@@ -154,7 +154,7 @@ div.errorExplanation ul {
   padding: 3px 0 0 10px;
 }
 div.errorExplanation li {
-  line-height: 130%;
+  line-height: 1.3;
   margin: 0;
   padding: 1px 2px 0px 2px;
 }
@@ -171,7 +171,7 @@ div.errorExplanation li {
 }
 .hiki_style p {
   margin: 10px 0;
-  line-height: 1.2em;
+  line-height: 1.2;
 }
 .hiki_style hr {
   margin: 3px;
