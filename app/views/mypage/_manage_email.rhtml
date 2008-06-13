@@ -1,0 +1,47 @@
+<div id="contents_container">
+
+<div id="contents_left">
+
+<%= render :partial => "manage_menu", :locals => { :selected_menu => @menu } %>
+
+</div><!-- contents_left -->
+
+<div id="contents_right">
+
+<div class="desc"><p>メールアドレス存在確認のため、入力されたメールアドレスにメールを送信します。<br/>
+24時間以内にそのメールに記載されたURLを開くことで申請が完了します。</p></div>
+
+<%= template_error_messages_for 'applied_email' %>
+
+<div class="edit_form_space">
+<% form_tag :action => 'apply_email' do -%>
+
+<% submit_value = "申請" %>
+<% if @applied_email.id %>
+<% submit_value = "再申請" %>
+既にメールアドレスの変更を申請済みです。記入したメールアドレスで再申請します。
+<% end %>
+
+<table id="user_info_box" class="normal" border="1">
+  <tr>
+    <th width="100px"><label for="page_title">変更前メールアドレス</label></th>
+    <td style="padding:5px;"><%=h @user.email%></td>
+  </tr>
+  <tr>
+    <th><label for="page_title">変更後メールアドレス</label></th>
+    <td style="padding:5px;"><%= text_field 'applied_email', 'email' %></td>
+  </tr>
+</table>
+
+  <%= submit_tag submit_value %>
+<% end %>
+</div>
+
+
+
+</div><!-- contents_right -->
+
+<div id="contents_bottom">
+</div><!-- contents_bottom -->
+
+</div><!-- contents_container -->

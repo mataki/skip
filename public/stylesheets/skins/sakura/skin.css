@@ -1,0 +1,48 @@
+/* ----------------------------------- */
+/* color1:外線, color2:タブ線, color3: タブ, color4:外側 */
+/* sakura : #e276a7, #bcd2e6, #efefef, #FCF3F8 */
+/* ----------------------------------- */
+div#main {
+  background-image: url("./back.gif"); /* image:http://www.aoiweb.com/aoi2/back3.htm */
+}
+div#panel {
+  border: 1px solid #e276a7; /* color:1 */
+}
+div#side ul {
+  border-bottom: 1px solid #e276a7; /* color:1 */
+}
+div#side li.normal {
+  border: 1px solid #e276a7; /* color:1 */
+  border-bottom: none;
+}
+div#side li.selected {
+  border: 1px solid #e276a7; /* color:1 */
+  border-left: 1px solid #FCF3F8; /* color:4 */
+  border-bottom: none;
+}
+div#side li.separator {
+  border: 1px solid #e276a7; /* color:1 */
+  border-bottom: none;
+  border-right: none;
+}
+/* ----------------------------------- */
+#tab_menu a {
+  background:url("./tab_left.gif") no-repeat left top;
+}
+#tab_menu a span {
+  color:#C7377D;
+  background:url("./tab_right.gif") repeat right top;
+}
+#tab_menu a:hover span, #tab_menu a.selected span {
+  color:#C7377D;
+}
+div#tab_body {
+  border: 1px solid #F4B7D6; /* color:2 */
+  border-bottom: none;
+  border-left: none;
+}
+/* ----------------------------------- */
+div#panel, div#side li.selected, div#tab_menu {
+  background-color: #FCF3F8; /* color:4 */
+}
+/* ----------------------------------- */

@@ -1,0 +1,250 @@
+<%= stylesheet_link_tag "form" -%>
+
+<style type="text/css">
+div.input_line {
+  border-bottom: 1px dotted silver;
+  margin-bottom: 2px;
+  padding-bottom: 2px;
+}
+div.input_line textarea {
+  width: 98%;
+}
+</style>
+
+<%= template_error_messages_for 'board_entry' %>
+
+<%= hidden_field_tag 'entry_type', params[:entry_type] %>
+<%= hidden_field_tag 'symbol', params[:symbol] %>
+
+<%= hidden_field 'board_entry', 'entry_type' %>
+<%= hidden_field 'board_entry', 'symbol' %>
+
+<%= hidden_field_tag 'lock_version', @board_entry.lock_version -%>
+
+<div class="input_line">
+  <div class="input_label">書き込み場所</div>
+  <div class="input_value" style="font-size: 15px; font-weight: bold;"><a href="<%= url_for(@target_url_param) -%>"><%=h @place -%></a></div>
+  <div style="clear: left"></div>
+</div>
+
+<div class="input_line">
+  <div class="input_label" style="height: 30px;">日付</div>
+  <div class="input_value">
+    <p><%= datetime_select 'board_entry', 'date', :use_month_numbers => true -%></p>
+    <p><a href="#" onclick="setCurrentDatetime('board_entry', 'date');">[現在時刻を設定]</a>
+      <%= check_box 'board_entry', 'ignore_times' -%>時刻は表示しない</p>
+  </div>
+  <div style="clear: left"></div>
+</div>
+
+<div class="input_line">
+  <div class="input_label">タグ</div>
+  <div class="input_value"><%= text_field 'board_entry', 'category', :size => '60', :value => @board_entry.comma_category %>
+    <div id="category_box" style="display:none;">
+      <div id="candidates_list"><p>foo,barの形で複数指定できます</p></div>
+      <div style="font-size:10pt; font-weight:bold;">あなたのタグ：</div><div id="tags_list" style="margin-bottom:5px;"></div>
+      <div style="font-size:10pt; font-weight:bold;">オススメ・定番のタグ：</div><div id="std_tags_list" style="margin-bottom:5px;"></div>
+      <div style="font-size:10pt; font-weight:bold;">他のユーザの最近のタグ：</div><div id="user_tags_list" style="margin-bottom:5px;"></div>
+      <div style="font-size:10pt; font-weight:bold;">システムタグ（付けることで振る舞いが変わります）：</div><div id="sys_tags_list" style="margin-bottom:5px;"></div>
+    </div>
+  </div>
+  <div style="clear: left"></div>
+</div>
+
+<div class="input_line">
+  <div class="input_label">タイトル</div>
+  <div class="input_value"><%= text_field 'board_entry', 'title', :size =>60 %></div>
+  <div style="clear: left"></div>
+</div>
+
+<div class="input_line">
+  <div class="input_label">内容</div>
+  <%= render :partial => "board_entries/edit_contents" %>
+</div>
+
+<div class="input_line">
+  <div class="input_label">画像/動画<br/>ファイル</div>
+  <div style="float:left;">
+    <%= render :partial => "shared/multiple_file" , :locals => {:file_field_name => "image", :submit_button_id => "submit_button", :blog_mode => true} -%>
+  </div>
+  <div style="clear: left"></div>
+  <div>（アップロードした画像/動画は、{{ファイル名.jpeg,240,160}}のように本文中で参照してください。画像は幅のみの指定も可能です。）</div>
+</div>
+
+<div class="input_line">
+  <div class="input_label" style="height: 30px;" id="input_label_publication">公開範囲</div>
+  <div class="input_value" id="input_value_publication"><table><tr><td>
+    <% display_type = (@board_entry.owner_is_public? ? "" : "none") %>
+    <span style="display:<%= display_type %>">
+      <%= radio_button_tag("publication_type", "public", params[:publication_type] == "public", :id=>"publication_type_public") -%>全体に公開
+    </span>
+    <%= radio_button_tag("publication_type", "private", params[:publication_type] == "private", :id=>"publication_type_private") -%><%= @board_entry.diary? ? "自分だけ" : "参加者のみ" -%>
+    <%= radio_button_tag("publication_type", "protected", params[:publication_type] == "protected", :id=>"publication_type_protected") %>直接指定
+
+    <div id="editor_symbols_space" style="display: none; margin-top: 5px;">
+      <%= check_box_tag 'editor_symbol', value = params[:symbol], params[:editor_symbol] -%>参加者の編集可
+    </div>
+    <%= render :partial => "shared/symbol_autocomplete_field", :locals => {:publication_symbols_value => params[:publication_symbols_value], :editor_symbols_value => params[:editor_symbols_value], :edit_checkbox => true } %>
+    </td></tr></table>
+  </div>
+  <div style="clear: left"></div>
+</div>
+
+<% if MAIL_FUNCTION_SETTING %>
+<div class="input_line">
+  <div class="input_label" style="height: 3em;">オプション</div>
+  <div class="input_value">
+    <div id="option_space">
+      <p><%= check_box 'sent_mail', 'send_flag', {:checked => @sent_mail_flag } %>[連絡] タグ指定時にメールを送信する</p>
+      <p>（全体に公開時と自分だけの場合は送信されません）</p>
+    </div>
+  </div>
+  <div style="clear: left"></div>
+</div>
+<% end %>
+
+<div class="input_line">
+  <div class="input_label" style="height: 3em;">トラックバック</div>
+  <div class="input_value">
+    <div id="option_space">
+      <p><%= text_field_tag 'trackbacks', params[:trackbacks], {:size => 60} %></p>
+      <p>（カンマ区切りでページのIDを入力してください。ex:1123,1234）</p>
+    </div>
+  </div>
+  <div style="clear: left"></div>
+</div>
+
+<span id="btn_preview_hiki" style="display: none">
+<input type="button" value="プレビュー" name="プレビュー" id="hiki_preview_button"/>
+</span>
+
+<%= skip_javascript_include_tag "controls" %>
+
+<script language='javascript' type='text/javascript'>
+//<![CDATA[
+$j(function() {
+    var tags = new Array(<%= @categories_hash[:mine].map{|str| ("'#{str}'")}.join(',') %>);
+    var stdTags = new Array(<%= @categories_hash[:standard].map{|str| ("'#{str}'")}.join(',') %>);
+    var userTags = new Array(<%= @categories_hash[:user].map{|str| ("'#{str}'")}.join(',') %>);
+    var sysTags = new Array(<%= @categories_hash[:system].map{|str| ("'#{str}'")}.join(',') %>);
+
+    $j('#tags_list').append(createTagsLink(tags));
+    $j('#std_tags_list').append(createTagsLink(stdTags));
+    $j('#user_tags_list').append(createTagsLink(userTags));
+    $j('#sys_tags_list').append(createTagsLink(sysTags));
+
+    // タグ処理
+    $j('#board_entry_category').jTagging($j('#tags_list'));
+    $j('#board_entry_category').jTagging($j('#std_tags_list'));
+    $j('#board_entry_category').jTagging($j('#user_tags_list'));
+    $j('#board_entry_category').jTagging($j('#sys_tags_list'));
+
+    // プレビュー表示用ボタン
+    var url = '<%= url_for({ :action => "ado_preview", :id => @board_entry}) -%>';
+    $j("#hiki_preview_button")
+    .click(function(){
+        $j.ajax({
+            type: 'POST',
+            url: url,
+            data: $j(this).parent().parent('form').serialize(),
+            success: function(msg) {
+                $j('#preview').html(msg);
+                $j('#preview-win')
+                .css('width',600)
+                .fadeIn();
+            }
+        });
+    });
+
+    // 入力フォームのチェック
+    $j('#board_entry_form')
+    .submit(function (){
+        if ($j('#publication_type_public:checked').size() > 0){
+            $j('#publication_symbols_value').val("");
+            $j('#editor_symbols_value').val("");
+        }
+
+        var no_tb_array = new Array();
+        var tb_array = $j('#trackbacks').val().split(',');
+
+        var contents_value;
+        if ($j('#editor_mode_richtext:checked').size() > 0) {
+            contents_value = $j('#contents_richtext').val();
+        } else if($j('#editor_mode_hiki:checked').size() > 0) {
+            contents_value = $j('#contents_hiki').val();
+        } else {
+            contents_value = $j('#contents_plaintext').val();
+        }
+
+        for(i=0; i < tb_array.length; i++){
+            var tb = Trim(tb_array[i]);
+            if(tb != ""){
+                if (isNaN(tb)){
+                    alert("トラックバックの指定が不正なフォーマットです。\r\nカンマ区切りでページのIDを列挙してください。");
+                    return false;
+                }
+                if (contents_value.match(new RegExp("page:" + tb + ".*]")) == null) {
+                    no_tb_array.push(tb);
+                }
+            }
+        }
+
+        if (no_tb_array.length > 0) {
+            if (confirm(no_tb_array + "が、本文中で言及していないので、リンクをたどることができませんが、\r\nよろしいですか？（言及方法：[page:123]のようにします）") == false) {
+                return false;
+            }
+        }
+
+        if ($j('#publication_type_protected:checked').size() > 0){
+            if ($j('#board_entry_category').val().match(new RegExp("連絡", "g")) == null) {
+                if (confirm("連絡タグがついていないため、\r\n相手に気づいてもらえないかもしれませんが、よろしいですか？") == false) {
+                    return false;
+                }
+            }
+            if ($j('#publication_symbols_value').val() == ""){
+                if (confirm("ユーザの指定がされていません。\r\nこのままだと、「全体に公開」になりますがよろしいですか？") == true) {
+                    $j('#publication_type_public').attr('checked',true);
+                    changePublicationType();
+                } else {
+                    return false;
+                }
+            }
+        }
+    });
+    var Trim = function(str){
+        str = str.replace(/^[ 　]+/,"");
+        str = str.replace(/[ 　]+$/,"");
+        return(str);
+    }
+
+    // 公開範囲のチェックボックス
+    var show_editable = <%= @board_entry.diary? ? "false" : "true" -%>;
+    var changePublicationType = function() {
+        if ($j('#publication_type_protected:checked').length > 0) {
+            $j('#editor_symbols_space').hide();
+            $j('#publication_symbols_space').show();
+            $j('#publication_symbol').focus();
+        } else {
+            $j('#publication_symbols_space').hide();
+            if (show_editable) {
+                $j('#editor_symbols_space').show();
+            }
+        }
+    };
+    $j('#publication_type_public, #publication_type_protected, #publication_type_private').click(function(){
+        changePublicationType();
+    });
+    changePublicationType();
+
+    // タグsuggestのスライド表示
+    $j('#board_entry_category')
+    .focus(function(){
+        showCategoryBox();
+    });
+    $j('#board_entry_title, #contents_hiki, #contents_richtext, #contents_plaintext')
+    .focus(function(){
+        hideCategoryBox();
+    });
+});
+//]]>
+</script>

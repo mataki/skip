@@ -1,0 +1,23 @@
+<% icon_name, icon_title = 'star_on.png', "スターをはずす" -%>
+<% icon_name, icon_title = 'star_off.png', "スターを付ける" unless participation.favorite -%>
+<a href="#" class='favorite_star' id="favorite_star_link_<%= participation.id -%>" ><%= image_tag(icon_name, :title => icon_title, :alt => icon_title) -%></a>
+
+<script type="text/javascript">
+$j(function(){
+    <%# TODO idでクリックを設定するDOM要素を設定しているがクラスで設定して、application.jsなどに一箇所に書きたい %>
+    // グループののスターをクリックしたときのAjaxアクションを設定する
+    $j('#favorite_star_link_<%= participation.id -%>')
+    .click(function() {
+        $j.ajax({
+            type: 'POST',
+            url: '<%= url_for(:controller => 'group', :gid => gid , :action => 'ado_set_favorite') -%>',
+            data: { group_participation_id : '<%= participation.id -%>', favorite_flag : <%= (!participation.favorite).to_s -%>, update_elem_id : '<%= update_elem_id -%>' },
+            complete: function(request) {
+                $j('#<%= update_elem_id -%>').html(request.responseText).parent().highlight();
+            }
+        });
+        return false;
+    });
+});
+</script>
+

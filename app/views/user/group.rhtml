@@ -1,0 +1,82 @@
+<!-- グループーの一覧表示 -->
+<% user_id ||= session[:user_id] %>
+<% show_favorite ||= false %>
+
+<div id="contents_container">
+
+<div id="contents_left">
+
+<div class="box_space">
+  <div class="box_space_title"><%= icon_tag 'text_list_bullets'%>カテゴリ</div>
+  <div class="box_space_body" style="font-size:10px">
+    <%= radio_button_tag "category", "all",  params[:category] == "all",  :class => "category_radio"  %><%= icon_tag "asterisk_orange", :margin => true %>全て(<%= @total_count %>)<br/>
+    <% #TODO group/index.rhtmlにほぼ同じ記述がある。helper化すべきか? %>
+    <% Group::CATEGORY_KEYS.each do |category| %>
+      <%= radio_button_tag "category", category, params[:category] == category, :class => "category_radio" %><%= get_group_icon category, :margin => true %><%= Group::CATEGORY_KEY_NAMES[category] -%>
+      (<%= @group_counts[category] %>)<br/>
+    <% end %>
+   </div>
+</div><!-- box_space -->
+
+<div class="box_space">
+  <div class="box_space_title"><%= icon_tag 'table_lightning' %>表示形式</div>
+  <div class="box_space_body">
+    <%= radio_button_tag "format_type", "list",   params[:format_type] == "list",   :class => "format_radio"  %> 一覧<br/>
+    <%= radio_button_tag "format_type", "detail", params[:format_type] == "detail", :class => "format_radio"  %> 詳細
+   </div>
+</div><!-- box_space -->
+
+<div class="box_space">
+  <div class="box_space_title"><%= icon_tag 'table_refresh' -%>表示順</div>
+  <div class="box_space_body">
+    <%= radio_button_tag("sort_type", "date", params[:sort_type] == "date", :class => "sort_radio") -%> 参加日順 <br/>
+    <%= radio_button_tag("sort_type", "name", params[:sort_type] == "name", :class => "sort_radio") -%> グループ名順
+  </div>
+</div><!-- box_space -->
+
+
+<div class="box_space">
+  <div class="box_space_title"><%= icon_tag 'find' -%>検索</div>
+  <div class="box_space_body">
+  <%= text_field_tag('keyword', params[:keyword], :size=>'10') %>
+  <%= submit_tag '検索', :onclick => "searchGroup();" %><br/>
+  </div>
+</div><!-- box_space -->
+
+
+</div><!-- contents_left -->
+
+<div id="contents_right">
+<%= @text %>
+</div><!-- contents_right -->
+
+<div id="contents_bottom"></div><!-- contents_bottom -->
+
+</div><!-- contents_container -->
+
+<script type="text/javascript">
+var url = '<%= url_for :action => "group" %>'
+
+/* 複数のラジオボタンの中からチェックされているラジオボタンのvalueを取得する */
+function getCheckedRadioValue(radios) {
+  var value = "";
+  radios.each(function(radio){
+    if(radio.checked) value = radio.value;
+  });
+  return value;
+}
+function searchGroup() {
+  var params = "";
+  var category = getCheckedRadioValue(document.getElementsByClassName("category_radio"));
+  var format = getCheckedRadioValue(document.getElementsByClassName("format_radio"));
+  var sort = getCheckedRadioValue(document.getElementsByClassName("sort_radio"));
+
+  params += "&category=" + category;
+  params += "&format_type=" + format;
+  params += "&sort_type=" + sort;
+  if ($F('keyword') != "") {
+    params += "&keyword=" + encodeURI($F('keyword'));
+  }
+  location.href = url + "?" + params.slice(1);
+}
+</script>

@@ -1,0 +1,28 @@
+#
+# 検索アプリのURL配置場所
+#
+
+development:
+  skip:
+    cache:  localhost/cache_skip
+    meta:  /data/caches/skip_meta
+    condition_js: http://localhost:3100/services/search_conditions.js
+    title: SKIP
+    order: 1
+
+test:
+  skip:
+    cache:  localhost/cache_skip
+    meta:  /data/caches/skip_meta
+    condition_js: http://localhost:3100/services/search_conditions.js
+    title: SKIP
+    order: 1
+
+production:
+  skip:
+    cache:  dev.openskip.org/cache_skip
+    meta:  /data/caches/skip_meta
+    condition_js: http://dev.openskip.org/services/search_conditions.js
+    title: SKIP
+    order: 1
+

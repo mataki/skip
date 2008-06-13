@@ -1,0 +1,26 @@
+<table class="group_list_box" border="1px solid silver;">
+  <tr>
+    <th width="60%">グループ名</th>
+    <th>カテゴリ</th>
+    <th>状態</th>
+    <th>承認</th>
+  </tr>
+
+<% groups.each do |group| %>
+  <tr>
+    <td>
+    <% if show_favorite %>
+      <% participation = group.group_participations.first %>
+      <% elem_id = "group_participation_#{participation.id}" %>
+      <span id="<%= elem_id %>"><%= render :partial => "favorite", :locals => { :gid => group.gid, :participation => participation, :update_elem_id => elem_id } %></span>
+    <% end %>
+      <%= group_link_to group %>
+    </td>
+    <td>
+      <%= icon_tag(group.category_icon_name.first, :title => group.category_icon_name.last, :margin => true) + group.category_icon_name.last %>
+    </td>
+    <td><%= participation_state(group, user_id, {:simple => true}) -%></td>
+    <td><%= "#{icon_tag 'key'} 必要" if group.protected? %></td>
+  </tr>
+<% end %>
+</table>

@@ -1,0 +1,49 @@
+<% level ||= 1 %>
+<% nest_limit = 5 %>
+
+<div class="board_entry_comment" id='comment_<%= comment.id -%>' style="margin-left:<%= level == 1 ? 0 : 20 -%>px;margin-top:5px;background-color:<%= get_bgcolor level %>;">
+  <div class="header">
+    <table style="width: 100%; _width: 96%;"><tr>
+      <td><%= user_link_to(comment.user) %><span style="font-size: 10px">[<%= comment.created_on.strftime("%Y/%m/%d-%H:%M") %>]</span></td>
+      <td align="right">
+        <%= dummy_link_to(icon_tag('comment_edit', { :alt => "編集", :title => "編集" }), :id => "comment_edit_link_#{comment.id}") if writer?(comment, session[:user_id]) %>
+        <%= link_to(icon_tag('comment_delete', { :alt => "削除", :title => "削除" }), {:controller => "board_entries", :action => "destroy_comment", :id => comment.id }, :confirm => '本当に削除しますか？') if (comment_writer?(comment, session[:user_id]) && comment.children.size == 0) %>
+      <% if level < nest_limit %>
+        <span class="edit_nest_comment" id='link_nest_comment_<%= comment.id -%>'><%= dummy_link_to(icon_tag("comment_add", { :alt => "このコメントに返信", :title => "このコメントに返信"}), :id => "comment_nest_link_#{comment.id}") %></span>
+      <% end %>
+      </td>
+  </tr></table>
+  </div><!-- header -->
+
+  <div id='comment_contents_<%= comment.id -%>' >
+    <%= render(:partial => 'board_entries/comment_contents', :locals => { :comment => comment, :level => level + 1 }) %>
+  </div>
+
+  <div class='comment_input_space' id='comment_area_<%= comment.id -%>' style='display: none;'>
+    <form id="comment_input_form_<%= comment.id -%>">
+    <% @comment = BoardEntryComment.new(:contents => comment.contents) %>
+    <div style="margin-top:3px;font-size:10px;color:gray">コメントの編集</div>
+    <%= text_area 'comment', 'contents', :cols => 90, :rows =>5  %>
+    <div style="margin-bottom: 5px">
+      <%= submit_tag '保存' %>
+      <input id="comment_cancel_button_<%= comment.id -%>" type="button" value="キャンセル"/>
+    </div>
+    </form>
+  </div><!-- comment_input_space -->
+
+  <div class="edit_nest_comment" id='edit_nest_comment_<%= comment.id -%>'></div>
+  <div id='view_nest_comment_<%= comment.id -%>'><%= render_nest_comment comment, level+1 -%></div>
+
+</div><!-- comment_# -->
+<script type="text/javascript">
+$j(function(){
+    var commentId = '<%= comment.id -%>';
+    var level = '<%= level + 1 %>';
+    setupCommentEditLink(commentId);
+    setupCommentCancelButton(commentId);
+    setupCommentInputForm(commentId);
+    setupCommentNestLink(commentId, level);
+    fnLoadPngs();
+});
+</script>
+

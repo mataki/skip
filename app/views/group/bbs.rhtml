@@ -1,0 +1,28 @@
+
+<div id="bbs_container">
+
+<div id="bbs_left">
+
+<%= render(:partial => 'entries/search_box') -%>
+<%= render(:partial => 'entries/recent_box', :locals => { :recent_entries => @recent_entries }) -%>
+<%= render(:partial => 'entries/user_archive_box', :locals => { :user_archives => @user_archives }) -%>
+<%= render(:partial => 'entries/categories_box', :locals => { :categories => @categories }) -%>
+
+</div><!-- bbs_left -->
+
+<div id="bbs_right">
+
+<% if @entry %>
+  <%= render(:partial => 'entries/entry_detail',
+             :locals => { :entry => @entry, :prev_entry => @prev_entry, :next_entry => @next_entry, :tb_entries => @tb_entries }) -%>
+<% else %>
+  <%= render(:partial => 'entries/entries_list',
+             :locals => { :pages => @pages, :entries => @entries }) -%>
+<% end %>
+
+</div><!-- bbs_right -->
+
+<div id="bbs_bottom">
+</div><!-- bbs_bottom -->
+
+</div><!-- bbs_container -->

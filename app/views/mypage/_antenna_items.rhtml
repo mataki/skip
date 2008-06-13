@@ -1,0 +1,14 @@
+
+<div class="box_space" style="_width: 90%;">
+  <div class="box_space_body" style="margin-top: 5px;" id="antenna_items_body">
+    <ul id="antenna_items_list" style="cursor: move;">
+<% antenna_items.each do |item| -%>
+    <li id="antenna_item_<%= item.id -%>"><%= icon_tag 'report_user' -%>
+      <%= symbol_link_to item.value -%>
+      <a href="javascript:deleteAntennaItem('<%= antenna.id -%>', '<%= item.id -%>');">[削除]</a>
+    </li>
+    <script type="text/javascript">new Draggable("antenna_item_<%= item.id -%>", {revert: true});</script>
+<% end -%>
+  </ul></div>
+
+</div>

@@ -1,0 +1,59 @@
+/* ブックマーク用メニューのスタイルシート */
+/* ----------------------------------- */
+/* 検索結果部分 */
+table.bookmark_comment_box {
+  margin: 5px 10px;
+  width: 600px;
+  border-collapse: collapse;
+  border: 1px solid silver;
+}
+table.bookmark_comment_box th {
+  width: 70px;
+  background-color: #f0f0ff;
+  padding-left: 5px;
+  border: 1px solid silver;
+}
+table.bookmark_comment_box td {
+  padding: 0px 5px;
+}
+
+/* _form用  */
+div.input_line {
+  border-bottom: 1px dotted silver;
+  margin-bottom: 5px;
+  padding-bottom: 2px;
+}
+div.input_label {
+  background-color: #f0f0ff;
+  width: 100px;
+  overflow: hidden;
+  float: left;
+  font-weight: bold;
+  font-size: 12px;
+  padding: 3px 5px;
+  margin-right: 5px;
+}
+
+span.label {
+  background-color: #f0f0ff;
+  width: 100px;
+  overflow: hidden;
+  float: left;
+  font-weight: bold;
+  font-size: 12px;
+  padding: 3px 5px;
+  margin-right: 5px;
+}
+
+div.title {
+  background-color: #f0f0ff;
+  padding: 2px 2px;
+  font-size: 12pt;
+  font-weight:bold;
+  border-left: 10px solid #7070ff;
+  border-bottom: 1px solid #7070ff;
+}
+
+div.bookmark_space div.comment_space {
+  overflow: hidden;
+}

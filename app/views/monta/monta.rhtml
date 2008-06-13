@@ -1,0 +1,37 @@
+<html>
+<head>
+  <title>TakahashiMonta: <%= @board_entry.title %></title>
+  <%= skip_javascript_include_tag 'prototype' %>
+  <%= skip_javascript_include_tag 'scriptaculous' %>
+  <%= skip_javascript_include_tag 'hotkey' %>
+  <%= javascript_include_tag 'application' %>
+  <%= stylesheet_link_tag 'monta' %>
+  </head>
+
+<% url_first_page = url_for(:controller=>'monta', :action=>'ado_view_contents', :id=>@board_entry.id, :index=>0) %>
+<body style="height:100%" onClick="go_next()" onLoad="new Ajax.Updater('view_contents', '<%= url_first_page %>', {asynchronous:true, evalScripts:true});
+  return false;">
+  <div class="my_header"><%= @board_entry.title %></div>
+  <div id="view_contents"></div>
+</body>
+
+<script>
+   function go_next() {
+    var monta = $('monta');
+    if (monta != null) {
+      new Effect.Puff(monta);
+    }
+    new Ajax.Updater('view_contents', $('url_next').innerHTML, {asynchronous:true, evalScripts:true});
+  };
+  function go_prev() {
+    new Ajax.Updater('view_contents', $('url_prev').innerHTML, {asynchronous:true, evalScripts:true});
+  };
+
+  var kb = new HotKey;
+  kb.add(["right"], go_next);
+  kb.add(["down"],  go_next);
+  kb.add(["enter"], go_next);
+
+  kb.add(["up"],    go_prev);
+  kb.add(["left"],  go_prev);
+</script>

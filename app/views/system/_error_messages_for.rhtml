@@ -1,0 +1,7 @@
+<div class="errorExplanation" id="errorExplanation">
+  <h2><%= messages.size %>個のエラーが発生しました</h2>
+  <p>次の項目に問題があります</p>
+  <ul>
+    <% for mes in messages %><li><%= mes %></li><% end %>
+  </ul>
+</div>

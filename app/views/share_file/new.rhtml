@@ -1,0 +1,30 @@
+<% form_tag({:action => 'create'}, :multipart => true, :id=>'share_file_form') do -%>
+
+  <%= render :partial => 'form', :locals => {:owner_name => @owner_name,
+                                             :share_file => @share_file,
+                                             :categories_hash => @categories_hash,
+                                             :symbol2name_hash => @symbol2name_hash} %>
+
+<div class="input_line">
+  <div class="input_label">ファイル</div>
+  <div style="float:left;">
+    <%= render :partial => "shared/multiple_file" , :locals => {:file_field_name => "file", :submit_button_id => "submit_button"} -%>
+    <div class="error_files">
+    <% if @error_messages and @error_messages.size > 0 %>
+      以下のファイルの登録に失敗しました。<br/>
+      <div class="error_messages"><ul>
+      <% @error_messages.each do |error_message| %>
+        <li><%= error_message %></li>
+      <% end %>
+      </ul></div>
+    <% end %>
+    </div>
+  </div>
+  <div style="clear: left"></div>
+  <div id="hidden_file_area" style="display:none;"></div>
+</div>
+
+  <%= submit_tag "登録", :id => "submit_button" %>
+  <input type="button" value="キャンセル" onclick="window.close();"></input>
+
+<% end %>

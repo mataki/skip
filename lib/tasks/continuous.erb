@@ -1,0 +1,102 @@
+<script src="/javascripts/prototype.js" type="text/javascript"></script>
+<script src="/javascripts/dragdrop.js" type="text/javascript"></script>
+<script src="/javascripts/effects.js" type="text/javascript"></script>
+<style type="text/css">
+table {
+  font-size: 11px;
+}
+table {
+  border: 2px solid gray;
+  border-collapse:collapse;
+}
+
+th {
+  background-color: aqua;
+  font-style: bold;
+  border: 1px solid gray;
+}
+
+td {
+  border: 1px dotted gray;
+  padding:2px 4px 2px 4px;
+}
+
+div.result {
+  font-size: 10px;
+  background-color: #eef;
+}
+#test_result-win {
+  position: absolute;
+  width: 700px;
+  overflow: auto;
+  left: 200px;
+  top: 50px;
+  padding: 2px;
+  background-color: #eef;
+  display: none;
+  z-index: 1000;
+  border: none;
+  font-size:11px;
+}
+#test_result-inbox {
+  border: 1px solid #C6C7C6;
+  background-color: #eef;
+}
+#test_result-bar {
+  background-color: #9999ff;
+  text-align:right;
+  width:100%;
+  border-top: 1px solid #FFFFFF;
+  border-bottom: 1px solid #AAAAAF;
+}
+
+</style>
+
+<html>
+<body>
+<table>
+<tr>
+<th>ファイル名</th>
+<th>実行時刻</th>
+<th>サマリ</th>
+</tr>
+<% Dir.glob("./continuous_test_log/*.log").reverse.each_with_index do |log_file_name, index| %>
+  <% icon_name = log_file_name.include?("green") ? "accept.png" : "cancel.png" %>
+  <tr>
+    <td><a href="" onclick="viewResult(<%= index %>);return false;"><%= File.basename(log_file_name) %></a></td>
+    <td><%= File.ctime(log_file_name).strftime("%Y/%m/%d %H:%M") %>
+    <td align="center"><img src="/images/icons/<%= icon_name %>"></td>
+    <div id="result_<%= index %>" style="display:none;"><pre><%= File.read(log_file_name) %></pre></div>
+  </tr>
+<% end %>
+</table>
+</body>
+</html>
+
+<script type="text/javascript">
+function viewResult(index) {
+    $('test_result-win').style.display='block';
+
+    new Effect.Parallel(
+        [
+        new Effect.Opacity('test_result-win', { from : 1.0, to : 0.9 }),
+        new Effect.Highlight('test_result-inbox'),
+        new Effect.Highlight('test_result-bar')
+        ]
+   );
+  $('test_result').innerHTML = $('result_' + index).innerHTML;
+}
+
+function closeTestResultWindow() {
+  new Effect.Opacity('test_result-win',
+                     { from : 1.0, to : 0.0,
+                       afterFinishInternal: function(){ $('test_result-win').style.display='none'; }
+                     });
+}
+</script>
+
+<div id="test_result-win"><div id="test_result-inbox">
+  <p style="position: absolute; text-align: left;">[テスト結果]</p>
+  <div id="test_result-bar"><input type="button" id="close" value="close" onclick="closeTestResultWindow();" /></div>
+  <div id="test_result">loading...</div>
+</div></div>

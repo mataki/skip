@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+et1:
+  board_entry: a_entry
+  tag: a_tag
+  created_on: <%= SkipFaker.today %>
+et2:
+  board_entry: a_entry
+  tag: system_question_tag
+  created_on: <%= SkipFaker.today %>
+et3:
+  board_entry: a_trackback_entry
+  tag: a_tag
+  created_on: <%= SkipFaker.today %>

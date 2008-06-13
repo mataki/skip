@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <title><%= CUSTOM_RITERAL[:app_title] -%></title>
+<script language="JavaScript" type="text/javascript">
+<!--
+var relative_url_root = '<%= controller.request.relative_url_root -%>';
+//-->
+</script>
+  <%= skip_stylesheet_link_tag 'style' %>
+  <%= skip_stylesheet_link_tag 'nyroModal.full.css' %>
+
+  <%= skip_javascript_include_tag 'prototype' %>
+  <%= skip_javascript_include_tag 'jquery.js' %>
+  <script language="JavaScript" type="text/javascript">$j = jQuery.noConflict();</script>
+  <%= skip_javascript_include_tag 'effects' %>
+  <%= skip_javascript_include_tag 'dragdrop' %>
+  <%= skip_javascript_include_tag "jquery.nyroModal.js" %>
+  <%= skip_javascript_include_tag "skip_util" %>
+  <%= javascript_include_tag "application" %>
+
+<style type="text/css">
+a:hover {
+  color: blue;
+  background-color: yellow;
+  font-weight: bold;
+}
+#attention {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 440px;
+  padding: 1px;
+  background-color: #ffcccc;
+  border: 1px solid silver;
+  color: red;
+}
+.desc {
+  position: absolute;
+  right: 10px;
+  top: 250px;
+  width: 400px;
+  border: solid 1px silver;
+  background-color: white;
+  padding: 5px;
+}
+* html .desc {
+  top: 245px;
+}
+#login {
+  position: absolute;
+  right: 10px;
+  top: 40px;
+  width: 175px;
+  _height: 180px;
+  padding: 2px;
+  border: 1px solid silver;
+  background-color: #f0f0ff;
+  font-size: 12px;
+}
+#login-title {
+  line-height: 130%;
+  padding: 2px;
+  background-color: #ddddff;
+  border-top: 1px solid #FFFFFF;
+  border-bottom: 1px solid #AAAAAF;
+  font-size: 14px;
+  font-weight: bold;
+  color: #77778C;
+  text-align: center;
+}
+.menu-category {
+  line-height: 80%;
+  padding: 3px;
+  background-color: #ebddff;
+  border-top: 1px solid #FFFFFF;
+  border-bottom: 1px solid #AAAAAF;
+  font-size: 13px;
+  font-weight: bold;
+  color: #77778C;
+  text-align: center;
+}
+.skip-menu {
+  line-height: 80%;
+  padding: 3px;
+  margin: 1px 10px;
+  border-top: 1px solid #FFFFFF;
+  border-bottom: 2px solid #AAAAAF;
+  font-size: 13px;
+  color: #77778C;
+}
+.menu-item {
+  margin: 10px;
+  background-color: white;
+}
+div#main {
+  position: relative;
+  background-image: url('<%= controller.request.relative_url_root -%>/images/<%= @img_name -%>');
+  padding: 10px;
+  _width: 100%;
+  height: 400px;
+}
+span.red, span.blue, span.green {
+  font-weight: bold;
+  font-size: 18px;
+}
+span.red { color: red; }
+span.green { color: #00A000; }
+span.blue { color: blue; }
+</style>
+</head>
+
+<body>
+<div id="logo"><%= link_to(image_tag("/custom/images/title_logo.png", :alt => CUSTOM_RITERAL[:app_title])) -%></div>
+
+<div id="top">
+  <div id="menu_btn"></div>
+  <div id="user_ctl">
+    <a href="mailto:<%= CUSTOM_RITERAL[:contact_addr] -%>" target="_blank">お問い合わせ</a>
+    <a href="#" onclick="javascript:getSubwindowRule()"> 利用規約</a>
+    <a href="#" onclick="javascript:getSubwindowScript(relative_url_root + 'custom/about_this_site.html', 720, 660)">このサイトについて</a>
+  </div>
+  <%= render :partial => "login_failed_message" %>
+</div>
+
+<div id="main">
+
+<% if @attentions and @attentions.size > 0 %>
+<div id="attention"><ul style="background-color: white; margin: 5px;">
+  <% @attentions.each do |attention| %>
+  <li style="margin: 5px 20px; border-bottom: dashed 1px silver"><%= attention %></li>
+  <% end %>
+</ul></div>
+<% end %>
+
+<% if @user_code -%>
+
+<div id="login" style="width: 320px; top: 20px;">
+  <p id="login-title">ログイン情報</p>
+  <div style="background-color: white; border: none; padding: 5px; margin-bottom: 5px; border: 1px dotted skyblue; border-top: none;"><%= @user_name -%> さんとしてログイン中です
+    <div style="text-align: right; font-size: 10px;"><%= link_to "[ログアウト]", :action => "logout" -%></div>
+  </div>
+  <p id="login-title">メニュー</p>
+  <div style="overflow: auto; height: 275px;">
+
+<% COMMON_MENUS[:main_menus].each do |menu| %>
+  <div class="skip-menu">
+  <%= link_to menu[:title], menu[:url], :target => "_blank" -%>
+  </div>
+<% end %>
+<% COMMON_MENUS[:block_menus].each do |block_menu| %>
+  <div class="menu-category"><%= block_menu[:title]-%></div>
+  <div style="border-left: 5px solid gray;">
+  <% block_menu[:blocks].each do |service| %>
+    <div class="menu-title" style="padding-left: 10px; font-weight: bold;"><%= service[:title] -%></div>
+    <% service[:links].each do |link| %>
+      <%= link_to(icon_tag(service[:icon]) + " " + link[:title], link[:url], :target => "_blank") -%><br/>
+    <% end %>
+  <% end %>
+  </div>
+<% end %>
+
+  </div>
+</div>
+<div id="desc_after_login" class="desc" style="left: 10px;"></div>
+
+<% else -%>
+
+<div id="login"><p id="login-title">ログイン</p><%= render :partial => 'shared/login_form' %></div>
+<div id="desc_before_login" class="desc"></div>
+
+<% end -%>
+
+</div><!-- main -->
+
+<div id="footer">
+  <div class="bottom" style="text-align: center;font-size: 12px;font-weight: bold;"><%= CUSTOM_RITERAL[:footer_contact] -%></div>
+  <div id="powered"><%= CUSTOM_RITERAL[:footer_copyright] -%></div>
+</div><!-- footer -->
+
+</body>
+<script type="text/javascript">
+<!--
+$j(function(){
+    $j('.desc, #login').fadeTo('slow',0.8);
+    $j('#desc_before_login').load(relative_url_root + '/custom/login_desc.html');
+    $j('#desc_after_login').load(relative_url_root + '/custom/registration_desc.html');
+    fnLoadPngs();
+});
+//-->
+</script>
+</html>

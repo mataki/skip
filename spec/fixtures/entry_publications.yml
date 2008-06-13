@@ -1,0 +1,4 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+a_entry_publication:
+  board_entry: a_entry
+  symbol: sid:allusers

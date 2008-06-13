@@ -1,0 +1,54 @@
+<!-- IE6/7 only style -->
+<style type="text/css">
+* html table{
+  table-layout: auto;
+}
+*:first-child+html table{
+  table-layout: auto;
+}
+</style>
+<div id="contents_container">
+
+<div id="contents_left">
+<%= render :partial => "manage_menu", :locals => { :selected_menu => @menu } %>
+</div><!-- contents_left -->
+
+<div id="contents_right">
+
+<div class="desc"><p>サイトの環境をカスタマイズすることが可能です。</p></div>
+
+<div class="edit_form_space">
+<% form_tag({:action => 'update_customize'}) do -%>
+<%= template_error_messages_for 'user_custom' %>
+
+<p><label for="theme">テーマ</label><br/>
+<table>
+<%
+   skins_path = File.join(RAILS_ROOT, "public", "stylesheets", "skins")
+
+   Dir.glob(File.join(skins_path, "*")).each do |skins_dir|
+     skin = File.basename(skins_dir)
+
+     sample_img_path = ""
+     Dir.glob(File.join(skins_path, skin, "back.*")).each do |backs_file|
+       sample_img_path = "../stylesheets/skins/#{skin}/" + File.basename(backs_file)
+     end
+-%>
+<tr>
+  <td><%= radio_button("user_custom", "theme", skin) -%></td>
+  <td><%= skin -%></td>
+  <td><%= image_tag(sample_img_path, :size => "90x40") -%></td>
+</tr>
+<% end -%>
+</table>
+
+<div><%= submit_tag("変更") %></div>
+<% end %>
+</div>
+
+</div><!-- contents_right -->
+
+<div id="contents_bottom">
+</div><!-- contents_bottom -->
+
+</div><!-- contents_container -->

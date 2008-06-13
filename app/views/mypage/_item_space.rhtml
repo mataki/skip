@@ -1,0 +1,14 @@
+<%= %(<div id="#{id_name}">) %>
+
+<div class="topix_title"><%= skip_image_tag('i05-01.gif') -%><span><%= title_name %></span></div>
+<div class="topix_body">
+<% items.each do |item| -%>
+  <div class="item_line">
+    <div class="item_name"><%= item[:name] %></div>
+    <div class="item_desc"><%= item[:desc] %></div>
+    <div class="item_date"><%= item[:date].strftime("%Y/%m/%d %H:%M") %></div>
+  </div>
+<% end -%>
+</div>
+
+</div>

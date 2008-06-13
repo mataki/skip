@@ -1,0 +1,16 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+a_protected_group1:
+  name: <%= SkipFaker.rand_char %>
+  gid: a_protected_group1
+  description: <%= SkipFaker.rand_char %>
+  protected: 1
+  created_on: <%= SkipFaker.today %>
+  updated_on: <%= SkipFaker.today %>
+
+a_protected_group2:
+  name: <%= SkipFaker.rand_char %>
+  gid: a_protected_group2
+  description: <%= SkipFaker.rand_char %>
+  protected: 1
+  created_on: <%= SkipFaker.today %>
+  updated_on: <%= SkipFaker.today %>

@@ -1,0 +1,5 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+a_entry_trackback:
+  updated_on: <%= SkipFaker.today %>
+  board_entry: a_entry
+  tb_entry: a_trackback_entry

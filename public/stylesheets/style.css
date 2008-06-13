@@ -1,0 +1,421 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+img {
+  vertical-align: middle;
+  border: 0;
+}
+a {
+  text-decoration: none;
+  color: #0080ff;
+}
+a:hover {
+  color: blue;
+  text-decoration: underline;
+}
+form {
+ padding:0px;
+ margin:0px;
+}
+input {
+  font-family: Verdana, Arial, Sans-serif;
+  margin: 0px;
+  padding: 2px;
+  font-size:12px;
+}
+select {
+  font-family: Verdana, Arial, Sans-serif;
+  margin: 0 2px 0 0;
+  padding: 0;
+  font-size:12px;
+  letter-spacing: 2px;
+  z-index:0;
+}
+textarea {
+  font-family: Verdana, Arial, Sans-serif;
+  margin: 0px;
+  padding: 2px;
+  font-size:12px;
+}
+div.submit {
+  text-align: right;
+}
+/* ----------------------------------- */
+table {
+  font-size: 12px;
+  table-layout: fixed;
+}
+table.normal {
+  font-size: 12px;
+  border-collapse: collapse;
+  border: 1px solid silver;
+}
+/* --- for IE only -----*/
+* html table.normal{
+  table-layout: auto;
+}
+* html table.normal th{
+  text-align: left;
+}
+/* -- for IE7 only --*/
+*:first-child+html table.normal{
+  table-layout: auto;
+}
+/* ------------------*/
+/* ---------------------*/
+table.normal th {
+  background-color: #f0f0ff;
+}
+table.normal td.line_0 {
+  background-color: #f8f8ff;
+}
+table.normal td.line_1 {
+  background-color: #ffffff;
+}
+/* ----------------------------------- */
+body {
+  position: absolute;
+  left: 0;
+  margin: 0;
+  text-align: left;
+  font-size: 12px;
+  font-family: Verdana, Arial, sans-serif;
+  background-color: #ffffff;
+  color: #555555;
+  width: 100%;
+}
+
+/* ----------------------------------- */
+div#header {
+  border-bottom: 1px dashed silver;
+  height: 50px;
+}
+div#header div#logo {
+  float: left;
+}
+div#header div#search {
+  float: right;
+  padding-top: 4px;
+}
+/* ----------------------------------- */
+div#top {
+  clear: both;
+  text-align: right;
+  border-bottom: 1px solid silver;
+  padding: 1px 10px 3px 10px;
+}
+div#top div#user_ctl a {
+  border-left: 1px solid #555555;
+  padding-left: 7px;
+  margin-left: 2px;
+}
+div#top div#menu_btn {
+  position: absolute;
+  left: 10px;
+}
+div#top div#menu_btn a {
+  margin-right: 2px;
+  padding: 0 1px 2px 1px;
+}
+div#top div#menu_btn a:hover {
+  background-color: pink;
+}
+/* ----------------------------------- */
+/* 共通系 */
+/* 件数や次ページなどのナビ */
+div.navi {
+  border: 3px double silver;
+  padding: 1px 5px;
+  background-color: #f0f0ff;
+  text-align: right;
+}
+/* 検索時の検索条件スペース */
+div.search_cond_space {
+  border: 1px dashed silver;
+  padding: 5px;
+  _width: 100%;
+}
+/* 検索時の検索結果スペース */
+div.search_result_space {
+  margin-top: 10px;
+  _width: 100%;
+}
+/* エディット時のフォーム入力スペース */
+div.edit_form_space {
+  border: 1px dashed silver;
+  padding: 10px;
+  margin-bottom: 5px;
+}
+div.edit_form_space p {
+  margin: 5px 0;
+}
+/* ページ先頭に説明文を入れる場合などに使う */
+div.desc {
+  padding: 3px 10px;
+  background-color: #f0f0ff;
+  border: 1px dashed #ffc000;
+}
+/* 感応型ヘルプ */
+div.helpbar {
+  background-color: #fff0f0;
+  text-align: center;
+  margin-bottom: 2px;
+}
+/* ----------------------------------- */
+/* タイトル＋一覧系 */
+div.topix_title {
+  border-top: 3px double silver;
+  border-bottom: 1px dashed silver;
+  padding: 0px 0px 0px 7px;
+  background-color: #f0f0ff;
+  margin-bottom: 2px;
+}
+div.topix_title span {
+  font-size: 14px;
+  font-weight: bold;
+  vertical-align: middle;
+  margin-left: 5px;
+  color: #0033cc;
+}
+div.topix_body {
+  margin-left: 5px;
+  margin-bottom: 5px;
+}
+div.topix_body a:visited {
+  color: purple;
+}
+div.topix_body .page_line, div.topix_body .item_line {
+  border-bottom: 1px dotted silver;
+  padding: 1px 2px 3px 2px;
+  margin-bottom: 2px;
+}
+div.topix_body .page_reading {
+  float: left;
+  margin-right: 5px;
+}
+div.topix_body .page_title {
+  width: 65%;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  float: left;
+}
+div.topix_body .page_from {
+  float: left;
+  margin-left: 5px;
+  width: 70px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+div.topix_body .page_date, div.topix_body .item_date {
+  text-align: right;
+  font-size: 10px;
+}
+div.topix_body .item_name {
+  width:120px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  float: left;
+  margin-right: 15px;
+}
+div.topix_body .item_desc {
+  float: left;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  width: 50%;
+}
+/* ----------------------------------- */
+/* flashで表示するメッセージ */
+div.notice {
+  border: 2px solid limegreen;
+  margin: 3px 0 1em 0;
+  font-size: 12px;
+  background-color: palegreen;
+}
+div.warning {
+  border: 2px solid orange;
+  margin: 3px 0 1em 0;
+  font-size: 12px;
+  background-color: yellow;
+}
+div.notice span, div.warning span {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  font-size: 10px;
+}
+/* ----------------------------------- */
+/* ボックス型 */
+/* 外側の表示枠 */
+div.box_space {
+  background-color: #ffffff;
+  border: 1px solid silver;
+  padding: 1px;
+  margin-bottom: 5px;
+  border-right: 2px solid silver;
+  border-bottom: 2px solid #aaaaaa;
+}
+/* タイトル部分 */
+div.box_space div.box_space_title {
+  padding: 1px 5px;
+  border-top: 1px solid silver;
+  border-left: 1px solid silver;
+  color: #0033cc;
+  font-size: 15px;
+  font-weight: bold;
+  background-image: url(./../images/label_bar.png);
+}
+/* タイトル中のサイズの小さい文字 */
+div.box_space div.box_space_title span.small {
+  font-size: 10px;
+  margin-left: 3px;
+}
+/* 本体部分 */
+div.box_space div.box_space_body {
+  text-align: left;
+  margin: 2px;
+  word-break:break-all;
+  overflow: hidden;
+}
+/* 本体部分 */
+div.box_space div.box_space_img_body {
+  text-align: center;
+  margin: 2px;
+}
+/* 本体の中の箇条書き */
+div.box_space div.box_space_body ul {
+  list-style-type: none;
+}
+/* 底の部分 */
+div.box_space div.box_space_bottom {
+  text-align: right;
+  border-right: 1px solid silver;
+  border-bottom: 1px solid silver;
+  padding: 1px;
+  font-size: 10px;
+}
+
+/* ----------------------------------- */
+/* オートコンプリートで使う */
+div.auto_complete {
+  width: 350px;
+  background: #fff;
+}
+div.auto_complete ul {
+  border:1px solid #888;
+  margin:0;
+  padding:0;
+  width:100%;
+  list-style-type:none;
+}
+div.auto_complete ul li {
+  margin:0;
+  padding:3px;
+}
+div.auto_complete ul li.selected {
+  background-color: #ffb;
+}
+div.auto_complete ul strong.highlight {
+  color: #800;
+  margin:0;
+  padding:0;
+}
+/* ----------------------------------- */
+/* カレンダー */
+.calendar {
+  border: none;
+  width: 100%;
+  _width: 94%;
+}
+.calendar, .calendar tr, .calendar th, .calendar td {
+  text-align: center;
+}
+.calendar tbody td {
+}
+.calendar hr {
+  border: solid thin #46f;
+}
+.monthName {
+  background-color: #abf;
+}
+.dayName {
+  background-color: #abf;
+  border: solid 1px #46f;
+}
+.otherMonth {
+}
+.day {
+  background-color: #f0f0ff;
+}
+.holiday {
+  background-color: #ffe0e0;
+}
+.today {
+  background-color: #c0ffc0;
+}
+.selected {
+  background-color: #ffffa0;
+}
+/* ----------------------------------- */
+/* コンテンツの左メニュー・右中身の構造 */
+/* レイアウトのコンテナ */
+div#contents_container {
+  width:100%;
+  margin-left:auto;
+  margin-right:auto;
+  text-align:left;
+}
+/* レイアウトの左側 */
+div#contents_left {
+  width:150px;
+  float:left;
+}
+/* レイアウトの右側 */
+div#contents_right {
+  margin-left: 160px;
+  _width: 100%;
+}
+/* レイアウトの下側 */
+div#contents_bottom {
+  width:100%;
+  clear:left;
+}
+/* ----------------------------------- */
+/* 紹介文のところで使う */
+table.chain_table {
+  width: 100%;
+  margin: 5px 0;
+  border-collapse: separate;
+  empty-cells: hide;
+}
+table.chain_table th {
+  background-color: #f0f0ff;
+  width: 120px;
+  text-align: center;
+  border: 1px solid silver;
+}
+table.chain_table td.message {
+}
+table.chain_table td.arrow {
+  width: 10px;
+}
+table.chain_table td.message div {
+  border: 1px solid silver;
+  overflow: hidden;
+  padding: 5px;
+  word-break: break-all;
+}
+/* ----------------------------------- */
+/* タグクラウドのフォントサイズ */
+.tag1 {font-size: 1.0em;}
+.tag2 {font-size: 1.2em;}
+.tag3 {font-size: 1.4em;}
+.tag4 {font-size: 1.6em;}
+.tag5 {font-size: 1.8em;}
+.tag6 {font-size: 2.0em;}
+
+/* ----------------------------------- */

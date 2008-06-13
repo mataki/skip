@@ -1,0 +1,18 @@
+<!-- グループーの一覧表示 -->
+<% user_id ||= session[:user_id] %>
+<% show_favorite ||= false %>
+
+<% if pages and pages.item_count > 0 -%>
+  <% if show_favorite %>
+  <div class="desc" style="margin-bottom:5px"><%= icon_tag('star') %>を選択したグループのみ、画面右上のショートカットメニュー「マイグループ」に表示されます</div>
+  <% end %>
+
+  <div class="navi"><%= page_link pages -%></div>
+  <% if @format_type == "detail" %>
+    <%= render :partial => "group", :collection => groups, :locals => { :user_id => user_id, :show_favorite => show_favorite } -%>
+  <% else %>
+    <%= render :partial => "group_list", :locals => { :user_id => user_id, :show_favorite => show_favorite, :groups => groups } -%>
+  <% end %>
+  <div class="navi"><%= page_link pages -%></div>
+<% end %>
+

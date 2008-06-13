@@ -1,0 +1,80 @@
+
+<div id="contents_container">
+
+<div id="contents_left">
+
+  <%= render(:partial => 'user/portrait_box', :locals => { :user => @user }) -%>
+
+  <div id="calendar"><%= render :partial => "shared/calendar", :locals => {:sel_year => @year, :sel_month => @month, :sel_day => @day, :item_count => @entry_count, :action => 'index'}  %></div>
+
+<div class="box_space">
+  <div class="box_space_title">一覧表示</div>
+  <div class="box_space_body"><ul>
+    <li><%= icon_tag 'folder_user' -%><%= link_to("みんなからの質問", :action => "index", :list_type => "questions", :all => true ) -%></li>
+    <li><%= icon_tag 'folder_star' -%><%= link_to("最近の人気記事", :action => "index", :list_type => "access_blogs" ) -%></li>
+    <li><%= icon_tag 'folder_page' -%><%= link_to("最近投稿された記事", :action => "index", :list_type => "recent_blogs" ) -%></li>
+    <li><%= icon_tag 'folder_feed' -%><%= link_to("アンテナの未読の記事", :action => "index", :list_type => "not_reading_blogs", :all => true ) -%></li>
+  </ul></div>
+  <div class="box_space_bottom"><!--【メニューを管理する】--></div>
+</div><!-- box_space -->
+
+  <div id="antennas">
+<div class="box_space">
+  <div class="box_space_title">アンテナ</div>
+  <%= skip_image_tag 'indicator.gif' %> <span style="color:gray">読み込み中...</span>
+</div>
+</div>
+
+  <div id="my_infos">
+<div class="box_space">
+  <div class="box_space_title">あなたの情報</div>
+  <div class="box_space_body"><ul>
+    <li><%= icon_tag 'asterisk_orange' -%><span id="access_count"><%= dummy_link_to 'アクセス数' -%>：<%= @my_info[:access_count] -%></span>
+      <div id="access_count_help" class="help" style="display:none;">（あなたのページを訪問したユーザのアクセス総数）</div></li>
+    <li><%= icon_tag 'newspaper' -%><span id="subscriber_count"><%= dummy_link_to '購読者数' -%>：<%= @my_info[:subscriber_count] -%>人</span>
+      <div id="subscriber_count_help" class="help" style="display:none;">（あなたのブログをアンテナでチェックしているユーザの数）</div></li>
+    <li><%= icon_tag 'report_user' -%><span id="blog_count"><%= dummy_link_to 'ブログ数' -%>：<%= @my_info[:blog_count] -%>件</span>
+      <div id="blog_count_help" class="help" style="display:none;">（あなたが今までに投稿したブログの数）</div></li>
+    <li><%= icon_tag 'user_suit' -%><span id="using_day"><%= dummy_link_to '登録から' -%>：<%= @my_info[:using_day] -%>日目</span>
+      <div id="using_day_help" class="help" style="display:none;">（あなたがユーザ登録してからの日数）</div></li>
+  </ul></div>
+  <div class="box_space_bottom"></div>
+</div><!-- box_space -->
+  </div>
+
+<style type="text/css">
+div#my_infos div.help {
+  font-size: 10px;
+  background-color:#f0f0ff;
+  margin-left: 5px;
+  margin-bottom: 5px;
+  padding: 1px;
+  border: 1px dashed silver;
+}
+</style>
+
+</div><!-- contents_left -->
+
+<div id="contents_right">
+
+<%= render :partial => @partial, :locals => @locals -%>
+
+</div><!-- contents_right -->
+
+<div id="contents_bottom">
+</div><!-- contents_bottom -->
+
+</div><!-- contents_container -->
+
+<script type="text/javascript">
+$j(function(){
+    // マウスオーバーでヘルプ出力
+    toggleMouseOver('#access_count', '#access_count_help');
+    toggleMouseOver('#subscriber_count', '#subscriber_count_help');
+    toggleMouseOver('#blog_count', '#blog_count_help');
+    toggleMouseOver('#using_day', '#using_day_help');
+
+    // アンテナ表示箇所の遅延ローディング
+    loadAntenna();
+});
+</script>

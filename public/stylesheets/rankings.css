@@ -1,0 +1,81 @@
+/* ランキングメニューのスタイルシート */
+/* ----------------------------------- */
+table.calendar_table {
+  font-size: 12px;
+  width: 150px;
+}
+table.calendar_table th {
+  background-color: #EEEEEE;
+}
+div.ranking_menu {
+  margin-bottom: 20px;
+}
+div.ranking_data {
+  margin-top: 10px;
+}
+div.summary_catption {
+  margin-bottom: 10px;
+}
+div.ranking_menu_title {
+  margin-bottom: 10px;
+}
+span.ranking_caption {
+  font-size: 10px;
+}
+span.summary_span {
+  color: #FF2222;
+  font-weight: bold;
+}
+
+table.ranking_square {
+  padding: 0px 0px 0px 0px;
+  margin: 0 0 10px 0;
+  background-color: #f0f0ff;
+  border: #C6C7C6 1px solid;
+  font-size: 12px;
+  table-layout: auto;
+}
+table.ranking_square .title {
+  margin: 1px;
+  padding: 5px;
+  background-color: #f0f0ff;
+  border: #C6C7C6 1px solid;
+  font-size: 14px;
+  font-weight: bold;
+  color: #77778C;
+  text-align: center;
+}
+table.ranking_square table {
+  text-align: left;
+  font-size: 12px;
+}
+table.ranking_square tr {
+  background-color: #ffffff;
+}
+table.ranking_square th {
+  padding: 3px 0 3px 0;
+  font-size: 12px;
+  background-color: #f8f8ff;
+  text-align: left;
+}
+table.ranking_square .rank {
+  padding: 3px;
+  width: 15px;
+  font-size: 12px;
+  text-align: center;
+}
+table.ranking_square .link_text {
+  padding: 3px 0 3px 0;
+  font-size: 12px;
+  width: 350px;
+}
+table.ranking_square .user_name {
+  padding: 3px 0 3px 0;
+  font-size: 12px;
+  width: 100px;
+}
+table.ranking_square .point {
+  padding: 3px 0 3px 0;
+  font-size: 12px;
+  text-align: center;
+}

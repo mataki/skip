@@ -1,0 +1,28 @@
+<% user_id ||= session[:user_id] %>
+
+<table class="group_box">
+  <tr>
+    <th>グループ名</th>
+    <td width="50%">
+      <% if show_favorite %>
+        <% participation = group.group_participations.first %>
+        <% elem_id = "group_participation_#{participation.id}" %>
+        <span id="<%= elem_id %>"><%= render :partial => "favorite", :locals => { :gid => group.gid, :participation => participation, :update_elem_id => elem_id } %></span>
+      <% end %>
+      <%= group_link_to group %>
+    </td>
+    <td class="auth" width="30%"><%= participation_state(group, user_id) -%></td>
+    <td class="category">
+      <%= icon_tag(group.category_icon_name.first, :title => group.category_icon_name.last, :margin => true) + group.category_icon_name.last %>
+    </td>
+  </tr>
+  <tr>
+    <th>説明</th>
+    <td colspan="3" class="desc"><div style="overflow: auto; height: 80px; width: 100%;"><div class="hiki_style"><%= hiki_parse(group.description, group.symbol) %></div></div></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td style="font-size:10px"><%= '※参加には承認が必要' if group.protected? -%></td>
+    <td colspan="2" class="since">since <%= group.created_on.strftime("%Y/%m/%d") -%></td>
+  </tr>
+</table>

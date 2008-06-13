@@ -1,0 +1,63 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+<% user_entry_no = 1 %>
+
+# あるユーザの投稿
+a_entry:
+  created_on: <%= SkipFaker.yesterday %>
+  updated_on: <%= SkipFaker.yesterday %>
+  title: <%= SkipFaker.rand_char %>
+  contents: <%= SkipFaker.rand_char %>
+  date: <%= SkipFaker.yesterday %>
+  user: a_user
+  category: [日記]
+  entry_type: DIARY
+  ignore_times: 0
+  last_updated: <%= SkipFaker.yesterday %>
+  user_entry_no: <%= user_entry_no %>
+  board_entry_comments_count: 0
+  symbol: uid:a_user
+  editor_mode: hiki
+  lock_version: 0
+  publication_type: public
+  publication_symbols_value:
+  entry_trackbacks_count: 1
+
+a_trackback_entry:
+  created_on: <%= SkipFaker.yesterday %>
+  updated_on: <%= SkipFaker.yesterday %>
+  title: <%= SkipFaker.rand_char %>
+  contents: <%= SkipFaker.rand_char %>
+  date: <%= SkipFaker.yesterday %>
+  user: a_user
+  category: [日記]
+  entry_type: DIARY
+  ignore_times: 0
+  last_updated: <%= SkipFaker.yesterday %>
+  user_entry_no: <%= user_entry_no + 1 %>
+  board_entry_comments_count: 0
+  symbol: uid:a_user
+  editor_mode: hiki
+  lock_version: 0
+  publication_type: public
+  publication_symbols_value:
+  entry_trackbacks_count: 0
+
+a_private_entry:
+  created_on: <%= SkipFaker.yesterday %>
+  updated_on: <%= SkipFaker.yesterday %>
+  title: <%= SkipFaker.rand_char %>
+  contents: <%= SkipFaker.rand_char %>
+  date: <%= SkipFaker.yesterday %>
+  user: a_user
+  category: [日記]
+  entry_type: DIARY
+  ignore_times: 0
+  last_updated: <%= SkipFaker.yesterday %>
+  user_entry_no: <%= user_entry_no + 1 %>
+  board_entry_comments_count: 0
+  symbol: uid:a_user
+  editor_mode: hiki
+  lock_version: 0
+  publication_type: private
+  publication_symbols_value:
+  entry_trackbacks_count: 0

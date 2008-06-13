@@ -1,0 +1,31 @@
+# codeは100000からの連番となるようにする
+<% code = 100000 %>
+a_user_uid:
+  user: a_user
+  uid: a_user
+  uid_type: NICKNAME
+
+a_user_code:
+  user: a_user
+  uid: <%= (code += 1).to_s %>
+  uid_type: MASTER
+
+a_retired_user_code:
+  user: a_retired_user
+  uid: <%= (code += 1).to_s %>
+  uid_type: MASTER
+
+a_group_owned_user_uid:
+  user: a_group_owned_user
+  uid: <%= (code += 1).to_s %>
+  uid_type: MASTER
+
+a_group_joined_user_uid:
+  user: a_group_joined_user
+  uid: <%= (code += 1).to_s %>
+  uid_type: MASTER
+
+a_group_waiting_user_uid:
+  user: a_group_waiting_user
+  uid: <%= (code += 1).to_s %>
+  uid_type: MASTER

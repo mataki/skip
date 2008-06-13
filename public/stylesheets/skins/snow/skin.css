@@ -1,0 +1,49 @@
+/* ----------------------------------- */
+/* color1:外線, color2:タブ線, color3: タブ, color4:外側 */
+/* snow : #8a8a8a, #bcd2e6, #efefef, #f8f8f8 */
+/* ----------------------------------- */
+div#main {
+  background-image: url("./back.jpg"); /* image */
+}
+div#panel {
+  border: 1px solid #8a8a8a; /* color:1 */
+}
+div#side ul {
+  border-bottom: 1px solid #8a8a8a; /* color:1 */
+}
+div#side li.normal {
+  border: 1px solid #8a8a8a; /* color:1 */
+  border-bottom: none;
+}
+div#side li.selected {
+  border: 1px solid #8a8a8a; /* color:1 */
+  border-left: 1px solid #f8f8f8; /* color:4 */
+  border-bottom: none;
+}
+div#side li.separator {
+  border: 1px solid #8a8a8a; /* color:1 */
+  border-bottom: none;
+  border-right: none;
+}
+/* ----------------------------------- */
+#tab_menu a {
+  background:url("./tab_left.gif") no-repeat left top;
+}
+#tab_menu a span {
+  color:#627EB7;
+  background:url("./tab_right.gif") repeat right top;
+}
+#tab_menu a:hover span, #tab_menu a.selected span {
+  color:#627EB7;
+}
+div#tab_body {
+  border: 1px solid #bcd2e6; /* color:2 */
+  border-bottom: none;
+  border-left: none;
+}
+/* ----------------------------------- */
+div#panel, div#side li.selected, div#tab_menu {
+  background-color: #f8f8f8; /* color:4 */
+  background-image: url("./back_.jpg"); /* image */
+}
+/* ----------------------------------- */

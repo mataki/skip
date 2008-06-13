@@ -1,0 +1,98 @@
+<style type="text/css">
+div.param_desc {
+  font-size: 10px;
+  color: gray;
+}
+</style>
+
+<% action_value ||= "" %>
+<% submit_value ||= "" %>
+
+<div class="edit_form_space">
+
+<% form_tag({:action => action_value}, :id=>'group_form') do -%>
+  <%= template_error_messages_for 'group' %>
+
+<% if action_value != 'update' %>
+<div class="input_line">
+  <div class="input_label">グループID</div>
+  <div class="input_value"><%= text_field 'group', 'gid', :size => 60 %></div>
+  <div class="param_desc">
+  ※グループIDは4文字以上で、数字orアルファベットor記号(ハイフン「-」 アンダーバー「_」)で入力してください。<br/>
+  ※グループIDは<%= CUSTOM_RITERAL[:abbr_app_title] %>内でグループ識を別する文字列として、URL等いろいろな場面で使いますので、分かりやすい文字列を選んでください。
+  </div>
+</div>
+<% end %>
+
+<div class="input_line">
+  <div class="input_label">名称</div>
+  <div class="input_value"><%= text_field 'group', 'name'  %></div>
+</div>
+
+<div class="input_line">
+  <div class="input_label">カテゴリ</div>
+  <div class="input_value">
+    <table style="margin-left:3px;border:0;">
+    <tr><th width="100px"></th><th></th></tr>
+<% Group::CATEGORY_KEYS.each do |category| %>
+    <tr>
+      <td><%= radio_button "group", "category", category, :class => "category_radio_button" -%> <%= get_group_icon category, :margin => true %><b><%= Group::CATEGORY_KEY_NAMES[category] -%></b></td>
+      <td><%= Group::CATEGORY_KEY_DESCRIPTIONS[category] -%></td>
+    </tr>
+<% end %>
+    </table>
+  </div>
+</div>
+
+<div class="input_line">
+ <p><label for="group_desc"><div class="input_label">説明</div>　　 <%= link_to_hiki_help %></label><br/>
+   <%= text_area 'group', 'description', :cols => 90, :rows => 20 %></p>
+</div>
+
+<% if action_value == 'create' %>
+<div class="input_line">
+  <div class="input_label" style="height: 35px;">招待したいユーザ／グループ</div>
+  <div class="input_value"><table><tr><td>
+    <%= render :partial => "shared/symbol_autocomplete_field", :locals => {:publication_symbols_value => params[:publication_symbols_value], :editor_symbols_value => params[:editor_symbols_value], :edit_checkbox => false } %>
+    </td></tr></table>
+  </div>
+  <div style="clear: left"></div>
+</div>
+<% end %>
+
+<p><label for="group_protected">参加するのにオーナーの承認が必要ですか？</label>
+  <select id="group_protected" name="group[protected]">
+    <%= options_for_select({ "いいえ" => false, "はい" => true }, @group.protected) %>
+</select></p>
+
+  <p><%= submit_tag submit_value %></p>
+
+<% end %>
+</div>
+
+<% if action_value == 'update' %>
+
+<div style="margin-top: 10px; padding: 5px;">
+
+<div class="desc">
+  <%= link_to("[[削除する]]", {:action => 'destroy'}, :confirm => '本当に削除しますか？', :method => :post ) %>
+</div>
+
+</div>
+
+<% end %>
+
+<script type="text/javascript">
+$j(function(){
+    $j('.category_radio_button')
+    .click(function(){
+        $j('.category_radio_button')
+        .parent().parent()
+        .css('backgroundColor','#fff');
+        $j(this)
+        .parent().parent()
+        .css('backgroundColor','#ffb');
+    });
+    $j('.category_radio_button:checked').click();
+});
+</script>

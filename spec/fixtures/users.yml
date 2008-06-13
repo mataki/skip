@@ -1,0 +1,51 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+# 汎用的なテストデータ
+a_user:
+  created_on: <%= SkipFaker.today %>
+  updated_on: <%= SkipFaker.today %>
+  email: <%= SkipFaker.email %>
+  name: a_user
+  section: <%= SkipFaker.rand_char %>
+  extension: <%= SkipFaker.rand_num 3 %>
+  introduction: <%= SkipFaker.rand_char %>
+  retired: 0
+
+a_retired_user:
+  created_on: <%= SkipFaker.today %>
+  updated_on: <%= SkipFaker.today %>
+  email: <%= SkipFaker.email %>
+  name: a_retired_user
+  section: <%= SkipFaker.rand_char %>
+  extension: <%= SkipFaker.rand_num 3 %>
+  introduction: <%= SkipFaker.rand_char %>
+  retired: 1
+
+a_group_owned_user:
+  created_on: <%= SkipFaker.today %>
+  updated_on: <%= SkipFaker.today %>
+  email: <%= SkipFaker.email %>
+  name: a_group_owned_user
+  section: <%= SkipFaker.rand_char %>
+  extension: <%= SkipFaker.rand_num 3 %>
+  introduction: <%= SkipFaker.rand_char %>
+  retired: 0
+
+a_group_joined_user:
+  created_on: <%= SkipFaker.today %>
+  updated_on: <%= SkipFaker.today %>
+  email: <%= SkipFaker.email %>
+  name: a_group_joined_user
+  section: <%= SkipFaker.rand_char %>
+  extension: <%= SkipFaker.rand_num 3 %>
+  introduction: <%= SkipFaker.rand_char %>
+  retired: 0
+
+a_group_waiting_user:
+  created_on: <%= SkipFaker.today %>
+  updated_on: <%= SkipFaker.today %>
+  email: <%= SkipFaker.email %>
+  name: a_group_waiting_user
+  section: <%= SkipFaker.rand_char %>
+  extension: <%= SkipFaker.rand_num 3 %>
+  introduction: <%= SkipFaker.rand_char %>
+  retired: 0

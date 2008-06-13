@@ -1,0 +1,14 @@
+
+<div id="confirm_desc" style="text-align: center; font-size: 16px; margin: 10px 30px;">
+</div>
+
+<div style="text-align: center; margin: 10px;">
+<input type="button" value="上記内容に同意する" onClick="location.href='<%= url_for(:action => :agreement) -%>'"></input>
+<input type="button" value="戻る" onClick="location.href='<%= url_for(:controller => :platform) -%>'"></input>
+</div>
+
+<script type="text/javascript">
+$j(function() {
+    $j('#confirm_desc').load(relative_url_root + '/custom/confirm_desc.html');
+});
+</script>

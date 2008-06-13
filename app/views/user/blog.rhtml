@@ -1,0 +1,29 @@
+
+<div id="contents_container">
+
+<div id="contents_left">
+
+<%= render(:partial => 'user/portrait_box', :locals => { :user => @user }) -%>
+<%= render(:partial => 'entries/search_box') -%>
+<%= render(:partial => 'entries/recent_box', :locals => { :recent_entries => @recent_entries }) -%>
+<%= render(:partial => 'entries/archive_box', :locals => { :month_archives => @month_archives }) -%>
+<%= render(:partial => 'entries/categories_box', :locals => { :categories => @categories }) -%>
+
+</div><!-- contents_left -->
+
+<div id="contents_right">
+
+<% if @entry %>
+  <%= render(:partial => 'entries/entry_detail',
+             :locals => { :entry => @entry, :prev_entry => @prev_entry, :next_entry => @next_entry, :tb_entries => @tb_entries }) -%>
+<% else %>
+  <%= render(:partial => 'entries/entries_list',
+             :locals => { :pages => @pages, :entries => @entries, :year => @year, :month => @month }) -%>
+<% end %>
+
+</div><!-- contents_right -->
+
+<div id="contents_bottom">
+</div><!-- contents_bottom -->
+
+</div><!-- contents_container -->

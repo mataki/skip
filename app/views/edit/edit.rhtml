@@ -1,0 +1,25 @@
+
+<%= render :partial => 'board_entries/preview_window' %>
+
+<% form_tag({:action => 'update', :id=>@board_entry}, :multipart => true, :id=>'board_entry_form') do -%>
+  <%= render :partial => 'board_entries/form' %>
+  <% if @conflicted %>
+  <div class="desc">＊編集をやり直す場合は、"やり直し"ボタンを、他の人の編集内容を上書きする場合は"更新"ボタンを押してください</div>
+　<% edit_url = url_for(:action => 'edit', :id => @board_entry.id) %>
+  <%= button_to_function("やり直し", "if(confirm('編集内容が破棄されますが、よろしいですか？')){window.location.href='#{edit_url}' }") %>
+  <% end %>
+  <%= submit_tag "更新", :id => 'submit_button' %>
+  <%= check_box_tag("non_update", "true") %>ちょっとした更新<br/>
+<% end %>
+
+<div style="border: solid 2px gray; margin: 5px 2px 5px 2px; padding: 2px; clear:left;">
+  <div id="images" style="float:left;">
+    <%= render :partial=>'board_entries/view_images', :locals=>{:img_urls=>@img_urls, :board_entry_id=>@board_entry.id} %>
+  </div>
+  <div style="clear:both;"></div>
+</div>
+<p id="indicator" style="display:none;margin-top:0px;"><%= skip_image_tag 'indicator.gif' %>更新中...</p>
+
+<div class="desc">
+  <%= link_to("[[削除する]]", {:action => "destroy", :id => @board_entry}, :confirm => "本当に削除しますか？", :method => :post)%>
+</div>

@@ -1,0 +1,25 @@
+/**
+ * JavaScript パーツ
+ */
+function sub_window_open(url, title, width, height) {
+  sub_window = window.open(url, title, 'width='+width+',height='+height+',resizable=yes,scrollbars=yes');
+  sub_window.focus();
+};
+function open_hiki() { sub_window_open('<%= "#{root_url}hiki.html" -%>', 'Hiki記法', 500,600); };
+function open_rule() { sub_window_open('<%= "#{root_url}custom/rules.html" -%>', '利用規約', 780,700); };
+function open_site() { sub_window_open('<%= "#{root_url}custom/about_this_site.html" -%>', 'このサイトについて', 720,660); };
+
+page_data = [
+  '<div id="footer" style="background-image: url(<%= CUSTOM_RITERAL[:footer_image_url] -%>);">',
+<% if CUSTOM_RITERAL[:footer_image_url].blank? %>
+    '<div class="bottom" style="font-size: 12px; margin-right: 0px;"><%= CUSTOM_RITERAL[:footer_link] -%></div>',
+    '<div class="bottom" style="margin-right: 0px;"><%= CUSTOM_RITERAL[:footer_contact] -%></div>',
+<% else %>
+    '<div class="bottom" style="font-size: 12px;"><%= CUSTOM_RITERAL[:footer_link] -%></div>',
+    '<div class="bottom"><%= CUSTOM_RITERAL[:footer_contact] -%></div>',
+<% end %>
+    '<div id="powered"><%= CUSTOM_RITERAL[:footer_copyright] -%></div>',
+  '</div>',
+].join(' ');
+
+document.write(page_data);

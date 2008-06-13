@@ -1,0 +1,40 @@
+<style type="text/css">
+div.share_file_space {
+  border: 1px solid silver;
+  width: 95%;
+  margin: 5px auto;
+  text-align: left;
+  position: relative;
+  font-size: 10px;
+}
+div.share_file_space div.share_file_line {
+  margin: 1px 0;
+  border-bottom: 1px dashed silver;
+  padding: 1px;
+}
+</style>
+<% visibility, visibility_color = share_file.visibility %>
+
+<div class="share_file_space">
+  <div style="position: absolute; top:0; right: 1px;">
+    <%= "所属：#{symbol_link_to share_file.owner_symbol}" if visible_owner_link %> 登録者：<%= user_link_to(share_file.user) %>
+    DL数：<span id="download_count_<%= share_file.id -%>"><%= share_file.total_count -%></span>
+  </div>
+  <div class="share_file_line" style="margin-top:13px;">
+    <%=h share_file.date.strftime("%Y/%m/%d %H:%M") %> -
+    <span style='background-color: <%=visibility_color%>;'> <%= visibility %></span> - <%= share_file.category %>
+  </div>
+
+  <div style="margin:3px 0 <%= visible_menu ? 15 : 3 -%>px 3px;">
+    <div style="font-size: 12px;">
+      <%= file_link_to(share_file, :id => "share_file_download_link_#{share_file.id}", :class => "share_file_download_link", :tabindex => 0) %>
+      <span style="margin-left:10px">... <%= share_file.description %></span>
+    </div>
+    <div style="position: absolute; bottom: 0; right: 1px;">
+    <% if (share_file.user_id == session[:user_id]) and visible_menu %>
+      <%= generate_file_menu(share_file, owner_name) -%>
+      <%= generate_manager_menu(share_file) -%>
+    <% end %>
+    </div>
+  </div>
+</div><!-- share_file_space -->

@@ -1,0 +1,24 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+gp1:
+  created_on: <%= SkipFaker.yesterday %>
+  updated_on: <%= SkipFaker.yesterday %>
+  user: a_group_owned_user
+  group: a_protected_group1
+  waiting: 0
+  owned: 1
+
+gp2:
+  created_on: <%= SkipFaker.today %>
+  updated_on: <%= SkipFaker.today %>
+  user: a_group_joined_user
+  group: a_protected_group1
+  waiting: 0
+  owned: 0
+
+gp3:
+  created_on: <%= SkipFaker.tomorrow %>
+  updated_on: <%= SkipFaker.tomorrow %>
+  user: a_group_waiting_user
+  group: a_protected_group1
+  waiting: 1
+  owned: 0

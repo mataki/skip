@@ -1,0 +1,47 @@
+
+<style type="text/css">
+  div.g_result_box { width: 90%; text-align: left; margin-top: 10px; margin-bottom: 6px; position: relative; }
+  div.g_type { font-size: 9px; margin-top: 3px; }
+  div.g_title { font-size: 16px; margin: 1px 0; padding: 1px; }
+  div.g_title a { text-decoration: underline; }
+  div.g_contents { margin: 1px 0 0 10px; padding: 1px; }
+  div.g_link { color: green; margin-left: 10px; background-color: #ffeeee; }
+  div.g_desc { margin-top: 0px; color: gray; }
+  div.auto_page_transition { border: 1px dotted silver; background-color: #eee; padding: 5px; margin: 10px 0 10px 0; }
+  div.full_text_search table { margin-left: 5px; }
+  div.full_text_search td { width: 120px; }
+  div.g_navi { font-weight: bold; font-size: 16px; margin-left: 10px; margin-right: 10px; }
+  div.g_result_info { text-align: right; width: 100%; margin-top: 10px; padding-top: 3px; padding-bottom: 3px; border-top: 1px solid blue; background-color: #eef; }
+</style>
+
+<% if params[:offset] && params[:offset].to_i > 990 %>
+ <div style="margin-top:15px">Google では 1000 件以上の検索結果は表示しておりません </div>
+<% elsif @error_message %>
+ <div style="margin-top:15px"><%= @error_message %></div>
+<% elsif @max_count == 0 %>
+ <div style="margin-top:15px">該当する検索結果がありませんでした。</div>
+<% elsif @max_count < 0 %>
+ <div style="margin-top:15px">検索条件を入力してください。</div>
+<% else %>
+ <%= render :partial => "result_info", :locals => @result_info_locals %>
+
+ <% if @result_lines.size == 0 %>
+ <div class="auto_page_transition">閲覧制限のため、あなたが見られるページはありませんでした。</div>
+ <% end %>
+
+ <% @result_lines.each do |line_hash| %>
+ <div class="g_result_box" style="font-size: 12px; overflow: hidden; width: 90%;">
+   <div class="g_title"><%=link_to(translate_contents_type(line_hash[:icon_type],line_hash[:contents_type]) + h(line_hash[:title]), line_hash[:link_url] ) -%></div>
+   <div class="g_contents"><%= line_hash[:contents] -%></div>
+   <div class="g_link"><%=h line_hash[:link_url] -%></div>
+ </div>
+ <% end %>
+
+ <%= render :partial => "page_navi", :locals => @page_navi_locals if @max_count > @per_page -%>
+ <%= render :partial => "result_info", :locals => @result_info_locals %>
+ <% if @invisible_count > 0 -%><div class="g_desc">[注]閲覧制限のため実件数よりも少なく表示されています。</div><% end -%>
+
+<% end %>
+<script type="text/javascript">
+fnLoadPngs();
+</script>

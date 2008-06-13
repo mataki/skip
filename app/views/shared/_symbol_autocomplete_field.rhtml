@@ -1,0 +1,160 @@
+<div id="publication_symbols_space" style="margin-top: 5px;">
+  <ul id="publication_symbols_table" style="list-style-type:none;"></ul>
+
+  <%= hidden_field_tag 'publication_symbols_value', publication_symbols_value %>
+  <%= hidden_field_tag 'editor_symbols_value', editor_symbols_value if edit_checkbox %>
+  <p style="margin-top: 5px;">
+  <input id="publication_symbol" name="symbol" size="40" type="text" />
+  <div class="auto_complete" id="publication_symbol_auto_complete"></div>
+  <input type="text" id="publication_name" style="background-color: #f0f0ff; border: none; color: blue;" disabled="disabled">
+  <input type="button" value="追加" id="btn_add_publication_symbol"></p>
+</div>
+
+<script type="text/javascript">
+/* このページで使う変数 */
+var publication_symbols_array = new Array();
+if ($j('#publication_symbols_value').val().length > 0) {
+    publication_symbols_array = $j('#publication_symbols_value').val().split(',');
+}
+
+var edit_checkbox = <%= edit_checkbox -%>;
+if(edit_checkbox) {
+    var editor_symbols_array = new Array();
+    if ($j('#editor_symbols_value').val().length > 0) {
+        editor_symbols_array = $j('#editor_symbols_value').val().split(',');
+    }
+}
+
+$j(function() {
+    var createSymbolRecord = function(symbol, checked, name) {
+        var base = $j(document.createElement("li")).css({ padding:'1px 0 1px 5px', marginTop:'3px', color:'#999999' });
+
+        // シンボルの表示部分のspan要素を作成
+        $j(document.createElement("span"))
+        .css({ marginLeft:'10px', borderBottom:'1px solid silver' })
+        .append(document.createTextNode(symbol))
+        .appendTo(base);
+
+        createSpanName(symbol, name).appendTo(base);
+        var spanCheck = createSpanCheck(symbol).appendTo(base);
+        createSpanDelete(symbol).appendTo(base);
+      
+        $j('#publication_symbols_table').append(base);
+        // IEでは実在するDOM要素に対してのみチェックボックスのオンが可能なので一番最後にチェック。
+        spanCheck.find('input').attr('checked', checked);
+    };
+
+    // 名前やグループ名表示部分のspan要素を作成
+    var createSpanName = function(symbol, name) {
+        var element = $j(document.createElement("span")).css({ marginLeft:'10px', marginRight:'5px' });
+        if (name == undefined) {
+        var symbol2name_url = '<%= url_for(:controller => 'symbol', :action => 'get_name_by_symbol') -%>';
+            $j.ajax({
+                url: symbol2name_url,
+                data: { symbol:symbol },
+                complete: function(request) {
+                    element.append(document.createTextNode(request.responseText));
+                }
+            });
+        } else {
+            element.append(document.createTextNode(name));
+        }
+        return element;
+    };
+
+    // 編集可否のチェックボックス表示部分のspan要素を作成
+    var createSpanCheck = function(symbol) {
+        var element = $j(document.createElement("span"));
+        if(edit_checkbox) {
+            var input_tag = $j(document.createElement("input"))
+            .attr('type', 'checkbox')
+            .click(function() {
+                if (this.checked) {
+                    if (!editor_symbols_array.include(symbol)) {
+                      editor_symbols_array.push(symbol);
+                    }
+                } else {
+                    if (editor_symbols_array.include(symbol)) {
+                      editor_symbols_array = editor_symbols_array.without(symbol);
+                    }
+                }
+                $j('#editor_symbols_value').val(editor_symbols_array.toString());
+            });
+            element.append(input_tag);
+            element.append(document.createTextNode("編集可"));
+        }
+        return element;
+    };
+
+    // 削除リンク表示部分のspan要素を作成
+    var createSpanDelete = function(symbol) {
+        var delete_link = $j(document.createElement("a"))
+        .css('cusor', 'pointer')
+        .append(document.createTextNode('[x]'))
+        .click(function(){
+            if (publication_symbols_array.include(symbol)) {
+                publication_symbols_array = publication_symbols_array.without(symbol);
+                $j('#publication_symbols_value').val(publication_symbols_array.toString());
+                if(edit_checkbox) {
+                    editor_symbols_array = editor_symbols_array.without(symbol);
+                    $j('#editor_symbols_value').val(editor_symbols_array.toString());
+                }
+                $j(this).parent().parent().remove();
+            }
+            return false;
+        });
+
+        return $j(document.createElement("span")).css('marginLeft','5px').append(delete_link);
+    };
+
+    $j('#btn_add_publication_symbol')
+    .click(function() {
+        var symbol = $j("#publication_symbol").val();
+        var name = $j("#publication_name").val();
+
+        var validReg = /(u|g|e)id:[a-zA-Z0-9\-_]*$/
+        if (!validReg.test(symbol)) {
+            alert("フォーマットが不正です。uid:xxxxxxのような形で入力してください。");
+            return
+        }
+        if (name.length == 0) {
+            alert("存在するユーザ/グループを入力してください");
+            return;
+        }
+        if (publication_symbols_array.include(symbol)) {
+            alert("既に追加されています");
+            return;
+        }
+        createSymbolRecord(symbol, false, name);
+        publication_symbols_array.push(symbol);
+        $j('#publication_symbols_value').val(publication_symbols_array.toString());
+      
+        $j("#publication_symbol").val("");
+        $j("#publication_name").val("");
+        $j('#publication_symbol').focus();
+        return false;
+    });
+
+    publication_symbols_array.each (function(symbol){
+        if(edit_checkbox) {
+            var checked = editor_symbols_array.include(symbol);
+            createSymbolRecord(symbol, checked);
+        } else {
+            createSymbolRecord(symbol, false);
+        }
+    });
+
+    var publication_symbol_auto_complete_url = '<%= url_for(:controller => 'symbol', :action => 'auto_complete_for_item_search', :type => 'publication') -%>';
+    $j('#publication_symbol')
+    .autocomplete(publication_symbol_auto_complete_url, {
+        formatItem: function(data) {
+            return data[0] + ' - ' + data[1];
+        }
+    })
+    .result(function(event, data, formatted) {
+        if (data) {
+            $j('#publication_name:input').val(data[1]);
+        }
+    });
+});
+</script>

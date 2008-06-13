@@ -1,0 +1,30 @@
+
+<% form_tag({:controller => :platform, :action => :login}, {:only_path => false, :id => 'login_form'}) do %>
+<%= hidden_field_tag "return_to", params[:return_to] -%>
+<table class="box" style="font-size: 12px; width: 170px;">
+  <tr valign="top"><td><label for="login_key"><span style="font-weight: bold;"><%= "#{CUSTOM_RITERAL[:login_account]}#{CUSTOM_RITERAL[:login_account_example]}" -%></span></label></td></tr>
+  <tr valign="top"><td><%= text_field 'login', 'key', { 'size' => 15, 'tabindex' => 1, 'AUTOCOMPLETE' => "on" } -%></td></tr>
+  <tr valign="top"><td><label for="login_pwd"><span style="font-weight: bold;"><%= CUSTOM_RITERAL[:login_password] -%></span></label></td></tr>
+  <tr valign="top"><td><%= password_field 'login', 'password', { 'size' => 15, :onfocus=>'select();', 'tabindex' => 2, 'AUTOCOMPLETE' => "on" } %></td></tr>
+  <tr valign="top"><td><input id="login_save" name="login_save" type="checkbox" value="true" checked tabindex="3" /> 次回から自動的にログイン</td></tr>
+  <tr valign="top"><td align="right"><%= submit_tag "ログイン", :onclick=>"saveLoginData();", 'tabindex' => 4 %></td></tr>
+  <tr valign="top" align="left"><td>
+    <% if SSL_SETTING %>
+    <div style="margin-top: 15px; _margin-top: 0px;">
+      <span style="border-right:1px solid gray;padding-right: 5px;"><%= radio_button_tag "ssl_enable", false, false, :id => "ssl_disable_radio" %>http</span>
+      <%= radio_button_tag "ssl_enable", true, false, :id => "ssl_enable_radio" %>https
+    </div>
+    <% end %>
+  </td></tr>
+</table>
+<% end %>
+
+<script type="text/javascript">
+  <%# TODO 後でjQuery化すること %>
+  Event.observe(window, "load", function() {loadLoginData();});
+  Event.observe("login_form", "submit", function() {
+    if($("ssl_enable_radio").checked) {
+      $("login_form").action = $("login_form").action.replace("http://", "https://");
+    }
+  });
+</script>

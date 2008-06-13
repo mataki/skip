@@ -1,0 +1,32 @@
+<style type="text/css">
+div.access_count {
+  text-align: center;
+  font-size: 15px;
+  font-weight: bold;
+  border: 1px dashed #ffc000;
+  margin: 2px 0;
+}
+ul.access_tracks {
+  list-style-type: none;
+  margin: 5px 15px;
+}
+ul.access_tracks li {
+  border-bottom: 1px dotted silver;
+}
+</style>
+
+<% if entry_accesses.size == 0 %>
+    このエントリには、まだアクセスがありません。
+<% else %>
+<div class="desc" style="font-size: 10px;"><p>このエントリへのアクセス数と、最近の訪問ユーザーを最大30件まで表示しています。<br/>
+同じ日付に同一ユーザーが複数回アクセスしている場合、最新のアクセス時間を表示しています。</p></div>
+
+<div class="access_count">アクセス数：<%= total_count -%></div>
+
+<ul class="access_tracks">
+  <% entry_accesses.each do |access| %>
+    <li><%=h access.updated_on.strftime("%Y年%m月%d日 %H時%M分 - ") -%>
+    <%= user_link_to access.visitor -%></li>
+  <% end %>
+</ul>
+<% end %>

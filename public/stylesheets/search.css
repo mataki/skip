@@ -1,0 +1,15 @@
+/* 検索メニューのスタイルシート */
+/* ----------------------------------- */
+/* 検索 */
+/* 検索条件部分 */
+table.search_cond_box {
+  width: 100%;
+  border-collapse: separate;
+}
+table.search_cond_box th {
+  width: 75px;
+  background-color: #f0f0ff;
+  padding: 0px 5px;
+  border-top: 1px solid silver;
+  border-bottom: 1px solid silver;
+}

@@ -1,0 +1,7 @@
+
+<%= render :partial => 'board_entries/preview_window' %>
+
+<% form_tag({:action => 'create'}, :multipart => true, :id=>'board_entry_form') do -%>
+  <%= render :partial => 'board_entries/form' %>
+  <%= submit_tag "作成" , :id => 'submit_button' %>
+<% end %>

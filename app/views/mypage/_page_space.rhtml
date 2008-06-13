@@ -1,0 +1,30 @@
+<% checkable ||= false -%>
+<% pages_obj ||= nil -%>
+<% symbol2name_hash ||= nil -%>
+
+<%= %(<div id="#{id_name}">) %>
+
+<div class="topix_title"><%= skip_image_tag('i05-01.gif') -%><span><%=h title_name %></span></div>
+
+<div class="topix_body" id="<%= id_name -%>_body">
+
+<% pages.each do |message| -%>
+  <% entry_infos = get_entry_infos(message) -%>
+  <div class="page_line">
+    <div class="page_reading">
+      <%= check_box_tag("message_#{message.id}", "true", !user_unreadings[message.id], {:class => "read_state_checkbox"}) if checkable -%>
+    </div>
+    <div class="page_title">
+      <% categories = message.category.scan(/\[[^\]]*\]/) -%>
+      <%= get_light_icon(message) -%><%= get_publication_type_icon(message) -%>
+      <%= hide_long_tags(categories) %>
+      <%= entry_link_to(message, {}, {:title => entry_infos}) -%>
+      ... <span style="font-size:10px; background-color: #fff5ff;  vertical-align: middle; color: gray;"><%= entry_infos -%></span></div>
+    <div class="page_from"><%= symbol2name_hash ? symbol_link_to(message.symbol, symbol2name_hash[message.symbol]) : user_link_to(message.user) %></div>
+    <div class="page_date"><%=h message.date.strftime("%m/%d %H:%M") %></div>
+  </div>
+<% end -%>
+
+</div><!-- topix_body -->
+
+</div>

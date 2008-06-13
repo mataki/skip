@@ -1,0 +1,57 @@
+<% year ||= nil -%>
+<% month ||= nil -%>
+
+<style type="text/css">
+div.entry_space {
+  border: 1px solid silver;
+  width: 98%;
+  margin: auto;
+  text-align: left;
+  margin-top: 3px;
+  margin-bottom: 3px;
+  position: relative;
+  font-size: 10px;
+}
+div.entry_space div.entry_line {
+  margin: 0;
+  border-bottom: 1px dashed silver;
+  padding: 0px;
+}
+</style>
+
+<% if year and month -%>
+<div style=""><%= "【#{year}年#{month}月のアーカイブ】" -%></div>
+<% end -%>
+
+<% if pages and pages.item_count > 0 %>
+  <div class="navi" style="position: relative; _width: 100%">
+    <div style="position: absolute; top:1px; left: 2px; font-size: 10px;"><%= icon_tag 'table_refresh', :title => "並び順" -%>
+      <% if params[:sort_type] == "date" %>
+        <span style="font-weight: bold;">[更新順]</span><%= link_to "[アクセス順]", params.merge({:sort_type => "access"}) -%>
+      <% else %>
+        <%= link_to "[更新順]", params.merge({:sort_type => "date"}) -%><span style="font-weight: bold;">[アクセス順]</span>
+      <% end %>
+    </div>
+    <%= page_link(pages) -%>
+  </div>
+
+  <div style="text-align: center;">
+  <% entries.each do |entry| %>
+  <% visibility, visibility_color = entry.visibility %>
+
+  <div class="entry_space">
+    <div class="entry_line" style="font-size: 90%; background-color: #ffeeff;"><%=h entry.diary_date %> - <%=h entry.category %></div>
+    <div class="entry_line" style="font-size: 12px;">
+      <%= entry_link_to(entry) %><span style="font-size: 10px;"><%= ' by '+ user_link_to(entry.user) unless entry.diary? -%></span>
+    </div>
+    <div style="text-align: right; font-size: 90%;">
+      <span style='background-color: <%=visibility_color%>;'><%= visibility %></span><%= get_entry_infos entry %>
+      - 最終更新:<%=h entry.last_updated.strftime("%y/%m/%d %H:%M") %>
+    </div>
+  </div>
+
+  <% end %>
+  </div>
+
+  <div class="navi"><%= page_link(pages) -%></div>
+<% end %>

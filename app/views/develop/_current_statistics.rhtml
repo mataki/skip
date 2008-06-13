@@ -1,0 +1,60 @@
+<% # :categoryはSiteCountの属性と同名 %>
+<% statistics_items = [{ :icon => "table",
+                         :desc => "登録ユーザ数",
+                         :unit => "人",
+                         :category => 'total_user_count'},
+                       { :icon => "table_lightning",
+                         :desc => "本日のアクセス数",
+                         :unit => "人",
+                         :category => 'today_user_count' },
+                       { :icon => "database",
+                         :desc => "総エントリ件数",
+                         :unit => "件",
+                         :category => 'total_blog_count' },
+                       { :icon => "database_lightning",
+                         :desc => "本日のエントリ数",
+                         :unit => "件",
+                         :category => 'today_blog_count' },
+                       { :icon => "database_edit",
+                         :desc => "直近一ヶ月にエントリ ・コメントを記入",
+                         :unit => "人",
+                         :category => 'writer_at_month' },
+                       { :icon => "database_go",
+                         :desc =>  "直近一ヶ月のアクセス数平均",
+                         :unit => "人",
+                         :category => 'user_access_at_month' }
+                      ]
+%>
+
+<div class="topix_title"><%= skip_image_tag('i05-01.gif') -%><span>[<%=h site_count.created_on.strftime("%Y/%m/%d %H:%M") %>] 時点の<%= CUSTOM_RITERAL[:abbr_app_title] -%>指標値</span></div>
+<% statistics_items.each do |item| %>
+<div class="statistics_line">
+  <div class="statistics_desc"><%= icon_tag item[:icon] %>　<%= item[:desc] %></div>
+  <div class="statistics_value"><%= eval("site_count.#{item[:category]}") %><%= item[:unit] %></div>
+  <div class="statistics_menu">
+    <%= link_to_remote "#{icon_tag 'calendar_view_month'} #{site_count.created_on.strftime('%Y/%m')}の推移を表示",
+          :update => 'statistics_history',
+          :url => {:action => 'ado_statistics_history',
+                   :type => 'monthly',
+                   :category => item[:category],
+                   :year  => site_count.created_on.year,
+                   :month => site_count.created_on.month,
+                   :desc => item[:desc] },
+          :complete => "new Effect.Highlight('statistics_history')" %>
+<!--
+    <%= link_to_remote "#{icon_tag 'map'} 今年の推移",
+          :update => 'statistics_history',
+          :url => {:action => 'history',
+                   :type => 'year',
+                   :category => item[:category],
+                   :year  => site_count.created_on.year,
+                   :month => site_count.created_on.month,
+                   :day   => site_count.created_on.day,
+                   :desc => item[:desc] },
+          :complete => "new Effect.Highlight('statistics_history')" %>
+-->
+  </div>
+</div>
+
+<div style="clear: left"></div>
+<% end %>

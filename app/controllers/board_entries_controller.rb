@@ -1,0 +1,152 @@
+# SKIP（Social Knowledge & Innovation Platform）
+# Copyright (C) 2008  TIS Inc.
+# 
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+# 
+#  You should have received a copy of the GNU General Public License
+#  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+class BoardEntriesController < ApplicationController
+
+  verify :method => :post, :only => [ :ado_create_comment, :ado_create_nest_comment ],
+         :redirect_to => { :action => :index }
+
+  after_filter :make_comment_message, :only => [ :ado_create_comment, :ado_create_nest_comment ]
+
+  # 巨大化表示
+  def large
+    unless @entry = check_entry_permission
+      render :text => "不正な操作です"
+      return false
+    end
+
+    render :layout=>false
+  end
+
+  # ルートコメントの作成
+  def ado_create_comment
+    if params[:board_entry_comment] == nil or params[:board_entry_comment][:contents] == ""
+      render :nothing => true
+      return false
+    end
+
+    begin
+      @board_entry = BoardEntry.find(params[:id])
+    rescue ActiveRecord::RecordNotFound => ex
+      render :nothing => true
+      return false
+    end
+
+    params[:board_entry_comment][:user_id] = session[:user_id]
+    comment = @board_entry.board_entry_comment.create(params[:board_entry_comment])
+    unless comment.errors.empty?
+      render :nothing => true
+      return false
+    end
+
+    render :partial => "board_entry_comment", :locals => { :comment => comment }
+  end
+
+  # ネストコメントの作成
+  def ado_create_nest_comment
+    begin
+      parent_comment = BoardEntryComment.find(params[:id])
+    rescue ActiveRecord::RecordNotFound => ex
+      render :nothing => true
+      return false
+    end
+
+    if params[:contents] == nil or params[:contents] == ""
+      render :nothing => true
+      return false
+    end
+
+    begin
+      @board_entry = parent_comment.board_entry
+    rescue ActiveRecord::RecordNotFound => ex
+      render :nothing => true
+      return false
+    end
+
+    comment = parent_comment.children.create(:board_entry_id => parent_comment.board_entry_id,
+                                             :contents => params["contents"],
+                                             :user_id => session[:user_id])
+    unless comment.errors.empty?
+      render :nothing => true
+      return false
+    end
+    render :partial => "board_entry_comment", :locals => { :comment => parent_comment.children.last, :level => params[:level].to_i }
+  end
+
+  def ado_pointup
+    begin
+      board_entry = BoardEntry.find(params[:id])
+    rescue ActiveRecord::RecordNotFound => ex
+      render :nothing => true
+      return false
+    end
+
+    unless board_entry.writer?(session[:user_id])
+      board_entry.state.increment!(:point)
+    end
+    render :partial => "board_entry_point", :locals => { :entry => board_entry, :editable => false }
+  end
+
+  def destroy_comment
+    @board_entry_comment = BoardEntryComment.find(params[:id])
+    if @board_entry_comment.children.size == 0
+      @board_entry_comment.destroy
+      flash[:notice] = "コメントを削除しました。"
+    else
+      flash[:warning] = "このコメントに対するコメントがあるため削除できません。"
+    end
+    redirect_to :action => "forward", :id => @board_entry_comment.board_entry.id
+  rescue ActiveRecord::RecordNotFound => ex
+    flash[:warning] = "コメントは既に削除された模様です"
+    redirect_to :controller => "mypage", :action => "index"
+  end
+
+  # ajax_action
+  def ado_edit_comment
+    comment = BoardEntryComment.find(params[:id])
+    comment.update_attribute :contents, params[:comment][:contents]
+    render :partial => "comment_contents", :locals =>{ :comment => comment }
+  end
+
+  def forward
+    begin
+      entry = BoardEntry.find(params[:id])
+    rescue ActiveRecord::RecordNotFound => ex
+      flash[:warning] = "指定のページは存在していません。"
+      redirect_to :controller => 'mypage', :action => ''
+      return false
+    end
+
+    forward_hash = { 'uid' => { :controller => 'user',  :id =>"blog" },
+                     'gid' => { :controller => 'group', :id =>'bbs'  } }
+
+    flash.keep(:notice)
+    flash.keep(:warning)
+    redirect_to :controller => forward_hash[entry.symbol_type][:controller],
+                :action     => entry.symbol_id,
+                :id         => forward_hash[entry.symbol_type][:id],
+                :entry_id   => entry.id
+  end
+
+private
+  def make_comment_message
+    return unless @board_entry
+    unless @board_entry.writer?(session[:user_id])
+      link_url = url_for(@board_entry.get_url_hash.update({:only_path => true}))
+      Message.save_message("COMMENT", @board_entry.user_id, link_url, @board_entry.title)
+    end
+  end
+
+end

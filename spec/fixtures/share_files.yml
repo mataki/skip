@@ -1,0 +1,12 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+a_share_file:
+  file_name: <%= SkipFaker.rand_char %>
+  owner_symbol: <%= SkipFaker.owner_symbol %> 
+  description: <%= SkipFaker.rand_char %>
+  date: <%= SkipFaker.today %>
+  user: a_user
+  category: <%= SkipFaker.rand_char %>
+  total_count: 1
+  content_type: image/png
+  publication_type: public
+  publication_symbols_value:

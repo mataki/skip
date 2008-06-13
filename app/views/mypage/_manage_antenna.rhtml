@@ -1,0 +1,49 @@
+<style type="text/css">
+ul {
+  list-style-type: none;
+}
+ul#antennas_list li.dragenter {
+  background-color: yellow;
+  *z-index: -1; /* スタックコンテキストの問題を回避する（for IE）*/
+}
+</style>
+
+<div id="contents_container">
+
+<div id="contents_left">
+
+<%= render :partial => "manage_menu", :locals => { :selected_menu => @menu } %>
+
+</div><!-- contents_left -->
+
+<div id="contents_right">
+
+<div class="desc"><p>ここでは注目するブログなどのアンテナを整備することが可能です。<br/>
+アンテナの名称は、クリックすると編集することが可能です。<br/>
+アンテナの一覧<%= icon_tag 'transmit' -%>は、上下にドラッグ＆ドロップすることで並び替えをすることができます。<br/>
+また、条件部分の<%= icon_tag 'report_user' -%>を掴んで、アンテナにドロップすれば、移動させることもできます。</p></div>
+
+<div class="edit_form_space"><!-- 編集領域  -->
+
+  <div id="antennas_list_container">
+    <%= render :partial => 'antennas', :object => @antennas, :locals => { :for_manage => true } -%>
+  </div>
+
+  <div style="border: 1px solid silver; background-color: #f0f0ff; margin-top: 5px;">
+    <p><%= icon_tag 'transmit_add' -%>アンテナの追加
+    <input type="edit" size="20" id="add_antenna_name" />
+    <input type="button" value="追加" id="add_antenna_btn" /></p>
+  </div>
+
+</div><!-- end of 編集領域 -->
+
+</div><!-- contents_right -->
+
+<div id="contents_bottom">
+</div><!-- contents_bottom -->
+
+</div><!-- contents_container -->
+
+<script type="text/javascript">
+Event.observe('add_antenna_btn', 'click', function() {addAntenna();}, false);
+</script>

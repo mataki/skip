@@ -1,0 +1,64 @@
+<div class="topix_title"><%= skip_image_tag('i05-01.gif') -%><span><%=  history_title %>の推移</span></div>
+
+<% complete_effect = "new Effect.Highlight('statistics_history');" %>
+<% url_params = {:action => 'ado_statistics_history', :type => 'monthly', :category => category, :desc => history_title } %>
+<div class="monthly_statictics_box">
+<div class="navigate_menu">
+<%= link_to_remote("[前月]",
+      :update => 'statistics_history',
+      :url => url_params.update({ :year  => date.to_time.last_month.year,
+                                  :month => date.to_time.last_month.month}),
+      :complete => "#{complete_effect}") %>
+<%= link_to_remote("[今月]",
+      :update => 'statistics_history',
+      :url => url_params.update({ :year  => Date.today.year,
+                                  :month => Date.today.month}),
+      :complete => "#{complete_effect}") %>
+<%= link_to_remote("[次月]",
+      :update => 'statistics_history',
+      :url => url_params.update({ :year  => date.to_time.next_month.year,
+                                  :month => date.to_time.next_month.month}),
+      :complete => "#{complete_effect}") %>
+</div><!-- navigate_menu -->
+
+<div style="border:1px solid #aaa;background-color:gray;color:white;margin-top:3px;font-weight:bold;"><%= date.strftime('%Y年%m月') %>の推移</div>
+
+<% if site_counts.size > 0 %>
+<% pixel_par_value = 100.0 / max_value %>
+<div class="monthly_statistics_inner_space">
+<% site_counts.each_with_index do |site_count, index| %>
+  <% value = eval("site_count.#{category}") %>
+  <% graph_color = max_value == value ? 'red' : 'silver' %>
+  <div class="monthly_statictics_line">
+    <div style="float:left;width:100px">
+      <%= link_to_remote(
+            site_count.created_on.strftime('%m月%d日(%a)'),
+            {:update => 'current_statistics',
+             :url =>{:action => 'ado_current_statistics',
+                     :year  => site_count.created_on.year,
+                     :month => site_count.created_on.month,
+                     :day   => site_count.created_on.day},
+             :complete => "new Effect.Opacity('current_statistics', {from:0.1, to:1.0});new Effect.Highlight('current_statistics');"},
+             :title => "#{site_count.created_on.strftime('%m月%d日(%a)')}のデータを画面上部に表示します。") %>
+    </div>
+    <div style="float:left;width:40px;"><%= value %></div>
+    <div style="float:left;margin-left:10px;background-color:<%= graph_color %>;width:<%= pixel_par_value * value %>px;">　</div>
+    <div style="float:left;width:<%= 100 - (pixel_par_value * value) %>px;">　</div>
+<!--
+    <div style="float:left;margin-left:10px;"><%= link_to(icon_tag('report_go'), { :controller => 'mypage',
+                                                                                   :action => 'index',
+                                                                                   :year  => site_count.created_on.year,
+                                                                                   :month => site_count.created_on.month,
+                                                                                   :day   => site_count.created_on.day,},
+                                                                                 :title => "この日のブログを見る") %></div>-->
+  </div>
+  <div style="clear:left;"></div>
+<% end %>
+
+<div style="clear:left;"></div>
+
+</div><!-- monthly_statistics_box -->
+
+<% else %>
+この月のデータはありません。
+<% end %>

@@ -1,0 +1,7 @@
+<% if flash[:auth_fail_message] -%>
+<div style="margin: 5px 10px; border: 1px solid silver; padding: 5px; background-color: #ffffdd; text-align: left;">
+<h2 style="border-bottom: solid 1px silver; background-color: yellow;color: red;"><%= flash[:auth_fail_message]["message"] -%></h2>
+
+<div style="font-weight: bold; font-size: 12px; text-align: left; margin: 0;"><%= flash[:auth_fail_message]["detail"] -%></div>
+</div>
+<% end -%>

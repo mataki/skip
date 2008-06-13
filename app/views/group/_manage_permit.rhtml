@@ -1,0 +1,79 @@
+
+<div id="contents_container">
+
+<div id="contents_left">
+
+<div class="box_space">
+  <div class="box_space_title">管理メニュー</span></div>
+  <div class="box_space_body">
+  <ul>
+    <% get_manage_menu_items(@menu).each do |menu_item| %>
+    <li><%= menu_item -%></li>
+    <% end %>
+  </ul>
+  </div>
+  <div class="box_space_bottom"></div>
+</div><!-- box_space -->
+
+</div><!-- contents_left -->
+
+<div id="contents_right">
+
+<% form_tag :action => :change_participation do -%>
+
+<div style="border-bottom: 1px dotted silver; margin-bottom: 10px;">
+処理の内容：
+<%= radio_button_tag 'submit_type', 'permit', true -%>許可する
+<%= radio_button_tag 'submit_type', 'reject', false -%>棄却する
+<%= submit_tag "処理を実行する", { :name => 'action=do_reject', :onclick => "return confirm('本当に実行しますか？');" } %>
+</div>
+
+<a href="#" onclick="check_all(/^participation_state/, true);">[全てをチェックする]</a>
+<a href="#" onclick="check_all(/^participation_state/, false);">[全てのチェックをはずす]</a>
+
+<div class="navi"><%= page_link @pages -%></div>
+
+<div style="margin: 10px auto 10px auto; width: 100%; text-align: center;">
+
+<table border="1" class="normal" style="width: 80%; margin: auto;">
+  <tr><th>参加許可</th><th>名前</th><th><%= CUSTOM_RITERAL[:login_account] -%></th></tr>
+
+  <% @participations.each do |@participation| %>
+    <tr>
+      <td align="center"><%= check_box("participation_state", @participation.id, {}, true, false) %></td>
+      <td><%= @participation.user.name %></td>
+      <td><%= @participation.user.code %></td>
+    </tr>
+  <% end %>
+</table>
+
+</div>
+
+<div class="navi"><%= page_link @pages -%></div>
+
+<% end %>
+
+</div><!-- contents_right -->
+
+<div id="contents_bottom">
+</div><!-- contents_bottom -->
+
+</div><!-- contents_container -->
+
+<script type="text/javascript">
+/*
+ * 正規表現にマッチした名前のチェックボックスをオン・オフ
+ * match_name : 正規表現（RegExp）
+ * check_val  : オンにするかオフにするか（Boolean）
+ */
+function check_all(match_name, check_val) {
+  var allElements = document.getElementsByTagName("input");
+  for (i = 0; i < allElements.length; i++) {
+    if (allElements[i].type == "checkbox") {
+      if (allElements[i].name.match(match_name)) {
+        allElements[i].checked = check_val;
+      }
+    }
+  }
+}
+</script>

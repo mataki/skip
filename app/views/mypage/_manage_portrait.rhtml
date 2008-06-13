@@ -1,0 +1,48 @@
+
+<div id="contents_container">
+
+<div id="contents_left">
+
+<%= render :partial => "manage_menu", :locals => { :selected_menu => @menu } %>
+
+</div><!-- contents_left -->
+
+<div id="contents_right">
+
+<div class="desc"><p>画像は現在、１枚までしか登録できません。画像サイズは、64kbまでです。<br/>
+既にアップロードしている場合、差し替える場合は一度削除してから登録して下さい。<br/>
+もし画像がない場合・・・<a href="http://www.google.co.jp/search?q=<%= URI.encode('似顔絵作成') %>&lr=lang_ja&ie=utf-8&oe=utf-8">「似顔絵作成」をGoogleで検索すると色々でてきます</a>ので作成してみると良いでしょう。</p></div>
+
+<%= template_error_messages_for 'picture' %>
+
+<div class="portrait" style="border: 1px solid silver; margin: 10px; text-align: center;">
+<%= showPicture(@user, 0, 150, false) -%>
+</div>
+
+<% if @picture.id %>
+<%= link_to("[[削除]]", {:action => "destroy_portrait"}, :confirm => '本当に削除しますか?', :method => :post) %>
+<% end %>
+
+<% form_tag({:action => 'save_portrait'}, :multipart => true, :id => 'picture_upload_form') do -%>
+  <%= file_field("picture", "picture") %><br/>
+  <%= submit_tag("アップロード") %>
+<% end %>
+
+</div><!-- contents_right -->
+
+<div id="contents_bottom">
+</div><!-- contents_bottom -->
+
+</div><!-- contents_container -->
+<script type="text/javascript">
+$j(function(){
+    $j("#picture_upload_form")
+    .submit(function(){
+        if( $j("#picture_picture").val() == ""){
+            alert('ファイル名を入力してください。');
+            return false;
+        }
+    });
+});
+</script>
+

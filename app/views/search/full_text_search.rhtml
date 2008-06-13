@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <title><%= '全文検索' -%></title>
+<script language="JavaScript" type="text/javascript">
+<!--
+var relative_url_root = '<%= controller.request.relative_url_root -%>';
+//-->
+</script>
+  <%= skip_stylesheet_link_tag 'style' %>
+
+  <%= skip_javascript_include_tag 'prototype' %>
+  <%= skip_javascript_include_tag 'jquery.js' %>
+  <script language="JavaScript" type="text/javascript">$j = jQuery.noConflict();</script>
+  <%= skip_javascript_include_tag 'effects' %>
+  <%= skip_javascript_include_tag "skip_util" %>
+  <%= javascript_include_tag "application" %>
+</head>
+<body>
+<style type="text/css">
+  div.sub_condition { border:1px dotted silver;padding:1px;margin-top:5px; }
+</style>
+
+<div id="header">
+  <div id="logo" style="align: top; margin: 3px 0 0 5px;"><%= link_to image_tag('logo-search.png', :alt=>'サーチ'), :controller => :search, :action => :full_text_search %></div>
+  <%= skip_menu_link -%>
+</div>
+<div id="top">
+  <div id="user_ctl">
+    <a href="<%= CUSTOM_RITERAL[:help_url] -%>" target="_blank"><span id="link_help">ヘルプ</span></a>
+  </div>
+</div>
+
+<div id="body" style="margin: 10px 5px 0px 5px">
+
+<div class="full_text_search">
+  <div style="margin-left: 90px;">
+    <div>
+      <% form_tag({:controller => 'search', :action => 'full_text_search'} ,:method => 'get', :id => 'full_text_form') do -%>
+      <%= text_field_tag('full_text_query', params[:full_text_query], :size => 50 ) -%>
+      <%= submit_tag '全文検索' -%>
+      <input id="internet_google_search_button" type="button" value="インターネット検索" /><br/>
+    </div>
+    <div style="margin-top: 5px;">
+      <% ORDERED_SEARCHAPPS.each do |app| %>
+      <%= radio_button_tag "target_aid", app.first, params[:target_aid] == app.first, {:id => "target_aid_#{app.first}", :class => "condition_radio_button"} %><%=h app.last['title']-%>から検索&nbsp;
+      <% end # each %>
+    </div>
+    <div>
+      <% SEARCHAPPS.each do |key,value| %>
+      <% if value['condition_js'] %>
+        <div class="sub_condition" id="<%= key -%>_conditions" style="display:<%= params[:target_aid]==key ? 'block' : 'none' -%>;">
+          <script type="text/javascript" src='<%= "#{value['condition_js']}?target_aid=#{h(params[:target_aid])}&target_contents=#{h(params[:target_contents])}" -%>' ></script>
+        </div>
+      <% else %>
+        <div id="<%= key -%>_conditions"></div>
+      <% end %>
+      <% end %>
+      <%= hidden_field_tag 'searcher', 'hyperestraier' -%>
+      <% end # form_tag %>
+    </div>
+  </div>
+</div>
+<div><%= render :partial => 'full_text_search' -%></div>
+</div>
+
+<div id="statusbar">
+<br/>
+</div>
+
+<%= skip_footer_link -%>
+
+<script type="text/javascript">
+$j(function(){
+    // サブ検索条件選択時、選択したもの以外のラジオボタンなどをdisableに
+    // disableにしないと、HTML上先に存在するラジオボタンなどが条件として送られるため
+    $j('.condition_radio_button')
+    .click(function() {
+        $j('.sub_condition').hide();
+        var app_name = this.id.split("_")[2];
+        $j('#' + app_name + '_conditions').show();
+
+        $j('.sub_condition').find(':input').attr("disabled", "disabled");
+        $j('#' + app_name + '_conditions').find(':input').removeAttr("disabled");
+    });
+    // 初期ロード時に選択されているチェックボックスがクリックされた状態にする
+    $j('.condition_radio_button:checked').click();
+
+    // ラジオボタンの選択がない場合は、先頭のものをチェックする
+    $j('.sub_condition').each(function(i) {
+        var radios =  $j(this).find(':radio');
+        var checked_radios = $j(this).find(':radio:checked');
+        if (radios.size() > 0 && checked_radios.size() == 0){
+            $j(radios[0]).attr("checked","checked");
+        }
+    });
+    // インターネットGoogle検索
+    $j('#internet_google_search_button')
+    .click(function() {
+        var query = $j('#full_text_query').val();
+        if (query == "") { return false; }
+        var url = "http://www.google.co.jp/search?hl=ja&btnG=Google+%E6%A4%9C%E7%B4%A2&lr=&q=" + query;
+        window.open(encodeURI(url), '_blank').foccus();
+    });
+});
+</script>
+
+</body>
+</html>

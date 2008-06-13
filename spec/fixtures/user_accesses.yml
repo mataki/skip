@@ -1,0 +1,6 @@
+a_user_access:
+  created_on: <%= SkipFaker.today %>
+  updated_on: <%= SkipFaker.today %>
+  user: a_user
+  last_access: <%= SkipFaker.yesterday %>
+  access_count: <%= SkipFaker.rand_num 3 %>

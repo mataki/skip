@@ -1,0 +1,50 @@
+<style type='text/css'>
+#preview-win {
+  position: absolute;
+  width: 0px;
+  overflow: auto;
+  left: 200px;
+  top: 200px;
+  padding: 2px;
+  background-color: #ffc;
+  display: none;
+  z-index: 1000;
+  border: none;
+}
+#preview-inbox {
+  border: 1px solid #C6C7C6;
+  background-color: #ffc;
+}
+#preview-bar {
+  background-color: #eec;
+  text-align:right;
+  width:100%;
+  border-top: 1px solid #FFFFFF;
+  border-bottom: 1px solid #AAAAAF;
+}
+</style>
+
+<div id="preview-win"><div id="preview-inbox">
+  <p style="position: absolute; text-align: left;">[プレビュー]</p>
+  <div id="preview-bar"><input type="button" id="close" value="close" /></div>
+  <div id="preview">loading...</div>
+  <p class="s10" style="text-align:right;">セレクトボックスと重なるのはIEの仕様です</p>
+</div></div>
+
+<%# ここだけで使っているJSライブラリ。複数個所で使うことになったら、移動を検討する。%>
+<%= skip_javascript_include_tag 'jquery.dimensions.js' %>
+<%= skip_javascript_include_tag 'ui.mouse.js' %>
+<%= skip_javascript_include_tag 'ui.draggable.js' %>
+<script language='javascript' type='text/javascript'>
+$j(function() {
+    $j("#preview-win").draggable();
+
+    $j("#close")
+    .click(function(){
+        $j("#preview-win")
+        .fadeOut(1000,function(){
+            $j(this).css('width',0);
+        });
+    });
+});
+</script>

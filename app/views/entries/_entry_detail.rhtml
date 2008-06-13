@@ -1,0 +1,424 @@
+<%
+ # ブログ・掲示板の詳細表示（１エントリ指定）
+ # :locals => { :entry, :prev_entry, :next_entry, :tb_entries }
+-%>
+
+<style type="text/css">
+div.move_navi {
+  position: relative;
+  height: 1.3em;
+}
+div.board_entry {
+  border: 1px solid silver;
+  position: relative;
+  _width: 100%;
+}
+.board_entry .buttons {
+  position: absolute;
+  top:3px;
+  right:3px;
+}
+.board_entry .date {
+  margin: 1px;
+  padding: 2px;
+  background-color: #4a4a4a;
+  color: white;
+}
+.board_entry .header {
+  border-bottom: 1px solid silver;
+  background-color: #f0f0ff;
+  margin: 1px;
+  padding: 1px;
+}
+.board_entry .header h1 {
+  font-size: 15px;
+}
+.board_entry .contents {
+  background-color: #FFFFFF;
+  overflow-y: visible;
+  overflow: hidden;
+  width: 100%;
+}
+.board_entry .contents_body {
+  margin: 5px;
+}
+.board_entry .contents_body pre {
+  white-space: -moz-pre-wrap; /* Mozilla */
+  white-space: -pre-wrap;     /* Opera 4-6 */
+  white-space: -o-pre-wrap;   /* Opera 7 */
+  white-space: pre-wrap;      /* CSS3 */
+  word-wrap: break-word;      /* IE 5.5+ */
+}
+.comment_input_space textarea {
+  width: 100%;
+}
+.board_entry_comment {
+  border-bottom: 2px solid silver;
+  border-left: 1px dotted #e0e0ff;
+  border-top: 1px dotted #e0e0ff;
+  _width: 100%;
+  margin: 0 0 5px 0;
+}
+.board_entry_comment .header {
+  width: _100%;
+  padding: 1px 5px;
+  border-bottom: 1px dotted #aaa;
+}
+.board_entry_comment .user {
+  float: left;
+}
+.board_entry_comment .command {
+  float: right;
+  font-size: 10px;
+}
+.board_entry_comment .content {
+  _width: 100%;
+  overflow-y: visible;
+  overflow: hidden;
+  padding: 0 0 0 3px;
+}
+.board_entry_comment div.edit_nest_comment {
+  font-size: 10px;
+}
+.comment_input_space input {
+  font-size: 10px;
+}
+.comment_input_space textarea {
+  width: 95%;
+}
+#permalink a, #permalink a:hover {
+  color: skyblue;
+}
+div#source_style_area, div#access_style_area {
+  background-color: #ffffdd;
+}
+</style>
+
+<div class="move_navi" style="text-align: center; font-size: 10px;">
+  <div style="position: absolute; left: 0; top: 0;">
+  <%= entry_link_to(prev_entry, :view_text => ('< ['+ truncate(prev_entry.title, 20) + ']')) if prev_entry %></div>
+  <div style="position: absolute; right: 0; top: 0;">
+  <%= entry_link_to(next_entry, :view_text => ('['+ truncate(next_entry.title, 20) + '] >')) if next_entry %></div>
+  <span><a href="#trackback">[ページ末尾]</a></span>
+</div>
+
+<div class="board_entry">
+  <!-- 右上ボタン -->
+  <div class="buttons" id="entry_buttons">
+    <span style="font-size: 75%; color: white;" id="permalink"><%= link_to '[permalink]', :controller=> "board_entries", :action => "forward", :id => entry.id -%></span>
+    <%= get_publication_type_icon(entry) -%>
+    <span style="font-size: 75%; color: white;"><%= get_entry_infos(entry) -%></span>
+    <% if @editable %>
+      <a href="#" id="access_style_button"><%= icon_tag('group', :title => "アクセス履歴") -%></a>
+      <%= link_to(icon_tag('page_edit', :alt=>'編集'), :controller=> "edit", :action => "edit", :id => entry, :symbol => entry.symbol) %>
+    <% else %>
+      <%= link_to(icon_tag('transmit_go', :alt=>'アンテナに追加'), {:controller => "antenna", :action => "select_antenna", :symbol => entry.symbol, :dummy => '.html'}, {:class => "nyroModal"}) %>
+    <% end %>
+    <%= link_to(icon_tag('tag_blue_add', :alt=>'ブックマークする'), {:controller => "bookmark", :action => "edit", :url => "/page/#{entry.id.to_s}", :title => entry.title, :dummy => '.html'}, {:class => "nyroModal"}) %>
+    <%= link_to(icon_tag('control_play_blue', :alt=>'もんた！'), {:controller=> "monta", :action => "execute_monta", :id => entry}, :target=>"_blank") %>
+    <%= link_to(icon_tag('zoom', :alt=>'最大化！'), {:controller=> "board_entries", :action => "large", :id => entry}, :target=>"_blank") %>
+  </div>
+
+  <div class="date"><%=h entry.diary_date %> <%=h entry.diary_author %></div>
+  <div class="header"><h1><%=h entry.category %> <%=h entry.title %></h1></div>
+  <div class="contents">
+    <div class="contents_body">
+      <div id="default_style_area" style="display: block;"><%= show_contents @entry %></div>
+      <div id="source_style_area" style="display: none;">
+        <div style="margin-bottom: 5px;font-weight: bold;background-color: #f0f0ff;">【ソース表示】</div><pre><%=h entry.contents.gsub("<br />", "<br/>\r\n") %></pre>
+      </div>
+      <div id="access_style_area" style="display: none;">
+      <% if @editable %>
+        <%= render :partial => "entries/access", :locals => {:entry_accesses => @entry_accesses, :total_count => @total_count} -%>
+      <% end %>
+      </div>
+    </div>
+  </div>
+  <span id="style_menu" style="position:absolute; left:3px; padding: 3px 0;font-size: 10px;display: block;">
+    [
+    <span id="default_style_label">ブログ表示</span><a href="#" id="default_style_link" style="display:none">ブログ表示</a>
+     | <span id="source_style_label" style="display:none">ソース表示</span><a href="#" id="source_style_link">ソース表示</a>
+    <% if @editable %>
+     | <span id="access_style_label" style="display:none">アクセス履歴</span><a href="#" id="access_style_link">アクセス履歴</a>
+    <% end %>
+    ]
+  </span>
+</div>
+<div style="text-align: right;">
+<% if @bookmark_comments_count > 0 -%>
+<%= link_to("[被ブクマ:#{@bookmark_comments_count}人]",{:controller =>'bookmark', :action=>'show', :uri => "/page/" + entry.id.to_s}) %>
+<% end -%>
+<span id="board_entry_point">
+<%= render(:partial => 'board_entries/board_entry_point', :locals => { :entry => entry, :editable => @editable }) -%>
+</span>
+</div>
+
+<div id="board_entry_comments" style="border-right: 1px dotted #e0e0ff;padding-right:3px;">
+<% entry.root_comments.each do |comment| %>
+  <div style="margin-bottom:5px;">
+    <%= render(:partial => "board_entries/board_entry_comment", :locals=>{:comment=>comment}) -%>
+  </div>
+<% end %>
+</div>
+
+<div class='comment_input_space' style="margin-top: 5px;">
+  <form id="new_comment_form">
+<p><label for="write_comment">コメントを書く</label><br/>
+<%= text_area 'board_entry_comment', 'contents', :cols => 40, :rows => 5  %><br/>
+<%= submit_tag "書き込み" %></p>
+  </form>
+</div>
+
+<a name="trackback" />
+<div class="trackback_space" style="margin-top: 10px; border: 1px solid silver;">
+  <div style="padding: 5px; background-color: #f0f0ff">トラックバック
+ - <%= link_to "このエントリにトラックバックする", :controller => "edit", :trackbacks => entry.id, :title => "RE: " + entry.title, :category => entry.category -%></div>
+  <div>
+    <ul style="margin-left: 20px;">
+<% symbol2name_hash = BoardEntry.get_symbol2name_hash @tb_entries %>
+<% @tb_entries.each do |tb_entry|  -%>
+<li><%= entry_link_to tb_entry -%> - <%= user_link_to tb_entry.user -%>（<%= symbol2name_hash[tb_entry.symbol] -%>）
+  <%= link_to " << [削除する]",
+      {:controller => "edit", :action => "delete_trackback", :id => entry.id, :tb_entry_id => tb_entry.id},
+      {:confirm => "本当に削除しますか？",  :method => :post} if session[:user_id] == entry.user_id -%></li>
+<% end -%>
+    </ul>
+  </div>
+</div>
+
+<div style="text-align: right;"><a href="#top">[ページ先頭]</a></div>
+
+<script type="text/javascript">
+$j(function(){
+    $j('#new_comment_form')
+    .submit(function() {
+        if(isEmpty($j('#board_entry_comment_contents').val())) {
+            return false;
+        }
+        $j.ajax({
+            type:'POST',
+            url:'<%= url_for(:controller => 'board_entries', :action => 'ado_create_comment', :id => entry.id) -%>',
+            data:$j('#new_comment_form').serialize(),
+            complete:function(request) {
+                $j('#board_entry_comments').append(request.responseText);
+                $j('#board_entry_comment_contents').val('');
+            }
+        });
+        return false;
+    });
+
+    // ブログ表示リンククリック時
+    $j('#default_style_link')
+    .click(function() {
+        changeStyleMenu('default');
+        return false;
+    });
+
+    // ソース表示リンククリック時
+    $j('#source_style_link')
+    .click(function() {
+        changeStyleMenu('source');
+        return false;
+    });
+
+    // アクセス履歴リンククリック時
+    $j('#access_style_link, #access_style_button')
+    .click(function() {
+        changeStyleMenu('access');
+        return false;
+    });
+
+    // ブログ表示、ソース表示、アクセス履歴を切り替える
+    var changeStyleMenu = function(styleType) {
+        var styles = ["default", "source", "access"];
+        $j.each(styles, function() {
+            if(this == styleType) {
+                $j('#' + this + '_style_area').show('normal');
+                $j('#' + this + '_style_label').show();
+                $j('#' + this + '_style_link').hide();
+            } else {
+                $j('#' + this + '_style_area').hide('fast');
+                $j('#' + this + '_style_label').hide();
+                $j('#' + this + '_style_link').show();
+            }
+        });
+    };
+
+    // 引数の文字列が空白以外で1文字以上かどうか
+    isEmpty = function(text) {
+        text = text.gsub("　", " ");
+        if(text.strip().length == 0) {
+            alert("空白以外で1文字以上入力してください。");
+            return true;
+        }
+        return false;
+    }
+
+    //  ポイントボタン押下時の動作 board_entry_point 内の動作
+    var entry_point = 0;
+    var appendEntryPointClick = function(){
+        $j('#entry_point_button')
+        .click(function(){
+            if (entry_point > 4){
+                alert('やりすぎ！');
+                return false;
+            }
+            var entry_point_url = '<%= url_for :controller => :board_entries, :action => :ado_pointup, :id => entry -%>';
+            $j.ajax({
+                url:entry_point_url,
+                success:function(request){
+                    $j('#board_entry_point').html(request);
+                    entry_point = ++entry_point;
+                    appendEntryPointClick();
+                }
+            });
+        });
+    }
+    appendEntryPointClick();
+});
+// 編集ボタン押下時の処理
+setupCommentEditLink = function(commentId) {
+    $j('#comment_edit_link_' + commentId)
+    .click(function() {
+        $j('#comment_contents_' + commentId).fadeOut(0, function() {
+            $j('#comment_area_' + commentId).fadeIn('fast', function() {
+                $j('#comment_input_form_' + commentId + ' textarea').focus();
+            });
+        });
+        return false;
+    });
+};
+
+// コメント編集フォームのキャンセルボタン押下時の処理
+setupCommentCancelButton = function(commentId) {
+    $j('#comment_cancel_button_' + commentId)
+    .click(function() {
+        if ($j('#comment_area_' + commentId).is(':visible')) {
+            $j('#comment_area_' + commentId).fadeOut(0, function() {
+                $j('#comment_contents_' + commentId).fadeIn('fast');
+            });
+        }
+        return false;
+    });
+};
+
+// コメント編集フォームをサブミットした時の処理
+setupCommentInputForm = function(commentId) {
+    $j('#comment_input_form_' + commentId)
+    .submit(function() {
+        if(isEmpty($j('#comment_input_form_' + commentId + ' textarea').val())) {
+            return false;
+        }
+        $j.ajax({
+            type:'POST',
+            url:'<%= url_for(:controller => 'board_entries', :action => 'ado_edit_comment') -%>/' + commentId,
+            data:$j('#comment_input_form_' + commentId).serialize(),
+            complete:function(request) {
+                $j('#comment_contents_' + commentId).html(request.responseText);
+                if ($j('#comment_area_' + commentId).is(':visible')) {
+                    $j('#comment_area_' + commentId).fadeOut(0, function() {
+                        $j('#comment_contents_' + commentId).fadeIn('fast');
+                    });
+                }
+            }
+        });
+        return false;
+    });
+};
+
+// 「このコメントに返信」ボタン押下時の処理
+setupCommentNestLink = function(commentId, level) {
+    $j('#comment_nest_link_' + commentId)
+    .click(function() {
+        // ネストレベルを保持するhiddenフィールドを作成
+        var hiddenLevel = function() {
+            return $j(document.createElement('input')).attr({type:'hidden', name:'level', value:level});
+        };
+
+        // 説明を作成
+        var divDesc = function() {
+            return $j(document.createElement('div'))
+            .append(document.createTextNode('このコメントに返信'))
+            .css({marginTop:'3px', fontSize:'10px', color:'gray'});
+        };
+
+        // コメント入力用テキストエリアを作成
+        var divText = function() {
+            var div = $j(document.createElement('div'));
+            $j(document.createElement('textarea'))
+            .attr({rows:5, name:'contents'})
+            .css('width', '90%')
+            .appendTo(div);
+            return div
+        };
+
+        // 保存ボタンを作成
+        var saveButton = function(jform) {
+            return $j(document.createElement('input'))
+            .attr({type:'button', value:'保存'})
+            .css({fontSize:'10px'})
+            .click(function() {
+                if(isEmpty(jform.find('textarea').val())) {
+                    return false;
+                }
+                $j.ajax({
+                    type:'POST',
+                    url:'<%= url_for(:controller => 'board_entries', :action => 'ado_create_nest_comment') -%>/' + commentId,
+                    data:jform.serialize(),
+                    complete:function(request) {
+                        if(request.responseText.strip().length == 0) {
+                            alert('保存に失敗しました。一度画面を更新してみてください。');
+                            return false;
+                        }
+                        jform.fadeOut('0', function(){
+                            $j('#link_nest_comment_' + commentId).show();
+                            $j(document.createElement('div'))
+                            .appendTo('#view_nest_comment_' + commentId)
+                            .html(request.responseText)
+                            .hide()
+                            .fadeIn('fast');
+                            jform.remove();
+                            fnLoadPngs();
+                        });
+                    },
+                    error:function(request) {
+                        alert('通信に失敗しました。');
+                    }
+
+                });
+                return false;
+            });
+        };
+
+        // キャンセルボタンを作成
+        var cancelButton = function(jform) {
+            return $j(document.createElement('input'))
+            .attr({type:'button', value:'キャンセル'})
+            .css({fontSize:'10px'})
+            .click(function() {
+                jform.fadeOut('0', function(){
+                    $j('#link_nest_comment_' + commentId).show();
+                    jform.remove();
+                });
+                return false;
+            });
+        };
+
+        $j('#link_nest_comment_' + commentId).hide();
+        // コメント返信フォームを作成して表示
+        var jform = $j(document.createElement('form'));
+        jform
+        .append(hiddenLevel())
+        .append(divDesc())
+        .append(divText())
+        .append(
+            $j(document.createElement('div'))
+            .append(saveButton(jform))
+            .append(cancelButton(jform))
+        )
+        .hide()
+        .fadeIn('fast')
+        .appendTo('#edit_nest_comment_' + commentId);
+    });
+};
+</script>

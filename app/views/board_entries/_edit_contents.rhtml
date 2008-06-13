@@ -1,0 +1,69 @@
+<style type="text/css">
+table.input_table textarea {
+  width: 100%;
+}
+</style>
+
+  <div class="input_value" style="height: 2em;">
+    <%= radio_button_tag("editor_mode", "hiki", params[:editor_mode] == "hiki", :id=>"editor_mode_hiki") -%>Wiki風
+    <span id="rich_text_radio"><%= radio_button_tag("editor_mode", "richtext", params[:editor_mode] == "richtext", :id=>"editor_mode_richtext") %>リッチテキスト</span>
+    <%= radio_button_tag("editor_mode", "plaintext", params[:editor_mode] == "plaintext", :id=>"editor_mode_plaintext") %>プレーンテキスト
+  </div>
+  <div id="contents_hiki_space" style="clear: left; display: none;">
+    <%= link_to_hiki_help %>
+  <table width="100%" style="border-collapse:separate;"><tr>
+    <td id="hiki_text" style="width:100%"><label for="contents"><%= text_area_tag 'contents_hiki', h(params[:contents_hiki]), :cols => 20, :rows => 20 %></label></td>
+  </tr></table>
+  </div>
+  <div id="contents_richtext_space" style="display: none;"><label for="contents"><%= text_area_tag 'contents_richtext', h(params[:contents_richtext]), :cols => 90, :rows => 20, :class => "mceEditor" %></label></div>
+  <div id="contents_plaintext_space" style="display: none;"><label for="contents"><%= text_area_tag 'contents_plaintext', h(params[:contents_plaintext]), :cols => 90, :rows => 20 %></label></div>
+
+<%= skip_javascript_include_tag 'openwysiwyg/wysiwyg' %>
+<script language='javascript' type='text/javascript'>
+//<![CDATA[
+$j(function(){
+    // 一度だけ OpenWYSWIGを初期化するためのフラグ
+    var initRichText = false;
+
+    changeEditorMode = function(){
+        var hiki = ($j('#editor_mode_hiki:checked').length > 0);
+        var richtext = ($j('#editor_mode_richtext:checked').length > 0);
+
+        $j('#contents_hiki_space, #contents_richtext_space, #contents_plaintext_space, #btn_preview_hiki')
+        .hide();
+
+        if(richtext){
+            if($j.browser.opera){
+                alert("既知のバグによりOperaではリッチテキストの編集はできません。\n申し訳ありませんが、他のブラウザでの編集をお願いします。");
+            }
+
+            $j('#contents_richtext_space').show();
+
+            if(!initRichText) {
+                initRichText = true;
+                wysiwygWidth = Element.getDimensions("contents_richtext").width-50;
+                wysiwygHeight = 400;
+                generate_wysiwyg('contents_richtext');
+            }
+        } else if(hiki) {
+            $j('#contents_hiki_space, #btn_preview_hiki').show();
+            $j('#contents_hiki').focus();
+        } else {
+            $j('#contents_plaintext_space').show();
+            $j('#contents_plaintext').focus();
+        }
+    }
+    changeEditorMode();
+
+    $j('#editor_mode_hiki, #editor_mode_richtext, #editor_mode_plaintext')
+    .click(function(){
+        changeEditorMode();
+    });
+
+    // OperaにOpenWyswygが対応していないためラジオボタンを隠す
+    if ($j.browser.opera) {
+        $j('#rich_text_radio').hide();
+    }
+});
+//]]>
+</script>

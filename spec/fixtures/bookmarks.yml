@@ -1,0 +1,42 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+a_bookmark:
+  created_on: <%= SkipFaker.today %>
+  updated_on: <%= SkipFaker.today %>
+  url: <%= SkipFaker.url %>
+  title: <%= SkipFaker.rand_char %>
+  bookmark_comments_count: <%= SkipFaker.rand_num 1 %>
+
+a_public_bookmark:
+  created_on: <%= SkipFaker.today %>
+  updated_on: <%= SkipFaker.today %>
+  url: <%= SkipFaker.url %>
+  title: <%= SkipFaker.rand_char %>
+  bookmark_comments_count: <%= SkipFaker.rand_num 1 %>
+
+a_private_bookmark:
+  created_on: <%= SkipFaker.today %>
+  updated_on: <%= SkipFaker.today %>
+  url: <%= SkipFaker.url %>
+  title: <%= SkipFaker.rand_char %>
+  bookmark_comments_count: <%= SkipFaker.rand_num 1 %>
+
+a_mixed_bookmark:
+  created_on: <%= SkipFaker.today %>
+  updated_on: <%= SkipFaker.today %>
+  url: <%= SkipFaker.url %>
+  title: <%= SkipFaker.rand_char %>
+  bookmark_comments_count: <%= SkipFaker.rand_num 1 %>
+
+a_public_page_bookmark:
+  created_on: <%= SkipFaker.today %>
+  updated_on: <%= SkipFaker.today %>
+  url: /page/<%= BoardEntry.find(:first,:conditions => ["publication_type = 'public'"] ).id %>
+  title: <%= SkipFaker.rand_char %>
+  bookmark_comments_count: <%= SkipFaker.rand_num 1 %>
+
+a_private_page_bookmark:
+  created_on: <%= SkipFaker.today %>
+  updated_on: <%= SkipFaker.today %>
+  url: /page/<%= BoardEntry.find(:first,:conditions => ["publication_type = 'private'"] ).id %>
+  title: <%= SkipFaker.rand_char %>
+  bookmark_comments_count: <%= SkipFaker.rand_num 1 %>

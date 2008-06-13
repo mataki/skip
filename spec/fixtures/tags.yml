@@ -1,0 +1,37 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+a_tag:
+  created_on: <%= SkipFaker.today %>
+  updated_on: <%= SkipFaker.today %>
+  name: <%= SkipFaker.rand_char %>
+  tag_type:
+
+system_question_tag:
+  created_on: <%= SkipFaker.today %>
+  updated_on: <%= SkipFaker.today %>
+  name: 質問
+  tag_type: SYSTEM
+
+system_request_tag:
+  created_on: <%= SkipFaker.today %>
+  updated_on: <%= SkipFaker.today %>
+  name: 連絡
+  tag_type: SYSTEM
+
+system_important_tag:
+  created_on: <%= SkipFaker.today %>
+  updated_on: <%= SkipFaker.today %>
+  name: 重要 
+  tag_type: SYSTEM
+
+system_notice_tag:
+  created_on: <%= SkipFaker.today %>
+  updated_on: <%= SkipFaker.today %>
+  name: 連絡
+  tag_type: SYSTEM
+
+a_standard_tag:
+  created_on: <%= SkipFaker.today %>
+  updated_on: <%= SkipFaker.today %>
+  name: 日記
+  tag_type: STANDARD
+

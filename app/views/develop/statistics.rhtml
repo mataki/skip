@@ -1,0 +1,99 @@
+<style type="text/css">
+div.statistics_history {
+  margin-top: 20px;
+}
+div.statistics_line {
+  font-size: 11px;
+  padding: 3px;
+  border-bottom: 1px dashed silver;
+  margin: 0px 5px;
+  float: left;
+}
+div.statistics_line .statistics_desc {
+  width: 240px;
+  float: left;
+}
+div.statistics_line .statistics_value {
+  width: 45px;
+  text-align: right;
+  float: left;
+}
+div.statistics_line .statistics_menu {
+  font-size: 10px;
+  width: 200px;
+  margin-left: 10px;
+  float: left;
+}
+
+div.monthly_statictics_box {
+  width: 300px;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid silver;
+  background-color: #eee;
+}
+div.monthly_statictics_line {
+  float: left;
+  border-bottom: 1px dotted silver;
+}
+div.monthly_statistics_inner_space {
+  padding: 3px;
+  background-color: #fff;
+}
+div.current_statistics {
+  float: left;
+  width: 100%;
+}
+</style>
+
+<div id="summary_container">
+<div id="summary_left">
+  <div id="calendar"><%= render :partial => "shared/calendar", :locals => {:sel_year => @date.year,
+                                                                           :sel_month => @date.month,
+                                                                           :sel_day => @date.day,
+                                                                           :item_count => @item_count,
+                                                                           :action => 'statistics'}  %></div>
+</div><!-- summary_left -->
+
+<div id="summary_right">
+<div id="current_statistics" class="current_statistics">
+<%= render :partial => "current_statistics", :locals => { :site_count => @site_count } %>
+</div>
+
+<div style="clear:left;margin-top:5px;">　</div>
+<div id="statistics_history" class="statistics_history">
+
+<% if @site_count.write_users_all > 0 %>
+<% # :categoryはSiteCountの属性と同名 %>
+<% statistics_items = [
+                       { :desc => "10日間以内にアクセスしたことがある人", :category => 'active_users'},
+                       { :desc => "ブログを書いたことのある人<br/>　（掲示板除く・公開のみ・自動投稿除く）", :category => 'write_users_all'},
+                       { :desc => "・・・上記に非公開を含めると・・・", :category => 'write_users_with_pvt'},
+                       { :desc => "・・・さらに掲示板も含めると・・・", :category => 'write_users_with_bbs'},
+                       { :desc => "コメントを書いたことのある人", :category => 'comment_users'},
+                       { :desc => "プロフィール画像を変えている人", :category => 'portrait_users'},
+                       { :desc => "プロフィールを入力している人", :category => 'profile_users'},
+                       { :desc => "背景をカスタマイズしたことある人", :category => 'custom_users'}
+                      ]
+%>
+<% user_count = @site_count.total_user_count -%>
+<div class="topix_title"><%= skip_image_tag('i05-01.gif') -%><span>その他の指標値（参考）</span></div>
+<% statistics_items.each do |item| %>
+  <% count_value = eval("@site_count.#{item[:category]}") %>
+<div class="statistics_line">
+  <div class="statistics_desc"><%= icon_tag 'group' %>　<%= item[:desc] %></div>
+  <div class="statistics_value"><%= count_value %>人</div>
+  <div class="statistics_menu" style="margin-left: 10px;"> - <%= (count_value.prec_f*10000.prec_f / user_count.prec_f).round / 100.prec_f %>％</div>
+</div>
+<div style="clear: left"></div>
+<% end %>
+
+<% end -%>
+
+</div>
+
+</div><!-- summary_right -->
+
+<div id="summary_bottom">
+</div><!-- summary_bottom -->
+</div><!-- summary_container -->

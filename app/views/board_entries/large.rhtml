@@ -1,0 +1,72 @@
+<html>
+<head>
+  <title><%= @entry.title %></title>
+  <%= javascript_include_tag 'application' %>
+
+  <%= skip_stylesheet_link_tag 'style' %>
+  <%= stylesheet_link_tag 'style' %>
+<style type="text/css">
+body {
+  margin-top: 10px;
+  width: 100%;
+}
+div.board_entry {
+  border: 1px solid silver;
+  position: relative;
+  width: 97%;
+  margin-left: 10px;
+}
+.board_entry .buttons {
+  position: absolute;
+  top:3px;
+  right:3px;
+}
+.board_entry .date {
+  margin: 1px;
+  padding: 2px;
+  background-color: #4a4a4a;
+  color: white;
+}
+.board_entry .header {
+  border-bottom: 1px solid silver;
+  background-color: #f0f0ff;
+  margin: 1px;
+  padding: 1px;
+}
+.board_entry .header h1 {
+  font-size: 15px;
+}
+
+.contents {
+  background-color: #FFFFFF;
+  overflow-y: visible;
+  overflow: hidden;
+  margin-left: 10px;
+}
+.board_entry .contents_body {
+  margin: 5px;
+}
+.board_entry_comment .header {
+  background-color: #dfdfdf;
+}
+.board_entry_comment .content {
+  background-color: #efefef;
+}
+</style>
+</head>
+
+<body>
+
+<div class="board_entry">
+  <div class="buttons">
+  <%= link_to(icon_tag('printer', :alt=>'印刷'), {}, :onclick=>"window.print();") %>
+  <%= link_to(icon_tag('cancel',  :alt=>'閉じる'), {}, :onclick=>"window.close();") %>
+  </div>
+  <div class="date"><%=h @entry.diary_date %> <%=h @entry.diary_author %></div>
+  <div class="header"><h1><%=h @entry.category %> <%=h @entry.title %></h1></div>
+</div>
+
+<div class="contents"><div class="contents_body"><%= show_contents @entry %></div></div>
+
+</body>
+</html>

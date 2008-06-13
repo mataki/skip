@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <title><%= CUSTOM_RITERAL[:app_title] -%> - サブウィンドウ</title>
+<script language="JavaScript" type="text/javascript">
+<!--
+var relative_url_root = '<%= controller.request.relative_url_root -%>';
+//-->
+</script>
+  <%= skip_stylesheet_link_tag 'style' %>
+  <%= stylesheet_link_tag 'style' %>
+  <%= stylesheet_link_tag controller.controller_name %>
+  <%= skip_stylesheet_link_tag 'nyroModal.full.css' %>
+  <%= skip_stylesheet_link_tag 'jquery.autocomplete.css' %>
+
+  <%= skip_javascript_include_tag 'prototype' %>
+  <%= skip_javascript_include_tag 'effects' %>
+  <%= skip_javascript_include_tag 'dragdrop' %>
+  <%= skip_javascript_include_tag 'controls' %>
+  <%= skip_javascript_include_tag 'jquery.js' %>
+  <%= skip_javascript_include_tag 'jquery.color.js' %>
+  <%= skip_javascript_include_tag "jquery.nyroModal.js" %>
+  <%= skip_javascript_include_tag "jquery.bgiframe.min.js" %>
+  <%= skip_javascript_include_tag "jquery.dimensions.js" %>
+  <%= skip_javascript_include_tag "jquery.autocomplete.js" %>
+  <%= skip_javascript_include_tag "jquery.jTagging.js" %>
+  <script language="JavaScript" type="text/javascript">$j = jQuery.noConflict();</script>
+  <%= javascript_include_tag 'application' %>
+</head>
+
+<body>
+<div id="main" style="margin: 10px;">
+
+  <% if flash[:warning] != nil %>
+  <div class="warning" onclick="this.style.display = 'none';">
+    <h3><%= flash[:warning] %></h3>
+    <span>[クリックでメッセージ消去]</span>
+  </div>
+  <% end %>
+  <% if flash[:notice] != nil %>
+  <div class="notice" onclick="this.style.display = 'none';">
+    <h3><%= flash[:notice] %></h3>
+    <span>[クリックでメッセージ消去]</span>
+  </div>
+  <% end %>
+
+  <%= @content_for_layout %>
+</div><!-- main -->
+
+</body>
+</html>

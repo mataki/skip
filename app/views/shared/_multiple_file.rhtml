@@ -1,0 +1,73 @@
+<style type="text/css">
+div.error_files {
+  color: gray;
+  font-size: 10px;
+  margin-top: 5px;
+}
+div.error_messages {
+  margin-left: 20px;
+  width: 350px;
+}
+</style>
+<% blog_mode ||= false %>
+
+<div id="input_value_area"></div>
+<div><a href="#" id="add_file_tag_link">[更にファイルを追加]</a></div>
+<div id="hidden_file_area" style="display:none;"></div>
+
+<script type='text/javascript'>
+
+$j(function() {
+    var index = 1;
+    var addInputFileField = function(){
+        var elemDiv = $j(document.createElement('div'))
+        .attr('class', 'input_value')
+        .append(
+            $j(document.createElement('input'))
+            .attr({
+                type: 'file',
+                id: "<%= file_field_name -%>[" + index + "]",
+                name: "<%= file_field_name -%>[" + index + "]",
+                size: '50'
+            })
+        )
+        .appendTo('#input_value_area');
+        if(<%= blog_mode %>) {
+            elemDiv.append(
+                $j(document.createElement("a"))
+                .css({
+                    backgroundColor: "#eef",
+                    margin: "0 0 0 3px"
+                })
+                .attr('href',"javascript:insertPicRef("+index+");")
+                .append(document.createTextNode("Hiki本文末尾に挿入"))
+            );
+        }
+        index++;
+     };
+
+     $j('#add_file_tag_link')
+     .click(function() {
+         addInputFileField();
+         return false;
+     });
+     addInputFileField();
+});
+
+function insertPicRef(cnt) {
+    var filePath = $j('#' + "<%= file_field_name -%>\\[" + cnt + "\\]").val();
+    if(filePath.length > 0) {
+        var pattern = /(\\|\:|\/)/;
+        var filePathArr = filePath.split(pattern);
+        var fileName = filePathArr[filePathArr.length - 1];
+        var insertText = "\n{{" + fileName;
+        var fileExtPattern = /\.flv|\.swf/;
+        if(fileName.toLowerCase().search(fileExtPattern) == -1) {
+            insertText += ",240,";
+        }
+        insertText += "}}";
+        $j("#contents_hiki").val($j("#contents_hiki").val() + insertText);
+    }
+}
+
+</script>

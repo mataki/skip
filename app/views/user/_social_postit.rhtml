@@ -1,0 +1,36 @@
+<div id="contents_container">
+<div id="contents_left">
+
+<%= render(:partial => 'user/portrait_box', :locals => { :user => @user }) -%>
+<%= render :partial => "social_menu", :locals => { :selected_menu => @menu } %>
+<%= render :partial => "social_tags", :locals => { :tags => @tags, :user => @user  } %>
+
+</div><!-- contents_left -->
+<div id="contents_right">
+
+<%= render :partial => "postit_cloud",
+           :locals => {
+             :postit_url => @postit_url,
+             :user => @user,
+             :tags => @tags
+           } %>
+
+<% if !(tag = h(params[:selected_tag])).blank? -%>
+<% text = "他に[#{tag}]の付いた人を探す" %>
+<div style="text-align: right;"><%= link_to text, {:controller => "bookmarks", :action => "search", :type => "user", :tag_words => "#{tag}"} -%></div>
+<% end -%>
+
+<ul class="postit_list" style="margin: 0 0 5px 20px;">
+<% @postits.each do |postit| %>
+<li style="border-bottom: 1px dotted silver; list-style-type: none;"><%= user_link_to postit.user, {:image_on => true} -%>
+  <span style="font-size: 10px; color: blue;"><%=h postit.tags -%></span>
+  <span><%=h postit.comment -%></span></li>
+<% end %>
+</ul>
+
+</div><!-- contents_right -->
+
+<div id="contents_bottom">
+</div><!-- contents_bottom -->
+
+</div><!-- contents_container -->

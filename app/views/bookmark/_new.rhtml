@@ -1,0 +1,150 @@
+<% messages ||= "" %>
+<% if @bookmark.is_type_user? -%>
+<%   @title = 'ブックマークする' -%>
+<%   desc = '対象ユーザにタグ・コメントを添えてブックマークします（ブックマーク一覧から見ることができます）' %>
+<% else -%>
+<%   @title = 'ブックマークコメント' -%>
+<%   desc = "タグをつけてコメントすることができます<br/>（#{CUSTOM_RITERAL[:abbr_app_title]}内のユーザやブログはページ内のリンクからブックマークすることをおすすめします）" %>
+<% end -%>
+
+<style type="text/css">
+div.formarea {
+  margin: 5px;
+  border: 1px solid silver;
+  margin-right: auto;
+}
+table {
+  table-layout: auto;
+}
+th {
+  background-color: #f0f0ff;
+  font-weight: bold;
+  font-size: 12px;
+  width: 60px;
+  padding: 1px 5px;
+}
+td {
+  border-bottom: 1px dotted silver;
+  width: 350px;
+}
+</style>
+
+<div class="desc"><%= desc -%></div>
+
+<div style="position: absolute;">
+
+<div id="update_body"></div>
+  <form id="update_form">
+
+<%= hidden_field_tag 'layout', layout -%>
+<%= hidden_field 'bookmark', 'url' -%>
+
+<div class="formarea">
+<table>
+
+<tr><th>URL</th><td><a href="<%= h(@bookmark.url) -%>" title="<%= h(@bookmark.url) -%>" target="_blank"><%= h(truncate(@bookmark.url, 60)) -%></a><br/>
+<span style="font-size: 10px; color: #555555;">（別ウィンドウで開きます）</span></td></tr>
+
+<tr><th>タイトル</th><td><span style="font-size: 15px; font-weight: bold;">
+<% if @bookmark.is_type_internet? -%>
+  <%= text_field 'bookmark', 'title' -%>
+  <span id="refresher"><a href="javascript: reloadTitle('<%= h(@bookmark.url) -%>', 'bookmark_title');"><%= icon_tag 'arrow_rotate_clockwise', :title => "タイトルを再取得する" -%></a></span>
+  <span id="indicator" style="display:none;font-size:10px;"><%= skip_image_tag 'indicator.gif' %>更新中...</span>
+  <br/><span style="font-size: 10px; color: green;">タイトルは全ユーザ共通です。修正の際はご注意ください。</span>
+<% else -%>
+  <%= h(@bookmark.title) -%>
+  <%= hidden_field 'bookmark', 'title' -%>
+<% end -%>
+</span></td></tr>
+
+<% unless @bookmark.is_type_user? -%>
+
+<tr><th>公開</th><td><%= radio_buttons('bookmark_comment', 'public', BookmarkComment.public_types ) -%></td></tr>
+
+<% end -%>
+
+<tr><th>タグ</th><td><%= text_field 'bookmark_comment', 'tags', :size => '50', :value => @bookmark_comment.comma_tags %>
+    <div id="category_box">
+      <div id="candidates_list"><p>foo,barの形で複数指定できます</p></div>
+      <div style="font-size:8pt; font-weight:bold;">みんながつけたタグ：</div><div id="user_tags_list" style="margin-bottom:5px;"></div>
+      <div style="font-size:8pt; font-weight:bold;">みんながよく使うタグ（人気の10件）：</div><div id="other_tags_list" style="margin-bottom:5px;"></div>
+      <div style="font-size:8pt; font-weight:bold;">あなたが使ったタグ（よく使う20件）：</div><div id="your_tags_list" style="margin-bottom:5px;"></div>
+    </div>
+</td></tr>
+
+<tr><th>コメント</th><td><%= text_field 'bookmark_comment', 'comment', :size => 50 %></td></tr>
+
+</table>
+</div>
+<div style="text-align: center;"><%= submit_tag "OK", :id => "submit_button" %>
+<% if @bookmark.is_type_internet? && @bookmarklet -%>
+  <input type="button" value="Cancel" onclick="location.href='<%= @bookmark.url -%>'"></input>
+<% end -%>
+</div>
+</form>
+
+</div><!-- relative  -->
+<script language='javascript' type='text/javascript'>
+//<![CDATA[
+$j(function(){
+
+    // ダイアログ(nyroModal)でのブックマーク後の処理
+    var completeDialog = function() {
+        location.reload();
+    };
+    // サブウィンドウ(ブックマークレット)でのブックマーク後の処理
+    var completeSubwindow = function() {
+        alert('ブックマークしました');
+        location.href = $j('#bookmark_url').val();
+    };
+
+    var userTags = new Array(<%= user_tags_array.map{|str| ("'#{str}'")}.join(',') %>);
+    var otherTags = new Array(<%= other_tags_array.map{|str| ("'#{str}'")}.join(',') %>);
+    var yourTags = new Array(<%= your_tags_array.map{|str| ("'#{str}'")}.join(',') %>);
+
+    $j('#user_tags_list').append(createTagsLink(userTags));
+    $j('#other_tags_list').append(createTagsLink(otherTags));
+    $j('#your_tags_list').append(createTagsLink(yourTags));
+
+    // jQueryアクションを追加する。
+    var initAction = function(completeFunction) {
+        $j('#update_form')
+        .submit(function(){
+            if($j('#bookmark_comment_public_true:checked').size() && <%= !@bookmark.url_is_public? -%>){
+                return confirm('非公開エントリーを全公開でブックマークしますがよろしいですか？\n（閲覧権限の有無によらずタイトルが公開されます）');
+            }
+            var url = '<%= url_for({ :controller => :bookmark, :action => :update }); -%>'
+            $j.ajax({
+                type: 'POST',
+                url: url,
+                data: $j(this).serialize(),
+                success: function(html) {
+                    if(html == 'success'){
+                        completeFunction();
+                    } else {
+                        $j('#update_body').html(html);
+                    }
+                }
+            });
+            return false;
+        });
+        if ($j('#bookmark_title').val() == '') {
+            reloadTitle('<%= h(@bookmark.url) -%>', 'bookmark_title');
+        }
+
+        $j('#bookmark_comment_tags').jTagging($j('#user_tags_list'));
+        $j('#bookmark_comment_tags').jTagging($j('#other_tags_list'));
+        $j('#bookmark_comment_tags').jTagging($j('#your_tags_list'));
+    };
+
+    $j.nyroModalSettings({
+        height: 500,
+        width: 450,
+        endShowContent: function(elts, settings) {
+            initAction(completeDialog);
+        }
+    });
+    initAction(completeSubwindow);
+});
+//]]>
+</script>

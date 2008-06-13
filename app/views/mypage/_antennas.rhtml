@@ -1,0 +1,85 @@
+<% for_manage ||= false -%>
+<% #TODO 管理用と通常表示用のビューを分けた方が分かりやすいのではないか？ %>
+<% if for_manage -%>
+
+<ul id="antennas_list">
+
+<% antennas.each do |@antenna| -%>
+  <li id="antenna_<%= @antenna.id -%>" style="border: 1px solid silver; margin-bottom: 5px; padding-bottom: 5px;">
+
+    <div style="border-bottom: 1px dashed silver; background-color: #f0f0ff;">
+      <%= icon_tag 'transmit' -%>
+      <span class="editable_antenna_name" id="editable_antenna_name_<%= @antenna.id -%>"><%=h @antenna.name -%></span>
+      <a href="javascript: deleteAntenna(<%= @antenna.id -%>);">[削除]</a>
+    </div>
+    <ul id="antenna_items_list" style="cursor: move; margin-left: 25px;">
+      <% @antenna.antenna_items.each do |item| -%>
+      <li id="antenna_item_<%= item.id -%>"><%= icon_tag 'report_user' -%> <%=h item.value -%>
+        <a href="javascript:deleteAntennaItem('<%= @antenna.id -%>', '<%= item.id -%>');">[削除]</a>
+      </li>
+      <script type="text/javascript">new Draggable("antenna_item_<%= item.id -%>", {revert: true});</script>
+      <% end -%>
+    </ul>
+
+  </li>
+<% end -%>
+</ul>
+<%= javascript_include_tag "jquery.inplace.js" %>
+<script type="text/javascript">
+  fnLoadPngs();
+
+  var dropzone = [];
+<% antennas.each do |antenna| -%>
+  dropzone.push("antenna_<%= antenna.id -%>");
+<% end %>
+  var optDrop = {
+    hoverclass: "dragenter",
+    onDrop: function(draggable, dropzone) {
+                    if (draggable.id.indexOf("antenna_item_") != -1) { // 移動
+                        var antenna_item_id = draggable.id.replace("antenna_item_", "");
+                        var antenna_id = dropzone.id.replace("antenna_", "");
+                        moveAntennaItem(antenna_id, antenna_item_id);
+                    } else { // ソート
+                        var source_antenna_id = draggable.id.replace("antenna_", "");
+                        var target_antenna_id = dropzone.id.replace("antenna_", "");
+                        sortAntenna(source_antenna_id, target_antenna_id);
+                    }
+    }
+  }
+  dropzone.each(function(id) { Droppables.add(id, optDrop); });
+
+  Sortable.create("antennas_list", {dropOnEmpty:true});
+$j(function() {
+    var ado_inplace_edit_url = '<%= url_for(:action => :set_antenna_name) %>';
+    $j('.editable_antenna_name').editInPlace({
+	url: ado_inplace_edit_url,
+	update_value: 'value',
+	save_button: '<a href="#" class="inplace_save">[保存]</a>',
+	cancel_button: '<a href="#" class="inplace_cancel">[キャンセル]</a>'
+    });
+});
+</script>
+
+<% else -%>
+
+<div class="box_space">
+  <div class="box_space_title">アンテナ</div>
+  <div class="box_space_body" id="antennas_body"><ul id="antennas_list">
+    <% system_antennas.each do |antenna| -%>
+    <li id="antenna_<%= antenna.antenna_type -%>"><%= icon_tag 'transmit_blue' -%>
+      <%= link_to h(antenna.name), :action => "index", :antenna_type => antenna.antenna_type -%>
+      （<%=h antenna.count -%>）
+    </li>
+    <% end -%>
+
+    <% antennas.each do |antenna| -%>
+    <li id="antenna_<%= antenna.id -%>"><%= icon_tag 'transmit' -%>
+      <%= link_to h(antenna.name), :action => "index", :antenna_id => antenna.id -%>
+      （<%=h antenna.count -%>）
+    </li>
+    <% end -%>
+  </ul></div>
+  <div class="box_space_bottom"><%= link_to '【アンテナを整備する】', :action => 'manage', :menu => 'manage_antenna' -%></div>
+</div><!-- box_space -->
+
+<% end -%>

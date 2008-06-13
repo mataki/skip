@@ -1,0 +1,38 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  margin: 0;
+  position: relative;
+  left: 0;
+  text-align: left;
+  font-size: 12px;
+  font-family: Verdana, Arial, sans-serif;
+  background-color: #FFFFFF;
+  color: #555555;
+  width: 100%;
+}
+a {
+  text-decoration: none;
+  color: purple;
+}
+.my_header {
+  margin: 0px;
+  padding: 4px;
+  text-align: left;
+  font-size: 18px;
+  font-weight: bold;
+  background-color:#DDFFDD;
+}
+.my_counter {
+  margin: 0px;
+  padding: 4px;
+  text-align: left;
+  font-size: 40px;
+  font-weight: bold;
+  background-color:#bfffbf;
+  position:absolute;
+  top: 0px;
+  right: 0px;
+}

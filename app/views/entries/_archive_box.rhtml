@@ -1,0 +1,18 @@
+<%
+ # ブログ・掲示板の左側のボックス（月ごとのアーカイブ）
+ # :locals => { :month_archives }
+-%>
+
+<div class="box_space">
+  <div class="box_space_title"><%= icon_tag 'page_white_zip' -%>月毎の一覧</div>
+  <div class="box_space_body" style="font-size: 10px;">
+  <ul style="list-style-position: inside; list-style-type: disc;">
+  <% @month_archives.each do |archive| -%>
+    <% link_text =  archive.year + "年" + archive.month + "月 (" + archive.count + ")" -%>
+    <li><%= link_to link_text, :archive => "all", :year => archive.year, :month => archive.month -%></li>
+  <% end -%>
+  </ul>
+  <br style="display: none; clear:left;" />
+  </div>
+  <div class="box_space_bottom"></div>
+</div><!-- box_space -->

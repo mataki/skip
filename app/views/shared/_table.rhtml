@@ -1,0 +1,35 @@
+<style type="text/css">
+table.normal td, table.normal th {
+  padding: 1px 4px 1px 4px;
+}
+</style>
+
+<% column_width_hash ||= {} %>
+<table border="1" class="normal" style="width: 95%; margin: 5px 10px;">
+  <tr>
+  <% table_columns.each do |column| %>
+    <% column_width = column_width_hash[column] %>
+    <%= column_width ? "<th width='#{column_width}'>" : "<th>" -%>
+      <%= target_class.human_attribute_name column -%></th>
+  <% end %>
+  </tr>
+
+<% even_or_odd = 0 %>
+<% records.each do |record| %>
+  <% even_or_odd = 1 - even_or_odd %>
+  <tr>
+    <% table_columns.each do |column| -%>
+    <td class="line_<%= even_or_odd -%>">
+<%=
+   if value_logic
+     value_logic.call record, column
+   else
+     record.send(column) if target_class.column_names.include? column
+   end
+-%>
+    </td>
+    <% end %>
+  </tr>
+<% end %>
+
+</table>

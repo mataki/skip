@@ -1,0 +1,17 @@
+<%
+ # ユーザの左側のボックス（プロフィール画像）
+ # :locals => { :user }
+-%>
+
+<div class="box_space">
+  <div class="box_space_title"><%= user.name %><span class="small">さん</span></div>
+  <div class="box_space_img_body"><%= showPicture(user, 120, 80, true) %></div>
+  <div class="box_space_bottom">
+  <% if session[:user_id] == user.id -%>
+    <%= link_to '[画像を変更する]', :controller => 'mypage', :action => 'manage', :menu => 'manage_portrait' -%>
+  <% else -%>
+    最終アクセス：<%= user.before_access %>
+  <% end -%>
+  </div>
+
+</div><!-- box_space -->

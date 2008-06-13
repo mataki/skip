@@ -1,0 +1,90 @@
+<% messages ||= "" %>
+<% @title = 'アンテナへの追加' %>
+
+<div id="select_antenna_body">
+
+<div class="desc">このブログをアンテナに追加できます。
+<br/>追加するアンテナを選択してください</div>
+
+<% unless messages.empty? %>
+  <div class="warning" onclick="this.style.display = 'none';">
+    <h3><%=h messages %></h3>
+  </div>
+<% end %>
+
+<% already_include = false -%>
+<div style="margin: 3px;">
+<p style="font-size: 10px;">あなたのアンテナ：</p>
+<p style="border: 1px solid silver; background-color: #f0f0ff; margin: 0 5px; padding: 0 5px;">
+<% antennas.each do |antenna| -%>
+  <% if antenna.included -%>
+    <% already_include = true -%>
+  <% else -%>
+    <a href="#" id="add_symbol_link_<%= antenna.id -%>" class="add_symbol_link"><%= h(antenna.name) -%></a>&nbsp;/
+  <% end %>
+<% end %></p>
+</div>
+
+<% if already_include -%>
+<div style="margin: 3px;">
+<p style="font-size: 10px;">このユーザは以下のアンテナに既に登録済みです：</p>
+<p style="border: 1px solid silver; background-color: #f0f0ff; margin: 0 5px; padding: 0 5px;">
+<% antennas.each do |antenna| -%>
+  <%= h(antenna.name) + ' /' if antenna.included -%>
+<% end %></p>
+</div>
+<% end -%>
+
+<div style="border: 1px solid silver; background-color: #f0f0ff; margin: 8px; padding: 5px; padding-top: 0; ">
+<form id='add_antenna_and_symbol_form'>
+  新しいアンテナを作成して追加：<%= text_field :antenna, :name %><%= hidden_field_tag :symbol, symbol %><%= submit_tag "追加" %>
+</form>
+</div>
+
+</div>
+<script type="text/javascript" >
+$j(function() {
+
+    var initAction = function() {
+        $j('.add_symbol_link')
+        .click(function() {
+            var url = '<%= url_for({:controller => "antenna", :action => "add_symbol"}) -%>';
+            var antennaId = this.id.split('_')[3]
+            var symbol = '<%= symbol -%>';
+            $j.ajax({
+                url: url,
+                data: { antenna_id: antennaId, symbol: symbol },
+                success: function(html) {
+                    $j('#select_antenna_body').html(html);
+                }
+            });
+            return false;
+        });
+
+        $j('#add_antenna_and_symbol_form')
+        .submit(function() {
+            var url = '<%= url_for({ :controller => :antenna, :action => :add_antenna_and_symbol }) -%>';
+            $j.ajax({
+                type: 'POST',
+                url: url,
+                data: $j(this).serialize(),
+                success: function(html) {
+                    $j('#select_antenna_body').html(html);
+                }
+            });
+            return false;
+        });
+    };
+
+    // nyroModal内で動作させるjQuery ActionはendShowContent callbackを利用して設定しないと動作しないようだ。
+    // もっといい方法があるかもしれない。
+    $j.nyroModalSettings({
+        height: 200,
+        width: 450,
+        endShowContent: function(elts, settings) {
+            initAction();
+        }
+    });
+    initAction();
+});
+</script>

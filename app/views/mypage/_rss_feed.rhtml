@@ -1,0 +1,10 @@
+<%# locals: feeds -%>
+<% feeds.each do |feed| %>
+<div class="box_space_title"><%= feed.channel.title -%></div>
+  <div class="box_space_body" style="font-size: 10px;">
+<% feed.items.each do |item| %>
+    <div class="item"><%= link_to icon_tag("new") + " " + item.title, item.link, :target => "_blank" -%></div>
+<% end %>
+  </div>
+<% end %>
+<div class="box_space_bottom"></div>

@@ -1,0 +1,71 @@
+<style type="text/css">
+div.input_line {
+  border: 1px dotted silver;
+  margin-bottom: 5px;
+  margin-top:10px;
+  padding-bottom: 2px;
+}
+div.input_line div.input_value {
+  padding: 5px;
+}
+div.input_line div.input_label {
+  background-color: #f0f0ff;
+  width: 250px;
+  float: left;
+  font-weight: bold;
+  font-size: 12px;
+  padding: 3px 5px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+</style>
+
+<% form_tag({:action => call_action}, :id=>'group_form') do -%>
+<div class="input_line">
+  <div class="input_value">
+    <%= hidden_field_tag 'users_symbol_value' %>
+    <div class="input_label"><%= header -%></div>
+    <div style="clear: left"></div>
+    <input id="users_symbol" name="symbol" size="40" type="text" />
+    <div class="auto_complete" id="users_symbol_auto_complete"></div>
+    <input type="text" id="users_name" style="background-color: #f0f0ff;border: none;color: blue" disabled>
+    <input type="button" value="<%= btn_title %>" id="users_submit">
+  </div>
+</div>
+<% end -%>
+
+<script type="text/javascript">
+$j(function() {
+    $j('#users_submit')
+    .click(function() {
+        var symbol = $j("#users_symbol").val();
+        var name = $j("#users_name").val();
+        if (name.length == 0) {
+            alert("存在するユーザ/グループを入力してください");
+            return;
+        }
+        var validReg = /(u|g)id:[a-zA-Z0-9]/
+        if (!validReg.test(symbol)) {
+            alert("フォーマットが不正です。uid:xxxxxxのような形で入力してください。");
+            return;
+        }
+        $j('#users_symbol_value').val(symbol);
+        $j('#group_form').submit();
+        return false;
+    });
+
+    var users_symbol_auto_complete_url = '<%= url_for(:controller => 'symbol', :action => 'auto_complete_for_item_search', :type => 'users') -%>';
+    $j('#users_symbol')
+    .autocomplete(users_symbol_auto_complete_url, {
+        formatItem: function(data) {
+            return data[0] + ' - ' + data[1];
+        }
+    })
+    .result(function(group, data, formatted) {
+        if (data) {
+            $j('#users_name:input').val(data[1]);
+        }
+    });
+      
+});
+</script>

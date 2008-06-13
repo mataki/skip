@@ -1,0 +1,18 @@
+<%
+ # ブログ・掲示板の左側のボックス（タグ）
+ # :locals => { :categories }
+-%>
+
+<div class="box_space">
+  <div class="box_space_title"><%= icon_tag 'tag_blue' -%>タグ</div>
+  <div class="box_space_body">
+  <ul>
+  <% categories.each do |category| -%>
+    <% text = link_to(h('[' + category + ']'), :category=>category) %>
+    <li><%= (params[:category] == category) ? ('<b>' + text + '</b>') : text -%></li>
+  <% end -%>
+  </ul>
+  </div>
+  <div class="box_space_bottom"></div>
+</div><!-- box_space -->
+

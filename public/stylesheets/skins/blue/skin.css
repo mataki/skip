@@ -1,0 +1,51 @@
+/* ----------------------------------- */
+/* color1:外線, color2:タブ線, color3: タブ, color4:外側 */
+/* blue  : #0000ff, #2763a5, #d4e5ff, #e3f6ff */
+/* ----------------------------------- */
+a {
+  color: green;
+}
+div#main {
+  background-image: url("./back.png"); /* image */
+}
+div#panel {
+  border: 1px solid #0000ff; /* color:1 */
+}
+div#side ul {
+  border-bottom: 1px solid #0000ff; /* color:1 */
+}
+div#side li.normal {
+  border: 1px solid #0000ff; /* color:1 */
+  border-bottom: none;
+}
+div#side li.selected {
+  border: 1px solid #0000ff; /* color:1 */
+  border-left: 1px solid #e3f6ff; /* color:4 */
+  border-bottom: none;
+}
+div#side li.separator {
+  border: 1px solid #0000ff; /* color:1 */
+  border-bottom: none;
+  border-right: none;
+}
+/* ----------------------------------- */
+#tab_menu a {
+  background:url("./tab_left.gif") no-repeat left top;
+}
+#tab_menu a span {
+  color:#627EB7;
+  background:url("./tab_right.gif") repeat right top;
+}
+#tab_menu a:hover span, #tab_menu a.selected span {
+  color:#627EB7;
+}
+div#tab_body {
+  border: 1px solid #bcd2e6; /* color:2 */
+  border-bottom: none;
+  border-left: none;
+}
+/* ----------------------------------- */
+div#panel, div#side li.selected, div#tab_menu {
+  background-color: #e3f6ff; /* color:4 */
+}
+/* ----------------------------------- */

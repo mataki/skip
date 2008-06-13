@@ -1,0 +1,179 @@
+<style type="text/css">
+div.input_line {
+  border-bottom: 1px dotted silver;
+  margin-bottom: 3px;
+  padding-bottom: 2px;
+}
+div.input_line div.input_label {
+  background-color: #f0f0ff;
+  width: 115px;
+  overflow: hidden;
+  float: left;
+  font-weight: bold;
+  padding: 3px 5px;
+  margin-right: 5px;
+}
+div.input_line div.input_value {
+  float: left;
+  padding: 3px 0;
+}
+div.input_line div.input_bottom {
+  height: 1em;
+  padding: 3px 0px;
+}
+
+</style>
+
+<div id="contents_container">
+<div id="contents_left">
+
+<%= render(:partial => 'user/portrait_box', :locals => { :user => @user }) -%>
+
+<div class="box_space" id="groups">
+  <div class="box_space_title"><%= icon_tag('group') %>参加グループ</div>
+  <div class="box_space_body">
+  <div id="group_participation_help" class="helpbar" style="display: none;">[<%= icon_tag('bullet_red') -%>：管理者 <%= icon_tag('bullet_blue') -%>：参加者]</div>
+  <ul>
+  <% @groups.each do |group| -%>
+    <% icon_name = group.group_participations.first.owned? ? 'bullet_red' : 'bullet_blue' -%>
+    <li><%= icon_tag(icon_name) + group_link_to(group, :view_text => truncate(h(group.name), 12), :title => group.name) -%></li>
+  <% end -%>
+  </ul>
+  </div>
+  <div class="box_space_bottom"><%= link_to "[全 #{@groups_count} 件...全てを見る]", :action => 'group', :uid => @user.uid %></div>
+</div><!-- box_space -->
+
+<div class="box_space">
+  <div class="box_space_title"><%= icon_tag('user_suit') %>紹介したユーザ</div>
+  <div class="box_space_body">
+  <ul>
+  <% for chain in @follow_chains %>
+    <li><%= icon_tag('bullet_blue') + user_link_to(chain.to_user) %></li>
+  <% end %>
+  </ul>
+  </div>
+  <div class="box_space_bottom"><%= link_to '[全てを見る]', :action => 'social', :menu => 'social_chain_against', :uid => @user.uid %></div>
+</div><!-- box_space -->
+
+</div><!-- contents_left -->
+
+<div id="contents_right">
+
+  <% if @user.retired %>
+  <div class="desc" style="font-weight: bold; margin-bottom: 5px;">この方は既に退職されています</div>
+  <% end %>
+
+  <div class="profile_information_space" style="margin-bottom: 10px; position: relative; width: 100%;">
+    <div class="topix_title"><%= skip_image_tag('i05-01.gif') -%><span>プロフィール</span></div>
+    <% if @user.id == session[:user_id] %>
+    <div style="position: absolute; top: 5px; right: 10px;">
+      <%= link_to icon_tag('vcard_edit', :alt=>'編集する') + '[編集する]', :controller => 'mypage', :action => 'manage', :menu => 'manage_profile' -%></div>
+    <% end -%>
+
+    <div class="topix_body" style="margin-top: 5px; width: 95%; overflow: hidden">
+
+      <div class="input_line">
+        <div class="input_label">ID - <%= CUSTOM_RITERAL[:login_account] -%></div>
+        <div class="input_value"><%=h @user.uid -%> - <%=h @user.code -%></div>
+        <div class="input_bottom"></div>
+      </div>
+      <div class="input_line">
+        <div class="input_label">名前</div>
+        <div class="input_value"><%=h @user.name -%>　（<a href="mailto:<%=h @user.email -%>"><%=h @user.email -%></a>）</div>
+        <div class="input_bottom"></div>
+      </div>
+      <div class="input_line">
+        <div class="input_label">所属 - 内線</div>
+        <div class="input_value"><%=h @user.section -%> - <%=h @user.extension -%></div>
+        <div class="input_bottom"></div>
+      </div>
+      <div class="input_line">
+        <div class="input_label">自己紹介</div>
+        <div class="input_value"></div>
+        <div class="input_bottom"></div>
+      </div>
+      <div style="border: 1px solid silver; padding: 5px;"><div class="hiki_style"><%= hiki_parse(@user.introduction) %></div></div>
+
+      <br/>
+
+      <% if @user.has_profile? && @user.profile.disclosure -%>
+      <% @profile = @user.profile -%>
+      <div class="input_line">
+        <div class="input_label">性別 - 入社年度</div>
+        <div class="input_value"><%=h @profile.gender -%> - <%=h @profile.join_year -%>年度入社</div>
+        <div class="input_bottom"></div>
+      </div>
+      <div class="input_line">
+        <div class="input_label">誕生日 - 血液型</div>
+        <div class="input_value"><%=h @profile.birth_month_day -%> - <%=h @profile.blood -%></div>
+        <div class="input_bottom"></div>
+      </div>
+      <div class="input_line">
+        <div class="input_label">出身地 - 出身校</div>
+        <div class="input_value"><%=h @profile.hometown_name -%> - <%=h @profile.alma_mater -%></div>
+        <div class="input_bottom"></div>
+      </div>
+      <div class="input_line">
+        <div class="input_label">現住所</div>
+        <div class="input_value"><%=h @profile.address -%></div>
+        <div class="input_bottom"></div>
+      </div>
+
+      <div class="input_line">
+        <div class="input_label">趣味</div>
+        <div class="input_value"><%=h @profile.hobby.chop.gsub(/\,/, ' , ') -%></div>
+        <div class="input_bottom"></div>
+      </div>
+      <div class="input_line">
+        <div class="input_label">オフの私</div>
+        <div class="input_value"></div>
+        <div class="input_bottom"></div>
+      </div>
+      <div style="border: 1px solid silver; padding: 5px;"><div class="hiki_style"><%= hiki_parse(@profile.introduction) %></div></div>
+      <% elsif @user.has_profile? && !@user.profile.disclosure -%>
+      <div style="text-align: center; color: blue; font-weight: bold;">属性情報・オフ情報は非公開です</div>
+      <% else -%>
+      <div style="text-align: center; color: blue; font-weight: bold;">まだ属性情報・オフ情報は登録されていません</div>
+      <% end -%>
+
+    </div>
+  </div>
+
+  <%= render :partial => "postit_cloud",
+             :locals => {
+               :postit_url => @postit_url,
+               :user => @user,
+               :tags => @tags
+             } %>
+
+<% if @against_chains.size > 0 %>
+  <div class="profile_information_space" style="margin-bottom: 10px; position: relative; width: 100%;">
+    <div class="topix_title"><%= skip_image_tag('i05-01.gif') -%><span>紹介文</span></div>
+    <div class="topix_body" style="margin-top: 5px; width: 100%">
+    <% for chain in @against_chains %>
+
+    <table border="1" class="normal" style="width: 95%; margin-bottom: 5px;">
+      <tr>
+        <th style="width: 80px; text-align: center;"><%= user_link_to(chain.from_user, { :view_text => showPicture(chain.from_user, 60, 40) + "<br/>" + chain.from_user.name }) -%></th>
+        <td style="padding: 2px;"><div class="hiki_style"><%= hiki_parse(chain.comment) -%></div></td>
+      </tr>
+    </table>
+
+    <% end %>
+    </div>
+    <div style="position: absolute; top: 5px; right: 10px;"><%= link_to '[全てを見る]', :action => 'social', :menu => 'social_chain', :uid => @user.uid %></div>
+  </div>
+<% end %>
+
+</div><!-- contents_right -->
+
+<div id="contents_bottom">
+</div><!-- contents_bottom -->
+
+</div><!-- contents_container -->
+
+<script type="text/javascript">
+$j(function(){
+    toggleMouseOver('#groups', '#group_participation_help');
+});
+</script>
