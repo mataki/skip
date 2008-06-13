@@ -25,8 +25,6 @@ ActionMailer::Base.smtp_settings = { :address=> 'localhost', :port=> '25' }
 ActionMailer::Base.raise_delivery_errors = true # 配送に失敗したら例外を出す
 
 # バッチ実行時のパラメータの設定
-# サーバのURLを指定
-ENV['BATCH_ROOT_URL'] = "http://localhost"
 # バッチのログの出力先の設定
 ENV['BATCH_LOG_PATH'] = "#{RAILS_ROOT}/log/batch.log"
 

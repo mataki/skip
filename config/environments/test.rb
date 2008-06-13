@@ -17,7 +17,6 @@ config.action_controller.perform_caching             = false
 # ActionMailer::Base.deliveries array.
 config.action_mailer.delivery_method = :test
 
-ENV['BATCH_ROOT_URL'] = "http://localhost"
 ENV['BATCH_LOG_PATH'] = "#{RAILS_ROOT}/log/batch.log"
 
 ENV['IMAGE_PATH'] = "tmp/test_image_files"

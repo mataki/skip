@@ -27,7 +27,7 @@ class BatchSendMails < BatchBase
       user = User.find(:first, :conditions => ["user_uids.uid = ?", mail.from_user_id], :include => ['user_uids'])
       board_entry = BoardEntry.find(:first, :conditions => ["user_id = ? and user_entry_no = ?", user.id, mail.user_entry_no])
       next unless board_entry
-      entry_url = "#{ENV['BATCH_ROOT_URL']}/page/#{board_entry.id}"
+      entry_url = "#{ENV['SKIP_URL']}/page/#{board_entry.id}"
 
       begin
         UserMailer.deliver_sent_contact(mail.to_address, user.name, entry_url, board_entry.title)
@@ -47,8 +47,8 @@ class BatchSendMails < BatchBase
                  :joins => 'LEFT JOIN user_message_unsubscribes USING(user_id,message_type)').each do |message|
       if message.user_message_unsubscribe_id.nil?
         user = User.find(:first, :conditions => ["id = ?", message.user_id])
-        link_url = "#{ENV['BATCH_ROOT_URL']}#{message.link_url}"
-        message_manage_url = "#{ENV['BATCH_ROOT_URL']}/mypage/manage?menu=manage_message"
+        link_url = "#{ENV['SKIP_URL']}#{message.link_url}"
+        message_manage_url = "#{ENV['SKIP_URL']}/mypage/manage?menu=manage_message"
         begin
           UserMailer.deliver_sent_message(user.email, link_url, message.message, message_manage_url)
           message.update_attribute :send_flag, true

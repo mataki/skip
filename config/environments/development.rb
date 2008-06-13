@@ -16,7 +16,6 @@ config.action_view.debug_rjs                         = true
 config.action_mailer.raise_delivery_errors = false
 config.action_mailer.delivery_method = :test
 
-ENV['BATCH_ROOT_URL'] ||= "http://localhost"
 ENV['BATCH_LOG_PATH'] ||= "#{RAILS_ROOT}/log/batch.log"
 
 ENV['IMAGE_PATH'] ||= "temp_image_file_path"
