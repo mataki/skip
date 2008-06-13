@@ -53,6 +53,13 @@ MYPAGE_FEED_DEFAULT_LIMIT = 3
 # url:   フィードのURL
 # title: フィードのタイトル(フィード内のタイトル以外のものを設定したい場合)
 # limit: フィードの最大表示件数
+# ex) RSSを表示しない場合、以下のように設定する
+# MYPAGE_FEED_SETTINGS = []
+# ex) 複数のRSSを表示する場合　上から表示する順に以下のように並べる
+# MYPAGE_FEED_SETTINGS = [ { :url => "http://www.openskip.org/rss.xml", :title => "SKIPニュース" },
+#                          { :url => "http://example.com/rss" } ]
+
+
 MYPAGE_FEED_SETTINGS = [ { :url => "http://www.openskip.org/rss.xml", :title => "SKIPニュース" } ]
 
 # 全文検索のHyperEstraierのノードマスタのURL
