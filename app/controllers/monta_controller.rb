@@ -1,6 +1,6 @@
 # SKIP（Social Knowledge & Innovation Platform）
 # Copyright (C) 2008  TIS Inc.
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -9,7 +9,7 @@
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-# 
+#
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -86,7 +86,7 @@ class MontaController < ApplicationController
       view_str = str.gsub(text_align.to_s+"\r\n", "")
     end
 
-     return view_str.gsub("\r\n", "<br/>"), img_id_arr
+     return ERB::Util.html_escape(view_str.gsub("\r\n", "<br/>")), img_id_arr
   end
 
   def replace_img_id content, img_id_arr
@@ -94,7 +94,7 @@ class MontaController < ApplicationController
     img_id_arr.each do |img_id|
       hidden_content = hidden_content.gsub("id='#{img_id}'", "id='hidden_#{img_id}'");
     end
-    return hidden_content
+    return ERB::Util.html_escape(hidden_content)
   end
 
   def divide_text text
