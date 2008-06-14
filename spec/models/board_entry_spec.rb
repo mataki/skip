@@ -1,6 +1,6 @@
 # SKIP（Social Knowledge & Innovation Platform）
 # Copyright (C) 2008  TIS Inc.
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -9,7 +9,7 @@
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-# 
+#
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -63,14 +63,15 @@ describe BoardEntry do
                                                 :category => "[#{Tag::NOTICE_TAG}]",
                                                 :publication_type => 'private'}))
 
+    Mail.delete_all
     # 単一ユーザに対する連絡
     entry.entry_publications.build(:symbol => "uid:#{@a_group_owned_user.uid}")
     entry.prepare_send_mail
     mails = Mail.find(:all)
     assert_equal 1, mails.size
     assert_equal @a_group_owned_user.email, mails.first.to_address
-    Mail.delete_all
 
+    Mail.delete_all
     # 複数ユーザに対する連絡
     entry.entry_publications.build(:symbol => "uid:#{@a_group_joined_user.uid}")
     entry.prepare_send_mail

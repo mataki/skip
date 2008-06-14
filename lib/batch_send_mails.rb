@@ -25,6 +25,10 @@ class BatchSendMails < BatchBase
   def self.send_notice
     Mail.find(:all, :conditions => "send_flag = false", :order => 'id asc', :limit => 30).each do |mail|
       user = User.find(:first, :conditions => ["user_uids.uid = ?", mail.from_user_id], :include => ['user_uids'])
+      if user.retired
+        mail.update_attribute :send_flag, true
+        next
+      end
       board_entry = BoardEntry.find(:first, :conditions => ["user_id = ? and user_entry_no = ?", user.id, mail.user_entry_no])
       next unless board_entry
       entry_url = "#{ENV['SKIP_URL']}/page/#{board_entry.id}"

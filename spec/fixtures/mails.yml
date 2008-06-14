@@ -1,1 +1,11 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+a_mail:
+  from_user_id: a_user
+  created_on: <%= SkipFaker.today %>
+  updated_on: <%= SkipFaker.today %>
+  user_entry_no: 1
+  to_address: <%= SkipFaker.email %>
+  send_flag: false
+  title: <%= SkipFaker.rand_char %>
+  to_address_name: <%= SkipFaker.rand_char %>
+  to_address_symbol: a_user
