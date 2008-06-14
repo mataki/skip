@@ -35,10 +35,9 @@
 
 <script language="JavaScript" type="text/javascript">
 $j(function(){
-
     var loadCalendar = function(year, month){
         $j.ajax({
-            url: '<%= url_for(:controller => 'mypage', :action => 'load_calendar') -%>',
+            url: '<%= url_for( :action => 'load_calendar') -%>',
             data: { year : year , month : month },
             complete: function(request) {
                $j('#calendar')
