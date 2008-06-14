@@ -20,9 +20,9 @@ config.action_controller.perform_caching             = true
 # ----設定項目----------------------------------------------------
 
 # メールサーバ設定
-ActionMailer::Base.delivery_method = :smtp
+ActionMailer::Base.delivery_method = :test
 ActionMailer::Base.smtp_settings = { :address=> 'localhost', :port=> '25' }
-ActionMailer::Base.raise_delivery_errors = true # 配送に失敗したら例外を出す
+ActionMailer::Base.raise_delivery_errors = false
 
 # バッチ実行時のパラメータの設定
 # バッチのログの出力先の設定
