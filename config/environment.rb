@@ -65,7 +65,7 @@ PASSWORD_EDIT_SETTING = true
 NICKNAME_USE_SETTING = true
 
 # SSLログインを利用するかの設定
-SSL_SETTING = true
+SSL_SETTING = false
 
 # 全文検索入力欄の表示の制御
 FULL_TEXT_SEARCH_SETTING = false
