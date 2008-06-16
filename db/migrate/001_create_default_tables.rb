@@ -5,7 +5,7 @@ class CreateDefaultTables < ActiveRecord::Migration
     t.string   "name",       :default => "", :null => false
     t.string   "email"
     t.string   "section",    :default => "", :null => false
-    t.string   "password",   :default => "", :null => false
+    t.string   "crypted_password",   :default => "", :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

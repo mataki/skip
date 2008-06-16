@@ -18,21 +18,21 @@ require File.dirname(__FILE__) + '/../../lib/account_access'
 
 describe AccountAccess, 'がアカウント情報を返すとき' do
   it 'は正しいユーザコードとパスワードが指定されていること' do
-    Account.should_receive(:find_by_code_and_password).with('123456', Account.encrypt('passwd')).and_return({ "code" => '123456' , "name" => "山田　太郎", "section" => '', "email" => '123456@hoge.jp' })
+    Account.should_receive(:find_by_code_and_crypted_password).with('123456', Account.encrypt('passwd')).and_return({ "code" => '123456' , "name" => "山田　太郎", "section" => '', "email" => '123456@hoge.jp' })
     AccountAccess.auth('123456', 'passwd').should == { "code" => '123456' , "name" => "山田　太郎", "section" => '', "email" => '123456@hoge.jp' }
   end
 end
 
 describe AccountAccess, 'がエラーメッセージを返すとき' do
   it 'はDBに存在しないユーザコードとパスワードが指定されていること' do
-    Account.should_receive(:find_by_code_and_password).and_return(nil)
+    Account.should_receive(:find_by_code_and_crypted_password).and_return(nil)
     lambda { AccountAccess.auth('123456', 'passwd') }.should raise_error(AccountAccess::AccountAccessException)
   end
 end
 
 describe AccountAccess, 'で入力された古いパスワードが違うとき' do
   before(:each) do
-    Account.should_receive(:find_by_code_and_password).and_return(nil)
+    Account.should_receive(:find_by_code_and_crypted_password).and_return(nil)
   end
   it 'はAccountにold_passwordが間違っている旨を表すエラーを設定して返すこと' do
     AccountAccess.change_password('111111', {}).should have(1).errors_on(:old_password)
@@ -42,8 +42,8 @@ end
 describe AccountAccess, 'で入力された古いパスワードが正しいとき' do
   fixtures :accounts
   before(:each) do
-    Account.should_receive(:find_by_code_and_password).and_return(accounts(:a_account))
-    @before_password = accounts(:a_account).password
+    Account.should_receive(:find_by_code_and_crypted_password).and_return(accounts(:a_account))
+    @before_password = accounts(:a_account).crypted_password
   end
   describe AccountAccess, 'で入力された新しいパスワードが4文字未満のとき' do
     it 'はAccountにpasswordの入力文字数が足りない旨を表すエラーを設定して返すこと' do
@@ -51,7 +51,7 @@ describe AccountAccess, 'で入力された古いパスワードが正しいと�
     end
     it 'はAccountを保存しないこと' do
       AccountAccess.change_password('111111', {:old_password => 'hoge', :password => '123', :password_confirmation => '123'})
-      after_password = Account.find_by_code('111111').password
+      after_password = Account.find_by_code('111111').crypted_password
       after_password.should == @before_password
     end
   end
@@ -59,7 +59,7 @@ describe AccountAccess, 'で入力された古いパスワードが正しいと�
   describe AccountAccess, 'で入力された新しいパスワードが正しいとき' do
     it 'はAccountを保存する' do
       AccountAccess.change_password('111111', {:old_password => 'hoge', :password => '1234', :password_confirmation => '1234'})
-      after_password = Account.find_by_code('111111').password
+      after_password = Account.find_by_code('111111').crypted_password
       after_password.should_not == @before_password
     end
   end

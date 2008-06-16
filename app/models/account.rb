@@ -14,7 +14,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Account < ActiveRecord::Base
-  attr_accessor :old_password
+  attr_accessor :old_password, :password
   validates_presence_of :code, :message => 'は必須です'
   validates_uniqueness_of :code, :message => 'は既に登録されています'
 
@@ -26,7 +26,7 @@ class Account < ActiveRecord::Base
   validates_presence_of :old_password, :message => 'は必須です', :if => :password_required?
 
   validates_presence_of :password, :message => 'は必須です'
-  validates_confirmation_of :password, :message => 'は確認用パスワードと一致しません'
+  validates_confirmation_of :password, :message => 'は確認用パスワードと一致しません', :if => :password_required?
   validates_length_of :password, :within => 4..40, :too_short => 'は%d文字以上で入力してください', :too_long => 'は%d文字以下で入力して下さい', :if => :password_required?
 
   validates_presence_of :password_confirmation, :message => 'は必須です', :if => :password_required?
@@ -46,11 +46,11 @@ class Account < ActiveRecord::Base
   end
 
   def before_save
-    self.password = self.class.encrypt(self.password)
+    self.crypted_password = self.class.encrypt(self.password)
   end
 
   def self.auth(code, password)
-    find_by_code_and_password(code, encrypt(password))
+    find_by_code_and_crypted_password(code, encrypt(password))
   end
 
   def self.encrypt(password)

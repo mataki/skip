@@ -5,6 +5,6 @@ a_account:
   name: a_account
   email: <%= SkipFaker.email %>
   section: <%= SkipFaker.rand_char %>
-  password: <%= Account.encrypt('password') %>
+  crypted_password: <%= Account.encrypt('password') %>
   created_at: <%= SkipFaker.today %>
   updated_at: <%= SkipFaker.today %>
