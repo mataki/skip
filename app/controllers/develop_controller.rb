@@ -69,6 +69,7 @@ class DevelopController < ApplicationController
     else
       @site_count = SiteCount.find(:first, :order => "created_on desc") || SiteCount.new
     end
+    flash[:notice] = '対象データが見つかりません。' if @site_count.new_record?
     @item_count = get_site_count_hash_by_day @date
   end
 

@@ -56,6 +56,7 @@ div.current_statistics {
 </div><!-- summary_left -->
 
 <div id="summary_right">
+<% unless @site_count.new_record? %>
 <div id="current_statistics" class="current_statistics">
 <%= render :partial => "current_statistics", :locals => { :site_count => @site_count } %>
 </div>
@@ -88,9 +89,10 @@ div.current_statistics {
 <div style="clear: left"></div>
 <% end %>
 
-<% end -%>
+<% end %>
 
 </div>
+<% end %>
 
 </div><!-- summary_right -->
 
