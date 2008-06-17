@@ -64,7 +64,7 @@ div.input_line div.input_bottom {
   <% end %>
 
   <div class="profile_information_space" style="margin-bottom: 10px; position: relative; width: 100%;">
-    <div class="topix_title"><%= skip_image_tag('i05-01.gif') -%><span>プロフィール</span></div>
+    <div class="topix_title"><%= icon_tag('asterisk_orange') -%><span>プロフィール</span></div>
     <% if @user.id == session[:user_id] %>
     <div style="position: absolute; top: 5px; right: 10px;">
       <%= link_to icon_tag('vcard_edit', :alt=>'編集する') + '[編集する]', :controller => 'mypage', :action => 'manage', :menu => 'manage_profile' -%></div>
@@ -148,7 +148,7 @@ div.input_line div.input_bottom {
 
 <% if @against_chains.size > 0 %>
   <div class="profile_information_space" style="margin-bottom: 10px; position: relative; width: 100%;">
-    <div class="topix_title"><%= skip_image_tag('i05-01.gif') -%><span>紹介文</span></div>
+    <div class="topix_title"><%= icon_tag('asterisk_orange') -%><span>紹介文</span></div>
     <div class="topix_body" style="margin-top: 5px; width: 100%">
     <% for chain in @against_chains %>
 

@@ -5,7 +5,7 @@
   <div align="center">
   <% file_ext = img_name.downcase.split(".").last %>
   <% if ["flv", "swf"].include?(file_ext) %>
-    <%= skip_image_tag 'flash_rune.gif', :alt => "flv形式の動画", :height => "70px" -%>
+    <%= image_tag 'http://www.adobe.com/shockwave/download/images/flash_rune.gif', :alt => "flv形式の動画", :height => "70px" -%>
   <% elsif ["jpg","png","jpeg","gif","bmp"].include?(file_ext)%>
     <img src="<%= img_url %>" alt="<%= img_name %>" height='70'/>
   <% else %>

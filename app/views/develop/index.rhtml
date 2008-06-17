@@ -98,7 +98,7 @@ div.message_post_space textarea {
 <div id="summary_right">
 
   <div class="develop_info_space">
-    <div class="topix_title" style="text-align: left;"><%= skip_image_tag('i05-01.gif') -%><span>不具合・要望受付</span></div>
+    <div class="topix_title" style="text-align: left;"><%= icon_tag('asterisk_orange') -%><span>不具合・要望受付</span></div>
     <div class="message_post_space" style="border: 1px dashed silver; margin-top: 5px; margin-bottom: 10px; padding: 5px 10px; text-align: left;">
       <% form_tag :action => 'create_message' do -%>
 
@@ -117,7 +117,7 @@ div.message_post_space textarea {
   </div><!-- develop_info_space -->
 
   <div class="develop_info_space">
-    <div class="topix_title" style="text-align: left;"><%= skip_image_tag('i05-01.gif') -%><span>お知らせ</span></div>
+    <div class="topix_title" style="text-align: left;"><%= icon_tag('asterisk_orange') -%><span>お知らせ</span></div>
     <div class="develop_info_space_lines">
       <% @info_messages.each do |message| -%>
         <% view_text = icon_tag('bullet_red') + "<span class='diary_date'>[" + message.diary_date + "]</span>" + h(message.title) %>
@@ -127,7 +127,7 @@ div.message_post_space textarea {
   </div><!-- develop_info_space -->
 
   <div class="develop_info_space">
-    <div class="topix_title" style="text-align: left;"><%= skip_image_tag('i05-01.gif') -%><span>リリースノート</span></div>
+    <div class="topix_title" style="text-align: left;"><%= icon_tag('asterisk_orange') -%><span>リリースノート</span></div>
     <div class="develop_info_space_lines">
       <% @release_messages.each do |message| -%>
         <% view_text = icon_tag('bullet_blue') + "<span class='diary_date'>[" + message.diary_date + "]</span>" + h(message.title) %>
@@ -137,7 +137,7 @@ div.message_post_space textarea {
   </div><!-- develop_info_space -->
 
   <div class="develop_info_space">
-    <div class="topix_title" style="text-align: left;"><%= skip_image_tag('i05-01.gif') -%><span>利用上のヒント</span></div>
+    <div class="topix_title" style="text-align: left;"><%= icon_tag('asterisk_orange') -%><span>利用上のヒント</span></div>
     <div class="develop_info_space_lines">
       <% @hint_messages.each do |message| -%>
         <% view_text = icon_tag('bullet_green') + "<span class='diary_date'>[" + message.diary_date + "]</span>" + h(message.title) %>

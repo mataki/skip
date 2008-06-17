@@ -1,4 +1,4 @@
-<div class="topix_title"><%= skip_image_tag('i05-01.gif') -%><span><%=  history_title %>の推移</span></div>
+<div class="topix_title"><%= icon_tag('asterisk_orange') -%><span><%=  history_title %>の推移</span></div>
 
 <% complete_effect = "new Effect.Highlight('statistics_history');" %>
 <% url_params = {:action => 'ado_statistics_history', :type => 'monthly', :category => category, :desc => history_title } %>

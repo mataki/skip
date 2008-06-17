@@ -84,7 +84,7 @@ div.box_space_body p.button {
 <div id="contents_right">
 
   <div class="group_info_space">
-    <div class="topix_title" style="text-align: left;"><%= skip_image_tag('i05-01.gif') -%><span>お知らせ</span></div>
+    <div class="topix_title" style="text-align: left;"><%= icon_tag('asterisk_orange') -%><span>お知らせ</span></div>
     <div class="group_info_space_lines">
       <% generate_informations(@group, @participation).each do |information| -%>
       <div class="group_info_space_lines_line"><%= information -%></div>
@@ -93,7 +93,7 @@ div.box_space_body p.button {
   </div><!-- group_info_space -->
 
   <div class="group_info_space">
-    <div class="topix_title" style="text-align: left;"><%= skip_image_tag('i05-01.gif') -%><span>説明</span></div>
+    <div class="topix_title" style="text-align: left;"><%= icon_tag('asterisk_orange') -%><span>説明</span></div>
     <div class="group_info_space_desc">
       <div class="group_info_space_desc_body"><div class="hiki_style"><%= hiki_parse(@group.description, @group.symbol) -%></div></div>
     </div>

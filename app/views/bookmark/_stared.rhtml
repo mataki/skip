@@ -1,6 +1,6 @@
-<% icon_name, icon_title = 'star_on.png', "スターをはずす" -%>
-<% icon_name, icon_title = 'star_off.png', "スターを付ける" unless bookmark_comment.stared -%>
-<a href="#" class='bookmark_star' id="bookmark_star_link_<%= bookmark_comment.id -%>"><%= image_tag(icon_name, :title => icon_title, :alt => icon_title) -%></a>
+<% icon_name, icon_title = 'award_star_gold_2', "スターをはずす" -%>
+<% icon_name, icon_title = 'award_star_silver_2', "スターを付ける" unless bookmark_comment.stared -%>
+<a href="#" class='bookmark_star' id="bookmark_star_link_<%= bookmark_comment.id -%>"><%= icon_tag(icon_name, :title => icon_title, :alt => icon_title) -%></a>
 
 <script type="text/javascript">
 $j(function(){
@@ -21,4 +21,3 @@ $j(function(){
     });
 });
 </script>
-
