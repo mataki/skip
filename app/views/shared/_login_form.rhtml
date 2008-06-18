@@ -1,5 +1,5 @@
 
-<% form_tag({:controller => :platform, :action => :login}, {:only_path => false, :id => 'login_form'}) do %>
+<% form_tag({:controller => :platform, :action => :login, :only_path => false}, {:id => 'login_form'}) do %>
 <%= hidden_field_tag "return_to", params[:return_to] -%>
 <table class="box" style="font-size: 12px; width: 170px;">
   <tr valign="top"><td><label for="login_key"><span style="font-weight: bold;"><%= "#{CUSTOM_RITERAL[:login_account]}#{CUSTOM_RITERAL[:login_account_example]}" -%></span></label></td></tr>
@@ -20,11 +20,21 @@
 <% end %>
 
 <script type="text/javascript">
-  <%# TODO 後でjQuery化すること %>
-  Event.observe(window, "load", function() {loadLoginData();});
-  Event.observe("login_form", "submit", function() {
-    if($("ssl_enable_radio").checked) {
-      $("login_form").action = $("login_form").action.replace("http://", "https://");
-    }
-  });
+$j(function(){
+    var loadLoginData = function(){
+        login_save = (loadCookie('login_save') == '') ? false : eval(loadCookie('login_save'));
+        $j('#login_save').attr('checked', login_save);
+        ssl_enable = (loadCookie('ssl_enable') == '') ? false : eval(loadCookie('ssl_enable'));
+        $j('#ssl_enable_radio').attr('checked', ssl_enable);
+        $j('#ssl_disable_radio').attr('checked', !ssl_enable);
+        $j('#login_key').focus();
+    };
+    loadLoginData();
+    $j('#login_form')
+    .submit(function(){
+        if($j('#ssl_enable_radio:checked').size() > 0) {
+            $j(this).attr('action', $j(this).attr('action').replace('http://', 'https://'));
+        }
+    });
+})
 </script>

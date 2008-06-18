@@ -291,10 +291,3 @@ function saveLoginData(){
     saveCookie('ssl_enable', $('ssl_enable_radio').checked.toString(), exp_days);
     return true;
 }
-function loadLoginData(){
-    $('login_save').checked = eval(loadCookie('login_save'));
-    if((ssl_enable = loadCookie('ssl_enable')) == "") ssl_enable = "false";
-    $('ssl_enable_radio').checked = eval(ssl_enable);
-    $('ssl_disable_radio').checked = !eval(ssl_enable);
-    $('login_key').focus();
-}
