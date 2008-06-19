@@ -23,9 +23,7 @@ class Account < ActiveRecord::Base
   validates_presence_of :email, :message => 'は必須です'
   validates_uniqueness_of :email, :message => 'は既に登録されています'
 
-  validates_presence_of :old_password, :message => 'は必須です', :if => :password_required?
-
-  validates_presence_of :password, :message => 'は必須です'
+  validates_presence_of :password, :message => 'は必須です', :if => :password_required?
   validates_confirmation_of :password, :message => 'は確認用パスワードと一致しません', :if => :password_required?
   validates_length_of :password, :within => 4..40, :too_short => 'は%d文字以上で入力してください', :too_long => 'は%d文字以下で入力して下さい', :if => :password_required?
 
@@ -59,6 +57,6 @@ class Account < ActiveRecord::Base
 
 private
   def password_required?
-    password.blank? || !old_password.blank?
+    crypted_password.blank? || !password.blank?
   end
 end
