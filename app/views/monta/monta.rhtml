@@ -3,37 +3,52 @@
   <title>TakahashiMonta: <%= @board_entry.title %></title>
   <%= skip_javascript_include_tag 'prototype' %>
   <%= skip_javascript_include_tag 'scriptaculous' %>
-  <%= skip_javascript_include_tag 'hotkey' %>
   <%= skip_javascript_include_tag 'jquery.js' %>
+  <%= skip_javascript_include_tag 'jquery.hotkeys.js' %>
   <script language="JavaScript" type="text/javascript">$j = jQuery.noConflict();</script>
   <%= javascript_include_tag 'application' %>
   <%= stylesheet_link_tag 'monta' %>
-  </head>
-
-<% url_first_page = url_for(:controller=>'monta', :action=>'ado_view_contents', :id=>@board_entry.id, :index=>0) %>
-<body style="height:100%" onClick="go_next()" onLoad="new Ajax.Updater('view_contents', '<%= url_first_page %>', {asynchronous:true, evalScripts:true});
-  return false;">
-  <div class="my_header"><%= @board_entry.title %></div>
+</head>
+<body id='monta_body' style="height:100%">
+  <div class="my_header">
+    <%= @board_entry.title %>
+  </div>
   <div id="view_contents"></div>
 </body>
+<script type="text/javascript">
+$j(function() {
+    var changePage = function(url) {
+        $j.ajax({
+            url: url,
+            success: function(html) {
+                $j('#view_contents').html(html);
+            }
+        });
+    };
+    var nextPage = function() {
+        changePage($j('#url_next').html());
+    };
+    var prevPage = function() {
+        changePage($j('#url_prev').html());
+    };
 
-<script>
-   function go_next() {
-    var monta = $('monta');
-    if (monta != null) {
-      new Effect.Puff(monta);
-    }
-    new Ajax.Updater('view_contents', $('url_next').innerHTML, {asynchronous:true, evalScripts:true});
-  };
-  function go_prev() {
-    new Ajax.Updater('view_contents', $('url_prev').innerHTML, {asynchronous:true, evalScripts:true});
-  };
+    $j.ajax({
+        url: '<%= url_for(:controller => :monta, :action => :ado_view_contents, :id => @board_entry.id, :index => 0) -%>',
+        success: function(html) {
+            $j('#view_contents').append(html);
+        }
+    });
 
-  var kb = new HotKey;
-  kb.add(["right"], go_next);
-  kb.add(["down"],  go_next);
-  kb.add(["enter"], go_next);
+    $j('#monta_body')
+    .click(function() {
+        nextPage();
+    });
 
-  kb.add(["up"],    go_prev);
-  kb.add(["left"],  go_prev);
+    $j.hotkeys.add('right', nextPage);
+    $j.hotkeys.add('down', nextPage);
+    $j.hotkeys.add('return', nextPage);
+    
+    $j.hotkeys.add('up', prevPage);
+    $j.hotkeys.add('left', prevPage);
+})
 </script>

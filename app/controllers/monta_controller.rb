@@ -23,7 +23,7 @@ class MontaController < ApplicationController
 
     return unless get_board_entry
     @index = 0
-    render :action=>"monta", :layout=>false
+    render :action => :monta, :layout => false
   end
 
   def ado_view_contents
@@ -50,43 +50,6 @@ class MontaController < ApplicationController
     end
     @max_count = counter_array.last
     render :layout=>false
-  end
-
-  def decorate_str(str, user_id, board_entry_id, board_entry_user_id)
-    view_str = str
-    # 黄色い付箋紙を追加
-    if str.match(/\[\[.+?\]\]/)
-      view_str = str.gsub("[[", "<span id='monta' style='background-color: #FFFF00;color: #FFFF00;'> ")
-      view_str = view_str.gsub("]]", "</span>")
-    end
-
-    # 画像を追加
-    regex_type = /\{\{.+?\}\}/
-    img_id_arr = []
-    if image_name = view_str.match(regex_type)
-      image_name = image_name.to_s.gsub("{{", "").gsub("}}", "")
-      image_name = board_entry_id.to_s + "_" +  image_name
-
-      img_url = url_for(:controller=>'image', :action=>'show', :path=>File.join('board_entries', board_entry_user_id.to_s, image_name))
-      image_id =  "image_#{image_name}"
-      view_str = view_str.gsub(regex_type, "<img id='#{image_id}'  src=\"" + img_url + "\" />")
-      img_id_arr << image_id
-    end
-
-    # テキストのレイアウト指定
-    if (text_align = str.match(/\|\|.+?\|\|/))
-      case text_align.to_s[2..-3]
-        when "left"
-          @text_align = "left"
-        when "right"
-          @text_align = "right"
-        else
-          @text_align = "center"
-      end
-      view_str = str.gsub(text_align.to_s+"\r\n", "")
-    end
-
-     return ERB::Util.html_escape(view_str.gsub("\r\n", "<br/>")), img_id_arr
   end
 
   def replace_img_id content, img_id_arr
@@ -124,6 +87,43 @@ private
       redirect_to :controller => 'mypage', :action => 'index'
       return false
     end
+  end
+
+  def decorate_str(str, user_id, board_entry_id, board_entry_user_id)
+    view_str = str
+    # 黄色い付箋紙を追加
+    if str.match(/\[\[.+?\]\]/)
+      view_str = str.gsub("[[", "<span id='monta' style='background-color: #FFFF00;color: #FFFF00;'> ")
+      view_str = view_str.gsub("]]", "</span>")
+    end
+
+    # 画像を追加
+    regex_type = /\{\{.+?\}\}/
+    img_id_arr = []
+    if image_name = view_str.match(regex_type)
+      image_name = image_name.to_s.gsub("{{", "").gsub("}}", "")
+      image_name = board_entry_id.to_s + "_" +  image_name
+
+      img_url = url_for(:controller=>'image', :action=>'show', :path=>File.join('board_entries', board_entry_user_id.to_s, image_name))
+      image_id =  "image_#{image_name}"
+      view_str = view_str.gsub(regex_type, "<img id='#{image_id}'  src=\"" + img_url + "\" />")
+      img_id_arr << image_id
+    end
+
+    # テキストのレイアウト指定
+    if (text_align = str.match(/\|\|.+?\|\|/))
+      case text_align.to_s[2..-3]
+        when "left"
+          @text_align = "left"
+        when "right"
+          @text_align = "right"
+        else
+          @text_align = "center"
+      end
+      view_str = str.gsub(text_align.to_s+"\r\n", "")
+    end
+
+     return ERB::Util.html_escape(view_str.gsub("\r\n", "<br/>")), img_id_arr
   end
 
 end
