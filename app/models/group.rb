@@ -1,6 +1,6 @@
 # SKIP（Social Knowledge & Innovation Platform）
 # Copyright (C) 2008  TIS Inc.
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -9,13 +9,12 @@
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-# 
+#
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Group < ActiveRecord::Base
   has_many :group_participations, :dependent => :destroy
-  has_one :group_mail, :dependent => :destroy
 
   validates_presence_of :name, :description, :gid,
                         :message =>'は必須です'
@@ -144,16 +143,6 @@ class Group < ActiveRecord::Base
 
     find(:all, :select => "category, gid").each{ |group| group_by_category[group.category] << "gid:#{group.gid}" }
     group_by_category
-  end
-
-  # メール自動投稿機能を利用しているか否か（レコードが保存されいるか否か）
-  def use_mail
-    return false unless group_mail
-    if group_mail.id
-      return true
-    else
-      return false
-    end
   end
 
   # グループに関連する情報の削除
