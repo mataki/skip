@@ -16,11 +16,11 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Account do
-  before(:each) do
-    @account = Account.new :code => SkipFaker.rand_char, :name => SkipFaker.rand_char, :email => SkipFaker.email, :password => SkipFaker.rand_char
-  end
-
-  it "should be valid" do
-    @account.should be_valid
-  end
+#  before(:each) do
+#    @account = Account.new :code => SkipFaker.rand_char, :name => SkipFaker.rand_char, :email => SkipFaker.email, :password => SkipFaker.rand_char
+#  end
+#
+#  it "should be valid" do
+#    @account.should be_valid
+#  end
 end

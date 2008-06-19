@@ -35,7 +35,7 @@ describe AccountAccess, 'で入力された古いパスワードが違うとき'
     Account.should_receive(:find_by_code_and_crypted_password).and_return(nil)
   end
   it 'はAccountにold_passwordが間違っている旨を表すエラーを設定して返すこと' do
-    AccountAccess.change_password('111111', {}).should have(1).errors_on(:old_password)
+    AccountAccess.change_password('111111', {}).errors[:old_password].should_not be_blank
   end
 end
 
