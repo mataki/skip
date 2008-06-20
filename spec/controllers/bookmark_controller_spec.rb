@@ -1,6 +1,7 @@
+# -*- coding: utf-8 -*-
 # SKIP（Social Knowledge & Innovation Platform）
 # Copyright (C) 2008  TIS Inc.
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -9,7 +10,7 @@
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-# 
+#
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -30,7 +31,7 @@ class BookmarkControllerSpec < Test::Unit::TestCase
     @request.session[:user_code] = "100001"
     # 必須項目の新規作成の場合
     post :update, {:bookmark => {:url => SkipFaker.url, :title => SkipFaker.rand_char},
-                   :bookmark_comment => {:tags => '', :public => true},
+                   :bookmark_comment => {:tags => '', :public => true, :comment => SkipFaker.rand_char },
                    :layout => 'dialog' }
     assert_response :ok
 
