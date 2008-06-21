@@ -397,7 +397,7 @@ class HikiDoc < String
         link_str = %Q|<img src="#{uri}" alt="#{File.basename( uri )}"#{@empty_element_suffix}|
       else
         if @site_re =~ uri
-          link_str = %Q|<a href="#{uri}">#{uri}</ba>|
+          link_str = %Q|<a href="#{uri}">#{uri}</a>|
         else
           link_str = %Q|<a href="#{uri}" target='_blank'>#{uri}</a>|
         end
