@@ -21,6 +21,6 @@ class BatchImportAccounts < BatchBase
   csv.each do |line|
     Account.create!( :code => line[0], :name => line[1],
                      :section => line[2], :email => line[3],
-                     :password => line[4] )
+                     :password => line[4], :password_confirmation => line[4] )
   end
 end
