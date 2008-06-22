@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # SKIP（Social Knowledge & Innovation Platform）
 # Copyright (C) 2008  TIS Inc.
 #
@@ -18,14 +17,18 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Group do
   before(:each) do
+    @category = Group::BIZ
     @group = Group.new({ :name => 'hoge', :gid => 'hoge', :description => 'hoge', :protected => '1',
-                         :created_on => Time.now, :updated_on => Time.now })
+                         :category => @category, :created_on => Time.now, :updated_on => Time.now })
   end
 
   it { @group.should be_valid }
   it { @group.symbol_id.should == @group.gid }
   it { @group.symbol.should == ('gid:'+@group.gid) }
   it { @group.to_s.should == "id:#{@group.id}, name:#{@group.name}" }
+  it { @group.category_icon_name.should == [Group::CATEGORY_KEY_ICON_NAMES[@category], Group::CATEGORY_KEY_NAMES[@category] ] }
+
+  it { Group.category_icon_name(Group::BIZ).should == ['page_word', 'ビジネス'] }
 end
 
 describe Group, "承認待ちのユーザがいるとき" do
@@ -68,6 +71,27 @@ describe "あるグループがあるとき" do
       @group.create_entry_invite_group(users(:a_user).id, 'hoge', ['uid:hoge'])
     }.should change(BoardEntry, :count).by(1)
   end
+end
+
+describe "あるユーザの管理しているグループに承認待ちのユーザがいる場合" do
+  fixtures :groups
+  before(:each) do
+    @participation = mock_model(GroupParticipation)
+    @group_id = groups(:a_protected_group1).id
+    @participation.stub!(:group_id).and_return(@group_id)
+    GroupParticipation.stub!(:find).and_return([@participation])
+  end
+
+  it { Group.find_waitings(1).first.id.should == @group_id }
+end
+
+describe "あるユーザの管理しているグループに承認待ちのユーザがいない場合" do
+  fixtures :groups
+  before(:each) do
+    GroupParticipation.stub!(:find).and_return([])
+  end
+
+  it { Group.find_waitings(1).should be_empty }
 end
 
 class GroupTest < Test::Unit::TestCase
