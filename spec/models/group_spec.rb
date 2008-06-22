@@ -73,25 +73,60 @@ describe "あるグループがあるとき" do
   end
 end
 
-describe "あるユーザの管理しているグループに承認待ちのユーザがいる場合" do
+describe "Group.find_waitings" do
   fixtures :groups
-  before(:each) do
-    @participation = mock_model(GroupParticipation)
-    @group_id = groups(:a_protected_group1).id
-    @participation.stub!(:group_id).and_return(@group_id)
-    GroupParticipation.stub!(:find).and_return([@participation])
+  describe "あるユーザの管理しているグループに承認待ちのユーザがいる場合" do
+
+    before(:each) do
+      @participation = mock_model(GroupParticipation)
+      @group_id = groups(:a_protected_group1).id
+      @participation.stub!(:group_id).and_return(@group_id)
+      GroupParticipation.stub!(:find).and_return([@participation])
+    end
+
+    it { Group.find_waitings(1).first.id.should == @group_id }
   end
 
-  it { Group.find_waitings(1).first.id.should == @group_id }
+  describe "あるユーザの管理しているグループに承認待ちのユーザがいない場合" do
+    before(:each) do
+      GroupParticipation.stub!(:find).and_return([])
+    end
+
+    it { Group.find_waitings(1).should be_empty }
+  end
 end
 
-describe "あるユーザの管理しているグループに承認待ちのユーザがいない場合" do
-  fixtures :groups
+describe "Group#get_owners あるグループに管理者がいる場合" do
   before(:each) do
-    GroupParticipation.stub!(:find).and_return([])
+    @group = Group.new
+    @user = mock_model(User)
+    @group_participation = mock_model(GroupParticipation)
+    @group_participation.stub!(:user).and_return(@user)
+    @group_participation.stub!(:owned).and_return(true)
+    @group.should_receive(:group_participations).and_return([@group_participation])
   end
 
-  it { Group.find_waitings(1).should be_empty }
+  it "管理者ユーザが返る" do
+    @group.get_owners.should == [@user]
+  end
+end
+
+describe "Group#after_destroy グループに掲示板と共有ファイルがある場合" do
+  fixtures :groups, :board_entries, :share_files
+  before(:each) do
+    @group = groups(:a_protected_group1)
+    @board_entry = board_entries(:a_entry)
+    @share_file = share_files(:a_share_file)
+    @board_entry.symbol = @group.symbol
+    @board_entry.entry_type = BoardEntry::GROUP_BBS
+    @board_entry.save!
+
+    @share_file.owner_symbol = @group.symbol
+    @share_file.save!
+  end
+
+  it { lambda { @group.destroy }.should change(BoardEntry, :count).by(-1) }
+  it { lambda { @group.destroy }.should change(ShareFile, :count).by(-1) }
 end
 
 class GroupTest < Test::Unit::TestCase
