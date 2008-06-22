@@ -129,32 +129,57 @@ describe "Group#after_destroy グループに掲示板と共有ファイルが�
   it { lambda { @group.destroy }.should change(ShareFile, :count).by(-1) }
 end
 
-class GroupTest < Test::Unit::TestCase
-  fixtures :users, :groups, :group_participations
+describe "Group.count_by_category" do
+  before(:each) do
+    @group1 = mock_model(Group)
+    @group1.stub!(:category).and_return('hoge')
+    @group1.stub!(:count).and_return('2')
+    @group2 = mock_model(Group)
+    @group2.stub!(:category).and_return('fuga')
+    @group2.stub!(:count).and_return('1')
+    Group.should_receive(:find).and_return([@group1,@group2])
+  end
 
-  def test_participation_users
-    # 管理者のみ取得できるかどうか
-    owned_users = @a_protected_group1.participation_users :owned => true
-    assert_equal owned_users.size, 1
+  it "グループのカテゴリとそのカテゴリのグループ数および全グループ数を返す" do
+    group_counts, total_count = Group.count_by_category
+    group_counts['hoge'].should == 2
+    group_counts['fuga'].should == 1
+    total_count.should == 3
+  end
+end
 
-    # 承認待ちユーザのみ取得できるかどうか
-    joined_users = @a_protected_group1.participation_users :waiting => false
-    assert_equal joined_users.size, 2
+describe "Group#participation_users" do
+  before(:each) do
+    @group = Group.new
+    @group.stub!(:id).and_return(1)
+    @user = mock_model(User)
+  end
 
-    # 承認済みユーザのみ取得できるかどうか
-    waiting_users = @a_protected_group1.participation_users :waiting => true
-    assert_equal waiting_users.size, 1
+  describe "引数が何も与えられていない場合" do
+    before(:each) do
+      options = { :conditions => ['group_participations.group_id = ? ',1], :include => 'group_participations' }
+      User.should_receive(:find).with(:all, options).and_return([@user])
+    end
+    it "conditionsとincludeが設定されていること" do
+      @group.participation_users.should == [@user]
+    end
+  end
 
-    # 全てのユーザを取得できるかどうか
-    all_users = @a_protected_group1.participation_users
-    assert_equal all_users.size, 3
+  describe "waitingオプションがあった場合　conditionsに承認待ちを限定する条件があること" do
+    before(:each) do
+      options = { :conditions => ['group_participations.group_id = ? and group_participations.waiting = ? ',1,true],
+        :include => 'group_participations' }
+      User.should_receive(:find).with(:all, options).and_return([@user])
+    end
+    it { @group.participation_users({ :waiting => true }).should == [@user] }
+  end
 
-    # 指定件数のみ取得できるかどうか
-    limited_users = @a_protected_group1.participation_users :limit => 2
-    assert_equal limited_users.size, 2
-
-    # 指定の並び順になっているかどうか
-    ordered_users = @a_protected_group1.participation_users :order => "group_participations.updated_on DESC"
-    assert_equal ordered_users.first, @a_group_waiting_user
+  describe "ownedオプションがあった場合" do
+    before(:each) do
+      options = { :conditions => ['group_participations.group_id = ? and group_participations.owned = ? ',1,true],
+        :include => 'group_participations' }
+      User.should_receive(:find).with(:all, options).and_return([@user])
+    end
+    it { @group.participation_users({ :owned => true }).should == [@user] }
   end
 end
