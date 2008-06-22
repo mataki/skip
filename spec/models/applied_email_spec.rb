@@ -15,23 +15,23 @@
 
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe AppliedEmail do
+describe AppliedEmail, "に値が設定されていない場合" do
   before(:each) do
     @applied_email = AppliedEmail.new
   end
 
   it { @applied_email.should_not be_valid }
-  it { @applied_email.should }
+  it { @applied_email.should have(2).errors_on(:email) }
 end
 
-describe AppliedEmail do
+describe AppliedEmail, "に正しい値が設定されている場合" do
   before(:each) do
     @applied_email = AppliedEmail.new({ :email => SkipFaker.email, :user_id => 1 })
   end
 
   it { @applied_email.should be_valid }
 
-  it do
+  it "保存時にonetime_codeが設定されていること" do
     @applied_email.save
     @applied_email.onetime_code.should_not be_nil
   end
