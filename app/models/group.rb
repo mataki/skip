@@ -1,6 +1,6 @@
 # SKIP（Social Knowledge & Innovation Platform）
 # Copyright (C) 2008  TIS Inc.
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -9,13 +9,12 @@
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-# 
+#
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Group < ActiveRecord::Base
   has_many :group_participations, :dependent => :destroy
-  has_one :group_mail, :dependent => :destroy
 
   validates_presence_of :name, :description, :gid,
                         :message =>'は必須です'
@@ -146,16 +145,6 @@ class Group < ActiveRecord::Base
     group_by_category
   end
 
-  # メール自動投稿機能を利用しているか否か（レコードが保存されいるか否か）
-  def use_mail
-    return false unless group_mail
-    if group_mail.id
-      return true
-    else
-      return false
-    end
-  end
-
   # グループに関連する情報の削除
   def after_destroy
     BoardEntry.destroy_all(["symbol = ?", self.symbol])
@@ -163,13 +152,15 @@ class Group < ActiveRecord::Base
   end
 
   def self.count_by_category user_id=nil
-    sql  = "SELECT groups.category, count(distinct(groups.id)) as count FROM groups, group_participations WHERE groups.id = group_participations.group_id"
-    sql << " and group_participations.user_id = #{user_id}" if user_id
-    sql << " GROUP BY category"
-
-    group_counts = Hash.new( 0 )
+    conditions = user_id ? ['group_participations.user_id = ?', user_id] : []
+    groups = find(:all,
+                  :select => 'groups.category, count(distinct(groups.id)) as count',
+                  :group => 'groups.category',
+                  :conditions => conditions,
+                  :joins => [:group_participations])
+    group_counts = Hash.new(0)
     total_count = 0
-    find_by_sql(sql).each do |group_count|
+    groups.each do |group_count|
       group_counts[group_count.category] = group_count.count.to_i
       total_count += group_count.count.to_i
     end

@@ -1,6 +1,6 @@
 # SKIP（Social Knowledge & Innovation Platform）
 # Copyright (C) 2008  TIS Inc.
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -9,7 +9,7 @@
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-# 
+#
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -18,11 +18,11 @@ class GroupController < ApplicationController
   before_filter :setup_layout
 
   before_filter :check_owned,
-                :only => [ :manage, :managers, :permit, :remove_mail_setting, :save_mail_setting,
+                :only => [ :manage, :managers, :permit,
                            :update, :destroy, :toggle_owned, :permit_participation ]
 
   verify :method => :post,
-         :only => [ :join, :destroy, :leave, :update, :change_participation, :save_mail_setting, :ado_set_favorite ],
+         :only => [ :join, :destroy, :leave, :update, :change_participation, :ado_set_favorite ],
          :redirect_to => { :action => :show }
 
   # tab_menu
@@ -318,31 +318,6 @@ class GroupController < ApplicationController
       flash[:notice] = 'グループの削除に失敗しました。'
     end
     redirect_to :action => 'show'
-  end
-
-  # post_action
-  def save_mail_setting
-    if @group.use_mail
-      @group.group_mail.attributes = params[:group_mail]
-    else
-      @group.group_mail = GroupMail.new(params[:group_mail])
-    end
-    if @group.group_mail.save
-      flash.now[:notice] = "設定情報の更新に成功しました。"
-    else
-      flash.now[:notice] = "設定情報の更新に失敗しました。"
-    end
-    @group_mail = @group.group_mail
-    params[:menu] = 'manage_mail'
-    manage
-  end
-
-  def remove_mail_setting
-    @group.group_mail.destroy
-    @group.group_mail = nil
-    flash.now[:notice] = "設定情報を削除しました。"
-    params[:menu] = 'manage_mail'
-    manage
   end
 
   # ajax action

@@ -1,6 +1,6 @@
 # SKIP（Social Knowledge & Innovation Platform）
 # Copyright (C) 2008  TIS Inc.
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -9,7 +9,7 @@
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-# 
+#
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -47,6 +47,7 @@ class Tag < ActiveRecord::Base
   end
 
   def self.validate_tags tags_as_string
+    return [] unless tags_as_string
     errors = []
     tags_as_string.split(',').each do |tag_name|
       if tag_name.split(//u).size > 30
@@ -78,6 +79,6 @@ class Tag < ActiveRecord::Base
   end
 
   def self.square_brackets_tags tags_as_string
-    ("[" + tags_as_string.strip.gsub("[", "").gsub("]", "").gsub(",", "][") + "]").gsub("[]", "")
+    tags_as_string ? ("[" + tags_as_string.strip.gsub("[", "").gsub("]", "").gsub(",", "][") + "]").gsub("[]", "") : ""
   end
 end

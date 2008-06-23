@@ -15,6 +15,102 @@
 
 require File.dirname(__FILE__) + '/../spec_helper'
 
+describe BoardEntry, "に何も値が設定されていない場合" do
+  before(:each) do
+    @board_entry = BoardEntry.new
+  end
+  it { @board_entry.should_not be_valid }
+  it { @board_entry.should have(1).errors_on(:title) }
+  it { @board_entry.should have(1).errors_on(:contents) }
+  it { @board_entry.should have(1).errors_on(:date) }
+  it { @board_entry.should have(1).errors_on(:user_id) }
+end
+
+describe BoardEntry, "に正しい値が設定されている場合" do
+  before(:each) do
+    @board_entry = BoardEntry.new({ :title => "hoge", :contents => "hoge",
+                                    :date => Date.today, :user_id => 1,
+    # FIXME この行からvalidateがかかっていないのに保存しようとするとMysqlエラー
+                                    :last_updated => Date.today })
+  end
+
+  it { @board_entry.should be_valid }
+  it "正しく保存される" do
+    lambda { @board_entry.save! }.should_not raise_error
+  end
+  it "保存するときにBoardEntryPointが作成される" do
+    BoardEntryPoint.should_receive(:create)
+    @board_entry.save!
+  end
+
+  describe BoardEntry, "にタグが設定されている場合" do
+    before(:each) do
+      @board_entry.category = 'foo,bar'
+    end
+
+    it "保存する際にTagが保存される" do
+      Tag.should_receive(:create_by_string)
+      @board_entry.save
+    end
+  end
+end
+
+describe BoardEntry, "があるユーザの日記だったとき" do
+  fixtures :board_entries
+  before(:each) do
+    @board_entry = board_entries(:a_entry)
+  end
+
+  it { @board_entry.permalink.should == "/page/#{@board_entry.id}" }
+  it { @board_entry.important?.should be_false }
+  it { @board_entry.public?.should be_true}
+  it { @board_entry.private?.should be_false }
+  it { @board_entry.protected?.should be_false  }
+  # TODO: このメソッドはいらない気がする。過去の消し忘れか
+  #  it { @board_entry.owner_is_public?.should be_true }
+  # TODO: BoardEntry#get_around_entryのテスト
+  #      select文の + の意味が分からん
+  #      文字列連結をしているようだ
+  #      周りのエントリを探すだけなのになぜここまでの処理が必要か？
+end
+
+# TODO: BoardEntry.make_conditionsのテスト
+# TODO: BoardEntry.find_visibleのテスト
+
+describe "BoardEntry.get_category_words 複数のタグが見つかったとき" do
+  before(:each) do
+    @board_entry = mock_model(BoardEntry)
+    @board_entry.stub!(:id).and_return(1)
+    BoardEntry.should_receive(:find).and_return([@board_entry])
+    @tag1 = mock_model(Tag)
+    @tag2 = mock_model(Tag)
+    @tag3 = mock_model(Tag)
+    @tag1.stub!(:name).and_return('z')
+    @tag2.stub!(:name).and_return('a')
+    @tag3.stub!(:name).and_return('z')
+    Tag.should_receive(:find).and_return([@tag1,@tag2,@tag3])
+  end
+
+  it "タグの名前をユニークにして並べ替えて返す" do
+    BoardEntry.get_category_words.should == ['a','z']
+  end
+end
+
+describe "BoardEntry.get_popular_tag_words で複数タグが見つかったとき" do
+  before(:each) do
+    @tag1 = mock_model(EntryTag)
+    @tag1.stub!(:name).and_return('z')
+    @tag2 = mock_model(EntryTag)
+    @tag2.stub!(:name).and_return('a')
+    @tag3 = mock_model(EntryTag)
+    @tag3.stub!(:name).and_return('z')
+    EntryTag.should_receive(:find).and_return([@tag1,@tag2,@tag3])
+  end
+  it "タグの名前をユニークして返す" do
+    BoardEntry.get_popular_tag_words.should == ['z','a']
+  end
+end
+
 describe BoardEntry do
   fixtures :board_entries, :groups, :users, :mails, :tags, :user_uids
 
@@ -191,21 +287,5 @@ private
       entry_template.store(key, value)
     end
     return entry_template
-  end
-end
-
-describe BoardEntry, ".get_category_wordsを実行した場合" do
-  fixtures :users, :board_entries, :entry_tags, :tags
-  before(:each) do
-    find_params = { :conditions=>["(entry_publications.symbol in (?))", ["uid:a_user", "sid:allusers"]], :include=>[:entry_publications]}
-    @tags = BoardEntry.get_category_words(find_params)
-  end
-
-  it "a_userの閲覧可能タグリストは、2つのタグを返す" do
-    @tags.should have(2).tags
-  end
-
-  it "a_userの閲覧可能タグリストは、タグの数と名前が入っている" do
-    @tags.first.should == tags(:a_tag).name
   end
 end

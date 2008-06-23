@@ -22,11 +22,11 @@ class GroupParticipation < ActiveRecord::Base
   # このためGroupParticipationテーブルには、deleteメソッドなど
   # after_xxx がかからないメソッドは使わないように。
   def after_save
-    MemcacheUtil.clear(user.code, :skip) if BELONG_INFO_APPS
+    MemcacheUtil.clear(user.code, :skip) unless BELONG_INFO_APPS.empty?
   end
 
   def after_destroy
-    MemcacheUtil.clear(user.code, :skip) if BELONG_INFO_APPS
+    MemcacheUtil.clear(user.code, :skip) unless BELONG_INFO_APPS.empty?
   end
 
   def to_s
