@@ -48,7 +48,7 @@
       <% unless session[:user_id] == @participation.user_id -%>
       <%= link_to "[強制退会させる]",
            {:action => "forced_leave_user", :participation_id => @participation.id},
-           :confirm => "このユーザを強制退会させます。この本当によろしいですか？",
+           :confirm => "このユーザを強制退会させます。本当によろしいですか？",
            :method => :post -%>
       <% end -%>
     </td>
