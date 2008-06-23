@@ -35,7 +35,7 @@ class CreateDefaultTables < ActiveRecord::Migration
     t.datetime "created_on"
     t.datetime "updated_on"
     t.string   "title",                      :limit => 100, :default => "",     :null => false
-    t.text     "contents",                                  :default => "",     :null => false
+    t.text     "contents",                                                      :null => false
     t.datetime "date",                                                          :null => false
     t.integer  "user_id",                                                       :null => false
     t.string   "category"
@@ -60,7 +60,7 @@ class CreateDefaultTables < ActiveRecord::Migration
     t.datetime "created_on"
     t.datetime "updated_on"
     t.integer  "board_entry_id",                 :null => false
-    t.text     "contents",       :default => "", :null => false
+    t.text     "contents",                       :null => false
     t.integer  "user_id",                        :null => false
     t.integer  "parent_id"
   end
@@ -90,7 +90,7 @@ class CreateDefaultTables < ActiveRecord::Migration
     t.datetime "updated_on"
     t.integer  "bookmark_id",                    :null => false
     t.integer  "user_id",                        :null => false
-    t.text     "comment",     :default => "",    :null => false
+    t.text     "comment",                        :null => false
     t.boolean  "public",                         :null => false
     t.string   "tags"
     t.boolean  "stared",      :default => false, :null => false
