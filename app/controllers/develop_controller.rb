@@ -97,7 +97,7 @@ class DevelopController < ApplicationController
     if params[:type] == "monthly"
       site_counts = SiteCount.find(:all,
                                    :conditions => ["DATE_FORMAT(created_on, '%Y-%m') = ?", date.strftime('%Y-%m')]) #"
-      values = site_counts.map{ |site_count| eval("site_count.#{params[:category]}") }
+      values = site_counts.map {|site_count| site_count[params[:category]] }
       max_value = values.max
       min_value = values.min
       render :partial => 'monthly_history',
