@@ -30,7 +30,7 @@
 <% statistics_items.each do |item| %>
 <div class="statistics_line">
   <div class="statistics_desc"><%= icon_tag item[:icon] %>　<%= item[:desc] %></div>
-  <div class="statistics_value"><%= eval("site_count.#{item[:category]}") %><%= item[:unit] %></div>
+  <div class="statistics_value"><%= site_count[item[:category]] %><%= item[:unit] %></div>
   <div class="statistics_menu">
     <%= link_to_remote "#{icon_tag 'calendar_view_month'} #{site_count.created_on.strftime('%Y/%m')}の推移を表示",
           :update => 'statistics_history',
