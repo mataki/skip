@@ -1,6 +1,6 @@
 # SKIP（Social Knowledge & Innovation Platform）
 # Copyright (C) 2008  TIS Inc.
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -9,7 +9,7 @@
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-# 
+#
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -19,8 +19,12 @@ require "csv"
 class BatchImportAccounts < BatchBase
   csv = CSV.readlines('accounts.csv', "\n")
   csv.each do |line|
-    Account.create!( :code => line[0], :name => line[1],
-                     :section => line[2], :email => line[3],
-                     :password => line[4], :password_confirmation => line[4] )
+    begin
+      Account.create!( :code => line[0], :name => line[1],
+                       :section => line[2], :email => line[3],
+                       :password => line[4], :password_confirmation => line[4] )
+    rescue ActiveRecord::RecordInvalid
+      puts "#{line[0]} - #{line[1]}は既に登録されているか、重複項目があるため登録されませんでした"
+    end
   end
 end
