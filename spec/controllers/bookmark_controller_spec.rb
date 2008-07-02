@@ -15,10 +15,8 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 require File.dirname(__FILE__) + '/../spec_helper'
-require 'bookmark_controller'
 
-class BookmarkController; def rescue_action(e) raise e end; end
-class BookmarkControllerSpec < Test::Unit::TestCase
+describe BookmarkController do
   fixtures :bookmarks, :users, :user_uids
 
   def setup

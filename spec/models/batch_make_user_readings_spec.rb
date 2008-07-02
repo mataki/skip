@@ -16,7 +16,7 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 require File.dirname(__FILE__) + '/../../lib/batch_make_user_readings'
 
-class BatchMakeUserReadingsTest < Test::Unit::TestCase
+describe BatchMakeUserReadings do
   fixtures :users, :board_entries, :groups, :user_uids
 
   def test_viewable

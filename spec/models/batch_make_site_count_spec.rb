@@ -14,8 +14,9 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 require File.dirname(__FILE__) + '/../spec_helper'
+require File.dirname(__FILE__) + '/../../lib/batch_make_user_readings'
 
-class BatchMakeSiteCountTest < Test::Unit::TestCase
+describe BatchMakeSiteCounts do
   fixtures :users, :board_entries, :board_entry_comments, :site_counts
 
   # 一ヶ月以内にエントリを書いたユーザ
