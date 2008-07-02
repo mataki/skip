@@ -63,7 +63,7 @@ class PlatformController < ApplicationController
     session[:user_email] = user_info["email"]
     session[:user_section] = user_info["section"]
 
-    return_to = URI.encode(params[:return_to])
+    return_to = params[:return_to] ? URI.encode(params[:return_to]) : nil
     redirect_to (return_to and !return_to.empty?) ? return_to : root_url
   rescue AccountAccess::AccountAccessException => ex
     logger.warn ex.message["message"]
