@@ -12,7 +12,7 @@ describe RankingController,"POST update" do
     describe "保存できた場合" do
       before do
         ran = Ranking.new
-        ran.should_receive(:add_amaount).and_return(true)
+        ran.should_receive(:add_amount).and_return(true)
         Ranking.should_receive(:find_by_url_and_extracted_on_and_contents_type_id).and_return([ran])
 
         post :update
@@ -24,7 +24,7 @@ describe RankingController,"POST update" do
     describe "保存できなかった場合" do
       before do
         ran = Ranking.new
-        ran.should_receive(:add_amaount).and_return(false)
+        ran.should_receive(:add_amount).and_return(false)
         Ranking.should_receive(:find_by_url_and_extracted_on_and_contents_type_id).and_return([ran])
 
         post :update

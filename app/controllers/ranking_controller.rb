@@ -9,7 +9,7 @@ class RankingController < ApplicationController
         head :bad_request
       end
     else
-      if exisiting_ranking.first.add_amaount(new_ranking.amaount)
+      if exisiting_ranking.first.add_amount(new_ranking.amount)
         head :ok
       else
         head :bad_request
