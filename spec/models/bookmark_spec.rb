@@ -16,6 +16,135 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Bookmark do
+  describe ".get_title_from_url" do
+    describe "URLが正しく取得できた場合" do
+      describe "TITLEが含まれている場合" do
+        before do
+          Bookmark.should_receive(:open).and_yield("hoge\n<TITLE>HOGE</TITLE>\nhoge")
+        end
+        it "タイトルを返す" do
+          title = Bookmark.get_title_from_url "http://www.example.com/"
+          title.should == "HOGE"
+        end
+      end
+
+      describe "titleが含まれている場合" do
+        before do
+          Bookmark.should_receive(:open).and_yield("HOGE\n<title>hoge</title>\nHOGE")
+        end
+        it "タイトルを返す" do
+          title = Bookmark.get_title_from_url "http://www.example.com/"
+          title.should == "hoge"
+        end
+      end
+
+      describe "titleが含まれていない場合" do
+        before do
+          Bookmark.should_receive(:open).and_yield("hoge\n<hoge>HOGE</hoge>\nhoge")
+        end
+        it "空文字列を返す" do
+          title = Bookmark.get_title_from_url "http://www.example.com/"
+          title.should == ""
+        end
+
+      end
+    end
+
+    describe "URLへ正しくアクセスできなかった場合" do
+      before do
+        Bookmark.should_receive(:open).and_raise(Exception)
+        logger = mock("logger")
+        logger.stub!(:error)
+        Bookmark.should_receive(:logger).at_least(:once).and_return(logger)
+        @title = Bookmark.get_title_from_url "http://www.example.com/"
+      end
+
+      it "ログへエラーメッセージを出力する" do
+      end
+
+      it "空文字列を返す" do
+        @title.should == ""
+      end
+    end
+  end
+
+  describe "ブックマークのタイプチェックメソッド" do
+    before do
+      @bookmark = Bookmark.new :url => "http://www.example.com/"
+    end
+
+    describe "#is_type_page?" do
+      describe "ページのブックマークの場合" do
+        before do
+          @bookmark.url = "/page/11"
+        end
+        it { @bookmark.should be_is_type_page }
+      end
+
+      describe "ページ以外のブックマークの場合" do
+        it { @bookmark.should_not be_is_type_page }
+      end
+    end
+
+    describe "is_type_user?" do
+      describe "ユーザのブックマークの場合" do
+        before do
+          @bookmark.url = "/user/hoge"
+        end
+        it { @bookmark.should be_is_type_user }
+      end
+
+      describe "ユーザ以外のブックマークの場合" do
+        it { @bookmark.should_not be_is_type_user }
+      end
+    end
+
+    describe "is_type_internet?" do
+      describe "インターネットのURLをブックマークしている場合" do
+        it { @bookmark.should be_is_type_internet }
+      end
+      describe "SKIP内のURLをブックマークしている場合" do
+        before do
+          @bookmark.url = "/page/1111"
+        end
+        it { @bookmark.should_not be_is_type_internet }
+      end
+    end
+  end
+
+#   describe "#url_is_public?" do
+#     before do
+#       @bookmark = Bookmark.new :url => "/page/1111"
+#     end
+#     describe "ページのブックマークの場合" do
+#       describe "ページが全公開の場合" do
+#         before do
+#           @entry = mock_model(BoardEntry)
+#           @entry.should_receive(:public?).and_return(true)
+#           BoardEntry.should_receive(:find_by_id).and_return(@entry)
+#         end
+#         it { @bookmark.should be_url_is_public }
+#       end
+
+#       describe "ページが全公開でない場合" do
+#         before do
+#           @entry = mock_model(BoardEntry)
+#           @entry.should_receive(:public?).and_return(false)
+#           BoardEntry.should_receive(:find_by_id).and_return(@entry)
+#         end
+#         it { @bookmark.should_not be_url_is_public }
+#       end
+#     end
+#     describe "ページのブックマークでない場合" do
+#       before do
+#         @bookmark.url = "http://example.com/"
+#       end
+#       it { @bookmark.should be_url_is_public }
+#     end
+#   end
+end
+
+describe Bookmark do
   fixtures :bookmarks, :bookmark_comments
 
   # 非公開コメントのみのブックマークは表示しない
