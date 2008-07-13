@@ -55,5 +55,11 @@ Spec::Runner.configure do |config|
   # config.mock_with :rr
 end
 
+def user_login
+  User.should_receive(:find_by_uid).at_least(:once).and_return(mock_model(User))
+  session[:user_code] = '111111'
+  session[:prepared] = true
+end
 ######skip関連のテストで必要
 class ApplicationController; def sso() return true end; end
+
