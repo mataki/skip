@@ -60,6 +60,17 @@ def user_login
   session[:user_code] = '111111'
   session[:prepared] = true
 end
+
+def create_ranking(options = {})
+    ranking = Ranking.new({
+      :url => 'http://user.openskip.org/',
+      :title => 'SUG',
+      :extracted_on => Date.today,
+      :amount => 1,
+      :contents_type_id => 'ACCESSES'}.merge(options))
+    ranking.save
+    ranking
+end
 ######skip関連のテストで必要
 class ApplicationController; def sso() return true end; end
 
