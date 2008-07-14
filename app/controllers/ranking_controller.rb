@@ -19,8 +19,8 @@ class RankingController < ApplicationController
     new_ranking = Ranking.new params[:ranking]
     exisiting_ranking = Ranking.find_by_url_and_extracted_on_and_contents_type(new_ranking.url, new_ranking.extracted_on, new_ranking.contents_type)
     if exisiting_ranking.empty?
-      if new_ranking.save 
-        head :created 
+      if new_ranking.save
+        head :created
       else
         head :bad_request
       end
@@ -36,7 +36,7 @@ class RankingController < ApplicationController
   # GET /rankings/:content_type/:year/:month
   def index
     if params[:content_type].blank?
-      return head :bad_request
+      return head(:bad_request)
     end
 
     unless params[:year]
