@@ -1,0 +1,15 @@
+<h1>総合ランキング</h1>
+<h2>エントリアクセスランキング</h2>
+<div id="entry_access">
+</div>
+
+<script type="text/javascript">
+$j(function() {
+    $j.ajax({
+        url: '/rankings/entry_access',
+        success: function(html) {
+            $j('#entry_access').html(html);
+        }
+    });
+});
+</script>

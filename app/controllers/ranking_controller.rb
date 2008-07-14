@@ -1,4 +1,5 @@
 class RankingController < ApplicationController
+  layout false
   def update
     new_ranking = Ranking.new params[:ranking]
     exisiting_ranking = Ranking.find_by_url_and_extracted_on_and_contents_type(new_ranking.url, new_ranking.extracted_on, new_ranking.contents_type)
@@ -24,11 +25,21 @@ class RankingController < ApplicationController
     end
 
     unless params[:year]
-      @rankings = Ranking.by_contents_type(params[:content_type])
+      @rankings = Ranking.all(params[:content_type])
     else
       if params[:month]
-        @rankings = Ranking.monthry_rankings(params[:content_type], params[:year], params[:month])
+        @rankings = Ranking.monthly(params[:content_type], params[:year], params[:month])
       end
     end
+  end
+
+  def all
+    render :layout => 'layout'
+  end
+
+  def monthly
+  end
+
+  def history
   end
 end

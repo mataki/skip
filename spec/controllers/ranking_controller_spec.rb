@@ -91,7 +91,7 @@ describe RankingController, 'GET /rankings/:content_type/:year/:month' do
   describe '統合ランキングが検索されてデータが見つかる時' do
     before do
       @rankings = (1..10).map{|i| mock_model(Ranking)}
-      Ranking.should_receive(:by_contents_type).with(anything).and_return(@rankings)
+      Ranking.should_receive(:all).with(anything).and_return(@rankings)
       get :index, :content_type => 'entry_access'
     end
     it 'content_typeがparamに含まれること' do
@@ -115,7 +115,7 @@ describe RankingController, 'GET /rankings/:content_type/:year/:month' do
   describe '月間ランキングが検索されてデータが見つかる時' do
     before do
       @rankings = (1..10).map{|i| mock_model(Ranking)}
-      Ranking.should_receive(:monthry_rankings).with(anything, anything, anything).and_return(@rankings)
+      Ranking.should_receive(:monthly).with(anything, anything, anything).and_return(@rankings)
       get :index, :content_type => 'entry_access', :year => '2008', :month => '8'
     end
     it 'content_typeがparamに含まれること' do

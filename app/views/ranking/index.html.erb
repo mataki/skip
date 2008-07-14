@@ -1,0 +1,14 @@
+<table>
+  <tbody>
+    <tr>
+      <th>URL</th>
+      <th>数</th>
+    </tr>
+<% @rankings.each do |ranking| %>
+    <tr>
+      <td><%= link_to h(ranking.title), h(ranking.url) -%></td>
+      <td><%= h ranking.amount -%></td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
