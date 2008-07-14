@@ -56,7 +56,7 @@ Spec::Runner.configure do |config|
 end
 
 def user_login
-  User.should_receive(:find_by_uid).at_least(:once).and_return(mock_model(User))
+  User.stub!(:find_by_uid).and_return(mock_model(User))
   session[:user_code] = '111111'
   session[:prepared] = true
 end

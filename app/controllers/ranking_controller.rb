@@ -16,4 +16,19 @@ class RankingController < ApplicationController
       end
     end
   end
+
+  # GET /rankings/:content_type/:year/:month
+  def index
+    if params[:content_type].blank?
+      return head :bad_request
+    end
+
+    unless params[:year]
+      @rankings = Ranking.all_rankings(params[:content_type])
+    else
+      if params[:month]
+        @rankings = Ranking.monthry_rankings(params[:content_type], params[:year], params[:month])
+      end
+    end
+  end
 end

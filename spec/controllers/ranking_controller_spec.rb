@@ -62,3 +62,74 @@ describe RankingController,"POST update" do
     end
   end
 end
+
+describe RankingController, 'GET /rankings/:content_type/:year/:month' do
+  before do
+    user_login
+  end
+  describe 'content_typeの指定が不正(nil又は空)の場合' do
+    before  { get :index, :content_type => '' }
+    it 'bad_requestを返すこと' do
+      response.code.should == '400'
+    end
+  end
+
+  describe 'content_typeが正しい場合' do
+    describe 'yearが不正な場合' do
+      it 'bad_requestを返すこと'
+    end
+    describe 'yearが正しい場合' do
+      describe 'monthが指定されていない場合' do
+        it 'bad_requestを返すこと'
+      end
+      describe 'monthが不正な場合' do
+        it 'bad_requestを返すこと'
+      end
+    end
+  end
+
+  describe '統合ランキングが検索されてデータが見つかる時' do
+    before do
+      @rankings = (1..10).map{|i| mock_model(Ranking)}
+      Ranking.should_receive(:all_rankings).with(anything).and_return(@rankings)
+      get :index, :content_type => 'entry_access'
+    end
+    it 'content_typeがparamに含まれること' do
+      params[:content_type].should_not be_nil
+    end
+    it 'yearがparamに含まれていないこと' do
+      params[:year].should be_nil
+    end
+    it '@rankingsにデータが設定されていること' do
+      assigns[:rankings].should == @rankings
+    end
+    it '200を返すこと' do
+      response.should be_success
+    end
+  end
+
+  describe '統合ランキングが検索されてデータが見つからない時' do
+    it '404を返すこと'
+  end
+
+  describe '月間ランキングが検索されてデータが見つかる時' do
+    before do
+      @rankings = (1..10).map{|i| mock_model(Ranking)}
+      Ranking.should_receive(:monthry_rankings).with(anything, anything, anything).and_return(@rankings)
+      get :index, :content_type => 'entry_access', :year => '2008', :month => '8'
+    end
+    it 'content_typeがparamに含まれること' do
+      params[:content_type].should_not be_nil
+    end
+    it 'yearがparamに含まれること' do
+      params[:year].should_not be_nil
+    end
+    it 'monthがparamに含まれること' do
+      params[:month].should_not be_nil
+    end
+  end
+
+  describe '月間ランキングが検索されてデータが見つからない時' do
+    it '404を返すこと'
+  end
+end
