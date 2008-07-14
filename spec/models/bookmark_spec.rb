@@ -68,49 +68,96 @@ describe Bookmark do
     end
   end
 
-  describe "ブックマークのタイプチェックメソッド" do
+  describe "#tags_as_string" do
     before do
-      @bookmark = Bookmark.new :url => "http://www.example.com/"
+      @comments = (1..2).map{|i| mock_model(BookmarkComment)}
     end
-
-    describe "#is_type_page?" do
-      describe "ページのブックマークの場合" do
-        before do
-          @bookmark.url = "/page/11"
-        end
-        it { @bookmark.should be_is_type_page }
+    describe "タグに複数コメントがついている場合" do
+      before do
+        @comments[0].should_receive(:tags).and_return("[hoge][fuga]")
+        @comments[1].should_receive(:tags).and_return("[kuga][hoga]")
+        @bookmark = Bookmark.new
+        @bookmark.should_receive(:bookmark_comments).and_return(@comments)
       end
-
-      describe "ページ以外のブックマークの場合" do
-        it { @bookmark.should_not be_is_type_page }
-      end
-    end
-
-    describe "is_type_user?" do
-      describe "ユーザのブックマークの場合" do
-        before do
-          @bookmark.url = "/user/hoge"
-        end
-        it { @bookmark.should be_is_type_user }
-      end
-
-      describe "ユーザ以外のブックマークの場合" do
-        it { @bookmark.should_not be_is_type_user }
+      it "コメントのタグがすべて連結されていること" do
+        tags = @bookmark.tags_as_string
+        tags.should == "[hoge][fuga][kuga][hoga]"
       end
     end
-
-    describe "is_type_internet?" do
-      describe "インターネットのURLをブックマークしている場合" do
-        it { @bookmark.should be_is_type_internet }
+    describe "複数コメントに同じタグが含まれている場合" do
+      before do
+        @comments[0].should_receive(:tags).and_return("[hoge][fuga]")
+        @comments[1].should_receive(:tags).and_return("[fuga][hoge]")
+        @bookmark = Bookmark.new
+        @bookmark.should_receive(:bookmark_comments).and_return(@comments)
       end
-      describe "SKIP内のURLをブックマークしている場合" do
-        before do
-          @bookmark.url = "/page/1111"
-        end
-        it { @bookmark.should_not be_is_type_internet }
+      it "ユニークになっていること" do
+        tags = @bookmark.tags_as_string
+        tags.should == "[hoge][fuga]"
       end
     end
   end
+
+end
+
+
+# TODO: rake spec:rcov でエラーが発生する
+# describe Bookmark do
+#   describe ".get_query_param" do
+#     describe "引数が user の場合" do
+#       it { Bookmark.get_query_param("user").should == "/user/%" }
+#     end
+#     describe "引数がpageの場合" do
+#       it { Bookmark.get_query_param("page").should == "/page/%" }
+#     end
+#     describe "引数がinternetの場合" do
+#       it { Bookmark.get_query_param("internet").should == "http%" }
+#     end
+#   end
+
+#   describe "ブックマークのタイプチェックメソッド" do
+#     before do
+#       @bookmark = Bookmark.new :url => "http://www.example.com/"
+#     end
+
+#     describe "#is_type_page?" do
+#       describe "ページのブックマークの場合" do
+#         before do
+#           @bookmark.url = "/page/11"
+#         end
+#         it { @bookmark.should be_is_type_page }
+#       end
+
+#       describe "ページ以外のブックマークの場合" do
+#         it { @bookmark.should_not be_is_type_page }
+#       end
+#     end
+
+#     describe "is_type_user?" do
+#       describe "ユーザのブックマークの場合" do
+#         before do
+#           @bookmark.url = "/user/hoge"
+#         end
+#         it { @bookmark.should be_is_type_user }
+#       end
+
+#       describe "ユーザ以外のブックマークの場合" do
+#         it { @bookmark.should_not be_is_type_user }
+#       end
+#     end
+
+#     describe "is_type_internet?" do
+#       describe "インターネットのURLをブックマークしている場合" do
+#         it { @bookmark.should be_is_type_internet }
+#       end
+#       describe "SKIP内のURLをブックマークしている場合" do
+#         before do
+#           @bookmark.url = "/page/1111"
+#         end
+#         it { @bookmark.should_not be_is_type_internet }
+#       end
+#     end
+#   end
 
 #   describe "#url_is_public?" do
 #     before do
@@ -142,7 +189,8 @@ describe Bookmark do
 #       it { @bookmark.should be_url_is_public }
 #     end
 #   end
-end
+
+# end
 
 describe Bookmark do
   fixtures :bookmarks, :bookmark_comments
