@@ -40,7 +40,8 @@ describe BookmarkController do
     assert_response :ok
 
     # 必須項目の更新の場合
-    post :update, {:bookmark => {:url => @a_bookmark.url, :title => SkipFaker.rand_char}, :layout => 'dialog' }
+    post :update, {:bookmark => {:url => @a_bookmark.url, :title => SkipFaker.rand_char},
+                   :bookmark_comment => {:public => true}, :layout => 'dialog' }
     assert_response :ok
 
     # 全項目の更新の場合
