@@ -23,11 +23,11 @@
 
 <div style="border:1px solid #aaa;background-color:gray;color:white;margin-top:3px;font-weight:bold;"><%= date.strftime('%Y年%m月') %>の推移</div>
 
-<% if site_counts.size > 0 %>
+<% unless site_counts.empty? %>
 <% pixel_par_value = 100.0 / max_value %>
 <div class="monthly_statistics_inner_space">
 <% site_counts.each_with_index do |site_count, index| %>
-  <% value = eval("site_count.#{category}") %>
+  <% value = site_count[category] %>
   <% graph_color = max_value == value ? 'red' : 'silver' %>
   <div class="monthly_statictics_line">
     <div style="float:left;width:100px">

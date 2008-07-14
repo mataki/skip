@@ -80,7 +80,7 @@ div.current_statistics {
 <% user_count = @site_count.total_user_count -%>
 <div class="topix_title"><%= icon_tag('asterisk_orange') -%><span>その他の指標値（参考）</span></div>
 <% statistics_items.each do |item| %>
-  <% count_value = eval("@site_count.#{item[:category]}") %>
+  <% count_value = @site_count[item[:category]] %>
 <div class="statistics_line">
   <div class="statistics_desc"><%= icon_tag 'group' %>　<%= item[:desc] %></div>
   <div class="statistics_value"><%= count_value %>人</div>

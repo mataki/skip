@@ -279,7 +279,7 @@ class GroupController < ApplicationController
 
     if states = params[:participation_state]
       states.each do |participation_id, state|
-        if eval(state)
+        if state == 'true'
           participation = GroupParticipation.find(participation_id)
           result = nil
           if params[:submit_type] == 'permit'

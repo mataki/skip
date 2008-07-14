@@ -374,7 +374,7 @@ private
       end
     end
     # 公開日付
-    unless Date.valid_date?(eval(params[:board_entry]["date(1i)"]), eval(params[:board_entry]["date(2i)"]), eval(params[:board_entry]["date(3i)"]))
+    unless Date.valid_date?(*params[:board_entry].values_at('date(1i)', 'date(2i)', 'date(3i)').map(&:to_i))
       entry.errors.add(:date, "には存在する日付を指定してください")
     end
     entry.errors.empty?
