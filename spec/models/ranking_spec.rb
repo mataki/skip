@@ -14,9 +14,9 @@ describe User, 'named_scope' do
 
   describe '.max_amount_by_url' do
     before do
-      p create_ranking(:contents_type => 'entry_access', :extracted_on => Date.yesterday, :amount => 1)
-      p create_ranking(:contents_type => 'entry_access', :extracted_on => Date.today, :amount => 2)
-      p create_ranking(:contents_type => 'entry_access', :extracted_on => Date.tomorrow, :amount => 3)
+      create_ranking(:contents_type => 'entry_access', :extracted_on => Date.yesterday, :amount => 1)
+      create_ranking(:contents_type => 'entry_access', :extracted_on => Date.today, :amount => 2)
+      create_ranking(:contents_type => 'entry_access', :extracted_on => Date.tomorrow, :amount => 3)
     end
     it 'urlでグルーピングされていること' do
       Ranking.max_amount_by_url.should have(1).items
