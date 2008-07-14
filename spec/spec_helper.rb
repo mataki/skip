@@ -67,7 +67,7 @@ def create_ranking(options = {})
       :title => 'SUG',
       :extracted_on => Date.today,
       :amount => 1,
-      :contents_type_id => 'ACCESSES'}.merge(options))
+      :contents_type => 'entry_access'}.merge(options))
     ranking.save
     ranking
 end

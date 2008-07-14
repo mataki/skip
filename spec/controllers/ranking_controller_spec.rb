@@ -13,7 +13,7 @@ describe RankingController,"POST update" do
       before do
         ran = Ranking.new
         ran.should_receive(:add_amount).and_return(true)
-        Ranking.should_receive(:find_by_url_and_extracted_on_and_contents_type_id).and_return([ran])
+        Ranking.should_receive(:find_by_url_and_extracted_on_and_contents_type).and_return([ran])
 
         post :update
       end
@@ -25,7 +25,7 @@ describe RankingController,"POST update" do
       before do
         ran = Ranking.new
         ran.should_receive(:add_amount).and_return(false)
-        Ranking.should_receive(:find_by_url_and_extracted_on_and_contents_type_id).and_return([ran])
+        Ranking.should_receive(:find_by_url_and_extracted_on_and_contents_type).and_return([ran])
 
         post :update
       end
@@ -36,7 +36,7 @@ describe RankingController,"POST update" do
   end
   describe "その日の分のランキングが存在しない場合" do
     before do
-      Ranking.should_receive(:find_by_url_and_extracted_on_and_contents_type_id).and_return([])
+      Ranking.should_receive(:find_by_url_and_extracted_on_and_contents_type).and_return([])
     end
     describe "保存できた場合" do
       before do
@@ -91,7 +91,7 @@ describe RankingController, 'GET /rankings/:content_type/:year/:month' do
   describe '統合ランキングが検索されてデータが見つかる時' do
     before do
       @rankings = (1..10).map{|i| mock_model(Ranking)}
-      Ranking.should_receive(:all_rankings).with(anything).and_return(@rankings)
+      Ranking.should_receive(:by_contents_type).with(anything).and_return(@rankings)
       get :index, :content_type => 'entry_access'
     end
     it 'content_typeがparamに含まれること' do

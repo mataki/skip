@@ -36,6 +36,8 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'logout', :controller => 'platform', :action => 'logout'
   map.connect 'session/:sso_sid', :controller => 'platform', :action => 'session_info'
 
+  map.rankings '/rankings/:content_type/:year/:month', :controller => 'ranking', :conditions => { :method => :get }
+
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
 

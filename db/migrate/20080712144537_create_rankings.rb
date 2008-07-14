@@ -7,7 +7,7 @@ class CreateRankings < ActiveRecord::Migration
       t.string "author_url", :null => true
       t.date "extracted_on", :null => false
       t.integer "amount", :null => true
-      t.integer "contents_type_id", :null => false
+      t.string "contents_type", :null => false
       t.timestamps
     end
   end

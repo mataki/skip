@@ -1,7 +1,7 @@
 class RankingController < ApplicationController
   def update
     new_ranking = Ranking.new params[:ranking]
-    exisiting_ranking = Ranking.find_by_url_and_extracted_on_and_contents_type_id(new_ranking.url, new_ranking.extracted_on, new_ranking.contents_type_id)
+    exisiting_ranking = Ranking.find_by_url_and_extracted_on_and_contents_type(new_ranking.url, new_ranking.extracted_on, new_ranking.contents_type)
     if exisiting_ranking.empty?
       if new_ranking.save 
         head :created 
@@ -24,7 +24,7 @@ class RankingController < ApplicationController
     end
 
     unless params[:year]
-      @rankings = Ranking.all_rankings(params[:content_type])
+      @rankings = Ranking.by_contents_type(params[:content_type])
     else
       if params[:month]
         @rankings = Ranking.monthry_rankings(params[:content_type], params[:year], params[:month])

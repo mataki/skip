@@ -1,7 +1,3 @@
 class Ranking < ActiveRecord::Base
-  def add_amount(amount)
-    return false unless (amount.class == Fixnum && amount > 0)
-    self.amount += amount
-    save
-  end 
+  named_scope :by_contents_type, proc{|contents_type| {:conditions => {:contents_type => contents_type.to_s}} }
 end
