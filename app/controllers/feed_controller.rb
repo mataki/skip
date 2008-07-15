@@ -1,6 +1,6 @@
 # SKIP（Social Knowledge & Innovation Platform）
 # Copyright (C) 2008  TIS Inc.
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -9,7 +9,7 @@
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-# 
+#
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -43,7 +43,7 @@ class FeedController < ApplicationController
     items = []
     if find_options[:symbols].size > 0
       find_params = BoardEntry.make_conditions(login_user_symbols, find_options)
-      items = board_entry_item_array(find_params) 
+      items = board_entry_item_array(find_params)
     end
     rss_feed action_name, description, items
   end
@@ -138,11 +138,11 @@ private
         item.link <<  server_addr
         case item_value[:type]
           when "page"
-          item.link << '/page/'
+          item.link << 'page/'
           when "user"
-          item.link << '/user/'
+          item.link << 'user/'
           when "group"
-          item.link << '/group/'
+          item.link << 'group/'
         end
         if item_value[:type] == "page"
           item.link << item_value[:id].to_s
