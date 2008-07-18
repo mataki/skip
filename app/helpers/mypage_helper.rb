@@ -36,6 +36,7 @@ module MypageHelper
     @@menus << {:name => "プロフィール変更", :menu => "manage_profile" }
     @@menus << {:name => "パスワード変更", :menu => "manage_password" } if PASSWORD_EDIT_SETTING
     @@menus << {:name => "メールアドレス変更", :menu => "manage_email" } if MAIL_FUNCTION_SETTING
+    @@menus << {:name => "OpenID URL変更", :menu => "manage_openid" }
     @@menus << {:name => "プロフィール画像変更", :menu => "manage_portrait" }
     @@menus << {:name => "カスタマイズ", :menu => "manage_customize" }
     @@menus << {:name => "アンテナの整備", :menu => "manage_antenna" }

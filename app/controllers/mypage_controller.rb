@@ -1,6 +1,6 @@
 # SKIP（Social Knowledge & Innovation Platform）
 # Copyright (C) 2008  TIS Inc.
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -9,7 +9,7 @@
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-# 
+#
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -21,7 +21,8 @@ class MypageController < ApplicationController
   helper :calendar
 
   verify :method => :post, :only => [ :destroy_portrait, :save_portrait, :update_profile,
-                                      :update_customize, :update_message_unsubscribes, :apply_password ],
+                                      :update_customize, :update_message_unsubscribes, :apply_password,
+                                      :apply_ident_url ],
          :redirect_to => { :action => :index }
 
   # マイページ（ホーム）の表示
@@ -151,6 +152,8 @@ class MypageController < ApplicationController
       @account = Account.new
     when "manage_email"
       @applied_email = AppliedEmail.find_by_user_id(session[:user_id]) || AppliedEmail.new
+    when "manage_openid"
+      @account = Account.find_by_code(@user.code)
     when "manage_portrait"
       @picture = Picture.find_by_user_id(@user.id) || Picture.new
     when "manage_customize"
@@ -287,6 +290,18 @@ class MypageController < ApplicationController
     else
       flash[:notice] = '指定されたページは存在しません'
       redirect_to :action => 'index'
+    end
+  end
+
+  def apply_ident_url
+    @account = Account.find_by_code(session[:user_code])
+    @account.ident_url = params[:account][:ident_url] unless params[:account].blank?
+
+    if @account.save
+      flash[:notice] = 'OpenID URLを設定しました。'
+      redirect_to :action => :manage, :menu => :manage_openid
+    else
+      render :partial => 'manage_openid', :layout => 'layout'
     end
   end
 

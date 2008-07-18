@@ -1,22 +1,66 @@
+<style type="text/css">
+  #login {
+    width: 300px;
+  }
 
-<% form_tag({:controller => :platform, :action => :login, :only_path => false}, {:id => 'login_form'}) do %>
-<%= hidden_field_tag "return_to", params[:return_to] -%>
-<table class="box" style="font-size: 12px; width: 170px;">
-  <tr valign="top"><td><label for="login_key"><span style="font-weight: bold;"><%= "#{CUSTOM_RITERAL[:login_account]}#{CUSTOM_RITERAL[:login_account_example]}" -%></span></label></td></tr>
-  <tr valign="top"><td><%= text_field 'login', 'key', { 'size' => 15, 'tabindex' => 1, 'AUTOCOMPLETE' => "on" } -%></td></tr>
-  <tr valign="top"><td><label for="login_pwd"><span style="font-weight: bold;"><%= CUSTOM_RITERAL[:login_password] -%></span></label></td></tr>
-  <tr valign="top"><td><%= password_field 'login', 'password', { 'size' => 15, :onfocus=>'select();', 'tabindex' => 2, 'AUTOCOMPLETE' => "on" } %></td></tr>
-  <tr valign="top"><td><input id="login_save" name="login_save" type="checkbox" value="true" checked tabindex="3" /> 次回から自動的にログイン</td></tr>
-  <tr valign="top"><td align="right"><%= submit_tag "ログイン", :onclick=>"saveLoginData();", 'tabindex' => 4 %></td></tr>
-  <tr valign="top" align="left"><td>
+  #openid_url {
+    background: #FFFFFF url(/images/openid_login_bg.gif) no-repeat scroll 0pt 50%;
+    padding-left: 18px;
+    width: 92%;
+  }
+
+  .auth_type {
+    text-align: center;
+  }
+</style>
+
+<div class="auth_type">
+  <%= link_to 'パスワード認証', '#', :id => 'show_password_auth' %>
+  |
+  <%= link_to 'OpenID認証', '#', :id => 'show_openid_auth' %>
+</div>
+
+<% form_tag({:controller => :platform, :action => :login, :only_path => false}, :id => 'login_form') do %>
+  <%= hidden_field_tag "return_to", params[:return_to] -%>
+  <table class="box" style="font-size: 12px; width: 300px;">
+    <tr valign="top" class="password_auth">
+      <td><label for="login_key"><span style="font-weight: bold;"><%= "#{CUSTOM_RITERAL[:login_account]}#{CUSTOM_RITERAL[:login_account_example]}" -%></span></label></td>
+    </tr>
+    <tr valign="top" class="password_auth">
+      <td><%= text_field 'login', 'key', :size => 15, :autocomplete => :on  -%></td>
+    </tr>
+    <tr valign="top" class="password_auth">
+      <td><label for="login_password"><span style="font-weight: bold;"><%= CUSTOM_RITERAL[:login_password] -%></span></label></td>
+    </tr>
+    <tr valign="top" class="password_auth">
+      <td><%= password_field 'login', 'password', { 'size' => 15, :onfocus=>'select();', 'AUTOCOMPLETE' => "on" } %></td>
+    </tr>
+
     <% if SSL_SETTING %>
-    <div style="margin-top: 15px; _margin-top: 0px;">
-      <span style="border-right:1px solid gray;padding-right: 5px;"><%= radio_button_tag "ssl_enable", false, false, :id => "ssl_disable_radio" %>http</span>
-      <%= radio_button_tag "ssl_enable", true, false, :id => "ssl_enable_radio" %>https
-    </div>
+      <tr valign="top" align="left" class="password_auth">
+        <td>
+          <div style="margin-top: 15px; _margin-top: 0px;">
+            <span style="border-right:1px solid gray;padding-right: 5px;"><%= radio_button_tag "ssl_enable", false, false, :id => "ssl_disable_radio" %>http</span>
+            <%= radio_button_tag "ssl_enable", true, false, :id => "ssl_enable_radio" %>https
+          </div>
+        </td>
+      </tr>
     <% end %>
-  </td></tr>
-</table>
+
+    <tr valign="top" class="openid_auth">
+      <td><label for="openid_url"><span style="font-weight: bold;">OpenID URL</span></label></td>
+    </tr>
+    <tr valign="top" class="openid_auth">
+      <td><%= text_field_tag 'openid_url', nil, 'AUTOCOMPLETE' => "on" %></td>
+    </tr>
+
+    <tr valign="top">
+      <td><input id="login_save" name="login_save" type="checkbox" value="true" checked="checked" /> 次回から自動的にログイン</td>
+    </tr>
+    <tr valign="top">
+      <td align="right"><%= submit_tag "ログイン", :onclick=>"saveLoginData();" %></td>
+    </tr>
+  </table>
 <% end %>
 
 <script type="text/javascript">
@@ -36,5 +80,15 @@ $j(function(){
             $j(this).attr('action', $j(this).attr('action').replace('http://', 'https://'));
         }
     });
-})
+
+    $j('#show_password_auth').click(function() {
+      $j('.password_auth').show();
+      $j('.openid_auth').hide();
+    }).click();
+
+    $j('#show_openid_auth').click(function() {
+      $j('.openid_auth').show();
+      $j('.password_auth').hide();
+    });
+});
 </script>

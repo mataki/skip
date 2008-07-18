@@ -1,0 +1,24 @@
+<div id="contents_container">
+  <div id="contents_left">
+<%= render :partial => "manage_menu", :locals => { :selected_menu => @menu } %>
+  </div><!-- contents_left -->
+
+  <div id="contents_right">
+    <div class="desc"><p>以下のフォームにOpenIDのURLを入力してください。</p></div>
+
+<%= template_error_messages_for 'account' %>
+
+    <div class="edit_form_space">
+<% form_for :account, @account, {:url => {:action => :apply_ident_url}} do |f| -%>
+      <table id="user_info_box" class="normal" border="1">
+        <tr>
+          <th width="100px"><%= f.label :ident_url, "OpenID URL" %></th>
+          <td style="padding:5px;"><%= f.text_field :ident_url -%></td>
+        </tr>
+      </table>
+  <%= submit_tag '保存' %>
+<% end %>
+    </div>
+  </div><!-- contents_right -->
+  <div id="contents_bottom"></div><!-- contents_bottom -->
+</div><!-- contents_container -->

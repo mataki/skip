@@ -52,19 +52,23 @@ class PlatformController < ApplicationController
   # ログイン処理（トップからと、require_loginからの両方からpostされる）
   # 認証後は、戻り先がある場合はそちらへ、なければデフォルトはSKIPへ遷移
   def login
-    user_info = AccountAccess.auth(params[:login][:key], params[:login][:password])
-    expires = params[:login_save] ? Time.now + 1.month : nil
-    sso_sid = Session.create_sso_sid(user_info, SSO_KEY, expires)
-    cookies["_sso_sid"] = { :expires => expires, :value => sso_sid }
+    if using_open_id?
+      login_with_open_id
+    else
+      user_info = AccountAccess.auth(params[:login][:key], params[:login][:password])
+      expires = params[:login_save] ? Time.now + 1.month : nil
+      sso_sid = Session.create_sso_sid(user_info, SSO_KEY, expires)
+      cookies["_sso_sid"] = { :expires => expires, :value => sso_sid }
 
-    reset_session
-    session[:user_code] = user_info["code"]
-    session[:user_name] = user_info["name"]
-    session[:user_email] = user_info["email"]
-    session[:user_section] = user_info["section"]
+      reset_session
+      session[:user_code] = user_info["code"]
+      session[:user_name] = user_info["name"]
+      session[:user_email] = user_info["email"]
+      session[:user_section] = user_info["section"]
 
-    return_to = params[:return_to] ? URI.encode(params[:return_to]) : nil
-    redirect_to (return_to and !return_to.empty?) ? return_to : root_url
+      return_to = params[:return_to] ? URI.encode(params[:return_to]) : nil
+      redirect_to (return_to and !return_to.empty?) ? return_to : root_url
+    end
   rescue AccountAccess::AccountAccessException => ex
     logger.warn ex.message["message"]
     flash[:auth_fail_message] ||= ex.message
@@ -93,4 +97,49 @@ class PlatformController < ApplicationController
     render :text => ""
   end
 
+  private
+  def login_with_open_id
+    authenticate_with_open_id do |result, identity_url|
+      if result.successful?
+        unless account = Account.find_by_ident_url(identity_url)
+          flash[:auth_fail_message] = {
+            "message" => "そのOpenIDは、登録されていません。",
+            "detail" => "ログイン後管理画面でOpenID URLを登録後ログインしてください。"
+          }
+          redirect_to :back
+          return
+        end
+        reset_session
+
+        %w(code name email section).each do |c|
+          session["user_#{c}".to_sym] = account.send(c)
+        end
+
+        # TODO 他のアプリケーションと一緒に以前のSSOの機構を外す(OpenID化できたら)
+        set_sso_cookie_from(account.attributes.with_indifferent_access.slice(:name, :email, :section).merge(:code => account.code))
+        redirect_to_back_or_root
+      else
+        error_messages = {
+          :missing => { "message" => "OpenIDサーバーが見つかりませんでした。", "detail" => "正しいOpenID URLを入力してください。" },
+          :canceled => { "message" => "キャンセルされました。", "detail" => "このサーバへの認証を確認してください" },
+          :failed => { "message" => "認証に失敗しました。", "detail" => "" },
+          :setup_needed => { "message" => "内部エラーが発生しました。", "detail" => "管理者に連絡してください。" }
+        }
+        message = error_messages[result.instance_variable_get(:@code)]
+        flash[:auth_fail_message] = message
+        redirect_to :back
+      end
+    end
+  end
+
+  def set_sso_cookie_from(user_info)
+    expires = params[:login_save] ? Time.now + 1.month : nil
+    sso_sid = Session.create_sso_sid(user_info, SSO_KEY, expires)
+    cookies["_sso_sid"] = { :expires => expires, :value => sso_sid }
+  end
+
+  def redirect_to_back_or_root
+    return_to = params[:return_to] ? URI.encode(params[:return_to]) : nil
+    redirect_to (return_to and !return_to.empty?) ? return_to : root_url
+  end
 end

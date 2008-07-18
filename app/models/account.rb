@@ -1,6 +1,6 @@
 # SKIP（Social Knowledge & Innovation Platform）
 # Copyright (C) 2008  TIS Inc.
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -9,7 +9,7 @@
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-# 
+#
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -29,14 +29,21 @@ class Account < ActiveRecord::Base
 
   validates_presence_of :password_confirmation, :message => 'は必須です', :if => :password_required?
 
+  def validate
+    normalize_ident_url
+  rescue OpenIdAuthentication::InvalidOpenId => e
+    errors.add(:ident_url, 'の形式が間違っています。')
+  end
+
   class << self
     HUMANIZED_ATTRIBUTE_KEY_NAMES = {
-      "code" => "ログインID",
-      "name" => "名前",
-      "email" => "メールアドレス",
-      "old_password" => "現在のパスワード",
-      "password" => "パスワード",
-      "password_confirmation" => "確認用パスワード"
+      "code"                  => "ログインID",
+      "name"                  => "名前",
+      "email"                 => "メールアドレス",
+      "old_password"          => "現在のパスワード",
+      "password"              => "パスワード",
+      "password_confirmation" => "確認用パスワード",
+      "ident_url"             => 'OpenID URL'
     }
     def human_attribute_name(attribute_key_name)
       HUMANIZED_ATTRIBUTE_KEY_NAMES[attribute_key_name] || super
@@ -44,7 +51,8 @@ class Account < ActiveRecord::Base
   end
 
   def before_save
-    self.crypted_password = self.class.encrypt(self.password)
+    self.crypted_password = self.class.encrypt(password) if password_required?
+    self.ident_url = normalize_ident_url
   end
 
   def self.auth(code, password)
@@ -58,5 +66,9 @@ class Account < ActiveRecord::Base
 private
   def password_required?
     crypted_password.blank? || !password.blank?
+  end
+
+  def normalize_ident_url
+    OpenIdAuthentication.normalize_url(ident_url) unless ident_url.blank?
   end
 end
