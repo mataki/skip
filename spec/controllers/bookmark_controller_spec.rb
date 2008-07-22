@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-# SKIP（Social Knowledge & Innovation Platform）
+# SKIP(Social Knowledge & Innovation Platform)
 # Copyright (C) 2008  TIS Inc.
 #
 # This program is free software: you can redistribute it and/or modify
