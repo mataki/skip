@@ -1,14 +1,20 @@
-<table>
+<% unless @rankings.empty? %>
+<table class="ranking_square">
   <tbody>
     <tr>
-      <th>URL</th>
+      <th></th>
+      <th>タイトル</th>
+      <th>ユーザ</th>
       <th>数</th>
     </tr>
-<% @rankings.each do |ranking| %>
+<% @rankings.each_with_index do |ranking, i| %>
     <tr>
+      <td class="rank"><%= i + 1 -%>
       <td><%= link_to h(ranking.title), h(ranking.url) -%></td>
+      <td><%= link_to h(ranking.author), h(ranking.author_url) -%></td>
       <td><%= h ranking.amount -%></td>
     </tr>
 <% end %>
   </tbody>
 </table>
+<% end %>

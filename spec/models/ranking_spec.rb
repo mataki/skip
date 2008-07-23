@@ -15,30 +15,98 @@
 
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
-describe User, 'named_scope' do
-  describe '.by_contents_type' do
+describe Ranking, '#total' do
+  before  do
+    @datetime = Time.local(2008, 7, 15)
+    create_ranking(:url => 'http://user.openskip.org/foo', :contents_type => 'entry_access', :extracted_on => @datetime.yesterday, :amount => 1)
+    create_ranking(:url => 'http://user.openskip.org/foo', :contents_type => 'entry_access', :extracted_on => @datetime, :amount => 2)
+    create_ranking(:url => 'http://user.openskip.org/foo', :contents_type => 'entry_access', :extracted_on => @datetime.tomorrow, :amount => 3)
+    create_ranking(:url => 'http://user.openskip.org/hoge', :contents_type => 'comment_access', :extracted_on => @datetime.yesterday, :amount => 4)
+    create_ranking(:url => 'http://user.openskip.org/hoge', :contents_type => 'comment_access', :extracted_on => @datetime, :amount => 5)
+    create_ranking(:url => 'http://user.openskip.org/hoge', :contents_type => 'comment_access', :extracted_on => @datetime.tomorrow, :amount => 6)
+    create_ranking(:url => 'http://user.openskip.org/bar', :contents_type => 'comment_access', :extracted_on => @datetime, :amount => 7)
+  end
+
+  it 'url及び指定したcontents_typeでグルーピングされたランキングが取得できること' do
+    Ranking.total(:entry_access).should have(1).items
+    Ranking.total(:comment_access).should have(2).items
+  end
+  # it 'url及び指定したcontents_type毎にextracted_onが最新のデータが抽出されていること'
+end
+
+describe Ranking, '#monthly' do
+  describe '複数種類のcontents_typeのデータがある場合' do
     before do
-      %w(entry_access comment).each do |s|
-        create_ranking(:contents_type => s)
-      end
+      @datetime = Time.local(2008, 7, 15)
+      create_ranking(:url => 'http://user.openskip.org/foo', :contents_type => 'entry_access', :extracted_on => @datetime, :amount => 2)
+      create_ranking(:url => 'http://user.openskip.org/hoge', :contents_type => 'comment_access', :extracted_on => @datetime, :amount => 5)
     end
-    it '指定したcontents_typeのデータが取得できること' do
-      Ranking.by_contents_type(:entry_access).should have(1).items
+    it '指定したcontents_typeのデータのみ抽出されること' do
+      Ranking.monthly(:entry_access, @datetime.year, @datetime.month).should have(1).items
+      Ranking.monthly(:comment_access, @datetime.year, @datetime.month).should have(1).items
+    end
+    it '存在しないcontents_typeのデータは抽出されないこと' do
+      Ranking.monthly(:hoge, @datetime.year, @datetime.month).should have(0).items
     end
   end
 
-  describe '.max_amount_by_url' do
+  describe '複数のurlのデータがある場合' do
     before do
-      create_ranking(:contents_type => 'entry_access', :extracted_on => Date.yesterday, :amount => 1)
-      create_ranking(:contents_type => 'entry_access', :extracted_on => Date.today, :amount => 2)
-      create_ranking(:contents_type => 'entry_access', :extracted_on => Date.tomorrow, :amount => 3)
+      @datetime = Time.local(2008, 7, 15)
+      create_ranking(:url => 'http://user.openskip.org/hoge', :contents_type => 'comment_access', :extracted_on => @datetime, :amount => 5)
+      create_ranking(:url => 'http://user.openskip.org/hoge', :contents_type => 'comment_access', :extracted_on => @datetime.yesterday, :amount => 4)
+      create_ranking(:url => 'http://user.openskip.org/bar', :contents_type => 'comment_access', :extracted_on => @datetime, :amount => 7)
     end
-    it 'urlでグルーピングされていること' do
-      Ranking.max_amount_by_url.should have(1).items
-    end
-    it 'extracted_onが最大のレコードのamountの値になること' do
-      pending 'maxしたレコードのほかのカラムの取り方不明'
-      #Ranking.max_amount_by_url.first.amount.should == 3
+    it 'urlでグルーピングされること' do
+      Ranking.monthly(:comment_access, @datetime.year, @datetime.month).should have(2).items
     end
   end
+
+  describe '単一のcontents_type及び、単一のurlのデータの場合' do
+    describe '前月以前にデータがある場合' do
+      before do
+        @datetime = Time.local(2008, 7, 15)
+        create_ranking(:url => 'http://user.openskip.org/hoge', :contents_type => 'comment_access', :extracted_on => @datetime.ago(2.month), :amount => 4)
+        create_ranking(:url => 'http://user.openskip.org/hoge', :contents_type => 'comment_access', :extracted_on => @datetime.yesterday, :amount => 4)
+        create_ranking(:url => 'http://user.openskip.org/hoge', :contents_type => 'comment_access', :extracted_on => @datetime, :amount => 5)
+        create_ranking(:url => 'http://user.openskip.org/hoge', :contents_type => 'comment_access', :extracted_on => @datetime.tomorrow, :amount => 6)
+      end
+      it '指定月でextracted_onが最大となるレコードのamount - 前月最終日以前でextracted_onが最大となるレコードのamountとなっていること' do
+        Ranking.monthly(:comment_access, @datetime.year, @datetime.month).first.amount.should == 2 
+      end
+    end
+
+    describe '前月以前にデータがない場合' do
+      before do
+        @datetime = Time.local(2008, 7, 15)
+        create_ranking(:url => 'http://user.openskip.org/hoge', :contents_type => 'comment_access', :extracted_on => @datetime.yesterday, :amount => 4)
+        create_ranking(:url => 'http://user.openskip.org/hoge', :contents_type => 'comment_access', :extracted_on => @datetime, :amount => 5)
+        create_ranking(:url => 'http://user.openskip.org/hoge', :contents_type => 'comment_access', :extracted_on => @datetime.tomorrow, :amount => 6)
+      end
+      it '指定月でextracted_onが最大となるレコードのamountとなっていること' do
+        Ranking.monthly(:comment_access, @datetime.year, @datetime.month).first.amount.should == 6
+      end
+    end
+  end
+
+  describe '単一のcontents_typeで、10種類を超えるurlのデータがある場合' do
+    before do
+      @datetime = Time.local(2008, 7, 15)
+      create_ranking(:url => 'http://user.openskip.org/1', :contents_type => 'comment_access', :extracted_on => @datetime, :amount => 1)
+      create_ranking(:url => 'http://user.openskip.org/2', :contents_type => 'comment_access', :extracted_on => @datetime, :amount => 2)
+      create_ranking(:url => 'http://user.openskip.org/3', :contents_type => 'comment_access', :extracted_on => @datetime, :amount => 3)
+      create_ranking(:url => 'http://user.openskip.org/4', :contents_type => 'comment_access', :extracted_on => @datetime, :amount => 4)
+      create_ranking(:url => 'http://user.openskip.org/5', :contents_type => 'comment_access', :extracted_on => @datetime, :amount => 5)
+      create_ranking(:url => 'http://user.openskip.org/6', :contents_type => 'comment_access', :extracted_on => @datetime, :amount => 6)
+      create_ranking(:url => 'http://user.openskip.org/7', :contents_type => 'comment_access', :extracted_on => @datetime, :amount => 7)
+      create_ranking(:url => 'http://user.openskip.org/8', :contents_type => 'comment_access', :extracted_on => @datetime, :amount => 8)
+      create_ranking(:url => 'http://user.openskip.org/9', :contents_type => 'comment_access', :extracted_on => @datetime, :amount => 9)
+      create_ranking(:url => 'http://user.openskip.org/10', :contents_type => 'comment_access', :extracted_on => @datetime, :amount => 10)
+      create_ranking(:url => 'http://user.openskip.org/11', :contents_type => 'comment_access', :extracted_on => @datetime, :amount => 11)
+    end
+    it '10件のデータが抽出されること' do
+      Ranking.monthly(:comment_access, @datetime.year, @datetime.month).should have(10).items
+    end
+  end
+
 end

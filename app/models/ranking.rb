@@ -14,15 +14,72 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Ranking < ActiveRecord::Base
-  named_scope :by_contents_type, proc{|contents_type| {:conditions => {:contents_type => contents_type.to_s}} }
-  named_scope :max_amount_by_url, {:select => 'id, url, title, max(extracted_on) as extracted_on, amount', :group => :url}
-  named_scope :top_10, {:order => 'amount desc', :limit => 10}
-
-  def self.all(contents_type)
-    # TODO 通常のallメソッドと名前かぶるの変える
-    by_contents_type(contents_type).max_amount_by_url.top_10
+  def self.monthly(contents_type, year, month)
+    sql = <<-SQL
+      select
+        rankings.url,
+        rankings.title,
+        rankings.author,
+        rankings.author_url,
+        rankings. extracted_on,
+        coalesce(rankings.amount - previous_rankings.amount, rankings.amount) as amount,
+        rankings.contents_type
+      from (
+        select rankings.* 
+        from (
+          select url, max(contents_type) as contents_type, max(extracted_on) as extracted_on 
+          from rankings 
+          where rankings.contents_type = :contents_type
+            and rankings.extracted_on between :beginning_of_month and :end_of_month
+          group by url
+        ) as recentry_rankings 
+        left outer join rankings 
+          on recentry_rankings.url = rankings.url 
+          and recentry_rankings.contents_type = rankings.contents_type 
+          and recentry_rankings.extracted_on = rankings.extracted_on 
+      ) as rankings 
+      left outer join (
+        select rankings.* 
+        from (
+          select url, max(contents_type) as contents_type, max(extracted_on) as extracted_on 
+          from rankings 
+          where rankings.contents_type = :contents_type
+            and rankings.extracted_on <= :end_of_month_ago_1_month
+          group by url
+        ) as recentry_rankings 
+        left outer join rankings 
+          on recentry_rankings.url = rankings.url 
+          and recentry_rankings.contents_type = rankings.contents_type 
+          and recentry_rankings.extracted_on = rankings.extracted_on 
+      ) as previous_rankings
+        on rankings.url = previous_rankings.url 
+        and rankings.contents_type = previous_rankings.contents_type
+      order by amount desc
+      limit 10
+    SQL
+    time = Time.local(year, month)
+    Ranking.find_by_sql([sql, { :contents_type => contents_type.to_s,
+                                :beginning_of_month => time.beginning_of_month,
+                                :end_of_month => time.end_of_month,
+                                :end_of_month_ago_1_month => time.end_of_month.ago(1.month) }])
   end
 
-  def self.monthly(contents_type, year, month)
+  def self.total(contents_type)
+    sql = <<-SQL
+      select rankings.* 
+      from (
+        select url, max(contents_type) as contents_type, max(extracted_on) as extracted_on 
+        from rankings 
+        where rankings.contents_type = :contents_type
+        group by url
+      ) as recentry_rankings 
+      left outer join rankings 
+        on recentry_rankings.url = rankings.url 
+        and recentry_rankings.contents_type = rankings.contents_type 
+        and recentry_rankings.extracted_on = rankings.extracted_on 
+      order by amount desc
+      limit 10
+    SQL
+    Ranking.find_by_sql([sql, { :contents_type => contents_type.to_s }])
   end
 end
