@@ -1,4 +1,6 @@
-<h1><%= h @year -%>年<%= h @month -%>月のランキング</h1>
+<%= select_tag 'date_list', options_for_select(@dates.map { |date| [date, date] }, @dates.first), :id => 'date_list' -%>
+<hr />
+<h1 id="ranking_title"><%= h @year -%>年<%= h @month -%>月のランキング</h1>
 <%= render :partial => 'list' %>
 <script type="text/javascript">
 $j(function() {
@@ -10,5 +12,13 @@ $j(function() {
             getRanking(contents_types[i], year, month);
     };
     loadRanking();
+
+    $j('#date_list')
+    .change(function(){
+        var year_month = $j('#date_list :selected').val().split('-');
+        var year = year_month[0];
+        var month = year_month[1];
+        location.href = relative_url_root + '/rankings/monthly/' + year + '/' + month;
+    });
 });
 </script>

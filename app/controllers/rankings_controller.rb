@@ -14,6 +14,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class RankingsController < ApplicationController
+  before_filter :setup_layout
   layout false
 # TODO 外部からのランキング取り込み機能は一旦ペンディングなのでコメントアウト
 #  def update
@@ -33,6 +34,10 @@ class RankingsController < ApplicationController
 #      end
 #    end
 #  end
+  def index
+    today = Date.today
+    redirect_to monthly_path(:year => today.year, :month => today.month)
+  end
 
   # GET /ranking_data/:content_type/:year/:month
   def data
@@ -75,9 +80,18 @@ class RankingsController < ApplicationController
       time = Time.local(year, month)
       @year = time.year
       @month = time.month
+      @dates = (0..23).map { |i| today.ago(i.month).strftime('%Y-%m') }
       render :layout => 'layout'
     rescue => e
       head(:bad_request)
     end
+  end
+
+  private
+  def setup_layout
+    @main_menu = @title = 'ランキング'
+
+    @tab_menu_source = [ ['月別ランキング', 'monthly'],
+                         ['総合ランキング', 'all'] ]
   end
 end

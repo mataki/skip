@@ -79,6 +79,18 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 #  end
 #end
 
+describe RankingsController, '#index' do
+  before do
+    user_login
+    @year, @month = 2008, 7
+    Date.should_receive(:today).and_return(Date.new(@year, @month))
+    get :index
+  end
+  it '今月のランキングにリダイレクトされること' do
+    response.should redirect_to("/rankings/monthly/#{@year}/#{@month}")
+  end
+end
+
 describe RankingsController, 'GET /ranking_data/:content_type/:year/:month' do
   before do
     user_login
