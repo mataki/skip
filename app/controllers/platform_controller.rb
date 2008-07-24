@@ -106,7 +106,7 @@ class PlatformController < ApplicationController
             "message" => "そのOpenIDは、登録されていません。",
             "detail" => "ログイン後管理画面でOpenID URLを登録後ログインしてください。"
           }
-          redirect_to :back
+          redirect_to :action => :index
           return
         end
         reset_session

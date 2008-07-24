@@ -118,7 +118,7 @@ describe PlatformController, "ログイン時にOpenIdのアカウントが渡�
       end
 
       it { response.should be_redirect }
-      it { response.should redirect_to(:back) }
+      it { response.should redirect_to(:action => :index) }
       it { flash[:auth_fail_message]["message"].should_not be_nil }
     end
   end
