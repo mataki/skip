@@ -10,6 +10,7 @@ class CreateRankings < ActiveRecord::Migration
       t.string "contents_type", :null => false
       t.timestamps
     end
+    add_index(:rankings, :url)
     add_index(:rankings, :extracted_on)
     add_index(:rankings, :contents_type)
   end

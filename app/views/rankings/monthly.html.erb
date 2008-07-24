@@ -1,11 +1,11 @@
-<h1>月間ランキング</h1>
+<h1><%= h @year -%>年<%= h @month -%>月のランキング</h1>
 <%= render :partial => 'list' %>
 <script type="text/javascript">
 $j(function() {
     var contents_types = ['entry_access', 'entry_comment', 'entry_he', 'user_entry', 'user_access'];
     var loadRanking = function(){
-        var year = <%= @year -%>;
-        var month = <%= @month -%>;
+        var year = <%= h @year -%>;
+        var month = <%= h @month -%>;
         for( var i = 0; i < contents_types.length; i++) 
             getRanking(contents_types[i], year, month);
     };
