@@ -6,19 +6,28 @@
   <div id="contents_right">
     <div class="desc"><p>以下のフォームにOpenIDのURLを入力してください。</p></div>
 
-<%= template_error_messages_for 'account' %>
+<%= template_error_messages_for 'openid_identifier' %>
 
     <div class="edit_form_space">
-<% form_for :account, @account, {:url => {:action => :apply_ident_url}} do |f| -%>
+<% form_for :openid_identifier, @openid_identifier, {:url => {:action => :apply_ident_url}} do |f| -%>
       <table id="user_info_box" class="normal" border="1">
         <tr>
-          <th width="100px"><%= f.label :ident_url, "OpenID URL" %></th>
-          <td style="padding:5px;"><%= f.text_field :ident_url -%></td>
+          <th width="100px"><%= f.label :url, "OpenID URL" %></th>
+          <td style="padding:5px;"><%= f.text_field :url -%></td>
         </tr>
       </table>
   <%= submit_tag '保存' %>
 <% end %>
     </div>
+    <% unless @openid_identifiers.blank? %>
+
+    <div class="desc">あなたの登録済みOpenID URL</div>
+    <div class="edit_form_space">
+      <% @openid_identifiers.each do |openid_identifier| %>
+      <p><%= openid_identifier.url -%></p>
+      <% end %>
+    </div>
+    <% end %>
   </div><!-- contents_right -->
   <div id="contents_bottom"></div><!-- contents_bottom -->
 </div><!-- contents_container -->

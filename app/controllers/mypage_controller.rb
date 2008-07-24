@@ -153,7 +153,8 @@ class MypageController < ApplicationController
     when "manage_email"
       @applied_email = AppliedEmail.find_by_user_id(session[:user_id]) || AppliedEmail.new
     when "manage_openid"
-      @account = Account.find_by_code(@user.code)
+      @openid_identifier = OpenidIdentifier.new
+      @openid_identifiers = Account.find_by_code(@user.code).openid_identifiers
     when "manage_portrait"
       @picture = Picture.find_by_user_id(@user.id) || Picture.new
     when "manage_customize"
@@ -294,13 +295,16 @@ class MypageController < ApplicationController
   end
 
   def apply_ident_url
-    @account = Account.find_by_code(session[:user_code])
-    @account.ident_url = params[:account][:ident_url] unless params[:account].blank?
+    account = Account.find_by_code(session[:user_code])
+    @openid_identifier = OpenidIdentifier.new
+    @openid_identifier.url = params[:openid_identifier][:url] if params[:openid_identifier]
+    account.openid_identifiers << @openid_identifier
 
-    if @account.save
+    if @openid_identifier.save
       flash[:notice] = 'OpenID URLを設定しました。'
       redirect_to :action => :manage, :menu => :manage_openid
     else
+      @openid_identifiers = account.openid_identifiers.reload
       render :partial => 'manage_openid', :layout => 'layout'
     end
   end

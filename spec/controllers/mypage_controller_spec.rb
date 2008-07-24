@@ -36,16 +36,24 @@ describe MypageController do
 
   describe "POST /mypage/apply_ident_url" do
     before do
+      @url = 'http://example.com'
+
+      @openid_identifier = stub_model(OpenidIdentifier)
+      @openid_identifiers = []
+      @openid_identifiers.should_receive(:<<)
+      OpenidIdentifier.should_receive(:new).and_return(@openid_identifier)
+
       @account = stub_model(Account)
+      @account.stub!(:openid_identifiers).and_return(@openid_identifiers)
       Account.should_receive(:find_by_code).with(@user.code).and_return(@account)
     end
 
     describe '保存に成功した場合' do
       before do
-        @account.should_receive(:ident_url=).with('http://example.com/')
-        @account.should_receive(:save).and_return(true)
+        @openid_identifier.should_receive(:url=).with(@url)
+        @openid_identifier.should_receive(:save).and_return(true)
 
-        post :apply_ident_url, :account => {:ident_url => 'http://example.com/'}
+        post :apply_ident_url, :openid_identifier => {:url => @url}
       end
 
       it { response.should be_redirect  }
@@ -54,24 +62,29 @@ describe MypageController do
 
     describe '保存に失敗した場合' do
       before do
-        @account.should_receive(:ident_url=).with('http://example.com/')
-        @account.should_receive(:save).and_return(false)
-        post :apply_ident_url, :account => {:ident_url => 'http://example.com/'}
+        @openid_identifier.should_receive(:url=).with(@url)
+        @openid_identifier.should_receive(:save).and_return(false)
+        @openid_identifiers.should_receive(:reload).and_return(@openid_identifiers)
+
+        post :apply_ident_url, :openid_identifier => {:url => @url}
       end
 
       it { response.should be_success }
+      it { assigns[:openid_identifiers].should_not be_nil }
       it { response.should render_template('mypage/_manage_openid') }
       it { flash[:notice].should be_nil }
     end
 
     describe 'パラメータが不足していた場合' do
       before do
+        @openid_identifiers.should_receive(:reload).and_return(@openid_identifiers)
+
         post :apply_ident_url
       end
 
+      it { assigns[:openid_identifiers].should_not be_nil }
       it { response.should be_success }
     end
-
   end
 
   describe "GET /mapage/apply_ident_url" do

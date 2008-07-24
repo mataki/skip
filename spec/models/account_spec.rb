@@ -44,46 +44,12 @@ describe Account, "適切な値が与えられた場合保存できる" do
     @account = Account.find_by_code("hoge")
 
     @account.should_not_receive(:crypted_password=)
-    @account.ident_url = 'http://example.com/hoge/'
+    @account.name = 'fuga'
     @account.send(:password_required?).should be_false
     @account.save
   end
 end
 
-describe Account, '#ident_url' do
-  before do
-    @account = new_account
-  end
-
-  describe '不正な URL を指定した場合' do
-    before do
-      @account.ident_url = '::::::'
-    end
-
-    it { @account.should_not be_valid }
-    it { @account.should have(1).errors_on(:ident_url) }
-  end
-
-  describe '正規化されていない URL を指定した場合' do
-    before do
-      @account.ident_url = 'example.com'
-    end
-
-    it '保存時に正規化されること' do
-      proc {
-        @account.save
-      }.should change(@account, :ident_url).from('example.com').to('http://example.com/')
-    end
-  end
-
-  describe 'update_attribute でも' do
-    it '正規化されること' do
-      proc {
-        @account.update_attribute(:ident_url, 'example.com')
-      }.should change(@account, :ident_url).from(nil).to('http://example.com/')
-    end
-  end
-end
 
 private
 def new_account options = {}

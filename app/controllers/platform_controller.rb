@@ -101,7 +101,7 @@ class PlatformController < ApplicationController
   def login_with_open_id
     authenticate_with_open_id do |result, identity_url|
       if result.successful?
-        unless account = Account.find_by_ident_url(identity_url)
+        unless identifier = OpenidIdentifier.find_by_url(identity_url)
           flash[:auth_fail_message] = {
             "message" => "そのOpenIDは、登録されていません。",
             "detail" => "ログイン後管理画面でOpenID URLを登録後ログインしてください。"
@@ -111,6 +111,7 @@ class PlatformController < ApplicationController
         end
         reset_session
 
+        account = identifier.account
         %w(code name email section).each do |c|
           session["user_#{c}".to_sym] = account.send(c)
         end

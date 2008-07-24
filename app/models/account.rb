@@ -14,6 +14,8 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Account < ActiveRecord::Base
+  has_many :openid_identifiers
+
   attr_accessor :old_password, :password
   validates_presence_of :code, :message => 'は必須です'
   validates_uniqueness_of :code, :message => 'は既に登録されています'
@@ -29,12 +31,6 @@ class Account < ActiveRecord::Base
 
   validates_presence_of :password_confirmation, :message => 'は必須です', :if => :password_required?
 
-  def validate
-    normalize_ident_url
-  rescue OpenIdAuthentication::InvalidOpenId => e
-    errors.add(:ident_url, 'の形式が間違っています。')
-  end
-
   class << self
     HUMANIZED_ATTRIBUTE_KEY_NAMES = {
       "code"                  => "ログインID",
@@ -43,7 +39,6 @@ class Account < ActiveRecord::Base
       "old_password"          => "現在のパスワード",
       "password"              => "パスワード",
       "password_confirmation" => "確認用パスワード",
-      "ident_url"             => 'OpenID URL'
     }
     def human_attribute_name(attribute_key_name)
       HUMANIZED_ATTRIBUTE_KEY_NAMES[attribute_key_name] || super
@@ -52,7 +47,6 @@ class Account < ActiveRecord::Base
 
   def before_save
     self.crypted_password = self.class.encrypt(password) if password_required?
-    self.ident_url = normalize_ident_url
   end
 
   def self.auth(code, password)
@@ -68,7 +62,4 @@ private
     crypted_password.blank? || !password.blank?
   end
 
-  def normalize_ident_url
-    OpenIdAuthentication.normalize_url(ident_url) unless ident_url.blank?
-  end
 end

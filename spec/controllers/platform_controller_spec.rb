@@ -71,12 +71,14 @@ describe PlatformController, "ログイン時にOpenIdのアカウントが渡�
     before do
       result = OpenIdAuthentication::Result[:successful]
       controller.should_receive(:authenticate_with_open_id).and_yield(result, 'http://hoge.example.com/')
+      @account = stub_model(Account, :code => "hogehoge", :name => "hogehoge", :email => "hoge@hoge.jp", :section => "hoge" )
+      @openid_identifier = stub_model(OpenidIdentifier, :url => 'http://hoge.example.com')
+      @openid_identifier.stub!(:account).and_return(@account)
     end
 
     describe "ユーザが登録済みの場合" do
       before do
-        @account = stub_model(Account, :code => "hogehoge", :name => "hogehoge", :email => "hoge@hoge.jp", :section => "hoge" )
-        Account.should_receive(:find_by_ident_url).and_return(@account)
+        OpenidIdentifier.should_receive(:find_by_url).and_return(@openid_identifier)
         controller.should_receive(:reset_session)
       end
 
@@ -112,7 +114,7 @@ describe PlatformController, "ログイン時にOpenIdのアカウントが渡�
 
     describe "Accountが登録されていない場合" do
       before do
-        Account.should_receive(:find_by_ident_url).and_return(nil)
+        OpenidIdentifier.should_receive(:find_by_url).and_return(nil)
         request.env['HTTP_REFERER'] = 'http://fuga.example.com/'
         post :login, :openid_url => "http://hoge.example.com"
       end
