@@ -14,4 +14,37 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 module RankingsHelper
+  def ranking_caption contents_type
+    case contents_type
+    when :entry_access
+      "アクセス数が非常に多かったみんなが注目しているブログランキングです。"
+    when :entry_comment
+      "活発に意見が交わされたブログランキングです。グループの掲示板は対象外です。"
+    when :entry_he
+      "たくさん#{CUSTOM_RITERAL[:point_button]}を押されたエントリのランキングです。グループの掲示板への投稿も含みます。"
+    when :user_entry
+      "個人のブログ投稿数ランキングです。(秘密日記込)"
+    when :user_access
+      "マイページに訪れた人の統計ランキングです。"
+    else
+      ""
+    end
+  end
+
+  def ranking_title contents_type
+    case contents_type
+    when :entry_access
+      "アクセス"
+    when :entry_comment
+      "コメント"
+    when :entry_he
+      "#{CUSTOM_RITERAL[:point_button]}"
+    when :user_entry
+      "投稿"
+    when :user_access
+      "訪問者"
+    else
+      ""
+    end
+  end
 end

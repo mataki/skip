@@ -1,0 +1,30 @@
+<% %w(entry_access entry_comment entry_he user_entry user_access).each do |contents_type| %>
+  <h2><%= ranking_title contents_type.to_sym -%>数ランキング</h2>
+  <span class="ranking_caption"><%= ranking_caption contents_type.to_sym -%></span>
+  <div id="<%= contents_type -%>">
+  <span class="indicator"><%= skip_image_tag 'indicator.gif' %></span>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+$j(function() {
+    getRanking = function(contents_type, year, month){
+        var url = relative_url_root + '/ranking_data/' + contents_type;
+        if ( year != undefined ) {
+            url = url + '/' + year;
+            if ( month != undefined ) {
+                url = url + '/' + month;
+            }
+        }
+        $j.ajax({
+            url: url,
+            success: function(html) {
+                $j('#' + contents_type).html(html);
+            },
+            error: function() {
+                $j('#' + contents_type).html('ランキングデータの取得に失敗しました。')
+            }
+        });
+    };
+});
+</script>
