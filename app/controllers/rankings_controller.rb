@@ -41,29 +41,21 @@ class RankingsController < ApplicationController
 
   # GET /ranking_data/:content_type/:year/:month
   def data
-    # TODO 要リファクタ(route.rb)
     if params[:content_type].blank?
       return head(:bad_request)
+    end
+
+    if params[:year].blank?
+      @rankings = Ranking.total(params[:content_type])
+      return head(:not_found) if @rankings.empty?
     else
-      if params[:year].blank?
-        @rankings = Ranking.total(params[:content_type])
-        if @rankings.empty?
-          head(:not_found)
-        end
-      else
-        if params[:month].blank?
-          head(:bad_request)
-        else
-          begin
-            Time.local(params[:year], params[:month])
-            @rankings = Ranking.monthly(params[:content_type], params[:year], params[:month])
-            if @rankings.empty?
-              head(:not_found)
-            end
-          rescue => e
-            head(:bad_request)
-          end
-        end
+      return head(:bad_request) if params[:month].blank?
+      begin
+        Time.local(params[:year], params[:month])
+        @rankings = Ranking.monthly(params[:content_type], params[:year], params[:month])
+        return head(:not_found) if @rankings.empty?
+      rescue => e
+        return head(:bad_request)
       end
     end
   end
