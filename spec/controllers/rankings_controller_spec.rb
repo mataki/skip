@@ -16,7 +16,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 # TODO 外部からのランキング取り込み機能は一旦ペンディングなのでコメントアウト
-#describe RankingController,"POST update" do
+#describe RankingsController,"POST update" do
 #  before do
 #    user_login
 #  end
@@ -79,12 +79,12 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 #  end
 #end
 
-describe RankingController, 'GET /rankings/:content_type/:year/:month' do
+describe RankingsController, 'GET /ranking_data/:content_type/:year/:month' do
   before do
     user_login
   end
   describe 'content_typeの指定が不正(nil又は空)の場合' do
-    before  { get :index, :content_type => '' }
+    before  { get :data, :content_type => '' }
     it 'bad_requestを返すこと' do
       response.code.should == '400'
     end
@@ -95,7 +95,7 @@ describe RankingController, 'GET /rankings/:content_type/:year/:month' do
     before { @content_type = 'entry_access' }
     describe 'yearの指定がある場合' do
       describe 'monthが指定されていない場合' do
-        before { get :index, :content_type => @content_type, :year => '2008' }
+        before { get :data, :content_type => @content_type, :year => '2008' }
         it 'bad_requestを返すこと' do
           response.code.should == '400'
         end
@@ -103,13 +103,13 @@ describe RankingController, 'GET /rankings/:content_type/:year/:month' do
 
       describe 'monthが指定されている場合' do
         describe 'yearが不正な場合' do
-          before { get :index, :content_type => @content_type, :year => '1000', :month => '8' }
+          before { get :data, :content_type => @content_type, :year => '1000', :month => '8' }
           it 'bad_requestを返すこと' do
             response.code.should == '400'
           end
         end
         describe 'monthが不正な場合' do
-          before { get :index, :content_type => @content_type, :year => '2008', :month => '13' }
+          before { get :data, :content_type => @content_type, :year => '2008', :month => '13' }
           it 'bad_requestを返すこと' do
             response.code.should == '400'
           end
@@ -123,7 +123,7 @@ describe RankingController, 'GET /rankings/:content_type/:year/:month' do
       before do
         @rankings = (1..10).map{|i| mock_model(Ranking)}
         Ranking.should_receive(:total).with(anything).and_return(@rankings)
-        get :index, :content_type => 'entry_access'
+        get :data, :content_type => 'entry_access'
       end
       it 'content_typeがparamに含まれること' do
         params[:content_type].should_not be_nil
@@ -142,7 +142,7 @@ describe RankingController, 'GET /rankings/:content_type/:year/:month' do
       before do
         @rankings = []
         Ranking.should_receive(:total).with(anything).and_return(@rankings)
-        get :index, :content_type => 'entry_access'
+        get :data, :content_type => 'entry_access'
       end
       it '404を返すこと' do
         response.code.should == '404'
@@ -155,7 +155,7 @@ describe RankingController, 'GET /rankings/:content_type/:year/:month' do
       before do
         @rankings = (1..10).map{|i| mock_model(Ranking)}
         Ranking.should_receive(:monthly).with(anything, anything, anything).and_return(@rankings)
-        get :index, :content_type => 'entry_access', :year => '2008', :month => '8'
+        get :data, :content_type => 'entry_access', :year => '2008', :month => '8'
       end
       it 'content_typeがparamに含まれること' do
         params[:content_type].should_not be_nil
@@ -177,7 +177,7 @@ describe RankingController, 'GET /rankings/:content_type/:year/:month' do
       before do
         @rankings = []
         Ranking.should_receive(:monthly).with(anything, anything, anything).and_return(@rankings)
-        get :index, :content_type => 'entry_access', :year => '2008', :month => '8'
+        get :data, :content_type => 'entry_access', :year => '2008', :month => '8'
       end
       it '404を返すこと' do
         response.code.should == '404'
@@ -186,7 +186,7 @@ describe RankingController, 'GET /rankings/:content_type/:year/:month' do
   end
 end
 
-describe RankingController, '#all' do
+describe RankingsController, '#all' do
   before do
     user_login
     get :all
@@ -194,7 +194,7 @@ describe RankingController, '#all' do
   it { response.should be_success }
 end
 
-describe RankingController, '#monthly' do
+describe RankingsController, '#monthly' do
   before do
     user_login
   end

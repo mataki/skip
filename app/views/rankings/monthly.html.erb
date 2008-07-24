@@ -1,25 +1,35 @@
-<h1>総合ランキング</h1>
+<h1>月間ランキング</h1>
 <h2>アクセス数ランキング</h2>
 <span class="ranking_caption">アクセス数が非常に多かったみんなが注目しているブログランキングです。</span>
-<div id="entry_access"></div>
+<div id="entry_access">
+  <span class="indicator"><%= skip_image_tag 'indicator.gif' %></span>
+</div>
 <h2>コメント数ランキング</h2>
 <span class="ranking_caption">活発に意見が交わされたブログランキングです。グループ・イベントの掲示板は対象外です。</span>
-<div id="entry_comment"></div>
+<div id="entry_comment">
+  <span class="indicator"><%= skip_image_tag 'indicator.gif' %></span>
+</div>
 <h2><%= CUSTOM_RITERAL[:point_button] -%>数ランキング</h2>
 <span class="ranking_caption">たくさん<%= CUSTOM_RITERAL[:point_button] -%>を押されたエントリのランキングです。グループ・イベントの掲示板への投稿も含みます。</span>
-<div id="entry_he"></div>
+<div id="entry_he">
+  <span class="indicator"><%= skip_image_tag 'indicator.gif' %></span>
+</div>
 <h2>投稿数ランキング</h2>
 <span class="ranking_caption">個人のblog投稿数ランキングです。(秘密日記込)</span>
-<div id="user_entry"></div>
+<div id="user_entry">
+  <span class="indicator"><%= skip_image_tag 'indicator.gif' %></span>
+</div>
 <h2>訪問者数ランキング</h2>
 <span class="ranking_caption">blog、マイページに訪れた人の総計ランキングです。</span>
-<div id="user_access"></div>
+<div id="user_access">
+  <span class="indicator"><%= skip_image_tag 'indicator.gif' %></span>
+</div>
 
 <script type="text/javascript">
 $j(function() {
-    var getRanking = function(contents_type){
+    var getMonthlyRanking = function(contents_type, year, month){
         $j.ajax({
-            url: relative_url_root + '/rankings/' + contents_type,
+            url: relative_url_root + '/ranking_data/' + contents_type + '/' + year + '/' + month,
             success: function(html) {
                 $j('#' + contents_type).html(html);
             },
@@ -28,13 +38,15 @@ $j(function() {
             }
         });
     };
-    var loadAllRanking = function(){
-        getRanking('entry_access');
-        getRanking('entry_comment');
-        getRanking('entry_he');
-        getRanking('user_entry');
-        getRanking('user_access');
+    var loadMonthlyRanking = function(){
+        var year = <%= @year -%>;
+        var month = <%= @month -%>;
+        getMonthlyRanking('entry_access', year, month);
+        getMonthlyRanking('entry_comment', year, month);
+        getMonthlyRanking('entry_he', year, month);
+        getMonthlyRanking('user_entry', year, month);
+        getMonthlyRanking('user_access', year, month);
     };
-    loadAllRanking();
+    loadMonthlyRanking();
 });
 </script>

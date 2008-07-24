@@ -13,5 +13,14 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-module RankingHelper
+require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+
+describe RankingsHelper do
+  
+  #Delete this example and add some real ones or delete this file
+  it "should be included in the object returned by #helper" do
+    included_modules = (class << helper; self; end).send :included_modules
+    included_modules.should include(RankingsHelper)
+  end
+
 end

@@ -13,7 +13,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class RankingController < ApplicationController
+class RankingsController < ApplicationController
   layout false
 # TODO 外部からのランキング取り込み機能は一旦ペンディングなのでコメントアウト
 #  def update
@@ -34,8 +34,8 @@ class RankingController < ApplicationController
 #    end
 #  end
 
-  # GET /rankings/:content_type/:year/:month
-  def index
+  # GET /ranking_data/:content_type/:year/:month
+  def data
     # TODO 要リファクタ(route.rb)
     if params[:content_type].blank?
       return head(:bad_request)
