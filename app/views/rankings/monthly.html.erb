@@ -1,4 +1,4 @@
-<%= select_tag 'date_list', options_for_select(@dates.map { |date| [date, date] }, @dates.first), :id => 'date_list' -%>
+<%= select_tag 'date_list', options_for_select(@dates.map { |date| [date, date] }, "#{@year}-#{@month}"), :id => 'date_list' -%>
 <hr />
 <h1 id="ranking_title"><%= h @year -%>年<%= h @month -%>月のランキング</h1>
 <%= render :partial => 'list' %>
