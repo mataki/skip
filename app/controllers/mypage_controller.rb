@@ -289,7 +289,7 @@ class MypageController < ApplicationController
         render :partial => 'manage_email', :layout => "layout"
       end
     else
-      flash[:notice] = '指定されたページは存在しません'
+      flash[:notice] = '指定されたページは存在しません。'
       redirect_to :action => 'index'
     end
   end
@@ -307,6 +307,17 @@ class MypageController < ApplicationController
       @openid_identifiers = account.openid_identifiers.reload
       render :partial => 'manage_openid', :layout => 'layout'
     end
+  end
+
+  def delete_ident_url
+    if (openid_identifier = OpenidIdentifier.find_by_url(params[:ident_url]) and
+        openid_identifier.account.code == session[:user_code])
+      openid_identifier.destroy
+      flash[:notice] = "OpenID URLを削除しました。"
+    else
+      flash[:notice] = "そのOpenID URLは登録されていません。"
+    end
+    redirect_to :action => :manage, :menu => :manage_openid
   end
 
   # post_action

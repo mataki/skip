@@ -24,7 +24,7 @@
     <div class="desc">あなたの登録済みOpenID URL</div>
     <div class="edit_form_space">
       <% @openid_identifiers.each do |openid_identifier| %>
-      <p><%= openid_identifier.url -%></p>
+      <div><%= openid_identifier.url -%> - <%= link_to '削除', {:action => :delete_ident_url, :ident_url => openid_identifier.url}, :method => :post, :confirm => "削除してもよろしいですか？" -%></div>
       <% end %>
     </div>
     <% end %>

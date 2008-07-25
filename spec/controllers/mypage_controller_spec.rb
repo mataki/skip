@@ -87,10 +87,53 @@ describe MypageController do
     end
   end
 
-  describe "GET /mapage/apply_ident_url" do
+  describe "GET /mypage/apply_ident_url" do
     before do
       get :apply_ident_url
     end
     it { response.should redirect_to(:action => :index)}
+  end
+
+  describe "POST /mypage/delete_ident_url" do
+    before do
+      @url = 'http://hoge.example.com/'
+      @account = mock_model(Account)
+      @openid_identifier = mock_model(OpenidIdentifier)
+      @openid_identifier.stub!(:account).and_return(@account)
+    end
+
+    describe "登録されているOpenID URLの場合" do
+      before do
+        @account.should_receive(:code).and_return('100001')
+        @openid_identifier.should_receive(:destroy)
+        OpenidIdentifier.should_receive(:find_by_url).with(@url).and_return(@openid_identifier)
+        post :delete_ident_url, :ident_url => @url
+      end
+
+      it { response.should be_redirect }
+      it { flash[:notice].should == "OpenID URLを削除しました。" }
+    end
+
+    describe "他人に関連付けられているURLの場合" do
+      before do
+        @account.should_receive(:code).and_return('222222')
+        @openid_identifier.should_not_receive(:destroy)
+        OpenidIdentifier.should_receive(:find_by_url).with(@url).and_return(@openid_identifier)
+        post :delete_ident_url, :ident_url => @url
+      end
+
+      it { response.should be_redirect }
+      it { flash[:notice].should == "そのOpenID URLは登録されていません。" }
+    end
+
+    describe "登録されているURLでなかった場合" do
+      before do
+        OpenidIdentifier.should_receive(:find_by_url).with(@url).and_return(nil)
+        post :delete_ident_url, :ident_url => @url
+      end
+
+      it { response.should be_redirect }
+      it { flash[:notice].should == "そのOpenID URLは登録されていません。" }
+    end
   end
 end
