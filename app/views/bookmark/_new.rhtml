@@ -111,7 +111,9 @@ $j(function(){
         $j('#update_form')
         .submit(function(){
             if($j('#bookmark_comment_public_true:checked').size() && <%= !@bookmark.url_is_public? -%>){
-                return confirm('非公開エントリーを全公開でブックマークしますがよろしいですか？\n（閲覧権限の有無によらずタイトルが公開されます）');
+                if(!confirm('非公開エントリーを全公開でブックマークしますがよろしいですか？\n（閲覧権限の有無によらずタイトルが公開されます）')){
+                    return false;
+                }
             }
             var url = '<%= url_for({ :controller => :bookmark, :action => :update }); -%>'
             $j.ajax({
