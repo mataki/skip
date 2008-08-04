@@ -222,6 +222,8 @@ class MypageController < ApplicationController
       session[:user_name] = @user.name
       redirect_to :action => 'profile'
     else
+      @error_msg = []
+      @error_msg.concat @user.errors.full_messages unless @user.valid?
       @profile ||= UserProfile.new
       render :partial => 'manage_profile', :layout => "layout"
     end

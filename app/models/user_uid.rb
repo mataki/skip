@@ -22,7 +22,7 @@ class UserUid < ActiveRecord::Base
   }
 
   UID_MIN_LENGTH = 4
-  UID_MAX_LENGTH = 31
+  UID_MAX_LENGTH = 30
   UID_FORMAT_REGEX = /^[a-zA-Z0-9\-_]*$/
 
   validates_presence_of :uid, :message => 'は必須です'

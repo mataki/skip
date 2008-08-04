@@ -163,8 +163,7 @@ function getSubwindowScript(url, height, width, title) {
     if(width == undefined) {
         width = 700
     }
-
-    window.open(url, title, 'width=' + width, 'height=' + height, resizable='yes', scrollbars='yes').focus();
+    window.open(url, title, 'width='+width+',height='+height+',resizable=yes,scrollbars=yes').focus();
 }
 
 function getSubwindowRule(height, width, title) {
