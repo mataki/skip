@@ -13,6 +13,8 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+require 'openid/extensions/ax'
+
 class PlatformController < ApplicationController
   layout false
   skip_before_filter :sso, :prepare_session
@@ -80,7 +82,7 @@ class PlatformController < ApplicationController
     Session.delete_all(["sid = ?", cookies["_sso_sid"]])
     cookies["_sso_sid"] = { :value => nil ,:expires => Time.local(1999,1,1) }
     reset_session
-    redirect_to :action => "index"
+    redirect_to ENV['SKIPOP_URL'].blank? ? {:action => "index"} : "#{ENV['SKIPOP_URL']}logout"
   end
 
   # セッション中のユーザ情報を取得するためのエンドポイント
@@ -99,14 +101,19 @@ class PlatformController < ApplicationController
 
   private
   def login_with_open_id
-    authenticate_with_open_id do |result, identity_url|
+    authenticate_with_open_id do |result, identity_url, registration|
       if result.successful?
         unless identifier = OpenidIdentifier.find_by_url(identity_url)
-          flash[:auth_fail_message] = {
-            "message" => "そのOpenIDは、登録されていません。",
-            "detail" => "ログイン後管理画面でOpenID URLを登録後ログインしてください。"
-          }
-          redirect_to :action => :index
+          if !ENV['SKIPOP_URL'].blank? and identity_url.include?(ENV['SKIPOP_URL'])
+            account = Account.create_with_identity_url(identity_url, create_account_params(identity_url, registration))
+            if account.valid?
+              redirect_to :controller => :portal
+            else
+              set_error_message_from_account_and_redirect(account)
+            end
+          else
+            set_error_message_not_create_new_account_and_redirect
+          end
           return
         end
         reset_session
@@ -120,18 +127,40 @@ class PlatformController < ApplicationController
         set_sso_cookie_from(account.attributes.with_indifferent_access.slice(:name, :email, :section).merge(:code => account.code))
         redirect_to_back_or_root
       else
-        error_messages = {
-          :missing => { "message" => "OpenIDサーバーが見つかりませんでした。", "detail" => "正しいOpenID URLを入力してください。" },
-          :canceled => { "message" => "キャンセルされました。", "detail" => "このサーバへの認証を確認してください" },
-          :failed => { "message" => "認証に失敗しました。", "detail" => "" },
-          :setup_needed => { "message" => "内部エラーが発生しました。", "detail" => "管理者に連絡してください。" }
-        }
-        message = error_messages[result.instance_variable_get(:@code)]
-        flash[:auth_fail_message] = message
-        redirect_to :back
+        set_error_message_form_result_and_redirect(result)
       end
     end
   end
+
+  # -----------------------------------------------
+  # over ride open_id_authentication to use OpenID::AX
+  def add_simple_registration_fields(open_id_request, fields)
+    axreq = OpenID::AX::FetchRequest.new
+    requested_attrs = [['http://axschema.org/namePerson', 'fullname'],
+                       ['http://axschema.org/company/title', 'job_title'],
+                       ['http://axschema.org/contact/email', 'email']]
+    requested_attrs.each { |a| axreq.add(OpenID::AX::AttrInfo.new(a[0], a[1], a[2] || false, a[3] || 1)) }
+    open_id_request.add_extension(axreq)
+    open_id_request.return_to_args['did_ax'] = 'y'
+  end
+
+  def complete_open_id_authentication
+    params_with_path = params.reject { |key, value| request.path_parameters[key] }
+    params_with_path.delete(:format)
+    open_id_response = timeout_protection_from_identity_server { open_id_consumer.complete(params_with_path, requested_url) }
+    identity_url     = normalize_url(open_id_response.endpoint.claimed_id) if open_id_response.endpoint.claimed_id
+    case open_id_response.status
+    when OpenID::Consumer::SUCCESS
+      yield Result[:successful], identity_url, OpenID::AX::FetchResponse.from_success_response(open_id_response)
+    when OpenID::Consumer::CANCEL
+      yield Result[:canceled], identity_url, nil
+    when OpenID::Consumer::FAILURE
+      yield Result[:failed], identity_url, nil
+    when OpenID::Consumer::SETUP_NEEDED
+      yield Result[:setup_needed], open_id_response.setup_url, nil
+    end
+  end
+  # -----------------------------------------------
 
   def set_sso_cookie_from(user_info)
     expires = params[:login_save] ? Time.now + 1.month : nil
@@ -143,4 +172,42 @@ class PlatformController < ApplicationController
     return_to = params[:return_to] ? URI.encode(params[:return_to]) : nil
     redirect_to (return_to and !return_to.empty?) ? return_to : root_url
   end
+
+  def create_account_params identity_url, registration
+    mappings = {'http://axschema.org/namePerson' => 'name',
+      'http://axschema.org/company/title' => 'section',
+      'http://axschema.org/contact/email' => 'email' }
+    account_attribute = {:code => identity_url.split("/").last}
+    mappings.each do |url, column|
+      account_attribute[column.to_sym] = registration.data[url][0]
+    end
+    account_attribute
+  end
+
+  def set_error_message_form_result_and_redirect(result)
+    error_messages = {
+      :missing      => ["OpenIDサーバーが見つかりませんでした。", "正しいOpenID URLを入力してください。"] ,
+      :canceled     => ["キャンセルされました。", "このサーバへの認証を確認してください" ],
+      :failed       => ["認証に失敗しました。", "" ],
+      :setup_needed => ["内部エラーが発生しました。", "管理者に連絡してください。" ]
+    }
+    set_error_message_and_redirect error_messages[result.instance_variable_get(:@code)], {:controller => :platform, :action => :login}
+  end
+
+  def set_error_message_from_account_and_redirect(account)
+    set_error_message_and_redirect ["ユーザの登録に失敗しました。", "管理者に連絡してください。<br/>#{account.errors.full_messages}"], :action => :index
+  end
+
+  def set_error_message_not_create_new_account_and_redirect
+    set_error_message_and_redirect ["そのOpenIDは、登録されていません。", "ログイン後管理画面でOpenID URLを登録後ログインしてください。"], :action => :index
+  end
+
+  def set_error_message_and_redirect(message, url)
+    flash[:auth_fail_message] = {
+      "message" => message.first,
+      "detail" => message.last
+    }
+    redirect_to url
+  end
 end
+

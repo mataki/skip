@@ -57,6 +57,13 @@ class Account < ActiveRecord::Base
     Digest::SHA1.hexdigest("#{SHA1_DIGEST_KEY}--#{password}--")
   end
 
+  def self.create_with_identity_url(identity_url, params)
+    password = self.encrypt(params[:code])
+    account = new(params.merge(:password => password, :password_confirmation => password))
+    account.openid_identifiers << OpenidIdentifier.new(:url => identity_url)
+    account.save
+    account
+  end
 private
   def password_required?
     crypted_password.blank? || !password.blank?

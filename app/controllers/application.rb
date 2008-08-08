@@ -78,6 +78,10 @@ class ApplicationController < ActionController::Base
     @login_user_groups ||= GroupParticipation.get_gid_array_by_user_id(session[:user_id])
   end
 
+  def logged_in?
+    !!session[:user_code]
+  end
+
   #エントリへのパーミッションをチェック
   def check_entry_permission
     find_params = BoardEntry.make_conditions(login_user_symbols, {:id=>params[:id]})
@@ -89,27 +93,35 @@ class ApplicationController < ActionController::Base
 
   # skip_util内のssoフィルターは自己をopenするため呼び出せないのでオーバーライド
   def sso
-    unless cookies[:_sso_sid]
-      if request.url == root_url
-        redirect_to :controller => :platform, :action => :index
-      else
-        redirect_to :controller => :platform, :action => :require_login, :return_to => URI.encode(request.env["REQUEST_URI"])
-      end
-      return false
-    end
-
-    if session[:sso_sid] != sid = cookies[:_sso_sid]
-      reset_session
-      if sess = Session.find(:first, :conditions => ["sid = ?", URI.decode(cookies[:_sso_sid])])
-        session[:sso_sid] = sid
-        session[:user_code] = sess.user_code
-        session[:user_name] = sess.user_name
-        session[:user_email] = sess.user_email
-      else
-        redirect_to :controller => :platform, :action => :logout
+    unless ENV['SKIPOP_URL'].blank?
+      unless logged_in?
+        redirect_to :controller => :platform, :action => :login, :openid_url => ENV['SKIPOP_URL']
         return false
       end
+      true
+    else
+      unless cookies[:_sso_sid]
+        if request.url == root_url
+          redirect_to :controller => :platform, :action => :index
+        else
+          redirect_to :controller => :platform, :action => :require_login, :return_to => URI.encode(request.env["REQUEST_URI"])
+        end
+        return false
+      end
+
+      if session[:sso_sid] != sid = cookies[:_sso_sid]
+        reset_session
+        if sess = Session.find(:first, :conditions => ["sid = ?", URI.decode(cookies[:_sso_sid])])
+          session[:sso_sid] = sid
+          session[:user_code] = sess.user_code
+          session[:user_name] = sess.user_name
+          session[:user_email] = sess.user_email
+        else
+          redirect_to :controller => :platform, :action => :logout
+          return false
+        end
+      end
+      return true
     end
-    return true
   end
 end

@@ -50,6 +50,20 @@ describe Account, "適切な値が与えられた場合保存できる" do
   end
 end
 
+describe Account, ".create_with_identity_url" do
+  before do
+    @identity_url = "http://test.com/identity"
+    @params = { :code => 'hoge', :email => 'hoge@hoge.jp', :name => "ほげ ふが" }
+    lambda do
+      @account = Account.create_with_identity_url(@identity_url, @params)
+    end.should change(Account, :count).by(1)
+  end
+
+  it { @account.should be_valid }
+  it { @account.should be_is_a(Account) }
+  it { @account.openid_identifiers.should_not be_nil }
+  it { @account.openid_identifiers.map{|i| i.url}.should be_include(@identity_url) }
+end
 
 private
 def new_account options = {}

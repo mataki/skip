@@ -74,6 +74,9 @@ FULL_TEXT_SEARCH_SETTING = false
 BELONG_INFO_APPS = {}
 #BELONG_INFO_APPS = { :app_name => { :api => :api_name, :hash_key => 'hash_key_name', :prefix => 'prefix' } }
 
+# SIKPoPモードを有効にする
+ENV['SKIPOP_URL'] ||= nil
+
 # 新規ユーザの登録を禁止する
 # ENV['STOP_NEW_USER'] = "ON"
 

@@ -67,12 +67,20 @@ describe PlatformController do
 end
 
 describe PlatformController, "ログイン時にOpenIdのアカウントが渡された場合" do
+  before do
+    @registration = mock('registration')
+    @registration_data = {'http://axschema.org/namePerson' => ['ほげ ふが'],
+      'http://axschema.org/company/title' => ['経理'],
+      'http://axschema.org/contact/email' => ['hoge@hoge.jp']}
+    @registration.stub!(:data).and_return(@registration_data)
+    @identity_url = 'http://op.example.com/opuser'
+  end
   describe "正しく認証できた場合" do
     before do
       result = OpenIdAuthentication::Result[:successful]
-      controller.should_receive(:authenticate_with_open_id).and_yield(result, 'http://hoge.example.com/')
+      controller.should_receive(:authenticate_with_open_id).and_yield(result, @identity_url, @registration)
       @account = stub_model(Account, :code => "hogehoge", :name => "hogehoge", :email => "hoge@hoge.jp", :section => "hoge" )
-      @openid_identifier = stub_model(OpenidIdentifier, :url => 'http://hoge.example.com')
+      @openid_identifier = stub_model(OpenidIdentifier, :url => @identity_url)
       @openid_identifier.stub!(:account).and_return(@account)
     end
 
@@ -84,7 +92,7 @@ describe PlatformController, "ログイン時にOpenIdのアカウントが渡�
 
       describe '直接アクセスした場合' do
         before do
-          post :login, :openid_url => 'http://hoge.example.com/'
+          post :login, :openid_url => @identity_url
         end
 
         it "Sessionにユーザ情報が詰め込まれていること" do
@@ -105,7 +113,7 @@ describe PlatformController, "ログイン時にOpenIdのアカウントが渡�
 
       describe '戻り先が指定されている場合' do
         before do
-          post :login, :openid_url => 'http://hoge.example.com/', :return_to => 'http://example.com'
+          post :login, :openid_url => @identity_url, :return_to => 'http://example.com'
         end
 
         it { response.should redirect_to('http://example.com') }
@@ -115,26 +123,67 @@ describe PlatformController, "ログイン時にOpenIdのアカウントが渡�
     describe "Accountが登録されていない場合" do
       before do
         OpenidIdentifier.should_receive(:find_by_url).and_return(nil)
-        request.env['HTTP_REFERER'] = 'http://fuga.example.com/'
-        post :login, :openid_url => "http://hoge.example.com"
       end
+      describe "新規Accountが作成可能な設定の場合" do
+        before do
+          ENV['SKIPOP_URL'] = 'http://op.example.com/'
+          @account = stub_model(Account)
+        end
+        describe "作成が成功する場合" do
+          before do
+            @account.should_receive(:valid?).and_return(true)
+            Account.should_receive(:create_with_identity_url).with(@identity_url, { :code => @identity_url.split("/").last, :name => 'ほげ ふが', :section => '経理', :email => 'hoge@hoge.jp' }).and_return(@account)
+            post :login, :openid_url => @identity_url
+          end
+          it "Accountを新規作成すること" do
+          end
+          it "Accountにidentity_urlから抽出されたcodeが渡されること" do
+          end
+          it "ユーザ登録が面へ遷移すること" do
+            response.should redirect_to(:controller => :portal)
+          end
+        end
+        describe "作成が失敗する場合" do
+          before do
+            @account.should_receive(:valid?).and_return(false)
+            Account.should_receive(:create_with_identity_url).and_return(@account)
+            post :login, :openid_url => @identity_url
+          end
+          it { response.should redirect_to(:controller => :platform, :action => :index) }
+          it { flash[:auth_fail_message]["message"].should_not be_nil }
+        end
 
-      it { response.should be_redirect }
-      it { response.should redirect_to(:action => :index) }
-      it { flash[:auth_fail_message]["message"].should_not be_nil }
+      end
+      describe "SKIPOP_URLが設定されていない場合設定の場合" do
+        before do
+          ENV['SKIPOP_URL'] = nil
+          post :login, :openid_url => @identity_url
+        end
+        it { response.should be_redirect }
+        it { response.should redirect_to(:controller => :platform, :action => :index) }
+        it { flash[:auth_fail_message]["message"].should_not be_nil }
+      end
+      describe "identity_urlにSKIPOP_URLが含まれないない場合" do
+        before do
+          ENV['SKIPOP_URL'] = 'http://localhost:3000/'
+          post :login, :openid_url => @identity_url
+        end
+        it { response.should be_redirect }
+        it { response.should redirect_to(:controller => :platform, :action => :index) }
+        it { flash[:auth_fail_message]["message"].should_not be_nil }
+      end
     end
   end
 
   describe '認証に失敗した場合' do
     before do
       @result = OpenIdAuthentication::Result[:failed]
-      controller.should_receive(:authenticate_with_open_id).and_yield(@result, 'http://hoge.example.com/')
-      request.env['HTTP_REFERER'] = 'http://fuga.example.com/'
-      post :login, :openid_url => 'http://hoge.example.com/'
+      controller.should_receive(:authenticate_with_open_id).and_yield(@result, @identity_url, @registration)
+      post :login, :openid_url => @identity_url
     end
 
-    it '前のページに遷移すること' do
-      response.should redirect_to(:back)
+    it 'ログインページに遷移すること' do
+      response.should redirect_to(:controller => :platform, :action => :login)
     end
 
     it 'flash が設定されていること' do

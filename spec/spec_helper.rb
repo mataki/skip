@@ -72,5 +72,5 @@ def create_ranking(options = {})
     ranking
 end
 ######skip関連のテストで必要
-class ApplicationController; def sso() return true end; end
+class ApplicationController;skip_before_filter :sso; end
 
