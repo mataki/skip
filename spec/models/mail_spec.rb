@@ -16,7 +16,14 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Mail do
-  def test_truth
-    assert true
+  before do
+    @mail = new_mail :to_address_symbol => "uid:hoge"
   end
+  it { @mail.save.should be_true }
+  it { @mail.symbol_type.should == 'uid' }
+  it { @mail.symbol_id.should == 'hoge' }
+end
+
+def new_mail(options = {})
+  Mail.new({ :to_address_name => 'uid:hoge', :user_entry_no => "1"}.update(options))
 end
