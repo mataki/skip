@@ -17,10 +17,6 @@ describe Admin::BoardEntryCommentsController do
     Admin::BoardEntry.stub!(:find).and_return(@board_entry)
   end
   describe "handling GET /admin_board_entry_comments" do
-
-    before(:each) do
-    end
-
     def do_get
       get :index
     end
@@ -47,10 +43,6 @@ describe Admin::BoardEntryCommentsController do
   end
 
   describe "handling GET /admin_board_entry_comments.xml" do
-
-    before(:each) do
-    end
-
     def do_get
       @request.env["HTTP_ACCEPT"] = "application/xml"
       get :index
@@ -74,10 +66,6 @@ describe Admin::BoardEntryCommentsController do
   end
 
   describe "handling GET /admin_board_entry_comments/1" do
-
-    before(:each) do
-    end
-
     def do_get
       get :show, :id => "1"
     end
@@ -104,11 +92,6 @@ describe Admin::BoardEntryCommentsController do
   end
 
   describe "handling GET /admin_board_entry_comments/1.xml" do
-
-    before(:each) do
-      @board_entry_comments.stub!(:find).and_return(@board_entry_comment)
-    end
-
     def do_get
       @request.env["HTTP_ACCEPT"] = "application/xml"
       get :show, :id => "1"
@@ -168,10 +151,6 @@ describe Admin::BoardEntryCommentsController do
   end
 
   describe "handling GET /admin_board_entry_comments/1/edit" do
-
-    before(:each) do
-    end
-
     def do_get
       get :edit, :id => "1"
     end
