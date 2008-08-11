@@ -1,4 +1,5 @@
 class Admin::BoardEntryCommentsController < ApplicationController
+  before_filter :require_admin
   before_filter :load_board_entry
   # GET /admin_board_entry_comments
   # GET /admin_board_entry_comments.xml

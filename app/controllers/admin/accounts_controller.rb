@@ -1,4 +1,5 @@
 class Admin::AccountsController < ApplicationController
+  before_filter :require_admin
   # GET /admin_accounts
   # GET /admin_accounts.xml
   def index

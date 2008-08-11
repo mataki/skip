@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
   # skip_utilで認証がされている前提で、グローバルセッションを利用している
   def prepare_session
     # プロフィール情報が登録されていない場合、platformに戻す
-    unless user = User.find_by_uid(session[:user_code])
+    unless user = current_user
       redirect_to :controller => :platform, :error => 'no_profile'
       return false
     end
@@ -82,6 +82,10 @@ class ApplicationController < ActionController::Base
     !!session[:user_code]
   end
 
+  def current_user
+    @current_user ||= User.find_by_uid(session[:user_code])
+  end
+
   #エントリへのパーミッションをチェック
   def check_entry_permission
     find_params = BoardEntry.make_conditions(login_user_symbols, {:id=>params[:id]})
@@ -122,6 +126,13 @@ class ApplicationController < ActionController::Base
         end
       end
       return true
+    end
+  end
+
+  def require_admin
+    unless current_user.admin
+      redirect_to root_url
+      return false
     end
   end
 end

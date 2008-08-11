@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe Admin::BoardEntriesController do
   before do
-    user_login
+    admin_login
   end
   describe "handling GET /admin_board_entries" do
 

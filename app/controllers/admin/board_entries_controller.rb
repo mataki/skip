@@ -1,4 +1,5 @@
 class Admin::BoardEntriesController < ApplicationController
+  before_filter :require_admin
   # GET /admin_board_entries
   # GET /admin_board_entries.xml
   def index

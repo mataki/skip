@@ -36,3 +36,64 @@ describe ApplicationController, "#sso" do
     end
   end
 end
+
+describe ApplicationController, '#current_user' do
+  describe 'session[:user_code]に一致するユーザが見つかる場合' do
+    before do
+      @user = mock_model(User)
+      User.should_receive(:find_by_uid).and_return(@user)
+    end
+    it { controller.current_user.should == @user }
+  end
+  describe 'session[:user_code]に一致するユーザが見つからない場合' do
+    before do
+      User.should_receive(:find_by_uid).and_return(nil)
+    end
+    it { controller.current_user.should == nil }
+  end
+end
+
+describe ApplicationController, '#prepare_session' do
+  before do
+    controller.stub!(:controller_name).and_return('mypage')
+    @session = {}
+    @session.stub!('[]').with(:prepared).and_return(true)
+    controller.stub!(:session).and_return(@session)
+  end
+  describe 'プロフィール情報が登録されていない場合' do
+    before do
+      controller.should_receive(:current_user).and_return(nil)
+    end
+    it 'platformにリダイレクトされること' do
+      controller.should_receive(:redirect_to).with({:controller => :platform, :error => 'no_profile'})
+      controller.prepare_session
+    end
+  end
+  describe 'プロフィール情報が登録されている場合' do
+    before do
+      @user = mock_model(User)
+      controller.should_receive(:current_user).and_return(@user)
+    end
+    it { controller.prepare_session.should be_true }
+  end
+end
+
+describe ApplicationController, '#require_admin' do
+  describe '管理者じゃない場合' do
+    before do
+      @user = mock_model(User)
+      @user.stub!(:admin).and_return(false)
+      controller.should_receive(:current_user).and_return(@user)
+      @url = '/'
+      controller.stub!(:root_url).and_return(@url)
+      controller.stub!(:redirect_to).with(@url)
+    end
+    it 'mypageへのリダイレクト処理が呼ばれること' do
+      controller.should_receive(:redirect_to).with(@url)
+      controller.require_admin
+    end
+    it 'falseが返却されること' do
+      controller.require_admin.should be_false
+    end
+  end
+end

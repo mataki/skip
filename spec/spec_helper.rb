@@ -55,10 +55,32 @@ Spec::Runner.configure do |config|
   # config.mock_with :rr
 end
 
-def user_login
-  User.stub!(:find_by_uid).and_return(mock_model(User))
+def admin_login
   session[:user_code] = '111111'
   session[:prepared] = true
+  u = stub_model(User)
+  u.stub!(:admin).and_return(true)
+  if defined? controller
+    controller.stub!(:current_user).and_return(u)
+  else
+    # helperでも使えるように
+    stub!(:current_user).and_return(u)
+  end
+  u
+end
+
+def user_login
+  session[:user_code] = '111111'
+  session[:prepared] = true
+  u = stub_model(User)
+  u.stub!(:admin).and_return(false)
+  if defined? controller
+    controller.stub!(:current_user).and_return(u)
+  else
+    # helperでも使えるように
+    stub!(:current_user).and_return(u)
+  end
+  u
 end
 
 def create_ranking(options = {})

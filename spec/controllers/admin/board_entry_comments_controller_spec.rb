@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe Admin::BoardEntryCommentsController do
   before do
-    user_login
+    admin_login
     @board_entry = mock_model(Admin::BoardEntry, :to_param => "1")
     controller.stub!(:load_board_entry).and_return(@board_entry)
   end
