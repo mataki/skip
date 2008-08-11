@@ -1,0 +1,18 @@
+<p>
+  <b>Title:</b>
+  <%=h @board_entry.title %>
+</p>
+
+<p>
+  <b>Contents:</b>
+  <%=h @board_entry.contents %>
+</p>
+
+<p>
+  <b>Category:</b>
+  <%=h @board_entry.category %>
+</p>
+
+
+<%= link_to 'Edit', edit_admin_board_entry_path(@board_entry) %> |
+<%= link_to 'Back', admin_board_entries_path %>
