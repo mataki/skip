@@ -1,0 +1,16 @@
+<h1>Editing board_entry_comment</h1>
+
+<% form_for(@board_entry_comment, :url => admin_board_entry_board_entry_comment_path(@board_entry, @board_entry_comment), :method => 'put') do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :contents %><br />
+    <%= f.text_area :contents %>
+  </p>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', admin_board_entry_board_entry_comment_path(@board_entry, @board_entry_comment) %> |
+<%= link_to 'Back', admin_board_entry_board_entry_comments_path(@board_entry) %>

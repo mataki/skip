@@ -1,2 +1,2 @@
-class Admin::BoardEntry < ActiveRecord::Base
+class Admin::BoardEntry < BoardEntry
 end

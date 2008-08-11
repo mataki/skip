@@ -37,7 +37,9 @@ ActionController::Routing::Routes.draw do |map|
 
   map.namespace "admin" do |admin_map|
     admin_map.resources :accounts
-    admin_map.resources :board_entries
+    admin_map.resources :board_entries do |board_entry|
+      board_entry.resources :board_entry_comments
+    end
   end
 
   map.connect ':controller/:action/:id'

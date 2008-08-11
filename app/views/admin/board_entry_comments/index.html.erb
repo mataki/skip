@@ -1,0 +1,20 @@
+<h1>Listing board_entry_comments</h1>
+
+<table>
+  <tr>
+    <th>Contents</th>
+  </tr>
+
+<% for board_entry_comment in @board_entry_comments %>
+  <tr>
+    <td><%=h board_entry_comment.contents %></td>
+    <td><%= link_to 'Show', admin_board_entry_board_entry_comment_path(@board_entry, board_entry_comment) %></td>
+    <td><%= link_to 'Edit', edit_admin_board_entry_board_entry_comment_path(@board_entry, board_entry_comment) %></td>
+    <td><%= link_to 'Destroy', admin_board_entry_board_entry_comment_path(@board_entry, board_entry_comment), :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New board_entry_comment', new_admin_board_entry_board_entry_comment_path(@board_entry) %>
