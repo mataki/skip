@@ -1,0 +1,23 @@
+<p>
+  <b>Code:</b>
+  <%=h @account.code %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%=h @account.name %>
+</p>
+
+<p>
+  <b>Email:</b>
+  <%=h @account.email %>
+</p>
+
+<p>
+  <b>Section:</b>
+  <%=h @account.section %>
+</p>
+
+
+<%= link_to 'Edit', edit_admin_account_path(@account) %> |
+<%= link_to 'Back', admin_accounts_path %>
