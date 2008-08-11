@@ -1,0 +1,15 @@
+<h1>New openid_identifier</h1>
+
+<% form_for(@openid_identifier, :url => admin_account_openid_identifiers_url(@account)) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :url %><br />
+    <%= f.text_field :url %>
+  </p>
+  <p>
+    <%= f.submit "Create" %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', admin_account_openid_identifiers_path %>
