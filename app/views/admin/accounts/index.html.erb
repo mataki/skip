@@ -2,10 +2,9 @@
 
 <table>
   <tr>
-    <th>Code</th>
-    <th>Name</th>
-    <th>Email</th>
-    <th>Section</th>
+    <% %w[Code Name Email Section].each do |title| -%>
+    <th><%= _("Admin account|#{title}") %></th>
+    <% end -%>
   </tr>
 
 <% for account in @accounts %>

@@ -21,6 +21,8 @@ class ApplicationController < ActionController::Base
   before_filter :prepare_session
   after_filter  :remove_message
 
+  init_gettext "skip"
+
   # アプリケーションで利用するセッションの準備をする
   # フィルタで毎アクセスごとに確認し、セッションが未準備なら初期値をいれる
   # skip_utilで認証がされている前提で、グローバルセッションを利用している
