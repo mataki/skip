@@ -1,5 +1,5 @@
 class Admin::OpenidIdentifiersController < ApplicationController
-  before_filter :load_account
+  before_filter :load_account, :require_admin
   # GET /admin_openid_identifiers
   # GET /admin_openid_identifiers.xml
   def index

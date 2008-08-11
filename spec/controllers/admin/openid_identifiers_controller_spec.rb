@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe Admin::OpenidIdentifiersController do
   before do
-    user_login
+    admin_login
 
     @openid_identifier = mock_model(Admin::OpenidIdentifier)
 
