@@ -116,7 +116,7 @@ class Antenna < ActiveRecord::Base
     antenna_comment = Antenna.new(:name => "コメントの行方", :user_id => user_id)
     antenna_comment.antenna_type = "comment"
     antenna_comment.count = BoardEntry.count(:conditions => find_params[:conditions],
-                                             :include => find_params[:include] | [:user_readings, :board_entry_comment])
+                                             :include => find_params[:include] | [:user_readings, :board_entry_comments])
     antennas << antenna_comment
 
     # ブクマの行方 /page/% をブクマしている人のみに表示する

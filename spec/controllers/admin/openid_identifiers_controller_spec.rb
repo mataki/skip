@@ -4,7 +4,7 @@ describe Admin::OpenidIdentifiersController do
   before do
     admin_login
 
-    @openid_identifier = mock_model(Admin::OpenidIdentifier)
+    @openid_identifier = mock_model(OpenidIdentifier)
 
     @openid_identifiers = [@openid_identifier]
 

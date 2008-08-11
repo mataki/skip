@@ -4,7 +4,7 @@ class Admin::BoardEntryCommentsController < ApplicationController
   # GET /admin_board_entry_comments
   # GET /admin_board_entry_comments.xml
   def index
-    @board_entry_comments = Admin::BoardEntryComment.find(:all)
+    @board_entry_comments = @board_entry.board_entry_comments
 
     respond_to do |format|
       format.html # index.html.erb
@@ -15,7 +15,7 @@ class Admin::BoardEntryCommentsController < ApplicationController
   # GET /admin_board_entry_comments/1
   # GET /admin_board_entry_comments/1.xml
   def show
-    @board_entry_comment = Admin::BoardEntryComment.find(params[:id])
+    @board_entry_comment = @board_entry.board_entry_comments.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -36,13 +36,13 @@ class Admin::BoardEntryCommentsController < ApplicationController
 
   # GET /admin_board_entry_comments/1/edit
   def edit
-    @board_entry_comment = Admin::BoardEntryComment.find(params[:id])
+    @board_entry_comment = @board_entry.board_entry_comments.find(params[:id])
   end
 
   # POST /admin_board_entry_comments
   # POST /admin_board_entry_comments.xml
   def create
-    @board_entry_comment = Admin::BoardEntryComment.new(params[:admin_board_entry_comment])
+    @board_entry_comment = @board_entry.board_entry_comments.build(params[:admin_board_entry_comment])
 
     respond_to do |format|
       if @board_entry_comment.save
@@ -59,7 +59,7 @@ class Admin::BoardEntryCommentsController < ApplicationController
   # PUT /admin_board_entry_comments/1
   # PUT /admin_board_entry_comments/1.xml
   def update
-    @board_entry_comment = Admin::BoardEntryComment.find(params[:id])
+    @board_entry_comment = @board_entry.board_entry_comments.find(params[:id])
 
     respond_to do |format|
       if @board_entry_comment.update_attributes(params[:admin_board_entry_comment])
@@ -76,7 +76,7 @@ class Admin::BoardEntryCommentsController < ApplicationController
   # DELETE /admin_board_entry_comments/1
   # DELETE /admin_board_entry_comments/1.xml
   def destroy
-    @board_entry_comment = Admin::BoardEntryComment.find(params[:id])
+    @board_entry_comment = @board_entry.board_entry_comments.find(params[:id])
     @board_entry_comment.destroy
 
     respond_to do |format|

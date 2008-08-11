@@ -1,6 +1,6 @@
 # SKIP(Social Knowledge & Innovation Platform)
 # Copyright (C) 2008 TIS Inc.
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -9,7 +9,7 @@
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-# 
+#
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -83,7 +83,7 @@ class UserController < ApplicationController
                                   :per_page => 20,
                                   :order => order,
                                   :conditions => find_params[:conditions],
-                                  :include => find_params[:include] | [ :user, :board_entry_comment, :state ])
+                                  :include => find_params[:include] | [ :user, :board_entry_comments, :state ])
       unless @entries && @entries.size > 0
         flash.now[:notice] = '該当する投稿はありませんでした。'
       end
@@ -99,7 +99,7 @@ class UserController < ApplicationController
       @entry = BoardEntry.find(:first,
                                :order => order,
                                :conditions => find_params[:conditions],
-                               :include => find_params[:include] | [ :user, :board_entry_comment, :state ])
+                               :include => find_params[:include] | [ :user, :board_entry_comments, :state ])
       if @entry
         login_user_id = session[:user_id]
         @entry.accessed(login_user_id)

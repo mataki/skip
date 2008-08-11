@@ -1,6 +1,6 @@
 # SKIP(Social Knowledge & Innovation Platform)
 # Copyright (C) 2008 TIS Inc.
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -9,7 +9,7 @@
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-# 
+#
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -43,7 +43,7 @@ class BatchMakeCache < BatchBase
     new_ids += EntryTrackback.find(:all, :select => "board_entry_id", :conditions => conditions).map{|trackback| trackback.board_entry_id}
     return if new_ids.size < 1
     entries = BoardEntry.find(:all,
-                              :include => [:user, {:board_entry_comment => :user}, {:entry_trackbacks => {:tb_entry => :user}}],
+                              :include => [:user, {:board_entry_comments => :user}, {:entry_trackbacks => {:tb_entry => :user}}],
                               :conditions =>["board_entries.id in (?)", new_ids.uniq])
     entries.each do |entry|
       publication_symbols = entry.entry_publications.map{|publication| publication.symbol}.join(',')
@@ -53,7 +53,7 @@ class BatchMakeCache < BatchBase
       body_lines << h(entry.user.name)
       body_lines << entry.contents
 
-      entry.board_entry_comment.each do|comment|
+      entry.board_entry_comments.each do|comment|
         body_lines << h(comment.user.name)
         body_lines << comment.contents
       end

@@ -87,7 +87,7 @@ class GroupController < ApplicationController
       @entry = BoardEntry.find(:first,
                                :order => order,
                                :conditions => find_params[:conditions],
-                               :include => find_params[:include] | [ :user, :board_entry_comment, :state ])
+                               :include => find_params[:include] | [ :user, :board_entry_comments, :state ])
 
       if @entry
         login_user_id = session[:user_id]
@@ -122,7 +122,7 @@ class GroupController < ApplicationController
                                   :per_page => 20,
                                   :order => order,
                                   :conditions => find_params[:conditions],
-                                  :include => find_params[:include] | [ :user, :board_entry_comment, :state ])
+                                  :include => find_params[:include] | [ :user, :board_entry_comments, :state ])
     end
 
   end

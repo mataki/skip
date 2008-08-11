@@ -36,21 +36,21 @@ class DevelopController < ApplicationController
                                         :limit => 5,
                                         :conditions=> find_params[:conditions],
                                         :order=>"last_updated DESC",
-                                        :include => find_params[:include] | [ :state, :board_entry_comment ])
+                                        :include => find_params[:include] | [ :state, :board_entry_comments ])
 
     find_params = BoardEntry.make_conditions(login_user_symbols, {:symbol => @group.symbol, :category => 'お知らせ'})
     @info_messages = BoardEntry.find(:all,
                                      :limit => 5,
                                      :conditions=>find_params[:conditions],
                                      :order=>"last_updated DESC",
-                                     :include => find_params[:include] | [ :state, :board_entry_comment ])
+                                     :include => find_params[:include] | [ :state, :board_entry_comments ])
 
     find_params = BoardEntry.make_conditions(login_user_symbols, {:symbol => @group.symbol, :category => 'ヒント'})
     @hint_messages = BoardEntry.find(:all,
                                      :limit => 5,
                                      :conditions=> find_params[:conditions],
                                      :order=>"last_updated DESC",
-                                     :include => find_params[:include] | [ :state, :board_entry_comment ])
+                                     :include => find_params[:include] | [ :state, :board_entry_comments ])
 
     find_params = BoardEntry.make_conditions(login_user_symbols, {:symbol => @group.symbol, :category => '運用環境'})
     @environment_message = BoardEntry.find(:first,

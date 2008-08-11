@@ -56,7 +56,7 @@ describe BatchMakeUserReadings do
     assert_equal entries[2].id, updated_entries[1].id
 
     # 30分以内に更新されたentryにコメント追加 => 更新されたと判断する
-    entries[0].board_entry_comment.create({ :contents => "comment",
+    entries[0].board_entry_comments.create({ :contents => "comment",
                                             :user_id => @a_user.id})
     updated_entries = BatchMakeUserReadings.get_updated_entries
     assert_equal 2, updated_entries.size
@@ -65,7 +65,7 @@ describe BatchMakeUserReadings do
 
     # 30分以上前に更新されたentryに、30分以上前にコメント追加 => 更新されたと判断しない
 #    ActiveRecord::Base.record_timestamps = false
-#    entries[1].board_entry_comment.create({ :contents => "comment",
+#    entries[1].board_entry_comments.create({ :contents => "comment",
 #                                            :user_id => @a_user.id,
 #                                            :created_on => Time.now.ago(60*32),
 #                                            :updated_on => Time.now.ago(60*32)})
@@ -77,7 +77,7 @@ describe BatchMakeUserReadings do
 
     ActiveRecord::Base.record_timestamps = true
     # 30分以上前に更新されたentryにコメント追加 => 更新されたと判断する
-    entries[1].board_entry_comment.create({ :contents => "comment",
+    entries[1].board_entry_comments.create({ :contents => "comment",
                                             :user_id => @a_user.id})
 
 

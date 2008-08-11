@@ -1,6 +1,6 @@
 # SKIP(Social Knowledge & Innovation Platform)
 # Copyright (C) 2008 TIS Inc.
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -9,7 +9,7 @@
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-# 
+#
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -21,7 +21,7 @@ class BoardEntry < ActiveRecord::Base
   has_many :entry_editors, :dependent => :destroy
   has_many :entry_trackbacks, :dependent => :destroy
   has_many :to_entry_trackbacks, :class_name => "EntryTrackback", :foreign_key => :tb_entry_id, :dependent => :destroy
-  has_many :board_entry_comment, :dependent => :destroy
+  has_many :board_entry_comments, :dependent => :destroy
   has_one  :state, :class_name => "BoardEntryPoint", :dependent => :destroy
   has_many :entry_accesses, :dependent => :destroy
   has_many :user_readings, :dependent => :destroy
@@ -224,7 +224,7 @@ class BoardEntry < ActiveRecord::Base
                      :limit=>limit,
                      :conditions => find_params[:conditions],
                      :order=>"last_updated DESC,board_entries.id DESC",
-                     :include => find_params[:include] | [ :state, :board_entry_comment ])
+                     :include => find_params[:include] | [ :state, :board_entry_comments ])
   end
 
   def get_around_entry(login_user_symbols)
@@ -613,7 +613,7 @@ class BoardEntry < ActiveRecord::Base
   end
 
   def root_comments
-    board_entry_comment.find(:all, :conditions => ["parent_id is NULL"], :order => "created_on")
+    board_entry_comments.find(:all, :conditions => ["parent_id is NULL"], :order => "created_on")
   end
 
   def comma_category

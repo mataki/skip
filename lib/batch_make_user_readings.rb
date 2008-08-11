@@ -1,6 +1,6 @@
 # SKIP(Social Knowledge & Innovation Platform)
 # Copyright (C) 2008 TIS Inc.
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -9,7 +9,7 @@
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-# 
+#
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -52,7 +52,7 @@ class BatchMakeUserReadings < BatchBase
   # 更新処理はupdatable?に該当する場合のみ実施。<br/>
   # 新規作成処理は、最終更新者とアンテナ登録者が異なる場合のみ実施。
   def self.save_user_reading antenna_user_id, entry
-    last_comment = entry.board_entry_comment.sort{ |a,b| a.updated_on <=> b.updated_on }.last
+    last_comment = entry.board_entry_comments.sort{ |a,b| a.updated_on <=> b.updated_on }.last
     if last_comment && last_comment.updated_on > entry.last_updated
       # コメントの最終更新日時が最新
       updater_id = last_comment.user_id
@@ -107,7 +107,7 @@ class BatchMakeUserReadings < BatchBase
     BoardEntry.find(:all,
                     :conditions => conditions_state,
                     :select => "board_entries.id, symbol, board_entry_comments.user_id",
-                    :include => [:board_entry_comment, :entry_publications])
+                    :include => [:board_entry_comments, :entry_publications])
   end
 
 end
