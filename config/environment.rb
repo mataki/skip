@@ -86,28 +86,28 @@ MAX_SHARE_FILE_SIZE = '10485760'
 # ----------------------------------------------------------------
 
 menu_btns = [
-  { :img_name => "house",         :id => "btn_mypage", :name => "マイページ", :url => {:controller => 'mypage', :action => 'index'} },
+  { :img_name => "house",         :id => "btn_mypage", :name => "マイページ", :url => {:controller => '/mypage', :action => 'index'} },
 
   { :separator => true, :name => "[マイメニュー]"},
 
-  { :img_name => "vcard",         :id => "btn_profile", :name => "プロフィール", :url => {:controller => 'mypage', :action => 'profile'} },
-  { :img_name => "report",        :id => "btn_my_blog", :name => "マイブログ", :url => {:controller => 'mypage', :action => 'blog'} },
-  { :img_name => "book_open",     :id => "btn_my_bookmark", :name => "マイブクマ", :url => {:controller => 'mypage', :action => 'bookmark'} },
-  { :img_name => "disk_multiple", :id => "btn_manage", :name => "マイファイル", :url => {:controller => 'mypage', :action => 'share_file'} },
-  { :img_name => "cog",           :id => "btn_manage", :name => "自分の管理", :url => {:controller => 'mypage', :action => 'manage'} },
+  { :img_name => "vcard",         :id => "btn_profile", :name => "プロフィール", :url => {:controller => '/mypage', :action => 'profile'} },
+  { :img_name => "report",        :id => "btn_my_blog", :name => "マイブログ", :url => {:controller => '/mypage', :action => 'blog'} },
+  { :img_name => "book_open",     :id => "btn_my_bookmark", :name => "マイブクマ", :url => {:controller => '/mypage', :action => 'bookmark'} },
+  { :img_name => "disk_multiple", :id => "btn_manage", :name => "マイファイル", :url => {:controller => '/mypage', :action => 'share_file'} },
+  { :img_name => "cog",           :id => "btn_manage", :name => "自分の管理", :url => {:controller => '/mypage', :action => 'manage'} },
 
   { :separator => true, :name => "[全体メニュー]"},
 
-  { :img_name => "user_suit",     :id => "btn_users", :name => "ユーザ", :url => {:controller => 'users', :action => 'index'} },
-  { :img_name => "group",         :id => "btn_groups", :name => "グループ", :url => {:controller => 'groups', :action => 'index'} },
-  { :img_name => "book",          :id => "btn_bookmarks", :name => "ブックマーク", :url => {:controller => 'bookmarks', :action => 'index'} },
-  { :img_name => "chart_bar",     :id => "btn_rankings", :name => "ランキング", :url => {:controller => 'rankings', :action => 'index'} },
-  { :img_name => "bricks",        :id => "btn_develop", :name => "サイト情報", :url => {:controller => 'develop', :action => 'index'} },
+  { :img_name => "user_suit",     :id => "btn_users", :name => "ユーザ", :url => {:controller => '/users', :action => 'index'} },
+  { :img_name => "group",         :id => "btn_groups", :name => "グループ", :url => {:controller => '/groups', :action => 'index'} },
+  { :img_name => "book",          :id => "btn_bookmarks", :name => "ブックマーク", :url => {:controller => '/bookmarks', :action => 'index'} },
+  { :img_name => "chart_bar",     :id => "btn_rankings", :name => "ランキング", :url => {:controller => '/rankings', :action => 'index'} },
+  { :img_name => "bricks",        :id => "btn_develop", :name => "サイト情報", :url => {:controller => '/develop', :action => 'index'} },
 
   { :separator => true, :name => "[アクション]"},
 
-  { :img_name => "page_find",     :id => "btn_search", :name => "データを探す", :url => {:controller => 'search', :action => 'index'} },
-  { :img_name => "report_edit",   :id => "btn_edit", :name => "ブログを書く", :url => {:controller => 'edit', :action => 'index'} },
+  { :img_name => "page_find",     :id => "btn_search", :name => "データを探す", :url => {:controller => '/search', :action => 'index'} },
+  { :img_name => "report_edit",   :id => "btn_edit", :name => "ブログを書く", :url => {:controller => '/edit', :action => 'index'} },
 ]
 MENU_BTNS = menu_btns
 
