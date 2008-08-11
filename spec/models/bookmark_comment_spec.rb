@@ -21,8 +21,7 @@ describe BookmarkComment do
       errors = (1..3).map{ |i| mock("error #{i}")}
       Tag.should_receive(:validate_tags).at_least(:once).and_return(errors)
       bc = BookmarkComment.new
-      bc.save
-      bc.should have(3).errors_on(:tags)
+      bc.should_not be_valid
     end
   end
 
