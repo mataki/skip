@@ -1,0 +1,26 @@
+<h1>Listing share_files</h1>
+
+<table>
+  <tr>
+    <th>FileName</th>
+    <th>Description</th>
+    <th>Category</th>
+    <th>User</th>
+  </tr>
+
+<% for share_file in @share_files %>
+  <tr>
+    <td><%=h share_file.file_name %></td>
+    <td><%=h share_file.description %></td>
+    <td><%=h share_file.category %></td>
+    <td><%=h share_file.user.name %></td>
+    <td><%= link_to 'Show', share_file %></td>
+    <td><%= link_to 'Edit', edit_admin_share_file_path(share_file) %></td>
+    <td><%= link_to 'Destroy', share_file, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New share_file', new_admin_share_file_path %>
