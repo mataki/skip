@@ -44,10 +44,10 @@ ActionController::Routing::Routes.draw do |map|
     end
 
     admin_map.resources :share_files
-
     admin_map.resources :bookmarks do |bookmark|
       bookmark.resources :bookmark_comments
     end
+    admin_map.resources :groups
   end
 
   map.connect ':controller/:action/:id'

@@ -1,24 +1,24 @@
 <p>
-  <b>Code:</b>
+  <b><%= _('Code') %>:</b>
   <%=h @account.code %>
 </p>
 
 <p>
-  <b>Name:</b>
+  <b><%= _('Name') %>:</b>
   <%=h @account.name %>
 </p>
 
 <p>
-  <b>Email:</b>
+  <b><%= _('Email') %>:</b>
   <%=h @account.email %>
 </p>
 
 <p>
-  <b>Section:</b>
+  <b><%= _('Section') %>:</b>
   <%=h @account.section %>
 </p>
 
 
-<%= link_to 'Edit', edit_admin_account_path(@account) %> |
-<%= link_to 'Back', admin_accounts_path %> |
-<%= link_to 'OpenidIdentifier List', admin_account_openid_identifiers_url(@account) %>
+<%= link_to _('Edit'), edit_admin_account_path(@account) %> |
+<%= link_to _('Back'), admin_accounts_path %> |
+<%= link_to _('OpenidIdentifier List'), admin_account_openid_identifiers_url(@account) %>

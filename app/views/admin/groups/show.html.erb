@@ -1,0 +1,28 @@
+<p>
+  <b><%= _('Name') %>:</b>
+  <%=h @group.name %>
+</p>
+
+<p>
+  <b><%= _('Gid') %>:</b>
+  <%=h @group.gid %>
+</p>
+
+<p>
+  <b><%= _('Description') %>:</b>
+  <%=h @group.description %>
+</p>
+
+<p>
+  <b><%= _('Protected') %>:</b>
+  <%=h @group.protected %>
+</p>
+
+<p>
+  <b><%= _('Category') %>:</b>
+  <%=h @group.category %>
+</p>
+
+
+<%= link_to _('Edit'), edit_admin_group_path(@group) %> |
+<%= link_to _('Back'), admin_groups_path %>
