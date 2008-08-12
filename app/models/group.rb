@@ -16,9 +16,7 @@
 class Group < ActiveRecord::Base
   has_many :group_participations, :dependent => :destroy
 
-  validates_presence_of :name, :description, :gid,
-                        :message =>'は必須です'
-
+  validates_presence_of :name, :description, :gid, :message =>'は必須です'
   validates_uniqueness_of :gid, :message =>'は既に登録されています'
   validates_length_of :gid, :minimum=>4, :message =>'は4文字以上で入力してください'
   validates_length_of :gid, :maximum=>50, :message =>'は50文字以内で入力してください'
