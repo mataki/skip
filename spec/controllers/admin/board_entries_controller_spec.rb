@@ -1,3 +1,18 @@
+# SKIP(Social Knowledge & Innovation Platform)
+# Copyright (C) 2008 TIS Inc.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe Admin::BoardEntriesController do
@@ -10,11 +25,11 @@ describe Admin::BoardEntriesController do
       @board_entry = mock_model(Admin::BoardEntry)
       Admin::BoardEntry.stub!(:find).and_return([@board_entry])
     end
-  
+
     def do_get
       get :index
     end
-  
+
     it "should be successful" do
       do_get
       response.should be_success
@@ -24,12 +39,12 @@ describe Admin::BoardEntriesController do
       do_get
       response.should render_template('index')
     end
-  
+
     it "should find all admin_board_entries" do
       Admin::BoardEntry.should_receive(:find).with(:all).and_return([@board_entry])
       do_get
     end
-  
+
     it "should assign the found admin_board_entries for the view" do
       do_get
       assigns[:board_entries].should == [@board_entry]
@@ -42,12 +57,12 @@ describe Admin::BoardEntriesController do
       @board_entries = mock("Array of Admin::BoardEntries", :to_xml => "XML")
       Admin::BoardEntry.stub!(:find).and_return(@board_entries)
     end
-  
+
     def do_get
       @request.env["HTTP_ACCEPT"] = "application/xml"
       get :index
     end
-  
+
     it "should be successful" do
       do_get
       response.should be_success
@@ -57,7 +72,7 @@ describe Admin::BoardEntriesController do
       Admin::BoardEntry.should_receive(:find).with(:all).and_return(@board_entries)
       do_get
     end
-  
+
     it "should render the found admin_board_entries as xml" do
       @board_entries.should_receive(:to_xml).and_return("XML")
       do_get
@@ -71,7 +86,7 @@ describe Admin::BoardEntriesController do
       @board_entry = mock_model(Admin::BoardEntry)
       Admin::BoardEntry.stub!(:find).and_return(@board_entry)
     end
-  
+
     def do_get
       get :show, :id => "1"
     end
@@ -80,17 +95,17 @@ describe Admin::BoardEntriesController do
       do_get
       response.should be_success
     end
-  
+
     it "should render show template" do
       do_get
       response.should render_template('show')
     end
-  
+
     it "should find the board_entry requested" do
       Admin::BoardEntry.should_receive(:find).with("1").and_return(@board_entry)
       do_get
     end
-  
+
     it "should assign the found board_entry for the view" do
       do_get
       assigns[:board_entry].should equal(@board_entry)
@@ -103,7 +118,7 @@ describe Admin::BoardEntriesController do
       @board_entry = mock_model(Admin::BoardEntry, :to_xml => "XML")
       Admin::BoardEntry.stub!(:find).and_return(@board_entry)
     end
-  
+
     def do_get
       @request.env["HTTP_ACCEPT"] = "application/xml"
       get :show, :id => "1"
@@ -113,12 +128,12 @@ describe Admin::BoardEntriesController do
       do_get
       response.should be_success
     end
-  
+
     it "should find the board_entry requested" do
       Admin::BoardEntry.should_receive(:find).with("1").and_return(@board_entry)
       do_get
     end
-  
+
     it "should render the found board_entry as xml" do
       @board_entry.should_receive(:to_xml).and_return("XML")
       do_get
@@ -132,7 +147,7 @@ describe Admin::BoardEntriesController do
       @board_entry = mock_model(Admin::BoardEntry)
       Admin::BoardEntry.stub!(:new).and_return(@board_entry)
     end
-  
+
     def do_get
       get :new
     end
@@ -141,22 +156,22 @@ describe Admin::BoardEntriesController do
       do_get
       response.should be_success
     end
-  
+
     it "should render new template" do
       do_get
       response.should render_template('new')
     end
-  
+
     it "should create an new board_entry" do
       Admin::BoardEntry.should_receive(:new).and_return(@board_entry)
       do_get
     end
-  
+
     it "should not save the new board_entry" do
       @board_entry.should_not_receive(:save)
       do_get
     end
-  
+
     it "should assign the new board_entry for the view" do
       do_get
       assigns[:board_entry].should equal(@board_entry)
@@ -169,7 +184,7 @@ describe Admin::BoardEntriesController do
       @board_entry = mock_model(Admin::BoardEntry)
       Admin::BoardEntry.stub!(:find).and_return(@board_entry)
     end
-  
+
     def do_get
       get :edit, :id => "1"
     end
@@ -178,17 +193,17 @@ describe Admin::BoardEntriesController do
       do_get
       response.should be_success
     end
-  
+
     it "should render edit template" do
       do_get
       response.should render_template('edit')
     end
-  
+
     it "should find the board_entry requested" do
       Admin::BoardEntry.should_receive(:find).and_return(@board_entry)
       do_get
     end
-  
+
     it "should assign the found Admin::BoardEntry for the view" do
       do_get
       assigns[:board_entry].should equal(@board_entry)
@@ -201,14 +216,14 @@ describe Admin::BoardEntriesController do
       @board_entry = mock_model(Admin::BoardEntry, :to_param => "1")
       Admin::BoardEntry.stub!(:new).and_return(@board_entry)
     end
-    
+
     describe "with successful save" do
-  
+
       def do_post
         @board_entry.should_receive(:save).and_return(true)
         post :create, :admin_board_entry => {}
       end
-  
+
       it "should create a new board_entry" do
         Admin::BoardEntry.should_receive(:new).with({}).and_return(@board_entry)
         do_post
@@ -218,21 +233,21 @@ describe Admin::BoardEntriesController do
         do_post
         response.should redirect_to(admin_board_entry_url("1"))
       end
-      
+
     end
-    
+
     describe "with failed save" do
 
       def do_post
         @board_entry.should_receive(:save).and_return(false)
         post :create, :board_entry => {}
       end
-  
+
       it "should re-render 'new'" do
         do_post
         response.should render_template('new')
       end
-      
+
     end
   end
 
@@ -242,7 +257,7 @@ describe Admin::BoardEntriesController do
       @board_entry = mock_model(Admin::BoardEntry, :to_param => "1")
       Admin::BoardEntry.stub!(:find).and_return(@board_entry)
     end
-    
+
     describe "with successful update" do
 
       def do_put
@@ -271,7 +286,7 @@ describe Admin::BoardEntriesController do
       end
 
     end
-    
+
     describe "with failed update" do
 
       def do_put
@@ -293,7 +308,7 @@ describe Admin::BoardEntriesController do
       @board_entry = mock_model(Admin::BoardEntry, :destroy => true)
       Admin::BoardEntry.stub!(:find).and_return(@board_entry)
     end
-  
+
     def do_delete
       delete :destroy, :id => "1"
     end
@@ -302,12 +317,12 @@ describe Admin::BoardEntriesController do
       Admin::BoardEntry.should_receive(:find).with("1").and_return(@board_entry)
       do_delete
     end
-  
+
     it "should call destroy on the found board_entry" do
       @board_entry.should_receive(:destroy)
       do_delete
     end
-  
+
     it "should redirect to the admin_board_entries list" do
       do_delete
       response.should redirect_to(admin_board_entries_url)
