@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  waiting: false
+  owned: false
+  favorite: false
+  user_id: 1
+
+two:
+  waiting: false
+  owned: false
+  favorite: false
+  user_id: 1

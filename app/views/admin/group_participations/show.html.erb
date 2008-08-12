@@ -1,0 +1,23 @@
+<p>
+  <b><%= _('Waiting') %>:</b>
+  <%=h @group_participation.waiting %>
+</p>
+
+<p>
+  <b><%= _('Owned') %>:</b>
+  <%=h @group_participation.owned %>
+</p>
+
+<p>
+  <b><%= _('Favorite') %>:</b>
+  <%=h @group_participation.favorite %>
+</p>
+
+<p>
+  <b><%= _('User') %>:</b>
+  <%=h @group_participation.user_id %>
+</p>
+
+
+<%= link_to _('Edit'), edit_admin_group_group_participation_path(@group, @group_participation) %> |
+<%= link_to _('Back'), admin_group_group_participations_path(@group) %>

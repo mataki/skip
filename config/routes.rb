@@ -48,6 +48,9 @@ ActionController::Routing::Routes.draw do |map|
     end
     admin_map.resources :groups
     admin_map.resources :users
+    admin_map.resources :groups do |group|
+      group.resources :group_participations
+    end
   end
 
   map.connect ':controller/:action/:id'

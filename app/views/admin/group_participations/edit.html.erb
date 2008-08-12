@@ -1,0 +1,28 @@
+<h1><%= _('Editing group_participation') %></h1>
+
+<% form_for(@group_participation, :url => admin_group_group_participation_path(@group, @group_participation)) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :user_id %><br />
+    <%= @group_participation.user.name %>
+  </p>
+  <p>
+    <%= f.label :waiting %><br />
+    <%= f.check_box :waiting %>
+  </p>
+  <p>
+    <%= f.label :owned %><br />
+    <%= f.check_box :owned %>
+  </p>
+  <p>
+    <%= f.label :favorite %><br />
+    <%= f.check_box :favorite %>
+  </p>
+  <p>
+    <%= f.submit _("Update") %>
+  </p>
+<% end %>
+
+<%= link_to _('Show'), admin_group_group_participation_path(@group, @group_participation) %> |
+<%= link_to _('Back'), admin_group_group_participations_path(@group) %>
