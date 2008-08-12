@@ -15,7 +15,7 @@
 
 # -*- coding: utf-8 -*-
 # skipの基点URL
-ENV['SKIP_URL'] ||= 'http://localhost:3100'
+ENV['SKIP_URL'] ||= 'http://localhost:3000'
 require 'hikidoc'
 
 require 'skip_util'
