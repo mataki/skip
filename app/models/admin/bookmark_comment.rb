@@ -1,2 +1,2 @@
-class Admin::BookmarkComment < ActiveRecord::Base
+class Admin::BookmarkComment < BookmarkComment
 end
