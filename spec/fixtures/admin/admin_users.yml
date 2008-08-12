@@ -1,0 +1,19 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  email: MyString
+  name: MyString
+  section: MyString
+  extension: MyString
+  introduction: MyText
+  retired: false
+  admin: false
+
+two:
+  email: MyString
+  name: MyString
+  section: MyString
+  extension: MyString
+  introduction: MyText
+  retired: false
+  admin: false

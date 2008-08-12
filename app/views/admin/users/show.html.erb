@@ -1,0 +1,38 @@
+<p>
+  <b>Email:</b>
+  <%=h @user.email %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%=h @user.name %>
+</p>
+
+<p>
+  <b>Section:</b>
+  <%=h @user.section %>
+</p>
+
+<p>
+  <b>Extension:</b>
+  <%=h @user.extension %>
+</p>
+
+<p>
+  <b>Introduction:</b>
+  <%=h @user.introduction %>
+</p>
+
+<p>
+  <b>Retired:</b>
+  <%=h @user.retired %>
+</p>
+
+<p>
+  <b>Admin:</b>
+  <%=h @user.admin %>
+</p>
+
+
+<%= link_to 'Edit', edit_admin_user_path(@user) %> |
+<%= link_to 'Back', admin_users_path %>

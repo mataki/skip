@@ -1,0 +1,40 @@
+<h1>Editing user</h1>
+
+<% form_for(@user) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :email %><br />
+    <%= f.text_field :email %>
+  </p>
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :section %><br />
+    <%= f.text_field :section %>
+  </p>
+  <p>
+    <%= f.label :extension %><br />
+    <%= f.text_field :extension %>
+  </p>
+  <p>
+    <%= f.label :introduction %><br />
+    <%= f.text_area :introduction %>
+  </p>
+  <p>
+    <%= f.label :retired %><br />
+    <%= f.check_box :retired %>
+  </p>
+  <p>
+    <%= f.label :admin %><br />
+    <%= f.check_box :admin %>
+  </p>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @user %> |
+<%= link_to 'Back', admin_users_path %>
