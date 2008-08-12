@@ -112,7 +112,7 @@ describe "Group#get_owners あるグループに管理者がいる場合" do
 end
 
 describe "Group#after_destroy グループに掲示板と共有ファイルがある場合" do
-  fixtures :groups, :board_entries, :share_files
+  fixtures :groups, :board_entries, :share_files, :users, :user_uids
   before(:each) do
     @group = groups(:a_protected_group1)
     @board_entry = board_entries(:a_entry)
