@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  comment: MyText
+  public: false
+  tags: MyString
+  stared: false
+
+two:
+  comment: MyText
+  public: false
+  tags: MyString
+  stared: false

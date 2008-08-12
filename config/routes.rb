@@ -42,7 +42,12 @@ ActionController::Routing::Routes.draw do |map|
     admin_map.resources :board_entries do |board_entry|
       board_entry.resources :board_entry_comments
     end
+
     admin_map.resources :share_files
+
+    admin_map.resources :bookmarks do |bookmark|
+      bookmark.resources :bookmark_comments
+    end
   end
 
   map.connect ':controller/:action/:id'

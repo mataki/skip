@@ -1,0 +1,26 @@
+<h1>Listing bookmark_comments</h1>
+
+<table>
+  <tr>
+    <th>Comment</th>
+    <th>Public</th>
+    <th>Tags</th>
+    <th>Stared</th>
+  </tr>
+
+<% for bookmark_comment in @bookmark_comments %>
+  <tr>
+    <td><%=h bookmark_comment.comment %></td>
+    <td><%=h bookmark_comment.public %></td>
+    <td><%=h bookmark_comment.tags %></td>
+    <td><%=h bookmark_comment.stared %></td>
+    <td><%= link_to 'Show', admin_bookmark_bookmark_comment_path(@bookmark, bookmark_comment) %></td>
+    <td><%= link_to 'Edit', edit_admin_bookmark_bookmark_comment_path(@bookmark, bookmark_comment) %></td>
+    <td><%= link_to 'Destroy', admin_bookmark_bookmark_comment_path(@bookmark, bookmark_comment), :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New bookmark_comment', new_admin_bookmark_bookmark_comment_path(@bookmark) %>

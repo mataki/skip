@@ -1,0 +1,23 @@
+<p>
+  <b>Comment:</b>
+  <%=h @bookmark_comment.comment %>
+</p>
+
+<p>
+  <b>Public:</b>
+  <%=h @bookmark_comment.public %>
+</p>
+
+<p>
+  <b>Tags:</b>
+  <%=h @bookmark_comment.tags %>
+</p>
+
+<p>
+  <b>Stared:</b>
+  <%=h @bookmark_comment.stared %>
+</p>
+
+
+<%= link_to 'Edit', edit_admin_bookmark_bookmark_comment_path(@bookmark, @bookmark_comment) %> |
+<%= link_to 'Back', admin_bookmark_bookmark_comments_path(@bookmark) %>

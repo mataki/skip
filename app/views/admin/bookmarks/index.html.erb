@@ -1,0 +1,22 @@
+<h1>Listing bookmarks</h1>
+
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Url</th>
+  </tr>
+
+<% for bookmark in @bookmarks %>
+  <tr>
+    <td><%=h bookmark.title %></td>
+    <td><%=h bookmark.url %></td>
+    <td><%= link_to 'Show', admin_bookmark_path(bookmark) %></td>
+    <td><%= link_to 'Edit', edit_admin_bookmark_path(bookmark) %></td>
+    <td><%= link_to 'Destroy', admin_bookmark_path(bookmark), :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New bookmark', new_admin_bookmark_path %>

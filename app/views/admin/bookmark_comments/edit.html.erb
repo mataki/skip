@@ -1,0 +1,28 @@
+<h1>Editing bookmark_comment</h1>
+
+<% form_for(@bookmark_comment, :url => admin_bookmark_bookmark_comment_path(@bookmark, @bookmark_comment), :method => 'put' ) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :comment %><br />
+    <%= f.text_area :comment %>
+  </p>
+  <p>
+    <%= f.label :public %><br />
+    <%= f.check_box :public %>
+  </p>
+  <p>
+    <%= f.label :tags %><br />
+    <%= f.text_field :tags %>
+  </p>
+  <p>
+    <%= f.label :stared %><br />
+    <%= f.check_box :stared %>
+  </p>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', admin_bookmark_bookmark_comment_path(@bookmark, @bookmark_comment) %> |
+<%= link_to 'Back', admin_bookmark_bookmark_comments_path(@bookmark) %>
