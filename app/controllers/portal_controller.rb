@@ -67,7 +67,7 @@ class PortalController < ApplicationController
       @profile.hobby = params[:hobbies].join(',') + ','
     end
     @profile.disclosure = params[:write_profile] ? true : false
-    @user.user_profiles << @profile if params[:write_profile]
+    @user.user_profile = @profile if params[:write_profile]
 
     if @user.save
       antenna = Antenna.new(:user_id => @user.id, :name => CUSTOM_RITERAL[:initial_anntena], :position => 1)
@@ -90,7 +90,7 @@ class PortalController < ApplicationController
       redirect_to :controller => 'mypage', :action => 'welcome'
     else
       @error_msg = []
-      @error_msg.concat @user.errors.full_messages.reject{|msg| msg.include?("User uid") || msg.include?("User profiles") } unless @user.valid?
+      @error_msg.concat @user.errors.full_messages.reject{|msg| msg.include?("User uid") || msg.include?("User profile") } unless @user.valid?
       @error_msg.concat @user_uid.errors.full_messages if @user_uid and @user_uid.errors
       @error_msg.concat @profile.errors.full_messages if @profile and @profile.errors
 

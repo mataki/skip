@@ -40,3 +40,15 @@ describe UserProfile do
     @user_profile.should be_valid
   end
 end
+
+describe UserProfile, '#profile' do
+  it '正常に処理が行われること'
+end
+
+describe UserProfile, '#update_profile' do
+  it '正常に処理が行われること'
+end
+
+describe UserProfile, '#has_profile?' do
+  it '正常に処理が行われること'
+end

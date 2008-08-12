@@ -1,0 +1,29 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  gender_type: 1
+  join_year: 1
+  birth_month: 1
+  birth_day: 1
+  blood_type: 1
+  hometown: 1
+  alma_mater: MyString
+  address_1: 1
+  address_2: MyString
+  hobby: MyText
+  introduction: MyText
+  disclosure: false
+
+two:
+  gender_type: 1
+  join_year: 1
+  birth_month: 1
+  birth_day: 1
+  blood_type: 1
+  hometown: 1
+  alma_mater: MyString
+  address_1: 1
+  address_2: MyString
+  hobby: MyText
+  introduction: MyText
+  disclosure: false

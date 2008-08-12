@@ -16,7 +16,7 @@
 class User < ActiveRecord::Base
   has_many :group_participations, :dependent => :destroy
   has_many :pictures, :dependent => :destroy
-  has_many :user_profiles, :dependent => :destroy
+  has_one  :user_profile, :dependent => :destroy
   has_many :tracks, :order => "updated_on DESC", :dependent => :destroy
   has_one  :user_access, :class_name => "UserAccess", :dependent => :destroy
 
@@ -171,10 +171,10 @@ class User < ActiveRecord::Base
   # プロフィールを返す（プロパティでキャッシュする）
   def profile
     unless @profile
-      if self.user_profiles.size == 0
+      if self.user_profile.nil?
         @profile =  UserProfile.new_default
       else
-        @profile =  self.user_profiles.first
+        @profile =  self.user_profile
       end
     end
     return @profile
@@ -187,13 +187,13 @@ class User < ActiveRecord::Base
       hobby = hobbies_params.join(',')+','
     end
 
-    if self.user_profiles.size == 0
+    if self.user_profile.nil?
       @profile = UserProfile.new(profile_params)
       @profile.user_id = self.id
       @profile.hobby = hobby
       @profile.save
     else
-      @profile =  self.user_profiles.first
+      @profile =  self.user_profile
       @profile.hobby = hobby
       @profile.update_attributes(profile_params)
     end
@@ -202,7 +202,7 @@ class User < ActiveRecord::Base
 
   # 属性情報とオフ情報のプロフィールを入力しているかどうか
   def has_profile?
-    self.user_profiles.size > 0
+    !self.user_profile.nil?
   end
 
   # Viewで使う部門一覧（セレクトボタン用）

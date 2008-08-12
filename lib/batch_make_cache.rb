@@ -128,7 +128,7 @@ class BatchMakeCache < BatchBase
 
   # userのプロフィール用
   def make_caches_user(contents_type, cache_path, border_time)
-    users = User.find(:all, :include => ['user_profiles'], :conditions => ["updated_on > ?", border_time])
+    users = User.find(:all, :include => ['user_profile'], :conditions => ["updated_on > ?", border_time])
     users.each do |user|
       body_lines = []
       body_lines << h(user.uid)
