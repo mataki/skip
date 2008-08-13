@@ -78,28 +78,42 @@ block_menus:
       - :title: HyperEstraier
         :url:   http://hyperestraier.sourceforge.net/
 
+# メール関連の設定
+mail_function_setting:    # メール関連項目の表示制御(メールアドレス変更、メール通知設定、メール送信履歴、(エントリ)連絡タグ)
+  default: false
+delivery_method:          # ActionMailer::Base.delivery_methodへの設定値
+  default: :test
+smtp_settings:            # ActionMailer::Base:smtp_settingsへの設定値
+  default:
+    :address: localhost
+    :port: 25
+    :domain: localhost.localdomain
+    :user_name:
+    :password:
+    :authentication:
+raise_delivery_errors:    # ActionMailer::Base:raise_delivery_errorsへの設定値
+  default: false
+
 # その他設定
-mail_function_setting:                        # メール関連項目の表示制御(メールアドレス変更、メール通知設定、メール送信履歴、(エントリ)連絡タグ)
-  default: false
-password_edit_setting:                        # パスワード変更可能かどうかの設定
+password_edit_setting:             # パスワード変更可能かどうかの設定
   default: true
-nickname_use_setting:                         # ユーザ登録時にニックネームを利用するかどうかの設定
+nickname_use_setting:              # ユーザ登録時にニックネームを利用するかどうかの設定
   default: true
-ssl_setting:                                  # SSLログインを利用するかどうかの設定
+ssl_setting:                       # SSLログインを利用するかどうかの設定
   default: false
-full_text_search_setting:                     # 全文検索入力欄の表示制御
+full_text_search_setting:          # 全文検索入力欄の表示制御
   default: false
-max_share_file_size:                          # 共有ファイルの最大許可容量( 10M = 10485760 )
+max_share_file_size:               # 共有ファイルの最大許可容量( 10M = 10485760 )
   default: 10485760
-user_code_format_regex:                       # ニックネームとして許可しない形式を指定
+user_code_format_regex:            # ニックネームとして許可しない形式を指定
   default: /^(\d{6}|[kK]\d{5})$/
-develop_team_gid:                             # 要望、不具合受付グループのID
+develop_team_gid:                  # 要望、不具合受付グループのID
   default: skipteam
-antenna_default_group:                        # 初期のアンテナに追加されるグループを指定(なければ空配列とする)
+antenna_default_group:             # 初期のアンテナに追加されるグループを指定(なければ空配列とする)
   default:
   - tcpdevelop
   - magazine
-mypage_feed_default_limit:                    # マイページで表示するRSSフィードの設定(デフォルトの1フィードあたりの最大表示件数)
+mypage_feed_default_limit:         # マイページで表示するRSSフィードの設定(デフォルトの1フィードあたりの最大表示件数)
   default: 3
 # フィードの設定
 # url:   フィードのURL
