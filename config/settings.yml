@@ -106,7 +106,7 @@ full_text_search_setting:          # 全文検索入力欄の表示制御
 max_share_file_size:               # 共有ファイルの最大許可容量( 10M = 10485760 )
   default: 10485760
 user_code_format_regex:            # ニックネームとして許可しない形式を指定
-  default: /^(\d{6}|[kK]\d{5})$/
+  default: ^(\d{6}|[kK]\d{5})$
 develop_team_gid:                  # 要望、不具合受付グループのID
   default: skipteam
 antenna_default_group:             # 初期のアンテナに追加されるグループを指定(なければ空配列とする)
