@@ -14,7 +14,7 @@ function openLinkMenu(link_id) {
 };
 
 function closeLinkMenu() {
-<% COMMON_MENUS[:block_menus].each do |block_menu| %>
+<% Setting.block_menus.each do |block_menu| %>
   document.getElementById('<%= block_menu[:id] -%>').style.display = 'none';
 <% end %>
 };
@@ -27,11 +27,11 @@ page_data = [
   '</style>',
 
   '<div id="services" style="float: right; border: none; background-color: #dfecf5; margin: 0 0 0 5px; padding: 0 0 2px 10px; font-size: 12px">',
-<% COMMON_MENUS[:main_menus].each do |menu| %>
+<% Setting.main_menus.each do |menu| %>
     '<%= link_to menu[:title], menu[:url], :target => "_blank" -%>',
 <% end %>
 
-<% COMMON_MENUS[:block_menus].each do |block_menu| %>
+<% Setting.block_menus.each do |block_menu| %>
   '<a href="javascript: openLinkMenu(\'<%= block_menu[:id] -%>\');"> <%= icon_tag("server_link") -%> <%= block_menu[:title]-%></a>',
   '<div id=<%= block_menu[:id] -%> style="position: absolute; right: <%= block_menu[:margin_right] -%>; top: 17px; background-color: #dfecf5; z-index: 100; display: none;" onClick="closeLinkMenu();">',
     <%= draw_menu_links block_menu[:blocks] -%>

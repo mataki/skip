@@ -147,12 +147,12 @@ span.blue { color: blue; }
   <p id="login-title">メニュー</p>
   <div style="overflow: auto; height: 275px;">
 
-<% COMMON_MENUS[:main_menus].each do |menu| %>
+<% Setting.main_menus.each do |menu| %>
   <div class="skip-menu">
   <%= link_to menu[:title], menu[:url], :target => "_blank" -%>
   </div>
 <% end %>
-<% COMMON_MENUS[:block_menus].each do |block_menu| %>
+<% Setting.block_menus.each do |block_menu| %>
   <div class="menu-category"><%= block_menu[:title]-%></div>
   <div style="border-left: 5px solid gray;">
   <% block_menu[:blocks].each do |service| %>
