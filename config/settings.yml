@@ -123,3 +123,5 @@ mypage_feed_settings:
   default:
   - :url: http://www.openskip.org/rss.xml
     :title: SKIPニュース
+stop_new_user:
+  default: true

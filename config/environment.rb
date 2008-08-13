@@ -50,25 +50,8 @@ end
 # Include your application configuration below
 
 # ----設定項目----------------------------------------------------
-
 # accountテーブルのパスワードSHA1暗号化用キー
 SHA1_DIGEST_KEY = 'change-me'
-
-# メール関連項目の表示の制御
-# メールアドレス変更、メール通知設定、メール送信履歴、(エントリ)連絡タグ
-MAIL_FUNCTION_SETTING = false
-
-# パスワード変更可能かどうか
-PASSWORD_EDIT_SETTING = true
-
-# ユーザ登録時にニックネームを利用するかの設定
-NICKNAME_USE_SETTING = true
-
-# SSLログインを利用するかの設定
-SSL_SETTING = false
-
-# 全文検索入力欄の表示の制御
-FULL_TEXT_SEARCH_SETTING = false
 
 # 全文検索の所属情報を持つアプリの設定
 BELONG_INFO_APPS = {}
@@ -76,13 +59,6 @@ BELONG_INFO_APPS = {}
 
 # SIKPoPモードを有効にする
 ENV['SKIPOP_URL'] ||= nil
-
-# 新規ユーザの登録を禁止する
-# ENV['STOP_NEW_USER'] = "ON"
-
-# 共有ファイルの最大許可容量( 10M = 10485760)
-MAX_SHARE_FILE_SIZE = '10485760'
-
 # ----------------------------------------------------------------
 
 menu_btns = [
@@ -114,16 +90,6 @@ MENU_BTNS = menu_btns
 # 全文検索の検索条件設定
 SEARCHAPPS = YAML::load(File.open(File.join(RAILS_ROOT, 'config', 'searchapps.yml')))[RAILS_ENV]
 ORDERED_SEARCHAPPS = SEARCHAPPS.sort_by{|key, value| value["order"]}.unshift(['all' , {'title' => '全体'}])
-
-# 共通メニュー
-COMMON_MENUS = YAML::load(File.open(File.join(RAILS_ROOT, 'config', 'common_menus.yml')))
-
-# アプリ全体でのアプリ名などの文言の定義
-# CUSTOM_RITERAL[:app_title]など
-CUSTOM_RITERAL = YAML::load(File.open(File.join(File.dirname(__FILE__), 'custom_riteral.yml')))
-
-# 別ページに飛ばないリンクの正規表現
-NOT_BLANK_LINK_RE = Regexp.new(CUSTOM_RITERAL[:not_blank_link_re])
 
 # 祝日マスタ
 HOLIDAYS = YAML::load(File.open(File.join(RAILS_ROOT, 'config', 'holiday.yml')))

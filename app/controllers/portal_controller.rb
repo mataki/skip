@@ -111,7 +111,7 @@ private
       return false
     end
 
-    if ENV['STOP_NEW_USER']
+    if Setting.stop_new_user
       deny_message = "現在、新規のユーザ登録の処理は停止させて頂いております。"
     end
     if deny_message
