@@ -65,9 +65,9 @@ block_menus:
       :icon:  bullet_blue
       :links:
       - :title: Subversion
-        :url:   http://svn.openskip.org/skip
+        :url:   http://svn.openskip.org/skip/
       - :title: redmine
-        :url:   http://dev.openskip.org/redmine
+        :url:   http://dev.openskip.org/redmine/
     - :title: 関連サイト
       :icon: bullet_green
       :links:
