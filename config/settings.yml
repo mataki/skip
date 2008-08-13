@@ -77,3 +77,35 @@ block_menus:
         :url:   http://railshelp.com/
       - :title: HyperEstraier
         :url:   http://hyperestraier.sourceforge.net/
+
+# その他設定
+mail_function_setting:                        # メール関連項目の表示制御(メールアドレス変更、メール通知設定、メール送信履歴、(エントリ)連絡タグ)
+  default: false
+password_edit_setting:                        # パスワード変更可能かどうかの設定
+  default: true
+nickname_use_setting:                         # ユーザ登録時にニックネームを利用するかどうかの設定
+  default: true
+ssl_setting:                                  # SSLログインを利用するかどうかの設定
+  default: false
+full_text_search_setting:                     # 全文検索入力欄の表示制御
+  default: false
+max_share_file_size:                          # 共有ファイルの最大許可容量( 10M = 10485760 )
+  default: 10485760
+user_code_format_regex:                       # ニックネームとして許可しない形式を指定
+  default: /^(\d{6}|[kK]\d{5})$/
+develop_team_gid:                             # 要望、不具合受付グループのID
+  default: skipteam
+antenna_default_group:                        # 初期のアンテナに追加されるグループを指定(なければ空配列とする)
+  default:
+  - tcpdevelop
+  - magazine
+mypage_feed_default_limit:                    # マイページで表示するRSSフィードの設定(デフォルトの1フィードあたりの最大表示件数)
+  default: 3
+# フィードの設定
+# url:   フィードのURL
+# title: フィードのタイトル(フィード内のタイトル以外のものを設定したい場合)
+# limit: フィードの最大表示件数
+mypage_feed_settings:
+  default:
+  - :url: http://www.openskip.org/rss.xml
+    :title: SKIPニュース
