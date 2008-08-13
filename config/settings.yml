@@ -15,3 +15,34 @@
 
 app_title:
   default: SKIP - Social Knowledge & Innovation Platform   # SNS名の全文
+abbr_app_title:
+  default: SKIP                                            # SNS名の略称
+contact_addr:
+  default: info@openskip.org                               # SNS運営元の連絡メールアドレス
+contact_url:
+  default: http://dev.openskip.org/                        # SNS運営元のウェブページのURL
+help_url:
+  default: http://www.openskip.org/help                    # SNSのヘルプのURL
+initial_anntena:
+  default: SKIPチーム                                      # 初期登録されるアンテナの名称
+login_account:
+  default: ログインID                                      # ログインアカウントの名称
+login_password:
+  default: パスワード                                      # パスワード
+login_account_example:                                     # ログインアカウントのパスワードのサンプル
+  default:
+footer_link:
+  default: >-
+    <a target="_blank" href="http://www.openskip.org/help">ヘルプ</a> -
+    <a onclick="open_hiki();" href="#">Hiki記法</a> - <a onclick="open_rule();" href="#">利用規約</a> -
+    <a onclick="open_site();" href="#">このサイトについて</a> - <a href="/develop">ご要望</a> #フッターの１行目（ヘルプ・規約へのリンクなどを推奨）
+footer_contact:
+  default: お問い合わせはこちら                            # フッターの２列目（提供元への連絡先などを推奨）
+footer_copyright:
+  default: Since 2008 SKIP                                 # フッターの３列目（提供もとの記載などを推奨）
+footer_image_url:
+  default: /images/skip/powered_by_rails.gif               # フッター右側に表示する画像のURL
+not_blank_link_re:
+  default: https?:\/\/dev(.openskip.org)?\/.*              # ブログ内のリンクで新しいウインドウを開かないでリンクをするURLの正規表現
+point_button:
+  default: GoodJob                                         # エントリへのポイント評価の
