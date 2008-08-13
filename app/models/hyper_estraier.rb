@@ -1,6 +1,6 @@
 # SKIP(Social Knowledge & Innovation Platform)
 # Copyright (C) 2008 TIS Inc.
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -9,7 +9,7 @@
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-# 
+#
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -24,12 +24,12 @@ class HyperEstraier < Search
 
     begin
       node = Node::new
-      node.set_url(ESTRAIER_URL)
+      node.set_url(INFRA_SETTING['estraier_url'])
       cond = Condition::new
       cond.set_options Condition::SIMPLE
       cond.set_phrase(params[:full_text_query])
-      if params[:target_aid] && params[:target_aid] != 'all' && !SEARCHAPPS[params[:target_aid]]['cache'].empty?
-        target_url = "http://#{SEARCHAPPS[params[:target_aid]]['cache']}"
+      if params[:target_aid] && params[:target_aid] != 'all' && !INFRA_SETTING['search_apps'][params[:target_aid]]['cache'].empty?
+        target_url = "http://#{INFRA_SETTING['search_apps'][params[:target_aid]]['cache']}"
         target_url << "/#{params[:target_contents]}" if params[:target_contents]
         cond.add_attr("@uri STRBW #{target_url}")
       end

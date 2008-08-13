@@ -1,0 +1,43 @@
+---
+default: &default
+  session:
+    session_key: skip_session_id
+    secret: replacethiswithyourowntopsecretsessionsecretsothatnfdjkaslfvew
+  mailer:
+    address: localhost
+    domain: your.domain.com
+    from: info@your.domain.com
+  sha1_digest_key: change-me
+  # 所属情報を設定する { :app_name => { :api => :api_name, :hash_key => 'hash_key_name', :prefix => 'prefix' } }
+  belong_info_apps:
+  proxy_url: http://cachetky2.tis.co.jp:8080/ # http://proxy.com:8080/
+  estraier_url: http://localhost:1987/node/node1
+  secret_key: skip
+  image_path: temp_image_file_path
+  share_file_path: temp_share_file_path
+  batch_log_path: #なければ log/batch.log
+  secret_key: skip
+
+# ---- 全文検索
+  search_apps:
+    skip:
+      cache:  localhost/cache_skip
+      meta:  /data/caches/skip_meta
+      condition_js: http://localhost:3000/services/search_conditions.js
+      title: SKIP
+      order: 1
+
+development:
+  <<: *default
+  mailer_delivaery_method: temp
+  mailer_delivaery_errors: false
+
+test:
+  <<: *default
+  mailer_delivaery_method: temp
+  mailer_delivaery_errors: false
+
+production:
+  <<: *default
+  mailer_delivaery_method: smtp
+  mailer_delivaery_errors: true

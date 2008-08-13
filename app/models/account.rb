@@ -54,7 +54,7 @@ class Account < ActiveRecord::Base
   end
 
   def self.encrypt(password)
-    Digest::SHA1.hexdigest("#{SHA1_DIGEST_KEY}--#{password}--")
+    Digest::SHA1.hexdigest("#{INFRA_SETTING['sha1_digest_key']}--#{password}--")
   end
 
   def self.create_with_identity_url(identity_url, params)

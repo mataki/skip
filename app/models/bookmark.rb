@@ -1,6 +1,6 @@
 # SKIP(Social Knowledge & Innovation Platform)
 # Copyright (C) 2008 TIS Inc.
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -9,7 +9,7 @@
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-# 
+#
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -39,7 +39,7 @@ class Bookmark < ActiveRecord::Base
 
   def self.get_title_from_url url
     begin
-      open(url, :proxy => ENV['PROXY_URL']) do |f|
+      open(url, :proxy => INFRA_SETTING['proxy_url']) do |f|
         re = /<(title|TITLE)>(.*?)<\/(title|TITLE)>/
         f.each_line do |line|
           return $2.toutf8 if re.match(line)

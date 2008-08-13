@@ -1,6 +1,6 @@
 # SKIP(Social Knowledge & Innovation Platform)
 # Copyright (C) 2008 TIS Inc.
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -9,7 +9,7 @@
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-# 
+#
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -47,7 +47,7 @@ class Search
     line_hash = { }
     line_hash[:contents] = contents
 
-    SEARCHAPPS.each do |key,value|
+    INFRA_SETTING['search_apps'].each do |key,value|
       if value['meta'] && uri_text.include?("/#{value['cache']}/") #メタファイルを設定している場合
         file_path = uri_text.gsub("http://#{value['cache']}", value['meta'])
         if File.file? file_path
@@ -60,7 +60,7 @@ class Search
         line_hash[:contents_type] = key.to_s
         line_hash[:icon_type] = value['icon_type'] if value['icon_type']
       end
-    end #SEARCHAPPS
+    end #INFRA_SETTING['search_apps']
     # メタファイルを設定していない場合
     line_hash[:publication_symbols] ||= 'sid:allusers'
     line_hash[:title] ||= title || uri_text

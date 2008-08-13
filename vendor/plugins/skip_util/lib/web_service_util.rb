@@ -1,6 +1,6 @@
 # SKIP(Social Knowledge & Innovation Platform)
 # Copyright (C) 2008 TIS Inc.
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -9,7 +9,7 @@
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-# 
+#
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -48,7 +48,7 @@ class WebServiceUtil
         url << param_str if param_str.size > 0
       end
 
-      request_headers = { "X-SECRET-KEY" => SECRET_KEY }
+      request_headers = { "X-SECRET-KEY" => ENV['SECRET_KEY'] }
       open(url, request_headers) {|f| f.each_line {|line| result_json = JsonParser.new.parse(line) } }
     rescue Exception => ex
       # TODO ログの出力先が、productionモードなどを意識できていない
@@ -61,7 +61,7 @@ end
 
 module ForServicesModule
   def check_secret_key
-    unless request.env["HTTP_X_SECRET_KEY"] && request.env["HTTP_X_SECRET_KEY"] == SECRET_KEY
+    unless request.env["HTTP_X_SECRET_KEY"] && request.env["HTTP_X_SECRET_KEY"] == ENV['SECRET_KEY']
       render :text => { :error => "不正なアクセスです" }.to_json
       return false
     end

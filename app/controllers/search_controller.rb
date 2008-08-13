@@ -1,6 +1,6 @@
 # SKIP(Social Knowledge & Innovation Platform)
 # Copyright (C) 2008 TIS Inc.
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -9,7 +9,7 @@
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-# 
+#
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -78,7 +78,7 @@ class SearchController < ApplicationController
                                     :per_page => 10)
     unless @share_files && @share_files.size > 0
       if params[:commit] || params[:category]
-        flash.now[:notice] = '該当する共有ファイルはありませんでした。' 
+        flash.now[:notice] = '該当する共有ファイルはありませんでした。'
       else
         flash.now[:notice] = '現在共有されているファイルはありません。'
       end
@@ -119,9 +119,11 @@ private
   def belong_symbols user_code
     symbols = ['sid:allusers'] + login_user_symbols
 
-    BELONG_INFO_APPS.each do |app_name, setting|
-      join_info = MemcacheUtil.get(user_code, app_name, setting[:api])
-      join_info[setting[:hash_key]].each{ |key, value| symbols << "#{setting[:prefix]}:#{key.to_s}" } if join_info
+    unless INFRA_SETTING['belong_info_apps'].blank?
+      INFRA_SETTING['belong_info_apps'].each do |app_name, setting|
+        join_info = MemcacheUtil.get(user_code, app_name, setting[:api])
+        join_info[setting[:hash_key]].each{ |key, value| symbols << "#{setting[:prefix]}:#{key.to_s}" } if join_info
+      end
     end
     symbols
   end

@@ -9,12 +9,23 @@ RAILS_GEM_VERSION = '2.1.0' unless defined? RAILS_GEM_VERSION
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
 
+require 'yaml'
+INFRA_SETTING = YAML.load(File.read(RAILS_ROOT + "/config/infra_settings.yml"))[RAILS_ENV]
+
 Rails::Initializer.run do |config|
-  config.action_controller.session = {
-    :session_key => '_skip_session',
-    :secret      => '0b77a6ad8bcfb834e34f161f0cbba9877929e0cb03f4ffeda64b84aa47f66f68032d77bc642ad497661296c015342c2d93ac21b097da7f7491e18f749bde75a7'
-  }
+  config.action_controller.session = INFRA_SETTING['session']
   # config.action_controller.session_store = :p_store
+
+  # Mailer Setting from infro_config
+  config.action_mailer.delivery_method = INFRA_SETTING['mailer_delivaery_method'].to_sym
+  config.action_mailer.raise_delivery_errors = INFRA_SETTING['mailer_delivaery_errors']
+  config.action_mailer.smtp_settings = {
+    :address => INFRA_SETTING['mailer']['address'],
+    :domain => INFRA_SETTING['mailer']['domain'],
+    :port => INFRA_SETTING['mailer']['port'],
+    :user_name => INFRA_SETTING['mailer']['user_name'],
+    :password => INFRA_SETTING['mailer']['password'],
+    :authentication => INFRA_SETTING['mailer']['authentication'] }
 
   # Skip frameworks you're not going to use
   # config.frameworks -= [ :action_web_service, :action_mailer ]
@@ -48,18 +59,10 @@ Rails::Initializer.run do |config|
 end
 
 # Include your application configuration below
-
-# ----設定項目----------------------------------------------------
-# accountテーブルのパスワードSHA1暗号化用キー
-SHA1_DIGEST_KEY = 'change-me'
-
-# 全文検索の所属情報を持つアプリの設定
-BELONG_INFO_APPS = {}
-#BELONG_INFO_APPS = { :app_name => { :api => :api_name, :hash_key => 'hash_key_name', :prefix => 'prefix' } }
-
-# SIKPoPモードを有効にする
-ENV['SKIPOP_URL'] ||= nil
-# ----------------------------------------------------------------
+ENV['IMAGE_PATH'] ||= INFRA_SETTING['image_path']
+ENV['SHARE_FILE_PATH'] ||= INFRA_SETTING['share_file_path']
+ENV['BATCH_LOG_PATH'] ||= INFRA_SETTING['batch_log_path'] || "#{RAILS_ROOT}/log/batch.log"
+ENV['SECRET_KEY'] ||= INFRA_SETTING['secret_key']
 
 menu_btns = [
   { :img_name => "house",         :id => "btn_mypage", :name => "マイページ", :url => {:controller => '/mypage', :action => 'index'} },
@@ -86,10 +89,6 @@ menu_btns = [
   { :img_name => "report_edit",   :id => "btn_edit", :name => "ブログを書く", :url => {:controller => '/edit', :action => 'index'} },
 ]
 MENU_BTNS = menu_btns
-
-# 全文検索の検索条件設定
-SEARCHAPPS = YAML::load(File.open(File.join(RAILS_ROOT, 'config', 'searchapps.yml')))[RAILS_ENV]
-ORDERED_SEARCHAPPS = SEARCHAPPS.sort_by{|key, value| value["order"]}.unshift(['all' , {'title' => '全体'}])
 
 # 祝日マスタ
 HOLIDAYS = YAML::load(File.open(File.join(RAILS_ROOT, 'config', 'holiday.yml')))
