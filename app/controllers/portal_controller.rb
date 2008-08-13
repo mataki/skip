@@ -52,7 +52,7 @@ class PortalController < ApplicationController
 
     @user = User.new(params[:user].update({ :name => session[:user_name], :email => session[:user_email] }))
 
-    if NICKNAME_USE_SETTING
+    if Setting.nickname_use_setting
       @user_uid = UserUid.new(params[:user_uid].update(:uid_type => UserUid::UID_TYPE[:nickname]))
       @user.user_uids << @user_uid if params[:user_uid][:uid] != session[:user_code]
     else

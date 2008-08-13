@@ -35,7 +35,7 @@ td, th {
   <tr>
     <th width="100px"><label for="user_uid">ニックネーム</label></th>
   <% if is_new %>
-    <td><%= text_field 'user_uid', 'uid', {:tabindex => (tabindex += 1), :disabled => !NICKNAME_USE_SETTING} %>（4桁以上）<span id="uid_result" style="margin-left:3px;color:gray;font-size:10px"></span><span id="indicator" style="display:none;"><%= skip_image_tag 'indicator.gif' %></span><div class="desc">半角英数の他にハイフン「-」,アンダーバー「_」が利用できます</div>
+    <td><%= text_field 'user_uid', 'uid', {:tabindex => (tabindex += 1), :disabled => !Setting.nickname_use_setting} %>（4桁以上）<span id="uid_result" style="margin-left:3px;color:gray;font-size:10px"></span><span id="indicator" style="display:none;"><%= skip_image_tag 'indicator.gif' %></span><div class="desc">半角英数の他にハイフン「-」,アンダーバー「_」が利用できます</div>
   <% else %>
     <td><%= h @user.uid %></td>
   <% end %>
@@ -46,7 +46,7 @@ td, th {
   </tr>
   <tr>
     <th width="100px"><label for="user_email">メールアドレス</label></th>
-    <td><%= @user.email %><span style="margin-left: 20px;"><%= link_to "[変更する]", :action=> 'manage', :menu => 'manage_email' if !is_new && MAIL_FUNCTION_SETTING %></span></td>
+    <td><%= @user.email %><span style="margin-left: 20px;"><%= link_to "[変更する]", :action=> 'manage', :menu => 'manage_email' if !is_new && Setting.mail_function_setting %></span></td>
   </tr>
   <tr>
     <th width="100px"><label for="user_name">名前</label></th>
