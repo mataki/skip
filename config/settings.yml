@@ -13,6 +13,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# 各種文言の設定
 app_title:
   default: SKIP - Social Knowledge & Innovation Platform   # SNS名の全文
 abbr_app_title:
@@ -46,3 +47,33 @@ not_blank_link_re:
   default: https?:\/\/dev(.openskip.org)?\/.*              # ブログ内のリンクで新しいウインドウを開かないでリンクをするURLの正規表現
 point_button:
   default: GoodJob                                         # エントリへのポイント評価の
+
+# 右上メニューの設定
+main_menus:
+  default:
+  - :title: SKIPトップ
+    :url:   http://www.openskip.org/
+  - :title: SKIP開発SNS
+    :url:   http://dev.openskip.org/
+block_menus:
+  default:
+  - :id: link_menu
+    :title: その他
+    :margin_right: 0px
+    :blocks:
+    - :title: 開発
+      :icon:  bullet_blue
+      :links:
+      - :title: Subversion
+        :url:   http://svn.openskip.org/skip
+      - :title: redmine
+        :url:   http://dev.openskip.org/redmine
+    - :title: 関連サイト
+      :icon: bullet_green
+      :links:
+      - :title: Ruby On Rails
+        :url:   http://www.rubyonrails.org/
+      - :title: Ruby On Rails Help
+        :url:   http://railshelp.com/
+      - :title: HyperEstraier
+        :url:   http://hyperestraier.sourceforge.net/
