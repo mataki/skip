@@ -1,6 +1,6 @@
 # SKIP(Social Knowledge & Innovation Platform)
 # Copyright (C) 2008 TIS Inc.
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -9,7 +9,7 @@
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-# 
+#
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -32,7 +32,7 @@ class UserUid < ActiveRecord::Base
   validates_format_of :uid, :message => 'は数字orアルファベットor記号で入力してください', :with => UID_FORMAT_REGEX
 
   def validate
-    errors.add(:uid, "は#{Setting.login_account}と異なる形式で入力してください") if uid_type == UID_TYPE[:nickname] && uid =~ USER_CODE_FORMAT_REGEX
+    errors.add(:uid, "は#{Setting.login_account}と異なる形式で入力してください") if uid_type == UID_TYPE[:nickname] && uid =~ Setting.user_code_format_regex
   end
 
   class << self
@@ -46,7 +46,7 @@ class UserUid < ActiveRecord::Base
 
   # uid入力チェック（ajaxのアクションから利用）
   def self.check_uid uid, code
-    return "#{Setting.login_account}と異なる形式で入力してください" if uid != code && uid =~ USER_CODE_FORMAT_REGEX
+    return "#{Setting.login_account}と異なる形式で入力してください" if uid != code && uid =~ Setting.user_code_format_regex
     return "#{UID_MIN_LENGTH}文字以上入力してください" if uid and uid.length < UID_MIN_LENGTH
     return "#{UID_MAX_LENGTH}文字以内で入力してください" if uid and uid.length > UID_MAX_LENGTH
     return "英数もしくは-(ハイフン)、_(アンダーバー)のみで入力してください" unless uid =~ UID_FORMAT_REGEX

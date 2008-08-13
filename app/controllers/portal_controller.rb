@@ -72,7 +72,7 @@ class PortalController < ApplicationController
     if @user.save
       antenna = Antenna.new(:user_id => @user.id, :name => Setting.initial_anntena, :position => 1)
 
-      ANTENNA_DEFAULT_GROUP.each do |default_gid|
+      Setting.antenna_default_group.each do |default_gid|
         if Group.count(:conditions => ["gid in (?)", default_gid]) > 0
           antenna.antenna_items.build(:value_type => "symbol", :value => "gid:"+default_gid)
         end

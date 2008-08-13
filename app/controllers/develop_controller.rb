@@ -21,7 +21,7 @@ class DevelopController < ApplicationController
          :redirect_to => { :action => :index }
 
   def index
-    unless @group = Group.find_by_gid(DEVELOP_TEAM_GID)
+    unless @group = Group.find_by_gid(Setting.develop_team_gid)
       flash[:warning] = "関係者用グループが存在していません"
       redirect_to :controller => "mypage"
       return
@@ -126,7 +126,7 @@ class DevelopController < ApplicationController
       return
     end
 
-    develop_temp_symbol = "gid:" + DEVELOP_TEAM_GID
+    develop_temp_symbol = "gid:" + Setting.develop_team_gid
     entry_params = { }
     entry_params[:non_auto] = true
     entry_params[:title] = params[:entry][:title]
