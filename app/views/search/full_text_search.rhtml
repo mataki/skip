@@ -26,12 +26,12 @@ var relative_url_root = '<%= controller.request.relative_url_root -%>';
 </style>
 
 <div id="header">
-  <div id="logo" style="align: top; margin: 3px 0 0 20px;"><%= link_to(image_tag('/custom/images/top_logo.png', :alt => CUSTOM_RITERAL[:abbr_app_title], :height => "45"), :controller => 'search', :action => 'full_text_search') -%></div>
+  <div id="logo" style="align: top; margin: 3px 0 0 20px;"><%= link_to(image_tag('/custom/images/top_logo.png', :alt => Setting.abbr_app_title, :height => "45"), :controller => 'mypage', :action => :index) -%></div>
   <%= skip_menu_link -%>
 </div>
 <div id="top">
   <div id="user_ctl">
-    <a href="<%= CUSTOM_RITERAL[:help_url] -%>" target="_blank"><span id="link_help">ヘルプ</span></a>
+    <a href="<%= Setting.help_url -%>" target="_blank"><span id="link_help">ヘルプ</span></a>
   </div>
 </div>
 

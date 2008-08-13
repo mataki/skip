@@ -214,7 +214,7 @@ module ApplicationHelper
   # [コメント(n)-ポイント(n)-TB(n)-アクセス(n)]の表示
   def get_entry_infos entry
     output = "[コメント(#{entry.board_entry_comments_count})"
-    output << "-#{CUSTOM_RITERAL[:point_button]}(#{entry.point.to_s})"
+    output << "-#{Setting.point_button}(#{entry.point.to_s})"
     output << "-TB(#{entry.entry_trackbacks_count})"
     output << "-アクセス(#{entry.state.access_count.to_s})]"
     return output

@@ -19,7 +19,7 @@ div.param_desc {
   <div class="input_value"><%= text_field 'group', 'gid', :size => 60 %></div>
   <div class="param_desc">
   ※グループIDは4文字以上で、数字orアルファベットor記号(ハイフン「-」 アンダーバー「_」)で入力してください。<br/>
-  ※グループIDは<%= CUSTOM_RITERAL[:abbr_app_title] %>内でグループ識を別する文字列として、URL等いろいろな場面で使いますので、分かりやすい文字列を選んでください。
+  ※グループIDは<%= Setting.abr_app_title %>内でグループ識を別する文字列として、URL等いろいろな場面で使いますので、分かりやすい文字列を選んでください。
   </div>
 </div>
 <% end %>

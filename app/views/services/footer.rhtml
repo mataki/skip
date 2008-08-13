@@ -10,15 +10,15 @@ function open_rule() { sub_window_open('<%= "#{root_url}custom/rules.html" -%>',
 function open_site() { sub_window_open('<%= "#{root_url}custom/about_this_site.html" -%>', 'このサイトについて', 720,660); };
 
 page_data = [
-  '<div id="footer" style="background-image: url(<%= CUSTOM_RITERAL[:footer_image_url] -%>);">',
-<% if CUSTOM_RITERAL[:footer_image_url].blank? %>
-    '<div class="bottom" style="font-size: 12px; margin-right: 0px;"><%= CUSTOM_RITERAL[:footer_link] -%></div>',
-    '<div class="bottom" style="margin-right: 0px;"><%= CUSTOM_RITERAL[:footer_contact] -%></div>',
+  '<div id="footer" style="background-image: url(<%= Setting.footer_image_url -%>);">',
+<% if Setting.footer_image_url.blank? %>
+    '<div class="bottom" style="font-size: 12px; margin-right: 0px;"><%= Setting.footer_link -%></div>',
+    '<div class="bottom" style="margin-right: 0px;"><%= Setting.footer_contact -%></div>',
 <% else %>
-    '<div class="bottom" style="font-size: 12px;"><%= CUSTOM_RITERAL[:footer_link] -%></div>',
-    '<div class="bottom"><%= CUSTOM_RITERAL[:footer_contact] -%></div>',
+    '<div class="bottom" style="font-size: 12px;"><%= Setting.footer_link -%></div>',
+    '<div class="bottom"><%= Setting.footer_contact -%></div>',
 <% end %>
-    '<div id="powered"><%= CUSTOM_RITERAL[:footer_copyright] -%></div>',
+    '<div id="powered"><%= Setting.footer_copyright -%></div>',
   '</div>',
 ].join(' ');
 

@@ -5,7 +5,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
   <link rel="shortcut icon" href="<%= controller.request.relative_url_root -%>/favicon.ico" />
-  <title><%= CUSTOM_RITERAL[:app_title] -%></title>
+  <title><%= Setting.app_title -%></title>
 <script language="JavaScript" type="text/javascript">
 <!--
 var relative_url_root = '<%= controller.request.relative_url_root -%>';
@@ -38,7 +38,7 @@ div#main_navi div.next_arrow {
 
 <body>
 <div id="header">
-  <div id="logo" style="align: top; margin: 3px 0 0 5px;"><%= link_to image_tag('/custom/images/top_logo.png', :alt => CUSTOM_RITERAL[:abbr_app_title], :height => "45"), :controller => :platform %></div>
+  <div id="logo" style="align: top; margin: 3px 0 0 5px;"><%= link_to image_tag('/custom/images/top_logo.png', :alt => Setting.abr_app_title, :height => "45"), :controller => :platform %></div>
 </div>
 
 <div id="top">

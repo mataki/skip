@@ -35,7 +35,7 @@ class UserSearchCondition < SearchCondition
 
     def sort_types
       [ ['最近ログインした順', "0"],
-        ["#{CUSTOM_RITERAL[:login_account]}順", "1"] ]
+        ["#{Setting.login_account}順", "1"] ]
     end
 
     @@output_types = {

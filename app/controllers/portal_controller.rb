@@ -70,7 +70,7 @@ class PortalController < ApplicationController
     @user.user_profile = @profile if params[:write_profile]
 
     if @user.save
-      antenna = Antenna.new(:user_id => @user.id, :name => CUSTOM_RITERAL[:initial_anntena], :position => 1)
+      antenna = Antenna.new(:user_id => @user.id, :name => Setting.initial_anntena, :position => 1)
 
       ANTENNA_DEFAULT_GROUP.each do |default_gid|
         if Group.count(:conditions => ["gid in (?)", default_gid]) > 0

@@ -5,7 +5,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
   <link rel="shortcut icon" href="<%= controller.request.relative_url_root -%>/favicon.ico" />
-  <title><%= CUSTOM_RITERAL[:app_title] -%></title>
+  <title><%= Setting.app_title -%></title>
 <script language="JavaScript" type="text/javascript">
 <!--
 var relative_url_root = '<%= controller.request.relative_url_root -%>';
@@ -115,12 +115,12 @@ span.blue { color: blue; }
 </head>
 
 <body>
-<div id="logo"><%= link_to(image_tag("/custom/images/title_logo.png", :alt => CUSTOM_RITERAL[:app_title])) -%></div>
+<div id="logo"><%= link_to(image_tag("/custom/images/title_logo.png", :alt => Setting.app_title)) -%></div>
 
 <div id="top">
   <div id="menu_btn"></div>
   <div id="user_ctl">
-    <a href="mailto:<%= CUSTOM_RITERAL[:contact_addr] -%>" target="_blank">お問い合わせ</a>
+    <a href="mailto:<%= Setting.contact_addr -%>" target="_blank">お問い合わせ</a>
     <a href="#" onclick="javascript:getSubwindowRule()"> 利用規約</a>
     <a href="#" onclick="javascript:getSubwindowScript(relative_url_root + '/custom/about_this_site.html', 720, 660)">このサイトについて</a>
   </div>
@@ -178,8 +178,8 @@ span.blue { color: blue; }
 </div><!-- main -->
 
 <div id="footer">
-  <div class="bottom" style="text-align: center;font-size: 12px;font-weight: bold;"><%= CUSTOM_RITERAL[:footer_contact] -%></div>
-  <div id="powered"><%= CUSTOM_RITERAL[:footer_copyright] -%></div>
+  <div class="bottom" style="text-align: center;font-size: 12px;font-weight: bold;"><%= Setting.footer_contact -%></div>
+  <div id="powered"><%= Setting.footer_copyright -%></div>
 </div><!-- footer -->
 
 </body>

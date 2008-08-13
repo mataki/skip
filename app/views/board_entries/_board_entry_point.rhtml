@@ -4,8 +4,8 @@
 -%>
 
 <% if editable %>
-  （<%= "#{entry.point} #{CUSTOM_RITERAL[:point_button]}" %> 頂きました）
+  （<%= "#{entry.point} #{Setting.point_button}" %> 頂きました）
 <% else %>
-  <input type="button" id="entry_point_button" value="<%= "#{entry.point} #{CUSTOM_RITERAL[:point_button]}" -%>" />
+  <input type="button" id="entry_point_button" value="<%= "#{entry.point} #{Setting.point_button}" -%>" />
 <% end %>
 </span>
