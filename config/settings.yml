@@ -85,7 +85,6 @@ mail_function_setting:    # メール関連項目の表示制御(メールアド
   format: boolean
   default: false
 delivery_method:          # ActionMailer::Base.delivery_methodへの設定値
-  format: boolean
   default: test
 smtp_settings:            # ActionMailer::Base:smtp_settingsへの設定値
   serialized: true
