@@ -46,7 +46,6 @@ ActionController::Routing::Routes.draw do |map|
     admin_map.resources :bookmarks do |bookmark|
       bookmark.resources :bookmark_comments
     end
-    admin_map.resources :groups
     admin_map.resources :users do |user|
       user.resource :user_profile
     end
