@@ -50,12 +50,14 @@ point_button:
 
 # 右上メニューの設定
 main_menus:
+  serialized: true
   default:
   - :title: SKIPトップ
     :url:   http://www.openskip.org/
   - :title: SKIP開発SNS
     :url:   http://dev.openskip.org/
 block_menus:
+  serialized: true
   default:
   - :id: link_menu
     :title: その他
@@ -84,6 +86,7 @@ mail_function_setting:    # メール関連項目の表示制御(メールアド
 delivery_method:          # ActionMailer::Base.delivery_methodへの設定値
   default: :test
 smtp_settings:            # ActionMailer::Base:smtp_settingsへの設定値
+  serialized: true
   default:
     :address: localhost
     :port: 25
@@ -110,6 +113,7 @@ user_code_format_regex:            # ニックネームとして許可しない�
 develop_team_gid:                  # 要望、不具合受付グループのID
   default: skipteam
 antenna_default_group:             # 初期のアンテナに追加されるグループを指定(なければ空配列とする)
+  serialized: true
   default:
   - tcpdevelop
   - magazine
@@ -120,6 +124,7 @@ mypage_feed_default_limit:         # マイページで表示するRSSフィー�
 # title: フィードのタイトル(フィード内のタイトル以外のものを設定したい場合)
 # limit: フィードの最大表示件数
 mypage_feed_settings:
+  serialized: true
   default:
   - :url: http://www.openskip.org/rss.xml
     :title: SKIPニュース
