@@ -43,8 +43,6 @@ footer_copyright:
   default: Since 2008 SKIP                                 # フッターの３列目（提供もとの記載などを推奨）
 footer_image_url:
   default: /images/skip/powered_by_rails.gif               # フッター右側に表示する画像のURL
-not_blank_link_re:
-  default: https?:\/\/dev(.openskip.org)?\/.*              # ブログ内のリンクで新しいウインドウを開かないでリンクをするURLの正規表現
 point_button:
   default: GoodJob                                         # エントリへのポイント評価の
 
@@ -100,22 +98,6 @@ raise_delivery_errors:    # ActionMailer::Base:raise_delivery_errorsへの設定
   default: false
 
 # その他設定
-password_edit_setting:             # パスワード変更可能かどうかの設定
-  format: boolean
-  default: true
-nickname_use_setting:              # ユーザ登録時にニックネームを利用するかどうかの設定
-  format: boolean
-  default: true
-ssl_setting:                       # SSLログインを利用するかどうかの設定
-  format: boolean
-  default: false
-full_text_search_setting:          # 全文検索入力欄の表示制御
-  format: boolean
-  default: false
-max_share_file_size:               # 共有ファイルの最大許可容量( 10M = 10485760 )
-  default: 10485760
-user_code_format_regex:            # ニックネームとして許可しない形式を指定
-  default: ^(\d{6}|[kK]\d{5})$
 develop_team_gid:                  # 要望、不具合受付グループのID
   default: skipteam
 antenna_default_group:             # 初期のアンテナに追加されるグループを指定(なければ空配列とする)
@@ -123,6 +105,11 @@ antenna_default_group:             # 初期のアンテナに追加されるグ�
   default:
   - tcpdevelop
   - magazine
+stop_new_user:
+  format: boolean
+  default: false
+
+# feed設定
 mypage_feed_default_limit:         # マイページで表示するRSSフィードの設定(デフォルトの1フィードあたりの最大表示件数)
   default: 3
 # フィードの設定
@@ -134,6 +121,3 @@ mypage_feed_settings:
   default:
   - :url: http://www.openskip.org/rss.xml
     :title: SKIPニュース
-stop_new_user:
-  format: boolean
-  default: false
