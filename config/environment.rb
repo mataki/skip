@@ -64,6 +64,9 @@ ENV['SHARE_FILE_PATH'] ||= INFRA_SETTING['share_file_path']
 ENV['BATCH_LOG_PATH'] ||= INFRA_SETTING['batch_log_path'] || "#{RAILS_ROOT}/log/batch.log"
 ENV['SECRET_KEY'] ||= INFRA_SETTING['secret_key']
 
+# TODO RP_SSOを削除する
+SSO_KEY = ENV['sso_key'] || 'skip'
+
 menu_btns = [
   { :img_name => "house",         :id => "btn_mypage", :name => "マイページ", :url => {:controller => '/mypage', :action => 'index'} },
 

@@ -29,12 +29,12 @@ default: &default
 
 development:
   <<: *default
-  mailer_delivaery_method: temp
+  mailer_delivaery_method: test
   mailer_delivaery_errors: false
 
 test:
   <<: *default
-  mailer_delivaery_method: temp
+  mailer_delivaery_method: test
   mailer_delivaery_errors: false
 
 production:
