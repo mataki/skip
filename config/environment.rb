@@ -17,15 +17,17 @@ Rails::Initializer.run do |config|
   # config.action_controller.session_store = :p_store
 
   # Mailer Setting from infro_config
-  config.action_mailer.delivery_method = INFRA_SETTING['mailer_delivaery_method'].to_sym
-  config.action_mailer.raise_delivery_errors = INFRA_SETTING['mailer_delivaery_errors']
-  config.action_mailer.smtp_settings = {
-    :address => INFRA_SETTING['mailer']['address'],
-    :domain => INFRA_SETTING['mailer']['domain'],
-    :port => INFRA_SETTING['mailer']['port'],
-    :user_name => INFRA_SETTING['mailer']['user_name'],
-    :password => INFRA_SETTING['mailer']['password'],
-    :authentication => INFRA_SETTING['mailer']['authentication'] }
+  config.after_initialize do
+    ActionMailer::Base.delivery_method = Setting.delivery_method.to_sym
+    ActionMailer::Base.raise_delivery_errors = Setting.raise_delivery_errors
+    ActionMailer::Base.smtp_settings = {
+      :address => Setting.smtp_settings[:address],
+      :domain => Setting.smtp_settings[:domain],
+      :port => Setting.smtp_settings[:port],
+      :user_name => Setting.smtp_settings[:user_name],
+      :password => Setting.smtp_settings[:password],
+      :authentication => Setting.smtp_settings[:authentication] }
+  end
 
   # Skip frameworks you're not going to use
   # config.frameworks -= [ :action_web_service, :action_mailer ]

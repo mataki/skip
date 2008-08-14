@@ -3,10 +3,6 @@ default: &default
   session:
     session_key: skip_session_id
     secret: replacethiswithyourowntopsecretsessionsecretsothatnfdjkaslfvew
-  mailer:
-    address: localhost
-    domain: your.domain.com
-    from: info@your.domain.com
   sha1_digest_key: change-me
   # 所属情報を設定する { :app_name => { :api => :api_name, :hash_key => 'hash_key_name', :prefix => 'prefix' } }
   belong_info_apps:
@@ -29,15 +25,9 @@ default: &default
 
 development:
   <<: *default
-  mailer_delivaery_method: test
-  mailer_delivaery_errors: false
 
 test:
   <<: *default
-  mailer_delivaery_method: test
-  mailer_delivaery_errors: false
 
 production:
   <<: *default
-  mailer_delivaery_method: smtp
-  mailer_delivaery_errors: true

@@ -84,7 +84,7 @@ block_menus:
 mail_function_setting:    # メール関連項目の表示制御(メールアドレス変更、メール通知設定、メール送信履歴、(エントリ)連絡タグ)
   default: false
 delivery_method:          # ActionMailer::Base.delivery_methodへの設定値
-  default: :test
+  default: test
 smtp_settings:            # ActionMailer::Base:smtp_settingsへの設定値
   serialized: true
   default:
