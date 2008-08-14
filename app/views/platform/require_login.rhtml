@@ -48,7 +48,7 @@ var relative_url_root = '<%= controller.request.relative_url_root -%>';
 <div id="login"><%= render :partial => 'shared/login_form' %></div>
 
 <div style="border: 1px solid silver; padding: 5px 10px; background-color: #f0f0ff; text-align: center;">
-  <a href="mailto:<%= Setting.contact_addr! -%>" target="_blank">[お問い合わせ]</a>
+  <a href="mailto:<%= Setting.contact_addr -%>" target="_blank">[お問い合わせ]</a>
   <a href="#" onclick="javascript:getSubwindowRule()">[利用規約]</a>
 </div>
 

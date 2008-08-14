@@ -88,7 +88,7 @@ class MypageController < ApplicationController
   def load_rss_feed
     feeds = []
     Setting.mypage_feed_settings.each do |setting|
-      feed = open(setting[:url], :proxy => INFRA_SETTING['proxy_url']){ |f| RSS::Parser.parse(f.read) }
+      feed = open(setting[:url], :proxy => INITIAL_SETTINGS['proxy_url']){ |f| RSS::Parser.parse(f.read) }
       feed.channel.title = setting[:title] if setting[:title]
       limit = (setting[:limit]||Setting.mypage_feed_default_limit)
       feed.items.slice!(limit..-1) if feed.items.size > limit

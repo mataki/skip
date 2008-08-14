@@ -119,8 +119,8 @@ private
   def belong_symbols user_code
     symbols = ['sid:allusers'] + login_user_symbols
 
-    unless INFRA_SETTING['belong_info_apps'].blank?
-      INFRA_SETTING['belong_info_apps'].each do |app_name, setting|
+    unless INITIAL_SETTINGS['belong_info_apps'].blank?
+      INITIAL_SETTINGS['belong_info_apps'].each do |app_name, setting|
         join_info = MemcacheUtil.get(user_code, app_name, setting[:api])
         join_info[setting[:hash_key]].each{ |key, value| symbols << "#{setting[:prefix]}:#{key.to_s}" } if join_info
       end

@@ -24,7 +24,7 @@ class UserUid < ActiveRecord::Base
   UID_MIN_LENGTH = 4
   UID_MAX_LENGTH = 30
   UID_FORMAT_REGEX = /^[a-zA-Z0-9\-_]*$/
-  UID_CODE_REGEX = Regexp.new(Setting.user_code_format_regex)
+  UID_CODE_REGEX = Regexp.new(INITIAL_SETTINGS['user_code_format_regex'])
 
   validates_presence_of :uid, :message => 'は必須です'
   validates_uniqueness_of :uid, :message => 'は既に登録されています'

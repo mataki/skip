@@ -47,7 +47,7 @@ class Search
     line_hash = { }
     line_hash[:contents] = contents
 
-    INFRA_SETTING['search_apps'].each do |key,value|
+    INITIAL_SETTINGS['search_apps'].each do |key,value|
       if value['meta'] && uri_text.include?("/#{value['cache']}/") #メタファイルを設定している場合
         file_path = uri_text.gsub("http://#{value['cache']}", value['meta'])
         if File.file? file_path
@@ -60,7 +60,7 @@ class Search
         line_hash[:contents_type] = key.to_s
         line_hash[:icon_type] = value['icon_type'] if value['icon_type']
       end
-    end #INFRA_SETTING['search_apps']
+    end #INITIAL_SETTINGS['search_apps']
     # メタファイルを設定していない場合
     line_hash[:publication_symbols] ||= 'sid:allusers'
     line_hash[:title] ||= title || uri_text

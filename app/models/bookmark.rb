@@ -39,7 +39,7 @@ class Bookmark < ActiveRecord::Base
 
   def self.get_title_from_url url
     begin
-      open(url, :proxy => INFRA_SETTING['proxy_url']) do |f|
+      open(url, :proxy => INITIAL_SETTINGS['proxy_url']) do |f|
         re = /<(title|TITLE)>(.*?)<\/(title|TITLE)>/
         f.each_line do |line|
           return $2.toutf8 if re.match(line)

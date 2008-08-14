@@ -10,10 +10,10 @@ RAILS_GEM_VERSION = '2.1.0' unless defined? RAILS_GEM_VERSION
 require File.join(File.dirname(__FILE__), 'boot')
 
 require 'yaml'
-INFRA_SETTING = YAML.load(File.read(RAILS_ROOT + "/config/infra_settings.yml"))[RAILS_ENV]
+INITIAL_SETTINGS = YAML.load(File.read(RAILS_ROOT + "/config/initial_settings.yml"))[RAILS_ENV]
 
 Rails::Initializer.run do |config|
-  config.action_controller.session = INFRA_SETTING['session']
+  config.action_controller.session = INITIAL_SETTINGS['session']
   # config.action_controller.session_store = :p_store
 
   # Skip frameworks you're not going to use
@@ -48,10 +48,10 @@ Rails::Initializer.run do |config|
 end
 
 # Include your application configuration below
-ENV['IMAGE_PATH'] ||= INFRA_SETTING['image_path']
-ENV['SHARE_FILE_PATH'] ||= INFRA_SETTING['share_file_path']
-ENV['BATCH_LOG_PATH'] ||= INFRA_SETTING['batch_log_path'] || "#{RAILS_ROOT}/log/batch.log"
-ENV['SECRET_KEY'] ||= INFRA_SETTING['secret_key']
+ENV['IMAGE_PATH'] ||= INITIAL_SETTINGS['image_path']
+ENV['SHARE_FILE_PATH'] ||= INITIAL_SETTINGS['share_file_path']
+ENV['BATCH_LOG_PATH'] ||= INITIAL_SETTINGS['batch_log_path'] || "#{RAILS_ROOT}/log/batch.log"
+ENV['SECRET_KEY'] ||= INITIAL_SETTINGS['secret_key']
 
 # TODO RP_SSOを削除する
 SSO_KEY = ENV['sso_key'] || 'skip'

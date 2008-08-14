@@ -155,7 +155,7 @@ module ApplicationHelper
   end
 
   def hiki_parse text, owner_symbol = nil
-    parse_permalink(HikiDoc.new(text, Regexp.new(Setting.not_blank_link_re)).to_html, owner_symbol)
+    parse_permalink(HikiDoc.new(text, Regexp.new(INITIAL_SETTINGS['not_blank_link_re'])).to_html, owner_symbol)
   end
 
   def show_contents entry
