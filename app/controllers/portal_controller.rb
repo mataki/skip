@@ -118,7 +118,7 @@ private
       render :layout => "entrance",
              :text => <<-EOS
                <div style="font-weight: bold; font-size: 18px;">大変申し訳ございません。<br/>#{deny_message}<br/>
-               <input type="button" value="戻る"  onClick="location.href = '#{url_for(:controller => :platform)}}';"></input></div>
+               <input type="button" value="戻る"  onClick="location.href = '#{url_for(:controller => :platform)}';"></input></div>
              EOS
       return false
     end
