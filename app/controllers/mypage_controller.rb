@@ -91,7 +91,7 @@ class MypageController < ApplicationController
     feeds = []
     Admin::Setting.mypage_feed_settings.each do |setting|
       feed = nil
-      timeout(Admin::Setting.mypage_feed_timeout) do
+      timeout(Admin::Setting.mypage_feed_timeout.to_i) do
         feed = open(setting[:url], :proxy => INITIAL_SETTINGS['proxy_url']){ |f| RSS::Parser.parse(f.read) }
       end
       feed.channel.title = setting[:title] if setting[:title]
