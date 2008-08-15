@@ -82,5 +82,8 @@ menu_btns = [
 ]
 MENU_BTNS = menu_btns
 
+# 共通メニュー
+COMMON_MENUS = YAML::load(File.open(File.join(RAILS_ROOT, 'config', 'common_menus.yml')))
+
 # 祝日マスタ
 HOLIDAYS = YAML::load(File.open(File.join(RAILS_ROOT, 'config', 'holiday.yml')))

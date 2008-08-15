@@ -46,38 +46,6 @@ footer_image_url:
 point_button:
   default: GoodJob                                         # エントリへのポイント評価の
 
-# 右上メニューの設定
-main_menus:
-  serialized: true
-  default:
-  - :title: SKIPトップ
-    :url:   http://www.openskip.org/
-  - :title: SKIP開発SNS
-    :url:   http://dev.openskip.org/
-block_menus:
-  serialized: true
-  default:
-  - :id: link_menu
-    :title: その他
-    :margin_right: 0px
-    :blocks:
-    - :title: 開発
-      :icon:  bullet_blue
-      :links:
-      - :title: Subversion
-        :url:   http://svn.openskip.org/skip/
-      - :title: redmine
-        :url:   http://dev.openskip.org/redmine/
-    - :title: 関連サイト
-      :icon: bullet_green
-      :links:
-      - :title: Ruby On Rails
-        :url:   http://www.rubyonrails.org/
-      - :title: Ruby On Rails Help
-        :url:   http://railshelp.com/
-      - :title: HyperEstraier
-        :url:   http://hyperestraier.sourceforge.net/
-
 # メール関連の設定
 mail_function_setting:    # メール関連項目の表示制御(メールアドレス変更、メール通知設定、メール送信履歴、(エントリ)連絡タグ)
   format: boolean

@@ -1,0 +1,26 @@
+:main_menus:
+ - :title: SKIPトップ
+   :url:   http://www.openskip.org/
+ - :title: SKIP開発SNS
+   :url:   http://dev.openskip.org/
+:block_menus:
+ - :id: link_menu
+   :title: その他
+   :margin_right: 0px
+   :blocks:
+   - :title: 開発
+     :icon:  bullet_blue
+     :links:
+     - :title: Subversion
+       :url:   http://svn.openskip.org/skip/
+     - :title: redmine
+       :url:   http://dev.openskip.org/redmine/
+   - :title: 関連サイト
+     :icon: bullet_green
+     :links:
+     - :title: Ruby On Rails
+       :url:   http://www.rubyonrails.org/
+     - :title: Ruby On Rails Help
+       :url:   http://railshelp.com/
+     - :title: HyperEstraier
+       :url:   http://hyperestraier.sourceforge.net/
