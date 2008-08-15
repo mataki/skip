@@ -70,9 +70,9 @@ class PortalController < ApplicationController
     @user.user_profile = @profile if params[:write_profile]
 
     if @user.save
-      antenna = Antenna.new(:user_id => @user.id, :name => Setting.initial_anntena, :position => 1)
+      antenna = Antenna.new(:user_id => @user.id, :name => Admin::Setting.initial_anntena, :position => 1)
 
-      Setting.antenna_default_group.each do |default_gid|
+      Admin::Setting.antenna_default_group.each do |default_gid|
         if Group.count(:conditions => ["gid in (?)", default_gid]) > 0
           antenna.antenna_items.build(:value_type => "symbol", :value => "gid:"+default_gid)
         end
@@ -111,7 +111,7 @@ private
       return false
     end
 
-    if Setting.stop_new_user
+    if Admin::Setting.stop_new_user
       deny_message = "現在、新規のユーザ登録の処理は停止させて頂いております。"
     end
     if deny_message

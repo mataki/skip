@@ -32,11 +32,11 @@ login_password:
   default: パスワード                                      # パスワード
 login_account_example:                                     # ログインアカウントのパスワードのサンプル
   default:
-footer_link:
+footer_link:                                               #フッターの１行目（ヘルプ・規約へのリンクなどを推奨）
   default: >-
     <a target="_blank" href="http://www.openskip.org/help">ヘルプ</a> -
     <a onclick="open_hiki();" href="#">Hiki記法</a> - <a onclick="open_rule();" href="#">利用規約</a> -
-    <a onclick="open_site();" href="#">このサイトについて</a> - <a href="/develop">ご要望</a> #フッターの１行目（ヘルプ・規約へのリンクなどを推奨）
+    <a onclick="open_site();" href="#">このサイトについて</a> - <a href="/develop">ご要望</a>
 footer_contact:
   default: お問い合わせはこちら                            # フッターの２列目（提供元への連絡先などを推奨）
 footer_copyright:

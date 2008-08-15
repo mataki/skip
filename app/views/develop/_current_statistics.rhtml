@@ -26,7 +26,7 @@
                       ]
 %>
 
-<div class="topix_title"><%= icon_tag('asterisk_orange') -%><span>[<%=h site_count.created_on.strftime("%Y/%m/%d %H:%M") %>] 時点の<%= Setting.abr_app_title -%>指標値</span></div>
+<div class="topix_title"><%= icon_tag('asterisk_orange') -%><span>[<%=h site_count.created_on.strftime("%Y/%m/%d %H:%M") %>] 時点の<%= Admin::Setting.abr_app_title -%>指標値</span></div>
 <% statistics_items.each do |item| %>
 <div class="statistics_line">
   <div class="statistics_desc"><%= icon_tag item[:icon] %>　<%= item[:desc] %></div>

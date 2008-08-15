@@ -33,7 +33,7 @@ class UserUid < ActiveRecord::Base
   validates_format_of :uid, :message => 'は数字orアルファベットor記号で入力してください', :with => UID_FORMAT_REGEX
 
   def validate
-    errors.add(:uid, "は#{Setting.login_account}と異なる形式で入力してください") if uid_type == UID_TYPE[:nickname] && uid =~ UID_CODE_REGEX
+    errors.add(:uid, "は#{Admin::Setting.login_account}と異なる形式で入力してください") if uid_type == UID_TYPE[:nickname] && uid =~ UID_CODE_REGEX
   end
 
   class << self
@@ -47,7 +47,7 @@ class UserUid < ActiveRecord::Base
 
   # uid入力チェック（ajaxのアクションから利用）
   def self.check_uid uid, code
-    return "#{Setting.login_account}と異なる形式で入力してください" if uid != code && uid =~ UID_CODE_REGEX
+    return "#{Admin::Setting.login_account}と異なる形式で入力してください" if uid != code && uid =~ UID_CODE_REGEX
     return "#{UID_MIN_LENGTH}文字以上入力してください" if uid and uid.length < UID_MIN_LENGTH
     return "#{UID_MAX_LENGTH}文字以内で入力してください" if uid and uid.length > UID_MAX_LENGTH
     return "英数もしくは-(ハイフン)、_(アンダーバー)のみで入力してください" unless uid =~ UID_FORMAT_REGEX

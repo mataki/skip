@@ -41,12 +41,12 @@ td, th {
   <% end %>
   </tr>
   <tr>
-    <th width="100px"><label for="user_code"><%= Setting.login_account -%></label></th>
+    <th width="100px"><label for="user_code"><%= Admin::Setting.login_account -%></label></th>
     <td><%=h session[:user_code] %></td>
   </tr>
   <tr>
     <th width="100px"><label for="user_email">メールアドレス</label></th>
-    <td><%= @user.email %><span style="margin-left: 20px;"><%= link_to "[変更する]", :action=> 'manage', :menu => 'manage_email' if !is_new && Setting.mail_function_setting %></span></td>
+    <td><%= @user.email %><span style="margin-left: 20px;"><%= link_to "[変更する]", :action=> 'manage', :menu => 'manage_email' if !is_new && Admin::Setting.mail_function_setting %></span></td>
   </tr>
   <tr>
     <th width="100px"><label for="user_name">名前</label></th>

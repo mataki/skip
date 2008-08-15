@@ -13,7 +13,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class Setting
+class Admin::Setting
   cattr_accessor :available_settings
   @@available_settings = YAML::load(File.open("#{RAILS_ROOT}/config/settings.yml"))
 
@@ -23,7 +23,7 @@ class Setting
   end
   
   # Defines getter for each setting
-  # Then setting values can be read using: Setting.some_setting_name
+  # Then setting values can be read using: Admin::Setting.some_setting_name
   @@available_settings.each do |name, params|
     src = <<-END_SRC
     def self.#{name}

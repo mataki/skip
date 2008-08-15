@@ -11,7 +11,7 @@
   <tr>
     <th>所属</th>
     <td><%= select(:condition, :section, User.select_section.insert(0, "")) -%></td>
-    <th><%= Setting.login_account -%></th>
+    <th><%= Admin::Setting.login_account -%></th>
     <td><%= text_field :condition, :code, :size => 25 %></td>
   </tr>
   <tr>

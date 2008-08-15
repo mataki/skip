@@ -50,7 +50,7 @@ class User < ActiveRecord::Base
     HUMANIZED_ATTRIBUTE_KEY_NAMES = {
       "uid" => "ニックネーム",
       "email" => "メールアドレス",
-      "code" => Setting.login_account,
+      "code" => Admin::Setting.login_account,
       "name" => "氏名",
       "section" => "部門",
       "extension" => "内線番号",
@@ -160,7 +160,7 @@ class User < ActiveRecord::Base
   end
 
   def self.get_csv_header
-    SkipUtil.get_a_row_for_csv([Setting.login_account, '名前', '所属', '内線', 'e-mail', '登録日'])
+    SkipUtil.get_a_row_for_csv([Admin::Setting.login_account, '名前', '所属', '内線', 'e-mail', '登録日'])
   end
 
   # uidかe-maiかを判断し、適切なユーザを返す

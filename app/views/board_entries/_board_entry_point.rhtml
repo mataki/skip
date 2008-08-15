@@ -4,8 +4,8 @@
 -%>
 
 <% if editable %>
-  （<%= "#{entry.point} #{Setting.point_button}" %> 頂きました）
+  （<%= "#{entry.point} #{Admin::Setting.point_button}" %> 頂きました）
 <% else %>
-  <input type="button" id="entry_point_button" value="<%= "#{entry.point} #{Setting.point_button}" -%>" />
+  <input type="button" id="entry_point_button" value="<%= "#{entry.point} #{Admin::Setting.point_button}" -%>" />
 <% end %>
 </span>

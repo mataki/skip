@@ -40,7 +40,7 @@ class PlatformController < ApplicationController
       img_files = Dir.glob(File.join(RAILS_ROOT, "public", "images", "titles", "*.{jpg,png,jpeg}"))
       @img_name = File.join("titles", File.basename(img_files[rand(img_files.size)]))
 
-      @attentions = ["#{Setting.abbr_app_title}にまだユーザ登録していません<br>プロフィール登録をしてください"] unless params[:error].blank?
+      @attentions = ["#{Admin::Setting.abbr_app_title}にまだユーザ登録していません<br>プロフィール登録をしてください"] unless params[:error].blank?
 
       @user_code, @user_name = session[:user_code], session[:user_name]
     else

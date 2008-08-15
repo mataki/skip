@@ -21,7 +21,7 @@ class UserMailer < ActionMailer::Base
     else
       @recipients = recipient
     end
-    @subject    = UserMailer.base64("[#{Setting.abbr_app_title}] #{user_name}さんから連絡がきています")
+    @subject    = UserMailer.base64("[#{Admin::Setting.abbr_app_title}] #{user_name}さんから連絡がきています")
     @from       = @@from
     @send_on    = Time.now
     @headers    = {}
@@ -30,7 +30,7 @@ class UserMailer < ActionMailer::Base
 
   def sent_message(recipient, link_url, message ,message_manage_url)
     @recipients = recipient
-    @subject    = UserMailer.base64("[#{Setting.abbr_app_title}] #{message}")
+    @subject    = UserMailer.base64("[#{Admin::Setting.abbr_app_title}] #{message}")
     @from       = @@from
     @send_on    = Time.now
     @headers    = {}
@@ -39,7 +39,7 @@ class UserMailer < ActionMailer::Base
 
   def sent_signup_confirm(recipient, confirm_url)
     @recipients = recipient
-    @subject    = UserMailer.base64("[#{Setting.abbr_app_title}] ユーザ登録の確認メールです")
+    @subject    = UserMailer.base64("[#{Admin::Setting.abbr_app_title}] ユーザ登録の確認メールです")
     @from       = @@from
     @send_on    = Time.now
     @headers    = {}
@@ -48,7 +48,7 @@ class UserMailer < ActionMailer::Base
 
   def sent_apply_email_confirm(recipient, confirm_url)
     @recipients = recipient
-    @subject    = UserMailer.base64("[#{Setting.abbr_app_title}] メールアドレス変更の確認メールです")
+    @subject    = UserMailer.base64("[#{Admin::Setting.abbr_app_title}] メールアドレス変更の確認メールです")
     @from       = @@from
     @send_on    = Time.now
     @headers    = {}
@@ -62,9 +62,9 @@ private
     return "=?#{charset}?B?#{text}?="
   end
 
-  @@site_url = Setting.contact_url
-  @@system_mail_addr = Setting.contact_addr
-  @@from = UserMailer.base64(Setting.abbr_app_title) + "<#{@@system_mail_addr}>"
+  @@site_url = Admin::Setting.contact_url
+  @@system_mail_addr = Admin::Setting.contact_addr
+  @@from = UserMailer.base64(Admin::Setting.abbr_app_title) + "<#{@@system_mail_addr}>"
   @@footer = "----\n#{@@system_mail_addr}\n#{@@site_url}"
 
 end

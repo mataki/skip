@@ -1,10 +1,10 @@
 # Mailer Setting from infro_setting
-ActionMailer::Base.delivery_method = Setting.delivery_method.to_sym
-ActionMailer::Base.raise_delivery_errors = Setting.raise_delivery_errors
+ActionMailer::Base.delivery_method = Admin::Setting.delivery_method.to_sym
+ActionMailer::Base.raise_delivery_errors = Admin::Setting.raise_delivery_errors
 ActionMailer::Base.smtp_settings = {
-  :address => Setting.smtp_settings[:address],
-  :domain => Setting.smtp_settings[:domain],
-  :port => Setting.smtp_settings[:port],
-  :user_name => Setting.smtp_settings[:user_name],
-  :password => Setting.smtp_settings[:password],
-  :authentication => Setting.smtp_settings[:authentication] }
+  :address => Admin::Setting.smtp_settings[:address],
+  :domain => Admin::Setting.smtp_settings[:domain],
+  :port => Admin::Setting.smtp_settings[:port],
+  :user_name => Admin::Setting.smtp_settings[:user_name],
+  :password => Admin::Setting.smtp_settings[:password],
+  :authentication => Admin::Setting.smtp_settings[:authentication] }

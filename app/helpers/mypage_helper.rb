@@ -35,19 +35,19 @@ module MypageHelper
     @@menus = []
     @@menus << {:name => "プロフィール変更", :menu => "manage_profile" }
     @@menus << {:name => "パスワード変更", :menu => "manage_password" } if INITIAL_SETTINGS['password_edit_setting']
-    @@menus << {:name => "メールアドレス変更", :menu => "manage_email" } if Setting.mail_function_setting
+    @@menus << {:name => "メールアドレス変更", :menu => "manage_email" } if Admin::Setting.mail_function_setting
     @@menus << {:name => "OpenID URL変更", :menu => "manage_openid" }
     @@menus << {:name => "プロフィール画像変更", :menu => "manage_portrait" }
     @@menus << {:name => "カスタマイズ", :menu => "manage_customize" }
     @@menus << {:name => "アンテナの整備", :menu => "manage_antenna" }
-    @@menus << {:name => "メール通知設定", :menu => "manage_message" } if Setting.mail_function_setting
+    @@menus << {:name => "メール通知設定", :menu => "manage_message" } if Admin::Setting.mail_function_setting
     get_menu_items @@menus, selected_menu, "manage"
   end
 
   # 履歴メニューの生成
   def get_record_menu_items selected_menu
     @@record_menus = []
-    @@record_menus << {:name => "メール送信履歴", :menu => "record_mail" } if Setting.mail_function_setting
+    @@record_menus << {:name => "メール送信履歴", :menu => "record_mail" } if Admin::Setting.mail_function_setting
     @@record_menus << {:name => "エントリ履歴", :menu => "record_post" }
 
     get_menu_items @@record_menus, selected_menu, "manage"

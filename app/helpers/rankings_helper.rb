@@ -21,7 +21,7 @@ module RankingsHelper
     when :entry_comment
       "活発に意見が交わされたブログランキングです。グループの掲示板は対象外です。"
     when :entry_he
-      "たくさん#{Setting.point_button}を押されたエントリのランキングです。グループの掲示板への投稿も含みます。"
+      "たくさん#{Admin::Setting.point_button}を押されたエントリのランキングです。グループの掲示板への投稿も含みます。"
     when :user_entry
       "個人のブログ投稿数ランキングです。(秘密日記込)"
     when :user_access
@@ -38,7 +38,7 @@ module RankingsHelper
     when :entry_comment
       "コメント"
     when :entry_he
-      "#{Setting.point_button!}"
+      "#{Admin::Setting.point_button!}"
     when :user_entry
       "投稿"
     when :user_access

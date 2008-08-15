@@ -89,13 +89,13 @@ class MypageController < ApplicationController
 
   def load_rss_feed
     feeds = []
-    Setting.mypage_feed_settings.each do |setting|
+    Admin::Setting.mypage_feed_settings.each do |setting|
       feed = nil
-      timeout(Setting.mypage_feed_timeout) do
+      timeout(Admin::Setting.mypage_feed_timeout) do
         feed = open(setting[:url], :proxy => INITIAL_SETTINGS['proxy_url']){ |f| RSS::Parser.parse(f.read) }
       end
       feed.channel.title = setting[:title] if setting[:title]
-      limit = (setting[:limit]||Setting.mypage_feed_default_limit)
+      limit = (setting[:limit]||Admin::Setting.mypage_feed_default_limit)
       feed.items.slice!(limit..-1) if feed.items.size > limit
       feeds << feed
     end

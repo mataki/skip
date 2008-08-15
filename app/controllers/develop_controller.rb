@@ -21,7 +21,7 @@ class DevelopController < ApplicationController
          :redirect_to => { :action => :index }
 
   def index
-    unless @group = Group.find_by_gid(Setting.develop_team_gid)
+    unless @group = Group.find_by_gid(Admin::Setting.develop_team_gid)
       flash[:warning] = "関係者用グループが存在していません"
       redirect_to :controller => "mypage"
       return
@@ -126,7 +126,7 @@ class DevelopController < ApplicationController
       return
     end
 
-    develop_temp_symbol = "gid:" + Setting.develop_team_gid
+    develop_temp_symbol = "gid:" + Admin::Setting.develop_team_gid
     entry_params = { }
     entry_params[:non_auto] = true
     entry_params[:title] = params[:entry][:title]
@@ -159,7 +159,7 @@ private
     @main_menu = @title = 'サイト情報'
 
     @tab_menu_source = [ ['リリースノート', 'index'],
-                         ["数字で見る#{Setting.abbr_app_title}", 'statistics' ] ]
+                         ["数字で見る#{Admin::Setting.abbr_app_title}", 'statistics' ] ]
   end
 
   def get_site_count_hash_by_day date

@@ -73,7 +73,7 @@ div.input_line div.input_bottom {
     <div class="topix_body" style="margin-top: 5px; width: 95%; overflow: hidden">
 
       <div class="input_line">
-        <div class="input_label">ID - <%= Setting.login_account -%></div>
+        <div class="input_label">ID - <%= Admin::Setting.login_account -%></div>
         <div class="input_value"><%=h @user.uid -%> - <%=h @user.code -%></div>
         <div class="input_bottom"></div>
       </div>
