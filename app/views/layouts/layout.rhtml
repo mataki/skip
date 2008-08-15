@@ -61,7 +61,8 @@ Event.observe(window, 'load', function() {
 
 <div id="top">
   <div id="menu_btn">
-<% MENU_BTNS.each do |btn| -%>
+<% menus = @current_user.admin ? MENU_BTNS + ADMIN_MENU_BTNS : MENU_BTNS -%>
+<% menus.each do |btn| -%>
 <%= btn[:separator] ? "| " : link_to(icon_tag(btn[:img_name], {:alt=>btn[:name], :title=>btn[:name]}), btn[:url]) -%>
 <% end -%>
   </div>
@@ -76,7 +77,7 @@ Event.observe(window, 'load', function() {
 
 <div id="side">
   <ul id="main_menu">
-<% MENU_BTNS.each do |btn| -%>
+<% menus.each do |btn| -%>
   <% if btn[:separator] -%>
   <li class="separator"><%= btn[:name] -%></li>
   <% elsif @main_menu == btn[:name] -%>

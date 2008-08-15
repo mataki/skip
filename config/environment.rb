@@ -82,6 +82,13 @@ menu_btns = [
 ]
 MENU_BTNS = menu_btns
 
+admin_menu_btns = [
+  { :separator => true, :name => "[管理メニュー]"},
+
+  { :img_name => "database_gear",         :id => "btn_admin", :name => "SNSの管理", :url => {:controller => '/admin', :action => 'index'} },
+]
+ADMIN_MENU_BTNS = admin_menu_btns
+
 # 共通メニュー
 COMMON_MENUS = YAML::load(File.open(File.join(RAILS_ROOT, 'config', 'common_menus.yml')))
 COMMON_MENUS[:main_menus] = [] unless COMMON_MENUS[:main_menus]
