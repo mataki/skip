@@ -80,6 +80,8 @@ stop_new_user:
 # feed設定
 mypage_feed_default_limit:         # マイページで表示するRSSフィードの設定(デフォルトの1フィードあたりの最大表示件数)
   default: 3
+mypage_feed_timeout:       # マイページで表示するRSSフィードのタイムアウト(秒)
+  default: 7
 # フィードの設定
 # url:   フィードのURL
 # title: フィードのタイトル(フィード内のタイトル以外のものを設定したい場合)

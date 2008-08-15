@@ -15,6 +15,8 @@
 
 require 'jcode'
 require 'open-uri'
+require "resolv-replace"
+require 'timeout'
 require 'rss'
 class MypageController < ApplicationController
   before_filter :setup_layout
@@ -88,13 +90,19 @@ class MypageController < ApplicationController
   def load_rss_feed
     feeds = []
     Setting.mypage_feed_settings.each do |setting|
-      feed = open(setting[:url], :proxy => INITIAL_SETTINGS['proxy_url']){ |f| RSS::Parser.parse(f.read) }
+      feed = nil
+      timeout(Setting.mypage_feed_timeout) do
+        feed = open(setting[:url], :proxy => INITIAL_SETTINGS['proxy_url']){ |f| RSS::Parser.parse(f.read) }
+      end
       feed.channel.title = setting[:title] if setting[:title]
       limit = (setting[:limit]||Setting.mypage_feed_default_limit)
       feed.items.slice!(limit..-1) if feed.items.size > limit
       feeds << feed
     end
     render :partial => "rss_feed", :locals => { :feeds => feeds }
+  rescue TimeoutError
+    render :text => "RSSの読み込みがタイムアウトしました。"
+    return false
   rescue Exception => e
     logger.error e
     e.backtrace.each { |line| logger.error line}
