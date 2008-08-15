@@ -84,6 +84,8 @@ MENU_BTNS = menu_btns
 
 # 共通メニュー
 COMMON_MENUS = YAML::load(File.open(File.join(RAILS_ROOT, 'config', 'common_menus.yml')))
+COMMON_MENUS[:main_menus] = [] unless COMMON_MENUS[:main_menus]
+COMMON_MENUS[:block_menus] = [] unless COMMON_MENUS[:block_menus]
 
 # 祝日マスタ
 HOLIDAYS = YAML::load(File.open(File.join(RAILS_ROOT, 'config', 'holiday.yml')))
