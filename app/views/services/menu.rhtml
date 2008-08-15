@@ -14,7 +14,7 @@ function openLinkMenu(link_id) {
 };
 
 function closeLinkMenu() {
-<% Setting.block_menus.each do |block_menu| %>
+<% COMMON_MENUS[:block_menus].each do |block_menu| %>
   document.getElementById('<%= block_menu[:id] -%>').style.display = 'none';
 <% end %>
 };
