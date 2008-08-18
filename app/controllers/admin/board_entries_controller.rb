@@ -13,7 +13,6 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class Admin::BoardEntriesController < ApplicationController
+class Admin::BoardEntriesController < Admin::ApplicationController
   include AdminModule::AdminRootModule
-  before_filter :require_admin
 end

@@ -1,3 +1,5 @@
+<%= render :partial => '/admin/contents_left' %>
+<% content_for :contents_right do -%>
 <h1><%= _('Editing group_participation') %></h1>
 
 <% form_for(@group_participation, :url => admin_group_group_participation_path(@group, @group_participation)) do |f| %>
@@ -26,3 +28,4 @@
 
 <%= link_to _('Show'), admin_group_group_participation_path(@group, @group_participation) %> |
 <%= link_to _('Back'), admin_group_group_participations_path(@group) %>
+<% end -%>

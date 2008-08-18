@@ -1,3 +1,5 @@
+<%= render :partial => '/admin/contents_left' %>
+<% content_for :contents_right do -%>
 <h1>Editing board_entry</h1>
 
 <% form_for(@board_entry) do |f| %>
@@ -22,3 +24,4 @@
 
 <%= link_to 'Show', @board_entry %> |
 <%= link_to 'Back', admin_board_entries_path %>
+<% end -%>

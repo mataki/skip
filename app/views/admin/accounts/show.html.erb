@@ -1,3 +1,5 @@
+<%= render :partial => '/admin/contents_left' %>
+<% content_for :contents_right do -%>
 <p>
   <b><%= _('Code') %>:</b>
   <%=h @account.code %>
@@ -22,3 +24,4 @@
 <%= link_to _('Edit'), edit_admin_account_path(@account) %> |
 <%= link_to _('Back'), admin_accounts_path %> |
 <%= link_to _('OpenidIdentifier List'), admin_account_openid_identifiers_url(@account) %>
+<% end -%>

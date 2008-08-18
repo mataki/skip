@@ -13,8 +13,8 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class Admin::BoardEntryCommentsController < ApplicationController
-  before_filter :require_admin, :load_parent
+class Admin::BoardEntryCommentsController < Admin::ApplicationController
+  before_filter :load_parent
   include AdminModule::AdminChildModule
 
   private

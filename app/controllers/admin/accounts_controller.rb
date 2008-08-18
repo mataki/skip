@@ -13,7 +13,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class Admin::AccountsController < ApplicationController
+class Admin::AccountsController < Admin::ApplicationController
+  layout 'admin/application'
   include AdminModule::AdminRootModule
-  before_filter :require_admin
 end

@@ -1,3 +1,5 @@
+<%= render :partial => '/admin/contents_left' %>
+<% content_for :contents_right do -%>
 <p>
   <b><%= _('Waiting') %>:</b>
   <%=h @group_participation.waiting %>
@@ -21,3 +23,4 @@
 
 <%= link_to _('Edit'), edit_admin_group_group_participation_path(@group, @group_participation) %> |
 <%= link_to _('Back'), admin_group_group_participations_path(@group) %>
+<% end -%>

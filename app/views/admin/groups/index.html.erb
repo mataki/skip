@@ -1,3 +1,5 @@
+<%= render :partial => '/admin/contents_left' %>
+<% content_for :contents_right do -%>
 <h1>Listing groups</h1>
 
 <table>
@@ -26,3 +28,4 @@
 <br />
 
 <%= link_to _('New group'), new_admin_group_path %>
+<% end -%>

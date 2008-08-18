@@ -1,3 +1,5 @@
+<%= render :partial => '/admin/contents_left' %>
+<% content_for :contents_right do -%>
 <h1>New bookmark_comment</h1>
 
 <% form_for(@bookmark_comment, :url => admin_bookmark_bookmark_comments_path(@bookmark)) do |f| %>
@@ -25,3 +27,4 @@
 <% end %>
 
 <%= link_to 'Back', admin_bookmark_bookmark_comments_path(@bookmark) %>
+<% end -%>

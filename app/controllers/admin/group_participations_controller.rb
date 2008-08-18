@@ -13,12 +13,11 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class Admin::GroupParticipationsController < ApplicationController
-  before_filter :load_parent, :require_admin
+class Admin::GroupParticipationsController < Admin::ApplicationController
+  before_filter :load_parent
   include AdminModule::AdminChildModule
 
   private
-
   def load_parent
     @group ||= Admin::Group.find(params[:group_id])
   end
@@ -26,5 +25,4 @@ class Admin::GroupParticipationsController < ApplicationController
   def url_prefix
     'admin_group_'
   end
-
 end

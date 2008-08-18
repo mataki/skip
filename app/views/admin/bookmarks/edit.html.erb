@@ -1,3 +1,5 @@
+<%= render :partial => '/admin/contents_left' %>
+<% content_for :contents_right do -%>
 <h1>Editing bookmark</h1>
 
 <% form_for(@bookmark) do |f| %>
@@ -18,3 +20,4 @@
 
 <%= link_to 'Show', admin_bookmark_path(@bookmark) %> |
 <%= link_to 'Back', admin_bookmarks_path %>
+<% end -%>

@@ -1,3 +1,5 @@
+<%= render :partial => '/admin/contents_left' %>
+<% content_for :contents_right do -%>
 <h1>Editing account</h1>
 
 <% form_for(@account) do |f| %>
@@ -26,3 +28,4 @@
 
 <%= link_to _('Show'), @account %> |
 <%= link_to _('Back'), admin_accounts_path %>
+<% end -%>

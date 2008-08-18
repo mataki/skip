@@ -1,3 +1,5 @@
+<%= render :partial => '/admin/contents_left' %>
+<% content_for :contents_right do -%>
 <h1>Editing share_file</h1>
 
 <% form_for(@share_file) do |f| %>
@@ -10,3 +12,4 @@
 
 <%= link_to 'Show', @share_file %> |
 <%= link_to 'Back', admin_share_files_path %>
+<% end -%>

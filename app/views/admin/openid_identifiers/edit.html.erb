@@ -1,3 +1,5 @@
+<%= render :partial => '/admin/contents_left' %>
+<% content_for :contents_right do -%>
 <h1>Editing openid_identifier</h1>
 
 <% form_for(@openid_identifier, :url => admin_account_openid_identifier_url(@account, @openid_identifier), :method => :put) do |f| %>
@@ -14,3 +16,4 @@
 
 <%= link_to 'Show', admin_account_openid_identifier_url(@account, @openid_identifier) %> |
 <%= link_to 'Back', admin_account_openid_identifiers_path(@account) %>
+<% end -%>

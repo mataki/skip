@@ -1,3 +1,5 @@
+<%= render :partial => '/admin/contents_left' %>
+<% content_for :contents_right do -%>
 <p>
   <b>Comment:</b>
   <%=h @bookmark_comment.comment %>
@@ -21,3 +23,4 @@
 
 <%= link_to 'Edit', edit_admin_bookmark_bookmark_comment_path(@bookmark, @bookmark_comment) %> |
 <%= link_to 'Back', admin_bookmark_bookmark_comments_path(@bookmark) %>
+<% end -%>
