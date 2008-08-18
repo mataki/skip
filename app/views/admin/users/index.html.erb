@@ -1,16 +1,12 @@
 <%= render :partial => '/admin/contents_left' %>
 <% content_for :contents_right do -%>
-<h1>Listing users</h1>
+<h1><%= _('Listing %{model}') % {:model => _('user')} %></h1>
 
 <table>
   <tr>
-    <th>Email</th>
-    <th>Name</th>
-    <th>Section</th>
-    <th>Extension</th>
-    <th>Introduction</th>
-    <th>Retired</th>
-    <th>Admin</th>
+    <% %w[Email Name Section Extension Introduction Retired Admin].each do |column| -%>
+    <th><%= _("Admin user|#{column}") %></th>
+    <% end -%>
   </tr>
 
 <% for user in @users %>
@@ -19,17 +15,17 @@
     <td><%=h user.name %></td>
     <td><%=h user.section %></td>
     <td><%=h user.extension %></td>
-    <td><%=h user.introduction %></td>
+    <td><%=h user.introduction  %></td>
     <td><%=h user.retired %></td>
     <td><%=h user.admin %></td>
-    <td><%= link_to 'Show', admin_user_path(user) %></td>
-    <td><%= link_to 'Edit', edit_admin_user_path(user) %></td>
-    <td><%= link_to 'Destroy', admin_user_path(user), :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to _('Show'), admin_user_path(user) %></td>
+    <td><%= link_to _('Edit'), edit_admin_user_path(user) %></td>
+    <td><%= link_to _('Destroy'), admin_user_path(user), :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New user', new_admin_user_path %>
+<%= link_to _('New %{model}') % {:model => _('user')}, new_admin_user_path %>
 <% end -%>

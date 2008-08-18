@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-08-12 11:35+0900\n"
+"POT-Creation-Date: 2008-08-18 17:18+0900\n"
 "PO-Revision-Date: 2008-08-11 18:58+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,6 +15,385 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: app/helpers/admin/application_helper.rb:20
+msgid "データ管理"
+msgstr ""
+
+#: app/helpers/admin/application_helper.rb:27 app/models/account.rb:-
+#: app/views/admin/accounts/index.html.erb:3
+#: app/views/admin/accounts/index.html.erb:27
+msgid "account"
+msgstr "アカウント"
+
+#: app/helpers/admin/application_helper.rb:28 app/models/user.rb:-
+#: app/views/admin/users/index.html.erb:3
+msgid "user"
+msgstr "ユーザー"
+
+#: app/helpers/admin/application_helper.rb:29 app/models/bookmark.rb:-
+msgid "bookmark"
+msgstr "ブックマーク"
+
+#: app/helpers/admin/application_helper.rb:30 app/models/board_entry.rb:-
+msgid "board entry"
+msgstr "エントリ"
+
+#: app/helpers/admin/application_helper.rb:31 app/models/share_file.rb:-
+msgid "share file"
+msgstr "共有ファイル"
+
+#: app/helpers/admin/application_helper.rb:32 app/models/group.rb:-
+msgid "group"
+msgstr "グループ"
+
+#: app/models/site_count.rb:-
+msgid "site count"
+msgstr ""
+
+#: app/models/site_count.rb:-
+msgid "SiteCount|Created on"
+msgstr ""
+
+#: app/models/site_count.rb:-
+msgid "SiteCount|Total user count"
+msgstr ""
+
+#: app/models/site_count.rb:-
+msgid "SiteCount|Today user count"
+msgstr ""
+
+#: app/models/site_count.rb:-
+msgid "SiteCount|Total blog count"
+msgstr ""
+
+#: app/models/site_count.rb:-
+msgid "SiteCount|Today blog count"
+msgstr ""
+
+#: app/models/site_count.rb:-
+msgid "SiteCount|Writer at month"
+msgstr ""
+
+#: app/models/site_count.rb:-
+msgid "SiteCount|User access at month"
+msgstr ""
+
+#: app/models/site_count.rb:-
+msgid "SiteCount|Write users all"
+msgstr ""
+
+#: app/models/site_count.rb:-
+msgid "SiteCount|Write users with pvt"
+msgstr ""
+
+#: app/models/site_count.rb:-
+msgid "SiteCount|Write users with bbs"
+msgstr ""
+
+#: app/models/site_count.rb:-
+msgid "SiteCount|Comment users"
+msgstr ""
+
+#: app/models/site_count.rb:-
+msgid "SiteCount|Portrait users"
+msgstr ""
+
+#: app/models/site_count.rb:-
+msgid "SiteCount|Profile users"
+msgstr ""
+
+#: app/models/site_count.rb:-
+msgid "SiteCount|Custom users"
+msgstr ""
+
+#: app/models/site_count.rb:-
+msgid "SiteCount|Active users"
+msgstr ""
+
+#: app/models/popular_bookmark.rb:-
+msgid "popular bookmark"
+msgstr ""
+
+#: app/models/popular_bookmark.rb:-
+msgid "PopularBookmark|Created on"
+msgstr ""
+
+#: app/models/popular_bookmark.rb:-
+msgid "PopularBookmark|Date"
+msgstr ""
+
+#: app/models/popular_bookmark.rb:-
+msgid "PopularBookmark|Bookmark"
+msgstr ""
+
+#: app/models/popular_bookmark.rb:-
+msgid "PopularBookmark|Count"
+msgstr ""
+
+#: app/models/board_entry_point.rb:-
+msgid "board entry point"
+msgstr ""
+
+#: app/models/board_entry_point.rb:-
+msgid "BoardEntryPoint|Created on"
+msgstr ""
+
+#: app/models/board_entry_point.rb:-
+msgid "BoardEntryPoint|Updated on"
+msgstr ""
+
+#: app/models/board_entry_point.rb:-
+msgid "BoardEntryPoint|Board entry"
+msgstr ""
+
+#: app/models/board_entry_point.rb:-
+msgid "BoardEntryPoint|Point"
+msgstr ""
+
+#: app/models/board_entry_point.rb:-
+msgid "BoardEntryPoint|Access count"
+msgstr ""
+
+#: app/models/board_entry_point.rb:-
+msgid "BoardEntryPoint|Today access count"
+msgstr ""
+
+#: app/models/entry_trackback.rb:-
+msgid "entry trackback"
+msgstr ""
+
+#: app/models/entry_trackback.rb:-
+msgid "EntryTrackback|Updated on"
+msgstr ""
+
+#: app/models/entry_trackback.rb:-
+msgid "EntryTrackback|トラックバック先の投稿"
+msgstr ""
+
+#: app/models/entry_trackback.rb:-
+msgid "EntryTrackback|トラックバック元の投稿"
+msgstr ""
+
+#: app/models/track.rb:-
+msgid "track"
+msgstr ""
+
+#: app/models/track.rb:-
+msgid "Track|Created on"
+msgstr ""
+
+#: app/models/track.rb:-
+msgid "Track|Updated on"
+msgstr ""
+
+#: app/models/track.rb:-
+msgid "Track|User"
+msgstr ""
+
+#: app/models/track.rb:-
+msgid "Track|Visitor"
+msgstr ""
+
+#: app/models/user_uid.rb:-
+msgid "user uid"
+msgstr ""
+
+#: app/models/user_uid.rb:-
+msgid "UserUid|User"
+msgstr ""
+
+#: app/models/user_uid.rb:-
+msgid "UserUid|ニックネーム"
+msgstr ""
+
+#: app/models/user_uid.rb:-
+msgid "UserUid|Uid type"
+msgstr ""
+
+#: app/models/bookmark.rb:-
+msgid "Bookmark|Created on"
+msgstr ""
+
+#: app/models/bookmark.rb:-
+msgid "Bookmark|Updated on"
+msgstr ""
+
+#: app/models/bookmark.rb:-
+msgid "Bookmark|URL"
+msgstr ""
+
+#: app/models/bookmark.rb:-
+msgid "Bookmark|タイトル"
+msgstr ""
+
+#: app/models/bookmark.rb:-
+msgid "Bookmark|Bookmark comments count"
+msgstr ""
+
+#: app/models/entry_editor.rb:-
+msgid "entry editor"
+msgstr ""
+
+#: app/models/entry_editor.rb:-
+msgid "EntryEditor|Board entry"
+msgstr ""
+
+#: app/models/entry_editor.rb:-
+msgid "EntryEditor|Symbol"
+msgstr ""
+
+#: app/models/entry_tag.rb:-
+msgid "entry tag"
+msgstr ""
+
+#: app/models/entry_tag.rb:-
+msgid "EntryTag|Created on"
+msgstr ""
+
+#: app/models/entry_tag.rb:-
+msgid "EntryTag|Board entry"
+msgstr ""
+
+#: app/models/entry_tag.rb:-
+msgid "EntryTag|Tag"
+msgstr ""
+
+#: app/models/user_message_unsubscribe.rb:-
+msgid "user message unsubscribe"
+msgstr ""
+
+#: app/models/user_message_unsubscribe.rb:-
+msgid "UserMessageUnsubscribe|User"
+msgstr ""
+
+#: app/models/user_message_unsubscribe.rb:-
+msgid "UserMessageUnsubscribe|Message type"
+msgstr ""
+
+#: app/models/antenna_item.rb:-
+msgid "antenna item"
+msgstr ""
+
+#: app/models/antenna_item.rb:-
+msgid "AntennaItem|Antenna"
+msgstr ""
+
+#: app/models/antenna_item.rb:-
+msgid "AntennaItem|Value type"
+msgstr ""
+
+#: app/models/antenna_item.rb:-
+msgid "AntennaItem|"
+msgstr ""
+
+#: app/models/user_reading.rb:-
+msgid "user reading"
+msgstr ""
+
+#: app/models/user_reading.rb:-
+msgid "UserReading|User"
+msgstr ""
+
+#: app/models/user_reading.rb:-
+msgid "UserReading|Board entry"
+msgstr ""
+
+#: app/models/user_reading.rb:-
+msgid "UserReading|Read"
+msgstr ""
+
+#: app/models/user_reading.rb:-
+msgid "UserReading|Checked on"
+msgstr ""
+
+#: app/models/ranking.rb:-
+msgid "ranking"
+msgstr ""
+
+#: app/models/ranking.rb:-
+msgid "Ranking|Url"
+msgstr ""
+
+#: app/models/ranking.rb:-
+msgid "Ranking|Title"
+msgstr ""
+
+#: app/models/ranking.rb:-
+msgid "Ranking|Author"
+msgstr ""
+
+#: app/models/ranking.rb:-
+msgid "Ranking|Author url"
+msgstr ""
+
+#: app/models/ranking.rb:-
+msgid "Ranking|Extracted on"
+msgstr ""
+
+#: app/models/ranking.rb:-
+msgid "Ranking|Amount"
+msgstr ""
+
+#: app/models/ranking.rb:-
+msgid "Ranking|Contents type"
+msgstr ""
+
+#: app/models/ranking.rb:-
+msgid "Ranking|Created at"
+msgstr ""
+
+#: app/models/ranking.rb:-
+msgid "Ranking|Updated at"
+msgstr ""
+
+#: app/models/entry_publication.rb:-
+msgid "entry publication"
+msgstr ""
+
+#: app/models/entry_publication.rb:-
+msgid "EntryPublication|Board entry"
+msgstr ""
+
+#: app/models/entry_publication.rb:-
+msgid "EntryPublication|Symbol"
+msgstr ""
+
+#: app/models/user.rb:-
+msgid "User|Created on"
+msgstr ""
+
+#: app/models/user.rb:-
+msgid "User|Updated on"
+msgstr ""
+
+#: app/models/user.rb:-
+msgid "User|メールアドレス"
+msgstr ""
+
+#: app/models/user.rb:-
+msgid "User|氏名"
+msgstr ""
+
+#: app/models/user.rb:-
+msgid "User|部門"
+msgstr ""
+
+#: app/models/user.rb:-
+msgid "User|内線番号"
+msgstr ""
+
+#: app/models/user.rb:-
+msgid "User|自己紹介"
+msgstr ""
+
+#: app/models/user.rb:-
+msgid "User|Retired"
+msgstr ""
+
+#: app/models/user.rb:-
+msgid "User|Admin"
+msgstr ""
 
 #: app/models/bookmark_comment.rb:-
 msgid "bookmark comment"
@@ -52,174 +431,6 @@ msgstr ""
 msgid "BookmarkComment|Stared"
 msgstr ""
 
-#: app/models/chain.rb:-
-msgid "chain"
-msgstr ""
-
-#: app/models/chain.rb:-
-msgid "Chain|Created on"
-msgstr ""
-
-#: app/models/chain.rb:-
-msgid "Chain|Updated on"
-msgstr ""
-
-#: app/models/chain.rb:-
-msgid "Chain|From user"
-msgstr ""
-
-#: app/models/chain.rb:-
-msgid "Chain|To user"
-msgstr ""
-
-#: app/models/chain.rb:-
-msgid "Chain|紹介文"
-msgstr ""
-
-#: app/models/entry_trackback.rb:-
-msgid "entry trackback"
-msgstr ""
-
-#: app/models/entry_trackback.rb:-
-msgid "EntryTrackback|Updated on"
-msgstr ""
-
-#: app/models/entry_trackback.rb:-
-msgid "EntryTrackback|トラックバック先の投稿"
-msgstr ""
-
-#: app/models/entry_trackback.rb:-
-msgid "EntryTrackback|トラックバック元の投稿"
-msgstr ""
-
-#: app/models/admin/share_file.rb:2
-msgid "Admin share_file|FileName"
-msgstr ""
-
-#: app/models/admin/share_file.rb:3
-msgid "Admin share_file|OwnerSymbol"
-msgstr ""
-
-#: app/models/admin/share_file.rb:4
-msgid "Admin share_file|Description"
-msgstr ""
-
-#: app/models/admin/share_file.rb:5
-msgid "Admin share_file|Date"
-msgstr ""
-
-#: app/models/admin/share_file.rb:6
-msgid "Admin share_file|User"
-msgstr ""
-
-#: app/models/admin/share_file.rb:7
-msgid "Admin share_file|Category"
-msgstr ""
-
-#: app/models/admin/share_file.rb:8
-msgid "Admin share_file|TotalCount"
-msgstr ""
-
-#: app/models/admin/share_file.rb:9
-msgid "Admin share_file|ContentType"
-msgstr ""
-
-#: app/models/admin/share_file.rb:10
-msgid "Admin share_file|PublicationType"
-msgstr ""
-
-#: app/models/admin/share_file.rb:11
-msgid "Admin share_file|PublicationSymbolsType"
-msgstr ""
-
-#: app/models/admin/account.rb:2
-msgid "Admin account|Code"
-msgstr "ログインID"
-
-#: app/models/admin/account.rb:3
-msgid "Admin account|Name"
-msgstr "氏名"
-
-#: app/models/admin/account.rb:4
-msgid "Admin account|Email"
-msgstr "メールアドレス"
-
-#: app/models/admin/account.rb:5
-msgid "Admin account|Section"
-msgstr "部署"
-
-#: app/models/admin/account.rb:6
-msgid "Admin account|Password"
-msgstr "パスワード"
-
-#: app/models/admin/account.rb:7
-msgid "Admin account|Password confirmation"
-msgstr "確認パスワード"
-
-#: app/models/bookmark_comment_tag.rb:-
-msgid "bookmark comment tag"
-msgstr ""
-
-#: app/models/bookmark_comment_tag.rb:-
-msgid "BookmarkCommentTag|Created on"
-msgstr ""
-
-#: app/models/bookmark_comment_tag.rb:-
-msgid "BookmarkCommentTag|Bookmark comment"
-msgstr ""
-
-#: app/models/bookmark_comment_tag.rb:-
-msgid "BookmarkCommentTag|Tag"
-msgstr ""
-
-#: app/models/entry_editor.rb:-
-msgid "entry editor"
-msgstr ""
-
-#: app/models/entry_editor.rb:-
-msgid "EntryEditor|Board entry"
-msgstr ""
-
-#: app/models/entry_editor.rb:-
-msgid "EntryEditor|Symbol"
-msgstr ""
-
-#: app/models/tag.rb:-
-msgid "tag"
-msgstr "タグ"
-
-#: app/models/tag.rb:-
-msgid "Tag|Created on"
-msgstr "作成日時"
-
-#: app/models/tag.rb:-
-msgid "Tag|Updated on"
-msgstr "更新日時"
-
-#: app/models/tag.rb:-
-msgid "Tag|Name"
-msgstr "タグ"
-
-#: app/models/tag.rb:-
-msgid "Tag|Tag type"
-msgstr "タグタイプ"
-
-#: app/models/share_file_access.rb:-
-msgid "share file access"
-msgstr ""
-
-#: app/models/share_file_access.rb:-
-msgid "ShareFileAccess|Share file"
-msgstr ""
-
-#: app/models/share_file_access.rb:-
-msgid "ShareFileAccess|User"
-msgstr ""
-
-#: app/models/share_file_access.rb:-
-msgid "ShareFileAccess|Created at"
-msgstr ""
-
 #: app/models/board_entry_comment.rb:-
 msgid "board entry comment"
 msgstr ""
@@ -248,8 +459,348 @@ msgstr ""
 msgid "BoardEntryComment|Parent"
 msgstr ""
 
-#: app/models/board_entry.rb:-
-msgid "board entry"
+#: app/models/entry_access.rb:-
+msgid "entry access"
+msgstr ""
+
+#: app/models/entry_access.rb:-
+msgid "EntryAccess|Board entry"
+msgstr ""
+
+#: app/models/entry_access.rb:-
+msgid "EntryAccess|Visitor"
+msgstr ""
+
+#: app/models/entry_access.rb:-
+msgid "EntryAccess|Updated on"
+msgstr ""
+
+#: app/models/share_file_publication.rb:-
+msgid "share file publication"
+msgstr ""
+
+#: app/models/share_file_publication.rb:-
+msgid "ShareFilePublication|Share file"
+msgstr ""
+
+#: app/models/share_file_publication.rb:-
+msgid "ShareFilePublication|Symbol"
+msgstr ""
+
+#: app/models/share_file_access.rb:-
+msgid "share file access"
+msgstr ""
+
+#: app/models/share_file_access.rb:-
+msgid "ShareFileAccess|Share file"
+msgstr ""
+
+#: app/models/share_file_access.rb:-
+msgid "ShareFileAccess|User"
+msgstr ""
+
+#: app/models/share_file_access.rb:-
+msgid "ShareFileAccess|Created at"
+msgstr ""
+
+#: app/models/mail.rb:-
+msgid "mail"
+msgstr ""
+
+#: app/models/mail.rb:-
+msgid "Mail|Created on"
+msgstr ""
+
+#: app/models/mail.rb:-
+msgid "Mail|Updated on"
+msgstr ""
+
+#: app/models/mail.rb:-
+msgid "Mail|From user"
+msgstr ""
+
+#: app/models/mail.rb:-
+msgid "Mail|User entry no"
+msgstr ""
+
+#: app/models/mail.rb:-
+msgid "Mail|To address"
+msgstr ""
+
+#: app/models/mail.rb:-
+msgid "Mail|Send flag"
+msgstr ""
+
+#: app/models/mail.rb:-
+msgid "Mail|Title"
+msgstr ""
+
+#: app/models/mail.rb:-
+msgid "Mail|To address name"
+msgstr ""
+
+#: app/models/mail.rb:-
+msgid "Mail|To address symbol"
+msgstr ""
+
+#: app/models/message.rb:-
+msgid "message"
+msgstr ""
+
+#: app/models/message.rb:-
+msgid "Message|Created on"
+msgstr ""
+
+#: app/models/message.rb:-
+msgid "Message|User"
+msgstr ""
+
+#: app/models/message.rb:-
+msgid "Message|Link url"
+msgstr ""
+
+#: app/models/message.rb:-
+msgid "Message|Message"
+msgstr ""
+
+#: app/models/message.rb:-
+msgid "Message|Message type"
+msgstr ""
+
+#: app/models/message.rb:-
+msgid "Message|Send flag"
+msgstr ""
+
+#: app/models/user_profile.rb:-
+msgid "user profile"
+msgstr ""
+
+#: app/models/user_profile.rb:-
+msgid "UserProfile|User"
+msgstr ""
+
+#: app/models/user_profile.rb:-
+msgid "UserProfile|Gender type"
+msgstr ""
+
+#: app/models/user_profile.rb:-
+msgid "UserProfile|Join year"
+msgstr ""
+
+#: app/models/user_profile.rb:-
+msgid "UserProfile|Birth month"
+msgstr ""
+
+#: app/models/user_profile.rb:-
+msgid "UserProfile|Birth day"
+msgstr ""
+
+#: app/models/user_profile.rb:-
+msgid "UserProfile|Blood type"
+msgstr ""
+
+#: app/models/user_profile.rb:-
+msgid "UserProfile|Hometown"
+msgstr ""
+
+#: app/models/user_profile.rb:-
+msgid "UserProfile|出身校"
+msgstr ""
+
+#: app/models/user_profile.rb:-
+msgid "UserProfile|Address 1"
+msgstr ""
+
+#: app/models/user_profile.rb:-
+msgid "UserProfile|現住所２"
+msgstr ""
+
+#: app/models/user_profile.rb:-
+msgid "UserProfile|Hobby"
+msgstr ""
+
+#: app/models/user_profile.rb:-
+msgid "UserProfile|Introduction"
+msgstr ""
+
+#: app/models/user_profile.rb:-
+msgid "UserProfile|Disclosure"
+msgstr ""
+
+#: app/models/tag.rb:-
+msgid "tag"
+msgstr "タグ"
+
+#: app/models/tag.rb:-
+msgid "Tag|Created on"
+msgstr "作成日時"
+
+#: app/models/tag.rb:-
+msgid "Tag|Updated on"
+msgstr "更新日時"
+
+#: app/models/tag.rb:-
+msgid "Tag|Name"
+msgstr "タグ"
+
+#: app/models/tag.rb:-
+msgid "Tag|Tag type"
+msgstr "タグタイプ"
+
+#: app/models/group_participation.rb:-
+msgid "group participation"
+msgstr ""
+
+#: app/models/group_participation.rb:-
+msgid "GroupParticipation|Created on"
+msgstr ""
+
+#: app/models/group_participation.rb:-
+msgid "GroupParticipation|Updated on"
+msgstr ""
+
+#: app/models/group_participation.rb:-
+msgid "GroupParticipation|User"
+msgstr ""
+
+#: app/models/group_participation.rb:-
+msgid "GroupParticipation|Group"
+msgstr ""
+
+#: app/models/group_participation.rb:-
+msgid "GroupParticipation|Waiting"
+msgstr ""
+
+#: app/models/group_participation.rb:-
+msgid "GroupParticipation|Owned"
+msgstr ""
+
+#: app/models/group_participation.rb:-
+msgid "GroupParticipation|Favorite"
+msgstr ""
+
+#: app/models/bookmark_comment_tag.rb:-
+msgid "bookmark comment tag"
+msgstr ""
+
+#: app/models/bookmark_comment_tag.rb:-
+msgid "BookmarkCommentTag|Created on"
+msgstr ""
+
+#: app/models/bookmark_comment_tag.rb:-
+msgid "BookmarkCommentTag|Bookmark comment"
+msgstr ""
+
+#: app/models/bookmark_comment_tag.rb:-
+msgid "BookmarkCommentTag|Tag"
+msgstr ""
+
+#: app/models/user_custom.rb:-
+msgid "user custom"
+msgstr ""
+
+#: app/models/user_custom.rb:-
+msgid "UserCustom|User"
+msgstr ""
+
+#: app/models/user_custom.rb:-
+msgid "UserCustom|Theme"
+msgstr ""
+
+#: app/models/group.rb:-
+msgid "Group|Created on"
+msgstr ""
+
+#: app/models/group.rb:-
+msgid "Group|Updated on"
+msgstr ""
+
+#: app/models/group.rb:-
+msgid "Group|名前"
+msgstr ""
+
+#: app/models/group.rb:-
+msgid "Group|説明"
+msgstr ""
+
+#: app/models/group.rb:-
+msgid "Group|Protected"
+msgstr ""
+
+#: app/models/group.rb:-
+msgid "Group|グループID"
+msgstr ""
+
+#: app/models/group.rb:-
+msgid "Group|Category"
+msgstr ""
+
+#: app/models/session.rb:-
+msgid "session"
+msgstr ""
+
+#: app/models/session.rb:-
+msgid "Session|Sid"
+msgstr ""
+
+#: app/models/session.rb:-
+msgid "Session|User code"
+msgstr ""
+
+#: app/models/session.rb:-
+msgid "Session|User name"
+msgstr ""
+
+#: app/models/session.rb:-
+msgid "Session|User email"
+msgstr ""
+
+#: app/models/session.rb:-
+msgid "Session|Expire date"
+msgstr ""
+
+#: app/models/session.rb:-
+msgid "Session|User section"
+msgstr ""
+
+#: app/models/share_file.rb:-
+msgid "ShareFile|ファイル"
+msgstr ""
+
+#: app/models/share_file.rb:-
+msgid "ShareFile|Owner symbol"
+msgstr ""
+
+#: app/models/share_file.rb:-
+msgid "ShareFile|コメント"
+msgstr ""
+
+#: app/models/share_file.rb:-
+msgid "ShareFile|日付"
+msgstr ""
+
+#: app/models/share_file.rb:-
+msgid "ShareFile|User"
+msgstr ""
+
+#: app/models/share_file.rb:-
+msgid "ShareFile|タグ"
+msgstr ""
+
+#: app/models/share_file.rb:-
+msgid "ShareFile|Total count"
+msgstr ""
+
+#: app/models/share_file.rb:-
+msgid "ShareFile|Content type"
+msgstr ""
+
+#: app/models/share_file.rb:-
+msgid "ShareFile|Publication type"
+msgstr ""
+
+#: app/models/share_file.rb:-
+msgid "ShareFile|Publication symbols value"
 msgstr ""
 
 #: app/models/board_entry.rb:-
@@ -324,201 +875,25 @@ msgstr ""
 msgid "BoardEntry|Entry trackbacks count"
 msgstr ""
 
-#: app/models/user.rb:-
-msgid "user"
-msgstr ""
+#: app/models/openid_identifier.rb:-
+msgid "openid identifier"
+msgstr "OpenID識別子"
 
-#: app/models/user.rb:-
-msgid "User|Created on"
-msgstr ""
+#: app/models/openid_identifier.rb:-
+msgid "OpenidIdentifier|OpenID URL"
+msgstr "OpenID URL"
 
-#: app/models/user.rb:-
-msgid "User|Updated on"
-msgstr ""
+#: app/models/openid_identifier.rb:-
+msgid "OpenidIdentifier|Account"
+msgstr "アカウント"
 
-#: app/models/user.rb:-
-msgid "User|メールアドレス"
-msgstr ""
+#: app/models/openid_identifier.rb:-
+msgid "OpenidIdentifier|Created at"
+msgstr "作成日時"
 
-#: app/models/user.rb:-
-msgid "User|氏名"
-msgstr ""
-
-#: app/models/user.rb:-
-msgid "User|部門"
-msgstr ""
-
-#: app/models/user.rb:-
-msgid "User|内線番号"
-msgstr ""
-
-#: app/models/user.rb:-
-msgid "User|自己紹介"
-msgstr ""
-
-#: app/models/user.rb:-
-msgid "User|Retired"
-msgstr ""
-
-#: app/models/user.rb:-
-msgid "User|Admin"
-msgstr ""
-
-#: app/models/session.rb:-
-msgid "session"
-msgstr ""
-
-#: app/models/session.rb:-
-msgid "Session|Sid"
-msgstr ""
-
-#: app/models/session.rb:-
-msgid "Session|User code"
-msgstr ""
-
-#: app/models/session.rb:-
-msgid "Session|User name"
-msgstr ""
-
-#: app/models/session.rb:-
-msgid "Session|User email"
-msgstr ""
-
-#: app/models/session.rb:-
-msgid "Session|Expire date"
-msgstr ""
-
-#: app/models/session.rb:-
-msgid "Session|User section"
-msgstr ""
-
-#: app/models/entry_publication.rb:-
-msgid "entry publication"
-msgstr ""
-
-#: app/models/entry_publication.rb:-
-msgid "EntryPublication|Board entry"
-msgstr ""
-
-#: app/models/entry_publication.rb:-
-msgid "EntryPublication|Symbol"
-msgstr ""
-
-#: app/models/entry_tag.rb:-
-msgid "entry tag"
-msgstr ""
-
-#: app/models/entry_tag.rb:-
-msgid "EntryTag|Created on"
-msgstr ""
-
-#: app/models/entry_tag.rb:-
-msgid "EntryTag|Board entry"
-msgstr ""
-
-#: app/models/entry_tag.rb:-
-msgid "EntryTag|Tag"
-msgstr ""
-
-#: app/models/user_reading.rb:-
-msgid "user reading"
-msgstr ""
-
-#: app/models/user_reading.rb:-
-msgid "UserReading|User"
-msgstr ""
-
-#: app/models/user_reading.rb:-
-msgid "UserReading|Board entry"
-msgstr ""
-
-#: app/models/user_reading.rb:-
-msgid "UserReading|Read"
-msgstr ""
-
-#: app/models/user_reading.rb:-
-msgid "UserReading|Checked on"
-msgstr ""
-
-#: app/models/ranking.rb:-
-msgid "ranking"
-msgstr ""
-
-#: app/models/ranking.rb:-
-msgid "Ranking|Url"
-msgstr ""
-
-#: app/models/ranking.rb:-
-msgid "Ranking|Title"
-msgstr ""
-
-#: app/models/ranking.rb:-
-msgid "Ranking|Author"
-msgstr ""
-
-#: app/models/ranking.rb:-
-msgid "Ranking|Author url"
-msgstr ""
-
-#: app/models/ranking.rb:-
-msgid "Ranking|Extracted on"
-msgstr ""
-
-#: app/models/ranking.rb:-
-msgid "Ranking|Amount"
-msgstr ""
-
-#: app/models/ranking.rb:-
-msgid "Ranking|Contents type"
-msgstr ""
-
-#: app/models/ranking.rb:-
-msgid "Ranking|Created at"
-msgstr ""
-
-#: app/models/ranking.rb:-
-msgid "Ranking|Updated at"
-msgstr ""
-
-#: app/models/entry_access.rb:-
-msgid "entry access"
-msgstr ""
-
-#: app/models/entry_access.rb:-
-msgid "EntryAccess|Board entry"
-msgstr ""
-
-#: app/models/entry_access.rb:-
-msgid "EntryAccess|Visitor"
-msgstr ""
-
-#: app/models/entry_access.rb:-
-msgid "EntryAccess|Updated on"
-msgstr ""
-
-#: app/models/bookmark.rb:-
-msgid "bookmark"
-msgstr ""
-
-#: app/models/bookmark.rb:-
-msgid "Bookmark|Created on"
-msgstr ""
-
-#: app/models/bookmark.rb:-
-msgid "Bookmark|Updated on"
-msgstr ""
-
-#: app/models/bookmark.rb:-
-msgid "Bookmark|URL"
-msgstr ""
-
-#: app/models/bookmark.rb:-
-msgid "Bookmark|タイトル"
-msgstr ""
-
-#: app/models/bookmark.rb:-
-msgid "Bookmark|Bookmark comments count"
-msgstr ""
+#: app/models/openid_identifier.rb:-
+msgid "OpenidIdentifier|Updated at"
+msgstr "更新日時"
 
 #: app/models/applied_email.rb:-
 msgid "applied email"
@@ -538,194 +913,6 @@ msgstr ""
 
 #: app/models/applied_email.rb:-
 msgid "AppliedEmail|メールアドレス"
-msgstr ""
-
-#: app/models/group_participation.rb:-
-msgid "group participation"
-msgstr ""
-
-#: app/models/group_participation.rb:-
-msgid "GroupParticipation|Created on"
-msgstr ""
-
-#: app/models/group_participation.rb:-
-msgid "GroupParticipation|Updated on"
-msgstr ""
-
-#: app/models/group_participation.rb:-
-msgid "GroupParticipation|User"
-msgstr ""
-
-#: app/models/group_participation.rb:-
-msgid "GroupParticipation|Group"
-msgstr ""
-
-#: app/models/group_participation.rb:-
-msgid "GroupParticipation|Waiting"
-msgstr ""
-
-#: app/models/group_participation.rb:-
-msgid "GroupParticipation|Owned"
-msgstr ""
-
-#: app/models/group_participation.rb:-
-msgid "GroupParticipation|Favorite"
-msgstr ""
-
-#: app/models/popular_bookmark.rb:-
-msgid "popular bookmark"
-msgstr ""
-
-#: app/models/popular_bookmark.rb:-
-msgid "PopularBookmark|Created on"
-msgstr ""
-
-#: app/models/popular_bookmark.rb:-
-msgid "PopularBookmark|Date"
-msgstr ""
-
-#: app/models/popular_bookmark.rb:-
-msgid "PopularBookmark|Bookmark"
-msgstr ""
-
-#: app/models/popular_bookmark.rb:-
-msgid "PopularBookmark|Count"
-msgstr ""
-
-#: app/models/antenna_item.rb:-
-msgid "antenna item"
-msgstr ""
-
-#: app/models/antenna_item.rb:-
-msgid "AntennaItem|Antenna"
-msgstr ""
-
-#: app/models/antenna_item.rb:-
-msgid "AntennaItem|Value type"
-msgstr ""
-
-#: app/models/antenna_item.rb:-
-msgid "AntennaItem|"
-msgstr ""
-
-#: app/models/track.rb:-
-msgid "track"
-msgstr ""
-
-#: app/models/track.rb:-
-msgid "Track|Created on"
-msgstr ""
-
-#: app/models/track.rb:-
-msgid "Track|Updated on"
-msgstr ""
-
-#: app/models/track.rb:-
-msgid "Track|User"
-msgstr ""
-
-#: app/models/track.rb:-
-msgid "Track|Visitor"
-msgstr ""
-
-#: app/models/user_custom.rb:-
-msgid "user custom"
-msgstr ""
-
-#: app/models/user_custom.rb:-
-msgid "UserCustom|User"
-msgstr ""
-
-#: app/models/user_custom.rb:-
-msgid "UserCustom|Theme"
-msgstr ""
-
-#: app/models/site_count.rb:-
-msgid "site count"
-msgstr ""
-
-#: app/models/site_count.rb:-
-msgid "SiteCount|Created on"
-msgstr ""
-
-#: app/models/site_count.rb:-
-msgid "SiteCount|Total user count"
-msgstr ""
-
-#: app/models/site_count.rb:-
-msgid "SiteCount|Today user count"
-msgstr ""
-
-#: app/models/site_count.rb:-
-msgid "SiteCount|Total blog count"
-msgstr ""
-
-#: app/models/site_count.rb:-
-msgid "SiteCount|Today blog count"
-msgstr ""
-
-#: app/models/site_count.rb:-
-msgid "SiteCount|Writer at month"
-msgstr ""
-
-#: app/models/site_count.rb:-
-msgid "SiteCount|User access at month"
-msgstr ""
-
-#: app/models/site_count.rb:-
-msgid "SiteCount|Write users all"
-msgstr ""
-
-#: app/models/site_count.rb:-
-msgid "SiteCount|Write users with pvt"
-msgstr ""
-
-#: app/models/site_count.rb:-
-msgid "SiteCount|Write users with bbs"
-msgstr ""
-
-#: app/models/site_count.rb:-
-msgid "SiteCount|Comment users"
-msgstr ""
-
-#: app/models/site_count.rb:-
-msgid "SiteCount|Portrait users"
-msgstr ""
-
-#: app/models/site_count.rb:-
-msgid "SiteCount|Profile users"
-msgstr ""
-
-#: app/models/site_count.rb:-
-msgid "SiteCount|Custom users"
-msgstr ""
-
-#: app/models/site_count.rb:-
-msgid "SiteCount|Active users"
-msgstr ""
-
-#: app/models/user_access.rb:-
-msgid "user access"
-msgstr ""
-
-#: app/models/user_access.rb:-
-msgid "UserAccess|Created on"
-msgstr ""
-
-#: app/models/user_access.rb:-
-msgid "UserAccess|Updated on"
-msgstr ""
-
-#: app/models/user_access.rb:-
-msgid "UserAccess|User"
-msgstr ""
-
-#: app/models/user_access.rb:-
-msgid "UserAccess|Last access"
-msgstr ""
-
-#: app/models/user_access.rb:-
-msgid "UserAccess|Access count"
 msgstr ""
 
 #: app/models/picture.rb:-
@@ -756,152 +943,28 @@ msgstr ""
 msgid "Picture|User"
 msgstr ""
 
-#: app/models/openid_identifier.rb:-
-msgid "openid identifier"
-msgstr "OpenID識別子"
-
-#: app/models/openid_identifier.rb:-
-msgid "OpenidIdentifier|OpenID URL"
-msgstr "OpenID URL"
-
-#: app/models/openid_identifier.rb:-
-msgid "OpenidIdentifier|Account"
-msgstr "アカウント"
-
-#: app/models/openid_identifier.rb:-
-msgid "OpenidIdentifier|Created at"
-msgstr "作成日時"
-
-#: app/models/openid_identifier.rb:-
-msgid "OpenidIdentifier|Updated at"
-msgstr "更新日時"
-
-#: app/models/user_uid.rb:-
-msgid "user uid"
+#: app/models/user_access.rb:-
+msgid "user access"
 msgstr ""
 
-#: app/models/user_uid.rb:-
-msgid "UserUid|User"
+#: app/models/user_access.rb:-
+msgid "UserAccess|Created on"
 msgstr ""
 
-#: app/models/user_uid.rb:-
-msgid "UserUid|ニックネーム"
+#: app/models/user_access.rb:-
+msgid "UserAccess|Updated on"
 msgstr ""
 
-#: app/models/user_uid.rb:-
-msgid "UserUid|Uid type"
+#: app/models/user_access.rb:-
+msgid "UserAccess|User"
 msgstr ""
 
-#: app/models/share_file_publication.rb:-
-msgid "share file publication"
+#: app/models/user_access.rb:-
+msgid "UserAccess|Last access"
 msgstr ""
 
-#: app/models/share_file_publication.rb:-
-msgid "ShareFilePublication|Share file"
-msgstr ""
-
-#: app/models/share_file_publication.rb:-
-msgid "ShareFilePublication|Symbol"
-msgstr ""
-
-#: app/models/group.rb:-
-msgid "group"
-msgstr ""
-
-#: app/models/group.rb:-
-msgid "Group|Created on"
-msgstr ""
-
-#: app/models/group.rb:-
-msgid "Group|Updated on"
-msgstr ""
-
-#: app/models/group.rb:-
-msgid "Group|名前"
-msgstr ""
-
-#: app/models/group.rb:-
-msgid "Group|説明"
-msgstr ""
-
-#: app/models/group.rb:-
-msgid "Group|Protected"
-msgstr ""
-
-#: app/models/group.rb:-
-msgid "Group|グループID"
-msgstr ""
-
-#: app/models/group.rb:-
-msgid "Group|Category"
-msgstr ""
-
-#: app/models/mail.rb:-
-msgid "mail"
-msgstr ""
-
-#: app/models/mail.rb:-
-msgid "Mail|Created on"
-msgstr ""
-
-#: app/models/mail.rb:-
-msgid "Mail|Updated on"
-msgstr ""
-
-#: app/models/mail.rb:-
-msgid "Mail|From user"
-msgstr ""
-
-#: app/models/mail.rb:-
-msgid "Mail|User entry no"
-msgstr ""
-
-#: app/models/mail.rb:-
-msgid "Mail|To address"
-msgstr ""
-
-#: app/models/mail.rb:-
-msgid "Mail|Send flag"
-msgstr ""
-
-#: app/models/mail.rb:-
-msgid "Mail|Title"
-msgstr ""
-
-#: app/models/mail.rb:-
-msgid "Mail|To address name"
-msgstr ""
-
-#: app/models/mail.rb:-
-msgid "Mail|To address symbol"
-msgstr ""
-
-#: app/models/board_entry_point.rb:-
-msgid "board entry point"
-msgstr ""
-
-#: app/models/board_entry_point.rb:-
-msgid "BoardEntryPoint|Created on"
-msgstr ""
-
-#: app/models/board_entry_point.rb:-
-msgid "BoardEntryPoint|Updated on"
-msgstr ""
-
-#: app/models/board_entry_point.rb:-
-msgid "BoardEntryPoint|Board entry"
-msgstr ""
-
-#: app/models/board_entry_point.rb:-
-msgid "BoardEntryPoint|Point"
-msgstr ""
-
-#: app/models/board_entry_point.rb:-
-msgid "BoardEntryPoint|Access count"
-msgstr ""
-
-#: app/models/board_entry_point.rb:-
-msgid "BoardEntryPoint|Today access count"
+#: app/models/user_access.rb:-
+msgid "UserAccess|Access count"
 msgstr ""
 
 #: app/models/share_file_tag.rb:-
@@ -936,64 +999,28 @@ msgstr ""
 msgid "Antenna|Position"
 msgstr ""
 
-#: app/models/user_message_unsubscribe.rb:-
-msgid "user message unsubscribe"
+#: app/models/chain.rb:-
+msgid "chain"
 msgstr ""
 
-#: app/models/user_message_unsubscribe.rb:-
-msgid "UserMessageUnsubscribe|User"
+#: app/models/chain.rb:-
+msgid "Chain|Created on"
 msgstr ""
 
-#: app/models/user_message_unsubscribe.rb:-
-msgid "UserMessageUnsubscribe|Message type"
+#: app/models/chain.rb:-
+msgid "Chain|Updated on"
 msgstr ""
 
-#: app/models/share_file.rb:-
-msgid "share file"
+#: app/models/chain.rb:-
+msgid "Chain|From user"
 msgstr ""
 
-#: app/models/share_file.rb:-
-msgid "ShareFile|ファイル"
+#: app/models/chain.rb:-
+msgid "Chain|To user"
 msgstr ""
 
-#: app/models/share_file.rb:-
-msgid "ShareFile|Owner symbol"
-msgstr ""
-
-#: app/models/share_file.rb:-
-msgid "ShareFile|コメント"
-msgstr ""
-
-#: app/models/share_file.rb:-
-msgid "ShareFile|日付"
-msgstr ""
-
-#: app/models/share_file.rb:-
-msgid "ShareFile|User"
-msgstr ""
-
-#: app/models/share_file.rb:-
-msgid "ShareFile|タグ"
-msgstr ""
-
-#: app/models/share_file.rb:-
-msgid "ShareFile|Total count"
-msgstr ""
-
-#: app/models/share_file.rb:-
-msgid "ShareFile|Content type"
-msgstr ""
-
-#: app/models/share_file.rb:-
-msgid "ShareFile|Publication type"
-msgstr ""
-
-#: app/models/share_file.rb:-
-msgid "ShareFile|Publication symbols value"
-msgstr ""
-
-#: app/models/account.rb:-
-msgid "account"
+#: app/models/chain.rb:-
+msgid "Chain|紹介文"
 msgstr ""
 
 #: app/models/account.rb:-
@@ -1024,175 +1051,248 @@ msgstr ""
 msgid "Account|Updated at"
 msgstr ""
 
-#: app/models/user_profile.rb:-
-msgid "user profile"
+#: app/models/admin/user.rb:17
+msgid "Admin user|Email"
+msgstr "メールアドレス"
+
+#: app/models/admin/user.rb:18
+msgid "Admin user|Name"
+msgstr "氏名"
+
+#: app/models/admin/user.rb:19
+msgid "Admin user|Section"
+msgstr "部署"
+
+#: app/models/admin/user.rb:20
+msgid "Admin user|Extension"
+msgstr "内線番号"
+
+#: app/models/admin/user.rb:21
+msgid "Admin user|Introduction"
+msgstr "自己紹介"
+
+#: app/models/admin/user.rb:22
+msgid "Admin user|Retired"
+msgstr "就業状態"
+
+#: app/models/admin/user.rb:23
+msgid "Admin user|Admin"
+msgstr "管理権限"
+
+#: app/models/admin/share_file.rb:17
+msgid "Admin share_file|FileName"
 msgstr ""
 
-#: app/models/user_profile.rb:-
-msgid "UserProfile|User"
+#: app/models/admin/share_file.rb:18
+msgid "Admin share_file|OwnerSymbol"
 msgstr ""
 
-#: app/models/user_profile.rb:-
-msgid "UserProfile|Gender type"
+#: app/models/admin/share_file.rb:19
+msgid "Admin share_file|Description"
 msgstr ""
 
-#: app/models/user_profile.rb:-
-msgid "UserProfile|Join year"
+#: app/models/admin/share_file.rb:20
+msgid "Admin share_file|Date"
 msgstr ""
 
-#: app/models/user_profile.rb:-
-msgid "UserProfile|Birth month"
+#: app/models/admin/share_file.rb:21
+msgid "Admin share_file|User"
 msgstr ""
 
-#: app/models/user_profile.rb:-
-msgid "UserProfile|Birth day"
+#: app/models/admin/share_file.rb:22
+msgid "Admin share_file|Category"
 msgstr ""
 
-#: app/models/user_profile.rb:-
-msgid "UserProfile|Blood type"
+#: app/models/admin/share_file.rb:23
+msgid "Admin share_file|TotalCount"
 msgstr ""
 
-#: app/models/user_profile.rb:-
-msgid "UserProfile|Hometown"
+#: app/models/admin/share_file.rb:24
+msgid "Admin share_file|ContentType"
 msgstr ""
 
-#: app/models/user_profile.rb:-
-msgid "UserProfile|出身校"
+#: app/models/admin/share_file.rb:25
+msgid "Admin share_file|PublicationType"
 msgstr ""
 
-#: app/models/user_profile.rb:-
-msgid "UserProfile|Address 1"
+#: app/models/admin/share_file.rb:26
+msgid "Admin share_file|PublicationSymbolsType"
 msgstr ""
 
-#: app/models/user_profile.rb:-
-msgid "UserProfile|現住所２"
-msgstr ""
+#: app/models/admin/account.rb:17
+msgid "Admin account|Code"
+msgstr "ログインID"
 
-#: app/models/user_profile.rb:-
-msgid "UserProfile|Hobby"
-msgstr ""
+#: app/models/admin/account.rb:18
+msgid "Admin account|Name"
+msgstr "氏名"
 
-#: app/models/user_profile.rb:-
-msgid "UserProfile|Introduction"
-msgstr ""
+#: app/models/admin/account.rb:19
+msgid "Admin account|Email"
+msgstr "メールアドレス"
 
-#: app/models/user_profile.rb:-
-msgid "UserProfile|Disclosure"
-msgstr ""
+#: app/models/admin/account.rb:20
+msgid "Admin account|Section"
+msgstr "部署"
 
-#: app/models/message.rb:-
-msgid "message"
-msgstr ""
+#: app/models/admin/account.rb:21
+msgid "Admin account|Password"
+msgstr "パスワード"
 
-#: app/models/message.rb:-
-msgid "Message|Created on"
-msgstr ""
+#: app/models/admin/account.rb:22
+msgid "Admin account|Password confirmation"
+msgstr "確認パスワード"
 
-#: app/models/message.rb:-
-msgid "Message|User"
-msgstr ""
-
-#: app/models/message.rb:-
-msgid "Message|Link url"
-msgstr ""
-
-#: app/models/message.rb:-
-msgid "Message|Message"
-msgstr ""
-
-#: app/models/message.rb:-
-msgid "Message|Message type"
-msgstr ""
-
-#: app/models/message.rb:-
-msgid "Message|Send flag"
-msgstr ""
-
-#: app/views/admin/groups/show.html.erb:2
-#: app/views/admin/groups/index.html.erb:5
-#: app/views/admin/accounts/show.html.erb:7
-msgid "Name"
-msgstr "名前"
-
-#: app/views/admin/groups/show.html.erb:7
-#: app/views/admin/groups/index.html.erb:6
-msgid "Gid"
-msgstr "グループID"
-
-#: app/views/admin/groups/show.html.erb:12
-#: app/views/admin/groups/index.html.erb:7
-#: app/views/admin/share_files/show.html.erb:7
-msgid "Description"
-msgstr "説明文"
-
-#: app/views/admin/groups/show.html.erb:17
-#: app/views/admin/groups/index.html.erb:8
-msgid "Protected"
-msgstr "参加制限"
-
-#: app/views/admin/groups/show.html.erb:22
-#: app/views/admin/groups/index.html.erb:9
-#: app/views/admin/share_files/show.html.erb:12
-msgid "Category"
-msgstr "カテゴリ"
-
-#: app/views/admin/groups/show.html.erb:27
-#: app/views/admin/groups/index.html.erb:20
-#: app/views/admin/accounts/show.html.erb:22
-msgid "Edit"
-msgstr "編集"
-
-#: app/views/admin/groups/show.html.erb:28
-#: app/views/admin/groups/edit.html.erb:32
-#: app/views/admin/groups/new.html.erb:31
-#: app/views/admin/accounts/show.html.erb:23
-#: app/views/admin/accounts/edit.html.erb:28
-msgid "Back"
-msgstr "一覧"
-
-#: app/views/admin/groups/edit.html.erb:31
-#: app/views/admin/groups/index.html.erb:19
-#: app/views/admin/accounts/edit.html.erb:27
-msgid "Show"
-msgstr "詳細"
-
-#: app/views/admin/groups/index.html.erb:21
-msgid "Destroy"
-msgstr "削除"
-
-#: app/views/admin/groups/index.html.erb:28
-#: app/views/admin/groups/new.html.erb:1
-msgid "New group"
-msgstr "新規グループの作成"
-
-#: app/views/admin/groups/new.html.erb:27
-msgid "Create"
-msgstr "作成"
-
-#: app/views/admin/share_files/show.html.erb:2
+#: app/views/admin/share_files/show.html.erb:4
 msgid "ShareFile|file_name"
 msgstr ""
 
-#: app/views/admin/share_files/show.html.erb:17
+#: app/views/admin/share_files/show.html.erb:9
+#: app/views/admin/groups/show.html.erb:14
+#: app/views/admin/groups/index.html.erb:9
+msgid "Description"
+msgstr "説明文"
+
+#: app/views/admin/share_files/show.html.erb:14
+#: app/views/admin/groups/show.html.erb:24
+#: app/views/admin/groups/index.html.erb:11
+msgid "Category"
+msgstr "カテゴリ"
+
+#: app/views/admin/share_files/show.html.erb:19
+#: app/views/admin/group_participations/show.html.erb:19
+#: app/views/admin/group_participations/index.html.erb:7
 msgid "User"
 msgstr "ユーザ"
 
-#: app/views/admin/accounts/show.html.erb:2
+#: app/views/admin/share_files/new.html.erb:8
+#: app/views/admin/group_participations/new.html.erb:25
+#: app/views/admin/groups/new.html.erb:29
+msgid "Create"
+msgstr "作成"
+
+#: app/views/admin/share_files/new.html.erb:12
+#: app/views/admin/accounts/show.html.erb:25
+#: app/views/admin/accounts/edit.html.erb:30
+#: app/views/admin/group_participations/show.html.erb:25
+#: app/views/admin/group_participations/new.html.erb:29
+#: app/views/admin/group_participations/edit.html.erb:30
+#: app/views/admin/groups/show.html.erb:30
+#: app/views/admin/groups/new.html.erb:33
+#: app/views/admin/groups/edit.html.erb:34
+msgid "Back"
+msgstr "一覧"
+
+#: app/views/admin/accounts/show.html.erb:4
 msgid "Code"
 msgstr ""
 
-#: app/views/admin/accounts/show.html.erb:12
+#: app/views/admin/accounts/show.html.erb:9
+#: app/views/admin/groups/show.html.erb:4
+#: app/views/admin/groups/index.html.erb:7
+msgid "Name"
+msgstr "名前"
+
+#: app/views/admin/accounts/show.html.erb:14
 msgid "Email"
 msgstr "メールアドレス"
 
-#: app/views/admin/accounts/show.html.erb:17
+#: app/views/admin/accounts/show.html.erb:19
 msgid "Section"
 msgstr ""
 
 #: app/views/admin/accounts/show.html.erb:24
+#: app/views/admin/accounts/index.html.erb:19
+#: app/views/admin/group_participations/show.html.erb:24
+#: app/views/admin/group_participations/index.html.erb:20
+#: app/views/admin/groups/show.html.erb:29
+#: app/views/admin/groups/index.html.erb:22
+msgid "Edit"
+msgstr "編集"
+
+#: app/views/admin/accounts/show.html.erb:26
 msgid "OpenidIdentifier List"
 msgstr "OpenID一覧"
 
-#: app/views/admin/accounts/index.html.erb:25
-msgid "New account"
-msgstr "新規アカウントの作成"
+#: app/views/admin/accounts/edit.html.erb:29
+#: app/views/admin/accounts/index.html.erb:18
+#: app/views/admin/group_participations/edit.html.erb:29
+#: app/views/admin/group_participations/index.html.erb:19
+#: app/views/admin/groups/edit.html.erb:33
+#: app/views/admin/groups/index.html.erb:21
+msgid "Show"
+msgstr "詳細"
+
+#: app/views/admin/accounts/index.html.erb:3
+#: app/views/admin/users/index.html.erb:3
+msgid "Listing %{model}"
+msgstr "%{model}一覧"
+
+#: app/views/admin/accounts/index.html.erb:20
+#: app/views/admin/group_participations/index.html.erb:21
+#: app/views/admin/groups/index.html.erb:23
+msgid "Destroy"
+msgstr "削除"
+
+#: app/views/admin/accounts/index.html.erb:27
+msgid "New %{model}"
+msgstr "新規%{model}の作成"
+
+#: app/views/admin/group_participations/show.html.erb:4
+#: app/views/admin/group_participations/index.html.erb:8
+msgid "Waiting"
+msgstr ""
+
+#: app/views/admin/group_participations/show.html.erb:9
+#: app/views/admin/group_participations/index.html.erb:9
+msgid "Owned"
+msgstr ""
+
+#: app/views/admin/group_participations/show.html.erb:14
+#: app/views/admin/group_participations/index.html.erb:10
+msgid "Favorite"
+msgstr ""
+
+#: app/views/admin/group_participations/new.html.erb:3
+#: app/views/admin/group_participations/index.html.erb:28
+msgid "New group_participation"
+msgstr ""
+
+#: app/views/admin/group_participations/edit.html.erb:3
+msgid "Editing group_participation"
+msgstr ""
+
+#: app/views/admin/group_participations/edit.html.erb:25
+msgid "Update"
+msgstr "更新日時"
+
+#: app/views/admin/group_participations/index.html.erb:3
+msgid "Listing group_participations"
+msgstr ""
+
+#: app/views/admin/group_participations/index.html.erb:21
+msgid "Are you sure?"
+msgstr ""
+
+#: app/views/admin/group_participations/index.html.erb:29
+msgid "Group Show"
+msgstr ""
+
+#: app/views/admin/groups/show.html.erb:9
+#: app/views/admin/groups/index.html.erb:8
+msgid "Gid"
+msgstr "グループID"
+
+#: app/views/admin/groups/show.html.erb:19
+#: app/views/admin/groups/index.html.erb:10
+msgid "Protected"
+msgstr "参加制限"
+
+#: app/views/admin/groups/show.html.erb:31
+msgid "GroupParticipation List"
+msgstr ""
+
+#: app/views/admin/groups/new.html.erb:3
+#: app/views/admin/groups/index.html.erb:30
+msgid "New group"
+msgstr "新規グループの作成"

@@ -1,11 +1,11 @@
 <%= render :partial => '/admin/contents_left' %>
 <% content_for :contents_right do -%>
-<h1>Listing accounts</h1>
+<h1><%= _('Listing %{model}') % {:model => _('account')} %></h1>
 
 <table>
   <tr>
-    <% %w[Code Name Email Section].each do |title| -%>
-    <th><%= _("Admin account|#{title}") %></th>
+    <% %w[Code Name Email Section].each do |column| -%>
+    <th><%= _("Admin account|#{column}") %></th>
     <% end -%>
   </tr>
 
@@ -15,14 +15,14 @@
     <td><%=h account.name %></td>
     <td><%=h account.email %></td>
     <td><%=h account.section %></td>
-    <td><%= link_to 'Show', account %></td>
-    <td><%= link_to 'Edit', edit_admin_account_path(account) %></td>
-    <td><%= link_to 'Destroy', account, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to _('Show'), account %></td>
+    <td><%= link_to _('Edit'), edit_admin_account_path(account) %></td>
+    <td><%= link_to _('Destroy'), account, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to _('New account'), new_admin_account_path %>
+<%= link_to _('New %{model}') % {:model => _('account')}, new_admin_account_path %>
 <% end -%>

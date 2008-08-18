@@ -27,8 +27,8 @@ module Admin::ApplicationHelper
     output << generate_box_menu_link( _('account'), admin_accounts_path, admin_accounts_path == selected_path )
     output << generate_box_menu_link( _('user'), admin_users_path, admin_users_path == selected_path )
     output << generate_box_menu_link( _('bookmark'), admin_bookmarks_path , admin_bookmarks_path == selected_path)
-    output << generate_box_menu_link( _('board_entry'), admin_board_entries_path, admin_board_entries_path == selected_path )
-    output << generate_box_menu_link( _('share_file'), admin_share_files_path, admin_share_files_path == selected_path )
+    output << generate_box_menu_link( _('board entry'), admin_board_entries_path, admin_board_entries_path == selected_path )
+    output << generate_box_menu_link( _('share file'), admin_share_files_path, admin_share_files_path == selected_path )
     output << generate_box_menu_link( _('group'), admin_groups_path, admin_groups_path == selected_path )
     output << '</ul>'
   end
