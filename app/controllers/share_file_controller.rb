@@ -40,6 +40,14 @@ class ShareFileController < ApplicationController
     @share_file.publication_type = params[:publication_type]
     @share_file.publication_symbols_value = params[:publication_type]=='protected' ? params[:publication_symbols_value] : ""
 
+    # 所有者がマイユーザ OR マイグループ
+    unless login_user_symbols.include? params[:owner_symbol]
+      @categories_hash = ShareFile.get_tags_hash(params[:owner_symbol])
+      flash.now[:warning] = "ファイルのアップロードに失敗しました!"
+      render :action => "new"
+      return
+    end
+    
     unless valid_upload_files? params[:file]
       @categories_hash = ShareFile.get_tags_hash(params[:owner_symbol])
       flash.now[:warning] = "ファイルサイズが０、もしくはサイズが大きすぎるファイルがあります。"
@@ -92,6 +100,11 @@ class ShareFileController < ApplicationController
       return
     end
 
+    unless authorize_to_save_share_file? @share_file 
+      render_window_close
+      return
+    end
+    
     params[:publication_symbols_value] = ""
     if @share_file.public?
       params[:publication_type] = "public"
@@ -113,6 +126,12 @@ class ShareFileController < ApplicationController
     update_params = params[:share_file]
     update_params[:publication_type] = params[:publication_type]
     update_params[:publication_symbols_value] = params[:publication_type]=='protected' ? params[:publication_symbols_value] : ""
+
+    unless authorize_to_save_share_file? @share_file
+      @categories_hash = ShareFile.get_tags_hash(@share_file.owner_symbol)
+      render :action => :edit
+      return
+    end
 
     if @share_file.update_attributes(update_params)
       @share_file.share_file_publications.clear
@@ -138,6 +157,11 @@ class ShareFileController < ApplicationController
       return false
     end
 
+    unless authorize_to_save_share_file? share_file
+      redirect_to :controller => share_file.owner_symbol_type, :action => share_file.owner_symbol_id, :id => 'share_file'
+      return
+    end
+    
     if share_file.destroy
       flash[:notice] = "ファイルの削除に成功しました。"
     else
@@ -214,6 +238,11 @@ class ShareFileController < ApplicationController
       return false
     end
 
+    unless authorize_to_save_share_file? share_file
+      send_data(" ", :filename => "dummy.csv", :type => 'application/x-csv', :disposition => 'attachment')
+      return
+    end
+
     csv_text, file_name = share_file.get_accesses_as_csv
     send_data(csv_text, :filename => nkf_file_name(file_name), :type => 'application/x-csv', :disposition => 'attachment')
   end
@@ -221,6 +250,11 @@ class ShareFileController < ApplicationController
   def clear_download_history
     unless share_file = ShareFile.find(:first, :conditions => ["id = ?", params[:id]])
       return false
+    end
+
+    unless authorize_to_save_share_file? share_file
+      render :nothing => true
+      return
     end
 
     share_file.share_file_accesses.clear
@@ -281,6 +315,14 @@ private
     agent = request.cgi.env_table["HTTP_USER_AGENT"]
     return  NKF::nkf('-Ws', file_name) if agent.include?("MSIE") and not agent.include?("Opera")
     return file_name
+  end
+
+  # 権限チェック 
+  # ・所有者がマイユーザ
+  # ・所有者がマイグループ  AND 作成者がマイユーザ 
+  def authorize_to_save_share_file? share_file
+    session[:user_symbol] == share_file.owner_symbol || 
+      (login_user_groups.include?(share_file.owner_symbol) && (session[:user_id] == share_file.user_id))
   end
 
 end
