@@ -75,8 +75,8 @@ class EditController < ApplicationController
     @board_entry.publication_type = params[:publication_type]
     @board_entry.publication_symbols_value = params[:publication_type]=='protected' ? params[:publication_symbols_value] : ""
 
-    unless (session[:user_symbol] == @board_entry.symbol && session[:user_id] == @board_entry.user_id) || 
-      (login_user_groups.include?(@board_entryy.symbol) && session[:user_id] == @board_entry.user_id)
+    unless (session[:user_symbol] == params[:board_entry][:symbol]) || 
+      login_user_groups.include?(params[:board_entry][:symbol]) 
       if MAIL_FUNCTION_SETTING
         @sent_mail_flag = "checked" if params[:sent_mail][:send_flag] == "1"
       end
