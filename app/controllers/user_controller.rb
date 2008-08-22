@@ -104,7 +104,7 @@ class UserController < ApplicationController
         login_user_id = session[:user_id]
         @entry.accessed(login_user_id)
         @prev_entry, @next_entry = @entry.get_around_entry(login_user_symbols)
-        @editable = @entry.editable?(login_user_symbols, login_user_id);
+        @editable = @entry.editable?(login_user_symbols, session[:user_id], session[:user_symbol], login_user_groups)
         @tb_entries = @entry.trackback_entries(login_user_id, login_user_symbols)
         @title += " - " + @entry.title
 

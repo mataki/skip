@@ -495,26 +495,33 @@ class BoardEntry < ActiveRecord::Base
   def writer?(login_user_id)
     user_id == login_user_id
   end
+  
+  # 権限チェック
+  # このエントリが編集可能かどうかを判断する
+  def editable?(login_user_symbols, login_user_id, login_user_symbol, login_user_groups)
+    #debugger
+    # 所有者がマイユーザ
+    return true if login_user_symbol == symbol      
 
-  #このエントリが編集可能かどうかを判断する
-  def editable?(login_user_symbols, login_user_id)
-    editable = false
-    if writer?(login_user_id)
-      editable = true
-    else
-      entry_editors = EntryEditor.find(:all, :conditions =>["board_entry_id = ?", id]) || []
-      entry_editors.each do |entry_editor|
-        editable = true  if login_user_symbols.include?(entry_editor.symbol)
-        break if editable
-      end
+    publicate = entry_publications.any? {|publication| login_user_symbols.include?(publication.symbol) || "sid:allusers" == publication.symbol} 
+    edit = entry_editors.any? {|editor| login_user_symbols.include? editor.symbol }
 
-      group_bbs = BoardEntry.find_by_id_and_entry_type(id,"GROUP_BBS") unless editable
-      if group_bbs
-        editable = true  if GroupParticipation.find(:first,:conditions => ["user_id = ? and owned = ? and groups.gid = ?", login_user_id, 1, (group_bbs.symbol.split(":").last)],:include => :group)
-      end
+    #debugger
+    #  マイユーザ/マイグループが公開範囲指定対象で、編集可能
+    return true if publicate && edit
+
+    # 所有者がマイグループ AND 作成者がマイユーザ
+    if login_user_groups.include?(symbol) 
+    #debugger
+      return true if login_user_id == user_id 
+      #  AND グループ管理者がマイユーザ
+      group = Symbol.get_item_by_symbol(symbol)
+    #debugger
+      return true if publicate && group.get_owners.any?{|user| user.id == login_user_id}
     end
-    return editable
+    return false
   end
+
 
   # アクセスしたことを示す（アクセス履歴）
   def accessed(login_user_id)
