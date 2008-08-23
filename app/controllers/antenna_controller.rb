@@ -23,6 +23,11 @@ class AntennaController < ApplicationController
   end
 
   def add_symbol
+    unless Antenna.find(params[:antenna_id]).user_id == session[:user_id]
+      redirect_to :controller => "mypage", :action => "index"
+      flash[:notice] = "このアンテナには、追加できません。"
+      return false
+    end
     antenna_item = AntennaItem.new(:antenna_id => params[:antenna_id],
                                    :value_type => :symbol.to_s,
                                    :value => params[:symbol])

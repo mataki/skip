@@ -499,29 +499,29 @@ class BoardEntry < ActiveRecord::Base
   # 権限チェック
   # このエントリが編集可能かどうかを判断する
   def editable?(login_user_symbols, login_user_id, login_user_symbol, login_user_groups)
-    #debugger
     # 所有者がマイユーザ
     return true if login_user_symbol == symbol      
 
-    publicate = entry_publications.any? {|publication| login_user_symbols.include?(publication.symbol) || "sid:allusers" == publication.symbol} 
-    edit = entry_editors.any? {|editor| login_user_symbols.include? editor.symbol }
-
-    #debugger
     #  マイユーザ/マイグループが公開範囲指定対象で、編集可能
-    return true if publicate && edit
+    return true if publicate?(login_user_symbols) && edit?
 
     # 所有者がマイグループ AND 作成者がマイユーザ
     if login_user_groups.include?(symbol) 
-    #debugger
       return true if login_user_id == user_id 
       #  AND グループ管理者がマイユーザ
       group = Symbol.get_item_by_symbol(symbol)
-    #debugger
-      return true if publicate && group.get_owners.any?{|user| user.id == login_user_id}
+      return true if publicate?(login_user_symbols) && group.get_owners.any?{|user| user.id == login_user_id}
     end
     return false
   end
 
+  def publicate? login_user_symbols
+    entry_publications.any? {|publication| login_user_symbols.include?(publication.symbol) || "sid:allusers" == publication.symbol} 
+  end
+
+  def edit?
+    entry_editors.any? {|editor| login_user_symbols.include? editor.symbol }
+  end
 
   # アクセスしたことを示す（アクセス履歴）
   def accessed(login_user_id)

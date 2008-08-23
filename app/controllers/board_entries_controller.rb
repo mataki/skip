@@ -37,9 +37,10 @@ class BoardEntriesController < ApplicationController
       return false
     end
 
-    begin
-      @board_entry = BoardEntry.find(params[:id])
-    rescue ActiveRecord::RecordNotFound => ex
+    find_params = BoardEntry.make_conditions(login_user_symbols, {:id => params[:id]})
+    unless @board_entry = BoardEntry.find(:first,
+                                          :conditions => find_params[:conditions],
+                                          :include => find_params[:include] | [ :user, :board_entry_comment, :state ])
       render :nothing => true
       return false
     end
@@ -68,9 +69,11 @@ class BoardEntriesController < ApplicationController
       return false
     end
 
-    begin
-      @board_entry = parent_comment.board_entry
-    rescue ActiveRecord::RecordNotFound => ex
+    @board_entry = parent_comment.board_entry
+    find_params = BoardEntry.make_conditions(login_user_symbols, {:id => @board_entry.id})
+    unless @board_entry = BoardEntry.find(:first,
+                                          :conditions => find_params[:conditions],
+                                          :include => find_params[:include] | [ :user, :board_entry_comment, :state ])
       render :nothing => true
       return false
     end
@@ -92,7 +95,11 @@ class BoardEntriesController < ApplicationController
       render :nothing => true
       return false
     end
-
+    unless !(session[:user_symbol] == board_entry.symbol || login_user_groups.include?(board_entry.symbol)) &&
+        board_entry.publicate?(login_user_symbols)
+      render :nothing => true
+      return false
+    end
     unless board_entry.writer?(session[:user_id])
       board_entry.state.increment!(:point)
     end
@@ -101,6 +108,25 @@ class BoardEntriesController < ApplicationController
 
   def destroy_comment
     @board_entry_comment = BoardEntryComment.find(params[:id])
+    board_entry = @board_entry_comment.board_entry
+
+    authorize = false 
+    authorize = true if session[:user_symbol] == board_entry.symbol 
+
+    if login_user_groups.include?(board_entry.symbol)
+      if login_user_groups.include?(board_entry.user_id)
+        authorize = true 
+      elsif board_entry.publicate?(login_user_symbols)
+        authorize = true 
+      end
+    end
+
+    unless authorize
+      redirect_to :controller => "mypage", :action => "index"
+      flash[:notice] = "このコメントは、削除できません。"
+      return false
+    end
+
     if @board_entry_comment.children.size == 0
       @board_entry_comment.destroy
       flash[:notice] = "コメントを削除しました。"
@@ -116,6 +142,30 @@ class BoardEntriesController < ApplicationController
   # ajax_action
   def ado_edit_comment
     comment = BoardEntryComment.find(params[:id])
+    board_entry = comment.board_entry
+
+    authorize = false 
+
+    if comment.user_id == session[:user_id]
+      if board_entry.symbol == session[:user_symbol]
+        authorize = true
+      end
+      if login_user_groups.include?(board_entry.symbol) 
+        if session[:user_id] == board_entry.user_id
+          authorize = true
+        elsif board_entry.publicate?(login_user_symbols)
+          authorize = true
+        end
+      elsif board_entry.publicate?(login_user_groups)
+        authorize = true
+      end
+    end
+    unless authorize
+      redirect_to :controller => "mypage", :action => "index"
+      flash[:notice] = "このコメントは、編集できません。"
+      return false
+    end
+
     comment.update_attribute :contents, params[:comment][:contents]
     render :partial => "comment_contents", :locals =>{ :comment => comment }
   end

@@ -99,6 +99,13 @@ class BookmarkController < ApplicationController
   # ブックマークコメントの削除
   def destroy
     comment = BookmarkComment.find(params[:comment_id])
+
+    unless comment.user_id == session[:user_id]
+      flash[:warning] = "このブックマークコメントは、削除できません"
+      redirect_to  :controller => 'mypage', :action =>'index'
+      return false
+    end
+
     if comment.destroy
       flash[:notice] = '削除しました。'
     else
@@ -154,6 +161,10 @@ class BookmarkController < ApplicationController
 
   def ado_set_stared
     bookmark_comment = BookmarkComment.find_by_id(params[:bookmark_comment_id])
+    unless bookmark_comment.user_id == session[:user_id]
+      render :nothing => true
+      return false
+    end
     bookmark_comment.update_attribute(:stared, params[:stared])
     render :partial => "bookmark/stared", :locals => {:bookmark_comment => bookmark_comment}
   end
