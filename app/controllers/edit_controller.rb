@@ -115,15 +115,6 @@ class EditController < ApplicationController
 
   # link_action
   def edit
-#    unless check_entry_permission
-#      render :text => "不正な操作です"
-#      return false
-#    end
-#    unless authorize_to_update_board_entry? BoardEntry.find(params[:id])
-#      # TODO エントリ表示画面への遷移がベター
-#      render :text => "不正な操作です"
-#      return false
-#    end
     @board_entry = get_entry(params[:id])
     authorize_to_edit_board_entry @board_entry
 

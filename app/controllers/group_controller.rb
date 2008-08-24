@@ -19,7 +19,8 @@ class GroupController < ApplicationController
 
   before_filter :check_owned,
                 :only => [ :manage, :managers, :permit,
-                           :update, :destroy, :toggle_owned, :permit_participation ]
+                           :update, :destroy, :toggle_owned, 
+                           :forced_leave_user, :change_participation, :append_user ]
 
   verify :method => :post,
          :only => [ :join, :destroy, :leave, :update, :change_participation, :ado_set_favorite ],
@@ -129,6 +130,11 @@ class GroupController < ApplicationController
 
   # tab_menu
   def new
+    unless login_user_groups.include? @group.symbol
+      flash[:warning] = "グループに参加していません。"
+      redirect_to :controller => 'mypage', :action => 'index'
+      return false
+    end
     redirect_to(:controller => 'edit',
                 :action => '',
                 :entry_type => BoardEntry::GROUP_BBS,
@@ -228,6 +234,11 @@ class GroupController < ApplicationController
   # 管理者変更
   def toggle_owned
     group_participation = GroupParticipation.find(params[:participation_id])
+    unless group_participation.user_id != session[:user_id]
+      flash[:warning] = '権限変更に失敗しました。'
+      redirect_to :action => 'manage', :menu => 'manage_participations'
+      return false
+    end
     group_participation.owned = !group_participation.owned?
 
     if group_participation.save
@@ -240,8 +251,9 @@ class GroupController < ApplicationController
 
   # 管理者による強制退会処理
   def forced_leave_user
-    unless group_participation = GroupParticipation.find_by_id(params[:participation_id])
-      flash[:warning] = "そのユーザは既に退会しています。"
+    group_participation = GroupParticipation.find(params[:participation_id])
+    unless group_participation.group_id == @participation.group_id
+      flash[:warning] = "そのユーザは、このグループに参加していません。"
       redirect_to :action => 'manage', :menu => 'manage_participations'
       return false
     end
@@ -274,13 +286,18 @@ class GroupController < ApplicationController
       flash[:warning] = "参加に承認は不要です"
       redirect_to :action => :show
     end
-
     type_name = params[:submit_type] == 'permit' ? "許可" : "棄却"
 
     if states = params[:participation_state]
       states.each do |participation_id, state|
         if state == 'true'
           participation = GroupParticipation.find(participation_id)
+          if participation.group_id == @participation.group_id &&
+            !participation.waiting
+            flash[:warning] = "このグループに参加済みのユーザが含まれています。"
+            redirect_to :action => 'manage', :menu => 'manage_permit'
+            return false
+          end
           result = nil
           if params[:submit_type] == 'permit'
             participation.waiting = false
@@ -326,6 +343,10 @@ class GroupController < ApplicationController
     par_id = params[:group_participation_id]
     favorite_flag = params[:favorite_flag]
     participation = @group.group_participations.find(par_id)
+    if participation.user_id == session[:user_id]
+      render :nothing => true
+      return false
+    end
     participation.update_attribute(:favorite, favorite_flag)
     render :partial => "groups/favorite", :locals => { :gid => @group.gid, :participation => participation, :update_elem_id => params[:update_elem_id]}
   end

@@ -27,6 +27,11 @@ class MontaController < ApplicationController
   end
 
   def ado_view_contents
+    unless check_entry_permission
+      render :text => "不正な操作です"
+      return false
+    end
+
     return unless get_board_entry
 
     @index = 0
@@ -52,6 +57,7 @@ class MontaController < ApplicationController
     render :layout=>false
   end
 
+private
   def decorate_str(str, user_id, board_entry_id, board_entry_user_id)
     view_str = str
     # 黄色い付箋紙を追加
@@ -116,7 +122,6 @@ class MontaController < ApplicationController
     return content_array, counter_array
   end
 
-private
   def get_board_entry
     begin
       @board_entry = BoardEntry.find(params[:id])

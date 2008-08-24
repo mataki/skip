@@ -117,6 +117,10 @@ class FeedController < ApplicationController
 
   def user_antenna
     antenna = Antenna.find(params[:antenna_id])
+    unless antenna.user_id == session[:user_id]
+      render :nothing => true
+      return false
+    end
     symbols, keyword = antenna.get_search_conditions
     find_params = BoardEntry.make_conditions(login_user_symbols, :symbols => symbols, :keyword => keyword)
     user_reading_condition find_params
