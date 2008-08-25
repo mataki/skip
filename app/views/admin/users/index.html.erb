@@ -2,6 +2,7 @@
 <% content_for :contents_right do -%>
 <h1><%= _('Listing %{model}') % {:model => _('user')} %></h1>
 
+<%= render :partial => '/admin/search_box' %>
 <table>
   <tr>
     <% %w[Email Name Section Extension Introduction Retired Admin].each do |column| -%>

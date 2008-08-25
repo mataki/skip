@@ -14,4 +14,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Admin::Bookmark < Bookmark
+  def self.search_colomns
+    "title like :lqs or url like :lqs"
+  end
 end

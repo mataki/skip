@@ -14,4 +14,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Admin::Group < Group
+  def self.search_colomns
+    "name like :lqs or gid like :lqs or description like :lqs or category like :lqs"
+  end
 end

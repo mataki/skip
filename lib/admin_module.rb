@@ -43,7 +43,8 @@ module AdminModule
     include AdminModule::AdminUtil
 
     def index
-      objects = admin_model_class.find(:all)
+      @query = params[:query]
+      objects = admin_model_class.find(:all, :conditions => [admin_model_class.search_colomns, { :lqs => SkipUtil.to_lqs(@query) }])
       set_pluralize_instance_val objects
 
       respond_to do |format|

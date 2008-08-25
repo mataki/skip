@@ -41,7 +41,7 @@ describe Admin::AccountsController do
     end
 
     it "should find all admin_accounts" do
-      Admin::Account.should_receive(:find).with(:all).and_return([@account])
+      Admin::Account.should_receive(:find).and_return([@account])
       do_get
     end
 
@@ -69,7 +69,7 @@ describe Admin::AccountsController do
     end
 
     it "should find all admin_accounts" do
-      Admin::Account.should_receive(:find).with(:all).and_return(@accounts)
+      Admin::Account.should_receive(:find).and_return(@accounts)
       do_get
     end
 
@@ -326,6 +326,48 @@ describe Admin::AccountsController do
     it "should redirect to the admin_accounts list" do
       do_delete
       response.should redirect_to(admin_accounts_url)
+    end
+  end
+end
+
+describe Admin::AccountsController do
+  before do
+    admin_login
+  end
+
+  describe "GET index" do
+    describe "条件がない場合" do
+      before do
+        @accounts = (1..3).map{|i| mock_model(Admin::Account)}
+        Admin::Account.should_receive(:find).and_return(@accounts)
+        get :index
+      end
+      it "@accountsが設定されていること" do
+        assigns[:accounts].should equal(@accounts)
+      end
+
+      it "indexがレンダリングされること" do
+        response.should render_template('admin/accounts/index')
+      end
+
+    end
+
+    describe "検索条件がある場合" do
+      before do
+        @query = 'hoge'
+        @accounts = (1..3).map{|i| mock_model(Admin::Account)}
+        conditions = [Admin::Account.search_colomns, {:lqs => SkipUtil.to_lqs(@query)}]
+        Admin::Account.should_receive(:find).with(:all, :conditions => conditions).and_return(@accounts)
+        get :index, :query => @query
+      end
+
+      it "@accountsが設定されていること" do
+        assigns[:accounts].should equal(@accounts)
+      end
+
+      it "@queryが設定されていること" do
+        assigns[:query].should equal(@query)
+      end
     end
   end
 end

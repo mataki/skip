@@ -21,4 +21,8 @@ class Admin::User < User
   N_('Admin user|Introduction')
   N_('Admin user|Retired')
   N_('Admin user|Admin')
+
+  def self.search_colomns
+    "name like :lqs or email like :lqs or section like :lqs or extension like :lqs or introduction like :lqs"
+  end
 end

@@ -24,4 +24,8 @@ class Admin::ShareFile < ShareFile
   N_('Admin share_file|ContentType')
   N_('Admin share_file|PublicationType')
   N_('Admin share_file|PublicationSymbolsType')
+
+  def self.search_colomns
+    "file_name like :lqs or description like :lqs or category like :lqs"
+  end
 end

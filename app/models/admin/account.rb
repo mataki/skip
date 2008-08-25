@@ -20,4 +20,8 @@ class Admin::Account < Account
   N_('Admin account|Section')
   N_('Admin account|Password')
   N_('Admin account|Password confirmation')
+
+  def self.search_colomns
+    "code like :lqs or name like :lqs or email like :lqs or section like :lqs"
+  end
 end

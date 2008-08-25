@@ -14,4 +14,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Admin::BoardEntry < BoardEntry
+  def self.search_colomns
+    "contents like :lqs or title like :lqs or category like :lqs"
+  end
 end
