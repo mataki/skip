@@ -340,6 +340,10 @@ class MypageController < ApplicationController
     id = params[:element_id] ? params[:element_id].split('_')[3] : nil
 
     antenna = Antenna.find(id)
+    unless antenna.user_id == session[:user_id]
+      render :text => ""
+      return false
+    end
     antenna.name = params[:value]
     if antenna.save
       # Inplaceエディタ内で直接ここで返した文字列を表示するためにHTMLエスケープする
@@ -355,12 +359,22 @@ class MypageController < ApplicationController
   end
 
   def delete_antenna
-    Antenna.destroy(params[:antenna_id])
+    antenna = Antenna.find(params[:antenna_id])
+    unless antenna.user_id == session[:user_id]
+      render :text => ""
+      return false
+    end
+    antenna.destroy
     render :partial => 'antennas', :object => find_antennas, :locals => { :for_manage => true }
   end
 
   def delete_antenna_item
-    AntennaItem.delete(params[:antenna_item_id])
+    item = AntennaItem.find(params[:antenna_item_id])
+    unless item.antenna.user_id == session[:user_id]
+      render :text => ""
+      return false
+    end
+    item.destroy
     render :partial => 'antennas', :object => find_antennas, :locals => { :for_manage => true }
   end
 
