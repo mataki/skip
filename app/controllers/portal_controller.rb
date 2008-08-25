@@ -47,26 +47,15 @@ class PortalController < ApplicationController
   #ユーザ登録処理
   def apply
     params[:user][:section] = params[:new_section].tr('ａ-ｚＡ-Ｚ１-９','a-zA-Z1-9').upcase unless params[:new_section].empty?
-    params[:profile][:alma_mater] = params[:new_alma_mater] unless params[:new_alma_mater].empty?
-    params[:profile][:address_2] = params[:new_address_2] unless params[:new_address_2].empty?
-
     @user = User.new(params[:user].update({ :name => session[:user_name], :email => session[:user_email] }))
 
-    if INITIAL_SETTINGS['nickname_use_setting']
-      @user_uid = UserUid.new(params[:user_uid].update(:uid_type => UserUid::UID_TYPE[:nickname]))
-      @user.user_uids << @user_uid if params[:user_uid][:uid] != session[:user_code]
-    else
-      @user_uid = UserUid.new({ :uid => session[:user_code] })
-    end
+    user_uid = make_user_uid
 
+    @profile = make_profile
+
+    @user.user_uids << user_uid if INITIAL_SETTINGS['nickname_use_setting'] && (params[:user_uid][:uid] != session[:user_code])
     @user.user_uids << UserUid.new({:uid => session[:user_code], :uid_type => UserUid::UID_TYPE[:master]})
 
-    @profile = params[:write_profile] ? UserProfile.new(params[:profile]) : UserProfile.new
-    @profile.hobby = ''
-    if (params[:hobbies] && params[:hobbies].size > 0 )
-      @profile.hobby = params[:hobbies].join(',') + ','
-    end
-    @profile.disclosure = params[:write_profile] ? true : false
     @user.user_profile = @profile if params[:write_profile]
 
     if @user.save
@@ -91,7 +80,7 @@ class PortalController < ApplicationController
     else
       @error_msg = []
       @error_msg.concat @user.errors.full_messages.reject{|msg| msg.include?("User uid") || msg.include?("User profile") } unless @user.valid?
-      @error_msg.concat @user_uid.errors.full_messages if @user_uid and @user_uid.errors
+      @error_msg.concat user_uid.errors.full_messages if user_uid and user_uid.errors
       @error_msg.concat @profile.errors.full_messages if @profile and @profile.errors
 
       render :action => :registration
@@ -122,5 +111,27 @@ private
              EOS
       return false
     end
+  end
+
+  def make_profile
+    params[:profile][:alma_mater] = params[:new_alma_mater] unless params[:new_alma_mater].empty?
+    params[:profile][:address_2] = params[:new_address_2] unless params[:new_address_2].empty?
+
+    profile = params[:write_profile] ? UserProfile.new(params[:profile]) : UserProfile.new
+    profile.hobby = ''
+    if (params[:hobbies] && params[:hobbies].size > 0 )
+      profile.hobby = params[:hobbies].join(',') + ','
+    end
+    profile.disclosure = params[:write_profile] ? true : false
+    profile
+  end
+
+  def make_user_uid
+    if INITIAL_SETTINGS['nickname_use_setting']
+      user_uid = UserUid.new(params[:user_uid].update(:uid_type => UserUid::UID_TYPE[:nickname]))
+    else
+      user_uid = UserUid.new({ :uid => session[:user_code] })
+    end
+    user_uid
   end
 end
