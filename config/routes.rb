@@ -36,7 +36,7 @@ ActionController::Routing::Routes.draw do |map|
   map.ranking_data 'ranking_data/:content_type/:year/:month', :controller => 'rankings', :action => 'data', :year => /\d{4}/, :month => /\d{2}/, :conditions => { :method => :get }, :defaults => { :year => '', :month => '' }
 
   map.namespace "admin" do |admin_map|
-    admin_map.root :controller => 'accounts', :action => 'index'
+    admin_map.root :controller => 'users', :action => 'index'
     admin_map.resources :accounts do |account|
       account.resources :openid_identifiers
     end

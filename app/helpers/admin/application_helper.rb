@@ -22,14 +22,15 @@ module Admin::ApplicationHelper
   end
 
   def generate_admin_box_menu selected_path = nil
+    accounts_link = (ENV['SKIPOP_URL'].blank? ? admin_accounts_path : "#{ENV['SKIPOP_URL']}admin/accounts")
     output = ''
     output << '<ul>'
-    output << generate_box_menu_link( _('account'), admin_accounts_path, admin_accounts_path == selected_path )
     output << generate_box_menu_link( _('user'), admin_users_path, admin_users_path == selected_path )
-    output << generate_box_menu_link( _('bookmark'), admin_bookmarks_path , admin_bookmarks_path == selected_path)
-    output << generate_box_menu_link( _('board entry'), admin_board_entries_path, admin_board_entries_path == selected_path )
-    output << generate_box_menu_link( _('share file'), admin_share_files_path, admin_share_files_path == selected_path )
     output << generate_box_menu_link( _('group'), admin_groups_path, admin_groups_path == selected_path )
+    output << generate_box_menu_link( _('board entry'), admin_board_entries_path, admin_board_entries_path == selected_path )
+    output << generate_box_menu_link( _('bookmark'), admin_bookmarks_path , admin_bookmarks_path == selected_path)
+    output << generate_box_menu_link( _('share file'), admin_share_files_path, admin_share_files_path == selected_path )
+    output << generate_box_menu_link( _('account'), accounts_link, admin_accounts_path == selected_path )
     output << '</ul>'
   end
 
