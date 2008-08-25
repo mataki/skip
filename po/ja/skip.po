@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-08-25 16:41+0900\n"
+"POT-Creation-Date: 2008-08-25 17:26+0900\n"
 "PO-Revision-Date: 2008-08-11 18:58+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,29 +20,18 @@ msgstr ""
 msgid "データ管理"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:27 app/models/account.rb:-
-#: app/views/admin/accounts/new.html.erb:3
-#: app/views/admin/accounts/edit.html.erb:3
-#: app/views/admin/accounts/index.html.erb:3
-#: app/views/admin/accounts/index.html.erb:27
-#: app/views/admin/openid_identifiers/index.html.erb:23
-msgid "account"
-msgstr "アカウント"
-
 #: app/helpers/admin/application_helper.rb:28 app/models/user.rb:-
 #: app/views/admin/users/new.html.erb:3 app/views/admin/users/edit.html.erb:3
 #: app/views/admin/users/index.html.erb:3
-#: app/views/admin/users/index.html.erb:30
+#: app/views/admin/users/index.html.erb:31
 msgid "user"
 msgstr "ユーザー"
 
-#: app/helpers/admin/application_helper.rb:29 app/models/bookmark.rb:-
-#: app/views/admin/bookmarks/new.html.erb:3
-#: app/views/admin/bookmarks/edit.html.erb:3
-#: app/views/admin/bookmarks/index.html.erb:3
-#: app/views/admin/bookmarks/index.html.erb:25
-msgid "bookmark"
-msgstr "ブックマーク"
+#: app/helpers/admin/application_helper.rb:29 app/models/group.rb:-
+#: app/views/admin/groups/edit.html.erb:3
+#: app/views/admin/groups/index.html.erb:3
+msgid "group"
+msgstr "グループ"
 
 #: app/helpers/admin/application_helper.rb:30 app/models/board_entry.rb:-
 #: app/views/admin/board_entries/edit.html.erb:3
@@ -51,14 +40,28 @@ msgstr "ブックマーク"
 msgid "board entry"
 msgstr "エントリ"
 
-#: app/helpers/admin/application_helper.rb:31 app/models/share_file.rb:-
+#: app/helpers/admin/application_helper.rb:31 app/models/bookmark.rb:-
+#: app/views/admin/bookmarks/new.html.erb:3
+#: app/views/admin/bookmarks/edit.html.erb:3
+#: app/views/admin/bookmarks/index.html.erb:3
+#: app/views/admin/bookmarks/index.html.erb:26
+msgid "bookmark"
+msgstr "ブックマーク"
+
+#: app/helpers/admin/application_helper.rb:32 app/models/share_file.rb:-
+#: app/views/admin/share_files/edit.html.erb:3
 #: app/views/admin/share_files/index.html.erb:3
 msgid "share file"
 msgstr "共有ファイル"
 
-#: app/helpers/admin/application_helper.rb:32 app/models/group.rb:-
-msgid "group"
-msgstr "グループ"
+#: app/helpers/admin/application_helper.rb:33 app/models/account.rb:-
+#: app/views/admin/accounts/new.html.erb:3
+#: app/views/admin/accounts/edit.html.erb:3
+#: app/views/admin/accounts/index.html.erb:3
+#: app/views/admin/accounts/index.html.erb:28
+#: app/views/admin/openid_identifiers/index.html.erb:23
+msgid "account"
+msgstr "アカウント"
 
 #: app/models/site_count.rb:-
 msgid "site count"
@@ -666,9 +669,9 @@ msgstr "タグ"
 msgid "Tag|Tag type"
 msgstr "タグタイプ"
 
-#: app/models/group_participation.rb:-
+#: app/models/group_participation.rb:- app/views/admin/groups/show.html.erb:31
 msgid "group participation"
-msgstr ""
+msgstr "グループ参加"
 
 #: app/models/group_participation.rb:-
 msgid "GroupParticipation|Created on"
@@ -680,7 +683,7 @@ msgstr ""
 
 #: app/models/group_participation.rb:-
 msgid "GroupParticipation|User"
-msgstr ""
+msgstr "ユーザ"
 
 #: app/models/group_participation.rb:-
 msgid "GroupParticipation|Group"
@@ -688,15 +691,15 @@ msgstr ""
 
 #: app/models/group_participation.rb:-
 msgid "GroupParticipation|Waiting"
-msgstr ""
+msgstr "許可待ち"
 
 #: app/models/group_participation.rb:-
 msgid "GroupParticipation|Owned"
-msgstr ""
+msgstr "管理者"
 
 #: app/models/group_participation.rb:-
 msgid "GroupParticipation|Favorite"
-msgstr ""
+msgstr "お気に入り"
 
 #: app/models/bookmark_comment_tag.rb:-
 msgid "bookmark comment tag"
@@ -1131,6 +1134,42 @@ msgstr "お気に入り"
 msgid "Admin::BoardEntryComment|Contents"
 msgstr "コメント"
 
+#: app/models/admin/group_participation.rb:17
+msgid "Admin::GroupParticipation|User"
+msgstr "ユーザ"
+
+#: app/models/admin/group_participation.rb:18
+msgid "Admin::GroupParticipation|Waiting"
+msgstr "許可待ち"
+
+#: app/models/admin/group_participation.rb:19
+msgid "Admin::GroupParticipation|Owned"
+msgstr "管理者"
+
+#: app/models/admin/group_participation.rb:20
+msgid "Admin::GroupParticipation|Favorite"
+msgstr "お気に入り"
+
+#: app/models/admin/group.rb:17
+msgid "Admin::Group|Name"
+msgstr "グループ名"
+
+#: app/models/admin/group.rb:18
+msgid "Admin::Group|Gid"
+msgstr "グループID"
+
+#: app/models/admin/group.rb:19
+msgid "Admin::Group|Description"
+msgstr "説明"
+
+#: app/models/admin/group.rb:20
+msgid "Admin::Group|Protected"
+msgstr "参加制限"
+
+#: app/models/admin/group.rb:21
+msgid "Admin::Group|Category"
+msgstr "タグ"
+
 #: app/models/admin/share_file.rb:17
 msgid "Admin::ShareFile|File name"
 msgstr "ファイル名"
@@ -1212,30 +1251,35 @@ msgstr "パスワード"
 msgid "Admin::Account|Password confirmation"
 msgstr "確認パスワード"
 
+#: app/views/admin/_search_box.html.erb:4
+msgid "Search"
+msgstr ""
+
 #: app/views/admin/share_files/show.html.erb:24
-#: app/views/admin/share_files/index.html.erb:19
+#: app/views/admin/share_files/index.html.erb:20
 #: app/views/admin/bookmark_comments/show.html.erb:24
 #: app/views/admin/board_entries/show.html.erb:19
-#: app/views/admin/board_entries/index.html.erb:18
+#: app/views/admin/board_entries/index.html.erb:19
 #: app/views/admin/accounts/show.html.erb:24
-#: app/views/admin/accounts/index.html.erb:19
+#: app/views/admin/accounts/index.html.erb:20
 #: app/views/admin/users/show.html.erb:39
-#: app/views/admin/users/index.html.erb:22
+#: app/views/admin/users/index.html.erb:23
 #: app/views/admin/board_entry_comments/show.html.erb:9
 #: app/views/admin/board_entry_comments/index.html.erb:14
-#: app/views/admin/group_participations/show.html.erb:24
+#: app/views/admin/group_participations/show.html.erb:25
 #: app/views/admin/group_participations/index.html.erb:20
 #: app/views/admin/groups/show.html.erb:29
-#: app/views/admin/groups/index.html.erb:22
+#: app/views/admin/groups/index.html.erb:21
 #: app/views/admin/openid_identifiers/show.html.erb:9
 #: app/views/admin/openid_identifiers/index.html.erb:14
 #: app/views/admin/bookmarks/show.html.erb:14
-#: app/views/admin/bookmarks/index.html.erb:17
+#: app/views/admin/bookmarks/index.html.erb:18
 msgid "Edit"
 msgstr "編集"
 
 #: app/views/admin/share_files/show.html.erb:25
 #: app/views/admin/share_files/new.html.erb:12
+#: app/views/admin/share_files/edit.html.erb:14
 #: app/views/admin/bookmark_comments/show.html.erb:25
 #: app/views/admin/bookmark_comments/edit.html.erb:30
 #: app/views/admin/board_entries/show.html.erb:20
@@ -1248,7 +1292,7 @@ msgstr "編集"
 #: app/views/admin/users/edit.html.erb:42
 #: app/views/admin/board_entry_comments/show.html.erb:10
 #: app/views/admin/board_entry_comments/edit.html.erb:18
-#: app/views/admin/group_participations/show.html.erb:25
+#: app/views/admin/group_participations/show.html.erb:26
 #: app/views/admin/group_participations/new.html.erb:29
 #: app/views/admin/group_participations/edit.html.erb:30
 #: app/views/admin/groups/show.html.erb:30
@@ -1273,6 +1317,53 @@ msgstr "戻る"
 msgid "Create"
 msgstr "作成"
 
+#: app/views/admin/share_files/edit.html.erb:3
+#: app/views/admin/bookmark_comments/edit.html.erb:3
+#: app/views/admin/board_entries/edit.html.erb:3
+#: app/views/admin/accounts/edit.html.erb:3
+#: app/views/admin/users/edit.html.erb:3
+#: app/views/admin/board_entry_comments/edit.html.erb:3
+#: app/views/admin/groups/edit.html.erb:3
+#: app/views/admin/openid_identifiers/edit.html.erb:3
+#: app/views/admin/bookmarks/edit.html.erb:3
+msgid "Editing %{model}"
+msgstr "%{model}の更新"
+
+#: app/views/admin/share_files/edit.html.erb:9
+#: app/views/admin/bookmark_comments/edit.html.erb:25
+#: app/views/admin/board_entries/edit.html.erb:21
+#: app/views/admin/accounts/edit.html.erb:25
+#: app/views/admin/users/edit.html.erb:37
+#: app/views/admin/board_entry_comments/edit.html.erb:13
+#: app/views/admin/group_participations/edit.html.erb:25
+#: app/views/admin/groups/edit.html.erb:29
+#: app/views/admin/openid_identifiers/edit.html.erb:13
+#: app/views/admin/bookmarks/edit.html.erb:17
+msgid "Update"
+msgstr "更新"
+
+#: app/views/admin/share_files/edit.html.erb:13
+#: app/views/admin/share_files/index.html.erb:19
+#: app/views/admin/bookmark_comments/edit.html.erb:29
+#: app/views/admin/board_entries/edit.html.erb:25
+#: app/views/admin/board_entries/index.html.erb:18
+#: app/views/admin/accounts/edit.html.erb:29
+#: app/views/admin/accounts/index.html.erb:19
+#: app/views/admin/users/edit.html.erb:41
+#: app/views/admin/users/index.html.erb:22
+#: app/views/admin/board_entry_comments/edit.html.erb:17
+#: app/views/admin/board_entry_comments/index.html.erb:13
+#: app/views/admin/group_participations/edit.html.erb:29
+#: app/views/admin/group_participations/index.html.erb:19
+#: app/views/admin/groups/edit.html.erb:33
+#: app/views/admin/groups/index.html.erb:20
+#: app/views/admin/openid_identifiers/edit.html.erb:17
+#: app/views/admin/openid_identifiers/index.html.erb:13
+#: app/views/admin/bookmarks/edit.html.erb:21
+#: app/views/admin/bookmarks/index.html.erb:17
+msgid "Show"
+msgstr "詳細"
+
 #: app/views/admin/share_files/index.html.erb:3
 #: app/views/admin/bookmark_comments/index.html.erb:3
 #: app/views/admin/board_entries/show.html.erb:21
@@ -1281,74 +1372,34 @@ msgstr "作成"
 #: app/views/admin/accounts/index.html.erb:3
 #: app/views/admin/users/index.html.erb:3
 #: app/views/admin/board_entry_comments/index.html.erb:3
+#: app/views/admin/groups/show.html.erb:31
+#: app/views/admin/groups/index.html.erb:3
 #: app/views/admin/openid_identifiers/index.html.erb:3
 #: app/views/admin/bookmarks/show.html.erb:16
 #: app/views/admin/bookmarks/index.html.erb:3
 msgid "Listing %{model}"
 msgstr "%{model}一覧"
 
-#: app/views/admin/share_files/index.html.erb:18
-#: app/views/admin/bookmark_comments/edit.html.erb:29
-#: app/views/admin/board_entries/edit.html.erb:25
-#: app/views/admin/board_entries/index.html.erb:17
-#: app/views/admin/accounts/edit.html.erb:29
-#: app/views/admin/accounts/index.html.erb:18
-#: app/views/admin/users/edit.html.erb:41
-#: app/views/admin/users/index.html.erb:21
-#: app/views/admin/board_entry_comments/edit.html.erb:17
-#: app/views/admin/board_entry_comments/index.html.erb:13
-#: app/views/admin/group_participations/edit.html.erb:29
-#: app/views/admin/group_participations/index.html.erb:19
-#: app/views/admin/groups/edit.html.erb:33
-#: app/views/admin/groups/index.html.erb:21
-#: app/views/admin/openid_identifiers/edit.html.erb:17
-#: app/views/admin/openid_identifiers/index.html.erb:13
-#: app/views/admin/bookmarks/edit.html.erb:21
-#: app/views/admin/bookmarks/index.html.erb:16
-msgid "Show"
-msgstr "詳細"
-
-#: app/views/admin/share_files/index.html.erb:20
-#: app/views/admin/board_entries/index.html.erb:19
-#: app/views/admin/accounts/index.html.erb:20
-#: app/views/admin/users/index.html.erb:23
+#: app/views/admin/share_files/index.html.erb:21
+#: app/views/admin/board_entries/index.html.erb:20
+#: app/views/admin/accounts/index.html.erb:21
+#: app/views/admin/users/index.html.erb:24
 #: app/views/admin/board_entry_comments/index.html.erb:15
 #: app/views/admin/group_participations/index.html.erb:21
-#: app/views/admin/groups/index.html.erb:23
+#: app/views/admin/groups/index.html.erb:22
 #: app/views/admin/openid_identifiers/index.html.erb:15
-#: app/views/admin/bookmarks/index.html.erb:18
+#: app/views/admin/bookmarks/index.html.erb:19
 msgid "Destroy"
 msgstr "削除"
 
-#: app/views/admin/bookmark_comments/edit.html.erb:3
-#: app/views/admin/board_entries/edit.html.erb:3
-#: app/views/admin/accounts/edit.html.erb:3
-#: app/views/admin/users/edit.html.erb:3
-#: app/views/admin/board_entry_comments/edit.html.erb:3
-#: app/views/admin/openid_identifiers/edit.html.erb:3
-#: app/views/admin/bookmarks/edit.html.erb:3
-msgid "Editing %{model}"
-msgstr "%{model}の更新"
-
-#: app/views/admin/bookmark_comments/edit.html.erb:25
-#: app/views/admin/board_entries/edit.html.erb:21
-#: app/views/admin/accounts/edit.html.erb:25
-#: app/views/admin/users/edit.html.erb:37
-#: app/views/admin/board_entry_comments/edit.html.erb:13
-#: app/views/admin/group_participations/edit.html.erb:25
-#: app/views/admin/openid_identifiers/edit.html.erb:13
-#: app/views/admin/bookmarks/edit.html.erb:17
-msgid "Update"
-msgstr "更新"
-
 #: app/views/admin/accounts/new.html.erb:3
-#: app/views/admin/accounts/index.html.erb:27
+#: app/views/admin/accounts/index.html.erb:28
 #: app/views/admin/users/new.html.erb:3
-#: app/views/admin/users/index.html.erb:30
+#: app/views/admin/users/index.html.erb:31
 #: app/views/admin/openid_identifiers/new.html.erb:3
 #: app/views/admin/openid_identifiers/index.html.erb:22
 #: app/views/admin/bookmarks/new.html.erb:3
-#: app/views/admin/bookmarks/index.html.erb:25
+#: app/views/admin/bookmarks/index.html.erb:26
 msgid "New %{model}"
 msgstr "新規%{model}の作成"
 
@@ -1361,26 +1412,6 @@ msgstr ""
 #: app/views/admin/openid_identifiers/index.html.erb:23
 msgid "%{model} Show"
 msgstr "%{model}の詳細"
-
-#: app/views/admin/group_participations/show.html.erb:4
-#: app/views/admin/group_participations/index.html.erb:8
-msgid "Waiting"
-msgstr ""
-
-#: app/views/admin/group_participations/show.html.erb:9
-#: app/views/admin/group_participations/index.html.erb:9
-msgid "Owned"
-msgstr ""
-
-#: app/views/admin/group_participations/show.html.erb:14
-#: app/views/admin/group_participations/index.html.erb:10
-msgid "Favorite"
-msgstr ""
-
-#: app/views/admin/group_participations/show.html.erb:19
-#: app/views/admin/group_participations/index.html.erb:7
-msgid "User"
-msgstr "ユーザ"
 
 #: app/views/admin/group_participations/new.html.erb:3
 #: app/views/admin/group_participations/index.html.erb:28
@@ -1395,40 +1426,42 @@ msgstr ""
 msgid "Listing group_participations"
 msgstr ""
 
+#: app/views/admin/group_participations/index.html.erb:7
+msgid "User"
+msgstr "ユーザ"
+
+#: app/views/admin/group_participations/index.html.erb:8
+msgid "Waiting"
+msgstr ""
+
+#: app/views/admin/group_participations/index.html.erb:9
+msgid "Owned"
+msgstr ""
+
+#: app/views/admin/group_participations/index.html.erb:10
+msgid "Favorite"
+msgstr ""
+
 #: app/views/admin/group_participations/index.html.erb:29
 msgid "Group Show"
 msgstr ""
 
-#: app/views/admin/groups/show.html.erb:4
-#: app/views/admin/groups/index.html.erb:7
-msgid "Name"
-msgstr "名前"
-
-#: app/views/admin/groups/show.html.erb:9
-#: app/views/admin/groups/index.html.erb:8
-msgid "Gid"
-msgstr "グループID"
-
-#: app/views/admin/groups/show.html.erb:14
-#: app/views/admin/groups/index.html.erb:9
-msgid "Description"
-msgstr "説明文"
-
-#: app/views/admin/groups/show.html.erb:19
-#: app/views/admin/groups/index.html.erb:10
-msgid "Protected"
-msgstr "参加制限"
-
-#: app/views/admin/groups/show.html.erb:24
-#: app/views/admin/groups/index.html.erb:11
-msgid "Category"
-msgstr "カテゴリ"
-
-#: app/views/admin/groups/show.html.erb:31
-msgid "GroupParticipation List"
-msgstr ""
-
 #: app/views/admin/groups/new.html.erb:3
-#: app/views/admin/groups/index.html.erb:30
+#: app/views/admin/groups/index.html.erb:29
 msgid "New group"
 msgstr "新規グループの作成"
+
+#~ msgid "Name"
+#~ msgstr "名前"
+
+#~ msgid "Gid"
+#~ msgstr "グループID"
+
+#~ msgid "Description"
+#~ msgstr "説明文"
+
+#~ msgid "Protected"
+#~ msgstr "参加制限"
+
+#~ msgid "Category"
+#~ msgstr "カテゴリ"

@@ -1,24 +1,25 @@
 <%= render :partial => '/admin/contents_left' %>
 <% content_for :contents_right do -%>
 <p>
-  <b><%= _('Waiting') %>:</b>
+  <b><%= label @group_participation.class, :user %>:</b>
+  <%=h @group_participation.user.name %>
+</p>
+
+<p>
+  <b><%= label @group_participation.class, :waiting %>:</b>
   <%=h @group_participation.waiting %>
 </p>
 
 <p>
-  <b><%= _('Owned') %>:</b>
+  <b><%= label @group_participation.class, :owned %>:</b>
   <%=h @group_participation.owned %>
 </p>
 
 <p>
-  <b><%= _('Favorite') %>:</b>
+  <b><%= label @group_participation.class, :favorite %>:</b>
   <%=h @group_participation.favorite %>
 </p>
 
-<p>
-  <b><%= _('User') %>:</b>
-  <%=h @group_participation.user_id %>
-</p>
 
 
 <%= link_to _('Edit'), edit_admin_group_group_participation_path(@group, @group_participation) %> |

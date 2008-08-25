@@ -14,6 +14,12 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Admin::Group < Group
+  N_('Admin::Group|Name')
+  N_('Admin::Group|Gid')
+  N_('Admin::Group|Description')
+  N_('Admin::Group|Protected')
+  N_('Admin::Group|Category')
+
   def self.search_colomns
     "name like :lqs or gid like :lqs or description like :lqs or category like :lqs"
   end

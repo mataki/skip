@@ -1,32 +1,32 @@
 <%= render :partial => '/admin/contents_left' %>
 <% content_for :contents_right do -%>
 <p>
-  <b><%= _('Name') %>:</b>
+  <b><%= label @group.class, :name %>:</b>
   <%=h @group.name %>
 </p>
 
 <p>
-  <b><%= _('Gid') %>:</b>
+  <b><%= label @group.class, :gid %>:</b>
   <%=h @group.gid %>
 </p>
 
 <p>
-  <b><%= _('Description') %>:</b>
+  <b><%= label @group.class, :description %>:</b>
   <%=h @group.description %>
 </p>
 
 <p>
-  <b><%= _('Protected') %>:</b>
+  <b><%= label @group.class, :protected %>:</b>
   <%=h @group.protected %>
 </p>
 
 <p>
-  <b><%= _('Category') %>:</b>
+  <b><%= label @group.class, :category %>:</b>
   <%=h @group.category %>
 </p>
 
 
 <%= link_to _('Edit'), edit_admin_group_path(@group) %> |
 <%= link_to _('Back'), admin_groups_path %> |
-<%= link_to _('GroupParticipation List'), admin_group_group_participations_path(@group) %>
+<%= link_to _('Listing %{model}') % {:model => _('group participation')}, admin_group_group_participations_path(@group) %>
 <% end -%>

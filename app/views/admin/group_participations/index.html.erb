@@ -1,13 +1,12 @@
 <%= render :partial => '/admin/contents_left' %>
 <% content_for :contents_right do -%>
-<h1><%= _('Listing group_participations') %></h1>
+<h1><%= _('Listing %{model}') % {:model => _('group participation')} %></h1>
 
 <table>
   <tr>
-    <th><%= _('User') %></th>
-    <th><%= _('Waiting') %></th>
-    <th><%= _('Owned') %></th>
-    <th><%= _('Favorite') %></th>
+    <% %w[User Waiting Owned Favorite].each do |column| -%>
+    <th><%= _("Admin::GroupParticipation|#{column}") %></th>
+    <% end -%>
   </tr>
 
 <% for group_participation in @group_participations %>
@@ -26,5 +25,5 @@
 <br />
 
 <%= link_to _('New group_participation'), new_admin_group_group_participation_path %> |
-<%= link_to _('Group Show'), admin_group_path(@group) %>
+<%= link_to _('%{model} Show') % {:model => _('group')}, admin_group_path(@group) %>
 <% end -%>

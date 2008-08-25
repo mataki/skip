@@ -14,4 +14,8 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Admin::GroupParticipation < GroupParticipation
+  N_('Admin::GroupParticipation|User')
+  N_('Admin::GroupParticipation|Waiting')
+  N_('Admin::GroupParticipation|Owned')
+  N_('Admin::GroupParticipation|Favorite')
 end
