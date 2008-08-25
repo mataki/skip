@@ -17,6 +17,8 @@ class Admin::GroupParticipationsController < Admin::ApplicationController
   before_filter :load_parent
   include AdminModule::AdminChildModule
 
+  undef create
+
   private
   def load_parent
     @group ||= Admin::Group.find(params[:group_id])

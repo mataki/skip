@@ -191,40 +191,6 @@ describe Admin::BoardEntryCommentsController do
     end
   end
 
-  describe "handling POST /admin_board_entry_comments" do
-    before do
-      @board_entry_comments.stub!(:build).with({}).and_return(@board_entry_comment)
-    end
-    describe "with successful save" do
-      def do_post
-        @board_entry_comment.should_receive(:save).and_return(true)
-        post :create, :admin_board_entry_comment => {}
-      end
-
-      it "should create a new board_entry_comment" do
-        @board_entry_comments.should_receive(:build).with({}).and_return(@board_entry_comment)
-        do_post
-      end
-
-      it "should redirect to the new board_entry_comment" do
-        do_post
-        response.should redirect_to(admin_board_entry_board_entry_comment_url(@board_entry, @board_entry_comment))
-      end
-    end
-
-    describe "with failed save" do
-      def do_post
-        @board_entry_comment.should_receive(:save).and_return(false)
-        post :create, :admin_board_entry_comment => {}
-      end
-
-      it "should re-render 'new'" do
-        do_post
-        response.should render_template('new')
-      end
-    end
-  end
-
   describe "handling PUT /admin_board_entry_comments/1" do
     describe "with successful update" do
       def do_put
@@ -291,5 +257,17 @@ describe Admin::BoardEntryCommentsController do
       do_delete
       response.should redirect_to(admin_board_entry_board_entry_comments_path(@board_entry))
     end
+  end
+end
+
+describe Admin::BoardEntryCommentsController, 'POST /create' do
+  before do
+    admin_login
+    controller.stub!(:load_parent)
+  end
+  it 'UnknownActionになること' do
+    lambda do
+      post :create
+    end.should raise_error(ActionController::UnknownAction)
   end
 end

@@ -15,4 +15,6 @@
 
 class Admin::BoardEntriesController < Admin::ApplicationController
   include AdminModule::AdminRootModule
+
+  undef create
 end

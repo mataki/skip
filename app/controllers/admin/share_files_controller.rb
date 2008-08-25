@@ -15,4 +15,6 @@
 
 class Admin::ShareFilesController < Admin::ApplicationController
   include AdminModule::AdminRootModule
+
+  undef create
 end

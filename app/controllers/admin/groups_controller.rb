@@ -15,4 +15,6 @@
 
 class Admin::GroupsController < Admin::ApplicationController
   include AdminModule::AdminRootModule
+
+  undef create
 end

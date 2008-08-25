@@ -15,4 +15,6 @@
 
 class Admin::UsersController < Admin::ApplicationController
   include AdminModule::AdminRootModule
+
+  undef create
 end

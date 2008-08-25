@@ -13,8 +13,16 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class Admin::BookmarksController < Admin::ApplicationController
-  include AdminModule::AdminRootModule
+require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-  undef create
+describe Admin::BookmarkCommentsController, 'POST /create' do
+  before do
+    admin_login
+    controller.stub!(:load_parent)
+  end
+  it 'UnknownActionになること' do
+    lambda do
+      post :create
+    end.should raise_error(ActionController::UnknownAction)
+  end
 end

@@ -17,6 +17,8 @@ class Admin::BookmarkCommentsController < Admin::ApplicationController
   before_filter :load_parent
   include AdminModule::AdminChildModule
 
+  undef create
+
   private
   def load_parent
     @bookmark ||= Admin::Bookmark.find(params[:bookmark_id])
