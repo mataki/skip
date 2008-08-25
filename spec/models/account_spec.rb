@@ -27,6 +27,30 @@ describe Account, "何も指定していない場合エラーが設定される"
   it { @account.should have(2).errors_on(:password) }
 end
 
+describe Account, "#code" do
+  before do
+    @account = new_account
+  end
+  describe "記号(.)が含まれている場合" do
+    before do
+      @account.code = "hoge.hoge"
+      @account.save
+    end
+    it "バリデーションエラーになること" do
+      @account.should_not be_valid
+    end
+  end
+  describe "記号(_)が含まれている場合" do
+    before do
+      @account.code = "hoge_hoge"
+      @account.save
+    end
+    it "保存できること" do
+      @account.should be_valid
+    end
+  end
+end
+
 describe Account, "適切な値が与えられた場合保存できる" do
   before(:each) do
     @account = new_account
