@@ -35,7 +35,7 @@ td, th {
   <tr>
     <th width="100px"><label for="user_uid">ニックネーム</label></th>
   <% if is_new %>
-    <td><%= text_field 'user_uid', 'uid', {:tabindex => (tabindex += 1), :disabled => !INITIAL_SETTING['nickname_use_setting']} %>（4桁以上）<span id="uid_result" style="margin-left:3px;color:gray;font-size:10px"></span><span id="indicator" style="display:none;"><%= skip_image_tag 'indicator.gif' %></span><div class="desc">半角英数の他にハイフン「-」,アンダーバー「_」が利用できます</div>
+    <td><%= text_field 'user_uid', 'uid', {:tabindex => (tabindex += 1), :disabled => !INITIAL_SETTINGS['nickname_use_setting']} %>（4桁以上）<span id="uid_result" style="margin-left:3px;color:gray;font-size:10px"></span><span id="indicator" style="display:none;"><%= skip_image_tag 'indicator.gif' %></span><div class="desc">半角英数の他にハイフン「-」,アンダーバー「_」が利用できます</div>
   <% else %>
     <td><%= h @user.uid %></td>
   <% end %>

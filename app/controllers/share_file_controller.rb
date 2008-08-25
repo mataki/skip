@@ -270,8 +270,8 @@ private
     if  file_obj
       if file_obj.size == 0
         return "存在しないもしくはサイズ０のファイルはアップロードできません。"
-      elsif file_obj.size > INITIAL_SETTING['max_share_file_size'].to_i
-        return (INITIAL_SETTING['max_share_file_size'].to_i/1024/1024).to_s + "Ｍバイト以上のファイルはアップロードできません。"
+      elsif file_obj.size > INITIAL_SETTINGS['max_share_file_size'].to_i
+        return (INITIAL_SETTINGS['max_share_file_size'].to_i/1024/1024).to_s + "Ｍバイト以上のファイルはアップロードできません。"
       end
     end
     return nil

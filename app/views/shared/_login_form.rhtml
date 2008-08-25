@@ -36,7 +36,7 @@
       <td><%= password_field 'login', 'password', { 'size' => 15, :onfocus=>'select();', 'AUTOCOMPLETE' => "on" } %></td>
     </tr>
 
-    <% if INITIAL_SETTING['ssl_setting'] %>
+    <% if INITIAL_SETTINGS['ssl_setting'] %>
       <tr valign="top" align="left" class="password_auth">
         <td>
           <div style="margin-top: 15px; _margin-top: 0px;">
