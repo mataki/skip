@@ -14,12 +14,12 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Admin::Account < Account
-  N_('Admin account|Code')
-  N_('Admin account|Name')
-  N_('Admin account|Email')
-  N_('Admin account|Section')
-  N_('Admin account|Password')
-  N_('Admin account|Password confirmation')
+  N_('Admin::Account|Code')
+  N_('Admin::Account|Name')
+  N_('Admin::Account|Email')
+  N_('Admin::Account|Section')
+  N_('Admin::Account|Password')
+  N_('Admin::Account|Password confirmation')
 
   def self.search_colomns
     "code like :lqs or name like :lqs or email like :lqs or section like :lqs"

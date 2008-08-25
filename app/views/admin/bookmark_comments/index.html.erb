@@ -1,13 +1,12 @@
 <%= render :partial => '/admin/contents_left' %>
 <% content_for :contents_right do -%>
-<h1>Listing bookmark_comments</h1>
+<h1><%= _('Listing %{model}') % {:model => _('bookmark comment')} %></h1>
 
 <table>
   <tr>
-    <th>Comment</th>
-    <th>Public</th>
-    <th>Tags</th>
-    <th>Stared</th>
+    <% %w[Comment Public Tags Stared].each do |column| -%>
+    <th><%= _("Admin::BookmarkComment|#{column}") %></th>
+    <% end -%>
   </tr>
 
 <% for bookmark_comment in @bookmark_comments %>

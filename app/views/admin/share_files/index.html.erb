@@ -1,14 +1,13 @@
 <%= render :partial => '/admin/contents_left' %>
 <% content_for :contents_right do -%>
-<h1>Listing share_files</h1>
+<h1><%= _('Listing %{model}') % {:model => _('share file')} %></h1>
 
 <%= render :partial => '/admin/search_box' %>
 <table>
   <tr>
-    <th>FileName</th>
-    <th>Description</th>
-    <th>Category</th>
-    <th>User</th>
+    <% ['File name', 'Description', 'Category', 'User'].each do |column| -%>
+    <th><%= _("Admin::ShareFile|#{column}") %></th>
+    <% end -%>
   </tr>
 
 <% for share_file in @share_files %>
@@ -17,9 +16,9 @@
     <td><%=h share_file.description %></td>
     <td><%=h share_file.category %></td>
     <td><%=h share_file.user.name %></td>
-    <td><%= link_to 'Show', share_file %></td>
-    <td><%= link_to 'Edit', edit_admin_share_file_path(share_file) %></td>
-    <td><%= link_to 'Destroy', share_file, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to _('Show'), share_file %></td>
+    <td><%= link_to _('Edit'), edit_admin_share_file_path(share_file) %></td>
+    <td><%= link_to _('Destroy'), share_file, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>

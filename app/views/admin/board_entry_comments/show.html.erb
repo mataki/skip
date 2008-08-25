@@ -1,11 +1,11 @@
 <%= render :partial => '/admin/contents_left' %>
 <% content_for :contents_right do -%>
 <p>
-  <b>Contents:</b>
+  <b><%= label @board_entry_comment.class, :Contents %>:</b>
   <%=h @board_entry_comment.contents %>
 </p>
 
 
-<%= link_to 'Edit', edit_admin_board_entry_board_entry_comment_path(@board_entry, @board_entry_comment) %> |
-<%= link_to 'Back', admin_board_entry_board_entry_comments_path(@board_entry) %>
+<%= link_to _('Edit'), edit_admin_board_entry_board_entry_comment_path(@board_entry, @board_entry_comment) %> |
+<%= link_to _('Back'), admin_board_entry_board_entry_comments_path(@board_entry) %>
 <% end -%>

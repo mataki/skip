@@ -1,6 +1,6 @@
 <%= render :partial => '/admin/contents_left' %>
 <% content_for :contents_right do -%>
-<h1>Editing board_entry_comment</h1>
+<h1><%= _('Editing %{model}') % {:model => _('board entry comment')} %></h1>
 
 <% form_for(@board_entry_comment, :url => admin_board_entry_board_entry_comment_path(@board_entry, @board_entry_comment), :method => 'put') do |f| %>
   <%= f.error_messages %>
@@ -10,10 +10,10 @@
     <%= f.text_area :contents %>
   </p>
   <p>
-    <%= f.submit "Update" %>
+    <%= f.submit _('Update') %>
   </p>
 <% end %>
 
-<%= link_to 'Show', admin_board_entry_board_entry_comment_path(@board_entry, @board_entry_comment) %> |
-<%= link_to 'Back', admin_board_entry_board_entry_comments_path(@board_entry) %>
+<%= link_to _('Show'), admin_board_entry_board_entry_comment_path(@board_entry, @board_entry_comment) %> |
+<%= link_to _('Back'), admin_board_entry_board_entry_comments_path(@board_entry) %>
 <% end -%>

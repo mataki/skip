@@ -1,26 +1,27 @@
 <%= render :partial => '/admin/contents_left' %>
 <% content_for :contents_right do -%>
-<h1>Listing bookmarks</h1>
+<h1><%= _('Listing %{model}') % {:model => _('bookmark')} %></h1>
 
 <%= render :partial => '/admin/search_box' %>
 <table>
   <tr>
-    <th>Title</th>
-    <th>Url</th>
+    <% %w[Title Url].each do |column| -%>
+    <th><%= _("Admin::Bookmark|#{column}") %></th>
+    <% end -%>
   </tr>
 
 <% for bookmark in @bookmarks %>
   <tr>
     <td><%=h bookmark.title %></td>
     <td><%=h bookmark.url %></td>
-    <td><%= link_to 'Show', admin_bookmark_path(bookmark) %></td>
-    <td><%= link_to 'Edit', edit_admin_bookmark_path(bookmark) %></td>
-    <td><%= link_to 'Destroy', admin_bookmark_path(bookmark), :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to _('Show'), admin_bookmark_path(bookmark) %></td>
+    <td><%= link_to _('Edit'), edit_admin_bookmark_path(bookmark) %></td>
+    <td><%= link_to _('Destroy'), admin_bookmark_path(bookmark), :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New bookmark', new_admin_bookmark_path %>
+<%= link_to _('New %{model}') % {:model => _('bookmark')}, new_admin_bookmark_path %>
 <% end -%>

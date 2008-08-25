@@ -14,16 +14,16 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Admin::ShareFile < ShareFile
-  N_('Admin share_file|FileName')
-  N_('Admin share_file|OwnerSymbol')
-  N_('Admin share_file|Description')
-  N_('Admin share_file|Date')
-  N_('Admin share_file|User')
-  N_('Admin share_file|Category')
-  N_('Admin share_file|TotalCount')
-  N_('Admin share_file|ContentType')
-  N_('Admin share_file|PublicationType')
-  N_('Admin share_file|PublicationSymbolsType')
+  N_('Admin::ShareFile|File name')
+  N_('Admin::ShareFile|Owner symbol')
+  N_('Admin::ShareFile|Description')
+  N_('Admin::ShareFile|Date')
+  N_('Admin::ShareFile|User')
+  N_('Admin::ShareFile|Category')
+  N_('Admin::ShareFile|Total count')
+  N_('Admin::ShareFile|Content type')
+  N_('Admin::ShareFile|Publication type')
+  N_('Admin::ShareFile|Publication symbols type')
 
   def self.search_colomns
     "file_name like :lqs or description like :lqs or category like :lqs"

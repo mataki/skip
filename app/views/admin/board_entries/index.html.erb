@@ -1,13 +1,13 @@
 <%= render :partial => '/admin/contents_left' %>
 <% content_for :contents_right do -%>
-<h1>Listing board_entries</h1>
+<h1><%= _('Listing %{model}') % {:model => _('board entry')} %></h1>
 
 <%= render :partial => '/admin/search_box' %>
 <table>
   <tr>
-    <th>Title</th>
-    <th>Contents</th>
-    <th>Category</th>
+    <% %w[Title Contents Category].each do |column| -%>
+    <th><%= _("Admin::BoardEntry|#{column}") %></th>
+    <% end -%>
   </tr>
 
 <% for board_entry in @board_entries %>
@@ -15,9 +15,9 @@
     <td><%=h board_entry.title %></td>
     <td><%=h board_entry.contents %></td>
     <td><%=h board_entry.category %></td>
-    <td><%= link_to 'Show', board_entry %></td>
-    <td><%= link_to 'Edit', edit_admin_board_entry_path(board_entry) %></td>
-    <td><%= link_to 'Destroy', board_entry, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to _('Show'), board_entry %></td>
+    <td><%= link_to _('Edit'), edit_admin_board_entry_path(board_entry) %></td>
+    <td><%= link_to _('Destroy'), board_entry, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>

@@ -48,3 +48,16 @@ module Admin::ApplicationHelper
     "<li>#{link_to('<span>' + name + '</span>', path, html_option)}</li>"
   end
 end
+
+module ActionView
+  module Helpers
+    module FormHelper
+      include GetText
+      def label_with_gettext(object_name, method, text = nil, options = {})
+        text ||= s_("#{object_name.to_s}|#{method.to_s.humanize}")
+        InstanceTag.new(object_name, method, self, nil, options.delete(:object)).to_label_tag(text, options.merge(:object => @object))
+      end
+      alias_method_chain :label, :gettext
+    end
+  end
+end

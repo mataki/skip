@@ -1,6 +1,6 @@
 <%= render :partial => '/admin/contents_left' %>
 <% content_for :contents_right do -%>
-<h1>New user</h1>
+<h1><%= _('New %{model}') % {:model => _('user')} %></h1>
 
 <% form_for(@user) do |f| %>
   <%= f.error_messages %>
@@ -34,9 +34,9 @@
     <%= f.check_box :admin %>
   </p>
   <p>
-    <%= f.submit "Create" %>
+    <%= f.submit _('Create') %>
   </p>
 <% end %>
 
-<%= link_to 'Back', admin_users_path %>
+<%= link_to _('Back'), admin_users_path %>
 <% end -%>

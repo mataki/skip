@@ -1,6 +1,6 @@
 <%= render :partial => '/admin/contents_left' %>
 <% content_for :contents_right do -%>
-<h1>Editing board_entry</h1>
+<h1><%= _('Editing %{model}') % {:model => _('board entry')} %></h1>
 
 <% form_for(@board_entry) do |f| %>
   <%= f.error_messages %>
@@ -18,10 +18,10 @@
     <%= f.text_field :category %>
   </p>
   <p>
-    <%= f.submit "Update" %>
+    <%= f.submit _('Update') %>
   </p>
 <% end %>
 
-<%= link_to 'Show', @board_entry %> |
-<%= link_to 'Back', admin_board_entries_path %>
+<%= link_to _('Show'), @board_entry %> |
+<%= link_to _('Back'), admin_board_entries_path %>
 <% end -%>

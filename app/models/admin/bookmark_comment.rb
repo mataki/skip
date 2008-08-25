@@ -14,4 +14,8 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Admin::BookmarkComment < BookmarkComment
+  N_('Admin::BookmarkComment|Comment')
+  N_('Admin::BookmarkComment|Public')
+  N_('Admin::BookmarkComment|Tags')
+  N_('Admin::BookmarkComment|Stared')
 end

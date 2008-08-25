@@ -18,14 +18,6 @@ class OpenidIdentifier < ActiveRecord::Base
 
   validates_presence_of :url
   validates_uniqueness_of :url
-  class << self
-    HUMANIZED_ATTRIBUTE_KEY_NAMES = {
-      "url" => "OpenID URL",
-    }
-    def human_attribute_name(attribute_key_name)
-      HUMANIZED_ATTRIBUTE_KEY_NAMES[attribute_key_name] || super
-    end
-  end
 
   def validate
     normalize_ident_url

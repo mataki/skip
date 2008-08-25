@@ -14,4 +14,5 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Admin::OpenidIdentifier < OpenidIdentifier
+  N_('Admin::OpenidIdentifier|Url')
 end

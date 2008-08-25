@@ -14,13 +14,13 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Admin::User < User
-  N_('Admin user|Email')
-  N_('Admin user|Name')
-  N_('Admin user|Section')
-  N_('Admin user|Extension')
-  N_('Admin user|Introduction')
-  N_('Admin user|Retired')
-  N_('Admin user|Admin')
+  N_('Admin::User|Email')
+  N_('Admin::User|Name')
+  N_('Admin::User|Section')
+  N_('Admin::User|Extension')
+  N_('Admin::User|Introduction')
+  N_('Admin::User|Retired')
+  N_('Admin::User|Admin')
 
   def self.search_colomns
     "name like :lqs or email like :lqs or section like :lqs or extension like :lqs or introduction like :lqs"

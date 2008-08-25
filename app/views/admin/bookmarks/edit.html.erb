@@ -1,6 +1,6 @@
 <%= render :partial => '/admin/contents_left' %>
 <% content_for :contents_right do -%>
-<h1>Editing bookmark</h1>
+<h1><%= _('Editing %{model}') % {:model => _('bookmark')} %></h1>
 
 <% form_for(@bookmark) do |f| %>
   <%= f.error_messages %>
@@ -14,10 +14,10 @@
     <%= f.text_field :url %>
   </p>
   <p>
-    <%= f.submit "Update" %>
+    <%= f.submit _('Update') %>
   </p>
 <% end %>
 
-<%= link_to 'Show', admin_bookmark_path(@bookmark) %> |
-<%= link_to 'Back', admin_bookmarks_path %>
+<%= link_to _('Show'), admin_bookmark_path(@bookmark) %> |
+<%= link_to _('Back'), admin_bookmarks_path %>
 <% end -%>

@@ -1,26 +1,26 @@
 <%= render :partial => '/admin/contents_left' %>
 <% content_for :contents_right do -%>
 <p>
-  <b>Comment:</b>
+  <b><%= label @bookmark_comment.class, :comment%>:</b>
   <%=h @bookmark_comment.comment %>
 </p>
 
 <p>
-  <b>Public:</b>
+  <b><%= label @bookmark_comment.class, :public%>:</b>
   <%=h @bookmark_comment.public %>
 </p>
 
 <p>
-  <b>Tags:</b>
+  <b><%= label @bookmark_comment.class, :tags%>:</b>
   <%=h @bookmark_comment.tags %>
 </p>
 
 <p>
-  <b>Stared:</b>
+  <b><%= label @bookmark_comment.class, :stared%>:</b>
   <%=h @bookmark_comment.stared %>
 </p>
 
 
-<%= link_to 'Edit', edit_admin_bookmark_bookmark_comment_path(@bookmark, @bookmark_comment) %> |
-<%= link_to 'Back', admin_bookmark_bookmark_comments_path(@bookmark) %>
+<%= link_to _('Edit'), edit_admin_bookmark_bookmark_comment_path(@bookmark, @bookmark_comment) %> |
+<%= link_to _('Back'), admin_bookmark_bookmark_comments_path(@bookmark) %>
 <% end -%>

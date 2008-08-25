@@ -1,15 +1,15 @@
 <%= render :partial => '/admin/contents_left' %>
 <% content_for :contents_right do -%>
-<h1>Editing share_file</h1>
+<h1><%= _('Editing %{model}') % {:model => _('share file')} %></h1>
 
 <% form_for(@share_file) do |f| %>
 <%= render :partial => f %>
 
   <p>
-    <%= f.submit "Update" %>
+    <%= f.submit _('Update') %>
   </p>
 <% end %>
 
-<%= link_to 'Show', @share_file %> |
-<%= link_to 'Back', admin_share_files_path %>
+<%= link_to _('Show'), @share_file %> |
+<%= link_to _('Back'), admin_share_files_path %>
 <% end -%>

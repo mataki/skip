@@ -1,27 +1,27 @@
 <%= render :partial => '/admin/contents_left' %>
 <% content_for :contents_right do -%>
 <p>
-  <b><%= _('Code') %>:</b>
+  <b><%= label @account.class, :code %>:</b>
   <%=h @account.code %>
 </p>
 
 <p>
-  <b><%= _('Name') %>:</b>
+  <b><%= label @account.class, :name %>:</b>
   <%=h @account.name %>
 </p>
 
 <p>
-  <b><%= _('Email') %>:</b>
+  <b><%= label @account.class, :email %>:</b>
   <%=h @account.email %>
 </p>
 
 <p>
-  <b><%= _('Section') %>:</b>
+  <b><%= label @account.class, :section %>:</b>
   <%=h @account.section %>
 </p>
 
 
 <%= link_to _('Edit'), edit_admin_account_path(@account) %> |
 <%= link_to _('Back'), admin_accounts_path %> |
-<%= link_to _('OpenidIdentifier List'), admin_account_openid_identifiers_url(@account) %>
+<%= link_to _('Listing %{model}') % {:model => _('openid identifier')}, admin_account_openid_identifiers_url(@account) %>
 <% end -%>

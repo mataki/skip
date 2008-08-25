@@ -1,24 +1,24 @@
 <%= render :partial => '/admin/contents_left' %>
 <% content_for :contents_right do -%>
-<h1>Listing openid_identifiers</h1>
+<h1><%= _('Listing %{model}') % {:model => _('openid identifier')} %></h1>
 
 <table>
   <tr>
-    <th>Url</th>
+    <th><%= _("Admin::OpenidIdentifier|Url") %></th>
   </tr>
 
 <% for openid_identifier in @openid_identifiers %>
   <tr>
     <td><%=h openid_identifier.url %></td>
-    <td><%= link_to 'Show', admin_account_openid_identifier_url(@account, openid_identifier) %></td>
-    <td><%= link_to 'Edit', edit_admin_account_openid_identifier_path(@account, openid_identifier) %></td>
-    <td><%= link_to 'Destroy', admin_account_openid_identifier_url(@account, openid_identifier), :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to _('Show'), admin_account_openid_identifier_url(@account, openid_identifier) %></td>
+    <td><%= link_to _('Edit'), edit_admin_account_openid_identifier_path(@account, openid_identifier) %></td>
+    <td><%= link_to _('Destroy'), admin_account_openid_identifier_url(@account, openid_identifier), :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New openid_identifier', new_admin_account_openid_identifier_path %> |
-<%= link_to 'Account Show', admin_account_path(@account) %>
+<%= link_to _('New %{model}') % {:model => _('openid identifier')}, new_admin_account_openid_identifier_path %> |
+<%= link_to _('%{model} Show') % {:model => _('account')}, admin_account_path(@account) %>
 <% end -%>

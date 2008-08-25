@@ -1,41 +1,41 @@
 <%= render :partial => '/admin/contents_left' %>
 <% content_for :contents_right do -%>
 <p>
-  <b>Email:</b>
+  <b><%= label @user.class, :email %>:</b>
   <%=h @user.email %>
 </p>
 
 <p>
-  <b>Name:</b>
+  <b><%= label @user.class, :name %>:</b>
   <%=h @user.name %>
 </p>
 
 <p>
-  <b>Section:</b>
+  <b><%= label @user.class, :section %>:</b>
   <%=h @user.section %>
 </p>
 
 <p>
-  <b>Extension:</b>
+  <b><%= label @user.class, :extension %>:</b>
   <%=h @user.extension %>
 </p>
 
 <p>
-  <b>Introduction:</b>
+  <b><%= label @user.class, :introduction %>:</b>
   <%=h @user.introduction %>
 </p>
 
 <p>
-  <b>Retired:</b>
+  <b><%= label @user.class, :retired %>:</b>
   <%=h @user.retired %>
 </p>
 
 <p>
-  <b>Admin:</b>
+  <b><%= label @user.class, :admin %>:</b>
   <%=h @user.admin %>
 </p>
 
 
-<%= link_to 'Edit', edit_admin_user_path(@user) %> |
-<%= link_to 'Back', admin_users_path %>
+<%= link_to _('Edit'), edit_admin_user_path(@user) %> |
+<%= link_to _('Back'), admin_users_path %>
 <% end -%>
