@@ -16,5 +16,8 @@
 class Admin::ShareFilesController < Admin::ApplicationController
   include AdminModule::AdminRootModule
 
+  undef new
   undef create
+  undef edit
+  undef update
 end
