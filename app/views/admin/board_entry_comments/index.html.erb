@@ -11,7 +11,6 @@
   <tr>
     <td><%=h board_entry_comment.contents %></td>
     <td><%= link_to _('Show'), admin_board_entry_board_entry_comment_path(@board_entry, board_entry_comment) %></td>
-    <td><%= link_to _('Edit'), edit_admin_board_entry_board_entry_comment_path(@board_entry, board_entry_comment) %></td>
     <td><%= link_to _('Destroy'), admin_board_entry_board_entry_comment_path(@board_entry, board_entry_comment), :confirm => _('Are you sure?'), :method => :delete %></td>
   </tr>
 <% end %>
@@ -19,6 +18,5 @@
 
 <br />
 
-<%= link_to 'New board_entry_comment', new_admin_board_entry_board_entry_comment_path(@board_entry) %> |
 <%= link_to _('%{model} Show') % {:model => _('board entry')}, admin_board_entry_path(@board_entry) %>
 <% end -%>
