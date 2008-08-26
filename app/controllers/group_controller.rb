@@ -343,7 +343,7 @@ class GroupController < ApplicationController
     par_id = params[:group_participation_id]
     favorite_flag = params[:favorite_flag]
     participation = @group.group_participations.find(par_id)
-    if participation.user_id == session[:user_id]
+    if participation.user_id != session[:user_id]
       render :nothing => true
       return false
     end
