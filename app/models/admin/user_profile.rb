@@ -14,4 +14,16 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Admin::UserProfile < UserProfile
+  N_('Admin::UserProfile|Gender type')
+  N_('Admin::UserProfile|Join year')
+  N_('Admin::UserProfile|Birth month')
+  N_('Admin::UserProfile|Birth day')
+  N_('Admin::UserProfile|Blood type')
+  N_('Admin::UserProfile|Hometown')
+  N_('Admin::UserProfile|Alma mater')
+  N_('Admin::UserProfile|Address 1')
+  N_('Admin::UserProfile|Address 2')
+  N_('Admin::UserProfile|Hobby')
+  N_('Admin::UserProfile|Introduction')
+  N_('Admin::UserProfile|Disclosure')
 end

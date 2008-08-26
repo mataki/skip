@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-08-26 16:51+0900\n"
+"POT-Creation-Date: 2008-08-26 17:42+0900\n"
 "PO-Revision-Date: 2008-08-11 18:58+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
+#: app/views/admin/user_profiles/show.html.erb:64
 #: app/views/admin/board_entry_comments/index.html.erb:21
 #: app/views/admin/group_participations/index.html.erb:26
 #: app/views/admin/openid_identifiers/index.html.erb:23
@@ -196,6 +197,54 @@ msgstr ""
 msgid "Admin::ShareFile|User"
 msgstr "ユーザ"
 
+#: app/models/admin/user_profile.rb:24
+msgid "Admin::UserProfile|Address 1"
+msgstr "現住所1"
+
+#: app/models/admin/user_profile.rb:25
+msgid "Admin::UserProfile|Address 2"
+msgstr "現住所2"
+
+#: app/models/admin/user_profile.rb:23
+msgid "Admin::UserProfile|Alma mater"
+msgstr "出身校"
+
+#: app/models/admin/user_profile.rb:20
+msgid "Admin::UserProfile|Birth day"
+msgstr "誕生日"
+
+#: app/models/admin/user_profile.rb:19
+msgid "Admin::UserProfile|Birth month"
+msgstr "誕生月"
+
+#: app/models/admin/user_profile.rb:21
+msgid "Admin::UserProfile|Blood type"
+msgstr "血液型"
+
+#: app/models/admin/user_profile.rb:28
+msgid "Admin::UserProfile|Disclosure"
+msgstr "属性情報公開"
+
+#: app/models/admin/user_profile.rb:17
+msgid "Admin::UserProfile|Gender type"
+msgstr "性別"
+
+#: app/models/admin/user_profile.rb:26
+msgid "Admin::UserProfile|Hobby"
+msgstr "趣味"
+
+#: app/models/admin/user_profile.rb:22
+msgid "Admin::UserProfile|Hometown"
+msgstr "出身地"
+
+#: app/models/admin/user_profile.rb:27
+msgid "Admin::UserProfile|Introduction"
+msgstr "自己紹介"
+
+#: app/models/admin/user_profile.rb:18
+msgid "Admin::UserProfile|Join year"
+msgstr "入社年度"
+
 #: app/models/admin/user.rb:23
 msgid "Admin::User|Admin"
 msgstr "管理権限"
@@ -277,22 +326,22 @@ msgstr ""
 msgid "Are you sure?"
 msgstr "本当に宜しいですか？"
 
-#: app/views/admin/share_files/show.html.erb:25
-#: app/views/admin/bookmark_comments/show.html.erb:25
-#: app/views/admin/board_entries/show.html.erb:20
+#: app/views/admin/share_files/show.html.erb:23
+#: app/views/admin/bookmark_comments/show.html.erb:23
+#: app/views/admin/board_entries/show.html.erb:18
 #: app/views/admin/accounts/import.html.erb:46
 #: app/views/admin/accounts/show.html.erb:25
 #: app/views/admin/accounts/new.html.erb:37
 #: app/views/admin/accounts/edit.html.erb:30
-#: app/views/admin/users/show.html.erb:40
+#: app/views/admin/users/show.html.erb:39
 #: app/views/admin/users/edit.html.erb:42
-#: app/views/admin/board_entry_comments/show.html.erb:10
-#: app/views/admin/group_participations/show.html.erb:26
-#: app/views/admin/groups/show.html.erb:30
+#: app/views/admin/board_entry_comments/show.html.erb:8
+#: app/views/admin/group_participations/show.html.erb:23
+#: app/views/admin/groups/show.html.erb:29
 #: app/views/admin/openid_identifiers/show.html.erb:10
 #: app/views/admin/openid_identifiers/new.html.erb:17
 #: app/views/admin/openid_identifiers/edit.html.erb:18
-#: app/views/admin/bookmarks/show.html.erb:15
+#: app/views/admin/bookmarks/show.html.erb:13
 msgid "Back"
 msgstr "戻る"
 
@@ -530,19 +579,13 @@ msgstr "作成"
 msgid "Destroy"
 msgstr "削除"
 
-#: app/views/admin/share_files/show.html.erb:24
-#: app/views/admin/bookmark_comments/show.html.erb:24
-#: app/views/admin/board_entries/show.html.erb:19
 #: app/views/admin/accounts/show.html.erb:24
 #: app/views/admin/accounts/index.html.erb:20
-#: app/views/admin/users/show.html.erb:39
+#: app/views/admin/user_profiles/show.html.erb:63
+#: app/views/admin/users/show.html.erb:38
 #: app/views/admin/users/index.html.erb:23
-#: app/views/admin/board_entry_comments/show.html.erb:9
-#: app/views/admin/group_participations/show.html.erb:25
-#: app/views/admin/groups/show.html.erb:29
 #: app/views/admin/openid_identifiers/show.html.erb:9
 #: app/views/admin/openid_identifiers/index.html.erb:14
-#: app/views/admin/bookmarks/show.html.erb:14
 msgid "Edit"
 msgstr "編集"
 
@@ -666,17 +709,17 @@ msgstr ""
 
 #: app/views/admin/share_files/index.html.erb:3
 #: app/views/admin/bookmark_comments/index.html.erb:3
-#: app/views/admin/board_entries/show.html.erb:21
+#: app/views/admin/board_entries/show.html.erb:19
 #: app/views/admin/board_entries/index.html.erb:3
 #: app/views/admin/accounts/show.html.erb:26
 #: app/views/admin/accounts/index.html.erb:3
 #: app/views/admin/users/index.html.erb:3
 #: app/views/admin/board_entry_comments/index.html.erb:3
 #: app/views/admin/group_participations/index.html.erb:3
-#: app/views/admin/groups/show.html.erb:31
+#: app/views/admin/groups/show.html.erb:30
 #: app/views/admin/groups/index.html.erb:3
 #: app/views/admin/openid_identifiers/index.html.erb:3
-#: app/views/admin/bookmarks/show.html.erb:16
+#: app/views/admin/bookmarks/show.html.erb:14
 #: app/views/admin/bookmarks/index.html.erb:3
 msgid "Listing %{model}"
 msgstr "%{model}一覧"
@@ -1096,43 +1139,51 @@ msgstr ""
 
 #: app/models/user_profile.rb:-
 msgid "UserProfile|Address 1"
-msgstr ""
+msgstr "現住所1"
+
+#: app/models/user_profile.rb:18
+msgid "UserProfile|Address 2"
+msgstr "現住所2"
+
+#: app/models/user_profile.rb:17
+msgid "UserProfile|Alma mater"
+msgstr "出身校"
 
 #: app/models/user_profile.rb:-
 msgid "UserProfile|Birth day"
-msgstr ""
+msgstr "誕生日"
 
 #: app/models/user_profile.rb:-
 msgid "UserProfile|Birth month"
-msgstr ""
+msgstr "誕生月"
 
 #: app/models/user_profile.rb:-
 msgid "UserProfile|Blood type"
-msgstr ""
+msgstr "血液型"
 
 #: app/models/user_profile.rb:-
 msgid "UserProfile|Disclosure"
-msgstr ""
+msgstr "属性情報公開"
 
 #: app/models/user_profile.rb:-
 msgid "UserProfile|Gender type"
-msgstr ""
+msgstr "性別"
 
 #: app/models/user_profile.rb:-
 msgid "UserProfile|Hobby"
-msgstr ""
+msgstr "趣味"
 
 #: app/models/user_profile.rb:-
 msgid "UserProfile|Hometown"
-msgstr ""
+msgstr "出身地"
 
 #: app/models/user_profile.rb:-
 msgid "UserProfile|Introduction"
-msgstr ""
+msgstr "自己紹介"
 
 #: app/models/user_profile.rb:-
 msgid "UserProfile|Join year"
-msgstr ""
+msgstr "入社年度"
 
 #: app/models/user_profile.rb:-
 msgid "UserProfile|User"
@@ -1140,11 +1191,11 @@ msgstr ""
 
 #: app/models/user_profile.rb:-
 msgid "UserProfile|出身校"
-msgstr ""
+msgstr "出身校"
 
 #: app/models/user_profile.rb:-
 msgid "UserProfile|現住所２"
-msgstr ""
+msgstr "現住所2"
 
 #: app/models/user_reading.rb:-
 msgid "UserReading|Board entry"
@@ -1238,7 +1289,7 @@ msgid "board entry"
 msgstr "エントリ"
 
 #: app/models/board_entry_comment.rb:-
-#: app/views/admin/board_entries/show.html.erb:21
+#: app/views/admin/board_entries/show.html.erb:19
 #: app/views/admin/board_entry_comments/index.html.erb:3
 msgid "board entry comment"
 msgstr "エントリコメント"
@@ -1254,7 +1305,7 @@ msgstr "ブックマーク"
 
 #: app/models/bookmark_comment.rb:-
 #: app/views/admin/bookmark_comments/index.html.erb:3
-#: app/views/admin/bookmarks/show.html.erb:16
+#: app/views/admin/bookmarks/show.html.erb:14
 msgid "bookmark comment"
 msgstr "ブックマークコメント"
 
@@ -1298,7 +1349,7 @@ msgstr "グループ"
 
 #: app/models/group_participation.rb:-
 #: app/views/admin/group_participations/index.html.erb:3
-#: app/views/admin/groups/show.html.erb:31
+#: app/views/admin/groups/show.html.erb:30
 msgid "group participation"
 msgstr "グループ参加"
 
@@ -1364,6 +1415,7 @@ msgid "track"
 msgstr ""
 
 #: app/helpers/admin/application_helper.rb:28 app/models/user.rb:-
+#: app/views/admin/user_profiles/show.html.erb:64
 #: app/views/admin/users/edit.html.erb:3
 #: app/views/admin/users/index.html.erb:3
 msgid "user"
@@ -1381,9 +1433,9 @@ msgstr ""
 msgid "user message unsubscribe"
 msgstr ""
 
-#: app/models/user_profile.rb:-
+#: app/models/user_profile.rb:- app/views/admin/users/show.html.erb:40
 msgid "user profile"
-msgstr ""
+msgstr "プロフィール"
 
 #: app/models/user_reading.rb:-
 msgid "user reading"

@@ -1,64 +1,65 @@
 <%= render :partial => '/admin/contents_left' %>
 <% content_for :contents_right do -%>
 <p>
-  <b>Gender type:</b>
+  <b><%= label @user_profile.class, :gender_type %>:</b>
   <%=h @user_profile.gender_type %>
 </p>
 
 <p>
-  <b>Join year:</b>
+  <b><%= label @user_profile.class, :join_year %>:</b>
   <%=h @user_profile.join_year %>
 </p>
 
 <p>
-  <b>Birth month:</b>
+  <b><%= label @user_profile.class, :birth_month %>:</b>
   <%=h @user_profile.birth_month %>
 </p>
 
 <p>
-  <b>Birth day:</b>
+  <b><%= label @user_profile.class, :birth_day %>:</b>
   <%=h @user_profile.birth_day %>
 </p>
 
 <p>
-  <b>Blood type:</b>
+  <b><%= label @user_profile.class, :blood_type %>:</b>
   <%=h @user_profile.blood_type %>
 </p>
 
 <p>
-  <b>Hometown:</b>
+  <b><%= label @user_profile.class, :hometown %>:</b>
   <%=h @user_profile.hometown %>
 </p>
 
 <p>
-  <b>Alma mater:</b>
+  <b><%= label @user_profile.class, :alma_mater %>:</b>
   <%=h @user_profile.alma_mater %>
 </p>
 
 <p>
-  <b>Address 1:</b>
+  <b><%= label @user_profile.class, :address_1 %>:</b>
   <%=h @user_profile.address_1 %>
 </p>
 
 <p>
-  <b>Address 2:</b>
+  <b><%= label @user_profile.class, :address_2 %>:</b>
   <%=h @user_profile.address_2 %>
 </p>
 
 <p>
-  <b>Hobby:</b>
+  <b><%= label @user_profile.class, :hobby %>:</b>
   <%=h @user_profile.hobby %>
 </p>
 
 <p>
-  <b>Introduction:</b>
+  <b><%= label @user_profile.class, :introduction %>:</b>
   <%=h @user_profile.introduction %>
 </p>
 
 <p>
-  <b>Disclosure:</b>
+  <b><%= label @user_profile.class, :disclosure %>:</b>
   <%=h @user_profile.disclosure %>
 </p>
 
-<%= link_to 'Edit', edit_admin_user_user_profile_path(@user) %>
+<%= link_to _('Edit'), edit_admin_user_user_profile_path(@user) %> |
+<%= link_to _('%{model} Show') % {:model => _('user')}, admin_user_path(@user) %>
 <% end -%>

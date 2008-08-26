@@ -14,6 +14,8 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class UserProfile < ActiveRecord::Base
+  N_('UserProfile|Alma mater')
+  N_('UserProfile|Address 2')
 
   include Types::Todouhuken
   include Types::Gender
