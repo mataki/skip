@@ -18,13 +18,11 @@
     <td><%=h group.protected %></td>
     <td><%=h group.category %></td>
     <td><%= link_to _('Show'), group %></td>
-    <td><%= link_to _('Edit'), edit_admin_group_path(group) %></td>
-    <td><%= link_to _('Destroy'), group, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to _('Destroy'), group, :confirm => _('Are you sure?'), :method => :delete %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to _('New group'), new_admin_group_path %>
 <% end -%>

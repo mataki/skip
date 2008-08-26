@@ -15,6 +15,17 @@
 
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
+describe Admin::GroupsController, 'GET /new' do
+  before do
+    admin_login
+  end
+  it 'UnknownActionになること' do
+    lambda do
+      get :new
+    end.should raise_error(ActionController::UnknownAction)
+  end
+end
+
 describe Admin::GroupsController, 'POST /create' do
   before do
     admin_login
@@ -22,6 +33,28 @@ describe Admin::GroupsController, 'POST /create' do
   it 'UnknownActionになること' do
     lambda do
       post :create
+    end.should raise_error(ActionController::UnknownAction)
+  end
+end
+
+describe Admin::GroupsController, 'GET /edit' do
+  before do
+    admin_login
+  end
+  it 'UnknownActionになること' do
+    lambda do
+      get :edit
+    end.should raise_error(ActionController::UnknownAction)
+  end
+end
+
+describe Admin::GroupsController, 'PUT /update' do
+  before do
+    admin_login
+  end
+  it 'UnknownActionになること' do
+    lambda do
+      put :update
     end.should raise_error(ActionController::UnknownAction)
   end
 end
