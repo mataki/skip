@@ -15,8 +15,6 @@
   <%=h @board_entry.category %>
 </p>
 
-
-<%= link_to _('Edit'), edit_admin_board_entry_path(@board_entry) %> |
 <%= link_to _('Back'), admin_board_entries_path %> |
 <%= link_to _('Listing %{model}') % {:model => _('board entry comment')}, admin_board_entry_board_entry_comments_path(@board_entry) %>
 <% end -%>
