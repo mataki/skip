@@ -10,7 +10,6 @@
   <%= stylesheet_link_tag "style" %>
   <%= stylesheet_link_tag "skins-base" %>
   <%= stylesheet_link_tag("skins/#{session[:user_custom_theme]}/skin.css") %>
-  <%= stylesheet_link_tag controller.controller_name %>
   <%= yield :stylesheet %>
 </head>
 

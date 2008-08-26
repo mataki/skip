@@ -14,5 +14,6 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Admin::ApplicationController < ApplicationController
+  layout 'admin/application'
   before_filter :require_admin
 end

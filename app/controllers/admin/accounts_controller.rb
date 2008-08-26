@@ -14,6 +14,5 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Admin::AccountsController < Admin::ApplicationController
-  layout 'admin/application'
   include AdminModule::AdminRootModule
 end
