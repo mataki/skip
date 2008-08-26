@@ -271,7 +271,7 @@ msgstr ""
 #: app/views/admin/group_participations/index.html.erb:19
 #: app/views/admin/groups/index.html.erb:21
 msgid "Are you sure?"
-msgstr ""
+msgstr "本当に宜しいですか？"
 
 #: app/views/admin/share_files/show.html.erb:25
 #: app/views/admin/bookmark_comments/show.html.erb:25
@@ -841,7 +841,7 @@ msgstr ""
 
 #: app/views/admin/_search_box.html.erb:4
 msgid "Search"
-msgstr ""
+msgstr "検索"
 
 #: app/models/session.rb:-
 msgid "Session|Expire date"

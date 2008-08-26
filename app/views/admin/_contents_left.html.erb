@@ -1,9 +1,8 @@
 <% content_for :contents_left do -%>
-<% @box_menu_selected_path ||= nil %>
 <div class="box_space">
   <div class="box_space_title">管理メニュー</div>
   <div class="box_space_body">
-    <%= generate_admin_box_menu @box_menu_selected_path %>
+    <%= generate_admin_box_menu %>
   </div>
   <div class="box_space_bottom"></div>
 </div><!-- box_space -->

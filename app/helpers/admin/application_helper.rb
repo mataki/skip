@@ -21,16 +21,16 @@ module Admin::ApplicationHelper
     output << '</ul>'
   end
 
-  def generate_admin_box_menu selected_path = nil
+  def generate_admin_box_menu
     accounts_link = (ENV['SKIPOP_URL'].blank? ? admin_accounts_path : "#{ENV['SKIPOP_URL']}admin/accounts")
     output = ''
     output << '<ul>'
-    output << generate_box_menu_link( _('user'), admin_users_path, admin_users_path == selected_path )
-    output << generate_box_menu_link( _('group'), admin_groups_path, admin_groups_path == selected_path )
-    output << generate_box_menu_link( _('board entry'), admin_board_entries_path, admin_board_entries_path == selected_path )
-    output << generate_box_menu_link( _('bookmark'), admin_bookmarks_path , admin_bookmarks_path == selected_path)
-    output << generate_box_menu_link( _('share file'), admin_share_files_path, admin_share_files_path == selected_path )
-    output << generate_box_menu_link( _('account'), accounts_link, admin_accounts_path == selected_path )
+    output << generate_box_menu_link( _('user'), admin_users_path, request.url.include?(admin_users_url))
+    output << generate_box_menu_link( _('group'), admin_groups_path, request.url.include?(admin_groups_url))
+    output << generate_box_menu_link( _('board entry'), admin_board_entries_path, request.url.include?(admin_board_entries_url))
+    output << generate_box_menu_link( _('bookmark'), admin_bookmarks_path , request.url.include?(admin_bookmarks_url))
+    output << generate_box_menu_link( _('share file'), admin_share_files_path, request.url.include?(admin_share_files_path))
+    output << generate_box_menu_link( _('account'), accounts_link, request.url.include?(admin_accounts_url))
     output << '</ul>'
   end
 
