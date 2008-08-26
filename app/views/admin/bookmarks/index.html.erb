@@ -15,7 +15,7 @@
     <td><%=h bookmark.title %></td>
     <td><%=h bookmark.url %></td>
     <td><%= link_to _('Show'), admin_bookmark_path(bookmark) %></td>
-    <td><%= link_to _('Destroy'), admin_bookmark_path(bookmark), :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to _('Destroy'), admin_bookmark_path(bookmark), :confirm => _('Are you sure?'), :method => :delete %></td>
   </tr>
 <% end %>
 </table>

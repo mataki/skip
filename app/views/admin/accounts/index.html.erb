@@ -18,7 +18,7 @@
     <td><%=h account.section %></td>
     <td><%= link_to _('Show'), account %></td>
     <td><%= link_to _('Edit'), edit_admin_account_path(account) %></td>
-    <td><%= link_to _('Destroy'), account, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to _('Destroy'), account, :confirm => _('Are you sure?'), :method => :delete %></td>
   </tr>
 <% end %>
 </table>

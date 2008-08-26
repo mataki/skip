@@ -12,7 +12,7 @@
     <td><%=h openid_identifier.url %></td>
     <td><%= link_to _('Show'), admin_account_openid_identifier_url(@account, openid_identifier) %></td>
     <td><%= link_to _('Edit'), edit_admin_account_openid_identifier_path(@account, openid_identifier) %></td>
-    <td><%= link_to _('Destroy'), admin_account_openid_identifier_url(@account, openid_identifier), :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to _('Destroy'), admin_account_openid_identifier_url(@account, openid_identifier), :confirm => _('Are you sure?'), :method => :delete %></td>
   </tr>
 <% end %>
 </table>

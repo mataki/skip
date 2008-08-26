@@ -21,7 +21,7 @@
     <td><%=h user.admin %></td>
     <td><%= link_to _('Show'), admin_user_path(user) %></td>
     <td><%= link_to _('Edit'), edit_admin_user_path(user) %></td>
-    <td><%= link_to _('Destroy'), admin_user_path(user), :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to _('Destroy'), admin_user_path(user), :confirm => _('Are you sure?'), :method => :delete %></td>
   </tr>
 <% end %>
 </table>
