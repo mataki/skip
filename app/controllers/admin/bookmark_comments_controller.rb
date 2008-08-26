@@ -17,7 +17,10 @@ class Admin::BookmarkCommentsController < Admin::ApplicationController
   before_filter :load_parent
   include AdminModule::AdminChildModule
 
+  undef new
   undef create
+  undef edit
+  undef update
 
   private
   def load_parent

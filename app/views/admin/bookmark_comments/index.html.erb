@@ -15,14 +15,12 @@
     <td><%=h bookmark_comment.public %></td>
     <td><%=h bookmark_comment.tags %></td>
     <td><%=h bookmark_comment.stared %></td>
-    <td><%= link_to 'Show', admin_bookmark_bookmark_comment_path(@bookmark, bookmark_comment) %></td>
-    <td><%= link_to 'Edit', edit_admin_bookmark_bookmark_comment_path(@bookmark, bookmark_comment) %></td>
-    <td><%= link_to 'Destroy', admin_bookmark_bookmark_comment_path(@bookmark, bookmark_comment), :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to _('Show'), admin_bookmark_bookmark_comment_path(@bookmark, bookmark_comment) %></td>
+    <td><%= link_to _('Destroy'), admin_bookmark_bookmark_comment_path(@bookmark, bookmark_comment), :confirm => _('Are you sure?'), :method => :delete %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New bookmark_comment', new_admin_bookmark_bookmark_comment_path(@bookmark) %>
 <% end -%>

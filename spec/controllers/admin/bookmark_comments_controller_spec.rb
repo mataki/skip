@@ -15,6 +15,18 @@
 
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
+describe Admin::BookmarkCommentsController, 'GET /new' do
+  before do
+    admin_login
+    controller.stub!(:load_parent)
+  end
+  it 'UnknownActionになること' do
+    lambda do
+      get :new
+    end.should raise_error(ActionController::UnknownAction)
+  end
+end
+
 describe Admin::BookmarkCommentsController, 'POST /create' do
   before do
     admin_login
@@ -23,6 +35,30 @@ describe Admin::BookmarkCommentsController, 'POST /create' do
   it 'UnknownActionになること' do
     lambda do
       post :create
+    end.should raise_error(ActionController::UnknownAction)
+  end
+end
+
+describe Admin::BookmarkCommentsController, 'GET /edit' do
+  before do
+    admin_login
+    controller.stub!(:load_parent)
+  end
+  it 'UnknownActionになること' do
+    lambda do
+      get :edit
+    end.should raise_error(ActionController::UnknownAction)
+  end
+end
+
+describe Admin::BookmarkCommentsController, 'PUT /update' do
+  before do
+    admin_login
+    controller.stub!(:load_parent)
+  end
+  it 'UnknownActionになること' do
+    lambda do
+      put :update
     end.should raise_error(ActionController::UnknownAction)
   end
 end
