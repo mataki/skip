@@ -16,13 +16,11 @@
     <td><%=h board_entry.contents %></td>
     <td><%=h board_entry.category %></td>
     <td><%= link_to _('Show'), board_entry %></td>
-    <td><%= link_to _('Edit'), edit_admin_board_entry_path(board_entry) %></td>
-    <td><%= link_to _('Destroy'), board_entry, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to _('Destroy'), board_entry, :confirm => _('Are you sure?'), :method => :delete %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New board_entry', new_admin_board_entry_path %>
 <% end -%>
