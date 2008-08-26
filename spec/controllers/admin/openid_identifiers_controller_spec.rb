@@ -204,6 +204,46 @@ describe Admin::OpenidIdentifiersController do
     end
   end
 
+  describe "handling POST /admin_openid_identifiers" do
+
+    before(:each) do
+      @openid_identifiers.stub!(:build).and_return(@openid_identifier)
+    end
+
+    describe "with successful save" do
+
+      def do_post
+        @openid_identifier.should_receive(:save).and_return(true)
+        post :create, :admin_openid_identifier => {}
+      end
+
+      it "should create a new openid_identifier" do
+        @openid_identifiers.should_receive(:build).with({}).and_return(@openid_identifier)
+        do_post
+      end
+
+      it "should redirect to the new openid_identifier" do
+        do_post
+        response.should redirect_to(admin_account_openid_identifier_url(@account, @openid_identifier))
+      end
+
+    end
+
+    describe "with failed save" do
+
+      def do_post
+        @openid_identifier.should_receive(:save).and_return(false)
+        post :create, :openid_identifier => {}
+      end
+
+      it "should re-render 'new'" do
+        do_post
+        response.should render_template('new')
+      end
+
+    end
+  end
+
   describe "handling PUT /admin_openid_identifiers/1" do
 
     before(:each) do
@@ -278,17 +318,5 @@ describe Admin::OpenidIdentifiersController do
       do_delete
       response.should redirect_to(admin_account_openid_identifiers_url(@account))
     end
-  end
-end
-
-describe Admin::OpenidIdentifiersController, 'POST /create' do
-  before do
-    admin_login
-    controller.stub!(:load_parent)
-  end
-  it 'UnknownActionになること' do
-    lambda do
-      post :create
-    end.should raise_error(ActionController::UnknownAction)
   end
 end
