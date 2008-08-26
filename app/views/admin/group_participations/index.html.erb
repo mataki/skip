@@ -16,7 +16,6 @@
     <td><%=h group_participation.owned %></td>
     <td><%=h group_participation.favorite %></td>
     <td><%= link_to _('Show'), admin_group_group_participation_path(@group, group_participation) %></td>
-    <td><%= link_to _('Edit'), edit_admin_group_group_participation_path(@group, group_participation) %></td>
     <td><%= link_to _('Destroy'), admin_group_group_participation_path(@group, group_participation), :confirm => _('Are you sure?'), :method => :delete %></td>
   </tr>
 <% end %>
@@ -24,6 +23,5 @@
 
 <br />
 
-<%= link_to _('New group_participation'), new_admin_group_group_participation_path %> |
 <%= link_to _('%{model} Show') % {:model => _('group')}, admin_group_path(@group) %>
 <% end -%>
