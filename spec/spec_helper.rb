@@ -83,6 +83,24 @@ def user_login
   u
 end
 
+def mock_record_invalid
+  fa = mock_model(ActiveRecord::Base)
+  fa.errors.stub!(:full_messages).and_return([])
+  ActiveRecord::RecordInvalid.new(fa)
+end
+
+def create_account(options = {})
+  account = Account.new({
+    :code => '111111',
+    :name => '山田　太郎',
+    :email => '111111@openskip.org',
+    :section => 'プログラマ',
+    :password => 'password',
+    :password_confirmation => 'password'}.merge(options))
+  account.save
+  account
+end
+
 def create_ranking(options = {})
     ranking = Ranking.new({
       :url => 'http://user.openskip.org/',

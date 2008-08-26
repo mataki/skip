@@ -371,3 +371,104 @@ describe Admin::AccountsController do
     end
   end
 end
+
+describe Admin::AccountsController, 'GET /import' do
+  before do
+    admin_login
+    get :import
+  end
+  it { response.should render_template('import') }
+  it { assigns[:accounts].should_not be_nil }
+end
+
+describe Admin::AccountsController, 'POST /import' do
+  before do
+    admin_login
+  end
+  describe '不正なファイルの場合' do
+    before do
+      controller.should_receive(:valid_csv?).and_return(false)
+      post :import
+    end
+    it { response.should render_template('import') }
+    it { assigns[:accounts].should_not be_nil }
+  end
+  describe '正常なファイルの場合' do
+    before do
+      controller.should_receive(:valid_csv?).and_return(true)
+    end
+    describe '1件が新規、1件が既存レコードの場合' do
+      before do
+        new_account = mock_model(Admin::Account)
+        new_account.stub!(:new_record?).and_return(true)
+        new_account.should_receive(:save!)
+        edit_account = mock_model(Admin::Account)
+        edit_account.stub!(:new_record?).and_return(false)
+        edit_account.should_receive(:save!)
+        Admin::Account.should_receive(:make_accounts).and_return([new_account, edit_account])
+        post :import
+      end
+      it { flash[:notice].should_not be_nil }
+      it { response.should redirect_to(admin_accounts_path) }
+    end
+    describe 'invalidなレコードが含まれる場合' do
+      before do
+        new_account = mock_model(Admin::Account)
+        new_account.stub!(:new_record?).and_return(true)
+        new_account.should_receive(:save!).and_raise(mock_record_invalid)
+        new_account.should_receive(:valid?)
+        Admin::Account.should_receive(:make_accounts).and_return([new_account])
+        post :import
+      end
+      it { response.should render_template('import') }
+    end
+  end
+end
+
+describe Admin::AccountsController, '#valid_csv' do
+  describe 'ファイルがnil又は空の場合' do
+    before do
+      @file = nil
+      controller.send(:valid_csv?, @file)
+    end
+    it { flash[:error].should_not be_nil }
+  end
+  describe 'ファイルサイズが0の場合' do
+    before do
+      @file = mock_csv_file(:size => 0)
+      controller.send(:valid_csv?, @file)
+    end
+    it { flash[:error].should_not be_nil }
+  end
+  describe 'ファイルサイズが1MBを超える場合' do
+    before do
+      @file = mock_csv_file(:size => 1.megabyte + 1)
+      controller.send(:valid_csv?, @file)
+    end
+    it { flash[:error].should_not be_nil }
+  end
+  describe 'ファイルのContent-typeがcsv以外の場合' do
+    before do
+      @file = mock_csv_file(:content_type => 'image/jpeg')
+      controller.send(:valid_csv?, @file)
+    end
+    it { flash[:error].should_not be_nil }
+  end
+  describe 'ファイルのContent-typeがcsvの場合' do
+    it "application/x-csvを渡した時、tureを返すこと" do
+      controller.send(:valid_csv?, mock_csv_file(:content_type => 'application/x-csv')).should be_true
+    end
+    it "text/csvを渡した時、trueを返すこと" do
+      controller.send(:valid_csv?, mock_csv_file(:content_type => 'text/csv')).should be_true
+    end
+  end
+end
+
+def mock_csv_file(options = {})
+  file = mock(ActionController::UploadedStringIO)
+  size = options[:size] ? options[:size] : 1.kilobyte
+  file.stub!(:size).and_return(size)
+  content_type = options[:content_type] ? options[:content_type] : 'text/csv'
+  file.stub!(:content_type).and_return(content_type)
+  file
+end

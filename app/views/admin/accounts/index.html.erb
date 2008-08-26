@@ -25,5 +25,6 @@
 
 <br />
 
-<%= link_to _('New %{model}') % {:model => _('account')}, new_admin_account_path %>
+<%= link_to _('New %{model}') % {:model => _('account')}, new_admin_account_path %> |
+<%= link_to _('New account from csv'), import_new_admin_account_path %>
 <% end -%>

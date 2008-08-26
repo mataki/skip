@@ -1,0 +1,46 @@
+<%= render :partial => '/admin/contents_left' %>
+<% content_for :contents_right do -%>
+<h2><%= _('アカウントインポート') %></h2>
+  <% form_tag import_new_admin_account_path, :multipart => true do -%>
+    <label for="file"><%= _('CSVファイル') %></label><%= file_field_tag :file %>
+    <%= submit_tag _('アップロード'), :disable_with => _('アップロード中…') %>
+  <% end -%>
+  <h2>正しいCSVファイルの例</h2>
+  <pre>
+  111111,山田 太郎,経理,yamada@example.com,password
+  222222,山田 花子,人事,h_yamada@example.com,password
+  333333,鈴木 次郎,開発,suzuki@example.com,password
+  </pre>
+  <% unless @accounts.empty? -%>
+    <% unless flash[:error].nil? -%>
+      <h2>アップロードしたCSVファイルのエラー行</h2>
+      <p><%= _('以下の色が変わっている箇所が不正な値です。例にならって修正後再度アップロードして下さい。') %></p>
+    <% end -%>
+  <table>
+    <thead>
+      <th><%= _('Line') %></th>
+      <th><%= label :account, :code %></th>
+      <th><%= label :account, :name %></th>
+      <th><%= label :account, :section %></th>
+      <th><%= label :account, :email %></th>
+      <th><%= label :account, :password %></th>
+    </thead>
+    <tbody>
+    <% @accounts.each_with_index do |account, line| -%>
+      <% unless account.errors.empty? -%>
+      <% @account = account -%>
+      <% error_messages_for :account -%>
+      <tr>
+      <td><%= line+1 %></td>
+      <td><%= label :account, :code, account.code %></td>
+      <td><%= label :account, :name, account.name %></td>
+      <td><%= label :account, :section, account.section %></td>
+      <td><%= label :account, :email, account.email %></td>
+      <td><%= label :account, :password, '********' %></td>
+      </tr>
+      <% end -%>
+    <% end -%>
+    </tbody>
+  </table>
+  <% end -%>
+<% end -%>

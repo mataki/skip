@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-08-26 11:59+0900\n"
+"POT-Creation-Date: 2008-08-26 15:48+0900\n"
 "PO-Revision-Date: 2008-08-11 18:58+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -475,6 +475,10 @@ msgstr ""
 msgid "Bookmark|タイトル"
 msgstr ""
 
+#: app/views/admin/accounts/import.html.erb:3
+msgid "CSVファイル"
+msgstr ""
+
 #: app/controllers/admin/accounts_controller.rb:30
 msgid "CSVファイルからのアカウント登録/更新に成功しました。"
 msgstr ""
@@ -651,6 +655,10 @@ msgstr ""
 msgid "Group|説明"
 msgstr ""
 
+#: app/views/admin/accounts/import.html.erb:19
+msgid "Line"
+msgstr ""
+
 #: app/views/admin/share_files/index.html.erb:3
 #: app/views/admin/bookmark_comments/index.html.erb:3
 #: app/views/admin/board_entries/show.html.erb:21
@@ -734,6 +742,10 @@ msgstr ""
 #: app/views/admin/openid_identifiers/index.html.erb:22
 msgid "New %{model}"
 msgstr "新規%{model}の作成"
+
+#: app/views/admin/accounts/index.html.erb:29
+msgid "New account from csv"
+msgstr "アカウントインポート"
 
 #: app/models/openid_identifier.rb:-
 msgid "OpenidIdentifier|Account"
@@ -1376,6 +1388,18 @@ msgstr ""
 msgid "user uid"
 msgstr ""
 
+#: app/views/admin/accounts/import.html.erb:1
+msgid "アカウントインポート"
+msgstr ""
+
+#: app/views/admin/accounts/import.html.erb:4
+msgid "アップロード"
+msgstr ""
+
+#: app/views/admin/accounts/import.html.erb:4
+msgid "アップロード中…"
+msgstr ""
+
 #: app/helpers/admin/application_helper.rb:20
 msgid "データ管理"
 msgstr ""
@@ -1390,4 +1414,10 @@ msgstr ""
 
 #: app/controllers/admin/accounts_controller.rb:51
 msgid "ファイルサイズが1MBを超えています。"
+msgstr ""
+
+#: app/views/admin/accounts/import.html.erb:15
+msgid ""
+"以下の色が変わっている箇所が不正な値です。例にならって修正後再度アップロード"
+"して下さい。"
 msgstr ""
