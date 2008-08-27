@@ -124,7 +124,13 @@ div.warning {
   font-size: 12px;
   background-color: yellow;
 }
-div.notice span, div.warning span {
+div.error {
+  border: 2px solid red;
+  margin: 3px 0 1em 0;
+  font-size: 12px;
+  background-color: pink;
+}
+div.notice span, div.warning span, div.error span {
   position: absolute;
   right: 15px;
   top: 15px;

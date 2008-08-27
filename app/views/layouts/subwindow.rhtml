@@ -34,20 +34,7 @@ var relative_url_root = '<%= controller.request.relative_url_root -%>';
 
 <body>
 <div id="main" style="margin: 10px;">
-
-  <% if flash[:warning] != nil %>
-  <div class="warning" onclick="this.style.display = 'none';">
-    <h3><%= flash[:warning] %></h3>
-    <span>[クリックでメッセージ消去]</span>
-  </div>
-  <% end %>
-  <% if flash[:notice] != nil %>
-  <div class="notice" onclick="this.style.display = 'none';">
-    <h3><%= flash[:notice] %></h3>
-    <span>[クリックでメッセージ消去]</span>
-  </div>
-  <% end %>
-
+  <%= render :partial => 'layouts/flash_messages' %>
   <%= @content_for_layout %>
 </div><!-- main -->
 

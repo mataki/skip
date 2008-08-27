@@ -60,16 +60,7 @@
   </div>
 
   <div id="tab_body">
-    <% if flash[:warning] != nil %>
-    <div class="warning" onclick="this.style.display = 'none';">
-      <h3 style="width: 100%;"><%= flash[:warning] %></h3><span>[クリックでメッセージ消去]</span>
-    </div>
-    <% end %>
-    <% if flash[:notice] != nil %>
-    <div class="notice" onclick="this.style.display = 'none';">
-      <h3 style="width: 100%;"><%= flash[:notice] %></h3><span>[クリックでメッセージ消去]</span>
-    </div>
-    <% end %>
+    <%= render :partial => 'layouts/flash_messages' %>
     <div id="contents_container">
       <%= yield %>
       <% if @content_for_contents_left -%>
