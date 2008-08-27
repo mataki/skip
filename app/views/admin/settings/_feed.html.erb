@@ -1,0 +1,39 @@
+<h3><%= _('RSSフィード設定') %></h3>
+<div class="box tabular">
+  <p><%= settings_label_with_text_field_tag :mypage_feed_default_limit %></p>
+  <p><%= settings_label_with_text_field_tag :mypage_feed_timeout %></p>
+  <div id="feed_items">
+    <p><%= label Admin::Setting.name, :mypage_feed_settings %>
+    <a id="add_feed_item" href="#">[フィードを追加する]</a>
+    <a id="remove_feed_item" href="#">[フィードを除去する]</a>
+    </p>
+    <% Admin::Setting.mypage_feed_settings.each_with_index do |feed_setting, index| -%>
+      <% @feed_setting = feed_setting -%>
+      <% @index = index -%>
+      <%= render :partial => 'feed_item' %>
+    <% end -%>
+  </div>
+</div>
+
+<% content_for :javascript do -%>
+<script type="text/javascript">
+$j(function(){
+    var index = <%= @index %>;
+    $j('#add_feed_item')
+    .click(function(){
+        index++;
+        $j.ajax({
+            url: '<%= admin_settings_ado_feed_item_url %>',
+            data: 'index=' + index,
+            success: function(html) {
+                $j('#feed_items').append(html);
+            }
+        });
+    });
+    $j('#remove_feed_item')
+    .click(function(){
+        $j('.feed_item:last').remove();
+    });
+});
+</script>
+<% end -%>

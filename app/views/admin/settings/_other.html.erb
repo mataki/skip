@@ -1,0 +1,39 @@
+<h3><%= _('その他設定') %></h3>
+<div class="box tabular">
+  <p><%= settings_label_with_text_field_tag :develop_team_gid %></p>
+  <div id="antenna_default_groups">
+    <p><%= label Admin::Setting.name, :antenna_default_group %>
+    <a id="add_antenna_default_group" href="#">[デフォルトのアンテナを追加する]</a>
+    <a id="remove_antenna_default_group" href="#">[デフォルトのアンテナを除去する]</a>
+    </p>
+    <% Admin::Setting.antenna_default_group.each_with_index do |antenna, index| -%>
+      <% @antenna = antenna -%>
+      <% @index = index -%>
+      <%= render :partial => 'antenna_default_group' %>
+    <% end -%>
+  </div>
+  <p><%= settings_label_with_check_box_tag :stop_new_user %></p>
+</div>
+
+<% content_for :javascript do -%>
+<script type="text/javascript">
+$j(function(){
+    var index = <%= @index %>;
+    $j('#add_antenna_default_group')
+    .click(function(){
+        index++;
+        $j.ajax({
+            url: '<%= admin_settings_ado_antenna_default_group_url %>',
+            data: 'index=' + index,
+            success: function(html) {
+                $j('#antenna_default_groups').append(html);
+            }
+        });
+    });
+    $j('#remove_antenna_default_group')
+    .click(function(){
+        $j('.antenna_default_group:last').remove();
+    });
+});
+</script>
+<% end -%>

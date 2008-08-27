@@ -18,6 +18,10 @@ module Admin::ApplicationHelper
     output = ''
     output << '<ul>'
     output << generate_tab_link( _('データ管理'), admin_accounts_path, true )
+    output << generate_tab_link( _('文言設定'), admin_settings_path(:tab => :literal) )
+    output << generate_tab_link( _('メール関連設定'), admin_settings_path(:tab => :mail) )
+    output << generate_tab_link( _('その他設定'), admin_settings_path(:tab => :other) )
+    output << generate_tab_link( _('RSSフィード設定'), admin_settings_path(:tab => :feed) )
     output << '</ul>'
   end
 

@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-08-26 17:42+0900\n"
+"POT-Creation-Date: 2008-08-27 10:19+0900\n"
 "PO-Revision-Date: 2008-08-11 18:58+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -156,6 +156,130 @@ msgstr "参加制限"
 #: app/views/admin/openid_identifiers/index.html.erb:7
 msgid "Admin::OpenidIdentifier|Url"
 msgstr "OpenID URL"
+
+#: app/models/admin/setting.rb:18
+msgid "Admin::Setting|Abbr app title"
+msgstr "SNS名の略称"
+
+#: app/models/admin/setting.rb:36
+msgid "Admin::Setting|Antenna default group"
+msgstr "初期のアンテナに追加されるグループ"
+
+#: app/models/admin/setting.rb:17
+msgid "Admin::Setting|Contact addr"
+msgstr "SNS運営者のメールアドレス"
+
+#: app/models/admin/setting.rb:20
+msgid "Admin::Setting|Contact url"
+msgstr "SNS運営者のURL"
+
+#: app/models/admin/setting.rb:44
+msgid "Admin::Setting|Delivery method"
+msgstr "配送方法"
+
+#: app/models/admin/setting.rb:45
+msgid "Admin::Setting|Develop team gid"
+msgstr "運営チームのgid"
+
+#: app/models/admin/setting.rb:27
+msgid "Admin::Setting|Footer contact"
+msgstr "フッターの2行目"
+
+#: app/models/admin/setting.rb:28
+msgid "Admin::Setting|Footer copyright"
+msgstr "フッターの3行目"
+
+#: app/models/admin/setting.rb:31
+msgid "Admin::Setting|Footer image url"
+msgstr "フッターの画像URL"
+
+#: app/models/admin/setting.rb:26
+msgid "Admin::Setting|Footer link"
+msgstr "フッターの1行目"
+
+#: app/models/admin/setting.rb:21
+msgid "Admin::Setting|Help url"
+msgstr "SNSヘルプのURL"
+
+#: app/models/admin/setting.rb:22
+msgid "Admin::Setting|Initial anntena"
+msgstr "初期登録されるアンテナ名"
+
+#: app/models/admin/setting.rb:23
+msgid "Admin::Setting|Login account"
+msgstr "ログインIDの名称"
+
+#: app/models/admin/setting.rb:25
+msgid "Admin::Setting|Login account example"
+msgstr "ログインIDのサンプル"
+
+#: app/models/admin/setting.rb:24
+msgid "Admin::Setting|Login password"
+msgstr "パスワードの名称"
+
+#: app/models/admin/setting.rb:48
+msgid "Admin::Setting|Mail function setting"
+msgstr "メール機能を有効にする"
+
+#: app/models/admin/setting.rb:35
+msgid "Admin::Setting|Mypage feed default limit"
+msgstr "1フィード当たりの表示件数のデフォルト値"
+
+#: app/models/admin/setting.rb:32
+msgid "Admin::Setting|Mypage feed settings"
+msgstr "フィードの設定"
+
+#: app/models/admin/setting.rb:34
+msgid "Admin::Setting|Mypage feed settings title"
+msgstr "フィードタイトル"
+
+#: app/models/admin/setting.rb:33
+msgid "Admin::Setting|Mypage feed settings url"
+msgstr "フィードURL"
+
+#: app/models/admin/setting.rb:47
+msgid "Admin::Setting|Mypage feed timeout"
+msgstr "フィード取得のタイムアウト値(秒)"
+
+#: app/models/admin/setting.rb:29
+msgid "Admin::Setting|Point button"
+msgstr "ポイント評価のボタン表示名"
+
+#: app/models/admin/setting.rb:46
+msgid "Admin::Setting|Raise delivery errors"
+msgstr "メール配送失敗時にエラーを出力"
+
+#: app/models/admin/setting.rb:37
+msgid "Admin::Setting|Smtp settings"
+msgstr "SMTP設定"
+
+#: app/models/admin/setting.rb:41
+msgid "Admin::Setting|Smtp settings address"
+msgstr "アドレス"
+
+#: app/models/admin/setting.rb:43
+msgid "Admin::Setting|Smtp settings authentication"
+msgstr "認証"
+
+#: app/models/admin/setting.rb:42
+msgid "Admin::Setting|Smtp settings domain"
+msgstr "ドメイン"
+
+#: app/models/admin/setting.rb:38
+msgid "Admin::Setting|Smtp settings password"
+msgstr "パスワード"
+
+#: app/models/admin/setting.rb:39
+msgid "Admin::Setting|Smtp settings port"
+msgstr "ポート"
+
+#: app/models/admin/setting.rb:40
+msgid "Admin::Setting|Smtp settings user name"
+msgstr "ユーザ名"
+
+#: app/models/admin/setting.rb:30
+msgid "Admin::Setting|Stop new user"
+msgstr "新規ユーザ登録の停止"
 
 #: app/models/admin/share_file.rb:22
 msgid "Admin::ShareFile|Category"
@@ -333,6 +457,7 @@ msgstr "本当に宜しいですか？"
 #: app/views/admin/accounts/show.html.erb:25
 #: app/views/admin/accounts/new.html.erb:37
 #: app/views/admin/accounts/edit.html.erb:30
+#: app/views/admin/user_profiles/edit.html.erb:61
 #: app/views/admin/users/show.html.erb:39
 #: app/views/admin/users/edit.html.erb:42
 #: app/views/admin/board_entry_comments/show.html.erb:8
@@ -590,6 +715,7 @@ msgid "Edit"
 msgstr "編集"
 
 #: app/views/admin/accounts/edit.html.erb:3
+#: app/views/admin/user_profiles/edit.html.erb:3
 #: app/views/admin/users/edit.html.erb:3
 #: app/views/admin/openid_identifiers/edit.html.erb:3
 msgid "Editing %{model}"
@@ -851,6 +977,12 @@ msgstr ""
 msgid "PopularBookmark|Date"
 msgstr ""
 
+#: app/controllers/admin/settings_controller.rb:24
+#: app/helpers/admin/application_helper.rb:24
+#: app/views/admin/settings/_feed.html.erb:1
+msgid "RSSフィード設定"
+msgstr ""
+
 #: app/models/ranking.rb:-
 msgid "Ranking|Amount"
 msgstr ""
@@ -885,6 +1017,14 @@ msgstr ""
 
 #: app/models/ranking.rb:-
 msgid "Ranking|Url"
+msgstr ""
+
+#: app/views/admin/settings/index.html.erb:4
+msgid "Save"
+msgstr ""
+
+#: app/views/admin/settings/index.html.erb:4
+msgid "Saving..."
 msgstr ""
 
 #: app/views/admin/_search_box.html.erb:4
@@ -1096,6 +1236,7 @@ msgid "Track|Visitor"
 msgstr ""
 
 #: app/views/admin/accounts/edit.html.erb:25
+#: app/views/admin/user_profiles/edit.html.erb:57
 #: app/views/admin/users/edit.html.erb:37
 #: app/views/admin/openid_identifiers/edit.html.erb:13
 msgid "Update"
@@ -1261,7 +1402,7 @@ msgstr ""
 msgid "User|部門"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:33 app/models/account.rb:-
+#: app/helpers/admin/application_helper.rb:37 app/models/account.rb:-
 #: app/views/admin/accounts/new.html.erb:3
 #: app/views/admin/accounts/edit.html.erb:3
 #: app/views/admin/accounts/index.html.erb:3
@@ -1282,7 +1423,7 @@ msgstr ""
 msgid "applied email"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:30 app/models/board_entry.rb:-
+#: app/helpers/admin/application_helper.rb:34 app/models/board_entry.rb:-
 #: app/views/admin/board_entries/index.html.erb:3
 #: app/views/admin/board_entry_comments/index.html.erb:21
 msgid "board entry"
@@ -1298,7 +1439,7 @@ msgstr "エントリコメント"
 msgid "board entry point"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:31 app/models/bookmark.rb:-
+#: app/helpers/admin/application_helper.rb:35 app/models/bookmark.rb:-
 #: app/views/admin/bookmarks/index.html.erb:3
 msgid "bookmark"
 msgstr "ブックマーク"
@@ -1341,7 +1482,7 @@ msgstr ""
 msgid "entry trackback"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:29 app/models/group.rb:-
+#: app/helpers/admin/application_helper.rb:33 app/models/group.rb:-
 #: app/views/admin/group_participations/index.html.erb:26
 #: app/views/admin/groups/index.html.erb:3
 msgid "group"
@@ -1385,7 +1526,7 @@ msgstr ""
 msgid "session"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:32 app/models/share_file.rb:-
+#: app/helpers/admin/application_helper.rb:36 app/models/share_file.rb:-
 #: app/views/admin/share_files/index.html.erb:3
 msgid "share file"
 msgstr "共有ファイル"
@@ -1414,7 +1555,7 @@ msgstr "タグ"
 msgid "track"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:28 app/models/user.rb:-
+#: app/helpers/admin/application_helper.rb:32 app/models/user.rb:-
 #: app/views/admin/user_profiles/show.html.erb:64
 #: app/views/admin/users/edit.html.erb:3
 #: app/views/admin/users/index.html.erb:3
@@ -1433,7 +1574,8 @@ msgstr ""
 msgid "user message unsubscribe"
 msgstr ""
 
-#: app/models/user_profile.rb:- app/views/admin/users/show.html.erb:40
+#: app/models/user_profile.rb:- app/views/admin/user_profiles/edit.html.erb:3
+#: app/views/admin/users/show.html.erb:40
 msgid "user profile"
 msgstr "プロフィール"
 
@@ -1443,6 +1585,12 @@ msgstr ""
 
 #: app/models/user_uid.rb:-
 msgid "user uid"
+msgstr ""
+
+#: app/controllers/admin/settings_controller.rb:23
+#: app/helpers/admin/application_helper.rb:23
+#: app/views/admin/settings/_other.html.erb:1
+msgid "その他設定"
 msgstr ""
 
 #: app/views/admin/accounts/import.html.erb:3
@@ -1473,8 +1621,24 @@ msgstr ""
 msgid "ファイルサイズが1MBを超えています。"
 msgstr ""
 
+#: app/controllers/admin/settings_controller.rb:22
+#: app/helpers/admin/application_helper.rb:22
+#: app/views/admin/settings/_mail.html.erb:1
+msgid "メール関連設定"
+msgstr ""
+
 #: app/views/admin/accounts/import.html.erb:17
 msgid ""
 "以下の色が変わっている箇所が不正な値です。例にならって修正後再度アップロード"
 "して下さい。"
+msgstr ""
+
+#: app/controllers/admin/settings_controller.rb:41
+msgid "保存しました。"
+msgstr ""
+
+#: app/controllers/admin/settings_controller.rb:21
+#: app/helpers/admin/application_helper.rb:21
+#: app/views/admin/settings/_literal.html.erb:1
+msgid "文言設定"
 msgstr ""
