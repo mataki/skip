@@ -1,0 +1,23 @@
+<%= render :partial => '/admin/contents_left' %>
+<% content_for :contents_right do -%>
+<h1><%= _('Editing %{model}') % {:model => _('user uid')} %></h1>
+
+<% form_for(@user_uid, :url => admin_user_user_uid_url(@user, @user_uid), :method => :put) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :uid %><br />
+    <%= f.text_field :uid %>
+  </p>
+  <p>
+    <%= f.label :uid_type %><br />
+    <%= f.text_field :uid_type %>
+  </p>
+  <p>
+    <%= f.submit _('Update') %>
+  </p>
+<% end %>
+
+<%= link_to _('Show'), admin_user_user_uid_url(@user, @user_uid) %> |
+<%= link_to _('Back'), admin_user_user_uids_path(@user) %>
+<% end -%>

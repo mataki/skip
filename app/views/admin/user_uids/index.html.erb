@@ -1,0 +1,26 @@
+<%= render :partial => '/admin/contents_left' %>
+<% content_for :contents_right do -%>
+<h1><%= _('Listing %{model}') % {:model => _('user uid')} %></h1>
+
+<table>
+  <tr>
+    <th><%= _("Admin::UserUid|Uid") %></th>
+    <th><%= _("Admin::UserUid|Uid type") %></th>
+  </tr>
+
+<% for user_uid in @user_uids %>
+  <tr>
+    <td><%=h user_uid.uid %></td>
+    <td><%=h user_uid.uid_type %></td>
+    <td><%= link_to _('Show'), admin_user_user_uid_url(@user, user_uid) %></td>
+    <td><%= link_to _('Edit'), edit_admin_user_user_uid_path(@user, user_uid) %></td>
+    <td><%= link_to _('Destroy'), admin_user_user_uid_url(@user, user_uid), :confirm => _('Are you sure?'), :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to _('New %{model}') % {:model => _('user uid')}, new_admin_user_user_uid_path %> |
+<%= link_to _('%{model} Show') % {:model => _('user')}, admin_user_path(@user) %>
+<% end -%>

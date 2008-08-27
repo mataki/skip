@@ -1,0 +1,14 @@
+<%= render :partial => '/admin/contents_left' %>
+<% content_for :contents_right do -%>
+<p>
+  <b><%= label @user_uid.class, :uid %>:</b>
+  <%=h @user_uid.uid %>
+</p>
+<p>
+  <b><%= label @user_uid.class, :uid_type %>:</b>
+  <%=h @user_uid.uid_type %>
+</p>
+
+<%= link_to _('Edit'), edit_admin_user_user_uid_path(@user, @user_uid) %> |
+<%= link_to _('Back'), admin_user_user_uids_path %>
+<% end -%>

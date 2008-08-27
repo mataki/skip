@@ -49,6 +49,7 @@ ActionController::Routing::Routes.draw do |map|
     end
     admin_map.resources :users do |user|
       user.resource :user_profile
+      user.resources :user_uids
     end
     admin_map.resources :groups do |group|
       group.resources :group_participations
