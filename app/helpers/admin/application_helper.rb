@@ -22,10 +22,11 @@ module Admin::ApplicationHelper
     output << generate_tab_link( _('メール関連設定'), admin_settings_path(:tab => :mail), request.url == admin_settings_url(:tab => :mail) )
     output << generate_tab_link( _('その他設定'), admin_settings_path(:tab => :other), request.url == admin_settings_url(:tab => :other) )
     output << generate_tab_link( _('RSSフィード設定'), admin_settings_path(:tab => :feed), request.url == admin_settings_url(:tab => :feed) )
+    output << generate_tab_link( _('静的コンテンツ管理'), admin_documents_path, request.url.include?(admin_documents_url) )
     output << '</ul>'
   end
 
-  def generate_admin_box_menu
+  def generate_box_menu
     accounts_link = (ENV['SKIPOP_URL'].blank? ? admin_accounts_path : "#{ENV['SKIPOP_URL']}admin/accounts")
     output = ''
     output << '<ul>'
@@ -38,7 +39,6 @@ module Admin::ApplicationHelper
     output << '</ul>'
   end
 
-  private
   def generate_box_menu_link(name, path, selected = false, html_options = nil)
     if selected
       "<li>#{icon_tag('bullet_red')}<b>#{name}</b></li>"
@@ -47,6 +47,7 @@ module Admin::ApplicationHelper
     end
   end
 
+  private
   def generate_tab_link(name, path, selected = false, html_options = nil)
     html_option = {:class => 'selected'} if selected
     "<li>#{link_to('<span>' + name + '</span>', path, html_option)}</li>"
