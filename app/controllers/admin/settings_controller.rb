@@ -17,12 +17,6 @@ class Admin::SettingsController < Admin::ApplicationController
 
   def index
     params[:tab] ||= 'literal'
-    @tab_menu_source = [
-      [_('文言設定'), 'literal'],
-      [_('メール関連設定'), 'mail'],
-      [_('その他設定'), 'other'],
-      [_('RSSフィード設定'), 'feed']
-    ]
   end
 
   def update_all
