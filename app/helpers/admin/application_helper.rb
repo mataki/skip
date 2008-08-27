@@ -14,14 +14,14 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 module Admin::ApplicationHelper
-  def generate_tab_menu menu_source, option = {}
+  def generate_admin_tab_menu
     output = ''
     output << '<ul>'
-    output << generate_tab_link( _('データ管理'), admin_accounts_path, true )
-    output << generate_tab_link( _('文言設定'), admin_settings_path(:tab => :literal) )
-    output << generate_tab_link( _('メール関連設定'), admin_settings_path(:tab => :mail) )
-    output << generate_tab_link( _('その他設定'), admin_settings_path(:tab => :other) )
-    output << generate_tab_link( _('RSSフィード設定'), admin_settings_path(:tab => :feed) )
+    output << generate_tab_link( _('データ管理'), admin_accounts_path, !request.url.include?(admin_settings_url) )
+    output << generate_tab_link( _('文言設定'), admin_settings_path(:tab => :literal), request.url == admin_settings_url || request.url == admin_settings_url(:tab => :literal) )
+    output << generate_tab_link( _('メール関連設定'), admin_settings_path(:tab => :mail), request.url == admin_settings_url(:tab => :mail) )
+    output << generate_tab_link( _('その他設定'), admin_settings_path(:tab => :other), request.url == admin_settings_url(:tab => :other) )
+    output << generate_tab_link( _('RSSフィード設定'), admin_settings_path(:tab => :feed), request.url == admin_settings_url(:tab => :feed) )
     output << '</ul>'
   end
 
