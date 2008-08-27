@@ -21,6 +21,8 @@ class BookmarkController < ApplicationController
 
   before_filter :check_params, :only => [:new, :edit]
 
+ protect_from_forgery :except => [:new]
+
   # ブックマークレット用
   def new
     user_tags, other_tags, your_tags = prepare_bookmark params

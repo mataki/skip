@@ -17,6 +17,8 @@ require 'symbol'
 require 'tempfile'
 
 class ApplicationController < ActionController::Base
+  protect_from_forgery 
+
   layout 'layout'
   before_filter :prepare_session
   after_filter  :remove_message
@@ -112,4 +114,5 @@ class ApplicationController < ActionController::Base
     end
     return true
   end
+
 end

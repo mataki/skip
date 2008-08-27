@@ -76,6 +76,7 @@ td {
 
 </table>
 </div>
+<%= hidden_field_tag("authenticity_token", form_authenticity_token) %>
 <div style="text-align: center;"><%= submit_tag "OK", :id => "submit_button" %>
 <% if @bookmark.is_type_internet? && @bookmarklet -%>
   <input type="button" value="Cancel" onclick="location.href='<%= @bookmark.url -%>'"></input>
