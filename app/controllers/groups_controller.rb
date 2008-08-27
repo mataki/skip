@@ -1,6 +1,6 @@
 # SKIP(Social Knowledge & Innovation Platform)
 # Copyright (C) 2008 TIS Inc.
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -9,7 +9,7 @@
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-# 
+#
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -24,8 +24,7 @@ class GroupsController < ApplicationController
     params[:yet_participation] ||= false
     target_user_id = params[:user_id] || session[:user_id]
     params[:category] ||= "all"
-    params[:format_type] ||= "detail"
-    @format_type = params[:format_type]
+    @format_type = params[:format_type] ||= "detail"
     @group_counts, @total_count = Group.count_by_category
     params[:sort_type] ||= "date"
 
@@ -52,30 +51,30 @@ class GroupsController < ApplicationController
   # グループの新規作成の処理
   def create
     @group = Group.new(params[:group])
-      #管理者（自分）
-      @group.group_participations.build(:user_id => session[:user_id], :owned => true)
+    #管理者（自分）
+    @group.group_participations.build(:user_id => session[:user_id], :owned => true)
 
-      # 招待したいユーザ・グループ
-      default_users = []
-      params[:publication_symbols_value].split(',').each do |symbol|
-        symbol_id = symbol.split(":").last
-        if symbol.include?("gid:")
-          group = Group.find_by_gid(symbol_id, :include => :group_participations)
-          group.group_participations.each { |gp| default_users << gp.user_id } if group
-        elsif symbol.include?("uid:")
-          user = User.find_by_uid(symbol_id)
-          default_users << user.id if user
-        end
+    # 招待したいユーザ・グループ
+    default_users = []
+    params[:publication_symbols_value].split(',').each do |symbol|
+      symbol_id = symbol.split(":").last
+      if symbol.include?("gid:")
+        group = Group.find_by_gid(symbol_id, :include => :group_participations)
+        group.group_participations.each { |gp| default_users << gp.user_id } if group
+      elsif symbol.include?("uid:")
+        user = User.find_by_uid(symbol_id)
+        default_users << user.id if user
       end
+    end
 
-      default_users.delete(session[:user_id]) # ログインユーザのIDは既に登録済み
-      default_users.uniq.each { |user_id| @group.group_participations.build(:user_id => user_id, :owned => false)}
+    default_users.delete(session[:user_id]) # ログインユーザのIDは既に登録済み
+    default_users.uniq.each { |user_id| @group.group_participations.build(:user_id => user_id, :owned => false)}
 
-      if @group.save
-        flash[:notice] = 'グループが正しく作成されました。'
-        redirect_to :controller => 'group', :action => 'show', :gid => @group.gid
-        return
-      end
+    if @group.save
+      flash[:notice] = 'グループが正しく作成されました。'
+      redirect_to :controller => 'group', :action => 'show', :gid => @group.gid
+      return
+    end
     render_create
   end
 
