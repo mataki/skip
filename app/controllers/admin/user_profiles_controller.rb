@@ -41,7 +41,7 @@ class Admin::UserProfilesController < Admin::ApplicationController
 
     respond_to do |format|
       if @user_profile.update_attributes(params[:user_profile])
-        flash[:notice] = 'Admin::UserProfile was successfully updated.'
+        flash[:notice] = _('%{model} was successfully updated.') % {:model => _('profile')}
         format.html { redirect_to(admin_user_user_profile_path(@user)) }
         format.xml  { head :ok }
       else

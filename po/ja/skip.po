@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-08-27 12:02+0900\n"
-"PO-Revision-Date: 2008-08-27 12:04+0900\n"
+"POT-Creation-Date: 2008-08-27 19:20+0900\n"
+"PO-Revision-Date: 2008-08-27 19:20+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -23,6 +23,15 @@ msgstr ""
 #: app/views/admin/user_uids/index.html.erb:25
 msgid "%{model} Show"
 msgstr "%{model}の詳細"
+
+#: lib/admin_module.rb:88 lib/admin_module.rb:171
+msgid "%{model} was successfully created."
+msgstr "%{model}の作成に成功しました。"
+
+#: app/controllers/admin/user_profiles_controller.rb:44
+#: lib/admin_module.rb:104 lib/admin_module.rb:188
+msgid "%{model} was successfully updated."
+msgstr "%{model}の更新に成功しました。"
 
 #: app/models/account.rb:-
 msgid "Account|Created at"
@@ -382,31 +391,31 @@ msgstr "ユーザID"
 msgid "Admin::UserUid|Uid type"
 msgstr "タイプ"
 
-#: app/models/admin/user.rb:23
+#: app/models/admin/user.rb:25
 msgid "Admin::User|Admin"
 msgstr "管理権限"
 
-#: app/models/admin/user.rb:17
+#: app/models/admin/user.rb:19
 msgid "Admin::User|Email"
 msgstr "メールアドレス"
 
-#: app/models/admin/user.rb:20
+#: app/models/admin/user.rb:22
 msgid "Admin::User|Extension"
 msgstr "内線番号"
 
-#: app/models/admin/user.rb:21
+#: app/models/admin/user.rb:23
 msgid "Admin::User|Introduction"
 msgstr "自己紹介"
 
-#: app/models/admin/user.rb:18
+#: app/models/admin/user.rb:20
 msgid "Admin::User|Name"
 msgstr "氏名"
 
-#: app/models/admin/user.rb:22
+#: app/models/admin/user.rb:24
 msgid "Admin::User|Retired"
 msgstr "就業状態"
 
-#: app/models/admin/user.rb:19
+#: app/models/admin/user.rb:21
 msgid "Admin::User|Section"
 msgstr "部署"
 
@@ -1002,7 +1011,6 @@ msgstr ""
 msgid "PopularBookmark|Date"
 msgstr ""
 
-#: app/controllers/admin/settings_controller.rb:24
 #: app/helpers/admin/application_helper.rb:24
 #: app/views/admin/settings/_feed.html.erb:1
 msgid "RSSフィード設定"
@@ -1551,6 +1559,10 @@ msgstr ""
 msgid "popular bookmark"
 msgstr ""
 
+#: app/controllers/admin/user_profiles_controller.rb:44
+msgid "profile"
+msgstr "プロフィール"
+
 #: app/models/ranking.rb:-
 msgid "ranking"
 msgstr ""
@@ -1620,10 +1632,10 @@ msgstr ""
 #: app/models/account.rb:- app/views/admin/user_uids/edit.html.erb:3
 #: app/views/admin/user_uids/index.html.erb:3
 #: app/views/admin/user_uids/index.html.erb:24
+#: app/views/admin/users/show.html.erb:41
 msgid "user uid"
 msgstr "ユーザID"
 
-#: app/controllers/admin/settings_controller.rb:23
 #: app/helpers/admin/application_helper.rb:23
 #: app/views/admin/settings/_other.html.erb:1
 msgid "その他設定"
@@ -1657,7 +1669,6 @@ msgstr ""
 msgid "ファイルサイズが1MBを超えています。"
 msgstr ""
 
-#: app/controllers/admin/settings_controller.rb:22
 #: app/helpers/admin/application_helper.rb:22
 #: app/views/admin/settings/_mail.html.erb:1
 msgid "メール関連設定"
@@ -1669,11 +1680,10 @@ msgid ""
 "して下さい。"
 msgstr ""
 
-#: app/controllers/admin/settings_controller.rb:41
+#: app/controllers/admin/settings_controller.rb:35
 msgid "保存しました。"
 msgstr ""
 
-#: app/controllers/admin/settings_controller.rb:21
 #: app/helpers/admin/application_helper.rb:21
 #: app/views/admin/settings/_literal.html.erb:1
 msgid "文言設定"

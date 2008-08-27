@@ -13,18 +13,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class Admin::User < User
-  has_many :user_uids, :dependent => :destroy, :class_name => 'Admin::UserUid'
+require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-  N_('Admin::User|Email')
-  N_('Admin::User|Name')
-  N_('Admin::User|Section')
-  N_('Admin::User|Extension')
-  N_('Admin::User|Introduction')
-  N_('Admin::User|Retired')
-  N_('Admin::User|Admin')
-
-  def self.search_colomns
-    "name like :lqs or email like :lqs or section like :lqs or extension like :lqs or introduction like :lqs"
-  end
+describe Admin::UserUidsController do
 end

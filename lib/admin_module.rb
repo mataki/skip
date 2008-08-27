@@ -85,7 +85,7 @@ module AdminModule
 
       respond_to do |format|
         if object.save
-          flash[:notice] = 'Admin::BoardEntry was successfully created.'
+          flash[:notice] = _("%{model} was successfully created.") % {:model => _(controller_name.singularize)}
           format.html { redirect_to(object) }
           format.xml  { render :xml => object, :status => :created, :location => object }
         else
@@ -101,7 +101,7 @@ module AdminModule
 
       respond_to do |format|
         if object.update_attributes(params[admin_params_sym])
-          flash[:notice] = 'Admin::BoardEntry was successfully updated.'
+          flash[:notice] = _("%{model} was successfully updated.") % {:model => _(controller_name.singularize)}
           format.html { redirect_to(object) }
           format.xml  { head :ok }
         else
@@ -168,7 +168,7 @@ module AdminModule
 
       respond_to do |format|
         if object.save
-          flash[:notice] = 'Admin::OpenidIdentifier was successfully created.'
+          flash[:notice] = _("%{model} was successfully created.") % {:model => _(controller_name.singularize)}
           format.html { redirect_to(url_for_parent_and(object)) }
           format.xml  { render :xml => object, :status => :created, :location => object }
         else
@@ -185,7 +185,7 @@ module AdminModule
 
       respond_to do |format|
         if object.update_attributes(params[controller_name.singularize.to_sym])
-          flash[:notice] = 'Admin::OpenidIdentifier was successfully updated.'
+          flash[:notice] = _('%{model} was successfully updated.') % {:model => _(controller_name.singularize)}
           format.html { redirect_to(url_for_parent_and(object)) }
           format.xml  { head :ok }
         else
