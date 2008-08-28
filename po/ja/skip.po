@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-08-28 16:40+0900\n"
+"POT-Creation-Date: 2008-08-28 18:47+0900\n"
 "PO-Revision-Date: 2008-08-27 19:20+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -195,7 +195,7 @@ msgstr "OpenID URL"
 msgid "Admin::Setting|Abbr app title"
 msgstr "SNS名の略称"
 
-#: app/models/admin/setting.rb:36
+#: app/models/admin/setting.rb:38
 msgid "Admin::Setting|Antenna default group"
 msgstr "初期のアンテナに追加されるグループ"
 
@@ -211,25 +211,33 @@ msgstr "SNS運営者のメールアドレス"
 msgid "Admin::Setting|Contact url"
 msgstr "SNS運営者のURL"
 
-#: app/models/admin/setting.rb:44
+#: app/models/admin/setting.rb:46
 msgid "Admin::Setting|Develop team gid"
 msgstr "運営チームのgid"
 
-#: app/models/admin/setting.rb:27
+#: app/models/admin/setting.rb:28
 msgid "Admin::Setting|Footer contact"
 msgstr "フッターの2行目"
 
-#: app/models/admin/setting.rb:28
+#: app/models/admin/setting.rb:29
 msgid "Admin::Setting|Footer copyright"
 msgstr "フッターの3行目"
 
 #: app/models/admin/setting.rb:31
+msgid "Admin::Setting|Footer image link url"
+msgstr "フッターの画像リンクURL"
+
+#: app/models/admin/setting.rb:30
 msgid "Admin::Setting|Footer image url"
 msgstr "フッターの画像URL"
 
-#: app/models/admin/setting.rb:26
+#: app/models/admin/setting.rb:27
 msgid "Admin::Setting|Footer link"
 msgstr "フッターの1行目"
+
+#: app/models/admin/setting.rb:26
+msgid "Admin::Setting|Header logo url"
+msgstr "ヘッダロゴ画像URL"
 
 #: app/models/admin/setting.rb:21
 msgid "Admin::Setting|Help url"
@@ -251,67 +259,67 @@ msgstr "ログインIDのサンプル"
 msgid "Admin::Setting|Login password"
 msgstr "パスワードの名称"
 
-#: app/models/admin/setting.rb:47
+#: app/models/admin/setting.rb:49
 msgid "Admin::Setting|Mail function setting"
 msgstr "メール機能を有効にする"
 
-#: app/models/admin/setting.rb:35
+#: app/models/admin/setting.rb:37
 msgid "Admin::Setting|Mypage feed default limit"
 msgstr "1フィード当たりの表示件数のデフォルト値"
 
-#: app/models/admin/setting.rb:32
+#: app/models/admin/setting.rb:34
 msgid "Admin::Setting|Mypage feed settings"
 msgstr "フィードの設定"
 
-#: app/models/admin/setting.rb:34
+#: app/models/admin/setting.rb:36
 msgid "Admin::Setting|Mypage feed settings title"
 msgstr "フィードタイトル"
 
-#: app/models/admin/setting.rb:33
+#: app/models/admin/setting.rb:35
 msgid "Admin::Setting|Mypage feed settings url"
 msgstr "フィードURL"
 
-#: app/models/admin/setting.rb:46
+#: app/models/admin/setting.rb:48
 msgid "Admin::Setting|Mypage feed timeout"
 msgstr "フィード取得のタイムアウト値(秒)"
 
-#: app/models/admin/setting.rb:29
+#: app/models/admin/setting.rb:32
 msgid "Admin::Setting|Point button"
 msgstr "ポイント評価のボタン表示名"
 
-#: app/models/admin/setting.rb:45
+#: app/models/admin/setting.rb:47
 msgid "Admin::Setting|Raise delivery errors"
 msgstr "メール配送失敗時にエラーを出力"
 
-#: app/models/admin/setting.rb:37
+#: app/models/admin/setting.rb:39
 msgid "Admin::Setting|Smtp settings"
 msgstr "SMTP設定"
 
-#: app/models/admin/setting.rb:41
+#: app/models/admin/setting.rb:43
 msgid "Admin::Setting|Smtp settings address"
 msgstr "アドレス"
 
-#: app/models/admin/setting.rb:43
+#: app/models/admin/setting.rb:45
 msgid "Admin::Setting|Smtp settings authentication"
 msgstr "認証"
 
-#: app/models/admin/setting.rb:42
+#: app/models/admin/setting.rb:44
 msgid "Admin::Setting|Smtp settings domain"
 msgstr "ドメイン"
 
-#: app/models/admin/setting.rb:38
+#: app/models/admin/setting.rb:40
 msgid "Admin::Setting|Smtp settings password"
 msgstr "パスワード"
 
-#: app/models/admin/setting.rb:39
+#: app/models/admin/setting.rb:41
 msgid "Admin::Setting|Smtp settings port"
 msgstr "ポート"
 
-#: app/models/admin/setting.rb:40
+#: app/models/admin/setting.rb:42
 msgid "Admin::Setting|Smtp settings user name"
 msgstr "ユーザ名"
 
-#: app/models/admin/setting.rb:30
+#: app/models/admin/setting.rb:33
 msgid "Admin::Setting|Stop new user"
 msgstr "新規ユーザ登録の停止"
 
@@ -1703,7 +1711,7 @@ msgid ""
 msgstr ""
 
 #: app/controllers/admin/documents_controller.rb:46
-#: app/controllers/admin/settings_controller.rb:32
+#: app/controllers/admin/settings_controller.rb:41
 msgid "保存しました。"
 msgstr ""
 
