@@ -1,7 +1,8 @@
 <%= render :partial => '/admin/contents_left' %>
 <% content_for :contents_right do -%>
-<h1><%= _('New %{model}') % {:model => _('openid identifier')} %></h1>
+<h2><%= _('New %{model}') % {:model => _('openid identifier')} %></h2>
 
+<div class="box tabular">
 <% form_for(@openid_identifier, :url => admin_account_openid_identifiers_url(@account)) do |f| %>
   <%= f.error_messages %>
 
@@ -13,6 +14,7 @@
     <%= f.submit _('Create') %>
   </p>
 <% end %>
+</div>
 
 <%= link_to _('Back'), admin_account_openid_identifiers_path %>
 <% end -%>

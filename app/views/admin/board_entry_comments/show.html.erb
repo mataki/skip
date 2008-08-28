@@ -1,9 +1,12 @@
 <%= render :partial => '/admin/contents_left' %>
 <% content_for :contents_right do -%>
-<p>
-  <b><%= label @board_entry_comment.class, :Contents %>:</b>
-  <%=h @board_entry_comment.contents %>
-</p>
+<h2><%= _('%{model} Show') % {:model => _('board entry comment')} %></h2>
 
+<div class="box">
+  <p>
+    <b><%= label @board_entry_comment.class, :Contents %>:</b>
+    <%=h @board_entry_comment.contents %>
+  </p>
+</div>
 <%= link_to _('Back'), admin_board_entry_board_entry_comments_path(@board_entry) %>
 <% end -%>

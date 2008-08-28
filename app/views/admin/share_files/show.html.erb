@@ -1,24 +1,27 @@
 <%= render :partial => '/admin/contents_left' %>
 <% content_for :contents_right do -%>
-<p>
-  <b><%= label @share_file.class, :file_name %>:</b>
-  <%=h @share_file.file_name %>
-</p>
+<h2><%= _('%{model} Show') % {:model => _('share file')} %></h2>
 
-<p>
-  <b><%= label @share_file.class, :description %>:</b>
-  <%=h @share_file.description %>
-</p>
+<div class="box">
+  <p>
+    <b><%= label @share_file.class, :file_name %>:</b>
+    <%=h @share_file.file_name %>
+  </p>
 
-<p>
-  <b><%= label @share_file.class, :category %>:</b>
-  <%=h @share_file.category %>
-</p>
+  <p>
+    <b><%= label @share_file.class, :description %>:</b>
+    <%=h @share_file.description %>
+  </p>
 
-<p>
-  <b><%= label @share_file.class, :user %>:</b>
-  <%=h @share_file.user.name %>
-</p>
+  <p>
+    <b><%= label @share_file.class, :category %>:</b>
+    <%=h @share_file.category %>
+  </p>
 
-<%= link_to _('Back'), admin_share_files_path %> 
+  <p>
+    <b><%= label @share_file.class, :user %>:</b>
+    <%=h @share_file.user.name %>
+  </p>
+</div>
+<%= link_to _('Back'), admin_share_files_path %>
 <% end -%>

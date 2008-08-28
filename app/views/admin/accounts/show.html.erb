@@ -1,6 +1,9 @@
 <%= render :partial => '/admin/contents_left' %>
 <% content_for :contents_right do -%>
-<p>
+<h2><%= _('%{model} Show') % {:model => _('account')} %></h2>
+
+<div class="box">
+  <p>
   <b><%= label @account.class, :code %>:</b>
   <%=h @account.code %>
 </p>
@@ -19,7 +22,7 @@
   <b><%= label @account.class, :section %>:</b>
   <%=h @account.section %>
 </p>
-
+</div>
 
 <%= link_to _('Edit'), edit_admin_account_path(@account) %> |
 <%= link_to _('Back'), admin_accounts_path %> |

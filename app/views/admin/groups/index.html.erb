@@ -1,9 +1,10 @@
 <%= render :partial => '/admin/contents_left' %>
 <% content_for :contents_right do -%>
-<h1><%= _('Listing %{model}') % {:model => _('group')} %></h1>
+<h2><%= _('Listing %{model}') % {:model => _('group')} %></h2>
 
+<div class="box tabular">
 <%= render :partial => '/admin/search_box' %>
-<table>
+<table class="normal">
   <tr>
     <% %w[Name Gid Description Protected Category].each do |column| -%>
     <th><%= _("Admin::Group|#{column}") %></th>
@@ -11,7 +12,7 @@
   </tr>
 
 <% for group in @groups %>
-  <tr>
+  <tr class="<%= cycle('line_0', 'line_1') %>">
     <td><%=h group.name %></td>
     <td><%=h group.gid %></td>
     <td><%=h group.description %></td>
@@ -22,7 +23,7 @@
   </tr>
 <% end %>
 </table>
-
+</div>
 <br />
 
 <% end -%>

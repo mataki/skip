@@ -1,62 +1,62 @@
 <%= render :partial => '/admin/contents_left' %>
 <% content_for :contents_right do -%>
-<h1><%= _('Editing %{model}') % {:model => _('user profile')} %></h1>
-
-<% form_for(@user_profile, :url => admin_user_user_profile_path(@user), :method => 'put') do |f| %>
+<h2><%= _('Editing %{model}') % {:model => _('user profile')} %></h2>
+<div class="box tabular">
+  <% form_for(@user_profile, :url => admin_user_user_profile_path(@user), :method => 'put') do |f| %>
   <%= f.error_messages %>
 
   <p>
-    <%= f.label :gender_type %><br />
+    <%= f.label :gender_type %>
     <%= f.text_field :gender_type %>
   </p>
   <p>
-    <%= f.label :join_year %><br />
+    <%= f.label :join_year %>
     <%= f.text_field :join_year %>
   </p>
   <p>
-    <%= f.label :birth_month %><br />
+    <%= f.label :birth_month %>
     <%= f.text_field :birth_month %>
   </p>
   <p>
-    <%= f.label :birth_day %><br />
+    <%= f.label :birth_day %>
     <%= f.text_field :birth_day %>
   </p>
   <p>
-    <%= f.label :blood_type %><br />
+    <%= f.label :blood_type %>
     <%= f.text_field :blood_type %>
   </p>
   <p>
-    <%= f.label :hometown %><br />
+    <%= f.label :hometown %>
     <%= f.text_field :hometown %>
   </p>
   <p>
-    <%= f.label :alma_mater %><br />
+    <%= f.label :alma_mater %>
     <%= f.text_field :alma_mater %>
   </p>
   <p>
-    <%= f.label :address_1 %><br />
+    <%= f.label :address_1 %>
     <%= f.text_field :address_1 %>
   </p>
   <p>
-    <%= f.label :address_2 %><br />
+    <%= f.label :address_2 %>
     <%= f.text_field :address_2 %>
   </p>
   <p>
-    <%= f.label :hobby %><br />
+    <%= f.label :hobby %>
     <%= f.text_area :hobby %>
   </p>
   <p>
-    <%= f.label :introduction %><br />
+    <%= f.label :introduction %>
     <%= f.text_area :introduction %>
   </p>
   <p>
-    <%= f.label :disclosure %><br />
+    <%= f.label :disclosure %>
     <%= f.check_box :disclosure %>
   </p>
   <p>
     <%= f.submit _('Update') %>
   </p>
-<% end %>
-
+  <% end %>
+</div>
 <%= link_to _('Back'), admin_user_user_profile_path(@user) %>
 <% end -%>

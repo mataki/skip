@@ -67,11 +67,15 @@ table.normal {
 table.normal th {
   background-color: #f0f0ff;
 }
-table.normal td.line_0 {
+table.normal td.line_0, table.normal tr.line_0 {
   background-color: #f8f8ff;
 }
-table.normal td.line_1 {
+table.normal td.line_1, table.normal tr.line_1 {
   background-color: #ffffff;
+}
+table.normal th, table.normal td {
+  border: 1px solid silver;
+  padding: 1px 4px 1px 4px;
 }
 /* ----------------------------------- */
 body {

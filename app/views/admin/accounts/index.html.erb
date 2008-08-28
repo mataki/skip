@@ -1,9 +1,10 @@
 <%= render :partial => '/admin/contents_left' %>
 <% content_for :contents_right do -%>
-<h1><%= _('Listing %{model}') % {:model => _('account')} %></h1>
+<h2><%= _('Listing %{model}') % {:model => _('account')} %></h2>
 
+<div class="box tabular">
 <%= render :partial => '/admin/search_box' %>
-<table>
+<table class="normal">
   <tr>
     <% %w[Code Name Email Section].each do |column| -%>
     <th><%= _("Admin::Account|#{column}") %></th>
@@ -11,7 +12,7 @@
   </tr>
 
 <% for account in @accounts %>
-  <tr>
+  <tr class="<%= cycle('line_0', 'line_1') %>">
     <td><%=h account.code %></td>
     <td><%=h account.name %></td>
     <td><%=h account.email %></td>
@@ -22,7 +23,7 @@
   </tr>
 <% end %>
 </table>
-
+</div>
 <br />
 
 <%= link_to _('New %{model}') % {:model => _('account')}, new_admin_account_path %> |

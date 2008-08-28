@@ -1,65 +1,68 @@
 <%= render :partial => '/admin/contents_left' %>
 <% content_for :contents_right do -%>
-<p>
-  <b><%= label @user_profile.class, :gender_type %>:</b>
-  <%=h @user_profile.gender_type %>
-</p>
+<h2><%= _('%{model} Show') % {:model => _('account')} %></h2>
 
-<p>
-  <b><%= label @user_profile.class, :join_year %>:</b>
-  <%=h @user_profile.join_year %>
-</p>
+<div class="box">
+  <p>
+    <b><%= label @user_profile.class, :gender_type %>:</b>
+    <%=h @user_profile.gender_type %>
+  </p>
 
-<p>
-  <b><%= label @user_profile.class, :birth_month %>:</b>
-  <%=h @user_profile.birth_month %>
-</p>
+  <p>
+    <b><%= label @user_profile.class, :join_year %>:</b>
+    <%=h @user_profile.join_year %>
+  </p>
 
-<p>
-  <b><%= label @user_profile.class, :birth_day %>:</b>
-  <%=h @user_profile.birth_day %>
-</p>
+  <p>
+    <b><%= label @user_profile.class, :birth_month %>:</b>
+    <%=h @user_profile.birth_month %>
+  </p>
 
-<p>
-  <b><%= label @user_profile.class, :blood_type %>:</b>
-  <%=h @user_profile.blood_type %>
-</p>
+  <p>
+    <b><%= label @user_profile.class, :birth_day %>:</b>
+    <%=h @user_profile.birth_day %>
+  </p>
 
-<p>
-  <b><%= label @user_profile.class, :hometown %>:</b>
-  <%=h @user_profile.hometown %>
-</p>
+  <p>
+    <b><%= label @user_profile.class, :blood_type %>:</b>
+    <%=h @user_profile.blood_type %>
+  </p>
 
-<p>
-  <b><%= label @user_profile.class, :alma_mater %>:</b>
-  <%=h @user_profile.alma_mater %>
-</p>
+  <p>
+    <b><%= label @user_profile.class, :hometown %>:</b>
+    <%=h @user_profile.hometown %>
+  </p>
 
-<p>
-  <b><%= label @user_profile.class, :address_1 %>:</b>
-  <%=h @user_profile.address_1 %>
-</p>
+  <p>
+    <b><%= label @user_profile.class, :alma_mater %>:</b>
+    <%=h @user_profile.alma_mater %>
+  </p>
 
-<p>
-  <b><%= label @user_profile.class, :address_2 %>:</b>
-  <%=h @user_profile.address_2 %>
-</p>
+  <p>
+    <b><%= label @user_profile.class, :address_1 %>:</b>
+    <%=h @user_profile.address_1 %>
+  </p>
 
-<p>
-  <b><%= label @user_profile.class, :hobby %>:</b>
-  <%=h @user_profile.hobby %>
-</p>
+  <p>
+    <b><%= label @user_profile.class, :address_2 %>:</b>
+    <%=h @user_profile.address_2 %>
+  </p>
 
-<p>
-  <b><%= label @user_profile.class, :introduction %>:</b>
-  <%=h @user_profile.introduction %>
-</p>
+  <p>
+    <b><%= label @user_profile.class, :hobby %>:</b>
+    <%=h @user_profile.hobby %>
+  </p>
 
-<p>
-  <b><%= label @user_profile.class, :disclosure %>:</b>
-  <%=h @user_profile.disclosure %>
-</p>
+  <p>
+    <b><%= label @user_profile.class, :introduction %>:</b>
+    <%=h @user_profile.introduction %>
+  </p>
 
+  <p>
+    <b><%= label @user_profile.class, :disclosure %>:</b>
+    <%=h @user_profile.disclosure %>
+  </p>
+</div>
 <%= link_to _('Edit'), edit_admin_user_user_profile_path(@user) %> |
 <%= link_to _('%{model} Show') % {:model => _('user')}, admin_user_path(@user) %>
 <% end -%>

@@ -1,4 +1,4 @@
-<table class="group_list_box" border="1px solid silver;">
+<table class="group_list_box normal">
   <tr>
     <th width="60%">グループ名</th>
     <th>カテゴリ</th>
@@ -7,7 +7,7 @@
   </tr>
 
 <% groups.each do |group| %>
-  <tr>
+  <tr class="<%= cycle('line_0', 'line_1') %>">
     <td>
     <% if show_favorite %>
       <% participation = group.group_participations.first %>

@@ -1,42 +1,47 @@
 <%= render :partial => '/admin/contents_left' %>
 <% content_for :contents_right do -%>
-<p>
-  <b><%= label @user.class, :email %>:</b>
-  <%=h @user.email %>
-</p>
+<h2><%= _('%{model} Show') % {:model => _('account')} %></h2>
 
-<p>
-  <b><%= label @user.class, :name %>:</b>
-  <%=h @user.name %>
-</p>
+<div class="box">
+  <p>
+    <b><%= label @user.class, :email %>:</b>
+    <%=h @user.email %>
+  </p>
 
-<p>
-  <b><%= label @user.class, :section %>:</b>
-  <%=h @user.section %>
-</p>
+  <p>
+    <b><%= label @user.class, :name %>:</b>
+    <%=h @user.name %>
+  </p>
 
-<p>
-  <b><%= label @user.class, :extension %>:</b>
-  <%=h @user.extension %>
-</p>
+  <p>
+    <b><%= label @user.class, :section %>:</b>
+    <%=h @user.section %>
+  </p>
 
-<p>
-  <b><%= label @user.class, :introduction %>:</b>
-  <%=h @user.introduction %>
-</p>
+  <p>
+    <b><%= label @user.class, :extension %>:</b>
+    <%=h @user.extension %>
+  </p>
 
-<p>
-  <b><%= label @user.class, :retired %>:</b>
-  <%=h @user.retired %>
-</p>
+  <p>
+    <b><%= label @user.class, :introduction %>:</b>
+    <%=h @user.introduction %>
+  </p>
 
-<p>
-  <b><%= label @user.class, :admin %>:</b>
-  <%=h @user.admin %>
-</p>
+  <p>
+    <b><%= label @user.class, :retired %>:</b>
+    <%=h @user.retired %>
+  </p>
+
+  <p>
+    <b><%= label @user.class, :admin %>:</b>
+    <%=h @user.admin %>
+  </p>
+</div>
 
 <%= link_to _('Edit'), edit_admin_user_path(@user) %> |
 <%= link_to _('Back'), admin_users_path %> |
 <%= link_to _('user profile'), admin_user_user_profile_path(@user) %> |
 <%= link_to _('user uid'), admin_user_user_uids_path(@user) %>
 <% end -%>
+

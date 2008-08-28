@@ -1,5 +1,8 @@
 <%= render :partial => '/admin/contents_left' %>
 <% content_for :contents_right do -%>
+<h2><%= _('%{model} Show') % {:model => _('board entry')} %></h2>
+
+<div class="box">
 <p>
   <b><%= label @board_entry.class, :Title %>:</b>
   <%=h @board_entry.title %>
@@ -14,7 +17,7 @@
   <b><%= label @board_entry.class, :Category %>:</b>
   <%=h @board_entry.category %>
 </p>
-
+</div>
 <%= link_to _('Back'), admin_board_entries_path %> |
 <%= link_to _('Listing %{model}') % {:model => _('board entry comment')}, admin_board_entry_board_entry_comments_path(@board_entry) %>
 <% end -%>

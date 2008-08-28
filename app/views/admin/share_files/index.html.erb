@@ -1,27 +1,28 @@
 <%= render :partial => '/admin/contents_left' %>
 <% content_for :contents_right do -%>
-<h1><%= _('Listing %{model}') % {:model => _('share file')} %></h1>
+<h2><%= _('Listing %{model}') % {:model => _('share file')} %></h2>
 
-<%= render :partial => '/admin/search_box' %>
-<table>
-  <tr>
-    <% ['File name', 'Description', 'Category', 'User'].each do |column| -%>
-    <th><%= _("Admin::ShareFile|#{column}") %></th>
-    <% end -%>
-  </tr>
+<div class="box tabular">
+  <%= render :partial => '/admin/search_box' %>
+  <table class="normal">
+    <tr>
+      <% ['File name', 'Description', 'Category', 'User'].each do |column| -%>
+      <th><%= _("Admin::ShareFile|#{column}") %></th>
+      <% end -%>
+    </tr>
 
-<% for share_file in @share_files %>
-  <tr>
-    <td><%=h share_file.file_name %></td>
-    <td><%=h share_file.description %></td>
-    <td><%=h share_file.category %></td>
-    <td><%=h share_file.user.name %></td>
-    <td><%= link_to _('Show'), share_file %></td>
-    <td><%= link_to _('Destroy'), share_file, :confirm => _('Are you sure?'), :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
-
+    <% for share_file in @share_files %>
+    <tr class="<%= cycle('line_0', 'line_1') %>">
+      <td><%=h share_file.file_name %></td>
+      <td><%=h share_file.description %></td>
+      <td><%=h share_file.category %></td>
+      <td><%=h share_file.user.name %></td>
+      <td><%= link_to _('Show'), share_file %></td>
+      <td><%= link_to _('Destroy'), share_file, :confirm => _('Are you sure?'), :method => :delete %></td>
+    </tr>
+    <% end %>
+  </table>
+</div>
 <br />
 
 <% end -%>

@@ -1,6 +1,3 @@
-<% content_for :stylesheet do -%>
-  <%= stylesheet_link_tag "settings" %>
-<% end -%>
 <h2>設定</h2>
 <% form_tag(admin_settings_update_all_path(:tab => params[:tab])) do -%>
 <%= render :partial => params[:tab] %>

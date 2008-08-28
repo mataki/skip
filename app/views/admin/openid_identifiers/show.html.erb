@@ -1,10 +1,13 @@
 <%= render :partial => '/admin/contents_left' %>
 <% content_for :contents_right do -%>
+<h2><%= _('%{model} Show') % {:model => _('openid identifier')} %></h2>
+
+<div class="box">
 <p>
   <b><%= label @openid_identifier.class, :url %>:</b>
   <%=h @openid_identifier.url %>
 </p>
-
+</div>
 
 <%= link_to _('Edit'), edit_admin_account_openid_identifier_path(@account, @openid_identifier) %> |
 <%= link_to _('Back'), admin_account_openid_identifiers_path %>

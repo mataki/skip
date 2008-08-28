@@ -1,14 +1,15 @@
 <%= render :partial => '/admin/contents_left' %>
 <% content_for :contents_right do -%>
-<h1><%= _('Listing %{model}') % {:model => _('openid identifier')} %></h1>
+<h2><%= _('Listing %{model}') % {:model => _('openid identifier')} %></h2>
 
-<table>
+<div class="box tabular">
+<table class="normal">
   <tr>
     <th><%= _("Admin::OpenidIdentifier|Url") %></th>
   </tr>
 
 <% for openid_identifier in @openid_identifiers %>
-  <tr>
+  <tr class="<%= cycle('line_0', 'line_1') %>">
     <td><%=h openid_identifier.url %></td>
     <td><%= link_to _('Show'), admin_account_openid_identifier_url(@account, openid_identifier) %></td>
     <td><%= link_to _('Edit'), edit_admin_account_openid_identifier_path(@account, openid_identifier) %></td>
@@ -16,8 +17,7 @@
   </tr>
 <% end %>
 </table>
-
-<br />
+</div>
 
 <%= link_to _('New %{model}') % {:model => _('openid identifier')}, new_admin_account_openid_identifier_path %> |
 <%= link_to _('%{model} Show') % {:model => _('account')}, admin_account_path(@account) %>

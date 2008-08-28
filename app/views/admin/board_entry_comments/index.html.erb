@@ -1,21 +1,22 @@
 <%= render :partial => '/admin/contents_left' %>
 <% content_for :contents_right do -%>
-<h1><%= _('Listing %{model}') % {:model => _('board entry comment')} %></h1>
+<h2><%= _('Listing %{model}') % {:model => _('board entry comment')} %></h2>
 
-<table>
-  <tr>
-    <th><%= _("Admin::BoardEntryComment|Contents") %></th>
-  </tr>
+<div class="box tabular">
+  <table class="normal">
+    <tr>
+      <th><%= _("Admin::BoardEntryComment|Contents") %></th>
+    </tr>
 
-<% for board_entry_comment in @board_entry_comments %>
-  <tr>
-    <td><%=h board_entry_comment.contents %></td>
-    <td><%= link_to _('Show'), admin_board_entry_board_entry_comment_path(@board_entry, board_entry_comment) %></td>
-    <td><%= link_to _('Destroy'), admin_board_entry_board_entry_comment_path(@board_entry, board_entry_comment), :confirm => _('Are you sure?'), :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
-
+    <% for board_entry_comment in @board_entry_comments %>
+    <tr class="<%= cycle('line_0', 'line_1') %>">
+      <td><%=h board_entry_comment.contents %></td>
+      <td><%= link_to _('Show'), admin_board_entry_board_entry_comment_path(@board_entry, board_entry_comment) %></td>
+      <td><%= link_to _('Destroy'), admin_board_entry_board_entry_comment_path(@board_entry, board_entry_comment), :confirm => _('Are you sure?'), :method => :delete %></td>
+    </tr>
+    <% end %>
+  </table>
+</div>
 <br />
 
 <%= link_to _('%{model} Show') % {:model => _('board entry')}, admin_board_entry_path(@board_entry) %>

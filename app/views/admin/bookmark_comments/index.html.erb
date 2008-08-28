@@ -1,26 +1,27 @@
 <%= render :partial => '/admin/contents_left' %>
 <% content_for :contents_right do -%>
-<h1><%= _('Listing %{model}') % {:model => _('bookmark comment')} %></h1>
+<h2><%= _('Listing %{model}') % {:model => _('bookmark comment')} %></h2>
 
-<table>
-  <tr>
-    <% %w[Comment Public Tags Stared].each do |column| -%>
-    <th><%= _("Admin::BookmarkComment|#{column}") %></th>
-    <% end -%>
-  </tr>
+<div class="box tabular">
+  <table class="normal">
+    <tr>
+      <% %w[Comment Public Tags Stared].each do |column| -%>
+      <th><%= _("Admin::BookmarkComment|#{column}") %></th>
+      <% end -%>
+    </tr>
 
-<% for bookmark_comment in @bookmark_comments %>
-  <tr>
-    <td><%=h bookmark_comment.comment %></td>
-    <td><%=h bookmark_comment.public %></td>
-    <td><%=h bookmark_comment.tags %></td>
-    <td><%=h bookmark_comment.stared %></td>
-    <td><%= link_to _('Show'), admin_bookmark_bookmark_comment_path(@bookmark, bookmark_comment) %></td>
-    <td><%= link_to _('Destroy'), admin_bookmark_bookmark_comment_path(@bookmark, bookmark_comment), :confirm => _('Are you sure?'), :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
-
+    <% for bookmark_comment in @bookmark_comments %>
+    <tr class="<%= cycle('line_0', 'line_1') %>">
+      <td><%=h bookmark_comment.comment %></td>
+      <td><%=h bookmark_comment.public %></td>
+      <td><%=h bookmark_comment.tags %></td>
+      <td><%=h bookmark_comment.stared %></td>
+      <td><%= link_to _('Show'), admin_bookmark_bookmark_comment_path(@bookmark, bookmark_comment) %></td>
+      <td><%= link_to _('Destroy'), admin_bookmark_bookmark_comment_path(@bookmark, bookmark_comment), :confirm => _('Are you sure?'), :method => :delete %></td>
+    </tr>
+    <% end %>
+  </table>
+</div>
 <br />
 
 <% end -%>
