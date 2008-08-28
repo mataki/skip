@@ -1,7 +1,6 @@
 <h3><%= _('メール関連設定') %></h3>
 <div class="box tabular">
   <p><%= settings_label_with_check_box_tag :mail_function_setting %></p>
-  <p><%= settings_label_with_text_field_tag :delivery_method %></p>
   <p><%= settings_label_with_check_box_tag :raise_delivery_errors %></p>
 </div>
 <h3><%= label Admin::Setting.name, :smtp_settings %></h3>

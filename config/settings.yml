@@ -50,8 +50,6 @@ point_button:
 mail_function_setting:    # メール関連項目の表示制御(メールアドレス変更、メール通知設定、メール送信履歴、(エントリ)連絡タグ)
   format: boolean
   default: false
-delivery_method:          # ActionMailer::Base.delivery_methodへの設定値
-  default: test
 smtp_settings_address:
   default: localhost
 smtp_settings_port:
