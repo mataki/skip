@@ -25,7 +25,7 @@ class Admin::DocumentsController < Admin::ApplicationController
   N_('Admin::DocumentsController|rules')
 
   def index
-    @content_name = _(params[:target])
+    @content_name = _(self.class.name + '|' + params[:target])
     @document = ''
     @document = open(RAILS_ROOT + "/public/custom/#{params[:target]}.html", 'r') { |f| s = f.read }
   rescue Errno::EACCES => e
@@ -56,9 +56,15 @@ class Admin::DocumentsController < Admin::ApplicationController
 
   private
   def check_params
-    params[:target] ||= 'about_this_site'
-    unless CONTENT_NAMES.include? params[:target]
-      redirect_to "#{root_url}404.html" 
+    if params[:target].blank?
+      if action_name == 'index'
+        flash.now[:notice] = _('対象のコンテンツを選択して下さい。')
+        render :action => :index
+      end
+    else
+      unless CONTENT_NAMES.include? params[:target]
+        redirect_to "#{root_url}404.html" 
+      end
     end
   end
 end

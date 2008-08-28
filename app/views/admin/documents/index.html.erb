@@ -1,13 +1,15 @@
 <% content_for :contents_right do -%>
   <h2><%= _('静的コンテンツ管理') %></h2>
-  <% form_tag(admin_documents_update_path(:target => params[:target])) do -%>
-  <h3><%= h @content_name %></h3>
-  <div class="box tabular">
-    <p>
-    <%= text_area_tag("documents[#{params[:target]}]", @document, :id => "documents_#{params[:target]}", :size => '80x40') %>
-    </p>
-  <%= submit_tag _('Save'), :disable_with => _('Saving...') %>
-  </div>
+  <% unless params[:target].blank? -%>
+    <% form_tag(admin_documents_update_path(:target => params[:target])) do -%>
+    <h3><%= h @content_name %></h3>
+    <div class="box tabular">
+      <p>
+      <%= text_area_tag("documents[#{params[:target]}]", @document, :id => "documents_#{params[:target]}", :size => '80x40') %>
+      </p>
+    <%= submit_tag _('Save'), :disable_with => _('Saving...') %>
+    </div>
+    <% end -%>
   <% end -%>
 <% end -%>
 

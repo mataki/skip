@@ -60,7 +60,7 @@ ActionController::Routing::Routes.draw do |map|
     admin_map.settings 'settings/:tab', :controller => 'settings', :action => 'index', :defaults => { :tab => 'literal' }
 
     admin_map.documents_update 'documents/:target/update', :controller => 'documents', :action => 'update'
-    admin_map.documents 'documents/:target', :controller => 'documents', :action => 'index'
+    admin_map.documents 'documents/:target', :controller => 'documents', :action => 'index', :defaults => { :target => '' }
   end
 
   map.connect ':controller/:action/:id'

@@ -26,7 +26,7 @@ describe Admin::DocumentsController, 'GET /index' do
     describe '対象ファイルの読み込みに成功する場合' do
       before do
         controller.should_receive(:open)
-        get :index
+        get :index, :target => 'rules'
       end
       it { response.should be_success }
     end
@@ -34,7 +34,7 @@ describe Admin::DocumentsController, 'GET /index' do
       describe '対象ファイルに対する権限が無い場合' do
         before do
           controller.should_receive(:open).and_raise(Errno::EACCES)
-          get :index
+          get :index, :target => 'rules'
         end
         it { flash[:error].should_not be_nil }
         it { response.code.should == '403' }
@@ -42,7 +42,7 @@ describe Admin::DocumentsController, 'GET /index' do
       describe 'その他エラーが発生する場合' do
         before do
           controller.should_receive(:open).and_raise(Errno::EBUSY)
-          get :index
+          get :index, :target => 'rules'
         end
         it { flash[:error].should_not be_nil }
         it { response.code.should == '500' }
@@ -52,7 +52,7 @@ describe Admin::DocumentsController, 'GET /index' do
   describe '対象ファイルが存在しない場合' do
     before do
       controller.should_receive(:open).and_raise(Errno::ENOENT)
-      get :index
+      get :index, :target => 'rules'
     end
     it { flash[:error].should_not be_nil }
     it { response.code.should == '404' }
