@@ -17,7 +17,7 @@ module Admin::ApplicationHelper
   def generate_admin_tab_menu
     output = ''
     output << '<ul>'
-    output << generate_tab_link( _('データ管理'), admin_accounts_path, !request.url.include?(admin_settings_url) )
+    output << generate_tab_link( _('データ管理'), admin_users_path, !(request.url.include?(admin_settings_url) || request.url.include?(admin_documents_url)) )
     output << generate_tab_link( _('文言設定'), admin_settings_path(:tab => :literal), request.url == admin_settings_url || request.url == admin_settings_url(:tab => :literal) )
     output << generate_tab_link( _('メール関連設定'), admin_settings_path(:tab => :mail), request.url == admin_settings_url(:tab => :mail) )
     output << generate_tab_link( _('その他設定'), admin_settings_path(:tab => :other), request.url == admin_settings_url(:tab => :other) )
@@ -30,7 +30,7 @@ module Admin::ApplicationHelper
     accounts_link = (ENV['SKIPOP_URL'].blank? ? admin_accounts_path : "#{ENV['SKIPOP_URL']}admin/accounts")
     output = ''
     output << '<ul>'
-    output << generate_box_menu_link( _('user'), admin_users_path, request.url.include?(admin_users_url))
+    output << generate_box_menu_link( _('user'), admin_users_path, (request.url.include?(admin_users_url) || request.url == admin_root_url))
     output << generate_box_menu_link( _('group'), admin_groups_path, request.url.include?(admin_groups_url))
     output << generate_box_menu_link( _('board entry'), admin_board_entries_path, request.url.include?(admin_board_entries_url))
     output << generate_box_menu_link( _('bookmark'), admin_bookmarks_path , request.url.include?(admin_bookmarks_url))
