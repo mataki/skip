@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-08-28 10:09+0900\n"
+"POT-Creation-Date: 2008-08-28 16:40+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -212,10 +212,6 @@ msgid "Admin::Setting|Contact url"
 msgstr ""
 
 #: app/models/admin/setting.rb:44
-msgid "Admin::Setting|Delivery method"
-msgstr ""
-
-#: app/models/admin/setting.rb:45
 msgid "Admin::Setting|Develop team gid"
 msgstr ""
 
@@ -255,7 +251,7 @@ msgstr ""
 msgid "Admin::Setting|Login password"
 msgstr ""
 
-#: app/models/admin/setting.rb:48
+#: app/models/admin/setting.rb:47
 msgid "Admin::Setting|Mail function setting"
 msgstr ""
 
@@ -275,7 +271,7 @@ msgstr ""
 msgid "Admin::Setting|Mypage feed settings url"
 msgstr ""
 
-#: app/models/admin/setting.rb:47
+#: app/models/admin/setting.rb:46
 msgid "Admin::Setting|Mypage feed timeout"
 msgstr ""
 
@@ -283,7 +279,7 @@ msgstr ""
 msgid "Admin::Setting|Point button"
 msgstr ""
 
-#: app/models/admin/setting.rb:46
+#: app/models/admin/setting.rb:45
 msgid "Admin::Setting|Raise delivery errors"
 msgstr ""
 
@@ -1707,7 +1703,7 @@ msgid ""
 msgstr ""
 
 #: app/controllers/admin/documents_controller.rb:46
-#: app/controllers/admin/settings_controller.rb:35
+#: app/controllers/admin/settings_controller.rb:32
 msgid "保存しました。"
 msgstr ""
 
@@ -1722,7 +1718,6 @@ msgid ""
 msgstr ""
 
 #: app/controllers/admin/documents_controller.rb:61
-#: app/controllers/admin/documents_controller.rb:64
 msgid "対象のコンテンツを選択して下さい。"
 msgstr ""
 

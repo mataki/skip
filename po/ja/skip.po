@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-08-28 10:09+0900\n"
+"POT-Creation-Date: 2008-08-28 16:40+0900\n"
 "PO-Revision-Date: 2008-08-27 19:20+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -212,10 +212,6 @@ msgid "Admin::Setting|Contact url"
 msgstr "SNS運営者のURL"
 
 #: app/models/admin/setting.rb:44
-msgid "Admin::Setting|Delivery method"
-msgstr "配送方法"
-
-#: app/models/admin/setting.rb:45
 msgid "Admin::Setting|Develop team gid"
 msgstr "運営チームのgid"
 
@@ -255,7 +251,7 @@ msgstr "ログインIDのサンプル"
 msgid "Admin::Setting|Login password"
 msgstr "パスワードの名称"
 
-#: app/models/admin/setting.rb:48
+#: app/models/admin/setting.rb:47
 msgid "Admin::Setting|Mail function setting"
 msgstr "メール機能を有効にする"
 
@@ -275,7 +271,7 @@ msgstr "フィードタイトル"
 msgid "Admin::Setting|Mypage feed settings url"
 msgstr "フィードURL"
 
-#: app/models/admin/setting.rb:47
+#: app/models/admin/setting.rb:46
 msgid "Admin::Setting|Mypage feed timeout"
 msgstr "フィード取得のタイムアウト値(秒)"
 
@@ -283,7 +279,7 @@ msgstr "フィード取得のタイムアウト値(秒)"
 msgid "Admin::Setting|Point button"
 msgstr "ポイント評価のボタン表示名"
 
-#: app/models/admin/setting.rb:46
+#: app/models/admin/setting.rb:45
 msgid "Admin::Setting|Raise delivery errors"
 msgstr "メール配送失敗時にエラーを出力"
 
@@ -1079,12 +1075,12 @@ msgstr ""
 #: app/views/admin/settings/index.html.erb:7
 #: app/views/admin/documents/index.html.erb:10
 msgid "Save"
-msgstr ""
+msgstr "保存"
 
 #: app/views/admin/settings/index.html.erb:7
 #: app/views/admin/documents/index.html.erb:10
 msgid "Saving..."
-msgstr ""
+msgstr "保存しています…"
 
 #: app/views/admin/_search_box.html.erb:4
 msgid "Search"
@@ -1707,7 +1703,7 @@ msgid ""
 msgstr ""
 
 #: app/controllers/admin/documents_controller.rb:46
-#: app/controllers/admin/settings_controller.rb:35
+#: app/controllers/admin/settings_controller.rb:32
 msgid "保存しました。"
 msgstr ""
 
@@ -1722,7 +1718,6 @@ msgid ""
 msgstr ""
 
 #: app/controllers/admin/documents_controller.rb:61
-#: app/controllers/admin/documents_controller.rb:64
 msgid "対象のコンテンツを選択して下さい。"
 msgstr ""
 
