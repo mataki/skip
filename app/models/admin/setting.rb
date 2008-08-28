@@ -110,7 +110,7 @@ class Admin::Setting < ActiveRecord::Base
   # and clears the cache hash if it's the case
   # Called once per request
   def self.check_cache
-    settings_updated_on = Setting.maximum(:updated_on)
+    settings_updated_on = Admin::Setting.maximum(:updated_at)
     if settings_updated_on && @cached_cleared_on <= settings_updated_on
       @cached_settings.clear
       @cached_cleared_on = Time.now

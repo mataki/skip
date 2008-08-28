@@ -64,6 +64,39 @@ describe Admin::Setting, '@@available_settingsの要素に対するaccesser' do
 end
 
 describe Admin::Setting, '.check_cache' do
+  before do
+    @now = Time.now
+    @before = Time.now - 1.year
+    Time.stub!(:now).and_return(@now)
+  end
+  describe '新しく更新されていた場合' do
+    before do
+      Admin::Setting.instance_variable_set(:@cached_cleared_on, @before)
+      Admin::Setting.should_receive(:maximum).and_return(@now)
+      logger = mock('logger')
+      logger.stub!(:info)
+      Admin::Setting.should_receive(:logger).twice.and_return(logger)
+      Admin::Setting.check_cache
+    end
+    it "更新時間が新しくなる" do
+      Admin::Setting.instance_variable_get(:@cached_cleared_on).should == @now
+    end
+    it "ログが出力される" do
+    end
+  end
+  describe "更新されていない場合" do
+    before do
+      Admin::Setting.instance_variable_set(:@cached_cleared_on, @now)
+      Admin::Setting.should_receive(:maximum).and_return(@before)
+      Admin::Setting.should_not_receive(:logger)
+      Admin::Setting.check_cache
+    end
+    it "更新時間が新しくならない" do
+      Admin::Setting.instance_variable_get(:@cached_cleared_on).should == @now
+    end
+    it "ログが出力されない" do
+    end
+  end
 end
 
 describe Admin::Setting, '.find_or_default' do

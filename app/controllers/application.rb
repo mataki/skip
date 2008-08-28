@@ -38,6 +38,9 @@ class ApplicationController < ActionController::Base
       @site_count = SiteCount.find(:first, :order => "created_on desc") || SiteCount.new
     end
 
+    # Settingのキャッシュをチェックする
+    Admin::Setting.check_cache
+
     # mypage/welcome を表示した際は、セッション情報を最新にするため
     session[:prepared] = nil if controller_name == 'mypage' && action_name == 'welcome'
     return true if session[:prepared]
