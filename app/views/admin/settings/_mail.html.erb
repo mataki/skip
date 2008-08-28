@@ -6,11 +6,10 @@
 </div>
 <h3><%= label Admin::Setting.name, :smtp_settings %></h3>
 <div class="box tabular">
-  <% Admin::Setting.smtp_settings.each do |key, val| -%>
-    <% smtp_setting_prefix = "settings[smtp_settings]" -%>
-    <p>
-    <%= label Admin::Setting.name, "smtp_settings_#{key}".to_sym %>
-    <%= text_field_tag "#{smtp_setting_prefix}[#{key}]", val, :size => 40 %>
-    </p>
-  <% end -%>
+  <p><%= settings_label_with_text_field_tag :smtp_settings_address %></p>
+  <p><%= settings_label_with_text_field_tag :smtp_settings_domain %></p>
+  <p><%= settings_label_with_text_field_tag :smtp_settings_port %></p>
+  <p><%= settings_label_with_text_field_tag :smtp_settings_user_name %></p>
+  <p><%= settings_label_with_text_field_tag :smtp_settings_password %></p>
+  <p><%= settings_label_with_text_field_tag :smtp_settings_authentication %></p>
 </div>

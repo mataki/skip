@@ -52,15 +52,18 @@ mail_function_setting:    # メール関連項目の表示制御(メールアド
   default: false
 delivery_method:          # ActionMailer::Base.delivery_methodへの設定値
   default: test
-smtp_settings:            # ActionMailer::Base:smtp_settingsへの設定値
-  serialized: true
+smtp_settings_address:
+  default: localhost
+smtp_settings_port:
+  default: 25
+smtp_settings_domain:
+  default: localhost.localdomain
+smtp_settings_user_name:
   default:
-    :address: localhost
-    :port: 25
-    :domain: localhost.localdomain
-    :user_name:
-    :password:
-    :authentication:
+smtp_settings_password:
+  default:
+smtp_settings_authentication:
+  default:
 raise_delivery_errors:    # ActionMailer::Base:raise_delivery_errorsへの設定値
   format: boolean
   default: false
@@ -79,8 +82,10 @@ stop_new_user:
 
 # feed設定
 mypage_feed_default_limit:         # マイページで表示するRSSフィードの設定(デフォルトの1フィードあたりの最大表示件数)
+  format: int
   default: 3
 mypage_feed_timeout:       # マイページで表示するRSSフィードのタイムアウト(秒)
+  format: int
   default: 7
 # フィードの設定
 # url:   フィードのURL
