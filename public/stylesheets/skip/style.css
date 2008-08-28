@@ -89,16 +89,15 @@ div#footer {
   color:#A9A9A9;
   overflow:hidden;
   text-align: center;
-  background-image: url("./../../custom/images/top_logo.png");
-  background-repeat: no-repeat;
-  background-position: top right;
   height: 6em;
 }
 div#footer .site {
   margin:0 auto;
-  width:40em;
+  width:60em;
 }
 div#footer .info {
+  float: left;
+  width:35em;
   padding: 1em;
 }
 div#footer .info .links {
@@ -111,7 +110,8 @@ div#footer .info .company {
   font-size: 10px;
 }
 div#footer .sponsor {
-  float:right;
+  float: right;
+  width:20em;
   padding: 0.6em;
 }
 /* ----------------------------------- */

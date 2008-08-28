@@ -177,10 +177,13 @@ span.blue { color: blue; }
 
 </div><!-- main -->
 
-<div id="footer" style="background-image: url(<%= Admin::Setting.footer_image_url -%>);">
+<div id="footer">
   <div class="site">
     <div class="info">
       <div class="company"><%= Admin::Setting.footer_contact -%> | <%= Admin::Setting.footer_copyright -%></div>
+    </div>
+    <div class="sponsor">
+      powerd by <%= image_tag Admin::Setting.footer_image_url  %>
     </div>
   </div>
 </div><!-- footer -->

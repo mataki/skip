@@ -26,7 +26,7 @@ var relative_url_root = '<%= controller.request.relative_url_root -%>';
 </style>
 
 <div id="header">
-  <div id="logo" style="align: top; margin: 3px 0 0 20px;"><%= link_to(image_tag('/custom/images/top_logo.png', :alt => Admin::Setting.abbr_app_title, :height => "45"), :controller => 'mypage', :action => :index) -%></div>
+  <div id="logo" style="align: top; margin: 3px 0 0 20px;"><%= link_to(Admin::Setting.header_logo_url, :alt => Admin::Setting.abbr_app_title, :height => "45"), :controller => 'mypage', :action => :index) -%></div>
   <%= skip_menu_link -%>
 </div>
 <div id="top">
