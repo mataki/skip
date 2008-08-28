@@ -29,6 +29,15 @@ class Admin::SettingsController < Admin::ApplicationController
       end
       Admin::Setting[name] = value
     end
+    if params[:tab] == 'mail'
+      ActionMailer::Base.smtp_settings = {
+        :address => Admin::Setting.smtp_settings_address,
+        :domain => Admin::Setting.smtp_settings_domain,
+        :port => Admin::Setting.smtp_settings_port,
+        :user_name => Admin::Setting.smtp_settings_user_name,
+        :password => Admin::Setting.smtp_settings_password,
+        :authentication => Admin::Setting.smtp_settings_authentication }
+    end
     flash[:notice] = _('保存しました。')
     redirect_to :action => params[:tab] ? params[:tab] : 'index'
   end
