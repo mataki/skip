@@ -24,10 +24,7 @@ class Admin::SettingsController < Admin::ApplicationController
     settings.each do |name, value|
       # remove blank values in array settings
       value.delete_if {|v| v.blank? } if value.is_a?(Array)
-      if name == :antenna_default_group
-        value = value.values
-      end
-      if name == :mypage_feed_settings
+      if [:antenna_default_group, :mypage_feed_settings].include? name
         value = value.values
       end
       Admin::Setting[name] = value
