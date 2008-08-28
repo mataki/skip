@@ -177,9 +177,12 @@ span.blue { color: blue; }
 
 </div><!-- main -->
 
-<div id="footer">
-  <div class="bottom" style="text-align: center;font-size: 12px;font-weight: bold;"><%= Admin::Setting.footer_contact -%></div>
-  <div id="powered"><%= Admin::Setting.footer_copyright -%></div>
+<div id="footer" style="background-image: url(<%= Admin::Setting.footer_image_url -%>);">
+  <div class="site">
+    <div class="info">
+      <div class="company"><%= Admin::Setting.footer_contact -%> | <%= Admin::Setting.footer_copyright -%></div>
+    </div>
+  </div>
 </div><!-- footer -->
 
 </body>

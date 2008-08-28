@@ -16,7 +16,7 @@
 module Admin::SettingsHelper
   def settings_label_with_text_field_tag symbolize_key
     label(Admin::Setting.name, symbolize_key) + 
-    text_field_tag("settings[#{symbolize_key.to_s}]", Admin::Setting.send(symbolize_key.to_s), :id => "admin_setting_#{symbolize_key.to_s}")
+    text_field_tag("settings[#{symbolize_key.to_s}]", Admin::Setting.send(symbolize_key.to_s), :id => "admin_setting_#{symbolize_key.to_s}", :size => 40)
   end
 
   def settings_label_with_check_box_tag symbolize_key

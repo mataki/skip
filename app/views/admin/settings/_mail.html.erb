@@ -10,7 +10,7 @@
     <% smtp_setting_prefix = "settings[smtp_settings]" -%>
     <p>
     <%= label Admin::Setting.name, "smtp_settings_#{key}".to_sym %>
-    <%= text_field_tag "#{smtp_setting_prefix}[#{key}]", val %>
+    <%= text_field_tag "#{smtp_setting_prefix}[#{key}]", val, :size => 40 %>
     </p>
   <% end -%>
 </div>
