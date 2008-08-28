@@ -21,8 +21,10 @@ abbr_app_title:
 contact_addr:
   default: info@openskip.org                               # SNS運営元の連絡メールアドレス
 contact_url:
+  format: url
   default: http://dev.openskip.org/                        # SNS運営元のウェブページのURL
 help_url:
+  format: url
   default: http://www.openskip.org/help                    # SNSのヘルプのURL
 initial_anntena:
   default: SKIPチーム                                      # 初期登録されるアンテナの名称
@@ -53,6 +55,7 @@ mail_function_setting:    # メール関連項目の表示制御(メールアド
 smtp_settings_address:
   default: localhost
 smtp_settings_port:
+  format: int
   default: 25
 smtp_settings_domain:
   default: localhost.localdomain
