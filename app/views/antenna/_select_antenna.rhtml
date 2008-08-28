@@ -38,6 +38,7 @@
 <div style="border: 1px solid silver; background-color: #f0f0ff; margin: 8px; padding: 5px; padding-top: 0; ">
 <form id='add_antenna_and_symbol_form'>
   新しいアンテナを作成して追加：<%= text_field :antenna, :name %><%= hidden_field_tag :symbol, symbol %><%= submit_tag "追加" %>
+    <%= hidden_field_tag("authenticity_token", form_authenticity_token) %>
 </form>
 </div>
 
@@ -53,7 +54,7 @@ $j(function() {
             var symbol = '<%= symbol -%>';
             $j.ajax({
                 url: url,
-                data: { antenna_id: antennaId, symbol: symbol },
+                data: { antenna_id: antennaId, symbol: symbol, authenticity_token: $j('authenticity_token').val() },
                 success: function(html) {
                     $j('#select_antenna_body').html(html);
                 }

@@ -12,6 +12,7 @@ div.files_body .file_menu {
 </style>
 
 <div id="contents_container">
+<%= hidden_field_tag("authenticity_token", form_authenticity_token) %>
 
 <div id="contents_left">
   <% if @visitor_is_uploader %>
@@ -87,7 +88,7 @@ $j(function(){
             var clearDownloadUrl = "<%= url_for(:controller => 'share_file', :action => 'clear_download_history') -%>/";
             $j.ajax({
                 type: "POST",
-                data: { id:shareFileId },
+                data: { id:shareFileId, authenticity_token: $j('#authenticity_token').val(), },
                 url: clearDownloadUrl,
                 success: function(html){
                     alert('ダウンロード履歴の削除に成功しました');

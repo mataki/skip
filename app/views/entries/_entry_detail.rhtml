@@ -164,6 +164,7 @@ div#source_style_area, div#access_style_area {
 <div class='comment_input_space' style="margin-top: 5px;">
   <form id="new_comment_form">
 <p><label for="write_comment">コメントを書く</label><br/>
+<%= hidden_field_tag("authenticity_token", form_authenticity_token) %>
 <%= text_area 'board_entry_comment', 'contents', :cols => 40, :rows => 5  %><br/>
 <%= submit_tag "書き込み" %></p>
   </form>
@@ -334,6 +335,11 @@ setupCommentNestLink = function(commentId, level) {
             return $j(document.createElement('input')).attr({type:'hidden', name:'level', value:level});
         };
 
+        // トークン
+        var hiddenToken = function() {
+            return $j(document.createElement('input')).attr({type:'hidden', name:'authenticity_token', value:$j('#authenticity_token').val()});
+        };
+
         // 説明を作成
         var divDesc = function() {
             return $j(document.createElement('div'))
@@ -408,6 +414,7 @@ setupCommentNestLink = function(commentId, level) {
         var jform = $j(document.createElement('form'));
         jform
         .append(hiddenLevel())
+        .append(hiddenToken())
         .append(divDesc())
         .append(divText())
         .append(
