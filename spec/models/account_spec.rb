@@ -22,7 +22,7 @@ describe Account, "何も指定していない場合エラーが設定される"
 
   it { @account.should_not be_valid }
 
-  it { @account.should have(1).errors_on(:code) }
+  it { @account.should have(2).errors_on(:code) }
   it { @account.should have(1).errors_on(:name) }
   it { @account.should have(2).errors_on(:password) }
 end
