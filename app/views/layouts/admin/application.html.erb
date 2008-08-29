@@ -11,6 +11,7 @@
   <%= stylesheet_link_tag "skins-base" %>
   <%= stylesheet_link_tag("skins/#{session[:user_custom_theme]}/skin.css") %>
   <%= stylesheet_link_tag "admin" %>
+  <%= skip_stylesheet_link_tag "jquery.cluetip.css" %>
   <%= yield :stylesheet %>
 </head>
 
@@ -115,6 +116,7 @@
   <%= skip_javascript_include_tag "jquery.dimensions.js" %>
   <%= skip_javascript_include_tag "jquery.autocomplete.js" %>
   <%= skip_javascript_include_tag "jquery.jTagging.js" %>
+  <%= skip_javascript_include_tag "jquery.cluetip.js" %>
   <%= skip_javascript_include_tag 'jquery.tablesorter.js' %>
 <script type="text/javascript">
 <!--
@@ -171,6 +173,11 @@ $j(function(){
         clickMyItems('<%= url_for(:controller => '/mypage', :action => 'ado_my_groups') -%>', '#select_my_group', '/group/',
             { nothing_message: '表示するグループがありません', result_message: 'グループ選択：' });
         return false;
+    });
+
+    $j('img.help').cluetip({
+        splitTitle: '|',
+        activation: 'click'
     });
 
     $j('table.sortable').tablesorter();
