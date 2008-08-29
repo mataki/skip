@@ -19,6 +19,8 @@ class Account < ActiveRecord::Base
   attr_accessor :old_password, :password
   validates_presence_of :code, :message => 'は必須です'
   validates_uniqueness_of :code, :message => 'は既に登録されています'
+  validates_length_of :code, :minimum => UserUid::UID_MIN_LENGTH, :message => "は%d文字以上で入力してください"
+  validates_length_of :code, :maximum => UserUid::UID_MAX_LENGTH, :message => "は%d文字以内で入力してください"
   validates_format_of :code, :message => 'は数字orアルファベットor記号で入力してください', :with => UserUid::UID_FORMAT_REGEX
 
   validates_presence_of :name, :message => 'は必須です'
