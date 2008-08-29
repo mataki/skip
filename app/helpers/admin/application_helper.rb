@@ -47,6 +47,10 @@ module Admin::ApplicationHelper
     end
   end
 
+  def help_icon_tag options = {:title => '', :content => ''}
+    icon_tag 'help', :class => 'help', :title => "#{options[:title]}|#{options[:content]}"
+  end
+
   private
   def generate_tab_link(name, path, selected = false, html_options = nil)
     html_option = {:class => 'selected'} if selected

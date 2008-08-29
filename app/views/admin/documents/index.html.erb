@@ -6,6 +6,7 @@
     <div class="box tabular">
       <p>
       <%= text_area_tag("documents[#{params[:target]}]", @document, :id => "documents_#{params[:target]}", :size => '80x40') %>
+      <%= help_icon_tag :content => _("Admin::DocumentsController|#{params[:target]}_description") %>
       </p>
     <%= submit_tag _('Save'), :disable_with => _('Saving...') %>
     </div>

@@ -8,3 +8,4 @@ table.sortable thead tr .header { background-image: url(/images/skip/jquery/tabl
 table.sortable thead tr .headerSortUp { background-image: url(/images/skip/jquery/tablesorter/asc.gif);}
 table.sortable thead tr .headerSortDown { background-image: url(/images/skip/jquery/tablesorter/desc.gif);}
 table.sortable tbody tr td { overflow: hidden; }
+.help { vertical-align: top }
