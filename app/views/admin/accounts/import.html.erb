@@ -28,6 +28,7 @@
         <th><%= label Admin::Account.name, :section %></th>
         <th><%= label Admin::Account.name, :email %></th>
         <th><%= label Admin::Account.name, :password %></th>
+        <td style="width:16px;"></td>
       </tr>
     </thead>
     <tbody>
@@ -42,6 +43,7 @@
         <td><%= label :account, :section, account.section %></td>
         <td><%= label :account, :email, account.email %></td>
         <td><%= label :account, :password, '********' %></td>
+        <td><%= help_icon_tag :content => "|#{@account.errors.full_messages.join('|')}" %></td>
       </tr>
       <% end -%>
       <% end -%>
