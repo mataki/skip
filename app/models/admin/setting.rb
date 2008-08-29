@@ -99,6 +99,7 @@ class Admin::Setting < ActiveRecord::Base
     # Unserialize serialized settings
     v = YAML::load(v) if @@available_settings[name]['serialized'] && v.is_a?(String)
     v = v.to_sym if @@available_settings[name]['format'] == 'symbol' && !v.blank?
+    v = v.to_i if @@available_settings[name]['format'] == 'int' && !v.blank?
     v = (v == 'true') if @@available_settings[name]['format'] == 'boolean' && !v.blank?
     v
   end
