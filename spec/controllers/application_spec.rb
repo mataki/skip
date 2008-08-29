@@ -23,7 +23,7 @@ describe ApplicationController, "#sso" do
     describe "未ログイン時" do
       it "ログインへリダイレクトされる" do
         controller.stub!(:logged_in?).and_return(false)
-        controller.should_receive(:redirect_to).with({:controller => :platform, :action => :login, :openid_url => ENV['SKIPOP_URL']})
+        controller.should_receive(:redirect_to).with({:controller => '/platform', :action => :login, :openid_url => ENV['SKIPOP_URL']})
         controller.send(:sso).should be_false
       end
     end
@@ -65,7 +65,7 @@ describe ApplicationController, '#prepare_session' do
       controller.should_receive(:current_user).and_return(nil)
     end
     it 'platformにリダイレクトされること' do
-      controller.should_receive(:redirect_to).with({:controller => :platform, :error => 'no_profile'})
+      controller.should_receive(:redirect_to).with({:controller => '/platform', :error => 'no_profile'})
       controller.prepare_session
     end
   end
