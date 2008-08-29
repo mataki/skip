@@ -1,4 +1,6 @@
+<% if @pages %>
 <div class="navi"><%= page_link(@pages) -%></div>
+<% end %>
 <table class="normal sortable">
   <thead>
     <tr>
@@ -30,4 +32,6 @@
     <% end %>
   </tbody>
 </table>
+<% if @pages %>
 <div class="navi"><%= page_link(@pages) -%></div>
+<% end %>

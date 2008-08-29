@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
 "POT-Creation-Date: 2008-08-29 18:52+0900\n"
-"PO-Revision-Date: 2008-08-29 18:53+0900\n"
+"PO-Revision-Date: 2008-08-29 19:11+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1079,7 +1079,7 @@ msgstr ""
 
 #: app/views/admin/accounts/import.html.erb:21
 msgid "Line"
-msgstr ""
+msgstr "行"
 
 #: app/views/admin/accounts/index.html.erb:3
 #: app/views/admin/accounts/show.html.erb:29
