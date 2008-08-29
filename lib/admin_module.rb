@@ -44,7 +44,10 @@ module AdminModule
 
     def index
       @query = params[:query]
-      objects = admin_model_class.find(:all, :conditions => [admin_model_class.search_colomns, { :lqs => SkipUtil.to_lqs(@query) }])
+      @pages, objects = paginate(controller_name.singularize.to_sym,
+                                 :per_page => 100,
+                                 :class_name => admin_model_class_name,
+                                 :conditions => [admin_model_class.search_colomns, { :lqs => SkipUtil.to_lqs(@query) }])
       set_pluralize_instance_val objects
 
       respond_to do |format|

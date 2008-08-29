@@ -23,7 +23,8 @@ describe Admin::AccountsController do
 
     before(:each) do
       @account = mock_model(Admin::Account)
-      Admin::Account.stub!(:find).and_return([@account])
+      @page = mock('page')
+      controller.should_receive(:paginate).and_return([@page, [@account]])
     end
 
     def do_get
@@ -40,11 +41,6 @@ describe Admin::AccountsController do
       response.should render_template('index')
     end
 
-    it "should find all admin_accounts" do
-      Admin::Account.should_receive(:find).and_return([@account])
-      do_get
-    end
-
     it "should assign the found admin_accounts for the view" do
       do_get
       assigns[:accounts].should == [@account]
@@ -54,8 +50,10 @@ describe Admin::AccountsController do
   describe "handling GET /admin_accounts.xml" do
 
     before(:each) do
-      @accounts = mock("Array of Admin::Accounts", :to_xml => "XML")
-      Admin::Account.stub!(:find).and_return(@accounts)
+      @account = mock_model(Admin::Account)
+      @accounts = [@account]
+      @accounts.stub!(:to_xml).and_return('XML')
+      controller.should_receive(:paginate).and_return([@page, @accounts])
     end
 
     def do_get
@@ -66,11 +64,6 @@ describe Admin::AccountsController do
     it "should be successful" do
       do_get
       response.should be_success
-    end
-
-    it "should find all admin_accounts" do
-      Admin::Account.should_receive(:find).and_return(@accounts)
-      do_get
     end
 
     it "should render the found admin_accounts as xml" do
@@ -339,7 +332,8 @@ describe Admin::AccountsController do
     describe "条件がない場合" do
       before do
         @accounts = (1..3).map{|i| mock_model(Admin::Account)}
-        Admin::Account.should_receive(:find).and_return(@accounts)
+        @pages = mock('pages')
+        controller.should_receive(:paginate).and_return([@pages,@accounts])
         get :index
       end
       it "@accountsが設定されていること" do
@@ -349,7 +343,6 @@ describe Admin::AccountsController do
       it "indexがレンダリングされること" do
         response.should render_template('admin/accounts/index')
       end
-
     end
 
     describe "検索条件がある場合" do
@@ -357,7 +350,8 @@ describe Admin::AccountsController do
         @query = 'hoge'
         @accounts = (1..3).map{|i| mock_model(Admin::Account)}
         conditions = [Admin::Account.search_colomns, {:lqs => SkipUtil.to_lqs(@query)}]
-        Admin::Account.should_receive(:find).with(:all, :conditions => conditions).and_return(@accounts)
+        @pages = mock('pages')
+        controller.should_receive(:paginate).and_return([@pages,@accounts])
         get :index, :query => @query
       end
 
