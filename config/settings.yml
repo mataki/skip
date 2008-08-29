@@ -69,6 +69,7 @@ smtp_settings_user_name:
 smtp_settings_password:
   default:
 smtp_settings_authentication:
+  format: symbol
   default:
 raise_delivery_errors:    # ActionMailer::Base:raise_delivery_errorsへの設定値
   format: boolean

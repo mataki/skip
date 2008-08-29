@@ -27,6 +27,12 @@ module Admin::SettingsHelper
     hidden_field_tag("settings[#{symbolize_key.to_s}]", "false")
   end
 
+  def settings_label_with_select_tag symbolize_key, container, selected = nil
+    label(Admin::Setting.name, symbolize_key) + 
+    select_tag("settings[#{symbolize_key.to_s}]", options_for_select(container, selected), :id => "admin_setting_#{symbolize_key.to_s}") +
+    help_icon_tag(:content => _(Admin::Setting.name + '|' + (symbolize_key.to_s + '_description').humanize))
+  end
+
   private
   def help_icon_tag options = {:title => '', :content => ''}
     icon_tag 'help', :class => 'help', :title => "#{options[:title]}|#{options[:content]}"
