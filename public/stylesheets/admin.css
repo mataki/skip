@@ -2,4 +2,8 @@
 .tabular label { float:left; font-weight:bold; text-align:right; width:250px; }
 .tabular p { overflow: hidden; height: 1%; margin: 0px; padding: 5px 0px 8px 0px;}
 .search_box { margin: 5px; padding: 6px 8px; border: 2px dotted #FFC000; background-color: #F0F0FF;}
-
+table.sortable { text-align: left;}
+table.sortable thead tr th, table.sortable tfoot tr th { padding: 4px 20px 4px 4px;}
+table.sortable thead tr .header { background-image: url(/images/skip/jquery/bg.gif); background-repeat: no-repeat; background-position: center right; cursor: pointer;}
+table.sortable thead tr .headerSortUp { background-image: url(/images/skip/jquery/asc.gif);}
+table.sortable thead tr .headerSortDown { background-image: url(/images/skip/jquery/desc.gif);}
