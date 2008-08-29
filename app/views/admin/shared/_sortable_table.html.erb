@@ -14,7 +14,11 @@
     <% for object in objects %>
     <tr class="<%= cycle('line_1', 'line_0') %>">
       <% columns.each do |column| -%>
-      <td><%=h object.send(column.to_sym) %></td>
+      <%
+      data = object.send(column.to_sym)
+      data = data[/.{1,100}/] if data
+         %>
+      <td><%=h data %></td>
       <% end %>
       <% link_elem.each do |link| -%>
       <td><%= link_to _(link[0]), eval(link[1]), link[2] %></td>
