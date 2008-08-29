@@ -38,7 +38,7 @@ module RankingsHelper
     when :entry_comment
       "コメント"
     when :entry_he
-      "#{Admin::Setting.point_button!}"
+      "#{Admin::Setting.point_button}"
     when :user_entry
       "投稿"
     when :user_access

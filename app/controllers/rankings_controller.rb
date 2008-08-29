@@ -75,7 +75,9 @@ class RankingsController < ApplicationController
       @dates = (0..23).map { |i| today.ago(i.month).strftime('%Y-%m') }
       render :layout => 'layout'
     rescue => e
-      head(:bad_request)
+      flash.now[:error] = _('不正なパラメタです。')
+      e.backtrace.each { |message| logger.error message }
+      render :text => '', :layout => 'layout', :status => :bad_request
     end
   end
 
