@@ -16,7 +16,7 @@
       <% columns.each do |column| -%>
       <%
       data = object.send(column.to_sym)
-      data = data[/.{1,100}/] if data
+      data = data[/.{1,100}/] if data.is_a?(String)
          %>
       <td><%=h data %></td>
       <% end %>
