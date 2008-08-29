@@ -22,6 +22,9 @@
       <% end %>
       <% link_elem.each do |link| -%>
       <td><%= link_to _(link[0]), eval(link[1]), link[2] %></td>
+      <% N_('Show') %>
+      <% N_('Edit') %>
+      <% N_('Destroy') %>
       <% end %>
     </tr>
     <% end %>
