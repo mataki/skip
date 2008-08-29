@@ -4,24 +4,14 @@
 
 <div class="box tabular">
   <%= render :partial => '/admin/search_box' %>
-  <table class="normal">
-    <tr>
-      <% ['File name', 'Description', 'Category', 'User'].each do |column| -%>
-      <th><%= _("Admin::ShareFile|#{column}") %></th>
-      <% end -%>
-    </tr>
-
-    <% for share_file in @share_files %>
-    <tr class="<%= cycle('line_0', 'line_1') %>">
-      <td><%=h share_file.file_name %></td>
-      <td><%=h share_file.description %></td>
-      <td><%=h share_file.category %></td>
-      <td><%=h share_file.user.name %></td>
-      <td><%= link_to _('Show'), share_file %></td>
-      <td><%= link_to _('Destroy'), share_file, :confirm => _('Are you sure?'), :method => :delete %></td>
-    </tr>
-    <% end %>
-  </table>
+  <%= render :partial => '/admin/shared/sortable_table',
+             :locals => {
+               :columns => %w[file_name description category user],
+               :objects => @share_files,
+               :class_name => 'Admin::ShareFile',
+               :link_elem => [['Show','object'], ['Destroy','object',{:confirm => _('Are you sure?'), :method => :delete}]]
+             }
+  -%>
 </div>
 <br />
 

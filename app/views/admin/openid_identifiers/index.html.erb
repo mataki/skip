@@ -3,20 +3,14 @@
 <h2><%= _('Listing %{model}') % {:model => _('openid identifier')} %></h2>
 
 <div class="box tabular">
-<table class="normal">
-  <tr>
-    <th><%= _("Admin::OpenidIdentifier|Url") %></th>
-  </tr>
-
-<% for openid_identifier in @openid_identifiers %>
-  <tr class="<%= cycle('line_0', 'line_1') %>">
-    <td><%=h openid_identifier.url %></td>
-    <td><%= link_to _('Show'), admin_account_openid_identifier_url(@account, openid_identifier) %></td>
-    <td><%= link_to _('Edit'), edit_admin_account_openid_identifier_path(@account, openid_identifier) %></td>
-    <td><%= link_to _('Destroy'), admin_account_openid_identifier_url(@account, openid_identifier), :confirm => _('Are you sure?'), :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
+  <%= render :partial => '/admin/shared/sortable_table',
+             :locals => {
+               :columns => %w[url],
+               :objects => @openid_identifiers,
+               :class_name => 'Admin::OpenidIdentifier',
+               :link_elem => [['Show','admin_account_openid_identifier_url(@account, object)'], ['Edit','edit_admin_account_openid_identifier_path(@account, object)'], ['Destroy','admin_account_openid_identifier_url(@account, object)',{:confirm => _('Are you sure?'), :method => :delete}]]
+             }
+  -%>
 </div>
 
 <%= link_to _('New %{model}') % {:model => _('openid identifier')}, new_admin_account_openid_identifier_path %> |

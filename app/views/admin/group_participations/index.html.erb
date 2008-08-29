@@ -3,24 +3,14 @@
 <h2><%= _('Listing %{model}') % {:model => _('group participation')} %></h2>
 
 <div class="box tabular">
-<table class="normal">
-  <tr>
-    <% %w[User Waiting Owned Favorite].each do |column| -%>
-    <th><%= _("Admin::GroupParticipation|#{column}") %></th>
-    <% end -%>
-  </tr>
-
-<% for group_participation in @group_participations %>
-  <tr class="<%= cycle('line_0', 'line_1') %>">
-    <td><%=h group_participation.user.name %></td>
-    <td><%=h group_participation.waiting %></td>
-    <td><%=h group_participation.owned %></td>
-    <td><%=h group_participation.favorite %></td>
-    <td><%= link_to _('Show'), admin_group_group_participation_path(@group, group_participation) %></td>
-    <td><%= link_to _('Destroy'), admin_group_group_participation_path(@group, group_participation), :confirm => _('Are you sure?'), :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
+  <%= render :partial => '/admin/shared/sortable_table',
+             :locals => {
+               :columns => %w[user waiting owned favorite],
+               :objects => @group_participations,
+               :class_name => 'Admin::GroupParticipation',
+               :link_elem => [['Show','admin_group_group_participation_path(@group, object)'], ['Destroy','admin_group_group_participation_path(@group, object)',{:confirm => _('Are you sure?'), :method => :delete}]]
+             }
+  -%>
 </div>
 <br />
 

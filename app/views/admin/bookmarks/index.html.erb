@@ -3,23 +3,15 @@
 <h2><%= _('Listing %{model}') % {:model => _('bookmark')} %></h2>
 
 <div class="box tabular">
-<%= render :partial => '/admin/search_box' %>
-  <table class="normal">
-    <tr>
-      <% %w[Title Url].each do |column| -%>
-      <th><%= _("Admin::Bookmark|#{column}") %></th>
-      <% end -%>
-    </tr>
-
-    <% for bookmark in @bookmarks %>
-    <tr class="<%= cycle('line_0', 'line_1') %>">
-      <td><%=h bookmark.title %></td>
-      <td><%=h bookmark.url %></td>
-      <td><%= link_to _('Show'), admin_bookmark_path(bookmark) %></td>
-      <td><%= link_to _('Destroy'), admin_bookmark_path(bookmark), :confirm => _('Are you sure?'), :method => :delete %></td>
-    </tr>
-    <% end %>
-  </table>
+  <%= render :partial => '/admin/search_box' %>
+  <%= render :partial => '/admin/shared/sortable_table',
+             :locals => {
+               :columns => %w[title url],
+               :objects => @bookmarks,
+               :class_name => 'Admin::Bookmark',
+               :link_elem => [['Show','object'], ['Destroy','object',{:confirm => _('Are you sure?'), :method => :delete}]]
+             }
+  -%>
 </div>
 <br />
 

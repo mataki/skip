@@ -4,23 +4,14 @@
 
 <div class="box tabular">
   <%= render :partial => '/admin/search_box' %>
-  <table class="normal">
-    <tr>
-      <% %w[Title Contents Category].each do |column| -%>
-      <th><%= _("Admin::BoardEntry|#{column}") %></th>
-      <% end -%>
-    </tr>
-
-    <% for board_entry in @board_entries %>
-    <tr class="<%= cycle('line_0', 'line_1') %>">
-      <td><%=h board_entry.title %></td>
-      <td><%=h board_entry.contents %></td>
-      <td><%=h board_entry.category %></td>
-      <td><%= link_to _('Show'), board_entry %></td>
-      <td><%= link_to _('Destroy'), board_entry, :confirm => _('Are you sure?'), :method => :delete %></td>
-    </tr>
-    <% end %>
-  </table>
+  <%= render :partial => '/admin/shared/sortable_table',
+             :locals => {
+               :columns => %w[title contents category],
+               :objects => @board_entries,
+               :class_name => 'Admin::BoardEntry',
+               :link_elem => [['Show','object'], ['Destroy','object',{:confirm => _('Are you sure?'), :method => :delete}]]
+             }
+  -%>
 </div>
 <br />
 

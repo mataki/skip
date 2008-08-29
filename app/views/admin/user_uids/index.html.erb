@@ -3,22 +3,14 @@
 <h2><%= _('Listing %{model}') % {:model => _('user uid')} %></h2>
 
 <div class="box tabular">
-  <table class="normal">
-    <tr>
-      <th><%= _("Admin::UserUid|Uid") %></th>
-      <th><%= _("Admin::UserUid|Uid type") %></th>
-    </tr>
-
-    <% for user_uid in @user_uids %>
-    <tr class="<%= cycle('line_0', 'line_1') %>">
-      <td><%=h user_uid.uid %></td>
-      <td><%=h user_uid.uid_type %></td>
-      <td><%= link_to _('Show'), admin_user_user_uid_url(@user, user_uid) %></td>
-      <td><%= link_to _('Edit'), edit_admin_user_user_uid_path(@user, user_uid) %></td>
-      <td><%= link_to _('Destroy'), admin_user_user_uid_url(@user, user_uid), :confirm => _('Are you sure?'), :method => :delete %></td>
-    </tr>
-    <% end %>
-  </table>
+  <%= render :partial => '/admin/shared/sortable_table',
+             :locals => {
+               :columns => %w[uid uid_type],
+               :objects => @user_uids,
+               :class_name => 'Admin::UserUid',
+               :link_elem => [['Show','admin_user_user_uid_path(@user,object)'], ['Edit','edit_admin_user_user_uid_path(@user, object)'], ['Destroy','admin_user_user_uid_path(@user, object)',{:confirm => _('Are you sure?'), :method => :delete}]]
+             }
+  -%>
 </div>
 <br />
 

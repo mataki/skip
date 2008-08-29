@@ -115,6 +115,7 @@
   <%= skip_javascript_include_tag "jquery.dimensions.js" %>
   <%= skip_javascript_include_tag "jquery.autocomplete.js" %>
   <%= skip_javascript_include_tag "jquery.jTagging.js" %>
+  <%= skip_javascript_include_tag 'jquery.tablesorter.js' %>
 <script type="text/javascript">
 <!--
 var relative_url_root = '<%= controller.request.relative_url_root -%>';
@@ -171,6 +172,8 @@ $j(function(){
             { nothing_message: '表示するグループがありません', result_message: 'グループ選択：' });
         return false;
     });
+
+    $j('table.sortable').tablesorter();
 });
 //-->
 </script>

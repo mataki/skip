@@ -1,0 +1,22 @@
+<table class="normal sortable">
+  <thead>
+    <tr>
+      <% columns.each do |column| -%>
+      <th><%= _("#{class_name}|#{column.humanize}") %></th>
+      <% end -%>
+    </tr>
+  </thead>
+  <tbody>
+    <% for object in objects %>
+    <tr class="<%= cycle('line_0', 'line_1') %>">
+      <% columns.each do |column| -%>
+      <td><%=h object.send(column.to_sym) %></td>
+      <% end %>
+      <% link_elem.each do |link| -%>
+      <td><%= link_to _(link[0]), eval(link[1]), link[2] %></td>
+      <% end %>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<div>(各列のタイトルをクリックするとソートされます)</div>
