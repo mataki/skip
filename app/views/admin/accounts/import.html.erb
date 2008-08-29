@@ -3,7 +3,7 @@
 <h2><%= _('アカウントインポート') %></h2>
   <% form_tag import_new_admin_account_path, :multipart => true do -%>
     <label for="file"><%= _('CSVファイル') %></label><%= file_field_tag :file %>
-    <%= submit_tag _('アップロード'), :disable_with => _('アップロード中…') %>
+    <%= submit_tag _('Upload'), :disable_with => _('Uploading...') %>
   <% end -%>
   <h2>正しいCSVファイルの例</h2>
   <pre>

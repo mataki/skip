@@ -22,7 +22,7 @@
     <%= f.text_field :section %>
   </p>
   <p>
-    <%= f.submit _('Update') %>
+  <%= f.submit _('Update'), :disable_with => _('Updating...') %>
   </p>
   <% end %>
 </div>

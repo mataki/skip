@@ -1,7 +1,7 @@
 <div class="search_box">
   <% form_tag({:action => :index}, {:method => :get}) do -%>
   <%= text_field_tag :query, @query %>
-  <%= submit_tag _('Search') %>
+  <%= submit_tag _('Search'), :disable_with => _('Searching...') %>
   <span style="margin-left: 10px;">画面上の項目全体から検索を行ないます</span>
   <% end -%>
 </div>

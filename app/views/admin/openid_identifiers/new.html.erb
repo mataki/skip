@@ -11,7 +11,7 @@
     <%= f.text_field :url %>
   </p>
   <p>
-    <%= f.submit _('Create') %>
+    <%= f.submit _('Create'), :disable_with => _('Creating...') %>
   </p>
 <% end %>
 </div>

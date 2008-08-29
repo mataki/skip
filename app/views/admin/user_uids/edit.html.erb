@@ -14,7 +14,7 @@
     <%= f.text_field :uid_type %>
   </p>
   <p>
-    <%= f.submit _('Update') %>
+    <%= f.submit _('Update'), :disable_with => _('Updating...') %>
   </p>
   <% end %>
 </div>
