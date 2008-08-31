@@ -17,33 +17,32 @@ class GroupsController < ApplicationController
   before_filter :setup_layout
 
   verify :method => :post, :only => [ :create ],
-         :redirect_to => { :action => :index }
+          :redirect_to => { :action => :index }
 
   # tab_menu
+  # グループの一覧表示
   def index
     params[:yet_participation] ||= false
-    target_user_id = params[:user_id] || session[:user_id]
     params[:category] ||= "all"
+    params[:sort_type] ||= "date"
     @format_type = params[:format_type] ||= "detail"
     @group_counts, @total_count = Group.count_by_category
-    params[:sort_type] ||= "date"
 
-    @pages, @groups = paginate_groups(target_user_id, params)
+    options = Group.paginate_option(session[:user_id], params)
+    options[:per_page] = params[:format_type] == "list" ? 2 : 2 # 30 : 5
+    @pages, @groups = paginate(:group, options)
+
     unless @groups && @groups.size > 0
       flash.now[:notice] = '該当するグループはありませんでした。'
     end
   end
 
   # tab_menu
-  def pages_search
-    redirect_to :controller => 'search', :action => 'index', :group => '1'
-  end
-
-  # tab_menu
   # グループの新規作成画面の表示
   def new
     @group = Group.new
-    render_create
+    render(:partial => "group/form", :layout => 'layout',
+            :locals => { :action_value => 'create', :submit_value => '作成' } )
   end
 
   # post_action
@@ -56,7 +55,8 @@ class GroupsController < ApplicationController
       flash[:notice] = 'グループが正しく作成されました。'
       redirect_to :controller => 'group', :action => 'show', :gid => @group.gid
     else
-      render_create
+      render(:partial => "group/form", :layout => 'layout',
+              :locals => { :action_value => 'create', :submit_value => '作成' } )
     end
   end
 
@@ -76,7 +76,10 @@ class GroupsController < ApplicationController
     @format_type = params[:format_type] = parent_controller.params[:format_type]
     params[:sort_type] = parent_controller.params[:sort_type] || "date"
 
-    @pages, @groups = paginate_groups(show_user_id, params)
+    options = Group.paginate_option(show_user_id, params)
+    options[:per_page] = params[:format_type] == "list" ? 2 : 2 # 30 : 5
+    @pages, @groups = paginate(:group, options)
+
     unless @groups && @groups.size > 0
       flash.now[:notice] = '該当するグループはありませんでした。'
     end
@@ -93,58 +96,7 @@ private
   def setup_layout
     @main_menu = @title = 'グループ'
 
-    @tab_menu_source = [ ['トップ', 'index'],
-                         ['掲示板検索', 'pages_search'],
+    @tab_menu_source = [ ['グループの検索', 'index'],
                          ['グループの新規作成', 'new'] ]
-  end
-
-  def render_create
-    render(:partial => "group/form", :layout => 'layout',
-            :locals => { :action_value => 'create', :submit_value => '作成' } )
-  end
-
-  def paginate_groups target_user_id, params = { :page => 1 }
-
-    conditions = [""]
-
-    if params[:keyword] and not params[:keyword].empty?
-      conditions[0] << "(groups.name like ? or groups.description like ?)"
-      conditions << SkipUtil.to_lqs(params[:keyword]) << SkipUtil.to_lqs(params[:keyword])
-    end
-
-    if params[:yet_participation]
-      conditions[0] << " and " unless conditions[0].empty?
-      conditions[0] << " NOT EXISTS (SELECT * FROM group_participations gp where groups.id = gp.group_id and gp.user_id = ?) "
-      conditions << target_user_id
-    elsif params[:participation]
-      conditions[0] << " and " unless conditions[0].empty?
-      conditions[0] << " group_participations.user_id in (?)"
-      conditions << target_user_id
-    end
-
-    if category = params[:category] and category != "all"
-      conditions[0] << " and " unless conditions[0].empty?
-      conditions[0] << "category = ?"
-      conditions << category
-    end
-
-    options = {
-      :per_page => params[:format_type] == "list" ? 30 : 5,
-      :include => :group_participations
-    }
-    if sort_type = params[:sort_type]
-      case sort_type
-      when "date"
-        options[:order] = "group_participations.created_on DESC"
-      when "name"
-        options[:order] = "groups.name"
-      else
-        options[:order] = "group_participations.created_on DESC"
-      end
-    end
-
-    options[:conditions] = conditions unless conditions[0].empty?
-
-    return paginate(:group, options)
   end
 end

@@ -199,4 +199,41 @@ class Group < ActiveRecord::Base
 
     User.find(:all, options)
   end
+
+  # paginateで使う検索条件を作成する
+  def self.paginate_option target_user_id, params = { :page => 1 }
+    conditions = [""]
+
+    if params[:keyword] and not params[:keyword].empty?
+      conditions[0] << "(groups.name like ? or groups.description like ?)"
+      conditions << SkipUtil.to_lqs(params[:keyword]) << SkipUtil.to_lqs(params[:keyword])
+    end
+
+    if params[:yet_participation]
+      conditions[0] << " and " unless conditions[0].empty?
+      conditions[0] << " NOT EXISTS (SELECT * FROM group_participations gp where groups.id = gp.group_id and gp.user_id = ?) "
+      conditions << target_user_id
+    elsif params[:participation]
+      conditions[0] << " and " unless conditions[0].empty?
+      conditions[0] << " group_participations.user_id in (?)"
+      conditions << target_user_id
+    end
+
+    if category = params[:category] and category != "all"
+      conditions[0] << " and " unless conditions[0].empty?
+      conditions[0] << "category = ?"
+      conditions << category
+    end
+
+    options = {}
+    if sort_type = params[:sort_type] and sort_type == "name"
+      options[:order] = "groups.name"
+    else
+      options[:order] = "group_participations.created_on DESC"
+    end
+    options[:conditions] = conditions unless conditions[0].empty?
+    options[:include] = :group_participations
+    options
+  end
+
 end

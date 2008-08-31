@@ -1,42 +1,36 @@
-
 <div class="search_cond_space">
 <% form_tag({:action => 'index'}, :method => 'get') do -%>
 <table class="search_cond_box">
   <tr>
     <th>グループ名・説明文</th>
-    <td><%= text_field_tag 'keyword' , params[:keyword], :size => 25 %></td>
-    <td><%= check_box_tag 'yet_participation', 'true', params[:yet_participation] %>まだ参加していないグループのみ表示</td>
+    <td>
+      <%= text_field_tag 'keyword' , params[:keyword], :size => 40 %><br/>
+      <%= check_box_tag 'yet_participation', 'true', params[:yet_participation] %>まだ参加していないグループのみ表示
+    </td>
+  </tr>
+  <tr style="height:20px;">
+    <th>カテゴリ</th>
+    <td>
+      <%= radio_button_tag "category", "all", params[:category] == "all" -%>
+      <%= icon_tag "asterisk_orange", :margin => true -%>全て(<%= @total_count -%>)
+      <% Group::CATEGORY_KEYS.each do |category| %>
+        <%= radio_button_tag "category", category, params[:category] == category -%>
+        <%= get_group_icon category, :margin => true -%>
+        <%= Group::CATEGORY_KEY_NAMES[category] -%>(<%= @group_counts[category] -%>)
+      <% end %>
+    </td>
+  </tr>
+  <tr style="height:20px;">
+    <th>表示形式</th>
+    <td>
+      <%= radio_button_tag "format_type", "detail", params[:format_type] == "detail" %> 詳細
+      <%= radio_button_tag "format_type", "list",   params[:format_type] == "list"  %> 一覧
+    </td>
   </tr>
 </table>
-<table class="category">
-<tr>
-  <th>カテゴリ</th>
-  <td>
-     <%= radio_button_tag "category", "all", params[:category] == "all" %><%= icon_tag "asterisk_orange", :margin => true %>全て
-    (<%= @total_count %>)
-  </td>
-  <% Group::CATEGORY_KEYS.each do |category| %>
-  <td>
-    <%= radio_button_tag "category", category, params[:category] == category %><%= get_group_icon category, :margin => true %><%= Group::CATEGORY_KEY_NAMES[category] -%>
-    (<%= @group_counts[category] %>)
-  </td>
-  <% end %>
-</tr>
-</table>
-<table class="sort">
-<tr>
-  <th>表示形式</th>
-  <td>
-    <%= radio_button_tag "format_type", "detail", params[:format_type] == "detail" %> 詳細
-    <%= radio_button_tag "format_type", "list",   params[:format_type] == "list"  %> 一覧
-  </td>
-</tr>
-</table>
-
 <div class="submit"><%= submit_tag '検索' %></div>
 <% end %>
 </div><!-- search_cond_space -->
-
 
 <div class="search_result_space">
 <%= render :partial => 'groups', :object => @groups, :locals => { :pages => @pages } -%>
