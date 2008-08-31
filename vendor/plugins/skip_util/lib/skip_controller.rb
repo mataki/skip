@@ -56,6 +56,12 @@ class ActionController::Base
     end
     return true
   end
+
+
+  def verify_extension file_name
+      ['html','htm','js'].any?{|extension| extension == file_name.split('.').last }
+  end
+
   private
   def sso
     unless cookies[:_sso_sid]
