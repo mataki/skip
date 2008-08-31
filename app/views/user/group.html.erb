@@ -1,7 +1,4 @@
 <!-- グループーの一覧表示 -->
-<% user_id ||= session[:user_id] %>
-<% show_favorite ||= false %>
-
 <div id="contents_container">
 
 <div id="contents_left">
@@ -9,10 +6,12 @@
 <div class="box_space">
   <div class="box_space_title"><%= icon_tag 'text_list_bullets'%>カテゴリ</div>
   <div class="box_space_body" style="font-size:10px">
-    <%= radio_button_tag "category", "all",  params[:category] == "all",  :class => "category_radio"  %><%= icon_tag "asterisk_orange", :margin => true %>全て(<%= @total_count %>)<br/>
+    <%= radio_button_tag "category", "all",  params[:category] == "all", :class => "category_radio"  %>
+    <%= icon_tag "asterisk_orange", :margin => true %>全て(<%= @total_count %>)<br/>
     <% #TODO group/index.rhtmlにほぼ同じ記述がある。helper化すべきか? %>
     <% Group::CATEGORY_KEYS.each do |category| %>
-      <%= radio_button_tag "category", category, params[:category] == category, :class => "category_radio" %><%= get_group_icon category, :margin => true %><%= Group::CATEGORY_KEY_NAMES[category] -%>
+      <%= radio_button_tag "category", category, params[:category] == category, :class => "category_radio" %>
+      <%= get_group_icon category, :margin => true %><%= Group::CATEGORY_KEY_NAMES[category] -%>
       (<%= @group_counts[category] %>)<br/>
     <% end %>
    </div>
@@ -34,7 +33,6 @@
   </div>
 </div><!-- box_space -->
 
-
 <div class="box_space">
   <div class="box_space_title"><%= icon_tag 'find' -%>検索</div>
   <div class="box_space_body">
@@ -43,11 +41,24 @@
   </div>
 </div><!-- box_space -->
 
-
 </div><!-- contents_left -->
 
 <div id="contents_right">
-<%= @text %>
+
+<% if @pages and @pages.item_count > 0 -%>
+  <% if @show_favorite %>
+  <div class="desc" style="margin-bottom:5px"><%= icon_tag('award_star_gold_2') %>を選択したグループのみ、画面右上のショートカットメニュー「マイグループ」に表示されます</div>
+  <% end %>
+
+  <div class="navi"><%= page_link @pages -%></div>
+  <% if @format_type == "detail" %>
+    <%= render :partial => "groups/group", :collection => @groups, :locals => { :user_id => @user.id, :show_favorite => @show_favorite } -%>
+  <% else %>
+    <%= render :partial => "groups/group_list", :locals => { :user_id => @user.id, :show_favorite => @show_favorite, :groups => @groups } -%>
+  <% end %>
+  <div class="navi"><%= page_link @pages -%></div>
+<% end %>
+
 </div><!-- contents_right -->
 
 <div id="contents_bottom"></div><!-- contents_bottom -->

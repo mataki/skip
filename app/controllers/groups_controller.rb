@@ -60,38 +60,6 @@ class GroupsController < ApplicationController
     end
   end
 
-  # component
-  def list
-    if not parent_controller
-      flash[:warning] = '不正な操作でのアクセスは許可されていません'
-      redirect_to :controller => 'mypage', :action => "index"
-      return
-    end
-
-    params[:page] = parent_controller.params[:page]
-    params[:participation] = true
-    show_user_id = parent_controller.params[:user_id]
-    params[:keyword] = parent_controller.params[:keyword]
-    params[:category] = parent_controller.params[:category]
-    @format_type = params[:format_type] = parent_controller.params[:format_type]
-    params[:sort_type] = parent_controller.params[:sort_type] || "date"
-
-    options = Group.paginate_option(show_user_id, params)
-    options[:per_page] = params[:format_type] == "list" ? 30 : 5
-    @pages, @groups = paginate(:group, options)
-
-    unless @groups && @groups.size > 0
-      flash.now[:notice] = '該当するグループはありませんでした。'
-    end
-
-    params[:controller] = parent_controller.params[:controller]
-    params[:action] = parent_controller.params[:action]
-
-    render :partial => 'groups', :object => @groups, :locals => { :pages => @pages,
-                                                                  :user_id => params[:user_id],
-                                                                  :show_favorite => (show_user_id == session[:user_id]) }
-  end
-
 private
   def setup_layout
     @main_menu = @title = 'グループ'

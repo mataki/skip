@@ -14,7 +14,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class UserController < ApplicationController
-  helper 'board_entries'
+  helper 'board_entries', 'groups'
 
   before_filter :setup_layout
   after_filter :make_chain_message, :only => [ :create_chain, :update_chain ]
@@ -48,7 +48,6 @@ class UserController < ApplicationController
     @against_chains = Chain.find(:all, :limit => limit,
                                  :order => "updated_on DESC",
                                  :conditions => ['to_user_id = ?', @user.id])
-
     # 他の人からみた・・・
     @postit_url = @user.get_postit_url
     @tags = BookmarkComment.get_tagcloud_tags @postit_url
@@ -154,10 +153,18 @@ class UserController < ApplicationController
   def group
     params[:user_id] = @user.id
     params[:category] ||= "all"
-    params[:format_type] ||= "list"
     params[:sort_type] ||= "date"
+    params[:participation] = true
+    @format_type = params[:format_type] ||= "list"
     @group_counts, @total_count = Group.count_by_category(@user.id)
-    @text = render_component_as_string( :controller => 'groups', :action => 'list', :id => @user.symbol, :params => params)
+
+    @show_favorite = (@user.id == session[:user_id])
+
+    options = Group.paginate_option(@user.id, params)
+    options[:per_page] = params[:format_type] == "list" ? 30 : 5
+    @pages, @groups = paginate(:group, options)
+
+    flash.now[:notice] = '該当するグループはありませんでした。' unless @groups && @groups.size > 0
   end
 
   # tab_menu

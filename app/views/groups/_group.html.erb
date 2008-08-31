@@ -7,7 +7,7 @@
       <% if show_favorite %>
         <% participation = group.group_participations.first %>
         <% elem_id = "group_participation_#{participation.id}" %>
-        <span id="<%= elem_id %>"><%= render :partial => "favorite", :locals => { :gid => group.gid, :participation => participation, :update_elem_id => elem_id } %></span>
+        <span id="<%= elem_id %>"><%= render :partial => "groups/favorite", :locals => { :gid => group.gid, :participation => participation, :update_elem_id => elem_id } %></span>
       <% end %>
       <%= group_link_to group %>
     </td>
