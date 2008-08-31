@@ -177,7 +177,6 @@ class MypageController < ApplicationController
     when "record_post"
       set_data_for_record_blog
     end
-
     render :partial => @menu, :layout => "layout"
   end
 
@@ -192,16 +191,21 @@ class MypageController < ApplicationController
 
   # post_action
   def save_portrait
-    if params[:picture][:picture].is_a? ActionController::UploadedFile
-      picture = Picture.new(params[:picture])
-      picture.user_id = session[:user_id]
-      if picture.save
-        flash[:notice] = "画像を変更しました"
-      else
-        flash[:warning] = picture.errors.full_messages
+    begin
+      unless params[:picture][:picture].is_a? ActionController::UploadedFile
+        raise ActiveRecord::RecordInvalid::new("ファイル形式が不正です。")
       end
-    else
-      flash[:warning] = "ファイル形式が不正です。"
+      Picture.transaction do
+        if picture = Picture.find_by_user_id(session[:user_id])
+          picture.destroy
+        end
+        picture = Picture.new(params[:picture])
+        picture.user_id = session[:user_id]
+        picture.save!
+        flash[:notice] = "画像を変更しました"
+      end
+    rescue ActiveRecord::RecordInvalid => e
+      flash[:warning] = e.message
     end
     redirect_to :action => 'manage', :menu => 'manage_portrait'
   end
