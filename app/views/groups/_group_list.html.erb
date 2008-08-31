@@ -1,26 +1,39 @@
-<table class="group_list_box normal">
-  <tr>
-    <th width="60%">グループ名</th>
-    <th>カテゴリ</th>
-    <th>状態</th>
-    <th>承認</th>
-  </tr>
+<% show_favorite ||= false -%>
 
-<% groups.each do |group| %>
-  <tr class="<%= cycle('line_0', 'line_1') %>">
-    <td>
-    <% if show_favorite %>
-      <% participation = group.group_participations.first %>
-      <% elem_id = "group_participation_#{participation.id}" %>
-      <span id="<%= elem_id %>"><%= render :partial => "groups/favorite", :locals => { :gid => group.gid, :participation => participation, :update_elem_id => elem_id } %></span>
+<% if pages and pages.item_count > 0 -%>
+  <% if show_favorite %>
+  <div class="desc" style="margin-bottom:5px"><%= icon_tag('award_star_gold_2') %>を選択したグループのみ、画面右上のショートカットメニュー「マイグループ」に表示されます</div>
+  <% end %>
+
+  <div class="navi"><%= page_link pages -%></div>
+  <% if format_type == "detail" %>
+    <%= render :partial => "groups/group", :collection => groups, :locals => { :user_id => user_id, :show_favorite => show_favorite } -%>
+  <% else %>
+    <table class="group_list_box normal">
+    <tr>
+      <th width="60%">グループ名</th>
+      <th>カテゴリ</th>
+      <th>状態</th>
+      <th>承認</th>
+    </tr>
+    <% groups.each do |group| %>
+    <tr class="<%= cycle('line_0', 'line_1') %>">
+      <td>
+        <% if show_favorite %>
+          <% participation = group.group_participations.first %>
+          <% elem_id = "group_participation_#{participation.id}" %>
+          <span id="<%= elem_id %>"><%= render :partial => "groups/favorite", :locals => { :gid => group.gid, :participation => participation, :update_elem_id => elem_id } %></span>
+        <% end %>
+        <%= group_link_to group %>
+      </td>
+      <td>
+        <%= icon_tag(group.category_icon_name.first, :title => group.category_icon_name.last, :margin => true) + group.category_icon_name.last %>
+      </td>
+      <td><%= participation_state(group, user_id, {:simple => true}) -%></td>
+      <td><%= "#{icon_tag 'key'} 必要" if group.protected? %></td>
+    </tr>
     <% end %>
-      <%= group_link_to group %>
-    </td>
-    <td>
-      <%= icon_tag(group.category_icon_name.first, :title => group.category_icon_name.last, :margin => true) + group.category_icon_name.last %>
-    </td>
-    <td><%= participation_state(group, user_id, {:simple => true}) -%></td>
-    <td><%= "#{icon_tag 'key'} 必要" if group.protected? %></td>
-  </tr>
+    </table>
+  <% end %>
+  <div class="navi"><%= page_link pages -%></div>
 <% end %>
-</table>

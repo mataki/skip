@@ -33,5 +33,7 @@
 </div><!-- search_cond_space -->
 
 <div class="search_result_space">
-<%= render :partial => 'groups', :object => @groups, :locals => { :pages => @pages } -%>
+<%= render :partial => 'groups/group_list',
+             :locals => { :pages => @pages, :groups => @groups,
+                          :user_id => session[:user_id], :format_type => @format_type } -%>
 </div><!-- search_result_space -->
