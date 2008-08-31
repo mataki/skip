@@ -29,7 +29,7 @@ class GroupsController < ApplicationController
     @group_counts, @total_count = Group.count_by_category
 
     options = Group.paginate_option(session[:user_id], params)
-    options[:per_page] = params[:format_type] == "list" ? 2 : 2 # 30 : 5
+    options[:per_page] = params[:format_type] == "list" ? 30 : 5
     @pages, @groups = paginate(:group, options)
 
     unless @groups && @groups.size > 0
@@ -77,7 +77,7 @@ class GroupsController < ApplicationController
     params[:sort_type] = parent_controller.params[:sort_type] || "date"
 
     options = Group.paginate_option(show_user_id, params)
-    options[:per_page] = params[:format_type] == "list" ? 2 : 2 # 30 : 5
+    options[:per_page] = params[:format_type] == "list" ? 30 : 5
     @pages, @groups = paginate(:group, options)
 
     unless @groups && @groups.size > 0
