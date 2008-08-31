@@ -2,24 +2,3 @@
 table {
   table-layout: auto;
 }
-div.input_line {
-  border-bottom: 1px dotted silver;
-  margin-bottom: 5px;
-  padding-bottom: 2px;
-}
-div.input_line div.input_label {
-  background-color: #f0f0ff;
-  width: 100px;
-  overflow: hidden;
-  float: left;
-  font-weight: bold;
-  font-size: 12px;
-  padding: 3px 5px;
-  margin-right: 5px;
-}
-
-div.input_line div.input_value {
-}
-div.input_line textarea {
-  width: 95%;
-}

@@ -17,23 +17,6 @@ table.bookmark_comment_box td {
   padding: 0px 5px;
 }
 
-/* _form用  */
-div.input_line {
-  border-bottom: 1px dotted silver;
-  margin-bottom: 5px;
-  padding-bottom: 2px;
-}
-div.input_label {
-  background-color: #f0f0ff;
-  width: 100px;
-  overflow: hidden;
-  float: left;
-  font-weight: bold;
-  font-size: 12px;
-  padding: 3px 5px;
-  margin-right: 5px;
-}
-
 span.label {
   background-color: #f0f0ff;
   width: 100px;
