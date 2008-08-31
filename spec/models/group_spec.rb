@@ -15,6 +15,15 @@
 
 require File.dirname(__FILE__) + '/../spec_helper'
 
+describe Group, "初期値が入っているか" do
+  before(:each) do
+    @group = Group.new
+  end
+
+  it { @group.category.should == Group::LIFE }
+  it { Group.category_icon_name(Group::LIFE).should == ['group_gear', 'ライフ'] }
+end
+
 describe Group do
   before(:each) do
     @category = Group::BIZ
@@ -27,8 +36,6 @@ describe Group do
   it { @group.symbol.should == ('gid:'+@group.gid) }
   it { @group.to_s.should == "id:#{@group.id}, name:#{@group.name}" }
   it { @group.category_icon_name.should == [Group::CATEGORY_KEY_ICON_NAMES[@category], Group::CATEGORY_KEY_NAMES[@category] ] }
-
-  it { Group.category_icon_name(Group::BIZ).should == ['page_word', 'ビジネス'] }
 end
 
 describe Group, "承認待ちのユーザがいるとき" do

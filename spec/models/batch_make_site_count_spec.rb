@@ -17,7 +17,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 require File.dirname(__FILE__) + '/../../lib/batch_make_user_readings'
 
 describe BatchMakeSiteCounts do
-  fixtures :users, :board_entries, :board_entry_comments, :site_counts
+  fixtures :users, :board_entries, :board_entry_comments, :site_counts, :user_uids
 
   # 一ヶ月以内にエントリを書いたユーザ
   def test_calc_write_at_month

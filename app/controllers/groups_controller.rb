@@ -43,7 +43,6 @@ class GroupsController < ApplicationController
   # グループの新規作成画面の表示
   def new
     @group = Group.new
-    @group.category = Group::LIFE
     render_create
   end
 
@@ -51,31 +50,14 @@ class GroupsController < ApplicationController
   # グループの新規作成の処理
   def create
     @group = Group.new(params[:group])
-    #管理者（自分）
     @group.group_participations.build(:user_id => session[:user_id], :owned => true)
-
-    # 招待したいユーザ・グループ
-    default_users = []
-    params[:publication_symbols_value].split(',').each do |symbol|
-      symbol_id = symbol.split(":").last
-      if symbol.include?("gid:")
-        group = Group.find_by_gid(symbol_id, :include => :group_participations)
-        group.group_participations.each { |gp| default_users << gp.user_id } if group
-      elsif symbol.include?("uid:")
-        user = User.find_by_uid(symbol_id)
-        default_users << user.id if user
-      end
-    end
-
-    default_users.delete(session[:user_id]) # ログインユーザのIDは既に登録済み
-    default_users.uniq.each { |user_id| @group.group_participations.build(:user_id => user_id, :owned => false)}
 
     if @group.save
       flash[:notice] = 'グループが正しく作成されました。'
       redirect_to :controller => 'group', :action => 'show', :gid => @group.gid
-      return
+    else
+      render_create
     end
-    render_create
   end
 
   # component
@@ -117,9 +99,8 @@ private
   end
 
   def render_create
-    render(:partial => "group/form",
-           :layout => 'layout',
-           :locals => { :action_value => 'create', :submit_value => '作成' } )
+    render(:partial => "group/form", :layout => 'layout',
+            :locals => { :action_value => 'create', :submit_value => '作成' } )
   end
 
   def paginate_groups target_user_id, params = { :page => 1 }

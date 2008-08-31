@@ -43,6 +43,13 @@ class Group < ActiveRecord::Base
     OFF => "趣味などざっくばらんな話題で利用する場合に選択してください。"
   }
 
+  alias initialize_old initialize
+
+  def initialize(attributes = nil)
+    initialize_old(attributes)
+    @attributes["category"] = LIFE unless attributes and attributes[:category]
+  end
+
   class << self
     HUMANIZED_ATTRIBUTE_KEY_NAMES = {
       "name" => "名前",
