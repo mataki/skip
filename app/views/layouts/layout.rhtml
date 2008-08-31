@@ -9,28 +9,18 @@
 <script language="JavaScript" type="text/javascript"><!--
 var relative_url_root = '<%= controller.request.relative_url_root -%>';
 //--></script>
-  <%= skip_stylesheet_link_tag "style" -%>
-  <%= stylesheet_link_tag "style" -%>
-  <%= stylesheet_link_tag "skins-base" -%>
+  <%= skip_all_stylesheet_link_tag "style" -%>
   <%= stylesheet_link_tag("skins/#{session[:user_custom_theme]}/skin.css") -%>
   <%= stylesheet_link_tag controller.controller_name -%>
   <%= skip_stylesheet_link_tag 'nyroModal.full.css' %>
   <%= skip_stylesheet_link_tag 'jquery.autocomplete.css' %>
 
-  <%= skip_javascript_include_tag 'prototype' %>
-  <%= skip_javascript_include_tag 'jquery.js' %>
-  <%= skip_javascript_include_tag 'jquery.color.js' %>
-  <script language="JavaScript" type="text/javascript">$j = jQuery.noConflict();</script>
-  <%= skip_javascript_include_tag 'scriptaculous' %>
+  <%= skip_all_javascript_include_tag 'prototype' %>
+  <%= skip_all_javascript_include_tag 'jquery' %>
   <%= skip_javascript_include_tag 'ufo' %>
+  <script language="JavaScript" type="text/javascript">$j = jQuery.noConflict();</script>
   <%= javascript_include_tag 'application' %>
   <%= skip_javascript_include_tag 'skip_util' %>
-
-  <%= skip_javascript_include_tag "jquery.nyroModal.js" %>
-  <%= skip_javascript_include_tag "jquery.bgiframe.min.js" %>
-  <%= skip_javascript_include_tag "jquery.dimensions.js" %>
-  <%= skip_javascript_include_tag "jquery.autocomplete.js" %>
-  <%= skip_javascript_include_tag "jquery.jTagging.js" %>
 
 <script language="JavaScript" type="text/javascript">
 <!--

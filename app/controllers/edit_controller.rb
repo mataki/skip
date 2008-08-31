@@ -351,7 +351,7 @@ private
 
   def upload_file board_entry, src_image_file
     # FIXME 以下のチェックに失敗した場合のエラー処理が全くない。
-    if valid_upload_file? src_image_file
+    if valid_upload_file?(src_image_file) and !verify_extension(src_image_file.original_filename)
       dir_path = File.join(get_dir_path, board_entry.user_id.to_s)
       FileUtils.mkdir_p dir_path
       target_image_file_name = File.join(dir_path, @board_entry.id.to_s + '_' + src_image_file.original_filename)
@@ -432,5 +432,6 @@ private
       return false
     end
   end
+
 end
 

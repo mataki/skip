@@ -263,10 +263,12 @@ $j(function(){
                 alert('やりすぎ！');
                 return false;
             }
-            var entry_point_url = '<%= url_for :controller => :board_entries, :action => :ado_pointup, :id => entry -%>';
+            var entry_point_url = '<%= url_for :controller => :board_entries, :action => :ado_pointup -%>';
             $j.ajax({
-                url:entry_point_url,
-                success:function(request){
+                type: 'POST',
+                url: entry_point_url,
+                data: {id: '<%= entry.id %>', authenticity_token: $j('#authenticity_token').val(), },
+                success: function(request){
                     $j('#board_entry_point').html(request);
                     entry_point = ++entry_point;
                     appendEntryPointClick();
@@ -312,7 +314,7 @@ setupCommentInputForm = function(commentId) {
         $j.ajax({
             type:'POST',
             url:'<%= url_for(:controller => 'board_entries', :action => 'ado_edit_comment') -%>/' + commentId,
-            data:$j('#comment_input_form_' + commentId).serialize(),
+            data:$j('#comment_input_form_' + commentId).serialize() + '&authenticity_token=' + $j('#authenticity_token').val(),
             complete:function(request) {
                 $j('#comment_contents_' + commentId).html(request.responseText);
                 if ($j('#comment_area_' + commentId).is(':visible')) {

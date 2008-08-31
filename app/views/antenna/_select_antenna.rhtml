@@ -53,6 +53,7 @@ $j(function() {
             var antennaId = this.id.split('_')[3]
             var symbol = '<%= symbol -%>';
             $j.ajax({
+                type: 'POST',
                 url: url,
                 data: { antenna_id: antennaId, symbol: symbol, authenticity_token: $j('authenticity_token').val() },
                 success: function(html) {

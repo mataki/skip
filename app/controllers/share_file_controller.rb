@@ -60,7 +60,9 @@ class ShareFileController < ApplicationController
       @share_file.file_name = file.original_filename
       @share_file.content_type = file.content_type.chomp
 
-      if not (verify_message = verify_file_size(file)) and @share_file.save
+      if not (verify_message = verify_extension_share_file(@share_file.file_name)) and 
+        not (verify_message = verify_file_size(file)) and 
+        @share_file.save
         target_symbols = analyze_param_publication_type
         target_symbols.each do |target_symbol|
           @share_file.share_file_publications.create(:symbol => target_symbol)
@@ -310,6 +312,14 @@ private
     end
     return nil
   end
+
+  def verify_extension_share_file file_name
+      if verify_extension file_name
+        return "#{NG_EXTENSION.join(',')}の拡張子が付いたファイルは、アップロードできません。" 
+      end
+      return nil
+  end
+
 
   def nkf_file_name(file_name)
     agent = request.cgi.env_table["HTTP_USER_AGENT"]

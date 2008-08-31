@@ -110,6 +110,12 @@ class BoardEntriesController < ApplicationController
     @board_entry_comment = BoardEntryComment.find(params[:id])
     board_entry = @board_entry_comment.board_entry
 
+    unless verified_request?
+      redirect_to :controller => "mypage", :action => "index"
+      flash[:notice] = "CSRF NG"
+      return false
+    end
+
     authorize = false 
     authorize = true if session[:user_symbol] == board_entry.symbol 
 
@@ -118,6 +124,11 @@ class BoardEntriesController < ApplicationController
         authorize = true 
       elsif board_entry.publicate?(login_user_symbols)
         authorize = true 
+      end
+    else
+      if session[:user_id] == @board_entry_comment.user_id && 
+        board_entry.publicate?(login_user_symbols) 
+        authorize = true
       end
     end
 

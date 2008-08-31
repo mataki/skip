@@ -17,6 +17,9 @@
   </div>
   </div>
 <% end %>
+
+<%= hidden_field_tag "authenticity_token", form_authenticity_token %>
+
 <script type="text/javascript">
 $j(function() {
     $j('.remove_image_link')
@@ -25,8 +28,9 @@ $j(function() {
         var filename = $j('#image_name_' + this.id.split('_')[3]).html();
         if(confirm('本当に削除しますか？')) {
             $j.ajax({
+                type: "POST",
                 url: url,
-                data: {filename: filename},
+                data: {filename: filename, authenticity_token: $j("#authenticity_token").val()},
                 success: function(html) {
                     $j('#images').html(html);
                 }

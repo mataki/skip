@@ -38,6 +38,9 @@ div.topix_body .page_line, div.topix_body .item_line {
     <%= page_link(entries_pages) if entries_pages -%>
   </div>
 </div>
+
+<%= hidden_field_tag "authenticity_token", form_authenticity_token %>
+
 <% if type_symbol == :antenna_id -%>
 <div id="antenna_items" style="text-align:right; border-top: 1px dashed silver; background-color: #fff5ff; display:none;">
   <% antenna_items.each do |item| -%>
@@ -95,8 +98,10 @@ $j(function() {
     var changeReadState = function(checkBoxObj, isRead){
         messageId = checkBoxObj.id.split('_')[1];
         $j.ajax({
+            type: 'POST',
             url: "<%= url_for(:controller => 'mypage', :action => 'change_read_state') -%>",
-            data: { board_entry_id:messageId, read:isRead },
+            data: { board_entry_id:messageId, read:isRead, 
+                authenticity_token: $j('#authenticity_token').val() },
             complete: function(request) {
             }
         });

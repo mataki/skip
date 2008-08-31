@@ -19,15 +19,4 @@ class PicturesController < ApplicationController
     @picture = Picture.find(params[:id])
     send_data(@picture.data, :filename => @picture.name, :type => @picture.content_type, :disposition => "inline")
   end
-
-  # プロフィール画像をファイルとして取得する。外部アプリからの利用を想定。
-  def profile_image
-    if user = User.find_by_uid(params['uid'])
-      if picture = user.pictures.first
-        send_data(picture.data, :filename => picture.name, :type => picture.content_type, :disposition => 'inline')
-        return
-      end
-    end
-    send_file "#{RAILS_ROOT}/public/images/default_picture.png", :type => 'image/png', :disposition => 'inline'
-  end
 end

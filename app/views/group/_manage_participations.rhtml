@@ -19,7 +19,7 @@
 <div id="contents_right">
 
 <div class="desc" style="margin-bottom: 10px;">この画面では、管理者の権限設定、強制退会が可能です。</div>
-
+<%= hidden_field_tag "authenticity_token", form_authenticity_token %>
 <div class="navi"><%= page_link @pages -%></div>
 
 <div style="margin: 10px auto 10px auto; width: 100%; text-align: center;">
@@ -39,7 +39,7 @@
       <% if session[:user_id] == @participation.user_id -%>
         管理者
       <% else -%>
-      <%= check_box(:participation, :owned, :onclick=>%(document.location.href='#{url_for(:action => 'toggle_owned', :participation_id =>@participation.id)}')) %>
+        <%= check_box(:participation, :owned, :class => 'toggle_owned', :id => "toggle_owned_checkbox_#{@participation.id}") %>
       <% end -%>
     </td>
     <td class="line_<%= even_or_odd -%>"><%= @participation.user.name -%></td>
@@ -71,3 +71,21 @@
 
 </div><!-- contents_container -->
 
+<script type="text/javascript" >
+$j(function() {
+        $j('.toggle_owned')
+        .click(function() {
+            var url = '<%= url_for(:action => "toggle_owned") -%>';
+            var participation_id = this.id.split('_')[3]
+            $j.ajax({
+                type: 'POST',
+                url: url,
+                data: { participation_id: participation_id, 
+                        authenticity_token: $j('#authenticity_token').val(), },
+                success: function(html) {
+                  alert('変更しました')
+                }
+            });
+        });
+});
+</script>
