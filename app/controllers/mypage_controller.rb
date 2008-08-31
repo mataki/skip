@@ -186,29 +186,23 @@ class MypageController < ApplicationController
     if picture = Picture.find_by_user_id(session[:user_id])
       picture.destroy
       flash[:notice] = "画像を削除しました"
-      @picture = Picture.new
     end
     redirect_to :action => 'manage', :menu => 'manage_portrait'
   end
 
   # post_action
   def save_portrait
-    @user = User.find(session[:user_id])
-
     if params[:picture][:picture].is_a? ActionController::UploadedFile
-      @picture = Picture.new(params[:picture])
-      @picture.user_id = @user.id
-      if @picture.save
+      picture = Picture.new(params[:picture])
+      picture.user_id = session[:user_id]
+      if picture.save
         flash[:notice] = "画像を変更しました"
       else
-        flash[:warning] = @picture.errors.full_messages
-        @picture = Picture.find_by_user_id(@user.id) || Picture.new
+        flash[:warning] = picture.errors.full_messages
       end
     else
       flash[:warning] = "ファイル形式が不正です。"
-      @picture = Picture.find_by_user_id(@user.id) || Picture.new
     end
-
     redirect_to :action => 'manage', :menu => 'manage_portrait'
   end
 

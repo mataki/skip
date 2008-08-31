@@ -134,24 +134,23 @@ module ApplicationHelper
     link_to image_tag(image_name, :alt=>title) + title, options
   end
 
-  def showPicture(user,width,height,popup=false)
+  def showPicture(user, width, height, popup=false)
     options = {:border=>'0', :name=>'picture', :alt=>user.name}
     options[:width] = width unless width == 0
     options[:height] = height unless height == 0
-    options[:title] = "クリックすると実際の大きさで表示されます" if popup
-    img_path = ''
     if user.retired
-      img_path = image_tag('retired.png', options)
-    else
-      if picture = user.pictures.first
+      file_name = 'retired.png'
+    elsif picture = user.pictures.first
+      if popup
         pop_name = url_for(:controller=>'pictures', :action=>'picture', :id=>picture.id.to_s)
-        options[:onclick] = "popupImage('#{pop_name}')" if popup
-        img_path = image_tag('/pictures/picture/' + picture.id.to_s + '.png', options)
-      else
-        img_path = image_tag('default_picture.png', options)
+        options[:onclick] = "popupImage('#{pop_name}')"
+        options[:title] = "クリックすると実際の大きさで表示されます"
       end
+      file_name = '/pictures/picture/' + picture.id.to_s + '.png'
+    else
+      file_name = 'default_picture.png'
     end
-    return img_path
+    image_tag(file_name, options)
   end
 
   def hiki_parse text, owner_symbol = nil
