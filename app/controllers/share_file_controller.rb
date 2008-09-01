@@ -43,7 +43,7 @@ class ShareFileController < ApplicationController
     # 所有者がマイユーザ OR マイグループ
     unless login_user_symbols.include? params[:owner_symbol]
       @categories_hash = ShareFile.get_tags_hash(params[:owner_symbol])
-      flash.now[:warning] = "ファイルのアップロードに失敗しました!"
+      flash.now[:warning] = "ファイルのアップロードに失敗しました。"
       render :action => "new"
       return
     end

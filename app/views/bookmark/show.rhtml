@@ -31,7 +31,7 @@
         <%= hidden_field_tag("authenticity_token", form_authenticity_token) %>
         <%= icon_tag('key', :title=>"非公開") unless bookmark_comment.public -%>
       <%= link_to(icon_tag('tag_blue_edit', :alt => '編集'), {:controller => "bookmark", :action => "edit", :url => @bookmark.url, :title => @bookmark.title, :dummy => '.html'}, {:class => "nyroModal"}) %>
-      <%= link_to_function icon_tag('tag_blue_delete', :alt => '削除'),"if (confirm('本当に削除しますか')) { var f = document.createElement('form'); this.parentNode.appendChild(f); f.method = 'POST';f.action = get_action_value(this.href, #{bookmark_comment.id}); var input = document.createElement('input'); input.name = 'authenticity_token'; input.value = document.getElementById('authenticity_token').value; f.appendChild(input); f.submit();}",:href => url_for(:controller =>'bookmark', :action =>'destroy')  %>
+      <%= link_to_function icon_tag('tag_blue_delete', :alt => '削除'),"if (confirm('本当に削除しますか')) { var f = document.createElement('form'); this.parentNode.appendChild(f); f.method = 'POST';f.action = get_action_value(this.href, #{bookmark_comment.id}); var input = document.createElement('input'); input.type = 'hidden'; input.name = 'authenticity_token'; input.value = document.getElementById('authenticity_token').value; f.appendChild(input); f.submit();}",:href => url_for(:controller =>'bookmark', :action =>'destroy')  %>
     <% end %>
     </div>
   <% end %>

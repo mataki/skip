@@ -91,7 +91,7 @@ $j(function(){
         $j.ajax({
             type: "POST",
             url: ado_get_title_url,
-            data: { url:url },
+            data: { url:url, authenticity_token: $j('#authenticity_token').val() },
             success: function(request){
                 if(request == ""){
                     alert("タイトルの取得ができませんでした");

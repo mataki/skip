@@ -51,6 +51,14 @@ class BookmarkController < ApplicationController
 
   # ブックマークの更新（存在しない場合は作成）
   def update
+    unless params[:bookmark][:url] =~ /^https?\:\/\/.*/ 
+      message = 'ブックマークするURLは、http(s)から始めて下さい'
+      unless params[:bookmark][:url] =~ /.*javascript\:.*/
+        message = 'ブックマークするURLには、javascriptのコードを含めないで下さい'
+        redirect_to :controller => 'user', :action => 'bookmark', :uid => session[:user_symbol]
+        flash[:warning] = message
+      end
+    end
     @bookmark = Bookmark.find_by_url(params[:bookmark][:url]) || Bookmark.new
     @bookmark.attributes = params[:bookmark]
 

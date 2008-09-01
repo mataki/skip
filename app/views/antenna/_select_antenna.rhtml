@@ -55,7 +55,7 @@ $j(function() {
             $j.ajax({
                 type: 'POST',
                 url: url,
-                data: { antenna_id: antennaId, symbol: symbol, authenticity_token: $j('authenticity_token').val() },
+                data: { antenna_id: antennaId, symbol: symbol, authenticity_token: $j('#authenticity_token').val() },
                 success: function(html) {
                     $j('#select_antenna_body').html(html);
                 }

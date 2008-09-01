@@ -503,7 +503,7 @@ class BoardEntry < ActiveRecord::Base
     return true if login_user_symbol == symbol      
 
     #  マイユーザ/マイグループが公開範囲指定対象で、編集可能
-    return true if publicate?(login_user_symbols) && edit?
+    return true if publicate?(login_user_symbols) && edit?(login_user_symbols)
 
     # 所有者がマイグループ AND 作成者がマイユーザ
     if login_user_groups.include?(symbol) 
@@ -519,7 +519,7 @@ class BoardEntry < ActiveRecord::Base
     entry_publications.any? {|publication| login_user_symbols.include?(publication.symbol) || "sid:allusers" == publication.symbol} 
   end
 
-  def edit?
+  def edit? login_user_symbols
     entry_editors.any? {|editor| login_user_symbols.include? editor.symbol }
   end
 
