@@ -21,7 +21,7 @@ class BookmarkController < ApplicationController
 
   before_filter :check_params, :only => [:new, :edit]
 
- protect_from_forgery :except => [:new]
+  protect_from_forgery :except => [:new]
 
   # ブックマークレット用
   def new
@@ -51,15 +51,16 @@ class BookmarkController < ApplicationController
 
   # ブックマークの更新（存在しない場合は作成）
   def update
-    unless params[:bookmark][:url] =~ /^https?\:\/\/.*/ 
-      message = 'ブックマークするURLは、http(s)から始めて下さい'
-      unless params[:bookmark][:url] =~ /.*javascript\:.*/
-        message = 'ブックマークするURLには、javascriptのコードを含めないで下さい'
-        redirect_to :controller => 'user', :action => 'bookmark', :uid => session[:user_symbol]
-        flash[:warning] = message
-      end
+    url = params[:bookmark][:url]
+
+    unless check_url_format? url
+      messages = []
+      messages << 'このURLは、ブックマークできません。'
+      render :partial => "system/error_messages_for", :locals=> { :messages => messages }
+      return
     end
-    @bookmark = Bookmark.find_by_url(params[:bookmark][:url]) || Bookmark.new
+
+    @bookmark = Bookmark.find_by_url(url) || Bookmark.new
     @bookmark.attributes = params[:bookmark]
 
     @bookmark_comment = @bookmark.bookmark_comments.find(:first, :conditions => ["bookmark_comments.user_id = ?", session[:user_id]]) || @bookmark.bookmark_comments.build
@@ -209,11 +210,15 @@ private
   end
 
   def check_params
-    unless params[:url]
+    unless params[:url] && check_url_format?(params[:url])
       flash[:warning] = "そのURLは有効ではありません。"
       redirect_to :controller => 'mypage', :action => 'index'
       return false
     end
+  end
+
+  def check_url_format? url
+    (url =~ /^https?\:\/\/.*/) && !(url =~ /.*javascript:.*/)
   end
 
   def prepare_bookmark params
