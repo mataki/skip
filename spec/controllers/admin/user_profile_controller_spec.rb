@@ -16,13 +16,55 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe Admin::UserProfilesController, 'GET /admin_user_user_profile' do
-  it '正常に処理が行われること'
+  before do
+    admin_login
+    @user = mock(Admin::User)
+    @user_profile = mock(Admin::UserProfile)
+    @user.should_receive(:user_profile).and_return(@user_profile)
+    Admin::User.should_receive(:find).and_return(@user)
+    get :show
+  end
+  it {assigns[:user].should == @user}
+  it {assigns[:user_profile].should == @user_profile}
+  it {response.should be_success}
 end
 
 describe Admin::UserProfilesController, 'GET /edit_admin_user_user_profile' do
-  it '正常に処理が行われること'
+  before do
+    admin_login
+    @user = mock(Admin::User)
+    @user_profile = mock(Admin::UserProfile)
+    @user.should_receive(:user_profile).and_return(@user_profile)
+    Admin::User.should_receive(:find).and_return(@user)
+    get :edit
+  end
+  it {assigns[:user].should == @user}
+  it {assigns[:user_profile].should == @user_profile}
 end
 
 describe Admin::UserProfilesController, 'PUT /edit_admin_user_user_profile' do
-  it '正常に処理が行われること'
+  before do
+    admin_login
+    @user = mock(Admin::User)
+    @user_profile = mock(Admin::UserProfile)
+    @user.should_receive(:user_profile).and_return(@user_profile)
+    Admin::User.should_receive(:find).and_return(@user)
+  end
+  describe '保存に成功する場合' do
+    before do
+      @user_profile.should_receive(:update_attributes).and_return(true)
+      post :update
+    end
+    it {flash[:notice].should_not be_nil}
+    it {assigns[:user].should == @user}
+    it {assigns[:user_profile].should == @user_profile}
+  end
+  describe '保存に失敗する場合' do
+    before do
+      @user_profile.should_receive(:update_attributes).and_return(false)
+      post :update
+    end
+    it {assigns[:user].should == @user}
+    it {assigns[:user_profile].should == @user_profile}
+  end
 end

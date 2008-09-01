@@ -93,7 +93,3 @@ describe PortalController, '#make_profile' do
     end
   end
 end
-
-describe PortalController, '#make_user_uid' do
-  it '正常に動作すること'
-end
