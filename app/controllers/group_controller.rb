@@ -131,7 +131,7 @@ class GroupController < ApplicationController
   # tab_menu
   def new
     unless login_user_groups.include? @group.symbol
-      flash[:warning] = "グループに参加していません。"
+      flash[:warning] = "この操作は、許可されていません。"
       redirect_to :controller => 'mypage', :action => 'index'
       return false
     end
@@ -235,7 +235,7 @@ class GroupController < ApplicationController
   def toggle_owned
     group_participation = GroupParticipation.find(params[:participation_id])
     unless group_participation.user_id != session[:user_id]
-      flash[:warning] = '権限変更に失敗しました。'
+      flash[:warning] = "この操作は、許可されていません。"
       redirect_to :action => 'manage', :menu => 'manage_participations'
       return false
     end
@@ -253,7 +253,7 @@ class GroupController < ApplicationController
   def forced_leave_user
     group_participation = GroupParticipation.find(params[:participation_id])
     unless group_participation.group_id == @participation.group_id
-      flash[:warning] = "そのユーザは、このグループに参加していません。"
+      flash[:warning] = "この操作は、許可されていません。"
       redirect_to :action => 'manage', :menu => 'manage_participations'
       return false
     end

@@ -110,9 +110,10 @@ class BookmarkController < ApplicationController
   # ブックマークコメントの削除
   def destroy
     comment = BookmarkComment.find(params[:comment_id])
-
+    
+    # 権限チェック
     unless comment.user_id == session[:user_id]
-      flash[:warning] = "このブックマークコメントは、削除できません"
+      flash[:warning] = "この操作は、許可されていません。"
       redirect_to  :controller => 'mypage', :action =>'index'
       return false
     end
@@ -172,6 +173,7 @@ class BookmarkController < ApplicationController
 
   def ado_set_stared
     bookmark_comment = BookmarkComment.find_by_id(params[:bookmark_comment_id])
+    # 権限チェック
     unless bookmark_comment.user_id == session[:user_id]
       render :nothing => true
       return false
@@ -218,7 +220,8 @@ private
   end
 
   def check_url_format? url
-    (url =~ /^https?\:\/\/.*/) && !(url =~ /.*javascript:.*/)
+    # 社内用URLのチェックは、bookmarkと重複している。
+    ((url =~ /^\/user\/.*/) || (url =~ /^\/page\/.*/) || url =~ /^https?:\/\/.*/) && !(url =~ /.*javascript:.*/)
   end
 
   def prepare_bookmark params

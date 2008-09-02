@@ -43,7 +43,7 @@ class ShareFileController < ApplicationController
     # 所有者がマイユーザ OR マイグループ
     unless login_user_symbols.include? params[:owner_symbol]
       @categories_hash = ShareFile.get_tags_hash(params[:owner_symbol])
-      flash.now[:warning] = "ファイルのアップロードに失敗しました。"
+      flash.now[:warning] = "この操作は、許可されていません。"
       render :action => "new"
       return
     end
@@ -60,7 +60,7 @@ class ShareFileController < ApplicationController
       @share_file.file_name = file.original_filename
       @share_file.content_type = file.content_type.chomp
 
-      if not (verify_message = verify_extension_share_file(@share_file.file_name)) and 
+      if not (verify_message = verify_extension_share_file(@share_file)) and 
         not (verify_message = verify_file_size(file)) and 
         @share_file.save
         target_symbols = analyze_param_publication_type
@@ -131,6 +131,7 @@ class ShareFileController < ApplicationController
 
     unless authorize_to_save_share_file? @share_file
       @categories_hash = ShareFile.get_tags_hash(@share_file.owner_symbol)
+      flash.now[:warning] = "この操作は、許可されていません。"
       render :action => :edit
       return
     end
@@ -160,6 +161,7 @@ class ShareFileController < ApplicationController
     end
 
     unless authorize_to_save_share_file? share_file
+      flash[:warning] = "この操作は、許可されていません。"
       redirect_to :controller => share_file.owner_symbol_type, :action => share_file.owner_symbol_id, :id => 'share_file'
       return
     end
@@ -313,9 +315,9 @@ private
     return nil
   end
 
-  def verify_extension_share_file file_name
-      if verify_extension file_name
-        return "#{NG_EXTENSION.join(',')}の拡張子が付いたファイルは、アップロードできません。" 
+  def verify_extension_share_file file
+      unless verify_extension? file.file_name, file.content_type
+        return "この形式のファイルは、アップロードできません。" 
       end
       return nil
   end

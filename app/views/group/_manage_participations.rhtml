@@ -73,19 +73,19 @@
 
 <script type="text/javascript" >
 $j(function() {
-        $j('.toggle_owned')
-        .click(function() {
-            var url = '<%= url_for(:action => "toggle_owned") -%>';
-            var participation_id = this.id.split('_')[3]
-            $j.ajax({
-                type: 'POST',
-                url: url,
-                data: { participation_id: participation_id, 
-                        authenticity_token: $j('#authenticity_token').val(), },
-                success: function(html) {
-                  alert('変更しました')
-                }
-            });
-        });
+  $j('.toggle_owned')
+  .click(function() {
+      var url = '<%= url_for(:action => "toggle_owned") -%>';
+      var participation_id = this.id.split('_')[3]
+      $j.ajax({
+          type: 'POST',
+          url: url,
+          data: { participation_id: participation_id, 
+                  authenticity_token: $j('#authenticity_token').val() },
+          success: function(html) {
+            alert('管理者を変更しました。')
+          }
+      });
+  });
 });
 </script>

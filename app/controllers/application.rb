@@ -27,17 +27,18 @@ class ApplicationController < ActionController::Base
   # フィルタで毎アクセスごとに確認し、セッションが未準備なら初期値をいれる
   # skip_utilで認証がされている前提で、グローバルセッションを利用している
   def prepare_session
+
     # プロフィール情報が登録されていない場合、platformに戻す
     unless user = User.find_by_uid(session[:user_code])
       redirect_to :controller => :platform, :error => 'no_profile'
       return false
     end
-    
+
     # ログのリクエスト情報に、ユーザIDを加える（情報漏えい事故発生時のトレーサビリティを確保)
     logger.info ("Log_for_Inspection {:user_id => #{user.id.to_s} }")
 
     unless controller_name == 'pictures'
-      UserAccess.update_all("last_access = CURRENT_TIMESTAMP", "user_id = "+user.id.to_s)
+      UserAccess.update_all("last_access = CURRENT_TIMESTAMP", ["user_id = ? ", user.id ])
       @site_count = SiteCount.find(:first, :order => "created_on desc") || SiteCount.new
     end
 

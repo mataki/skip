@@ -33,7 +33,7 @@ class Tag < ActiveRecord::Base
   end
 
   def self.get_system_tag name
-    Tag.find(:first, :conditions => ["name = '#{name}'"])
+    Tag.find(:first, :conditions => ["name = ? ", name])
   end
 
   # 文字列をタグの名前の配列に分解する

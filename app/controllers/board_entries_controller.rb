@@ -109,13 +109,8 @@ class BoardEntriesController < ApplicationController
   def destroy_comment
     @board_entry_comment = BoardEntryComment.find(params[:id])
     board_entry = @board_entry_comment.board_entry
-
-    unless verified_request?
-      redirect_to :controller => "mypage", :action => "index"
-      flash[:notice] = "CSRF NG"
-      return false
-    end
-
+    
+    # 権限チェック
     authorize = false 
     authorize = true if session[:user_symbol] == board_entry.symbol 
 
@@ -133,8 +128,8 @@ class BoardEntriesController < ApplicationController
     end
 
     unless authorize
+      flash[:warning] = "この操作は、許可されていません。"
       redirect_to :controller => "mypage", :action => "index"
-      flash[:notice] = "このコメントは、削除できません。"
       return false
     end
 
@@ -154,7 +149,8 @@ class BoardEntriesController < ApplicationController
   def ado_edit_comment
     comment = BoardEntryComment.find(params[:id])
     board_entry = comment.board_entry
-
+    
+    # 権限チェック
     authorize = false 
 
     if comment.user_id == session[:user_id]
@@ -172,8 +168,8 @@ class BoardEntriesController < ApplicationController
       end
     end
     unless authorize
+      flash[:warning] = "この操作は、許可されていません。"
       redirect_to :controller => "mypage", :action => "index"
-      flash[:notice] = "このコメントは、編集できません。"
       return false
     end
 

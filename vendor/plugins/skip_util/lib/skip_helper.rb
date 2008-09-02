@@ -45,10 +45,7 @@ module SkipHelper
 
   def skip_all_javascript_include_tag source
     library = {'prototype' => PROTOTYPE_LIBRARY, 'jquery' => JQUERY_LIBRARY}[source]
-    lib_str = []
-    library[:libs].each do |lib|
-      lib_str << "/javascripts/skip/#{lib}"
-    end
+    lib_str = library[:libs].map{|lib| "/javascripts/skip/#{lib}" } 
     lib_str << {:cache => library[:name]}
     javascript_include_tag(*lib_str)
   end

@@ -267,7 +267,7 @@ $j(function(){
             $j.ajax({
                 type: 'POST',
                 url: entry_point_url,
-                data: {id: '<%= entry.id %>', authenticity_token: $j('#authenticity_token').val(), },
+                data: {id: '<%= entry.id %>', authenticity_token: $j('#authenticity_token').val() },
                 success: function(request){
                     $j('#board_entry_point').html(request);
                     entry_point = ++entry_point;

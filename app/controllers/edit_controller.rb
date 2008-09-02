@@ -75,12 +75,13 @@ class EditController < ApplicationController
     @board_entry.publication_type = params[:publication_type]
     @board_entry.publication_symbols_value = params[:publication_type]=='protected' ? params[:publication_symbols_value] : ""
 
+    # 権限チェック
     unless (session[:user_symbol] == params[:board_entry][:symbol]) || 
       login_user_groups.include?(params[:board_entry][:symbol]) 
       if MAIL_FUNCTION_SETTING
         @sent_mail_flag = "checked" if params[:sent_mail][:send_flag] == "1"
       end
-      flash[:warning] = "不正なパラメータがあります"
+      flash[:warning] = "この操作は、許可されていません。"
       render :action => 'index'
       return
     end
@@ -116,8 +117,12 @@ class EditController < ApplicationController
   # link_action
   def edit
     @board_entry = get_entry(params[:id])
-    authorize_to_edit_board_entry @board_entry
-
+    # 権限チェック
+    unless authorize_to_edit_board_entry? @board_entry
+      flash[:warning] = "この操作は、許可されていません。"
+      redirect_to :controller => 'mypage', :action => 'index'
+      return false
+    end
     params[:entry_type] ||= @board_entry.entry_type
     params[:symbol] ||= @board_entry.symbol
 
@@ -209,7 +214,12 @@ class EditController < ApplicationController
     update_params[:publication_type] = params[:publication_type]
     update_params[:publication_symbols_value] = params[:publication_type]=='protected' ? params[:publication_symbols_value] : ""
     
-    authorize_to_edit_board_entry @board_entry
+    # 権限チェック
+    unless authorize_to_edit_board_entry? @board_entry
+      flash[:warning] = "この操作は、許可されていません。"
+      redirect_to :controller => 'mypage', :action => 'index'
+      return false
+    end
 
     # 成りすましての更新を防止
     if params[:symbol] != @board_entry.symbol || params[:board_entry][:symbol] != @board_entry.symbol 
@@ -253,8 +263,9 @@ class EditController < ApplicationController
   # post_action
   def destroy
     @board_entry = get_entry params[:id] 
-    unless @board_entry.editable?(login_user_symbols, session[:user_id], session[:user_symbol], login_user_groups)
-      flash[:warning] = 'その操作は許可されていません。'
+    # 権限チェック
+    unless authorize_to_edit_board_entry? @board_entry
+      flash[:warning] = "この操作は、許可されていません。"
       redirect_to :controller => 'mypage', :action => 'index'
       return false
     end
@@ -278,7 +289,7 @@ class EditController < ApplicationController
     @board_entry = get_entry params[:id] 
 
     unless @board_entry.user_id == session[:user_id]
-      flash[:warning] = 'その操作は許可されていません。'
+      flash[:warning] = "この操作は、許可されていません。"
       redirect_to :controller => 'mypage', :action => 'index'
       return false
     end
@@ -304,8 +315,10 @@ class EditController < ApplicationController
   # ajax_action
   def ado_remove_image
     @board_entry = get_entry params[:id] 
-    unless @board_entry.editable?(login_user_symbols, session[:user_id], session[:user_symbol], login_user_groups)
-      flash[:warning] = 'その操作は許可されていません。'
+
+    # 権限チェック
+    unless authorize_to_edit_board_entry? @board_entry
+      flash[:warning] = "この操作は、許可されていません。"
       redirect_to :controller => 'mypage', :action => 'index'
       return false
     end
@@ -351,7 +364,8 @@ private
 
   def upload_file board_entry, src_image_file
     # FIXME 以下のチェックに失敗した場合のエラー処理が全くない。
-    if valid_upload_file?(src_image_file) and !verify_extension(src_image_file.original_filename)
+    if valid_upload_file?(src_image_file) && 
+      verify_extension?(src_image_file.original_filename, src_image_file.content_type)
       dir_path = File.join(get_dir_path, board_entry.user_id.to_s)
       FileUtils.mkdir_p dir_path
       target_image_file_name = File.join(dir_path, @board_entry.id.to_s + '_' + src_image_file.original_filename)
@@ -416,12 +430,8 @@ private
     end
   end
 
-  def authorize_to_edit_board_entry entry
-    unless entry.editable?(login_user_symbols, session[:user_id], session[:user_symbol], login_user_groups)
-      flash[:warning] = 'その操作は許可されていません。'
-      redirect_to :controller => 'mypage', :action => 'index'
-      return false
-    end
+  def authorize_to_edit_board_entry? entry
+    entry.editable?(login_user_symbols, session[:user_id], session[:user_symbol], login_user_groups)
   end
 
   def get_entry entry_id

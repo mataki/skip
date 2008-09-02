@@ -13,7 +13,7 @@ $j(function(){
             type: 'POST',
             url: '<%= url_for(:controller => 'bookmark', :action => 'ado_set_stared') -%>',
             data: { bookmark_comment_id : '<%= bookmark_comment.id -%>', stared : <%= (!bookmark_comment.stared).to_s -%>,
-          　        authenticity_token: $j("#authenticity_token").val(), },
+          　        authenticity_token: $j("#authenticity_token").val() },
             complete: function(request) {
                 $j('#bookmark_comment_stared_<%= bookmark_comment.id -%>').html(request.responseText);
                 $j('#bookmark_comment_<%= bookmark_comment.id -%>').highlight();

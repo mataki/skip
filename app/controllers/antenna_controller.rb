@@ -24,8 +24,8 @@ class AntennaController < ApplicationController
 
   def add_symbol
     unless Antenna.find(params[:antenna_id]).user_id == session[:user_id]
+      flash[:warning] = "この操作は、許可されていません。"
       redirect_to :controller => "mypage", :action => "index"
-      flash[:notice] = "このアンテナには、追加できません。"
       return false
     end
     antenna_item = AntennaItem.new(:antenna_id => params[:antenna_id],

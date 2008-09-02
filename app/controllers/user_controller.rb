@@ -326,7 +326,7 @@ private
     join_state =  "left join bookmark_comment_tags on bookmark_comments.id = bookmark_comment_tags.bookmark_comment_id "
     join_state << "left join tags on tags.id = bookmark_comment_tags.tag_id "
 
-    conditions = ["bookmarks.url = '#{@postit_url}' "]
+    conditions = ["bookmarks.url = #{ActiveRecord::Base.connection.quote(@postit_url)} "]
     if params[:selected_tag]
       conditions[0] << " and tags.name = ?"
       conditions << params[:selected_tag]

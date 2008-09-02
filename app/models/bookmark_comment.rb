@@ -102,7 +102,7 @@ class BookmarkComment < ActiveRecord::Base
 
     Tag.find(:all,
              :select => "tags.name, count(tags.id) as count",
-             :conditions => "bookmarks.url = '#{postit_url}'",
+             :conditions => ["bookmarks.url = ? ", postit_url],
              :order => "bookmark_comments.created_on DESC",
              :group => "bookmark_comment_tags.tag_id",
              :joins => join_state)
