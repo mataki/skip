@@ -1,5 +1,5 @@
 .box { color: #505050; background-color: #F6F6F6; border:1px solid #E4E4E4; line-height: 1.5em; padding: 6px; }
-.tabular label { float:left; font-weight:bold; text-align:right; width:250px; }
+.tabular label { float:left; font-weight:bold; text-align:right; width:200px; }
 .tabular p { overflow: hidden; height: 1%; margin: 0px; padding: 5px 0px 8px 0px;}
 .search_box { margin: 5px; padding: 6px 8px; border: 2px dotted #FFC000; background-color: #F0F0FF;}
 table.sortable { text-align: left; width: 97%; margin: 5px auto;}
