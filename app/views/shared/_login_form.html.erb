@@ -24,7 +24,7 @@
   <%= hidden_field_tag "return_to", params[:return_to] -%>
   <table class="box" style="font-size: 12px; width: 300px;">
     <tr valign="top" class="password_auth">
-      <td><label for="login_key"><span style="font-weight: bold;"><%= "#{Admin::Setting.login_account}#{Admin::Setting.login_account_example}" -%></span></label></td>
+      <td><label for="login_key"><span style="font-weight: bold;"><%= "#{Admin::Setting.login_account}" -%></span></label></td>
     </tr>
     <tr valign="top" class="password_auth">
       <td><%= text_field 'login', 'key', :size => 15, :autocomplete => :on  -%></td>
