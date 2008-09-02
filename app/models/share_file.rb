@@ -51,6 +51,10 @@ class ShareFile < ActiveRecord::Base
 
   def after_destroy
     File.delete(self.full_path)
+  rescue Errno::ENOENT => e
+    logger.error e.message
+  rescue => e
+    e.backtrace.each { |message| logger.error message }
   end
 
   def owner_symbol_type

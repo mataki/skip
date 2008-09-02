@@ -48,12 +48,41 @@ describe ShareFile, '#full_path' do
     FileUtils.stub!(:mkdir_p)
   end
   describe 'ユーザ所有の共有ファイルの場合' do
-    it 'full_pathが取得できること' do
+    before do
       symbol_type = 'uid'
-      symbol_id = '111111'
-      file_name = 'sample.csv'
-      share_file = create_share_file(:file_name => file_name, :owner_symbol => "#{symbol_type}:#{symbol_id}")
-      share_file.full_path.should == File.join(@share_file_path, 'user', symbol_id, file_name)
+      @symbol_id = '111111'
+      @file_name = 'sample.csv'
+      @share_file = create_share_file(:file_name => @file_name, :owner_symbol => "#{symbol_type}:#{@symbol_id}")
+    end
+    it 'full_pathが取得できること' do
+      @share_file.full_path.should == File.join(@share_file_path, 'user', @symbol_id, @file_name)
+    end
+  end
+end
+
+describe ShareFile, '#after_destroy' do
+  before do
+    @share_file = create_share_file
+    File.stub!(:delete)
+  end
+  describe '対象ファイルが存在する場合' do
+    before do
+      @full_path = 'full_path'
+      @share_file.stub!(:full_path).and_return(@full_path)
+    end
+    it 'ファイル削除が呼ばれること' do
+      File.should_receive(:delete).with(@full_path)
+      @share_file.after_destroy
+    end
+  end
+  describe '対象ファイルが存在しない場合' do
+    before do
+      File.should_receive(:delete).and_raise(Errno::ENOENT)
+    end
+    it '例外を送出しないこと' do
+      lambda do
+        @share_file.after_destroy
+      end.should_not raise_error
     end
   end
 end
