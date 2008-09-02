@@ -14,6 +14,8 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class User < ActiveRecord::Base
+  attr_accessor :old_password, :password
+
   has_many :group_participations, :dependent => :destroy
   has_many :pictures, :dependent => :destroy
   has_one  :user_profile, :dependent => :destroy
@@ -26,6 +28,8 @@ class User < ActiveRecord::Base
   has_many :antennas, :dependent => :destroy
   has_many :user_uids, :dependent => :destroy
 
+  has_many :openid_identifiers
+
   validates_presence_of :email, :message => 'は必須です'
   validates_length_of :email, :maximum => 50, :message => 'は50桁以内で入力してください'
   validates_format_of :email, :message => 'は正しい形式で登録してください', :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/
@@ -33,14 +37,11 @@ class User < ActiveRecord::Base
   validates_presence_of :name, :message => 'は必須です'
   validates_length_of :name, :maximum => 60, :message => 'は60桁以内で入力してください'
 
-  validates_presence_of :section, :message => 'は必須です'
-  validates_length_of :section, :maximum => 30, :message => 'は30桁以内で入力してください'
+  validates_presence_of :password, :message => 'は必須です', :if => :password_required?
+  validates_confirmation_of :password, :message => 'は確認用パスワードと一致しません', :if => :password_required?
+  validates_length_of :password, :within => 4..40, :too_short => 'は%d文字以上で入力してください', :too_long => 'は%d文字以下で入力して下さい', :if => :password_required?
 
-  validates_presence_of :extension, :message => 'は必須です'
-  validates_numericality_of :extension, :message => 'は数値で入力してください'
-  validates_length_of :extension, :maximum => 10, :message => 'は10桁以内で入力してください'
-
-  validates_length_of :introduction, :minimum => 5, :message => 'は5文字数以上入力してください'
+  validates_presence_of :password_confirmation, :message => 'は必須です', :if => :password_required?
 
   def to_s
     return 'uid:' + uid.to_s + ', name:' + name.to_s
@@ -62,6 +63,36 @@ class User < ActiveRecord::Base
     def symbol_type
       :uid
     end
+  end
+
+  def before_save
+    self.crypted_password = self.class.encrypt(password) if password_required?
+  end
+
+  def self.auth(code, password)
+    user = find_by_code(code)
+    user if user && user.crypted_password == encrypt(password)
+  end
+
+  def self.encrypt(password)
+    Digest::SHA1.hexdigest("#{INITIAL_SETTINGS['sha1_digest_key']}--#{password}--")
+  end
+
+  def self.create_with_identity_url(identity_url, params)
+    code = params.delete(:code)
+    password = self.encrypt(params[:code])
+
+    user = new(params.merge(:password => password, :password_confirmation => password))
+    user.user_uids << UserUid.new(:uid => code, :uid_type => 'MASTER')
+    user.openid_identifiers << OpenidIdentifier.new(:url => identity_url)
+
+    user.save
+    user
+  end
+
+  def self.find_by_code(code)
+    uid = UserUid.find_by_uid_and_uid_type(code, 'MASTER')
+    uid ? uid.user : nil
   end
 
   def symbol_id
@@ -226,6 +257,17 @@ class User < ActiveRecord::Base
     BoardEntry.create_entry(entry_params)
   end
 
+  def retired?
+    status == 'RETIRED'
+  end
+
+  def active?
+    status == 'ACTIVE'
+  end
+
+  def unused?
+    status == 'UNUSED'
+  end
 protected
   @@search_cond_keys = [:name, :extension, :section, :code, :email, :introduction]
 
@@ -246,4 +288,8 @@ protected
     return conditions_param.unshift(conditions_state)
   end
 
+private
+  def password_required?
+    crypted_password.blank? || !password.blank?
+  end
 end

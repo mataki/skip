@@ -31,7 +31,7 @@ class PortalController < ApplicationController
     when :registration
       params[:write_profile] = true
       params[:hobbies] = Array.new
-      @user = User.new({:name => session[:user_name], :email => session[:user_email]})
+      @user = User.find_by_code(session[:user_code])
       @profile = UserProfile.new_default
       @user_uid = UserUid.new({ :uid => session[:user_code] })
     end
@@ -47,18 +47,21 @@ class PortalController < ApplicationController
   #ユーザ登録処理
   def apply
     params[:user][:section] = params[:new_section].tr('ａ-ｚＡ-Ｚ１-９','a-zA-Z1-9').upcase unless params[:new_section].empty?
-    @user = User.new(params[:user].update({ :name => session[:user_name], :email => session[:user_email] }))
+    @user = current_user
+    @user.attributes = params[:user]
 
-    user_uid = make_user_uid
+    @user_uid = make_user_uid
 
     @profile = make_profile
 
-    @user.user_uids << user_uid if INITIAL_SETTINGS['nickname_use_setting'] && (params[:user_uid][:uid] != session[:user_code])
-    @user.user_uids << UserUid.new({:uid => session[:user_code], :uid_type => UserUid::UID_TYPE[:master]})
+    User.transaction do
+      @user.user_uids << @user_uid if INITIAL_SETTINGS['nickname_use_setting'] && (params[:user_uid][:uid] != session[:user_code])
 
-    @user.user_profile = @profile if params[:write_profile]
+      @user.user_profile = @profile if params[:write_profile]
 
-    if @user.save
+      @user.status = 'ACTIVE'
+      @user.save!
+
       antenna = Antenna.new(:user_id => @user.id, :name => Admin::Setting.initial_anntena, :position => 1)
 
       Admin::Setting.antenna_default_group.each do |default_gid|
@@ -66,25 +69,26 @@ class PortalController < ApplicationController
           antenna.antenna_items.build(:value_type => "symbol", :value => "gid:"+default_gid)
         end
       end
-      antenna.save
+      antenna.save!
 
       message = render_to_string(:partial => 'entries_template/user_signup',
                                  :locals => { :user_name => @user.name, :user_introduction => @user.introduction})
+
       @user.create_initial_entry(message)
 
-      UserAccess.create(:user_id=>@user.id, :last_access=>Time.now, :access_count=>0)
+      UserAccess.create!(:user_id => @user.id, :last_access => Time.now, :access_count => 0)
       UserMailer.deliver_sent_signup_confirm(@user.email, "#{root_url}mypage/manage?menu=manage_email")
 
       session[:entrance_next_action] = nil
       redirect_to :controller => 'mypage', :action => 'welcome'
-    else
-      @error_msg = []
-      @error_msg.concat @user.errors.full_messages.reject{|msg| msg.include?("User uid") || msg.include?("User profile") } unless @user.valid?
-      @error_msg.concat user_uid.errors.full_messages if user_uid and user_uid.errors
-      @error_msg.concat @profile.errors.full_messages if @profile and @profile.errors
-
-      render :action => :registration
     end
+  rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => e
+    @error_msg = []
+    @error_msg.concat @user.errors.full_messages.reject{|msg| msg.include?("User uid") || msg.include?("User profile") } unless @user.valid?
+    @error_msg.concat @user_uid.errors.full_messages if @user_uid and @user_uid.errors
+    @error_msg.concat @profile.errors.full_messages if @profile and @profile.errors
+
+    render :action => :registration
   end
 
   # ajax_action
@@ -93,9 +97,9 @@ class PortalController < ApplicationController
     render :text => UserUid.check_uid(params[:uid], session[:user_code])
   end
 
-private
+  private
   def registerable_filter
-    if User.find_by_uid session[:user_code]
+    unless current_user.unused?
       redirect_to root_url
       return false
     end
@@ -105,7 +109,7 @@ private
     end
     if deny_message
       render :layout => "entrance",
-             :text => <<-EOS
+      :text => <<-EOS
                <div style="font-weight: bold; font-size: 18px;">大変申し訳ございません。<br/>#{deny_message}<br/>
                <input type="button" value="戻る"  onClick="location.href = '#{url_for(:controller => :platform)}';"></input></div>
              EOS

@@ -28,7 +28,9 @@ class ApplicationController < ActionController::Base
   # skip_utilで認証がされている前提で、グローバルセッションを利用している
   def prepare_session
     # プロフィール情報が登録されていない場合、platformに戻す
-    unless user = current_user
+    user = current_user
+
+    unless user.active?
       redirect_to :controller => '/platform', :error => 'no_profile'
       return false
     end

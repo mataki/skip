@@ -8,7 +8,7 @@ a_user:
   section: <%= SkipFaker.rand_char %>
   extension: <%= SkipFaker.rand_num 3 %>
   introduction: <%= SkipFaker.rand_char %>
-  retired: 0
+  status: ACTIVE
 
 a_retired_user:
   created_on: <%= SkipFaker.today %>
@@ -18,7 +18,7 @@ a_retired_user:
   section: <%= SkipFaker.rand_char %>
   extension: <%= SkipFaker.rand_num 3 %>
   introduction: <%= SkipFaker.rand_char %>
-  retired: 1
+  status: RETIRED
 
 a_group_owned_user:
   created_on: <%= SkipFaker.today %>
@@ -28,7 +28,7 @@ a_group_owned_user:
   section: <%= SkipFaker.rand_char %>
   extension: <%= SkipFaker.rand_num 3 %>
   introduction: <%= SkipFaker.rand_char %>
-  retired: 0
+  status: ACTIVE
 
 a_group_joined_user:
   created_on: <%= SkipFaker.today %>
@@ -38,7 +38,7 @@ a_group_joined_user:
   section: <%= SkipFaker.rand_char %>
   extension: <%= SkipFaker.rand_num 3 %>
   introduction: <%= SkipFaker.rand_char %>
-  retired: 0
+  status: ACTIVE
 
 a_group_waiting_user:
   created_on: <%= SkipFaker.today %>
@@ -48,4 +48,4 @@ a_group_waiting_user:
   section: <%= SkipFaker.rand_char %>
   extension: <%= SkipFaker.rand_num 3 %>
   introduction: <%= SkipFaker.rand_char %>
-  retired: 0
+  status: ACTIVE

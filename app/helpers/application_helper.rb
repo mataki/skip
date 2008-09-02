@@ -138,7 +138,7 @@ module ApplicationHelper
     options = {:border=>'0', :name=>'picture', :alt=>user.name}
     options[:width] = width unless width == 0
     options[:height] = height unless height == 0
-    if user.retired
+    if user.retired?
       file_name = 'retired.png'
     elsif picture = user.pictures.first
       if popup

@@ -1,6 +1,6 @@
 # SKIP(Social Knowledge & Innovation Platform)
 # Copyright (C) 2008 TIS Inc.
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -9,7 +9,7 @@
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-# 
+#
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -20,7 +20,7 @@ class BatchMakeSiteCounts < BatchBase
   def self.execute options
     create_params = {}
 
-    create_params[:total_user_count] = User.count(:conditions => ["retired = false"])
+    create_params[:total_user_count] = User.count(:conditions => ["status = ?", 'ACTIVE'])
     create_params[:today_user_count] = UserAccess.count(:conditions => ["last_access > ?", Date.today])
     create_params[:total_blog_count] = BoardEntry.count
     create_params[:today_blog_count] = BoardEntry.count(:conditions => ["created_on > ?", Date.today])

@@ -60,6 +60,7 @@ def admin_login
   session[:prepared] = true
   u = stub_model(User)
   u.stub!(:admin).and_return(true)
+  u.stub!(:active?).and_return(true)
   if defined? controller
     controller.stub!(:current_user).and_return(u)
   else
@@ -74,6 +75,7 @@ def user_login
   session[:prepared] = true
   u = stub_model(User)
   u.stub!(:admin).and_return(false)
+  u.stub!(:active?).and_return(true)
   if defined? controller
     controller.stub!(:current_user).and_return(u)
   else
@@ -111,6 +113,15 @@ def create_ranking(options = {})
     ranking.save
     ranking
 end
+
+def create_user options = {}
+  user = User.new({ :name => 'ほげ ほげ', :email => 'hoge@hoge.com', :section => 'section',
+                    :extension => '000000', :introduction => '自己紹介文',
+                    :password => 'password', :password_confirmation => 'password'}.merge(options))
+  user.save
+  user
+end
+
 ######skip関連のテストで必要
 class ApplicationController;skip_before_filter :sso; end
 

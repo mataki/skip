@@ -37,9 +37,6 @@ ActionController::Routing::Routes.draw do |map|
 
   map.namespace "admin" do |admin_map|
     admin_map.root :controller => 'users', :action => 'index'
-    admin_map.resources :accounts, :new => [:import] do |account|
-      account.resources :openid_identifiers
-    end
     admin_map.resources :board_entries do |board_entry|
       board_entry.resources :board_entry_comments
     end
@@ -50,6 +47,7 @@ ActionController::Routing::Routes.draw do |map|
     admin_map.resources :users do |user|
       user.resource :user_profile
       user.resources :user_uids
+      user.resources :openid_identifiers
     end
     admin_map.resources :groups do |group|
       group.resources :group_participations

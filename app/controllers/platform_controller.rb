@@ -105,26 +105,26 @@ class PlatformController < ApplicationController
       if result.successful?
         unless identifier = OpenidIdentifier.find_by_url(identity_url)
           if !ENV['SKIPOP_URL'].blank? and identity_url.include?(ENV['SKIPOP_URL'])
-            account = Account.create_with_identity_url(identity_url, create_account_params(identity_url, registration))
-            if account.valid?
+            user = User.create_with_identity_url(identity_url, create_user_params(identity_url, registration))
+            if user.valid?
               redirect_to :controller => :portal
             else
-              set_error_message_from_account_and_redirect(account)
+              set_error_message_from_user_and_redirect(user)
             end
           else
-            set_error_message_not_create_new_account_and_redirect
+            set_error_message_not_create_new_user_and_redirect
           end
           return
         end
         reset_session
 
-        account = identifier.account
+        user = identifier.user
         %w(code name email section).each do |c|
-          session["user_#{c}".to_sym] = account.send(c)
+          session["user_#{c}".to_sym] = user.send(c)
         end
 
         # TODO 他のアプリケーションと一緒に以前のSSOの機構を外す(OpenID化できたら)
-        set_sso_cookie_from(account.attributes.with_indifferent_access.slice(:name, :email, :section).merge(:code => account.code))
+        set_sso_cookie_from(user.attributes.with_indifferent_access.slice(:name, :email, :section).merge(:code => user.code))
         redirect_to_back_or_root
       else
         set_error_message_form_result_and_redirect(result)
@@ -173,15 +173,15 @@ class PlatformController < ApplicationController
     redirect_to (return_to and !return_to.empty?) ? return_to : root_url
   end
 
-  def create_account_params identity_url, registration
+  def create_user_params identity_url, registration
     mappings = {'http://axschema.org/namePerson' => 'name',
       'http://axschema.org/company/title' => 'section',
       'http://axschema.org/contact/email' => 'email' }
-    account_attribute = {:code => identity_url.split("/").last}
+    user_attribute = {:code => identity_url.split("/").last}
     mappings.each do |url, column|
-      account_attribute[column.to_sym] = registration.data[url][0]
+      user_attribute[column.to_sym] = registration.data[url][0]
     end
-    account_attribute
+    user_attribute
   end
 
   def set_error_message_form_result_and_redirect(result)
@@ -194,11 +194,11 @@ class PlatformController < ApplicationController
     set_error_message_and_redirect error_messages[result.instance_variable_get(:@code)], {:controller => :platform, :action => :login}
   end
 
-  def set_error_message_from_account_and_redirect(account)
-    set_error_message_and_redirect ["ユーザの登録に失敗しました。", "管理者に連絡してください。<br/>#{account.errors.full_messages}"], :action => :index
+  def set_error_message_from_user_and_redirect(user)
+    set_error_message_and_redirect ["ユーザの登録に失敗しました。", "管理者に連絡してください。<br/>#{user.errors.full_messages}"], :action => :index
   end
 
-  def set_error_message_not_create_new_account_and_redirect
+  def set_error_message_not_create_new_user_and_redirect
     set_error_message_and_redirect ["そのOpenIDは、登録されていません。", "ログイン後管理画面でOpenID URLを登録後ログインしてください。"], :action => :index
   end
 

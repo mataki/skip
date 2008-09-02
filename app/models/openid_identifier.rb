@@ -14,7 +14,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class OpenidIdentifier < ActiveRecord::Base
-  belongs_to :account
+  belongs_to :user
 
   validates_presence_of :url
   validates_uniqueness_of :url

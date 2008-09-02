@@ -25,7 +25,7 @@ class BatchSendMails < BatchBase
   def self.send_notice
     Mail.find(:all, :conditions => "send_flag = false", :order => 'id asc', :limit => 30).each do |mail|
       user = User.find(:first, :conditions => ["user_uids.uid = ?", mail.from_user_id], :include => ['user_uids'])
-      if user.retired
+      if user.retired?
         mail.update_attribute :send_flag, true
         next
       end

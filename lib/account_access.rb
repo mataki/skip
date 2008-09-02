@@ -1,6 +1,6 @@
 # SKIP(Social Knowledge & Innovation Platform)
 # Copyright (C) 2008 TIS Inc.
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -9,7 +9,7 @@
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-# 
+#
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -19,21 +19,21 @@ class AccountAccess
   end
 
   def self.auth(user_code, password)
-    if account = Account.auth(user_code, password)
-      return account
+    if user = User.auth(user_code, password)
+      return { 'code' => user.code, 'name' => user.name, 'email' => user.email, 'section' => user.section}
     end
     raise AccountAccessException.new({ "message" => "ログインに失敗しました。", "detail" => "下部に記載されているお問い合わせ先にご連絡下さい。"})
   end
 
-  def self.change_password(user_code, account_params)
-    account = Account.auth(user_code, account_params[:old_password])
-    unless account
-      account = Account.new(account_params) 
-      account.errors.add(:old_password, 'が間違っています。')
-      return account
+  def self.change_password(user_code, user_params)
+    user = User.auth(user_code, user_params[:old_password])
+    unless user
+      user = User.new(user_params)
+      user.errors.add(:old_password, 'が間違っています。')
+      return user
     end
-    account.attributes = account_params
-    account.save
-    account
+    user.attributes = user_params
+    user.save
+    user
   end
 end

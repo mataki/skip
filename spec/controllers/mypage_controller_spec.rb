@@ -23,6 +23,7 @@ describe MypageController do
     session[:user_code] = @user.code
   end
 
+
   describe "POST /mypage/apply_email" do
     it "should be successful" do
       post :apply_email, {:applied_email => {:email => SkipFaker.email}}
@@ -43,9 +44,10 @@ describe MypageController do
       @openid_identifiers.should_receive(:<<)
       OpenidIdentifier.should_receive(:new).and_return(@openid_identifier)
 
-      @account = stub_model(Account)
-      @account.stub!(:openid_identifiers).and_return(@openid_identifiers)
-      Account.should_receive(:find_by_code).with(@user.code).and_return(@account)
+      @user = stub_model(User)
+      @user.stub!(:openid_identifiers).and_return(@openid_identifiers)
+      @user.stub!(:code).and_return('100001')
+      User.should_receive(:find_by_code).with(@user.code).and_return(@user)
     end
 
     describe '保存に成功した場合' do
@@ -97,14 +99,14 @@ describe MypageController do
   describe "POST /mypage/delete_ident_url" do
     before do
       @url = 'http://hoge.example.com/'
-      @account = mock_model(Account)
+      @user = mock_model(User)
       @openid_identifier = mock_model(OpenidIdentifier)
-      @openid_identifier.stub!(:account).and_return(@account)
+      @openid_identifier.stub!(:user).and_return(@user)
     end
 
     describe "登録されているOpenID URLの場合" do
       before do
-        @account.should_receive(:code).and_return('100001')
+        @user.should_receive(:code).and_return('100001')
         @openid_identifier.should_receive(:destroy)
         OpenidIdentifier.should_receive(:find_by_url).with(@url).and_return(@openid_identifier)
         post :delete_ident_url, :ident_url => @url
@@ -116,7 +118,7 @@ describe MypageController do
 
     describe "他人に関連付けられているURLの場合" do
       before do
-        @account.should_receive(:code).and_return('222222')
+        @user.should_receive(:code).and_return('222222')
         @openid_identifier.should_not_receive(:destroy)
         OpenidIdentifier.should_receive(:find_by_url).with(@url).and_return(@openid_identifier)
         post :delete_ident_url, :ident_url => @url

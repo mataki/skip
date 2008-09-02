@@ -62,7 +62,9 @@ describe ApplicationController, '#prepare_session' do
   end
   describe 'プロフィール情報が登録されていない場合' do
     before do
-      controller.should_receive(:current_user).and_return(nil)
+      @user = mock_model(User)
+      @user.stub!(:active?).and_return(false)
+      controller.should_receive(:current_user).and_return(@user)
     end
     it 'platformにリダイレクトされること' do
       controller.should_receive(:redirect_to).with({:controller => '/platform', :error => 'no_profile'})
@@ -72,6 +74,7 @@ describe ApplicationController, '#prepare_session' do
   describe 'プロフィール情報が登録されている場合' do
     before do
       @user = mock_model(User)
+      @user.stub!(:active?).and_return(true)
       controller.should_receive(:current_user).and_return(@user)
     end
     it { controller.prepare_session.should be_true }
@@ -83,6 +86,7 @@ describe ApplicationController, '#require_admin' do
     before do
       @user = mock_model(User)
       @user.stub!(:admin).and_return(false)
+      @user.stub!(:active?).and_return(true)
       controller.should_receive(:current_user).and_return(@user)
       @url = '/'
       controller.stub!(:root_url).and_return(@url)

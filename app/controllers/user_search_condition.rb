@@ -1,6 +1,6 @@
 # SKIP(Social Knowledge & Innovation Platform)
 # Copyright (C) 2008 TIS Inc.
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -9,7 +9,7 @@
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-# 
+#
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -129,17 +129,20 @@ class UserSearchCondition < SearchCondition
       conditions_param << SkipUtil.to_like_query_string(value)
     end
     if @not_include_retired
-      conditions_state << " and users.retired = ?"
-      conditions_param << false
+      conditions_state << " and users.status = ?"
+      conditions_param << 'ACTIVE'
+    else
+      conditions_state << " and users.status in (?)"
+      conditions_param << ['ACTIVE', 'RETIRED']
     end
     if @employed_type
       case @employed_type
         when "1"
-        conditions_state << " and users.retired = ?"
-        conditions_param << false
+        conditions_state << " and users.status = ?"
+        conditions_param << 'ACTIVE'
         when "2"
-        conditions_state << " and users.retired = ?"
-        conditions_param << true
+        conditions_state << " and users.status = ?"
+        conditions_param << 'RETIRED'
       end
     end
     if @sort_type == "1"

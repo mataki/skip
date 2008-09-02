@@ -17,7 +17,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe OpenidIdentifier do
   before(:each) do
-    @openid_identifier = OpenidIdentifier.new({ :url => "http://hoge.example.com", :account_id => 1})
+    @openid_identifier = OpenidIdentifier.new({ :url => "http://hoge.example.com", :user_id => 1})
   end
 
   it "should be valid" do
@@ -28,7 +28,7 @@ end
 
 describe OpenidIdentifier, '#url' do
   before do
-    @openid_identifier = OpenidIdentifier.new({ :url => "http://hoge.example.com/", :account_id => 1})
+    @openid_identifier = OpenidIdentifier.new({ :url => "http://hoge.example.com/", :user_id => 1})
   end
 
   describe '不正な URL を指定した場合' do

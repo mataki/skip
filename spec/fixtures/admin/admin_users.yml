@@ -6,7 +6,7 @@ one:
   section: MyString
   extension: MyString
   introduction: MyText
-  retired: false
+  status: ACTIVE
   admin: false
 
 two:
@@ -15,5 +15,5 @@ two:
   section: MyString
   extension: MyString
   introduction: MyText
-  retired: false
+  status: ACTIVE
   admin: false

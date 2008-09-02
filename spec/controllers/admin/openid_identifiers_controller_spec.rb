@@ -26,9 +26,9 @@ describe Admin::OpenidIdentifiersController do
     @openid_identifiers.stub!(:to_xml).and_return("XML")
     @openid_identifiers.stub!(:find).and_return(@openid_identifier)
 
-    @account = mock_model(Admin::Account)
-    @account.stub!(:openid_identifiers).and_return(@openid_identifiers)
-    Admin::Account.stub!(:find).and_return(@account)
+    @user = mock_model(Admin::User)
+    @user.stub!(:openid_identifiers).and_return(@openid_identifiers)
+    Admin::User.stub!(:find).and_return(@user)
   end
   describe "handling GET /admin_openid_identifiers" do
 
@@ -224,7 +224,7 @@ describe Admin::OpenidIdentifiersController do
 
       it "should redirect to the new openid_identifier" do
         do_post
-        response.should redirect_to(admin_account_openid_identifier_url(@account, @openid_identifier))
+        response.should redirect_to(admin_user_openid_identifier_url(@user, @openid_identifier))
       end
 
     end
@@ -273,7 +273,7 @@ describe Admin::OpenidIdentifiersController do
 
       it "should redirect to the openid_identifier" do
         do_put
-        response.should redirect_to(admin_account_openid_identifier_url(@account, @openid_identifier))
+        response.should redirect_to(admin_user_openid_identifier_url(@user, @openid_identifier))
       end
 
     end
@@ -316,7 +316,7 @@ describe Admin::OpenidIdentifiersController do
 
     it "should redirect to the admin_openid_identifiers list" do
       do_delete
-      response.should redirect_to(admin_account_openid_identifiers_url(@account))
+      response.should redirect_to(admin_user_openid_identifiers_url(@user))
     end
   end
 end

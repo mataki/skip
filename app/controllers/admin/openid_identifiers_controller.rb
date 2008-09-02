@@ -19,10 +19,10 @@ class Admin::OpenidIdentifiersController < Admin::ApplicationController
 
   private
   def load_parent
-    @account ||= Admin::Account.find(params[:account_id])
+    @user ||= Admin::User.find(params[:user_id])
   end
 
   def url_prefix
-    'admin_account_'
+    'admin_user_'
   end
 end

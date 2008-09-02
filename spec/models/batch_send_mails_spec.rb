@@ -25,7 +25,7 @@ describe BatchSendMails, "Mailsテーブルに未送信メールがあるとき"
   describe BatchSendMails, "ユーザが退職しておらずエントリがある場合" do
     before(:each) do
       user = mock_model(User)
-      user.stub!(:retired).and_return(false)
+      user.stub!(:retired?).and_return(false)
       user.stub!(:name).and_return("hoge")
       User.should_receive(:find).and_return(user)
 
@@ -46,7 +46,7 @@ describe BatchSendMails, "Mailsテーブルに未送信メールがあるとき"
   describe BatchSendMails, "ユーザが退職している場合" do
     before(:each) do
       user = mock_model(User)
-      user.stub!(:retired).and_return(true)
+      user.stub!(:retired?).and_return(true)
       User.should_receive(:find).and_return(user)
 
       mail = mails(:a_mail)
@@ -62,7 +62,7 @@ describe BatchSendMails, "Mailsテーブルに未送信メールがあるとき"
   describe BatchSendMails, "エントリがない場合" do
     before(:each) do
       user = mock_model(User)
-      user.stub!(:retired).and_return(false)
+      user.stub!(:retired?).and_return(false)
       user.stub!(:name).and_return("hoge")
       User.should_receive(:find).and_return(user)
 

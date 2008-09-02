@@ -79,9 +79,9 @@ describe PlatformController, "ログイン時にOpenIdのアカウントが渡�
     before do
       result = OpenIdAuthentication::Result[:successful]
       controller.should_receive(:authenticate_with_open_id).and_yield(result, @identity_url, @registration)
-      @account = stub_model(Account, :code => "hogehoge", :name => "hogehoge", :email => "hoge@hoge.jp", :section => "hoge" )
+      @user = stub_model(User, :code => "hogehoge", :name => "hogehoge", :email => "hoge@hoge.jp", :section => "hoge" )
       @openid_identifier = stub_model(OpenidIdentifier, :url => @identity_url)
-      @openid_identifier.stub!(:account).and_return(@account)
+      @openid_identifier.stub!(:user).and_return(@user)
     end
 
     describe "ユーザが登録済みの場合" do
@@ -96,10 +96,10 @@ describe PlatformController, "ログイン時にOpenIdのアカウントが渡�
         end
 
         it "Sessionにユーザ情報が詰め込まれていること" do
-          session[:user_code].should == @account.code
-          session[:user_name].should == @account.name
-          session[:user_email].should == @account.email
-          session[:user_section].should == @account.section
+          session[:user_code].should == @user.code
+          session[:user_name].should == @user.name
+          session[:user_email].should == @user.email
+          session[:user_section].should == @user.section
         end
 
         it 'SSO の sid がクッキーに設定されていること' do
@@ -120,24 +120,24 @@ describe PlatformController, "ログイン時にOpenIdのアカウントが渡�
       end
     end
 
-    describe "Accountが登録されていない場合" do
+    describe "Userが登録されていない場合" do
       before do
         OpenidIdentifier.should_receive(:find_by_url).and_return(nil)
       end
-      describe "新規Accountが作成可能な設定の場合" do
+      describe "新規Userが作成可能な設定の場合" do
         before do
           ENV['SKIPOP_URL'] = 'http://op.example.com/'
-          @account = stub_model(Account)
+          @user = stub_model(User)
         end
         describe "作成が成功する場合" do
           before do
-            @account.should_receive(:valid?).and_return(true)
-            Account.should_receive(:create_with_identity_url).with(@identity_url, { :code => @identity_url.split("/").last, :name => 'ほげ ふが', :section => '経理', :email => 'hoge@hoge.jp' }).and_return(@account)
+            @user.should_receive(:valid?).and_return(true)
+            User.should_receive(:create_with_identity_url).with(@identity_url, { :code => @identity_url.split("/").last, :name => 'ほげ ふが', :section => '経理', :email => 'hoge@hoge.jp' }).and_return(@user)
             post :login, :openid_url => @identity_url
           end
-          it "Accountを新規作成すること" do
+          it "Userを新規作成すること" do
           end
-          it "Accountにidentity_urlから抽出されたcodeが渡されること" do
+          it "Userにidentity_urlから抽出されたcodeが渡されること" do
           end
           it "ユーザ登録が面へ遷移すること" do
             response.should redirect_to(:controller => :portal)
@@ -145,8 +145,8 @@ describe PlatformController, "ログイン時にOpenIdのアカウントが渡�
         end
         describe "作成が失敗する場合" do
           before do
-            @account.should_receive(:valid?).and_return(false)
-            Account.should_receive(:create_with_identity_url).and_return(@account)
+            @user.should_receive(:valid?).and_return(false)
+            User.should_receive(:create_with_identity_url).and_return(@user)
             post :login, :openid_url => @identity_url
           end
           it { response.should redirect_to(:controller => :platform, :action => :index) }
