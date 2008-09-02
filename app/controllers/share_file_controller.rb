@@ -57,7 +57,7 @@ class ShareFileController < ApplicationController
         target_symbols.each do |target_symbol|
           @share_file.share_file_publications.create(:symbol => target_symbol)
         end
-        upload_file file, @share_file
+        upload_file file, @share_file.full_path
       else
         error_message = @share_file.file_name
 
@@ -229,18 +229,8 @@ class ShareFileController < ApplicationController
 
 private
 
-  def upload_file src_file, share_file
-    dir_hash = { 'uid' => 'user',
-                 'gid' => 'group' }
-
-    symbol_type = share_file.owner_symbol.split(":").first
-    symbol_id = share_file.owner_symbol.split(":").last
-
-    target_dir_path =File.join(ENV['SHARE_FILE_PATH'], dir_hash[symbol_type], symbol_id)
-    FileUtils.mkdir_p target_dir_path
-
-    target_file_name = File.join(target_dir_path, share_file.file_name)
-    open(target_file_name, "w+b") do |f|
+  def upload_file src_file, target_full_path
+    open(target_full_path, "w+b") do |f|
       f.write(src_file.read)
     end
   end

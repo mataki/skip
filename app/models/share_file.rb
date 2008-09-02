@@ -49,6 +49,10 @@ class ShareFile < ActiveRecord::Base
     Tag.create_by_string category, share_file_tags
   end
 
+  def after_destroy
+    File.delete(self.full_path)
+  end
+
   def owner_symbol_type
     symbol_type = owner_symbol.split(':').first
     { 'uid' => 'user', 'gid' => 'group' }[symbol_type]
@@ -240,6 +244,18 @@ class ShareFile < ActiveRecord::Base
 
   def comma_category
     Tag.comma_tags(self.category)
+  end
+
+  def full_path
+    dir_hash = { 'uid' => 'user',
+                 'gid' => 'group' }
+
+    symbol_type = self.owner_symbol.split(":").first
+    symbol_id = self.owner_symbol.split(":").last
+
+    target_dir_path = File.join(ENV['SHARE_FILE_PATH'], dir_hash[symbol_type], symbol_id)
+    FileUtils.mkdir_p target_dir_path
+    File.join(target_dir_path, self.file_name)
   end
 
 private

@@ -40,3 +40,33 @@ fixtures :share_files
     assert_equal @a_share_file.share_file_tags.size, 3
   end
 end
+
+describe ShareFile, '#full_path' do
+  before do
+    @share_file_path = 'temp'
+    ENV.stub!('[]').with('SHARE_FILE_PATH').and_return(@share_file_path)
+    FileUtils.stub!(:mkdir_p)
+  end
+  describe 'ユーザ所有の共有ファイルの場合' do
+    it 'full_pathが取得できること' do
+      symbol_type = 'uid'
+      symbol_id = '111111'
+      file_name = 'sample.csv'
+      share_file = create_share_file(:file_name => file_name, :owner_symbol => "#{symbol_type}:#{symbol_id}")
+      share_file.full_path.should == File.join(@share_file_path, 'user', symbol_id, file_name)
+    end
+  end
+end
+
+private
+def create_share_file options = {}
+  share_file = ShareFile.new({
+    :file_name => 'sample.csv',
+    :content_type => 'text/csv',
+    :date => Time.now,
+    :user_id => 1,
+    :owner_symbol => 'uid:111111'
+  }.merge(options))
+  share_file.save
+  share_file
+end

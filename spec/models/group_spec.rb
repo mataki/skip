@@ -130,6 +130,7 @@ describe "Group#after_destroy グループに掲示板と共有ファイルが�
 
     @share_file.owner_symbol = @group.symbol
     @share_file.save!
+    File.stub!(:delete)
   end
 
   it { lambda { @group.destroy }.should change(BoardEntry, :count).by(-1) }
