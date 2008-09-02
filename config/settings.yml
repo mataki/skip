@@ -30,8 +30,6 @@ initial_anntena:
   default: SKIPチーム                                      # 初期登録されるアンテナの名称
 login_account:
   default: ログインID                                      # ログインアカウントの名称
-login_password:
-  default: パスワード                                      # パスワード
 login_account_example:                                     # ログインアカウントのパスワードのサンプル
   default:
 header_logo_url:                                           # ヘッダロゴに表示する画像のURL
