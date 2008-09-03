@@ -115,9 +115,7 @@ def create_ranking(options = {})
 end
 
 def create_user options = {}
-  user = User.new({ :name => 'ほげ ほげ', :email => 'hoge@hoge.com', :section => 'section',
-                    :extension => '000000', :introduction => '自己紹介文',
-                    :password => 'password', :password_confirmation => 'password'}.merge(options))
+  user = User.new({ :name => 'ほげ ほげ', :password => 'password', :password_confirmation => 'password'}.merge(options))
   user.save
   user
 end

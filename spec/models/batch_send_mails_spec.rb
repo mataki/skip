@@ -17,8 +17,8 @@ require File.dirname(__FILE__) + '/../spec_helper'
 require File.dirname(__FILE__) + '/../../lib/batch_make_user_readings'
 
 describe BatchSendMails, "Mailsテーブルに未送信メールがあるとき" do
-    fixtures :mails
     before(:each) do
+      @mail = stub_model(Mail)
       ActionMailer::Base.deliveries.clear
     end
 
@@ -34,8 +34,7 @@ describe BatchSendMails, "Mailsテーブルに未送信メールがあるとき"
       board_entry.stub!(:title).and_return("hoge")
       BoardEntry.should_receive(:find).and_return(board_entry)
 
-      mail = mails(:a_mail)
-      Mail.should_receive(:find).and_return([mail])
+      Mail.should_receive(:find).and_return([@mail])
     end
     it "メールが送信される" do
       BatchSendMails.send_notice
@@ -49,9 +48,8 @@ describe BatchSendMails, "Mailsテーブルに未送信メールがあるとき"
       user.stub!(:retired?).and_return(true)
       User.should_receive(:find).and_return(user)
 
-      mail = mails(:a_mail)
-      mail.should_receive(:update_attribute).with(:send_flag,true)
-      Mail.should_receive(:find).and_return([mail])
+      @mail.should_receive(:update_attribute).with(:send_flag,true)
+      Mail.should_receive(:find).and_return([@mail])
     end
     it "レコードが送信済みとなり、メールが送信されない" do
       BatchSendMails.send_notice
@@ -68,8 +66,7 @@ describe BatchSendMails, "Mailsテーブルに未送信メールがあるとき"
 
       BoardEntry.should_receive(:find).and_return(nil)
 
-      mail = mails(:a_mail)
-      Mail.should_receive(:find).and_return([mail])
+      Mail.should_receive(:find).and_return([@mail])
     end
     it "メールが送信されない" do
       BatchSendMails.send_notice

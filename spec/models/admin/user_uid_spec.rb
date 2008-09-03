@@ -45,7 +45,7 @@ describe Admin::UserUid do
 end
 
 def create_items_expect_change
-  @u = User.create!({:name => 'hoge', :extension => '11111', :email => 'hoge@hoge.com', :section => "hoge", :introduction => "abcdefg uid:hoge", :password => 'password', :password_confirmation => 'password'})
+  @u = User.create!({:name => 'hoge', :password => 'password', :password_confirmation => 'password'})
   @u.user_uids.create({:uid => 'hoge'})
   @u.create_user_profile({:introduction => "uid:hoge"})
   @b = BoardEntry.create!({:title => "hoge", :contents => 'hoge', :date => Date.today, :entry_type => 'DIARY', :symbol => 'uid:hoge', :publication_symbols_value => 'uid:hoge', :contents => "geafdsaf uid:hoge fdsaf", :user_id => @u, :last_updated => Date.today})

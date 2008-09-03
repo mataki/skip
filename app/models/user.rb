@@ -30,10 +30,6 @@ class User < ActiveRecord::Base
 
   has_many :openid_identifiers
 
-  validates_presence_of :email, :message => 'は必須です'
-  validates_length_of :email, :maximum => 50, :message => 'は50桁以内で入力してください'
-  validates_format_of :email, :message => 'は正しい形式で登録してください', :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/
-
   validates_presence_of :name, :message => 'は必須です'
   validates_length_of :name, :maximum => 60, :message => 'は60桁以内で入力してください'
 

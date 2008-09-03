@@ -15,24 +15,6 @@
 
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe User, "do not have attributes" do
-  before(:each) do
-    @user = User.new
-  end
-
-  it "should be valid" do
-    @user.should_not be_valid
-  end
-
-  it "set errors to email" do
-    @user.should have(2).errors_on(:email)
-  end
-
-  it "set errors to name" do
-    @user.should have(1).errors_on(:name)
-  end
-end
-
 describe User," is a_user" do
   fixtures :users, :user_accesses, :user_uids
   before(:each) do
@@ -87,7 +69,7 @@ end
 describe User, ".create_with_identity_url" do
   before do
     @identity_url = "http://test.com/identity"
-    @params = { :code => 'hoge', :email => 'hoge@hoge.jp', :name => "ほげ ふが" }
+    @params = { :code => 'hoge', :name => "ほげ ふが" }
     lambda do
       @user = User.create_with_identity_url(@identity_url, @params)
     end.should change(User, :count).by(1)
@@ -151,7 +133,5 @@ describe User, ".find_by_code" do
 end
 
 def new_user options = {}
-  User.new({ :name => 'ほげ ほげ', :email => 'hoge@hoge.com', :section => 'section',
-             :extension => '000000', :introduction => '自己紹介文',
-             :password => 'password', :password_confirmation => 'password'}.merge(options))
+  User.new({ :name => 'ほげ ほげ', :password => 'password', :password_confirmation => 'password'}.merge(options))
 end

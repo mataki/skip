@@ -41,8 +41,8 @@ describe PortalController, 'POST /apply' do
 
       controller.stub!(:current_user).and_return(@user)
 
-      post :apply, { "user"=> {"extension"=>"000000", "introduction"=>"00000", "section"=>"開発"},
-        "profile"=>{"birth_month"=>"1", "join_year"=>"2008", "blood_type"=>"1", "address_1"=>"1", "alma_mater"=>"非公開", "birth_day"=>"1", "gender_type"=>"1", "address_2"=>"非公開", "introduction"=>"", "hometown"=>"1"},
+      post :apply, { "user"=> {},
+        "profile"=>{"email"=>"example@skip.org", "extension"=>"000000", "introduction"=>"00000", "section"=>"開発", "birth_month"=>"1", "join_year"=>"2008", "blood_type"=>"1", "address_1"=>"1", "alma_mater"=>"非公開", "birth_day"=>"1", "gender_type"=>"1", "address_2"=>"非公開", "introduction"=>"", "hometown"=>"1"},
         "user_uid"=>{"uid"=>"hogehoge"},
         "new_address_2"=>"", "write_profile"=>"true", "new_section"=>"", "new_alma_mater"=>"" }
     end

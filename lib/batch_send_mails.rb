@@ -64,7 +64,6 @@ class BatchSendMails < BatchBase
       end
     end
   end
-
 end
 
 BatchSendMails.execution

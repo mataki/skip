@@ -119,12 +119,13 @@ class PlatformController < ApplicationController
         reset_session
 
         user = identifier.user
-        %w(code name email section).each do |c|
-          session["user_#{c}".to_sym] = user.send(c)
-        end
+        session[:user_code] = user.code
+        session[:user_name] = user.name
+        session[:user_email] = user.user_profile.email
+        session[:user_section] = user.user_profile.section
 
         # TODO 他のアプリケーションと一緒に以前のSSOの機構を外す(OpenID化できたら)
-        set_sso_cookie_from(user.attributes.with_indifferent_access.slice(:name, :email, :section).merge(:code => user.code))
+        set_sso_cookie_from({"code" => session[:user_code], "name" => session[:user_name], "email" => session[:user_email], "section" => session[:user_section]})
         redirect_to_back_or_root
       else
         set_error_message_form_result_and_redirect(result)

@@ -19,7 +19,7 @@ class Admin::UserUid < UserUid
 
   def after_save
     ActiveRecord::Base.connection.execute("update board_entries set symbol = 'uid:#{uid}' where symbol = 'uid:#{uid_was}'")
-    ActiveRecord::Base.connection.execute("update users set introduction = replace(introduction, 'uid:#{uid_was}', 'uid:#{uid}') where introduction like '%uid:#{uid_was}%'")
+    ActiveRecord::Base.connection.execute("update user_profiles set self_introduction = replace(self_introduction, 'uid:#{uid_was}', 'uid:#{uid}') where self_introduction like '%uid:#{uid_was}%'")
     ActiveRecord::Base.connection.execute("update user_profiles set introduction = replace(introduction, 'uid:#{uid_was}', 'uid:#{uid}') where introduction like '%uid:#{uid_was}%'")
     ActiveRecord::Base.connection.execute("update board_entries set symbol = 'uid:#{uid}' where symbol = 'uid:#{uid_was}'")
     ActiveRecord::Base.connection.execute("update board_entries set publication_symbols_value = replace(publication_symbols_value, 'uid:#{uid_was}', 'uid:#{uid}') where publication_symbols_value like '%uid:#{uid_was}%'")

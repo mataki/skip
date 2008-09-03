@@ -16,39 +16,4 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe UserProfile do
-  before(:each) do
-    @user_profile = UserProfile.new(:user_id=>"1",:alma_mater=>"shussinkou",:address_2=>"address02")
-  end
-
-  it "too long alma_mater is NG" do
-    @user_profile.alma_mater = "abcdefghijklmnopqrstu"
-    @user_profile.should_not be_valid
-  end
-
-  it "too long address_2 is NG" do
-    @user_profile.address_2 = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvw"
-    @user_profile.should_not be_valid
-  end
-
-  it "longest alma_mater is OK" do
-    @user_profile.alma_mater = "abcdefghijklmnopqrs"
-    @user_profile.should be_valid
-  end
-
-  it "longest address_2 is OK" do
-    @user_profile.address_2 = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuv"
-    @user_profile.should be_valid
-  end
-end
-
-describe UserProfile, '#profile' do
-  it '正常に処理が行われること'
-end
-
-describe UserProfile, '#update_profile' do
-  it '正常に処理が行われること'
-end
-
-describe UserProfile, '#has_profile?' do
-  it '正常に処理が行われること'
 end

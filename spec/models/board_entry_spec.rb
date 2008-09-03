@@ -112,7 +112,7 @@ describe "BoardEntry.get_popular_tag_words で複数タグが見つかったと�
 end
 
 describe BoardEntry do
-  fixtures :board_entries, :groups, :users, :mails, :tags, :user_uids
+  fixtures :board_entries, :groups, :users, :mails, :tags, :user_uids, :user_profiles
 
   def test_validate_category
     # カテゴリに+,/,-,_,.以外の記号を含む場合 => validationにひっかかる
@@ -165,7 +165,7 @@ describe BoardEntry do
     entry.prepare_send_mail
     mails = Mail.find(:all)
     assert_equal 1, mails.size
-    assert_equal @a_group_owned_user.email, mails.first.to_address
+    assert_equal @a_group_owned_user.user_profile.email, mails.first.to_address
 
     Mail.delete_all
     # 複数ユーザに対する連絡
@@ -174,8 +174,8 @@ describe BoardEntry do
     mails, mail_address = get_mails
 
     assert_equal 2, mails.size
-    assert_not_nil mail_address.index(@a_group_owned_user.email)
-    assert_not_nil mail_address.index(@a_group_joined_user.email)
+    assert_not_nil mail_address.index(@a_group_owned_user.user_profile.email)
+    assert_not_nil mail_address.index(@a_group_joined_user.user_profile.email)
     Mail.delete_all
 
   end

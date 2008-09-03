@@ -22,8 +22,17 @@ class UserProfile < ActiveRecord::Base
   include Types::Blood
   include Types::Hobby
 
-  validates_length_of :alma_mater, :maximum=>20, :message =>'は20文字以内で入力してください'
-  validates_length_of :address_2,  :maximum=>100, :message =>'は100文字以内で入力してください'
+  belongs_to :user
+
+  validates_presence_of :email, :message => 'は必須です'
+  validates_length_of :email, :maximum => 50, :message => 'は50桁以内で入力してください'
+  validates_format_of :email, :message => 'は正しい形式で登録してください', :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/
+
+  validates_length_of :alma_mater, :maximum=>20, :message =>'は20文字以内で入力してください', :allow_nil => true
+
+  validates_length_of :address_2,  :maximum=>100, :message =>'は100文字以内で入力してください', :allow_nil => true
+
+  validates_presence_of :disclosure, :message => 'は必須です'
 
   class << self
     HUMANIZED_ATTRIBUTE_KEY_NAMES = {

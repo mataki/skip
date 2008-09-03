@@ -79,7 +79,9 @@ describe PlatformController, "ログイン時にOpenIdのアカウントが渡�
     before do
       result = OpenIdAuthentication::Result[:successful]
       controller.should_receive(:authenticate_with_open_id).and_yield(result, @identity_url, @registration)
-      @user = stub_model(User, :code => "hogehoge", :name => "hogehoge", :email => "hoge@hoge.jp", :section => "hoge" )
+      @user = stub_model(User, :code => "hogehoge", :name => "hogehoge")
+      user_profile = stub_model(UserProfile, :email => 'hoge@hoge.jp', :section => '')
+      @user.stub!(:user_profile).and_return(user_profile)
       @openid_identifier = stub_model(OpenidIdentifier, :url => @identity_url)
       @openid_identifier.stub!(:user).and_return(@user)
     end
@@ -98,8 +100,8 @@ describe PlatformController, "ログイン時にOpenIdのアカウントが渡�
         it "Sessionにユーザ情報が詰め込まれていること" do
           session[:user_code].should == @user.code
           session[:user_name].should == @user.name
-          session[:user_email].should == @user.email
-          session[:user_section].should == @user.section
+          session[:user_email].should == @user.user_profile.email
+          session[:user_section].should == @user.user_profile.section
         end
 
         it 'SSO の sid がクッキーに設定されていること' do

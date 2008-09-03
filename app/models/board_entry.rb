@@ -468,7 +468,7 @@ class BoardEntry < ActiveRecord::Base
       when "uid"
         user = User.find_by_uid(symbol)
         if user
-          to_address = user.email
+          to_address = user.user_profile.email
           to_address_name = user.name
           to_address_symbol = user.symbol
         end
