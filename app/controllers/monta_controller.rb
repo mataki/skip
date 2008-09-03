@@ -15,6 +15,8 @@
 
 class MontaController < ApplicationController
 
+  protect_from_forgery :except => [:execute,:ado_view_contents] 
+
   def execute_monta
     unless check_entry_permission
       render :text => "不正な操作です"
