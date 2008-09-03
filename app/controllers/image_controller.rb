@@ -17,7 +17,7 @@ class ImageController < ApplicationController
 
   def show
     content, user_id, file_path = params[:path]
-    unless check_and_authorize_path? content, user_id, file_path
+    unless valid_params_and_authorize? content, user_id, file_path
       render :nothing => true
       return false 
     end
@@ -29,7 +29,7 @@ class ImageController < ApplicationController
   end
 
   private
-  def check_and_authorize_path? content, user_id, file_path 
+  def valid_params_and_authorize? content, user_id, file_path 
     # ver.0.9時点では、pathは、"/board_entries/#{user_id}/#{entry_id}_ファイル名"で構成
     if content == 'board_entries' && /\d*/ =~ user_id
       if entry_id = file_path.scan(/^(\d*)_[^\/]*\.\w*/)
