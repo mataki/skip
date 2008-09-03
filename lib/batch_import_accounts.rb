@@ -20,10 +20,13 @@ class BatchImportAccounts < BatchBase
   csv = CSV.readlines('accounts.csv', "\n")
   csv.each do |line|
     begin
-      Account.create!( :code => line[0], :name => line[1],
-                       :section => line[2], :email => line[3],
-                       :password => line[4], :password_confirmation => line[4] )
-    rescue ActiveRecord::RecordInvalid
+      User.transaction do
+        user = User.new( :name => line[1], :section => line[2], :email => line[3],
+                         :password => line[4], :password_confirmation => line[4], :status => 'UNUSED' )
+        user.user_uids << UserUid.new( :uid => line[0], :uid_type => 'MASTER' )
+        user.save!
+      end
+    rescue ActiveRecord::RecordInvalid => e
       puts "#{line[0]} - #{line[1]}は既に登録されているか、重複項目があるため登録されませんでした"
     end
   end
