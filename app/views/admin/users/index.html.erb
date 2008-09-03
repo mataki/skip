@@ -6,7 +6,7 @@
   <%= render :partial => '/admin/search_box' %>
   <%= render :partial => '/admin/shared/sortable_table',
              :locals => {
-               :columns => %w[email name section extension status admin],
+               :columns => %w[name status admin],
                :objects => @users,
                :class_name => 'Admin::User',
                :link_elem => [['Show','admin_user_path(object)'], ['Edit','edit_admin_user_path(object)'], ['Destroy','admin_user_path(object)',{:confirm => _('Are you sure?'), :method => :delete}]]

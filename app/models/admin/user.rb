@@ -16,15 +16,11 @@
 class Admin::User < User
   has_many :user_uids, :dependent => :destroy, :class_name => 'Admin::UserUid'
 
-  N_('Admin::User|Email')
   N_('Admin::User|Name')
-  N_('Admin::User|Section')
-  N_('Admin::User|Extension')
-  N_('Admin::User|Introduction')
   N_('Admin::User|Retired')
   N_('Admin::User|Admin')
 
   def self.search_colomns
-    "name like :lqs or email like :lqs or section like :lqs or extension like :lqs or introduction like :lqs"
+    "name like :lqs"
   end
 end
