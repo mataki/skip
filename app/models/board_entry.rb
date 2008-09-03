@@ -127,17 +127,20 @@ class BoardEntry < ActiveRecord::Base
 
     # 種別
     if entry_type = options[:entry_type]
-      conditions_state << " and board_entries.entry_type='#{entry_type}'"
+      conditions_state << " and board_entries.entry_type= ? "
+      conditions_param << entry_type 
     end
 
     # 除外種別
     if entry_type = options[:exclude_entry_type]
-      conditions_state << " and board_entries.entry_type<>'#{entry_type}'"
+      conditions_state << " and board_entries.entry_type <> ? "
+      conditions_param << entry_type 
     end
 
     # 公開範囲
     if publication_type = options[:publication_type]
-      conditions_state << " and board_entries.publication_type='#{publication_type}'"
+      conditions_state << " and board_entries.publication_type= ? "
+      conditions_param << publication_type 
     end
 
     # 所有者条件
