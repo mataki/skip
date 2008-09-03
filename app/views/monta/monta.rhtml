@@ -13,7 +13,7 @@
 <% url_first_page = url_for(:controller=>'monta', :action=>'ado_view_contents', :id=>@board_entry.id, :index=>0) %>
 <body style="height:100%" onClick="go_next()" onLoad="new Ajax.Updater('view_contents', '<%= url_first_page %>', {asynchronous:true, evalScripts:true});
   return false;">
-  <div class="my_header"><%= @board_entry.title %></div>
+  <div class="my_header"><%= h @board_entry.title %></div>
   <div id="view_contents"></div>
 </body>
 

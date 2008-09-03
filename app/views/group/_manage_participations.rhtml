@@ -42,8 +42,8 @@
         <%= check_box(:participation, :owned, :class => 'toggle_owned', :id => "toggle_owned_checkbox_#{@participation.id}") %>
       <% end -%>
     </td>
-    <td class="line_<%= even_or_odd -%>"><%= @participation.user.name -%></td>
-    <td class="line_<%= even_or_odd -%>"><%= @participation.user.code -%></td>
+    <td class="line_<%= even_or_odd -%>"><%= h @participation.user.name -%></td>
+    <td class="line_<%= even_or_odd -%>"><%= h @participation.user.code -%></td>
     <td align="center" class="line_<%= even_or_odd -%>">
       <% unless session[:user_id] == @participation.user_id -%>
       <%= link_to "[強制退会させる]",

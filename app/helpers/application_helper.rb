@@ -292,12 +292,12 @@ private
 
     if bookmark.is_type_page?
       url =  relative_url_root + url
-      return "<a href=#{url} title='#{title}'>#{icon_tag('report_link')} #{h(name)}</a>"
+      return "<a href=#{url} title='#{h(title)}'>#{icon_tag('report_link')} #{h(name)}</a>"
     elsif bookmark.is_type_user?
       url =  relative_url_root + url
-      return "<a href=#{url} title='#{title}'>#{icon_tag('user')} #{h(name)}</a>"
+      return "<a href=#{url} title='#{h(title)}'>#{icon_tag('user')} #{h(name)}</a>"
     else
-      return "<a href=#{url} title='#{title}'>#{icon_tag('world_link')} #{h(truncate(name, 115))}</a>"
+      return "<a href=#{url} title='#{h(title)}'>#{icon_tag('world_link')} #{h(truncate(name, 115))}</a>"
     end
   end
 

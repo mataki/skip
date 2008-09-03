@@ -4,7 +4,7 @@
 -%>
 
 <div class="box_space">
-  <div class="box_space_title"><%= user.name %><span class="small">さん</span></div>
+  <div class="box_space_title"><%= h user.name %><span class="small">さん</span></div>
   <div class="box_space_img_body"><%= showPicture(user, 120, 80, true) %></div>
   <div class="box_space_bottom">
   <% if session[:user_id] == user.id -%>

@@ -1,5 +1,5 @@
 
-<div class="desc"><%= @user.name -%>さんをみんなに紹介しましょう！</div>
+<div class="desc"><%= h @user.name -%>さんをみんなに紹介しましょう！</div>
 
 <%= render(:partial => "users/user", :object => @user) %>
 

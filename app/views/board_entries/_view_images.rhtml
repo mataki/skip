@@ -1,7 +1,7 @@
 <% img_urls.each_with_index do |(img_name, img_url), index| %>
 
   <div id="image_<%= index -%>" style="float:left; border: solid 1px silver; margin: 2px;">
-  <div id="image_name_<%= index -%>" class="image_name"><%= img_name %></div>
+  <div id="image_name_<%= index -%>" class="image_name"><%= h img_name %></div>
   <div align="center">
   <% file_ext = img_name.downcase.split(".").last %>
   <% if ["flv", "swf"].include?(file_ext) %>

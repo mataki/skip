@@ -41,8 +41,8 @@
   <% @participations.each do |@participation| %>
     <tr>
       <td align="center"><%= check_box("participation_state", @participation.id, {}, true, false) %></td>
-      <td><%= @participation.user.name %></td>
-      <td><%= @participation.user.code %></td>
+      <td><%= h @participation.user.name %></td>
+      <td><%= h @participation.user.code %></td>
     </tr>
   <% end %>
 </table>
