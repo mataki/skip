@@ -31,26 +31,30 @@ end
 
 describe PortalController, 'POST /apply' do
   before do
-    unused_user_login
+    @user = unused_user_login
+    controller.stub!(:make_profile).and_return(@user.user_profile)
   end
   describe '正常に動作する場合' do
-    before do
-      user = create_user({ :status => 'UNUSED' })
-      @user = User.find_by_id(user.id)
-      @user.should_receive(:status=).with('ACTIVE')
+    describe '新しい部署が入力されている場合' do
+      before do
+        @user.should_receive(:status=).with('ACTIVE')
+        @user.user_profile.should_receive(:save!)
+        @user.should_receive(:save!)
 
-      controller.stub!(:current_user).and_return(@user)
+        controller.stub!(:current_user).and_return(@user)
 
-      post :apply, { "user"=> {},
-        "profile"=>{"email"=>"example@skip.org", "extension"=>"000000", "introduction"=>"00000", "section"=>"開発", "birth_month"=>"1", "join_year"=>"2008", "blood_type"=>"1", "address_1"=>"1", "alma_mater"=>"非公開", "birth_day"=>"1", "gender_type"=>"1", "address_2"=>"非公開", "introduction"=>"", "hometown"=>"1"},
-        "user_uid"=>{"uid"=>"hogehoge"},
-        "new_address_2"=>"", "write_profile"=>"true", "new_section"=>"", "new_alma_mater"=>"" }
+        post :apply, {"profile"=>{"email"=>"example@skip.org", "extension"=>"000000", "introduction"=>"00000", "section"=>"開発", "birth_month"=>"1", "join_year"=>"2008", "blood_type"=>"1", "address_1"=>"1", "alma_mater"=>"非公開", "birth_day"=>"1", "gender_type"=>"1", "address_2"=>"非公開", "introduction"=>"", "hometown"=>"1"},
+          "user_uid"=>{"uid"=>"hogehoge"},
+          "new_address_2"=>"", "write_profile"=>"true", "new_section"=>"営業", "new_alma_mater"=>"" }
+      end
+
+      it { response.should be_redirect }
+      it { assigns[:user].should_not be_nil }
+      it { assigns[:profile].should_not be_nil }
+      it { assigns[:user_uid].should_not be_nil }
     end
-
-    it { response.should be_redirect }
-    it { assigns[:user].should_not be_nil }
-    it { assigns[:profile].should_not be_nil }
-    it { assigns[:user_uid].should_not be_nil }
+    describe '新しい部署が入力されていない場合' do
+    end
   end
 
   describe 'Userの保存に失敗する場合' do
@@ -60,13 +64,24 @@ end
 
 describe PortalController, '#make_profile' do
   before do
-    unused_user_login
+    @user = unused_user_login
+    @profile = stub_model(UserProfile)
+    @user.stub!(:user_profile).and_return(@profile)
     @portal_controller = PortalController.new
-    @params = {:new_alma_mater => '', :new_address_2 => '', :profile => {}}
+    @portal_controller.stub!(:current_user).and_return(@user)
+    @params = {:new_alma_mater => '', :new_address_2 => '', :new_section => '', :profile => {}}
     @portal_controller.stub!(:params).and_return(@params)
-    @profile = mock_model(UserProfile)
-    @profile.stub!('hobby=')
-    @profile.stub!('disclosure=')
+  end
+  describe 'new_sectionが空じゃない場合' do
+    before do
+      @new_section = 'new_section'
+      @params = @params.merge!({:new_section => @new_section})
+      @portal_controller.stub!(:params).and_return(@params)
+    end
+    it 'profileのsectionに値が設定されること' do
+      @params[:profile].should_receive('[]=').with(:section, @new_section.upcase)
+      @portal_controller.send('make_profile')
+    end
   end
   describe 'new_alma_materが空じゃない場合' do
     before do
@@ -95,13 +110,19 @@ describe PortalController, '#make_profile' do
       @params = @params.merge({:write_profile => '1'})
       @portal_controller.stub!(:params).and_return(@params)
     end
-    it 'UserProfileがparamsのprofileを元に作成されること' do
-      UserProfile.should_receive(:new).with(@params[:profile]).and_return(@profile)
+    it '必須項目が設定されること' do
+      @profile.should_receive('section=')
+      @profile.should_receive('extension=')
+      @profile.should_receive('self_introduction=')
+      @portal_controller.send('make_profile')
+    end
+    it 'UserProfileがparamsのprofileで上書きされること' do
+      @profile.should_receive('attributes=').with(@params[:profile])
+      @user.should_receive(:user_profile).and_return(@profile)
       @portal_controller.send('make_profile')
     end
     it 'UserProfileのdisclosureにtrueが設定されること' do
       @profile.should_receive('disclosure=').with(true)
-      UserProfile.should_receive(:new).with(@params[:profile]).and_return(@profile)
       @portal_controller.send('make_profile')
     end
   end
@@ -110,13 +131,13 @@ describe PortalController, '#make_profile' do
       @params = @params.merge({:write_profile => nil})
       @portal_controller.stub!(:params).and_return(@params)
     end
-    it 'UserProfileが作成されること' do
-      UserProfile.should_receive(:new).and_return(@profile)
+    it 'UserProfileがparamsのprofileで上書きされないこと' do
+      @profile.should_not_receive('attributes=')
+      @user.should_receive(:user_profile).and_return(@profile)
       @portal_controller.send('make_profile')
     end
     it 'UserProfileのdisclosureにfalseが設定されること' do
       @profile.should_receive('disclosure=').with(false)
-      UserProfile.should_receive(:new).and_return(@profile)
       @portal_controller.send('make_profile')
     end
   end
@@ -128,7 +149,6 @@ describe PortalController, '#make_profile' do
     end
     it 'profileのhobbyに設定されること' do
       @profile.should_receive('hobby=').twice
-      UserProfile.should_receive(:new).and_return(@profile)
       @portal_controller.send('make_profile')
     end
   end
@@ -138,9 +158,13 @@ def unused_user_login
   session[:user_code] = '111111'
   session[:prepared] = true
   u = stub_model(User)
+  up = stub_model(UserProfile)
   u.stub!(:admin).and_return(false)
   u.stub!(:active?).and_return(false)
   u.stub!(:unused?).and_return(true)
+  u.stub!(:name).and_return('未登録ユーザ')
+  u.stub!(:crypted_password).and_return('123456789')
+  u.stub!(:user_profile).and_return(up)
   if defined? controller
     controller.stub!(:current_user).and_return(u)
   else

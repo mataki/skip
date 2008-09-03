@@ -32,7 +32,7 @@
   <% recent_users.each do |user| -%>
     <div class="item_line" style="margin-bottom: 1px; border-bottom: 1px dashed #d0e0ff;">
       <div class="item_name"><%= item_link_to user %></div>
-      <div class="item_desc" style="font-size: 10px; margin-left: 4px; color: gray;"><%=h user.introduction %></div>
+      <div class="item_desc" style="font-size: 10px; margin-left: 4px; color: gray;"><%=h user.user_profile.self_introduction %></div>
     </div>
   <% end -%>
   </div>

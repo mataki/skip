@@ -82,7 +82,7 @@ module GroupHelper
         when "name"
           user_link_to user
         when "email"
-          %(<a href="mailto:#{user.email}">#{user.email}</a>)
+          %(<a href="mailto:#{user.user_profile.email}">#{user.user_profile.email}</a>)
         else
           h(user.send(column))
         end

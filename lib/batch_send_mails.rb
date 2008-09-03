@@ -54,7 +54,7 @@ class BatchSendMails < BatchBase
         link_url = "#{ENV['SKIP_URL']}#{message.link_url}"
         message_manage_url = "#{ENV['SKIP_URL']}/mypage/manage?menu=manage_message"
         begin
-          UserMailer.deliver_sent_message(user.email, link_url, message.message, message_manage_url)
+          UserMailer.deliver_sent_message(user.user_profile.email, link_url, message.message, message_manage_url)
           message.update_attribute :send_flag, true
         rescue
           log_error "failed send message [id]:" + message.id.to_s + " " + $!

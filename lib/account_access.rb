@@ -20,7 +20,7 @@ class AccountAccess
 
   def self.auth(user_code, password)
     if user = User.auth(user_code, password)
-      return { 'code' => user.code, 'name' => user.name, 'email' => user.user_profie.email, 'section' => user.user_profie.section}
+      return { 'code' => user.code, 'name' => user.name, 'email' => user.user_profile.email, 'section' => user.user_profile.section}
     end
     raise AccountAccessException.new({ "message" => "ログインに失敗しました。", "detail" => "下部に記載されているお問い合わせ先にご連絡下さい。"})
   end

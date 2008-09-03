@@ -74,8 +74,12 @@ def user_login
   session[:user_code] = '111111'
   session[:prepared] = true
   u = stub_model(User)
+  up = stub_model(UserProfile)
   u.stub!(:admin).and_return(false)
   u.stub!(:active?).and_return(true)
+  u.stub!(:name).and_return('ユーザ')
+  u.stub!(:crypted_password).and_return('123456789')
+  u.stub!(:user_profile).and_return(up)
   if defined? controller
     controller.stub!(:current_user).and_return(u)
   else

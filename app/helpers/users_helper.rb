@@ -29,7 +29,11 @@ module UsersHelper
         when "name"
           user_link_to user
         when "email"
-          %(<a href="mailto:#{user.email}">#{user.email}</a>)
+          %(<a href="mailto:#{user.user_profile.email}">#{user.user_profile.email}</a>)
+        when "section"
+          h(user.user_profile.section)
+        when "extension"
+          h(user.user_profile.extension)
         else
           h(user.send(column))
         end

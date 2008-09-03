@@ -46,7 +46,6 @@ class PortalController < ApplicationController
 
   #ユーザ登録処理
   def apply
-    params[:user][:section] = params[:new_section].tr('ａ-ｚＡ-Ｚ１-９','a-zA-Z1-9').upcase unless params[:new_section].empty?
     @user = current_user
     @user.attributes = params[:user]
 
@@ -57,7 +56,7 @@ class PortalController < ApplicationController
     User.transaction do
       @user.user_uids << @user_uid if INITIAL_SETTINGS['nickname_use_setting'] && (params[:user_uid][:uid] != session[:user_code])
 
-      @user.user_profile = @profile if params[:write_profile]
+      @user.user_profile.save!
 
       @user.status = 'ACTIVE'
       @user.save!
@@ -118,10 +117,15 @@ class PortalController < ApplicationController
   end
 
   def make_profile
+    params[:profile][:section] = params[:new_section].tr('ａ-ｚＡ-Ｚ１-９','a-zA-Z1-9').upcase unless params[:new_section].empty?
     params[:profile][:alma_mater] = params[:new_alma_mater] unless params[:new_alma_mater].empty?
     params[:profile][:address_2] = params[:new_address_2] unless params[:new_address_2].empty?
 
-    profile = params[:write_profile] ? UserProfile.new(params[:profile]) : UserProfile.new
+    profile = current_user.user_profile
+    profile.section = params[:profile][:section]
+    profile.extension = params[:profile][:extension]
+    profile.self_introduction = params[:profile][:self_introduction]
+    profile.attributes = params[:profile] if params[:write_profile]
     profile.hobby = ''
     if (params[:hobbies] && params[:hobbies].size > 0 )
       profile.hobby = params[:hobbies].join(',') + ','

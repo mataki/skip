@@ -23,7 +23,6 @@ describe MypageController do
     session[:user_code] = @user.code
   end
 
-
   describe "POST /mypage/apply_email" do
     it "should be successful" do
       post :apply_email, {:applied_email => {:email => SkipFaker.email}}
@@ -137,5 +136,28 @@ describe MypageController do
       it { response.should be_redirect }
       it { flash[:notice].should == "そのOpenID URLは登録されていません。" }
     end
+  end
+end
+
+describe MypageController, 'POST #update_profile' do
+  before do
+    @user = user_login
+    @user.stub!(:update_attributes)
+    @profile = stub_model(UserProfile)
+    @profile.stub!(:errors).and_return([])
+    @user.stub!(:update_profile).and_return(@profile)
+  end
+  describe '保存に成功する場合' do
+    before do
+      @user.should_receive(:update_attributes).and_return(true)
+      post :update_profile, {"new_address_2"=>"", "commit"=>"保存", "profile"=>{"birth_month"=>"1", "join_year"=>"2008", "blood_type"=>"1", "extension"=>"111111", "address_1"=>"1", "alma_mater"=>"あああ", "birth_day"=>"1", "gender_type"=>"1", "self_introduction"=>"よろしく", "address_2"=>"あははははははは", "introduction"=>"", "section"=>"TC", "hometown"=>"1"}, "write_profile"=>"true", "action"=>"update_profile", "new_alma_mater"=>"", "controller"=>"mypage", "new_section"=>"", "hobbies"=>["習いごと", "語学", "マンガ", "美容"]}
+    end
+    it {assigns[:user].should_not be_nil}
+    it {assigns[:profile].should_not be_nil}
+    it {assigns[:error_msg].should be_nil}
+    it {response.should be_redirect}
+  end
+  describe '保存に失敗する場合' do
+    it '保存に失敗すること'
   end
 end

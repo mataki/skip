@@ -234,7 +234,7 @@ class User < ActiveRecord::Base
 
   # Viewで使う部門一覧（セレクトボタン用）
   def self.select_section
-    User.find(:all, :select => "section", :group => "section").collect { |user| user.section }
+    UserProfile.find(:all, :select => "section", :group => "section").collect { |user_profile| user_profile.section }
   end
 
   # ユーザ登録時にブログを投稿する

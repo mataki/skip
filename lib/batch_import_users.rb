@@ -21,8 +21,8 @@ class BatchImportUsers < BatchBase
   csv.each do |line|
     begin
       User.transaction do
-        user = User.new( :name => line[1], :section => line[2], :email => line[3],
-                         :password => line[4], :password_confirmation => line[4], :status => 'UNUSED' )
+        user = User.new( :name => line[1], :password => line[4], :password_confirmation => line[4], :status => 'UNUSED' )
+        user.user_profile = UserProfile.new(:section => line[2], :email => line[3], :disclosure => true)
         user.user_uids << UserUid.new( :uid => line[0], :uid_type => 'MASTER' )
         user.save!
       end

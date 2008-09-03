@@ -60,7 +60,7 @@ class FeedController < ApplicationController
     description = "最近登録されたユーザ"
     users = User.find(:all, :order=>"created_on DESC", :conditions=>["created_on > ?" ,Date.today-10], :limit => 10)
     item_arry = []
-    users.map{|user| item_arry << {:type => "user", :title => user.name, :id => user.uid, :date => user.created_on, :contents => user.introduction } }
+    users.map{|user| item_arry << {:type => "user", :title => user.name, :id => user.uid, :date => user.created_on, :contents => user.user_profile.self_introduction } }
     rss_feed "recent_registed_users", description, item_arry
   end
 

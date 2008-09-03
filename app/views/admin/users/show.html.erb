@@ -5,7 +5,7 @@
 <div class="box">
   <p>
     <b><%= label @user.class, :email %>:</b>
-    <%=h @user.email %>
+    <%=h @user.user_profile.email %>
   </p>
 
   <p>
@@ -15,17 +15,17 @@
 
   <p>
     <b><%= label @user.class, :section %>:</b>
-    <%=h @user.section %>
+    <%=h @user.user_profile.section %>
   </p>
 
   <p>
     <b><%= label @user.class, :extension %>:</b>
-    <%=h @user.extension %>
+    <%=h @user.user_profile.extension %>
   </p>
 
   <p>
     <b><%= label @user.class, :introduction %>:</b>
-    <%=h @user.introduction %>
+    <%=h @user.user_profile.self_introduction %>
   </p>
 
   <p>

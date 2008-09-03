@@ -14,7 +14,7 @@
     <th>氏名</th>
     <td><%= user_link_to user %></td>
     <th>内線</th>
-    <td><%=h user.extension %></td>
+    <td><%=h user.user_profile.extension %></td>
   </tr>
   <tr>
     <th>ニックネーム</th>
@@ -26,6 +26,6 @@
     <th>最終アクセス</th>
     <td><%=h user.before_access %></td>
     <th>所属</th>
-    <td><%=h user.section %></td>
+    <td><%=h user.user_profile.section %></td>
   </tr>
 </table>

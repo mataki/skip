@@ -16,7 +16,7 @@
 # ユーザ検索時に使う検索条件クラス
 class UserSearchCondition < SearchCondition
 
-  @@keys = {:name => 'users.name', :section => 'users.section', :code => 'user_uids.uid', :introduction => 'users.introduction'}
+  @@keys = {:name => 'users.name', :section => 'user_profiles.section', :code => 'user_uids.uid', :introduction => 'user_profiles.self_introduction'}
   @@keys.each {|key, val| attr_reader key }
 
   attr_reader :include_absentee

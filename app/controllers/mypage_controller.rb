@@ -212,14 +212,14 @@ class MypageController < ApplicationController
 
   # post_action
   def update_profile
-    params[:user][:section] = params[:new_section] unless params[:new_section].empty?
-    params[:user][:section] = params[:user][:section].tr('ａ-ｚＡ-Ｚ１-９','a-zA-Z1-9').upcase
+    params[:profile][:section] = params[:new_section] unless params[:new_section].empty?
+    params[:profile][:section] = params[:profile][:section].tr('ａ-ｚＡ-Ｚ１-９','a-zA-Z1-9').upcase
 
     params[:profile][:alma_mater] = params[:new_alma_mater] unless SkipUtil.jstrip(params[:new_alma_mater]).empty?
     params[:profile][:address_2] = params[:new_address_2] unless SkipUtil.jstrip(params[:new_address_2]).empty?
-    params[:user][:introduction] = SkipUtil.jstrip(params[:user][:introduction])
+    params[:profile][:self_introduction] = SkipUtil.jstrip(params[:profile][:self_introduction])
 
-    @user = User.find(session[:user_id])
+    @user = current_user
     params[:profile][:disclosure] =  params[:write_profile] ? true : false
     @profile = @user.update_profile(params[:profile], params[:hobbies])
     result = (@user.update_attributes(params[:user]) && @profile.errors.empty?)
@@ -284,14 +284,14 @@ class MypageController < ApplicationController
     onetime_code = params[:id]
     if @applied_email = AppliedEmail.find_by_user_id_and_onetime_code(session[:user_id], onetime_code)
       @user = User.find(session[:user_id])
-      old_email = @user.email
-      @user.email = @applied_email.email
+      old_email = @user.user_profile.email
+      @user.user_profile.email = @applied_email.email
       if @user.save
         @applied_email.destroy
         flash[:notice] = "メールアドレスが正しく更新されました。"
         redirect_to :action => 'profile'
       else
-        @user.email = old_email
+        @user.user_profile.email = old_email
         @menu = 'manage_email'
         flash[:notice] = "既に登録されているメールアドレスです。メールアドレスの変更をやり直してください。"
         render :partial => 'manage_email', :layout => "layout"
@@ -728,7 +728,7 @@ private
 
     # システムからの連絡
     system_messages = []
-    if @user.introduction.size < 10 || !UserProfile.find_by_user_id(@user.id)
+    if @user.user_profile.introduction.size < 10 || !UserProfile.find_by_user_id(@user.id)
       system_messages << {
         :text => "プロフィールを充実させましょう！",
         :icon => "vcard",

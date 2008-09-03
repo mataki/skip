@@ -133,20 +133,20 @@ class BatchMakeCache < BatchBase
       body_lines = []
       body_lines << h(user.uid)
       body_lines << h(user.name)
-      body_lines << h(user.email)
       body_lines << h(user.code)
-      body_lines << h(user.extension)
-      body_lines << h(user.section)
       if user.has_profile?
         profile = user.profile
+        body_lines << h(profile.email)
+        body_lines << h(profile.extension)
+        body_lines << h(profile.section)
         body_lines << h(profile.gender) + " - " + h(profile.join_year) + "年度入社"
         body_lines << h(profile.birth_month_day) + " - " + h(profile.blood)
         body_lines << h(profile.hometown_name) + " - " + h(profile.alma_mater)
         body_lines << h(profile.address)
         body_lines << h(profile.hobby.chop.gsub(/\,/, ' , '))
         body_lines << profile.introduction
+        body_lines << profile.self_introduction
       end
-      body_lines << user.introduction
 
       contents = create_contents(:title => user.name,
                                  :body_lines => body_lines)

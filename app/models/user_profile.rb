@@ -32,8 +32,6 @@ class UserProfile < ActiveRecord::Base
 
   validates_length_of :address_2,  :maximum=>100, :message =>'は100文字以内で入力してください', :allow_nil => true
 
-  validates_presence_of :disclosure, :message => 'は必須です'
-
   class << self
     HUMANIZED_ATTRIBUTE_KEY_NAMES = {
       "alma_mater" => "出身校",

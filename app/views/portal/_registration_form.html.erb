@@ -40,29 +40,29 @@ table.normal {
   </tr>
   <tr>
     <th width="100px"><label for="user_email">メールアドレス</label></th>
-    <td><%= @user.email %><span style="margin-left: 20px;"><%= link_to "[変更する]", :action=> 'manage', :menu => 'manage_email' if !is_new && Admin::Setting.mail_function_setting %></span></td>
+    <td><%=h @user.user_profile.email %><span style="margin-left: 20px;"><%= link_to "[変更する]", :action=> 'manage', :menu => 'manage_email' if !is_new && Admin::Setting.mail_function_setting %></span></td>
   </tr>
   <tr>
     <th width="100px"><label for="user_name">名前</label></th>
-    <td><%= @user.name %></td>
+    <td><%=h @user.name %></td>
   </tr>
   <tr>
     <th width="100px"><label for="page_title">部門</label></th>
     <td><% sections = []
       sections = User.select_section
       if sections.size > 0 %>
-      <%= select("user", "section", sections, {}, {:tabindex => (tabindex += 1)}) -%>
+      <%= select("profile", "section", sections, {}, {:tabindex => (tabindex += 1)}) -%>
     <% end %>
       <br/>
       [選択に無い場合] ： <%= text_field_tag "new_section", params[:new_section], :size => 10, :tabindex => (tabindex += 1) %> （次回以降選択項目になります）</td>
   </tr>
   <tr>
     <th width="100px"><label for="page_title">内線番号</label></div></th>
-    <td><%= text_field 'user', 'extension', :size => 10, :tabindex => (tabindex += 1) %></td>
+    <td><%= text_field 'profile', 'extension', :size => 10, :tabindex => (tabindex += 1) %></td>
   </tr>
   <tr>
     <th width="100px"><label for="page_title">自己紹介</label><div class="example" style="margin-top: 10px;">現在の業務や今までの仕事、興味や関心のある事柄などについて書いてください(5文字以上必須です)</div></th>
-    <td><%= link_to_hiki_help %><br/><%= text_area 'user', 'introduction', :cols => 55, :rows => 15, :tabindex => (tabindex += 1) %></td>
+    <td><%= link_to_hiki_help %><br/><%= text_area 'profile', 'self_introduction', :cols => 55, :rows => 15, :tabindex => (tabindex += 1) %></td>
   </tr>
 </table>
 
