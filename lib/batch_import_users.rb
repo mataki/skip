@@ -16,8 +16,8 @@
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 require "csv"
 
-class BatchImportAccounts < BatchBase
-  csv = CSV.readlines('accounts.csv', "\n")
+class BatchImportUsers < BatchBase
+  csv = CSV.readlines('users.csv', "\n")
   csv.each do |line|
     begin
       User.transaction do
