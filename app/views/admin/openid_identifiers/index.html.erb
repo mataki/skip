@@ -8,11 +8,10 @@
                :columns => %w[url],
                :objects => @openid_identifiers,
                :class_name => 'Admin::OpenidIdentifier',
-               :link_elem => [['Show','admin_user_openid_identifier_url(@user, object)'], ['Edit','edit_admin_user_openid_identifier_path(@user, object)'], ['Destroy','admin_user_openid_identifier_url(@user, object)',{:confirm => _('Are you sure?'), :method => :delete}]]
+               :link_elem => [['Edit','edit_admin_user_openid_identifier_path(@user, object)'], ['Destroy','admin_user_openid_identifier_url(@user, object)',{:confirm => _('Are you sure?'), :method => :delete}]]
              }
   -%>
 </div>
 
-<%= link_to _('New %{model}') % {:model => _('openid identifier')}, new_admin_user_openid_identifier_path %> |
 <%= link_to _('%{model} Show') % {:model => _('user')}, admin_user_path(@user) %>
 <% end -%>

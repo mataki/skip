@@ -36,54 +36,98 @@ describe MypageController do
   end
 
   describe "POST /mypage/apply_ident_url" do
-    before do
-      @url = 'http://example.com'
-
-      @openid_identifier = stub_model(OpenidIdentifier)
-      @openid_identifiers = []
-      @openid_identifiers.should_receive(:<<)
-      OpenidIdentifier.should_receive(:new).and_return(@openid_identifier)
-
-      @user.stub!(:openid_identifiers).and_return(@openid_identifiers)
-      @user.stub!(:code).and_return('100001')
-    end
-
-    describe '保存に成功した場合' do
+    describe '新規登録の場合' do
       before do
-        @openid_identifier.should_receive(:url=).with(@url)
-        @openid_identifier.should_receive(:save).and_return(true)
+        @url = 'http://example.com'
 
-        post :apply_ident_url, :openid_identifier => {:url => @url}
+        @user = user_login
+
+        @openid_identifier = stub_model(OpenidIdentifier, :user_id => @user.id, :url => @url)
+        @openid_identifier.stub!(:url=).with(@url)
+
+        @openid_identifiers = mock('openid_identifiers')
+        @openid_identifiers.stub!(:empty?).and_return(true)
+        @openid_identifiers.stub!(:build).and_return(@openid_identifier)
+
+        @user.stub!(:openid_identifiers).and_return(@openid_identifiers)
       end
 
-      it { response.should be_redirect  }
-      it { flash[:notice].should_not be_nil }
-    end
+      describe '保存に成功した場合' do
+        before do
+          @openid_identifier.should_receive(:save).and_return(true)
+          post :apply_ident_url, :openid_identifier => {:url => @url}
+        end
 
-    describe '保存に失敗した場合' do
-      before do
-        @openid_identifier.should_receive(:url=).with(@url)
-        @openid_identifier.should_receive(:save).and_return(false)
-        @openid_identifiers.should_receive(:reload).and_return(@openid_identifiers)
-
-        post :apply_ident_url, :openid_identifier => {:url => @url}
+        it { response.should be_redirect  }
+        it { flash[:notice].should_not be_nil }
       end
 
-      it { response.should be_success }
-      it { assigns[:openid_identifiers].should_not be_nil }
-      it { response.should render_template('mypage/_manage_openid') }
-      it { flash[:notice].should be_nil }
+      describe '保存に失敗した場合' do
+        before do
+          @openid_identifier.should_receive(:save).and_return(false)
+
+          post :apply_ident_url, :openid_identifier => {:url => @url}
+        end
+
+        it { assigns[:openid_identifier].should_not be_nil }
+        it { response.should render_template('mypage/_manage_openid') }
+        it { flash[:notice].should be_nil }
+      end
     end
-
-    describe 'パラメータが不足していた場合' do
+    describe '更新の場合' do
       before do
-        @openid_identifiers.should_receive(:reload).and_return(@openid_identifiers)
+        @user = user_login
 
-        post :apply_ident_url
+        @openid_identifier = stub_model(OpenidIdentifier, :user_id => @user.id)
+
+        @openid_identifiers = mock('openid_identifiers')
+        @openid_identifiers.stub!(:empty?).and_return(false)
+        @openid_identifiers.stub!(:first).and_return(@openid_identifier)
+
+        @user.stub!(:openid_identifiers).and_return(@openid_identifiers)
+      end
+      describe '保存に成功した場合' do
+        before do
+          @url = 'http://example.com'
+
+          @openid_identifier.should_receive(:url).and_return(@url)
+          @openid_identifier.should_receive(:url=).with(@url)
+          @openid_identifier.should_receive(:save).and_return(true)
+
+          post :apply_ident_url, :openid_identifier => {:url => @url}
+        end
+
+        it { response.should be_redirect }
+        it { flash[:notice].should_not be_nil }
+      end
+      describe '保存に失敗した場合' do
+        before do
+          @url = 'http://example.com'
+
+          @openid_identifier.should_receive(:url).and_return(@url)
+          @openid_identifier.should_receive(:url=).with(@url)
+          @openid_identifier.should_receive(:save).and_return(false)
+
+          post :apply_ident_url, :openid_identifier => {:url => @url}
+        end
+
+        it { response.should render_template('mypage/_manage_openid') }
+        it { assigns[:openid_identifier].should_not be_nil }
       end
 
-      it { assigns[:openid_identifiers].should_not be_nil }
-      it { response.should be_success }
+      describe 'URLが空の場合' do
+        before do
+          @url = ''
+          @openid_identifier.stub!(:url=).with(@url)
+
+          @openid_identifier.should_receive(:destroy)
+
+          post :apply_ident_url, :openid_identifier => {:url => @url}
+        end
+
+        it { response.should be_redirect }
+        it { flash[:notice].should_not be_nil}
+      end
     end
   end
 

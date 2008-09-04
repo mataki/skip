@@ -1,33 +1,24 @@
 <div id="contents_container">
   <div id="contents_left">
-<%= render :partial => "manage_menu", :locals => { :selected_menu => @menu } %>
+    <%= render :partial => "manage_menu", :locals => { :selected_menu => @menu } %>
   </div><!-- contents_left -->
 
   <div id="contents_right">
     <div class="desc"><p>以下のフォームにOpenIDのURLを入力してください。</p></div>
 
-<%= template_error_messages_for 'openid_identifier' %>
+    <%= template_error_messages_for 'openid_identifier' %>
 
     <div class="edit_form_space">
-<% form_for :openid_identifier, @openid_identifier, {:url => {:action => :apply_ident_url}} do |f| -%>
+      <% form_for :openid_identifier, @openid_identifier, {:url => {:action => :apply_ident_url}} do |f| -%>
       <table id="user_info_box" class="normal" border="1">
         <tr>
           <th width="100px"><%= f.label :url, "OpenID URL" %></th>
           <td style="padding:5px;"><%= f.text_field :url -%></td>
         </tr>
       </table>
-  <%= submit_tag '保存' %>
-<% end %>
-    </div>
-    <% unless @openid_identifiers.blank? %>
-
-    <div class="desc">あなたの登録済みOpenID URL</div>
-    <div class="edit_form_space">
-      <% @openid_identifiers.each do |openid_identifier| %>
-      <div><%= openid_identifier.url -%> - <%= link_to '削除', {:action => :delete_ident_url, :ident_url => openid_identifier.url}, :method => :post, :confirm => "削除してもよろしいですか？" -%></div>
+      <%= submit_tag '保存' %>
       <% end %>
     </div>
-    <% end %>
   </div><!-- contents_right -->
   <div id="contents_bottom"></div><!-- contents_bottom -->
 </div><!-- contents_container -->
