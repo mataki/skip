@@ -31,7 +31,7 @@ class PortalController < ApplicationController
     when :registration
       params[:write_profile] = true
       params[:hobbies] = Array.new
-      @user = User.find_by_code(session[:user_code])
+      @user = current_user
       @profile = UserProfile.new_default
       @user_uid = UserUid.new({ :uid => session[:user_code] })
     end

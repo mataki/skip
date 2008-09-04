@@ -39,7 +39,7 @@ class MypageController < ApplicationController
 
     @entry_count = get_entry_count(@year, @month)
 
-    @user = User.find(session[:user_id], :include => [:user_access])
+    @user = current_user
 
     @my_info = {
       :access_count => @user.user_access.access_count,
@@ -143,7 +143,6 @@ class MypageController < ApplicationController
 
   # tab_menu
   def trace
-    current_user = User.find(session[:user_id])
     @access_count = current_user.user_access.access_count
     @access_tracks = current_user.tracks
   end
@@ -151,7 +150,7 @@ class MypageController < ApplicationController
   # tab_menu
   def manage
     @title = "自分の管理"
-    @user = User.find(session[:user_id])
+    @user = current_user
     @menu = params[:menu] || "manage_profile"
     case @menu
     when "manage_profile"
@@ -162,7 +161,7 @@ class MypageController < ApplicationController
       @applied_email = AppliedEmail.find_by_user_id(session[:user_id]) || AppliedEmail.new
     when "manage_openid"
       @openid_identifier = OpenidIdentifier.new
-      @openid_identifiers = User.find_by_code(@user.code).openid_identifiers
+      @openid_identifiers = @user.openid_identifiers
     when "manage_portrait"
       @picture = Picture.find_by_user_id(@user.id) || Picture.new
     when "manage_customize"
@@ -276,14 +275,14 @@ class MypageController < ApplicationController
       flash.now[:warning] = "処理に失敗しました。もう一度申請してください。"
     end
     @menu = 'manage_email'
-    @user = User.find(session[:user_id])
+    @user = current_user
     render :partial => 'manage_email', :layout => "layout"
   end
 
   def update_email
     onetime_code = params[:id]
     if @applied_email = AppliedEmail.find_by_user_id_and_onetime_code(session[:user_id], onetime_code)
-      @user = User.find(session[:user_id])
+      @user = current_user
       old_email = @user.user_profile.email
       @user.user_profile.email = @applied_email.email
       if @user.save
@@ -303,7 +302,7 @@ class MypageController < ApplicationController
   end
 
   def apply_ident_url
-    user = User.find_by_code(session[:user_code])
+    user = current_user
     @openid_identifier = OpenidIdentifier.new
     @openid_identifier.url = params[:openid_identifier][:url] if params[:openid_identifier]
     user.openid_identifiers << @openid_identifier

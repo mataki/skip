@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe PortalController, 'GET /index' do
   before do
-    unused_user_login
+    @user = unused_user_login
   end
   describe "entrance_next_actionが何もない時" do
     before do
@@ -14,10 +14,6 @@ describe PortalController, 'GET /index' do
 
   describe "entrance_next_actionが:registrationの場合" do
     before do
-      @code = '111111'
-      session[:user_code] = @code
-      @user = mock_model(User)
-      User.should_receive(:find_by_code).with(@code).and_return(@user)
       session[:entrance_next_action] = :registration
       get :index
     end

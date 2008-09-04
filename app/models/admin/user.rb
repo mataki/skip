@@ -20,6 +20,10 @@ class Admin::User < User
   N_('Admin::User|Retired')
   N_('Admin::User|Admin')
 
+  class << self
+    alias :find :find_without_retired_skip
+  end
+
   def self.search_colomns
     "name like :lqs"
   end

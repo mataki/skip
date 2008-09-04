@@ -59,6 +59,12 @@ class User < ActiveRecord::Base
     def symbol_type
       :uid
     end
+    def find_with_retired_skip(*args)
+      with_scope(:find => { :conditions => { :status => ['ACTIVE', 'RETIRED']} }) do
+        find_without_retired_skip(*args)
+      end
+    end
+    alias_method_chain :find, :retired_skip
   end
 
   def before_save
@@ -86,9 +92,16 @@ class User < ActiveRecord::Base
     user
   end
 
+  # 未登録ユーザも含めて検索する際に利用する
   def self.find_by_code(code)
-    uid = UserUid.find_by_uid_and_uid_type(code, 'MASTER')
-    uid ? uid.user : nil
+    find_without_retired_skip(:first,
+                              :include => :user_uids,
+                              :conditions => ["user_uids.uid = ? and user_uids.uid_type = ?", code, 'MASTER'])
+  end
+
+  # 登録済みユーザのユーザID(ログインID,ニックネーム)をもとにユーザを検索する
+  def self.find_by_uid(code)
+    find(:first, :conditions => ['user_uids.uid = ?', code], :include => :user_uids)
   end
 
   def symbol_id
@@ -153,10 +166,6 @@ class User < ActiveRecord::Base
 
   def self.select_columns
     return column_names.dup.map! {|item| "users." + item}.join(',')
-  end
-
-  def self.find_by_uid(code)
-    find(:first, :conditions => ['user_uids.uid = ?', code], :include => :user_uids)
   end
 
   def uid

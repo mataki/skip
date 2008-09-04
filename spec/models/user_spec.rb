@@ -99,37 +99,12 @@ describe User, ".auth" do
     end
     it { User.auth('code', 'password').should be_nil }
   end
-  describe "認証が通らない場合" do
+  describe "指定のユーザが存在しない場合" do
     before do
       User.should_receive(:find_by_code).and_return(nil)
     end
     it { User.auth('code', 'password').should be_nil }
   end
-end
-
-describe User, ".find_by_code" do
-  describe "存在する場合" do
-    before do
-      @user = mock_model(User)
-      @uid = mock_model(UserUid)
-      @uid.stub!(:user).and_return(@user)
-      UserUid.should_receive(:find_by_uid_and_uid_type).with('000000', 'MASTER').and_return(@uid)
-    end
-
-    it "ユーザが返ること" do
-      User.find_by_code('000000').should == @user
-    end
-  end
-  describe "存在しない場合" do
-    before do
-      UserUid.should_receive(:find_by_uid_and_uid_type).and_return(nil)
-    end
-
-    it "nilが返ること" do
-      User.find_by_code('000000').should be_nil
-    end
-  end
-
 end
 
 def new_user options = {}

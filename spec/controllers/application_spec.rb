@@ -41,13 +41,13 @@ describe ApplicationController, '#current_user' do
   describe 'session[:user_code]に一致するユーザが見つかる場合' do
     before do
       @user = mock_model(User)
-      User.should_receive(:find_by_uid).and_return(@user)
+      User.should_receive(:find_by_code).and_return(@user)
     end
     it { controller.current_user.should == @user }
   end
   describe 'session[:user_code]に一致するユーザが見つからない場合' do
     before do
-      User.should_receive(:find_by_uid).and_return(nil)
+      User.should_receive(:find_by_code).and_return(nil)
     end
     it { controller.current_user.should == nil }
   end

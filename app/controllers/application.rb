@@ -17,7 +17,7 @@ require 'symbol'
 require 'tempfile'
 
 class ApplicationController < ActionController::Base
-  protect_from_forgery 
+  protect_from_forgery
 
   layout 'layout'
   before_filter :prepare_session
@@ -96,7 +96,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-    @current_user ||= User.find_by_uid(session[:user_code])
+    @current_user ||= User.find_by_code(session[:user_code])
   end
 
   #エントリへのパーミッションをチェック

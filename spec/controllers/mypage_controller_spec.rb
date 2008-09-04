@@ -16,14 +16,15 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe MypageController do
-  fixtures :users, :user_uids
   before(:each) do
-    @user = users(:a_user)
+    @user = user_login
     ActionMailer::Base.deliveries.clear
-    session[:user_code] = @user.code
   end
 
   describe "POST /mypage/apply_email" do
+    before do
+      session[:user_id] = 1
+    end
     it "should be successful" do
       post :apply_email, {:applied_email => {:email => SkipFaker.email}}
       response.should be_success
@@ -43,10 +44,8 @@ describe MypageController do
       @openid_identifiers.should_receive(:<<)
       OpenidIdentifier.should_receive(:new).and_return(@openid_identifier)
 
-      @user = stub_model(User)
       @user.stub!(:openid_identifiers).and_return(@openid_identifiers)
       @user.stub!(:code).and_return('100001')
-      User.should_receive(:find_by_code).with(@user.code).and_return(@user)
     end
 
     describe '保存に成功した場合' do
@@ -105,6 +104,7 @@ describe MypageController do
 
     describe "登録されているOpenID URLの場合" do
       before do
+        session[:user_code] = '100001'
         @user.should_receive(:code).and_return('100001')
         @openid_identifier.should_receive(:destroy)
         OpenidIdentifier.should_receive(:find_by_url).with(@url).and_return(@openid_identifier)
