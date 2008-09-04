@@ -21,6 +21,8 @@ class BookmarkController < ApplicationController
 
   before_filter :check_params, :only => [:new, :edit]
 
+  protect_from_forgery :except => [:new]
+
   # ブックマークレット用
   def new
     user_tags, other_tags, your_tags = prepare_bookmark params
@@ -49,7 +51,16 @@ class BookmarkController < ApplicationController
 
   # ブックマークの更新（存在しない場合は作成）
   def update
-    @bookmark = Bookmark.find_by_url(params[:bookmark][:url]) || Bookmark.new
+    url = params[:bookmark][:url]
+
+    unless check_url_format? url
+      messages = []
+      messages << 'このURLは、ブックマークできません。'
+      render :partial => "system/error_messages_for", :locals=> { :messages => messages }
+      return
+    end
+
+    @bookmark = Bookmark.find_by_url(url) || Bookmark.new
     @bookmark.attributes = params[:bookmark]
 
     @bookmark_comment = @bookmark.bookmark_comments.find(:first, :conditions => ["bookmark_comments.user_id = ?", session[:user_id]]) || @bookmark.bookmark_comments.build
@@ -99,6 +110,14 @@ class BookmarkController < ApplicationController
   # ブックマークコメントの削除
   def destroy
     comment = BookmarkComment.find(params[:comment_id])
+    
+    # 権限チェック
+    unless comment.user_id == session[:user_id]
+      flash[:warning] = "この操作は、許可されていません。"
+      redirect_to  :controller => 'mypage', :action =>'index'
+      return false
+    end
+
     if comment.destroy
       flash[:notice] = '削除しました。'
     else
@@ -154,6 +173,11 @@ class BookmarkController < ApplicationController
 
   def ado_set_stared
     bookmark_comment = BookmarkComment.find_by_id(params[:bookmark_comment_id])
+    # 権限チェック
+    unless bookmark_comment.user_id == session[:user_id]
+      render :nothing => true
+      return false
+    end
     bookmark_comment.update_attribute(:stared, params[:stared])
     render :partial => "bookmark/stared", :locals => {:bookmark_comment => bookmark_comment}
   end
@@ -188,11 +212,16 @@ private
   end
 
   def check_params
-    unless params[:url]
+    unless params[:url] && check_url_format?(params[:url])
       flash[:warning] = "そのURLは有効ではありません。"
       redirect_to :controller => 'mypage', :action => 'index'
       return false
     end
+  end
+
+  def check_url_format? url
+    # 社内用URLのチェックは、bookmarkと重複している。
+    ((url =~ /^\/user\/.*/) || (url =~ /^\/page\/.*/) || url =~ /^https?:\/\/.*/) && !(url =~ /.*javascript:.*/)
   end
 
   def prepare_bookmark params

@@ -91,7 +91,7 @@ $j(function(){
         $j.ajax({
             type: "POST",
             url: ado_get_title_url,
-            data: { url:url },
+            data: { url:url, authenticity_token: $j('#authenticity_token').val() },
             success: function(request){
                 if(request == ""){
                     alert("タイトルの取得ができませんでした");
@@ -167,7 +167,7 @@ function addAntenna() {
 
     var options = {
         evalScripts: true,
-        parameters: "name="+antenna_name,
+        parameters: "name="+antenna_name+"&authenticity_token="+$('authenticity_token').value,
         onFailure: function(originalRequest){
             alert("通信に失敗しました");
         },
@@ -187,7 +187,7 @@ function deleteAntenna(antenna_id) {
 
     var options = {
         evalScripts: true,
-        parameters: "antenna_id="+antenna_id,
+        parameters: "antenna_id="+antenna_id+"&authenticity_token="+$('authenticity_token').value,
         onFailure: function(originalRequest){
             alert("通信に失敗しました");
         },
@@ -206,7 +206,7 @@ function deleteAntennaItem(antenna_id, antenna_item_id) {
 
     var options = {
         evalScripts: true,
-        parameters: "antenna_id="+antenna_id + "&antenna_item_id="+antenna_item_id,
+        parameters: "antenna_id="+antenna_id + "&antenna_item_id=" + antenna_item_id + "&authenticity_token="+$('authenticity_token').value,
         onFailure: function(originalRequest){
             alert("通信に失敗しました");
         },
@@ -222,7 +222,7 @@ function sortAntenna(source_antenna_id, target_antenna_id) {
 
     var options = {
         evalScripts: true,
-        parameters: "source_antenna_id="+source_antenna_id + "&target_antenna_id="+target_antenna_id,
+        parameters: "source_antenna_id="+source_antenna_id + "&target_antenna_id="+target_antenna_id + "&authenticity_token="+$('authenticity_token').value,
         onFailure: function(originalRequest){
             alert("通信に失敗しました");
         },
@@ -238,7 +238,7 @@ function moveAntennaItem(antenna_id, antenna_item_id) {
 
     var options = {
         evalScripts: true,
-        parameters: "antenna_id="+antenna_id + "&antenna_item_id="+antenna_item_id,
+        parameters: "antenna_id="+antenna_id + "&antenna_item_id=" + antenna_item_id + "&authenticity_token="+$('authenticity_token').value,
         onFailure: function(originalRequest){
             alert("通信に失敗しました");
         },

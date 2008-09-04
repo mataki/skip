@@ -56,7 +56,8 @@ end
 describe ApplicationController, '#prepare_session' do
   before do
     controller.stub!(:controller_name).and_return('mypage')
-    @session = {}
+    @session = mock('hash')
+    @session.stub!('[]')
     @session.stub!('[]').with(:prepared).and_return(true)
     controller.stub!(:session).and_return(@session)
   end

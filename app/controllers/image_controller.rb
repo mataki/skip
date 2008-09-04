@@ -16,6 +16,11 @@
 class ImageController < ApplicationController
 
   def show
+    content, user_id, file_path = params[:path]
+    unless valid_params_and_authorize? content, user_id, file_path
+      render :nothing => true
+      return false 
+    end
     open(File.join(ENV['IMAGE_PATH'], params[:path]), "rb") do |f|
       send_data(f.read, :filename=>params[:path], :disposition=>"inline")
     end
@@ -23,4 +28,16 @@ class ImageController < ApplicationController
     render :text=>'見つかりません!！'
   end
 
+  private
+  def valid_params_and_authorize? content, user_id, file_path 
+    # ver.0.9時点では、pathは、"/board_entries/#{user_id}/#{entry_id}_ファイル名"で構成
+    if content == 'board_entries' && /\d*/ =~ user_id
+      if entry_id = file_path.scan(/^(\d*)_[^\/]*\.\w*/)
+        return BoardEntry.find(entry_id.to_s).entry_publications.any? do |publication|
+          [session[:user_symbol], Symbol::SYSTEM_ALL_USER].include? publication.symbol
+        end
+      end
+    end
+    return false
+  end
 end

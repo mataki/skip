@@ -28,7 +28,7 @@ div.share_file_space div.share_file_line {
   <div style="margin:3px 0 <%= visible_menu ? 15 : 3 -%>px 3px;">
     <div style="font-size: 12px;">
       <%= file_link_to(share_file, :id => "share_file_download_link_#{share_file.id}", :class => "share_file_download_link", :tabindex => 0) %>
-      <span style="margin-left:10px">... <%= share_file.description %></span>
+      <span style="margin-left:10px">... <%= h share_file.description %></span>
     </div>
     <div style="position: absolute; bottom: 0; right: 1px;">
     <% if (share_file.user_id == session[:user_id]) and visible_menu %>

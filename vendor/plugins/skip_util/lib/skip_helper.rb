@@ -15,6 +15,17 @@
 
 # SKIP関連で利用可能なメソッドを定義する
 module SkipHelper
+
+  PROTOTYPE_LIBRARY = {:name => 'prototype.all',
+    :libs => ['prototype', 'builder', 'effects', 'dragdrop', 'controls', 'slider']}
+
+  JQUERY_LIBRARY = {:name => 'jquery.all', 
+    :libs => ['jquery', 'jquery.color.js', 'jquery.nyroModal.js', 'jquery.bgiframe.min.js',
+              'jquery.dimensions.js', 'jquery.autocomplete.js', 'jquery.jTagging.js']}
+
+  STYLE_LIBRARY = {:name => 'skip.style', 
+    :libs => ['skip/style', 'style', 'skins-base']}
+
   # アイコンタグを参照する
   def icon_tag(source, options = {})
     url = "#{ENV['SKIP_URL']}/images/skip/icons/#{source}.png"
@@ -30,6 +41,13 @@ module SkipHelper
   def skip_image_tag(source, options = {})
     url = "#{ENV['SKIP_URL']}/images/skip/#{source}"
     return options[:only_url] ? url : image_tag(url, options)
+  end
+
+  def skip_all_javascript_include_tag source
+    library = {'prototype' => PROTOTYPE_LIBRARY, 'jquery' => JQUERY_LIBRARY}[source]
+    lib_str = library[:libs].map{|lib| "/javascripts/skip/#{lib}" } 
+    lib_str << {:cache => library[:name]}
+    javascript_include_tag(*lib_str)
   end
 
   # SA間共通（javascripts/skip以下に格納されている）JavaScriptを参照する
@@ -48,6 +66,16 @@ var platform_url_root = '#{ENV['SKIP_URL']}';
 </script>
 #{javascript_include_tag(ENV['SKIP_URL'] + '/javascripts/skip/skip_util' )}
     EOS
+  end
+
+  def skip_all_stylesheet_link_tag source
+    library = {'style' => STYLE_LIBRARY }[source]
+    lib_str = []
+    library[:libs].each do |lib|
+      lib_str << "/stylesheets/#{lib}"
+    end
+    lib_str << {:cache => library[:name]}
+    stylesheet_link_tag(*lib_str)
   end
 
   # SA間共通（stylesheets/skip以下に格納されている）スタイルシートを参照する

@@ -17,6 +17,8 @@ class ActionController::Base
   filter_parameter_logging :password
   before_filter :sso
 
+  rescue_from ActionController::InvalidAuthenticityToken, :with => :deny_auth
+
   # 本番環境でのエラー画面をプラットホームにあるエラー画面にするために、rescue.rbのメソッドを
   # オーバーライドしている。
   # CGI::Session::CookieStore::TamperedWithCookie について
@@ -56,6 +58,13 @@ class ActionController::Base
     end
     return true
   end
+
+
+  def verify_extension? file_name, content_type
+    !['html','htm','js'].any?{|extension| extension == file_name.split('.').last } &&
+      !['text/html','application/x-javascript'].any?{|content| content == content_type }
+  end
+ 
   private
   def sso
     unless cookies[:_sso_sid]
@@ -81,4 +90,8 @@ class ActionController::Base
     return true
   end
 
+  def deny_auth
+    flash[:warning] = 'この操作は、許可されていません'
+    redirect_to :controller => 'mypage', :action => 'index'
+  end
 end

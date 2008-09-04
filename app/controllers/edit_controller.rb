@@ -16,9 +16,6 @@
 class EditController < ApplicationController
   before_filter :setup_layout,
                 :except => [ :ado_get_name ]
-  before_filter :check_author,
-                :only => [ :edit, :update, :destroy,
-                           :ado_remove_image, :delete_trackback ]
 
   after_filter  :post_mail,   :only => [ :create, :update ]
 
@@ -65,7 +62,9 @@ class EditController < ApplicationController
     end
 
     unless validate_params params, @board_entry
-      @sent_mail_flag = "checked" if params[:sent_mail][:send_flag] == "1"
+      if MAIL_FUNCTION_SETTING
+        @sent_mail_flag = "checked" if params[:sent_mail][:send_flag] == "1"
+      end
       flash[:warning] = "不正なパラメータがあります"
       render :action => 'index'
       return
@@ -75,6 +74,17 @@ class EditController < ApplicationController
     @board_entry.last_updated = Time.now
     @board_entry.publication_type = params[:publication_type]
     @board_entry.publication_symbols_value = params[:publication_type]=='protected' ? params[:publication_symbols_value] : ""
+
+    # 権限チェック
+    unless (session[:user_symbol] == params[:board_entry][:symbol]) || 
+      login_user_groups.include?(params[:board_entry][:symbol]) 
+      if MAIL_FUNCTION_SETTING
+        @sent_mail_flag = "checked" if params[:sent_mail][:send_flag] == "1"
+      end
+      flash[:warning] = "この操作は、許可されていません。"
+      render :action => 'index'
+      return
+    end
 
     if @board_entry.save
 
@@ -106,11 +116,13 @@ class EditController < ApplicationController
 
   # link_action
   def edit
-    unless check_entry_permission
-      render :text => "不正な操作です"
+    @board_entry = get_entry(params[:id])
+    # 権限チェック
+    unless authorize_to_edit_board_entry? @board_entry
+      flash[:warning] = "この操作は、許可されていません。"
+      redirect_to :controller => 'mypage', :action => 'index'
       return false
     end
-
     params[:entry_type] ||= @board_entry.entry_type
     params[:symbol] ||= @board_entry.symbol
 
@@ -163,6 +175,7 @@ class EditController < ApplicationController
 
   # post_acttion
   def update
+    @board_entry = get_entry params[:id] 
     #編集の競合をチェック
     @conflicted = false
     @img_urls = get_img_urls @board_entry
@@ -171,13 +184,17 @@ class EditController < ApplicationController
       @conflicted = true
       flash.now[:warning] = "他の人によって同じ投稿に更新がかかっています。編集をやり直しますか？"
       @img_urls = get_img_urls @board_entry
-      @sent_mail_flag = "checked" if params[:sent_mail][:send_flag] == "1"
+      if MAIL_FUNCTION_SETTING
+        @sent_mail_flag = "checked" if params[:sent_mail][:send_flag] == "1"
+      end
       render :action => 'edit'
       return
     end
 
     unless validate_params params, @board_entry
-      @sent_mail_flag = "checked" if params[:sent_mail][:send_flag] == "1"
+      if MAIL_FUNCTION_SETTING
+        @sent_mail_flag = "checked" if params[:sent_mail][:send_flag] == "1"
+      end
       flash[:warning] = "不正なパラメータがあります"
       render :action => 'edit'
       return
@@ -196,7 +213,20 @@ class EditController < ApplicationController
 
     update_params[:publication_type] = params[:publication_type]
     update_params[:publication_symbols_value] = params[:publication_type]=='protected' ? params[:publication_symbols_value] : ""
+    
+    # 権限チェック
+    unless authorize_to_edit_board_entry? @board_entry
+      flash[:warning] = "この操作は、許可されていません。"
+      redirect_to :controller => 'mypage', :action => 'index'
+      return false
+    end
 
+    # 成りすましての更新を防止
+    if params[:symbol] != @board_entry.symbol || params[:board_entry][:symbol] != @board_entry.symbol 
+      flash[:warning] = 'その操作は許可されていません。'
+      redirect_to :controller => 'mypage', :action => 'index'
+      return false
+    end
 
     # ちょっとした更新でなければ、last_updatedを更新する
     update_params[:last_updated] = Time.now unless params[:non_update]
@@ -232,6 +262,14 @@ class EditController < ApplicationController
 
   # post_action
   def destroy
+    @board_entry = get_entry params[:id] 
+    # 権限チェック
+    unless authorize_to_edit_board_entry? @board_entry
+      flash[:warning] = "この操作は、許可されていません。"
+      redirect_to :controller => 'mypage', :action => 'index'
+      return false
+    end
+
     id = @board_entry.id
     user_id = @board_entry.user_id
 
@@ -244,11 +282,18 @@ class EditController < ApplicationController
     else
       flash[:notice] = '削除に失敗しました。'
     end
-
     redirect_to url
   end
 
   def delete_trackback
+    @board_entry = get_entry params[:id] 
+
+    unless @board_entry.user_id == session[:user_id]
+      flash[:warning] = "この操作は、許可されていません。"
+      redirect_to :controller => 'mypage', :action => 'index'
+      return false
+    end
+
     tb_entries = EntryTrackback.find_all_by_board_entry_id_and_tb_entry_id(@board_entry.id, params[:tb_entry_id])
     tb_entries.each do |tb_entry|
       tb_entry.destroy
@@ -269,6 +314,15 @@ class EditController < ApplicationController
 
   # ajax_action
   def ado_remove_image
+    @board_entry = get_entry params[:id] 
+
+    # 権限チェック
+    unless authorize_to_edit_board_entry? @board_entry
+      flash[:warning] = "この操作は、許可されていません。"
+      redirect_to :controller => 'mypage', :action => 'index'
+      return false
+    end
+
     FileUtils.rm(File.join(get_dir_path, @board_entry.user_id.to_s, @board_entry.id.to_s + '_' + params[:filename]))
     img_urls = get_img_urls @board_entry
     render :partial => "board_entries/view_images", :locals=>{:img_urls=>img_urls, :board_entry_id=>@board_entry.id}
@@ -285,20 +339,7 @@ private
     @title = 'エントリを投稿する'
     @title = 'エントリを編集する' if ["edit", "update"].include? action_name
   end
-
-  def check_author
-    begin
-      @board_entry = BoardEntry.find(params[:id])
-    rescue ActiveRecord::RecordNotFound => ex
-      redirect_to :controller => 'mypage', :action => 'index'
-      return false
-    end
-    unless @board_entry and @board_entry.editable?(login_user_symbols, session[:user_id])
-      flash[:warning] = 'その操作は許可されていません。'
-      redirect_to :controller => 'mypage', :action => 'index'
-      return false
-    end
-  end
+  
 
   def analyze_params
     target_symbols_publication = []
@@ -323,7 +364,8 @@ private
 
   def upload_file board_entry, src_image_file
     # FIXME 以下のチェックに失敗した場合のエラー処理が全くない。
-    if valid_upload_file? src_image_file
+    if valid_upload_file?(src_image_file) && 
+      verify_extension?(src_image_file.original_filename, src_image_file.content_type)
       dir_path = File.join(get_dir_path, board_entry.user_id.to_s)
       FileUtils.mkdir_p dir_path
       target_image_file_name = File.join(dir_path, @board_entry.id.to_s + '_' + src_image_file.original_filename)
@@ -337,7 +379,7 @@ private
     board_entry_id = board_entry.id.to_s
     dir_path = File.join('board_entries', board_entry.user_id.to_s)
     img_urls = {}
-    img_files = Dir.glob(File.join(ENV['IMAGE_PATH'], dir_path, board_entry_id.to_s + "_*"))
+    img_files = Dir.glob(File.join(ENV['IMAGE_PATH'], dir_path, board_entry_id + "_*"))
     img_files.each do |img_file|
       img_name = File.basename(img_file)
       img_key = img_name.gsub(board_entry_id+"_",'')
@@ -387,4 +429,19 @@ private
       Message.save_message("TRACKBACK", trackback.board_entry.user_id, link_url, trackback.tb_entry.title)
     end
   end
+
+  def authorize_to_edit_board_entry? entry
+    entry.editable?(login_user_symbols, session[:user_id], session[:user_symbol], login_user_groups)
+  end
+
+  def get_entry entry_id
+    begin
+      @board_entry = BoardEntry.find(params[:id])
+    rescue ActiveRecord::RecordNotFound => ex
+      redirect_to :controller => 'mypage', :action => 'index'
+      return false
+    end
+  end
+
 end
+

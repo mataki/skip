@@ -49,45 +49,4 @@ describe BookmarkController do
                    :layout => 'dialog' }
     assert_response :ok
   end
-
-  def test_update_failuer
-    @request.session[:user_code] = "100001"
-    get :update
-    assert_response :found
-
-    # タイトルが空の場合
-    post :update, {:bookmark => {:url => SkipFaker.url, :title => ''},
-                   :bookmark_comment => {:tags => '', :public => true},
-                   :layout => 'dialog' }
-    assert_response :ok
-    assert_select "div h2", "1個のエラーが発生しました"
-
-    # URLが空の場合
-    post :update, {:bookmark => {:url => '', :title => SkipFaker.rand_char},
-                   :bookmark_comment => {:tags => '', :public => true},
-                   :layout => 'dialog' }
-    assert_response :ok
-    assert_select "div h2", "2個のエラーが発生しました"
-
-    # タグが不正な形
-    post :update, {:bookmark => {:url => SkipFaker.url, :title => SkipFaker.rand_char},
-                   :bookmark_comment => {:tags => '[a', :public => true},
-                   :layout => 'dialog' }
-    assert_response :ok
-    assert_select "div h2", "1個のエラーが発生しました"
-
-    # タイトルが空でURLが空でタグが不正な場合
-    post :update, {:bookmark => {:url => '', :title => ''},
-                   :bookmark_comment => {:tags => '[a', :public => true},
-                   :layout => 'dialog' }
-    assert_response :ok
-    assert_select "div h2", "4個のエラーが発生しました"
-
-    # 既存のURLでタイトルが空でタグが不正の場合
-    post :update, {:bookmark => {:url => @a_bookmark.url, :title => ''},
-                   :bookmark_comment => {:tags => '[a', :public => true},
-                   :layout => 'dialog' }
-    assert_response :ok
-    assert_select "div h2", "2個のエラーが発生しました"
-  end
 end

@@ -1,7 +1,7 @@
+<%= hidden_field_tag("authenticity_token", form_authenticity_token) %>
 <% icon_name, icon_title = 'award_star_gold_2', "スターをはずす" -%>
 <% icon_name, icon_title = 'award_star_silver_2', "スターを付ける" unless participation.favorite -%>
 <a href="#" class='favorite_star' id="favorite_star_link_<%= participation.id -%>" ><%= icon_tag(icon_name, :title => icon_title, :alt => icon_title) -%></a>
-
 <script type="text/javascript">
 $j(function(){
     <%# TODO idでクリックを設定するDOM要素を設定しているがクラスで設定して、application.jsなどに一箇所に書きたい %>
@@ -11,7 +11,7 @@ $j(function(){
         $j.ajax({
             type: 'POST',
             url: '<%= url_for(:controller => 'group', :gid => gid , :action => 'ado_set_favorite') -%>',
-            data: { group_participation_id : '<%= participation.id -%>', favorite_flag : <%= (!participation.favorite).to_s -%>, update_elem_id : '<%= update_elem_id -%>' },
+            data: { group_participation_id : '<%= participation.id -%>', favorite_flag : <%= (!participation.favorite).to_s -%>, update_elem_id : '<%= update_elem_id -%>', authenticity_token: $j("#authenticity_token").val()},
             complete: function(request) {
                 $j('#<%= update_elem_id -%>').html(request.responseText).parent().highlight();
             }

@@ -15,6 +15,8 @@
 
 class MontaController < ApplicationController
 
+  protect_from_forgery :except => [:execute,:ado_view_contents] 
+
   def execute_monta
     unless check_entry_permission
       render :text => "不正な操作です"
@@ -27,6 +29,11 @@ class MontaController < ApplicationController
   end
 
   def ado_view_contents
+    unless check_entry_permission
+      render :text => "不正な操作です"
+      return false
+    end
+
     return unless get_board_entry
 
     @index = 0
@@ -52,43 +59,7 @@ class MontaController < ApplicationController
     render :layout=>false
   end
 
-  def replace_img_id content, img_id_arr
-    hidden_content = content
-    img_id_arr.each do |img_id|
-      hidden_content = hidden_content.gsub("id='#{img_id}'", "id='hidden_#{img_id}'");
-    end
-    return ERB::Util.html_escape(hidden_content)
-  end
-
-  def divide_text text
-    line_count = 1
-    content_array = []
-    counter_array = []
-    src_texts = text.split(/[\r\n]{3,}/)
-    src_texts.each do |src_text|
-      tmp_text = src_text
-      content_array << src_text
-      counter_array << line_count
-      while tmp_text.match(/\[\[.+?\]\]/)
-        tmp_text = tmp_text.sub("[[","").sub("]]","")
-        content_array << tmp_text
-        counter_array << line_count
-      end
-      line_count += 1
-    end
-    return content_array, counter_array
-  end
-
 private
-  def get_board_entry
-    begin
-      @board_entry = BoardEntry.find(params[:id])
-    rescue ActiveRecord::RecordNotFound => ex
-      redirect_to :controller => 'mypage', :action => 'index'
-      return false
-    end
-  end
-
   def decorate_str(str, user_id, board_entry_id, board_entry_user_id)
     view_str = str
     # 黄色い付箋紙を追加
@@ -124,6 +95,42 @@ private
     end
 
      return ERB::Util.html_escape(view_str.gsub("\r\n", "<br/>")), img_id_arr
+  end
+
+  def replace_img_id content, img_id_arr
+    hidden_content = content
+    img_id_arr.each do |img_id|
+      hidden_content = hidden_content.gsub("id='#{img_id}'", "id='hidden_#{img_id}'");
+    end
+    return ERB::Util.html_escape(hidden_content)
+  end
+
+  def divide_text text
+    line_count = 1
+    content_array = []
+    counter_array = []
+    src_texts = text.split(/[\r\n]{3,}/)
+    src_texts.each do |src_text|
+      tmp_text = src_text
+      content_array << src_text
+      counter_array << line_count
+      while tmp_text.match(/\[\[.+?\]\]/)
+        tmp_text = tmp_text.sub("[[","").sub("]]","")
+        content_array << tmp_text
+        counter_array << line_count
+      end
+      line_count += 1
+    end
+    return content_array, counter_array
+  end
+
+  def get_board_entry
+    begin
+      @board_entry = BoardEntry.find(params[:id])
+    rescue ActiveRecord::RecordNotFound => ex
+      redirect_to :controller => 'mypage', :action => 'index'
+      return false
+    end
   end
 
 end

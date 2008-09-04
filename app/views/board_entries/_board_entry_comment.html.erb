@@ -7,7 +7,9 @@
       <td><%= user_link_to(comment.user) %><span style="font-size: 10px">[<%= comment.created_on.strftime("%Y/%m/%d-%H:%M") %>]</span></td>
       <td align="right">
         <%= dummy_link_to(icon_tag('comment_edit', { :alt => "編集", :title => "編集" }), :id => "comment_edit_link_#{comment.id}") if writer?(comment, session[:user_id]) %>
-        <%= link_to(icon_tag('comment_delete', { :alt => "削除", :title => "削除" }), {:controller => "board_entries", :action => "destroy_comment", :id => comment.id }, :confirm => '本当に削除しますか？') if (comment_writer?(comment, session[:user_id]) && comment.children.size == 0) %>
+        <%= link_to(icon_tag('comment_delete', { :alt => "削除", :title => "削除" }), 
+                    {:controller => "board_entries", :action => "destroy_comment", :id => comment.id}, 
+                    :confirm => '本当に削除しますか？', :method => :post) if (comment_writer?(comment, session[:user_id]) && comment.children.size == 0) %>
       <% if level < nest_limit %>
         <span class="edit_nest_comment" id='link_nest_comment_<%= comment.id -%>'><%= dummy_link_to(icon_tag("comment_add", { :alt => "このコメントに返信", :title => "このコメントに返信"}), :id => "comment_nest_link_#{comment.id}") %></span>
       <% end %>
