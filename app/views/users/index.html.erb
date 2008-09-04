@@ -10,7 +10,7 @@
   </tr>
   <tr>
     <th>所属</th>
-    <td><%= select(:condition, :section, User.select_section.insert(0, "")) -%></td>
+    <td><%= select(:condition, :section, UserProfile.grouped_sections.insert(0, "")) %></td>
     <th><%= Admin::Setting.login_account -%></th>
     <td><%= text_field :condition, :code, :size => 25 %></td>
   </tr>

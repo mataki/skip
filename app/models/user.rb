@@ -232,11 +232,6 @@ class User < ActiveRecord::Base
     !self.user_profile.nil?
   end
 
-  # Viewで使う部門一覧（セレクトボタン用）
-  def self.select_section
-    UserProfile.find(:all, :select => "section", :group => "section").collect { |user_profile| user_profile.section }
-  end
-
   # ユーザ登録時にブログを投稿する
   def create_initial_entry message
     entry_params = {}

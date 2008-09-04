@@ -14,7 +14,7 @@ a_user_profile:
   introduction:
   disclosure: true
   email: a_user@skip.jp
-  section:
+  section: Programmer
   extension:
   self_introduction:
 
@@ -33,7 +33,7 @@ a_group_owned_user_profile:
   introduction:
   disclosure: true
   email: a_group_owned_user@skip.jp
-  section:
+  section: Programmer
   extension:
   self_introduction:
 
@@ -52,6 +52,6 @@ a_group_joined_user_profile:
   introduction:
   disclosure: true
   email: a_group_joined_user@skip.jp
-  section:
+  section: Programmer
   extension:
   self_introduction:

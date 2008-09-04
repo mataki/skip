@@ -48,12 +48,10 @@ table.normal {
   </tr>
   <tr>
     <th width="100px"><label for="page_title">部門</label></th>
-    <td><% sections = []
-      sections = User.select_section
-      if sections.size > 0 %>
-      <%= select("profile", "section", sections, {}, {:tabindex => (tabindex += 1)}) -%>
+    <td>
+    <% if sections = UserProfile.grouped_sections %>
+      <%= select("profile", "section", sections, {}, {:tabindex => (tabindex += 1)}) -%><br/>
     <% end %>
-      <br/>
       [選択に無い場合] ： <%= text_field_tag "new_section", params[:new_section], :size => 10, :tabindex => (tabindex += 1) %> （次回以降選択項目になります）</td>
   </tr>
   <tr>
