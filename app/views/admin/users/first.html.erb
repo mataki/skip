@@ -1,0 +1,32 @@
+<h3><%= _('管理者ユーザの作成') %></h3>
+
+<% form_tag(first_new_admin_user_url(:code => params[:code])) do |f| %>
+  <%= error_messages_for :user %>
+  <p>
+    <%= label :user_uid, :uid %><br />
+    <%= text_field :user_uid, :uid %>
+  </p>
+  <p>
+    <%= label :user_profile, :email %><br />
+    <%= text_field :user_profile, :email %>
+  </p>
+  <p>
+    <%= label :user, :name %><br />
+    <%= text_field :user, :name %>
+  </p>
+  <p>
+    <%= label :user_profile, :section %><br />
+    <%= text_field :user_profile, :section %>
+  </p>
+  <p>
+    <%= label :user, :password %><br />
+    <%= password_field :user, :password %>
+  </p>
+  <p>
+    <%= label :user, :password_confirmation %><br />
+    <%= password_field :user, :password_confirmation %>
+  </p>
+  <p>
+    <%= submit_tag _('Create') %>
+  </p>
+<% end %>

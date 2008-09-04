@@ -745,7 +745,8 @@ private
 
     # システムからの連絡
     system_messages = []
-    if @user.user_profile.introduction.size < 10 || !UserProfile.find_by_user_id(@user.id)
+    self_introduction = @user.user_profile.self_introduction
+    if self_introduction.blank? || self_introduction.size < 10 || !UserProfile.find_by_user_id(@user.id)
       system_messages << {
         :text => "プロフィールを充実させましょう！",
         :icon => "vcard",
