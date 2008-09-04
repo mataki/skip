@@ -3,37 +3,37 @@ module AdminModule
     include ActionController::RecordIdentifier
     private
 
-    # "Admin::Account"
+    # "Admin::User"
     def admin_model_class_name
       "Admin::"+controller_name.classify
     end
 
-    # Admin::Account
+    # Admin::User
     def admin_model_class
       admin_model_class_name.constantize
     end
 
-    # "admin_account"
+    # "admin_user"
     def admin_params_name
       singular_class_name(admin_model_class_name.constantize)
     end
 
-    # :admin_account
+    # :admin_user
     def admin_params_sym
       admin_params_name.to_sym
     end
 
-    # admin_accounts_url
+    # admin_users_url
     def index_url
       eval(admin_params_name.pluralize+"_url")
     end
 
-    # @account = object
+    # @user = object
     def set_singularize_instance_val(object)
       instance_variable_set '@'+controller_name.singularize, object
     end
 
-    # @accounts = objects
+    # @users = objects
     def set_pluralize_instance_val(objects)
       instance_variable_set '@'+controller_name, objects
     end

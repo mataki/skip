@@ -3,7 +3,7 @@
 <h2><%= _('New %{model}') % {:model => _('openid identifier')} %></h2>
 
 <div class="box tabular">
-<% form_for(@openid_identifier, :url => admin_account_openid_identifiers_url(@account)) do |f| %>
+<% form_for(@openid_identifier, :url => admin_user_openid_identifiers_url(@user)) do |f| %>
   <%= f.error_messages %>
 
   <p>
@@ -16,5 +16,5 @@
 <% end %>
 </div>
 
-<%= link_to _('Back'), admin_account_openid_identifiers_path %>
+<%= link_to _('Back'), admin_user_openid_identifiers_path %>
 <% end -%>

@@ -156,7 +156,7 @@ class MypageController < ApplicationController
     when "manage_profile"
       @profile = @user.profile || UserProfile.new
     when "manage_password"
-      @account = User.new
+      @user = User.new
     when "manage_email"
       @applied_email = AppliedEmail.find_by_user_id(session[:user_id]) || AppliedEmail.new
     when "manage_openid"
@@ -250,8 +250,8 @@ class MypageController < ApplicationController
   end
 
   def apply_password
-    @account = AccountAccess.change_password(session[:user_code], params[:account])
-    if @account.errors.empty?
+    @user = AccountAccess.change_password(session[:user_code], params[:user])
+    if @user.errors.empty?
       flash[:notice] = 'パスワードを変更しました。'
       redirect_to :action => :manage, :menu => :manage_password
       return
