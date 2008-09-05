@@ -17,9 +17,9 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe UserProfile, '.grouped_sections' do
   before do
-    create_user.create_user_profile(:email => SkipFaker.email, :section => 'Programmer', :disclosure => true)
-    create_user.create_user_profile(:email => SkipFaker.email, :section => 'Programmer', :disclosure => true)
-    create_user.create_user_profile(:email => SkipFaker.email, :section => 'Tester', :disclosure => true)
+    create_user :user_profile_options => {:email => SkipFaker.email, :section => 'Programmer', :disclosure => true}, :user_uid_options => {:uid => SkipFaker.rand_num(6)}
+    create_user :user_profile_options => {:email => SkipFaker.email, :section => 'Programmer', :disclosure => true}, :user_uid_options => {:uid => SkipFaker.rand_num(6)}
+    create_user :user_profile_options => {:email => SkipFaker.email, :section => 'Tester', :disclosure => true}, :user_uid_options => {:uid => SkipFaker.rand_num(6)}
   end
   it {UserProfile.grouped_sections.size.should == 2}
 end

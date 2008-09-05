@@ -107,8 +107,17 @@ def create_ranking(options = {})
 end
 
 def create_user options = {}
-  user = User.new({ :name => 'ほげ ほげ', :password => 'password', :password_confirmation => 'password'}.merge(options))
-  user.save
+  options[:user_options] ||= {}
+  user = User.new({ :name => 'ほげ ほげ', :password => 'password', :password_confirmation => 'password'}.merge(options[:user_options]))
+  if options[:user_profile_options]
+    user_profile = UserProfile.new({ :email => 'example@skip.org', :section => 'Programmer', :disclosure => true }.merge(options[:user_profile_options]))
+    user.user_profile = user_profile
+  end
+  if options[:user_uid_options]
+    user_uid = UserUid.new({ :uid => '123456', :uid_type => 'MASTER' }.merge(options[:user_uid_options]))
+    user.user_uids << user_uid
+  end
+  user.save!
   user
 end
 

@@ -1,0 +1,55 @@
+<%= render :partial => '/admin/contents_left' %>
+<% content_for :contents_right do -%>
+<h2><%= _('ユーザインポート') %></h2>
+<div class="box">
+  <div class="search_box">
+    <% form_tag import_new_admin_user_path, :multipart => true do -%>
+    <label for="file"><%= _('CSVファイル') %></label><%= file_field_tag :file %>
+    <%= submit_tag _('Upload'), :disable_with => _('Uploading...') %>
+    <% end -%>
+
+    <h3><%= _('正しいCSVファイルの例') %></h3>
+    <pre>
+      111111,山田 太郎,経理,yamada@example.com,password
+      222222,山田 花子,人事,h_yamada@example.com,password
+      333333,鈴木 次郎,開発,suzuki@example.com,password</pre>
+  </div>
+  <% unless @users.empty? -%>
+  <% unless flash[:error].nil? -%>
+  <h2>アップロードしたCSVファイルのエラー行</h2>
+  <p><%= _('以下の色が変わっている箇所が不正な値です。例にならって修正後再度アップロードして下さい。') %></p>
+  <% end -%>
+  <table class="normal sortable">
+    <thead>
+      <tr>
+        <th><%= _('Line') %></th>
+        <th><%= label Admin::UserUid, :uid %></th>
+        <th><%= label Admin::User, :name %></th>
+        <th><%= label Admin::UserProfile, :section %></th>
+        <th><%= label Admin::UserProfile, :email %></th>
+        <th><%= label Admin::User, :password %></th>
+        <td style="width:16px;"></td>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each_with_index do |array, line| -%>
+        <% @user, @user_profile, @user_uid = array -%>
+        <% unless @user.errors.empty? -%>
+        <% error_messages_for :user -%>
+        <tr class="<%= cycle('line_1', 'line_0') %>">
+          <td><%= line+1 %></td>
+          <td><%= label :user_uid, :uid, @user_uid.uid %></td>
+          <td><%= label :user_name, :name, @user.name %></td>
+          <td><%= label :user_profile, :section, @user_profile.section %></td>
+          <td><%= label :user_profile, :email, @user_profile.email %></td>
+          <td><%= label :user, :password, '********' %></td>
+          <td><%= help_icon_tag :content => "|#{@user.errors.full_messages.join('|')}" %></td>
+        </tr>
+        <% end -%>
+      <% end -%>
+    </tbody>
+  </table>
+  <% end -%>
+</div>
+<%= link_to _('Back'), admin_users_path %>
+<% end -%>

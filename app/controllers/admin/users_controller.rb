@@ -57,10 +57,56 @@ class Admin::UsersController < Admin::ApplicationController
     end
   end
 
+  def import
+    if request.get? || !valid_csv?(params[:file])
+      @users = []
+      return
+    end
+    @users = Admin::User.make_users(params[:file])
+    Admin::User.transaction do
+      @users.each do |user, user_profile, user_uid|
+        user.save!
+        unless user.new_record?
+          user_profile.save!
+          user_uid.save!
+        end
+      end
+    end
+    flash[:notice] = _('CSVファイルからのアカウント登録/更新に成功しました。')
+    redirect_to admin_users_path
+  rescue ActiveRecord::RecordInvalid,
+         ActiveRecord::RecordNotSaved => e
+    flash[:error] = _('CSVファイルに不正な値が含まれています。')
+    @users.each {|user, user_profile, user_uid| user.valid?}
+  end
+
   private
   def valid_activation_code? code
     return false unless code
     return true if Activation.find_by_code(code)
     false
+  end
+
+  def valid_csv?(uploaded_file)
+    if uploaded_file.blank?
+      flash[:error] = _('ファイルを指定して下さい。')
+      return false
+    end
+
+    if uploaded_file.size == 0
+      flash[:error] = _('ファイルサイズが0です。')
+      return false
+    end
+
+    if uploaded_file.size > 1.megabyte
+      flash[:error] = _('ファイルサイズが1MBを超えています。')
+      return false
+    end
+
+    unless ['text/csv', 'application/x-csv'].include?(uploaded_file.content_type)
+      flash[:error] = _('csvファイル以外はアップロード出来ません。')
+      return false
+    end
+    true
   end
 end

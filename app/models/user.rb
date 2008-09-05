@@ -15,6 +15,7 @@
 
 class User < ActiveRecord::Base
   attr_accessor :old_password, :password
+  attr_protected :admin, :status
 
   has_many :group_participations, :dependent => :destroy
   has_many :pictures, :dependent => :destroy
