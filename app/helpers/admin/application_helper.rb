@@ -75,7 +75,9 @@ module ActionView
     module FormHelper
       include GetText
       def label_with_gettext(object_name, method, text = nil, options = {})
-        text ||= s_("#{object_name.to_s}|#{method.to_s.humanize}")
+        text ||= s_("#{object_name.to_s.classify}|#{method.to_s.humanize}")
+        # ラベル名変換が終わったらテーブル名の単数形にしておく。(for属性のため)
+        object_name = object_name.to_s.demodulize.tableize.singularize
         InstanceTag.new(object_name, method, self, nil, options.delete(:object)).to_label_tag(text, options.merge(:object => @object))
       end
       alias_method_chain :label, :gettext

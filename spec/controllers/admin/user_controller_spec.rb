@@ -33,6 +33,9 @@ describe Admin::UsersController, 'GET /first' do
       get :first
     end
     it {response.should be_success}
+    it {assigns[:user].should_not be_nil}
+    it {assigns[:user_profile].should_not be_nil}
+    it {assigns[:user_uid].should_not be_nil}
   end
 end
 
@@ -40,20 +43,18 @@ describe Admin::UsersController, 'POST /first' do
   describe '有効なactivation_codeの場合' do
     before do
       controller.stub!(:valid_activation_code?).and_return(true)
-      @user = stub_model(User)
-      @user_profile = stub_model(UserProfile)
-      @user_uid = stub_model(UserUid)
+      @user = stub_model(Admin::User)
+      @user_profile = stub_model(Admin::UserProfile)
+      @user_uid = stub_model(Admin::UserUid)
       @activation = stub_model(Activation)
+      @user.stub!(:user_access=)
+      Admin::User.stub!(:make_user).and_return([@user, @user_profile, @user_uid])
     end
     describe '管理者ユーザの登録に成功する場合' do
-      it 'Userが作成されること' do
-        @user.should_receive('admin=').with(true)
-        @user.should_receive('status=').with('ACTIVE')
+      it 'Admin::Userが作成されること' do
+        @user.should_receive(:user_access=)
         @user.should_receive(:save!)
-        User.should_receive(:new).and_return(@user)
-        @user_profile.should_receive('disclosure=').with(true)
-        UserProfile.should_receive(:new).and_return(@user_profile)
-        UserUid.should_receive(:new).and_return(@user_uid)
+        Admin::User.should_receive(:make_user).and_return([@user, @user_profile, @user_uid])
         @activation.should_receive(:update_attributes).with({:code => nil})
         Activation.should_receive(:find_by_code).and_return(@activation)
         post :first, {:user => {"name"=>"管理者", "password_confirmation"=>"[FILTERED]", "password"=>"[FILTERED]"}, :user_profile => {"email"=>"admin@skip.org", "section"=>"管理部"}, :user_uid => {:uid => 'admin'}}
@@ -63,10 +64,10 @@ describe Admin::UsersController, 'POST /first' do
     describe '管理者ユーザの登録に失敗する場合' do
       before do
         @user.should_receive(:save!).and_raise(mock_record_invalid)
-        User.should_receive(:new).and_return(@user)
         post :first, :user_uid => {}
       end
       it {response.should be_success}
+      it {response.should render_template('first')}
     end
   end
   describe '無効なactivation_codeの場合' do

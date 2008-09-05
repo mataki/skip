@@ -1,29 +1,30 @@
 <h3><%= _('管理者ユーザの作成') %></h3>
+<%= stylesheet_link_tag "admin" %>
 
 <% form_tag(first_new_admin_user_url(:code => params[:code])) do |f| %>
   <%= error_messages_for :user %>
   <p>
-    <%= label :user_uid, :uid %><br />
+    <%= label Admin::UserUid.name, :uid %><br />
     <%= text_field :user_uid, :uid %>
   </p>
   <p>
-    <%= label :user_profile, :email %><br />
+    <%= label Admin::UserProfile.name, :email %><br />
     <%= text_field :user_profile, :email %>
   </p>
   <p>
-    <%= label :user, :name %><br />
+    <%= label Admin::User.name, :name %><br />
     <%= text_field :user, :name %>
   </p>
   <p>
-    <%= label :user_profile, :section %><br />
+    <%= label Admin::UserProfile.name, :section %><br />
     <%= text_field :user_profile, :section %>
   </p>
   <p>
-    <%= label :user, :password %><br />
+    <%= label Admin::User.name, :password %><br />
     <%= password_field :user, :password %>
   </p>
   <p>
-    <%= label :user, :password_confirmation %><br />
+    <%= label Admin::User.name, :password_confirmation %><br />
     <%= password_field :user, :password_confirmation %>
   </p>
   <p>

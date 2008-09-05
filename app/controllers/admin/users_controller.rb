@@ -25,21 +25,14 @@ class Admin::UsersController < Admin::ApplicationController
   def first
     if valid_activation_code? params[:code]
       if request.get?
-        @user = User.new
-        @user_profile = UserProfile.new
-        @user_uid = UserUid.new
+        @user = Admin::User.new
+        @user_profile = Admin::UserProfile.new
+        @user_uid = Admin::UserUid.new
         render :layout => false
       else
         begin
-          User.transaction do
-            @user = User.new params[:user]
-            @user.admin = true
-            @user.status = 'ACTIVE'
-            @user_profile = UserProfile.new params[:user_profile]
-            @user_profile.disclosure = true
-            @user.user_profile = @user_profile
-            @user_uid = UserUid.new :uid => params[:user_uid][:uid], :uid_type => 'MASTER'
-            @user.user_uids << @user_uid
+          Admin::User.transaction do
+            @user, @user_profile, @user_uid = Admin::User.make_user({:user => params[:user], :user_profile => params[:user_profile], :user_uid => params[:user_uid]}, true)
             @user.user_access = UserAccess.new :last_access => Time.now, :access_count => 0
             @user.save!
             UserAccess.create!(:user_id => @user.id, :last_access => Time.now, :access_count => 0)
