@@ -1,6 +1,8 @@
 <%= render :partial => '/admin/contents_left' %>
+<% content_for :topic_path do -%>
+<%= render :partial => '/admin/shared/topic_path' %>
+<% end -%>
 <% content_for :contents_right do -%>
-<h2><%= _('ユーザインポート') %></h2>
 <div class="box">
   <div class="search_box">
     <% form_tag import_new_admin_user_path, :multipart => true do -%>
@@ -17,17 +19,17 @@
   <% unless @users.empty? -%>
   <% unless flash[:error].nil? -%>
   <h2>アップロードしたCSVファイルのエラー行</h2>
-  <p><%= _('以下の色が変わっている箇所が不正な値です。例にならって修正後再度アップロードして下さい。') %></p>
+  <p><%= _('エラーの詳細は各行の右端のアイコンをクリックすると表示されます。例にならって修正後再度アップロードして下さい。') %></p>
   <% end -%>
   <table class="normal sortable">
     <thead>
       <tr>
         <th><%= _('Line') %></th>
-        <th><%= label Admin::UserUid, :uid %></th>
-        <th><%= label Admin::User, :name %></th>
-        <th><%= label Admin::UserProfile, :section %></th>
-        <th><%= label Admin::UserProfile, :email %></th>
-        <th><%= label Admin::User, :password %></th>
+        <th><%= label Admin::UserUid.name, :uid %></th>
+        <th><%= label Admin::User.name, :name %></th>
+        <th><%= label Admin::UserProfile.name, :section %></th>
+        <th><%= label Admin::UserProfile.name, :email %></th>
+        <th><%= label Admin::User.name, :password %></th>
         <td style="width:16px;"></td>
       </tr>
     </thead>
@@ -35,15 +37,20 @@
       <% @users.each_with_index do |array, line| -%>
         <% @user, @user_profile, @user_uid = array -%>
         <% unless @user.errors.empty? -%>
-        <% error_messages_for :user -%>
         <tr class="<%= cycle('line_1', 'line_0') %>">
           <td><%= line+1 %></td>
-          <td><%= label :user_uid, :uid, @user_uid.uid %></td>
-          <td><%= label :user_name, :name, @user.name %></td>
-          <td><%= label :user_profile, :section, @user_profile.section %></td>
-          <td><%= label :user_profile, :email, @user_profile.email %></td>
-          <td><%= label :user, :password, '********' %></td>
-          <td><%= help_icon_tag :content => "|#{@user.errors.full_messages.join('|')}" %></td>
+          <td><%= @user_uid.uid %></td>
+          <td><%= @user.name %></td>
+          <td><%= @user_profile.section %></td>
+          <td><%= @user_profile.email %></td>
+          <td><%= '********' %></td>
+          <%
+            error_msg = []
+            error_msg.concat @user.errors.full_messages.reject{|msg| msg.include?("User uid") || msg.include?("User profile") } unless @user.errors.empty?
+            error_msg.concat @user_profile.errors.full_messages unless @user_profile.errors.empty?
+            error_msg.concat @user_uid.errors.full_messages unless @user_uid.errors.empty?
+          %>
+          <td><%= help_icon_tag :content => "|#{error_msg.join('|')}" %></td>
         </tr>
         <% end -%>
       <% end -%>
@@ -51,5 +58,5 @@
   </table>
   <% end -%>
 </div>
-<%= link_to _('Back'), admin_users_path %>
+  <%= link_to _('Listing %{model}') % {:model => _('user')}, admin_users_path %>
 <% end -%>

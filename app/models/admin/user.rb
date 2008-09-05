@@ -18,9 +18,11 @@ class Admin::User < User
   has_many :user_uids, :dependent => :destroy, :class_name => 'Admin::UserUid'
   has_many :openid_identifiers, :dependent => :destroy, :class_name => 'Admin::OpenidIdentifier'
 
-  N_('Admin::User|Name')
-  N_('Admin::User|Retired')
   N_('Admin::User|Admin')
+  N_('Admin::User|Name')
+  N_('Admin::User|Password confirmation')
+  N_('Admin::User|Password')
+  N_('Admin::User|Retired')
 
   class << self
     alias :find :find_without_retired_skip

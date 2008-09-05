@@ -60,6 +60,7 @@ class Admin::UsersController < Admin::ApplicationController
   def import
     if request.get? || !valid_csv?(params[:file])
       @users = []
+      @topics = [[_('Listing %{model}') % {:model => _('user')}, admin_users_path], _('ユーザインポート')]
       return
     end
     @users = Admin::User.make_users(params[:file])
