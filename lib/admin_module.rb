@@ -28,14 +28,23 @@ module AdminModule
       eval(admin_params_name.pluralize+"_url")
     end
 
+    # "user" "board entry"
+    def singularize_name
+      controller_name.singularize
+    end
+
     # @user = object
     def set_singularize_instance_val(object)
-      instance_variable_set '@'+controller_name.singularize, object
+      instance_variable_set '@'+singularize_name, object
     end
 
     # @users = objects
     def set_pluralize_instance_val(objects)
       instance_variable_set '@'+controller_name, objects
+    end
+
+    def object_name_without_admin(object)
+      object.class.name[/[^Admin::](.*)$/].tableize.singularize
     end
   end
 
@@ -44,11 +53,13 @@ module AdminModule
 
     def index
       @query = params[:query]
-      @pages, objects = paginate(controller_name.singularize.to_sym,
+      @pages, objects = paginate(singularize_name.to_sym,
                                  :per_page => 100,
                                  :class_name => admin_model_class_name,
                                  :conditions => [admin_model_class.search_colomns, { :lqs => SkipUtil.to_lqs(@query) }])
       set_pluralize_instance_val objects
+
+      @topics = [_('Listing %{model}') % {:model => _(singularize_name.gsub('_', ' '))}]
 
       respond_to do |format|
         format.html # index.html.erb
@@ -59,6 +70,9 @@ module AdminModule
     def show
       object = admin_model_class.find(params[:id])
       set_singularize_instance_val object
+
+      @topics = [[_('Listing %{model}') % {:model => _(singularize_name.gsub('_', ' '))}, index_url],
+                 _('%{model} Show') % {:model => object.topic_title}]
 
       respond_to do |format|
         format.html # show.html.erb
@@ -71,6 +85,9 @@ module AdminModule
       object = admin_model_class.new
       set_singularize_instance_val object
 
+      @topics = [[_('Listing %{model}') % {:model => _(singularize_name.gsub('_', ' '))}, index_url],
+                 _('New %{model}') % {:model => object.topic_title}]
+
       respond_to do |format|
         format.html # new.html.erb
         format.xml  { render :xml => object }
@@ -80,6 +97,9 @@ module AdminModule
     def edit
       object = admin_model_class.find(params[:id])
       set_singularize_instance_val object
+
+      @topics = [[_('Listing %{model}') % {:model => _(singularize_name.gsub('_', ' '))}, index_url],
+                 _('Editing %{model}') % {:model => object.topic_title}]
     end
 
     def create
@@ -88,7 +108,7 @@ module AdminModule
 
       respond_to do |format|
         if object.save
-          flash[:notice] = _("%{model} was successfully created.") % {:model => _(controller_name.singularize)}
+          flash[:notice] = _("%{model} was successfully created.") % {:model => _(singularize_name)}
           format.html { redirect_to(object) }
           format.xml  { render :xml => object, :status => :created, :location => object }
         else
@@ -104,7 +124,7 @@ module AdminModule
 
       respond_to do |format|
         if object.update_attributes(params[admin_params_sym])
-          flash[:notice] = _("%{model} was successfully updated.") % {:model => _(controller_name.singularize)}
+          flash[:notice] = _("%{model} was successfully updated.") % {:model => _(singularize_name)}
           format.html { redirect_to(object) }
           format.xml  { head :ok }
         else
@@ -134,6 +154,10 @@ module AdminModule
       objects = chiled_objects
       set_pluralize_instance_val objects
 
+      @topics = [[_('Listing %{model}') % {:model => _(object_name_without_admin(load_parent).gsub('_', ' '))}, parent_index_path],
+                 [_('%{model} Show') % {:model => load_parent.topic_title}, load_parent],
+                 _('Listing %{model}') % {:model => _(singularize_name.gsub('_', ' '))}]
+
       respond_to do |format|
         format.html # index.html.erb
         format.xml  { render :xml => objects }
@@ -143,6 +167,11 @@ module AdminModule
     def show
       object = chiled_objects.find(params[:id])
       set_singularize_instance_val object
+
+      @topics = [[_('Listing %{model}') % {:model => _(object_name_without_admin(load_parent).gsub('_', ' '))}, parent_index_path],
+                 [_('%{model} Show') % {:model => load_parent.topic_title}, load_parent],
+                 [_('Listing %{model}') % {:model => _(singularize_name.gsub('_', ' '))}, { :action => :index }],
+                 _('%{model} Show') % {:model => object.topic_title}]
 
       respond_to do |format|
         format.html # show.html.erb
@@ -154,6 +183,11 @@ module AdminModule
       object = admin_model_class.new
       set_singularize_instance_val object
 
+      @topics = [[_('Listing %{model}') % {:model => _(object_name_without_admin(load_parent).gsub('_', ' '))}, parent_index_path],
+                 [_('%{model} Show') % {:model => load_parent.topic_title}, load_parent],
+                 [_('Listing %{model}') % {:model => _(singularize_name.gsub('_', ' '))}, { :action => :index }],
+                 _('New %{model}') % {:model => object.topic_title}]
+
       respond_to do |format|
         format.html # new.html.erb
         format.xml  { render :xml => object }
@@ -163,6 +197,11 @@ module AdminModule
     def edit
       object = chiled_objects.find(params[:id])
       set_singularize_instance_val object
+
+      @topics = [[_('Listing %{model}') % {:model => _(object_name_without_admin(load_parent).gsub('_', ' '))}, parent_index_path],
+                 [_('%{model} Show') % {:model => load_parent.topic_title}, load_parent],
+                 [_('Listing %{model}') % {:model => _(singularize_name.gsub('_', ' '))}, { :action => :index }],
+                 _('Editing %{model}') % {:model => object.topic_title}]
     end
 
     def create
@@ -171,7 +210,7 @@ module AdminModule
 
       respond_to do |format|
         if object.save
-          flash[:notice] = _("%{model} was successfully created.") % {:model => _(controller_name.singularize)}
+          flash[:notice] = _("%{model} was successfully created.") % {:model => _(singularize_name)}
           format.html { redirect_to(url_for_parent_and(object)) }
           format.xml  { render :xml => object, :status => :created, :location => object }
         else
@@ -187,8 +226,8 @@ module AdminModule
       set_singularize_instance_val object
 
       respond_to do |format|
-        if object.update_attributes(params[controller_name.singularize.to_sym])
-          flash[:notice] = _('%{model} was successfully updated.') % {:model => _(controller_name.singularize)}
+        if object.update_attributes(params[singularize_name.to_sym])
+          flash[:notice] = _('%{model} was successfully updated.') % {:model => _(singularize_name)}
           format.html { redirect_to(url_for_parent_and(object)) }
           format.xml  { head :ok }
         else
@@ -215,13 +254,17 @@ module AdminModule
     end
 
     def url_for_parent_and(object)
-      redirect_url = url_prefix+controller_name.singularize+"_url"
+      redirect_url = url_prefix+singularize_name+"_url"
       send(redirect_url.to_sym, load_parent, object)
     end
 
     def url_for_parent
       redirect_url = url_prefix+controller_name+"_url"
       send(redirect_url.to_sym, load_parent)
+    end
+
+    def parent_index_path
+      eval("admin_"+object_name_without_admin(load_parent).pluralize+"_path")
     end
   end
 end

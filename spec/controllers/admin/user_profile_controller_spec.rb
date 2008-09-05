@@ -18,7 +18,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe Admin::UserProfilesController, 'GET /admin_user_user_profile' do
   before do
     admin_login
-    @user = mock(Admin::User)
+    @user = mock(Admin::User, :name => 'name')
     @user_profile = mock(Admin::UserProfile)
     @user.should_receive(:user_profile).and_return(@user_profile)
     Admin::User.should_receive(:find).and_return(@user)
@@ -32,7 +32,7 @@ end
 describe Admin::UserProfilesController, 'GET /edit_admin_user_user_profile' do
   before do
     admin_login
-    @user = mock(Admin::User)
+    @user = mock(Admin::User, :name => 'name')
     @user_profile = mock(Admin::UserProfile)
     @user.should_receive(:user_profile).and_return(@user_profile)
     Admin::User.should_receive(:find).and_return(@user)
@@ -45,7 +45,7 @@ end
 describe Admin::UserProfilesController, 'PUT /edit_admin_user_user_profile' do
   before do
     admin_login
-    @user = mock(Admin::User)
+    @user = mock(Admin::User, :name => 'name')
     @user_profile = mock(Admin::UserProfile)
     @user.should_receive(:user_profile).and_return(@user_profile)
     Admin::User.should_receive(:find).and_return(@user)

@@ -20,7 +20,6 @@ class Admin::UsersController < Admin::ApplicationController
   skip_before_filter :prepare_session, :only => [:first]
   skip_before_filter :require_admin, :only => [:first]
 
-  undef new
   undef create
 
   def first

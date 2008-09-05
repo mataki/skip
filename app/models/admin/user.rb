@@ -15,6 +15,7 @@
 
 class Admin::User < User
   has_many :user_uids, :dependent => :destroy, :class_name => 'Admin::UserUid'
+  has_many :openid_identifiers, :dependent => :destroy, :class_name => 'Admin::OpenidIdentifier'
 
   N_('Admin::User|Name')
   N_('Admin::User|Retired')
@@ -26,5 +27,9 @@ class Admin::User < User
 
   def self.search_colomns
     "name like :lqs"
+  end
+
+  def topic_title
+    name
   end
 end

@@ -14,10 +14,15 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Admin::Bookmark < Bookmark
+  has_many :bookmark_comments, :class_name => 'Admin::BookmarkComment'
   N_('Admin::Bookmark|Title')
   N_('Admin::Bookmark|Url')
 
   def self.search_colomns
     "title like :lqs or url like :lqs"
+  end
+
+  def topic_title
+    title[/.{1,10}/] + "..."
   end
 end

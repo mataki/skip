@@ -19,14 +19,14 @@ describe Admin::BoardEntryCommentsController do
   before do
     admin_login
 
-    @board_entry_comment = mock_model(BoardEntryComment)
+    @board_entry_comment = mock_model(Admin::BoardEntryComment, :topic_title => 'topic_title')
 
     @board_entry_comments = [@board_entry_comment]
 
     @board_entry_comments.stub!(:to_xml).and_return('XML')
     @board_entry_comments.stub!(:find).and_return(@board_entry_comment)
 
-    @board_entry = mock_model(Admin::BoardEntry, :to_param => "1")
+    @board_entry = mock_model(Admin::BoardEntry, :to_param => "1", :topic_title => 'topic_title')
     @board_entry.stub!(:board_entry_comments).and_return(@board_entry_comments)
 
     Admin::BoardEntry.stub!(:find).and_return(@board_entry)

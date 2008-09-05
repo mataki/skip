@@ -40,7 +40,7 @@ class BoardEntriesController < ApplicationController
     find_params = BoardEntry.make_conditions(login_user_symbols, {:id => params[:id]})
     unless @board_entry = BoardEntry.find(:first,
                                           :conditions => find_params[:conditions],
-                                          :include => find_params[:include] | [ :user, :board_entry_comment, :state ])
+                                          :include => find_params[:include] | [ :user, :board_entry_comments, :state ])
       render :nothing => true
       return false
     end
@@ -73,7 +73,7 @@ class BoardEntriesController < ApplicationController
     find_params = BoardEntry.make_conditions(login_user_symbols, {:id => @board_entry.id})
     unless @board_entry = BoardEntry.find(:first,
                                           :conditions => find_params[:conditions],
-                                          :include => find_params[:include] | [ :user, :board_entry_comment, :state ])
+                                          :include => find_params[:include] | [ :user, :board_entry_comments, :state ])
       render :nothing => true
       return false
     end
@@ -109,20 +109,19 @@ class BoardEntriesController < ApplicationController
   def destroy_comment
     @board_entry_comment = BoardEntryComment.find(params[:id])
     board_entry = @board_entry_comment.board_entry
-    
+
     # 権限チェック
-    authorize = false 
-    authorize = true if session[:user_symbol] == board_entry.symbol 
+    authorize = false
+    authorize = true if session[:user_symbol] == board_entry.symbol
 
     if login_user_groups.include?(board_entry.symbol)
       if login_user_groups.include?(board_entry.user_id)
-        authorize = true 
+        authorize = true
       elsif board_entry.publicate?(login_user_symbols)
-        authorize = true 
+        authorize = true
       end
     else
-      if session[:user_id] == @board_entry_comment.user_id && 
-        board_entry.publicate?(login_user_symbols) 
+      if session[:user_id] == @board_entry_comment.user_id && board_entry.publicate?(login_user_symbols)
         authorize = true
       end
     end
@@ -149,15 +148,15 @@ class BoardEntriesController < ApplicationController
   def ado_edit_comment
     comment = BoardEntryComment.find(params[:id])
     board_entry = comment.board_entry
-    
+
     # 権限チェック
-    authorize = false 
+    authorize = false
 
     if comment.user_id == session[:user_id]
       if board_entry.symbol == session[:user_symbol]
         authorize = true
       end
-      if login_user_groups.include?(board_entry.symbol) 
+      if login_user_groups.include?(board_entry.symbol)
         if session[:user_id] == board_entry.user_id
           authorize = true
         elsif board_entry.publicate?(login_user_symbols)

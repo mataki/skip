@@ -15,4 +15,8 @@
 
 class Admin::BoardEntryComment < BoardEntryComment
   N_('Admin::BoardEntryComment|Contents')
+
+  def name
+    contents[/.{1,10}/]
+  end
 end

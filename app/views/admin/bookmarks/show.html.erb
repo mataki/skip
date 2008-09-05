@@ -1,6 +1,9 @@
 <%= render :partial => '/admin/contents_left' %>
+<% content_for :topic_path do -%>
+<%= render :partial => '/admin/shared/topic_path' %>
+<% end -%>
 <% content_for :contents_right do -%>
-<h2><%= _('%{model} Show') % {:model => _('bookmark')} %></h2>
+
 
 <div class="box">
 <p>
@@ -13,6 +16,5 @@
   <%=h @bookmark.url %>
 </p>
 </div>
-<%= link_to _('Back'), admin_bookmarks_path %> |
 <%= link_to _('Listing %{model}') % {:model => _('bookmark comment')}, admin_bookmark_bookmark_comments_path(@bookmark) %>
 <% end -%>

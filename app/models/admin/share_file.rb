@@ -28,4 +28,8 @@ class Admin::ShareFile < ShareFile
   def self.search_colomns
     "file_name like :lqs or description like :lqs or category like :lqs"
   end
+
+  def topic_title
+    file_name[/.{1,10}/] + "..."
+  end
 end

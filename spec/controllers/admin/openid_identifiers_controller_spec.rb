@@ -19,14 +19,14 @@ describe Admin::OpenidIdentifiersController do
   before do
     admin_login
 
-    @openid_identifier = mock_model(OpenidIdentifier)
+    @openid_identifier = mock_model(Admin::OpenidIdentifier, :topic_title => 'topic_title')
 
     @openid_identifiers = [@openid_identifier]
 
     @openid_identifiers.stub!(:to_xml).and_return("XML")
     @openid_identifiers.stub!(:find).and_return(@openid_identifier)
 
-    @user = mock_model(Admin::User)
+    @user = mock_model(Admin::User, :topic_title => 'topic_title')
     @user.stub!(:openid_identifiers).and_return(@openid_identifiers)
     Admin::User.stub!(:find).and_return(@user)
   end
@@ -49,12 +49,10 @@ describe Admin::OpenidIdentifiersController do
       response.should render_template('index')
     end
 
-    it "should find all admin_openid_identifiers" do
-      do_get
-    end
-
     it "should assign the found admin_openid_identifiers for the view" do
       do_get
+      assigns[:topics].should_not be_nil
+      assigns[:openid_identifiers].should_not be_nil
     end
   end
 
@@ -71,10 +69,6 @@ describe Admin::OpenidIdentifiersController do
     it "should be successful" do
       do_get
       response.should be_success
-    end
-
-    it "should find all admin_openid_identifiers" do
-      do_get
     end
 
     it "should render the found admin_openid_identifiers as xml" do
@@ -111,6 +105,7 @@ describe Admin::OpenidIdentifiersController do
     it "should assign the found openid_identifier for the view" do
       do_get
       assigns[:openid_identifier].should equal(@openid_identifier)
+      assigns[:topics].should_not be_nil
     end
   end
 
@@ -171,6 +166,7 @@ describe Admin::OpenidIdentifiersController do
     it "should assign the new openid_identifier for the view" do
       do_get
       assigns[:openid_identifier].should equal(@openid_identifier)
+      assigns[:topics].should_not be_nil
     end
   end
 
@@ -201,6 +197,7 @@ describe Admin::OpenidIdentifiersController do
     it "should assign the found Admin::OpenidIdentifier for the view" do
       do_get
       assigns[:openid_identifier].should equal(@openid_identifier)
+      assigns[:topics].should_not be_nil
     end
   end
 

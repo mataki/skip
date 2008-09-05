@@ -14,11 +14,16 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Admin::BoardEntry < BoardEntry
+  has_many :board_entry_comments, :dependent => :destroy, :class_name => 'Admin::BoardEntryComment'
   N_('Admin::BoardEntry|Title')
   N_('Admin::BoardEntry|Contents')
   N_('Admin::BoardEntry|Category')
 
   def self.search_colomns
     "contents like :lqs or title like :lqs or category like :lqs"
+  end
+
+  def topic_title
+    title[/.{1,10}/] + "..."
   end
 end

@@ -15,17 +15,6 @@
 
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe Admin::UsersController, 'GET /new' do
-  before do
-    admin_login
-  end
-  it 'UnknownActionになること' do
-    lambda do
-      get :new
-    end.should raise_error(ActionController::UnknownAction)
-  end
-end
-
 describe Admin::UsersController, 'POST /create' do
   before do
     admin_login

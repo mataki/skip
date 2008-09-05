@@ -1,6 +1,9 @@
 <%= render :partial => '/admin/contents_left' %>
+<% content_for :topic_path do -%>
+<%= render :partial => '/admin/shared/topic_path' %>
+<% end -%>
 <% content_for :contents_right do -%>
-<h2><%= _('Listing %{model}') % {:model => _('share file')} %></h2>
+
 
 <div class="box tabular">
   <%= render :partial => '/admin/search_box' %>

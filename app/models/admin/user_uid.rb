@@ -38,4 +38,9 @@ class Admin::UserUid < UserUid
     ActiveRecord::Base.connection.execute("update bookmarks set url = replace(url, '/user/#{uid_was}', '/user/#{uid}') where url = '/user/#{uid_was}'")
     ActiveRecord::Base.connection.execute("update antenna_items set value = 'uid:#{uid}' where value = 'uid:#{uid_was}'")
   end
+
+  def topic_title
+    user.name
+  end
+
 end

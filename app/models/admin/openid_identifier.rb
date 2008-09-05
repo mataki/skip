@@ -15,4 +15,8 @@
 
 class Admin::OpenidIdentifier < OpenidIdentifier
   N_('Admin::OpenidIdentifier|Url')
+
+  def topic_title
+    user.name
+  end
 end

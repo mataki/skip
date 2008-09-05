@@ -18,4 +18,8 @@ class Admin::GroupParticipation < GroupParticipation
   N_('Admin::GroupParticipation|Waiting')
   N_('Admin::GroupParticipation|Owned')
   N_('Admin::GroupParticipation|Favorite')
+
+  def topic_title
+    user.name
+  end
 end

@@ -14,9 +14,14 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Admin::SettingsController < Admin::ApplicationController
+  N_('Admin::SettingsController|literal')
+  N_('Admin::SettingsController|mail')
+  N_('Admin::SettingsController|other')
+  N_('Admin::SettingsController|feed')
 
   def index
     params[:tab] ||= 'literal'
+    @topics = [[_("#{self.class.name}|#{params[:tab]}")]]
   end
 
   def update_all

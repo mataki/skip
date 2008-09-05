@@ -34,6 +34,8 @@ class Admin::DocumentsController < Admin::ApplicationController
     @content_name = _(self.class.name + '|' + params[:target])
     @document = ''
     @document = open(RAILS_ROOT + "/public/custom/#{params[:target]}.html", 'r') { |f| s = f.read }
+    @topics = [[_('静的コンテンツ管理'), admin_documents_path]]
+    @topics << @content_name
   rescue Errno::EACCES => e
     flash.now[:error] = _('対象のコンテンツを開くことが出来ませんでした。')
     render :status => :forbidden
@@ -42,6 +44,7 @@ class Admin::DocumentsController < Admin::ApplicationController
     render :status => :not_found
   rescue => e
     flash.now[:error] = _('想定外のエラーが発生しました。管理者にお問い合わせ下さい。')
+    logger.error e
     e.backtrace.each { |message| logger.error message }
     render :status => :internal_server_error
   end
@@ -69,7 +72,7 @@ class Admin::DocumentsController < Admin::ApplicationController
       end
     else
       unless CONTENT_NAMES.include? params[:target]
-        redirect_to "#{root_url}404.html" 
+        redirect_to "#{root_url}404.html"
       end
     end
   end

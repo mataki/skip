@@ -14,6 +14,8 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Admin::Group < Group
+  has_many :group_participations, :dependent => :destroy, :class_name => 'Admin::GroupParticipation'
+
   N_('Admin::Group|Name')
   N_('Admin::Group|Gid')
   N_('Admin::Group|Description')
@@ -22,5 +24,9 @@ class Admin::Group < Group
 
   def self.search_colomns
     "name like :lqs or gid like :lqs or description like :lqs or category like :lqs"
+  end
+
+  def topic_title
+    name
   end
 end

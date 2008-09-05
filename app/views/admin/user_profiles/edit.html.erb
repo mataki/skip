@@ -1,6 +1,9 @@
 <%= render :partial => '/admin/contents_left' %>
+<% content_for :topic_path do -%>
+<%= render :partial => '/admin/shared/topic_path' %>
+<% end -%>
 <% content_for :contents_right do -%>
-<h2><%= _('Editing %{model}') % {:model => _('user profile')} %></h2>
+
 <div class="box tabular">
   <% form_for(@user_profile, :url => admin_user_user_profile_path(@user), :method => 'put') do |f| %>
   <%= f.error_messages %>
@@ -58,5 +61,4 @@
   </p>
   <% end %>
 </div>
-<%= link_to _('Back'), admin_user_user_profile_path(@user) %>
 <% end -%>

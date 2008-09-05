@@ -21,6 +21,10 @@ class Admin::UserProfilesController < Admin::ApplicationController
     @user = Admin::User.find(params[:user_id])
     @user_profile = @user.user_profile
 
+    @topics = [[_('Listing %{model}') % {:model => _('user')}, { :controller => :user, :action => :index }],
+               [_('%{model} Show') % {:model => @user.name}, @user],
+               _('%{model} Show') % {:model => _('profile')}]
+
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @user_profile }
@@ -31,6 +35,10 @@ class Admin::UserProfilesController < Admin::ApplicationController
   def edit
     @user = Admin::User.find(params[:user_id])
     @user_profile = @user.user_profile
+
+    @topics = [[_('Listing %{model}') % {:model => _('user')}, { :controller => :user, :action => :index }],
+               [_('%{model} Show') % {:model => @user.name}, @user],
+               _('Editing %{model}') % {:model => _('profile')}]
   end
 
   # PUT /admin_user_profiles/1

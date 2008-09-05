@@ -1,6 +1,9 @@
 <%= render :partial => '/admin/contents_left' %>
+<% content_for :topic_path do -%>
+<%= render :partial => '/admin/shared/topic_path' %>
+<% end -%>
 <% content_for :contents_right do -%>
-<h2><%= _('%{model} Show') % {:model => _('group')} %></h2>
+
 
 <div class="box">
 <p>
@@ -29,6 +32,5 @@
 </p>
 </div>
 
-<%= link_to _('Back'), admin_groups_path %> |
 <%= link_to _('Listing %{model}') % {:model => _('group participation')}, admin_group_group_participations_path(@group) %>
 <% end -%>

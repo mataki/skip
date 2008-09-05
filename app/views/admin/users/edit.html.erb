@@ -1,27 +1,17 @@
 <%= render :partial => '/admin/contents_left' %>
+<% content_for :topic_path do -%>
+<%= render :partial => '/admin/shared/topic_path' %>
+<% end -%>
 <% content_for :contents_right do -%>
-<h2><%= _('Editing %{model}') % {:model => _('user')} %></h2>
+
 <div class="box tabular">
   <% form_for(@user) do |f| %>
-  <%= f.error_messages %>
-  <p>
-    <%= f.label :name %>
-    <%= f.text_field :name %>
-  </p>
-  <p>
-    <%= f.label :status %>
-    <%= f.text_field :status %>
-  </p>
-  <p>
-    <%= f.label :admin %>
-    <%= f.check_box :admin %>
-  </p>
+  <%= render :partial => f %>
   <p>
     <%= f.submit _('Update'), :disable_with => _('Updating...') %>
   </p>
   <% end %>
 </div>
 
-<%= link_to _('Show'), @user %> |
-<%= link_to _('Back'), admin_users_path %>
+<%= link_to _('Show'), @user %>
 <% end -%>

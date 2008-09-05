@@ -1,6 +1,9 @@
 <%= render :partial => '/admin/contents_left' %>
+<% content_for :topic_path do -%>
+<%= render :partial => '/admin/shared/topic_path' %>
+<% end -%>
 <% content_for :contents_right do -%>
-<h2><%= _('%{model} Show') % {:model => _('openid identifier')} %></h2>
+
 
 <div class="box">
 <p>
@@ -9,6 +12,5 @@
 </p>
 </div>
 
-<%= link_to _('Edit'), edit_admin_user_openid_identifier_path(@user, @openid_identifier) %> |
-<%= link_to _('Back'), admin_user_openid_identifiers_path %>
+<%= link_to _('Edit'), edit_admin_user_openid_identifier_path(@user, @openid_identifier) %>
 <% end -%>

@@ -1,4 +1,6 @@
-<h2>設定</h2>
+<% content_for :topic_path do -%>
+<%= render :partial => '/admin/shared/topic_path' %>
+<% end -%>
 <% form_tag(admin_settings_update_all_path(:tab => params[:tab])) do -%>
 <%= render :partial => params[:tab] %>
 <%= submit_tag _('Save'), :disable_with => _('Saving...') %>

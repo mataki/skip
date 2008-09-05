@@ -17,12 +17,12 @@ module Admin::ApplicationHelper
   def generate_admin_tab_menu
     output = ''
     output << '<ul>'
-    output << generate_tab_link( _('データ管理'), admin_users_path, !(request.url.include?(admin_settings_url) || request.url.include?(admin_documents_url)) )
-    output << generate_tab_link( _('文言設定'), admin_settings_path(:tab => :literal), request.url == admin_settings_url || request.url == admin_settings_url(:tab => :literal) )
-    output << generate_tab_link( _('メール関連設定'), admin_settings_path(:tab => :mail), request.url == admin_settings_url(:tab => :mail) )
-    output << generate_tab_link( _('その他設定'), admin_settings_path(:tab => :other), request.url == admin_settings_url(:tab => :other) )
-    output << generate_tab_link( _('RSSフィード設定'), admin_settings_path(:tab => :feed), request.url == admin_settings_url(:tab => :feed) )
-    output << generate_tab_link( _('静的コンテンツ管理'), admin_documents_path, request.url.include?(admin_documents_url) )
+    output << generate_tab_link( _('Data management'), admin_users_path, !(request.url.include?(admin_settings_url) || request.url.include?(admin_documents_url)) )
+    output << generate_tab_link( _('Admin::SettingsController|literal'), admin_settings_path(:tab => :literal), request.url == admin_settings_url || request.url == admin_settings_url(:tab => :literal) )
+    output << generate_tab_link( _('Admin::SettingsController|mail'), admin_settings_path(:tab => :mail), request.url == admin_settings_url(:tab => :mail) )
+    output << generate_tab_link( _('Admin::SettingsController|other'), admin_settings_path(:tab => :other), request.url == admin_settings_url(:tab => :other) )
+    output << generate_tab_link( _('Admin::SettingsController|feed'), admin_settings_path(:tab => :feed), request.url == admin_settings_url(:tab => :feed) )
+    output << generate_tab_link( _('Admin::DocumentsController'), admin_documents_path, request.url.include?(admin_documents_url) )
     output << '</ul>'
   end
 
@@ -35,6 +35,20 @@ module Admin::ApplicationHelper
     output << generate_box_menu_link( _('bookmark'), admin_bookmarks_path , request.url.include?(admin_bookmarks_url))
     output << generate_box_menu_link( _('share file'), admin_share_files_path, request.url.include?(admin_share_files_path))
     output << '</ul>'
+  end
+
+  def generate_topics_str(topics)
+    topics.map do |topic|
+      if topic.is_a?(Array)
+        if topic.size > 1
+          link_to_unless_current h(topic.shift), topic.shift
+        else
+          h(topic.first)
+        end
+      else
+        h(topic)
+      end
+    end.join(' > ')
   end
 
   def generate_box_menu_link(name, path, selected = false, html_options = nil)
