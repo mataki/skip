@@ -288,6 +288,8 @@ function fitImageSize(id, max_width, max_height) {
 function saveLoginData(){
     exp_days = 14;
     saveCookie('login_save', $('login_save').checked.toString(), exp_days);
-    saveCookie('ssl_enable', $('ssl_enable_radio').checked.toString(), exp_days);
+    if($('ssl_enable_radio')){
+        saveCookie('ssl_enable', $('ssl_enable_radio').checked.toString(), exp_days);
+    }
     return true;
 }
