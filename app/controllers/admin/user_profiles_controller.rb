@@ -21,7 +21,7 @@ class Admin::UserProfilesController < Admin::ApplicationController
     @user = Admin::User.find(params[:user_id])
     @user_profile = @user.user_profile
 
-    @topics = [[_('Listing %{model}') % {:model => _('user')}, { :controller => :user, :action => :index }],
+    @topics = [[_('Listing %{model}') % {:model => _('user')}, { :controller => :users, :action => :index }],
                [_('%{model} Show') % {:model => @user.name}, @user],
                _('%{model} Show') % {:model => _('profile')}]
 
@@ -36,7 +36,7 @@ class Admin::UserProfilesController < Admin::ApplicationController
     @user = Admin::User.find(params[:user_id])
     @user_profile = @user.user_profile
 
-    @topics = [[_('Listing %{model}') % {:model => _('user')}, { :controller => :user, :action => :index }],
+    @topics = [[_('Listing %{model}') % {:model => _('user')}, { :controller => :users, :action => :index }],
                [_('%{model} Show') % {:model => @user.name}, @user],
                _('Editing %{model}') % {:model => _('profile')}]
   end

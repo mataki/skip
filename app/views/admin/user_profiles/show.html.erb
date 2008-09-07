@@ -7,6 +7,26 @@
 
 <div class="box">
   <p>
+    <b><%= label @user_profile.class, :extension %>:</b>
+    <%=h @user_profile.extension %>
+  </p>
+
+  <p>
+    <b><%= label @user_profile.class, :section %>:</b>
+    <%=h @user_profile.section %>
+  </p>
+
+  <p>
+    <b><%= label @user_profile.class, :email %>:</b>
+    <%=h @user_profile.email %>
+  </p>
+
+  <p>
+    <b><%= label @user_profile.class, :self_introduction %>:</b>
+    <%=h @user_profile.self_introduction %>
+  </p>
+
+  <p>
     <b><%= label @user_profile.class, :gender_type %>:</b>
     <%=h @user_profile.gender_type %>
   </p>
