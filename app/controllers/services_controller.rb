@@ -65,18 +65,6 @@ class ServicesController < ActionController::Base
   def footer
   end
 
-  # Ldapから複数ユーザの名前を取得する
-  def user_names
-    result = {}
-    params[:user_code] ||=""
-    params[:access_user_code] ||=""
-    params[:password] ||=""
-    user_code_arr = params[:user_code].downcase.split(",")
-    result[:success] = AccountAccess.user_names(user_code_arr, params[:access_user_code], params[:password] )
-    result[:failed] = (user_code_arr - result[:success].map{ |user| user["user_code"]})
-    render :text => result.to_json
-  end
-
 private
   def diff_users new_or_retired, from_date
     conditions = new_or_retired == 'new' ? ["status = ?", 'ACTIVE'] : ["status = ?", 'RETIRED']

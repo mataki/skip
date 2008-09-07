@@ -23,6 +23,7 @@ class Admin::User < User
   N_('Admin::User|Password confirmation')
   N_('Admin::User|Password')
   N_('Admin::User|Retired')
+  N_('Admin::User|Status')
 
   class << self
     alias :find :find_without_retired_skip

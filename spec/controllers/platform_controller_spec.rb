@@ -15,57 +15,6 @@
 
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe PlatformController do
-  before(:all) do
-    Session.destroy_all
-    @user_info = { "code" => "111111", "name" => SkipFaker.rand_char,
-      "email" => SkipFaker.email, "section" => SkipFaker.rand_char }
-    @referer = "http://localhost.jp/"
-  end
-
-  before(:each) do
-    request.env["HTTP_REFERER"] = @referer
-  end
-
-  describe "初めてのログインの場合" do
-    before(:each) do
-      AccountAccess.should_receive(:auth).and_return(@user_info)
-      @user = { :key => '111111', :password => 'passwd'}
-      get :login, :login => @user
-    end
-
-    it "レスポンスがリダイレクトであること" do
-      response.should be_redirect
-    end
-
-    it "Sessionテーブルにユーザのセッションが１列追加されていること" do
-      Session.find_all_by_user_code(@user[:key]).size.should == 1
-    end
-  end
-
-  describe "二度目のログインの場合" do
-    before(:each) do
-      AccountAccess.should_receive(:auth).twice.and_return(@user_info)
-      @user = { :key => '111111', :password => 'passwd' }
-      get :login, :login => @user, :login_save => true
-      get :login, :login => @user, :login_save => true
-    end
-
-    it "レスポンスがリダイレクトであること" do
-      response.should be_redirect
-    end
-
-    it "Sessionテーブルにユーザのセッションが２列追加されていること" do
-      Session.find_all_by_user_code(@user[:key]).size.should == 2
-    end
-
-    it "失効期間が１ヶ月として設定されていること" do
-      assert Session.find_all_by_user_code(@user[:key]).last.expire_date > Time.now + 1.month - 1.day
-      assert Session.find_all_by_user_code(@user[:key]).last.expire_date < Time.now + 1.month + 1.day
-    end
-  end
-end
-
 describe PlatformController, "ログイン時にOpenIdのアカウントが渡された場合" do
   before do
     @registration = mock('registration')
@@ -102,10 +51,6 @@ describe PlatformController, "ログイン時にOpenIdのアカウントが渡�
           session[:user_name].should == @user.name
           session[:user_email].should == @user.user_profile.email
           session[:user_section].should == @user.user_profile.section
-        end
-
-        it 'SSO の sid がクッキーに設定されていること' do
-          cookies['_sso_sid'].should_not be_nil
         end
 
         it "root_urlに遷移すること" do

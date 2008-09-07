@@ -1,6 +1,6 @@
 # SKIP(Social Knowledge & Innovation Platform)
 # Copyright (C) 2008 TIS Inc.
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -9,7 +9,7 @@
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-# 
+#
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -64,30 +64,17 @@ class ActionController::Base
     !['html','htm','js'].any?{|extension| extension == file_name.split('.').last } &&
       !['text/html','application/x-javascript'].any?{|content| content == content_type }
   end
- 
+
   private
   def sso
-    unless cookies[:_sso_sid]
-      redirect_to "#{ENV['SKIP_URL']}/platform/require_login?return_to=#{URI.encode(request.env["REQUEST_URI"])}"
-      return false
-    end
-
-    if session[:sso_sid] != cookies[:_sso_sid]
-      reset_session
-      begin
-        open(ENV['SKIP_URL'] + "/session/" + cookies[:_sso_sid], :proxy => nil) do |f|
-          session[:sso_sid] = cookies[:_sso_sid]
-          session[:user_code] = URI.decode(f.meta["user_code"])
-          session[:user_name] = URI.decode(f.meta["user_name"])
-          session[:user_email] = URI.decode(f.meta["user_email"])
-          session[:user_section] = URI.decode(f.meta["user_section"])
-        end
-      rescue OpenURI::HTTPError => error
-        redirect_to ENV['SKIP_URL'] + "/logout"
+    unless ENV['SKIPOP_URL'].blank?
+      unless logged_in?
+        # TODO return_toを一緒に設定する必要がおそらくある
+        redirect_to :controller => '/platform', :action => :login, :openid_url => ENV['SKIPOP_URL']
         return false
       end
+      true
     end
-    return true
   end
 
   def deny_auth

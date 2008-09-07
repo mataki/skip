@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-09-06 10:28+0900\n"
+"POT-Creation-Date: 2008-09-08 02:43+0900\n"
 "PO-Revision-Date: 2008-09-06 10:34+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -601,6 +601,11 @@ msgstr "確認パスワード"
 #: app/models/admin/user.rb:25
 msgid "Admin::User|Retired"
 msgstr "就業状態"
+
+#: app/models/admin/user.rb:26
+#, fuzzy
+msgid "Admin::User|Status"
+msgstr "氏名"
 
 #: app/models/antenna_item.rb:-
 msgid "AntennaItem|"
@@ -1218,30 +1223,6 @@ msgstr "検索"
 msgid "Searching..."
 msgstr "検索しています…"
 
-#: app/models/session.rb:-
-msgid "Session|Expire date"
-msgstr ""
-
-#: app/models/session.rb:-
-msgid "Session|Sid"
-msgstr ""
-
-#: app/models/session.rb:-
-msgid "Session|User code"
-msgstr ""
-
-#: app/models/session.rb:-
-msgid "Session|User email"
-msgstr ""
-
-#: app/models/session.rb:-
-msgid "Session|User name"
-msgstr ""
-
-#: app/models/session.rb:-
-msgid "Session|User section"
-msgstr ""
-
 #: app/models/share_file_access.rb:-
 msgid "ShareFileAccess|Created at"
 msgstr ""
@@ -1712,10 +1693,6 @@ msgstr "プロフィール"
 msgid "ranking"
 msgstr ""
 
-#: app/models/session.rb:-
-msgid "session"
-msgstr ""
-
 #: app/helpers/admin/application_helper.rb:36 app/models/share_file.rb:-
 msgid "share file"
 msgstr "共有ファイル"
@@ -1849,4 +1826,3 @@ msgstr ""
 #: app/controllers/admin/documents_controller.rb:37
 msgid "静的コンテンツ管理"
 msgstr ""
-
