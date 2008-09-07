@@ -19,7 +19,7 @@ class GroupController < ApplicationController
 
   before_filter :check_owned,
                 :only => [ :manage, :managers, :permit,
-                           :update, :destroy, :toggle_owned, 
+                           :update, :destroy, :toggle_owned,
                            :forced_leave_user, :change_participation, :append_user ]
 
   verify :method => :post,
@@ -199,7 +199,7 @@ class GroupController < ApplicationController
         entry_params = { }
         entry_params[:title] = "参加申し込みをしました！"
         entry_params[:message] = render_to_string(:partial => 'entries_template/group_join',
-                                                  :locals => { :user_name => session[:user_name],
+                                                  :locals => { :user_name => current_user.name,
                                                                :message => message })
         entry_params[:tags] = "参加申し込み"
         entry_params[:tags] << ",#{Tag::NOTICE_TAG}" if @group.protected?

@@ -223,7 +223,6 @@ class MypageController < ApplicationController
     result = (@user.update_attributes(params[:user]) && @profile.errors.empty?)
     if result
       flash[:notice] = 'ユーザ情報の更新に成功しました。'
-      session[:user_name] = @user.name
       redirect_to :action => 'profile'
     else
       @error_msg = []

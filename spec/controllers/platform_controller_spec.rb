@@ -48,9 +48,6 @@ describe PlatformController, "ログイン時にOpenIdのアカウントが渡�
 
         it "Sessionにユーザ情報が詰め込まれていること" do
           session[:user_code].should == @user.code
-          session[:user_name].should == @user.name
-          session[:user_email].should == @user.user_profile.email
-          session[:user_section].should == @user.user_profile.section
         end
 
         it "root_urlに遷移すること" do

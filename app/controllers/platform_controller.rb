@@ -28,7 +28,7 @@ class PlatformController < ApplicationController
       img_files = Dir.glob(File.join(RAILS_ROOT, "public", "images", "titles", "*.{jpg,png,jpeg}"))
       @img_name = File.join("titles", File.basename(img_files[rand(img_files.size)]))
 
-      @user_code, @user_name = session[:user_code], session[:user_name]
+      @user_code, @user_name = session[:user_code], current_user.name
     else
       render :action => :require_login
     end
@@ -47,9 +47,6 @@ class PlatformController < ApplicationController
 
       reset_session
       session[:user_code] = user_info["code"]
-      session[:user_name] = user_info["name"]
-      session[:user_email] = user_info["email"]
-      session[:user_section] = user_info["section"]
 
       return_to = params[:return_to] ? URI.encode(params[:return_to]) : nil
       redirect_to (return_to and !return_to.empty?) ? return_to : root_url
@@ -87,9 +84,6 @@ class PlatformController < ApplicationController
 
         user = identifier.user
         session[:user_code] = user.code
-        session[:user_name] = user.name
-        session[:user_email] = user.user_profile.email
-        session[:user_section] = user.user_profile.section
 
         redirect_to_back_or_root
       else
