@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-09-08 02:43+0900\n"
+"POT-Creation-Date: 2008-09-08 03:36+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -819,11 +819,11 @@ msgstr ""
 msgid "CSVファイル"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:69
+#: app/controllers/admin/users_controller.rb:70
 msgid "CSVファイルからのアカウント登録/更新に成功しました。"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:73
+#: app/controllers/admin/users_controller.rb:74
 msgid "CSVファイルに不正な値が含まれています。"
 msgstr ""
 
@@ -995,7 +995,7 @@ msgstr ""
 
 #: app/controllers/admin/user_profiles_controller.rb:24
 #: app/controllers/admin/user_profiles_controller.rb:39
-#: app/controllers/admin/users_controller.rb:56
+#: app/controllers/admin/users_controller.rb:57
 #: app/views/admin/board_entries/show.html.erb:23
 #: app/views/admin/bookmarks/show.html.erb:19
 #: app/views/admin/groups/show.html.erb:35
@@ -1076,11 +1076,11 @@ msgstr ""
 msgid "New user from csv"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:312
+#: app/controllers/mypage_controller.rb:311
 msgid "OpenID URLを削除しました。"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:316
+#: app/controllers/mypage_controller.rb:315
 msgid "OpenID URLを設定しました。"
 msgstr ""
 
@@ -1601,7 +1601,7 @@ msgstr ""
 msgid "chain"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:101
+#: app/controllers/admin/users_controller.rb:102
 msgid "csvファイル以外はアップロード出来ません。"
 msgstr ""
 
@@ -1694,7 +1694,7 @@ msgstr ""
 
 #: app/controllers/admin/user_profiles_controller.rb:24
 #: app/controllers/admin/user_profiles_controller.rb:39
-#: app/controllers/admin/users_controller.rb:56
+#: app/controllers/admin/users_controller.rb:57
 #: app/helpers/admin/application_helper.rb:32 app/models/user.rb:-
 #: app/views/admin/openid_identifiers/index.html.erb:19
 #: app/views/admin/user_profiles/show.html.erb:90
@@ -1728,7 +1728,7 @@ msgstr ""
 msgid "user uid"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:49
+#: app/controllers/admin/users_controller.rb:50
 msgid "この操作は、許可されていません。"
 msgstr ""
 
@@ -1738,19 +1738,19 @@ msgid ""
 "修正後再度アップロードして下さい。"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:86
+#: app/controllers/admin/users_controller.rb:87
 msgid "ファイルを指定して下さい。"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:91
+#: app/controllers/admin/users_controller.rb:92
 msgid "ファイルサイズが0です。"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:96
+#: app/controllers/admin/users_controller.rb:97
 msgid "ファイルサイズが1MBを超えています。"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:56
+#: app/controllers/admin/users_controller.rb:57
 msgid "ユーザインポート"
 msgstr ""
 
