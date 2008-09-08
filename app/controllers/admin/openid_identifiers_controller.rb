@@ -17,6 +17,7 @@ class Admin::OpenidIdentifiersController < Admin::ApplicationController
   before_filter :load_parent
   include AdminModule::AdminChildModule
 
+  undef show
   private
   def load_parent
     @user ||= Admin::User.find(params[:user_id])

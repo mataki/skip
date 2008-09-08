@@ -21,6 +21,7 @@ class Admin::BoardEntryCommentsController < Admin::ApplicationController
   undef create
   undef edit
   undef update
+  undef show
 
   private
   def load_parent

@@ -10,11 +10,8 @@
                :columns => %w[user waiting owned favorite],
                :objects => @group_participations,
                :class_name => 'Admin::GroupParticipation',
-               :link_elem => [['Show','admin_group_group_participation_path(@group, object)'], ['Destroy','admin_group_group_participation_path(@group, object)',{:confirm => _('Are you sure?'), :method => :delete}]]
+               :link_elem => [['Destroy','admin_group_group_participation_path(@group, object)',{:confirm => _('Are you sure?'), :method => :delete}]]
              }
   -%>
 </div>
-<br />
-
-<%= link_to _('%{model} Show') % {:model => _('group')}, admin_group_path(@group) %>
 <% end -%>

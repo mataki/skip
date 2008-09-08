@@ -20,4 +20,5 @@ class Admin::ShareFilesController < Admin::ApplicationController
   undef create
   undef edit
   undef update
+  undef show
 end

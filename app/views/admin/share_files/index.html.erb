@@ -9,13 +9,11 @@
   <%= render :partial => '/admin/search_box' %>
   <%= render :partial => '/admin/shared/sortable_table',
              :locals => {
-               :columns => %w[file_name description category],
+               :columns => %w[user file_name description category],
                :objects => @share_files,
                :class_name => 'Admin::ShareFile',
-               :link_elem => [['Show','object'], ['Destroy','object',{:confirm => _('Are you sure?'), :method => :delete}]]
+               :link_elem => [['Destroy','object',{:confirm => _('Are you sure?'), :method => :delete}]]
              }
   -%>
 </div>
-<br />
-
 <% end -%>

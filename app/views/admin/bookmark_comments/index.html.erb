@@ -10,10 +10,8 @@
                :columns => %w[comment public tags stared],
                :objects => @bookmark_comments,
                :class_name => 'Admin::BookmarkComment',
-               :link_elem => [['Show','admin_bookmark_bookmark_comment_path(@bookmark, object)'], ['Destroy','admin_bookmark_bookmark_comment_path(@bookmark, object)',{:confirm => _('Are you sure?'), :method => :delete}]]
+               :link_elem => [['Destroy','admin_bookmark_bookmark_comment_path(@bookmark, object)',{:confirm => _('Are you sure?'), :method => :delete}]]
              }
   -%>
 </div>
-<br />
-
 <% end -%>
