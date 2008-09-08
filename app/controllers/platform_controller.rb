@@ -28,7 +28,7 @@ class PlatformController < ApplicationController
       img_files = Dir.glob(File.join(RAILS_ROOT, "public", "images", "titles", "*.{jpg,png,jpeg}"))
       @img_name = File.join("titles", File.basename(img_files[rand(img_files.size)]))
 
-      @user_code, @user_name = session[:user_code], current_user.name
+      @user_code, @user_name = session[:user_code], session[:user_name]
     else
       render :action => :require_login
     end
