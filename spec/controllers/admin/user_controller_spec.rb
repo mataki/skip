@@ -101,7 +101,8 @@ describe Admin::UsersController, 'POST /first' do
       Admin::User.stub!(:make_user).and_return([@user, @user_profile, @user_uid])
     end
     describe '管理者ユーザの登録に成功する場合' do
-      it 'Admin::Userが作成されること' do
+      # ユーザが作成されること
+      before do
         @user.should_receive(:user_access=)
         @user.should_receive(:save!)
         Admin::User.should_receive(:make_user).and_return([@user, @user_profile, @user_uid])
@@ -109,7 +110,8 @@ describe Admin::UsersController, 'POST /first' do
         Activation.should_receive(:find_by_code).and_return(@activation)
         post :first, {:user => {"name"=>"管理者", "password_confirmation"=>"[FILTERED]", "password"=>"[FILTERED]"}, :user_profile => {"email"=>"admin@skip.org", "section"=>"管理部"}, :user_uid => {:uid => 'admin'}}
       end
-      it {response.code.should be_nil}
+      it {flash[:notice].should_not be_nil}
+      it {response.should be_redirect}
     end
     describe '管理者ユーザの登録に失敗する場合' do
       before do

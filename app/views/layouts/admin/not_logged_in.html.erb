@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="shortcut icon" href="<%= controller.request.relative_url_root %>/favicon.ico" />
+  <title><%= Admin::Setting.abbr_app_title %> - <%= @title %></title>
+  <%= skip_stylesheet_link_tag "style" %>
+  <%= stylesheet_link_tag "style" %>
+  <%= stylesheet_link_tag "admin" %>
+  <%= yield :stylesheet %>
+</head>
+
+<body>
+<div id="header">
+  <div id="logo" style="align: top; margin: 3px 0 0 20px;"><%= link_to(image_tag(Admin::Setting.header_logo_url, :alt => Admin::Setting.abbr_app_title, :height => "45"), :controller => '/mypage', :action => 'index')  %></div>
+</div><!-- header -->
+
+<div id="main">
+  <div id="panel">
+    <div style="_width: 98%;">
+      <h1 id="title"><%=h @title %></h1>
+      <%# if @tab_menu_source -%>
+      <div id="tab_menu"><%#= generate_admin_tab_menu %></div>
+      <br style="clear: left;" />
+      <%# end -%>
+    </div>
+
+    <div id="tab_body">
+      <%= render :partial => 'layouts/flash_messages' %>
+      <div id="contents_container">
+        <% if @content_for_contents_left -%>
+        <div id="contents_left">
+        <%= yield :contents_left %>
+        </div><!-- contents_left -->
+        <% end -%>
+
+        <% if @content_for_topic_path -%>
+        <div id="topic_path">
+          <%= yield :topic_path %>
+        </div><!-- topic_path -->
+        <% end %>
+
+        <%= yield %>
+
+        <% if @content_for_contents_right -%>
+        <div id="contents_right">
+        <%= yield :contents_right %>
+        </div><!-- contents_right -->
+        <% end -%>
+
+        <% if @content_for_contents_bottom -%>
+        <div id="contents_bottom">
+        <%= yield :contents_bottom %>
+        </div><!-- contents_bottom -->
+        <% end -%>
+      </div><!-- contents_container -->
+    </div><!-- tab_body -->
+  </div><!-- panel -->
+</div><!-- main -->
+
+<div id="footer">
+  <div class="site">
+    <div class="info">
+      <div class="company"><%= Admin::Setting.footer_contact -%> | <%= Admin::Setting.footer_copyright -%></div>
+    </div>
+    <div class="sponsor">
+      powered by <%= image_tag Admin::Setting.footer_image_url  %>
+    </div>
+  </div>
+</div><!-- footer -->
+
+</body>
+</html>

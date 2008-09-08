@@ -124,6 +124,7 @@ span.blue { color: blue; }
     <a href="#" onclick="javascript:getSubwindowRule()"> 利用規約</a>
     <a href="#" onclick="javascript:getSubwindowScript(relative_url_root + '/custom/about_this_site.html', 720, 660)">このサイトについて</a>
   </div>
+  <%= render :partial => '/layouts/flash_messages' %>
   <%= render :partial => "login_failed_message" %>
 </div>
 
@@ -177,16 +178,7 @@ span.blue { color: blue; }
 
 </div><!-- main -->
 
-<div id="footer">
-  <div class="site">
-    <div class="info">
-      <div class="company"><%= Admin::Setting.footer_contact -%> | <%= Admin::Setting.footer_copyright -%></div>
-    </div>
-    <div class="sponsor">
-      powered by <%= image_tag Admin::Setting.footer_image_url  %>
-    </div>
-  </div>
-</div><!-- footer -->
+<%= skip_footer_link -%>
 
 </body>
 <script type="text/javascript">

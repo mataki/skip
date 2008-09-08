@@ -1,33 +1,35 @@
 <h3><%= _('管理者ユーザの作成') %></h3>
-<%= stylesheet_link_tag "admin" %>
 
-<% form_tag(first_new_admin_user_url(:code => params[:code])) do |f| %>
+<div class="box tabular">
+<% form_tag(first_new_admin_user_url(:code => params[:code])) do -%>
   <%= error_messages_for :user %>
   <p>
-    <%= label Admin::UserUid.name, :uid %><br />
+    <%= label Admin::UserUid.name, :uid %>
     <%= text_field :user_uid, :uid %>
   </p>
   <p>
-    <%= label Admin::UserProfile.name, :email %><br />
+    <%= label Admin::UserProfile.name, :email %>
     <%= text_field :user_profile, :email %>
   </p>
   <p>
-    <%= label Admin::User.name, :name %><br />
+    <%= label Admin::User.name, :name %>
     <%= text_field :user, :name %>
   </p>
   <p>
-    <%= label Admin::UserProfile.name, :section %><br />
+    <%= label Admin::UserProfile.name, :section %>
     <%= text_field :user_profile, :section %>
   </p>
   <p>
-    <%= label Admin::User.name, :password %><br />
+    <%= label Admin::User.name, :password %>
     <%= password_field :user, :password %>
   </p>
   <p>
-    <%= label Admin::User.name, :password_confirmation %><br />
+    <%= label Admin::User.name, :password_confirmation %>
     <%= password_field :user, :password_confirmation %>
   </p>
   <p>
-    <%= submit_tag _('Create') %>
+    <label />
+    <%= submit_tag _('Create'), :disable_with => _('Creating...') %>
   </p>
-<% end %>
+<% end -%>
+</div>

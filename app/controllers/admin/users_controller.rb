@@ -75,7 +75,7 @@ class Admin::UsersController < Admin::ApplicationController
         @user = Admin::User.new
         @user_profile = Admin::UserProfile.new
         @user_uid = Admin::UserUid.new
-        render :layout => false
+        render :layout => 'admin/not_logged_in'
       else
         begin
           Admin::User.transaction do
@@ -86,9 +86,10 @@ class Admin::UsersController < Admin::ApplicationController
               activation.update_attributes(:code => nil)
             end
           end
-          render :text => '登録しました。'
+          flash[:notice] = _('登録しました。')
+          redirect_to '/platform/'
         rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => e
-          render :layout => false
+          render :layout => 'admin/not_logged_in'
         end
       end
     else
