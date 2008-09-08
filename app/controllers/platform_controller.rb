@@ -20,18 +20,11 @@ class PlatformController < ApplicationController
   skip_before_filter :sso, :login_required, :prepare_session
   skip_after_filter  :remove_message
 
-  # ログイン前画面の表示
+  before_filter :require_not_login, :except => [:logout]
+
   def index
-    if (params[:return_to] == url_for(:action => :index) || params[:return_to] == '/' || params[:return_to] == nil)
-      reset_session_without_flash unless session[:user_code]
-
-      img_files = Dir.glob(File.join(RAILS_ROOT, "public", "images", "titles", "*.{jpg,png,jpeg}"))
-      @img_name = File.join("titles", File.basename(img_files[rand(img_files.size)]))
-
-      @user_code, @user_name = session[:user_code], session[:user_name]
-    else
-      render :action => :require_login
-    end
+    img_files = Dir.glob(File.join(RAILS_ROOT, "public", "images", "titles", "*.{jpg,png,jpeg}"))
+    @img_name = File.join("titles", File.basename(img_files[rand(img_files.size)]))
   end
 
   def require_login
@@ -162,6 +155,17 @@ class PlatformController < ApplicationController
       "detail" => message.last
     }
     redirect_to url
+  end
+
+  def require_not_login
+    if current_user
+      unless current_user.unused?
+        redirect_to_back_or_root
+        return false
+      else
+        redirect_to :controller => :portal, :action => :index
+      end
+    end
   end
 end
 

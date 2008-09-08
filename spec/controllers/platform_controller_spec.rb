@@ -135,3 +135,46 @@ describe PlatformController, "ログイン時にOpenIdのアカウントが渡�
     end
   end
 end
+
+describe PlatformController, "#require_not_login" do
+  describe "未ログイン状態のとき" do
+    before do
+      get :index
+    end
+    it { response.should be_success }
+  end
+
+  describe "ログイン中の時" do
+    describe "params[:return_to]が設定されていない時" do
+      before do
+        user_login
+        get :index
+      end
+      it { response.should redirect_to(root_url) }
+    end
+    describe "params[:return_to]が設定されている時" do
+      before do
+        user_login
+        @return_to = 'http://test.com/'
+        get :index, :return_to => @return_to
+      end
+      it { response.should redirect_to(@return_to) }
+    end
+  end
+
+  describe "未登録ユーザでログインした時" do
+    before do
+      unused_user_login
+      get :index
+    end
+    it { response.should redirect_to(:controller => :portal)}
+  end
+end
+
+describe PlatformController, "#logout" do
+  before do
+    controller.should_receive(:reset_session)
+    get :logout
+  end
+  it { response.should redirect_to(:action => :index)}
+end

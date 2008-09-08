@@ -16,7 +16,7 @@
 class Admin::DocumentsController < Admin::ApplicationController
   before_filter :check_params
 
-  CONTENT_NAMES = %w(about_this_site confirm_desc introduction login_desc registration_desc rules)
+  CONTENT_NAMES = %w(about_this_site confirm_desc introduction login_desc rules)
   N_('Admin::DocumentsController|about_this_site')
   N_('Admin::DocumentsController|about_this_site_description')
   N_('Admin::DocumentsController|confirm_desc')
@@ -25,8 +25,6 @@ class Admin::DocumentsController < Admin::ApplicationController
   N_('Admin::DocumentsController|introduction_description')
   N_('Admin::DocumentsController|login_desc')
   N_('Admin::DocumentsController|login_desc_description')
-  N_('Admin::DocumentsController|registration_desc')
-  N_('Admin::DocumentsController|registration_desc_description')
   N_('Admin::DocumentsController|rules')
   N_('Admin::DocumentsController|rules_description')
 

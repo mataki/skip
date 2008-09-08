@@ -150,22 +150,3 @@ describe PortalController, '#make_profile' do
   end
 end
 
-def unused_user_login
-  session[:user_code] = '111111'
-  session[:prepared] = true
-  u = stub_model(User)
-  up = stub_model(UserProfile)
-  u.stub!(:admin).and_return(false)
-  u.stub!(:active?).and_return(false)
-  u.stub!(:unused?).and_return(true)
-  u.stub!(:name).and_return('未登録ユーザ')
-  u.stub!(:crypted_password).and_return('123456789')
-  u.stub!(:user_profile).and_return(up)
-  if defined? controller
-    controller.stub!(:current_user).and_return(u)
-  else
-    # helperでも使えるように
-    stub!(:current_user).and_return(u)
-  end
-  u
-end

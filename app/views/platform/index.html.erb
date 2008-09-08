@@ -138,43 +138,8 @@ span.blue { color: blue; }
 </ul></div>
 <% end %>
 
-<% if @user_code -%>
-
-<div id="login" style="width: 320px; top: 20px;">
-  <p id="login-title">ログイン情報</p>
-  <div style="background-color: white; border: none; padding: 5px; margin-bottom: 5px; border: 1px dotted skyblue; border-top: none;"><%= @user_name -%> さんとしてログイン中です
-    <div style="text-align: right; font-size: 10px;"><%= link_to "[ログアウト]", :action => "logout" -%></div>
-  </div>
-  <p id="login-title">メニュー</p>
-  <div style="overflow: auto; height: 275px;">
-
-<% COMMON_MENUS[:main_menus].each do |menu| %>
-  <div class="skip-menu">
-  <%= link_to menu[:title], menu[:url], :target => "_blank" -%>
-  </div>
-<% end %>
-<% COMMON_MENUS[:block_menus].each do |block_menu| %>
-  <div class="menu-category"><%= block_menu[:title]-%></div>
-  <div style="border-left: 5px solid gray;">
-  <% block_menu[:blocks].each do |service| %>
-    <div class="menu-title" style="padding-left: 10px; font-weight: bold;"><%= service[:title] -%></div>
-    <% service[:links].each do |link| %>
-      <%= link_to(icon_tag(service[:icon]) + " " + link[:title], link[:url], :target => "_blank") -%><br/>
-    <% end %>
-  <% end %>
-  </div>
-<% end %>
-
-  </div>
-</div>
-<div id="desc_after_login" class="desc" style="left: 10px;"></div>
-
-<% else -%>
-
 <div id="login"><p id="login-title">ログイン</p><%= render :partial => 'shared/login_form' %></div>
 <div id="desc_before_login" class="desc"></div>
-
-<% end -%>
 
 </div><!-- main -->
 
@@ -186,7 +151,6 @@ span.blue { color: blue; }
 $j(function(){
     $j('.desc, #login').fadeTo('slow',0.8);
     $j('#desc_before_login').load(relative_url_root + '/custom/login_desc.html');
-    $j('#desc_after_login').load(relative_url_root + '/custom/registration_desc.html');
     fnLoadPngs();
 });
 //-->
