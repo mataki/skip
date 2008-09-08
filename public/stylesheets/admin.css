@@ -12,3 +12,4 @@ table.sortable tbody tr td { overflow: hidden; }
 h3.topics { background-color: #F0F0FF; border-bottom: 1px dashed silver; border-top: 3px double silver; margin-bottom: 2px; padding: 0 0 0 7px; }
 .fieldWithErrors { display: inline; padding: 2px; background-color: #F6F6F6; _background-color: pink; }
 .fieldWithErrors label { background-color: pink; }
+div.feed_item { border: 1px dotted blue; width: 90%; margin-bottom: 8px; }
