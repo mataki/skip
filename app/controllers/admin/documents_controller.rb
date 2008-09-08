@@ -65,7 +65,7 @@ class Admin::DocumentsController < Admin::ApplicationController
   def check_params
     if params[:target].blank?
       if action_name == 'index'
-        flash.now[:notice] = _('対象のコンテンツを選択して下さい。')
+        @topics = [[_('静的コンテンツ管理'), admin_documents_path]]
         render :action => :index
       end
     else

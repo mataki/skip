@@ -173,6 +173,7 @@ end
 
 describe PlatformController, "#logout" do
   before do
+    ENV['SKIPOP_URL'] = nil
     controller.should_receive(:reset_session)
     get :logout
   end
