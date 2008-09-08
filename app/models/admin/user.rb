@@ -47,29 +47,53 @@ class Admin::User < User
     users
   end
 
+  def self.make_new_user(params = {}, admin = false)
+    check_params_keys(params, [:user, :user_profile, :user_uid])
+    user = Admin::User.new(params[:user])
+    user.admin = admin
+    user.status = admin ? 'ACTIVE' : 'UNUSED'
+    user_profile = Admin::UserProfile.new(params[:user_profile])
+    user_profile.disclosure = true unless params[:user_profile][:disclosure]
+    user.user_profile = user_profile
+    user_uid = Admin::UserUid.new(params[:user_uid].merge(:uid_type => 'MASTER'))
+    user.user_uids << user_uid
+    [user, user_profile, user_uid]
+  end
+
+  def self.make_user_by_id(params = {}, admin = false)
+    check_params_keys(params, [:user, :user_profile, :user_uid])
+    user = Admin::User.find(params[:id])
+    user.attributes = params[:user]
+    user_profile = user.user_profile
+    user_profile.attributes = params[:user_profile]
+    user_uid = user.user_uids.find_by_uid_type('MASTER')
+    user_uid.attributes = params[:user_uid]
+    [user, user_profile, user_uid]
+  end
+
+  def self.make_user_by_uid(params = {}, admin = false)
+    check_params_keys(params, [:user, :user_profile, :user_uid])
+    user = Admin::User.find_by_code(params[:user_uid][:uid])
+    user.attributes = params[:user]
+    user_profile = user.user_profile
+    user_profile.attributes = params[:user_profile]
+    user_uid = user.user_uids.find_by_uid_type('MASTER')
+    user_uid.attributes = params[:user_uid]
+    [user, user_profile, user_uid]
+  end
+
   def self.make_user(params = {}, admin = false)
-    raise ArgumentError.new unless params.key?(:user)
-    raise ArgumentError.new unless params.key?(:user_profile)
-    raise ArgumentError.new unless params.key?(:user_uid)
+    check_params_keys(params, [:user, :user_profile, :user_uid])
     user = Admin::User.find_by_code(params[:user_uid][:uid])
     if user
-      user.attributes = params[:user]
-      user_profile = user.user_profile
-      user_profile.attributes = params[:user_profile]
-      user_uid = user.user_uids.find_by_uid_type('MASTER')
-      user_uid.attributes = params[:user_uid]
-      return [user, user_profile, user_uid]
+      make_user_by_uid(params, admin)
     else
-      user = Admin::User.new(params[:user])
-      user.admin = admin
-      user.status = admin ? 'ACTIVE' : 'UNUSED'
-      user_profile = Admin::UserProfile.new(params[:user_profile])
-      user_profile.disclosure = true unless params[:user_profile][:disclosure]
-      user.user_profile = user_profile
-      user_uid = Admin::UserUid.new(params[:user_uid].merge(:uid_type => 'MASTER'))
-      user.user_uids << user_uid
-      return [user, user_profile, user_uid]
+      make_new_user(params, admin)
     end
+  end
+
+  def master_user_uid
+    user_uids.find_by_uid_type('MASTER')
   end
 
   private
@@ -78,5 +102,11 @@ class Admin::User < User
     user_profile_hash = {:section => line[2], :email => line[3]}
     user_uid_hash ={:uid => line[0]}
     [user_hash, user_profile_hash, user_uid_hash]
+  end
+
+  def self.check_params_keys(params, keys)
+    keys.each do |key|
+      raise ArgumentError.new("#{key} is required in params") unless params.key?(key)
+    end
   end
 end

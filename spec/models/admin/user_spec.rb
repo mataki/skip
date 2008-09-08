@@ -27,13 +27,6 @@ describe Admin::User, '.make_users' do
 end
 
 describe Admin::User, '.make_user' do
-  before do
-    @uid = '999999'
-    @email = "yamada@example.com"
-    @password = "password"
-    @fullname = "山田 太郎"
-    @job_title = "経理"
-  end
   describe '引数が不正な場合' do
     describe 'hashのキーに:userが指定されていない場合' do
       it { lambda{ Admin::User.make_user({:user_profile => {}, :user_uid => {}}) }.should raise_error(ArgumentError) }
@@ -47,11 +40,96 @@ describe Admin::User, '.make_user' do
   end
   describe '既存のレコードがある場合' do
     before do
+      user_profile_hash = {:section => 'プログラマ', :email => SkipFaker.email}
+      user_uid_hash = {:uid => SkipFaker.rand_num(6)}
+      user = create_user :user_profile_options => user_profile_hash, :user_uid_options => user_uid_hash
+      @user_hash = user.attributes
+      @user_profile_hash = user.attributes
+      @user_uid_hash = user.user_uids.find_by_uid_type('MASTER')
+    end
+    it 'make_user_by_uidが呼ばれること' do
+      Admin::User.should_receive(:make_user_by_uid)
+      @user, @user_profile, @user_uid = Admin::User.make_user({:user => @user_hash, :user_profile => @user_profile_hash, :user_uid => @user_uid_hash})
+    end
+  end
+  describe '既存のレコードがない場合' do
+    it 'make_new_userが呼ばれること' do
+      Admin::User.should_receive(:make_new_user)
+      @user, @user_profile, @user_uid = Admin::User.make_user({:user => {}, :user_profile => {}, :user_uid => {:uid => 'skipuser'}})
+    end
+  end
+end
+
+describe Admin::User, '.make_new_user' do
+  before do
+    @uid = '999999'
+    @email = "yamada@example.com"
+    @password = "password"
+    @fullname = "山田 太郎"
+    @job_title = "経理"
+    @user_hash = {:name => @fullname, :password => @password, :password_confirmation => @password}
+    @user_profile_hash = {:section => @job_title, :email => @email}
+    @user_uid_hash = {:uid => @uid}
+  end
+  describe '管理者を作成する場合' do
+    before do
+      @user, @user_profile, @user_uid = Admin::User.make_new_user({:user => @user_hash, :user_profile => @user_profile_hash, :user_uid => @user_uid_hash}, true)
+    end
+    it '新規レコードであること' do
+      @user.new_record?.should be_true
+    end
+    it 'fullnameが設定されていること' do
+      @user.name.should == @fullname
+    end
+    it 'passwordが設定されていること' do
+      @user.password.should == @password
+    end
+    it 'password_confirmationが設定されていること' do
+      @user.password_confirmation == @password_confirmation
+    end
+    it '管理者であること' do
+      @user.admin.should be_true
+    end
+    it 'statusが有効化されていること' do
+      @user.status.should == :ACTIVE.to_s
+    end
+    it { @user.user_profile.should == @user_profile }
+    it 'sectionが設定されていること' do
+      @user_profile.section.should == @job_title
+    end
+    it 'emailが設定されていること' do
+      @user_profile.email.should == @email
+    end
+    it { @user.user_uids.include?(@user_uid).should be_true }
+    it 'uidが設定されていること' do
+      @user_uid.uid.should == @uid
+    end
+  end
+  describe '一般ユーザを作成する場合' do
+    before do
+      @user, @user_profile, @user_uid = Admin::User.make_user({:user => @user_hash, :user_profile => @user_profile_hash, :user_uid => @user_uid_hash})
+    end
+    it '管理者でないこと' do
+      @user.admin.should be_false
+    end
+    it 'statusが無効化されていること' do
+      @user.status.should == :UNUSED.to_s
+    end
+  end
+end
+
+describe Admin::User, '.make_user_by_uid' do
+    before do
+      @uid = '999999'
+      @email = "yamada@example.com"
+      @password = "password"
+      @fullname = "山田 太郎"
+      @job_title = "経理"
       @user_hash = {:name => @fullname, :password => @password, :password_confirmation => @password}
       @user_profile_hash = {:section => @job_title, :email => @email}
       @user_uid_hash = {:uid => SkipFaker.rand_num(6)}
       user = create_user :user_profile_options => @user_profile_hash, :user_uid_options => @user_uid_hash
-      @user, @user_profile, @user_uid = Admin::User.make_user({:user => @user_hash, :user_profile => @user_profile_hash, :user_uid => @user_uid_hash})
+      @user, @user_profile, @user_uid = Admin::User.make_user_by_uid({:user => @user_hash, :user_profile => @user_profile_hash, :user_uid => @user_uid_hash})
     end
     it '新規レコードではないこと' do
       @user.new_record?.should_not be_true
@@ -71,57 +149,4 @@ describe Admin::User, '.make_user' do
     it 'emailが設定されていること' do
       @user_profile.email.should == @email
     end
-  end
-  describe '既存のレコードがない場合' do
-    before do
-      @user_hash = {:name => @fullname, :password => @password, :password_confirmation => @password}
-      @user_profile_hash = {:section => @job_title, :email => @email}
-      @user_uid_hash = {:uid => @uid}
-    end
-    describe '管理者を作成する場合' do
-      before do
-        @user, @user_profile, @user_uid = Admin::User.make_user({:user => @user_hash, :user_profile => @user_profile_hash, :user_uid => @user_uid_hash}, true)
-      end
-      it '新規レコードであること' do
-        @user.new_record?.should be_true
-      end
-      it 'fullnameが設定されていること' do
-        @user.name.should == @fullname
-      end
-      it 'passwordが設定されていること' do
-        @user.password.should == @password
-      end
-      it 'password_confirmationが設定されていること' do
-        @user.password_confirmation == @password_confirmation
-      end
-      it '管理者であること' do
-        @user.admin.should be_true
-      end
-      it 'statusが有効化されていること' do
-        @user.status.should == :ACTIVE.to_s
-      end
-      it { @user.user_profile.should == @user_profile }
-      it 'sectionが設定されていること' do
-        @user_profile.section.should == @job_title
-      end
-      it 'emailが設定されていること' do
-        @user_profile.email.should == @email
-      end
-      it { @user.user_uids.include?(@user_uid).should be_true }
-      it 'uidが設定されていること' do
-        @user_uid.uid.should == @uid
-      end
-    end
-    describe '一般ユーザを作成する場合' do
-      before do
-        @user, @user_profile, @user_uid = Admin::User.make_user({:user => @user_hash, :user_profile => @user_profile_hash, :user_uid => @user_uid_hash})
-      end
-      it '管理者でないこと' do
-        @user.admin.should be_false
-      end
-      it 'statusが無効化されていること' do
-        @user.status.should == :UNUSED.to_s
-      end
-    end
-  end
 end

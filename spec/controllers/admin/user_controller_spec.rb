@@ -15,15 +15,65 @@
 
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
+describe Admin::UsersController, 'GET /new' do
+  before do
+    admin_login
+    get :new
+  end
+  it {assigns[:user].should_not be_nil}
+  it {assigns[:user_profile].should_not be_nil}
+  it {assigns[:user_uid].should_not be_nil}
+  it {assigns[:topics].should_not be_nil}
+  it {response.should be_success}
+end
+
 describe Admin::UsersController, 'POST /create' do
   before do
     admin_login
+    @user = stub_model(Admin::User)
+    @user.stub!(:save!)
+    @user_profile = stub_model(Admin::UserProfile)
+    @user_uid = stub_model(Admin::UserUid)
+    Admin::User.stub!(:make_new_user).and_return([@user, @user_profile, @user_uid])
   end
-  it 'UnknownActionになること' do
-    lambda do
+  describe 'ユーザの登録に成功する場合' do
+    it 'Admin::Userが作成されること' do
+      @user.should_receive(:save!)
+      Admin::User.should_receive(:make_new_user).and_return([@user, @user_profile, @user_uid])
       post :create
-    end.should raise_error(ActionController::UnknownAction)
+    end
+    it {post :create; flash[:notice].should_not be_nil}
+    it {post :create; response.should be_redirect}
   end
+  describe 'ユーザの登録に失敗する場合' do
+    before do
+      @user.should_receive(:save!).and_raise(mock_record_invalid)
+      post :create
+    end
+    it {response.should be_success}
+    it {response.should render_template('new')}
+  end
+end
+
+describe Admin::UsersController, 'GET /edit' do
+  before do
+    admin_login
+    @user = stub_model(Admin::User)
+    Admin::User.stub!(:find).and_return(@user)
+    @user_profile = stub_model(Admin::UserProfile)
+    @user.stub!(:user_profile).and_return(@user_profile)
+    @user_uid = stub_model(Admin::UserUid)
+    @user.stub!(:master_user_uid).and_return(@user_uid)
+    get :edit
+  end
+  it {assigns[:user].should_not be_nil}
+  it {assigns[:user_profile].should_not be_nil}
+  it {assigns[:user_uid].should_not be_nil}
+  it {assigns[:topics].should_not be_nil}
+  it {response.should be_success}
+end
+
+describe Admin::UsersController, 'POST /update' do
 end
 
 describe Admin::UsersController, 'GET /first' do

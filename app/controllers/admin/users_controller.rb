@@ -21,7 +21,53 @@ class Admin::UsersController < Admin::ApplicationController
   skip_before_filter :prepare_session, :only => [:first]
   skip_before_filter :require_admin, :only => [:first]
 
-  undef create
+  def new
+    @user = Admin::User.new
+    @user_profile = Admin::UserProfile.new
+    @user_uid = Admin::UserUid.new
+    @topics = [[_('Listing %{model}') % {:model => _('user')}, admin_users_path], _('New %{model}') % {:model => _('user')}]
+  end
+
+  def create
+    begin
+      Admin::User.transaction do
+        @user, @user_profile, @user_uid = Admin::User.make_new_user({:user => params[:user], :user_profile => params[:user_profile], :user_uid => params[:user_uid]})
+        @user.save!
+      end
+      flash[:notice] = _('登録しました。')
+      redirect_to admin_users_path
+    rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => e
+      render :action => 'new'
+    end
+  end
+
+  def edit
+    @user = Admin::User.find(params[:id])
+    @user_profile = @user.user_profile
+    @user_uid = @user.master_user_uid
+
+    @topics = [[_('Listing %{model}') % {:model => _('user')}, admin_users_path],
+               _('Editing %{model}') % {:model => @user.topic_title }]
+  rescue ActiveRecord::RecordNotFound => e
+    flash[:notice] = _('ご指定のユーザは存在しません。')
+    redirect_to admin_users_path
+  end
+
+  def update
+    Admin::User.transaction do
+      @user, @user_profile, @user_uid = Admin::User.make_user_by_id(params)
+      @user.save!
+      @user_profile.save!
+      @user_uid.save!
+    end
+    flash[:notice] = _('更新しました。')
+    redirect_to admin_users_path
+  rescue ActiveRecord::RecordNotFound => e
+    flash[:notice] = _('ご指定のユーザは存在しません。')
+    redirect_to admin_users_path
+  rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => e
+    render :action => 'edit'
+  end
 
   def first
     if valid_activation_code? params[:code]
@@ -36,7 +82,6 @@ class Admin::UsersController < Admin::ApplicationController
             @user, @user_profile, @user_uid = Admin::User.make_user({:user => params[:user], :user_profile => params[:user_profile], :user_uid => params[:user_uid]}, true)
             @user.user_access = UserAccess.new :last_access => Time.now, :access_count => 0
             @user.save!
-            UserAccess.create!(:user_id => @user.id, :last_access => Time.now, :access_count => 0)
             if activation = Activation.find_by_code(params[:code])
               activation.update_attributes(:code => nil)
             end
@@ -54,7 +99,7 @@ class Admin::UsersController < Admin::ApplicationController
   def import
     if request.get? || !valid_csv?(params[:file])
       @users = []
-      @topics = [[_('Listing %{model}') % {:model => _('user')}, admin_users_path], _('ユーザインポート')]
+      @topics = [[_('Listing %{model}') % {:model => _('user')}, admin_users_path], _('New user from csv')]
       return
     end
     @users = Admin::User.make_users(params[:file])

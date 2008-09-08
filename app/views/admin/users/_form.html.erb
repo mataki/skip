@@ -1,21 +1,25 @@
-<%= form.error_messages %>
+<%= error_messages_for :user %>
 <p>
-  <%= form.label :name %>
-  <%= form.text_field :name %>
+  <%= label Admin::UserUid.name, :uid %>
+  <%= text_field :user_uid, :uid %>
 </p>
 <p>
-  <%= form.label :status %>
-  <%= form.text_field :status %>
+  <%= label Admin::UserProfile.name, :email %>
+  <%= text_field :user_profile, :email %>
 </p>
 <p>
-  <%= form.label :admin %>
-  <%= form.check_box :admin %>
+  <%= label Admin::User.name, :name %>
+  <%= text_field :user, :name %>
 </p>
 <p>
-  <%= form.label :password %>
-  <%= form.password_field :password %>
+  <%= label Admin::UserProfile.name, :section %>
+  <%= text_field :user_profile, :section %>
 </p>
 <p>
-  <%= form.label :password_confirmation %>
-  <%= form.password_field :password_confirmation %>
+  <%= label Admin::User.name, :password %>
+  <%= password_field :user, :password %>
+</p>
+<p>
+  <%= label Admin::User.name, :password_confirmation %>
+  <%= password_field :user, :password_confirmation %>
 </p>

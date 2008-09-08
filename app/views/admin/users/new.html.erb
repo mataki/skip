@@ -6,10 +6,10 @@
 
 
 <div class="box tabular">
-<% form_for(@user) do |f| %>
-<%= render :partial => f %>
+<% form_tag(admin_users_path) do %>
+<%= render :partial => 'form' %>
   <p>
-    <%= f.submit _('Create'), :disable_with => _('Creating...') %>
+    <%= submit_tag _('Create'), :disable_with => _('Creating...') %>
   </p>
 <% end %>
 </div>
