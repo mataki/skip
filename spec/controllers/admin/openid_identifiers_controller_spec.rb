@@ -78,65 +78,65 @@ describe Admin::OpenidIdentifiersController do
     end
   end
 
-  describe "handling GET /admin_openid_identifiers/1" do
+#   describe "handling GET /admin_openid_identifiers/1" do
 
-    before(:each) do
-    end
+#     before(:each) do
+#     end
 
-    def do_get
-      get :show, :id => "1"
-    end
+#     def do_get
+#       get :show, :id => "1"
+#     end
 
-    it "should be successful" do
-      do_get
-      response.should be_success
-    end
+#     it "should be successful" do
+#       do_get
+#       response.should be_success
+#     end
 
-    it "should render show template" do
-      do_get
-      response.should render_template('show')
-    end
+#     it "should render show template" do
+#       do_get
+#       response.should render_template('show')
+#     end
 
-    it "should find the openid_identifier requested" do
-      @openid_identifiers.should_receive(:find).with("1").and_return(@openid_identifier)
-      do_get
-    end
+#     it "should find the openid_identifier requested" do
+#       @openid_identifiers.should_receive(:find).with("1").and_return(@openid_identifier)
+#       do_get
+#     end
 
-    it "should assign the found openid_identifier for the view" do
-      do_get
-      assigns[:openid_identifier].should equal(@openid_identifier)
-      assigns[:topics].should_not be_nil
-    end
-  end
+#     it "should assign the found openid_identifier for the view" do
+#       do_get
+#       assigns[:openid_identifier].should equal(@openid_identifier)
+#       assigns[:topics].should_not be_nil
+#     end
+#   end
 
-  describe "handling GET /admin_openid_identifiers/1.xml" do
+#   describe "handling GET /admin_openid_identifiers/1.xml" do
 
-    before(:each) do
+#     before(:each) do
 
-      @openid_identifier.stub!(:to_xml).and_return("XML")
-    end
+#       @openid_identifier.stub!(:to_xml).and_return("XML")
+#     end
 
-    def do_get
-      @request.env["HTTP_ACCEPT"] = "application/xml"
-      get :show, :id => "1"
-    end
+#     def do_get
+#       @request.env["HTTP_ACCEPT"] = "application/xml"
+#       get :show, :id => "1"
+#     end
 
-    it "should be successful" do
-      do_get
-      response.should be_success
-    end
+#     it "should be successful" do
+#       do_get
+#       response.should be_success
+#     end
 
-    it "should find the openid_identifier requested" do
-      @openid_identifiers.should_receive(:find).with("1").and_return(@openid_identifier)
-      do_get
-    end
+#     it "should find the openid_identifier requested" do
+#       @openid_identifiers.should_receive(:find).with("1").and_return(@openid_identifier)
+#       do_get
+#     end
 
-    it "should render the found openid_identifier as xml" do
-      @openid_identifier.should_receive(:to_xml).and_return("XML")
-      do_get
-      response.body.should == "XML"
-    end
-  end
+#     it "should render the found openid_identifier as xml" do
+#       @openid_identifier.should_receive(:to_xml).and_return("XML")
+#       do_get
+#       response.body.should == "XML"
+#     end
+#   end
 
   describe "handling GET /admin_openid_identifiers/new" do
 

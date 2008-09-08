@@ -176,5 +176,6 @@ describe PlatformController, "#logout" do
     controller.should_receive(:reset_session)
     get :logout
   end
-  it { response.should redirect_to(:action => :index)}
+  it { response.should redirect_to(:controller => :platform, :action => :index) }
+  it { flash[:notice].should_not be_nil }
 end

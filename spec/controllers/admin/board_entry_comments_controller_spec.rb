@@ -80,54 +80,54 @@ describe Admin::BoardEntryCommentsController do
     end
   end
 
-  describe "handling GET /admin_board_entry_comments/1" do
-    def do_get
-      get :show, :id => "1"
-    end
+#   describe "handling GET /admin_board_entry_comments/1" do
+#     def do_get
+#       get :show, :id => "1"
+#     end
 
-    it "should be successful" do
-      do_get
-      response.should be_success
-    end
+#     it "should be successful" do
+#       do_get
+#       response.should be_success
+#     end
 
-    it "should render show template" do
-      do_get
-      response.should render_template('show')
-    end
+#     it "should render show template" do
+#       do_get
+#       response.should render_template('show')
+#     end
 
-    it "should find the board_entry_comment requested" do
-      @board_entry_comments.should_receive(:find).with("1").and_return(@board_entry_comment)
-      do_get
-    end
+#     it "should find the board_entry_comment requested" do
+#       @board_entry_comments.should_receive(:find).with("1").and_return(@board_entry_comment)
+#       do_get
+#     end
 
-    it "should assign the found board_entry_comment for the view" do
-      do_get
-      assigns[:board_entry_comment].should equal(@board_entry_comment)
-    end
-  end
+#     it "should assign the found board_entry_comment for the view" do
+#       do_get
+#       assigns[:board_entry_comment].should equal(@board_entry_comment)
+#     end
+#   end
 
-  describe "handling GET /admin_board_entry_comments/1.xml" do
-    def do_get
-      @request.env["HTTP_ACCEPT"] = "application/xml"
-      get :show, :id => "1"
-    end
+#   describe "handling GET /admin_board_entry_comments/1.xml" do
+#     def do_get
+#       @request.env["HTTP_ACCEPT"] = "application/xml"
+#       get :show, :id => "1"
+#     end
 
-    it "should be successful" do
-      do_get
-      response.should be_success
-    end
+#     it "should be successful" do
+#       do_get
+#       response.should be_success
+#     end
 
-    it "should find the board_entry_comment requested" do
-      @board_entry_comments.should_receive(:find).with("1").and_return(@board_entry_comment)
-      do_get
-    end
+#     it "should find the board_entry_comment requested" do
+#       @board_entry_comments.should_receive(:find).with("1").and_return(@board_entry_comment)
+#       do_get
+#     end
 
-    it "should render the found board_entry_comment as xml" do
-      @board_entry_comment.should_receive(:to_xml).and_return("XML")
-      do_get
-      response.body.should == "XML"
-    end
-  end
+#     it "should render the found board_entry_comment as xml" do
+#       @board_entry_comment.should_receive(:to_xml).and_return("XML")
+#       do_get
+#       response.body.should == "XML"
+#     end
+#   end
 
   describe "handling DELETE /admin_board_entry_comments/1" do
     before do
