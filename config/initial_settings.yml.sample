@@ -34,7 +34,8 @@ default: &default
   full_text_search_setting: false                                    # 全文検索入力欄の表示制御
   password_edit_setting: true                                        # パスワード変更可能かどうかの設定
   nickname_use_setting: true                                         # ユーザ登録時にニックネームを利用するかどうかの設定
-  delivery_method: smtp                                             # メール配信方法(ActionMailer::Base.delivery_methodへの設定値)
+  delivery_method: smtp                                              # メール配信方法(ActionMailer::Base.delivery_methodへの設定値)
+  raise_delivery_errors: false                                       # メール送信に失敗した場合のエラー処理を行なうか
 
 # ---- 全文検索
   search_apps:
