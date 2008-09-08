@@ -62,7 +62,7 @@ private
     return "=?#{charset}?B?#{text}?="
   end
 
-  @@site_url = Admin::Setting.contact_url
+  @@site_url = ENV['SKIP_URL'] + "/"
   @@system_mail_addr = Admin::Setting.contact_addr
   @@from = UserMailer.base64(Admin::Setting.abbr_app_title) + "<#{@@system_mail_addr}>"
   @@footer = "----\n#{@@system_mail_addr}\n#{@@site_url}"

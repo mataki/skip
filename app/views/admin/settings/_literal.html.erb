@@ -1,5 +1,5 @@
 <div class="box tabular">
-<% %w(app_title abbr_app_title contact_addr contact_url help_url initial_anntena login_account header_logo_url footer_link footer_contact footer_copyright footer_image_url footer_image_link_url point_button).each do |key| -%>
+<% %w(app_title abbr_app_title contact_addr help_url initial_anntena login_account header_logo_url footer_link footer_contact footer_copyright footer_image_url footer_image_link_url point_button).each do |key| -%>
   <p><%= settings_label_with_text_field_tag key.to_sym %></p>
 <% end -%>
 </div>

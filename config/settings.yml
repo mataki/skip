@@ -20,9 +20,6 @@ abbr_app_title:
   default: SKIP                                            # SNS名の略称
 contact_addr:
   default: info@openskip.org                               # SNS運営元の連絡メールアドレス
-contact_url:
-  format: url
-  default: http://dev.openskip.org/                        # SNS運営元のウェブページのURL
 help_url:
   format: url
   default: http://www.openskip.org/help                    # SNSのヘルプのURL
