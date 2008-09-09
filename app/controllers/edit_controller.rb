@@ -82,7 +82,7 @@ class EditController < ApplicationController
         @sent_mail_flag = "checked" if params[:sent_mail][:send_flag] == "1"
       end
       flash[:warning] = "この操作は、許可されていません。"
-      render :action => 'index'
+      redirect_to  :controller => 'mypage', :action =>'index'
       return
     end
 
