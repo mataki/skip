@@ -29,7 +29,7 @@ class ShareFileController < ApplicationController
 
     @error_messages = []
     @owner_name = params[:owner_name]
-    @categories_hash = ShareFile.get_tags_hash(params[:owner_symbol])
+    @categories_hash = ShareFile.get_tags_hash(@share_file.owner_symbol)
   end
 
   # post action
@@ -41,15 +41,15 @@ class ShareFileController < ApplicationController
     @share_file.publication_symbols_value = params[:publication_type]=='protected' ? params[:publication_symbols_value] : ""
 
     # 所有者がマイユーザ OR マイグループ
-    unless login_user_symbols.include? params[:owner_symbol]
-      @categories_hash = ShareFile.get_tags_hash(params[:owner_symbol])
-      flash.now[:warning] = "この操作は、許可されていません。"
-      render :action => "new"
+    unless login_user_symbols.include? @share_file.owner_symbol
+      @categories_hash = ShareFile.get_tags_hash(@share_file.owner_symbol)
+      flash[:warning] = "この操作は、許可されていません。"
+      redirect_to :controller => 'mypage', :action => "index"
       return
     end
     
     unless valid_upload_files? params[:file]
-      @categories_hash = ShareFile.get_tags_hash(params[:owner_symbol])
+      @categories_hash = ShareFile.get_tags_hash(@share_file.owner_symbol)
       flash.now[:warning] = "ファイルサイズが０、もしくはサイズが大きすぎるファイルがあります。"
       render :action => "new", :layout => "subwindow", :collection => @categories_hash
       return
@@ -131,8 +131,8 @@ class ShareFileController < ApplicationController
 
     unless authorize_to_save_share_file? @share_file
       @categories_hash = ShareFile.get_tags_hash(@share_file.owner_symbol)
-      flash.now[:warning] = "この操作は、許可されていません。"
-      render :action => :edit
+      flash[:warning] = "この操作は、許可されていません。"
+      redirect_to  :controller => 'mypage', :action =>'index'
       return
     end
 
@@ -162,7 +162,7 @@ class ShareFileController < ApplicationController
 
     unless authorize_to_save_share_file? share_file
       flash[:warning] = "この操作は、許可されていません。"
-      redirect_to :controller => share_file.owner_symbol_type, :action => share_file.owner_symbol_id, :id => 'share_file'
+      redirect_to :controller => 'mypage', :action => 'index'
       return
     end
     

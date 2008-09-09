@@ -236,7 +236,7 @@ class GroupController < ApplicationController
     group_participation = GroupParticipation.find(params[:participation_id])
     unless group_participation.user_id != session[:user_id]
       flash[:warning] = "この操作は、許可されていません。"
-      redirect_to :action => 'manage', :menu => 'manage_participations'
+      redirect_to  :controller => 'mypage', :action =>'index'
       return false
     end
     group_participation.owned = !group_participation.owned?
@@ -254,7 +254,7 @@ class GroupController < ApplicationController
     group_participation = GroupParticipation.find(params[:participation_id])
     unless group_participation.group_id == @participation.group_id
       flash[:warning] = "この操作は、許可されていません。"
-      redirect_to :action => 'manage', :menu => 'manage_participations'
+      redirect_to  :controller => 'mypage', :action =>'index'
       return false
     end
 
@@ -420,7 +420,7 @@ private
   def check_owned
     unless @participation and @participation.owned?
       flash[:warning] = 'その操作は管理者権限が必要です。'
-      redirect_to :action => 'show'
+      redirect_to :controller => 'mypage', :action => 'index'
       return false
     end
   end
