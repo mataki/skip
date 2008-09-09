@@ -21,6 +21,7 @@ describe Admin::User, '.make_users' do
     @user_profile = mock_model(Admin::UserProfile)
     @user_uid = mock_model(Admin::UserUid)
     FasterCSV.should_receive(:parse).and_return([['hoge']])
+    Admin::User.stub!(:make_user_hash_from_csv_line).and_return({},{},{})
     Admin::User.should_receive(:make_user).and_return([@user, @user_profile, @user_uid])
   end
   it { Admin::User.send(:make_users, mock('mock')).should == ([[@user, @user_profile, @user_uid]]) }

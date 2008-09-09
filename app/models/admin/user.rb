@@ -98,6 +98,7 @@ class Admin::User < User
 
   private
   def self.make_user_hash_from_csv_line(line)
+    line.map! { |column| column.blank? ? '' : column.toutf8 }
     user_hash = {:name => line[1], :password => line[4], :password_confirmation => line[4]}
     user_profile_hash = {:section => line[2], :email => line[3]}
     user_uid_hash ={:uid => line[0]}

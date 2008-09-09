@@ -113,7 +113,7 @@ class Admin::UsersController < Admin::ApplicationController
         end
       end
     end
-    flash[:notice] = _('CSVファイルからのアカウント登録/更新に成功しました。')
+    flash[:notice] = _('CSVファイルからのユーザ登録/更新に成功しました。')
     redirect_to admin_users_path
   rescue ActiveRecord::RecordInvalid,
          ActiveRecord::RecordNotSaved => e
@@ -144,7 +144,7 @@ class Admin::UsersController < Admin::ApplicationController
       return false
     end
 
-    unless ['text/csv', 'application/x-csv'].include?(uploaded_file.content_type)
+    unless ['text/csv', 'application/x-csv', 'application/vnd.ms-excel'].include?(uploaded_file.content_type)
       flash[:error] = _('csvファイル以外はアップロード出来ません。')
       return false
     end

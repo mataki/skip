@@ -20,7 +20,7 @@ class CreateNewAdminUrl < BatchBase
     cnau = CreateNewAdminUrl.new
     if valid_args?(options)
       if activation = Activation.first
-        p (code = activation.code) ? cnau.show_new_admin_url(code) : '初期アカウントは登録済みです。'
+        p (code = activation.code) ? cnau.show_new_admin_url(code) : '初期管理者ユーザは登録済みです。'
       else
         activation = Activation.new(:code => options[:code])
         p activation.save ? cnau.show_new_admin_url(activation.code) : 'ワンタイムコードの保存に失敗しました。'
