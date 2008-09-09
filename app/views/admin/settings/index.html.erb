@@ -1,7 +1,39 @@
 <% content_for :topic_path do -%>
 <%= render :partial => '/admin/shared/topic_path' %>
 <% end -%>
+<% help_msg = _('全ての入力内容が規定値に置き換わります。保存ボタンを押さない限り保存されません。') -%>
 <% form_tag(admin_settings_update_all_path(:tab => params[:tab])) do -%>
 <%= render :partial => params[:tab] %>
 <%= submit_tag _('Save'), :disable_with => _('Saving...') %>
+<%= link_to _('全て既定値に戻す'), '#', :id => 'revert_to_default_link' %><%= help_icon_tag :content => help_msg %>
+<% end -%>
+
+<% content_for :javascript do -%>
+<script type="text/javascript">
+$j(function(){
+    var revertToDefault = function(target_id, value) {
+        var targetObj = $j('#' + target_id);
+        if(targetObj.attr('type') == 'checkbox') {
+            if(value == 'true') {
+                targetObj.attr('checked', 'checked');
+            } else {
+                targetObj.removeAttr('checked');
+            }
+        } else {
+            // select text textarea等
+            targetObj.val(value);
+        }
+    }
+
+    $j('#revert_to_default_link').click(function(){
+        if(!confirm('<%= help_msg %>')){
+            return;
+        }
+<% @revert_columns ||= [] -%>
+<% @revert_columns.each do |key| -%>
+        revertToDefault('admin_setting_' + '<%= key %>', '<%= Admin::Setting.send("default_" + key) %>');
+<% end -%>
+    });
+});
+</script>
 <% end -%>

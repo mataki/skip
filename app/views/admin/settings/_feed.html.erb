@@ -1,3 +1,4 @@
+<% @revert_columns = %w(mypage_feed_default_limit mypage_feed_timeout) %>
 <div class="box tabular">
   <p><%= settings_label_with_select_tag :mypage_feed_default_limit, (1..5).to_a, Admin::Setting.mypage_feed_default_limit.to_i %></p>
   <p><%= settings_label_with_select_tag :mypage_feed_timeout, (1..7).to_a, Admin::Setting.mypage_feed_timeout.to_i  %></p>

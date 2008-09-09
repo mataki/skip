@@ -128,6 +128,10 @@ class Admin::Setting < ActiveRecord::Base
       self[:#{name}]
     end
 
+    def self.default_#{name}
+      self.available_settings['#{name}']['default']
+    end
+
     def self.#{name}?
       self[:#{name}] == 'true'
     end

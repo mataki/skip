@@ -8,7 +8,7 @@ table.sortable thead tr .header { background-image: url(/images/skip/jquery/tabl
 table.sortable thead tr .headerSortUp { background-image: url(/images/skip/jquery/tablesorter/asc.gif);}
 table.sortable thead tr .headerSortDown { background-image: url(/images/skip/jquery/tablesorter/desc.gif);}
 table.sortable tbody tr td { overflow: hidden; }
-.help { vertical-align: top }
+.help { vertical-align: middle }
 h3.topics { background-color: #F0F0FF; border-bottom: 1px dashed silver; border-top: 3px double silver; margin-bottom: 2px; padding: 0 0 0 7px; }
 .fieldWithErrors { display: inline; padding: 2px; background-color: #F6F6F6; _background-color: pink; }
 .fieldWithErrors label { background-color: pink; }

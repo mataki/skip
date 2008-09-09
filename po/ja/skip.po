@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-09-09 11:51+0900\n"
+"POT-Creation-Date: 2008-09-09 16:03+0900\n"
 "PO-Revision-Date: 2008-09-08 03:39+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -215,7 +215,10 @@ msgstr "初期登録アンテナのグループID"
 
 #: app/models/admin/setting.rb:56
 msgid "Admin::Setting|Antenna default group description"
-msgstr "[グループIDを追加]で初期登録アンテナに追加されるグループIDを増やすことが出来ます。[グループIDを除去]で初期登録アンテナに追加されるグループIDを減らすことが出来ます。"
+msgstr ""
+"[グループIDを追加]で初期登録アンテナに追加されるグループIDを増やすことが出来"
+"ます。[グループIDを除去]で初期登録アンテナに追加されるグループIDを減らすこと"
+"が出来ます。"
 
 #: app/models/admin/setting.rb:17
 msgid "Admin::Setting|App title"
@@ -317,7 +320,9 @@ msgstr "初期登録アンテナ名"
 
 #: app/models/admin/setting.rb:28
 msgid "Admin::Setting|Initial anntena description"
-msgstr "ユーザがプロフィールを新規に登録する際に自動的に登録されるアンテナのアンテナ名を指定します。"
+msgstr ""
+"ユーザがプロフィールを新規に登録する際に自動的に登録されるアンテナのアンテナ"
+"名を指定します。"
 
 #: app/models/admin/setting.rb:29
 msgid "Admin::Setting|Login account"
@@ -1197,12 +1202,12 @@ msgstr ""
 msgid "Ranking|Url"
 msgstr ""
 
-#: app/views/admin/settings/index.html.erb:6
+#: app/views/admin/settings/index.html.erb:7
 #: app/views/admin/documents/index.html.erb:12
 msgid "Save"
 msgstr "保存"
 
-#: app/views/admin/settings/index.html.erb:6
+#: app/views/admin/settings/index.html.erb:7
 #: app/views/admin/documents/index.html.erb:12
 msgid "Saving..."
 msgstr "保存しています…"
@@ -1767,6 +1772,14 @@ msgid ""
 "修正後再度アップロードして下さい。"
 msgstr ""
 
+#: app/views/admin/settings/_other.html.erb:7
+msgid "グループIDを追加"
+msgstr ""
+
+#: app/views/admin/settings/_other.html.erb:8
+msgid "グループIDを除去"
+msgstr ""
+
 #: app/controllers/admin/users_controller.rb:133
 msgid "ファイルを指定して下さい。"
 msgstr ""
@@ -1786,6 +1799,16 @@ msgstr ""
 #: app/controllers/admin/documents_controller.rb:53
 #: app/controllers/admin/settings_controller.rb:46
 msgid "保存しました。"
+msgstr ""
+
+#: app/views/admin/settings/index.html.erb:4
+msgid ""
+"全ての入力内容が規定値に置き換わります。保存ボタンを押さない限り保存されませ"
+"ん。"
+msgstr ""
+
+#: app/views/admin/settings/index.html.erb:8
+msgid "全て既定値に戻す"
 msgstr ""
 
 #: app/controllers/admin/documents_controller.rb:41
