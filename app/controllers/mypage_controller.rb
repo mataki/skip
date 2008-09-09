@@ -210,26 +210,24 @@ class MypageController < ApplicationController
 
   # post_action
   def update_profile
-    params[:profile][:section] = params[:new_section] unless params[:new_section].empty?
-    params[:profile][:section] = params[:profile][:section].tr('ａ-ｚＡ-Ｚ１-９','a-zA-Z1-9').upcase
-
-    params[:profile][:alma_mater] = params[:new_alma_mater] unless SkipUtil.jstrip(params[:new_alma_mater]).empty?
-    params[:profile][:address_2] = params[:new_address_2] unless SkipUtil.jstrip(params[:new_address_2]).empty?
-    params[:profile][:self_introduction] = SkipUtil.jstrip(params[:profile][:self_introduction])
-
     @user = current_user
-    params[:profile][:disclosure] =  params[:write_profile] ? true : false
-    @profile = @user.update_profile(params[:profile], params[:hobbies])
-    result = (@user.update_attributes(params[:user]) && @profile.errors.empty?)
-    if result
+    @user.attributes = params[:user]
+
+    @profile = @user.user_profile
+    @profile.attributes_for_registration(params)
+
+    User.transaction do
+      @profile.save!
+      @user.save!
+
       flash[:notice] = 'ユーザ情報の更新に成功しました。'
       redirect_to :action => 'profile'
-    else
-      @error_msg = []
-      @error_msg.concat @user.errors.full_messages unless @user.valid?
-      @profile ||= UserProfile.new
-      render :partial => 'manage_profile', :layout => "layout"
     end
+  rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => e
+    @error_msg = []
+    @error_msg.concat @user.errors.full_messages.reject{|msg| msg.include?("User profile") } unless @user.valid?
+    @error_msg.concat @profile.errors.full_messages if @profile and @profile.errors
+    render :partial => 'manage_profile', :layout => "layout"
   end
 
   # post_action

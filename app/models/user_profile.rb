@@ -131,4 +131,17 @@ class UserProfile < ActiveRecord::Base
   def self.grouped_sections
     all(:select => "section", :group => "section").collect { |user_profile| user_profile.section }
   end
+
+  def attributes_for_registration params
+    self.attributes = params[:profile]
+    self.section = params[:new_section].tr('ａ-ｚＡ-Ｚ１-９','a-zA-Z1-9').upcase unless params[:new_section].empty?
+    self.alma_mater = params[:new_alma_mater] unless SkipUtil.jstrip(params[:new_alma_mater]).empty?
+    self.address_2 = params[:new_address_2] unless SkipUtil.jstrip(params[:new_address_2]).empty?
+    self.self_introduction = SkipUtil.jstrip(params[:profile][:self_introduction])
+    self.hobby = ''
+    if (params[:hobbies] && params[:hobbies].size > 0 )
+      self.hobby = params[:hobbies].join(',') + ','
+    end
+    self.disclosure = params[:write_profile] ? true : false
+  end
 end

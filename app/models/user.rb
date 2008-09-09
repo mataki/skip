@@ -217,26 +217,6 @@ class User < ActiveRecord::Base
     return @profile
   end
 
-  # プロフィールの更新（ない場合はレコード作成）
-  def update_profile(profile_params, hobbies_params)
-    hobby = ""
-    if hobbies_params && hobbies_params.size > 0
-      hobby = hobbies_params.join(',')+','
-    end
-
-    if self.user_profile.nil?
-      @profile = UserProfile.new(profile_params)
-      @profile.user_id = self.id
-      @profile.hobby = hobby
-      @profile.save
-    else
-      @profile =  self.user_profile
-      @profile.hobby = hobby
-      @profile.update_attributes(profile_params)
-    end
-    return @profile
-  end
-
   # 属性情報とオフ情報のプロフィールを入力しているかどうか
   def has_profile?
     !self.user_profile.nil?
