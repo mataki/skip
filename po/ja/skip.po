@@ -211,11 +211,11 @@ msgstr "SNS名の略称を指定します。"
 
 #: app/models/admin/setting.rb:55
 msgid "Admin::Setting|Antenna default group"
-msgstr "初期のアンテナに追加されるグループ"
+msgstr "初期登録アンテナのグループID"
 
 #: app/models/admin/setting.rb:56
 msgid "Admin::Setting|Antenna default group description"
-msgstr "初期のアンテナに追加されるグループを指定します。"
+msgstr "[グループIDを追加]で初期登録アンテナに追加されるグループIDを増やすことが出来ます。[グループIDを除去]で初期登録アンテナに追加されるグループIDを減らすことが出来ます。"
 
 #: app/models/admin/setting.rb:17
 msgid "Admin::Setting|App title"
@@ -313,11 +313,11 @@ msgstr "SNSヘルプのURLを指定します。"
 
 #: app/models/admin/setting.rb:27
 msgid "Admin::Setting|Initial anntena"
-msgstr "初期登録されるアンテナ名"
+msgstr "初期登録アンテナ名"
 
 #: app/models/admin/setting.rb:28
 msgid "Admin::Setting|Initial anntena description"
-msgstr "初期登録されるアンテナ名を指定します。"
+msgstr "ユーザがプロフィールを新規に登録する際に自動的に登録されるアンテナのアンテナ名を指定します。"
 
 #: app/models/admin/setting.rb:29
 msgid "Admin::Setting|Login account"

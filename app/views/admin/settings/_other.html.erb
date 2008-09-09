@@ -1,9 +1,11 @@
 <div class="box tabular">
   <p><%= settings_label_with_text_field_tag :develop_team_gid %></p>
+  <p><%= settings_label_with_text_field_tag :initial_anntena %></p>
   <div id="antenna_default_groups">
     <p><%= label Admin::Setting.name, :antenna_default_group %>
-    <a id="add_antenna_default_group" href="#">[デフォルトのアンテナを追加する]</a>
-    <a id="remove_antenna_default_group" href="#">[デフォルトのアンテナを除去する]</a>
+    <a id="add_antenna_default_group" href="#">[<%= _('グループIDを追加') %>]</a>
+    <a id="remove_antenna_default_group" href="#">[<%= _('グループIDを除去') %>]</a>
+    <%= help_icon_tag :content => _(Admin::Setting.name + '|' + 'antenna_default_group_description'.humanize) %>
     </p>
     <% Admin::Setting.antenna_default_group.each_with_index do |antenna, index| -%>
       <% @antenna = antenna -%>
