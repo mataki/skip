@@ -246,7 +246,8 @@ class MypageController < ApplicationController
   end
 
   def apply_password
-    @user = AccountAccess.change_password(session[:user_code], params[:user])
+    @user = current_user
+    @user.change_password(params[:user])
     if @user.errors.empty?
       flash[:notice] = 'パスワードを変更しました。'
       redirect_to :action => :manage, :menu => :manage_password

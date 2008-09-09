@@ -15,6 +15,33 @@
 
 require File.dirname(__FILE__) + '/../spec_helper'
 
+describe PlatformController, "パスワードでログインする場合" do
+  before do
+    @code = "111111"
+    @password = "password"
+    @user = mock_model(User, :code => @code)
+  end
+  describe "認証に成功する場合" do
+    before do
+      User.should_receive(:auth).with(@code, @password).and_return(@user)
+
+      post :login, :login => { :key => @code, :password => @password }
+    end
+    it { response.should redirect_to(root_url) }
+    it { session[:user_code].should == @code }
+  end
+  describe "認証に失敗した場合" do
+    before do
+      request.env['HTTP_REFERER'] = @back = "http://test.host/previous/page"
+      User.should_receive(:auth).and_return(nil)
+
+      post :login, :login => { :key => @code, :password => @password }
+    end
+    it { response.should redirect_to(:back) }
+    it { flash[:auth_fail_message].should_not be_nil }
+  end
+end
+
 describe PlatformController, "ログイン時にOpenIdのアカウントが渡された場合" do
   before do
     @registration = mock('registration')

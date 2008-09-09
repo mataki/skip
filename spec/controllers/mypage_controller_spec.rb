@@ -219,3 +219,14 @@ describe MypageController, 'POST #update_profile' do
     it {response.should render_template('mypage/_manage_profile')}
   end
 end
+
+describe MypageController, "POST /apply_password" do
+  before do
+    @user = user_login
+    @user.should_receive(:change_password)
+    @user.should_receive(:errors).and_return([])
+
+    post :apply_password
+  end
+  it { response.should be_redirect }
+end

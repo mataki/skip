@@ -69,7 +69,7 @@ class User < ActiveRecord::Base
   end
 
   def before_save
-    self.crypted_password = self.class.encrypt(password) if password_required?
+    self.crypted_password = encrypt(password) if password_required?
   end
 
   def self.auth(code, password)
@@ -83,7 +83,7 @@ class User < ActiveRecord::Base
 
   def self.create_with_identity_url(identity_url, params)
     code = params.delete(:code)
-    password = self.encrypt(params[:code])
+    password = encrypt(params[:code])
 
     user = new(params.merge(:password => password, :password_confirmation => password))
     user.user_uids << UserUid.new(:uid => code, :uid_type => 'MASTER')
@@ -103,6 +103,14 @@ class User < ActiveRecord::Base
   # 登録済みユーザのユーザID(ログインID,ニックネーム)をもとにユーザを検索する
   def self.find_by_uid(code)
     find(:first, :conditions => ['user_uids.uid = ?', code], :include => :user_uids)
+  end
+
+  def change_password(params = {})
+    if params[:old_password] and crypted_password == encrypt(params[:old_password])
+      self.update_attributes params.slice(:password, :password_confirmation)
+    else
+      errors.add(:old_password, "が間違っています。")
+    end
   end
 
   def symbol_id
@@ -272,5 +280,9 @@ protected
 private
   def password_required?
     crypted_password.blank? || !password.blank?
+  end
+
+  def encrypt(password)
+    self.class.encrypt(password)
   end
 end

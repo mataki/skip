@@ -36,18 +36,18 @@ class PlatformController < ApplicationController
     if using_open_id?
       login_with_open_id
     else
-      user_info = AccountAccess.auth(params[:login][:key], params[:login][:password])
+      if user = User.auth(params[:login][:key], params[:login][:password])
 
-      reset_session
-      session[:user_code] = user_info["code"]
+        reset_session
+        session[:user_code] = user.code
 
-      return_to = params[:return_to] ? URI.encode(params[:return_to]) : nil
-      redirect_to (return_to and !return_to.empty?) ? return_to : root_url
+        return_to = params[:return_to] ? URI.encode(params[:return_to]) : nil
+        redirect_to (return_to and !return_to.empty?) ? return_to : root_url
+      else
+        flash[:auth_fail_message] ||={ "message" => "ログインに失敗しました。", "detail" => "下部に記載されているお問い合わせ先にご連絡下さい。"}
+        redirect_to :back
+      end
     end
-  rescue AccountAccess::AccountAccessException => ex
-    logger.warn ex.message["message"]
-    flash[:auth_fail_message] ||= ex.message
-    redirect_to request.env["HTTP_REFERER"]
   end
 
   # ログアウト

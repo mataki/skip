@@ -66,6 +66,29 @@ describe User, "#before_save" do
   end
 end
 
+describe User, '#change_password' do
+  before do
+    @user = create_user
+    @before_password = @user.password
+    @after_password = 'hogehoge'
+
+    @params = { :old_password => @before_password, :password => @after_password, :password_confirmation => @after_password }
+  end
+  describe "変更が成功する場合" do
+    before do
+      @user.change_password @params
+    end
+    it { @user.crypted_password.should == User.encrypt(@after_password) }
+  end
+  describe "前のパスワードが間違っている場合" do
+    before do
+      @params[:old_password] = 'fugafuga'
+      @user.change_password @params
+    end
+    it { @user.errors.full_messages.size.should == 1 }
+  end
+end
+
 describe User, ".create_with_identity_url" do
   before do
     @identity_url = "http://test.com/identity"
