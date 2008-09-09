@@ -86,7 +86,7 @@ module AdminModule
       set_singularize_instance_val object
 
       @topics = [[_('Listing %{model}') % {:model => _(singularize_name.gsub('_', ' '))}, index_url],
-                 _('New %{model}') % {:model => object.topic_title}]
+                 _('New %{model}') % {:model => _(singularize_name.gsub('_', ' '))}]
 
       respond_to do |format|
         format.html # new.html.erb
@@ -108,7 +108,7 @@ module AdminModule
 
       respond_to do |format|
         if object.save
-          flash[:notice] = _("%{model} was successfully created.") % {:model => _(singularize_name)}
+          flash[:notice] = _("%{model} was successfully created.") % {:model => _(singularize_name.gsub('_', ' '))}
           format.html { redirect_to(object) }
           format.xml  { render :xml => object, :status => :created, :location => object }
         else
@@ -124,7 +124,7 @@ module AdminModule
 
       respond_to do |format|
         if object.update_attributes(params[admin_params_sym])
-          flash[:notice] = _("%{model} was successfully updated.") % {:model => _(singularize_name)}
+          flash[:notice] = _("%{model} was successfully updated.") % {:model => _(singularize_name.gsub('_', ' '))}
           format.html { redirect_to(object) }
           format.xml  { head :ok }
         else
@@ -210,7 +210,7 @@ module AdminModule
 
       respond_to do |format|
         if object.save
-          flash[:notice] = _("%{model} was successfully created.") % {:model => _(singularize_name)}
+          flash[:notice] = _("%{model} was successfully created.") % {:model => _(singularize_name.gsub('_', ' '))}
           format.html { redirect_to(url_for_parent_and(object)) }
           format.xml  { render :xml => object, :status => :created, :location => object }
         else
@@ -227,7 +227,7 @@ module AdminModule
 
       respond_to do |format|
         if object.update_attributes(params[singularize_name.to_sym])
-          flash[:notice] = _('%{model} was successfully updated.') % {:model => _(singularize_name)}
+          flash[:notice] = _('%{model} was successfully updated.') % {:model => _(singularize_name.gsub('_', ' '))}
           format.html { redirect_to(url_for_parent_and(object)) }
           format.xml  { head :ok }
         else

@@ -44,10 +44,11 @@ ActionController::Routing::Routes.draw do |map|
       bookmark.resources :bookmark_comments
     end
     admin_map.resources :users, :new => [:import, :first] do |user|
-      user.resource :user_profile
       user.resources :user_uids
       user.resources :openid_identifiers
     end
+    admin_map.resources :user_profiles
+
     admin_map.resources :groups do |group|
       group.resources :group_participations
     end

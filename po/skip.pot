@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-09-09 16:03+0900\n"
+"POT-Creation-Date: 2008-09-09 22:22+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,11 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: app/controllers/admin/user_profiles_controller.rb:25
-#: app/controllers/admin/user_profiles_controller.rb:26
-#: app/controllers/admin/user_profiles_controller.rb:40
-#: app/views/admin/user_uids/index.html.erb:21
-#: app/views/admin/user_profiles/show.html.erb:90 lib/admin_module.rb:75
+#: app/views/admin/user_uids/index.html.erb:21 lib/admin_module.rb:75
 #: lib/admin_module.rb:158 lib/admin_module.rb:172 lib/admin_module.rb:174
 #: lib/admin_module.rb:187 lib/admin_module.rb:202
 msgid "%{model} Show"
@@ -30,7 +26,6 @@ msgstr ""
 msgid "%{model} was successfully created."
 msgstr ""
 
-#: app/controllers/admin/user_profiles_controller.rb:52
 #: lib/admin_module.rb:127 lib/admin_module.rb:230
 msgid "%{model} was successfully updated."
 msgstr ""
@@ -87,7 +82,7 @@ msgstr ""
 msgid "Admin::Bookmark|Url"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:25
+#: app/helpers/admin/application_helper.rb:24
 msgid "Admin::DocumentsController"
 msgstr ""
 
@@ -172,7 +167,7 @@ msgid "Admin::OpenidIdentifier|Url"
 msgstr ""
 
 #: app/controllers/admin/settings_controller.rb:20
-#: app/helpers/admin/application_helper.rb:24
+#: app/helpers/admin/application_helper.rb:23
 msgid "Admin::SettingsController|feed"
 msgstr ""
 
@@ -187,7 +182,7 @@ msgid "Admin::SettingsController|mail"
 msgstr ""
 
 #: app/controllers/admin/settings_controller.rb:19
-#: app/helpers/admin/application_helper.rb:23
+#: app/helpers/admin/application_helper.rb:25
 msgid "Admin::SettingsController|other"
 msgstr ""
 
@@ -479,60 +474,72 @@ msgstr ""
 msgid "Admin::ShareFile|User"
 msgstr ""
 
-#: app/models/admin/user_profile.rb:17
+#: app/models/admin/user_profile.rb:18
 msgid "Admin::UserProfile|Address 1"
 msgstr ""
 
-#: app/models/admin/user_profile.rb:18
+#: app/models/admin/user_profile.rb:19
 msgid "Admin::UserProfile|Address 2"
 msgstr ""
 
-#: app/models/admin/user_profile.rb:19
+#: app/models/admin/user_profile.rb:20
 msgid "Admin::UserProfile|Alma mater"
 msgstr ""
 
-#: app/models/admin/user_profile.rb:20
+#: app/models/admin/user_profile.rb:21
 msgid "Admin::UserProfile|Birth day"
 msgstr ""
 
-#: app/models/admin/user_profile.rb:21
+#: app/models/admin/user_profile.rb:22
 msgid "Admin::UserProfile|Birth month"
 msgstr ""
 
-#: app/models/admin/user_profile.rb:22
+#: app/models/admin/user_profile.rb:23
 msgid "Admin::UserProfile|Blood type"
 msgstr ""
 
-#: app/models/admin/user_profile.rb:23
+#: app/models/admin/user_profile.rb:24
 msgid "Admin::UserProfile|Disclosure"
 msgstr ""
 
-#: app/models/admin/user_profile.rb:24
+#: app/models/admin/user_profile.rb:25
 msgid "Admin::UserProfile|Email"
 msgstr ""
 
-#: app/models/admin/user_profile.rb:25
-msgid "Admin::UserProfile|Gender type"
+#: app/models/admin/user_profile.rb:33
+msgid "Admin::UserProfile|Extension"
 msgstr ""
 
 #: app/models/admin/user_profile.rb:26
-msgid "Admin::UserProfile|Hobby"
+msgid "Admin::UserProfile|Gender type"
 msgstr ""
 
 #: app/models/admin/user_profile.rb:27
-msgid "Admin::UserProfile|Hometown"
+msgid "Admin::UserProfile|Hobby"
 msgstr ""
 
 #: app/models/admin/user_profile.rb:28
-msgid "Admin::UserProfile|Introduction"
+msgid "Admin::UserProfile|Hometown"
 msgstr ""
 
 #: app/models/admin/user_profile.rb:29
-msgid "Admin::UserProfile|Join year"
+msgid "Admin::UserProfile|Introduction"
 msgstr ""
 
 #: app/models/admin/user_profile.rb:30
+msgid "Admin::UserProfile|Join year"
+msgstr ""
+
+#: app/models/admin/user_profile.rb:31
 msgid "Admin::UserProfile|Section"
+msgstr ""
+
+#: app/models/admin/user_profile.rb:34
+msgid "Admin::UserProfile|Self introduction"
+msgstr ""
+
+#: app/models/admin/user_profile.rb:32
+msgid "Admin::UserProfile|User"
 msgstr ""
 
 #: app/models/admin/user_uid.rb:17
@@ -607,16 +614,17 @@ msgstr ""
 msgid "AppliedEmail|メールアドレス"
 msgstr ""
 
-#: app/views/admin/share_files/index.html.erb:15
-#: app/views/admin/bookmark_comments/index.html.erb:13
 #: app/views/admin/board_entries/index.html.erb:14
-#: app/views/admin/user_uids/index.html.erb:14
-#: app/views/admin/users/index.html.erb:14
 #: app/views/admin/board_entry_comments/index.html.erb:13
+#: app/views/admin/bookmark_comments/index.html.erb:13
+#: app/views/admin/bookmarks/index.html.erb:15
 #: app/views/admin/group_participations/index.html.erb:13
 #: app/views/admin/groups/index.html.erb:15
 #: app/views/admin/openid_identifiers/index.html.erb:14
-#: app/views/admin/bookmarks/index.html.erb:15
+#: app/views/admin/share_files/index.html.erb:15
+#: app/views/admin/user_profiles/index.html.erb:14
+#: app/views/admin/user_uids/index.html.erb:14
+#: app/views/admin/users/index.html.erb:14
 msgid "Are you sure?"
 msgstr ""
 
@@ -809,7 +817,7 @@ msgid "CSVファイル"
 msgstr ""
 
 #: app/controllers/admin/users_controller.rb:116
-msgid "CSVファイルからのアカウント登録/更新に成功しました。"
+msgid "CSVファイルからのユーザ登録/更新に成功しました。"
 msgstr ""
 
 #: app/controllers/admin/users_controller.rb:120
@@ -836,17 +844,19 @@ msgstr ""
 msgid "Chain|紹介文"
 msgstr ""
 
-#: app/views/admin/user_uids/new.html.erb:17
-#: app/views/admin/users/new.html.erb:12
-#: app/views/admin/users/first.html.erb:32
 #: app/views/admin/openid_identifiers/new.html.erb:17
+#: app/views/admin/user_profiles/new.html.erb:15
+#: app/views/admin/user_uids/new.html.erb:17
+#: app/views/admin/users/first.html.erb:32
+#: app/views/admin/users/new.html.erb:12
 msgid "Create"
 msgstr ""
 
-#: app/views/admin/user_uids/new.html.erb:17
-#: app/views/admin/users/new.html.erb:12
-#: app/views/admin/users/first.html.erb:32
 #: app/views/admin/openid_identifiers/new.html.erb:17
+#: app/views/admin/user_profiles/new.html.erb:15
+#: app/views/admin/user_uids/new.html.erb:17
+#: app/views/admin/users/first.html.erb:32
+#: app/views/admin/users/new.html.erb:12
 msgid "Creating..."
 msgstr ""
 
@@ -859,15 +869,14 @@ msgid "Destroy"
 msgstr ""
 
 #: app/views/admin/shared/_sortable_table.html.erb:28
-#: app/views/admin/user_uids/show.html.erb:18
 #: app/views/admin/user_profiles/show.html.erb:89
+#: app/views/admin/user_uids/show.html.erb:18
 #: app/views/admin/users/show.html.erb:26
 msgid "Edit"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:50
-#: app/controllers/admin/user_profiles_controller.rb:41
-#: lib/admin_module.rb:102 lib/admin_module.rb:204
+#: app/controllers/admin/users_controller.rb:50 lib/admin_module.rb:102
+#: lib/admin_module.rb:204
 msgid "Editing %{model}"
 msgstr ""
 
@@ -986,12 +995,10 @@ msgstr ""
 #: app/controllers/admin/users_controller.rb:28
 #: app/controllers/admin/users_controller.rb:49
 #: app/controllers/admin/users_controller.rb:103
-#: app/controllers/admin/user_profiles_controller.rb:24
-#: app/controllers/admin/user_profiles_controller.rb:39
 #: app/views/admin/board_entries/show.html.erb:23
-#: app/views/admin/users/import.html.erb:61
+#: app/views/admin/bookmarks/show.html.erb:19
 #: app/views/admin/groups/show.html.erb:35
-#: app/views/admin/bookmarks/show.html.erb:19 lib/admin_module.rb:62
+#: app/views/admin/users/import.html.erb:61 lib/admin_module.rb:62
 #: lib/admin_module.rb:74 lib/admin_module.rb:88 lib/admin_module.rb:101
 #: lib/admin_module.rb:157 lib/admin_module.rb:159 lib/admin_module.rb:171
 #: lib/admin_module.rb:173 lib/admin_module.rb:186 lib/admin_module.rb:188
@@ -1060,6 +1067,7 @@ msgid "Message|User"
 msgstr ""
 
 #: app/controllers/admin/users_controller.rb:28
+#: app/views/admin/user_profiles/index.html.erb:18
 #: app/views/admin/user_uids/index.html.erb:20
 #: app/views/admin/users/index.html.erb:19 lib/admin_module.rb:89
 #: lib/admin_module.rb:189
@@ -1171,13 +1179,13 @@ msgstr ""
 msgid "Ranking|Url"
 msgstr ""
 
-#: app/views/admin/settings/index.html.erb:7
 #: app/views/admin/documents/index.html.erb:12
+#: app/views/admin/settings/index.html.erb:7
 msgid "Save"
 msgstr ""
 
-#: app/views/admin/settings/index.html.erb:7
 #: app/views/admin/documents/index.html.erb:12
+#: app/views/admin/settings/index.html.erb:7
 msgid "Saving..."
 msgstr ""
 
@@ -1359,17 +1367,17 @@ msgstr ""
 msgid "Track|Visitor"
 msgstr ""
 
-#: app/views/admin/user_uids/edit.html.erb:20
-#: app/views/admin/user_profiles/edit.html.erb:11
-#: app/views/admin/users/edit.html.erb:11
 #: app/views/admin/openid_identifiers/edit.html.erb:16
+#: app/views/admin/user_profiles/edit.html.erb:11
+#: app/views/admin/user_uids/edit.html.erb:20
+#: app/views/admin/users/edit.html.erb:11
 msgid "Update"
 msgstr ""
 
-#: app/views/admin/user_uids/edit.html.erb:20
-#: app/views/admin/user_profiles/edit.html.erb:11
-#: app/views/admin/users/edit.html.erb:11
 #: app/views/admin/openid_identifiers/edit.html.erb:16
+#: app/views/admin/user_profiles/edit.html.erb:11
+#: app/views/admin/user_uids/edit.html.erb:20
+#: app/views/admin/users/edit.html.erb:11
 msgid "Updating..."
 msgstr ""
 
@@ -1569,7 +1577,7 @@ msgstr ""
 msgid "applied email"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:34 app/models/board_entry.rb:-
+#: app/helpers/admin/application_helper.rb:35 app/models/board_entry.rb:-
 msgid "board entry"
 msgstr ""
 
@@ -1582,7 +1590,7 @@ msgstr ""
 msgid "board entry point"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:35 app/models/bookmark.rb:-
+#: app/helpers/admin/application_helper.rb:36 app/models/bookmark.rb:-
 msgid "bookmark"
 msgstr ""
 
@@ -1622,7 +1630,7 @@ msgstr ""
 msgid "entry trackback"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:33 app/models/group.rb:-
+#: app/helpers/admin/application_helper.rb:34 app/models/group.rb:-
 msgid "group"
 msgstr ""
 
@@ -1638,7 +1646,7 @@ msgstr ""
 msgid "message"
 msgstr ""
 
-#: app/models/openid_identifier.rb:- app/views/admin/users/show.html.erb:28
+#: app/models/openid_identifier.rb:- app/views/admin/users/show.html.erb:27
 msgid "openid identifier"
 msgstr ""
 
@@ -1650,17 +1658,11 @@ msgstr ""
 msgid "popular bookmark"
 msgstr ""
 
-#: app/controllers/admin/user_profiles_controller.rb:26
-#: app/controllers/admin/user_profiles_controller.rb:41
-#: app/controllers/admin/user_profiles_controller.rb:52
-msgid "profile"
-msgstr ""
-
 #: app/models/ranking.rb:-
 msgid "ranking"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:36 app/models/share_file.rb:-
+#: app/helpers/admin/application_helper.rb:37 app/models/share_file.rb:-
 msgid "share file"
 msgstr ""
 
@@ -1691,11 +1693,8 @@ msgstr ""
 #: app/controllers/admin/users_controller.rb:28
 #: app/controllers/admin/users_controller.rb:49
 #: app/controllers/admin/users_controller.rb:103
-#: app/controllers/admin/user_profiles_controller.rb:24
-#: app/controllers/admin/user_profiles_controller.rb:39
 #: app/helpers/admin/application_helper.rb:32 app/models/user.rb:-
 #: app/views/admin/user_uids/index.html.erb:21
-#: app/views/admin/user_profiles/show.html.erb:90
 #: app/views/admin/users/import.html.erb:61
 #: app/views/admin/users/index.html.erb:19
 msgid "user"
@@ -1713,7 +1712,8 @@ msgstr ""
 msgid "user message unsubscribe"
 msgstr ""
 
-#: app/models/user_profile.rb:- app/views/admin/users/show.html.erb:27
+#: app/helpers/admin/application_helper.rb:33 app/models/user_profile.rb:-
+#: app/views/admin/user_profiles/index.html.erb:18
 msgid "user profile"
 msgstr ""
 
@@ -1722,7 +1722,7 @@ msgid "user reading"
 msgstr ""
 
 #: app/models/user_uid.rb:- app/views/admin/user_uids/index.html.erb:20
-#: app/views/admin/users/show.html.erb:29
+#: app/views/admin/users/show.html.erb:28
 msgid "user uid"
 msgstr ""
 
@@ -1819,4 +1819,8 @@ msgstr ""
 #: app/controllers/admin/documents_controller.rb:35
 #: app/controllers/admin/documents_controller.rb:68
 msgid "静的コンテンツ管理"
+msgstr ""
+
+#: app/views/admin/_search_box.html.erb:5
+msgid "項目全体から検索を行ないます"
 msgstr ""

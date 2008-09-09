@@ -6,10 +6,15 @@
 
 <div class="box tabular">
   <% form_for(@user_profile) do |f| %>
+  <p>
+    <%= f.label :user_id %>
+    <%= f.text_field :user_id %>
+  </p>
   <%= render :partial => f %>
   <p>
-  <%= f.submit _('Update'), :disable_with => _('Updating...') %>
+    <%= submit_tag _('Create'), :disable_with => _('Creating...') %>
   </p>
   <% end %>
 </div>
+
 <% end -%>

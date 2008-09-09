@@ -165,6 +165,7 @@ class PlatformController < ApplicationController
         return false
       else
         redirect_to :controller => :portal, :action => :index
+        return false
       end
     end
   end

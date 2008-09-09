@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-09-09 16:03+0900\n"
-"PO-Revision-Date: 2008-09-08 03:39+0900\n"
+"POT-Creation-Date: 2008-09-09 22:22+0900\n"
+"PO-Revision-Date: 2008-09-09 22:36+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -16,11 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: app/controllers/admin/user_profiles_controller.rb:25
-#: app/controllers/admin/user_profiles_controller.rb:26
-#: app/controllers/admin/user_profiles_controller.rb:40
-#: app/views/admin/user_uids/index.html.erb:21
-#: app/views/admin/user_profiles/show.html.erb:90 lib/admin_module.rb:75
+#: app/views/admin/user_uids/index.html.erb:21 lib/admin_module.rb:75
 #: lib/admin_module.rb:158 lib/admin_module.rb:172 lib/admin_module.rb:174
 #: lib/admin_module.rb:187 lib/admin_module.rb:202
 msgid "%{model} Show"
@@ -30,7 +26,6 @@ msgstr "%{model}の詳細"
 msgid "%{model} was successfully created."
 msgstr "%{model}の作成に成功しました。"
 
-#: app/controllers/admin/user_profiles_controller.rb:52
 #: lib/admin_module.rb:127 lib/admin_module.rb:230
 msgid "%{model} was successfully updated."
 msgstr "%{model}の更新に成功しました。"
@@ -87,7 +82,7 @@ msgstr "タイトル"
 msgid "Admin::Bookmark|Url"
 msgstr "URL"
 
-#: app/helpers/admin/application_helper.rb:25
+#: app/helpers/admin/application_helper.rb:24
 msgid "Admin::DocumentsController"
 msgstr "説明文の設定"
 
@@ -182,7 +177,7 @@ msgid "Admin::OpenidIdentifier|Url"
 msgstr "OpenID URL"
 
 #: app/controllers/admin/settings_controller.rb:20
-#: app/helpers/admin/application_helper.rb:24
+#: app/helpers/admin/application_helper.rb:23
 msgid "Admin::SettingsController|feed"
 msgstr "RSSフィードの設定"
 
@@ -197,7 +192,7 @@ msgid "Admin::SettingsController|mail"
 msgstr "メール関連設定"
 
 #: app/controllers/admin/settings_controller.rb:19
-#: app/helpers/admin/application_helper.rb:23
+#: app/helpers/admin/application_helper.rb:25
 msgid "Admin::SettingsController|other"
 msgstr "その他の設定"
 
@@ -211,14 +206,11 @@ msgstr "SNS名の略称を指定します。"
 
 #: app/models/admin/setting.rb:55
 msgid "Admin::Setting|Antenna default group"
-msgstr "初期登録アンテナのグループID"
+msgstr "初期のアンテナに追加されるグループ"
 
 #: app/models/admin/setting.rb:56
 msgid "Admin::Setting|Antenna default group description"
-msgstr ""
-"[グループIDを追加]で初期登録アンテナに追加されるグループIDを増やすことが出来"
-"ます。[グループIDを除去]で初期登録アンテナに追加されるグループIDを減らすこと"
-"が出来ます。"
+msgstr "初期のアンテナに追加されるグループを指定します。"
 
 #: app/models/admin/setting.rb:17
 msgid "Admin::Setting|App title"
@@ -316,13 +308,11 @@ msgstr "SNSヘルプのURLを指定します。"
 
 #: app/models/admin/setting.rb:27
 msgid "Admin::Setting|Initial anntena"
-msgstr "初期登録アンテナ名"
+msgstr "初期登録されるアンテナ名"
 
 #: app/models/admin/setting.rb:28
 msgid "Admin::Setting|Initial anntena description"
-msgstr ""
-"ユーザがプロフィールを新規に登録する際に自動的に登録されるアンテナのアンテナ"
-"名を指定します。"
+msgstr "初期登録されるアンテナ名を指定します。"
 
 #: app/models/admin/setting.rb:29
 msgid "Admin::Setting|Login account"
@@ -480,7 +470,7 @@ msgstr "種別"
 
 #: app/models/admin/share_file.rb:20
 msgid "Admin::ShareFile|Date"
-msgstr ""
+msgstr "アップロード日時"
 
 #: app/models/admin/share_file.rb:19
 msgid "Admin::ShareFile|Description"
@@ -492,79 +482,91 @@ msgstr "ファイル名"
 
 #: app/models/admin/share_file.rb:18
 msgid "Admin::ShareFile|Owner symbol"
-msgstr ""
+msgstr "保有シンボル"
 
 #: app/models/admin/share_file.rb:26
 msgid "Admin::ShareFile|Publication symbols type"
-msgstr ""
+msgstr "公開範囲"
 
 #: app/models/admin/share_file.rb:25
 msgid "Admin::ShareFile|Publication type"
-msgstr ""
+msgstr "公開タイプ"
 
 #: app/models/admin/share_file.rb:23
 msgid "Admin::ShareFile|Total count"
-msgstr ""
+msgstr "ダウンロード数"
 
 #: app/models/admin/share_file.rb:21
 msgid "Admin::ShareFile|User"
 msgstr "ユーザ"
 
-#: app/models/admin/user_profile.rb:17
+#: app/models/admin/user_profile.rb:18
 msgid "Admin::UserProfile|Address 1"
 msgstr "現住所1"
 
-#: app/models/admin/user_profile.rb:18
+#: app/models/admin/user_profile.rb:19
 msgid "Admin::UserProfile|Address 2"
 msgstr "現住所2"
 
-#: app/models/admin/user_profile.rb:19
+#: app/models/admin/user_profile.rb:20
 msgid "Admin::UserProfile|Alma mater"
 msgstr "出身校"
 
-#: app/models/admin/user_profile.rb:20
+#: app/models/admin/user_profile.rb:21
 msgid "Admin::UserProfile|Birth day"
 msgstr "誕生日"
 
-#: app/models/admin/user_profile.rb:21
+#: app/models/admin/user_profile.rb:22
 msgid "Admin::UserProfile|Birth month"
 msgstr "誕生月"
 
-#: app/models/admin/user_profile.rb:22
+#: app/models/admin/user_profile.rb:23
 msgid "Admin::UserProfile|Blood type"
 msgstr "血液型"
 
-#: app/models/admin/user_profile.rb:23
+#: app/models/admin/user_profile.rb:24
 msgid "Admin::UserProfile|Disclosure"
 msgstr "属性情報公開"
 
-#: app/models/admin/user_profile.rb:24
+#: app/models/admin/user_profile.rb:25
 msgid "Admin::UserProfile|Email"
 msgstr "メールアドレス"
 
-#: app/models/admin/user_profile.rb:25
+#: app/models/admin/user_profile.rb:33
+msgid "Admin::UserProfile|Extension"
+msgstr "内線番号"
+
+#: app/models/admin/user_profile.rb:26
 msgid "Admin::UserProfile|Gender type"
 msgstr "性別"
 
-#: app/models/admin/user_profile.rb:26
+#: app/models/admin/user_profile.rb:27
 msgid "Admin::UserProfile|Hobby"
 msgstr "趣味"
 
-#: app/models/admin/user_profile.rb:27
+#: app/models/admin/user_profile.rb:28
 msgid "Admin::UserProfile|Hometown"
 msgstr "出身地"
 
-#: app/models/admin/user_profile.rb:28
+#: app/models/admin/user_profile.rb:29
 msgid "Admin::UserProfile|Introduction"
 msgstr "自己紹介"
 
-#: app/models/admin/user_profile.rb:29
+#: app/models/admin/user_profile.rb:30
 msgid "Admin::UserProfile|Join year"
 msgstr "入社年度"
 
-#: app/models/admin/user_profile.rb:30
+#: app/models/admin/user_profile.rb:31
 msgid "Admin::UserProfile|Section"
 msgstr "部署"
+
+#: app/models/admin/user_profile.rb:34
+msgid "Admin::UserProfile|Self introduction"
+msgstr "自己紹介"
+
+#: app/models/admin/user_profile.rb:32
+msgid "Admin::UserProfile|User"
+msgstr "ユーザ"
 
 #: app/models/admin/user_uid.rb:17
 msgid "Admin::UserUid|Uid"
@@ -600,72 +602,73 @@ msgstr "ステータス"
 
 #: app/models/antenna_item.rb:-
 msgid "AntennaItem|"
-msgstr ""
+msgstr "アンテナアイテム"
 
 #: app/models/antenna_item.rb:-
 msgid "AntennaItem|Antenna"
-msgstr ""
+msgstr "アンテナ"
 
 #: app/models/antenna_item.rb:-
 msgid "AntennaItem|Value type"
-msgstr ""
+msgstr "アンテナ形式"
 
 #: app/models/antenna.rb:-
 msgid "Antenna|Position"
-msgstr ""
+msgstr "位置"
 
 #: app/models/antenna.rb:-
 msgid "Antenna|User"
-msgstr ""
+msgstr "ユーザ"
 
 #: app/models/antenna.rb:-
 msgid "Antenna|アンテナ名"
-msgstr ""
+msgstr "アンテナ名"
 
 #: app/models/applied_email.rb:-
 msgid "AppliedEmail|Created on"
-msgstr ""
+msgstr "更新日時"
 
 #: app/models/applied_email.rb:-
 msgid "AppliedEmail|Onetime code"
-msgstr ""
+msgstr "ワンタイムコード"
 
 #: app/models/applied_email.rb:-
 msgid "AppliedEmail|User"
-msgstr ""
+msgstr "ユーザ"
 
 #: app/models/applied_email.rb:-
 msgid "AppliedEmail|メールアドレス"
-msgstr ""
+msgstr "メールアドレス"
 
-#: app/views/admin/share_files/index.html.erb:15
-#: app/views/admin/bookmark_comments/index.html.erb:13
 #: app/views/admin/board_entries/index.html.erb:14
-#: app/views/admin/user_uids/index.html.erb:14
-#: app/views/admin/users/index.html.erb:14
 #: app/views/admin/board_entry_comments/index.html.erb:13
+#: app/views/admin/bookmark_comments/index.html.erb:13
+#: app/views/admin/bookmarks/index.html.erb:15
 #: app/views/admin/group_participations/index.html.erb:13
 #: app/views/admin/groups/index.html.erb:15
 #: app/views/admin/openid_identifiers/index.html.erb:14
-#: app/views/admin/bookmarks/index.html.erb:15
+#: app/views/admin/share_files/index.html.erb:15
+#: app/views/admin/user_profiles/index.html.erb:14
+#: app/views/admin/user_uids/index.html.erb:14
+#: app/views/admin/users/index.html.erb:14
 msgid "Are you sure?"
 msgstr "本当に宜しいですか？"
 
 #: app/models/board_entry_comment.rb:-
 msgid "BoardEntryComment|Created on"
-msgstr ""
+msgstr "作成日時"
 
 #: app/models/board_entry_comment.rb:-
 msgid "BoardEntryComment|Parent"
-msgstr ""
+msgstr "親コメント"
 
 #: app/models/board_entry_comment.rb:-
 msgid "BoardEntryComment|Updated on"
-msgstr ""
+msgstr "更新日時"
 
 #: app/models/board_entry_comment.rb:-
 msgid "BoardEntryComment|コメント先の投稿"
-msgstr ""
+msgstr "コメント先の投稿"
 
 #: app/models/board_entry_comment.rb:-
 msgid "BoardEntryComment|内容"
@@ -673,51 +676,51 @@ msgstr "コメント"
 
 #: app/models/board_entry_comment.rb:-
 msgid "BoardEntryComment|著者"
-msgstr ""
+msgstr "著者"
 
 #: app/models/board_entry_point.rb:-
 msgid "BoardEntryPoint|Access count"
-msgstr ""
+msgstr "アクセス数"
 
 #: app/models/board_entry_point.rb:-
 msgid "BoardEntryPoint|Board entry"
-msgstr ""
+msgstr "ブログ・掲示板"
 
 #: app/models/board_entry_point.rb:-
 msgid "BoardEntryPoint|Created on"
-msgstr ""
+msgstr "作成日時"
 
 #: app/models/board_entry_point.rb:-
 msgid "BoardEntryPoint|Point"
-msgstr ""
+msgstr "ポイント"
 
 #: app/models/board_entry_point.rb:-
 msgid "BoardEntryPoint|Today access count"
-msgstr ""
+msgstr "本日のアクセス数"
 
 #: app/models/board_entry_point.rb:-
 msgid "BoardEntryPoint|Updated on"
-msgstr ""
+msgstr "更新日時"
 
 #: app/models/board_entry.rb:-
 msgid "BoardEntry|Board entry comments count"
-msgstr ""
+msgstr "コメント数"
 
 #: app/models/board_entry.rb:-
 msgid "BoardEntry|Created on"
-msgstr ""
+msgstr "作成日時"
 
 #: app/models/board_entry.rb:-
 msgid "BoardEntry|Editor mode"
-msgstr ""
+msgstr "編集形式"
 
 #: app/models/board_entry.rb:-
 msgid "BoardEntry|Entry trackbacks count"
-msgstr ""
+msgstr "トラックバック数"
 
 #: app/models/board_entry.rb:-
 msgid "BoardEntry|Entry type"
-msgstr ""
+msgstr "エントリの形式"
 
 #: app/models/board_entry.rb:-
 msgid "BoardEntry|Ignore times"
@@ -725,31 +728,31 @@ msgstr ""
 
 #: app/models/board_entry.rb:-
 msgid "BoardEntry|Last updated"
-msgstr ""
+msgstr "最終更新日時"
 
 #: app/models/board_entry.rb:-
 msgid "BoardEntry|Lock version"
-msgstr ""
+msgstr "ロックバージョン"
 
 #: app/models/board_entry.rb:-
 msgid "BoardEntry|Publication symbols value"
-msgstr ""
+msgstr "公開範囲"
 
 #: app/models/board_entry.rb:-
 msgid "BoardEntry|Publication type"
-msgstr ""
+msgstr "公開タイプ"
 
 #: app/models/board_entry.rb:-
 msgid "BoardEntry|Symbol"
-msgstr ""
+msgstr "シンボル"
 
 #: app/models/board_entry.rb:-
 msgid "BoardEntry|Updated on"
-msgstr ""
+msgstr "更新日時"
 
 #: app/models/board_entry.rb:-
 msgid "BoardEntry|User entry no"
-msgstr ""
+msgstr "ブログ数"
 
 #: app/models/board_entry.rb:-
 msgid "BoardEntry|タイトル"
@@ -765,27 +768,27 @@ msgstr "内容"
 
 #: app/models/board_entry.rb:-
 msgid "BoardEntry|日付"
-msgstr ""
+msgstr "日付"
 
 #: app/models/board_entry.rb:-
 msgid "BoardEntry|著者"
-msgstr ""
+msgstr "著者"
 
 #: app/models/bookmark_comment_tag.rb:-
 msgid "BookmarkCommentTag|Bookmark comment"
-msgstr ""
+msgstr "ブックマークコメント"
 
 #: app/models/bookmark_comment_tag.rb:-
 msgid "BookmarkCommentTag|Created on"
-msgstr ""
+msgstr "作成日時"
 
 #: app/models/bookmark_comment_tag.rb:-
 msgid "BookmarkCommentTag|Tag"
-msgstr ""
+msgstr "タグ"
 
 #: app/models/bookmark_comment.rb:-
 msgid "BookmarkComment|Bookmark"
-msgstr ""
+msgstr "ブックマーク"
 
 #: app/models/bookmark_comment.rb:-
 msgid "BookmarkComment|Comment"
@@ -793,7 +796,7 @@ msgstr "コメント"
 
 #: app/models/bookmark_comment.rb:-
 msgid "BookmarkComment|Created on"
-msgstr ""
+msgstr "作成日時"
 
 #: app/models/bookmark_comment.rb:-
 msgid "BookmarkComment|Public"
@@ -805,11 +808,11 @@ msgstr "お気に入り"
 
 #: app/models/bookmark_comment.rb:-
 msgid "BookmarkComment|Updated on"
-msgstr ""
+msgstr "更新日時"
 
 #: app/models/bookmark_comment.rb:-
 msgid "BookmarkComment|User"
-msgstr ""
+msgstr "ユーザ"
 
 #: app/models/bookmark_comment.rb:-
 msgid "BookmarkComment|タグ"
@@ -817,30 +820,30 @@ msgstr "タグ"
 
 #: app/models/bookmark.rb:-
 msgid "Bookmark|Bookmark comments count"
-msgstr ""
+msgstr "ブックマーク数"
 
 #: app/models/bookmark.rb:-
 msgid "Bookmark|Created on"
-msgstr ""
+msgstr "作成日時"
 
 #: app/models/bookmark.rb:-
 msgid "Bookmark|URL"
-msgstr ""
+msgstr "URL"
 
 #: app/models/bookmark.rb:-
 msgid "Bookmark|Updated on"
-msgstr ""
+msgstr "更新日時"
 
 #: app/models/bookmark.rb:-
 msgid "Bookmark|タイトル"
-msgstr ""
+msgstr "タイトル"
 
 #: app/views/admin/users/import.html.erb:9
 msgid "CSVファイル"
 msgstr ""
 
 #: app/controllers/admin/users_controller.rb:116
-msgid "CSVファイルからのアカウント登録/更新に成功しました。"
+msgid "CSVファイルからのユーザ登録/更新に成功しました。"
 msgstr ""
 
 #: app/controllers/admin/users_controller.rb:120
@@ -849,35 +852,37 @@ msgstr ""
 
 #: app/models/chain.rb:-
 msgid "Chain|Created on"
-msgstr ""
+msgstr "作成日時"
 
 #: app/models/chain.rb:-
 msgid "Chain|From user"
-msgstr ""
+msgstr "紹介した人"
 
 #: app/models/chain.rb:-
 msgid "Chain|To user"
-msgstr ""
+msgstr "紹介された人"
 
 #: app/models/chain.rb:-
 msgid "Chain|Updated on"
-msgstr ""
+msgstr "更新日時"
 
 #: app/models/chain.rb:-
 msgid "Chain|紹介文"
-msgstr ""
+msgstr "紹介文"
 
-#: app/views/admin/user_uids/new.html.erb:17
-#: app/views/admin/users/new.html.erb:12
-#: app/views/admin/users/first.html.erb:32
 #: app/views/admin/openid_identifiers/new.html.erb:17
+#: app/views/admin/user_profiles/new.html.erb:15
+#: app/views/admin/user_uids/new.html.erb:17
+#: app/views/admin/users/first.html.erb:32
+#: app/views/admin/users/new.html.erb:12
 msgid "Create"
 msgstr "作成"
 
-#: app/views/admin/user_uids/new.html.erb:17
-#: app/views/admin/users/new.html.erb:12
-#: app/views/admin/users/first.html.erb:32
 #: app/views/admin/openid_identifiers/new.html.erb:17
+#: app/views/admin/user_profiles/new.html.erb:15
+#: app/views/admin/user_uids/new.html.erb:17
+#: app/views/admin/users/first.html.erb:32
+#: app/views/admin/users/new.html.erb:12
 msgid "Creating..."
 msgstr "作成しています…"
 
@@ -890,73 +895,72 @@ msgid "Destroy"
 msgstr "削除"
 
 #: app/views/admin/shared/_sortable_table.html.erb:28
-#: app/views/admin/user_uids/show.html.erb:18
 #: app/views/admin/user_profiles/show.html.erb:89
+#: app/views/admin/user_uids/show.html.erb:18
 #: app/views/admin/users/show.html.erb:26
 msgid "Edit"
 msgstr "編集"
 
-#: app/controllers/admin/users_controller.rb:50
-#: app/controllers/admin/user_profiles_controller.rb:41
-#: lib/admin_module.rb:102 lib/admin_module.rb:204
+#: app/controllers/admin/users_controller.rb:50 lib/admin_module.rb:102
+#: lib/admin_module.rb:204
 msgid "Editing %{model}"
 msgstr "%{model}の更新"
 
 #: app/models/entry_access.rb:-
 msgid "EntryAccess|Board entry"
-msgstr ""
+msgstr "ブログ・掲示板"
 
 #: app/models/entry_access.rb:-
 msgid "EntryAccess|Updated on"
-msgstr ""
+msgstr "更新日時"
 
 #: app/models/entry_access.rb:-
 msgid "EntryAccess|Visitor"
-msgstr ""
+msgstr "アクセスした人"
 
 #: app/models/entry_editor.rb:-
 msgid "EntryEditor|Board entry"
-msgstr ""
+msgstr "ブログ・掲示板"
 
 #: app/models/entry_editor.rb:-
 msgid "EntryEditor|Symbol"
-msgstr ""
+msgstr "シンボル"
 
 #: app/models/entry_publication.rb:-
 msgid "EntryPublication|Board entry"
-msgstr ""
+msgstr "ブログ・掲示板"
 
 #: app/models/entry_publication.rb:-
 msgid "EntryPublication|Symbol"
-msgstr ""
+msgstr "シンボル"
 
 #: app/models/entry_tag.rb:-
 msgid "EntryTag|Board entry"
-msgstr ""
+msgstr "ブログ・掲示板"
 
 #: app/models/entry_tag.rb:-
 msgid "EntryTag|Created on"
-msgstr ""
+msgstr "作成日時"
 
 #: app/models/entry_tag.rb:-
 msgid "EntryTag|Tag"
-msgstr ""
+msgstr "タグ"
 
 #: app/models/entry_trackback.rb:-
 msgid "EntryTrackback|Updated on"
-msgstr ""
+msgstr "更新日時"
 
 #: app/models/entry_trackback.rb:-
 msgid "EntryTrackback|トラックバック元の投稿"
-msgstr ""
+msgstr "トラックバック元の投稿"
 
 #: app/models/entry_trackback.rb:-
 msgid "EntryTrackback|トラックバック先の投稿"
-msgstr ""
+msgstr "トラックバック先の投稿"
 
 #: app/models/group_participation.rb:-
 msgid "GroupParticipation|Created on"
-msgstr ""
+msgstr "作成日時"
 
 #: app/models/group_participation.rb:-
 msgid "GroupParticipation|Favorite"
@@ -964,7 +968,7 @@ msgstr "お気に入り"
 
 #: app/models/group_participation.rb:-
 msgid "GroupParticipation|Group"
-msgstr ""
+msgstr "グループ"
 
 #: app/models/group_participation.rb:-
 msgid "GroupParticipation|Owned"
@@ -972,7 +976,7 @@ msgstr "管理者"
 
 #: app/models/group_participation.rb:-
 msgid "GroupParticipation|Updated on"
-msgstr ""
+msgstr "更新日時"
 
 #: app/models/group_participation.rb:-
 msgid "GroupParticipation|User"
@@ -984,19 +988,19 @@ msgstr "許可待ち"
 
 #: app/models/group.rb:-
 msgid "Group|Category"
-msgstr ""
+msgstr "カテゴリ"
 
 #: app/models/group.rb:-
 msgid "Group|Created on"
-msgstr ""
+msgstr "作成日時"
 
 #: app/models/group.rb:-
 msgid "Group|Protected"
-msgstr ""
+msgstr "参加者承認"
 
 #: app/models/group.rb:-
 msgid "Group|Updated on"
-msgstr ""
+msgstr "更新日時"
 
 #: app/models/group.rb:-
 msgid "Group|グループID"
@@ -1017,12 +1021,10 @@ msgstr "行"
 #: app/controllers/admin/users_controller.rb:28
 #: app/controllers/admin/users_controller.rb:49
 #: app/controllers/admin/users_controller.rb:103
-#: app/controllers/admin/user_profiles_controller.rb:24
-#: app/controllers/admin/user_profiles_controller.rb:39
 #: app/views/admin/board_entries/show.html.erb:23
-#: app/views/admin/users/import.html.erb:61
+#: app/views/admin/bookmarks/show.html.erb:19
 #: app/views/admin/groups/show.html.erb:35
-#: app/views/admin/bookmarks/show.html.erb:19 lib/admin_module.rb:62
+#: app/views/admin/users/import.html.erb:61 lib/admin_module.rb:62
 #: lib/admin_module.rb:74 lib/admin_module.rb:88 lib/admin_module.rb:101
 #: lib/admin_module.rb:157 lib/admin_module.rb:159 lib/admin_module.rb:171
 #: lib/admin_module.rb:173 lib/admin_module.rb:186 lib/admin_module.rb:188
@@ -1032,35 +1034,35 @@ msgstr "%{model}一覧"
 
 #: app/models/mail.rb:-
 msgid "Mail|Created on"
-msgstr ""
+msgstr "作成日時"
 
 #: app/models/mail.rb:-
 msgid "Mail|From user"
-msgstr ""
+msgstr "送信ユーザ"
 
 #: app/models/mail.rb:-
 msgid "Mail|Send flag"
-msgstr ""
+msgstr "送信状態"
 
 #: app/models/mail.rb:-
 msgid "Mail|Title"
-msgstr ""
+msgstr "タイトル"
 
 #: app/models/mail.rb:-
 msgid "Mail|To address"
-msgstr ""
+msgstr "宛先アドレス"
 
 #: app/models/mail.rb:-
 msgid "Mail|To address name"
-msgstr ""
+msgstr "宛先ユーザ名"
 
 #: app/models/mail.rb:-
 msgid "Mail|To address symbol"
-msgstr ""
+msgstr "宛先シンボル"
 
 #: app/models/mail.rb:-
 msgid "Mail|Updated on"
-msgstr ""
+msgstr "更新日時"
 
 #: app/models/mail.rb:-
 msgid "Mail|User entry no"
@@ -1091,6 +1093,7 @@ msgid "Message|User"
 msgstr ""
 
 #: app/controllers/admin/users_controller.rb:28
+#: app/views/admin/user_profiles/index.html.erb:18
 #: app/views/admin/user_uids/index.html.erb:20
 #: app/views/admin/users/index.html.erb:19 lib/admin_module.rb:89
 #: lib/admin_module.rb:189
@@ -1202,13 +1205,13 @@ msgstr ""
 msgid "Ranking|Url"
 msgstr ""
 
-#: app/views/admin/settings/index.html.erb:7
 #: app/views/admin/documents/index.html.erb:12
+#: app/views/admin/settings/index.html.erb:7
 msgid "Save"
 msgstr "保存"
 
-#: app/views/admin/settings/index.html.erb:7
 #: app/views/admin/documents/index.html.erb:12
+#: app/views/admin/settings/index.html.erb:7
 msgid "Saving..."
 msgstr "保存しています…"
 
@@ -1390,17 +1393,17 @@ msgstr ""
 msgid "Track|Visitor"
 msgstr ""
 
-#: app/views/admin/user_uids/edit.html.erb:20
-#: app/views/admin/user_profiles/edit.html.erb:11
-#: app/views/admin/users/edit.html.erb:11
 #: app/views/admin/openid_identifiers/edit.html.erb:16
+#: app/views/admin/user_profiles/edit.html.erb:11
+#: app/views/admin/user_uids/edit.html.erb:20
+#: app/views/admin/users/edit.html.erb:11
 msgid "Update"
 msgstr "更新"
 
-#: app/views/admin/user_uids/edit.html.erb:20
-#: app/views/admin/user_profiles/edit.html.erb:11
-#: app/views/admin/users/edit.html.erb:11
 #: app/views/admin/openid_identifiers/edit.html.erb:16
+#: app/views/admin/user_profiles/edit.html.erb:11
+#: app/views/admin/user_uids/edit.html.erb:20
+#: app/views/admin/users/edit.html.erb:11
 msgid "Updating..."
 msgstr "更新しています…"
 
@@ -1582,7 +1585,7 @@ msgstr ""
 
 #: app/controllers/platform_controller.rb:56
 msgid "You are now logged out."
-msgstr "ログアウトしました。"
+msgstr ""
 
 #: app/models/activation.rb:-
 msgid "activation"
@@ -1600,7 +1603,7 @@ msgstr "アンテナアイテム"
 msgid "applied email"
 msgstr "メールアドレス変更"
 
-#: app/helpers/admin/application_helper.rb:34 app/models/board_entry.rb:-
+#: app/helpers/admin/application_helper.rb:35 app/models/board_entry.rb:-
 msgid "board entry"
 msgstr "エントリ"
 
@@ -1613,7 +1616,7 @@ msgstr "エントリコメント"
 msgid "board entry point"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:35 app/models/bookmark.rb:-
+#: app/helpers/admin/application_helper.rb:36 app/models/bookmark.rb:-
 msgid "bookmark"
 msgstr "ブックマーク"
 
@@ -1653,7 +1656,7 @@ msgstr ""
 msgid "entry trackback"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:33 app/models/group.rb:-
+#: app/helpers/admin/application_helper.rb:34 app/models/group.rb:-
 msgid "group"
 msgstr "グループ"
 
@@ -1669,7 +1672,7 @@ msgstr ""
 msgid "message"
 msgstr ""
 
-#: app/models/openid_identifier.rb:- app/views/admin/users/show.html.erb:28
+#: app/models/openid_identifier.rb:- app/views/admin/users/show.html.erb:27
 msgid "openid identifier"
 msgstr "OpenID"
 
@@ -1681,17 +1684,11 @@ msgstr ""
 msgid "popular bookmark"
 msgstr ""
 
-#: app/controllers/admin/user_profiles_controller.rb:26
-#: app/controllers/admin/user_profiles_controller.rb:41
-#: app/controllers/admin/user_profiles_controller.rb:52
-msgid "profile"
-msgstr "プロフィール"
-
 #: app/models/ranking.rb:-
 msgid "ranking"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:36 app/models/share_file.rb:-
+#: app/helpers/admin/application_helper.rb:37 app/models/share_file.rb:-
 msgid "share file"
 msgstr "共有ファイル"
 
@@ -1722,11 +1719,8 @@ msgstr ""
 #: app/controllers/admin/users_controller.rb:28
 #: app/controllers/admin/users_controller.rb:49
 #: app/controllers/admin/users_controller.rb:103
-#: app/controllers/admin/user_profiles_controller.rb:24
-#: app/controllers/admin/user_profiles_controller.rb:39
 #: app/helpers/admin/application_helper.rb:32 app/models/user.rb:-
 #: app/views/admin/user_uids/index.html.erb:21
-#: app/views/admin/user_profiles/show.html.erb:90
 #: app/views/admin/users/import.html.erb:61
 #: app/views/admin/users/index.html.erb:19
 msgid "user"
@@ -1744,7 +1738,8 @@ msgstr ""
 msgid "user message unsubscribe"
 msgstr ""
 
-#: app/models/user_profile.rb:- app/views/admin/users/show.html.erb:27
+#: app/helpers/admin/application_helper.rb:33 app/models/user_profile.rb:-
+#: app/views/admin/user_profiles/index.html.erb:18
 msgid "user profile"
 msgstr "プロフィール"
 
@@ -1753,7 +1748,7 @@ msgid "user reading"
 msgstr ""
 
 #: app/models/user_uid.rb:- app/views/admin/user_uids/index.html.erb:20
-#: app/views/admin/users/show.html.erb:29
+#: app/views/admin/users/show.html.erb:28
 msgid "user uid"
 msgstr "ユーザID"
 
@@ -1851,3 +1846,8 @@ msgstr ""
 #: app/controllers/admin/documents_controller.rb:68
 msgid "静的コンテンツ管理"
 msgstr ""
+
+#: app/views/admin/_search_box.html.erb:5
+msgid "項目全体から検索を行ないます"
+msgstr ""
+

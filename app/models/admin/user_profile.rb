@@ -14,6 +14,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Admin::UserProfile < UserProfile
+  belongs_to :user, :class_name => 'Admin::User'
   N_('Admin::UserProfile|Address 1')
   N_('Admin::UserProfile|Address 2')
   N_('Admin::UserProfile|Alma mater')
@@ -28,4 +29,16 @@ class Admin::UserProfile < UserProfile
   N_('Admin::UserProfile|Introduction')
   N_('Admin::UserProfile|Join year')
   N_('Admin::UserProfile|Section')
+  N_('Admin::UserProfile|User')
+  N_('Admin::UserProfile|Extension')
+  N_('Admin::UserProfile|Self introduction')
+
+  def self.search_colomns
+    cols = %w(address_1 address_2 alma_mater birth_month birth_day blood_type email hobby hometown introduction self_introduction section)
+    cols.map{ |col| col + " like :lqs" }.join(' or ')
+  end
+
+  def topic_title
+    user.name
+  end
 end
