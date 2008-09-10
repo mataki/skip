@@ -18,6 +18,7 @@ class Admin::SettingsController < Admin::ApplicationController
   N_('Admin::SettingsController|mail')
   N_('Admin::SettingsController|other')
   N_('Admin::SettingsController|feed')
+  N_('Admin::SettingsController|main')
 
   def index
     params[:tab] ||= 'literal'

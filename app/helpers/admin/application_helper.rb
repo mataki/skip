@@ -17,6 +17,7 @@ module Admin::ApplicationHelper
   def generate_admin_tab_menu
     output = ''
     output << '<ul>'
+    output << generate_tab_link( _('Admin::SettingsController|main'), admin_settings_path(:tab => :main), request.url == admin_settings_url(:tab => :main) )
     output << generate_tab_link( _('Data management'), admin_users_path, !(request.url.include?(admin_settings_url) || request.url.include?(admin_documents_url) || request.url.include?(admin_images_url)) )
     output << generate_tab_link( _('Admin::SettingsController|literal'), admin_settings_path(:tab => :literal), request.url == admin_settings_url || request.url == admin_settings_url(:tab => :literal) )
     output << generate_tab_link( _('Admin::SettingsController|mail'), admin_settings_path(:tab => :mail), request.url == admin_settings_url(:tab => :mail) )
@@ -79,7 +80,7 @@ module ActionView
       def label_with_gettext(object_name, method, text = nil, options = {})
         text ||= s_("#{object_name.to_s.classify}|#{method.to_s.humanize}")
         # ラベル名変換が終わったらテーブル名の単数形にしておく。(for属性のため)
-        object_name = object_name.to_s.demodulize.tableize.singularize
+        object_name = object_name.to_s.tableize.gsub('/','_').singularize
         InstanceTag.new(object_name, method, self, nil, options.delete(:object)).to_label_tag(text, options.merge(:object => @object))
       end
       alias_method_chain :label, :gettext

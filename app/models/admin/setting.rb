@@ -48,6 +48,7 @@ class Admin::Setting < ActiveRecord::Base
   N_('Admin::Setting|Mypage feed settings title description')
   N_('Admin::Setting|Mypage feed default limit')
   N_('Admin::Setting|Mypage feed default limit description')
+  N_('Admin::Setting|Antenna settings')
   N_('Admin::Setting|Antenna default group')
   N_('Admin::Setting|Antenna default group description')
   N_('Admin::Setting|Smtp settings')

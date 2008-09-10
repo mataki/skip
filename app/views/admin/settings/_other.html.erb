@@ -1,6 +1,9 @@
-<% @revert_columns = %w(develop_team_gid initial_anntena stop_new_user) -%>
+<% @revert_columns = %w(develop_team_gid initial_anntena) -%>
 <div class="box tabular">
   <p><%= settings_label_with_text_field_tag :develop_team_gid %></p>
+</div>
+<h3><%= label Admin::Setting.name, :antenna_settings %></h3>
+<div class="box tabular">
   <p><%= settings_label_with_text_field_tag :initial_anntena %></p>
   <div id="antenna_default_groups">
     <p><%= label Admin::Setting.name, :antenna_default_group %>
@@ -14,7 +17,6 @@
       <%= render :partial => 'antenna_default_group' %>
     <% end -%>
   </div>
-  <p><%= settings_label_with_check_box_tag :stop_new_user %></p>
 </div>
 
 <% content_for :javascript do -%>

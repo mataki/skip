@@ -44,7 +44,7 @@ class PlatformController < ApplicationController
         return_to = params[:return_to] ? URI.encode(params[:return_to]) : nil
         redirect_to (return_to and !return_to.empty?) ? return_to : root_url
       else
-        flash[:auth_fail_message] ||={ "message" => "ログインに失敗しました。", "detail" => "下部に記載されているお問い合わせ先にご連絡下さい。"}
+        flash[:auth_fail_message] ||={ "message" => _("ログインに失敗しました。"), "detail" => _("下部に記載されているお問い合わせ先にご連絡下さい。")}
         redirect_to :back
       end
     end
@@ -134,20 +134,20 @@ class PlatformController < ApplicationController
 
   def set_error_message_form_result_and_redirect(result)
     error_messages = {
-      :missing      => ["OpenIDサーバーが見つかりませんでした。", "正しいOpenID URLを入力してください。"] ,
-      :canceled     => ["キャンセルされました。", "このサーバへの認証を確認してください" ],
-      :failed       => ["認証に失敗しました。", "" ],
-      :setup_needed => ["内部エラーが発生しました。", "管理者に連絡してください。" ]
+      :missing      => [_("OpenIDサーバーが見つかりませんでした。"), _("正しいOpenID URLを入力してください。")] ,
+      :canceled     => [_("キャンセルされました。"), _("このサーバへの認証を確認してください") ],
+      :failed       => [_("認証に失敗しました。"), "" ],
+      :setup_needed => [_("内部エラーが発生しました。"), _("管理者に連絡してください。") ]
     }
     set_error_message_and_redirect error_messages[result.instance_variable_get(:@code)], {:controller => :platform, :action => :login}
   end
 
   def set_error_message_from_user_and_redirect(user)
-    set_error_message_and_redirect ["ユーザの登録に失敗しました。", "管理者に連絡してください。<br/>#{user.errors.full_messages}"], :action => :index
+    set_error_message_and_redirect [_("ユーザの登録に失敗しました。"), _("管理者に連絡してください。<br/>%{msg}")%{:msg => user.errors.full_messages}], :action => :index
   end
 
   def set_error_message_not_create_new_user_and_redirect
-    set_error_message_and_redirect ["そのOpenIDは、登録されていません。", "ログイン後管理画面でOpenID URLを登録後ログインしてください。"], :action => :index
+    set_error_message_and_redirect [_("そのOpenIDは、登録されていません。"), _("ログイン後管理画面でOpenID URLを登録後ログインしてください。")], :action => :index
   end
 
   def set_error_message_and_redirect(message, url)

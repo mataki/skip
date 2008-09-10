@@ -7,7 +7,7 @@ class MargeAccountsToUsers < ActiveRecord::Migration
 
     User.transaction do
       Account.all.each do |account|
-        user = User.find_by_uid(account.code)
+        user = User.find_by_code(account.code)
         unless user
           user = User.new({ :email => account.email, :name => account.name, :extension => '000000',
                             :section => account.section, :introduction => '00000',
