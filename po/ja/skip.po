@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
 "POT-Creation-Date: 2008-09-10 18:15+0900\n"
-"PO-Revision-Date: 2008-09-10 18:19+0900\n"
+"PO-Revision-Date: 2008-09-10 18:24+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1640,12 +1640,12 @@ msgstr "メールアドレス変更"
 
 #: app/helpers/admin/application_helper.rb:35 app/models/board_entry.rb:-
 msgid "board entry"
-msgstr "エントリ"
+msgstr "ブログ・掲示板"
 
 #: app/models/board_entry_comment.rb:-
 #: app/views/admin/board_entries/show.html.erb:23
 msgid "board entry comment"
-msgstr "エントリコメント"
+msgstr "ブログ・掲示板コメント"
 
 #: app/models/board_entry_point.rb:-
 msgid "board entry point"
