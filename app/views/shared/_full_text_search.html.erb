@@ -1,5 +1,5 @@
 <div id="search"><span class="full_text_search">
-  <% form_tag({:controller => 'search', :action => 'full_text_search'},{ :method => 'get'}) do -%>
+  <% form_tag({:controller => '/search', :action => 'full_text_search'},{ :method => 'get'}) do -%>
   <span style="vertical-align:middle;">全文検索：</span><%= text_field_tag('full_text_query') -%><%= submit_tag '検索' -%>
   <% end -%>
 </span></div>
