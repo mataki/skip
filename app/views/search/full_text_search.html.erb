@@ -26,7 +26,7 @@ var relative_url_root = '<%= controller.request.relative_url_root -%>';
 </style>
 
 <div id="header">
-  <div id="logo" style="align: top; margin: 3px 0 0 20px;"><%= link_to(Admin::Setting.header_logo_url, :alt => Admin::Setting.abbr_app_title, :height => "45"), :controller => 'mypage', :action => :index) -%></div>
+  <div id="logo" style="align: top; margin: 3px 0 0 20px;"><%= link_to(image_tag(Admin::Setting.header_logo_url, :alt => Admin::Setting.abbr_app_title, :height => "45"), :controller => '/mypage', :action => 'index')  %></div>
   <%= skip_menu_link -%>
 </div>
 <div id="top">
@@ -39,8 +39,8 @@ var relative_url_root = '<%= controller.request.relative_url_root -%>';
 
 <div class="full_text_search">
   <div style="margin-left: 90px;">
+    <% form_tag({:controller => 'search', :action => 'full_text_search'} ,:method => 'get', :id => 'full_text_form') do -%>
     <div>
-      <% form_tag({:controller => 'search', :action => 'full_text_search'} ,:method => 'get', :id => 'full_text_form') do -%>
       <%= text_field_tag('full_text_query', params[:full_text_query], :size => 50 ) -%>
       <%= submit_tag '全文検索' -%>
       <input id="internet_google_search_button" type="button" value="インターネット検索" /><br/>
@@ -61,8 +61,8 @@ var relative_url_root = '<%= controller.request.relative_url_root -%>';
         <div id="<%= key -%>_conditions"></div>
       <% end %>
       <% end %>
-      <%= hidden_field_tag 'searcher', 'hyperestraier' -%>
-      <% end # form_tag %>
+      <%= hidden_field_tag 'searcher', 'hyperestraier' %>
+      <% end %>
     </div>
   </div>
 </div>
