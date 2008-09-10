@@ -45,6 +45,14 @@ Rails::Initializer.run do |config|
   # config.active_record.schema_format = :ruby
 
   # See Rails::Configuration for more options
+  config.gem "gettext" 
+  config.gem "uuidtools"
+  config.gem "fastercsv"
+  config.gem "ruby-openid", :lib => "openid"
+  # config.gem "mongrel"
+  # config.gem "rspec", :lib => "spec"
+  # config.gem "ZenTest", :lib => "zentest"
+  # config.gem "ruby-debug"
 end
 
 # Include your application configuration below
