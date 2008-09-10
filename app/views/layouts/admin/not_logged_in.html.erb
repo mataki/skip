@@ -14,7 +14,7 @@
 
 <body>
 <div id="header">
-  <div id="logo" style="align: top; margin: 3px 0 0 20px;"><%= link_to(image_tag(Admin::Setting.header_logo_url, :alt => Admin::Setting.abbr_app_title, :height => "45"), :controller => '/mypage', :action => 'index')  %></div>
+  <div id="logo" style="align: top; margin: 3px 0 0 20px;"><%= link_to(image_tag('/custom/images/header_logo.png', :alt => Admin::Setting.abbr_app_title, :height => "45"), :controller => '/mypage', :action => 'index')  %></div>
 </div><!-- header -->
 
 <div id="main">
@@ -66,7 +66,7 @@
       <div class="company"><%= Admin::Setting.footer_contact -%> | <%= Admin::Setting.footer_copyright -%></div>
     </div>
     <div class="sponsor">
-      powered by <%= image_tag Admin::Setting.footer_image_url  %>
+      powered by <%= link_to image_tag('/custom/images/footer_logo.png'), Admin::Setting.footer_image_link_url %>
     </div>
   </div>
 </div><!-- footer -->

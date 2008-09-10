@@ -17,10 +17,11 @@ module Admin::ApplicationHelper
   def generate_admin_tab_menu
     output = ''
     output << '<ul>'
-    output << generate_tab_link( _('Data management'), admin_users_path, !(request.url.include?(admin_settings_url) || request.url.include?(admin_documents_url)) )
+    output << generate_tab_link( _('Data management'), admin_users_path, !(request.url.include?(admin_settings_url) || request.url.include?(admin_documents_url) || request.url.include?(admin_images_url)) )
     output << generate_tab_link( _('Admin::SettingsController|literal'), admin_settings_path(:tab => :literal), request.url == admin_settings_url || request.url == admin_settings_url(:tab => :literal) )
     output << generate_tab_link( _('Admin::SettingsController|mail'), admin_settings_path(:tab => :mail), request.url == admin_settings_url(:tab => :mail) )
     output << generate_tab_link( _('Admin::SettingsController|feed'), admin_settings_path(:tab => :feed), request.url == admin_settings_url(:tab => :feed) )
+    output << generate_tab_link( _('Admin::ImagesController'), admin_images_path, request.url.include?(admin_images_url) )
     output << generate_tab_link( _('Admin::DocumentsController'), admin_documents_path, request.url.include?(admin_documents_url) )
     output << generate_tab_link( _('Admin::SettingsController|other'), admin_settings_path(:tab => :other), request.url == admin_settings_url(:tab => :other) )
     output << '</ul>'

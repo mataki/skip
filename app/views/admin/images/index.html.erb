@@ -1,0 +1,18 @@
+<% content_for :topic_path do -%>
+<%= render :partial => '/admin/shared/topic_path' %>
+<% end -%>
+
+<div class="box tabular">
+  <% Admin::ImagesController::PNG_IMAGE_NAMES.each do |target| -%>
+    <% form_tag admin_images_update_path(:target => target), :multipart => true do -%>
+      <label for="<%= target %>"><%= _('Admin::ImagesController|' + target) %></label><%= file_field_tag target, :size => 60, :accept => 'image/png' %>
+      <%= submit_tag _('Upload'), :disable_with => _('Uploading...') %>
+    <% end -%>
+  <% end -%>
+  <% Admin::ImagesController::BACKGROUND_IMAGE_NAMES.each do |target| -%>
+    <% form_tag admin_images_update_path(:target => target), :multipart => true do -%>
+      <label for="<%= target %>"><%= _('Admin::ImagesController|background') %></label><%= file_field_tag target, :size => 60, :accept => 'image/png' %>
+      <%= submit_tag _('Upload'), :disable_with => _('Uploading...') %>
+    <% end -%>
+  <% end -%>
+</div>

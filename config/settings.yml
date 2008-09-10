@@ -27,8 +27,6 @@ initial_anntena:
   default: SKIPチーム                                      # 初期登録されるアンテナの名称
 login_account:
   default: ログインID                                      # ログインアカウントの名称
-header_logo_url:                                           # ヘッダロゴに表示する画像のURL
-  default: /custom/images/top_logo.png
 footer_link:                                               #フッターの１行目（ヘルプ・規約へのリンクなどを推奨）
   default: >-
     <a target="_blank" href="http://www.openskip.org/help">ヘルプ</a> -
@@ -38,8 +36,6 @@ footer_contact:
   default: お問い合わせはこちら                            # フッターの２列目（提供元への連絡先などを推奨）
 footer_copyright:
   default: Since 2008 SKIP                                 # フッターの３列目（提供もとの記載などを推奨）
-footer_image_url:
-  default: /custom/images/top_logo.png                     # フッター右側に表示する画像のURL
 footer_image_link_url:
   format: url
   default: http://www.openskip.org/                        # フッター右側に表示する画像のリンクURL

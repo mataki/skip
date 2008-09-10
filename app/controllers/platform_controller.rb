@@ -23,7 +23,7 @@ class PlatformController < ApplicationController
   before_filter :require_not_login, :except => [:logout]
 
   def index
-    img_files = Dir.glob(File.join(RAILS_ROOT, "public", "images", "titles", "*.{jpg,png,jpeg}"))
+    img_files = Dir.glob(File.join(RAILS_ROOT, "public", "custom", "images", "titles", "background*.{jpg,png,jpeg}"))
     @img_name = File.join("titles", File.basename(img_files[rand(img_files.size)]))
   end
 
