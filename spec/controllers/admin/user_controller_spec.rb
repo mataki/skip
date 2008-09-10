@@ -185,9 +185,7 @@ describe Admin::UsersController, 'POST /import' do
       @edit_user = stub_model(Admin::User)
       @edit_user_profile = stub_model(Admin::UserProfile)
       @edit_user_uid = stub_model(Admin::UserUid)
-      @new_user.stub!(:save!)
-      @edit_user.stub!(:save!)
-      @edit_user_profile.stub!(:save!)
+      controller.stub!(:import!)
       @edit_user_uid.stub!(:save!)
       controller.should_receive(:valid_csv?).and_return(true)
     end
@@ -198,10 +196,7 @@ describe Admin::UsersController, 'POST /import' do
         Admin::User.should_receive(:make_users).and_return([[@new_user, @new_user_profile, @new_user_uid], [@edit_user, @edit_user_profile, @edit_user_uid]])
       end
       it '新規レコードはUserのみ、既存レコードはUser, UserProfile, UserUidの各々で保存されること' do
-        @new_user.should_receive(:save!)
-        @edit_user.should_receive(:save!)
-        @edit_user_profile.should_receive(:save!)
-        @edit_user_uid.should_receive(:save!)
+        controller.should_receive(:import!)
         post :import
       end
       
@@ -210,9 +205,7 @@ describe Admin::UsersController, 'POST /import' do
     end
     describe 'invalidなレコードが含まれる場合' do
       before do
-        @new_user.stub!(:new_record?).and_return(true)
-        @new_user.should_receive(:save!).and_raise(mock_record_invalid)
-        @new_user.should_receive(:valid?)
+        controller.should_receive(:import!).and_raise(mock_record_invalid)
         Admin::User.should_receive(:make_users).and_return([@new_user, @new_user_profile, @new_user_uid])
         post :import
       end

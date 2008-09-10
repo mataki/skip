@@ -97,28 +97,38 @@ class Admin::UsersController < Admin::ApplicationController
     end
   end
 
-  def import
+  def import_confirmation
+    @topics = [[_('Listing %{model}') % {:model => _('user')}, admin_users_path], _('New user from csv')]
     if request.get? || !valid_csv?(params[:file])
       @users = []
-      @topics = [[_('Listing %{model}') % {:model => _('user')}, admin_users_path], _('New user from csv')]
+      return render :action => :import
+    end
+    @users = Admin::User.make_users(params[:file])
+    import!(@users)
+    flash.now[:notice] = _('CSVファイルの内容を検証しました。')
+    render :action => :import
+  rescue ActiveRecord::RecordInvalid,
+         ActiveRecord::RecordNotSaved => e
+    @users.each {|user, user_profile, user_uid| user.valid?}
+    flash.now[:notice] = _('CSVファイルの内容を検証しました。')
+    render :action => :import
+  end
+
+  def import
+    @topics = [[_('Listing %{model}') % {:model => _('user')}, admin_users_path], _('New user from csv')]
+    @error_row_only = true
+    if request.get? || !valid_csv?(params[:file])
+      @users = []
       return
     end
     @users = Admin::User.make_users(params[:file])
-    Admin::User.transaction do
-      @users.each do |user, user_profile, user_uid|
-        user.save!
-        unless user.new_record?
-          user_profile.save!
-          user_uid.save!
-        end
-      end
-    end
+    import!(@users, false)
     flash[:notice] = _('CSVファイルからのユーザ登録/更新に成功しました。')
     redirect_to admin_users_path
   rescue ActiveRecord::RecordInvalid,
          ActiveRecord::RecordNotSaved => e
-    flash[:error] = _('CSVファイルに不正な値が含まれています。')
     @users.each {|user, user_profile, user_uid| user.valid?}
+    flash.now[:error] = _('CSVファイルに不正な値が含まれています。')
   end
 
   private
@@ -149,5 +159,18 @@ class Admin::UsersController < Admin::ApplicationController
       return false
     end
     true
+  end
+
+  def import!(users, rollback = true)
+    Admin::User.transaction do
+      users.each do |user, user_profile, user_uid|
+        user.save!
+        unless user.new_record?
+          user_profile.save!
+          user_uid.save!
+        end
+      end
+      raise ActiveRecord::Rollback if rollback
+    end
   end
 end

@@ -5,22 +5,25 @@
 <% content_for :contents_right do -%>
 <div class="box">
   <div class="search_box">
-    <% form_tag import_new_admin_user_path, :multipart => true do -%>
+    <% form_tag import_new_admin_user_path, :multipart => true, :id => 'import_form' do -%>
     <label for="file"><%= _('CSVファイル') %></label><%= file_field_tag :file %>
+    <button id="import_confirmation_button"><%= _('Import confirmation') %></button>
     <%= submit_tag _('Upload'), :disable_with => _('Uploading...') %>
     <% end -%>
 
+    <h3><%= _('CSVファイルでインポートする際の注意') %></h3>
+    <p style="color:red;"><b><%= _('CSVファイルの文字コードはUTF-8にしてアップロードするようにして下さい。') %></b></p>
+    <p style="color:red;"><b><%= _('ログインID(CSVファイルの最初の列)のデータが存在しない場合は新規作成、存在する場合は更新されます。') %></b></p>
+    <p style="color:red;"><b><%= _('データが更新される場合、ユーザが部署やパスワード等を自分自身で変更している場合でも上書きされますのでご注意下さい。') %></b></p>
     <h3><%= _('正しいCSVファイルの例') %></h3>
-    <pre>
+<pre>
 111111,山田 太郎,経理,yamada@example.com,password
 222222,山田 花子,人事,h_yamada@example.com,password
 333333,鈴木 次郎,開発,suzuki@example.com,password</pre>
   </div>
   <% unless @users.empty? -%>
-  <% unless flash[:error].nil? -%>
-  <h2>アップロードしたCSVファイルのエラー行</h2>
-  <p><%= _('エラーの詳細は各行の右端のアイコンをクリックすると表示されます。例にならって修正後再度アップロードして下さい。') %></p>
-  <% end -%>
+  <h2><%= _('アップロードしたCSVファイルの内容') %></h2>
+  <p><%= @error_row_only ? _('エラー行のみ表示しています。右端のアイコンをクリックするとエラーの詳細を確認出来ます。例にならって修正して下さい。') : _('エラーがある場合は各行の右端のアイコンをクリックすると詳細が表示されます。例にならって修正して下さい。') %></p>
   <table class="normal sortable">
     <thead>
       <tr>
@@ -36,7 +39,7 @@
     <tbody>
       <% @users.each_with_index do |array, line| -%>
         <% @user, @user_profile, @user_uid = array -%>
-        <% unless @user.errors.empty? -%>
+        <% unless (@error_row_only &&  @user.errors.empty?) -%>
         <tr class="<%= cycle('line_1', 'line_0') %>">
           <td><%= line+1 %></td>
           <td><%= @user_uid.uid %></td>
@@ -44,19 +47,41 @@
           <td><%= @user_profile.section %></td>
           <td><%= @user_profile.email %></td>
           <td><%= '********' %></td>
+          <td>
+        <% unless @user.errors.empty? -%>
           <%
             error_msg = []
-            error_msg.concat @user.errors.full_messages.reject{|msg| msg.include?("User uid") || msg.include?("User profile") } unless @user.errors.empty?
-            error_msg.concat @user_profile.errors.full_messages unless @user_profile.errors.empty?
-            error_msg.concat @user_uid.errors.full_messages unless @user_uid.errors.empty?
+            error_msg.concat @user.errors.full_messages.reject{|msg| msg.include?("User uid") || msg.include?("User profile") }
+            error_msg.concat @user_profile.errors.full_messages
+            error_msg.concat @user_uid.errors.full_messages
           %>
-          <td><%= help_icon_tag :content => "|#{error_msg.join('|')}" %></td>
-        </tr>
+          <%= help_icon_tag :content => "|#{error_msg.join('|')}" %>
         <% end -%>
+          </td>
+        </tr>
+      <% end -%>
       <% end -%>
     </tbody>
   </table>
   <% end -%>
 </div>
   <%= link_to _('Listing %{model}') % {:model => _('user')}, admin_users_path %>
+<% end -%>
+
+<% content_for :javascript do -%>
+<script type="text/javascript">
+$j(function(){
+    $j('#import_confirmation_button')
+    .click(function(){
+        $j(this)
+        .attr('disabled', 'disabled')
+        .text('<%= _('Uploading...') %>');
+
+        $j('#import_form')
+        .attr('action', '<%= import_confirmation_new_admin_user_path %>')
+        .submit();
+        return false;
+    })
+});
+</script>
 <% end -%>
