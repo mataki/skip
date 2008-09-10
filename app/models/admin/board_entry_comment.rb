@@ -15,6 +15,9 @@
 
 class Admin::BoardEntryComment < BoardEntryComment
   N_('Admin::BoardEntryComment|Contents')
+  N_('Admin::BoardEntryComment|Id')
+  N_('Admin::BoardEntryComment|User')
+  N_('Admin::BoardEntryComment|Parent')
 
   def name
     contents[/.{1,10}/]

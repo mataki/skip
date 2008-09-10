@@ -10,7 +10,7 @@
                :columns => %w[id user contents parent_id],
                :objects => @board_entry_comments,
                :class_name => 'Admin::BoardEntryComment',
-               :link_elem => [['Destroy','admin_board_entry_board_entry_comment_path(@board_entry, object)',{:confirm => _('Are you sure?'), :method => :delete}]]
+               :link_elem => [['Destroy','admin_board_entry_board_entry_comment_path(@board_entry, object)',{:confirm => _('Are you sure destroing with nest comments?'), :method => :delete}]]
              }
   -%>
 </div>
