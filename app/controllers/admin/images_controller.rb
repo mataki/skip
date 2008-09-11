@@ -14,6 +14,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Admin::ImagesController < Admin::ApplicationController
+  before_filter :check_params, :only => [:update]
 
   PNG_IMAGE_NAMES = %w(title_logo header_logo footer_logo)
   BACKGROUND_IMAGE_NAMES = %w(background001 background002 background003 background004 background005 
@@ -62,5 +63,14 @@ class Admin::ImagesController < Admin::ApplicationController
   def save_dir
     base_dir = "#{RAILS_ROOT}/public/custom/images"
     BACKGROUND_IMAGE_NAMES.include?(params[:target]) ? "#{base_dir}/titles" : base_dir
+  end
+
+  def check_params
+    if params[:target].blank?
+      redirect_to :action => :index
+    end
+    unless PNG_IMAGE_NAMES.concat(BACKGROUND_IMAGE_NAMES).include? params[:target]
+      redirect_to "#{root_url}404.html"
+    end
   end
 end

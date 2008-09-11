@@ -21,6 +21,7 @@ end
 describe Admin::ImagesController, 'POST /update' do
   before do
     admin_login
+    controller.should_receive(:check_params).at_least(:once)
     controller.stub!(:valid_file?).and_return(true)
   end
   describe '不正なファイルの場合' do
