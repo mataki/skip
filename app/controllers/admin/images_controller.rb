@@ -28,12 +28,17 @@ class Admin::ImagesController < Admin::ApplicationController
   N_('Admin::ImageController|background_description')
 
   def index
+    @topics = [_(self.class.name.to_s)]
   end
 
   def update
-    image = params[params[:target].to_sym]
-    debugger
-    open("#{RAILS_ROOT}/public/custom/images/#{params[:target]}.png", 'wb') { |f| f.write(image.read) }
+    @topics = [_(self.class.name.to_s)]
+    image_file = params[params[:target].to_sym]
+    unless valid_file?(image_file, :max_size => 300.kilobyte, :content_types => content_types)
+      return render(:action => :index)
+    end
+
+    open("#{save_dir}/#{params[:target]}#{extentions}", 'wb') { |f| f.write(image_file.read) }
     flash[:notice] = _('保存しました。')
     redirect_to admin_images_path
   rescue Errno::EACCES => e
@@ -43,5 +48,19 @@ class Admin::ImagesController < Admin::ApplicationController
     flash.now[:error] = _('想定外のエラーが発生しました。管理者にお問い合わせ下さい。')
     e.backtrace.each { |message| logger.error message }
     render :action => :index, :target => params[:target], :status => :internal_server_error
+  end
+
+  private
+  def extentions
+    BACKGROUND_IMAGE_NAMES.include?(params[:target]) ? '.jpg' : '.png'
+  end
+
+  def content_types
+    BACKGROUND_IMAGE_NAMES.include?(params[:target]) ? ['image/jpg', 'image/jpeg'] : ['image/png']
+  end
+
+  def save_dir
+    base_dir = "#{RAILS_ROOT}/public/custom/images"
+    BACKGROUND_IMAGE_NAMES.include?(params[:target]) ? "#{base_dir}/titles" : base_dir
   end
 end

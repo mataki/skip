@@ -99,9 +99,9 @@ class Admin::UsersController < Admin::ApplicationController
 
   def import_confirmation
     @topics = [[_('Listing %{model}') % {:model => _('user')}, admin_users_path], _('New user from csv')]
-    if request.get? || !valid_csv?(params[:file])
+    if request.get? || !valid_file?(params[:file], :content_types => ['text/csv', 'application/x-csv', 'application/vnd.ms-excel'])
       @users = []
-      return render :action => :import
+      return render(:action => :import)
     end
     @users = Admin::User.make_users(params[:file])
     import!(@users)
@@ -117,7 +117,7 @@ class Admin::UsersController < Admin::ApplicationController
   def import
     @topics = [[_('Listing %{model}') % {:model => _('user')}, admin_users_path], _('New user from csv')]
     @error_row_only = true
-    if request.get? || !valid_csv?(params[:file])
+    if request.get? || !valid_file?(params[:file], :content_types => ['text/csv', 'application/x-csv', 'application/vnd.ms-excel'])
       @users = []
       return
     end
@@ -136,29 +136,6 @@ class Admin::UsersController < Admin::ApplicationController
     return false unless code
     return true if Activation.find_by_code(code)
     false
-  end
-
-  def valid_csv?(uploaded_file)
-    if uploaded_file.blank?
-      flash[:error] = _('ファイルを指定して下さい。')
-      return false
-    end
-
-    if uploaded_file.size == 0
-      flash[:error] = _('ファイルサイズが0です。')
-      return false
-    end
-
-    if uploaded_file.size > 1.megabyte
-      flash[:error] = _('ファイルサイズが1MBを超えています。')
-      return false
-    end
-
-    unless ['text/csv', 'application/x-csv', 'application/vnd.ms-excel'].include?(uploaded_file.content_type)
-      flash[:error] = _('csvファイル以外はアップロード出来ません。')
-      return false
-    end
-    true
   end
 
   def import!(users, rollback = true)

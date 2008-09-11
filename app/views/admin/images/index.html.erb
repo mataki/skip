@@ -9,9 +9,9 @@
       <%= submit_tag _('Upload'), :disable_with => _('Uploading...') %>
     <% end -%>
   <% end -%>
-  <% Admin::ImagesController::BACKGROUND_IMAGE_NAMES.each do |target| -%>
+  <% Admin::ImagesController::BACKGROUND_IMAGE_NAMES.each_with_index do |target, index| -%>
     <% form_tag admin_images_update_path(:target => target), :multipart => true do -%>
-      <label for="<%= target %>"><%= _('Admin::ImagesController|background') %></label><%= file_field_tag target, :size => 60, :accept => 'image/png' %>
+      <label for="<%= target %>"><%= _('Admin::ImagesController|background') + (index + 1).to_s %></label><%= file_field_tag target, :size => 60, :accept => 'image/png' %>
       <%= submit_tag _('Upload'), :disable_with => _('Uploading...') %>
     <% end -%>
   <% end -%>
