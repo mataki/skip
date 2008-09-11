@@ -27,11 +27,11 @@
   <div class="input_value">
     <table style="margin-left:3px;border:0;">
     <tr><th width="100px"></th><th></th></tr>
-<% Group::CATEGORY_KEYS.each do |category| %>
+<% Group::CATEGORIES.each do |category| %>
     <tr>
-      <td><%= radio_button "group", "category", category, :class => "category_radio_button" -%>
-            <%= get_group_icon category, :margin => true %><b><%= Group::CATEGORY_KEY_NAMES[category] -%></b></td>
-      <td><%= Group::CATEGORY_KEY_DESCRIPTIONS[category] -%></td>
+      <td><%= radio_button "group", "category", category[:type], :class => "category_radio_button" -%>
+            <%= get_group_icon category[:type], :margin => true %><b><%= category[:name] -%></b></td>
+      <td><%= category[:desc] -%></td>
     </tr>
 <% end %>
     </table>

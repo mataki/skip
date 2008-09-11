@@ -20,13 +20,13 @@ describe Group, "初期値が入っているか" do
     @group = Group.new
   end
 
-  it { @group.category.should == Group::LIFE }
-  it { Group.category_icon_name(Group::LIFE).should == ['group_gear', 'ライフ'] }
+  it { @group.category.should == "LIFE" }
+  it { @group.category_icon_name.should == ['group_gear', 'ライフ'] }
 end
 
 describe Group do
   before(:each) do
-    @category = Group::BIZ
+    @category = "BIZ"
     @group = Group.new({ :name => 'hoge', :gid => 'hoge', :description => 'hoge', :protected => '1',
                          :category => @category, :created_on => Time.now, :updated_on => Time.now })
   end
@@ -35,7 +35,6 @@ describe Group do
   it { @group.symbol_id.should == @group.gid }
   it { @group.symbol.should == ('gid:'+@group.gid) }
   it { @group.to_s.should == "id:#{@group.id}, name:#{@group.name}" }
-  it { @group.category_icon_name.should == [Group::CATEGORY_KEY_ICON_NAMES[@category], Group::CATEGORY_KEY_NAMES[@category] ] }
 end
 
 describe Group, "承認待ちのユーザがいるとき" do

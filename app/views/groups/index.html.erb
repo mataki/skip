@@ -13,10 +13,10 @@
     <td>
       <%= radio_button_tag "category", "all", params[:category] == "all" -%>
       <%= icon_tag "asterisk_orange", :margin => true -%>全て(<%= @total_count -%>)
-      <% Group::CATEGORY_KEYS.each do |category| %>
-        <%= radio_button_tag "category", category, params[:category] == category -%>
-        <%= get_group_icon category, :margin => true -%>
-        <%= Group::CATEGORY_KEY_NAMES[category] -%>(<%= @group_counts[category] -%>)
+      <% Group::CATEGORIES.each do |category| %>
+        <%= radio_button_tag "category", category[:type], params[:category] == category[:type] -%>
+        <%= get_group_icon category[:type], :margin => true -%>
+        <%= category[:name] -%>(<%= @group_counts[category[:type]] -%>)
       <% end %>
     </td>
   </tr>

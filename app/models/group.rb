@@ -23,31 +23,22 @@ class Group < ActiveRecord::Base
   validates_format_of :gid, :message =>'は数字orアルファベットor記号(ハイフン「-」 アンダーバー「_」)で入力してください', :with => /^[a-zA-Z0-9\-_]*$/
 
   # categoryの種類
-  BIZ = "BIZ"
-  LIFE = "LIFE"
-  OFF = "OFF"
-  CATEGORY_KEYS = [BIZ, LIFE, OFF]
-  CATEGORY_KEY_NAMES = {
-    BIZ => "ビジネス",
-    LIFE => "ライフ",
-    OFF => "オフ"
-  }
-  CATEGORY_KEY_ICON_NAMES = {
-    BIZ => "page_word",
-    LIFE => "group_gear",
-    OFF => "ipod"
-  }
-  CATEGORY_KEY_DESCRIPTIONS = {
-    BIZ => "プロジェクト内など、業務で利用する場合に選択してください。",
-    LIFE => "業務に直結しない会社内の活動で利用する場合に選択してください。",
-    OFF => "趣味などざっくばらんな話題で利用する場合に選択してください。"
-  }
+  CATEGORIES = [
+    { :type => "BIZ", :name => "ビジネス", :icon => "page_word", :desc => "プロジェクト内など、業務で利用する場合に選択してください。" },
+    { :type => "LIFE", :name => "ライフ", :icon => "group_gear", :desc => "業務に直結しない会社内の活動で利用する場合に選択してください。", :default => true },
+    { :type => "OFF", :name => "オフ", :icon => "ipod", :desc => "趣味などざっくばらんな話題で利用する場合に選択してください。" }
+  ]
+  CATEGORIES_HASH = {}
+  CATEGORIES.each do |category|
+    CATEGORIES_HASH[category[:type]] = category
+    DEFAULT_CATEGORY = category[:type] if category[:default]
+  end
 
   alias initialize_old initialize
 
   def initialize(attributes = nil)
     initialize_old(attributes)
-    @attributes["category"] = LIFE unless attributes and attributes[:category]
+    @attributes["category"] = DEFAULT_CATEGORY unless attributes and attributes[:category]
   end
 
   class << self
@@ -97,12 +88,9 @@ class Group < ActiveRecord::Base
     BoardEntry.create_entry entry_params
   end
 
-  def self.category_icon_name category
-    [CATEGORY_KEY_ICON_NAMES[category], CATEGORY_KEY_NAMES[category]]
-  end
-
   def category_icon_name
-    self.class.category_icon_name category
+    category_ = CATEGORIES_HASH[category]
+    [category_[:icon], category_[:name]]
   end
 
   def self.make_conditions(options={})
