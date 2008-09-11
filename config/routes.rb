@@ -59,8 +59,9 @@ ActionController::Routing::Routes.draw do |map|
     admin_map.documents_update 'documents/:target/update', :controller => 'documents', :action => 'update'
     admin_map.documents 'documents/:target', :controller => 'documents', :action => 'index', :defaults => { :target => '' }
 
-    admin_map.images_update 'images/:target/update', :controller => 'images', :action => 'update'
     admin_map.images 'images', :controller => 'images', :action => 'index'
+    admin_map.images_update 'images/:target/update', :controller => 'images', :action => 'update'
+    admin_map.images_revert 'images/:target/revert', :controller => 'images', :action => 'revert'
   end
 
   map.connect ':controller/:action/:id'
