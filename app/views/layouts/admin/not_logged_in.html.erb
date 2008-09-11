@@ -14,7 +14,7 @@
 
 <body>
 <div id="header">
-  <div id="logo" style="align: top; margin: 3px 0 0 20px;"><%= link_to(image_tag("#{controller.request.relative_url_root}/custom/images/header_logo.png", :alt => Admin::Setting.abbr_app_title, :height => "45"), :controller => '/mypage', :action => 'index')  %></div>
+  <%= header_logo_link %>
 </div><!-- header -->
 
 <div id="main">

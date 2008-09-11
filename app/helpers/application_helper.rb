@@ -254,6 +254,11 @@ module ApplicationHelper
     url_for :controller => 'bookmark', :action => 'show', :uri => URI.encode(uri)
   end
 
+  def header_logo_link(url = url_for(:controller => '/mypage', :action => 'index'))
+    img_url = "#{@controller.request.relative_url_root}/custom/images/header_logo.png"
+    "<div id=\"logo\">" + link_to(image_tag(img_url, :alt => Admin::Setting.abbr_app_title, :height => "45"), url) + "</div>"
+  end
+
 private
   def generate_tab_link name, options
     html_option = {:class=>'selected'} if @controller.action_name == options[:action]

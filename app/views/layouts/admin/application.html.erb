@@ -17,9 +17,9 @@
 
 <body>
 <div id="header">
-  <div id="logo" style="align: top; margin: 3px 0 0 20px;"><%= link_to(image_tag("#{controller.request.relative_url_root}/custom/images/header_logo.png", :alt => Admin::Setting.abbr_app_title, :height => "45"), :controller => '/mypage', :action => 'index')  %></div>
-  <%= skip_menu_link -%>
-  <%= render :partial => "shared/full_text_search" if INITIAL_SETTINGS['full_text_search_setting'] -%>
+  <%= header_logo_link %>
+  <%= skip_menu_link %>
+  <%= render :partial => "shared/full_text_search" if INITIAL_SETTINGS['full_text_search_setting'] %>
 </div><!-- header -->
 
 <div id="top">
