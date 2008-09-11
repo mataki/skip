@@ -1,8 +1,14 @@
 <%= error_messages_for :user %>
 <p>
   <%= label Admin::UserUid.name, :uid %>
+  <% if @user.new_record? %>
   <%= text_field :user_uid, :uid %>
+  <% else %>
+  :<%= h @user.code %>
+  <% end %>
+
 </p>
+
 <p>
   <%= label Admin::UserProfile.name, :email %>
   <%= text_field :user_profile, :email %>

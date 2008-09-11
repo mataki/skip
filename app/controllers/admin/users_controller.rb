@@ -55,10 +55,9 @@ class Admin::UsersController < Admin::ApplicationController
 
   def update
     Admin::User.transaction do
-      @user, @user_profile, @user_uid = Admin::User.make_user_by_id(params)
+      @user, @user_profile = Admin::User.make_user_by_id(params)
       @user.save!
       @user_profile.save!
-      @user_uid.save!
     end
     flash[:notice] = _('更新しました。')
     redirect_to admin_users_path
@@ -142,7 +141,7 @@ class Admin::UsersController < Admin::ApplicationController
     end
 
     if uid = @user.user_uids.find(:first, :conditions => ['uid_type = ?', UserUid::UID_TYPE[:nickname]])
-      uid.uid = params[:user_uid][:uid]
+      uid.uid = params[:user_uid] ? params[:user_uid][:uid] : ''
       if uid.save
         flash[:notice] = "変更しました"
         redirect_to @user

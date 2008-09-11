@@ -66,9 +66,7 @@ class Admin::User < User
     user.attributes = params[:user]
     user_profile = user.user_profile
     user_profile.attributes = params[:user_profile]
-    user_uid = user.user_uids.find_by_uid_type('MASTER')
-    user_uid.attributes = params[:user_uid]
-    [user, user_profile, user_uid]
+    [user, user_profile]
   end
 
   def self.make_user_by_uid(params = {}, admin = false)
