@@ -20,13 +20,13 @@ class Admin::ImagesController < Admin::ApplicationController
   BACKGROUND_IMAGE_NAMES = %w(background001 background002 background003 background004 background005 
                               background006 background007 background008 background009 background010).freeze
   N_('Admin::ImagesController|title_logo')
-  N_('Admin::ImageController|title_logo_description')
+  N_('Admin::ImagesController|title_logo_description')
   N_('Admin::ImagesController|header_logo')
-  N_('Admin::ImageController|header_logo_description')
+  N_('Admin::ImagesController|header_logo_description')
   N_('Admin::ImagesController|footer_logo')
-  N_('Admin::ImageController|footer_logo_description')
+  N_('Admin::ImagesController|footer_logo_description')
   N_('Admin::ImagesController|background')
-  N_('Admin::ImageController|background_description')
+  N_('Admin::ImagesController|background_description')
 
   def index
     @topics = [_(self.class.name.to_s)]

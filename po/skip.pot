@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-09-11 01:38+0900\n"
+"POT-Creation-Date: 2008-09-11 11:54+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -174,22 +174,6 @@ msgstr ""
 msgid "Admin::Group|Protected"
 msgstr ""
 
-#: app/controllers/admin/images_controller.rb:28
-msgid "Admin::ImageController|background_description"
-msgstr ""
-
-#: app/controllers/admin/images_controller.rb:26
-msgid "Admin::ImageController|footer_logo_description"
-msgstr ""
-
-#: app/controllers/admin/images_controller.rb:24
-msgid "Admin::ImageController|header_logo_description"
-msgstr ""
-
-#: app/controllers/admin/images_controller.rb:22
-msgid "Admin::ImageController|title_logo_description"
-msgstr ""
-
 #: app/helpers/admin/application_helper.rb:25
 msgid "Admin::ImagesController"
 msgstr ""
@@ -198,49 +182,66 @@ msgstr ""
 msgid "Admin::ImagesController|"
 msgstr ""
 
-#: app/controllers/admin/images_controller.rb:27
-#: app/views/admin/images/index.html.erb:14
+#: app/controllers/admin/images_controller.rb:28
+#: app/views/admin/images/index.html.erb:16
 msgid "Admin::ImagesController|background"
 msgstr ""
 
-#: app/controllers/admin/images_controller.rb:25
+#: app/controllers/admin/images_controller.rb:29
+#: app/views/admin/images/index.html.erb:19
+msgid "Admin::ImagesController|background_description"
+msgstr ""
+
+#: app/controllers/admin/images_controller.rb:26
 msgid "Admin::ImagesController|footer_logo"
 msgstr ""
 
-#: app/controllers/admin/images_controller.rb:23
+#: app/controllers/admin/images_controller.rb:27
+msgid "Admin::ImagesController|footer_logo_description"
+msgstr ""
+
+#: app/controllers/admin/images_controller.rb:24
 msgid "Admin::ImagesController|header_logo"
 msgstr ""
 
-#: app/controllers/admin/images_controller.rb:21
+#: app/controllers/admin/images_controller.rb:25
+msgid "Admin::ImagesController|header_logo_description"
+msgstr ""
+
+#: app/controllers/admin/images_controller.rb:22
 msgid "Admin::ImagesController|title_logo"
+msgstr ""
+
+#: app/controllers/admin/images_controller.rb:23
+msgid "Admin::ImagesController|title_logo_description"
 msgstr ""
 
 #: app/models/admin/openid_identifier.rb:17
 msgid "Admin::OpenidIdentifier|Url"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:24
 #: app/controllers/admin/settings_controller.rb:20
+#: app/helpers/admin/application_helper.rb:24
 msgid "Admin::SettingsController|feed"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:22
 #: app/controllers/admin/settings_controller.rb:17
+#: app/helpers/admin/application_helper.rb:22
 msgid "Admin::SettingsController|literal"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:23
 #: app/controllers/admin/settings_controller.rb:18
+#: app/helpers/admin/application_helper.rb:23
 msgid "Admin::SettingsController|mail"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:20
 #: app/controllers/admin/settings_controller.rb:21
+#: app/helpers/admin/application_helper.rb:20
 msgid "Admin::SettingsController|main"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:27
 #: app/controllers/admin/settings_controller.rb:19
+#: app/helpers/admin/application_helper.rb:27
 msgid "Admin::SettingsController|other"
 msgstr ""
 
@@ -664,16 +665,16 @@ msgstr ""
 msgid "Are you sure destroing with nest comments?"
 msgstr ""
 
-#: app/views/admin/openid_identifiers/index.html.erb:14
-#: app/views/admin/bookmark_comments/index.html.erb:13
-#: app/views/admin/bookmarks/index.html.erb:15
-#: app/views/admin/groups/index.html.erb:15
-#: app/views/admin/board_entries/index.html.erb:14
-#: app/views/admin/group_participations/index.html.erb:13
 #: app/views/admin/share_files/index.html.erb:15
+#: app/views/admin/bookmark_comments/index.html.erb:13
+#: app/views/admin/board_entries/index.html.erb:14
 #: app/views/admin/user_uids/index.html.erb:14
 #: app/views/admin/user_profiles/index.html.erb:14
 #: app/views/admin/users/index.html.erb:14
+#: app/views/admin/group_participations/index.html.erb:13
+#: app/views/admin/groups/index.html.erb:15
+#: app/views/admin/openid_identifiers/index.html.erb:14
+#: app/views/admin/bookmarks/index.html.erb:15
 msgid "Are you sure?"
 msgstr ""
 
@@ -906,19 +907,19 @@ msgstr ""
 msgid "Chain|紹介文"
 msgstr ""
 
-#: app/views/admin/openid_identifiers/new.html.erb:17
 #: app/views/admin/user_uids/new.html.erb:17
 #: app/views/admin/user_profiles/new.html.erb:15
-#: app/views/admin/users/first.html.erb:32
 #: app/views/admin/users/new.html.erb:12
+#: app/views/admin/users/first.html.erb:32
+#: app/views/admin/openid_identifiers/new.html.erb:17
 msgid "Create"
 msgstr ""
 
-#: app/views/admin/openid_identifiers/new.html.erb:17
 #: app/views/admin/user_uids/new.html.erb:17
 #: app/views/admin/user_profiles/new.html.erb:15
-#: app/views/admin/users/first.html.erb:32
 #: app/views/admin/users/new.html.erb:12
+#: app/views/admin/users/first.html.erb:32
+#: app/views/admin/openid_identifiers/new.html.erb:17
 msgid "Creating..."
 msgstr ""
 
@@ -930,10 +931,10 @@ msgstr ""
 msgid "Destroy"
 msgstr ""
 
+#: app/views/admin/shared/_sortable_table.html.erb:28
 #: app/views/admin/user_uids/show.html.erb:18
 #: app/views/admin/user_profiles/show.html.erb:89
 #: app/views/admin/users/show.html.erb:26
-#: app/views/admin/shared/_sortable_table.html.erb:28
 msgid "Edit"
 msgstr ""
 
@@ -1062,10 +1063,10 @@ msgstr ""
 #: app/controllers/admin/users_controller.rb:49
 #: app/controllers/admin/users_controller.rb:101
 #: app/controllers/admin/users_controller.rb:118
-#: app/views/admin/bookmarks/show.html.erb:19
-#: app/views/admin/groups/show.html.erb:35
 #: app/views/admin/board_entries/show.html.erb:23
-#: app/views/admin/users/import.html.erb:68 lib/admin_module.rb:62
+#: app/views/admin/users/import.html.erb:68
+#: app/views/admin/groups/show.html.erb:35
+#: app/views/admin/bookmarks/show.html.erb:19 lib/admin_module.rb:62
 #: lib/admin_module.rb:74 lib/admin_module.rb:88 lib/admin_module.rb:101
 #: lib/admin_module.rb:157 lib/admin_module.rb:159 lib/admin_module.rb:171
 #: lib/admin_module.rb:173 lib/admin_module.rb:186 lib/admin_module.rb:188
@@ -1155,7 +1156,7 @@ msgstr ""
 msgid "OpenID URLを設定しました。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:137
+#: app/controllers/platform_controller.rb:134
 msgid "OpenIDサーバーが見つかりませんでした。"
 msgstr ""
 
@@ -1341,9 +1342,9 @@ msgstr ""
 msgid "ShareFile|日付"
 msgstr ""
 
+#: app/views/admin/shared/_sortable_table.html.erb:27
 #: app/views/admin/user_uids/edit.html.erb:24
 #: app/views/admin/users/edit.html.erb:16
-#: app/views/admin/shared/_sortable_table.html.erb:27
 msgid "Show"
 msgstr ""
 
@@ -1439,30 +1440,30 @@ msgstr ""
 msgid "Track|Visitor"
 msgstr ""
 
-#: app/views/admin/openid_identifiers/edit.html.erb:16
 #: app/views/admin/user_uids/edit.html.erb:20
 #: app/views/admin/user_profiles/edit.html.erb:11
 #: app/views/admin/users/edit.html.erb:11
+#: app/views/admin/openid_identifiers/edit.html.erb:16
 msgid "Update"
 msgstr ""
 
-#: app/views/admin/openid_identifiers/edit.html.erb:16
 #: app/views/admin/user_uids/edit.html.erb:20
 #: app/views/admin/user_profiles/edit.html.erb:11
 #: app/views/admin/users/edit.html.erb:11
+#: app/views/admin/openid_identifiers/edit.html.erb:16
 msgid "Updating..."
 msgstr ""
 
-#: app/views/admin/images/index.html.erb:9
-#: app/views/admin/images/index.html.erb:15
 #: app/views/admin/users/import.html.erb:11
+#: app/views/admin/images/index.html.erb:10
+#: app/views/admin/images/index.html.erb:18
 msgid "Upload"
 msgstr ""
 
-#: app/views/admin/images/index.html.erb:9
-#: app/views/admin/images/index.html.erb:15
 #: app/views/admin/users/import.html.erb:11
 #: app/views/admin/users/import.html.erb:78
+#: app/views/admin/images/index.html.erb:10
+#: app/views/admin/images/index.html.erb:18
 msgid "Uploading..."
 msgstr ""
 
@@ -1634,7 +1635,7 @@ msgstr ""
 msgid "User|氏名"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:56
+#: app/controllers/platform_controller.rb:55
 msgid "You are now logged out."
 msgstr ""
 
@@ -1681,10 +1682,6 @@ msgstr ""
 
 #: app/models/chain.rb:-
 msgid "chain"
-msgstr ""
-
-#: app/controllers/admin/users_controller.rb:158
-msgid "csvファイル以外はアップロード出来ません。"
 msgstr ""
 
 #: app/models/entry_access.rb:-
@@ -1767,11 +1764,11 @@ msgstr ""
 msgid "track"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:34 app/models/user.rb:-
 #: app/controllers/admin/users_controller.rb:28
 #: app/controllers/admin/users_controller.rb:49
 #: app/controllers/admin/users_controller.rb:101
 #: app/controllers/admin/users_controller.rb:118
+#: app/helpers/admin/application_helper.rb:34 app/models/user.rb:-
 #: app/views/admin/user_uids/index.html.erb:21
 #: app/views/admin/users/import.html.erb:68
 #: app/views/admin/users/index.html.erb:19
@@ -1804,7 +1801,7 @@ msgstr ""
 msgid "user uid"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:138
+#: app/controllers/platform_controller.rb:135
 msgid "このサーバへの認証を確認してください"
 msgstr ""
 
@@ -1817,7 +1814,7 @@ msgstr ""
 msgid "ご指定のユーザは存在しません。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:150
+#: app/controllers/platform_controller.rb:147
 msgid "そのOpenIDは、登録されていません。"
 msgstr ""
 
@@ -1837,7 +1834,7 @@ msgid ""
 "出来ます。例にならって修正して下さい。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:138
+#: app/controllers/platform_controller.rb:135
 msgid "キャンセルされました。"
 msgstr ""
 
@@ -1855,19 +1852,19 @@ msgid ""
 "合でも上書きされますのでご注意下さい。"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:143
+#: app/controllers/admin/application_controller.rb:24
 msgid "ファイルを指定して下さい。"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:148
+#: app/controllers/admin/application_controller.rb:29
 msgid "ファイルサイズが0です。"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:153
-msgid "ファイルサイズが1MBを超えています。"
+#: app/controllers/admin/application_controller.rb:34
+msgid "ファイルサイズが上限を超えています。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:146
+#: app/controllers/platform_controller.rb:143
 msgid "ユーザの登録に失敗しました。"
 msgstr ""
 
@@ -1877,15 +1874,15 @@ msgid ""
 "場合は更新されます。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:47
+#: app/controllers/platform_controller.rb:46
 msgid "ログインに失敗しました。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:150
+#: app/controllers/platform_controller.rb:147
 msgid "ログイン後管理画面でOpenID URLを登録後ログインしてください。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:47
+#: app/controllers/platform_controller.rb:46
 msgid "下部に記載されているお問い合わせ先にご連絡下さい。"
 msgstr ""
 
@@ -1894,8 +1891,8 @@ msgid "不正なパラメタです。"
 msgstr ""
 
 #: app/controllers/admin/documents_controller.rb:53
+#: app/controllers/admin/images_controller.rb:46
 #: app/controllers/admin/settings_controller.rb:47
-#: app/controllers/admin/images_controller.rb:37
 msgid "保存しました。"
 msgstr ""
 
@@ -1909,7 +1906,7 @@ msgstr ""
 msgid "全て既定値に戻す"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:140
+#: app/controllers/platform_controller.rb:137
 msgid "内部エラーが発生しました。"
 msgstr ""
 
@@ -1927,7 +1924,7 @@ msgstr ""
 msgid "対象のコンテンツを開くことが出来ませんでした。"
 msgstr ""
 
-#: app/controllers/admin/images_controller.rb:40
+#: app/controllers/admin/images_controller.rb:49
 msgid ""
 "対象の画像を保存することが出来ませんでした。再度お試し頂くか管理者にお問い合"
 "わせ下さい。"
@@ -1935,8 +1932,12 @@ msgstr ""
 
 #: app/controllers/admin/documents_controller.rb:44
 #: app/controllers/admin/documents_controller.rb:59
-#: app/controllers/admin/images_controller.rb:43
+#: app/controllers/admin/images_controller.rb:52
 msgid "想定外のエラーが発生しました。管理者にお問い合わせ下さい。"
+msgstr ""
+
+#: app/controllers/admin/application_controller.rb:40
+msgid "指定された形式のファイルはアップロード出来ません。"
 msgstr ""
 
 #: app/controllers/admin/users_controller.rb:63
@@ -1947,7 +1948,7 @@ msgstr ""
 msgid "正しいCSVファイルの例"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:137
+#: app/controllers/platform_controller.rb:134
 msgid "正しいOpenID URLを入力してください。"
 msgstr ""
 
@@ -1956,11 +1957,11 @@ msgstr ""
 msgid "登録しました。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:140
+#: app/controllers/platform_controller.rb:137
 msgid "管理者に連絡してください。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:146
+#: app/controllers/platform_controller.rb:143
 msgid "管理者に連絡してください。<br/>%{msg}"
 msgstr ""
 
@@ -1968,7 +1969,7 @@ msgstr ""
 msgid "管理者ユーザの作成"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:139
+#: app/controllers/platform_controller.rb:136
 msgid "認証に失敗しました。"
 msgstr ""
 
