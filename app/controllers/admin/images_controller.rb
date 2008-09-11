@@ -16,9 +16,9 @@
 class Admin::ImagesController < Admin::ApplicationController
   before_filter :check_params, :only => [:update]
 
-  PNG_IMAGE_NAMES = %w(title_logo header_logo footer_logo)
+  PNG_IMAGE_NAMES = %w(title_logo header_logo footer_logo).freeze
   BACKGROUND_IMAGE_NAMES = %w(background001 background002 background003 background004 background005 
-                              background006 background007 background008 background009 background010)
+                              background006 background007 background008 background009 background010).freeze
   N_('Admin::ImagesController|title_logo')
   N_('Admin::ImageController|title_logo_description')
   N_('Admin::ImagesController|header_logo')
@@ -33,6 +33,9 @@ class Admin::ImagesController < Admin::ApplicationController
   end
 
   def update
+    if request.get?
+      return redirect_to(:action => :index)
+    end
     @topics = [_(self.class.name.to_s)]
     image_file = params[params[:target].to_sym]
     unless valid_file?(image_file, :max_size => 300.kilobyte, :content_types => content_types)
@@ -69,7 +72,7 @@ class Admin::ImagesController < Admin::ApplicationController
     if params[:target].blank?
       redirect_to :action => :index
     end
-    unless PNG_IMAGE_NAMES.concat(BACKGROUND_IMAGE_NAMES).include? params[:target]
+    unless (PNG_IMAGE_NAMES + BACKGROUND_IMAGE_NAMES).include? params[:target]
       redirect_to "#{root_url}404.html"
     end
   end
