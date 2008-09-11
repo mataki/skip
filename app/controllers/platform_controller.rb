@@ -36,15 +36,12 @@ class PlatformController < ApplicationController
     if using_open_id?
       login_with_open_id
     else
-      if params[:login]
-        if user = User.auth(params[:login][:key], params[:login][:password])
+      if params[:login] and user = User.auth(params[:login][:key], params[:login][:password])
+        reset_session
+        session[:user_code] = user.code
 
-          reset_session
-          session[:user_code] = user.code
-
-          return_to = params[:return_to] ? URI.encode(params[:return_to]) : nil
-          redirect_to (return_to and !return_to.empty?) ? return_to : root_url
-        end
+        return_to = params[:return_to] ? URI.encode(params[:return_to]) : nil
+        redirect_to (return_to and !return_to.empty?) ? return_to : root_url
       else
         flash[:auth_fail_message] ||={ "message" => _("ログインに失敗しました。"), "detail" => _("下部に記載されているお問い合わせ先にご連絡下さい。")}
         redirect_to :back

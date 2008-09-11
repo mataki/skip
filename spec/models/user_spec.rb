@@ -92,7 +92,7 @@ end
 describe User, ".create_with_identity_url" do
   before do
     @identity_url = "http://test.com/identity"
-    @params = { :code => 'hoge', :name => "ほげ ふが" }
+    @params = { :code => 'hoge', :name => "ほげ ふが", :email => 'hoge@hoge.com' }
     lambda do
       @user = User.create_with_identity_url(@identity_url, @params)
     end.should change(User, :count).by(1)

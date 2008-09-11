@@ -59,7 +59,7 @@ describe PlatformController, "ログイン時にOpenIdのアカウントが渡�
       user_profile = stub_model(UserProfile, :email => 'hoge@hoge.jp', :section => '')
       @user.stub!(:user_profile).and_return(user_profile)
       @openid_identifier = stub_model(OpenidIdentifier, :url => @identity_url)
-      @openid_identifier.stub!(:user).and_return(@user)
+      @openid_identifier.stub!(:user_with_unused).and_return(@user)
     end
 
     describe "ユーザが登録済みの場合" do
@@ -103,7 +103,7 @@ describe PlatformController, "ログイン時にOpenIdのアカウントが渡�
         describe "作成が成功する場合" do
           before do
             @user.should_receive(:valid?).and_return(true)
-            User.should_receive(:create_with_identity_url).with(@identity_url, { :code => @identity_url.split("/").last, :name => 'ほげ ふが', :section => '経理', :email => 'hoge@hoge.jp' }).and_return(@user)
+            User.should_receive(:create_with_identity_url).with(@identity_url, { :code => @identity_url.split("/").last, :name => 'ほげ ふが', :email => 'hoge@hoge.jp' }).and_return(@user)
             post :login, :openid_url => @identity_url
           end
           it "Userを新規作成すること" do
