@@ -8,7 +8,8 @@
       <label for="<%= target %>"><%= _('Admin::ImagesController|' + target) %></label>
       <%= file_field_tag target, :size => 60 %>
       <%= submit_tag _('Upload'), :disable_with => _('Uploading...') %>
-      <%= help_icon_tag :content => _("Admin::ImagesController|#{target}_description") %>
+      <%= help_icon_tag :content => _("Admin::ImagesController|#{target}_description") %> |
+      <%= link_to _('Preview'), "/custom/images/#{target}.png", :popup => true %>
     <% end -%>
   <% end -%>
   <% Admin::ImagesController::BACKGROUND_IMAGE_NAMES.each_with_index do |target, index| -%>
@@ -16,7 +17,8 @@
       <label for="<%= target %>"><%= _('Admin::ImagesController|background') + (index + 1).to_s %></label>
       <%= file_field_tag target, :size => 60 %>
       <%= submit_tag _('Upload'), :disable_with => _('Uploading...') %>
-      <%= help_icon_tag :content => _("Admin::ImagesController|background_description") %>
+      <%= help_icon_tag :content => _("Admin::ImagesController|background_description") %> |
+      <%= link_to _('Preview'), "/custom/images/titles/#{target}.jpg", :popup => true %>
     <% end -%>
   <% end -%>
 </div>

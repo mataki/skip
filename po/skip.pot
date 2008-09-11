@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-09-11 11:54+0900\n"
+"POT-Creation-Date: 2008-09-11 13:21+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -183,12 +183,12 @@ msgid "Admin::ImagesController|"
 msgstr ""
 
 #: app/controllers/admin/images_controller.rb:28
-#: app/views/admin/images/index.html.erb:16
+#: app/views/admin/images/index.html.erb:17
 msgid "Admin::ImagesController|background"
 msgstr ""
 
 #: app/controllers/admin/images_controller.rb:29
-#: app/views/admin/images/index.html.erb:19
+#: app/views/admin/images/index.html.erb:20
 msgid "Admin::ImagesController|background_description"
 msgstr ""
 
@@ -1216,6 +1216,11 @@ msgstr ""
 msgid "PopularBookmark|Date"
 msgstr ""
 
+#: app/views/admin/images/index.html.erb:12
+#: app/views/admin/images/index.html.erb:21
+msgid "Preview"
+msgstr ""
+
 #: app/models/ranking.rb:-
 msgid "Ranking|Amount"
 msgstr ""
@@ -1456,14 +1461,14 @@ msgstr ""
 
 #: app/views/admin/users/import.html.erb:11
 #: app/views/admin/images/index.html.erb:10
-#: app/views/admin/images/index.html.erb:18
+#: app/views/admin/images/index.html.erb:19
 msgid "Upload"
 msgstr ""
 
 #: app/views/admin/users/import.html.erb:11
 #: app/views/admin/users/import.html.erb:78
 #: app/views/admin/images/index.html.erb:10
-#: app/views/admin/images/index.html.erb:18
+#: app/views/admin/images/index.html.erb:19
 msgid "Uploading..."
 msgstr ""
 
@@ -1892,8 +1897,12 @@ msgstr ""
 
 #: app/controllers/admin/documents_controller.rb:53
 #: app/controllers/admin/images_controller.rb:46
-#: app/controllers/admin/settings_controller.rb:47
+#: app/controllers/admin/settings_controller.rb:41
 msgid "保存しました。"
+msgstr ""
+
+#: app/controllers/admin/settings_controller.rb:43
+msgid "保存に失敗している項目があります。"
 msgstr ""
 
 #: app/views/admin/settings/index.html.erb:4
