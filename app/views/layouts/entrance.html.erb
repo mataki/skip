@@ -38,7 +38,7 @@ div#main_navi div.next_arrow {
 
 <body>
 <div id="header">
-  <div id="logo" style="align: top; margin: 3px 0 0 5px;"><%= link_to image_tag('/custom/images/header_logo.png', :alt => Admin::Setting.abbr_app_title, :height => "45"), :controller => :platform %></div>
+  <div id="logo" style="align: top; margin: 3px 0 0 5px;"><%= link_to image_tag("#{controller.request.relative_url_root}/custom/images/header_logo.png", :alt => Admin::Setting.abbr_app_title, :height => "45"), :controller => :platform %></div>
 </div>
 
 <div id="top">

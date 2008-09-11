@@ -115,7 +115,7 @@ span.blue { color: blue; }
 </head>
 
 <body>
-<div id="logo"><%= link_to(image_tag("/custom/images/title_logo.png", :alt => Admin::Setting.app_title)) -%></div>
+<div id="logo"><%= link_to(image_tag("#{controller.request.relative_url_root}/custom/images/title_logo.png", :alt => Admin::Setting.app_title)) -%></div>
 
 <div id="top">
   <div id="menu_btn"></div>

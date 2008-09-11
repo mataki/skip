@@ -9,7 +9,7 @@
       <%= file_field_tag target, :size => 60 %>
       <%= submit_tag _('Upload'), :disable_with => _('Uploading...') %>
       <%= help_icon_tag :content => _("Admin::ImagesController|#{target}_description") %> |
-      <%= link_to _('Preview'), "/custom/images/#{target}.png", :popup => true %>
+      <%= link_to _('Preview'), "#{controller.request.relative_url_root}/custom/images/#{target}.png", :popup => true %>
     <% end -%>
   <% end -%>
   <% Admin::ImagesController::BACKGROUND_IMAGE_NAMES.each_with_index do |target, index| -%>
@@ -18,7 +18,7 @@
       <%= file_field_tag target, :size => 60 %>
       <%= submit_tag _('Upload'), :disable_with => _('Uploading...') %>
       <%= help_icon_tag :content => _("Admin::ImagesController|background_description") %> |
-      <%= link_to _('Preview'), "/custom/images/titles/#{target}.jpg", :popup => true %>
+      <%= link_to _('Preview'), "#{controller.request.relative_url_root}/custom/images/titles/#{target}.jpg", :popup => true %>
     <% end -%>
   <% end -%>
 </div>
