@@ -29,6 +29,10 @@ class OpenidIdentifier < ActiveRecord::Base
     self.url = normalize_ident_url
   end
 
+  def user_with_unused
+    User.find_without_retired_skip(:first, :conditions => {:id => user_id})
+  end
+
 private
   def normalize_ident_url
     OpenIdAuthentication.normalize_url(url) unless url.blank?

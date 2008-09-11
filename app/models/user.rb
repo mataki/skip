@@ -47,12 +47,8 @@ class User < ActiveRecord::Base
   class << self
     HUMANIZED_ATTRIBUTE_KEY_NAMES = {
       "uid" => "ニックネーム",
-      "email" => "メールアドレス",
       "code" => Admin::Setting.login_account,
       "name" => "氏名",
-      "section" => "部門",
-      "extension" => "内線番号",
-      "introduction" => "自己紹介"
     }
     def human_attribute_name(attribute_key_name)
       HUMANIZED_ATTRIBUTE_KEY_NAMES[attribute_key_name] || super
@@ -85,9 +81,11 @@ class User < ActiveRecord::Base
     code = params.delete(:code)
     password = encrypt(params[:code])
 
-    user = new(params.merge(:password => password, :password_confirmation => password))
+    user = new(params.slice(:name).merge(:password => password, :password_confirmation => password))
     user.user_uids << UserUid.new(:uid => code, :uid_type => 'MASTER')
+    user.user_profile = UserProfile.new(params.slice(:email).merge(:disclosure => false))
     user.openid_identifiers << OpenidIdentifier.new(:url => identity_url)
+    user.status = 'UNUSED'
 
     user.save
     user

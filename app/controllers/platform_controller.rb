@@ -36,13 +36,15 @@ class PlatformController < ApplicationController
     if using_open_id?
       login_with_open_id
     else
-      if user = User.auth(params[:login][:key], params[:login][:password])
+      if params[:login]
+        if user = User.auth(params[:login][:key], params[:login][:password])
 
-        reset_session
-        session[:user_code] = user.code
+          reset_session
+          session[:user_code] = user.code
 
-        return_to = params[:return_to] ? URI.encode(params[:return_to]) : nil
-        redirect_to (return_to and !return_to.empty?) ? return_to : root_url
+          return_to = params[:return_to] ? URI.encode(params[:return_to]) : nil
+          redirect_to (return_to and !return_to.empty?) ? return_to : root_url
+        end
       else
         flash[:auth_fail_message] ||={ "message" => _("ログインに失敗しました。"), "detail" => _("下部に記載されているお問い合わせ先にご連絡下さい。")}
         redirect_to :back
@@ -76,7 +78,7 @@ class PlatformController < ApplicationController
         end
         reset_session
 
-        user = identifier.user
+        user = identifier.user_with_unused
         session[:user_code] = user.code
 
         redirect_to_back_or_root
@@ -91,7 +93,6 @@ class PlatformController < ApplicationController
   def add_simple_registration_fields(open_id_request, fields)
     axreq = OpenID::AX::FetchRequest.new
     requested_attrs = [['http://axschema.org/namePerson', 'fullname'],
-                       ['http://axschema.org/company/title', 'job_title'],
                        ['http://axschema.org/contact/email', 'email']]
     requested_attrs.each { |a| axreq.add(OpenID::AX::AttrInfo.new(a[0], a[1], a[2] || false, a[3] || 1)) }
     open_id_request.add_extension(axreq)
@@ -123,7 +124,6 @@ class PlatformController < ApplicationController
 
   def create_user_params identity_url, registration
     mappings = {'http://axschema.org/namePerson' => 'name',
-      'http://axschema.org/company/title' => 'section',
       'http://axschema.org/contact/email' => 'email' }
     user_attribute = {:code => identity_url.split("/").last}
     mappings.each do |url, column|
