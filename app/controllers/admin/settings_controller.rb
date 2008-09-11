@@ -27,14 +27,22 @@ class Admin::SettingsController < Admin::ApplicationController
 
   def update_all
     settings = (params[:settings] || {}).dup.symbolize_keys
-    settings.each do |name, value|
+    objects = settings.map do |name, value|
       # remove blank values in array settings
       value.delete_if {|v| v.blank? } if value.is_a?(Array)
       if [:antenna_default_group, :mypage_feed_settings].include? name
         value = value.values
       end
-      Admin::Setting[name] = value
+      # Admin::Setting[name] = value と評価すると value の値がmapに収納されてしまうので
+      Admin::Setting.[]=(name,value)
     end
+
+    if objects.all? { |o| o.errors.empty? }
+      flash[:notice] = _('保存しました。')
+    else
+      flash[:error] = _('保存に失敗している項目があります。')
+    end
+
     if params[:tab] == 'mail'
       ActionMailer::Base.smtp_settings = {
         :address => Admin::Setting.smtp_settings_address,
@@ -44,7 +52,7 @@ class Admin::SettingsController < Admin::ApplicationController
         :password => Admin::Setting.smtp_settings_password,
         :authentication => Admin::Setting.smtp_settings_authentication }
     end
-    flash[:notice] = _('保存しました。')
+
     redirect_to :action => params[:tab] ? params[:tab] : 'index'
   end
 

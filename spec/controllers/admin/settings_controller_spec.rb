@@ -29,40 +29,55 @@ describe Admin::SettingsController, 'POST /update_all' do
   end
   describe '通常のsettingsパラメタがひとつ送信された場合' do
     before do
-      @key, @value = 'hoge', 'hoge_val'
+      @key, @value, @setting = 'hoge', 'hoge_val', mock_model(Admin::Setting, :errors => [])
+      Admin::Setting.stub!('[]=').once.with(@key.to_sym, @value).and_return(@setting)
     end
     it '保存処理が一回呼ばれる事' do
-      Admin::Setting.should_receive('[]=').once.with(@key.to_sym, @value)
+      Admin::Setting.should_receive('[]=').once.with(@key.to_sym, @value).and_return(@setting)
       post :update_all, 'settings' => {@key => @value}
+    end
+    it "保存に成功したメッセージがflashに格納されていること" do
+      post :update_all, 'settings' => {@key => @value}
+      flash[:notice].should == '保存しました。'
+    end
+  end
+  describe 'バリデーションエラーがあった場合' do
+    before do
+      @key, @value, @setting = 'hoge', 'hoge_val', mock_model(Admin::Setting, :errors => ['error'])
+      Admin::Setting.should_receive('[]=').once.with(@key.to_sym, @value).and_return(@setting)
+      post :update_all, 'settings' => {@key => @value}
+    end
+    it 'flashにエラーがあった旨のメッセージが格納されていること' do
+      flash[:error].should == '保存に失敗している項目があります。'
     end
   end
   describe '通常のsettingsパラメタがふたつ送信された場合' do
     before do
-      @key1, @value1 = 'hoge', 'hoge_val'
-      @key2, @value2 = 'fuga', 'fuga_val'
+      @key1, @value1, @setting1 = 'hoge', 'hoge_val', mock_model(Admin::Setting, :errors => [])
+      @key2, @value2, @setting2 = 'fuga', 'fuga_val', mock_model(Admin::Setting, :errors => [])
     end
     it '保存処理が二回呼ばれる事' do
-      Admin::Setting.should_receive('[]=').once.with(@key1.to_sym, @value1)
-      Admin::Setting.should_receive('[]=').once.with(@key2.to_sym, @value2)
+      Admin::Setting.should_receive('[]=').once.with(@key1.to_sym, @value1).and_return(@setting1)
+      Admin::Setting.should_receive('[]=').once.with(@key2.to_sym, @value2).and_return(@setting2)
       post :update_all, 'settings' => {@key1 => @value1, @key2 => @value2}
     end
   end
   describe '中身が配列のsettingsパラメタが送信された場合' do
     before do
-      @key, @value = 'hoge', ['hoge', '']
+      @key, @value, @setting = 'hoge', ['hoge', ''], mock_model(Admin::Setting, :errors => [])
       @expected_value = ['hoge']
     end
     it '空の値が取り除かれること' do
-      Admin::Setting.should_receive('[]=').once.with(@key.to_sym, @expected_value)
+      Admin::Setting.should_receive('[]=').once.with(@key.to_sym, @expected_value).and_return(@setting)
       post :update_all, 'settings' => {@key => @value}
     end
   end
   describe '中身がHashのsettingsパラメタが送信された場合' do
     before do
-      @key, @value = 'hoge', {'aaa' => 'aaa', 'bbb' => 'bbb'}
+      @key, @value, @setting = 'hoge', {'aaa' => 'aaa', 'bbb' => 'bbb'}, mock_model(Admin::Setting, :errors => [])
     end
     it 'Hashが保存されること' do
-      Admin::Setting.should_receive('[]=').once.with(@key.to_sym, @value)
+      Admin::Setting.should_receive('[]=').once.with(@key.to_sym, @value).and_return(@setting)
       post :update_all, :settings => {@key => @value}
     end
   end

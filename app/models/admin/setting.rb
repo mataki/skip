@@ -113,7 +113,7 @@ class Admin::Setting < ActiveRecord::Base
     setting.value = (v ? v : "")
     @cached_settings[name] = nil
     setting.save
-    setting.value
+    setting
   end
 
   # Defines getter and setter for each setting

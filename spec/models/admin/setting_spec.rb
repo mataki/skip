@@ -52,10 +52,9 @@ describe Admin::Setting, '.[]=' do
     before do
       @setting.should_receive(:save).and_return(true)
       @value = mock('hoge')
-      @setting.should_receive(:value).and_return(@value)
     end
-    it 'Admin::Setting#valueの結果が返却されること' do
-      Admin::Setting.[]=(:hoge, @value).should == @value
+    it 'Admin::Settingのオブジェクトが返却されること' do
+      Admin::Setting.[]=(:hoge, @value).should == @setting
     end
   end
 end
