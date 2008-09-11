@@ -25,7 +25,7 @@
 
 <%= link_to _('Edit'), edit_admin_user_path(@user) %> |
 <%= link_to _('openid identifier'), admin_user_openid_identifiers_path(@user) %> |
-<%= link_to _('user uid'), admin_user_user_uids_path(@user) %>
+<%= link_to(_('Change uid'), {:action => :change_uid, :id => @user}) if @user.user_uids.size > 1 %>
 
 <% end -%>
 

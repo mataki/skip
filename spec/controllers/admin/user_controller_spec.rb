@@ -199,7 +199,7 @@ describe Admin::UsersController, 'POST /import' do
         controller.should_receive(:import!)
         post :import
       end
-      
+
       it { post :import; flash[:notice].should_not be_nil }
       it { post :import; response.should redirect_to(admin_users_path) }
     end
@@ -211,5 +211,49 @@ describe Admin::UsersController, 'POST /import' do
       end
       it { response.should render_template('import') }
     end
+  end
+end
+
+describe Admin::UsersController, "POST #change_uid" do
+  before do
+    admin_login
+
+    @new_uid = "hogehoge"
+
+    @user_uid = stub_model(Admin::UserUid)
+
+    @user_uids = mock('user_uids')
+    @user_uids.stub!(:find).and_return(@user_uid)
+
+    @user = stub_model(Admin::User)
+    @user.stub!(:user_uids).and_return(@user_uids)
+
+    Admin::User.should_receive(:find).and_return(@user)
+  end
+  describe "保存に成功する時" do
+    before do
+      @user_uid.should_receive(:save).and_return(true)
+
+      post :change_uid, :id => 1, :new_uid => @new_uid
+    end
+    it { response.should be_redirect }
+    it { flash[:notice].should_not be_nil }
+  end
+  describe "保存に失敗する時" do
+    before do
+      @user_uid.should_receive(:save).and_return(false)
+
+      post :change_uid, :id => 1, :new_uid => @new_uid
+    end
+    it { response.should render_template('admin/users/change_uid') }
+    it { assigns[:user].should == @user }
+  end
+  describe "ニックネームが見つからない時" do
+    before do
+      @user_uids.should_receive(:find).and_return(nil)
+
+      post :change_uid, :id => 1, :new_uid => @new_uid
+    end
+    it { response.should redirect_to(admin_users_path) }
   end
 end

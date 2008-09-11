@@ -131,6 +131,30 @@ class Admin::UsersController < Admin::ApplicationController
     flash.now[:error] = _('CSVファイルに不正な値が含まれています。')
   end
 
+  def change_uid
+    @user = Admin::User.find(params[:id])
+    @topics = [[_('Listing %{model}') % {:model => _('user')}, admin_users_path],
+               [_('%{model} Show') % {:model => @user.topic_title}, @user],
+               _('Change uid')]
+    if request.get?
+      @user_uid = Admin::UserUid.new
+      return
+    end
+
+    if uid = @user.user_uids.find(:first, :conditions => ['uid_type = ?', UserUid::UID_TYPE[:nickname]])
+      uid.uid = params[:user_uid][:uid]
+      if uid.save
+        flash[:notice] = "変更しました"
+        redirect_to @user
+      else
+        @user_uid = uid
+      end
+    else
+      flash[:notice] = "ニックネームが見つかりませんでした。"
+      redirect_to admin_users_path
+    end
+  end
+
   private
   def valid_activation_code? code
     return false unless code

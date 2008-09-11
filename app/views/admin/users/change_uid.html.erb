@@ -1,0 +1,22 @@
+<%= render :partial => '/admin/contents_left' %>
+<% content_for :topic_path do -%>
+<%= render :partial => '/admin/shared/topic_path' %>
+<% end -%>
+<% content_for :contents_right do -%>
+<div class="box tabular">
+  <% form_for(:user_uid, :url => {:action => :change_uid, :id => @user}) do |f| -%>
+  <%= error_messages_for :user_uid %>
+  <p>
+    <%= label_tag :before_uid, _("before_uid") %>:
+    <%= @user.uid %>
+  </p>
+  <p>
+    <%= f.label :uid, _("new_uid") %>
+    <%= f.text_field :uid %>
+  </p>
+  <p>
+    <%= f.submit _("Update") %>
+  </p>
+  <% end -%>
+</div>
+<% end -%>

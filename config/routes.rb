@@ -35,7 +35,7 @@ ActionController::Routing::Routes.draw do |map|
   map.ranking_data 'ranking_data/:content_type/:year/:month', :controller => 'rankings', :action => 'data', :year => /\d{4}/, :month => /\d{2}/, :conditions => { :method => :get }, :defaults => { :year => '', :month => '' }
 
   map.namespace "admin" do |admin_map|
-    admin_map.root :controller => 'users', :action => 'index'
+    admin_map.root :controller => 'settings', :action => 'index', :tab => 'main'
     admin_map.resources :board_entries do |board_entry|
       board_entry.resources :board_entry_comments
     end
@@ -43,8 +43,7 @@ ActionController::Routing::Routes.draw do |map|
     admin_map.resources :bookmarks do |bookmark|
       bookmark.resources :bookmark_comments
     end
-    admin_map.resources :users, :new => [:import, :import_confirmation, :first] do |user|
-      user.resources :user_uids
+    admin_map.resources :users, :new => [:import, :import_confirmation, :first], :member => [:change_uid] do |user|
       user.resources :openid_identifiers
     end
     admin_map.resources :user_profiles
