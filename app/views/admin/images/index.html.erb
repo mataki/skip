@@ -6,7 +6,7 @@
   <% Admin::ImagesController::PNG_IMAGE_NAMES.each do |target| -%>
     <% form_tag admin_images_update_path(:target => target), :multipart => true, :style => 'display: inline' do -%>
       <label for="<%= target %>"><%= _('Admin::ImagesController|' + target) %></label>
-      <%= file_field_tag target, :size => 60 %>
+      <%= file_field_tag target, :size => 40 %>
       <%= submit_tag _('Upload'), :disable_with => _('Uploading...') %>
     <% end -%>
     <%= help_icon_tag :content => _("Admin::ImagesController|#{target}_description") %> |
@@ -16,7 +16,7 @@
   <% Admin::ImagesController::BACKGROUND_IMAGE_NAMES.each_with_index do |target, index| -%>
     <% form_tag admin_images_update_path(:target => target), :multipart => true, :style => 'display: inline' do -%>
       <label for="<%= target %>"><%= _('Admin::ImagesController|background') + (index + 1).to_s %></label>
-      <%= file_field_tag target, :size => 60 %>
+      <%= file_field_tag target, :size => 40 %>
       <%= submit_tag _('Upload'), :disable_with => _('Uploading...') %>
     <% end -%>
     <%= help_icon_tag :content => _("Admin::ImagesController|background_description") %> |
