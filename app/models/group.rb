@@ -28,7 +28,7 @@ class Group < ActiveRecord::Base
   CATEGORIES_HASH = {}
   DEFAULT_CATEGORY_ID = ''
   CATEGORIES.each do |category|
-    CATEGORIES_HASH[category.key] = category
+    CATEGORIES_HASH[category.code] = category
     DEFAULT_CATEGORY_ID = category.id if category.default
   end
 
@@ -87,7 +87,7 @@ class Group < ActiveRecord::Base
   end
 
   def category_icon_name
-    category_ = CATEGORIES_HASH[group_category.key]
+    category_ = CATEGORIES_HASH[group_category.code]
     [category_.icon, category_.name]
   end
 

@@ -782,7 +782,7 @@ private
     gid_by_category = Group.gid_by_category
     Group::CATEGORIES.each do |category| # 表示順序の制御
       options = { :group_symbols => gid_by_category[category.id], :recent_day => 10, :per_page => 3 }
-      recent_bbs << self.send("find_recent_bbs_#{category.key.downcase}_as_locals", options)
+      recent_bbs << self.send("find_recent_bbs_#{category.code.downcase}_as_locals", options)
     end
 
     #最近のブックマーク
@@ -840,7 +840,7 @@ private
   # 引数：recent_day       = 最近を示す日数（デフォルト10日）
   # 引数：per_page         = １ページの表示数（デフォルト3件）
   Group::CATEGORIES.each do |category|
-    define_method( "find_recent_bbs_#{category.key.downcase}_as_locals" ) do |options|
+    define_method( "find_recent_bbs_#{category.code.downcase}_as_locals" ) do |options|
       options ||= {}
       options[:recent_day] ||= 10
       options[:per_page] ||= 3
@@ -850,8 +850,8 @@ private
 
   # 最新のBBSエントリ一覧partial用オプション生成メソッド
   def recent_bbs_proc category, options
-    title   = "最新の掲示板のエントリ（#{Group::CATEGORIES_HASH[category.key][:name]}）"
-    id_name = "recent_bbs_#{category.key.downcase}"
+    title   = "最新の掲示板のエントリ（#{Group::CATEGORIES_HASH[category.code][:name]}）"
+    id_name = "recent_bbs_#{category.code.downcase}"
     pages_obj, pages = nil, []
 
     find_options = {:exclude_entry_type=>'DIARY', :publication_type => 'public', :recent_day=>options[:recent_day]}

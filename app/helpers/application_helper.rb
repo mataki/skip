@@ -246,7 +246,7 @@ module ApplicationHelper
   end
 
   def get_group_icon(category, options = {:margin => false})
-    options[:alt] = category.key
+    options[:alt] = category.code
     icon_tag(category.icon, options)
   end
 
