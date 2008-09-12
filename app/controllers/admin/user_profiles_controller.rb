@@ -15,4 +15,11 @@
 
 class Admin::UserProfilesController < Admin::ApplicationController
   include AdminModule::AdminRootModule
+
+  def show
+    redirect_to admin_user_profiles_path
+  end
+  undef new
+  undef create
+  undef destroy
 end

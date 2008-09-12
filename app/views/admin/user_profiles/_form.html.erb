@@ -13,11 +13,11 @@
 </p>
 <p>
   <%= form.label :self_introduction %>
-  <%= form.text_field :self_introduction %>
+  <%= form.text_area :self_introduction %>
 </p>
 <p>
   <%= form.label :gender_type %>
-  <%= form.text_field :gender_type %>
+  <%= form.select :gender_type, UserProfile.select_gender_type %>
 </p>
 <p>
   <%= form.label :join_year %>
@@ -33,11 +33,11 @@
 </p>
 <p>
   <%= form.label :blood_type %>
-  <%= form.text_field :blood_type %>
+  <%= form.select :blood_type, UserProfile.select_blood_type %>
 </p>
 <p>
   <%= form.label :hometown %>
-  <%= form.text_field :hometown %>
+  <%= form.select :hometown, UserProfile.select_todouhuken %>
 </p>
 <p>
   <%= form.label :alma_mater %>
@@ -45,7 +45,7 @@
 </p>
 <p>
   <%= form.label :address_1 %>
-  <%= form.text_field :address_1 %>
+  <%= form.select :address_1, UserProfile.select_todouhuken %>
 </p>
 <p>
   <%= form.label :address_2 %>
