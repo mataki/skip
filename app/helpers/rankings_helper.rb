@@ -14,37 +14,84 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 module RankingsHelper
+  def ranking_title contents_type
+    case contents_type
+    when :entry_access
+      "人気ブログランキング(アクセス）"
+    when :entry_comment
+      "人気ブログランキング(コメント）"
+    when :entry_he
+      "人気ブログランキング(#{Admin::Setting.point_button})"
+    when :user_access
+      "人気ユーザランキング"
+    when :user_entry
+      "ブログ投稿数ランキング"
+    when :commentator
+      "コメント投稿数ランキング"
+    else
+      ""
+    end
+  end
+  
   def ranking_caption contents_type
     case contents_type
     when :entry_access
-      "アクセス数が非常に多かったみんなが注目しているブログランキングです。"
+      "みんなによく読まれたブログ/掲示板です(公開範囲が「全公開」のみ)"
     when :entry_comment
-      "活発に意見が交わされたブログランキングです。グループの掲示板は対象外です。"
+      "みんなからコメントが活発に付いたブログです(公開範囲が「全公開」のみ)"
     when :entry_he
-      "たくさん#{Admin::Setting.point_button}を押されたエントリのランキングです。グループの掲示板への投稿も含みます。"
-    when :user_entry
-      "個人のブログ投稿数ランキングです。(秘密日記込)"
+      "みんなから最も#{Admin::Setting.point_button}を貰ったブログ/掲示板です(公開範囲が「全公開」のみ)"
     when :user_access
-      "マイページに訪れた人の統計ランキングです。"
+      "みんなから書いたブログや自身のプロフィールによく訪れてもらったユーザです"
+    when :user_entry
+      "最もブログを投稿したユーザです(公開範囲に関わらず、カウント)"
+    when :commentator
+      "最もコメントを付けたユーザです(公開範囲に関わらず、カウント)"
     else
       ""
     end
   end
 
-  def ranking_title contents_type
+  def ranking_amount_name contents_type
     case contents_type
     when :entry_access
-      "アクセス"
+      "アクセス数"
     when :entry_comment
-      "コメント"
+      "コメント件数"
     when :entry_he
       "#{Admin::Setting.point_button}"
-    when :user_entry
-      "投稿"
     when :user_access
-      "訪問者"
+      "アクセス数"
+    when :user_entry
+      "ブログ件数"
+    when :commentator
+      "コメント件数"
     else
       ""
     end
   end
+
+  def show_title_col? contents_type
+    ranking_data_type(contents_type).to_s == "entry"
+  end
+
+  def ranking_data_type contents_type
+    case contents_type
+    when :entry_access 
+      "entry"
+    when :entry_comment 
+      "entry"
+    when :entry_he
+      "entry"
+    when :user_access
+      "user"
+    when :user_entry
+      "user"
+    when  :commentator
+      "user"
+    else
+      ""
+    end
+  end
+
 end

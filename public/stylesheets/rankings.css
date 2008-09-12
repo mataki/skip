@@ -58,6 +58,9 @@ table.ranking_square th {
   background-color: #f8f8ff;
   text-align: left;
 }
+table.ranking_square th.point {
+  text-align: center;
+}
 table.ranking_square .rank {
   padding: 3px;
   width: 15px;
@@ -78,4 +81,14 @@ table.ranking_square .point {
   padding: 3px 0 3px 0;
   font-size: 12px;
   text-align: center;
+  width: 100px;
 }
+
+#ranking_title {
+  color:#0033CC;
+  font-size:14px;
+  font-weight:bold;
+  margin-left:5px;
+  vertical-align:middle;
+}
+

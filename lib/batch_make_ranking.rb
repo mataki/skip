@@ -15,73 +15,130 @@
 
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 
+# 1日分のランキング元データを生成
+# 送信するデータは、今日のスナップショット(昨日からの差分ではない)。
+# 表示時には、本バッチで生成したデータを集計するのみ。
 class BatchMakeRanking < BatchBase
 
-   execute_day = "20080715"
+  def self.execute options
 
-#  アクセス数  entry_access_rankings
-   BoardEntryPoint.find(:all, :conditions => ["today_access_count > 0 AND DATE_FORMAT(updated_on,'%Y%m%d') = ?", execute_day]).each do |record|
-     Ranking.create(
-       :contents_type => "entry_access",
-       :extracted_on => execute_day,
-       :url => "#{ENV['SKIP_URL']}/page/#{record.board_entry.id}",
-       :title => record.board_entry.title,
-       :author => record.board_entry.user.name,
-       :author_url => "#{ENV['SKIP_URL']}/user/#{record.board_entry.user.nickname}",
-       :amount => record.access_count
-     )
-   end
+    unless @@target_day = options[:exec_day]
+      @@target_day = Date.today -1
+    end 
 
-#  コメント数  entry_comment_rankings
-   BoardEntry.find(:all, :conditions => ["board_entry_comments_count > 0 and date_format(updated_on,'%y%m%d') = ?", execute_day]).each do |record|
-     ranking.create(
-       :url => "#{ENV['skip_url']}/page/#{record.id}",
-       :contents_type => "entry_comment",
-       :title => record.title,
-       :author => record.user.name,
-       :author_url => "#{ENV['skip_url']}/user/#{record.user.get_uid}",
-       :extracted_on => execute_day,
-       :amount => record.board_entry_comments_count
-     )
-   end
+    begin
+      ActiveRecord::Base.transaction do
+        # アクセス数
+        BoardEntryPoint.find(:all, :conditions => make_conditions("today_access_count > 0")).each do |entrypoint|
+          entry = entrypoint.board_entry
+          if published? entry
+            create_ranking_by_entry entry, entrypoint.access_count, "entry_access"
+          end
+        end
 
-#  へー  entry_he_rankings
-   BoardEntryPoint.find(:all, :conditions => ["point > 0 AND DATE_FORMAT(updated_on,'%Y%m%d') = ?", execute_day]).each do |record|
-     Ranking.create(
-       :url => "#{ENV['SKIP_URL']}/page/#{record.board_entry.id}", 
-       :contents_type => "entry_he",
-       :title => record.board_entry.title,
-       :author => record.board_entry.user_id,
-       :author_url => "#{ENV['SKIP_URL']}/user/#{record.board_entry.user.get_uid}",
-       :extracted_on => execute_day,
-       :amount => record.point
-     )
-   end
+        # へー
+        BoardEntryPoint.find(:all, :conditions => make_conditions("point > 0")).each do |entrypoint|
+          entry = entrypoint.board_entry 
+          if published? entry
+            create_ranking_by_entry entry, entrypoint.point, "entry_he"
+          end
+        end
 
-#    投稿数 entry_post_rankings
-   BoardEntry.find(:all, :select =>"user_id, count(*) as entry_count", :conditions => ["entry_type = 'DIARY' AND DATE_FORMAT(updated_on,'%Y%m%d') = ?", execute_day], :group => "user_id").each do |record|
-     Ranking.create(
-       :url => "#{ENV['SKIP_URL']}/user/#{record.user.get_uid}",
-       :contents_type => "user_entry",
-         :title => record.user.name,
-         :author => "",
-         :author_url => "",
-         :extracted_on => execute_day,
-         :amount => record.entry_count
-     )
-   end
+        # コメント数
+        BoardEntry.find(:all, :conditions => make_conditions("board_entry_comments_count > 0")).each do |entry|
+          if published? entry
+            create_ranking_by_entry entry, entry.board_entry_comments_count, "entry_comment"
+          end
+        end
 
-#  訪問者数 user_access_rankings
-   UserAccess.find(:all, :conditions => ["access_count > 0 AND DATE_FORMAT(updated_on,'%Y%m%d') = ?", execute_day]).each do |record|
-     Ranking.create(
-       :url => "#{ENV['SKIP_URL']}/user/#{record.user.get_uid}",
-       :contents_type => "user_access",
-         :title => record.user.name,
-         :author => "",
-         :author_url => "",
-         :extracted_on => execute_day,
-         :amount => record.access_count
-     )
-   end
+        # 投稿数
+        BoardEntry.find(:all, :conditions => make_conditions("entry_type = 'DIARY'"), 
+                        :select => "user_id, count(*) as entry_count", 
+                        :group => "user_id").each do |record|
+          user = User.find(record.user_id) 
+          create_ranking_by_user user, record.entry_count, "user_entry" 
+        end
 
+        # 訪問者数
+        UserAccess.find(:all, :conditions => make_conditions("access_count > 0")).each do |access|
+          user = access.user
+          create_ranking_by_user user, access.access_count, "user_access"
+        end
+
+        # コメンテータ
+        BoardEntryComment.find(:all, :conditions => make_conditions(""), 
+                               :select => "user_id, count(*) as comment_count", 
+                               :group => "user_id").each do |record|
+          user = User.find(record.user_id)
+          create_ranking_by_user user, record.comment_count, "commentator"
+        end
+      end
+    rescue ActiveRecord::RecordInvalid,
+      ActiveRecord::RecordNotSaved => e
+      e.backtrace.each { |line| log_error line}
+    end
+  end
+
+private
+  def self.make_conditions condition
+    where_str = "DATE_FORMAT(updated_on,'%Y%m%d') = ? "
+    unless condition == ""
+      where_str << " AND " + condition
+    end
+    [where_str, @@target_day.strftime('%Y%m%d')]
+  end
+
+  def self.published? entry
+    entry.entry_publications.any?{|publication| publication.symbol == Symbol::SYSTEM_ALL_USER }
+  end
+
+  def self.create_ranking url, title, author, author_url, amount, contents_type
+    Ranking.create!(
+      :url => url,
+      :title => title,
+      :author => author,
+      :author_url => author_url,
+      :extracted_on => @@target_day,
+      :amount => amount,
+      :contents_type => contents_type
+    )
+  end
+
+  def self.create_ranking_by_entry entry, amount, contents_type
+    create_ranking page_url(entry.id), entry.title, entry.user.name, 
+      user_url(entry.user.uid), amount, contents_type
+  end
+
+  def self.create_ranking_by_user user, amount, contents_type
+    create_ranking user_url(user.uid), user.name, user.name,
+      user_url(user.uid), amount, contents_type
+  end
+
+  def self.user_url str
+   ENV['SKIP_URL'] + "/user/" + str.to_s 
+  end
+
+  def self.page_url str
+   ENV['SKIP_URL'] + "/page/" + str.to_s
+  end
 end
+
+
+# 引数は、シェルからの実行用。集計対象日を'YYYYMMDD'形式で渡せる。
+# cronからの日次実行時には、引数は不要。
+
+def convert_date str
+  Date.new(str[0,4].to_i, str[4,2].to_i, str[6,2].to_i)
+end
+
+from_day = ARGV[0]
+to_day   = ARGV[1]
+
+unless to_day 
+  BatchMakeRanking.execution({ :exec_day => convert_date(from_day)}) 
+else
+  (convert_date(from_day)..convert_date(to_day)).each do |exec_date|
+    BatchMakeRanking.execution({ :exec_day => exec_date}) 
+  end 
+end
+

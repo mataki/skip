@@ -14,48 +14,32 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Ranking < ActiveRecord::Base
+ 
+  validates_uniqueness_of :url, :scope => [:extracted_on, :contents_type]
+
   def self.monthly(contents_type, year, month)
     sql = <<-SQL
-      select
-        rankings.url,
-        rankings.title,
-        rankings.author,
-        rankings.author_url,
-        rankings. extracted_on,
-        coalesce(rankings.amount - previous_rankings.amount, rankings.amount) as amount,
-        rankings.contents_type
-      from (
-        select rankings.* 
-        from (
-          select url, max(contents_type) as contents_type, max(extracted_on) as extracted_on 
-          from rankings 
-          where rankings.contents_type = :contents_type
-            and rankings.extracted_on between :beginning_of_month and :end_of_month
-          group by url
-        ) as recentry_rankings 
-        left outer join rankings 
-          on recentry_rankings.url = rankings.url 
-          and recentry_rankings.contents_type = rankings.contents_type 
-          and recentry_rankings.extracted_on = rankings.extracted_on 
-      ) as rankings 
-      left outer join (
-        select rankings.* 
-        from (
-          select url, max(contents_type) as contents_type, max(extracted_on) as extracted_on 
-          from rankings 
-          where rankings.contents_type = :contents_type
-            and rankings.extracted_on <= :end_of_month_ago_1_month
-          group by url
-        ) as recentry_rankings 
-        left outer join rankings 
-          on recentry_rankings.url = rankings.url 
-          and recentry_rankings.contents_type = rankings.contents_type 
-          and recentry_rankings.extracted_on = rankings.extracted_on 
-      ) as previous_rankings
-        on rankings.url = previous_rankings.url 
-        and rankings.contents_type = previous_rankings.contents_type
-      order by amount desc
-      limit 10
+      SELECT 
+        recent.url, recent.title, recent.author, recent.author_url, recent. extracted_on,
+        COALESCE(recent.amount - previous.amount, recent.amount) AS amount,
+        recent.contents_type
+      FROM (
+          SELECT url, title, author, author_url, MAX(extracted_on) AS extracted_on, MAX(amount) AS amount, contents_type
+          FROM rankings 
+          WHERE rankings.contents_type = :contents_type
+            AND rankings.extracted_on BETWEEN :beginning_of_month AND :end_of_month
+          GROUP BY url
+        ) AS recent 
+      LEFT OUTER JOIN (
+          SELECT url, title, author, author_url, MAX(extracted_on) AS extracted_on, MAX(amount) AS amount, contents_type
+          FROM rankings 
+          WHERE rankings.contents_type = :contents_type
+            AND rankings.extracted_on <= :end_of_month_ago_1_month 
+          GROUP BY url
+      ) AS previous
+        ON recent.url = previous.url 
+      ORDER BY amount DESC
+      LIMIT 10
     SQL
     time = Time.local(year, month)
     Ranking.find_by_sql([sql, { :contents_type => contents_type.to_s,
@@ -65,21 +49,8 @@ class Ranking < ActiveRecord::Base
   end
 
   def self.total(contents_type)
-    sql = <<-SQL
-      select rankings.* 
-      from (
-        select url, max(contents_type) as contents_type, max(extracted_on) as extracted_on 
-        from rankings 
-        where rankings.contents_type = :contents_type
-        group by url
-      ) as recentry_rankings 
-      left outer join rankings 
-        on recentry_rankings.url = rankings.url 
-        and recentry_rankings.contents_type = rankings.contents_type 
-        and recentry_rankings.extracted_on = rankings.extracted_on 
-      order by amount desc
-      limit 10
-    SQL
-    Ranking.find_by_sql([sql, { :contents_type => contents_type.to_s }])
+    Ranking.find :all, :conditions => ["contents_type = ? ", contents_type.to_s ],
+      :select => "url, title, author, author_url, MAX(extracted_on) AS extracted_on, MAX(amount) AS amount, contents_type",
+      :limit => 10, :group => "url", :order => "amount DESC" 
   end
 end

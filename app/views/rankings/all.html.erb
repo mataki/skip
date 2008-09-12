@@ -1,8 +1,13 @@
-<h1>総合ランキング</h1>
+<%= Admin::Setting.abbr_app_title %>の総合ランキングです。 ( 対象期間：サイト開設～昨日まで。日次で更新しています）<br/>
+<br />
+<hr />
+<br />
+<h1 id="ranking_title"><%= icon_tag 'chart_bar' %>総合ランキング</h1>
+<br />
 <%= render :partial => 'list' %>
 <script type="text/javascript">
 $j(function() {
-    var contents_types = ['entry_access', 'entry_comment', 'entry_he', 'user_entry', 'user_access'];
+    var contents_types = ['entry_access', 'entry_comment', 'entry_he', 'user_entry', 'user_access', 'commentator'];
     var loadRanking = function(){
         for( var i = 0; i < contents_types.length; i++) 
             getRanking(contents_types[i]);

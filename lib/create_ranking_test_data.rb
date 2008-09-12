@@ -18,7 +18,7 @@ end
 ARGV[1] = 10 unless ARGV[1]
 
 start_time = Time.now
-%w(entry_access entry_comment entry_he user_entry user_access).each do |contents_type|
+%w(entry_access entry_comment entry_he user_entry user_access commentator).each do |contents_type|
   puts "#{contents_type}のデータを#{ARGV[0]}URL * #{ARGV[1]}日分作成します。"
   ActiveRecord::Base.transaction do
     (1..ARGV[0].to_i).each do |i|
@@ -26,7 +26,7 @@ start_time = Time.now
       url = "http://hoge.jp/#{title}"
       author = SkipFaker.rand_char(4)
       author_url = "http://author.jp/#{author}"
-      date = Date.today.ago(2.year)
+      date = Date.today.ago(3.month)
       amount = 0
       (1..ARGV[1].to_i).each do |j|
         date = date.since(SkipFaker.rand_num(1).to_i.day)

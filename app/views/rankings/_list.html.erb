@@ -1,6 +1,4 @@
-<% %w(entry_access entry_comment entry_he user_entry user_access).each do |contents_type| %>
-  <h2><%= ranking_title contents_type.to_sym -%>数ランキング</h2>
-  <span class="ranking_caption"><%= ranking_caption contents_type.to_sym -%></span>
+<% %w(entry_access entry_comment entry_he user_access user_entry commentator).each do |contents_type| %>
   <div id="<%= contents_type -%>">
   <span class="indicator"><%= skip_image_tag 'indicator.gif' %></span>
   </div>

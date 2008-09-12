@@ -1,10 +1,25 @@
+<%= Admin::Setting.abbr_app_title %>の月間ランキングです。 ( 対象期間：月初～昨日まで。日次で更新しています）<br/>
+<br />
+<%= stylesheet_link_tag 'search' %>
+<div class="search_cond_space">
+  <table class="search_cond_box">
+    <tr>
+      <th>期間</th>
+      <td>
 <%= select_tag 'date_list', options_for_select(@dates.map { |date| [date, date] }, "#{@year}-#{@month}"), :id => 'date_list' -%>
+      </td>
+    </tr>
+  </table>
+</div>
+<br />
 <hr />
-<h1 id="ranking_title"><%= h @year -%>年<%= h @month -%>月のランキング</h1>
+<br />
+<h1 id="ranking_title"><%= icon_tag 'chart_bar' %><%= h @year -%>年<%= h @month -%>月のランキング</h1>
+<br />
 <%= render :partial => 'list' %>
 <script type="text/javascript">
 $j(function() {
-    var contents_types = ['entry_access', 'entry_comment', 'entry_he', 'user_entry', 'user_access'];
+    var contents_types = ['entry_access', 'entry_comment', 'entry_he', 'user_entry', 'user_access', 'commentator'];
     var loadRanking = function(){
         var year = <%= h @year -%>;
         var month = <%= h @month -%>;
