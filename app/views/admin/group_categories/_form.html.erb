@@ -1,0 +1,20 @@
+<%= form.error_messages %>
+<p>
+  <%= form.label :code %>
+  <%= form.text_field :code %>
+</p>
+<p>
+  <%= form.label :name %>
+  <%= form.text_field :name %>
+</p>
+<p>
+  <%= form.label :icon %>
+  <%= form.text_field :icon %>
+</p>
+<p>
+  <%= form.label :description %>
+  <%= form.text_area :description, :rows => 5 %>
+<p>
+  <%= form.label :initial_selected %>
+  <%= form.check_box :initial_selected %>
+</p>

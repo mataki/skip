@@ -9,13 +9,15 @@
   <%= render :partial => '/admin/search_box' %>
   <%= render :partial => '/admin/shared/sortable_table',
              :locals => {
-               :columns => %w[name gid description protected category],
+               :columns => %w[name gid description protected group_category_id],
                :disp_columns_proc => lambda do |object,column|
       case column
       when "protected"
         _("Group|Protected|#{object.protected}")
       when "description"
         object.description[/.{1,100}/]
+      when "group_category_id"
+        object.group_category.name
       else
         object.send(column.to_sym)
       end

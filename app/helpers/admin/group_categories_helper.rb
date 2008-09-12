@@ -13,21 +13,5 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class Admin::Group < Group
-  has_many :group_participations, :dependent => :destroy, :class_name => 'Admin::GroupParticipation'
-  belongs_to :group_category, :class_name => 'Admin::GroupCategory'
-
-  N_('Admin::Group|Name')
-  N_('Admin::Group|Gid')
-  N_('Admin::Group|Description')
-  N_('Admin::Group|Protected')
-  N_('Admin::Group|Group category')
-
-  def self.search_colomns
-    "name like :lqs or gid like :lqs or description like :lqs or group_category_id like :lqs"
-  end
-
-  def topic_title
-    name
-  end
+module Admin::GroupCategoriesHelper
 end

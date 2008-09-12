@@ -1,0 +1,31 @@
+<%= render :partial => '/admin/contents_left' %>
+<% content_for :topic_path do -%>
+<%= render :partial => '/admin/shared/topic_path' %>
+<% end -%>
+<% content_for :contents_right do -%>
+<div class="box">
+  <p>
+    <b><%= label @group_category.class, :code %>:</b>
+    <%=h @group_category.code %>
+  </p>
+  <p>
+    <b><%= label @group_category.class, :name %>:</b>
+    <%=h @group_category.name %>
+  </p>
+  <p>
+    <b><%= label @group_category.class, :icon %>:</b>
+    <%=h @group_category.icon %>
+  </p>
+  <p>
+    <b><%= label @group_category.class, :description %>:</b>
+    <%=h @group_category.description %>
+  </p>
+  <p>
+    <b><%= label @group_category.class, :initial_selected %>:</b>
+    <%=h @group_category.initial_selected %>
+  </p>
+</div>
+
+<%= link_to _('Edit'), edit_admin_group_category_path(@group_category) %>
+<% end -%>
+

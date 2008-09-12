@@ -1,0 +1,17 @@
+<%= render :partial => '/admin/contents_left' %>
+<% content_for :topic_path do -%>
+<%= render :partial => '/admin/shared/topic_path' %>
+<% end -%>
+<% content_for :contents_right do -%>
+
+<div class="box tabular">
+  <% form_for(@group_category) do |f| %>
+  <%= render :partial => f %>
+  <p>
+    <%= f.submit _('Update'), :disable_with => _('Updating...') %>
+  </p>
+  <% end %>
+</div>
+
+<%= link_to _('Show'), @group_category %>
+<% end -%>

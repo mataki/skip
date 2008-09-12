@@ -1,0 +1,21 @@
+
+<%= render :partial => '/admin/contents_left' %>
+<% content_for :topic_path do -%>
+<%= render :partial => '/admin/shared/topic_path' %>
+<% end -%>
+<% content_for :contents_right do -%>
+<div class="box tabular">
+  <%= render :partial => '/admin/search_box' %>
+  <%= render :partial => '/admin/shared/sortable_table',
+             :locals => {
+               :columns => %w[code name icon description initial_selected],
+               :objects => @group_categories,
+               :class_name => 'Admin::GroupCategory',
+               :link_elem => [['Show','admin_group_category_path(object)'],
+                              ['Edit','edit_admin_group_category_path(object)']]
+             }
+  -%>
+</div>
+<br />
+<%= link_to _('New %{model}') % {:model => _('group category')}, new_admin_group_category_path %> |
+<% end -%>
