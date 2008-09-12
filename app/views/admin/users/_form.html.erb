@@ -1,26 +1,39 @@
 <%= error_messages_for :user %>
 <p>
   <%= label Admin::UserUid.name, :uid %>
-  <% if @user.new_record? %>
+  <% if @user.new_record? -%>
   <%= text_field :user_uid, :uid %>
-  <% else %>
+  <% else -%>
   :<%= h @user.code %>
-  <% end %>
-
-</p>
-
-<p>
-  <%= label Admin::UserProfile.name, :email %>
-  <%= text_field :user_profile, :email %>
+  <% end -%>
 </p>
 <p>
   <%= label Admin::User.name, :name %>
   <%= text_field :user, :name %>
 </p>
 <p>
-  <%= label Admin::UserProfile.name, :section %>
-  <%= text_field :user_profile, :section %>
+  <%= label Admin::User.name, :status %>
+  <% if @user.new_record? -%>
+  :<%= _('User|Status|UNUSED') %>
+  <% else -%>
+  <% unless @user.unused? -%>
+  <%= select :user, :status, Admin::User.status_select.delete_if{|select| select.last == 'UNUSED'} %>
+  <% else -%>
+  :<%= _('User|Status|UNUSED') %>
+  <% end -%>
+  <% end %>
 </p>
+<% unless @user.new_record? -%><p>
+  <%= label Admin::User.name, :admin %>
+  <%= check_box :user, :admin %>
+</p>
+<% end -%>
+<% if @user.new_record? -%>
+<p>
+  <%= label Admin::UserProfile.name, :email %>
+  <%= text_field :user_profile, :email %>
+</p>
+<% end -%>
 <p>
   <%= label Admin::User.name, :password %>
   <%= password_field :user, :password %>

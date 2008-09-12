@@ -61,18 +61,32 @@ describe ApplicationController, '#prepare_session' do
     @session.stub!('[]').with(:prepared).and_return(true)
     controller.stub!(:session).and_return(@session)
   end
-  describe 'プロフィール情報が登録されていない場合' do
+  describe 'アクティブなユーザでない場合' do
     before do
       @user = mock_model(User)
       @user.stub!(:active?).and_return(false)
       controller.should_receive(:current_user).and_return(@user)
     end
-    it 'platformにリダイレクトされること' do
-      controller.should_receive(:redirect_to).with({:controller => '/platform', :error => 'no_profile'})
-      controller.prepare_session
+    describe "退職済みユーザの場合" do
+      before do
+        @user.stub!(:retired?).and_return(true)
+      end
+      it "ログアウトにリダイレクトされること" do
+        controller.should_receive(:redirect_to).with({ :controller => '/platform', :action => :logout, :message => 'retired' })
+        controller.prepare_session
+      end
+    end
+    describe "未登録ユーザの場合" do
+      before do
+        @user.stub!(:retired?).and_return(false)
+      end
+      it 'ユーザ登録画面にリダイレクトされること' do
+        controller.should_receive(:redirect_to).with({ :controller => '/portal' })
+        controller.prepare_session
+      end
     end
   end
-  describe 'プロフィール情報が登録されている場合' do
+  describe 'アクティブなユーザの場合' do
     before do
       @user = mock_model(User)
       @user.stub!(:active?).and_return(true)

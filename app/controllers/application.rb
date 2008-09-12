@@ -29,13 +29,12 @@ class ApplicationController < ActionController::Base
   # フィルタで毎アクセスごとに確認し、セッションが未準備なら初期値をいれる
   # skip_utilで認証がされている前提で、グローバルセッションを利用している
   def prepare_session
-
-    # プロフィール情報が登録されていない場合、platformに戻す
     user = current_user
 
+    # プロフィール情報が登録されていない場合、platformに戻す
     unless user.active?
-      redirect_to :controller => '/platform', :error => 'no_profile'
-      return false
+      redirect_to user.retired? ? { :controller => '/platform', :action => :logout, :message => 'retired' } : { :controller => '/portal' }
+      return
     end
 
     # ログのリクエスト情報に、ユーザ情報を加える（情報漏えい事故発生時のトレーサビリティを確保)

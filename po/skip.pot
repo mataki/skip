@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-09-11 15:34+0900\n"
+"POT-Creation-Date: 2008-09-12 15:01+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: app/controllers/admin/users_controller.rb:137
+#: app/controllers/admin/users_controller.rb:146
 #: app/views/admin/user_uids/index.html.erb:21 lib/admin_module.rb:75
 #: lib/admin_module.rb:158 lib/admin_module.rb:172 lib/admin_module.rb:174
 #: lib/admin_module.rb:187 lib/admin_module.rb:202
@@ -711,18 +711,18 @@ msgstr ""
 msgid "Are you sure destroing with nest comments?"
 msgstr ""
 
-#: app/views/admin/share_files/index.html.erb:15
-#: app/views/admin/bookmark_comments/index.html.erb:13
 #: app/views/admin/board_entries/index.html.erb:14
-#: app/views/admin/user_uids/index.html.erb:14
-#: app/views/admin/user_profiles/index.html.erb:14
-#: app/views/admin/users/index.html.erb:16
+#: app/views/admin/bookmark_comments/index.html.erb:13
+#: app/views/admin/bookmarks/index.html.erb:15
 #: app/views/admin/group_participations/index.html.erb:13
 #: app/views/admin/groups/index.html.erb:15
 #: app/views/admin/images/index.html.erb:14
 #: app/views/admin/images/index.html.erb:24
 #: app/views/admin/openid_identifiers/index.html.erb:14
-#: app/views/admin/bookmarks/index.html.erb:15
+#: app/views/admin/share_files/index.html.erb:15
+#: app/views/admin/user_profiles/index.html.erb:14
+#: app/views/admin/user_uids/index.html.erb:14
+#: app/views/admin/users/edit.html.erb:16
 msgid "Are you sure?"
 msgstr ""
 
@@ -914,7 +914,7 @@ msgstr ""
 msgid "CSVファイル"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:126
+#: app/controllers/admin/users_controller.rb:135
 msgid "CSVファイルからのユーザ登録/更新に成功しました。"
 msgstr ""
 
@@ -922,12 +922,12 @@ msgstr ""
 msgid "CSVファイルでインポートする際の注意"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:131
+#: app/controllers/admin/users_controller.rb:140
 msgid "CSVファイルに不正な値が含まれています。"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:108
-#: app/controllers/admin/users_controller.rb:113
+#: app/controllers/admin/users_controller.rb:117
+#: app/controllers/admin/users_controller.rb:122
 msgid "CSVファイルの内容を検証しました。"
 msgstr ""
 
@@ -955,24 +955,24 @@ msgstr ""
 msgid "Chain|紹介文"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:138
+#: app/controllers/admin/users_controller.rb:147
 #: app/views/admin/users/show.html.erb:28
 msgid "Change uid"
 msgstr ""
 
-#: app/views/admin/user_uids/new.html.erb:17
-#: app/views/admin/user_profiles/new.html.erb:15
-#: app/views/admin/users/new.html.erb:12
-#: app/views/admin/users/first.html.erb:32
 #: app/views/admin/openid_identifiers/new.html.erb:17
+#: app/views/admin/user_profiles/new.html.erb:15
+#: app/views/admin/user_uids/new.html.erb:17
+#: app/views/admin/users/first.html.erb:32
+#: app/views/admin/users/new.html.erb:12
 msgid "Create"
 msgstr ""
 
-#: app/views/admin/user_uids/new.html.erb:17
-#: app/views/admin/user_profiles/new.html.erb:15
-#: app/views/admin/users/new.html.erb:12
-#: app/views/admin/users/first.html.erb:32
 #: app/views/admin/openid_identifiers/new.html.erb:17
+#: app/views/admin/user_profiles/new.html.erb:15
+#: app/views/admin/user_uids/new.html.erb:17
+#: app/views/admin/users/first.html.erb:32
+#: app/views/admin/users/new.html.erb:12
 msgid "Creating..."
 msgstr ""
 
@@ -985,13 +985,14 @@ msgid "Destroy"
 msgstr ""
 
 #: app/views/admin/shared/_sortable_table.html.erb:28
-#: app/views/admin/user_uids/show.html.erb:18
 #: app/views/admin/user_profiles/show.html.erb:89
+#: app/views/admin/user_uids/show.html.erb:18
 #: app/views/admin/users/show.html.erb:26
 msgid "Edit"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:50 lib/admin_module.rb:102
+#: app/controllers/admin/users_controller.rb:50
+#: app/controllers/admin/users_controller.rb:66 lib/admin_module.rb:102
 #: lib/admin_module.rb:204
 msgid "Editing %{model}"
 msgstr ""
@@ -1114,13 +1115,14 @@ msgstr ""
 
 #: app/controllers/admin/users_controller.rb:28
 #: app/controllers/admin/users_controller.rb:49
-#: app/controllers/admin/users_controller.rb:101
-#: app/controllers/admin/users_controller.rb:118
-#: app/controllers/admin/users_controller.rb:136
+#: app/controllers/admin/users_controller.rb:65
+#: app/controllers/admin/users_controller.rb:110
+#: app/controllers/admin/users_controller.rb:127
+#: app/controllers/admin/users_controller.rb:145
 #: app/views/admin/board_entries/show.html.erb:23
-#: app/views/admin/users/import.html.erb:68
+#: app/views/admin/bookmarks/show.html.erb:19
 #: app/views/admin/groups/show.html.erb:35
-#: app/views/admin/bookmarks/show.html.erb:19 lib/admin_module.rb:62
+#: app/views/admin/users/import.html.erb:68 lib/admin_module.rb:62
 #: lib/admin_module.rb:74 lib/admin_module.rb:88 lib/admin_module.rb:101
 #: lib/admin_module.rb:157 lib/admin_module.rb:159 lib/admin_module.rb:171
 #: lib/admin_module.rb:173 lib/admin_module.rb:186 lib/admin_module.rb:188
@@ -1189,16 +1191,16 @@ msgid "Message|User"
 msgstr ""
 
 #: app/controllers/admin/users_controller.rb:28
-#: app/views/admin/user_uids/index.html.erb:20
 #: app/views/admin/user_profiles/index.html.erb:18
-#: app/views/admin/users/index.html.erb:21 lib/admin_module.rb:89
+#: app/views/admin/user_uids/index.html.erb:20
+#: app/views/admin/users/index.html.erb:20 lib/admin_module.rb:89
 #: lib/admin_module.rb:189
 msgid "New %{model}"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:101
-#: app/controllers/admin/users_controller.rb:118
-#: app/views/admin/users/index.html.erb:22
+#: app/controllers/admin/users_controller.rb:110
+#: app/controllers/admin/users_controller.rb:127
+#: app/views/admin/users/index.html.erb:21
 msgid "New user from csv"
 msgstr ""
 
@@ -1210,7 +1212,7 @@ msgstr ""
 msgid "OpenID URLを設定しました。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:134
+#: app/controllers/platform_controller.rb:137
 msgid "OpenIDサーバーが見つかりませんでした。"
 msgstr ""
 
@@ -1311,13 +1313,13 @@ msgstr ""
 msgid "Ranking|Url"
 msgstr ""
 
-#: app/views/admin/settings/index.html.erb:7
 #: app/views/admin/documents/index.html.erb:12
+#: app/views/admin/settings/index.html.erb:7
 msgid "Save"
 msgstr ""
 
-#: app/views/admin/settings/index.html.erb:7
 #: app/views/admin/documents/index.html.erb:12
+#: app/views/admin/settings/index.html.erb:7
 msgid "Saving..."
 msgstr ""
 
@@ -1403,7 +1405,7 @@ msgstr ""
 
 #: app/views/admin/shared/_sortable_table.html.erb:27
 #: app/views/admin/user_uids/edit.html.erb:24
-#: app/views/admin/users/edit.html.erb:16
+#: app/views/admin/users/edit.html.erb:22
 msgid "Show"
 msgstr ""
 
@@ -1499,32 +1501,36 @@ msgstr ""
 msgid "Track|Visitor"
 msgstr ""
 
-#: app/views/admin/user_uids/edit.html.erb:20
+#: app/views/admin/openid_identifiers/edit.html.erb:16
 #: app/views/admin/user_profiles/edit.html.erb:11
+#: app/views/admin/user_uids/edit.html.erb:20
 #: app/views/admin/users/change_uid.html.erb:18
 #: app/views/admin/users/edit.html.erb:11
-#: app/views/admin/openid_identifiers/edit.html.erb:16
 msgid "Update"
 msgstr ""
 
-#: app/views/admin/user_uids/edit.html.erb:20
-#: app/views/admin/user_profiles/edit.html.erb:11
-#: app/views/admin/users/edit.html.erb:11
 #: app/views/admin/openid_identifiers/edit.html.erb:16
+#: app/views/admin/user_profiles/edit.html.erb:11
+#: app/views/admin/user_uids/edit.html.erb:20
+#: app/views/admin/users/edit.html.erb:11
 msgid "Updating..."
 msgstr ""
 
-#: app/views/admin/users/import.html.erb:11
 #: app/views/admin/images/index.html.erb:10
 #: app/views/admin/images/index.html.erb:20
+#: app/views/admin/users/import.html.erb:11
 msgid "Upload"
 msgstr ""
 
-#: app/views/admin/users/import.html.erb:11
-#: app/views/admin/users/import.html.erb:78
 #: app/views/admin/images/index.html.erb:10
 #: app/views/admin/images/index.html.erb:20
+#: app/views/admin/users/import.html.erb:11
+#: app/views/admin/users/import.html.erb:78
 msgid "Uploading..."
+msgstr ""
+
+#: app/controllers/admin/users_controller.rb:74
+msgid "User was successfuly deleted."
 msgstr ""
 
 #: app/models/user_access.rb:-
@@ -1687,6 +1693,19 @@ msgstr ""
 msgid "User|Status"
 msgstr ""
 
+#: app/models/user.rb:44
+msgid "User|Status|ACTIVE"
+msgstr ""
+
+#: app/models/user.rb:45
+msgid "User|Status|RETIRED"
+msgstr ""
+
+#: app/models/user.rb:46 app/views/admin/users/_form.html.erb:17
+#: app/views/admin/users/_form.html.erb:22
+msgid "User|Status|UNUSED"
+msgstr ""
+
 #: app/models/user.rb:-
 msgid "User|Updated on"
 msgstr ""
@@ -1697,6 +1716,14 @@ msgstr ""
 
 #: app/controllers/platform_controller.rb:55
 msgid "You are now logged out."
+msgstr ""
+
+#: app/controllers/admin/users_controller.rb:76
+msgid "You cannot delete user who is not unused."
+msgstr ""
+
+#: app/controllers/platform_controller.rb:56
+msgid "You had been retired."
 msgstr ""
 
 #: app/models/activation.rb:-
@@ -1834,13 +1861,14 @@ msgstr ""
 
 #: app/controllers/admin/users_controller.rb:28
 #: app/controllers/admin/users_controller.rb:49
-#: app/controllers/admin/users_controller.rb:101
-#: app/controllers/admin/users_controller.rb:118
-#: app/controllers/admin/users_controller.rb:136
+#: app/controllers/admin/users_controller.rb:65
+#: app/controllers/admin/users_controller.rb:110
+#: app/controllers/admin/users_controller.rb:127
+#: app/controllers/admin/users_controller.rb:145
 #: app/helpers/admin/application_helper.rb:34 app/models/user.rb:-
 #: app/views/admin/user_uids/index.html.erb:21
 #: app/views/admin/users/import.html.erb:68
-#: app/views/admin/users/index.html.erb:21
+#: app/views/admin/users/index.html.erb:20
 msgid "user"
 msgstr ""
 
@@ -1869,20 +1897,20 @@ msgstr ""
 msgid "user uid"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:135
+#: app/controllers/platform_controller.rb:138
 msgid "このサーバへの認証を確認してください"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:96
+#: app/controllers/admin/users_controller.rb:105
 msgid "この操作は、許可されていません。"
 msgstr ""
 
 #: app/controllers/admin/users_controller.rb:52
-#: app/controllers/admin/users_controller.rb:66
+#: app/controllers/admin/users_controller.rb:62
 msgid "ご指定のユーザは存在しません。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:147
+#: app/controllers/platform_controller.rb:150
 msgid "そのOpenIDは、登録されていません。"
 msgstr ""
 
@@ -1902,7 +1930,7 @@ msgid ""
 "出来ます。例にならって修正して下さい。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:135
+#: app/controllers/platform_controller.rb:138
 msgid "キャンセルされました。"
 msgstr ""
 
@@ -1932,7 +1960,7 @@ msgstr ""
 msgid "ファイルサイズが上限を超えています。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:143
+#: app/controllers/platform_controller.rb:146
 msgid "ユーザの登録に失敗しました。"
 msgstr ""
 
@@ -1946,7 +1974,7 @@ msgstr ""
 msgid "ログインに失敗しました。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:147
+#: app/controllers/platform_controller.rb:150
 msgid "ログイン後管理画面でOpenID URLを登録後ログインしてください。"
 msgstr ""
 
@@ -1977,8 +2005,12 @@ msgstr ""
 msgid "全て既定値に戻す"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:137
+#: app/controllers/platform_controller.rb:140
 msgid "内部エラーが発生しました。"
+msgstr ""
+
+#: app/views/admin/documents/index.html.erb:13
+msgid "実際のページを表示"
 msgstr ""
 
 #: app/controllers/admin/documents_controller.rb:41
@@ -2018,7 +2050,7 @@ msgstr ""
 msgid "既定の画像に戻す"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:63
+#: app/controllers/admin/users_controller.rb:59
 msgid "更新しました。"
 msgstr ""
 
@@ -2026,20 +2058,20 @@ msgstr ""
 msgid "正しいCSVファイルの例"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:134
+#: app/controllers/platform_controller.rb:137
 msgid "正しいOpenID URLを入力してください。"
 msgstr ""
 
 #: app/controllers/admin/users_controller.rb:37
-#: app/controllers/admin/users_controller.rb:89
+#: app/controllers/admin/users_controller.rb:98
 msgid "登録しました。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:137
+#: app/controllers/platform_controller.rb:140
 msgid "管理者に連絡してください。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:143
+#: app/controllers/platform_controller.rb:146
 msgid "管理者に連絡してください。<br/>%{msg}"
 msgstr ""
 
@@ -2047,7 +2079,7 @@ msgstr ""
 msgid "管理者ユーザの作成"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:136
+#: app/controllers/platform_controller.rb:139
 msgid "認証に失敗しました。"
 msgstr ""
 

@@ -76,6 +76,35 @@ end
 describe Admin::UsersController, 'POST /update' do
 end
 
+describe Admin::UsersController, 'POST #destroy' do
+  before do
+    admin_login
+
+    @user = mock_model(Admin::User)
+    Admin::User.stub!(:find).with('1').and_return(@user)
+  end
+  describe "未登録ユーザの場合" do
+    before do
+      @user.should_receive(:unused?).and_return(true)
+      @user.should_receive(:destroy)
+
+      post :destroy, :id => 1
+    end
+    it { redirect_to admin_users_path }
+    it { flash[:notice].should == 'User was successfuly deleted.' }
+  end
+  describe "未登録ユーザでない場合" do
+    before do
+      @user.should_receive(:unused?).and_return(false)
+      @user.should_not_receive(:destroy)
+
+      post :destroy, :id => 1
+    end
+    it { redirect_to admin_users_path }
+    it { flash[:notice].should == "You cannot delete user who is not unused." }
+  end
+end
+
 describe Admin::UsersController, 'GET /first' do
   describe '有効なactivation_codeの場合' do
     before do
@@ -259,3 +288,4 @@ describe Admin::UsersController, "POST #change_uid" do
     post :change_uid, :id => 1, :user_uid => { :uid => 'hoge' }
   end
 end
+

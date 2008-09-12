@@ -31,7 +31,7 @@ $j(function(){
         }
 <% @revert_columns ||= [] -%>
 <% @revert_columns.each do |key| -%>
-        revertToDefault('admin_setting_' + '<%= key %>', '<%= Admin::Setting.send("default_" + key) %>');
+        revertToDefault('setting_' + '<%= key %>', '<%= Admin::Setting.send("default_" + key) %>');
 <% end -%>
     });
 });

@@ -52,7 +52,10 @@ class PlatformController < ApplicationController
   # ログアウト
   def logout
     reset_session
-    flash[:notice] = _('You are now logged out.')
+    notice = _('You are now logged out.')
+    notice = notice + "<br>" + _('You had been retired.') unless params[:message].blank?
+    flash[:notice] = notice
+
     redirect_to ENV['SKIPOP_URL'].blank? ? {:action => "index"} : "#{ENV['SKIPOP_URL']}logout"
   end
 

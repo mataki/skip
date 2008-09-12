@@ -151,3 +151,36 @@ describe Admin::User, '.make_user_by_uid' do
       @user_profile.email.should == @email
     end
 end
+
+describe Admin::User, '.make_user_by_id' do
+  before do
+    @password = "password"
+    @fullname = "山田 太郎"
+    @job_title = "経理"
+    @admin = "1"
+    @status = "RETIRED"
+
+    @user_hash = {:name => @fullname, :password => @password, :password_confirmation => @password, :admin => @admin, :status => @status}
+    user = create_user
+    @user = Admin::User.make_user_by_id({:id => user.id, :user => @user_hash})
+  end
+
+  it '新規レコードではないこと' do
+    @user.new_record?.should_not be_true
+  end
+  it 'fullnameが設定されていること' do
+    @user.name.should == @fullname
+  end
+  it 'passwordが設定されていること' do
+    @user.password.should == @password
+  end
+  it 'password_confirmationが設定されていること' do
+    @user.password_confirmation == @password_confirmation
+  end
+  it 'adminが設定されていること' do
+    @user.admin.should be_true
+  end
+  it 'statusが設定されていること' do
+    @user.status.should == @status
+  end
+end

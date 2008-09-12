@@ -40,6 +40,12 @@ class User < ActiveRecord::Base
 
   validates_presence_of :password_confirmation, :message => 'は必須です', :if => :password_required?
 
+  # ステータスの状態
+  N_('User|Status|ACTIVE')
+  N_('User|Status|RETIRED')
+  N_('User|Status|UNUSED')
+  STATUSES = %w(ACTIVE RETIRED UNUSED)
+
   def to_s
     return 'uid:' + uid.to_s + ', name:' + name.to_s
   end

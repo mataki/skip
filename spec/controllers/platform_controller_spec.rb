@@ -199,11 +199,24 @@ describe PlatformController, "#require_not_login" do
 end
 
 describe PlatformController, "#logout" do
-  before do
-    ENV['SKIPOP_URL'] = nil
-    controller.should_receive(:reset_session)
-    get :logout
+  describe "通常のログアウト" do
+    before do
+      ENV['SKIPOP_URL'] = nil
+      controller.should_receive(:reset_session)
+      get :logout
+    end
+    it { response.should redirect_to(:controller => :platform, :action => :index) }
+    it { flash[:notice].should_not be_nil }
   end
-  it { response.should redirect_to(:controller => :platform, :action => :index) }
-  it { flash[:notice].should_not be_nil }
+  describe "メッセージが設定されている場合" do
+    before do
+      ENV['SKIPOP_URL'] = nil
+      controller.should_receive(:reset_session)
+      @message = 'ほげほげ'
+
+      get :logout, :message => @message
+    end
+    it { response.should redirect_to(:controller => :platform, :action => :index) }
+    it { flash[:notice].should be_include('retired') }
+  end
 end

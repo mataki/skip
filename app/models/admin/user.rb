@@ -37,6 +37,12 @@ class Admin::User < User
     name
   end
 
+  def self.status_select
+    STATUSES.map do |status|
+      [_("User|Status|#{status}"), status]
+    end
+  end
+
   def self.make_users(uploaded_file)
     users = []
     parsed_csv = FasterCSV.parse uploaded_file
@@ -61,12 +67,14 @@ class Admin::User < User
   end
 
   def self.make_user_by_id(params = {}, admin = false)
-    check_params_keys(params, [:user, :user_profile, :user_uid])
+    check_params_keys(params, [:user])
     user = Admin::User.find(params[:id])
     user.attributes = params[:user]
-    user_profile = user.user_profile
-    user_profile.attributes = params[:user_profile]
-    [user, user_profile]
+    if !params[:user][:status].blank? and !user.unused?
+      user.status = params[:user][:status]
+    end
+    user.admin = params[:user][:admin]
+    user
   end
 
   def self.make_user_by_uid(params = {}, admin = false)

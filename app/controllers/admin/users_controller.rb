@@ -54,18 +54,28 @@ class Admin::UsersController < Admin::ApplicationController
   end
 
   def update
-    Admin::User.transaction do
-      @user, @user_profile = Admin::User.make_user_by_id(params)
-      @user.save!
-      @user_profile.save!
-    end
+    @user = Admin::User.make_user_by_id(params)
+    @user.save!
     flash[:notice] = _('更新しました。')
-    redirect_to admin_users_path
+    redirect_to admin_user_path(@user)
   rescue ActiveRecord::RecordNotFound => e
     flash[:notice] = _('ご指定のユーザは存在しません。')
     redirect_to admin_users_path
   rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => e
+    @topics = [[_('Listing %{model}') % {:model => _('user')}, admin_users_path],
+               _('Editing %{model}') % {:model => @user.topic_title }]
     render :action => 'edit'
+  end
+
+  def destroy
+    @user = Admin::User.find(params[:id])
+    if @user.unused?
+      @user.destroy
+      flash[:notice] = _('User was successfuly deleted.')
+    else
+      flash[:notice] = _("You cannot delete user who is not unused.")
+    end
+    redirect_to admin_users_path
   end
 
   def first
@@ -86,7 +96,7 @@ class Admin::UsersController < Admin::ApplicationController
             end
           end
           flash[:notice] = _('登録しました。')
-          redirect_to '/platform/'
+          redirect_to :controller => "/platform", :action => :index
         rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => e
           render :layout => 'admin/not_logged_in'
         end
