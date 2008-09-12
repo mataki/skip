@@ -47,7 +47,7 @@ class MargeAccountsToUsers < ActiveRecord::Migration
 
     remove_column :users, :crypted_password
     remove_column :users, :status
-    add_column :users, :retired, :boolean, :default => false, :nill => false
+    add_column :users, :retired, :boolean, :default => false, :null => false
   end
 end
 
