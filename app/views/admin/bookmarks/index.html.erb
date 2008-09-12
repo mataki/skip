@@ -12,7 +12,12 @@
                :columns => %w[title url],
                :objects => @bookmarks,
                :class_name => 'Admin::Bookmark',
-               :link_elem => [['Show','object'], ['Destroy','object',{:confirm => _('Are you sure?'), :method => :delete}]]
+               :link_elem_size => 2,
+               :link_elem_proc => lambda { |object|
+      result = ""
+      result << content_tag(:td, link_to(_("Show"), object) )
+      result << content_tag(:td, link_to(_("Destroy"), object, {:confirm => _('Are you sure?'), :method => :delete}) )
+    }
              }
   -%>
 </div>

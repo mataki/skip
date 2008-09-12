@@ -1,3 +1,13 @@
+<%#
+   :link_elem_size
+     右側のオブジェクトごとのリンクの数を設定できる
+   :link_elem_proc
+     右側のオブジェクトごとのリンクを生成するための処理ブロックをわたす
+     ブロックからは、オブジェクトが渡される
+   :disp_columns_proc
+     オブジェクトのカラムを表示するための処理ブロックをわたす
+     ブロックからは、オブジェクトとカラムが渡される
+%>
 <% disp_columns_proc ||= lambda do |object,column|
      data = object.send(column.to_sym)
      data = data[/.{1,100}/] if data.is_a?(String)
@@ -14,7 +24,7 @@
       <% columns.each do |column| -%>
       <th><%= _("#{class_name}|#{column.humanize}") %></th>
       <% end -%>
-      <% link_elem.size.times do %>
+      <% link_elem_size.times do %>
       <td width="30px"/>
       <% end %>
     </tr>
@@ -25,12 +35,7 @@
       <% columns.each do |column| -%>
       <td><%=h disp_columns_proc.call object, column %></td>
       <% end %>
-      <% link_elem.each do |link| -%>
-      <td><%= link_to _(link[0]), eval(link[1]), link[2] %></td>
-      <% N_('Show') %>
-      <% N_('Edit') %>
-      <% N_('Destroy') %>
-      <% end %>
+      <%= link_elem_proc.call object %>
     </tr>
     <% end %>
   </tbody>

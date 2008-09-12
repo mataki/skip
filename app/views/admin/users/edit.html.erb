@@ -11,11 +11,6 @@
     <%= f.submit _('Update'), :disable_with => _('Updating...') %>
   </p>
   <% end %>
-  <% if @user.unused? -%>
-  <div class="desc">
-  <%= link_to "[[#{_('Destroy')}する]]", admin_user_path(@user), {:confirm => _('Are you sure?'), :method => :delete} %>
-  </div>
-  <% end -%>
 
 </div>
 
