@@ -47,7 +47,7 @@ private
     symbol_type, symbol_id = Symbol.split_symbol symbol
     case symbol_type
     when "uid"
-      return  User.find(:all, :conditions =>["uid LIKE ?", SkipUtil.to_lqs(symbol_id)], :include => [:user_uids])
+      return  User.find(:all, :conditions =>["user_uids.uid LIKE ?", SkipUtil.to_lqs(symbol_id)], :include => [:user_uids])
     when "gid"
       return  Group.find(:all, :conditions =>["gid LIKE ?", SkipUtil.to_lqs(symbol_id)])
     end
