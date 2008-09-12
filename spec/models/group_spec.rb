@@ -15,20 +15,20 @@
 
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe Group, "初期値が入っているか" do
-  before(:each) do
-    @group = Group.new
-  end
-
-  it { @group.category.should == "LIFE" }
-  it { @group.category_icon_name.should == ['group_gear', 'ライフ'] }
-end
+#describe Group, "初期値が入っているか" do
+#  before(:each) do
+#    @group = Group.new
+#  end
+#
+#  it { @group.category.should == "LIFE" }
+#  it { @group.category_icon_name.should == ['group_gear', 'ライフ'] }
+#end
 
 describe Group do
   before(:each) do
-    @category = "BIZ"
+    @group_category_id = "1"
     @group = Group.new({ :name => 'hoge', :gid => 'hoge', :description => 'hoge', :protected => '1',
-                         :category => @category, :created_on => Time.now, :updated_on => Time.now })
+                         :group_category_id => @group_category_id, :created_on => Time.now, :updated_on => Time.now })
   end
 
   it { @group.should be_valid }
@@ -139,18 +139,18 @@ end
 describe "Group.count_by_category" do
   before(:each) do
     @group1 = mock_model(Group)
-    @group1.stub!(:category).and_return('hoge')
+    @group1.stub!(:group_category_id).and_return('1')
     @group1.stub!(:count).and_return('2')
     @group2 = mock_model(Group)
-    @group2.stub!(:category).and_return('fuga')
+    @group2.stub!(:group_category_id).and_return('2')
     @group2.stub!(:count).and_return('1')
     Group.should_receive(:find).and_return([@group1,@group2])
   end
 
   it "グループのカテゴリとそのカテゴリのグループ数および全グループ数を返す" do
     group_counts, total_count = Group.count_by_category
-    group_counts['hoge'].should == 2
-    group_counts['fuga'].should == 1
+    group_counts['1'].should == 2
+    group_counts['2'].should == 1
     total_count.should == 3
   end
 end

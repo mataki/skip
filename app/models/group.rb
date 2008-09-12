@@ -15,6 +15,7 @@
 
 class Group < ActiveRecord::Base
   has_many :group_participations, :dependent => :destroy
+  belongs_to :group_category
 
   validates_presence_of :name, :description, :gid, :message =>'は必須です'
   validates_uniqueness_of :gid, :message =>'は既に登録されています'
@@ -23,22 +24,19 @@ class Group < ActiveRecord::Base
   validates_format_of :gid, :message =>'は数字orアルファベットor記号(ハイフン「-」 アンダーバー「_」)で入力してください', :with => /^[a-zA-Z0-9\-_]*$/
 
   # categoryの種類
-  CATEGORIES = [
-    { :type => "BIZ", :name => "ビジネス", :icon => "page_word", :desc => "プロジェクト内など、業務で利用する場合に選択してください。" },
-    { :type => "LIFE", :name => "ライフ", :icon => "group_gear", :desc => "業務に直結しない会社内の活動で利用する場合に選択してください。", :default => true },
-    { :type => "OFF", :name => "オフ", :icon => "ipod", :desc => "趣味などざっくばらんな話題で利用する場合に選択してください。" }
-  ]
+  CATEGORIES = GroupCategory.all
   CATEGORIES_HASH = {}
+  DEFAULT_CATEGORY_ID = ''
   CATEGORIES.each do |category|
-    CATEGORIES_HASH[category[:type]] = category
-    DEFAULT_CATEGORY = category[:type] if category[:default]
+    CATEGORIES_HASH[category.key] = category
+    DEFAULT_CATEGORY_ID = category.id if category.default
   end
 
   alias initialize_old initialize
 
   def initialize(attributes = nil)
     initialize_old(attributes)
-    @attributes["category"] = DEFAULT_CATEGORY unless attributes and attributes[:category]
+    self.group_category_id = DEFAULT_CATEGORY_ID
   end
 
   class << self
@@ -89,8 +87,8 @@ class Group < ActiveRecord::Base
   end
 
   def category_icon_name
-    category_ = CATEGORIES_HASH[category]
-    [category_[:icon], category_[:name]]
+    category_ = CATEGORIES_HASH[group_category.key]
+    [category_.icon, category_.name]
   end
 
   def self.make_conditions(options={})
@@ -134,7 +132,7 @@ class Group < ActiveRecord::Base
   def self.gid_by_category
     group_by_category = Hash.new{|h, key| h[key] = []}
 
-    find(:all, :select => "category, gid").each{ |group| group_by_category[group.category] << "gid:#{group.gid}" }
+    find(:all, :select => "group_category_id, gid").each{ |group| group_by_category[group.group_category_id] << "gid:#{group.gid}" }
     group_by_category
   end
 
@@ -147,14 +145,14 @@ class Group < ActiveRecord::Base
   def self.count_by_category user_id=nil
     conditions = user_id ? ['group_participations.user_id = ?', user_id] : []
     groups = find(:all,
-                  :select => 'groups.category, count(distinct(groups.id)) as count',
-                  :group => 'groups.category',
+                  :select => 'group_category_id, count(distinct(groups.id)) as count',
+                  :group => 'groups.group_category_id',
                   :conditions => conditions,
                   :joins => [:group_participations])
     group_counts = Hash.new(0)
     total_count = 0
     groups.each do |group_count|
-      group_counts[group_count.category] = group_count.count.to_i
+      group_counts[group_count.group_category_id] = group_count.count.to_i
       total_count += group_count.count.to_i
     end
 
@@ -207,10 +205,10 @@ class Group < ActiveRecord::Base
       conditions << target_user_id
     end
 
-    if category = params[:category] and category != "all"
+    if group_category_id = params[:group_category_id] and group_category_id != "all"
       conditions[0] << " and " unless conditions[0].empty?
-      conditions[0] << "category = ?"
-      conditions << category
+      conditions[0] << "group_category_id = ?"
+      conditions << group_category_id
     end
 
     options = {}

@@ -6,13 +6,13 @@
 <div class="box_space">
   <div class="box_space_title"><%= icon_tag 'text_list_bullets'%>カテゴリ</div>
   <div class="box_space_body" style="font-size:10px">
-    <%= radio_button_tag "category", "all",  params[:category] == "all", :class => "category_radio"  %>
+    <%= radio_button_tag "group_category_id", "all",  params[:group_category_id] == "all", :class => "category_radio"  %>
     <%= icon_tag "asterisk_orange", :margin => true %>全て(<%= @total_count %>)<br/>
     <% #TODO group/index.rhtmlにほぼ同じ記述がある。helper化すべきか? %>
     <% Group::CATEGORIES.each do |category| %>
-      <%= radio_button_tag "category", category[:type], params[:category] == category[:type], :class => "category_radio" %>
-      <%= get_group_icon category[:type], :margin => true %><%= category[:name] -%>
-      (<%= @group_counts[category[:type]] %>)<br/>
+      <%= radio_button_tag "group_category_id", category.id, params[:group_category_id] == category.id.to_s, :class => "category_radio" %>
+      <%= get_group_icon category, :margin => true %>
+      <%= category[:name] -%>(<%= @group_counts[category.id] %>)<br/>
     <% end %>
    </div>
 </div><!-- box_space -->
@@ -70,7 +70,7 @@ function searchGroup() {
   var format = getCheckedRadioValue(document.getElementsByClassName("format_radio"));
   var sort = getCheckedRadioValue(document.getElementsByClassName("sort_radio"));
 
-  params += "&category=" + category;
+  params += "&group_category_id=" + category;
   params += "&format_type=" + format;
   params += "&sort_type=" + sort;
   if ($F('keyword') != "") {

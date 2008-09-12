@@ -23,7 +23,7 @@ class GroupsController < ApplicationController
   # グループの一覧表示
   def index
     params[:yet_participation] ||= false
-    params[:category] ||= "all"
+    params[:group_category_id] ||= "all"
     params[:sort_type] ||= "date"
     @format_type = params[:format_type] ||= "detail"
     @group_counts, @total_count = Group.count_by_category

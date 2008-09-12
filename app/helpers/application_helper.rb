@@ -246,10 +246,8 @@ module ApplicationHelper
   end
 
   def get_group_icon(category, options = {:margin => false})
-    category_ = Group::CATEGORIES_HASH[category]
-    
-    options[:alt] = category_[:type]
-    icon_tag(category_[:icon], options)
+    options[:alt] = category.key
+    icon_tag(category.icon, options)
   end
 
   def encode_bookmark_url(uri)

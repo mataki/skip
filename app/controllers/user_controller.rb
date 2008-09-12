@@ -152,7 +152,7 @@ class UserController < ApplicationController
   # tab_menu
   def group
     params[:user_id] = @user.id
-    params[:category] ||= "all"
+    params[:group_category_id] ||= "all"
     params[:sort_type] ||= "date"
     params[:participation] = true
     @format_type = params[:format_type] ||= "list"

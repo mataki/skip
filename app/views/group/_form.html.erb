@@ -29,9 +29,9 @@
     <tr><th width="100px"></th><th></th></tr>
 <% Group::CATEGORIES.each do |category| %>
     <tr>
-      <td><%= radio_button "group", "category", category[:type], :class => "category_radio_button" -%>
-            <%= get_group_icon category[:type], :margin => true %><b><%= category[:name] -%></b></td>
-      <td><%= category[:desc] -%></td>
+      <td><%= radio_button "group", "group_category_id", category.id, :class => "category_radio_button" %>
+            <%= get_group_icon category, :margin => true %><b><%= category.name %></b></td>
+      <td><%= category.description %></td>
     </tr>
 <% end %>
     </table>
