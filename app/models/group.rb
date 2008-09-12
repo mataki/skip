@@ -29,7 +29,7 @@ class Group < ActiveRecord::Base
   DEFAULT_CATEGORY_ID = ''
   CATEGORIES.each do |category|
     CATEGORIES_HASH[category.code] = category
-    DEFAULT_CATEGORY_ID = category.id if category.default
+    DEFAULT_CATEGORY_ID = category.id if category.initial_selected
   end
 
   alias initialize_old initialize
