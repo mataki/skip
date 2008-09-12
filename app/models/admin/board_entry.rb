@@ -18,6 +18,8 @@ class Admin::BoardEntry < BoardEntry
   N_('Admin::BoardEntry|Title')
   N_('Admin::BoardEntry|Contents')
   N_('Admin::BoardEntry|Category')
+  N_('Admin::BoardEntry|Entry type')
+  N_('Admin::BoardEntry|User')
 
   def self.search_colomns
     "contents like :lqs or title like :lqs or category like :lqs"

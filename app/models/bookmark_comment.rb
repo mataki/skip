@@ -1,6 +1,6 @@
 # SKIP(Social Knowledge & Innovation Platform)
 # Copyright (C) 2008 TIS Inc.
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -9,7 +9,7 @@
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-# 
+#
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -20,6 +20,11 @@ class BookmarkComment < ActiveRecord::Base
   has_many :tag_strings, :source => :tag,  :through => :bookmark_comment_tags
 
   before_save :square_brackets_tags
+
+  N_('BookmarkComment|Public|true')
+  N_('BookmarkComment|Public|false')
+  N_('BookmarkComment|Stared|true')
+  N_('BookmarkComment|Stared|false')
 
   class << self
     HUMANIZED_ATTRIBUTE_KEY_NAMES = {

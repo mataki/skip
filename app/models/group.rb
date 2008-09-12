@@ -23,6 +23,9 @@ class Group < ActiveRecord::Base
   validates_length_of :gid, :maximum=>50, :message =>'は50文字以内で入力してください'
   validates_format_of :gid, :message =>'は数字orアルファベットor記号(ハイフン「-」 アンダーバー「_」)で入力してください', :with => /^[a-zA-Z0-9\-_]*$/
 
+  N_('Group|Protected|true')
+  N_('Group|Protected|false')
+
   # categoryの種類
   CATEGORIES = GroupCategory.all
   CATEGORIES_HASH = {}

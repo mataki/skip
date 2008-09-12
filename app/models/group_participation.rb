@@ -17,6 +17,13 @@ class GroupParticipation < ActiveRecord::Base
   belongs_to :user
   belongs_to :group
 
+  N_('GroupParticipation|Waiting|true')
+  N_('GroupParticipation|Waiting|false')
+  N_('GroupParticipation|Owned|true')
+  N_('GroupParticipation|Owned|false')
+  N_('GroupParticipation|Favorite|true')
+  N_('GroupParticipation|Favorite|false')
+
   # memcache領域にグループの参加情報を載せているため
   # 追加・削除の際はmemcache領域を削除する。
   # このためGroupParticipationテーブルには、deleteメソッドなど
@@ -39,6 +46,4 @@ class GroupParticipation < ActiveRecord::Base
          :conditions => [" waiting = 0 and user_id = ?", user_id],
          :include =>'group').map {|group_participation| "gid:#{group_participation.group.gid}" } || []
   end
-
-
 end

@@ -10,6 +10,16 @@
   <%= render :partial => '/admin/shared/sortable_table',
              :locals => {
                :columns => %w[user file_name description category],
+               :disp_columns_proc => lambda do |object,column|
+      case column
+      when "user"
+        object.user.name
+      when "description"
+        object.description[/.{1,100}/]
+      else
+        object.send(column.to_sym)
+      end
+    end,
                :objects => @share_files,
                :class_name => 'Admin::ShareFile',
                :link_elem => [['Destroy','object',{:confirm => _('Are you sure?'), :method => :delete}]]

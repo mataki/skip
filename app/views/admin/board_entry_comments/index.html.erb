@@ -8,6 +8,16 @@
   <%= render :partial => '/admin/shared/sortable_table',
                :locals => {
                :columns => %w[id user contents parent_id],
+               :disp_columns_proc => lambda do |object,column|
+      case column
+      when "user"
+        object.user.name
+      when "contents"
+        object.contents[/.{1,100}/]
+      else
+        object.send(column.to_sym)
+      end
+    end,
                :objects => @board_entry_comments,
                :class_name => 'Admin::BoardEntryComment',
                :link_elem => [['Destroy','admin_board_entry_board_entry_comment_path(@board_entry, object)',{:confirm => _('Are you sure destroing with nest comments?'), :method => :delete}]]

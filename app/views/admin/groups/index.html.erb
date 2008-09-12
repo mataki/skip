@@ -10,12 +10,20 @@
   <%= render :partial => '/admin/shared/sortable_table',
              :locals => {
                :columns => %w[name gid description protected category],
+               :disp_columns_proc => lambda do |object,column|
+      case column
+      when "protected"
+        _("Group|Protected|#{object.protected}")
+      when "description"
+        object.description[/.{1,100}/]
+      else
+        object.send(column.to_sym)
+      end
+    end,
                :objects => @groups,
                :class_name => 'Admin::Group',
                :link_elem => [['Show','object'], ['Destroy','object',{:confirm => _('Are you sure?'), :method => :delete}]]
              }
   -%>
 </div>
-<br />
-
 <% end -%>

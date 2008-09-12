@@ -1,6 +1,6 @@
 # SKIP(Social Knowledge & Innovation Platform)
 # Copyright (C) 2008 TIS Inc.
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -9,14 +9,11 @@
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-# 
+#
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class UserProfile < ActiveRecord::Base
-  N_('UserProfile|Alma mater')
-  N_('UserProfile|Address 2')
-
   include Types::Todouhuken
   include Types::Gender
   include Types::Blood
@@ -31,6 +28,12 @@ class UserProfile < ActiveRecord::Base
   validates_length_of :alma_mater, :maximum=>20, :message =>'は20文字以内で入力してください', :allow_nil => true
 
   validates_length_of :address_2,  :maximum=>100, :message =>'は100文字以内で入力してください', :allow_nil => true
+
+  N_('UserProfile|Alma mater')
+  N_('UserProfile|Address 2')
+
+  N_('UserProfile|Disclosure|true')
+  N_('UserProfile|Disclosure|false')
 
   class << self
     HUMANIZED_ATTRIBUTE_KEY_NAMES = {

@@ -9,6 +9,16 @@
   <%= render :partial => '/admin/shared/sortable_table',
              :locals => {
                :columns => %w[user email section extension disclosure],
+               :disp_columns_proc => lambda do |object,column|
+      case column
+      when "user"
+        object.user.name
+      when "disclosure"
+        _("UserProfile|Disclosure|#{object.disclosure}")
+      else
+        object.send(column.to_sym)
+      end
+    end,
                :objects => @user_profiles,
                :class_name => 'Admin::UserProfile',
                :link_elem => [['Edit','edit_admin_user_profile_path(object)']]

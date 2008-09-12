@@ -9,6 +9,16 @@
   <%= render :partial => '/admin/shared/sortable_table',
              :locals => {
                :columns => %w[name status admin],
+               :disp_columns_proc => lambda do |object,column|
+      case column
+      when "status"
+        _("User|Status|#{object.status}")
+      when "admin"
+        _("User|Admin|#{object.admin}")
+      else
+        object.send(column.to_sym)
+      end
+    end,
                :objects => @users,
                :class_name => 'Admin::User',
                :link_elem => [['Show','admin_user_path(object)'],

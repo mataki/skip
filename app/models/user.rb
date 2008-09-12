@@ -46,6 +46,12 @@ class User < ActiveRecord::Base
   N_('User|Status|UNUSED')
   STATUSES = %w(ACTIVE RETIRED UNUSED)
 
+  N_('User|Admin|true')
+  N_('User|Admin|false')
+
+  N_('User|Disclosure|true')
+  N_('User|Disclosure|false')
+
   def to_s
     return 'uid:' + uid.to_s + ', name:' + name.to_s
   end

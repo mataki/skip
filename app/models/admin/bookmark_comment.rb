@@ -18,6 +18,7 @@ class Admin::BookmarkComment < BookmarkComment
   N_('Admin::BookmarkComment|Public')
   N_('Admin::BookmarkComment|Tags')
   N_('Admin::BookmarkComment|Stared')
+  N_('Admin::BookmarkComment|User')
 
   def topic_title
     user.name

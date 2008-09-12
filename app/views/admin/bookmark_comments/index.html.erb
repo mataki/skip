@@ -7,7 +7,21 @@
 <div class="box tabular">
   <%= render :partial => '/admin/shared/sortable_table',
              :locals => {
-               :columns => %w[comment public tags stared],
+               :columns => %w[user comment public tags stared],
+               :disp_columns_proc => lambda do |object,column|
+      case column
+      when "user"
+        object.user.name
+      when "comment"
+        object.comment[/.{1,100}/]
+      when "public"
+        _("BookmarkComment|Public|#{object.public}")
+      when "stared"
+        _("BookmarkComment|Stared|#{object.stared}")
+      else
+        object.send(column.to_sym)
+      end
+    end,
                :objects => @bookmark_comments,
                :class_name => 'Admin::BookmarkComment',
                :link_elem => [['Destroy','admin_bookmark_bookmark_comment_path(@bookmark, object)',{:confirm => _('Are you sure?'), :method => :delete}]]

@@ -8,7 +8,19 @@
   <%= render :partial => '/admin/search_box' %>
   <%= render :partial => '/admin/shared/sortable_table',
              :locals => {
-               :columns => %w[title contents category],
+               :columns => %w[entry_type user title contents category],
+               :disp_columns_proc => lambda do |object,column|
+      case column
+      when "user"
+        object.user.name
+      when "entry_type"
+        _("BoardEntry|Entry type|#{object.entry_type}")
+      when "contents"
+        object.contents[/.{1,100}/]
+      else
+        object.send(column.to_sym)
+      end
+    end,
                :objects => @board_entries,
                :class_name => 'Admin::BoardEntry',
                :link_elem => [['Show','object'], ['Destroy','object',{:confirm => _('Are you sure?'), :method => :delete}]]
