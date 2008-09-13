@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-09-13 14:02+0900\n"
+"POT-Creation-Date: 2008-09-13 14:47+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1342,7 +1342,7 @@ msgstr ""
 msgid "OpenID URLを設定しました。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:137
+#: app/controllers/platform_controller.rb:138
 msgid "OpenIDサーバーが見つかりませんでした。"
 msgstr ""
 
@@ -1400,11 +1400,6 @@ msgstr ""
 
 #: app/models/popular_bookmark.rb:-
 msgid "PopularBookmark|Date"
-msgstr ""
-
-#: app/views/admin/images/index.html.erb:13
-#: app/views/admin/images/index.html.erb:23
-msgid "Preview"
 msgstr ""
 
 #: app/models/ranking.rb:-
@@ -2086,7 +2081,7 @@ msgstr ""
 msgid "user uid"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:138
+#: app/controllers/platform_controller.rb:139
 msgid "このサーバへの認証を確認してください"
 msgstr ""
 
@@ -2099,7 +2094,7 @@ msgstr ""
 msgid "ご指定のユーザは存在しません。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:150
+#: app/controllers/platform_controller.rb:151
 msgid "そのOpenIDは、登録されていません。"
 msgstr ""
 
@@ -2119,7 +2114,7 @@ msgid ""
 "出来ます。例にならって修正して下さい。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:138
+#: app/controllers/platform_controller.rb:139
 msgid "キャンセルされました。"
 msgstr ""
 
@@ -2149,7 +2144,7 @@ msgstr ""
 msgid "ファイルサイズが上限を超えています。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:146
+#: app/controllers/platform_controller.rb:147
 msgid "ユーザの登録に失敗しました。"
 msgstr ""
 
@@ -2163,7 +2158,7 @@ msgstr ""
 msgid "ログインに失敗しました。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:150
+#: app/controllers/platform_controller.rb:151
 msgid "ログイン後管理画面でOpenID URLを登録後ログインしてください。"
 msgstr ""
 
@@ -2194,7 +2189,7 @@ msgstr ""
 msgid "全て既定値に戻す"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:140
+#: app/controllers/platform_controller.rb:141
 msgid "内部エラーが発生しました。"
 msgstr ""
 
@@ -2204,10 +2199,6 @@ msgstr ""
 
 #: app/controllers/admin/group_categories_controller.rb:34
 msgid "削除対象のカテゴリが存在しませんでした。"
-msgstr ""
-
-#: app/views/admin/documents/index.html.erb:13
-msgid "実際のページを表示"
 msgstr ""
 
 #: app/models/group_category.rb:52
@@ -2264,8 +2255,17 @@ msgstr ""
 msgid "正しいCSVファイルの例"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:137
+#: app/controllers/platform_controller.rb:138
 msgid "正しいOpenID URLを入力してください。"
+msgstr ""
+
+#: app/views/admin/documents/index.html.erb:13
+msgid "現在のページを表示"
+msgstr ""
+
+#: app/views/admin/images/index.html.erb:13
+#: app/views/admin/images/index.html.erb:23
+msgid "現在の画像を表示"
 msgstr ""
 
 #: app/controllers/admin/users_controller.rb:37
@@ -2273,11 +2273,11 @@ msgstr ""
 msgid "登録しました。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:140
+#: app/controllers/platform_controller.rb:141
 msgid "管理者に連絡してください。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:146
+#: app/controllers/platform_controller.rb:147
 msgid "管理者に連絡してください。<br/>%{msg}"
 msgstr ""
 
@@ -2285,13 +2285,13 @@ msgstr ""
 msgid "管理者ユーザの作成"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:139
+#: app/controllers/platform_controller.rb:140
 msgid "認証に失敗しました。"
 msgstr ""
 
 #: app/controllers/admin/documents_controller.rb:35
 #: app/controllers/admin/documents_controller.rb:68
-msgid "静的コンテンツ管理"
+msgid "説明文の設定"
 msgstr ""
 
 #: app/views/admin/_search_box.html.erb:5
