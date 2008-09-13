@@ -16,7 +16,7 @@
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 
 # 1日分のランキング元データを生成
-# 送信するデータは、今日のスナップショット(昨日からの差分ではない)。
+# 送信するデータは、送信日時点でのこれまでの累積値(!=前日からの差分)
 # 表示時には、本バッチで生成したデータを集計するのみ。
 class BatchMakeRanking < BatchBase
 
@@ -28,11 +28,21 @@ class BatchMakeRanking < BatchBase
 
     begin
       ActiveRecord::Base.transaction do
+        # バッチのリラン用
+        Ranking.destroy_all(['extracted_on = ?', @@target_day])
+
         # アクセス数
-        BoardEntryPoint.find(:all, :conditions => make_conditions("today_access_count > 0")).each do |entrypoint|
+        BoardEntryPoint.find(:all, :conditions => make_conditions("access_count > 0")).each do |entrypoint|
           entry = entrypoint.board_entry
           if published? entry
             create_ranking_by_entry entry, entrypoint.access_count, "entry_access"
+          end
+        end
+
+        # コメント数
+        BoardEntry.find(:all, :conditions => make_conditions("board_entry_comments_count > 0")).each do |entry|
+          if published? entry
+            create_ranking_by_entry entry, entry.board_entry_comments_count, "entry_comment"
           end
         end
 
@@ -44,48 +54,46 @@ class BatchMakeRanking < BatchBase
           end
         end
 
-        # コメント数
-        BoardEntry.find(:all, :conditions => make_conditions("board_entry_comments_count > 0")).each do |entry|
-          if published? entry
-            create_ranking_by_entry entry, entry.board_entry_comments_count, "entry_comment"
-          end
-        end
-
-        # 投稿数
-        BoardEntry.find(:all, :conditions => make_conditions("entry_type = 'DIARY'"), 
-                        :select => "user_id, count(*) as entry_count", 
-                        :group => "user_id").each do |record|
-          user = User.find(record.user_id) 
-          create_ranking_by_user user, record.entry_count, "user_entry" 
-        end
-
         # 訪問者数
         UserAccess.find(:all, :conditions => make_conditions("access_count > 0")).each do |access|
           user = access.user
           create_ranking_by_user user, access.access_count, "user_access"
         end
 
+        # 投稿数
+        BoardEntry.find(:all, :conditions => make_conditions("entry_type = 'DIARY'"), 
+                        :select => "user_id, MAX(user_entry_no) as user_entry_no", 
+                        :group => "user_id").each do |record|
+          user = User.find(record.user_id) 
+          create_ranking_by_user user, record.user_entry_no, "user_entry" 
+        end
+
         # コメンテータ
-        BoardEntryComment.find(:all, :conditions => make_conditions(""), 
-                               :select => "user_id, count(*) as comment_count", 
-                               :group => "user_id").each do |record|
+        # skip上に累積値を持たないため、導出
+        sql = <<-SQL
+              SELECT user_id,COUNT(*) AS comment_count
+              FROM board_entry_comments
+              WHERE user_id IN (
+                SELECT distinct user_id
+                FROM board_entry_comments
+                WHERE DATE_FORMAT(updated_on,'%Y%m%d') = :commentator_conditions
+              )
+              AND DATE_FORMAT(updated_on,'%Y%m%d') <= :commentator_conditions
+              GROUP BY user_id
+              SQL
+        BoardEntryComment.find_by_sql([sql, { :commentator_conditions => @@target_day.strftime('%Y%m%d') }]).each do |record|
           user = User.find(record.user_id)
           create_ranking_by_user user, record.comment_count, "commentator"
         end
       end
-    rescue ActiveRecord::RecordInvalid,
-      ActiveRecord::RecordNotSaved => e
+    rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => e
       e.backtrace.each { |line| log_error line}
     end
   end
 
 private
   def self.make_conditions condition
-    where_str = "DATE_FORMAT(updated_on,'%Y%m%d') = ? "
-    unless condition == ""
-      where_str << " AND " + condition
-    end
-    [where_str, @@target_day.strftime('%Y%m%d')]
+    [condition + " AND DATE_FORMAT(updated_on,'%Y%m%d') = ? ", @@target_day.strftime('%Y%m%d')]
   end
 
   def self.published? entry
@@ -93,7 +101,7 @@ private
   end
 
   def self.create_ranking url, title, author, author_url, amount, contents_type
-    Ranking.create!(
+    ranking = Ranking.new(
       :url => url,
       :title => title,
       :author => author,
@@ -102,6 +110,7 @@ private
       :amount => amount,
       :contents_type => contents_type
     )
+    ranking.save!
   end
 
   def self.create_ranking_by_entry entry, amount, contents_type
