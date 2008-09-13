@@ -18,9 +18,20 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe Admin::SettingsController, 'GET /index' do
   before do
     admin_login
-    get :index
   end
-  it { response.should be_success }
+  describe 'tabパラメタの指定がない場合' do
+    before do
+      get :index
+    end
+    it { response.should be_redirect }
+  end
+
+  describe 'tabパラメタの指定がある場合' do
+    before do
+      get :index, :tab => 'literal'
+    end
+    it { response.should be_success }
+  end
 end
 
 describe Admin::SettingsController, 'POST /update_all' do

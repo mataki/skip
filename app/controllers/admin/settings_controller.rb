@@ -21,8 +21,10 @@ class Admin::SettingsController < Admin::ApplicationController
   N_('Admin::SettingsController|main')
 
   def index
-    params[:tab] ||= 'literal'
     @topics = [[_("#{self.class.name}|#{params[:tab]}")]]
+    if params[:tab].blank?
+      redirect_to admin_settings_path(:tab => :literal)
+    end
   end
 
   def update_all
