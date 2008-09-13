@@ -14,7 +14,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Admin::UsersController < Admin::ApplicationController
-  include AdminModule::AdminRootModule
+  include Admin::AdminModule::AdminRootModule
 
   skip_before_filter :sso, :only => [:first]
   skip_before_filter :login_required, :only => [:first]

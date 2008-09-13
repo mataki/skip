@@ -14,7 +14,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Admin::UserProfilesController < Admin::ApplicationController
-  include AdminModule::AdminRootModule
+  include Admin::AdminModule::AdminRootModule
 
   def show
     redirect_to admin_user_profiles_path

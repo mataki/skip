@@ -14,7 +14,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Admin::BookmarksController < Admin::ApplicationController
-  include AdminModule::AdminRootModule
+  include Admin::AdminModule::AdminRootModule
 
   undef new
   undef create

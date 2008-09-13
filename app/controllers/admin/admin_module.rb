@@ -1,4 +1,4 @@
-module AdminModule
+module Admin::AdminModule
   module AdminUtil
     include ActionController::RecordIdentifier
     private
@@ -49,7 +49,7 @@ module AdminModule
   end
 
   module AdminRootModule
-    include AdminModule::AdminUtil
+    include Admin::AdminModule::AdminUtil
 
     def index
       @query = params[:query]
@@ -148,7 +148,7 @@ module AdminModule
   end
 
   module AdminChildModule
-    include AdminModule::AdminUtil
+    include Admin::AdminModule::AdminUtil
 
     def index
       objects = chiled_objects

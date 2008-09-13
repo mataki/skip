@@ -14,7 +14,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Admin::GroupCategoriesController < Admin::ApplicationController
-  include AdminModule::AdminRootModule
+  include Admin::AdminModule::AdminRootModule
 
   def destroy
     group_category = Admin::GroupCategory.find(params[:id])

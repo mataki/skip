@@ -15,7 +15,7 @@
 
 class Admin::OpenidIdentifiersController < Admin::ApplicationController
   before_filter :load_parent
-  include AdminModule::AdminChildModule
+  include Admin::AdminModule::AdminChildModule
 
   undef show
   private
