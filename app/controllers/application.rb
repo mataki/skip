@@ -107,13 +107,6 @@ class ApplicationController < ActionController::Base
     entry
   end
 
-  def require_admin
-    unless current_user.admin
-      redirect_to root_url
-      return false
-    end
-  end
-
   def login_required
     if current_user.nil?
       if request.url == root_url

@@ -96,27 +96,6 @@ describe ApplicationController, '#prepare_session' do
   end
 end
 
-describe ApplicationController, '#require_admin' do
-  describe '管理者じゃない場合' do
-    before do
-      @user = mock_model(User)
-      @user.stub!(:admin).and_return(false)
-      @user.stub!(:active?).and_return(true)
-      controller.should_receive(:current_user).and_return(@user)
-      @url = '/'
-      controller.stub!(:root_url).and_return(@url)
-      controller.stub!(:redirect_to).with(@url)
-    end
-    it 'mypageへのリダイレクト処理が呼ばれること' do
-      controller.should_receive(:redirect_to).with(@url)
-      controller.require_admin
-    end
-    it 'falseが返却されること' do
-      controller.require_admin.should be_false
-    end
-  end
-end
-
 describe ApplicationController, '#login_required' do
   describe 'ログイン中の場合' do
     before do

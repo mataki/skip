@@ -17,6 +17,13 @@ class Admin::ApplicationController < ApplicationController
   layout 'admin/application'
   before_filter :require_admin
 
+  def require_admin
+    unless current_user.admin
+      redirect_to root_url
+      return false
+    end
+  end
+
   protected
   def valid_file?(uploaded_file, options = {})
     options = {:max_size => 1.megabyte, :content_types => []}.merge(options)
