@@ -39,7 +39,7 @@ class Group < ActiveRecord::Base
 
   def initialize(attributes = nil)
     initialize_old(attributes)
-    self.group_category_id = DEFAULT_CATEGORY_ID
+    self.group_category_id = DEFAULT_CATEGORY_ID if self.group_category_id == 0
   end
 
   class << self
