@@ -27,4 +27,14 @@ class GroupCategory < ActiveRecord::Base
   validates_length_of :icon, :maximum => 20
 
   validates_length_of :description, :maximum => 255
+
+  def before_save
+    if self.initial_selected
+      if initial_selected_group_category = self.class.find_by_initial_selected(true)
+        if self.new_record? || !(self.id == initial_selected_group_category.id)
+          initial_selected_group_category.toggle!(:initial_selected)
+        end
+      end
+    end
+  end
 end

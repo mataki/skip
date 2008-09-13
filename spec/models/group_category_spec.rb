@@ -65,12 +65,52 @@ describe GroupCategory, 'validation' do
   end
 end
 
+describe GroupCategory, '#before_save' do
+  describe 'initial_selectedなレコードを保存する場合' do
+    before do
+      @new_group_category = valid_group_category
+      @new_group_category.attributes = {:code => 'EMACS', :name => 'EMACS', :initial_selected => true}
+    end
+    describe 'まだinitial_selectedなレコードが存在しない場合' do
+      it '正常に保存できること' do
+        @new_group_category.save.should be_true
+      end
+    end
+    describe 'initial_selectedなレコードが存在する場合' do
+      before do
+        @group_category = create_group_category(:code => 'VIM', :name => 'VIM', :initial_selected => true)
+      end
+      describe '新規登録の場合' do
+        it '登録済みのGroupCategoryのinitial_selectedがfalseになること' do
+          @new_group_category.save!
+          @group_category.reload
+          @group_category.initial_selected.should be_false
+        end
+      end
+      describe '更新の場合' do
+        before do
+          # 事前にfalseで保存されている
+          @new_group_category.initial_selected = false
+          @new_group_category.save!
+        end
+        it '登録済みのGroupCategoryのinitial_selectedがfalseになること' do
+          # trueに更新する
+          @new_group_category.toggle!(:initial_selected)
+          @group_category.reload
+          @group_category.initial_selected.should be_false
+        end
+      end
+    end
+  end
+end
+
 def valid_group_category
   group_category = GroupCategory.new({
     :code => 'DEPT',
     :name => '部署',
     :icon => 'group_gear',
-    :description => '部署用のグループカテゴリ'
+    :description => '部署用のグループカテゴリ',
+    :initial_selected => false
   })
   group_category
 end
