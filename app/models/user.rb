@@ -36,7 +36,7 @@ class User < ActiveRecord::Base
 
   validates_presence_of :password, :message => 'は必須です', :if => :password_required?
   validates_confirmation_of :password, :message => 'は確認用パスワードと一致しません', :if => :password_required?
-  validates_length_of :password, :within => 4..40, :too_short => 'は%d文字以上で入力してください', :too_long => 'は%d文字以下で入力して下さい', :if => :password_required?
+  validates_length_of :password, :within => 6..40, :too_short => 'は%d文字以上で入力してください', :too_long => 'は%d文字以下で入力して下さい', :if => :password_required?
 
   validates_presence_of :password_confirmation, :message => 'は必須です', :if => :password_required?
 
