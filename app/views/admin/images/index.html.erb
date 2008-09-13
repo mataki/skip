@@ -10,7 +10,7 @@
       <%= submit_tag _('Upload'), :disable_with => _('Uploading...') %>
     <% end -%>
     <%= help_icon_tag :content => _("Admin::ImagesController|#{target}_description") %> |
-    <%= link_to _('Preview'), "#{controller.request.relative_url_root}/custom/images/#{target}.png", :popup => true %> |
+    <%= link_to _('現在の画像を表示'), "#{controller.request.relative_url_root}/custom/images/#{target}.png", :popup => true %> |
     <%= link_to _('既定の画像に戻す'), admin_images_revert_path(:target => target), :method => :post, :confirm => _('Are you sure?') %>
   <% end -%>
   <% Admin::ImagesController::BACKGROUND_IMAGE_NAMES.each_with_index do |target, index| -%>
@@ -20,7 +20,7 @@
       <%= submit_tag _('Upload'), :disable_with => _('Uploading...') %>
     <% end -%>
     <%= help_icon_tag :content => _("Admin::ImagesController|background_description") %> |
-    <%= link_to _('Preview'), "#{controller.request.relative_url_root}/custom/images/titles/#{target}.jpg", :popup => true %> |
+    <%= link_to _('現在の画像を表示'), "#{controller.request.relative_url_root}/custom/images/titles/#{target}.jpg", :popup => true %> |
     <%= link_to _('既定の画像に戻す'), admin_images_revert_path(:target => target), :method => :post, :confirm => _('Are you sure?') %>
   <% end -%>
 </div>
