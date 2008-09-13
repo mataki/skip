@@ -43,23 +43,6 @@ describe Tag do
     assert "[]", Tag.split_tags("")
   end
 
-  def test_validate_tags
-    assert_equal Tag.validate_tags(SkipFaker.comma_tags).size, 0
-
-    assert_equal Tag.validate_tags("あああ.いい").size, 0
-    assert_equal Tag.validate_tags("あ+ああ/い-_.い").size, 0
-
-    assert_equal Tag.validate_tags("ああ*あ=いい").size, 1
-
-    assert_equal Tag.validate_tags(SkipFaker.comma_tags(:digit => 30)).size, 0
-    assert_equal Tag.validate_tags(SkipFaker.comma_tags(:digit => 31)).size, 1
-
-    assert_equal Tag.validate_tags(SkipFaker.comma_tags(:digit => 29, :qt => 8 ) + ',' + SkipFaker.comma_tags(:digit => 15)).size, 0
-    assert_equal Tag.validate_tags(SkipFaker.comma_tags(:digit => 29, :qt => 8 ) + ',' + SkipFaker.comma_tags(:digit => 16)).size, 1
-
-    assert_equal Tag.validate_tags(SkipFaker.comma_tags(:digit => 31)+ "[aaaa=*]").size, 2
-  end
-
   def test_create_by_string
     @a_entry.category = ''
     Tag.create_by_string @a_entry.category, @a_entry.entry_tags
@@ -78,3 +61,54 @@ describe Tag do
     assert_equal @a_bookmark_comment.bookmark_comment_tags.size, 4
   end
 end
+
+describe Tag, 'validate_tags' do
+  describe '正常なタグの場合' do
+    it { Tag.validate_tags(SkipFaker.comma_tags).size.should == 0 }
+  end
+
+  describe '許容する記号の場合' do
+    it { Tag.validate_tags("あああ.いい").size.should == 0 }
+    it { Tag.validate_tags("あ+ああ/い-_.い").size.should == 0 }
+  end
+
+  describe '許容しない記号の場合' do
+    it { Tag.validate_tags("ああ*あ=いい").size.should == 1 }
+  end
+
+  describe 'ひとつのタグの長さが30文字の場合' do
+    it { Tag.validate_tags(SkipFaker.comma_tags(:digit => 30)).size.should == 0 }
+    it { Tag.validate_tags(two_byte_tag(:digit => 30)).size.should == 0 }
+  end
+  describe 'ひとつのタグの長さが31文字の場合' do
+    it { Tag.validate_tags(SkipFaker.comma_tags(:digit => 31)).size.should == 1 }
+    it { Tag.validate_tags(two_byte_tag(:digit => 31)).size.should == 1 }
+  end
+  describe 'ひとつのタグの長さが29文字で全長が255文字の場合' do
+    it { Tag.validate_tags(SkipFaker.comma_tags(:digit => 29, :qt => 8 ) + ',' + SkipFaker.comma_tags(:digit => 15)).size.should == 0 }
+    it { Tag.validate_tags(two_byte_tag(:digit => 29 , :qt => 8) + ',' + two_byte_tag(:digit => 15)).size.should == 0 }
+  end
+  describe 'ひとつのタグの長さが29文字で全長が256文字の場合' do
+    it { Tag.validate_tags(SkipFaker.comma_tags(:digit => 29, :qt => 8 ) + ',' + SkipFaker.comma_tags(:digit => 16)).size.should == 1 }
+    it { Tag.validate_tags(two_byte_tag(:digit => 29 , :qt => 8) + ',' + two_byte_tag(:digit => 16)).size.should == 1 }
+  end
+
+  describe '複合エラーの場合' do
+    it { Tag.validate_tags(SkipFaker.comma_tags(:digit => 31)+ "[aaaa=*]").size.should == 2 }
+  end
+
+  def two_byte_tag(options = {})
+    options[:qt] ||= 1
+    options[:digit] ? options[:digit] = options[:digit] : options[:digit] = 10
+    array = []
+    str = ''
+    (1..options[:digit]).each do
+      str += 'あ'
+    end
+    (1..options[:qt]).each do
+      array << str
+    end
+    array.join(',')
+  end
+end
+

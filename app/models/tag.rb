@@ -59,7 +59,7 @@ class Tag < ActiveRecord::Base
       errors << '使用可能な記号は「+/.-_」及び「,」(タグの区切り)のみです。その他の記号、半角空白は使えません。'
     end
 
-    if tags_as_string.size > 255
+    if tags_as_string.split(//u).size > 255
       errors << 'は255文字以内で入力してください'
     end
 
