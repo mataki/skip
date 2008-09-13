@@ -32,7 +32,7 @@ class Admin::DocumentsController < Admin::ApplicationController
     @content_name = _(self.class.name + '|' + params[:target])
     @document = ''
     @document = open(RAILS_ROOT + "/public/custom/#{params[:target]}.html", 'r') { |f| s = f.read }
-    @topics = [[_('静的コンテンツ管理'), admin_documents_path]]
+    @topics = [[_('説明文の設定'), admin_documents_path]]
     @topics << @content_name
   rescue Errno::EACCES => e
     flash.now[:error] = _('対象のコンテンツを開くことが出来ませんでした。')
@@ -65,7 +65,7 @@ class Admin::DocumentsController < Admin::ApplicationController
   def check_params
     if params[:target].blank?
       if action_name == 'index'
-        @topics = [[_('静的コンテンツ管理'), admin_documents_path]]
+        @topics = [[_('説明文の設定'), admin_documents_path]]
         render :action => :index
       end
     else
