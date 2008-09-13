@@ -101,7 +101,7 @@ class Admin::UsersController < Admin::ApplicationController
               activation.update_attributes(:code => nil)
             end
           end
-          flash[:notice] = _('登録しました。')
+          flash[:notice] = _('登録しました。') + _('ログインし直して下さい。')
           redirect_to :controller => "/platform", :action => :index
         rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => e
           render :layout => 'admin/not_logged_in'
