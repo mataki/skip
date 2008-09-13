@@ -10,7 +10,7 @@
       <%= help_icon_tag :content => _("Admin::DocumentsController|#{params[:target]}_description") %>
       </p>
     <%= submit_tag _('Save'), :disable_with => _('Saving...') %>
-    <%= link_to '[' + _('実際のページを表示') + ']', "#{controller.request.relative_url_root}/custom/#{params[:target]}.html", :popup => true %>
+    <%= link_to '[' + _('現在のページを表示') + ']', "#{controller.request.relative_url_root}/custom/#{params[:target]}.html", :popup => true %>
     </div>
     <% end -%>
   <% else -%>
