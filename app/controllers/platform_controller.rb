@@ -64,16 +64,7 @@ class PlatformController < ApplicationController
     authenticate_with_open_id do |result, identity_url, registration|
       if result.successful?
         unless identifier = OpenidIdentifier.find_by_url(identity_url)
-          if !ENV['SKIPOP_URL'].blank? and identity_url.include?(ENV['SKIPOP_URL'])
-            user = User.create_with_identity_url(identity_url, create_user_params(identity_url, registration))
-            if user.valid?
-              redirect_to :controller => :portal
-            else
-              set_error_message_from_user_and_redirect(user)
-            end
-          else
-            set_error_message_not_create_new_user_and_redirect
-          end
+          create_user_from(identity_url, registration)
           return
         end
         reset_session
@@ -88,12 +79,24 @@ class PlatformController < ApplicationController
     end
   end
 
+  def create_user_from(identity_url, registration)
+    if !ENV['SKIPOP_URL'].blank? and identity_url.include?(ENV['SKIPOP_URL'])
+      user = User.create_with_identity_url(identity_url, create_user_params(registration))
+      if user.valid?
+        redirect_to :controller => :portal
+      else
+        set_error_message_from_user_and_redirect(user)
+      end
+    else
+      set_error_message_not_create_new_user_and_redirect
+    end
+  end
+
   # -----------------------------------------------
   # over ride open_id_authentication to use OpenID::AX
   def add_simple_registration_fields(open_id_request, fields)
     axreq = OpenID::AX::FetchRequest.new
-    requested_attrs = [['http://axschema.org/namePerson', 'fullname'],
-                       ['http://axschema.org/contact/email', 'email']]
+    requested_attrs = INITIAL_SETTINGS['ax_fetchrequest']
     requested_attrs.each { |a| axreq.add(OpenID::AX::AttrInfo.new(a[0], a[1], a[2] || false, a[3] || 1)) }
     open_id_request.add_extension(axreq)
     open_id_request.return_to_args['did_ax'] = 'y'
@@ -122,12 +125,10 @@ class PlatformController < ApplicationController
     redirect_to (return_to and !return_to.empty?) ? return_to : root_url
   end
 
-  def create_user_params identity_url, registration
-    mappings = {'http://axschema.org/namePerson' => 'name',
-      'http://axschema.org/contact/email' => 'email' }
-    user_attribute = {:code => identity_url.split("/").last}
-    mappings.each do |url, column|
-      user_attribute[column.to_sym] = registration.data[url][0]
+  def create_user_params registration
+    user_attribute = {}
+    INITIAL_SETTINGS['ax_fetchrequest'].each do |a|
+      user_attribute[a[1].to_sym] = registration.data[a[0]][0]
     end
     user_attribute
   end

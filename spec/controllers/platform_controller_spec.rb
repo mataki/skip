@@ -47,17 +47,17 @@ describe PlatformController, "ログイン時にOpenIdのアカウントが渡�
     @registration = mock('registration')
     @registration_data = {'http://axschema.org/namePerson' => ['ほげ ふが'],
       'http://axschema.org/company/title' => ['経理'],
-      'http://axschema.org/contact/email' => ['hoge@hoge.jp']}
+      'http://axschema.org/contact/email' => ['hoge@hoge.jp'],
+      'http://axschema.org/namePerson/friendly' => ['opuser']
+    }
     @registration.stub!(:data).and_return(@registration_data)
-    @identity_url = 'http://op.example.com/opuser'
+    @identity_url = 'http://op.example.com/hoge'
   end
   describe "正しく認証できた場合" do
     before do
       result = OpenIdAuthentication::Result[:successful]
       controller.should_receive(:authenticate_with_open_id).and_yield(result, @identity_url, @registration)
-      @user = stub_model(User, :code => "hogehoge", :name => "hogehoge")
-      user_profile = stub_model(UserProfile, :email => 'hoge@hoge.jp', :section => '')
-      @user.stub!(:user_profile).and_return(user_profile)
+      @user = stub_model(User, :code => "hogehoge")
       @openid_identifier = stub_model(OpenidIdentifier, :url => @identity_url)
       @openid_identifier.stub!(:user_with_unused).and_return(@user)
     end
@@ -95,53 +95,10 @@ describe PlatformController, "ログイン時にOpenIdのアカウントが渡�
       before do
         OpenidIdentifier.should_receive(:find_by_url).and_return(nil)
       end
-      describe "新規Userが作成可能な設定の場合" do
-        before do
-          ENV['SKIPOP_URL'] = 'http://op.example.com/'
-          @user = stub_model(User)
-        end
-        describe "作成が成功する場合" do
-          before do
-            @user.should_receive(:valid?).and_return(true)
-            User.should_receive(:create_with_identity_url).with(@identity_url, { :code => @identity_url.split("/").last, :name => 'ほげ ふが', :email => 'hoge@hoge.jp' }).and_return(@user)
-            post :login, :openid_url => @identity_url
-          end
-          it "Userを新規作成すること" do
-          end
-          it "Userにidentity_urlから抽出されたcodeが渡されること" do
-          end
-          it "ユーザ登録が面へ遷移すること" do
-            response.should redirect_to(:controller => :portal)
-          end
-        end
-        describe "作成が失敗する場合" do
-          before do
-            @user.should_receive(:valid?).and_return(false)
-            User.should_receive(:create_with_identity_url).and_return(@user)
-            post :login, :openid_url => @identity_url
-          end
-          it { response.should redirect_to(:controller => :platform, :action => :index) }
-          it { flash[:auth_fail_message]["message"].should_not be_nil }
-        end
+      it "create_user_fromが呼ばれること" do
+        controller.should_receive(:create_user_from).with(@identity_url, @registration)
 
-      end
-      describe "SKIPOP_URLが設定されていない場合設定の場合" do
-        before do
-          ENV['SKIPOP_URL'] = nil
-          post :login, :openid_url => @identity_url
-        end
-        it { response.should be_redirect }
-        it { response.should redirect_to(:controller => :platform, :action => :index) }
-        it { flash[:auth_fail_message]["message"].should_not be_nil }
-      end
-      describe "identity_urlにSKIPOP_URLが含まれないない場合" do
-        before do
-          ENV['SKIPOP_URL'] = 'http://localhost:3000/'
-          post :login, :openid_url => @identity_url
-        end
-        it { response.should be_redirect }
-        it { response.should redirect_to(:controller => :platform, :action => :index) }
-        it { flash[:auth_fail_message]["message"].should_not be_nil }
+      post :login, :openid_url => @identity_url
       end
     end
   end
@@ -218,5 +175,77 @@ describe PlatformController, "#logout" do
     end
     it { response.should redirect_to(:controller => :platform, :action => :index) }
     it { flash[:notice].should be_include('retired') }
+  end
+end
+
+describe PlatformController, "#create_user_from" do
+  before do
+    @identity_url = "http://id.example.com/a_user/"
+    @registration = mock('registration')
+  end
+
+  describe "専用OPモードの場合" do
+    before do
+      ENV['SKIPOP_URL'] = 'http://skipop.url/'
+    end
+    describe "identity_urlが適切な場合" do
+      before do
+        @identity_url = 'http://skipop.url/user/a_user'
+
+        @user = stub_model(User)
+        User.should_receive(:create_with_identity_url).and_return(@user)
+        controller.stub!(:create_user_params)
+      end
+      describe "ユーザの登録が成功した場合" do
+        before do
+          @user.should_receive(:valid?).and_return(true)
+        end
+        it "登録画面へリダイレクトすること" do
+          controller.should_receive(:redirect_to).with({ :controller => :portal })
+
+          call_create_user_from
+        end
+      end
+      describe "ユーザの登録に失敗した場合" do
+        before do
+          @user.should_receive(:valid?).and_return(false)
+        end
+        it "ログイン前画面に遷移してエラー表示すること" do
+          controller.should_receive(:set_error_message_from_user_and_redirect).with(@user)
+
+          call_create_user_from
+        end
+      end
+    end
+  end
+  describe "OP専用モードでない場合" do
+    before do
+      ENV['SKIPOP_URL'] = nil
+    end
+    it "ログイン画面に遷移して、エラーメッセージを表示すること" do
+      controller.should_receive(:set_error_message_not_create_new_user_and_redirect)
+
+      call_create_user_from
+    end
+  end
+  def call_create_user_from
+    controller.send(:create_user_from, @identity_url, @registration)
+  end
+end
+
+describe PlatformController, "#create_user_params" do
+  before do
+    @registration = mock('registration')
+    @registration_data = {'http://axschema.org/namePerson' => ['ほげ ふが'],
+      'http://axschema.org/contact/email' => ['hoge@hoge.jp'],
+      'http://axschema.org/namePerson/friendly' => ['opuser']
+    }
+    @registration.stub!(:data).and_return(@registration_data)
+    INITIAL_SETTINGS['ax_fetchrequest'] = [ ["http://axschema.org/namePerson", 'name'],
+                                            ["http://axschema.org/contact/email", 'email'],
+                                            ["http://axschema.org/namePerson/friendly", 'code']]
+  end
+  it "正しく整形されたもんが返却されること" do
+    controller.send(:create_user_params, @registration).should == {:email=>"hoge@hoge.jp", :name=>"ほげ ふが", :code=>"opuser"}
   end
 end
