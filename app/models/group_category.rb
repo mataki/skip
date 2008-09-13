@@ -16,6 +16,9 @@
 class GroupCategory < ActiveRecord::Base
   has_many :groups
 
+  N_('GroupCategory|Initial selected|true')
+  N_('GroupCategory|Initial selected|false')
+
   validates_presence_of :code
   validates_uniqueness_of :code
   validates_length_of :code, :maximum => 20
@@ -28,6 +31,8 @@ class GroupCategory < ActiveRecord::Base
 
   validates_length_of :description, :maximum => 255
 
+  ICONS = ['page_word', 'group_gear', 'ipod']
+
   def before_save
     if self.initial_selected
       if initial_selected_group_category = self.class.find_by_initial_selected(true)
@@ -36,5 +41,18 @@ class GroupCategory < ActiveRecord::Base
         end
       end
     end
+  end
+
+  def deletable?
+    if self.initial_selected?
+      errors.add_to_base(_('対象のカテゴリはグループ作成時に初期選択される設定のため削除出来ません。'))
+      return false
+    else
+      unless self.groups.empty?
+        errors.add_to_base(_('対象のカテゴリのグループが存在するため削除できません。'))
+        return false
+      end
+    end
+    true
   end
 end

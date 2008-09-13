@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-09-13 11:45+0900\n"
+"POT-Creation-Date: 2008-09-13 14:02+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -742,16 +742,17 @@ msgstr ""
 msgid "Are you sure destroing with nest comments?"
 msgstr ""
 
-#: app/views/admin/board_entries/index.html.erb:30
+#: app/views/admin/share_files/index.html.erb:28
 #: app/views/admin/bookmark_comments/index.html.erb:30
-#: app/views/admin/bookmarks/index.html.erb:19
+#: app/views/admin/board_entries/index.html.erb:30
+#: app/views/admin/users/index.html.erb:29
 #: app/views/admin/group_participations/index.html.erb:30
+#: app/views/admin/group_categories/index.html.erb:27
 #: app/views/admin/groups/index.html.erb:31
 #: app/views/admin/images/index.html.erb:14
 #: app/views/admin/images/index.html.erb:24
 #: app/views/admin/openid_identifiers/index.html.erb:18
-#: app/views/admin/share_files/index.html.erb:28
-#: app/views/admin/users/index.html.erb:29
+#: app/views/admin/bookmarks/index.html.erb:19
 msgid "Are you sure?"
 msgstr ""
 
@@ -1013,17 +1014,17 @@ msgstr ""
 msgid "Change uid"
 msgstr ""
 
+#: app/views/admin/users/new.html.erb:12
+#: app/views/admin/users/first.html.erb:32
 #: app/views/admin/group_categories/new.html.erb:10
 #: app/views/admin/openid_identifiers/new.html.erb:17
-#: app/views/admin/users/first.html.erb:32
-#: app/views/admin/users/new.html.erb:12
 msgid "Create"
 msgstr ""
 
+#: app/views/admin/users/new.html.erb:12
+#: app/views/admin/users/first.html.erb:32
 #: app/views/admin/group_categories/new.html.erb:10
 #: app/views/admin/openid_identifiers/new.html.erb:17
-#: app/views/admin/users/first.html.erb:32
-#: app/views/admin/users/new.html.erb:12
 msgid "Creating..."
 msgstr ""
 
@@ -1031,24 +1032,25 @@ msgstr ""
 msgid "Data management"
 msgstr ""
 
-#: app/views/admin/board_entries/index.html.erb:30
-#: app/views/admin/board_entry_comments/index.html.erb:26
+#: app/views/admin/share_files/index.html.erb:28
 #: app/views/admin/bookmark_comments/index.html.erb:30
-#: app/views/admin/bookmarks/index.html.erb:19
+#: app/views/admin/board_entries/index.html.erb:30
+#: app/views/admin/users/index.html.erb:29
+#: app/views/admin/board_entry_comments/index.html.erb:26
 #: app/views/admin/group_participations/index.html.erb:30
+#: app/views/admin/group_categories/index.html.erb:27
 #: app/views/admin/groups/index.html.erb:31
 #: app/views/admin/openid_identifiers/index.html.erb:18
-#: app/views/admin/share_files/index.html.erb:28
-#: app/views/admin/users/index.html.erb:29
+#: app/views/admin/bookmarks/index.html.erb:19
 msgid "Destroy"
 msgstr ""
 
-#: app/views/admin/group_categories/index.html.erb:18
-#: app/views/admin/group_categories/show.html.erb:29
-#: app/views/admin/openid_identifiers/index.html.erb:17
 #: app/views/admin/user_profiles/index.html.erb:27
-#: app/views/admin/users/index.html.erb:28
 #: app/views/admin/users/show.html.erb:26
+#: app/views/admin/users/index.html.erb:28
+#: app/views/admin/group_categories/show.html.erb:29
+#: app/views/admin/group_categories/index.html.erb:26
+#: app/views/admin/openid_identifiers/index.html.erb:17
 msgid "Edit"
 msgstr ""
 
@@ -1128,6 +1130,14 @@ msgstr ""
 
 #: app/models/group.rb:-
 msgid "GroupCategory|Initial selected"
+msgstr ""
+
+#: app/models/group_category.rb:20
+msgid "GroupCategory|Initial selected|false"
+msgstr ""
+
+#: app/models/group_category.rb:19
+msgid "GroupCategory|Initial selected|true"
 msgstr ""
 
 #: app/models/group.rb:-
@@ -1241,9 +1251,9 @@ msgstr ""
 #: app/controllers/admin/users_controller.rb:133
 #: app/controllers/admin/users_controller.rb:151
 #: app/views/admin/board_entries/show.html.erb:23
-#: app/views/admin/bookmarks/show.html.erb:19
+#: app/views/admin/users/import.html.erb:68
 #: app/views/admin/groups/show.html.erb:35
-#: app/views/admin/users/import.html.erb:68 lib/admin_module.rb:62
+#: app/views/admin/bookmarks/show.html.erb:19 lib/admin_module.rb:62
 #: lib/admin_module.rb:74 lib/admin_module.rb:88 lib/admin_module.rb:101
 #: lib/admin_module.rb:157 lib/admin_module.rb:159 lib/admin_module.rb:171
 #: lib/admin_module.rb:173 lib/admin_module.rb:186 lib/admin_module.rb:188
@@ -1312,8 +1322,8 @@ msgid "Message|User"
 msgstr ""
 
 #: app/controllers/admin/users_controller.rb:28
-#: app/views/admin/group_categories/index.html.erb:24
-#: app/views/admin/users/index.html.erb:36 lib/admin_module.rb:89
+#: app/views/admin/users/index.html.erb:36
+#: app/views/admin/group_categories/index.html.erb:34 lib/admin_module.rb:89
 #: lib/admin_module.rb:189
 msgid "New %{model}"
 msgstr ""
@@ -1433,13 +1443,13 @@ msgstr ""
 msgid "Ranking|Url"
 msgstr ""
 
-#: app/views/admin/documents/index.html.erb:12
 #: app/views/admin/settings/index.html.erb:7
+#: app/views/admin/documents/index.html.erb:12
 msgid "Save"
 msgstr ""
 
-#: app/views/admin/documents/index.html.erb:12
 #: app/views/admin/settings/index.html.erb:7
+#: app/views/admin/documents/index.html.erb:12
 msgid "Saving..."
 msgstr ""
 
@@ -1524,12 +1534,12 @@ msgid "ShareFile|日付"
 msgstr ""
 
 #: app/views/admin/board_entries/index.html.erb:29
-#: app/views/admin/bookmarks/index.html.erb:18
-#: app/views/admin/group_categories/edit.html.erb:16
-#: app/views/admin/group_categories/index.html.erb:17
-#: app/views/admin/groups/index.html.erb:30
 #: app/views/admin/users/edit.html.erb:17
 #: app/views/admin/users/index.html.erb:27
+#: app/views/admin/group_categories/edit.html.erb:16
+#: app/views/admin/group_categories/index.html.erb:25
+#: app/views/admin/groups/index.html.erb:30
+#: app/views/admin/bookmarks/index.html.erb:18
 msgid "Show"
 msgstr ""
 
@@ -1625,31 +1635,31 @@ msgstr ""
 msgid "Track|Visitor"
 msgstr ""
 
-#: app/views/admin/group_categories/edit.html.erb:11
-#: app/views/admin/openid_identifiers/edit.html.erb:16
 #: app/views/admin/user_profiles/edit.html.erb:11
 #: app/views/admin/users/change_uid.html.erb:18
 #: app/views/admin/users/edit.html.erb:11
+#: app/views/admin/group_categories/edit.html.erb:11
+#: app/views/admin/openid_identifiers/edit.html.erb:16
 msgid "Update"
 msgstr ""
 
-#: app/views/admin/group_categories/edit.html.erb:11
-#: app/views/admin/openid_identifiers/edit.html.erb:16
 #: app/views/admin/user_profiles/edit.html.erb:11
 #: app/views/admin/users/edit.html.erb:11
+#: app/views/admin/group_categories/edit.html.erb:11
+#: app/views/admin/openid_identifiers/edit.html.erb:16
 msgid "Updating..."
 msgstr ""
 
+#: app/views/admin/users/import.html.erb:11
 #: app/views/admin/images/index.html.erb:10
 #: app/views/admin/images/index.html.erb:20
-#: app/views/admin/users/import.html.erb:11
 msgid "Upload"
 msgstr ""
 
-#: app/views/admin/images/index.html.erb:10
-#: app/views/admin/images/index.html.erb:20
 #: app/views/admin/users/import.html.erb:11
 #: app/views/admin/users/import.html.erb:78
+#: app/views/admin/images/index.html.erb:10
+#: app/views/admin/images/index.html.erb:20
 msgid "Uploading..."
 msgstr ""
 
@@ -1968,7 +1978,7 @@ msgid "group"
 msgstr ""
 
 #: app/helpers/admin/application_helper.rb:36 app/models/group.rb:-
-#: app/views/admin/group_categories/index.html.erb:24
+#: app/views/admin/group_categories/index.html.erb:34
 msgid "group category"
 msgstr ""
 
@@ -2188,8 +2198,25 @@ msgstr ""
 msgid "内部エラーが発生しました。"
 msgstr ""
 
+#: app/controllers/admin/group_categories_controller.rb:23
+msgid "削除しました。"
+msgstr ""
+
+#: app/controllers/admin/group_categories_controller.rb:34
+msgid "削除対象のカテゴリが存在しませんでした。"
+msgstr ""
+
 #: app/views/admin/documents/index.html.erb:13
 msgid "実際のページを表示"
+msgstr ""
+
+#: app/models/group_category.rb:52
+msgid "対象のカテゴリのグループが存在するため削除できません。"
+msgstr ""
+
+#: app/models/group_category.rb:48
+msgid ""
+"対象のカテゴリはグループ作成時に初期選択される設定のため削除出来ません。"
 msgstr ""
 
 #: app/controllers/admin/documents_controller.rb:41

@@ -1,15 +1,15 @@
 class CreateGroupCategories < ActiveRecord::Migration
   def self.up
     create_table :group_categories do |t|
-      t.string :code,        :default => '', :null => false
-      t.string :name,        :default => '', :null => false
-      t.string :icon,        :default => '', :null => false
-      t.string :description, :default => ''
+      t.string :code,                 :default => '', :null => false
+      t.string :name,                 :default => '', :null => false
+      t.string :icon,                 :default => '', :null => false
+      t.string :description,          :default => ''
       t.boolean :initial_selected,    :default => false, :null => false
       t.timestamps
     end
     add_index :group_categories, :code, :unique => true
-    add_column :groups, :group_category_id, :integer
+    add_column :groups, :group_category_id, :integer, :default => 0, :null => false
 
     Group.transaction do
       biz_category = GroupCategory.create!({ :code => "BIZ", :name => "ビジネス", :icon => "page_word", :description => "プロジェクト内など、業務で利用する場合に選択してください。" })

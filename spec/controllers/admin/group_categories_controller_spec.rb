@@ -19,9 +19,41 @@ describe Admin::GroupCategoriesController, 'DELETE /destroy' do
   before do
     admin_login
   end
-  it 'UnknownActionになること' do
-    lambda do
+  describe '対象のgroup_categoryが存在する場合' do
+    before do
+      @group_category = stub_model(Admin::GroupCategory)
+      @group_category.stub!(:deletable?)
+      Admin::GroupCategory.stub!(:find).and_return(@group_category)
+    end
+    describe '削除可能な場合' do
+      before do
+        @group_category.should_receive(:deletable?).and_return(true)
+        @group_category.should_receive(:destroy)
+        delete :destroy
+      end
+      it { flash[:notice].should_not be_nil }
+      it { response.should redirect_to(admin_group_categories_path) }
+    end
+    describe '削除不可能な場合' do
+      before do
+        @group_category.should_receive(:deletable?).and_return(false)
+        @group_category.should_not_receive(:destroy)
+        mock_errors = mock('errors')
+        mock_errors.should_receive(:full_messages).and_return(['error'])
+        @group_category.stub!(:errors).and_return(mock_errors)
+        delete :destroy
+      end
+      it { flash[:error].should_not be_nil }
+      it { response.should redirect_to(admin_group_categories_path) }
+    end
+  end
+  describe '対象のgroup_categoryが存在しない場合' do
+    before do
+      @group_category = stub_model(Admin::GroupCategory)
+      Admin::GroupCategory.should_receive(:find).and_raise(ActiveRecord::RecordNotFound)
       delete :destroy
-    end.should raise_error(ActionController::UnknownAction)
+    end
+    it { flash[:error].should_not be_nil }
+    it { response.should redirect_to(admin_group_categories_path) }
   end
 end
