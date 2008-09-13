@@ -15,12 +15,3 @@
 
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe Admin::GroupCategory do
-  before(:each) do
-    @group_category = Admin::GroupCategory.new
-  end
-
-  it "should be valid" do
-    @group_category.should be_valid
-  end
-end

@@ -96,14 +96,14 @@ def mock_record_invalid
 end
 
 def create_ranking(options = {})
-    ranking = Ranking.new({
-      :url => 'http://user.openskip.org/',
-      :title => 'SUG',
-      :extracted_on => Date.today,
-      :amount => 1,
-      :contents_type => 'entry_access'}.merge(options))
-    ranking.save
-    ranking
+  ranking = Ranking.new({
+    :url => 'http://user.openskip.org/',
+    :title => 'SUG',
+    :extracted_on => Date.today,
+    :amount => 1,
+    :contents_type => 'entry_access'}.merge(options))
+  ranking.save
+  ranking
 end
 
 def create_user options = {}

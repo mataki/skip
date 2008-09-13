@@ -15,4 +15,16 @@
 
 class GroupCategory < ActiveRecord::Base
   has_many :groups
+
+  validates_presence_of :code
+  validates_uniqueness_of :code
+  validates_length_of :code, :maximum => 20
+
+  validates_presence_of :name
+  validates_length_of :name, :maximum => 20
+
+  validates_presence_of :icon
+  validates_length_of :icon, :maximum => 20
+
+  validates_length_of :description, :maximum => 255
 end
