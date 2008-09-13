@@ -1,6 +1,8 @@
 <html>
 <head>
   <title><%= @entry.title %></title>
+  <%= skip_all_javascript_include_tag 'jquery' %>
+  <script language="JavaScript" type="text/javascript">$j = jQuery.noConflict();</script>
   <%= javascript_include_tag 'application' %>
 
   <%= skip_stylesheet_link_tag 'style' %>
@@ -40,7 +42,6 @@ div.board_entry {
 .contents {
   background-color: #FFFFFF;
   overflow-y: visible;
-  overflow: hidden;
   margin-left: 10px;
 }
 .board_entry .contents_body {
