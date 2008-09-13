@@ -73,7 +73,59 @@ describe Admin::UsersController, 'GET /edit' do
   it {response.should be_success}
 end
 
-describe Admin::UsersController, 'POST /update' do
+describe Admin::UsersController, 'POST #update' do
+  before do
+    admin_login
+
+    @user = stub_model(Admin::User)
+    Admin::User.stub!(:make_user_by_id).and_return(@user)
+  end
+  describe "正しく更新できた場合" do
+    before do
+      @user.should_receive(:save!)
+
+      post :update
+    end
+    it "flashに更新しましたのメッセージが入っていること" do
+      flash[:notice].should == '更新しました。'
+    end
+    it { response.should be_redirect }
+  end
+  describe "更新できなかった場合" do
+    before do
+      @user.should_receive(:save!).and_raise(mock_record_invalid)
+
+      post :update
+    end
+    it { response.should render_template('admin/users/edit') }
+    it "@userが設定されていること" do
+      assigns[:user].should == @user
+    end
+  end
+  describe "自分自身を更新する場合" do
+    before do
+      @before_status = mock('before_status')
+      @before_admin = mock('before admin')
+      @admin_user = admin_login
+      @admin_user.stub!(:status).and_return(@before_status)
+      @admin_user.stub!(:admin).and_return(@before_admin)
+      @admin_user.stub!(:id).and_return(@user.id)
+
+      @user.stub!(:save!)
+    end
+    it "ステータスが変更されない" do
+      @user.should_receive(:status=).with(@before_status)
+      post :update
+    end
+    it "管理権限が変更されない" do
+      @user.should_receive(:admin=).with(@before_admin)
+      post :update
+    end
+    it "編集画面がrenderされる" do
+      post :update
+      response.should render_template('admin/users/edit')
+    end
+  end
 end
 
 describe Admin::UsersController, 'POST #destroy' do

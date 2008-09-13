@@ -55,6 +55,12 @@ class Admin::UsersController < Admin::ApplicationController
 
   def update
     @user = Admin::User.make_user_by_id(params)
+    if @user.id == current_user.id and (@user.status != current_user.status or @user.admin != current_user.admin)
+      @user.status = current_user.status
+      @user.admin = current_user.admin
+      @user.errors.add_to_base(_('You cannot update status and admin of yourself'))
+      raise ActiveRecord::RecordInvalid.new(@user)
+    end
     @user.save!
     flash[:notice] = _('更新しました。')
     redirect_to admin_user_path(@user)
