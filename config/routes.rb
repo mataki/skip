@@ -69,8 +69,9 @@ ActionController::Routing::Routes.draw do |map|
     admin_map.settings_ado_antenna_default_group 'settings/ado_antenna_default_group', :controller => 'settings', :action => 'ado_antenna_default_group'
     admin_map.settings 'settings/:tab', :controller => 'settings', :action => 'index', :defaults => { :tab => '' }
 
-    admin_map.documents_update 'documents/:target/update', :controller => 'documents', :action => 'update'
     admin_map.documents 'documents/:target', :controller => 'documents', :action => 'index', :defaults => { :target => '' }
+    admin_map.documents_update 'documents/:target/update', :controller => 'documents', :action => 'update'
+    admin_map.documents_revert 'documents/:target/revert', :controller => 'documents', :action => 'revert'
 
     admin_map.images 'images', :controller => 'images', :action => 'index'
     admin_map.images_update 'images/:target/update', :controller => 'images', :action => 'update'

@@ -66,7 +66,7 @@ class Admin::ImagesController < Admin::ApplicationController
 
   def revert
     if request.get?
-      return redirect_to(:action => :index)
+      return redirect_to(admin_images_path)
     end
     @topics = [_(self.class.name.to_s)]
     open("#{save_dir}/default_#{params[:target]}#{extentions}", 'rb') do |default_file|

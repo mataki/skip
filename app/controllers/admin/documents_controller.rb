@@ -61,6 +61,29 @@ class Admin::DocumentsController < Admin::ApplicationController
     render :action => :index, :target => params[:target], :status => :internal_server_error
   end
 
+  def revert
+    if request.get?
+      return redirect_to(admin_documents_path)
+    end
+    @topics = [_(self.class.name.to_s)]
+    save_dir = "#{RAILS_ROOT}/public/custom"
+    extentions = '.html'
+    open("#{save_dir}/default_#{params[:target]}#{extentions}", 'r') do |default_file|
+      open("#{save_dir}/#{params[:target]}#{extentions}", 'w') do |target_file|
+        target_file.write(default_file.read)
+      end
+    end
+    flash[:notice] = _('%{target}を保存しました。' % {:target => _("Admin::DocumentsController|#{params[:target]}")})
+    redirect_to admin_documents_path(:target => params[:target])
+  rescue Errno::EACCES => e
+    flash.now[:error] = _('対象のコンテンツを保存することが出来ませんでした。再度お試し頂くか管理者にお問い合わせ下さい。')
+    render :action => :index, :target => params[:target], :status => :forbidden
+  rescue => e
+    flash.now[:error] = _('想定外のエラーが発生しました。管理者にお問い合わせ下さい。')
+    e.backtrace.each { |message| logger.error message }
+    render :action => :index, :target => params[:target], :status => :internal_server_error
+  end
+
   private
   def check_params
     if params[:target].blank?
