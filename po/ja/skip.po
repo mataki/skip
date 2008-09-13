@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-09-13 14:47+0900\n"
+"POT-Creation-Date: 2008-09-13 16:38+0900\n"
 "PO-Revision-Date: 2008-09-13 11:22+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,17 +16,23 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: app/controllers/admin/users_controller.rb:152 lib/admin_module.rb:75
-#: lib/admin_module.rb:158 lib/admin_module.rb:172 lib/admin_module.rb:174
-#: lib/admin_module.rb:187 lib/admin_module.rb:202
+#: app/controllers/admin/users_controller.rb:159
+#: app/controllers/admin/admin_module.rb:75
+#: app/controllers/admin/admin_module.rb:158
+#: app/controllers/admin/admin_module.rb:172
+#: app/controllers/admin/admin_module.rb:174
+#: app/controllers/admin/admin_module.rb:187
+#: app/controllers/admin/admin_module.rb:202
 msgid "%{model} Show"
 msgstr "%{model}の詳細"
 
-#: lib/admin_module.rb:111 lib/admin_module.rb:213
+#: app/controllers/admin/admin_module.rb:111
+#: app/controllers/admin/admin_module.rb:213
 msgid "%{model} was successfully created."
 msgstr "%{model}の作成に成功しました。"
 
-#: lib/admin_module.rb:127 lib/admin_module.rb:230
+#: app/controllers/admin/admin_module.rb:127
+#: app/controllers/admin/admin_module.rb:230
 msgid "%{model} was successfully updated."
 msgstr "%{model}の更新に成功しました。"
 
@@ -121,9 +127,7 @@ msgstr "このサイトについて"
 
 #: app/controllers/admin/documents_controller.rb:21
 msgid "Admin::DocumentsController|about_this_site_description"
-msgstr ""
-"<a href=\"/custom/about_this_site.html\">[このサイトについて]</a>画面の内容を"
-"修正することが出来ます。"
+msgstr "[このサイトについて]画面の内容を修正することが出来ます。"
 
 #: app/controllers/admin/documents_controller.rb:22
 msgid "Admin::DocumentsController|confirm_desc"
@@ -131,9 +135,7 @@ msgstr "利用規約の確認"
 
 #: app/controllers/admin/documents_controller.rb:23
 msgid "Admin::DocumentsController|confirm_desc_description"
-msgstr ""
-"<a href=\"/custom/confirm_desc.html\">[利用規約の確認]</a>画面の内容を修正す"
-"ることが出来ます。"
+msgstr "[利用規約の確認]画面の内容を修正することが出来ます。"
 
 #: app/controllers/admin/documents_controller.rb:24
 msgid "Admin::DocumentsController|introduction"
@@ -141,9 +143,7 @@ msgstr "イントロダクション"
 
 #: app/controllers/admin/documents_controller.rb:25
 msgid "Admin::DocumentsController|introduction_description"
-msgstr ""
-"<a href=\"/custom/confirm_desc.html\">[イントロダクション]</a>画面の内容を修"
-"正することが出来ます。"
+msgstr "[イントロダクション]画面の内容を修正することが出来ます。"
 
 #: app/controllers/admin/documents_controller.rb:26
 msgid "Admin::DocumentsController|login_desc"
@@ -151,9 +151,7 @@ msgstr "ログインの説明"
 
 #: app/controllers/admin/documents_controller.rb:27
 msgid "Admin::DocumentsController|login_desc_description"
-msgstr ""
-"<a href=\"/custom/confirm_desc.html\">[ログインの説明]</a>画面の内容を修正す"
-"ることが出来ます。"
+msgstr "[ログインの説明]画面の内容を修正することが出来ます。"
 
 #: app/controllers/admin/documents_controller.rb:28
 msgid "Admin::DocumentsController|rules"
@@ -161,9 +159,7 @@ msgstr "利用規約"
 
 #: app/controllers/admin/documents_controller.rb:29
 msgid "Admin::DocumentsController|rules_description"
-msgstr ""
-"<a href=\"/custom/confirm_desc.html\">[利用規約]</a>画面の内容を修正すること"
-"が出来ます。"
+msgstr "[利用規約]画面の内容を修正することが出来ます。"
 
 #: app/models/admin/group_category.rb:19
 msgid "Admin::GroupCategory|Code"
@@ -775,8 +771,6 @@ msgstr "関連するコメントも一緒に削除されますが、よろしい
 #: app/views/admin/group_participations/index.html.erb:30
 #: app/views/admin/group_categories/index.html.erb:27
 #: app/views/admin/groups/index.html.erb:31
-#: app/views/admin/images/index.html.erb:14
-#: app/views/admin/images/index.html.erb:24
 #: app/views/admin/openid_identifiers/index.html.erb:18
 #: app/views/admin/bookmarks/index.html.erb:19
 msgid "Are you sure?"
@@ -994,7 +988,7 @@ msgstr "タイトル"
 msgid "CSVファイル"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:141
+#: app/controllers/admin/users_controller.rb:148
 msgid "CSVファイルからのユーザ登録/更新に成功しました。"
 msgstr ""
 
@@ -1002,12 +996,16 @@ msgstr ""
 msgid "CSVファイルでインポートする際の注意"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:146
+#: app/controllers/admin/users_controller.rb:153
 msgid "CSVファイルに不正な値が含まれています。"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:123
-#: app/controllers/admin/users_controller.rb:128
+#: app/views/admin/users/import.html.erb:25
+msgid "CSVファイルの内容"
+msgstr ""
+
+#: app/controllers/admin/users_controller.rb:130
+#: app/controllers/admin/users_controller.rb:135
 msgid "CSVファイルの内容を検証しました。"
 msgstr ""
 
@@ -1035,7 +1033,7 @@ msgstr "更新日時"
 msgid "Chain|紹介文"
 msgstr "紹介文"
 
-#: app/controllers/admin/users_controller.rb:153
+#: app/controllers/admin/users_controller.rb:160
 #: app/views/admin/users/show.html.erb:28
 msgid "Change uid"
 msgstr "ニックネーム変更"
@@ -1081,8 +1079,9 @@ msgid "Edit"
 msgstr "編集"
 
 #: app/controllers/admin/users_controller.rb:50
-#: app/controllers/admin/users_controller.rb:72 lib/admin_module.rb:102
-#: lib/admin_module.rb:204
+#: app/controllers/admin/users_controller.rb:72
+#: app/controllers/admin/admin_module.rb:102
+#: app/controllers/admin/admin_module.rb:204
 msgid "Editing %{model}"
 msgstr "%{model}の更新"
 
@@ -1273,17 +1272,25 @@ msgstr "行"
 #: app/controllers/admin/users_controller.rb:28
 #: app/controllers/admin/users_controller.rb:49
 #: app/controllers/admin/users_controller.rb:71
-#: app/controllers/admin/users_controller.rb:116
-#: app/controllers/admin/users_controller.rb:133
-#: app/controllers/admin/users_controller.rb:151
+#: app/controllers/admin/users_controller.rb:123
+#: app/controllers/admin/users_controller.rb:140
+#: app/controllers/admin/users_controller.rb:158
+#: app/controllers/admin/admin_module.rb:62
+#: app/controllers/admin/admin_module.rb:74
+#: app/controllers/admin/admin_module.rb:88
+#: app/controllers/admin/admin_module.rb:101
+#: app/controllers/admin/admin_module.rb:157
+#: app/controllers/admin/admin_module.rb:159
+#: app/controllers/admin/admin_module.rb:171
+#: app/controllers/admin/admin_module.rb:173
+#: app/controllers/admin/admin_module.rb:186
+#: app/controllers/admin/admin_module.rb:188
+#: app/controllers/admin/admin_module.rb:201
+#: app/controllers/admin/admin_module.rb:203
 #: app/views/admin/board_entries/show.html.erb:23
 #: app/views/admin/users/import.html.erb:68
 #: app/views/admin/groups/show.html.erb:35
-#: app/views/admin/bookmarks/show.html.erb:19 lib/admin_module.rb:62
-#: lib/admin_module.rb:74 lib/admin_module.rb:88 lib/admin_module.rb:101
-#: lib/admin_module.rb:157 lib/admin_module.rb:159 lib/admin_module.rb:171
-#: lib/admin_module.rb:173 lib/admin_module.rb:186 lib/admin_module.rb:188
-#: lib/admin_module.rb:201 lib/admin_module.rb:203
+#: app/views/admin/bookmarks/show.html.erb:19
 msgid "Listing %{model}"
 msgstr "%{model}一覧"
 
@@ -1348,14 +1355,15 @@ msgid "Message|User"
 msgstr ""
 
 #: app/controllers/admin/users_controller.rb:28
+#: app/controllers/admin/admin_module.rb:89
+#: app/controllers/admin/admin_module.rb:189
 #: app/views/admin/users/index.html.erb:36
-#: app/views/admin/group_categories/index.html.erb:34 lib/admin_module.rb:89
-#: lib/admin_module.rb:189
+#: app/views/admin/group_categories/index.html.erb:34
 msgid "New %{model}"
 msgstr "新規%{model}の作成"
 
-#: app/controllers/admin/users_controller.rb:116
-#: app/controllers/admin/users_controller.rb:133
+#: app/controllers/admin/users_controller.rb:123
+#: app/controllers/admin/users_controller.rb:140
 #: app/views/admin/users/index.html.erb:37
 msgid "New user from csv"
 msgstr "ユーザのCSVアップデート"
@@ -2076,9 +2084,9 @@ msgstr ""
 #: app/controllers/admin/users_controller.rb:28
 #: app/controllers/admin/users_controller.rb:49
 #: app/controllers/admin/users_controller.rb:71
-#: app/controllers/admin/users_controller.rb:116
-#: app/controllers/admin/users_controller.rb:133
-#: app/controllers/admin/users_controller.rb:151
+#: app/controllers/admin/users_controller.rb:123
+#: app/controllers/admin/users_controller.rb:140
+#: app/controllers/admin/users_controller.rb:158
 #: app/helpers/admin/application_helper.rb:34 app/models/user.rb:-
 #: app/views/admin/users/import.html.erb:68
 #: app/views/admin/users/index.html.erb:36
@@ -2113,8 +2121,10 @@ msgstr "ユーザID"
 msgid "このサーバへの認証を確認してください"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:111
-msgid "この操作は、許可されていません。"
+#: app/controllers/admin/users_controller.rb:116
+msgid ""
+"この操作は、許可されていません。URLをご確認の上再度お試し頂くか、%"
+"{contact_link}下さい。"
 msgstr ""
 
 #: app/controllers/admin/users_controller.rb:52
@@ -2124,10 +2134,6 @@ msgstr ""
 
 #: app/controllers/platform_controller.rb:151
 msgid "そのOpenIDは、登録されていません。"
-msgstr ""
-
-#: app/views/admin/users/import.html.erb:25
-msgid "アップロードしたCSVファイルの内容"
 msgstr ""
 
 #: app/views/admin/users/import.html.erb:26
@@ -2160,15 +2166,15 @@ msgid ""
 "合でも上書きされますのでご注意下さい。"
 msgstr ""
 
-#: app/controllers/admin/application_controller.rb:24
+#: app/controllers/admin/application_controller.rb:31
 msgid "ファイルを指定して下さい。"
 msgstr ""
 
-#: app/controllers/admin/application_controller.rb:29
+#: app/controllers/admin/application_controller.rb:36
 msgid "ファイルサイズが0です。"
 msgstr ""
 
-#: app/controllers/admin/application_controller.rb:34
+#: app/controllers/admin/application_controller.rb:41
 msgid "ファイルサイズが上限を超えています。"
 msgstr ""
 
@@ -2180,6 +2186,10 @@ msgstr ""
 msgid ""
 "ログインID(CSVファイルの最初の列)のデータが存在しない場合は新規作成、存在する"
 "場合は更新されます。"
+msgstr ""
+
+#: app/controllers/admin/users_controller.rb:104
+msgid "ログインし直して下さい。"
 msgstr ""
 
 #: app/controllers/platform_controller.rb:46
@@ -2199,11 +2209,11 @@ msgid "不正なパラメタです。"
 msgstr ""
 
 #: app/controllers/admin/documents_controller.rb:53
-#: app/controllers/admin/settings_controller.rb:41
+#: app/controllers/admin/settings_controller.rb:43
 msgid "保存しました。"
 msgstr ""
 
-#: app/controllers/admin/settings_controller.rb:43
+#: app/controllers/admin/settings_controller.rb:45
 msgid "保存に失敗している項目があります。"
 msgstr ""
 
@@ -2266,8 +2276,14 @@ msgstr ""
 msgid "想定外のエラーが発生しました。管理者にお問い合わせ下さい。"
 msgstr ""
 
-#: app/controllers/admin/application_controller.rb:40
+#: app/controllers/admin/application_controller.rb:47
 msgid "指定された形式のファイルはアップロード出来ません。"
+msgstr ""
+
+#: app/controllers/admin/users_controller.rb:113
+msgid ""
+"既に管理者ユーザが登録済みです。ログインして下さい。ログイン出来ない場合は%"
+"{contact_link}下さい。"
 msgstr ""
 
 #: app/views/admin/images/index.html.erb:14
@@ -2294,6 +2310,11 @@ msgstr ""
 #: app/views/admin/images/index.html.erb:13
 #: app/views/admin/images/index.html.erb:23
 msgid "現在の画像を表示"
+msgstr ""
+
+#: app/views/admin/images/index.html.erb:14
+#: app/views/admin/images/index.html.erb:24
+msgid "現在設定中の画像が消えてしまいますがよろしいですか?"
 msgstr ""
 
 #: app/controllers/admin/users_controller.rb:37
