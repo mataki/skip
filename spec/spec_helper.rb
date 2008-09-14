@@ -144,3 +144,18 @@ end
 ######skip関連のテストで必要
 class ApplicationController;skip_before_filter :sso; end
 
+# TODO Rails2.1.1対応時にRspec1.1.4で"DEPRECATION WARNING"が発生したため
+# 以下のコード埋め込んで表示しないように対応
+module Spec
+  module Matchers
+    class Have
+      def method_missing(sym, *args, &block)
+        @collection_name = sym
+        @plural_collection_name = ActiveSupport::Inflector.pluralize(sym.to_s) if Object.const_defined?(:Inflector)
+        @args = args
+        @block = block
+        self
+      end
+    end
+  end
+end

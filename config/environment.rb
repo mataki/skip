@@ -4,7 +4,7 @@
 # (Use only when you can't set environment variables through your web/app server)
 ENV['RAILS_ENV'] ||= 'production'
 
-RAILS_GEM_VERSION = '2.1.0' unless defined? RAILS_GEM_VERSION
+RAILS_GEM_VERSION = '2.1.1' unless defined? RAILS_GEM_VERSION
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
@@ -45,7 +45,7 @@ Rails::Initializer.run do |config|
   # config.active_record.schema_format = :ruby
 
   # See Rails::Configuration for more options
-  config.gem "gettext" 
+  config.gem "gettext"
   config.gem "uuidtools"
   config.gem "fastercsv"
   config.gem "ruby-openid", :lib => "openid"
