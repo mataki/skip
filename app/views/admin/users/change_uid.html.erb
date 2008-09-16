@@ -3,6 +3,8 @@
 <%= render :partial => '/admin/shared/topic_path' %>
 <% end -%>
 <% content_for :contents_right do -%>
+  <h3><%= _('Caution!') %></h3>
+  <p style="color: red;"><b><%= _('ニックネーム変更は様々な箇所に影響するため、どうしても変更が必要な場合のみ変更するようにして下さい。') %></b></p>
 <div class="box tabular">
   <% form_for(:user_uid, :url => {:action => :change_uid, :id => @user}) do |f| -%>
   <%= error_messages_for :user_uid %>
@@ -19,4 +21,19 @@
   </p>
   <% end -%>
 </div>
+<% end -%>
+
+<% content_for :javascript do -%>
+<script type="text/javascript">
+$j(function(){
+    $j('#user_uid_submit')
+    .click(function() {
+        if(confirm('<%= _('ニックネームを変更します。') + _('Are you sure?') %>')) {
+            $j(this).attr('disabled', 'disabled').val('<%= _('Updating...') %>');
+        } else {
+            return false; 
+        }
+    });
+});
+</script>
 <% end -%>

@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-09-13 16:38+0900\n"
+"POT-Creation-Date: 2008-09-16 14:56+0900\n"
 "PO-Revision-Date: 2008-09-13 11:22+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -36,8 +36,8 @@ msgstr "%{model}の作成に成功しました。"
 msgid "%{model} was successfully updated."
 msgstr "%{model}の更新に成功しました。"
 
-#: app/controllers/admin/images_controller.rb:56
-#: app/controllers/admin/images_controller.rb:77
+#: app/controllers/admin/documents_controller.rb:76
+#: app/controllers/admin/images_controller.rb:96
 msgid "%{target}を保存しました。"
 msgstr ""
 
@@ -303,27 +303,27 @@ msgstr "ログイン画面に表示されるロゴの画像です。"
 msgid "Admin::OpenidIdentifier|Url"
 msgstr "OpenID URL"
 
-#: app/controllers/admin/settings_controller.rb:20
+#: app/controllers/admin/settings_controller.rb:23
 #: app/helpers/admin/application_helper.rb:24
 msgid "Admin::SettingsController|feed"
 msgstr "RSSフィードの設定"
 
-#: app/controllers/admin/settings_controller.rb:17
+#: app/controllers/admin/settings_controller.rb:20
 #: app/helpers/admin/application_helper.rb:22
 msgid "Admin::SettingsController|literal"
 msgstr "文言設定"
 
-#: app/controllers/admin/settings_controller.rb:18
+#: app/controllers/admin/settings_controller.rb:21
 #: app/helpers/admin/application_helper.rb:23
 msgid "Admin::SettingsController|mail"
 msgstr "メール関連設定"
 
-#: app/controllers/admin/settings_controller.rb:21
+#: app/controllers/admin/settings_controller.rb:24
 #: app/helpers/admin/application_helper.rb:20
 msgid "Admin::SettingsController|main"
 msgstr "全体設定"
 
-#: app/controllers/admin/settings_controller.rb:19
+#: app/controllers/admin/settings_controller.rb:22
 #: app/helpers/admin/application_helper.rb:27
 msgid "Admin::SettingsController|other"
 msgstr "その他の設定"
@@ -767,6 +767,7 @@ msgstr "関連するコメントも一緒に削除されますが、よろしい
 #: app/views/admin/share_files/index.html.erb:28
 #: app/views/admin/bookmark_comments/index.html.erb:30
 #: app/views/admin/board_entries/index.html.erb:30
+#: app/views/admin/users/change_uid.html.erb:31
 #: app/views/admin/users/index.html.erb:29
 #: app/views/admin/group_participations/index.html.erb:30
 #: app/views/admin/group_categories/index.html.erb:27
@@ -1012,6 +1013,10 @@ msgstr ""
 #: app/views/admin/users/import.html.erb:15
 msgid "CSVファイルの文字コードはUTF-8にしてアップロードするようにして下さい。"
 msgstr ""
+
+#: app/views/admin/users/change_uid.html.erb:6
+msgid "Caution!"
+msgstr "注意!"
 
 #: app/models/chain.rb:-
 msgid "Chain|Created on"
@@ -1665,7 +1670,7 @@ msgid "Track|Visitor"
 msgstr ""
 
 #: app/views/admin/user_profiles/edit.html.erb:11
-#: app/views/admin/users/change_uid.html.erb:18
+#: app/views/admin/users/change_uid.html.erb:20
 #: app/views/admin/users/edit.html.erb:11
 #: app/views/admin/group_categories/edit.html.erb:11
 #: app/views/admin/openid_identifiers/edit.html.erb:16
@@ -1673,6 +1678,7 @@ msgid "Update"
 msgstr "更新"
 
 #: app/views/admin/user_profiles/edit.html.erb:11
+#: app/views/admin/users/change_uid.html.erb:32
 #: app/views/admin/users/edit.html.erb:11
 #: app/views/admin/group_categories/edit.html.erb:11
 #: app/views/admin/openid_identifiers/edit.html.erb:16
@@ -1943,7 +1949,7 @@ msgstr "アンテナアイテム"
 msgid "applied email"
 msgstr "メールアドレス変更"
 
-#: app/views/admin/users/change_uid.html.erb:10
+#: app/views/admin/users/change_uid.html.erb:12
 msgid "before_uid"
 msgstr "現在のニックネーム"
 
@@ -2025,7 +2031,7 @@ msgstr ""
 msgid "message"
 msgstr ""
 
-#: app/views/admin/users/change_uid.html.erb:14
+#: app/views/admin/users/change_uid.html.erb:16
 msgid "new_uid"
 msgstr "新しく設定するニックネーム"
 
@@ -2166,6 +2172,16 @@ msgid ""
 "合でも上書きされますのでご注意下さい。"
 msgstr ""
 
+#: app/views/admin/users/change_uid.html.erb:31
+msgid "ニックネームを変更します。"
+msgstr ""
+
+#: app/views/admin/users/change_uid.html.erb:7
+msgid ""
+"ニックネーム変更は様々な箇所に影響するため、どうしても変更が必要な場合のみ変"
+"更するようにして下さい。"
+msgstr ""
+
 #: app/controllers/admin/application_controller.rb:31
 msgid "ファイルを指定して下さい。"
 msgstr ""
@@ -2209,11 +2225,11 @@ msgid "不正なパラメタです。"
 msgstr ""
 
 #: app/controllers/admin/documents_controller.rb:53
-#: app/controllers/admin/settings_controller.rb:43
+#: app/controllers/admin/settings_controller.rb:46
 msgid "保存しました。"
 msgstr ""
 
-#: app/controllers/admin/settings_controller.rb:45
+#: app/controllers/admin/settings_controller.rb:48
 msgid "保存に失敗している項目があります。"
 msgstr ""
 
@@ -2253,6 +2269,7 @@ msgid "対象のコンテンツが存在しません。"
 msgstr ""
 
 #: app/controllers/admin/documents_controller.rb:56
+#: app/controllers/admin/documents_controller.rb:79
 msgid ""
 "対象のコンテンツを保存することが出来ませんでした。再度お試し頂くか管理者にお"
 "問い合わせ下さい。"
@@ -2262,8 +2279,7 @@ msgstr ""
 msgid "対象のコンテンツを開くことが出来ませんでした。"
 msgstr ""
 
-#: app/controllers/admin/images_controller.rb:59
-#: app/controllers/admin/images_controller.rb:80
+#: app/controllers/admin/images_controller.rb:99
 msgid ""
 "対象の画像を保存することが出来ませんでした。再度お試し頂くか管理者にお問い合"
 "わせ下さい。"
@@ -2271,8 +2287,8 @@ msgstr ""
 
 #: app/controllers/admin/documents_controller.rb:44
 #: app/controllers/admin/documents_controller.rb:59
-#: app/controllers/admin/images_controller.rb:62
-#: app/controllers/admin/images_controller.rb:83
+#: app/controllers/admin/documents_controller.rb:82
+#: app/controllers/admin/images_controller.rb:102
 msgid "想定外のエラーが発生しました。管理者にお問い合わせ下さい。"
 msgstr ""
 
@@ -2284,6 +2300,10 @@ msgstr ""
 msgid ""
 "既に管理者ユーザが登録済みです。ログインして下さい。ログイン出来ない場合は%"
 "{contact_link}下さい。"
+msgstr ""
+
+#: app/views/admin/documents/index.html.erb:14
+msgid "既定のページ戻す"
 msgstr ""
 
 #: app/views/admin/images/index.html.erb:14
@@ -2310,6 +2330,10 @@ msgstr ""
 #: app/views/admin/images/index.html.erb:13
 #: app/views/admin/images/index.html.erb:23
 msgid "現在の画像を表示"
+msgstr ""
+
+#: app/views/admin/documents/index.html.erb:14
+msgid "現在設定中のページが消えてしまいますがよろしいですか?"
 msgstr ""
 
 #: app/views/admin/images/index.html.erb:14
@@ -2339,7 +2363,7 @@ msgid "認証に失敗しました。"
 msgstr ""
 
 #: app/controllers/admin/documents_controller.rb:35
-#: app/controllers/admin/documents_controller.rb:68
+#: app/controllers/admin/documents_controller.rb:91
 msgid "説明文の設定"
 msgstr ""
 
