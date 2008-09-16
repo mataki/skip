@@ -43,46 +43,25 @@ class Admin::ImagesController < Admin::ApplicationController
   end
 
   def update
-    if request.get?
-      return redirect_to(:action => :index)
+    begin_update do
+      @topics = [_(self.class.name.to_s)]
+      image_file = params[params[:target].to_sym]
+      unless valid_file?(image_file, :max_size => 300.kilobyte, :content_types => content_types)
+        return render(:action => :index)
+      end
+      open("#{save_dir}/#{params[:target]}#{extentions}", 'wb') { |f| f.write(image_file.read) }
     end
-    @topics = [_(self.class.name.to_s)]
-    image_file = params[params[:target].to_sym]
-    unless valid_file?(image_file, :max_size => 300.kilobyte, :content_types => content_types)
-      return render(:action => :index)
-    end
-
-    open("#{save_dir}/#{params[:target]}#{extentions}", 'wb') { |f| f.write(image_file.read) }
-    flash[:notice] = _('%{target}を保存しました。' % {:target => _("Admin::ImagesController|#{params[:target]}")})
-    redirect_to admin_images_path
-  rescue Errno::EACCES => e
-    flash.now[:error] = _('対象の画像を保存することが出来ませんでした。再度お試し頂くか管理者にお問い合わせ下さい。')
-    render :action => :index, :target => params[:target], :status => :forbidden
-  rescue => e
-    flash.now[:error] = _('想定外のエラーが発生しました。管理者にお問い合わせ下さい。')
-    e.backtrace.each { |message| logger.error message }
-    render :action => :index, :target => params[:target], :status => :internal_server_error
   end
 
   def revert
-    if request.get?
-      return redirect_to(admin_images_path)
-    end
-    @topics = [_(self.class.name.to_s)]
-    open("#{save_dir}/default_#{params[:target]}#{extentions}", 'rb') do |default_file|
-      open("#{save_dir}/#{params[:target]}#{extentions}", 'wb') do |target_file|
-        target_file.write(default_file.read)
+    begin_update do
+      @topics = [_(self.class.name.to_s)]
+      open("#{save_dir}/default_#{params[:target]}#{extentions}", 'rb') do |default_file|
+        open("#{save_dir}/#{params[:target]}#{extentions}", 'wb') do |target_file|
+          target_file.write(default_file.read)
+        end
       end
     end
-    flash[:notice] = _('%{target}を保存しました。' % {:target => _("Admin::ImagesController|#{params[:target]}")})
-    redirect_to admin_images_path
-  rescue Errno::EACCES => e
-    flash.now[:error] = _('対象の画像を保存することが出来ませんでした。再度お試し頂くか管理者にお問い合わせ下さい。')
-    render :action => :index, :target => params[:target], :status => :forbidden
-  rescue => e
-    flash.now[:error] = _('想定外のエラーが発生しました。管理者にお問い合わせ下さい。')
-    e.backtrace.each { |message| logger.error message }
-    render :action => :index, :target => params[:target], :status => :internal_server_error
   end
 
   private
@@ -107,4 +86,22 @@ class Admin::ImagesController < Admin::ApplicationController
       redirect_to "#{root_url}404.html"
     end
   end
+
+  def begin_update(&block)
+    if request.get?
+      return redirect_to(admin_images_path)
+    end
+    yield
+    ActionView::Base.computed_public_paths.clear
+    flash[:notice] = _('%{target}を保存しました。' % {:target => _("Admin::ImagesController|#{params[:target]}")})
+    redirect_to admin_images_path
+  rescue Errno::EACCES => e
+    flash.now[:error] = _('対象の画像を保存することが出来ませんでした。再度お試し頂くか管理者にお問い合わせ下さい。')
+    render :action => :index, :target => params[:target], :status => :forbidden
+  rescue => e
+    flash.now[:error] = _('想定外のエラーが発生しました。管理者にお問い合わせ下さい。')
+    e.backtrace.each { |message| logger.error message }
+    render :action => :index, :target => params[:target], :status => :internal_server_error
+  end
+  
 end

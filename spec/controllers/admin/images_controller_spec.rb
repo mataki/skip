@@ -81,15 +81,6 @@ describe Admin::ImagesController, 'POST /update' do
   end
 end
 
-describe Admin::ImagesController, 'GET /revert' do
-  before do
-    admin_login
-    controller.stub!(:check_params)
-    get :revert
-  end
-  it { response.should redirect_to(admin_images_path) }
-end
-
 describe Admin::ImagesController, 'POST /revert' do
   before do
     admin_login
@@ -108,26 +99,4 @@ describe Admin::ImagesController, 'POST /revert' do
     it { response.should redirect_to(admin_images_path) }
     it { assigns[:topics].should_not be_nil }
   end
-
-  describe '処理に失敗する場合' do
-    describe '対象ファイルに対する権限がない場合' do
-      before do
-        controller.should_receive(:open).and_raise(Errno::EACCES)
-        post :revert, :target => 'title_logo'
-      end
-      it { flash[:error].should_not be_nil }
-      it { response.code.should == '403' }
-      it { response.should render_template('index') }
-    end
-    describe 'その他エラーが発生する場合' do
-      before do
-        controller.should_receive(:open).and_raise(Errno::EBUSY)
-        post :revert, :target => 'title_logo'
-      end
-      it { flash[:error].should_not be_nil }
-      it { response.code.should == '500' }
-      it { response.should render_template('index') }
-    end
-  end
 end
-
