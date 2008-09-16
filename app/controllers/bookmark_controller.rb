@@ -71,8 +71,8 @@ class BookmarkController < ApplicationController
     is_new_record = @bookmark.new_record?
     Bookmark.transaction do
       # 親が存在しない場合は、親保存時に子も保存される。既存の親の場合は親を保存しても子が保存されないので子のみ保存
-      @bookmark.save!
       @bookmark_comment.save! unless is_new_record
+      @bookmark.save!
       if @bookmark.is_type_user?
         uid = @bookmark.url.slice(/^\/user\/(.*)/, 1)
         user = User.find_by_uid(uid)
