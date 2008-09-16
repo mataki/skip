@@ -103,5 +103,4 @@ class Admin::ImagesController < Admin::ApplicationController
     e.backtrace.each { |message| logger.error message }
     render :action => :index, :target => params[:target], :status => :internal_server_error
   end
-  
 end
