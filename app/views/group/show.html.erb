@@ -40,7 +40,7 @@ div.box_space_body p.button {
 <div class="box_space">
   <div class="box_space_title"><%= icon_tag('text_list_bullets') -%>カテゴリ</div>
   <div class="box_space_body">
-    <%= icon_tag(@group.category_icon_name.first, :title => @group.category_icon_name.last, :margin => true) + @group.category_icon_name.last %>
+    <%= icon_tag(h(@group.category_icon_name.first), :title => h(@group.category_icon_name.last), :margin => true) + h(@group.category_icon_name.last) %>
   </div>
   <div class="box_space_bottom"></div>
 </div><!-- box_space -->

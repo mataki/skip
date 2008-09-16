@@ -16,7 +16,7 @@
       <% Group::CATEGORIES.each do |category| %>
         <%= radio_button_tag "group_category_id", category[:id], params[:group_category_id] == category[:id].to_s -%>
         <%= get_group_icon category, :margin => true -%>
-        <%= category[:name] -%>(<%= @group_counts[category[:id]] -%>)
+        <%= h category[:name] %>(<%= h @group_counts[category[:id]] %>)
       <% end %>
     </td>
   </tr>

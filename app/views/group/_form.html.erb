@@ -30,8 +30,8 @@
 <% Group::CATEGORIES.each do |category| %>
     <tr>
       <td><%= radio_button "group", "group_category_id", category.id, :class => "category_radio_button" %>
-            <%= get_group_icon category, :margin => true %><b><%= category.name %></b></td>
-      <td><%= category.description %></td>
+            <%= get_group_icon category, :margin => true %><b><%= h category.name %></b></td>
+      <td><%= h category.description %></td>
     </tr>
 <% end %>
     </table>
