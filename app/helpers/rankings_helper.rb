@@ -21,7 +21,7 @@ module RankingsHelper
     when :entry_comment
       "人気ブログランキング(コメント）"
     when :entry_he
-      "人気ブログランキング(#{Admin::Setting.point_button})"
+      "人気ブログランキング(#{h Admin::Setting.point_button})"
     when :user_access
       "人気ユーザランキング"
     when :user_entry
@@ -40,7 +40,7 @@ module RankingsHelper
     when :entry_comment
       "みんなからコメントが活発に付いたブログです(公開範囲が「全公開」のみ)"
     when :entry_he
-      "みんなから最も#{Admin::Setting.point_button}を貰ったブログ/掲示板です(公開範囲が「全公開」のみ)"
+      "みんなから最も#{h Admin::Setting.point_button}を貰ったブログ/掲示板です(公開範囲が「全公開」のみ)"
     when :user_access
       "みんなから書いたブログや自身のプロフィールによく訪れてもらったユーザです"
     when :user_entry
@@ -59,7 +59,7 @@ module RankingsHelper
     when :entry_comment
       "コメント件数"
     when :entry_he
-      "#{Admin::Setting.point_button}"
+      "#{h Admin::Setting.point_button}"
     when :user_access
       "アクセス数"
     when :user_entry

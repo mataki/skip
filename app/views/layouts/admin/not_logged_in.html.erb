@@ -5,7 +5,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
   <link rel="shortcut icon" href="<%= controller.request.relative_url_root %>/favicon.ico" />
-  <title><%= Admin::Setting.abbr_app_title %> - <%= @title %></title>
+  <title><%= h Admin::Setting.abbr_app_title %> - <%= h @title %></title>
   <%= skip_stylesheet_link_tag "style" %>
   <%= stylesheet_link_tag "style" %>
   <%= stylesheet_link_tag "admin" %>
@@ -63,10 +63,10 @@
 <div id="footer">
   <div class="site">
     <div class="info">
-      <div class="company"><%= Admin::Setting.footer_contact -%> | <%= Admin::Setting.footer_copyright -%></div>
+      <div class="company"><%= Admin::Setting.footer_contact -%> | <%= h Admin::Setting.footer_copyright -%></div>
     </div>
     <div class="sponsor">
-      powered by <%= link_to image_tag("#{controller.request.relative_url_root}/custom/images/footer_logo.png"), Admin::Setting.footer_image_link_url %>
+      powered by <%= link_to image_tag("#{controller.request.relative_url_root}/custom/images/footer_logo.png"), h(Admin::Setting.footer_image_link_url) %>
     </div>
   </div>
 </div><!-- footer -->

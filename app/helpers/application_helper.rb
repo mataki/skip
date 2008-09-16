@@ -213,7 +213,7 @@ module ApplicationHelper
   # [コメント(n)-ポイント(n)-TB(n)-アクセス(n)]の表示
   def get_entry_infos entry
     output = "[コメント(#{entry.board_entry_comments_count})"
-    output << "-#{Admin::Setting.point_button}(#{entry.point.to_s})"
+    output << "-#{h Admin::Setting.point_button}(#{entry.point.to_s})"
     output << "-TB(#{entry.entry_trackbacks_count})"
     output << "-アクセス(#{entry.state.access_count.to_s})]"
     return output
@@ -256,7 +256,7 @@ module ApplicationHelper
 
   def header_logo_link(url = url_for(:controller => '/mypage', :action => 'index'))
     img_url = "#{@controller.request.relative_url_root}/custom/images/header_logo.png"
-    "<div id=\"logo\">" + link_to(image_tag(img_url, :alt => Admin::Setting.abbr_app_title, :height => "45"), url) + "</div>"
+    "<div id=\"logo\">" + link_to(image_tag(img_url, :alt => h(Admin::Setting.abbr_app_title), :height => "45"), url) + "</div>"
   end
 
 private

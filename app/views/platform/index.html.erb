@@ -5,7 +5,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
   <link rel="shortcut icon" href="<%= controller.request.relative_url_root -%>/favicon.ico" />
-  <title><%= Admin::Setting.app_title -%></title>
+  <title><%= h Admin::Setting.app_title -%></title>
 <script language="JavaScript" type="text/javascript">
 <!--
 var relative_url_root = '<%= controller.request.relative_url_root -%>';
@@ -115,12 +115,12 @@ span.blue { color: blue; }
 </head>
 
 <body>
-<div id="logo"><%= link_to(image_tag("#{controller.request.relative_url_root}/custom/images/title_logo.png", :alt => Admin::Setting.app_title)) -%></div>
+<div id="logo"><%= link_to(image_tag("#{controller.request.relative_url_root}/custom/images/title_logo.png", :alt => h(Admin::Setting.app_title))) -%></div>
 
 <div id="top">
   <div id="menu_btn"></div>
   <div id="user_ctl">
-    <a href="mailto:<%= Admin::Setting.contact_addr -%>" target="_blank">お問い合わせ</a>
+    <a href="mailto:<%= h Admin::Setting.contact_addr -%>" target="_blank">お問い合わせ</a>
     <a href="#" onclick="javascript:getSubwindowRule()"> 利用規約</a>
     <a href="#" onclick="javascript:getSubwindowScript(relative_url_root + '/custom/about_this_site.html', 720, 660)">このサイトについて</a>
   </div>
@@ -146,10 +146,10 @@ span.blue { color: blue; }
 <div id="footer">
   <div class="site">
     <div class="info">
-      <div class="company"><%= Admin::Setting.footer_contact -%> | <%= Admin::Setting.footer_copyright -%></div>
+      <div class="company"><%= Admin::Setting.footer_contact -%> | <%= h Admin::Setting.footer_copyright -%></div>
     </div>
     <div class="sponsor">
-      powered by <%= link_to image_tag("#{controller.request.relative_url_root}/custom/images/footer_logo.png"), Admin::Setting.footer_image_link_url %>
+      powered by <%= link_to image_tag("#{controller.request.relative_url_root}/custom/images/footer_logo.png"), h(Admin::Setting.footer_image_link_url) %>
     </div>
   </div>
 </div><!-- footer -->

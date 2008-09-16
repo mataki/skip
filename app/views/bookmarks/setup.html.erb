@@ -40,15 +40,15 @@ ul.welcome li {
   <div style="margin-left: 15px; margin-top: 5px;">
     <div style="margin-top: 5px; margin-left: 20px;">
     <span style="font-size: 15px; font-weight: bold; border: 1px solid silver; padding: 2px; background-color: #f5f5ff">
-      <a href="javascript:void(function(){(function(){var _addr='http://<%= request.host_with_port + request.relative_url_root -%>';location.replace('about:blank');document.write('<html><body><form action=&quot;'+_addr+'/bookmark/new&quot; method=&quot;post&quot;><input type=hidden name=&quot;url&quot; value=&quot;'+location.href+'&quot;><input type=hidden name=&quot;title&quot; value=&quot;'+document.title+'&quot;>'+document.title+'<br/><input type=submit value=&quot;Bookmark This&quot;></div></form><script>document.forms[0].submit();</script></body></html>');document.close();})();})()"><%= Admin::Setting.abbr_app_title -%>でブクマ</a>
+      <a href="javascript:void(function(){(function(){var _addr='http://<%= request.host_with_port + request.relative_url_root -%>';location.replace('about:blank');document.write('<html><body><form action=&quot;'+_addr+'/bookmark/new&quot; method=&quot;post&quot;><input type=hidden name=&quot;url&quot; value=&quot;'+location.href+'&quot;><input type=hidden name=&quot;title&quot; value=&quot;'+document.title+'&quot;>'+document.title+'<br/><input type=submit value=&quot;Bookmark This&quot;></div></form><script>document.forms[0].submit();</script></body></html>');document.close();})();})()"><%= h Admin::Setting.abbr_app_title -%>でブクマ</a>
     </span>
     </div>
 
     <ul class="welcome">
-      <li>１．上記のリンク<b>「<%= Admin::Setting.abbr_app_title -%>でブクマ」</b>を右クリックし、メニューの「<b>お気に入りに追加</b>」を選択します。</li>
+      <li>１．上記のリンク<b>「<%= h Admin::Setting.abbr_app_title -%>でブクマ」</b>を右クリックし、メニューの「<b>お気に入りに追加</b>」を選択します。</li>
       <li>２．セキュリティの警告「追加しようとしているお気に入りは、安全でない可能性があります。続行しますか？」とダイアログが出る場合は「<b>はい</b>」を選択。(この操作は安全です。) </li>
       <li>３．お気に入りに追加画面で、「<b>フォルダ</b>」ボタンをクリックして保存するフォルダ「<b>リンク</b>」を選択して「<b>OK</b>」をクリックします。</li>
-      <li>４．完了するとツールバーに「<%= Admin::Setting.abbr_app_title -%>でブクマ」ボタンが作成されます。</li>
+      <li>４．完了するとツールバーに「<%= h Admin::Setting.abbr_app_title -%>でブクマ」ボタンが作成されます。</li>
     </ul>
     <p style="background-color: #f0f0ff; text-align: right; margin-left: 30px;">...ツールバーが表示されていない場合はブラウザのメニュー「表示」->「ツールバー」->「リンク」から表示するよう設定してください。</p>
   </div>
@@ -59,28 +59,28 @@ ul.welcome li {
   <div style="margin-left: 15px; margin-top: 5px;">
     <div style="margin-top: 5px; margin-left: 20px;">
     <span style="font-size: 15px; font-weight: bold; border: 1px solid silver; padding: 2px; background-color: #f5f5ff">
-      <a href="javascript:void(function(){(function(){var _addr='http://<%= request.host_with_port + request.relative_url_root -%>';location.replace('about:blank');document.write('<html><body><form action=&quot;'+_addr+'/bookmark/new&quot; method=&quot;post&quot;><input type=hidden name=&quot;url&quot; value=&quot;'+location.href+'&quot;><input type=hidden name=&quot;title&quot; value=&quot;'+document.title+'&quot;><div style=\'display: none;\'>'+document.title+'<br/><input type=submit value=&quot;Bookmark This&quot;></div></form><script>document.forms[0].submit();</script></body></html>');document.close();})();})()"><%= Admin::Setting.abbr_app_title -%>でブクマ</a>
+      <a href="javascript:void(function(){(function(){var _addr='http://<%= request.host_with_port + request.relative_url_root -%>';location.replace('about:blank');document.write('<html><body><form action=&quot;'+_addr+'/bookmark/new&quot; method=&quot;post&quot;><input type=hidden name=&quot;url&quot; value=&quot;'+location.href+'&quot;><input type=hidden name=&quot;title&quot; value=&quot;'+document.title+'&quot;><div style=\'display: none;\'>'+document.title+'<br/><input type=submit value=&quot;Bookmark This&quot;></div></form><script>document.forms[0].submit();</script></body></html>');document.close();})();})()"><%= h Admin::Setting.abbr_app_title -%>でブクマ</a>
     </span>
     </div>
 
     <ul class="welcome">
-      <li>１．上記のリンク<b>「<%= Admin::Setting.abbr_app_title -%>でブクマ」</b>をクリックしたままブラウザのツールバーにドラッグ＆ドロップします。</li>
-      <li>２．完了するとツールバーに「<%= Admin::Setting.abbr_app_title -%>でブクマ」ボタンが作成されます。</li>
+      <li>１．上記のリンク<b>「<%= h Admin::Setting.abbr_app_title -%>でブクマ」</b>をクリックしたままブラウザのツールバーにドラッグ＆ドロップします。</li>
+      <li>２．完了するとツールバーに「<%= h Admin::Setting.abbr_app_title -%>でブクマ」ボタンが作成されます。</li>
     </ul>
     <p style="background-color: #f0f0ff; text-align: right; margin-left: 30px;">...ツールバーが表示されていない場合はブラウザのメニュー「表示」->「ツールバー」->「ブックマークツールバー」から表示するよう設定してください。</p>
   </div>
 </div>
 
 <div style="border: 1px dashed pink; padding: 5px; margin-bottom: 10px;">
-  <h3 style="color: blue; background-color: #f0f0ff; padding: 3px; border-left: 10px solid skyblue; border-bottom: 1px dashed skyblue;">ブックマークレット「<%= Admin::Setting.abbr_app_title -%>でブクマ」の使いかた</h3>
+  <h3 style="color: blue; background-color: #f0f0ff; padding: 3px; border-left: 10px solid skyblue; border-bottom: 1px dashed skyblue;">ブックマークレット「<%= h Admin::Setting.abbr_app_title -%>でブクマ」の使いかた</h3>
   <div style="margin-left: 15px; margin-top: 5px;">
     <ul class="welcome">
-      <li>１．好きなページに移動したあと、ツールバーにある「<%= Admin::Setting.abbr_app_title -%>でブクマ」をクリックします。</li>
-      <li>２．<%= Admin::Setting.abbr_app_title -%>のブックマーク登録画面に遷移します。</li>
+      <li>１．好きなページに移動したあと、ツールバーにある「<%= h Admin::Setting.abbr_app_title -%>でブクマ」をクリックします。</li>
+      <li>２．<%= h Admin::Setting.abbr_app_title -%>のブックマーク登録画面に遷移します。</li>
       <li>３．必要な事項を入力し、「OK」をクリックします。</li>
       <li>４．ブックマークが作成されたメッセージが出たら「OK」をクリックすれば、元のページに戻ります。</li>
     </ul>
-    <p class="welcome">これで、<%= Admin::Setting.abbr_app_title -%>上のあなたのブックマークに登録されています。<br/>
-    <%= Admin::Setting.abbr_app_title -%>で右メニューにある「マイブクマ」をクリックすると、登録されたブックマークが見つかります。</p>
+    <p class="welcome">これで、<%= h Admin::Setting.abbr_app_title -%>上のあなたのブックマークに登録されています。<br/>
+    <%= h Admin::Setting.abbr_app_title -%>で右メニューにある「マイブクマ」をクリックすると、登録されたブックマークが見つかります。</p>
   </div>
 </div>

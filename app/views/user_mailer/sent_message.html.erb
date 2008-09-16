@@ -1,4 +1,4 @@
-こんにちは、<%= Admin::Setting.abbr_app_title -%>事務局です。
+こんにちは、<%= h Admin::Setting.abbr_app_title -%>事務局です。
 
 <%= @message %>
 
@@ -9,6 +9,6 @@
 
 
 メッセージメールが不要な場合はこちらで設定が出来ます。
-<%=@message_manage_url %>
+<%= @message_manage_url %>
 
 <%= @footer %>
