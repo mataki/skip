@@ -79,15 +79,15 @@ class PlatformController < ApplicationController
       if result.successful?
         unless identifier = OpenidIdentifier.find_by_url(identity_url)
           create_user_from(identity_url, registration)
-          return
+        else
+          return_to = session[:return_to]
+          reset_session
+
+          user = identifier.user_with_unused
+          session[:user_code] = user.code
+
+          redirect_to_back_or_root(return_to)
         end
-        return_to = session[:return_to]
-        reset_session
-
-        user = identifier.user_with_unused
-        session[:user_code] = user.code
-
-        redirect_to_back_or_root(return_to)
       else
         set_error_message_form_result_and_redirect(result)
       end
@@ -98,10 +98,17 @@ class PlatformController < ApplicationController
     if !ENV['SKIPOP_URL'].blank? and identity_url.include?(ENV['SKIPOP_URL'])
       user = User.create_with_identity_url(identity_url, create_user_params(registration))
       if user.valid?
+        reset_session
+        session[:user_code] = user.code
+
         redirect_to :controller => :portal
       else
         set_error_message_from_user_and_redirect(user)
       end
+    elsif !ENV['FREE_OP'].blank?
+      session[:identity_url] = identity_url
+
+      redirect_to :controller => :portal, :action => :index
     else
       set_error_message_not_create_new_user_and_redirect
     end

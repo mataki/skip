@@ -38,6 +38,14 @@ describe PortalController, 'GET /index' do
     it { assigns[:profile].should_not be_nil }
     it { assigns[:user_uid].should_not be_nil }
   end
+  describe "entrance_next_actionが:account_registrationの場合" do
+    before do
+      session[:entrance_next_action] = :account_registration
+      get :index
+    end
+    it { response.should render_template('account_registration')}
+    it { assigns[:user].should be_is_a(User) }
+  end
 end
 
 # ここでやりたいことは何か?
@@ -91,5 +99,50 @@ describe PortalController, 'POST /apply' do
     end
     it {response.should be_success}
     it {response.should render_template('portal/registration')}
+  end
+end
+
+describe PortalController, "#registration" do
+  before do
+    ENV['FREE_OP'] = "ON"
+  end
+  describe "session[:identity_url]が空の場合" do
+    before do
+      session[:identity_url] = nil
+
+      post :registration
+    end
+    it { response.should redirect_to(:controller => :platform, :action => :index)}
+  end
+  describe "session[:identity_url]に値が入っている場合" do
+    before do
+      @openid_url = 'http://www.openskip.org/a_user/'
+      session[:identity_url] = @openid_url
+
+      @code = 'hoge'
+      @params = { "code" => @code, "email" => 'email@openskip.org', "name" => 'SKIP君'}
+
+      @user = mock_model(User, :code => @code)
+      User.should_receive(:create_with_identity_url).with(@openid_url, @params).and_return(@user)
+    end
+    describe "保存が成功する場合" do
+      before do
+        @user.stub!(:valid?).and_return(true)
+
+        post :registration, :user => @params
+      end
+      it { response.should redirect_to({ :action => :index }) }
+      it { session[:user_code].should == @user.code }
+      it { session[:identity_url].should be_nil }
+    end
+    describe "保存が失敗する場合" do
+      before do
+        @user.stub!(:valid?).and_return(false)
+
+        post :registration, :user => @params
+      end
+      it { response.should render_template('portal/account_registration') }
+      it { assigns[:user].should == @user }
+    end
   end
 end

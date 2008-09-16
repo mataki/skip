@@ -89,19 +89,45 @@ describe User, '#change_password' do
   end
 end
 
+describe User, ".new_with_identity_url" do
+  describe "正しく保存される場合" do
+    before do
+      @identity_url = "http://test.com/identity"
+      @params = { :code => 'hoge', :name => "ほげ ふが", :email => 'hoge@hoge.com' }
+      @user = User.new_with_identity_url(@identity_url, @params)
+    end
+
+    it { @user.should be_valid }
+    it { @user.should be_is_a(User) }
+    it { @user.openid_identifiers.should_not be_nil }
+    it { @user.openid_identifiers.map{|i| i.url}.should be_include(@identity_url) }
+  end
+  describe "バリデーションエラーの場合" do
+    before do
+      @identity_url = "http://test.com/identity"
+      @params = { :code => 'hoge', :name => '', :email => "" }
+      @user = User.new_with_identity_url(@identity_url, @params)
+    end
+    it { @user.should_not be_valid }
+    it "エラーがUserUidとUserProfileに設定されていること" do
+      @user.valid?
+      @user.errors.full_messages.size.should == 2
+    end
+    it { @user.user_profile.should_not be_nil }
+  end
+end
+
 describe User, ".create_with_identity_url" do
   before do
     @identity_url = "http://test.com/identity"
     @params = { :code => 'hoge', :name => "ほげ ふが", :email => 'hoge@hoge.com' }
-    lambda do
-      @user = User.create_with_identity_url(@identity_url, @params)
-    end.should change(User, :count).by(1)
-  end
 
-  it { @user.should be_valid }
-  it { @user.should be_is_a(User) }
-  it { @user.openid_identifiers.should_not be_nil }
-  it { @user.openid_identifiers.map{|i| i.url}.should be_include(@identity_url) }
+    @user = mock_model(User)
+    User.should_receive(:new_with_identity_url).and_return(@user)
+
+    @user.should_receive(:save)
+  end
+  it { User.create_with_identity_url(@identity_url, @params).should be_is_a(User) }
 end
 
 describe User, ".auth" do

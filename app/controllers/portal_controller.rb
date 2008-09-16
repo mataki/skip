@@ -18,29 +18,38 @@ require "jcode"
 class PortalController < ApplicationController
   skip_before_filter :prepare_session
   skip_after_filter  :remove_message
+  skip_before_filter :sso, :only => [:index, :agreement, :registration]
+  skip_before_filter :login_required, :only => [:index, :agreement, :registration]
   before_filter :registerable_filter
 
   layout 'entrance'
-  verify :method => :post, :only => [ :apply_for_ldap ], :redirect_to => { :action => :index }
+  verify :method => :post, :only => [ :apply, :registration ], :redirect_to => { :action => :index }
 
   # ユーザ登録の画面表示（ウィザード形式のためsessionの中により表示先切替）
   def index
     case session[:entrance_next_action] ||= :confirm
     when :confirm
       # N/A
+    when :account_registration
+      @user = User.new
+      session[:entrance_next_action] = :account_registration
     when :registration
       params[:write_profile] = true
       params[:hobbies] = Array.new
       @user = current_user
-      @profile = UserProfile.new_default
-      @user_uid = UserUid.new({ :uid => session[:user_code] })
+      @profile = (@user.user_profile || UserProfile.new_default)
+      @user_uid = (@user.user_uids.first || UserUid.new({ :uid => session[:user_code] }))
     end
     render :action => session[:entrance_next_action]
   end
 
   # 利用規約の確認に同意した際に呼ばれる
   def agreement
-    session[:entrance_next_action] = :registration
+    session[:entrance_next_action] = if !ENV['FREE_OP'].blank? and !session[:identity_url].blank?
+                                       :account_registration
+                                     else
+                                       :registration
+                                     end
     redirect_to :action => :index
   end
 
@@ -98,9 +107,27 @@ class PortalController < ApplicationController
     render :text => UserUid.check_uid(params[:uid], session[:user_code])
   end
 
+  def registration
+    if session[:identity_url].blank?
+      flash[:notice] = _('You must login with openid.')
+      redirect_to :controller => :platform, :action => :index
+    else
+      @user = User.create_with_identity_url(session[:identity_url], params[:user])
+      if @user.valid?
+        reset_session
+        session[:entrance_next_action] = :registration
+        session[:user_code] = @user.code
+
+        redirect_to :action => :index
+      else
+        render :action => :account_registration
+      end
+    end
+  end
+
   private
   def registerable_filter
-    unless current_user.unused?
+    if current_user and !current_user.unused?
       redirect_to root_url
       return false
     end

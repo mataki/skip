@@ -188,6 +188,7 @@ describe PlatformController, "#create_user_from" do
 
   describe "専用OPモードの場合" do
     before do
+      ENV['FREE_OP'] = nil
       ENV['SKIPOP_URL'] = 'http://skipop.url/'
     end
     describe "identity_urlが適切な場合" do
@@ -200,10 +201,23 @@ describe PlatformController, "#create_user_from" do
       end
       describe "ユーザの登録が成功した場合" do
         before do
+          @code = 'openskip'
+          @user.stub!(:code).and_return(@code)
           @user.should_receive(:valid?).and_return(true)
+          controller.should_receive(:reset_session)
+
+          @session = {}
+          controller.stub!(:session).and_return(@session)
+
+          controller.stub!(:redirect_to).with({ :controller => :portal })
         end
         it "登録画面へリダイレクトすること" do
           controller.should_receive(:redirect_to).with({ :controller => :portal })
+
+          call_create_user_from
+        end
+        it "session[:user_code]にcodeが入っていること" do
+          @session.should_receive(:[]=).with(:user_code, @code)
 
           call_create_user_from
         end
@@ -220,9 +234,31 @@ describe PlatformController, "#create_user_from" do
       end
     end
   end
+  describe "フリーOPモードの場合" do
+    before do
+      ENV['SKIPOP_URL'] = nil
+      ENV['FREE_OP'] = 'ON'
+
+      @session = {}
+      @session.stub!(:[]=).with(:identity_url, @identity_url)
+      controller.stub!(:session).and_return(@session)
+
+      controller.stub!(:create_user_params)
+      @user = stub_model(User)
+      User.stub!(:new_with_identity_url).and_return(@user)
+
+      controller.should_receive(:redirect_to).with(:controller => :portal, :action => :index)
+    end
+    it "session[:identity_url]にOPから取得したOpenID identifierを保存する" do
+      @session.should_receive(:[]=).with(:identity_url, @identity_url)
+
+      call_create_user_from
+    end
+  end
   describe "OP専用モードでない場合" do
     before do
       ENV['SKIPOP_URL'] = nil
+      ENV['FREE_OP'] = nil
     end
     it "ログイン画面に遷移して、エラーメッセージを表示すること" do
       controller.should_receive(:set_error_message_not_create_new_user_and_redirect)
@@ -251,3 +287,4 @@ describe PlatformController, "#create_user_params" do
     controller.send(:create_user_params, @registration).should == {:email=>"hoge@hoge.jp", :name=>"ほげ ふが", :code=>"opuser"}
   end
 end
+

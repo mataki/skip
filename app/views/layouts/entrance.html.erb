@@ -48,11 +48,15 @@ div#main_navi div.next_arrow {
 
 <div id="main" style="position: relative; background-color: #f0f0f0; padding: 10px; _width: 100%;">
   <div id="main_navi" style="background-color: #ffffff; padding: 10px; margin-bottom: 10px;">
-    <div class="flow_box" <%= 'style="background-color: yellow"' if session[:entrance_next_action] == :confirm -%> >１．利用規約の確認</div>
+    <div class="flow_box" <%= 'style="background-color: yellow"' if session[:entrance_next_action] == :confirm -%> >利用規約の確認</div>
     <div class="next_arrow"><%= icon_tag 'arrow_right' -%></div>
-    <div class="flow_box" <%= 'style="background-color: yellow"' if session[:entrance_next_action] == :registration -%> >２．プロフィール登録</div>
+    <% if ENV['FREE_OP'] -%>
+    <div class="flow_box" <%= 'style="background-color: yellow"' if session[:entrance_next_action] == :account_registration -%> >アカウントの登録</div>
     <div class="next_arrow"><%= icon_tag 'arrow_right' -%></div>
-    <div class="flow_box">３．SNSの利用開始！</div>
+    <% end -%>
+    <div class="flow_box" <%= 'style="background-color: yellow"' if session[:entrance_next_action] == :registration -%> >プロフィールの登録</div>
+    <div class="next_arrow"><%= icon_tag 'arrow_right' -%></div>
+    <div class="flow_box">SNSの利用開始！</div>
     <div style="clear: both;"></div>
   </div>
 

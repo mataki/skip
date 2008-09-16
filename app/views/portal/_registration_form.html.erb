@@ -40,7 +40,7 @@ table.normal {
   </tr>
   <tr>
     <th width="100px"><label for="user_email">メールアドレス</label></th>
-    <td><%=h @user.user_profile.email %><span style="margin-left: 20px;"><%= link_to "[変更する]", :action=> 'manage', :menu => 'manage_email' if !is_new && Admin::Setting.mail_function_setting %></span></td>
+    <td><%=h @profile.email %><span style="margin-left: 20px;"><%= link_to "[変更する]", :action=> 'manage', :menu => 'manage_email' if !is_new && Admin::Setting.mail_function_setting %></span></td>
   </tr>
   <tr>
     <th width="100px"><label for="user_name">名前</label></th>

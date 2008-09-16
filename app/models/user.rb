@@ -90,16 +90,20 @@ class User < ActiveRecord::Base
     Digest::SHA1.hexdigest("#{INITIAL_SETTINGS['sha1_digest_key']}--#{password}--")
   end
 
-  def self.create_with_identity_url(identity_url, params)
+  def self.new_with_identity_url(identity_url, params)
+    params ||= {}
     code = params.delete(:code)
     password = encrypt(params[:code])
-
     user = new(params.slice(:name).merge(:password => password, :password_confirmation => password))
     user.user_uids << UserUid.new(:uid => code, :uid_type => 'MASTER')
     user.user_profile = UserProfile.new(params.slice(:email).merge(:disclosure => false))
     user.openid_identifiers << OpenidIdentifier.new(:url => identity_url)
     user.status = 'UNUSED'
+    user
+  end
 
+  def self.create_with_identity_url(identity_url, params)
+    user = new_with_identity_url(identity_url, params)
     user.save
     user
   end
