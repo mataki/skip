@@ -40,11 +40,14 @@ class PlatformController < ApplicationController
         reset_session
         session[:user_code] = user.code
 
-        return_to = params[:return_to] ? URI.encode(params[:return_to]) : nil
-        redirect_to (return_to and !return_to.empty?) ? return_to : root_url
+        redirect_to_back_or_root
       else
         flash[:auth_fail_message] ||={ "message" => _("ログインに失敗しました。"), "detail" => _("下部に記載されているお問い合わせ先にご連絡下さい。")}
-        redirect_to :back
+        if request.env['HTTP_REFERER']
+          redirect_to :back
+        else
+          redirect_to :action => :index
+        end
       end
     end
   end
@@ -60,19 +63,31 @@ class PlatformController < ApplicationController
   end
 
   private
+  def require_not_login
+    if current_user
+      unless current_user.unused?
+        redirect_to_back_or_root
+      else
+        redirect_to :controller => :portal, :action => :index
+      end
+    end
+  end
+
   def login_with_open_id
+    session[:return_to] = params[:return_to] if !params[:return_to].blank? and params[:open_id_complete].blank?
     authenticate_with_open_id do |result, identity_url, registration|
       if result.successful?
         unless identifier = OpenidIdentifier.find_by_url(identity_url)
           create_user_from(identity_url, registration)
           return
         end
+        return_to = session[:return_to]
         reset_session
 
         user = identifier.user_with_unused
         session[:user_code] = user.code
 
-        redirect_to_back_or_root
+        redirect_to_back_or_root(return_to)
       else
         set_error_message_form_result_and_redirect(result)
       end
@@ -92,36 +107,9 @@ class PlatformController < ApplicationController
     end
   end
 
-  # -----------------------------------------------
-  # over ride open_id_authentication to use OpenID::AX
-  def add_simple_registration_fields(open_id_request, fields)
-    axreq = OpenID::AX::FetchRequest.new
-    requested_attrs = INITIAL_SETTINGS['ax_fetchrequest']
-    requested_attrs.each { |a| axreq.add(OpenID::AX::AttrInfo.new(a[0], a[1], a[2] || false, a[3] || 1)) }
-    open_id_request.add_extension(axreq)
-    open_id_request.return_to_args['did_ax'] = 'y'
-  end
 
-  def complete_open_id_authentication
-    params_with_path = params.reject { |key, value| request.path_parameters[key] }
-    params_with_path.delete(:format)
-    open_id_response = timeout_protection_from_identity_server { open_id_consumer.complete(params_with_path, requested_url) }
-    identity_url     = normalize_url(open_id_response.endpoint.claimed_id) if open_id_response.endpoint.claimed_id
-    case open_id_response.status
-    when OpenID::Consumer::SUCCESS
-      yield Result[:successful], identity_url, OpenID::AX::FetchResponse.from_success_response(open_id_response)
-    when OpenID::Consumer::CANCEL
-      yield Result[:canceled], identity_url, nil
-    when OpenID::Consumer::FAILURE
-      yield Result[:failed], identity_url, nil
-    when OpenID::Consumer::SETUP_NEEDED
-      yield Result[:setup_needed], open_id_response.setup_url, nil
-    end
-  end
-  # -----------------------------------------------
-
-  def redirect_to_back_or_root
-    return_to = params[:return_to] ? URI.encode(params[:return_to]) : nil
+  def redirect_to_back_or_root(return_to = params[:return_to])
+    return_to = return_to ? URI.encode(return_to) : nil
     redirect_to (return_to and !return_to.empty?) ? return_to : root_url
   end
 
@@ -159,16 +147,32 @@ class PlatformController < ApplicationController
     redirect_to url
   end
 
-  def require_not_login
-    if current_user
-      unless current_user.unused?
-        redirect_to_back_or_root
-        return false
-      else
-        redirect_to :controller => :portal, :action => :index
-        return false
-      end
+  # -----------------------------------------------
+  # over ride open_id_authentication to use OpenID::AX
+  def add_simple_registration_fields(open_id_request, fields)
+    axreq = OpenID::AX::FetchRequest.new
+    requested_attrs = INITIAL_SETTINGS['ax_fetchrequest']
+    requested_attrs.each { |a| axreq.add(OpenID::AX::AttrInfo.new(a[0], a[1], a[2] || false, a[3] || 1)) }
+    open_id_request.add_extension(axreq)
+    open_id_request.return_to_args['did_ax'] = 'y'
+  end
+
+  def complete_open_id_authentication
+    params_with_path = params.reject { |key, value| request.path_parameters[key] }
+    params_with_path.delete(:format)
+    open_id_response = timeout_protection_from_identity_server { open_id_consumer.complete(params_with_path, requested_url) }
+    identity_url     = normalize_url(open_id_response.endpoint.claimed_id) if open_id_response.endpoint.claimed_id
+    case open_id_response.status
+    when OpenID::Consumer::SUCCESS
+      yield Result[:successful], identity_url, OpenID::AX::FetchResponse.from_success_response(open_id_response)
+    when OpenID::Consumer::CANCEL
+      yield Result[:canceled], identity_url, nil
+    when OpenID::Consumer::FAILURE
+      yield Result[:failed], identity_url, nil
+    when OpenID::Consumer::SETUP_NEEDED
+      yield Result[:setup_needed], open_id_response.setup_url, nil
     end
   end
+  # -----------------------------------------------
 end
 

@@ -84,10 +84,12 @@ describe PlatformController, "ログイン時にOpenIdのアカウントが渡�
 
       describe '戻り先が指定されている場合' do
         before do
-          post :login, :openid_url => @identity_url, :return_to => 'http://example.com'
+          @return_to = 'http://www.openskip.org/return_to'
+          session[:return_to] = @return_to
+          post :login, :openid_url => @identity_url
         end
 
-        it { response.should redirect_to('http://example.com') }
+        it { response.should redirect_to(@return_to) }
       end
     end
 

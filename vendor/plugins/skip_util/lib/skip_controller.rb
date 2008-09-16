@@ -69,8 +69,7 @@ class ActionController::Base
   def sso
     unless ENV['SKIPOP_URL'].blank?
       unless logged_in?
-        # TODO return_toを一緒に設定する必要がおそらくある
-        redirect_to :controller => '/platform', :action => :login, :openid_url => ENV['SKIPOP_URL']
+        redirect_to :controller => '/platform', :action => :login, :openid_url => ENV['SKIPOP_URL'], :return_to => URI.encode(request.url)
         return false
       end
       true

@@ -19,11 +19,13 @@ describe ApplicationController, "#sso" do
   describe "SKIPOP設定の場合" do
     before do
       ENV['SKIPOP_URL'] = 'http://localhost.com/'
+      @return_to = 'http://www.openskip.org/return_to'
+      controller.stub!(:request).and_return(mock('request', :url => @return_to))
     end
     describe "未ログイン時" do
       it "ログインへリダイレクトされる" do
         controller.stub!(:logged_in?).and_return(false)
-        controller.should_receive(:redirect_to).with({:controller => '/platform', :action => :login, :openid_url => ENV['SKIPOP_URL']})
+        controller.should_receive(:redirect_to).with({:controller => '/platform', :action => :login, :openid_url => ENV['SKIPOP_URL'], :return_to => @return_to})
         controller.send(:sso).should be_false
       end
     end
