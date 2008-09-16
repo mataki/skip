@@ -10,7 +10,7 @@
   <%= error_messages_for :user_uid %>
   <p>
     <%= label_tag :before_uid, _("before_uid") %>:
-    <%= @user.uid %>
+    <%=h @user.uid %>
   </p>
   <p>
     <%= f.label :uid, _("new_uid") %>

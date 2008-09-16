@@ -41,12 +41,12 @@
         <% @user, @user_profile, @user_uid = array -%>
         <% unless (@error_row_only &&  @user.errors.empty?) -%>
         <tr class="<%= cycle('line_1', 'line_0') %>">
-          <td><%= line+1 %></td>
-          <td><%= @user_uid.uid %></td>
-          <td><%= @user.name %></td>
-          <td><%= @user_profile.section %></td>
-          <td><%= @user_profile.email %></td>
-          <td><%= '********' %></td>
+          <td><%=h line+1 %></td>
+          <td><%=h @user_uid.uid %></td>
+          <td><%=h @user.name %></td>
+          <td><%=h @user_profile.section %></td>
+          <td><%=h @user_profile.email %></td>
+          <td><%=h '********' %></td>
           <td>
         <% unless @user.errors.empty? -%>
           <%
