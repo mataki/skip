@@ -13,6 +13,9 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# config/settings.ymlの内容をいくつかのビューにわけて表示/編集するコントローラ
+# 具体的には全体設定、文言設定、メール関連設定、フィード設定、その他設定の各タブの
+# 表示/更新を行う。
 class Admin::SettingsController < Admin::ApplicationController
   N_('Admin::SettingsController|literal')
   N_('Admin::SettingsController|mail')
