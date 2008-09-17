@@ -51,10 +51,10 @@ describe GroupCategory do
       @group_category.icon = ''
       @group_category.valid?.should be_false
     end
-    it 'iconが20文字以下であること' do
-      @group_category.icon = SkipFaker.rand_char(21)
+    it 'iconがGroupCategory::ICONSに含まれること' do
+      @group_category.icon = 'hoge'
       @group_category.valid?.should be_false
-      @group_category.icon = SkipFaker.rand_char(20)
+      @group_category.icon = 'ipod'
       @group_category.valid?.should be_true
     end
 

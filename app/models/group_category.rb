@@ -19,6 +19,8 @@ class GroupCategory < ActiveRecord::Base
   N_('GroupCategory|Initial selected|true')
   N_('GroupCategory|Initial selected|false')
 
+  ICONS = ['page_word', 'group_gear', 'ipod']
+
   validates_presence_of :code
   validates_uniqueness_of :code
   validates_length_of :code, :maximum => 20
@@ -27,11 +29,9 @@ class GroupCategory < ActiveRecord::Base
   validates_length_of :name, :maximum => 20
 
   validates_presence_of :icon
-  validates_length_of :icon, :maximum => 20
+  validates_inclusion_of :icon, :in => ICONS
 
   validates_length_of :description, :maximum => 255
-
-  ICONS = ['page_word', 'group_gear', 'ipod']
 
   def before_save
     if self.initial_selected
