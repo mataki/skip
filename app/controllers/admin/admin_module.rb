@@ -146,6 +146,7 @@ module Admin::AdminModule
       set_singularize_instance_val object
 
       respond_to do |format|
+        flash[:notice] = _("%{model} was successfully deleted.") % {:model => _(singularize_name.gsub('_', ' '))}
         format.html { redirect_to(index_url) }
         format.xml  { head :ok }
       end
@@ -259,6 +260,7 @@ module Admin::AdminModule
       set_singularize_instance_val object
 
       respond_to do |format|
+        flash[:notice] = _("%{model} was successfully deleted.") % {:model => _(singularize_name.gsub('_', ' '))}
         format.html { redirect_to(url_for_parent) }
         format.xml  { head :ok }
       end

@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-09-17 15:07+0900\n"
+"POT-Creation-Date: 2008-09-17 17:27+0900\n"
 "PO-Revision-Date: 2008-09-13 11:22+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,23 +18,28 @@ msgstr ""
 
 #: app/controllers/admin/users_controller.rb:160
 #: app/controllers/admin/admin_module.rb:75
-#: app/controllers/admin/admin_module.rb:164
-#: app/controllers/admin/admin_module.rb:178
-#: app/controllers/admin/admin_module.rb:180
-#: app/controllers/admin/admin_module.rb:193
-#: app/controllers/admin/admin_module.rb:208
-#: app/controllers/admin/admin_module.rb:218
-#: app/controllers/admin/admin_module.rb:240
+#: app/controllers/admin/admin_module.rb:165
+#: app/controllers/admin/admin_module.rb:179
+#: app/controllers/admin/admin_module.rb:181
+#: app/controllers/admin/admin_module.rb:194
+#: app/controllers/admin/admin_module.rb:209
+#: app/controllers/admin/admin_module.rb:219
+#: app/controllers/admin/admin_module.rb:241
 msgid "%{model} Show"
 msgstr "%{model}の詳細"
 
 #: app/controllers/admin/admin_module.rb:114
-#: app/controllers/admin/admin_module.rb:224
+#: app/controllers/admin/admin_module.rb:225
 msgid "%{model} was successfully created."
 msgstr "%{model}の作成に成功しました。"
 
+#: app/controllers/admin/admin_module.rb:149
+#: app/controllers/admin/admin_module.rb:263
+msgid "%{model} was successfully deleted."
+msgstr "%{model}を削除しました。"
+
 #: app/controllers/admin/admin_module.rb:133
-#: app/controllers/admin/admin_module.rb:246
+#: app/controllers/admin/admin_module.rb:247
 msgid "%{model} was successfully updated."
 msgstr "%{model}の更新に成功しました。"
 
@@ -1091,8 +1096,8 @@ msgstr "編集"
 #: app/controllers/admin/users_controller.rb:73
 #: app/controllers/admin/admin_module.rb:102
 #: app/controllers/admin/admin_module.rb:129
-#: app/controllers/admin/admin_module.rb:210
-#: app/controllers/admin/admin_module.rb:242
+#: app/controllers/admin/admin_module.rb:211
+#: app/controllers/admin/admin_module.rb:243
 msgid "Editing %{model}"
 msgstr "%{model}の更新"
 
@@ -1293,18 +1298,18 @@ msgstr "行"
 #: app/controllers/admin/admin_module.rb:101
 #: app/controllers/admin/admin_module.rb:109
 #: app/controllers/admin/admin_module.rb:128
-#: app/controllers/admin/admin_module.rb:163
-#: app/controllers/admin/admin_module.rb:165
-#: app/controllers/admin/admin_module.rb:177
-#: app/controllers/admin/admin_module.rb:179
-#: app/controllers/admin/admin_module.rb:192
-#: app/controllers/admin/admin_module.rb:194
-#: app/controllers/admin/admin_module.rb:207
-#: app/controllers/admin/admin_module.rb:209
-#: app/controllers/admin/admin_module.rb:217
-#: app/controllers/admin/admin_module.rb:219
-#: app/controllers/admin/admin_module.rb:239
-#: app/controllers/admin/admin_module.rb:241
+#: app/controllers/admin/admin_module.rb:164
+#: app/controllers/admin/admin_module.rb:166
+#: app/controllers/admin/admin_module.rb:178
+#: app/controllers/admin/admin_module.rb:180
+#: app/controllers/admin/admin_module.rb:193
+#: app/controllers/admin/admin_module.rb:195
+#: app/controllers/admin/admin_module.rb:208
+#: app/controllers/admin/admin_module.rb:210
+#: app/controllers/admin/admin_module.rb:218
+#: app/controllers/admin/admin_module.rb:220
+#: app/controllers/admin/admin_module.rb:240
+#: app/controllers/admin/admin_module.rb:242
 #: app/views/admin/board_entries/show.html.erb:23
 #: app/views/admin/users/import.html.erb:68
 #: app/views/admin/groups/show.html.erb:35
@@ -1376,8 +1381,8 @@ msgstr ""
 #: app/controllers/admin/users_controller.rb:40
 #: app/controllers/admin/admin_module.rb:89
 #: app/controllers/admin/admin_module.rb:110
-#: app/controllers/admin/admin_module.rb:195
-#: app/controllers/admin/admin_module.rb:220
+#: app/controllers/admin/admin_module.rb:196
+#: app/controllers/admin/admin_module.rb:221
 #: app/views/admin/users/index.html.erb:36
 #: app/views/admin/group_categories/index.html.erb:34
 msgid "New %{model}"
