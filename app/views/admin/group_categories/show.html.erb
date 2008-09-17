@@ -14,7 +14,7 @@
   </p>
   <p>
     <b><%= label @group_category.class, :icon %>:</b>
-    <%=h @group_category.icon %>
+    <%= icon_tag h(@group_category.icon), :alt => h(@group_category.icon) %>
   </p>
   <p>
     <b><%= label @group_category.class, :description %>:</b>

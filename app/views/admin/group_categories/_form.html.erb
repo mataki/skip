@@ -9,6 +9,11 @@
 </p>
 <p>
   <%= form.label :icon %>
+  <%
+    @group_category.icon = Admin::GroupCategory::ICONS.first if @group_category.icon.blank?
+    icon = h(@group_category.icon)
+  -%>
+  <%= icon_tag icon, :alt => icon, :id => 'category_icon' %>
   <%= form.select :icon, Admin::GroupCategory::ICONS %>
 </p>
 <p>
@@ -18,3 +23,21 @@
   <%= form.label :initial_selected %>
   <%= form.check_box :initial_selected %>
 </p>
+
+<% content_for :javascript do -%>
+<script type="text/javascript">
+$j(function(){
+    $j('#admin_group_category_icon')
+    .click(function(){
+        var icon = $j('#admin_group_category_icon').val();
+        $j('#category_icon')
+        .attr({
+            title: icon,
+            src: '<%= @controller.request.relative_url_root %>' + '/images/skip/icons/' + icon + '.png',
+            alt: icon
+        });
+        fnLoadPngs();
+    });
+});
+</script>
+<% end -%>
