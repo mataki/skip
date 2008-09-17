@@ -159,7 +159,7 @@ private
     @main_menu = @title = 'サイト情報'
 
     @tab_menu_source = [ ['リリースノート', 'index'],
-                         ["数字で見る#{Admin::Setting.abbr_app_title}", 'statistics' ] ]
+                         ["数字で見る#{ERB::Util.h(Admin::Setting.abbr_app_title)}", 'statistics' ] ]
   end
 
   def get_site_count_hash_by_day date

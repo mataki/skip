@@ -13,7 +13,7 @@
     </td>
     <td class="auth" width="30%"><%= participation_state(group, user_id) -%></td>
     <td class="category">
-      <%= icon_tag(group.category_icon_name.first, :title => group.category_icon_name.last, :margin => true) + group.category_icon_name.last %>
+      <%= icon_tag(group.category_icon_name.first, :title => group.category_icon_name.last, :margin => true) + h(group.category_icon_name.last) %>
     </td>
   </tr>
   <tr>
