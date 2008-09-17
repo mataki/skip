@@ -27,12 +27,13 @@ class ActionController::Base
   # その場合、SSOの機構があるので一旦リダイレクトして同じURLに飛ばすことでcookieを作り直せる。
   def rescue_action_in_public ex
     case ex
-    when ::ActionController::UnknownController,::ActionController::UnknownAction,::ActionController::RoutingError
-      redirect_to "#{ENV['SKIP_URL']}/404.html", :status => :temporary_redirect
+    when ActionController::UnknownController, ActionController::UnknownAction,
+      ActionController::RoutingError, ActiveRecord::RecordNotFound
+      render :file => File.join(RAILS_ROOT, 'public', '404.html'), :status => :not_found
     when CGI::Session::CookieStore::TamperedWithCookie
       redirect_to request.env["REQUEST_URI"], :status => :temporary_redirect
     else
-      redirect_to "#{ENV['SKIP_URL']}/500.html", :status => :temporary_redirect
+      render :file => File.join(RAILS_ROOT, 'public', '500.html'), :status => :internal_server_error
     end
   end
 
