@@ -32,7 +32,7 @@ class Admin::DocumentsController < Admin::ApplicationController
     @content_name = _(self.class.name + '|' + params[:target])
     @document = ''
     @document = open(RAILS_ROOT + "/public/custom/#{params[:target]}.html", 'r') { |f| s = f.read }
-    @topics = [[_('説明文の設定'), admin_documents_path]]
+    @topics = topics
     @topics << @content_name
   rescue Errno::EACCES => e
     flash.now[:error] = _('対象のコンテンツを開くことが出来ませんでした。')
@@ -71,7 +71,7 @@ class Admin::DocumentsController < Admin::ApplicationController
   def check_params
     if params[:target].blank?
       if action_name == 'index'
-        @topics = [[_('説明文の設定'), admin_documents_path]]
+        @topics = topics
         render :action => :index
       end
     else
@@ -95,5 +95,9 @@ class Admin::DocumentsController < Admin::ApplicationController
     flash.now[:error] = _('想定外のエラーが発生しました。管理者にお問い合わせ下さい。')
     e.backtrace.each { |message| logger.error message }
     render :action => :index, :target => params[:target], :status => :internal_server_error
+  end
+
+  def topics
+    [[_('Admin::DocumentsController'), admin_documents_path]]
   end
 end
