@@ -106,6 +106,9 @@ module Admin::AdminModule
       object = admin_model_class.new(params[admin_params_sym])
       set_singularize_instance_val object
 
+      @topics = [[_('Listing %{model}') % {:model => _(singularize_name.gsub('_', ' '))}, index_url],
+                 _('New %{model}') % {:model => _(singularize_name.gsub('_', ' '))}]
+
       respond_to do |format|
         if object.save
           flash[:notice] = _("%{model} was successfully created.") % {:model => _(singularize_name.gsub('_', ' '))}
@@ -121,6 +124,9 @@ module Admin::AdminModule
     def update
       object = admin_model_class.find(params[:id])
       set_singularize_instance_val object
+
+      @topics = [[_('Listing %{model}') % {:model => _(singularize_name.gsub('_', ' '))}, index_url],
+                 _('Editing %{model}') % {:model => object.topic_title}]
 
       respond_to do |format|
         if object.update_attributes(params[admin_params_sym])
@@ -208,6 +214,11 @@ module Admin::AdminModule
       object = chiled_objects.build(params[admin_params_sym])
       set_singularize_instance_val object
 
+      @topics = [[_('Listing %{model}') % {:model => _(object_name_without_admin(load_parent).gsub('_', ' '))}, parent_index_path],
+                 [_('%{model} Show') % {:model => load_parent.topic_title}, load_parent],
+                 [_('Listing %{model}') % {:model => _(singularize_name.gsub('_', ' '))}, { :action => :index }],
+                 _('New %{model}') % {:model => object.topic_title}]
+
       respond_to do |format|
         if object.save
           flash[:notice] = _("%{model} was successfully created.") % {:model => _(singularize_name.gsub('_', ' '))}
@@ -224,6 +235,11 @@ module Admin::AdminModule
     def update
       object = chiled_objects.find(params[:id])
       set_singularize_instance_val object
+
+      @topics = [[_('Listing %{model}') % {:model => _(object_name_without_admin(load_parent).gsub('_', ' '))}, parent_index_path],
+                 [_('%{model} Show') % {:model => load_parent.topic_title}, load_parent],
+                 [_('Listing %{model}') % {:model => _(singularize_name.gsub('_', ' '))}, { :action => :index }],
+                 _('Editing %{model}') % {:model => object.topic_title}]
 
       respond_to do |format|
         if object.update_attributes(params[singularize_name.to_sym])

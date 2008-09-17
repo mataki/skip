@@ -37,6 +37,7 @@ class Admin::UsersController < Admin::ApplicationController
       flash[:notice] = _('登録しました。')
       redirect_to admin_users_path
     rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => e
+      @topics = [[_('Listing %{model}') % {:model => _('user')}, admin_users_path], _('New %{model}') % {:model => _('user')}]
       render :action => 'new'
     end
   end
