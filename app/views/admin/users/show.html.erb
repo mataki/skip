@@ -13,12 +13,12 @@
 
   <p>
     <b><%= label @user.class, :status %>:</b>
-    <%=h @user.status %>
+    <%=h _('User|Status|' + @user.status) %>
   </p>
 
   <p>
     <b><%= label @user.class, :admin %>:</b>
-    <%=h @user.admin %>
+    <%=h _('User|Admin|' + @user.admin.to_s) %>
   </p>
 
 </div>
