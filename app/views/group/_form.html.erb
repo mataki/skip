@@ -27,7 +27,7 @@
   <div class="input_value">
     <table style="margin-left:3px;border:0;">
     <tr><th width="100px"></th><th></th></tr>
-<% Group::CATEGORIES.each do |category| %>
+<% @group_categories.each do |category| %>
     <tr>
       <td><%= radio_button "group", "group_category_id", category.id, :class => "category_radio_button" %>
             <%= get_group_icon category, :margin => true %><b><%= h category.name %></b></td>

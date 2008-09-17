@@ -9,10 +9,10 @@
     <%= radio_button_tag "group_category_id", "all",  params[:group_category_id] == "all", :class => "category_radio"  %>
     <%= icon_tag "asterisk_orange", :margin => true %>全て(<%= @total_count %>)<br/>
     <% #TODO group/index.rhtmlにほぼ同じ記述がある。helper化すべきか? %>
-    <% Group::CATEGORIES.each do |category| %>
+    <% @group_categories.each do |category| %>
       <%= radio_button_tag "group_category_id", category.id, params[:group_category_id] == category.id.to_s, :class => "category_radio" %>
       <%= get_group_icon category, :margin => true %>
-      <%= h category[:name] -%>(<%= h @group_counts[category.id] %>)<br/>
+      <%= h category.name -%>(<%= h @group_counts[category.id] %>)<br/>
     <% end %>
    </div>
 </div><!-- box_space -->

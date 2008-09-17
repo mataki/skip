@@ -26,20 +26,16 @@ class Group < ActiveRecord::Base
   N_('Group|Protected|true')
   N_('Group|Protected|false')
 
-  # categoryの種類
-  CATEGORIES = GroupCategory.all
-  CATEGORIES_HASH = {}
-  DEFAULT_CATEGORY_ID = ''
-  CATEGORIES.each do |category|
-    CATEGORIES_HASH[category.code] = category
-    DEFAULT_CATEGORY_ID = category.id if category.initial_selected
-  end
-
   alias initialize_old initialize
 
   def initialize(attributes = nil)
+    attributes = {} if attributes.nil? 
+    if attributes[:group_category_id].nil?
+      if gc = GroupCategory.find_by_initial_selected(true)
+        attributes[:group_category_id] = gc.id
+      end
+    end
     initialize_old(attributes)
-    self.group_category_id = DEFAULT_CATEGORY_ID if self.group_category_id == 0
   end
 
   class << self
@@ -90,8 +86,7 @@ class Group < ActiveRecord::Base
   end
 
   def category_icon_name
-    category_ = CATEGORIES_HASH[group_category.code]
-    [category_.icon, category_.name]
+    [group_category.icon, group_category.name]
   end
 
   def self.make_conditions(options={})

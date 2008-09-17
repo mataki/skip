@@ -157,6 +157,7 @@ class UserController < ApplicationController
     params[:participation] = true
     @format_type = params[:format_type] ||= "list"
     @group_counts, @total_count = Group.count_by_category(@user.id)
+    @group_categories = GroupCategory.all
 
     @show_favorite = (@user.id == session[:user_id])
 

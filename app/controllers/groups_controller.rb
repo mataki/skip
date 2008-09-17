@@ -27,6 +27,7 @@ class GroupsController < ApplicationController
     params[:sort_type] ||= "date"
     @format_type = params[:format_type] ||= "detail"
     @group_counts, @total_count = Group.count_by_category
+    @group_categories = GroupCategory.all
 
     options = Group.paginate_option(session[:user_id], params)
     options[:per_page] = params[:format_type] == "list" ? 30 : 5
@@ -41,6 +42,7 @@ class GroupsController < ApplicationController
   # グループの新規作成画面の表示
   def new
     @group = Group.new
+    @group_categories = GroupCategory.all
     render(:partial => "group/form", :layout => 'layout',
             :locals => { :action_value => 'create', :submit_value => '作成' } )
   end
@@ -49,6 +51,7 @@ class GroupsController < ApplicationController
   # グループの新規作成の処理
   def create
     @group = Group.new(params[:group])
+    @group_categories = GroupCategory.all
     @group.group_participations.build(:user_id => session[:user_id], :owned => true)
 
     if @group.save

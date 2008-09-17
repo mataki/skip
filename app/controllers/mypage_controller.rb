@@ -780,7 +780,7 @@ private
     # 最新の掲示板のエントリ(全体公開のみ)
     recent_bbs = []
     gid_by_category = Group.gid_by_category
-    Group::CATEGORIES.each do |category| # 表示順序の制御
+    GroupCategory.all.each do |category| # 表示順序の制御
       options = { :group_symbols => gid_by_category[category.id], :recent_day => 10, :per_page => 3 }
       recent_bbs << self.send("find_recent_bbs_#{category.code.downcase}_as_locals", options)
     end
@@ -839,7 +839,7 @@ private
   # 引数：group_symbols    = 検索対象のグループシンボル(デフォルトnil)
   # 引数：recent_day       = 最近を示す日数（デフォルト10日）
   # 引数：per_page         = １ページの表示数（デフォルト3件）
-  Group::CATEGORIES.each do |category|
+  GroupCategory.all.each do |category|
     define_method( "find_recent_bbs_#{category.code.downcase}_as_locals" ) do |options|
       options ||= {}
       options[:recent_day] ||= 10
@@ -850,7 +850,7 @@ private
 
   # 最新のBBSエントリ一覧partial用オプション生成メソッド
   def recent_bbs_proc category, options
-    title   = "最新の掲示板のエントリ（#{Group::CATEGORIES_HASH[category.code][:name]}）"
+    title   = "最新の掲示板のエントリ（#{category.name}）"
     id_name = "recent_bbs_#{category.code.downcase}"
     pages_obj, pages = nil, []
 

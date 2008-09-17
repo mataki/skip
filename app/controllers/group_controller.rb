@@ -153,7 +153,7 @@ class GroupController < ApplicationController
 
     case @menu
     when "manage_info"
-      #
+      @group_categories = GroupCategory.all
     when "manage_participations"
       @pages, @participations = paginate_participations(@group, false)
     when "manage_permit"
