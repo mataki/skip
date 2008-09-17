@@ -30,10 +30,20 @@ describe GroupCategory do
       @group_category.valid?.should be_false
     end
     it 'codeが20文字以下であること' do
-      @group_category.code = SkipFaker.rand_char(21)
+      @group_category.code = SkipFaker.rand_alpha(21)
       @group_category.valid?.should be_false
-      @group_category.code = SkipFaker.rand_char(20)
+      @group_category.code = SkipFaker.rand_alpha(20)
       @group_category.valid?.should be_true
+    end
+    it 'codeがアルファベットのみであること' do
+      @group_category.code = 'aaa'
+      @group_category.valid?.should be_true
+      @group_category.code = 'AAA'
+      @group_category.valid?.should be_true
+      @group_category.code = 'aaa0'
+      @group_category.valid?.should be_false
+      @group_category.code = 'aaa+-\&^'
+      @group_category.valid?.should be_false
     end
 
     it 'nameが必須であること' do

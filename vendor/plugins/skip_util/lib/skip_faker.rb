@@ -24,6 +24,11 @@ module SkipFaker
     (0..(digit-1)).map{rand(10)}.join
   end
 
+  # 指定桁数のランダムな英字を生成。デフォルトは10桁
+  def self.rand_alpha(digit = 10)
+    (0..(digit-1)).map{(10..35).map{|i| i.to_s(36)}[rand(25)]}.join
+  end
+
   # テスト用の名前を生成
   def self.name
     %w(guchon mat_aki maedana meguro gotanda sinagawa tamati).rand

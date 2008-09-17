@@ -24,6 +24,7 @@ class GroupCategory < ActiveRecord::Base
   validates_presence_of :code
   validates_uniqueness_of :code
   validates_length_of :code, :maximum => 20
+  validates_format_of :code, :message => _('はアルファベットで入力して下さい。'), :with => /^[a-zA-Z]*$/
 
   validates_presence_of :name
   validates_length_of :name, :maximum => 20
