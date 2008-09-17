@@ -158,25 +158,42 @@ describe PlatformController, "#require_not_login" do
 end
 
 describe PlatformController, "#logout" do
-  describe "通常のログアウト" do
+  describe "固定OP利用RPモードの場合" do
     before do
-      ENV['SKIPOP_URL'] = nil
+      INITIAL_SETTINGS['login_mode'] = "rp"
+      INITIAL_SETTINGS['fixed_op_url'] = 'http://skipop.url/'
+    end
+    it "reset_sessionが呼ばれること" do
       controller.should_receive(:reset_session)
       get :logout
     end
-    it { response.should redirect_to(:controller => :platform, :action => :index) }
-    it { flash[:notice].should_not be_nil }
-  end
-  describe "メッセージが設定されている場合" do
-    before do
-      ENV['SKIPOP_URL'] = nil
-      controller.should_receive(:reset_session)
-      @message = 'ほげほげ'
-
-      get :logout, :message => @message
+    it "OPのログアウトにリダイレクトすること" do
+      get :logout
+      response.should redirect_to("#{INITIAL_SETTINGS['fixed_op_url']}logout")
     end
-    it { response.should redirect_to(:controller => :platform, :action => :index) }
-    it { flash[:notice].should be_include('retired') }
+  end
+  describe "その他のモードの場合" do
+    before do
+      INITIAL_SETTINGS['login_mode'] = 'password'
+    end
+    describe "通常のログアウト" do
+      before do
+        controller.should_receive(:reset_session)
+        get :logout
+      end
+      it { response.should redirect_to(:controller => :platform, :action => :index) }
+      it { flash[:notice].should_not be_nil }
+    end
+    describe "メッセージが設定されている場合" do
+      before do
+        controller.should_receive(:reset_session)
+        @message = 'ほげほげ'
+
+        get :logout, :message => @message
+      end
+      it { response.should redirect_to(:controller => :platform, :action => :index) }
+      it { flash[:notice].should be_include('retired') }
+    end
   end
 end
 
@@ -188,8 +205,8 @@ describe PlatformController, "#create_user_from" do
 
   describe "専用OPモードの場合" do
     before do
-      ENV['FREE_OP'] = nil
-      ENV['SKIPOP_URL'] = 'http://skipop.url/'
+      INITIAL_SETTINGS['login_mode'] = 'rp'
+      INITIAL_SETTINGS['fixed_op_url'] = 'http://skipop.url/'
     end
     describe "identity_urlが適切な場合" do
       before do
@@ -236,8 +253,8 @@ describe PlatformController, "#create_user_from" do
   end
   describe "フリーOPモードの場合" do
     before do
-      ENV['SKIPOP_URL'] = nil
-      ENV['FREE_OP'] = 'ON'
+      INITIAL_SETTINGS['login_mode'] = 'rp'
+      INITIAL_SETTINGS['fixed_op_url'] = nil
 
       @session = {}
       @session.stub!(:[]=).with(:identity_url, @identity_url)
@@ -257,8 +274,7 @@ describe PlatformController, "#create_user_from" do
   end
   describe "OP専用モードでない場合" do
     before do
-      ENV['SKIPOP_URL'] = nil
-      ENV['FREE_OP'] = nil
+      INITIAL_SETTINGS['login_mode'] = 'password'
     end
     it "ログイン画面に遷移して、エラーメッセージを表示すること" do
       controller.should_receive(:set_error_message_not_create_new_user_and_redirect)

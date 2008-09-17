@@ -36,6 +36,10 @@ describe MypageController do
   end
 
   describe "POST /mypage/apply_ident_url" do
+    before do
+      INITIAL_SETTINGS['login_mode'] = 'rp'
+      INITIAL_SETTINGS['fixed_op_url'] = nil
+    end
     describe '新規登録の場合' do
       before do
         @url = 'http://example.com'
@@ -140,6 +144,9 @@ describe MypageController do
 
   describe "POST /mypage/delete_ident_url" do
     before do
+      INITIAL_SETTINGS['login_mode'] = 'rp'
+      INITIAL_SETTINGS['fixed_op_url'] = nil
+
       @url = 'http://hoge.example.com/'
       @user = mock_model(User)
       @openid_identifier = mock_model(OpenidIdentifier)
@@ -222,11 +229,13 @@ end
 
 describe MypageController, "POST /apply_password" do
   before do
+    INITIAL_SETTINGS['login_mode'] = 'password'
+
     @user = user_login
     @user.should_receive(:change_password)
     @user.should_receive(:errors).and_return([])
 
     post :apply_password
   end
-  it { response.should be_redirect }
+  it { response.should redirect_to(:action => :manage, :menu => :manage_password) }
 end

@@ -43,11 +43,10 @@ class ShareFileController < ApplicationController
     # 所有者がマイユーザ OR マイグループ
     unless login_user_symbols.include? @share_file.owner_symbol
       @categories_hash = ShareFile.get_tags_hash(@share_file.owner_symbol)
-      flash[:warning] = "この操作は、許可されていません。"
-      redirect_to :controller => 'mypage', :action => "index"
+      redirect_to_with_deny_auth
       return
     end
-    
+
     unless valid_upload_files? params[:file]
       @categories_hash = ShareFile.get_tags_hash(@share_file.owner_symbol)
       flash.now[:warning] = "ファイルサイズが０、もしくはサイズが大きすぎるファイルがあります。"
@@ -60,8 +59,8 @@ class ShareFileController < ApplicationController
       @share_file.file_name = file.original_filename
       @share_file.content_type = file.content_type.chomp
 
-      if not (verify_message = verify_extension_share_file(@share_file)) and 
-        not (verify_message = verify_file_size(file)) and 
+      if not (verify_message = verify_extension_share_file(@share_file)) and
+        not (verify_message = verify_file_size(file)) and
         @share_file.save
         target_symbols = analyze_param_publication_type
         target_symbols.each do |target_symbol|
@@ -102,11 +101,11 @@ class ShareFileController < ApplicationController
       return
     end
 
-    unless authorize_to_save_share_file? @share_file 
+    unless authorize_to_save_share_file? @share_file
       render_window_close
       return
     end
-    
+
     params[:publication_symbols_value] = ""
     if @share_file.public?
       params[:publication_type] = "public"
@@ -131,8 +130,7 @@ class ShareFileController < ApplicationController
 
     unless authorize_to_save_share_file? @share_file
       @categories_hash = ShareFile.get_tags_hash(@share_file.owner_symbol)
-      flash[:warning] = "この操作は、許可されていません。"
-      redirect_to  :controller => 'mypage', :action =>'index'
+      redirect_to_with_deny_auth
       return
     end
 
@@ -160,12 +158,8 @@ class ShareFileController < ApplicationController
       return false
     end
 
-    unless authorize_to_save_share_file? share_file
-      flash[:warning] = "この操作は、許可されていません。"
-      redirect_to :controller => 'mypage', :action => 'index'
-      return
-    end
-    
+    redirect_to_with_deny_auth and return unless authorize_to_save_share_file? share_file
+
     if share_file.destroy
       flash[:notice] = "ファイルの削除に成功しました。"
     else
@@ -176,11 +170,7 @@ class ShareFileController < ApplicationController
   end
 
   def list
-    if not parent_controller
-      flash[:warning] = '不正な操作でのアクセスは許可されていません'
-      redirect_to :controller => 'mypage', :action => "index"
-      return
-    end
+    redirect_to_with_deny_auth and return if not parent_controller
 
     @owner_name = params[:owner_name]
     @owner_symbol = params[:id]
@@ -307,7 +297,7 @@ private
 
   def verify_extension_share_file file
       unless verify_extension? file.file_name, file.content_type
-        return "この形式のファイルは、アップロードできません。" 
+        return "この形式のファイルは、アップロードできません。"
       end
       return nil
   end
@@ -319,11 +309,11 @@ private
     return file_name
   end
 
-  # 権限チェック 
+  # 権限チェック
   # ・所有者がマイユーザ
-  # ・所有者がマイグループ  AND 作成者がマイユーザ 
+  # ・所有者がマイグループ  AND 作成者がマイユーザ
   def authorize_to_save_share_file? share_file
-    session[:user_symbol] == share_file.owner_symbol || 
+    session[:user_symbol] == share_file.owner_symbol ||
       (login_user_groups.include?(share_file.owner_symbol) && (session[:user_id] == share_file.user_id))
   end
 

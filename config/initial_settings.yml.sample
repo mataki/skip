@@ -36,6 +36,8 @@ default: &default
   nickname_use_setting: true                                         # ユーザ登録時にニックネームを利用するかどうかの設定
   delivery_method: smtp                                              # メール配信方法(ActionMailer::Base.delivery_methodへの設定値)
   raise_delivery_errors: false                                       # メール送信に失敗した場合のエラー処理を行なうか
+  login_mode: password                                               # ログインの方法の設定 password:パスワード認証, rp:RPモード
+#  fixed_op_url: http://skipop.openskip.org/                         # RPモードで固定OPを利用するSSOの場合のURL
 
 # ---- 全文検索
   search_apps:

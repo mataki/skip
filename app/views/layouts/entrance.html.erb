@@ -50,7 +50,7 @@ div#main_navi div.next_arrow {
   <div id="main_navi" style="background-color: #ffffff; padding: 10px; margin-bottom: 10px;">
     <div class="flow_box" <%= 'style="background-color: yellow"' if session[:entrance_next_action] == :confirm -%> >利用規約の確認</div>
     <div class="next_arrow"><%= icon_tag 'arrow_right' -%></div>
-    <% if ENV['FREE_OP'] -%>
+    <% if INITIAL_SETTINGS['login_mode'] == 'rp' and INITIAL_SETTINGS['fixed_op_url'].blank? -%>
     <div class="flow_box" <%= 'style="background-color: yellow"' if session[:entrance_next_action] == :account_registration -%> >アカウントの登録</div>
     <div class="next_arrow"><%= icon_tag 'arrow_right' -%></div>
     <% end -%>

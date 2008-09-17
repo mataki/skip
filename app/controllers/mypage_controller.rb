@@ -156,10 +156,12 @@ class MypageController < ApplicationController
     when "manage_profile"
       @profile = @user.profile || UserProfile.new
     when "manage_password"
+      redirect_to_with_deny_auth(:action => :manage) and return if INITIAL_SETTINGS['login_mode'] == 'rp'
       @user = User.new
     when "manage_email"
       @applied_email = AppliedEmail.find_by_user_id(session[:user_id]) || AppliedEmail.new
     when "manage_openid"
+      redirect_to_with_deny_auth(:action => :manage) and return if INITIAL_SETTINGS['login_mode'] == 'password' or !INITIAL_SETTINGS['fixed_op_url'].blank?
       @openid_identifier = @user.openid_identifiers.first || OpenidIdentifier.new
     when "manage_portrait"
       @picture = Picture.find_by_user_id(@user.id) || Picture.new
@@ -246,15 +248,17 @@ class MypageController < ApplicationController
   end
 
   def apply_password
+    redirect_to_with_deny_auth(:action => :manage) and return if INITIAL_SETTINGS['login_mode'] == 'rp'
+
     @user = current_user
     @user.change_password(params[:user])
     if @user.errors.empty?
       flash[:notice] = 'パスワードを変更しました。'
       redirect_to :action => :manage, :menu => :manage_password
-      return
+    else
+      @menu = 'manage_password'
+      render :partial => 'manage_password', :layout => 'layout'
     end
-    @menu = 'manage_password'
-    render :partial => 'manage_password', :layout => 'layout'
   end
 
   def apply_email
@@ -299,6 +303,7 @@ class MypageController < ApplicationController
   end
 
   def apply_ident_url
+    redirect_to_with_deny_auth(:action => :manage) and return if INITIAL_SETTINGS['login_mode'] == 'password' or !INITIAL_SETTINGS['fixed_op_url'].blank?
     @openid_identifier = if current_user.openid_identifiers.empty?
                            current_user.openid_identifiers.build
                          else
@@ -319,6 +324,7 @@ class MypageController < ApplicationController
   end
 
   def delete_ident_url
+    redirect_to_with_deny_auth(:action => :manage) and return if INITIAL_SETTINGS['login_mode'] == 'password' or !INITIAL_SETTINGS['fixed_op_url'].blank?
     if (openid_identifier = OpenidIdentifier.find_by_url(params[:ident_url]) and
         openid_identifier.user.code == session[:user_code])
       openid_identifier.destroy

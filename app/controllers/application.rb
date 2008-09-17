@@ -118,4 +118,9 @@ class ApplicationController < ActionController::Base
     end
     true
   end
+
+  def redirect_to_with_deny_auth(url = { :controller => :mypage, :action => :index })
+    flash[:warning] = _('この操作は、許可されていません。')
+    redirect_to url
+  end
 end

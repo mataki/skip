@@ -104,7 +104,8 @@ end
 
 describe PortalController, "#registration" do
   before do
-    ENV['FREE_OP'] = "ON"
+    INITIAL_SETTINGS['login_mode'] = 'rp'
+    INITIAL_SETTINGS['fixed_op_url'] = nil
   end
   describe "session[:identity_url]が空の場合" do
     before do

@@ -1,6 +1,6 @@
 # SKIP(Social Knowledge & Innovation Platform)
 # Copyright (C) 2008 TIS Inc.
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -9,7 +9,7 @@
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-# 
+#
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -76,14 +76,12 @@ class EditController < ApplicationController
     @board_entry.publication_symbols_value = params[:publication_type]=='protected' ? params[:publication_symbols_value] : ""
 
     # 権限チェック
-    unless (session[:user_symbol] == params[:board_entry][:symbol]) || 
-      login_user_groups.include?(params[:board_entry][:symbol]) 
+    unless (session[:user_symbol] == params[:board_entry][:symbol]) ||
+      login_user_groups.include?(params[:board_entry][:symbol])
       if MAIL_FUNCTION_SETTING
         @sent_mail_flag = "checked" if params[:sent_mail][:send_flag] == "1"
       end
-      flash[:warning] = "この操作は、許可されていません。"
-      redirect_to  :controller => 'mypage', :action =>'index'
-      return
+      redirect_to_with_deny_auth and return
     end
 
     if @board_entry.save
@@ -118,11 +116,8 @@ class EditController < ApplicationController
   def edit
     @board_entry = get_entry(params[:id])
     # 権限チェック
-    unless authorize_to_edit_board_entry? @board_entry
-      flash[:warning] = "この操作は、許可されていません。"
-      redirect_to :controller => 'mypage', :action => 'index'
-      return false
-    end
+    redirect_to_with_deny_auth and return unless authorize_to_edit_board_entry? @board_entry
+
     params[:entry_type] ||= @board_entry.entry_type
     params[:symbol] ||= @board_entry.symbol
 
@@ -175,7 +170,7 @@ class EditController < ApplicationController
 
   # post_acttion
   def update
-    @board_entry = get_entry params[:id] 
+    @board_entry = get_entry params[:id]
     #編集の競合をチェック
     @conflicted = false
     @img_urls = get_img_urls @board_entry
@@ -213,19 +208,13 @@ class EditController < ApplicationController
 
     update_params[:publication_type] = params[:publication_type]
     update_params[:publication_symbols_value] = params[:publication_type]=='protected' ? params[:publication_symbols_value] : ""
-    
+
     # 権限チェック
-    unless authorize_to_edit_board_entry? @board_entry
-      flash[:warning] = "この操作は、許可されていません。"
-      redirect_to :controller => 'mypage', :action => 'index'
-      return false
-    end
+    redirect_to_with_deny_auth and return unless authorize_to_edit_board_entry? @board_entry
 
     # 成りすましての更新を防止
-    if params[:symbol] != @board_entry.symbol || params[:board_entry][:symbol] != @board_entry.symbol 
-      flash[:warning] = 'その操作は許可されていません。'
-      redirect_to :controller => 'mypage', :action => 'index'
-      return false
+    if params[:symbol] != @board_entry.symbol || params[:board_entry][:symbol] != @board_entry.symbol
+      redirect_to_with_deny_auth and return
     end
 
     # ちょっとした更新でなければ、last_updatedを更新する
@@ -262,13 +251,9 @@ class EditController < ApplicationController
 
   # post_action
   def destroy
-    @board_entry = get_entry params[:id] 
+    @board_entry = get_entry params[:id]
     # 権限チェック
-    unless authorize_to_edit_board_entry? @board_entry
-      flash[:warning] = "この操作は、許可されていません。"
-      redirect_to :controller => 'mypage', :action => 'index'
-      return false
-    end
+    redirect_to_with_deny_auth and return unless authorize_to_edit_board_entry? @board_entry
 
     id = @board_entry.id
     user_id = @board_entry.user_id
@@ -286,13 +271,9 @@ class EditController < ApplicationController
   end
 
   def delete_trackback
-    @board_entry = get_entry params[:id] 
+    @board_entry = get_entry params[:id]
 
-    unless @board_entry.user_id == session[:user_id]
-      flash[:warning] = "この操作は、許可されていません。"
-      redirect_to :controller => 'mypage', :action => 'index'
-      return false
-    end
+    redirect_to_with_deny_auth and return unless @board_entry.user_id == session[:user_id]
 
     tb_entries = EntryTrackback.find_all_by_board_entry_id_and_tb_entry_id(@board_entry.id, params[:tb_entry_id])
     tb_entries.each do |tb_entry|
@@ -314,14 +295,10 @@ class EditController < ApplicationController
 
   # ajax_action
   def ado_remove_image
-    @board_entry = get_entry params[:id] 
+    @board_entry = get_entry params[:id]
 
     # 権限チェック
-    unless authorize_to_edit_board_entry? @board_entry
-      flash[:warning] = "この操作は、許可されていません。"
-      redirect_to :controller => 'mypage', :action => 'index'
-      return false
-    end
+    redirect_to_with_deny_auth and return unless authorize_to_edit_board_entry? @board_entry
 
     FileUtils.rm(File.join(get_dir_path, @board_entry.user_id.to_s, @board_entry.id.to_s + '_' + params[:filename]))
     img_urls = get_img_urls @board_entry
@@ -339,7 +316,7 @@ private
     @title = 'エントリを投稿する'
     @title = 'エントリを編集する' if ["edit", "update"].include? action_name
   end
-  
+
 
   def analyze_params
     target_symbols_publication = []
@@ -364,7 +341,7 @@ private
 
   def upload_file board_entry, src_image_file
     # FIXME 以下のチェックに失敗した場合のエラー処理が全くない。
-    if valid_upload_file?(src_image_file) && 
+    if valid_upload_file?(src_image_file) &&
       verify_extension?(src_image_file.original_filename, src_image_file.content_type)
       dir_path = File.join(get_dir_path, board_entry.user_id.to_s)
       FileUtils.mkdir_p dir_path

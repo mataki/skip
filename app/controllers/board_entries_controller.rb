@@ -126,11 +126,7 @@ class BoardEntriesController < ApplicationController
       end
     end
 
-    unless authorize
-      flash[:warning] = "この操作は、許可されていません。"
-      redirect_to :controller => "mypage", :action => "index"
-      return false
-    end
+    redirect_to_with_deny_auth and return unless authorize
 
     if @board_entry_comment.children.size == 0
       @board_entry_comment.destroy
@@ -166,11 +162,9 @@ class BoardEntriesController < ApplicationController
         authorize = true
       end
     end
-    unless authorize
-      flash[:warning] = "この操作は、許可されていません。"
-      redirect_to :controller => "mypage", :action => "index"
-      return false
-    end
+
+    redirect_to_with_deny_auth and return unless authorize
+
 
     comment.update_attribute :contents, params[:comment][:contents]
     render :partial => "comment_contents", :locals =>{ :comment => comment }

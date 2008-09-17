@@ -45,7 +45,7 @@ class PortalController < ApplicationController
 
   # 利用規約の確認に同意した際に呼ばれる
   def agreement
-    session[:entrance_next_action] = if !ENV['FREE_OP'].blank? and !session[:identity_url].blank?
+    session[:entrance_next_action] = if INITIAL_SETTINGS['login_mode'] == 'rp' and INITIAL_SETTINGS['fixed_op_url'].blank? and !session[:identity_url].blank?
                                        :account_registration
                                      else
                                        :registration

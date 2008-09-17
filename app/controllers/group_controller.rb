@@ -130,11 +130,8 @@ class GroupController < ApplicationController
 
   # tab_menu
   def new
-    unless login_user_groups.include? @group.symbol
-      flash[:warning] = "この操作は、許可されていません。"
-      redirect_to :controller => 'mypage', :action => 'index'
-      return false
-    end
+    redirect_to_with_deny_auth and return unless login_user_groups.include? @group.symbol
+
     redirect_to(:controller => 'edit',
                 :action => '',
                 :entry_type => BoardEntry::GROUP_BBS,
@@ -234,11 +231,9 @@ class GroupController < ApplicationController
   # 管理者変更
   def toggle_owned
     group_participation = GroupParticipation.find(params[:participation_id])
-    unless group_participation.user_id != session[:user_id]
-      flash[:warning] = "この操作は、許可されていません。"
-      redirect_to  :controller => 'mypage', :action =>'index'
-      return false
-    end
+
+    redirect_to_with_deny_auth and return unless group_participation.user_id != session[:user_id]
+
     group_participation.owned = !group_participation.owned?
 
     if group_participation.save
@@ -252,11 +247,8 @@ class GroupController < ApplicationController
   # 管理者による強制退会処理
   def forced_leave_user
     group_participation = GroupParticipation.find(params[:participation_id])
-    unless group_participation.group_id == @participation.group_id
-      flash[:warning] = "この操作は、許可されていません。"
-      redirect_to  :controller => 'mypage', :action =>'index'
-      return false
-    end
+
+    redirect_to_with_deny_auth and return unless group_participation.group_id == @participation.group_id
 
     user = group_participation.user
     group_participation.destroy

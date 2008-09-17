@@ -1,6 +1,6 @@
 # SKIP(Social Knowledge & Innovation Platform)
 # Copyright (C) 2008 TIS Inc.
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -9,7 +9,7 @@
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-# 
+#
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -88,7 +88,7 @@ class BookmarkController < ApplicationController
     messages = []
     messages.concat @bookmark.errors.full_messages.reject{|msg| msg.include?("Bookmark comments")} unless @bookmark.valid?
     messages.concat @bookmark_comment.errors.full_messages unless @bookmark_comment.valid?
-    
+
     render :partial => "system/error_messages_for", :locals=> { :messages => messages }
   end
 
@@ -110,13 +110,9 @@ class BookmarkController < ApplicationController
   # ブックマークコメントの削除
   def destroy
     comment = BookmarkComment.find(params[:comment_id])
-    
+
     # 権限チェック
-    unless comment.user_id == session[:user_id]
-      flash[:warning] = "この操作は、許可されていません。"
-      redirect_to  :controller => 'mypage', :action =>'index'
-      return false
-    end
+    redirect_to_with_deny_auth and return unless comment.user_id == session[:user_id]
 
     if comment.destroy
       flash[:notice] = '削除しました。'
@@ -129,15 +125,11 @@ class BookmarkController < ApplicationController
     redirect_to  :controller => 'mypage', :action =>'index'
     return false
   end
-    
+
 
   #ユーザのブックマークコメント一覧表示(ユーザのページからのリンクでくる)
   def list
-    if not parent_controller
-      flash[:warning] = '不正な操作でのアクセスは許可されていません'
-      redirect_to :controller => 'mypage', :action => "index"
-      return
-    end
+    redirect_to_with_deny_auth and return if not parent_controller
 
     params[:user_id] = parent_controller.params[:user_id]
     params[:page] = parent_controller.params[:page]
@@ -190,7 +182,7 @@ class BookmarkController < ApplicationController
     render :text => count.to_s
   end
 
-    
+
 private
   def setup_layout
     uri = URI.decode(params[:uri])

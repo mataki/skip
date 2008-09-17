@@ -34,9 +34,9 @@ module MypageHelper
   def get_manage_menu_items selected_menu
     @@menus = []
     @@menus << {:name => "プロフィール変更", :menu => "manage_profile" }
-    @@menus << {:name => "パスワード変更", :menu => "manage_password" } if INITIAL_SETTINGS['password_edit_setting']
+    @@menus << {:name => "パスワード変更", :menu => "manage_password" } if INITIAL_SETTINGS['password_edit_setting'] and INITIAL_SETTINGS['login_mode'] == 'password'
     @@menus << {:name => "メールアドレス変更", :menu => "manage_email" } if Admin::Setting.mail_function_setting
-    @@menus << {:name => "OpenID URL変更", :menu => "manage_openid" }
+    @@menus << {:name => "OpenID URL変更", :menu => "manage_openid" } if INITIAL_SETTINGS['login_mode'] == 'rp' and INITIAL_SETTINGS['fixed_op_url'].blank?
     @@menus << {:name => "プロフィール画像変更", :menu => "manage_portrait" }
     @@menus << {:name => "カスタマイズ", :menu => "manage_customize" }
     @@menus << {:name => "アンテナの整備", :menu => "manage_antenna" }

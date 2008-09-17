@@ -60,7 +60,6 @@ class ActionController::Base
     return true
   end
 
-
   def verify_extension? file_name, content_type
     !['html','htm','js'].any?{|extension| extension == file_name.split('.').last } &&
       !['text/html','application/x-javascript'].any?{|content| content == content_type }
@@ -68,9 +67,9 @@ class ActionController::Base
 
   private
   def sso
-    unless ENV['SKIPOP_URL'].blank?
+    if INITIAL_SETTINGS['login_mode'] == "rp" and !INITIAL_SETTINGS['fixed_op_url'].blank?
       unless logged_in?
-        redirect_to :controller => '/platform', :action => :login, :openid_url => ENV['SKIPOP_URL'], :return_to => URI.encode(request.url)
+        redirect_to :controller => '/platform', :action => :login, :openid_url => INITIAL_SETTINGS['fixed_op_url'], :return_to => URI.encode(request.url)
         return false
       end
       true

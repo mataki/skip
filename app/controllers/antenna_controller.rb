@@ -1,6 +1,6 @@
 # SKIP(Social Knowledge & Innovation Platform)
 # Copyright (C) 2008 TIS Inc.
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -9,7 +9,7 @@
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-# 
+#
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -23,11 +23,8 @@ class AntennaController < ApplicationController
   end
 
   def add_symbol
-    unless Antenna.find(params[:antenna_id]).user_id == session[:user_id]
-      flash[:warning] = "この操作は、許可されていません。"
-      redirect_to :controller => "mypage", :action => "index"
-      return false
-    end
+    redirect_to_with_deny_auth and return unless Antenna.find(params[:antenna_id]).user_id == session[:user_id]
+
     antenna_item = AntennaItem.new(:antenna_id => params[:antenna_id],
                                    :value_type => :symbol.to_s,
                                    :value => params[:symbol])
