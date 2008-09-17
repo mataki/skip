@@ -46,13 +46,13 @@ describe ApplicationController, '#current_user' do
       @user = mock_model(User)
       User.should_receive(:find_by_code).and_return(@user)
     end
-    it { controller.current_user.should == @user }
+    it { controller.send(:current_user).should == @user }
   end
   describe 'session[:user_code]に一致するユーザが見つからない場合' do
     before do
       User.should_receive(:find_by_code).and_return(nil)
     end
-    it { controller.current_user.should == nil }
+    it { controller.send(:current_user).should == nil }
   end
 end
 
@@ -76,7 +76,7 @@ describe ApplicationController, '#prepare_session' do
       end
       it "ログアウトにリダイレクトされること" do
         controller.should_receive(:redirect_to).with({ :controller => '/platform', :action => :logout, :message => 'retired' })
-        controller.prepare_session
+        controller.send(:prepare_session)
       end
     end
     describe "未登録ユーザの場合" do
@@ -85,7 +85,7 @@ describe ApplicationController, '#prepare_session' do
       end
       it 'ユーザ登録画面にリダイレクトされること' do
         controller.should_receive(:redirect_to).with({ :controller => '/portal' })
-        controller.prepare_session
+        controller.send(:prepare_session)
       end
     end
   end
@@ -95,7 +95,7 @@ describe ApplicationController, '#prepare_session' do
       @user.stub!(:active?).and_return(true)
       controller.should_receive(:current_user).and_return(@user)
     end
-    it { controller.prepare_session.should be_true }
+    it { controller.send(:prepare_session).should be_true }
   end
 end
 
@@ -105,7 +105,7 @@ describe ApplicationController, '#login_required' do
       @user = stub_model(User)
       controller.should_receive(:current_user).and_return(@user)
     end
-    it { controller.login_required.should be_true }
+    it { controller.send(:login_required).should be_true }
   end
 
   describe "ログインしていない場合" do
@@ -116,7 +116,7 @@ describe ApplicationController, '#login_required' do
       controller.should_receive(:root_url).and_return(@root_url)
     end
     after do
-      controller.login_required
+      controller.send(:login_required)
     end
 
     describe 'root_urlに遷移し来ていた場合' do
@@ -134,3 +134,4 @@ describe ApplicationController, '#login_required' do
     end
   end
 end
+

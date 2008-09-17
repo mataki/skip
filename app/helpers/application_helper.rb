@@ -14,7 +14,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 module ApplicationHelper
-
+  include InitialSettingsHelper
   @@CONTROLLER_HASH = { 'uid'  => 'user',
                         'gid'  => 'group',
                         'page' => 'page'}

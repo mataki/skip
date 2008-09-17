@@ -59,7 +59,7 @@ class PlatformController < ApplicationController
     notice = notice + "<br>" + _('You had been retired.') unless params[:message].blank?
     flash[:notice] = notice
 
-    redirect_to (INITIAL_SETTINGS['login_mode'] == 'rp' and !INITIAL_SETTINGS['fixed_op_url'].blank?) ? "#{INITIAL_SETTINGS['fixed_op_url']}logout" : {:action => "index"}
+    redirect_to login_mode?(:fixed_rp) ? "#{INITIAL_SETTINGS['fixed_op_url']}logout" : {:action => "index"}
   end
 
   private
@@ -95,7 +95,7 @@ class PlatformController < ApplicationController
   end
 
   def create_user_from(identity_url, registration)
-    if INITIAL_SETTINGS['login_mode'] == 'rp' and !INITIAL_SETTINGS['fixed_op_url'].blank? and identity_url.include?(INITIAL_SETTINGS['fixed_op_url'])
+    if login_mode?(:fixed_rp) and identity_url.include?(INITIAL_SETTINGS['fixed_op_url'])
       user = User.create_with_identity_url(identity_url, create_user_params(registration))
       if user.valid?
         reset_session
@@ -105,7 +105,7 @@ class PlatformController < ApplicationController
       else
         set_error_message_from_user_and_redirect(user)
       end
-    elsif INITIAL_SETTINGS['login_mode'] == "rp" and INITIAL_SETTINGS['fixed_op_url'].blank?
+    elsif login_mode?(:free_rp)
       session[:identity_url] = identity_url
 
       redirect_to :controller => :portal, :action => :index

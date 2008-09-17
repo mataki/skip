@@ -25,6 +25,8 @@ class ApplicationController < ActionController::Base
 
   init_gettext "skip"
 
+protected
+  include InitialSettingsHelper
   # アプリケーションで利用するセッションの準備をする
   # フィルタで毎アクセスごとに確認し、セッションが未準備なら初期値をいれる
   # skip_utilで認証がされている前提で、グローバルセッションを利用している
