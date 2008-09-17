@@ -18,8 +18,8 @@ require 'uri'
 require 'open-uri'
 
 class Bookmark < ActiveRecord::Base
-  has_many :bookmark_comments
-  has_many :popular_bookmarks
+  has_many :bookmark_comments, :dependent => :destroy
+  has_many :popular_bookmarks, :dependent => :destroy
 
   validates_presence_of :url, :message =>'は必須です'
   validates_length_of :url, :maximum=>255, :message =>'は255文字以内で入力してください'

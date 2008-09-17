@@ -255,19 +255,11 @@ class EditController < ApplicationController
     # 権限チェック
     redirect_to_with_deny_auth and return unless authorize_to_edit_board_entry? @board_entry
 
-    id = @board_entry.id
-    user_id = @board_entry.user_id
-
-    url = @board_entry.get_url_hash
-    url[:entry_id] = nil
-
-    if @board_entry.destroy
-      FileUtils.rm(Dir.glob(File.join(get_dir_path, user_id.to_s, id.to_s + "_*.{jpg,JPG,png,PNG,jpeg,JPEG,gif,GIF}")))
-      flash[:notice] = '削除しました。'
-    else
-      flash[:notice] = '削除に失敗しました。'
-    end
-    redirect_to url
+    @board_entry.destroy
+    flash[:notice] = _('削除しました。')
+    # そのユーザのブログ一覧画面に遷移する
+    # TODO: この部分をメソッド化した方がいいかも(by mat_aki)
+    redirect_to @board_entry.get_url_hash.delete_if{|key,val| key == :entry_id}
   end
 
   def delete_trackback

@@ -55,6 +55,28 @@ describe BoardEntry, "に正しい値が設定されている場合" do
   end
 end
 
+describe BoardEntry, "#delete_images" do
+  before do
+    @board_entry = stub_model(BoardEntry, :id => 1, :user_id => 2)
+    @file_path = make_img_file(@board_entry)
+
+    @board_entry.send(:delete_images)
+  end
+  it "ファイルが消えること" do
+    File.exist?(@file_path).should be_false
+  end
+
+  # TODO 全部モデルにもっていく(by mat_aki)
+  # コントローラー(edit)にあるのも含めて
+  def make_img_file board_entry
+    dir_path = File.join(BoardEntry.image_root_path, board_entry.user_id.to_s)
+    FileUtils.mkdir_p(dir_path)
+    file_path = File.join(dir_path, board_entry.id.to_s + "_hoge.png")
+    FileUtils.touch file_path
+    return file_path
+  end
+end
+
 describe BoardEntry, "があるユーザの日記だったとき" do
   fixtures :board_entries
   before(:each) do

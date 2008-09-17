@@ -1,6 +1,6 @@
 # SKIP(Social Knowledge & Innovation Platform)
 # Copyright (C) 2008 TIS Inc.
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -9,7 +9,7 @@
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-# 
+#
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -65,6 +65,25 @@ describe EditController do
       response.should be_success
     end
   end
+end
 
+describe EditController, "#destroy" do
+  before do
+    user_login
 
+    controller.stub!(:setup_layout)
+    controller.stub!(:authorize_to_edit_board_entry?).and_return(true)
+
+    @board_entry = stub_model(BoardEntry, :id => 2, :user_id => 2, :entry_type => "DIARY", :symbol => 'uid:skip')
+    @board_entry.should_receive(:destroy).and_return(@board_entry)
+    BoardEntry.should_receive(:find).and_return(@board_entry)
+
+    @url = @board_entry.get_url_hash.delete_if{|key,val| key == :entry_id}
+
+    post :destroy, :id => "1"
+  end
+  it { response.should redirect_to(@url) }
+  it "flashメッセージが設定されていること" do
+    flash[:notice].should == '削除しました。'
+  end
 end

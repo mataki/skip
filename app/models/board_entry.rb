@@ -28,7 +28,7 @@ class BoardEntry < ActiveRecord::Base
 
   before_create :generate_next_user_entry_no
   before_save :square_brackets_tags, :parse_symbol_link
-  after_destroy :cancel_mail
+  after_destroy :cancel_mail, :delete_images
 
   validates_presence_of :title, :message => 'は必須です'
   validates_length_of   :title, :maximum => 100, :message => 'は%d桁以内で入力してください'
@@ -638,6 +638,9 @@ class BoardEntry < ActiveRecord::Base
     Mail.delete( unsent_mails.collect{ |mail| mail.id }) unless unsent_mails.size == 0
   end
 
+  def self.image_root_path
+    File.join(ENV['IMAGE_PATH'], "board_entries")
+  end
 private
   def generate_next_user_entry_no
     entry = BoardEntry.find(:first,
@@ -701,5 +704,9 @@ private
 
   def square_brackets_tags
     self.category = Tag.square_brackets_tags(self.category)
+  end
+
+  def delete_images
+    FileUtils.rm(Dir.glob(File.join(self.class.image_root_path, user_id.to_s, id.to_s + "_*.{jpg,JPG,png,PNG,jpeg,JPEG,gif,GIF}")))
   end
 end
