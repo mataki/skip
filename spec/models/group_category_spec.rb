@@ -115,7 +115,7 @@ describe GroupCategory do
     end
   end
 
-  describe Admin::GroupCategory, '#deletable?' do
+  describe GroupCategory, '#deletable?' do
     describe 'initial_selectedで既にグループが存在する場合' do
       before do
         # initial_selectedで、既にグループが存在している
@@ -170,23 +170,5 @@ describe GroupCategory do
         @eclipse_group_category.deletable?.should be_true
       end
     end
-  end
-
-  def valid_group_category
-    group_category = GroupCategory.new({
-      :code => 'DEPT',
-      :name => '部署',
-      :icon => 'group_gear',
-      :description => '部署用のグループカテゴリ',
-      :initial_selected => false
-    })
-    group_category
-  end
-
-  def create_group_category(options = {})
-    group_category = valid_group_category
-    group_category.attributes = options
-    group_category.save!
-    group_category
   end
 end

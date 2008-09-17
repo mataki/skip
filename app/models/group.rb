@@ -52,6 +52,12 @@ class Group < ActiveRecord::Base
     end
   end
 
+  def validate
+    unless GroupCategory.find_by_id(self.group_category_id)
+      errors.add(:group_category_id, _('カテゴリが選択されていないか、不正な値です。'))
+    end
+  end
+
   def symbol_id
     gid
   end

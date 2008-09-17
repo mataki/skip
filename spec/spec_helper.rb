@@ -141,6 +141,24 @@ def unused_user_login
   u
 end
 
+def valid_group_category
+  group_category = GroupCategory.new({
+    :code => 'DEPT',
+    :name => '部署',
+    :icon => 'group_gear',
+    :description => '部署用のグループカテゴリ',
+    :initial_selected => false
+  })
+  group_category
+end
+
+def create_group_category(options = {})
+  group_category = valid_group_category
+  group_category.attributes = options
+  group_category.save!
+  group_category
+end
+
 ######skip関連のテストで必要
 class ApplicationController;skip_before_filter :sso; end
 
