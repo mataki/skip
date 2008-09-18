@@ -232,3 +232,32 @@ private
     return entry_template
   end
 end
+
+describe BoardEntry, "#images_filename_to_url_mapping_hash" do
+  before do
+    @board_entry = stub_model(BoardEntry, :user_id => 1)
+    mkdir_and_touch_files @board_entry
+
+    @result = @board_entry.images_filename_to_url_mapping_hash
+  end
+  it { @result["3.jpg"].should == "/images/board_entries/#{@board_entry.user_id}/#{@board_entry.id}_3.jpg" }
+  it { @result["2.jpg"].should == "/images/board_entries/#{@board_entry.user_id}/#{@board_entry.id}_2.jpg" }
+
+  after do
+    delete_touch_files @board_entry
+  end
+
+  def mkdir_and_touch_files board_entry
+    dir_path = File.join(BoardEntry.image_root_path, board_entry.user_id.to_s)
+    FileUtils.mkdir_p dir_path
+    file_list = (1..5).map{|i| File.join(dir_path, "#{board_entry.id.to_s}_#{i.to_s}.jpg")}
+    FileUtils.touch file_list
+  end
+
+  def delete_touch_files board_entry
+    dir_path = File.join(BoardEntry.image_root_path, board_entry.user_id.to_s)
+    file_list = (1..5).map{|i| File.join(dir_path, "#{board_entry.id.to_s}_#{i.to_s}.jpg")}
+    FileUtils.rm file_list
+  end
+end
+

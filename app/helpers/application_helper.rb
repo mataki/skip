@@ -162,9 +162,7 @@ module ApplicationHelper
     if entry.editor_mode == 'hiki'
       output_contents = hiki_parse(entry.contents, entry.symbol)
       board_entry_image_url_proc = proc { |file_name|
-        return url_for(:controller=>'image',
-                       :action=>'show',
-                       :path=>File.join('board_entries', entry.user_id.to_s, "#{entry.id.to_s}_#{file_name}"))
+        entry.image_url(file_name)
       }
       output_contents = SkipUtil.images_parse(output_contents, board_entry_image_url_proc)
       output = '<div class="hiki_style">'

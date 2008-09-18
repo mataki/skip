@@ -344,17 +344,9 @@ private
     end
   end
 
+  # TODO: モデルのメソッドを直接呼び出しでもよい。他の部分でSpecを書いたら持っていく
   def get_img_urls board_entry
-    board_entry_id = board_entry.id.to_s
-    dir_path = File.join('board_entries', board_entry.user_id.to_s)
-    img_urls = {}
-    img_files = Dir.glob(File.join(ENV['IMAGE_PATH'], dir_path, board_entry_id + "_*"))
-    img_files.each do |img_file|
-      img_name = File.basename(img_file)
-      img_key = img_name.gsub(board_entry_id+"_",'')
-      img_urls[img_key] = url_for(:controller=>'image', :action=>'show', :path=>File.join(dir_path, img_name))
-    end
-    return img_urls
+    board_entry.images_filename_to_url_mapping_hash
   end
 
   def get_dir_path

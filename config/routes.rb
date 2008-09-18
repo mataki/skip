@@ -2,7 +2,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.root    :controller => 'mypage', :action => 'index'
 
-  map.connect 'images/*path',
+  map.images 'images/*path',
               :controller => 'image',
               :action     => 'show'
 
@@ -31,20 +31,20 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'login', :controller => 'platform', :action => 'login'
   map.connect 'logout', :controller => 'platform', :action => 'logout'
 
-  map.monthly 'rankings/monthly/:year/:month', 
-              :controller => 'rankings', 
-              :action => 'monthly', 
-              :year => /\d{4}/, 
-              :month => /\d{1,2}/, 
-              :conditions => { :method => :get }, 
+  map.monthly 'rankings/monthly/:year/:month',
+              :controller => 'rankings',
+              :action => 'monthly',
+              :year => /\d{4}/,
+              :month => /\d{1,2}/,
+              :conditions => { :method => :get },
               :defaults => { :year => '', :month => '' }
 
-  map.ranking_data 'ranking_data/:content_type/:year/:month', 
-              :controller => 'rankings', 
-              :action => 'data', 
-              :year => /\d{4}/, 
-              :month => /\d{1,2}/, 
-              :conditions => { :method => :get }, 
+  map.ranking_data 'ranking_data/:content_type/:year/:month',
+              :controller => 'rankings',
+              :action => 'data',
+              :year => /\d{4}/,
+              :month => /\d{1,2}/,
+              :conditions => { :method => :get },
               :defaults => { :year => '', :month => '' }
 
   map.namespace "admin" do |admin_map|
