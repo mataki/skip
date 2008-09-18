@@ -641,7 +641,7 @@ private
       find_params = BoardEntry.make_conditions(login_user_symbols)
       find_params[:conditions][0] << " and board_entry_comments.user_id = ?"
       find_params[:conditions] << session[:user_id]
-      find_params[:include] << :board_entry_comment
+      find_params[:include] << :board_entry_comments
     when "bookmark"
       bookmarks = Bookmark.find(:all,
                                 :conditions => ["bookmark_comments.user_id = ? and bookmarks.url like '/page/%'", session[:user_id]],
