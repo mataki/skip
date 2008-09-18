@@ -70,7 +70,7 @@ msgstr "ID"
 
 #: app/models/admin/board_entry_comment.rb:20
 msgid "Admin::BoardEntryComment|Parent"
-msgstr "親コメント"
+msgstr "親コメントID"
 
 #: app/models/admin/board_entry_comment.rb:19
 msgid "Admin::BoardEntryComment|User"
