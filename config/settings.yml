@@ -67,8 +67,8 @@ develop_team_gid:                  # 要望、不具合受付グループのID
 antenna_default_group:             # 初期のアンテナに追加されるグループを指定(なければ空配列とする)
   serialized: true
   default:
-  - tcpdevelop
-  - magazine
+  - skipdevelop
+  - openskip
 stop_new_user:
   format: boolean
   default: false
