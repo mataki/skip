@@ -84,7 +84,6 @@ class Admin::User < User
     user_profile = user.user_profile
     user_profile.attributes = params[:user_profile]
     user_uid = user.user_uids.find_by_uid_type('MASTER')
-    user_uid.attributes = params[:user_uid]
     [user, user_profile, user_uid]
   end
 
