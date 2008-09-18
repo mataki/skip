@@ -645,7 +645,7 @@ class BoardEntry < ActiveRecord::Base
 
   def images_filename_to_url_mapping_hash
     img_urls = {}
-    img_files = Dir.glob(File.join(image_owner_path, id.to_s + "_*"))
+    img_files = all_images
     img_files.each do |img_file|
       img_name = File.basename(img_file)
       img_key = img_name.gsub(id.to_s+"_",'')
@@ -667,6 +667,10 @@ private
                             :select => 'max(user_entry_no) max_user_entry_no',
                             :conditions =>['user_id = ?', self.user_id])
     self.user_entry_no = entry.max_user_entry_no.to_i + 1
+  end
+
+  def all_images
+    Dir.glob(File.join(image_owner_path, id.to_s + "_*"))
   end
 
   # symbol_link([uid:fujiwara>])を参照先のデータに基づいて変換する
@@ -727,6 +731,6 @@ private
   end
 
   def delete_images
-    FileUtils.rm(Dir.glob(File.join(self.class.image_root_path, user_id.to_s, id.to_s + "_*.{jpg,JPG,png,PNG,jpeg,JPEG,gif,GIF}")))
+    FileUtils.rm(all_images)
   end
 end
