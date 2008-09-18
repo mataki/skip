@@ -7,7 +7,7 @@
 
 <div class="box tabular">
 <% form_for(@openid_identifier, :url => admin_user_openid_identifiers_url(@user)) do |f| %>
-  <%= f.error_messages %>
+  <%= error_messages_for :openid_identifier %>
 
   <p>
     <%= f.label :url %>

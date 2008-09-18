@@ -17,7 +17,60 @@ class Admin::OpenidIdentifiersController < Admin::ApplicationController
   before_filter :load_parent
   include Admin::AdminModule::AdminChildModule
 
-  undef show
+  def new
+    redirect_to_with_deny_auth(:action => :index) unless chiled_objects.empty?
+    object = chiled_objects.build
+    set_singularize_instance_val object
+
+    @topics = [[_('Listing %{model}') % {:model => _(object_name_without_admin(load_parent).gsub('_', ' '))}, parent_index_path],
+               [_('%{model} Show') % {:model => load_parent.topic_title}, load_parent],
+               [_('Listing %{model}') % {:model => _(singularize_name.gsub('_', ' '))}, { :action => :index }],
+               _('New %{model}') % {:model => object.topic_title}]
+  end
+
+  def update
+    object = chiled_objects.find(params[:id])
+    set_singularize_instance_val object
+
+    @topics = [[_('Listing %{model}') % {:model => _(object_name_without_admin(load_parent).gsub('_', ' '))}, parent_index_path],
+               [_('%{model} Show') % {:model => load_parent.topic_title}, load_parent],
+               [_('Listing %{model}') % {:model => _(singularize_name.gsub('_', ' '))}, { :action => :index }],
+               _('Editing %{model}') % {:model => object.topic_title}]
+
+    respond_to do |format|
+      if object.update_attributes(params[admin_params_sym])
+        flash[:notice] = _('%{model} was successfully updated.') % {:model => _(singularize_name.gsub('_', ' '))}
+        format.html { redirect_to(url_for_parent) }
+        format.xml  { head :ok }
+      else
+        format.html { render :action => "edit" }
+        format.xml  { render :xml => object.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+
+  def create
+    redirect_to_with_deny_auth(:action => :index) unless chiled_objects.empty?
+    object = chiled_objects.build(params[admin_params_sym])
+    set_singularize_instance_val object
+
+    @topics = [[_('Listing %{model}') % {:model => _(object_name_without_admin(load_parent).gsub('_', ' '))}, parent_index_path],
+               [_('%{model} Show') % {:model => load_parent.topic_title}, load_parent],
+               [_('Listing %{model}') % {:model => _(singularize_name.gsub('_', ' '))}, { :action => :index }],
+               _('New %{model}') % {:model => object.topic_title}]
+
+    respond_to do |format|
+      if object.save
+        flash[:notice] = _("%{model} was successfully created.") % {:model => _(singularize_name.gsub('_', ' '))}
+        format.html { redirect_to(url_for_parent) }
+        format.xml  { render :xml => object, :status => :created, :location => object }
+      else
+        format.html { render :action => "new" }
+        format.xml  { render :xml => object.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+
   private
   def load_parent
     @user ||= Admin::User.find(params[:user_id])

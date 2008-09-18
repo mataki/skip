@@ -20,4 +20,5 @@
              }
   -%>
 </div>
+<%= link_to _('New %{model}') % {:model => _('openid identifier')}, new_admin_user_openid_identifier_path if @openid_identifiers.empty? %>
 <% end -%>

@@ -34,7 +34,7 @@ class Admin::User < User
   end
 
   def topic_title
-    name
+    name_was
   end
 
   def self.status_select

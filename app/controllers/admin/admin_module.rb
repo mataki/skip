@@ -187,7 +187,7 @@ module Admin::AdminModule
     end
 
     def new
-      object = admin_model_class.new
+      object = chiled_objects.build
       set_singularize_instance_val object
 
       @topics = [[_('Listing %{model}') % {:model => _(object_name_without_admin(load_parent).gsub('_', ' '))}, parent_index_path],

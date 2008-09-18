@@ -45,7 +45,7 @@ module Admin::ApplicationHelper
     topics.map do |topic|
       if topic.is_a?(Array)
         if topic.size > 1
-          link_to_unless_current h(topic.shift), topic.shift
+          link_to h(topic.shift), topic.shift
         else
           h(topic.first)
         end
