@@ -424,7 +424,7 @@ msgstr "フッターの1行目"
 
 #: app/models/admin/setting.rb:32
 msgid "Admin::Setting|Footer link description"
-msgstr "フッターの1行目を指定します。各種リンク等を指定するのがお勧めです。"
+msgstr "フッターの1行目を指定します。各種リンク等を指定するのがお勧めです。HTMLのタグをそのまま記述できます。<p style="color:red;">JavaScript等を記述することも可能ですが、記述の際はセキュリティ上の問題に十分注意して下さい。</p>"
 
 #: app/models/admin/setting.rb:25
 msgid "Admin::Setting|Help url"
