@@ -62,9 +62,7 @@ class EditController < ApplicationController
     end
 
     unless validate_params params, @board_entry
-      if MAIL_FUNCTION_SETTING
-        @sent_mail_flag = "checked" if params[:sent_mail][:send_flag] == "1"
-      end
+      @sent_mail_flag = "checked" if params[:sent_mail] and params[:sent_mail][:send_flag] == "1"
       flash[:warning] = "不正なパラメータがあります"
       render :action => 'index'
       return
@@ -78,9 +76,8 @@ class EditController < ApplicationController
     # 権限チェック
     unless (session[:user_symbol] == params[:board_entry][:symbol]) ||
       login_user_groups.include?(params[:board_entry][:symbol])
-      if MAIL_FUNCTION_SETTING
-        @sent_mail_flag = "checked" if params[:sent_mail][:send_flag] == "1"
-      end
+      @sent_mail_flag = "checked" if params[:sent_mail] and params[:sent_mail][:send_flag] == "1"
+
       redirect_to_with_deny_auth and return
     end
 
@@ -108,7 +105,7 @@ class EditController < ApplicationController
       return
     end
 
-    @sent_mail_flag = "checked" if params[:sent_mail][:send_flag] == "1"
+    @sent_mail_flag = "checked" if params[:sent_mail] and params[:sent_mail][:send_flag] == "1"
     render :action => 'index'
   end
 
@@ -179,17 +176,13 @@ class EditController < ApplicationController
       @conflicted = true
       flash.now[:warning] = "他の人によって同じ投稿に更新がかかっています。編集をやり直しますか？"
       @img_urls = get_img_urls @board_entry
-      if MAIL_FUNCTION_SETTING
-        @sent_mail_flag = "checked" if params[:sent_mail][:send_flag] == "1"
-      end
+      @sent_mail_flag = "checked" if params[:sent_mail] and params[:sent_mail][:send_flag] == "1"
       render :action => 'edit'
       return
     end
 
     unless validate_params params, @board_entry
-      if MAIL_FUNCTION_SETTING
-        @sent_mail_flag = "checked" if params[:sent_mail][:send_flag] == "1"
-      end
+      @sent_mail_flag = "checked" if params[:sent_mail] and params[:sent_mail][:send_flag] == "1"
       flash[:warning] = "不正なパラメータがあります"
       render :action => 'edit'
       return
@@ -245,7 +238,7 @@ class EditController < ApplicationController
     end
 
 
-    @sent_mail_flag = "checked" if params[:sent_mail][:send_flag] == "1"
+    @sent_mail_flag = "checked" if params[:sent_mail] and params[:sent_mail][:send_flag] == "1"
     render :action => 'edit'
   end
 
@@ -357,9 +350,7 @@ private
     return unless @board_entry.errors.empty?
     @board_entry.cancel_mail
 
-    if params[:sent_mail] && params[:sent_mail][:send_flag] == "1"
-      @board_entry.prepare_send_mail
-    end
+    @board_entry.prepare_send_mail if params[:sent_mail] and params[:sent_mail][:send_flag] == "1"
   end
 
   # 独自のバリデーション（成功ならtrue）
