@@ -24,6 +24,7 @@ class UserProfile < ActiveRecord::Base
   validates_presence_of :email, :message => 'は必須です'
   validates_length_of :email, :maximum => 50, :message => 'は50桁以内で入力してください'
   validates_format_of :email, :message => 'は正しい形式で登録してください', :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/
+  validates_uniqueness_of :email, :message => 'は既に登録されています。'
 
   validates_length_of :alma_mater, :maximum=>20, :message =>'は20文字以内で入力してください', :allow_nil => true
 
