@@ -102,7 +102,6 @@ class SearchController < ApplicationController
       e.backtrace.each {|msg| logger.error msg }
       @error_message = e.message
     end
-    render :layout => false
   end
 
 private
@@ -111,7 +110,8 @@ private
     @title = '検索'
 
     @tab_menu_source = [ ['ブログ・掲示板', 'index'],
-                         ['共有ファイル検索', 'share_file_search']]
+                         ['共有ファイル検索', 'share_file_search'] ]
+    @tab_menu_source << ['全文検索', 'full_text_search'] if INITIAL_SETTINGS['full_text_search_setting']
   end
 
   # 所属情報を取得するためのメソッド
