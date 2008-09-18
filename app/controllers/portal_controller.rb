@@ -139,7 +139,7 @@ class PortalController < ApplicationController
       render :layout => "entrance",
       :text => <<-EOS
                <div style="font-weight: bold; font-size: 18px;">大変申し訳ございません。<br/>#{deny_message}<br/>
-               <input type="button" value="戻る"  onClick="location.href = '#{url_for(:controller => :platform)}';"></input></div>
+               <input type="button" value="ログアウト"  onClick="location.href = '#{url_for(:controller => :platform, :action => :logout)}';"></input></div>
              EOS
       return false
     end
