@@ -250,18 +250,23 @@ class ShareFile < ActiveRecord::Base
     Tag.comma_tags(self.category)
   end
 
+  def upload_file src_file
+    open(full_path, "w+b") { |f| f.write(src_file.read) }
+  end
+
   def full_path
-    dir_hash = { 'uid' => 'user',
-                 'gid' => 'group' }
-
-    symbol_type = self.owner_symbol.split(":").first
-    symbol_id = self.owner_symbol.split(":").last
-
-    target_dir_path = File.join(ENV['SHARE_FILE_PATH'], dir_hash[symbol_type], symbol_id)
+    target_dir_path = ShareFile.dir_path(self.owner_symbol)
     FileUtils.mkdir_p target_dir_path
     File.join(target_dir_path, self.file_name)
   end
 
+  def self.dir_path owner_symbol
+    dir_hash = { 'uid' => 'user',
+                 'gid' => 'group' }
+    symbol_type = owner_symbol.split(":").first
+    symbol_id = owner_symbol.split(":").last
+    File.join(ENV['SHARE_FILE_PATH'], dir_hash[symbol_type], symbol_id)
+  end
 private
   def square_brackets_tags
     self.category = Tag.square_brackets_tags(self.category)

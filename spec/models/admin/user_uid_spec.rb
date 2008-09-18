@@ -19,6 +19,7 @@ describe Admin::UserUid do
   describe "after_save" do
     before do
       create_items_expect_change
+      @owner_symbol_was = @sf.owner_symbol
       @uid = Admin::UserUid.find_by_uid(@u.uid)
       @uid.uid = "fuga"
       @uid.save
@@ -40,6 +41,12 @@ describe Admin::UserUid do
       @mail.to_address_symbol.should == 'uid:fuga'
       @bookmark.reload
       @bookmark.url.should == '/user/fuga'
+      File.exist?(ShareFile.dir_path(@owner_symbol_was)).should be_false
+      File.exist?(ShareFile.dir_path(@sf.owner_symbol)).should be_true
+    end
+
+    after do
+      FileUtils.rmdir(ShareFile.dir_path(@sf.owner_symbol))
     end
   end
 end
@@ -64,4 +71,5 @@ def create_items_expect_change
   @b.entry_editors.should_not be_empty
   @b.entry_publications.should_not be_empty
   @sf.share_file_publications.should_not be_empty
+  FileUtils.mkdir_p(ShareFile.dir_path(@sf.owner_symbol))
 end

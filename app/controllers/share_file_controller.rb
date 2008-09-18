@@ -66,7 +66,7 @@ class ShareFileController < ApplicationController
         target_symbols.each do |target_symbol|
           @share_file.share_file_publications.create(:symbol => target_symbol)
         end
-        upload_file file, @share_file.full_path
+        @share_file.upload_file file
       else
         error_message = @share_file.file_name
 
@@ -202,29 +202,23 @@ class ShareFileController < ApplicationController
   def download
     symbol_type_hash = { 'user'  => 'uid',
                          'group' => 'gid' }
-    controller_name = params[:controller_name]
-    symbol_id = params[:symbol_id]
     file_name =  params[:file_name]
-    owner_symbol = "#{symbol_type_hash[controller_name]}:#{symbol_id}"
+    owner_symbol = "#{symbol_type_hash[params[:controller_name]]}:#{params[:symbol_id]}"
 
     # ログインユーザが対象ファイルをダウンロードできるか否か判定
     find_params = ShareFile.make_conditions(login_user_symbols, { :file_name => file_name, :owner_symbol => owner_symbol })
     unless share_file = ShareFile.find(:first, :conditions => find_params[:conditions], :include => find_params[:include] )
       flash[:warning] = '指定されたファイルは存在しません' # 本来は存在する場合でも、ファイルの存在自体を知らせないために、存在しない旨を表示
-      redirect_to :controller => 'mypage', :action => 'index'
-      return false
+      return redirect_to(:controller => 'mypage', :action => 'index')
     end
 
-    target_file_path = File.join(ENV['SHARE_FILE_PATH'], controller_name, symbol_id, file_name)
-    unless File.exist?(target_file_path)
+    unless File.exist?(share_file.full_path)
       flash[:warning] = '指定されたファイルの実体が存在しません。お手数ですが管理者にご連絡をお願いいたします。'
-      redirect_to :controller => 'mypage', :action => "index"
-      return
+      return redirect_to(:controller => 'mypage', :action => "index")
     end
 
-    share_file.create_history session[:user_id]
-
-    send_file(target_file_path, :filename => nkf_file_name(params[:file_name]), :type => share_file.content_type, :stream => false, :disposition => 'attachment')
+    share_file.create_history current_user.id
+    send_file(share_file.full_path, :filename => nkf_file_name(file_name), :type => share_file.content_type, :stream => false, :disposition => 'attachment')
   end
 
   def download_history_as_csv
@@ -256,13 +250,6 @@ class ShareFileController < ApplicationController
   end
 
 private
-
-  def upload_file src_file, target_full_path
-    open(target_full_path, "w+b") do |f|
-      f.write(src_file.read)
-    end
-  end
-
   def analyze_param_publication_type
     target_symbols = []
     case params[:publication_type]

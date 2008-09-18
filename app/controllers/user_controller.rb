@@ -227,7 +227,7 @@ private
         @user.mark_track session[:user_id]
       end
     else
-      flash.now[:warning] = "指定のユーザーは存在していません"
+      flash[:warning] = "指定のユーザーは存在していません"
       redirect_to :controller => 'mypage', :action => 'index'
       return false
     end

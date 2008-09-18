@@ -37,6 +37,7 @@ class Admin::UserUid < UserUid
     ActiveRecord::Base.connection.execute("update mails set to_address_symbol = 'uid:#{uid}' where to_address_symbol = 'uid:#{uid_was}'")
     ActiveRecord::Base.connection.execute("update bookmarks set url = replace(url, '/user/#{uid_was}', '/user/#{uid}') where url = '/user/#{uid_was}'")
     ActiveRecord::Base.connection.execute("update antenna_items set value = 'uid:#{uid}' where value = 'uid:#{uid_was}'")
+    FileUtils.mv(ShareFile.dir_path("uid:#{uid_was}"), ShareFile.dir_path("uid:#{uid}"))
   end
 
   def topic_title
