@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-09-17 17:27+0900\n"
+"POT-Creation-Date: 2008-09-19 11:36+0900\n"
 "PO-Revision-Date: 2008-09-13 11:22+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,11 +25,15 @@ msgstr ""
 #: app/controllers/admin/admin_module.rb:209
 #: app/controllers/admin/admin_module.rb:219
 #: app/controllers/admin/admin_module.rb:241
+#: app/controllers/admin/openid_identifiers_controller.rb:26
+#: app/controllers/admin/openid_identifiers_controller.rb:36
+#: app/controllers/admin/openid_identifiers_controller.rb:58
 msgid "%{model} Show"
 msgstr "%{model}の詳細"
 
 #: app/controllers/admin/admin_module.rb:114
 #: app/controllers/admin/admin_module.rb:225
+#: app/controllers/admin/openid_identifiers_controller.rb:64
 msgid "%{model} was successfully created."
 msgstr "%{model}の作成に成功しました。"
 
@@ -40,6 +44,7 @@ msgstr "%{model}を削除しました。"
 
 #: app/controllers/admin/admin_module.rb:133
 #: app/controllers/admin/admin_module.rb:247
+#: app/controllers/admin/openid_identifiers_controller.rb:42
 msgid "%{model} was successfully updated."
 msgstr "%{model}の更新に成功しました。"
 
@@ -229,12 +234,12 @@ msgstr "参加承認"
 msgid "Admin::ImagesController"
 msgstr "画像設定"
 
-#: app/views/admin/images/index.html.erb:8
+#: app/views/admin/images/index.html.erb:10
 msgid "Admin::ImagesController|"
 msgstr ""
 
 #: app/controllers/admin/images_controller.rb:28
-#: app/views/admin/images/index.html.erb:18
+#: app/views/admin/images/index.html.erb:20
 msgid "Admin::ImagesController|background"
 msgstr "背景画像"
 
@@ -279,7 +284,7 @@ msgid "Admin::ImagesController|background010"
 msgstr "背景画像10"
 
 #: app/controllers/admin/images_controller.rb:29
-#: app/views/admin/images/index.html.erb:22
+#: app/views/admin/images/index.html.erb:24
 msgid "Admin::ImagesController|background_description"
 msgstr "ログイン画面でランダムに切り替わる背景画像です。10個まで設定できます。"
 
@@ -308,6 +313,7 @@ msgid "Admin::ImagesController|title_logo_description"
 msgstr "ログイン画面に表示されるロゴの画像です。"
 
 #: app/models/admin/openid_identifier.rb:17
+#: app/models/admin/openid_identifier.rb:20
 msgid "Admin::OpenidIdentifier|Url"
 msgstr "OpenID URL"
 
@@ -424,7 +430,10 @@ msgstr "フッターの1行目"
 
 #: app/models/admin/setting.rb:32
 msgid "Admin::Setting|Footer link description"
-msgstr "フッターの1行目を指定します。各種リンク等を指定するのがお勧めです。HTMLのタグをそのまま記述できます。<p style="color:red;">JavaScript等を記述することも可能ですが、記述の際はセキュリティ上の問題に十分注意して下さい。</p>"
+msgstr ""
+"フッターの1行目を指定します。各種リンク等を指定するのがお勧めです。HTMLのタグ"
+"をそのまま記述できます。<p style=\"color:red;\">JavaScript等を記述することも"
+"可能ですが、記述の際はセキュリティ上の問題に十分注意して下さい。</p>"
 
 #: app/models/admin/setting.rb:25
 msgid "Admin::Setting|Help url"
@@ -1098,6 +1107,7 @@ msgstr "編集"
 #: app/controllers/admin/admin_module.rb:129
 #: app/controllers/admin/admin_module.rb:211
 #: app/controllers/admin/admin_module.rb:243
+#: app/controllers/admin/openid_identifiers_controller.rb:38
 msgid "Editing %{model}"
 msgstr "%{model}の更新"
 
@@ -1310,6 +1320,12 @@ msgstr "行"
 #: app/controllers/admin/admin_module.rb:220
 #: app/controllers/admin/admin_module.rb:240
 #: app/controllers/admin/admin_module.rb:242
+#: app/controllers/admin/openid_identifiers_controller.rb:25
+#: app/controllers/admin/openid_identifiers_controller.rb:27
+#: app/controllers/admin/openid_identifiers_controller.rb:35
+#: app/controllers/admin/openid_identifiers_controller.rb:37
+#: app/controllers/admin/openid_identifiers_controller.rb:57
+#: app/controllers/admin/openid_identifiers_controller.rb:59
 #: app/views/admin/board_entries/show.html.erb:23
 #: app/views/admin/users/import.html.erb:68
 #: app/views/admin/groups/show.html.erb:35
@@ -1383,8 +1399,11 @@ msgstr ""
 #: app/controllers/admin/admin_module.rb:110
 #: app/controllers/admin/admin_module.rb:196
 #: app/controllers/admin/admin_module.rb:221
+#: app/controllers/admin/openid_identifiers_controller.rb:28
+#: app/controllers/admin/openid_identifiers_controller.rb:60
 #: app/views/admin/users/index.html.erb:36
 #: app/views/admin/group_categories/index.html.erb:34
+#: app/views/admin/openid_identifiers/index.html.erb:23
 msgid "New %{model}"
 msgstr "新規%{model}の作成"
 
@@ -1394,11 +1413,11 @@ msgstr "新規%{model}の作成"
 msgid "New user from csv"
 msgstr "ユーザのCSVアップデート"
 
-#: app/controllers/mypage_controller.rb:310
+#: app/controllers/mypage_controller.rb:315
 msgid "OpenID URLを削除しました。"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:314
+#: app/controllers/mypage_controller.rb:319
 msgid "OpenID URLを設定しました。"
 msgstr ""
 
@@ -1707,15 +1726,15 @@ msgid "Updating..."
 msgstr "更新しています…"
 
 #: app/views/admin/users/import.html.erb:11
-#: app/views/admin/images/index.html.erb:10
-#: app/views/admin/images/index.html.erb:20
+#: app/views/admin/images/index.html.erb:12
+#: app/views/admin/images/index.html.erb:22
 msgid "Upload"
 msgstr "アップロード"
 
 #: app/views/admin/users/import.html.erb:11
 #: app/views/admin/users/import.html.erb:78
-#: app/views/admin/images/index.html.erb:10
-#: app/views/admin/images/index.html.erb:20
+#: app/views/admin/images/index.html.erb:12
+#: app/views/admin/images/index.html.erb:22
 msgid "Uploading..."
 msgstr "アップロードしています…"
 
@@ -1763,11 +1782,11 @@ msgstr ""
 msgid "UserProfile|Address 1"
 msgstr "現住所1"
 
-#: app/models/user_profile.rb:33
+#: app/models/user_profile.rb:34
 msgid "UserProfile|Address 2"
 msgstr "現住所2"
 
-#: app/models/user_profile.rb:32
+#: app/models/user_profile.rb:33
 msgid "UserProfile|Alma mater"
 msgstr "出身校"
 
@@ -1787,11 +1806,11 @@ msgstr "血液型"
 msgid "UserProfile|Disclosure"
 msgstr "属性情報公開"
 
-#: app/models/user_profile.rb:36
+#: app/models/user_profile.rb:37
 msgid "UserProfile|Disclosure|false"
 msgstr "非公開"
 
-#: app/models/user_profile.rb:35
+#: app/models/user_profile.rb:36
 msgid "UserProfile|Disclosure|true"
 msgstr "公開"
 
@@ -2061,6 +2080,7 @@ msgid "new_uid"
 msgstr "新しく設定するニックネーム"
 
 #: app/models/openid_identifier.rb:- app/views/admin/users/show.html.erb:27
+#: app/views/admin/openid_identifiers/index.html.erb:23
 msgid "openid identifier"
 msgstr "OpenID"
 
@@ -2151,6 +2171,10 @@ msgstr "ユーザID"
 
 #: app/controllers/platform_controller.rb:134
 msgid "このサーバへの認証を確認してください"
+msgstr ""
+
+#: app/controllers/application.rb:125
+msgid "この操作は、許可されていません。"
 msgstr ""
 
 #: app/controllers/admin/users_controller.rb:117
@@ -2250,6 +2274,10 @@ msgstr ""
 msgid "ログイン後管理画面でOpenID URLを登録後ログインしてください。"
 msgstr ""
 
+#: app/views/admin/images/index.html.erb:7
+msgid "ロゴはpng形式のみ、背景画像はjpg形式の画像のみ利用可能です。"
+msgstr ""
+
 #: app/controllers/platform_controller.rb:45
 msgid "下部に記載されているお問い合わせ先にご連絡下さい。"
 msgstr ""
@@ -2280,6 +2308,7 @@ msgstr ""
 msgid "内部エラーが発生しました。"
 msgstr ""
 
+#: app/controllers/edit_controller.rb:252
 #: app/controllers/admin/group_categories_controller.rb:23
 msgid "削除しました。"
 msgstr ""
@@ -2337,8 +2366,8 @@ msgstr ""
 msgid "既定のページ戻す"
 msgstr ""
 
-#: app/views/admin/images/index.html.erb:14
-#: app/views/admin/images/index.html.erb:24
+#: app/views/admin/images/index.html.erb:16
+#: app/views/admin/images/index.html.erb:26
 msgid "既定の画像に戻す"
 msgstr ""
 
@@ -2358,8 +2387,8 @@ msgstr ""
 msgid "現在のページを表示"
 msgstr ""
 
-#: app/views/admin/images/index.html.erb:13
-#: app/views/admin/images/index.html.erb:23
+#: app/views/admin/images/index.html.erb:15
+#: app/views/admin/images/index.html.erb:25
 msgid "現在の画像を表示"
 msgstr ""
 
@@ -2367,9 +2396,13 @@ msgstr ""
 msgid "現在設定中のページが消えてしまいますがよろしいですか?"
 msgstr ""
 
-#: app/views/admin/images/index.html.erb:14
-#: app/views/admin/images/index.html.erb:24
+#: app/views/admin/images/index.html.erb:16
+#: app/views/admin/images/index.html.erb:26
 msgid "現在設定中の画像が消えてしまいますがよろしいですか?"
+msgstr ""
+
+#: app/views/admin/images/index.html.erb:6
+msgid "画像の形式について"
 msgstr ""
 
 #: app/controllers/admin/users_controller.rb:37

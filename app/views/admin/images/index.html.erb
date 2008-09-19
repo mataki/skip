@@ -3,6 +3,8 @@
 <% end -%>
 
 <div class="box tabular">
+  <h3><%= _('画像の形式について') %></h3>
+  <p><%= _('ロゴはpng形式のみ、背景画像はjpg形式の画像のみ利用可能です。') %></p>
   <% Admin::ImagesController::PNG_IMAGE_NAMES.each do |target| -%>
     <% form_tag admin_images_update_path(:target => target), :multipart => true, :style => 'display: inline' do -%>
       <label for="<%= target %>"><%= _('Admin::ImagesController|' + target) %></label>
