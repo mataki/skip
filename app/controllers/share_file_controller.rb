@@ -55,25 +55,25 @@ class ShareFileController < ApplicationController
     end
 
     params[:file].each do |key,file|
-      @share_file = @share_file.clone
-      @share_file.file_name = file.original_filename
-      @share_file.content_type = file.content_type.chomp
+      share_file = @share_file.clone
+      share_file.file_name = file.original_filename
+      share_file.content_type = file.content_type.chomp
 
-      if not (verify_message = verify_extension_share_file(@share_file)) and
+      if not (verify_message = verify_extension_share_file(share_file)) and
         not (verify_message = verify_file_size(file)) and
-        @share_file.save
+        share_file.save
         target_symbols = analyze_param_publication_type
         target_symbols.each do |target_symbol|
-          @share_file.share_file_publications.create(:symbol => target_symbol)
+          share_file.share_file_publications.create(:symbol => target_symbol)
         end
-        @share_file.upload_file file
+        share_file.upload_file file
       else
-        error_message = @share_file.file_name
+        error_message = share_file.file_name
 
-        if @share_file.errors.empty?
+        if share_file.errors.empty?
           error_message << " ... #{verify_message}"
         else
-          error_message << " ... #{@share_file.errors.full_messages.join(",")}"
+          error_message << " ... #{share_file.errors.full_messages.join(",")}"
         end
         @error_messages << error_message
       end

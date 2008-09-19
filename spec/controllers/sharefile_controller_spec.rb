@@ -63,3 +63,45 @@ describe ShareFileController, "GET /download" do
     it { response.should be_redirect }
   end
 end
+
+describe ShareFileController, "POST #create" do
+  before do
+    user_login
+    session[:user_id] = 1
+
+    controller.stub!(:login_user_symbols).and_return(["uid:hoge"])
+    controller.stub!(:valid_upload_files?).and_return(true)
+  end
+  describe "ファイルが一つの時" do
+    before do
+      @file1 = mock('file1', { :original_filename => "file1.png", :content_type => "text",
+                      :size => 1000, :read => "" })
+
+      post :create, { :symbol => "", :publication_type => "public", :owner_name => 'ほげ ほげ',
+        :publication_symbols_value => "",
+        :share_file => { "date(1i)" => "2008", "date(2i)" => "9", "date(3i)" => "19",
+          "date(4i)" => "16", "date(5i)" => "07", :description => "description",
+          :category => "hoge,hoge", :owner_symbol => "uid:hoge"},
+        :file => { "1" => @file1 } }
+    end
+    it { response.body.should == "<script type='text/javascript'>window.opener.location.reload();window.close();</script>" }
+    it { assigns[:error_messages].should be_empty }
+  end
+  describe "複数ファイルが送信された場合" do
+    before do
+      @file1 = mock('file1', { :original_filename => "file1.png", :content_type => "text",
+                      :size => 1000, :read => "" })
+      @file2 = mock('file2', { :original_filename => "file2.png", :content_type => "text",
+                      :size => 1000, :read => "" })
+
+      post :create, { :symbol => "", :publication_type => "public", :owner_name => 'ほげ ほげ',
+        :publication_symbols_value => "",
+        :share_file => { "date(1i)" => "2008", "date(2i)" => "9", "date(3i)" => "19",
+          "date(4i)" => "16", "date(5i)" => "07", :description => "description",
+          :category => "hoge,hoge", :owner_symbol => "uid:hoge"},
+        :file => { "1" => @file1, "2" => @file2 } }
+    end
+    it { response.body.should == "<script type='text/javascript'>window.opener.location.reload();window.close();</script>" }
+    it { assigns[:error_messages].should be_empty }
+  end
+end

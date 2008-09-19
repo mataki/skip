@@ -22,32 +22,34 @@ describe Admin::UserUid do
         create_items_expect_change
         @owner_symbol_was = @sf.owner_symbol
         @uid = Admin::UserUid.find_by_uid(@u.uid)
-        @uid.uid = "fuga"
-        @uid.save
+        @new_uid = SkipFaker.rand_char
+        @new_symbol = "uid:#{@new_uid}"
+        @uid.uid = @new_uid
+        @uid.save!
       end
 
       it "同時に変更されること" do
         @b.reload
-        @b.symbol.should == 'uid:fuga'
-        @b.publication_symbols_value.should == 'uid:fuga'
-        @b.contents.should be_include('uid:fuga')
-        @b.entry_editors.first.symbol.should == 'uid:fuga'
-        @b.entry_publications.first.symbol.should == 'uid:fuga'
+        @b.symbol.should == @new_symbol
+        @b.publication_symbols_value.should == @new_symbol
+        @b.contents.should be_include(@new_symbol)
+        @b.entry_editors.first.symbol.should == @new_symbol
+        @b.entry_publications.first.symbol.should == @new_symbol
         @message.reload
-        @message.link_url.should == '/user/fuga'
+        @message.link_url.should == "/user/#{@new_uid}"
         @sf.reload
-        @sf.owner_symbol.should == 'uid:fuga'
+        @sf.owner_symbol.should == @new_symbol
         @mail.reload
-        @mail.from_user_id.should == 'fuga'
-        @mail.to_address_symbol.should == 'uid:fuga'
+        @mail.from_user_id.should == @new_uid
+        @mail.to_address_symbol.should == @new_symbol
         @bookmark.reload
-        @bookmark.url.should == '/user/fuga'
+        @bookmark.url.should == "/user/#{@new_uid}"
         File.exist?(ShareFile.dir_path(@owner_symbol_was)).should be_false
         File.exist?(ShareFile.dir_path(@sf.owner_symbol)).should be_true
       end
 
       after do
-        FileUtils.rmdir(ShareFile.dir_path(@sf.owner_symbol))
+        FileUtils.rm_r(ShareFile.dir_path(@sf.owner_symbol))
       end
     end
     describe "同じIDで更新する場合" do
