@@ -116,7 +116,7 @@ class FeedController < ApplicationController
   end
 
   def user_antenna
-    antenna = Antenna.find(params[:antenna_id])
+    antenna = Antenna.find(params[:id])
 
     # 権限チェック
     unless antenna.user_id == session[:user_id]

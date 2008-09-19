@@ -239,3 +239,13 @@ describe MypageController, "POST /apply_password" do
   end
   it { response.should redirect_to(:action => :manage, :menu => :manage_password) }
 end
+
+describe MypageController, "GET /antenna_list" do
+  before do
+    user_login
+    @result_text = 'result_text'
+    controller.should_receive(:current_user_antennas_as_json).and_return(@result_text)
+    get :antenna_list
+  end
+  it { response.should include_text(@result_text) }
+end
