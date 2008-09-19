@@ -22,6 +22,7 @@ contact_addr:
   default: info@openskip.org                               # 運営者の連絡メールアドレス
 help_url:
   format: url
+  allow_blank: true
   default: http://www.openskip.org/help                    # ヘルプのURL
 initial_anntena:
   default: SKIPチーム                                      # 初期登録されるアンテナの名称

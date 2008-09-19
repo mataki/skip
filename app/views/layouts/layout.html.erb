@@ -58,7 +58,10 @@ Event.observe(window, 'load', function() {
   </div>
   <div id="user_ctl">
     <a id="my_group_link" href="#" ><span id="link_my_group">マイグループ</span></a>
-    <a href="<%= h Admin::Setting.help_url -%>" target="_blank"><span id="link_help">ヘルプ</span></a>
+    <% help_url = h(Admin::Setting.help_url) -%>
+    <% unless help_url.blank? -%>
+      <a href="<%= help_url %>" target="_blank"><span id="link_help">ヘルプ</span></a>
+    <% end -%>
   </div>
   <div id="select_my_group" style="margin-top: 5px; display: none;"></div>
 </div>
