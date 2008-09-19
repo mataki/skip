@@ -123,7 +123,11 @@ describe PortalController, "#registration" do
       @code = 'hoge'
       @params = { "code" => @code, "email" => 'email@openskip.org', "name" => 'SKIP君'}
 
-      @user = mock_model(User, :code => @code)
+      @user_uid = stub_model(UserUid)
+      @user_profile = stub_model(User)
+      @user = stub_model(User, :code => @code)
+      @user.stub!(:user_uids).and_return([@user_uid])
+      @user.stub!(:user_profile).and_return(@user_profile)
       User.should_receive(:create_with_identity_url).with(@openid_url, @params).and_return(@user)
     end
     describe "保存が成功する場合" do

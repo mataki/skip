@@ -120,6 +120,10 @@ class PortalController < ApplicationController
 
         redirect_to :action => :index
       else
+        @error_msgs = []
+        @error_msgs.concat @user.errors.full_messages.reject{|msg| msg.include?("User uid") || msg.include?("User profile") } unless @user.valid?
+        @error_msgs.concat @user.user_uids.first.errors.full_messages unless @user.user_uids.first.errors.empty?
+        @error_msgs.concat @user.user_profile.errors.full_messages unless @user.user_profile.errors.empty?
         render :action => :account_registration
       end
     end

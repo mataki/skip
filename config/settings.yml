@@ -15,14 +15,14 @@
 
 # 各種文言の設定
 app_title:
-  default: SKIP - Social Knowledge & Innovation Platform   # SNS名の全文
+  default: SKIP - Social Knowledge & Innovation Platform   # システムの名称
 abbr_app_title:
-  default: SKIP                                            # SNS名の略称
+  default: SKIP                                            # システムの略称
 contact_addr:
-  default: info@openskip.org                               # SNS運営元の連絡メールアドレス
+  default: info@openskip.org                               # 運営者の連絡メールアドレス
 help_url:
   format: url
-  default: http://www.openskip.org/help                    # SNSのヘルプのURL
+  default: http://www.openskip.org/help                    # ヘルプのURL
 initial_anntena:
   default: SKIPチーム                                      # 初期登録されるアンテナの名称
 login_account:
