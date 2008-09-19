@@ -22,7 +22,7 @@
 <% content_for :javascript do -%>
 <script type="text/javascript">
 $j(function(){
-    var index = <%= @index %>;
+    var index = <%= @index || 0 %>;
     $j('#add_antenna_default_group')
     .click(function(){
         index++;
@@ -37,6 +37,12 @@ $j(function(){
     $j('#remove_antenna_default_group')
     .click(function(){
         $j('.antenna_default_group:last').remove();
+    });
+    $j('form')
+    .submit(function(){
+        if($j('.antenna_default_group').size() == 0){
+            $j('#antenna_default_groups').append('<%= hidden_field_tag 'settings[antenna_default_group]', '' %>')
+        }
     });
 });
 </script>

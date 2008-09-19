@@ -36,6 +36,7 @@ class Admin::SettingsController < Admin::ApplicationController
       # remove blank values in array settings
       value.delete_if {|v| v.blank? } if value.is_a?(Array)
       if [:antenna_default_group, :mypage_feed_settings].include? name
+        value = {} if value.blank?
         value = value.values
       end
       # Admin::Setting[name] = value と評価すると value の値がmapに収納されてしまうので

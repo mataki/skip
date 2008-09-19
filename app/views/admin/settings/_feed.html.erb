@@ -8,8 +8,8 @@
     <a id="remove_feed_item" href="#">[フィードを除去する]</a>
     </p>
     <% Admin::Setting.mypage_feed_settings.each_with_index do |feed_setting, index| -%>
-      <% @feed_setting = feed_setting -%>
-      <% @index = index -%>
+      <% @feed_setting = feed_setting %>
+      <% @index = index %>
       <%= render :partial => 'feed_item' %>
     <% end -%>
   </div>
@@ -18,7 +18,7 @@
 <% content_for :javascript do -%>
 <script type="text/javascript">
 $j(function(){
-    var index = <%= @index %>;
+    var index = <%= @index || 0 %>;
     $j('#add_feed_item')
     .click(function(){
         index++;
@@ -33,6 +33,12 @@ $j(function(){
     $j('#remove_feed_item')
     .click(function(){
         $j('.feed_item:last').remove();
+    });
+    $j('form')
+    .submit(function(){
+        if($j('.feed_item').size() == 0){
+            $j('#feed_items').append('<%= hidden_field_tag 'settings[mypage_feed_settings]', '' %>')
+        }
     });
 });
 </script>

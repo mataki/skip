@@ -1,7 +1,5 @@
-<span class="feed_item">
-  <div class="feed_item">
-    <% feed_setting_prefix = "settings[mypage_feed_settings][#{@index}]" -%>
-    <p><%= label Admin::Setting.name, :mypage_feed_settings_url %><%= text_field_tag "#{feed_setting_prefix}[url]", @feed_setting[:url], :id => 'settings_mypage_feed_settings_url', :size => 40 %></p>
-    <p><%= label Admin::Setting.name, :mypage_feed_settings_title %><%= text_field_tag "#{feed_setting_prefix}[title]", @feed_setting[:title], :id => 'settings_mypage_feed_settings_title', :size => 40 %></p>
-  </div>
-</span>
+<div class="feed_item">
+  <% feed_setting_prefix = "settings[mypage_feed_settings][#{@index}]" -%>
+  <p><%= label Admin::Setting.name, :mypage_feed_settings_url %><%= text_field_tag "#{feed_setting_prefix}[url]", @feed_setting[:url], :id => 'settings_mypage_feed_settings_url', :size => 40 %></p>
+  <p><%= label Admin::Setting.name, :mypage_feed_settings_title %><%= text_field_tag "#{feed_setting_prefix}[title]", @feed_setting[:title], :id => 'settings_mypage_feed_settings_title', :size => 40 %></p>
+</div>
