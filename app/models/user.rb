@@ -216,7 +216,7 @@ class User < ActiveRecord::Base
   end
 
   def get_csv_record
-    SkipUtil.get_a_row_for_csv([code, name, section, extension, email, created_on.strftime("%Y/%m/%d")])
+    SkipUtil.get_a_row_for_csv([code, name, user_profile.section, user_profile.extension, user_profile.email, created_on.strftime("%Y/%m/%d")])
   end
 
   def self.get_csv_header

@@ -156,6 +156,16 @@ describe User, ".auth" do
   end
 end
 
+describe User, "#get_csv_record" do
+  before do
+    @user_profile = stub_model(UserProfile, :section => "部署", :extension => "222222", :email => "hoge@openskip.org")
+    @user = stub_model(User, :code => "hoge", :name => "hoge", :created_on => Time.now)
+    @user.stub!(:user_profile).and_return(@user_profile)
+  end
+  it { @user.get_csv_record.should be_include('hoge') }
+end
+
 def new_user options = {}
   User.new({ :name => 'ほげ ほげ', :password => 'password', :password_confirmation => 'password'}.merge(options))
 end
+

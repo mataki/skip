@@ -83,6 +83,10 @@ module GroupHelper
           user_link_to user
         when "email"
           %(<a href="mailto:#{user.user_profile.email}">#{user.user_profile.email}</a>)
+        when "section"
+          user.user_profile.section
+        when "extension"
+          user.user_profile.extension
         else
           h(user.send(column))
         end
