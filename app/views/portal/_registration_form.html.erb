@@ -132,7 +132,7 @@ table.normal {
 <% end %>
 </div>
 
-<script language="JavaScript" type="text/javascript">
+<script type="text/javascript">
 $j(function(){
     // プロフィール入力の表示、非表示を切り替える
     var toggleProfileBox = function() {
@@ -141,6 +141,23 @@ $j(function(){
         } else {
             $j('#profile_box').hide();
         }
+    };
+
+    var checkIdFormat = function(form, result, indicator) {
+        form
+        .keyup(function() {
+            $j.ajax({
+                url: '<%= url_for(:controller => 'portal', :action => 'ado_check_uid') -%>',
+                data: { uid : $j(this).val() },
+                complete: function(request) {
+                    result.html(request.responseText);
+                    indicator.css({ display:'none' });
+                }
+            });
+        })
+        .ajaxStart(function() {
+            indicator.css({ display:'inline' });
+        });
     };
 
     checkIdFormat($j('#user_uid_uid'), $j('#uid_result'), $j('#indicator'));
