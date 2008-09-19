@@ -53,10 +53,11 @@
 $j(function() {
     var ado_inplace_edit_url = '<%= url_for(:action => :set_antenna_name) %>';
     $j('.editable_antenna_name').editInPlace({
-	url: ado_inplace_edit_url,
-	update_value: 'value',
-	save_button: '<a href="#" class="inplace_save">[保存]</a>',
-	cancel_button: '<a href="#" class="inplace_cancel">[キャンセル]</a>'
+        url: ado_inplace_edit_url,
+        params: 'authenticity_token='+$j('#authenticity_token').val(),
+        update_value: 'value',
+        save_button: '<a href="#" class="inplace_save">[保存]</a>',
+        cancel_button: '<a href="#" class="inplace_cancel">[キャンセル]</a>'
     });
 });
 </script>
