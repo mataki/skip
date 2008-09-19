@@ -15,28 +15,11 @@
 
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe CreateNewAdminUrl, '.valid_args?' do
-  describe 'code指定が無い場合' do
-    before do
-      CreateNewAdminUrl.stub!(:p)
-      @options = {}
-    end
-    it 'codeエラーが表示されること' do
-      CreateNewAdminUrl.should_receive(:p).and_return('ワンタイムコードの指定は必須です。')
-      CreateNewAdminUrl.valid_args?(@options)
-    end
-    it 'falseが返ること' do
-      CreateNewAdminUrl.valid_args?(@options).should be_false
-    end
-  end
-end
-
 describe CreateNewAdminUrl, '.execute' do
   before do
-    CreateNewAdminUrl.should_receive(:valid_args?).and_return(true)
     CreateNewAdminUrl.stub!(:default_url_options).and_return({:host => 'skip.org'})
     @create_new_admin_url =  CreateNewAdminUrl.new
-    CreateNewAdminUrl.should_receive(:new).and_return(@create_new_admin_url)
+    CreateNewAdminUrl.stub!(:new).and_return(@create_new_admin_url)
   end
   describe 'activationsにレコードが存在する場合' do
     before do
@@ -49,19 +32,26 @@ describe CreateNewAdminUrl, '.execute' do
       end
       it '初期アカウントは登録済みである旨のメッセージ表示' do
         CreateNewAdminUrl.should_receive(:p).and_return('初期アカウントは登録済みです。')
-        CreateNewAdminUrl.execute
+        CreateNewAdminUrl.execute(:argv => [])
       end
     end
     describe 'codeがnot nilの場合' do
       before do
         @code = '123456789'
-        @activation.should_receive(:code).and_return(@code)
+        @activation.stub!(:code).and_return(@code)
       end
-      it '初期アカウント登録用ワンタイムURLを表示' do
-        @url = 'http://hoge.jp'
-        @create_new_admin_url.should_receive(:show_new_admin_url).with(@code).and_return(@url)
-        CreateNewAdminUrl.should_receive(:p).and_return(@url)
-        CreateNewAdminUrl.execute
+      describe '起動オプションに--code指定がある場合' do
+        it 'activation_codeの保存が行われること' do
+          @activation.should_receive(:update_attributes)
+          CreateNewAdminUrl.should_receive(:p)
+          CreateNewAdminUrl.execute(:argv => ['--code'])
+        end
+      end
+      describe '起動オプションに--code指定がない場合' do
+        it 'activation_codeは発行済みである旨のメッセージ表示' do
+          CreateNewAdminUrl.should_receive(:p).twice()
+          CreateNewAdminUrl.execute(:argv => [])
+        end
       end
     end
   end
@@ -70,18 +60,19 @@ describe CreateNewAdminUrl, '.execute' do
       Activation.should_receive(:first).and_return(nil)
       @activation = mock_model(Activation)
     end
-    describe 'activationsの作成に成功する場合' do
-      before do
-        @code = '123456789'
-        @activation.should_receive(:code).and_return(@code)
-        @activation.should_receive(:save).and_return(true)
-        Activation.should_receive(:new).and_return(@activation)
-      end
+    describe '起動オプションに--code指定がある場合' do
+      describe 'activationsの作成に成功する場合' do
+        before do
+          @code = '123456789'
+          @activation.should_receive(:code).and_return(@code)
+          @activation.should_receive(:save).and_return(true)
+          Activation.should_receive(:new).and_return(@activation)
+        end
       it '初期アカウント登録用ワンタイムURLを表示' do
         @url = 'http://hoge.jp'
         @create_new_admin_url.should_receive(:show_new_admin_url).with(@code).and_return(@url)
-        CreateNewAdminUrl.should_receive(:p).and_return(@url)
-        CreateNewAdminUrl.execute
+        CreateNewAdminUrl.should_receive(:p).twice()
+        CreateNewAdminUrl.execute(:argv => ['--code'])
       end
     end
     describe 'activationsの作成に失敗する場合' do
@@ -91,7 +82,14 @@ describe CreateNewAdminUrl, '.execute' do
       end
       it 'エラーが表示されること' do
         CreateNewAdminUrl.should_receive(:p).and_return('ワンタイムコードの保存に失敗しました。')
-        CreateNewAdminUrl.execute
+        CreateNewAdminUrl.execute(:argv => ['--code'])
+      end
+    end
+    end
+    describe '起動オプションに--code指定がない場合' do
+      it 'codeの指定を促すメッセージ表示がされること' do
+        CreateNewAdminUrl.should_receive(:p).and_return('activation_codeが未発行です。--helpを参照の上、codeを指定して下さい。')
+        CreateNewAdminUrl.execute(:argv => [])
       end
     end
   end
