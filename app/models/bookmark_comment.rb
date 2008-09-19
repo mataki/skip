@@ -157,7 +157,7 @@ private
     end
 
     if options[:keyword]  && !for_tag
-      condition_state << " and (title like ? or comment like ?)"
+      condition_state << " and (bookmarks.title like ? or comment like ?)"
       condition_param << SkipUtil.to_like_query_string(options[:keyword])
       condition_param << SkipUtil.to_like_query_string(options[:keyword])
     end
