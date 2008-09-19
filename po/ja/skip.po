@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-09-19 18:31+0900\n"
+"POT-Creation-Date: 2008-09-19 22:39+0900\n"
 "PO-Revision-Date: 2008-09-13 11:22+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -140,7 +140,9 @@ msgstr "このサイトについて"
 
 #: app/controllers/admin/documents_controller.rb:21
 msgid "Admin::DocumentsController|about_this_site_description"
-msgstr "[このサイトについて]画面の内容を修正することが出来ます。"
+msgstr ""
+"このサイトの目的と概要を記述します。システムでは、フッターにリンクを表示して"
+"います。"
 
 #: app/controllers/admin/documents_controller.rb:22
 msgid "Admin::DocumentsController|confirm_desc"
@@ -148,7 +150,9 @@ msgstr "利用規約の確認"
 
 #: app/controllers/admin/documents_controller.rb:23
 msgid "Admin::DocumentsController|confirm_desc_description"
-msgstr "[利用規約の確認]画面の内容を修正することが出来ます。"
+msgstr ""
+"利用規約への同意を求める説明を記述します。システムでは、初回ログインの直後に"
+"表示しています。"
 
 #: app/controllers/admin/documents_controller.rb:24
 msgid "Admin::DocumentsController|introduction"
@@ -156,7 +160,9 @@ msgstr "イントロダクション"
 
 #: app/controllers/admin/documents_controller.rb:25
 msgid "Admin::DocumentsController|introduction_description"
-msgstr "[イントロダクション]画面の内容を修正することが出来ます。"
+msgstr ""
+"初めてシステムを使う人向けの使い方を記述します。システムでは、初回ログイン時"
+"にプロフィール登録完了後に表示しています。"
 
 #: app/controllers/admin/documents_controller.rb:26
 msgid "Admin::DocumentsController|login_desc"
@@ -164,7 +170,9 @@ msgstr "ログインの説明"
 
 #: app/controllers/admin/documents_controller.rb:27
 msgid "Admin::DocumentsController|login_desc_description"
-msgstr "[ログインの説明]画面の内容を修正することが出来ます。"
+msgstr ""
+"まだログインしていないユーザ向けに、システムの簡単な紹介を記述します。システ"
+"ムでは、ログイン画面でフォームの下側に表示しています。"
 
 #: app/controllers/admin/documents_controller.rb:28
 msgid "Admin::DocumentsController|rules"
@@ -172,7 +180,9 @@ msgstr "利用規約"
 
 #: app/controllers/admin/documents_controller.rb:29
 msgid "Admin::DocumentsController|rules_description"
-msgstr "[利用規約]画面の内容を修正することが出来ます。"
+msgstr ""
+"このシステム用の利用規約を記述します。システムでは、初回ログイン後に表示して"
+"います。また、フッターにリンクを表示しています。"
 
 #: app/models/admin/group_category.rb:19
 msgid "Admin::GroupCategory|Code"
@@ -348,7 +358,7 @@ msgstr "システムの略称"
 
 #: app/models/admin/setting.rb:20
 msgid "Admin::Setting|Abbr app title description"
-msgstr "システムの略称を指定します。"
+msgstr "各画面での用いるシステム名は、主にこの略称です。"
 
 #: app/models/admin/setting.rb:50
 msgid "Admin::Setting|Antenna default group"
@@ -368,17 +378,17 @@ msgstr "システムの名称"
 
 #: app/models/admin/setting.rb:18
 msgid "Admin::Setting|App title description"
-msgstr "システムの名称を指定します。"
+msgstr "システムの正式名称になります。"
 
 #: app/models/admin/setting.rb:21
 msgid "Admin::Setting|Contact addr"
-msgstr "運営者のメールアドレス"
+msgstr "お問い合わせ先メールアドレス"
 
 #: app/models/admin/setting.rb:22
 msgid "Admin::Setting|Contact addr description"
 msgstr ""
-"運営者のメールアドレスを指定します。ユーザからの問い合わせ窓口となるアドレス"
-"等を指定して下さい。"
+"ユーザから運営者への問い合わせ先メールアドレスです。システムからのメール送信"
+"の送信元としても表示されます。"
 
 #: app/models/admin/setting.rb:66
 msgid "Admin::Setting|Develop team gid"
@@ -387,8 +397,9 @@ msgstr "運営チームのグループID"
 #: app/models/admin/setting.rb:67
 msgid "Admin::Setting|Develop team gid description"
 msgstr ""
-"運営チームのグループIDを指定します。サイト情報機能から投稿する不具合や要望が"
-"指定されたグループの掲示板に蓄積されるようになります。"
+"フッターの2行目左側に表示されます。運営チームのグループIDを指定します。サイト"
+"情報機能から投稿する不具合や要望が指定されたグループの掲示板に蓄積されるよう"
+"になります。"
 
 #: app/models/admin/setting.rb:31
 msgid "Admin::Setting|Footer contact"
@@ -396,15 +407,21 @@ msgstr "フッターのお問い合わせ先"
 
 #: app/models/admin/setting.rb:32
 msgid "Admin::Setting|Footer contact description"
-msgstr "フッターのお問い合わせ先を指定します。"
+msgstr ""
+"問い合わせ先窓口となる、TEL or メールアドレス or 担当者名などを記述してくださ"
+"い。HTMLのタグをそのまま記述できます。<p style=\"color:red;\">JavaScript等を"
+"記述することも可能ですが、記述の際はセキュリティ上の問題に十分注意して下さ"
+"い。</p>"
 
 #: app/models/admin/setting.rb:33
 msgid "Admin::Setting|Footer copyright"
-msgstr "フッターのコピーライト"
+msgstr "フッターの運営者名"
 
 #: app/models/admin/setting.rb:34
 msgid "Admin::Setting|Footer copyright description"
-msgstr "フッターのコピーライトを指定します。"
+msgstr ""
+"フッターの2行目右側に表示されます。このシステムを運営する担当者名 or チーム"
+"名 or 社名などを記述して下さい。"
 
 #: app/models/admin/setting.rb:35
 msgid "Admin::Setting|Footer image link url"
@@ -412,18 +429,20 @@ msgstr "フッターの画像リンクURL"
 
 #: app/models/admin/setting.rb:36
 msgid "Admin::Setting|Footer image link url description"
-msgstr "フッターの画像リンクURLを指定します。"
+msgstr ""
+"フッターの右端に表示される画像をクリックした際に移動する先のURLです（画像ファ"
+"イルの変更は、画像設定タブからできます）"
 
 #: app/models/admin/setting.rb:29
 msgid "Admin::Setting|Footer link"
-msgstr "フッターの1行目"
+msgstr "フッターのリンク集"
 
 #: app/models/admin/setting.rb:30
 msgid "Admin::Setting|Footer link description"
 msgstr ""
-"フッターの1行目を指定します。各種リンク等を指定するのがお勧めです。HTMLのタグ"
-"をそのまま記述できます。<p style=\"color:red;\">JavaScript等を記述することも"
-"可能ですが、記述の際はセキュリティ上の問題に十分注意して下さい。</p>"
+"フッターの1行目に表示されます。よく使うリンクを指定するのがお勧めです。HTMLの"
+"タグをそのまま記述できます。<p style=\"color:red;\">JavaScript等を記述するこ"
+"とも可能ですが、記述の際はセキュリティ上の問題に十分注意して下さい。</p>"
 
 #: app/models/admin/setting.rb:23
 msgid "Admin::Setting|Help url"
@@ -431,7 +450,7 @@ msgstr "ヘルプのURL"
 
 #: app/models/admin/setting.rb:24
 msgid "Admin::Setting|Help url description"
-msgstr "ヘルプのURLを指定します。"
+msgstr "画面右上のヘルプ用です。何も入力しない場合、リンクが表示されません。"
 
 #: app/models/admin/setting.rb:25
 msgid "Admin::Setting|Initial anntena"
@@ -447,7 +466,9 @@ msgstr "ログインIDの名称"
 
 #: app/models/admin/setting.rb:28
 msgid "Admin::Setting|Login account description"
-msgstr "ログインIDの名称を指定します。"
+msgstr ""
+"例えば、社員番号をログインIDに使っている場合、「社員番号」に変更しておくと、"
+"ユーザがログインIDを忘れにくくなります。"
 
 #: app/models/admin/setting.rb:70
 msgid "Admin::Setting|Mail function setting"
@@ -455,8 +476,7 @@ msgstr "メール機能を有効にする"
 
 #: app/models/admin/setting.rb:71
 msgid "Admin::Setting|Mail function setting description"
-msgstr ""
-"メール機能を有効/無効を切り替えます。チェックをすることで有効となります。"
+msgstr "システムから連絡メールが送信できます。併せてSMTP設定を行ってください。"
 
 #: app/models/admin/setting.rb:47
 msgid "Admin::Setting|Mypage feed default limit"
@@ -503,11 +523,11 @@ msgstr ""
 
 #: app/models/admin/setting.rb:37
 msgid "Admin::Setting|Point button"
-msgstr "ポイント評価のボタン表示名"
+msgstr "ポイント評価のボタン名"
 
 #: app/models/admin/setting.rb:38
 msgid "Admin::Setting|Point button description"
-msgstr "掲示板やブログ等でのポイント評価のボタン表示名を指定します。"
+msgstr "掲示板やブログ等でのポイント評価のボタン名を変更できます。"
 
 #: app/models/admin/setting.rb:52
 msgid "Admin::Setting|Smtp settings"
@@ -519,7 +539,7 @@ msgstr "SMTPサーバのホスト名"
 
 #: app/models/admin/setting.rb:61
 msgid "Admin::Setting|Smtp settings address description"
-msgstr "SMTPサーバのホスト名を指定"
+msgstr "SMTPサーバのホスト名を指定します。"
 
 #: app/models/admin/setting.rb:64
 msgid "Admin::Setting|Smtp settings authentication"
@@ -528,7 +548,7 @@ msgstr "認証の種類"
 #: app/models/admin/setting.rb:65
 msgid "Admin::Setting|Smtp settings authentication description"
 msgstr ""
-"認証が必要であれば認証の種類を指定します。指定可能な値はplain, login, "
+"認証が必要な場合、認証の種類を指定します。指定可能な値はplain, login, "
 "cram_md5です。"
 
 #: app/models/admin/setting.rb:53
@@ -549,7 +569,7 @@ msgstr "パスワード"
 
 #: app/models/admin/setting.rb:55
 msgid "Admin::Setting|Smtp settings password description"
-msgstr "認証を行う場合のパスワードを指定します。"
+msgstr "認証が必要な場合、パスワードを指定します。"
 
 #: app/models/admin/setting.rb:56
 msgid "Admin::Setting|Smtp settings port"
@@ -557,7 +577,7 @@ msgstr "ポート"
 
 #: app/models/admin/setting.rb:57
 msgid "Admin::Setting|Smtp settings port description"
-msgstr "ポートを指定します。"
+msgstr "ポート番号を指定します。"
 
 #: app/models/admin/setting.rb:58
 msgid "Admin::Setting|Smtp settings user name"
@@ -565,17 +585,17 @@ msgstr "ユーザ名"
 
 #: app/models/admin/setting.rb:59
 msgid "Admin::Setting|Smtp settings user name description"
-msgstr "認証を行う場合のユーザ名を指定します。"
+msgstr "認証が必要な場合、ユーザ名を指定します。"
 
 #: app/models/admin/setting.rb:39
 msgid "Admin::Setting|Stop new user"
-msgstr "新規ユーザ登録の停止"
+msgstr "ユーザ登録を停止する"
 
 #: app/models/admin/setting.rb:40
 msgid "Admin::Setting|Stop new user description"
 msgstr ""
-"新規ユーザ登録の有効/無効を切り替えます。チェックすることで新規ユーザ登録を停"
-"止させることが出来ます。"
+"ユーザ登録を一時停止し、現在登録済みのユーザだけで運営できます。チェックを外"
+"すと、再開します。"
 
 #: app/models/admin/share_file.rb:22
 msgid "Admin::ShareFile|Category"
@@ -1498,12 +1518,12 @@ msgid "Ranking|Url"
 msgstr ""
 
 #: app/views/admin/settings/index.html.erb:7
-#: app/views/admin/documents/index.html.erb:12
+#: app/views/admin/documents/index.html.erb:13
 msgid "Save"
 msgstr "保存"
 
 #: app/views/admin/settings/index.html.erb:7
-#: app/views/admin/documents/index.html.erb:12
+#: app/views/admin/documents/index.html.erb:13
 msgid "Saving..."
 msgstr "保存しています…"
 
@@ -2282,16 +2302,16 @@ msgstr ""
 
 #: app/views/admin/settings/index.html.erb:4
 msgid ""
-"全ての入力内容が規定値に置き換わります。保存ボタンを押さない限り保存されませ"
-"ん。"
-msgstr ""
-
-#: app/views/admin/settings/index.html.erb:8
-msgid "全て既定値に戻す"
+"全ての入力値を、初期設定値に置き換えます。保存ボタンを押さない限り、保存され"
+"ません。"
 msgstr ""
 
 #: app/controllers/platform_controller.rb:136
 msgid "内部エラーが発生しました。"
+msgstr ""
+
+#: app/views/admin/settings/index.html.erb:8
+msgid "初期設定に戻す"
 msgstr ""
 
 #: app/controllers/edit_controller.rb:252
@@ -2352,7 +2372,7 @@ msgid ""
 "{contact_link}下さい。"
 msgstr ""
 
-#: app/views/admin/documents/index.html.erb:14
+#: app/views/admin/documents/index.html.erb:15
 msgid "既定のページ戻す"
 msgstr ""
 
@@ -2373,7 +2393,7 @@ msgstr ""
 msgid "正しいOpenID URLを入力してください。"
 msgstr ""
 
-#: app/views/admin/documents/index.html.erb:13
+#: app/views/admin/documents/index.html.erb:14
 msgid "現在のページを表示"
 msgstr ""
 
@@ -2382,7 +2402,7 @@ msgstr ""
 msgid "現在の画像を表示"
 msgstr ""
 
-#: app/views/admin/documents/index.html.erb:14
+#: app/views/admin/documents/index.html.erb:15
 msgid "現在設定中のページが消えてしまいますがよろしいですか?"
 msgstr ""
 

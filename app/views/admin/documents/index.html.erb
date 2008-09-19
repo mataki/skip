@@ -5,6 +5,7 @@
   <% unless params[:target].blank? -%>
     <% form_tag(admin_documents_update_path(:target => params[:target])) do -%>
     <div class="box tabular">
+      <p><%= _("Admin::DocumentsController|#{params[:target]}_description") %></p> 
       <p>
       <%= text_area_tag("documents[#{params[:target]}]", @document, :id => "documents_#{params[:target]}", :size => '80x40') %>
       <%= help_icon_tag :content => _("Admin::DocumentsController|#{params[:target]}_description") %>
