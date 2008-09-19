@@ -17,7 +17,7 @@
     <% if show_title_col? params[:content_type].to_sym -%>
        <td class="link_text"><%= link_to h(ranking.title), h(ranking.url) %></td>
     <% end -%>
-      <td class="user_name"><%= link_to h(ranking.author), h(ranking.author) %></td>
+      <td class="user_name"><%= link_to h(ranking.author), h(ranking.author_url) %></td>
       <td class="point"><%= h ranking.amount %></td>
     </tr>
 <% end -%>
