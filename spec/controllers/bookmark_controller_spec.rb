@@ -85,3 +85,20 @@ describe BookmarkController, "GET #show" do
     end
   end
 end
+
+describe BookmarkController, "GET #show" do
+  before do
+    user_login
+  end
+  describe "ユーザのブックマークを検索された場合" do
+    before do
+      @parent_controller = mock('parent_controller')
+      @params = {:uid => "111111", :id => "uid:111111", :user_id => 1, :type => "page"}
+      @parent_controller.stub!(:params).and_return(@params)
+      controller.stub!(:parent_controller).and_return(@parent_controller)
+
+      get :list
+    end
+    it { response.should render_template('bookmark/_user_bookmarks') }
+  end
+end

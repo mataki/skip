@@ -171,7 +171,7 @@ private
       if options[:type] == "star"
         condition_state << " and stared = true"
       else
-        condition_state << " and url like ?"
+        condition_state << " and bookmarks.url like ?"
         condition_param << Bookmark.get_query_param(options[:type])
       end
     end
