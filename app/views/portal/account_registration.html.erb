@@ -20,7 +20,7 @@ table.normal {
 
 <div class="desc" style="margin-bottom: 10px;">
   <%= Admin::Setting.abbr_app_title %>を利用する際の基本データの登録を行います。<br/>
-  <%= Admin::Setting.abbr_app_title %>でユーザを一意にするためのID、SNSで表示する名前、メールアドレスを登録してください。
+  <%= Admin::Setting.abbr_app_title %>でユーザを一意にするためのID、表示する名前、メールアドレスを登録してください。
 </div>
 <div>
 <% form_for(@user, :url => { :controller => :portal, :action => :registration }) do |f| -%>
