@@ -15,8 +15,6 @@
 
 require 'uri'
 class BookmarkController < ApplicationController
-  before_filter :setup_layout, :only => [:show]
-
   verify :method => :post, :only => [:update, :destroy, :ado_set_stared ], :redirect_to => { :action => :show }
 
   before_filter :check_params, :only => [:new, :edit]
@@ -98,7 +96,20 @@ class BookmarkController < ApplicationController
 
   # tab_menu
   def show
-    setup_tab_menu('show')
+    uri = params[:uri] ? URI.decode(params[:uri]) : ""
+    uri.gsub!('+', ' ')
+    unless @bookmark = Bookmark.find_by_url(uri, :include => :bookmark_comments )
+      flash[:warning] = _("指定のＵＲＬは誰もブックマークしていません。")
+      redirect_to :controller => 'mypage', :action => 'index'
+      return
+    end
+
+    @main_menu = 'ブックマーク'
+    @title = 'ブックマーク[' + @bookmark.title + ']'
+    @tab_menu_source = [ ['ブックマークコメント', 'show'] ]
+    @tab_menu_option = { :uri => @bookmark.url }
+
+    # TODO: SQLを発行しなくても判断できるのでrubyで処理する様に
     comment =  BookmarkComment.find(:first,
                                     :conditions => ["bookmark_id = ? and user_id = ?", @bookmark.id, session[:user_id]])
 
@@ -184,25 +195,6 @@ class BookmarkController < ApplicationController
 
 
 private
-  def setup_layout
-    uri = URI.decode(params[:uri])
-    uri.gsub!('+', ' ')
-    unless @bookmark = Bookmark.find_by_url(uri, :include=>:bookmark_comments )
-      flash[:warning] = "指定のＵＲＬは誰もブックマークしていません。"
-      redirect_to :controller => 'mypage', :action => 'index'
-      return false
-    end
-  end
-
-  def setup_tab_menu(action_name, comment_id=nil)
-    @main_menu = 'ブックマーク'
-    @title = 'ブックマーク[' + @bookmark.title + ']'
-
-    @tab_menu_source = [ ['ブックマークコメント', action_name] ]
-
-    @tab_menu_option = comment_id ? { :uri => @bookmark.url, :comment_id => comment_id} : { :uri => @bookmark.url}
-  end
-
   def check_params
     unless params[:url] && check_url_format?(params[:url])
       flash[:warning] = "そのURLは有効ではありません。"

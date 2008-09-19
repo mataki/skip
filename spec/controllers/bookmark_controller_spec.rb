@@ -50,3 +50,38 @@ describe BookmarkController do
     assert_response :ok
   end
 end
+
+describe BookmarkController, "GET #show" do
+  before do
+    user_login
+  end
+  describe "urlが送られていない場合" do
+    before do
+      Bookmark.should_receive(:find_by_url).with("", :include => :bookmark_comments).and_return(nil)
+      get :show
+    end
+    it { response.should redirect_to(:controller => :mypage, :action => :index) }
+    it "flashメッセージが設定されていること" do
+      flash[:warning].should == "指定のＵＲＬは誰もブックマークしていません。"
+    end
+  end
+  describe "存在するブックマークがパラメータとして与えられた場合" do
+    before do
+      @url = "http://www.openskip.org/"
+      @bookmark = mock_model(Bookmark, :title => "bookmark title", :url => @url)
+      Bookmark.should_receive(:find_by_url).with(@url, :include => :bookmark_comments).and_return(@bookmark)
+
+      get :show, :uri => @url
+    end
+    it { response.should render_template('bookmark/show') }
+    it "正しいインスタンス変数が設定されていること" do
+      assigns[:bookmark].should_not be_nil
+      assigns[:main_menu].should_not be_nil
+      assigns[:tab_menu_source].should_not be_nil
+      assigns[:tab_menu_option].should_not be_nil
+      assigns[:title].should_not be_nil
+      assigns[:tags].should_not be_nil
+      assigns[:create_button_show].should_not be_nil
+    end
+  end
+end
