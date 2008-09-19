@@ -387,12 +387,7 @@ private
   end
 
   def get_entry entry_id
-    begin
-      @board_entry = BoardEntry.find(params[:id])
-    rescue ActiveRecord::RecordNotFound => ex
-      redirect_to :controller => 'mypage', :action => 'index'
-      return false
-    end
+    @board_entry = BoardEntry.find(params[:id])
   end
 
 end
