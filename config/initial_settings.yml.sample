@@ -38,6 +38,7 @@ default: &default
   raise_delivery_errors: false                                       # メール送信に失敗した場合のエラー処理を行なうか
   login_mode: password                                               # ログインの方法の設定 password:パスワード認証, rp:RPモード
 #  fixed_op_url: http://skipop.openskip.org/                         # RPモードで固定OPを利用するSSOの場合のURL
+  administrator_addr: info@openskip.org
 
 # ---- 全文検索
   search_apps:
