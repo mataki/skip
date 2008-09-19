@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-09-19 11:36+0900\n"
+"POT-Creation-Date: 2008-09-19 18:31+0900\n"
 "PO-Revision-Date: 2008-09-13 11:22+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -344,254 +344,234 @@ msgstr "その他設定"
 
 #: app/models/admin/setting.rb:19
 msgid "Admin::Setting|Abbr app title"
-msgstr "SNS名の略称"
+msgstr "システムの略称"
 
 #: app/models/admin/setting.rb:20
 msgid "Admin::Setting|Abbr app title description"
-msgstr "SNS名の略称を指定します。"
+msgstr "システムの略称を指定します。"
 
-#: app/models/admin/setting.rb:52
+#: app/models/admin/setting.rb:50
 msgid "Admin::Setting|Antenna default group"
 msgstr "アンテナに追加されるグループ"
 
-#: app/models/admin/setting.rb:53
+#: app/models/admin/setting.rb:51
 msgid "Admin::Setting|Antenna default group description"
 msgstr "初期登録されるアンテナに追加されるグループを指定します。"
 
-#: app/models/admin/setting.rb:51
+#: app/models/admin/setting.rb:49
 msgid "Admin::Setting|Antenna settings"
 msgstr "アンテナ設定"
 
 #: app/models/admin/setting.rb:17
 msgid "Admin::Setting|App title"
-msgstr "SNS名の名称"
+msgstr "システムの名称"
 
 #: app/models/admin/setting.rb:18
 msgid "Admin::Setting|App title description"
-msgstr "SNS名の名称を指定します。"
+msgstr "システムの名称を指定します。"
 
 #: app/models/admin/setting.rb:21
 msgid "Admin::Setting|Contact addr"
-msgstr "SNS運営者のメールアドレス"
+msgstr "運営者のメールアドレス"
 
 #: app/models/admin/setting.rb:22
 msgid "Admin::Setting|Contact addr description"
 msgstr ""
-"SNS運営者のメールアドレスを指定します。ユーザからの問い合わせ窓口となるアドレ"
-"ス等を指定して下さい。"
+"運営者のメールアドレスを指定します。ユーザからの問い合わせ窓口となるアドレス"
+"等を指定して下さい。"
 
-#: app/models/admin/setting.rb:23
-msgid "Admin::Setting|Contact url"
-msgstr "SNS運営者のURL"
-
-#: app/models/admin/setting.rb:24
-msgid "Admin::Setting|Contact url description"
-msgstr ""
-"SNS運営者のホームページを指定します。システムからユーザにメールを送信する際の"
-"フッターに記載されます。"
-
-#: app/models/admin/setting.rb:68
+#: app/models/admin/setting.rb:66
 msgid "Admin::Setting|Develop team gid"
 msgstr "運営チームのグループID"
 
-#: app/models/admin/setting.rb:69
+#: app/models/admin/setting.rb:67
 msgid "Admin::Setting|Develop team gid description"
 msgstr ""
 "運営チームのグループIDを指定します。サイト情報機能から投稿する不具合や要望が"
 "指定されたグループの掲示板に蓄積されるようになります。"
 
-#: app/models/admin/setting.rb:33
+#: app/models/admin/setting.rb:31
 msgid "Admin::Setting|Footer contact"
 msgstr "フッターのお問い合わせ先"
 
-#: app/models/admin/setting.rb:34
+#: app/models/admin/setting.rb:32
 msgid "Admin::Setting|Footer contact description"
 msgstr "フッターのお問い合わせ先を指定します。"
 
-#: app/models/admin/setting.rb:35
+#: app/models/admin/setting.rb:33
 msgid "Admin::Setting|Footer copyright"
 msgstr "フッターのコピーライト"
 
-#: app/models/admin/setting.rb:36
+#: app/models/admin/setting.rb:34
 msgid "Admin::Setting|Footer copyright description"
 msgstr "フッターのコピーライトを指定します。"
 
-#: app/models/admin/setting.rb:37
+#: app/models/admin/setting.rb:35
 msgid "Admin::Setting|Footer image link url"
 msgstr "フッターの画像リンクURL"
 
-#: app/models/admin/setting.rb:38
+#: app/models/admin/setting.rb:36
 msgid "Admin::Setting|Footer image link url description"
 msgstr "フッターの画像リンクURLを指定します。"
 
-#: app/models/admin/setting.rb:31
+#: app/models/admin/setting.rb:29
 msgid "Admin::Setting|Footer link"
 msgstr "フッターの1行目"
 
-#: app/models/admin/setting.rb:32
+#: app/models/admin/setting.rb:30
 msgid "Admin::Setting|Footer link description"
 msgstr ""
 "フッターの1行目を指定します。各種リンク等を指定するのがお勧めです。HTMLのタグ"
 "をそのまま記述できます。<p style=\"color:red;\">JavaScript等を記述することも"
 "可能ですが、記述の際はセキュリティ上の問題に十分注意して下さい。</p>"
 
-#: app/models/admin/setting.rb:25
+#: app/models/admin/setting.rb:23
 msgid "Admin::Setting|Help url"
-msgstr "SNSヘルプのURL"
+msgstr "ヘルプのURL"
 
-#: app/models/admin/setting.rb:26
+#: app/models/admin/setting.rb:24
 msgid "Admin::Setting|Help url description"
-msgstr "SNSヘルプのURLを指定します。"
+msgstr "ヘルプのURLを指定します。"
 
-#: app/models/admin/setting.rb:27
+#: app/models/admin/setting.rb:25
 msgid "Admin::Setting|Initial anntena"
 msgstr "初期登録されるアンテナ名"
 
-#: app/models/admin/setting.rb:28
+#: app/models/admin/setting.rb:26
 msgid "Admin::Setting|Initial anntena description"
 msgstr "初期登録されるアンテナ名を指定します。"
 
-#: app/models/admin/setting.rb:29
+#: app/models/admin/setting.rb:27
 msgid "Admin::Setting|Login account"
 msgstr "ログインIDの名称"
 
-#: app/models/admin/setting.rb:30
+#: app/models/admin/setting.rb:28
 msgid "Admin::Setting|Login account description"
 msgstr "ログインIDの名称を指定します。"
 
-#: app/models/admin/setting.rb:74
+#: app/models/admin/setting.rb:70
 msgid "Admin::Setting|Mail function setting"
 msgstr "メール機能を有効にする"
 
-#: app/models/admin/setting.rb:75
+#: app/models/admin/setting.rb:71
 msgid "Admin::Setting|Mail function setting description"
 msgstr ""
 "メール機能を有効/無効を切り替えます。チェックをすることで有効となります。"
 
-#: app/models/admin/setting.rb:49
+#: app/models/admin/setting.rb:47
 msgid "Admin::Setting|Mypage feed default limit"
 msgstr "1フィード当たりの表示件数のデフォルト値"
 
-#: app/models/admin/setting.rb:50
+#: app/models/admin/setting.rb:48
 msgid "Admin::Setting|Mypage feed default limit description"
 msgstr ""
 "マイページにて指定した数値の数だけフィードのサマリを表示するようになります。"
 
-#: app/models/admin/setting.rb:43
+#: app/models/admin/setting.rb:41
 msgid "Admin::Setting|Mypage feed settings"
 msgstr "フィードの設定"
 
-#: app/models/admin/setting.rb:44
+#: app/models/admin/setting.rb:42
 msgid "Admin::Setting|Mypage feed settings description"
 msgstr "マイページに表示するフィードの設定を行います。"
 
-#: app/models/admin/setting.rb:47
+#: app/models/admin/setting.rb:45
 msgid "Admin::Setting|Mypage feed settings title"
 msgstr "フィードタイトル"
 
-#: app/models/admin/setting.rb:48
+#: app/models/admin/setting.rb:46
 msgid "Admin::Setting|Mypage feed settings title description"
 msgstr "フィードタイトルを指定します。"
 
-#: app/models/admin/setting.rb:45
+#: app/models/admin/setting.rb:43
 msgid "Admin::Setting|Mypage feed settings url"
 msgstr "フィードURL"
 
-#: app/models/admin/setting.rb:46
+#: app/models/admin/setting.rb:44
 msgid "Admin::Setting|Mypage feed settings url description"
 msgstr "取得するフィードのURLを指定します。"
 
-#: app/models/admin/setting.rb:72
+#: app/models/admin/setting.rb:68
 msgid "Admin::Setting|Mypage feed timeout"
 msgstr "フィード取得のタイムアウト値(秒)"
 
-#: app/models/admin/setting.rb:73
+#: app/models/admin/setting.rb:69
 msgid "Admin::Setting|Mypage feed timeout description"
 msgstr ""
 "フィード取得のタイムアウト値(秒)を指定します。指定した秒数応答が無ければ強制"
 "的にタイムアウトします。"
 
-#: app/models/admin/setting.rb:39
+#: app/models/admin/setting.rb:37
 msgid "Admin::Setting|Point button"
 msgstr "ポイント評価のボタン表示名"
 
-#: app/models/admin/setting.rb:40
+#: app/models/admin/setting.rb:38
 msgid "Admin::Setting|Point button description"
 msgstr "掲示板やブログ等でのポイント評価のボタン表示名を指定します。"
 
-#: app/models/admin/setting.rb:70
-msgid "Admin::Setting|Raise delivery errors"
-msgstr "メール配送失敗時にエラーを出力"
-
-#: app/models/admin/setting.rb:71
-msgid "Admin::Setting|Raise delivery errors description"
-msgstr ""
-"メール配送失敗時にエラーを出力有無を指定します。チェックをすることでエラー出"
-"力を行うようになります。"
-
-#: app/models/admin/setting.rb:54
+#: app/models/admin/setting.rb:52
 msgid "Admin::Setting|Smtp settings"
 msgstr "SMTP設定"
 
-#: app/models/admin/setting.rb:62
+#: app/models/admin/setting.rb:60
 msgid "Admin::Setting|Smtp settings address"
 msgstr "SMTPサーバのホスト名"
 
-#: app/models/admin/setting.rb:63
+#: app/models/admin/setting.rb:61
 msgid "Admin::Setting|Smtp settings address description"
 msgstr "SMTPサーバのホスト名を指定"
 
-#: app/models/admin/setting.rb:66
+#: app/models/admin/setting.rb:64
 msgid "Admin::Setting|Smtp settings authentication"
 msgstr "認証の種類"
 
-#: app/models/admin/setting.rb:67
+#: app/models/admin/setting.rb:65
 msgid "Admin::Setting|Smtp settings authentication description"
 msgstr ""
 "認証が必要であれば認証の種類を指定します。指定可能な値はplain, login, "
 "cram_md5です。"
 
-#: app/models/admin/setting.rb:55
+#: app/models/admin/setting.rb:53
 msgid "Admin::Setting|Smtp settings description"
 msgstr "SMTP設定を行います。"
 
-#: app/models/admin/setting.rb:64
+#: app/models/admin/setting.rb:62
 msgid "Admin::Setting|Smtp settings domain"
 msgstr "送信元ドメイン"
 
-#: app/models/admin/setting.rb:65
+#: app/models/admin/setting.rb:63
 msgid "Admin::Setting|Smtp settings domain description"
 msgstr "送信元ドメインの指定を行います。送信メールヘッダに記載されます。"
 
-#: app/models/admin/setting.rb:56
+#: app/models/admin/setting.rb:54
 msgid "Admin::Setting|Smtp settings password"
 msgstr "パスワード"
 
-#: app/models/admin/setting.rb:57
+#: app/models/admin/setting.rb:55
 msgid "Admin::Setting|Smtp settings password description"
 msgstr "認証を行う場合のパスワードを指定します。"
 
-#: app/models/admin/setting.rb:58
+#: app/models/admin/setting.rb:56
 msgid "Admin::Setting|Smtp settings port"
 msgstr "ポート"
 
-#: app/models/admin/setting.rb:59
+#: app/models/admin/setting.rb:57
 msgid "Admin::Setting|Smtp settings port description"
 msgstr "ポートを指定します。"
 
-#: app/models/admin/setting.rb:60
+#: app/models/admin/setting.rb:58
 msgid "Admin::Setting|Smtp settings user name"
 msgstr "ユーザ名"
 
-#: app/models/admin/setting.rb:61
+#: app/models/admin/setting.rb:59
 msgid "Admin::Setting|Smtp settings user name description"
 msgstr "認証を行う場合のユーザ名を指定します。"
 
-#: app/models/admin/setting.rb:41
+#: app/models/admin/setting.rb:39
 msgid "Admin::Setting|Stop new user"
 msgstr "新規ユーザ登録の停止"
 
-#: app/models/admin/setting.rb:42
+#: app/models/admin/setting.rb:40
 msgid "Admin::Setting|Stop new user description"
 msgstr ""
 "新規ユーザ登録の有効/無効を切り替えます。チェックすることで新規ユーザ登録を停"
@@ -787,7 +767,7 @@ msgstr "関連するコメントも一緒に削除されますが、よろしい
 #: app/views/admin/users/change_uid.html.erb:31
 #: app/views/admin/users/index.html.erb:29
 #: app/views/admin/group_participations/index.html.erb:30
-#: app/views/admin/group_categories/index.html.erb:27
+#: app/views/admin/group_categories/index.html.erb:28
 #: app/views/admin/groups/index.html.erb:31
 #: app/views/admin/openid_identifiers/index.html.erb:18
 #: app/views/admin/bookmarks/index.html.erb:19
@@ -1060,7 +1040,7 @@ msgstr "紹介文"
 msgid "Change uid"
 msgstr "ニックネーム変更"
 
-#: app/views/portal/account_registration.html.erb:21
+#: app/views/portal/account_registration.html.erb:45
 #: app/views/admin/users/new.html.erb:12
 #: app/views/admin/users/first.html.erb:32
 #: app/views/admin/group_categories/new.html.erb:10
@@ -1085,7 +1065,7 @@ msgstr "データ管理"
 #: app/views/admin/users/index.html.erb:29
 #: app/views/admin/board_entry_comments/index.html.erb:26
 #: app/views/admin/group_participations/index.html.erb:30
-#: app/views/admin/group_categories/index.html.erb:27
+#: app/views/admin/group_categories/index.html.erb:28
 #: app/views/admin/groups/index.html.erb:31
 #: app/views/admin/openid_identifiers/index.html.erb:18
 #: app/views/admin/bookmarks/index.html.erb:19
@@ -1096,7 +1076,7 @@ msgstr "削除"
 #: app/views/admin/users/show.html.erb:26
 #: app/views/admin/users/index.html.erb:28
 #: app/views/admin/group_categories/show.html.erb:29
-#: app/views/admin/group_categories/index.html.erb:26
+#: app/views/admin/group_categories/index.html.erb:27
 #: app/views/admin/openid_identifiers/index.html.erb:17
 msgid "Edit"
 msgstr "編集"
@@ -1402,7 +1382,7 @@ msgstr ""
 #: app/controllers/admin/openid_identifiers_controller.rb:28
 #: app/controllers/admin/openid_identifiers_controller.rb:60
 #: app/views/admin/users/index.html.erb:36
-#: app/views/admin/group_categories/index.html.erb:34
+#: app/views/admin/group_categories/index.html.erb:35
 #: app/views/admin/openid_identifiers/index.html.erb:23
 msgid "New %{model}"
 msgstr "新規%{model}の作成"
@@ -1611,7 +1591,7 @@ msgstr ""
 #: app/views/admin/users/edit.html.erb:17
 #: app/views/admin/users/index.html.erb:27
 #: app/views/admin/group_categories/edit.html.erb:16
-#: app/views/admin/group_categories/index.html.erb:25
+#: app/views/admin/group_categories/index.html.erb:26
 #: app/views/admin/groups/index.html.erb:30
 #: app/views/admin/bookmarks/index.html.erb:18
 msgid "Show"
@@ -2059,7 +2039,7 @@ msgid "group"
 msgstr "グループ"
 
 #: app/helpers/admin/application_helper.rb:36 app/models/group_category.rb:-
-#: app/views/admin/group_categories/index.html.erb:34
+#: app/views/admin/group_categories/index.html.erb:35
 msgid "group category"
 msgstr "グループカテゴリ"
 
@@ -2224,6 +2204,12 @@ msgstr ""
 msgid "グループIDを除去"
 msgstr ""
 
+#: app/views/admin/group_categories/index.html.erb:9
+msgid ""
+"グループカテゴリを削除したい場合、対象のグループカテゴリに属するグループが全"
+"て削除されている必要があります。"
+msgstr ""
+
 #: app/views/admin/users/import.html.erb:17
 msgid ""
 "データが更新される場合、ユーザが部署やパスワード等を自分自身で変更している場"
@@ -2286,11 +2272,11 @@ msgstr ""
 msgid "不正なパラメタです。"
 msgstr ""
 
-#: app/controllers/admin/settings_controller.rb:46
+#: app/controllers/admin/settings_controller.rb:47
 msgid "保存しました。"
 msgstr ""
 
-#: app/controllers/admin/settings_controller.rb:48
+#: app/controllers/admin/settings_controller.rb:49
 msgid "保存に失敗している項目があります。"
 msgstr ""
 
@@ -2354,6 +2340,10 @@ msgstr ""
 
 #: app/controllers/admin/application_controller.rb:47
 msgid "指定された形式のファイルはアップロード出来ません。"
+msgstr ""
+
+#: app/controllers/bookmark_controller.rb:102
+msgid "指定のＵＲＬは誰もブックマークしていません。"
 msgstr ""
 
 #: app/controllers/admin/users_controller.rb:114
