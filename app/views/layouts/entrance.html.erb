@@ -59,6 +59,28 @@ div#main_navi div.next_arrow {
     <div class="flow_box">SNSの利用開始！</div>
     <div style="clear: both;"></div>
   </div>
+<script language="JavaScript" type="text/javascript">
+    fnLoadPngs();
+$j(function() {
+    checkIdFormat = function(form, result, indicator) {
+        form
+        .keyup(function() {
+            $j.ajax({
+                url: '<%= url_for(:controller => 'portal', :action => 'ado_check_uid') -%>',
+                data: { uid : $j(this).val() },
+                complete: function(request) {
+                    result.html(request.responseText);
+                    indicator.css({ display:'none' });
+                }
+            });
+        })
+        .ajaxStart(function() {
+            indicator.css({ display:'inline' });
+        });
+    };
+});
+</script>
+
 
   <div id="main_body" style="position: relative; background-color: #ffffff; padding: 10px;">
     <%= @content_for_layout %>
@@ -68,5 +90,4 @@ div#main_navi div.next_arrow {
 <%= skip_footer_link -%>
 </body>
 
-<script language="JavaScript" type="text/javascript">fnLoadPngs();</script>
 </html>

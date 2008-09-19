@@ -168,7 +168,7 @@ class PlatformController < ApplicationController
     params_with_path = params.reject { |key, value| request.path_parameters[key] }
     params_with_path.delete(:format)
     open_id_response = timeout_protection_from_identity_server { open_id_consumer.complete(params_with_path, requested_url) }
-    identity_url     = normalize_url(open_id_response.endpoint.claimed_id) if open_id_response.endpoint.claimed_id
+    identity_url     = normalize_url(open_id_response.endpoint.claimed_id) if open_id_response.endpoint and open_id_response.endpoint.claimed_id
     case open_id_response.status
     when OpenID::Consumer::SUCCESS
       yield Result[:successful], identity_url, OpenID::AX::FetchResponse.from_success_response(open_id_response)

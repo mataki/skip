@@ -1,22 +1,46 @@
+<style type="text/css">
+div.subtitle {
+  border-left: 10px solid #aaaaff;
+  border-bottom: 1px solid #aaaaff;
+  padding-left: 5px;
+  padding-top: 3px;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+table.normal {
+  margin-bottom: 10px;
+}
+.example {
+  text-align: right;
+  font-weight: normal;
+  margin-left: 13px;
+  color: gray;
+}
+</style>
+
+<div class="desc" style="margin-bottom: 10px;">
+  SNSを利用する際の基本データの登録を行います。<br/>
+  SNSでユーザを一意にするためのID、SNSで表示する名前、メールアドレスを登録してください。
+</div>
 <div>
 <% form_for(@user, :url => { :controller => :portal, :action => :registration }) do |f| -%>
 <% @profile = @user.user_profile; @uid = @user.user_uids.first %>
 <%= error_messages_for 'user', 'profile', 'uid' %>
-<p>
-<%= f.label :code %>
-<%= text_field_tag 'user[code]', @profile ? @uid.uid : "", :id => 'user_code' %>
-</p>
-
-<p>
-<%= f.label :name %>
-<%= f.text_field :name %>
-</p>
-
-<p>
-<%= label_tag 'user_email', 'Email' %>
-<%= text_field_tag 'user[email]', @profile ? @profile.email : "", :id => 'user_email' %>
-</p>
-
+<div class="subtitle">アカウント情報</div>
+<table id="user_info_box" class="normal" border="1">
+  <tr>
+    <th width="100px"><label for="user_code">ログインID</label></th>
+    <td><%= text_field_tag 'user[code]', @profile ? @uid.uid : "", :id => 'user_code' %>（4桁以上）<span id="uid_result" style="margin-left:3px;color:gray;font-size:10px"></span><span id="indicator" style="display:none;"><%= skip_image_tag 'indicator.gif' %></span><div class="desc">半角英数の他にハイフン「-」,アンダーバー「_」が利用できます</div>
+  </tr>
+  <tr>
+    <th width="100px"><label for="user_name">名前</label></th>
+    <td><%= text_field_tag 'user[name]', @user.name, :id => 'user_name' %></td>
+  </tr>
+  <tr>
+    <th width="100px"><label for="user_email">メールアドレス</label></th>
+    <td><%= text_field_tag 'user[email]', @profile ? @profile.email : "", :id => 'user_email' %></td>
+  </tr>
+</table>
 <p>
 <%= f.submit _('Create') %>
 </p>

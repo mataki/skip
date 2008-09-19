@@ -143,20 +143,7 @@ $j(function(){
         }
     };
 
-    $j('#user_uid_uid')
-    .keyup(function() {
-        $j.ajax({
-            url: '<%= url_for(:controller => 'portal', :action => 'ado_check_uid') -%>',
-            data: { uid : $j(this).val() },
-            complete: function(request) {
-                $j('#uid_result').html(request.responseText);
-                $j('#indicator').css({ display:'none' });
-            }
-        });
-    })
-    .ajaxStart(function() {
-        $j('#indicator').css({ display:'inline' });
-    });
+    checkIdFormat($j('#user_uid_uid'), $j('#uid_result'), $j('#indicator'));
 
     $j('#write_profile')
     .click(function() {
