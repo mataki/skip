@@ -1,6 +1,6 @@
 # SKIP(Social Knowledge & Innovation Platform)
 # Copyright (C) 2008 TIS Inc.
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -9,7 +9,7 @@
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-# 
+#
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -62,18 +62,12 @@ class UsersController < ApplicationController
     render :partial => 'user/chain_table', :layout => "layout"
   end
 
-  # tab_menu
-  def blogs_search
-    redirect_to :controller => 'search', :action => 'index', :user => '1'
-  end
-
 private
   def setup_layout
     @main_menu = @title = 'ユーザ'
 
     @tab_menu_source = [ ['トップ', 'index'],
-                         ['紹介文', 'chain_search'],
-                         ['ブログ検索', 'blogs_search'] ]
+                         ['紹介文', 'chain_search'] ]
   end
 end
 
