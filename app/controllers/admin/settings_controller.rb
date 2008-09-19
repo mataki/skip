@@ -37,7 +37,7 @@ class Admin::SettingsController < Admin::ApplicationController
       value.delete_if {|v| v.blank? } if value.is_a?(Array)
       if [:antenna_default_group, :mypage_feed_settings].include? name
         value = {} if value.blank?
-        value = value.values
+        value = value.values.delete_if { |item| (item.class == String) ? item.blank? : has_empty_value?(item.values) }
       end
       # Admin::Setting[name] = value と評価すると value の値がmapに収納されてしまうので
       Admin::Setting.[]=(name,value)
@@ -72,5 +72,13 @@ class Admin::SettingsController < Admin::ApplicationController
     @antenna = ''
     @index =  params[:index]
     render :partial => 'antenna_default_group'
+  end
+
+  private
+  def has_empty_value?(array)
+    array.each do |value|
+      return true if value.blank?
+    end
+    false
   end
 end
