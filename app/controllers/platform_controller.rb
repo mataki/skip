@@ -122,7 +122,7 @@ class PlatformController < ApplicationController
 
   def create_user_params registration
     user_attribute = {}
-    INITIAL_SETTINGS['ax_fetchrequest'].each do |a|
+    (INITIAL_SETTINGS['ax_fetchrequest']||[]).each do |a|
       user_attribute[a[1].to_sym] = registration.data[a[0]][0]
     end
     user_attribute
@@ -158,7 +158,7 @@ class PlatformController < ApplicationController
   # over ride open_id_authentication to use OpenID::AX
   def add_simple_registration_fields(open_id_request, fields)
     axreq = OpenID::AX::FetchRequest.new
-    requested_attrs = INITIAL_SETTINGS['ax_fetchrequest']
+    requested_attrs = INITIAL_SETTINGS['ax_fetchrequest'] || []
     requested_attrs.each { |a| axreq.add(OpenID::AX::AttrInfo.new(a[0], a[1], a[2] || false, a[3] || 1)) }
     open_id_request.add_extension(axreq)
     open_id_request.return_to_args['did_ax'] = 'y'

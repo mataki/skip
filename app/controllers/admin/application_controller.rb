@@ -28,23 +28,23 @@ class Admin::ApplicationController < ApplicationController
   def valid_file?(uploaded_file, options = {})
     options = {:max_size => 1.megabyte, :content_types => []}.merge(options)
     if uploaded_file.blank?
-      flash[:error] = _('ファイルを指定して下さい。')
+      flash.now[:error] = _('ファイルを指定して下さい。')
       return false
     end
 
     if uploaded_file.size == 0
-      flash[:error] = _('ファイルサイズが0です。')
+      flash.now[:error] = _('ファイルサイズが0です。')
       return false
     end
 
     if uploaded_file.size > options[:max_size]
-      flash[:error] = _('ファイルサイズが上限を超えています。')
+      flash.now[:error] = _('ファイルサイズが上限を超えています。')
       return false
     end
 
     unless options[:content_types].empty?
       unless options[:content_types].include?(uploaded_file.content_type)
-        flash[:error] = _('指定された形式のファイルはアップロード出来ません。')
+        flash.now[:error] = _('指定された形式のファイルはアップロード出来ません。')
         return false
       end
     end
