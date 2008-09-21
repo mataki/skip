@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-09-21 16:09+0900\n"
+"POT-Creation-Date: 2008-09-21 19:28+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -129,8 +129,8 @@ msgstr ""
 msgid "Admin::Bookmark|Url"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:26
 #: app/controllers/admin/documents_controller.rb:101
+#: app/helpers/admin/application_helper.rb:26
 msgid "Admin::DocumentsController"
 msgstr ""
 
@@ -317,28 +317,28 @@ msgstr ""
 msgid "Admin::OpenidIdentifier|Url"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:24
 #: app/controllers/admin/settings_controller.rb:23
+#: app/helpers/admin/application_helper.rb:24
 msgid "Admin::SettingsController|feed"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:22
 #: app/controllers/admin/settings_controller.rb:20
+#: app/helpers/admin/application_helper.rb:22
 msgid "Admin::SettingsController|literal"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:23
 #: app/controllers/admin/settings_controller.rb:21
+#: app/helpers/admin/application_helper.rb:23
 msgid "Admin::SettingsController|mail"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:20
 #: app/controllers/admin/settings_controller.rb:24
+#: app/helpers/admin/application_helper.rb:20
 msgid "Admin::SettingsController|main"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:27
 #: app/controllers/admin/settings_controller.rb:22
+#: app/helpers/admin/application_helper.rb:27
 msgid "Admin::SettingsController|other"
 msgstr ""
 
@@ -746,16 +746,16 @@ msgstr ""
 msgid "Are you sure destroing with nest comments?"
 msgstr ""
 
-#: app/views/admin/openid_identifiers/index.html.erb:18
-#: app/views/admin/group_categories/index.html.erb:28
+#: app/views/admin/board_entries/index.html.erb:30
 #: app/views/admin/bookmark_comments/index.html.erb:30
 #: app/views/admin/bookmarks/index.html.erb:19
-#: app/views/admin/groups/index.html.erb:31
-#: app/views/admin/board_entries/index.html.erb:30
+#: app/views/admin/group_categories/index.html.erb:28
 #: app/views/admin/group_participations/index.html.erb:30
+#: app/views/admin/groups/index.html.erb:31
+#: app/views/admin/openid_identifiers/index.html.erb:18
 #: app/views/admin/share_files/index.html.erb:28
-#: app/views/admin/users/index.html.erb:29
 #: app/views/admin/users/change_uid.html.erb:31
+#: app/views/admin/users/index.html.erb:29
 msgid "Are you sure?"
 msgstr ""
 
@@ -1021,20 +1021,20 @@ msgid "Chain|紹介文"
 msgstr ""
 
 #: app/controllers/admin/users_controller.rb:161
-#: app/views/admin/users/show.html.erb:28
+#: app/views/admin/users/show.html.erb:30
 msgid "Change uid"
 msgstr ""
 
-#: app/views/admin/openid_identifiers/new.html.erb:17
 #: app/views/admin/group_categories/new.html.erb:10
+#: app/views/admin/openid_identifiers/new.html.erb:17
 #: app/views/admin/users/first.html.erb:32
 #: app/views/admin/users/new.html.erb:12
 #: app/views/portal/account_registration.html.erb:45
 msgid "Create"
 msgstr ""
 
-#: app/views/admin/openid_identifiers/new.html.erb:17
 #: app/views/admin/group_categories/new.html.erb:10
+#: app/views/admin/openid_identifiers/new.html.erb:17
 #: app/views/admin/users/first.html.erb:32
 #: app/views/admin/users/new.html.erb:12
 msgid "Creating..."
@@ -1044,25 +1044,25 @@ msgstr ""
 msgid "Data management"
 msgstr ""
 
-#: app/views/admin/openid_identifiers/index.html.erb:18
-#: app/views/admin/group_categories/index.html.erb:28
-#: app/views/admin/bookmark_comments/index.html.erb:30
-#: app/views/admin/board_entry_comments/index.html.erb:26
-#: app/views/admin/bookmarks/index.html.erb:19
-#: app/views/admin/groups/index.html.erb:31
 #: app/views/admin/board_entries/index.html.erb:30
+#: app/views/admin/board_entry_comments/index.html.erb:26
+#: app/views/admin/bookmark_comments/index.html.erb:30
+#: app/views/admin/bookmarks/index.html.erb:19
+#: app/views/admin/group_categories/index.html.erb:28
 #: app/views/admin/group_participations/index.html.erb:30
+#: app/views/admin/groups/index.html.erb:31
+#: app/views/admin/openid_identifiers/index.html.erb:18
 #: app/views/admin/share_files/index.html.erb:28
 #: app/views/admin/users/index.html.erb:29
 msgid "Destroy"
 msgstr ""
 
-#: app/views/admin/openid_identifiers/index.html.erb:17
-#: app/views/admin/group_categories/show.html.erb:29
 #: app/views/admin/group_categories/index.html.erb:27
+#: app/views/admin/group_categories/show.html.erb:29
+#: app/views/admin/openid_identifiers/index.html.erb:17
 #: app/views/admin/user_profiles/index.html.erb:27
-#: app/views/admin/users/show.html.erb:26
 #: app/views/admin/users/index.html.erb:28
+#: app/views/admin/users/show.html.erb:26
 msgid "Edit"
 msgstr ""
 
@@ -1252,6 +1252,14 @@ msgstr ""
 msgid "Group|説明"
 msgstr ""
 
+#: app/views/admin/settings/_other.html.erb:11
+msgid "ID欄を削除"
+msgstr ""
+
+#: app/views/admin/settings/_other.html.erb:10
+msgid "ID欄を追加"
+msgstr ""
+
 #: app/views/admin/users/import.html.erb:10
 msgid "Import confirmation"
 msgstr ""
@@ -1291,9 +1299,9 @@ msgstr ""
 #: app/controllers/admin/users_controller.rb:124
 #: app/controllers/admin/users_controller.rb:141
 #: app/controllers/admin/users_controller.rb:159
+#: app/views/admin/board_entries/show.html.erb:23
 #: app/views/admin/bookmarks/show.html.erb:19
 #: app/views/admin/groups/show.html.erb:35
-#: app/views/admin/board_entries/show.html.erb:23
 #: app/views/admin/users/import.html.erb:68
 msgid "Listing %{model}"
 msgstr ""
@@ -1366,8 +1374,8 @@ msgstr ""
 #: app/controllers/admin/openid_identifiers_controller.rb:60
 #: app/controllers/admin/users_controller.rb:28
 #: app/controllers/admin/users_controller.rb:40
-#: app/views/admin/openid_identifiers/index.html.erb:23
 #: app/views/admin/group_categories/index.html.erb:35
+#: app/views/admin/openid_identifiers/index.html.erb:23
 #: app/views/admin/users/index.html.erb:36
 msgid "New %{model}"
 msgstr ""
@@ -1379,10 +1387,6 @@ msgid "New user from csv"
 msgstr ""
 
 #: app/controllers/mypage_controller.rb:315
-msgid "OpenID URLを削除しました。"
-msgstr ""
-
-#: app/controllers/mypage_controller.rb:319
 msgid "OpenID URLを設定しました。"
 msgstr ""
 
@@ -1482,13 +1486,13 @@ msgstr ""
 msgid "Ranking|Url"
 msgstr ""
 
-#: app/views/admin/settings/index.html.erb:7
 #: app/views/admin/documents/index.html.erb:13
+#: app/views/admin/settings/index.html.erb:7
 msgid "Save"
 msgstr ""
 
-#: app/views/admin/settings/index.html.erb:7
 #: app/views/admin/documents/index.html.erb:13
+#: app/views/admin/settings/index.html.erb:7
 msgid "Saving..."
 msgstr ""
 
@@ -1572,11 +1576,11 @@ msgstr ""
 msgid "ShareFile|日付"
 msgstr ""
 
+#: app/views/admin/board_entries/index.html.erb:29
+#: app/views/admin/bookmarks/index.html.erb:18
 #: app/views/admin/group_categories/edit.html.erb:16
 #: app/views/admin/group_categories/index.html.erb:26
-#: app/views/admin/bookmarks/index.html.erb:18
 #: app/views/admin/groups/index.html.erb:30
-#: app/views/admin/board_entries/index.html.erb:29
 #: app/views/admin/users/edit.html.erb:17
 #: app/views/admin/users/index.html.erb:27
 msgid "Show"
@@ -1674,19 +1678,19 @@ msgstr ""
 msgid "Track|Visitor"
 msgstr ""
 
-#: app/views/admin/openid_identifiers/edit.html.erb:16
 #: app/views/admin/group_categories/edit.html.erb:11
+#: app/views/admin/openid_identifiers/edit.html.erb:16
 #: app/views/admin/user_profiles/edit.html.erb:11
-#: app/views/admin/users/edit.html.erb:11
 #: app/views/admin/users/change_uid.html.erb:20
+#: app/views/admin/users/edit.html.erb:11
 msgid "Update"
 msgstr ""
 
-#: app/views/admin/openid_identifiers/edit.html.erb:16
 #: app/views/admin/group_categories/edit.html.erb:11
+#: app/views/admin/openid_identifiers/edit.html.erb:16
 #: app/views/admin/user_profiles/edit.html.erb:11
-#: app/views/admin/users/edit.html.erb:11
 #: app/views/admin/users/change_uid.html.erb:32
+#: app/views/admin/users/edit.html.erb:11
 msgid "Updating..."
 msgstr ""
 
@@ -2044,7 +2048,7 @@ msgstr ""
 
 #: app/models/openid_identifier.rb:-
 #: app/views/admin/openid_identifiers/index.html.erb:23
-#: app/views/admin/users/show.html.erb:27
+#: app/views/admin/users/show.html.erb:28
 msgid "openid identifier"
 msgstr ""
 
@@ -2096,7 +2100,6 @@ msgstr ""
 msgid "track"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:34 app/models/user.rb:-
 #: app/controllers/admin/users_controller.rb:28
 #: app/controllers/admin/users_controller.rb:40
 #: app/controllers/admin/users_controller.rb:50
@@ -2104,6 +2107,7 @@ msgstr ""
 #: app/controllers/admin/users_controller.rb:124
 #: app/controllers/admin/users_controller.rb:141
 #: app/controllers/admin/users_controller.rb:159
+#: app/helpers/admin/application_helper.rb:34 app/models/user.rb:-
 #: app/views/admin/users/import.html.erb:68
 #: app/views/admin/users/index.html.erb:36
 msgid "user"
@@ -2178,14 +2182,6 @@ msgstr ""
 
 #: app/controllers/platform_controller.rb:134
 msgid "キャンセルされました。"
-msgstr ""
-
-#: app/views/admin/settings/_other.html.erb:10
-msgid "グループIDを追加"
-msgstr ""
-
-#: app/views/admin/settings/_other.html.erb:11
-msgid "グループIDを除去"
 msgstr ""
 
 #: app/views/admin/group_categories/index.html.erb:9
