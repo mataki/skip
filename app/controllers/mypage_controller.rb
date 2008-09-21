@@ -311,28 +311,12 @@ class MypageController < ApplicationController
                          end
     @openid_identifier.url = params[:openid_identifier][:url] if params[:openid_identifier]
 
-    if @openid_identifier.url.blank?
-      flash[:notice] = _('OpenID URLを削除しました。')
-      @openid_identifier.destroy
-      redirect_to :action => :manage, :menu => :manage_openid
-    elsif @openid_identifier.save
+    if @openid_identifier.save
       flash[:notice] = _('OpenID URLを設定しました。')
       redirect_to :action => :manage, :menu => :manage_openid
     else
       render :partial => 'manage_openid', :layout => 'layout'
     end
-  end
-
-  def delete_ident_url
-    redirect_to_with_deny_auth(:action => :manage) and return unless login_mode?(:free_rp)
-    if (openid_identifier = OpenidIdentifier.find_by_url(params[:ident_url]) and
-        openid_identifier.user.code == session[:user_code])
-      openid_identifier.destroy
-      flash[:notice] = "OpenID URLを削除しました。"
-    else
-      flash[:notice] = "そのOpenID URLは登録されていません。"
-    end
-    redirect_to :action => :manage, :menu => :manage_openid
   end
 
   # post_action

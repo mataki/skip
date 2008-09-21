@@ -94,7 +94,6 @@ describe MypageController do
         before do
           @url = 'http://example.com'
 
-          @openid_identifier.should_receive(:url).and_return(@url)
           @openid_identifier.should_receive(:url=).with(@url)
           @openid_identifier.should_receive(:save).and_return(true)
 
@@ -108,7 +107,6 @@ describe MypageController do
         before do
           @url = 'http://example.com'
 
-          @openid_identifier.should_receive(:url).and_return(@url)
           @openid_identifier.should_receive(:url=).with(@url)
           @openid_identifier.should_receive(:save).and_return(false)
 
@@ -118,20 +116,6 @@ describe MypageController do
         it { response.should render_template('mypage/_manage_openid') }
         it { assigns[:openid_identifier].should_not be_nil }
       end
-
-      describe 'URLが空の場合' do
-        before do
-          @url = ''
-          @openid_identifier.stub!(:url=).with(@url)
-
-          @openid_identifier.should_receive(:destroy)
-
-          post :apply_ident_url, :openid_identifier => {:url => @url}
-        end
-
-        it { response.should be_redirect }
-        it { flash[:notice].should_not be_nil}
-      end
     end
   end
 
@@ -140,53 +124,6 @@ describe MypageController do
       get :apply_ident_url
     end
     it { response.should redirect_to(:action => :index)}
-  end
-
-  describe "POST /mypage/delete_ident_url" do
-    before do
-      INITIAL_SETTINGS['login_mode'] = 'rp'
-      INITIAL_SETTINGS['fixed_op_url'] = nil
-
-      @url = 'http://hoge.example.com/'
-      @user = mock_model(User)
-      @openid_identifier = mock_model(OpenidIdentifier)
-      @openid_identifier.stub!(:user).and_return(@user)
-    end
-
-    describe "登録されているOpenID URLの場合" do
-      before do
-        session[:user_code] = '100001'
-        @user.should_receive(:code).and_return('100001')
-        @openid_identifier.should_receive(:destroy)
-        OpenidIdentifier.should_receive(:find_by_url).with(@url).and_return(@openid_identifier)
-        post :delete_ident_url, :ident_url => @url
-      end
-
-      it { response.should be_redirect }
-      it { flash[:notice].should == "OpenID URLを削除しました。" }
-    end
-
-    describe "他人に関連付けられているURLの場合" do
-      before do
-        @user.should_receive(:code).and_return('222222')
-        @openid_identifier.should_not_receive(:destroy)
-        OpenidIdentifier.should_receive(:find_by_url).with(@url).and_return(@openid_identifier)
-        post :delete_ident_url, :ident_url => @url
-      end
-
-      it { response.should be_redirect }
-      it { flash[:notice].should == "そのOpenID URLは登録されていません。" }
-    end
-
-    describe "登録されているURLでなかった場合" do
-      before do
-        OpenidIdentifier.should_receive(:find_by_url).with(@url).and_return(nil)
-        post :delete_ident_url, :ident_url => @url
-      end
-
-      it { response.should be_redirect }
-      it { flash[:notice].should == "そのOpenID URLは登録されていません。" }
-    end
   end
 end
 
