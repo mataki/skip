@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-09-19 22:39+0900\n"
+"POT-Creation-Date: 2008-09-21 16:09+0900\n"
 "PO-Revision-Date: 2008-09-13 11:22+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +16,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: app/controllers/admin/users_controller.rb:160
 #: app/controllers/admin/admin_module.rb:75
 #: app/controllers/admin/admin_module.rb:165
 #: app/controllers/admin/admin_module.rb:179
@@ -28,6 +27,7 @@ msgstr ""
 #: app/controllers/admin/openid_identifiers_controller.rb:26
 #: app/controllers/admin/openid_identifiers_controller.rb:36
 #: app/controllers/admin/openid_identifiers_controller.rb:58
+#: app/controllers/admin/users_controller.rb:160
 msgid "%{model} Show"
 msgstr "%{model}の詳細"
 
@@ -129,8 +129,8 @@ msgstr "タイトル"
 msgid "Admin::Bookmark|Url"
 msgstr "URL"
 
-#: app/controllers/admin/documents_controller.rb:101
 #: app/helpers/admin/application_helper.rb:26
+#: app/controllers/admin/documents_controller.rb:101
 msgid "Admin::DocumentsController"
 msgstr "説明文設定"
 
@@ -327,28 +327,28 @@ msgstr "ログイン画面に表示されるロゴの画像です。"
 msgid "Admin::OpenidIdentifier|Url"
 msgstr "OpenID URL"
 
-#: app/controllers/admin/settings_controller.rb:23
 #: app/helpers/admin/application_helper.rb:24
+#: app/controllers/admin/settings_controller.rb:23
 msgid "Admin::SettingsController|feed"
 msgstr "RSSフィード設定"
 
-#: app/controllers/admin/settings_controller.rb:20
 #: app/helpers/admin/application_helper.rb:22
+#: app/controllers/admin/settings_controller.rb:20
 msgid "Admin::SettingsController|literal"
 msgstr "文言設定"
 
-#: app/controllers/admin/settings_controller.rb:21
 #: app/helpers/admin/application_helper.rb:23
+#: app/controllers/admin/settings_controller.rb:21
 msgid "Admin::SettingsController|mail"
 msgstr "メール関連設定"
 
-#: app/controllers/admin/settings_controller.rb:24
 #: app/helpers/admin/application_helper.rb:20
+#: app/controllers/admin/settings_controller.rb:24
 msgid "Admin::SettingsController|main"
 msgstr "全体設定"
 
-#: app/controllers/admin/settings_controller.rb:22
 #: app/helpers/admin/application_helper.rb:27
+#: app/controllers/admin/settings_controller.rb:22
 msgid "Admin::SettingsController|other"
 msgstr "その他設定"
 
@@ -637,71 +637,71 @@ msgstr "ダウンロード数"
 msgid "Admin::ShareFile|User"
 msgstr "ユーザ"
 
-#: app/models/admin/user_profile.rb:18
+#: app/models/admin/user_profile.rb:23
 msgid "Admin::UserProfile|Address 1"
 msgstr "現住所1"
 
-#: app/models/admin/user_profile.rb:19
+#: app/models/admin/user_profile.rb:24
 msgid "Admin::UserProfile|Address 2"
 msgstr "現住所2"
 
-#: app/models/admin/user_profile.rb:20
+#: app/models/admin/user_profile.rb:25
 msgid "Admin::UserProfile|Alma mater"
 msgstr "出身校"
 
-#: app/models/admin/user_profile.rb:21
+#: app/models/admin/user_profile.rb:26
 msgid "Admin::UserProfile|Birth day"
 msgstr "誕生日"
 
-#: app/models/admin/user_profile.rb:22
+#: app/models/admin/user_profile.rb:27
 msgid "Admin::UserProfile|Birth month"
 msgstr "誕生月"
 
-#: app/models/admin/user_profile.rb:23
+#: app/models/admin/user_profile.rb:28
 msgid "Admin::UserProfile|Blood type"
 msgstr "血液型"
 
-#: app/models/admin/user_profile.rb:24
+#: app/models/admin/user_profile.rb:29
 msgid "Admin::UserProfile|Disclosure"
 msgstr "属性情報公開"
 
-#: app/models/admin/user_profile.rb:25
+#: app/models/admin/user_profile.rb:30
 msgid "Admin::UserProfile|Email"
 msgstr "メールアドレス"
 
-#: app/models/admin/user_profile.rb:33
+#: app/models/admin/user_profile.rb:38
 msgid "Admin::UserProfile|Extension"
 msgstr "内線番号"
 
-#: app/models/admin/user_profile.rb:26
+#: app/models/admin/user_profile.rb:31
 msgid "Admin::UserProfile|Gender type"
 msgstr "性別"
 
-#: app/models/admin/user_profile.rb:27
+#: app/models/admin/user_profile.rb:32
 msgid "Admin::UserProfile|Hobby"
 msgstr "趣味"
 
-#: app/models/admin/user_profile.rb:28
+#: app/models/admin/user_profile.rb:33
 msgid "Admin::UserProfile|Hometown"
 msgstr "出身地"
 
-#: app/models/admin/user_profile.rb:29
+#: app/models/admin/user_profile.rb:34
 msgid "Admin::UserProfile|Introduction"
 msgstr "オフの私"
 
-#: app/models/admin/user_profile.rb:30
+#: app/models/admin/user_profile.rb:35
 msgid "Admin::UserProfile|Join year"
 msgstr "入社年度"
 
-#: app/models/admin/user_profile.rb:31
+#: app/models/admin/user_profile.rb:36
 msgid "Admin::UserProfile|Section"
 msgstr "部署"
 
-#: app/models/admin/user_profile.rb:34
+#: app/models/admin/user_profile.rb:39
 msgid "Admin::UserProfile|Self introduction"
 msgstr "自己紹介"
 
-#: app/models/admin/user_profile.rb:32
+#: app/models/admin/user_profile.rb:37
 msgid "Admin::UserProfile|User"
 msgstr "ユーザ"
 
@@ -781,16 +781,16 @@ msgstr "メールアドレス"
 msgid "Are you sure destroing with nest comments?"
 msgstr "関連するコメントも一緒に削除されますが、よろしいですか？"
 
-#: app/views/admin/share_files/index.html.erb:28
-#: app/views/admin/bookmark_comments/index.html.erb:30
-#: app/views/admin/board_entries/index.html.erb:30
-#: app/views/admin/users/change_uid.html.erb:31
-#: app/views/admin/users/index.html.erb:29
-#: app/views/admin/group_participations/index.html.erb:30
-#: app/views/admin/group_categories/index.html.erb:28
-#: app/views/admin/groups/index.html.erb:31
 #: app/views/admin/openid_identifiers/index.html.erb:18
+#: app/views/admin/group_categories/index.html.erb:28
+#: app/views/admin/bookmark_comments/index.html.erb:30
 #: app/views/admin/bookmarks/index.html.erb:19
+#: app/views/admin/groups/index.html.erb:31
+#: app/views/admin/board_entries/index.html.erb:30
+#: app/views/admin/group_participations/index.html.erb:30
+#: app/views/admin/share_files/index.html.erb:28
+#: app/views/admin/users/index.html.erb:29
+#: app/views/admin/users/change_uid.html.erb:31
 msgid "Are you sure?"
 msgstr "本当に宜しいですか？"
 
@@ -1060,18 +1060,18 @@ msgstr "紹介文"
 msgid "Change uid"
 msgstr "ニックネーム変更"
 
-#: app/views/portal/account_registration.html.erb:45
-#: app/views/admin/users/new.html.erb:12
-#: app/views/admin/users/first.html.erb:32
-#: app/views/admin/group_categories/new.html.erb:10
 #: app/views/admin/openid_identifiers/new.html.erb:17
+#: app/views/admin/group_categories/new.html.erb:10
+#: app/views/admin/users/first.html.erb:32
+#: app/views/admin/users/new.html.erb:12
+#: app/views/portal/account_registration.html.erb:45
 msgid "Create"
 msgstr "作成"
 
-#: app/views/admin/users/new.html.erb:12
-#: app/views/admin/users/first.html.erb:32
-#: app/views/admin/group_categories/new.html.erb:10
 #: app/views/admin/openid_identifiers/new.html.erb:17
+#: app/views/admin/group_categories/new.html.erb:10
+#: app/views/admin/users/first.html.erb:32
+#: app/views/admin/users/new.html.erb:12
 msgid "Creating..."
 msgstr "作成しています…"
 
@@ -1079,35 +1079,35 @@ msgstr "作成しています…"
 msgid "Data management"
 msgstr "データ管理"
 
-#: app/views/admin/share_files/index.html.erb:28
-#: app/views/admin/bookmark_comments/index.html.erb:30
-#: app/views/admin/board_entries/index.html.erb:30
-#: app/views/admin/users/index.html.erb:29
-#: app/views/admin/board_entry_comments/index.html.erb:26
-#: app/views/admin/group_participations/index.html.erb:30
-#: app/views/admin/group_categories/index.html.erb:28
-#: app/views/admin/groups/index.html.erb:31
 #: app/views/admin/openid_identifiers/index.html.erb:18
+#: app/views/admin/group_categories/index.html.erb:28
+#: app/views/admin/bookmark_comments/index.html.erb:30
+#: app/views/admin/board_entry_comments/index.html.erb:26
 #: app/views/admin/bookmarks/index.html.erb:19
+#: app/views/admin/groups/index.html.erb:31
+#: app/views/admin/board_entries/index.html.erb:30
+#: app/views/admin/group_participations/index.html.erb:30
+#: app/views/admin/share_files/index.html.erb:28
+#: app/views/admin/users/index.html.erb:29
 msgid "Destroy"
 msgstr "削除"
 
+#: app/views/admin/openid_identifiers/index.html.erb:17
+#: app/views/admin/group_categories/show.html.erb:29
+#: app/views/admin/group_categories/index.html.erb:27
 #: app/views/admin/user_profiles/index.html.erb:27
 #: app/views/admin/users/show.html.erb:26
 #: app/views/admin/users/index.html.erb:28
-#: app/views/admin/group_categories/show.html.erb:29
-#: app/views/admin/group_categories/index.html.erb:27
-#: app/views/admin/openid_identifiers/index.html.erb:17
 msgid "Edit"
 msgstr "編集"
 
-#: app/controllers/admin/users_controller.rb:51
-#: app/controllers/admin/users_controller.rb:73
 #: app/controllers/admin/admin_module.rb:102
 #: app/controllers/admin/admin_module.rb:129
 #: app/controllers/admin/admin_module.rb:211
 #: app/controllers/admin/admin_module.rb:243
 #: app/controllers/admin/openid_identifiers_controller.rb:38
+#: app/controllers/admin/users_controller.rb:51
+#: app/controllers/admin/users_controller.rb:73
 msgid "Editing %{model}"
 msgstr "%{model}の更新"
 
@@ -1295,13 +1295,6 @@ msgstr "アップロード(確認)"
 msgid "Line"
 msgstr "行"
 
-#: app/controllers/admin/users_controller.rb:28
-#: app/controllers/admin/users_controller.rb:40
-#: app/controllers/admin/users_controller.rb:50
-#: app/controllers/admin/users_controller.rb:72
-#: app/controllers/admin/users_controller.rb:124
-#: app/controllers/admin/users_controller.rb:141
-#: app/controllers/admin/users_controller.rb:159
 #: app/controllers/admin/admin_module.rb:62
 #: app/controllers/admin/admin_module.rb:74
 #: app/controllers/admin/admin_module.rb:88
@@ -1326,10 +1319,17 @@ msgstr "行"
 #: app/controllers/admin/openid_identifiers_controller.rb:37
 #: app/controllers/admin/openid_identifiers_controller.rb:57
 #: app/controllers/admin/openid_identifiers_controller.rb:59
+#: app/controllers/admin/users_controller.rb:28
+#: app/controllers/admin/users_controller.rb:40
+#: app/controllers/admin/users_controller.rb:50
+#: app/controllers/admin/users_controller.rb:72
+#: app/controllers/admin/users_controller.rb:124
+#: app/controllers/admin/users_controller.rb:141
+#: app/controllers/admin/users_controller.rb:159
+#: app/views/admin/bookmarks/show.html.erb:19
+#: app/views/admin/groups/show.html.erb:35
 #: app/views/admin/board_entries/show.html.erb:23
 #: app/views/admin/users/import.html.erb:68
-#: app/views/admin/groups/show.html.erb:35
-#: app/views/admin/bookmarks/show.html.erb:19
 msgid "Listing %{model}"
 msgstr "%{model}一覧"
 
@@ -1393,17 +1393,17 @@ msgstr ""
 msgid "Message|User"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:28
-#: app/controllers/admin/users_controller.rb:40
 #: app/controllers/admin/admin_module.rb:89
 #: app/controllers/admin/admin_module.rb:110
 #: app/controllers/admin/admin_module.rb:196
 #: app/controllers/admin/admin_module.rb:221
 #: app/controllers/admin/openid_identifiers_controller.rb:28
 #: app/controllers/admin/openid_identifiers_controller.rb:60
-#: app/views/admin/users/index.html.erb:36
-#: app/views/admin/group_categories/index.html.erb:35
+#: app/controllers/admin/users_controller.rb:28
+#: app/controllers/admin/users_controller.rb:40
 #: app/views/admin/openid_identifiers/index.html.erb:23
+#: app/views/admin/group_categories/index.html.erb:35
+#: app/views/admin/users/index.html.erb:36
 msgid "New %{model}"
 msgstr "新規%{model}の作成"
 
@@ -1607,13 +1607,13 @@ msgstr ""
 msgid "ShareFile|日付"
 msgstr ""
 
+#: app/views/admin/group_categories/edit.html.erb:16
+#: app/views/admin/group_categories/index.html.erb:26
+#: app/views/admin/bookmarks/index.html.erb:18
+#: app/views/admin/groups/index.html.erb:30
 #: app/views/admin/board_entries/index.html.erb:29
 #: app/views/admin/users/edit.html.erb:17
 #: app/views/admin/users/index.html.erb:27
-#: app/views/admin/group_categories/edit.html.erb:16
-#: app/views/admin/group_categories/index.html.erb:26
-#: app/views/admin/groups/index.html.erb:30
-#: app/views/admin/bookmarks/index.html.erb:18
 msgid "Show"
 msgstr "詳細"
 
@@ -1709,32 +1709,32 @@ msgstr ""
 msgid "Track|Visitor"
 msgstr ""
 
-#: app/views/admin/user_profiles/edit.html.erb:11
-#: app/views/admin/users/change_uid.html.erb:20
-#: app/views/admin/users/edit.html.erb:11
-#: app/views/admin/group_categories/edit.html.erb:11
 #: app/views/admin/openid_identifiers/edit.html.erb:16
+#: app/views/admin/group_categories/edit.html.erb:11
+#: app/views/admin/user_profiles/edit.html.erb:11
+#: app/views/admin/users/edit.html.erb:11
+#: app/views/admin/users/change_uid.html.erb:20
 msgid "Update"
 msgstr "更新"
 
-#: app/views/admin/user_profiles/edit.html.erb:11
-#: app/views/admin/users/change_uid.html.erb:32
-#: app/views/admin/users/edit.html.erb:11
-#: app/views/admin/group_categories/edit.html.erb:11
 #: app/views/admin/openid_identifiers/edit.html.erb:16
+#: app/views/admin/group_categories/edit.html.erb:11
+#: app/views/admin/user_profiles/edit.html.erb:11
+#: app/views/admin/users/edit.html.erb:11
+#: app/views/admin/users/change_uid.html.erb:32
 msgid "Updating..."
 msgstr "更新しています…"
 
-#: app/views/admin/users/import.html.erb:11
 #: app/views/admin/images/index.html.erb:12
 #: app/views/admin/images/index.html.erb:22
+#: app/views/admin/users/import.html.erb:11
 msgid "Upload"
 msgstr "アップロード"
 
-#: app/views/admin/users/import.html.erb:11
-#: app/views/admin/users/import.html.erb:78
 #: app/views/admin/images/index.html.erb:12
 #: app/views/admin/images/index.html.erb:22
+#: app/views/admin/users/import.html.erb:11
+#: app/views/admin/users/import.html.erb:78
 msgid "Uploading..."
 msgstr "アップロードしています…"
 
@@ -2079,8 +2079,9 @@ msgstr ""
 msgid "new_uid"
 msgstr "新しく設定するニックネーム"
 
-#: app/models/openid_identifier.rb:- app/views/admin/users/show.html.erb:27
+#: app/models/openid_identifier.rb:-
 #: app/views/admin/openid_identifiers/index.html.erb:23
+#: app/views/admin/users/show.html.erb:27
 msgid "openid identifier"
 msgstr "OpenID"
 
@@ -2132,6 +2133,7 @@ msgstr "タグ"
 msgid "track"
 msgstr ""
 
+#: app/helpers/admin/application_helper.rb:34 app/models/user.rb:-
 #: app/controllers/admin/users_controller.rb:28
 #: app/controllers/admin/users_controller.rb:40
 #: app/controllers/admin/users_controller.rb:50
@@ -2139,7 +2141,6 @@ msgstr ""
 #: app/controllers/admin/users_controller.rb:124
 #: app/controllers/admin/users_controller.rb:141
 #: app/controllers/admin/users_controller.rb:159
-#: app/helpers/admin/application_helper.rb:34 app/models/user.rb:-
 #: app/views/admin/users/import.html.erb:68
 #: app/views/admin/users/index.html.erb:36
 msgid "user"
@@ -2243,7 +2244,8 @@ msgstr ""
 #: app/views/admin/users/change_uid.html.erb:7
 msgid ""
 "ニックネーム変更は様々な箇所に影響するため、どうしても変更が必要な場合のみ変"
-"更するようにして下さい。"
+"更するようにして下さい。<br/>また、処理に時間がかかりレスポンスが遅くなる場合"
+"がありますので、一般ユーザのアクセスしていない時間に実行してください。"
 msgstr ""
 
 #: app/controllers/admin/application_controller.rb:31
@@ -2314,8 +2316,8 @@ msgstr ""
 msgid "初期設定に戻す"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:252
 #: app/controllers/admin/group_categories_controller.rb:23
+#: app/controllers/edit_controller.rb:252
 msgid "削除しました。"
 msgstr ""
 
