@@ -15,5 +15,79 @@
 
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe Admin::UserProfile do
+describe Admin::UserProfile, "#join_year" do
+  before do
+    @up = Admin::UserProfile.new(:email => "hoge@openskip.org")
+  end
+  describe "4桁でない場合" do
+    before do
+      @up.join_year = "11111"
+    end
+    it { @up.should_not be_valid }
+    it { @up.should have(1).errors_on(:join_year) }
+  end
+  describe "4桁の場合" do
+    before do
+      @up.join_year = "1111"
+    end
+    it { @up.should be_valid }
+  end
+  describe "空の場合" do
+    before do
+      @up.join_year = nil
+    end
+    it { @up.should be_valid }
+  end
 end
+
+describe Admin::UserProfile, "#birth_month" do
+  before do
+    @up = Admin::UserProfile.new(:email => "hoge@openskip.org")
+  end
+  describe "正しい月の時" do
+    (1..12).each do |i|
+      before do
+        @up.birth_month = i
+      end
+      it { @up.should be_valid }
+    end
+  end
+  describe "0の時" do
+    before do
+      @up.birth_month = 0
+    end
+    it { @up.should_not be_valid }
+  end
+  describe "13の時" do
+    before do
+      @up.birth_month = 13
+    end
+    it { @up.should_not be_valid }
+  end
+end
+describe Admin::UserProfile, "#birth_day" do
+  before do
+    @up = Admin::UserProfile.new(:email => "hoge@openskip.org")
+  end
+  describe "正しい月の時" do
+    (1..31).each do |i|
+      before do
+        @up.birth_day = i
+      end
+      it { @up.should be_valid }
+    end
+  end
+  describe "0の時" do
+    before do
+      @up.birth_day = 0
+    end
+    it { @up.should_not be_valid }
+  end
+  describe "32の時" do
+    before do
+      @up.birth_day = 32
+    end
+    it { @up.should_not be_valid }
+  end
+end
+

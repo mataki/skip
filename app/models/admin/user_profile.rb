@@ -15,6 +15,11 @@
 
 class Admin::UserProfile < UserProfile
   belongs_to :user, :class_name => 'Admin::User'
+
+  validates_format_of :join_year, :with => /^\d{4}$/, :allow_blank => true
+  validates_format_of :birth_month, :with => /(^[1-9]$|10|11|12)/, :allow_blank => true
+  validates_format_of :birth_day, :with => /(^[1-9]$|[1-2][0-9]|30|31)/, :allow_blank => true
+
   N_('Admin::UserProfile|Address 1')
   N_('Admin::UserProfile|Address 2')
   N_('Admin::UserProfile|Alma mater')
