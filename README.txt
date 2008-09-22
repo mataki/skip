@@ -27,7 +27,9 @@ for Unix (Linux, etc.)
 
 1. Ruby, RubyGems, MySQL等、各種ソフトウェアのインストール
 --------------------------------------------------------------------------------
- 1. aptitudeを使ってインストール(Debian 及び Ubuntuユーザの場合)
+Debian 及び Ubuntuユーザの場合
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 1. yumを使ってインストール
 
     $ sudo yum install ruby rubygems ruby-devel mysql mysql-server ruby-mysql zlib-devel
 
