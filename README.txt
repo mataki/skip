@@ -43,7 +43,7 @@ for Unix (Linux, etc.)
 
 3. SKIPの展開
 --------------------------------------------------------------------------------
- 1. 公式ページ( http://www.openskip.org/ )から最新版SKIPをダウンロード。
+ 1. 公式ページから最新版SKIPをダウンロード。(http://www.openskip.org/download/)
  2. 解凍する
 
     $ tar xvzf skip-1.0rc1.tar.gz
