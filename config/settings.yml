@@ -19,7 +19,7 @@ app_title:
 abbr_app_title:
   default: SKIP                                            # システムの略称
 contact_addr:
-  default: info@openskip.org                               # 運営者の連絡メールアドレス
+  default: youradmin@example.com
 help_url:
   format: url
   allow_blank: true

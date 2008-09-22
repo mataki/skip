@@ -16,29 +16,28 @@
 default: &default
   session:
     session_key: skip_session_id
-    secret: replacethiswithyourowntopsecretsessionsecretsothatnfdjkaslfvew
-  sha1_digest_key: change-me
+    secret: change-me                                                       # 必ず変更して下さい。cookieの暗号化に使う鍵です。
+  sha1_digest_key: change-me                                                # 必ず変更して下さい。ユーザのパスワードを登録する際に使う鍵です。
   # 所属情報を設定する { :app_name => { :api => :api_name, :hash_key => 'hash_key_name', :prefix => 'prefix' } }
   belong_info_apps:
-  proxy_url:  # http://proxy.com:8080/
-  estraier_url: http://localhost:1987/node/node1
-  secret_key: skip
-  image_path: temp_image_file_path
-  share_file_path: temp_share_file_path
-  batch_log_path: #なければ log/batch.log
-  secret_key: skip
-  max_share_file_size: 10485760                                      # 共有ファイルの最大許可容量( 10M = 10485760 )
-  not_blank_link_re: https?:\/\/dev(.openskip.org)?\/.*              # ブログ内のリンクで新しいウインドウを開かないでリンクをするURLの正規表現
-  ssl_setting: false                                                 # SSLログインを利用するかどうかの設定
-  user_code_format_regex: ^(\d{6}|[kK]\d{5})$                        # ニックネームとして許可しない形式を指定
-  full_text_search_setting: false                                    # 全文検索入力欄の表示制御
-  password_edit_setting: true                                        # パスワード変更可能かどうかの設定
-  nickname_use_setting: true                                         # ユーザ登録時にニックネームを利用するかどうかの設定
-  delivery_method: smtp                                              # メール配信方法(ActionMailer::Base.delivery_methodへの設定値)
-  raise_delivery_errors: false                                       # メール送信に失敗した場合のエラー処理を行なうか
-  login_mode: password                                               # ログインの方法の設定 password:パスワード認証, rp:RPモード
-#  fixed_op_url: http://skipop.openskip.org/                         # RPモードで固定OPを利用するSSOの場合のURL
-  administrator_addr: info@openskip.org
+  proxy_url:                                                                # プロキシサーバのURL(例:http://proxy.com:8080/)
+  estraier_url: http://localhost:1987/node/node1                            # hyper estraierの検索ノードのURL
+  secret_key: change-me                                                     # 必ず変更して下さい。
+  image_path: temp_image_file_path                                          # ブログ/掲示板画像の保存ディレクトリ
+  share_file_path: temp_share_file_path                                     # 共有ファイルの保存ディレクトリ
+  batch_log_path:                                                           # バッチ実行時のログ出力先(指定がなければ log/batch.log)
+  max_share_file_size: 10485760                                             # 共有ファイルの最大許可容量( 10M = 10485760 )
+  not_blank_link_re: https?:\/\/dev(.openskip.org)?\/.*                     # ブログ内のリンクで新しいウインドウを開かないでリンクをするURLの正規表現
+  ssl_setting: false                                                        # SSLログインを利用するかどうかの設定
+  user_code_format_regex: ^(\d{6}|[kK]\d{5})$                               # ニックネームとして許可しない形式を指定
+  full_text_search_setting: false                                           # 全文検索入力欄の表示制御
+  password_edit_setting: true                                               # パスワード変更可能かどうかの設定
+  nickname_use_setting: true                                                # ユーザ登録時にニックネームを利用するかどうかの設定
+  delivery_method: smtp                                                     # メール配信方法(ActionMailer::Base.delivery_methodへの設定値)
+  raise_delivery_errors: false                                              # メール送信に失敗した場合のエラー処理を行なうか
+  login_mode: password                                                      # ログインの方法の設定 password:パスワード認証, rp:RPモード
+#  fixed_op_url: http://skipop.openskip.org/                                # RPモードで固定OPを利用するSSOの場合のURL
+  administrator_addr: youradmin@example.com                                 # システム管理者のアドレス
 
 # ---- 全文検索
   search_apps:
