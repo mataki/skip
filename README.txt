@@ -29,7 +29,7 @@ for Unix (Linux, etc.)
 --------------------------------------------------------------------------------
  1. aptitudeを使ってインストール(Debian 及び Ubuntuユーザの場合)
 
-    $ sudo aptitude install ruby rubygems ruby-devel mysql mysql-server ruby-mysql zlib-devel
+    $ sudo yum install ruby rubygems ruby-devel mysql mysql-server ruby-mysql zlib-devel
 
 2. gemsのインストール
 --------------------------------------------------------------------------------
@@ -39,9 +39,38 @@ for Unix (Linux, etc.)
     $ sudo gem install uuidtools
     $ sudo gem install fastercsv
     $ sudo gem install ruby-openid
-    $ sudo gem install rails --version 2.1.0 -y
+    $ sudo gem install rails --version 2.1.0
 
-3. データベースの作成
+3. SKIPの展開
+--------------------------------------------------------------------------------
+ 1. 公式ページ( http://www.openskip.org/ )から最新版SKIPをダウンロード。
+ 2. 解凍する
+
+    $ tar xvzf skip-1.0rc1.tar.gz
+
+ 3. 設定ファイルの作成
+
+    $ cd [RAILS_ROOT]/config
+    $ cp initial_settings.yml.sample initial_settings.yml
+    $ cp database.yml.sample database.yml
+
+ 4. initial_settings.ymlを編集
+    session:のsecretを変更する(※30文字以上にする必要があります)
+    sha1_digest_keyを変更する
+    secret_keyを変更する
+
+ 5. 依存ファイル(plugin等の展開)
+
+    $ rake skip:setup_production
+
+4. 環境変数の設定
+--------------------------------------------------------------------------------
+ 1. 必要な環境変数を設定する
+
+    $ export SKIP_URL=http://[サーバのIPアドレス or ドメインネーム]:[SKIP起動ポート]
+    $ export RAILS_ENV=production
+
+5. データベースの作成
 --------------------------------------------------------------------------------
  1. mysqlを起動
  2. mysqlのデータベースを作成 
@@ -49,37 +78,13 @@ for Unix (Linux, etc.)
     $ mysql -u root
     mysql> create database skip_production charset = utf8;
 
- 3. database.ymlの作成
-
-    $ cd [RAILS_ROOT]/config
-    $ cp database.yml.sample database.yml
-
- 4. rakeコマンド実行
+ 3. rakeコマンド実行
 
     $ rake db:migrate
 
-4. SKIPの展開
---------------------------------------------------------------------------------
- 1. 公式ページ( http://www.openskip.org/ )から最新版SKIPをダウンロード。
- 2. 解凍する
-
-    $ tar xvzf skip-1.0rc1.tar.gz
-
-5. 環境変数の設定
---------------------------------------------------------------------------------
- 1. 必要な環境変数を設定する
-
-    $ export SKIP_URL=http://[サーバのIPアドレス or ドメインネーム]:[SKIP起動ポート]
-    $ export RAILS_ENV=production
-
 6. プロキシサーバの設定(必要な場合のみ)
 --------------------------------------------------------------------------------
- 1. initial_settings.ymlの作成
-
-    $ cd [RAILS_ROOT]/config
-    $ cp initial_settings.yml.sample initial_settings.yml
-
- 2. initial_settings.ymlを編集
+ 1. initial_settings.ymlを編集
 
     proxy_urlにプロキシサーバのIPアドレスを設定する
     
@@ -97,11 +102,7 @@ SKIP 初期設定
 1. initial_settings.ymlの設定
 --------------------------------------------------------------------------------
  1. initial_settings.ymlを編集
-
-    session:のsecretを変更する
-    sha1_digest_keyを変更する
-    secret_keyを変更する
-    ※その他の値は適宜必要に応じて変更する
+    必要に応じて変更する
 
 2. 初期管理者ユーザの作成
 --------------------------------------------------------------------------------
@@ -109,7 +110,7 @@ SKIP 初期設定
 
     $ export SKIP_HOST=[サーバのIPアドレス or ドメインネーム]:[SKIP起動ポート]
     $ cd [RAILS_ROOT]/lib
-    $ ruby create_new_admin_url.rb
+    $ ruby create_new_admin_url.rb --code
 
  2. 初期管理者ユーザを作成する
     

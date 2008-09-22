@@ -60,6 +60,7 @@ namespace :skip do
     # vendor/plugin以下あるtar.gzなファイルを解凍
     `for file in ./vendor/plugins/*.tar.gz; do tar zxvf $file -C ./vendor/plugins; done;`
     `for file in ./vendor/plugins/*.tar.gz; do rm $file; done;`
+    `rm -rf ./vendor/plugins/rspec-rails/`
     # public以下にある圧縮ファイルを解凍
     `tar zxvf ./public/images/skip/icons.tar.gz -C ./public/images/skip`
     `rm ./public/images/skip/icons.tar.gz`
