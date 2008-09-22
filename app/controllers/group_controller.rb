@@ -319,14 +319,12 @@ class GroupController < ApplicationController
   def destroy
     if @group.group_participations.size > 1
       flash[:warning] = '自分以外のユーザがまだ存在しています。削除できません。'
-    elsif @group.destroy
+      redirect_to :action => 'show'
+    else
+      @group.destroy
       flash[:notice] = 'グループは削除されました。'
       redirect_to :controller => 'groups'
-      return
-    else
-      flash[:notice] = 'グループの削除に失敗しました。'
     end
-    redirect_to :action => 'show'
   end
 
   # ajax action
