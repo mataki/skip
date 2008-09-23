@@ -18,6 +18,7 @@ class UserSearchCondition < SearchCondition
 
   @@keys = {:name => 'users.name', :section => 'user_profiles.section', :code => 'user_uids.uid', :introduction => 'user_profiles.self_introduction'}
   @@keys.each {|key, val| attr_reader key }
+  @@include_tables = [:user_access, :pictures, :user_uids, :user_profile]
 
   attr_reader :include_absentee
   attr_reader :include_manager
@@ -63,6 +64,7 @@ class UserSearchCondition < SearchCondition
 
   def initialize()
     @name = @section = @code = @introduction = ""
+    @conditions_state = ""
 
     @include_absentee = "0"
     @include_manager = "0"
@@ -120,36 +122,52 @@ class UserSearchCondition < SearchCondition
   end
 
   def make_conditions
-    conditions_state = ""
     conditions_param = []
     @@keys.each do |key, val|
-      value = send(key) || ""
-      conditions_state << " and " unless conditions_state.empty?
-      conditions_state << val + " like ?"
-      conditions_param << SkipUtil.to_like_query_string(value)
+      value = send(key)
+      unless value.empty?
+        conditions_state << val + " like ?"
+        conditions_param << SkipUtil.to_like_query_string(value)
+      end
     end
     if @not_include_retired
-      conditions_state << " and users.status = ?"
+      conditions_state << "users.status = ?"
       conditions_param << 'ACTIVE'
     else
-      conditions_state << " and users.status in (?)"
+      conditions_state << "users.status in (?)"
       conditions_param << ['ACTIVE', 'RETIRED']
     end
     if @employed_type
       case @employed_type
         when "1"
-        conditions_state << " and users.status = ?"
+        conditions_state << "users.status = ?"
         conditions_param << 'ACTIVE'
         when "2"
-        conditions_state << " and users.status = ?"
+        conditions_state << "users.status = ?"
         conditions_param << 'RETIRED'
       end
     end
     if @sort_type == "1"
-      conditions_state << " and user_uids.uid_type = ?"
+      conditions_state << "user_uids.uid_type = ?"
       conditions_param << UserUid::UID_TYPE[:master]
     end
-    conditions_param.unshift(conditions_state)
+    conditions_param.unshift(@conditions_state)
   end
+
+  def value_of_include
+    # パフォ劣化のため、user_uidsテーブルとの外部結合をログインIDとログインIDソートに限定した。
+    if @code.empty? && @sort_type != "1"
+      @@include_tables.delete(:user_uids)
+    end
+    @@include_tables   
+  end
+
+  private
+  def conditions_state
+    unless @conditions_state.empty? 
+      @conditions_state << " AND "
+    end
+    @conditions_state
+  end     
 end
 

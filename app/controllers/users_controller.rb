@@ -24,7 +24,7 @@ class UsersController < ApplicationController
                               :per_page => @condition.value_of_per_page,
                               :conditions => @condition.make_conditions,
                               :order_by => @condition.value_of_order_by,
-                              :include => [:user_access, :pictures, :user_uids, :user_profile])
+                              :include => @condition.value_of_include)
     unless @users && @users.size > 0
       flash.now[:notice] = '該当するユーザはいませんでした。'
     end
