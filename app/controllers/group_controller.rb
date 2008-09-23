@@ -217,10 +217,9 @@ class GroupController < ApplicationController
   # 退会
   def leave
     if @participation
-      if @participation.destroy
-        login_user_groups.delete(@group.symbol)
-        flash[:notice] = '退会しました。'
-      end
+      @participation.destroy
+      login_user_groups.delete(@group.symbol)
+      flash[:notice] = '退会しました。'
     else
       flash[:notice] = 'そのグループには参加していません。'
     end

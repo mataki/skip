@@ -151,20 +151,12 @@ class ShareFileController < ApplicationController
 
   # post action
   def destroy
-    begin
-      share_file = ShareFile.find(params[:id])
-    rescue ActiveRecord::RecordNotFound => ex
-      redirect_to :controller => 'mypage', :action => 'index'
-      return false
-    end
+    share_file = ShareFile.find(params[:id])
 
     redirect_to_with_deny_auth and return unless authorize_to_save_share_file? share_file
 
-    if share_file.destroy
-      flash[:notice] = "ファイルの削除に成功しました。"
-    else
-      flash[:notice] = "ファイルの削除に失敗しました。"
-    end
+    share_file.destroy
+    flash[:notice] = _("ファイルの削除に成功しました。")
 
     redirect_to :controller => share_file.owner_symbol_type, :action => share_file.owner_symbol_id, :id => 'share_file'
   end

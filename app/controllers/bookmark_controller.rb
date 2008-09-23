@@ -125,16 +125,9 @@ class BookmarkController < ApplicationController
     # 権限チェック
     redirect_to_with_deny_auth and return unless comment.user_id == session[:user_id]
 
-    if comment.destroy
-      flash[:notice] = '削除しました。'
-    else
-      flash[:warning] = '削除に失敗しました。'
-    end
+    comment.destroy
+    flash[:notice] = '削除しました。'
     redirect_to  :action =>'show', :uri => comment.bookmark.url
-  rescue ActiveRecord::RecordNotFound => ex
-    flash[:warning] = "ブックマークは、既に削除されています"
-    redirect_to  :controller => 'mypage', :action =>'index'
-    return false
   end
 
 

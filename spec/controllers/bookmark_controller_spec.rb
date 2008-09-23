@@ -115,3 +115,35 @@ describe BookmarkController, "GET #list" do
   end
 end
 
+describe BookmarkController, "POST #destroy" do
+  before do
+    user_login
+
+    @bookmark_comment = stub_model(BookmarkComment, :user_id => 1)
+
+    BookmarkComment.stub!(:find).and_return(@bookmark_comment)
+  end
+  describe "bookmark_commentが存在する場合" do
+    before do
+      session[:user_id] = 1
+
+      @bookmark = stub_model(Bookmark, :url => "http://www.openskip.org/")
+      @bookmark_comment.should_receive(:destroy).and_return(@bookmark_comment)
+      @bookmark_comment.stub!(:bookmark).and_return(@bookmark)
+
+      post :destroy, :id => 1
+    end
+    it { response.should redirect_to(:action => :show, :uri => @bookmark.url ) }
+    it "flashにメッセージが登録されていること" do
+      flash[:notice] = '削除しました。'
+    end
+  end
+  describe "削除権限がない場合" do
+    before do
+      session[:user_id] = 2
+
+      post :destroy, :id => 1
+    end
+    it { response.should redirect_to(root_path) }
+  end
+end

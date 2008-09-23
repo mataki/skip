@@ -105,3 +105,44 @@ describe ShareFileController, "POST #create" do
     it { assigns[:error_messages].should be_empty }
   end
 end
+
+describe ShareFileController, "POST #destroy" do
+  before do
+    user_login
+  end
+  describe "ファイルが見つからなかったとき" do
+    before do
+      ShareFile.stub!(:find).with("1").and_raise(ActiveRecord::RecordNotFound)
+    end
+    it "ActiveRecord::RecordNotFoundが発生するとこ" do
+      lambda do
+        post :destroy, :id => 1
+      end.should raise_error(ActiveRecord::RecordNotFound)
+    end
+  end
+  describe "削除権限がなかった場合" do
+    before do
+      @share_file = stub_model(ShareFile)
+      ShareFile.stub!(:find).with("1").and_return(@share_file)
+
+      controller.should_receive(:authorize_to_save_share_file?).and_return(false)
+
+      post :destroy, :id => 1
+    end
+    it { response.should redirect_to(:controller => :mypage)}
+  end
+  describe "削除に成功した場合" do
+    before do
+      @share_file = stub_model(ShareFile, :owner_symbol_type => "group", :owner_symbol_id => "hoge")
+      ShareFile.stub!(:find).with("1").and_return(@share_file)
+
+      controller.should_receive(:authorize_to_save_share_file?).and_return(true)
+
+      @share_file.should_receive(:destroy).and_return(@share_file)
+
+      post :destroy, :id => 1
+    end
+    it { response.should redirect_to(:controller => "group", :action => "hoge", :id => "share_file") }
+    it { flash[:notice].should == "ファイルの削除に成功しました。" }
+  end
+end
