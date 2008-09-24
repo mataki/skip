@@ -214,12 +214,10 @@ class ShareFileController < ApplicationController
   end
 
   def download_history_as_csv
-    unless share_file = ShareFile.find(:first, :conditions => ["id = ?", params[:id]])
-      return false
-    end
+    share_file = ShareFile.find(params[:id])
 
     unless authorize_to_save_share_file? share_file
-      send_data(" ", :filename => "dummy.csv", :type => 'application/x-csv', :disposition => 'attachment')
+      redirect_to_with_deny_auth
       return
     end
 

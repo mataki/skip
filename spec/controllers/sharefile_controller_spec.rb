@@ -146,3 +146,39 @@ describe ShareFileController, "POST #destroy" do
     it { flash[:notice].should == "ファイルの削除に成功しました。" }
   end
 end
+
+describe ShareFileController, 'POST /download_history_as_csv' do
+  before do
+    user_login
+    ShareFile.stub!(:find)
+    controller.stub!(:authorize_to_save_share_file?)
+  end
+  describe '対象のShareFileが存在する場合' do
+    before do
+      @csv_text, @file_name = 'test,test', 'test.csv'
+      @share_file = stub_model(ShareFile)
+      @share_file.stub!(:get_accesses_as_csv).and_return(@csv_text, @file_name)
+      ShareFile.should_receive(:find).and_return(@share_file)
+    end
+    describe '権限のあるファイルの場合' do
+      before do
+        controller.should_receive(:authorize_to_save_share_file?).and_return(true)
+      end
+      it 'csvファイルがdownloadされること' do
+        controller.stub!(:nkf_file_name)
+        controller.should_receive(:send_data).with(@csv_text, anything())
+        post :download_history_as_csv
+      end
+    end
+    describe '権限のないファイルの場合' do
+      before do
+        controller.should_receive(:authorize_to_save_share_file?).and_return(false)
+      end
+      it '権限チェックエラーとなること' do
+        controller.should_not_receive(:send_data)
+        controller.should_receive(:redirect_to_with_deny_auth)
+        post :download_history_as_csv
+      end
+    end
+  end
+end
