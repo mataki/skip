@@ -87,6 +87,30 @@ describe ShareFile, '#after_destroy' do
   end
 end
 
+describe ShareFile, '#owner_symbol_name' do
+  before do
+    @share_file = ShareFile.new
+  end
+  describe 'owner_symbolに一致するオーナー(ユーザ、グループ等)が存在する場合' do
+    before do
+      @user_name = 'とあるゆーざー'
+      @user = stub_model(User, :name => @user_name)
+      Symbol.should_receive(:get_item_by_symbol).and_return(@user)
+    end
+    it 'オーナー名が返却されること' do
+      @share_file.owner_symbol_name.should == @user_name
+    end
+  end
+  describe 'owner_symbolに一致するオーナー(ユーザ、グループ等)が存在しない場合' do
+    before do
+      Symbol.should_receive(:get_item_by_symbol).and_return(nil)
+    end
+    it '空文字が返却されること' do
+      @share_file.owner_symbol_name.should == ''
+    end
+  end
+end
+
 private
 def create_share_file options = {}
   share_file = ShareFile.new({

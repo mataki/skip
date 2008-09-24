@@ -16,6 +16,7 @@
 class Admin::ShareFile < ShareFile
   N_('Admin::ShareFile|File name')
   N_('Admin::ShareFile|Owner symbol')
+  N_('Admin::ShareFile|Owner symbol type')
   N_('Admin::ShareFile|Description')
   N_('Admin::ShareFile|Date')
   N_('Admin::ShareFile|User')

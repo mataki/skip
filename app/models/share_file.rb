@@ -66,6 +66,11 @@ class ShareFile < ActiveRecord::Base
     owner_symbol.split(':').last
   end
 
+  def owner_symbol_name
+    owner = Symbol.get_item_by_symbol(self.owner_symbol)
+    owner ? owner.name : ''
+  end
+
   # 全公開かどうか
   def public?
     publication_type == 'public'

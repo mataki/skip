@@ -9,11 +9,15 @@
   <%= render :partial => '/admin/search_box' %>
   <%= render :partial => '/admin/shared/sortable_table',
              :locals => {
-               :columns => %w[user file_name description category],
+               :columns => %w[owner_symbol owner_symbol_type user file_name description category],
                :disp_columns_proc => lambda do |object,column|
       case column
       when "user"
         object.user.name
+      when "owner_symbol_type"
+        _("Symbol|Type|#{object.owner_symbol_type}")
+      when "owner_symbol"
+        object.owner_symbol_name
       when "description"
         object.description[/.{1,100}/]
       else
