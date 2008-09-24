@@ -60,12 +60,13 @@
 			}
 		};
 	
-		$.fn.jTagging = function(tags, seperator,normalStyle, selectedStyle, normalHoverStyle)
+		$.fn.jTagging = function(tags, seperator, normalStyle, selectedStyle, normalHoverStyle, timeout)
 		{
 			seperator = seperator || ",";
 			normalStyle =normalStyle || $.jTagging.defaults.normalStyle;
 			selectedStyle =selectedStyle || $.jTagging.defaults.selectedStyle;
 			normalHoverStyle = normalHoverStyle || $.jTagging.defaults.normalHoverStyle;
+            timeout = timeout || 500
 			tags = [tags];
 		    return this.each
 			(
@@ -79,51 +80,31 @@
 					}
 					
 					var input = this;
-					
-					$.each
-					(
-						["keydown", "keyup"]
-						,
-						function(i, n)
-						{
-							$(input).bind
-							(
-								n
-								,
-								function()
-								{
-									$.each
-									(
-										tags, function(i, n)
-										{
-											$.each
-											(
-												n, function (j, o)
-												{
-													 $("a", o).each
-													 (
-														function(k)
-														{
-															var value = $(input).val().split(seperator);
-															$.jTagging.arrayRemove(value);
-															if ($(value).index($(this).text()) >= 0)
-															{
-																$.jTagging.setClass(this, selectedStyle, normalHoverStyle);
-															}
-															else
-															{
-																$.jTagging.setClass(this, normalStyle, normalHoverStyle);
-															}
-														}
-													 );
-												}
-											);
-										}
-									);
-								}
-							);
-						}
-					);
+                    // タグの数が増えると重くなるので指定秒入力が無いときのみkeyupイベントが発生するようにした。
+                    var tid = null;
+                    var handler = function() {
+                            $.each ( tags, function(i, n) {
+                                $.each ( n, function (j, o) {
+                                    $("a", o).each ( function(k) {
+                                        var value = $(input).val().split(seperator);
+                                        $.jTagging.arrayRemove(value);
+                                        if ($(value).index($(this).text()) >= 0) {
+                                            $.jTagging.setClass(this, selectedStyle, normalHoverStyle);
+                                        } else {
+                                            $.jTagging.setClass(this, normalStyle, normalHoverStyle);
+                                        }
+                                    });
+                                });
+                            });
+                    };
+                    $(input)
+                    .bind('keydown', function() {
+                        clearTimeout(tid);
+                        tid = null;
+                    })
+                    .bind('keyup', function() {
+                        ( tid == null ) && ( tid = setTimeout(handler, timeout) );
+                    });
 					
 					$.each
 					(
