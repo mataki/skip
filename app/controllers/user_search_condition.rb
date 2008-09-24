@@ -18,7 +18,6 @@ class UserSearchCondition < SearchCondition
 
   @@keys = {:name => 'users.name', :section => 'user_profiles.section', :code => 'user_uids.uid', :introduction => 'user_profiles.self_introduction'}
   @@keys.each {|key, val| attr_reader key }
-  @@include_tables = [:user_access, :pictures, :user_uids, :user_profile]
 
   attr_reader :include_absentee
   attr_reader :include_manager
@@ -156,10 +155,9 @@ class UserSearchCondition < SearchCondition
 
   def value_of_include
     # パフォ劣化のため、user_uidsテーブルとの外部結合をログインIDとログインIDソートに限定した。
-    if @code.empty? && @sort_type != "1"
-      @@include_tables.delete(:user_uids)
-    end
-    @@include_tables   
+    include_tables = [:user_access, :pictures, :user_uids, :user_profile]
+    include_tables.delete(:user_uids) if @code.empty? && @sort_type != "1"
+    include_tables   
   end
 
   private
