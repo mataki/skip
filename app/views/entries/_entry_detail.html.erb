@@ -141,6 +141,8 @@ div#source_style_area, div#access_style_area {
     <% if @editable %>
      | <span id="access_style_label" style="display:none">アクセス履歴</span><a href="#" id="access_style_link">アクセス履歴</a>
     <% end %>
+     | <span id="sort_desc_style_label" style="display:none">コメントソート(降順)</span><a href="#" id="sort_desc_style_link">コメントソート(降順)</a>
+     | <span id="sort_asc_style_label" style="display:none">コメントソート(昇順)</span><a href="#" id="sort_asc_style_link">コメントソート(降順)</a>
     ]
   </span>
 </div>
@@ -227,6 +229,56 @@ $j(function(){
         changeStyleMenu('access');
         return false;
     });
+
+    // コメントソート(降順)リンククリック時
+    $j('#sort_desc_style_link')
+    .click(function() {
+        sortComment('desc')
+        return false;
+    });
+
+    // コメントソート(昇順)リンククリック時
+    $j('#sort_asc_style_link')
+    .click(function() {
+        sortComment('asc')
+        return false;
+    });
+
+    // 引数の値によってコメントを昇順もしくは降順にソートする
+    var sortComment = function(sortType) { 
+        sortType = sortType || 'asc';
+        var trees = $j.makeArray($j('#board_entry_comments').children().children('.board_entry_comment'));
+        $j.each(
+            trees.sort(
+                function(leftTree, rightTree) {
+                    var maxLeftTreeId = getMaxCommentId(leftTree)
+                    var maxRightTreeId = getMaxCommentId(rightTree)
+                    if (sortType == 'asc') {
+                        return maxRightTreeId - maxLeftTreeId;
+                    } else {
+                        return maxLeftTreeId - maxRightTreeId;
+                    }
+                }
+            ),
+            function(){
+                $j(this).css({marginLeft:'0px', backgroundColor:'#eee'}).parent().remove().appendTo('#board_entry_comments');
+            }
+        )
+    };
+
+    // 引数のコメントツリーについて最大のコメントIDを返す
+    var getMaxCommentId = function(tree) {
+        var children = $j.makeArray($j(tree).find('.board_entry_comment'));
+        if( children.size() == 0 ) {
+            return -tree.id.split('_')[1]
+        }
+        var descSortedChildren = children.sort(
+            function(leftChildren, rightChildren){
+                return rightChildren.id.split('_')[1] - leftChildren.id.split('_')[1];
+            }
+        );
+        return -descSortedChildren[0].id.split('_')[1];
+    };
 
     // ブログ表示、ソース表示、アクセス履歴を切り替える
     var changeStyleMenu = function(styleType) {
