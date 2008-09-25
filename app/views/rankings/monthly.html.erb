@@ -6,7 +6,7 @@
     <tr>
       <th>期間</th>
       <td>
-<%= select_tag 'date_list', options_for_select(@dates.map { |date| [date, date] }, "#{@year}-#{@month}"), :id => 'date_list' -%>
+<%= select_tag 'date_list', options_for_select(@dates, "#{@year}-#{@month.to_s.rjust(2,'0')}"), :id => 'date_list' -%>
       </td>
     </tr>
   </table>
@@ -23,7 +23,7 @@ $j(function() {
     var loadRanking = function(){
         var year = <%= h @year -%>;
         var month = <%= h @month -%>;
-        for( var i = 0; i < contents_types.length; i++) 
+        for( var i = 0; i < contents_types.length; i++)
             getRanking(contents_types[i], year, month);
     };
     loadRanking();
