@@ -202,27 +202,6 @@ class User < ActiveRecord::Base
     user_uid ? user_uid.uid : nil
   end
 
-  def self.find_as_csv(*args)
-    users = User.find(*args)
-
-    csv_text = ""
-    CSV::Writer.generate(csv_text) do |csv|
-      csv << User.get_csv_header
-      users.each do |user|
-        csv << user.get_csv_record
-      end
-    end
-    csv_text
-  end
-
-  def get_csv_record
-    SkipUtil.get_a_row_for_csv([code, name, user_profile.section, user_profile.extension, user_profile.email, created_on.strftime("%Y/%m/%d")])
-  end
-
-  def self.get_csv_header
-    SkipUtil.get_a_row_for_csv([Admin::Setting.login_account, '名前', '所属', '内線', 'e-mail', '登録日'])
-  end
-
   # uidかe-maiかを判断し、適切なユーザを返す
   def self.find_by_login_key login_key
     return login_key.include?('@') ? User.find_by_email(login_key) : User.find_by_uid(login_key)

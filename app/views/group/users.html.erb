@@ -10,21 +10,21 @@
   </tr>
   <tr>
     <th>ソート順</th>
-    <td><%= select :condition, :sort_type, UserSearchCondition.sort_types -%></td>
+    <td><%= select :condition, :sort_type, UserSearchCondition.sort_types %></td>
     <th>出力形式</th>
-    <td><%= select :condition, :output_type, UserSearchCondition.output_types -%></td>
+    <td><%= radio_buttons :condition, :output_type, UserSearchCondition.output_types %></td>
   </tr>
 </table>
-<div class="submit" style="text-align: right;"><%= submit_tag '検索' -%></div>
-<% end %>
+<div class="submit" style="text-align: right;"><%= submit_tag '検索' %></div>
+<% end -%>
 </div>
 
 <div class="search_result_space">
-<% if @pages and @pages.item_count > 0 %>
-  <div class="navi"><%= page_link(@pages) -%></div>
+<% if @pages and @pages.item_count > 0 -%>
+  <div class="navi"><%= page_link(@pages) %></div>
 
-  <%= output_users_result @condition.output_normal?, @users -%>
+  <%= output_users_result @condition.output_normal?, @users %>
 
-  <div class="navi"><%= page_link(@pages) -%></div>
-<% end %>
+  <div class="navi"><%= page_link(@pages) %></div>
+<% end -%>
 </div>

@@ -38,26 +38,9 @@ class UserSearchCondition < SearchCondition
         ["#{Admin::Setting.login_account}順", "1"] ]
     end
 
-    @@output_types = {
-      :normal => '通常',
-      :list => '一覧形式',
-      :csv => 'ＣＳＶダウンロード'
-    }
-
-    def output_types options=[:normal, :list, :csv]
-      output = []
-      options.each do |option|
-        if value = @@output_types[option]
-          output << [value, option.to_s]
-        end
-      end
-      output
-    end
-
-    def employed_types
-      [['在職者・退職者含む',"0"],
-       ['在職者のみ',"1"],
-       ['退職者のみ',"2"]]
+    def output_types
+      [ ['通常', 'normal'],
+        ['一覧形式', 'list'] ]
     end
   end
 

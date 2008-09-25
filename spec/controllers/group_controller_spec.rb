@@ -125,13 +125,6 @@ describe GroupController, 'GET /users' do
       end
       it {response.should be_success}
     end
-    describe '出力形式がcsvの場合' do
-      before do
-        @params[:condition].merge!(:output_type => 'csv')
-        get :users, @params
-      end
-      it {response.should be_success}
-    end
   end
   def create_stub_group
     @group = stub_model(Group, :name => 'とあるグループ')

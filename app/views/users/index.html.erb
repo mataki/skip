@@ -15,26 +15,26 @@
     <td><%= text_field :condition, :code, :size => 25 %></td>
   </tr>
   <tr>
-    <th>表示順</th>
-    <td><%= select :condition, :sort_type, UserSearchCondition.sort_types -%></td>
+  <th>表示順</th>
+    <td><%= select :condition, :sort_type, UserSearchCondition.sort_types %></td>
     <th>出力形式</th>
-    <td><%= radio_buttons :condition, :output_type, UserSearchCondition.output_types([:normal, :list]) -%></td>
+    <td><%= radio_buttons :condition, :output_type, UserSearchCondition.output_types %></td>
   </tr>
   <tr>
     <th>退職者指定</th>
-    <td><%= check_box_tag 'condition[not_include_retired]',1,@condition.not_include_retired, :id => 'condition_not_include_retired' -%>退職者を含めない</td>
+    <td><%= check_box_tag 'condition[not_include_retired]',1,@condition.not_include_retired, :id => 'condition_not_include_retired' %>退職者を含めない</td>
   </tr>
 </table>
 <div class="submit"><%= submit_tag '検索' %></div>
-<% end %>
+<% end -%>
 </div>
 
 <div class="search_result_space">
-<% if @pages and @pages.item_count > 0 %>
+<% if @pages and @pages.item_count > 0 -%>
   <div class="navi"><%= page_link(@pages) -%></div>
 
-  <%= output_users_result @condition.output_normal?, @users -%>
+  <%= output_users_result @condition.output_normal?, @users %>
 
-  <div class="navi"><%= page_link(@pages) -%></div>
-<% end %>
+  <div class="navi"><%= page_link(@pages) %></div>
+<% end -%>
 </div>
