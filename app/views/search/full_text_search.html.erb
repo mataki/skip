@@ -8,7 +8,7 @@
     <div style="margin-left: 90px;">
       <% form_tag({:controller => 'search', :action => 'full_text_search'} ,:method => 'get', :id => 'full_text_form') do -%>
       <div>
-        <%= text_field_tag('full_text_query', params[:full_text_query], :size => 50 ) -%>
+        <%= text_field_tag('query', params[:query], :size => 50 ) -%>
         <%= submit_tag '全文検索' -%>
         <input id="internet_google_search_button" type="button" value="インターネット検索" /><br/>
       </div>
@@ -63,7 +63,7 @@ $j(function(){
     // インターネットGoogle検索
     $j('#internet_google_search_button')
     .click(function() {
-        var query = $j('#full_text_query').val();
+        var query = $j('#query').val();
         if (query == "") { return false; }
         var url = "http://www.google.co.jp/search?hl=ja&btnG=Google+%E6%A4%9C%E7%B4%A2&lr=&q=" + query;
         window.open(encodeURI(url), '_blank').foccus();

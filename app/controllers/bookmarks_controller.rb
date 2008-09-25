@@ -65,7 +65,7 @@ private
   def setup_layout
     @main_menu = @title = 'ブックマーク'
 
-    @tab_menu_source = [ ['トップ', 'index'],
+    @tab_menu_source = [ ['人気ランキング', 'index'],
                          ['検索', 'search'],
                          ['セットアップ', 'setup'] ]
   end

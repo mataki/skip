@@ -90,7 +90,7 @@ MENU_BTNS = menu_btns
 admin_menu_btns = [
   { :separator => true, :name => "[管理メニュー]"},
 
-  { :img_name => "database_gear",         :id => "btn_admin", :name => "システムの管理", :url => {:controller => '/admin', :action => 'index'} },
+  { :img_name => "database_gear",         :id => "btn_admin", :name => "システム管理", :url => {:controller => '/admin', :action => 'index'} },
 ]
 ADMIN_MENU_BTNS = admin_menu_btns
 

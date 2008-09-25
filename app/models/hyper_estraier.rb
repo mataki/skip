@@ -27,7 +27,7 @@ class HyperEstraier < Search
       node.set_url(INITIAL_SETTINGS['estraier_url'])
       cond = Condition::new
       cond.set_options Condition::SIMPLE
-      cond.set_phrase(params[:full_text_query])
+      cond.set_phrase(params[:query])
       if params[:target_aid] && params[:target_aid] != 'all' && !INITIAL_SETTINGS['search_apps'][params[:target_aid]]['cache'].empty?
         target_url = "http://#{INITIAL_SETTINGS['search_apps'][params[:target_aid]]['cache']}"
         target_url << "/#{params[:target_contents]}" if params[:target_contents]

@@ -87,6 +87,7 @@ class SearchController < ApplicationController
 
   #全文検索
   def full_text_search
+    params[:query] = params[:full_text_query] unless params[:full_text_query].blank?
     params[:target_contents] ||= 'all'
     params[:target_aid] ||= 'all'
     params[:per_page] = 10
@@ -107,10 +108,10 @@ class SearchController < ApplicationController
 private
   def setup_layout
     @main_menu = 'データを探す'
-    @title = '検索'
+    @title = 'データを探す'
 
-    @tab_menu_source = [ ['ブログ・掲示板', 'index'],
-                         ['共有ファイル検索', 'share_file_search'] ]
+    @tab_menu_source = [ ['記事を探す', 'index'],
+                         ['ファイルを探す', 'share_file_search'] ]
     @tab_menu_source << ['全文検索', 'full_text_search'] if INITIAL_SETTINGS['full_text_search_setting']
   end
 
@@ -138,7 +139,7 @@ private
     next_offset = search_result[:header][:next].empty? ? nil : search_result[:header][:start_count] + @per_page - 1
 
     @result_info_locals = {
-      :query => params[:full_text_query],
+      :query => params[:query],
       :prev_offset => prev_offset,
       :next_offset => next_offset,
       :max_count => @max_count,
@@ -156,7 +157,7 @@ private
     end_index = 100 if end_index > 100
 
     @page_navi_locals = {
-      :query => params["full_text_query"],
+      :query => params["query"],
       :prev_offset => prev_offset,
       :next_offset => next_offset,
       :per_page => @per_page,

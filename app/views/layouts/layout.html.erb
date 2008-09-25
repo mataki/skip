@@ -46,7 +46,7 @@ Event.observe(window, 'load', function() {
 <div id="header">
   <%= header_logo_link %>
   <%= skip_menu_link %>
-  <%= render :partial => "shared/full_text_search" if INITIAL_SETTINGS['full_text_search_setting'] and !( params[:controller] == "search" and params[:action] == "full_text_search")  %>
+  <%= render :partial => "shared/full_text_search" if INITIAL_SETTINGS['full_text_search_setting'] %>
 </div><!-- header -->
 
 <div id="top">

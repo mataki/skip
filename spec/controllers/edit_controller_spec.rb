@@ -66,7 +66,64 @@ describe EditController do
     end
   end
 end
+# 途中
+describe EditController, "GET #index" do
+  before do
+    user_login
+    session[:user_symbol] = "uid:skip"
+  end
+  describe "ブログを書くの場合" do
+    before do
+      get :index
+    end
+    it { response.should render_template('edit/index') }
+    it "適切なインスタンス変数が設定されていること" do
+      assigns[:title].should == "ブログを書く"
+      assigns[:main_menu].should == "ブログを書く"
+    end
+  end
+  describe "掲示板を書くの場合" do
+    before do
+      get :index, :symbol => "gid:hoge"
+    end
+    it { response.should render_template('edit/index') }
+    it "適切なインスタンス変数が設定されていること" do
+      assigns[:title].should == "掲示板を投稿する"
+      assigns[:main_menu].should == "グループ"
+    end
+  end
+end
+# 途中
+describe EditController, "GET #edit" do
+  before do
+    user_login
+    session[:user_symbol] = "uid:skip"
 
+    @board_entry = stub_model(BoardEntry)
+    BoardEntry.stub!(:find).and_return(@board_entry)
+    BoardEntry.stub!(:get_categories_hash)
+  end
+  describe "ブログの場合" do
+    before do
+      get :edit, :id => 1, :symbol => 'uid:skip'
+    end
+    it { response.should be_redirect }
+    it "適切なインスタンス変数が設定されていること" do
+      assigns[:title].should == "ブログを編集する"
+      assigns[:main_menu].should == "マイブログ"
+    end
+  end
+  describe "掲示板の場合" do
+    before do
+      get :edit, :id => 1, :symbol => 'gid:skip'
+    end
+    it { response.should be_redirect }
+    it "適切なインスタンス変数が設定されていること" do
+      assigns[:title].should == "掲示板を編集する"
+      assigns[:main_menu].should == "グループ"
+    end
+  end
+end
 describe EditController, "#destroy" do
   before do
     user_login
@@ -98,3 +155,4 @@ describe EditController, "#get_img_urls" do
     controller.send(:get_img_urls, @board_entry)
   end
 end
+

@@ -297,11 +297,26 @@ private
     @categories_hash =  BoardEntry.get_categories_hash(login_user_symbols, {:symbol=>symbol})
     @place, @target_url_param = BoardEntry.get_place_name_and_target_url_param symbol
 
-    @main_menu = @title = 'ブログを書く'
-    @title = 'エントリを投稿する'
-    @title = 'エントリを編集する' if ["edit", "update"].include? action_name
-  end
 
+    if !params[:symbol].blank? and params[:symbol].include?('gid:')
+      @main_menu = 'グループ'
+      @title = '掲示板'
+      if ["edit", "update"].include?(action_name)
+        @title << 'を編集する'
+      else
+        @title << 'を投稿する'
+      end
+    else
+      @title = 'ブログ'
+      if ["edit", "update"].include?(action_name)
+        @main_menu = 'マイブログ'
+        @title << 'を編集する'
+      else
+        @main_menu = "ブログを書く"
+        @title << 'を書く'
+      end
+    end
+  end
 
   def analyze_params
     target_symbols_publication = []

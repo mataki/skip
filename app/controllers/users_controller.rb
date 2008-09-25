@@ -66,7 +66,7 @@ private
   def setup_layout
     @main_menu = @title = 'ユーザ'
 
-    @tab_menu_source = [ ['トップ', 'index'],
+    @tab_menu_source = [ ['ユーザの検索', 'index'],
                          ['紹介文', 'chain_search'] ]
   end
 end

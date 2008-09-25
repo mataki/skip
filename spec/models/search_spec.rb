@@ -35,7 +35,7 @@ describe Search do
 #   end
 
   def test_no_query_search
-    params = { :full_text_query => "" }
+    params = { :query => "" }
     search = Search.new params,['sid:allusers']
 
     result = search.result

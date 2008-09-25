@@ -5,7 +5,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
   <link rel="shortcut icon" href="<%= controller.request.relative_url_root %>/favicon.ico" />
-  <title><%= h Admin::Setting.abbr_app_title %> - <%= h @title %></title>
+  <title><%= h Admin::Setting.abbr_app_title %> - <%= _('システム管理') %></title>
   <%= skip_stylesheet_link_tag "style" %>
   <%= stylesheet_link_tag "style" %>
   <%= stylesheet_link_tag "skins-base" %>
@@ -18,8 +18,7 @@
 <body>
 <div id="header">
   <%= header_logo_link %>
-  <%= skip_menu_link %>
-  <%= render :partial => "shared/full_text_search" if INITIAL_SETTINGS['full_text_search_setting'] %>
+  <%= skip_menu_link %>  <%= render :partial => "shared/full_text_search" if INITIAL_SETTINGS['full_text_search_setting'] %>
 </div><!-- header -->
 
 <div id="top">

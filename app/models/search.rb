@@ -22,7 +22,7 @@ class Search
       :header => { :count => -1, :start_count => 0, :end_count => 0, :prev => "", :next => "", :per_page => 10 },
       :elements => []
     }
-    if params[:full_text_query] && !SkipUtil.jstrip(params[:full_text_query]).empty?
+    if params[:query] && !SkipUtil.jstrip(params[:query]).empty?
       @result = HyperEstraier.search params,@result
     end
 
