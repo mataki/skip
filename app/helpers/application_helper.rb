@@ -88,9 +88,9 @@ module ApplicationHelper
   def user_link_to user, options = {}
     output_text = ""
     output_text << icon_tag('user_suit') if options[:image_on]
-    output_text << (options[:view_text] || h(user.name))
+    output_text << title = (options[:view_text] || h(user.name))
 
-    link_to output_text, {:controller=>'user', :action=>'show', :uid=>user.uid}, {:title => output_text}
+    link_to output_text, {:controller => 'user', :action => 'show', :uid => user.uid}, {:title => title}
   end
 
   # グループのページへのリンク
