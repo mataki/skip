@@ -140,11 +140,11 @@ def convert_date str
   Date.new(str[0,4].to_i, str[4,2].to_i, str[6,2].to_i)
 end
 
-from_day = ARGV[0]
+from_day = ARGV[0] || Time.now.strftime('%Y%m%d') 
 to_day   = ARGV[1]
 
 unless to_day 
-  BatchMakeRanking.execution({ :exec_day => convert_date(from_day)}) 
+  BatchMakeRanking.execution({:exec_day => convert_date(from_day)}) 
 else
   (convert_date(from_day)..convert_date(to_day)).each do |exec_date|
     BatchMakeRanking.execution({ :exec_day => exec_date}) 
