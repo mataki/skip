@@ -19,7 +19,7 @@ class GroupCategory < ActiveRecord::Base
   N_('GroupCategory|Initial selected|true')
   N_('GroupCategory|Initial selected|false')
 
-  ICONS = ['page_word', 'group_gear', 'ipod']
+  ICONS = ['group_gear', 'ipod', 'joystick', 'money', 'music', 'page_excel', 'page_word', 'phone', 'ruby', 'tux']
 
   validates_presence_of :code
   validates_uniqueness_of :code
