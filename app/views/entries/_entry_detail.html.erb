@@ -7,6 +7,18 @@
 div.move_navi {
   position: relative;
   height: 1.3em;
+  text-align: center;
+  font-size: 0.8em;
+}
+div.move_navi .next_entry {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+div.move_navi .prev_entry {
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 div.board_entry {
   border: 1px solid silver;
@@ -94,12 +106,10 @@ div#source_style_area, div#access_style_area {
 }
 </style>
 
-<div class="move_navi" style="text-align: center; font-size: 10px;">
-  <div style="position: absolute; left: 0; top: 0;">
-  <%= entry_link_to(prev_entry, :view_text => ('< ['+ truncate(prev_entry.title, 20) + ']')) if prev_entry %></div>
-  <div style="position: absolute; right: 0; top: 0;">
-  <%= entry_link_to(next_entry, :view_text => ('['+ truncate(next_entry.title, 20) + '] >')) if next_entry %></div>
-  <span><a href="#trackback">[ページ末尾]</a></span>
+<div class="move_navi">
+  <%= entry_link_to(prev_entry, {:view_text => ('< ['+ truncate(prev_entry.title, 20) + ']')}, :class => 'prev_entry') if prev_entry %>
+  <%= entry_link_to(next_entry, {:view_text => ('['+ truncate(next_entry.title, 20) + '] >')}, :class => 'next_entry') if next_entry %>
+  <a id="page_top" href="#page_bottom">[ページ末尾]</a>
 </div>
 
 <div class="board_entry">
@@ -188,7 +198,9 @@ div#source_style_area, div#access_style_area {
   </div>
 </div>
 
-<div style="text-align: right;"><a href="#top">[ページ先頭]</a></div>
+<div class="move_navi">
+  <a id="page_bottom" href="#page_top">[ページ先頭]</a></div>
+</div>
 
 <script type="text/javascript">
 $j(function(){
