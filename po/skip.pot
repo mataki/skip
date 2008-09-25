@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-09-24 17:10+0900\n"
+"POT-Creation-Date: 2008-09-25 10:47+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -562,19 +562,19 @@ msgstr ""
 msgid "Admin::Setting|Stop new user description"
 msgstr ""
 
-#: app/models/admin/share_file.rb:23
+#: app/models/admin/share_file.rb:25
 msgid "Admin::ShareFile|Category"
 msgstr ""
 
-#: app/models/admin/share_file.rb:25
+#: app/models/admin/share_file.rb:27
 msgid "Admin::ShareFile|Content type"
 msgstr ""
 
-#: app/models/admin/share_file.rb:21
+#: app/models/admin/share_file.rb:23
 msgid "Admin::ShareFile|Date"
 msgstr ""
 
-#: app/models/admin/share_file.rb:20
+#: app/models/admin/share_file.rb:22
 msgid "Admin::ShareFile|Description"
 msgstr ""
 
@@ -590,19 +590,19 @@ msgstr ""
 msgid "Admin::ShareFile|Owner symbol type"
 msgstr ""
 
-#: app/models/admin/share_file.rb:27
+#: app/models/admin/share_file.rb:29
 msgid "Admin::ShareFile|Publication symbols type"
 msgstr ""
 
-#: app/models/admin/share_file.rb:26
+#: app/models/admin/share_file.rb:28
 msgid "Admin::ShareFile|Publication type"
 msgstr ""
 
-#: app/models/admin/share_file.rb:24
+#: app/models/admin/share_file.rb:26
 msgid "Admin::ShareFile|Total count"
 msgstr ""
 
-#: app/models/admin/share_file.rb:22
+#: app/models/admin/share_file.rb:24
 msgid "Admin::ShareFile|User"
 msgstr ""
 
@@ -1650,11 +1650,11 @@ msgstr ""
 msgid "SiteCount|Writer at month"
 msgstr ""
 
-#: lib/symbol.rb:18
+#: app/models/admin/share_file.rb:21
 msgid "Symbol|Type|group"
 msgstr ""
 
-#: lib/symbol.rb:17
+#: app/models/admin/share_file.rb:20
 msgid "Symbol|Type|user"
 msgstr ""
 

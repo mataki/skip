@@ -17,6 +17,10 @@ class Admin::ShareFile < ShareFile
   N_('Admin::ShareFile|File name')
   N_('Admin::ShareFile|Owner symbol')
   N_('Admin::ShareFile|Owner symbol type')
+  # TODO lib/symbol.rbに記述してみたが、script/console等の起動の際に
+  # N_がundefinedとなってしまう。仕方がないので原因がわかるまでここに書いておく。
+  N_('Symbol|Type|user')
+  N_('Symbol|Type|group')
   N_('Admin::ShareFile|Description')
   N_('Admin::ShareFile|Date')
   N_('Admin::ShareFile|User')

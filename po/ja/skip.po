@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-09-24 17:10+0900\n"
+"POT-Creation-Date: 2008-09-25 10:47+0900\n"
 "PO-Revision-Date: 2008-09-13 11:22+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -601,19 +601,19 @@ msgstr ""
 "ユーザ登録を一時停止し、現在登録済みのユーザだけで運営できます。チェックを外"
 "すと、再開します。"
 
-#: app/models/admin/share_file.rb:23
+#: app/models/admin/share_file.rb:25
 msgid "Admin::ShareFile|Category"
 msgstr "タグ"
 
-#: app/models/admin/share_file.rb:25
+#: app/models/admin/share_file.rb:27
 msgid "Admin::ShareFile|Content type"
 msgstr "種別"
 
-#: app/models/admin/share_file.rb:21
+#: app/models/admin/share_file.rb:23
 msgid "Admin::ShareFile|Date"
 msgstr "アップロード日時"
 
-#: app/models/admin/share_file.rb:20
+#: app/models/admin/share_file.rb:22
 msgid "Admin::ShareFile|Description"
 msgstr "説明"
 
@@ -629,19 +629,19 @@ msgstr "オーナー"
 msgid "Admin::ShareFile|Owner symbol type"
 msgstr "オーナー種別"
 
-#: app/models/admin/share_file.rb:27
+#: app/models/admin/share_file.rb:29
 msgid "Admin::ShareFile|Publication symbols type"
 msgstr "公開範囲"
 
-#: app/models/admin/share_file.rb:26
+#: app/models/admin/share_file.rb:28
 msgid "Admin::ShareFile|Publication type"
 msgstr "公開タイプ"
 
-#: app/models/admin/share_file.rb:24
+#: app/models/admin/share_file.rb:26
 msgid "Admin::ShareFile|Total count"
 msgstr "ダウンロード数"
 
-#: app/models/admin/share_file.rb:22
+#: app/models/admin/share_file.rb:24
 msgid "Admin::ShareFile|User"
 msgstr "アップロードユーザ"
 
@@ -1689,11 +1689,11 @@ msgstr ""
 msgid "SiteCount|Writer at month"
 msgstr ""
 
-#: lib/symbol.rb:18
+#: app/models/admin/share_file.rb:21
 msgid "Symbol|Type|group"
 msgstr "グループ"
 
-#: lib/symbol.rb:17
+#: app/models/admin/share_file.rb:20
 msgid "Symbol|Type|user"
 msgstr "ユーザ"
 

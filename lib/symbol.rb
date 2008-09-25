@@ -14,8 +14,6 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Symbol
-  N_('Symbol|Type|user')
-  N_('Symbol|Type|group')
 
   SYSTEM_ALL_USER = "sid:allusers"
 
