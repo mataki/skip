@@ -30,8 +30,8 @@ class Admin::ShareFile < ShareFile
   N_('Admin::ShareFile|Publication type')
   N_('Admin::ShareFile|Publication symbols type')
 
-  def self.search_colomns
-    "file_name like :lqs or description like :lqs or category like :lqs"
+  def self.search_columns
+    %w(file_name description category)
   end
 
   def topic_title

@@ -29,8 +29,8 @@ class Admin::User < User
     alias :find :find_without_retired_skip
   end
 
-  def self.search_colomns
-    "name like :lqs"
+  def self.search_columns
+    %w(name)
   end
 
   def topic_title

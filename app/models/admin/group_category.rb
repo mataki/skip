@@ -22,8 +22,8 @@ class Admin::GroupCategory < GroupCategory
   N_('Admin::GroupCategory|Description')
   N_('Admin::GroupCategory|Initial selected')
 
-  def self.search_colomns
-    "code like :lqs or name like :lqs or icon like :lqs or description like :lqs or initial_selected like :lqs"
+  def self.search_columns
+    %w(code name icon description)
   end
 
   def topic_title

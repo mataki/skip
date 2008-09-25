@@ -6,7 +6,7 @@
 
 
 <div class="box tabular">
-  <%= render :partial => '/admin/search_box' %>
+  <%= render :partial => '/admin/search_box', :locals => {:class_name => 'Admin::Bookmark'} %>
   <%= render :partial => '/admin/shared/sortable_table',
              :locals => {
                :columns => %w[title url],

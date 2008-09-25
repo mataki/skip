@@ -46,6 +46,11 @@ module Admin::AdminModule
     def object_name_without_admin(object)
       object.class.name[/[^Admin::](.*)$/].tableize.singularize
     end
+
+    def search_condition
+      columns = admin_model_class.search_columns
+      columns.map{ |column| " #{column} like :lqs" }.join(' or ')
+    end
   end
 
   module AdminRootModule
@@ -56,7 +61,7 @@ module Admin::AdminModule
       @pages, objects = paginate(singularize_name.to_sym,
                                  :per_page => 100,
                                  :class_name => admin_model_class_name,
-                                 :conditions => [admin_model_class.search_colomns, { :lqs => SkipUtil.to_lqs(@query) }])
+                                 :conditions => [search_condition, { :lqs => SkipUtil.to_lqs(@query) }])
       set_pluralize_instance_val objects
 
       @topics = [_('Listing %{model}') % {:model => _(singularize_name.gsub('_', ' '))}]

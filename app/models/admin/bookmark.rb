@@ -18,8 +18,8 @@ class Admin::Bookmark < Bookmark
   N_('Admin::Bookmark|Title')
   N_('Admin::Bookmark|Url')
 
-  def self.search_colomns
-    "title like :lqs or url like :lqs"
+  def self.search_columns
+    %w(title url)
   end
 
   def topic_title

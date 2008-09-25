@@ -38,9 +38,8 @@ class Admin::UserProfile < UserProfile
   N_('Admin::UserProfile|Extension')
   N_('Admin::UserProfile|Self introduction')
 
-  def self.search_colomns
-    cols = %w(address_1 address_2 alma_mater birth_month birth_day blood_type email hobby hometown introduction self_introduction section)
-    cols.map{ |col| col + " like :lqs" }.join(' or ')
+  def self.search_columns
+    %w(email section extension)
   end
 
   def topic_title

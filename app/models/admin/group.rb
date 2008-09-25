@@ -23,8 +23,8 @@ class Admin::Group < Group
   N_('Admin::Group|Protected')
   N_('Admin::Group|Group category')
 
-  def self.search_colomns
-    "name like :lqs or gid like :lqs or description like :lqs or group_category_id like :lqs"
+  def self.search_columns
+    %w(name gid description)
   end
 
   def topic_title

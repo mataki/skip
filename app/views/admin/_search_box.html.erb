@@ -2,6 +2,6 @@
   <% form_tag({:action => :index}, {:method => :get}) do -%>
   <%= text_field_tag :query, @query %>
   <%= submit_tag _('Search'), :disable_with => _('Searching...') %>
-  <span style="margin-left: 10px;"><%= _('項目全体から検索を行ないます') %></span>
+  <span style="margin-left: 10px;"><%= _('%{target}から検索を行ないます' % {:target => class_name.constantize.search_columns.map{|column| _("#{class_name}|#{column.humanize}")}.join(', ')}) %></span>
   <% end -%>
 </div>

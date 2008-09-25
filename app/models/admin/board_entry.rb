@@ -21,8 +21,8 @@ class Admin::BoardEntry < BoardEntry
   N_('Admin::BoardEntry|Entry type')
   N_('Admin::BoardEntry|User')
 
-  def self.search_colomns
-    "contents like :lqs or title like :lqs or category like :lqs"
+  def self.search_columns
+    %w(title contents category)
   end
 
   def topic_title
