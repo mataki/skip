@@ -109,6 +109,7 @@ end
 def create_user options = {}
   options[:user_options] ||= {}
   user = User.new({ :name => 'ほげ ほげ', :password => 'password', :password_confirmation => 'password'}.merge(options[:user_options]))
+  user.status = options[:status] || 'ACTIVE'
   if options[:user_profile_options]
     user_profile = UserProfile.new({ :email => 'example@skip.org', :section => 'Programmer', :disclosure => true }.merge(options[:user_profile_options]))
     user.user_profile = user_profile
