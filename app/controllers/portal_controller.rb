@@ -38,7 +38,7 @@ class PortalController < ApplicationController
       params[:hobbies] = Array.new
       @user = current_user
       @profile = (@user.user_profile || UserProfile.new_default)
-      @user_uid = (@user.user_uids.first || UserUid.new({ :uid => session[:user_code] }))
+      @user_uid = (UserUid.new({ :uid => @profile.email.split('@').first }))
     end
     render :action => session[:entrance_next_action]
   end
@@ -62,28 +62,19 @@ class PortalController < ApplicationController
     @profile = @user.user_profile
     @profile.attributes_for_registration(params)
 
-    @user_uid = @user.user_uids.find_by_uid_type('MASTER')
-
     User.transaction do
-      if INITIAL_SETTINGS['nickname_use_setting'] && (params[:user_uid][:uid] != session[:user_code])
-        @user_uid = UserUid.new(params[:user_uid].update(:uid_type => UserUid::UID_TYPE[:nickname]))
-        @user.user_uids << @user_uid
+      if INITIAL_SETTINGS['nickname_use_setting']
+        @user_uid = @user.user_uids.build(params[:user_uid].update(:uid_type => UserUid::UID_TYPE[:nickname]))
+        @user_uid.save!
       end
-      @profile.save!
+
       @user.save!
+      @profile.save!
 
-      antenna = Antenna.new(:user_id => @user.id, :name => Admin::Setting.initial_anntena, :position => 1)
-
-      Admin::Setting.antenna_default_group.each do |default_gid|
-        if Group.count(:conditions => ["gid in (?)", default_gid]) > 0
-          antenna.antenna_items.build(:value_type => "symbol", :value => "gid:"+default_gid)
-        end
-      end
-      antenna.save!
+      Antenna.create_initial(@user).save!
 
       message = render_to_string(:partial => 'entries_template/user_signup',
                                  :locals => { :user_name => @user.name, :user_introduction => @user.user_profile.self_introduction})
-
       @user.create_initial_entry(message)
 
       UserAccess.create!(:user_id => @user.id, :last_access => Time.now, :access_count => 0)
@@ -104,7 +95,7 @@ class PortalController < ApplicationController
   # ajax_action
   # 入力されているuidがユニークか否かをチェックする
   def ado_check_uid
-    render :text => UserUid.check_uid(params[:uid], session[:user_code])
+    render :text => UserUid.check_uid(params[:uid])
   end
 
   def registration
@@ -147,14 +138,5 @@ class PortalController < ApplicationController
              EOS
       return false
     end
-  end
-
-  def make_user_uid
-    if INITIAL_SETTINGS['nickname_use_setting']
-      user_uid = UserUid.new(params[:user_uid].update(:uid_type => UserUid::UID_TYPE[:nickname]))
-    else
-      user_uid = @user.user_uids.find_by_uid_type('MASTER')
-    end
-    user_uid
   end
 end

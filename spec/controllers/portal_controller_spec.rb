@@ -23,20 +23,26 @@ describe PortalController, 'GET /index' do
     before do
       get :index
     end
-    it { response.should be_success }
     it { response.should render_template('confirm') }
   end
 
   describe "entrance_next_actionが:registrationの場合" do
     before do
       session[:entrance_next_action] = :registration
+
+      @profile = stub_model(UserProfile, :email => "skip@skip.openskip.org")
+      @user = unused_user_login
+      @user.stub!(:user_profile).and_return(@profile)
+
       get :index
     end
-    it { response.should be_success }
     it { response.should render_template('registration') }
-    it { assigns[:user].should == @user }
-    it { assigns[:profile].should_not be_nil }
-    it { assigns[:user_uid].should_not be_nil }
+    it "正しいインスタンス変数が設定されていること" do
+      assigns[:user].should == @user
+      assigns[:profile].should_not be_nil
+      assigns[:user_uid].should_not be_nil
+      assigns[:user_uid].uid.should == "skip"
+    end
   end
   describe "entrance_next_actionが:account_registrationの場合" do
     before do
@@ -66,39 +72,83 @@ describe PortalController, 'POST /apply' do
     @user = unused_user_login
     @user.stub!(:save!)
     @user.stub!(:user_profile).and_return(@profile)
+    @user.stub!(:create_initial_entry)
   end
-  describe '正常に動作する場合' do
+  describe "ユーザ名利用設定がonの場合" do
     before do
-      @profile.should_receive(:attributes_for_registration)
-      @profile.should_receive(:save!)
+      INITIAL_SETTINGS['nickname_use_setting'] = true
+    end
+    describe '正常に動作する場合' do
+      before do
+        @user_uid = stub_model(UserUid)
+        @user_uid.should_receive(:save!)
+        @user_uids = mock('user_uids', :build => @user_uid)
 
-      @user.should_receive(:status=).with('ACTIVE')
-      @user.should_receive(:attributes=).with(params[:user])
-      @user.should_receive(:save!)
-      controller.stub!(:current_user).and_return(@user)
+        @profile.should_receive(:attributes_for_registration)
+        @profile.should_receive(:save!)
 
-      post :apply, {"profile"=>{"email"=>"example@skip.org", "extension"=>"000000", "introduction"=>"00000", "section"=>"開発", "birth_month"=>"1", "join_year"=>"2008", "blood_type"=>"1", "address_1"=>"1", "alma_mater"=>"非公開", "birth_day"=>"1", "gender_type"=>"1", "address_2"=>"非公開", "introduction"=>"", "hometown"=>"1"},
-        "user_uid"=>{"uid"=>"hogehoge"},
-        "new_address_2"=>"", "write_profile"=>"true", "new_section"=>"営業", "new_alma_mater"=>"" }
+        @user.should_receive(:status=).with('ACTIVE')
+        @user.should_receive(:attributes=).with(params[:user])
+        @user.should_receive(:save!)
+        @user.stub!(:user_uids).and_return(@user_uids)
+        controller.stub!(:current_user).and_return(@user)
+
+        post_apply
+      end
+
+      it { response.should redirect_to(:controller => :mypage, :action => :welcome) }
     end
 
-    it { response.should be_redirect }
-    it { assigns[:user].should_not be_nil }
-    it { assigns[:profile].should_not be_nil }
-    it { assigns[:user_uid].should_not be_nil }
+    describe '保存に失敗する場合' do
+      before do
+        @user.should_receive(:save!).and_raise(mock_record_invalid)
+        controller.stub!(:current_user).and_return(@user)
+
+        post_apply
+      end
+      it { response.should render_template('portal/registration') }
+      it "適切なインスタンス変数が設定されていること" do
+        assigns[:user].should_not be_nil
+        assigns[:profile].should_not be_nil
+        assigns[:user_uid].should_not be_nil
+      end
+    end
   end
 
-  describe '保存に失敗する場合' do
+  describe "ユーザ名利用設定がオフの場合" do
     before do
-      INITIAL_SETTINGS.stub!('[]').with('nickname_use_setting').and_return(false)
-      @user.should_receive(:save!).and_raise(mock_record_invalid)
-      controller.stub!(:current_user).and_return(@user)
-      post :apply, {"profile"=>{"email"=>"example@skip.org", "extension"=>"000000", "introduction"=>"00000", "section"=>"開発", "birth_month"=>"1", "join_year"=>"2008", "blood_type"=>"1", "address_1"=>"1", "alma_mater"=>"非公開", "birth_day"=>"1", "gender_type"=>"1", "address_2"=>"非公開", "introduction"=>"", "hometown"=>"1"},
-        "user_uid"=>{"uid"=>"hogehoge"},
-        "new_address_2"=>"", "write_profile"=>"true", "new_section"=>"営業", "new_alma_mater"=>"" }
+      INITIAL_SETTINGS['nickname_use_setting'] = false
     end
-    it {response.should be_success}
-    it {response.should render_template('portal/registration')}
+    describe "保存に成功する場合" do
+      before do
+        @user_uid = stub_model(UserUid)
+        @user_uid.should_not_receive(:save!)
+        @user_uids = mock('user_uids', :build => @user_uid)
+        @user.stub!(:user_uids).and_return(@user_uids)
+
+        post_apply
+      end
+      it { response.should redirect_to(:controller => :mypage, :action => :welcome) }
+    end
+    describe "保存に失敗する場合" do
+      before do
+        @user.should_receive(:save!).and_raise(mock_record_invalid)
+        controller.stub!(:current_user).and_return(@user)
+
+        post_apply
+      end
+      it { response.should render_template('portal/registration') }
+      it "適切なインスタンス変数が設定されていること" do
+        assigns[:user].should_not be_nil
+        assigns[:profile].should_not be_nil
+        assigns[:user_uid].should be_nil
+      end
+    end
+  end
+  def post_apply
+    post :apply, {"profile"=>{"email"=>"example@skip.org", "extension"=>"000000", "self_introduction"=>"00000", "section"=>"開発", "birth_month"=>"1", "join_year"=>"2008", "blood_type"=>"1", "address_1"=>"1", "alma_mater"=>"非公開", "birth_day"=>"1", "gender_type"=>"1", "address_2"=>"非公開", "introduction"=>"", "hometown"=>"1"},
+      "user_uid"=>{"uid"=>"hogehoge"},
+      "new_address_2"=>"", "write_profile"=>"true", "new_section"=>"営業", "new_alma_mater"=>"" }
   end
 end
 

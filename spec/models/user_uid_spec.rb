@@ -15,25 +15,14 @@
 
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe UserUid do
-  before(:each) do
-    @user_uid = UserUid.new
-  end
-end
-
-describe User,"'s class methods" do
-  fixtures :users
-  before(:each) do
-    @user = users(:a_user)
+describe UserUid, ".check_uid" do
+  it "登録できない場合" do
+    [SkipFaker.rand_char(3), SkipFaker.rand_char(32), "111111", "11*ff"].each do |uid|
+      UserUid.check_uid(uid).should_not == "登録可能です"
+    end
   end
 
-  it "check_uid" do
-    UserUid.check_uid("101010", "101010").should == "登録可能です"
-    UserUid.check_uid("101010", "101011").should_not == "登録可能です"
-    UserUid.check_uid(SkipFaker.rand_char(3), "101011").should_not == "登録可能です"
-    UserUid.check_uid(SkipFaker.rand_char(32), "101011").should_not == "登録可能です"
-    UserUid.check_uid("_abc", "101010").should == "登録可能です"
-    UserUid.check_uid("+abc", "101010").should_not == "登録可能です"
-    UserUid.check_uid(@user.uid,"101010").should_not == "登録可能です"
+  it "登録可能な場合" do
+    UserUid.check_uid(SkipFaker.rand_char(10)).should == "登録可能です"
   end
 end

@@ -112,3 +112,41 @@ describe "Antenna.get_system_antennas" do
     antenna_types.should be_include('group')
   end
 end
+
+describe Antenna, ".create_initial" do
+  before do
+    @initial_anntena = "初期アンテナ名"
+    Admin::Setting.initial_anntena = @initial_anntena
+    Admin::Setting.antenna_default_group = ["hoge","fuga"]
+
+    @user = stub_model(User)
+  end
+  describe "存在するグループが複数(2)設定されている場合" do
+    before do
+      Group.stub!(:count).with(:conditions => ["gid in (?)", "hoge"]).and_return(1)
+      Group.stub!(:count).with(:conditions => ["gid in (?)", "fuga"]).and_return(1)
+
+      @antenna = Antenna.create_initial(@user)
+    end
+    it "アンテナに複数(2)アイテムが登録されていること" do
+      @antenna.antenna_items.length == 2
+    end
+    it "アンテナ名が登録されていること" do
+      @antenna.name.should == @initial_anntena
+    end
+  end
+  describe "存在しないグループが含まれている場合" do
+    before do
+      Group.stub!(:count).with(:conditions => ["gid in (?)", "hoge"]).and_return(1)
+      Group.stub!(:count).with(:conditions => ["gid in (?)", "fuga"]).and_return(0)
+
+      @antenna = Antenna.create_initial(@user)
+    end
+    it "アンテナに存在するグループのアイテムが登録されていること" do
+      @antenna.antenna_items.length == 1
+    end
+    it "アンテナ名が登録されていること" do
+      @antenna.name.should == @initial_anntena
+    end
+  end
+end
