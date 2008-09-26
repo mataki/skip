@@ -82,7 +82,7 @@ menu_btns = [
 
   { :separator => true, :name => "[アクション]"},
 
-  { :img_name => "page_find",     :id => "btn_search", :name => "データを探す", :url => {:controller => '/search', :action => 'index'} },
+  { :img_name => "page_find",     :id => "btn_search", :name => "データを探す", :url => {:controller => '/search', :action => (INITIAL_SETTINGS['full_text_search_setting'] ? 'full_text_search' : 'entry_search') } },
   { :img_name => "report_edit",   :id => "btn_edit", :name => "ブログを書く", :url => {:controller => '/edit', :action => 'index'} },
 ]
 MENU_BTNS = menu_btns

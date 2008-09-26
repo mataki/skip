@@ -20,7 +20,7 @@ class SearchController < ApplicationController
   before_filter :setup_layout
 
   # tab_menu
-  def index
+  def entry_search
     params[:tag_select] ||= "AND"
     find_params = BoardEntry.make_conditions(login_user_symbols, {:keyword =>params[:keyword],
                                                :tag_words => params[:tag_words],
@@ -110,9 +110,9 @@ private
     @main_menu = 'データを探す'
     @title = 'データを探す'
 
-    @tab_menu_source = [ ['記事を探す', 'index'],
+    @tab_menu_source = [ ['記事を探す', 'entry_search'],
                          ['ファイルを探す', 'share_file_search'] ]
-    @tab_menu_source << ['全文検索', 'full_text_search'] if INITIAL_SETTINGS['full_text_search_setting']
+    @tab_menu_source.unshift(['全文検索', 'full_text_search']) if INITIAL_SETTINGS['full_text_search_setting']
   end
 
   # 所属情報を取得するためのメソッド
