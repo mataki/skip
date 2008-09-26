@@ -199,7 +199,7 @@ div#source_style_area, div#access_style_area {
 </div>
 
 <div class="move_navi">
-  <a id="page_bottom" href="#page_top">[ページ先頭]</a></div>
+  <a id="page_bottom" href="#page_top">[ページ先頭]</a>
 </div>
 
 <script type="text/javascript">
@@ -257,7 +257,7 @@ $j(function(){
     });
 
     // 引数の値によってコメントを昇順もしくは降順にソートする
-    var sortComment = function(sortType) { 
+    var sortComment = function(sortType) {
         sortType = sortType || 'asc';
         var trees = $j.makeArray($j('#board_entry_comments').children().children('.board_entry_comment'));
         $j.each(
