@@ -69,6 +69,7 @@ class UserProfile < ActiveRecord::Base
 
   # 住所を返す
   def address
+    return '' if self.address_1.blank?
     address = TODOUHUKEN[self.address_1]
     address = address + ' ' + self.address_2 unless self.address_2 == "非公開"
     return address

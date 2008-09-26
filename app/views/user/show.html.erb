@@ -121,7 +121,7 @@ div.input_line div.input_bottom {
 
       <div class="input_line">
         <div class="input_label">趣味</div>
-        <div class="input_value"><%=h @profile.hobby.chop.gsub(/\,/, ' , ') -%></div>
+        <div class="input_value"><%=h @profile.hobby.chop.gsub(/\,/, ' , ') if @profile.hobby %></div>
         <div class="input_bottom"></div>
       </div>
       <div class="input_line">
