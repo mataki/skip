@@ -14,6 +14,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class BoardEntry < ActiveRecord::Base
+  include Publication
   belongs_to :user
   has_many :tags, :through => :entry_tags
   has_many :entry_tags, :dependent => :destroy
@@ -96,23 +97,7 @@ class BoardEntry < ActiveRecord::Base
     category.include?("[#{Tag::PRIORITY_TAG}]")
   end
 
-
-  # 全公開かどうか
-  def public?
-    publication_type == 'public'
-  end
-
-  # 自分のみ、参加者のみかどうか
-  def private?
-    publication_type == 'private'
-  end
-
-  # 直接指定かどうか
-  def protected?
-    publication_type == 'protected'
-  end
-
-   # 所属するグループの公開範囲により、エントリの公開範囲を判定する
+  # 所属するグループの公開範囲により、エントリの公開範囲を判定する
   def owner_is_public?
     Symbol.public_symbol_obj? symbol
   end
@@ -432,6 +417,11 @@ class BoardEntry < ActiveRecord::Base
 
   def symbol_id
     symbol.split(':')[1]
+  end
+
+  def symbol_name
+    owner = Symbol.get_item_by_symbol(self.symbol)
+    owner ? owner.name : ''
   end
 
   def point

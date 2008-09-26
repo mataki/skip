@@ -15,6 +15,7 @@
 
 require 'csv'
 class ShareFile < ActiveRecord::Base
+  include Publication
   belongs_to :user
   has_many :tags, :through => :share_file_tags
   has_many :share_file_tags, :dependent => :destroy
@@ -57,8 +58,11 @@ class ShareFile < ActiveRecord::Base
     e.backtrace.each { |message| logger.error message }
   end
 
+  def symbol_type
+    owner_symbol.split(':').first
+  end
+
   def owner_symbol_type
-    symbol_type = owner_symbol.split(':').first
     { 'uid' => 'user', 'gid' => 'group' }[symbol_type]
   end
 
@@ -69,21 +73,6 @@ class ShareFile < ActiveRecord::Base
   def owner_symbol_name
     owner = Symbol.get_item_by_symbol(self.owner_symbol)
     owner ? owner.name : ''
-  end
-
-  # 全公開かどうか
-  def public?
-    publication_type == 'public'
-  end
-
-  # 自分のみ、参加者のみかどうか
-  def private?
-    publication_type == 'private'
-  end
-
-  # 直接指定かどうか
-  def protected?
-    publication_type == 'protected'
   end
 
   # 所属するグループの公開範囲により、共有ファイルの公開範囲を判定する

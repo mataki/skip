@@ -17,8 +17,7 @@ class Admin::ShareFile < ShareFile
   N_('Admin::ShareFile|File name')
   N_('Admin::ShareFile|Owner symbol')
   N_('Admin::ShareFile|Owner symbol type')
-  # TODO lib/symbol.rbに記述してみたが、script/console等の起動の際に
-  # N_がundefinedとなってしまう。仕方がないので原因がわかるまでここに書いておく。
+  # TODO lib/symbol.rbに記述してみたが、N_がundefinedとなってしまう。解決方法を探る
   N_('Symbol|Type|user')
   N_('Symbol|Type|group')
   N_('Admin::ShareFile|Description')
@@ -28,6 +27,11 @@ class Admin::ShareFile < ShareFile
   N_('Admin::ShareFile|Total count')
   N_('Admin::ShareFile|Content type')
   N_('Admin::ShareFile|Publication type')
+  # TODO app/model/publication.rbに記述してみたが、N_がundefinedとなってしまう。解決方法を探る
+  N_('Publication type|public')
+  N_('Publication type|protected')
+  N_('Publication type|private|uid')
+  N_('Publication type|private|gid')
   N_('Admin::ShareFile|Publication symbols type')
 
   def self.search_columns

@@ -6,8 +6,28 @@
 
 <div class="box">
 <p>
+  <b><%= label @board_entry.class, :Entry_type %>:</b>
+  <%=h _("BoardEntry|Entry type|#{@board_entry.entry_type}") %>
+</p>
+
+<p>
+  <b><%= label @board_entry.class, :Symbol %>:</b>
+  <%=h @board_entry.symbol_name %>
+</p>
+
+<p>
+  <b><%= label @board_entry.class, :User %>:</b>
+  <%=h @board_entry.user.name %>
+</p>
+
+<p>
   <b><%= label @board_entry.class, :Title %>:</b>
   <%=h @board_entry.title %>
+</p>
+
+<p>
+  <b><%= label @board_entry.class, :Publication_type %>:</b>
+  <%=h @board_entry.publication_type_name %>
 </p>
 
 <p>

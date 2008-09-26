@@ -8,13 +8,17 @@
   <%= render :partial => '/admin/search_box', :locals => { :class_name => 'Admin::BoardEntry' } %>
   <%= render :partial => '/admin/shared/sortable_table',
              :locals => {
-               :columns => %w[entry_type user title contents category],
+               :columns => %w[entry_type symbol user title publication_type contents category],
                :disp_columns_proc => lambda do |object,column|
       case column
-      when "user"
-        object.user.name
       when "entry_type"
         _("BoardEntry|Entry type|#{object.entry_type}")
+      when "symbol"
+        object.symbol_name
+      when "user"
+        object.user.name
+      when "publication_type"
+        object.publication_type_name
       when "contents"
         object.contents[/.{1,100}/]
       else

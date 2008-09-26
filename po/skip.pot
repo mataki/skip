@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-09-25 14:34+0900\n"
+"POT-Creation-Date: 2008-09-26 11:25+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -95,6 +95,14 @@ msgstr ""
 
 #: app/models/admin/board_entry.rb:21
 msgid "Admin::BoardEntry|Entry type"
+msgstr ""
+
+#: app/models/admin/board_entry.rb:24
+msgid "Admin::BoardEntry|Publication type"
+msgstr ""
+
+#: app/models/admin/board_entry.rb:23
+msgid "Admin::BoardEntry|Symbol"
 msgstr ""
 
 #: app/models/admin/board_entry.rb:18
@@ -594,7 +602,7 @@ msgstr ""
 msgid "Admin::ShareFile|Owner symbol type"
 msgstr ""
 
-#: app/models/admin/share_file.rb:31
+#: app/models/admin/share_file.rb:36
 msgid "Admin::ShareFile|Publication symbols type"
 msgstr ""
 
@@ -754,9 +762,9 @@ msgstr ""
 msgid "Are you sure destroing with nest comments?"
 msgstr ""
 
-#: app/views/admin/share_files/index.html.erb:32
+#: app/views/admin/share_files/index.html.erb:34
 #: app/views/admin/bookmark_comments/index.html.erb:30
-#: app/views/admin/board_entries/index.html.erb:30
+#: app/views/admin/board_entries/index.html.erb:34
 #: app/views/admin/users/change_uid.html.erb:31
 #: app/views/admin/users/index.html.erb:29
 #: app/views/admin/group_participations/index.html.erb:30
@@ -835,11 +843,11 @@ msgstr ""
 msgid "BoardEntry|Entry type"
 msgstr ""
 
-#: app/models/board_entry.rb:40
+#: app/models/board_entry.rb:41
 msgid "BoardEntry|Entry type|DIARY"
 msgstr ""
 
-#: app/models/board_entry.rb:41
+#: app/models/board_entry.rb:42
 msgid "BoardEntry|Entry type|GROUP_BBS"
 msgstr ""
 
@@ -1052,9 +1060,9 @@ msgstr ""
 msgid "Data management"
 msgstr ""
 
-#: app/views/admin/share_files/index.html.erb:32
+#: app/views/admin/share_files/index.html.erb:34
 #: app/views/admin/bookmark_comments/index.html.erb:30
-#: app/views/admin/board_entries/index.html.erb:30
+#: app/views/admin/board_entries/index.html.erb:34
 #: app/views/admin/users/index.html.erb:29
 #: app/views/admin/board_entry_comments/index.html.erb:26
 #: app/views/admin/group_participations/index.html.erb:30
@@ -1307,7 +1315,7 @@ msgstr ""
 #: app/controllers/admin/openid_identifiers_controller.rb:37
 #: app/controllers/admin/openid_identifiers_controller.rb:57
 #: app/controllers/admin/openid_identifiers_controller.rb:59
-#: app/views/admin/board_entries/show.html.erb:23
+#: app/views/admin/board_entries/show.html.erb:43
 #: app/views/admin/users/import.html.erb:68
 #: app/views/admin/groups/show.html.erb:35
 #: app/views/admin/bookmarks/show.html.erb:19
@@ -1458,6 +1466,22 @@ msgstr ""
 msgid "PopularBookmark|Date"
 msgstr ""
 
+#: app/models/admin/share_file.rb:35
+msgid "Publication type|private|gid"
+msgstr ""
+
+#: app/models/admin/share_file.rb:34
+msgid "Publication type|private|uid"
+msgstr ""
+
+#: app/models/admin/share_file.rb:33
+msgid "Publication type|protected"
+msgstr ""
+
+#: app/models/admin/share_file.rb:32
+msgid "Publication type|public"
+msgstr ""
+
 #: app/models/ranking.rb:-
 msgid "Ranking|Amount"
 msgstr ""
@@ -1584,7 +1608,7 @@ msgstr ""
 msgid "ShareFile|日付"
 msgstr ""
 
-#: app/views/admin/board_entries/index.html.erb:29
+#: app/views/admin/board_entries/index.html.erb:33
 #: app/views/admin/users/edit.html.erb:17
 #: app/views/admin/users/index.html.erb:27
 #: app/views/admin/group_categories/edit.html.erb:16
@@ -1985,7 +2009,7 @@ msgid "board entry"
 msgstr ""
 
 #: app/models/board_entry_comment.rb:-
-#: app/views/admin/board_entries/show.html.erb:23
+#: app/views/admin/board_entries/show.html.erb:43
 msgid "board entry comment"
 msgstr ""
 
@@ -2007,10 +2031,6 @@ msgstr ""
 
 #: app/models/chain.rb:-
 msgid "chain"
-msgstr ""
-
-#: app/views/admin/board_entries/index.html.erb:19
-msgid "contents"
 msgstr ""
 
 #: app/views/admin/groups/index.html.erb:18
@@ -2071,7 +2091,7 @@ msgstr ""
 msgid "owned"
 msgstr ""
 
-#: app/views/admin/share_files/index.html.erb:20
+#: app/views/admin/share_files/index.html.erb:18
 msgid "owner_symbol"
 msgstr ""
 
@@ -2109,6 +2129,10 @@ msgstr ""
 
 #: app/views/admin/bookmark_comments/index.html.erb:20
 msgid "stared"
+msgstr ""
+
+#: app/views/admin/board_entries/index.html.erb:17
+msgid "symbol"
 msgstr ""
 
 #: app/models/tag.rb:-

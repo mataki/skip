@@ -13,21 +13,26 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class Admin::BoardEntry < BoardEntry
-  has_many :board_entry_comments, :dependent => :destroy, :class_name => 'Admin::BoardEntryComment'
-  N_('Admin::BoardEntry|Title')
-  N_('Admin::BoardEntry|Contents')
-  N_('Admin::BoardEntry|Category')
-  N_('Admin::BoardEntry|Entry type')
-  N_('Admin::BoardEntry|User')
-  N_('Admin::BoardEntry|Symbol')
-  N_('Admin::BoardEntry|Publication type')
-
-  def self.search_columns
-    %w(title contents category)
+module Publication
+  def publication_type_name
+    if self.publication_type == 'private'
+      _("Publication type|#{self.publication_type}|#{self.symbol_type}")
+    else
+      _("Publication type|#{self.publication_type}")
+    end
+  end
+  # 全公開かどうか
+  def public?
+    publication_type == 'public'
   end
 
-  def topic_title
-    title[/.{1,10}/] + "..."
+  # 自分のみ、参加者のみかどうか
+  def private?
+    publication_type == 'private'
+  end
+
+  # 直接指定かどうか
+  def protected?
+    publication_type == 'protected'
   end
 end
