@@ -27,27 +27,27 @@ table.normal {
 
 <table id="user_info_box" class="normal" border="1">
   <tr>
-    <th width="100px"><label for="user_uid_uid">ニックネーム</label></th>
+    <th width="100px"><label for="user_code"><%= h Admin::Setting.login_account -%></label></th>
+    <td><%=h session[:user_code] %></td>
+  </tr>
+  <tr>
+    <th width="100px"><label for="user_uid_uid"><%= _('user name') %></label></th>
   <% if is_new %>
-    <td><%= text_field 'user_uid', 'uid', {:tabindex => (tabindex += 1), :disabled => !INITIAL_SETTINGS['nickname_use_setting']} %>（4桁以上）<span id="uid_result" style="margin-left:3px;color:gray;font-size:10px"></span><span id="indicator" style="display:none;"><%= skip_image_tag 'indicator.gif' %></span><div class="desc">半角英数の他にハイフン「-」,アンダーバー「_」が利用できます</div>
+    <td><%= text_field 'user_uid', 'uid', {:tabindex => (tabindex += 1), :disabled => !INITIAL_SETTINGS['username_use_setting']} %>（4桁以上）<span id="uid_result" style="margin-left:3px;color:gray;font-size:10px"></span><span id="indicator" style="display:none;"><%= skip_image_tag 'indicator.gif' %></span><div class="desc">半角英数の他にハイフン「-」,アンダーバー「_」が利用できます</div>
   <% else %>
     <td><%= h @user.uid %></td>
   <% end %>
   </tr>
   <tr>
-    <th width="100px"><label for="user_code"><%= h Admin::Setting.login_account -%></label></th>
-    <td><%=h session[:user_code] %></td>
-  </tr>
-  <tr>
-    <th width="100px"><label for="user_email">メールアドレス</label></th>
-    <td><%=h @profile.email %><span style="margin-left: 20px;"><%= link_to "[変更する]", :action=> 'manage', :menu => 'manage_email' if !is_new && Admin::Setting.mail_function_setting %></span></td>
-  </tr>
-  <tr>
-    <th width="100px"><label for="user_name">名前</label></th>
+    <th width="100px"><label for="user_name"><%=h _('Admin::User|Name') %></label></th>
     <td><%=h @user.name %></td>
   </tr>
   <tr>
-    <th width="100px"><label for="page_title">部門</label></th>
+    <th width="100px"><label for="user_email"><%=h _('UserProfile|Email') %></label></th>
+    <td><%=h @profile.email %><span style="margin-left: 20px;"><%= link_to "[変更する]", :action=> 'manage', :menu => 'manage_email' if !is_new && Admin::Setting.mail_function_setting %></span></td>
+  </tr>
+  <tr>
+    <th width="100px"><label for="profile_section"><%=h _('UserProfile|Section') %></label></th>
     <td>
     <% if sections = UserProfile.grouped_sections %>
       <%= select("profile", "section", sections, {}, {:tabindex => (tabindex += 1)}) -%><br/>
@@ -55,11 +55,11 @@ table.normal {
       [選択に無い場合] ： <%= text_field_tag "new_section", params[:new_section], :size => 10, :tabindex => (tabindex += 1) %> （次回以降選択項目になります）</td>
   </tr>
   <tr>
-    <th width="100px"><label for="profile_extention">内線番号</label></div></th>
+    <th width="100px"><label for="profile_extension"><%=h _('UserProfile|Extension') %></label></div></th>
     <td><%= text_field 'profile', 'extension', :size => 10, :tabindex => (tabindex += 1) %></td>
   </tr>
   <tr>
-    <th width="100px"><label for="profile_self_introduction">自己紹介</label><div class="example" style="margin-top: 10px;">現在の業務や今までの仕事、興味や関心のある事柄などについて書いてください</div></th>
+    <th width="100px"><label for="profile_self_introduction"><%=h _('UserProfile|Self introduction') %></label><div class="example" style="margin-top: 10px;">現在の業務や今までの仕事、興味や関心のある事柄などについて書いてください</div></th>
     <td><%= link_to_hiki_help %><br/><%= text_area 'profile', 'self_introduction', :cols => 55, :rows => 15, :tabindex => (tabindex += 1) %></td>
   </tr>
 </table>

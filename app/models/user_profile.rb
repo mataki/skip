@@ -132,7 +132,7 @@ class UserProfile < ActiveRecord::Base
              :address_2 => "非公開")
   end
 
-  # Viewで使う部門一覧（セレクトボタン用）
+  # Viewで使う所属一覧（セレクトボタン用）
   def self.grouped_sections
     all(:select => "section", :group => "section").collect { |user_profile| user_profile.section }
   end

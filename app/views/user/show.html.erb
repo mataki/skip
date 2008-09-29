@@ -73,22 +73,37 @@ div.input_line div.input_bottom {
     <div class="topix_body" style="margin-top: 5px; width: 95%; overflow: hidden">
 
       <div class="input_line">
-        <div class="input_label">ID - <%=h Admin::Setting.login_account -%></div>
-        <div class="input_value"><%=h @user.uid -%> - <%=h @user.code -%></div>
+        <div class="input_label"><%=h Admin::Setting.login_account -%></div>
+        <div class="input_value"><%=h @user.code -%></div>
         <div class="input_bottom"></div>
       </div>
       <div class="input_line">
-        <div class="input_label">名前</div>
-        <div class="input_value"><%=h @user.name -%>　（<a href="mailto:<%=h @user.user_profile.email -%>"><%=h @user.user_profile.email -%></a>）</div>
+        <div class="input_label"><%=h _('user name') -%></div>
+        <div class="input_value"><%=h @user.uid -%></div>
         <div class="input_bottom"></div>
       </div>
       <div class="input_line">
-        <div class="input_label">所属 - 内線</div>
-        <div class="input_value"><%=h @user.user_profile.section -%> - <%=h @user.user_profile.extension -%></div>
+        <div class="input_label"><%=h _("Admin::User|Name") %></div>
+        <div class="input_value"><%=h @user.name -%></div>
         <div class="input_bottom"></div>
       </div>
       <div class="input_line">
-        <div class="input_label">自己紹介</div>
+        <div class="input_label"><%=h _('UserProfile|Email') %></div>
+        <div class="input_value"><a href="mailto:<%=h @user.user_profile.email -%>"><%=h @user.user_profile.email -%></a></div>
+        <div class="input_bottom"></div>
+      </div>
+      <div class="input_line">
+        <div class="input_label"><%=h _('UserProfile|Section') %></div>
+        <div class="input_value"><%=h @user.user_profile.section -%></div>
+        <div class="input_bottom"></div>
+      </div>
+      <div class="input_line">
+        <div class="input_label"><%=h _('UserProfile|Extension') %></div>
+        <div class="input_value"><%=h @user.user_profile.extension -%></div>
+        <div class="input_bottom"></div>
+      </div>
+      <div class="input_line">
+        <div class="input_label"><%=h _('UserProfile|Self introduction') %></div>
         <div class="input_value"></div>
         <div class="input_bottom"></div>
       </div>

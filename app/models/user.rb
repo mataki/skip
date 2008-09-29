@@ -59,9 +59,12 @@ class User < ActiveRecord::Base
 
   class << self
     HUMANIZED_ATTRIBUTE_KEY_NAMES = {
-      "uid" => "ニックネーム",
+      "uid" => "ユーザ名",
       "code" => Admin::Setting.login_account,
-      "name" => "氏名",
+      "name" => "名前",
+      "section" => "所属",
+      "email" => "メールアドレス",
+      "extension" => "内線"
     }
     def human_attribute_name(attribute_key_name)
       HUMANIZED_ATTRIBUTE_KEY_NAMES[attribute_key_name] || super
@@ -115,7 +118,7 @@ class User < ActiveRecord::Base
                               :conditions => ["user_uids.uid = ? and user_uids.uid_type = ?", code, 'MASTER'])
   end
 
-  # 登録済みユーザのユーザID(ログインID,ニックネーム)をもとにユーザを検索する
+  # 登録済みユーザのユーザID(ログインID,ユーザ名)をもとにユーザを検索する
   def self.find_by_uid(code)
     find(:first, :conditions => ['user_uids.uid = ?', code], :include => :user_uids)
   end
@@ -193,7 +196,7 @@ class User < ActiveRecord::Base
   end
 
   def uid
-    user_uid = user_uids.find(:first, :conditions => ['uid_type = ?', UserUid::UID_TYPE[:nickname]])
+    user_uid = user_uids.find(:first, :conditions => ['uid_type = ?', UserUid::UID_TYPE[:username]])
     user_uid ? user_uid.uid : code
   end
 

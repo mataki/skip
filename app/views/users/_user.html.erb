@@ -9,23 +9,25 @@
   </tr>
   <tr>
   <% else -%>
-    <td class="image" rowspan="3"><%= image_output %></td>
+    <td class="image" rowspan="4"><%= image_output %></td>
   <% end -%>
-    <th>氏名</th>
-    <td><%= user_link_to user %></td>
-    <th>内線</th>
-    <td><%=h user.user_profile.extension %></td>
-  </tr>
-  <tr>
-    <th>ニックネーム</th>
-    <td><%=h user.uid %></td>
     <th><%=h Admin::Setting.login_account -%></th>
     <td><%=h user.code %></td>
+    <th><%= _('user name') %></th>
+    <td><%=h user.uid %></td>
+  </tr>
+  <tr>
+    <th><%=h _("Admin::User|Name") %></th>
+    <td><%= user_link_to user %></td>
+    <th><%=h _("UserProfile|Email") %></th>
+    <td><%=h user.user_profile.extension %></td>
   </tr>
   <tr>
     <th>最終アクセス</th>
     <td><%=h user.before_access %></td>
-    <th>所属</th>
+    <th><%=h _('UserProfile|Section') %></th>
     <td><%=h user.user_profile.section %></td>
+  </tr>
+  <tr>
   </tr>
 </table>

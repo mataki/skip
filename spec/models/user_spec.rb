@@ -131,7 +131,7 @@ describe User, ".create_with_identity_url" do
 end
 
 describe User, ".auth" do
-  describe "ユーザID・パスワードが正しい場合" do
+  describe "ログインID・パスワードが正しい場合" do
     before do
       @password = 'password'
       @user = mock_model(User)

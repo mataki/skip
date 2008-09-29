@@ -51,7 +51,7 @@ class GroupController < ApplicationController
                               :order_by => @condition.value_of_order_by,
                               :include => @condition.value_of_include << 'group_participations')
     unless @users && @users.size > 0
-      flash.now[:notice] = '該当するユーザは存在しませんでした。'
+      flash.now[:notice] = _('該当するユーザは存在しませんでした。')
     end
   end
 

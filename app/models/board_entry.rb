@@ -49,15 +49,15 @@ class BoardEntry < ActiveRecord::Base
     symbol_type, symbol_id = Symbol::split_symbol self.symbol
     if self.entry_type == DIARY
       if symbol_type == "uid"
-        errors.add_to_base("ご指定のユーザは存在しません。") unless User.find_by_uid(symbol_id)
+        errors.add_to_base(_("ご指定のユーザは存在しません。")) unless User.find_by_uid(symbol_id)
       else
-        errors.add_to_base("不正なユーザです。")
+        errors.add_to_base(_("不正なユーザです。"))
       end
     elsif self.entry_type == GROUP_BBS
       if symbol_type == "gid"
-        errors.add_to_base("ご指定のグループは存在しません。") unless Group.find_by_gid(symbol_id)
+        errors.add_to_base(_("ご指定のグループは存在しません。")) unless Group.find_by_gid(symbol_id)
       else
-        errors.add_to_base("不正なグループです。")
+        errors.add_to_base(_("不正なグループです。"))
       end
     end
 

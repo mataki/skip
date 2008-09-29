@@ -31,7 +31,7 @@ class ServicesController < ActionController::Base
       end
       result = { :user_uid => user.uid, :group_symbols => group_hash }
     else
-      result = { :error => "#{Admin::Setting.abbr_app_title}にユーザー情報が登録されていません。" }
+      result = { :error => "#{Admin::Setting.abbr_app_title}にユーザ情報が登録されていません。" }
     end
     render :text => result.to_json
   end

@@ -164,16 +164,16 @@ class Admin::UsersController < Admin::ApplicationController
       return
     end
 
-    if uid = @user.user_uids.find(:first, :conditions => ['uid_type = ?', UserUid::UID_TYPE[:nickname]])
+    if uid = @user.user_uids.find(:first, :conditions => ['uid_type = ?', UserUid::UID_TYPE[:username]])
       uid.uid = params[:user_uid] ? params[:user_uid][:uid] : ''
       if uid.save
-        flash[:notice] = "変更しました"
+        flash[:notice] = _("変更しました")
         redirect_to @user
       else
         @user_uid = uid
       end
     else
-      flash[:notice] = "ニックネームが見つかりませんでした。"
+      flash[:notice] = _("ユーザ名が見つかりませんでした。")
       redirect_to admin_users_path
     end
   end

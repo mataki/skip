@@ -18,7 +18,7 @@ class UserUid < ActiveRecord::Base
 
   UID_TYPE = {
     :master => 'MASTER',
-    :nickname => 'NICKNAME'
+    :username => 'NICKNAME'
   }
 
   UID_MIN_LENGTH = 4
@@ -28,15 +28,6 @@ class UserUid < ActiveRecord::Base
 
   N_('UserUid|Uid')
 
-  class << self
-    HUMANIZED_ATTRIBUTE_KEY_NAMES = {
-      "uid" => "ニックネーム"
-    }
-    def human_attribute_name(attribute_key_name)
-      HUMANIZED_ATTRIBUTE_KEY_NAMES[attribute_key_name] || super
-    end
-  end
-
   validates_presence_of :uid, :message => 'は必須です'
   validates_uniqueness_of :uid, :message => 'は既に登録されています'
   validates_length_of :uid, :minimum => UID_MIN_LENGTH, :message => "は%d文字以上で入力してください"
@@ -44,12 +35,12 @@ class UserUid < ActiveRecord::Base
   validates_format_of :uid, :message => 'は数字orアルファベットor記号で入力してください', :with => UID_FORMAT_REGEX
 
   def validate
-    errors.add(:uid, "は#{Admin::Setting.login_account}と異なる形式で入力してください") if uid_type == UID_TYPE[:nickname] && uid =~ UID_CODE_REGEX
+    errors.add(:uid, "は#{Admin::Setting.login_account}と異なる形式で入力してください") if uid_type == UID_TYPE[:username] && uid =~ UID_CODE_REGEX
   end
 
   # uid入力チェック（ajaxのアクションから利用）
   def self.check_uid uid
-    u = new(:uid => uid, :uid_type => UID_TYPE[:nickname])
+    u = new(:uid => uid, :uid_type => UID_TYPE[:username])
     u.valid? ? _('登録可能です') : u.errors.full_messages.join(',')
   end
 end

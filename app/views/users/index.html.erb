@@ -3,7 +3,7 @@
 <% form_tag({:action => 'index'}, :method => 'get') do -%>
 <table class="search_cond_box">
   <tr>
-    <th>氏名</th>
+    <th><%=h _("Admin::User|Name") %></th>
     <td><%= text_field :condition, :name , :size => 25 %></td>
     <th>自己紹介文</th>
     <td><%= text_field :condition, :introduction, :size => 25 %></td>

@@ -327,7 +327,7 @@ describe Admin::UsersController, "POST #change_uid" do
     it { response.should render_template('admin/users/change_uid') }
     it { assigns[:user].should == @user }
   end
-  describe "ニックネームが見つからない時" do
+  describe "ユーザ名が見つからない時" do
     before do
       @user_uids.should_receive(:find).and_return(nil)
 

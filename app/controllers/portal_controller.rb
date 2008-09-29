@@ -63,8 +63,8 @@ class PortalController < ApplicationController
     @profile.attributes_for_registration(params)
 
     User.transaction do
-      if INITIAL_SETTINGS['nickname_use_setting']
-        @user_uid = @user.user_uids.build(params[:user_uid].update(:uid_type => UserUid::UID_TYPE[:nickname]))
+      if INITIAL_SETTINGS['username_use_setting']
+        @user_uid = @user.user_uids.build(params[:user_uid].update(:uid_type => UserUid::UID_TYPE[:username]))
         @user_uid.save!
       end
 

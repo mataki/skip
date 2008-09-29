@@ -56,7 +56,7 @@ end
 
 # ここでやりたいことは何か?
 # 既にUser, UserProfile, UserUidは登録済みだ。
-# 1. ニックネーム有効でニックネームを変更することが出来る。(UserUidを一件作らないといけない。)
+# 1. ユーザ名有効でユーザ名を変更することが出来る。(UserUidを一件作らないといけない。)
 # 2. ユーザを活性化しなければいけない。
 # 3. 初期アンテナを作成しなければいけない。
 # 4. 新しい部署の上書きをしなければいけない。
@@ -76,7 +76,7 @@ describe PortalController, 'POST /apply' do
   end
   describe "ユーザ名利用設定がonの場合" do
     before do
-      INITIAL_SETTINGS['nickname_use_setting'] = true
+      INITIAL_SETTINGS['username_use_setting'] = true
     end
     describe '正常に動作する場合' do
       before do
@@ -117,7 +117,7 @@ describe PortalController, 'POST /apply' do
 
   describe "ユーザ名利用設定がオフの場合" do
     before do
-      INITIAL_SETTINGS['nickname_use_setting'] = false
+      INITIAL_SETTINGS['username_use_setting'] = false
     end
     describe "保存に成功する場合" do
       before do
