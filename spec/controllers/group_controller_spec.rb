@@ -114,6 +114,11 @@ describe GroupController, 'GET /users' do
     describe '出力形式が通常の場合' do
       before do
         @params[:condition].merge!(:output_type => 'normal')
+        find_params = { :include => [:user_access, :pictures, :user_uids, :user_profile, :group_participations],
+          :order_by => "user_uids.uid",
+          :per_page => 5,
+          :conditions => ["users.status in (?) AND user_uids.uid_type = ? AND group_participations.owned = false and group_participations.group_id = ? and group_participations.waiting = false", ["ACTIVE", "RETIRED"], "MASTER", @group.id]}
+        controller.should_receive(:paginate).with(:user, find_params)
         get :users, @params
       end
       it {response.should be_success}

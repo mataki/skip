@@ -133,6 +133,9 @@ class UserSearchCondition < SearchCondition
       conditions_state << "user_uids.uid_type = ?"
       conditions_param << UserUid::UID_TYPE[:master]
     end
+    unless @include_manager == "1"
+      conditions_state << "group_participations.owned = false"
+    end
     conditions_param.unshift(@conditions_state)
   end
 
@@ -140,15 +143,15 @@ class UserSearchCondition < SearchCondition
     # パフォ劣化のため、user_uidsテーブルとの外部結合をログインIDとログインIDソートに限定した。
     include_tables = [:user_access, :pictures, :user_uids, :user_profile]
     include_tables.delete(:user_uids) if @code.empty? && @sort_type != "1"
-    include_tables   
+    include_tables
   end
 
   private
   def conditions_state
-    unless @conditions_state.empty? 
+    unless @conditions_state.empty?
       @conditions_state << " AND "
     end
     @conditions_state
-  end     
+  end
 end
 

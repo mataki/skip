@@ -42,14 +42,16 @@ class GroupController < ApplicationController
   def users
     @condition = UserSearchCondition.create_by_params params
 
-    conditions = ["group_participations.group_id = ? and group_participations.waiting = ?", @group.id, false]
-    conditions[0] << " and group_participations.owned = false" unless @condition.include_manager?
+    # TODO: UserSearchConditionの make_conditions の処理に入れるべきではないか？
+    conditions = @condition.make_conditions
+    conditions[0] << " and group_participations.group_id = ? and group_participations.waiting = false"
+    conditions << @group.id
 
     @pages, @users = paginate(:user,
                               :per_page => @condition.value_of_per_page,
                               :conditions => conditions,
                               :order_by => @condition.value_of_order_by,
-                              :include => @condition.value_of_include << 'group_participations')
+                              :include => @condition.value_of_include << :group_participations)
     unless @users && @users.size > 0
       flash.now[:notice] = _('該当するユーザは存在しませんでした。')
     end

@@ -74,7 +74,11 @@ module GroupHelper
                           :locals => { :top_option => user_state(user) } )
       end
     else
-      table_columns = [ "", "uid", "name", "code", "email", "section", "extension" ]
+      table_columns = [ "name", "email", "section", "extension" ]
+      table_columns.unshift('uid') if user_name_mode?(:name)
+      table_columns.unshift('code') if user_name_mode?(:code)
+      table_columns.unshift('')
+
       block = lambda{ |user, column|
         case column
         when ""
