@@ -133,9 +133,6 @@ class UserSearchCondition < SearchCondition
       conditions_state << "user_uids.uid_type = ?"
       conditions_param << UserUid::UID_TYPE[:master]
     end
-    unless @include_manager == "1"
-      conditions_state << "group_participations.owned = false"
-    end
     conditions_param.unshift(@conditions_state)
   end
 

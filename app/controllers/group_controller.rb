@@ -46,6 +46,7 @@ class GroupController < ApplicationController
     conditions = @condition.make_conditions
     conditions[0] << " and group_participations.group_id = ? and group_participations.waiting = false"
     conditions << @group.id
+    conditions[0] << " and group_participations.owned = false" unless @condition.include_manager?
 
     @pages, @users = paginate(:user,
                               :per_page => @condition.value_of_per_page,
