@@ -240,8 +240,8 @@ describe BoardEntry, "#images_filename_to_url_mapping_hash" do
 
     @result = @board_entry.images_filename_to_url_mapping_hash
   end
-  it { @result["3.jpg"].should == "/images/board_entries/#{@board_entry.user_id}/#{@board_entry.id}_3.jpg" }
-  it { @result["2.jpg"].should == "/images/board_entries/#{@board_entry.user_id}/#{@board_entry.id}_2.jpg" }
+  it { @result["3.jpg"].should == "/images/board_entries%2F#{@board_entry.user_id}%2F#{@board_entry.id}_3.jpg" }
+  it { @result["2.jpg"].should == "/images/board_entries%2F#{@board_entry.user_id}%2F#{@board_entry.id}_2.jpg" }
 
   after do
     delete_touch_files @board_entry

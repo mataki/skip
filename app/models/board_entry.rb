@@ -15,6 +15,8 @@
 
 class BoardEntry < ActiveRecord::Base
   include Publication
+  include ActionController::UrlWriter
+
   belongs_to :user
   has_many :tags, :through => :entry_tags
   has_many :entry_tags, :dependent => :destroy
@@ -630,7 +632,8 @@ class BoardEntry < ActiveRecord::Base
 
   def image_url(file_name, with_id = true)
     file_name = with_id ? "#{id}_#{file_name}" : file_name
-    File.join('/', 'images', 'board_entries', user_id.to_s, file_name)
+    file_path = File.join('board_entries', user_id.to_s, file_name)
+    url_for(:controller => '/image', :action => :show, :path => file_path, :only_path => true)
   end
 
   def images_filename_to_url_mapping_hash

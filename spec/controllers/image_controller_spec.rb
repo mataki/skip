@@ -15,18 +15,25 @@
 
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe ApplicationHelper, "#show_contents" do
-  describe "hikiモードの時" do
-    before do
-      @entry = stub_model(BoardEntry, :editor_mode => 'hiki', :contents => "hogehoge",
-                          :symbol => "ほげ", :user_id => 1)
-      @output_contents = "output_contents {{question.gif,240,}} output_contents"
-      helper.stub!(:hiki_parse).and_return(@output_contents)
+describe ImageController, "GET #show" do
+  before do
+    user_login
 
-      @result = helper.show_contents(@entry)
+    controller.should_receive(:valid_params_and_authorize?).and_return(true)
+    f = mock('file')
+    f.stub!(:read).and_return('read')
+    controller.should_receive(:open).with("#{ENV['IMAGE_PATH']}/board_entries/2/2_hoge.jpg", "rb").and_yield(f)
+  end
+  describe "pathがエンコードされずにわたってきた場合" do
+    before do
+      get :show, :path => ["board_entries", "2", "2_hoge.jpg"]
     end
-    it { @result.should have_tag("div.hiki_style") }
-    it { @result.should be_include('output_contents') }
-    it { @result.should be_include("/images/board_entries%2F#{@entry.user_id}%2F#{@entry.id}_question.gif") }
+    it { response.body.should == "read" }
+  end
+  describe "pathがエンコードされてわたってきた場合" do
+    before do
+      get :show, :path => ["board_entries/2/2_hoge.jpg"]
+    end
+    it { response.body.should == "read" }
   end
 end
