@@ -1,6 +1,6 @@
 <%= error_messages_for :user %>
 <p>
-  <%= label Admin::UserUid.name, :uid %>
+  <%= label Admin::UserUid.name, :uid, Admin::Setting.login_account %>
   <% if @user.new_record? -%>
   <%= text_field :user_uid, :uid %>
   <% else -%>

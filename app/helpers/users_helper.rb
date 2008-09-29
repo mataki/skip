@@ -23,7 +23,13 @@ module UsersHelper
                           :object => user )
       end
     else
-      table_columns = [ "code", "uid", "name", "email", "section", "extension" ]
+      table_columns = [ "name", "email", "section", "extension" ]
+      if user_name_mode?(:code)
+        table_columns.unshift('code')
+      end
+      if user_name_mode?(:name)
+        table_columns.unshift('uid')
+      end
       block = lambda{ |user, column|
         case column
         when "name"

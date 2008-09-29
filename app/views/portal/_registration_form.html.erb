@@ -26,18 +26,22 @@ table.normal {
 <div class="subtitle">基本情報</div>
 
 <table id="user_info_box" class="normal" border="1">
+  <% if user_name_mode?(:code) -%>
   <tr>
     <th width="100px"><label for="user_code"><%= h Admin::Setting.login_account -%></label></th>
     <td><%=h session[:user_code] %></td>
   </tr>
+  <% end -%>
+  <% if user_name_mode?(:name) -%>
   <tr>
     <th width="100px"><label for="user_uid_uid"><%= _('user name') %></label></th>
-  <% if is_new %>
+  <% if is_new -%>
     <td><%= text_field 'user_uid', 'uid', {:tabindex => (tabindex += 1), :disabled => !INITIAL_SETTINGS['username_use_setting']} %>（4桁以上）<span id="uid_result" style="margin-left:3px;color:gray;font-size:10px"></span><span id="indicator" style="display:none;"><%= skip_image_tag 'indicator.gif' %></span><div class="desc">半角英数の他にハイフン「-」,アンダーバー「_」が利用できます</div>
-  <% else %>
+  <% else -%>
     <td><%= h @user.uid %></td>
-  <% end %>
+  <% end -%>
   </tr>
+  <% end -%>
   <tr>
     <th width="100px"><label for="user_name"><%=h _('Admin::User|Name') %></label></th>
     <td><%=h @user.name %></td>

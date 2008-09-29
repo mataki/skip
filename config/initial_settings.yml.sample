@@ -33,6 +33,7 @@ default: &default
   full_text_search_setting: false                                           # 全文検索入力欄の表示制御
   password_edit_setting: true                                               # パスワード変更可能かどうかの設定
   username_use_setting: true                                                # ユーザ登録時にユーザ名を利用するかどうかの設定
+  usercode_dips_setting: true                                               # ログインIDを表示するかどうかの設定
   delivery_method: smtp                                                     # メール配信方法(ActionMailer::Base.delivery_methodへの設定値)
   raise_delivery_errors: false                                              # メール送信に失敗した場合のエラー処理を行なうか
   login_mode: password                                                      # ログインの方法の設定 password:パスワード認証, rp:RPモード

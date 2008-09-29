@@ -26,4 +26,14 @@ module InitialSettingsHelper
       return false
     end
   end
+
+  def user_name_mode?(mode)
+    case mode
+    when :name
+      return INITIAL_SETTINGS['username_use_setting']
+    when :code
+      return INITIAL_SETTINGS['usercode_dips_setting']
+    end
+    false
+  end
 end
