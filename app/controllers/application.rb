@@ -17,19 +17,19 @@ require 'symbol'
 require 'tempfile'
 
 class ApplicationController < ActionController::Base
-  protect_from_forgery
-
   layout 'layout'
+
+  protect_from_forgery
+  rescue_from ActionController::InvalidAuthenticityToken, :with => :redirect_to_deny_auth
+
   before_filter :login_required, :prepare_session
   after_filter  :remove_message
 
   init_gettext "skip"
-
 protected
   include InitialSettingsHelper
   # アプリケーションで利用するセッションの準備をする
   # フィルタで毎アクセスごとに確認し、セッションが未準備なら初期値をいれる
-  # skip_utilで認証がされている前提で、グローバルセッションを利用している
   def prepare_session
     user = current_user
 
@@ -124,5 +124,33 @@ protected
   def redirect_to_with_deny_auth(url = { :controller => :mypage, :action => :index })
     flash[:warning] = _('この操作は、許可されていません。')
     redirect_to url
+  end
+
+  # 本番環境でのエラー画面をプラットホームにあるエラー画面にするために、rescue.rbのメソッドを
+  # オーバーライドしている。
+  # CGI::Session::CookieStore::TamperedWithCookie について
+  # Rails2.0からcookie-sessionになり、以下の場合などにunmarcial出来ない場合にエラーがraiseされる。
+  # (cookieのシークレットキーが変わったとき、ユーザが無理やりcookieを書き換えたとき)
+  # その場合、SSOの機構があるので一旦リダイレクトして同じURLに飛ばすことでcookieを作り直せる。
+  def rescue_action_in_public ex
+    case ex
+    when ActionController::UnknownController, ActionController::UnknownAction,
+      ActionController::RoutingError, ActiveRecord::RecordNotFound
+      render :file => File.join(RAILS_ROOT, 'public', '404.html'), :status => :not_found, :layout => 'layout'
+    when CGI::Session::CookieStore::TamperedWithCookie
+      redirect_to request.env["REQUEST_URI"], :status => :temporary_redirect
+    else
+      render :template => "system/500" , :status => :internal_server_error, :layout => 'layout'
+    end
+  end
+
+  # 本番環境(リバースプロキシあり)では、リモートからのリクエストでもリバースプロキシで、
+  # ハンドリングされるので、ローカルからのリクエストとRailsが認識していう場合がある。
+  # (lighttpd の mod_extfoward が根本の問題)
+  # そもそも、enviromentの設定でどのエラー画面を出すかの設定は可能で、本番環境で詳細な
+  # エラー画面を出す必要は無いので、常にリモートからのアクセスと認識させるべき。
+  # なので、rescue.rb local_requestメソッドをオーバーライドしている。
+  def local_request?
+    false
   end
 end
