@@ -37,7 +37,7 @@ default: &default
   delivery_method: smtp                                                     # メール配信方法(ActionMailer::Base.delivery_methodへの設定値)
   raise_delivery_errors: false                                              # メール送信に失敗した場合のエラー処理を行なうか
   login_mode: password                                                      # ログインの方法の設定 password:パスワード認証, rp:RPモード
-#  fixed_op_url: http://skipop.openskip.org/                                # RPモードで固定OPを利用するSSOの場合のURL
+  fixed_op_url:                                                             # RPモードで固定OPを利用するSSOの場合のURL
   administrator_addr: youradmin@example.com                                 # システム管理者のアドレス
 
 # ---- 全文検索
