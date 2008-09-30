@@ -19,14 +19,13 @@ class UserSearchCondition < SearchCondition
   @@keys = {:name => 'users.name', :section => 'user_profiles.section', :code => 'user_uids.uid', :introduction => 'user_profiles.self_introduction'}
   @@keys.each {|key, val| attr_reader key }
 
-  attr_reader :include_absentee
   attr_reader :include_manager
   attr_reader :sort_type
   attr_reader :output_type
   attr_reader :not_include_retired
-  attr_reader :employed_type
 
   class << self
+    include InitialSettingsHelper
 
     def include_manager_types
       [ ['参加者のみ', "0"],
@@ -34,8 +33,10 @@ class UserSearchCondition < SearchCondition
     end
 
     def sort_types
-      [ ['最近ログインした順', "0"],
-        ["#{Admin::Setting.login_account}順", "1"] ]
+      options = [ ['最近ログインした順', "0"] ]
+      options << ["#{Admin::Setting.login_account}順", "1"] if user_name_mode?(:code)
+      options << [_('user name') + "順", "2"] if user_name_mode?(:name)
+      options
     end
 
     def output_types
@@ -44,16 +45,14 @@ class UserSearchCondition < SearchCondition
     end
   end
 
-  def initialize()
+  def initialize
     @name = @section = @code = @introduction = ""
     @conditions_state = ""
 
-    @include_absentee = "0"
     @include_manager = "0"
     @sort_type = "0"
     @output_type = "normal"
     @not_include_retired = true
-    @employed_type = "0"
   end
 
   def assign(params = {})
@@ -66,11 +65,6 @@ class UserSearchCondition < SearchCondition
     @sort_type = params[:sort_type] || "0"
     @output_type = params[:output_type] || "normal"
     @not_include_retired = params[:not_include_retired]
-    @employed_type = params[:employed_type]
-  end
-
-  def include_allusers?
-    @include_absentee == "2" ? true : false
   end
 
   def include_manager?
@@ -86,7 +80,7 @@ class UserSearchCondition < SearchCondition
     case @sort_type
     when "0"
       order_by = "user_accesses.last_access DESC"
-    when "1"
+    when "1", "2"
       order_by = "user_uids.uid"
     end
     order_by
@@ -119,19 +113,15 @@ class UserSearchCondition < SearchCondition
       conditions_state << "users.status in (?)"
       conditions_param << ['ACTIVE', 'RETIRED']
     end
-    if @employed_type
-      case @employed_type
-        when "1"
-        conditions_state << "users.status = ?"
-        conditions_param << 'ACTIVE'
-        when "2"
-        conditions_state << "users.status = ?"
-        conditions_param << 'RETIRED'
+    if @sort_type
+      case @sort_type
+      when "1"
+        conditions_state << "user_uids.uid_type = ?"
+        conditions_param << UserUid::UID_TYPE[:master]
+      when "2"
+        conditions_state << "user_uids.uid_type = ?"
+        conditions_param << UserUid::UID_TYPE[:username]
       end
-    end
-    if @sort_type == "1"
-      conditions_state << "user_uids.uid_type = ?"
-      conditions_param << UserUid::UID_TYPE[:master]
     end
     conditions_param.unshift(@conditions_state)
   end
@@ -139,7 +129,7 @@ class UserSearchCondition < SearchCondition
   def value_of_include
     # パフォ劣化のため、user_uidsテーブルとの外部結合をログインIDとログインIDソートに限定した。
     include_tables = [:user_access, :pictures, :user_uids, :user_profile]
-    include_tables.delete(:user_uids) if @code.empty? && @sort_type != "1"
+    include_tables.delete(:user_uids) if @code.empty? && @sort_type == "0"
     include_tables
   end
 

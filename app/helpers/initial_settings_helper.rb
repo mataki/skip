@@ -36,4 +36,11 @@ module InitialSettingsHelper
     end
     false
   end
+
+  def user_name_mode_label
+    label = []
+    label << Admin::Setting.login_account if user_name_mode?(:code)
+    label << _('user name') if user_name_mode?(:name)
+    label.join("/")
+  end
 end

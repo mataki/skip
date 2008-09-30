@@ -25,7 +25,6 @@ describe OpenidIdentifier do
   end
 end
 
-
 describe OpenidIdentifier, '#url' do
   before do
     @openid_identifier = OpenidIdentifier.new({ :url => "http://hoge.example.com/", :user_id => 1})
@@ -60,4 +59,3 @@ describe OpenidIdentifier, '#url' do
     end
   end
 end
-
