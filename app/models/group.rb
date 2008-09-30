@@ -29,7 +29,7 @@ class Group < ActiveRecord::Base
   alias initialize_old initialize
 
   def initialize(attributes = nil)
-    attributes = {} if attributes.nil? 
+    attributes = {} if attributes.nil?
     if attributes[:group_category_id].nil?
       if gc = GroupCategory.find_by_initial_selected(true)
         attributes[:group_category_id] = gc.id

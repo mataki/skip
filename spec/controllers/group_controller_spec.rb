@@ -101,7 +101,7 @@ describe GroupController, "POST #leave" do
   end
 end
 
-describe GroupController, 'GET /users' do
+describe GroupController, 'GET #users' do
   before do
     user_login
     create_stub_group
@@ -141,3 +141,19 @@ describe GroupController, 'GET /users' do
   end
 end
 
+describe GroupController, "GET #show" do
+  before do
+    user_login
+
+    @group = stub_model(Group)
+    Group.stub!(:find_by_gid).with("gid").and_return(@group)
+
+    get :show, :gid => "gid"
+  end
+  it { response.should render_template("show") }
+  it "適切なインスタンス変数が設定されていること" do
+    assigns[:admin_users].should_not be_nil
+    assigns[:users].should_not be_nil
+    assigns[:recent_messages].should_not be_nil
+  end
+end
