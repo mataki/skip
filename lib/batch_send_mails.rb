@@ -51,6 +51,10 @@ class BatchSendMails < BatchBase
                  :joins => 'LEFT JOIN user_message_unsubscribes USING(user_id,message_type)').each do |message|
       if message.user_message_unsubscribe_id.nil?
         user = User.find(:first, :conditions => ["id = ?", message.user_id])
+        if user.retired?
+          message.update_attribute :send_flag, true
+          next
+        end
         link_url = "#{ENV['SKIP_URL']}#{message.link_url}"
         message_manage_url = "#{ENV['SKIP_URL']}/mypage/manage?menu=manage_message"
         begin
@@ -66,4 +70,4 @@ class BatchSendMails < BatchBase
   end
 end
 
-BatchSendMails.execution
+BatchSendMails.execution unless RAILS_ENV == 'test'
