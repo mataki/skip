@@ -4,7 +4,7 @@
   <%= skip_all_javascript_include_tag 'jquery' %>
   <script language="JavaScript" type="text/javascript">$j = jQuery.noConflict();</script>
   <%= javascript_include_tag 'application' %>
-
+  <%= skip_javascript_include_tag 'skip_util' %>
   <%= skip_stylesheet_link_tag 'style' %>
   <%= stylesheet_link_tag 'style' %>
 <style type="text/css">
@@ -68,6 +68,6 @@ div.board_entry {
 </div>
 
 <div class="contents"><div class="contents_body"><%= show_contents @entry %></div></div>
-
+<script type="text/javascript">fnLoadPngs();</script>
 </body>
 </html>
