@@ -341,3 +341,54 @@ describe Admin::UsersController, "POST #change_uid" do
   end
 end
 
+describe Admin::UsersController, "POST #create_uid" do
+  before do
+    admin_login
+
+    @user = stub_model(Admin::User)
+    Admin::User.stub!(:find).with("1").and_return(@user)
+
+    @user_uid = stub_model(Admin::UserUid)
+    @user_uids = mock('user_uids')
+    @user.stub!(:user_uids).and_return(@user_uids)
+  end
+  describe "ユーザ名が登録されていない場合" do
+    before do
+      @user_uids.stub!(:find).and_return(nil)
+      @user_uids.stub!(:build).with({ "uid" => 'hoge', "uid_type" => UserUid::UID_TYPE[:username]}).and_return(@user_uid)
+    end
+    describe "作成に成功する場合" do
+      before do
+        @user_uid.should_receive(:save).and_return(true)
+
+        post :create_uid, :id => 1, :user_uid => { :uid => 'hoge' }
+      end
+      it { response.should redirect_to(admin_user_path(@user)) }
+      it "flashにメッセージが登録されていること" do
+        flash[:notice].should == "登録に成功しました。"
+      end
+    end
+    describe "バリデーションエラーの場合" do
+      before do
+        @user_uid.should_receive(:save).and_return(false)
+
+        post :create_uid, :id => 1, :user_uid => { :uid => 'hoge' }
+      end
+      it { response.should render_template('create_uid') }
+      it "@user_uidが設定されていること" do
+        assigns[:user_uid].should == @user_uid
+      end
+    end
+  end
+  describe "もう既にユーザ名が登録されていた場合" do
+    before do
+      @user_uids.stub!(:find).and_return(@user_uid)
+
+      post :create_uid, :id => 1, :user_uid => { :uid => 'hoge' }
+    end
+    it { response.should redirect_to(admin_user_path(@user)) }
+    it "flashにメッセージが登録されていること" do
+      flash[:error].should == "既にuser nameが登録されています。"
+    end
+  end
+end

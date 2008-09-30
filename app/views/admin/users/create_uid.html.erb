@@ -1,0 +1,35 @@
+<%= render :partial => '/admin/contents_left' %>
+<% content_for :topic_path do -%>
+<%= render :partial => '/admin/shared/topic_path' %>
+<% end -%>
+<% content_for :contents_right do -%>
+<h3><%= _('Caution!') %></h3>
+<p style="color: red;"><b><%= _('ユーザ名変更及び作成は様々な箇所に影響するため、どうしても変更が必要な場合のみ変更するようにして下さい。<br/>また、処理に時間がかかりレスポンスが遅くなる場合がありますので、一般ユーザのアクセスしていない時間に実行してください。') %></b></p>
+<div class="box tabular">
+  <% form_for(:user_uid, :url => {:action => :create_uid, :id => @user}) do |f| -%>
+  <%= error_messages_for :user_uid %>
+  <p>
+    <%= f.label :uid, _('user name') %>
+    <%= f.text_field :uid %>
+  </p>
+  <p>
+    <%= f.submit _("Create") %>
+  </p>
+  <% end -%>
+</div>
+<% end -%>
+
+<% content_for :javascript do -%>
+<script type="text/javascript">
+$j(function(){
+    $j('form')
+    .submit(function() {
+        if(confirm('<%= _('%{name}を作成します。') % {:name => _('user name')} + _('Are you sure?') %>')) {
+            $j('#user_uid_submit').attr('disabled', 'disabled').val('<%= _('Creating...') %>');
+        } else {
+            return false;
+        }
+    });
+});
+</script>
+<% end -%>

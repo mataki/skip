@@ -19,26 +19,14 @@ class Admin::UserUid < UserUid
 
   def after_update
     if uid_changed?
-      ActiveRecord::Base.connection.execute("update board_entries set symbol = 'uid:#{uid}' where symbol = 'uid:#{uid_was}'")
-      ActiveRecord::Base.connection.execute("update user_profiles set self_introduction = replace(self_introduction, 'uid:#{uid_was}', 'uid:#{uid}') where self_introduction like '%uid:#{uid_was}%'")
-      ActiveRecord::Base.connection.execute("update user_profiles set introduction = replace(introduction, 'uid:#{uid_was}', 'uid:#{uid}') where introduction like '%uid:#{uid_was}%'")
-      ActiveRecord::Base.connection.execute("update board_entries set symbol = 'uid:#{uid}' where symbol = 'uid:#{uid_was}'")
-      ActiveRecord::Base.connection.execute("update board_entries set publication_symbols_value = replace(publication_symbols_value, 'uid:#{uid_was}', 'uid:#{uid}') where publication_symbols_value like '%uid:#{uid_was}%'")
-      ActiveRecord::Base.connection.execute("update board_entries set contents = replace(contents, 'uid:#{uid_was}', 'uid:#{uid}') where editor_mode = 'hiki' and contents like '%uid:#{uid_was}%'")
-      ActiveRecord::Base.connection.execute("update board_entry_comments set contents = replace(contents, 'uid:#{uid_was}', 'uid:#{uid}') where contents like '%uid:#{uid_was}%'")
-      ActiveRecord::Base.connection.execute("update chains set comment = replace(comment, 'uid:#{uid_was}', 'uid:#{uid}') where comment like '%uid:#{uid_was}%'")
-      ActiveRecord::Base.connection.execute("update entry_editors set symbol = 'uid:#{uid}' where symbol = 'uid:#{uid_was}'")
-      ActiveRecord::Base.connection.execute("update entry_publications set symbol = 'uid:#{uid}' where symbol = 'uid:#{uid_was}'")
-      ActiveRecord::Base.connection.execute("update groups set description = replace(description, 'uid:#{uid_was}', 'uid:#{uid}') where description like '%uid:#{uid_was}%'")
-      ActiveRecord::Base.connection.execute("update messages set link_url = replace(link_url, '/user/#{uid_was}', '/user/#{uid}') where link_url like '/user/#{uid_was}%'")
-      ActiveRecord::Base.connection.execute("update share_file_publications set symbol = 'uid:#{uid}' where symbol = 'uid:#{uid_was}'")
-      ActiveRecord::Base.connection.execute("update share_files set owner_symbol = 'uid:#{uid}' where owner_symbol = 'uid:#{uid_was}'")
-      ActiveRecord::Base.connection.execute("update share_files set publication_symbols_value = replace(publication_symbols_value, 'uid:#{uid_was}', 'uid:#{uid}') where publication_symbols_value like '%uid:#{uid_was}%'")
-      ActiveRecord::Base.connection.execute("update mails set from_user_id = '#{uid}' where from_user_id = '#{uid_was}'")
-      ActiveRecord::Base.connection.execute("update mails set to_address_symbol = 'uid:#{uid}' where to_address_symbol = 'uid:#{uid_was}'")
-      ActiveRecord::Base.connection.execute("update bookmarks set url = replace(url, '/user/#{uid_was}', '/user/#{uid}') where url = '/user/#{uid_was}'")
-      ActiveRecord::Base.connection.execute("update antenna_items set value = 'uid:#{uid}' where value = 'uid:#{uid_was}'")
-      FileUtils.mv(ShareFile.dir_path("uid:#{uid_was}"), ShareFile.dir_path("uid:#{uid}")) if File.exist?(ShareFile.dir_path("uid:#{uid_was}"))
+      self.class.rename(uid_was, uid)
+    end
+  end
+
+  def after_create
+    if master = self.class.find(:first, :conditions => { :uid_type => UserUid::UID_TYPE[:master], :user_id => user_id }) and
+        self.class.find(:all, :conditions => { :uid_type => UserUid::UID_TYPE[:username], :user_id => user_id }).size <= 1
+      self.class.rename(master.uid, uid)
     end
   end
 
@@ -46,4 +34,26 @@ class Admin::UserUid < UserUid
     user.name
   end
 
+  def self.rename(from, to)
+    ActiveRecord::Base.connection.execute("update board_entries set symbol = 'uid:#{to}' where symbol = 'uid:#{from}'")
+    ActiveRecord::Base.connection.execute("update user_profiles set self_introduction = replace(self_introduction, 'uid:#{from}', 'uid:#{to}') where self_introduction like '%uid:#{from}%'")
+    ActiveRecord::Base.connection.execute("update user_profiles set introduction = replace(introduction, 'uid:#{from}', 'uid:#{to}') where introduction like '%uid:#{from}%'")
+    ActiveRecord::Base.connection.execute("update board_entries set symbol = 'uid:#{to}' where symbol = 'uid:#{from}'")
+    ActiveRecord::Base.connection.execute("update board_entries set publication_symbols_value = replace(publication_symbols_value, 'uid:#{from}', 'uid:#{to}') where publication_symbols_value like '%uid:#{from}%'")
+    ActiveRecord::Base.connection.execute("update board_entries set contents = replace(contents, 'uid:#{from}', 'uid:#{to}') where editor_mode = 'hiki' and contents like '%uid:#{from}%'")
+    ActiveRecord::Base.connection.execute("update board_entry_comments set contents = replace(contents, 'uid:#{from}', 'uid:#{to}') where contents like '%uid:#{from}%'")
+    ActiveRecord::Base.connection.execute("update chains set comment = replace(comment, 'uid:#{from}', 'uid:#{to}') where comment like '%uid:#{from}%'")
+    ActiveRecord::Base.connection.execute("update entry_editors set symbol = 'uid:#{to}' where symbol = 'uid:#{from}'")
+    ActiveRecord::Base.connection.execute("update entry_publications set symbol = 'uid:#{to}' where symbol = 'uid:#{from}'")
+    ActiveRecord::Base.connection.execute("update groups set description = replace(description, 'uid:#{from}', 'uid:#{to}') where description like '%uid:#{from}%'")
+    ActiveRecord::Base.connection.execute("update messages set link_url = replace(link_url, '/user/#{from}', '/user/#{to}') where link_url like '/user/#{from}%'")
+    ActiveRecord::Base.connection.execute("update share_file_publications set symbol = 'uid:#{to}' where symbol = 'uid:#{from}'")
+    ActiveRecord::Base.connection.execute("update share_files set owner_symbol = 'uid:#{to}' where owner_symbol = 'uid:#{from}'")
+    ActiveRecord::Base.connection.execute("update share_files set publication_symbols_value = replace(publication_symbols_value, 'uid:#{from}', 'uid:#{to}') where publication_symbols_value like '%uid:#{from}%'")
+    ActiveRecord::Base.connection.execute("update mails set from_user_id = '#{to}' where from_user_id = '#{from}'")
+    ActiveRecord::Base.connection.execute("update mails set to_address_symbol = 'uid:#{to}' where to_address_symbol = 'uid:#{from}'")
+    ActiveRecord::Base.connection.execute("update bookmarks set url = replace(url, '/user/#{from}', '/user/#{to}') where url = '/user/#{from}'")
+    ActiveRecord::Base.connection.execute("update antenna_items set value = 'uid:#{to}' where value = 'uid:#{from}'")
+    FileUtils.mv(ShareFile.dir_path("uid:#{from}"), ShareFile.dir_path("uid:#{to}")) if File.exist?(ShareFile.dir_path("uid:#{from}"))
+  end
 end

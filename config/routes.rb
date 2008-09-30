@@ -56,7 +56,7 @@ ActionController::Routing::Routes.draw do |map|
     admin_map.resources :bookmarks do |bookmark|
       bookmark.resources :bookmark_comments
     end
-    admin_map.resources :users, :new => [:import, :import_confirmation, :first], :member => [:change_uid] do |user|
+    admin_map.resources :users, :new => [:import, :import_confirmation, :first], :member => [:change_uid, :create_uid] do |user|
       user.resources :openid_identifiers
     end
     admin_map.resources :user_profiles

@@ -178,6 +178,30 @@ class Admin::UsersController < Admin::ApplicationController
     end
   end
 
+  def create_uid
+    @user = Admin::User.find(params[:id])
+    @topics = [[_('Listing %{model}') % {:model => _('user')}, admin_users_path],
+               [_('%{model} Show') % {:model => @user.topic_title}, @user],
+               _('Create %{name}') % { :name => _('user name')}]
+
+    if @user.user_uids.find(:first, :conditions => ['uid_type = ?', UserUid::UID_TYPE[:username]])
+      flash[:error] = _("既に%{username}が登録されています。") % {:username => _('user name')}
+      redirect_to(@user)
+      return
+    end
+
+    if request.get?
+      @user_uid = Admin::UserUid.new
+      return
+    end
+
+    @user_uid = @user.user_uids.build(params[:user_uid].merge!(:uid_type => UserUid::UID_TYPE[:username]))
+    if @user_uid.save
+      flash[:notice] = _('登録に成功しました。')
+      redirect_to(@user)
+    end
+  end
+
   private
   def valid_activation_code? code
     return false unless code
