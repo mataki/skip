@@ -16,6 +16,7 @@
 # -*- coding: utf-8 -*-
 # skipの基点URL
 ENV['SKIP_URL'] ||= 'http://localhost:3000'
+require File.join(File.dirname(__FILE__), 'lib', 'hikidoc')
 require 'hikidoc'
 
 require 'skip_util'
