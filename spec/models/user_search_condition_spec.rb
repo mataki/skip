@@ -15,7 +15,7 @@
 
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe UserSearchCondition, "#make_conditions" do
+describe UserSearchCondition do
   describe "パラメータが設定されていない場合" do
     it "初期値がロードされること" do
       conditions = UserSearchCondition.create_by_params :condition => {}
@@ -90,9 +90,23 @@ describe UserSearchCondition, "#make_conditions" do
       conditions.make_conditions.should == ["users.status = ?", "ACTIVE"]
     end
   end
-  describe "グループの管理者を含む場合" do
-    it "とくになにもしないこと" do
-      conditions = UserSearchCondition.create_by_params :condition => { :include_manager => "1" }
+  describe "グループの所属情報も含めて検索する場合" do
+    before do
+      @conditions = UserSearchCondition.create_by_params :condition => { :with_group => 2, :include_manager => "1" }
+    end
+    it "検索条件が設定されていること" do
+      @conditions.make_conditions.should == ["users.status in (?) AND group_participations.group_id = ? AND group_participations.waiting = false", ["ACTIVE", "RETIRED"], 2]
+    end
+    it "includeが設定されていること" do
+      @conditions.value_of_include.should == [:user_access, :pictures, :user_profile, :group_participations]
+    end
+    describe "グループの管理者を含まない場合" do
+      before do
+        @conditions = UserSearchCondition.create_by_params :condition => { :with_group => 2, :include_manager => "0" }
+      end
+      it "検索条件が設定されていること" do
+        @conditions.make_conditions.should == ["users.status in (?) AND group_participations.group_id = ? AND group_participations.waiting = false AND group_participations.owned = false", ["ACTIVE", "RETIRED"], 2]
+      end
     end
   end
 end

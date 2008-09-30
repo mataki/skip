@@ -23,6 +23,7 @@ class UserSearchCondition < SearchCondition
   attr_reader :sort_type
   attr_reader :output_type
   attr_reader :not_include_retired
+  attr_reader :with_group
 
   class << self
     include InitialSettingsHelper
@@ -53,6 +54,7 @@ class UserSearchCondition < SearchCondition
     @sort_type = "0"
     @output_type = "normal"
     @not_include_retired = true
+    @with_group = nil
   end
 
   def assign(params = {})
@@ -65,6 +67,7 @@ class UserSearchCondition < SearchCondition
     @sort_type = params[:sort_type] || "0"
     @output_type = params[:output_type] || "normal"
     @not_include_retired = params[:not_include_retired]
+    @with_group = params[:with_group]
   end
 
   def include_manager?
@@ -123,6 +126,13 @@ class UserSearchCondition < SearchCondition
         conditions_param << UserUid::UID_TYPE[:username]
       end
     end
+    if @with_group
+      conditions_state << "group_participations.group_id = ? AND group_participations.waiting = false"
+      conditions_param << @with_group
+      unless @include_manager == "1"
+        conditions_state << "group_participations.owned = false"
+      end
+    end
     conditions_param.unshift(@conditions_state)
   end
 
@@ -130,6 +140,7 @@ class UserSearchCondition < SearchCondition
     # パフォ劣化のため、user_uidsテーブルとの外部結合をログインIDとログインIDソートに限定した。
     include_tables = [:user_access, :pictures, :user_uids, :user_profile]
     include_tables.delete(:user_uids) if @code.empty? && @sort_type == "0"
+    include_tables << :group_participations if @with_group
     include_tables
   end
 
@@ -141,4 +152,3 @@ class UserSearchCondition < SearchCondition
     @conditions_state
   end
 end
-

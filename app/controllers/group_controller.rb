@@ -40,19 +40,14 @@ class GroupController < ApplicationController
 
   # tab_menu
   def users
+    params[:condition].merge!(:with_group => @group.id) if params[:condition]
     @condition = UserSearchCondition.create_by_params params
-
-    # TODO: UserSearchConditionの make_conditions の処理に入れるべきではないか？
-    conditions = @condition.make_conditions
-    conditions[0] << " and group_participations.group_id = ? and group_participations.waiting = false"
-    conditions << @group.id
-    conditions[0] << " and group_participations.owned = false" unless @condition.include_manager?
 
     @pages, @users = paginate(:user,
                               :per_page => @condition.value_of_per_page,
-                              :conditions => conditions,
+                              :conditions => @condition.make_conditions,
                               :order_by => @condition.value_of_order_by,
-                              :include => @condition.value_of_include << :group_participations)
+                              :include => @condition.value_of_include)
     unless @users && @users.size > 0
       flash.now[:notice] = _('該当するユーザは存在しませんでした。')
     end
