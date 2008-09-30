@@ -715,13 +715,13 @@ private
 
   def get_index_default
     partial = "index_default"
-    recent_day = 10
+    recent_day = Admin::Setting.recent_date
 
     # お知らせ-承認待ちの一覧
     @waiting_groups = Group.find_waitings session[:user_id]
 
     # あなたへの重要な連絡
-    find_params = BoardEntry.make_conditions(login_user_symbols, {:recent_day=>recent_day, :categories=>['連絡', '重要']})
+    find_params = BoardEntry.make_conditions(login_user_symbols, {:recent_day => recent_day, :categories => ['連絡', '重要']})
     @important_your_messages = BoardEntry.find(:all,
                                                :conditions=> find_params[:conditions],
                                                :order=>"last_updated DESC,board_entries.id DESC",
@@ -749,7 +749,7 @@ private
     system_messages
 
     # あなたへの連絡
-    find_params = BoardEntry.make_conditions(login_user_symbols, {:recent_day=>recent_day})
+    find_params = BoardEntry.make_conditions(login_user_symbols, {:recent_day => recent_day})
     find_params[:conditions][0] << " and user_readings.read = ? and user_readings.user_id = ? and entry_tags.tag_id = ?" #[連絡]タグのTagsテーブルのIDが4
     find_params[:conditions] << false << session[:user_id] << Tag.get_system_tag(Tag::NOTICE_TAG).id
     find_params[:include] << :user_readings
@@ -759,16 +759,16 @@ private
                                           :limit=>5,
                                           :include => find_params[:include] | [ :user, :state, :entry_tags ])
     # みんなからの質問！
-    questions = find_questions_as_locals
+    questions = find_questions_as_locals(:recent_day => recent_day)
     # 最近の人気記事
-    access_blogs = find_access_blogs_as_locals
+    access_blogs = find_access_blogs_as_locals(:recent_day => recent_day)
     # 最新のブログのエントリ
-    recent_blogs = find_recent_blogs_as_locals
+    recent_blogs = find_recent_blogs_as_locals(:recent_day => recent_day)
     # 最新の掲示板のエントリ(全体公開のみ)
     recent_bbs = []
     gid_by_category = Group.gid_by_category
     GroupCategory.all.each do |category| # 表示順序の制御
-      options = { :group_symbols => gid_by_category[category.id], :recent_day => 10, :per_page => 3 }
+      options = { :group_symbols => gid_by_category[category.id], :recent_day => recent_day, :per_page => 3 }
       recent_bbs << self.send("find_recent_bbs_#{category.code.downcase}_as_locals", options)
     end
 
@@ -803,7 +803,8 @@ private
   # 最近のエントリ一覧を取得する（partial用のオプションを返す）
   # 引数：recent_day = 最近を示す日数（デフォルト10日）
   # 引数：per_page   = １ページの表示数（デフォルト5件）
-  def find_recent_blogs_as_locals options = { :recent_day => 10, :per_page => 4 }
+  def find_recent_blogs_as_locals options = {}
+    options = { :recent_day => 10, :per_page => 4 }.merge(options)
     find_params = BoardEntry.make_conditions(login_user_symbols, {:entry_type=>'DIARY', :recent_day=>options[:recent_day], :publication_type => 'public'})
     find_params[:conditions][0] << " and board_entries.title <> 'ユーザー登録しました！'"
     pages_obj, pages = paginate(:board_entry,
@@ -865,7 +866,8 @@ private
   # 最近の人気記事一覧を取得する（partial用のオプションを返す）
   # 引数：recent_day = 最近を示す日数（デフォルト10日）
   # 引数：per_page   = １ページの表示数（デフォルト10件）
-  def find_access_blogs_as_locals options = { :recent_day => 10, :per_page => 10 }
+  def find_access_blogs_as_locals options = {}
+    options = { :recent_day => 10, :per_page => 10 }.merge(options)
     find_params = BoardEntry.make_conditions(login_user_symbols, {:publication_type => 'public'})
     find_params[:conditions][0] << " and board_entries.category not like ?"
     find_params[:conditions] << '%[質問]%'
@@ -891,7 +893,8 @@ private
   # 質問記事一覧を取得する（partial用のオプションを返す）
   # 引数：recent_day = 最近を示す日数（デフォルト10日）
   # 引数：per_page   = １ページの表示数（デフォルト5件）
-  def find_questions_as_locals options = { :recent_day => 10, :per_page => 5 }
+  def find_questions_as_locals options = {}
+    options = { :recent_day => 10, :per_page => 5 }.merge(options)
     find_params = BoardEntry.make_conditions(login_user_symbols, {:entry_type=>'DIARY', :recent_day=>options[:recent_day], :category=>'質問'})
     pages_obj, pages = paginate(:board_entry,
                                 :per_page =>options[:per_page],
@@ -911,7 +914,8 @@ private
   # 未読記事一覧を取得する（partial用のオプションを返す）
   # 引数：recent_day = 最近を示す日数（デフォルト10日）
   # 引数：per_page   = １ページの表示数（デフォルト5件）
-  def find_not_reading_blogs_as_locals options = { :recent_day => 10, :per_page => 5 }
+  def find_not_reading_blogs_as_locals options = {}
+    options = { :recent_day => 10, :per_page => 5 }.merge(options)
     find_params = BoardEntry.make_conditions(login_user_symbols, {:recent_day=>options[:recent_day]})
     find_params[:conditions][0] << " and user_readings.read = ? and user_readings.user_id = ?"
     find_params[:conditions] << false << session[:user_id]

@@ -13,6 +13,11 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# 全体設定
+stop_new_user:
+  format: boolean
+  default: false
+
 # 各種文言の設定
 app_title:
   default: SKIP - Social Knowledge & Innovation Platform   # システムの名称
@@ -70,9 +75,9 @@ antenna_default_group:             # 初期のアンテナに追加されるグ�
   default:
   - skipdevelop
   - openskip
-stop_new_user:
-  format: boolean
-  default: false
+recent_date:                       # 最近を示す日数
+  format: int
+  default: 10
 
 # feed設定
 mypage_feed_default_limit:         # マイページで表示するRSSフィードの設定(デフォルトの1フィードあたりの最大表示件数)

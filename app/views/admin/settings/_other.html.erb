@@ -1,6 +1,8 @@
-<% @revert_columns = %w(develop_team_gid initial_anntena) -%>
+<% @revert_columns = %w(develop_team_gid recent_date) -%>
 <div class="box tabular">
-  <p><%= settings_label_with_text_field_tag :develop_team_gid %></p>
+<% @revert_columns.each do |key| -%>
+  <p><%= settings_label_with_text_field_tag key.to_sym %></p>
+<% end -%>
 </div>
 <h3><%= label Admin::Setting.name, :antenna_settings %></h3>
 <div class="box tabular">
