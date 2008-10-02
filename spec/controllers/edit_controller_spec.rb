@@ -20,7 +20,7 @@ describe EditController do
   before(:each) do
     @user = users(:a_user)
     @a_protected_group = groups(:a_protected_group1)
-    session[:user_code] = @user.code
+    session[:auth_session_token] = @user.auth_session_token
   end
 
   describe "GET 'index'" do
@@ -124,6 +124,7 @@ describe EditController, "GET #edit" do
     end
   end
 end
+
 describe EditController, "#destroy" do
   before do
     user_login

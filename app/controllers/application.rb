@@ -157,7 +157,7 @@ protected
   # restful_authenticationが生成するlib/authenticated_system.rbから「次回から自動的にログイン」機能
   # に必要な箇所を持ってきた。
   def login_from_session
-    User.find_by_code(session[:user_code])
+    User.find_by_auth_session_token(session[:auth_session_token]) if session[:auth_session_token]
   end
 
   def login_from_cookie
@@ -179,7 +179,7 @@ protected
 
   def valid_remember_cookie?
     return nil unless @current_user
-    (@current_user.remember_token?) && 
+    (@current_user.remember_token?) &&
       (cookies[:auth_token] == @current_user.remember_token)
   end
 
@@ -188,7 +188,7 @@ protected
     return unless @current_user
     case
     when valid_remember_cookie? then @current_user.refresh_token # keeping same expiry date
-    when new_cookie_flag        then @current_user.remember_me 
+    when new_cookie_flag        then @current_user.remember_me
     else                             @current_user.forget_me
     end
     send_remember_cookie!

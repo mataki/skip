@@ -40,6 +40,7 @@ class PlatformController < ApplicationController
       logout_killing_session!
       if params[:login] and @current_user = User.auth(params[:login][:key], params[:login][:password])
         session[:user_code] = @current_user.code
+        session[:auth_session_token] = @current_user.update_auth_session_token!
         handle_remember_cookie!(params[:login_save] == 'true')
 
         redirect_to_back_or_root

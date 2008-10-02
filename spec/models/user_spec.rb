@@ -156,6 +156,38 @@ describe User, ".auth" do
   end
 end
 
+describe User, "#delete_auth_tokens" do
+  before do
+    @user = create_user
+    @user.remember_token = "remember_token"
+    @user.remember_token_expires_at = Time.now
+    @user.auth_session_token = "auth_session_token"
+    @user.save
+
+    @user.delete_auth_tokens!
+  end
+  it "すべてのトークンが削除されていること" do
+    @user.remember_token.should be_nil
+    @user.remember_token_expires_at.should be_nil
+    @user.auth_session_token.should be_nil
+  end
+end
+
+describe User, "#update_auth_session_token" do
+  before do
+    @user = create_user
+    @auth_session_token = User.make_token
+    User.stub!(:make_token).and_return(@auth_session_token)
+  end
+  it "トークンが保存されること" do
+    @user.update_auth_session_token!
+    @user.auth_session_token.should == @auth_session_token
+  end
+  it "トークンが返されること" do
+    @user.update_auth_session_token!.should == @auth_session_token
+  end
+end
+
 def new_user options = {}
   User.new({ :name => 'ほげ ほげ', :password => 'password', :password_confirmation => 'password'}.merge(options))
 end

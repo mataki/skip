@@ -5,27 +5,32 @@ a_user:
   updated_on: <%= SkipFaker.today %>
   name: a_user
   status: ACTIVE
+  auth_session_token: <%= SkipFaker.rand_char %>
 
 a_retired_user:
   created_on: <%= SkipFaker.today %>
   updated_on: <%= SkipFaker.today %>
   name: a_retired_user
   status: RETIRED
+  auth_session_token: <%= SkipFaker.rand_char %>
 
 a_group_owned_user:
   created_on: <%= SkipFaker.today %>
   updated_on: <%= SkipFaker.today %>
   name: a_group_owned_user
   status: ACTIVE
+  auth_session_token: <%= SkipFaker.rand_char %>
 
 a_group_joined_user:
   created_on: <%= SkipFaker.today %>
   updated_on: <%= SkipFaker.today %>
   name: a_group_joined_user
   status: ACTIVE
+  auth_session_token: <%= SkipFaker.rand_char %>
 
 a_group_waiting_user:
   created_on: <%= SkipFaker.today %>
   updated_on: <%= SkipFaker.today %>
   name: a_group_waiting_user
   status: ACTIVE
+  auth_session_token: <%= SkipFaker.rand_char %>

@@ -15,10 +15,13 @@
 
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe Admin::UserUid, "#after_save" do
+describe Admin::UserUid, "#after_update" do
   before do
+    @user = stub_model(User)
+    @user.stub!(:delete_auth_tokens!)
     @before_uid = SkipFaker.rand_char
-    @uid = Admin::UserUid.create!(:uid => @before_uid, :uid_type => UserUid::UID_TYPE[:username], :user_id => 1)
+    @uid = Admin::UserUid.create!(:uid => @before_uid, :uid_type => UserUid::UID_TYPE[:username], :user_id => @user.id)
+    @uid.stub!(:user).and_return(@user)
   end
   describe "新しいIDで更新の場合" do
     before do
@@ -26,6 +29,10 @@ describe Admin::UserUid, "#after_save" do
     end
     it "renameが呼ばれること" do
       Admin::UserUid.should_receive(:rename).with(@before_uid, @new_uid)
+      @uid.save!
+    end
+    it "強制ログアウトされること" do
+      @user.should_receive(:delete_auth_tokens!)
       @uid.save!
     end
   end
@@ -43,25 +50,25 @@ end
 describe Admin::UserUid, "#after_create" do
   describe "既にmasterのuidが存在している場合" do
     before do
-      @master_uid = 'master'
-      master = Admin::UserUid.create!(:uid => @master_uid, :uid_type => UserUid::UID_TYPE[:master], :user_id => 1)
+      @user = create_user :user_uid_options => {}
+      @master_uid = @user.code
     end
     describe "usernameが存在していない場合" do
       it "self.renameが呼ばれること" do
         new_uid = "username"
         Admin::UserUid.should_receive(:rename).with(@master_uid, new_uid)
-        Admin::UserUid.create!(:uid => new_uid, :uid_type => UserUid::UID_TYPE[:username], :user_id => 1)
+        Admin::UserUid.create!(:uid => new_uid, :uid_type => UserUid::UID_TYPE[:username], :user_id => @user.id)
       end
     end
     describe "usernameが存在している場合" do
       before do
         created_uid = 'createduid'
-        created = Admin::UserUid.create!(:uid => created_uid, :uid_type => UserUid::UID_TYPE[:username], :user_id => 1)
+        created = Admin::UserUid.create!(:uid => created_uid, :uid_type => UserUid::UID_TYPE[:username], :user_id => @user.id)
       end
       it "self.renameが呼ばれないこと" do
         new_uid = "username"
         Admin::UserUid.should_not_receive(:rename)
-        Admin::UserUid.create!(:uid => new_uid, :uid_type => UserUid::UID_TYPE[:username], :user_id => 1)
+        Admin::UserUid.create!(:uid => new_uid, :uid_type => UserUid::UID_TYPE[:username], :user_id => @user.id)
       end
     end
   end
@@ -109,20 +116,21 @@ describe Admin::UserUid, "#rename" do
   end
 
   def create_items_expect_change
-    @u = User.new({:name => 'hoge', :password => 'password', :password_confirmation => 'password'})
+    uid_str = SkipFaker.rand_char
+    @u = User.new({:name => uid_str, :password => 'password', :password_confirmation => 'password'})
     @u.status = 'ACTIVE'
     @u.save!
-    @u.user_uids.create({:uid => 'hoge'})
-    @u.create_user_profile({:introduction => "uid:hoge"})
-    @b = BoardEntry.create!({:title => "hoge", :contents => 'hoge', :date => Date.today, :entry_type => 'DIARY', :symbol => 'uid:hoge', :publication_symbols_value => 'uid:hoge', :contents => "geafdsaf uid:hoge fdsaf", :user_id => @u, :last_updated => Date.today})
-    @b.entry_editors.create({:symbol => 'uid:hoge'})
-    @b.entry_publications.create({:symbol => 'uid:hoge'})
-    @message = Message.create!({:link_url => "/user/hoge", :user_id => @u})
-    @sf = ShareFile.create!({:file_name => "hoge", :owner_symbol => 'uid:hoge', :publication_symbols_value => 'uid:hoge', :date => Date.today, :user_id => @u, :description => 'hoge'})
-    @sf.share_file_publications.create({:symbol => 'uid:hoge'})
-    @mail = Mail.create!({:from_user_id => 'hoge', :to_address_symbol => "uid:hoge", :user_entry_no => 1})
-    @bookmark = Bookmark.create!({:url => '/user/hoge', :title => "hoge"})
-    @ai = AntennaItem.create!({:value => 'uid:hoge', :antenna_id => 1})
+    @u.user_uids.create!({:uid => uid_str})
+    @u.create_user_profile({:introduction => "uid:#{uid_str}"})
+    @b = BoardEntry.create!({:title => uid_str, :contents => uid_str, :date => Date.today, :entry_type => 'DIARY', :symbol => "uid:#{uid_str}", :publication_symbols_value => "uid:#{uid_str}", :contents => "geafdsaf uid:#{uid_str} fdsaf", :user_id => @u, :last_updated => Date.today})
+    @b.entry_editors.create!({:symbol => "uid:#{uid_str}"})
+    @b.entry_publications.create!({:symbol => "uid:#{uid_str}"})
+    @message = Message.create!({:link_url => "/user/#{uid_str}", :user_id => @u})
+    @sf = ShareFile.create!({:file_name => uid_str, :owner_symbol => "uid:#{uid_str}", :publication_symbols_value => "uid:#{uid_str}", :date => Date.today, :user_id => @u, :description => uid_str})
+    @sf.share_file_publications.create!({:symbol => "uid:#{uid_str}"})
+    @mail = Mail.create!({:from_user_id => uid_str, :to_address_symbol => "uid:#{uid_str}", :user_entry_no => 1})
+    @bookmark = Bookmark.create!({:url => "/user/#{uid_str}", :title => uid_str})
+    @ai = AntennaItem.create!({:value => "uid:#{uid_str}", :antenna_id => 1})
 
     @u.user_uids.should_not be_empty
     @b.entry_editors.should_not be_empty

@@ -20,13 +20,15 @@ class Admin::UserUid < UserUid
   def after_update
     if uid_changed?
       self.class.rename(uid_was, uid)
+      self.user.delete_auth_tokens!
     end
   end
 
   def after_create
     if master = self.class.find(:first, :conditions => { :uid_type => UserUid::UID_TYPE[:master], :user_id => user_id }) and
-        self.class.find(:all, :conditions => { :uid_type => UserUid::UID_TYPE[:username], :user_id => user_id }).size <= 1
+        self.class.find(:all, :conditions => { :uid_type => UserUid::UID_TYPE[:username], :user_id => user_id }).size == 1
       self.class.rename(master.uid, uid)
+      self.user.delete_auth_tokens!
     end
   end
 

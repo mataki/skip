@@ -17,37 +17,40 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe BookmarkController do
   fixtures :bookmarks, :users, :user_uids
-
-  def setup
-    @controller = BookmarkController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
+  before do
+    user = user_login
+    session[:user_id] = user.id
   end
-
-  def test_update
-    @request.session[:user_code] = "100001"
-    # 必須項目の新規作成の場合
-    post :update, {:bookmark => {:url => SkipFaker.url, :title => SkipFaker.rand_char},
-                   :bookmark_comment => {:tags => '', :public => true, :comment => SkipFaker.rand_char },
-                   :layout => 'dialog' }
-    assert_response :ok
-
-    # 全項目の新規作成の場合
-    post :update, {:bookmark => {:url => SkipFaker.url, :title => SkipFaker.rand_char},
-                   :bookmark_comment => {:tags => SkipFaker.tag, :public => true, :comment => SkipFaker.rand_char},
-                   :layout => 'dialog' }
-    assert_response :ok
-
-    # 必須項目の更新の場合
-    post :update, {:bookmark => {:url => @a_bookmark.url, :title => SkipFaker.rand_char},
-                   :bookmark_comment => {:public => true}, :layout => 'dialog' }
-    assert_response :ok
-
-    # 全項目の更新の場合
-    post :update, {:bookmark => {:url => @a_bookmark.url, :title => SkipFaker.rand_char},
-                   :bookmark_comment => {:tags => SkipFaker.tag, :public => true, :comment => SkipFaker.rand_char},
-                   :layout => 'dialog' }
-    assert_response :ok
+  describe "必須項目の新規作成の場合" do
+    it "レスポンスが成功であること" do
+      post :update, {:bookmark => {:url => SkipFaker.url, :title => SkipFaker.rand_char},
+                     :bookmark_comment => {:tags => '', :public => true, :comment => SkipFaker.rand_char },
+                     :layout => 'dialog' }
+      response.should be_success
+    end
+  end
+  describe "全項目の新規作成の場合" do
+    it "レスポンスが成功であること" do
+      post :update, {:bookmark => {:url => SkipFaker.url, :title => SkipFaker.rand_char},
+                     :bookmark_comment => {:tags => SkipFaker.tag, :public => true, :comment => SkipFaker.rand_char},
+                     :layout => 'dialog' }
+      response.should be_success
+    end
+  end
+  describe "必須項目の更新の場合" do
+    it "レスポンスが成功であること" do
+      post :update, {:bookmark => {:url => @a_bookmark.url, :title => SkipFaker.rand_char},
+                     :bookmark_comment => {:public => true, :comment => SkipFaker.rand_char}, :layout => 'dialog' }
+      response.should be_success
+    end
+  end
+  describe "全項目の更新の場合" do
+    it "レスポンスが成功であること" do
+      post :update, {:bookmark => {:url => @a_bookmark.url, :title => SkipFaker.rand_char},
+                     :bookmark_comment => {:tags => SkipFaker.tag, :public => true, :comment => SkipFaker.rand_char},
+                     :layout => 'dialog' }
+      response.should be_success
+    end
   end
 end
 

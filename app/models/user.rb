@@ -256,6 +256,17 @@ class User < ActiveRecord::Base
   def unused?
     status == 'UNUSED'
   end
+
+  def delete_auth_tokens!
+    self.auth_session_token = nil
+    self.forget_me
+  end
+
+  def update_auth_session_token!
+    self.auth_session_token = self.class.make_token
+    save(false)
+    self.auth_session_token
+  end
 protected
   @@search_cond_keys = [:name, :extension, :section, :code, :email, :introduction]
 

@@ -155,7 +155,37 @@ describe ApplicationController, '#login_required' do
 end
 
 describe ApplicationController, '#login_from_session' do
-  # TODO 後で書く
+  describe "session[:auth_session_token]がある場合" do
+    before do
+      @auth_session_token = "auth_session_token"
+      controller.stub!(:session).and_return({:auth_session_token => @auth_session_token})
+    end
+    describe "ログイントークンに一致するユーザが見つかる場合" do
+      before do
+        @user = stub_model(User)
+        User.should_receive(:find_by_auth_session_token).with(@auth_session_token).and_return(@user)
+      end
+      it "ユーザを返すこと" do
+        controller.send(:login_from_session).should == @user
+      end
+    end
+    describe "ログイントークンに一致するユーザが見つからない場合" do
+      before do
+        User.should_receive(:find_by_auth_session_token).with(@auth_session_token).and_return(nil)
+      end
+      it "nilを返すこと" do
+        controller.send(:login_from_session).should be_nil
+      end
+    end
+  end
+  describe "session[:auth_session_token]がない場合" do
+    before do
+      controller.stub!(:session).and_return({})
+    end
+    it "nilを返すこと" do
+      controller.send(:login_from_session).should be_nil
+    end
+  end
 end
 
 describe ApplicationController, '#login_from_cookie' do

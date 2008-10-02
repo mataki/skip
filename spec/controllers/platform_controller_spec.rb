@@ -28,15 +28,18 @@ describe PlatformController, "パスワードでログインする場合" do
   describe "認証に成功する場合" do
     before do
       User.should_receive(:auth).with(@code, @password).and_return(@user)
+      @auth_session_token = "auth_session_token"
+      @user.should_receive(:update_auth_session_token!).and_return(@auth_session_token)
       controller.stub!(:handle_remember_cookie!)
     end
     it 'root_urlにリダイレクトされること' do
       login
       response.should redirect_to(root_url)
     end
-    it 'session[:user_code]にログインIDが設定されていること' do
+    it 'sessionのuser_code:ログインIDとauth_session_tokenが設定されていること' do
       login
       session[:user_code].should == @code
+      session[:auth_session_token].should == @auth_session_token
     end
     describe '「次回から自動的にログイン」にチェックがついている場合' do
       it 'handle_remember_cookie!(true)が呼ばれること' do
