@@ -97,7 +97,7 @@ protected
   end
 
   def current_user
-    @current_user ||= User.find_by_code(session[:user_code])
+    @current_user ||= (login_from_session || login_from_cookie)
   end
 
   #エントリへのパーミッションをチェック
@@ -152,5 +152,61 @@ protected
   # なので、rescue.rb local_requestメソッドをオーバーライドしている。
   def local_request?
     false
+  end
+
+  # restful_authenticationが生成するlib/authenticated_system.rbから「次回から自動的にログイン」機能
+  # に必要な箇所を持ってきた。
+  def login_from_session
+    User.find_by_code(session[:user_code])
+  end
+
+  def login_from_cookie
+    user = cookies[:auth_token] && User.find_by_remember_token(cookies[:auth_token])
+    if user && user.remember_token?
+      handle_remember_cookie! false
+      user
+    end
+  end
+
+  #
+  # Remember_me Tokens
+  #
+  # Cookies shouldn't be allowed to persist past their freshness date,
+  # and they should be changed at each login
+
+  # Cookies shouldn't be allowed to persist past their freshness date,
+  # and they should be changed at each login
+
+  def valid_remember_cookie?
+    return nil unless @current_user
+    (@current_user.remember_token?) && 
+      (cookies[:auth_token] == @current_user.remember_token)
+  end
+
+  # Refresh the cookie auth token if it exists, create it otherwise
+  def handle_remember_cookie! new_cookie_flag
+    return unless @current_user
+    case
+    when valid_remember_cookie? then @current_user.refresh_token # keeping same expiry date
+    when new_cookie_flag        then @current_user.remember_me 
+    else                             @current_user.forget_me
+    end
+    send_remember_cookie!
+  end
+
+  def kill_remember_cookie!
+    cookies.delete :auth_token
+  end
+
+  def send_remember_cookie!
+    cookies[:auth_token] = {
+      :value   => @current_user.remember_token,
+      :expires => @current_user.remember_token_expires_at }
+  end
+
+  def logout_killing_session!
+    @current_user.forget_me if @current_user.is_a? User
+    kill_remember_cookie!
+    reset_session
   end
 end

@@ -21,14 +21,35 @@ describe PlatformController, "パスワードでログインする場合" do
     @password = "password"
     @user = mock_model(User, :code => @code)
   end
+  it 'セッションとクッキーがクリアされること' do
+    controller.should_receive(:logout_killing_session!)
+    login
+  end
   describe "認証に成功する場合" do
     before do
       User.should_receive(:auth).with(@code, @password).and_return(@user)
-
-      post :login, :login => { :key => @code, :password => @password }
+      controller.stub!(:handle_remember_cookie!)
     end
-    it { response.should redirect_to(root_url) }
-    it { session[:user_code].should == @code }
+    it 'root_urlにリダイレクトされること' do
+      login
+      response.should redirect_to(root_url)
+    end
+    it 'session[:user_code]にログインIDが設定されていること' do
+      login
+      session[:user_code].should == @code
+    end
+    describe '「次回から自動的にログイン」にチェックがついている場合' do
+      it 'handle_remember_cookie!(true)が呼ばれること' do
+        controller.should_receive(:handle_remember_cookie!).with(true)
+        login(true)
+      end
+    end
+    describe '「次回から自動的にログイン」にチェックがついていない場合' do
+      it 'handle_remember_cookie!(false)が呼ばれること' do
+        controller.should_receive(:handle_remember_cookie!).with(false)
+        login
+      end
+    end
   end
   describe "認証に失敗した場合" do
     before do
@@ -39,6 +60,13 @@ describe PlatformController, "パスワードでログインする場合" do
     end
     it { response.should redirect_to(:back) }
     it { flash[:auth_fail_message].should_not be_nil }
+  end
+  def login login_save = false
+    if login_save
+      post :login, :login => { :key => @code, :password => @password }, :login_save => 'true'
+    else
+      post :login, :login => { :key => @code, :password => @password }
+    end
   end
 end
 
@@ -158,13 +186,16 @@ describe PlatformController, "#require_not_login" do
 end
 
 describe PlatformController, "#logout" do
+  before do
+    user_login
+  end
   describe "固定OP利用RPモードの場合" do
     before do
       INITIAL_SETTINGS['login_mode'] = "rp"
       INITIAL_SETTINGS['fixed_op_url'] = 'http://skipop.url/'
     end
-    it "reset_sessionが呼ばれること" do
-      controller.should_receive(:reset_session)
+    it 'セッションとクッキーがクリアされること' do
+      controller.should_receive(:logout_killing_session!)
       get :logout
     end
     it "OPのログアウトにリダイレクトすること" do

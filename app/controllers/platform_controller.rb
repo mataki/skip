@@ -17,7 +17,7 @@ require 'openid/extensions/ax'
 
 class PlatformController < ApplicationController
   layout false
-  skip_before_filter :sso, :login_required, :prepare_session
+  skip_before_filter :sso, :login_required, :prepare_session, :except => [:logout]
   skip_after_filter  :remove_message
 
   before_filter :require_not_login, :except => [:logout]
@@ -36,9 +36,10 @@ class PlatformController < ApplicationController
     if using_open_id?
       login_with_open_id
     else
-      if params[:login] and user = User.auth(params[:login][:key], params[:login][:password])
-        reset_session
-        session[:user_code] = user.code
+      logout_killing_session!
+      if params[:login] and @current_user = User.auth(params[:login][:key], params[:login][:password])
+        session[:user_code] = @current_user.code
+        handle_remember_cookie!(params[:login_save] == 'true')
 
         redirect_to_back_or_root
       else
@@ -54,7 +55,7 @@ class PlatformController < ApplicationController
 
   # ログアウト
   def logout
-    reset_session
+    logout_killing_session!
     notice = _('You are now logged out.')
     notice = notice + "<br>" + _('You had been retired.') unless params[:message].blank?
     flash[:notice] = notice

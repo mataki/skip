@@ -41,18 +41,37 @@ describe ApplicationController, "#sso" do
 end
 
 describe ApplicationController, '#current_user' do
-  describe 'session[:user_code]に一致するユーザが見つかる場合' do
-    before do
-      @user = mock_model(User)
-      User.should_receive(:find_by_code).and_return(@user)
-    end
-    it { controller.send(:current_user).should == @user }
+  before do
+    @user = stub_model(User)
   end
-  describe 'session[:user_code]に一致するユーザが見つからない場合' do
+  describe 'sessionからユーザを取得できる場合' do
     before do
-      User.should_receive(:find_by_code).and_return(nil)
+      controller.should_receive(:login_from_session).and_return(@user)
     end
-    it { controller.send(:current_user).should == nil }
+    it 'ユーザが返却されること' do
+      controller.send(:current_user).should == @user
+    end
+  end
+  describe 'sessionからユーザを取得できない場合' do
+    before do
+      controller.should_receive(:login_from_session).and_return(nil)
+    end
+    describe 'cookieからユーザを取得できる場合' do
+      before do
+        controller.should_receive(:login_from_cookie).and_return(@user)
+      end
+      it 'ユーザが返却されること' do
+        controller.send(:current_user).should == @user
+      end
+    end
+    describe 'cookieからユーザを取得できない場合' do
+      before do
+        controller.should_receive(:login_from_cookie).and_return(nil)
+      end
+      it 'ユーザが返却されないこと' do
+        controller.send(:current_user).should be_nil
+      end
+    end
   end
 end
 
@@ -135,3 +154,49 @@ describe ApplicationController, '#login_required' do
   end
 end
 
+describe ApplicationController, '#login_from_session' do
+  # TODO 後で書く
+end
+
+describe ApplicationController, '#login_from_cookie' do
+  describe 'cookieにauth_tokenがある場合' do
+    before do
+      @cookies = {}
+      @auth_token = 'auth_token'
+      @cookies[:auth_token] = @auth_token
+      controller.stub!(:cookies).and_return(@cookies)
+    end
+    describe 'usersテーブルにauth_tokenに一致する利用可能なレコードが存在する場合' do
+      before do
+        @user = stub_model(User)
+        @user.stub!(:remember_token?).and_return(true)
+        User.stub!(:find_by_remember_token).with(@auth_token).and_return(@user)
+        controller.stub!(:handle_remember_cookie!)
+      end
+      it 'handle_remember_cookie!が呼ばれること' do
+        controller.should_receive(:handle_remember_cookie!)
+        controller.send(:login_from_cookie)
+      end
+      it 'そのuserを返すこと' do
+        controller.send(:login_from_cookie).should == @user
+      end
+    end
+    describe 'usersテーブルにauth_tokenに一致する利用可能なレコードが存在しない場合' do
+      before do
+        User.stub!(:find_by_remember_token).with(@auth_token).and_return(nil)
+      end
+      it 'nilを返すこと' do
+        controller.send(:login_from_cookie).should be_nil
+      end
+    end
+  end
+  describe 'cookiesにauth_tokenがない場合' do
+    before do
+      @cookies = {}
+      controller.stub!(:cookies).and_return(@cookies)
+    end
+    it 'nilを返すこと' do
+      controller.send(:login_from_cookie).should be_nil
+    end
+  end
+end

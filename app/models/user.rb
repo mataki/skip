@@ -14,6 +14,8 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class User < ActiveRecord::Base
+  include Authentication
+  include Authentication::ByCookieToken
   attr_accessor :old_password, :password
   attr_protected :admin, :status
 
