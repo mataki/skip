@@ -21,6 +21,7 @@ class PlatformController < ApplicationController
   skip_after_filter  :remove_message
 
   before_filter :require_not_login, :except => [:logout]
+  protect_from_forgery :except => [:login]
 
   def index
     img_files = Dir.glob(File.join(RAILS_ROOT, "public", "custom", "images", "titles", "background*.{jpg,png,jpeg}"))
