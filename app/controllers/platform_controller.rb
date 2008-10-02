@@ -17,6 +17,7 @@ class PlatformController < ApplicationController
   layout false
   skip_before_filter :sso, :prepare_session
   skip_after_filter  :remove_message
+  protect_from_forgery :except => [:login]
 
   # ログイン前画面の表示
   def index
