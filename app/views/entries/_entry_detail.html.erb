@@ -151,8 +151,11 @@ div#source_style_area, div#access_style_area {
     <% if @editable %>
      | <span id="access_style_label" style="display:none">アクセス履歴</span><a href="#" id="access_style_link">アクセス履歴</a>
     <% end %>
-     | <span id="sort_desc_style_label" style="display:none">コメントソート(降順)</span><a href="#" id="sort_desc_style_link">コメントソート(降順)</a>
-     | <span id="sort_asc_style_label" style="display:none">コメントソート(昇順)</span><a href="#" id="sort_asc_style_link">コメントソート(降順)</a>
+    ]
+    [
+     <span id="sort_default_label">コメントソート(標準)</span><a href="#" id="sort_default_link" style="display:none">コメントソート(標準)</a>
+     | <span id="sort_desc_label" style="display:none">コメントソート(降順)</span><a href="#" id="sort_desc_link">コメントソート(降順)</a>
+     | <span id="sort_asc_label" style="display:none">コメントソート(昇順)</span><a href="#" id="sort_asc_link">コメントソート(昇順)</a>
     ]
   </span>
 </div>
@@ -204,6 +207,7 @@ div#source_style_area, div#access_style_area {
 
 <script type="text/javascript">
 $j(function(){
+    // 書き込みボタン押下時
     $j('#new_comment_form')
     .submit(function() {
         if(isEmpty($j('#board_entry_comment_contents').val())) {
@@ -216,6 +220,10 @@ $j(function(){
             complete:function(request) {
                 $j('#board_entry_comments').append(request.responseText);
                 $j('#board_entry_comment_contents').val('');
+                setupCommentEditLink();
+                setupCommentCancelButton();
+                setupCommentInputForm();
+                setupCommentNestLink();
             }
         });
         return false;
@@ -242,54 +250,87 @@ $j(function(){
         return false;
     });
 
+    // コメントソート(標準)リンククリック時
+    $j('#sort_default_link')
+    .click(function() {
+        sortComment('default');
+        changeSortMenu('default');
+        return false;
+    });
+
     // コメントソート(降順)リンククリック時
-    $j('#sort_desc_style_link')
+    $j('#sort_desc_link')
     .click(function() {
         sortComment('desc')
+        changeSortMenu('desc')
         return false;
     });
 
     // コメントソート(昇順)リンククリック時
-    $j('#sort_asc_style_link')
+    $j('#sort_asc_link')
     .click(function() {
         sortComment('asc')
+        changeSortMenu('asc')
         return false;
     });
 
-    // 引数の値によってコメントを昇順もしくは降順にソートする
+    // 引数の値によってコメントを標準、昇順、降順にソートする
     var sortComment = function(sortType) {
-        sortType = sortType || 'asc';
+        // 引数のコメントツリーについて最大のコメントIDを返す
+        var getMaxCommentId = function(tree) {
+            var children = $j.makeArray($j(tree).find('.board_entry_comment'));
+            if( children.size() == 0 ) {
+                return -tree.id.split('_')[1]
+            }
+            var descSortedChildren = children.sort(
+                function(leftChildren, rightChildren){
+                    return rightChildren.id.split('_')[1] - leftChildren.id.split('_')[1];
+                }
+            );
+            return -descSortedChildren[0].id.split('_')[1];
+        };
+
+        sortType = sortType || 'default';
         var trees = $j.makeArray($j('#board_entry_comments').children().children('.board_entry_comment'));
+        var sortDefault = function(leftTree, rightTree) {
+            return leftTree.id.split('_')[1] - rightTree.id.split('_')[1];
+        };
         $j.each(
             trees.sort(
                 function(leftTree, rightTree) {
-                    var maxLeftTreeId = getMaxCommentId(leftTree)
-                    var maxRightTreeId = getMaxCommentId(rightTree)
-                    if (sortType == 'asc') {
-                        return maxRightTreeId - maxLeftTreeId;
+                    if (sortType == 'default') {
+                        return sortDefault(leftTree, rightTree);
+                    } else if (sortType == 'asc') {
+                        return getMaxCommentId(rightTree) - getMaxCommentId(leftTree);
+                    } else if (sortType == 'desc') {
+                        return getMaxCommentId(leftTree) - getMaxCommentId(rightTree);
                     } else {
-                        return maxLeftTreeId - maxRightTreeId;
+                        return sortDefault(leftTree, rightTree);
                     }
                 }
             ),
             function(){
                 $j(this).css({marginLeft:'0px', backgroundColor:'#eee'}).parent().remove().appendTo('#board_entry_comments');
             }
-        )
+        );
+        setupCommentEditLink();
+        setupCommentCancelButton();
+        setupCommentInputForm();
+        setupCommentNestLink();
     };
 
-    // 引数のコメントツリーについて最大のコメントIDを返す
-    var getMaxCommentId = function(tree) {
-        var children = $j.makeArray($j(tree).find('.board_entry_comment'));
-        if( children.size() == 0 ) {
-            return -tree.id.split('_')[1]
-        }
-        var descSortedChildren = children.sort(
-            function(leftChildren, rightChildren){
-                return rightChildren.id.split('_')[1] - leftChildren.id.split('_')[1];
+    // コメントソート(標準)、コメントソート(昇順)、コメントソート(降順)を切り替える
+    var changeSortMenu = function(sortType) {
+        var sortTypes = ['default', 'desc', 'asc'];
+        $j.each(sortTypes, function() {
+            if(this == sortType) {
+                $j('#sort_' + this + '_label').show();
+                $j('#sort_' + this + '_link').hide();
+            } else {
+                $j('#sort_' + this + '_label').hide();
+                $j('#sort_' + this + '_link').show();
             }
-        );
-        return -descSortedChildren[0].id.split('_')[1];
+        });
     };
 
     // ブログ表示、ソース表示、アクセス履歴を切り替える
@@ -309,14 +350,14 @@ $j(function(){
     };
 
     // 引数の文字列が空白以外で1文字以上かどうか
-    isEmpty = function(text) {
+    var isEmpty = function(text) {
         text = text.gsub("　", " ");
         if(text.strip().length == 0) {
             alert("空白以外で1文字以上入力してください。");
             return true;
         }
         return false;
-    }
+    };
 
     //  ポイントボタン押下時の動作 board_entry_point 内の動作
     var entry_point = 0;
@@ -339,158 +380,172 @@ $j(function(){
                 }
             });
         });
-    }
+    };
     appendEntryPointClick();
-});
-// 編集ボタン押下時の処理
-setupCommentEditLink = function(commentId) {
-    $j('#comment_edit_link_' + commentId)
-    .click(function() {
-        $j('#comment_contents_' + commentId).fadeOut(0, function() {
-            $j('#comment_area_' + commentId).fadeIn('fast', function() {
-                $j('#comment_input_form_' + commentId + ' textarea').focus();
-            });
-        });
-        return false;
-    });
-};
 
-// コメント編集フォームのキャンセルボタン押下時の処理
-setupCommentCancelButton = function(commentId) {
-    $j('#comment_cancel_button_' + commentId)
-    .click(function() {
-        if ($j('#comment_area_' + commentId).is(':visible')) {
-            $j('#comment_area_' + commentId).fadeOut(0, function() {
-                $j('#comment_contents_' + commentId).fadeIn('fast');
+    // 編集ボタン押下時の処理
+    var setupCommentEditLink = function() {
+        $j('.comment_edit_link')
+        .click(function() {
+            commentId = this.id.split('_')[3];
+            $j('#comment_contents_' + commentId).fadeOut(0, function() {
+                $j('#comment_area_' + commentId).fadeIn('fast', function() {
+                    $j('#comment_input_form_' + commentId + ' textarea').focus();
+                });
             });
-        }
-        return false;
-    });
-};
-
-// コメント編集フォームをサブミットした時の処理
-setupCommentInputForm = function(commentId) {
-    $j('#comment_input_form_' + commentId)
-    .submit(function() {
-        if(isEmpty($j('#comment_input_form_' + commentId + ' textarea').val())) {
             return false;
-        }
-        $j.ajax({
-            type:'POST',
-            url:'<%= url_for(:controller => 'board_entries', :action => 'ado_edit_comment') -%>/' + commentId,
-            data:$j('#comment_input_form_' + commentId).serialize() + '&authenticity_token=' + $j('#authenticity_token').val(),
-            complete:function(request) {
-                $j('#comment_contents_' + commentId).html(request.responseText);
-                if ($j('#comment_area_' + commentId).is(':visible')) {
-                    $j('#comment_area_' + commentId).fadeOut(0, function() {
-                        $j('#comment_contents_' + commentId).fadeIn('fast');
-                    });
-                }
-            }
         });
-        return false;
-    });
-};
+    };
+    setupCommentEditLink();
 
-// 「このコメントに返信」ボタン押下時の処理
-setupCommentNestLink = function(commentId, level) {
-    $j('#comment_nest_link_' + commentId)
-    .click(function() {
-        // ネストレベルを保持するhiddenフィールドを作成
-        var hiddenLevel = function() {
-            return $j(document.createElement('input')).attr({type:'hidden', name:'level', value:level});
-        };
+    // コメント編集フォームのキャンセルボタン押下時の処理
+    var setupCommentCancelButton = function() {
+        $j('.comment_cancel_button')
+        .click(function() {
+            commentId = this.id.split('_')[3];
+            if ($j('#comment_area_' + commentId).is(':visible')) {
+                $j('#comment_area_' + commentId).fadeOut(0, function() {
+                    $j('#comment_contents_' + commentId).fadeIn('fast');
+                });
+            }
+            return false;
+        });
+    };
+    setupCommentCancelButton();
 
-        // トークン
-        var hiddenToken = function() {
-            return $j(document.createElement('input')).attr({type:'hidden', name:'authenticity_token', value:$j('#authenticity_token').val()});
-        };
-
-        // 説明を作成
-        var divDesc = function() {
-            return $j(document.createElement('div'))
-            .append(document.createTextNode('このコメントに返信'))
-            .css({marginTop:'3px', fontSize:'10px', color:'gray'});
-        };
-
-        // コメント入力用テキストエリアを作成
-        var divText = function() {
-            var div = $j(document.createElement('div'));
-            $j(document.createElement('textarea'))
-            .attr({rows:5, name:'contents'})
-            .css('width', '90%')
-            .appendTo(div);
-            return div
-        };
-
-        // 保存ボタンを作成
-        var saveButton = function(jform) {
-            return $j(document.createElement('input'))
-            .attr({type:'button', value:'保存'})
-            .css({fontSize:'10px'})
-            .click(function() {
-                if(isEmpty(jform.find('textarea').val())) {
-                    return false;
-                }
-                $j.ajax({
-                    type:'POST',
-                    url:'<%= url_for(:controller => 'board_entries', :action => 'ado_create_nest_comment') -%>/' + commentId,
-                    data:jform.serialize(),
-                    complete:function(request) {
-                        if(request.responseText.strip().length == 0) {
-                            alert('保存に失敗しました。一度画面を更新してみてください。');
-                            return false;
-                        }
-                        jform.fadeOut('0', function(){
-                            $j('#link_nest_comment_' + commentId).show();
-                            $j(document.createElement('div'))
-                            .appendTo('#view_nest_comment_' + commentId)
-                            .html(request.responseText)
-                            .hide()
-                            .fadeIn('fast');
-                            jform.remove();
-                            fnLoadPngs();
+    // コメント編集フォームをサブミットした時の処理
+    var setupCommentInputForm = function() {
+        $j('.comment_input_form')
+        .submit(function() {
+            commentId = this.id.split('_')[3];
+            if(isEmpty($j('#comment_input_form_' + commentId + ' textarea').val())) {
+                return false;
+            }
+            $j.ajax({
+                type:'POST',
+                url:'<%= url_for(:controller => 'board_entries', :action => 'ado_edit_comment') -%>/' + commentId,
+                data:$j('#comment_input_form_' + commentId).serialize() + '&authenticity_token=' + $j('#authenticity_token').val(),
+                complete:function(request) {
+                    $j('#comment_contents_' + commentId).html(request.responseText);
+                    if ($j('#comment_area_' + commentId).is(':visible')) {
+                        $j('#comment_area_' + commentId).fadeOut(0, function() {
+                            $j('#comment_contents_' + commentId).fadeIn('fast');
                         });
-                    },
-                    error:function(request) {
-                        alert('通信に失敗しました。');
                     }
-
-                });
-                return false;
+                }
             });
-        };
+            return false;
+        });
+    };
+    setupCommentInputForm();
 
-        // キャンセルボタンを作成
-        var cancelButton = function(jform) {
-            return $j(document.createElement('input'))
-            .attr({type:'button', value:'キャンセル'})
-            .css({fontSize:'10px'})
-            .click(function() {
-                jform.fadeOut('0', function(){
-                    $j('#link_nest_comment_' + commentId).show();
-                    jform.remove();
+    // 「このコメントに返信」ボタン押下時の処理
+    var setupCommentNestLink = function() {
+        $j('.comment_nest_link')
+        .click(function() {
+            commentId = this.id.split('_')[3];
+            level = this.id.split('_')[4] - 0 + 1;
+            // ネストレベルを保持するhiddenフィールドを作成
+            var hiddenLevel = function() {
+                return $j(document.createElement('input')).attr({type:'hidden', name:'level', value:level});
+            };
+
+            // トークン
+            var hiddenToken = function() {
+                return $j(document.createElement('input')).attr({type:'hidden', name:'authenticity_token', value:$j('#authenticity_token').val()});
+            };
+
+            // 説明を作成
+            var divDesc = function() {
+                return $j(document.createElement('div'))
+                .append(document.createTextNode('このコメントに返信'))
+                .css({marginTop:'3px', fontSize:'10px', color:'gray'});
+            };
+
+            // コメント入力用テキストエリアを作成
+            var divText = function() {
+                var div = $j(document.createElement('div'));
+                $j(document.createElement('textarea'))
+                .attr({rows:5, name:'contents'})
+                .css('width', '90%')
+                .appendTo(div);
+                return div
+            };
+
+            // 保存ボタンを作成
+            var saveButton = function(jform) {
+                return $j(document.createElement('input'))
+                .attr({type:'button', value:'保存'})
+                .css({fontSize:'10px'})
+                .click(function() {
+                    if(isEmpty(jform.find('textarea').val())) {
+                        return false;
+                    }
+                    $j.ajax({
+                        type:'POST',
+                        url:'<%= url_for(:controller => 'board_entries', :action => 'ado_create_nest_comment') -%>/' + commentId,
+                        data:jform.serialize(),
+                        complete:function(request) {
+                            if(request.responseText.strip().length == 0) {
+                                alert('保存に失敗しました。一度画面を更新してみてください。');
+                                return false;
+                            }
+                            jform.fadeOut('0', function(){
+                                $j('#link_nest_comment_' + commentId).show();
+                                $j(document.createElement('div'))
+                                .appendTo('#view_nest_comment_' + commentId)
+                                .html(request.responseText)
+                                .hide()
+                                .fadeIn('fast', function() {
+                                    setupCommentEditLink();
+                                    setupCommentCancelButton();
+                                    setupCommentInputForm();
+                                    setupCommentNestLink();
+                                });
+                                jform.remove();
+                                fnLoadPngs();
+                            });
+                        },
+                        error:function(request) {
+                            alert('通信に失敗しました。');
+                        }
+                    });
+                    return false;
                 });
-                return false;
-            });
-        };
+            };
 
-        $j('#link_nest_comment_' + commentId).hide();
-        // コメント返信フォームを作成して表示
-        var jform = $j(document.createElement('form'));
-        jform
-        .append(hiddenLevel())
-        .append(hiddenToken())
-        .append(divDesc())
-        .append(divText())
-        .append(
-            $j(document.createElement('div'))
-            .append(saveButton(jform))
-            .append(cancelButton(jform))
-        )
-        .hide()
-        .fadeIn('fast')
-        .appendTo('#edit_nest_comment_' + commentId);
-    });
-};
+            // キャンセルボタンを作成
+            var cancelButton = function(jform) {
+                return $j(document.createElement('input'))
+                .attr({type:'button', value:'キャンセル'})
+                .css({fontSize:'10px'})
+                .click(function() {
+                    jform.fadeOut('0', function(){
+                        $j('#link_nest_comment_' + commentId).show();
+                        jform.remove();
+                    });
+                    return false;
+                });
+            };
+
+            $j('#link_nest_comment_' + commentId).hide();
+            // コメント返信フォームを作成して表示
+            var jform = $j(document.createElement('form'));
+            jform
+            .append(hiddenLevel())
+            .append(hiddenToken())
+            .append(divDesc())
+            .append(divText())
+            .append(
+                $j(document.createElement('div'))
+                .append(saveButton(jform))
+                .append(cancelButton(jform))
+            )
+            .hide()
+            .fadeIn('fast')
+            .appendTo('#edit_nest_comment_' + commentId);
+        });
+    };
+    setupCommentNestLink();
+});
 </script>
