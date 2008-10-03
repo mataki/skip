@@ -418,11 +418,9 @@ class MypageController < ApplicationController
   end
 
   def antenna_list
-    antennas = Antenna.find(:all, :conditions => ["user_id = ?" ,session[:user_id]])
-    service_url = root_url+"/feed/user_antenna?anntena_id="
-    result = { :antenna_list => antennas.map{|antenna| { :name => antenna.name, :url => service_url+antenna.id.to_s }} }
-    render :text => result.to_jason
+    render :text => current_user_antennas_as_json
   end
+
 private
   def setup_layout
     @main_menu = @title = 'マイページ'
@@ -905,5 +903,15 @@ private
       :symbol2name_hash => BoardEntry.get_symbol2name_hash(pages)
     }
   end
+
+  def current_user_antennas_as_json
+    antennas = Antenna.all(:conditions => ["user_id = ?" , current_user.id])
+    result = {
+      :antenna_list => antennas.map do |antenna|
+      { :name => antenna.name, :url => url_for(:controller => :feed, :action => :user_antenna, :id => antenna.id) }
+      end
+    }.to_json
+  end
+
 end
 

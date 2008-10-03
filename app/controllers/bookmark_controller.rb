@@ -1,6 +1,6 @@
-# SKIP（Social Knowledge & Innovation Platform）
-# Copyright (C) 2008  TIS Inc.
-# 
+# SKIP(Social Knowledge & Innovation Platform)
+# Copyright (C) 2008 TIS Inc.
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -9,14 +9,12 @@
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-# 
+#
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 require 'uri'
 class BookmarkController < ApplicationController
-  before_filter :setup_layout, :only => [:show]
-
   verify :method => :post, :only => [:update, :destroy, :ado_set_stared ], :redirect_to => { :action => :show }
 
   before_filter :check_params, :only => [:new, :edit]
@@ -71,8 +69,8 @@ class BookmarkController < ApplicationController
     is_new_record = @bookmark.new_record?
     Bookmark.transaction do
       # 親が存在しない場合は、親保存時に子も保存される。既存の親の場合は親を保存しても子が保存されないので子のみ保存
-      @bookmark.save! if is_new_record
       @bookmark_comment.save! unless is_new_record
+      @bookmark.save!
       if @bookmark.is_type_user?
         uid = @bookmark.url.slice(/^\/user\/(.*)/, 1)
         user = User.find_by_uid(uid)
@@ -88,7 +86,7 @@ class BookmarkController < ApplicationController
     messages = []
     messages.concat @bookmark.errors.full_messages.reject{|msg| msg.include?("Bookmark comments")} unless @bookmark.valid?
     messages.concat @bookmark_comment.errors.full_messages unless @bookmark_comment.valid?
-    
+
     render :partial => "system/error_messages_for", :locals=> { :messages => messages }
   end
 
@@ -98,7 +96,20 @@ class BookmarkController < ApplicationController
 
   # tab_menu
   def show
-    setup_tab_menu('show')
+    uri = params[:uri] ? URI.decode(params[:uri]) : ""
+    uri.gsub!('+', ' ')
+    unless @bookmark = Bookmark.find_by_url(uri, :include => :bookmark_comments )
+      flash[:warning] = "指定のＵＲＬは誰もブックマークしていません。"
+      redirect_to :controller => 'mypage', :action => 'index'
+      return
+    end
+
+    @main_menu = 'ブックマーク'
+    @title = 'ブックマーク[' + @bookmark.title + ']'
+    @tab_menu_source = [ ['ブックマークコメント', 'show'] ]
+    @tab_menu_option = { :uri => @bookmark.url }
+
+    # TODO: SQLを発行しなくても判断できるのでrubyで処理する様に
     comment =  BookmarkComment.find(:first,
                                     :conditions => ["bookmark_id = ? and user_id = ?", @bookmark.id, session[:user_id]])
 
@@ -110,34 +121,19 @@ class BookmarkController < ApplicationController
   # ブックマークコメントの削除
   def destroy
     comment = BookmarkComment.find(params[:comment_id])
-    
-    # 権限チェック
-    unless comment.user_id == session[:user_id]
-      flash[:warning] = "この操作は、許可されていません。"
-      redirect_to  :controller => 'mypage', :action =>'index'
-      return false
-    end
 
-    if comment.destroy
-      flash[:notice] = '削除しました。'
-    else
-      flash[:warning] = '削除に失敗しました。'
-    end
+    # 権限チェック
+    redirect_to_with_deny_auth and return unless comment.user_id == session[:user_id]
+
+    comment.destroy
+    flash[:notice] = '削除しました。'
     redirect_to  :action =>'show', :uri => comment.bookmark.url
-  rescue ActiveRecord::RecordNotFound => ex
-    flash[:warning] = "ブックマークは、既に削除されています"
-    redirect_to  :controller => 'mypage', :action =>'index'
-    return false
   end
-    
+
 
   #ユーザのブックマークコメント一覧表示(ユーザのページからのリンクでくる)
   def list
-    if not parent_controller
-      flash[:warning] = '不正な操作でのアクセスは許可されていません'
-      redirect_to :controller => 'mypage', :action => "index"
-      return
-    end
+    redirect_to_with_deny_auth and return if not parent_controller
 
     params[:user_id] = parent_controller.params[:user_id]
     params[:page] = parent_controller.params[:page]
@@ -190,27 +186,8 @@ class BookmarkController < ApplicationController
     render :text => count.to_s
   end
 
-    
+
 private
-  def setup_layout
-    uri = URI.decode(params[:uri])
-    uri.gsub!('+', ' ')
-    unless @bookmark = Bookmark.find_by_url(uri, :include=>:bookmark_comments )
-      flash[:warning] = "指定のＵＲＬは誰もブックマークしていません。"
-      redirect_to :controller => 'mypage', :action => 'index'
-      return false
-    end
-  end
-
-  def setup_tab_menu(action_name, comment_id=nil)
-    @main_menu = 'ブックマーク'
-    @title = 'ブックマーク[' + @bookmark.title + ']'
-
-    @tab_menu_source = [ ['ブックマークコメント', action_name] ]
-
-    @tab_menu_option = comment_id ? { :uri => @bookmark.url, :comment_id => comment_id} : { :uri => @bookmark.url}
-  end
-
   def check_params
     unless params[:url] && check_url_format?(params[:url])
       flash[:warning] = "そのURLは有効ではありません。"

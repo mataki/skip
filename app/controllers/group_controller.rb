@@ -45,28 +45,11 @@ class GroupController < ApplicationController
     conditions = ["group_participations.group_id = ? and group_participations.waiting = ?", @group.id, false]
     conditions[0] << " and group_participations.owned = false" unless @condition.include_manager?
 
-    order_by = @condition.value_of_order_by
-
-    per_page = 10
-    case @condition.output_type
-    when "normal"
-      per_page = 5
-    when "list"
-      per_page = 20
-    when "csv"
-      csv_text = User.find_as_csv(:all,
-                                  :conditions => conditions,
-                                  :order => order_by,
-                                  :include => [:user_access, :group_participations])
-      send_data csv_text, :filename => 'users.csv', :type => 'application/x-csv', :disposition => 'attachment'
-      return nil
-    end
-
     @pages, @users = paginate(:user,
-                              :per_page => per_page,
+                              :per_page => @condition.value_of_per_page,
                               :conditions => conditions,
-                              :order_by => order_by,
-                              :include => [:user_access, :pictures, :group_participations, :user_uids])
+                              :order_by => @condition.value_of_order_by,
+                              :include => @condition.value_of_include << 'group_participations')
     unless @users && @users.size > 0
       flash.now[:notice] = '該当するユーザは存在しませんでした。'
     end

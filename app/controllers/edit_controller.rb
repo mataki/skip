@@ -1,6 +1,6 @@
-# SKIP（Social Knowledge & Innovation Platform）
-# Copyright (C) 2008  TIS Inc.
-# 
+# SKIP(Social Knowledge & Innovation Platform)
+# Copyright (C) 2008 TIS Inc.
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -9,7 +9,7 @@
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-# 
+#
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -62,9 +62,7 @@ class EditController < ApplicationController
     end
 
     unless validate_params params, @board_entry
-      if MAIL_FUNCTION_SETTING
-        @sent_mail_flag = "checked" if params[:sent_mail][:send_flag] == "1"
-      end
+      @sent_mail_flag = "checked" if params[:sent_mail] and params[:sent_mail][:send_flag] == "1"
       flash[:warning] = "不正なパラメータがあります"
       render :action => 'index'
       return
@@ -76,14 +74,11 @@ class EditController < ApplicationController
     @board_entry.publication_symbols_value = params[:publication_type]=='protected' ? params[:publication_symbols_value] : ""
 
     # 権限チェック
-    unless (session[:user_symbol] == params[:board_entry][:symbol]) || 
-      login_user_groups.include?(params[:board_entry][:symbol]) 
-      if MAIL_FUNCTION_SETTING
-        @sent_mail_flag = "checked" if params[:sent_mail][:send_flag] == "1"
-      end
-      flash[:warning] = "この操作は、許可されていません。"
-      redirect_to  :controller => 'mypage', :action =>'index'
-      return
+    unless (session[:user_symbol] == params[:board_entry][:symbol]) ||
+      login_user_groups.include?(params[:board_entry][:symbol])
+      @sent_mail_flag = "checked" if params[:sent_mail] and params[:sent_mail][:send_flag] == "1"
+
+      redirect_to_with_deny_auth and return
     end
 
     if @board_entry.save
@@ -110,7 +105,7 @@ class EditController < ApplicationController
       return
     end
 
-    @sent_mail_flag = "checked" if params[:sent_mail][:send_flag] == "1"
+    @sent_mail_flag = "checked" if params[:sent_mail] and params[:sent_mail][:send_flag] == "1"
     render :action => 'index'
   end
 
@@ -118,11 +113,8 @@ class EditController < ApplicationController
   def edit
     @board_entry = get_entry(params[:id])
     # 権限チェック
-    unless authorize_to_edit_board_entry? @board_entry
-      flash[:warning] = "この操作は、許可されていません。"
-      redirect_to :controller => 'mypage', :action => 'index'
-      return false
-    end
+    redirect_to_with_deny_auth and return unless authorize_to_edit_board_entry? @board_entry
+
     params[:entry_type] ||= @board_entry.entry_type
     params[:symbol] ||= @board_entry.symbol
 
@@ -175,7 +167,7 @@ class EditController < ApplicationController
 
   # post_acttion
   def update
-    @board_entry = get_entry params[:id] 
+    @board_entry = get_entry params[:id]
     #編集の競合をチェック
     @conflicted = false
     @img_urls = get_img_urls @board_entry
@@ -184,17 +176,13 @@ class EditController < ApplicationController
       @conflicted = true
       flash.now[:warning] = "他の人によって同じ投稿に更新がかかっています。編集をやり直しますか？"
       @img_urls = get_img_urls @board_entry
-      if MAIL_FUNCTION_SETTING
-        @sent_mail_flag = "checked" if params[:sent_mail][:send_flag] == "1"
-      end
+      @sent_mail_flag = "checked" if params[:sent_mail] and params[:sent_mail][:send_flag] == "1"
       render :action => 'edit'
       return
     end
 
     unless validate_params params, @board_entry
-      if MAIL_FUNCTION_SETTING
-        @sent_mail_flag = "checked" if params[:sent_mail][:send_flag] == "1"
-      end
+      @sent_mail_flag = "checked" if params[:sent_mail] and params[:sent_mail][:send_flag] == "1"
       flash[:warning] = "不正なパラメータがあります"
       render :action => 'edit'
       return
@@ -213,19 +201,13 @@ class EditController < ApplicationController
 
     update_params[:publication_type] = params[:publication_type]
     update_params[:publication_symbols_value] = params[:publication_type]=='protected' ? params[:publication_symbols_value] : ""
-    
+
     # 権限チェック
-    unless authorize_to_edit_board_entry? @board_entry
-      flash[:warning] = "この操作は、許可されていません。"
-      redirect_to :controller => 'mypage', :action => 'index'
-      return false
-    end
+    redirect_to_with_deny_auth and return unless authorize_to_edit_board_entry? @board_entry
 
     # 成りすましての更新を防止
-    if params[:symbol] != @board_entry.symbol || params[:board_entry][:symbol] != @board_entry.symbol 
-      flash[:warning] = 'その操作は許可されていません。'
-      redirect_to :controller => 'mypage', :action => 'index'
-      return false
+    if params[:symbol] != @board_entry.symbol || params[:board_entry][:symbol] != @board_entry.symbol
+      redirect_to_with_deny_auth and return
     end
 
     # ちょっとした更新でなければ、last_updatedを更新する
@@ -256,43 +238,27 @@ class EditController < ApplicationController
     end
 
 
-    @sent_mail_flag = "checked" if params[:sent_mail][:send_flag] == "1"
+    @sent_mail_flag = "checked" if params[:sent_mail] and params[:sent_mail][:send_flag] == "1"
     render :action => 'edit'
   end
 
   # post_action
   def destroy
-    @board_entry = get_entry params[:id] 
+    @board_entry = get_entry params[:id]
     # 権限チェック
-    unless authorize_to_edit_board_entry? @board_entry
-      flash[:warning] = "この操作は、許可されていません。"
-      redirect_to :controller => 'mypage', :action => 'index'
-      return false
-    end
+    redirect_to_with_deny_auth and return unless authorize_to_edit_board_entry? @board_entry
 
-    id = @board_entry.id
-    user_id = @board_entry.user_id
-
-    url = @board_entry.get_url_hash
-    url[:entry_id] = nil
-
-    if @board_entry.destroy
-      FileUtils.rm(Dir.glob(File.join(get_dir_path, user_id.to_s, id.to_s + "_*.{jpg,JPG,png,PNG,jpeg,JPEG,gif,GIF}")))
-      flash[:notice] = '削除しました。'
-    else
-      flash[:notice] = '削除に失敗しました。'
-    end
-    redirect_to url
+    @board_entry.destroy
+    flash[:notice] = _('削除しました。')
+    # そのユーザのブログ一覧画面に遷移する
+    # TODO: この部分をメソッド化した方がいいかも(by mat_aki)
+    redirect_to @board_entry.get_url_hash.delete_if{|key,val| key == :entry_id}
   end
 
   def delete_trackback
-    @board_entry = get_entry params[:id] 
+    @board_entry = get_entry params[:id]
 
-    unless @board_entry.user_id == session[:user_id]
-      flash[:warning] = "この操作は、許可されていません。"
-      redirect_to :controller => 'mypage', :action => 'index'
-      return false
-    end
+    redirect_to_with_deny_auth and return unless @board_entry.user_id == session[:user_id]
 
     tb_entries = EntryTrackback.find_all_by_board_entry_id_and_tb_entry_id(@board_entry.id, params[:tb_entry_id])
     tb_entries.each do |tb_entry|
@@ -314,14 +280,10 @@ class EditController < ApplicationController
 
   # ajax_action
   def ado_remove_image
-    @board_entry = get_entry params[:id] 
+    @board_entry = get_entry params[:id]
 
     # 権限チェック
-    unless authorize_to_edit_board_entry? @board_entry
-      flash[:warning] = "この操作は、許可されていません。"
-      redirect_to :controller => 'mypage', :action => 'index'
-      return false
-    end
+    redirect_to_with_deny_auth and return unless authorize_to_edit_board_entry? @board_entry
 
     FileUtils.rm(File.join(get_dir_path, @board_entry.user_id.to_s, @board_entry.id.to_s + '_' + params[:filename]))
     img_urls = get_img_urls @board_entry
@@ -339,7 +301,7 @@ private
     @title = 'エントリを投稿する'
     @title = 'エントリを編集する' if ["edit", "update"].include? action_name
   end
-  
+
 
   def analyze_params
     target_symbols_publication = []
@@ -364,7 +326,7 @@ private
 
   def upload_file board_entry, src_image_file
     # FIXME 以下のチェックに失敗した場合のエラー処理が全くない。
-    if valid_upload_file?(src_image_file) && 
+    if valid_upload_file?(src_image_file) &&
       verify_extension?(src_image_file.original_filename, src_image_file.content_type)
       dir_path = File.join(get_dir_path, board_entry.user_id.to_s)
       FileUtils.mkdir_p dir_path
@@ -375,17 +337,9 @@ private
     end
   end
 
+  # TODO: モデルのメソッドを直接呼び出しでもよい。他の部分でSpecを書いたら持っていく
   def get_img_urls board_entry
-    board_entry_id = board_entry.id.to_s
-    dir_path = File.join('board_entries', board_entry.user_id.to_s)
-    img_urls = {}
-    img_files = Dir.glob(File.join(ENV['IMAGE_PATH'], dir_path, board_entry_id + "_*"))
-    img_files.each do |img_file|
-      img_name = File.basename(img_file)
-      img_key = img_name.gsub(board_entry_id+"_",'')
-      img_urls[img_key] = url_for(:controller=>'image', :action=>'show', :path=>File.join(dir_path, img_name))
-    end
-    return img_urls
+    board_entry.images_filename_to_url_mapping_hash
   end
 
   def get_dir_path
@@ -396,9 +350,7 @@ private
     return unless @board_entry.errors.empty?
     @board_entry.cancel_mail
 
-    if params[:sent_mail] && params[:sent_mail][:send_flag] == "1"
-      @board_entry.prepare_send_mail
-    end
+    @board_entry.prepare_send_mail if params[:sent_mail] and params[:sent_mail][:send_flag] == "1"
   end
 
   # 独自のバリデーション（成功ならtrue）
@@ -435,12 +387,7 @@ private
   end
 
   def get_entry entry_id
-    begin
-      @board_entry = BoardEntry.find(params[:id])
-    rescue ActiveRecord::RecordNotFound => ex
-      redirect_to :controller => 'mypage', :action => 'index'
-      return false
-    end
+    @board_entry = BoardEntry.find(params[:id])
   end
 
 end

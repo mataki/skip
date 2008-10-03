@@ -1,6 +1,6 @@
-# SKIP（Social Knowledge & Innovation Platform）
-# Copyright (C) 2008  TIS Inc.
-# 
+# SKIP(Social Knowledge & Innovation Platform)
+# Copyright (C) 2008 TIS Inc.
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -9,7 +9,7 @@
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-# 
+#
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -152,7 +152,7 @@ private
     end
 
     if options[:keyword]  && !for_tag
-      condition_state << " and (title like ? or comment like ?)"
+      condition_state << " and (bookmarks.title like ? or comment like ?)"
       condition_param << SkipUtil.to_like_query_string(options[:keyword])
       condition_param << SkipUtil.to_like_query_string(options[:keyword])
     end
@@ -166,7 +166,7 @@ private
       if options[:type] == "star"
         condition_state << " and stared = true"
       else
-        condition_state << " and url like ?"
+        condition_state << " and bookmarks.url like ?"
         condition_param << Bookmark.get_query_param(options[:type])
       end
     end
