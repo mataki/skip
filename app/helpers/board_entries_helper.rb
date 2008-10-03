@@ -33,9 +33,4 @@ module BoardEntriesHelper
   def comment_writer? comment, user_id
     writer?(comment, user_id) || (comment.board_entry.user_id == user_id)
   end
-
-  def get_bgcolor level
-    bc = sprintf("%x", ("f0".to_i(16) - ((level-1) * 8)))
-    "##{bc*3}"
-  end
 end

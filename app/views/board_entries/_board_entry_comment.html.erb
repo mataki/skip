@@ -2,35 +2,31 @@
 <% nest_limit = 5 -%>
 <% comment_class = "board_entry_comment level#{level}" -%>
 
-<div class="<%= comment_class %>" id='comment_<%= comment.id %>_<%= level %>' style="margin-left:<%= level == 1 ? 0 : 20 %>px;margin-top:5px;background-color:<%= get_bgcolor level %>;">
+<div class="<%= comment_class %>" id="comment_<%= comment.id %>_<%= level %>">
   <div class="header">
-    <table style="width: 100%; _width: 96%;"><tr>
-      <td><%= user_link_to(comment.user) %><span style="font-size: 10px">[<%= comment.created_on.strftime("%Y/%m/%d-%H:%M") %>]</span></td>
-      <td align="right">
-        <%= dummy_link_to(icon_tag('comment_edit', { :alt => "編集", :title => "編集" }), :id => "comment_edit_link_#{comment.id}", :class => "comment_edit_link") if writer?(comment, session[:user_id]) %>
-        <%= link_to(icon_tag('comment_delete', { :alt => "削除", :title => "削除" }), 
-                    {:controller => "board_entries", :action => "destroy_comment", :id => comment.id}, 
-                    :confirm => '本当に削除しますか？', :method => :post) if (comment_writer?(comment, session[:user_id]) && comment.children.size == 0) %>
+    <span class="title">
+      <%= user_link_to(comment.user) %><span class="date">[<%= comment.created_on.strftime("%Y/%m/%d-%H:%M") %>]</span>
+    </span>
+    <span class="buttons">
+      <%= dummy_link_to(icon_tag('comment_edit', { :alt => "編集", :title => "編集" }), :id => "comment_edit_link_#{comment.id}", :class => "comment_edit_link") if writer?(comment, session[:user_id]) %>
+      <%= link_to(icon_tag('comment_delete', { :alt => "削除", :title => "削除" }), {:controller => "board_entries", :action => "destroy_comment", :id => comment.id}, :confirm => '本当に削除しますか？', :method => :post) if (comment_writer?(comment, session[:user_id]) && comment.children.size == 0) %>
       <% if level < nest_limit -%>
-        <span class="link_nest_comment" id='link_nest_comment_<%= comment.id %>'><%= dummy_link_to(icon_tag("comment_add", { :alt => "このコメントに返信", :title => "このコメントに返信"}), :id => "comment_nest_link_#{comment.id}_#{level}", :class => "comment_nest_link") %></span>
+      <span class="link_nest_comment" id='link_nest_comment_<%= comment.id %>'><%= dummy_link_to(icon_tag("comment_add", { :alt => "このコメントに返信", :title => "このコメントに返信"}), :id => "comment_nest_link_#{comment.id}_#{level}", :class => "comment_nest_link") %></span>
       <% end -%>
-      </td>
-  </tr></table>
+    </span>
   </div><!-- header -->
 
   <div id='comment_contents_<%= comment.id %>' >
     <%= render(:partial => 'board_entries/comment_contents', :locals => { :comment => comment }) %>
   </div>
 
-  <div class='comment_input_space' id='comment_area_<%= comment.id %>' style='display: none;'>
+  <div class='comment_input_space invisible' id='comment_area_<%= comment.id %>'>
     <form id="comment_input_form_<%= comment.id %>" class="comment_input_form">
     <% @comment = BoardEntryComment.new(:contents => comment.contents) -%>
-    <div style="margin-top:3px;font-size:10px;color:gray">コメントの編集</div>
-    <%= text_area 'comment', 'contents', :cols => 90, :rows =>5 %>
-    <div style="margin-bottom: 5px">
+      <label for="comment_contents">コメントの編集</label>
+      <%= text_area 'comment', 'contents', :cols => 90, :rows =>5 %>
       <%= submit_tag '保存' %>
       <input id="comment_cancel_button_<%= comment.id %>" class="comment_cancel_button" type="button" value="キャンセル"/>
-    </div>
     </form>
   </div><!-- comment_input_space -->
 
