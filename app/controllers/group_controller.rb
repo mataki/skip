@@ -375,7 +375,7 @@ private
   end
 
   def load_group_and_participation
-    if @group = Group.find_by_gid(params[:gid])
+    unless @group = Group.find_by_gid(params[:gid])
       flash[:warning] = "指定のグループは存在していません"
       redirect_to :controller => 'mypage', :action => 'index'
       return false
