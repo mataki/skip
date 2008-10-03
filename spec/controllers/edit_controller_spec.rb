@@ -78,8 +78,8 @@ describe EditController, "GET #index" do
     end
     it { response.should render_template('edit/index') }
     it "適切なインスタンス変数が設定されていること" do
-      assigns[:title].should == "ブログを書く"
-      assigns[:main_menu].should == "ブログを書く"
+      assigns[:title].should == "記事を書く"
+      assigns[:main_menu].should == "マイブログ"
     end
   end
   describe "掲示板を書くの場合" do
@@ -88,7 +88,7 @@ describe EditController, "GET #index" do
     end
     it { response.should render_template('edit/index') }
     it "適切なインスタンス変数が設定されていること" do
-      assigns[:title].should == "掲示板を投稿する"
+      assigns[:title].should == "記事を書く"
       assigns[:main_menu].should == "グループ"
     end
   end
@@ -109,7 +109,7 @@ describe EditController, "GET #edit" do
     end
     it { response.should be_redirect }
     it "適切なインスタンス変数が設定されていること" do
-      assigns[:title].should == "ブログを編集する"
+      assigns[:title].should == "記事を編集する"
       assigns[:main_menu].should == "マイブログ"
     end
   end
@@ -119,7 +119,7 @@ describe EditController, "GET #edit" do
     end
     it { response.should be_redirect }
     it "適切なインスタンス変数が設定されていること" do
-      assigns[:title].should == "掲示板を編集する"
+      assigns[:title].should == "記事を編集する"
       assigns[:main_menu].should == "グループ"
     end
   end

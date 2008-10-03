@@ -71,7 +71,7 @@ private
   def setup_layout
     @main_menu = @title = "数字で見る#{ERB::Util.h(Admin::Setting.abbr_app_title)}"
 
-    @tab_menu_source = [ [@title, 'index' ] ]
+    @tab_menu_source = [ [ @title, 'index' ] ]
   end
 
   def get_site_count_hash_by_day date

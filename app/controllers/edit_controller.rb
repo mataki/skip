@@ -14,10 +14,10 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class EditController < ApplicationController
-  before_filter :setup_layout,
-                :except => [ :ado_get_name ]
+  before_filter :setup_layout, :load_tagwards_and_link_params,
+                :except => [ :destroy, :delete_trackback, :ado_preview, :ado_remove_image ]
 
-  after_filter  :post_mail,   :only => [ :create, :update ]
+  after_filter  :post_mail, :only => [ :create, :update ]
 
   verify :method => :post, :only => [ :create, :update, :destroy ],
          :redirect_to => { :action => :index }
@@ -292,30 +292,17 @@ class EditController < ApplicationController
 
 private
   def setup_layout
+    @main_menu = (!params[:symbol].blank? and params[:symbol].include?('gid:')) ? 'グループ' : 'マイブログ'
+
+    @title = '記事を'
+    @title << (["edit", "update"].include?(action_name) ? '編集する' : '書く')
+  end
+
+  def load_tagwards_and_link_params
     symbol = params[:symbol] || session[:user_symbol]
 
-    @categories_hash =  BoardEntry.get_categories_hash(login_user_symbols, {:symbol=>symbol})
+    @categories_hash =  BoardEntry.get_categories_hash(login_user_symbols, {:symbol => symbol})
     @place, @target_url_param = BoardEntry.get_place_name_and_target_url_param symbol
-
-
-    if !params[:symbol].blank? and params[:symbol].include?('gid:')
-      @main_menu = 'グループ'
-      @title = '掲示板'
-      if ["edit", "update"].include?(action_name)
-        @title << 'を編集する'
-      else
-        @title << 'を投稿する'
-      end
-    else
-      @title = 'ブログ'
-      if ["edit", "update"].include?(action_name)
-        @main_menu = 'マイブログ'
-        @title << 'を編集する'
-      else
-        @main_menu = "ブログを書く"
-        @title << 'を書く'
-      end
-    end
   end
 
   def analyze_params

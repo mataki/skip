@@ -107,8 +107,7 @@ class SearchController < ApplicationController
 
 private
   def setup_layout
-    @main_menu = 'データを探す'
-    @title = 'データを探す'
+    @main_menu = @title = 'データを探す'
 
     @tab_menu_source = [ ['記事を探す', 'entry_search'],
                          ['ファイルを探す', 'share_file_search'] ]

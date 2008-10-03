@@ -16,7 +16,7 @@
 class UserController < ApplicationController
   helper 'board_entries', 'groups'
 
-  before_filter :setup_layout
+  before_filter :load_user, :setup_layout
   after_filter :make_chain_message, :only => [ :create_chain, :update_chain ]
 
   verify :method => :post, :only => [ :create_chain, :update_chain ],
@@ -223,17 +223,7 @@ class UserController < ApplicationController
 
 private
   def setup_layout
-    if @user = User.find_by_uid(params[:uid])
-      if @user.id != session[:user_id]
-        @user.mark_track session[:user_id]
-      end
-    else
-      flash[:warning] = _('ご指定のユーザは存在しません。')
-      redirect_to :controller => 'mypage', :action => 'index'
-      return false
-    end
-    @main_menu = 'ユーザ'
-    @main_menu = 'プロフィール' if @user.id == session[:user_id]
+    @main_menu = (@user.id == session[:user_id] ? 'プロフィール' : 'ユーザ')
     @title = @user.name + 'さん'
 
     @tab_menu_source = [ ['プロフィール', 'show'],
@@ -254,6 +244,16 @@ private
     end
 
     @tab_menu_option = { :uid => @user.uid }
+  end
+
+  def load_user
+    if @user = User.find_by_uid(params[:uid])
+      @user.mark_track session[:user_id] if @user.id != session[:user_id]
+    else
+      flash[:warning] = _('ご指定のユーザは存在しません。')
+      redirect_to :controller => 'mypage', :action => 'index'
+      return false
+    end
   end
 
   def redirect_to_index

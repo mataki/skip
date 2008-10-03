@@ -15,13 +15,17 @@
 
 class Admin::ApplicationController < ApplicationController
   layout 'admin/application'
-  before_filter :require_admin
+  before_filter :require_admin, :setup_layout
 
   def require_admin
     unless current_user.admin
       redirect_to root_url
       return false
     end
+  end
+
+  def setup_layout
+    @title = @main_menu = "システム管理"
   end
 
   protected

@@ -15,7 +15,7 @@
 
 class GroupController < ApplicationController
   helper 'board_entries'
-  before_filter :setup_layout
+  before_filter :load_group_and_participation, :setup_layout
 
   before_filter :check_owned,
                 :only => [ :manage, :managers, :permit,
@@ -360,18 +360,8 @@ class GroupController < ApplicationController
 
 private
   def setup_layout
-    if @group = Group.find_by_gid(params[:gid])
-      flash[:warning] ||= nil
-    else
-      flash[:warning] = "指定のグループは存在していません"
-      redirect_to :controller => 'mypage', :action => 'index'
-      return false
-    end
-
-    @participation = @group.group_participations.find_by_user_id(session[:user_id])
-
     @main_menu = 'グループ'
-    @title = @group.name
+    @title = @group.name if @group
 
     @tab_menu_source = []
     @tab_menu_source << ['サマリ', 'show']
@@ -382,6 +372,15 @@ private
     @tab_menu_source << ['管理', 'manage'] if participating? and @participation.owned?
 
     @tab_menu_option = { :gid => @group.gid }
+  end
+
+  def load_group_and_participation
+    if @group = Group.find_by_gid(params[:gid])
+      flash[:warning] = "指定のグループは存在していません"
+      redirect_to :controller => 'mypage', :action => 'index'
+      return false
+    end
+    @participation = @group.group_participations.find_by_user_id(session[:user_id])
   end
 
   def participating?

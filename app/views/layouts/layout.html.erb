@@ -50,12 +50,6 @@ Event.observe(window, 'load', function() {
 </div><!-- header -->
 
 <div id="top">
-  <div id="menu_btn">
-<% menus = @current_user.admin ? MENU_BTNS + ADMIN_MENU_BTNS : MENU_BTNS -%>
-<% menus.each do |btn| -%>
-<%= btn[:separator] ? "| " : link_to(icon_tag(btn[:img_name], {:alt=>btn[:name], :title=>btn[:name]}), btn[:url]) -%>
-<% end -%>
-  </div>
   <div id="user_ctl">
     <a id="my_group_link" href="#" ><span id="link_my_group">マイグループ</span></a>
     <% help_url = h(Admin::Setting.help_url) -%>
@@ -70,6 +64,7 @@ Event.observe(window, 'load', function() {
 
 <div id="side">
   <ul id="main_menu">
+<% menus = @current_user.admin ? MENU_BTNS + ADMIN_MENU_BTNS : MENU_BTNS -%>
 <% menus.each do |btn| -%>
   <% if btn[:separator] -%>
   <li class="separator"><%= btn[:name] -%></li>
