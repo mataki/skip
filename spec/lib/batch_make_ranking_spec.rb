@@ -263,11 +263,4 @@ describe BatchMakeRanking do
     user_access
   end
 
-  def create_board_entry_comment options = {}
-    board_entry_comment = BoardEntryComment.new({:board_entry_id => 1,
-                                                 :contents => 'とあるコメント',
-                                                 :user_id => 1}.merge(options))
-    board_entry_comment.save!
-    board_entry_comment
-  end
 end

@@ -160,6 +160,32 @@ def create_group_category(options = {})
   group_category
 end
 
+def create_board_entry options = {}
+  board_entry = BoardEntry.new({:title => 'とある記事',
+                               :contents => 'とある記事の内容',
+                               :date => Date.today,
+                               :user_id => 1,
+                               :last_updated => Date.today,
+                               :publication_type => 'public'}.merge(options))
+  board_entry.save!
+  create_entry_publications(:board_entry_id => board_entry.id, :symbol => Symbol::SYSTEM_ALL_USER) if board_entry.public?
+  board_entry
+end
+
+def create_entry_publications options = {}
+  entry_publication = EntryPublication.new({:board_entry_id => 1, :symbol => ''}.merge(options))
+  entry_publication.save!
+  entry_publication
+end
+
+def create_board_entry_comment options = {}
+  board_entry_comment = BoardEntryComment.new({:board_entry_id => 1,
+                                               :contents => 'とあるコメント',
+                                               :user_id => 1}.merge(options))
+  board_entry_comment.save!
+  board_entry_comment
+end
+
 ######skip関連のテストで必要
 class ApplicationController;skip_before_filter :sso; end
 

@@ -569,23 +569,14 @@ class BoardEntry < ActiveRecord::Base
 
   # トラックバックしてくれた記事一覧を返す
   def trackback_entries(login_user_id, login_user_symbols)
-
-    tb_entries = []
     ids =  self.entry_trackbacks.map {|trackback| trackback.tb_entry_id }
-    if ids.length > 0
-      find_params = {}
-      if login_user_id == self.user_id
-        find_params[:conditions] = ["board_entries.id in (?)", ids]
-        find_params[:include] = []
-      else
-        find_params = BoardEntry.make_conditions(login_user_symbols, { :ids => ids })
-      end
-      tb_entries = BoardEntry.find(:all,
-                                    :conditions => find_params[:conditions],
-                                    :order => "date DESC",
-                                    :include => find_params[:include] | [:user])
-    end
-    return tb_entries
+    authorized_entries_except_given_user(login_user_id, login_user_symbols, ids)
+  end
+
+  # トラックバックした記事一覧を返す
+  def to_trackback_entries(login_user_id, login_user_symbols)
+    ids =  self.to_entry_trackbacks.map {|trackback| trackback.board_entry_id }
+    authorized_entries_except_given_user(login_user_id, login_user_symbols, ids)
   end
 
   # この記事の公開対象ユーザ一覧を返す
@@ -725,5 +716,25 @@ private
 
   def delete_images
     FileUtils.rm(all_images)
+  end
+
+  # 記事が指定されたユーザの記事の場合、指定されたidに一致する記事を全て返す。
+  # 記事が指定されたユーザの記事ではない場合、指定されたidに一致する記事のうち、権限のある記事一覧を返す
+  def authorized_entries_except_given_user(user_id, user_symbols, ids)
+    entries = []
+    if ids && ids.length > 0
+      find_params = {}
+      if user_id == self.user_id
+        find_params[:conditions] = ["board_entries.id in (?)", ids]
+        find_params[:include] = []
+      else
+        find_params = BoardEntry.make_conditions(user_symbols, { :ids => ids })
+      end
+      entries = BoardEntry.find(:all,
+                                    :conditions => find_params[:conditions],
+                                    :order => "date DESC",
+                                    :include => find_params[:include] | [:user])
+    end
+    entries
   end
 end

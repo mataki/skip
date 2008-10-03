@@ -261,3 +261,58 @@ describe BoardEntry, "#images_filename_to_url_mapping_hash" do
   end
 end
 
+describe BoardEntry, '#authorized_entries_except_given_user' do
+  before do
+    # satoはsuzukiの記事の閲覧権限がない
+    @sato = create_user(:user_options => {:name => 'Sato'}, :user_uid_options => {:uid => 'sato'})
+    @sato_symbols = ["uid:#{@sato.uid}"]
+    # yamadaはsuzukiの記事の閲覧権限がある
+    @yamada = create_user(:user_options => {:name => 'Yamada'}, :user_uid_options => {:uid => 'yamada'})
+    @yamada_symbols = ["uid:#{@yamada.uid}"]
+    @yamada_entry = create_board_entry(:user_id => @yamada.id)
+    @suzuki = create_user(:user_options => {:name => 'Suzuki'}, :user_uid_options => {:uid => 'suzuki'})
+    @suzuki_entry = create_board_entry(:user_id => @suzuki.id, :publication_type => 'private')
+    create_entry_publications(:board_entry_id => @suzuki_entry.id, :symbol => "uid:#{@suzuki.uid}")
+    @entry_ids = [@yamada_entry.id, @suzuki_entry.id]
+  end
+  describe '[全公開の記事とSatoが閲覧できないprotectedな記事]からSatoが閲覧可能な記事を取得する場合' do
+    it '一件の記事が取得できること' do
+      @yamada_entry.send(:authorized_entries_except_given_user, @sato.id, @sato_symbols, @entry_ids).size.should == 1
+    end
+  end
+  describe '[全公開の記事とYamadaが閲覧できるprotectedな記事]からYamadaが閲覧可能な記事を取得する場合' do
+    it '二件の記事が取得できること' do
+      @yamada_entry.send(:authorized_entries_except_given_user, @yamada.id, @yamada_symbols, @entry_ids).size.should == 2
+    end
+  end
+end
+
+describe BoardEntry, '#trackback_entries' do
+  before do
+    @entry = stub_model(BoardEntry)
+    @trackback_entry = stub_model(BoardEntry, :tb_entry_id => @entry.id)
+    @trackback_entry_ids = [@entry.id]
+  end
+  it 'トラックバックしてくれた記事を取得する処理をコールすること' do
+    user_id = SkipFaker.rand_num
+    user_symbols = ['uid:hoge']
+    @entry.should_receive(:entry_trackbacks).and_return([@trackback_entry])
+    @entry.should_receive(:authorized_entries_except_given_user).with(user_id, user_symbols, @trackback_entry_ids)
+    @entry.trackback_entries(user_id, user_symbols)
+  end
+end
+
+describe BoardEntry, '#to_trackback_entries' do
+  before do
+    @entry = stub_model(BoardEntry)
+    @to_trackback_entry = stub_model(BoardEntry, :board_entry_id => @entry.id)
+    @to_trackback_entry_ids = [@entry.id]
+  end
+  it 'トラックバックした記事一覧を取得する処理をコールすること' do
+    user_id = SkipFaker.rand_num
+    user_symbols = ['uid:hoge']
+    @entry.should_receive(:to_entry_trackbacks).and_return([@to_trackback_entry])
+    @entry.should_receive(:authorized_entries_except_given_user).with(user_id, user_symbols, @to_trackback_entry_ids)
+    @entry.to_trackback_entries(user_id, user_symbols)
+  end
+end

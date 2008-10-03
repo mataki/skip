@@ -13,13 +13,15 @@
 
 <div id="contents_right">
 
-<% if @entry %>
+<% if @entry -%>
   <%= render(:partial => 'entries/entry_detail',
-             :locals => { :entry => @entry, :prev_entry => @prev_entry, :next_entry => @next_entry, :tb_entries => @tb_entries }) -%>
-<% else %>
+             :locals => {:entry => @entry, :prev_entry => @prev_entry, :next_entry => @next_entry,
+                         :tb_entries => @tb_entries, :to_tb_entries => @to_tb_entries, :editable => @editable,
+                         :entry_accesses => @entry_accesses, :total_count => @total_count, :bookmark_comments_count => @bookmark_comments_count}) %>
+<% else -%>
   <%= render(:partial => 'entries/entries_list',
              :locals => { :pages => @pages, :entries => @entries, :year => @year, :month => @month }) -%>
-<% end %>
+<% end -%>
 
 </div><!-- contents_right -->
 
