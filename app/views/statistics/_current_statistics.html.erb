@@ -29,8 +29,8 @@
 <div class="topix_title"><%= icon_tag('asterisk_orange') -%><span>[<%=h site_count.created_on.strftime("%Y/%m/%d %H:%M") %>] 時点の<%= Admin::Setting.abbr_app_title -%>指標値</span></div>
 <% statistics_items.each do |item| %>
 <div class="statistics_line">
-  <div class="statistics_desc"><%= icon_tag item[:icon] %>　<%= item[:desc] %></div>
-  <div class="statistics_value"><%= site_count[item[:category]] %><%= item[:unit] %></div>
+  <div class="statistics_desc"><%= icon_tag item[:icon] %>　<%=h item[:desc] %></div>
+  <div class="statistics_value"><%=h site_count[item[:category]] %><%=h item[:unit] %></div>
   <div class="statistics_menu">
     <%= link_to_remote "#{icon_tag 'calendar_view_month'} #{site_count.created_on.strftime('%Y/%m')}の推移を表示",
           :update => 'statistics_history',

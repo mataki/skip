@@ -1,0 +1,72 @@
+/* サイト情報メニューのスタイルシート */
+/* ----------------------------------- */
+/* ----------------------------------- */
+/* リリースノート */
+/* レイアウトのコンテナ */
+div#summary_container {
+  width:100%;
+  margin-left:auto;
+  margin-right:auto;
+  text-align:left;
+}
+/* レイアウトの左側 */
+div#summary_left {
+  width:150px;
+  float:left;
+}
+/* レイアウトの右側 */
+div#summary_right {
+  margin-left: 160px;
+  _width: 100%;
+}
+/* レイアウトの下側 */
+div#summary_bottom {
+  width:100%;
+  clear:left;
+}
+
+div.statistics_history {
+  margin-top: 20px;
+}
+div.statistics_line {
+  font-size: 11px;
+  padding: 3px;
+  border-bottom: 1px dashed silver;
+  margin: 0px 5px;
+  float: left;
+}
+div.statistics_line .statistics_desc {
+  width: 240px;
+  float: left;
+}
+div.statistics_line .statistics_value {
+  width: 45px;
+  text-align: right;
+  float: left;
+}
+div.statistics_line .statistics_menu {
+  font-size: 10px;
+  width: 200px;
+  margin-left: 10px;
+  float: left;
+}
+
+div.monthly_statictics_box {
+  width: 300px;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid silver;
+  background-color: #eee;
+}
+div.monthly_statictics_line {
+  float: left;
+  border-bottom: 1px dotted silver;
+}
+div.monthly_statistics_inner_space {
+  padding: 3px;
+  background-color: #fff;
+}
+div.current_statistics {
+  float: left;
+  width: 100%;
+}

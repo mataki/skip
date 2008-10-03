@@ -78,7 +78,6 @@ menu_btns = [
   { :img_name => "group",         :id => "btn_groups", :name => "グループ", :url => {:controller => '/groups', :action => 'index'} },
   { :img_name => "book",          :id => "btn_bookmarks", :name => "ブックマーク", :url => {:controller => '/bookmarks', :action => 'index'} },
   { :img_name => "chart_bar",     :id => "btn_rankings", :name => "ランキング", :url => {:controller => '/rankings', :action => 'index'} },
-  { :img_name => "bricks",        :id => "btn_develop", :name => "サイト情報", :url => {:controller => '/develop', :action => 'index'} },
 
   { :separator => true, :name => "[アクション]"},
 

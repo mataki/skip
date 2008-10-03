@@ -26,7 +26,7 @@
 <% unless site_counts.empty? %>
 <% pixel_par_value = 100.0 / max_value %>
 <div class="monthly_statistics_inner_space">
-<% site_counts.each_with_index do |site_count, index| %>
+<% site_counts.each do |site_count| %>
   <% value = site_count[category] %>
   <% graph_color = max_value == value ? 'red' : 'silver' %>
   <div class="monthly_statictics_line">
@@ -44,13 +44,6 @@
     <div style="float:left;width:40px;"><%= value %></div>
     <div style="float:left;margin-left:10px;background-color:<%= graph_color %>;width:<%= pixel_par_value * value %>px;">　</div>
     <div style="float:left;width:<%= 100 - (pixel_par_value * value) %>px;">　</div>
-<!--
-    <div style="float:left;margin-left:10px;"><%= link_to(icon_tag('report_go'), { :controller => 'mypage',
-                                                                                   :action => 'index',
-                                                                                   :year  => site_count.created_on.year,
-                                                                                   :month => site_count.created_on.month,
-                                                                                   :day   => site_count.created_on.day,},
-                                                                                 :title => "この日のブログを見る") %></div>-->
   </div>
   <div style="clear:left;"></div>
 <% end %>

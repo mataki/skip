@@ -105,7 +105,7 @@
   <span><%= icon_tag 'table_lightning'    -%> 本日のアクセス数：<%= @site_count.today_user_count %>人</span>
   <span><%= icon_tag 'database'           -%> 総エントリ件数：<%= @site_count.total_blog_count %>件</span>
   <span><%= icon_tag 'database_lightning' -%> 本日のエントリ数：<%= @site_count.today_blog_count %>件</span>
-  <span><%= icon_tag 'chart_curve'        -%> <%= link_to("数字で見る#{h Admin::Setting.abbr_app_title}", :controller=>"/develop",:action=>"statistics") -%></span>
+  <span><%= icon_tag 'chart_curve'        -%> <%= link_to("数字で見る#{h Admin::Setting.abbr_app_title}", :controller => "/statistics", :action => :index) -%></span>
 </div>
 
 <%= skip_footer_link -%>

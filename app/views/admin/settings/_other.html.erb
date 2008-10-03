@@ -1,4 +1,4 @@
-<% @revert_columns = %w(develop_team_gid recent_date) -%>
+<% @revert_columns = %w(recent_date) -%>
 <div class="box tabular">
 <% @revert_columns.each do |key| -%>
   <p><%= settings_label_with_text_field_tag key.to_sym %></p>

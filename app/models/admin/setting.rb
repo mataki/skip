@@ -63,8 +63,6 @@ class Admin::Setting < ActiveRecord::Base
   N_('Admin::Setting|Smtp settings domain description')
   N_('Admin::Setting|Smtp settings authentication')
   N_('Admin::Setting|Smtp settings authentication description')
-  N_('Admin::Setting|Develop team gid')
-  N_('Admin::Setting|Develop team gid description')
   N_('Admin::Setting|Mypage feed timeout')
   N_('Admin::Setting|Mypage feed timeout description')
   N_('Admin::Setting|Mail function setting')

@@ -68,8 +68,6 @@ smtp_settings_authentication:
   default:
 
 # その他設定
-develop_team_gid:                  # 要望、不具合受付グループのID
-  default: skipteam
 antenna_default_group:             # 初期のアンテナに追加されるグループを指定(なければ空配列とする)
   serialized: true
   default:
