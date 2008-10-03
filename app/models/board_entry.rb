@@ -99,7 +99,7 @@ class BoardEntry < ActiveRecord::Base
     category.include?("[#{Tag::PRIORITY_TAG}]")
   end
 
-  # 所属するグループの公開範囲により、エントリの公開範囲を判定する
+  # 所属するグループの公開範囲により、記事の公開範囲を判定する
   def owner_is_public?
     Symbol.public_symbol_obj? symbol
   end
@@ -397,7 +397,7 @@ class BoardEntry < ActiveRecord::Base
     symbol2name_hash
   end
 
-  # エントリへのリンクのURLを生成して返す
+  # 記事へのリンクのURLを生成して返す
   def get_url_hash
     url = { :entry_id => id }
     case entry_type
@@ -488,13 +488,13 @@ class BoardEntry < ActiveRecord::Base
     end
   end
 
-  # このエントリの作成者かどうか判断する
+  # この記事の作成者かどうか判断する
   def writer?(login_user_id)
     user_id == login_user_id
   end
 
   # 権限チェック
-  # このエントリが編集可能かどうかを判断する
+  # この記事が編集可能かどうかを判断する
   def editable?(login_user_symbols, login_user_id, login_user_symbol, login_user_groups)
     # 所有者がマイユーザ
     return true if login_user_symbol == symbol
@@ -552,7 +552,7 @@ class BoardEntry < ActiveRecord::Base
                                 :conditions => find_params[:conditions],
                                 :include => find_params[:include])
       if entries.length != ids.length
-        message = "（トラックバック先に不明なエントリが存在しましたが無視しました）"
+        message = "（トラックバック先に不明な記事が存在しましたが無視しました）"
       end
 
       entries.each do |entry|
@@ -567,7 +567,7 @@ class BoardEntry < ActiveRecord::Base
     return message, new_trackbacks
   end
 
-  # トラックバックしてくれたエントリ一覧を返す
+  # トラックバックしてくれた記事一覧を返す
   def trackback_entries(login_user_id, login_user_symbols)
 
     tb_entries = []
@@ -588,7 +588,7 @@ class BoardEntry < ActiveRecord::Base
     return tb_entries
   end
 
-  # このエントリの公開対象ユーザ一覧を返す
+  # この記事の公開対象ユーザ一覧を返す
   # 戻り値：Userオブジェクトの配列（重複なし）
   def publication_users
     users = []

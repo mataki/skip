@@ -100,7 +100,7 @@ protected
     @current_user ||= (login_from_session || login_from_cookie)
   end
 
-  #エントリへのパーミッションをチェック
+  #記事へのパーミッションをチェック
   def check_entry_permission
     find_params = BoardEntry.make_conditions(login_user_symbols, {:id=>params[:id]})
     unless entry = BoardEntry.find(:first, :conditions => find_params[:conditions], :include => find_params[:include])

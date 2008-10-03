@@ -24,12 +24,12 @@ module BoardEntriesHelper
     result
   end
 
-  # エントリを書いた人かどうか
+  # 記事を書いた人かどうか
   def writer? comment, user_id
     user_id == comment.user_id
   end
 
-  # エントリを書いた人及びコメントを書いた人かどうか
+  # 記事を書いた人及びコメントを書いた人かどうか
   def comment_writer? comment, user_id
     writer?(comment, user_id) || (comment.board_entry.user_id == user_id)
   end

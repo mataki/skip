@@ -93,7 +93,7 @@ describe BoardEntry, "があるユーザの日記だったとき" do
   # TODO: BoardEntry#get_around_entryのテスト
   #      select文の + の意味が分からん
   #      文字列連結をしているようだ
-  #      周りのエントリを探すだけなのになぜここまでの処理が必要か？
+  #      周りの記事を探すだけなのになぜここまでの処理が必要か？
 end
 
 # TODO: BoardEntry.make_conditionsのテスト
@@ -174,7 +174,7 @@ describe BoardEntry do
   end
 
   def test_prepare_send_mail
-    # 直接指定のエントリ
+    # 直接指定の記事
     entry = BoardEntry.new(store_entry_params({ :user_id => @a_user.id,
                                                 :last_updated => Time.now,
                                                 :symbol => "uid:#{@a_user.uid}",

@@ -229,7 +229,7 @@ class EditController < ApplicationController
       message, new_trackbacks = @board_entry.send_trackbacks(login_user_symbols, params[:trackbacks])
       make_trackback_message(new_trackbacks)
 
-      flash[:notice] = 'エントリの更新に成功しました。' + message
+      flash[:notice] = '記事の更新に成功しました。' + message
       redirect_to @board_entry.get_url_hash
       return
     else

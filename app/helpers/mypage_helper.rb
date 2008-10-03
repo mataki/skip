@@ -48,7 +48,7 @@ module MypageHelper
   def get_record_menu_items selected_menu
     @@record_menus = []
     @@record_menus << {:name => "メール送信履歴", :menu => "record_mail" } if Admin::Setting.mail_function_setting
-    @@record_menus << {:name => "エントリ履歴", :menu => "record_post" }
+    @@record_menus << {:name => "記事履歴", :menu => "record_post" }
 
     get_menu_items @@record_menus, selected_menu, "manage"
   end

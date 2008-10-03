@@ -44,8 +44,8 @@ class BatchMakeSiteCounts < BatchBase
     SiteCount.create(create_params)
   end
 
-  # ここ一ヶ月以内にコメントかエントリを投稿したユーザー数
-  # 自動投稿のエントリは除く（タイトルで除外している）
+  # ここ一ヶ月以内にコメントか記事を投稿したユーザー数
+  # 自動投稿の記事は除く（タイトルで除外している）
   def self.calc_writer_at_month time_now
     entries = BoardEntry.find(:all,
                               :select => "user_id, title",

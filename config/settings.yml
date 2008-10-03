@@ -46,10 +46,10 @@ footer_image_link_url:
   format: url
   default: http://www.openskip.org/                        # フッター右側に表示する画像のリンクURL
 point_button:
-  default: GoodJob                                         # エントリへのポイント評価の
+  default: GoodJob                                         # 記事へのポイント評価の
 
 # メール関連の設定
-mail_function_setting:    # メール関連項目の表示制御(メールアドレス変更、メール通知設定、メール送信履歴、(エントリ)連絡タグ)
+mail_function_setting:    # メール関連項目の表示制御(メールアドレス変更、メール通知設定、メール送信履歴、(記事)連絡タグ)
   format: boolean
   default: false
 smtp_settings_address:

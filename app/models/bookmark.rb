@@ -106,7 +106,7 @@ class Bookmark < ActiveRecord::Base
   end
 
   # ブックマークされたURLが全公開であるか
-  # SNS内の全公開でないエントリのときfalse
+  # SNS内の全公開でない記事のときfalse
   def url_is_public?
     return true unless is_type_page?
 

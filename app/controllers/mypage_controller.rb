@@ -534,7 +534,7 @@ private
     Antenna.get_system_antennas session[:user_id], login_user_symbols, login_user_groups
   end
 
-  # 月の中でエントリが含まれている日付とエントリ数のハッシュと、
+  # 月の中で記事が含まれている日付と記事数のハッシュと、
   # 引数は、指定の年と月
   def get_entry_count year, month
     find_params = BoardEntry.make_conditions(login_user_symbols, {:entry_type=>'DIARY'})
@@ -554,7 +554,7 @@ private
     return entry_count
   end
 
-  # マイページで日付ごとにエントリを表示するためのデータを取得する
+  # マイページで日付ごとに記事を表示するためのデータを取得する
   # 引数は指定の日付
   def get_index_day(year, month, day)
     partial = "index_day"
@@ -573,7 +573,7 @@ private
                                        :order=>"date ASC",
                                        :include => find_params[:include] | [ :user, :state ])
 
-    # エントリのある次の日
+    # 記事のある次の日
     find_params = BoardEntry.make_conditions(login_user_symbols, {:entry_type=>'DIARY'})
     find_params[:conditions][0] << " and DATE(date) > ?"
     find_params[:conditions] << locals[:selected_day]
@@ -585,7 +585,7 @@ private
                                :limit => 1,
                                :joins => "LEFT OUTER JOIN entry_publications ON entry_publications.board_entry_id = board_entries.id")
 
-    # エントリのある前の日
+    # 記事のある前の日
     find_params = BoardEntry.make_conditions(login_user_symbols, {:entry_type=>'DIARY'})
     find_params[:conditions][0] << " and DATE(date) < ?"
     find_params[:conditions] << locals[:selected_day]
@@ -603,7 +603,7 @@ private
     return partial, locals
   end
 
-  # マイページでシステムアンテナのエントリを表示するためのデータを取得する
+  # マイページでシステムアンテナの記事を表示するためのデータを取得する
   # 引数は、システムアンテナのタイプ
   def get_index_antenna_system(antenna_type)
     partial = "index_antenna"
@@ -618,7 +618,7 @@ private
       locals[:title_name] = "あなたへ宛てた連絡"
       find_params = BoardEntry.make_conditions login_user_symbols, { :category=>'連絡' }
     when "comment"
-      locals[:title_name] = "過去にあなたがコメントを残したエントリ"
+      locals[:title_name] = "過去にあなたがコメントを残した記事"
       find_params = BoardEntry.make_conditions(login_user_symbols)
       find_params[:conditions][0] << " and board_entry_comments.user_id = ?"
       find_params[:conditions] << session[:user_id]
@@ -632,7 +632,7 @@ private
         ids << bookmark.url.gsub(/\/page\//, "")
       end
 
-      locals[:title_name] = "あなたがブックマークしたエントリ"
+      locals[:title_name] = "あなたがブックマークした記事"
       find_params = BoardEntry.make_conditions(login_user_symbols)
       find_params[:conditions][0] << " and board_entries.id in (?)"
       find_params[:conditions] << ids
@@ -666,7 +666,7 @@ private
     return partial, locals
   end
 
-  # マイページでアンテナのエントリを表示するためのデータを取得する
+  # マイページでアンテナの記事を表示するためのデータを取得する
   # 引数は、アンテナのID
   def get_index_antenna(antenna_id)
     partial = "index_antenna"
@@ -762,9 +762,9 @@ private
     questions = find_questions_as_locals(:recent_day => recent_day)
     # 最近の人気記事
     access_blogs = find_access_blogs_as_locals(:recent_day => recent_day)
-    # 最新のブログのエントリ
+    # 最新のブログの記事
     recent_blogs = find_recent_blogs_as_locals(:recent_day => recent_day)
-    # 最新の掲示板のエントリ(全体公開のみ)
+    # 最新の掲示板の記事(全体公開のみ)
     recent_bbs = []
     gid_by_category = Group.gid_by_category
     GroupCategory.all.each do |category| # 表示順序の制御
@@ -800,7 +800,7 @@ private
     return partial, locals
   end
 
-  # 最近のエントリ一覧を取得する（partial用のオプションを返す）
+  # 最近の記事一覧を取得する（partial用のオプションを返す）
   # 引数：recent_day = 最近を示す日数（デフォルト10日）
   # 引数：per_page   = １ページの表示数（デフォルト5件）
   def find_recent_blogs_as_locals options = {}
@@ -821,7 +821,7 @@ private
     }
   end
 
-  # 最近のBBSエントリ一覧を取得するメソッドを動的に生成(partial用のオプションを返す)
+  # 最近のBBS記事一覧を取得するメソッドを動的に生成(partial用のオプションを返す)
   # sendで呼び出すためにカテゴリごとにメソッドを生成
   #
   # 引数：group_symbols    = 検索対象のグループシンボル(デフォルトnil)
@@ -836,9 +836,9 @@ private
     end
   end
 
-  # 最新のBBSエントリ一覧partial用オプション生成メソッド
+  # 最新のBBS記事一覧partial用オプション生成メソッド
   def recent_bbs_proc category, options
-    title   = "最新の掲示板のエントリ（#{category.name}）"
+    title   = "最新の掲示板の記事（#{category.name}）"
     id_name = "recent_bbs_#{category.code.downcase}"
     pages_obj, pages = nil, []
 

@@ -206,9 +206,9 @@ describe Bookmark do
 
   # ブックマークされたURLが全公開可能か
   def test_url_is_public?
-    # 全公開のエントリの場合 true
+    # 全公開の記事の場合 true
     assert @a_public_page_bookmark.url_is_public?
-    # 全公開以外のエントリの場合 false
+    # 全公開以外の記事の場合 false
     assert !@a_private_page_bookmark.url_is_public?
     # 外部のURLの場合 true
     assert @a_bookmark.url_is_public?

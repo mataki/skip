@@ -27,7 +27,7 @@ class FeedController < ApplicationController
     rss_feed "recent_blogs","最近投稿された記事", board_entry_item_array(find_params)
   end
 
-  # 最近のBBSエントリ一覧のRSSを生成するメソッドを動的に生成
+  # 最近のBBS記事一覧のRSSを生成するメソッドを動的に生成
   # FIXME recent_bbsと統合したほうがいいかもしれない。mypage_controllerのrecent_bbs_proc辺りも同様の匂いを感じる。
   GroupCategory.all.each do |category|
     define_method( "recent_bbs_#{category.code.downcase}" ) do
@@ -35,9 +35,9 @@ class FeedController < ApplicationController
     end
   end
 
-  # 最近のBBSエントリ一覧のRSSを生成する
+  # 最近のBBS記事一覧のRSSを生成する
   def recent_bbs action_name, category
-    description = "最新の掲示板のエントリ（#{ERB::Util.h(category.name)}）"
+    description = "最新の掲示板の記事（#{ERB::Util.h(category.name)}）"
     find_options = {:exclude_entry_type=>'DIARY', :publication_type => 'public', :recent_day=> 10}
     find_options[:symbols] = Group.gid_by_category[category.id]
     items = []

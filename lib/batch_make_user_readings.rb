@@ -20,7 +20,7 @@ class BatchMakeUserReadings < BatchBase
   def self.execute options
     get_updated_entries.each do |entry|
       symbol_type,symbol_id = SkipUtil.split_symbol(entry.symbol)
-      user_ids = [] # このエントリが更新されたことを通知するuserのid一覧
+      user_ids = [] # この記事が更新されたことを通知するuserのid一覧
 
       # アンテナに基づく更新
       antenna_items = AntennaItem.find(:all,
@@ -39,7 +39,7 @@ class BatchMakeUserReadings < BatchBase
 
       # コメントをつけたブログの行く末
       user_ids += BoardEntryComment.find(:all, :conditions => ["board_entry_id = ?", entry.id]).map{ |comment| comment.user_id }
-      # ブックマークしたエントリの行く末
+      # ブックマークした記事の行く末
       user_ids += BookmarkComment.find(:all, :conditions => ["bookmarks.url = ?", entry.permalink], :include => [:bookmark]).map{ |comment| comment.user_id }
       # あなたへの連絡
       user_ids += contact_ids entry
@@ -58,7 +58,7 @@ class BatchMakeUserReadings < BatchBase
       updater_id = last_comment.user_id
       last_updated_time = last_comment.updated_on
     else
-      # エントリ自身の最終更新日時が最新
+      # 記事自身の最終更新日時が最新
       updater_id = entry.user_id
       last_updated_time = entry.last_updated
     end
@@ -73,8 +73,8 @@ class BatchMakeUserReadings < BatchBase
 
   # 以下の条件に該当しない場合のみtrueを返す<br/>
   #  ・更新対象のuser_readingがtrueである<br/>
-  #  ・コメント、もしくはエントリを書いた人とアンテナの登録者が異なる（自分が書いたコメントはアンテナに反映されない）<br/>
-  #  ・コメント、もしくはエントリの最終更新日時が、ユーザごとの最終チェック日時以降
+  #  ・コメント、もしくは記事を書いた人とアンテナの登録者が異なる（自分が書いたコメントはアンテナに反映されない）<br/>
+  #  ・コメント、もしくは記事の最終更新日時が、ユーザごとの最終チェック日時以降
   def self.updatable?(user_reading, last_updated_time, updater_id, antenna_user_id)
     user_reading.read and user_reading.checked_on < last_updated_time and updater_id != antenna_user_id
   end
@@ -98,7 +98,7 @@ class BatchMakeUserReadings < BatchBase
     entry.publication_users.map{ |user| user.id }
   end
 
-  # 30分以内にエントリ自身かコメントに更新があったエントリを全て取得
+  # 30分以内に記事自身かコメントに更新があった記事を全て取得
   def self.get_updated_entries
     conditions_state =  "(last_updated BETWEEN subtime(now(), '00:30:00') AND now())"
     conditions_state << " OR "

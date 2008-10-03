@@ -19,7 +19,7 @@ require File.dirname(__FILE__) + '/../../lib/batch_make_user_readings'
 describe BatchMakeSiteCounts do
   fixtures :users, :board_entries, :board_entry_comments, :site_counts, :user_uids
 
-  # 一ヶ月以内にエントリを書いたユーザ
+  # 一ヶ月以内に記事を書いたユーザ
   def test_calc_write_at_month
     count = BatchMakeSiteCounts.calc_writer_at_month Time.now
     assert_equal 1, count

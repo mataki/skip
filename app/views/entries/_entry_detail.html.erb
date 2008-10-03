@@ -1,5 +1,5 @@
 <%
- # ブログ・掲示板の詳細表示（１エントリ指定）
+ # ブログ・掲示板の詳細表示（１記事指定）
  # :locals => { :entry, :prev_entry, :next_entry, :tb_entries }
 -%>
 
@@ -301,7 +301,7 @@ form.comment_input_form textarea{
 </div>
 
 <div class="trackback_space">
-  トラックバック - <%= link_to "このエントリにトラックバックする", :controller => "edit", :trackbacks => entry.id, :title => "RE: " + entry.title, :category => entry.category %>
+  トラックバック - <%= link_to "この記事にトラックバックする", :controller => "edit", :trackbacks => entry.id, :title => "RE: " + entry.title, :category => entry.category %>
   <ul class="entries">
 <% symbol2name_hash = BoardEntry.get_symbol2name_hash @tb_entries -%>
 <% @tb_entries.each do |tb_entry|  -%>

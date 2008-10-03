@@ -23,7 +23,7 @@ describe BatchSendMails, '.send_notice' do
       ActionMailer::Base.deliveries.clear
     end
 
-    describe BatchSendMails, "ユーザが退職しておらずエントリがある場合" do
+    describe BatchSendMails, "ユーザが退職しておらず記事がある場合" do
       before(:each) do
         user = mock_model(User)
         user.stub!(:retired?).and_return(false)
@@ -58,7 +58,7 @@ describe BatchSendMails, '.send_notice' do
       end
     end
 
-    describe BatchSendMails, "エントリがない場合" do
+    describe BatchSendMails, "記事がない場合" do
       before(:each) do
         user = mock_model(User)
         user.stub!(:retired?).and_return(false)

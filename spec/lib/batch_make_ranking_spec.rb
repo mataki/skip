@@ -1,6 +1,6 @@
 # SKIP(Social Knowledge & Innovation Platform)
 # Copyright (C) 2008 TIS Inc.
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -9,7 +9,7 @@
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-# 
+#
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -29,7 +29,7 @@ describe BatchMakeRanking do
         before do
           @board_entry_point.update_attributes!(:access_count => 1)
         end
-        describe 'エントリが全公開の場合' do
+        describe '記事が全公開の場合' do
           before do
             BatchMakeRanking.stub!(:published?).and_return(true)
           end
@@ -39,7 +39,7 @@ describe BatchMakeRanking do
             end.should change(Ranking, :count)
           end
         end
-        describe 'エントリが全公開ではない場合' do
+        describe '記事が全公開ではない場合' do
           before do
             BatchMakeRanking.stub!(:published?).and_return(false)
           end
@@ -71,7 +71,7 @@ describe BatchMakeRanking do
         before do
           @board_entry_point.update_attributes!(:point => 1)
         end
-        describe 'エントリが全公開の場合' do
+        describe '記事が全公開の場合' do
           before do
             BatchMakeRanking.stub!(:published?).and_return(true)
           end
@@ -81,7 +81,7 @@ describe BatchMakeRanking do
             end.should change(Ranking, :count)
           end
         end
-        describe 'エントリが全公開ではない場合' do
+        describe '記事が全公開ではない場合' do
           before do
             BatchMakeRanking.stub!(:published?).and_return(false)
           end
@@ -115,7 +115,7 @@ describe BatchMakeRanking do
           # @board_entry.update_attributes!(:board_entry_comments_count => 1)
           @board_entry_comment = create_board_entry_comment(:user_id => @user.id, :board_entry_id => @board_entry.id)
         end
-        describe 'エントリが全公開の場合' do
+        describe '記事が全公開の場合' do
           before do
             BatchMakeRanking.should_receive(:published?).and_return(true)
           end
@@ -125,7 +125,7 @@ describe BatchMakeRanking do
             end.should change(Ranking, :count)
           end
         end
-        describe 'エントリが全公開ではない場合' do
+        describe '記事が全公開ではない場合' do
           before do
             BatchMakeRanking.stub!(:published?).and_return(false)
           end
@@ -150,7 +150,7 @@ describe BatchMakeRanking do
       before do
         setup_test_data
       end
-      describe 'BoardEntryのエントリ種別(entry_type)が日記(DIARY)なレコードが存在する場合' do
+      describe 'BoardEntryの記事種別(entry_type)が日記(DIARY)なレコードが存在する場合' do
         before do
           @board_entry.symbol = "uid:#{@user.uid}"
           @board_entry.update_attributes!(:entry_type => BoardEntry::DIARY)
@@ -161,7 +161,7 @@ describe BatchMakeRanking do
           end.should change(Ranking, :count)
         end
       end
-      describe 'BoardEntryのエントリ種別(entry_type)が日記(DIARY)なレコードが存在しない場合' do
+      describe 'BoardEntryの記事種別(entry_type)が日記(DIARY)なレコードが存在しない場合' do
         before do
           @board_entry.update_attributes!(:entry_type => 'BBS')
         end
@@ -240,8 +240,8 @@ describe BatchMakeRanking do
   end
 
   def create_board_entry options = {}
-    board_entry = BoardEntry.new({:title => 'とあるエントリ',
-                                 :contents => 'とあるエントリの内容',
+    board_entry = BoardEntry.new({:title => 'とある記事',
+                                 :contents => 'とある記事の内容',
                                  :date => Date.today,
                                  :user_id => 1,
                                  :last_updated => Date.today}.merge(options))

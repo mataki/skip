@@ -30,7 +30,7 @@ describe BatchMakeUserReadings do
   end
 
   def test_get_updated_entries_and_save_user_readings
-    # 登録済みのエントリを一旦クリア
+    # 登録済みの記事を一旦クリア
     BoardEntry.delete_all
     BoardEntryComment.delete_all
     entries = []
