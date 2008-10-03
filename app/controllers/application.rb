@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   rescue_from ActionController::InvalidAuthenticityToken, :with => :redirect_to_deny_auth
 
-  before_filter :login_required, :prepare_session
+  before_filter :sso, :login_required, :prepare_session
   after_filter  :remove_message
 
   init_gettext "skip"
@@ -136,11 +136,11 @@ protected
     case ex
     when ActionController::UnknownController, ActionController::UnknownAction,
       ActionController::RoutingError, ActiveRecord::RecordNotFound
-      render :file => File.join(RAILS_ROOT, 'public', '404.html'), :status => :not_found, :layout => 'layout'
+      render :file => File.join(RAILS_ROOT, 'public', '404.html'), :status => :not_found
     when CGI::Session::CookieStore::TamperedWithCookie
       redirect_to request.env["REQUEST_URI"], :status => :temporary_redirect
     else
-      render :template => "system/500" , :status => :internal_server_error, :layout => 'layout'
+      render :template => "system/500" , :status => :internal_server_error
     end
   end
 
@@ -208,5 +208,16 @@ protected
     @current_user.forget_me if @current_user.is_a? User
     kill_remember_cookie!
     reset_session
+  end
+
+private
+  def sso
+    if INITIAL_SETTINGS['login_mode'] == "rp" and !INITIAL_SETTINGS['fixed_op_url'].blank?
+      unless logged_in?
+        redirect_to :controller => '/platform', :action => :login, :openid_url => INITIAL_SETTINGS['fixed_op_url'], :return_to => URI.encode(request.url)
+        return false
+      end
+      true
+    end
   end
 end

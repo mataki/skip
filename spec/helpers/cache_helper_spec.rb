@@ -13,24 +13,22 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class ActionController::Base
-  filter_parameter_logging :password
-
-  # ファイルアップロード時の共通チェック
-  def valid_upload_file? file, max_size = 209715200
-    file.is_a?(ActionController::UploadedFile) && file.size > 0 && file.size < max_size
-  end
-
-  # 複数ファイルアップロード時の共通チェック
-  def valid_upload_files? files, max_size = 209715200
-    files.each do |key, file|
-      return false unless valid_upload_file?(file, max_size)
+describe CacheHelper, "#all_javascript_include_tag" do
+  describe "prototypeが引数の場合" do
+    before do
+      @result = helper.all_javascript_include_tag "prototype"
     end
-    return true
+    CacheHelper::PROTOTYPE_LIBRARY[:libs].each do |lib|
+      it { @result.should be_include(lib) }
+    end
   end
+end
 
-  def verify_extension? file_name, content_type
-    !['html','htm','js'].any?{|extension| extension == file_name.split('.').last } &&
-      !['text/html','application/x-javascript'].any?{|content| content == content_type }
+describe CacheHelper, "#all_stylesheet_link_tag" do
+  before do
+    @result = helper.all_stylesheet_link_tag "style"
+  end
+  CacheHelper::STYLE_LIBRARY[:libs].each do |lib|
+    it { @result.should be_include(lib) }
   end
 end

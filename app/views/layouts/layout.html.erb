@@ -9,14 +9,14 @@
 <script language="JavaScript" type="text/javascript"><!--
 var relative_url_root = '<%= controller.request.relative_url_root -%>';
 //--></script>
-  <%= skip_all_stylesheet_link_tag "style" -%>
+  <%= all_stylesheet_link_tag "style" -%>
   <%= stylesheet_link_tag("skins/#{session[:user_custom_theme]}/skin.css") -%>
   <%= stylesheet_link_tag controller.controller_name -%>
   <%= skip_stylesheet_link_tag 'nyroModal.full.css' %>
   <%= skip_stylesheet_link_tag 'jquery.autocomplete.css' %>
 
-  <%= skip_all_javascript_include_tag 'prototype' %>
-  <%= skip_all_javascript_include_tag 'jquery' %>
+  <%= all_javascript_include_tag 'prototype' %>
+  <%= all_javascript_include_tag 'jquery' %>
   <%= skip_javascript_include_tag 'ufo' %>
   <script language="JavaScript" type="text/javascript">$j = jQuery.noConflict();</script>
   <%= javascript_include_tag 'application' %>
