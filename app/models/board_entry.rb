@@ -28,7 +28,7 @@ class BoardEntry < ActiveRecord::Base
 
   before_create :generate_next_user_entry_no
   before_save :square_brackets_tags, :parse_symbol_link
-  after_destroy :cancel_mail
+  after_destroy :cancel_mail, :delete_images
 
   validates_presence_of :title, :message => 'は必須です'
   validates_length_of   :title, :maximum => 100, :message => 'は%d桁以内で入力してください'
@@ -636,12 +636,41 @@ class BoardEntry < ActiveRecord::Base
     Mail.delete( unsent_mails.collect{ |mail| mail.id }) unless unsent_mails.size == 0
   end
 
+  def image_url(file_name, with_id = true)
+    file_name = with_id ? "#{id}_#{file_name}" : file_name
+    file_path = File.join('board_entries', user_id.to_s, file_name)
+    url_for(:controller => '/image', :action => :show, :path => file_path, :only_path => true)
+  end
+
+  def images_filename_to_url_mapping_hash
+    img_urls = {}
+    img_files = all_images
+    img_files.each do |img_file|
+      img_name = File.basename(img_file)
+      img_key = img_name.gsub(id.to_s+"_",'')
+      img_urls[img_key] = image_url(img_name, false)
+    end
+    return img_urls
+  end
+
+  def image_owner_path
+    File.join(self.class.image_root_path, user_id.to_s)
+  end
+
+  def self.image_root_path
+    File.join(ENV['IMAGE_PATH'], "board_entries")
+  end
+
 private
   def generate_next_user_entry_no
     entry = BoardEntry.find(:first,
                             :select => 'max(user_entry_no) max_user_entry_no',
                             :conditions =>['user_id = ?', self.user_id])
     self.user_entry_no = entry.max_user_entry_no.to_i + 1
+  end
+
+  def all_images
+    Dir.glob(File.join(image_owner_path, id.to_s + "_*"))
   end
 
   # symbol_link([uid:fujiwara>])を参照先のデータに基づいて変換する
@@ -700,4 +729,10 @@ private
   def square_brackets_tags
     self.category = Tag.square_brackets_tags(self.category)
   end
+  729       
+
+  def delete_images
+    FileUtils.rm(Dir.glob(File.join(self.class.image_root_path, user_id.to_s, id.to_s + "_*.{jpg,JPG,png,PNG,jpeg,JPEG,gif,GIF}")))
+  end
+  
 end

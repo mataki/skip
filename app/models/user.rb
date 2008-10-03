@@ -12,7 +12,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
+require 'csv'
 class User < ActiveRecord::Base
   has_many :group_participations, :dependent => :destroy
   has_many :pictures, :dependent => :destroy
@@ -146,6 +146,7 @@ class User < ActiveRecord::Base
     users = User.find(*args)
 
     csv_text = ""
+
     CSV::Writer.generate(csv_text) do |csv|
       csv << User.get_csv_header
       users.each do |user|
