@@ -5,24 +5,24 @@
 <div class="box tabular">
   <h3><%= _('画像の形式について') %></h3>
   <p><%= _('ロゴはpng形式のみ、背景画像はjpg形式の画像のみ利用可能です。') %></p>
-  <% Admin::ImagesController::PNG_IMAGE_NAMES.each do |target| -%>
-    <% form_tag admin_images_update_path(:target => target), :multipart => true, :style => 'display: inline' do -%>
-      <label for="<%= target %>"><%= _('Admin::ImagesController|' + target) %></label>
-      <%= file_field_tag target, :size => 40 %>
-      <%= submit_tag _('Upload'), :disable_with => _('Uploading...') %>
-    <% end -%>
-    <%= help_icon_tag :content => _("Admin::ImagesController|#{target}_description") %> |
-    <%= link_to _('現在の画像を表示'), image_path("/custom/images/#{target}.png"), :popup => true %> |
-    <%= link_to _('既定の画像に戻す'), admin_images_revert_path(:target => target), :method => :post, :confirm => _('現在設定中の画像が消えてしまいますがよろしいですか?') %>
+  <% Admin::ImagesController::LogoImage::IMAGE_NAMES.each do |target_name| -%>
+    <%= render :partial => 'form',
+               :locals => { :target_name => target_name,
+                            :target_path => "/custom/images/#{target_name}.png",
+                            :title => _("Admin::ImagesController|#{target_name}"),
+                            :description => _("Admin::ImagesController|#{target_name}_description") } %>
   <% end -%>
-  <% Admin::ImagesController::BACKGROUND_IMAGE_NAMES.each_with_index do |target, index| -%>
-    <% form_tag admin_images_update_path(:target => target), :multipart => true, :style => 'display: inline' do -%>
-      <label for="<%= target %>"><%= _('Admin::ImagesController|background') + (index + 1).to_s %></label>
-      <%= file_field_tag target, :size => 40 %>
-      <%= submit_tag _('Upload'), :disable_with => _('Uploading...') %>
-    <% end -%>
-    <%= help_icon_tag :content => _("Admin::ImagesController|background_description") %> |
-    <%= link_to _('現在の画像を表示'), image_path("/custom/images/titles/#{target}.jpg"), :popup => true %> |
-    <%= link_to _('既定の画像に戻す'), admin_images_revert_path(:target => target), :method => :post, :confirm => _('現在設定中の画像が消えてしまいますがよろしいですか?') %>
+  <% Admin::ImagesController::BackGroundImage::IMAGE_NAMES.each_with_index do |target_name, index| -%>
+    <%= render :partial => 'form',
+               :locals => { :target_name => target_name,
+                            :target_path => "/custom/images/titles/#{target_name}.jpg",
+                            :title => _("Admin::ImagesController|background") + (index + 1).to_s,
+                            :description => _("Admin::ImagesController|background_description") } %>
   <% end -%>
+  <% target_name = Admin::ImagesController::FaviconImage::IMAGE_NAMES[0] -%>
+  <%= render :partial => 'form',
+             :locals => { :target_name => target_name,
+                          :target_path => "/#{target_name}.ico",
+                          :title => _("Admin::ImagesController|favicon"),
+                          :description => _("Admin::ImagesController|favicon_description") } %>
 </div>

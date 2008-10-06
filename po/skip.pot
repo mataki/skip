@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-10-06 09:26+0900\n"
+"POT-Creation-Date: 2008-10-06 17:52+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -62,7 +62,7 @@ msgid "%{target}から検索を行ないます"
 msgstr ""
 
 #: app/controllers/admin/documents_controller.rb:89
-#: app/controllers/admin/images_controller.rb:96
+#: app/controllers/admin/images_controller.rb:137
 msgid "%{target}を保存しました。"
 msgstr ""
 
@@ -255,12 +255,10 @@ msgstr ""
 msgid "Admin::ImagesController"
 msgstr ""
 
-#: app/views/admin/images/index.html.erb:10
-msgid "Admin::ImagesController|"
-msgstr ""
-
 #: app/controllers/admin/images_controller.rb:28
-#: app/views/admin/images/index.html.erb:20
+#: app/views/admin/images/_form2.html.erb:3
+#: app/views/admin/images/_form1.html.erb:2
+#: app/views/admin/images/index.html.erb:19
 msgid "Admin::ImagesController|background"
 msgstr ""
 
@@ -305,8 +303,20 @@ msgid "Admin::ImagesController|background010"
 msgstr ""
 
 #: app/controllers/admin/images_controller.rb:29
-#: app/views/admin/images/index.html.erb:24
+#: app/views/admin/images/_form2.html.erb:7
+#: app/views/admin/images/_form1.html.erb:6
+#: app/views/admin/images/index.html.erb:20
 msgid "Admin::ImagesController|background_description"
+msgstr ""
+
+#: app/controllers/admin/images_controller.rb:40
+#: app/views/admin/images/index.html.erb:26
+msgid "Admin::ImagesController|favicon"
+msgstr ""
+
+#: app/controllers/admin/images_controller.rb:41
+#: app/views/admin/images/index.html.erb:27
+msgid "Admin::ImagesController|favicon_description"
 msgstr ""
 
 #: app/controllers/admin/images_controller.rb:26
@@ -866,7 +876,7 @@ msgstr ""
 msgid "Are you sure destroing with nest comments?"
 msgstr ""
 
-#: app/views/admin/share_files/index.html.erb:34
+#: app/views/admin/share_files/index.html.erb:36
 #: app/views/admin/bookmark_comments/index.html.erb:30
 #: app/views/admin/board_entries/index.html.erb:34
 #: app/views/admin/users/change_uid.html.erb:31
@@ -1173,7 +1183,7 @@ msgstr ""
 msgid "Data management"
 msgstr ""
 
-#: app/views/admin/share_files/index.html.erb:34
+#: app/views/admin/share_files/index.html.erb:36
 #: app/views/admin/bookmark_comments/index.html.erb:30
 #: app/views/admin/board_entries/index.html.erb:34
 #: app/views/admin/users/index.html.erb:29
@@ -1849,15 +1859,17 @@ msgid "Updating..."
 msgstr ""
 
 #: app/views/admin/users/import.html.erb:11
-#: app/views/admin/images/index.html.erb:12
-#: app/views/admin/images/index.html.erb:22
+#: app/views/admin/images/_form2.html.erb:5
+#: app/views/admin/images/_form1.html.erb:4
+#: app/views/admin/images/_form.html.erb:4
 msgid "Upload"
 msgstr ""
 
 #: app/views/admin/users/import.html.erb:11
 #: app/views/admin/users/import.html.erb:78
-#: app/views/admin/images/index.html.erb:12
-#: app/views/admin/images/index.html.erb:22
+#: app/views/admin/images/_form2.html.erb:5
+#: app/views/admin/images/_form1.html.erb:4
+#: app/views/admin/images/_form.html.erb:4
 msgid "Uploading..."
 msgstr ""
 
@@ -2529,7 +2541,7 @@ msgstr ""
 msgid "対象のコンテンツを開くことが出来ませんでした。"
 msgstr ""
 
-#: app/controllers/admin/images_controller.rb:99
+#: app/controllers/admin/images_controller.rb:140
 msgid ""
 "対象の画像を保存することが出来ませんでした。再度お試し頂くか管理者にお問い合"
 "わせ下さい。"
@@ -2541,7 +2553,7 @@ msgstr ""
 
 #: app/controllers/admin/documents_controller.rb:44
 #: app/controllers/admin/documents_controller.rb:95
-#: app/controllers/admin/images_controller.rb:102
+#: app/controllers/admin/images_controller.rb:143
 msgid "想定外のエラーが発生しました。管理者にお問い合わせ下さい。"
 msgstr ""
 
@@ -2567,8 +2579,9 @@ msgstr ""
 msgid "既定のページに戻す"
 msgstr ""
 
-#: app/views/admin/images/index.html.erb:16
-#: app/views/admin/images/index.html.erb:26
+#: app/views/admin/images/_form2.html.erb:9
+#: app/views/admin/images/_form1.html.erb:8
+#: app/views/admin/images/_form.html.erb:8
 msgid "既定の画像に戻す"
 msgstr ""
 
@@ -2588,8 +2601,9 @@ msgstr ""
 msgid "現在のページを表示"
 msgstr ""
 
-#: app/views/admin/images/index.html.erb:15
-#: app/views/admin/images/index.html.erb:25
+#: app/views/admin/images/_form2.html.erb:8
+#: app/views/admin/images/_form1.html.erb:7
+#: app/views/admin/images/_form.html.erb:7
 msgid "現在の画像を表示"
 msgstr ""
 
@@ -2597,8 +2611,9 @@ msgstr ""
 msgid "現在設定中のページが消えてしまいますがよろしいですか?"
 msgstr ""
 
-#: app/views/admin/images/index.html.erb:16
-#: app/views/admin/images/index.html.erb:26
+#: app/views/admin/images/_form2.html.erb:9
+#: app/views/admin/images/_form1.html.erb:8
+#: app/views/admin/images/_form.html.erb:8
 msgid "現在設定中の画像が消えてしまいますがよろしいですか?"
 msgstr ""
 

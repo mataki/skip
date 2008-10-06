@@ -16,9 +16,6 @@
 class Admin::ImagesController < Admin::ApplicationController
   before_filter :check_params, :only => [:update, :revert]
 
-  PNG_IMAGE_NAMES = %w(title_logo header_logo footer_logo).freeze
-  BACKGROUND_IMAGE_NAMES = %w(background001 background002 background003 background004 background005 
-                              background006 background007 background008 background009 background010).freeze
   N_('Admin::ImagesController|title_logo')
   N_('Admin::ImagesController|title_logo_description')
   N_('Admin::ImagesController|header_logo')
@@ -37,52 +34,91 @@ class Admin::ImagesController < Admin::ApplicationController
   N_('Admin::ImagesController|background008')
   N_('Admin::ImagesController|background009')
   N_('Admin::ImagesController|background010')
+  N_('Admin::ImagesController|favicon')
+  N_('Admin::ImagesController|favicon_description')
 
   def index
     @topics = [_(self.class.name.to_s)]
   end
 
   def update
+    image = new_image
     begin_update do
       @topics = [_(self.class.name.to_s)]
-      image_file = params[params[:target].to_sym]
-      unless valid_file?(image_file, :max_size => 300.kilobyte, :content_types => content_types)
+      unless valid_file?(image.file, :max_size => image.max_size, :content_types => image.content_types)
         return render(:action => :index)
       end
-      open("#{save_dir}/#{params[:target]}#{extentions}", 'wb') { |f| f.write(image_file.read) }
+      open(image.full_path, 'wb') { |f| f.write(image.file.read) }
     end
   end
 
   def revert
+    image = new_image
     begin_update do
       @topics = [_(self.class.name.to_s)]
-      open("#{save_dir}/default_#{params[:target]}#{extentions}", 'rb') do |default_file|
-        open("#{save_dir}/#{params[:target]}#{extentions}", 'wb') do |target_file|
+      open(image.default_full_path, 'rb') do |default_file|
+        open(image.full_path, 'wb') do |target_file|
           target_file.write(default_file.read)
         end
       end
     end
   end
 
+  class BaseImage
+    attr_reader :file, :file_name, :extentions, :content_types, :base_dir, :save_dir, :max_size
+    def initialize param = {}
+      @file_name = param[:target]
+      @file = param[self.file_name.to_sym]
+      @extentions = '.png'
+      @content_types = []
+      @base_dir = @save_dir = "#{RAILS_ROOT}/public"
+      @max_size = 300.kilobyte
+    end
+
+    def full_path
+      "#{@save_dir}/#{@file_name}#{@extentions}"
+    end
+
+    def default_full_path
+      "#{@save_dir}/default_#{@file_name}#{@extentions}"
+    end
+  end
+
+  class LogoImage < BaseImage
+    IMAGE_NAMES = %w(title_logo header_logo footer_logo).freeze
+    def initialize param = {}
+      super
+      @extentions = '.png'
+      @content_types = ['image/png']
+      @save_dir = "#{base_dir}/custom/images"
+    end
+  end
+
+  class BackGroundImage < BaseImage
+    IMAGE_NAMES = %w(background001 background002 background003 background004 background005 
+                     background006 background007 background008 background009 background010).freeze
+    def initialize param = {}
+      super
+      @extentions = '.jpg'
+      @content_types = ['image/jpg', 'image/jpeg']
+      @save_dir = "#{base_dir}/custom/images/titles"
+    end
+  end
+
+  class FaviconImage < BaseImage
+    IMAGE_NAMES = ['favicon'].freeze
+    def initialize param = {}
+      super
+      @extentions = '.ico'
+      @max_size = 10.kilobyte
+    end
+  end
   private
-  def extentions
-    BACKGROUND_IMAGE_NAMES.include?(params[:target]) ? '.jpg' : '.png'
-  end
-
-  def content_types
-    BACKGROUND_IMAGE_NAMES.include?(params[:target]) ? ['image/jpg', 'image/jpeg'] : ['image/png']
-  end
-
-  def save_dir
-    base_dir = "#{RAILS_ROOT}/public/custom/images"
-    BACKGROUND_IMAGE_NAMES.include?(params[:target]) ? "#{base_dir}/titles" : base_dir
-  end
-
   def check_params
     if params[:target].blank?
       redirect_to :action => :index
     end
-    unless (PNG_IMAGE_NAMES + BACKGROUND_IMAGE_NAMES).include? params[:target]
+    unless (LogoImage::IMAGE_NAMES + BackGroundImage::IMAGE_NAMES + FaviconImage::IMAGE_NAMES).include? params[:target]
       redirect_to "#{root_url}404.html"
     end
   end
@@ -102,5 +138,15 @@ class Admin::ImagesController < Admin::ApplicationController
     flash.now[:error] = _('想定外のエラーが発生しました。管理者にお問い合わせ下さい。')
     e.backtrace.each { |message| logger.error message }
     render :action => :index, :target => params[:target], :status => :internal_server_error
+  end
+
+  def new_image
+    if LogoImage::IMAGE_NAMES.include?(params[:target])
+      LogoImage.new params
+    elsif BackGroundImage::IMAGE_NAMES.include?(params[:target])
+      BackGroundImage.new params
+    else
+      FaviconImage.new params
+    end
   end
 end

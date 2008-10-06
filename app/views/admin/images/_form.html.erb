@@ -1,0 +1,8 @@
+<% form_tag admin_images_update_path(:target => target_name), :multipart => true, :style => 'display: inline' do -%>
+  <label for="<%= target_name %>"><%= title %></label>
+  <%= file_field_tag target_name, :size => 40 %>
+  <%= submit_tag _('Upload'), :disable_with => _('Uploading...') %>
+<% end -%>
+<%= help_icon_tag :content => description %> |
+<%= link_to _('現在の画像を表示'), image_path(target_path), :popup => true %> |
+<%= link_to _('既定の画像に戻す'), admin_images_revert_path(:target => target_name), :method => :post, :confirm => _('現在設定中の画像が消えてしまいますがよろしいですか?') %>

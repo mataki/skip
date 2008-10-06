@@ -26,6 +26,8 @@ end
 describe Admin::ImagesController, 'GET /update' do
   before do
     admin_login
+    stub_image = stub(Admin::ImagesController::BaseImage)
+    controller.stub!(:new_image).and_return(stub_image)
     controller.stub!(:check_params)
     get :update
   end
