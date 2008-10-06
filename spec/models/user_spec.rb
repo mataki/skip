@@ -69,16 +69,26 @@ end
 describe User, '#change_password' do
   before do
     @user = create_user
-    @before_password = @user.password
-    @after_password = 'hogehoge'
+    @old_password = @user.password
+    @new_password = 'hogehoge'
 
-    @params = { :old_password => @before_password, :password => @after_password, :password_confirmation => @after_password }
+    @params = { :old_password => @old_password, :password => @new_password, :password_confirmation => @new_password }
   end
-  describe "変更が成功する場合" do
-    before do
-      @user.change_password @params
+  describe "前のパスワードが正しい場合" do
+    describe '新しいパスワードが入力されている場合' do
+      it 'パスワードが変更されること' do
+        lambda do
+          @user.change_password @params
+        end.should change(@user, :crypted_password)
+      end
     end
-    it { @user.crypted_password.should == User.encrypt(@after_password) }
+    describe '新しいパスワードが入力されていない場合' do
+      before do
+        @params[:password] = ''
+        @user.change_password @params
+      end
+      it { @user.errors.full_messages.size.should == 1 }
+    end
   end
   describe "前のパスワードが間違っている場合" do
     before do

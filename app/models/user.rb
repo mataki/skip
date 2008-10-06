@@ -127,7 +127,11 @@ class User < ActiveRecord::Base
 
   def change_password(params = {})
     if params[:old_password] and crypted_password == encrypt(params[:old_password])
-      self.update_attributes params.slice(:password, :password_confirmation)
+      if params[:password].blank?
+        errors.add(:password, "が入力されていません。")
+      else
+        self.update_attributes params.slice(:password, :password_confirmation)
+      end
     else
       errors.add(:old_password, "が間違っています。")
     end
