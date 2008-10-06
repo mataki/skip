@@ -28,7 +28,7 @@
     <thead>
       <tr>
         <th><%= _('Line') %></th>
-        <th><%= label Admin::UserUid.name, :uid %></th>
+        <th><label><%= h Admin::Setting.login_account %></label></th>
         <th><%= label Admin::User.name, :name %></th>
         <th><%= label Admin::UserProfile.name, :section %></th>
         <th><%= label Admin::UserProfile.name, :email %></th>
