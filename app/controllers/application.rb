@@ -93,6 +93,11 @@ class ApplicationController < ActionController::Base
     entry
   end
 
+  def redirect_to_with_deny_auth(url = { :controller => :mypage, :action => :index })
+    flash[:warning] = 'この操作は、許可されていません。'
+    redirect_to url
+  end
+
   # skip_util内のssoフィルターは自己をopenするため呼び出せないのでオーバーライド
   def sso
     unless cookies[:_sso_sid]

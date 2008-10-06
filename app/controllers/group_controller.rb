@@ -57,7 +57,7 @@ class GroupController < ApplicationController
       csv_text = User.find_as_csv(:all,
                                   :conditions => conditions,
                                   :order => order_by,
-                                  :include => [:user_access, :group_participations])
+                                  :include => [:user_access, :group_participations, :user_uids])
       send_data csv_text, :filename => 'users.csv', :type => 'application/x-csv', :disposition => 'attachment'
       return nil
     end
