@@ -11,6 +11,9 @@ table.input_table textarea {
   </div>
   <div id="contents_hiki_space" style="clear: left; display: none;">
     <%= link_to_hiki_help %>
+    <span id="btn_preview_hiki" style="display: none">
+      <a href="#" id="hiki_preview_link">【プレビューで確認する】</a>
+    </span>
   <table width="100%" style="border-collapse:separate;"><tr>
     <td id="hiki_text" style="width:100%"><label for="contents"><%= text_area_tag 'contents_hiki', h(params[:contents_hiki]), :cols => 20, :rows => 20 %></label></td>
   </tr></table>
@@ -64,6 +67,25 @@ $j(function(){
     if ($j.browser.opera) {
         $j('#rich_text_radio').hide();
     }
+
+    // プレビュー表示用ボタン
+    var url = '<%= url_for({ :action => "ado_preview", :id => @board_entry}) -%>';
+    $j("#hiki_preview_link")
+    .click(function(){
+        $j.ajax({
+            type: 'POST',
+            url: url,
+            data: $j('#board_entry_form').serialize(),
+            success: function(msg) {
+                $j('#preview').html(msg);
+                $j('#preview-win')
+                .css('width',600)
+                .fadeIn();
+            }
+        });
+        return false;
+    });
+
 });
 //]]>
 </script>

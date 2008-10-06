@@ -114,10 +114,6 @@ div.input_line textarea {
   <div style="clear: left"></div>
 </div>
 
-<span id="btn_preview_hiki" style="display: none">
-<input type="button" value="プレビュー" name="プレビュー" id="hiki_preview_button"/>
-</span>
-
 <%= skip_javascript_include_tag "controls" %>
 
 <script language='javascript' type='text/javascript'>
@@ -138,23 +134,6 @@ $j(function() {
     $j('#board_entry_category').jTagging($j('#std_tags_list'));
     $j('#board_entry_category').jTagging($j('#user_tags_list'));
     $j('#board_entry_category').jTagging($j('#sys_tags_list'));
-
-    // プレビュー表示用ボタン
-    var url = '<%= url_for({ :action => "ado_preview", :id => @board_entry}) -%>';
-    $j("#hiki_preview_button")
-    .click(function(){
-        $j.ajax({
-            type: 'POST',
-            url: url,
-            data: $j(this).parent().parent('form').serialize(),
-            success: function(msg) {
-                $j('#preview').html(msg);
-                $j('#preview-win')
-                .css('width',600)
-                .fadeIn();
-            }
-        });
-    });
 
     // 入力フォームのチェック
     $j('#board_entry_form')
