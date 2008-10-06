@@ -12,7 +12,7 @@
       </p>
     <%= submit_tag _('Save'), :disable_with => _('Saving...') %>
     <%= link_to '[' + _('現在のページを表示') + ']', "#{controller.request.relative_url_root}/custom/#{params[:target]}.html", :popup => true %>
-    <%= link_to '[' + _('既定のページ戻す') + ']', admin_documents_revert_path(:target => params[:target]), :method => :post, :confirm => _('現在設定中のページが消えてしまいますがよろしいですか?') %>
+    <%= link_to '[' + _('既定のページに戻す') + ']', admin_documents_revert_path(:target => params[:target]), :method => :post, :confirm => _('現在設定中のページが消えてしまいますがよろしいですか?') %>
     </div>
     <% end -%>
   <% else -%>

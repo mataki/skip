@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-09-30 16:56+0900\n"
+"POT-Creation-Date: 2008-10-06 09:26+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -491,14 +491,6 @@ msgstr ""
 msgid "Admin::Setting|Contact addr description"
 msgstr ""
 
-#: app/models/admin/setting.rb:66
-msgid "Admin::Setting|Develop team gid"
-msgstr ""
-
-#: app/models/admin/setting.rb:67
-msgid "Admin::Setting|Develop team gid description"
-msgstr ""
-
 #: app/models/admin/setting.rb:31
 msgid "Admin::Setting|Footer contact"
 msgstr ""
@@ -555,11 +547,11 @@ msgstr ""
 msgid "Admin::Setting|Login account description"
 msgstr ""
 
-#: app/models/admin/setting.rb:70
+#: app/models/admin/setting.rb:68
 msgid "Admin::Setting|Mail function setting"
 msgstr ""
 
-#: app/models/admin/setting.rb:71
+#: app/models/admin/setting.rb:69
 msgid "Admin::Setting|Mail function setting description"
 msgstr ""
 
@@ -595,11 +587,11 @@ msgstr ""
 msgid "Admin::Setting|Mypage feed settings url description"
 msgstr ""
 
-#: app/models/admin/setting.rb:68
+#: app/models/admin/setting.rb:66
 msgid "Admin::Setting|Mypage feed timeout"
 msgstr ""
 
-#: app/models/admin/setting.rb:69
+#: app/models/admin/setting.rb:67
 msgid "Admin::Setting|Mypage feed timeout description"
 msgstr ""
 
@@ -611,11 +603,11 @@ msgstr ""
 msgid "Admin::Setting|Point button description"
 msgstr ""
 
-#: app/models/admin/setting.rb:72
+#: app/models/admin/setting.rb:70
 msgid "Admin::Setting|Recent date"
 msgstr ""
 
-#: app/models/admin/setting.rb:73
+#: app/models/admin/setting.rb:71
 msgid "Admin::Setting|Recent date description"
 msgstr ""
 
@@ -1389,11 +1381,11 @@ msgstr ""
 msgid "Group|説明"
 msgstr ""
 
-#: app/views/admin/settings/_other.html.erb:11
+#: app/views/admin/settings/_other.html.erb:13
 msgid "ID欄を削除"
 msgstr ""
 
-#: app/views/admin/settings/_other.html.erb:10
+#: app/views/admin/settings/_other.html.erb:12
 msgid "ID欄を追加"
 msgstr ""
 
@@ -1528,7 +1520,7 @@ msgstr ""
 msgid "OpenID URLを設定しました。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:133
+#: app/controllers/platform_controller.rb:136
 msgid "OpenIDサーバーが見つかりませんでした。"
 msgstr ""
 
@@ -2033,12 +2025,16 @@ msgstr ""
 msgid "User|Admin"
 msgstr ""
 
-#: app/models/user.rb:51
+#: app/models/user.rb:53
 msgid "User|Admin|false"
 msgstr ""
 
-#: app/models/user.rb:50
+#: app/models/user.rb:52
 msgid "User|Admin|true"
+msgstr ""
+
+#: app/models/user.rb:-
+msgid "User|Auth session token"
 msgstr ""
 
 #: app/models/user.rb:-
@@ -2049,31 +2045,39 @@ msgstr ""
 msgid "User|Crypted password"
 msgstr ""
 
-#: app/models/user.rb:54
+#: app/models/user.rb:56
 msgid "User|Disclosure|false"
 msgstr ""
 
-#: app/models/user.rb:53
+#: app/models/user.rb:55
 msgid "User|Disclosure|true"
 msgstr ""
 
-#: app/models/user.rb:43
+#: app/models/user.rb:45
 msgid "User|Old password"
+msgstr ""
+
+#: app/models/user.rb:-
+msgid "User|Remember token"
+msgstr ""
+
+#: app/models/user.rb:-
+msgid "User|Remember token expires at"
 msgstr ""
 
 #: app/models/user.rb:-
 msgid "User|Status"
 msgstr ""
 
-#: app/models/user.rb:45
+#: app/models/user.rb:47
 msgid "User|Status|ACTIVE"
 msgstr ""
 
-#: app/models/user.rb:46
+#: app/models/user.rb:48
 msgid "User|Status|RETIRED"
 msgstr ""
 
-#: app/models/user.rb:47 app/views/admin/users/_form.html.erb:17
+#: app/models/user.rb:49 app/views/admin/users/_form.html.erb:17
 #: app/views/admin/users/_form.html.erb:22
 msgid "User|Status|UNUSED"
 msgstr ""
@@ -2086,7 +2090,7 @@ msgstr ""
 msgid "User|名前"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:58
+#: app/controllers/platform_controller.rb:61
 msgid "You are now logged out."
 msgstr ""
 
@@ -2098,7 +2102,7 @@ msgstr ""
 msgid "You cannot update status and admin of yourself"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:59
+#: app/controllers/platform_controller.rb:62
 msgid "You had been retired."
 msgstr ""
 
@@ -2321,7 +2325,7 @@ msgstr ""
 msgid "user uid"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:134
+#: app/controllers/platform_controller.rb:137
 msgid "このサーバへの認証を確認してください"
 msgstr ""
 
@@ -2339,13 +2343,13 @@ msgstr ""
 msgid "ご指定のグループは存在しません。"
 msgstr ""
 
-#: app/controllers/user_controller.rb:230
 #: app/controllers/admin/users_controller.rb:53
-#: app/controllers/admin/users_controller.rb:69 app/models/board_entry.rb:52
+#: app/controllers/admin/users_controller.rb:69
+#: app/controllers/user_controller.rb:253 app/models/board_entry.rb:52
 msgid "ご指定のユーザは存在しません。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:146
+#: app/controllers/platform_controller.rb:149
 msgid "そのOpenIDは、登録されていません。"
 msgstr ""
 
@@ -2369,7 +2373,7 @@ msgstr ""
 msgid "カテゴリが選択されていないか、不正な値です。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:134
+#: app/controllers/platform_controller.rb:137
 msgid "キャンセルされました。"
 msgstr ""
 
@@ -2393,19 +2397,19 @@ msgstr ""
 msgid "ファイルの削除に成功しました。"
 msgstr ""
 
-#: app/controllers/admin/application_controller.rb:31
+#: app/controllers/admin/application_controller.rb:35
 msgid "ファイルを指定して下さい。"
 msgstr ""
 
-#: app/controllers/admin/application_controller.rb:36
+#: app/controllers/admin/application_controller.rb:40
 msgid "ファイルサイズが0です。"
 msgstr ""
 
-#: app/controllers/admin/application_controller.rb:41
+#: app/controllers/admin/application_controller.rb:45
 msgid "ファイルサイズが上限を超えています。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:142
+#: app/controllers/platform_controller.rb:145
 msgid "ユーザの登録に失敗しました。"
 msgstr ""
 
@@ -2431,11 +2435,11 @@ msgstr ""
 msgid "ログインし直して下さい。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:45
+#: app/controllers/platform_controller.rb:48
 msgid "ログインに失敗しました。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:146
+#: app/controllers/platform_controller.rb:149
 msgid "ログイン後管理画面でOpenID URLを登録後ログインしてください。"
 msgstr ""
 
@@ -2443,7 +2447,7 @@ msgstr ""
 msgid "ロゴはpng形式のみ、背景画像はjpg形式の画像のみ利用可能です。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:45
+#: app/controllers/platform_controller.rb:48
 msgid "下部に記載されているお問い合わせ先にご連絡下さい。"
 msgstr ""
 
@@ -2477,7 +2481,7 @@ msgid ""
 "ません。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:136
+#: app/controllers/platform_controller.rb:139
 msgid "内部エラーが発生しました。"
 msgstr ""
 
@@ -2531,13 +2535,17 @@ msgid ""
 "わせ下さい。"
 msgstr ""
 
+#: app/controllers/statistics_controller.rb:28
+msgid "対象データが見つかりません。"
+msgstr ""
+
 #: app/controllers/admin/documents_controller.rb:44
 #: app/controllers/admin/documents_controller.rb:95
 #: app/controllers/admin/images_controller.rb:102
 msgid "想定外のエラーが発生しました。管理者にお問い合わせ下さい。"
 msgstr ""
 
-#: app/controllers/admin/application_controller.rb:47
+#: app/controllers/admin/application_controller.rb:51
 msgid "指定された形式のファイルはアップロード出来ません。"
 msgstr ""
 
@@ -2556,7 +2564,7 @@ msgid ""
 msgstr ""
 
 #: app/views/admin/documents/index.html.erb:15
-msgid "既定のページ戻す"
+msgid "既定のページに戻す"
 msgstr ""
 
 #: app/views/admin/images/index.html.erb:16
@@ -2572,7 +2580,7 @@ msgstr ""
 msgid "正しいCSVファイルの例"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:133
+#: app/controllers/platform_controller.rb:136
 msgid "正しいOpenID URLを入力してください。"
 msgstr ""
 
@@ -2611,11 +2619,11 @@ msgstr ""
 msgid "登録可能です"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:136
+#: app/controllers/platform_controller.rb:139
 msgid "管理者に連絡してください。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:142
+#: app/controllers/platform_controller.rb:145
 msgid "管理者に連絡してください。<br/>%{msg}"
 msgstr ""
 
@@ -2628,6 +2636,6 @@ msgstr ""
 msgid "該当するユーザは存在しませんでした。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:135
+#: app/controllers/platform_controller.rb:138
 msgid "認証に失敗しました。"
 msgstr ""
