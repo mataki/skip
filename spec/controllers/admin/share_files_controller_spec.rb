@@ -58,3 +58,17 @@ describe Admin::ShareFilesController, 'PUT /update' do
     end.should raise_error(ActionController::UnknownAction)
   end
 end
+
+describe Admin::ShareFilesController, 'GET /download' do
+  before do
+    admin_login
+    @share_file = stub_model(Admin::ShareFile)
+    @share_file.stub!(:full_path).and_return('/full_path')
+    Admin::ShareFile.should_receive(:find).and_return(@share_file)
+  end
+  it '取得した共有ファイルの実体ファイルの送信処理が行われること' do
+    controller.should_receive(:send_file).with(@share_file.full_path, {:filename => @share_file.file_name,
+                                               :type => @share_file.content_type, :stream => false, :disposition => 'attachment'})
+    get :download
+  end
+end

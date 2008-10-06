@@ -18,6 +18,8 @@
         object.owner_symbol_name
       when "user"
         object.user.name
+      when "file_name"
+        link_to object.send(column.to_sym), download_admin_share_file_path(object)
       when "publication_type"
         object.publication_type_name
       when "description"
