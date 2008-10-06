@@ -294,7 +294,7 @@ form.comment_input_form textarea{
 
 <div id="board_entry_comments">
   <div class="header">
-    <span class="buttons">
+    <span class="buttons invisible">
       [
        <span id="sort_desc_label" class="invisible">新しい順にソート</span><a href="#" id="sort_desc_link">新しい順にソート</a>
        | <span id="sort_asc_label" class="invisible">古い順にソート</span><a href="#" id="sort_asc_link">古い順にソート</a>
@@ -350,6 +350,7 @@ $j(function(){
             complete:function(request) {
                 $j('#board_entry_comments').append(request.responseText);
                 $j('#board_entry_comment_contents').val('');
+                showSortMenu();
                 setupCommentEditLink();
                 setupCommentCancelButton();
                 setupCommentInputForm();
@@ -449,6 +450,16 @@ $j(function(){
         setupCommentInputForm();
         setupCommentNestLink();
     };
+
+    // コメントソートの表示制御
+    var showSortMenu = function() {
+        if ( $j('.board_entry_comment.level1').length > 1 ) {
+            $j('#board_entry_comments > .header > .buttons').show();
+        } else {
+            $j('#board_entry_comments > .header > .buttons').hide();
+        }
+    };
+    showSortMenu();
 
     // コメントソート(標準)、コメントソート(昇順)、コメントソート(降順)を切り替える
     var changeSortMenu = function(sortType) {
@@ -679,5 +690,6 @@ $j(function(){
         });
     };
     setupCommentNestLink();
+
 });
 </script>
