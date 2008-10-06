@@ -58,7 +58,7 @@ var platform_url_root = '#{ENV['SKIP_URL']}';
 
   def link_to_hiki_help
     sub_window_script = get_subwindow_script "#{ENV['SKIP_URL']}/hiki.html", 500, 600
-    link_to '【Hiki記法表示】', "javascript:void(0)", :onclick => "#{sub_window_script}"
+    link_to '【本文の書き方に関するヒント】', "javascript:void(0)", :onclick => "#{sub_window_script}"
   end
 
   def get_subwindow_script url, width, height, title='subwindow'
