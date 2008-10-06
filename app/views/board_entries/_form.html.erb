@@ -189,12 +189,6 @@ $j(function() {
             }
         }
 
-        if (no_tb_array.length > 0) {
-            if (confirm(no_tb_array + "が、本文中で言及していないので、リンクをたどることができませんが、\r\nよろしいですか？（言及方法：[page:123]のようにします）") == false) {
-                return false;
-            }
-        }
-
         if ($j('#publication_type_protected:checked').size() > 0){
             if ($j('#board_entry_category').val().match(new RegExp("連絡", "g")) == null) {
                 if (confirm("連絡タグがついていないため、\r\n相手に気づいてもらえないかもしれませんが、よろしいですか？") == false) {
