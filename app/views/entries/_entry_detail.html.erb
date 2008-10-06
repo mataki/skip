@@ -245,13 +245,15 @@ form.comment_input_form textarea{
       <% end %>
       </div>
     </div>
+    <% if entry.editor_mode != 'hiki' -%>
     <div class="contents_image">
-      <div id="image_style_area" class="invisible">
+      <div id="image_style_area">
         <% entry.images_filename_to_url_mapping_hash.each_value do |url| -%>
           <%= image_tag url, :width => '240', :onclick => "popupImage('#{url}');" %>
         <% end -%>
       </div>
     </div>
+    <% end -%>
   </div>
 </div>
 <div id="board_entry_control">
@@ -261,7 +263,6 @@ form.comment_input_form textarea{
      | <span id="source_style_label" class="invisible">ソース表示</span><a href="#" id="source_style_link">ソース表示</a>
     <% if editable %>
      | <span id="access_style_label" class="invisible">アクセス履歴</span><a href="#" id="access_style_link">アクセス履歴</a>
-     | <span id="image_style_label" class="invisible">添付画像表示</span><a href="#" id="image_style_link">添付画像表示</a>
     <% end %>
     ]
   </span>
@@ -378,13 +379,6 @@ $j(function(){
         return false;
     });
 
-    // 添付画像表示リンククリック時
-    $j('#image_style_link')
-    .click(function() {
-        changeStyleMenu('image');
-        return false;
-    });
-
     // コメントソート(標準)リンククリック時
     $j('#sort_default_link')
     .click(function() {
@@ -470,7 +464,7 @@ $j(function(){
 
     // ブログ表示、ソース表示、アクセス履歴を切り替える
     var changeStyleMenu = function(styleType) {
-        var styles = ["default", "source", "access", "image"];
+        var styles = ["default", "source", "access"];
         $j.each(styles, function() {
             if(this == styleType) {
                 $j('#' + this + '_style_area').show('normal');
