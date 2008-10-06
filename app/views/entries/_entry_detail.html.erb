@@ -197,12 +197,15 @@ form.comment_input_form textarea{
   display: block;
 }
 .trackback_space {
-  margin-top: 10px; border: 1px solid silver;
-  padding: 5px;
   background-color: #f0f0ff;
 }
 .trackback_space .entries {
   margin-left: 20px;
+}
+.sent_trackback {
+  padding: 5px;
+  margin-top: 10px;
+  border: 1px solid silver;
 }
 </style>
 
@@ -232,6 +235,19 @@ form.comment_input_form textarea{
       </div>
     </div>
     <h1><%=h entry.category %> <%=h entry.title %></h1>
+    <% unless to_tb_entries.empty? -%>
+    <div class="trackback_space send_trackback">
+      トラックバック先
+      <ul class="entries">
+    <% symbol2name_hash = BoardEntry.get_symbol2name_hash to_tb_entries -%>
+    <% to_tb_entries.each do |to_tb_entry|  -%>
+        <li>
+          <%= entry_link_to to_tb_entry %> - <%= user_link_to to_tb_entry.user %>（<%= symbol2name_hash[to_tb_entry.symbol] %>）
+        </li>
+    <% end -%>
+      </ul>
+    </div>
+    <% end -%>
   </div>
   <div class="contents">
     <div class="contents_body">
@@ -302,21 +318,7 @@ form.comment_input_form textarea{
   </form>
 </div>
 
-<% unless to_tb_entries.empty? -%>
-<div class="trackback_space">
-  トラックバック先
-  <ul class="entries">
-<% symbol2name_hash = BoardEntry.get_symbol2name_hash to_tb_entries -%>
-<% to_tb_entries.each do |to_tb_entry|  -%>
-    <li>
-      <%= entry_link_to to_tb_entry %> - <%= user_link_to to_tb_entry.user %>（<%= symbol2name_hash[to_tb_entry.symbol] %>）
-    </li>
-<% end -%>
-  </ul>
-</div>
-<% end -%>
-
-<div class="trackback_space">
+<div class="trackback_space sent_trackback">
   トラックバック - <%= link_to "この記事にトラックバックする", :controller => "edit", :trackbacks => entry.id, :title => "RE: " + entry.title, :category => entry.category %>
   <ul class="entries">
 <% symbol2name_hash = BoardEntry.get_symbol2name_hash tb_entries -%>
