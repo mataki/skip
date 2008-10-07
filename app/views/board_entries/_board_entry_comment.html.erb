@@ -5,7 +5,7 @@
 <div class="<%= comment_class %>" id="comment_<%= comment.id %>_<%= level %>">
   <div class="header">
     <span class="title">
-      <%= user_link_to(comment.user) %><span class="date">[<%= comment.created_on.strftime("%Y/%m/%d-%H:%M") %>]</span>
+      <%= user_link_to(comment.user) %><span class="date"><%= date_with_icon(comment.created_on) %></span>
     </span>
     <span class="buttons">
       <%= dummy_link_to(icon_tag('comment_edit', { :alt => "編集", :title => "編集" }), :id => "comment_edit_link_#{comment.id}", :class => "comment_edit_link") if writer?(comment, session[:user_id]) %>
