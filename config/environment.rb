@@ -51,6 +51,7 @@ Rails::Initializer.run do |config|
   # config.gem "ruby-openid", :lib => "openid"
   # config.gem "mongrel"
   # config.gem "rspec", :lib => "spec"
+  # config.gem "rspec-rails"
   # config.gem "ZenTest", :lib => "zentest"
   # config.gem "ruby-debug"
 end
