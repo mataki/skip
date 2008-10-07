@@ -287,7 +287,7 @@ class EditController < ApplicationController
 
     FileUtils.rm(File.join(get_dir_path, @board_entry.user_id.to_s, @board_entry.id.to_s + '_' + params[:filename]))
     img_urls = get_img_urls @board_entry
-    render :partial => "board_entries/view_images", :locals=>{:img_urls=>img_urls, :board_entry_id=>@board_entry.id}
+    render :partial => "board_entries/view_images", :locals=>{:img_urls=>img_urls, :board_entry_id=>@board_entry.id, :deletable => true}
   end
 
 private

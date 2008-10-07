@@ -14,7 +14,7 @@
 
 <div style="border: solid 2px gray; margin: 5px 2px 5px 2px; padding: 2px; clear:left;">
   <div id="images" style="float:left;">
-    <%= render :partial=>'board_entries/view_images', :locals=>{:img_urls=>@img_urls, :board_entry_id=>@board_entry.id} %>
+    <%= render :partial=>'board_entries/view_images', :locals=>{:img_urls=>@img_urls, :board_entry_id=>@board_entry.id, :deletable => true} %>
   </div>
   <div style="clear:both;"></div>
 </div>

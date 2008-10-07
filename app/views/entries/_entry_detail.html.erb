@@ -74,8 +74,11 @@ div.board_entry {
   white-space: pre-wrap;      /* CSS3 */
   word-wrap: break-word;      /* IE 5.5+ */
 }
-.board_entry .contents_image img {
-  display: block;
+.board_entry .images {
+  border: 2px solid silver;
+  overflow-y: visible;
+  overflow: hidden;
+  margin: 3px;
 }
 div#source_style_area, div#access_style_area {
   background-color: #ffffdd;
@@ -265,15 +268,11 @@ form.comment_input_form textarea{
       <% end %>
       </div>
     </div>
-    <% if entry.editor_mode != 'hiki' -%>
-    <div class="contents_image">
-      <div id="image_style_area">
-        <% entry.images_filename_to_url_mapping_hash.each_value do |url| -%>
-          <%= image_tag url, :width => '240', :onclick => "popupImage('#{url}');" %>
-        <% end -%>
-      </div>
-    </div>
-    <% end -%>
+  </div>
+  <div class="images">
+    <p>添付画像(※クリックで画像を拡大出来ます。)</p>
+    <% img_urls = entry.images_filename_to_url_mapping_hash -%>
+    <%= render :partial => 'board_entries/view_images', :locals => { :img_urls => img_urls, :board_entry_id => entry.id, :deletable => false } %>
   </div>
 </div>
 <div id="board_entry_control">
