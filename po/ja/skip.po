@@ -1561,7 +1561,7 @@ msgstr "新規%{model}の作成"
 #: app/controllers/admin/users_controller.rb:141
 #: app/views/admin/users/index.html.erb:37
 msgid "New user from csv"
-msgstr "ユーザのCSVアップデート"
+msgstr "ユーザのCSVアップロード"
 
 #: app/controllers/mypage_controller.rb:315
 msgid "OpenID URLを設定しました。"
