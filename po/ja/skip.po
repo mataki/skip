@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-10-06 17:52+0900\n"
+"POT-Creation-Date: 2008-10-07 17:14+0900\n"
 "PO-Revision-Date: 2008-09-30 15:00+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -62,7 +62,7 @@ msgid "%{target}から検索を行ないます"
 msgstr ""
 
 #: app/controllers/admin/documents_controller.rb:89
-#: app/controllers/admin/images_controller.rb:137
+#: app/controllers/admin/images_controller.rb:150
 msgid "%{target}を保存しました。"
 msgstr ""
 
@@ -265,91 +265,87 @@ msgstr "参加承認"
 msgid "Admin::ImagesController"
 msgstr "画像設定"
 
-#: app/controllers/admin/images_controller.rb:28
-#: app/views/admin/images/_form2.html.erb:3
-#: app/views/admin/images/_form1.html.erb:2
-#: app/views/admin/images/index.html.erb:19
+#: app/controllers/admin/images_controller.rb:25
+#: app/views/admin/images/index.html.erb:21
 msgid "Admin::ImagesController|background"
 msgstr "背景画像"
 
-#: app/controllers/admin/images_controller.rb:30
+#: app/controllers/admin/images_controller.rb:27
 msgid "Admin::ImagesController|background001"
 msgstr "背景画像1"
 
-#: app/controllers/admin/images_controller.rb:31
+#: app/controllers/admin/images_controller.rb:28
 msgid "Admin::ImagesController|background002"
 msgstr "背景画像2"
 
-#: app/controllers/admin/images_controller.rb:32
+#: app/controllers/admin/images_controller.rb:29
 msgid "Admin::ImagesController|background003"
 msgstr "背景画像3"
 
-#: app/controllers/admin/images_controller.rb:33
+#: app/controllers/admin/images_controller.rb:30
 msgid "Admin::ImagesController|background004"
 msgstr "背景画像4"
 
-#: app/controllers/admin/images_controller.rb:34
+#: app/controllers/admin/images_controller.rb:31
 msgid "Admin::ImagesController|background005"
 msgstr "背景画像5"
 
-#: app/controllers/admin/images_controller.rb:35
+#: app/controllers/admin/images_controller.rb:32
 msgid "Admin::ImagesController|background006"
 msgstr "背景画像6"
 
-#: app/controllers/admin/images_controller.rb:36
+#: app/controllers/admin/images_controller.rb:33
 msgid "Admin::ImagesController|background007"
 msgstr "背景画像7"
 
-#: app/controllers/admin/images_controller.rb:37
+#: app/controllers/admin/images_controller.rb:34
 msgid "Admin::ImagesController|background008"
 msgstr "背景画像8"
 
-#: app/controllers/admin/images_controller.rb:38
+#: app/controllers/admin/images_controller.rb:35
 msgid "Admin::ImagesController|background009"
 msgstr "背景画像9"
 
-#: app/controllers/admin/images_controller.rb:39
+#: app/controllers/admin/images_controller.rb:36
 msgid "Admin::ImagesController|background010"
 msgstr "背景画像10"
 
-#: app/controllers/admin/images_controller.rb:29
-#: app/views/admin/images/_form2.html.erb:7
-#: app/views/admin/images/_form1.html.erb:6
-#: app/views/admin/images/index.html.erb:20
+#: app/controllers/admin/images_controller.rb:26
+#: app/views/admin/images/index.html.erb:22
 msgid "Admin::ImagesController|background_description"
 msgstr "ログイン画面でランダムに切り替わる背景画像です。10個まで設定できます。"
 
-#: app/controllers/admin/images_controller.rb:40
-#: app/views/admin/images/index.html.erb:26
+#: app/controllers/admin/images_controller.rb:37
+#: app/views/admin/images/index.html.erb:30
 msgid "Admin::ImagesController|favicon"
 msgstr "favicon"
 
-#: app/controllers/admin/images_controller.rb:41
-#: app/views/admin/images/index.html.erb:27
+#: app/controllers/admin/images_controller.rb:38
+#: app/views/admin/images/index.html.erb:31
 msgid "Admin::ImagesController|favicon_description"
 msgstr "faviconを設定できます。"
 
-#: app/controllers/admin/images_controller.rb:26
+#: app/controllers/admin/images_controller.rb:23
 msgid "Admin::ImagesController|footer_logo"
 msgstr "フッターロゴ画像"
 
-#: app/controllers/admin/images_controller.rb:27
+#: app/controllers/admin/images_controller.rb:24
 msgid "Admin::ImagesController|footer_logo_description"
 msgstr "画面右下のフッターに表示されるロゴの画像です。"
 
-#: app/controllers/admin/images_controller.rb:24
+#: app/controllers/admin/images_controller.rb:21
 msgid "Admin::ImagesController|header_logo"
 msgstr "ヘッダーロゴ画像"
 
-#: app/controllers/admin/images_controller.rb:25
+#: app/controllers/admin/images_controller.rb:22
 msgid "Admin::ImagesController|header_logo_description"
 msgstr "画面左上のヘッダーに表示されるロゴの画像です。"
 
-#: app/controllers/admin/images_controller.rb:22
+#: app/controllers/admin/images_controller.rb:19
 msgid "Admin::ImagesController|title_logo"
 msgstr "タイトルロゴ画像"
 
-#: app/controllers/admin/images_controller.rb:23
+#: app/controllers/admin/images_controller.rb:20
 msgid "Admin::ImagesController|title_logo_description"
 msgstr "ログイン画面に表示されるロゴの画像です。"
 
@@ -1896,16 +1892,12 @@ msgid "Updating..."
 msgstr "更新しています…"
 
 #: app/views/admin/users/import.html.erb:11
-#: app/views/admin/images/_form2.html.erb:5
-#: app/views/admin/images/_form1.html.erb:4
 #: app/views/admin/images/_form.html.erb:4
 msgid "Upload"
 msgstr "アップロード"
 
 #: app/views/admin/users/import.html.erb:11
 #: app/views/admin/users/import.html.erb:78
-#: app/views/admin/images/_form2.html.erb:5
-#: app/views/admin/images/_form1.html.erb:4
 #: app/views/admin/images/_form.html.erb:4
 msgid "Uploading..."
 msgstr "アップロードしています…"
@@ -2238,6 +2230,10 @@ msgstr ""
 msgid "entry trackback"
 msgstr ""
 
+#: app/views/admin/images/index.html.erb:24
+msgid "favicon画像"
+msgstr ""
+
 #: app/helpers/admin/application_helper.rb:37 app/models/group.rb:-
 msgid "group"
 msgstr "グループ"
@@ -2460,6 +2456,14 @@ msgstr ""
 msgid "ファイルサイズが上限を超えています。"
 msgstr ""
 
+#: app/views/admin/images/index.html.erb:7
+#: app/views/admin/images/index.html.erb:16
+#: app/views/admin/images/index.html.erb:25
+msgid ""
+"ファイル形式は%{extentions}形式を利用可能できます。ファイルサイズは%{size}"
+"Kbyteまでアップロード可能です。"
+msgstr ""
+
 #: app/controllers/platform_controller.rb:145
 msgid "ユーザの登録に失敗しました。"
 msgstr ""
@@ -2494,8 +2498,12 @@ msgstr ""
 msgid "ログイン後管理画面でOpenID URLを登録後ログインしてください。"
 msgstr ""
 
-#: app/views/admin/images/index.html.erb:7
-msgid "ロゴはpng形式のみ、背景画像はjpg形式の画像のみ利用可能です。"
+#: app/views/admin/images/index.html.erb:15
+msgid "ログイン画面の背景画像"
+msgstr ""
+
+#: app/views/admin/images/index.html.erb:6
+msgid "ロゴ画像"
 msgstr ""
 
 #: app/controllers/platform_controller.rb:48
@@ -2506,7 +2514,7 @@ msgstr ""
 msgid "不正なグループです。"
 msgstr ""
 
-#: app/controllers/rankings_controller.rb:78
+#: app/controllers/rankings_controller.rb:77
 msgid "不正なパラメタです。"
 msgstr ""
 
@@ -2580,19 +2588,19 @@ msgstr ""
 msgid "対象のコンテンツを開くことが出来ませんでした。"
 msgstr ""
 
-#: app/controllers/admin/images_controller.rb:140
+#: app/controllers/admin/images_controller.rb:153
 msgid ""
 "対象の画像を保存することが出来ませんでした。再度お試し頂くか管理者にお問い合"
 "わせ下さい。"
 msgstr ""
 
-#: app/controllers/statistics_controller.rb:28
+#: app/controllers/rankings_controller.rb:91
 msgid "対象データが見つかりません。"
 msgstr ""
 
 #: app/controllers/admin/documents_controller.rb:44
 #: app/controllers/admin/documents_controller.rb:95
-#: app/controllers/admin/images_controller.rb:143
+#: app/controllers/admin/images_controller.rb:156
 msgid "想定外のエラーが発生しました。管理者にお問い合わせ下さい。"
 msgstr ""
 
@@ -2618,8 +2626,6 @@ msgstr ""
 msgid "既定のページに戻す"
 msgstr ""
 
-#: app/views/admin/images/_form2.html.erb:9
-#: app/views/admin/images/_form1.html.erb:8
 #: app/views/admin/images/_form.html.erb:8
 msgid "既定の画像に戻す"
 msgstr ""
@@ -2640,8 +2646,6 @@ msgstr ""
 msgid "現在のページを表示"
 msgstr ""
 
-#: app/views/admin/images/_form2.html.erb:8
-#: app/views/admin/images/_form1.html.erb:7
 #: app/views/admin/images/_form.html.erb:7
 msgid "現在の画像を表示"
 msgstr ""
@@ -2650,14 +2654,8 @@ msgstr ""
 msgid "現在設定中のページが消えてしまいますがよろしいですか?"
 msgstr ""
 
-#: app/views/admin/images/_form2.html.erb:9
-#: app/views/admin/images/_form1.html.erb:8
 #: app/views/admin/images/_form.html.erb:8
 msgid "現在設定中の画像が消えてしまいますがよろしいですか?"
-msgstr ""
-
-#: app/views/admin/images/index.html.erb:6
-msgid "画像の形式について"
 msgstr ""
 
 #: app/controllers/admin/users_controller.rb:37

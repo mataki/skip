@@ -45,7 +45,7 @@ class Admin::ImagesController < Admin::ApplicationController
     image = new_image
     begin_update do
       @topics = [_(self.class.name.to_s)]
-      unless valid_file?(image.file, :max_size => image.max_size, :content_types => image.content_types)
+      unless valid_file?(image.file, :max_size => image.class.max_size, :content_types => image.content_types)
         return render(:action => :index)
       end
       open(image.full_path, 'wb') { |f| f.write(image.file.read) }
@@ -65,22 +65,28 @@ class Admin::ImagesController < Admin::ApplicationController
   end
 
   class BaseImage
-    attr_reader :file, :file_name, :extentions, :content_types, :base_dir, :save_dir, :max_size
+    attr_reader :file, :file_name, :content_types, :base_dir, :save_dir
     def initialize param = {}
       @file_name = param[:target]
       @file = param[self.file_name.to_sym]
-      @extentions = '.png'
       @content_types = []
       @base_dir = @save_dir = "#{RAILS_ROOT}/public"
-      @max_size = 300.kilobyte
     end
 
     def full_path
-      "#{@save_dir}/#{@file_name}#{@extentions}"
+      "#{@save_dir}/#{@file_name}.#{self.class.extentions}"
     end
 
     def default_full_path
-      "#{@save_dir}/default_#{@file_name}#{@extentions}"
+      "#{@save_dir}/default_#{@file_name}.#{self.class.extentions}"
+    end
+
+    def self.extentions
+      'png'
+    end
+
+    def self.max_size
+      300.kilobyte
     end
   end
 
@@ -88,9 +94,12 @@ class Admin::ImagesController < Admin::ApplicationController
     IMAGE_NAMES = %w(title_logo header_logo footer_logo).freeze
     def initialize param = {}
       super
-      @extentions = '.png'
       @content_types = ['image/png']
       @save_dir = "#{base_dir}/custom/images"
+    end
+
+    def self.extentions
+      'png'
     end
   end
 
@@ -99,9 +108,12 @@ class Admin::ImagesController < Admin::ApplicationController
                      background006 background007 background008 background009 background010).freeze
     def initialize param = {}
       super
-      @extentions = '.jpg'
       @content_types = ['image/jpg', 'image/jpeg']
       @save_dir = "#{base_dir}/custom/images/titles"
+    end
+
+    def self.extentions
+      'jpg'
     end
   end
 
@@ -109,8 +121,14 @@ class Admin::ImagesController < Admin::ApplicationController
     IMAGE_NAMES = ['favicon'].freeze
     def initialize param = {}
       super
-      @extentions = '.ico'
-      @max_size = 10.kilobyte
+    end
+    
+    def self.extentions
+      'ico'
+    end
+
+    def self.max_size
+      10.kilobyte
     end
   end
   private
