@@ -4,7 +4,7 @@
 <% form_tag(first_new_admin_user_url(:code => params[:code])) do -%>
   <%= error_messages_for :user %>
   <p>
-    <%= label Admin::UserUid.name, :uid %>
+    <%= label Admin::UserUid.name, :uid, h(Admin::Setting.login_account) %>
     <%= text_field :user_uid, :uid %>
   </p>
   <p>
