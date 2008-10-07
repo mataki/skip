@@ -15,7 +15,7 @@
 
 class RankingsController < ApplicationController
   before_filter :setup_layout
-  layout false
+  helper :calendar
 # TODO 外部からのランキング取り込み機能は一旦ペンディングなのでコメントアウト
 #  def update
 #    new_ranking = Ranking.new params[:ranking]
@@ -58,10 +58,10 @@ class RankingsController < ApplicationController
         return head(:bad_request)
       end
     end
+    render :layout => false
   end
 
   def all
-    render :layout => 'layout'
   end
 
   def monthly
@@ -73,11 +73,59 @@ class RankingsController < ApplicationController
       @year = time.year
       @month = time.month
       @dates = (0..23).map { |i| today.ago(i.month).strftime('%Y-%m') }
-      render :layout => 'layout'
     rescue => e
       flash.now[:error] = _('不正なパラメタです。')
       e.backtrace.each { |message| logger.error message }
-      render :text => '', :layout => 'layout', :status => :bad_request
+      render :text => '', :status => :bad_request
+    end
+  end
+
+  def statistics
+    @date = Date.today
+    if (params[:year] and params[:month] and params[:day])
+      @date = Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i)
+      @site_count = SiteCount.get_by_date(@date) || SiteCount.new
+    else
+      @site_count = SiteCount.find(:first, :order => "created_on desc") || SiteCount.new
+    end
+    flash[:notice] = _('対象データが見つかりません。') if @site_count.new_record?
+    @item_count = get_site_count_hash_by_day @date
+  end
+
+  def load_calendar
+    render :partial => "shared/calendar",
+           :locals => { :sel_year => params[:year].to_i,
+                        :sel_month => params[:month].to_i,
+                        :sel_day => nil,
+                        :item_count => get_site_count_hash_by_day(Date.new(params[:year].to_i, params[:month].to_i)),
+                        :action => 'statistics'}
+  end
+
+  # ajax_action
+  def ado_current_statistics
+    date = Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i)
+    site_count = SiteCount.find(:first,
+                                :conditions => ["DATE_FORMAT(created_on, '%Y-%m-%d') = ?", date.strftime('%Y-%m-%d')]) || SiteCount.new #"
+    render :partial => "current_statistics", :locals => { :site_count => site_count }
+  end
+
+  # ajax_action
+  def ado_statistics_history
+    date = Date.new(params[:year].to_i, params[:month].to_i)
+    if params[:type] == "monthly"
+      site_counts = SiteCount.find(:all,
+                                   :conditions => ["DATE_FORMAT(created_on, '%Y-%m') = ?", date.strftime('%Y-%m')]) #"
+      values = site_counts.map {|site_count| site_count[params[:category]] }
+      max_value = values.max
+      min_value = values.min
+      render :partial => 'monthly_history',
+             :locals => {:history_title => params[:desc],
+                         :site_counts => site_counts,
+                         :category => params[:category],
+                         :date => date,
+                         :max_value => max_value,
+                         :min_value => min_value},
+             :layout => false
     end
   end
 
@@ -86,6 +134,17 @@ class RankingsController < ApplicationController
     @main_menu = @title = 'ランキング'
 
     @tab_menu_source = [ ['月別ランキング', 'monthly'],
-                         ['総合ランキング', 'all'] ]
+                         ['総合ランキング', 'all'],
+                         ['サイト情報', 'statistics'] ]
+  end
+
+  def get_site_count_hash_by_day date
+    site_counts = SiteCount.find(:all,
+                                 :conditions => ["DATE_FORMAT(created_on, '%Y-%m') = ?", date.strftime('%Y-%m')]) #"
+    result = {}
+    site_counts.each do |site_count|
+      result[site_count.created_on.day] = 1
+    end
+    return result
   end
 end
