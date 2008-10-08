@@ -24,57 +24,57 @@ div.move_navi .prev_entry {
   right: 0;
   top: 0;
 }
-div.board_entry {
+div#board_entry {
   border: 1px solid silver;
   position: relative;
   _width: 100%;
 }
-.board_entry .header {
+div#board_entry .header {
   border-bottom: 1px solid silver;
   background-color: #f0f0ff;
 }
-.board_entry .header .control {
+div#board_entry .header .control {
   position: relative;
   height: 2em;
   color: #FFFFFF;
   background-color: #4a4a4a;
   font-size: 0.8em;
 }
-.board_entry .header .control .date {
+div#board_entry .header .control .date {
   position: absolute;
   bottom: 1px;
   left: 2px;
   font-size: 1.3em;
 }
-.board_entry .header .control .buttons {
+div#board_entry .header .control .buttons {
   position: absolute;
   top:3px;
   right:3px;
 }
-.board_entry .header h1 {
+div#board_entry .header h1 {
   margin: 1px;
   font-size: 15px;
 }
 #permalink a, #permalink a:hover {
   color: skyblue;
 }
-.board_entry .contents {
+div#board_entry .contents {
   background-color: #FFFFFF;
   overflow-y: visible;
   overflow: hidden;
   width: 100%;
 }
-.board_entry .contents_body {
+div#board_entry .contents_body {
   margin: 5px;
 }
-.board_entry .contents_body pre {
+div#board_entry .contents_body pre {
   white-space: -moz-pre-wrap; /* Mozilla */
   white-space: -pre-wrap;     /* Opera 4-6 */
   white-space: -o-pre-wrap;   /* Opera 7 */
   white-space: pre-wrap;      /* CSS3 */
   word-wrap: break-word;      /* IE 5.5+ */
 }
-.board_entry .images {
+div#board_entry .images {
   border: 2px solid silver;
   overflow-y: visible;
   overflow: hidden;
@@ -92,53 +92,53 @@ div#default_style_area {
 }
 div#board_entry_control {
   position: relative;
-  height: 1.3em;
+  height: 2.0em;
   font-size: 0.8em;
 }
 div#board_entry_control .actions {
   position: absolute;
   left: 3px;
-  bottom: 0;
+  top: 0;
 }
 div#board_entry_control .info {
   position: absolute;
+  top: 0;
   right: 0;
-  bottom: 0;
 }
-#board_entry_comments {
+div#board_entry_comments {
   border-right: 1px dotted #e0e0ff;
   padding-right: 3px;
   margin-top: 5px;
 }
-#board_entry_comments > .header {
+div#board_entry_comments #comments_header {
   /* border: 1px solid silver; */
   position: relative;
   height: 1.5em;
   font-size: 0.8em;
 }
-#board_entry_comments > .header > .buttons {
+div#board_entry_comments #comments_header .buttons {
   position: absolute;
   right: 2px;
   bottom: 0;
 }
-#board_entry_comments .level1 {
+div#board_entry_comments .level1 {
   margin: 0 0 5px 0;
   background-color: #F0F0F0;
 }
-#board_entry_comments .level2, #board_entry_comments .level3,
-#board_entry_comments .level4, #board_entry_comments .level5 {
+div#board_entry_comments .level2, div#board_entry_comments .level3,
+div#board_entry_comments .level4, div#board_entry_comments .level5 {
   margin-left: 20px;
 }
-#board_entry_comments .level2 {
+div#board_entry_comments .level2 {
   background-color: #E8E8E8;
 }
-#board_entry_comments .level3 {
+div#board_entry_comments .level3 {
   background-color: #E0E0E0;
 }
-#board_entry_comments .level4 {
+div#board_entry_comments .level4 {
   background-color: #D8D8D8;
 }
-#board_entry_comments .level5 {
+div#board_entry_comments .level5 {
   background-color: #D0D0D0;
 }
 .board_entry_comment {
@@ -148,22 +148,23 @@ div#board_entry_control .info {
   _width: 100%;
   margin-bottom: 5px;
 }
-.board_entry_comment > .header {
+.board_entry_comment .header {
   _width: 100%;
   padding: 1px 5px;
   border-bottom: 1px dotted #aaa;
   position: relative;
   height: 1.5em;
+  vertical-align: text-bottom;
 }
-.board_entry_comment > .header > .title {
+.board_entry_comment .header .title {
   position: absolute;
   left: 2px;
   bottom: 0;
 }
-.board_entry_comment > .header > .title > .date {
+.board_entry_comment .header .title .date {
   font-size: 0.8em;
 }
-.board_entry_comment > .header > .buttons {
+.board_entry_comment .header .buttons {
   position: absolute;
   right: 2px;
   bottom: 0;
@@ -222,7 +223,7 @@ form.comment_input_form textarea{
   <a id="page_top" href="#page_bottom">[ページ末尾]</a>
 </div>
 
-<div class="board_entry">
+<div id="board_entry">
   <div class="header">
     <div class="control">
       <div class="date"><%=h entry.diary_date %> <%=h entry.diary_author %></div>
@@ -298,7 +299,7 @@ form.comment_input_form textarea{
 </div>
 
 <div id="board_entry_comments">
-  <div class="header">
+  <div id="comments_header">
     <span class="buttons invisible">
       [
        <span id="sort_desc_label" class="invisible">新しい順に並べる</span><a href="#" id="sort_desc_link">新しい順に並べる</a>
@@ -459,9 +460,9 @@ $j(function(){
     // コメントソートの表示制御
     var showSortMenu = function() {
         if ( $j('.board_entry_comment.level1').length > 1 ) {
-            $j('#board_entry_comments > .header > .buttons').show();
+            $j('#board_entry_comments > #comments_header > .buttons').show();
         } else {
-            $j('#board_entry_comments > .header > .buttons').hide();
+            $j('#board_entry_comments > #comments_header > .buttons').hide();
         }
     };
     showSortMenu();
