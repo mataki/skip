@@ -316,3 +316,37 @@ describe BoardEntry, '#to_trackback_entries' do
     @entry.to_trackback_entries(user_id, user_symbols)
   end
 end
+
+describe BoardEntry, '.owner' do
+  describe '書き込み場所がUserの場合(symbolがuid:xxxxxx)' do
+    before do
+      @symbol = 'uid:111111'
+      @user = mock_model(User)
+      User.should_receive(:find_by_uid).and_return(@user)
+    end
+    it '書きこみ場所(所有者)としてユーザが返却されること' do
+      BoardEntry.owner(@symbol).should == @user
+    end
+  end
+  describe '書き込み場所がGroupの場合(symbolがgid:xxxxxx)' do
+    before do
+      @symbol = 'gid:111111'
+      @group = mock_model(Group)
+      Group.should_receive(:find_by_gid).and_return(@group)
+    end
+    it '書き込み場所(所有者)としてグループが返却されること' do
+      BoardEntry.owner(@symbol).should == @group
+    end
+  end
+  describe '書き込み場所が不明な場合' do
+    before do
+      @symbol = 'hoge:111111'
+    end
+    it 'nilが返却されること' do
+      BoardEntry.owner(@symbol).should be_nil
+    end
+  end
+end
+
+describe BoardEntry, '#load_owner' do
+end

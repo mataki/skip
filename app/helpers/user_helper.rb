@@ -14,6 +14,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 module UserHelper
+  include BoardEntriesHelper
 
   # メニューの生成
   def get_social_menu_items selected_menu

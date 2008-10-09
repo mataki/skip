@@ -51,3 +51,38 @@ describe BoardEntriesHelper do
     helper.comment_writer?(comment, user_id).should be_false
   end
 end
+
+describe BoardEntriesHelper, '.link_to_write_place' do
+  describe '引数のownerがnilの場合' do
+    it { helper.link_to_write_place(nil) == '' }
+  end
+  describe '引数のownerがnil以外の場合' do
+    describe 'ownerの型がUserの場合' do
+      before do
+        @owner = mock_model(User, :name => 'ユーザ', :uid => SkipFaker.rand_char)
+      end
+      it 'ユーザのブログへのリンクが生成されること' do
+        helper.should_receive(:link_to).with("#{@owner.name}のブログ", :controller => 'user', :action => 'blog', :uid => @owner.uid, :archive => 'all')
+        helper.link_to_write_place(@owner)
+      end
+    end
+    describe 'ownerの型がGroupの場合' do
+      before do
+        @owner = mock_model(Group, :name => 'グループ', :gid => SkipFaker.rand_char)
+      end
+      it 'グループの掲示板へのリンクが生成されること' do
+        helper.should_receive(:link_to).with("#{@owner.name}の掲示板", :controller => 'group', :action => 'bbs', :gid => @owner.gid)
+        helper.link_to_write_place(@owner)
+      end
+    end
+    describe 'ownerの型が不明な場合' do
+      # 通常のフローではありえないはず。
+      before do
+        @owner = mock('')
+      end
+      it '「不明」が返却されること' do
+        helper.link_to_write_place(@owner) == '不明'
+      end
+    end
+  end
+end

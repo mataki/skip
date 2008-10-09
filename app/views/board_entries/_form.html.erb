@@ -23,7 +23,7 @@ div.input_line textarea {
 
 <div class="input_line">
   <div class="input_label">書き込み場所</div>
-  <div class="input_value" style="font-size: 15px; font-weight: bold;"><a href="<%= url_for(@target_url_param) -%>"><%=h @place -%></a></div>
+  <div class="input_value" style="font-size: 15px; font-weight: bold;"><%= link_to_write_place @owner %></a></div>
   <div style="clear: left"></div>
 </div>
 

@@ -14,6 +14,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 module GroupHelper
+  include BoardEntriesHelper
 
   # グループのサマリに出す状態を状況に応じて出力する
   # 表示文字列と、可能な操作の文字列のペアを返す

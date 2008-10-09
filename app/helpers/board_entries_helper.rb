@@ -44,4 +44,16 @@ module BoardEntriesHelper
       formated_date
     end
   end
+
+  def link_to_write_place owner
+    if owner
+      if owner.class == User
+        link_to "#{owner.name}のブログ", :controller => 'user', :action => 'blog', :uid => owner.uid, :archive => 'all'
+      elsif owner.class == Group
+        link_to "#{owner.name}の掲示板", :controller => 'group', :action => 'bbs', :gid => owner.gid
+      else
+        '不明'
+      end
+    end
+  end
 end

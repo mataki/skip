@@ -40,6 +40,8 @@ class BoardEntry < ActiveRecord::Base
   validates_presence_of :date, :message => 'は必須です'
   validates_presence_of :user_id, :message => 'は必須です'
 
+  attr_reader :owner
+
   N_('BoardEntry|Entry type|DIARY')
   N_('BoardEntry|Entry type|GROUP_BBS')
   DIARY = 'DIARY'
@@ -430,18 +432,6 @@ class BoardEntry < ActiveRecord::Base
     state.point
   end
 
-  def self.get_place_name_and_target_url_param symbol
-    symbol_type, symbol_id = Symbol::split_symbol symbol
-    if symbol_type == "uid" and user = User.find_by_uid(symbol_id)
-      place = user.name + "のブログ"
-      url_param = { :controller => 'user', :action => 'blog', :uid => symbol_id, :archive => 'all' }
-    elsif symbol_type == "gid" and group = Group.find_by_gid(symbol_id)
-      place = group.name + "の掲示板"
-      url_param = { :controller => 'group', :action => 'bbs', :gid => symbol_id }
-    end
-    return place, url_param
-  end
-
   def prepare_send_mail
     if public? # 全公開だとpostしない
       return
@@ -645,6 +635,21 @@ class BoardEntry < ActiveRecord::Base
   def self.image_root_path
     File.join(ENV['IMAGE_PATH'], "board_entries")
   end
+
+  def self.owner symbol
+    symbol_type, symbol_id = Symbol::split_symbol symbol
+    if symbol_type == "uid"
+      User.find_by_uid(symbol_id)
+    elsif symbol_type == "gid"
+      Group.find_by_gid(symbol_id)
+    else
+      nil
+    end
+  end
+
+  def load_owner
+    @owner = self.class.owner self.symbol
+  end
 private
   def generate_next_user_entry_no
     entry = BoardEntry.find(:first,
@@ -731,9 +736,12 @@ private
         find_params = BoardEntry.make_conditions(user_symbols, { :ids => ids })
       end
       entries = BoardEntry.find(:all,
-                                    :conditions => find_params[:conditions],
-                                    :order => "date DESC",
-                                    :include => find_params[:include] | [:user])
+                                :conditions => find_params[:conditions],
+                                :order => "date DESC",
+                                :include => find_params[:include] | [:user])
+      entries.each do |entry|
+        entry.load_owner
+      end
     end
     entries
   end

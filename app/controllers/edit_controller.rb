@@ -302,7 +302,7 @@ private
     symbol = params[:symbol] || session[:user_symbol]
 
     @categories_hash =  BoardEntry.get_categories_hash(login_user_symbols, {:symbol => symbol})
-    @place, @target_url_param = BoardEntry.get_place_name_and_target_url_param symbol
+    @owner = BoardEntry.owner symbol
   end
 
   def analyze_params
