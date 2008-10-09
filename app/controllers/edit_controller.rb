@@ -14,6 +14,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class EditController < ApplicationController
+  include BoardEntriesHelper
   before_filter :setup_layout, :load_tagwards_and_link_params,
                 :except => [ :destroy, :delete_trackback, :ado_preview, :ado_remove_image ]
 
@@ -294,7 +295,9 @@ private
   def setup_layout
     @main_menu = (!params[:symbol].blank? and params[:symbol].include?('gid:')) ? 'グループ' : 'マイブログ'
 
-    @title = '記事を'
+    symbol = params[:symbol] || session[:user_symbol]
+    owner = BoardEntry.owner(symbol)
+    @title = "#{write_place_name(owner)}を"
     @title << (["edit", "update"].include?(action_name) ? '編集する' : '書く')
   end
 
@@ -302,7 +305,6 @@ private
     symbol = params[:symbol] || session[:user_symbol]
 
     @categories_hash =  BoardEntry.get_categories_hash(login_user_symbols, {:symbol => symbol})
-    @owner = BoardEntry.owner symbol
   end
 
   def analyze_params

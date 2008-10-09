@@ -23,6 +23,7 @@
 
 <div id="top">
   <div id="user_ctl">
+    <%= link_to icon_tag(:report_edit, :alt=> 'ブログを書く', :title => 'ブログを書く') + 'ブログを書く', :controller => '/edit', :action => :index %>
     <a id="my_group_link" href="#" ><span id="link_my_group">マイグループ</span></a>
     <% help_url = h(Admin::Setting.help_url) -%>
     <% unless help_url.blank? -%>

@@ -22,12 +22,6 @@ div.input_line textarea {
 <%= hidden_field_tag 'lock_version', @board_entry.lock_version -%>
 
 <div class="input_line">
-  <div class="input_label">書き込み場所</div>
-  <div class="input_value" style="font-size: 15px; font-weight: bold;"><%= link_to_write_place @owner %></a></div>
-  <div style="clear: left"></div>
-</div>
-
-<div class="input_line">
   <div class="input_label" style="height: 30px;">日付</div>
   <div class="input_value">
     <p><%= datetime_select 'board_entry', 'date', :use_month_numbers => true -%></p>

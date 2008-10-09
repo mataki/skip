@@ -71,6 +71,9 @@ describe EditController, "GET #index" do
   before do
     user_login
     session[:user_symbol] = "uid:skip"
+
+    @title_prefix = 'とあるユーザ/グループのブログ/掲示板'
+    controller.stub!(:write_place_name).and_return(@title_prefix)
   end
   describe "ブログを書くの場合" do
     before do
@@ -78,7 +81,7 @@ describe EditController, "GET #index" do
     end
     it { response.should render_template('edit/index') }
     it "適切なインスタンス変数が設定されていること" do
-      assigns[:title].should == "記事を書く"
+      assigns[:title].should == "#{@title_prefix}を書く"
       assigns[:main_menu].should == "マイブログ"
     end
   end
@@ -88,7 +91,7 @@ describe EditController, "GET #index" do
     end
     it { response.should render_template('edit/index') }
     it "適切なインスタンス変数が設定されていること" do
-      assigns[:title].should == "記事を書く"
+      assigns[:title].should == "#{@title_prefix}を書く"
       assigns[:main_menu].should == "グループ"
     end
   end
@@ -102,6 +105,8 @@ describe EditController, "GET #edit" do
     @board_entry = stub_model(BoardEntry)
     BoardEntry.stub!(:find).and_return(@board_entry)
     BoardEntry.stub!(:get_categories_hash)
+    @title_prefix = 'とあるユーザ/グループのブログ/掲示板'
+    controller.stub!(:write_place_name).and_return(@title_prefix)
   end
   describe "ブログの場合" do
     before do
@@ -109,7 +114,7 @@ describe EditController, "GET #edit" do
     end
     it { response.should be_redirect }
     it "適切なインスタンス変数が設定されていること" do
-      assigns[:title].should == "記事を編集する"
+      assigns[:title].should == "#{@title_prefix}を編集する"
       assigns[:main_menu].should == "マイブログ"
     end
   end
@@ -119,7 +124,7 @@ describe EditController, "GET #edit" do
     end
     it { response.should be_redirect }
     it "適切なインスタンス変数が設定されていること" do
-      assigns[:title].should == "記事を編集する"
+      assigns[:title].should == "#{@title_prefix}を編集する"
       assigns[:main_menu].should == "グループ"
     end
   end

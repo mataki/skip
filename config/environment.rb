@@ -75,15 +75,11 @@ menu_btns = [
 
   { :separator => true, :name => "[全体メニュー]"},
 
+  { :img_name => "page_find",     :id => "btn_search", :name => "データを探す", :url => {:controller => '/search', :action => (INITIAL_SETTINGS['full_text_search_setting'] ? 'full_text_search' : 'entry_search') } },
   { :img_name => "user_suit",     :id => "btn_users", :name => "ユーザ", :url => {:controller => '/users', :action => 'index'} },
   { :img_name => "group",         :id => "btn_groups", :name => "グループ", :url => {:controller => '/groups', :action => 'index'} },
   { :img_name => "book",          :id => "btn_bookmarks", :name => "ブックマーク", :url => {:controller => '/bookmarks', :action => 'index'} },
   { :img_name => "chart_bar",     :id => "btn_rankings", :name => "ランキング", :url => {:controller => '/rankings', :action => 'index'} },
-
-  { :separator => true, :name => "[アクション]"},
-
-  { :img_name => "page_find",     :id => "btn_search", :name => "データを探す", :url => {:controller => '/search', :action => (INITIAL_SETTINGS['full_text_search_setting'] ? 'full_text_search' : 'entry_search') } },
-  { :img_name => "report_edit",   :id => "btn_edit", :name => "ブログを書く", :url => {:controller => '/edit', :action => 'index'} },
 ]
 MENU_BTNS = menu_btns
 

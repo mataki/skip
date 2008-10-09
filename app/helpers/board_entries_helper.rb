@@ -46,14 +46,26 @@ module BoardEntriesHelper
   end
 
   def link_to_write_place owner
+    name = write_place_name(owner)
+    unless name.blank?
+      link_to name, write_place_url(owner)
+    else
+      ''
+    end
+  end
+
+  def write_place_name owner
     if owner
-      if owner.class == User
-        link_to "#{owner.name}のブログ", :controller => 'user', :action => 'blog', :uid => owner.uid, :archive => 'all'
-      elsif owner.class == Group
-        link_to "#{owner.name}の掲示板", :controller => 'group', :action => 'bbs', :gid => owner.gid
-      else
-        '不明'
-      end
+      return "#{owner.name}のブログ" if owner.class == User
+      return "#{owner.name}の掲示板" if owner.class == Group
+    end
+    ''
+  end
+
+  def write_place_url owner
+    if owner
+      return url_for(:controller => 'user', :action => 'blog', :uid => owner.uid, :archive => 'all') if owner.class == User
+      return url_for(:controller => 'group', :action => 'bbs', :gid => owner.gid) if owner.class == Group
     end
   end
 end
