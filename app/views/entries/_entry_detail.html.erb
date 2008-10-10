@@ -74,12 +74,6 @@ div#board_entry .contents_body pre {
   white-space: pre-wrap;      /* CSS3 */
   word-wrap: break-word;      /* IE 5.5+ */
 }
-div#board_entry .images {
-  border: 2px solid silver;
-  overflow-y: visible;
-  overflow: hidden;
-  margin: 3px;
-}
 div#source_style_area, div#access_style_area {
   background-color: #ffffdd;
 }
@@ -89,6 +83,12 @@ div#source_style_area .header {
 }
 div#default_style_area {
   display: block;
+}
+div#default_style_area .images {
+  border: 2px solid silver;
+  overflow-y: visible;
+  overflow: hidden;
+  margin: 3px;
 }
 div#board_entry_control {
   position: relative;
@@ -259,7 +259,16 @@ form.comment_input_form textarea{
   </div>
   <div class="contents">
     <div class="contents_body">
-      <div id="default_style_area"><%= show_contents entry %></div>
+      <div id="default_style_area">
+        <%= show_contents entry %>
+        <% img_urls = entry.images_filename_to_url_mapping_hash -%>
+        <% unless img_urls.empty? -%>
+        <div class="images">
+          <p>添付画像(※クリックで画像を拡大出来ます。)</p>
+          <%= render :partial => 'board_entries/view_images', :locals => { :img_urls => img_urls, :board_entry_id => entry.id, :deletable => false } %>
+        </div>
+        <% end -%>
+      </div>
       <div id="source_style_area" class="invisible">
         <div class="header">【ソース表示】</div><pre><%=h entry.contents.gsub("<br />", "<br/>\r\n") %></pre>
       </div>
@@ -270,13 +279,6 @@ form.comment_input_form textarea{
       </div>
     </div>
   </div>
-  <% img_urls = entry.images_filename_to_url_mapping_hash -%>
-  <% unless img_urls.empty? -%>
-  <div class="images">
-    <p>添付画像(※クリックで画像を拡大出来ます。)</p>
-    <%= render :partial => 'board_entries/view_images', :locals => { :img_urls => img_urls, :board_entry_id => entry.id, :deletable => false } %>
-  </div>
-  <% end -%>
 </div>
 <div id="board_entry_control">
   <span class="actions">
