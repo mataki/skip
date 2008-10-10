@@ -17,7 +17,7 @@ require 'symbol'
 require 'tempfile'
 
 class ApplicationController < ActionController::Base
-  include ExceptionNotifiable
+  include ExceptionNotifiable if defined?(ExceptionNotifier)
   layout 'layout'
 
   protect_from_forgery
