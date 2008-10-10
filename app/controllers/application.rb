@@ -17,6 +17,7 @@ require 'symbol'
 require 'tempfile'
 
 class ApplicationController < ActionController::Base
+  include ExceptionNotifiable
   layout 'layout'
 
   protect_from_forgery
@@ -141,6 +142,17 @@ protected
       redirect_to request.env["REQUEST_URI"], :status => :temporary_redirect
     else
       render :template => "system/500" , :status => :internal_server_error
+
+      if ENABLE_EXCEPTION_NOTIFIER
+        deliverer = self.class.exception_data
+        data = case deliverer
+          when nil then {}
+          when Symbol then send(deliverer)
+          when Proc then deliverer.call(self)
+        end
+
+        ExceptionNotifier.deliver_exception_notification(ex, self, request, data)
+      end
     end
   end
 
