@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
 
   has_many :group_participations, :dependent => :destroy
   has_many :pictures, :dependent => :destroy
-  has_one  :user_profile, :dependent => :destroy
+  has_one  :user_profile, :dependent => :destroy, :validate => true
   has_many :tracks, :order => "updated_on DESC", :dependent => :destroy
   has_one  :user_access, :class_name => "UserAccess", :dependent => :destroy
 
