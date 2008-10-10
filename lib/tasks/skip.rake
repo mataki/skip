@@ -51,8 +51,7 @@ namespace :skip do
     `for file in ./vendor/plugins/*.tar.gz; do tar zxvf $file -C ./vendor/plugins; done;`
     # public以下にある圧縮ファイルを解凍
     `tar zxvf ./public/images/skip/icons.tar.gz -C ./public/images/skip`
-    `tar zxvf ./public/javascripts/skip/openwysiwyg.tar.gz -C ./public/javascripts/skip`
-    `tar zxvf ./public/javascripts/skip/tinymce_2_1_2.tgz -C ./public/javascripts/skip`
+    `tar zxvf ./public/javascripts/skip/fckeditor.tar.gz -C ./public/javascripts/skip`
   end
 
   desc "[SKIP-Original]Setup Skip production environment."
@@ -63,10 +62,8 @@ namespace :skip do
     # public以下にある圧縮ファイルを解凍
     `tar zxvf ./public/images/skip/icons.tar.gz -C ./public/images/skip`
     `rm ./public/images/skip/icons.tar.gz`
-    `tar zxvf ./public/javascripts/skip/openwysiwyg.tar.gz -C ./public/javascripts/skip`
-    `rm ./public/javascripts/skip/openwysiwyg.tar.gz`
-    `tar zxvf ./public/javascripts/skip/tinymce_2_1_2.tgz -C ./public/javascripts/skip`
-    `rm ./public/javascripts/skip/tinymce_2_1_2.tgz`
+    `tar zxvf ./public/javascripts/skip/fckeditor.tar.gz -C ./public/javascripts/skip`
+    `rm ./public/javascripts/skip/fckeditor.tar.gz`
   end
 
   desc "[SKIP-Original]Cleanup Skip environment."

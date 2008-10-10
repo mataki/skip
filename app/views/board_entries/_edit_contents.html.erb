@@ -21,12 +21,17 @@ table.input_table textarea {
   <div id="contents_richtext_space" style="display: none;"><label for="contents"><%= text_area_tag 'contents_richtext', h(params[:contents_richtext]), :cols => 90, :rows => 20, :class => "mceEditor" %></label></div>
   <div id="contents_plaintext_space" style="display: none;"><label for="contents"><%= text_area_tag 'contents_plaintext', h(params[:contents_plaintext]), :cols => 90, :rows => 20 %></label></div>
 
-<%= skip_javascript_include_tag 'openwysiwyg/wysiwyg' %>
-<script language='javascript' type='text/javascript'>
+<%= skip_javascript_include_tag "fckeditor/fckeditor" %>
+<script type='text/javascript'>
 //<![CDATA[
 $j(function(){
-    // 一度だけ OpenWYSWIGを初期化するためのフラグ
-    var initRichText = false;
+    FCKeditor.BasePath = platform_url_root + "/javascripts/skip/fckeditor/";
+    var fckArea = new FCKeditor('contents_richtext');
+    fckArea.ToolbarSet = "Custom";
+    fckArea.Height = "430";
+    fckArea.Config["CustomConfigurationsPath"] = "/javascripts/skip/fckeditor/skipconfig.js" ;
+
+    fckArea.ReplaceTextarea();
 
     changeEditorMode = function(){
         var hiki = ($j('#editor_mode_hiki:checked').length > 0);
@@ -36,18 +41,8 @@ $j(function(){
         .hide();
 
         if(richtext){
-            if($j.browser.opera){
-                alert("既知のバグによりOperaではリッチテキストの編集はできません。\n申し訳ありませんが、他のブラウザでの編集をお願いします。");
-            }
-
             $j('#contents_richtext_space').show();
-
-            if(!initRichText) {
-                initRichText = true;
-                wysiwygWidth = Element.getDimensions("contents_richtext").width-50;
-                wysiwygHeight = 400;
-                generate_wysiwyg('contents_richtext');
-            }
+            $j('#contents_richtext').focus();
         } else if(hiki) {
             $j('#contents_hiki_space, #btn_preview_hiki').show();
             $j('#contents_hiki').focus();
@@ -62,11 +57,6 @@ $j(function(){
     .click(function(){
         changeEditorMode();
     });
-
-    // OperaにOpenWyswygが対応していないためラジオボタンを隠す
-    if ($j.browser.opera) {
-        $j('#rich_text_radio').hide();
-    }
 
     // プレビュー表示用ボタン
     var url = '<%= url_for({ :action => "ado_preview", :id => @board_entry}) -%>';
