@@ -17,7 +17,7 @@ require 'symbol'
 require 'tempfile'
 
 class ApplicationController < ActionController::Base
-  include ExceptionNotifiable if defined?(ExceptionNotifier)
+  include ExceptionNotifiable if INITIAL_SETTINGS['exception_notifier']['enable']
   layout 'layout'
 
   protect_from_forgery
@@ -143,7 +143,7 @@ protected
     else
       render :template => "system/500" , :status => :internal_server_error
 
-      if ENABLE_EXCEPTION_NOTIFIER
+      if INITIAL_SETTINGS['exception_notifier']['enable']
         deliverer = self.class.exception_data
         data = case deliverer
           when nil then {}

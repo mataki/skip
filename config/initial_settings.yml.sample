@@ -39,6 +39,10 @@ default: &default
   login_mode: password                                                      # ログインの方法の設定 password:パスワード認証, rp:RPモード
   fixed_op_url:                                                             # RPモードで固定OPを利用するSSOの場合のURL
   administrator_addr: youradmin@example.com                                 # システム管理者のアドレス
+  exception_notifier:
+    enable: false                                                           # システムエラーをシステム管理者にメールするかどうか
+    sender_addr: yoursender@example.com                                     # システムエラーメールの送信元アドレス
+    email_prefix: [ERROR]                                                   # システムエラーメールのタイトルにつけるprefix
 
 # ---- 全文検索
   search_apps:
