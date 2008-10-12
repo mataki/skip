@@ -23,23 +23,14 @@ table.normal {
   color: gray;
 }
 </style>
-<div class="subtitle">基本情報</div>
+
+<div class="subtitle">アカウント情報</div>
 
 <table id="user_info_box" class="normal" border="1">
   <% if user_name_mode?(:code) -%>
   <tr>
     <th width="100px"><label for="user_code"><%= h Admin::Setting.login_account -%></label></th>
     <td><%=h session[:user_code] %></td>
-  </tr>
-  <% end -%>
-  <% if user_name_mode?(:name) -%>
-  <tr>
-    <th width="100px"><label for="user_uid_uid"><%= _('user name') %></label></th>
-  <% if is_new -%>
-    <td><%= text_field 'user_uid', 'uid', {:tabindex => (tabindex += 1), :disabled => !INITIAL_SETTINGS['username_use_setting']} %>（4桁以上）<span id="uid_result" style="margin-left:3px;color:gray;font-size:10px"></span><span id="indicator" style="display:none;"><%= skip_image_tag 'indicator.gif' %></span><div class="desc">半角英数の他にハイフン「-」,アンダーバー「_」が利用できます</div>
-  <% else -%>
-    <td><%= h @user.uid %></td>
-  <% end -%>
   </tr>
   <% end -%>
   <tr>
@@ -50,6 +41,29 @@ table.normal {
     <th width="100px"><label for="user_email"><%=h _('UserProfile|Email') %></label></th>
     <td><%=h @profile.email %><span style="margin-left: 20px;"><%= link_to "[変更する]", :action=> 'manage', :menu => 'manage_email' if !is_new && Admin::Setting.mail_function_setting %></span></td>
   </tr>
+  <% if user_name_mode?(:name) -%>
+  <tr>
+    <th width="100px"><label for="user_uid_uid"><%= _('user name') %></label></th>
+  <% if is_new -%>
+    <td><%= text_field 'user_uid', 'uid', {:tabindex => (tabindex += 1), :disabled => !INITIAL_SETTINGS['username_use_setting']} %>
+      <span id="uid_result" style="margin-left:3px;color:gray;font-size:10px"></span>
+      <span id="indicator" style="display:none;"><%= skip_image_tag 'indicator.gif' %></span>
+      <div class="desc">
+        <p>4桁以上が必要です。半角英数の他にハイフン'-',アンダーバー'_'が利用できます。</p>
+        <p>この「ユーザ名」はシステムの中で、あなたのことをブログの記事中などで簡易的に指定する際に使います。</p>
+        <p>その特性上、この「ユーザ名」は他のユーザに知られることになりますので、不用意な値は指定しないようご注意ください。</p>
+        <p>よくわからない場合、メールアドレスのアカウント名（@の左側）と同じ値でかまいません。</p>
+      </div>
+  <% else -%>
+    <td><%= h @user.uid %></td>
+  <% end -%>
+  </tr>
+  <% end -%>
+</table>
+
+<div class="subtitle">基本情報</div>
+
+<table id="user_info_box" class="normal" border="1" style="width: 600px;">
   <tr>
     <th width="100px"><label for="profile_section"><%=h _('UserProfile|Section') %></label></th>
     <td>
@@ -68,9 +82,9 @@ table.normal {
   </tr>
 </table>
 
-<div class="subtitle">属性情報<span style="margin-left: 30px;font-weight: normal;">(属性情報を入力する ※登録済みの場合、チェックを外して保存を実行すると非公開となります ： <%= check_box_tag("write_profile", "true", ( @profile.disclosure || params[:write_profile] )) -%>)</span></div>
+<div class="subtitle">属性情報<span style="margin-left: 30px;font-weight: normal;">(属性情報を入力する・・・登録済みの場合、チェックを外して保存を実行すると非公開となります ： <%= check_box_tag("write_profile", "true", ( @profile.disclosure || params[:write_profile] )) -%>)</span></div>
 <div id="profile_box" style="display: block;">
-<table id="user_info_box" class="normal" border="1">
+<table id="user_info_box" class="normal" border="1" style="width: 600px;">
   <tr>
     <th width="100px"><label for="profile_gender_type_1">性別</label></th>
     <td><%= radio_buttons("profile", "gender_type", UserProfile.select_gender_type, :tabindex => (tabindex += 1)) -%></td>
@@ -115,7 +129,7 @@ table.normal {
 
 <div class="subtitle">オフ情報　（入力は必須ではありません）</div>
 
-<table id="user_info_box" class="normal" border="1">
+<table id="user_info_box" class="normal" border="1" style="width: 600px;">
   <tr>
     <th width="100px"><label for="hobbies[]">趣味</label></th>
     <td>
