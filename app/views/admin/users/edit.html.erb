@@ -14,5 +14,10 @@
 
 </div>
 
-<%= link_to _('Show'), @user %>
+<%= link_to _('Show'), @user %> |
+<% if user_name_mode?(:name) -%>
+<%= link_to(_('Change uid'), {:action => :change_uid, :id => @user}) if @user.user_uids.size > 1 %>
+<%= link_to(_('Create %{name}') % {:name => _('user name')}, {:action => :create_uid, :id => @user}) if @user.user_uids.size == 1 %>
+<% end -%>
+
 <% end -%>
