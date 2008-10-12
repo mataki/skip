@@ -293,7 +293,7 @@ describe BoardEntry, '#trackback_entries' do
     @trackback_entry = stub_model(BoardEntry, :tb_entry_id => @entry.id)
     @trackback_entry_ids = [@entry.id]
   end
-  it 'トラックバックしてくれた記事を取得する処理をコールすること' do
+  it '話題にしてくれた記事を取得する処理をコールすること' do
     user_id = SkipFaker.rand_num
     user_symbols = ['uid:hoge']
     @entry.should_receive(:entry_trackbacks).and_return([@trackback_entry])
@@ -308,7 +308,7 @@ describe BoardEntry, '#to_trackback_entries' do
     @to_trackback_entry = stub_model(BoardEntry, :board_entry_id => @entry.id)
     @to_trackback_entry_ids = [@entry.id]
   end
-  it 'トラックバックした記事一覧を取得する処理をコールすること' do
+  it '話題にした記事一覧を取得する処理をコールすること' do
     user_id = SkipFaker.rand_num
     user_symbols = ['uid:hoge']
     @entry.should_receive(:to_entry_trackbacks).and_return([@to_trackback_entry])
