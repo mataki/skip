@@ -266,7 +266,7 @@ class EditController < ApplicationController
       tb_entry.destroy
     end
 
-    flash[:notice] = "指定のトラックバックを削除しました"
+    flash[:notice] = "指定の話題のリンクを削除しました"
     redirect_to @board_entry.get_url_hash
   end
 

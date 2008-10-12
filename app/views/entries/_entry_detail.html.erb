@@ -245,7 +245,7 @@ form.comment_input_form textarea{
     <h1><%=h entry.category %> <%=h entry.title %></h1>
     <% unless to_tb_entries.empty? -%>
     <div class="trackback_space send_trackback">
-      トラックバック先
+      話題の記事：
       <ul class="entries">
     <% symbol2name_hash = BoardEntry.get_symbol2name_hash to_tb_entries -%>
     <% to_tb_entries.each do |to_tb_entry|  -%>
@@ -327,16 +327,18 @@ form.comment_input_form textarea{
 </div>
 
 <div class="trackback_space sent_trackback">
-  トラックバック - <%= link_to "この記事にトラックバックする", :controller => "edit", :trackbacks => entry.id, :title => "RE: " + entry.title, :category => entry.category %>
+<% if tb_entries.size > 0 -%>
+  この記事を話題にした記事：
+<% end -%>
   <ul class="entries">
-<% symbol2name_hash = BoardEntry.get_symbol2name_hash tb_entries -%>
 <% tb_entries.each do |tb_entry|  -%>
     <li>
     <%= entry_link_to tb_entry %> - <%= user_link_to tb_entry.user %>（<%= link_to_write_place tb_entry.owner%>）
-      <%= link_to " << [削除する]", {:controller => "edit", :action => "delete_trackback", :id => entry.id, :tb_entry_id => tb_entry.id}, {:confirm => "本当に削除しますか？",  :method => :post} if session[:user_id] == entry.user_id %>
+      <- <%= link_to " [削除する]", {:controller => "edit", :action => "delete_trackback", :id => entry.id, :tb_entry_id => tb_entry.id}, {:confirm => "本当に削除しますか？",  :method => :post} if session[:user_id] == entry.user_id %>
     </li>
 <% end -%>
   </ul>
+  <%= link_to "[この記事を「話題」にして、新しい記事を書く]", :controller => "edit", :trackbacks => entry.id, :title => "RE: " + entry.title, :category => entry.category %>
 </div>
 
 <div class="move_navi">

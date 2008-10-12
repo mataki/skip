@@ -98,7 +98,7 @@ div.input_line textarea {
 <% end %>
 
 <div class="input_line">
-  <div class="input_label" style="height: 3em;">トラックバック</div>
+  <div class="input_label" style="height: 3em;">話題の記事</div>
   <div class="input_value">
     <div id="option_space">
       <p><%= text_field_tag 'trackbacks', params[:trackbacks], {:size => 60} %></p>
@@ -153,7 +153,7 @@ $j(function() {
             var tb = Trim(tb_array[i]);
             if(tb != ""){
                 if (isNaN(tb)){
-                    alert("トラックバックの指定が不正なフォーマットです。\r\nカンマ区切りでページのIDを列挙してください。");
+                    alert("「話題の記事」の指定が不正な形式です。\r\nカンマ区切りでページのIDを列挙してください。");
                     return false;
                 }
                 if (contents_value.match(new RegExp("page:" + tb + ".*]")) == null) {

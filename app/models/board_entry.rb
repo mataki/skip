@@ -530,7 +530,7 @@ class BoardEntry < ActiveRecord::Base
     end
   end
 
-  # トラックバックを送りつける
+  # 話題の信号を送りつける
   def send_trackbacks(login_user_symbols, trackback_target_str)
     message = ""
     new_trackbacks = []
@@ -542,7 +542,7 @@ class BoardEntry < ActiveRecord::Base
                                 :conditions => find_params[:conditions],
                                 :include => find_params[:include])
       if entries.length != ids.length
-        message = "（トラックバック先に不明な記事が存在しましたが無視しました）"
+        message = "（話題元の記事が不明でしたが無視しました）"
       end
 
       entries.each do |entry|
@@ -557,13 +557,13 @@ class BoardEntry < ActiveRecord::Base
     return message, new_trackbacks
   end
 
-  # トラックバックしてくれた記事一覧を返す
+  # 話題にしてくれた記事一覧を返す
   def trackback_entries(login_user_id, login_user_symbols)
     ids =  self.entry_trackbacks.map {|trackback| trackback.tb_entry_id }
     authorized_entries_except_given_user(login_user_id, login_user_symbols, ids)
   end
 
-  # トラックバックした記事一覧を返す
+  # 話題元の記事一覧を返す
   def to_trackback_entries(login_user_id, login_user_symbols)
     ids =  self.to_entry_trackbacks.map {|trackback| trackback.board_entry_id }
     authorized_entries_except_given_user(login_user_id, login_user_symbols, ids)
