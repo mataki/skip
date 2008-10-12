@@ -1,6 +1,6 @@
 # SKIP(Social Knowledge & Innovation Platform)
 # Copyright (C) 2008 TIS Inc.
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -9,16 +9,16 @@
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-# 
+#
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Message < ActiveRecord::Base
 
   MESSAGE_TYPES = {
-    "COMMENT"   => { :name => "新着コメント", :message => "あなたの投稿[?]に新着コメントがあります！", :icon_name => 'comments'},
+    "COMMENT"   => { :name => "新着コメント", :message => "あなたの記事[?]に新着コメントがあります！", :icon_name => 'comments'},
     "CHAIN"     => { :name => "新着紹介文", :message => "あなたの紹介文が追加されました！", :icon_name => 'user_comment'},
-    "TRACKBACK" => { :name => "新着トラックバック", :message => "あなたの投稿に新着トラックバック[?]があります！", :icon_name => 'report_go'},
+    "TRACKBACK" => { :name => "新着記事", :message => "あなたの記事を話題にした新着記事[?]があります！", :icon_name => 'report_go'},
     "POSTIT"    => { :name => "新着ブックマーク", :message => "あなたのプロフィールにブックマークされました！", :icon_name => 'tag_blue'}
   }
 
