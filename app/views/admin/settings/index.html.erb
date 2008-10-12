@@ -9,22 +9,30 @@
 <% end -%>
 
 <% if params[:tab] == 'main' -%>
-  <h3><%= _('初期設定内容') %></h3>
+<div style="margin-top: 20px;">
+
+  <h3 class="topics"><%= _('初期設定内容') %></h3>
   <%= _('以下は運用開始後は原則として変更できない設定項目です。') %>
 <div class="box tabular">
   <% keys = %w(proxy_url max_share_file_size not_blank_link_re user_code_format_regex delivery_method login_mode administrator_addr) -%>
   <% keys << 'fixed_op_url' if login_mode?(:fixed_rp) -%>
   <% keys.each do |key| -%>
     <p class="initial_setting">
-    <label><%= key %></label><%= help_icon_tag(:content => _("#{Admin::InitialSetting.name}|#{key.humanize}")) %> : <%= h INITIAL_SETTINGS[key] %>
+    <label><%= _("#{Admin::InitialSetting.name}|#{key.humanize}") %></label>
+    <%= help_icon_tag(:content => _("#{Admin::InitialSetting.name}|#{key.humanize} description")) %>
+     : <%=h INITIAL_SETTINGS[key] %>
     </p>
   <% end -%>
+
   <% %w(ssl_setting full_text_search_setting password_edit_setting username_use_setting usercode_dips_setting).each do |key| -%>
     <p class="initial_setting">
-    <label><%= key %></label><%= help_icon_tag(:content => _("#{Admin::InitialSetting.name}|#{key.humanize}")) %>
-    <%= h _("#{Admin::InitialSetting.name}|#{key.humanize}|#{INITIAL_SETTINGS[key]}") %>
+    <label><%= _("#{Admin::InitialSetting.name}|#{key.humanize}") %></label>
+    <%= help_icon_tag(:content => _("#{Admin::InitialSetting.name}|#{key.humanize} description")) %>
+     : <%=h _("#{Admin::InitialSetting.name}|#{key.humanize}|#{INITIAL_SETTINGS[key]}") %>
     </p>
   <% end -%>
+</div>
+
 </div>
 <% end -%>
 

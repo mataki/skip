@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-10-12 02:47+0900\n"
+"POT-Creation-Date: 2008-10-12 06:41+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -339,51 +339,83 @@ msgstr ""
 msgid "Admin::ImagesController|title_logo_description"
 msgstr ""
 
-#: app/models/admin/initial_setting.rb:24
+#: app/models/admin/initial_setting.rb:31
 msgid "Admin::InitialSetting|Administrator addr"
 msgstr ""
 
-#: app/models/admin/initial_setting.rb:21
+#: app/models/admin/initial_setting.rb:32
+msgid "Admin::InitialSetting|Administrator addr description"
+msgstr ""
+
+#: app/models/admin/initial_setting.rb:25
 msgid "Admin::InitialSetting|Delivery method"
 msgstr ""
 
-#: app/models/admin/initial_setting.rb:23
-msgid "Admin::InitialSetting|Fixed op url"
+#: app/models/admin/initial_setting.rb:26
+msgid "Admin::InitialSetting|Delivery method description"
 msgstr ""
 
 #: app/models/admin/initial_setting.rb:29
-msgid "Admin::InitialSetting|Full text search setting"
-msgstr ""
-
-#: app/models/admin/initial_setting.rb:31
-msgid "Admin::InitialSetting|Full text search setting|false"
+msgid "Admin::InitialSetting|Fixed op url"
 msgstr ""
 
 #: app/models/admin/initial_setting.rb:30
+msgid "Admin::InitialSetting|Fixed op url description"
+msgstr ""
+
+#: app/models/admin/initial_setting.rb:38
+msgid "Admin::InitialSetting|Full text search setting"
+msgstr ""
+
+#: app/models/admin/initial_setting.rb:39
+msgid "Admin::InitialSetting|Full text search setting description"
+msgstr ""
+
+#: app/models/admin/initial_setting.rb:41
+msgid "Admin::InitialSetting|Full text search setting|false"
+msgstr ""
+
+#: app/models/admin/initial_setting.rb:40
 msgid "Admin::InitialSetting|Full text search setting|true"
 msgstr ""
 
-#: app/models/admin/initial_setting.rb:22
+#: app/models/admin/initial_setting.rb:27
 msgid "Admin::InitialSetting|Login mode"
 msgstr ""
 
-#: app/models/admin/initial_setting.rb:18
-msgid "Admin::InitialSetting|Max share file size"
+#: app/models/admin/initial_setting.rb:28
+msgid "Admin::InitialSetting|Login mode description"
 msgstr ""
 
 #: app/models/admin/initial_setting.rb:19
+msgid "Admin::InitialSetting|Max share file size"
+msgstr ""
+
+#: app/models/admin/initial_setting.rb:20
+msgid "Admin::InitialSetting|Max share file size description"
+msgstr ""
+
+#: app/models/admin/initial_setting.rb:21
 msgid "Admin::InitialSetting|Not blank link re"
 msgstr ""
 
-#: app/models/admin/initial_setting.rb:32
+#: app/models/admin/initial_setting.rb:22
+msgid "Admin::InitialSetting|Not blank link re description"
+msgstr ""
+
+#: app/models/admin/initial_setting.rb:42
 msgid "Admin::InitialSetting|Password edit setting"
 msgstr ""
 
-#: app/models/admin/initial_setting.rb:34
+#: app/models/admin/initial_setting.rb:43
+msgid "Admin::InitialSetting|Password edit setting description"
+msgstr ""
+
+#: app/models/admin/initial_setting.rb:45
 msgid "Admin::InitialSetting|Password edit setting|false"
 msgstr ""
 
-#: app/models/admin/initial_setting.rb:33
+#: app/models/admin/initial_setting.rb:44
 msgid "Admin::InitialSetting|Password edit setting|true"
 msgstr ""
 
@@ -391,43 +423,63 @@ msgstr ""
 msgid "Admin::InitialSetting|Proxy url"
 msgstr ""
 
-#: app/models/admin/initial_setting.rb:26
+#: app/models/admin/initial_setting.rb:18
+msgid "Admin::InitialSetting|Proxy url description"
+msgstr ""
+
+#: app/models/admin/initial_setting.rb:34
 msgid "Admin::InitialSetting|Ssl setting"
 msgstr ""
 
-#: app/models/admin/initial_setting.rb:28
-msgid "Admin::InitialSetting|Ssl setting|false"
-msgstr ""
-
-#: app/models/admin/initial_setting.rb:27
-msgid "Admin::InitialSetting|Ssl setting|true"
-msgstr ""
-
-#: app/models/admin/initial_setting.rb:20
-msgid "Admin::InitialSetting|User code format regex"
-msgstr ""
-
-#: app/models/admin/initial_setting.rb:38
-msgid "Admin::InitialSetting|Usercode dips setting"
-msgstr ""
-
-#: app/models/admin/initial_setting.rb:40
-msgid "Admin::InitialSetting|Usercode dips setting|false"
-msgstr ""
-
-#: app/models/admin/initial_setting.rb:39
-msgid "Admin::InitialSetting|Usercode dips setting|true"
-msgstr ""
-
 #: app/models/admin/initial_setting.rb:35
-msgid "Admin::InitialSetting|Username use setting"
+msgid "Admin::InitialSetting|Ssl setting description"
 msgstr ""
 
 #: app/models/admin/initial_setting.rb:37
-msgid "Admin::InitialSetting|Username use setting|false"
+msgid "Admin::InitialSetting|Ssl setting|false"
 msgstr ""
 
 #: app/models/admin/initial_setting.rb:36
+msgid "Admin::InitialSetting|Ssl setting|true"
+msgstr ""
+
+#: app/models/admin/initial_setting.rb:23
+msgid "Admin::InitialSetting|User code format regex"
+msgstr ""
+
+#: app/models/admin/initial_setting.rb:24
+msgid "Admin::InitialSetting|User code format regex description"
+msgstr ""
+
+#: app/models/admin/initial_setting.rb:50
+msgid "Admin::InitialSetting|Usercode dips setting"
+msgstr ""
+
+#: app/models/admin/initial_setting.rb:51
+msgid "Admin::InitialSetting|Usercode dips setting description"
+msgstr ""
+
+#: app/models/admin/initial_setting.rb:53
+msgid "Admin::InitialSetting|Usercode dips setting|false"
+msgstr ""
+
+#: app/models/admin/initial_setting.rb:52
+msgid "Admin::InitialSetting|Usercode dips setting|true"
+msgstr ""
+
+#: app/models/admin/initial_setting.rb:46
+msgid "Admin::InitialSetting|Username use setting"
+msgstr ""
+
+#: app/models/admin/initial_setting.rb:47
+msgid "Admin::InitialSetting|Username use setting description"
+msgstr ""
+
+#: app/models/admin/initial_setting.rb:49
+msgid "Admin::InitialSetting|Username use setting|false"
+msgstr ""
+
+#: app/models/admin/initial_setting.rb:48
 msgid "Admin::InitialSetting|Username use setting|true"
 msgstr ""
 
@@ -875,7 +927,7 @@ msgstr ""
 #: app/views/admin/share_files/index.html.erb:36
 #: app/views/admin/users/create_uid.html.erb:27
 #: app/views/admin/users/change_uid.html.erb:31
-#: app/views/admin/users/index.html.erb:29
+#: app/views/admin/users/index.html.erb:28
 #: app/views/admin/groups/index.html.erb:31
 #: app/views/admin/openid_identifiers/index.html.erb:18
 #: app/views/admin/bookmarks/index.html.erb:19
@@ -1149,6 +1201,7 @@ msgid "Chain|紹介文"
 msgstr ""
 
 #: app/controllers/admin/users_controller.rb:161
+#: app/views/admin/users/edit.html.erb:19
 #: app/views/admin/users/show.html.erb:28
 msgid "Change uid"
 msgstr ""
@@ -1163,6 +1216,7 @@ msgid "Create"
 msgstr ""
 
 #: app/controllers/admin/users_controller.rb:185
+#: app/views/admin/users/edit.html.erb:20
 #: app/views/admin/users/show.html.erb:29
 msgid "Create %{name}"
 msgstr ""
@@ -1180,7 +1234,7 @@ msgid "Data management"
 msgstr ""
 
 #: app/views/admin/share_files/index.html.erb:36
-#: app/views/admin/users/index.html.erb:29
+#: app/views/admin/users/index.html.erb:28
 #: app/views/admin/groups/index.html.erb:31
 #: app/views/admin/openid_identifiers/index.html.erb:18
 #: app/views/admin/bookmarks/index.html.erb:19
@@ -1192,7 +1246,7 @@ msgstr ""
 msgid "Destroy"
 msgstr ""
 
-#: app/views/admin/users/index.html.erb:28
+#: app/views/admin/users/index.html.erb:27
 #: app/views/admin/users/show.html.erb:23
 #: app/views/admin/openid_identifiers/index.html.erb:17
 #: app/views/admin/user_profiles/index.html.erb:27
@@ -1510,7 +1564,7 @@ msgstr ""
 #: app/controllers/admin/admin_module.rb:115
 #: app/controllers/admin/admin_module.rb:201
 #: app/controllers/admin/admin_module.rb:226
-#: app/views/admin/users/index.html.erb:36
+#: app/views/admin/users/index.html.erb:35
 #: app/views/admin/openid_identifiers/index.html.erb:23
 #: app/views/admin/group_categories/index.html.erb:37
 msgid "New %{model}"
@@ -1518,7 +1572,7 @@ msgstr ""
 
 #: app/controllers/admin/users_controller.rb:124
 #: app/controllers/admin/users_controller.rb:141
-#: app/views/admin/users/index.html.erb:37
+#: app/views/admin/users/index.html.erb:36
 msgid "New user from csv"
 msgstr ""
 
@@ -1729,7 +1783,6 @@ msgid "ShareFile|日付"
 msgstr ""
 
 #: app/views/admin/users/edit.html.erb:17
-#: app/views/admin/users/index.html.erb:27
 #: app/views/admin/groups/index.html.erb:30
 #: app/views/admin/bookmarks/index.html.erb:18
 #: app/views/admin/board_entries/index.html.erb:33
@@ -2291,7 +2344,7 @@ msgstr ""
 #: app/controllers/admin/users_controller.rb:159
 #: app/controllers/admin/users_controller.rb:183
 #: app/views/admin/users/import.html.erb:68
-#: app/views/admin/users/index.html.erb:36
+#: app/views/admin/users/index.html.erb:35
 msgid "user"
 msgstr ""
 
@@ -2316,6 +2369,7 @@ msgstr ""
 #: app/views/user/show.html.erb:84
 #: app/views/admin/users/create_uid.html.erb:12
 #: app/views/admin/users/create_uid.html.erb:27
+#: app/views/admin/users/edit.html.erb:20
 #: app/views/admin/users/change_uid.html.erb:31
 #: app/views/admin/users/show.html.erb:29
 msgid "user name"
@@ -2483,7 +2537,7 @@ msgstr ""
 msgid "不正なユーザです。"
 msgstr ""
 
-#: app/views/admin/settings/index.html.erb:13
+#: app/views/admin/settings/index.html.erb:15
 msgid "以下は運用開始後は原則として変更できない設定項目です。"
 msgstr ""
 
@@ -2509,7 +2563,7 @@ msgstr ""
 msgid "初期値に戻す"
 msgstr ""
 
-#: app/views/admin/settings/index.html.erb:12
+#: app/views/admin/settings/index.html.erb:14
 msgid "初期設定内容"
 msgstr ""
 

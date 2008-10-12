@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-10-12 02:47+0900\n"
+"POT-Creation-Date: 2008-10-12 06:41+0900\n"
 "PO-Revision-Date: 2008-09-30 15:00+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -349,51 +349,83 @@ msgstr "タイトルロゴ画像"
 msgid "Admin::ImagesController|title_logo_description"
 msgstr "ログイン画面に表示されるロゴの画像です。"
 
-#: app/models/admin/initial_setting.rb:24
+#: app/models/admin/initial_setting.rb:31
 msgid "Admin::InitialSetting|Administrator addr"
 msgstr "システム管理者のメールアドレス"
 
-#: app/models/admin/initial_setting.rb:21
+#: app/models/admin/initial_setting.rb:32
+msgid "Admin::InitialSetting|Administrator addr description"
+msgstr "システム障害時の連絡先のメールアドレスとして表示されます（500エラーなど）"
+
+#: app/models/admin/initial_setting.rb:25
 msgid "Admin::InitialSetting|Delivery method"
 msgstr "メール配信方法"
 
-#: app/models/admin/initial_setting.rb:23
+#: app/models/admin/initial_setting.rb:26
+msgid "Admin::InitialSetting|Delivery method description"
+msgstr "メールの配信方法を指定しています（testの場合、実際に送信は行われません）"
+
+#: app/models/admin/initial_setting.rb:29
 msgid "Admin::InitialSetting|Fixed op url"
 msgstr "RPモードで固定OPを利用するSSOの場合のURL"
 
-#: app/models/admin/initial_setting.rb:29
-msgid "Admin::InitialSetting|Full text search setting"
-msgstr "全文検索入力欄の表示制御"
-
-#: app/models/admin/initial_setting.rb:31
-msgid "Admin::InitialSetting|Full text search setting|false"
-msgstr "非表示"
-
 #: app/models/admin/initial_setting.rb:30
+msgid "Admin::InitialSetting|Fixed op url description"
+msgstr "固定OPを利用することで強制的にこのURLで認証を行うように動きます"
+
+#: app/models/admin/initial_setting.rb:38
+msgid "Admin::InitialSetting|Full text search setting"
+msgstr "全文検索の機能"
+
+#: app/models/admin/initial_setting.rb:39
+msgid "Admin::InitialSetting|Full text search setting description"
+msgstr "全文検索を行うかどうかの設定です（利用しない場合、検索ボックスなどが表示されません）"
+
+#: app/models/admin/initial_setting.rb:41
+msgid "Admin::InitialSetting|Full text search setting|false"
+msgstr "利用しない"
+
+#: app/models/admin/initial_setting.rb:40
 msgid "Admin::InitialSetting|Full text search setting|true"
-msgstr "表示"
+msgstr "利用する"
 
-#: app/models/admin/initial_setting.rb:22
+#: app/models/admin/initial_setting.rb:27
 msgid "Admin::InitialSetting|Login mode"
-msgstr "ログイン方法"
+msgstr "ユーザアカウントの管理方法"
 
-#: app/models/admin/initial_setting.rb:18
-msgid "Admin::InitialSetting|Max share file size"
-msgstr "共有ファイルの一度にアップロード出来る最大許可容量(byte)"
+#: app/models/admin/initial_setting.rb:28
+msgid "Admin::InitialSetting|Login mode description"
+msgstr "ユーザアカウントをどこで管理するかを指定しています（passwordの場合はパスワードを本体で管理を行い、RPの場合はOpenID認証を利用するため別に存在するOPで管理を行います）"
 
 #: app/models/admin/initial_setting.rb:19
+msgid "Admin::InitialSetting|Max share file size"
+msgstr "共有ファイルの一度にアップロードが出来る最大許可容量(byte)"
+
+#: app/models/admin/initial_setting.rb:20
+msgid "Admin::InitialSetting|Max share file size description"
+msgstr "ユーザの一度のアップロードのアクションで格納できるファイルの最大容量です"
+
+#: app/models/admin/initial_setting.rb:21
 msgid "Admin::InitialSetting|Not blank link re"
 msgstr "ブログ内のリンクで新しいウィンドウを開かないでリンクするURLの形式"
 
-#: app/models/admin/initial_setting.rb:32
-msgid "Admin::InitialSetting|Password edit setting"
-msgstr "パスワード編集可否"
+#: app/models/admin/initial_setting.rb:22
+msgid "Admin::InitialSetting|Not blank link re description"
+msgstr "ブログや掲示板の記事中でURLでリンクを指定した場合、この指定のURLの場合は新しいウィンドウを開かずに同じウィンドウで遷移します"
 
-#: app/models/admin/initial_setting.rb:34
+#: app/models/admin/initial_setting.rb:42
+msgid "Admin::InitialSetting|Password edit setting"
+msgstr "パスワードの編集可否"
+
+#: app/models/admin/initial_setting.rb:43
+msgid "Admin::InitialSetting|Password edit setting description"
+msgstr "ユーザによるパスワードの変更ができるかどうかを指定しています"
+
+#: app/models/admin/initial_setting.rb:45
 msgid "Admin::InitialSetting|Password edit setting|false"
 msgstr "編集不可"
 
-#: app/models/admin/initial_setting.rb:33
+#: app/models/admin/initial_setting.rb:44
 msgid "Admin::InitialSetting|Password edit setting|true"
 msgstr "編集可"
 
@@ -401,43 +433,63 @@ msgstr "編集可"
 msgid "Admin::InitialSetting|Proxy url"
 msgstr "プロキシのURL"
 
-#: app/models/admin/initial_setting.rb:26
-msgid "Admin::InitialSetting|Ssl setting"
-msgstr "SSLログインを利用設定"
+#: app/models/admin/initial_setting.rb:18
+msgid "Admin::InitialSetting|Proxy url description"
+msgstr "RSSなどでアプリケーションが外部のサイトからデータ取得する場合のプロキシサーバのURLを指定しています"
 
-#: app/models/admin/initial_setting.rb:28
+#: app/models/admin/initial_setting.rb:34
+msgid "Admin::InitialSetting|Ssl setting"
+msgstr "SSLログインを利用するか"
+
+#: app/models/admin/initial_setting.rb:35
+msgid "Admin::InitialSetting|Ssl setting description"
+msgstr "ログイン時のSSL指定ができるかどうかを指定しています"
+
+#: app/models/admin/initial_setting.rb:37
 msgid "Admin::InitialSetting|Ssl setting|false"
 msgstr "利用しない"
 
-#: app/models/admin/initial_setting.rb:27
+#: app/models/admin/initial_setting.rb:36
 msgid "Admin::InitialSetting|Ssl setting|true"
 msgstr "利用する"
 
-#: app/models/admin/initial_setting.rb:20
+#: app/models/admin/initial_setting.rb:23
 msgid "Admin::InitialSetting|User code format regex"
 msgstr "許可しないユーザ名の形式"
 
-#: app/models/admin/initial_setting.rb:38
-msgid "Admin::InitialSetting|Usercode dips setting"
-msgstr "ログインID表示制御"
+#: app/models/admin/initial_setting.rb:24
+msgid "Admin::InitialSetting|User code format regex description"
+msgstr "ユーザ名として使えない形式の指定を正規表現で行っています"
 
-#: app/models/admin/initial_setting.rb:40
+#: app/models/admin/initial_setting.rb:50
+msgid "Admin::InitialSetting|Usercode dips setting"
+msgstr "ログインIDの画面上の表示"
+
+#: app/models/admin/initial_setting.rb:51
+msgid "Admin::InitialSetting|Usercode dips setting description"
+msgstr "ログインIDを社員番号などにしており画面上に表示したくない場合などには「表示しない」を指定します"
+
+#: app/models/admin/initial_setting.rb:53
 msgid "Admin::InitialSetting|Usercode dips setting|false"
 msgstr "表示しない"
 
-#: app/models/admin/initial_setting.rb:39
+#: app/models/admin/initial_setting.rb:52
 msgid "Admin::InitialSetting|Usercode dips setting|true"
 msgstr "表示する"
 
-#: app/models/admin/initial_setting.rb:35
+#: app/models/admin/initial_setting.rb:46
 msgid "Admin::InitialSetting|Username use setting"
-msgstr "ログイン時ユーザ名利用設定"
+msgstr "ログイン時のユーザ名の利用"
 
-#: app/models/admin/initial_setting.rb:37
+#: app/models/admin/initial_setting.rb:47
+msgid "Admin::InitialSetting|Username use setting description"
+msgstr "ユーザがログインする際に「ユーザ名」を使ってログインできるかどうかを指定します"
+
+#: app/models/admin/initial_setting.rb:49
 msgid "Admin::InitialSetting|Username use setting|false"
 msgstr "利用しない"
 
-#: app/models/admin/initial_setting.rb:36
+#: app/models/admin/initial_setting.rb:48
 msgid "Admin::InitialSetting|Username use setting|true"
 msgstr "利用する"
 
@@ -912,7 +964,7 @@ msgstr "関連するコメントも一緒に削除されますが、よろしい
 #: app/views/admin/share_files/index.html.erb:36
 #: app/views/admin/users/create_uid.html.erb:27
 #: app/views/admin/users/change_uid.html.erb:31
-#: app/views/admin/users/index.html.erb:29
+#: app/views/admin/users/index.html.erb:28
 #: app/views/admin/groups/index.html.erb:31
 #: app/views/admin/openid_identifiers/index.html.erb:18
 #: app/views/admin/bookmarks/index.html.erb:19
@@ -1186,6 +1238,7 @@ msgid "Chain|紹介文"
 msgstr "紹介文"
 
 #: app/controllers/admin/users_controller.rb:161
+#: app/views/admin/users/edit.html.erb:19
 #: app/views/admin/users/show.html.erb:28
 msgid "Change uid"
 msgstr "ユーザ名変更"
@@ -1200,6 +1253,7 @@ msgid "Create"
 msgstr "作成"
 
 #: app/controllers/admin/users_controller.rb:185
+#: app/views/admin/users/edit.html.erb:20
 #: app/views/admin/users/show.html.erb:29
 msgid "Create %{name}"
 msgstr "%{name}作成"
@@ -1217,7 +1271,7 @@ msgid "Data management"
 msgstr "データ管理"
 
 #: app/views/admin/share_files/index.html.erb:36
-#: app/views/admin/users/index.html.erb:29
+#: app/views/admin/users/index.html.erb:28
 #: app/views/admin/groups/index.html.erb:31
 #: app/views/admin/openid_identifiers/index.html.erb:18
 #: app/views/admin/bookmarks/index.html.erb:19
@@ -1229,7 +1283,7 @@ msgstr "データ管理"
 msgid "Destroy"
 msgstr "削除"
 
-#: app/views/admin/users/index.html.erb:28
+#: app/views/admin/users/index.html.erb:27
 #: app/views/admin/users/show.html.erb:23
 #: app/views/admin/openid_identifiers/index.html.erb:17
 #: app/views/admin/user_profiles/index.html.erb:27
@@ -1549,7 +1603,7 @@ msgstr ""
 #: app/controllers/admin/admin_module.rb:115
 #: app/controllers/admin/admin_module.rb:201
 #: app/controllers/admin/admin_module.rb:226
-#: app/views/admin/users/index.html.erb:36
+#: app/views/admin/users/index.html.erb:35
 #: app/views/admin/openid_identifiers/index.html.erb:23
 #: app/views/admin/group_categories/index.html.erb:37
 msgid "New %{model}"
@@ -1557,7 +1611,7 @@ msgstr "新規%{model}の作成"
 
 #: app/controllers/admin/users_controller.rb:124
 #: app/controllers/admin/users_controller.rb:141
-#: app/views/admin/users/index.html.erb:37
+#: app/views/admin/users/index.html.erb:36
 msgid "New user from csv"
 msgstr "ユーザのCSVアップロード"
 
@@ -1768,7 +1822,6 @@ msgid "ShareFile|日付"
 msgstr ""
 
 #: app/views/admin/users/edit.html.erb:17
-#: app/views/admin/users/index.html.erb:27
 #: app/views/admin/groups/index.html.erb:30
 #: app/views/admin/bookmarks/index.html.erb:18
 #: app/views/admin/board_entries/index.html.erb:33
@@ -2332,7 +2385,7 @@ msgstr ""
 #: app/controllers/admin/users_controller.rb:159
 #: app/controllers/admin/users_controller.rb:183
 #: app/views/admin/users/import.html.erb:68
-#: app/views/admin/users/index.html.erb:36
+#: app/views/admin/users/index.html.erb:35
 msgid "user"
 msgstr "ユーザ"
 
@@ -2357,6 +2410,7 @@ msgstr ""
 #: app/views/user/show.html.erb:84
 #: app/views/admin/users/create_uid.html.erb:12
 #: app/views/admin/users/create_uid.html.erb:27
+#: app/views/admin/users/edit.html.erb:20
 #: app/views/admin/users/change_uid.html.erb:31
 #: app/views/admin/users/show.html.erb:29
 msgid "user name"
@@ -2524,7 +2578,7 @@ msgstr ""
 msgid "不正なユーザです。"
 msgstr ""
 
-#: app/views/admin/settings/index.html.erb:13
+#: app/views/admin/settings/index.html.erb:15
 msgid "以下は運用開始後は原則として変更できない設定項目です。"
 msgstr ""
 
@@ -2550,7 +2604,7 @@ msgstr ""
 msgid "初期値に戻す"
 msgstr ""
 
-#: app/views/admin/settings/index.html.erb:12
+#: app/views/admin/settings/index.html.erb:14
 msgid "初期設定内容"
 msgstr ""
 
