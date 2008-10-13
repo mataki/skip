@@ -35,17 +35,34 @@ class MontaController < ApplicationController
     end
     return unless get_board_entry
 
+    line_count, content_array, counter_array = 1, [], []
+
+    @board_entry.contents.split(/[\r\n]{3,}/).each do |src_text|
+      content_array << src_text
+      counter_array << line_count
+      tmp_text = src_text
+      while tmp_text.match(/\[\[.+?\]\]/)
+        tmp_text = tmp_text.sub("[[","").sub("]]","")
+        content_array << tmp_text
+        counter_array << line_count
+      end
+      line_count += 1
+    end
+
     index = params[:index].to_i
-    index = 0 if index < 0
 
-    arr, counter_array = divide_text @board_entry.contents
+    if index < content_array.size
+      index = 0 if index < 0
+      @counter_value = "[#{counter_array[index]}/#{line_count-1}]"
+      @content, @img_id_arr, @text_align = decorate_str content_array[index], @board_entry.id, @board_entry.user_id
 
-    if index < arr.size
-      @content, @img_id_arr = decorate_str arr[index], @board_entry.id, @board_entry.user_id
-      @hidden_content = replace_img_id @content, @img_id_arr
-      @counter_value = "[#{counter_array[index]}/#{counter_array.last}]"
+      @hidden_content = @content.clone
+      @img_id_arr.each do |img_id|
+        @hidden_content = @hidden_content.gsub("id='#{img_id}'", "id='hidden_#{img_id}'");
+      end
     else
-      index = arr.size
+      index = content_array.size
+      @text_align = "center"
       @content = @hidden_content = '<a href="#" onclick="window.close();">おしまい</a>'
     end
 
@@ -74,43 +91,18 @@ private
     end
 
     # テキストのレイアウト指定
-    if text_align = view_str.match(/\|\|.+?\|\|/)
+    if text_align = view_str.match(/\|\|.+?\|\|/) || "center"
+      view_str = view_str.gsub(text_align.to_s+"\r\n", "")
       case text_align.to_s[2..-3]
       when "left"
-        @text_align = "left"
+        text_align = "left"
       when "right"
-        @text_align = "right"
+        text_align = "right"
       else
-        @text_align = "center"
+        text_align = "center"
       end
-      view_str = view_str.gsub(text_align.to_s+"\r\n", "")
     end
-    return view_str.gsub("\r\n", "<br/>"), img_id_arr
-  end
-
-  def replace_img_id content, img_id_arr
-    hidden_content = content
-    img_id_arr.each do |img_id|
-      hidden_content = hidden_content.gsub("id='#{img_id}'", "id='hidden_#{img_id}'");
-    end
-    return ERB::Util.html_escape(hidden_content)
-  end
-
-  def divide_text text
-    line_count, content_array, counter_array = 1, [], []
-
-    text.split(/[\r\n]{3,}/).each do |src_text|
-      tmp_text = src_text
-      content_array << src_text
-      counter_array << line_count
-      while tmp_text.match(/\[\[.+?\]\]/)
-        tmp_text = tmp_text.sub("[[","").sub("]]","")
-        content_array << tmp_text
-        counter_array << line_count
-      end
-      line_count += 1
-    end
-    return content_array, counter_array
+    return view_str.gsub("\r\n", "<br/>"), img_id_arr, text_align
   end
 
   def get_board_entry

@@ -23,6 +23,7 @@ $j(function() {
             url: url,
             success: function(html) {
                 $j('#view_contents').html(html);
+                $j('#counter').html($j('#counter_value').html());
             }
         });
     };

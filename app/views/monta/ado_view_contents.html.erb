@@ -1,4 +1,3 @@
-<% @text_align ||= "center" %>
 <table border='0' align='<%= @text_align %>' width='100%' height='100%' style="position: absolute; top: 0px; text-align:<%= @text_align %>;">
   <tr><td id="output_td"><%= @content %></td></tr>
 </table>
@@ -7,6 +6,7 @@
   <div id="output"><%= @hidden_content -%></div>
   <div id="url_next"><%= @next_url -%></div>
   <div id="url_prev"><%= @prev_url -%></div>
+  <div id="counter_value"><%= @counter_value -%></div>
 </div>
 
 <script type="text/javascript">
@@ -20,6 +20,4 @@
   <% end %>
 
   fitTextSize($('output'), textsize);
-
-  $j('#counter').html('<%= @counter_value -%>');
 </script>
