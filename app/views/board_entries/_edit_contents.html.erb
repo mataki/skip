@@ -29,19 +29,16 @@ $j(function(){
     var fckArea = new FCKeditor('contents_richtext');
     fckArea.ToolbarSet = "Custom";
     fckArea.Height = "430";
-    fckArea.Config["CustomConfigurationsPath"] = "/javascripts/skip/fckeditor/skipconfig.js" ;
+    fckArea.Config["CustomConfigurationsPath"] = "/javascripts/skip/skip_fckeditor_config.js" ;
     fckArea.ReplaceTextarea();
 
     changeEditorMode = function(){
-        var hiki = ($j('#editor_mode_hiki:checked').length > 0);
-        var richtext = ($j('#editor_mode_richtext:checked').length > 0);
-
         $j('#contents_hiki_space, #contents_richtext_space, #contents_plaintext_space, .hiki_support').hide();
 
-        if(richtext){
+        if($j('#editor_mode_richtext:checked').length > 0){
             $j('#contents_richtext_space').show();
             $j('#contents_richtext').focus();
-        } else if(hiki) {
+        } else if($j('#editor_mode_hiki:checked').length > 0) {
             $j('#contents_hiki_space, .hiki_support').show();
             $j('#contents_hiki').focus();
         } else {
@@ -49,7 +46,6 @@ $j(function(){
             $j('#contents_plaintext').focus();
         }
     }
-    changeEditorMode();
 
     $j('#editor_mode_hiki, #editor_mode_richtext, #editor_mode_plaintext')
     .click(function(){
@@ -73,7 +69,6 @@ $j(function(){
         });
         return false;
     });
-
 });
 //]]>
 </script>

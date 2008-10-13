@@ -57,7 +57,7 @@ div.input_line textarea {
 </div>
 
 <div class="input_line">
-  <div class="input_label">画像/動画<br/>ファイル</div>
+  <div class="input_label" style="height: 3em;">ファイル</div>
   <div style="float:left;">
     <%= render :partial => "shared/multiple_file" , :locals => {:file_field_name => "image", :submit_button_id => "submit_button", :blog_mode => true} -%>
   </div>
@@ -65,7 +65,7 @@ div.input_line textarea {
 </div>
 
 <div class="input_line">
-  <div class="input_label" style="height: 30px;" id="input_label_publication">公開範囲</div>
+  <div class="input_label" style="height: 3em;" id="input_label_publication">公開範囲</div>
   <div class="input_value" id="input_value_publication"><table><tr><td>
     <% display_type = (@board_entry.owner_is_public? ? "" : "none") %>
     <span style="display:<%= display_type %>">
@@ -85,7 +85,7 @@ div.input_line textarea {
 
 <% if Admin::Setting.mail_function_setting %>
 <div class="input_line">
-  <div class="input_label" style="height: 3em;">オプション</div>
+  <div class="input_label" style="height: 3em;">メール</div>
   <div class="input_value">
     <div id="option_space">
       <p><%= check_box 'sent_mail', 'send_flag', {:checked => @sent_mail_flag } %>[連絡] タグ指定時にメールを送信する</p>
@@ -211,6 +211,8 @@ $j(function() {
     .focus(function(){
         hideCategoryBox();
     });
+
+    changeEditorMode();
 });
 //]]>
 </script>
