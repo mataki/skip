@@ -11,9 +11,9 @@ div.error_messages {
 </style>
 <% blog_mode ||= false %>
 
+（注意！）セキュリティ上の問題があるファイルは、アップロードしないで下さい。
 <div id="input_value_area"></div>
 <div><a href="#" id="add_file_tag_link">[更にファイルを追加]</a></div>
-※セキュリティ上の問題があるファイルは、アップロードしないで下さい。
 <div id="hidden_file_area" style="display:none;"></div>
 
 <script type='text/javascript'>
@@ -33,6 +33,7 @@ $j(function() {
             })
         )
         .appendTo('#input_value_area');
+
         if(<%= blog_mode %>) {
             elemDiv.append(
                 $j(document.createElement("a"))
@@ -41,7 +42,8 @@ $j(function() {
                     margin: "0 0 0 3px"
                 })
                 .attr('href',"javascript:insertPicRef("+index+");")
-                .append(document.createTextNode("Hiki本文末尾に挿入"))
+                .attr('class', "hiki_support")
+                .append(document.createTextNode("本文末尾に挿入"))
             );
         }
         index++;
