@@ -355,7 +355,7 @@ class CreateDefaultTables < ActiveRecord::Migration
 
     # tagのデフォルト値の登録
     system_tags  = ["質問","要望","重要","連絡","解決"]
-    standard_tags = ["書評","もんた","日記","技術","ネタ","ニュース"]
+    standard_tags = ["日記","書評","オフ","ネタ","ニュース"]
 
     tag_hash = Hash.new
     system_tags.each do |name|

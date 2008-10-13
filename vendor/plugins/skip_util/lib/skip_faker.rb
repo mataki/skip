@@ -84,7 +84,7 @@ module SkipFaker
   # テスト用標準タグを作成
   # タグをfixturesに書き込む場合は""で括らないとyamlのフロースタイルと見なされてしまうので注意
   def self.standard_tag
-    "[#{%w(書評 もんた 日記 技術 ネタ ニュース).rand}]"
+    "[#{%w(日記 書評 オフ ネタ ニュース).rand}]"
   end
 
   # テスト用URL

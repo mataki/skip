@@ -238,7 +238,7 @@ form.comment_input_form textarea{
           <%= link_to(icon_tag('transmit_go', :alt=>'アンテナに追加'), {:controller => "antenna", :action => "select_antenna", :symbol => entry.symbol, :dummy => '.html'}, {:class => "nyroModal"}) %>
         <% end %>
         <%= link_to(icon_tag('tag_blue_add', :alt=>'ブックマークする'), {:controller => "bookmark", :action => "edit", :url => "/page/#{entry.id.to_s}", :title => entry.title, :dummy => '.html'}, {:class => "nyroModal"}) %>
-        <%= link_to(icon_tag('control_play_blue', :alt=>'もんた！'), {:controller=> "monta", :action => "execute_monta", :id => entry}, :target=>"_blank") %>
+        <%= link_to(icon_tag('control_play_blue', :alt=>'スライドショー'), {:controller=> "monta", :action => "execute_monta", :id => entry}, :target=>"_blank") %>
         <%= link_to(icon_tag('zoom', :alt=>'最大化！'), {:controller=> "board_entries", :action => "large", :id => entry}, :target=>"_blank") %>
       </div>
     </div>

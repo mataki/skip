@@ -15,21 +15,17 @@ body {
 }
 a {
   text-decoration: none;
-  color: purple;
+  color: silver;
 }
 .my_header {
-  margin: 0px;
   padding: 4px;
-  text-align: left;
   font-size: 18px;
   font-weight: bold;
   background-color:#DDFFDD;
 }
 .my_counter {
-  margin: 0px;
   padding: 4px;
-  text-align: left;
-  font-size: 40px;
+  font-size: 20px;
   font-weight: bold;
   background-color:#bfffbf;
   position:absolute;

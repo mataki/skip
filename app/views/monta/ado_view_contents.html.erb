@@ -1,91 +1,25 @@
+<% @text_align ||= "center" %>
+<table border='0' align='<%= @text_align %>' width='100%' height='100%' style="position: absolute; top: 0px; text-align:<%= @text_align %>;">
+  <tr><td id="output_td"><%= @content %></td></tr>
+</table>
+
+<div style="visibility: hidden;">
+  <div id="output"><%= @hidden_content -%></div>
+  <div id="url_next"><%= @next_url -%></div>
+  <div id="url_prev"><%= @prev_url -%></div>
+</div>
+
 <script type="text/javascript">
+  var textsize = 0.8;
 
-  new Effect.Opacity('counter', {to:0.6});
-
-  var output = $('output');
-
-  <% if @img_id_arr.size == 0 %>
-    fitTextSize(0.8);
-  <% else %>
+  <% if @img_id_arr and @img_id_arr.size > 0 %>
     <% @img_id_arr.each do |img_id_r| %>
     fitImageSize('<%= img_id_r %>', <%= @img_id_arr.size %>);
     <% end %>
-    fitTextSize(0.3);
+    textsize = 0.3;
   <% end %>
 
-  function fitTextSize(reducation_ratio_h) {
-    with(output.style){
-      fontSize = "10px";
-      display  = "inline";
-    }
-    var body_w = document.body.offsetWidth;
-    var body_h = document.body.offsetHeight;
-    var output_w = output.offsetWidth;
-    var new_fs = Math.ceil((body_w/output_w) * 9);
-    if(new_fs <= 5000){
-      with(output.style){
-        fontSize = new_fs + "px";
-        display  = "block";
-      }
-      var output_h = output.offsetHeight;
-      if(output_h > body_h){
-        var new_fs = Math.ceil((body_h/output_h) * new_fs * reducation_ratio_h);
-        if(new_fs <= 10000){
-          with(output.style){
-            fontSize = new_fs + "px";
-          }
-         $('output_td').style.fontSize = new_fs + "px";
-        }
-      } else {
-        $('output_td').style.fontSize = new_fs + "px";
-      }
-    }
-  }
+  fitTextSize($('output'), textsize);
 
-  function fitImageSize(img_id, img_count) {
-    var body_w = document.body.offsetWidth;
-    var body_h = document.body.offsetHeight;
-    var output_h = output.offsetHeight;
-    max_width = body_w / img_count * 0.65;
-    max_height = body_h / img_count * 0.65;
-    img = new Image();
-    img.src = $(img_id).src;
-          if (img.width > img.height) {
-      value = img.height / (img.width/max_width);
-      setImageSize(img_id, max_width, value);
-    } else {
-      value = img.width / (img.height/max_height);
-      setImageSize(img_id, value, max_height);
-    }
-  }
-
-  function setImageSize(img_id, width, height){
-    if (width < 1)  {width = 1;}
-    if (height < 1) {height = 1;}
-    $(img_id).width = width;
-    $(img_id).height = height;
-    var hidden_img_id = 'hidden_' + img_id;
-    $(hidden_img_id).width = 0.1;
-    $(hidden_img_id).height = height;
-  }
-
+  $j('#counter').html('<%= @counter_value -%>');
 </script>
-
-<% url_forward = url_for(:controller=>'monta', :action=>'ado_view_contents', :id=>@board_entry.id, :index=>@index+1) %>
-<% url_back    = url_for(:controller=>'monta', :action=>'ado_view_contents', :id=>@board_entry.id, :index=>@index-1) %>
-
-<div id="counter" class="my_counter">[<%= @count %>/<%= @max_count %>]</div>
-
-<% @text_align ||= "center" %>
-<table border='0' align='<%= @text_align %>' width='100%' height='100%' style="position: absolute; top: 0px; text-align:<%= @text_align %>;">
-  <tr>
-    <td id="output_td">
-      <%= @content %>
-    </td>
-  </tr>
-</table>
-<center>
-  <div id="output" style="visibility: hidden;"><%= @hidden_content %></div>
-</center>
-<div id="url_next" style="visibility: hidden;"><%= url_forward %></div>
-<div id="url_prev" style="visibility: hidden;"><%= url_back %></div>
