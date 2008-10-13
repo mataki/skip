@@ -4,7 +4,7 @@
 
 <div class="<%= comment_class %>" id="comment_<%= comment.id %>_<%= level %>">
   <div class="header">
-    <span class="title">
+    <span class="title" style="<%=h 'background-color: #FFEFCC;' if comment.user_id == session[:user_id] -%>">
       <%= user_link_to(comment.user) %><span class="date"><%= date_with_icon(comment.created_on) %></span>
     </span>
     <span class="buttons">
