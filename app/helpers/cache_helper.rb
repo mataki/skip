@@ -19,7 +19,7 @@ module CacheHelper
 
   JQUERY_LIBRARY = {:name => 'jquery.all',
     :libs => ['jquery', 'jquery.color.js', 'jquery.nyroModal.js', 'jquery.bgiframe.min.js',
-              'jquery.dimensions.js', 'jquery.autocomplete.js', 'jquery.jTagging.js']}
+              'jquery.dimensions.js', 'jquery.autocomplete.js', 'jquery.jTagging.js', 'jquery.jgrow-0.2.js']}
 
   STYLE_LIBRARY = {:name => 'skip.style',
     :libs => ['skip/style', 'style', 'skins-base']}

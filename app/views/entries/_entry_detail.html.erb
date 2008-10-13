@@ -697,9 +697,13 @@ $j(function(){
             .hide()
             .fadeIn('fast')
             .appendTo('#edit_nest_comment_' + commentId);
+
+            $j("textarea").jGrow({ rows: 25 });
         });
     };
     setupCommentNestLink();
+
+    $j("textarea").jGrow({ rows: 25 });
 
 });
 </script>
