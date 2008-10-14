@@ -74,9 +74,7 @@ describe ShareFileController, "POST #create" do
   end
   describe "ファイルが一つの時" do
     before do
-      @file1 = mock('file1', { :original_filename => "file1.png", :content_type => "text",
-                      :size => 1000, :read => "" })
-
+      @file1 = mock_uploaed_file({ :original_filename => "file1.png", :content_type => "text", :size => 1000, :read => "" }) 
       post :create, { :symbol => "", :publication_type => "public", :owner_name => 'ほげ ほげ',
         :publication_symbols_value => "",
         :share_file => { "date(1i)" => "2008", "date(2i)" => "9", "date(3i)" => "19",
@@ -89,13 +87,12 @@ describe ShareFileController, "POST #create" do
   end
   describe "複数ファイルが送信された場合" do
     before do
-      @file1 = mock('file1', { :original_filename => "file1.png", :content_type => "text",
+      @file1 = mock_uploaed_file({ :original_filename => "file1.png", :content_type => "text",
                       :size => 1000, :read => "" })
-      @file2 = mock('file2', { :original_filename => "file2.png", :content_type => "text",
+      @file2 = mock_uploaed_file({ :original_filename => "file2.png", :content_type => "text",
                       :size => 1000, :read => "" })
 
-      post :create, { :symbol => "", :publication_type => "public", :owner_name => 'ほげ ほげ',
-        :publication_symbols_value => "",
+      post :create, { :symbol => "", :publication_type => "public", :owner_name => 'ほげ ほげ', :publication_symbols_value => "",
         :share_file => { "date(1i)" => "2008", "date(2i)" => "9", "date(3i)" => "19",
           "date(4i)" => "16", "date(5i)" => "07", :description => "description",
           :category => "hoge,hoge", :owner_symbol => "uid:hoge"},

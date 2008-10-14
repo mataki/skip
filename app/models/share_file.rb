@@ -16,6 +16,9 @@
 require 'csv'
 class ShareFile < ActiveRecord::Base
   include Publication
+
+  attr_accessor :file
+
   belongs_to :user
   has_many :tags, :through => :share_file_tags
   has_many :share_file_tags, :dependent => :destroy
@@ -44,6 +47,25 @@ class ShareFile < ActiveRecord::Base
 
   def validate
     Tag.validate_tags(category).each{ |error| errors.add(:category, error) }
+  end
+
+  def validate_on_create
+    unless self.file.is_a?(ActionController::UploadedFile)
+      errors.add_to_base "ファイルが指定されていません。"
+      return
+    end
+
+    # 形式チェック
+    unless SkipUtil.verify_extension? self.file_name, self.content_type
+      errors.add_to_base "この形式のファイルは、アップロードできません。"
+    end
+
+    # サイズチェック
+    if self.file.size == 0
+      errors.add_to_base "存在しないもしくはサイズ０のファイルはアップロードできません。"
+    elsif self.file.size > INITIAL_SETTINGS['max_share_file_size'].to_i
+      errors.add_to_base (INITIAL_SETTINGS['max_share_file_size'].to_i/1024/1024).to_s + "Ｍバイト以上のファイルはアップロードできません。"
+    end
   end
 
   def after_save

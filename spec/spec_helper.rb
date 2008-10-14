@@ -186,5 +186,13 @@ def create_board_entry_comment options = {}
   board_entry_comment
 end
 
+def mock_uploaed_file options = {}
+  file = mock('file', { :original_filename => "file1.png", :content_type => "text", :size => 1000, :read => "" }.merge(options))
+  file.stub!(:is_a?).with(ActionController::UploadedFile).and_return(true)
+  # 以下をやらないとパラメータの中身がHashかどうかのチェックがらしく、リクエストが飛ばなくなるので
+  file.stub!(:is_a?).with(Hash).and_return(false)
+  file
+end
+
 ######skip関連のテストで必要
 class ApplicationController;skip_before_filter :sso; end

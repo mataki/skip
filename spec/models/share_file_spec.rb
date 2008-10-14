@@ -17,11 +17,6 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe ShareFile do
 fixtures :share_files
-  def test_validate_category
-    @a_share_file.category = "[あ=あ][*いえ]"
-    assert !@a_share_file.valid?
-  end
-
   def test_owner_symbol_type
     @a_share_file.owner_symbol = 'uid:hoge'
     assert_equal 'user', @a_share_file.owner_symbol_type
@@ -58,6 +53,66 @@ describe ShareFile, '#full_path' do
       @share_file.full_path.should == File.join(@share_file_path, 'user', @symbol_id, @file_name)
     end
   end
+end
+
+describe ShareFile, '#validate_on_create' do
+  before do
+    @share_file = ShareFile.new
+    @errors = @share_file.errors
+    SkipUtil.stub!(:verify_extension?).and_return(true)
+  end
+
+  describe 'ファイルが未指定の場合' do
+    before do
+      @share_file.file = ''
+    end
+    it 'エラーが追加されていること' do
+      lambda do
+        @share_file.validate_on_create
+      end.should change(@errors, :size).from(0).to(1)
+    end
+  end
+
+  describe 'ファイルが指定されている場合' do
+    before do
+      @share_file.file = mock_uploaed_file
+    end
+    describe 'ファイルの形式が不正の場合' do
+      before do
+        SkipUtil.should_receive(:verify_extension?).and_return(false)
+      end
+      it 'エラーが追加されていること' do
+        lambda do
+          @share_file.validate_on_create
+        end.should change(@errors, :size).from(0).to(1)
+      end
+    end
+
+    describe 'ファイルのサイズが0の場合' do
+      before do
+        @share_file.file = mock_uploaed_file(:size => 0)
+      end
+      it 'エラーが追加されていること' do
+        lambda do
+          @share_file.validate_on_create
+        end.should change(@errors, :size).from(0).to(1)
+      end
+    end
+
+    describe 'ファイルサイズが最大値を越えている場合' do
+      before do
+        max_size = 10000
+        INITIAL_SETTINGS['max_share_file_size'] = max_size
+        @share_file.file = mock_uploaed_file(:size => max_size + 1)
+      end
+      it 'エラーが追加されていること' do
+        lambda do
+          @share_file.validate_on_create
+        end.should change(@errors, :size).from(0).to(1)
+      end
+    end
+  end
+
 end
 
 describe ShareFile, '#after_destroy' do

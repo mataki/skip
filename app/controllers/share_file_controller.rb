@@ -47,21 +47,15 @@ class ShareFileController < ApplicationController
       return
     end
 
-    unless valid_upload_files? params[:file]
-      @categories_hash = ShareFile.get_tags_hash(@share_file.owner_symbol)
-      flash.now[:warning] = "ファイルサイズが０、もしくはサイズが大きすぎるファイルがあります。"
-      render :action => "new", :layout => "subwindow", :collection => @categories_hash
-      return
-    end
-
-    params[:file].each do |key,file|
+    params[:file].each do |key, file|
       share_file = @share_file.clone
-      share_file.file_name = file.original_filename
-      share_file.content_type = file.content_type.chomp
+      if file.is_a?(ActionController::UploadedFile)
+        share_file.file_name = file.original_filename
+        share_file.content_type = file.content_type.chomp
+      end
+      share_file.file = file
 
-      if not (verify_message = verify_extension_share_file(share_file)) and
-        not (verify_message = verify_file_size(file)) and
-        share_file.save
+      if share_file.save
         target_symbols = analyze_param_publication_type
         target_symbols.each do |target_symbol|
           share_file.share_file_publications.create(:symbol => target_symbol)
@@ -70,9 +64,7 @@ class ShareFileController < ApplicationController
       else
         error_message = share_file.file_name
 
-        if share_file.errors.empty?
-          error_message << " ... #{verify_message}"
-        else
+        unless share_file.errors.empty?
           error_message << " ... #{share_file.errors.full_messages.join(",")}"
         end
         @error_messages << error_message
@@ -260,25 +252,6 @@ private
   def render_window_close
     render :text => "<script type='text/javascript'>window.opener.location.reload();window.close();</script>"
   end
-
-  def verify_file_size file_obj
-    if  file_obj
-      if file_obj.size == 0
-        return "存在しないもしくはサイズ０のファイルはアップロードできません。"
-      elsif file_obj.size > INITIAL_SETTINGS['max_share_file_size'].to_i
-        return (INITIAL_SETTINGS['max_share_file_size'].to_i/1024/1024).to_s + "Ｍバイト以上のファイルはアップロードできません。"
-      end
-    end
-    return nil
-  end
-
-  def verify_extension_share_file file
-      unless verify_extension? file.file_name, file.content_type
-        return "この形式のファイルは、アップロードできません。"
-      end
-      return nil
-  end
-
 
   def nkf_file_name(file_name)
     agent = request.cgi.env_table["HTTP_USER_AGENT"]
