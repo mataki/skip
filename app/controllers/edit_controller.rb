@@ -42,8 +42,6 @@ class EditController < ApplicationController
       params[:contents_richtext] = params[:contents]
     when "hiki"
       params[:contents_hiki] = params[:contents]
-    when "plaintext"
-      params[:contents_plaintext] = params[:contents]
     end
 
     @sent_mail_flag = "checked"
@@ -58,8 +56,6 @@ class EditController < ApplicationController
       @board_entry.contents = params[:contents_hiki]
     when "richtext"
       @board_entry.contents = params[:contents_richtext]
-    when "plaintext"
-      @board_entry.contents = params[:contents_plaintext]
     end
 
     unless validate_params params, @board_entry
@@ -155,8 +151,6 @@ class EditController < ApplicationController
       params[:contents_hiki] = @board_entry.contents
     when "richtext"
       params[:contents_richtext] = @board_entry.contents
-    when "plaintext"
-      params[:contents_plaintext] = @board_entry.contents
     end
 
     @img_urls = get_img_urls @board_entry
@@ -196,8 +190,6 @@ class EditController < ApplicationController
       update_params[:contents] = params[:contents_hiki]
     when "richtext"
       update_params[:contents] = params[:contents_richtext]
-    when "plaintext"
-      update_params[:contents] = params[:contents_plaintext]
     end
 
     update_params[:publication_type] = params[:publication_type]

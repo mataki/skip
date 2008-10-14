@@ -6,8 +6,7 @@ table.input_table textarea {
 
   <div class="input_value" style="height: 2em;">
     <%= radio_button_tag("editor_mode", "richtext", params[:editor_mode] == "richtext", :id=>"editor_mode_richtext") %>リッチテキスト
-    <%= radio_button_tag("editor_mode", "hiki", params[:editor_mode] == "hiki", :id=>"editor_mode_hiki") -%>Wiki風
-    <%= radio_button_tag("editor_mode", "plaintext", params[:editor_mode] == "plaintext", :id=>"editor_mode_plaintext") %>プレーンテキスト
+    <%= radio_button_tag("editor_mode", "hiki", params[:editor_mode] == "hiki", :id=>"editor_mode_hiki") -%>Wikiテキスト
   </div>
 
   <div id="contents_richtext_space" style="display: none;">
@@ -16,9 +15,6 @@ table.input_table textarea {
   <div id="contents_hiki_space" style="display: none;">
     <%= link_to_hiki_help %> <a href="#" id="hiki_preview_link">【プレビューで確認する】</a>
     <label for="contents"><%= text_area_tag 'contents_hiki', h(params[:contents_hiki]), :cols => 90, :rows => 20 %></label>
-  </div>
-  <div id="contents_plaintext_space" style="display: none;">
-    <label for="contents"><%= text_area_tag 'contents_plaintext', h(params[:contents_plaintext]), :cols => 90, :rows => 20 %></label>
   </div>
 
 <%= skip_javascript_include_tag "fckeditor/fckeditor" %>
@@ -33,7 +29,7 @@ $j(function(){
     fckArea.ReplaceTextarea();
 
     changeEditorMode = function(){
-        $j('#contents_hiki_space, #contents_richtext_space, #contents_plaintext_space, .hiki_support').hide();
+        $j('#contents_hiki_space, #contents_richtext_space, .hiki_support').hide();
 
         if($j('#editor_mode_richtext:checked').length > 0){
             $j('#contents_richtext_space').show();
@@ -41,13 +37,10 @@ $j(function(){
         } else if($j('#editor_mode_hiki:checked').length > 0) {
             $j('#contents_hiki_space, .hiki_support').show();
             $j('#contents_hiki').focus();
-        } else {
-            $j('#contents_plaintext_space').show();
-            $j('#contents_plaintext').focus();
         }
     }
 
-    $j('#editor_mode_hiki, #editor_mode_richtext, #editor_mode_plaintext')
+    $j('#editor_mode_hiki, #editor_mode_richtext')
     .click(function(){
         changeEditorMode();
     });

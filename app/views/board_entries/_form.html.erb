@@ -153,10 +153,8 @@ $j(function() {
         var contents_value;
         if ($j('#editor_mode_richtext:checked').size() > 0) {
             contents_value = $j('#contents_richtext').val();
-        } else if($j('#editor_mode_hiki:checked').size() > 0) {
-            contents_value = $j('#contents_hiki').val();
         } else {
-            contents_value = $j('#contents_plaintext').val();
+            contents_value = $j('#contents_hiki').val();
         }
 
         for(i=0; i < tb_array.length; i++){
@@ -218,7 +216,7 @@ $j(function() {
     .focus(function(){
         showCategoryBox();
     });
-    $j('#board_entry_title, #contents_hiki, #contents_richtext, #contents_plaintext')
+    $j('#board_entry_title, #contents_hiki, #contents_richtext')
     .focus(function(){
         hideCategoryBox();
     });
