@@ -225,5 +225,4 @@ class Group < ActiveRecord::Base
     options[:include] = :group_participations
     options
   end
-
 end

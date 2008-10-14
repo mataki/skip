@@ -27,6 +27,7 @@ default: &default
   share_file_path: temp_share_file_path                                     # 共有ファイルの保存ディレクトリ
   batch_log_path:                                                           # バッチ実行時のログ出力先(指定がなければ log/batch.log)
   max_share_file_size: 10485760                                             # 共有ファイルの最大許可容量( 10M = 10485760 )
+  max_share_file_size_per_owner: 314572800                                  # オーナーごとのファイルの最大許可容量( 300M = 314572800 )
   not_blank_link_re: https?:\/\/dev(.openskip.org)?\/.*                     # ブログ内のリンクで新しいウインドウを開かないでリンクをするURLの正規表現
   ssl_setting: false                                                        # SSLログインを利用するかどうかの設定
   user_code_format_regex: ^(\d{6}|[kK]\d{5})$                               # ユーザ名として許可しない形式を指定

@@ -111,6 +111,18 @@ describe ShareFile, '#owner_symbol_name' do
   end
 end
 
+describe ShareFile, ".total_share_file_size" do
+  before do
+    Dir.should_receive(:glob).and_return(["a"])
+    file = mock('file')
+    file.stub!(:size).and_return(100)
+    File.should_receive(:stat).with('a').and_return(file)
+  end
+  it "ファイルの合計サイズを返す" do
+    ShareFile.total_share_file_size("uid:hoge").should == 100
+  end
+end
+
 private
 def create_share_file options = {}
   share_file = ShareFile.new({

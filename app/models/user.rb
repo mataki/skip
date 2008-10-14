@@ -271,6 +271,7 @@ class User < ActiveRecord::Base
     save(false)
     self.auth_session_token
   end
+
 protected
   @@search_cond_keys = [:name, :extension, :section, :code, :email, :introduction]
 

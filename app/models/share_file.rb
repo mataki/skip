@@ -261,6 +261,14 @@ class ShareFile < ActiveRecord::Base
     symbol_id = owner_symbol.split(":").last
     File.join(ENV['SHARE_FILE_PATH'], dir_hash[symbol_type], symbol_id)
   end
+
+  def self.total_share_file_size symbol
+    sum = 0
+    Dir.glob("#{ShareFile.dir_path(symbol)}/**").each do |f|
+      sum += File.stat(f).size
+    end
+    sum
+  end
 private
   def square_brackets_tags
     self.category = Tag.square_brackets_tags(self.category)
