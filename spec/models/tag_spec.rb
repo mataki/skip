@@ -19,7 +19,7 @@ describe Tag do
   fixtures :tags, :board_entries, :share_files, :bookmark_comments
 
   # FIXME テスト汎用化。Fakerを使った形に出来ないか？
-  SYSTEM_TAG_NAMES = ["質問", "要望", "重要", "連絡", "解決"]
+  SYSTEM_TAG_NAMES = ["質問",  "重要", "連絡", "解決"]
   STANDARD_TAG_NAMES = ["日記", "書評", "オフ", "ネタ", "ニュース"]
   def test_tag
     assert_not_nil @a_tag.tag
