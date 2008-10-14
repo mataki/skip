@@ -14,10 +14,10 @@ FCKConfig.ToolbarSets["Custom"] = [
         ['Bold','Italic','Underline','StrikeThrough'],
         ['OrderedList','UnorderedList'],
         ['JustifyLeft','JustifyCenter','JustifyRight','JustifyFull'],
+        ['TextColor','BGColor'],
         ['Table','Rule','Smiley'],
         '/',
-        ['FontFormat','FontSize'],
-        ['TextColor','BGColor'],
+        ['FontName','FontFormat','FontSize'],
         ['Link','Unlink'],
         ['Source','Preview'],
         ['FitWindow','ShowBlocks','-','About']          // No comma for the last row.
