@@ -1,4 +1,5 @@
 namespace :skip do
+
   desc "[SKIP-Original]Load csvdatas into the current environment's database"
   task :load_csvdatas => :environment do
     require 'active_record/fixtures'
@@ -43,28 +44,6 @@ namespace :skip do
         end
       end
     end
-  end
-
-  desc "[SKIP-Original]Setup Skip development environment."
-  task :setup_development => :environment do
-    # vendor/plugin以下あるtar.gzなファイルを解凍
-    `for file in ./vendor/plugins/*.tar.gz; do tar zxvf $file -C ./vendor/plugins; done;`
-    # public以下にある圧縮ファイルを解凍
-    `tar zxvf ./public/images/skip/icons.tar.gz -C ./public/images/skip`
-  end
-
-  desc "[SKIP-Original]Setup Skip production environment."
-  task :setup_production => :environment do
-    # vendor/plugin以下あるtar.gzなファイルを解凍
-    `for file in ./vendor/plugins/*.tar.gz; do tar zxvf $file -C ./vendor/plugins; done;`
-    `for file in ./vendor/plugins/*.tar.gz; do rm $file; done;`
-    # public以下にある圧縮ファイルを解凍
-    `tar zxvf ./public/images/skip/icons.tar.gz -C ./public/images/skip`
-    `rm ./public/images/skip/icons.tar.gz`
-  end
-
-  desc "[SKIP-Original]Cleanup Skip environment."
-  task :cleanup => :environment do
   end
 
   desc "[SKIP-Original]Continuous Integration"
