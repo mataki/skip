@@ -37,11 +37,11 @@ class EditController < ApplicationController
     params[:publication_type] ||= "public"
     params[:publication_symbols_value] = ""
 
-    case params[:editor_mode] ||= "hiki"
-    when "hiki"
-      params[:contents_hiki] = params[:contents]
+    case params[:editor_mode] ||= "richtext"
     when "richtext"
       params[:contents_richtext] = params[:contents]
+    when "hiki"
+      params[:contents_hiki] = params[:contents]
     when "plaintext"
       params[:contents_plaintext] = params[:contents]
     end
