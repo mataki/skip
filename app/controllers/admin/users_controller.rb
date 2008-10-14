@@ -64,7 +64,7 @@ class Admin::UsersController < Admin::ApplicationController
     end
     @user.save!
     flash[:notice] = _('更新しました。')
-    redirect_to admin_user_path(@user)
+    redirect_to :action => "edit"
   rescue ActiveRecord::RecordNotFound => e
     flash[:notice] = _('ご指定のユーザは存在しません。')
     redirect_to admin_users_path

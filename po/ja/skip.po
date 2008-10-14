@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-10-12 06:41+0900\n"
+"POT-Creation-Date: 2008-10-14 03:54+0900\n"
 "PO-Revision-Date: 2008-09-30 15:00+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -355,7 +355,8 @@ msgstr "システム管理者のメールアドレス"
 
 #: app/models/admin/initial_setting.rb:32
 msgid "Admin::InitialSetting|Administrator addr description"
-msgstr "システム障害時の連絡先のメールアドレスとして表示されます（500エラーなど）"
+msgstr ""
+"システム障害時の連絡先のメールアドレスとして表示されます（500エラーなど）"
 
 #: app/models/admin/initial_setting.rb:25
 msgid "Admin::InitialSetting|Delivery method"
@@ -363,7 +364,8 @@ msgstr "メール配信方法"
 
 #: app/models/admin/initial_setting.rb:26
 msgid "Admin::InitialSetting|Delivery method description"
-msgstr "メールの配信方法を指定しています（testの場合、実際に送信は行われません）"
+msgstr ""
+"メールの配信方法を指定しています（testの場合、実際に送信は行われません）"
 
 #: app/models/admin/initial_setting.rb:29
 msgid "Admin::InitialSetting|Fixed op url"
@@ -379,7 +381,9 @@ msgstr "全文検索の機能"
 
 #: app/models/admin/initial_setting.rb:39
 msgid "Admin::InitialSetting|Full text search setting description"
-msgstr "全文検索を行うかどうかの設定です（利用しない場合、検索ボックスなどが表示されません）"
+msgstr ""
+"全文検索を行うかどうかの設定です（利用しない場合、検索ボックスなどが表示され"
+"ません）"
 
 #: app/models/admin/initial_setting.rb:41
 msgid "Admin::InitialSetting|Full text search setting|false"
@@ -395,7 +399,10 @@ msgstr "ユーザアカウントの管理方法"
 
 #: app/models/admin/initial_setting.rb:28
 msgid "Admin::InitialSetting|Login mode description"
-msgstr "ユーザアカウントをどこで管理するかを指定しています（passwordの場合はパスワードを本体で管理を行い、RPの場合はOpenID認証を利用するため別に存在するOPで管理を行います）"
+msgstr ""
+"ユーザアカウントをどこで管理するかを指定しています（passwordの場合はパスワー"
+"ドを本体で管理を行い、RPの場合はOpenID認証を利用するため別に存在するOPで管理"
+"を行います）"
 
 #: app/models/admin/initial_setting.rb:19
 msgid "Admin::InitialSetting|Max share file size"
@@ -403,7 +410,8 @@ msgstr "共有ファイルの一度にアップロードが出来る最大許可
 
 #: app/models/admin/initial_setting.rb:20
 msgid "Admin::InitialSetting|Max share file size description"
-msgstr "ユーザの一度のアップロードのアクションで格納できるファイルの最大容量です"
+msgstr ""
+"ユーザの一度のアップロードのアクションで格納できるファイルの最大容量です"
 
 #: app/models/admin/initial_setting.rb:21
 msgid "Admin::InitialSetting|Not blank link re"
@@ -411,7 +419,9 @@ msgstr "ブログ内のリンクで新しいウィンドウを開かないでリ
 
 #: app/models/admin/initial_setting.rb:22
 msgid "Admin::InitialSetting|Not blank link re description"
-msgstr "ブログや掲示板の記事中でURLでリンクを指定した場合、この指定のURLの場合は新しいウィンドウを開かずに同じウィンドウで遷移します"
+msgstr ""
+"ブログや掲示板の記事中でURLでリンクを指定した場合、この指定のURLの場合は新し"
+"いウィンドウを開かずに同じウィンドウで遷移します"
 
 #: app/models/admin/initial_setting.rb:42
 msgid "Admin::InitialSetting|Password edit setting"
@@ -435,7 +445,9 @@ msgstr "プロキシのURL"
 
 #: app/models/admin/initial_setting.rb:18
 msgid "Admin::InitialSetting|Proxy url description"
-msgstr "RSSなどでアプリケーションが外部のサイトからデータ取得する場合のプロキシサーバのURLを指定しています"
+msgstr ""
+"RSSなどでアプリケーションが外部のサイトからデータ取得する場合のプロキシサーバ"
+"のURLを指定しています"
 
 #: app/models/admin/initial_setting.rb:34
 msgid "Admin::InitialSetting|Ssl setting"
@@ -467,7 +479,9 @@ msgstr "ログインIDの画面上の表示"
 
 #: app/models/admin/initial_setting.rb:51
 msgid "Admin::InitialSetting|Usercode dips setting description"
-msgstr "ログインIDを社員番号などにしており画面上に表示したくない場合などには「表示しない」を指定します"
+msgstr ""
+"ログインIDを社員番号などにしており画面上に表示したくない場合などには「表示し"
+"ない」を指定します"
 
 #: app/models/admin/initial_setting.rb:53
 msgid "Admin::InitialSetting|Usercode dips setting|false"
@@ -479,11 +493,12 @@ msgstr "表示する"
 
 #: app/models/admin/initial_setting.rb:46
 msgid "Admin::InitialSetting|Username use setting"
-msgstr "ログイン時のユーザ名の利用"
+msgstr "ユーザ名を利用するか"
 
 #: app/models/admin/initial_setting.rb:47
 msgid "Admin::InitialSetting|Username use setting description"
-msgstr "ユーザがログインする際に「ユーザ名」を使ってログインできるかどうかを指定します"
+msgstr ""
+"システム内のユーザの指定にわかりやすい「ユーザ名」を利用するかどうか"
 
 #: app/models/admin/initial_setting.rb:49
 msgid "Admin::InitialSetting|Username use setting|false"
@@ -890,32 +905,40 @@ msgstr "ユーザID"
 msgid "Admin::UserUid|Uid type"
 msgstr "タイプ"
 
-#: app/models/admin/user.rb:21
+#: app/models/admin/user.rb:23
 msgid "Admin::User|Admin"
 msgstr "管理権限"
 
-#: app/models/admin/user.rb:22 app/views/users/_user.html.erb:24
+#: app/models/admin/user.rb:21
+msgid "Admin::User|Code"
+msgstr "ログインID"
+
+#: app/models/admin/user.rb:24 app/views/users/_user.html.erb:24
 #: app/views/users/index.html.erb:6
-#: app/views/portal/_registration_form.html.erb:46
+#: app/views/portal/_registration_form.html.erb:37
 #: app/views/user/show.html.erb:90
 msgid "Admin::User|Name"
 msgstr "名前"
 
-#: app/models/admin/user.rb:24
+#: app/models/admin/user.rb:26
 msgid "Admin::User|Password"
 msgstr "パスワード"
 
-#: app/models/admin/user.rb:23
+#: app/models/admin/user.rb:25
 msgid "Admin::User|Password confirmation"
 msgstr "確認パスワード"
 
-#: app/models/admin/user.rb:25
+#: app/models/admin/user.rb:27
 msgid "Admin::User|Retired"
 msgstr "就業状態"
 
-#: app/models/admin/user.rb:26
+#: app/models/admin/user.rb:28
 msgid "Admin::User|Status"
 msgstr "ステータス"
+
+#: app/models/admin/user.rb:22
+msgid "Admin::User|Uid"
+msgstr "ユーザ名"
 
 #: app/models/antenna_item.rb:-
 msgid "AntennaItem|"
@@ -1238,7 +1261,7 @@ msgid "Chain|紹介文"
 msgstr "紹介文"
 
 #: app/controllers/admin/users_controller.rb:161
-#: app/views/admin/users/edit.html.erb:19
+#: app/views/admin/users/edit.html.erb:18
 #: app/views/admin/users/show.html.erb:28
 msgid "Change uid"
 msgstr "ユーザ名変更"
@@ -1253,7 +1276,7 @@ msgid "Create"
 msgstr "作成"
 
 #: app/controllers/admin/users_controller.rb:185
-#: app/views/admin/users/edit.html.erb:20
+#: app/views/admin/users/edit.html.erb:19
 #: app/views/admin/users/show.html.erb:29
 msgid "Create %{name}"
 msgstr "%{name}作成"
@@ -1347,12 +1370,10 @@ msgid "EntryTrackback|Updated on"
 msgstr "更新日時"
 
 #: app/models/entry_trackback.rb:-
-#, fuzzy
 msgid "EntryTrackback|話題の元になった記事"
 msgstr "話題の元の記事"
 
 #: app/models/entry_trackback.rb:-
-#, fuzzy
 msgid "EntryTrackback|話題を元に書いた記事"
 msgstr "話題を元に書かれた記事"
 
@@ -1821,7 +1842,6 @@ msgstr ""
 msgid "ShareFile|日付"
 msgstr ""
 
-#: app/views/admin/users/edit.html.erb:17
 #: app/views/admin/groups/index.html.erb:30
 #: app/views/admin/bookmarks/index.html.erb:18
 #: app/views/admin/board_entries/index.html.erb:33
@@ -2034,13 +2054,13 @@ msgid "UserProfile|Disclosure|true"
 msgstr "公開"
 
 #: app/models/user_profile.rb:- app/views/users/_user.html.erb:26
-#: app/views/portal/_registration_form.html.erb:50
+#: app/views/portal/_registration_form.html.erb:41
 #: app/views/user/show.html.erb:95
 msgid "UserProfile|Email"
 msgstr "メールアドレス"
 
 #: app/models/user_profile.rb:-
-#: app/views/portal/_registration_form.html.erb:62
+#: app/views/portal/_registration_form.html.erb:76
 #: app/views/user/show.html.erb:105
 msgid "UserProfile|Extension"
 msgstr "内線番号"
@@ -2066,13 +2086,13 @@ msgid "UserProfile|Join year"
 msgstr "入社年度"
 
 #: app/models/user_profile.rb:- app/views/users/_user.html.erb:32
-#: app/views/portal/_registration_form.html.erb:54
+#: app/views/portal/_registration_form.html.erb:68
 #: app/views/user/show.html.erb:100
 msgid "UserProfile|Section"
 msgstr "部署"
 
 #: app/models/user_profile.rb:-
-#: app/views/portal/_registration_form.html.erb:66
+#: app/views/portal/_registration_form.html.erb:80
 #: app/views/user/show.html.erb:110
 msgid "UserProfile|Self introduction"
 msgstr "自己紹介"
@@ -2406,11 +2426,11 @@ msgstr ""
 #: app/controllers/admin/users_controller.rb:185
 #: app/controllers/admin/users_controller.rb:188
 #: app/views/users/_user.html.erb:19
-#: app/views/portal/_registration_form.html.erb:37
+#: app/views/portal/_registration_form.html.erb:46
 #: app/views/user/show.html.erb:84
 #: app/views/admin/users/create_uid.html.erb:12
 #: app/views/admin/users/create_uid.html.erb:27
-#: app/views/admin/users/edit.html.erb:20
+#: app/views/admin/users/edit.html.erb:19
 #: app/views/admin/users/change_uid.html.erb:31
 #: app/views/admin/users/show.html.erb:29
 msgid "user name"

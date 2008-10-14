@@ -18,6 +18,8 @@ class Admin::User < User
   has_many :user_uids, :dependent => :destroy, :class_name => 'Admin::UserUid'
   has_many :openid_identifiers, :dependent => :destroy, :class_name => 'Admin::OpenidIdentifier'
 
+  N_('Admin::User|Code')
+  N_('Admin::User|Uid')
   N_('Admin::User|Admin')
   N_('Admin::User|Name')
   N_('Admin::User|Password confirmation')
