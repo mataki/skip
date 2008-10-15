@@ -18,6 +18,10 @@ class Admin::InitialSetting < ActiveRecord::Base
   N_('Admin::InitialSetting|Proxy url description')
   N_('Admin::InitialSetting|Max share file size')
   N_('Admin::InitialSetting|Max share file size description')
+  N_('Admin::InitialSetting|Max share file size per owner')
+  N_('Admin::InitialSetting|Max share file size per owner description')
+  N_('Admin::InitialSetting|Max share file size of system')
+  N_('Admin::InitialSetting|Max share file size of system description')
   N_('Admin::InitialSetting|Not blank link re')
   N_('Admin::InitialSetting|Not blank link re description')
   N_('Admin::InitialSetting|User code format regex')
@@ -51,5 +55,4 @@ class Admin::InitialSetting < ActiveRecord::Base
   N_('Admin::InitialSetting|Usercode dips setting description')
   N_('Admin::InitialSetting|Usercode dips setting|true')
   N_('Admin::InitialSetting|Usercode dips setting|false')
-
 end

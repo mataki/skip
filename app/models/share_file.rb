@@ -54,7 +54,8 @@ class ShareFile < ActiveRecord::Base
 
     valid_extension_of_file
     valid_size_of_file
-    valid_size_per_owner_of_file
+    valid_max_size_per_owner_of_file
+    valid_max_size_of_system_of_file
   end
 
   def after_save
@@ -275,7 +276,7 @@ class ShareFile < ActiveRecord::Base
 
   def self.total_share_file_size symbol
     sum = 0
-    Dir.glob("#{ShareFile.dir_path(symbol)}/**").each do |f|
+    Dir.glob("#{ShareFile.dir_path(symbol)}/**/*").each do |f|
       sum += File.stat(f).size
     end
     sum
@@ -283,6 +284,14 @@ class ShareFile < ActiveRecord::Base
 
   def total_share_file_size
     self.class.total_share_file_size self.owner_symbol
+  end
+
+  def self.system_share_file_size
+    sum = 0
+    Dir.glob("#{ENV['SHARE_FILE_PATH']}/**/*").each do |f|
+      sum += File.stat(f).size
+    end
+    sum
   end
 private
   def square_brackets_tags
@@ -311,9 +320,15 @@ private
     end
   end
 
-  def valid_size_per_owner_of_file
+  def valid_max_size_per_owner_of_file
     if (self.total_share_file_size + self.file.size) > INITIAL_SETTINGS['max_share_file_size_per_owner'].to_i
-      errors.add_to_base "共有ファイル保存場所の最大サイズを越えてしまうためアップロードできません。"
+      errors.add_to_base "共有ファイル保存領域の利用容量が最大値を越えてしまうためアップロードできません。"
+    end
+  end
+
+  def valid_max_size_of_system_of_file
+    if (self.class.system_share_file_size + self.file.size) > INITIAL_SETTINGS['max_share_file_size_of_system'].to_i
+      errors.add_to_base "システム全体における共有ファイル保存領域の利用容量が最大値を越えてしまうためアップロードできません。"
     end
   end
 end

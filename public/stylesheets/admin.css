@@ -1,3 +1,4 @@
+#contents_container .content { margin-bottom: 20px; }
 .box { color: #505050; background-color: #F6F6F6; border:1px solid #E4E4E4; line-height: 1.5em; padding: 6px; }
 .tabular label { float:left; font-weight:bold; text-align:right; width:200px; }
 .tabular p { overflow: hidden; height: 1%; margin: 0px; padding: 5px 0px 8px 0px;}

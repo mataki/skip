@@ -64,7 +64,8 @@ describe ShareFile, '#validate_on_create' do
       @share_file.should_receive(:valid_presence_of_file).and_return(false)
       @share_file.should_not_receive(:valid_extension_of_file)
       @share_file.should_not_receive(:valid_size_of_file)
-      @share_file.should_not_receive(:valid_size_per_owner_of_file)
+      @share_file.should_not_receive(:valid_max_size_per_owner_of_file)
+      @share_file.should_not_receive(:valid_max_size_of_system_of_file)
       @share_file.validate_on_create
     end
   end
@@ -73,12 +74,89 @@ describe ShareFile, '#validate_on_create' do
       @share_file.should_receive(:valid_presence_of_file).and_return(true)
       @share_file.should_receive(:valid_extension_of_file)
       @share_file.should_receive(:valid_size_of_file)
-      @share_file.should_receive(:valid_size_per_owner_of_file)
+      @share_file.should_receive(:valid_max_size_per_owner_of_file)
+      @share_file.should_receive(:valid_max_size_of_system_of_file)
       @share_file.validate_on_create
     end
   end
 end
 
+describe ShareFile, '#after_destroy' do
+  before do
+    @share_file = create_share_file
+    File.stub!(:delete)
+  end
+  describe '対象ファイルが存在する場合' do
+    before do
+      @full_path = 'full_path'
+      @share_file.stub!(:full_path).and_return(@full_path)
+    end
+    it 'ファイル削除が呼ばれること' do
+      File.should_receive(:delete).with(@full_path)
+      @share_file.after_destroy
+    end
+  end
+  describe '対象ファイルが存在しない場合' do
+    before do
+      File.should_receive(:delete).and_raise(Errno::ENOENT)
+    end
+    it '例外を送出しないこと' do
+      lambda do
+        @share_file.after_destroy
+      end.should_not raise_error
+    end
+  end
+end
+
+describe ShareFile, '#owner_symbol_name' do
+  before do
+    @share_file = ShareFile.new
+  end
+  describe 'owner_symbolに一致するオーナー(ユーザ、グループ等)が存在する場合' do
+    before do
+      @user_name = 'とあるゆーざー'
+      @user = stub_model(User, :name => @user_name)
+      Symbol.should_receive(:get_item_by_symbol).and_return(@user)
+    end
+    it 'オーナー名が返却されること' do
+      @share_file.owner_symbol_name.should == @user_name
+    end
+  end
+  describe 'owner_symbolに一致するオーナー(ユーザ、グループ等)が存在しない場合' do
+    before do
+      Symbol.should_receive(:get_item_by_symbol).and_return(nil)
+    end
+    it '空文字が返却されること' do
+      @share_file.owner_symbol_name.should == ''
+    end
+  end
+end
+
+describe ShareFile, ".total_share_file_size" do
+  before do
+    Dir.should_receive(:glob).and_return(["a"])
+    file = mock('file')
+    file.stub!(:size).and_return(100)
+    File.should_receive(:stat).with('a').and_return(file)
+  end
+  it "ファイルの合計サイズを返す" do
+    ShareFile.total_share_file_size("uid:hoge").should == 100
+  end
+end
+
+describe ShareFile, '.system_share_file_size' do
+  before do
+    Dir.should_receive(:glob).and_return(["a"])
+    file = mock('file')
+    file.stub!(:size).and_return(100)
+    File.should_receive(:stat).with('a').and_return(file)
+  end
+  it 'システム全体のファイルの合計サイズを返す' do
+    ShareFile.system_share_file_size.should == 100
+  end
+end
+
+# privateメソッドのspec
 describe ShareFile, '#valid_presence_of_file' do
   before do
     @share_file = ShareFile.new
@@ -160,7 +238,7 @@ describe ShareFile, '#valid_size_of_file' do
   end
 end
 
-describe ShareFile, '#valid_size_per_owner_of_file' do
+describe ShareFile, '#valid_max_size_per_owner_of_file' do
   before do
     @share_file = ShareFile.new
     @share_file.file = mock_uploaed_file
@@ -175,72 +253,30 @@ describe ShareFile, '#valid_size_per_owner_of_file' do
     end
     it 'エラーが追加されていること' do
       lambda do
-        @share_file.send(:valid_size_per_owner_of_file)
+        @share_file.send(:valid_max_size_per_owner_of_file)
       end.should change(@errors, :size).from(0).to(1)
     end
   end
 end
 
-describe ShareFile, '#after_destroy' do
-  before do
-    @share_file = create_share_file
-    File.stub!(:delete)
-  end
-  describe '対象ファイルが存在する場合' do
-    before do
-      @full_path = 'full_path'
-      @share_file.stub!(:full_path).and_return(@full_path)
-    end
-    it 'ファイル削除が呼ばれること' do
-      File.should_receive(:delete).with(@full_path)
-      @share_file.after_destroy
-    end
-  end
-  describe '対象ファイルが存在しない場合' do
-    before do
-      File.should_receive(:delete).and_raise(Errno::ENOENT)
-    end
-    it '例外を送出しないこと' do
-      lambda do
-        @share_file.after_destroy
-      end.should_not raise_error
-    end
-  end
-end
-
-describe ShareFile, '#owner_symbol_name' do
+describe ShareFile, '#valid_max_size_of_system_of_file' do
   before do
     @share_file = ShareFile.new
+    @share_file.file = mock_uploaed_file
+    @errors = @share_file.errors
   end
-  describe 'owner_symbolに一致するオーナー(ユーザ、グループ等)が存在する場合' do
+  describe 'ファイルサイズがシステム全体の最大許可容量を越えてしまう場合' do
     before do
-      @user_name = 'とあるゆーざー'
-      @user = stub_model(User, :name => @user_name)
-      Symbol.should_receive(:get_item_by_symbol).and_return(@user)
+      max_share_file_size_of_system = 10000
+      INITIAL_SETTINGS['max_share_file_size_of_system'] = max_share_file_size_of_system
+      @share_file.file = mock_uploaed_file(:size => 2)
+      ShareFile.should_receive(:system_share_file_size).and_return(max_share_file_size_of_system -1)
     end
-    it 'オーナー名が返却されること' do
-      @share_file.owner_symbol_name.should == @user_name
+    it 'エラーが追加されていること' do
+      lambda do
+        @share_file.send(:valid_max_size_of_system_of_file)
+      end.should change(@errors, :size).from(0).to(1)
     end
-  end
-  describe 'owner_symbolに一致するオーナー(ユーザ、グループ等)が存在しない場合' do
-    before do
-      Symbol.should_receive(:get_item_by_symbol).and_return(nil)
-    end
-    it '空文字が返却されること' do
-      @share_file.owner_symbol_name.should == ''
-    end
-  end
-end
-
-describe ShareFile, ".total_share_file_size" do
-  before do
-    Dir.should_receive(:glob).and_return(["a"])
-    file = mock('file')
-    file.stub!(:size).and_return(100)
-    File.should_receive(:stat).with('a').and_return(file)
-  end
-  it "ファイルの合計サイズを返す" do
-    ShareFile.total_share_file_size("uid:hoge").should == 100
   end
 end
 

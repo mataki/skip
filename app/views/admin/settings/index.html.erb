@@ -1,3 +1,4 @@
+<div class="content">
 <% content_for :topic_path do -%>
 <%= render :partial => '/admin/shared/topic_path' %>
 <% end -%>
@@ -7,32 +8,41 @@
 <%= submit_tag _('Save'), :disable_with => _('Saving...') %>
 <%= link_to _('初期値に戻す'), '#', :id => 'revert_to_default_link' %><%= help_icon_tag :content => help_msg %>
 <% end -%>
-
-<% if params[:tab] == 'main' -%>
-<div style="margin-top: 20px;">
-
-  <h3 class="topics"><%= _('初期設定内容') %></h3>
-  <%= _('以下は運用開始後は原則として変更できない設定項目です。') %>
-<div class="box tabular">
-  <% keys = %w(proxy_url max_share_file_size not_blank_link_re user_code_format_regex delivery_method login_mode administrator_addr) -%>
-  <% keys << 'fixed_op_url' if login_mode?(:fixed_rp) -%>
-  <% keys.each do |key| -%>
-    <p class="initial_setting">
-    <label><%= _("#{Admin::InitialSetting.name}|#{key.humanize}") %></label>
-    <%= help_icon_tag(:content => _("#{Admin::InitialSetting.name}|#{key.humanize} description")) %>
-     : <%=h INITIAL_SETTINGS[key] %>
-    </p>
-  <% end -%>
-
-  <% %w(ssl_setting full_text_search_setting password_edit_setting username_use_setting usercode_dips_setting).each do |key| -%>
-    <p class="initial_setting">
-    <label><%= _("#{Admin::InitialSetting.name}|#{key.humanize}") %></label>
-    <%= help_icon_tag(:content => _("#{Admin::InitialSetting.name}|#{key.humanize} description")) %>
-     : <%=h _("#{Admin::InitialSetting.name}|#{key.humanize}|#{INITIAL_SETTINGS[key]}") %>
-    </p>
-  <% end -%>
 </div>
 
+<% if params[:tab] == 'main' -%>
+<div class="content">
+  <h3 class="topics"><%= _('システム情報') %></h3>
+  <div class="box tabular">
+    <p>
+    <label><%= _("共有ファイル利用容量") %></label>
+    <%= help_icon_tag(:content => _("システム全体の最大許可容量に対して現在使用中の共有ファイルの容量です。")) %>
+     : <%=h ShareFile.system_share_file_size/1.megabyte %> / <%=h INITIAL_SETTINGS['max_share_file_size_of_system']/1.megabyte %> (MB)</p>
+</div>
+</div>
+
+<div class="content">
+  <h3 class="topics"><%= _('初期設定内容') %></h3>
+  <%= _('以下は運用開始後は原則として変更できない設定項目です。') %>
+  <div class="box tabular">
+    <% keys = %w(proxy_url max_share_file_size_of_system max_share_file_size_per_owner max_share_file_size not_blank_link_re user_code_format_regex delivery_method login_mode administrator_addr) -%>
+    <% keys << 'fixed_op_url' if login_mode?(:fixed_rp) -%>
+    <% keys.each do |key| -%>
+      <p class="initial_setting">
+      <label><%= _("#{Admin::InitialSetting.name}|#{key.humanize}") %></label>
+      <%= help_icon_tag(:content => _("#{Admin::InitialSetting.name}|#{key.humanize} description")) %>
+       : <%=h INITIAL_SETTINGS[key] %>
+      </p>
+    <% end -%>
+
+    <% %w(ssl_setting full_text_search_setting password_edit_setting username_use_setting usercode_dips_setting).each do |key| -%>
+      <p class="initial_setting">
+      <label><%= _("#{Admin::InitialSetting.name}|#{key.humanize}") %></label>
+      <%= help_icon_tag(:content => _("#{Admin::InitialSetting.name}|#{key.humanize} description")) %>
+       : <%=h _("#{Admin::InitialSetting.name}|#{key.humanize}|#{INITIAL_SETTINGS[key]}") %>
+      </p>
+    <% end -%>
+  </div>
 </div>
 <% end -%>
 
