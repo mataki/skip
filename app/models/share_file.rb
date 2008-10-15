@@ -50,22 +50,11 @@ class ShareFile < ActiveRecord::Base
   end
 
   def validate_on_create
-    unless self.file.is_a?(ActionController::UploadedFile)
-      errors.add_to_base "ファイルが指定されていません。"
-      return
-    end
+    return unless valid_presence_of_file
 
-    # 形式チェック
-    unless SkipUtil.verify_extension? self.file_name, self.content_type
-      errors.add_to_base "この形式のファイルは、アップロードできません。"
-    end
-
-    # サイズチェック
-    if self.file.size == 0
-      errors.add_to_base "存在しないもしくはサイズ０のファイルはアップロードできません。"
-    elsif self.file.size > INITIAL_SETTINGS['max_share_file_size'].to_i
-      errors.add_to_base (INITIAL_SETTINGS['max_share_file_size'].to_i/1024/1024).to_s + "Ｍバイト以上のファイルはアップロードできません。"
-    end
+    valid_extension_of_file
+    valid_size_of_file
+    valid_size_per_owner_of_file
   end
 
   def after_save
@@ -291,9 +280,40 @@ class ShareFile < ActiveRecord::Base
     end
     sum
   end
+
+  def total_share_file_size
+    self.class.total_share_file_size self.owner_symbol
+  end
 private
   def square_brackets_tags
     self.category = Tag.square_brackets_tags(self.category)
   end
 
+  def valid_presence_of_file
+    unless self.file.is_a?(ActionController::UploadedFile)
+      errors.add_to_base "ファイルが指定されていません。"
+      return false
+    end
+    true
+  end
+
+  def valid_extension_of_file
+    unless SkipUtil.verify_extension? self.file_name, self.content_type
+      errors.add_to_base "この形式のファイルは、アップロードできません。"
+    end
+  end
+
+  def valid_size_of_file
+    if self.file.size == 0
+      errors.add_to_base "存在しないもしくはサイズ０のファイルはアップロードできません。"
+    elsif self.file.size > INITIAL_SETTINGS['max_share_file_size'].to_i
+      errors.add_to_base "#{INITIAL_SETTINGS['max_share_file_size'].to_i/1.megabyte}Mバイト以上のファイルはアップロードできません。"
+    end
+  end
+
+  def valid_size_per_owner_of_file
+    if (self.total_share_file_size + self.file.size) > INITIAL_SETTINGS['max_share_file_size_per_owner'].to_i
+      errors.add_to_base "共有ファイル保存場所の最大サイズを越えてしまうためアップロードできません。"
+    end
+  end
 end

@@ -58,61 +58,127 @@ end
 describe ShareFile, '#validate_on_create' do
   before do
     @share_file = ShareFile.new
-    @errors = @share_file.errors
-    SkipUtil.stub!(:verify_extension?).and_return(true)
   end
+  describe 'ファイルが指定されていない場合' do
+    it 'valid_presence_of_fileのみ呼ばれること' do
+      @share_file.should_receive(:valid_presence_of_file).and_return(false)
+      @share_file.should_not_receive(:valid_extension_of_file)
+      @share_file.should_not_receive(:valid_size_of_file)
+      @share_file.should_not_receive(:valid_size_per_owner_of_file)
+      @share_file.validate_on_create
+    end
+  end
+  describe 'ファイルが指定されている場合' do
+    it 'fileに関するすべての検証メソッドが呼ばれること' do
+      @share_file.should_receive(:valid_presence_of_file).and_return(true)
+      @share_file.should_receive(:valid_extension_of_file)
+      @share_file.should_receive(:valid_size_of_file)
+      @share_file.should_receive(:valid_size_per_owner_of_file)
+      @share_file.validate_on_create
+    end
+  end
+end
 
+describe ShareFile, '#valid_presence_of_file' do
+  before do
+    @share_file = ShareFile.new
+    @errors = @share_file.errors
+  end
   describe 'ファイルが未指定の場合' do
     before do
       @share_file.file = ''
     end
     it 'エラーが追加されていること' do
       lambda do
-        @share_file.validate_on_create
+        @share_file.send!(:valid_presence_of_file)
       end.should change(@errors, :size).from(0).to(1)
     end
+    it 'falseが返ること' do
+      @share_file.send!(:valid_presence_of_file).should be_false
+    end
   end
-
   describe 'ファイルが指定されている場合' do
     before do
       @share_file.file = mock_uploaed_file
     end
-    describe 'ファイルの形式が不正の場合' do
-      before do
-        SkipUtil.should_receive(:verify_extension?).and_return(false)
-      end
-      it 'エラーが追加されていること' do
-        lambda do
-          @share_file.validate_on_create
-        end.should change(@errors, :size).from(0).to(1)
-      end
+    it 'エラーが追加されていないこと' do
+      lambda do
+        @share_file.send!(:valid_presence_of_file)
+      end.should_not change(@errors, :size)
     end
-
-    describe 'ファイルのサイズが0の場合' do
-      before do
-        @share_file.file = mock_uploaed_file(:size => 0)
-      end
-      it 'エラーが追加されていること' do
-        lambda do
-          @share_file.validate_on_create
-        end.should change(@errors, :size).from(0).to(1)
-      end
-    end
-
-    describe 'ファイルサイズが最大値を越えている場合' do
-      before do
-        max_size = 10000
-        INITIAL_SETTINGS['max_share_file_size'] = max_size
-        @share_file.file = mock_uploaed_file(:size => max_size + 1)
-      end
-      it 'エラーが追加されていること' do
-        lambda do
-          @share_file.validate_on_create
-        end.should change(@errors, :size).from(0).to(1)
-      end
+    it 'trueが返ること' do
+      @share_file.send!(:valid_presence_of_file).should be_true
     end
   end
+end
 
+describe ShareFile, '#valid_extension_of_file' do
+  before do
+    @share_file = ShareFile.new
+    @share_file.file = mock_uploaed_file
+    @errors = @share_file.errors
+  end
+  describe 'ファイルの形式が不正の場合' do
+    before do
+      SkipUtil.should_receive(:verify_extension?).and_return(false)
+    end
+    it 'エラーが追加されていること' do
+      lambda do
+        @share_file.send(:valid_extension_of_file)
+      end.should change(@errors, :size).from(0).to(1)
+    end
+  end
+end
+
+describe ShareFile, '#valid_size_of_file' do
+  before do
+    @share_file = ShareFile.new
+    @share_file.file = mock_uploaed_file
+    @errors = @share_file.errors
+  end
+  describe 'ファイルのサイズが0の場合' do
+    before do
+      @share_file.file = mock_uploaed_file(:size => 0)
+    end
+    it 'エラーが追加されていること' do
+      lambda do
+        @share_file.send(:valid_size_of_file)
+      end.should change(@errors, :size).from(0).to(1)
+    end
+  end
+  describe 'ファイルサイズが最大値を越えている場合' do
+    before do
+      max_size = 1000
+      INITIAL_SETTINGS['max_share_file_size'] = max_size
+      @share_file.file = mock_uploaed_file(:size => max_size + 1)
+    end
+    it 'エラーが追加されていること' do
+      lambda do
+        @share_file.send(:valid_size_of_file)
+      end.should change(@errors, :size).from(0).to(1)
+    end
+  end
+end
+
+describe ShareFile, '#valid_size_per_owner_of_file' do
+  before do
+    @share_file = ShareFile.new
+    @share_file.file = mock_uploaed_file
+    @errors = @share_file.errors
+  end
+  describe 'ファイルサイズがオーナーの最大許可容量を越えてしまう場合' do
+    before do
+      max_share_file_size_per_owner = 10000
+      INITIAL_SETTINGS['max_share_file_size_per_owner'] = max_share_file_size_per_owner
+      @share_file.file = mock_uploaed_file(:size => 2)
+      @share_file.should_receive(:total_share_file_size).and_return(max_share_file_size_per_owner -1)
+    end
+    it 'エラーが追加されていること' do
+      lambda do
+        @share_file.send(:valid_size_per_owner_of_file)
+      end.should change(@errors, :size).from(0).to(1)
+    end
+  end
 end
 
 describe ShareFile, '#after_destroy' do
