@@ -1,35 +1,33 @@
-<h3><%= _('管理者ユーザの作成') %></h3>
-
-<div class="box tabular">
-<% form_tag(first_new_admin_user_url(:code => params[:code])) do -%>
-  <%= error_messages_for :user %>
-  <p>
-    <%= label Admin::UserUid.name, :uid, h(Admin::Setting.login_account) %>
-    <%= text_field :user_uid, :uid %>
-  </p>
-  <p>
-    <%= label Admin::UserProfile.name, :email %>
-    <%= text_field :user_profile, :email %>
-  </p>
-  <p>
-    <%= label Admin::User.name, :name %>
-    <%= text_field :user, :name %>
-  </p>
-  <p>
-    <%= label Admin::UserProfile.name, :section %>
-    <%= text_field :user_profile, :section %>
-  </p>
-  <p>
-    <%= label Admin::User.name, :password %>
-    <%= password_field :user, :password %>
-  </p>
-  <p>
-    <%= label Admin::User.name, :password_confirmation %>
-    <%= password_field :user, :password_confirmation %>
-  </p>
-  <p>
-    <label />
+<div class="content">
+  <h3><%= _('管理者ユーザの作成') %></h3>
+  <% form_tag(first_new_admin_user_url(:code => params[:code])) do -%>
+    <%= error_messages_for :user %>
+    <table>
+      <tr>
+        <th><%= label Admin::UserUid.name, :uid, h(Admin::Setting.login_account) %></th>
+        <td><%= text_field :user_uid, :uid %></td>
+      </tr>
+      <tr>
+        <th><%= label Admin::UserProfile.name, :email %></th>
+        <td><%= text_field :user_profile, :email %></td>
+      </tr>
+      <tr>
+        <th><%= label Admin::User.name, :name %></th>
+        <td><%= text_field :user, :name %></td>
+      </tr>
+      <tr>
+        <th><%= label Admin::UserProfile.name, :section %></th>
+        <td><%= text_field :user_profile, :section %></td>
+      </tr>
+      <tr>
+        <th><%= label Admin::User.name, :password %></th>
+        <td><%= password_field :user, :password %></td>
+      </tr>
+      <tr>
+        <th><%= label Admin::User.name, :password_confirmation %></th>
+        <td><%= password_field :user, :password_confirmation %></td>
+      </tr>
+    </table>
     <%= submit_tag _('Create'), :disable_with => _('Creating...') %>
-  </p>
-<% end -%>
+  <% end -%>
 </div>
