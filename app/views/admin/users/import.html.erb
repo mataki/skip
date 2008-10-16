@@ -9,6 +9,11 @@
     <label for="file"><%= _('CSVファイル') %></label><%= file_field_tag :file %>
     <button id="import_confirmation_button"><%= _('Import confirmation') %></button>
     <%= submit_tag _('Upload'), :disable_with => _('Uploading...') %>
+    <p>以下の属性も含む</p>
+    <p><label for="options[name]"><%= _("Admin::User|Name") %></label><%= check_box_tag "options[name]", "1", true, :class => "csv_options" %>
+    <label for="options[password]"><%= _("Admin::User|Password") %></label><%= check_box_tag "options[password]", "1", true, :class => "csv_options" %>
+    <label for="options[email]"><%= _("Admin::UserProfile|Email") %></label><%= check_box_tag "options[email]", "1", true, :class => "csv_options" %>
+    <label for="options[section]"><%= _("Admin::UserProfile|Section") %></label><%= check_box_tag "options[section]", "1", true, :class => "csv_options" %></p>
     <% end -%>
 
     <h3><%= _('CSVファイルでインポートする際の注意') %></h3>
@@ -17,9 +22,9 @@
     <p style="color:red;"><b><%= _('データが更新される場合、ユーザが部署やパスワード等を自分自身で変更している場合でも上書きされますのでご注意下さい。') %></b></p>
     <h3><%= _('正しいCSVファイルの例') %></h3>
 <pre>
-111111,山田 太郎,経理,yamada@example.com,password
-222222,山田 花子,人事,h_yamada@example.com,password
-333333,鈴木 次郎,開発,suzuki@example.com,password</pre>
+111111<span class="example_name">,山田 太郎</span><span class="example_password">,password</span><span class="example_email">,yamada@example.com</span></span><span class="example_section">,経理</span>
+222222<span class="example_name">,山田 花子</span><span class="example_password">,password</span><span class="example_email">,h_yamada@example.com</span><span class="example_section">,人事</span>
+333333<span class="example_name">,鈴木 次郎</span><span class="example_password">,password</span><span class="example_email">,suzuki@example.com</span><span class="example_section">,開発</span></pre>
   </div>
   <% unless @users.empty? -%>
   <h2><%= _('CSVファイルの内容') %></h2>
@@ -82,6 +87,20 @@ $j(function(){
         .submit();
         return false;
     })
+    $j('.csv_options')
+    .click(function(){
+	this.id.match(/\[(.*)\]/);
+	$j('.example_' + RegExp.$1).toggle();
+    });
+    $j.each($j('.csv_options'), function(i) {
+	this.id.match(/\[(.*)\]/);
+	var target_obj = $j('.example_' + RegExp.$1);
+	if (this.checked) {
+	    target_obj.show();
+	} else {
+	    target_obj.hide();
+	}
+    });
 });
 </script>
 <% end -%>

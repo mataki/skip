@@ -24,7 +24,7 @@ describe Admin::User, '.make_users' do
     Admin::User.stub!(:make_user_hash_from_csv_line).and_return({},{},{})
     Admin::User.should_receive(:make_user).and_return([@user, @user_profile, @user_uid])
   end
-  it { Admin::User.send(:make_users, mock('mock')).should == ([[@user, @user_profile, @user_uid]]) }
+  it { Admin::User.send(:make_users, mock('uplocaded_file'), mock('options')).should == ([[@user, @user_profile, @user_uid]]) }
 end
 
 describe Admin::User, '.make_user' do
@@ -182,5 +182,40 @@ describe Admin::User, '.make_user_by_id' do
   end
   it 'statusが設定されていること' do
     @user.status.should == @status
+  end
+end
+
+describe Admin::User, ".make_user_hash_from_csv_line" do
+  before do
+    @line = %w(111111 山田太郎 password yamada@example.com)
+    @options = {:name => "1", :password => "1", :email => "1"}
+  end
+  describe "部署もアップデートする場合" do
+    before do
+      @line.push('経理')
+      @options.merge!(:section => "1")
+    end
+    it "部署を含んだ配列を返す" do
+      Admin::User.send(:make_user_hash_from_csv_line, @line, @options).should == [{:password=>"password", :password_confirmation=>"password", :name=>"山田太郎"}, {:section=>"経理", :email=>"yamada@example.com"}, {:uid=>"111111"}]
+    end
+  end
+  describe "部署をアップデートしない場合" do
+    it "部署を含まない配列を返す" do
+      Admin::User.send(:make_user_hash_from_csv_line, @line, @options).should == [{:password=>"password", :password_confirmation=>"password", :name=>"山田太郎"}, {:email=>"yamada@example.com"}, {:uid=>"111111"}]
+    end
+  end
+  describe "optionsがnilの場合" do
+    it "uidのみ入った配列を返す" do
+      Admin::User.send(:make_user_hash_from_csv_line, @line, nil).should == [{}, {}, {:uid=>"111111"}]
+    end
+  end
+  describe "emailのみアップデートしない場合" do
+    before do
+      @line = %w(111111 山田太郎 password 経理)
+      @options = {:name => "1", :password => "1", :section => "1"}
+    end
+    it "emailのみが設定されていないこと" do
+      Admin::User.send(:make_user_hash_from_csv_line, @line, @options).should == [{:password=>"password", :password_confirmation=>"password", :name=>"山田太郎"}, {:section => "経理"}, {:uid=>"111111"}]
+    end
   end
 end

@@ -45,11 +45,11 @@ class Admin::User < User
     end
   end
 
-  def self.make_users(uploaded_file)
+  def self.make_users(uploaded_file, options)
     users = []
     parsed_csv = FasterCSV.parse uploaded_file
     parsed_csv.each do |line|
-      user_hash, user_profile_hash, user_uid_hash = make_user_hash_from_csv_line(line)
+      user_hash, user_profile_hash, user_uid_hash = make_user_hash_from_csv_line(line, options)
       users << make_user({:user => user_hash, :user_profile => user_profile_hash, :user_uid => user_uid_hash})
     end
     users
@@ -104,11 +104,31 @@ class Admin::User < User
   end
 
   private
-  def self.make_user_hash_from_csv_line(line)
+  # ログインIDは必須でそれ以外は、optionsにパラメータのあるものを
+  # それぞれ正しいHashに設定する
+  def self.make_user_hash_from_csv_line(line, options)
     line.map! { |column| column.blank? ? '' : column.toutf8 }
-    user_hash = {:name => line[1], :password => line[4], :password_confirmation => line[4]}
-    user_profile_hash = {:section => line[2], :email => line[3]}
-    user_uid_hash ={:uid => line[0]}
+
+    line_hash = {:login_id => line[0]}
+    line_index = 1
+    [:name, :password, :email, :section].each do |attr|
+      if options && options.include?(attr)
+        line_hash[attr] = line[line_index]
+        line_index += 1
+      end
+    end
+
+    user_uid_hash = {}
+    user_uid_hash.merge!(:uid => line_hash[:login_id])
+
+    user_hash = {}
+    user_hash.merge!(:name => line_hash[:name]) if line_hash[:name]
+    user_hash.merge!(:password => line_hash[:password], :password_confirmation => line_hash[:password]) if line_hash[:password]
+
+    user_profile_hash = {}
+    user_profile_hash.merge!(:email => line_hash[:email]) if line_hash[:email]
+    user_profile_hash.merge!(:section => line_hash[:section]) if line_hash[:section]
+
     [user_hash, user_profile_hash, user_uid_hash]
   end
 

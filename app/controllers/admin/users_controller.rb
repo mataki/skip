@@ -126,7 +126,7 @@ class Admin::UsersController < Admin::ApplicationController
       @users = []
       return render(:action => :import)
     end
-    @users = Admin::User.make_users(params[:file])
+    @users = Admin::User.make_users(params[:file], params[:options])
     import!(@users)
     flash.now[:notice] = _('CSVファイルの内容を検証しました。')
     render :action => :import
@@ -144,7 +144,7 @@ class Admin::UsersController < Admin::ApplicationController
       @users = []
       return
     end
-    @users = Admin::User.make_users(params[:file])
+    @users = Admin::User.make_users(params[:file], params[:options])
     import!(@users, false)
     flash[:notice] = _('CSVファイルからのユーザ登録/更新に成功しました。')
     redirect_to admin_users_path
