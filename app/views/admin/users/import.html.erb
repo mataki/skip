@@ -4,22 +4,26 @@
 <% end -%>
 <% content_for :contents_right do -%>
 <div class="box">
-  <div class="search_box">
+  <h3><%= _('CSVファイルでインポートする際の注意') %></h3>
+  <p style="color:red;"><b><%= _('CSVファイルの文字コードはUTF-8にしてアップロードするようにして下さい。') %></b></p>
+  <p style="color:red;"><b><%= _('ログインID(CSVファイルの最初の列)のデータが存在しない場合は新規作成、存在する場合は更新されます。') %></b></p>
+  <p style="color:red;"><b><%= _('データが更新される場合、ユーザが部署やパスワード等を自分自身で変更している場合でも上書きされますのでご注意下さい。') %></b></p>
+
+    <div class="search_box">
     <% form_tag import_new_admin_user_path, :multipart => true, :id => 'import_form' do -%>
     <label for="file"><%= _('CSVファイル') %></label><%= file_field_tag :file %>
     <button id="import_confirmation_button"><%= _('Import confirmation') %></button>
     <%= submit_tag _('Upload'), :disable_with => _('Uploading...') %>
-    <p>以下の属性も含む</p>
-    <p><label for="options[name]"><%= _("Admin::User|Name") %></label><%= check_box_tag "options[name]", "1", true, :class => "csv_options" %>
-    <label for="options[password]"><%= _("Admin::User|Password") %></label><%= check_box_tag "options[password]", "1", true, :class => "csv_options" %>
-    <label for="options[email]"><%= _("Admin::UserProfile|Email") %></label><%= check_box_tag "options[email]", "1", true, :class => "csv_options" %>
-    <label for="options[section]"><%= _("Admin::UserProfile|Section") %></label><%= check_box_tag "options[section]", "1", true, :class => "csv_options" %></p>
+   <p><label for="create_only"><%= _("未登録のユーザのみを追加登録する") %></label><%= check_box_tag "create_only", "1", true %><%= help_icon_tag :content => "|チェックすると既存のユーザを更新せずに、新規に登録するユーザのみを追加します。<br/>既存のユーザの情報を一括変更したい場合は、チェックボックスを外して以下の更新したい属性を設定してください。" %></p>
+    <h4>以下の属性を更新する<%= help_icon_tag :content => "|チェックするとその属性を更新することができます。CSVの例を参考にCSVファイルを作成してください。<br/>新規登録のユーザは、名前・パスワード・メールアドレスは必須になります。" %></h4>
+    <p>
+      <label for="options[name]"><%= _("Admin::User|Name") %></label><%= check_box_tag "options[name]", "1", true, :class => "csv_options" %>
+      <label for="options[password]"><%= _("Admin::User|Password") %></label><%= check_box_tag "options[password]", "1", true, :class => "csv_options" %>
+      <label for="options[email]"><%= _("Admin::UserProfile|Email") %></label><%= check_box_tag "options[email]", "1", true, :class => "csv_options" %>
+      <label for="options[section]"><%= _("Admin::UserProfile|Section") %></label><%= check_box_tag "options[section]", "1", true, :class => "csv_options" %>
+    </p>
     <% end -%>
 
-    <h3><%= _('CSVファイルでインポートする際の注意') %></h3>
-    <p style="color:red;"><b><%= _('CSVファイルの文字コードはUTF-8にしてアップロードするようにして下さい。') %></b></p>
-    <p style="color:red;"><b><%= _('ログインID(CSVファイルの最初の列)のデータが存在しない場合は新規作成、存在する場合は更新されます。') %></b></p>
-    <p style="color:red;"><b><%= _('データが更新される場合、ユーザが部署やパスワード等を自分自身で変更している場合でも上書きされますのでご注意下さい。') %></b></p>
     <h3><%= _('正しいCSVファイルの例') %></h3>
 <pre>
 111111<span class="example_name">,山田 太郎</span><span class="example_password">,password</span><span class="example_email">,yamada@example.com</span></span><span class="example_section">,経理</span>
@@ -35,9 +39,9 @@
         <th><%= _('Line') %></th>
         <th><label><%= h Admin::Setting.login_account %></label></th>
         <th><%= label Admin::User.name, :name %></th>
-        <th><%= label Admin::UserProfile.name, :section %></th>
-        <th><%= label Admin::UserProfile.name, :email %></th>
         <th><%= label Admin::User.name, :password %></th>
+        <th><%= label Admin::UserProfile.name, :email %></th>
+        <th><%= label Admin::UserProfile.name, :section %></th>
         <td style="width:16px;"></td>
       </tr>
     </thead>
@@ -49,9 +53,9 @@
           <td><%=h line+1 %></td>
           <td><%=h @user_uid.uid %></td>
           <td><%=h @user.name %></td>
-          <td><%=h @user_profile.section %></td>
+          <td><%=h '********' if @user.crypted_password %></td>
           <td><%=h @user_profile.email %></td>
-          <td><%=h '********' %></td>
+          <td><%=h @user_profile.section %></td>
           <td>
         <% unless @user.errors.empty? -%>
           <%
@@ -87,6 +91,8 @@ $j(function(){
         .submit();
         return false;
     })
+
+    // CSVでアップロードするカラムが変更されたときにサンプルも変化する様に
     $j('.csv_options')
     .click(function(){
 	this.id.match(/\[(.*)\]/);
@@ -101,6 +107,28 @@ $j(function(){
 	    target_obj.hide();
 	}
     });
+
+    // 既存のユーザを更新しない場合は、必須項目のチェックを外せない様に
+//     $j('#create_only')
+//     .click(function() {
+// 	checkCreateOnly(this);
+//     });
+
+//     var checkCreateOnly = function(obj) {
+// 	if (obj.checked) {
+// 	    $j('#options\\[name\\]').attr("disabled", "disabled").attr("checked",true);
+// 	    $j('.example_name').show();
+// 	    $j('#options\\[password\\]').attr("disabled", "disabled").attr("checked",true);
+// 	    $j('.example_password').show();
+// 	    $j('#options\\[email\\]').attr("disabled", "disabled").attr("checked",true);
+// 	    $j('.example_email').show();
+// 	} else {
+// 	    $j('#options\\[name\\]').removeAttr("disabled");
+// 	    $j('#options\\[password\\]').removeAttr("disabled");
+// 	    $j('#options\\[email\\]').removeAttr("disabled");
+// 	}
+//     };
+//     checkCreateOnly($j('#create_only')[0]);
 });
 </script>
 <% end -%>

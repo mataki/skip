@@ -45,17 +45,18 @@ class Admin::User < User
     end
   end
 
-  def self.make_users(uploaded_file, options)
+  def self.make_users(uploaded_file, options, create_only = false)
     users = []
     parsed_csv = FasterCSV.parse uploaded_file
     parsed_csv.each do |line|
       user_hash, user_profile_hash, user_uid_hash = make_user_hash_from_csv_line(line, options)
-      users << make_user({:user => user_hash, :user_profile => user_profile_hash, :user_uid => user_uid_hash})
+      user = make_user({:user => user_hash, :user_profile => user_profile_hash, :user_uid => user_uid_hash}, false, create_only)
+      users << user if user
     end
     users
   end
 
-  def self.make_new_user(params = {}, admin = false)
+  def self.make_new_user(params, admin = false)
     check_params_keys(params, [:user, :user_profile, :user_uid])
     user = Admin::User.new(params[:user])
     user.admin = admin
@@ -68,7 +69,7 @@ class Admin::User < User
     [user, user_profile, user_uid]
   end
 
-  def self.make_user_by_id(params = {}, admin = false)
+  def self.make_user_by_id(params, admin = false)
     check_params_keys(params, [:user])
     user = Admin::User.find(params[:id])
     user.attributes = params[:user]
@@ -79,7 +80,7 @@ class Admin::User < User
     user
   end
 
-  def self.make_user_by_uid(params = {}, admin = false)
+  def self.make_user_by_uid(params, admin = false)
     check_params_keys(params, [:user, :user_profile, :user_uid])
     user = Admin::User.find_by_code(params[:user_uid][:uid])
     user.attributes = params[:user]
@@ -89,10 +90,10 @@ class Admin::User < User
     [user, user_profile, user_uid]
   end
 
-  def self.make_user(params = {}, admin = false)
-    check_params_keys(params, [:user, :user_profile, :user_uid])
+  def self.make_user(params, admin = false, create_only = false)
     user = Admin::User.find_by_code(params[:user_uid][:uid])
     if user
+      params = {:user => {}, :user_uid => {:uid => params[:user_uid][:uid]}, :user_profile => {}} if create_only
       make_user_by_uid(params, admin)
     else
       make_new_user(params, admin)

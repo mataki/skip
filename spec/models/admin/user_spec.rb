@@ -28,29 +28,34 @@ describe Admin::User, '.make_users' do
 end
 
 describe Admin::User, '.make_user' do
-  describe '引数が不正な場合' do
-    describe 'hashのキーに:userが指定されていない場合' do
-      it { lambda{ Admin::User.make_user({:user_profile => {}, :user_uid => {}}) }.should raise_error(ArgumentError) }
-    end
-    describe 'hashのキーに:user_profileが指定されていない場合' do
-      it { lambda{ Admin::User.make_user({:user => {}, :user_uid => {}}) }.should raise_error(ArgumentError) }
-    end
-    describe 'hashのキーに:user_uidが指定されていない場合' do
-      it { lambda{ Admin::User.make_user({:user => {}, :user_profile => {}}) }.should raise_error(ArgumentError) }
-    end
-  end
   describe '既存のレコードがある場合' do
-    before do
-      user_profile_hash = {:section => 'プログラマ', :email => SkipFaker.email}
-      user_uid_hash = {:uid => SkipFaker.rand_num(6)}
-      user = create_user :user_profile_options => user_profile_hash, :user_uid_options => user_uid_hash
-      @user_hash = user.attributes
-      @user_profile_hash = user.attributes
-      @user_uid_hash = user.user_uids.find_by_uid_type('MASTER')
+    describe "既存のユーザを更新する場合" do
+      before do
+        user_profile_hash = {:section => 'プログラマ', :email => SkipFaker.email}
+        user_uid_hash = {:uid => SkipFaker.rand_num(6)}
+        user = create_user :user_profile_options => user_profile_hash, :user_uid_options => user_uid_hash
+        @user_hash = user.attributes
+        @user_profile_hash = user.attributes
+        @user_uid_hash = user.user_uids.find_by_uid_type('MASTER')
+      end
+      it 'make_user_by_uidが呼ばれること' do
+        Admin::User.should_receive(:make_user_by_uid)
+        @user, @user_profile, @user_uid = Admin::User.make_user({:user => @user_hash, :user_profile => @user_profile_hash, :user_uid => @user_uid_hash}, false, false)
+      end
     end
-    it 'make_user_by_uidが呼ばれること' do
-      Admin::User.should_receive(:make_user_by_uid)
-      @user, @user_profile, @user_uid = Admin::User.make_user({:user => @user_hash, :user_profile => @user_profile_hash, :user_uid => @user_uid_hash})
+    describe "既存のレコードを更新しない場合" do
+      before do
+        user_profile_hash = {:section => 'プログラマ', :email => SkipFaker.email}
+        user_uid_hash = {:uid => SkipFaker.rand_num(6)}
+        user = create_user :user_profile_options => user_profile_hash, :user_uid_options => user_uid_hash
+        @user_hash = user.attributes
+        @user_profile_hash = user.attributes
+        @user_uid_hash = user.user_uids.find_by_uid_type('MASTER')
+      end
+      it 'make_user_by_uidが属性なしで呼ばれること' do
+        Admin::User.should_receive(:make_user_by_uid).with({:user => {}, :user_uid => {:uid => @user_uid_hash[:uid]}, :user_profile => {}}, false)
+        @user, @user_profile, @user_uid = Admin::User.make_user({:user => @user_hash, :user_profile => @user_profile_hash, :user_uid => @user_uid_hash}, false, true)
+      end
     end
   end
   describe '既存のレコードがない場合' do
