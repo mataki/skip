@@ -64,6 +64,15 @@ class UserMailer < ActionMailer::Base
     @body       = {:reset_password_url => reset_password_url, :footer => @@footer}
   end
 
+  def sent_forgot_login_id(recipient, login_id)
+    @recipients = recipient
+    @subject    = UserMailer.base64("[#{Admin::Setting.abbr_app_title}] ログインIDのお知らせです")
+    @from       = @@from
+    @send_on    = Time.now
+    @headers    = {}
+    @body       = {:login_id => login_id, :footer => @@footer}
+  end
+
 private
   def self.base64(text, charset="iso-2022-jp", convert=true)
     text = NKF.nkf('-j -m0 --cp932', text) if convert and charset == "iso-2022-jp"

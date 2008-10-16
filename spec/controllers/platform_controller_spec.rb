@@ -347,6 +347,47 @@ describe PlatformController, 'POST /reset_password' do
   end
 end
 
+describe PlatformController, 'GET /forgot_login_id' do
+  it 'ログインID忘れ画面に遷移すること' do
+    get :forgot_login_id
+    response.should be_success
+  end
+end
+
+describe PlatformController, 'POST /forgot_login_id' do
+  describe '登録済みのメールアドレスが送信された場合' do
+    before do
+      @email = 'exist@example.com'
+      @user_profile = stub_model(UserProfile, :email => @email)
+      @user = stub_model(User)
+      @login_id = '123456'
+      @user.stub!(:code).and_return(@login_id)
+      @user_profile.stub!(:user).and_return(@user)
+      UserProfile.should_receive(:find_by_email).and_return(@user_profile)
+      UserMailer.stub!(:deliver_sent_forgot_login_id)
+    end
+    it 'ログインIDを記載したメールの送信処理が呼ばれること' do
+      UserMailer.should_receive(:deliver_sent_forgot_login_id).with(@email, @login_id)
+      post :forgot_login_id, :email => @email
+    end
+    it 'メール送信した旨のメッセージが設定されてリダイレクトされること' do
+      post :forgot_login_id, :email => @email
+      flash[:notice].should_not be_nil
+      response.should be_redirect
+    end
+  end
+  describe '未登録のメールアドレスが送信された場合' do
+    before do
+      UserProfile.should_receive(:find_by_email).and_return(nil)
+    end
+    it 'メールアドレスが未登録である旨のメッセージが設定されること' do
+      post :forgot_login_id, :email => 'forgot_password@example.com'
+      flash[:error].should_not be_nil
+      response.should be_success
+    end
+  end
+end
+
 describe PlatformController, "#create_user_from" do
   before do
     @identity_url = "http://id.example.com/a_user/"

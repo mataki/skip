@@ -73,8 +73,8 @@ class PlatformController < ApplicationController
       user.forgot_password
       user.save!
       UserMailer.deliver_sent_forgot_password(email, reset_password_url(user.password_reset_code))
-      redirect_to :controller => '/platform'
       flash[:notice] = "パスワードリセットのためのURLを記載したメールを#{email}宛てに送信しました。"
+      redirect_to :controller => '/platform'
     else
       flash[:error] = "入力された#{email}というメールアドレスは登録されていません。"
       render :layout => 'admin/not_logged_in'
@@ -97,6 +97,20 @@ class PlatformController < ApplicationController
     else
       flash[:error] = "パスワードリセットのためのURLが不正です。再度お試し頂くか、システム管理者にお問い合わせ下さい。"
       redirect_to :controller => '/platform'
+    end
+  end
+
+  def forgot_login_id
+    return render(:layout => 'admin/not_logged_in') unless request.post?
+    email = params[:email]
+    if @user_profile = UserProfile.find_by_email(email)
+      login_id = @user_profile.user.code
+      UserMailer.deliver_sent_forgot_login_id(email, login_id)
+      flash[:notice] = "ログインIDを記載したメールを#{email}宛てに送信しました。"
+      redirect_to :controller => '/platform'
+    else
+      flash[:error] = "入力された#{email}というメールアドレスは登録されていません。"
+      render :layout => 'admin/not_logged_in'
     end
   end
 
