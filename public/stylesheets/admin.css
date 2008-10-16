@@ -1,17 +1,78 @@
-#contents_container .content { margin-bottom: 20px; }
-.box { color: #505050; background-color: #F6F6F6; border:1px solid #E4E4E4; line-height: 1.5em; padding: 6px; }
-.tabular label { float:left; font-weight:bold; text-align:right; width:200px; }
-.tabular p { overflow: hidden; height: 1%; margin: 0px; padding: 5px 0px 8px 0px;}
-.tabular p.initial_setting { padding: 1px 0px 1px 0px;}
-.search_box { margin: 5px; padding: 6px 8px; border: 2px dotted #FFC000; background-color: #F0F0FF;}
-table.sortable { text-align: left; width: 97%; margin: 5px auto;}
-table.sortable thead tr th, table.sortable tfoot tr th { padding: 4px 20px 4px 4px;}
-table.sortable thead tr .header { background-image: url(/images/skip/jquery/tablesorter/bg.gif); background-repeat: no-repeat; background-position: center right; cursor: pointer;}
-table.sortable thead tr .headerSortUp { background-image: url(/images/skip/jquery/tablesorter/asc.gif);}
-table.sortable thead tr .headerSortDown { background-image: url(/images/skip/jquery/tablesorter/desc.gif);}
-table.sortable tbody tr td { overflow: hidden; }
-.help { vertical-align: top }
-h3.topics { background-color: #F0F0FF; border-bottom: 1px dashed silver; border-top: 3px double silver; margin-bottom: 2px; padding: 0 0 0 7px; }
-.fieldWithErrors { display: inline; padding: 2px; background-color: #F6F6F6; _background-color: pink; }
-.fieldWithErrors label { background-color: pink; }
-div.feed_item { border: 1px dotted blue; width: 90%; margin-bottom: 8px; }
+#contents_container .content {
+  margin-bottom: 20px;
+}
+.box {
+  color: #505050;
+  background-color: #F6F6F6;
+  border:1px solid #E4E4E4;
+  line-height: 1.5em;
+  padding: 6px;
+}
+.tabular label {
+  float:left;
+  font-weight:bold;
+  text-align:right;
+  width:200px;
+}
+.tabular p {
+  overflow: hidden;
+  height: 1%;
+  margin: 0px;
+  padding: 5px 0px 8px 0px;
+}
+.tabular p.initial_setting {
+  padding: 1px 0px 1px 0px;
+}
+.search_box {
+  margin: 5px;
+  padding: 6px 8px;
+  border: 2px dotted #FFC000;
+  background-color: #F0F0FF;
+}
+table.sortable {
+  text-align: left;
+  width: 97%;
+  margin: 5px auto;
+}
+table.sortable thead tr th, table.sortable tfoot tr th {
+  padding: 4px 20px 4px 4px;
+}
+table.sortable thead tr .header {
+  background-image: url(/images/skip/jquery/tablesorter/bg.gif);
+  background-repeat: no-repeat;
+  background-position: center right;
+  cursor: pointer;
+}
+table.sortable thead tr .headerSortUp {
+  background-image: url(/images/skip/jquery/tablesorter/asc.gif);
+}
+table.sortable thead tr .headerSortDown {
+  background-image: url(/images/skip/jquery/tablesorter/desc.gif);
+}
+table.sortable tbody tr td {
+  overflow: hidden;
+}
+.help {
+  vertical-align: top
+}
+h3.topics {
+  background-color: #F0F0FF;
+  border-bottom: 1px dashed silver;
+  border-top: 3px double silver;
+  margin-bottom: 2px;
+  padding: 0 0 0 7px;
+}
+.fieldWithErrors {
+  display: inline;
+  padding: 2px;
+  background-color: #F6F6F6;
+  _background-color: pink;
+}
+.fieldWithErrors label {
+  background-color: pink;
+}
+div.feed_item {
+  border: 1px dotted blue;
+  width: 90%;
+  margin-bottom: 8px;
+}
