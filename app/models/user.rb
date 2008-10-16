@@ -272,6 +272,14 @@ class User < ActiveRecord::Base
     self.auth_session_token
   end
 
+  def forgot_password
+    self.password_reset_code = self.class.make_token
+  end
+
+  def reset_password
+    update_attributes(:password_reset_code => nil)
+  end
+
 protected
   @@search_cond_keys = [:name, :extension, :section, :code, :email, :introduction]
 

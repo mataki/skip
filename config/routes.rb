@@ -30,6 +30,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.connect 'login', :controller => 'platform', :action => 'login'
   map.connect 'logout', :controller => 'platform', :action => 'logout'
+  map.forgot_password 'platform/forgot_password', :controller => 'platform', :action => 'forgot_password'
+  map.reset_password 'platform/reset_password/:code', :controller => 'platform', :action => 'reset_password'
 
   map.monthly 'rankings/monthly/:year/:month',
               :controller => 'rankings',

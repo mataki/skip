@@ -22,7 +22,7 @@
       <td><%= text_field 'login', 'key', :size => 15, :autocomplete => :on  -%></td>
     </tr>
     <tr valign="top">
-      <td><label for="login_password"><span style="font-weight: bold;">パスワード</span></label></td>
+      <td><label for="login_password"><span style="font-weight: bold;">パスワード</span></label>(<%= link_to 'パスワードを忘れた方はこちら', forgot_password_url, {:style => 'font-size:11px'} %>)</td>
     </tr>
     <tr valign="top">
       <td><%= password_field 'login', 'password', { 'size' => 15, :onfocus=>'select();', 'AUTOCOMPLETE' => "on" } %></td>

@@ -231,6 +231,122 @@ describe PlatformController, "#logout" do
   end
 end
 
+describe PlatformController, 'GET /forgot_password' do
+  it 'パスワード忘れ画面に遷移すること' do
+    get :forgot_password
+    response.should be_success
+  end
+end
+
+describe PlatformController, 'POST /forgot_password' do
+  before do
+    UserProfile.stub!(:find_by_email)
+  end
+  describe '登録済みのメールアドレスが送信された場合' do
+    before do
+      @email = 'exist@example.com'
+      @user_profile = stub_model(UserProfile, :email => @email)
+      @password_reset_url = 'password_reset_url'
+      controller.stub!(:reset_password_url).and_return(@password_reset_url)
+      @user = stub_model(User, :password_reset_code => @password_reset_code)
+      @user.stub!(:forgot_password)
+      @user.stub!(:save!)
+      UserMailer.stub!(:deliver_sent_forgot_password)
+      @user_profile.stub!(:user).and_return(@user)
+      UserProfile.should_receive(:find_by_email).and_return(@user_profile)
+    end
+    it 'パスワードリセットURLを記載したメールの送信処理が呼ばれること' do
+      UserMailer.should_receive(:deliver_sent_forgot_password).with(@email, @password_reset_url)
+      post :forgot_password, :email => @email
+    end
+    it 'パスワードリセットコード発行処理が行われること' do
+      @user.should_receive(:forgot_password)
+      @user.should_receive(:save!)
+      post :forgot_password, :email => @email
+    end
+    it 'メール送信した旨のメッセージが設定されてリダイレクトされること' do
+      post :forgot_password, :email => @email
+      flash[:notice].should_not be_nil
+      response.should be_redirect
+    end
+  end
+  describe '未登録のメールアドレスが送信された場合' do
+    before do
+      UserProfile.should_receive(:find_by_email).and_return(nil)
+    end
+    it 'メールアドレスが未登録である旨のメッセージが設定されること' do
+      post :forgot_password, :email => 'forgot_password@example.com'
+      flash[:error].should_not be_nil
+      response.should be_success
+    end
+  end
+end
+
+describe PlatformController, 'GET /reset_password' do
+  before do
+    @user = stub_model(User)
+  end
+  describe 'パスワードリセットコードに一致するユーザが存在する場合' do
+    before do
+      User.should_receive(:find_by_password_reset_code).and_return(@user)
+    end
+    it 'パスワードリセット画面に遷移すること' do
+      get :reset_password, :code => '991ea5ca6502e3ded9e494c9c5ae50ad356e4f4a'
+      response.should be_success
+    end
+  end
+  describe 'パスワードリセットコードに一致するユーザが存在しない場合' do
+    before do
+      User.should_receive(:find_by_password_reset_code).and_return(nil)
+    end
+    it 'ログイン画面にリダイレクトされること' do
+      get :reset_password, :code => '991ea5ca6502e3ded9e494c9c5ae50ad356e4f4a'
+      response.should be_redirect
+    end
+  end
+end
+
+describe PlatformController, 'POST /reset_password' do
+  describe 'パスワードリセットコードに一致するユーザが存在する場合' do
+    before do
+      @password = 'password'
+      @password_confirmation = 'password'
+      @user = stub_model(User)
+      @user.should_receive(:password=).with(@password)
+      @user.should_receive(:password_confirmation=).with(@password_confirmation)
+      User.stub!(:find_by_password_reset_code).and_return(@user)
+    end
+    describe 'パスワードリセットに成功する場合' do
+      before do
+        @user.should_receive(:save).and_return(true)
+        @user.should_receive(:reset_password)
+        User.should_receive(:find_by_password_reset_code).and_return(@user)
+        post :reset_password, :user => {:password => @password, :password_confirmation => @password_confirmation}, :code => '991ea5ca6502e3ded9e494c9c5ae50ad356e4f4a'
+      end
+      it { flash[:notice].should_not be_nil }
+      it { response.should be_redirect }
+    end
+    describe 'パスワードリセットに失敗する場合' do
+      before do
+        @user.should_receive(:save).and_return(false)
+        User.should_receive(:find_by_password_reset_code).and_return(@user)
+        post :reset_password, :user => {:password => @password, :password_confirmation => @password_confirmation}, :code => '991ea5ca6502e3ded9e494c9c5ae50ad356e4f4a'
+      end
+      it { flash[:error].should_not be_nil }
+      it { response.should be_success }
+    end
+  end
+  describe 'パスワードリセットコードに一致するユーザが存在しない場合' do
+    before do
+      User.should_receive(:find_by_password_reset_code).and_return(nil)
+    end
+    it 'ログイン画面にリダイレクトされること' do
+      get :reset_password, :code => '991ea5ca6502e3ded9e494c9c5ae50ad356e4f4a'
+      response.should be_redirect
+    end
+  end
+end
+
 describe PlatformController, "#create_user_from" do
   before do
     @identity_url = "http://id.example.com/a_user/"

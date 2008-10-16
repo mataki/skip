@@ -198,6 +198,27 @@ describe User, "#update_auth_session_token" do
   end
 end
 
+describe User, '#forgot_password' do
+  before do
+    @user = create_user
+  end
+  it 'password_reset_codeに値が入ること' do
+    lambda do
+      @user.forgot_password
+    end.should change(@user, :password_reset_code)
+  end
+end
+
+describe User, '#reset_password' do
+  it 'password_reset_codeの値が更新されること' do
+    prc = '6df711a1a42d110261cfe759838213143ca3c2ad'
+    u = create_user(:user_options => {:password_reset_code => prc})
+    lambda do
+      u.reset_password
+    end.should change(u, :password_reset_code).from(prc).to(nil)
+  end
+end
+
 def new_user options = {}
   User.new({ :name => 'ほげ ほげ', :password => 'password', :password_confirmation => 'password'}.merge(options))
 end
