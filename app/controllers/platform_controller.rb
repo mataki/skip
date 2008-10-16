@@ -66,7 +66,7 @@ class PlatformController < ApplicationController
   end
 
   def forgot_password
-    return render(:layout => 'admin/not_logged_in') unless request.post?
+    return render(:layout => 'not_logged_in') unless request.post?
     email = params[:email]
     if @user_profile = UserProfile.find_by_email(email)
       user = @user_profile.user
@@ -77,13 +77,13 @@ class PlatformController < ApplicationController
       redirect_to :controller => '/platform'
     else
       flash[:error] = "入力された#{email}というメールアドレスは登録されていません。"
-      render :layout => 'admin/not_logged_in'
+      render :layout => 'not_logged_in'
     end
   end
 
   def reset_password
     if @user = User.find_by_password_reset_code(params[:code])
-      return render(:layout => 'admin/not_logged_in') unless request.post?
+      return render(:layout => 'not_logged_in') unless request.post?
       @user.password = params[:user][:password]
       @user.password_confirmation = params[:user][:password_confirmation]
       if @user.save
@@ -92,7 +92,7 @@ class PlatformController < ApplicationController
         redirect_to :controller => '/platform'
       else
         flash[:error] = "パスワードリセットに失敗しました。"
-        render :layout => 'admin/not_logged_in'
+        render :layout => 'not_logged_in'
       end
     else
       flash[:error] = "パスワードリセットのためのURLが不正です。再度お試し頂くか、システム管理者にお問い合わせ下さい。"
@@ -101,7 +101,7 @@ class PlatformController < ApplicationController
   end
 
   def forgot_login_id
-    return render(:layout => 'admin/not_logged_in') unless request.post?
+    return render(:layout => 'not_logged_in') unless request.post?
     email = params[:email]
     if @user_profile = UserProfile.find_by_email(email)
       login_id = @user_profile.user.code
@@ -110,7 +110,7 @@ class PlatformController < ApplicationController
       redirect_to :controller => '/platform'
     else
       flash[:error] = "入力された#{email}というメールアドレスは登録されていません。"
-      render :layout => 'admin/not_logged_in'
+      render :layout => 'not_logged_in'
     end
   end
 

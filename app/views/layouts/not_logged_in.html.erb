@@ -19,14 +19,6 @@
 
 <div id="main">
   <div id="panel">
-    <div style="_width: 98%;">
-      <h1 id="title"><%=h @title %></h1>
-      <%# if @tab_menu_source -%>
-      <div id="tab_menu"><%#= generate_admin_tab_menu %></div>
-      <br style="clear: left;" />
-      <%# end -%>
-    </div>
-
     <div id="tab_body">
       <%= render :partial => 'layouts/flash_messages' %>
       <div id="contents_container">

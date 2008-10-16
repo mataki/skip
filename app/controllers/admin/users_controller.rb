@@ -91,7 +91,7 @@ class Admin::UsersController < Admin::ApplicationController
         @user = Admin::User.new
         @user_profile = Admin::UserProfile.new
         @user_uid = Admin::UserUid.new
-        render :layout => 'admin/not_logged_in'
+        render :layout => 'not_logged_in'
       else
         begin
           Admin::User.transaction do
@@ -105,7 +105,7 @@ class Admin::UsersController < Admin::ApplicationController
           flash[:notice] = _('登録しました。') + _('ログインし直して下さい。')
           redirect_to :controller => "/platform", :action => :index
         rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => e
-          render :layout => 'admin/not_logged_in'
+          render :layout => 'not_logged_in'
         end
       end
     else
@@ -115,7 +115,7 @@ class Admin::UsersController < Admin::ApplicationController
         redirect_to :controller => "/platform", :action => :index
       else
         flash.now[:error] = _('この操作は、許可されていません。URLをご確認の上再度お試し頂くか、%{contact_link}下さい。') % {:contact_link => contact_link}
-        render :text => '', :status => :forbidden, :layout => 'admin/not_logged_in'
+        render :text => '', :status => :forbidden, :layout => 'not_logged_in'
       end
     end
   end
