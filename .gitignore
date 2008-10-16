@@ -1,0 +1,12 @@
+config/database.yml
+config/initial_settings.yml
+db/schema.rb
+log/*.log*
+public/custom/*.html
+public/custom/*
+coverage
+tmp/*
+*flymake.rb
+*#*#
+*.#*
+

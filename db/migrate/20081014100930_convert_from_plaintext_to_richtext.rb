@@ -5,7 +5,7 @@ class ConvertFromPlaintextToRichtext < ActiveRecord::Migration
       if entry.editor_mode == "plaintext"
         entry.contents = "<pre>#{entry.contents}</pre>"
         entry.editor_mode = "richtext"
-        entry.save!
+        entry.save(false)
       end
     end
   end
