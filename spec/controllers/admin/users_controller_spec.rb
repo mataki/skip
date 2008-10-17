@@ -363,7 +363,7 @@ describe Admin::UsersController, "POST #create_uid" do
 
         post :create_uid, :id => 1, :user_uid => { :uid => 'hoge' }
       end
-      it { response.should redirect_to(admin_user_path(@user)) }
+      it { response.should be_redirect }
       it "flashにメッセージが登録されていること" do
         flash[:notice].should == "登録に成功しました。"
       end

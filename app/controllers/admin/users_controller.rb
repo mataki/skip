@@ -157,7 +157,7 @@ class Admin::UsersController < Admin::ApplicationController
   def change_uid
     @user = Admin::User.find(params[:id])
     @topics = [[_('Listing %{model}') % {:model => _('user')}, admin_users_path],
-               [_('%{model} Show') % {:model => @user.topic_title}, @user],
+               [_('Editing %{model}') % {:model => @user.topic_title}, edit_admin_user_path(@user)],
                _('Change uid')]
     if request.get?
       @user_uid = Admin::UserUid.new
@@ -168,7 +168,7 @@ class Admin::UsersController < Admin::ApplicationController
       uid.uid = params[:user_uid] ? params[:user_uid][:uid] : ''
       if uid.save
         flash[:notice] = _("変更しました")
-        redirect_to @user
+        redirect_to :action => "edit"
       else
         @user_uid = uid
       end
@@ -181,7 +181,7 @@ class Admin::UsersController < Admin::ApplicationController
   def create_uid
     @user = Admin::User.find(params[:id])
     @topics = [[_('Listing %{model}') % {:model => _('user')}, admin_users_path],
-               [_('%{model} Show') % {:model => @user.topic_title}, @user],
+               [_('Editing %{model}') % {:model => @user.topic_title}, edit_admin_user_path(@user)],
                _('Create %{name}') % { :name => _('user name')}]
 
     if @user.user_uids.find(:first, :conditions => ['uid_type = ?', UserUid::UID_TYPE[:username]])
@@ -198,7 +198,7 @@ class Admin::UsersController < Admin::ApplicationController
     @user_uid = @user.user_uids.build(params[:user_uid].merge!(:uid_type => UserUid::UID_TYPE[:username]))
     if @user_uid.save
       flash[:notice] = _('登録に成功しました。')
-      redirect_to(@user)
+      redirect_to :action => "edit"
     end
   end
 
