@@ -14,7 +14,6 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class UserMailer < ActionMailer::Base
-
   def sent_contact(recipient, user_name, entry_url, entry_title)
     if recipient.include? ","
       @bcc        = recipient
@@ -80,9 +79,8 @@ private
     return "=?#{charset}?B?#{text}?="
   end
 
-  @@site_url = ENV['SKIP_URL'] + "/"
+  @@site_url = "http://#{INITIAL_SETTINGS['host']}/"
   @@system_mail_addr = Admin::Setting.contact_addr
   @@from = UserMailer.base64(Admin::Setting.abbr_app_title) + "<#{@@system_mail_addr}>"
   @@footer = "----\n#{@@system_mail_addr}\n#{@@site_url}"
-
 end

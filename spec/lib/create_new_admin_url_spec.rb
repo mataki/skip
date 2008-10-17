@@ -17,7 +17,6 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe CreateNewAdminUrl, '.execute' do
   before do
-    CreateNewAdminUrl.stub!(:default_url_options).and_return({:host => 'skip.org'})
     @create_new_admin_url =  CreateNewAdminUrl.new
     CreateNewAdminUrl.stub!(:new).and_return(@create_new_admin_url)
   end
@@ -97,9 +96,9 @@ end
 
 describe CreateNewAdminUrl, '#show_new_admin_url' do
   include ActionController::UrlWriter
+  default_url_options[:host] = INITIAL_SETTINGS['host']
+
   before do
-    default_url_options[:host] = 'skip.org'
-    CreateNewAdminUrl.stub!(:default_url_options).and_return({:host => 'skip.org'})
     @create_new_admin_url = CreateNewAdminUrl.new
   end
   it '指定されたホストのアカウント作成処理へcodeパラメタ付きでアクセスするためのurlが返ってくること' do

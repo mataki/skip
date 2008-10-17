@@ -18,9 +18,10 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe BatchMakeRanking do
   before do
     @exec_date = Date.today
+    @maker = BatchMakeRanking.new
   end
   # アクセス数
-  describe BatchMakeRanking, '.create_access_ranking' do
+  describe BatchMakeRanking, '#create_access_ranking' do
     describe '更新日付が実行日のBoardEntryPointが存在する場合' do
       before do
         setup_test_data
@@ -31,21 +32,21 @@ describe BatchMakeRanking do
         end
         describe '記事が全公開の場合' do
           before do
-            BatchMakeRanking.stub!(:published?).and_return(true)
+            @maker.stub!(:published?).and_return(true)
           end
           it 'ランキングが生成されること' do
             lambda do
-              BatchMakeRanking.send(:create_access_ranking, @exec_date)
+              @maker.send(:create_access_ranking, @exec_date)
             end.should change(Ranking, :count)
           end
         end
         describe '記事が全公開ではない場合' do
           before do
-            BatchMakeRanking.stub!(:published?).and_return(false)
+            @maker.stub!(:published?).and_return(false)
           end
           it 'ランキングが生成されないこと' do
-            BatchMakeRanking.should_not_receive(:create_ranking_by_entry)
-            BatchMakeRanking.send(:create_access_ranking, @exec_date)
+            @maker.should_not_receive(:create_ranking_by_entry)
+            @maker.send(:create_access_ranking, @exec_date)
           end
         end
       end
@@ -54,15 +55,15 @@ describe BatchMakeRanking do
           @board_entry_point.update_attributes!(:access_count => 0)
         end
         it 'ランキングが生成されないこと' do
-          BatchMakeRanking.should_not_receive(:create_ranking_by_entry)
-          BatchMakeRanking.send(:create_access_ranking, @exec_date)
+          @maker.should_not_receive(:create_ranking_by_entry)
+          @maker.send(:create_access_ranking, @exec_date)
         end
       end
     end
   end
 
   # goodjob数
-  describe BatchMakeRanking, '.create_point_ranking' do
+  describe BatchMakeRanking, '#create_point_ranking' do
     describe '更新日付が実行日のBoardEntryPointが存在する場合' do
       before do
         setup_test_data
@@ -73,21 +74,21 @@ describe BatchMakeRanking do
         end
         describe '記事が全公開の場合' do
           before do
-            BatchMakeRanking.stub!(:published?).and_return(true)
+            @maker.stub!(:published?).and_return(true)
           end
           it 'ランキングが生成されること' do
             lambda do
-              BatchMakeRanking.send(:create_point_ranking, @exec_date)
+              @maker.send(:create_point_ranking, @exec_date)
             end.should change(Ranking, :count)
           end
         end
         describe '記事が全公開ではない場合' do
           before do
-            BatchMakeRanking.stub!(:published?).and_return(false)
+            @maker.stub!(:published?).and_return(false)
           end
           it 'ランキングが生成されないこと' do
-            BatchMakeRanking.should_not_receive(:create_ranking_by_entry)
-            BatchMakeRanking.send(:create_point_ranking, @exec_date)
+            @maker.should_not_receive(:create_ranking_by_entry)
+            @maker.send(:create_point_ranking, @exec_date)
           end
         end
       end
@@ -96,15 +97,15 @@ describe BatchMakeRanking do
           @board_entry_point.update_attributes!(:point => 0)
         end
         it 'ランキングが生成されないこと' do
-          BatchMakeRanking.should_not_receive(:create_ranking_by_entry)
-          BatchMakeRanking.send(:create_point_ranking, @exec_date)
+          @maker.should_not_receive(:create_ranking_by_entry)
+          @maker.send(:create_point_ranking, @exec_date)
         end
       end
     end
   end
 
   # コメント数
-  describe BatchMakeRanking, '.create_comment_ranking' do
+  describe BatchMakeRanking, '#create_comment_ranking' do
     describe '更新日付が実行日のBoardEntryが存在する場合' do
       before do
         setup_test_data
@@ -117,35 +118,35 @@ describe BatchMakeRanking do
         end
         describe '記事が全公開の場合' do
           before do
-            BatchMakeRanking.should_receive(:published?).and_return(true)
+            @maker.should_receive(:published?).and_return(true)
           end
           it 'ランキングが生成されること' do
             lambda do
-              BatchMakeRanking.send(:create_comment_ranking, @exec_date)
+              @maker.send(:create_comment_ranking, @exec_date)
             end.should change(Ranking, :count)
           end
         end
         describe '記事が全公開ではない場合' do
           before do
-            BatchMakeRanking.stub!(:published?).and_return(false)
+            @maker.stub!(:published?).and_return(false)
           end
           it 'ランキングが生成されないこと' do
-            BatchMakeRanking.should_not_receive(:create_ranking_by_entry)
-            BatchMakeRanking.send(:create_comment_ranking, @exec_date)
+            @maker.should_not_receive(:create_ranking_by_entry)
+            @maker.send(:create_comment_ranking, @exec_date)
           end
         end
       end
       describe 'BoardEntryのコメント数(board_entry_comments_count)が1以上のレコードが存在しない場合' do
         it 'ランキングが生成されないこと' do
-          BatchMakeRanking.should_not_receive(:create_ranking_by_entry)
-          BatchMakeRanking.send(:create_comment_ranking, @exec_date)
+          @maker.should_not_receive(:create_ranking_by_entry)
+          @maker.send(:create_comment_ranking, @exec_date)
         end
       end
     end
   end
 
   # 投稿数
-  describe BatchMakeRanking, '.create_post_ranking' do
+  describe BatchMakeRanking, '#create_post_ranking' do
     describe '更新日付が実行日のBoardEntryが存在する場合' do
       before do
         setup_test_data
@@ -157,7 +158,7 @@ describe BatchMakeRanking do
         end
         it 'ランキングが生成されること' do
           lambda do
-            BatchMakeRanking.send(:create_post_ranking, @exec_date)
+            @maker.send(:create_post_ranking, @exec_date)
           end.should change(Ranking, :count)
         end
       end
@@ -166,15 +167,15 @@ describe BatchMakeRanking do
           @board_entry.update_attributes!(:entry_type => 'BBS')
         end
         it 'ランキングが生成されないこと' do
-          BatchMakeRanking.should_not_receive(:create_ranking_by_entry)
-          BatchMakeRanking.send(:create_post_ranking, @exec_date)
+          @maker.should_not_receive(:create_ranking_by_entry)
+          @maker.send(:create_post_ranking, @exec_date)
         end
       end
     end
   end
 
   # 訪問者数
-  describe BatchMakeRanking, '.create_visited_ranking' do
+  describe BatchMakeRanking, '#create_visited_ranking' do
     describe '更新日付が実行日のUserAccessが存在する場合' do
       before do
         setup_test_data
@@ -186,7 +187,7 @@ describe BatchMakeRanking do
         end
         it 'ランキングが生成されること' do
           lambda do
-            BatchMakeRanking.send(:create_visited_ranking, @exec_date)
+            @maker.send(:create_visited_ranking, @exec_date)
           end.should change(Ranking, :count)
         end
       end
@@ -195,15 +196,15 @@ describe BatchMakeRanking do
           @user_access.update_attributes(:access_count => 0)
         end
         it 'ランキングが生成されないこと' do
-          BatchMakeRanking.should_not_receive(:create_ranking_by_entry)
-          BatchMakeRanking.send(:create_visited_ranking, @exec_date)
+          @maker.should_not_receive(:create_ranking_by_entry)
+          @maker.send(:create_visited_ranking, @exec_date)
         end
       end
     end
   end
 
   # コメンテータ
-  describe BatchMakeRanking, '.create_commentator_ranking' do
+  describe BatchMakeRanking, '#create_commentator_ranking' do
     describe '更新日付が実行日以前のBoardEntryCommentが存在する場合' do
       before do
         setup_test_data
@@ -215,7 +216,7 @@ describe BatchMakeRanking do
         end
         it 'ランキングが生成されること' do
           lambda do
-            BatchMakeRanking.send(:create_commentator_ranking, @exec_date)
+            @maker.send(:create_commentator_ranking, @exec_date)
           end.should change(Ranking, :count)
         end
       end
@@ -224,10 +225,22 @@ describe BatchMakeRanking do
           @board_entry_comment.update_attributes!(:updated_on => @exec_date.tomorrow)
         end
         it 'ランキングが生成されないこと' do
-          BatchMakeRanking.should_not_receive(:create_ranking_by_entry)
-          BatchMakeRanking.send(:create_commentator_ranking, @exec_date)
+          @maker.should_not_receive(:create_ranking_by_entry)
+          @maker.send(:create_commentator_ranking, @exec_date)
         end
       end
+    end
+  end
+
+  describe BatchMakeRanking, "#user_url" do
+    it "URLが正しく返されること" do
+      @maker.send(:user_url, "hoge").should == "http://localhost:3000/user/hoge"
+    end
+  end
+
+  describe BatchMakeRanking, "#page_url" do
+    it "URLが正しく返されること" do
+      @maker.send(:page_url, 1).should == "http://localhost:3000/page/1"
     end
   end
 

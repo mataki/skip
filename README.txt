@@ -66,6 +66,7 @@ Debian 及び Ubuntuユーザの場合
     session:のsecretを変更する(0文字以上にする必要があります)
     sha1_digest_keyを変更する
     secret_keyを変更する
+    hostを起動するURLに変更する
 
     proxy_urlにプロキシサーバのIPアドレスを設定する(必要な場合のみ)
 
@@ -75,7 +76,6 @@ Debian 及び Ubuntuユーザの場合
 --------------------------------------------------------------------------------
  1. 必要な環境変数を設定する
 
-    $ export SKIP_URL=http://[サーバのIPアドレス or ドメインネーム]:[SKIP起動ポート]
     $ export RAILS_ENV=production
 
 5. データベースの作成
@@ -100,7 +100,6 @@ Debian 及び Ubuntuユーザの場合
 --------------------------------------------------------------------------------
  1. 初期管理者ユーザ登録URLの生成
 
-    $ export SKIP_HOST=[サーバのIPアドレス or ドメインネーム]:[SKIP起動ポート]
     $ cd [RAILS_ROOT]/lib
     $ ruby create_new_admin_url.rb --code
 
@@ -143,7 +142,6 @@ Debian 及び Ubuntuユーザの場合
 --------------------------------------------------------------------------------
  1. 必要な環境変数を設定する
 
-    $ export SKIP_URL=http://[サーバのIPアドレス or ドメインネーム]:[SKIP起動ポート]
     $ export RAILS_ENV=production
 
 2. サーバ起動

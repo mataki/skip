@@ -16,6 +16,9 @@
 require File.expand_path(File.join(RAILS_ROOT,'config','environment'))
 
 class BatchBase
+  include ActionController::UrlWriter
+  default_url_options[:host] = INITIAL_SETTINGS['host']
+
   @@logger = Logger.new(ENV['BATCH_LOG_PATH'])
 
   def self.execution options = {}

@@ -21,3 +21,26 @@ describe UserMailer do
     assert_match /http:\/\/.*\/$/m, response.body
   end
 end
+
+describe UserMailer do
+  include ActionController::UrlWriter
+  before do
+    UserMailer.new
+  end
+  it "@@site_urlが正しく設定されていること" do
+    UserMailer.site_url.should == root_url(:host => INITIAL_SETTINGS['host'])
+  end
+  it "@@system_mail_addrが正しく設定されていること" do
+    UserMailer.system_mail_addr.should == Admin::Setting.contact_addr
+  end
+  it "@@fromが正しく設定されていること" do
+    UserMailer.from.should == "#{UserMailer.send(:base64, Admin::Setting.abbr_app_title)}<#{UserMailer.system_mail_addr}>"
+  end
+  it "@@footerが正しく設定されていること" do
+    UserMailer.footer.should == "----\n#{UserMailer.system_mail_addr}\n#{UserMailer.site_url}"
+  end
+
+  UserMailer.class_eval{
+    cattr_accessor :site_url, :system_mail_addr, :from, :footer
+  }
+end

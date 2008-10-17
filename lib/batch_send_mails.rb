@@ -16,13 +16,13 @@
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 
 class BatchSendMails < BatchBase
-
   def self.execute options
-    send_notice
-    send_message
+    sender = self.new
+    sender.send_notice
+    sender.send_message
   end
 
-  def self.send_notice
+  def send_notice
     Mail.find(:all, :conditions => "send_flag = false", :order => 'id asc', :limit => 30).each do |mail|
       user = User.find(:first, :conditions => ["user_uids.uid = ?", mail.from_user_id], :include => ['user_uids'])
       if user.retired?
@@ -31,18 +31,18 @@ class BatchSendMails < BatchBase
       end
       board_entry = BoardEntry.find(:first, :conditions => ["user_id = ? and user_entry_no = ?", user.id, mail.user_entry_no])
       next unless board_entry
-      entry_url = "#{ENV['SKIP_URL']}/page/#{board_entry.id}"
+      entry_url = url_for :controller => :board_entries, :action => :forward, :id => board_entry.id
 
       begin
         UserMailer.deliver_sent_contact(mail.to_address, user.name, entry_url, board_entry.title)
         mail.update_attribute :send_flag, true
       rescue
-        log_error "failed send mail [id]:" + mail.id.to_s + " " + $!
+        self.class.log_error "failed send mail [id]:" + mail.id.to_s + " " + $!
       end
     end
   end
 
-  def self.send_message
+  def send_message
     Message.find(:all,
                  :select =>'messages.*, user_message_unsubscribes.id as user_message_unsubscribe_id',
                  :conditions => "send_flag = false",
@@ -55,13 +55,14 @@ class BatchSendMails < BatchBase
           message.update_attribute :send_flag, true
           next
         end
-        link_url = "#{ENV['SKIP_URL']}#{message.link_url}"
-        message_manage_url = "#{ENV['SKIP_URL']}/mypage/manage?menu=manage_message"
+        link_url = root_url.chop + message.link_url
+        message_manage_url = url_for :controller => "/mypage", :action => "manage", :menu => :manage_message
+
         begin
           UserMailer.deliver_sent_message(user.user_profile.email, link_url, message.message, message_manage_url)
           message.update_attribute :send_flag, true
         rescue
-          log_error "failed send message [id]:" + message.id.to_s + " " + $!
+          self.class.log_error "failed send message [id]:" + message.id.to_s + " " + $!
         end
       else
         message.update_attribute :send_flag, true

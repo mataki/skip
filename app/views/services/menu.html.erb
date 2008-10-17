@@ -38,7 +38,7 @@ page_data = [
   '</div>',
 <% end %>
 
-'<%= link_to icon_tag("door") + " ログアウト", "#{ENV['SKIP_URL']}/logout" -%>',
+'<%= link_to icon_tag("door") + " ログアウト", :controller => "/platform", :action => :logout, :only_path => false -%>',
 
   '</div>',
 

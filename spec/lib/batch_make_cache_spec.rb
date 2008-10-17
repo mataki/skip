@@ -13,4 +13,20 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# SKIP関連で利用可能なメソッドを定義する
+require File.dirname(__FILE__) + '/../spec_helper'
+
+describe BatchMakeCache, "#create_meta" do
+  before do
+    bmc = BatchMakeCache.new
+    params = { :title => "title",
+      :contents_type => "page",
+      :publication_symbols => "sid:allusers",
+      :link_url => "/user/hoge",
+      :icon_type => "icon"
+    }
+    @result = bmc.create_meta(params)
+  end
+  it "link_urlが正しく設定されること" do
+    @result.should be_include("link_url: http://#{INITIAL_SETTINGS['host']}/user/hoge")
+  end
+end

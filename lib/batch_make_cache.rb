@@ -205,11 +205,10 @@ class BatchMakeCache < BatchBase
 title: #{URI.encode(URI.encode(params[:title]), /[\&|\+|\=|!|~|'|(|)|;|\/|?|:|$|,|\[|\]|]/)}
 contents_type: #{params[:contents_type]}
 publication_symbols: #{params[:publication_symbols]}
-link_url: #{ENV['SKIP_URL']}#{params[:link_url]}
+link_url: #{root_url.chop}#{params[:link_url]}
 icon_type: #{params[:icon_type]}
     EOS
   end
-
 
   # ファイルに出力
   def output_file(path, contents_type, contents_id, contents, meta)

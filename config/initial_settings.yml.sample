@@ -45,6 +45,7 @@ default: &default
     enable: false                                                           # システムエラーをシステム管理者にメールするかどうか
     sender_addr: yoursender@example.com                                     # システムエラーメールの送信元アドレス
     email_prefix: [ERROR]                                                   # システムエラーメールのタイトルにつけるprefix
+  host: localhost:3000                                                      # システムが動作するURLのホスト部分(バッチ処理等に利用される)
 
 # ---- 全文検索
   search_apps:
