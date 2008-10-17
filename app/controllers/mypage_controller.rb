@@ -895,7 +895,7 @@ private
   # 引数：per_page   = １ページの表示数（デフォルト5件）
   def find_questions_as_locals options = {}
     options = { :recent_day => 10, :per_page => 5 }.merge(options)
-    find_params = BoardEntry.make_conditions(login_user_symbols, {:entry_type=>'DIARY', :recent_day=>options[:recent_day], :category=>'質問'})
+    find_params = BoardEntry.make_conditions(login_user_symbols, {:recent_day=>options[:recent_day], :category=>'質問'})
     pages_obj, pages = paginate(:board_entry,
                                 :per_page =>options[:per_page],
                                 :order =>"last_updated DESC,board_entries.id DESC",

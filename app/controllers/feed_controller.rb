@@ -17,7 +17,7 @@ require 'rss'
 class FeedController < ApplicationController
   #DRY
   def recent_questions
-    find_params = BoardEntry.make_conditions(login_user_symbols, {:entry_type=>'DIARY', :recent_day=> 10, :category=>'質問'})
+    find_params = BoardEntry.make_conditions(login_user_symbols, {:recent_day=> 10, :category=>'質問'})
     rss_feed "recent_questions", "みんなからの質問!", board_entry_item_array(find_params)
   end
 
