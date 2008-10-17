@@ -15,11 +15,12 @@
 
 module CacheHelper
   PROTOTYPE_LIBRARY = {:name => 'prototype.all',
-    :libs => ['prototype', 'builder', 'effects', 'dragdrop', 'controls', 'slider']}
+    :libs => ['prototype', 'builder', 'effects', 'controls', 'slider']}
 
   JQUERY_LIBRARY = {:name => 'jquery.all',
     :libs => ['jquery', 'jquery.color.js', 'jquery.nyroModal.js', 'jquery.bgiframe.min.js',
-              'jquery.dimensions.js', 'jquery.autocomplete.js', 'jquery.jTagging.js', 'jquery.jgrow-0.2.js']}
+              'jquery.dimensions.js', 'jquery.autocomplete.js', 'jquery.jTagging.js', 'jquery.jgrow-0.2.js',
+              'ui/ui.core.js', 'ui/ui.draggable.js', 'ui/ui.droppable.js', 'ui/ui.sortable.js']}
 
   STYLE_LIBRARY = {:name => 'skip.style',
     :libs => ['skip/style', 'style', 'skins-base']}

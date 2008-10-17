@@ -46,5 +46,127 @@ ul#antennas_list li.dragenter {
 <%= hidden_field_tag("authenticity_token", form_authenticity_token) %>
 
 <script type="text/javascript">
-Event.observe('add_antenna_btn', 'click', function() {addAntenna();}, false);
+$j(function() {
+    // アンテナの追加
+    var setupAddAntennaBtn = function() {
+      $j('#add_antenna_btn')
+      .click(function() {
+          var antenna_name = $j('#add_antenna_name').val();
+          if (antenna_name == '') {
+              alert('アンテナ名は必須です。');
+              return false;
+          }
+          if (antenna_name.length > 10) {
+              alert('アンテナ名は10文字以内で入力して下さい。');
+              return false;
+          }
+          var add_antenna_url = relative_url_root + "/mypage/add_antenna";
+          $j.ajax({
+              type: 'POST',
+              url: add_antenna_url,
+              data: { name: antenna_name, authenticity_token: $j('#authenticity_token').val() },
+              success: function(request) {
+                  $j('#add_antenna_name').val('');
+                  $j('#antennas_list_container').html(request).highlight();
+              },
+              error: function(event){
+                  alert("通信に失敗しました");
+              },
+              complete: function(request) {
+                  setupDeleteAntennaLink();
+                  setupDeleteAntennaItemLink();
+              }
+          });
+          return false;
+      });
+    };
+    setupAddAntennaBtn();
+
+    // アンテナの削除
+    var setupDeleteAntennaLink = function() {
+        $j('.delete_antenna_link')
+        .click(function() {
+              if (!confirm('本当に削除しますか?')) {
+                  return;
+              }
+              var antenna_id = this.id.split('_')[3];
+              var delete_antenna_url = relative_url_root + "/mypage/delete_antenna";
+              $j.ajax({
+                  type: 'POST',
+                  url: delete_antenna_url,
+                  data: { antenna_id: antenna_id, authenticity_token: $j('#authenticity_token').val() },
+                  success: function(request) {
+                      $j('#antennas_list_container').html(request).highlight();
+                  },
+                  error: function(event){
+                      alert("通信に失敗しました");
+                  },
+                  complete: function(request) {
+                      setupDeleteAntennaLink();
+                      setupDeleteAntennaItemLink();
+                  }
+              });
+              return false;
+        });
+    };
+    setupDeleteAntennaLink();
+
+    // アンテナアイテムの削除
+    var setupDeleteAntennaItemLink = function() {
+        $j('.delete_antenna_item_link')
+        .click(function() {
+            if (!confirm('本当に削除しますか?')) {
+                return;
+            }
+            var antenna_id = this.id.split('_')[4];
+            var antenna_item_id = this.id.split('_')[5];
+            var delete_antenna_item_url = relative_url_root + "/mypage/delete_antenna_item";
+            $j.ajax({
+                type: 'POST',
+                url: delete_antenna_item_url,
+                data: { antenna_id: antenna_id,
+                        antenna_item_id: antenna_item_id,
+                        authenticity_token: $j('#authenticity_token').val() },
+                success: function(request) {
+                    $j('#antennas_list_container').html(request).highlight();
+                },
+                error: function(event){
+                    alert("通信に失敗しました");
+                },
+                complete: function(request) {
+                    setupDeleteAntennaLink();
+                    setupDeleteAntennaItemLink();
+                }
+            });
+        });
+    };
+    setupDeleteAntennaItemLink();
+
+    // アンテナのソート
+    $j('#antennas_list')
+    .sortable({
+        axis: 'y',
+        update: function(ev, ui) {
+        // ソート先のアンテナIDとソート元のアンテナIDが取得できれば
+        // sortAntenna(ソート先のアンテナID, ソート元のアンテナID);
+        // とすればいいが、ソート先のアンテナIDを取得する手段がない。
+        // /mypage/sort_antennaの処理を見直して、ソート元のアンテナID
+        // と何番目になったのかの情報で並び替えれるようにすればいけそうだ。
+        }
+    });
+
+    // アンテナアイテムの張替え
+    $j('.antenna')
+    .droppable({
+        hoverclass: "dragenter",
+        accept: '.antenna_item',
+        drop: function(ev, ui) {
+                  var antenna_id = this.id.split('_')[1];
+                  var antenna_item_id = ui.draggable.attr('id').split('_')[2];
+                  $j(this).children('#antenna_items_list').append(ui.draggable);
+                  moveAntennaItem(antenna_id, antenna_item_id);
+              }
+    });
+    $j('.antenna_item').draggable({revert: true});
+});
 </script>
