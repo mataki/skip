@@ -72,7 +72,7 @@ class PlatformController < ApplicationController
       user = @user_profile.user
       user.forgot_password
       user.save!
-      UserMailer.deliver_sent_forgot_password(email, reset_password_url(user.password_reset_code))
+      UserMailer.deliver_sent_forgot_password(email, reset_password_url(user.password_reset_token))
       flash[:notice] = "パスワードリセットのためのURLを記載したメールを#{email}宛てに送信しました。"
       redirect_to :controller => '/platform'
     else
@@ -82,17 +82,22 @@ class PlatformController < ApplicationController
   end
 
   def reset_password
-    if @user = User.find_by_password_reset_code(params[:code])
-      return render(:layout => 'not_logged_in') unless request.post?
-      @user.password = params[:user][:password]
-      @user.password_confirmation = params[:user][:password_confirmation]
-      if @user.save
-        @user.reset_password
-        flash[:notice] = "パスワードリセットが完了しました。"
-        redirect_to :controller => '/platform'
+    if @user = User.find_by_password_reset_token(params[:code])
+      if Time.now <= @user.password_reset_token_expires_at
+        return render(:layout => 'not_logged_in') unless request.post?
+        @user.password = params[:user][:password]
+        @user.password_confirmation = params[:user][:password_confirmation]
+        if @user.save
+          @user.reset_password
+          flash[:notice] = "パスワードリセットが完了しました。"
+          redirect_to :controller => '/platform'
+        else
+          flash[:error] = "パスワードリセットに失敗しました。"
+          render :layout => 'not_logged_in'
+        end
       else
-        flash[:error] = "パスワードリセットに失敗しました。"
-        render :layout => 'not_logged_in'
+        flash[:error] = "パスワードリセットのためのURLの有効期限が過ぎています。"
+        redirect_to :controller => '/platform'
       end
     else
       flash[:error] = "パスワードリセットのためのURLが不正です。再度お試し頂くか、システム管理者にお問い合わせ下さい。"

@@ -248,7 +248,7 @@ describe PlatformController, 'POST /forgot_password' do
       @user_profile = stub_model(UserProfile, :email => @email)
       @password_reset_url = 'password_reset_url'
       controller.stub!(:reset_password_url).and_return(@password_reset_url)
-      @user = stub_model(User, :password_reset_code => @password_reset_code)
+      @user = stub_model(User, :password_reset_token => @password_reset_token)
       @user.stub!(:forgot_password)
       @user.stub!(:save!)
       UserMailer.stub!(:deliver_sent_forgot_password)
@@ -284,20 +284,37 @@ end
 
 describe PlatformController, 'GET /reset_password' do
   before do
-    @user = stub_model(User)
+    @expires_at = Time.local(2008, 11, 1)
+    @user = stub_model(User, :password_reset_token_expires_at => @expires_at)
   end
   describe 'パスワードリセットコードに一致するユーザが存在する場合' do
     before do
-      User.should_receive(:find_by_password_reset_code).and_return(@user)
+      User.should_receive(:find_by_password_reset_token).and_return(@user)
     end
-    it 'パスワードリセット画面に遷移すること' do
-      get :reset_password, :code => '991ea5ca6502e3ded9e494c9c5ae50ad356e4f4a'
-      response.should be_success
+    describe 'パスワードリセットコードが作成されてから24時間以内の場合' do
+      it '24時間未満の場合はパスワードリセット画面に遷移すること' do
+        Time.stub!(:now).and_return(@expires_at.ago(1.second))
+        get :reset_password, :code => '991ea5ca6502e3ded9e494c9c5ae50ad356e4f4a'
+        response.should be_success
+      end
+      it 'ちょうど24時間の場合はパスワードリセット画面に遷移すること' do
+        Time.stub!(:now).and_return(@expires_at)
+        get :reset_password, :code => '991ea5ca6502e3ded9e494c9c5ae50ad356e4f4a'
+        response.should be_success
+      end
+    end
+    describe 'パスワードリセットコードが作成されてから24時間を越えている場合' do
+      before do
+        Time.stub!(:now).and_return(@expires_at.since(1.second))
+        get :reset_password, :code => '991ea5ca6502e3ded9e494c9c5ae50ad356e4f4a'
+      end
+      it { flash[:error].should_not be_nil }
+      it { response.should be_redirect }
     end
   end
   describe 'パスワードリセットコードに一致するユーザが存在しない場合' do
     before do
-      User.should_receive(:find_by_password_reset_code).and_return(nil)
+      User.should_receive(:find_by_password_reset_token).and_return(nil)
     end
     it 'ログイン画面にリダイレクトされること' do
       get :reset_password, :code => '991ea5ca6502e3ded9e494c9c5ae50ad356e4f4a'
@@ -307,41 +324,60 @@ describe PlatformController, 'GET /reset_password' do
 end
 
 describe PlatformController, 'POST /reset_password' do
+  before do
+    @password = 'password'
+    @password_confirmation = 'password'
+    @expires_at = Time.local(2008, 11, 1)
+  end
+  def post_reset_password
+    post :reset_password, :user => {:password => @password, :password_confirmation => @password_confirmation}, :code => '991e5ca6502e3ded9e494c9c5ae50ad356e4f4a'
+  end
   describe 'パスワードリセットコードに一致するユーザが存在する場合' do
     before do
-      @password = 'password'
-      @password_confirmation = 'password'
-      @user = stub_model(User)
-      @user.should_receive(:password=).with(@password)
-      @user.should_receive(:password_confirmation=).with(@password_confirmation)
-      User.stub!(:find_by_password_reset_code).and_return(@user)
+      @user = stub_model(User, :password_reset_token_expires_at => @expires_at)
+      User.stub!(:find_by_password_reset_token).and_return(@user)
     end
-    describe 'パスワードリセットに成功する場合' do
+    describe 'パスワードリセットコードが作成されてから24時間以内の場合' do
       before do
-        @user.should_receive(:save).and_return(true)
-        @user.should_receive(:reset_password)
-        User.should_receive(:find_by_password_reset_code).and_return(@user)
-        post :reset_password, :user => {:password => @password, :password_confirmation => @password_confirmation}, :code => '991ea5ca6502e3ded9e494c9c5ae50ad356e4f4a'
+        Time.stub!(:now).and_return(@expires_at)
+        @user.should_receive(:password=).with(@password)
+        @user.should_receive(:password_confirmation=).with(@password_confirmation)
       end
-      it { flash[:notice].should_not be_nil }
-      it { response.should be_redirect }
+      describe 'パスワードリセットに成功する場合' do
+        before do
+          @user.should_receive(:save).and_return(true)
+          @user.should_receive(:reset_password)
+          User.should_receive(:find_by_password_reset_token).and_return(@user)
+          post_reset_password
+        end
+        it { flash[:notice].should_not be_nil }
+        it { response.should be_redirect }
+      end
+      describe 'パスワードリセットに失敗する場合' do
+        before do
+          @user.should_receive(:save).and_return(false)
+          User.should_receive(:find_by_password_reset_token).and_return(@user)
+          post_reset_password
+        end
+        it { flash[:error].should_not be_nil }
+        it { response.should be_success }
+      end
     end
-    describe 'パスワードリセットに失敗する場合' do
+    describe 'パスワードリセットコードが作成されてから24時間を越えている場合' do
       before do
-        @user.should_receive(:save).and_return(false)
-        User.should_receive(:find_by_password_reset_code).and_return(@user)
-        post :reset_password, :user => {:password => @password, :password_confirmation => @password_confirmation}, :code => '991ea5ca6502e3ded9e494c9c5ae50ad356e4f4a'
+        Time.stub!(:now).and_return(@expires_at.since(1.second))
+        post_reset_password
       end
       it { flash[:error].should_not be_nil }
-      it { response.should be_success }
+      it { response.should be_redirect }
     end
   end
   describe 'パスワードリセットコードに一致するユーザが存在しない場合' do
     before do
-      User.should_receive(:find_by_password_reset_code).and_return(nil)
+      User.should_receive(:find_by_password_reset_token).and_return(nil)
     end
     it 'ログイン画面にリダイレクトされること' do
-      get :reset_password, :code => '991ea5ca6502e3ded9e494c9c5ae50ad356e4f4a'
+      post_reset_password
       response.should be_redirect
     end
   end

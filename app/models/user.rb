@@ -273,11 +273,12 @@ class User < ActiveRecord::Base
   end
 
   def forgot_password
-    self.password_reset_code = self.class.make_token
+    self.password_reset_token = self.class.make_token
+    self.password_reset_token_expires_at = Time.now.since(24.hour)
   end
 
   def reset_password
-    update_attributes(:password_reset_code => nil)
+    update_attributes(:password_reset_token => nil, :password_reset_token_expires_at => nil)
   end
 
 protected
