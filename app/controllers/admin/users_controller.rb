@@ -159,7 +159,8 @@ class Admin::UsersController < Admin::ApplicationController
     @topics = [[_('Listing %{model}') % {:model => _('user')}, admin_users_path],
                [_('Editing %{model}') % {:model => @user.topic_title}, edit_admin_user_path(@user)],
                _('Change uid')]
-    if request.get?
+
+    if request.get? or not @user.active?
       @user_uid = Admin::UserUid.new
       return
     end
@@ -184,14 +185,14 @@ class Admin::UsersController < Admin::ApplicationController
                [_('Editing %{model}') % {:model => @user.topic_title}, edit_admin_user_path(@user)],
                _('Create %{name}') % { :name => _('user name')}]
 
-    if @user.user_uids.find(:first, :conditions => ['uid_type = ?', UserUid::UID_TYPE[:username]])
-      flash[:error] = _("既に%{username}が登録されています。") % {:username => _('user name')}
-      redirect_to(@user)
+    if request.get? or not @user.active?
+      @user_uid = Admin::UserUid.new
       return
     end
 
-    if request.get?
-      @user_uid = Admin::UserUid.new
+    if @user.user_uids.find(:first, :conditions => ['uid_type = ?', UserUid::UID_TYPE[:username]])
+      flash[:error] = _("既に%{username}が登録されています。") % {:username => _('user name')}
+      redirect_to(@user)
       return
     end
 

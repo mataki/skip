@@ -234,13 +234,13 @@ describe BatchMakeRanking do
 
   describe BatchMakeRanking, "#user_url" do
     it "URLが正しく返されること" do
-      @maker.send(:user_url, "hoge").should == "http://localhost:3000/user/hoge"
+      @maker.send(:user_url, "hoge").should == "http://#{INITIAL_SETTINGS['host']}/user/hoge"
     end
   end
 
   describe BatchMakeRanking, "#page_url" do
     it "URLが正しく返されること" do
-      @maker.send(:page_url, 1).should == "http://localhost:3000/page/1"
+      @maker.send(:page_url, 1).should == "http://#{INITIAL_SETTINGS['host']}/page/1"
     end
   end
 

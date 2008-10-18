@@ -71,10 +71,11 @@ describe ShareFileController, "POST #create" do
 
     controller.stub!(:login_user_symbols).and_return(["uid:hoge"])
     controller.stub!(:valid_upload_files?).and_return(true)
+    INITIAL_SETTINGS['max_share_file_size_of_system'] = 1000000
   end
   describe "ファイルが一つの時" do
     before do
-      @file1 = mock_uploaed_file({ :original_filename => "file1.png", :content_type => "text", :size => 1000, :read => "" }) 
+      @file1 = mock_uploaed_file({ :original_filename => "file1.png", :content_type => "text", :size => 1000, :read => "" })
       post :create, { :symbol => "", :publication_type => "public", :owner_name => 'ほげ ほげ',
         :publication_symbols_value => "",
         :share_file => { "date(1i)" => "2008", "date(2i)" => "9", "date(3i)" => "19",

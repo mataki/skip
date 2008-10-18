@@ -305,6 +305,7 @@ describe Admin::UsersController, "POST #change_uid" do
     @user_uids.stub!(:find).and_return(@user_uid)
 
     @user = stub_model(Admin::User)
+    @user.status = 'ACTIVE'
     @user.stub!(:user_uids).and_return(@user_uids)
 
     Admin::User.should_receive(:find).and_return(@user)
@@ -346,6 +347,7 @@ describe Admin::UsersController, "POST #create_uid" do
     admin_login
 
     @user = stub_model(Admin::User)
+    @user.status = 'ACTIVE'
     Admin::User.stub!(:find).with("1").and_return(@user)
 
     @user_uid = stub_model(Admin::UserUid)
