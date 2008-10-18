@@ -16,14 +16,14 @@
 # SNSへのプロフィール情報を登録するためのアクションをまとめたクラス
 require "jcode"
 class PortalController < ApplicationController
+  layout 'entrance'
+  verify :method => :post, :only => [ :apply, :registration ], :redirect_to => { :action => :index }
+
   skip_before_filter :prepare_session
   skip_after_filter  :remove_message
   skip_before_filter :sso, :only => [:index, :agreement, :registration]
   skip_before_filter :login_required, :only => [:index, :agreement, :registration]
   before_filter :registerable_filter
-
-  layout 'entrance'
-  verify :method => :post, :only => [ :apply, :registration ], :redirect_to => { :action => :index }
 
   # ユーザ登録の画面表示（ウィザード形式のためsessionの中により表示先切替）
   def index
@@ -118,6 +118,13 @@ class PortalController < ApplicationController
         render :action => :account_registration
       end
     end
+  end
+
+  def logout
+    logout_killing_session!
+    flash[:notice] = _('You are now logged out.')
+
+    redirect_to login_mode?(:fixed_rp) ? "#{INITIAL_SETTINGS['fixed_op_url']}logout" : {:controller => "platform", :action => "index"}
   end
 
   private
