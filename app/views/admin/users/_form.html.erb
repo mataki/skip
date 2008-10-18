@@ -1,12 +1,19 @@
 <%= error_messages_for :user %>
+
 <p>
-  <%= label Admin::UserUid.name, :uid, Admin::Setting.login_account %>
+  <%= label Admin::User.name, :code %>
   <% if @user.new_record? -%>
   <%= text_field :user_uid, :uid %>
   <% else -%>
   :<%= h @user.code %>
   <% end -%>
 </p>
+<% unless @user.new_record? -%>
+<p>
+  <%= label Admin::User.name, :uid %>
+  :<%= h @user.uid %>
+</p>
+<% end -%>
 <p>
   <%= label Admin::User.name, :name %>
   <%= text_field :user, :name %>
@@ -28,12 +35,14 @@
   <%= check_box :user, :admin %>
 </p>
 <% end -%>
-<% if @user.new_record? -%>
 <p>
   <%= label Admin::UserProfile.name, :email %>
+  <% if @user.new_record? -%>
   <%= text_field :user_profile, :email %>
+  <% else -%>
+  :<%=h @user.user_profile.email %>
+  <% end -%>
 </p>
-<% end -%>
 <p>
   <%= label Admin::User.name, :password %>
   <%= password_field :user, :password %>

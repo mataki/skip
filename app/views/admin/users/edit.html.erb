@@ -7,11 +7,8 @@
 <div class="box tabular">
   <% form_for(@user) do |f| %>
   <%= render :partial => f %>
-  <p>
-    <%= f.submit _('Update'), :disable_with => _('Updating...') %>
-  </p>
+  <p><%= f.submit _('Update'), :disable_with => _('Updating...') %></p>
   <% end %>
-
 </div>
 
 <% if user_name_mode?(:name) -%>
