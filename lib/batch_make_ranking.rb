@@ -53,7 +53,6 @@ class BatchMakeRanking < BatchBase
     end
   end
 
-private
   def create_access_ranking exec_date
     BoardEntryPoint.find(:all, :conditions => make_conditions("access_count > 0", exec_date)).each do |entrypoint|
       entry = entrypoint.board_entry
@@ -65,7 +64,7 @@ private
 
   def create_point_ranking exec_date
     BoardEntryPoint.find(:all, :conditions => make_conditions("point > 0", exec_date)).each do |entrypoint|
-      entry = entrypoint.board_entry 
+      entry = entrypoint.board_entry
       if published? entry
         create_ranking_by_entry entry, entrypoint.point, "entry_he", exec_date
       end
@@ -81,10 +80,10 @@ private
   end
 
   def create_post_ranking exec_date
-    BoardEntry.find(:all, :conditions => make_conditions("entry_type = 'DIARY'", exec_date), 
-                    :select => "user_id, MAX(user_entry_no) as user_entry_no", 
+    BoardEntry.find(:all, :conditions => make_conditions("entry_type = 'DIARY'", exec_date),
+                    :select => "user_id, MAX(user_entry_no) as user_entry_no",
                     :group => "user_id").each do |record|
-      user = User.find(record.user_id) 
+      user = User.find(record.user_id)
       create_ranking_by_user user, record.user_entry_no, "user_entry", exec_date
     end
   end
@@ -139,7 +138,7 @@ private
   end
 
   def create_ranking_by_entry entry, amount, contents_type, exec_date
-    create_ranking page_url(entry.id), entry.title, entry.user.name, 
+    create_ranking page_url(entry.id), entry.title, entry.user.name,
       user_url(entry.user.uid), amount, contents_type, exec_date
   end
 
