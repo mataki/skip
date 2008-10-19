@@ -7,8 +7,44 @@
   <%= skip_javascript_include_tag 'jquery.hotkeys.js' %>
   <script language="JavaScript" type="text/javascript">$j = jQuery.noConflict();</script>
   <%= javascript_include_tag 'application' %>
-  <%= stylesheet_link_tag 'monta' %>
 </head>
+
+<style type="text/css">
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  margin: 0;
+  position: relative;
+  left: 0;
+  text-align: left;
+  font-size: 12px;
+  font-family: Verdana, Arial, sans-serif;
+  background-color: #FFFFFF;
+  color: #555555;
+  width: 100%;
+}
+a {
+  text-decoration: none;
+  color: silver;
+}
+.my_header {
+  padding: 4px;
+  font-size: 18px;
+  font-weight: bold;
+  background-color:#DDFFDD;
+}
+.my_counter {
+  padding: 4px;
+  font-size: 20px;
+  font-weight: bold;
+  background-color:#bfffbf;
+  position:absolute;
+  top: 0px;
+  right: 0px;
+}
+</style>
 
 <body id='monta_body' style="height:100%">
   <div class="my_header"><%=h @board_entry.title %></div>

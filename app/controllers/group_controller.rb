@@ -40,7 +40,8 @@ class GroupController < ApplicationController
 
   # tab_menu
   def users
-    params[:condition].merge!(:with_group => @group.id) if params[:condition]
+    params[:condition] = {} unless params[:condition]
+    params[:condition].merge!(:with_group => @group.id)
     @condition = UserSearchCondition.create_by_params params
 
     @pages, @users = paginate(:user,

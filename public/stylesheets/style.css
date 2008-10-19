@@ -149,9 +149,9 @@ div#top div#menu_btn a:hover {
 /* 共通系 */
 /* 件数や次ページなどのナビ */
 div.navi {
-  border: 3px double silver;
-  padding: 1px 5px;
-  background-color: #f0f0ff;
+  border: 1px solid #e0e0ff;
+  padding: 1px;
+  background-color: #f8f8ff;
   text-align: right;
 }
 /* 検索時の検索条件スペース */
@@ -443,3 +443,139 @@ table.chain_table td.message div {
 .tag6 {font-size: 2.0em;}
 
 /* ----------------------------------- */
+/* マイページ：足跡 */
+div.access_count {
+  text-align: center;
+  font-size: 15px;
+  font-weight: bold;
+  border: 1px dashed #ffc000;
+  margin: 2px 0;
+}
+ul.access_tracks {
+  list-style-type: none;
+  margin: 5px 15px;
+}
+ul.access_tracks li {
+  border-bottom: 1px dotted silver;
+}
+
+/* ----------------------------------- */
+/* グループ・ユーザの検索条件部分 */
+table.search_cond_box {
+  width: 100%;
+  border-collapse: separate;
+}
+table.search_cond_box th {
+  width: 120px;
+  background-color: #f0f0ff;
+  padding: 0px 5px;
+  border-top: 1px solid silver;
+  border-bottom: 1px solid silver;
+}
+div.search_cond_space table.cateogry {
+  border-collapse: separate;
+}
+div.search_cond_space table.category th {
+  background-color: #f0f0ff;
+  padding: 0px 5px;
+  border-top: 1px solid silver;
+  border-bottom: 1px solid silver;
+  width: 120px;
+}
+div.search_cond_space table.category td {
+  font-size: 10px;
+  width: 105px;
+}
+div.search_cond_space table.cateogry {
+  border-collapse: separate;
+}
+div.search_cond_space table.sort th {
+  background-color: #f0f0ff;
+  padding: 0px 5px;
+  border-top: 1px solid silver;
+  border-bottom: 1px solid silver;
+  width: 120px;
+}
+div.search_cond_space table.category td.title {
+  color: gray;
+  font-weight: bold;
+  background-color: #eee;
+  width: 80px;
+  text-align: center;
+}
+
+/* ----------------------------------- */
+/* ユーザ検索の検索結果部分 */
+table.user_box {
+  margin: 5px 10px;
+  width: 95%;
+  border-collapse: collapse;
+  border: 1px solid silver;
+}
+table.user_box th {
+  width: 20%;
+  background-color: #f0f0ff;
+  padding-left: 5px;
+  border: 1px solid silver;
+}
+table.user_box td.image {
+  padding: 0px;
+  width: 130px;
+  text-align: center;
+}
+table.user_box td {
+  padding-left: 5px;
+  border: 1px solid silver;
+}
+
+/* ----------------------------------- */
+/* グループ検索の検索結果部分 */
+table.group_box {
+  margin: 5px 10px;
+  width: 95%;
+  border-collapse: collapse;
+  border: 1px solid silver;
+  table-layout: fixed;
+}
+table.group_box th {
+  width: 70px;
+  background-color: #f0f0ff;
+  padding-left: 5px;
+  border: 1px solid silver;
+}
+table.group_box td {
+  padding: 0px 5px;
+}
+table.group_box td.auth {
+  text-align: left;
+  font-size: 10px;
+  color: gray;
+}
+table.group_box td.category {
+  text-align: right;
+  font-size: 10px;
+  color: gray;
+}
+table.group_box td.desc {
+  border: 1px solid silver;
+}
+table.group_box td.since {
+  text-align: right;
+  font-size: 10px;
+}
+
+table.group_list_box {
+  margin: 5px 10px;
+  width: 95%;
+  border-collapse: collapse;
+  border: 1px solid silver;
+}
+table.group_list_box th {
+  text-align: left;
+  background-color: #f0f0ff;
+  padding-left: 5px;
+  border: 1px solid silver;
+}
+table.group_list_box td {
+  padding: 0px 5px;
+}

@@ -5,7 +5,7 @@
 <div id="body" style="margin: 10px 5px 0px 5px">
 
   <div class="full_text_search">
-    <div style="margin-left: 90px;">
+    <div class="search_cond_space">
       <% form_tag({:controller => 'search', :action => 'full_text_search'} ,:method => 'get', :id => 'full_text_form') do -%>
       <div>
         <%= text_field_tag('query', params[:query], :size => 50 ) -%>
