@@ -3,8 +3,8 @@
 <%= render :partial => '/admin/shared/topic_path' %>
 <% end -%>
 <% content_for :contents_right do -%>
-  <h3><%= _('Caution!') %></h3>
-  <p style="color: red;"><b><%= _('ユーザ名変更及び作成は様々な箇所に影響するため、どうしても変更が必要な場合のみ変更するようにして下さい。<br/>また、処理に時間がかかりレスポンスが遅くなる場合がありますので、一般ユーザのアクセスしていない時間に実行してください。') %></b></p>
+  <h3><%= _('Admin|Create Change Uid|Caution') %></h3>
+  <p style="color: red;"><b><%= _('Admin|Create Change Uid|Caution Description') %></b></p>
 <div class="box tabular">
   <% form_for(:user_uid, :url => {:action => :change_uid, :id => @user}) do |f| -%>
   <%= error_messages_for :user_uid %>

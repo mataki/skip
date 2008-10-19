@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-10-18 13:41+0900\n"
+"POT-Creation-Date: 2008-10-18 13:56+0900\n"
 "PO-Revision-Date: 2008-09-30 15:00+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -967,6 +967,20 @@ msgstr "ユーザ名"
 msgid "Admin::User|User uids"
 msgstr "ログインID"
 
+#: app/views/admin/users/create_uid.html.erb:6
+#: app/views/admin/users/change_uid.html.erb:6
+msgid "Admin|Create Change Uid|Caution"
+msgstr "注意！"
+
+#: app/views/admin/users/create_uid.html.erb:7
+#: app/views/admin/users/change_uid.html.erb:7
+msgid "Admin|Create Change Uid|Caution Description"
+msgstr ""
+"ユーザ名変更及び作成は様々な箇所に影響するため、どうしても変更が必要な場合の"
+"み変更するようにして下さい。<br/>処理に時間がかかりレスポンスが遅くなる"
+"場合がありますので、一般ユーザのアクセスしていない時間に実行してください。<br/>"
+"また、変更したユーザは、再ログインが要求されます。（管理者ご自身の場合も例外ではありません）"
+
 #: app/models/antenna_item.rb:-
 msgid "AntennaItem|"
 msgstr "アンテナアイテム"
@@ -1261,11 +1275,6 @@ msgstr ""
 #: app/views/admin/users/import.html.erb:8
 msgid "CSVファイルの文字コードはUTF-8にしてアップロードするようにして下さい。"
 msgstr ""
-
-#: app/views/admin/users/create_uid.html.erb:6
-#: app/views/admin/users/change_uid.html.erb:6
-msgid "Caution!"
-msgstr "注意!"
 
 #: app/models/chain.rb:-
 msgid "Chain|Created on"
@@ -2597,14 +2606,6 @@ msgstr ""
 
 #: app/controllers/admin/users_controller.rb:177
 msgid "ユーザ名が見つかりませんでした。"
-msgstr ""
-
-#: app/views/admin/users/create_uid.html.erb:7
-#: app/views/admin/users/change_uid.html.erb:7
-msgid ""
-"ユーザ名変更及び作成は様々な箇所に影響するため、どうしても変更が必要な場合の"
-"み変更するようにして下さい。<br/>また、処理に時間がかかりレスポンスが遅くなる"
-"場合がありますので、一般ユーザのアクセスしていない時間に実行してください。"
 msgstr ""
 
 #: app/views/admin/users/import.html.erb:9
