@@ -210,11 +210,11 @@ module ApplicationHelper
     icon_tag(icon_name, :alt => view_name, :title => view_name)
   end
 
-  # [コメント(n)-ポイント(n)-TB(n)-アクセス(n)]の表示
+  # [コメント(n)-ポイント(n)-話題(n)-アクセス(n)]の表示
   def get_entry_infos entry
     output = "[コメント(#{entry.board_entry_comments_count})"
     output << "-#{h Admin::Setting.point_button}(#{entry.point.to_s})"
-    output << "-TB(#{entry.entry_trackbacks_count})"
+    output << "-話題(#{entry.entry_trackbacks_count})"
     output << "-アクセス(#{entry.state.access_count.to_s})]"
     return output
   end
