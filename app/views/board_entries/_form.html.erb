@@ -23,16 +23,6 @@ div.input_line textarea {
 <%= hidden_field_tag 'lock_version', @board_entry.lock_version -%>
 
 <div class="input_line">
-  <div class="input_label" style="height: 30px;">日付</div>
-  <div class="input_value">
-    <p><%= datetime_select 'board_entry', 'date', :use_month_numbers => true -%></p>
-    <p><a href="#" onclick="setCurrentDatetime('board_entry', 'date');">[現在時刻を設定]</a>
-      <%= check_box 'board_entry', 'ignore_times' -%>時刻は表示しない</p>
-  </div>
-  <div style="clear: left"></div>
-</div>
-
-<div class="input_line">
   <div class="input_label">タグ</div>
   <div class="input_value"><%= text_field 'board_entry', 'category', :size => '60', :value => @board_entry.comma_category %>
     <div id="category_box" style="display:none;">
@@ -72,6 +62,16 @@ div.input_line textarea {
   <div class="input_label" style="height: 3em;">ファイル</div>
   <div style="float:left;">
     <%= render :partial => "shared/multiple_file" , :locals => {:file_field_name => "image", :submit_button_id => "submit_button", :blog_mode => true} -%>
+  </div>
+  <div style="clear: left"></div>
+</div>
+
+<div class="input_line">
+  <div class="input_label" style="height: 30px;">日付</div>
+  <div class="input_value">
+    <p><%= datetime_select 'board_entry', 'date', :use_month_numbers => true -%></p>
+    <p><a href="#" onclick="setCurrentDatetime('board_entry', 'date');">[現在時刻を設定]</a>
+      <%= check_box 'board_entry', 'ignore_times' -%>時刻は表示しない</p>
   </div>
   <div style="clear: left"></div>
 </div>
