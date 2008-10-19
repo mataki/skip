@@ -16,7 +16,7 @@
 module Admin::SettingsHelper
   def settings_label_with_text_field_tag symbolize_key
     label(Admin::Setting.name, symbolize_key) +
-    text_field_tag("settings[#{symbolize_key.to_s}]", Admin::Setting.send(symbolize_key.to_s), :id => "setting_#{symbolize_key.to_s}", :size => 40) +
+    text_field_tag("settings[#{symbolize_key.to_s}]", Admin::Setting.send(symbolize_key.to_s), :id => "setting_#{symbolize_key.to_s}", :size => 60) +
     help_icon_tag(:content => _(Admin::Setting.name + '|' + (symbolize_key.to_s + '_description').humanize))
   end
 

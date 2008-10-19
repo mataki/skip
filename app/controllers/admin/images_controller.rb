@@ -91,7 +91,7 @@ class Admin::ImagesController < Admin::ApplicationController
   end
 
   class LogoImage < BaseImage
-    IMAGE_NAMES = %w(title_logo header_logo footer_logo).freeze
+    IMAGE_NAMES = %w(title_logo header_logo).freeze
     def initialize param = {}
       super
       @content_types = ['image/png']
@@ -104,7 +104,7 @@ class Admin::ImagesController < Admin::ApplicationController
   end
 
   class BackGroundImage < BaseImage
-    IMAGE_NAMES = %w(background001 background002 background003 background004 background005 
+    IMAGE_NAMES = %w(background001 background002 background003 background004 background005
                      background006 background007 background008 background009 background010).freeze
     def initialize param = {}
       super
@@ -122,7 +122,7 @@ class Admin::ImagesController < Admin::ApplicationController
     def initialize param = {}
       super
     end
-    
+
     def self.extentions
       'ico'
     end
