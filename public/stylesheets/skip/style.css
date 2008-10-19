@@ -86,33 +86,29 @@ div#statusbar span {
 }
 /* ----------------------------------- */
 div#footer {
-  color:#A9A9A9;
-  overflow:hidden;
+  color: #A9A9A9;
+  overflow: hidden;
   text-align: center;
-  height: 6em;
+  position: relative;
+  height: 50px;
 }
 div#footer .site {
-  margin:0 auto;
-  width:60em;
 }
 div#footer .info {
-  float: left;
-  width:35em;
-  padding: 1em;
+  width: 50em;
+  margin: auto;
+  padding: 5px 200px 3px 0;
 }
 div#footer .info .links {
   border-bottom:1px dashed silver;
-  padding-bottom:0.4em;
+  padding-bottom:4px;
   font-weight: bold;
 }
 div#footer .info .company {
-  padding-top:0.4em;
-  font-size: 10px;
+  padding-top: 5px;
 }
 div#footer .sponsor {
-  float: right;
-  width:20em;
-  padding: 0.6em;
+  position: absolute; top: 0px; right: 0px;
 }
 /* ----------------------------------- */
 /* flashで表示するメッセージ */

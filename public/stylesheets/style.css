@@ -115,7 +115,7 @@ div#header {
 div#header div#logo {
   float: left;
   vertical-align: top;
-  margin: 3px 0 0 20px
+  margin: 3px 0 0 10px;
 }
 div#header div#search {
   float: right;
