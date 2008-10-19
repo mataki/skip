@@ -14,8 +14,6 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Admin::Setting < ActiveRecord::Base
-  N_('Admin::Setting|App title')
-  N_('Admin::Setting|App title description')
   N_('Admin::Setting|Abbr app title')
   N_('Admin::Setting|Abbr app title description')
   N_('Admin::Setting|Contact addr')

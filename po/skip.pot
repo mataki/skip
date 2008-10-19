@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-10-18 13:56+0900\n"
+"POT-Creation-Date: 2008-10-19 23:00+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -148,7 +148,7 @@ msgstr ""
 msgid "Admin::Bookmark|Url"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:26
+#: app/helpers/admin/application_helper.rb:24
 #: app/controllers/admin/documents_controller.rb:101
 msgid "Admin::DocumentsController"
 msgstr ""
@@ -249,7 +249,7 @@ msgstr ""
 msgid "Admin::Group|Protected"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:25
+#: app/helpers/admin/application_helper.rb:23
 msgid "Admin::ImagesController"
 msgstr ""
 
@@ -510,7 +510,7 @@ msgstr ""
 msgid "Admin::OpenidIdentifier|Url"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:24
+#: app/helpers/admin/application_helper.rb:26
 #: app/controllers/admin/settings_controller.rb:23
 msgid "Admin::SettingsController|feed"
 msgstr ""
@@ -520,7 +520,7 @@ msgstr ""
 msgid "Admin::SettingsController|literal"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:23
+#: app/helpers/admin/application_helper.rb:25
 #: app/controllers/admin/settings_controller.rb:21
 msgid "Admin::SettingsController|mail"
 msgstr ""
@@ -535,223 +535,215 @@ msgstr ""
 msgid "Admin::SettingsController|other"
 msgstr ""
 
-#: app/models/admin/setting.rb:19
+#: app/models/admin/setting.rb:17
 msgid "Admin::Setting|Abbr app title"
 msgstr ""
 
-#: app/models/admin/setting.rb:20
+#: app/models/admin/setting.rb:18
 msgid "Admin::Setting|Abbr app title description"
 msgstr ""
 
-#: app/models/admin/setting.rb:50
+#: app/models/admin/setting.rb:48
 msgid "Admin::Setting|Antenna default group"
 msgstr ""
 
-#: app/models/admin/setting.rb:51
+#: app/models/admin/setting.rb:49
 msgid "Admin::Setting|Antenna default group description"
 msgstr ""
 
-#: app/models/admin/setting.rb:49
+#: app/models/admin/setting.rb:47
 msgid "Admin::Setting|Antenna settings"
 msgstr ""
 
-#: app/models/admin/setting.rb:17
-msgid "Admin::Setting|App title"
-msgstr ""
-
-#: app/models/admin/setting.rb:18
-msgid "Admin::Setting|App title description"
-msgstr ""
-
-#: app/models/admin/setting.rb:21
+#: app/models/admin/setting.rb:19
 msgid "Admin::Setting|Contact addr"
 msgstr ""
 
-#: app/models/admin/setting.rb:22
+#: app/models/admin/setting.rb:20
 msgid "Admin::Setting|Contact addr description"
 msgstr ""
 
-#: app/models/admin/setting.rb:31
+#: app/models/admin/setting.rb:29
 msgid "Admin::Setting|Footer contact"
 msgstr ""
 
-#: app/models/admin/setting.rb:32
+#: app/models/admin/setting.rb:30
 msgid "Admin::Setting|Footer contact description"
 msgstr ""
 
-#: app/models/admin/setting.rb:33
+#: app/models/admin/setting.rb:31
 msgid "Admin::Setting|Footer copyright"
 msgstr ""
 
-#: app/models/admin/setting.rb:34
+#: app/models/admin/setting.rb:32
 msgid "Admin::Setting|Footer copyright description"
 msgstr ""
 
-#: app/models/admin/setting.rb:35
+#: app/models/admin/setting.rb:33
 msgid "Admin::Setting|Footer image link url"
 msgstr ""
 
-#: app/models/admin/setting.rb:36
+#: app/models/admin/setting.rb:34
 msgid "Admin::Setting|Footer image link url description"
 msgstr ""
 
-#: app/models/admin/setting.rb:29
+#: app/models/admin/setting.rb:27
 msgid "Admin::Setting|Footer link"
 msgstr ""
 
-#: app/models/admin/setting.rb:30
+#: app/models/admin/setting.rb:28
 msgid "Admin::Setting|Footer link description"
 msgstr ""
 
-#: app/models/admin/setting.rb:23
+#: app/models/admin/setting.rb:21
 msgid "Admin::Setting|Help url"
 msgstr ""
 
-#: app/models/admin/setting.rb:24
+#: app/models/admin/setting.rb:22
 msgid "Admin::Setting|Help url description"
 msgstr ""
 
-#: app/models/admin/setting.rb:25
+#: app/models/admin/setting.rb:23
 msgid "Admin::Setting|Initial anntena"
 msgstr ""
 
-#: app/models/admin/setting.rb:26
+#: app/models/admin/setting.rb:24
 msgid "Admin::Setting|Initial anntena description"
 msgstr ""
 
-#: app/models/admin/setting.rb:27
+#: app/models/admin/setting.rb:25
 msgid "Admin::Setting|Login account"
 msgstr ""
 
-#: app/models/admin/setting.rb:28
+#: app/models/admin/setting.rb:26
 msgid "Admin::Setting|Login account description"
 msgstr ""
 
-#: app/models/admin/setting.rb:68
+#: app/models/admin/setting.rb:66
 msgid "Admin::Setting|Mail function setting"
 msgstr ""
 
-#: app/models/admin/setting.rb:69
+#: app/models/admin/setting.rb:67
 msgid "Admin::Setting|Mail function setting description"
 msgstr ""
 
-#: app/models/admin/setting.rb:47
+#: app/models/admin/setting.rb:45
 msgid "Admin::Setting|Mypage feed default limit"
 msgstr ""
 
-#: app/models/admin/setting.rb:48
+#: app/models/admin/setting.rb:46
 msgid "Admin::Setting|Mypage feed default limit description"
 msgstr ""
 
-#: app/models/admin/setting.rb:41
+#: app/models/admin/setting.rb:39
 msgid "Admin::Setting|Mypage feed settings"
 msgstr ""
 
-#: app/models/admin/setting.rb:42
+#: app/models/admin/setting.rb:40
 msgid "Admin::Setting|Mypage feed settings description"
 msgstr ""
 
-#: app/models/admin/setting.rb:45
+#: app/models/admin/setting.rb:43
 msgid "Admin::Setting|Mypage feed settings title"
 msgstr ""
 
-#: app/models/admin/setting.rb:46
+#: app/models/admin/setting.rb:44
 msgid "Admin::Setting|Mypage feed settings title description"
 msgstr ""
 
-#: app/models/admin/setting.rb:43
+#: app/models/admin/setting.rb:41
 msgid "Admin::Setting|Mypage feed settings url"
 msgstr ""
 
-#: app/models/admin/setting.rb:44
+#: app/models/admin/setting.rb:42
 msgid "Admin::Setting|Mypage feed settings url description"
 msgstr ""
 
-#: app/models/admin/setting.rb:66
+#: app/models/admin/setting.rb:64
 msgid "Admin::Setting|Mypage feed timeout"
 msgstr ""
 
-#: app/models/admin/setting.rb:67
+#: app/models/admin/setting.rb:65
 msgid "Admin::Setting|Mypage feed timeout description"
 msgstr ""
 
-#: app/models/admin/setting.rb:37
+#: app/models/admin/setting.rb:35
 msgid "Admin::Setting|Point button"
 msgstr ""
 
-#: app/models/admin/setting.rb:38
+#: app/models/admin/setting.rb:36
 msgid "Admin::Setting|Point button description"
 msgstr ""
 
-#: app/models/admin/setting.rb:70
+#: app/models/admin/setting.rb:68
 msgid "Admin::Setting|Recent date"
 msgstr ""
 
-#: app/models/admin/setting.rb:71
+#: app/models/admin/setting.rb:69
 msgid "Admin::Setting|Recent date description"
 msgstr ""
 
-#: app/models/admin/setting.rb:52
+#: app/models/admin/setting.rb:50
 msgid "Admin::Setting|Smtp settings"
 msgstr ""
 
-#: app/models/admin/setting.rb:60
+#: app/models/admin/setting.rb:58
 msgid "Admin::Setting|Smtp settings address"
 msgstr ""
 
-#: app/models/admin/setting.rb:61
+#: app/models/admin/setting.rb:59
 msgid "Admin::Setting|Smtp settings address description"
 msgstr ""
 
-#: app/models/admin/setting.rb:64
+#: app/models/admin/setting.rb:62
 msgid "Admin::Setting|Smtp settings authentication"
 msgstr ""
 
-#: app/models/admin/setting.rb:65
+#: app/models/admin/setting.rb:63
 msgid "Admin::Setting|Smtp settings authentication description"
 msgstr ""
 
-#: app/models/admin/setting.rb:53
+#: app/models/admin/setting.rb:51
 msgid "Admin::Setting|Smtp settings description"
 msgstr ""
 
-#: app/models/admin/setting.rb:62
+#: app/models/admin/setting.rb:60
 msgid "Admin::Setting|Smtp settings domain"
 msgstr ""
 
-#: app/models/admin/setting.rb:63
+#: app/models/admin/setting.rb:61
 msgid "Admin::Setting|Smtp settings domain description"
 msgstr ""
 
-#: app/models/admin/setting.rb:54
+#: app/models/admin/setting.rb:52
 msgid "Admin::Setting|Smtp settings password"
 msgstr ""
 
-#: app/models/admin/setting.rb:55
+#: app/models/admin/setting.rb:53
 msgid "Admin::Setting|Smtp settings password description"
 msgstr ""
 
-#: app/models/admin/setting.rb:56
+#: app/models/admin/setting.rb:54
 msgid "Admin::Setting|Smtp settings port"
 msgstr ""
 
-#: app/models/admin/setting.rb:57
+#: app/models/admin/setting.rb:55
 msgid "Admin::Setting|Smtp settings port description"
 msgstr ""
 
-#: app/models/admin/setting.rb:58
+#: app/models/admin/setting.rb:56
 msgid "Admin::Setting|Smtp settings user name"
 msgstr ""
 
-#: app/models/admin/setting.rb:59
+#: app/models/admin/setting.rb:57
 msgid "Admin::Setting|Smtp settings user name description"
 msgstr ""
 
-#: app/models/admin/setting.rb:39
+#: app/models/admin/setting.rb:37
 msgid "Admin::Setting|Stop new user"
 msgstr ""
 
-#: app/models/admin/setting.rb:40
+#: app/models/admin/setting.rb:38
 msgid "Admin::Setting|Stop new user description"
 msgstr ""
 
@@ -2434,6 +2426,10 @@ msgstr ""
 msgid "user uid"
 msgstr ""
 
+#: app/views/admin/settings/_literal.html.erb:10
+msgid "お問い合わせ・ヘルプ"
+msgstr ""
+
 #: app/controllers/platform_controller.rb:191
 msgid "このサーバへの認証を確認してください"
 msgstr ""
@@ -2542,6 +2538,10 @@ msgid ""
 "Kbyteまでアップロード可能です。"
 msgstr ""
 
+#: app/views/admin/settings/_literal.html.erb:18
+msgid "フッター"
+msgstr ""
+
 #: app/controllers/platform_controller.rb:199
 msgid "ユーザの登録に失敗しました。"
 msgstr ""
@@ -2621,6 +2621,10 @@ msgstr ""
 
 #: app/controllers/admin/group_categories_controller.rb:34
 msgid "削除対象のカテゴリが存在しませんでした。"
+msgstr ""
+
+#: app/views/admin/settings/_literal.html.erb:2
+msgid "名称・名前"
 msgstr ""
 
 #: app/controllers/admin/users_controller.rb:171
@@ -2757,7 +2761,7 @@ msgstr ""
 msgid "管理者ユーザの作成"
 msgstr ""
 
-#: app/controllers/group_controller.rb:52
+#: app/controllers/group_controller.rb:53
 #: app/controllers/users_controller.rb:29
 msgid "該当するユーザは存在しませんでした。"
 msgstr ""

@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-10-18 13:56+0900\n"
+"POT-Creation-Date: 2008-10-19 23:00+0900\n"
 "PO-Revision-Date: 2008-09-30 15:00+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -148,7 +148,7 @@ msgstr "タイトル"
 msgid "Admin::Bookmark|Url"
 msgstr "URL"
 
-#: app/helpers/admin/application_helper.rb:26
+#: app/helpers/admin/application_helper.rb:24
 #: app/controllers/admin/documents_controller.rb:101
 msgid "Admin::DocumentsController"
 msgstr "説明文設定"
@@ -259,7 +259,7 @@ msgstr "グループ名"
 msgid "Admin::Group|Protected"
 msgstr "参加承認"
 
-#: app/helpers/admin/application_helper.rb:25
+#: app/helpers/admin/application_helper.rb:23
 msgid "Admin::ImagesController"
 msgstr "画像設定"
 
@@ -534,7 +534,7 @@ msgstr "利用する"
 msgid "Admin::OpenidIdentifier|Url"
 msgstr "OpenID URL"
 
-#: app/helpers/admin/application_helper.rb:24
+#: app/helpers/admin/application_helper.rb:26
 #: app/controllers/admin/settings_controller.rb:23
 msgid "Admin::SettingsController|feed"
 msgstr "RSSフィード設定"
@@ -544,7 +544,7 @@ msgstr "RSSフィード設定"
 msgid "Admin::SettingsController|literal"
 msgstr "文言設定"
 
-#: app/helpers/admin/application_helper.rb:23
+#: app/helpers/admin/application_helper.rb:25
 #: app/controllers/admin/settings_controller.rb:21
 msgid "Admin::SettingsController|mail"
 msgstr "メール関連設定"
@@ -559,49 +559,41 @@ msgstr "全体設定"
 msgid "Admin::SettingsController|other"
 msgstr "その他設定"
 
-#: app/models/admin/setting.rb:19
-msgid "Admin::Setting|Abbr app title"
-msgstr "システムの略称"
-
-#: app/models/admin/setting.rb:20
-msgid "Admin::Setting|Abbr app title description"
-msgstr "各画面での用いるシステム名は、主にこの略称です。"
-
-#: app/models/admin/setting.rb:50
-msgid "Admin::Setting|Antenna default group"
-msgstr "初期登録するユーザ/グループ"
-
-#: app/models/admin/setting.rb:51
-msgid "Admin::Setting|Antenna default group description"
-msgstr "上記のアンテナに追加するユーザ名/グループIDを記入して下さい。"
-
-#: app/models/admin/setting.rb:49
-msgid "Admin::Setting|Antenna settings"
-msgstr "アンテナ設定"
-
 #: app/models/admin/setting.rb:17
-msgid "Admin::Setting|App title"
+msgid "Admin::Setting|Abbr app title"
 msgstr "システムの名称"
 
 #: app/models/admin/setting.rb:18
-msgid "Admin::Setting|App title description"
-msgstr "システムの正式名称になります。"
+msgid "Admin::Setting|Abbr app title description"
+msgstr "各画面での用いるシステムの名称です。"
 
-#: app/models/admin/setting.rb:21
+#: app/models/admin/setting.rb:48
+msgid "Admin::Setting|Antenna default group"
+msgstr "初期登録するユーザ/グループ"
+
+#: app/models/admin/setting.rb:49
+msgid "Admin::Setting|Antenna default group description"
+msgstr "上記のアンテナに追加するユーザ名/グループIDを記入して下さい。"
+
+#: app/models/admin/setting.rb:47
+msgid "Admin::Setting|Antenna settings"
+msgstr "アンテナ設定"
+
+#: app/models/admin/setting.rb:19
 msgid "Admin::Setting|Contact addr"
 msgstr "お問い合わせ先メールアドレス"
 
-#: app/models/admin/setting.rb:22
+#: app/models/admin/setting.rb:20
 msgid "Admin::Setting|Contact addr description"
 msgstr ""
 "ユーザから運営者への問い合わせ先メールアドレスです。システムからのメール送信"
 "の送信元としても表示されます。"
 
-#: app/models/admin/setting.rb:31
+#: app/models/admin/setting.rb:29
 msgid "Admin::Setting|Footer contact"
 msgstr "フッターのお問い合わせ先"
 
-#: app/models/admin/setting.rb:32
+#: app/models/admin/setting.rb:30
 msgid "Admin::Setting|Footer contact description"
 msgstr ""
 "問い合わせ先窓口となる、TEL or メールアドレス or 担当者名などを記述してくださ"
@@ -609,198 +601,198 @@ msgstr ""
 "記述することも可能ですが、記述の際はセキュリティ上の問題に十分注意して下さ"
 "い。</p>"
 
-#: app/models/admin/setting.rb:33
+#: app/models/admin/setting.rb:31
 msgid "Admin::Setting|Footer copyright"
 msgstr "フッターの運営者名"
 
-#: app/models/admin/setting.rb:34
+#: app/models/admin/setting.rb:32
 msgid "Admin::Setting|Footer copyright description"
 msgstr ""
 "フッターの2行目右側に表示されます。このシステムを運営する担当者名 or チーム"
 "名 or 社名などを記述して下さい。"
 
-#: app/models/admin/setting.rb:35
+#: app/models/admin/setting.rb:33
 msgid "Admin::Setting|Footer image link url"
 msgstr "フッターの画像リンクURL"
 
-#: app/models/admin/setting.rb:36
+#: app/models/admin/setting.rb:34
 msgid "Admin::Setting|Footer image link url description"
 msgstr ""
 "フッターの右端に表示される画像をクリックした際に移動する先のURLです（画像ファ"
 "イルの変更は、画像設定タブからできます）"
 
-#: app/models/admin/setting.rb:29
+#: app/models/admin/setting.rb:27
 msgid "Admin::Setting|Footer link"
 msgstr "フッターのリンク集"
 
-#: app/models/admin/setting.rb:30
+#: app/models/admin/setting.rb:28
 msgid "Admin::Setting|Footer link description"
 msgstr ""
 "フッターの1行目に表示されます。よく使うリンクを指定するのがお勧めです。HTMLの"
 "タグをそのまま記述できます。<p style=\"color:red;\">JavaScript等を記述するこ"
 "とも可能ですが、記述の際はセキュリティ上の問題に十分注意して下さい。</p>"
 
-#: app/models/admin/setting.rb:23
+#: app/models/admin/setting.rb:21
 msgid "Admin::Setting|Help url"
 msgstr "ヘルプのURL"
 
-#: app/models/admin/setting.rb:24
+#: app/models/admin/setting.rb:22
 msgid "Admin::Setting|Help url description"
 msgstr "画面右上のヘルプ用です。何も入力しない場合、リンクが表示されません。"
 
-#: app/models/admin/setting.rb:25
+#: app/models/admin/setting.rb:23
 msgid "Admin::Setting|Initial anntena"
 msgstr "初期登録するアンテナ名"
 
-#: app/models/admin/setting.rb:26
+#: app/models/admin/setting.rb:24
 msgid "Admin::Setting|Initial anntena description"
 msgstr ""
 "ユーザ登録時に、アンテナを予め1つ登録しておけます。その名前を記述して下さい。"
 
-#: app/models/admin/setting.rb:27
+#: app/models/admin/setting.rb:25
 msgid "Admin::Setting|Login account"
 msgstr "ログインIDの名称"
 
-#: app/models/admin/setting.rb:28
+#: app/models/admin/setting.rb:26
 msgid "Admin::Setting|Login account description"
 msgstr ""
 "例えば、社員番号をログインIDに使っている場合、「社員番号」に変更しておくと、"
 "ユーザがログインIDを忘れにくくなります。"
 
-#: app/models/admin/setting.rb:68
+#: app/models/admin/setting.rb:66
 msgid "Admin::Setting|Mail function setting"
 msgstr "メール機能を有効にする"
 
-#: app/models/admin/setting.rb:69
+#: app/models/admin/setting.rb:67
 msgid "Admin::Setting|Mail function setting description"
 msgstr "システムから連絡メールが送信できます。併せてSMTP設定を行ってください。"
 
-#: app/models/admin/setting.rb:47
+#: app/models/admin/setting.rb:45
 msgid "Admin::Setting|Mypage feed default limit"
 msgstr "1フィードあたりのサマリの件数"
 
-#: app/models/admin/setting.rb:48
+#: app/models/admin/setting.rb:46
 msgid "Admin::Setting|Mypage feed default limit description"
 msgstr ""
 "マイページの右側にフィードブロックがあり、中にサマリを表示しています。ここ"
 "で、1フィードあたりのサマリの件数を調整し、マイページでの見映えを確認して下さ"
 "い。"
 
-#: app/models/admin/setting.rb:41
+#: app/models/admin/setting.rb:39
 msgid "Admin::Setting|Mypage feed settings"
 msgstr "フィードを追加/削除する"
 
-#: app/models/admin/setting.rb:42
+#: app/models/admin/setting.rb:40
 msgid "Admin::Setting|Mypage feed settings description"
 msgstr "マイページに表示するフィードの設定を行います。"
 
-#: app/models/admin/setting.rb:45
+#: app/models/admin/setting.rb:43
 msgid "Admin::Setting|Mypage feed settings title"
 msgstr "フィードのタイトル"
 
-#: app/models/admin/setting.rb:46
+#: app/models/admin/setting.rb:44
 msgid "Admin::Setting|Mypage feed settings title description"
 msgstr "フィードタイトルを指定します。"
 
-#: app/models/admin/setting.rb:43
+#: app/models/admin/setting.rb:41
 msgid "Admin::Setting|Mypage feed settings url"
 msgstr "フィードのURL"
 
-#: app/models/admin/setting.rb:44
+#: app/models/admin/setting.rb:42
 msgid "Admin::Setting|Mypage feed settings url description"
 msgstr "取得するフィードのURLを指定します。"
 
-#: app/models/admin/setting.rb:66
+#: app/models/admin/setting.rb:64
 msgid "Admin::Setting|Mypage feed timeout"
 msgstr "フィード取得のタイムアウト(秒)"
 
-#: app/models/admin/setting.rb:67
+#: app/models/admin/setting.rb:65
 msgid "Admin::Setting|Mypage feed timeout description"
 msgstr ""
 "フィードは、このシステム外にあるため、取得できない場合があります。タイムアウ"
 "トを経過すると、取得を中断します。"
 
-#: app/models/admin/setting.rb:37
+#: app/models/admin/setting.rb:35
 msgid "Admin::Setting|Point button"
 msgstr "ポイント評価のボタン名"
 
-#: app/models/admin/setting.rb:38
+#: app/models/admin/setting.rb:36
 msgid "Admin::Setting|Point button description"
 msgstr "掲示板やブログ等でのポイント評価のボタン名を変更できます。"
 
-#: app/models/admin/setting.rb:70
+#: app/models/admin/setting.rb:68
 msgid "Admin::Setting|Recent date"
 msgstr "[最近]を示す日数"
 
-#: app/models/admin/setting.rb:71
+#: app/models/admin/setting.rb:69
 msgid "Admin::Setting|Recent date description"
 msgstr ""
 "[最近]を示す日数です。マイページに表示される[最近投稿された記事]等における[最"
 "近]が何日前までなのかを設定します。"
 
-#: app/models/admin/setting.rb:52
+#: app/models/admin/setting.rb:50
 msgid "Admin::Setting|Smtp settings"
 msgstr "SMTP設定"
 
-#: app/models/admin/setting.rb:60
+#: app/models/admin/setting.rb:58
 msgid "Admin::Setting|Smtp settings address"
 msgstr "SMTPサーバのホスト名"
 
-#: app/models/admin/setting.rb:61
+#: app/models/admin/setting.rb:59
 msgid "Admin::Setting|Smtp settings address description"
 msgstr "SMTPサーバのホスト名を指定します。"
 
-#: app/models/admin/setting.rb:64
+#: app/models/admin/setting.rb:62
 msgid "Admin::Setting|Smtp settings authentication"
 msgstr "認証の種類"
 
-#: app/models/admin/setting.rb:65
+#: app/models/admin/setting.rb:63
 msgid "Admin::Setting|Smtp settings authentication description"
 msgstr ""
 "認証が必要な場合、認証の種類を指定します。指定可能な値はplain, login, "
 "cram_md5です。"
 
-#: app/models/admin/setting.rb:53
+#: app/models/admin/setting.rb:51
 msgid "Admin::Setting|Smtp settings description"
 msgstr "SMTP設定を行います。"
 
-#: app/models/admin/setting.rb:62
+#: app/models/admin/setting.rb:60
 msgid "Admin::Setting|Smtp settings domain"
 msgstr "送信元ドメイン"
 
-#: app/models/admin/setting.rb:63
+#: app/models/admin/setting.rb:61
 msgid "Admin::Setting|Smtp settings domain description"
 msgstr "送信元ドメインの指定を行います。送信メールヘッダに記載されます。"
 
-#: app/models/admin/setting.rb:54
+#: app/models/admin/setting.rb:52
 msgid "Admin::Setting|Smtp settings password"
 msgstr "パスワード"
 
-#: app/models/admin/setting.rb:55
+#: app/models/admin/setting.rb:53
 msgid "Admin::Setting|Smtp settings password description"
 msgstr "認証が必要な場合、パスワードを指定します。"
 
-#: app/models/admin/setting.rb:56
+#: app/models/admin/setting.rb:54
 msgid "Admin::Setting|Smtp settings port"
 msgstr "ポート"
 
-#: app/models/admin/setting.rb:57
+#: app/models/admin/setting.rb:55
 msgid "Admin::Setting|Smtp settings port description"
 msgstr "ポート番号を指定します。"
 
-#: app/models/admin/setting.rb:58
+#: app/models/admin/setting.rb:56
 msgid "Admin::Setting|Smtp settings user name"
 msgstr "ユーザ名"
 
-#: app/models/admin/setting.rb:59
+#: app/models/admin/setting.rb:57
 msgid "Admin::Setting|Smtp settings user name description"
 msgstr "認証が必要な場合、ユーザ名を指定します。"
 
-#: app/models/admin/setting.rb:39
+#: app/models/admin/setting.rb:37
 msgid "Admin::Setting|Stop new user"
 msgstr "ユーザ登録を停止する"
 
-#: app/models/admin/setting.rb:40
+#: app/models/admin/setting.rb:38
 msgid "Admin::Setting|Stop new user description"
 msgstr ""
 "ユーザ登録を一時停止し、現在登録済みのユーザだけで運営できます。チェックを外"
@@ -977,9 +969,10 @@ msgstr "注意！"
 msgid "Admin|Create Change Uid|Caution Description"
 msgstr ""
 "ユーザ名変更及び作成は様々な箇所に影響するため、どうしても変更が必要な場合の"
-"み変更するようにして下さい。<br/>処理に時間がかかりレスポンスが遅くなる"
-"場合がありますので、一般ユーザのアクセスしていない時間に実行してください。<br/>"
-"また、変更したユーザは、再ログインが要求されます。（管理者ご自身の場合も例外ではありません）"
+"み変更するようにして下さい。<br/>処理に時間がかかりレスポンスが遅くなる場合が"
+"ありますので、一般ユーザのアクセスしていない時間に実行してください。<br/>ま"
+"た、変更したユーザは、再ログインが要求されます。（管理者ご自身の場合も例外で"
+"はありません）"
 
 #: app/models/antenna_item.rb:-
 msgid "AntennaItem|"
@@ -2492,6 +2485,10 @@ msgstr ""
 msgid "user uid"
 msgstr "ユーザID"
 
+#: app/views/admin/settings/_literal.html.erb:10
+msgid "お問い合わせ・ヘルプ"
+msgstr ""
+
 #: app/controllers/platform_controller.rb:191
 msgid "このサーバへの認証を確認してください"
 msgstr ""
@@ -2600,6 +2597,10 @@ msgid ""
 "Kbyteまでアップロード可能です。"
 msgstr ""
 
+#: app/views/admin/settings/_literal.html.erb:18
+msgid "フッター"
+msgstr ""
+
 #: app/controllers/platform_controller.rb:199
 msgid "ユーザの登録に失敗しました。"
 msgstr ""
@@ -2679,6 +2680,10 @@ msgstr ""
 
 #: app/controllers/admin/group_categories_controller.rb:34
 msgid "削除対象のカテゴリが存在しませんでした。"
+msgstr ""
+
+#: app/views/admin/settings/_literal.html.erb:2
+msgid "名称・名前"
 msgstr ""
 
 #: app/controllers/admin/users_controller.rb:171
@@ -2815,7 +2820,7 @@ msgstr ""
 msgid "管理者ユーザの作成"
 msgstr ""
 
-#: app/controllers/group_controller.rb:52
+#: app/controllers/group_controller.rb:53
 #: app/controllers/users_controller.rb:29
 msgid "該当するユーザは存在しませんでした。"
 msgstr ""

@@ -19,10 +19,8 @@ stop_new_user:
   default: false
 
 # 各種文言の設定
-app_title:
-  default: SKIP - Social Knowledge & Innovation Platform   # システムの名称
 abbr_app_title:
-  default: SKIP                                            # システムの略称
+  default: SKIP                                            # システムの名称
 contact_addr:
   default: youradmin@example.com
 help_url:
