@@ -579,3 +579,16 @@ table.group_list_box th {
 table.group_list_box td {
   padding: 0px 5px;
 }
+
+/* ----------------------------------- */
+/* 共有ファイル関連 */
+div.error_files {
+  color: gray;
+  font-size: 10px;
+  margin-top: 5px;
+}
+
+div.error_messages {
+  margin-left: 20px;
+  width: 350px;
+}
