@@ -28,7 +28,7 @@ contact_addr:
 help_url:
   format: url
   allow_blank: true
-  default: http://www.openskip.org/help                    # ヘルプのURL
+  default: http://sites.google.com/a/openskip.org/docs/techinfo/%E3%83%9E%E3%83%8B%E3%83%A5%E3%82%A2%E3%83%AB                    # ヘルプのURL
 initial_anntena:
   default: SKIPチーム                                      # 初期登録されるアンテナの名称
 login_account:
