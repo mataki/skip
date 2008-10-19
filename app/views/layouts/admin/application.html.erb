@@ -18,16 +18,17 @@
 <body>
 <div id="header">
   <%= header_logo_link %>
-  <%= skip_menu_link %>  <%= render :partial => "shared/full_text_search" if INITIAL_SETTINGS['full_text_search_setting'] %>
+  <%= skip_menu_link %>
+  <%= render :partial => "shared/full_text_search" if INITIAL_SETTINGS['full_text_search_setting'] %>
 </div><!-- header -->
 
 <div id="top">
   <div id="user_ctl">
     <%= link_to icon_tag(:report_edit, :alt=> 'ブログを書く', :title => 'ブログを書く') + 'ブログを書く', :controller => '/edit', :action => :index %>
-    <a id="my_group_link" href="#" ><span id="link_my_group">マイグループ</span></a>
+    <a id="my_group_link" href="#" ><%= icon_tag(:group_go, :alt=> 'マイグループ', :title => 'マイグループ') -%><span id="link_my_group">所属グループのショートカット</span></a>
     <% help_url = h(Admin::Setting.help_url) -%>
     <% unless help_url.blank? -%>
-      <a href="<%= help_url %>" target="_blank"><span id="link_help">ヘルプ</span></a>
+      <a href="<%= help_url %>" target="_blank"><%= icon_tag(:help, :alt=> 'ヘルプ', :title => 'ヘルプ') -%><span id="link_help">ヘルプ</span></a>
     <% end -%>
   </div>
   <div id="select_my_group" style="margin-top: 5px; display: none;"></div>
@@ -62,9 +63,10 @@
   <div id="tab_body">
     <%= render :partial => 'layouts/flash_messages' %>
     <div id="contents_container">
+
       <% if @content_for_contents_left -%>
       <div id="contents_left">
-      <%= yield :contents_left %>
+        <%= yield :contents_left %>
       </div><!-- contents_left -->
       <% end -%>
 
@@ -78,19 +80,19 @@
 
       <% if @content_for_contents_right -%>
       <div id="contents_right">
-      <%= yield :contents_right %>
+        <%= yield :contents_right %>
       </div><!-- contents_right -->
       <% end -%>
 
       <% if @content_for_contents_bottom -%>
       <div id="contents_bottom">
-      <%= yield :contents_bottom %>
+        <%= yield :contents_bottom %>
       </div><!-- contents_bottom -->
       <% end -%>
+
     </div><!-- contents_container -->
   </div><!-- tab_body -->
 </div><!-- panel -->
-
 
 <div style="clear: both;"><br/></div>
 

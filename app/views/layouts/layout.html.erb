@@ -41,7 +41,6 @@ Event.observe(window, 'load', function() {
 </head>
 
 <body>
-
 <div id="header">
   <%= header_logo_link %>
   <%= skip_menu_link %>
@@ -101,7 +100,7 @@ Event.observe(window, 'load', function() {
   <span><%= icon_tag 'table_lightning'    -%> 本日のアクセス数：<%= @site_count.today_user_count %>人</span>
   <span><%= icon_tag 'database'           -%> 総記事件数：<%= @site_count.total_blog_count %>件</span>
   <span><%= icon_tag 'database_lightning' -%> 本日の記事数：<%= @site_count.today_blog_count %>件</span>
-  <span><%= icon_tag 'chart_curve'        -%> <%= link_to("統計を見る", :controller => "/rankings",:action => :statistics) -%></span>
+  <span><%= icon_tag 'chart_curve'        -%> <%= link_to("統計を見る", :controller => "/rankings", :action => :statistics) -%></span>
 </div>
 
 <%= skip_footer_link -%>
