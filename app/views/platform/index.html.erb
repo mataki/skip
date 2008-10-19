@@ -17,8 +17,6 @@ var relative_url_root = '<%= controller.request.relative_url_root -%>';
   <%= skip_javascript_include_tag 'prototype' %>
   <%= skip_javascript_include_tag 'jquery.js' %>
   <script language="JavaScript" type="text/javascript">$j = jQuery.noConflict();</script>
-  <%= skip_javascript_include_tag 'effects' %>
-  <%= skip_javascript_include_tag 'dragdrop' %>
   <%= skip_javascript_include_tag "jquery.nyroModal.js" %>
   <%= skip_javascript_include_tag "skip_util" %>
   <%= javascript_include_tag "application" %>
@@ -130,14 +128,6 @@ span.blue { color: blue; }
 
 <div id="main">
 
-<% if @attentions and @attentions.size > 0 %>
-<div id="attention"><ul style="background-color: white; margin: 5px;">
-  <% @attentions.each do |attention| %>
-  <li style="margin: 5px 20px; border-bottom: dashed 1px silver"><%= attention %></li>
-  <% end %>
-</ul></div>
-<% end %>
-
 <div id="login"><p id="login-title">ログイン</p><%= render :partial => 'shared/login_form' %></div>
 <div id="desc_before_login" class="desc"></div>
 
@@ -160,7 +150,6 @@ span.blue { color: blue; }
 $j(function(){
     $j('.desc, #login').fadeTo('slow',0.8);
     $j('#desc_before_login').load(relative_url_root + '/custom/login_desc.html');
-    fnLoadPngs();
 });
 //-->
 </script>

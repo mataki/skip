@@ -1,13 +1,13 @@
-<div id="summary_container">
-<div id="summary_left">
+<div id="contents_container">
+<div id="contents_left">
   <div id="calendar"><%= render :partial => "shared/calendar", :locals => {:sel_year => @date.year,
                                                                            :sel_month => @date.month,
                                                                            :sel_day => @date.day,
                                                                            :item_count => @item_count,
                                                                            :action => "index"}  %></div>
-</div><!-- summary_left -->
+</div><!-- contents_left -->
 
-<div id="summary_right">
+<div id="contents_right">
 <% unless @site_count.new_record? %>
 <div id="current_statistics" class="current_statistics">
 <%= render :partial => "current_statistics", :locals => { :site_count => @site_count } %>
@@ -17,8 +17,7 @@
 <div id="statistics_history" class="statistics_history">
 
 <% if @site_count.write_users_all > 0 %>
-<% # :categoryはSiteCountの属性と同名 %>
-<% statistics_items = [
+<% statistics_items = [ # :categoryはSiteCountの属性と同名
                        { :desc => "10日間以内にアクセスしたことがある人", :category => 'active_users'},
                        { :desc => "ブログを書いたことのある人<br/>　（掲示板除く・公開のみ・自動投稿除く）", :category => 'write_users_all'},
                        { :desc => "・・・上記に非公開を含めると・・・", :category => 'write_users_with_pvt'},
@@ -46,8 +45,8 @@
 </div>
 <% end %>
 
-</div><!-- summary_right -->
+</div><!-- contents_right -->
 
-<div id="summary_bottom">
-</div><!-- summary_bottom -->
-</div><!-- summary_container -->
+<div id="contents_bottom"></div><!-- contents_bottom -->
+
+</div><!-- contents_container -->

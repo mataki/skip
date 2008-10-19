@@ -22,9 +22,10 @@
     <div id="tab_body">
       <%= render :partial => 'layouts/flash_messages' %>
       <div id="contents_container">
+
         <% if @content_for_contents_left -%>
         <div id="contents_left">
-        <%= yield :contents_left %>
+          <%= yield :contents_left %>
         </div><!-- contents_left -->
         <% end -%>
 
@@ -38,15 +39,16 @@
 
         <% if @content_for_contents_right -%>
         <div id="contents_right">
-        <%= yield :contents_right %>
+          <%= yield :contents_right %>
         </div><!-- contents_right -->
         <% end -%>
 
         <% if @content_for_contents_bottom -%>
         <div id="contents_bottom">
-        <%= yield :contents_bottom %>
+          <%= yield :contents_bottom %>
         </div><!-- contents_bottom -->
         <% end -%>
+
       </div><!-- contents_container -->
     </div><!-- tab_body -->
   </div><!-- panel -->
