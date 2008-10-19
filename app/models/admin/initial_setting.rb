@@ -30,11 +30,12 @@ class Admin::InitialSetting < ActiveRecord::Base
   N_('Admin::InitialSetting|Delivery method description')
   N_('Admin::InitialSetting|Login mode')
   N_('Admin::InitialSetting|Login mode description')
+  N_('Admin::InitialSetting|Login mode|password')
+  N_('Admin::InitialSetting|Login mode|rp')
   N_('Admin::InitialSetting|Fixed op url')
   N_('Admin::InitialSetting|Fixed op url description')
   N_('Admin::InitialSetting|Administrator addr')
   N_('Admin::InitialSetting|Administrator addr description')
-
   N_('Admin::InitialSetting|Ssl setting')
   N_('Admin::InitialSetting|Ssl setting description')
   N_('Admin::InitialSetting|Ssl setting|true')

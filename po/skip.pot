@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-10-18 03:36+0900\n"
+"POT-Creation-Date: 2008-10-18 13:41+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -337,11 +337,11 @@ msgstr ""
 msgid "Admin::ImagesController|title_logo_description"
 msgstr ""
 
-#: app/models/admin/initial_setting.rb:35
+#: app/models/admin/initial_setting.rb:37
 msgid "Admin::InitialSetting|Administrator addr"
 msgstr ""
 
-#: app/models/admin/initial_setting.rb:36
+#: app/models/admin/initial_setting.rb:38
 msgid "Admin::InitialSetting|Administrator addr description"
 msgstr ""
 
@@ -353,27 +353,27 @@ msgstr ""
 msgid "Admin::InitialSetting|Delivery method description"
 msgstr ""
 
-#: app/models/admin/initial_setting.rb:33
+#: app/models/admin/initial_setting.rb:35
 msgid "Admin::InitialSetting|Fixed op url"
 msgstr ""
 
-#: app/models/admin/initial_setting.rb:34
+#: app/models/admin/initial_setting.rb:36
 msgid "Admin::InitialSetting|Fixed op url description"
 msgstr ""
 
-#: app/models/admin/initial_setting.rb:42
+#: app/models/admin/initial_setting.rb:43
 msgid "Admin::InitialSetting|Full text search setting"
 msgstr ""
 
-#: app/models/admin/initial_setting.rb:43
+#: app/models/admin/initial_setting.rb:44
 msgid "Admin::InitialSetting|Full text search setting description"
 msgstr ""
 
-#: app/models/admin/initial_setting.rb:45
+#: app/models/admin/initial_setting.rb:46
 msgid "Admin::InitialSetting|Full text search setting|false"
 msgstr ""
 
-#: app/models/admin/initial_setting.rb:44
+#: app/models/admin/initial_setting.rb:45
 msgid "Admin::InitialSetting|Full text search setting|true"
 msgstr ""
 
@@ -383,6 +383,14 @@ msgstr ""
 
 #: app/models/admin/initial_setting.rb:32
 msgid "Admin::InitialSetting|Login mode description"
+msgstr ""
+
+#: app/models/admin/initial_setting.rb:33
+msgid "Admin::InitialSetting|Login mode|password"
+msgstr ""
+
+#: app/models/admin/initial_setting.rb:34
+msgid "Admin::InitialSetting|Login mode|rp"
 msgstr ""
 
 #: app/models/admin/initial_setting.rb:19
@@ -417,19 +425,19 @@ msgstr ""
 msgid "Admin::InitialSetting|Not blank link re description"
 msgstr ""
 
-#: app/models/admin/initial_setting.rb:46
+#: app/models/admin/initial_setting.rb:47
 msgid "Admin::InitialSetting|Password edit setting"
 msgstr ""
 
-#: app/models/admin/initial_setting.rb:47
+#: app/models/admin/initial_setting.rb:48
 msgid "Admin::InitialSetting|Password edit setting description"
 msgstr ""
 
-#: app/models/admin/initial_setting.rb:49
+#: app/models/admin/initial_setting.rb:50
 msgid "Admin::InitialSetting|Password edit setting|false"
 msgstr ""
 
-#: app/models/admin/initial_setting.rb:48
+#: app/models/admin/initial_setting.rb:49
 msgid "Admin::InitialSetting|Password edit setting|true"
 msgstr ""
 
@@ -441,19 +449,19 @@ msgstr ""
 msgid "Admin::InitialSetting|Proxy url description"
 msgstr ""
 
-#: app/models/admin/initial_setting.rb:38
+#: app/models/admin/initial_setting.rb:39
 msgid "Admin::InitialSetting|Ssl setting"
 msgstr ""
 
-#: app/models/admin/initial_setting.rb:39
+#: app/models/admin/initial_setting.rb:40
 msgid "Admin::InitialSetting|Ssl setting description"
 msgstr ""
 
-#: app/models/admin/initial_setting.rb:41
+#: app/models/admin/initial_setting.rb:42
 msgid "Admin::InitialSetting|Ssl setting|false"
 msgstr ""
 
-#: app/models/admin/initial_setting.rb:40
+#: app/models/admin/initial_setting.rb:41
 msgid "Admin::InitialSetting|Ssl setting|true"
 msgstr ""
 
@@ -465,35 +473,35 @@ msgstr ""
 msgid "Admin::InitialSetting|User code format regex description"
 msgstr ""
 
-#: app/models/admin/initial_setting.rb:54
+#: app/models/admin/initial_setting.rb:55
 msgid "Admin::InitialSetting|Usercode dips setting"
 msgstr ""
 
-#: app/models/admin/initial_setting.rb:55
+#: app/models/admin/initial_setting.rb:56
 msgid "Admin::InitialSetting|Usercode dips setting description"
 msgstr ""
 
-#: app/models/admin/initial_setting.rb:57
+#: app/models/admin/initial_setting.rb:58
 msgid "Admin::InitialSetting|Usercode dips setting|false"
 msgstr ""
 
-#: app/models/admin/initial_setting.rb:56
+#: app/models/admin/initial_setting.rb:57
 msgid "Admin::InitialSetting|Usercode dips setting|true"
 msgstr ""
 
-#: app/models/admin/initial_setting.rb:50
+#: app/models/admin/initial_setting.rb:51
 msgid "Admin::InitialSetting|Username use setting"
 msgstr ""
 
-#: app/models/admin/initial_setting.rb:51
+#: app/models/admin/initial_setting.rb:52
 msgid "Admin::InitialSetting|Username use setting description"
 msgstr ""
 
-#: app/models/admin/initial_setting.rb:53
+#: app/models/admin/initial_setting.rb:54
 msgid "Admin::InitialSetting|Username use setting|false"
 msgstr ""
 
-#: app/models/admin/initial_setting.rb:52
+#: app/models/admin/initial_setting.rb:53
 msgid "Admin::InitialSetting|Username use setting|true"
 msgstr ""
 
@@ -1229,7 +1237,7 @@ msgid "Chain|紹介文"
 msgstr ""
 
 #: app/controllers/admin/users_controller.rb:161
-#: app/views/admin/users/edit.html.erb:18
+#: app/views/admin/users/edit.html.erb:15
 msgid "Change uid"
 msgstr ""
 
@@ -1243,7 +1251,7 @@ msgid "Create"
 msgstr ""
 
 #: app/controllers/admin/users_controller.rb:186
-#: app/views/admin/users/edit.html.erb:19
+#: app/views/admin/users/edit.html.erb:16
 msgid "Create %{name}"
 msgstr ""
 
@@ -1917,7 +1925,7 @@ msgstr ""
 msgid "Track|Visitor"
 msgstr ""
 
-#: app/views/admin/users/edit.html.erb:11
+#: app/views/admin/users/edit.html.erb:10
 #: app/views/admin/users/change_uid.html.erb:20
 #: app/views/admin/openid_identifiers/edit.html.erb:16
 #: app/views/admin/user_profiles/edit.html.erb:11
@@ -1925,7 +1933,7 @@ msgstr ""
 msgid "Update"
 msgstr ""
 
-#: app/views/admin/users/edit.html.erb:11
+#: app/views/admin/users/edit.html.erb:10
 #: app/views/admin/users/change_uid.html.erb:32
 #: app/views/admin/openid_identifiers/edit.html.erb:16
 #: app/views/admin/user_profiles/edit.html.erb:11
@@ -2168,8 +2176,8 @@ msgstr ""
 msgid "User|Status|RETIRED"
 msgstr ""
 
-#: app/models/user.rb:49 app/views/admin/users/_form.html.erb:17
-#: app/views/admin/users/_form.html.erb:22
+#: app/models/user.rb:49 app/views/admin/users/_form.html.erb:24
+#: app/views/admin/users/_form.html.erb:29
 msgid "User|Status|UNUSED"
 msgstr ""
 
@@ -2182,6 +2190,7 @@ msgid "User|名前"
 msgstr ""
 
 #: app/controllers/platform_controller.rb:61
+#: app/controllers/portal_controller.rb:125
 msgid "You are now logged out."
 msgstr ""
 
@@ -2403,7 +2412,7 @@ msgstr ""
 #: app/views/user/show.html.erb:84
 #: app/views/admin/users/create_uid.html.erb:12
 #: app/views/admin/users/create_uid.html.erb:27
-#: app/views/admin/users/edit.html.erb:19
+#: app/views/admin/users/edit.html.erb:16
 #: app/views/admin/users/change_uid.html.erb:31
 msgid "user name"
 msgstr ""
@@ -2452,6 +2461,10 @@ msgstr ""
 msgid "はアルファベットで入力して下さい。"
 msgstr ""
 
+#: app/controllers/admin/settings_controller.rb:46
+msgid "アカウント関連"
+msgstr ""
+
 #: app/views/admin/users/import.html.erb:35
 msgid ""
 "エラーがある場合は各行の右端のアイコンをクリックすると詳細が表示されます。例"
@@ -2478,7 +2491,7 @@ msgid ""
 "て削除されている必要があります。"
 msgstr ""
 
-#: app/views/admin/settings/index.html.erb:19
+#: app/controllers/admin/settings_controller.rb:37
 msgid "システム全体の最大許可容量に対して現在使用中の共有ファイルの容量です。"
 msgstr ""
 
@@ -2488,6 +2501,10 @@ msgstr ""
 
 #: app/views/layouts/admin/application.html.erb:8
 msgid "システム管理"
+msgstr ""
+
+#: app/controllers/admin/settings_controller.rb:63
+msgid "システム運用について"
 msgstr ""
 
 #: app/views/admin/users/import.html.erb:10
@@ -2578,15 +2595,11 @@ msgstr ""
 msgid "不正なユーザです。"
 msgstr ""
 
-#: app/views/admin/settings/index.html.erb:26
-msgid "以下は運用開始後は原則として変更できない設定項目です。"
-msgstr ""
-
-#: app/controllers/admin/settings_controller.rb:47
+#: app/controllers/admin/settings_controller.rb:84
 msgid "保存しました。"
 msgstr ""
 
-#: app/controllers/admin/settings_controller.rb:49
+#: app/controllers/admin/settings_controller.rb:86
 msgid "保存に失敗している項目があります。"
 msgstr ""
 
@@ -2596,20 +2609,12 @@ msgid ""
 "ません。"
 msgstr ""
 
-#: app/views/admin/settings/index.html.erb:18
-msgid "共有ファイル利用容量"
+#: app/controllers/admin/settings_controller.rb:35
+msgid "共有ファイル関連"
 msgstr ""
 
 #: app/controllers/platform_controller.rb:193
 msgid "内部エラーが発生しました。"
-msgstr ""
-
-#: app/views/admin/settings/index.html.erb:9
-msgid "初期値に戻す"
-msgstr ""
-
-#: app/views/admin/settings/index.html.erb:25
-msgid "初期設定内容"
 msgstr ""
 
 #: app/controllers/edit_controller.rb:245
@@ -2698,6 +2703,10 @@ msgstr ""
 msgid "未登録のユーザのみを追加登録する"
 msgstr ""
 
+#: app/controllers/admin/settings_controller.rb:56
+msgid "機能に関する設定"
+msgstr ""
+
 #: app/views/admin/users/import.html.erb:27
 msgid "正しいCSVファイルの例"
 msgstr ""
@@ -2708,6 +2717,10 @@ msgstr ""
 
 #: app/views/admin/documents/index.html.erb:14
 msgid "現在のページを表示"
+msgstr ""
+
+#: app/controllers/admin/settings_controller.rb:36
+msgid "現在の利用容量"
 msgstr ""
 
 #: app/views/admin/images/_form.html.erb:7
