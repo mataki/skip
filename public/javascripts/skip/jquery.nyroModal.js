@@ -5,8 +5,8 @@
  * Copyright (c) 2008 Cedric Nirousset (nyrodev.com)
  * Licensed under the MIT license
  *
- * $Date: 2008-04-19 (Sat, 19 Apr 2008) $
- * $version: 1.2.0
+ * $Date: 2008-06-24 (Tue, 24 Jun 2008) $
+ * $version: 1.2.8
  */
 jQuery(function($) {
 
@@ -14,10 +14,13 @@ jQuery(function($) {
 	// Private Variables
 	// -------------------------------------------------------
 	
-	var isIE6 = (jQuery.browser.msie && parseInt(jQuery.browser.version.substr(0,1)) < 7);
+	var isIE6 = ($.browser.msie && parseInt($.browser.version.substr(0,1)) < 7);
 	var body = $('body');
 	
 	var currentSettings;
+	
+	// To know if the fix for the Issue 10 should be applied (or has been applied)
+	var fixFF = false;
 	
 	// Used for retrieve the content from an hidden div
 	var contentElt;
@@ -37,9 +40,15 @@ jQuery(function($) {
 		tmp: null,
 		content: null,
 		wrapper: null,
-		contentWrapper: null
+		contentWrapper: null,
+		scripts: new Array()
 	};
 	
+	// Indicate of the height or the width was resized, to reinit the currentsettings related to null
+	var resized = {
+		width: false,
+		height: false
+	};
 	
 	// -------------------------------------------------------
 	// Public function
@@ -47,19 +56,19 @@ jQuery(function($) {
 	
 	// jQuery extension function. A paramater object could be used to overwrite the default settings
 	$.fn.nyroModal = function(settings) {
+		if (!this)
+			return false;
 		return this.each(function(){
 			if (this.nodeName.toLowerCase() == 'form') {
 				$(this).submit(function(e) {
 					if (this.enctype == 'multipart/form-data') {
-						processModal(jQuery.extend(settings, {
-							type: 'formData',
+						processModal($.extend(settings, {
 							from: this
 						}));
 						return true;
 					}
 					e.preventDefault();
-					processModal(jQuery.extend(settings, {
-						type: 'form',
+					processModal($.extend(settings, {
 						from: this
 					}));
 					return false;
@@ -67,8 +76,7 @@ jQuery(function($) {
 			} else {
 				$(this).click(function(e) {
 					e.preventDefault();
-					processModal(jQuery.extend(settings, {
-						type: '',
+					processModal($.extend(settings, {
 						from: this
 					}));
 					return false;
@@ -81,12 +89,15 @@ jQuery(function($) {
 	$.fn.nyroModalManual = function(settings) {
 		if (!this.length)
 			processModal(settings);
-		
 		return this.each(function(){
-			processModal(jQuery.extend(settings, {
+			processModal($.extend(settings, {
 				from: this
 			}));
 		});
+	};
+	
+	$.nyroModalManual = function(settings) {
+		processModal(settings);
 	};
 	
 	// Update the current settings
@@ -95,6 +106,23 @@ jQuery(function($) {
 	// string deep2 second key where overwrite the settings
 	$.nyroModalSettings = function(settings, deep1, deep2) {
 		setCurrentSettings(settings, deep1, deep2);
+		if (!deep1 && modal.ready) {
+			if (settings.bgColor)
+				currentSettings.updateBgColor(modal, currentSettings, function(){});
+			
+			if ((modal.dataReady && !modal.anim && !modal.transition) && (settings.width || settings.height)) {
+				calculateSize(true);
+				
+				if (fixFF)
+					modal.content.css({position: ''});
+				currentSettings.resize(modal, currentSettings, function() {
+					if (fixFF)
+						modal.content.css({position: 'fixed'});
+					if ($.isFunction(currentSettings.endResize))
+						currentSettings.endResize(modal, currentSettings);
+				});
+			}
+		}
 	};
 	
 	// Remove the modal function
@@ -102,14 +130,30 @@ jQuery(function($) {
 		removeModal();
 	};
 	
-	// Resize the window
-	$.nyroModalResize = function(width, height) {
-		currentSettings.width = width;
-		currentSettings.height = height;
-		if (modal.ready) {
-			calculateSize(true);
-			currentSettings.resize(modal, currentSettings, currentSettings.endResize || function(){});
+	// Go to the next image for a gallery
+	// return false if nothing was done
+	$.nyroModalNext = function() {
+		if (currentSettings.type == 'gallery') {
+			var gallery = $('[rel="'+currentSettings.from.rel+'"]');
+			var currentIndex = gallery.index(currentSettings.from);
+			if (currentIndex < gallery.length-1) {
+				return gallery.eq(currentIndex+1).nyroModalManual(currentSettings);
+			}
 		}
+		return false;
+	};
+	
+	// Go to the previous image for a gallery
+	// return false if nothing was done
+	$.nyroModalPrev = function() {
+		if (currentSettings.type == 'gallery') {
+			var gallery = $('[rel="'+currentSettings.from.rel+'"]');
+			var currentIndex = gallery.index(currentSettings.from);
+			if (currentIndex > 0) {
+				return gallery.eq(currentIndex-1).nyroModalManual(currentSettings);
+			}
+		}
+		return false;
 	};
 
 	
@@ -138,11 +182,14 @@ jQuery(function($) {
 		
 		ajax: {}, // Ajax option (url, data, type, success will be overwritten for a form, url and success only for an ajax call)
 		
-		width: 650, // default Width
-		height: 500, // default Height
+		width: null, // default Width If null, will be calculate automatically
+		height: null, // default Height If null, will be calculate automatically
 		
-		minWidth: 150, // Minimum width
-		minHeight: 150, // Minimu height
+		minWidth: 400, // Minimum width
+		minHeight: 300, // Minimum height
+		
+		resizeable: true, // Indicate if the content is resizable. Will be set to false for swf
+		autoSizable: true, // Indicate if the content is auto sizable. If not, the min size will be used
 		
 		padding: 20, // padding for the max modal size
 		
@@ -219,7 +266,11 @@ jQuery(function($) {
 		hideLoading: hideLoading, // hide loading animation function
 		
 		resize: resize, // Resize animation function
-		endResize: null // Will be called one the content is resized
+		endResize: null, // Will be called one the content is resized
+		
+		updateBgColor: updateBgColor, // Change background color animation function
+		
+		endRemove: null // Will be called once the modal is totally gone
 	};
 
 	
@@ -229,15 +280,26 @@ jQuery(function($) {
 	
 	// Main function
 	function processModal(settings) {
+		if (modal.loadingShown || modal.transition || modal.anim)
+			return;
 		debug('processModal');
 		setDefaultCurrentSettings(settings);
 		modal.error = false;
 		modal.dataReady = false;
+		modal.scripts = new Array();
 		
-		if (jQuery.isFunction(currentSettings.processHandler))
+		currentSettings.type = fileType();
+		
+		if ($.isFunction(currentSettings.processHandler))
 			currentSettings.processHandler(currentSettings);
 
 		from = currentSettings.from;
+		
+		if (currentSettings.type == 'swf') {
+			// Swf is transforming as a raw content
+			currentSettings.resizable = false;
+			currentSettings.content = '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="'+currentSettings.width+'" height="'+currentSettings.height+'"><param name="movie" value="'+currentSettings.url+'"></param><param name="wmode" value="transparent"></param><embed src="'+currentSettings.url+'" type="application/x-shockwave-flash" wmode="transparent" width="'+currentSettings.width+'" height="'+currentSettings.height+'"></embed></object>';
+		}
 		
 		if (from) {
 			if (currentSettings.type == 'form') {
@@ -247,7 +309,7 @@ jQuery(function($) {
 				data.push({name: currentSettings.formIndicator, value: 1});
 				if (currentSettings.selector)
 					data.push({name: currentSettings.selIndicator, value: currentSettings.selector.substring(1)});
-				$.ajax(jQuery.extend({}, currentSettings.ajax, {
+				$.ajax($.extend({}, currentSettings.ajax, {
 						url: url,
 						data: data,
 						type: from.method,
@@ -277,105 +339,91 @@ jQuery(function($) {
 				debug('Form Data Load: '+from.action);
 				showModal();
 				showContentOrLoading();
-			} else {
-				var type = currentSettings.type || fileType();
-				
-				if (type == 'swf') {
-					// Swf is transforming as a raw content
-					currentSettings.resizable = false;
-					currentSettings.content = '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="'+currentSettings.width+'" height="'+currentSettings.height+'"><param name="movie" value="'+currentSettings.url+'"></param><param name="wmode" value="transparent"></param><embed src="'+currentSettings.url+'" type="application/x-shockwave-flash" wmode="transparent" width="'+currentSettings.width+'" height="'+currentSettings.height+'"></embed></object>';
-				}
-				
-				if (type == 'image' || type == 'gallery') {
-					setCurrentSettings({type: type});
-					var title = from.title || currentSettings.defaultImgAlt;
-					initModal();
-					modal.tmp.html('<img id="nyroModalImg" alt="'+title+'" />');
-					debug('Image Load: '+from.href);
-					$('img', modal.tmp)
-						.error(loadingError)
-						.load(function() {
-							debug('Image Loaded: '+this.src);
-							$(this).unbind('load');
-							var w = modal.tmp.width();
-							var h = modal.tmp.height();
-							setCurrentSettings({
-								width: w,
-								height: h,
-								imgWidth: w,
-								imgHeight: h
-							});
-							modal.dataReady = true;
-							if (modal.loadingShown || modal.transition)
-								showContentOrLoading();
-						})
-						.attr('src', from.href);
-					showModal();
-				} else if (type == 'iframe') {
-					setCurrentSettings({type: 'iframe'});
-					initModal();
-					modal.tmp.html('<iframe frameborder="0" hspace="0" src="'+from.href+'" name="nyroModalIframe"></iframe>');
-					debug('Iframe Load: '+from.href);
-					$('iframe', modal.tmp).eq(0)
-						.css({
-							width: '100%',
-							height: '100%'
+			} else if (currentSettings.type == 'image' || currentSettings.type == 'gallery') {
+				var title = from.title || currentSettings.defaultImgAlt;
+				initModal();
+				modal.tmp.html('<img id="nyroModalImg" alt="'+title+'" />');
+				debug('Image Load: '+from.href);
+				$('img', modal.tmp)
+					.error(loadingError)
+					.load(function() {
+						debug('Image Loaded: '+this.src);
+						$(this).unbind('load');
+						var w = modal.tmp.width();
+						var h = modal.tmp.height();
+						setCurrentSettings({
+							width: w,
+							height: h,
+							imgWidth: w,
+							imgHeight: h
 						});
-					modal.dataReady = true;
-					showModal();
-					showContentOrLoading();
-				} else if (type) {
-					// Could be every other kind og type or a dom selector
-					debug('Content: '+type);
-					setCurrentSettings({type: type});
-					initModal();
-					modal.tmp.html(currentSettings.content);
-					var w = modal.tmp.width();
-					var h = modal.tmp.height();
-					var div = $(type);
-					if (div.length) {
-						setCurrentSettings({type: 'div'});
-						w = div.width();
-						h = div.height();
-						if (contentElt)
-							contentEltLast = contentElt;
-						contentElt = div;
-						modal.tmp.append(div.contents());
-					}
-					setCurrentSettings({
-						width: w,
-						height: h
-					});
-					if (modal.tmp.html())
 						modal.dataReady = true;
-					else
-						loadingError();
-					showModal();
-					showContentOrLoading();
-				} else {
-					debug('Ajax Load: '+from.href);
-					var url = from.href.substring(0, from.href.length-currentSettings.selector.length);
-					setCurrentSettings({type: 'ajax'});
-					var data = {};
-					if (currentSettings.selector) {
-						data = currentSettings.ajax.data || {};
-						data[currentSettings.selIndicator] = currentSettings.selector.substring(1);
-					}
-					$.ajax(jQuery.extend({}, currentSettings.ajax, {
-						url: url,
-						success: ajaxLoaded,
-						error: loadingError,
-						data: data
-					}));
-					showModal();
+						if (modal.loadingShown || modal.transition)
+							showContentOrLoading();
+					})
+					.attr('src', from.href);
+				showModal();
+			} else if (currentSettings.type == 'iframe') {
+				initModal();
+				modal.tmp.html('<iframe frameborder="0" hspace="0" src="'+from.href+'" name="nyroModalIframe"></iframe>');
+				debug('Iframe Load: '+from.href);
+				$('iframe', modal.tmp).eq(0)
+					.css({
+						width: '100%',
+						height: '100%'
+					});
+				currentSettings.autoSizable = false;
+				modal.dataReady = true;
+				showModal();
+			} else if (currentSettings.type) {
+				// Could be every other kind of type or a dom selector
+				debug('Content: '+currentSettings.type);
+				initModal();
+				modal.tmp.html(currentSettings.content);
+				var w = modal.tmp.width();
+				var h = modal.tmp.height();
+				var div = $(currentSettings.type);
+				if (div.length) {
+					setCurrentSettings({type: 'div'});
+					w = div.width();
+					h = div.height();
+					if (contentElt)
+						contentEltLast = contentElt;
+					contentElt = div;
+					modal.tmp.append(div.contents());
 				}
+				setCurrentSettings({
+					width: w,
+					height: h
+				});
+				if (modal.tmp.html())
+					modal.dataReady = true;
+				else
+					loadingError();
+				showModal();
+				showContentOrLoading();
+			} else {
+				debug('Ajax Load: '+currentSettings.url);
+				setCurrentSettings({type: 'ajax'});
+				var data = {};
+				if (currentSettings.selector) {
+					data = currentSettings.ajax.data || {};
+					data[currentSettings.selIndicator] = currentSettings.selector.substring(1);
+				}
+				$.ajax($.extend({}, currentSettings.ajax, {
+					url: currentSettings.url.substring(0, currentSettings.url.length-currentSettings.selector.length),
+					success: ajaxLoaded,
+					error: loadingError,
+					data: data
+				}));
+				showModal();
 			}
 		} else if (currentSettings.content) {
 			// Raw content not from a DOM element
-			debug('Content: '+type);
+			debug('Content: '+currentSettings.type);
 			setCurrentSettings({type: 'manual'});
 			initModal();
-			modal.tmp.html(currentSettings.content);
+			modal.tmp.html($('<div/>').html(currentSettings.content).contents());
 			if (modal.tmp.html())
 				modal.dataReady = true;
 			else
@@ -392,7 +440,7 @@ jQuery(function($) {
 	// string deep2 second key where overwrite the settings
 	function setDefaultCurrentSettings(settings) {
 		debug('setDefaultCurrentSettings');
-		currentSettings = jQuery.extend({}, $.fn.nyroModal.settings, settings);
+		currentSettings = $.extend({}, $.fn.nyroModal.settings, settings);
 		currentSettings.selector = '',
 		currentSettings.borderW = 0,
 		currentSettings.borderH = 0,
@@ -402,11 +450,11 @@ jQuery(function($) {
 	
 	function setCurrentSettings(settings, deep1, deep2) {
 		if (deep1 && deep2) {
-			jQuery.extend(currentSettings[deep1][deep2], settings);
+			$.extend(currentSettings[deep1][deep2], settings);
 		} else if (deep1) {
-			jQuery.extend(currentSettings[deep1], settings);
+			$.extend(currentSettings[deep1], settings);
 		} else {
-			jQuery.extend(currentSettings, settings);
+			$.extend(currentSettings, settings);
 		}
 	}
 
@@ -442,12 +490,16 @@ jQuery(function($) {
 		
 			var iframeHideIE = '';
 			if (isIE6) {
-				body.css({height: '100%', width: '100%', position: 'static'});
+				body.css({
+					height: body.height()+'px',
+					width: body.width()+'px',
+					position: 'static',
+					overflow: 'hidden'});
 				$('html').css({overflow: 'hidden'});
 				setCurrentSettings({
 					position: 'absolute',
-					height: '100%',
-					width: '100%',
+					height: '110%',
+					width: '110%',
 					top: currentSettings.marginScrollTop+'px',
 					left: currentSettings.marginScrollLeft+'px'
 				}, 'css', 'bg');
@@ -455,20 +507,20 @@ jQuery(function($) {
 				setCurrentSettings({position: 'absolute'}, 'css', 'loading');
 				setCurrentSettings({position: 'absolute'}, 'css', 'wrapper');
 				
-				iframeHideIE = $('<iframe id="nyroModal"></iframe>')
-								.css(jQuery.extend({},
+				iframeHideIE = $('<iframe id="nyroModalIframeHideIe"></iframe>')
+								.css($.extend({},
 									currentSettings.css.bg, {
 										opacity: 0,
-										zIndex: 99,
+										zIndex: 50,
 										border: 'none'
 									}));
 			}
 		
-			body.append($('<div id="nyroModalFull"><div id="nyroModalBg"></div><div id="nyroModalLoading"></div><div id="nyroModalWrapper"><div id="nyroModalContent"></div></div><div id="nyrModalTmp"></div></div>').hide());
+			body.append($('<div id="nyroModalFull"><div id="nyroModalBg"></div><div id="nyroModalWrapper"><div id="nyroModalContent"></div></div><div id="nyrModalTmp"></div><div id="nyroModalLoading"></div></div>').hide());
 			
 			modal.full = $('#nyroModalFull').show();
 			modal.bg = $('#nyroModalBg')
-				.css(jQuery.extend({
+				.css($.extend({
 						backgroundColor: currentSettings.bgColor
 					}, currentSettings.css.bg))
 				.before(iframeHideIE);
@@ -484,15 +536,13 @@ jQuery(function($) {
 			modal.tmp = $('#nyrModalTmp').hide();
 			
 			// To stop the mousewheel if the the plugin is available
-			if (jQuery.isFunction($.fn.mousewheel)) {
+			if ($.isFunction($.fn.mousewheel)) {
 				modal.content.mousewheel(function(e, d) {
-					if ($(e.target).parents('#nyroModalContent').length == 1) {
-						var elt = modal.content.get(0);
-						if ((elt.scrollTop == 0 && d > 0) ||
-								(d < 0 && elt.scrollHeight - elt.scrollTop == elt.clientHeight)) {
-							e.preventDefault();
-							e.stopPropagation();
-						}
+					var elt = modal.content.get(0);
+					if ((d > 0 && elt.scrollTop == 0) ||
+							(d < 0 && elt.scrollHeight - elt.scrollTop == elt.clientHeight)) {
+						e.preventDefault();
+						e.stopPropagation();
 					}
 				});
 			}
@@ -522,7 +572,7 @@ jQuery(function($) {
 		if (e.keyCode == 27) {
 			if (!currentSettings.modal)
 				removeModal();
-		} else if (currentSettings.type == 'gallery') {
+		} else if (currentSettings.type == 'gallery' && modal.ready && modal.dataReady && !modal.anim && !modal.transition) {
 			if (e.keyCode == 39 || e.keyCode == 40) {
 				e.preventDefault();
 				$('.nyroModalNext', modal.content).eq(0).trigger('click');
@@ -539,30 +589,51 @@ jQuery(function($) {
 	function fileType() {
 		var from = currentSettings.from;
 		
-		if (from.rev == 'modal')
-			currentSettings.modal = true;
+		var url = currentSettings.url;
 		
-		var image = new RegExp('[^\.]\.('+currentSettings.extImg+')\s*$', 'i');
-		if (image.test(from.href)) {
-			if (from.rel)
-				return 'gallery';
-			else
-				return 'image';
+		if (from && from.nodeName) {
+			if (from.nodeName.toLowerCase() == 'form') {
+				if (from.enctype == 'multipart/form-data')
+					return 'formData';
+				return 'form';
+			}
+			
+			if (from.rev == 'modal')
+				currentSettings.modal = true;
+			
+			var image = new RegExp('[^\.]\.('+currentSettings.extImg+')\s*$', 'i');
+			if (image.test(from.href)) {
+				if (from.rel)
+					return 'gallery';
+				else
+					return 'image';
+			}
+			
+			var swf = new RegExp('[^\.]\.(swf)\s*$', 'i');
+			if (swf.test(from.href))
+				return 'swf';
+			
+			if (from.target.toLowerCase() == '_blank' || (from.hostname.replace(/:\d*$/,'') != window.location.hostname.replace(/:\d*$/,'')))
+				return 'iframe';
+			
+			url = from.href;
 		}
 		
-		var swf = new RegExp('[^\.]\.(swf)\s*$', 'i');
-		if (swf.test(from.href))
-			return 'swf';
-		
-		if (from.target.toLowerCase() == '_blank' || (from.hostname != window.location.hostname))
-			return 'iframe';
-		
-		var hash = getHash(from.href);
-		var curLoc = this.location.href.substring(0, this.location.href.length-this.location.hash.length);
-		if (from.href.indexOf(curLoc+'#') == 0)
-			return hash;
-		else
-			currentSettings.selector = hash;
+		if (url) {
+			if (from)
+				currentSettings.url = url;
+			else
+				currentSettings.from = true;
+			var hash = getHash(url);
+			var hashLoc = getHash(window.location.href);
+			var curLoc = window.location.href.substring(0, window.location.href.length - hashLoc.length);
+			var req = url.substring(0, url.length - hash.length);
+			
+			if (req == curLoc)
+				return hash;
+			else
+				currentSettings.selector = hash;
+		}
 	}
 
 	// Called when the content cannot be loaded or tiemout reached
@@ -574,7 +645,7 @@ jQuery(function($) {
 		if (!modal.ready)
 			return;
 		
-		if (jQuery.isFunction(currentSettings.handleError))
+		if ($.isFunction(currentSettings.handleError))
 			currentSettings.handleError(modal, currentSettings);
 		
 		modal.loading
@@ -589,14 +660,22 @@ jQuery(function($) {
 		if (!modal.tmp.html())
 			return;
 		
-		modal.content.html(modal.tmp.contents().remove());
+		modal.content.html(modal.tmp.contents());
+		modal.tmp.empty();
 		wrapContent();
 		
-		if (jQuery.isFunction(currentSettings.endFillContent))
+		if ($.isFunction(currentSettings.endFillContent))
 			currentSettings.endFillContent(modal, currentSettings);
 		
+		modal.content.append(modal.scripts);
+		
+		var currentSettingsNew = $.extend({}, currentSettings);
+		if (resized.width)
+			currentSettingsNew.width = null;
+		if (resized.height)
+			currentSettingsNew.height = null;
 		$(currentSettings.closeSelector, modal.contentWrapper).click(removeModal);
-		$(currentSettings.openSelector, modal.contentWrapper).nyroModal(currentSettings);
+		$(currentSettings.openSelector, modal.contentWrapper).nyroModal(currentSettingsNew);
 	}
 	
 	// Wrap the content and update the modal size if needed
@@ -647,12 +726,36 @@ jQuery(function($) {
 		if (!modal.wrapper)
 			modal.wrapper = modal.contentWrapper.children(':first');
 		
-		var outerWrapper = getOuter(modal.contentWrapper);
-		var outerWrapper2 = getOuter(modal.wrapper);
-		var outerContent = getOuter(modal.content);
+		resized.width = false;
+		resized.height = false;
+		if (currentSettings.autoSizable && (!currentSettings.width || !currentSettings.height)) {
+			modal.contentWrapper.css({opacity: 0}).show();
+			var tmp = {
+				width: 'auto',
+				height: 'auto'
+			};
+			if (currentSettings.width)
+				tmp.width = currentSettings.width;
+			if (currentSettings.height)
+				tmp.height = currentSettings.height;
+			modal.content.css(tmp);
+			if (!currentSettings.width) {
+				currentSettings.width = modal.content.width();
+				resized.width = true;
+			}
+			if (!currentSettings.height) {
+				currentSettings.height = modal.content.height();
+				resized.height = true;
+			}
+			modal.contentWrapper.hide().css({opacity: 1});
+		}
 		
 		currentSettings.width = Math.max(currentSettings.width, currentSettings.minWidth);
 		currentSettings.height = Math.max(currentSettings.height, currentSettings.minHeight);
+		
+		var outerWrapper = getOuter(modal.contentWrapper);
+		var outerWrapper2 = getOuter(modal.wrapper);
+		var outerContent = getOuter(modal.content);
 		
 		var tmp = {
 			content: {
@@ -715,11 +818,11 @@ jQuery(function($) {
 			}
 		}
 		
-		modal.content.css(jQuery.extend({}, tmp.content, currentSettings.css.content));
-		modal.wrapper.css(jQuery.extend({}, tmp.wrapper2, currentSettings.css.wrapper2));
+		modal.content.css($.extend({}, tmp.content, currentSettings.css.content));
+		modal.wrapper.css($.extend({}, tmp.wrapper2, currentSettings.css.wrapper2));
 		
 		if (!resizing) {
-			modal.contentWrapper.css(jQuery.extend({}, tmp.wrapper, currentSettings.css.wrapper));
+			modal.contentWrapper.css($.extend({}, tmp.wrapper, currentSettings.css.wrapper));
 			if (currentSettings.type == 'image' || currentSettings.type == 'gallery') {
 				// Adding the title for the image
 				var title = $('img', modal.content).attr('alt');
@@ -759,6 +862,10 @@ jQuery(function($) {
 						currentSettings.hideBackground(modal, currentSettings, endRemove);
 					});
 			} else {
+				if (fixFF)
+					modal.content.css({position: ''}); // Fix Issue #10, remove the attribute
+				modal.wrapper.css({overflow: 'hidden'}); // Used to fix a visual issue when hiding
+				modal.content.css({overflow: 'hidden'}); // Used to fix a visual issue when hiding
 				currentSettings.hideContent(modal, currentSettings, function() {
 						endHideContent();
 						currentSettings.hideBackground(modal, currentSettings, endRemove);
@@ -780,6 +887,7 @@ jQuery(function($) {
 						currentSettings.hideTransition(modal, currentSettings, function() {
 							modal.loading.hide();
 							modal.transition = false;
+							modal.loadingShown = false;
 							endShowContent();
 						});
 					} else {
@@ -787,11 +895,11 @@ jQuery(function($) {
 								modal.loading.hide();
 								modal.loadingShown = false;
 								fillContent();
-								currentSettings.showContent(modal, currentSettings, endShowContent);
+								currentSettings.showContent(modal, $.extend({}, currentSettings), endShowContent);
 							});
 					}
 				}
-			} else if (!modal.loadingShown) {
+			} else if (!modal.loadingShown && !modal.transition) {
 				modal.anim = true;
 				modal.loadingShown = true;
 				if (modal.error)
@@ -811,10 +919,9 @@ jQuery(function($) {
 	
 	function ajaxLoaded(data) {
 		debug('AjaxLoaded: '+this.url);
-		data = filterBody(data);
 		modal.tmp.html(currentSettings.selector
-			?$('<div>'+data+'</div>').find(currentSettings.selector).contents()
-			:data);
+			?filterScripts($('<div>'+data+'</div>').find(currentSettings.selector).contents())
+			:filterScripts(data));
 		if (modal.tmp.html()) {
 			modal.dataReady = true;
 			showContentOrLoading();
@@ -836,12 +943,6 @@ jQuery(function($) {
 			showContentOrLoading();
 		} else
 			loadingError();
-	}
-	
-	function iframeLoaded() {
-		debug('iframeLoaded');
-		modal.dataReady = true;
-		showContentOrLoading();
 	}
 
 
@@ -877,9 +978,11 @@ jQuery(function($) {
 		modal.full.remove();
 		modal.full = null;
 		if (isIE6) {
-			body.css({height: '', width: '', position: ''});
+			body.css({height: '', width: '', position: '', overflow: ''});
 			$('html').css({overflow: ''});
 		}
+		if ($.isFunction(currentSettings.endRemove))
+			currentSettings.endRemove(modal, currentSettings);
 	}
 	
 	function endBackground() {
@@ -890,10 +993,18 @@ jQuery(function($) {
 	}
 	
 	function endShowContent() {
+		debug('endShowContent');
 		modal.anim = false;
 		modal.contentWrapper.css({opacity: ''}); // for the close button in IE
-		if (jQuery.isFunction(currentSettings.endShowContent))
+		fixFF = $.browser.mozilla && parseFloat($.browser.version) < 1.9 && currentSettings.type != 'gallery' && currentSettings.type != 'image';
+		if (fixFF)
+			modal.content.css({position: 'fixed'}); // Fix Issue #10
+		if ($.isFunction(currentSettings.endShowContent))
 			currentSettings.endShowContent(modal, currentSettings);
+		if (resized.width)
+			setCurrentSettings({width: null});
+		if (resized.height)
+			setCurrentSettings({height: null});
 	}
 
 
@@ -909,14 +1020,20 @@ jQuery(function($) {
 		return '';
 	}
 	
-	// Filter an html content to get only the body part
-	function filterBody(data) {
-		var bodySt = data.indexOf('<body>');
-		var bodyEd = data.indexOf('</body>');
-		if (bodySt > -1 &&  bodyEd > -1)
-			return data.substring(bodySt+6, bodyEd);
-		else
-			return data;
+	// Filter an html content to remove the script[src]
+	function filterScripts(data) {
+		// Removing the body, head and html tag
+		if (typeof data == 'string')
+			data = data.replace(/<\/?(html|head|body)([^>]*)>/gi, '');
+		var tmp = new Array();
+		$.each($.clean({0:data}, this.ownerDocument), function() {
+			if ($.nodeName(this, "script")) {
+				if (!this.src || $(this).attr('rel') == 'forceLoad')
+					modal.scripts.push(this);
+			} else
+				tmp.push(this);
+		});
+		return tmp;
 	}
 	
 	// Get the vertical and horizontal margin, padding and border dimension
@@ -966,47 +1083,11 @@ jQuery(function($) {
 	// -------------------------------------------------------
 	
 	function showBackground(elts, settings, callback) {
-		elts.bg.css({opacity:0}).fadeTo(500, 0.75, callback)
+		elts.bg.css({opacity:0}).fadeTo(500, 0.75, callback);
 	}
 	
 	function hideBackground(elts, settings, callback) {
-		modal.bg.fadeOut(300, callback);
-	}
-	
-	function showContent(elts, settings, callback) {
-		elts.contentWrapper
-			.css({
-				marginTop: (-150/2 + settings.marginScrollTop)+'px',
-				marginLeft: (-150/2 + settings.marginScrollLeft)+'px',
-				height: '150px',
-				width: '150px',
-				opacity: 0
-			})
-			.show()
-			.animate({
-				width: settings.width+'px',
-				marginLeft: (settings.marginLeft)+'px',
-				opacity: 0.5
-			}, {duration: 350})
-			.animate({
-				height: settings.height+'px',
-				marginTop: (settings.marginTop)+'px',
-				opacity: 1
-			}, {complete: callback, duration: 350});
-	}
-	
-	function hideContent(elts, settings, callback) {
-		elts.contentWrapper
-			.animate({
-				marginTop: (-150/2 + settings.marginScrollTop)+'px',
-				height: '150px',
-				opacity: 0.5
-			}, {duration: 200})
-			.animate({
-				marginLeft: (-150/2 + settings.marginScrollLeft)+'px',
-				width: '150px',
-				opacity: 0
-			}, {complete: callback, duration: 200});
+		elts.bg.fadeOut(300, callback);
 	}
 	
 	function showLoading(elts, settings, callback) {
@@ -1027,10 +1108,50 @@ jQuery(function($) {
 	}
 	
 	function hideLoading(elts, settings, callback) {
+		callback();
+	}
+	
+	function showContent(elts, settings, callback) {
+		var h = elts.loading.height();
+		var w = elts.loading.width();
 		elts.loading
+			.css({
+				height: h+'px',
+				width: w+'px',
+				marginTop: (-h/2 + settings.marginScrollTop)+'px',
+				marginLeft: (-w/2 + settings.marginScrollLeft)+'px'
+			})
+			.show()
 			.animate({
-				opacity: 0
-			}, {complete: callback, duration: 300});
+				width: settings.width+'px',
+				height: settings.height+'px',
+				marginTop: (settings.marginTop)+'px',
+				marginLeft: (settings.marginLeft)+'px'
+			}, {duration: 350, complete: function() {
+				elts.contentWrapper
+					.css({
+						width: settings.width+'px',
+						height: settings.height+'px',
+						marginTop: (settings.marginTop)+'px',
+						marginLeft: (settings.marginLeft)+'px'
+					})
+					.show();
+					elts.loading.fadeOut(200, callback);
+				}
+			});
+	}
+	
+	function hideContent(elts, settings, callback) {
+		elts.contentWrapper
+			.animate({
+				height: '50px',
+				width: '50px',
+				marginTop: 25+settings.marginScrollTop+'px',
+				marginLeft: 25+settings.marginScrollLeft+'px'
+			}, {duration: 350, complete: function() {
+				elts.contentWrapper.hide();
+				callback();
+			}});
 	}
 	
 	function showTransition(elts, settings, callback) {
@@ -1039,18 +1160,15 @@ jQuery(function($) {
 			.css({
 				marginTop: elts.contentWrapper.css('marginTop'),
 				marginLeft: elts.contentWrapper.css('marginLeft'),
-				height: elts.contentWrapper.height()+'px',
-				width: elts.contentWrapper.width()+'px',
+				height: elts.contentWrapper.css('height'),
+				width: elts.contentWrapper.css('width'),
 				opacity: 0
 			})
 			.show()
-			.animate({
-				opacity: 1
-			}, {complete: function() {
+			.fadeTo(400, 1, function() {
 					elts.contentWrapper.hide();
 					callback();
-				}, duration: 400});
-			
+				});
 	}
 	
 	function hideTransition(elts, settings, callback) {
@@ -1063,7 +1181,6 @@ jQuery(function($) {
 				marginTop: (settings.marginTop)+'px',
 				opacity: 1
 			});
-		
 		elts.loading
 			.animate({
 				width: settings.width+'px',
@@ -1072,7 +1189,7 @@ jQuery(function($) {
 				marginTop: (settings.marginTop)+'px'
 			}, {complete: function() {
 					elts.contentWrapper.show();
-					elts.loading.fadeOut('normal', function() {
+					elts.loading.fadeOut(400, function() {
 						elts.loading.hide();
 						callback();
 					});
@@ -1088,7 +1205,18 @@ jQuery(function($) {
 				marginTop: (settings.marginTop)+'px'
 			}, {complete: callback, duration: 400});
 	}
-
+	
+	function updateBgColor(elts, settings, callback) {
+		if (!$.fx.step.backgroundColor) {
+			elts.bg.css({backgroundColor: settings.bgColor});
+			callback();
+		} else
+			elts.bg
+				.animate({
+					backgroundColor: settings.bgColor
+				}, {complete: callback, duration: 400});
+	}
+	
 	// -------------------------------------------------------
 	// Default initialization
 	// -------------------------------------------------------
