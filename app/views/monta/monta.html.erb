@@ -2,8 +2,8 @@
 <head>
   <title>スライドショー : <%=h @board_entry.title %></title>
   <%= skip_javascript_include_tag 'prototype' %>
-  <%= skip_javascript_include_tag 'jquery.js' %>
-  <%= skip_javascript_include_tag 'jquery.hotkeys.js' %>
+  <%= skip_jquery_include_tag 'jquery' %>
+  <%= skip_jquery_include_tag 'jquery.hotkeys' %>
   <script language="JavaScript" type="text/javascript">$j = jQuery.noConflict();</script>
   <%= javascript_include_tag 'application' %>
 </head>

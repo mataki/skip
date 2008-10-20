@@ -16,8 +16,12 @@ var relative_url_root = '<%= controller.request.relative_url_root -%>';
 
   <%= all_javascript_include_tag 'prototype' %>
   <%= all_javascript_include_tag 'jquery' %>
-  <%= skip_javascript_include_tag 'ufo' %>
+  <%= skip_jquery_include_tag 'ui.core' %>
+  <%= skip_jquery_include_tag 'ui.draggable' %>
+  <%= skip_jquery_include_tag 'ui.droppable' %>
+  <%= skip_jquery_include_tag 'ui.sortable' %>
   <script language="JavaScript" type="text/javascript">$j = jQuery.noConflict();</script>
+  <%= skip_javascript_include_tag 'ufo' %>
   <%= javascript_include_tag 'application' %>
   <%= skip_javascript_include_tag 'skip_util' %>
 

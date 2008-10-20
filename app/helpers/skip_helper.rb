@@ -50,6 +50,33 @@ var platform_url_root = '#{root_url.chop}';
     EOS
   end
 
+  def skip_jquery_include_tag source
+    javascript_include_tag skip_jquery_path(source)
+  end
+
+  def skip_jquery_path source
+    jquery_base_dir = '/javascripts/skip/jquery'
+    if source == 'jquery'
+      if ENV['RAILS_ENV'] == 'production'
+        "#{jquery_base_dir}/#{source}.min.js"
+      else
+        "#{jquery_base_dir}/#{source}"
+      end
+    elsif ( (source =~ /^ui\./) == 0 || (source =~ /^effects\./) == 0 )
+      if ENV['RAILS_ENV'] == 'production'
+        "#{jquery_base_dir}/ui/minified/#{source}.min.js"
+      else
+        "#{jquery_base_dir}/ui/#{source}.js"
+      end
+    else
+      if ENV['RAILS_ENV'] == 'production'
+        "#{jquery_base_dir}/plugins/minified/#{source}.min.js"
+      else
+        "#{jquery_base_dir}/plugins/#{source}.js"
+      end
+    end
+  end
+
   # （stylesheets/skip以下に格納されている）スタイルシートを参照する
   def skip_stylesheet_link_tag source
     stylesheet_link_tag("/stylesheets/skip/#{source}")

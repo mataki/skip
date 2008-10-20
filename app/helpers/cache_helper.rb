@@ -17,16 +17,19 @@ module CacheHelper
   PROTOTYPE_LIBRARY = {:name => 'prototype.all', :libs => ['prototype']}
 
   JQUERY_LIBRARY = {:name => 'jquery.all',
-    :libs => ['jquery', 'jquery.color.js', 'jquery.nyroModal.js', 'jquery.bgiframe.min.js',
-              'jquery.autocomplete.js', 'jquery.jTagging.js', 'jquery.jgrow-0.2.js',
-              'ui/ui.core.js', 'ui/ui.draggable.js', 'ui/ui.droppable.js', 'ui/ui.sortable.js']}
+    :libs => ['jquery', 'jquery.color', 'jquery.nyroModal', 'jquery.bgiframe',
+              'jquery.autocomplete', 'jquery.jTagging', 'jquery.jgrow-0.2']}
 
   STYLE_LIBRARY = {:name => 'skip.style',
     :libs => ['skip/style', 'style', 'skins-base']}
 
   def all_javascript_include_tag source
     library = {'prototype' => PROTOTYPE_LIBRARY, 'jquery' => JQUERY_LIBRARY}[source]
-    lib_str = library[:libs].map{|lib| "/javascripts/skip/#{lib}" }
+    if source == 'jquery'
+      lib_str = library[:libs].map { |lib| skip_jquery_path lib }
+    else
+      lib_str = library[:libs].map { |lib| "/javascripts/skip/#{lib}" }
+    end
     lib_str << {:cache => library[:name]}
     javascript_include_tag(*lib_str)
   end

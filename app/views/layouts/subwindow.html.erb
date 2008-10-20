@@ -17,12 +17,12 @@ var relative_url_root = '<%= controller.request.relative_url_root -%>';
   <%= skip_stylesheet_link_tag 'jquery.autocomplete.css' %>
 
   <%= skip_javascript_include_tag 'prototype' %>
-  <%= skip_javascript_include_tag 'jquery.js' %>
-  <%= skip_javascript_include_tag 'jquery.color.js' %>
-  <%= skip_javascript_include_tag "jquery.nyroModal.js" %>
-  <%= skip_javascript_include_tag "jquery.bgiframe.min.js" %>
-  <%= skip_javascript_include_tag "jquery.autocomplete.js" %>
-  <%= skip_javascript_include_tag "jquery.jTagging.js" %>
+  <%= skip_jquery_include_tag 'jquery' %>
+  <%= skip_jquery_include_tag 'jquery.color' %>
+  <%= skip_jquery_include_tag "jquery.nyroModal" %>
+  <%= skip_jquery_include_tag "jquery.bgiframe" %>
+  <%= skip_jquery_include_tag "jquery.autocomplete" %>
+  <%= skip_jquery_include_tag "jquery.jTagging" %>
   <script language="JavaScript" type="text/javascript">$j = jQuery.noConflict();</script>
   <%= javascript_include_tag 'application' %>
 </head>

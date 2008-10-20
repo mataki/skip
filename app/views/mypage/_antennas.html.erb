@@ -24,7 +24,7 @@
   </li>
 <% end -%>
 </ul>
-<%= skip_javascript_include_tag "jquery.inplace.js" %>
+<%= skip_jquery_include_tag "jquery.inplace" %>
 <script type="text/javascript">
 $j(function() {
     var ado_inplace_edit_url = '<%= url_for(:action => :set_antenna_name) %>';

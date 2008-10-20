@@ -1,5 +1,5 @@
 /*
- * Autocomplete - jQuery plugin 1.0 Beta
+ * Autocomplete - jQuery plugin 1.0.2
  *
  * Copyright (c) 2007 Dylan Verheul, Dan G. Switzer, Anjesh Tuladhar, Jörn Zaefferer
  *
@@ -7,136 +7,8 @@
  *   http://www.opensource.org/licenses/mit-license.php
  *   http://www.gnu.org/licenses/gpl.html
  *
- * Revision: $Id: jquery.autocomplete.js 5206 2008-04-06 17:08:47Z dswitzer $
+ * Revision: $Id: jquery.autocomplete.js 5747 2008-06-25 18:30:55Z joern.zaefferer $
  *
- */
-
-/**
- * Provide autocomplete for text-inputs or textareas.
- *
- * Depends on dimensions plugin's offset method for correct positioning of the select box and bgiframe plugin
- * to fix IE's problem with selects.
- *
- * @example $("#input_box").autocomplete("my_autocomplete_backend.php");
- * @before <input id="input_box" />
- * @desc Autocomplete a text-input with remote data. For small to giant datasets.
- *
- * When the user starts typing, a request is send to the specified backend ("my_autocomplete_backend.php"),
- * with a GET parameter named q that contains the current value of the input box and a paremeter "limit" with
- * the value specified for the max option.
- *
- * A value of "foo" would result in this request url: my_autocomplete_backend.php?q=foo&limit=10
- *
- * The result must return with one value on each line. The result is presented in the order
- * the backend sends it.
- *
- * @example $("#input_box").autocomplete(["Cologne", "Berlin", "Munich"]);
- * @before <input id="input_box" />
- * @desc Autcomplete a text-input with local data. For small datasets.
- *
- * @example $.getJSON("my_backend.php", function(data) {
- *   $("#input_box").autocomplete(data);
- * });
- * @before <input id="input_box" />
- * @desc Autcomplete a text-input with data received via AJAX. For small to medium sized datasets.
- *
- * @example $("#mytextarea").autocomplete(["Cologne", "Berlin", "Munich"], {
- *  multiple: true
- * });
- * @before <textarea id="mytextarea" />
- * @desc Autcomplete a textarea with local data (for small datasets). Once the user chooses one
- * value, a separator is appended (by default a comma, see multipleSeparator option) and more values
- * are autocompleted.
- *
- * @name autocomplete
- * @cat Plugins/Autocomplete
- * @type $
- * @param String|Array urlOrData Pass either an URL for remote-autocompletion or an array of data for local auto-completion
- * @param Map options Optional settings
- * @option String inputClass This class will be added to the input box. Default: "ac_input"
- * @option String resultsClass The class for the UL that will contain the result items (result items are LI elements). Default: "ac_results"
- * @option String loadingClass The class for the input box while results are being fetched from the server. Default: "ac_loading"
- * @option Number minChars The minimum number of characters a user has to type before the autocompleter activates. Default: 1
- * @option Number delay The delay in milliseconds the autocompleter waits after a keystroke to activate itself. Default: 400 for remote, 10 for local
- * @option Number cacheLength The number of backend query results to store in cache. If set to 1 (the current result), no caching will happen. Do not set below 1. Default: 10
- * @option Boolean matchSubset Whether or not the autocompleter can use a cache for more specific queries. This means that all matches of "foot" are a subset of all matches for "foo". Usually this is true, and using this options decreases server load and increases performance. Only useful with cacheLength settings bigger than one, like 10. Default: true
- * @option Boolean matchCase Whether or not the comparison is case sensitive. Important only if you use caching. Default: false
- * @option Boolean matchContains Whether or not the comparison looks inside (i.e. does "ba" match "foo bar") the search results. Important only if you use caching. Don't mix with autofill. Default: false
- * @option Booolean mustMatch If set to true, the autocompleter will only allow results that are presented by the backend. Note that illegal values result in an empty input box. Default: false
- * @option Object extraParams Extra parameters for the backend. If you were to specify { bar:4 }, the autocompleter would call my_autocomplete_backend.php?q=foo&bar=4 (assuming the input box contains "foo"). The param can be a function that is called to calculate the param before each request. Default: none
- * @option Boolean selectFirst If this is set to true, the first autocomplete value will be automatically selected on tab/return, even if it has not been handpicked by keyboard or mouse action. If there is a handpicked (highlighted) result, that result will take precedence. Default: true
- * @option Function formatItem Provides advanced markup for an item. For each row of results, this function will be called. The returned value will be displayed inside an LI element in the results list. Autocompleter will provide 4 parameters: the results row, the position of the row in the list of results (starting at 1), the number of items in the list of results and the search term. Default: none, assumes that a single row contains a single value.
- * @option Function formatResult Similar to formatItem, but provides the formatting for the value to be put into the input field. Again three arguments: Data, position (starting with one) and total number of data. Default: none, assumes either plain data to use as result or uses the same value as provided by formatItem.
- * @option Boolean multiple Whether to allow more than one autocomplted-value to enter. Default: false
- * @option String multipleSeparator Seperator to put between values when using multiple option. Default: ", "
- * @option Number width Specify a custom width for the select box. Default: width of the input element
- * @option Boolean autoFill Fill the textinput while still selecting a value, replacing the value if more is typed or something else is selected. Default: false
- * @option Number max Limit the number of items in the select box. Is also sent as a "limit" parameter with a remote request. Default: 10
- * @option Boolean|Function highlight Whether and how to highlight matches in the select box. Set to false to disable. Set to a function to customize. The function gets the value as the first argument and the search term as the second and must return the formatted value. Default: Wraps the search term in a <strong> element 
- * @option Boolean scroll Whether to scroll when more results than configured via scrollHeight are available. Default: true 
- * @option Number scrollHeight height of scrolled autocomplete control in pixels
- * @option String attachTo The element to attach the autocomplete list to. Useful if used inside a modal window like Thickbox. Default: body -MM
- */
-
-/**
- * Handle the result of a search event. Is executed when the user selects a value or a
- * programmatic search event is triggered (see search()).
- *
- * You can add and remove (using unbind("result")) this event at any time.
- *
- * @example $('input#suggest').result(function(event, data, formatted) {
- *   $("#result").html( !data ? "No match!" : "Selected: " + formatted);
- * });
- * @desc Bind a handler to the result event to display the selected value in a #result element.
- *    The first argument is a generic event object, in this case with type "result".
- *    The second argument refers to the selected data, which can be a plain string value or an array or object.
- *    The third argument is the formatted value that is inserted into the input field.
- *
- * @param Function handler The event handler, gets a default event object as first and
- * 		the selected list item as second argument.
- * @name result
- * @cat Plugins/Autocomplete
- * @type $
- */
-
-/**
- * Trigger a search event. See result(Function) for binding to that event.
- *
- * A search event mimics the same behaviour as when the user selects a value from
- * the list of autocomplete items. You can use it to execute anything that does something
- * with the selected value, beyond simply putting the value into the input and submitting it.
- *
- * @example $('input#suggest').search();
- * @desc Triggers a search event.
- *
- * @name search
- * @cat Plugins/Autocomplete
- * @type $
- */
- 
-/**
- * Flush (empty) the cache of matched input's autocompleters.
- *
- * @example $('input#suggest').flushCache();
- *
- * @name flushCache
- * @cat Plugins/Autocomplete
- * @type $
- */
-
-/**
- * Updates the options for the current autocomplete field. This allows 
- * you to change things like the URL, max items to display, etc. If you're
- * changing the URL, be sure to remember to call the flushCache() method.
- *
- * @example $('input#suggest').setOptions({
- *  max: 15
- * });
- * @desc Changes the maximum number of items to display to 15.
- *
- * @name setOptions
- * @cat Plugins/Autocomplete
- * @type $
  */
 
 ;(function($) {
@@ -153,6 +25,9 @@ $.fn.extend({
 		
 		// if highlight is set to false, replace it with a do-nothing function
 		options.highlight = options.highlight || function(value) { return value; };
+		
+		// if the formatMatch option is not specified, then use formatItem for backwards compatibility
+		options.formatMatch = options.formatMatch || options.formatItem;
 		
 		return this.each(function() {
 			new $.Autocompleter(this, options);
@@ -186,7 +61,8 @@ $.Autocompleter = function(input, options) {
 		ESC: 27,
 		COMMA: 188,
 		PAGEUP: 33,
-		PAGEDOWN: 34
+		PAGEDOWN: 34,
+		BACKSPACE: 8
 	};
 
 	// Create $ object for input element
@@ -202,7 +78,18 @@ $.Autocompleter = function(input, options) {
 	};
 	var select = $.Autocompleter.Select(options, input, selectCurrent, config);
 	
-	$input.keydown(function(event) {
+	var blockSubmit;
+	
+	// prevent form submit in opera when selecting with return key
+	$.browser.opera && $(input.form).bind("submit.autocomplete", function() {
+		if (blockSubmit) {
+			blockSubmit = false;
+			return false;
+		}
+	});
+	
+	// only opera doesn't trigger keydown multiple times while pressed, others don't work with keypress at all
+	$input.bind(($.browser.opera ? "keypress" : "keydown") + ".autocomplete", function(event) {
 		// track last key pressed
 		lastKeyPressCode = event.keyCode;
 		switch(event.keyCode) {
@@ -247,11 +134,11 @@ $.Autocompleter = function(input, options) {
 			case options.multiple && $.trim(options.multipleSeparator) == "," && KEY.COMMA:
 			case KEY.TAB:
 			case KEY.RETURN:
-				if( selectCurrent() ){
-					// make sure to blur off the current field
-					if( !options.multiple )
-						$input.blur();
+				if( selectCurrent() ) {
+					// stop default to prevent a form submit, Opera needs special handling
 					event.preventDefault();
+					blockSubmit = true;
+					return false;
 				}
 				break;
 				
@@ -264,8 +151,6 @@ $.Autocompleter = function(input, options) {
 				timeout = setTimeout(onChange, options.delay);
 				break;
 		}
-	}).keypress(function() {
-		// having fun with opera - remove this binding and Opera submits the form when we select an entry via return
 	}).focus(function(){
 		// track whether the field has focus, we shouldn't process any
 		// results if the field no longer has focus
@@ -309,6 +194,7 @@ $.Autocompleter = function(input, options) {
 	}).bind("unautocomplete", function() {
 		select.unbind();
 		$input.unbind();
+		$(input.form).unbind(".autocomplete");
 	});
 	
 	
@@ -380,10 +266,12 @@ $.Autocompleter = function(input, options) {
 	}
 	
 	// fills in the input box w/the first match (assumed to be the best match)
+	// q: the term entered
+	// sValue: the first matching result
 	function autoFill(q, sValue){
 		// autofill in the complete box w/the first match as long as the user hasn't entered in more data
 		// if the last user key pressed was backspace, don't autofill
-		if( options.autoFill && (lastWord($input.val()).toLowerCase() == q.toLowerCase()) && lastKeyPressCode != 8 ) {
+		if( options.autoFill && (lastWord($input.val()).toLowerCase() == q.toLowerCase()) && lastKeyPressCode != KEY.BACKSPACE ) {
 			// fill in the value (keep the case the user has typed)
 			$input.val($input.val() + sValue.substring(lastWord(previousValue).length));
 			// select the portion of the value not typed by the user (so the next character will erase)
@@ -397,6 +285,7 @@ $.Autocompleter = function(input, options) {
 	};
 
 	function hideResultsNow() {
+		var wasVisible = select.visible();
 		select.hide();
 		clearTimeout(timeout);
 		stopLoading();
@@ -405,10 +294,20 @@ $.Autocompleter = function(input, options) {
 			$input.search(
 				function (result){
 					// if no value found, clear the input box
-					if( !result ) $input.val("");
+					if( !result ) {
+						if (options.multiple) {
+							var words = trimWords($input.val()).slice(0, -1);
+							$input.val( words.join(options.multipleSeparator) + (words.length ? options.multipleSeparator : "") );
+						}
+						else
+							$input.val( "" );
+					}
 				}
 			);
 		}
+		if (wasVisible)
+			// position cursor at end of input field
+			$.Autocompleter.Selection(input, input.value.length, input.value.length);
 	};
 
 	function receiveData(q, data) {
@@ -432,7 +331,9 @@ $.Autocompleter = function(input, options) {
 		// if an AJAX url has been supplied, try loading the data now
 		} else if( (typeof options.url == "string") && (options.url.length > 0) ){
 			
-			var extraParams = {};
+			var extraParams = {
+				timestamp: +new Date()
+			};
 			$.each(options.extraParams, function(key, param) {
 				extraParams[key] = typeof param == "function" ? param() : param;
 			});
@@ -499,6 +400,7 @@ $.Autocompleter.defaults = {
 	extraParams: {},
 	selectFirst: true,
 	formatItem: function(row) { return row[0]; },
+	formatMatch: null,
 	autoFill: false,
 	width: 0,
 	multiple: false,
@@ -507,8 +409,7 @@ $.Autocompleter.defaults = {
 		return value.replace(new RegExp("(?![^&;]+;)(?!<[^<>]*)(" + term.replace(/([\^\$\(\)\[\]\{\}\*\.\+\?\|\\])/gi, "\\$1") + ")(?![^<>]*>)(?![^&;]+;)", "gi"), "<strong>$1</strong>");
 	},
     scroll: true,
-    scrollHeight: 180,
-	attachTo: 'body'
+    scrollHeight: 180
 };
 
 $.Autocompleter.Cache = function(options) {
@@ -552,7 +453,7 @@ $.Autocompleter.Cache = function(options) {
 			// if rawValue is a string, make an array otherwise just reference the array
 			rawValue = (typeof rawValue == "string") ? [rawValue] : rawValue;
 			
-			var value = options.formatItem(rawValue, i+1, options.data.length);
+			var value = options.formatMatch(rawValue, i+1, options.data.length);
 			if ( value === false )
 				continue;
 				
@@ -668,9 +569,9 @@ $.Autocompleter.Select = function (options, input, select, config) {
 		.hide()
 		.addClass(options.resultsClass)
 		.css("position", "absolute")
-		.appendTo(options.attachTo);
+		.appendTo(document.body);
 	
-		list = $("<ul>").appendTo(element).mouseover( function(event) {
+		list = $("<ul/>").appendTo(element).mouseover( function(event) {
 			if(target(event).nodeName && target(event).nodeName.toUpperCase() == 'LI') {
 	            active = $("li", list).removeClass(CLASSES.ACTIVE).index(target(event));
 			    $(target(event)).addClass(CLASSES.ACTIVE);            
@@ -678,6 +579,7 @@ $.Autocompleter.Select = function (options, input, select, config) {
 		}).click(function(event) {
 			$(target(event)).addClass(CLASSES.ACTIVE);
 			select();
+			// TODO provide option to avoid setting focus again after selection? useful for cleanup-on-focus
 			input.focus();
 			return false;
 		}).mousedown(function() {
@@ -703,7 +605,7 @@ $.Autocompleter.Select = function (options, input, select, config) {
 	}
 
 	function moveSelect(step) {
-		listItems.slice(active, active + 1).removeClass();
+		listItems.slice(active, active + 1).removeClass(CLASSES.ACTIVE);
 		movePosition(step);
         var activeItem = listItems.slice(active, active + 1).addClass(CLASSES.ACTIVE);
         if(options.scroll) {
@@ -743,7 +645,7 @@ $.Autocompleter.Select = function (options, input, select, config) {
 			var formatted = options.formatItem(data[i].data, i+1, max, data[i].value, term);
 			if ( formatted === false )
 				continue;
-			var li = $("<li>").html( options.highlight(formatted, term) ).addClass(i%2 == 0 ? "ac_event" : "ac_odd").appendTo(list)[0];
+			var li = $("<li/>").html( options.highlight(formatted, term) ).addClass(i%2 == 0 ? "ac_even" : "ac_odd").appendTo(list)[0];
 			$.data(li, "ac_data", data[i]);
 		}
 		listItems = list.find("li");
@@ -751,7 +653,9 @@ $.Autocompleter.Select = function (options, input, select, config) {
 			listItems.slice(0, 1).addClass(CLASSES.ACTIVE);
 			active = 0;
 		}
-		list.bgiframe();
+		// apply bgiframe if available
+		if ( $.fn.bgiframe )
+			list.bgiframe();
 	}
 	
 	return {
@@ -783,6 +687,7 @@ $.Autocompleter.Select = function (options, input, select, config) {
 		},
 		hide: function() {
 			element && element.hide();
+			listItems && listItems.removeClass(CLASSES.ACTIVE);
 			active = -1;
 		},
 		visible : function() {
@@ -825,8 +730,7 @@ $.Autocompleter.Select = function (options, input, select, config) {
 			return selected && selected.length && $.data(selected[0], "ac_data");
 		},
 		emptyList: function (){
-			// only empty the list if it doesn't exist
-			if( list ) list.empty();
+			list && list.empty();
 		},
 		unbind: function() {
 			element && element.remove();
