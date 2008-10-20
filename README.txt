@@ -91,7 +91,7 @@ SKIPを動かすにあたり以下の環境で検証を行っています。
  4. config/initial_settings.ymlを編集
 
     hostを起動するURLに変更する
-    session:のsecretを変更する(0文字以上にする必要があります)
+    session:のsecretを変更する(30文字以上にする必要があります)
     sha1_digest_keyを変更する
     secret_keyを変更する
     proxy_urlにプロキシサーバのIPアドレスを設定する(必要な場合のみ)
