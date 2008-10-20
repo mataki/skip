@@ -414,13 +414,7 @@ class MypageController < ApplicationController
     antennas = Antenna.find(:all,
                             :conditions => ["user_id = ?", session[:user_id]],
                             :order => "position")
-    target_pos = 0
-    antennas.each_with_index do |antenna, index|
-      if antenna.id.to_s == params[:target_antenna_id]
-        target_pos = antenna.position
-        break
-      end
-    end
+    target_pos = Integer(params[:target_pos])
 
     antennas.each_with_index do |antenna, index|
       if antenna.id.to_s == params[:source_antenna_id]

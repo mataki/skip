@@ -75,6 +75,8 @@ $j(function() {
               complete: function(request) {
                   setupDeleteAntennaLink();
                   setupDeleteAntennaItemLink();
+                  setupSortableAntenna();
+                  setupDoraggableAntennaItem();
               }
           });
           return false;
@@ -143,30 +145,64 @@ $j(function() {
     setupDeleteAntennaItemLink();
 
     // アンテナのソート
-    $j('#antennas_list')
-    .sortable({
-        axis: 'y',
-        update: function(ev, ui) {
-        // ソート先のアンテナIDとソート元のアンテナIDが取得できれば
-        // sortAntenna(ソート先のアンテナID, ソート元のアンテナID);
-        // とすればいいが、ソート先のアンテナIDを取得する手段がない。
-        // /mypage/sort_antennaの処理を見直して、ソート元のアンテナID
-        // と何番目になったのかの情報で並び替えれるようにすればいけそうだ。
-        }
-    });
+    var setupSortableAntenna = function() {
+        $j('#antennas_list')
+        .sortable({
+            axis: 'y',
+            update: function(ev, ui) {
+                // ソートされた先の位置
+                var target_pos = 0;
+                var source_antenna_id = ui.item.attr('id').split('_')[1];
+                var array = $j('#antennas_list > li')
+                // length - 1 する理由はui末尾に一時的に追加されるli要素を対象外としたいので。
+                for(i = 0; i < array.length - 1; i++) {
+                    if( array[i].id == ui.item.attr('id')) {
+                        target_pos = i + 1;
+                    }
+                }
+                var url = relative_url_root + '/mypage/sort_antenna'
+                $j.ajax({
+                    type: 'POST',
+                    url: url,
+                    data: { source_antenna_id: source_antenna_id, target_pos: target_pos, authenticity_token: $j('#authenticity_token').val() },
+                    error: function(event){
+                        alert("通信に失敗しました");
+                    },
+                    success: function(request) {
+                        $j('#antennas_list_container').highlight();
+                    }
+                });
+            }
+        });
+    };
+    setupSortableAntenna();
 
     // アンテナアイテムの張替え
-    $j('.antenna')
-    .droppable({
-        hoverclass: "dragenter",
-        accept: '.antenna_item',
-        drop: function(ev, ui) {
-                  var antenna_id = this.id.split('_')[1];
-                  var antenna_item_id = ui.draggable.attr('id').split('_')[2];
-                  $j(this).children('#antenna_items_list').append(ui.draggable);
-                  moveAntennaItem(antenna_id, antenna_item_id);
-              }
-    });
-    $j('.antenna_item').draggable({revert: true});
+    var setupDoraggableAntennaItem = function() {
+        $j('.antenna')
+        .droppable({
+            hoverclass: "dragenter",
+            accept: '.antenna_item',
+            drop: function(ev, ui) {
+                      var antenna_id = this.id.split('_')[1];
+                      var antenna_item_id = ui.draggable.attr('id').split('_')[2];
+                      $j(this).children('#antenna_items_list').append(ui.draggable);
+                      var url = relative_url_root + '/mypage/move_antenna_item'
+                      $j.ajax({
+                          type: 'POST',
+                          url: url,
+                          data: { antenna_id: antenna_id, antenna_item_id: antenna_item_id, authenticity_token: $j('#authenticity_token').val() },
+                          error: function(event){
+                              alert("通信に失敗しました");
+                          },
+                          success: function(request) {
+                              $j('#antennas_list_container').highlight();
+                          }
+                      });
+                  }
+        });
+        $j('.antenna_item').draggable({revert: true});
+    };
+    setupDoraggableAntennaItem();
 });
 </script>

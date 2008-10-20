@@ -151,38 +151,6 @@ function setCurrentDatetime(obj_name, property_name) {
 }
 
 /* -------------------------------------------------- */
-function sortAntenna(source_antenna_id, target_antenna_id) {
-
-    var options = {
-        evalScripts: true,
-        parameters: "source_antenna_id="+source_antenna_id + "&target_antenna_id="+target_antenna_id + "&authenticity_token="+$('authenticity_token').value,
-        onFailure: function(originalRequest){
-            alert("通信に失敗しました");
-        },
-        onComplete: function(originalRequest) {
-            new Effect.Highlight('antennas_list_container');
-        }
-    };
-    var url = relative_url_root + "/mypage/sort_antenna";
-    url += ("?" + (new Date()).getTime());
-    new Ajax.Updater('antennas_list_container', url, options);
-}
-function moveAntennaItem(antenna_id, antenna_item_id) {
-
-    var options = {
-        evalScripts: true,
-        parameters: "antenna_id="+antenna_id + "&antenna_item_id=" + antenna_item_id + "&authenticity_token="+$('authenticity_token').value,
-        onFailure: function(originalRequest){
-            alert("通信に失敗しました");
-        },
-        onComplete: function(originalRequest) {
-            new Effect.Highlight('antennas_list_container');
-        }
-    };
-    var url = relative_url_root + "/mypage/move_antenna_item";
-    url += ("?" + (new Date()).getTime());
-    new Ajax.Updater('antennas_list_container', url, options);
-}
 
 function fitImageSize(id, max_width, max_height) {
     img = new Image();
