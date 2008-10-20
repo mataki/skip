@@ -1,60 +1,61 @@
 <% # :categoryはSiteCountの属性と同名 %>
-<% statistics_items = [{ :icon => "table",
-                         :desc => "登録ユーザ数",
-                         :unit => "人",
-                         :category => 'total_user_count'},
-                       { :icon => "table_lightning",
-                         :desc => "本日のアクセス数",
-                         :unit => "人",
-                         :category => 'today_user_count' },
-                       { :icon => "database",
-                         :desc => "総記事件数",
-                         :unit => "件",
-                         :category => 'total_blog_count' },
-                       { :icon => "database_lightning",
-                         :desc => "本日の記事数",
-                         :unit => "件",
-                         :category => 'today_blog_count' },
-                       { :icon => "database_edit",
-                         :desc => "直近一ヶ月に記事 ・コメントを記入",
-                         :unit => "人",
-                         :category => 'writer_at_month' },
-                       { :icon => "database_go",
-                         :desc =>  "直近一ヶ月のアクセス数平均",
-                         :unit => "人",
-                         :category => 'user_access_at_month' }
-                      ]
+<% # TODO 以下のHashはSiteCountが定数として持つべき。要リファクタ。バッチも合わせて修正する %>
+<% statistics_items = { :total_user_count => { :icon => "table",
+                                               :desc => "登録ユーザ数",
+                                               :unit => "人" },
+                        :today_user_count => { :icon => "table_lightning",
+                                               :desc => "本日のアクセス数",
+                                               :unit => "人" },
+                        :total_blog_count => { :icon => "database",
+                                               :desc => "総記事件数",
+                                               :unit => "件" },
+                        :today_blog_count => { :icon => "database_lightning",
+                                               :desc => "本日の記事数",
+
+                                               :unit => "件" },
+                        :writer_at_month => { :icon => "database_edit",
+                                              :desc => "直近一ヶ月に記事 ・コメントを記入",
+                                              :unit => "人" },
+                        :user_access_at_month => { :icon => "database_go",
+                                                   :desc =>  "直近一ヶ月のアクセス数平均",
+                                                   :unit => "人" } }
 %>
 
 <div class="topix_title"><%= icon_tag('asterisk_orange') -%><span>[<%=h site_count.created_on.strftime("%Y/%m/%d %H:%M") %>] 時点の指標値</span></div>
-<% statistics_items.each do |item| %>
+<% %w(total_user_count today_user_count total_blog_count today_blog_count writer_at_month user_access_at_month).each do |category| -%>
+<% item = statistics_items[category.to_sym] -%>
 <div class="statistics_line">
   <div class="statistics_desc"><%= icon_tag item[:icon] %>　<%=h item[:desc] %></div>
-  <div class="statistics_value"><%=h site_count[item[:category]] %><%=h item[:unit] %></div>
+  <div class="statistics_value"><%=h site_count[category] %><%=h item[:unit] %></div>
   <div class="statistics_menu">
-    <%= link_to_remote "#{icon_tag 'calendar_view_month'} #{site_count.created_on.strftime('%Y/%m')}の推移を表示",
-          :update => 'statistics_history',
-          :url => {:action => 'ado_statistics_history',
-                   :type => 'monthly',
-                   :category => item[:category],
-                   :year  => site_count.created_on.year,
-                   :month => site_count.created_on.month,
-                   :desc => item[:desc] },
-          :complete => "new Effect.Highlight('statistics_history')" %>
-<!--
-    <%= link_to_remote "#{icon_tag 'map'} 今年の推移",
-          :update => 'statistics_history',
-          :url => {:action => 'history',
-                   :type => 'year',
-                   :category => item[:category],
-                   :year  => site_count.created_on.year,
-                   :month => site_count.created_on.month,
-                   :day   => site_count.created_on.day,
-                   :desc => item[:desc] },
-          :complete => "new Effect.Highlight('statistics_history')" %>
--->
+    <%= link_to "#{icon_tag 'calendar_view_month'} #{site_count.created_on.strftime('%Y/%m')}の推移を表示", '#', :class => 'statistics_history_link', :id => category, :title => item[:desc] %>
   </div>
 </div>
 
 <div style="clear: left"></div>
 <% end %>
+
+<script type="text/javascript">
+$j(function() {
+    $j('.statistics_history_link')
+    .click(function() {
+        var url = relative_url_root + '/rankings/ado_statistics_history';
+        $j.ajax({
+            url: url,
+            data: { type: 'monthly',
+                    category: this.id,
+                    year: <%= site_count.created_on.year %>,
+                    month: <%= site_count.created_on.month %>,
+                    desc: $j(this).attr('title')
+            },
+            error: function(event){
+                alert("通信に失敗しました");
+            },
+            success: function(request) {
+                $j('#statistics_history').html(request).highlight();
+            }
+        });
+        return false;
+    });
+});
+</script>
