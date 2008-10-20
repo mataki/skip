@@ -14,8 +14,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 module CacheHelper
-  PROTOTYPE_LIBRARY = {:name => 'prototype.all',
-    :libs => ['prototype', 'builder', 'effects', 'controls', 'slider']}
+  PROTOTYPE_LIBRARY = {:name => 'prototype.all', :libs => ['prototype']}
 
   JQUERY_LIBRARY = {:name => 'jquery.all',
     :libs => ['jquery', 'jquery.color.js', 'jquery.nyroModal.js', 'jquery.bgiframe.min.js',
