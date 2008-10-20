@@ -162,3 +162,40 @@ describe EditController, "#get_img_urls" do
   end
 end
 
+describe EditController, "#create" do
+  before do
+    user_login
+    @user_symbol = "uid:hoge"
+    session[:user_symbol] = @user_symbol
+  end
+  describe "正しく更新される場合" do
+    before do
+      new_trackbacks = mock('new_trackbacks')
+
+      @file1 = mock_uploaed_file
+      @file2 = mock_uploaed_file
+
+      @entry = stub_model(BoardEntry, :entry_type => "DIARY")
+      @entry.should_receive(:save).and_return(true)
+      @entry.should_receive(:send_trackbacks).and_return(["", new_trackbacks])
+
+      controller.should_receive(:setup_layout).and_return(true)
+      controller.should_receive(:validate_params).and_return(true)
+      controller.should_receive(:post_mail).and_return(true)
+      controller.should_receive(:analyze_params).and_return([["sid:allusers"], []])
+      controller.should_receive(:make_trackback_message).with(new_trackbacks)
+
+      BoardEntry.stub!(:new).and_return(@entry)
+
+      post :create, {
+        :board_entry => { :symbol => @user_symbol }, :image => { "1" => @file1, "2" => @file2 }
+      }
+    end
+    it "作成された掲示板にリダイレクトされる" do
+      response.should redirect_to(@entry.get_url_hash)
+    end
+    it "flashメッセージが設定されていること" do
+      flash[:notice].should == '正しく作成されました。'
+    end
+  end
+end

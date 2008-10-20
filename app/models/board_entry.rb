@@ -15,6 +15,7 @@
 
 class BoardEntry < ActiveRecord::Base
   include Publication
+  include ValidationsFile
   include ActionController::UrlWriter
 
   belongs_to :user
@@ -41,6 +42,7 @@ class BoardEntry < ActiveRecord::Base
   validates_presence_of :user_id, :message => 'は必須です'
 
   attr_reader :owner
+  attr_accessor :image_files
 
   N_('BoardEntry|Entry type|DIARY')
   N_('BoardEntry|Entry type|GROUP_BBS')
@@ -64,6 +66,8 @@ class BoardEntry < ActiveRecord::Base
     end
 
     Tag.validate_tags(category).each{ |error| errors.add(:category, error) }
+
+    validate_image_files
   end
 
   class << self
@@ -81,6 +85,7 @@ class BoardEntry < ActiveRecord::Base
 
   def after_save
     Tag.create_by_string category, entry_tags
+    upload_files image_files if image_files.is_a?(Array) and !image_files.blank?
   end
 
   def after_create
@@ -628,6 +633,23 @@ class BoardEntry < ActiveRecord::Base
     return img_urls
   end
 
+  def upload_files(files)
+    FileUtils.mkdir_p(image_owner_path)
+    files.each do |file|
+      upload_file(file)
+    end
+  end
+
+  def upload_file(file)
+    open(image_file_path(file.original_filename), "w+b") do |f|
+      f.write(file.read)
+    end
+  end
+
+  def image_file_path(file_name)
+    File.join(image_owner_path, "#{id}_#{file_name}")
+  end
+
   def image_owner_path
     File.join(self.class.image_root_path, user_id.to_s)
   end
@@ -650,16 +672,26 @@ class BoardEntry < ActiveRecord::Base
   def load_owner
     @owner = self.class.owner self.symbol
   end
+
+  def self.total_image_size(owner_symbol)
+    sum = 0
+    find(:all, :conditions => { :symbol => owner_symbol }).each do |entry|
+      entry.all_images.each do |f|
+        sum += File.stat(f).size
+      end
+    end
+    sum
+  end
+
+  def all_images
+    Dir.glob(File.join(image_owner_path, id.to_s + "_*"))
+  end
 private
   def generate_next_user_entry_no
     entry = BoardEntry.find(:first,
                             :select => 'max(user_entry_no) max_user_entry_no',
                             :conditions =>['user_id = ?', self.user_id])
     self.user_entry_no = entry.max_user_entry_no.to_i + 1
-  end
-
-  def all_images
-    Dir.glob(File.join(image_owner_path, id.to_s + "_*"))
   end
 
   # symbol_link([uid:fujiwara>])を参照先のデータに基づいて変換する
@@ -744,5 +776,15 @@ private
       end
     end
     entries
+  end
+
+  def validate_image_files
+    image_files and image_files.each do |file|
+      next unless valid_presence_of_file(file)
+      valid_size_of_file file
+      valid_extension_of_file file
+      valid_max_size_per_owner_of_file file, symbol
+      valid_max_size_of_system_of_file file
+    end
   end
 end

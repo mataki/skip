@@ -16,6 +16,7 @@
 require 'csv'
 class ShareFile < ActiveRecord::Base
   include Publication
+  include ValidationsFile
 
   attr_accessor :file
 
@@ -50,12 +51,12 @@ class ShareFile < ActiveRecord::Base
   end
 
   def validate_on_create
-    return unless valid_presence_of_file
+    return unless valid_presence_of_file file
 
-    valid_extension_of_file
-    valid_size_of_file
-    valid_max_size_per_owner_of_file
-    valid_max_size_of_system_of_file
+    valid_extension_of_file file
+    valid_size_of_file file
+    valid_max_size_per_owner_of_file file, owner_symbol
+    valid_max_size_of_system_of_file file
   end
 
   def after_save
@@ -285,50 +286,8 @@ class ShareFile < ActiveRecord::Base
   def total_share_file_size
     self.class.total_share_file_size self.owner_symbol
   end
-
-  def self.system_share_file_size
-    sum = 0
-    Dir.glob("#{ENV['SHARE_FILE_PATH']}/**/*").each do |f|
-      sum += File.stat(f).size
-    end
-    sum
-  end
 private
   def square_brackets_tags
     self.category = Tag.square_brackets_tags(self.category)
-  end
-
-  def valid_presence_of_file
-    unless self.file.is_a?(ActionController::UploadedFile)
-      errors.add_to_base "ファイルが指定されていません。"
-      return false
-    end
-    true
-  end
-
-  def valid_extension_of_file
-    unless SkipUtil.verify_extension? self.file_name, self.content_type
-      errors.add_to_base "この形式のファイルは、アップロードできません。"
-    end
-  end
-
-  def valid_size_of_file
-    if self.file.size == 0
-      errors.add_to_base "存在しないもしくはサイズ０のファイルはアップロードできません。"
-    elsif self.file.size > INITIAL_SETTINGS['max_share_file_size'].to_i
-      errors.add_to_base "#{INITIAL_SETTINGS['max_share_file_size'].to_i/1.megabyte}Mバイト以上のファイルはアップロードできません。"
-    end
-  end
-
-  def valid_max_size_per_owner_of_file
-    if (self.total_share_file_size + self.file.size) > INITIAL_SETTINGS['max_share_file_size_per_owner'].to_i
-      errors.add_to_base "共有ファイル保存領域の利用容量が最大値を越えてしまうためアップロードできません。"
-    end
-  end
-
-  def valid_max_size_of_system_of_file
-    if (self.class.system_share_file_size + self.file.size) > INITIAL_SETTINGS['max_share_file_size_of_system'].to_i
-      errors.add_to_base "システム全体における共有ファイル保存領域の利用容量が最大値を越えてしまうためアップロードできません。"
-    end
   end
 end

@@ -78,10 +78,8 @@ class EditController < ApplicationController
       redirect_to_with_deny_auth and return
     end
 
+    @board_entry.image_files = params[:image].map{|key,val| val}.delete_if{|elm| elm == ""} if params[:image]
     if @board_entry.save
-
-      params[:image].each{ |key,image| upload_file(@board_entry, image) } if params[:image]
-
       target_symbols  = analyze_params
       target_symbols.first.each do |target_symbol|
         @board_entry.entry_publications.create(:symbol => target_symbol)
@@ -92,7 +90,6 @@ class EditController < ApplicationController
 
       message, new_trackbacks = @board_entry.send_trackbacks(login_user_symbols, params[:trackbacks])
       make_trackback_message(new_trackbacks)
-
 
       flash[:notice] = '正しく作成されました。' + message
       redirect_to @board_entry.get_url_hash
@@ -206,8 +203,8 @@ class EditController < ApplicationController
     # ちょっとした更新でなければ、last_updatedを更新する
     update_params[:last_updated] = Time.now unless params[:non_update]
 
+    @board_entry.image_files = params[:image].map{|key,val| val}.delete_if{|elm| elm == ""} if params[:image]
     if @board_entry.update_attributes(update_params)
-      params[:image].each { |key,image| upload_file(@board_entry, image) } if params[:image]
 
       @board_entry.entry_publications.clear
       @board_entry.entry_editors.clear
@@ -278,9 +275,9 @@ class EditController < ApplicationController
     # 権限チェック
     redirect_to_with_deny_auth and return unless authorize_to_edit_board_entry? @board_entry
 
-    FileUtils.rm(File.join(get_dir_path, @board_entry.user_id.to_s, @board_entry.id.to_s + '_' + params[:filename]))
+    FileUtils.rm(File.join(@board_entry.image_owner_path, @board_entry.id.to_s + '_' + params[:filename]))
     img_urls = get_img_urls @board_entry
-    render :partial => "board_entries/view_images", :locals=>{:img_urls=>img_urls, :board_entry_id=>@board_entry.id, :deletable => true}
+    render :partial => "board_entries/view_images", :locals => {:img_urls => img_urls, :board_entry_id => @board_entry.id, :deletable => true}
   end
 
 private
@@ -320,26 +317,9 @@ private
     return target_symbols_publication, target_symbols_editor
   end
 
-  def upload_file board_entry, src_image_file
-    # FIXME 以下のチェックに失敗した場合のエラー処理が全くない。
-    if valid_upload_file?(src_image_file) &&
-      SkipUtil.verify_extension?(src_image_file.original_filename, src_image_file.content_type)
-      dir_path = File.join(get_dir_path, board_entry.user_id.to_s)
-      FileUtils.mkdir_p dir_path
-      target_image_file_name = File.join(dir_path, @board_entry.id.to_s + '_' + src_image_file.original_filename)
-      open(target_image_file_name, "w+b") do |f|
-        f.write(src_image_file.read)
-      end
-    end
-  end
-
   # TODO: モデルのメソッドを直接呼び出しでもよい。他の部分でSpecを書いたら持っていく
   def get_img_urls board_entry
     board_entry.images_filename_to_url_mapping_hash
-  end
-
-  def get_dir_path
-    File.join(ENV['IMAGE_PATH'], "board_entries")
   end
 
   def post_mail

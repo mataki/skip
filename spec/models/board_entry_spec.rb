@@ -350,3 +350,91 @@ end
 
 describe BoardEntry, '#load_owner' do
 end
+
+describe BoardEntry, "#upload_file" do
+  before do
+    @file = mock_uploaed_file(:read => "file")
+    @entry = stub_model(BoardEntry, :id => 1, :user_id => 1)
+  end
+  it "ファイルをアップロードすること" do
+    f = mock('file')
+    f.should_receive(:write).with(@file.read)
+    @entry.should_receive(:open).with(@entry.image_file_path(@file.original_filename), "w+b").and_yield(f)
+    @entry.upload_file(@file)
+  end
+end
+
+describe BoardEntry, "#upload_files" do
+  before do
+    @files = [mock('file1'), mock('file2')]
+    @entry = stub_model(BoardEntry, :id => 1, :user_id => 1)
+  end
+  it "upload_fileがファイルの数呼ばれること" do
+    @entry.should_receive(:upload_file).with(@files[0])
+    @entry.should_receive(:upload_file).with(@files[1])
+    @entry.upload_files(@files)
+  end
+end
+
+describe BoardEntry, ".total_image_size" do
+  before do
+    @entry = stub_model(BoardEntry)
+    @entry.stub!(:all_images).and_return(["image1", "image2"])
+    @entries = [@entry]
+    BoardEntry.should_receive(:find).and_return(@entries)
+
+    File.stub!(:stat).with("image1").and_return(mock('file', :size => 100))
+    File.stub!(:stat).with("image2").and_return(mock('file', :size => 200))
+  end
+  it "画像の合計サイズを返す" do
+    BoardEntry.total_image_size("uid:hoge").should == 300
+  end
+end
+
+describe BoardEntry, "#validate_image_files" do
+  before do
+    @entry = stub_model(BoardEntry)
+  end
+  describe "複数ファイルが送られてきた場合" do
+    before do
+      @entry.stub!(:image_files).and_return({ "1" => "file1", "2" => "file2" })
+    end
+    describe "すべてのファイルがvalidな場合" do
+      before do
+        @entry.should_receive(:valid_presence_of_file).twice.and_return(true)
+        @entry.should_receive(:valid_size_of_file).twice
+        @entry.should_receive(:valid_extension_of_file).twice
+        @entry.should_receive(:valid_max_size_per_owner_of_file).twice
+        @entry.should_receive(:valid_max_size_of_system_of_file).twice
+      end
+      it "すべての検証が呼ばれること" do
+        @entry.send(:validate_image_files)
+      end
+    end
+  end
+  describe "presence_of_fileに引っかかる場合" do
+    before do
+      @entry.stub!(:image_files).and_return({ "1" => "image1" })
+    end
+    it "presence_of_fileのみ呼ばれること" do
+      @entry.should_receive(:valid_presence_of_file).and_return(false)
+      @entry.should_not_receive(:valid_size_of_file)
+      @entry.should_not_receive(:valid_extension_of_file)
+      @entry.should_not_receive(:valid_max_size_per_owner_of_file)
+      @entry.should_not_receive(:valid_max_size_of_system_of_file)
+
+      @entry.send(:validate_image_files)
+    end
+  end
+end
+
+describe BoardEntry, "#validate" do
+  before do
+    @entry = stub_model(BoardEntry)
+  end
+  it "validate_image_filesが呼ばれること" do
+    @entry.should_receive(:validate_image_files)
+
+    @entry.validate
+  end
+end
