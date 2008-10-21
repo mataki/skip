@@ -27,64 +27,6 @@ function transparentImage(obj) {
   }
 }
 /* -------------------------------------------------- */
-/*
- * 共通化：マイグループ
- */
-function click_my_items(select_my_item_id, link_my_item_id, _options) {
-  var select_my_item_elem = $(select_my_item_id);
-  var link_my_item_elem = $(link_my_item_id);
-
-  if (select_my_item_elem.style.display != 'none') {
-    select_my_item_elem.style.display = 'none';
-    link_my_item_elem.style.backgroundColor = "white";
-    return;
-  }
-  select_my_item_elem.style.display = 'block';
-    link_my_item_elem.style.backgroundColor = "#e0e0ff";
-
-  if (select_my_item_elem.innerHTML.length != 0) {
-      return;
-  }
-
-  select_my_item_elem.innerHTML='<img src="' + platform_url_root + '/images/skip/indicator.gif" />';
-
-  var options = {
-        onFailure: function() {
-           alert("通信に失敗しました");
-        },
-        onComplete: function(res) {
-          var items = $H(eval( '(' + res.responseText + ')' ));
-
-          select_my_item_elem.innerHTML='';
-
-          var line_elem = document.createElement('div');
-          with(line_elem.style) {
-              borderTop = "1px dashed silver";
-              marginTop = "3px";
-          }
-          select_my_item_elem.appendChild(line_elem);
-
-          if(items.keys().length <= 0) {
-              select_my_item_elem.appendChild(document.createTextNode(_options.nothing_message));
-          } else {
-              select_my_item_elem.appendChild(document.createTextNode(_options.result_message));
-          }
-
-          items.keys().each( function(key) {
-            var candidate_elem = document.createElement('a');
-            with(candidate_elem.style) {
-              marginRight = "5px";
-            }
-            candidate_elem.setAttribute('href', relative_url_root + _options.link_url_base + key);
-            candidate_elem.appendChild(document.createTextNode('[' + items[key] + ']'));
-            select_my_item_elem.appendChild(candidate_elem);
-          });
-
-      }.bind(this)
-  };
-  new Ajax.Request(relative_url_root + _options.action_url, options);
-}
-/* -------------------------------------------------- */
 function saveCookie(key,value,exp){
     if(key&&value){
         if(exp) {

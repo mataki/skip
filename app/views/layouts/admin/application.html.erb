@@ -124,22 +124,7 @@
   <%= skip_jquery_include_tag "jquery.cluetip" %>
   <%= skip_jquery_include_tag 'jquery.tablesorter' %>
 <script type="text/javascript">
-<!--
 var relative_url_root = '<%= controller.request.relative_url_root -%>';
-function imageSizing(){
-  var imgs = document.getElementsByName("picture");
-  if(!imgs) return;
-  for(i=0; i<imgs.length; i++){
-    width = imgs[i].width;
-    height = imgs[i].height;
-    fitImageSize(imgs[i], width, height);
-  }
-}
-Event.observe(window, 'load', function() {
-  imageSizing();
-  fnLoadPngs();
-} , false);
-<%# FIXME 以下のclickMyItemsメソッドを利用すれば、他アプリのclick_my_itemsを使っている箇所を置き換え可能 %>
 $j(function(){
     var clickMyItems = function(actionUrl, updateId, linkUrlBase, _options) {
         // ajaxUpdate対象の要素が空じゃない（つまり2回目以降の場合はtoggleするだけ)
@@ -180,6 +165,18 @@ $j(function(){
         return false;
     });
 
+    var imageSizing = function() {
+        var imgs = document.getElementsByName("picture");
+        if(!imgs) return;
+        for(i = 0; i < imgs.length; i++){
+            width = imgs[i].width;
+            height = imgs[i].height;
+            fitImageSize(imgs[i], width, height);
+        }
+    };
+    imageSizing();
+    fnLoadPngs();
+
     $j('img.help').cluetip({
         splitTitle: '|',
         dropShadow: false,
@@ -190,7 +187,6 @@ $j(function(){
 
     $j('table.sortable').tablesorter();
 });
-//-->
 </script>
 <%= yield :javascript %>
 </html>

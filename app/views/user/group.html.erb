@@ -3,6 +3,7 @@
 
 <div id="contents_left">
 
+<% form_tag( { :action => 'group'}, { :method => 'get' } ) do -%>
 <div class="box_space">
   <div class="box_space_title"><%= icon_tag 'text_list_bullets'%>カテゴリ</div>
   <div class="box_space_body" style="font-size:10px">
@@ -40,6 +41,7 @@
   <%= submit_tag '検索', :onclick => "searchGroup();" %><br/>
   </div>
 </div><!-- box_space -->
+<% end -%>
 
 </div><!-- contents_left -->
 
@@ -52,30 +54,3 @@
 <div id="contents_bottom"></div><!-- contents_bottom -->
 
 </div><!-- contents_container -->
-
-<script type="text/javascript">
-var url = '<%= url_for :action => "group" %>'
-
-/* 複数のラジオボタンの中からチェックされているラジオボタンのvalueを取得する */
-function getCheckedRadioValue(radios) {
-  var value = "";
-  radios.each(function(radio){
-    if(radio.checked) value = radio.value;
-  });
-  return value;
-}
-function searchGroup() {
-  var params = "";
-  var category = getCheckedRadioValue(document.getElementsByClassName("category_radio"));
-  var format = getCheckedRadioValue(document.getElementsByClassName("format_radio"));
-  var sort = getCheckedRadioValue(document.getElementsByClassName("sort_radio"));
-
-  params += "&group_category_id=" + category;
-  params += "&format_type=" + format;
-  params += "&sort_type=" + sort;
-  if ($F('keyword') != "") {
-    params += "&keyword=" + encodeURI($F('keyword'));
-  }
-  location.href = url + "?" + params.slice(1);
-}
-</script>

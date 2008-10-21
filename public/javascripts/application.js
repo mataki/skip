@@ -85,8 +85,8 @@ $j(function(){
      * ブックマークのタイトルを取得する
      */
     reloadTitle = function(url, target_id) {
-        $('refresher').hide();
-        $('indicator').show();
+        $j('#refresher').hide();
+        $j('#indicator').show();
         var ado_get_title_url = relative_url_root + "/bookmark/ado_get_title";
         $j.ajax({
             type: "POST",
@@ -101,8 +101,8 @@ $j(function(){
                 }
             },
             complete: function(request){
-                $('indicator').hide();
-                $('refresher').show();
+                $j('#indicator').hide();
+                $j('#refresher').show();
             },
             error: function(event){
                 alert("通信に失敗しました");
@@ -155,31 +155,27 @@ function setCurrentDatetime(obj_name, property_name) {
 
 function fitImageSize(id, max_width, max_height) {
     img = new Image();
-    img.src = $(id).src;
+    img.src = $j('#' + id).attr('src');
 
     if (max_height > max_width) {
         if (img.width > max_width) {
             value = img.height / (img.width/max_width);
             if (value < 1)  { value = 1; }
-            $(id).height = value;
-            $(id).width = max_width;
+            $j('#' + id).attr({ height: value, width: max_width });
         } else if (img.height > max_height) {
             value = img.width / (img.height/max_height);
             if (value < 1) { value = 1; }
-            $(id).height = max_height;
-            $(id).width = value;
+            $j('#' + id).attr({ height: max_height, width: value });
         }
     } else {
         if (img.height >= max_height) {
             value = img.width / (img.height/max_height);
             if (value < 1) { value = 1; }
-            $(id).height = max_height;
-            $(id).width = value;
+            $j('#' + id).attr({ height: max_height, width: value });
         } else if (img.width > max_width) {
             value = img.height / (img.width/max_width);
             if (value < 1)  { value = 1; }
-            $(id).height = value;
-            $(id).width = max_width;
+            $j('#' + id).attr({ height: value, width: max_width });
         }
     }
 }
@@ -189,9 +185,9 @@ function fitImageSize(id, max_width, max_height) {
  */
 function saveLoginData(){
     exp_days = 14;
-    saveCookie('login_save', $('login_save').checked.toString(), exp_days);
-    if($('ssl_enable_radio')){
-        saveCookie('ssl_enable', $('ssl_enable_radio').checked.toString(), exp_days);
+    saveCookie('login_save', $j('#login_save').attr('checked').toString(), exp_days);
+    if($j('#ssl_enable_radio')){
+        saveCookie('ssl_enable', $j('#ssl_enable_radio').attr('checked').toString(), exp_days);
     }
     return true;
 }

@@ -20,24 +20,6 @@ var relative_url_root = '<%= controller.request.relative_url_root -%>';
   <%= skip_javascript_include_tag 'ufo' %>
   <%= javascript_include_tag 'application' %>
   <%= skip_javascript_include_tag 'skip_util' %>
-
-<script language="JavaScript" type="text/javascript">
-<!--
-function imageSizing(){
-  var imgs = document.getElementsByName("picture");
-  if(!imgs) return;
-  for(i=0; i<imgs.length; i++){
-    width = imgs[i].width;
-    height = imgs[i].height;
-    fitImageSize(imgs[i], width, height);
-  }
-}
-Event.observe(window, 'load', function() {
-  imageSizing();
-  fnLoadPngs();
-} , false);
-//-->
-</script>
 </head>
 
 <body>
@@ -106,9 +88,7 @@ Event.observe(window, 'load', function() {
 <%= skip_footer_link -%>
 
 </body>
-</html>
 <script type="text/javascript">
-<%# FIXME 以下のclickMyItemsメソッドを利用すれば、他アプリのclick_my_itemsを使っている箇所を置き換え可能 %>
 $j(function(){
     var clickMyItems = function(actionUrl, updateId, linkUrlBase, _options) {
         // ajaxUpdate対象の要素が空じゃない（つまり2回目以降の場合はtoggleするだけ)
@@ -149,6 +129,18 @@ $j(function(){
         return false;
     });
 
+    var imageSizing = function() {
+        var imgs = document.getElementsByName("picture");
+        if(!imgs) return;
+        for(i = 0; i < imgs.length; i++){
+            width = imgs[i].width;
+            height = imgs[i].height;
+            fitImageSize(imgs[i], width, height);
+        }
+    };
+    imageSizing();
+    fnLoadPngs();
+
     $j.fn.nyroModal.settings.processHandler = function(settings) {
         $j.nyroModalSettings({
             minWidth: 10, minHeight: 10
@@ -156,3 +148,4 @@ $j(function(){
     };
 });
 </script>
+</html>

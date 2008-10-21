@@ -135,12 +135,12 @@ $j(function() {
         return false;
     });
 
-    publication_symbols_array.each (function(symbol){
+    $j.each(publication_symbols_array, function() {
         if(edit_checkbox) {
-            var checked = editor_symbols_array.include(symbol);
-            createSymbolRecord(symbol, checked);
+            var checked = editor_thiss_array.include(this);
+            createSymbolRecord(this, checked);
         } else {
-            createSymbolRecord(symbol, false);
+            createSymbolRecord(this, false);
         }
     });
 

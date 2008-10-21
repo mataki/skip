@@ -87,8 +87,8 @@ class SkipUtil
         image_link << "<param name='movie' value='#{image_url}' />"
         image_link << "</object>"
         image_link << "<div style='text-align: center;'>"
-        image_link << "<a href='javascript: $(\"flash#{file_count}\").Play();'>[再生/次へ]</a>"
-        image_link << "<a href='javascript: $(\"flash#{file_count}\").Rewind();'>[最初から]</a>"
+        image_link << "<a href='javascript: $j(\"#flash#{file_count}\")[0].Play();'>[再生/次へ]</a>"
+        image_link << "<a href='javascript: $j(\"#flash#{file_count}\")[0].Rewind();'>[最初から]</a>"
         image_link << "</div></div>"
       else
         image_link = "<a href='#{image_url}' class=\"nyroModal\" ><img src='#{image_url}' "
