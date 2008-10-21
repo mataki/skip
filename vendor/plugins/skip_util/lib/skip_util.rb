@@ -91,10 +91,10 @@ class SkipUtil
         image_link << "<a href='javascript: $(\"flash#{file_count}\").Rewind();'>[最初から]</a>"
         image_link << "</div></div>"
       else
-        image_link = "<img src='#{image_url}' "
+        image_link = "<a href='#{image_url}' class=\"nyroModal\" ><img src='#{image_url}' "
         image_link << "width='#{image_size.first}' " if image_size.first > 0
         image_link << "height='#{image_size.last}' " if image_size.last > 0
-        image_link << "onclick='popupImage(\"#{image_url}/\")' />"
+        image_link << " /></a>"
       end
 
       view_str = view_str.sub(regex_type, image_link)

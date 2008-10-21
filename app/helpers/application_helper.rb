@@ -135,19 +135,19 @@ module ApplicationHelper
     link_to image_tag(image_name, :alt=>title) + title, options
   end
 
-  def showPicture(user, width, height, popup=false)
+  def showPicture(user, width, height, popup = false)
     options = {:border=>'0', :name=>'picture', :alt=>user.name}
     options[:width] = width unless width == 0
     options[:height] = height unless height == 0
     if user.retired?
       file_name = 'retired.png'
     elsif picture = user.pictures.first
-      if popup
-        pop_name = url_for(:controller=>'pictures', :action=>'picture', :id=>picture.id.to_s)
-        options[:onclick] = "popupImage('#{pop_name}')"
-        options[:title] = "クリックすると実際の大きさで表示されます"
-      end
       file_name = '/pictures/picture/' + picture.id.to_s + '.png'
+      if popup
+        pop_name = url_for(:controller => 'pictures', :action => 'picture', :id => picture.id.to_s)
+        options[:title] = "クリックすると実際の大きさで表示されます"
+        return link_to image_tag(file_name, options), file_name, :class => 'nyroModal'
+      end
     else
       file_name = 'default_picture.png'
     end

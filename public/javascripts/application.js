@@ -120,6 +120,12 @@ $j(function(){
         });
         return text;
     };
+
+    $j.fn.nyroModal.settings.processHandler = function(settings) {
+        $j.nyroModalSettings({
+            minWidth: 10, minHeight: 10
+        });
+    };
 });
 
 ///----------------------------------------------------------------------------------------

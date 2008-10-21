@@ -111,48 +111,6 @@ function loadCookie(key){
     return value
 }
 /* -------------------------------------------------- */
-function popupImage(filepath){
-    var y = 0;
-
-    if (document.all) {
-        y = document.body.scrollTop + 32;
-
-        if(!popupImage.imgNode){
-            popupImage.imgNode = document.createElement('img');
-            popupImage.imgNode.setAttribute( 'src' , filepath );
-            popupImage.imgNode.onclick = closeImage;
-        }
-    } else if(document.implementation) {
-        y = window.pageYOffset + 32;
-
-        if(!popupImage.imgNode){
-            popupImage.imgNode = document.createElement('img');
-            popupImage.imgNode.setAttribute( 'src' , filepath );
-            popupImage.imgNode.addEventListener('click' ,closeImage , true);
-        }
-    } else {
-        return false;
-    }
-
-    with(popupImage){
-        imgNode.style.position = 'absolute';
-        imgNode.style.left = '32px';
-        imgNode.style.top = y + 'px';
-        imgNode.style.borderColor = '#0099FF';
-        imgNode.style.borderWidth = '1px';
-        imgNode.style.borderStyle = 'solid';
-        imgNode.style.margin = '0';
-        document.body.appendChild(imgNode);
-    }
-
-    function closeImage(){
-        if (popupImage.imgNode) {
-            document.body.removeChild(popupImage.imgNode);
-            popupImage.imgNode = null;
-        }
-    }
-}
-
 function getSubwindowScript(url, height, width, title) {
     if(title == undefined) {
         title = 'subwindow'
