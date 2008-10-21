@@ -21,7 +21,9 @@ class ApplicationController < ActionController::Base
   layout 'layout'
 
   protect_from_forgery
-  rescue_from ActionController::InvalidAuthenticityToken, :with => :redirect_to_deny_auth
+  rescue_from ActionController::InvalidAuthenticityToken do |exception|
+    redirect_to_with_deny_auth
+  end
 
   before_filter :sso, :login_required, :prepare_session
   after_filter  :remove_message
