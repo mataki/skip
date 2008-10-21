@@ -122,21 +122,24 @@ div.input_line textarea {
 <script language='javascript' type='text/javascript'>
 //<![CDATA[
 $j(function() {
-    var tags = new Array(<%= @categories_hash[:mine].map{|str| ("'#{str}'")}.join(',') %>);
-    var stdTags = new Array(<%= @categories_hash[:standard].map{|str| ("'#{str}'")}.join(',') %>);
-    var userTags = new Array(<%= @categories_hash[:user].map{|str| ("'#{str}'")}.join(',') %>);
-    var sysTags = new Array(<%= @categories_hash[:system].map{|str| ("'#{str}'")}.join(',') %>);
+    var setupTagComplete = function() {
+        var tags = new Array(<%= @categories_hash[:mine].map{|str| ("'#{str}'")}.join(',') %>);
+        var stdTags = new Array(<%= @categories_hash[:standard].map{|str| ("'#{str}'")}.join(',') %>);
+        var userTags = new Array(<%= @categories_hash[:user].map{|str| ("'#{str}'")}.join(',') %>);
+        var sysTags = new Array(<%= @categories_hash[:system].map{|str| ("'#{str}'")}.join(',') %>);
 
-    $j('#tags_list').append(createTagsLink(tags));
-    $j('#std_tags_list').append(createTagsLink(stdTags));
-    $j('#user_tags_list').append(createTagsLink(userTags));
-    $j('#sys_tags_list').append(createTagsLink(sysTags));
+        $j('#tags_list').append(createTagsLink(tags));
+        $j('#std_tags_list').append(createTagsLink(stdTags));
+        $j('#user_tags_list').append(createTagsLink(userTags));
+        $j('#sys_tags_list').append(createTagsLink(sysTags));
 
-    // タグ処理
-    $j('#board_entry_category').jTagging($j('#tags_list'));
-    $j('#board_entry_category').jTagging($j('#std_tags_list'));
-    $j('#board_entry_category').jTagging($j('#user_tags_list'));
-    $j('#board_entry_category').jTagging($j('#sys_tags_list'));
+        // タグ処理
+        $j('#board_entry_category').jTagging($j('#tags_list'));
+        $j('#board_entry_category').jTagging($j('#std_tags_list'));
+        $j('#board_entry_category').jTagging($j('#user_tags_list'));
+        $j('#board_entry_category').jTagging($j('#sys_tags_list'));
+    };
+    setupTagComplete();
 
     // 入力フォームのチェック
     $j('#board_entry_form')
@@ -219,7 +222,6 @@ $j(function() {
     .focus(function(){
         hideCategoryBox();
     });
-
     changeEditorMode();
 });
 //]]>

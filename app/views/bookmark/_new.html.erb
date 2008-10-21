@@ -89,64 +89,63 @@ td {
 //<![CDATA[
 $j(function(){
 
-    // ダイアログ(nyroModal)でのブックマーク後の処理
-    var completeDialog = function() {
-        location.reload();
-    };
-    // サブウィンドウ(ブックマークレット)でのブックマーク後の処理
-    var completeSubwindow = function() {
-        alert('ブックマークしました');
-        location.href = $j('#bookmark_url').val();
-    };
+    var setupTagComplete = function() {
+        var userTags = new Array(<%= user_tags_array.map{|str| ("'#{str}'")}.join(',') %>);
+        var otherTags = new Array(<%= other_tags_array.map{|str| ("'#{str}'")}.join(',') %>);
+        var yourTags = new Array(<%= your_tags_array.map{|str| ("'#{str}'")}.join(',') %>);
 
-    var userTags = new Array(<%= user_tags_array.map{|str| ("'#{str}'")}.join(',') %>);
-    var otherTags = new Array(<%= other_tags_array.map{|str| ("'#{str}'")}.join(',') %>);
-    var yourTags = new Array(<%= your_tags_array.map{|str| ("'#{str}'")}.join(',') %>);
-
-    $j('#user_tags_list').append(createTagsLink(userTags));
-    $j('#other_tags_list').append(createTagsLink(otherTags));
-    $j('#your_tags_list').append(createTagsLink(yourTags));
-
-    // jQueryアクションを追加する。
-    var initAction = function(completeFunction) {
-        $j('#update_form')
-        .submit(function(){
-            if($j('#bookmark_comment_public_true:checked').size() && <%= !@bookmark.url_is_public? -%>){
-                if(!confirm('非公開記事ーを全公開でブックマークしますがよろしいですか？\n（閲覧権限の有無によらずタイトルが公開されます）')){
-                    return false;
-                }
-            }
-            var url = '<%= url_for({ :controller => :bookmark, :action => :update }); -%>'
-            $j.ajax({
-                type: 'POST',
-                url: url,
-                data: $j(this).serialize(),
-                success: function(html) {
-                    if(html == 'success'){
-                        completeFunction();
-                    } else {
-                        $j('#update_body').html(html);
-                    }
-                }
-            });
-            return false;
-        });
-        if ($j('#bookmark_title').val() == '') {
-            reloadTitle('<%= h(@bookmark.url) -%>', 'bookmark_title');
-        }
+        $j('#user_tags_list').append(createTagsLink(userTags));
+        $j('#other_tags_list').append(createTagsLink(otherTags));
+        $j('#your_tags_list').append(createTagsLink(yourTags));
 
         $j('#bookmark_comment_tags').jTagging($j('#user_tags_list'));
         $j('#bookmark_comment_tags').jTagging($j('#other_tags_list'));
         $j('#bookmark_comment_tags').jTagging($j('#your_tags_list'));
     };
+    setupTagComplete();
+
+    // サブウィンドウ(ブックマークレット)でのブックマーク後の処理
+    var complete = function() {
+        alert('ブックマークしました');
+        location.href = $j('#bookmark_url').val();
+    };
 
     $j.nyroModalSettings({
         height: 500,
         endShowContent: function(elts, settings) {
-            initAction(completeDialog);
+            // ダイアログ(nyroModal)でのブックマーク後の処理
+            complete = function() {
+                location.reload();
+            };
         }
     });
-    initAction(completeSubwindow);
+
+    $j('#update_form')
+    .submit(function(){
+        if($j('#bookmark_comment_public_true:checked').size() && <%= !@bookmark.url_is_public? -%>){
+            if(!confirm('非公開記事ーを全公開でブックマークしますがよろしいですか？\n（閲覧権限の有無によらずタイトルが公開されます）')){
+                return false;
+            }
+        }
+        var url = '<%= url_for({ :controller => :bookmark, :action => :update }); -%>'
+        $j.ajax({
+            type: 'POST',
+            url: url,
+            data: $j(this).serialize(),
+            success: function(html) {
+                if(html == 'success'){
+                    complete();
+                } else {
+                    $j('#update_body').html(html);
+                }
+            }
+        });
+        return false;
+    });
+
+    if ($j('#bookmark_title').val() == '') {
+        reloadTitle('<%= h(@bookmark.url) -%>', 'bookmark_title');
+    }
 });
 //]]>
 </script>

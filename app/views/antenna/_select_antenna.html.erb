@@ -45,46 +45,34 @@
 </div>
 <script type="text/javascript" >
 $j(function() {
-
-    var initAction = function() {
-        $j('.add_symbol_link')
-        .click(function() {
-            var url = '<%= url_for({:controller => "antenna", :action => "add_symbol"}) -%>';
-            var antennaId = this.id.split('_')[3]
-            var symbol = '<%= symbol -%>';
-            $j.ajax({
-                type: 'POST',
-                url: url,
-                data: { antenna_id: antennaId, symbol: symbol, authenticity_token: $j('#authenticity_token').val() },
-                success: function(html) {
-                    $j('#select_antenna_body').html(html);
-                }
-            });
-            return false;
+    $j('.add_symbol_link')
+    .click(function() {
+        var url = '<%= url_for({:controller => "antenna", :action => "add_symbol"}) -%>';
+        var antennaId = this.id.split('_')[3]
+        var symbol = '<%= symbol -%>';
+        $j.ajax({
+            type: 'POST',
+            url: url,
+            data: { antenna_id: antennaId, symbol: symbol, authenticity_token: $j('#authenticity_token').val() },
+            success: function(html) {
+                $j('#select_antenna_body').html(html);
+            }
         });
-
-        $j('#add_antenna_and_symbol_form')
-        .submit(function() {
-            var url = '<%= url_for({ :controller => :antenna, :action => :add_antenna_and_symbol }) -%>';
-            $j.ajax({
-                type: 'POST',
-                url: url,
-                data: $j(this).serialize(),
-                success: function(html) {
-                    $j('#select_antenna_body').html(html);
-                }
-            });
-            return false;
-        });
-    };
-
-    // nyroModal内で動作させるjQuery ActionはendShowContent callbackを利用して設定しないと動作しないようだ。
-    // もっといい方法があるかもしれない。
-    $j.nyroModalSettings({
-        endShowContent: function(elts, settings) {
-            initAction();
-        }
+        return false;
     });
-    initAction();
+
+    $j('#add_antenna_and_symbol_form')
+    .submit(function() {
+        var url = '<%= url_for({ :controller => :antenna, :action => :add_antenna_and_symbol }) -%>';
+        $j.ajax({
+            type: 'POST',
+            url: url,
+            data: $j(this).serialize(),
+            success: function(html) {
+                $j('#select_antenna_body').html(html);
+            }
+        });
+        return false;
+    });
 });
 </script>

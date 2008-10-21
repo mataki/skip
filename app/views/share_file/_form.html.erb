@@ -111,15 +111,18 @@ $j(function() {
         hideCategoryBox();
     });
 
-    var tags = new Array(<%= categories_hash[:mine].map{|str| ("'#{str}'")}.join(',') %>);
-    var userTags = new Array(<%= categories_hash[:user].map{|str| ("'#{str}'")}.join(',') %>);
+    var setupTagComplete = function() {
+        var tags = new Array(<%= categories_hash[:mine].map{|str| ("'#{str}'")}.join(',') %>);
+        var userTags = new Array(<%= categories_hash[:user].map{|str| ("'#{str}'")}.join(',') %>);
 
-    $j('#tags_list').append(createTagsLink(tags));
-    $j('#user_tags_list').append(createTagsLink(userTags));
+        $j('#tags_list').append(createTagsLink(tags));
+        $j('#user_tags_list').append(createTagsLink(userTags));
 
-    // タグ処理
-    $j('#share_file_category').jTagging($j('#tags_list'));
-    $j('#share_file_category').jTagging($j('#user_tags_list'));
+        // タグ処理
+        $j('#share_file_category').jTagging($j('#tags_list'));
+        $j('#share_file_category').jTagging($j('#user_tags_list'));
+    };
+    setupTagComplete();
 });
 //]]>
 </script>
