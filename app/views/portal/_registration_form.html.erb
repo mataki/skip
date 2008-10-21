@@ -78,7 +78,7 @@ table.normal {
   </tr>
   <tr>
     <th width="100px"><label for="profile_self_introduction"><%=h _('UserProfile|Self introduction') %></label><div class="example" style="margin-top: 10px;">現在の業務や今までの仕事、興味や関心のある事柄などについて書いてください</div></th>
-    <td><%= link_to_hiki_help %><br/><%= text_area 'profile', 'self_introduction', :cols => 55, :rows => 15, :tabindex => (tabindex += 1) %></td>
+    <td><%= text_area 'profile', 'self_introduction', :cols => 55, :rows => 15, :tabindex => (tabindex += 1) %></td>
   </tr>
 </table>
 
@@ -141,7 +141,7 @@ table.normal {
   </tr>
   <tr>
     <th width="100px"><label for="profile_introduction">オフの私</label><div class="example" style="margin-top: 10px;">趣味の詳しい内容や、休日の過ごし方など、オフのあなたを少しだけ教えてください</div></th>
-    <td><%= link_to_hiki_help %><br/><%= text_area "profile", "introduction", :cols => 55, :rows => 15, :tabindex => (tabindex += 1) %></td>
+    <td><%= text_area "profile", "introduction", :cols => 55, :rows => 15, :tabindex => (tabindex += 1) %></td>
   </tr>
 </table>
 </div>
@@ -150,8 +150,19 @@ table.normal {
 <% end %>
 </div>
 
+<%= skip_javascript_include_tag "fckeditor/fckeditor" %>
 <script type="text/javascript">
 $j(function(){
+    FCKeditor.BasePath = platform_url_root + "/javascripts/skip/fckeditor/";
+    var setFckPropertyAndReplace = function(fckObj) {
+	fckObj.ToolbarSet = "Custom";
+	fckObj.Height = "430";
+	fckObj.Config["CustomConfigurationsPath"] = "/javascripts/skip/skip_fckeditor_config.js" ;
+	fckObj.ReplaceTextarea();
+    };
+    setFckPropertyAndReplace(new FCKeditor('profile_self_introduction'));
+    setFckPropertyAndReplace(new FCKeditor('profile_introduction'));
+
     // プロフィール入力の表示、非表示を切り替える
     var toggleProfileBox = function() {
         if($j('#write_profile').attr('checked')) {
