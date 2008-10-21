@@ -60,7 +60,7 @@ var platform_url_root = '#{root_url.chop}';
       if ENV['RAILS_ENV'] == 'production'
         "#{jquery_base_dir}/#{source}.min.js"
       else
-        "#{jquery_base_dir}/#{source}"
+        "#{jquery_base_dir}/#{source}.js"
       end
     elsif ( (source =~ /^ui\./) == 0 || (source =~ /^effects\./) == 0 )
       if ENV['RAILS_ENV'] == 'production'
