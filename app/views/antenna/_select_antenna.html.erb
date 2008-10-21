@@ -81,8 +81,6 @@ $j(function() {
     // nyroModal内で動作させるjQuery ActionはendShowContent callbackを利用して設定しないと動作しないようだ。
     // もっといい方法があるかもしれない。
     $j.nyroModalSettings({
-        height: 200,
-        width: 450,
         endShowContent: function(elts, settings) {
             initAction();
         }

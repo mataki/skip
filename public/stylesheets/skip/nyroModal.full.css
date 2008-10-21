@@ -8,7 +8,7 @@ div#nyroModalFull div#nyroModalLoading {
 	width: 150px;
 	height: 150	px;
 	text-indent: -9999em;
-	background: #fff url(../img/ajaxLoader.gif) no-repeat;
+  background: #fff url(../../images/skip/jquery/nyroModal/ajaxLoader.gif) no-repeat;
 	background-position: center;
 }
 div#nyroModalFull div#nyroModalLoading.error {
@@ -32,7 +32,7 @@ div#nyroModalFull div#nyroModalWrapper a#closeBut {
 	width: 12px;
 	height: 12px;
 	text-indent: -9999em;
-	background: url(../img/close.gif) no-repeat;
+  background: url(../../images/skip/jquery/nyroModal/close.gif) no-repeat;
 	outline: 0;
 }
 div#nyroModalFull div#nyroModalWrapper div.wrapper div#nyroModalContent {
@@ -77,12 +77,12 @@ div#nyroModalFull div#nyroModalWrapper div.wrapperImg div#nyroModalContent a.nyr
 	width: 40%;
 }
 div#nyroModalFull div#nyroModalWrapper div.wrapperImg div#nyroModalContent a.nyroModalPrev:hover {
-	background: url(../img/prev.gif) left 20% no-repeat;
+	background: url(../../images/skip/jquery/nyroModal/prev.gif) left 20% no-repeat;
 }
 div#nyroModalFull div#nyroModalWrapper div.wrapperImg div#nyroModalContent a.nyroModalNext {
 	right: 0;
 	width: 40%;
 }
 div#nyroModalFull div#nyroModalWrapper div.wrapperImg div#nyroModalContent a.nyroModalNext:hover {
-	background: url(../img/next.gif) right 20% no-repeat;
+	background: url(../../images/skip/jquery/nyroModal/next.gif) right 20% no-repeat;
 }
