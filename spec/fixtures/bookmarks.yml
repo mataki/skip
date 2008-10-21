@@ -30,13 +30,14 @@ a_mixed_bookmark:
 a_public_page_bookmark:
   created_on: <%= SkipFaker.today %>
   updated_on: <%= SkipFaker.today %>
-  url: /page/<%= BoardEntry.find(:first,:conditions => ["publication_type = 'public'"] ).id %>
+  url: /page/1
   title: <%= SkipFaker.rand_char %>
   bookmark_comments_count: <%= SkipFaker.rand_num 1 %>
 
 a_private_page_bookmark:
   created_on: <%= SkipFaker.today %>
   updated_on: <%= SkipFaker.today %>
-  url: /page/<%= BoardEntry.find(:first,:conditions => ["publication_type = 'private'"] ).id %>
+  url: /page/3
   title: <%= SkipFaker.rand_char %>
   bookmark_comments_count: <%= SkipFaker.rand_num 1 %>
+

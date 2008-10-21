@@ -79,7 +79,7 @@ private
     return "=?#{charset}?B?#{text}?="
   end
 
-  @@site_url = "http://#{INITIAL_SETTINGS['host']}/"
+  @@site_url = "#{INITIAL_SETTINGS['protocol']}#{INITIAL_SETTINGS['host']}/"
   @@system_mail_addr = Admin::Setting.contact_addr
   @@from = UserMailer.base64(Admin::Setting.abbr_app_title) + "<#{@@system_mail_addr}>"
   @@footer = "----\n#{@@system_mail_addr}\n#{@@site_url}"

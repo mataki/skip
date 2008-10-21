@@ -8,7 +8,7 @@ describe "/services/menu.html.erb" do
     render "/services/menu.html.erb"
 
     response.should have_tag("div#services") do
-      with_tag("a[href=#{url_for(:controller => '/platform', :action => :logout, :host => "test.host", :only_path => false)}]")
+      with_tag("a[href=#{url_for(:controller => '/platform', :action => :logout, :host => "test.host", :only_path => false, :protocol => "http://")}]")
     end
   end
 end

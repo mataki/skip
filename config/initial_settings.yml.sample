@@ -21,10 +21,6 @@
 
 default: &default
 
-  # 以下の項目はSKIPを動かすために必ず設定する必要があります（proxy_urlはインターネットに直接接続できない場合のみ）
-  host: localhost:3000                                                      # システムが動作するURLのホスト部分とポート番号
-  proxy_url:                                                                # プロキシサーバのURL(例:http://proxy.com:8080/)
-
   # 以下の項目はセキュリティ上の観点から、インターネットでの稼動時は必ず変更して下さい
   session:
     :session_key: _skip_session                                             # セッションの名称です。
@@ -41,6 +37,10 @@ default: &default
   image_path: tmp/image_file_path                                           # ブログ/掲示板画像の保存ディレクトリ
   share_file_path: tmp/share_file_path                                      # 共有ファイルの保存ディレクトリ
   batch_log_path:                                                           # バッチ実行時のログ出力先(指定がなければ log/batch.log)
+
+  # バッチ・メール送信時のシステムのURLに含まれるホスト情報の設定
+  host: localhost:3000                                                      # システムが動作するURLのホスト部分とポート番号
+  protocol: http://                                                         # システムが動作する標準のプロトコル(例:http:// or https://)
 
   # システム運用担当者
   administrator_addr: youradmin@example.com                                 # 500エラーの送信と管理者登録失敗の場合に表示されるアドレス
@@ -59,18 +59,20 @@ default: &default
   # メールに関する設定
   delivery_method: smtp                                                     # メール配信方法(ActionMailer::Base.delivery_methodへの設定値)
   raise_delivery_errors: false                                              # メール送信に失敗した場合のエラー処理を行なうか
+  # システムにエラーが発生した場合にエラーメールを送信するための設定
   exception_notifier:
     enable: false                                                           # システムエラーをシステム運用担当者にメールするかどうか
     sender_addr: yoursender@example.com                                     # システムエラーメールの送信元アドレス
     email_prefix: [ERROR]                                                   # システムエラーメールのタイトルにつけるprefix
 
   # アカウントに関する設定
-  login_mode: password                                                      # ログインの方法の設定 password:パスワード認証, rp:RPモード
   usercode_dips_setting: true                                               # ログインIDを表示するかどうかの設定
   password_edit_setting: true                                               # パスワード変更可能かどうかの設定
   username_use_setting: true                                                # ユーザ登録時にユーザ名を利用するかどうかの設定
   user_code_format_regex: ^(\d{6}|[kK]\d{5})$                               # ユーザ名として許可しない形式を指定
 
+  # ログインの際に利用する認証方式の設定
+  login_mode: password                                                      # ログインの方法の設定 password:パスワード認証, rp:RPモード
   # RPモードの場合の設定
   fixed_op_url:                                                             # RPモードで固定OPを利用するSSOの場合のURL
   ax_fetchrequest:
@@ -88,6 +90,7 @@ default: &default
       - true
 
   # その他
+  proxy_url:                                                                # プロキシサーバのURL(例:http://proxy.com:8080/)
   ssl_setting: false                                                        # SSLログインを利用するかどうかの設定
   not_blank_link_re: https?:\/\/dev(.openskip.org)?\/.*                     # ブログ内のリンクで新しいウインドウを開かないでリンクをするURLの正規表現
   belong_info_apps:                                                         # 所属情報を設定する { :app_name => { :api => :api_name, :hash_key => 'hash_key_name', :prefix => 'prefix' } }

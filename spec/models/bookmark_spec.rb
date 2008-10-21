@@ -193,7 +193,7 @@ end
 # end
 
 describe Bookmark do
-  fixtures :bookmarks, :bookmark_comments
+  fixtures :bookmarks, :bookmark_comments, :board_entries
 
   # 非公開コメントのみのブックマークは表示しない
   def test_find_visible

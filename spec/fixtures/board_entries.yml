@@ -3,6 +3,7 @@
 
 # あるユーザの投稿
 a_entry:
+  id: 1
   created_on: <%= SkipFaker.yesterday %>
   updated_on: <%= SkipFaker.yesterday %>
   title: <%= SkipFaker.rand_char %>
@@ -23,6 +24,7 @@ a_entry:
   entry_trackbacks_count: 1
 
 a_trackback_entry:
+  id: 2
   created_on: <%= SkipFaker.yesterday %>
   updated_on: <%= SkipFaker.yesterday %>
   title: <%= SkipFaker.rand_char %>
@@ -43,6 +45,7 @@ a_trackback_entry:
   entry_trackbacks_count: 0
 
 a_private_entry:
+  id: 3
   created_on: <%= SkipFaker.yesterday %>
   updated_on: <%= SkipFaker.yesterday %>
   title: <%= SkipFaker.rand_char %>
