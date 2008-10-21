@@ -44,7 +44,7 @@ div.topix_body .page_line, div.topix_body .item_line {
 <% if type_symbol == :antenna_id -%>
 <div id="antenna_items" style="text-align:right; border-top: 1px dashed silver; background-color: #fff5ff; display:none;">
   <% antenna_items.each do |item| -%>
-    <%= item.value_type -%>=<%= item.value -%> /
+    <%= h item.value_type -%>=<%= h item.value -%> /
   <% end -%>
 </div>
 <% end -%>

@@ -218,8 +218,8 @@ form.comment_input_form textarea{
 </style>
 
 <div class="move_navi">
-  <%= entry_link_to(prev_entry, {:view_text => ('< ['+ truncate(prev_entry.title, 20) + ']')}, :class => 'prev_entry') if prev_entry %>
-  <%= entry_link_to(next_entry, {:view_text => ('['+ truncate(next_entry.title, 20) + '] >')}, :class => 'next_entry') if next_entry %>
+  <%= entry_link_to(prev_entry, {:view_text => ('< ['+ h(truncate(prev_entry.title, 20)) + ']')}, :class => 'prev_entry') if prev_entry %>
+  <%= entry_link_to(next_entry, {:view_text => ('['+ h(truncate(next_entry.title, 20)) + '] >')}, :class => 'next_entry') if next_entry %>
   <a id="page_top" href="#page_bottom">[ページ末尾]</a>
 </div>
 

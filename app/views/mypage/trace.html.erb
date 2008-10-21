@@ -2,7 +2,7 @@
 <div class="desc"><p>あなたのページ全体のアクセス数と、最近の訪問ユーザを最大30件まで表示しています。<br/>
 同じ日付に同一ユーザが複数回アクセスしている場合、最新のアクセス時間を表示しています。</p></div>
 
-<div class="access_count">アクセス数：<%= @access_count %></div>
+<div class="access_count">アクセス数：<%= h @access_count %></div>
 
 <ul class="access_tracks">
 <% @access_tracks.each do |track| -%>

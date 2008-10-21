@@ -20,7 +20,7 @@ div.entry_space div.entry_line {
 </style>
 
 <% if year and month -%>
-<div style=""><%= "【#{year}年#{month}月のアーカイブ】" -%></div>
+<div style=""><%= "【#{h year}年#{h month}月のアーカイブ】" -%></div>
 <% end -%>
 
 <% if pages and pages.item_count > 0 %>

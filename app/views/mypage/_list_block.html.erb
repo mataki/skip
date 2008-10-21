@@ -34,7 +34,7 @@
   <a class="first_link" id="<%= id_name -%>_first_link" href="#" >[最初へ]</a>
   <a class="back_link" id="<%= id_name -%>_back_link" href="#" >[前へ]</a>
 <% end -%>
-<%= %(全#{pages_obj.item_count}件（#{pages_obj.current.number}/#{pages_obj.length}ページ）) %>
+<%= %(全#{h pages_obj.item_count}件（#{h pages_obj.current.number}/#{h pages_obj.length}ページ）) %>
 <% if pages_obj.current.next -%>
   <a class="next_link" id="<%= id_name -%>_next_link" href="#" >[次へ]</a>
   <a class="last_link" id="<%= id_name -%>_last_link" href="#" >[最後へ]</a>

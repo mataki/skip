@@ -15,7 +15,7 @@
 
 class BoardEntriesController < ApplicationController
 
-  verify :method => :post, :only => [ :ado_create_comment, :ado_create_nest_comment ],
+  verify :method => :post, :only => [ :ado_create_comment, :ado_create_nest_comment, :ado_pointup, :destroy_comment, :ado_edit_comment ], 
          :redirect_to => { :action => :index }
 
   after_filter :make_comment_message, :only => [ :ado_create_comment, :ado_create_nest_comment ]

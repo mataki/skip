@@ -36,19 +36,19 @@ td {
 <div id="update_body"></div>
   <form id="update_form">
 
-<%= hidden_field_tag 'layout', layout -%>
+<%= hidden_field_tag 'layout', h(layout) -%>
 <%= hidden_field 'bookmark', 'url' -%>
 
 <div class="formarea">
 <table>
 
-<tr><th>URL</th><td><a href="<%= h(@bookmark.url) -%>" title="<%= h(@bookmark.url) -%>" target="_blank"><%= h(truncate(@bookmark.url, 60)) -%></a><br/>
+<tr><th>URL</th><td><a href="<%= escape_bookmark_url(@bookmark.url) -%>" title="<%= escape_bookmark_url(@bookmark.url) -%>" target="_blank"><%= escape_bookmark_url(truncate(@bookmark.url, 60)) -%></a><br/>
 <span style="font-size: 10px; color: #555555;">（別ウィンドウで開きます）</span></td></tr>
 
 <tr><th>タイトル</th><td><span style="font-size: 15px; font-weight: bold;">
 <% if @bookmark.is_type_internet? -%>
   <%= text_field 'bookmark', 'title' -%>
-  <span id="refresher"><a href="javascript: reloadTitle('<%= h(@bookmark.url) -%>', 'bookmark_title');"><%= icon_tag 'arrow_rotate_clockwise', :title => "タイトルを再取得する" -%></a></span>
+  <span id="refresher"><a href="javascript: reloadTitle('<%= escape_bookmark_url(@bookmark.url) -%>', 'bookmark_title');"><%= icon_tag 'arrow_rotate_clockwise', :title => "タイトルを再取得する" -%></a></span>
   <span id="indicator" style="display:none;font-size:10px;"><%= skip_image_tag 'indicator.gif' %>更新中...</span>
   <br/><span style="font-size: 10px; color: green;">タイトルは全ユーザ共通です。修正の際はご注意ください。</span>
 <% else -%>
@@ -79,7 +79,7 @@ td {
 <%= hidden_field_tag("authenticity_token", form_authenticity_token) %>
 <div style="text-align: center;"><%= submit_tag "OK", :id => "submit_button" %>
 <% if @bookmark.is_type_internet? && @bookmarklet -%>
-  <input type="button" value="Cancel" onclick="location.href='<%= @bookmark.url -%>'"></input>
+  <input type="button" value="Cancel" onclick="location.href='<%= escape_bookmark_url @bookmark.url -%>'"></input>
 <% end -%>
 </div>
 </form>
@@ -144,7 +144,7 @@ $j(function(){
     });
 
     if ($j('#bookmark_title').val() == '') {
-        reloadTitle('<%= h(@bookmark.url) -%>', 'bookmark_title');
+        reloadTitle('<%= escape_bookmark_url(@bookmark.url) -%>', 'bookmark_title');
     }
 });
 //]]>

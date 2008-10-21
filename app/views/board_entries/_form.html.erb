@@ -14,13 +14,13 @@ div.input_line textarea {
 
 <%= template_error_messages_for 'board_entry' %>
 
-<%= hidden_field_tag 'entry_type', params[:entry_type] %>
-<%= hidden_field_tag 'symbol', params[:symbol] %>
+<%= hidden_field_tag 'entry_type', h(params[:entry_type]) %>
+<%= hidden_field_tag 'symbol', h(params[:symbol]) %>
 
 <%= hidden_field 'board_entry', 'entry_type' %>
 <%= hidden_field 'board_entry', 'symbol' %>
 
-<%= hidden_field_tag 'lock_version', @board_entry.lock_version -%>
+<%= hidden_field_tag 'lock_version', h(@board_entry.lock_version) -%>
 
 <div class="input_line">
   <div class="input_label">タグ</div>

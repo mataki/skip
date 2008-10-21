@@ -23,7 +23,8 @@ class GroupController < ApplicationController
                            :forced_leave_user, :change_participation, :append_user ]
 
   verify :method => :post,
-         :only => [ :join, :destroy, :leave, :update, :change_participation, :ado_set_favorite ],
+         :only => [ :join, :destroy, :leave, :update, :change_participation, 
+                    :ado_set_favorite, :toggle_owned, :forced_leave_user, :append_user ],
          :redirect_to => { :action => :show }
 
   # tab_menu

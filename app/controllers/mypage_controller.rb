@@ -24,7 +24,8 @@ class MypageController < ApplicationController
 
   verify :method => :post, :only => [ :destroy_portrait, :save_portrait, :update_profile,
                                       :update_customize, :update_message_unsubscribes, :apply_password,
-                                      :apply_ident_url ],
+                                      :apply_ident_url, :add_antenna, :delete_antenna, :delete_antenna_item, :move_antenna_item,
+                                      :change_read_state, :apply_email, :update_email, :set_antenna_name, :sort_antenna],
          :redirect_to => { :action => :index }
 
   # マイページ（ホーム）の表示

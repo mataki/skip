@@ -20,7 +20,7 @@ class EditController < ApplicationController
 
   after_filter  :post_mail, :only => [ :create, :update ]
 
-  verify :method => :post, :only => [ :create, :update, :destroy ],
+  verify :method => :post, :only => [ :create, :update, :destroy, :delete_trackback, :ado_remove_image ],
          :redirect_to => { :action => :index }
 
   # tab_menu

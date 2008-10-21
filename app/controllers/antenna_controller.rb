@@ -15,6 +15,8 @@
 
 class AntennaController < ApplicationController
 
+  verify :method => :post, :only => [ :add_symbol, :add_antenna_and_symbol ]
+
   def select_antenna
     antennas = Antenna.find_with_included session[:user_id], params[:symbol]
     render :layout => 'dialog', :partial => 'select_antenna',

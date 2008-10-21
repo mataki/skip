@@ -6,13 +6,13 @@
     <%= link_to(icon_tag('tag_blue_add', :alt=>'コメントの追加') + 'コメントの追加！', {:controller => "bookmark", :action => "edit", :url => @bookmark.url, :title => @bookmark.title, :dummy => '.html'}, {:class => "nyroModal"}) %>
   </div>
 <% end %>
-  <div class="title"><%= link_to_bookmark_url(@bookmark, @bookmark.title) %> </div>
+  <div class="title"><%= link_to_bookmark_url(@bookmark, h(@bookmark.title)) %> </div>
   [タグ]
   <div style="margin: 5px 10px; background-color: #fff0f0; padding: 5px;">
 
 <% tag_cloud @tags do |name, count, css_class| -%>
 <%= link_to name, {:controller => "bookmarks", :action => "search", :tag_words => name}, :class => css_class -%>
-<span style='color: silver; font-size: 10px;'>(<%= count -%>)</span>
+<span style='color: silver; font-size: 10px;'>(<%= h count -%>)</span>
 <% end -%>
   </div>
   <div style="overflow: hidden;">[URL]　<%= link_to_bookmark_url(@bookmark, @bookmark.url) %></a><br>

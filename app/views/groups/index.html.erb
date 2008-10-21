@@ -12,7 +12,7 @@
     <th>カテゴリ</th>
     <td>
       <%= radio_button_tag "group_category_id", "all", params[:group_category_id] == "all" -%>
-      <%= icon_tag "asterisk_orange", :margin => true -%>全て(<%= @total_count -%>)
+      <%= icon_tag "asterisk_orange", :margin => true -%>全て(<%= h @total_count -%>)
       <% @group_categories.each do |category| %>
         <%= radio_button_tag "group_category_id", category.id, params[:group_category_id] == category.id.to_s -%>
         <%= get_group_icon category, :margin => true -%>

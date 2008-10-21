@@ -81,7 +81,7 @@ div.entry_space div.entry_line {
   <div class="entry_space" id="bookmark_comment_<%= comment.id -%>">
     <div class="entry_line" style="font-size: 90%; background-color: #ffeeff;">
       <%=h comment.created_on.strftime("%Y年%m月%d日") %>
-      <span style="font-size:10px"><%= link_to("[他のユーザ:#{comment.bookmark.bookmark_comments_count}人]", encode_bookmark_url(comment.bookmark.url)) %></span>
+      <span style="font-size:10px"><%= link_to("[他のユーザ:#{comment.bookmark.bookmark_comments_count}人]", url_for_bookmark(comment.bookmark.url)) %></span>
     </div>
     <div class="entry_line" style="font-size: 12px;">
       <% if params[:user_id] == login_user_id -%>
@@ -93,11 +93,11 @@ div.entry_space div.entry_line {
     <div style="text-align: right; font-size: 90%;">
       <span style="color: blue;"><%=h comment.tags %></span><%=h comment.comment %>
         <% if login_user_id == comment.user_id %>
-        <%= link_to(icon_tag('tag_blue_edit', :alt => '編集'), {:controller => "bookmark", :action => "edit", :url => comment.bookmark.url, :title => comment.bookmark.title, :dummy => '.html'}, {:class => "nyroModal"}) %>
+        <%= link_to(icon_tag('tag_blue_edit', :alt => '編集'), {:controller => "bookmark", :action => "edit", :url => escape_bookmark_url(comment.bookmark.url), :title => comment.bookmark.title, :dummy => '.html'}, {:class => "nyroModal"}) %>
         <%= link_to_function icon_tag('tag_blue_delete', :alt => '削除'),"if (confirm('本当に削除しますか')) { var f = document.createElement('form'); this.parentNode.appendChild(f); f.method = 'POST';f.action = get_action_value(this.href, #{comment.id}); var input = document.createElement('input');  input.type = 'hidden'; input.name = 'authenticity_token'; input.value = document.getElementById('authenticity_token').value; f.appendChild(input); f.submit();}",:href => url_for(:controller =>'bookmark', :action =>'destroy'), :title => "削除"  %>
       <script  language='javascript' type='text/javascript'>
         function get_action_value(href, comment_id){
-          return  href +'/' + escape('<%= comment.bookmark.get_encode_url %>') + '?comment_id=' + comment_id;
+          return  href +'/' + escape('<%= escape_bookmark_url comment.bookmark.get_encode_url %>') + '?comment_id=' + comment_id;
         }
       </script>
        <% end %>

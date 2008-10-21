@@ -213,9 +213,9 @@ module ApplicationHelper
   # [コメント(n)-ポイント(n)-話題(n)-アクセス(n)]の表示
   def get_entry_infos entry
     output = "[コメント(#{entry.board_entry_comments_count})"
-    output << "-#{h Admin::Setting.point_button}(#{entry.point.to_s})"
-    output << "-話題(#{entry.entry_trackbacks_count})"
-    output << "-アクセス(#{entry.state.access_count.to_s})]"
+    output << "-#{h Admin::Setting.point_button}(#{h entry.point.to_s})"
+    output << "-話題(#{h entry.entry_trackbacks_count})"
+    output << "-アクセス(#{h entry.state.access_count.to_s})]"
     return output
   end
 
@@ -250,8 +250,12 @@ module ApplicationHelper
     icon_tag(category.icon, options)
   end
 
-  def encode_bookmark_url(uri)
-    url_for :controller => 'bookmark', :action => 'show', :uri => URI.encode(uri)
+  def url_for_bookmark url
+    url_for :controller => 'bookmark', :action => 'show', :uri => escape_bookmark_url(url)
+  end
+
+  def escape_bookmark_url url
+    h(URI.encode(url)).gsub(/'/,'&#39;')
   end
 
   def header_logo_link(url = url_for(:controller => '/mypage', :action => 'index'))
@@ -297,12 +301,12 @@ private
 
     if bookmark.is_type_page?
       url =  relative_url_root + url
-      return "<a href=#{url} title='#{h(title)}'>#{icon_tag('report_link')} #{h(name)}</a>"
+      return "<a href=#{escape_bookmark_url(url)} title='#{h(title)}'>#{icon_tag('report_link')} #{h(name)}</a>"
     elsif bookmark.is_type_user?
       url =  relative_url_root + url
-      return "<a href=#{url} title='#{h(title)}'>#{icon_tag('user')} #{h(name)}</a>"
+      return "<a href=#{escape_bookmark_url(url)} title='#{h(title)}'>#{icon_tag('user')} #{h(name)}</a>"
     else
-      return "<a href=#{url} title='#{h(title)}'>#{icon_tag('world_link')} #{h(truncate(name, 115))}</a>"
+      return "<a href=#{escape_bookmark_url(url)} title='#{h(title)}'>#{icon_tag('world_link')} #{h(truncate(name, 115))}</a>"
     end
   end
 
