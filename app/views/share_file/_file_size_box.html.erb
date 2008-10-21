@@ -1,0 +1,6 @@
+<div class="box_space">
+  <div class="box_space_title"><%= icon_tag 'database_save' -%>利用容量</div>
+  <div class="box_space_body">
+    <%=h ValidationsFile::FileSizeCounter.per_owner(owner_symbol)/1.megabyte %> / <%=h INITIAL_SETTINGS['max_share_file_size_per_owner']/1.megabyte %> (MB)
+  </div>
+</div>

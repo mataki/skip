@@ -8,6 +8,7 @@
 <%= render(:partial => 'entries/recent_box', :locals => { :recent_entries => @recent_entries }) -%>
 <%= render(:partial => 'entries/archive_box', :locals => { :month_archives => @month_archives }) -%>
 <%= render(:partial => 'entries/categories_box', :locals => { :categories => @categories }) -%>
+<%= render(:partial => 'share_file/file_size_box', :locals => { :owner_symbol => @user.symbol }) %>
 
 </div><!-- contents_left -->
 

@@ -52,13 +52,7 @@ div.files_body .file_menu {
     </div>
     <div style="font-size:10px;text-align:right;"><a href="#" id="search_cancel">[選択をキャンセル]</a></div>
   </div><!-- box_space -->
-  <div class="box_space">
-    <div class="box_space_title"><%= icon_tag 'database_save' -%>利用容量</div>
-    <div class="box_space_body">
-      <%=h ShareFile.total_share_file_size(@owner_symbol)/1.megabyte %> / <%=h INITIAL_SETTINGS['max_share_file_size_per_owner']/1.megabyte %> (MB)
-    </div>
-  </div>
-
+  <%= render(:partial => 'share_file/file_size_box', :locals => { :owner_symbol => @owner_symbol }) %>
 </div><!-- contents_left -->
 
 <div id="contents_right">
