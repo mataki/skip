@@ -224,12 +224,10 @@ protected
 
 private
   def sso
-    if INITIAL_SETTINGS['login_mode'] == "rp" and !INITIAL_SETTINGS['fixed_op_url'].blank?
-      unless logged_in?
-        redirect_to :controller => '/platform', :action => :login, :openid_url => INITIAL_SETTINGS['fixed_op_url'], :return_to => URI.encode(request.url)
-        return false
-      end
-      true
+    if login_mode?(:fixed_rp) and !logged_in?
+      redirect_to :controller => '/platform', :action => :login, :openid_url => INITIAL_SETTINGS['fixed_op_url'], :return_to => URI.encode(request.url)
+      return false
     end
+    true
   end
 end

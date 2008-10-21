@@ -120,13 +120,6 @@ class PortalController < ApplicationController
     end
   end
 
-  def logout
-    logout_killing_session!
-    flash[:notice] = _('You are now logged out.')
-
-    redirect_to login_mode?(:fixed_rp) ? "#{INITIAL_SETTINGS['fixed_op_url']}logout" : {:controller => "platform", :action => "index"}
-  end
-
   private
   def registerable_filter
     if current_user and !current_user.unused?
@@ -141,7 +134,7 @@ class PortalController < ApplicationController
       render :layout => "entrance",
       :text => <<-EOS
                <div style="font-weight: bold; font-size: 18px;">大変申し訳ございません。<br/>#{deny_message}<br/>
-               <input type="button" value="ログアウト"  onClick="location.href = '#{url_for(:controller => :portal, :action => :logout)}';"></input></div>
+               <input type="button" value="ログアウト"  onClick="location.href = '#{url_for(:controller => "/platform", :action => :logout)}';"></input></div>
              EOS
       return false
     end

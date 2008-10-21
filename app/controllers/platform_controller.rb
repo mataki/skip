@@ -17,7 +17,7 @@ require 'openid/extensions/ax'
 
 class PlatformController < ApplicationController
   layout false
-  skip_before_filter :sso, :login_required, :prepare_session, :except => [:logout]
+  skip_before_filter :sso, :login_required, :prepare_session
   skip_after_filter  :remove_message
 
   before_filter :require_not_login, :except => [:logout]
