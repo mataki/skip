@@ -31,7 +31,9 @@
   <p class="s10" style="text-align:right;">セレクトボックスと重なるのはIEの仕様です</p>
 </div></div>
 
-<script language='javascript' type='text/javascript'>
+<%= skip_jquery_include_tag 'ui.core' %>
+<%= skip_jquery_include_tag 'ui.draggable' %>
+<script type='text/javascript'>
 $j(function() {
     $j("#preview-win").draggable();
 

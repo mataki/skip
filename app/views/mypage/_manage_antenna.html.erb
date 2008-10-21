@@ -45,6 +45,10 @@ ul#antennas_list li.dragenter {
 </div><!-- contents_container -->
 <%= hidden_field_tag("authenticity_token", form_authenticity_token) %>
 
+<%= skip_jquery_include_tag 'ui.core' %>
+<%= skip_jquery_include_tag 'ui.draggable' %>
+<%= skip_jquery_include_tag 'ui.droppable' %>
+<%= skip_jquery_include_tag 'ui.sortable' %>
 <script type="text/javascript">
 $j(function() {
     // アンテナの追加

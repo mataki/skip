@@ -16,10 +16,6 @@ var relative_url_root = '<%= controller.request.relative_url_root -%>';
 
   <%= all_javascript_include_tag 'prototype' %>
   <%= all_javascript_include_tag 'jquery' %>
-  <%= skip_jquery_include_tag 'ui.core' %>
-  <%= skip_jquery_include_tag 'ui.draggable' %>
-  <%= skip_jquery_include_tag 'ui.droppable' %>
-  <%= skip_jquery_include_tag 'ui.sortable' %>
   <script language="JavaScript" type="text/javascript">$j = jQuery.noConflict();</script>
   <%= skip_javascript_include_tag 'ufo' %>
   <%= javascript_include_tag 'application' %>
@@ -152,5 +148,11 @@ $j(function(){
             { nothing_message: '表示するグループがありません', result_message: 'グループ選択：' });
         return false;
     });
+
+    $j.fn.nyroModal.settings.processHandler = function(settings) {
+        $j.nyroModalSettings({
+            minWidth: 10, minHeight: 10
+        });
+    };
 });
 </script>
