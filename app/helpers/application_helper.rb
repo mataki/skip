@@ -270,6 +270,7 @@ private
   end
 
   def parse_permalink text, owner_symbol
+    return '' unless text
     # closure
     default_proc = proc { |symbol, link_str|
                           symbol_type, symbol_id = SkipUtil.split_symbol symbol
