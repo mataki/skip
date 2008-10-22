@@ -29,62 +29,71 @@ td {
 }
 </style>
 
+<div style="height: 500px">
 <div class="desc"><%= desc -%></div>
-
-<div style="position: absolute;">
-
-<div id="update_body"></div>
+<div>
+  <div id="update_body"></div>
   <form id="update_form">
-
-<%= hidden_field_tag 'layout', h(layout) -%>
-<%= hidden_field 'bookmark', 'url' -%>
-
-<div class="formarea">
-<table>
-
-<tr><th>URL</th><td><a href="<%= escape_bookmark_url(@bookmark.url) -%>" title="<%= escape_bookmark_url(@bookmark.url) -%>" target="_blank"><%= escape_bookmark_url(truncate(@bookmark.url, 60)) -%></a><br/>
-<span style="font-size: 10px; color: #555555;">（別ウィンドウで開きます）</span></td></tr>
-
-<tr><th>タイトル</th><td><span style="font-size: 15px; font-weight: bold;">
-<% if @bookmark.is_type_internet? -%>
-  <%= text_field 'bookmark', 'title' -%>
-  <span id="refresher"><a href="javascript: reloadTitle('<%= escape_bookmark_url(@bookmark.url) -%>', 'bookmark_title');"><%= icon_tag 'arrow_rotate_clockwise', :title => "タイトルを再取得する" -%></a></span>
-  <span id="indicator" style="display:none;font-size:10px;"><%= skip_image_tag 'indicator.gif' %>更新中...</span>
-  <br/><span style="font-size: 10px; color: green;">タイトルは全ユーザ共通です。修正の際はご注意ください。</span>
-<% else -%>
-  <%= h(@bookmark.title) -%>
-  <%= hidden_field 'bookmark', 'title' -%>
-<% end -%>
-</span></td></tr>
-
-<% unless @bookmark.is_type_user? -%>
-
-<tr><th>公開</th><td><%= radio_buttons('bookmark_comment', 'public', BookmarkComment.public_types ) -%></td></tr>
-
-<% end -%>
-
-<tr><th>タグ</th><td><%= text_field 'bookmark_comment', 'tags', :size => '50', :value => @bookmark_comment.comma_tags %>
-    <div id="category_box">
-      <div id="candidates_list"><p>foo,barの形で複数指定できます</p></div>
-      <div style="font-size:8pt; font-weight:bold;">みんながつけたタグ：</div><div id="user_tags_list" style="margin-bottom:5px;"></div>
-      <div style="font-size:8pt; font-weight:bold;">みんながよく使うタグ（人気の10件）：</div><div id="other_tags_list" style="margin-bottom:5px;"></div>
-      <div style="font-size:8pt; font-weight:bold;">あなたが使ったタグ（よく使う20件）：</div><div id="your_tags_list" style="margin-bottom:5px;"></div>
+    <%= hidden_field_tag 'layout', h(layout) -%>
+    <%= hidden_field 'bookmark', 'url' -%>
+    <div class="formarea">
+      <table>
+        <tr>
+          <th>URL</th>
+          <td>
+            <a href="<%= escape_bookmark_url(@bookmark.url) -%>" title="<%= escape_bookmark_url(@bookmark.url) -%>" target="_blank"><%= escape_bookmark_url(truncate(@bookmark.url, 60)) -%></a><br/>
+            <span style="font-size: 10px; color: #555555;">（別ウィンドウで開きます）</span>
+          </td>
+        </tr>
+        <tr>
+          <th>タイトル</th>
+          <td>
+            <span style="font-size: 15px; font-weight: bold;">
+            <% if @bookmark.is_type_internet? -%>
+              <%= text_field 'bookmark', 'title' -%>
+              <span id="refresher"><a href="javascript: reloadTitle('<%= escape_bookmark_url(@bookmark.url) -%>', 'bookmark_title');"><%= icon_tag 'arrow_rotate_clockwise', :title => "タイトルを再取得する" -%></a></span>
+              <span id="indicator" style="display:none;font-size:10px;"><%= skip_image_tag 'indicator.gif' %>更新中...</span>
+              <br/><span style="font-size: 10px; color: green;">タイトルは全ユーザ共通です。修正の際はご注意ください。</span>
+            <% else -%>
+              <%= h(@bookmark.title) -%>
+              <%= hidden_field 'bookmark', 'title' -%>
+            <% end -%>
+            </span>
+          </td>
+        </tr>
+        <% unless @bookmark.is_type_user? -%>
+        <tr>
+          <th>公開</th>
+          <td><%= radio_buttons('bookmark_comment', 'public', BookmarkComment.public_types ) -%></td>
+        </tr>
+        <% end -%>
+        <tr>
+          <th>タグ</th>
+          <td>
+            <%= text_field 'bookmark_comment', 'tags', :size => '50', :value => @bookmark_comment.comma_tags %>
+            <div id="category_box">
+              <div id="candidates_list"><p>foo,barの形で複数指定できます</p></div>
+              <div style="font-size:8pt; font-weight:bold;">みんながつけたタグ：</div><div id="user_tags_list" style="margin-bottom:5px;"></div>
+              <div style="font-size:8pt; font-weight:bold;">みんながよく使うタグ（人気の10件）：</div><div id="other_tags_list" style="margin-bottom:5px;"></div>
+              <div style="font-size:8pt; font-weight:bold;">あなたが使ったタグ（よく使う20件）：</div><div id="your_tags_list" style="margin-bottom:5px;"></div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th>コメント</th>
+          <td><%= text_field 'bookmark_comment', 'comment', :size => 50 %></td>
+        </tr>
+      </table>
+    <%= hidden_field_tag("authenticity_token", form_authenticity_token) %>
+      <div style="text-align: center;"><%= submit_tag "OK", :id => "submit_button" %>
+        <% if @bookmark.is_type_internet? && @bookmarklet -%>
+        <input type="button" value="Cancel" onclick="location.href='<%= escape_bookmark_url @bookmark.url -%>'"></input>
+        <% end -%>
+      </div>
     </div>
-</td></tr>
-
-<tr><th>コメント</th><td><%= text_field 'bookmark_comment', 'comment', :size => 50 %></td></tr>
-
-</table>
+  </form>
 </div>
-<%= hidden_field_tag("authenticity_token", form_authenticity_token) %>
-<div style="text-align: center;"><%= submit_tag "OK", :id => "submit_button" %>
-<% if @bookmark.is_type_internet? && @bookmarklet -%>
-  <input type="button" value="Cancel" onclick="location.href='<%= escape_bookmark_url @bookmark.url -%>'"></input>
-<% end -%>
 </div>
-</form>
-
-</div><!-- relative  -->
 <script language='javascript' type='text/javascript'>
 //<![CDATA[
 $j(function(){
@@ -111,7 +120,6 @@ $j(function(){
     };
 
     $j.nyroModalSettings({
-        height: 500,
         endShowContent: function(elts, settings) {
             // ダイアログ(nyroModal)でのブックマーク後の処理
             complete = function() {
