@@ -112,6 +112,7 @@ SKIPを動かすにあたり以下の環境で検証を行っています。
 
     $ mysql -u root
     mysql> create database skip_production charset = utf8;
+    mysql> exit
 
  3. rakeコマンド実行
 
