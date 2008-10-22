@@ -45,10 +45,10 @@ icons by famfamfam.com (http://www.famfamfam.com/lab/icons/silk/)
 SKIPを動かすにあたり以下の環境で検証を行っています。
 （動作を保証するものではありません、また、下記環境以外でも動作する可能性はあります）
 
- - OS : Linux (kernel 2.6系)
- - DB : MySQL 5.0系
- - Ruby 1.8.7
- - Rails 2.1.1
+ - OS    : Linux (kernel 2.6系)
+ - DB    : MySQL 5.0系
+ - Ruby  : 1.8.6, 1.8.7
+ - Rails : 2.1.1
 
 
 ================================================================================
@@ -58,7 +58,7 @@ SKIPを動かすにあたり以下の環境で検証を行っています。
 
 1. Ruby, RubyGems, MySQL等、各種ソフトウェアのインストール
 --------------------------------------------------------------------------------
- 1. yumを使ってインストール（Debian 及び Ubuntuユーザの場合）
+ 1. yumを使ってインストール（RedHat or fedoraユーザの場合）
 
     $ sudo yum install ruby rubygems ruby-devel mysql mysql-server ruby-mysql zlib-devel
 
