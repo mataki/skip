@@ -32,7 +32,7 @@ describe BoardEntriesController, "GET #destroy_comment" do
       @board_entry_comment.stub!(:children).and_return([])
       @board_entry_comment.should_receive(:destroy)
 
-      get :destroy_comment
+      post :destroy_comment
     end
     it { response.should redirect_to(:action => "forward", :id => @board_entry.id ) }
     it "flashにメッセージが登録されていること" do
@@ -44,7 +44,7 @@ describe BoardEntriesController, "GET #destroy_comment" do
       @board_entry_comment.stub!(:children).and_return(["aa","aa"])
       @board_entry_comment.should_not_receive(:destroy)
 
-      get :destroy_comment
+      post :destroy_comment
     end
     it { response.should redirect_to(:action => "forward", :id => @board_entry.id ) }
     it "flashにメッセージが登録されていること" do
