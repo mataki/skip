@@ -186,7 +186,7 @@ function fitImageSize(id, max_width, max_height) {
 function saveLoginData(){
     exp_days = 14;
     saveCookie('login_save', $j('#login_save').attr('checked').toString(), exp_days);
-    if($j('#ssl_enable_radio')){
+    if($j('#ssl_enable_radio')[0] != undefined){
         saveCookie('ssl_enable', $j('#ssl_enable_radio').attr('checked').toString(), exp_days);
     }
     return true;
