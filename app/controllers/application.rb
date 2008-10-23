@@ -19,6 +19,7 @@ require 'tempfile'
 class ApplicationController < ActionController::Base
   include ExceptionNotifiable if INITIAL_SETTINGS['exception_notifier']['enable']
   layout 'layout'
+  filter_parameter_logging :password
 
   protect_from_forgery
   rescue_from ActionController::InvalidAuthenticityToken do |exception|
@@ -222,6 +223,19 @@ protected
     @current_user.forget_me if @current_user.is_a? User
     kill_remember_cookie!
     reset_session
+  end
+
+  # ファイルアップロード時の共通チェック
+  def valid_upload_file? file, max_size = 209715200
+    file.is_a?(ActionController::UploadedFile) && file.size > 0 && file.size < max_size
+  end
+
+  # 複数ファイルアップロード時の共通チェック
+  def valid_upload_files? files, max_size = 209715200
+    files.each do |key, file|
+      return false unless valid_upload_file?(file, max_size)
+    end
+    return true
   end
 
 private

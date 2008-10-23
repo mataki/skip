@@ -14,6 +14,8 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 module ServicesHelper
+  include ApplicationHelper
+
   def draw_menu_links links
     result = ""
     links.each do |service|

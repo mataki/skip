@@ -16,10 +16,10 @@
 module ApplicationHelper
   include InitialSettingsHelper
   include CacheHelper
+  include SkipHelper
   @@CONTROLLER_HASH = { 'uid'  => 'user',
                         'gid'  => 'group',
                         'page' => 'page'}
-
 
   # レイアウトのタブメニューを生成する
   # menu_source:: メニュー名とアクションを配列にした項目の配列 ex.[ [name, action] ]
