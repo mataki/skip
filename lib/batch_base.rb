@@ -17,7 +17,7 @@ require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 
 class BatchBase
   include ActionController::UrlWriter
-  default_url_options[:host] = INITIAL_SETTINGS['host']
+  default_url_options[:host] = INITIAL_SETTINGS['host_and_port']
   default_url_options[:protocol] = INITIAL_SETTINGS['protocol']
 
   @@logger = Logger.new(ENV['BATCH_LOG_PATH'])

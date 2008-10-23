@@ -39,7 +39,7 @@ default: &default
   batch_log_path:                                                           # バッチ実行時のログ出力先(指定がなければ log/batch.log)
 
   # バッチ・メール送信時のシステムのURLに含まれるホスト情報の設定
-  host: localhost:3000                                                      # システムが動作するURLのホスト部分とポート番号
+  host_and_port: localhost:3000                                                      # システムが動作するURLのホスト部分とポート番号
   protocol: http://                                                         # システムが動作する標準のプロトコル(例:http:// or https://)
 
   # システム運用担当者
