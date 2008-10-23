@@ -72,6 +72,15 @@ class UserMailer < ActionMailer::Base
     @body       = {:login_id => login_id, :footer => @@footer}
   end
 
+  def self.smtp_settings
+    { :address => Admin::Setting.smtp_settings_address,
+      :port => Admin::Setting.smtp_settings_port,
+      :domain => Admin::Setting.smtp_settings_domain,
+      :user_name => Admin::Setting.smtp_settings_user_name,
+      :password => Admin::Setting.smtp_settings_password,
+      :authentication => Admin::Setting.smtp_settings_authentication }
+  end
+
 private
   def self.base64(text, charset="iso-2022-jp", convert=true)
     text = NKF.nkf('-j -m0 --cp932', text) if convert and charset == "iso-2022-jp"

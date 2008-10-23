@@ -44,3 +44,22 @@ describe UserMailer do
     cattr_accessor :site_url, :system_mail_addr, :from, :footer
   }
 end
+
+describe UserMailer, "#smtp_settings" do
+  before do
+    Admin::Setting.stub!(:smtp_settings_address).and_return("address")
+    Admin::Setting.stub!(:smtp_settings_domain).and_return("domain")
+    Admin::Setting.stub!(:smtp_settings_port).and_return("port")
+    Admin::Setting.stub!(:smtp_settings_user_name).and_return("user_name")
+    Admin::Setting.stub!(:smtp_settings_password).and_return("password")
+    Admin::Setting.stub!(:smtp_settings_authentication).and_return("authentication")
+  end
+  it "DBの内容を返すこと" do
+    UserMailer.smtp_settings[:address].should == "address"
+    UserMailer.smtp_settings[:port].should == "port"
+    UserMailer.smtp_settings[:domain].should == "domain"
+    UserMailer.smtp_settings[:user_name].should == "user_name"
+    UserMailer.smtp_settings[:password].should == "password"
+    UserMailer.smtp_settings[:authentication].should == "authentication"
+  end
+end

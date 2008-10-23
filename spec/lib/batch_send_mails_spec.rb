@@ -113,10 +113,11 @@ describe BatchSendMails, '#send_message' do
           @user_profile = stub_model(UserProfile, :email => SkipFaker.email)
           @user = stub_model(User, :retired? => false, :user_profile => @user_profile)
           User.should_receive(:find).and_return(@user)
+          UserMailer.stub!(:deliver_sent_message)
         end
         it 'messagesテーブルの対象レコードが送信済みとなること' do
-          @message.should_receive(:update_attribute).with(:send_flag, true)
           Message.should_receive(:find).and_return([@message])
+          @message.should_receive(:update_attribute).with(:send_flag, true)
           @sender.send_message
         end
         it 'メールが送信されること' do
