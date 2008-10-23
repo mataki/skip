@@ -19,7 +19,8 @@ class BatchCleanupTables < BatchBase
 
   def self.execute options
     AppliedEmail.delete_all(["created_on <= ?", (Time.now.yesterday)])
-    BoardEntryPoint.update_all "today_access_count = 0"
+    BoardEntryPoint.update_all(["today_access_count = 0"])
+    UserReading.delete_all(["user_readings.read = 1"])
   end
 end
 
