@@ -14,13 +14,14 @@
     <label for="file"><%= _('CSVファイル') %></label><%= file_field_tag :file %>
     <button id="import_confirmation_button"><%= _('Import confirmation') %></button>
     <%= submit_tag _('Upload'), :disable_with => _('Uploading...') %>
-   <p><label for="create_only"><%= _("未登録のユーザのみを追加登録する") %></label><%= check_box_tag "create_only", "1", true %><%= help_icon_tag :content => "|チェックすると既存のユーザを更新せずに、新規に登録するユーザのみを追加します。<br/>既存のユーザの情報を一括変更したい場合は、チェックボックスを外して以下の更新したい属性を設定してください。" %></p>
+   <p><label for="update_registered"><%= _("登録ユーザを上書きする") %></label><%= check_box_tag "update_registered", "1", params[:update_registered] %><%= help_icon_tag :content => "|チェックすると既存のユーザを更新せずに、新規に登録するユーザのみを追加します。<br/>既存のユーザの情報を一括変更したい場合は、チェックボックスを外して以下の更新したい属性を設定してください。" %></p>
     <h4>以下の属性を更新する<%= help_icon_tag :content => "|チェックするとその属性を更新することができます。CSVの例を参考にCSVファイルを作成してください。<br/>新規登録のユーザは、名前・パスワード・メールアドレスは必須になります。" %></h4>
     <p>
-      <label for="options[name]"><%= _("Admin::User|Name") %></label><%= check_box_tag "options[name]", "1", true, :class => "csv_options disable_uncheck_create_only" %>
-      <label for="options[password]"><%= _("Admin::User|Password") %></label><%= check_box_tag "options[password]", "1", true, :class => "csv_options disable_uncheck_create_only" %>
-      <label for="options[email]"><%= _("Admin::UserProfile|Email") %></label><%= check_box_tag "options[email]", "1", true, :class => "csv_options disable_uncheck_create_only" %>
-      <label for="options[section]"><%= _("Admin::UserProfile|Section") %></label><%= check_box_tag "options[section]", "1", true, :class => "csv_options" %>
+      <% options = params[:options] || {} %>
+      <label for="options[name]"><%= _("Admin::User|Name") %></label><%= check_box_tag "options[name]", "1", options[:name], :class => "csv_options disable_uncheck_update_registered" %>
+      <label for="options[password]"><%= _("Admin::User|Password") %></label><%= check_box_tag "options[password]", "1", options[:password], :class => "csv_options disable_uncheck_update_registered" %>
+      <label for="options[email]"><%= _("Admin::UserProfile|Email") %></label><%= check_box_tag "options[email]", "1", options[:email], :class => "csv_options disable_uncheck_update_registered" %>
+      <label for="options[section]"><%= _("Admin::UserProfile|Section") %></label><%= check_box_tag "options[section]", "1", options[:section], :class => "csv_options" %>
     </p>
     <% end -%>
 
@@ -109,9 +110,9 @@ $j(function(){
     });
 
     // 既存のユーザを更新しない場合は、必須項目のチェックを外せない様に
-    $j('#create_only')
+    $j('#update_registered')
     .click(function() {
-	checkCreateOnly(this);
+	checkUpdateRegistered(this);
     });
 
     $j.fn.disableAndAppendHidden = function () {
@@ -132,18 +133,18 @@ $j(function(){
 	return this
     }
 
-    var checkCreateOnly = function(obj) {
+    var checkUpdateRegistered = function(obj) {
 	if (obj.checked) {
-	    $j('.disable_uncheck_create_only')
+	    $j('.disable_uncheck_update_registered')
+	    .enableAndRemoveHidden();
+	} else {
+	    $j('.disable_uncheck_update_registered')
 	    .disableAndAppendHidden();
 
 	    $j('.example_name, .example_password, .example_email').show();
-	} else {
-	    $j('.disable_uncheck_create_only')
-	    .enableAndRemoveHidden();
 	}
     };
-    checkCreateOnly($j('#create_only')[0]);
+    checkUpdateRegistered($j('#update_registered')[0]);
 
 });
 </script>
