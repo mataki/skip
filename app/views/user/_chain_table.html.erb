@@ -4,13 +4,13 @@
 <% @result.each do |result| %>
 <table class="chain_table">
   <tr>
-    <th rowspan="2" valign="top"><%= user_link_to(result[:from_user], { :view_text => showPicture(result[:from_user], 120, 80) }) -%><br/>
+    <th rowspan="2" valign="top"><%= user_link_to_with_portrait(result[:from_user]) %><br/>
      <%= user_link_to result[:from_user] %>
     </th>
     <td class="arrow"><%= icon_tag('resultset_next')  %></td>
     <td class="message"><div class="hiki_style"><%= hiki_parse(result[:from_message]) %></div></td>
     <td class="arrow"></td>
-    <th rowspan="2" valign="bottom"><%= user_link_to(result[:to_user], { :view_text => showPicture(result[:to_user], 120, 80) }) -%><br/>
+    <th rowspan="2" valign="bottom"><%= user_link_to_with_portrait(result[:to_user]) %><br/>
       <%= user_link_to result[:to_user] %>
     </th>
   </tr>

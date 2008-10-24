@@ -1,6 +1,6 @@
 <% top_option ||= nil %>
 
-<% image_output = user_link_to(user, { :view_text => showPicture(user, 120, 80) }) %>
+<% image_output = user_link_to_with_portrait(user) %>
 <table class="user_box">
   <tr>
     <% if top_option -%>

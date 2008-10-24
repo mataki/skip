@@ -173,7 +173,10 @@ div.input_line div.input_bottom {
 
     <table border="1" class="normal" style="width: 95%; margin-bottom: 5px;">
       <tr>
-        <th style="width: 80px; text-align: center;"><%= user_link_to(chain.from_user, { :view_text => showPicture(chain.from_user, 60, 40) + "<br/>" + chain.from_user.name }) -%></th>
+        <th style="width: 80px; text-align: center;">
+          <%= user_link_to_with_portrait(chain.from_user, :width => 60, :height => 40) %><br/>
+          <%= user_link_to(chain.from_user) %>
+        </th>
         <td style="padding: 2px;"><div class="hiki_style"><%= hiki_parse(chain.comment) -%></div></td>
       </tr>
     </table>

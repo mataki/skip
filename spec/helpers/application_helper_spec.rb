@@ -30,3 +30,27 @@ describe ApplicationHelper, "#show_contents" do
     it { @result.should be_include("/images/board_entries%2F#{@entry.user_id}%2F#{@entry.id}_question.gif") }
   end
 end
+
+describe ApplicationHelper, '#user_link_to_with_portrait' do
+  before do
+    @user = stub_model(User, :uid => 'uid:skipkuma', :name => 'skipkuma')
+    @url_params = {:controller => 'user', :action => 'show', :uid => @user.uid}
+    @mock_picture = mock('picture')
+  end
+  describe 'width, heightの指定がない場合' do
+    it 'width 120, height 80 のポートレイト画像付きユーザリンクが生成されること' do
+      helper.should_receive(:showPicture).with(@user, 120, 80).and_return(@mock_picture)
+      helper.should_receive(:link_to).with(@mock_picture, @url_params, anything())
+      helper.user_link_to_with_portrait(@user)
+    end
+  end
+  describe 'width 60, height 40の指定がある場合' do
+    before do
+      it 'width 60, height 40 のポートレイト画像付きユーザリンクが生成されること' do
+        helper.should_receive(:showPicture).with(@user, 60, 40).and_return(@mock_picture)
+        helper.should_receive(:link_to).with(@mock_picture, @url_params, anything())
+        helper.user_link_to_with_portrait(@user)
+      end
+    end
+  end
+end
