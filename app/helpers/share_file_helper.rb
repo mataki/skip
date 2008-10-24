@@ -39,6 +39,22 @@ module ShareFileHelper
     output
   end
 
+  def file_size_with_unit share_file
+    if (size = share_file.file_size) == -1
+      '不明'
+    else
+      unless (mega_size = size/1.megabyte) == 0
+        h "#{mega_size}Mbyte"
+      else
+        unless (kilo_size = size/1.kilobyte) == 0
+          h "#{kilo_size}Kbyte"
+        else
+          h "#{size}byte"
+        end
+      end
+    end
+  end
+
 private
   def open_sub_window_script url
     "sub_window = window.open('#{url}', 'subwindow', 'width=550,height=400,resizable=yes,scrollbars=yes');sub_window.focus();"

@@ -17,8 +17,10 @@ div.share_file_space div.share_file_line {
 
 <div class="share_file_space">
   <div style="position: absolute; top:0; right: 1px;">
-    <%= "所属：#{symbol_link_to share_file.owner_symbol}" if visible_owner_link %> 登録者：<%= user_link_to(share_file.user) %>
-    DL数：<span id="download_count_<%= share_file.id -%>"><%= share_file.total_count -%></span>
+    所属：<%= symbol_link_to share_file.owner_symbol if visible_owner_link %>
+    登録者：<%= user_link_to(share_file.user) %>
+    DL数：<span id="download_count_<%= h share_file.id %>"><%= h share_file.total_count %></span>
+    サイズ：<%= file_size_with_unit( share_file ) %>
   </div>
   <div class="share_file_line" style="margin-top:13px;">
     <%=h share_file.date.strftime("%Y/%m/%d %H:%M") %> -

@@ -286,6 +286,14 @@ class ShareFile < ActiveRecord::Base
   def total_share_file_size
     self.class.total_share_file_size self.owner_symbol
   end
+
+  def file_size
+    if File.exist? self.full_path
+      File.size self.full_path
+    else
+      -1
+    end
+  end
 private
   def square_brackets_tags
     self.category = Tag.square_brackets_tags(self.category)
