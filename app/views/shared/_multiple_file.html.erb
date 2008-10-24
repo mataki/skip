@@ -44,21 +44,21 @@ $j(function() {
      });
      addInputFileField();
 
-      var insertPicRef = function(cnt) {
-          var filePath = $j('#' + "<%= file_field_name -%>\\[" + cnt + "\\]").val();
-          if(filePath.length > 0) {
-              var pattern = /(\\|\:|\/)/;
-              var filePathArr = filePath.split(pattern);
-              var fileName = filePathArr[filePathArr.length - 1];
-              var insertText = "\n{{" + fileName;
-              var fileExtPattern = /\.flv|\.swf/;
-              if(fileName.toLowerCase().search(fileExtPattern) == -1) {
-                  insertText += ",240,";
-              }
-              insertText += "}}";
-              $j("#contents_hiki").val($j("#contents_hiki").val() + insertText);
-          }
-      };
+     insertPicRef = function(cnt) {
+         var filePath = $j('#' + "<%= file_field_name -%>\\[" + cnt + "\\]").val();
+         if(filePath.length > 0) {
+             var pattern = /(\\|\:|\/)/;
+             var filePathArr = filePath.split(pattern);
+             var fileName = filePathArr[filePathArr.length - 1];
+             var insertText = "\n{{" + fileName;
+             var fileExtPattern = /\.flv|\.swf/;
+             if(fileName.toLowerCase().search(fileExtPattern) == -1) {
+                 insertText += ",240,";
+             }
+             insertText += "}}";
+             $j("#contents_hiki").val($j("#contents_hiki").val() + insertText);
+         }
+     };
 });
 
 

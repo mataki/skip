@@ -151,7 +151,7 @@ module ApplicationHelper
       if popup
         pop_name = url_for(:controller => 'pictures', :action => 'picture', :id => picture.id.to_s)
         options[:title] = "クリックすると実際の大きさで表示されます"
-        return link_to(image_tag(file_name, options), file_name, :class => 'nyroModal')
+        return link_to(image_tag(file_name, options), file_name, :class => 'nyroModal zoomable')
       end
     else
       file_name = 'default_picture.png'

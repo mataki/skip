@@ -22,6 +22,29 @@ $j(function(){
     };
 
     /*
+     * ロールオーバーで虫眼鏡画像を表示させる
+     */
+    $j.fn.zoomable = function() {
+        return this.hover(
+            function() {
+                //alert('zoom!!')
+                var img = $j(this).find('img')[0];
+                var span = $j(document.createElement("span"))
+                .css( { position: 'absolute',
+                        top: img.offsetTop + "px",
+                        left: img.offsetLeft + "px",
+                        width: img.offsetWidth + "px",
+                        height: img.offsetHeight + "px" } )
+                .addClass('image_over');
+                $j(this).prepend(span);
+            },
+            function() {
+                $j(this).find('.image_over').remove();
+            }
+        );
+    };
+
+    /*
      * 感応型のヘルプバー表示をさせる
      * sensitive_selecter : 感知するselecter / appeared_selecter : 表示させるID
      */

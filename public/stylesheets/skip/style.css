@@ -254,3 +254,12 @@ div.errorExplanation li {
 .rich_style ol {
   padding-left: 25px;
 }
+/* ----------------------------------- */
+/* zoomable_style */
+.image_over{
+	background:url(../../images/skip/zoom.gif) no-repeat 50% 50%;
+	filter:alpha(opacity=50);
+	-moz-opacity:0.5;
+	-khtml-opacity: 0.5;
+	opacity: 0.5;
+}

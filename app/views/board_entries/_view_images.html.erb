@@ -7,7 +7,7 @@
   <% if ["flv", "swf"].include?(file_ext) -%>
     <%= image_tag 'http://www.adobe.com/shockwave/download/images/flash_rune.gif', :alt => "flv形式の動画", :height => "64px", :width => "64px" %>
   <% elsif ["jpg","png","jpeg","gif","bmp"].include?(file_ext) -%>
-    <%= link_to image_tag ( img_url, :alt => h(img_name), :width => '64', :height => '64' ), img_url, :class => 'nyroModal', :rel => 'gal' %>
+    <%= link_to image_tag ( img_url, :alt => h(img_name), :width => '64', :height => '64' ), img_url, :class => 'nyroModal zoomable', :rel => 'gal' %>
   <% else -%>
     <%= image_tag "question.gif", :alt => "不明なファイル形式", :height => "64px", :width => "64px" -%>
   <% end -%>
