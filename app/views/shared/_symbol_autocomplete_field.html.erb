@@ -70,13 +70,14 @@ $j(function() {
             .attr('type', 'checkbox')
             .click(function() {
                 if (this.checked) {
-                    if (!editor_symbols_array.include(symbol)) {
-                      editor_symbols_array.push(symbol);
+                    if ($j.inArray(symbol, editor_symbols_array) == -1) {
+                        editor_symbols_array.push(symbol);
                     }
                 } else {
-                    if (editor_symbols_array.include(symbol)) {
-                      editor_symbols_array = editor_symbols_array.without(symbol);
-                    }
+                    // editor_symbols_arrayからsymbolを取り除く
+                    editor_symbols_array = $j.grep(editor_symbols_array, function(n, i) {
+                        return n != symbol;
+                    });
                 }
                 $j('#editor_symbols_value').val(editor_symbols_array.toString());
             });
@@ -92,11 +93,15 @@ $j(function() {
         .css('cusor', 'pointer')
         .append(document.createTextNode('[x]'))
         .click(function(){
-            if (publication_symbols_array.include(symbol)) {
-                publication_symbols_array = publication_symbols_array.without(symbol);
+            if ($j.inArray(symbol, publication_symbols_array) != -1) {
+                publication_symbols_array = $j.grep(publication_symbols_array, function(n, i) {
+                    return n != symbol;
+                });
                 $j('#publication_symbols_value').val(publication_symbols_array.toString());
-                if(edit_checkbox) {
-                    editor_symbols_array = editor_symbols_array.without(symbol);
+                if (edit_checkbox) {
+                    editor_symbols_array = $j.grep(editor_symbols_array, function(n, i) {
+                        return n != symbol;
+                    });
                     $j('#editor_symbols_value').val(editor_symbols_array.toString());
                 }
                 $j(this).parent().parent().remove();
@@ -121,7 +126,7 @@ $j(function() {
             alert("存在するユーザ/グループを入力してください");
             return;
         }
-        if (publication_symbols_array.include(symbol)) {
+        if ($j.inArray(symbol, publication_symbols_array) != -1) {
             alert("既に追加されています");
             return;
         }
@@ -137,14 +142,14 @@ $j(function() {
 
     $j.each(publication_symbols_array, function() {
         if(edit_checkbox) {
-            var checked = editor_thiss_array.include(this);
+            var checked = ($j.inArray(this, editor_thiss_array) != -1);
             createSymbolRecord(this, checked);
         } else {
             createSymbolRecord(this, false);
         }
     });
 
-    var publication_symbol_auto_complete_url = '<%= url_for(:controller => 'symbol', :action => 'auto_complete_for_item_search', :type => 'publication') -%>';
+    var publication_symbol_auto_complete_url = '<%= url_for(:controller => 'symbol', :action => 'auto_complete_for_item_search', :type => 'publication') %>';
     $j('#publication_symbol')
     .autocomplete(publication_symbol_auto_complete_url, {
         formatItem: function(data) {

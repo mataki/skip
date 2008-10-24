@@ -14,8 +14,8 @@ $j(function(){
             url: '<%= url_for(:controller => 'bookmark', :action => 'ado_set_stared') -%>',
             data: { bookmark_comment_id : '<%= bookmark_comment.id -%>', stared : <%= (!bookmark_comment.stared).to_s -%>,
           　        authenticity_token: $j("#authenticity_token").val() },
-            complete: function(request) {
-                $j('#bookmark_comment_stared_<%= bookmark_comment.id -%>').html(request.responseText);
+            success: function(html) {
+                $j('#bookmark_comment_stared_<%= bookmark_comment.id -%>').html(html);
                 $j('#bookmark_comment_<%= bookmark_comment.id -%>').highlight();
             }
         });

@@ -155,10 +155,10 @@ table.normal {
 $j(function(){
     FCKeditor.BasePath = platform_url_root + "/javascripts/skip/fckeditor/";
     var setFckPropertyAndReplace = function(fckObj) {
-	fckObj.ToolbarSet = "Custom";
-	fckObj.Height = "430";
-	fckObj.Config["CustomConfigurationsPath"] = "/javascripts/skip/skip_fckeditor_config.js" ;
-	fckObj.ReplaceTextarea();
+        fckObj.ToolbarSet = "Custom";
+        fckObj.Height = "430";
+        fckObj.Config["CustomConfigurationsPath"] = "/javascripts/skip/skip_fckeditor_config.js" ;
+        fckObj.ReplaceTextarea();
     };
     setFckPropertyAndReplace(new FCKeditor('profile_self_introduction'));
     setFckPropertyAndReplace(new FCKeditor('profile_introduction'));

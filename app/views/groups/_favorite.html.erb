@@ -5,15 +5,18 @@
 <script type="text/javascript">
 $j(function(){
     <%# TODO idでクリックを設定するDOM要素を設定しているがクラスで設定して、application.jsなどに一箇所に書きたい %>
-    // グループののスターをクリックしたときのAjaxアクションを設定する
+    // グループのスターをクリックしたときのAjaxアクションを設定する
     $j('#favorite_star_link_<%= participation.id -%>')
     .click(function() {
         $j.ajax({
             type: 'POST',
-            url: '<%= url_for(:controller => 'group', :gid => gid , :action => 'ado_set_favorite') -%>',
-            data: { group_participation_id : '<%= participation.id -%>', favorite_flag : <%= (!participation.favorite).to_s -%>, update_elem_id : '<%= update_elem_id -%>', authenticity_token: $j("#authenticity_token").val()},
-            complete: function(request) {
-                $j('#<%= update_elem_id -%>').html(request.responseText).parent().highlight();
+            url: '<%= url_for(:controller => 'group', :gid => gid , :action => 'ado_set_favorite') %>',
+            data: { group_participation_id : '<%= participation.id %>',
+                    favorite_flag : <%= (!participation.favorite).to_s %>,
+                    update_elem_id : '<%= update_elem_id -%>',
+                    authenticity_token: $j("#authenticity_token").val() },
+            success: function(html) {
+                $j('#<%= update_elem_id -%>').html(html).parent().highlight();
             }
         });
         return false;

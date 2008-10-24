@@ -65,9 +65,14 @@
 <script type="text/javascript">
 $j(function(){
     var loadLoginData = function(){
-        login_save = (loadCookie('login_save') == '') ? false : eval(loadCookie('login_save'));
+        login_save = false;
+        if (loadCookie('login_save') == 'true')
+            login_save = true;
         $j('#login_save').attr('checked', login_save);
-        ssl_enable = (loadCookie('ssl_enable') == '') ? false : eval(loadCookie('ssl_enable'));
+
+        ssl_enable = false;
+        if (loadCookie('ssl_enable') == 'true')
+            ssl_enable = true;
         $j('#ssl_enable_radio').attr('checked', ssl_enable);
         $j('#ssl_disable_radio').attr('checked', !ssl_enable);
         $j('#login_key').focus();

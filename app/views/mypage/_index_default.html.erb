@@ -118,9 +118,13 @@ span.important {
 <script type='text/javascript'>
 $j(function(){
     $j.ajax({
-        url: '<%= url_for(:controller => 'mypage', :action => 'load_rss_feed') -%>',
+        url: '<%= url_for(:controller => 'mypage', :action => 'load_rss_feed') %>',
+        success: function(html) {
+            $j('#rss_feed').html(html);
+        },
+        error: function(event) {
+        },
         complete: function(request) {
-            $j('#rss_feed').html(request.responseText);
             fnLoadPngs();
         }
     });

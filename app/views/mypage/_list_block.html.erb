@@ -55,11 +55,11 @@ $j(function(){
         $j.ajax({
             url: '<%= url_for(:controller => 'mypage', :action => 'load_entries') -%>',
             data: { page : page, page_name : 'list_block', target : id_name },
+            success: function(html) {
+                $j('#' + id_name).html(html).appendClickForToggleTag();
+                $j('#' + id_name + '_body').highlight();
+            },
             complete: function(request) {
-                $j('#' + id_name)
-                .html(request.responseText).appendClickForToggleTag();
-                $j('#' + id_name + '_body')
-                .highlight();
                 fnLoadPngs();
             }
         });

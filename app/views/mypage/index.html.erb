@@ -74,7 +74,20 @@ $j(function(){
     toggleMouseOver('#blog_count', '#blog_count_help');
     toggleMouseOver('#using_day', '#using_day_help');
 
-    // アンテナ表示箇所の遅延ローディング
-    loadAntenna();
+    /*
+     * アンテナのローディング
+     */
+    $j.ajax({
+        url: relative_url_root + '/mypage/ado_antennas/',
+        success: function(request) {
+            $j('#antennas').html(request);
+        },
+        error: function(event) {
+            $j('#antennas > .box_space').html('アンテナの読み込みに失敗しました。');
+        },
+        complete: function(request) {
+            fnLoadPngs();
+        }
+    });
 });
 </script>

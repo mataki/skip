@@ -421,7 +421,7 @@ $j(function(){
         // 引数のコメントツリーについて最大のコメントIDを返す
         var getMaxCommentId = function(tree) {
             var children = $j.makeArray($j(tree).find('.board_entry_comment'));
-            if( children.size() == 0 ) {
+            if( children.length == 0 ) {
                 return -tree.id.split('_')[1]
             }
             var descSortedChildren = children.sort(
@@ -503,8 +503,7 @@ $j(function(){
 
     // 引数の文字列が空白以外で1文字以上かどうか
     var isEmpty = function(text) {
-        text = text.gsub("　", " ");
-        if(text.strip().length == 0) {
+        if($j.trim(text).length == 0) {
             alert("空白以外で1文字以上入力してください。");
             return true;
         }
@@ -638,7 +637,7 @@ $j(function(){
                         url:'<%= url_for(:controller => 'board_entries', :action => 'ado_create_nest_comment') -%>/' + commentId,
                         data:jform.serialize(),
                         complete:function(request) {
-                            if(request.responseText.strip().length == 0) {
+                            if($j.trim(request.responseText).length == 0) {
                                 alert('保存に失敗しました。一度画面を更新してみてください。');
                                 return false;
                             }

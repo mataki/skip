@@ -6,7 +6,6 @@
 <div id="hidden_file_area" style="display:none;"></div>
 
 <script type='text/javascript'>
-
 $j(function() {
     var index = 1;
     var addInputFileField = function(){
@@ -44,22 +43,23 @@ $j(function() {
          return false;
      });
      addInputFileField();
+
+      var insertPicRef = function(cnt) {
+          var filePath = $j('#' + "<%= file_field_name -%>\\[" + cnt + "\\]").val();
+          if(filePath.length > 0) {
+              var pattern = /(\\|\:|\/)/;
+              var filePathArr = filePath.split(pattern);
+              var fileName = filePathArr[filePathArr.length - 1];
+              var insertText = "\n{{" + fileName;
+              var fileExtPattern = /\.flv|\.swf/;
+              if(fileName.toLowerCase().search(fileExtPattern) == -1) {
+                  insertText += ",240,";
+              }
+              insertText += "}}";
+              $j("#contents_hiki").val($j("#contents_hiki").val() + insertText);
+          }
+      };
 });
 
-function insertPicRef(cnt) {
-    var filePath = $j('#' + "<%= file_field_name -%>\\[" + cnt + "\\]").val();
-    if(filePath.length > 0) {
-        var pattern = /(\\|\:|\/)/;
-        var filePathArr = filePath.split(pattern);
-        var fileName = filePathArr[filePathArr.length - 1];
-        var insertText = "\n{{" + fileName;
-        var fileExtPattern = /\.flv|\.swf/;
-        if(fileName.toLowerCase().search(fileExtPattern) == -1) {
-            insertText += ",240,";
-        }
-        insertText += "}}";
-        $j("#contents_hiki").val($j("#contents_hiki").val() + insertText);
-    }
-}
 
 </script>

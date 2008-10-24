@@ -97,7 +97,6 @@ td {
 <script language='javascript' type='text/javascript'>
 //<![CDATA[
 $j(function(){
-
     var setupTagComplete = function() {
         var userTags = new Array(<%= user_tags_array.map{|str| ("'#{str}'")}.join(',') %>);
         var otherTags = new Array(<%= other_tags_array.map{|str| ("'#{str}'")}.join(',') %>);

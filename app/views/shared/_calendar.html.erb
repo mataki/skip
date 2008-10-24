@@ -33,17 +33,15 @@
   </div>
 </div><!-- box_space -->
 
-<script language="JavaScript" type="text/javascript">
+<script type="text/javascript">
 $j(function(){
     var loadCalendar = function(year, month){
         $j.ajax({
-            url: '<%= url_for( :action => 'load_calendar') -%>',
+            url: '<%= url_for( :action => 'load_calendar') %>',
             data: { year : year , month : month },
-            complete: function(request) {
-               $j('#calendar')
-               .html(request.responseText);
-               $j('#calendar_body')
-               .highlight();
+            success: function(html) {
+               $j('#calendar').html(html);
+               $j('#calendar_body').highlight();
             }
         });
     };
@@ -51,14 +49,14 @@ $j(function(){
     // カレンダーの前月、次月リンククリック時のajaxアクション
     $j('#prev_month_link')
     .click(function() {
-        loadCalendar(<%= prev_month.year -%>, <%= prev_month.month -%>);
+        loadCalendar(<%= prev_month.year %>, <%= prev_month.month %>);
         return false;
     });
 
     $j('#next_month_link')
     .click(function() {
-        loadCalendar(<%= next_month.year -%>, <%= next_month.month -%>);
+        loadCalendar(<%= next_month.year %>, <%= next_month.month %>);
         return false;
     });
-}); // $j(function(){
+});
 </script>

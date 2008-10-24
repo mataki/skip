@@ -85,10 +85,10 @@ $j(function(){
     .click(function(){
         if (confirm('本当に削除しますか？')) {
             var shareFileId = this.id.split('_')[4];
-            var clearDownloadUrl = "<%= url_for(:controller => 'share_file', :action => 'clear_download_history') -%>/";
+            var clearDownloadUrl = "<%= url_for(:controller => 'share_file', :action => 'clear_download_history') %>/";
             $j.ajax({
                 type: "POST",
-                data: { id:shareFileId, authenticity_token: $j('#authenticity_token').val() },
+                data: { id: shareFileId, authenticity_token: $j('#authenticity_token').val() },
                 url: clearDownloadUrl,
                 success: function(html){
                     alert('ダウンロード履歴の削除に成功しました');

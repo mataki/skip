@@ -100,9 +100,10 @@ $j(function() {
         $j.ajax({
             type: 'POST',
             url: "<%= url_for(:controller => 'mypage', :action => 'change_read_state') -%>",
-            data: { board_entry_id:messageId, read:isRead, 
-                authenticity_token: $j('#authenticity_token').val() },
-            complete: function(request) {
+            data: { board_entry_id:messageId,
+                    read:isRead,
+                    authenticity_token: $j('#authenticity_token').val() },
+            success: function(request) {
             }
         });
 

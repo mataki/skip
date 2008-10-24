@@ -19,7 +19,6 @@ table.input_table textarea {
 
 <%= skip_javascript_include_tag "fckeditor/fckeditor" %>
 <script type='text/javascript'>
-//<![CDATA[
 $j(function(){
     FCKeditor.BasePath = platform_url_root + "/javascripts/skip/fckeditor/";
     var fckArea = new FCKeditor('contents_richtext');
@@ -63,5 +62,4 @@ $j(function(){
         return false;
     });
 });
-//]]>
 </script>
