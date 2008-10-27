@@ -23,16 +23,19 @@ $j(function() {
         .appendTo('#input_value_area');
 
         if(<%= blog_mode %>) {
-            elemDiv.append(
-                $j(document.createElement("a"))
-                .css({
-                    backgroundColor: "#eef",
-                    margin: "0 0 0 3px"
-                })
-                .attr('href',"javascript:insertPicRef("+index+");")
-                .attr('class', "hiki_support")
-                .append(document.createTextNode("本文末尾に挿入"))
-            );
+            var hiki_support = $j(document.createElement("a"))
+            .css({
+                backgroundColor: "#eef",
+                margin: "0 0 0 3px",
+                display: "none"
+            })
+            .attr('href',"javascript:insertPicRef("+index+");")
+            .attr('class', "hiki_support")
+            .append(document.createTextNode("本文末尾に挿入"));
+            if($j('#editor_mode_hiki:checked').length > 0) {
+                hiki_support.show();
+            }
+            elemDiv.append(hiki_support);
         }
         index++;
      };
