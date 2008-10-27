@@ -289,13 +289,17 @@ private
     file_proc = proc {|file_symbol, link_str|
                       symbol_type, symbol_id = SkipUtil.split_symbol owner_symbol
                       f_symbol_type, file_name = SkipUtil.split_symbol file_symbol
-                      url = share_file_url :controller_name => @@CONTROLLER_HASH[symbol_type], :symbol_id => symbol_id, :file_name => file_name.strip
+                      url = share_file_url :controller_name => @@CONTROLLER_HASH[symbol_type], :symbol_id => symbol_id, :file_name => file_name.strip, :authenticity_token => form_authenticity_token
                       link_to(link_str, url) }
 
     procs = [["uid", default_proc], ["gid", default_proc], ["page", default_proc]]
     procs << ["file",file_proc] if owner_symbol
 
     split_mark =  "&gt;"
+    share_file_url_regex = /<a href=\"#{root_url.gsub('\/', '\\\/')}([^\/.?]+)\/([^\/.?]+)\/files\/(.*?)\".*?<\/a>/m
+    text.gsub!( share_file_url_regex ) do |url|
+      "[file:#{$3}]"
+    end
     procs.each { |value| text = BoardEntry.replace_symbol_link(text, value.first, value.last, split_mark) }
     return text
   end

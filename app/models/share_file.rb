@@ -34,6 +34,9 @@ class ShareFile < ActiveRecord::Base
   validates_presence_of :user_id, :message =>'は必須です'
   validates_uniqueness_of :file_name, :scope => :owner_symbol, :message =>'名が同一のファイルが既に登録されています'
 
+  UNCHECKED_EXTENTIONS = ['gif', 'jpeg', 'jpg', 'png', 'bmp'].freeze
+  UNCHECKED_CONTENT_TYPES = ['image/gif', 'image/jpeg', 'image/jpg', 'image/png', 'image/bmp'].freeze
+
   class << self
     HUMANIZED_ATTRIBUTE_KEY_NAMES = {
       "description" => "コメント",
@@ -294,8 +297,21 @@ class ShareFile < ActiveRecord::Base
       -1
     end
   end
+
+  def uncheck_authenticity?
+    uncheck_extention? && uncheck_content_type?
+  end
+
 private
   def square_brackets_tags
     self.category = Tag.square_brackets_tags(self.category)
+  end
+
+  def uncheck_extention?
+    UNCHECKED_EXTENTIONS.any?{ |extension| extension == self.file_name.split('.').last }
+  end
+
+  def uncheck_content_type?
+    UNCHECKED_CONTENT_TYPES.any?{ |content_type| content_type == self.content_type }
   end
 end

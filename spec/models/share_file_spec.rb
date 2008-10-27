@@ -144,6 +144,79 @@ describe ShareFile, ".total_share_file_size" do
   end
 end
 
+describe ShareFile, '#uncheck_authenticity?' do
+  before do
+    @share_file = stub_model(ShareFile)
+  end
+  describe 'チェックしない拡張子の場合' do
+    before do
+      @share_file.should_receive(:uncheck_extention?).and_return(true)
+    end
+    describe 'チェックしないContent-Typeの場合' do
+      before do
+        @share_file.should_receive(:uncheck_content_type?).and_return(true)
+      end
+      it 'trueを返すこと' do
+        @share_file.uncheck_authenticity?.should be_true
+      end
+    end
+    describe 'チェックするContent-Typeの場合' do
+      before do
+        @share_file.should_receive(:uncheck_content_type?).and_return(false)
+      end
+      it 'falseを返すこと' do
+        @share_file.uncheck_authenticity?.should be_false
+      end
+    end
+  end
+  describe 'チェックする拡張子の場合' do
+    before do
+      @share_file.should_receive(:uncheck_extention?).and_return(false)
+    end
+    it 'falseを返すこと' do
+      @share_file.uncheck_authenticity?.should be_false
+    end
+  end
+end
+
+describe ShareFile, '#uncheck_extention?' do
+  describe 'authenticityチェックしない拡張子の場合' do
+    before do
+      @share_file = stub_model(ShareFile, :file_name => 'uncheck.jpg')
+    end
+    it 'trueを返すこと' do
+      @share_file.send(:uncheck_extention?).should be_true
+    end
+  end
+  describe 'authenticityチェックする拡張子の場合' do
+    before do
+      @share_file = stub_model(ShareFile, :file_name => 'uncheck.xls')
+    end
+    it 'falseを返すこと' do
+      @share_file.send(:uncheck_extention?).should be_false
+    end
+  end
+end
+
+describe ShareFile, '#downloadable_content_type' do
+  describe 'authenticityチェックしないContent-Typeの場合' do
+    before do
+      @share_file = stub_model(ShareFile, :content_type => 'image/jpg')
+    end
+    it 'trueを返すこと' do
+      @share_file.send(:uncheck_content_type?).should be_true
+    end
+  end
+  describe 'authenticityチェックするContent-Typeの場合' do
+    before do
+      @share_file = stub_model(ShareFile, :content_type => 'application/csv')
+    end
+    it 'falseを返すこと' do
+      @share_file.send(:uncheck_content_type?).should be_false
+    end
+  end
+end
+
 # privateメソッドのspec
 private
 def create_share_file options = {}

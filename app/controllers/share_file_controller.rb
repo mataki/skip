@@ -182,7 +182,6 @@ class ShareFileController < ApplicationController
     render :partial => 'share_files', :object => @share_files, :locals => { :pages => @pages }
   end
 
-
   def download
     symbol_type_hash = { 'user'  => 'uid',
                          'group' => 'gid' }
@@ -196,13 +195,22 @@ class ShareFileController < ApplicationController
       return redirect_to(:controller => 'mypage', :action => 'index')
     end
 
-    unless File.exist?(share_file.full_path)
-      flash[:warning] = '指定されたファイルの実体が存在しません。お手数ですが管理者にご連絡をお願いいたします。'
-      return redirect_to(:controller => 'mypage', :action => "index")
-    end
+    if downloadable?(params[:authenticity_token], share_file)
+      unless File.exist?(share_file.full_path)
+        flash[:warning] = '指定されたファイルの実体が存在しません。お手数ですが管理者にご連絡をお願いいたします。'
+        return redirect_to(:controller => 'mypage', :action => "index")
+      end
 
-    share_file.create_history current_user.id
-    send_file(share_file.full_path, :filename => nkf_file_name(file_name), :type => share_file.content_type, :stream => false, :disposition => 'attachment')
+      share_file.create_history current_user.id
+      send_file(share_file.full_path, :filename => nkf_file_name(file_name), :type => share_file.content_type, :stream => false, :disposition => 'attachment')
+    else
+      return redirect_to_with_deny_auth
+    end
+  end
+
+  def downloadable?(authenticity_token, share_file)
+    return true if share_file.uncheck_authenticity?
+    authenticity_token == form_authenticity_token ? true : false
   end
 
   def download_history_as_csv

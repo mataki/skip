@@ -29,29 +29,43 @@ describe ShareFileController, "GET /download" do
       @share_file.stub!(:full_path).and_return(@full_path)
       ShareFile.should_receive(:find).and_return(@share_file)
     end
-    describe '対象となる実体ファイルが存在する場合' do
+    describe 'ダウンロードを許可するファイルの場合' do
       before do
-        @share_file.stub!(:create_history)
-        @controller.stub!(:nkf_file_name)
-        @controller.stub!(:send_file)
-        File.should_receive(:exist?).with(@full_path).and_return(true)
+        controller.should_receive(:downloadable?).and_return(true)
       end
-      it '履歴が作成されること' do
-        @share_file.should_receive(:create_history).with(@user.id)
-        get :download
+      describe '対象となる実体ファイルが存在する場合' do
+        before do
+          @share_file.stub!(:create_history)
+          @controller.stub!(:nkf_file_name)
+          @controller.stub!(:send_file)
+          File.should_receive(:exist?).with(@full_path).and_return(true)
+        end
+        it '履歴が作成されること' do
+          @share_file.should_receive(:create_history).with(@user.id)
+          get :download
+        end
+        it 'ファイルがダウンロードされること' do
+          @controller.should_receive(:send_file).with(@share_file.full_path, anything())
+          get :download
+        end
       end
-      it 'ファイルがダウンロードされること' do
-        @controller.should_receive(:send_file).with(@share_file.full_path, anything())
-        get :download
+      describe '対象となる実体ファイルが存在しない場合' do
+        before do
+          File.should_receive(:exist?).with(@full_path).and_return(false)
+          get :download
+        end
+        it { flash[:warning].should_not be_nil }
+        it { response.should be_redirect }
       end
     end
-    describe '対象となる実体ファイルが存在しない場合' do
+    describe 'ダウンロードを許可しないファイルの場合' do
       before do
-        File.should_receive(:exist?).with(@full_path).and_return(false)
+        controller.should_receive(:downloadable?).and_return(false)
+      end
+      it 'redirect_to_with_deny_authがcallされること' do
+        controller.should_receive(:redirect_to_with_deny_auth)
         get :download
       end
-      it { flash[:warning].should_not be_nil }
-      it { response.should be_redirect }
     end
   end
   describe '対象のShareFileが存在しない場合' do
@@ -61,6 +75,39 @@ describe ShareFileController, "GET /download" do
     end
     it { flash[:warning].should_not be_nil }
     it { response.should be_redirect }
+  end
+end
+
+describe ShareFileController, '#downloadable?' do
+  before do
+    controller.stub!(:form_authenticity_token)
+  end
+  describe 'authenticity_tokenのチェックを行う必要がない場合' do
+    before do
+      @share_file = stub_model(ShareFile)
+      @share_file.stub!(:uncheck_authenticity).and_return(true)
+    end
+    it 'trueを返すこと' do
+      controller.send(:downloadable?, anything(), @share_file).should be_true
+    end
+  end
+  describe 'authenticity_tokenのチェックを行う必要がある場合' do
+    before do
+      @share_file = stub_model(ShareFile)
+      @share_file.stub!(:uncheck_authenticity).and_return(false)
+      @valid_authenticity_token = SkipFaker.rand_char
+      controller.should_receive(:form_authenticity_token).and_return(@valid_authenticity_token)
+    end
+    describe 'authenticity_tokenが正しい場合' do
+      it 'trueを返すこと' do
+        controller.send(:downloadable?, @valid_authenticity_token, @share_file).should be_true
+      end
+    end
+    describe 'authenticity_tokenが間違っている場合' do
+      it 'falseを返すこと' do
+        controller.send(:downloadable?, nil, @share_file).should be_false
+      end
+    end
   end
 end
 
