@@ -92,16 +92,4 @@ describe Admin::SettingsController, 'POST /update_all' do
       post :update_all, :settings => {@key => @value}
     end
   end
-  describe 'メール設定の保存を行う場合' do
-    it 'メール設定の再設定処理が行われること' do
-      ActionMailer::Base.should_receive(:smtp_settings=)
-      post :update_all, :tab => 'mail'
-    end
-  end
-  describe 'メール設定以外の保存を行う場合' do
-    it 'メール設定の再設定処理が行われないこと' do
-      ActionMailer::Base.should_not_receive(:smtp_settings=)
-      post :update_all, :tab => 'literal'
-    end
-  end
 end

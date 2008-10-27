@@ -45,7 +45,14 @@ describe UserMailer do
   }
 end
 
+# config/initilizers/mai_setting.rbのspec
 describe UserMailer, "#smtp_settings" do
+  before(:all) do
+    @before_method = ActionMailer::Base.delivery_method
+    ActionMailer::Base.delivery_method = :smtp
+    @before_errors = ActionMailer::Base.raise_delivery_errors
+    ActionMailer::Base.raise_delivery_errors = true
+  end
   before do
     Admin::Setting.stub!(:smtp_settings_address).and_return("address")
     Admin::Setting.stub!(:smtp_settings_domain).and_return("domain")
@@ -53,13 +60,16 @@ describe UserMailer, "#smtp_settings" do
     Admin::Setting.stub!(:smtp_settings_user_name).and_return("user_name")
     Admin::Setting.stub!(:smtp_settings_password).and_return("password")
     Admin::Setting.stub!(:smtp_settings_authentication).and_return("authentication")
+    @smtp = mock('smtp')
+    @smtp.stub!(:sendmail)
+    Net::SMTP.stub!(:start).and_yield(@smtp)
   end
-  it "DBの内容を返すこと" do
-    UserMailer.smtp_settings[:address].should == "address"
-    UserMailer.smtp_settings[:port].should == "port"
-    UserMailer.smtp_settings[:domain].should == "domain"
-    UserMailer.smtp_settings[:user_name].should == "user_name"
-    UserMailer.smtp_settings[:password].should == "password"
-    UserMailer.smtp_settings[:authentication].should == "authentication"
+  it "Net::SMTPメソッドでDBの内容を利用して送信すること" do
+    Net::SMTP.should_receive(:start).with("address", "port", "domain", "user_name", "password", "authentication").and_yield(@smtp)
+    UserMailer.deliver_sent_forgot_login_id("test@test.com", "test")
+  end
+  after(:all) do
+    ActionMailer::Base.delivery_method = @before_method
+    ActionMailer::Base.raise_delivery_errors = @before_errors
   end
 end
