@@ -61,11 +61,9 @@ describe ShareFileController, "GET /download" do
     describe 'ダウンロードを許可しないファイルの場合' do
       before do
         controller.should_receive(:downloadable?).and_return(false)
-      end
-      it 'redirect_to_with_deny_authがcallされること' do
-        controller.should_receive(:redirect_to_with_deny_auth)
         get :download
       end
+      it { response.should render_template('confirm_download') }
     end
   end
   describe '対象のShareFileが存在しない場合' do

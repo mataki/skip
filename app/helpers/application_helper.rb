@@ -132,7 +132,8 @@ module ApplicationHelper
     symbol_type, symbol_id = SkipUtil.split_symbol share_file.owner_symbol
     url = share_file_url :controller_name => @@CONTROLLER_HASH[symbol_type],
                          :symbol_id => symbol_id,
-                         :file_name => share_file.file_name
+                         :file_name => share_file.file_name,
+                         :authenticity_token => form_authenticity_token
     link_to h(share_file.file_name), url, html_options
   end
 
@@ -295,11 +296,13 @@ private
     procs = [["uid", default_proc], ["gid", default_proc], ["page", default_proc]]
     procs << ["file",file_proc] if owner_symbol
 
-    split_mark =  "&gt;"
-    share_file_url_regex = /<a href=\"#{root_url.gsub('\/', '\\\/')}([^\/.?]+)\/([^\/.?]+)\/files\/(.*?)\".*?<\/a>/m
-    text.gsub!( share_file_url_regex ) do |url|
-      "[file:#{$3}]"
+    # 共有ファイルのリンクに対してtarget="_blank"を付加
+    share_file_link_regex = /(<a href=\"#{root_url.gsub('\/', '\\\/')}[^\/.?]+\/[^\/.?]+\/files\/.*?\")(.*?<\/a>)/m
+    text.gsub!( share_file_link_regex ) do |url|
+      "#{$1} target=\"_blank\"#{$2}"
     end
+
+    split_mark =  "&gt;"
     procs.each { |value| text = BoardEntry.replace_symbol_link(text, value.first, value.last, split_mark) }
     return text
   end

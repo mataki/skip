@@ -1,0 +1,7 @@
+<% form_tag(share_file_path(:symbol_id => params[:symbol_id], :file_name => params[:file_name])) do %>
+  <p><%= _('ダウンロードしても宜しければ以下のリンクをクリックして下さい。') %></p>
+  <div class="input_line">
+    <div class="input_label">ファイル名</div>
+    <div class="input_value"><%= link_to h(params[:file_name]), share_file_path(:symbol_id => params[:symbol_id], :file_name => params[:file_name], :authenticity_token => form_authenticity_token) %></div>
+  </div>
+<% end -%>
