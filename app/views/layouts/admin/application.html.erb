@@ -109,18 +109,12 @@
 <%= skip_footer_link -%>
 
 </body>
-  <%= skip_jquery_include_tag 'jquery' %>
+  <%= all_javascript_include_tag 'jquery' %>
   <script language="JavaScript" type="text/javascript">$j = jQuery.noConflict();</script>
+  <%= skip_jquery_include_tag 'jquery.cluetip' %>
+  <%= skip_jquery_include_tag 'jquery.tablesorter' %>
   <%= javascript_include_tag 'application' %>
   <%= skip_javascript_include_tag 'skip_util' %>
-
-  <%= skip_jquery_include_tag "jquery.color" %>
-  <%= skip_jquery_include_tag "jquery.nyroModal" %>
-  <%= skip_jquery_include_tag "jquery.bgiframe" %>
-  <%= skip_jquery_include_tag "jquery.autocomplete" %>
-  <%= skip_jquery_include_tag "jquery.jTagging" %>
-  <%= skip_jquery_include_tag "jquery.cluetip" %>
-  <%= skip_jquery_include_tag 'jquery.tablesorter' %>
 <script type="text/javascript">
 var relative_url_root = '<%= controller.request.relative_url_root -%>';
 $j(function(){
