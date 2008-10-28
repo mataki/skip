@@ -8,7 +8,7 @@ FCKConfig.BodyClass = 'fck' ;
 FCKConfig.DefaultLanguage               = 'ja' ;
 FCKConfig.SkinPath = FCKConfig.BasePath + 'skins/silver/';
 
-FCKConfig.ToolbarSets["Custom"] = [
+FCKConfig.ToolbarSets["Normal"] = [
         ['Cut','Copy','Paste','PasteText','PasteWord'],
         ['Undo','Redo','RemoveFormat'],
         ['Bold','Italic','Underline','StrikeThrough'],
@@ -21,6 +21,14 @@ FCKConfig.ToolbarSets["Custom"] = [
         ['Link','Unlink'],
         ['Source','Preview'],
         ['FitWindow','ShowBlocks','-','About']          // No comma for the last row.
+] ;
+
+FCKConfig.ToolbarSets["Light"] = [
+        ['Undo','Redo'],
+        ['Bold','Italic','Underline','StrikeThrough','RemoveFormat'],
+        ['TextColor','BGColor','Smiley'],
+        '/',
+        ['FontName','FontFormat','FontSize']           // No comma for the last row.
 ] ;
 
 FCKConfig.LinkBrowser = false ;
