@@ -157,18 +157,6 @@ $j(function(){
         return false;
     });
 
-    var imageSizing = function() {
-        var imgs = document.getElementsByName("picture");
-        if(!imgs) return;
-        for(i = 0; i < imgs.length; i++){
-            width = imgs[i].width;
-            height = imgs[i].height;
-            fitImageSize(imgs[i], width, height);
-        }
-    };
-    imageSizing();
-    fnLoadPngs();
-
     $j('img.help').cluetip({
         splitTitle: '|',
         dropShadow: false,
@@ -178,6 +166,7 @@ $j(function(){
     });
 
     $j('table.sortable').tablesorter();
+    fnLoadPngs();
 });
 </script>
 <%= yield :javascript %>

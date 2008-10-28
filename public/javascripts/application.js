@@ -163,29 +163,29 @@ $j(function(){
         minute_obj[0].value = currentMinute;
     }
 
-    fitImageSize = function(id, max_width, max_height) {
+    fitImageSize = function(jObj, max_width, max_height) {
         img = new Image();
-        img.src = $j('#' + id).attr('src');
+        img.src = jObj.attr('src');
 
         if (max_height > max_width) {
             if (img.width > max_width) {
                 value = img.height / (img.width/max_width);
                 if (value < 1)  { value = 1; }
-                $j('#' + id).attr({ height: value, width: max_width });
+                jObj.attr({ height: value, width: max_width });
             } else if (img.height > max_height) {
                 value = img.width / (img.height/max_height);
                 if (value < 1) { value = 1; }
-                $j('#' + id).attr({ height: max_height, width: value });
+                jObj.attr({ height: max_height, width: value });
             }
         } else {
             if (img.height >= max_height) {
                 value = img.width / (img.height/max_height);
                 if (value < 1) { value = 1; }
-                $j('#' + id).attr({ height: max_height, width: value });
+                jObj.attr({ height: max_height, width: value });
             } else if (img.width > max_width) {
                 value = img.height / (img.width/max_width);
                 if (value < 1)  { value = 1; }
-                $j('#' + id).attr({ height: value, width: max_width });
+                jObj.attr({ height: value, width: max_width });
             }
         }
     }

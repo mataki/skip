@@ -128,17 +128,9 @@ $j(function(){
         return false;
     });
 
-    var imageSizing = function() {
-        var imgs = document.getElementsByName("picture");
-        if(!imgs) return;
-        for(i = 0; i < imgs.length; i++){
-            width = imgs[i].width;
-            height = imgs[i].height;
-            fitImageSize(imgs[i], width, height);
-        }
-    };
-    imageSizing();
-    fnLoadPngs();
+    $j(document.getElementsByName("picture")).each(function(i) {
+        fitImageSize($j(this), this.width, this.height);
+    });
 
     $j.fn.nyroModal.settings.processHandler = function(settings) {
         $j.nyroModalSettings({
@@ -147,6 +139,7 @@ $j(function(){
     };
 
     $j('.zoomable').zoomable();
+    fnLoadPngs();
 });
 </script>
 </html>
