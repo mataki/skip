@@ -100,97 +100,95 @@ describe Bookmark do
 
 end
 
+describe Bookmark do
+  describe ".get_query_param" do
+    describe "引数が user の場合" do
+      it { Bookmark.get_query_param("user").should == "/user/%" }
+    end
+    describe "引数がpageの場合" do
+      it { Bookmark.get_query_param("page").should == "/page/%" }
+    end
+    describe "引数がinternetの場合" do
+      it { Bookmark.get_query_param("internet").should == "http%" }
+    end
+  end
 
-# TODO: rake spec:rcov でエラーが発生する
-# describe Bookmark do
-#   describe ".get_query_param" do
-#     describe "引数が user の場合" do
-#       it { Bookmark.get_query_param("user").should == "/user/%" }
-#     end
-#     describe "引数がpageの場合" do
-#       it { Bookmark.get_query_param("page").should == "/page/%" }
-#     end
-#     describe "引数がinternetの場合" do
-#       it { Bookmark.get_query_param("internet").should == "http%" }
-#     end
-#   end
+  describe "ブックマークのタイプチェックメソッド" do
+    before do
+      @bookmark = Bookmark.new :url => "http://www.example.com/"
+    end
 
-#   describe "ブックマークのタイプチェックメソッド" do
-#     before do
-#       @bookmark = Bookmark.new :url => "http://www.example.com/"
-#     end
+    describe "#is_type_page?" do
+      describe "ページのブックマークの場合" do
+        before do
+          @bookmark.url = "/page/11"
+        end
+        it { @bookmark.should be_is_type_page }
+      end
 
-#     describe "#is_type_page?" do
-#       describe "ページのブックマークの場合" do
-#         before do
-#           @bookmark.url = "/page/11"
-#         end
-#         it { @bookmark.should be_is_type_page }
-#       end
+      describe "ページ以外のブックマークの場合" do
+        it { @bookmark.should_not be_is_type_page }
+      end
+    end
 
-#       describe "ページ以外のブックマークの場合" do
-#         it { @bookmark.should_not be_is_type_page }
-#       end
-#     end
+    describe "is_type_user?" do
+      describe "ユーザのブックマークの場合" do
+        before do
+          @bookmark.url = "/user/hoge"
+        end
+        it { @bookmark.should be_is_type_user }
+      end
 
-#     describe "is_type_user?" do
-#       describe "ユーザのブックマークの場合" do
-#         before do
-#           @bookmark.url = "/user/hoge"
-#         end
-#         it { @bookmark.should be_is_type_user }
-#       end
+      describe "ユーザ以外のブックマークの場合" do
+        it { @bookmark.should_not be_is_type_user }
+      end
+    end
 
-#       describe "ユーザ以外のブックマークの場合" do
-#         it { @bookmark.should_not be_is_type_user }
-#       end
-#     end
+    describe "is_type_internet?" do
+      describe "インターネットのURLをブックマークしている場合" do
+        it { @bookmark.should be_is_type_internet }
+      end
+      describe "SKIP内のURLをブックマークしている場合" do
+        before do
+          @bookmark.url = "/page/1111"
+        end
+        it { @bookmark.should_not be_is_type_internet }
+      end
+    end
+  end
 
-#     describe "is_type_internet?" do
-#       describe "インターネットのURLをブックマークしている場合" do
-#         it { @bookmark.should be_is_type_internet }
-#       end
-#       describe "SKIP内のURLをブックマークしている場合" do
-#         before do
-#           @bookmark.url = "/page/1111"
-#         end
-#         it { @bookmark.should_not be_is_type_internet }
-#       end
-#     end
-#   end
+  describe "#url_is_public?" do
+    before do
+      @bookmark = Bookmark.new :url => "/page/1111"
+    end
+    describe "ページのブックマークの場合" do
+      describe "ページが全公開の場合" do
+        before do
+          @entry = mock_model(BoardEntry)
+          @entry.should_receive(:public?).and_return(true)
+          BoardEntry.should_receive(:find_by_id).and_return(@entry)
+        end
+        it { @bookmark.should be_url_is_public }
+      end
 
-#   describe "#url_is_public?" do
-#     before do
-#       @bookmark = Bookmark.new :url => "/page/1111"
-#     end
-#     describe "ページのブックマークの場合" do
-#       describe "ページが全公開の場合" do
-#         before do
-#           @entry = mock_model(BoardEntry)
-#           @entry.should_receive(:public?).and_return(true)
-#           BoardEntry.should_receive(:find_by_id).and_return(@entry)
-#         end
-#         it { @bookmark.should be_url_is_public }
-#       end
+      describe "ページが全公開でない場合" do
+        before do
+          @entry = mock_model(BoardEntry)
+          @entry.should_receive(:public?).and_return(false)
+          BoardEntry.should_receive(:find_by_id).and_return(@entry)
+        end
+        it { @bookmark.should_not be_url_is_public }
+      end
+    end
+    describe "ページのブックマークでない場合" do
+      before do
+        @bookmark.url = "http://example.com/"
+      end
+      it { @bookmark.should be_url_is_public }
+    end
+  end
 
-#       describe "ページが全公開でない場合" do
-#         before do
-#           @entry = mock_model(BoardEntry)
-#           @entry.should_receive(:public?).and_return(false)
-#           BoardEntry.should_receive(:find_by_id).and_return(@entry)
-#         end
-#         it { @bookmark.should_not be_url_is_public }
-#       end
-#     end
-#     describe "ページのブックマークでない場合" do
-#       before do
-#         @bookmark.url = "http://example.com/"
-#       end
-#       it { @bookmark.should be_url_is_public }
-#     end
-#   end
-
-# end
+end
 
 describe Bookmark do
   fixtures :bookmarks, :bookmark_comments, :board_entries

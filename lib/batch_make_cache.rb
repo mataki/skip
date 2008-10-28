@@ -83,10 +83,13 @@ class BatchMakeCache < BatchBase
     bookmarks = Bookmark.find(:all, :include => [{:bookmark_comments => :user}], :conditions =>["bookmarks.id in (?)", new_ids.uniq])
     bookmarks.each do |bookmark|
       body_lines = []
+      publication_symbols = bookmark.bookmark_comments.all?{|comment| !comment.public} ? [] : ["sid:allusers"]
       body_lines << h(bookmark.title)
 
       body_lines << bookmark.url
       bookmark.bookmark_comments.each do|comment|
+        publication_symbols << "uid:#{h(comment.user.uid)}"
+        next unless comment.public
         body_lines << h(comment.updated_on.strftime("%Y年%m月%d日"))
         body_lines << h(comment.user.name)
         body_lines << h(comment.tags)
@@ -97,7 +100,7 @@ class BatchMakeCache < BatchBase
                                  :body_lines => body_lines)
 
       meta = create_meta(:contents_type => contents_type,
-                         :publication_symbols => "sid:allusers",
+                         :publication_symbols => publication_symbols.join(','),
                          :link_url => "/bookmark/show/#{bookmark.url}",
                          :title => bookmark.title,
                          :icon_type => 'book')
@@ -226,7 +229,7 @@ end
 # パラメータは順不同、なくてもOK
 # -all すべてのキャッシュを再作成
 # -cache_path=キャッシュパス文字列
-# 実行例　ruby batch_make_cache.rb -cache_path=/var/skip_caches/systest -all
+# 実行例 ruby batch_make_cache.rb -cache_path=/var/skip_caches/systest -all
 # 時間を指定しなければ15分前以降に更新されたもののキャッシュを生成する
 time = 15.minutes.ago
 ARGV.each do |arg|
