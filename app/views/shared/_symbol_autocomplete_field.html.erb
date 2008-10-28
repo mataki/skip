@@ -142,7 +142,7 @@ $j(function() {
 
     $j.each(publication_symbols_array, function() {
         if(edit_checkbox) {
-            var checked = ($j.inArray(this, editor_thiss_array) != -1);
+            var checked = ($j.inArray(this, editor_symbols_array) != -1);
             createSymbolRecord(this, checked);
         } else {
             createSymbolRecord(this, false);
