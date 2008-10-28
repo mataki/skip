@@ -298,6 +298,22 @@ class ShareFile < ActiveRecord::Base
     end
   end
 
+  def file_size_with_unit
+    if (size = self.file_size) == -1
+      '不明'
+    else
+      unless (mega_size = size/1.megabyte) == 0
+        "#{mega_size}Mbyte"
+      else
+        unless (kilo_size = size/1.kilobyte) == 0
+          "#{kilo_size}Kbyte"
+        else
+          "#{size}byte"
+        end
+      end
+    end
+  end
+
   def uncheck_authenticity?
     uncheck_extention? && uncheck_content_type?
   end

@@ -217,6 +217,49 @@ describe ShareFile, '#downloadable_content_type' do
   end
 end
 
+describe ShareFile, '#file_size_with_unit' do
+  before do
+    @share_file = stub_model(ShareFile)
+  end
+  describe 'ファイルが存在しない場合' do
+    before do
+      @share_file.should_receive(:file_size).and_return(-1)
+    end
+    it '不明を返すこと' do
+      @share_file.file_size_with_unit.should == '不明'
+    end
+  end
+  describe 'ファイルが存在する場合' do
+    describe 'ファイルサイズが1メガバイト以上の場合' do
+      before do
+        @size = 1.megabyte
+        @share_file.should_receive(:file_size).and_return(@size)
+      end
+      it 'メガバイト表示が返ること' do
+        @share_file.file_size_with_unit.should == "#{@size/1.megabyte}Mbyte"
+      end
+    end
+    describe 'ファイルサイズが1メガバイト未満の場合' do
+      describe 'ファイルサイズが1キロバイト以上の場合' do
+        it 'キロバイト表示が返ること' do
+          size = 1.kilobyte
+          @share_file.should_receive(:file_size).and_return(size)
+          @share_file.file_size_with_unit.should == "#{size/1.kilobyte}Kbyte"
+        end
+      end
+      describe 'ファイルサイズが1キロバイト未満の場合' do
+        before do
+          @size = 1.kilobyte - 1
+        end
+        it 'バイト表示が返ること' do
+          @share_file.should_receive(:file_size).and_return(@size)
+          @share_file.file_size_with_unit.should == "#{@size}byte"
+        end
+      end
+    end
+  end
+end
+
 # privateメソッドのspec
 private
 def create_share_file options = {}
