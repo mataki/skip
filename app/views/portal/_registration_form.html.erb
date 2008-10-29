@@ -30,7 +30,7 @@ table.normal {
   <% if user_name_mode?(:code) -%>
   <tr>
     <th width="100px"><label for="user_code"><%= h Admin::Setting.login_account -%></label></th>
-    <td><%=h session[:user_code] %></td>
+    <td><%=h @user.code %></td>
   </tr>
   <% end -%>
   <tr>
