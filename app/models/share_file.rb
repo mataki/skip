@@ -17,6 +17,7 @@ require 'csv'
 class ShareFile < ActiveRecord::Base
   include Publication
   include ValidationsFile
+  include Types::ContentType
 
   attr_accessor :file
 
@@ -33,9 +34,6 @@ class ShareFile < ActiveRecord::Base
   validates_presence_of :date, :message =>'は必須です'
   validates_presence_of :user_id, :message =>'は必須です'
   validates_uniqueness_of :file_name, :scope => :owner_symbol, :message =>'名が同一のファイルが既に登録されています'
-
-  UNCHECKED_EXTENTIONS = ['gif', 'jpeg', 'jpg', 'png', 'bmp'].freeze
-  UNCHECKED_CONTENT_TYPES = ['image/gif', 'image/jpeg', 'image/jpg', 'image/png', 'image/bmp'].freeze
 
   class << self
     HUMANIZED_ATTRIBUTE_KEY_NAMES = {
@@ -57,6 +55,7 @@ class ShareFile < ActiveRecord::Base
     return unless valid_presence_of_file file
 
     valid_extension_of_file file
+    valid_content_type_of_file file
     valid_size_of_file file
     valid_max_size_per_owner_of_file file, owner_symbol
     valid_max_size_of_system_of_file file
@@ -324,10 +323,10 @@ private
   end
 
   def uncheck_extention?
-    UNCHECKED_EXTENTIONS.any?{ |extension| extension == self.file_name.split('.').last }
+    CONTENT_TYPE_IMAGES.keys.any?{ |extension| extension.to_s == self.file_name.split('.').last }
   end
 
   def uncheck_content_type?
-    UNCHECKED_CONTENT_TYPES.any?{ |content_type| content_type == self.content_type }
+    CONTENT_TYPE_IMAGES.values.any?{ |content_type| content_type == self.content_type }
   end
 end

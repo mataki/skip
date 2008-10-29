@@ -47,8 +47,8 @@ describe ValidationsFile do
     describe "ファイルの形式が不正な場合" do
       it "エラーが追加されること" do
         @vf.errors.should_receive(:add_to_base).with("この形式のファイルは、アップロードできません。")
-        SkipUtil.should_receive(:verify_extension?).and_return(false)
-        @vf.valid_extension_of_file(@muf)
+        @vf.should_receive(:verify_extension?).and_return(false)
+        @vf.send!(:valid_extension_of_file, @muf)
       end
     end
   end
@@ -89,6 +89,17 @@ describe ValidationsFile do
         ValidationsFile::FileSizeCounter.should_receive(:per_system).and_return(INITIAL_SETTINGS['max_share_file_size_of_system'].to_i - 100)
         @vf.errors.should_receive(:add_to_base).with('システム全体における共有ファイル保存領域の利用容量が最大値を越えてしまうためアップロードできません。')
         @vf.valid_max_size_of_system_of_file(@muf)
+      end
+    end
+  end
+
+  describe '#valid_content_type_of_file' do
+    describe 'ファイルの拡張子に対するContentTypeが不正な場合' do
+      before do
+        @muf.stub!(:original_filename).and_return('image.jpg')
+        @muf.stub!(:content_type).and_return('image/gif')
+        @vf.errors.should_receive(:add_to_base).with('この形式のファイルは、アップロードできません。')
+        @vf.valid_content_type_of_file(@muf)
       end
     end
   end

@@ -101,9 +101,4 @@ class SkipUtil
     end
     return view_str
   end
-
-  def self.verify_extension? file_name, content_type
-    !['html','htm','js'].any?{|extension| extension == file_name.split('.').last } &&
-      !['text/html','application/x-javascript'].any?{|content| content == content_type }
-  end
 end

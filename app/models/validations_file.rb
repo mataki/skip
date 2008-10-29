@@ -14,6 +14,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 module ValidationsFile
+  include Types::ContentType
   def valid_presence_of_file(file)
     unless file.is_a?(ActionController::UploadedFile)
       errors.add_to_base "ファイルが指定されていません。"
@@ -23,8 +24,23 @@ module ValidationsFile
   end
 
   def valid_extension_of_file(file)
-    unless SkipUtil.verify_extension? file.original_filename, file.content_type
+    unless verify_extension? file.original_filename, file.content_type
       errors.add_to_base "この形式のファイルは、アップロードできません。"
+    end
+  end
+
+  def verify_extension? file_name, content_type
+    !['html','htm','js'].any?{|extension| extension == file_name.split('.').last } &&
+      !['text/html','application/x-javascript'].any?{|content| content == content_type }
+  end
+
+  def valid_content_type_of_file(file)
+    extension = file.original_filename.split('.').last
+    if(content_type = CONTENT_TYPE_IMAGES[extension.to_sym])
+      unless file.content_type == content_type
+        errors.add_to_base "この形式のファイルは、アップロードできません。"
+        return false;
+      end
     end
   end
 

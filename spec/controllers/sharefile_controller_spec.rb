@@ -121,7 +121,7 @@ describe ShareFileController, "POST #create" do
   end
   describe "ファイルが一つの時" do
     before do
-      @file1 = mock_uploaed_file({ :original_filename => "file1.png", :content_type => "text", :size => 1, :read => "" })
+      @file1 = mock_uploaed_file({ :original_filename => "file1.png", :content_type => "image/png", :size => 1, :read => "" })
       post :create, { :symbol => "", :publication_type => "public", :owner_name => 'ほげ ほげ',
         :publication_symbols_value => "",
         :share_file => { "date(1i)" => "2008", "date(2i)" => "9", "date(3i)" => "19",
@@ -134,9 +134,9 @@ describe ShareFileController, "POST #create" do
   end
   describe "複数ファイルが送信された場合" do
     before do
-      @file1 = mock_uploaed_file({ :original_filename => "file1.png", :content_type => "text",
+      @file1 = mock_uploaed_file({ :original_filename => "file1.png", :content_type => "image/png",
                       :size => 1000, :read => "" })
-      @file2 = mock_uploaed_file({ :original_filename => "file2.png", :content_type => "text",
+      @file2 = mock_uploaed_file({ :original_filename => "file2.png", :content_type => "image/png",
                       :size => 1000, :read => "" })
 
       post :create, { :symbol => "", :publication_type => "public", :owner_name => 'ほげ ほげ', :publication_symbols_value => "",
