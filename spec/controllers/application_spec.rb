@@ -75,6 +75,39 @@ describe ApplicationController, '#current_user' do
   end
 end
 
+describe ApplicationController, "#current_user=" do
+  before do
+    @session = mock('session')
+    @session.stub!(:[]=)
+    controller.stub!(:session).and_return(@session)
+  end
+  describe "userがわたってきた場合" do
+    before do
+      @user = stub_model(User, :code => "code")
+      @user.stub!(:update_auth_session_token!).and_return("auth_token")
+    end
+    it "session[:auth_session_token]にauth_tokenが登録されていること" do
+      @session.should_receive(:[]=).with(:auth_session_token, "auth_token")
+      controller.send(:current_user=, @user)
+    end
+    it "session[:user_code]にuser.codeが設定されること" do
+      @session.should_receive(:[]=).with(:user_code, @user.code)
+      controller.send(:current_user=, @user)
+    end
+    it "userのupdate_auth_session_token!が呼ばれること" do
+      @user.should_receive(:update_auth_session_token!).and_return("auth_token")
+      controller.send(:current_user=, @user)
+    end
+  end
+  describe "nilがわたってきた場合" do
+    it "sessionにnilが設定されること" do
+      @session.should_receive(:[]=).with(:auth_session_token, nil)
+      @session.should_receive(:[]=).with(:user_code, nil)
+      controller.send(:current_user=, nil)
+    end
+  end
+end
+
 describe ApplicationController, '#prepare_session' do
   before do
     controller.stub!(:controller_name).and_return('mypage')

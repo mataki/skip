@@ -107,8 +107,7 @@ class PortalController < ApplicationController
       if @user.valid?
         reset_session
         session[:entrance_next_action] = :registration
-        session[:user_code] = @user.code
-
+        self.current_user = @user
         redirect_to :action => :index
       else
         @error_msgs = []

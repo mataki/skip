@@ -183,12 +183,14 @@ describe PortalController, "#registration" do
     describe "保存が成功する場合" do
       before do
         @user.stub!(:valid?).and_return(true)
+        controller.should_receive(:current_user=).with(@user)
 
         post :registration, :user => @params
       end
       it { response.should redirect_to({ :action => :index }) }
-      it { session[:user_code].should == @user.code }
-      it { session[:identity_url].should be_nil }
+      it "session[:identity_url]が削除されること" do
+        session[:identity_url].should be_nil
+      end
     end
     describe "保存が失敗する場合" do
       before do

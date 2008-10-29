@@ -28,18 +28,16 @@ describe PlatformController, "パスワードでログインする場合" do
   describe "認証に成功する場合" do
     before do
       User.should_receive(:auth).with(@code, @password).and_return(@user)
-      @auth_session_token = "auth_session_token"
-      @user.should_receive(:update_auth_session_token!).and_return(@auth_session_token)
+      controller.stub!(:current_user=).with(@user)
       controller.stub!(:handle_remember_cookie!)
     end
     it 'root_urlにリダイレクトされること' do
       login
       response.should redirect_to(root_url)
     end
-    it 'sessionのuser_code:ログインIDとauth_session_tokenが設定されていること' do
+    it 'current_user=がよばれること' do
+      controller.should_receive(:current_user=).with(@user)
       login
-      session[:user_code].should == @code
-      session[:auth_session_token].should == @auth_session_token
     end
     describe '「次回から自動的にログイン」にチェックがついている場合' do
       it 'handle_remember_cookie!(true)が呼ばれること' do
@@ -89,6 +87,7 @@ describe PlatformController, "ログイン時にOpenIdのアカウントが渡�
       result = OpenIdAuthentication::Result[:successful]
       controller.should_receive(:authenticate_with_open_id).and_yield(result, @identity_url, @registration)
       @user = stub_model(User, :code => "hogehoge")
+      @auth_token = 'auth_token'
       @openid_identifier = stub_model(OpenidIdentifier, :url => @identity_url)
       @openid_identifier.stub!(:user_with_unused).and_return(@user)
     end
@@ -97,29 +96,21 @@ describe PlatformController, "ログイン時にOpenIdのアカウントが渡�
       before do
         OpenidIdentifier.should_receive(:find_by_url).and_return(@openid_identifier)
         controller.should_receive(:reset_session)
+        controller.should_receive(:current_user=).with(@user)
       end
 
       describe '直接アクセスした場合' do
-        before do
-          post :login, :openid_url => @identity_url
-        end
-
-        it "Sessionにユーザ情報が詰め込まれていること" do
-          session[:user_code].should == @user.code
-        end
-
         it "root_urlに遷移すること" do
+          post :login, :openid_url => @identity_url
           response.should redirect_to(root_url)
         end
       end
-
       describe '戻り先が指定されている場合' do
         before do
           @return_to = 'http://www.openskip.org/return_to'
           session[:return_to] = @return_to
           post :login, :openid_url => @identity_url
         end
-
         it { response.should redirect_to(@return_to) }
       end
     end
@@ -130,8 +121,7 @@ describe PlatformController, "ログイン時にOpenIdのアカウントが渡�
       end
       it "create_user_fromが呼ばれること" do
         controller.should_receive(:create_user_from).with(@identity_url, @registration)
-
-      post :login, :openid_url => @identity_url
+        post :login, :openid_url => @identity_url
       end
     end
   end
@@ -144,7 +134,7 @@ describe PlatformController, "ログイン時にOpenIdのアカウントが渡�
     end
 
     it 'ログインページに遷移すること' do
-      response.should redirect_to(:controller => :platform, :action => :login)
+      response.should redirect_to(:action => :index)
     end
 
     it 'flash が設定されていること' do
@@ -448,20 +438,14 @@ describe PlatformController, "#create_user_from" do
           @code = 'openskip'
           @user.stub!(:code).and_return(@code)
           @user.should_receive(:valid?).and_return(true)
-          controller.should_receive(:reset_session)
 
-          @session = {}
-          controller.stub!(:session).and_return(@session)
+          controller.should_receive(:reset_session)
+          controller.should_receive(:current_user=).with(@user)
 
           controller.stub!(:redirect_to).with({ :controller => :portal })
         end
         it "登録画面へリダイレクトすること" do
           controller.should_receive(:redirect_to).with({ :controller => :portal })
-
-          call_create_user_from
-        end
-        it "session[:user_code]にcodeが入っていること" do
-          @session.should_receive(:[]=).with(:user_code, @code)
 
           call_create_user_from
         end

@@ -120,6 +120,12 @@ class User < ActiveRecord::Base
                               :conditions => ["user_uids.uid = ? and user_uids.uid_type = ?", code, 'MASTER'])
   end
 
+  def self.find_by_auth_session_token(token)
+    find_without_retired_skip(:first,
+                              :include => :user_uids,
+                              :conditions => { :auth_session_token => token })
+  end
+
   # 登録済みユーザのユーザID(ログインID,ユーザ名)をもとにユーザを検索する
   def self.find_by_uid(code)
     find(:first, :conditions => ['user_uids.uid = ?', code], :include => :user_uids)

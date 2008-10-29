@@ -104,6 +104,12 @@ protected
     @current_user ||= (login_from_session || login_from_cookie)
   end
 
+  def current_user=(user)
+    session[:auth_session_token] = user ? user.update_auth_session_token! : nil
+    session[:user_code] = user ? user.code : nil
+    @current_user = user || nil
+  end
+
   #記事へのパーミッションをチェック
   def check_entry_permission
     find_params = BoardEntry.make_conditions(login_user_symbols, {:id=>params[:id]})

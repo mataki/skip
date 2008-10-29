@@ -38,9 +38,7 @@ class PlatformController < ApplicationController
       login_with_open_id
     else
       logout_killing_session!
-      if params[:login] and @current_user = User.auth(params[:login][:key], params[:login][:password])
-        session[:user_code] = @current_user.code
-        session[:auth_session_token] = @current_user.update_auth_session_token!
+      if params[:login] and self.current_user = User.auth(params[:login][:key], params[:login][:password])
         handle_remember_cookie!(params[:login_save] == 'true')
 
         redirect_to_back_or_root
@@ -132,22 +130,25 @@ class PlatformController < ApplicationController
 
   def login_with_open_id
     session[:return_to] = params[:return_to] if !params[:return_to].blank? and params[:open_id_complete].blank?
-    authenticate_with_open_id do |result, identity_url, registration|
-      if result.successful?
-        unless identifier = OpenidIdentifier.find_by_url(identity_url)
-          create_user_from(identity_url, registration)
+    begin
+      authenticate_with_open_id do |result, identity_url, registration|
+        if result.successful?
+          unless identifier = OpenidIdentifier.find_by_url(identity_url)
+            create_user_from(identity_url, registration)
+          else
+            return_to = session[:return_to]
+            reset_session
+
+            self.current_user = identifier.user_with_unused
+            redirect_to_back_or_root(return_to)
+          end
         else
-          return_to = session[:return_to]
-          reset_session
-
-          user = identifier.user_with_unused
-          session[:user_code] = user.code
-
-          redirect_to_back_or_root(return_to)
+          set_error_message_form_result_and_redirect(result)
         end
-      else
-        set_error_message_form_result_and_redirect(result)
       end
+    rescue OpenIdAuthentication::InvalidOpenId
+      flash[:error] = _("OpenIDの形式が正しくありません。")
+      render :action => :index
     end
   end
 
@@ -156,7 +157,7 @@ class PlatformController < ApplicationController
       user = User.create_with_identity_url(identity_url, create_user_params(registration))
       if user.valid?
         reset_session
-        session[:user_code] = user.code
+        self.current_user = user
 
         redirect_to :controller => :portal
       else
@@ -170,7 +171,6 @@ class PlatformController < ApplicationController
       set_error_message_not_create_new_user_and_redirect
     end
   end
-
 
   def redirect_to_back_or_root(return_to = params[:return_to])
     return_to = return_to ? URI.encode(return_to) : nil
@@ -192,7 +192,7 @@ class PlatformController < ApplicationController
       :failed       => [_("認証に失敗しました。"), "" ],
       :setup_needed => [_("内部エラーが発生しました。"), _("管理者に連絡してください。") ]
     }
-    set_error_message_and_redirect error_messages[result.instance_variable_get(:@code)], {:controller => :platform, :action => :login}
+    set_error_message_and_redirect error_messages[result.instance_variable_get(:@code)], {:action => :index}
   end
 
   def set_error_message_from_user_and_redirect(user)
