@@ -129,12 +129,17 @@ module ApplicationHelper
 
   # ファイルダウンロードへのリンク
   def file_link_to share_file, html_options = {}
-    symbol_type, symbol_id = SkipUtil.split_symbol share_file.owner_symbol
-    url = share_file_url :controller_name => @@CONTROLLER_HASH[symbol_type],
-                         :symbol_id => symbol_id,
-                         :file_name => share_file.file_name,
-                         :authenticity_token => form_authenticity_token
+    url = file_link_url(share_file)
     link_to h(share_file.file_name), url, html_options
+  end
+
+  def file_link_url share_file
+    symbol_type, symbol_id = SkipUtil.split_symbol share_file.owner_symbol
+    url_params = {:controller_name => @@CONTROLLER_HASH[symbol_type],
+                  :symbol_id => symbol_id,
+                  :file_name => share_file.file_name}
+    url = share_file_url(url_params)
+    url
   end
 
   def image_link_tag title, image_name, options={}

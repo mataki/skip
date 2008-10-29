@@ -263,3 +263,7 @@ div.errorExplanation li {
 	-khtml-opacity: 0.5;
 	opacity: 0.5;
 }
+/* 不可視にする時に使う */
+.invisible {
+  display: none;
+}

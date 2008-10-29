@@ -89,6 +89,18 @@ $j(function(){
     });
 
     /*
+     * 共有ファイルのダウンロードリンク押下時はauthenticity_tokenを付加した
+     * formのsubmit処理にする
+     */
+    setupShareFileDownloadLink = function(){
+        $j('.share_file_download_link')
+        .click(function() {
+            $j('#share_file_download_form_' + this.id.split('_')[4]).submit();
+            return false;
+        });
+    };
+
+    /*
      * ブログなどの編集画面でタグの候補を表示・非表示
      */
     showCategoryBox = function() {

@@ -29,7 +29,10 @@ div.share_file_space div.share_file_line {
 
   <div style="margin:3px 0 <%= visible_menu ? 15 : 3 -%>px 3px;">
     <div style="font-size: 12px;">
-      <%= file_link_to(share_file, :id => "share_file_download_link_#{share_file.id}", :class => "share_file_download_link", :tabindex => 0) %>
+      <%= file_link_to(share_file, :id => "share_file_download_link_#{share_file.id}", :class => "share_file_download_link") %>
+      <% form_tag file_link_url(share_file), :id => "share_file_download_form_#{share_file.id}", :class => 'invisible' do -%>
+        <%= hidden_field_tag 'authenticity_token', form_authenticity_token %>
+      <% end -%>
       <span style="margin-left:10px">... <%= h share_file.description %></span>
     </div>
     <div style="position: absolute; bottom: 0; right: 1px;">
