@@ -54,7 +54,7 @@ describe BatchMakeCache, "#make_caches_bookmark" do
       @bmc.make_caches_bookmark("bookmark", "cache/path", 1.hour.ago)
     end
     it "コンテンツの内容に作者が存在していること" do
-      @bmc.should_receive(:create_contents).with(:title => "title", :body_lines => ["title", "url", "2008年10月28日", "creater", "tags,category", ""])
+      @bmc.should_receive(:create_contents).with(:body_lines => ["title", "url", 10.minutes.ago.strftime("%Y年%m月%d日"), "creater", "tags,category", ""], :title => "title")
       @bmc.make_caches_bookmark("bookmark", "cache/path", 1.hour.ago)
     end
     it "公開範囲が公開(sid:allusers)で設定されていること" do
@@ -80,7 +80,7 @@ describe BatchMakeCache, "#make_caches_bookmark" do
       @bmc.make_caches_bookmark("bookmark", "cache/path", 1.hour.ago)
     end
     it "コンテンツの内容に公開している作者のみが存在していること" do
-      @bmc.should_receive(:create_contents).with(:title => "title", :body_lines => ["title", "url", "2008年10月28日", "creater1", "tags,category", ""])
+      @bmc.should_receive(:create_contents).with(:title => "title", :body_lines => ["title", "url", 10.minutes.ago.strftime("%Y年%m月%d日"), "creater1", "tags,category", ""])
       @bmc.make_caches_bookmark("bookmark", "cache/path", 1.hour.ago)
     end
     it "公開範囲が公開(sid:allusers)で設定されていること" do
