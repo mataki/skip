@@ -80,8 +80,8 @@ class BatchMakeRanking < BatchBase
   end
 
   def create_post_ranking exec_date
-    BoardEntry.find(:all, :conditions => make_conditions("entry_type = 'DIARY'", exec_date),
-                    :select => "user_id, MAX(user_entry_no) as user_entry_no",
+    BoardEntry.find(:all, :conditions => [" entry_type = 'DIARY' AND DATE_FORMAT(created_on,'%Y%m%d') <= ? ", exec_date.strftime('%Y%m%d')],
+                    :select => "user_id, COUNT(*) as user_entry_no",
                     :group => "user_id").each do |record|
       user = User.find(record.user_id)
       create_ranking_by_user user, record.user_entry_no, "user_entry", exec_date
@@ -89,7 +89,7 @@ class BatchMakeRanking < BatchBase
   end
 
   def create_visited_ranking exec_date
-    UserAccess.find(:all, :conditions => make_conditions("access_count > 0", exec_date)).each do |access|
+    UserAccess.find(:all, :conditions => ["access_count > 0 AND DATE_FORMAT(updated_on,'%Y%m%d') <= ? ", exec_date.strftime('%Y%m%d')]).each do |access|
       user = access.user
       create_ranking_by_user user, access.access_count, "user_access", exec_date
     end
@@ -117,7 +117,7 @@ class BatchMakeRanking < BatchBase
   end
 
   def make_conditions condition, exec_date
-    [condition + " AND DATE_FORMAT(updated_on,'%Y%m%d') = ? ", exec_date.strftime('%Y%m%d')]
+    [condition + " AND DATE_FORMAT(created_on,'%Y%m%d') = ? ", exec_date.strftime('%Y%m%d')]
   end
 
   def published? entry
