@@ -49,7 +49,7 @@ div.input_line textarea {
 
 <% if @img_urls and not @img_urls.empty? -%>
 <div style="border: solid 1px skyblue; margin: 5px 0px; padding: 2px; clear:left;">
-  <p style="background-color: #CCFFFF;">添付画像(クリックで画像を拡大出来ます)</p>
+  <p style="background-color: #CCFFFF;">添付画像(クリックで画像を元の大きさで表示)</p>
   <div id="images" style="float:left;">
     <%= render :partial=>'board_entries/view_images', :locals=>{:img_urls=>@img_urls, :board_entry_id=>@board_entry.id, :deletable => true} %>
   </div>

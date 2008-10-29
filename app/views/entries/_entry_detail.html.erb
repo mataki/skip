@@ -260,7 +260,7 @@ form.comment_input_form textarea{
         <% img_urls = entry.images_filename_to_url_mapping_hash -%>
         <% unless img_urls.empty? -%>
         <div class="images" style="border: solid 1px skyblue; margin: 5px 0px; padding: 2px; clear:left;">
-          <p style="background-color: #CCFFFF;">添付画像(クリックで画像を拡大出来ます)</p>
+          <p style="background-color: #CCFFFF;">添付画像(クリックで画像を元の大きさで表示)</p>
           <%= render :partial => 'board_entries/view_images', :locals => { :img_urls => img_urls, :board_entry_id => entry.id, :deletable => false } %>
         </div>
         <% end -%>
