@@ -233,6 +233,41 @@ describe User, '#reset_password' do
   end
 end
 
+describe User, '#signup' do
+  before do
+    @user = create_user
+    @now = Time.local(2008, 11, 1)
+    Time.stub!(:now).and_return(@now)
+  end
+  it 'activation_tokenに値が入ること' do
+    lambda do
+      @user.signup
+    end.should change(@user, :activation_token)
+  end
+  it 'activation_token_expires_atが24時間後となること' do
+    lambda do
+      @user.signup
+    end.should change(@user, :activation_token_expires_at).from(nil).to(@now.since(24.hour))
+  end
+end
+
+describe User, '#activate!' do
+  it 'activation_tokenの値が更新されること' do
+    activation_token = '6df711a1a42d110261cfe759838213143ca3c2ad'
+    u = create_user(:user_options => {:activation_token=> activation_token})
+    lambda do
+      u.activate!
+    end.should change(u, :activation_token).from(activation_token).to(nil)
+  end
+  it 'activation_token_expires_atの値が更新されること' do
+    time = Time.now
+    u = create_user(:user_options => {:activation_token_expires_at => time})
+    lambda do
+      u.activate!
+    end.should change(u, :activation_token_expires_at).from(time).to(nil)
+  end
+end
+
 def new_user options = {}
   User.new({ :name => 'ほげ ほげ', :password => 'password', :password_confirmation => 'password'}.merge(options))
 end

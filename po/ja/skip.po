@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-10-28 11:25+0900\n"
+"POT-Creation-Date: 2008-10-30 20:47+0900\n"
 "PO-Revision-Date: 2008-09-30 15:00+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -935,11 +935,12 @@ msgstr "ログインID"
 msgid "Admin::User|Name"
 msgstr "名前"
 
-#: app/models/admin/user.rb:26 app/views/admin/users/import.html.erb:22
+#: app/models/admin/user.rb:26 app/views/portal/_registration_form.html.erb:70
+#: app/views/admin/users/import.html.erb:22
 msgid "Admin::User|Password"
 msgstr "パスワード"
 
-#: app/models/admin/user.rb:25
+#: app/models/admin/user.rb:25 app/views/portal/_registration_form.html.erb:74
 msgid "Admin::User|Password confirmation"
 msgstr "確認パスワード"
 
@@ -1668,7 +1669,11 @@ msgstr "ユーザのCSVアップロード"
 msgid "OpenID URLを設定しました。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:190
+#: app/controllers/platform_controller.rb:185
+msgid "OpenIDの形式が正しくありません。"
+msgstr ""
+
+#: app/controllers/platform_controller.rb:225
 msgid "OpenIDサーバーが見つかりませんでした。"
 msgstr ""
 
@@ -1877,6 +1882,10 @@ msgstr ""
 #: app/views/admin/group_categories/edit.html.erb:16
 msgid "Show"
 msgstr "詳細"
+
+#: app/views/platform/signup.html.erb:2 app/views/platform/index.html.erb:137
+msgid "Signup"
+msgstr "ユーザ登録"
 
 #: app/models/site_count.rb:-
 msgid "SiteCount|Active users"
@@ -2088,7 +2097,7 @@ msgid "UserProfile|Email"
 msgstr "メールアドレス"
 
 #: app/models/user_profile.rb:- app/views/user/show.html.erb:105
-#: app/views/portal/_registration_form.html.erb:76
+#: app/views/portal/_registration_form.html.erb:92
 msgid "UserProfile|Extension"
 msgstr "内線番号"
 
@@ -2113,13 +2122,13 @@ msgid "UserProfile|Join year"
 msgstr "入社年度"
 
 #: app/models/user_profile.rb:- app/views/user/show.html.erb:100
-#: app/views/portal/_registration_form.html.erb:68
+#: app/views/portal/_registration_form.html.erb:84
 #: app/views/users/_user.html.erb:32
 msgid "UserProfile|Section"
 msgstr "部署"
 
 #: app/models/user_profile.rb:- app/views/user/show.html.erb:110
-#: app/views/portal/_registration_form.html.erb:80
+#: app/views/portal/_registration_form.html.erb:96
 msgid "UserProfile|Self introduction"
 msgstr "自己紹介"
 
@@ -2162,6 +2171,14 @@ msgstr "タイプ"
 #: app/models/user_uid.rb:-
 msgid "UserUid|User"
 msgstr "ユーザ"
+
+#: app/models/user.rb:-
+msgid "User|Activation token"
+msgstr ""
+
+#: app/models/user.rb:-
+msgid "User|Activation token expires at"
+msgstr ""
 
 #: app/models/user.rb:-
 msgid "User|Admin"
@@ -2240,7 +2257,7 @@ msgstr ""
 msgid "User|名前"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:61
+#: app/controllers/platform_controller.rb:59
 msgid "You are now logged out."
 msgstr "ログアウトしました。"
 
@@ -2254,11 +2271,11 @@ msgstr ""
 "管理者は自分自身のステータスと管理権限は変更できません。他の管理者アカウント"
 "から変更してください。"
 
-#: app/controllers/platform_controller.rb:62
+#: app/controllers/platform_controller.rb:60
 msgid "You had been retired."
 msgstr "あなたは退職済みです。"
 
-#: app/controllers/portal_controller.rb:103
+#: app/controllers/portal_controller.rb:109
 msgid "You must login with openid."
 msgstr ""
 
@@ -2457,7 +2474,7 @@ msgstr ""
 
 #: app/helpers/initial_settings_helper.rb:43
 #: app/controllers/admin/users_controller.rb:186
-#: app/controllers/admin/users_controller.rb:194 app/models/share_file.rb:249
+#: app/controllers/admin/users_controller.rb:194 app/models/share_file.rb:248
 #: app/models/user_search_condition.rb:39 app/views/user/show.html.erb:84
 #: app/views/portal/_registration_form.html.erb:46
 #: app/views/admin/users/create_uid.html.erb:12
@@ -2483,11 +2500,11 @@ msgstr "ユーザID"
 msgid "お問い合わせ・ヘルプ"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:191
+#: app/controllers/platform_controller.rb:226
 msgid "このサーバへの認証を確認してください"
 msgstr ""
 
-#: app/controllers/application.rb:129
+#: app/controllers/application.rb:135
 msgid "この操作は、許可されていません。"
 msgstr ""
 
@@ -2507,7 +2524,7 @@ msgstr ""
 msgid "ご指定のユーザは存在しません。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:203
+#: app/controllers/platform_controller.rb:238
 msgid "そのOpenIDは、登録されていません。"
 msgstr ""
 
@@ -2535,7 +2552,7 @@ msgstr ""
 msgid "カテゴリが選択されていないか、不正な値です。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:191
+#: app/controllers/platform_controller.rb:226
 msgid "キャンセルされました。"
 msgstr ""
 
@@ -2599,7 +2616,7 @@ msgstr ""
 msgid "フッター"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:199
+#: app/controllers/platform_controller.rb:234
 msgid "ユーザの登録に失敗しました。"
 msgstr ""
 
@@ -2617,11 +2634,11 @@ msgstr ""
 msgid "ログインし直して下さい。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:48
+#: app/controllers/platform_controller.rb:46
 msgid "ログインに失敗しました。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:203
+#: app/controllers/platform_controller.rb:238
 msgid "ログイン後管理画面でOpenID URLを登録後ログインしてください。"
 msgstr ""
 
@@ -2633,7 +2650,7 @@ msgstr ""
 msgid "ロゴ画像"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:48
+#: app/controllers/platform_controller.rb:46
 msgid "下部に記載されているお問い合わせ先にご連絡下さい。"
 msgstr ""
 
@@ -2667,7 +2684,7 @@ msgstr ""
 msgid "共有ファイル関連"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:193
+#: app/controllers/platform_controller.rb:228
 msgid "内部エラーが発生しました。"
 msgstr ""
 
@@ -2769,7 +2786,7 @@ msgstr ""
 msgid "正しいCSVファイルの例"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:190
+#: app/controllers/platform_controller.rb:225
 msgid "正しいOpenID URLを入力してください。"
 msgstr ""
 
@@ -2810,11 +2827,11 @@ msgstr ""
 msgid "登録可能です"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:193
+#: app/controllers/platform_controller.rb:228
 msgid "管理者に連絡してください。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:199
+#: app/controllers/platform_controller.rb:234
 msgid "管理者に連絡してください。<br/>%{msg}"
 msgstr ""
 
@@ -2827,6 +2844,6 @@ msgstr ""
 msgid "該当するユーザは存在しませんでした。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:192
+#: app/controllers/platform_controller.rb:227
 msgid "認証に失敗しました。"
 msgstr ""

@@ -72,6 +72,15 @@ class UserMailer < ActionMailer::Base
     @body       = {:login_id => login_id, :footer => @@footer}
   end
 
+  def sent_signup(recipient, activate_url)
+    @recipients = recipient
+    @subject    = UserMailer.base64("[#{Admin::Setting.abbr_app_title}] #{_('signup')}の確認メールです")
+    @from       = @@from
+    @send_on    = Time.now
+    @headers    = {}
+    @body       = {:activate_url => activate_url, :footer => @@footer}
+  end
+
 private
   def self.base64(text, charset="iso-2022-jp", convert=true)
     text = NKF.nkf('-j -m0 --cp932', text) if convert and charset == "iso-2022-jp"

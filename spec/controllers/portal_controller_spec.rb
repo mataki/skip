@@ -73,6 +73,7 @@ describe PortalController, 'POST /apply' do
     @user.stub!(:save!)
     @user.stub!(:user_profile).and_return(@profile)
     @user.stub!(:create_initial_entry)
+    @user.stub!(:activate!)
   end
   describe "ユーザ名利用設定がonの場合" do
     before do
@@ -88,7 +89,7 @@ describe PortalController, 'POST /apply' do
         @profile.should_receive(:save!)
 
         @user.should_receive(:status=).with('ACTIVE')
-        @user.should_receive(:attributes=).with(params[:user])
+        @user.should_receive(:attributes=)
         @user.should_receive(:save!)
         @user.stub!(:user_uids).and_return(@user_uids)
         controller.stub!(:current_user).and_return(@user)
@@ -146,9 +147,13 @@ describe PortalController, 'POST /apply' do
     end
   end
   def post_apply
-    post :apply, {"profile"=>{"email"=>"example@skip.org", "extension"=>"000000", "self_introduction"=>"00000", "section"=>"開発", "birth_month"=>"1", "join_year"=>"2008", "blood_type"=>"1", "address_1"=>"1", "alma_mater"=>"非公開", "birth_day"=>"1", "gender_type"=>"1", "address_2"=>"非公開", "introduction"=>"", "hometown"=>"1"},
-      "user_uid"=>{"uid"=>"hogehoge"},
-      "new_address_2"=>"", "write_profile"=>"true", "new_section"=>"営業", "new_alma_mater"=>"" }
+    post :apply, {"user"=>{:password => "password", :password_confirmation => "password_confirmation"},
+                  "profile"=>{"email"=>"example@skip.org", "extension"=>"000000", "self_introduction"=>"00000",
+                    "section"=>"開発", "birth_month"=>"1", "join_year"=>"2008", "blood_type"=>"1", "address_1"=>"1",
+                    "alma_mater"=>"非公開", "birth_day"=>"1", "gender_type"=>"1", "address_2"=>"非公開", "introduction"=>"",
+                    "hometown"=>"1"},
+                  "user_uid"=>{"uid"=>"hogehoge"},
+                  "new_address_2"=>"", "write_profile"=>"true", "new_section"=>"営業", "new_alma_mater"=>"" }
   end
 end
 

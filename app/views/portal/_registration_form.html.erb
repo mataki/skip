@@ -59,6 +59,17 @@ table.normal {
   <% end -%>
   </tr>
   <% end -%>
+<% unless @user.activation_token.nil? -%>
+  <%= hidden_field_tag :code, @user.activation_token %>
+  <tr>
+    <th width="100px"><label for="user_password"><%= _('Admin::User|Password') %></label></th>
+    <td><%= password_field 'user', 'password', {:tabindex => (tabindex +=1)} %></td>
+  </tr>
+  <tr>
+    <th width="100px"><label for="user_password_confirmation"><%= _('Admin::User|Password confirmation') %></label></th>
+    <td><%= password_field 'user', 'password_confirmation', {:tabindex => (tabindex +=1)} %></td>
+  </tr>
+<% end -%>
 </table>
 
 <div class="subtitle">基本情報</div>

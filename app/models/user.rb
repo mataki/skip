@@ -83,7 +83,9 @@ class User < ActiveRecord::Base
   end
 
   def before_save
-    self.crypted_password = encrypt(password) if password_required?
+    unless password.blank?
+      self.crypted_password = encrypt(password) if password_required?
+    end
   end
 
   def self.auth(code, password)
@@ -124,6 +126,12 @@ class User < ActiveRecord::Base
     find_without_retired_skip(:first,
                               :include => :user_uids,
                               :conditions => { :auth_session_token => token })
+  end
+
+  def self.find_by_activation_token(token)
+    find_without_retired_skip(:first,
+                              :include => :user_uids,
+                              :conditions => { :activation_token => token })
   end
 
   # 登録済みユーザのユーザID(ログインID,ユーザ名)をもとにユーザを検索する
@@ -285,6 +293,16 @@ class User < ActiveRecord::Base
 
   def reset_password
     update_attributes(:password_reset_token => nil, :password_reset_token_expires_at => nil)
+  end
+
+  def signup
+    self.crypted_password = nil
+    self.activation_token = self.class.make_token
+    self.activation_token_expires_at = Time.now.since(24.hour)
+  end
+
+  def activate!
+    update_attributes!(:activation_token => nil, :activation_token_expires_at => nil)
   end
 
 protected

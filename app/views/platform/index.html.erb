@@ -37,7 +37,7 @@ a:hover {
 .desc {
   position: absolute;
   right: 10px;
-  top: 250px;
+  top: 280px;
   width: 400px;
   border: solid 1px silver;
   background-color: white;
@@ -46,18 +46,14 @@ a:hover {
 * html .desc {
   top: 245px;
 }
-#login {
-  position: absolute;
-  right: 10px;
-  top: 40px;
-  width: 175px;
-  _height: 180px;
+.login-box {
+  width: 300px;
   padding: 2px;
   border: 1px solid silver;
   background-color: #f0f0ff;
   font-size: 12px;
 }
-#login-title {
+.login-box-title {
   line-height: 130%;
   padding: 2px;
   background-color: #ddddff;
@@ -66,6 +62,18 @@ a:hover {
   font-size: 14px;
   font-weight: bold;
   color: #77778C;
+  text-align: center;
+}
+#login {
+  position: absolute;
+  right: 10px;
+  top: 40px;
+  _height: 180px;
+}
+#signup {
+  position: absolute;
+  right: 10px;
+  top: 200px;
   text-align: center;
 }
 .menu-category {
@@ -125,7 +133,11 @@ span.blue { color: blue; }
 
 <div id="main">
 
-<div id="login"><p id="login-title">ログイン</p><%= render :partial => 'shared/login_form' %></div>
+<div id="login" class="login-box"><p class="login-box-title">ログイン</p><%= render :partial => 'shared/login_form' %></div>
+<div id="signup" class="login-box">
+  <p class="login-box-title"><%= _('Signup') %></p>
+  <h3><%= link_to _('Signup') + 'してSKIPの利用を開始する', signup_url %></h3>
+</div>
 <div id="desc_before_login" class="desc"></div>
 
 </div><!-- main -->

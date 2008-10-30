@@ -117,6 +117,41 @@ class PlatformController < ApplicationController
     end
   end
 
+  def signup
+    return render(:layout => 'not_logged_in') unless request.post?
+    email = params[:email]
+    if @user_profile = UserProfile.find_by_email(email)
+      if user = @user_profile.unused_user
+        user.signup
+        user.save_without_validation!
+        UserMailer.deliver_sent_signup(email, activate_url(user.activation_token))
+        flash[:notice] = "サインアップのためのURLを記載したメールを#{email}宛に送信しました。"
+        redirect_to :controller => '/platform'
+      else
+        flash[:error] = "メールアドレスが#{email}のユーザは既に利用を開始しています。"
+        render :layout => 'not_logged_in'
+      end
+    else
+      flash[:error] = "入力された#{email}というメールアドレスは登録されていません。"
+      render :layout => 'not_logged_in'
+    end
+  end
+
+  def activate
+    if @user = User.find_by_activation_token(params[:code])
+      if Time.now <= @user.activation_token_expires_at
+        self.current_user = @user
+        return redirect_to(:controller => :portal)
+      else
+        flash[:error] = "サインアップのためのURLの有効期限が過ぎています。"
+        redirect_to :controller => '/platform'
+      end
+    else
+      flash[:error] = "サインアップのためのURLが不正です。再度お試し頂くか、システム管理者にお問い合わせ下さい。"
+      redirect_to :controller => '/platform'
+    end
+  end
+
   private
   def require_not_login
     if current_user

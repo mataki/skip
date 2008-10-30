@@ -46,7 +46,6 @@ class UserProfile < ActiveRecord::Base
     end
   end
 
-
   # 性別を返す.
   def gender
     return GENDER[self.gender_type]
@@ -148,5 +147,10 @@ class UserProfile < ActiveRecord::Base
       self.hobby = params[:hobbies].join(',') + ','
     end
     self.disclosure = params[:write_profile] ? true : false
+  end
+
+  # 未使用のユーザを取得
+  def unused_user
+    User.find_without_retired_skip(:first, :conditions => {:id => user_id, :status => 'UNUSED'})
   end
 end

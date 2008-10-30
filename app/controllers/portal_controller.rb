@@ -57,6 +57,10 @@ class PortalController < ApplicationController
   def apply
     @user = current_user
     @user.attributes = params[:user]
+    unless @user.activation_token.nil?
+      @user.password = params[:user][:password]
+      @user.password_confirmation = params[:user][:password_confirmation]
+    end
     @user.status = 'ACTIVE'
 
     @profile = @user.user_profile
@@ -79,6 +83,8 @@ class PortalController < ApplicationController
 
       UserAccess.create!(:user_id => @user.id, :last_access => Time.now, :access_count => 0)
       UserMailer.deliver_sent_signup_confirm(@user.user_profile.email, "#{root_url}mypage/manage?menu=manage_email")
+
+      @user.activate! unless @user.activation_token.nil?
 
       session[:entrance_next_action] = nil
       redirect_to :controller => 'mypage', :action => 'welcome'
