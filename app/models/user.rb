@@ -43,6 +43,8 @@ class User < ActiveRecord::Base
   validates_presence_of :password_confirmation, :message => 'は必須です', :if => :password_required?
 
   N_('User|Old password')
+  N_('User|Password')
+  N_('User|Password confirmation')
   # ステータスの状態
   N_('User|Status|ACTIVE')
   N_('User|Status|RETIRED')
