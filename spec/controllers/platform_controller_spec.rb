@@ -235,6 +235,13 @@ describe PlatformController, 'POST /forgot_password' do
   before do
     UserProfile.stub!(:find_by_email)
   end
+  describe 'メールアドレスの入力がない場合' do
+    it 'メールアドレスの入力は必須である旨のメッセージを表示する' do
+      post :forgot_password, :email => ''
+      flash[:error].should == 'メールアドレスは必須です。'
+      response.should be_success
+    end
+  end
   describe '登録済みのメールアドレスが送信された場合' do
     before do
       @email = 'exist@example.com'
@@ -427,6 +434,13 @@ end
 describe PlatformController, 'POST /invite' do
   before do
     UserProfile.stub!(:find_by_email)
+  end
+  describe 'メールアドレスの入力がない場合' do
+    it 'メールアドレスの入力は必須である旨のメッセージを表示する' do
+      post :invite, :email => ''
+      flash[:error].should == 'メールアドレスは必須です。'
+      response.should be_success
+    end
   end
   describe '招待機能が有効な場合' do
     before do

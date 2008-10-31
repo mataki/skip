@@ -66,6 +66,10 @@ class PlatformController < ApplicationController
   def forgot_password
     return render(:layout => 'not_logged_in') unless request.post?
     email = params[:email]
+    if email.blank?
+      flash.now[:error] = _('メールアドレスは必須です。')
+      return render(:layout => 'not_logged_in')
+    end
     if @user_profile = UserProfile.find_by_email(email)
       user = @user_profile.user
       user.forgot_password
@@ -74,7 +78,7 @@ class PlatformController < ApplicationController
       flash[:notice] = "パスワードリセットのためのURLを記載したメールを#{email}宛てに送信しました。"
       redirect_to :controller => '/platform'
     else
-      flash[:error] = "入力された#{email}というメールアドレスは登録されていません。"
+      flash.now[:error] = "入力された#{email}というメールアドレスは登録されていません。"
       render :layout => 'not_logged_in'
     end
   end
@@ -123,6 +127,10 @@ class PlatformController < ApplicationController
     end
     return render(:layout => 'not_logged_in') unless request.post?
     email = params[:email]
+    if email.blank?
+      flash.now[:error] = _('メールアドレスは必須です。')
+      return render(:layout => 'not_logged_in')
+    end
     if @user_profile = UserProfile.find_by_email(email)
       if user = @user_profile.unused_user
         user.invite
@@ -135,7 +143,7 @@ class PlatformController < ApplicationController
         render :layout => 'not_logged_in'
       end
     else
-      flash[:error] = _("入力された%{email}というメールアドレスは登録されていません。") % {:email => email}
+      flash.now[:error] = _("入力された%{email}というメールアドレスは登録されていません。") % {:email => email}
       render :layout => 'not_logged_in'
     end
   end
