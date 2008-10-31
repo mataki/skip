@@ -20,6 +20,8 @@ describe PlatformController, "パスワードでログインする場合" do
     @code = "111111"
     @password = "password"
     @user = mock_model(User, :code => @code)
+    User.stub!(:auth)
+    controller.stub!(:current_user=)
   end
   it 'セッションとクッキーがクリアされること' do
     controller.should_receive(:logout_killing_session!)
@@ -56,6 +58,7 @@ describe PlatformController, "パスワードでログインする場合" do
     before do
       request.env['HTTP_REFERER'] = @back = "http://test.host/previous/page"
       User.should_receive(:auth).and_return(nil)
+      controller.should_receive(:current_user=).with(nil)
 
       post :login, :login => { :key => @code, :password => @password }
     end

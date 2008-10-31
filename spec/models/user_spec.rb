@@ -141,24 +141,40 @@ describe User, ".create_with_identity_url" do
 end
 
 describe User, ".auth" do
-  describe "ログインID・パスワードが正しい場合" do
-    before do
-      @password = 'password'
-      @user = mock_model(User)
-      @user.stub!(:crypted_password).and_return(User.encrypt(@password))
-      User.should_receive(:find_by_code).and_return(@user)
-    end
-    it { User.auth('code', @password).should == @user }
+  before do
+    INITIAL_SETTINGS['enable_invitation'] = false
   end
-  describe "ユーザは存在するが、パスワードは正しくない場合" do
-    before do
-      @user = mock_model(User)
-      @user.stub!(:crypted_password).and_return('hogehoge')
-      User.should_receive(:find_by_code).and_return(@user)
+  describe "指定したログインIDに対応するユーザが存在する場合" do
+    describe "招待機能が有効で未使用ユーザの場合" do
+      before do
+        INITIAL_SETTINGS['enable_invitation'] = true
+        @password = 'password'
+        @user = mock_model(User)
+        @user.stub!(:crypted_password).and_return(User.encrypt(@password))
+        @user.stub!(:unused?).and_return(true)
+        User.should_receive(:find_by_code).and_return(@user)
+      end
+      it { User.auth('code', 'password').should be_nil }
     end
-    it { User.auth('code', 'password').should be_nil }
+    describe "パスワードが正しい場合" do
+      before do
+        @password = 'password'
+        @user = mock_model(User)
+        @user.stub!(:crypted_password).and_return(User.encrypt(@password))
+        User.should_receive(:find_by_code).and_return(@user)
+      end
+      it { User.auth('code', @password).should == @user }
+    end
+    describe "パスワードは正しくない場合" do
+      before do
+        @user = mock_model(User)
+        @user.stub!(:crypted_password).and_return('hogehoge')
+        User.should_receive(:find_by_code).and_return(@user)
+      end
+      it { User.auth('code', 'password').should be_nil }
+    end
   end
-  describe "指定のユーザが存在しない場合" do
+  describe "指定したログインIDに対応するユーザが存在しない場合" do
     before do
       User.should_receive(:find_by_code).and_return(nil)
     end
