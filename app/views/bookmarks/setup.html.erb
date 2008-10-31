@@ -59,7 +59,7 @@ ul.welcome li {
   <div style="margin-left: 15px; margin-top: 5px;">
     <div style="margin-top: 5px; margin-left: 20px;">
     <span style="font-size: 15px; font-weight: bold; border: 1px solid silver; padding: 2px; background-color: #f5f5ff">
-      <a href="javascript:void(function(){(function(){var _addr='http://<%= request.host_with_port + request.relative_url_root -%>';location.replace('about:blank');document.write('<html><body><form action=&quot;'+_addr+'/bookmark/new&quot; method=&quot;post&quot;><input type=hidden name=&quot;url&quot; value=&quot;'+location.href+'&quot;><input type=hidden name=&quot;title&quot; value=&quot;'+document.title+'&quot;><div style=\'display: none;\'>'+document.title+'<br/><input type=submit value=&quot;Bookmark This&quot;></div></form><script>document.forms[0].submit();</script></body></html>');document.close();})();})()"><%= h Admin::Setting.abbr_app_title -%>でブクマ</a>
+      <a href="javascript:void(function(){(function(){var _addr='<%= request.protocol + request.host_with_port + request.relative_url_root -%>';location.replace('about:blank');document.write('<html><body><form action=&quot;'+_addr+'/bookmark/new&quot; method=&quot;post&quot;><input type=hidden name=&quot;url&quot; value=&quot;'+location.href+'&quot;><input type=hidden name=&quot;title&quot; value=&quot;'+document.title+'&quot;><div style=\'display: none;\'>'+document.title+'<br/><input type=submit value=&quot;Bookmark This&quot;></div></form><script>document.forms[0].submit();</script></body></html>');document.close();})();})()"><%= h Admin::Setting.abbr_app_title -%>でブクマ</a>
     </span>
     </div>
 
