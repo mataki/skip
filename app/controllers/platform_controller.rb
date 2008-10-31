@@ -75,10 +75,10 @@ class PlatformController < ApplicationController
       user.forgot_password
       user.save!
       UserMailer.deliver_sent_forgot_password(email, reset_password_url(user.password_reset_token))
-      flash[:notice] = "パスワードリセットのためのURLを記載したメールを#{email}宛てに送信しました。"
+      flash[:notice] = _("パスワードリセットのためのURLを記載したメールを%{email}宛てに送信しました。") % {:email => email}
       redirect_to :controller => '/platform'
     else
-      flash.now[:error] = "入力された#{email}というメールアドレスは登録されていません。"
+      flash.now[:error] = _("入力された%{email}というメールアドレスは登録されていません。") % {:email => email}
       render :layout => 'not_logged_in'
     end
   end
@@ -110,13 +110,17 @@ class PlatformController < ApplicationController
   def forgot_login_id
     return render(:layout => 'not_logged_in') unless request.post?
     email = params[:email]
+    if email.blank?
+      flash.now[:error] = _('メールアドレスは必須です。')
+      return render(:layout => 'not_logged_in')
+    end
     if @user_profile = UserProfile.find_by_email(email)
       login_id = @user_profile.user.code
       UserMailer.deliver_sent_forgot_login_id(email, login_id)
-      flash[:notice] = "ログインIDを記載したメールを#{email}宛てに送信しました。"
+      flash[:notice] = _("ログインIDを記載したメールを%{email}宛てに送信しました。") % {:email => email}
       redirect_to :controller => '/platform'
     else
-      flash[:error] = "入力された#{email}というメールアドレスは登録されていません。"
+      flash.now[:error] = _("入力された%{email}というメールアドレスは登録されていません。") % {:email => email}
       render :layout => 'not_logged_in'
     end
   end
@@ -136,7 +140,7 @@ class PlatformController < ApplicationController
         user.invite
         user.save_without_validation!
         UserMailer.deliver_sent_invite(email, signup_url(user.activation_token))
-        flash[:notice] = _("ユーザ登録のためのURLを記載したメールを%{email}宛に送信しました。") % {:email => email}
+        flash[:notice] = _("ユーザ登録のためのURLを記載したメールを%{email}宛てに送信しました。") % {:email => email}
         redirect_to :controller => '/platform'
       else
         flash[:error] = _("メールアドレスが%{email}のユーザは既に利用を開始しています。") % {:email => email}

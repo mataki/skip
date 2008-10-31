@@ -1,6 +1,6 @@
 <div class="content">
   <h3><%= h Admin::Setting.login_account %>リマインダー</h3>
-  <p>以下で指定されたメールアドレスにログインIDを送信します。</p>
+  <p><%= _('以下で指定されたメールアドレスにログインIDを送信します。') %></p>
   <% form_tag :action => :forgot_login_id do -%>
   <%= render :partial => 'mail_form' %>
   <% end -%>

@@ -391,6 +391,13 @@ describe PlatformController, 'GET /forgot_login_id' do
 end
 
 describe PlatformController, 'POST /forgot_login_id' do
+  describe 'メールアドレスの入力がない場合' do
+    it 'メールアドレスの入力は必須である旨のメッセージを表示する' do
+      post :forgot_login_id, :email => ''
+      flash[:error].should == 'メールアドレスは必須です。'
+      response.should be_success
+    end
+  end
   describe '登録済みのメールアドレスが送信された場合' do
     before do
       @email = 'exist@example.com'
