@@ -1,8 +1,6 @@
-<% @revert_columns = %w(recent_date) -%>
+<% @revert_columns = %w(recent_date initial_anntena) -%>
 <div class="box tabular">
-<% @revert_columns.each do |key| -%>
-  <p><%= settings_label_with_text_field_tag key.to_sym %></p>
-<% end -%>
+  <p><%= settings_label_with_text_field_tag :recent_date %></p>
 </div>
 <h3><%= label Admin::Setting.name, :antenna_settings %></h3>
 <div class="box tabular">

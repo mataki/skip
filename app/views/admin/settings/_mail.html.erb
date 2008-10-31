@@ -1,4 +1,4 @@
-<% @revert_columns = %w(mail_function_setting smtp_settings_address smtp_settings_domain smtp_settings_port smtp_settings_authentication smtp_settings_user_name smtp_settings_password) -%>
+<% @revert_columns = %w(mail_function_setting smtp_settings_address smtp_settings_domain smtp_settings_port smtp_settings_authentication smtp_settings_user_name smtp_settings_password host_and_port protocol) -%>
 <div class="box tabular">
   <p><%= settings_label_with_check_box_tag :mail_function_setting %></p>
   <p><%= settings_label_with_text_field_tag :host_and_port unless INITIAL_SETTINGS['host_and_port']  %></p>
