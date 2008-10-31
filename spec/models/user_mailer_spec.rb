@@ -28,7 +28,7 @@ describe UserMailer do
     UserMailer.new
   end
   it "@@site_urlが正しく設定されていること" do
-    UserMailer.site_url.should == root_url(:host => INITIAL_SETTINGS['host_and_port'])
+    UserMailer.site_url.should == root_url(:host => Admin::Setting.host_and_port_by_initial_settings_default)
   end
   it "@@system_mail_addrが正しく設定されていること" do
     UserMailer.system_mail_addr.should == Admin::Setting.contact_addr

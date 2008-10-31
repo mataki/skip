@@ -63,6 +63,10 @@ smtp_settings_password:
 smtp_settings_authentication:
   format: symbol
   default:
+host_and_port:
+  default: localhost:3000
+protocol:
+ default: http://
 
 # その他設定
 antenna_default_group:             # 初期のアンテナに追加されるグループを指定(なければ空配列とする)

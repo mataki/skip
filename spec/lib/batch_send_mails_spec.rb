@@ -37,7 +37,7 @@ describe BatchSendMails, '#send_notice' do
         Mail.should_receive(:find).and_return([@mail])
       end
       it "メールが送信される" do
-        UserMailer.should_receive(:deliver_sent_contact).with(@mail.to_address, @user.name, "#{INITIAL_SETTINGS['protocol']}#{INITIAL_SETTINGS['host_and_port']}/page/1", @board_entry.title)
+        UserMailer.should_receive(:deliver_sent_contact).with(@mail.to_address, @user.name, "#{Admin::Setting.protocol_by_initial_settings_default}#{Admin::Setting.host_and_port_by_initial_settings_default}/page/1", @board_entry.title)
         @sender.send_notice
       end
     end
@@ -121,7 +121,7 @@ describe BatchSendMails, '#send_message' do
           @sender.send_message
         end
         it 'メールが送信されること' do
-          UserMailer.should_receive(:deliver_sent_message).with(@user_profile.email, "#{INITIAL_SETTINGS['protocol']}#{INITIAL_SETTINGS['host_and_port'] + @message.link_url}", @message.message, "#{INITIAL_SETTINGS['protocol']}#{INITIAL_SETTINGS['host_and_port']}/mypage/manage?menu=manage_message")
+          UserMailer.should_receive(:deliver_sent_message).with(@user_profile.email, "#{Admin::Setting.protocol_by_initial_settings_default}#{Admin::Setting.host_and_port_by_initial_settings_default + @message.link_url}", @message.message, "#{Admin::Setting.protocol_by_initial_settings_default}#{Admin::Setting.host_and_port_by_initial_settings_default}/mypage/manage?menu=manage_message")
           @sender.send_message
         end
       end

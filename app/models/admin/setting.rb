@@ -67,6 +67,10 @@ class Admin::Setting < ActiveRecord::Base
   N_('Admin::Setting|Mail function setting description')
   N_('Admin::Setting|Recent date')
   N_('Admin::Setting|Recent date description')
+  N_('Admin::Setting|Host and port')
+  N_('Admin::Setting|Host and port description')
+  N_('Admin::Setting|Protocol')
+  N_('Admin::Setting|Protocol description')
 
   cattr_accessor :available_settings
   @@available_settings = YAML::load(File.open("#{RAILS_ROOT}/config/settings.yml"))
@@ -151,6 +155,14 @@ class Admin::Setting < ActiveRecord::Base
       @cached_cleared_on = Time.now
       logger.info "Settings cache cleared." if logger
     end
+  end
+
+  def self.host_and_port_by_initial_settings_default
+    INITIAL_SETTINGS['host_and_port'] || self.host_and_port
+  end
+
+  def self.protocol_by_initial_settings_default
+    INITIAL_SETTINGS['protocol'] || self.protocol
   end
 
   private
