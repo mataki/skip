@@ -425,57 +425,71 @@ describe PlatformController, 'POST /invite' do
   before do
     UserProfile.stub!(:find_by_email)
   end
-  describe '登録済みのメールアドレスが送信された場合' do
+  describe '招待機能が有効な場合' do
     before do
-      @email = 'exist@example.com'
-      @user_profile = stub_model(UserProfile, :email => @email)
-      @signup_url = 'signup_url'
-      controller.stub!(:signup_url).and_return(@signup_url)
-      @user = stub_model(User, :activation_token => @activation_token)
-      @user.stub!(:invite)
-      @user.stub!(:save_without_validation!)
-      UserMailer.stub!(:deliver_sent_invite)
-      @user_profile.stub!(:user).and_return(@user)
-      UserProfile.should_receive(:find_by_email).and_return(@user_profile)
+      INITIAL_SETTINGS['enable_invitation'] = true
     end
-    describe '未使用ユーザが見つかる場合' do
+    describe '登録済みのメールアドレスが送信された場合' do
       before do
-        @user_profile.should_receive(:unused_user).and_return(@user)
+        @email = 'exist@example.com'
+        @user_profile = stub_model(UserProfile, :email => @email)
+        @signup_url = 'signup_url'
+        controller.stub!(:signup_url).and_return(@signup_url)
+        @user = stub_model(User, :activation_token => @activation_token)
+        @user.stub!(:invite)
+        @user.stub!(:save_without_validation!)
+        UserMailer.stub!(:deliver_sent_invite)
+        @user_profile.stub!(:user).and_return(@user)
+        UserProfile.should_receive(:find_by_email).and_return(@user_profile)
       end
-      it 'アクティベーションURLを記載したメールの送信処理が呼ばれること' do
-        UserMailer.should_receive(:deliver_sent_invite).with(@email, @signup_url)
-        post :invite, :email => @email
+      describe '未使用ユーザが見つかる場合' do
+        before do
+          @user_profile.should_receive(:unused_user).and_return(@user)
+        end
+        it 'アクティベーションURLを記載したメールの送信処理が呼ばれること' do
+          UserMailer.should_receive(:deliver_sent_invite).with(@email, @signup_url)
+          post :invite, :email => @email
+        end
+        it 'アクティベーションコード発行処理が行われること' do
+          @user.should_receive(:invite)
+          @user.should_receive(:save_without_validation!)
+          post :invite, :email => @email
+        end
+        it 'メール送信した旨のメッセージが設定されてリダイレクトされること' do
+          post :invite, :email => @email
+          flash[:notice].should_not be_nil
+          response.should be_redirect
+        end
       end
-      it 'アクティベーションコード発行処理が行われること' do
-        @user.should_receive(:invite)
-        @user.should_receive(:save_without_validation!)
-        post :invite, :email => @email
-      end
-      it 'メール送信した旨のメッセージが設定されてリダイレクトされること' do
-        post :invite, :email => @email
-        flash[:notice].should_not be_nil
-        response.should be_redirect
+      describe '未使用ユーザが見つからない場合' do
+        before do
+          @user_profile.should_receive(:unused_user).and_return(nil)
+        end
+        it '既に利用開始済みである旨のメッセージが設定されること' do
+          post :invite, :email => @email
+          flash[:error].should_not be_nil
+          response.should be_success
+        end
       end
     end
-    describe '未使用ユーザが見つからない場合' do
+    describe '未登録のメールアドレスが送信された場合' do
       before do
-        @user_profile.should_receive(:unused_user).and_return(nil)
+        UserProfile.should_receive(:find_by_email).and_return(nil)
       end
-      it '既に利用開始済みである旨のメッセージが設定されること' do
-        post :invite, :email => @email
+      it 'メールアドレスが未登録である旨のメッセージが設定されること' do
+        post :invite, :email => 'invite@example.com'
         flash[:error].should_not be_nil
         response.should be_success
       end
     end
   end
-  describe '未登録のメールアドレスが送信された場合' do
+  describe '招待機能が無効な場合' do
     before do
-      UserProfile.should_receive(:find_by_email).and_return(nil)
+      INITIAL_SETTINGS['enable_invitation'] = false
     end
-    it 'メールアドレスが未登録である旨のメッセージが設定されること' do
+    it '404ページへリダイレクトされること' do
       post :invite, :email => 'invite@example.com'
-      flash[:error].should_not be_nil
-      response.should be_success
+      response.code.should == '404'
     end
   end
 end

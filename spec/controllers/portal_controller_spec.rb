@@ -73,42 +73,124 @@ describe PortalController, 'POST /apply' do
     @user.stub!(:save!)
     @user.stub!(:user_profile).and_return(@profile)
     @user.stub!(:create_initial_entry)
+    @antenna = stub_model(Antenna)
+    @antenna.stub!(:save!)
+    Antenna.stub!(:create_initial).and_return(@antenna)
+    UserAccess.stub!(:create!)
+    UserMailer.stub!(:deliver_sent_signup_confirm)
     @user.stub!(:activate!)
+    INITIAL_SETTINGS['username_use_setting'] = false
+    INITIAL_SETTINGS['enable_invitation'] = false
   end
-  describe "ユーザ名利用設定がonの場合" do
-    before do
-      INITIAL_SETTINGS['username_use_setting'] = true
-    end
-    describe '正常に動作する場合' do
+
+  describe '正常に終了する場合' do
+    describe 'ユーザ名利用設定がoffの場合' do
       before do
+        INITIAL_SETTINGS['username_use_setting'] = false
+      end
+      it 'UserUidが保存されないこと' do
+        @user_uid = stub_model(UserUid)
+        @user_uid.should_not_receive(:save!)
+        @user_uids = mock('user_uids', :build => @user_uid)
+        @user.stub!(:user_uids).and_return(@user_uids)
+        post_apply
+      end
+      it 'Userが保存されること' do
+        verify_save_user
+      end
+      it 'Profileが保存されること' do
+        verify_save_user_profile
+      end
+      it 'welcomeページにリダイレクトされること' do
+        post_apply
+        response.should redirect_to(:controller => 'mypage', :action => 'welcome')
+      end
+    end
+    describe 'ユーザ名利用設定がonの場合' do
+      before do
+        INITIAL_SETTINGS['username_use_setting'] = true
+      end
+      it 'UserUidが保存されること' do
         @user_uid = stub_model(UserUid)
         @user_uid.should_receive(:save!)
         @user_uids = mock('user_uids', :build => @user_uid)
-
-        @profile.should_receive(:attributes_for_registration)
-        @profile.should_receive(:save!)
-
-        @user.should_receive(:status=).with('ACTIVE')
-        @user.should_receive(:attributes=)
-        @user.should_receive(:save!)
-        @user.stub!(:user_uids).and_return(@user_uids)
-        controller.stub!(:current_user).and_return(@user)
-
+        @user.should_receive(:user_uids).and_return(@user_uids)
         post_apply
       end
-
-      it { response.should redirect_to(:controller => :mypage, :action => :welcome) }
+      it 'Userが保存されること' do
+        verify_save_user
+      end
+      it 'Profileが保存されること' do
+        verify_save_user_profile
+      end
+      it 'welcomeページにリダイレクトされること' do
+        post_apply
+        response.should redirect_to(:controller => 'mypage', :action => 'welcome')
+      end
     end
-
-    describe '保存に失敗する場合' do
+    describe '招待機能が無効の場合' do
       before do
-        @user.should_receive(:save!).and_raise(mock_record_invalid)
-        controller.stub!(:current_user).and_return(@user)
-
+        INITIAL_SETTINGS['enable_invitation'] = false
+      end
+      it 'activateされること' do
+        @user.should_receive(:activate!)
         post_apply
       end
-      it { response.should render_template('portal/registration') }
+      it 'welcomeページにリダイレクトされること' do
+        post_apply
+        response.should redirect_to(:controller => 'mypage', :action => 'welcome')
+      end
+    end
+    describe '招待機能が有効の場合' do
+      before do
+        INITIAL_SETTINGS['enable_invitation'] = true
+      end
+      it 'パスワードの設定が行われること' do
+        @user.should_receive(:password=).at_least(:once)
+        @user.should_receive(:password_confirmation=).at_least(:once)
+        post_apply
+      end
+      it 'activateされること' do
+        @user.should_receive(:activate!)
+        post_apply
+      end
+      it 'welcomeページにリダイレクトされること' do
+        post_apply
+        response.should redirect_to(:controller => 'mypage', :action => 'welcome')
+      end
+    end
+  end
+
+  describe '異常終了する場合' do
+    before do
+      @user.stub!(:save!).and_raise(mock_record_invalid)
+      controller.stub!(:current_user).and_return(@user)
+    end
+    describe 'ユーザ名利用設定がoffの場合' do
+      before do
+        INITIAL_SETTINGS['username_use_setting'] = false
+      end
+      it '登録ページに遷移すること' do
+        post_apply
+        response.should render_template('portal/registration')
+      end
       it "適切なインスタンス変数が設定されていること" do
+        post_apply
+        assigns[:user].should_not be_nil
+        assigns[:profile].should_not be_nil
+        assigns[:user_uid].should be_nil
+      end
+    end
+    describe 'ユーザ名利用設定がonの場合' do
+      before do
+        INITIAL_SETTINGS['username_use_setting'] = true
+      end
+      it '登録ページに遷移すること' do
+        post_apply
+        response.should render_template('portal/registration')
+      end
+      it "適切なインスタンス変数が設定されていること" do
+        post_apply
         assigns[:user].should_not be_nil
         assigns[:profile].should_not be_nil
         assigns[:user_uid].should_not be_nil
@@ -116,36 +198,20 @@ describe PortalController, 'POST /apply' do
     end
   end
 
-  describe "ユーザ名利用設定がオフの場合" do
-    before do
-      INITIAL_SETTINGS['username_use_setting'] = false
-    end
-    describe "保存に成功する場合" do
-      before do
-        @user_uid = stub_model(UserUid)
-        @user_uid.should_not_receive(:save!)
-        @user_uids = mock('user_uids', :build => @user_uid)
-        @user.stub!(:user_uids).and_return(@user_uids)
-
-        post_apply
-      end
-      it { response.should redirect_to(:controller => :mypage, :action => :welcome) }
-    end
-    describe "保存に失敗する場合" do
-      before do
-        @user.should_receive(:save!).and_raise(mock_record_invalid)
-        controller.stub!(:current_user).and_return(@user)
-
-        post_apply
-      end
-      it { response.should render_template('portal/registration') }
-      it "適切なインスタンス変数が設定されていること" do
-        assigns[:user].should_not be_nil
-        assigns[:profile].should_not be_nil
-        assigns[:user_uid].should be_nil
-      end
-    end
+  def verify_save_user
+    @user.should_receive(:attributes=)
+    @user.should_receive(:save!)
+    @user.should_receive(:activate!)
+    controller.should_receive(:current_user).and_return(@user)
+    post_apply
   end
+
+  def verify_save_user_profile
+    @profile.should_receive(:attributes_for_registration)
+    @profile.should_receive(:save!)
+    post_apply
+  end
+
   def post_apply
     post :apply, {"user"=>{:password => "password", :password_confirmation => "password_confirmation"},
                   "profile"=>{"email"=>"example@skip.org", "extension"=>"000000", "self_introduction"=>"00000",

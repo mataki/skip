@@ -118,6 +118,9 @@ class PlatformController < ApplicationController
   end
 
   def invite
+    unless INITIAL_SETTINGS['enable_invitation']
+      return render(:file => File.join(RAILS_ROOT, 'public', '404.html'), :status => :not_found)
+    end
     return render(:layout => 'not_logged_in') unless request.post?
     email = params[:email]
     if @user_profile = UserProfile.find_by_email(email)

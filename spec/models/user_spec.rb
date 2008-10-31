@@ -266,6 +266,13 @@ describe User, '#activate!' do
       u.activate!
     end.should change(u, :activation_token_expires_at).from(time).to(nil)
   end
+  it 'statusがACTIVEになること' do
+    u = create_user
+    u.status = 'UNUSED'
+    lambda do
+      u.activate!
+    end.should change(u, :status).from('UNUSED').to('ACTIVE')
+  end
 end
 
 def new_user options = {}

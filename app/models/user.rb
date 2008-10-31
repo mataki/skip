@@ -302,7 +302,10 @@ class User < ActiveRecord::Base
   end
 
   def activate!
-    update_attributes!(:activation_token => nil, :activation_token_expires_at => nil)
+    self.status = 'ACTIVE'
+    self.activation_token = nil
+    self.activation_token_expires_at = nil
+    self.save!
   end
 
 protected
