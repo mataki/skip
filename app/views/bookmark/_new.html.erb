@@ -35,7 +35,7 @@ td {
   <div id="update_body"></div>
   <form id="update_form">
     <%= hidden_field_tag 'layout', h(layout) -%>
-    <%= hidden_field 'bookmark', 'url' -%>
+    <%= hidden_field 'bookmark', 'url', :value => escape_bookmark_url(@bookmark.url) %>
     <div class="formarea">
       <table>
         <tr>
