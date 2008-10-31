@@ -414,14 +414,14 @@ describe PlatformController, 'POST /forgot_login_id' do
   end
 end
 
-describe PlatformController, 'GET /signup' do
+describe PlatformController, 'GET /invite' do
   it 'サインアップ画面に遷移すること' do
-    get :signup
+    get :invite
     response.should be_success
   end
 end
 
-describe PlatformController, 'POST /signup' do
+describe PlatformController, 'POST /invite' do
   before do
     UserProfile.stub!(:find_by_email)
   end
@@ -429,12 +429,12 @@ describe PlatformController, 'POST /signup' do
     before do
       @email = 'exist@example.com'
       @user_profile = stub_model(UserProfile, :email => @email)
-      @activate_url = 'activate_url'
-      controller.stub!(:activate_url).and_return(@activate_url)
+      @signup_url = 'signup_url'
+      controller.stub!(:signup_url).and_return(@signup_url)
       @user = stub_model(User, :activation_token => @activation_token)
-      @user.stub!(:signup)
+      @user.stub!(:invite)
       @user.stub!(:save_without_validation!)
-      UserMailer.stub!(:deliver_sent_signup)
+      UserMailer.stub!(:deliver_sent_invite)
       @user_profile.stub!(:user).and_return(@user)
       UserProfile.should_receive(:find_by_email).and_return(@user_profile)
     end
@@ -443,16 +443,16 @@ describe PlatformController, 'POST /signup' do
         @user_profile.should_receive(:unused_user).and_return(@user)
       end
       it 'アクティベーションURLを記載したメールの送信処理が呼ばれること' do
-        UserMailer.should_receive(:deliver_sent_signup).with(@email, @activate_url)
-        post :signup, :email => @email
+        UserMailer.should_receive(:deliver_sent_invite).with(@email, @signup_url)
+        post :invite, :email => @email
       end
       it 'アクティベーションコード発行処理が行われること' do
-        @user.should_receive(:signup)
+        @user.should_receive(:invite)
         @user.should_receive(:save_without_validation!)
-        post :signup, :email => @email
+        post :invite, :email => @email
       end
       it 'メール送信した旨のメッセージが設定されてリダイレクトされること' do
-        post :signup, :email => @email
+        post :invite, :email => @email
         flash[:notice].should_not be_nil
         response.should be_redirect
       end
@@ -462,7 +462,7 @@ describe PlatformController, 'POST /signup' do
         @user_profile.should_receive(:unused_user).and_return(nil)
       end
       it '既に利用開始済みである旨のメッセージが設定されること' do
-        post :signup, :email => @email
+        post :invite, :email => @email
         flash[:error].should_not be_nil
         response.should be_success
       end
@@ -473,14 +473,14 @@ describe PlatformController, 'POST /signup' do
       UserProfile.should_receive(:find_by_email).and_return(nil)
     end
     it 'メールアドレスが未登録である旨のメッセージが設定されること' do
-      post :signup, :email => 'signup@example.com'
+      post :invite, :email => 'invite@example.com'
       flash[:error].should_not be_nil
       response.should be_success
     end
   end
 end
 
-describe PlatformController, 'GET /activate' do
+describe PlatformController, 'GET /signup' do
   before do
     @expires_at = Time.local(2008, 11, 1)
     @user = stub_model(User, :activation_token_expires_at => @expires_at)
@@ -495,19 +495,19 @@ describe PlatformController, 'GET /activate' do
       end
       it '24時間未満の場合はアクティベート画面に遷移すること' do
         Time.stub!(:now).and_return(@expires_at.ago(1.second))
-        get :activate, :code => '991ea5ca6502e3ded9e494c9c5ae50ad356e4f4a'
+        get :signup, :code => '991ea5ca6502e3ded9e494c9c5ae50ad356e4f4a'
         response.should be_redirect
       end
       it 'ちょうど24時間の場合はアクティベート画面に遷移すること' do
         Time.stub!(:now).and_return(@expires_at)
-        get :activate, :code => '991ea5ca6502e3ded9e494c9c5ae50ad356e4f4a'
+        get :signup, :code => '991ea5ca6502e3ded9e494c9c5ae50ad356e4f4a'
         response.should be_redirect
       end
     end
     describe 'アクティベーションコードが作成されてから24時間を越えている場合' do
       before do
         Time.stub!(:now).and_return(@expires_at.since(1.second))
-        get :activate, :code => '991ea5ca6502e3ded9e494c9c5ae50ad356e4f4a'
+        get :signup, :code => '991ea5ca6502e3ded9e494c9c5ae50ad356e4f4a'
       end
       it { flash[:error].should_not be_nil }
       it { response.should be_redirect }
@@ -518,7 +518,7 @@ describe PlatformController, 'GET /activate' do
       User.should_receive(:find_by_activation_token).and_return(nil)
     end
     it 'ログイン画面にリダイレクトされること' do
-      get :activate, :code => '991ea5ca6502e3ded9e494c9c5ae50ad356e4f4a'
+      get :signup, :code => '991ea5ca6502e3ded9e494c9c5ae50ad356e4f4a'
       response.should be_redirect
     end
   end

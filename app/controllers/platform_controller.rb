@@ -117,37 +117,37 @@ class PlatformController < ApplicationController
     end
   end
 
-  def signup
+  def invite
     return render(:layout => 'not_logged_in') unless request.post?
     email = params[:email]
     if @user_profile = UserProfile.find_by_email(email)
       if user = @user_profile.unused_user
-        user.signup
+        user.invite
         user.save_without_validation!
-        UserMailer.deliver_sent_signup(email, activate_url(user.activation_token))
-        flash[:notice] = "サインアップのためのURLを記載したメールを#{email}宛に送信しました。"
+        UserMailer.deliver_sent_invite(email, signup_url(user.activation_token))
+        flash[:notice] = _("ユーザ登録のためのURLを記載したメールを%{email}宛に送信しました。") % {:email => email}
         redirect_to :controller => '/platform'
       else
-        flash[:error] = "メールアドレスが#{email}のユーザは既に利用を開始しています。"
+        flash[:error] = _("メールアドレスが%{email}のユーザは既に利用を開始しています。") % {:email => email}
         render :layout => 'not_logged_in'
       end
     else
-      flash[:error] = "入力された#{email}というメールアドレスは登録されていません。"
+      flash[:error] = _("入力された%{email}というメールアドレスは登録されていません。") % {:email => email}
       render :layout => 'not_logged_in'
     end
   end
 
-  def activate
+  def signup
     if @user = User.find_by_activation_token(params[:code])
       if Time.now <= @user.activation_token_expires_at
         self.current_user = @user
         return redirect_to(:controller => :portal)
       else
-        flash[:error] = "サインアップのためのURLの有効期限が過ぎています。"
+        flash[:error] = _("ユーザ登録のためのURLの有効期限が過ぎています。")
         redirect_to :controller => '/platform'
       end
     else
-      flash[:error] = "サインアップのためのURLが不正です。再度お試し頂くか、システム管理者にお問い合わせ下さい。"
+      flash[:error] = _("ユーザ登録のためのURLが不正です。再度お試し頂くか、システム管理者にお問い合わせ下さい。")
       redirect_to :controller => '/platform'
     end
   end

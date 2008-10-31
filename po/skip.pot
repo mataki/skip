@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-10-30 20:47+0900\n"
+"POT-Creation-Date: 2008-10-31 09:58+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -884,12 +884,12 @@ msgstr ""
 msgid "Admin::User|Name"
 msgstr ""
 
-#: app/models/admin/user.rb:26 app/views/portal/_registration_form.html.erb:70
+#: app/models/admin/user.rb:26 app/views/portal/_registration_form.html.erb:65
 #: app/views/admin/users/import.html.erb:22
 msgid "Admin::User|Password"
 msgstr ""
 
-#: app/models/admin/user.rb:25 app/views/portal/_registration_form.html.erb:74
+#: app/models/admin/user.rb:25 app/views/portal/_registration_form.html.erb:69
 msgid "Admin::User|Password confirmation"
 msgstr ""
 
@@ -1747,6 +1747,10 @@ msgstr ""
 msgid "Searching..."
 msgstr ""
 
+#: app/views/platform/invite.html.erb:11
+msgid "Send"
+msgstr ""
+
 #: app/models/share_file_access.rb:-
 msgid "ShareFileAccess|Created at"
 msgstr ""
@@ -1827,7 +1831,7 @@ msgstr ""
 msgid "Show"
 msgstr ""
 
-#: app/views/platform/signup.html.erb:2 app/views/platform/index.html.erb:137
+#: app/views/platform/index.html.erb:138 app/views/platform/invite.html.erb:2
 msgid "Signup"
 msgstr ""
 
@@ -2036,12 +2040,12 @@ msgstr ""
 
 #: app/models/user_profile.rb:- app/views/user/show.html.erb:95
 #: app/views/portal/_registration_form.html.erb:41
-#: app/views/users/_user.html.erb:26
+#: app/views/platform/invite.html.erb:7 app/views/users/_user.html.erb:26
 msgid "UserProfile|Email"
 msgstr ""
 
 #: app/models/user_profile.rb:- app/views/user/show.html.erb:105
-#: app/views/portal/_registration_form.html.erb:92
+#: app/views/portal/_registration_form.html.erb:87
 msgid "UserProfile|Extension"
 msgstr ""
 
@@ -2066,13 +2070,13 @@ msgid "UserProfile|Join year"
 msgstr ""
 
 #: app/models/user_profile.rb:- app/views/user/show.html.erb:100
-#: app/views/portal/_registration_form.html.erb:84
+#: app/views/portal/_registration_form.html.erb:79
 #: app/views/users/_user.html.erb:32
 msgid "UserProfile|Section"
 msgstr ""
 
 #: app/models/user_profile.rb:- app/views/user/show.html.erb:110
-#: app/views/portal/_registration_form.html.erb:96
+#: app/views/portal/_registration_form.html.erb:91
 msgid "UserProfile|Self introduction"
 msgstr ""
 
@@ -2558,12 +2562,34 @@ msgstr ""
 msgid "フッター"
 msgstr ""
 
+#: app/controllers/platform_controller.rb:131
+msgid "メールアドレスが%{email}のユーザは既に利用を開始しています。"
+msgstr ""
+
 #: app/controllers/platform_controller.rb:234
 msgid "ユーザの登録に失敗しました。"
 msgstr ""
 
 #: app/controllers/admin/users_controller.rb:177
 msgid "ユーザ名が見つかりませんでした。"
+msgstr ""
+
+#: app/views/platform/index.html.erb:139
+msgid "ユーザ登録してSKIPの利用を開始する"
+msgstr ""
+
+#: app/controllers/platform_controller.rb:150
+msgid ""
+"ユーザ登録のためのURLが不正です。再度お試し頂くか、システム管理者にお問い合わ"
+"せ下さい。"
+msgstr ""
+
+#: app/controllers/platform_controller.rb:146
+msgid "ユーザ登録のためのURLの有効期限が過ぎています。"
+msgstr ""
+
+#: app/controllers/platform_controller.rb:128
+msgid "ユーザ登録のためのURLを記載したメールを%{email}宛に送信しました。"
 msgstr ""
 
 #: app/views/admin/users/import.html.erb:9
@@ -2608,12 +2634,20 @@ msgstr ""
 msgid "不正なユーザです。"
 msgstr ""
 
+#: app/views/platform/invite.html.erb:3
+msgid "以下で指定されたメールアドレスにユーザ登録のためのURLを送信します。"
+msgstr ""
+
 #: app/controllers/admin/settings_controller.rb:84
 msgid "保存しました。"
 msgstr ""
 
 #: app/controllers/admin/settings_controller.rb:86
 msgid "保存に失敗している項目があります。"
+msgstr ""
+
+#: app/controllers/platform_controller.rb:135
+msgid "入力された%{email}というメールアドレスは登録されていません。"
 msgstr ""
 
 #: app/views/admin/settings/index.html.erb:5

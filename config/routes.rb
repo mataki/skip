@@ -33,8 +33,8 @@ ActionController::Routing::Routes.draw do |map|
   map.forgot_password 'platform/forgot_password', :controller => 'platform', :action => 'forgot_password'
   map.reset_password 'platform/reset_password/:code', :controller => 'platform', :action => 'reset_password'
   map.forgot_login_id 'platform/forgot_login_id', :controller => 'platform', :action => 'forgot_login_id'
-  map.signup 'platform/signup', :controller => 'platform', :action => 'signup'
-  map.activate 'platform/activate/:code', :controller => 'platform', :action => 'activate'
+  map.invite 'platform/invite', :controller => 'platform', :action => 'invite'
+  map.signup 'platform/signup/:code', :controller => 'platform', :action => 'signup'
 
   map.monthly 'rankings/monthly/:year/:month',
               :controller => 'rankings',

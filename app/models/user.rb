@@ -295,7 +295,7 @@ class User < ActiveRecord::Base
     update_attributes(:password_reset_token => nil, :password_reset_token_expires_at => nil)
   end
 
-  def signup
+  def invite
     self.crypted_password = nil
     self.activation_token = self.class.make_token
     self.activation_token_expires_at = Time.now.since(24.hour)
