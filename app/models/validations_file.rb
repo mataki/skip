@@ -36,8 +36,8 @@ module ValidationsFile
 
   def valid_content_type_of_file(file)
     extension = file.original_filename.split('.').last
-    if(content_type = CONTENT_TYPE_IMAGES[extension.to_sym])
-      unless file.content_type == content_type
+    if(content_types = CONTENT_TYPE_IMAGES[extension.to_sym])
+      unless content_types.split(',').include?(file.content_type)
         errors.add_to_base "この形式のファイルは、アップロードできません。"
         return false;
       end

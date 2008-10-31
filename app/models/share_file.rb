@@ -327,6 +327,6 @@ private
   end
 
   def uncheck_content_type?
-    CONTENT_TYPE_IMAGES.values.any?{ |content_type| content_type == self.content_type }
+    CONTENT_TYPE_IMAGES.values.any?{ |content_types| content_types.split(',').include?(self.content_type) }
   end
 end

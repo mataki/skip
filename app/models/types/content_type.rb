@@ -15,8 +15,8 @@
 
 module Types::ContentType
   CONTENT_TYPE_IMAGES = {
-    :jpg => 'image/jpg',
-    :jpeg => 'image/jpeg',
+    :jpg => 'image/jpg,image/jpeg',
+    :jpeg => 'image/jpg,image/jpeg',
     :png => 'image/png',
     :gif => 'image/gif',
     :bmp => 'image/bmp'
