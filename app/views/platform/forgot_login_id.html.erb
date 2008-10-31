@@ -2,12 +2,6 @@
   <h3><%= h Admin::Setting.login_account %>リマインダー</h3>
   <p>以下で指定されたメールアドレスにログインIDを送信します。</p>
   <% form_tag :action => :forgot_login_id do -%>
-    <table>
-      <tr>
-        <th><label for="email">メールアドレス</label></th>
-        <td><%= text_field_tag(:email, params[:email]) %></td>
-      </tr>
-    </table>
-    <%= submit_tag "送信する" %>
+  <%= render :partial => 'mail_form' %>
   <% end -%>
 </div>
