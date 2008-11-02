@@ -1,7 +1,12 @@
+<div class="desc">
+<p>本サイトにアップロードされたファイルのダウンロードを行おうとしています。<br/>
+下記のファイルで間違いなければ、クリックしてダウンロードを開始してください。<br/></p>
+</div>
+
 <% form_tag(share_file_path(:symbol_id => params[:symbol_id], :file_name => params[:file_name])) do %>
-  <p><%= _('ダウンロードしても宜しければ以下のリンクをクリックして下さい。') %></p>
-  <div class="input_line">
-    <div class="input_label">ファイル名</div>
+  <div class="input_line" style="text-align: center; margin: 10px; font-size: 30px;">
     <div class="input_value"><%= link_to h(params[:file_name]), share_file_path(:symbol_id => params[:symbol_id], :file_name => params[:file_name], :authenticity_token => form_authenticity_token) %></div>
   </div>
 <% end -%>
+
+<div style="text-align: right;">（この画面は、直ダウンロードによるセキュリティ上の懸念を解消するために表示しています）</div>

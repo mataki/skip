@@ -204,6 +204,7 @@ class ShareFileController < ApplicationController
       share_file.create_history current_user.id
       send_file(share_file.full_path, :filename => nkf_file_name(file_name), :type => share_file.content_type, :stream => false, :disposition => 'attachment')
     else
+      @main_menu = @title = 'ファイルのダウンロード'
       render :action => 'confirm_download', :layout => 'layout'
     end
   end
