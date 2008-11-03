@@ -188,22 +188,22 @@ div.helpbar {
 /* ----------------------------------- */
 /* タイトル＋一覧系 */
 div.topix_title {
-  border-top: 3px double silver;
+  border-top: 1px solid silver;
   border-bottom: 1px dashed silver;
-  padding: 0px 0px 0px 7px;
-  background-color: #f0f0ff;
-  margin-bottom: 2px;
+  padding: 4px 0px 2px 7px;
+  background-color: #f3f3ff;
+  margin-bottom: 0px;
 }
 div.topix_title span {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: bold;
-  vertical-align: middle;
+  vertical-align: bottom;
   margin-left: 5px;
-  color: #0033cc;
+  color: #003399;
 }
 div.topix_body {
   margin-left: 5px;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
 div.topix_body a:visited {
   color: purple;
