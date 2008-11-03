@@ -1,21 +1,17 @@
 <% img_urls.each_with_index do |(img_name, img_url), index| -%>
 
-  <div id="image_<%= index %>" style="position: relative; float:left; border: solid 1px silver; margin: 2px;">
-  <div id="image_name_<%= index %>" class="image_name"><%= h img_name %></div>
-  <div align="center">
+  <div id="image_<%= index %>" style="position: relative; float:left; margin: 2px; text-align: center;">
   <% file_ext = img_name.downcase.split(".").last -%>
   <% if ["flv", "swf"].include?(file_ext) -%>
     <%= image_tag 'http://www.adobe.com/shockwave/download/images/flash_rune.gif', :alt => "flv形式の動画", :height => "64px", :width => "64px" %>
   <% elsif ["jpg","png","jpeg","gif","bmp"].include?(file_ext) -%>
-    <%= link_to image_tag(img_url, :alt => h(img_name), :width => '64', :height => '64' ), img_url, :class => 'nyroModal zoomable', :rel => 'gal' %>
+    <%= link_to image_tag(img_url, :alt => h(img_name), :width => '150' ), img_url, :class => 'nyroModal zoomable', :rel => 'gal' %>
   <% else -%>
-    <%= image_tag "question.gif", :alt => "不明なファイル形式", :height => "64px", :width => "64px" -%>
+    <%= image_tag "question.gif", :alt => "不明なファイル形式" -%>
   <% end -%>
-  </div>
   <% if deletable -%>
-    <div style="text-align:right;">
-      <a href="#" id="remove_image_link_<%= index -%>" class="remove_image_link" >...[削除]</a>
-    </div>
+  <div id="image_name_<%= index %>" class="image_name"><%= h img_name %></div>
+  <div style="text-align:right;"><a href="#" id="remove_image_link_<%= index -%>" class="remove_image_link" >...[削除する]</a></div>
   <% end -%>
   </div>
 <% end -%>
