@@ -119,30 +119,15 @@ div#header div#logo {
 }
 div#header div#search {
   float: right;
-  padding-top: 4px;
+  padding-top: 2px;
+  padding-right: 6px;
 }
 /* ----------------------------------- */
 div#top {
   clear: both;
   text-align: right;
   border-bottom: 1px solid silver;
-  padding: 1px 10px 3px 10px;
-}
-div#top div#user_ctl a {
-  border-left: 1px solid #555555;
-  padding-left: 7px;
-  margin-left: 2px;
-}
-div#top div#menu_btn {
-  position: absolute;
-  left: 10px;
-}
-div#top div#menu_btn a {
-  margin-right: 2px;
-  padding: 0 1px 2px 1px;
-}
-div#top div#menu_btn a:hover {
-  background-color: pink;
+  padding: 1px 5px;
 }
 /* ----------------------------------- */
 /* 共通系 */

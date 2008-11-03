@@ -340,20 +340,6 @@ class MypageController < ApplicationController
     end
   end
 
-  # ajax
-  def ado_my_groups
-    conditions = ["group_participations.user_id = ? and group_participations.favorite = true", session[:user_id]]
-    groups = Group.find(:all,
-                        :conditions => conditions,
-                        :order => "group_participations.created_on DESC",
-                        :include => :group_participations)
-    symbol2name_hash = {}
-    groups.each do |group|
-      symbol2name_hash[group.gid] = group.name
-    end
-    render :text => symbol2name_hash.to_json
-  end
-
   # ajaxで、未読・既読を変更する
   def change_read_state
     UserReading.create_or_update(session[:user_id], params[:board_entry_id], params[:read])

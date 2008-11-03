@@ -51,6 +51,11 @@ protected
       @site_count = SiteCount.find(:first, :order => "created_on desc") || SiteCount.new
     end
 
+    @favorite_groups = Group.find(:all,
+                                  :conditions => ["group_participations.user_id = ? and group_participations.favorite = true", user.id],
+                                  :order => "group_participations.created_on DESC",
+                                  :include => :group_participations)
+
     # Settingのキャッシュをチェックする
     Admin::Setting.check_cache
 

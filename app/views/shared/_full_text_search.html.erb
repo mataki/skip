@@ -1,7 +1,0 @@
-<div id="search">
-  <% form_tag({:controller => '/search', :action => 'full_text_search'},{ :method => 'get'}) do -%>
-  <input type="text" size="35" onfocus="if(this.value=='検索したいキーワードをいれてください'){this.style.color='#000000'; this.value = ''}" onblur="if(this.value==''){this.style.color='#999999'; this.form.reset()}" style="color: rgb(153, 153, 153);" id="full_text_query" name="full_text_query" value="検索したいキーワードをいれてください" />
-  <%= submit_tag '検索' -%>
-  <% end -%>
-</div>
-
