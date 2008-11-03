@@ -174,7 +174,7 @@ class ShareFileController < ApplicationController
                                     :order => order_by,
                                     :per_page => 10)
     unless @share_files && @share_files.size > 0
-      flash.now[:notice] = '該当する共有ファイルはありませんでした。'
+      flash.now[:notice] = '該当するファイルはありませんでした。'
     end
 
     # 編集メニューの表示有無

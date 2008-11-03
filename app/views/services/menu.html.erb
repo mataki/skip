@@ -26,7 +26,8 @@ page_data = [
   'div#services img { vertical-align: middle; }',
   '</style>',
 
-  '<div id="services" style="float: right; border: none; background-color: #dfecf5; margin: 0 0 0 5px; padding: 0 0 2px 10px; font-size: 12px">',
+  '<div id="services" style="float: right; border: none; background-color: #dfecf5; margin: 0; padding: 0 0 2px 5px; font-size: 12px">',
+
 <% COMMON_MENUS[:main_menus].each do |menu| %>
     '<%= link_to menu[:title], menu[:url], :target => "_blank" -%>',
 <% end %>
@@ -38,10 +39,14 @@ page_data = [
   '</div>',
 <% end %>
 
-'<%= link_to icon_tag("door") + " ログアウト", :controller => "/platform", :action => :logout, :only_path => false -%>',
+<% help_url = h(Admin::Setting.help_url) -%>
+<% unless help_url.blank? -%>
+  '<a href="<%= help_url %>" target="_blank"><%= icon_tag(:help, :alt=> 'ヘルプ', :title => 'ヘルプ') -%>ヘルプ</a>',
+<% end -%>
+
+  '<%= link_to icon_tag("door") + " ログアウト", :controller => "/platform", :action => :logout, :only_path => false -%>',
 
   '</div>',
-
 
   '<br style="clear: right;" />'
 ].join(' ');

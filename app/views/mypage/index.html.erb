@@ -1,10 +1,8 @@
-
 <div id="contents_container">
 
 <div id="contents_left">
 
   <%= render(:partial => 'user/portrait_box', :locals => { :user => @user }) -%>
-
   <div id="calendar"><%= render :partial => "shared/calendar", :locals => {:sel_year => @year, :sel_month => @month, :sel_day => @day, :item_count => @entry_count, :action => 'index'}  %></div>
 
 <div class="box_space">
@@ -18,7 +16,7 @@
   <div class="box_space_bottom"><!--【メニューを管理する】--></div>
 </div><!-- box_space -->
 
-  <div id="antennas">
+<div id="antennas">
 <div class="box_space">
   <div class="box_space_title">アンテナ</div>
   <%= skip_image_tag 'indicator.gif' %> <span style="color:gray">読み込み中...</span>
@@ -52,20 +50,6 @@ div#my_infos div.help {
   border: 1px dashed silver;
 }
 </style>
-
-</div><!-- contents_left -->
-
-<div id="contents_right">
-
-<%= render :partial => @partial, :locals => @locals -%>
-
-</div><!-- contents_right -->
-
-<div id="contents_bottom">
-</div><!-- contents_bottom -->
-
-</div><!-- contents_container -->
-
 <script type="text/javascript">
 $j(function(){
     // マウスオーバーでヘルプ出力
@@ -74,9 +58,7 @@ $j(function(){
     toggleMouseOver('#blog_count', '#blog_count_help');
     toggleMouseOver('#using_day', '#using_day_help');
 
-    /*
-     * アンテナのローディング
-     */
+    // アンテナのローディング
     $j.ajax({
         url: relative_url_root + '/mypage/ado_antennas/',
         success: function(request) {
@@ -91,3 +73,14 @@ $j(function(){
     });
 });
 </script>
+
+</div><!-- contents_left -->
+
+<div id="contents_right">
+<%= render :partial => @partial, :locals => @locals -%>
+</div><!-- contents_right -->
+
+<div id="contents_bottom">
+</div><!-- contents_bottom -->
+
+</div><!-- contents_container -->

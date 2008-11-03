@@ -23,7 +23,7 @@ class GroupController < ApplicationController
                            :forced_leave_user, :change_participation, :append_user ]
 
   verify :method => :post,
-         :only => [ :join, :destroy, :leave, :update, :change_participation, 
+         :only => [ :join, :destroy, :leave, :update, :change_participation,
                     :ado_set_favorite, :toggle_owned, :forced_leave_user, :append_user ],
          :redirect_to => { :action => :show }
 
@@ -370,7 +370,7 @@ private
     @tab_menu_source << ['参加者一覧', 'users']
     @tab_menu_source << ['掲示板', 'bbs']
     @tab_menu_source << ['新規投稿', 'new'] if participating?
-    @tab_menu_source << ['共有ファイル', 'share_file']
+    @tab_menu_source << ['ファイル', 'share_file']
     @tab_menu_source << ['管理', 'manage'] if participating? and @participation.owned?
 
     @tab_menu_option = { :gid => @group.gid }

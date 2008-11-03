@@ -228,9 +228,9 @@ private
 
     @tab_menu_source = [ ['プロフィール', 'show'],
                          ['ブログ', 'blog'],
+                         ['ファイル','share_file'],
                          ['ソーシャル', 'social'],
                          ['ブックマーク', 'bookmark'],
-                         ['共有ファイル','share_file'],
                          ['参加グループ', 'group'] ]
 
     if @user.id != session[:user_id]

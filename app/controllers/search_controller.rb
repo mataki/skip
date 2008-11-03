@@ -78,9 +78,9 @@ class SearchController < ApplicationController
                                     :per_page => 10)
     unless @share_files && @share_files.size > 0
       if params[:commit] || params[:category]
-        flash.now[:notice] = '該当する共有ファイルはありませんでした。'
+        flash.now[:notice] = '該当するファイルはありませんでした。'
       else
-        flash.now[:notice] = '現在共有されているファイルはありません。'
+        flash.now[:notice] = '現在公開されているファイルはありません。'
       end
     end
   end

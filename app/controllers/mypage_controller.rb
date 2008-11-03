@@ -449,9 +449,9 @@ private
     @tab_menu_source = [ ['ホーム', 'index'],
                          ['プロフィール', 'profile'],
                          ['ブログ', 'blog'],
+                         ['ファイル','share_file'],
                          ['ソーシャル', 'social'],
                          ['ブックマーク', 'bookmark'],
-                         ['共有ファイル','share_file'],
                          ['参加グループ', 'group'],
                          ['足跡', 'trace'],
                          ['管理', 'manage'] ]

@@ -26,10 +26,6 @@
   <div id="user_ctl">
     <%= link_to icon_tag(:report_edit, :alt=> 'ブログを書く', :title => 'ブログを書く') + 'ブログを書く', :controller => '/edit', :action => :index %>
     <a id="my_group_link" href="#" ><%= icon_tag(:group_go, :alt=> 'マイグループ', :title => 'マイグループ') -%><span id="link_my_group">所属グループのショートカット</span></a>
-    <% help_url = h(Admin::Setting.help_url) -%>
-    <% unless help_url.blank? -%>
-      <a href="<%= help_url %>" target="_blank"><%= icon_tag(:help, :alt=> 'ヘルプ', :title => 'ヘルプ') -%><span id="link_help">ヘルプ</span></a>
-    <% end -%>
   </div>
   <div id="select_my_group" style="margin-top: 5px; display: none;"></div>
 </div>

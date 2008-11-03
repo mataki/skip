@@ -1,8 +1,8 @@
 :main_menus:
- - :title: SKIPトップ
+ - :title: SKIP公式サイト
    :url:   http://www.openskip.org/
- - :title: SKIP開発SNS
-   :url:   http://dev.openskip.org/
+ - :title: SKIPユーザコミュニティ
+   :url:   http://user.openskip.org/
 #:block_menus:
 # - :id: link_menu
 #   :title: その他
