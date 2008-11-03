@@ -15,14 +15,14 @@
         (<%= link_to "#{h(Admin::Setting.login_account)}を忘れた方はこちら", forgot_login_id_path, {:style => 'font-size:11px', :tabindex => "101"} %>)</td>
     </tr>
     <tr valign="top">
-      <td><%= text_field 'login', 'key', :size => 30, :autocomplete => :on, :style => "font-family:Tahoma", :tabindex => "1" -%></td>
+      <td><%= text_field 'login', 'key', :size => 35, :autocomplete => :on, :style => "font-family:Tahoma", :tabindex => "1" -%></td>
     </tr>
     <tr valign="top">
       <td><label for="login_password"><span style="font-weight: bold;">パスワード</span></label>
         (<%= link_to 'パスワードを忘れた方はこちら', forgot_password_path, {:style => 'font-size:11px', :tabindex => "102"} %>)</td>
     </tr>
     <tr valign="top">
-      <td><%= password_field 'login', 'password', { 'size' => 30, :onfocus=>'select();', 'AUTOCOMPLETE' => "on", :style => "font-family:Tahoma", :tabindex => "2" } %></td>
+      <td><%= password_field 'login', 'password', { 'size' => 35, :onfocus=>'select();', 'AUTOCOMPLETE' => "on", :style => "font-family:Tahoma", :tabindex => "2" } %></td>
     </tr>
     <% elsif login_mode?(:fixed_rp) -%>
     <tr valign="top">

@@ -40,7 +40,7 @@ var relative_url_root = '<%= controller.request.relative_url_root -%>';
 
 <div style="margin: 5px 0px 10px 0px; padding: 3px 10px 3px 10px; background-color: #EEFFEE; border: #FFC000 1px dashed;"><p>以降の操作のためには<%= h Admin::Setting.abbr_app_title -%>へのログインが必要です。以下よりログインしてください。</p></div>
 
-<%= render :partial => "login_failed_message" %>
+<%= render :partial => '/layouts/flash_messages' %>
 
 <div id="login"><%= render :partial => 'shared/login_form' %></div>
 

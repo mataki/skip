@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-10-20 18:36+0900\n"
+"POT-Creation-Date: 2008-10-20 22:52+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1633,8 +1633,13 @@ msgstr ""
 msgid "OpenIDの形式が正しくありません。"
 msgstr ""
 
+#: app/controllers/platform_controller.rb:242
+msgid "OpenIDの認証に失敗しました。"
+msgstr ""
+
 #: app/controllers/platform_controller.rb:240
-msgid "OpenIDサーバーが見つかりませんでした。"
+msgid ""
+"OpenIDサーバーが見つかりませんでした。正しいOpenID URLを入力してください。"
 msgstr ""
 
 #: app/models/openid_identifier.rb:-
@@ -1745,12 +1750,12 @@ msgstr ""
 msgid "Ranking|Url"
 msgstr ""
 
-#: app/views/admin/documents/index.html.erb:13
+#: app/views/admin/documents/index.html.erb:10
 #: app/views/admin/settings/index.html.erb:8
 msgid "Save"
 msgstr ""
 
-#: app/views/admin/documents/index.html.erb:13
+#: app/views/admin/documents/index.html.erb:10
 #: app/views/admin/settings/index.html.erb:8
 msgid "Saving..."
 msgstr ""
@@ -1847,7 +1852,7 @@ msgstr ""
 msgid "Show"
 msgstr ""
 
-#: app/views/platform/index.html.erb:139 app/views/platform/invite.html.erb:2
+#: app/views/platform/index.html.erb:75 app/views/platform/invite.html.erb:2
 msgid "Signup"
 msgstr ""
 
@@ -2475,10 +2480,6 @@ msgstr ""
 msgid "お問い合わせ・ヘルプ"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:241
-msgid "このサーバへの認証を確認してください"
-msgstr ""
-
 #: app/controllers/application.rb:135
 msgid "この操作は、許可されていません。"
 msgstr ""
@@ -2500,7 +2501,9 @@ msgid "ご指定のユーザは存在しません。"
 msgstr ""
 
 #: app/controllers/platform_controller.rb:253
-msgid "そのOpenIDは、登録されていません。"
+msgid ""
+"そのOpenIDは、登録されていません。ログイン後管理画面でOpenID URLを登録後ログ"
+"インしてください。"
 msgstr ""
 
 #: app/models/group_category.rb:27
@@ -2528,7 +2531,7 @@ msgid "カテゴリが選択されていないか、不正な値です。"
 msgstr ""
 
 #: app/controllers/platform_controller.rb:241
-msgid "キャンセルされました。"
+msgid "キャンセルされました。このサーバへの認証を確認してください"
 msgstr ""
 
 #: app/views/admin/group_categories/index.html.erb:9
@@ -2603,14 +2606,14 @@ msgid "メールアドレスは必須です。"
 msgstr ""
 
 #: app/controllers/platform_controller.rb:249
-msgid "ユーザの登録に失敗しました。"
+msgid "ユーザの登録に失敗しました。管理者に連絡してください。<br/>%{msg}"
 msgstr ""
 
 #: app/controllers/admin/users_controller.rb:177
 msgid "ユーザ名が見つかりませんでした。"
 msgstr ""
 
-#: app/views/platform/index.html.erb:140
+#: app/views/platform/index.html.erb:76
 msgid "ユーザ登録してSKIPの利用を開始する"
 msgstr ""
 
@@ -2646,20 +2649,12 @@ msgstr ""
 msgid "ログインに失敗しました。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:253
-msgid "ログイン後管理画面でOpenID URLを登録後ログインしてください。"
-msgstr ""
-
 #: app/views/admin/images/index.html.erb:15
 msgid "ログイン画面の背景画像"
 msgstr ""
 
 #: app/views/admin/images/index.html.erb:6
 msgid "ロゴ画像"
-msgstr ""
-
-#: app/controllers/platform_controller.rb:46
-msgid "下部に記載されているお問い合わせ先にご連絡下さい。"
 msgstr ""
 
 #: app/models/board_entry.rb:64
@@ -2712,7 +2707,7 @@ msgid "共有ファイル関連"
 msgstr ""
 
 #: app/controllers/platform_controller.rb:243
-msgid "内部エラーが発生しました。"
+msgid "内部エラーが発生しました。管理者に連絡してください。"
 msgstr ""
 
 #: app/views/admin/settings/index.html.erb:9
@@ -2793,7 +2788,7 @@ msgid ""
 "{contact_link}下さい。"
 msgstr ""
 
-#: app/views/admin/documents/index.html.erb:15
+#: app/views/admin/documents/index.html.erb:12
 msgid "既定のページに戻す"
 msgstr ""
 
@@ -2813,11 +2808,7 @@ msgstr ""
 msgid "正しいCSVファイルの例"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:240
-msgid "正しいOpenID URLを入力してください。"
-msgstr ""
-
-#: app/views/admin/documents/index.html.erb:14
+#: app/views/admin/documents/index.html.erb:11
 msgid "現在のページを表示"
 msgstr ""
 
@@ -2829,7 +2820,7 @@ msgstr ""
 msgid "現在の画像を表示"
 msgstr ""
 
-#: app/views/admin/documents/index.html.erb:15
+#: app/views/admin/documents/index.html.erb:12
 msgid "現在設定中のページが消えてしまいますがよろしいですか?"
 msgstr ""
 
@@ -2854,14 +2845,6 @@ msgstr ""
 msgid "登録可能です"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:243
-msgid "管理者に連絡してください。"
-msgstr ""
-
-#: app/controllers/platform_controller.rb:249
-msgid "管理者に連絡してください。<br/>%{msg}"
-msgstr ""
-
 #: app/views/admin/users/first.html.erb:2
 msgid "管理者ユーザの作成"
 msgstr ""
@@ -2869,8 +2852,4 @@ msgstr ""
 #: app/controllers/group_controller.rb:54
 #: app/controllers/users_controller.rb:29
 msgid "該当するユーザは存在しませんでした。"
-msgstr ""
-
-#: app/controllers/platform_controller.rb:242
-msgid "認証に失敗しました。"
 msgstr ""

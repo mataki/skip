@@ -91,11 +91,9 @@ class User < ActiveRecord::Base
   end
 
   def self.auth(code, password)
-    user = find_by_code(code)
-    if INITIAL_SETTINGS['enable_invitation']
-      return nil if user.unused?
-    end
-    user if user && user.crypted_password == encrypt(password)
+    return nil unless user = find_by_code(code)
+    return nil if INITIAL_SETTINGS['enable_invitation'] && user.unused?
+    return user if user.crypted_password == encrypt(password)
   end
 
   def self.encrypt(password)

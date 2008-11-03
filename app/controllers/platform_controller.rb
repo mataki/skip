@@ -43,7 +43,7 @@ class PlatformController < ApplicationController
 
         redirect_to_back_or_root
       else
-        flash[:auth_fail_message] ||={ "message" => _("ログインに失敗しました。"), "detail" => _("下部に記載されているお問い合わせ先にご連絡下さい。")}
+        flash[:error] = _("ログインに失敗しました。")
         if request.env['HTTP_REFERER']
           redirect_to :back
         else
@@ -237,28 +237,25 @@ class PlatformController < ApplicationController
 
   def set_error_message_form_result_and_redirect(result)
     error_messages = {
-      :missing      => [_("OpenIDサーバーが見つかりませんでした。"), _("正しいOpenID URLを入力してください。")] ,
-      :canceled     => [_("キャンセルされました。"), _("このサーバへの認証を確認してください") ],
-      :failed       => [_("認証に失敗しました。"), "" ],
-      :setup_needed => [_("内部エラーが発生しました。"), _("管理者に連絡してください。") ]
+      :missing      => _("OpenIDサーバーが見つかりませんでした。正しいOpenID URLを入力してください。"),
+      :canceled     => _("キャンセルされました。このサーバへの認証を確認してください"),
+      :failed       => _("OpenIDの認証に失敗しました。"),
+      :setup_needed => _("内部エラーが発生しました。管理者に連絡してください。")
     }
-    set_error_message_and_redirect error_messages[result.instance_variable_get(:@code)], {:action => :index}
+    set_error_message_and_redirect error_messages[result.instance_variable_get(:@code)]
   end
 
   def set_error_message_from_user_and_redirect(user)
-    set_error_message_and_redirect [_("ユーザの登録に失敗しました。"), _("管理者に連絡してください。<br/>%{msg}")%{:msg => user.errors.full_messages}], :action => :index
+    set_error_message_and_redirect _("ユーザの登録に失敗しました。管理者に連絡してください。<br/>%{msg}")%{:msg => user.errors.full_messages}
   end
 
   def set_error_message_not_create_new_user_and_redirect
-    set_error_message_and_redirect [_("そのOpenIDは、登録されていません。"), _("ログイン後管理画面でOpenID URLを登録後ログインしてください。")], :action => :index
+    set_error_message_and_redirect _("そのOpenIDは、登録されていません。ログイン後管理画面でOpenID URLを登録後ログインしてください。")
   end
 
-  def set_error_message_and_redirect(message, url)
-    flash[:auth_fail_message] = {
-      "message" => message.first,
-      "detail" => message.last
-    }
-    redirect_to url
+  def set_error_message_and_redirect(message)
+    flash[:error] = message
+    redirect_to({:action => :index})
   end
 
   # -----------------------------------------------

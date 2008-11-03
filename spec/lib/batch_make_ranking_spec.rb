@@ -151,7 +151,7 @@ describe BatchMakeRanking do
       before do
         setup_test_data
       end
-      describe 'BoardEntryの記事種別(entry_type)が日記(DIARY)なレコードが存在する場合' do
+      describe 'BoardEntryの記事種別(entry_type)が(DIARY)なレコードが存在する場合' do
         before do
           @board_entry.symbol = "uid:#{@user.uid}"
           @board_entry.update_attributes!(:entry_type => BoardEntry::DIARY)
@@ -162,7 +162,7 @@ describe BatchMakeRanking do
           end.should change(Ranking, :count)
         end
       end
-      describe 'BoardEntryの記事種別(entry_type)が日記(DIARY)なレコードが存在しない場合' do
+      describe 'BoardEntryの記事種別(entry_type)が(DIARY)なレコードが存在しない場合' do
         before do
           @board_entry.update_attributes!(:entry_type => 'BBS')
         end

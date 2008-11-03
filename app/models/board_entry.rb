@@ -96,7 +96,7 @@ class BoardEntry < ActiveRecord::Base
     '/page/' + id.to_s
   end
 
-  # 日記かどうか
+  # ブログかどうか
   def diary?
     entry_type == DIARY
   end
@@ -216,7 +216,7 @@ class BoardEntry < ActiveRecord::Base
   end
 
 
-  # 最新の一覧を取得（日記でも掲示板でも。オーナーさえ決まればOK。）
+  # 最新の一覧を取得（ブログでも掲示板でも。オーナーさえ決まればOK。）
   def self.find_visible(limit, login_user_symbols, owner_symbol)
     find_params = self.make_conditions(login_user_symbols, {:symbol => owner_symbol})
     return self.find(:all,

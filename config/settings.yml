@@ -26,15 +26,14 @@ contact_addr:
 help_url:
   format: url
   allow_blank: true
-  default: http://sites.google.com/a/openskip.org/docs/techinfo/%E3%83%9E%E3%83%8B%E3%83%A5%E3%82%A2%E3%83%AB                    # ヘルプのURL
+  default: http://portal.openskip.org/                     # ヘルプのURL
 initial_anntena:
   default: SKIPチーム                                      # 初期登録されるアンテナの名称
 login_account:
   default: ログインID                                      # ログインアカウントの名称
-footer_link:                                               #フッターの１行目（ヘルプ・規約へのリンクなどを推奨）
+footer_link:                                               # フッターの１行目（ヘルプ・規約へのリンクなどを推奨）
   default: >-
-    <a onclick="open_hiki();" href="#">Hiki記法</a> - <a onclick="open_rule();" href="#">利用規約</a> -
-    <a onclick="open_site();" href="#">このサイトについて</a>
+    <a onclick="open_site();" href="#">このサイトについて</a> - <a onclick="open_rule();" href="#">利用規約</a> - <a onclick="open_hiki();" href="#">Hiki記法</a>
 footer_contact:
   default: お問い合わせはこちら                            # フッターの２列目（提供元への連絡先などを推奨）
 footer_copyright:
@@ -43,7 +42,7 @@ footer_image_link_url:
   format: url
   default: http://www.openskip.org/                        # フッター右側に表示する画像のリンクURL
 point_button:
-  default: GoodJob                                         # 記事へのポイント評価の
+  default: GoodJob                                         # 記事へのポイント評価の名称（へぇ～などに変更できます）
 
 # メール関連の設定
 mail_function_setting:    # メール関連項目の表示制御(メールアドレス変更、メール通知設定、メール送信履歴、(記事)連絡タグ)
@@ -78,13 +77,14 @@ recent_date:                       # 最近を示す日数
   format: int
   default: 10
 
-# feed設定
+# フィードの設定
 mypage_feed_default_limit:         # マイページで表示するRSSフィードの設定(デフォルトの1フィードあたりの最大表示件数)
   format: int
   default: 3
-mypage_feed_timeout:       # マイページで表示するRSSフィードのタイムアウト(秒)
+mypage_feed_timeout:               # マイページで表示するRSSフィードのタイムアウト(秒)
   format: int
   default: 7
+
 # フィードの設定
 # url:   フィードのURL
 # title: フィードのタイトル(フィード内のタイトル以外のものを設定したい場合)

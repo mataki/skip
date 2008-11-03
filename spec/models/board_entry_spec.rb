@@ -77,7 +77,7 @@ describe BoardEntry, "#delete_images" do
   end
 end
 
-describe BoardEntry, "があるユーザの日記だったとき" do
+describe BoardEntry, "があるユーザのブログだったとき" do
   fixtures :board_entries
   before(:each) do
     @board_entry = board_entries(:a_entry)
