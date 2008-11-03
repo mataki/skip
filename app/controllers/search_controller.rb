@@ -17,10 +17,12 @@ require "rexml/document"
 require "open-uri"
 
 class SearchController < ApplicationController
-  before_filter :setup_layout
 
   # tab_menu
   def entry_search
+    @main_menu = @title = '記事'
+    @tab_menu_source = [ ['記事を探す', 'entry_search'] ]
+
     params[:tag_select] ||= "AND"
     find_params = BoardEntry.make_conditions(login_user_symbols, {:keyword =>params[:keyword],
                                                :tag_words => params[:tag_words],
@@ -60,6 +62,9 @@ class SearchController < ApplicationController
 
   # tab_menu
   def share_file_search
+    @main_menu = @title = 'ファイル'
+    @tab_menu_source = [ ['ファイルを探す', 'share_file_search'] ]
+
     @tags = ShareFile.get_popular_tag_words
 
     params[:tag_select] ||= "AND"
@@ -87,6 +92,8 @@ class SearchController < ApplicationController
 
   #全文検索
   def full_text_search
+    @main_menu = @title = '全文検索'
+
     params[:query] = params[:full_text_query] unless params[:full_text_query].blank?
     params[:target_contents] ||= 'all'
     params[:target_aid] ||= 'all'
@@ -106,14 +113,6 @@ class SearchController < ApplicationController
   end
 
 private
-  def setup_layout
-    @main_menu = @title = 'データを探す'
-
-    @tab_menu_source = [ ['記事を探す', 'entry_search'],
-                         ['ファイルを探す', 'share_file_search'] ]
-    @tab_menu_source.unshift(['全文検索', 'full_text_search']) if INITIAL_SETTINGS['full_text_search_setting']
-  end
-
   # 所属情報を取得するためのメソッド
   # user_codeを渡すとSNSの所属情報と設定のアプリの所属情報を取得する
   def belong_symbols user_code

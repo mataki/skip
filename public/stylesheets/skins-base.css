@@ -21,14 +21,9 @@ div#side ul {
 div#side ul img {
   margin-right: 4px;
 }
-div#side li.normal {
+div#side li {
   background-color: #ffffff;
-  padding: 1px 0 1px 4px;
-  list-style-type: none;
-}
-div#side li.selected {
-  background-color: #ffffff;
-  padding: 3px 0 3px 4px;
+  padding: 5px 0 5px 3px;
   list-style-type: none;
 }
 div#side li.selected a {

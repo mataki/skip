@@ -65,28 +65,30 @@ ENV['SECRET_KEY'] ||= INITIAL_SETTINGS['secret_key']
 menu_btns = [
   { :img_name => "house",         :id => "btn_mypage", :name => "マイページ", :url => {:controller => '/mypage', :action => 'index'} },
 
-  { :separator => true, :name => "[マイメニュー]"},
+#   { :separator => true, :name => "[マイメニュー]"},
 
-  { :img_name => "vcard",         :id => "btn_profile", :name => "プロフィール", :url => {:controller => '/mypage', :action => 'profile'} },
-  { :img_name => "report",        :id => "btn_my_blog", :name => "マイブログ", :url => {:controller => '/mypage', :action => 'blog'} },
-  { :img_name => "disk_multiple", :id => "btn_manage", :name => "マイファイル", :url => {:controller => '/mypage', :action => 'share_file'} },
-  { :img_name => "book_open",     :id => "btn_my_bookmark", :name => "マイブクマ", :url => {:controller => '/mypage', :action => 'bookmark'} },
-  { :img_name => "cog",           :id => "btn_manage", :name => "自分の管理", :url => {:controller => '/mypage', :action => 'manage'} },
+#   { :img_name => "vcard",         :id => "btn_profile", :name => "プロフィール", :url => {:controller => '/mypage', :action => 'profile'} },
+#   { :img_name => "report",        :id => "btn_my_blog", :name => "マイブログ", :url => {:controller => '/mypage', :action => 'blog'} },
+#   { :img_name => "disk_multiple", :id => "btn_manage", :name => "マイファイル", :url => {:controller => '/mypage', :action => 'share_file'} },
+#   { :img_name => "book_open",     :id => "btn_my_bookmark", :name => "マイブクマ", :url => {:controller => '/mypage', :action => 'bookmark'} },
+#   { :img_name => "cog",           :id => "btn_manage", :name => "自分の管理", :url => {:controller => '/mypage', :action => 'manage'} },
 
-  { :separator => true, :name => "[全体メニュー]"},
+#  { :separator => true, :name => "[全体メニュー]"},
 
-  { :img_name => "page_find",     :id => "btn_search", :name => "データを探す", :url => {:controller => '/search', :action => (INITIAL_SETTINGS['full_text_search_setting'] ? 'full_text_search' : 'entry_search') } },
+  { :img_name => "report",        :id => "btn_entries", :name => "記事", :url => {:controller => '/search', :action => 'entry_search' } },
+  { :img_name => "disk_multiple", :id => "btn_share_files", :name => "ファイル", :url => {:controller => '/search', :action => 'share_file_search' } },
   { :img_name => "user_suit",     :id => "btn_users", :name => "ユーザ", :url => {:controller => '/users', :action => 'index'} },
   { :img_name => "group",         :id => "btn_groups", :name => "グループ", :url => {:controller => '/groups', :action => 'index'} },
   { :img_name => "book",          :id => "btn_bookmarks", :name => "ブックマーク", :url => {:controller => '/bookmarks', :action => 'index'} },
   { :img_name => "chart_bar",     :id => "btn_rankings", :name => "ランキング", :url => {:controller => '/rankings', :action => 'index'} },
+  INITIAL_SETTINGS['full_text_search_setting'] ? { :img_name => "page_find",     :id => "btn_search", :name => "全文検索", :url => {:controller => '/search', :action => 'full_text_search' } } : nil,
 ]
 MENU_BTNS = menu_btns
 
 admin_menu_btns = [
-  { :separator => true, :name => "[管理メニュー]"},
+#  { :separator => true, :name => "[管理メニュー]"},
 
-  { :img_name => "database_gear",         :id => "btn_admin", :name => "システム管理", :url => {:controller => '/admin', :action => 'index'} },
+  { :img_name => "database_gear",         :id => "btn_admin", :name => "設定・管理", :url => {:controller => '/admin', :action => 'index'} },
 ]
 ADMIN_MENU_BTNS = admin_menu_btns
 

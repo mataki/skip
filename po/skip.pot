@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-10-20 22:52+0900\n"
+"POT-Creation-Date: 2008-10-21 06:55+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2494,7 +2494,7 @@ msgstr ""
 msgid "ご指定のグループは存在しません。"
 msgstr ""
 
-#: app/models/board_entry.rb:56 app/controllers/user_controller.rb:253
+#: app/models/board_entry.rb:56 app/controllers/user_controller.rb:252
 #: app/controllers/admin/users_controller.rb:53
 #: app/controllers/admin/users_controller.rb:69
 msgid "ご指定のユーザは存在しません。"
@@ -2546,10 +2546,6 @@ msgstr ""
 
 #: app/views/admin/settings/index.html.erb:15
 msgid "システム情報"
-msgstr ""
-
-#: app/views/layouts/admin/application.html.erb:8
-msgid "システム管理"
 msgstr ""
 
 #: app/controllers/admin/settings_controller.rb:63
@@ -2847,6 +2843,10 @@ msgstr ""
 
 #: app/views/admin/users/first.html.erb:2
 msgid "管理者ユーザの作成"
+msgstr ""
+
+#: app/views/layouts/admin/application.html.erb:8
+msgid "設定・管理"
 msgstr ""
 
 #: app/controllers/group_controller.rb:54

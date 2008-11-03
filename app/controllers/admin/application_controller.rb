@@ -25,7 +25,7 @@ class Admin::ApplicationController < ApplicationController
   end
 
   def setup_layout
-    @title = @main_menu = "システム管理"
+    @title = @main_menu = "設定・管理"
   end
 
   protected

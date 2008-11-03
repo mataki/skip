@@ -66,7 +66,7 @@ private
     @main_menu = @title = 'ブックマーク'
 
     @tab_menu_source = [ ['人気ランキング', 'index'],
-                         ['検索', 'search'],
+                         ['ブックマークを探す', 'search'],
                          ['セットアップ', 'setup'] ]
   end
 end

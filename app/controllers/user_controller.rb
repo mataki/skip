@@ -23,11 +23,6 @@ class UserController < ApplicationController
          :redirect_to => { :action => :index }
 
   # tab_menu
-  def mypage
-    redirect_to :controller => 'mypage', :action => ''
-  end
-
-  # tab_menu
   def show
     limit = 5
 
@@ -55,7 +50,7 @@ class UserController < ApplicationController
 
   # tab_menu
   def blog
-    @main_menu = 'マイブログ' if @user.id == session[:user_id]
+    @main_menu = 'マイページ' if @user.id == session[:user_id]
 
     options = { :symbol => "uid:" + @user.uid }
     setup_blog_left_box options
@@ -143,7 +138,7 @@ class UserController < ApplicationController
 
   # tab_menu
   def bookmark
-    @main_menu = 'マイブクマ' if @user.id == session[:user_id]
+    @main_menu = 'マイページ' if @user.id == session[:user_id]
 
     params[:user_id] = @user.id
     text = render_component_as_string( :controller => 'bookmark', :action => 'list', :id => @user.symbol, :params => params)
@@ -183,7 +178,7 @@ class UserController < ApplicationController
 
   # tab_menu
   def share_file
-    @main_menu = 'マイファイル' if @user.id == session[:user_id]
+    @main_menu = 'マイページ' if @user.id == session[:user_id]
 
     params.store(:owner_name, @user.name)
     params.store(:visitor_is_uploader, (@user.id == session[:user_id]))
@@ -223,9 +218,6 @@ class UserController < ApplicationController
 
 private
   def setup_layout
-    @main_menu = (@user.id == session[:user_id] ? 'プロフィール' : 'ユーザ')
-    @title = @user.name + 'さん'
-
     @tab_menu_source = [ ['プロフィール', 'show'],
                          ['ブログ', 'blog'],
                          ['ファイル','share_file'],
@@ -234,13 +226,20 @@ private
                          ['参加グループ', 'group'] ]
 
     if @user.id != session[:user_id]
+      @main_menu = 'ユーザ'
+      @title = @user.name + 'さん'
+
       if Chain.count(:conditions => ["from_user_id = ? and to_user_id = ?", session[:user_id], @user.id]) <= 0
         @tab_menu_source << ['紹介文を作る', 'new_chain']
       else
         @tab_menu_source << ['紹介文の変更', 'edit_chain']
       end
     else
-      @tab_menu_source.unshift ['マイページ', 'mypage']
+      @main_menu = @title = 'マイページ'
+
+      @tab_menu_source.unshift ['ホーム', 'index']
+      @tab_menu_source << ['足跡', 'trace']
+      @tab_menu_source << ['管理', 'manage']
     end
 
     @tab_menu_option = { :uid => @user.uid }
@@ -252,6 +251,11 @@ private
     else
       flash[:warning] = _('ご指定のユーザは存在しません。')
       redirect_to :controller => 'mypage', :action => 'index'
+      return false
+    end
+
+    if @user.id == session[:user_id] and %(index, trace, manage).include?(self.action_name)
+      redirect_to :controller => 'mypage', :action => self.action_name
       return false
     end
   end
