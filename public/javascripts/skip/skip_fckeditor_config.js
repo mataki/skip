@@ -39,3 +39,6 @@ FCKConfig.ImageUpload = false ;
 FCKConfig.FlashUpload = false ;
 
 FCKConfig.FontNames             = 'ＭＳ Ｐゴシック;ＭＳ Ｐ明朝;ＭＳ ゴシック;ＭＳ 明朝;MS UI Gothic;Arial;Comic Sans MS;Courier New;Tahoma;Times New Roman;Verdana' ;
+
+FCKConfig.EnterMode = 'br' ;
+FCKConfig.ShiftEnterMode = 'p' ;
