@@ -71,6 +71,8 @@ class Admin::Setting < ActiveRecord::Base
   N_('Admin::Setting|Host and port description')
   N_('Admin::Setting|Protocol')
   N_('Admin::Setting|Protocol description')
+  N_('Admin::Setting|Enable activation')
+  N_('Admin::Setting|Enable activation description')
 
   cattr_accessor :available_settings
   @@available_settings = YAML::load(File.open("#{RAILS_ROOT}/config/settings.yml"))

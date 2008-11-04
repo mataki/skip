@@ -80,7 +80,7 @@ describe PortalController, 'POST /apply' do
     UserMailer.stub!(:deliver_sent_signup_confirm)
     @user.stub!(:activate!)
     INITIAL_SETTINGS['username_use_setting'] = false
-    INITIAL_SETTINGS['enable_activation'] = false
+    Admin::Setting.stub!(:enable_activation).and_return(false)
   end
 
   describe '正常に終了する場合' do
@@ -130,7 +130,7 @@ describe PortalController, 'POST /apply' do
     end
     describe 'アクティベート機能が無効の場合' do
       before do
-        INITIAL_SETTINGS['enable_activation'] = false
+        Admin::Setting.should_receive(:enable_activation).and_return(false)
       end
       it 'activateされること' do
         @user.should_receive(:activate!)
@@ -143,7 +143,7 @@ describe PortalController, 'POST /apply' do
     end
     describe 'アクティベート機能が有効の場合' do
       before do
-        INITIAL_SETTINGS['enable_activation'] = true
+        Admin::Setting.should_receive(:enable_activation).and_return(true)
       end
       it 'パスワードの設定が行われること' do
         @user.should_receive(:password=).at_least(:once)

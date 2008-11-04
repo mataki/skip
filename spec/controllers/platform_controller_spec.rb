@@ -432,26 +432,38 @@ describe PlatformController, 'POST /forgot_login_id' do
 end
 
 describe PlatformController, 'GET /activate' do
-  it 'サインアップ画面に遷移すること' do
-    get :activate
-    response.should be_success
+  describe 'アクティベート機能が有効な場合' do
+    before do
+      Admin::Setting.should_receive(:enable_activation).and_return(true)
+    end
+    it 'サインアップ画面に遷移すること' do
+      get :activate
+      response.should be_success
+    end
+  end
+  describe 'アクティベート機能が無効な場合' do
+    before do
+      Admin::Setting.should_receive(:enable_activation).and_return(false)
+    end
+    it '404ページへリダイレクトされること' do
+      get :activate
+      response.code.should == '404'
+    end
   end
 end
 
 describe PlatformController, 'POST /activate' do
-  before do
-    UserProfile.stub!(:find_by_email)
-  end
-  describe 'メールアドレスの入力がない場合' do
-    it 'メールアドレスの入力は必須である旨のメッセージを表示する' do
-      post :activate, :email => ''
-      flash[:error].should == 'メールアドレスは必須です。'
-      response.should be_success
-    end
-  end
   describe 'アクティベート機能が有効な場合' do
     before do
-      INITIAL_SETTINGS['enable_activation'] = true
+      Admin::Setting.should_receive(:enable_activation).and_return(true)
+      UserProfile.stub!(:find_by_email)
+    end
+    describe 'メールアドレスの入力がない場合' do
+      it 'メールアドレスの入力は必須である旨のメッセージを表示する' do
+        post :activate, :email => ''
+        flash[:error].should == 'メールアドレスは必須です。'
+        response.should be_success
+      end
     end
     describe '登録済みのメールアドレスが送信された場合' do
       before do
@@ -509,7 +521,7 @@ describe PlatformController, 'POST /activate' do
   end
   describe 'アクティベート機能が無効な場合' do
     before do
-      INITIAL_SETTINGS['enable_activation'] = false
+      Admin::Setting.should_receive(:enable_activation).and_return(false)
     end
     it '404ページへリダイレクトされること' do
       post :activate, :email => 'activate@example.com'

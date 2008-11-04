@@ -142,12 +142,12 @@ end
 
 describe User, ".auth" do
   before do
-    INITIAL_SETTINGS['enable_activation'] = false
+    Admin::Setting.stub!(:enable_activation).and_return(false)
   end
   describe "指定したログインIDに対応するユーザが存在する場合" do
     describe "アクティベート機能が有効で未使用ユーザの場合" do
       before do
-        INITIAL_SETTINGS['enable_activation'] = true
+        Admin::Setting.should_receive(:enable_activation).and_return(true)
         @password = 'password'
         @user = mock_model(User)
         @user.stub!(:crypted_password).and_return(User.encrypt(@password))

@@ -1,5 +1,6 @@
-<% @revert_columns = %w(stop_new_user) -%>
+<% @revert_columns = %w(stop_new_user enable_activation) -%>
 <div class="box tabular">
   <p><%= settings_label_with_check_box_tag :stop_new_user %></p>
+  <p><%= settings_label_with_check_box_tag :enable_activation %></p>
 </div>
 <%# 全体の管理メニュー ログビュアーなどがここに表示される予定 -%>
