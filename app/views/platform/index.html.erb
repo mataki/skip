@@ -71,9 +71,9 @@ div#main {
   <p>ログイン</p>
   <%= render :partial => 'shared/login_form' %>
 
-<% if INITIAL_SETTINGS['enable_invitation'] -%>
+<% if INITIAL_SETTINGS['enable_activation'] -%>
   <p><%= _('Signup') %></p>
-  <div style="text-align: center; font-weight: bold; font-size: 14px;"><%= link_to _('ユーザ登録してSKIPの利用を開始する'), invite_url %></div>
+  <div style="text-align: center; font-weight: bold; font-size: 14px;"><%= link_to _('ユーザ登録してSKIPの利用を開始する'), activate_url %></div>
 <% end -%>
 </div>
 

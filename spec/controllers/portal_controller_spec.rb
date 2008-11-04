@@ -80,7 +80,7 @@ describe PortalController, 'POST /apply' do
     UserMailer.stub!(:deliver_sent_signup_confirm)
     @user.stub!(:activate!)
     INITIAL_SETTINGS['username_use_setting'] = false
-    INITIAL_SETTINGS['enable_invitation'] = false
+    INITIAL_SETTINGS['enable_activation'] = false
   end
 
   describe '正常に終了する場合' do
@@ -128,9 +128,9 @@ describe PortalController, 'POST /apply' do
         response.should redirect_to(:controller => 'mypage', :action => 'welcome')
       end
     end
-    describe '招待機能が無効の場合' do
+    describe 'アクティベート機能が無効の場合' do
       before do
-        INITIAL_SETTINGS['enable_invitation'] = false
+        INITIAL_SETTINGS['enable_activation'] = false
       end
       it 'activateされること' do
         @user.should_receive(:activate!)
@@ -141,9 +141,9 @@ describe PortalController, 'POST /apply' do
         response.should redirect_to(:controller => 'mypage', :action => 'welcome')
       end
     end
-    describe '招待機能が有効の場合' do
+    describe 'アクティベート機能が有効の場合' do
       before do
-        INITIAL_SETTINGS['enable_invitation'] = true
+        INITIAL_SETTINGS['enable_activation'] = true
       end
       it 'パスワードの設定が行われること' do
         @user.should_receive(:password=).at_least(:once)

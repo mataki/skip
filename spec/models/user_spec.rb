@@ -142,12 +142,12 @@ end
 
 describe User, ".auth" do
   before do
-    INITIAL_SETTINGS['enable_invitation'] = false
+    INITIAL_SETTINGS['enable_activation'] = false
   end
   describe "指定したログインIDに対応するユーザが存在する場合" do
-    describe "招待機能が有効で未使用ユーザの場合" do
+    describe "アクティベート機能が有効で未使用ユーザの場合" do
       before do
-        INITIAL_SETTINGS['enable_invitation'] = true
+        INITIAL_SETTINGS['enable_activation'] = true
         @password = 'password'
         @user = mock_model(User)
         @user.stub!(:crypted_password).and_return(User.encrypt(@password))
@@ -249,7 +249,7 @@ describe User, '#reset_password' do
   end
 end
 
-describe User, '#invite' do
+describe User, '#activate' do
   before do
     @user = create_user
     @now = Time.local(2008, 11, 1)
@@ -257,12 +257,12 @@ describe User, '#invite' do
   end
   it 'activation_tokenに値が入ること' do
     lambda do
-      @user.invite
+      @user.activate
     end.should change(@user, :activation_token)
   end
   it 'activation_token_expires_atが24時間後となること' do
     lambda do
-      @user.invite
+      @user.activate
     end.should change(@user, :activation_token_expires_at).from(nil).to(@now.since(24.hour))
   end
 end

@@ -72,7 +72,7 @@ class UserMailer < ActionMailer::Base
     @body       = {:login_id => login_id, :footer => @@footer}
   end
 
-  def sent_invite(recipient, signup_url)
+  def sent_activate(recipient, signup_url)
     @recipients = recipient
     @subject    = UserMailer.base64("[#{Admin::Setting.abbr_app_title}] " + _('ユーザ登録の確認メールです'))
     @from       = @@from

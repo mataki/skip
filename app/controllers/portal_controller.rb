@@ -57,7 +57,7 @@ class PortalController < ApplicationController
   def apply
     @user = current_user
     @user.attributes = params[:user]
-    if INITIAL_SETTINGS['enable_invitation']
+    if INITIAL_SETTINGS['enable_activation']
       @user.password = params[:user][:password]
       @user.password_confirmation = params[:user][:password_confirmation]
     end

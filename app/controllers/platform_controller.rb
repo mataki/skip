@@ -125,8 +125,8 @@ class PlatformController < ApplicationController
     end
   end
 
-  def invite
-    unless INITIAL_SETTINGS['enable_invitation']
+  def activate
+    unless INITIAL_SETTINGS['enable_activation']
       return render(:file => File.join(RAILS_ROOT, 'public', '404.html'), :status => :not_found)
     end
     return render(:layout => 'not_logged_in') unless request.post?
@@ -137,9 +137,9 @@ class PlatformController < ApplicationController
     end
     if @user_profile = UserProfile.find_by_email(email)
       if user = @user_profile.unused_user
-        user.invite
+        user.activate
         user.save_without_validation!
-        UserMailer.deliver_sent_invite(email, signup_url(user.activation_token))
+        UserMailer.deliver_sent_activate(email, signup_url(user.activation_token))
         flash[:notice] = _("ユーザ登録のためのURLを記載したメールを%{email}宛てに送信しました。") % {:email => email}
         redirect_to :controller => '/platform'
       else

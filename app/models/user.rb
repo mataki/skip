@@ -92,7 +92,7 @@ class User < ActiveRecord::Base
 
   def self.auth(code, password)
     return nil unless user = find_by_code(code)
-    return nil if INITIAL_SETTINGS['enable_invitation'] && user.unused?
+    return nil if INITIAL_SETTINGS['enable_activation'] && user.unused?
     return user if user.crypted_password == encrypt(password)
   end
 
@@ -298,7 +298,7 @@ class User < ActiveRecord::Base
     update_attributes(:password_reset_token => nil, :password_reset_token_expires_at => nil)
   end
 
-  def invite
+  def activate
     self.crypted_password = nil
     self.activation_token = self.class.make_token
     self.activation_token_expires_at = Time.now.since(24.hour)
