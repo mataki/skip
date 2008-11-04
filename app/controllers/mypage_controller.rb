@@ -95,6 +95,7 @@ class MypageController < ApplicationController
       timeout(Admin::Setting.mypage_feed_timeout.to_i) do
         feed = open(setting[:url], :proxy => INITIAL_SETTINGS['proxy_url']){ |f| RSS::Parser.parse(f.read) }
       end
+      feed = feed.to_rss("2.0") if feed.is_a?(RSS::Atom::Feed)
       feed.channel.title = setting[:title] if setting[:title]
       limit = (setting[:limit]||Admin::Setting.mypage_feed_default_limit)
       feed.items.slice!(limit..-1) if feed.items.size > limit
