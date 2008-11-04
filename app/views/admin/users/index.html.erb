@@ -8,13 +8,15 @@
   <%= render :partial => '/admin/search_box', :locals => { :class_name => 'Admin::User' } %>
   <%= render :partial => '/admin/shared/sortable_table',
              :locals => {
-               :columns => %w[code uid name status admin],
+               :columns => %w[code uid name status admin activation_token],
                :disp_columns_proc => lambda do |object,column|
       case column
       when "status"
         _("User|Status|#{object.status}")
       when "admin"
         _("User|Admin|#{object.admin}")
+      when "activation_token"
+        link_to _('Show'), show_signup_url_admin_user_path(object), :class => 'nyroModal' unless object.activation_token.blank?
       else
         object.send(column.to_sym)
       end
@@ -34,4 +36,16 @@
 
 <%= link_to _('New %{model}') % {:model => _('user')}, new_admin_user_path %> |
 <%= link_to _('New user from csv'), import_new_admin_user_path %>
+<% end -%>
+
+<% content_for :javascript do -%>
+<script type="text/javascript">
+$j(function(){
+    $j.fn.nyroModal.settings.processHandler = function(settings) {
+        $j.nyroModalSettings({
+            minWidth: 10, minHeight: 10
+        });
+    };
+});
+</script>
 <% end -%>

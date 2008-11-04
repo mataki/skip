@@ -203,6 +203,12 @@ class Admin::UsersController < Admin::ApplicationController
     end
   end
 
+  def show_signup_url
+    user = Admin::User.find(params[:id])
+    @signup_url = signup_url(user.activation_token)
+    render :layout => false
+  end
+
   private
   def valid_activation_code? code
     return false unless code
