@@ -14,6 +14,17 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Admin::Setting < ActiveRecord::Base
+  # ================================================================================================
+  # 全体設定用
+  # ================================================================================================
+  N_('Admin::Setting|Stop new user')
+  N_('Admin::Setting|Stop new user description')
+  N_('Admin::Setting|Enable activation')
+  N_('Admin::Setting|Enable activation description')
+
+  # ================================================================================================
+  # 各種文言の設定用
+  # ================================================================================================
   N_('Admin::Setting|Abbr app title')
   N_('Admin::Setting|Abbr app title description')
   N_('Admin::Setting|Contact addr')
@@ -34,19 +45,12 @@ class Admin::Setting < ActiveRecord::Base
   N_('Admin::Setting|Footer image link url description')
   N_('Admin::Setting|Point button')
   N_('Admin::Setting|Point button description')
-  N_('Admin::Setting|Stop new user')
-  N_('Admin::Setting|Stop new user description')
-  N_('Admin::Setting|Mypage feed settings')
-  N_('Admin::Setting|Mypage feed settings description')
-  N_('Admin::Setting|Mypage feed settings url')
-  N_('Admin::Setting|Mypage feed settings url description')
-  N_('Admin::Setting|Mypage feed settings title')
-  N_('Admin::Setting|Mypage feed settings title description')
-  N_('Admin::Setting|Mypage feed default limit')
-  N_('Admin::Setting|Mypage feed default limit description')
-  N_('Admin::Setting|Antenna settings')
-  N_('Admin::Setting|Antenna default group')
-  N_('Admin::Setting|Antenna default group description')
+
+  # ================================================================================================
+  # メール関連の設定用
+  # ================================================================================================
+  N_('Admin::Setting|Mail function setting')
+  N_('Admin::Setting|Mail function setting description')
   N_('Admin::Setting|Smtp settings')
   N_('Admin::Setting|Smtp settings description')
   N_('Admin::Setting|Smtp settings password')
@@ -61,18 +65,33 @@ class Admin::Setting < ActiveRecord::Base
   N_('Admin::Setting|Smtp settings domain description')
   N_('Admin::Setting|Smtp settings authentication')
   N_('Admin::Setting|Smtp settings authentication description')
-  N_('Admin::Setting|Mypage feed timeout')
-  N_('Admin::Setting|Mypage feed timeout description')
-  N_('Admin::Setting|Mail function setting')
-  N_('Admin::Setting|Mail function setting description')
-  N_('Admin::Setting|Recent date')
-  N_('Admin::Setting|Recent date description')
   N_('Admin::Setting|Host and port')
   N_('Admin::Setting|Host and port description')
   N_('Admin::Setting|Protocol')
   N_('Admin::Setting|Protocol description')
-  N_('Admin::Setting|Enable activation')
-  N_('Admin::Setting|Enable activation description')
+
+  # ================================================================================================
+  # RSSフィードの設定用
+  # ================================================================================================
+  N_('Admin::Setting|Mypage feed default limit')
+  N_('Admin::Setting|Mypage feed default limit description')
+  N_('Admin::Setting|Mypage feed timeout')
+  N_('Admin::Setting|Mypage feed timeout description')
+  N_('Admin::Setting|Mypage feed settings')
+  N_('Admin::Setting|Mypage feed settings description')
+  N_('Admin::Setting|Mypage feed settings url')
+  N_('Admin::Setting|Mypage feed settings url description')
+  N_('Admin::Setting|Mypage feed settings title')
+  N_('Admin::Setting|Mypage feed settings title description')
+
+  # ================================================================================================
+  # その他設定
+  # ================================================================================================
+  N_('Admin::Setting|Antenna settings')
+  N_('Admin::Setting|Antenna default group')
+  N_('Admin::Setting|Antenna default group description')
+  N_('Admin::Setting|Recent date')
+  N_('Admin::Setting|Recent date description')
 
   cattr_accessor :available_settings
   @@available_settings = YAML::load(File.open("#{RAILS_ROOT}/config/settings.yml"))
