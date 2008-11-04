@@ -58,6 +58,7 @@ class PortalController < ApplicationController
     @user = current_user
     @user.attributes = params[:user]
     if Admin::Setting.enable_activation
+      @user.crypted_password = nil
       @user.password = params[:user][:password]
       @user.password_confirmation = params[:user][:password_confirmation]
     end

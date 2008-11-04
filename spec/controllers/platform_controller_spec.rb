@@ -473,7 +473,7 @@ describe PlatformController, 'POST /activate' do
         controller.stub!(:signup_url).and_return(@signup_url)
         @user = stub_model(User, :activation_token => @activation_token)
         @user.stub!(:issue_activation_code)
-        @user.stub!(:save_without_validation!)
+        @user.stub!(:save!)
         UserMailer.stub!(:deliver_sent_activate)
         @user_profile.stub!(:user).and_return(@user)
         UserProfile.should_receive(:find_by_email).and_return(@user_profile)
@@ -488,7 +488,7 @@ describe PlatformController, 'POST /activate' do
         end
         it 'アクティベーションコード発行処理が行われること' do
           @user.should_receive(:issue_activation_code)
-          @user.should_receive(:save_without_validation!)
+          @user.should_receive(:save!)
           post :activate, :email => @email
         end
         it 'メール送信した旨のメッセージが設定されてリダイレクトされること' do

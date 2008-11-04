@@ -85,9 +85,7 @@ class User < ActiveRecord::Base
   end
 
   def before_save
-    unless password.blank?
-      self.crypted_password = encrypt(password) if password_required?
-    end
+    self.crypted_password = encrypt(password) if password_required?
   end
 
   def self.auth(code, password)
@@ -299,7 +297,6 @@ class User < ActiveRecord::Base
   end
 
   def issue_activation_code
-    self.crypted_password = nil
     self.activation_token = self.class.make_token
     self.activation_token_expires_at = Time.now.since(24.hour)
   end

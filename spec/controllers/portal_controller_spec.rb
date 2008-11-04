@@ -145,6 +145,11 @@ describe PortalController, 'POST /apply' do
       before do
         Admin::Setting.should_receive(:enable_activation).and_return(true)
       end
+      it 'crypted_passwordのクリアが行われること' do
+        # passwordの必須チェックに引っ掛けるため。もっと別の対応をしたい所
+        @user.should_receive(:crypted_password=).with(nil)
+        post_apply
+      end
       it 'パスワードの設定が行われること' do
         @user.should_receive(:password=).at_least(:once)
         @user.should_receive(:password_confirmation=).at_least(:once)
