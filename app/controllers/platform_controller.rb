@@ -137,7 +137,7 @@ class PlatformController < ApplicationController
     end
     if @user_profile = UserProfile.find_by_email(email)
       if user = @user_profile.unused_user
-        user.activate
+        user.issue_activation_code
         user.save_without_validation!
         UserMailer.deliver_sent_activate(email, signup_url(user.activation_token))
         flash[:notice] = _("ユーザ登録のためのURLを記載したメールを%{email}宛てに送信しました。") % {:email => email}

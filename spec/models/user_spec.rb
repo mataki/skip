@@ -249,7 +249,7 @@ describe User, '#reset_password' do
   end
 end
 
-describe User, '#activate' do
+describe User, '#issue_activation_code' do
   before do
     @user = create_user
     @now = Time.local(2008, 11, 1)
@@ -257,12 +257,12 @@ describe User, '#activate' do
   end
   it 'activation_tokenに値が入ること' do
     lambda do
-      @user.activate
+      @user.issue_activation_code
     end.should change(@user, :activation_token)
   end
   it 'activation_token_expires_atが24時間後となること' do
     lambda do
-      @user.activate
+      @user.issue_activation_code
     end.should change(@user, :activation_token_expires_at).from(nil).to(@now.since(24.hour))
   end
 end
