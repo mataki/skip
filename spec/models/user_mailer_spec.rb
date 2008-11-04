@@ -22,30 +22,6 @@ describe UserMailer do
   end
 end
 
-describe UserMailer do
-  include ActionController::UrlWriter
-  before do
-    UserMailer.new
-  end
-  it "@@site_urlが正しく設定されていること" do
-    UserMailer.site_url.should == root_url(:host => Admin::Setting.host_and_port_by_initial_settings_default)
-  end
-  it "@@system_mail_addrが正しく設定されていること" do
-    UserMailer.system_mail_addr.should == Admin::Setting.contact_addr
-  end
-  it "@@fromが正しく設定されていること" do
-    UserMailer.from.should == "#{UserMailer.send(:base64, Admin::Setting.abbr_app_title)}<#{UserMailer.system_mail_addr}>"
-  end
-  it "@@footerが正しく設定されていること" do
-    UserMailer.footer.should == "----\n#{UserMailer.system_mail_addr}\n#{UserMailer.site_url}"
-  end
-
-  UserMailer.class_eval{
-    cattr_accessor :site_url, :system_mail_addr, :from, :footer
-  }
-end
-
-# config/initilizers/mai_setting.rbのspec
 describe UserMailer, "#smtp_settings" do
   before(:all) do
     @before_method = ActionMailer::Base.delivery_method
