@@ -80,9 +80,9 @@ menu_btns = [
   { :img_name => "user_suit",     :id => "btn_users", :name => "ユーザ", :url => {:controller => '/users', :action => 'index'} },
   { :img_name => "group",         :id => "btn_groups", :name => "グループ", :url => {:controller => '/groups', :action => 'index'} },
   { :img_name => "book",          :id => "btn_bookmarks", :name => "ブックマーク", :url => {:controller => '/bookmarks', :action => 'index'} },
-  { :img_name => "chart_bar",     :id => "btn_rankings", :name => "ランキング", :url => {:controller => '/rankings', :action => 'index'} },
-  INITIAL_SETTINGS['full_text_search_setting'] ? { :img_name => "page_find",     :id => "btn_search", :name => "全文検索", :url => {:controller => '/search', :action => 'full_text_search' } } : nil,
+  { :img_name => "chart_bar",     :id => "btn_rankings", :name => "ランキング", :url => {:controller => '/rankings', :action => 'index'} }
 ]
+menu_btns << { :img_name => "page_find", :id => "btn_search", :name => "全文検索", :url => {:controller => '/search', :action => 'full_text_search' } } if INITIAL_SETTINGS['full_text_search_setting']
 MENU_BTNS = menu_btns
 
 admin_menu_btns = [
