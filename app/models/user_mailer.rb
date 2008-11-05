@@ -103,4 +103,13 @@ private
   def footer
     "----\n#{system_mail_addr}\n#{site_url}"
   end
+
+  def smtp_settings
+    { :address => Admin::Setting.smtp_settings_address,
+      :port => Admin::Setting.smtp_settings_port,
+      :domain => Admin::Setting.smtp_settings_domain,
+      :user_name => Admin::Setting.smtp_settings_user_name,
+      :password => Admin::Setting.smtp_settings_password,
+      :authentication => Admin::Setting.smtp_settings_authentication }
+  end
 end
