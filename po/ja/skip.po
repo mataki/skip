@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-11-05 14:23+0900\n"
+"POT-Creation-Date: 2008-11-05 18:07+0900\n"
 "PO-Revision-Date: 2008-10-31 15:11+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1065,7 +1065,7 @@ msgstr "関連するコメントも一緒に削除されますが、よろしい
 #: app/views/admin/group_categories/index.html.erb:30
 #: app/views/admin/users/create_uid.html.erb:27
 #: app/views/admin/users/change_uid.html.erb:31
-#: app/views/admin/users/index.html.erb:45
+#: app/views/admin/users/index.html.erb:44
 msgid "Are you sure?"
 msgstr "本当に宜しいですか？"
 
@@ -1366,7 +1366,7 @@ msgstr "データ管理"
 #: app/views/admin/openid_identifiers/index.html.erb:18
 #: app/views/admin/group_participations/index.html.erb:30
 #: app/views/admin/group_categories/index.html.erb:30
-#: app/views/admin/users/index.html.erb:45
+#: app/views/admin/users/index.html.erb:44
 msgid "Destroy"
 msgstr "削除"
 
@@ -1374,7 +1374,7 @@ msgstr "削除"
 #: app/views/admin/openid_identifiers/index.html.erb:17
 #: app/views/admin/group_categories/index.html.erb:29
 #: app/views/admin/group_categories/show.html.erb:29
-#: app/views/admin/users/index.html.erb:44
+#: app/views/admin/users/index.html.erb:43
 msgid "Edit"
 msgstr "編集"
 
@@ -1691,13 +1691,13 @@ msgstr ""
 #: app/controllers/admin/admin_module.rb:226
 #: app/views/admin/openid_identifiers/index.html.erb:23
 #: app/views/admin/group_categories/index.html.erb:37
-#: app/views/admin/users/index.html.erb:52
+#: app/views/admin/users/index.html.erb:51
 msgid "New %{model}"
 msgstr "新規%{model}の作成"
 
 #: app/controllers/admin/users_controller.rb:124
 #: app/controllers/admin/users_controller.rb:141
-#: app/views/admin/users/index.html.erb:53
+#: app/views/admin/users/index.html.erb:52
 msgid "New user from csv"
 msgstr "ユーザのCSVアップロード"
 
@@ -2509,7 +2509,7 @@ msgstr ""
 #: app/controllers/admin/users_controller.rb:159
 #: app/controllers/admin/users_controller.rb:184 app/models/user.rb:-
 #: app/views/admin/users/import.html.erb:78
-#: app/views/admin/users/index.html.erb:52
+#: app/views/admin/users/index.html.erb:51
 msgid "user"
 msgstr "ユーザ"
 
@@ -2585,6 +2585,12 @@ msgstr ""
 
 #: app/controllers/admin/settings_controller.rb:46
 msgid "アカウント関連"
+msgstr ""
+
+#: app/views/admin/users/index.html.erb:65
+msgid ""
+"アクティベーションコードを発行して対象ユーザにメールを送信しますが宜しいです"
+"か?"
 msgstr ""
 
 #: app/views/admin/users/import.html.erb:36
@@ -2738,6 +2744,10 @@ msgstr ""
 msgid "ロゴ画像"
 msgstr ""
 
+#: app/controllers/antenna_controller.rb:71
+msgid "不正なアンテナが指定されました。"
+msgstr ""
+
 #: app/models/board_entry.rb:64
 msgid "不正なグループです。"
 msgstr ""
@@ -2791,8 +2801,12 @@ msgstr ""
 msgid "内部エラーが発生しました。管理者に連絡してください。"
 msgstr ""
 
-#: app/views/admin/users/index.html.erb:24
+#: app/views/admin/users/index.html.erb:23
 msgid "再発行"
+msgstr ""
+
+#: app/controllers/antenna_controller.rb:82
+msgid "処理中にエラーが発生しました。"
 msgstr ""
 
 #: app/views/admin/settings/index.html.erb:9
@@ -2814,6 +2828,10 @@ msgstr ""
 
 #: app/controllers/admin/users_controller.rb:171
 msgid "変更しました"
+msgstr ""
+
+#: app/controllers/antenna_controller.rb:74
+msgid "存在しないオーナーが指定されました。"
 msgstr ""
 
 #: app/models/group_category.rb:53
@@ -2885,12 +2903,8 @@ msgstr ""
 msgid "更新しました。"
 msgstr ""
 
-#: app/views/admin/users/index.html.erb:29
+#: app/views/admin/users/index.html.erb:28
 msgid "期限切れ"
-msgstr ""
-
-#: app/views/admin/users/index.html.erb:22
-msgid "未発行"
 msgstr ""
 
 #: app/controllers/admin/settings_controller.rb:56
@@ -2925,11 +2939,11 @@ msgstr ""
 msgid "発行"
 msgstr ""
 
-#: app/views/admin/users/index.html.erb:33
+#: app/views/admin/users/index.html.erb:32
 msgid "発行不可"
 msgstr ""
 
-#: app/views/admin/users/index.html.erb:27
+#: app/views/admin/users/index.html.erb:26
 msgid "発行済"
 msgstr ""
 
@@ -2950,7 +2964,7 @@ msgstr ""
 msgid "登録可能です"
 msgstr ""
 
-#: app/views/admin/users/index.html.erb:26
+#: app/views/admin/users/index.html.erb:25
 msgid "確認"
 msgstr ""
 
@@ -2965,4 +2979,8 @@ msgstr ""
 #: app/controllers/users_controller.rb:29
 #: app/controllers/group_controller.rb:54
 msgid "該当するユーザは存在しませんでした。"
+msgstr ""
+
+#: app/controllers/rankings_controller.rb:154
+msgid "該当のブックマークがありません。"
 msgstr ""

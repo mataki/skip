@@ -15,7 +15,7 @@
 
 class AntennaController < ApplicationController
 
-  verify :method => :post, :only => [ :add_symbol, :add_antenna_and_symbol ]
+  verify :method => :post, :only => [ :add_symbol, :add_antenna_and_symbol, :ado_add_antenna_item ]
 
   def select_antenna
     antennas = Antenna.find_with_included session[:user_id], params[:symbol]
@@ -25,7 +25,7 @@ class AntennaController < ApplicationController
   end
 
   def add_symbol
-    redirect_to_with_deny_auth and return unless Antenna.find(params[:antenna_id]).user_id == session[:user_id]
+    redirect_to_with_deny_auth and return unless login_user_antenna?(params[:antenna_id])
 
     antenna_item = AntennaItem.new(:antenna_id => params[:antenna_id],
                                    :value_type => :symbol.to_s,
@@ -65,4 +65,24 @@ class AntennaController < ApplicationController
     end
   end
 
+  def ado_add_antenna_item
+    unless login_user_antenna?(params[:antenna_id])
+      render :text => _('不正なアンテナが指定されました。'), :status => :bad_request and return
+    end
+    unless item = Symbol.get_item_by_symbol(params[:symbol])
+      render :text => _('存在しないオーナーが指定されました。'), :status => :bad_request and return
+    end
+    antenna_item = AntennaItem.new(:antenna_id => params[:antenna_id],
+                                   :value_type => :symbol.to_s,
+                                   :value => params[:symbol])
+    if antenna_item.save
+      render :partial => 'antenna_item', :locals => {:antenna_item => antenna_item, :antenna_id => antenna_item.antenna_id}
+    else
+      render :text => _('処理中にエラーが発生しました。'), :status => :internal_server_error
+    end
+  end
+
+  def login_user_antenna? antenna_id
+    Antenna.find(antenna_id).user_id == session[:user_id]
+  end
 end
