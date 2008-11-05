@@ -39,8 +39,10 @@
 </div>
 
 <div class="input_line">
- <p><label for="group_desc"><div class="input_label">説明</div>　　<%= link_to_hiki_help %></label><br/>
-   <%= text_area 'group', 'description', :cols => 90, :rows => 20 %></p>
+  <p>
+    <label for="group_description"><div class="input_label">説明</div></label><br/>
+    <%= text_area 'group', 'description', :cols => 90, :rows => 20 %>
+  </p>
 </div>
 
 <div class="input_line">
@@ -62,8 +64,12 @@
 </div>
 <% end %>
 
+<%= skip_javascript_include_tag "fckeditor/fckeditor" %>
 <script type="text/javascript">
 $j(function(){
+    FCKeditor.BasePath = platform_url_root + "/javascripts/skip/fckeditor/";
+    new FCKeditor('group_description', '100%', '350', 'Normal').ReplaceTextarea();
+
     $j('.category_radio_button')
     .click(function(){
         $j('.category_radio_button').parent().parent().css('backgroundColor','#fff');

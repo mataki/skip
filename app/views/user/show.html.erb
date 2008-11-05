@@ -27,16 +27,16 @@ div.input_line div.input_bottom {
 <div id="contents_container">
 <div id="contents_left">
 
-<%= render(:partial => 'user/portrait_box', :locals => { :user => @user }) -%>
+<%= render(:partial => 'user/portrait_box', :locals => { :user => @user }) %>
 
 <div class="box_space" id="groups">
   <div class="box_space_title"><%= icon_tag('group') %>参加グループ</div>
   <div class="box_space_body">
-  <div id="group_participation_help" class="helpbar" style="display: none;">[<%= icon_tag('bullet_red') -%>：管理者 <%= icon_tag('bullet_blue') -%>：参加者]</div>
+  <div id="group_participation_help" class="helpbar" style="display: none;">[<%= icon_tag('bullet_red') %>：管理者 <%= icon_tag('bullet_blue') %>：参加者]</div>
   <ul>
   <% @groups.each do |group| -%>
     <% icon_name = group.group_participations.first.owned? ? 'bullet_red' : 'bullet_blue' -%>
-    <li><%= icon_tag(icon_name) + group_link_to(group, :view_text => truncate(h(group.name), 12), :title => group.name) -%></li>
+    <li><%= icon_tag(icon_name) + group_link_to(group, :view_text => truncate(h(group.name), 12), :title => group.name) %></li>
   <% end -%>
   </ul>
   </div>
@@ -165,11 +165,11 @@ div.input_line div.input_bottom {
                :tags => @tags
              } %>
 
-<% if @against_chains.size > 0 %>
+<% if @against_chains.size > 0 -%>
   <div class="profile_information_space" style="margin-bottom: 10px; position: relative; width: 100%;">
-    <div class="topix_title"><%= icon_tag('asterisk_orange') -%><span>紹介文</span></div>
+    <div class="topix_title"><%= icon_tag('asterisk_orange') %><span>紹介文</span></div>
     <div class="topix_body" style="margin-top: 5px; width: 100%">
-    <% for chain in @against_chains %>
+    <% for chain in @against_chains -%>
 
     <table border="1" class="normal" style="width: 95%; margin-bottom: 5px;">
       <tr>
@@ -177,15 +177,15 @@ div.input_line div.input_bottom {
           <%= user_link_to_with_portrait(chain.from_user, :width => 60, :height => 40) %><br/>
           <%= user_link_to(chain.from_user) %>
         </th>
-        <td style="padding: 2px;"><div class="hiki_style"><%= hiki_parse(chain.comment) -%></div></td>
+        <td style="padding: 2px;"><div class="rich_style"><%= parse_permalink(chain.comment) %></div></td>
       </tr>
     </table>
 
-    <% end %>
+    <% end -%>
     </div>
     <div style="position: absolute; top: 5px; right: 10px;"><%= link_to '[全てを見る]', :action => 'social', :menu => 'social_chain', :uid => @user.uid %></div>
   </div>
-<% end %>
+<% end -%>
 
 </div><!-- contents_right -->
 

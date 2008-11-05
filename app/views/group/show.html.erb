@@ -95,7 +95,7 @@ div.box_space_body p.button {
   <div class="group_info_space">
     <div class="topix_title" style="text-align: left;"><%= icon_tag('asterisk_orange') -%><span>説明</span></div>
     <div class="group_info_space_desc">
-      <div class="group_info_space_desc_body"><div class="hiki_style"><%= hiki_parse(@group.description, @group.symbol) -%></div></div>
+      <div class="group_info_space_desc_body"><div class="rich_style"><%= parse_permalink(@group.description, @group.symbol) -%></div></div>
     </div>
   </div><!-- group_info_space -->
 

@@ -21,11 +21,7 @@ table.input_table textarea {
 <script type='text/javascript'>
 $j(function(){
     FCKeditor.BasePath = platform_url_root + "/javascripts/skip/fckeditor/";
-    var fckArea = new FCKeditor('contents_richtext');
-    fckArea.ToolbarSet = "Normal";
-    fckArea.Height = "330";
-    fckArea.Config["CustomConfigurationsPath"] = "/javascripts/skip/skip_fckeditor_config.js" ;
-    fckArea.ReplaceTextarea();
+    new FCKeditor('contents_richtext', '100%', '330', 'Normal').ReplaceTextarea();
 
     changeEditorMode = function(){
         $j('#contents_hiki_space, #contents_richtext_space, .hiki_support').hide();

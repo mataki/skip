@@ -165,14 +165,8 @@ table.normal {
 <script type="text/javascript">
 $j(function(){
     FCKeditor.BasePath = platform_url_root + "/javascripts/skip/fckeditor/";
-    var setFckPropertyAndReplace = function(fckObj) {
-        fckObj.ToolbarSet = "Light";
-        fckObj.Height = "430";
-        fckObj.Config["CustomConfigurationsPath"] = "/javascripts/skip/skip_fckeditor_config.js" ;
-        fckObj.ReplaceTextarea();
-    };
-    setFckPropertyAndReplace(new FCKeditor('profile_self_introduction'));
-    setFckPropertyAndReplace(new FCKeditor('profile_introduction'));
+    new FCKeditor('profile_self_introduction', '100%', '430', 'Light').ReplaceTextarea();
+    new FCKeditor('profile_introduction', '100%', '430', 'Light').ReplaceTextarea();
 
     // プロフィール入力の表示、非表示を切り替える
     var toggleProfileBox = function() {

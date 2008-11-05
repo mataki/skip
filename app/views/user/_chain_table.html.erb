@@ -8,17 +8,19 @@
      <%= user_link_to result[:from_user] %>
     </th>
     <td class="arrow"><%= icon_tag('resultset_next')  %></td>
-    <td class="message"><div class="hiki_style"><%= hiki_parse(result[:from_message]) %></div></td>
+    <td class="message"><div class="rich_style"><%= parse_permalink(result[:from_message]) %></div></td>
     <td class="arrow"></td>
     <th rowspan="2" valign="bottom"><%= user_link_to_with_portrait(result[:to_user]) %><br/>
       <%= user_link_to result[:to_user] %>
     </th>
   </tr>
+  <% unless result[:counter_message].blank? -%>
   <tr>
     <td class="arrow"></td>
-    <td class="message"><%= '<div class="hiki_style">' + hiki_parse(result[:counter_message]) + '</div>' unless result[:counter_message].empty? %></td>
+    <td class="message"><div class="rich_style"><%= parse_permalink(result[:counter_message]) %></div></td>
     <td class="arrow"><%= icon_tag('resultset_previous') unless result[:counter_message].empty? %></td>
   </tr>
+  <% end -%>
 </table>
 <% end %>
 

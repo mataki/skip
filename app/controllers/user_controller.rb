@@ -127,7 +127,7 @@ class UserController < ApplicationController
     when "social_chain"
       prepare_chain
     when "social_chain_against"
-      prepare_chain against = true
+      prepare_chain true
       render_partial = "social_chain"
     when "social_postit"
       prepare_postit

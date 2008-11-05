@@ -284,7 +284,7 @@ private
     @controller.request.relative_url_root
   end
 
-  def parse_permalink text, owner_symbol
+  def parse_permalink text, owner_symbol = nil
     return '' unless text
     # closure
     default_proc = proc { |symbol, link_str|

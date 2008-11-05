@@ -33,9 +33,7 @@
     <div class="item_line" style="margin-bottom: 1px; border-bottom: 1px dashed #d0e0ff;">
       <div class="item_name"><%= item_link_to user %></div>
       <div class="item_desc" style="font-size: 10px; margin-left: 4px; color: gray;">
-        <div class="rich_style">
-          <%= strip_tags(user.user_profile.self_introduction)[0, 100] if user.user_profile.self_introduction %>
-        </div>
+        <%= strip_tags(user.user_profile.self_introduction)[0, 100] if user.user_profile.self_introduction %>
       </div>
     </div>
   <% end -%>
