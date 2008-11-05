@@ -20,8 +20,11 @@
   <select style="font-size: 13px; border:1px solid silver; vertical-align:middle; padding:1px;" onchange="if (this.value != '') { window.location = this.value; }">
     <option selected="selected" value="<%= url_for({:controller => '/mypage', :action => 'group'}) -%>">参加グループへ移動 ... </option>
     <option disabled="disabled">---</option>
-    <% @favorite_groups.each do |group| %>
-    <option value="<%= url_for({:controller => '/group', :gid => group.gid, :action => 'show'}) -%>"><%= group.name -%></option>
+    <% @favorite_groups.each do |category| %>
+    <option disabled="disabled">[<%= category[:name] -%>]</option>
+      <% category[:groups].each do |group| %>
+      <option value="<%= url_for({:controller => '/group', :gid => group.gid, :action => 'show'}) -%>">&nbsp;<%= group.name -%></option>
+      <% end %>
     <% end %>
     <option disabled="disabled">---</option>
     <option value="<%= url_for({:controller => '/mypage', :action => 'group'}) -%>">参加グループの一覧へ</option>

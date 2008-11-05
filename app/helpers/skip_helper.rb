@@ -16,13 +16,8 @@
 module SkipHelper
 
   # アイコンタグを参照する
-  def icon_tag(source, options = {})
-    url = "/images/skip/icons/#{source}.png"
-    return url if options[:only_url]
-    options[:name] = "_"
-    options[:title] = options[:alt] unless options[:title]
-    options[:alt] = options[:title] unless options[:alt]
-    result = image_tag(url, options)
+  def icon_tag(name, options = {})
+    result = "<span class=\"ss_sprite ss_#{name}\" title=\"#{options[:title]}\">&nbsp;</span>"
     options[:margin] ? result + " " : result
   end
 

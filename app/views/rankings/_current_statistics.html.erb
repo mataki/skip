@@ -21,7 +21,7 @@
                                                    :unit => "人" } }
 %>
 
-<div class="topix_title"><%= icon_tag('asterisk_orange') -%><span>[<%=h site_count.created_on.strftime("%Y/%m/%d %H:%M") %>] 時点の指標値</span></div>
+<h2 class="topix_title"><%= icon_tag('asterisk_orange') -%>[<%=h site_count.created_on.strftime("%Y/%m/%d %H:%M") %>] 時点の指標値</h2>
 <% %w(total_user_count today_user_count total_blog_count today_blog_count writer_at_month user_access_at_month).each do |category| -%>
 <% item = statistics_items[category.to_sym] -%>
 <div class="statistics_line">

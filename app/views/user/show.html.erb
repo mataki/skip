@@ -64,7 +64,7 @@ div.input_line div.input_bottom {
   <% end %>
 
   <div class="profile_information_space" style="margin-bottom: 10px; position: relative; width: 100%;">
-    <div class="topix_title"><%= icon_tag('asterisk_orange') -%><span>プロフィール</span></div>
+    <h2 class="topix_title"><%= icon_tag('asterisk_orange') -%>プロフィール</h2>
     <% if @user.id == session[:user_id] %>
     <div style="position: absolute; top: 5px; right: 10px;">
       <%= link_to icon_tag('vcard_edit', :alt=>'編集する') + '[編集する]', :controller => 'mypage', :action => 'manage', :menu => 'manage_profile' -%></div>

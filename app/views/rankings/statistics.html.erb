@@ -29,7 +29,7 @@
                       ]
 %>
 <% user_count = @site_count.total_user_count -%>
-<div class="topix_title"><%= icon_tag('asterisk_orange') -%><span>その他の指標値（参考）</span></div>
+<h2 class="topix_title"><%= icon_tag('asterisk_orange') -%>その他の指標値（参考）</h2>
 <% statistics_items.each do |item| %>
   <% count_value = @site_count[item[:category]] %>
 <div class="statistics_line">
