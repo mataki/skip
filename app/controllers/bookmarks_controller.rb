@@ -16,37 +16,7 @@
 class BookmarksController < ApplicationController
   before_filter :setup_layout
 
-  # tab_menu
   def index
-    @target_date = Date.today
-    if params[:target_date]
-      date_array =  params[:target_date].split('-')
-      @target_date = Date.new(date_array[0].to_i, date_array[1].to_i, date_array[2].to_i)
-    end
-    popular_bookmarks = PopularBookmark.find(:all,
-                                             :conditions => ["date = ?", @target_date],
-                                             :order =>'count DESC' ,
-                                             :include => [:bookmark])
-    @bookmarks = []
-    if popular_bookmarks && popular_bookmarks.size > 0
-      popular_bookmarks.each do |popular_bookmark|
-        popular_bookmark.bookmark.bookmark_comments.each do |comment|
-          if comment.public
-            @bookmarks << popular_bookmark.bookmark
-            break
-          end
-        end
-      end
-
-      @last_updated = popular_bookmarks.first.created_on.strftime("%Y/%m/%d %H:%M")
-    else
-      flash.now[:notice] = '現在ブックマークは登録されていません。'
-    end
-
-  end
-
-  # tab_menu
-  def search
     params[:tag_select] ||= "AND"
     params[:type] ||= "all"
     @sort_types = Bookmark.get_sort_types
@@ -65,8 +35,7 @@ private
   def setup_layout
     @main_menu = @title = 'ブックマーク'
 
-    @tab_menu_source = [ ['人気ランキング', 'index'],
-                         ['ブックマークを探す', 'search'],
+    @tab_menu_source = [ ['ブックマークを探す', 'index'],
                          ['セットアップ', 'setup'] ]
   end
 end

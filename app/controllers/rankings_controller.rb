@@ -129,12 +129,39 @@ class RankingsController < ApplicationController
     end
   end
 
+  def bookmark
+    @target_date = Date.today
+    if params[:target_date]
+      date_array =  params[:target_date].split('-')
+      @target_date = Date.new(date_array[0].to_i, date_array[1].to_i, date_array[2].to_i)
+    end
+    popular_bookmarks = PopularBookmark.find(:all,
+                                             :conditions => ["date = ?", @target_date],
+                                             :order =>'count DESC' ,
+                                             :include => [:bookmark])
+    @bookmarks = []
+    if popular_bookmarks && popular_bookmarks.size > 0
+      popular_bookmarks.each do |popular_bookmark|
+        popular_bookmark.bookmark.bookmark_comments.each do |comment|
+          if comment.public
+            @bookmarks << popular_bookmark.bookmark
+            break
+          end
+        end
+      end
+      @last_updated = popular_bookmarks.first.created_on.strftime("%Y/%m/%d %H:%M")
+    else
+      flash.now[:notice] = _('該当のブックマークがありません。')
+    end
+  end
+
   private
   def setup_layout
     @main_menu = @title = 'ランキング'
 
     @tab_menu_source = [ ['月別ランキング', 'monthly'],
                          ['総合ランキング', 'all'],
+                         ['人気ブックマーク', 'bookmark'],
                          ['サイト情報', 'statistics'] ]
   end
 

@@ -1,19 +1,35 @@
-
 <%= render :partial => "new_bookmark" %>
 
 <div class="search_cond_space">
-<div class="title"><u><%=h @target_date %>の人気の記事ー</u>
-  <span style="color: darkgray; font-size: 10px; font-weight: normal;">最終更新時間：<%=h @last_updated %></span></div>
-<div style="margin-left: 15px;"><%=h @target_date-6  %> ～<%=h @target_date %>の1週間にコメントの登録が多かったブックマークです。</div>
-<div style="text-align: right;">
-<% if Date.today > @target_date %>
-<%= link_to((@target_date+1).to_s+"の人気記事ー",{:controller =>'bookmarks', :action => 'index', :target_date => @target_date+1})  %>
- /
+<% form_tag({:action => 'index'}, :method => 'get') do -%>
+<table class="search_cond_box">
+  <tr>
+    <th width="60">タイトル</th>
+    <td width="150"><%= text_field_tag('title', params[:title]) %></td>
+    <th width="60">表示順</th>
+    <td width="150"><%= selected_tag("sort_type", params[:sort_type],@sort_types) -%></td>
+  </tr>
+  <tr>
+    <th>検索範囲</th>
+    <td colspan="4">
+      <%= radio_button_tag('type', 'all', params[:type]=='all') %>全て
+      <%= radio_button_tag('type', 'user', params[:type]=='user') %>ユーザ
+      <%= radio_button_tag('type', 'page', params[:type]=='page') %>ブログ/BBS
+      <%= radio_button_tag('type', 'internet', params[:type]=='internet') %>インターネット
+    </td>
+  </tr>
+  <%= render :partial => 'search/tag_search' %>
+</table>
+
+<div class="submit"><%= submit_tag '検索' %></div>
 <% end %>
-<%= link_to((@target_date-1).to_s+"の人気記事ー",{:controller =>'bookmarks', :action => 'index', :target_date => @target_date-1})  %>
-</div>
 </div>
 
 <div class="search_result_space" style="position: relative; width: 100%; margin-left: auto; margin-right: auto;">
-<%= render :partial => "bookmarks", :object => @bookmarks %>
+<% if @pages and @pages.item_count > 0 -%>
+  <div class="navi"><%= page_link @pages -%></div>
+  <%= render :partial => "bookmarks", :object => @bookmarks %>
+  <div class="navi"><%= page_link @pages -%></div>
+<% end %>
+
 </div>
