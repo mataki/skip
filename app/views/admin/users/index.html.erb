@@ -16,7 +16,22 @@
       when "admin"
         _("User|Admin|#{object.admin}")
       when "activation_token"
-        link_to _('Show'), show_signup_url_admin_user_path(object), :class => 'nyroModal' unless object.activation_token.blank?
+        if object.unused?
+          if object.activation_token.nil?
+            issue_link = link_to(_('発行'), issue_activation_code_admin_user_path(object))
+            _('未発行') + "(#{issue_link})"
+          else
+            reissue_link = link_to(_('再発行'), issue_activation_code_admin_user_path(object))
+            if Time.now <= object.activation_token_expires_at
+              confirm_link = link_to( _('確認'), show_signup_url_admin_user_path(object), :class => 'nyroModal')
+              _('発行済') + "(#{confirm_link}/#{reissue_link})"
+            else
+              _('期限切れ') + "(#{reissue_link})"
+            end
+          end
+        else
+          _('発行不可')
+        end
       else
         object.send(column.to_sym)
       end

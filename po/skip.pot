@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-11-05 11:04+0900\n"
+"POT-Creation-Date: 2008-11-05 14:23+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1001,7 +1001,7 @@ msgstr ""
 #: app/views/admin/group_categories/index.html.erb:30
 #: app/views/admin/users/create_uid.html.erb:27
 #: app/views/admin/users/change_uid.html.erb:31
-#: app/views/admin/users/index.html.erb:30
+#: app/views/admin/users/index.html.erb:45
 msgid "Are you sure?"
 msgstr ""
 
@@ -1302,7 +1302,7 @@ msgstr ""
 #: app/views/admin/openid_identifiers/index.html.erb:18
 #: app/views/admin/group_participations/index.html.erb:30
 #: app/views/admin/group_categories/index.html.erb:30
-#: app/views/admin/users/index.html.erb:30
+#: app/views/admin/users/index.html.erb:45
 msgid "Destroy"
 msgstr ""
 
@@ -1310,7 +1310,7 @@ msgstr ""
 #: app/views/admin/openid_identifiers/index.html.erb:17
 #: app/views/admin/group_categories/index.html.erb:29
 #: app/views/admin/group_categories/show.html.erb:29
-#: app/views/admin/users/index.html.erb:29
+#: app/views/admin/users/index.html.erb:44
 msgid "Edit"
 msgstr ""
 
@@ -1627,13 +1627,13 @@ msgstr ""
 #: app/controllers/admin/admin_module.rb:226
 #: app/views/admin/openid_identifiers/index.html.erb:23
 #: app/views/admin/group_categories/index.html.erb:37
-#: app/views/admin/users/index.html.erb:37
+#: app/views/admin/users/index.html.erb:52
 msgid "New %{model}"
 msgstr ""
 
 #: app/controllers/admin/users_controller.rb:124
 #: app/controllers/admin/users_controller.rb:141
-#: app/views/admin/users/index.html.erb:38
+#: app/views/admin/users/index.html.erb:53
 msgid "New user from csv"
 msgstr ""
 
@@ -1861,7 +1861,6 @@ msgstr ""
 #: app/views/admin/groups/index.html.erb:30
 #: app/views/admin/group_categories/index.html.erb:28
 #: app/views/admin/group_categories/edit.html.erb:16
-#: app/views/admin/users/index.html.erb:19
 msgid "Show"
 msgstr ""
 
@@ -2444,7 +2443,7 @@ msgstr ""
 #: app/controllers/admin/users_controller.rb:159
 #: app/controllers/admin/users_controller.rb:184 app/models/user.rb:-
 #: app/views/admin/users/import.html.erb:78
-#: app/views/admin/users/index.html.erb:37
+#: app/views/admin/users/index.html.erb:52
 msgid "user"
 msgstr ""
 
@@ -2604,6 +2603,7 @@ msgid "フッター"
 msgstr ""
 
 #: app/controllers/platform_controller.rb:146
+#: app/controllers/admin/users_controller.rb:221
 msgid "メールアドレスが%{email}のユーザは既に利用を開始しています。"
 msgstr ""
 
@@ -2642,6 +2642,7 @@ msgid "ユーザ登録のためのURLの有効期限が過ぎています。"
 msgstr ""
 
 #: app/controllers/platform_controller.rb:143
+#: app/controllers/admin/users_controller.rb:219
 msgid "ユーザ登録のためのURLを記載したメールを%{email}宛てに送信しました。"
 msgstr ""
 
@@ -2722,6 +2723,10 @@ msgstr ""
 
 #: app/controllers/platform_controller.rb:243
 msgid "内部エラーが発生しました。管理者に連絡してください。"
+msgstr ""
+
+#: app/views/admin/users/index.html.erb:24
+msgid "再発行"
 msgstr ""
 
 #: app/views/admin/settings/index.html.erb:9
@@ -2814,6 +2819,14 @@ msgstr ""
 msgid "更新しました。"
 msgstr ""
 
+#: app/views/admin/users/index.html.erb:29
+msgid "期限切れ"
+msgstr ""
+
+#: app/views/admin/users/index.html.erb:22
+msgid "未発行"
+msgstr ""
+
 #: app/controllers/admin/settings_controller.rb:56
 msgid "機能に関する設定"
 msgstr ""
@@ -2842,6 +2855,18 @@ msgstr ""
 msgid "現在設定中の画像が消えてしまいますがよろしいですか?"
 msgstr ""
 
+#: app/views/admin/users/index.html.erb:21
+msgid "発行"
+msgstr ""
+
+#: app/views/admin/users/index.html.erb:33
+msgid "発行不可"
+msgstr ""
+
+#: app/views/admin/users/index.html.erb:27
+msgid "発行済"
+msgstr ""
+
 #: app/controllers/admin/users_controller.rb:37
 #: app/controllers/admin/users_controller.rb:105
 msgid "登録しました。"
@@ -2857,6 +2882,10 @@ msgstr ""
 
 #: app/models/user_uid.rb:44
 msgid "登録可能です"
+msgstr ""
+
+#: app/views/admin/users/index.html.erb:26
+msgid "確認"
 msgstr ""
 
 #: app/views/admin/users/first.html.erb:2

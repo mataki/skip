@@ -394,3 +394,43 @@ describe Admin::UsersController, "POST #create_uid" do
     end
   end
 end
+
+describe Admin::UsersController, '/activate' do
+  before do
+    admin_login
+  end
+  describe '未使用ユーザの場合' do
+    before do
+      @user_profile = stub_model(Admin::UserProfile, :email => 'skip@example.com')
+      @user = stub_model(Admin::User, :status => 'UNUSED')
+      @user.stub!(:save!)
+      @user.stub!(:user_profile).and_return(@user_profile)
+      Admin::User.should_receive(:find).and_return(@user)
+    end
+    it 'アクティベーションURLを記載したメールの送信処理が呼ばれること' do
+      UserMailer.should_receive(:deliver_sent_activate)
+      post :issue_activation_code
+    end
+    it 'アクティベーションコード発行処理が行われること' do
+      @user.should_receive(:issue_activation_code)
+      @user.should_receive(:save!)
+      post :issue_activation_code
+    end
+    it 'メール送信した旨のメッセージが設定されてリダイレクトされること' do
+      post :issue_activation_code
+      flash[:notice].should_not be_nil
+      response.should be_redirect
+    end
+  end
+  describe '未使用ユーザ以外の場合' do
+    before do
+      @user = stub_model(Admin::User, :status => 'ACTIVE')
+      Admin::User.should_receive(:find).and_return(@user)
+    end
+    it '既に利用開始済みである旨のメッセージが設定されること' do
+      post :issue_activation_code
+      flash[:error].should_not be_nil
+      response.should be_redirect
+    end
+  end
+end

@@ -209,6 +209,20 @@ class Admin::UsersController < Admin::ApplicationController
     render :layout => false
   end
 
+  def issue_activation_code
+    user = Admin::User.find(params[:id])
+    if user.unused?
+      user.issue_activation_code
+      user.save!
+      email = user.user_profile.email
+      UserMailer.deliver_sent_activate(email, signup_url(user.activation_token))
+      flash[:notice] = _("ユーザ登録のためのURLを記載したメールを%{email}宛てに送信しました。") % {:email => email}
+    else
+      flash[:error] = _("メールアドレスが%{email}のユーザは既に利用を開始しています。") % {:email => email}
+    end
+    redirect_to admin_users_path
+  end
+
   private
   def valid_activation_code? code
     return false unless code
