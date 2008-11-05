@@ -3,4 +3,15 @@
   <p><%= settings_label_with_check_box_tag :stop_new_user %></p>
   <p><%= settings_label_with_check_box_tag :enable_activation %></p>
 </div>
-<%# 全体の管理メニュー ログビュアーなどがここに表示される予定 -%>
+<% content_for :javascript do -%>
+<script type="text/javascript">
+$j(function(){
+    $j('#setting_enable_activation')
+    .click(function() {
+        if(this.checked && !<%= Admin::Setting.mail_function_setting %>) {
+            return confirm('<%= _('メール機能が無効になっています。利用開始申請時のメールが送信されませんが宜しいですか?') %>');
+        }
+    });
+});
+</script>
+<% end -%>
