@@ -72,7 +72,7 @@ class RankingsController < ApplicationController
       time = Time.local(year, month)
       @year = time.year
       @month = time.month
-      @dates = (0..23).map { |i| today.ago(i.month).strftime('%Y-%m') }
+      @dates = Ranking.extracted_dates
     rescue => e
       flash.now[:error] = _('不正なパラメタです。')
       e.backtrace.each { |message| logger.error message }

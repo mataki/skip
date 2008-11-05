@@ -53,4 +53,8 @@ class Ranking < ActiveRecord::Base
       :select => "url, title, author, author_url, MAX(extracted_on) AS extracted_on, MAX(amount) AS amount, contents_type",
       :limit => 10, :group => "url", :order => "amount DESC" 
   end
+
+  def self.extracted_dates
+    Ranking.all(:select => "DISTINCT DATE_FORMAT(extracted_on, '%Y-%m') as extracted_month", :order => 'extracted_on desc').map { |r| r.extracted_month }
+  end
 end

@@ -220,28 +220,28 @@ describe RankingsController, '#monthly' do
     it { response.should be_success }
   end
 
-  describe '年月の指定がある場合' do
-    before do
-      @year = '2008'
-      @month = '8'
-      get :monthly, :year => @year, :month => @month
+  describe 'パラメタの指定が正しい場合' do
+    describe '年月の指定がある場合' do
+      before do
+        @year = '2008'
+        @month = '8'
+        get :monthly, :year => @year, :month => @month
+      end
+      it { assigns[:year].should == @year.to_i }
+      it { assigns[:month].should == @month.to_i }
+      it { response.should be_success }
     end
-    it { assigns[:year].should == @year.to_i }
-    it { assigns[:month].should == @month.to_i }
-    it { response.should be_success }
-  end
-
-  describe '年のみ指定がある場合' do
-    before do
-      @year = '2008'
-      @month = Date.today.month
-      get :monthly, :year => @year
+    describe '年のみ指定がある場合' do
+      before do
+        @year = '2008'
+        @month = Date.today.month
+        get :monthly, :year => @year
+      end
+      it { assigns[:year].should == @year.to_i }
+      it { assigns[:month].should == @month.to_i }
+      it { response.should be_success }
     end
-    it { assigns[:year].should == @year.to_i }
-    it { assigns[:month].should == @month.to_i }
-    it { response.should be_success }
   end
-
   describe '不正なパラメタが指定された場合' do
     before do
       @year = '123456'

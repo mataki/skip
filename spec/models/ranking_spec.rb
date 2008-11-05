@@ -15,7 +15,7 @@
 
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
-describe Ranking, '#total' do
+describe Ranking, '.total' do
   before  do
     @datetime = Time.local(2008, 7, 15)
     create_ranking(:url => 'http://user.openskip.org/foo', :contents_type => 'entry_access', :extracted_on => @datetime.yesterday, :amount => 1)
@@ -34,7 +34,7 @@ describe Ranking, '#total' do
   # it 'url及び指定したcontents_type毎にextracted_onが最新のデータが抽出されていること'
 end
 
-describe Ranking, '#monthly' do
+describe Ranking, '.monthly' do
   describe '複数種類のcontents_typeのデータがある場合' do
     before do
       @datetime = Time.local(2008, 7, 15)
@@ -108,5 +108,40 @@ describe Ranking, '#monthly' do
       Ranking.monthly(:comment_access, @datetime.year, @datetime.month).should have(10).items
     end
   end
+end
 
+describe Ranking, '.extracted_dates' do
+  describe 'extracted_onが同月のレコードが2件の場合' do
+    before do
+      create_ranking(:extracted_on => Time.local(2008, 11, 1))
+      create_ranking(:extracted_on => Time.local(2008, 11, 2))
+    end
+    it { Ranking.extracted_dates.should == ['2008-11'] }
+  end
+  describe 'extracted_onが異なる月のレコードが2件の場合' do
+    before do
+      create_ranking(:extracted_on => Time.local(2008, 11, 1))
+      create_ranking(:extracted_on => Time.local(2008, 12, 1))
+    end
+    it { Ranking.extracted_dates.should == ['2008-12', '2008-11'] }
+  end
+  describe 'extracted_onが同月のレコードが2件、異なる月のレコードが1件の場合' do
+    before do
+      create_ranking(:extracted_on => Time.local(2008, 11, 1))
+      create_ranking(:extracted_on => Time.local(2008, 11, 2))
+      create_ranking(:extracted_on => Time.local(2008, 12, 1))
+    end
+    it { Ranking.extracted_dates.should == ['2008-12', '2008-11'] }
+  end
+end
+
+def create_ranking(options = {})
+  ranking = Ranking.new({
+    :url => 'http://user.openskip.org/',
+    :title => 'SUG',
+    :extracted_on => Date.today,
+    :amount => 1,
+    :contents_type => 'entry_access'}.merge(options))
+  ranking.save
+  ranking
 end

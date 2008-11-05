@@ -95,17 +95,6 @@ def mock_record_invalid
   ActiveRecord::RecordInvalid.new(fa)
 end
 
-def create_ranking(options = {})
-  ranking = Ranking.new({
-    :url => 'http://user.openskip.org/',
-    :title => 'SUG',
-    :extracted_on => Date.today,
-    :amount => 1,
-    :contents_type => 'entry_access'}.merge(options))
-  ranking.save
-  ranking
-end
-
 def create_user options = {}
   options[:user_options] ||= {}
   user = User.new({ :name => 'ほげ ほげ', :password => 'password', :password_confirmation => 'password', :password_reset_token => nil}.merge(options[:user_options]))
