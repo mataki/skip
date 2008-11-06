@@ -15,6 +15,56 @@
 
 require File.dirname(__FILE__) + '/../spec_helper'
 
+describe BoardEntriesController, 'GET /ado_create_nest_comment' do
+  before do
+    user_login
+    @comment = stub_model(BoardEntryComment)
+    @entry = stub_model(BoardEntry)
+    @comment.stub!(:board_entry).and_return(@entry)
+    BoardEntryComment.stub!(:find).and_return(@comment)
+    BoardEntry.stub!(:make_conditions).and_return({})
+    BoardEntry.stub!(:find).and_return(@entry)
+  end
+
+  describe '親コメントが存在しない場合' do
+    before do
+      BoardEntryComment.should_receive(:find).and_raise(ActiveRecord::RecordNotFound)
+      post :ado_create_nest_comment
+    end
+    it 'ステータスコード404が設定されること' do
+      response.code.should == '404'
+    end
+    it '親コメントが存在しない旨のメッセージが設定されること' do
+      response.body.should == '親コメントが存在しません。'
+    end
+  end
+
+  describe 'コメントの中身が空の場合' do
+    before do
+      post :ado_create_nest_comment, :contents => ''
+    end
+    it 'ステータスコード400が設定されること' do
+      response.code.should == '400'
+    end
+    it 'コメントは必須である旨のメッセージが設定されること' do
+      response.body.should == 'コメントの入力は必須です。'
+    end
+  end
+
+  describe 'コメントを行おうとしているエントリが存在しない場合' do
+    before do
+      BoardEntry.should_receive(:find).and_return(nil)
+      post :ado_create_nest_comment, :contents => 'contents'
+    end
+    it 'ステータスコード404が設定されること' do
+      response.code.should == '404'
+    end
+    it '対象の記事が存在しない旨のメッセージが設定されること' do
+      response.body.should == 'コメント対象の記事は存在しません。'
+    end
+  end
+end
+
 describe BoardEntriesController, "GET #destroy_comment" do
   before do
     user_login

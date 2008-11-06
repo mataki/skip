@@ -632,16 +632,12 @@ $j(function(){
                         type:'POST',
                         url:'<%= url_for(:controller => 'board_entries', :action => 'ado_create_nest_comment') -%>/' + commentId,
                         data:jform.serialize(),
-                        complete:function(request) {
-                            if($j.trim(request.responseText).length == 0) {
-                                alert('保存に失敗しました。一度画面を更新してみてください。');
-                                return false;
-                            }
+                        success:function(html) {
                             jform.fadeOut('0', function(){
                                 $j('#link_nest_comment_' + commentId).show();
                                 $j(document.createElement('div'))
                                 .appendTo('#view_nest_comment_' + commentId)
-                                .html(request.responseText)
+                                .html(html)
                                 .hide()
                                 .fadeIn('fast', function() {
                                     setupCommentEditLink();
@@ -654,7 +650,7 @@ $j(function(){
                             });
                         },
                         error:function(request) {
-                            alert('通信に失敗しました。');
+                            alert(request.responseText);
                         }
                     });
                     return false;

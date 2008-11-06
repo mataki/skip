@@ -60,13 +60,11 @@ class BoardEntriesController < ApplicationController
     begin
       parent_comment = BoardEntryComment.find(params[:id])
     rescue ActiveRecord::RecordNotFound => ex
-      render :nothing => true
-      return false
+      render(:text => _('親コメントが存在しません。'), :status => :not_found) and return
     end
 
-    if params[:contents] == nil or params[:contents] == ""
-      render :nothing => true
-      return false
+    if params[:contents].blank?
+      render(:text => _('コメントの入力は必須です。'), :status => :bad_request) and return
     end
 
     @board_entry = parent_comment.board_entry
@@ -74,16 +72,14 @@ class BoardEntriesController < ApplicationController
     unless @board_entry = BoardEntry.find(:first,
                                           :conditions => find_params[:conditions],
                                           :include => find_params[:include] | [ :user, :board_entry_comments, :state ])
-      render :nothing => true
-      return false
+      render(:text => _('コメント対象の記事は存在しません。'), :status => :not_found) and return
     end
 
     comment = parent_comment.children.create(:board_entry_id => parent_comment.board_entry_id,
                                              :contents => params["contents"],
                                              :user_id => session[:user_id])
     unless comment.errors.empty?
-      render :nothing => true
-      return false
+      render(:text => _('保存に失敗しました。'), :status => :bad_request) and return
     end
     render :partial => "board_entry_comment", :locals => { :comment => parent_comment.children.last, :level => params[:level].to_i }
   end
