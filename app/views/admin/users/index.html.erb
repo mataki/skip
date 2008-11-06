@@ -21,7 +21,7 @@
             link_to(_('発行'), issue_activation_code_admin_user_path(object), :class => 'issue_activation_code_link')
           else
             reissue_link = link_to(_('再発行'), issue_activation_code_admin_user_path(object), :class=> 'issue_activation_code_link')
-            if Time.now <= object.activation_token_expires_at
+            if object.within_time_limit_of_activation_token?
               confirm_link = link_to( _('確認'), show_signup_url_admin_user_path(object), :class => 'nyroModal')
               _('発行済') + "(#{confirm_link}/#{reissue_link})"
             else

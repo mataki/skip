@@ -308,6 +308,10 @@ class User < ActiveRecord::Base
     self.save!
   end
 
+  def within_time_limit_of_activation_token?
+    !self.activation_token.nil? && Time.now <= self.activation_token_expires_at
+  end
+
 protected
   @@search_cond_keys = [:name, :extension, :section, :code, :email, :introduction]
 

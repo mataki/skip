@@ -534,29 +534,25 @@ describe PlatformController, 'GET /signup' do
   before do
     @expires_at = Time.local(2008, 11, 1)
     @user = stub_model(User, :activation_token_expires_at => @expires_at)
+    @user.stub!(:within_time_limit_of_activation_token?).and_return(true)
   end
   describe 'アクティベーションコードに一致するユーザが存在する場合' do
     before do
       User.should_receive(:find_by_activation_token).and_return(@user)
     end
-    describe 'アクティベーションコードが作成されてから24時間以内の場合' do
+    describe '有効期限内のアクティベーションコードの場合' do
       before do
+        @user.should_receive(:within_time_limit_of_activation_token?).and_return(true)
         controller.should_receive(:current_user=).with(@user)
       end
-      it '24時間未満の場合はアクティベート画面に遷移すること' do
-        Time.stub!(:now).and_return(@expires_at.ago(1.second))
-        get :signup, :code => '991ea5ca6502e3ded9e494c9c5ae50ad356e4f4a'
-        response.should be_redirect
-      end
-      it 'ちょうど24時間の場合はアクティベート画面に遷移すること' do
-        Time.stub!(:now).and_return(@expires_at)
+      it 'アクティベート画面に遷移すること' do
         get :signup, :code => '991ea5ca6502e3ded9e494c9c5ae50ad356e4f4a'
         response.should be_redirect
       end
     end
-    describe 'アクティベーションコードが作成されてから24時間を越えている場合' do
+    describe '有効期限外のアクティベーションコードの場合' do
       before do
-        Time.stub!(:now).and_return(@expires_at.since(1.second))
+        @user.should_receive(:within_time_limit_of_activation_token?).and_return(false)
         get :signup, :code => '991ea5ca6502e3ded9e494c9c5ae50ad356e4f4a'
       end
       it { flash[:error].should_not be_nil }

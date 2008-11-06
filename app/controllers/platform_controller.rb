@@ -154,7 +154,7 @@ class PlatformController < ApplicationController
 
   def signup
     if @user = User.find_by_activation_token(params[:code])
-      if Time.now <= @user.activation_token_expires_at
+      if @user.within_time_limit_of_activation_token?
         self.current_user = @user
         return redirect_to(:controller => :portal)
       else

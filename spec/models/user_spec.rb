@@ -291,6 +291,33 @@ describe User, '#activate!' do
   end
 end
 
+describe User, '#within_time_limit_of_activation_token' do
+  before do
+    @activation_token_expires_at = Time.local(2008, 11, 1, 0, 0, 0)
+    @activation_token = 'activation_token'
+  end
+  describe 'activation_token_expires_atが期限切れの場合' do
+    before do
+      @user = create_user(:user_options => {:activation_token => @activation_token, :activation_token_expires_at => @activation_token_expires_at })
+      now = @activation_token_expires_at.since(1.second)
+      Time.stub!(:now).and_return(now)
+    end
+    it 'falseが返ること' do
+      @user.within_time_limit_of_activation_token?.should be_false
+    end
+  end
+  describe 'activation_token_expires_atが期限切れではない場合' do
+    before do
+      @user = create_user(:user_options => {:activation_token => @activation_token, :activation_token_expires_at => @activation_token_expires_at })
+      now = @activation_token_expires_at.ago(1.second)
+      Time.stub!(:now).and_return(now)
+    end
+    it 'trueが返ること' do
+      @user.within_time_limit_of_activation_token?.should be_true
+    end
+  end
+end
+
 def new_user options = {}
   User.new({ :name => 'ほげ ほげ', :password => 'password', :password_confirmation => 'password'}.merge(options))
 end

@@ -59,7 +59,7 @@ table.normal {
   <% end -%>
   </tr>
   <% end -%>
-<% if Admin::Setting.enable_activation -%>
+<% if @user.within_time_limit_of_activation_token? -%>
   <%= hidden_field_tag :code, @user.activation_token %>
   <tr>
     <th width="100px"><label for="user_password"><%= _('Admin::User|Password') %></label></th>

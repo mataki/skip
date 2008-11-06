@@ -79,8 +79,8 @@ describe PortalController, 'POST /apply' do
     UserAccess.stub!(:create!)
     UserMailer.stub!(:deliver_sent_signup_confirm)
     @user.stub!(:activate!)
+    @user.stub!(:within_time_limit_of_activation_token?)
     INITIAL_SETTINGS['username_use_setting'] = false
-    Admin::Setting.stub!(:enable_activation).and_return(false)
   end
 
   describe '正常に終了する場合' do
@@ -130,7 +130,7 @@ describe PortalController, 'POST /apply' do
     end
     describe 'アクティベート機能が無効の場合' do
       before do
-        Admin::Setting.should_receive(:enable_activation).and_return(false)
+        @user.should_receive(:within_time_limit_of_activation_token?).and_return(false)
       end
       it 'activateされること' do
         @user.should_receive(:activate!)
@@ -143,7 +143,7 @@ describe PortalController, 'POST /apply' do
     end
     describe 'アクティベート機能が有効の場合' do
       before do
-        Admin::Setting.should_receive(:enable_activation).and_return(true)
+        @user.should_receive(:within_time_limit_of_activation_token?).and_return(true)
       end
       it 'crypted_passwordのクリアが行われること' do
         # passwordの必須チェックに引っ掛けるため。もっと別の対応をしたい所

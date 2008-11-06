@@ -57,7 +57,7 @@ class PortalController < ApplicationController
   def apply
     @user = current_user
     @user.attributes = params[:user]
-    if Admin::Setting.enable_activation
+    if @user.within_time_limit_of_activation_token?
       @user.crypted_password = nil
       @user.password = params[:user][:password]
       @user.password_confirmation = params[:user][:password_confirmation]

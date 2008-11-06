@@ -135,6 +135,7 @@ describe MypageController, 'POST #update_profile' do
     @user = user_login
     @user.stub!(:save!)
     @user.stub!(:user_profile).and_return(@profile)
+    @user.stub!(:within_time_limit_of_activation_token?)
   end
   describe '保存に成功する場合' do
     before do
