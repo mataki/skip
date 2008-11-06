@@ -17,7 +17,7 @@ module SkipHelper
 
   # アイコンタグを参照する
   def icon_tag(name, options = {})
-    result = "<span class=\"ss_sprite ss_#{name}\" title=\"#{options[:title]}\">&nbsp;</span>"
+    result = content_tag(:span, '', {:class =>"ss_sprite ss_#{name}"}.merge(options))
     options[:margin] ? result + " " : result
   end
 

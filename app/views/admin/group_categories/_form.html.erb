@@ -13,7 +13,7 @@
     @group_category.icon = Admin::GroupCategory::ICONS.first if @group_category.icon.blank?
     icon = h(@group_category.icon)
   -%>
-  <%= icon_tag icon, :alt => icon, :id => 'category_icon' %>
+  <%= icon_tag icon, :id => 'category_icon' %>
   <%= form.select :icon, Admin::GroupCategory::ICONS %>
 </p>
 <p>
@@ -29,11 +29,10 @@
 $j(function(){
     var changeCategoryIcon = function(){
         var icon = $j('#admin_group_category_icon').val();
+        var icon_class = 'ss_sprite ss_' + icon;
         $j('#category_icon')
         .attr({
-            title: icon,
-            src: '<%= @controller.request.relative_url_root %>' + '/images/skip/icons/' + icon + '.png',
-            alt: icon
+            class: icon_class
         });
         fnLoadPngs();
     };
