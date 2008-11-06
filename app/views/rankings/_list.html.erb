@@ -19,8 +19,8 @@ $j(function() {
             success: function(html) {
                 $j('#' + contents_type).html(html);
             },
-            error: function() {
-                $j('#' + contents_type).html('ランキングデータの取得に失敗しました。')
+            error: function(request) {
+                $j('#' + contents_type).html(request.responseText)
             }
         });
     };

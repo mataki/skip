@@ -47,15 +47,15 @@ class RankingsController < ApplicationController
 
     if params[:year].blank?
       @rankings = Ranking.total(params[:content_type])
-      return head(:not_found) if @rankings.empty?
+      return render(:text => _('対象のランキングが存在しません。'), :status => :not_found) if @rankings.empty?
     else
-      return head(:bad_request) if params[:month].blank?
+      return render(:text => _('不正なリクエストです。'), :status => :bad_request) if params[:month].blank?
       begin
         Time.local(params[:year], params[:month])
         @rankings = Ranking.monthly(params[:content_type], params[:year], params[:month])
-        return head(:not_found) if @rankings.empty?
+        return render(:text => _('対象のランキングが存在しません。'), :status => :not_found) if @rankings.empty?
       rescue => e
-        return head(:bad_request)
+        return render(:text => _('不正なリクエストです。'), :status => :bad_request)
       end
     end
     render :layout => false
