@@ -8,7 +8,6 @@
       <p><%= _("Admin::DocumentsController|#{params[:target]}_description") %></p>
       <p><%= text_area_tag("documents[#{params[:target]}]", @document, :id => "documents_#{params[:target]}", :class => "invisible") %></p>
     <%= submit_tag _('Save'), :disable_with => _('Saving...') %>
-    <%= link_to '[' + _('現在のページを表示') + ']', "#{controller.request.relative_url_root}/custom/#{params[:target]}.html", :popup => true %>
     <%= link_to '[' + _('既定のページに戻す') + ']', admin_documents_revert_path(:target => params[:target]), :method => :post, :confirm => _('現在設定中のページが消えてしまいますがよろしいですか?') %>
     </div>
     <% end -%>
@@ -29,7 +28,7 @@
         左のメニューから編集したいページを選択して下さい。<br />
       </p>
       <p style="color:red;">
-        <b>※説明文は、HTML形式で記述して下さい。セキュリティ上問題の有るコード(javascriptなど)は、利用しないで下さい。</b>
+        <b>※セキュリティ上問題の有るコード(javascriptなど)は、利用しないで下さい。</b>
       </p>
     </div>
   <% end -%>
