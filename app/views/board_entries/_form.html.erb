@@ -66,7 +66,7 @@ div.input_line textarea {
   <div style="clear: left"></div>
 </div>
 
-<div class="input_line">
+<div class="input_line input_option invisible">
   <div class="input_label" style="height: 30px;">日付</div>
   <div class="input_value">
     <p><%= datetime_select 'board_entry', 'date', :use_month_numbers => true -%></p>
@@ -75,8 +75,11 @@ div.input_line textarea {
   </div>
   <div style="clear: left"></div>
 </div>
+<div class="input_line" id="show_option">
+<a href="#" id="show_option_link">[オプションを表示]</a>
+</div>
 
-<div class="input_line">
+<div class="input_line input_option invisible">
   <div class="input_label" style="height: 3em;" id="input_label_publication">公開範囲</div>
   <div class="input_value" id="input_value_publication"><table><tr><td>
     <% display_type = (@board_entry.owner_is_public? ? "" : "none") %>
@@ -96,7 +99,7 @@ div.input_line textarea {
 </div>
 
 <% if Admin::Setting.mail_function_setting %>
-<div class="input_line">
+<div class="input_line input_option invisible">
   <div class="input_label" style="height: 3em;">メール</div>
   <div class="input_value">
     <div id="option_space">
@@ -108,7 +111,7 @@ div.input_line textarea {
 </div>
 <% end %>
 
-<div class="input_line">
+<div class="input_line input_option invisible">
   <div class="input_label" style="height: 3em;">話題の記事</div>
   <div class="input_value">
     <div id="option_space">
@@ -120,7 +123,6 @@ div.input_line textarea {
 </div>
 
 <script language='javascript' type='text/javascript'>
-//<![CDATA[
 $j(function() {
     var setupTagComplete = function() {
         var tags = new Array(<%= @categories_hash[:mine].map{|str| ("'#{str}'")}.join(',') %>);
@@ -223,6 +225,15 @@ $j(function() {
         hideCategoryBox();
     });
     changeEditorMode();
+
+    // オプション入力項目の表示制御
+    $j('#show_option_link')
+    .click(function() {
+        $j('.input_option').show();
+        $j('#show_option').hide();
+    });
+<% unless @board_entry.new_record? -%>
+    $j('#show_option_link').click();
+<% end -%>
 });
-//]]>
 </script>
