@@ -25,6 +25,10 @@ class Group < ActiveRecord::Base
 
   N_('Group|Protected|true')
   N_('Group|Protected|false')
+  # TODO HUMANIZED_ATTRIBUTE_KEY_NAMESが存在しているので一時的に追加
+  N_('Group|Gid')
+  N_('Group|Name')
+  N_('Group|Description')
 
   alias initialize_old initialize
 

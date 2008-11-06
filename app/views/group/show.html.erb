@@ -3,11 +3,10 @@
 div.group_info_space {
   margin-bottom: 10px;
   width: 100%;
-  _text-align: right;
 }
 div.group_info_space_desc {
   margin-top: 5px;
-  margin-left: auto;
+  margin-left: 10px;
   width: 97%;
   text-align: left;
   border: 1px solid silver;
@@ -17,7 +16,7 @@ div.group_info_space_desc_body {
   margin: 5px;
 }
 div.group_info_space_lines {
-  margin-left: auto;
+  margin-left: 10px;
   width: 97%;
   text-align: left;
   overflow: hidden;
@@ -82,9 +81,8 @@ div.box_space_body p.button {
 </div><!-- contents_left -->
 
 <div id="contents_right">
-
   <div class="group_info_space">
-    <h2 class="topix_title" style="text-align: left;"><%= icon_tag('asterisk_orange') -%>お知らせ</h2>
+    <h2 class="topix_title"><%= icon_tag('asterisk_orange') %>お知らせ</h2>
     <div class="group_info_space_lines">
       <% generate_informations(@group, @participation).each do |information| -%>
       <div class="group_info_space_lines_line"><%= information -%></div>
@@ -93,17 +91,15 @@ div.box_space_body p.button {
   </div><!-- group_info_space -->
 
   <div class="group_info_space">
-    <h2 class="topix_title" style="text-align: left;"><%= icon_tag('asterisk_orange') -%>説明</h2>
+    <h2 class="topix_title"><%= icon_tag('asterisk_orange') %>説明</h2>
     <div class="group_info_space_desc">
       <div class="group_info_space_desc_body"><div class="rich_style"><%= parse_permalink(@group.description, @group.symbol) -%></div></div>
     </div>
   </div><!-- group_info_space -->
-
 <%= render :partial => "mypage/page_space",
            :locals => { :id_name => 'recent_messages',
                         :title_name => '参加グループの最新の書き込み',
                         :pages => @recent_messages } %>
-
 </div><!-- contents_right -->
 
 <div id="contents_bottom">

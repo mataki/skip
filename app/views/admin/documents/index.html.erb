@@ -6,11 +6,20 @@
     <% form_tag(admin_documents_update_path(:target => params[:target])) do -%>
     <div class="box tabular">
       <p><%= _("Admin::DocumentsController|#{params[:target]}_description") %></p>
-      <p><%= text_area_tag("documents[#{params[:target]}]", @document, :id => "documents_#{params[:target]}", :size => '100x28') %></p>
+      <p><%= text_area_tag("documents[#{params[:target]}]", @document, :id => "documents_#{params[:target]}", :class => "invisible") %></p>
     <%= submit_tag _('Save'), :disable_with => _('Saving...') %>
     <%= link_to '[' + _('現在のページを表示') + ']', "#{controller.request.relative_url_root}/custom/#{params[:target]}.html", :popup => true %>
     <%= link_to '[' + _('既定のページに戻す') + ']', admin_documents_revert_path(:target => params[:target]), :method => :post, :confirm => _('現在設定中のページが消えてしまいますがよろしいですか?') %>
     </div>
+    <% end -%>
+    <% content_for :javascript do -%>
+    <%= skip_javascript_include_tag "fckeditor/fckeditor" %>
+    <script type="text/javascript">
+    $j(function(){
+        FCKeditor.BasePath = platform_url_root + "/javascripts/skip/fckeditor/";
+        new FCKeditor('documents_<%= params[:target] %>', '100%', '600', 'Normal').ReplaceTextarea();
+    });
+    </script>
     <% end -%>
   <% else -%>
     <div class="box">

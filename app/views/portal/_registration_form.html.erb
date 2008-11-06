@@ -89,7 +89,7 @@ table.normal {
   </tr>
   <tr>
     <th width="100px"><label for="profile_self_introduction"><%=h _('UserProfile|Self introduction') %></label><div class="example" style="margin-top: 10px;">現在の業務や今までの仕事、興味や関心のある事柄などについて書いてください</div></th>
-    <td><%= text_area 'profile', 'self_introduction', :cols => 55, :rows => 15, :tabindex => (tabindex += 1) %></td>
+    <td><%= text_area 'profile', 'self_introduction', :class => 'invisible', :tabindex => (tabindex += 1) %></td>
   </tr>
 </table>
 
@@ -152,7 +152,7 @@ table.normal {
   </tr>
   <tr>
     <th width="100px"><label for="profile_introduction">オフの私</label><div class="example" style="margin-top: 10px;">趣味の詳しい内容や、休日の過ごし方など、オフのあなたを少しだけ教えてください</div></th>
-    <td><%= text_area "profile", "introduction", :cols => 55, :rows => 15, :tabindex => (tabindex += 1) %></td>
+    <td><%= text_area "profile", "introduction", :class => 'invisible', :tabindex => (tabindex += 1) %></td>
   </tr>
 </table>
 </div>
