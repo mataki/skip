@@ -191,7 +191,7 @@ class ShareFileController < ApplicationController
     # ログインユーザが対象ファイルをダウンロードできるか否か判定
     find_params = ShareFile.make_conditions(login_user_symbols, { :file_name => file_name, :owner_symbol => owner_symbol })
     unless share_file = ShareFile.find(:first, :conditions => find_params[:conditions], :include => find_params[:include] )
-      flash[:warning] = '指定されたファイルは存在しません' # 本来は存在する場合でも、ファイルの存在自体を知らせないために、存在しない旨を表示
+      flash[:warning] = _('指定されたファイルが存在しないか、アクセス権がありません。') # 本来は存在する場合でも、ファイルの存在自体を知らせないために、存在しない旨を表示
       return redirect_to(:controller => 'mypage', :action => 'index')
     end
 
