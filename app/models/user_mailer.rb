@@ -36,13 +36,13 @@ class UserMailer < ActionMailer::Base
     @body       = {:link_url=>link_url, :message => message, :message_manage_url => message_manage_url, :footer => footer}
   end
 
-  def sent_signup_confirm(recipient, confirm_url)
+  def sent_signup_confirm(recipient, login_url)
     @recipients = recipient
     @subject    = UserMailer.base64("[#{Admin::Setting.abbr_app_title}] ユーザ登録の確認メールです")
     @from       = from
     @send_on    = Time.now
     @headers    = {}
-    @body       = {:confirm_url=>confirm_url, :footer => footer}
+    @body       = {:login_url => login_url, :footer => footer}
   end
 
   def sent_apply_email_confirm(recipient, confirm_url)
