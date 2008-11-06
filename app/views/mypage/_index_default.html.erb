@@ -18,7 +18,9 @@
   <% recent_groups.each do |group| -%>
     <div class="item_line" style="margin-bottom: 1px; border-bottom: 1px dashed #d0e0ff;">
       <div class="item_name"><%= get_group_icon(group.group_category) %> <%= item_link_to group %></div>
-      <div class="item_desc" style="font-size: 10px; margin-left: 4px; color: gray;"><%= truncate(h(group.description), 30) %></div>
+      <div class="item_desc" style="font-size: 10px; margin-left: 4px; color: gray;">
+        <%= truncate(strip_tags(group.description)) if group.description %>
+      </div>
     </div>
   <% end -%>
   </div>
@@ -33,7 +35,7 @@
     <div class="item_line" style="margin-bottom: 1px; border-bottom: 1px dashed #d0e0ff;">
       <div class="item_name"><%= item_link_to user %></div>
       <div class="item_desc" style="font-size: 10px; margin-left: 4px; color: gray;">
-        <%= strip_tags(user.user_profile.self_introduction)[0, 100] if user.user_profile.self_introduction %>
+        <%= truncate(strip_tags(user.user_profile.self_introduction)) if user.user_profile.self_introduction %>
       </div>
     </div>
   <% end -%>
