@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-11-06 16:26+0900\n"
+"POT-Creation-Date: 2008-11-07 11:01+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2589,12 +2589,6 @@ msgstr ""
 msgid "システム運用について"
 msgstr ""
 
-#: app/views/admin/users/import.html.erb:10
-msgid ""
-"データが更新される場合、ユーザが部署やパスワード等を自分自身で変更している場"
-"合でも上書きされますのでご注意下さい。"
-msgstr ""
-
 #: app/controllers/platform_controller.rb:78
 msgid ""
 "パスワードリセットのためのURLを記載したメールを%{email}宛てに送信しました。"
@@ -2670,12 +2664,6 @@ msgstr ""
 #: app/controllers/platform_controller.rb:143
 #: app/controllers/admin/users_controller.rb:219
 msgid "ユーザ登録のためのURLを記載したメールを%{email}宛てに送信しました。"
-msgstr ""
-
-#: app/views/admin/users/import.html.erb:9
-msgid ""
-"ログインID(CSVファイルの最初の列)のデータが存在しない場合は新規作成、存在する"
-"場合は更新されます。"
 msgstr ""
 
 #: app/controllers/platform_controller.rb:120
@@ -2883,6 +2871,12 @@ msgstr ""
 msgid "期限切れ"
 msgstr ""
 
+#: app/views/admin/users/import.html.erb:9
+msgid ""
+"未登録のユーザは追加されます。登録済みのユーザを更新したい場合は、[登録済みの"
+"ユーザは上書きする]のチェックボックスにチェックを入れてください。"
+msgstr ""
+
 #: app/controllers/admin/settings_controller.rb:56
 msgid "機能に関する設定"
 msgstr ""
@@ -2928,12 +2922,18 @@ msgstr ""
 msgid "登録に成功しました。"
 msgstr ""
 
-#: app/views/admin/users/import.html.erb:17
-msgid "登録ユーザを上書きする"
-msgstr ""
-
 #: app/models/user_uid.rb:44
 msgid "登録可能です"
+msgstr ""
+
+#: app/views/admin/users/import.html.erb:17
+msgid "登録済みのユーザは上書きする"
+msgstr ""
+
+#: app/views/admin/users/import.html.erb:10
+msgid ""
+"登録済みのユーザを更新する場合、ユーザが部署やパスワード等を自分自身で変更し"
+"ている場合でも上書きされますのでご注意下さい。"
 msgstr ""
 
 #: app/views/admin/users/index.html.erb:25
