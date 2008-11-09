@@ -92,6 +92,20 @@ span.important {
                         :pages => mail_your_messages } if mail_your_messages.size > 0 %>
 
 <%= render :partial => "list_block", :locals => questions    if questions[:pages].size > 0 %>
+
+<% if access_blogs[:pages].size <= 0 -%>
+<h2 class="topix_title"><%= icon_tag('star') -%><%=h Admin::Setting.recent_date -%>日以内に投稿された記事はありません。</h2>
+<div class="topix_body">
+  <ul style="list-style-type: none;">
+    <li style="padding: 5px; border-bottom: 1px dotted silver;"><%= icon_tag 'folder_user' -%><%= link_to("みんなからの質問", :action => "index", :list_type => "questions", :all => true ) -%></li>
+    <li style="padding: 5px; border-bottom: 1px dotted silver;"><%= icon_tag 'folder_star' -%><%= link_to("過去の人気記事", :action => "index", :list_type => "access_blogs", :all => true ) -%></li>
+    <li style="padding: 5px; border-bottom: 1px dotted silver;"><%= icon_tag 'folder_page' -%><%= link_to("過去に投稿された記事", :action => "index", :list_type => "recent_blogs", :all => true ) -%></li>
+    <li style="padding: 5px; border-bottom: 1px dotted silver;"><%= icon_tag 'folder_feed' -%><%= link_to("アンテナの未読の記事", :action => "index", :list_type => "not_reading_blogs", :all => true ) -%></li>
+    <li style="padding: 5px; border-bottom: 1px dotted silver;"><%= icon_tag 'report_edit' -%><%= link_to("新しい記事を書く", :controller => '/edit', :action => :index ) -%></li>
+  </ul>
+</div>
+<% end %>
+
 <%= render :partial => "list_block", :locals => access_blogs if access_blogs[:pages].size > 0 %>
 <%= render :partial => "list_block", :locals => recent_blogs if recent_blogs[:pages].size > 0 %>
 <% recent_bbs.each do |bbs| %>
