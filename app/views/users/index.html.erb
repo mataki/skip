@@ -9,7 +9,7 @@
     <td><%= text_field :condition, :introduction, :size => 25 %></td>
   </tr>
   <tr>
-    <th>所属</th>
+    <th>部署</th>
     <td><%= select(:condition, :section, UserProfile.grouped_sections.insert(0, "")) %></td>
     <th><%=h user_name_mode_label %></th>
     <td><%= text_field :condition, :code, :size => 25 %></td>
