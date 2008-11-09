@@ -909,7 +909,7 @@ msgstr "メールアドレス"
 
 #: app/models/admin/user_profile.rb:38
 msgid "Admin::UserProfile|Extension"
-msgstr "内線番号"
+msgstr "連絡先"
 
 #: app/models/admin/user_profile.rb:31
 msgid "Admin::UserProfile|Gender type"
@@ -2156,7 +2156,7 @@ msgstr "メールアドレス"
 #: app/models/user_profile.rb:- app/views/user/show.html.erb:105
 #: app/views/portal/_registration_form.html.erb:87
 msgid "UserProfile|Extension"
-msgstr "内線番号"
+msgstr "連絡先"
 
 #: app/models/user_profile.rb:-
 msgid "UserProfile|Gender type"
