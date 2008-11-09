@@ -3,7 +3,7 @@
 <div class="bookmark_space" style="border-bottom: 1px solid silver; padding-bottom: 5px; margin-bottom: 10px; position: relative;">
 <% if @create_button_show %>
   <div style="position: absolute; top: 5px; right: 10px;">
-    <%= link_to(icon_tag('tag_blue_add', :alt=>'コメントの追加') + 'コメントの追加！', {:controller => "bookmark", :action => "edit", :url => @bookmark.url, :title => @bookmark.title, :dummy => '.html'}, {:class => "nyroModal"}) %>
+    <%= link_to(icon_tag('tag_blue_add', :title=>'コメントの追加') + 'コメントの追加！', {:controller => "bookmark", :action => "edit", :url => @bookmark.url, :title => @bookmark.title, :dummy => '.html'}, {:class => "nyroModal"}) %>
   </div>
 <% end %>
   <div class="title"><%= link_to_bookmark_url(@bookmark, h(@bookmark.title)) %> </div>
@@ -30,8 +30,8 @@
       <% if bookmark_comment.user.id == login_user_id %>
         <%= hidden_field_tag("authenticity_token", form_authenticity_token) %>
         <%= icon_tag('key', :title=>"非公開") unless bookmark_comment.public -%>
-      <%= link_to(icon_tag('tag_blue_edit', :alt => '編集'), {:controller => "bookmark", :action => "edit", :url => @bookmark.url, :title => @bookmark.title, :dummy => '.html'}, {:class => "nyroModal"}) %>
-      <%= link_to_function icon_tag('tag_blue_delete', :alt => '削除'),"if (confirm('本当に削除しますか')) { var f = document.createElement('form'); this.parentNode.appendChild(f); f.method = 'POST';f.action = get_action_value(this.href, #{bookmark_comment.id}); var input = document.createElement('input'); input.type = 'hidden'; input.name = 'authenticity_token'; input.value = document.getElementById('authenticity_token').value; f.appendChild(input); f.submit();}",:href => url_for(:controller =>'bookmark', :action =>'destroy')  %>
+      <%= link_to(icon_tag('tag_blue_edit', :title => '編集'), {:controller => "bookmark", :action => "edit", :url => @bookmark.url, :title => @bookmark.title, :dummy => '.html'}, {:class => "nyroModal"}) %>
+      <%= link_to_function icon_tag('tag_blue_delete', :title => '削除'),"if (confirm('本当に削除しますか')) { var f = document.createElement('form'); this.parentNode.appendChild(f); f.method = 'POST';f.action = get_action_value(this.href, #{bookmark_comment.id}); var input = document.createElement('input'); input.type = 'hidden'; input.name = 'authenticity_token'; input.value = document.getElementById('authenticity_token').value; f.appendChild(input); f.submit();}",:href => url_for(:controller =>'bookmark', :action =>'destroy')  %>
     <% end %>
     </div>
   <% end %>

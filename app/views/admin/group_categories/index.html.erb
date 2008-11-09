@@ -13,7 +13,7 @@
                :disp_columns_proc => lambda do |object, column|
       case column
       when 'icon'
-        icon_tag(h(object.icon), :alt => h(object.icon)) + object.send(column.to_sym)
+        icon_tag(h(object.icon), :title => h(object.icon)) + object.send(column.to_sym)
       when 'initial_selected'
         _("GroupCategory|Initial selected|#{object.initial_selected}")
       else

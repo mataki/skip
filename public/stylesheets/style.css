@@ -268,7 +268,7 @@ div.box_space {
 }
 /* タイトル部分 */
 div.box_space div.box_space_title {
-  padding: 1px 5px;
+  padding: 1px;
   border-top: 1px solid silver;
   border-left: 1px solid silver;
   color: #0033cc;

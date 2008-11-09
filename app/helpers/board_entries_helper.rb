@@ -37,9 +37,9 @@ module BoardEntriesHelper
   def date_with_icon date
     formated_date = "[ #{date.strftime('%Y/%m/%d-%H:%M')} ]"
     if Time.now - date < 12.hour
-      "#{formated_date} #{icon_tag :emoticon_happy, :alt => '[12時間以内のコメント]', :title => '[12時間以内のコメント]'}"
+      "#{formated_date} #{icon_tag :emoticon_happy, :title => '[12時間以内のコメント]'}"
     elsif Time.now - date < 24.hour
-      "#{formated_date} #{icon_tag :emoticon_smile, :alt => '[24時間以内のコメント]', :title => '[24時間以内のコメント]'}"
+      "#{formated_date} #{icon_tag :emoticon_smile, :title => '[24時間以内のコメント]'}"
     else
       formated_date
     end

@@ -218,7 +218,7 @@ module ApplicationHelper
       icon_name = 'page_key'
       view_name = entry.diary? ? "自分だけ" : "参加者のみ"
    end
-    icon_tag(icon_name, :alt => view_name, :title => view_name)
+    icon_tag(icon_name, :title => view_name)
   end
 
   # [コメント(n)-ポイント(n)-話題(n)-アクセス(n)]の表示

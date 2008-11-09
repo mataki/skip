@@ -45,8 +45,13 @@ div#board_entry .header .control .date {
 }
 div#board_entry .header .control .buttons {
   position: absolute;
-  top:3px;
-  right:3px;
+  top:21px;
+  right:2px;
+}
+div#board_entry .header .control .count {
+  position: absolute;
+  top:2px;
+  right:2px;
 }
 div#board_entry .header h1 {
   margin: 1px;
@@ -223,22 +228,22 @@ form.comment_input_form textarea{
 <div id="board_entry">
   <div class="header">
     <div class="control">
-      <div class="date"><%=h entry.diary_date %> <%=h entry.diary_author %></div>
-      <div class="buttons" id="entry_buttons">
-        <span id="permalink"><%= link_to '[permalink]', :controller=> "board_entries", :action => "forward", :id => entry.id -%></span>
-        <%= get_publication_type_icon(entry) -%>
+      <div class="date"><%=h entry.diary_date %> <%=h entry.diary_author %> <span id="permalink"><%= link_to '[permalink]', :controller=> "board_entries", :action => "forward", :id => entry.id -%></span></div>
+      <div class="count">
         <span class="info"><%= get_entry_infos(entry) -%></span>
+      </div>
+      <div class="buttons" id="entry_buttons"><span style="color: #000000;">アクション:<span>
         <% if editable -%>
           <a href="#" id="access_style_button"><%= icon_tag('group', :title => "アクセス履歴") %></a>
-          <%= link_to(icon_tag('page_edit', :alt=>'編集'), :controller=> "edit", :action => "edit", :id => entry, :symbol => entry.symbol) %>
+          <%= link_to(icon_tag('page_edit', :title=>'編集'), :controller=> "edit", :action => "edit", :id => entry, :symbol => entry.symbol) %>
         <% end -%>
-          <%= link_to(icon_tag('transmit_go', :alt=>'アンテナに追加'), {:controller => "antenna", :action => "select_antenna", :symbol => entry.symbol, :dummy => '.html'}, {:class => "nyroModal"}) %>
-        <%= link_to(icon_tag('tag_blue_add', :alt=>'ブックマークする'), {:controller => "bookmark", :action => "edit", :url => "/page/#{entry.id.to_s}", :title => entry.title, :dummy => '.html'}, {:class => "nyroModal"}) %>
-        <%= link_to(icon_tag('control_play_blue', :alt=>'スライドショー'), {:controller=> "monta", :action => "execute_monta", :id => entry}, :target=>"_blank") if entry.editor_mode == 'hiki' %>
-        <%= link_to(icon_tag('zoom', :alt=>'最大化！'), {:controller=> "board_entries", :action => "large", :id => entry}, :target=>"_blank") %>
+          <%= link_to(icon_tag('transmit_go', :title=>'アンテナに追加'), {:controller => "antenna", :action => "select_antenna", :symbol => entry.symbol, :dummy => '.html'}, {:class => "nyroModal"}) %>
+        <%= link_to(icon_tag('tag_blue_add', :title=>'ブックマークする'), {:controller => "bookmark", :action => "edit", :url => "/page/#{entry.id.to_s}", :title => entry.title, :dummy => '.html'}, {:class => "nyroModal"}) %>
+        <%= link_to(icon_tag('control_play_blue', :title=>'スライドショー'), {:controller=> "monta", :action => "execute_monta", :id => entry}, :target=>"_blank") if entry.editor_mode == 'hiki' %>
+        <%= link_to(icon_tag('zoom', :title=>'最大化！'), {:controller=> "board_entries", :action => "large", :id => entry}, :target=>"_blank") %>
       </div>
     </div>
-    <h1><%=h entry.category %> <%=h entry.title %></h1>
+    <h1><%= get_publication_type_icon(entry) -%> <%=h entry.category %> <%=h entry.title %></h1>
     <% unless to_tb_entries.empty? -%>
     <div class="trackback_space send_trackback">
       話題の記事：

@@ -29,9 +29,9 @@
   <% if btn[:separator] -%>
   <li class="separator"><%= btn[:name] -%></li>
   <% elsif @main_menu == btn[:name] -%>
-  <li class="selected"><%= link_to icon_tag(btn[:img_name], {:alt=>btn[:name], :title=>btn[:name]}) + btn[:name], btn[:url] -%></li>
+  <li class="selected"><%= link_to icon_tag(btn[:img_name], {:title=>btn[:name]}) + btn[:name], btn[:url] -%></li>
   <% else -%>
-  <li class="normal"><%= link_to icon_tag(btn[:img_name], {:alt=>btn[:name], :title=>btn[:name]}) + btn[:name], btn[:url] -%></li>
+  <li class="normal"><%= link_to icon_tag(btn[:img_name], {:title=>btn[:name]}) + btn[:name], btn[:url] -%></li>
   <% end -%>
 <% end -%>
   </ul>

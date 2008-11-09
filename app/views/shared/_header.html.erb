@@ -14,9 +14,9 @@
 </div><!-- header -->
 
 <div id="top">
-  <%= link_to icon_tag(:report_edit, :alt=> 'ブログを書く', :title => 'ブログを書く') + 'ブログを書く', :controller => '/edit', :action => :index %>
+  <%= link_to icon_tag(:report_edit, :title => 'ブログを書く') + 'ブログを書く', :controller => '/edit', :action => :index %>
 
-  <%= icon_tag(:group_go, :alt=> 'マイグループ', :title => 'マイグループ') -%>
+  <%= icon_tag(:group_go, :title => 'マイグループ') -%>
   <select style="font-size: 13px; border:1px solid silver; vertical-align:middle; padding:1px;" onchange="if (this.value != '') { window.location = this.value; }">
     <option selected="selected" value="<%= url_for({:controller => '/mypage', :action => 'group'}) -%>">参加グループへ移動 ... </option>
     <option disabled="disabled">---</option>

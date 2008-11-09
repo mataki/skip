@@ -2,8 +2,8 @@
 
 <div class="profile_information_space" style="margin-bottom: 10px; position: relative; width: 100%;">
   <div style="position: absolute; top: 5px; right: 10px;">
-    <%= link_to(icon_tag('tag_blue_add', :alt=>'ブックマーク！') + 'ブックマーク！', {:controller => "bookmark", :action => "edit", :url => postit_url, :title => user.name, :dummy => '.html'}, {:class => "nyroModal"}) %>
-    <%= link_to(icon_tag('tag_blue', :alt=>'全てを見る') + '[全てを見る]', {:uid => @user.uid, :action => "social", :menu => "social_postit"}) %>
+    <%= link_to(icon_tag('tag_blue_add', :title=>'ブックマーク！') + 'ブックマーク！', {:controller => "bookmark", :action => "edit", :url => postit_url, :title => user.name, :dummy => '.html'}, {:class => "nyroModal"}) %>
+    <%= link_to(icon_tag('tag_blue', :title=>'全てを見る') + '[全てを見る]', {:uid => @user.uid, :action => "social", :menu => "social_postit"}) %>
   </div>
   <h2 class="topix_title"><%= icon_tag('asterisk_orange') -%>他の人から見た<%=h user.name %>さん</h2>
   <div class="topix_body" style="margin-top: 5px; width: 100%"><%= social_tag_cloud tags, user.uid -%></div>
