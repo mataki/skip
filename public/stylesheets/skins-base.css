@@ -9,6 +9,7 @@ div#main {
 div#panel {
   margin-right: 109px;
 }
+/* ----------------------------------- */
 div#side {
   float: right;
   width: 110px;
@@ -34,6 +35,26 @@ div#side li.separator {
   list-style-type: none;
   text-align: right;
   font-size: 10px;
+}
+/* ----------------------------------- */
+#globalnavi{
+  position: relative;
+  _width: 100%;
+}
+#globalnavi ul{
+  list-style-type: none;
+}
+#globalnavi li{
+  float:left;
+  width: 100px;
+}
+#globalnavi li a{
+  padding: 0.5em 0;
+  text-align: center;
+  display:block;
+  width:100%;
+  background-color: #FFF;
+  font-weight: bold;
 }
 /* ----------------------------------- */
 h1#title {

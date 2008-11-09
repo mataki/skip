@@ -26,6 +26,18 @@ div#side li.separator {
   border-right: none;
 }
 /* ----------------------------------- */
+#globalnavi li{
+  border-top: 1px solid #e276a7; /* color:1 */
+  border-right: 1px solid #e276a7; /* color:1 */
+}
+#globalnavi li.first{
+  border-left: 1px solid #e276a7; /* color:1 */
+}
+#globalnavi li a.current,
+#globalnavi li a:hover {
+  background-color: #FCF3F8; /* color:4 */
+}
+/* ----------------------------------- */
 #tab_menu a {
   background:url("./tab_left.gif") no-repeat left top;
 }

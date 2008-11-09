@@ -2,6 +2,10 @@
 /* color1:外線, color2:タブ線, color3: タブ, color4:外側 */
 /* green  : #009500, #c2bcae, #bfffbf, #eaffea */
 /* ----------------------------------- */
+a {
+  color: #0070dd;
+}
+/* ----------------------------------- */
 div#main {
   background-image: url("./back.png"); /* image */
 }
@@ -24,6 +28,18 @@ div#side li.separator {
   border: 1px solid #009500; /* color:1 */
   border-bottom: none;
   border-right: none;
+}
+/* ----------------------------------- */
+#globalnavi li{
+  border-top: 1px solid #009500; /* color:1 */
+  border-right: 1px solid #009500; /* color:1 */
+}
+#globalnavi li.first{
+  border-left: 1px solid #009500; /* color:1 */
+}
+#globalnavi li a.current,
+#globalnavi li a:hover {
+  background-color: #eaffea; /* color:4 */
 }
 /* ----------------------------------- */
 #tab_menu a {
