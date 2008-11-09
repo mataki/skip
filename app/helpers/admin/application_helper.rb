@@ -64,7 +64,7 @@ module Admin::ApplicationHelper
   end
 
   def help_icon_tag options = {:title => '', :content => ''}
-    icon_tag 'help', :class => 'help', :title => "#{options[:title]}|#{options[:content]}"
+    icon_tag 'help', :title => "#{options[:title]}|#{options[:content]}"
   end
 
   private
