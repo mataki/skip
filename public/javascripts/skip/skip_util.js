@@ -2,30 +2,6 @@
  * このjavascriptの前提条件としてvar platform_url_root
  * が定義されている必要があるので、skip_javascript_include_tagを通して利用すること
  */
-/*
- * 透過ＰＮＧをIEでも表示できるように苦肉の策（iconフォルダ以下かつ、name属性が"_"だったら透過）
- */
-function fnLoadPngs() {
-    if (navigator.platform == "Win32" && navigator.appName == "Microsoft Internet Explorer" && window.attachEvent) {
-        var rslt = navigator.appVersion.match(/MSIE (\d+\.\d+)/, '');
-        var itsAllGood = (rslt != null && Number(rslt[1]) >= 5.5);
-
-        for (var i = document.images.length - 1, img = null; (img = document.images[i]); i--) {
-            if (itsAllGood && img.src.match(/\icons.*.png.*$/i) != null && img.name == "_") {
-                transparentImage(img);
-            }
-        }
-    }
-}
-function transparentImage(obj) {
-  if(obj.runtimeStyle){
-    var image = obj.src;
-    obj.src = platform_url_root + "/images/skip/blank.gif";
-    obj.width = 16;
-    obj.height = 16;
-    obj.runtimeStyle.filter = 'progid:DXImageTransform.Microsoft.AlphaImageLoader(src="' + image + '", sizingmethod="image");';
-  }
-}
 /* -------------------------------------------------- */
 function saveCookie(key,value,exp){
     if(key&&value){
