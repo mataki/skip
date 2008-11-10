@@ -8,10 +8,10 @@
 <div class="box_space">
   <div class="box_space_title">一覧表示</div>
   <div class="box_space_body"><ul>
-    <li><%= icon_tag 'folder_user' -%><%= link_to("みんなからの質問", :action => "index", :list_type => "questions", :all => true ) -%></li>
-    <li><%= icon_tag 'folder_star' -%><%= link_to("最近の人気記事", :action => "index", :list_type => "access_blogs" ) -%></li>
-    <li><%= icon_tag 'folder_page' -%><%= link_to("最近投稿された記事", :action => "index", :list_type => "recent_blogs" ) -%></li>
-    <li><%= icon_tag 'folder_feed' -%><%= link_to("アンテナの未読の記事", :action => "index", :list_type => "not_reading_blogs", :all => true ) -%></li>
+    <li><%= icon_tag 'folder_user' %><%= link_to("みんなからの質問", :action => "index", :list_type => "questions" ) %></li>
+    <li><%= icon_tag 'folder_star' %><%= link_to("最近の人気記事", :action => "index", :list_type => "access_blogs" ) %></li>
+    <li><%= icon_tag 'folder_page' %><%= link_to("最近投稿された記事", :action => "index", :list_type => "recent_blogs" ) %></li>
+    <li><%= icon_tag 'folder_feed' %><%= link_to("アンテナの未読の記事", :action => "index", :list_type => "not_reading_blogs" ) %></li>
   </ul></div>
   <div class="box_space_bottom"><!--【メニューを管理する】--></div>
 </div><!-- box_space -->
