@@ -85,7 +85,8 @@ class MypageController < ApplicationController
   # param[:target]で指定した内容をページ単位表示する
   def load_entries
     partial_name = params[:page_name] ||= "page_space"
-    render :partial => partial_name, :locals => self.send('find_' +  params[:target] + '_as_locals')
+    locals = find_as_locals params[:target]
+    render :partial => partial_name, :locals => locals
   end
 
   def load_rss_feed
@@ -689,10 +690,11 @@ private
   def get_index_list(list_type, show_all = false)
     partial = "index_list"
     options = {:per_page => 20}
-    options[:recent_day] = Admin::Setting.recent_date unless show_all
+    options[:recent_day] = show_all ? nil : Admin::Setting.recent_date
 
     # partialへのlocal変数で渡すから"_as_locals"
-    return partial, self.send('find_' +  list_type + '_as_locals', options)
+    locals = find_as_locals(list_type, options)
+    return partial, locals
   end
 
   def get_index_default
@@ -751,7 +753,7 @@ private
     gid_by_category = Group.gid_by_category
     GroupCategory.all.each do |category| # 表示順序の制御
       options = { :group_symbols => gid_by_category[category.id], :recent_day => recent_day, :per_page => 3 }
-      recent_bbs << self.send("find_recent_bbs_#{category.code.downcase}_as_locals", options)
+      recent_bbs << find_recent_bbs_as_locals(category.code.downcase, options)
     end
 
     #最近のブックマーク
@@ -782,10 +784,24 @@ private
     return partial, locals
   end
 
+  def find_as_locals target, options = {}
+    group_categories = GroupCategory.all.map{ |gc| gc.code.downcase }
+    case
+    when target == 'questions'             then find_questions_as_locals options
+    when target == 'access_blogs'          then find_access_blogs_as_locals options
+    when target == 'recent_blogs'          then find_recent_blogs_as_locals options
+    when target == 'not_reading_blogs'     then find_not_reading_blogs_as_locals options
+    when group_categories.include?(target) then find_recent_bbs_as_locals target, options
+# TODO 例外出すなどの対応をしないとアプリケーションエラーになってしまう。
+#    else
+    end
+  end
+
   # 最近の記事一覧を取得する（partial用のオプションを返す）
   # 引数：recent_day = 最近を示す日数
   # 引数：per_page   = １ページの表示数（デフォルト5件）
-  def find_recent_blogs_as_locals options = { :recent_day => Admin::Setting.recent_date, :per_page => 4 }
+  def find_recent_blogs_as_locals options = {}
+    options = { :recent_day => Admin::Setting.recent_date, :per_page => 4 }.merge(options)
     find_params = BoardEntry.make_conditions(login_user_symbols, {:entry_type=>'DIARY', :recent_day => options[:recent_day], :publication_type => 'public'})
     find_params[:conditions][0] << " and board_entries.title <> 'ユーザー登録しました！'"
     pages_obj, pages = paginate(:board_entry,
@@ -803,24 +819,14 @@ private
   end
 
   # 最近のBBS記事一覧を取得するメソッドを動的に生成(partial用のオプションを返す)
-  # sendで呼び出すためにカテゴリごとにメソッドを生成
   #
-  # 引数：group_symbols    = 検索対象のグループシンボル(デフォルトnil)
   # 引数：recent_day       = 最近を示す日数
   # 引数：per_page         = １ページの表示数（デフォルト3件）
-  GroupCategory.all.each do |category|
-    define_method( "find_recent_bbs_#{category.code.downcase}_as_locals" ) do |options|
-      options ||= {}
-      options[:recent_day] ||= Admin::Setting.recent_date
-      options[:per_page] ||= 3
-      recent_bbs_proc category, options
-    end
-  end
-
-  # 最新のBBS記事一覧partial用オプション生成メソッド
-  def recent_bbs_proc category, options
+  def find_recent_bbs_as_locals code, options = {}
+    options = { :recent_day => Admin::Setting.recent_date, :per_page => 3 }.merge(options)
+    category = GroupCategory.find_by_code(code)
     title   = "最新の掲示板の記事（#{category.name}）"
-    id_name = "recent_bbs_#{category.code.downcase}"
+    id_name = category.code.downcase
     pages_obj, pages = nil, []
 
     find_options = {:exclude_entry_type=>'DIARY', :publication_type => 'public', :recent_day => options[:recent_day]}
@@ -843,11 +849,11 @@ private
     }
   end
 
-
   # 最近の人気記事一覧を取得する（partial用のオプションを返す）
   # 引数：recent_day = 最近を示す日数
   # 引数：per_page   = １ページの表示数（デフォルト10件）
-  def find_access_blogs_as_locals options = { :recent_day => Admin::Setting.recent_date, :per_page => 10 }
+  def find_access_blogs_as_locals options = {}
+    options = { :recent_day => Admin::Setting.recent_date, :per_page => 10 }.merge(options)
     find_params = BoardEntry.make_conditions(login_user_symbols, {:publication_type => 'public'})
     find_params[:conditions][0] << " and board_entries.category not like ?"
     find_params[:conditions] << '%[質問]%'
@@ -873,7 +879,8 @@ private
   # 質問記事一覧を取得する（partial用のオプションを返す）
   # 引数：recent_day = 最近を示す日数（デフォルト10日）
   # 引数：per_page   = １ページの表示数（デフォルト5件）
-  def find_questions_as_locals options = { :recent_day => Admin::Setting.recent_date, :per_page => 5 }
+  def find_questions_as_locals options = {}
+    options = { :recent_day => Admin::Setting.recent_date, :per_page => 5 }.merge(options)
     find_params = BoardEntry.make_conditions(login_user_symbols, {:recent_day => options[:recent_day], :category=>'質問'})
     pages_obj, pages = paginate(:board_entry,
                                 :per_page =>options[:per_page],
@@ -893,7 +900,8 @@ private
   # 未読記事一覧を取得する（partial用のオプションを返す）
   # 引数：recent_day = 最近を示す日数
   # 引数：per_page   = １ページの表示数（デフォルト5件）
-  def find_not_reading_blogs_as_locals options = { :recent_day => Admin::Setting.recent_date, :per_page => 5 }
+  def find_not_reading_blogs_as_locals options = {}
+    options = { :recent_day => Admin::Setting.recent_date, :per_page => 5 }.merge(options)
     find_params = BoardEntry.make_conditions(login_user_symbols, {:recent_day => options[:recent_day]})
     find_params[:conditions][0] << " and user_readings.read = ? and user_readings.user_id = ?"
     find_params[:conditions] << false << session[:user_id]
