@@ -6,9 +6,6 @@ div#main {
   padding: 10px 10px 10px 15px;
   _width: 100%;
 }
-div#panel {
-  margin-right: 109px;
-}
 /* ----------------------------------- */
 div#side {
   float: right;

@@ -33,20 +33,7 @@ var relative_url_root = '<%= controller.request.relative_url_root -%>';
     $j('#loading').hide();
 //--></script>
 
-<div id="side">
-  <ul id="main_menu">
-<% menus = @current_user.admin ? MENU_BTNS + ADMIN_MENU_BTNS : MENU_BTNS -%>
-<% menus.each do |btn| -%>
-  <% if btn[:separator] -%>
-  <li class="separator"><%= btn[:name] -%></li>
-  <% elsif @main_menu == btn[:name] -%>
-  <li class="selected"><%= link_to icon_tag(btn[:img_name], {:title=>btn[:name]}) + btn[:name], btn[:url] -%></li>
-  <% else -%>
-  <li class="normal"><%= link_to icon_tag(btn[:img_name], {:title=>btn[:name]}) + btn[:name], btn[:url] -%></li>
-  <% end -%>
-<% end -%>
-  </ul>
-</div><!-- side -->
+<%= render :partial => "layouts/menu" %>
 
 <div id="panel">
   <div style="_width: 98%;">

@@ -1,0 +1,16 @@
+<% menus = @current_user.admin ? MENU_BTNS + ADMIN_MENU_BTNS : MENU_BTNS -%>
+
+<div id="side">
+  <ul id="main_menu">
+<% menus.each do |btn| -%>
+  <% if @main_menu == btn[:name] -%><li class="selected"><% else -%><li class="normal"><% end -%>
+  <%= link_to icon_tag(btn[:img_name], {:title=>btn[:name]}) + btn[:name], btn[:url] -%></li>
+<% end -%>
+  </ul>
+</div><!-- side -->
+
+<style type="text/css">
+div#panel {
+  margin-right: 109px;
+}
+</style>
