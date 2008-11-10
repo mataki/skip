@@ -168,8 +168,7 @@ class MypageController < ApplicationController
     when "manage_portrait"
       @picture = Picture.find_by_user_id(@user.id) || Picture.new
     when "manage_customize"
-      custom = UserCustom.find_by_user_id(@user.id)
-      @user_custom = custom || UserCustom.new
+      @user_custom = UserCustom.find_by_user_id(@user.id) || UserCustom.new
     when "manage_antenna"
       @antennas = find_antennas
     when "manage_message"
@@ -335,6 +334,7 @@ class MypageController < ApplicationController
     if result
       flash[:notice] = '正しく更新されました。'
       session[:user_custom_theme] = @user_custom.theme
+      session[:user_custom_classic] = @user_custom.classic
       redirect_to :action => 'manage', :menu => 'manage_customize'
     else
       render :partial => 'manage_customize', :layout => "layout"

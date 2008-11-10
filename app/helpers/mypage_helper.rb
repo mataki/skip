@@ -38,7 +38,7 @@ module MypageHelper
     @@menus << {:name => "メールアドレス変更", :menu => "manage_email" } if Admin::Setting.mail_function_setting
     @@menus << {:name => "OpenID URL変更", :menu => "manage_openid" } if login_mode?(:free_rp)
     @@menus << {:name => "プロフィール画像変更", :menu => "manage_portrait" }
-    @@menus << {:name => "カスタマイズ", :menu => "manage_customize" }
+    @@menus << {:name => "画面デザイン変更", :menu => "manage_customize" }
     @@menus << {:name => "アンテナの整備", :menu => "manage_antenna" }
     @@menus << {:name => "メール通知設定", :menu => "manage_message" } if Admin::Setting.mail_function_setting
     get_menu_items @@menus, selected_menu, "manage"

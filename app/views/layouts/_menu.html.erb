@@ -1,5 +1,7 @@
 <% menus = @current_user.admin ? MENU_BTNS + ADMIN_MENU_BTNS : MENU_BTNS -%>
 
+<% if session[:user_custom_classic] == true %>
+
 <div id="side">
   <ul id="main_menu">
 <% menus.each do |btn| -%>
@@ -14,3 +16,24 @@ div#panel {
   margin-right: 109px;
 }
 </style>
+
+<% else %>
+
+<div id="globalnavi">
+  <ul>
+<% menus.each do |btn| -%>
+  <% if menus.first == btn %><li class="first"><% else %><li><% end %>
+  <%= link_to icon_tag(btn[:img_name], {:title=>btn[:name]}) + btn[:name], btn[:url], @main_menu == btn[:name] ? {:class => "current"} : nil -%>
+  </li>
+<% end -%>
+  </ul>
+<br style="clear: left;" />
+</div><!-- globalnavi -->
+
+<style type="text/css">
+div#panel {
+  margin-right: 5px;
+}
+</style>
+
+<% end %>
