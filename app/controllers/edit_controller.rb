@@ -18,8 +18,6 @@ class EditController < ApplicationController
   before_filter :setup_layout, :load_tagwards_and_link_params,
                 :except => [ :destroy, :delete_trackback, :ado_preview, :ado_remove_image ]
 
-  after_filter  :post_mail, :only => [ :create, :update ]
-
   verify :method => :post, :only => [ :create, :update, :destroy, :delete_trackback, :ado_remove_image ],
          :redirect_to => { :action => :index }
 
@@ -43,8 +41,6 @@ class EditController < ApplicationController
     when "hiki"
       params[:contents_hiki] = params[:contents]
     end
-
-    @sent_mail_flag = "checked"
   end
 
   # post_action
@@ -59,7 +55,7 @@ class EditController < ApplicationController
     end
 
     unless validate_params params, @board_entry
-      @sent_mail_flag = "checked" if params[:sent_mail] and params[:sent_mail][:send_flag] == "1"
+      @board_entry.send_mail = params[:board_entry][:send_mail] if params[:board_entry]
       flash[:warning] = "不正なパラメータがあります"
       render :action => 'index'
       return
@@ -73,7 +69,6 @@ class EditController < ApplicationController
     # 権限チェック
     unless (session[:user_symbol] == params[:board_entry][:symbol]) ||
       login_user_groups.include?(params[:board_entry][:symbol])
-      @sent_mail_flag = "checked" if params[:sent_mail] and params[:sent_mail][:send_flag] == "1"
 
       redirect_to_with_deny_auth and return
     end
@@ -91,6 +86,9 @@ class EditController < ApplicationController
       message, new_trackbacks = @board_entry.send_trackbacks(login_user_symbols, params[:trackbacks])
       make_trackback_message(new_trackbacks)
 
+      @board_entry.cancel_mail
+      @board_entry.prepare_send_mail if @board_entry.send_mail?
+
       flash[:notice] = '正しく作成されました。' + message
       redirect_to @board_entry.get_url_hash
       return
@@ -98,8 +96,6 @@ class EditController < ApplicationController
       render :action => 'index'
       return
     end
-
-    @sent_mail_flag = "checked" if params[:sent_mail] and params[:sent_mail][:send_flag] == "1"
     render :action => 'index'
   end
 
@@ -154,7 +150,7 @@ class EditController < ApplicationController
 
     # まだ送信していないメールが存在する場合のみ、自動で送信チェックボックスをチェックする
     login_user_symbol_type, login_user_symbol_id = Symbol.split_symbol(session[:user_symbol])
-    @sent_mail_flag = "checked" if Mail.find_by_from_user_id_and_user_entry_no_and_send_flag(login_user_symbol_id, @board_entry.user_entry_no, false)
+    @board_entry.send_mail = "1" if Mail.find_by_from_user_id_and_user_entry_no_and_send_flag(login_user_symbol_id, @board_entry.user_entry_no, false)
   end
 
   # post_acttion
@@ -165,16 +161,15 @@ class EditController < ApplicationController
     @img_urls = get_img_urls @board_entry
 
     unless params[:lock_version].to_i == @board_entry.lock_version
+      @board_entry.send_mail = params[:board_entry][:send_mail] if params[:board_entry]
       @conflicted = true
       flash.now[:warning] = "他の人によって同じ投稿に更新がかかっています。編集をやり直しますか？"
-      @img_urls = get_img_urls @board_entry
-      @sent_mail_flag = "checked" if params[:sent_mail] and params[:sent_mail][:send_flag] == "1"
       render :action => 'edit'
       return
     end
 
     unless validate_params params, @board_entry
-      @sent_mail_flag = "checked" if params[:sent_mail] and params[:sent_mail][:send_flag] == "1"
+      @board_entry.send_mail = params[:board_entry][:send_mail] if params[:board_entry]
       flash[:warning] = "不正なパラメータがあります"
       render :action => 'edit'
       return
@@ -219,16 +214,13 @@ class EditController < ApplicationController
       message, new_trackbacks = @board_entry.send_trackbacks(login_user_symbols, params[:trackbacks])
       make_trackback_message(new_trackbacks)
 
+      @board_entry.cancel_mail
+      @board_entry.prepare_send_mail if @board_entry.send_mail?
+
       flash[:notice] = '記事の更新に成功しました。' + message
       redirect_to @board_entry.get_url_hash
       return
-    else
-      render :action => 'edit'
-      return
     end
-
-
-    @sent_mail_flag = "checked" if params[:sent_mail] and params[:sent_mail][:send_flag] == "1"
     render :action => 'edit'
   end
 
@@ -320,13 +312,6 @@ private
   # TODO: モデルのメソッドを直接呼び出しでもよい。他の部分でSpecを書いたら持っていく
   def get_img_urls board_entry
     board_entry.images_filename_to_url_mapping_hash
-  end
-
-  def post_mail
-    return unless @board_entry.errors.empty?
-    @board_entry.cancel_mail
-
-    @board_entry.prepare_send_mail if params[:sent_mail] and params[:sent_mail][:send_flag] == "1"
   end
 
   # 独自のバリデーション（成功ならtrue）

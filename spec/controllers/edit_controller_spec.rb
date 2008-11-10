@@ -168,7 +168,7 @@ describe EditController, "#create" do
     @user_symbol = "uid:hoge"
     session[:user_symbol] = @user_symbol
   end
-  describe "正しく更新される場合" do
+  describe "正しく作成される場合" do
     before do
       new_trackbacks = mock('new_trackbacks')
 
@@ -178,24 +178,49 @@ describe EditController, "#create" do
       @entry = stub_model(BoardEntry, :entry_type => "DIARY")
       @entry.should_receive(:save).and_return(true)
       @entry.should_receive(:send_trackbacks).and_return(["", new_trackbacks])
+      @entry.should_receive(:cancel_mail)
 
       controller.should_receive(:setup_layout).and_return(true)
       controller.should_receive(:validate_params).and_return(true)
-      controller.should_receive(:post_mail).and_return(true)
       controller.should_receive(:analyze_params).and_return([["sid:allusers"], []])
       controller.should_receive(:make_trackback_message).with(new_trackbacks)
 
       BoardEntry.stub!(:new).and_return(@entry)
+    end
+    describe "メールを送る場合" do
+      before do
+        @entry.should_receive(:send_mail?).and_return(true)
+        @entry.should_receive(:prepare_send_mail)
+        post :create, {
+          :board_entry => { :symbol => @user_symbol, :send_mail => "1" }, :image => { "1" => @file1, "2" => @file2 }
+        }
+      end
+      it "作成された掲示板にリダイレクトされる" do
+        response.should redirect_to(@entry.get_url_hash)
+      end
+      it "メールが送信が予約されること" do
+      end
+      it "flashメッセージが設定されていること" do
+        flash[:notice].should == '正しく作成されました。'
+      end
+    end
 
-      post :create, {
-        :board_entry => { :symbol => @user_symbol }, :image => { "1" => @file1, "2" => @file2 }
-      }
-    end
-    it "作成された掲示板にリダイレクトされる" do
-      response.should redirect_to(@entry.get_url_hash)
-    end
-    it "flashメッセージが設定されていること" do
-      flash[:notice].should == '正しく作成されました。'
+    describe "メールを送らない場合" do
+      before do
+        @entry.should_not_receive(:prepare_send_mail)
+        @entry.should_receive(:send_mail?).and_return(false)
+        post :create, {
+          :board_entry => { :symbol => @user_symbol, :send_mail => "0" }, :image => { "1" => @file1, "2" => @file2 }
+        }
+      end
+      it "作成された掲示板にリダイレクトされる" do
+        response.should redirect_to(@entry.get_url_hash)
+      end
+      it "flashメッセージが設定されていること" do
+        flash[:notice].should == '正しく作成されました。'
+      end
+      it "メール送信が予約されないこと" do
+      end
     end
   end
 end

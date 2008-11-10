@@ -103,7 +103,7 @@ div.input_line textarea {
   <div class="input_label" style="height: 3em;">メール</div>
   <div class="input_value">
     <div id="option_space">
-      <p><%= check_box 'sent_mail', 'send_flag', {:checked => @sent_mail_flag } %>[連絡] タグ指定時にメールを送信する</p>
+      <p><%= check_box :board_entry, :send_mail %><%= label :board_entry, :send_mail, _('公開されている人にメールを送信する') %></p>
       <p>（全体に公開時と自分だけの場合は送信されません）</p>
     </div>
   </div>

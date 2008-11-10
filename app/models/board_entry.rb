@@ -43,6 +43,7 @@ class BoardEntry < ActiveRecord::Base
 
   attr_reader :owner
   attr_accessor :image_files
+  attr_accessor :send_mail
 
   N_('BoardEntry|Entry type|DIARY')
   N_('BoardEntry|Entry type|GROUP_BBS')
@@ -224,6 +225,10 @@ class BoardEntry < ActiveRecord::Base
                      :conditions => find_params[:conditions],
                      :order=>"last_updated DESC,board_entries.id DESC",
                      :include => find_params[:include] | [ :state, :board_entry_comments ])
+  end
+
+  def send_mail?
+    true if send_mail == "1"
   end
 
   def get_around_entry(login_user_symbols)
@@ -444,9 +449,6 @@ class BoardEntry < ActiveRecord::Base
     if (entry_publications.size == 1) and (entry_publications.first.symbol == symbol) and diary?
       return # 自分にだけ公開の場合メールはpostしない
     end
-    unless category.include?("[#{Tag::NOTICE_TAG}]") # [連絡]タグがないとpostしない
-      return
-    end
 
     entry_publications.each do |entry_publication|
       next if user.symbol == entry_publication.symbol #書いた人にはメールしない
@@ -477,6 +479,7 @@ class BoardEntry < ActiveRecord::Base
       # 存在しないグループやユーザが指定されている可能性あり
       if to_address.length > 0
         writer = User.find(user_id)
+
         Mail.create({:from_user_id => writer.uid, :user_entry_no => user_entry_no, :to_address => to_address,
                       :title => title, :to_address_name => to_address_name, :to_address_symbol => to_address_symbol})
       end
