@@ -222,8 +222,8 @@ private
                          ['ブログ', 'blog'],
                          ['ファイル','share_file'],
                          ['ソーシャル', 'social'],
-                         ['ブックマーク', 'bookmark'],
-                         ['参加グループ', 'group'] ]
+                         ['グループ', 'group'],
+                         ['ブックマーク', 'bookmark'] ]
 
     if @user.id != session[:user_id]
       @main_menu = 'ユーザ'

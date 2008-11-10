@@ -36,6 +36,6 @@ private
     @main_menu = @title = 'ブックマーク'
 
     @tab_menu_source = [ ['ブックマークを探す', 'index'],
-                         ['セットアップ', 'setup'] ]
+                         ['ブックマークレット', 'setup'] ]
   end
 end

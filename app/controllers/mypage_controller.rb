@@ -439,8 +439,8 @@ private
                          ['ブログ', 'blog'],
                          ['ファイル','share_file'],
                          ['ソーシャル', 'social'],
+                         ['グループ', 'group'],
                          ['ブックマーク', 'bookmark'],
-                         ['参加グループ', 'group'],
                          ['足跡', 'trace'],
                          ['管理', 'manage'] ]
   end
