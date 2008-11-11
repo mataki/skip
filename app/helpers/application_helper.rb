@@ -30,7 +30,7 @@ module ApplicationHelper
 
     output = ''
     menu_source.each do |menu|
-      output << generate_tab_link(menu.first, option.merge({ :action=>menu.last }))
+      output << generate_tab_link(menu.first, option.merge({ :action => menu.last }))
     end
     '<ul>' + output + '</ul>'
   end
@@ -69,6 +69,7 @@ module ApplicationHelper
   end
 
   # ページへのリンク
+  # TODO: リファクタ プロックをわたせるようにしてview_textオプションを無くした方がよいと思う mat_aki
   def entry_link_to board_entry, options = {}, html_options = {}
     output_text = ""
     output_text << icon_tag('page') if options[:image_on]
@@ -78,10 +79,9 @@ module ApplicationHelper
     else
       title = board_entry.title
     end
-    output_text << (options[:view_text] || title)
+    output_text << (sanitize(options[:view_text]) || h(title))
 
     html_options[:title] ||= board_entry.title
-    output_text = h(output_text) unless output_text.include?('<img')
     link_to output_text, board_entry.get_url_hash, html_options
   end
 
@@ -105,7 +105,7 @@ module ApplicationHelper
     output_text << icon_tag('group.png') if options[:image_on]
     output_text << (options[:view_text] || h(group.name))
 
-    link_to output_text, { :controller=>'group', :action=>'show', :gid=>group.gid }, options
+    link_to output_text, { :controller => 'group', :action => 'show', :gid => group.gid }, options
   end
 
   # ユーザかグループのページへのリンク
@@ -114,9 +114,9 @@ module ApplicationHelper
     output_text << image_tag(option[:image_name]) if options[:image_name]
     output_text << (options[:view_text] || h(item[:name]))
 
-    url = { :controller=>item.class.name.downcase,
-            :action=>'show',
-            item.class.symbol_type=>item.symbol_id }
+    url = { :controller => item.class.name.downcase,
+            :action => 'show',
+            item.class.symbol_type => item.symbol_id }
 
     link_to output_text, url, { :title => h(item[:name]) }
   end
@@ -143,11 +143,11 @@ module ApplicationHelper
   end
 
   def image_link_tag title, image_name, options={}
-    link_to image_tag(image_name, :alt=>title) + title, options
+    link_to image_tag(image_name, :alt => title) + title, options
   end
 
   def showPicture(user, width, height, popup = false)
-    options = {:border=>'0', :name=>'picture', :alt=>user.name}
+    options = {:border => '0', :name => 'picture', :alt => h(user.name)}
     options[:width] = width unless width == 0
     options[:height] = height unless height == 0
     if user.retired?
@@ -236,7 +236,7 @@ module ApplicationHelper
       if menu[:menu] == selected_menu
         menu_items << icon_tag('bullet_red') + "<b>#{menu[:name]}</b>"
       else
-        link_to_params = { :action=>action, :menu=>menu[:menu] }
+        link_to_params = { :action => action, :menu => menu[:menu] }
         menu_items << icon_tag('bullet_blue') + link_to(menu[:name], link_to_params, :confirm => menu[:confirm])
       end
     end
@@ -276,7 +276,7 @@ module ApplicationHelper
 
 private
   def generate_tab_link name, options
-    html_option = {:class=>'selected'} if @controller.action_name == options[:action]
+    html_option = {:class => 'selected'} if @controller.action_name == options[:action]
     '<li>' + link_to('<span>' + name + '</span>', options, html_option) + '</li>'
   end
 
