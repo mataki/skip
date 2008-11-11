@@ -16,6 +16,11 @@
 class Admin::GroupCategoriesController < Admin::ApplicationController
   include Admin::AdminModule::AdminRootModule
 
+  def show
+    flash.keep
+    redirect_to admin_group_categories_path
+  end
+
   def destroy
     group_category = Admin::GroupCategory.find(params[:id])
     if group_category.deletable?
