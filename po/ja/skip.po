@@ -2239,11 +2239,11 @@ msgstr ""
 
 #: app/models/user.rb:55
 msgid "User|Admin|false"
-msgstr "なし"
+msgstr " "
 
 #: app/models/user.rb:54
 msgid "User|Admin|true"
-msgstr "あり"
+msgstr "管理者"
 
 #: app/models/user.rb:-
 msgid "User|Auth session token"
