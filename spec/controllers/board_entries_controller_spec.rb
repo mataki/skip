@@ -35,7 +35,7 @@ describe BoardEntriesController, 'GET /ado_create_nest_comment' do
       response.code.should == '404'
     end
     it '親コメントが存在しない旨のメッセージが設定されること' do
-      response.body.should == '親コメントが存在しません。'
+      response.body.should == '親コメントが存在しません。再読み込みして下さい。'
     end
   end
 

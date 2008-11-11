@@ -60,7 +60,7 @@ class BoardEntriesController < ApplicationController
     begin
       parent_comment = BoardEntryComment.find(params[:id])
     rescue ActiveRecord::RecordNotFound => ex
-      render(:text => _('親コメントが存在しません。'), :status => :not_found) and return
+      render(:text => _('親コメントが存在しません。再読み込みして下さい。'), :status => :not_found) and return
     end
 
     if params[:contents].blank?

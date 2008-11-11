@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-11-11 15:01+0900\n"
+"POT-Creation-Date: 2008-11-11 15:22+0900\n"
 "PO-Revision-Date: 2008-11-06 14:56+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3001,7 +3001,7 @@ msgid "管理者ユーザの作成"
 msgstr ""
 
 #: app/controllers/board_entries_controller.rb:63
-msgid "親コメントが存在しません。"
+msgid "親コメントが存在しません。再読み込みして下さい。"
 msgstr ""
 
 #: app/views/layouts/admin/application.html.erb:8
