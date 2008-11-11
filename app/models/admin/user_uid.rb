@@ -15,6 +15,7 @@
 
 class Admin::UserUid < UserUid
   N_('Admin::UserUid|Uid')
+  N_('Admin::UserUid|Uid description')
   N_('Admin::UserUid|Uid type')
 
   def after_update

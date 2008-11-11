@@ -17,10 +17,15 @@ class Admin::GroupCategory < GroupCategory
   has_many :groups, :class_name => 'Admin::Group'
 
   N_('Admin::GroupCategory|Code')
+  N_('Admin::GroupCategory|Code description')
   N_('Admin::GroupCategory|Name')
+  N_('Admin::GroupCategory|Name description')
   N_('Admin::GroupCategory|Icon')
+  N_('Admin::GroupCategory|Icon description')
   N_('Admin::GroupCategory|Description')
+  N_('Admin::GroupCategory|Description description')
   N_('Admin::GroupCategory|Initial selected')
+  N_('Admin::GroupCategory|Initial selected description')
 
   def self.search_columns
     %w(code name icon description)

@@ -4,6 +4,7 @@
   <%= label Admin::UserUid.name, :uid, _("Admin::User|User uids") %>
   <% if @user.new_record? -%>
   <%= text_field :user_uid, :uid %>
+  <%= help_icon Admin::UserUid.name, :uid %>
   <% else -%>
   :<%= h @user.code %>
   <% end -%>
@@ -17,6 +18,7 @@
 <p>
   <%= label Admin::User.name, :name %>
   <%= text_field :user, :name %>
+  <%= help_icon Admin::User.name, :name %>
 </p>
 <p>
   <%= label Admin::User.name, :status %>
@@ -25,6 +27,7 @@
   <% else -%>
   <% unless @user.unused? -%>
   <%= select :user, :status, Admin::User.status_select.delete_if{|select| select.last == 'UNUSED'} %>
+  <%= help_icon Admin::User.name, :status %>
   <% else -%>
   :<%= _('User|Status|UNUSED') %>
   <% end -%>
@@ -33,12 +36,14 @@
 <% unless @user.new_record? -%><p>
   <%= label Admin::User.name, :admin %>
   <%= check_box :user, :admin %>
+  <%= help_icon Admin::User.name, :admin %>
 </p>
 <% end -%>
 <p>
   <%= label Admin::UserProfile.name, :email %>
   <% if @user.new_record? -%>
   <%= text_field :user_profile, :email %>
+  <%= help_icon Admin::UserProfile.name, :email %>
   <% else -%>
   :<%=h @user.user_profile.email %>
   <% end -%>
@@ -46,8 +51,10 @@
 <p>
   <%= label Admin::User.name, :password %>
   <%= password_field :user, :password %>
+  <%= help_icon Admin::User.name, :password %>
 </p>
 <p>
   <%= label Admin::User.name, :password_confirmation %>
   <%= password_field :user, :password_confirmation %>
+  <%= help_icon Admin::User.name, :password_confirmation %>
 </p>

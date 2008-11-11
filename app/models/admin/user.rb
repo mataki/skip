@@ -19,13 +19,19 @@ class Admin::User < User
   has_many :openid_identifiers, :dependent => :destroy, :class_name => 'Admin::OpenidIdentifier'
 
   N_('Admin::User|Code')
+  N_('Admin::User|Code description')
   N_('Admin::User|Uid')
   N_('Admin::User|Admin')
+  N_('Admin::User|Admin description')
   N_('Admin::User|Name')
+  N_('Admin::User|Name description')
   N_('Admin::User|Password confirmation')
+  N_('Admin::User|Password confirmation description')
   N_('Admin::User|Password')
+  N_('Admin::User|Password description')
   N_('Admin::User|Retired')
   N_('Admin::User|Status')
+  N_('Admin::User|Status description')
 
   N_('Admin::User|User uids')
 

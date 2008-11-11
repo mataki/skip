@@ -2,10 +2,12 @@
 <p>
   <%= form.label :code %>
   <%= form.text_field :code %>
+  <%= form.help_icon :code %>
 </p>
 <p>
   <%= form.label :name %>
   <%= form.text_field :name %>
+  <%= form.help_icon :name %>
 </p>
 <p>
   <%= form.label :icon %>
@@ -15,13 +17,16 @@
   -%>
   <%= icon_tag icon, :id => 'category_icon' %>
   <%= form.select :icon, Admin::GroupCategory::ICONS %>
+  <%= form.help_icon :icon %>
 </p>
 <p>
   <%= form.label :description %>
   <%= form.text_area :description, :rows => 5 %>
+  <%= form.help_icon :description %>
 <p>
   <%= form.label :initial_selected %>
   <%= form.check_box :initial_selected %>
+  <%= form.help_icon :initial_selected %>
 </p>
 
 <% content_for :javascript do -%>

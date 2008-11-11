@@ -63,10 +63,6 @@ module Admin::ApplicationHelper
     end
   end
 
-  def help_icon_tag options = {:title => '', :content => ''}
-    icon_tag 'help', :title => "#{options[:title]}|#{options[:content]}"
-  end
-
   private
   def generate_tab_link(name, path, selected = false, html_options = nil)
     html_option = {:class => 'selected'} if selected
@@ -85,6 +81,20 @@ module ActionView
         InstanceTag.new(object_name, method, self, nil, options.delete(:object)).to_label_tag(text, options.merge(:object => @object))
       end
       alias_method_chain :label, :gettext
+      def help_icon(object_name, method, content = nil, options = {})
+        content ||= s_("#{object_name.to_s.classify}|#{method.to_s.humanize} description")
+        help_icon_tag :content => content
+      end
+    end
+    module FormTagHelper
+      def help_icon_tag options = {:title => '', :content => ''}
+        icon_tag 'help', :title => "#{options[:title]}|#{options[:content]}"
+      end
+    end
+    class FormBuilder
+      def help_icon(method, content = nil, options = {})
+        @template.help_icon(@object.class.name, method, content, objectify_options(options))
+      end
     end
   end
 end

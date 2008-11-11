@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-11-11 18:40+0900\n"
+"POT-Creation-Date: 2008-11-11 21:02+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -197,20 +197,40 @@ msgstr ""
 msgid "Admin::GroupCategory|Code"
 msgstr ""
 
-#: app/models/admin/group_category.rb:22
+#: app/models/admin/group_category.rb:20
+msgid "Admin::GroupCategory|Code description"
+msgstr ""
+
+#: app/models/admin/group_category.rb:25
 msgid "Admin::GroupCategory|Description"
 msgstr ""
 
-#: app/models/admin/group_category.rb:21
-msgid "Admin::GroupCategory|Icon"
+#: app/models/admin/group_category.rb:26
+msgid "Admin::GroupCategory|Description description"
 msgstr ""
 
 #: app/models/admin/group_category.rb:23
+msgid "Admin::GroupCategory|Icon"
+msgstr ""
+
+#: app/models/admin/group_category.rb:24
+msgid "Admin::GroupCategory|Icon description"
+msgstr ""
+
+#: app/models/admin/group_category.rb:27
 msgid "Admin::GroupCategory|Initial selected"
 msgstr ""
 
-#: app/models/admin/group_category.rb:20
+#: app/models/admin/group_category.rb:28
+msgid "Admin::GroupCategory|Initial selected description"
+msgstr ""
+
+#: app/models/admin/group_category.rb:21
 msgid "Admin::GroupCategory|Name"
+msgstr ""
+
+#: app/models/admin/group_category.rb:22
+msgid "Admin::GroupCategory|Name description"
 msgstr ""
 
 #: app/models/admin/group_participation.rb:20
@@ -820,68 +840,128 @@ msgid "Admin::UserProfile|Address 1"
 msgstr ""
 
 #: app/models/admin/user_profile.rb:24
-msgid "Admin::UserProfile|Address 2"
+msgid "Admin::UserProfile|Address 1 description"
 msgstr ""
 
 #: app/models/admin/user_profile.rb:25
-msgid "Admin::UserProfile|Alma mater"
+msgid "Admin::UserProfile|Address 2"
 msgstr ""
 
 #: app/models/admin/user_profile.rb:26
-msgid "Admin::UserProfile|Birth day"
+msgid "Admin::UserProfile|Address 2 description"
 msgstr ""
 
 #: app/models/admin/user_profile.rb:27
-msgid "Admin::UserProfile|Birth month"
+msgid "Admin::UserProfile|Alma mater"
 msgstr ""
 
 #: app/models/admin/user_profile.rb:28
-msgid "Admin::UserProfile|Blood type"
+msgid "Admin::UserProfile|Alma mater description"
 msgstr ""
 
 #: app/models/admin/user_profile.rb:29
-msgid "Admin::UserProfile|Disclosure"
+msgid "Admin::UserProfile|Birth day"
 msgstr ""
 
 #: app/models/admin/user_profile.rb:30
+msgid "Admin::UserProfile|Birth day description"
+msgstr ""
+
+#: app/models/admin/user_profile.rb:31
+msgid "Admin::UserProfile|Birth month"
+msgstr ""
+
+#: app/models/admin/user_profile.rb:32
+msgid "Admin::UserProfile|Birth month description"
+msgstr ""
+
+#: app/models/admin/user_profile.rb:33
+msgid "Admin::UserProfile|Blood type"
+msgstr ""
+
+#: app/models/admin/user_profile.rb:34
+msgid "Admin::UserProfile|Blood type description"
+msgstr ""
+
+#: app/models/admin/user_profile.rb:35
+msgid "Admin::UserProfile|Disclosure"
+msgstr ""
+
+#: app/models/admin/user_profile.rb:36
 #: app/views/admin/users/import.html.erb:23
 msgid "Admin::UserProfile|Email"
 msgstr ""
 
-#: app/models/admin/user_profile.rb:38
+#: app/models/admin/user_profile.rb:37
+msgid "Admin::UserProfile|Email description"
+msgstr ""
+
+#: app/models/admin/user_profile.rb:51
 msgid "Admin::UserProfile|Extension"
 msgstr ""
 
-#: app/models/admin/user_profile.rb:31
+#: app/models/admin/user_profile.rb:52
+msgid "Admin::UserProfile|Extension description"
+msgstr ""
+
+#: app/models/admin/user_profile.rb:38
 msgid "Admin::UserProfile|Gender type"
 msgstr ""
 
-#: app/models/admin/user_profile.rb:32
+#: app/models/admin/user_profile.rb:39
+msgid "Admin::UserProfile|Gender type description"
+msgstr ""
+
+#: app/models/admin/user_profile.rb:40
 msgid "Admin::UserProfile|Hobby"
 msgstr ""
 
-#: app/models/admin/user_profile.rb:33
+#: app/models/admin/user_profile.rb:41
+msgid "Admin::UserProfile|Hobby description"
+msgstr ""
+
+#: app/models/admin/user_profile.rb:42
 msgid "Admin::UserProfile|Hometown"
 msgstr ""
 
-#: app/models/admin/user_profile.rb:34
+#: app/models/admin/user_profile.rb:43
+msgid "Admin::UserProfile|Hometown description"
+msgstr ""
+
+#: app/models/admin/user_profile.rb:44
 msgid "Admin::UserProfile|Introduction"
 msgstr ""
 
-#: app/models/admin/user_profile.rb:35
+#: app/models/admin/user_profile.rb:45
+msgid "Admin::UserProfile|Introduction description"
+msgstr ""
+
+#: app/models/admin/user_profile.rb:46
 msgid "Admin::UserProfile|Join year"
 msgstr ""
 
-#: app/models/admin/user_profile.rb:36
+#: app/models/admin/user_profile.rb:47
+msgid "Admin::UserProfile|Join year description"
+msgstr ""
+
+#: app/models/admin/user_profile.rb:48
 #: app/views/admin/users/import.html.erb:24
 msgid "Admin::UserProfile|Section"
 msgstr ""
 
-#: app/models/admin/user_profile.rb:39
+#: app/models/admin/user_profile.rb:49
+msgid "Admin::UserProfile|Section description"
+msgstr ""
+
+#: app/models/admin/user_profile.rb:53
 msgid "Admin::UserProfile|Self introduction"
 msgstr ""
 
-#: app/models/admin/user_profile.rb:37
+#: app/models/admin/user_profile.rb:54
+msgid "Admin::UserProfile|Self introduction description"
+msgstr ""
+
+#: app/models/admin/user_profile.rb:50
 msgid "Admin::UserProfile|User"
 msgstr ""
 
@@ -890,46 +970,74 @@ msgid "Admin::UserUid|Uid"
 msgstr ""
 
 #: app/models/admin/user_uid.rb:18
+msgid "Admin::UserUid|Uid description"
+msgstr ""
+
+#: app/models/admin/user_uid.rb:19
 msgid "Admin::UserUid|Uid type"
 msgstr ""
 
-#: app/models/admin/user.rb:23
+#: app/models/admin/user.rb:24
 msgid "Admin::User|Admin"
+msgstr ""
+
+#: app/models/admin/user.rb:25
+msgid "Admin::User|Admin description"
 msgstr ""
 
 #: app/models/admin/user.rb:21
 msgid "Admin::User|Code"
 msgstr ""
 
-#: app/models/admin/user.rb:24 app/views/user/show.html.erb:90
+#: app/models/admin/user.rb:22
+msgid "Admin::User|Code description"
+msgstr ""
+
+#: app/models/admin/user.rb:26 app/views/user/show.html.erb:90
 #: app/views/portal/_registration_form.html.erb:37
-#: app/views/admin/users/import.html.erb:21 app/views/users/_user.html.erb:24
+#: app/views/admin/users/import.html.erb:21 app/views/users/_user.html.erb:28
 #: app/views/users/index.html.erb:6
 msgid "Admin::User|Name"
 msgstr ""
 
-#: app/models/admin/user.rb:26 app/views/portal/_registration_form.html.erb:65
+#: app/models/admin/user.rb:27
+msgid "Admin::User|Name description"
+msgstr ""
+
+#: app/models/admin/user.rb:30 app/views/portal/_registration_form.html.erb:65
 #: app/views/admin/users/import.html.erb:22
 msgid "Admin::User|Password"
 msgstr ""
 
-#: app/models/admin/user.rb:25 app/views/portal/_registration_form.html.erb:69
+#: app/models/admin/user.rb:28 app/views/portal/_registration_form.html.erb:69
 msgid "Admin::User|Password confirmation"
 msgstr ""
 
-#: app/models/admin/user.rb:27
+#: app/models/admin/user.rb:29
+msgid "Admin::User|Password confirmation description"
+msgstr ""
+
+#: app/models/admin/user.rb:31
+msgid "Admin::User|Password description"
+msgstr ""
+
+#: app/models/admin/user.rb:32
 msgid "Admin::User|Retired"
 msgstr ""
 
-#: app/models/admin/user.rb:28
+#: app/models/admin/user.rb:33
 msgid "Admin::User|Status"
 msgstr ""
 
-#: app/models/admin/user.rb:22
+#: app/models/admin/user.rb:34
+msgid "Admin::User|Status description"
+msgstr ""
+
+#: app/models/admin/user.rb:23
 msgid "Admin::User|Uid"
 msgstr ""
 
-#: app/models/admin/user.rb:30 app/views/admin/users/_form.html.erb:4
+#: app/models/admin/user.rb:36 app/views/admin/users/_form.html.erb:4
 msgid "Admin::User|User uids"
 msgstr ""
 
@@ -2078,7 +2186,7 @@ msgstr ""
 
 #: app/models/user_profile.rb:- app/views/user/show.html.erb:95
 #: app/views/portal/_registration_form.html.erb:41
-#: app/views/platform/_mail_form.html.erb:3 app/views/users/_user.html.erb:26
+#: app/views/platform/_mail_form.html.erb:3 app/views/users/_user.html.erb:30
 msgid "UserProfile|Email"
 msgstr ""
 
@@ -2109,7 +2217,7 @@ msgstr ""
 
 #: app/models/user_profile.rb:- app/views/user/show.html.erb:100
 #: app/views/portal/_registration_form.html.erb:79
-#: app/views/users/_user.html.erb:32
+#: app/views/users/_user.html.erb:36
 msgid "UserProfile|Section"
 msgstr ""
 
@@ -2238,8 +2346,8 @@ msgstr ""
 msgid "User|Status|RETIRED"
 msgstr ""
 
-#: app/models/user.rb:51 app/views/admin/users/_form.html.erb:24
-#: app/views/admin/users/_form.html.erb:29
+#: app/models/user.rb:51 app/views/admin/users/_form.html.erb:26
+#: app/views/admin/users/_form.html.erb:32
 msgid "User|Status|UNUSED"
 msgstr ""
 
@@ -2476,7 +2584,7 @@ msgstr ""
 #: app/views/admin/users/create_uid.html.erb:12
 #: app/views/admin/users/create_uid.html.erb:27
 #: app/views/admin/users/change_uid.html.erb:31
-#: app/views/admin/users/edit.html.erb:16 app/views/users/_user.html.erb:19
+#: app/views/admin/users/edit.html.erb:16 app/views/users/_user.html.erb:23
 msgid "user name"
 msgstr ""
 
@@ -2530,7 +2638,7 @@ msgstr ""
 msgid "アカウント関連"
 msgstr ""
 
-#: app/helpers/users_helper.rb:47
+#: app/helpers/users_helper.rb:47 app/views/users/_user.html.erb:6
 msgid "アンテナに追加"
 msgstr ""
 

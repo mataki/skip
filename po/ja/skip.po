@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-11-11 18:40+0900\n"
+"POT-Creation-Date: 2008-11-11 21:02+0900\n"
 "PO-Revision-Date: 2008-11-06 14:56+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -207,21 +207,41 @@ msgstr ""
 msgid "Admin::GroupCategory|Code"
 msgstr "コード"
 
-#: app/models/admin/group_category.rb:22
+#: app/models/admin/group_category.rb:20
+msgid "Admin::GroupCategory|Code description"
+msgstr "このグループカテゴリを一意に識別するための名称を入力して下さい。"
+
+#: app/models/admin/group_category.rb:25
 msgid "Admin::GroupCategory|Description"
 msgstr "説明"
 
-#: app/models/admin/group_category.rb:21
+#: app/models/admin/group_category.rb:26
+msgid "Admin::GroupCategory|Description description"
+msgstr "このグループカテゴリについての説明を入力して下さい。"
+
+#: app/models/admin/group_category.rb:23
 msgid "Admin::GroupCategory|Icon"
 msgstr "アイコン"
 
-#: app/models/admin/group_category.rb:23
+#: app/models/admin/group_category.rb:24
+msgid "Admin::GroupCategory|Icon description"
+msgstr "このグループカテゴリを表すアイコンを選択して下さい。"
+
+#: app/models/admin/group_category.rb:27
 msgid "Admin::GroupCategory|Initial selected"
 msgstr "初期選択"
 
-#: app/models/admin/group_category.rb:20
+#: app/models/admin/group_category.rb:28
+msgid "Admin::GroupCategory|Initial selected description"
+msgstr "チェックをつけた場合、グループを新規作成する際の初期値となります。"
+
+#: app/models/admin/group_category.rb:21
 msgid "Admin::GroupCategory|Name"
 msgstr "表示名"
+
+#: app/models/admin/group_category.rb:22
+msgid "Admin::GroupCategory|Name description"
+msgstr "このグループカテゴリの表示名を入力して下さい。"
 
 #: app/models/admin/group_participation.rb:20
 msgid "Admin::GroupParticipation|Favorite"
@@ -621,7 +641,7 @@ msgstr "フッターの運営者名"
 msgid "Admin::Setting|Footer copyright description"
 msgstr ""
 "フッターの2行目右側に表示されます。このシステムを運営する担当者名 or チーム"
-"名 or 社名などを記述して下さい。"
+"名 or 社名などを入力して下さい。"
 
 #: app/models/admin/setting.rb:44
 msgid "Admin::Setting|Footer image link url"
@@ -669,7 +689,7 @@ msgstr "初期登録するアンテナ名"
 #: app/models/admin/setting.rb:35
 msgid "Admin::Setting|Initial anntena description"
 msgstr ""
-"ユーザ登録時に、アンテナを予め1つ登録しておけます。その名前を記述して下さい。"
+"ユーザ登録時に、アンテナを予め1つ登録しておけます。その名前を入力して下さい。"
 
 #: app/models/admin/setting.rb:36
 msgid "Admin::Setting|Login account"
@@ -879,68 +899,128 @@ msgid "Admin::UserProfile|Address 1"
 msgstr "現住所1"
 
 #: app/models/admin/user_profile.rb:24
+msgid "Admin::UserProfile|Address 1 description"
+msgstr "都道府県を選択して下さい。"
+
+#: app/models/admin/user_profile.rb:25
 msgid "Admin::UserProfile|Address 2"
 msgstr "現住所2"
 
-#: app/models/admin/user_profile.rb:25
+#: app/models/admin/user_profile.rb:26
+msgid "Admin::UserProfile|Address 2 description"
+msgstr "都道府県以降の住所を入力して下さい。"
+
+#: app/models/admin/user_profile.rb:27
 msgid "Admin::UserProfile|Alma mater"
 msgstr "出身校"
 
-#: app/models/admin/user_profile.rb:26
+#: app/models/admin/user_profile.rb:28
+msgid "Admin::UserProfile|Alma mater description"
+msgstr "出身校を入力して下さい。"
+
+#: app/models/admin/user_profile.rb:29
 msgid "Admin::UserProfile|Birth day"
 msgstr "誕生日"
 
-#: app/models/admin/user_profile.rb:27
+#: app/models/admin/user_profile.rb:30
+msgid "Admin::UserProfile|Birth day description"
+msgstr "誕生日を入力して下さい。"
+
+#: app/models/admin/user_profile.rb:31
 msgid "Admin::UserProfile|Birth month"
 msgstr "誕生月"
 
-#: app/models/admin/user_profile.rb:28
+#: app/models/admin/user_profile.rb:32
+msgid "Admin::UserProfile|Birth month description"
+msgstr "誕生月を入力して下さい。"
+
+#: app/models/admin/user_profile.rb:33
 msgid "Admin::UserProfile|Blood type"
 msgstr "血液型"
 
-#: app/models/admin/user_profile.rb:29
+#: app/models/admin/user_profile.rb:34
+msgid "Admin::UserProfile|Blood type description"
+msgstr "血液型を選択して下さい。"
+
+#: app/models/admin/user_profile.rb:35
 msgid "Admin::UserProfile|Disclosure"
 msgstr "属性情報公開"
 
-#: app/models/admin/user_profile.rb:30
+#: app/models/admin/user_profile.rb:36
 #: app/views/admin/users/import.html.erb:23
 msgid "Admin::UserProfile|Email"
 msgstr "メールアドレス"
 
-#: app/models/admin/user_profile.rb:38
+#: app/models/admin/user_profile.rb:37
+msgid "Admin::UserProfile|Email description"
+msgstr "メールアドレスを入力して下さい。"
+
+#: app/models/admin/user_profile.rb:51
 msgid "Admin::UserProfile|Extension"
 msgstr "連絡先"
 
-#: app/models/admin/user_profile.rb:31
+#: app/models/admin/user_profile.rb:52
+msgid "Admin::UserProfile|Extension description"
+msgstr "連絡先を入力して下さい。"
+
+#: app/models/admin/user_profile.rb:38
 msgid "Admin::UserProfile|Gender type"
 msgstr "性別"
 
-#: app/models/admin/user_profile.rb:32
+#: app/models/admin/user_profile.rb:39
+msgid "Admin::UserProfile|Gender type description"
+msgstr "性別を入力して下さい。"
+
+#: app/models/admin/user_profile.rb:40
 msgid "Admin::UserProfile|Hobby"
 msgstr "趣味"
 
-#: app/models/admin/user_profile.rb:33
+#: app/models/admin/user_profile.rb:41
+msgid "Admin::UserProfile|Hobby description"
+msgstr "趣味を入力して下さい。"
+
+#: app/models/admin/user_profile.rb:42
 msgid "Admin::UserProfile|Hometown"
 msgstr "出身地"
 
-#: app/models/admin/user_profile.rb:34
+#: app/models/admin/user_profile.rb:43
+msgid "Admin::UserProfile|Hometown description"
+msgstr "出身地を入力して下さい。"
+
+#: app/models/admin/user_profile.rb:44
 msgid "Admin::UserProfile|Introduction"
 msgstr "オフの私"
 
-#: app/models/admin/user_profile.rb:35
+#: app/models/admin/user_profile.rb:45
+msgid "Admin::UserProfile|Introduction description"
+msgstr "オフに行うことなどを自由に入力して下さい。"
+
+#: app/models/admin/user_profile.rb:46
 msgid "Admin::UserProfile|Join year"
 msgstr "入社年度"
 
-#: app/models/admin/user_profile.rb:36
+#: app/models/admin/user_profile.rb:47
+msgid "Admin::UserProfile|Join year description"
+msgstr "入社年度を入力して下さい。"
+
+#: app/models/admin/user_profile.rb:48
 #: app/views/admin/users/import.html.erb:24
 msgid "Admin::UserProfile|Section"
 msgstr "部署"
 
-#: app/models/admin/user_profile.rb:39
+#: app/models/admin/user_profile.rb:49
+msgid "Admin::UserProfile|Section description"
+msgstr "部署を入力して下さい。"
+
+#: app/models/admin/user_profile.rb:53
 msgid "Admin::UserProfile|Self introduction"
 msgstr "自己紹介"
 
-#: app/models/admin/user_profile.rb:37
+#: app/models/admin/user_profile.rb:54
+msgid "Admin::UserProfile|Self introduction description"
+msgstr "自己紹介を自由に入力して下さい。"
+
+#: app/models/admin/user_profile.rb:50
 msgid "Admin::UserProfile|User"
 msgstr "ユーザ"
 
@@ -949,46 +1029,74 @@ msgid "Admin::UserUid|Uid"
 msgstr "ユーザ名"
 
 #: app/models/admin/user_uid.rb:18
+msgid "Admin::UserUid|Uid description"
+msgstr "ユーザ名を入力して下さい。"
+
+#: app/models/admin/user_uid.rb:19
 msgid "Admin::UserUid|Uid type"
 msgstr "タイプ"
 
-#: app/models/admin/user.rb:23
+#: app/models/admin/user.rb:24
 msgid "Admin::User|Admin"
 msgstr "管理権限"
+
+#: app/models/admin/user.rb:25
+msgid "Admin::User|Admin description"
+msgstr "チェックをつけると管理者にすることが出来ます。"
 
 #: app/models/admin/user.rb:21
 msgid "Admin::User|Code"
 msgstr "ログインID"
 
-#: app/models/admin/user.rb:24 app/views/user/show.html.erb:90
+#: app/models/admin/user.rb:22
+msgid "Admin::User|Code description"
+msgstr "ログインIDを入力して下さい。"
+
+#: app/models/admin/user.rb:26 app/views/user/show.html.erb:90
 #: app/views/portal/_registration_form.html.erb:37
-#: app/views/admin/users/import.html.erb:21 app/views/users/_user.html.erb:24
+#: app/views/admin/users/import.html.erb:21 app/views/users/_user.html.erb:28
 #: app/views/users/index.html.erb:6
 msgid "Admin::User|Name"
 msgstr "名前"
 
-#: app/models/admin/user.rb:26 app/views/portal/_registration_form.html.erb:65
+#: app/models/admin/user.rb:27
+msgid "Admin::User|Name description"
+msgstr "名前を入力して下さい。"
+
+#: app/models/admin/user.rb:30 app/views/portal/_registration_form.html.erb:65
 #: app/views/admin/users/import.html.erb:22
 msgid "Admin::User|Password"
 msgstr "パスワード"
 
-#: app/models/admin/user.rb:25 app/views/portal/_registration_form.html.erb:69
+#: app/models/admin/user.rb:28 app/views/portal/_registration_form.html.erb:69
 msgid "Admin::User|Password confirmation"
 msgstr "確認パスワード"
 
-#: app/models/admin/user.rb:27
+#: app/models/admin/user.rb:29
+msgid "Admin::User|Password confirmation description"
+msgstr "確認パスワードを入力して下さい。パスワードと一致している必要があります。"
+
+#: app/models/admin/user.rb:31
+msgid "Admin::User|Password description"
+msgstr "パスワードを入力して下さい。6文字以上入力する必要があります。"
+
+#: app/models/admin/user.rb:32
 msgid "Admin::User|Retired"
 msgstr "就業状態"
 
-#: app/models/admin/user.rb:28
+#: app/models/admin/user.rb:33
 msgid "Admin::User|Status"
 msgstr "ステータス"
 
-#: app/models/admin/user.rb:22
+#: app/models/admin/user.rb:34
+msgid "Admin::User|Status description"
+msgstr "ユーザの利用状態を選択します。"
+
+#: app/models/admin/user.rb:23
 msgid "Admin::User|Uid"
 msgstr "ユーザ名"
 
-#: app/models/admin/user.rb:30 app/views/admin/users/_form.html.erb:4
+#: app/models/admin/user.rb:36 app/views/admin/users/_form.html.erb:4
 msgid "Admin::User|User uids"
 msgstr "ログインID"
 
@@ -2142,7 +2250,7 @@ msgstr "公開"
 
 #: app/models/user_profile.rb:- app/views/user/show.html.erb:95
 #: app/views/portal/_registration_form.html.erb:41
-#: app/views/platform/_mail_form.html.erb:3 app/views/users/_user.html.erb:26
+#: app/views/platform/_mail_form.html.erb:3 app/views/users/_user.html.erb:30
 msgid "UserProfile|Email"
 msgstr "メールアドレス"
 
@@ -2173,7 +2281,7 @@ msgstr "入社年度"
 
 #: app/models/user_profile.rb:- app/views/user/show.html.erb:100
 #: app/views/portal/_registration_form.html.erb:79
-#: app/views/users/_user.html.erb:32
+#: app/views/users/_user.html.erb:36
 msgid "UserProfile|Section"
 msgstr "部署"
 
@@ -2302,8 +2410,8 @@ msgstr "使用中"
 msgid "User|Status|RETIRED"
 msgstr "退職"
 
-#: app/models/user.rb:51 app/views/admin/users/_form.html.erb:24
-#: app/views/admin/users/_form.html.erb:29
+#: app/models/user.rb:51 app/views/admin/users/_form.html.erb:26
+#: app/views/admin/users/_form.html.erb:32
 msgid "User|Status|UNUSED"
 msgstr "未使用"
 
@@ -2542,7 +2650,7 @@ msgstr ""
 #: app/views/admin/users/create_uid.html.erb:12
 #: app/views/admin/users/create_uid.html.erb:27
 #: app/views/admin/users/change_uid.html.erb:31
-#: app/views/admin/users/edit.html.erb:16 app/views/users/_user.html.erb:19
+#: app/views/admin/users/edit.html.erb:16 app/views/users/_user.html.erb:23
 msgid "user name"
 msgstr "ユーザ名"
 
@@ -2596,7 +2704,7 @@ msgstr ""
 msgid "アカウント関連"
 msgstr ""
 
-#: app/helpers/users_helper.rb:47
+#: app/helpers/users_helper.rb:47 app/views/users/_user.html.erb:6
 msgid "アンテナに追加"
 msgstr ""
 
