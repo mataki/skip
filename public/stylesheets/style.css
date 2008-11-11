@@ -489,9 +489,18 @@ div.search_cond_space table.category td.title {
 
 /* ----------------------------------- */
 /* ユーザ検索の検索結果部分 */
-table.user_box {
+div.user_box {
+  position: relative;
   margin: 5px 10px;
   width: 95%;
+}
+div#user_buttons {
+  position: absolute;
+  top: 2px;
+  right: 5px;
+}
+table.user_box {
+  width: 100%;
   border-collapse: collapse;
   border: 1px solid silver;
 }

@@ -1,6 +1,10 @@
 <% top_option ||= nil %>
 
 <% image_output = user_link_to_with_portrait(user) %>
+<div class="user_box">
+  <div id="user_buttons">
+    <%= link_to(icon_tag('transmit_go', :title => _('アンテナに追加')), {:controller => "antenna", :action => "select_antenna", :symbol => user.symbol, :dummy => '.html'}, {:class => "nyroModal"}) %>
+  </div>
 <table class="user_box">
   <tr>
     <% if top_option -%>
@@ -33,3 +37,4 @@
     <td><%=h user.user_profile.section %></td>
   </tr>
 </table>
+</div>
