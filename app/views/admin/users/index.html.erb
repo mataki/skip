@@ -8,29 +8,28 @@
   <%= render :partial => '/admin/search_box', :locals => { :class_name => 'Admin::User' } %>
   <%= render :partial => '/admin/shared/sortable_table',
              :locals => {
-               :columns => %w[code uid name status admin activation_token],
+               :columns => %w[code uid name status admin],
                :disp_columns_proc => lambda do |object,column|
       case column
       when "status"
-        _("User|Status|#{object.status}")
-      when "admin"
-        _("User|Admin|#{object.admin}")
-      when "activation_token"
         if object.unused?
           if object.activation_token.nil?
-            link_to(_('発行'), issue_activation_code_admin_user_path(object), :class => 'issue_activation_code_link')
+            issue_link = link_to(_('利用開始通知'), issue_activation_code_admin_user_path(object), :class => 'issue_activation_code_link')
+            _("User|Status|#{object.status}") + "(#{issue_link})"
           else
-            reissue_link = link_to(_('再発行'), issue_activation_code_admin_user_path(object), :class=> 'issue_activation_code_link')
+            reissue_link = link_to(_('再通知'), issue_activation_code_admin_user_path(object), :class=> 'issue_activation_code_link')
             if object.within_time_limit_of_activation_token?
               confirm_link = link_to( _('確認'), show_signup_url_admin_user_path(object), :class => 'nyroModal')
-              _('発行済') + "(#{confirm_link}/#{reissue_link})"
+              _('利用開始通知済み') + "(#{confirm_link}/#{reissue_link})"
             else
-              _('期限切れ') + "(#{reissue_link})"
+              _('通知期限切れ') + "(#{reissue_link})"
             end
           end
         else
-          _('発行不可')
+          _("User|Status|#{object.status}")
         end
+      when "admin"
+        _("User|Admin|#{object.admin}")
       else
         object.send(column.to_sym)
       end
@@ -62,7 +61,7 @@ $j(function(){
     };
     $j('.issue_activation_code_link')
     .click(function() {
-        return confirm('<%= _('アクティベーションコードを発行して対象ユーザにメールを送信しますが宜しいですか?') %>');
+        return confirm('<%= _('対象ユーザに利用開始通知メールを送信しますが宜しいですか?') %>');
     });
 });
 </script>

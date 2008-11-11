@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-11-07 11:01+0900\n"
+"POT-Creation-Date: 2008-11-11 15:01+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -893,10 +893,6 @@ msgstr ""
 msgid "Admin::UserUid|Uid type"
 msgstr ""
 
-#: app/models/admin/user.rb:29
-msgid "Admin::User|Activation token"
-msgstr ""
-
 #: app/models/admin/user.rb:23
 msgid "Admin::User|Admin"
 msgstr ""
@@ -933,7 +929,7 @@ msgstr ""
 msgid "Admin::User|Uid"
 msgstr ""
 
-#: app/models/admin/user.rb:31 app/views/admin/users/_form.html.erb:4
+#: app/models/admin/user.rb:30 app/views/admin/users/_form.html.erb:4
 msgid "Admin::User|User uids"
 msgstr ""
 
@@ -1001,7 +997,7 @@ msgstr ""
 #: app/views/admin/group_categories/index.html.erb:30
 #: app/views/admin/users/create_uid.html.erb:27
 #: app/views/admin/users/change_uid.html.erb:31
-#: app/views/admin/users/index.html.erb:44
+#: app/views/admin/users/index.html.erb:43
 msgid "Are you sure?"
 msgstr ""
 
@@ -1073,11 +1069,11 @@ msgstr ""
 msgid "BoardEntry|Entry type"
 msgstr ""
 
-#: app/models/board_entry.rb:47
+#: app/models/board_entry.rb:48
 msgid "BoardEntry|Entry type|DIARY"
 msgstr ""
 
-#: app/models/board_entry.rb:48
+#: app/models/board_entry.rb:49
 msgid "BoardEntry|Entry type|GROUP_BBS"
 msgstr ""
 
@@ -1302,7 +1298,7 @@ msgstr ""
 #: app/views/admin/openid_identifiers/index.html.erb:18
 #: app/views/admin/group_participations/index.html.erb:30
 #: app/views/admin/group_categories/index.html.erb:30
-#: app/views/admin/users/index.html.erb:44
+#: app/views/admin/users/index.html.erb:43
 msgid "Destroy"
 msgstr ""
 
@@ -1310,7 +1306,7 @@ msgstr ""
 #: app/views/admin/openid_identifiers/index.html.erb:17
 #: app/views/admin/group_categories/index.html.erb:29
 #: app/views/admin/group_categories/show.html.erb:29
-#: app/views/admin/users/index.html.erb:43
+#: app/views/admin/users/index.html.erb:42
 msgid "Edit"
 msgstr ""
 
@@ -1639,13 +1635,13 @@ msgstr ""
 #: app/controllers/admin/admin_module.rb:226
 #: app/views/admin/openid_identifiers/index.html.erb:23
 #: app/views/admin/group_categories/index.html.erb:37
-#: app/views/admin/users/index.html.erb:51
+#: app/views/admin/users/index.html.erb:50
 msgid "New %{model}"
 msgstr ""
 
 #: app/controllers/admin/users_controller.rb:124
 #: app/controllers/admin/users_controller.rb:141
-#: app/views/admin/users/index.html.erb:52
+#: app/views/admin/users/index.html.erb:51
 msgid "New user from csv"
 msgstr ""
 
@@ -1893,10 +1889,6 @@ msgid "SiteCount|Created on"
 msgstr ""
 
 #: app/models/site_count.rb:-
-msgid "SiteCount|Custom users"
-msgstr ""
-
-#: app/models/site_count.rb:-
 msgid "SiteCount|Portrait users"
 msgstr ""
 
@@ -2029,6 +2021,10 @@ msgstr ""
 
 #: app/models/user_access.rb:-
 msgid "UserAccess|User"
+msgstr ""
+
+#: app/models/user_custom.rb:-
+msgid "UserCustom|Classic"
 msgstr ""
 
 #: app/models/user_custom.rb:-
@@ -2282,7 +2278,7 @@ msgstr ""
 msgid "activation"
 msgstr ""
 
-#: app/views/admin/users/index.html.erb:17
+#: app/views/admin/users/index.html.erb:32
 msgid "admin"
 msgstr ""
 
@@ -2455,7 +2451,7 @@ msgstr ""
 #: app/controllers/admin/users_controller.rb:159
 #: app/controllers/admin/users_controller.rb:184 app/models/user.rb:-
 #: app/views/admin/users/import.html.erb:78
-#: app/views/admin/users/index.html.erb:51
+#: app/views/admin/users/index.html.erb:50
 msgid "user"
 msgstr ""
 
@@ -2499,7 +2495,7 @@ msgstr ""
 msgid "お問い合わせ・ヘルプ"
 msgstr ""
 
-#: app/controllers/application.rb:144
+#: app/controllers/application.rb:147
 msgid "この操作は、許可されていません。"
 msgstr ""
 
@@ -2509,13 +2505,13 @@ msgid ""
 "{contact_link}下さい。"
 msgstr ""
 
-#: app/models/board_entry.rb:62
+#: app/models/board_entry.rb:63
 msgid "ご指定のグループは存在しません。"
 msgstr ""
 
 #: app/controllers/user_controller.rb:252
 #: app/controllers/admin/users_controller.rb:53
-#: app/controllers/admin/users_controller.rb:69 app/models/board_entry.rb:56
+#: app/controllers/admin/users_controller.rb:69 app/models/board_entry.rb:57
 msgid "ご指定のユーザは存在しません。"
 msgstr ""
 
@@ -2531,12 +2527,6 @@ msgstr ""
 
 #: app/controllers/admin/settings_controller.rb:46
 msgid "アカウント関連"
-msgstr ""
-
-#: app/views/admin/users/index.html.erb:65
-msgid ""
-"アクティベーションコードを発行して対象ユーザにメールを送信しますが宜しいです"
-"か?"
 msgstr ""
 
 #: app/views/admin/users/import.html.erb:36
@@ -2690,7 +2680,7 @@ msgstr ""
 msgid "不正なアンテナが指定されました。"
 msgstr ""
 
-#: app/models/board_entry.rb:64
+#: app/models/board_entry.rb:65
 msgid "不正なグループです。"
 msgstr ""
 
@@ -2698,7 +2688,7 @@ msgstr ""
 msgid "不正なパラメタです。"
 msgstr ""
 
-#: app/models/board_entry.rb:58
+#: app/models/board_entry.rb:59
 msgid "不正なユーザです。"
 msgstr ""
 
@@ -2744,6 +2734,10 @@ msgid ""
 "ません。"
 msgstr ""
 
+#: app/views/board_entries/_form.html.erb:106
+msgid "公開されている人にメールを送信する"
+msgstr ""
+
 #: app/controllers/admin/settings_controller.rb:35
 msgid "共有ファイル関連"
 msgstr ""
@@ -2752,8 +2746,8 @@ msgstr ""
 msgid "内部エラーが発生しました。管理者に連絡してください。"
 msgstr ""
 
-#: app/views/admin/users/index.html.erb:23
-msgid "再発行"
+#: app/views/admin/users/index.html.erb:20
+msgid "再通知"
 msgstr ""
 
 #: app/controllers/antenna_controller.rb:81
@@ -2764,8 +2758,16 @@ msgstr ""
 msgid "初期値に戻す"
 msgstr ""
 
+#: app/views/admin/users/index.html.erb:17
+msgid "利用開始通知"
+msgstr ""
+
+#: app/views/admin/users/index.html.erb:23
+msgid "利用開始通知済み"
+msgstr ""
+
 #: app/controllers/admin/group_categories_controller.rb:23
-#: app/controllers/edit_controller.rb:242
+#: app/controllers/edit_controller.rb:234
 msgid "削除しました。"
 msgstr ""
 
@@ -2827,6 +2829,10 @@ msgstr ""
 msgid "対象データが見つかりません。"
 msgstr ""
 
+#: app/views/admin/users/index.html.erb:64
+msgid "対象ユーザに利用開始通知メールを送信しますが宜しいですか?"
+msgstr ""
+
 #: app/controllers/admin/images_controller.rb:156
 #: app/controllers/admin/documents_controller.rb:44
 #: app/controllers/admin/documents_controller.rb:95
@@ -2867,10 +2873,6 @@ msgstr ""
 msgid "更新しました。"
 msgstr ""
 
-#: app/views/admin/users/index.html.erb:28
-msgid "期限切れ"
-msgstr ""
-
 #: app/views/admin/users/import.html.erb:9
 msgid ""
 "未登録のユーザは追加されます。登録済みのユーザを更新したい場合は、[登録済みの"
@@ -2901,18 +2903,6 @@ msgstr ""
 msgid "現在設定中の画像が消えてしまいますがよろしいですか?"
 msgstr ""
 
-#: app/views/admin/users/index.html.erb:21
-msgid "発行"
-msgstr ""
-
-#: app/views/admin/users/index.html.erb:32
-msgid "発行不可"
-msgstr ""
-
-#: app/views/admin/users/index.html.erb:26
-msgid "発行済"
-msgstr ""
-
 #: app/controllers/admin/users_controller.rb:37
 #: app/controllers/admin/users_controller.rb:105
 msgid "登録しました。"
@@ -2936,7 +2926,7 @@ msgid ""
 "ている場合でも上書きされますのでご注意下さい。"
 msgstr ""
 
-#: app/views/admin/users/index.html.erb:25
+#: app/views/admin/users/index.html.erb:22
 msgid "確認"
 msgstr ""
 
@@ -2959,4 +2949,8 @@ msgstr ""
 
 #: app/controllers/rankings_controller.rb:154
 msgid "該当のブックマークがありません。"
+msgstr ""
+
+#: app/views/admin/users/index.html.erb:25
+msgid "通知期限切れ"
 msgstr ""

@@ -26,7 +26,6 @@ class Admin::User < User
   N_('Admin::User|Password')
   N_('Admin::User|Retired')
   N_('Admin::User|Status')
-  N_('Admin::User|Activation token')
 
   N_('Admin::User|User uids')
 
