@@ -187,3 +187,54 @@ describe MypageController, "GET /antenna_list" do
   end
   it { response.should include_text(@result_text) }
 end
+
+describe MypageController, "#unify_feed_form" do
+  before do
+    @channel = mock('channel')
+    @items = (1..5).map{|i| mock("item#{i}") }
+    @feed = mock('feed', :channel => @channel, :items => @items)
+  end
+  describe "feedがRSS:Rssの場合" do
+    before do
+      @feed.stub!(:is_a?).with(RSS::Rss).and_return(true)
+      @title = "title"
+      @limit = 1
+
+      @channel.stub!(:title=)
+    end
+    it "titleが設定されること" do
+      @channel.should_receive(:title=).with(@title)
+      controller.send(:unify_feed_form, @feed, @title)
+    end
+    it "limit以下のアイテム数になること" do
+      feed = controller.send(:unify_feed_form, @feed, @title, @limit)
+      feed.items.size.should == @limit
+    end
+  end
+  describe "feedがRSS::Atomの場合" do
+    before do
+      @feed.stub!(:is_a?).with(RSS::Rss).and_return(false)
+    end
+    describe "Atomが利用できるライブラリのバージョンの場合" do
+      before do
+        @feed.stub!(:is_a?).with(RSS::Atom::Feed).and_return(true)
+      end
+      it "AtomからRss2.0に変換されること" do
+        @feed.should_receive(:to_rss).with("2.0")
+        controller.send(:unify_feed_form, @feed)
+      end
+    end
+    describe "Atomが利用でいないライブラリのバージョンの場合" do
+      before do
+        @feed.stub!(:is_a?).and_raise(NameError.new("uninitialized constant RSS::Atom", "RSS::Atom::Feed"))
+      end
+      it "ログにエラーが表示されること" do
+        controller.logger.should_receive(:error).with("[Error] Rubyのライブラリが古いためAtom形式を変換できませんでした。")
+        controller.send(:unify_feed_form, @feed)
+      end
+      it "nilが返されること" do
+        controller.send(:unify_feed_form, @feed).should be_nil
+      end
+    end
+  end
+end

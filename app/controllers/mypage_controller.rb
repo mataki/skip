@@ -96,11 +96,8 @@ class MypageController < ApplicationController
       timeout(Admin::Setting.mypage_feed_timeout.to_i) do
         feed = open(setting[:url], :proxy => INITIAL_SETTINGS['proxy_url']){ |f| RSS::Parser.parse(f.read) }
       end
-      feed = feed.to_rss("2.0") if feed.is_a?(RSS::Atom::Feed)
-      feed.channel.title = setting[:title] if setting[:title]
-      limit = (setting[:limit]||Admin::Setting.mypage_feed_default_limit)
-      feed.items.slice!(limit..-1) if feed.items.size > limit
-      feeds << feed
+      feed = unify_feed_form(feed, setting[:title], setting[:limit])
+      feeds << feed if feed
     end
     render :partial => "rss_feed", :locals => { :feeds => feeds }
   rescue TimeoutError
@@ -928,6 +925,20 @@ private
         { :name => antenna.name, :url => url_for(:controller => :feed, :action => :user_antenna, :id => antenna.id) }
       end
     }.to_json
+  end
+
+  def unify_feed_form feed, title = nil, limit = nil
+    unless feed.is_a?(RSS::Rss)
+      feed.to_rss("2.0") if feed.is_a?(RSS::Atom::Feed)
+    else
+      feed.channel.title = title if title
+      limit = (limit || Admin::Setting.mypage_feed_default_limit)
+      feed.items.slice!(limit..-1) if feed.items.size > limit
+      feed
+    end
+  rescue NameError => e
+    logger.error "[Error] Rubyのライブラリが古いためAtom形式を変換できませんでした。"
+    return nil
   end
 end
 
