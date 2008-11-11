@@ -15,6 +15,7 @@
 
 module GroupHelper
   include BoardEntriesHelper
+  include UsersHelper
 
   # グループのサマリに出す状態を状況に応じて出力する
   # 表示文字列と、可能な操作の文字列のペアを返す
@@ -66,45 +67,6 @@ module GroupHelper
     informations
   end
 
-  def output_users_result output_normal, users
-    output = ""
-    if output_normal
-      users.each do |user|
-        output << render( :partial => "users/user",
-                          :object => user,
-                          :locals => { :top_option => user_state(user) } )
-      end
-    else
-      table_columns = [ "name", "email", "section", "extension" ]
-      table_columns.unshift('uid') if user_name_mode?(:name)
-      table_columns.unshift('code') if user_name_mode?(:code)
-      table_columns.unshift('')
-
-      block = lambda{ |user, column|
-        case column
-        when ""
-          user_state(user)
-        when "name"
-          user_link_to user
-        when "email"
-          %(<a href="mailto:#{user.user_profile.email}">#{user.user_profile.email}</a>)
-        when "section"
-          user.user_profile.section
-        when "extension"
-          user.user_profile.extension
-        else
-          h(user.send(column))
-        end
-      }
-      output = render( :partial => "shared/table",
-                       :locals => { :records => users,
-                                    :target_class => User,
-                                    :table_columns => table_columns,
-                                    :value_logic => block  } )
-    end
-    output
-  end
-
   # 管理メニューの生成
   def get_manage_menu_items selected_menu
     @@menus = [{:name => "グループ情報変更", :menu => "manage_info" },
@@ -118,17 +80,6 @@ module GroupHelper
     options_hash = {}
     owners.each { |owner| options_hash.store(owner.name, owner.id) }
     options_hash
-  end
-
-private
-  def user_state user
-    output = ""
-    if user.group_participations.first.owned?
-      output << icon_tag('star') + '管理者'
-    else
-      output << icon_tag('user') + '参加者'
-    end
-    output
   end
 
 end

@@ -15,27 +15,33 @@
 
 module UsersHelper
 
-  def output_users_result output_normal, users
+  def output_users_result users, options = {}
+    options = {:output_normal => true, :output_group_participation => false}.merge(options)
+
     output = ""
-    if output_normal
+    if options[:output_normal]
       for user in users
-        output << render( :partial => "users/user",
-                          :object => user )
+        render_params = {:partial => 'users/user', :object => user}
+        render_params.merge!(:locals => {:top_option => user_state(user)}) if options[:output_group_participation]
+        output << render(render_params)
       end
     else
-      table_columns = [ "name", "email", "section", "extension" ]
-      table_columns.unshift('uid') if user_name_mode?(:name)
-      table_columns.unshift('code') if user_name_mode?(:code)
+      columns = [ 'code', 'uid', 'name', 'email', 'section', 'extension' ]
+      columns.delete('code') unless user_name_mode?(:code)
+      columns.delete('uid') unless user_name_mode?(:name)
+      columns.unshift('') if options[:output_group_participation]
 
       block = lambda{ |user, column|
         case column
-        when "name"
+        when ''
+          user_state(user)
+        when 'name'
           user_link_to user
-        when "email"
+        when 'email'
           %(<a href="mailto:#{user.user_profile.email}">#{user.user_profile.email}</a>)
-        when "section"
+        when 'section'
           h(user.user_profile.section)
-        when "extension"
+        when 'extension'
           h(user.user_profile.extension)
         else
           h(user.send(column))
@@ -44,8 +50,19 @@ module UsersHelper
       output = render( :partial => "shared/table",
                        :locals => { :records => users,
                                     :target_class => User,
-                                    :table_columns => table_columns,
+                                    :table_columns => columns,
                                     :value_logic => block  } )
+    end
+    output
+  end
+
+  def user_state user
+    # FIXME 前提条件がちょっと変わっただけで動作しなくなるロジックになっているので見直しが必要。
+    output = ""
+    if user.group_participations.first.owned?
+      output << icon_tag('star') + '管理者'
+    else
+      output << icon_tag('user') + '参加者'
     end
     output
   end

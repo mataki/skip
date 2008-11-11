@@ -23,7 +23,7 @@
 <% if @pages and @pages.item_count > 0 -%>
   <div class="navi"><%= page_link(@pages) %></div>
 
-  <%= output_users_result @condition.output_normal?, @users %>
+  <%= output_users_result @users, :output_normal => @condition.output_normal?, :output_group_participation => true %>
 
   <div class="navi"><%= page_link(@pages) %></div>
 <% end -%>
