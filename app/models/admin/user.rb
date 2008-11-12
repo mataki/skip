@@ -30,8 +30,6 @@ class Admin::User < User
   N_('Admin::User|Retired')
   N_('Admin::User|Status')
   N_('Admin::User|Status description')
-  N_('Admin::User|Password reset token')
-  N_('Admin::User|Password reset token description')
 
   N_('Admin::User|User uids')
 
