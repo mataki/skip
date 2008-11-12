@@ -74,7 +74,7 @@ class UserMailer < ActionMailer::Base
 
   def sent_activate(recipient, signup_url)
     @recipients = recipient
-    @subject    = UserMailer.base64("[#{Admin::Setting.abbr_app_title}] " + _('ユーザ登録の確認メールです'))
+    @subject    = UserMailer.base64("[#{Admin::Setting.abbr_app_title}] " + _('利用開始確認メールです'))
     @from       = from
     @send_on    = Time.now
     @headers    = {}
