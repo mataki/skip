@@ -142,14 +142,13 @@ end
 
 describe User, ".auth" do
   before do
-    Admin::Setting.stub!(:enable_activation).and_return(false)
+    @user = mock_model(User)
+    @user.stub!(:unused?).and_return(false)
   end
   describe "指定したログインIDに対応するユーザが存在する場合" do
-    describe "アクティベート機能が有効で未使用ユーザの場合" do
+    describe "未使用ユーザの場合" do
       before do
-        Admin::Setting.should_receive(:enable_activation).and_return(true)
         @password = 'password'
-        @user = mock_model(User)
         @user.stub!(:crypted_password).and_return(User.encrypt(@password))
         @user.stub!(:unused?).and_return(true)
         User.should_receive(:find_by_code).and_return(@user)
@@ -159,7 +158,6 @@ describe User, ".auth" do
     describe "パスワードが正しい場合" do
       before do
         @password = 'password'
-        @user = mock_model(User)
         @user.stub!(:crypted_password).and_return(User.encrypt(@password))
         User.should_receive(:find_by_code).and_return(@user)
       end
@@ -167,7 +165,6 @@ describe User, ".auth" do
     end
     describe "パスワードは正しくない場合" do
       before do
-        @user = mock_model(User)
         @user.stub!(:crypted_password).and_return('hogehoge')
         User.should_receive(:find_by_code).and_return(@user)
       end

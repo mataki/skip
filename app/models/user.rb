@@ -90,7 +90,7 @@ class User < ActiveRecord::Base
 
   def self.auth(code, password)
     return nil unless user = find_by_code(code)
-    return nil if Admin::Setting.enable_activation && user.unused?
+    return nil if user.unused?
     return user if user.crypted_password == encrypt(password)
   end
 

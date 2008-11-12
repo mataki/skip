@@ -126,9 +126,6 @@ class PlatformController < ApplicationController
   end
 
   def activate
-    unless Admin::Setting.enable_activation
-      return render(:file => File.join(RAILS_ROOT, 'public', '404.html'), :status => :not_found)
-    end
     return render(:layout => 'not_logged_in') unless request.post?
     email = params[:email]
     if email.blank?

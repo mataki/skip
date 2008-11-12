@@ -19,9 +19,6 @@
 stop_new_user:
   format: boolean
   default: false
-enable_activation:                                         # アクティベーション機能の有効/無効の設定
-  format: boolean
-  default: false
 
 # ==================================================================================================
 # 各種文言の設定

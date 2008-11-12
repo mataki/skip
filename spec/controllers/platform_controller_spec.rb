@@ -432,100 +432,74 @@ describe PlatformController, 'POST /forgot_login_id' do
 end
 
 describe PlatformController, 'GET /activate' do
-  describe 'アクティベート機能が有効な場合' do
-    before do
-      Admin::Setting.should_receive(:enable_activation).and_return(true)
-    end
-    it 'サインアップ画面に遷移すること' do
-      get :activate
-      response.should be_success
-    end
-  end
-  describe 'アクティベート機能が無効な場合' do
-    before do
-      Admin::Setting.should_receive(:enable_activation).and_return(false)
-    end
-    it '404ページへリダイレクトされること' do
-      get :activate
-      response.code.should == '404'
-    end
+  it 'サインアップ画面に遷移すること' do
+    get :activate
+    response.should be_success
   end
 end
 
 describe PlatformController, 'POST /activate' do
-  describe 'アクティベート機能が有効な場合' do
+  before do
+    UserProfile.stub!(:find_by_email)
+  end
+  describe 'メールアドレスの入力がない場合' do
+    it 'メールアドレスの入力は必須である旨のメッセージを表示する' do
+      post :activate, :email => ''
+      flash[:error].should == 'メールアドレスは必須です。'
+      response.should be_success
+    end
+  end
+  describe '登録済みのメールアドレスが送信された場合' do
     before do
-      Admin::Setting.should_receive(:enable_activation).and_return(true)
-      UserProfile.stub!(:find_by_email)
+      @email = 'exist@example.com'
+      @user_profile = stub_model(UserProfile, :email => @email)
+      @signup_url = 'signup_url'
+      controller.stub!(:signup_url).and_return(@signup_url)
+      @user = stub_model(User, :activation_token => @activation_token)
+      @user.stub!(:issue_activation_code)
+      @user.stub!(:save!)
+      UserMailer.stub!(:deliver_sent_activate)
+      @user_profile.stub!(:user).and_return(@user)
+      UserProfile.should_receive(:find_by_email).and_return(@user_profile)
     end
-    describe 'メールアドレスの入力がない場合' do
-      it 'メールアドレスの入力は必須である旨のメッセージを表示する' do
-        post :activate, :email => ''
-        flash[:error].should == 'メールアドレスは必須です。'
-        response.should be_success
-      end
-    end
-    describe '登録済みのメールアドレスが送信された場合' do
+    describe '未使用ユーザが見つかる場合' do
       before do
-        @email = 'exist@example.com'
-        @user_profile = stub_model(UserProfile, :email => @email)
-        @signup_url = 'signup_url'
-        controller.stub!(:signup_url).and_return(@signup_url)
-        @user = stub_model(User, :activation_token => @activation_token)
-        @user.stub!(:issue_activation_code)
-        @user.stub!(:save!)
-        UserMailer.stub!(:deliver_sent_activate)
-        @user_profile.stub!(:user).and_return(@user)
-        UserProfile.should_receive(:find_by_email).and_return(@user_profile)
+        @user_profile.should_receive(:unused_user).and_return(@user)
       end
-      describe '未使用ユーザが見つかる場合' do
-        before do
-          @user_profile.should_receive(:unused_user).and_return(@user)
-        end
-        it 'アクティベーションURLを記載したメールの送信処理が呼ばれること' do
-          UserMailer.should_receive(:deliver_sent_activate).with(@email, @signup_url)
-          post :activate, :email => @email
-        end
-        it 'アクティベーションコード発行処理が行われること' do
-          @user.should_receive(:issue_activation_code)
-          @user.should_receive(:save!)
-          post :activate, :email => @email
-        end
-        it 'メール送信した旨のメッセージが設定されてリダイレクトされること' do
-          post :activate, :email => @email
-          flash[:notice].should_not be_nil
-          response.should be_redirect
-        end
+      it 'アクティベーションURLを記載したメールの送信処理が呼ばれること' do
+        UserMailer.should_receive(:deliver_sent_activate).with(@email, @signup_url)
+        post :activate, :email => @email
       end
-      describe '未使用ユーザが見つからない場合' do
-        before do
-          @user_profile.should_receive(:unused_user).and_return(nil)
-        end
-        it '既に利用開始済みである旨のメッセージが設定されること' do
-          post :activate, :email => @email
-          flash[:error].should_not be_nil
-          response.should be_success
-        end
+      it 'アクティベーションコード発行処理が行われること' do
+        @user.should_receive(:issue_activation_code)
+        @user.should_receive(:save!)
+        post :activate, :email => @email
+      end
+      it 'メール送信した旨のメッセージが設定されてリダイレクトされること' do
+        post :activate, :email => @email
+        flash[:notice].should_not be_nil
+        response.should be_redirect
       end
     end
-    describe '未登録のメールアドレスが送信された場合' do
+    describe '未使用ユーザが見つからない場合' do
       before do
-        UserProfile.should_receive(:find_by_email).and_return(nil)
+        @user_profile.should_receive(:unused_user).and_return(nil)
       end
-      it 'メールアドレスが未登録である旨のメッセージが設定されること' do
-        post :activate, :email => 'activate@example.com'
+      it '既に利用開始済みである旨のメッセージが設定されること' do
+        post :activate, :email => @email
         flash[:error].should_not be_nil
         response.should be_success
       end
     end
   end
-  describe 'アクティベート機能が無効な場合' do
+  describe '未登録のメールアドレスが送信された場合' do
     before do
-      Admin::Setting.should_receive(:enable_activation).and_return(false)
+      UserProfile.should_receive(:find_by_email).and_return(nil)
     end
-    it '404ページへリダイレクトされること' do
+    it 'メールアドレスが未登録である旨のメッセージが設定されること' do
       post :activate, :email => 'activate@example.com'
-      response.code.should == '404'
+      flash[:error].should_not be_nil
+      response.should be_success
     end
   end
 end

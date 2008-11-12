@@ -71,10 +71,8 @@ div#main {
   <p>ログイン</p>
   <%= render :partial => 'shared/login_form' %>
 
-<% if Admin::Setting.enable_activation -%>
   <p><%= _('Signup') %></p>
   <div style="text-align: center; font-weight: bold; font-size: 14px;"><%= link_to _('ユーザ登録してSKIPの利用を開始する'), activate_url %></div>
-<% end -%>
 </div>
 
 <div id="desc_before_login" class="desc"><%= skip_image_tag 'indicator.gif' %></div>
