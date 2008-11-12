@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-11-11 21:02+0900\n"
+"POT-Creation-Date: 2008-11-12 16:03+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,6 +15,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: app/views/shared/_login_form.html.erb:15
+msgid "%{login_account_name}を忘れた方はこちら"
+msgstr ""
 
 #: app/controllers/admin/openid_identifiers_controller.rb:26
 #: app/controllers/admin/openid_identifiers_controller.rb:36
@@ -1752,19 +1756,19 @@ msgstr ""
 msgid "New user from csv"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:317
+#: app/controllers/mypage_controller.rb:314
 msgid "OpenID URLを設定しました。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:200
+#: app/controllers/platform_controller.rb:197
 msgid "OpenIDの形式が正しくありません。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:242
+#: app/controllers/platform_controller.rb:239
 msgid "OpenIDの認証に失敗しました。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:240
+#: app/controllers/platform_controller.rb:237
 msgid ""
 "OpenIDサーバーが見つかりませんでした。正しいOpenID URLを入力してください。"
 msgstr ""
@@ -2624,7 +2628,7 @@ msgstr ""
 msgid "ご指定のユーザは存在しません。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:253
+#: app/controllers/platform_controller.rb:250
 msgid ""
 "そのOpenIDは、登録されていません。ログイン後管理画面でOpenID URLを登録後ログ"
 "インしてください。"
@@ -2658,7 +2662,7 @@ msgstr ""
 msgid "カテゴリが選択されていないか、不正な値です。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:241
+#: app/controllers/platform_controller.rb:238
 msgid "キャンセルされました。このサーバへの認証を確認してください"
 msgstr ""
 
@@ -2690,6 +2694,10 @@ msgstr ""
 
 #: app/controllers/admin/settings_controller.rb:63
 msgid "システム運用について"
+msgstr ""
+
+#: app/views/shared/_login_form.html.erb:23
+msgid "パスワードを忘れた方はこちら"
 msgstr ""
 
 #: app/controllers/platform_controller.rb:78
@@ -2725,24 +2733,18 @@ msgstr ""
 msgid "フッター"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:146
+#: app/controllers/platform_controller.rb:143
 #: app/controllers/admin/users_controller.rb:221
 msgid "メールアドレスが%{email}のユーザは既に利用を開始しています。"
 msgstr ""
 
 #: app/controllers/platform_controller.rb:70
 #: app/controllers/platform_controller.rb:114
-#: app/controllers/platform_controller.rb:135
+#: app/controllers/platform_controller.rb:132
 msgid "メールアドレスは必須です。"
 msgstr ""
 
-#: app/views/admin/settings/_main.html.erb:12
-msgid ""
-"メール機能が無効になっています。利用開始申請時のメールが送信されませんが宜し"
-"いですか?"
-msgstr ""
-
-#: app/controllers/platform_controller.rb:249
+#: app/controllers/platform_controller.rb:246
 msgid "ユーザの登録に失敗しました。管理者に連絡してください。<br/>%{msg}"
 msgstr ""
 
@@ -2754,17 +2756,17 @@ msgstr ""
 msgid "ユーザ登録してSKIPの利用を開始する"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:165
+#: app/controllers/platform_controller.rb:162
 msgid ""
 "ユーザ登録のためのURLが不正です。再度お試し頂くか、システム管理者にお問い合わ"
 "せ下さい。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:161
+#: app/controllers/platform_controller.rb:158
 msgid "ユーザ登録のためのURLの有効期限が過ぎています。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:143
+#: app/controllers/platform_controller.rb:140
 #: app/controllers/admin/users_controller.rb:219
 msgid "ユーザ登録のためのURLを記載したメールを%{email}宛てに送信しました。"
 msgstr ""
@@ -2837,7 +2839,7 @@ msgstr ""
 
 #: app/controllers/platform_controller.rb:81
 #: app/controllers/platform_controller.rb:123
-#: app/controllers/platform_controller.rb:150
+#: app/controllers/platform_controller.rb:147
 msgid "入力された%{email}というメールアドレスは登録されていません。"
 msgstr ""
 
@@ -2855,7 +2857,7 @@ msgstr ""
 msgid "共有ファイル関連"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:243
+#: app/controllers/platform_controller.rb:240
 msgid "内部エラーが発生しました。管理者に連絡してください。"
 msgstr ""
 
