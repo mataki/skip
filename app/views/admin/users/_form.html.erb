@@ -52,5 +52,6 @@
 <p>
   <%= label Admin::User.name, :password %>
   : [<%= link_to(_('再設定URLを表示する'), issue_password_reset_code_admin_user_path(@user), :class => 'nyroModal') %>]
+  <%= help_icon Admin::User.name, :password_reset_token %>
 </p>
 <% end -%>

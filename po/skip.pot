@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-11-12 19:03+0900\n"
+"POT-Creation-Date: 2008-11-12 19:29+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1016,6 +1016,14 @@ msgstr ""
 msgid "Admin::User|Password confirmation"
 msgstr ""
 
+#: app/models/admin/user.rb:33
+msgid "Admin::User|Password reset token"
+msgstr ""
+
+#: app/models/admin/user.rb:34
+msgid "Admin::User|Password reset token description"
+msgstr ""
+
 #: app/models/admin/user.rb:30
 msgid "Admin::User|Retired"
 msgstr ""
@@ -1032,7 +1040,7 @@ msgstr ""
 msgid "Admin::User|Uid"
 msgstr ""
 
-#: app/models/admin/user.rb:34 app/views/admin/users/_form.html.erb:4
+#: app/models/admin/user.rb:36 app/views/admin/users/_form.html.erb:4
 msgid "Admin::User|User uids"
 msgstr ""
 

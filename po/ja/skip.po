@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-11-12 19:03+0900\n"
+"POT-Creation-Date: 2008-11-12 19:29+0900\n"
 "PO-Revision-Date: 2008-11-06 14:56+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1075,6 +1075,14 @@ msgstr "パスワード"
 msgid "Admin::User|Password confirmation"
 msgstr "確認パスワード"
 
+#: app/models/admin/user.rb:33
+msgid "Admin::User|Password reset token"
+msgstr "パスワード再設定コード"
+
+#: app/models/admin/user.rb:34
+msgid "Admin::User|Password reset token description"
+msgstr "パスワードを再設定するためのURLを表示します。ユーザがパスワードを忘れた場合は、リンクをクリックして表示されるURLをメールでユーザに送信して下さい。"
+
 #: app/models/admin/user.rb:30
 msgid "Admin::User|Retired"
 msgstr "就業状態"
@@ -1091,7 +1099,7 @@ msgstr "ユーザの利用状態を選択します。"
 msgid "Admin::User|Uid"
 msgstr "ユーザ名"
 
-#: app/models/admin/user.rb:34 app/views/admin/users/_form.html.erb:4
+#: app/models/admin/user.rb:36 app/views/admin/users/_form.html.erb:4
 msgid "Admin::User|User uids"
 msgstr "ログインID"
 
