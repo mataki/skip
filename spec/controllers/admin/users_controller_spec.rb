@@ -395,7 +395,7 @@ describe Admin::UsersController, "POST #create_uid" do
   end
 end
 
-describe Admin::UsersController, '/activate' do
+describe Admin::UsersController, 'POST /issue_activation_code' do
   before do
     admin_login
   end
@@ -430,6 +430,41 @@ describe Admin::UsersController, '/activate' do
     it '既に利用開始済みである旨のメッセージが設定されること' do
       post :issue_activation_code
       flash[:error].should_not be_nil
+      response.should be_redirect
+    end
+  end
+end
+
+describe Admin::UsersController, 'POST /issue_password_reset_code' do
+  before do
+    admin_login
+  end
+  describe '未使用ユーザの場合' do
+    before do
+      @user = stub_model(Admin::User, :status => 'UNUSED')
+      @user.stub!(:save!)
+      Admin::User.should_receive(:find).and_return(@user)
+    end
+    it '未使用ユーザのパスワード再設定コードは発行できない旨のメッセージが設定されること' do
+      post :issue_password_reset_code
+      flash[:error].should_not be_nil
+      response.should be_redirect
+    end
+  end
+  describe '利用開始済みユーザの場合' do
+    before do
+      @user = stub_model(Admin::User, :status => 'ACTIVE')
+      @user.stub!(:save!)
+      Admin::User.should_receive(:find).and_return(@user)
+    end
+    it 'パスワード再設定コードの発行処理が行われること' do
+      @user.should_receive(:forgot_password)
+      @user.should_receive(:save!)
+      post :issue_password_reset_code
+    end
+    it 'パスワード再設定コードを発行した旨のメッセージが設定されること' do
+      post :issue_password_reset_code
+      flash[:notice].should_not be_nil
       response.should be_redirect
     end
   end

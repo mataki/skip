@@ -56,7 +56,7 @@ class UserMailer < ActionMailer::Base
 
   def sent_forgot_password(recipient, reset_password_url)
     @recipients = recipient
-    @subject    = UserMailer.base64("[#{Admin::Setting.abbr_app_title}] パスワードリセットの確認メールです")
+    @subject    = UserMailer.base64("[#{Admin::Setting.abbr_app_title}] パスワード再設定のメールです")
     @from       = from
     @send_on    = Time.now
     @headers    = {}

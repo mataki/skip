@@ -17,3 +17,14 @@
 <% end -%>
 
 <% end -%>
+<% content_for :javascript do -%>
+<script type="text/javascript">
+$j(function(){
+    $j.fn.nyroModal.settings.processHandler = function(settings) {
+        $j.nyroModalSettings({
+            minWidth: 10, minHeight: 10
+        });
+    };
+});
+</script>
+<% end -%>

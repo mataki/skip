@@ -312,6 +312,10 @@ class User < ActiveRecord::Base
     !self.activation_token.nil? && Time.now <= self.activation_token_expires_at
   end
 
+  def within_time_limit_of_password_reset_token?
+    !self.password_reset_token.nil? && Time.now <= self.password_reset_token_expires_at
+  end
+
 protected
   @@search_cond_keys = [:name, :extension, :section, :code, :email, :introduction]
 

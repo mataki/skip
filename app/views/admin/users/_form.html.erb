@@ -17,7 +17,7 @@
 <% end -%>
 <p>
   <%= label Admin::User.name, :name %>
-  <%= text_field :user, :name %>
+  :<%= text_field :user, :name %>
   <%= help_icon Admin::User.name, :name %>
 </p>
 <p>
@@ -26,7 +26,7 @@
   :<%= _('User|Status|UNUSED') %>
   <% else -%>
   <% unless @user.unused? -%>
-  <%= select :user, :status, Admin::User.status_select.delete_if{|select| select.last == 'UNUSED'} %>
+  :<%= select :user, :status, Admin::User.status_select.delete_if{|select| select.last == 'UNUSED'} %>
   <%= help_icon Admin::User.name, :status %>
   <% else -%>
   :<%= _('User|Status|UNUSED') %>
@@ -35,16 +35,30 @@
 </p>
 <% unless @user.new_record? -%><p>
   <%= label Admin::User.name, :admin %>
-  <%= check_box :user, :admin %>
+  :<%= check_box :user, :admin %>
   <%= help_icon Admin::User.name, :admin %>
 </p>
 <% end -%>
 <p>
   <%= label Admin::UserProfile.name, :email %>
   <% if @user.new_record? -%>
-  <%= text_field :user_profile, :email %>
+  :<%= text_field :user_profile, :email %>
   <%= help_icon Admin::UserProfile.name, :email %>
   <% else -%>
   :<%=h @user.user_profile.email %>
   <% end -%>
 </p>
+<% if !Admin::Setting.mail_function_setting && @user.active? -%>
+<p>
+  <%= label Admin::User.name, :password %>
+  :
+  <% if @user.password_reset_token.nil? -%>
+    [<%= link_to(_('再設定コード発行'), issue_password_reset_code_admin_user_path(@user)) %>]
+  <% elsif @user.within_time_limit_of_password_reset_token? -%>
+    [<%= link_to( _('再設定URL確認'), show_password_reset_url_admin_user_path(@user), :class => 'nyroModal') %>]
+  <% else -%>
+    <%= _('再設定コード期限切れ') + '(' + link_to(_('再発行'), issue_password_reset_code_admin_user_path(@user)) + ')' %>
+  <% end -%>
+  <%= help_icon Admin::User.name, :password_reset_token %>
+</p>
+<% end -%>

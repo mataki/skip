@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-11-12 16:03+0900\n"
+"POT-Creation-Date: 2008-11-12 17:44+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -892,7 +892,7 @@ msgid "Admin::UserProfile|Disclosure"
 msgstr ""
 
 #: app/models/admin/user_profile.rb:36
-#: app/views/admin/users/import.html.erb:23
+#: app/views/admin/users/import.html.erb:22
 msgid "Admin::UserProfile|Email"
 msgstr ""
 
@@ -949,7 +949,7 @@ msgid "Admin::UserProfile|Join year description"
 msgstr ""
 
 #: app/models/admin/user_profile.rb:48
-#: app/views/admin/users/import.html.erb:24
+#: app/views/admin/users/import.html.erb:23
 msgid "Admin::UserProfile|Section"
 msgstr ""
 
@@ -1008,8 +1008,7 @@ msgstr ""
 msgid "Admin::User|Name description"
 msgstr ""
 
-#: app/models/admin/user.rb:30 app/views/portal/_registration_form.html.erb:65
-#: app/views/admin/users/import.html.erb:22
+#: app/models/admin/user.rb:29 app/views/portal/_registration_form.html.erb:65
 msgid "Admin::User|Password"
 msgstr ""
 
@@ -1017,23 +1016,23 @@ msgstr ""
 msgid "Admin::User|Password confirmation"
 msgstr ""
 
-#: app/models/admin/user.rb:29
-msgid "Admin::User|Password confirmation description"
-msgstr ""
-
-#: app/models/admin/user.rb:31
-msgid "Admin::User|Password description"
-msgstr ""
-
-#: app/models/admin/user.rb:32
-msgid "Admin::User|Retired"
-msgstr ""
-
 #: app/models/admin/user.rb:33
-msgid "Admin::User|Status"
+msgid "Admin::User|Password reset token"
 msgstr ""
 
 #: app/models/admin/user.rb:34
+msgid "Admin::User|Password reset token description"
+msgstr ""
+
+#: app/models/admin/user.rb:30
+msgid "Admin::User|Retired"
+msgstr ""
+
+#: app/models/admin/user.rb:31
+msgid "Admin::User|Status"
+msgstr ""
+
+#: app/models/admin/user.rb:32
 msgid "Admin::User|Status description"
 msgstr ""
 
@@ -1337,7 +1336,7 @@ msgstr ""
 msgid "CSVファイルに不正な値が含まれています。"
 msgstr ""
 
-#: app/views/admin/users/import.html.erb:35
+#: app/views/admin/users/import.html.erb:34
 msgid "CSVファイルの内容"
 msgstr ""
 
@@ -1633,7 +1632,7 @@ msgstr ""
 msgid "Import confirmation"
 msgstr ""
 
-#: app/views/admin/users/import.html.erb:40
+#: app/views/admin/users/import.html.erb:39
 msgid "Line"
 msgstr ""
 
@@ -1672,7 +1671,7 @@ msgstr ""
 #: app/views/admin/board_entries/show.html.erb:43
 #: app/views/admin/bookmarks/show.html.erb:19
 #: app/views/admin/groups/show.html.erb:35
-#: app/views/admin/users/import.html.erb:78
+#: app/views/admin/users/import.html.erb:75
 msgid "Listing %{model}"
 msgstr ""
 
@@ -2104,7 +2103,7 @@ msgstr ""
 
 #: app/views/admin/images/_form.html.erb:4
 #: app/views/admin/users/import.html.erb:16
-#: app/views/admin/users/import.html.erb:88
+#: app/views/admin/users/import.html.erb:85
 msgid "Uploading..."
 msgstr ""
 
@@ -2563,7 +2562,7 @@ msgstr ""
 #: app/controllers/admin/users_controller.rb:141
 #: app/controllers/admin/users_controller.rb:159
 #: app/controllers/admin/users_controller.rb:184 app/models/user.rb:-
-#: app/views/admin/users/import.html.erb:78
+#: app/views/admin/users/import.html.erb:75
 #: app/views/admin/users/index.html.erb:50
 msgid "user"
 msgstr ""
@@ -2646,13 +2645,13 @@ msgstr ""
 msgid "アンテナに追加"
 msgstr ""
 
-#: app/views/admin/users/import.html.erb:36
+#: app/views/admin/users/import.html.erb:35
 msgid ""
 "エラーがある場合は各行の右端のアイコンをクリックすると詳細が表示されます。例"
 "にならって修正して下さい。"
 msgstr ""
 
-#: app/views/admin/users/import.html.erb:36
+#: app/views/admin/users/import.html.erb:35
 msgid ""
 "エラー行のみ表示しています。右端のアイコンをクリックするとエラーの詳細を確認"
 "出来ます。例にならって修正して下さい。"
@@ -2696,6 +2695,10 @@ msgstr ""
 msgid "システム運用について"
 msgstr ""
 
+#: app/views/admin/users/show_password_reset_url.html.erb:2
+msgid "パスワードを再設定するためのURLは以下の通りです。"
+msgstr ""
+
 #: app/views/shared/_login_form.html.erb:23
 msgid "パスワードを忘れた方はこちら"
 msgstr ""
@@ -2703,6 +2706,18 @@ msgstr ""
 #: app/controllers/platform_controller.rb:78
 msgid ""
 "パスワードリセットのためのURLを記載したメールを%{email}宛てに送信しました。"
+msgstr ""
+
+#: app/views/admin/users/show_password_reset_url.html.erb:4
+msgid "パスワード再設定URLをメールで送信する"
+msgstr ""
+
+#: app/views/admin/users/show_password_reset_url.html.erb:4
+msgid "パスワード再設定のメールです"
+msgstr ""
+
+#: app/controllers/admin/users_controller.rb:239
+msgid "パスワード再設定コードが発行されました。"
 msgstr ""
 
 #: app/controllers/share_file_controller.rb:151
@@ -2734,7 +2749,7 @@ msgid "フッター"
 msgstr ""
 
 #: app/controllers/platform_controller.rb:143
-#: app/controllers/admin/users_controller.rb:221
+#: app/controllers/admin/users_controller.rb:222
 msgid "メールアドレスが%{email}のユーザは既に利用を開始しています。"
 msgstr ""
 
@@ -2767,7 +2782,7 @@ msgid "ユーザ登録のためのURLの有効期限が過ぎています。"
 msgstr ""
 
 #: app/controllers/platform_controller.rb:140
-#: app/controllers/admin/users_controller.rb:219
+#: app/controllers/admin/users_controller.rb:220
 msgid "ユーザ登録のためのURLを記載したメールを%{email}宛てに送信しました。"
 msgstr ""
 
@@ -2861,6 +2876,22 @@ msgstr ""
 msgid "内部エラーが発生しました。管理者に連絡してください。"
 msgstr ""
 
+#: app/views/admin/users/_form.html.erb:60
+msgid "再発行"
+msgstr ""
+
+#: app/views/admin/users/_form.html.erb:58
+msgid "再設定URL確認"
+msgstr ""
+
+#: app/views/admin/users/_form.html.erb:60
+msgid "再設定コード期限切れ"
+msgstr ""
+
+#: app/views/admin/users/_form.html.erb:56
+msgid "再設定コード発行"
+msgstr ""
+
 #: app/views/admin/users/index.html.erb:20
 msgid "再通知"
 msgstr ""
@@ -2871,6 +2902,14 @@ msgstr ""
 
 #: app/views/admin/settings/index.html.erb:9
 msgid "初期値に戻す"
+msgstr ""
+
+#: app/views/admin/users/show_signup_url.html.erb:4
+msgid "利用開始URLをメールで送信する"
+msgstr ""
+
+#: app/views/admin/users/show_signup_url.html.erb:4
+msgid "利用開始確認メールです"
 msgstr ""
 
 #: app/views/admin/users/index.html.erb:17
@@ -2983,6 +3022,10 @@ msgstr ""
 msgid "更新しました。"
 msgstr ""
 
+#: app/controllers/admin/users_controller.rb:241
+msgid "未使用ユーザのパスワード再設定コードは発行できません。"
+msgstr ""
+
 #: app/views/admin/users/import.html.erb:9
 msgid ""
 "未登録のユーザは追加されます。登録済みのユーザを更新したい場合は、[登録済みの"
@@ -2993,7 +3036,7 @@ msgstr ""
 msgid "機能に関する設定"
 msgstr ""
 
-#: app/views/admin/users/import.html.erb:28
+#: app/views/admin/users/import.html.erb:27
 msgid "正しいCSVファイルの例"
 msgstr ""
 

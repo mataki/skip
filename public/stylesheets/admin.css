@@ -79,10 +79,10 @@ div.feed_item {
   width: 90%;
   margin-bottom: 8px;
 }
-div#signup_url {
+div.onetime_url {
   font-weight: bold;
   font-size: 16px;
 }
-div#signup_url p {
+div.onetime_url p {
   padding: 10px;
 }

@@ -224,6 +224,25 @@ class Admin::UsersController < Admin::ApplicationController
     redirect_to admin_users_path
   end
 
+  def show_password_reset_url
+    @user = Admin::User.find(params[:id])
+    @reset_password_url = reset_password_url(@user.password_reset_token)
+    @mail_body = render_to_string(:template => "user_mailer/sent_forgot_password", :layout => false)
+    render :layout => false
+  end
+
+  def issue_password_reset_code
+    user = Admin::User.find(params[:id])
+    if user.active?
+      user.forgot_password
+      user.save!
+      flash[:notice] = _('パスワード再設定コードが発行されました。')
+    else
+      flash[:error] = _('未使用ユーザのパスワード再設定コードは発行できません。')
+    end
+    redirect_to edit_admin_user_path(params[:id])
+  end
+
   private
   def valid_activation_code? code
     return false unless code
