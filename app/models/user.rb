@@ -334,7 +334,7 @@ protected
 
 private
   def password_required?
-    crypted_password.blank? || !password.blank?
+    active? and crypted_password.blank? or !password.blank?
   end
 
   def encrypt(password)

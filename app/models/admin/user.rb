@@ -120,7 +120,7 @@ class Admin::User < User
 
     line_hash = {:login_id => line[0]}
     line_index = 1
-    [:name, :password, :email, :section].each do |attr|
+    [:name, :email, :section].each do |attr|
       if options && options.include?(attr)
         line_hash[attr] = line[line_index]
         line_index += 1
@@ -132,7 +132,6 @@ class Admin::User < User
 
     user_hash = {}
     user_hash.merge!(:name => line_hash[:name]) if line_hash[:name]
-    user_hash.merge!(:password => line_hash[:password], :password_confirmation => line_hash[:password]) if line_hash[:password]
 
     user_profile_hash = {}
     user_profile_hash.merge!(:email => line_hash[:email]) if line_hash[:email]

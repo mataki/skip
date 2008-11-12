@@ -19,7 +19,6 @@
       <p>
         <% options = params[:options] || {} %>
         <label for="options[name]"><%= _("Admin::User|Name") %></label><%= check_box_tag "options[name]", "1", options[:name], :class => "csv_options disable_uncheck_update_registered" %>
-        <label for="options[password]"><%= _("Admin::User|Password") %></label><%= check_box_tag "options[password]", "1", options[:password], :class => "csv_options disable_uncheck_update_registered" %>
         <label for="options[email]"><%= _("Admin::UserProfile|Email") %></label><%= check_box_tag "options[email]", "1", options[:email], :class => "csv_options disable_uncheck_update_registered" %>
         <label for="options[section]"><%= _("Admin::UserProfile|Section") %></label><%= check_box_tag "options[section]", "1", options[:section], :class => "csv_options" %>
       </p>
@@ -27,9 +26,9 @@
 
     <h3><%= _('正しいCSVファイルの例') %></h3>
 <pre>
-111111<span class="example_name">,山田 太郎</span><span class="example_password">,password</span><span class="example_email">,yamada@example.com</span></span><span class="example_section">,経理</span>
-222222<span class="example_name">,山田 花子</span><span class="example_password">,password</span><span class="example_email">,h_yamada@example.com</span><span class="example_section">,人事</span>
-333333<span class="example_name">,鈴木 次郎</span><span class="example_password">,password</span><span class="example_email">,suzuki@example.com</span><span class="example_section">,開発</span></pre>
+111111<span class="example_name">,山田 太郎</span><span class="example_email">,yamada@example.com</span></span><span class="example_section">,経理</span>
+222222<span class="example_name">,山田 花子</span><span class="example_email">,h_yamada@example.com</span><span class="example_section">,人事</span>
+333333<span class="example_name">,鈴木 次郎</span><span class="example_email">,suzuki@example.com</span><span class="example_section">,開発</span></pre>
   </div>
   <% unless @users.empty? -%>
   <h2><%= _('CSVファイルの内容') %></h2>
@@ -40,7 +39,6 @@
         <th><%= _('Line') %></th>
         <th><label><%= h Admin::Setting.login_account %></label></th>
         <th><%= label Admin::User.name, :name %></th>
-        <th><%= label Admin::User.name, :password %></th>
         <th><%= label Admin::UserProfile.name, :email %></th>
         <th><%= label Admin::UserProfile.name, :section %></th>
         <td style="width:16px;"></td>
@@ -54,7 +52,6 @@
           <td><%=h line+1 %></td>
           <td><%=h @user_uid.uid %></td>
           <td><%=h @user.name %></td>
-          <td><%=h '********' if @user.crypted_password %></td>
           <td><%=h @user_profile.email %></td>
           <td><%=h @user_profile.section %></td>
           <td>
@@ -96,53 +93,53 @@ $j(function(){
     // CSVでアップロードするカラムが変更されたときにサンプルも変化する様に
     $j('.csv_options')
     .click(function(){
-	this.id.match(/\[(.*)\]/);
-	$j('.example_' + RegExp.$1).toggle();
+        this.id.match(/\[(.*)\]/);
+        $j('.example_' + RegExp.$1).toggle();
     });
     $j.each($j('.csv_options'), function(i) {
-	this.id.match(/\[(.*)\]/);
-	var target_obj = $j('.example_' + RegExp.$1);
-	if (this.checked) {
-	    target_obj.show();
-	} else {
-	    target_obj.hide();
-	}
+        this.id.match(/\[(.*)\]/);
+        var target_obj = $j('.example_' + RegExp.$1);
+        if (this.checked) {
+            target_obj.show();
+        } else {
+            target_obj.hide();
+        }
     });
 
     // 既存のユーザを更新しない場合は、必須項目のチェックを外せない様に
     $j('#update_registered')
     .click(function() {
-	checkUpdateRegistered(this);
+        checkUpdateRegistered(this);
     });
 
     $j.fn.disableAndAppendHidden = function () {
-	this
-	.attr("disabled", "disabled")
-	.attr("checked",true)
-	.each(function() {
-	    $j(this).after("<input type='hidden' value='"+this.value+"' name='"+this.name+"'/>");
-	});
-	return this
+        this
+        .attr("disabled", "disabled")
+        .attr("checked",true)
+        .each(function() {
+            $j(this).after("<input type='hidden' value='"+this.value+"' name='"+this.name+"'/>");
+        });
+        return this
     };
 
     $j.fn.enableAndRemoveHidden = function () {
-	this
-	.removeAttr("disabled")
-	.next("input[type='hidden']")
-	.remove();
-	return this
+        this
+        .removeAttr("disabled")
+        .next("input[type='hidden']")
+        .remove();
+        return this
     }
 
     var checkUpdateRegistered = function(obj) {
-	if (obj.checked) {
-	    $j('.disable_uncheck_update_registered')
-	    .enableAndRemoveHidden();
-	} else {
-	    $j('.disable_uncheck_update_registered')
-	    .disableAndAppendHidden();
+        if (obj.checked) {
+            $j('.disable_uncheck_update_registered')
+            .enableAndRemoveHidden();
+        } else {
+            $j('.disable_uncheck_update_registered')
+            .disableAndAppendHidden();
 
-	    $j('.example_name, .example_password, .example_email').show();
-	}
+            $j('.example_name, .example_email').show();
+        }
     };
     checkUpdateRegistered($j('#update_registered')[0]);
 

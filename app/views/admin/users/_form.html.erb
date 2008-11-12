@@ -48,13 +48,3 @@
   :<%=h @user.user_profile.email %>
   <% end -%>
 </p>
-<p>
-  <%= label Admin::User.name, :password %>
-  <%= password_field :user, :password %>
-  <%= help_icon Admin::User.name, :password %>
-</p>
-<p>
-  <%= label Admin::User.name, :password_confirmation %>
-  <%= password_field :user, :password_confirmation %>
-  <%= help_icon Admin::User.name, :password_confirmation %>
-</p>
