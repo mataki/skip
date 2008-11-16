@@ -56,8 +56,8 @@ module BoardEntriesHelper
 
   def write_place_name owner
     if owner
-      return "#{owner.name}のブログ" if owner.class == User
-      return "#{owner.name}の掲示板" if owner.class == Group
+      return "#{h owner.name}のブログ" if owner.class == User
+      return "#{h owner.name}の掲示板" if owner.class == Group
     end
     ''
   end
