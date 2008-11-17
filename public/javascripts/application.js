@@ -8,6 +8,13 @@ $j(function(){
         }
     });
 
+    $j('span.ss_help').cluetip({
+        splitTitle: '|',
+        dropShadow: false,
+        cluetipClass: 'jtip',
+        arrows: true
+    });
+
     /*
      * jQueryオブジェクトをHighlightする
      */
