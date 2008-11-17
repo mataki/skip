@@ -62,7 +62,9 @@ class MypageController < ApplicationController
       @partial, @locals = get_index_antenna(antenna_id)
 
     elsif list_type = params[:list_type]
-      @partial, @locals = get_index_list(list_type, params[:all])
+      options = {:per_page => 20}
+      options[:recent_day] = params[:all] ? nil : Admin::Setting.recent_date
+      @partial, @locals = "index_list", find_as_locals(list_type, options)
 
     else
       @partial, @locals = get_index_default
@@ -84,9 +86,7 @@ class MypageController < ApplicationController
   # 汎用的なajax対応アクション
   # param[:target]で指定した内容をページ単位表示する
   def load_entries
-    partial_name = params[:page_name] ||= "page_space"
-    locals = find_as_locals params[:target]
-    render :partial => partial_name, :locals => locals
+    render :partial => (params[:page_name] ||= "page_space"), :locals => find_as_locals(params[:target])
   end
 
   def load_rss_feed
@@ -684,16 +684,6 @@ private
     return partial, locals
   end
 
-  def get_index_list(list_type, show_all = false)
-    partial = "index_list"
-    options = {:per_page => 20}
-    options[:recent_day] = show_all ? nil : Admin::Setting.recent_date
-
-    # partialへのlocal変数で渡すから"_as_locals"
-    locals = find_as_locals(list_type, options)
-    return partial, locals
-  end
-
   def get_index_default
     partial = "index_default"
     recent_day = Admin::Setting.recent_date
@@ -727,8 +717,6 @@ private
       }
     end
 
-    system_messages
-
     # あなたへの連絡
     find_params = BoardEntry.make_conditions(login_user_symbols, {:recent_day => recent_day})
     find_params[:conditions][0] << " and user_readings.read = ? and user_readings.user_id = ? and entry_tags.tag_id = ?" #[連絡]タグのTagsテーブルのIDが4
@@ -752,13 +740,10 @@ private
       options = { :group_symbols => gid_by_category[category.id], :recent_day => recent_day, :per_page => 3 }
       recent_bbs << find_recent_bbs_as_locals(category.code.downcase, options)
     end
-
     #最近のブックマーク
     @bookmarks = Bookmark.find_visible(5, recent_day)
-
     # 最近登録されたグループ
     @recent_groups =  Group.find(:all, :order=>"created_on DESC", :conditions=>["created_on > ?" ,Date.today-recent_day], :limit => 10)
-
     # 最近登録されたユーザ
     @recent_users = User.find(:all, :order=>"created_on DESC", :conditions=>["created_on > ?" ,Date.today-recent_day], :limit => 10)
 
@@ -796,9 +781,9 @@ private
 
   # 最近の記事一覧を取得する（partial用のオプションを返す）
   # 引数：recent_day = 最近を示す日数
-  # 引数：per_page   = １ページの表示数（デフォルト5件）
+  # 引数：per_page   = １ページの表示数（デフォルト3件）
   def find_recent_blogs_as_locals options = {}
-    options = { :recent_day => Admin::Setting.recent_date, :per_page => 4 }.merge(options)
+    options = { :recent_day => Admin::Setting.recent_date, :per_page => 3 }.merge(options)
     find_params = BoardEntry.make_conditions(login_user_symbols, {:entry_type=>'DIARY', :recent_day => options[:recent_day], :publication_type => 'public'})
     find_params[:conditions][0] << " and board_entries.title <> 'ユーザー登録しました！'"
     pages_obj, pages = paginate(:board_entry,
@@ -816,7 +801,6 @@ private
   end
 
   # 最近のBBS記事一覧を取得するメソッドを動的に生成(partial用のオプションを返す)
-  #
   # 引数：recent_day       = 最近を示す日数
   # 引数：per_page         = １ページの表示数（デフォルト3件）
   def find_recent_bbs_as_locals code, options = {}
