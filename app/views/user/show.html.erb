@@ -32,7 +32,7 @@ div.input_line div.input_bottom {
 <div class="box_space" id="groups">
   <div class="box_space_title"><%= icon_tag('group') %>参加グループ</div>
   <div class="box_space_body">
-  <div id="group_participation_help" class="helpbar" style="display: none;">[<%= icon_tag('bullet_red') %>：管理者 <%= icon_tag('bullet_blue') %>：参加者]</div>
+  <div class="helpbar">[<%= icon_tag('bullet_red') %>：管理者 <%= icon_tag('bullet_blue') %>：参加者]</div>
   <ul>
   <% @groups.each do |group| -%>
     <% icon_name = group.group_participations.first.owned? ? 'bullet_red' : 'bullet_blue' -%>
@@ -189,13 +189,6 @@ div.input_line div.input_bottom {
 
 </div><!-- contents_right -->
 
-<div id="contents_bottom">
-</div><!-- contents_bottom -->
+<div id="contents_bottom"></div><!-- contents_bottom -->
 
 </div><!-- contents_container -->
-
-<script type="text/javascript">
-$j(function(){
-    toggleMouseOver('#groups', '#group_participation_help');
-});
-</script>

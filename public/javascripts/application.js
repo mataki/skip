@@ -52,19 +52,6 @@ $j(function(){
     };
 
     /*
-     * 感応型のヘルプバー表示をさせる
-     * sensitive_selecter : 感知するselecter / appeared_selecter : 表示させるID
-     */
-    toggleMouseOver = function(sensitive_selecter, appeared_selecter){
-        $j(sensitive_selecter)
-        .hover(function() {
-            $j(appeared_selecter).show();
-        },function() {
-            $j(appeared_selecter).hide();
-        });
-    };
-
-    /*
      * タグの表示非表示
      */
     $j.fn.appendClickForToggleTag = function() {
