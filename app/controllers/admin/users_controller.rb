@@ -217,7 +217,7 @@ class Admin::UsersController < Admin::ApplicationController
       user.save!
       email = user.user_profile.email
       UserMailer.deliver_sent_activate(email, signup_url(user.activation_token))
-      flash[:notice] = _("ユーザ登録のためのURLを記載したメールを%{email}宛てに送信しました。") % {:email => email}
+      flash[:notice] = Admin::Setting.mail_function_setting ?  _("ユーザ登録のためのURLを記載したメールを%{email}宛てに送信しました。") % {:email => email} : _('利用開始URLを発行しました。確認のリンクからユーザに連絡してください。')
     else
       flash[:error] = _("メールアドレスが%{email}のユーザは既に利用を開始しています。") % {:email => email}
     end

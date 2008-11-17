@@ -1,5 +1,9 @@
 <div class="onetime_url">
 <p><%= _('サインアップするためのURLは以下の通りです。') %></p>
 <p><%= @signup_url %></p>
-<p><%= mail_to(@user.user_profile.email, _('利用開始URLをメールで送信する'), :body => strip_tags(@mail_body), :subject => _('利用開始確認メールです')) unless Admin::Setting.mail_function_setting %></p>
+<% unless Admin::Setting.mail_function_setting -%>
+<p><%= _('以下のメールアドレスにURLを送信してください。') %></p>
+<p><%= @user.user_profile.email %></p>
+<p><%= mail_to(@user.user_profile.email, _('メーラを起動して送信する（宛先と本文が設定されます）'), :body => strip_tags(@mail_body), :subject => _('利用開始確認メールです')) %></p>
+<% end -%>
 </div>
