@@ -88,7 +88,7 @@ describe BoardEntriesHelper, '#write_place_name' do
         @owner = mock_model(User, :name => 'ユーザ', :uid => SkipFaker.rand_char)
       end
       it '「ユーザのブログ」という文言が返却されること' do
-        helper.write_place_name(@owner).should == "#{@owner.name}のブログ"
+        helper.write_place_name(@owner).should == "#{h @owner.name}のブログ"
       end
     end
     describe 'ownerの型がGroupの場合' do
@@ -96,7 +96,7 @@ describe BoardEntriesHelper, '#write_place_name' do
         @owner = mock_model(Group, :name => 'グループ', :gid => SkipFaker.rand_char)
       end
       it '「グループの掲示板」という文言が返却されること' do
-        helper.write_place_name(@owner).should == "#{@owner.name}の掲示板"
+        helper.write_place_name(@owner).should == "#{h @owner.name}の掲示板"
       end
     end
     describe 'ownerの型が不明な場合' do
