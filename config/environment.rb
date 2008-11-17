@@ -64,17 +64,6 @@ ENV['SECRET_KEY'] ||= INITIAL_SETTINGS['secret_key']
 
 menu_btns = [
   { :img_name => "house",         :id => "btn_mypage", :name => "マイページ", :url => {:controller => '/mypage', :action => 'index'} },
-
-#   { :separator => true, :name => "[マイメニュー]"},
-
-#   { :img_name => "vcard",         :id => "btn_profile", :name => "プロフィール", :url => {:controller => '/mypage', :action => 'profile'} },
-#   { :img_name => "report",        :id => "btn_my_blog", :name => "マイブログ", :url => {:controller => '/mypage', :action => 'blog'} },
-#   { :img_name => "disk_multiple", :id => "btn_manage", :name => "マイファイル", :url => {:controller => '/mypage', :action => 'share_file'} },
-#   { :img_name => "book_open",     :id => "btn_my_bookmark", :name => "マイブクマ", :url => {:controller => '/mypage', :action => 'bookmark'} },
-#   { :img_name => "cog",           :id => "btn_manage", :name => "自分の管理", :url => {:controller => '/mypage', :action => 'manage'} },
-
-#  { :separator => true, :name => "[全体メニュー]"},
-
   { :img_name => "report",        :id => "btn_entries", :name => "記事", :url => {:controller => '/search', :action => 'entry_search' } },
   { :img_name => "disk_multiple", :id => "btn_share_files", :name => "ファイル", :url => {:controller => '/search', :action => 'share_file_search' } },
   { :img_name => "user_suit",     :id => "btn_users", :name => "ユーザ", :url => {:controller => '/users', :action => 'index'} },
@@ -86,9 +75,7 @@ menu_btns << { :img_name => "page_find", :id => "btn_search", :name => "全文�
 MENU_BTNS = menu_btns
 
 admin_menu_btns = [
-#  { :separator => true, :name => "[管理メニュー]"},
-
-  { :img_name => "database_gear",         :id => "btn_admin", :name => "設定・管理", :url => {:controller => '/admin', :action => 'index'} },
+  { :img_name => "database_gear", :id => "btn_admin", :name => "設定・管理", :url => {:controller => '/admin', :action => 'index'} },
 ]
 ADMIN_MENU_BTNS = admin_menu_btns
 
