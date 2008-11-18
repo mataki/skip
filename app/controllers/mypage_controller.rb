@@ -680,7 +680,7 @@ private
   end
 
   def get_index_default
-    recent_day = Admin::Setting.recent_date
+    recent_day = 10 # 重要な連絡・連絡・質問・ブックマーク・登録グループ・登録ユーザの表示条件日数
 
     # お知らせ-承認待ちの一覧
     @waiting_groups = Group.find_waitings session[:user_id]
@@ -791,7 +791,7 @@ private
   def find_access_blogs_as_locals options
     find_params = BoardEntry.make_conditions(login_user_symbols, {:publication_type => 'public'})
     find_params[:conditions][0] << " and board_entries.category not like ? and last_updated > ?"
-    find_params[:conditions] << '%[質問]%' << Date.today-Admin::Setting.recent_date
+    find_params[:conditions] << '%[質問]%' << Date.today-10 # 人気記事の検索条件として10日以内でレーティングする
     pages_obj, pages = paginate(:board_entry,
                                 :per_page =>options[:per_page],
                                 :order=>"board_entry_points.today_access_count DESC, board_entry_points.access_count DESC, board_entries.last_updated DESC, board_entries.id DESC",
