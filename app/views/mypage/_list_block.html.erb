@@ -6,43 +6,41 @@
 <%= %(<div id="#{id_name}">) %>
 
 <h2 class="topix_title"><%= icon_tag(title_icon) -%><%=h title_name %></h2>
-
 <div class="topix_body" id="<%= id_name -%>_body">
 
 <% pages.each do |message| -%>
-
   <% entry_infos = get_entry_infos(message) -%>
   <% categories = message.category.scan(/\[[^\]]*\]/) -%>
   <% delete_categories.each {|categ| categories.delete(categ) } -%>
-
   <div style="border-bottom: 1px dotted silver; margin: 3px 0 1px 0; height: 16px; position: relative;">
-
-    <div style="width: 80%;  white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin: 0;"><%= get_light_icon(message) -%>
-      <%= hide_long_tags(categories, 3) %>
-      <%= entry_link_to(message, {}, {:title => message.title + entry_infos}) -%> <span style="font-size:8px; background-color: #fff8ff; vertical-align: middle; color: #bbbbbb;"><%= entry_infos -%></span></div>
-
+    <div style="width: 80%;  white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin: 0;">
+      <%= get_light_icon(message) + hide_long_tags(categories, 3) + entry_link_to(message, {}, {:title => message.title + entry_infos}) -%>
+      <span style="font-size:8px; background-color: #fff8ff; vertical-align: middle; color: #bbbbbb;"><%= entry_infos -%></span>
+    </div>
     <div style="position: absolute; bottom:0px; right: 0; width: 15%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; text-align: right; padding-left: 5px;font-size:10px;">
-      <%= symbol2name_hash ? symbol_link_to(message.symbol, symbol2name_hash[message.symbol]) : user_link_to(message.user) -%></div>
-
+      <%= symbol2name_hash ? symbol_link_to(message.symbol, symbol2name_hash[message.symbol]) : user_link_to(message.user) -%>
+    </div>
   </div>
-
 <% end -%>
 
+<div style="text-align: right;"><span style="background-color: #fcffc5; padding: 0 2px 0 5px; font-size: 10px;">
 <% if pages_obj -%>
-<div style="text-align: right; font-size: 10px;"><span style="background-color: #fcffc5; padding: 0 2px 0 5px;">
-<% if pages_obj.current.previous -%>
+<% if pages_obj.item_count > 0 -%>
+  <% if pages_obj.current.previous -%>
   <a class="first_link" id="<%= id_name -%>_first_link" href="#" >[最初へ]</a>
   <a class="back_link" id="<%= id_name -%>_back_link" href="#" >[前へ]</a>
-<% end -%>
-<%= %(全#{h pages_obj.item_count}件（#{h pages_obj.current.number}/#{h pages_obj.length}ページ）) %>
-<% if pages_obj.current.next -%>
+  <% end -%>
+  <%= %(全#{h pages_obj.item_count}件（#{h pages_obj.current.number}/#{h pages_obj.length}ページ）) %>
+  <% if pages_obj.current.next -%>
   <a class="next_link" id="<%= id_name -%>_next_link" href="#" >[次へ]</a>
   <a class="last_link" id="<%= id_name -%>_last_link" href="#" >[最後へ]</a>
+  <% end -%>
+<% else -%>
+  最近の記事はありません・・・
 <% end -%>
-<%= link_to('[ぜんぶ見る]', :controller => 'mypage', :action => "index", :list_type => id_name) -%>
+<% end -%>
+<%= link_to('[すべて見る]', :controller => 'mypage', :action => "index", :list_type => id_name) -%>
 </span></div>
-
-<% end %>
 
 </div><!-- topix_body -->
 
@@ -54,13 +52,12 @@ $j(function(){
     var loadEntries = function(page){
         $j.ajax({
             url: '<%= url_for(:controller => 'mypage', :action => 'load_entries') -%>',
-            data: { page : page, page_name : 'list_block', target : id_name },
+            data: { page : page, page_name : 'list_block', target : id_name, per_page : '<%= per_page -%>'<%= ", recent_day : '#{recent_day}'" if recent_day -%> },
             success: function(html) {
                 $j('#' + id_name).html(html).appendClickForToggleTag();
                 $j('#' + id_name + '_body').highlight();
             },
-            complete: function(request) {
-            }
+            complete: function(request) {}
         });
     };
 

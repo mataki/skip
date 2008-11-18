@@ -10,13 +10,6 @@ div#antenna_navi span.item {
 </style>
 
 <div style="text-align:right;">
-  <span style="border-right: 1px solid #555555; padding-right: 3px; margin-right: 7px;">
-    <% if params[:all] -%>
-      <%= link_to "[#{Admin::Setting.recent_date}日以前の記事を隠す]", :list_type => id_name, :all => false -%>
-    <% else %>
-    <%= link_to '[過去の全ての記事を表示]', :list_type => id_name, :all => true -%>
-    <% end %>
-  </span>
   <%= page_link(pages_obj) if pages_obj -%>
 </div>
 

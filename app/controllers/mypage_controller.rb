@@ -39,9 +39,7 @@ class MypageController < ApplicationController
     end
 
     @entry_count = get_entry_count(@year, @month)
-
     @user = current_user
-
     @my_info = {
       :access_count => @user.user_access.access_count,
       :subscriber_count => AntennaItem.count(:conditions => ["antenna_items.value = ?", @user.symbol],
@@ -54,18 +52,13 @@ class MypageController < ApplicationController
     # マイページの右側部分（パラメタに応じて内容を変更）
     if params[:year] && params[:month] && params[:day]
       @partial, @locals = get_index_day(@year, @month, @day)
-
     elsif antenna_type = params[:antenna_type]
       @partial, @locals = get_index_antenna_system(antenna_type)
-
     elsif antenna_id = params[:antenna_id]
       @partial, @locals = get_index_antenna(antenna_id)
-
     elsif list_type = params[:list_type]
       options = {:per_page => 20}
-      options[:recent_day] = params[:all] ? nil : Admin::Setting.recent_date
       @partial, @locals = "index_list", find_as_locals(list_type, options)
-
     else
       @partial, @locals = get_index_default
     end
@@ -86,7 +79,9 @@ class MypageController < ApplicationController
   # 汎用的なajax対応アクション
   # param[:target]で指定した内容をページ単位表示する
   def load_entries
-    render :partial => (params[:page_name] ||= "page_space"), :locals => find_as_locals(params[:target])
+    option = { :per_page => params[:per_page].to_i }
+    option[:recent_day] = params[:recent_day].to_i if params[:recent_day]
+    render :partial => (params[:page_name] ||= "page_space"), :locals => find_as_locals(params[:target], option)
   end
 
   def load_rss_feed
@@ -685,12 +680,10 @@ private
   end
 
   def get_index_default
-    partial = "index_default"
     recent_day = Admin::Setting.recent_date
 
     # お知らせ-承認待ちの一覧
     @waiting_groups = Group.find_waitings session[:user_id]
-
     # あなたへの重要な連絡
     find_params = BoardEntry.make_conditions(login_user_symbols, {:recent_day => recent_day, :categories => ['連絡', '重要']})
     @important_your_messages = BoardEntry.find(:all,
@@ -704,15 +697,13 @@ private
     self_introduction = @user.user_profile.self_introduction
     if self_introduction.blank? || self_introduction.size < 10 || !UserProfile.find_by_user_id(@user.id)
       system_messages << {
-        :text => "プロフィールを充実させましょう！",
-        :icon => "vcard",
+        :text => "プロフィールを充実させましょう！",   :icon => "vcard",
         :option => {:controller => "mypage", :action => "manage"}
       }
     end
     if @user.pictures.size < 1
       system_messages << {
-        :text => "プロフィール画像を変更しましょう！",
-        :icon => "picture",
+        :text => "プロフィール画像を変更しましょう！", :icon => "picture",
         :option => {:controller => "mypage", :action => "manage", :menu => "manage_portrait"}
       }
     end
@@ -727,17 +718,14 @@ private
                                           :order=>"last_updated DESC,board_entries.id DESC",
                                           :limit=>5,
                                           :include => find_params[:include] | [ :user, :state, :entry_tags ])
-    # みんなからの質問！
-    questions = find_questions_as_locals
-    # 最近の人気記事
-    access_blogs = find_access_blogs_as_locals
-    # 最新のブログの記事
-    recent_blogs = find_recent_blogs_as_locals
-    # 最新の掲示板の記事(全体公開のみ)
-    recent_bbs = []
+
+    questions = find_questions_as_locals({:recent_day => recent_day, :per_page => 5}) # みんなからの質問！
+    access_blogs = find_access_blogs_as_locals({:per_page => 10}) # 最近の人気記事
+    recent_blogs = find_recent_blogs_as_locals({:per_page => 3} ) # 最新のブログの記事
+    recent_bbs = [] # 最新の掲示板の記事(全体公開のみ)
     gid_by_category = Group.gid_by_category
     GroupCategory.all.each do |category| # 表示順序の制御
-      options = { :group_symbols => gid_by_category[category.id], :recent_day => recent_day, :per_page => 3 }
+      options = { :group_symbols => gid_by_category[category.id], :per_page => 3 }
       recent_bbs << find_recent_bbs_as_locals(category.code.downcase, options)
     end
     #最近のブックマーク
@@ -763,54 +751,90 @@ private
       :recent_bbs => recent_bbs,
       :message_array => Message.get_message_array_by_user_id(session[:user_id])
     }
-    return partial, locals
+    return "index_default", locals
   end
 
-  def find_as_locals target, options = {}
+  def find_as_locals target, options
     group_categories = GroupCategory.all.map{ |gc| gc.code.downcase }
     case
     when target == 'questions'             then find_questions_as_locals options
     when target == 'access_blogs'          then find_access_blogs_as_locals options
     when target == 'recent_blogs'          then find_recent_blogs_as_locals options
-    when target == 'not_reading_blogs'     then find_not_reading_blogs_as_locals options
     when group_categories.include?(target) then find_recent_bbs_as_locals target, options
+    when target == 'not_reading_blogs'     then find_not_reading_blogs_as_locals options
 # TODO 例外出すなどの対応をしないとアプリケーションエラーになってしまう。
 #    else
     end
   end
 
-  # 最近の記事一覧を取得する（partial用のオプションを返す）
-  # 引数：recent_day = 最近を示す日数
-  # 引数：per_page   = １ページの表示数（デフォルト3件）
-  def find_recent_blogs_as_locals options = {}
-    options = { :recent_day => Admin::Setting.recent_date, :per_page => 3 }.merge(options)
-    find_params = BoardEntry.make_conditions(login_user_symbols, {:entry_type=>'DIARY', :recent_day => options[:recent_day], :publication_type => 'public'})
+  # 質問記事一覧を取得する（partial用のオプションを返す）
+  def find_questions_as_locals options
+    find_params = BoardEntry.make_conditions(login_user_symbols, {:recent_day => options[:recent_day], :category=>'質問'})
+    pages_obj, pages = paginate(:board_entry,
+                                :per_page =>options[:per_page],
+                                :order =>"last_updated DESC,board_entries.id DESC",
+                                :conditions=> find_params[:conditions],
+                                :include => find_params[:include] | [ :user, :state ])
+    locals = {
+      :id_name => 'questions',
+      :title_icon => "user_comment",
+      :title_name => 'みんなからの質問！',
+      :pages => pages,
+      :pages_obj => pages_obj,
+      :per_page => options[:per_page],
+      :recent_day => options[:recent_day],
+      :delete_categories => '[質問]'
+    }
+  end
+
+  # 最近の人気記事一覧を取得する（partial用のオプションを返す）
+  def find_access_blogs_as_locals options
+    find_params = BoardEntry.make_conditions(login_user_symbols, {:publication_type => 'public'})
+    find_params[:conditions][0] << " and board_entries.category not like ? and last_updated > ?"
+    find_params[:conditions] << '%[質問]%' << Date.today-Admin::Setting.recent_date
+    pages_obj, pages = paginate(:board_entry,
+                                :per_page =>options[:per_page],
+                                :order=>"board_entry_points.today_access_count DESC, board_entry_points.access_count DESC, board_entries.last_updated DESC, board_entries.id DESC",
+                                :conditions=> find_params[:conditions],
+                                :include => find_params[:include] | [ :user, :state ])
+    locals = {
+      :id_name => 'access_blogs',
+      :title_icon => "star",
+      :title_name => '最近の人気記事',
+      :pages => pages,
+      :pages_obj => pages_obj,
+      :per_page => options[:per_page],
+      :symbol2name_hash => BoardEntry.get_symbol2name_hash(pages)
+    }
+  end
+
+  # 記事一覧を取得する（partial用のオプションを返す）
+  def find_recent_blogs_as_locals options
+    find_params = BoardEntry.make_conditions(login_user_symbols, {:entry_type=>'DIARY', :publication_type => 'public'})
     find_params[:conditions][0] << " and board_entries.title <> 'ユーザー登録しました！'"
     pages_obj, pages = paginate(:board_entry,
                                 :per_page =>options[:per_page],
-                                :order=>"last_updated DESC,board_entries.id DESC",
+                                :order=>"last_updated DESC, board_entries.id DESC",
                                 :conditions=> find_params[:conditions],
                                 :include => find_params[:include] | [ :user, :state ])
     locals = {
       :id_name => 'recent_blogs',
-      :title_name => '最近投稿された記事',
+      :title_icon => "page_copy",
+      :title_name => 'ユーザの記事',
       :pages => pages,
       :pages_obj => pages_obj,
-      :title_icon => "page_copy"
+      :per_page => options[:per_page]
     }
   end
 
-  # 最近のBBS記事一覧を取得するメソッドを動的に生成(partial用のオプションを返す)
-  # 引数：recent_day       = 最近を示す日数
-  # 引数：per_page         = １ページの表示数（デフォルト3件）
+  # BBS記事一覧を取得するメソッドを動的に生成(partial用のオプションを返す)
   def find_recent_bbs_as_locals code, options = {}
-    options = { :recent_day => Admin::Setting.recent_date, :per_page => 3 }.merge(options)
     category = GroupCategory.find_by_code(code)
-    title   = "最新の掲示板の記事（#{category.name}）"
+    title   = "グループ（#{category.name}）の記事"
     id_name = category.code.downcase
     pages_obj, pages = nil, []
 
-    find_options = {:exclude_entry_type=>'DIARY', :publication_type => 'public', :recent_day => options[:recent_day]}
+    find_options = {:exclude_entry_type=>'DIARY', :publication_type => 'public'}
     find_options[:symbols] = options[:group_symbols] || Group.gid_by_category[category.id]
     if find_options[:symbols].size > 0
       find_params = BoardEntry.make_conditions(login_user_symbols, find_options)
@@ -820,84 +844,32 @@ private
                                   :conditions=> find_params[:conditions],
                                   :include => find_params[:include] | [ :user, :state ])
     end
-
     locals = {
       :id_name => id_name,
       :title_name => title,
       :pages => pages,
       :pages_obj => pages_obj,
+      :per_page => options[:per_page],
       :symbol2name_hash => BoardEntry.get_symbol2name_hash(pages)
     }
   end
 
-  # 最近の人気記事一覧を取得する（partial用のオプションを返す）
-  # 引数：recent_day = 最近を示す日数
-  # 引数：per_page   = １ページの表示数（デフォルト10件）
-  def find_access_blogs_as_locals options = {}
-    options = { :recent_day => Admin::Setting.recent_date, :per_page => 10 }.merge(options)
-    find_params = BoardEntry.make_conditions(login_user_symbols, {:publication_type => 'public'})
-    find_params[:conditions][0] << " and board_entries.category not like ?"
-    find_params[:conditions] << '%[質問]%'
-    if options[:recent_day]
-      find_params[:conditions][0] << " and last_updated > ?"
-      find_params[:conditions] << Date.today-options[:recent_day]
-    end
-    pages_obj, pages = paginate(:board_entry,
-                                :per_page =>options[:per_page],
-                                :order=>"board_entry_points.today_access_count DESC, board_entry_points.access_count DESC, board_entries.last_updated DESC, board_entries.id DESC",
-                                :conditions=> find_params[:conditions],
-                                :include => find_params[:include] | [ :user, :state ])
-    locals = {
-      :id_name => 'access_blogs',
-      :title_name => '最近の人気記事（質問除く）',
-      :pages => pages,
-      :pages_obj => pages_obj,
-      :symbol2name_hash => BoardEntry.get_symbol2name_hash(pages),
-      :title_icon => "star"
-    }
-  end
-
-  # 質問記事一覧を取得する（partial用のオプションを返す）
-  # 引数：recent_day = 最近を示す日数（デフォルト10日）
-  # 引数：per_page   = １ページの表示数（デフォルト5件）
-  def find_questions_as_locals options = {}
-    options = { :recent_day => Admin::Setting.recent_date, :per_page => 5 }.merge(options)
-    find_params = BoardEntry.make_conditions(login_user_symbols, {:recent_day => options[:recent_day], :category=>'質問'})
-    pages_obj, pages = paginate(:board_entry,
-                                :per_page =>options[:per_page],
-                                :order =>"last_updated DESC,board_entries.id DESC",
-                                :conditions=> find_params[:conditions],
-                                :include => find_params[:include] | [ :user, :state ])
-    locals = {
-      :id_name => 'questions',
-      :title_name => 'みんなからの質問！',
-      :pages => pages,
-      :pages_obj => pages_obj,
-      :title_icon => "user_comment",
-      :delete_categories => '[質問]'
-    }
-  end
-
   # 未読記事一覧を取得する（partial用のオプションを返す）
-  # 引数：recent_day = 最近を示す日数
-  # 引数：per_page   = １ページの表示数（デフォルト5件）
-  def find_not_reading_blogs_as_locals options = {}
-    options = { :recent_day => Admin::Setting.recent_date, :per_page => 5 }.merge(options)
-    find_params = BoardEntry.make_conditions(login_user_symbols, {:recent_day => options[:recent_day]})
+  def find_not_reading_blogs_as_locals options
+    find_params = BoardEntry.make_conditions(login_user_symbols, {})
     find_params[:conditions][0] << " and user_readings.read = ? and user_readings.user_id = ?"
     find_params[:conditions] << false << session[:user_id]
-    find_params[:include] << :user_readings
     pages_obj, pages = paginate(:board_entry,
                                 :per_page =>options[:per_page],
                                 :order =>"last_updated DESC,board_entries.id DESC",
                                 :conditions=> find_params[:conditions],
-                                :include => find_params[:include] | [ :state ])
-
+                                :include => find_params[:include] | [ :user_readings, :state ])
     locals = {
       :id_name => 'not_reading_blogs',
       :title_name => '未読記事の一覧',
       :pages => pages,
       :pages_obj => pages_obj,
+      :per_page => options[:per_page],
       :symbol2name_hash => BoardEntry.get_symbol2name_hash(pages)
     }
   end
