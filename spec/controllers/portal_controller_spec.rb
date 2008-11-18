@@ -132,6 +132,11 @@ describe PortalController, 'POST /apply' do
       before do
         @user.should_receive(:within_time_limit_of_activation_token?).and_return(false)
       end
+      it 'UserのstatusがACTIVEに設定されて保存されること' do
+        @user.should_receive(:status=).with('ACTIVE')
+        @user.save!
+        post_apply
+      end
       it 'activateされること' do
         @user.should_receive(:activate!)
         post_apply
@@ -153,6 +158,11 @@ describe PortalController, 'POST /apply' do
       it 'パスワードの設定が行われること' do
         @user.should_receive(:password=).at_least(:once)
         @user.should_receive(:password_confirmation=).at_least(:once)
+        post_apply
+      end
+      it 'UserのstatusがACTIVEに設定されて保存されること' do
+        @user.should_receive(:status=).with('ACTIVE')
+        @user.save!
         post_apply
       end
       it 'activateされること' do

@@ -72,6 +72,7 @@ class PortalController < ApplicationController
         @user_uid.save!
       end
 
+      @user.status = 'ACTIVE'
       @user.save!
       @profile.save!
 
