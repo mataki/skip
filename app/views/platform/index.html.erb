@@ -14,6 +14,7 @@ var relative_url_root = '<%= controller.request.relative_url_root -%>';
   <%= skip_stylesheet_link_tag 'style' %>
 
   <%= skip_jquery_include_tag 'jquery' %>
+  <%= skip_jquery_include_tag 'jquery.cluetip' %>
   <script language="JavaScript" type="text/javascript">$j = jQuery.noConflict();</script>
   <%= skip_javascript_include_tag "skip_util" %>
   <%= javascript_include_tag "application" %>
