@@ -1,8 +1,9 @@
 <% %w(entry_access entry_comment entry_he user_access user_entry commentator).each do |contents_type| %>
-  <div id="<%= contents_type -%>">
+  <div id="<%= contents_type -%>" style="float:left; margin-right: 10px;">
   <span class="indicator"><%= skip_image_tag 'indicator.gif' %></span>
   </div>
 <% end %>
+<div style="clear: left;"><br/></div>
 
 <script type="text/javascript">
 $j(function() {
