@@ -244,7 +244,7 @@ form.comment_input_form textarea{
           <%= link_to(icon_tag('transmit_go', :title=>'アンテナに追加'), {:controller => "antenna", :action => "select_antenna", :symbol => entry.symbol, :dummy => '.html'}, {:class => "nyroModal"}) %>
         <%= link_to(icon_tag('tag_blue_add', :title=>'ブックマークする'), {:controller => "bookmark", :action => "edit", :url => "/page/#{entry.id.to_s}", :title => entry.title, :dummy => '.html'}, {:class => "nyroModal"}) %>
         <%= link_to(icon_tag('control_play_blue', :title=>'スライドショー'), {:controller=> "monta", :action => "execute_monta", :id => entry}, :target=>"_blank") if entry.editor_mode == 'hiki' %>
-        <%= link_to(icon_tag('zoom', :title=>'最大化！'), {:controller=> "board_entries", :action => "large", :id => entry}, :target=>"_blank") %>
+        <%= link_to(icon_tag('zoom', :title=>'印刷表示'), {:controller=> "board_entries", :action => "large", :id => entry}, :target=>"_blank") %>
       </div>
     </div>
     <h1><%= get_publication_type_icon(entry) -%> <%=h entry.category %> <%=h entry.title %></h1>

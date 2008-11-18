@@ -44,7 +44,8 @@ module UsersHelper
         when 'extension'
           h(user.user_profile.extension)
         when _('action')
-          link_to(icon_tag('transmit_go', :title => _('アンテナに追加')), {:controller => "antenna", :action => "select_antenna", :symbol => user.symbol, :dummy => '.html'}, {:class => "nyroModal"})
+          link_to(icon_tag('transmit_go', :title => _('アンテナに追加')), {:controller => "antenna", :action => "select_antenna", :symbol => user.symbol, :dummy => '.html'}, {:class => "nyroModal"}) +
+          link_to(icon_tag('tag_blue_add', :title=>'ブックマークする'), {:controller => "bookmark", :action => "edit", :url => user.get_postit_url, :title => user.name, :dummy => '.html'}, {:class => "nyroModal"})
         else
           h(user.send(column))
         end
