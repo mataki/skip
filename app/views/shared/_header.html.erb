@@ -21,9 +21,9 @@
     <option selected="selected" value="<%= url_for({:controller => '/mypage', :action => 'group'}) -%>">参加グループへ移動 ... </option>
     <option disabled="disabled">---</option>
     <% @favorite_groups.each do |category| %>
-    <option disabled="disabled">[<%= category[:name] -%>]</option>
+    <option disabled="disabled">[<%=h category[:name] -%>]</option>
       <% category[:groups].each do |group| %>
-      <option value="<%= url_for({:controller => '/group', :gid => group.gid, :action => 'show'}) -%>">&nbsp;<%= group.name -%></option>
+      <option value="<%= url_for({:controller => '/group', :gid => group.gid, :action => 'show'}) -%>">&nbsp;<%=h group.name -%></option>
       <% end %>
     <% end %>
     <option disabled="disabled">---</option>
