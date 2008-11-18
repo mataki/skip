@@ -115,38 +115,61 @@ end
 
 describe Antenna, ".create_initial" do
   before do
-    @initial_anntena = "初期アンテナ名"
-    Admin::Setting.initial_anntena = @initial_anntena
-    Admin::Setting.antenna_default_group = ["hoge","fuga"]
-
     @user = stub_model(User)
   end
-  describe "存在するグループが複数(2)設定されている場合" do
+  describe "アンテナ名とアンテナグループが設定されている場合" do
     before do
-      Group.stub!(:count).with(:conditions => ["gid in (?)", "hoge"]).and_return(1)
-      Group.stub!(:count).with(:conditions => ["gid in (?)", "fuga"]).and_return(1)
+      @initial_anntena = "初期アンテナ名"
+      Admin::Setting.initial_anntena = @initial_anntena
+      Admin::Setting.antenna_default_group = ["hoge","fuga"]
+    end
+    describe "存在するグループが複数(2)設定されている場合" do
+      before do
+        Group.stub!(:count).with(:conditions => ["gid in (?)", "hoge"]).and_return(1)
+        Group.stub!(:count).with(:conditions => ["gid in (?)", "fuga"]).and_return(1)
 
-      @antenna = Antenna.create_initial(@user)
+        @antenna = Antenna.create_initial(@user)
+      end
+      it "アンテナに複数(2)アイテムが登録されていること" do
+        @antenna.antenna_items.length == 2
+      end
+      it "アンテナ名が登録されていること" do
+        @antenna.name.should == @initial_anntena
+      end
     end
-    it "アンテナに複数(2)アイテムが登録されていること" do
-      @antenna.antenna_items.length == 2
-    end
-    it "アンテナ名が登録されていること" do
-      @antenna.name.should == @initial_anntena
+    describe "存在しないグループが含まれている場合" do
+      before do
+        Group.stub!(:count).with(:conditions => ["gid in (?)", "hoge"]).and_return(1)
+        Group.stub!(:count).with(:conditions => ["gid in (?)", "fuga"]).and_return(0)
+
+        @antenna = Antenna.create_initial(@user)
+      end
+      it "アンテナに存在するグループのアイテムが登録されていること" do
+        @antenna.antenna_items.length == 1
+      end
+      it "アンテナ名が登録されていること" do
+        @antenna.name.should == @initial_anntena
+      end
     end
   end
-  describe "存在しないグループが含まれている場合" do
+  describe "アンテナ名が設定されていない場合" do
     before do
-      Group.stub!(:count).with(:conditions => ["gid in (?)", "hoge"]).and_return(1)
-      Group.stub!(:count).with(:conditions => ["gid in (?)", "fuga"]).and_return(0)
-
-      @antenna = Antenna.create_initial(@user)
+      Admin::Setting.initial_anntena = ""
+      Admin::Setting.antenna_default_group = ["hoge", "fuga"]
     end
-    it "アンテナに存在するグループのアイテムが登録されていること" do
-      @antenna.antenna_items.length == 1
+    it "nilが返ること" do
+      Antenna.create_initial(@user).should be_nil
     end
-    it "アンテナ名が登録されていること" do
-      @antenna.name.should == @initial_anntena
+  end
+  describe "アンテナグループが設定されていない場合" do
+    before do
+      Admin::Setting.initial_anntena = "init_antena"
+      Admin::Setting.antenna_default_group = []
+    end
+    it "nilが返ること" do
+      Antenna.create_initial(@user).should be_nil
     end
   end
 end
+
+

@@ -75,7 +75,7 @@ describe PortalController, 'POST /apply' do
     @user.stub!(:create_initial_entry)
     @antenna = stub_model(Antenna)
     @antenna.stub!(:save!)
-    Antenna.stub!(:create_initial).and_return(@antenna)
+    Antenna.stub!(:create_initial!).and_return(@antenna)
     UserAccess.stub!(:create!)
     UserMailer.stub!(:deliver_sent_signup_confirm)
     @user.stub!(:activate!)

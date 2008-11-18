@@ -75,7 +75,7 @@ class PortalController < ApplicationController
       @user.save!
       @profile.save!
 
-      Antenna.create_initial(@user).save!
+      Antenna.create_initial!(@user)
 
       message = render_to_string(:partial => 'entries_template/user_signup',
                                  :locals => { :user_name => @user.name, :user_introduction => @user.user_profile.self_introduction})
