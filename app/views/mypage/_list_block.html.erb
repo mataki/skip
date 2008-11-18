@@ -5,7 +5,11 @@
 
 <%= %(<div id="#{id_name}">) %>
 
-<h2 class="topix_title"><%= icon_tag(title_icon) -%><%=h title_name %></h2>
+<div style="position: relative; _width: 100%;">
+  <h2 class="topix_title"><%= icon_tag(title_icon) -%><%=h title_name %></h2>
+  <div style="position: absolute; top: 5px; right: 10px; font-size: 14px;"><%= link_to('[すべて見る]', :controller => 'mypage', :action => "index", :list_type => id_name) -%></div>
+</div>
+
 <div class="topix_body" id="<%= id_name -%>_body">
 
 <% pages.each do |message| -%>
@@ -24,8 +28,7 @@
 <% end -%>
 
 <div style="text-align: right;"><span style="background-color: #fcffc5; padding: 0 2px 0 5px; font-size: 10px;">
-<% if pages_obj -%>
-<% if pages_obj.item_count > 0 -%>
+<% if pages_obj and pages_obj.item_count > 0 -%>
   <% if pages_obj.current.previous -%>
   <a class="first_link" id="<%= id_name -%>_first_link" href="#" >[最初へ]</a>
   <a class="back_link" id="<%= id_name -%>_back_link" href="#" >[前へ]</a>
@@ -35,11 +38,7 @@
   <a class="next_link" id="<%= id_name -%>_next_link" href="#" >[次へ]</a>
   <a class="last_link" id="<%= id_name -%>_last_link" href="#" >[最後へ]</a>
   <% end -%>
-<% else -%>
-  最近の記事はありません・・・
 <% end -%>
-<% end -%>
-<%= link_to('[すべて見る]', :controller => 'mypage', :action => "index", :list_type => id_name) -%>
 </span></div>
 
 </div><!-- topix_body -->

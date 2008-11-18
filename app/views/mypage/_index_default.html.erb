@@ -96,7 +96,10 @@ span.important {
 
 <% if bookmarks.size > 0 %>
 <div id="recent_bookmarks" style="width:100%;">
-  <h2 class="topix_title"><%= icon_tag('asterisk_orange') -%>最新のブックマーク</h2>
+  <div style="position: relative; _width: 100%;">
+    <h2 class="topix_title"><%= icon_tag('asterisk_orange') -%>最新のブックマーク</h2>
+    <div style="position: absolute; top: 5px; right: 10px; font-size: 14px;"><%= link_to('[すべて見る]', :controller => 'bookmarks') -%></div>
+  </div>
   <div class="topix_body" id="bookmark_body">
   <% bookmarks.each do |bookmark| -%>
     <div class="page_line">
@@ -105,7 +108,6 @@ span.important {
       <div class="page_date"><%=h bookmark.updated_on.strftime("%m/%d %H:%M") %></div>
     </div>
   <% end -%>
-<div style="text-align:right; margin-bottom:3px;padding-bottom: 1px;"><%= link_to('[全て見る]', :controller => 'bookmarks', :action => 'search')%></div>
   </div>
 </div>
 <% end %>

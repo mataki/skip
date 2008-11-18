@@ -9,7 +9,7 @@
   <tr>
     <th>検索範囲</th>
     <td colspan="4"><%= check_box_tag('user', "1", params[:user]) -%>ユーザのブログ
-        <%= check_box_tag('group', "1", params[:group]) -%>グループの掲示板<br/>
+        <%= check_box_tag('group', "1", params[:group]) -%>グループの掲示板
         （全チェックなしは全てを対象とします）</td>
   </tr
   <%= render :partial => 'tag_search' %>
