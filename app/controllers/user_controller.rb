@@ -44,8 +44,7 @@ class UserController < ApplicationController
                                  :order => "updated_on DESC",
                                  :conditions => ['to_user_id = ?', @user.id])
     # 他の人からみた・・・
-    @postit_url = @user.get_postit_url
-    @tags = BookmarkComment.get_tagcloud_tags @postit_url
+    @tags = BookmarkComment.get_tagcloud_tags @user.get_postit_url
   end
 
   # tab_menu
@@ -119,8 +118,7 @@ class UserController < ApplicationController
     render_partial = @menu
 
     # contents_left -> social_tags
-    @postit_url = @user.get_postit_url
-    @tags = BookmarkComment.get_tagcloud_tags @postit_url
+    @tags = BookmarkComment.get_tagcloud_tags @user.get_postit_url
 
     # contens_right
     case @menu
@@ -334,14 +332,12 @@ private
   end
 
   def prepare_postit
-    @postit_url = @user.get_postit_url
-
     join_state =  "left join bookmark_comment_tags on bookmark_comments.id = bookmark_comment_tags.bookmark_comment_id "
     join_state << "left join tags on tags.id = bookmark_comment_tags.tag_id "
 
     conditions = []
     conditions[0] = "bookmarks.url = ? "
-    conditions << @postit_url
+    conditions << @user.get_postit_url
     if params[:selected_tag]
       conditions[0] << " and tags.name = ?"
       conditions << params[:selected_tag]

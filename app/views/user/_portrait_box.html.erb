@@ -14,13 +14,16 @@
   <% end -%>
   </div>
 
+  <div class="box_space_bottom" style="text-align: center; font-size: 12px;">
   <% if session[:user_id] == user.id and @my_info -%>
-  <div class="box_space_bottom" style="text-align: center;">
     <span title="訪問者数（あなたのページを訪問したユーザののべ人数）"><%= icon_tag 'eye' -%><%=h @my_info[:access_count] -%>人</span>
     <span title="購読者数（あなたのブログをアンテナでチェックしているユーザ数）"><%= icon_tag 'newspaper' -%><%=h @my_info[:subscriber_count] -%>人</span><br/>
     <span title="投稿件数（あなたが今までに投稿した記事の数）"><%= icon_tag 'report_user' -%><%=h @my_info[:blog_count] -%>件</span>
     <span title="あなたがユーザ登録してからの日数"><%= icon_tag 'user_go' -%><%=h @my_info[:using_day] -%>日</span>
-  </div>
+  <% else -%>
+    <%= link_to(icon_tag('transmit_go', :title => _('アンテナに追加')) + _('アンテナに追加'), {:controller => "antenna", :action => "select_antenna", :symbol => user.symbol, :dummy => '.html'}, {:class => "nyroModal"}) %><br/>
+    <%= link_to(icon_tag('tag_blue_add', :title=>'ブックマークする') + 'ブックマークする', {:controller => "bookmark", :action => "edit", :url => user.get_postit_url, :title => user.name, :dummy => '.html'}, {:class => "nyroModal"}) %>
   <% end -%>
+  </div>
 
 </div><!-- box_space -->
