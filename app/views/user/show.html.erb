@@ -167,7 +167,7 @@ div.input_line div.input_bottom {
 <% if @against_chains.size > 0 -%>
   <div class="profile_information_space" style="margin-bottom: 10px; position: relative; width: 100%;">
     <div style="position: absolute; top: 5px; right: 10px;"><%= link_to '[すべて見る]', :action => 'social', :menu => 'social_chain', :uid => @user.uid %></div>
-    <h2 class="topix_title"><%= icon_tag('asterisk_orange') %><span>紹介文</span></div>
+    <h2 class="topix_title"><%= icon_tag('asterisk_orange') %>紹介文</h2>
     <div class="topix_body" style="margin-top: 5px; width: 100%">
     <% for chain in @against_chains -%>
 

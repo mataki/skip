@@ -184,6 +184,7 @@ h2.topix_title {
   vertical-align: bottom;
   margin-left: 5px;
   color: #003399;
+  background-image: url(./../images/skip/gradient.png);
 }
 div.topix_body {
   margin-left: 5px;

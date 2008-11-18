@@ -2,7 +2,6 @@
 
 <div id="contents_left">
   <%= render(:partial => 'user/portrait_box', :locals => { :user => @user }) -%>
-  <div id="calendar"><%= render :partial => "shared/calendar", :locals => {:sel_year => @year, :sel_month => @month, :sel_day => @day, :item_count => @entry_count, :action => 'index'}  %></div>
 
 <div id="antennas">
 <div class="box_space">
