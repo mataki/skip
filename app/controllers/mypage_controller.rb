@@ -25,7 +25,7 @@ class MypageController < ApplicationController
   verify :method => :post, :only => [ :destroy_portrait, :save_portrait, :update_profile,
                                       :update_customize, :update_message_unsubscribes, :apply_password,
                                       :apply_ident_url, :add_antenna, :delete_antenna, :delete_antenna_item, :move_antenna_item,
-                                      :change_read_state, :apply_email, :update_email, :set_antenna_name, :sort_antenna],
+                                      :change_read_state, :apply_email, :set_antenna_name, :sort_antenna],
          :redirect_to => { :action => :index }
 
   # マイページ（ホーム）の表示
@@ -273,12 +273,11 @@ class MypageController < ApplicationController
   end
 
   def update_email
-    onetime_code = params[:id]
-    if @applied_email = AppliedEmail.find_by_user_id_and_onetime_code(session[:user_id], onetime_code)
+    if @applied_email = AppliedEmail.find_by_user_id_and_onetime_code(session[:user_id], params[:id])
       @user = current_user
       old_email = @user.user_profile.email
       @user.user_profile.email = @applied_email.email
-      if @user.save
+      if @user.user_profile.save
         @applied_email.destroy
         flash[:notice] = "メールアドレスが正しく更新されました。"
         redirect_to :action => 'profile'
