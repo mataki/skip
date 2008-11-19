@@ -24,8 +24,7 @@ end
 
 describe UserMailer, "#smtp_settings" do
   before(:all) do
-    @before_method = ActionMailer::Base.delivery_method
-    ActionMailer::Base.delivery_method = :smtp
+    Admin::Setting.stub!(:mail_function_setting).and_return(true)
     @before_errors = ActionMailer::Base.raise_delivery_errors
     ActionMailer::Base.raise_delivery_errors = true
   end

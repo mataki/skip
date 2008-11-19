@@ -112,4 +112,8 @@ private
       :password => Admin::Setting.smtp_settings_password,
       :authentication => Admin::Setting.smtp_settings_authentication }
   end
+
+  def delivery_method
+    Admin::Setting.mail_function_setting ? :smtp : :test
+  end
 end

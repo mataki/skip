@@ -63,7 +63,6 @@ default: &default
   # ================================================================================================
   # メールに関する設定
   # ================================================================================================
-  delivery_method: smtp                                              # メール配信方法(ActionMailer::Base.delivery_methodへの設定値)
   raise_delivery_errors: false                                       # メール送信に失敗した場合のエラー処理を行なうか
   # システムにエラーが発生した場合にエラーメールを送信するための設定
   exception_notifier:
@@ -133,11 +132,9 @@ default: &default
 
 development:
   <<: *default
-  delivery_method: test
 
 test:
   <<: *default
-  delivery_method: test
 
 production:
   <<: *default
