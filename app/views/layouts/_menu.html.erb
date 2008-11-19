@@ -22,8 +22,8 @@ div#panel {
 <div id="globalnavi">
   <ul>
 <% menus.each do |btn| -%>
-  <% if menus.first == btn %><li class="first"><% else %><li><% end %>
-  <%= link_to icon_tag(btn[:img_name], {:title=>btn[:name]}) + btn[:name], btn[:url], @main_menu == btn[:name] ? {:class => "current"} : nil -%>
+  <li title="<%=h btn[:desc] -%>" <%= "class=first" if menus.first == btn -%>>
+  <%= link_to icon_tag(btn[:img_name]) + btn[:name], btn[:url], @main_menu == btn[:name] ? {:class => "current"} : nil -%>
   </li>
 <% end -%>
   </ul>

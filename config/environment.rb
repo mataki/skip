@@ -63,21 +63,63 @@ ENV['BATCH_LOG_PATH'] ||= INITIAL_SETTINGS['batch_log_path'] || "#{RAILS_ROOT}/l
 ENV['SECRET_KEY'] ||= INITIAL_SETTINGS['secret_key']
 
 menu_btns = [
-  { :img_name => "house",         :id => "btn_mypage", :name => "マイページ", :url => {:controller => '/mypage', :action => 'index'} },
-  { :img_name => "report",        :id => "btn_entries", :name => "記事", :url => {:controller => '/search', :action => 'entry_search' } },
-  { :img_name => "disk_multiple", :id => "btn_share_files", :name => "ファイル", :url => {:controller => '/search', :action => 'share_file_search' } },
-  { :img_name => "user_suit",     :id => "btn_users", :name => "ユーザ", :url => {:controller => '/users', :action => 'index'} },
-  { :img_name => "group",         :id => "btn_groups", :name => "グループ", :url => {:controller => '/groups', :action => 'index'} },
-  { :img_name => "tag_blue",      :id => "btn_bookmarks", :name => "ブックマーク", :url => {:controller => '/bookmarks', :action => 'index'} },
-  { :img_name => "chart_bar",     :id => "btn_rankings", :name => "ランキング", :url => {:controller => '/rankings', :action => 'index'} }
+             { :img_name => "house",
+               :id => "btn_mypage",
+               :name => "マイページ",
+               :url => {:controller => '/mypage', :action => 'index'},
+               :desc => "自分用のトップページに戻ります"},
+
+             { :img_name => "report",
+               :id => "btn_entries",
+               :name => "記事",
+               :url => {:controller => '/search', :action => 'entry_search' },
+               :desc => "ブログや掲示板の記事を探します"},
+
+             { :img_name => "disk_multiple",
+               :id => "btn_share_files",
+               :name => "ファイル",
+               :url => {:controller => '/search', :action => 'share_file_search' },
+               :desc => "ユーザやグループで共有しているファイルを探します"},
+
+             { :img_name => "user_suit",
+               :id => "btn_users",
+               :name => "ユーザ",
+               :url => {:controller => '/users', :action => 'index'},
+               :desc => "利用中のユーザや紹介文を探します"},
+
+             { :img_name => "group",
+               :id => "btn_groups",
+               :name => "グループ",
+               :url => {:controller => '/groups', :action => 'index'},
+               :desc => "他のユーザが作ったグループを探します"},
+
+             { :img_name => "tag_blue",
+               :id => "btn_bookmarks",
+               :name => "ブックマーク",
+               :url => {:controller => '/bookmarks', :action => 'index'},
+               :desc => "共有しているブックマーク（URL）を探します"},
+
+             { :img_name => "chart_bar",
+               :id => "btn_rankings",
+               :name => "ランキング",
+               :url => {:controller => '/rankings', :action => 'index'},
+               :desc => "ランキング情報と統計情報を見ます"}
 ]
-menu_btns << { :img_name => "page_find", :id => "btn_search", :name => "全文検索", :url => {:controller => '/search', :action => 'full_text_search' } } if INITIAL_SETTINGS['full_text_search_setting']
+menu_btns << { :img_name => "page_find",
+               :id => "btn_search",
+               :name => "全文検索",
+               :url => {:controller => '/search', :action => 'full_text_search' },
+               :desc => "キーワードでサイト全体から検索します" } if INITIAL_SETTINGS['full_text_search_setting']
 MENU_BTNS = menu_btns
 
-admin_menu_btns = [
-  { :img_name => "database_gear", :id => "btn_admin", :name => "設定・管理", :url => {:controller => '/admin', :action => 'index'} },
+admin_btns = [
+              {:img_name => "database_gear",
+               :id => "btn_admin",
+               :name => "設定・管理",
+               :url => {:controller => '/admin', :action => 'index'},
+               :desc => "このシステムの設定や管理を行います" },
 ]
-ADMIN_MENU_BTNS = admin_menu_btns
+ADMIN_MENU_BTNS = admin_btns
 
 # 共通メニュー
 COMMON_MENUS = YAML::load(File.open(File.join(RAILS_ROOT, 'config', 'common_menus.yml')))
