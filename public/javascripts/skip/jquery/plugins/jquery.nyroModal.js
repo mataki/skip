@@ -534,7 +534,7 @@ jQuery(function($) {
 				setCurrentSettings({position: 'absolute'}, 'css', 'loading');
 				setCurrentSettings({position: 'absolute'}, 'css', 'wrapper');
 
-				iframeHideIE = $('<iframe id="nyroModalIframeHideIe"></iframe>')
+				iframeHideIE = $('<iframe id="nyroModalIframeHideIe" src="javascript:false"></iframe>')
 								.css($.extend({},
 									currentSettings.css.bg, {
 										opacity: 0,
