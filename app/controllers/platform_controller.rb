@@ -71,12 +71,17 @@ class PlatformController < ApplicationController
       return render(:layout => 'not_logged_in')
     end
     if @user_profile = UserProfile.find_by_email(email)
-      user = @user_profile.user
-      user.forgot_password
-      user.save!
-      UserMailer.deliver_sent_forgot_password(email, reset_password_url(user.password_reset_token))
-      flash[:notice] = _("パスワードリセットのためのURLを記載したメールを%{email}宛てに送信しました。") % {:email => email}
-      redirect_to :controller => '/platform'
+      if @user_profile.user
+        user = @user_profile.user
+        user.forgot_password
+        user.save!
+        UserMailer.deliver_sent_forgot_password(email, reset_password_url(user.password_reset_token))
+        flash[:notice] = _("パスワードリセットのためのURLを記載したメールを%{email}宛てに送信しました。") % {:email => email}
+        redirect_to :controller => '/platform'
+      else
+        flash.now[:error] = _('入力された%{email}のユーザは、利用開始されていません。利用開始してください。') % {:email => email}
+        render :layout => 'not_logged_in'
+      end
     else
       flash.now[:error] = _("入力された%{email}というメールアドレスは登録されていません。") % {:email => email}
       render :layout => 'not_logged_in'
@@ -116,10 +121,15 @@ class PlatformController < ApplicationController
       return render(:layout => 'not_logged_in')
     end
     if @user_profile = UserProfile.find_by_email(email)
-      login_id = @user_profile.user.code
-      UserMailer.deliver_sent_forgot_login_id(email, login_id)
-      flash[:notice] = _("ログインIDを記載したメールを%{email}宛てに送信しました。") % {:email => email}
-      redirect_to :controller => '/platform'
+      if @user_profile.user
+        login_id = @user_profile.user.code
+        UserMailer.deliver_sent_forgot_login_id(email, login_id)
+        flash[:notice] = _("ログインIDを記載したメールを%{email}宛てに送信しました。") % {:email => email}
+        redirect_to :controller => '/platform'
+      else
+        flash.now[:error] = _('入力された%{email}のユーザは、利用開始されていません。利用開始してください。') % {:email => email}
+        render :layout => 'not_logged_in'
+      end
     else
       flash.now[:error] = _("入力された%{email}というメールアドレスは登録されていません。") % {:email => email}
       render :layout => 'not_logged_in'

@@ -246,28 +246,42 @@ describe PlatformController, 'POST /forgot_password' do
     before do
       @email = 'exist@example.com'
       @user_profile = stub_model(UserProfile, :email => @email)
-      @password_reset_url = 'password_reset_url'
-      controller.stub!(:reset_password_url).and_return(@password_reset_url)
-      @user = stub_model(User, :password_reset_token => @password_reset_token)
-      @user.stub!(:forgot_password)
-      @user.stub!(:save!)
-      UserMailer.stub!(:deliver_sent_forgot_password)
-      @user_profile.stub!(:user).and_return(@user)
       UserProfile.should_receive(:find_by_email).and_return(@user_profile)
     end
-    it 'パスワードリセットURLを記載したメールの送信処理が呼ばれること' do
-      UserMailer.should_receive(:deliver_sent_forgot_password).with(@email, @password_reset_url)
-      post :forgot_password, :email => @email
+    describe '利用開始済みのユーザの場合' do
+      before do
+        @password_reset_url = 'password_reset_url'
+        controller.stub!(:reset_password_url).and_return(@password_reset_url)
+        @user = stub_model(User, :password_reset_token => @password_reset_token)
+        @user.stub!(:forgot_password)
+        @user.stub!(:save!)
+        UserMailer.stub!(:deliver_sent_forgot_password)
+        @user_profile.stub!(:user).and_return(@user)
+      end
+      it 'パスワードリセットURLを記載したメールの送信処理が呼ばれること' do
+        UserMailer.should_receive(:deliver_sent_forgot_password).with(@email, @password_reset_url)
+        post :forgot_password, :email => @email
+      end
+      it 'パスワードリセットコード発行処理が行われること' do
+        @user.should_receive(:forgot_password)
+        @user.should_receive(:save!)
+        post :forgot_password, :email => @email
+      end
+      it 'メール送信した旨のメッセージが設定されてリダイレクトされること' do
+        post :forgot_password, :email => @email
+        flash[:notice].should_not be_nil
+        response.should be_redirect
+      end
     end
-    it 'パスワードリセットコード発行処理が行われること' do
-      @user.should_receive(:forgot_password)
-      @user.should_receive(:save!)
-      post :forgot_password, :email => @email
-    end
-    it 'メール送信した旨のメッセージが設定されてリダイレクトされること' do
-      post :forgot_password, :email => @email
-      flash[:notice].should_not be_nil
-      response.should be_redirect
+    describe '未使用ユーザの場合' do
+      before do
+        @user_profile.stub!(:user).and_return(nil)
+      end
+      it "未登録ユーザのメールアドレスである旨のメッセージが設定されること" do
+        post :forgot_password, :email => @email
+        flash[:error].should == "入力された#{@email}のユーザは、利用開始されていません。利用開始してください。"
+        response.should render_template('forgot_password')
+      end
     end
   end
   describe '未登録のメールアドレスが送信された場合' do
@@ -402,21 +416,35 @@ describe PlatformController, 'POST /forgot_login_id' do
     before do
       @email = 'exist@example.com'
       @user_profile = stub_model(UserProfile, :email => @email)
-      @user = stub_model(User)
-      @login_id = '123456'
-      @user.stub!(:code).and_return(@login_id)
-      @user_profile.stub!(:user).and_return(@user)
       UserProfile.should_receive(:find_by_email).and_return(@user_profile)
-      UserMailer.stub!(:deliver_sent_forgot_login_id)
     end
-    it 'ログインIDを記載したメールの送信処理が呼ばれること' do
-      UserMailer.should_receive(:deliver_sent_forgot_login_id).with(@email, @login_id)
-      post :forgot_login_id, :email => @email
+    describe '利用開始済みのユーザの場合' do
+      before do
+        @user = stub_model(User)
+        @login_id = '123456'
+        @user.stub!(:code).and_return(@login_id)
+        @user_profile.stub!(:user).and_return(@user)
+        UserMailer.stub!(:deliver_sent_forgot_login_id)
+      end
+      it 'ログインIDを記載したメールの送信処理が呼ばれること' do
+        UserMailer.should_receive(:deliver_sent_forgot_login_id).with(@email, @login_id)
+        post :forgot_login_id, :email => @email
+      end
+      it 'メール送信した旨のメッセージが設定されてリダイレクトされること' do
+        post :forgot_login_id, :email => @email
+        flash[:notice].should_not be_nil
+        response.should be_redirect
+      end
     end
-    it 'メール送信した旨のメッセージが設定されてリダイレクトされること' do
-      post :forgot_login_id, :email => @email
-      flash[:notice].should_not be_nil
-      response.should be_redirect
+    describe '未使用ユーザの場合' do
+      before do
+        @user_profile.stub!(:user).and_return(nil)
+      end
+      it "未登録ユーザのメールアドレスである旨のメッセージが設定されること" do
+        post :forgot_login_id, :email => "forgot_password@example.com"
+        flash[:error].should == '入力されたforgot_password@example.comのユーザは、利用開始されていません。利用開始してください。'
+        response.should render_template('forgot_login_id')
+      end
     end
   end
   describe '未登録のメールアドレスが送信された場合' do
