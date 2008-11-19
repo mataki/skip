@@ -3,23 +3,17 @@
 <div id="contents_left">
   <%= render(:partial => 'user/portrait_box', :locals => { :user => @user }) -%>
 
-<div id="antennas">
 <div class="box_space">
   <div class="box_space_title"><%= icon_tag 'folder_feed' %><%= link_to("アンテナ", :action => "index", :list_type => "not_reading_blogs" ) -%></div>
-  <div class="box_space_body" id="antennas_body"><ul id="antennas_list">
+  <div class="box_space_body"><ul id="antennas_list">
     <% @system_antennas.each do |antenna| -%>
-    <li id="antenna_<%= antenna.antenna_type -%>"><%= icon_tag 'transmit_blue' -%>
-      <%= link_to h(antenna.name), :action => "index", :antenna_type => antenna.antenna_type -%>（<%=h antenna.count -%>）
-    </li>
+    <li><%= icon_tag('transmit_blue') + link_to(h(antenna.name), :action => "index", :antenna_type => antenna.antenna_type) + "(#{h antenna.count})" -%></li>
     <% end -%>
     <% @my_antennas.each do |antenna| -%>
-    <li id="antenna_<%= antenna.id -%>"><%= icon_tag 'transmit' -%>
-      <%= link_to h(antenna.name), :action => "index", :antenna_id => antenna.id -%>（<%=h antenna.count -%>）
-    </li>
+    <li><%= icon_tag('transmit') + link_to(h(antenna.name), :action => "index", :antenna_id => antenna.id) + "(#{h antenna.count})" -%></li>
     <% end -%>
   </ul></div>
   <div class="box_space_bottom"><%= link_to '【アンテナを整備する】', :action => 'manage', :menu => 'manage_antenna' -%></div>
-</div>
 </div>
 
 </div><!-- contents_left -->
@@ -31,19 +25,3 @@
 <div id="contents_bottom"></div><!-- contents_bottom -->
 
 </div><!-- contents_container -->
-
-<script type="text/javascript">
-$j(function(){
-/*    // アンテナのローディング
-    $j.ajax({
-        url: relative_url_root + '/mypage/ado_antennas/',
-        success: function(request) {
-            $j('#antennas').html(request);
-        },
-        error: function(event) {
-            $j('#antennas > .box_space').html('アンテナの読み込みに失敗しました。');
-        },
-        complete: function(request) {}
-    });*/
-});
-</script>

@@ -11,9 +11,7 @@ ul#antennas_list li.dragenter {
 <div id="contents_container">
 
 <div id="contents_left">
-
 <%= render :partial => "manage_menu", :locals => { :selected_menu => @menu } %>
-
 </div><!-- contents_left -->
 
 <div id="contents_right">
@@ -26,7 +24,7 @@ ul#antennas_list li.dragenter {
 <div class="edit_form_space"><!-- 編集領域  -->
 
   <div id="antennas_list_container">
-    <%= render :partial => 'antennas', :object => @antennas, :locals => { :for_manage => true } -%>
+    <%= render :partial => 'antennas', :object => @antennas -%>
   </div>
 
   <div style="border: 1px solid silver; background-color: #f0f0ff; margin-top: 5px;">
@@ -39,10 +37,10 @@ ul#antennas_list li.dragenter {
 
 </div><!-- contents_right -->
 
-<div id="contents_bottom">
-</div><!-- contents_bottom -->
+<div id="contents_bottom"></div><!-- contents_bottom -->
 
 </div><!-- contents_container -->
+
 <%= hidden_field_tag("authenticity_token", form_authenticity_token) %>
 
 <%= skip_jquery_include_tag 'ui.core' %>

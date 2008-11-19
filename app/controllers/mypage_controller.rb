@@ -74,10 +74,6 @@ class MypageController < ApplicationController
                         :item_count => get_entry_count(params[:year], params[:month])}
   end
 
-  def ado_antennas
-    render :partial => "antennas", :object =>  find_antennas, :locals => {:system_antennas => find_system_antennas }
-  end
-
   # 汎用的なajax対応アクション
   # param[:target]で指定した内容をページ単位表示する
   def load_entries
@@ -342,10 +338,6 @@ class MypageController < ApplicationController
     render :text => ""
   end
 
-  def get_antennas
-    render :partial => 'antennas', :object => find_antennas, :locals => { :system_antennas => find_system_antennas }
-  end
-
   def set_antenna_name
     id = params[:element_id] ? params[:element_id].split('_')[3] : nil
 
@@ -365,7 +357,7 @@ class MypageController < ApplicationController
 
   def add_antenna
     Antenna.create(:user_id => session[:user_id], :name => params[:name])
-    render :partial => 'antennas', :object => find_antennas, :locals => { :for_manage => true }
+    render :partial => 'antennas', :object => find_antennas
   end
 
   def delete_antenna
@@ -375,7 +367,7 @@ class MypageController < ApplicationController
       return false
     end
     antenna.destroy
-    render :partial => 'antennas', :object => find_antennas, :locals => { :for_manage => true }
+    render :partial => 'antennas', :object => find_antennas
   end
 
   def delete_antenna_item
@@ -385,12 +377,12 @@ class MypageController < ApplicationController
       return false
     end
     item.destroy
-    render :partial => 'antennas', :object => find_antennas, :locals => { :for_manage => true }
+    render :partial => 'antennas', :object => find_antennas
   end
 
   def move_antenna_item
     AntennaItem.update(params[:antenna_item_id], :antenna_id => params[:antenna_id])
-    render :partial => 'antennas', :object => find_antennas, :locals => { :for_manage => true }
+    render :partial => 'antennas', :object => find_antennas
   end
 
   def sort_antenna
@@ -417,8 +409,7 @@ class MypageController < ApplicationController
         antenna.save
       end
     end
-
-    render :partial => 'antennas', :object => find_antennas, :locals => { :for_manage => true }
+    render :partial => 'antennas', :object => find_antennas
   end
 
   def antenna_list

@@ -1,6 +1,3 @@
-<% for_manage ||= false -%>
-<% #TODO 管理用と通常表示用のビューを分けた方が分かりやすいのではないか？ %>
-<% if for_manage -%>
 <ul id="antennas_list">
 <% antennas.each do |@antenna| -%>
   <li id="antenna_<%= @antenna.id -%>" class="antenna" style="border: 1px solid silver; margin-bottom: 5px; padding-bottom: 5px;">
@@ -15,10 +12,10 @@
     <ul id="antenna_items_list_<%= @antenna.id %>" class="antenna_items_list" style="cursor: move; margin-left: 25px;">
       <%= render :partial => 'antenna/antenna_item', :collection => @antenna.antenna_items, :locals => {:antenna_id => @antenna.id} %>
     </ul>
-
   </li>
 <% end -%>
 </ul>
+
 <%= skip_jquery_include_tag "jquery.inplace" %>
 <script type="text/javascript">
 $j(function() {
@@ -32,24 +29,3 @@ $j(function() {
     });
 });
 </script>
-<% else -%>
-<div class="box_space">
-  <div class="box_space_title"><%= icon_tag 'folder_feed' %><%= link_to("アンテナ", :action => "index", :list_type => "not_reading_blogs" ) -%></div>
-  <div class="box_space_body" id="antennas_body"><ul id="antennas_list">
-    <% system_antennas.each do |antenna| -%>
-    <li id="antenna_<%= antenna.antenna_type -%>"><%= icon_tag 'transmit_blue' -%>
-      <%= link_to h(antenna.name), :action => "index", :antenna_type => antenna.antenna_type -%>
-      （<%=h antenna.count -%>）
-    </li>
-    <% end -%>
-
-    <% antennas.each do |antenna| -%>
-    <li id="antenna_<%= antenna.id -%>"><%= icon_tag 'transmit' -%>
-      <%= link_to h(antenna.name), :action => "index", :antenna_id => antenna.id -%>
-      （<%=h antenna.count -%>）
-    </li>
-    <% end -%>
-  </ul></div>
-  <div class="box_space_bottom"><%= link_to '【アンテナを整備する】', :action => 'manage', :menu => 'manage_antenna' -%></div>
-</div><!-- box_space -->
-<% end -%>
