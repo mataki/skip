@@ -19,7 +19,11 @@
           else
             issue_link_str = Admin::Setting.mail_function_setting ? _('利用開始通知') : _('利用開始待ちにする')
             issue_link = link_to(issue_link_str, issue_activation_code_admin_user_path(object), :class => 'issue_activation_code_link')
-            _("User|Status|#{object.status}") + "(#{issue_link})"
+            if login_mode?(:password)
+              _("User|Status|#{object.status}") + "(#{issue_link})"
+            else
+              _("User|Status|#{object.status}")
+            end
           end
         else
           _("User|Status|#{object.status}")
@@ -42,9 +46,10 @@
               }
   -%>
 </div>
-
+<% if login_mode?(:password) -%>
 <%= link_to _('New %{model}') % {:model => _('user')}, new_admin_user_path %> |
 <%= link_to _('New user from csv'), import_new_admin_user_path %>
+<% end -%>
 <% end -%>
 
 <% content_for :javascript do -%>
