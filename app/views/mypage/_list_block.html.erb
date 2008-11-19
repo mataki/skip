@@ -27,8 +27,8 @@
   </div>
 <% end -%>
 
-<div style="text-align: right;"><span style="background-color: #fcffc5; padding: 0 2px 0 5px; font-size: 10px;">
 <% if pages_obj and pages_obj.item_count > 0 -%>
+<div style="text-align: right;"><span style="background-color: #fcffc5; padding: 0 2px 0 5px; font-size: 10px;">
   <% if pages_obj.current.previous -%>
   <a class="first_link" id="<%= id_name -%>_first_link" href="#" >[最初へ]</a>
   <a class="back_link" id="<%= id_name -%>_back_link" href="#" >[前へ]</a>
@@ -38,12 +38,8 @@
   <a class="next_link" id="<%= id_name -%>_next_link" href="#" >[次へ]</a>
   <a class="last_link" id="<%= id_name -%>_last_link" href="#" >[最後へ]</a>
   <% end -%>
-<% end -%>
 </span></div>
 
-</div><!-- topix_body -->
-
-</div>
 <script type="text/javascript">
 <%# TODO この部分テンプレートが読み込まれる度に以下のjavascriptも読み込まれるがうまく分離できるのではないか？ %>
 $j(function(){
@@ -59,14 +55,12 @@ $j(function(){
             complete: function(request) {}
         });
     };
-
     // 最初へ,前へ,次へ,最後へリンククリック時のajaxアクション
     $j('#' + id_name + '_first_link')
     .click(function() {
         loadEntries('1');
         return false;
     });
-<% if pages_obj %>
     $j('#' + id_name + '_back_link')
     .click(function() {
         loadEntries('<%= pages_obj.current.previous.to_i -%>');
@@ -84,6 +78,10 @@ $j(function(){
         loadEntries('<%= pages_obj.last.to_i -%>');
         return false;
     });
-<% end %>
 });
 </script>
+<% end -%>
+
+</div><!-- topix_body -->
+
+</div>
