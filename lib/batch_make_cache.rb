@@ -103,7 +103,7 @@ class BatchMakeCache < BatchBase
                          :publication_symbols => publication_symbols.join(','),
                          :link_url => "/bookmark/show/#{bookmark.url}",
                          :title => bookmark.title,
-                         :icon_type => 'book')
+                         :icon_type => 'tag_blue')
 
       output_file(cache_path, contents_type, bookmark.id, contents, meta)
     end

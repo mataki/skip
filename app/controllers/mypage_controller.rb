@@ -48,6 +48,8 @@ class MypageController < ApplicationController
       :blog_count => BoardEntry.count(:conditions => ["user_id = ? and entry_type = ?", @user.id, "DIARY"]),
       :using_day => ((Time.now - @user.created_on) / (60*60*24)).to_i + 1
     }
+    @system_antennas = find_system_antennas
+    @my_antennas = find_antennas
 
     # マイページの右側部分（パラメタに応じて内容を変更）
     if params[:year] && params[:month] && params[:day]

@@ -58,7 +58,7 @@ describe BatchMakeCache, "#make_caches_bookmark" do
       @bmc.make_caches_bookmark("bookmark", "cache/path", 1.hour.ago)
     end
     it "公開範囲が公開(sid:allusers)で設定されていること" do
-      @bmc.should_receive(:create_meta).with(:contents_type => "bookmark", :publication_symbols => "sid:allusers,uid:creater", :link_url => "/bookmark/show/url", :icon_type => "book", :title => "title")
+      @bmc.should_receive(:create_meta).with(:contents_type => "bookmark", :publication_symbols => "sid:allusers,uid:creater", :link_url => "/bookmark/show/url", :icon_type => "tag_blue", :title => "title")
       @bmc.make_caches_bookmark("bookmark", "cache/path", 1.hour.ago)
     end
   end
@@ -84,7 +84,7 @@ describe BatchMakeCache, "#make_caches_bookmark" do
       @bmc.make_caches_bookmark("bookmark", "cache/path", 1.hour.ago)
     end
     it "公開範囲が公開(sid:allusers)で設定されていること" do
-      @bmc.should_receive(:create_meta).with(:contents_type => "bookmark", :publication_symbols => "sid:allusers,uid:creater1,uid:creater2", :link_url => "/bookmark/show/url", :icon_type => "book", :title => "title")
+      @bmc.should_receive(:create_meta).with(:contents_type => "bookmark", :publication_symbols => "sid:allusers,uid:creater1,uid:creater2", :link_url => "/bookmark/show/url", :icon_type => "tag_blue", :title => "title")
       @bmc.make_caches_bookmark("bookmark", "cache/path", 1.hour.ago)
     end
   end
@@ -109,7 +109,7 @@ describe BatchMakeCache, "#make_caches_bookmark" do
       @bmc.make_caches_bookmark("bookmark", "cache/path", 1.hour.ago)
     end
     it "公開範囲が公開(sid:allusers)に設定されていないこと" do
-      @bmc.should_receive(:create_meta).with(:contents_type => "bookmark", :publication_symbols => "uid:creater", :link_url => "/bookmark/show/url", :icon_type => "book", :title => "title")
+      @bmc.should_receive(:create_meta).with(:contents_type => "bookmark", :publication_symbols => "uid:creater", :link_url => "/bookmark/show/url", :icon_type => "tag_blue", :title => "title")
       @bmc.make_caches_bookmark("bookmark", "cache/path", 1.hour.ago)
     end
   end
