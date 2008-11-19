@@ -193,13 +193,12 @@ describe MypageController, "#unify_feed_form" do
     @channel = mock('channel')
     @items = (1..5).map{|i| mock("item#{i}") }
     @feed = mock('feed', :channel => @channel, :items => @items)
+
+    @title = "title"
+    @limit = 1
   end
   describe "feedがRSS:Rssの場合" do
     before do
-      @feed.stub!(:is_a?).with(RSS::Rss).and_return(true)
-      @title = "title"
-      @limit = 1
-
       @channel.stub!(:title=)
     end
     it "titleが設定されること" do
@@ -212,16 +211,24 @@ describe MypageController, "#unify_feed_form" do
     end
   end
   describe "feedがRSS::Atomの場合" do
-    before do
-      @feed.stub!(:is_a?).with(RSS::Rss).and_return(false)
-    end
     describe "Atomが利用できるライブラリのバージョンの場合" do
       before do
+        @channel.stub!(:title=)
+
         @feed.stub!(:is_a?).with(RSS::Atom::Feed).and_return(true)
+        @feed.stub!(:to_rss).with("2.0").and_return(@feed)
       end
       it "AtomからRss2.0に変換されること" do
-        @feed.should_receive(:to_rss).with("2.0")
+        @feed.should_receive(:to_rss).with("2.0").and_return(@feed)
         controller.send(:unify_feed_form, @feed)
+      end
+      it "titleが設定されること" do
+        @channel.should_receive(:title=).with(@title)
+        controller.send(:unify_feed_form, @feed, @title, @limit)
+      end
+      it "limit以下のアイテム数になること" do
+        feed = controller.send(:unify_feed_form, @feed, @title, @limit)
+        feed.items.size.should == @limit
       end
     end
     describe "Atomが利用でいないライブラリのバージョンの場合" do

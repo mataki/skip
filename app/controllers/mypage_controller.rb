@@ -876,14 +876,11 @@ private
   end
 
   def unify_feed_form feed, title = nil, limit = nil
-    unless feed.is_a?(RSS::Rss)
-      feed.to_rss("2.0") if feed.is_a?(RSS::Atom::Feed)
-    else
-      feed.channel.title = title if title
-      limit = (limit || Admin::Setting.mypage_feed_default_limit)
-      feed.items.slice!(limit..-1) if feed.items.size > limit
-      feed
-    end
+    feed = feed.to_rss("2.0") if feed.is_a?(RSS::Atom::Feed)
+    feed.channel.title = title if title
+    limit = (limit || Admin::Setting.mypage_feed_default_limit)
+    feed.items.slice!(limit..-1) if feed.items.size > limit
+    feed
   rescue NameError => e
     logger.error "[Error] Rubyのライブラリが古いためAtom形式を変換できませんでした。"
     return nil
