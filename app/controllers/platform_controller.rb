@@ -87,6 +87,7 @@ class PlatformController < ApplicationController
     if @user = User.find_by_password_reset_token(params[:code])
       if Time.now <= @user.password_reset_token_expires_at
         return render(:layout => 'not_logged_in') unless request.post?
+        @user.crypted_password = nil
         @user.password = params[:user][:password]
         @user.password_confirmation = params[:user][:password_confirmation]
         if @user.save
