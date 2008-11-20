@@ -15,14 +15,15 @@
 
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe UserUid, ".check_uid" do
-  it "登録できない場合" do
-    [SkipFaker.rand_char(3), SkipFaker.rand_char(32), "111111", "11*ff"].each do |uid|
-      UserUid.check_uid(uid).should_not == "登録可能です"
+describe UserUid, '.validation_error_message' do
+  describe 'validなuidの場合' do
+    it 'nilを返すこと' do
+      UserUid.validation_error_message(SkipFaker.rand_char(4)).should be_nil
     end
   end
-
-  it "登録可能な場合" do
-    UserUid.check_uid(SkipFaker.rand_char(10)).should == "登録可能です"
+  describe 'invalidなuidの場合' do
+    it 'エラーメッセージを返すこと' do
+      UserUid.validation_error_message(SkipFaker.rand_char(3)).should_not be_nil
+    end
   end
 end

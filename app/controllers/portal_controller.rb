@@ -102,7 +102,11 @@ class PortalController < ApplicationController
   # ajax_action
   # 入力されているuidがユニークか否かをチェックする
   def ado_check_uid
-    render :text => UserUid.check_uid(params[:uid])
+    unless error_message = UserUid.validation_error_message(params[:uid])
+      render :text => _('登録可能です'), :status => :ok
+    else
+      render :text => error_message, :status => :bad_request
+    end
   end
 
   def registration

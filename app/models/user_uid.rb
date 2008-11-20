@@ -38,9 +38,8 @@ class UserUid < ActiveRecord::Base
     errors.add(:uid, "は#{Admin::Setting.login_account}と異なる形式で入力してください") if uid_type == UID_TYPE[:username] && uid =~ UID_CODE_REGEX
   end
 
-  # uid入力チェック（ajaxのアクションから利用）
-  def self.check_uid uid
+  def self.validation_error_message uid
     u = new(:uid => uid, :uid_type => UID_TYPE[:username])
-    u.valid? ? _('登録可能です') : u.errors.full_messages.join(',')
+    u.valid? ? nil : u.errors.full_messages.join(',')
   end
 end

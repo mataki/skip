@@ -177,24 +177,25 @@ $j(function(){
         }
     };
 
-    var checkIdFormat = function(form, result, indicator) {
-        form
-        .keyup(function() {
-            $j.ajax({
-                url: '<%= url_for(:controller => 'portal', :action => 'ado_check_uid') -%>',
-                data: { uid : $j(this).val() },
-                complete: function(request) {
-                    result.html(request.responseText);
-                    indicator.css({ display:'none' });
-                }
-            });
-        })
-        .ajaxStart(function() {
-            indicator.css({ display:'inline' });
+    $j('#user_uid_uid')
+    .keyup(function() {
+        $j.ajax({
+            url: '<%= url_for(:controller => 'portal', :action => 'ado_check_uid') %>',
+            data: { uid : $j(this).val() },
+            success: function(text) {
+                $j('#uid_result').html(text).css({ color: '#555555' });
+            },
+            error: function(request) {
+                $j('#uid_result').html(request.responseText).css({ color: 'red' });
+            },
+            complete: function(request) {
+                $j('#indicator').css({ display:'none' });
+            }
         });
-    };
-
-    checkIdFormat($j('#user_uid_uid'), $j('#uid_result'), $j('#indicator'));
+    })
+    .ajaxStart(function() {
+        $j('#indicator').css({ display:'inline' });
+    });
 
     $j('#write_profile')
     .click(function() {
