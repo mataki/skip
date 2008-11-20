@@ -43,3 +43,93 @@ describe InitialSettingsHelper, "#login_mode?" do
     it { helper.login_mode?(:fixed_rp).should be_false }
   end
 end
+
+describe InitialSettingsHelper, '#enable_activate?' do
+  describe 'パスワードモード かつ ユーザ登録可 かつ メール機能有効の場合' do
+    before do
+      INITIAL_SETTINGS['login_mode'] = 'password'
+      Admin::Setting.stub!(:stop_new_user).and_return(false)
+      Admin::Setting.stub!(:mail_function_setting).and_return(true)
+    end
+    it { helper.enable_activate?.should be_true }
+  end
+  describe '固定RPモードの場合' do
+    before do
+      INITIAL_SETTINGS['login_mode'] = 'rp'
+      INITIAL_SETTINGS['fixed_op_url'] = 'http://op.openskip.org/'
+    end
+    it { helper.enable_activate?.should be_false }
+  end
+  describe 'フリーRPモードの場合' do
+    before do
+      INITIAL_SETTINGS['login_mode'] = 'rp'
+      INITIAL_SETTINGS['fixed_op_url'] = nil
+    end
+    it { helper.enable_activate?.should be_false }
+  end
+  describe 'ユーザ登録停止の場合' do
+    before do
+      Admin::Setting.stub!(:stop_new_user).and_return(true)
+    end
+    it { helper.enable_activate?.should be_false }
+  end
+  describe 'メール機能無効の場合' do
+    before do
+      Admin::Setting.stub!(:mail_function_setting).and_return(false)
+    end
+    it { helper.enable_activate?.should be_false }
+  end
+end
+
+describe InitialSettingsHelper, '#enable_signup?' do
+  describe 'パスワードモードの場合' do
+    before do
+      INITIAL_SETTINGS['login_mode'] = 'password'
+    end
+    it { helper.enable_signup?.should be_true }
+  end
+  describe '固定RPモードの場合' do
+    before do
+      INITIAL_SETTINGS['login_mode'] = 'rp'
+      INITIAL_SETTINGS['fixed_op_url'] = 'http://op.openskip.org/'
+    end
+    it { helper.enable_signup?.should be_false }
+  end
+  describe 'フリーRPモードの場合' do
+    before do
+      INITIAL_SETTINGS['login_mode'] = 'rp'
+      INITIAL_SETTINGS['fixed_op_url'] = nil
+    end
+    it { helper.enable_signup?.should be_false }
+  end
+end
+
+describe InitialSettingsHelper, '#enable_forgot_password?' do
+  describe 'パスワードモード かつ メール機能有効の場合' do
+    before do
+      INITIAL_SETTINGS['login_mode'] = 'password'
+      Admin::Setting.stub!(:mail_function_setting).and_return(true)
+    end
+    it { helper.enable_forgot_password?.should be_true }
+  end
+  describe '固定RPモードの場合' do
+    before do
+      INITIAL_SETTINGS['login_mode'] = 'rp'
+      INITIAL_SETTINGS['fixed_op_url'] = 'http://op.openskip.org/'
+    end
+    it { helper.enable_forgot_password?.should be_false }
+  end
+  describe 'フリーRPモードの場合' do
+    before do
+      INITIAL_SETTINGS['login_mode'] = 'rp'
+      INITIAL_SETTINGS['fixed_op_url'] = nil
+    end
+    it { helper.enable_forgot_password?.should be_false }
+  end
+  describe 'メール機能無効の場合' do
+    before do
+      Admin::Setting.stub!(:mail_function_setting).and_return(false)
+    end
+    it { helper.enable_forgot_password?.should be_false }
+  end
+end

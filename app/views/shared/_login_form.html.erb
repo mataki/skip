@@ -13,7 +13,7 @@
     <tr valign="top">
       <td><label for="login_key"><span style="font-weight: bold;"><%= h Admin::Setting.login_account %></span></label>
         <% login_id_forgot_link_text = _('%{login_account_name}を忘れた方はこちら') % {:login_account_name => h(Admin::Setting.login_account)} -%>
-        <%= "(#{link_to(login_id_forgot_link_text, forgot_login_id_path, {:style => 'font-size:11px', :tabindex => '101'})})" if Admin::Setting.mail_function_setting %></td>
+        <%= "(#{link_to(login_id_forgot_link_text, forgot_login_id_path, {:style => 'font-size:11px', :tabindex => '101'})})" if enable_forgot_password? %></td>
     </tr>
     <tr valign="top">
       <td><%= text_field 'login', 'key', :size => 35, :autocomplete => :on, :style => "font-family:Tahoma", :tabindex => "1" -%></td>
@@ -21,7 +21,7 @@
     <tr valign="top">
       <td><label for="login_password"><span style="font-weight: bold;">パスワード</span></label>
         <% password_forgot_link_text = _('パスワードを忘れた方はこちら') -%>
-        <%= "(#{link_to(password_forgot_link_text, forgot_password_path, {:style => 'font-size:11px', :tabindex => '102'})})" if Admin::Setting.mail_function_setting %></td>
+        <%= "(#{link_to(password_forgot_link_text, forgot_password_path, {:style => 'font-size:11px', :tabindex => '102'})})" if enable_forgot_password? %></td>
     </tr>
     <tr valign="top">
       <td><%= password_field 'login', 'password', { 'size' => 35, :onfocus=>'select();', 'AUTOCOMPLETE' => "on", :style => "font-family:Tahoma", :tabindex => "2" } %></td>

@@ -43,4 +43,16 @@ module InitialSettingsHelper
     label << _('user name') if user_name_mode?(:name)
     label.join("/")
   end
+
+  def enable_activate?
+    login_mode?(:password) && !Admin::Setting.stop_new_user && Admin::Setting.mail_function_setting
+  end
+
+  def enable_signup?
+    login_mode?(:password)
+  end
+
+  def enable_forgot_password?
+    login_mode?(:password) && Admin::Setting.mail_function_setting
+  end
 end

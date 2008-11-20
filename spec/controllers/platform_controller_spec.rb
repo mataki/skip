@@ -225,6 +225,9 @@ describe PlatformController, "#logout" do
 end
 
 describe PlatformController, 'GET /forgot_password' do
+  before do
+    controller.stub!(:enable_forgot_password?).and_return(true)
+  end
   it 'パスワード忘れ画面に遷移すること' do
     get :forgot_password
     response.should be_success
@@ -234,6 +237,7 @@ end
 describe PlatformController, 'POST /forgot_password' do
   before do
     UserProfile.stub!(:find_by_email)
+    controller.stub!(:enable_forgot_password?).and_return(true)
   end
   describe 'メールアドレスの入力がない場合' do
     it 'メールアドレスの入力は必須である旨のメッセージを表示する' do
@@ -398,6 +402,9 @@ describe PlatformController, 'POST /reset_password' do
 end
 
 describe PlatformController, 'GET /forgot_login_id' do
+  before do
+    controller.stub!(:enable_forgot_password?).and_return(true)
+  end
   it 'ログインID忘れ画面に遷移すること' do
     get :forgot_login_id
     response.should be_success
@@ -405,6 +412,9 @@ describe PlatformController, 'GET /forgot_login_id' do
 end
 
 describe PlatformController, 'POST /forgot_login_id' do
+  before do
+    controller.stub!(:enable_forgot_password?).and_return(true)
+  end
   describe 'メールアドレスの入力がない場合' do
     it 'メールアドレスの入力は必須である旨のメッセージを表示する' do
       post :forgot_login_id, :email => ''
@@ -460,6 +470,9 @@ describe PlatformController, 'POST /forgot_login_id' do
 end
 
 describe PlatformController, 'GET /activate' do
+  before do
+    controller.stub!(:enable_activate?).and_return(true)
+  end
   it 'サインアップ画面に遷移すること' do
     get :activate
     response.should be_success
@@ -469,6 +482,7 @@ end
 describe PlatformController, 'POST /activate' do
   before do
     UserProfile.stub!(:find_by_email)
+    controller.stub!(:enable_activate?).and_return(true)
   end
   describe 'メールアドレスの入力がない場合' do
     it 'メールアドレスの入力は必須である旨のメッセージを表示する' do
@@ -537,6 +551,7 @@ describe PlatformController, 'GET /signup' do
     @expires_at = Time.local(2008, 11, 1)
     @user = stub_model(User, :activation_token_expires_at => @expires_at)
     @user.stub!(:within_time_limit_of_activation_token?).and_return(true)
+    controller.stub!(:enable_signup?).and_return(true)
   end
   describe 'アクティベーションコードに一致するユーザが存在する場合' do
     before do

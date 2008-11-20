@@ -64,6 +64,10 @@ class PlatformController < ApplicationController
   end
 
   def forgot_password
+    unless enable_forgot_password?
+      flash[:error] = _('%{function}は現在利用することが出来ません。') % {:function => 'パスワード忘れ機能'}
+      return redirect_to(:controller => '/platform')
+    end
     return render(:layout => 'not_logged_in') unless request.post?
     email = params[:email]
     if email.blank?
@@ -114,6 +118,10 @@ class PlatformController < ApplicationController
   end
 
   def forgot_login_id
+    unless enable_forgot_password?
+      flash[:error] = _('%{function}は現在利用することが出来ません。') % {:function => 'ログインID忘れ機能'}
+      return redirect_to(:controller => '/platform')
+    end
     return render(:layout => 'not_logged_in') unless request.post?
     email = params[:email]
     if email.blank?
@@ -137,6 +145,10 @@ class PlatformController < ApplicationController
   end
 
   def activate
+    unless enable_activate?
+      flash[:error] = _('%{function}は現在利用することが出来ません。') % {:function => '利用開始通知'}
+      return redirect_to(:controller => '/platform')
+    end
     return render(:layout => 'not_logged_in') unless request.post?
     email = params[:email]
     if email.blank?
@@ -161,6 +173,10 @@ class PlatformController < ApplicationController
   end
 
   def signup
+    unless enable_signup?
+      flash[:error] = _('%{function}は現在利用することが出来ません。') % {:function => '利用登録'}
+      return redirect_to(:controller => '/platform')
+    end
     if @user = User.find_by_activation_token(params[:code])
       if @user.within_time_limit_of_activation_token?
         self.current_user = @user
