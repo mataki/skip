@@ -8,8 +8,9 @@
  * $Date: 2008-10-22 (Wed, 22 Oct 2008) $
  * $version: 1.3.0
  *
- * 2007081119 fixed ie6 bug (popup security dialog when run nyromodal with https
- * 2007081120 fixed ie6 bug (scrollTop value is invalid when run nyromodal with standard mode
+ * 2007081119 fixed ie6 bug [https環境の場合 かつ IE6 だと セキュリティ警告のポップアップが表示されてしまう問題を修正]
+ * 2007081120 fixed ie6 bug [IE6で標準モードで動かしている場合にscrollTopとscrollLeftが正しく設定されずに表示がずれてしまっていた問題を修正]
+ * 2007081120 fixed ie6 bug [IE6でutf-8の場合にhrefに2バイト文字が含まれるaタグだとhrefが文字化けした状態でリクエストが送信されてしまう問題を修正]
  */
 jQuery(function($) {
 
@@ -625,7 +626,7 @@ jQuery(function($) {
 		var url;
 
 		if (from && from.nodeName) {
-			currentSettings.url = url = from.nodeName.toLowerCase() == 'form'? from.action : from.href;
+			currentSettings.url = url = from.nodeName.toLowerCase() == 'form'? from.action : $(from).attr('href');
 
 			if (from.rev == 'modal')
 				currentSettings.modal = true;
