@@ -192,7 +192,7 @@ class User < ActiveRecord::Base
   def mark_track(visitor_id)
     track = Track.find(:first, :conditions => ["user_id = ? and visitor_id = ?", id, visitor_id], :order => "updated_on DESC")
     if track && (track.updated_on.strftime("%Y %m %d") == Date.today.strftime("%Y %m %d"))
-      track.update_attribute("visitor_id", visitor_id)
+      track.update_attribute("updated_on", Time.now)
     else
       Track.create(:user_id => id, :visitor_id => visitor_id)
     end
