@@ -38,7 +38,7 @@ $j(function() {
         createSpanName(symbol, name).appendTo(base);
         var spanCheck = createSpanCheck(symbol).appendTo(base);
         createSpanDelete(symbol).appendTo(base);
-      
+
         $j('#publication_symbols_table').append(base);
         // IEでは実在するDOM要素に対してのみチェックボックスのオンが可能なので一番最後にチェック。
         spanCheck.find('input').attr('checked', checked);
@@ -93,14 +93,14 @@ $j(function() {
         .css('cusor', 'pointer')
         .append(document.createTextNode('[x]'))
         .click(function(){
-            if ($j.inArray(symbol, publication_symbols_array) != -1) {
+            if ($j.inArray(symbol.toString(), publication_symbols_array) != -1) {
                 publication_symbols_array = $j.grep(publication_symbols_array, function(n, i) {
                     return n != symbol;
                 });
                 $j('#publication_symbols_value').val(publication_symbols_array.toString());
                 if (edit_checkbox) {
                     editor_symbols_array = $j.grep(editor_symbols_array, function(n, i) {
-                        return n != symbol;
+                        return n != symbol.toString();
                     });
                     $j('#editor_symbols_value').val(editor_symbols_array.toString());
                 }
@@ -133,7 +133,7 @@ $j(function() {
         createSymbolRecord(symbol, false, name);
         publication_symbols_array.push(symbol);
         $j('#publication_symbols_value').val(publication_symbols_array.toString());
-      
+
         $j("#publication_symbol").val("");
         $j("#publication_name").val("");
         $j('#publication_symbol').focus();
@@ -142,7 +142,7 @@ $j(function() {
 
     $j.each(publication_symbols_array, function() {
         if(edit_checkbox) {
-            var checked = ($j.inArray(this, editor_symbols_array) != -1);
+            var checked = ($j.inArray(this.toString(), editor_symbols_array) != -1);
             createSymbolRecord(this, checked);
         } else {
             createSymbolRecord(this, false);
