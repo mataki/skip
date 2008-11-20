@@ -249,22 +249,26 @@ $j(function() {
             drop: function(ev, ui) {
                       var antenna_id = this.id.split('_')[1];
                       var antenna_item_id = ui.draggable.attr('id').split('_')[2];
-                      $j(this).children('.antenna_items_list').append(ui.draggable);
+                      var dropObj = $j(this).children('.antenna_items_list');
                       var url = relative_url_root + '/mypage/move_antenna_item'
                       $j.ajax({
                           type: 'POST',
                           url: url,
                           data: { antenna_id: antenna_id, antenna_item_id: antenna_item_id, authenticity_token: $j('#authenticity_token').val() },
                           error: function(event){
-                              alert("通信に失敗しました");
+                              alert(event.responseText);
                           },
                           success: function(request) {
+                              dropObj.append(ui.draggable);
                               $j('#antennas_list_container').highlight();
                           }
                       });
                   }
         });
-        $j('.antenna_item').draggable({revert: true});
+        $j('.antenna_item').draggable({
+            axis: 'y',
+            revert: true
+        });
     };
     setupDoraggableAntennaItem();
 });

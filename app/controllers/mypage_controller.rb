@@ -380,8 +380,13 @@ class MypageController < ApplicationController
   end
 
   def move_antenna_item
-    AntennaItem.update(params[:antenna_item_id], :antenna_id => params[:antenna_id])
-    render :partial => 'antennas', :object => find_antennas
+    antenna_item = AntennaItem.find(params[:antenna_item_id])
+    antenna_item.antenna_id = params[:antenna_id]
+    if antenna_item.save
+      render :partial => 'antennas', :object => find_antennas
+    else
+      render :text => antenna_item.errors.full_messages, :status => :bad_request
+    end
   end
 
   def sort_antenna
