@@ -687,6 +687,8 @@ private
                                                :conditions=> find_params[:conditions],
                                                :order=>"last_updated DESC,board_entries.id DESC",
                                                :include => find_params[:include] | [ :user, :state ])
+    @important_your_messages += BoardEntry.find(:all,
+                                                :conditions => ["publication_type = :publication_type and category like :category", { :publication_type => "public", :category => "%連絡%" }])
     symbol2name_hash = BoardEntry.get_symbol2name_hash @important_your_messages
 
     # システムからの連絡
