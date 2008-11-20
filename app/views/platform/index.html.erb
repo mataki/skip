@@ -72,7 +72,7 @@ div#main {
   <p>ログイン</p>
   <%= render :partial => 'shared/login_form' %>
 
-  <% if Admin::Setting.mail_function_setting %>
+  <% if login_mode?(:password) && Admin::Setting.mail_function_setting %>
   <p><%= _('Signup') %></p>
   <div style="text-align: center; font-weight: bold; font-size: 14px;"><%= link_to _('ユーザ登録してSKIPの利用を開始する'), activate_url %></div>
   <% end -%>
