@@ -6,7 +6,10 @@
  * Licensed under the MIT license
  *
  * $Date: 2008-10-22 (Wed, 22 Oct 2008) $
- * $version: 1.2.8
+ * $version: 1.3.0
+ *
+ * 2007081119 fixed ie6 bug (popup security dialog when run nyromodal with https
+ * 2007081120 fixed ie6 bug (scrollTop value is invalid when run nyromodal with standard mode
  */
 jQuery(function($) {
 
@@ -479,13 +482,8 @@ jQuery(function($) {
 	// Set the margin for postionning the element. Useful for IE6
 	function setMarginScroll() {
 		if (isIE6) {
-			if (document.documentElement) {
-				currentSettings.marginScrollLeft = document.documentElement.scrollLeft;
-				currentSettings.marginScrollTop = document.documentElement.scrollTop;
-			} else {
-				currentSettings.marginScrollLeft = document.body.scrollLeft;
-				currentSettings.marginScrollTop = document.body.scrollTop;
-			}
+			currentSettings.marginScrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft;
+			currentSettings.marginScrollTop = document.documentElement.scrollTop || document.body.scrollTop;
 		} else {
 			currentSettings.marginScrollLeft = 0;
 			currentSettings.marginScrollTop = 0;
