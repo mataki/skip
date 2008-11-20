@@ -707,7 +707,7 @@ private
 
     # あなたへの連絡
     find_params = BoardEntry.make_conditions(login_user_symbols, {:recent_day => recent_day})
-    find_params[:conditions][0] << " and user_readings.read = ? and user_readings.user_id = ? and entry_tags.tag_id = ?" #[連絡]タグのTagsテーブルのIDが4
+    find_params[:conditions][0] << " and user_readings.read = ? and user_readings.user_id = ? and entry_tags.tag_id = ?"
     find_params[:conditions] << false << session[:user_id] << Tag.get_system_tag(Tag::NOTICE_TAG).id
     find_params[:include] << :user_readings
     @mail_your_messages = BoardEntry.find(:all,

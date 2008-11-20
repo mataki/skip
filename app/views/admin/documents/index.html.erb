@@ -16,7 +16,11 @@
     <script type="text/javascript">
     $j(function(){
         FCKeditor.BasePath = platform_url_root + "/javascripts/skip/fckeditor/";
-        new FCKeditor('documents_<%= params[:target] %>', '100%', '600', 'Normal').ReplaceTextarea();
+        var editor = new FCKeditor('documents_<%= params[:target] %>', '100%', '600', 'Normal');
+<% if %w(rules about_this_site).include?(params[:target]) -%>
+        editor.Config["FullPage"] = true;
+<% end %>
+        editor.ReplaceTextarea();
     });
     </script>
     <% end -%>
