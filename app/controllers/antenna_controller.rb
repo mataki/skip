@@ -78,7 +78,7 @@ class AntennaController < ApplicationController
     if antenna_item.save
       render :partial => 'antenna_item', :locals => {:antenna_item => antenna_item, :antenna_id => antenna_item.antenna_id}
     else
-      render :text => _('処理中にエラーが発生しました。'), :status => :internal_server_error
+      render :text => antenna_item.errors.full_messages, :status => :bad_request
     end
   end
 

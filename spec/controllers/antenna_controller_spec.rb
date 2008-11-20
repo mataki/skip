@@ -63,11 +63,8 @@ describe AntennaController, 'GET ado_add_antenna_item' do
       @antenna_item.should_receive(:save).and_return(false)
       post :ado_add_antenna_item
     end
-    it 'ステータスコードとして500が返ること' do
-      response.code.should == '500'
-    end
-    it '処理エラーの旨メッセージ表示' do
-      response.body == '処理中にエラーが発生しました。'
+    it 'ステータスコードとして400が返ること' do
+      response.code.should == '400'
     end
   end
 end
