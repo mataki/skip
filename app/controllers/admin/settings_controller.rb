@@ -19,7 +19,6 @@
 class Admin::SettingsController < Admin::ApplicationController
   N_('Admin::SettingsController|literal')
   N_('Admin::SettingsController|mail')
-  N_('Admin::SettingsController|other')
   N_('Admin::SettingsController|feed')
   N_('Admin::SettingsController|main')
 
@@ -72,7 +71,7 @@ class Admin::SettingsController < Admin::ApplicationController
     objects = settings.map do |name, value|
       # remove blank values in array settings
       value.delete_if {|v| v.blank? } if value.is_a?(Array)
-      if [:antenna_default_group, :mypage_feed_settings].include? name
+      if [:mypage_feed_settings].include? name
         value = {} if value.blank?
         value = value.values.delete_if { |item| (item.class == String) ? item.blank? : has_empty_value?(item.values) }
       end
@@ -93,12 +92,6 @@ class Admin::SettingsController < Admin::ApplicationController
     @feed_setting = {:url => '', :title => ''}
     @index =  params[:index]
     render :partial => 'feed_item'
-  end
-
-  def ado_antenna_default_group
-    @antenna = ''
-    @index =  params[:index]
-    render :partial => 'antenna_default_group'
   end
 
   private

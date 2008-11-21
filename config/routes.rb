@@ -71,7 +71,6 @@ ActionController::Routing::Routes.draw do |map|
     admin_map.resources :group_categories
     admin_map.settings_update_all 'settings/:tab/update_all', :controller => 'settings', :action => 'update_all'
     admin_map.settings_ado_feed_item 'settings/ado_feed_item', :controller => 'settings', :action => 'ado_feed_item'
-    admin_map.settings_ado_antenna_default_group 'settings/ado_antenna_default_group', :controller => 'settings', :action => 'ado_antenna_default_group'
     admin_map.settings 'settings/:tab', :controller => 'settings', :action => 'index', :defaults => { :tab => '' }
 
     admin_map.documents 'documents/:target', :controller => 'documents', :action => 'index', :defaults => { :target => '' }
