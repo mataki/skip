@@ -87,6 +87,4 @@ mypage_feed_timeout:               # マイページで表示するRSSフィー�
 # limit: フィードの最大表示件数
 mypage_feed_settings:
   serialized: true
-  default:
-  - :url: http://www.openskip.org/rss.xml
-    :title: SKIPニュース
+  default: []
