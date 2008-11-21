@@ -15,10 +15,10 @@
 
 module Types::ContentType
   CONTENT_TYPE_IMAGES = {
-    :jpg => 'image/jpg,image/jpeg',
-    :jpeg => 'image/jpg,image/jpeg',
-    :png => 'image/png',
-    :gif => 'image/gif',
-    :bmp => 'image/bmp'
+    :jpg  => 'image/jpg,image/jpeg,image/pjpeg',
+    :jpeg => 'image/jpg,image/jpeg,image/pjpeg',
+    :png  => 'image/png,image/x-png',
+    :gif  => 'image/gif',
+    :bmp  => 'image/bmp'
   }.freeze
 end

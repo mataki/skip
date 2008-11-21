@@ -42,6 +42,7 @@ module ValidationsFile
         return false;
       end
     end
+    true
   end
 
   def valid_size_of_file(file)

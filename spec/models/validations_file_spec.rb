@@ -102,6 +102,91 @@ describe ValidationsFile do
         @vf.valid_content_type_of_file(@muf)
       end
     end
+    describe '拡張子がjpgの場合' do
+      before do
+        @muf.stub!(:original_filename).and_return('image.jpg')
+      end
+      describe 'content_typeがimage/jpgの場合' do
+        before do
+          @muf.stub!(:content_type).and_return('image/jpg')
+        end
+        it { @vf.valid_content_type_of_file(@muf).should be_true }
+      end
+      describe 'content_typeがimage/jpegの場合' do
+        before do
+          @muf.stub!(:content_type).and_return('image/jpeg')
+        end
+        it { @vf.valid_content_type_of_file(@muf).should be_true }
+      end
+      describe 'content_typeがimage/pjpeg(プログレッシブ画像)の場合' do
+        before do
+          @muf.stub!(:content_type).and_return('image/pjpeg')
+        end
+        it { @vf.valid_content_type_of_file(@muf).should be_true }
+      end
+    end
+    describe '拡張子がjpegの場合' do
+      before do
+        @muf.stub!(:original_filename).and_return('image.jpeg')
+      end
+      describe 'content_typeがimage/jpgの場合' do
+        before do
+          @muf.stub!(:content_type).and_return('image/jpg')
+        end
+        it { @vf.valid_content_type_of_file(@muf).should be_true }
+      end
+      describe 'content_typeがimage/jpegの場合' do
+        before do
+          @muf.stub!(:content_type).and_return('image/jpeg')
+        end
+        it { @vf.valid_content_type_of_file(@muf).should be_true }
+      end
+      describe 'content_typeがimage/pjpeg(プログレッシブ画像)の場合' do
+        before do
+          @muf.stub!(:content_type).and_return('image/pjpeg')
+        end
+        it { @vf.valid_content_type_of_file(@muf).should be_true }
+      end
+    end
+    describe '拡張子がpngの場合' do
+      before do
+        @muf.stub!(:original_filename).and_return('image.png')
+      end
+      describe 'content_typeがimage/pngの場合' do
+        before do
+          @muf.stub!(:content_type).and_return('image/png')
+        end
+        it { @vf.valid_content_type_of_file(@muf).should be_true }
+      end
+      describe 'content_typeがimage/x-pngの場合' do
+        before do
+          @muf.stub!(:content_type).and_return('image/x-png')
+        end
+        it { @vf.valid_content_type_of_file(@muf).should be_true }
+      end
+    end
+    describe '拡張子がgifの場合' do
+      before do
+        @muf.stub!(:original_filename).and_return('image.gif')
+      end
+      describe 'content_typeがimage/gifの場合' do
+        before do
+          @muf.stub!(:content_type).and_return('image/gif')
+        end
+        it { @vf.valid_content_type_of_file(@muf).should be_true }
+      end
+    end
+    describe '拡張子がbmpの場合' do
+      before do
+        @muf.stub!(:original_filename).and_return('image.bmp')
+      end
+      describe 'content_typeがimage/bmpの場合' do
+        before do
+          @muf.stub!(:content_type).and_return('image/bmp')
+        end
+        it { @vf.valid_content_type_of_file(@muf).should be_true }
+      end
+    end
   end
 
   def mock_model_class
