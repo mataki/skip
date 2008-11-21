@@ -42,7 +42,7 @@ describe Admin::ImagesController, 'POST /update' do
   end
   describe '不正なファイルの場合' do
     before do
-      controller.should_receive(:valid_file?).with(anything(), :max_size => 300.kilobyte, :content_types => anything()).and_return(false)
+      controller.should_receive(:valid_file?).with(anything(), :max_size => 300.kilobyte, :content_types => anything(), :extension => anything()).and_return(false)
       post :update, :target => 'title_logo', :title_logo => mock('upload_file')
     end
     it { response.should render_template('index') }

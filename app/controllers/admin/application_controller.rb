@@ -46,7 +46,14 @@ class Admin::ApplicationController < ApplicationController
       return false
     end
 
-    unless options[:content_types].empty?
+    if options[:extension] && !options[:extension].empty?
+      unless options[:extension] == uploaded_file.original_filename.split('.').last
+        flash.now[:error] = _('指定された拡張子のファイルはアップロード出来ません。')
+        return false
+      end
+    end
+
+    if options[:content_types] && !options[:content_types].empty?
       unless options[:content_types].include?(uploaded_file.content_type)
         flash.now[:error] = _('指定された形式のファイルはアップロード出来ません。')
         return false
