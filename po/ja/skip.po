@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-11-21 13:36+0900\n"
+"POT-Creation-Date: 2008-11-21 17:53+0900\n"
 "PO-Revision-Date: 2008-11-06 14:56+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -562,7 +562,7 @@ msgid "Admin::OpenidIdentifier|Url"
 msgstr "OpenID URL"
 
 #: app/helpers/admin/application_helper.rb:26
-#: app/controllers/admin/settings_controller.rb:23
+#: app/controllers/admin/settings_controller.rb:22
 msgid "Admin::SettingsController|feed"
 msgstr "RSSフィード設定"
 
@@ -577,14 +577,9 @@ msgid "Admin::SettingsController|mail"
 msgstr "メール関連設定"
 
 #: app/helpers/admin/application_helper.rb:20
-#: app/controllers/admin/settings_controller.rb:24
+#: app/controllers/admin/settings_controller.rb:23
 msgid "Admin::SettingsController|main"
 msgstr "全体設定"
-
-#: app/helpers/admin/application_helper.rb:27
-#: app/controllers/admin/settings_controller.rb:22
-msgid "Admin::SettingsController|other"
-msgstr "その他設定"
 
 #: app/models/admin/setting.rb:28
 msgid "Admin::Setting|Abbr app title"
@@ -1647,11 +1642,11 @@ msgstr "はい"
 msgid "Group|Created on"
 msgstr "作成日時"
 
-#: app/models/group.rb:31
+#: app/models/group.rb:31 app/views/group/_form.html.erb:44
 msgid "Group|Description"
 msgstr "説明"
 
-#: app/models/group.rb:29
+#: app/models/group.rb:29 app/views/group/_form.html.erb:11
 msgid "Group|Gid"
 msgstr "グループID"
 
@@ -1659,7 +1654,7 @@ msgstr "グループID"
 msgid "Group|Group category"
 msgstr "グループカテゴリ"
 
-#: app/models/group.rb:30
+#: app/models/group.rb:30 app/views/group/_form.html.erb:21
 msgid "Group|Name"
 msgstr "グループ名"
 
@@ -1689,14 +1684,6 @@ msgstr ""
 
 #: app/models/group.rb:-
 msgid "Group|説明"
-msgstr ""
-
-#: app/views/admin/settings/_other.html.erb:8
-msgid "ID欄を削除"
-msgstr ""
-
-#: app/views/admin/settings/_other.html.erb:7
-msgid "ID欄を追加"
 msgstr ""
 
 #: app/views/admin/users/import.html.erb:15
@@ -2481,7 +2468,7 @@ msgstr "メールアドレス変更"
 msgid "before_uid"
 msgstr "現在のユーザ名"
 
-#: app/helpers/admin/application_helper.rb:38 app/models/board_entry.rb:-
+#: app/helpers/admin/application_helper.rb:37 app/models/board_entry.rb:-
 msgid "board entry"
 msgstr "ブログ・掲示板"
 
@@ -2494,7 +2481,7 @@ msgstr "ブログ・掲示板コメント"
 msgid "board entry point"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:39 app/models/bookmark.rb:-
+#: app/helpers/admin/application_helper.rb:38 app/models/bookmark.rb:-
 msgid "bookmark"
 msgstr "ブックマーク"
 
@@ -2538,11 +2525,11 @@ msgstr ""
 msgid "favicon画像"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:37 app/models/group.rb:-
+#: app/helpers/admin/application_helper.rb:36 app/models/group.rb:-
 msgid "group"
 msgstr "グループ"
 
-#: app/helpers/admin/application_helper.rb:36 app/models/group_category.rb:-
+#: app/helpers/admin/application_helper.rb:35 app/models/group_category.rb:-
 #: app/views/admin/group_categories/index.html.erb:36
 msgid "group category"
 msgstr "グループカテゴリ"
@@ -2588,7 +2575,7 @@ msgstr ""
 msgid "ranking"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:40 app/models/share_file.rb:-
+#: app/helpers/admin/application_helper.rb:39 app/models/share_file.rb:-
 msgid "share file"
 msgstr "共有ファイル"
 
@@ -2624,7 +2611,7 @@ msgstr "タグ"
 msgid "track"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:34
+#: app/helpers/admin/application_helper.rb:33
 #: app/controllers/admin/users_controller.rb:28
 #: app/controllers/admin/users_controller.rb:40
 #: app/controllers/admin/users_controller.rb:50
@@ -2662,7 +2649,7 @@ msgstr ""
 msgid "user name"
 msgstr "ユーザ名"
 
-#: app/helpers/admin/application_helper.rb:35 app/models/user_profile.rb:-
+#: app/helpers/admin/application_helper.rb:34 app/models/user_profile.rb:-
 msgid "user profile"
 msgstr "プロフィール"
 
@@ -2708,7 +2695,7 @@ msgstr ""
 msgid "はアルファベットで入力して下さい。"
 msgstr ""
 
-#: app/controllers/admin/settings_controller.rb:46
+#: app/controllers/admin/settings_controller.rb:45
 msgid "アカウント関連"
 msgstr ""
 
@@ -2755,7 +2742,7 @@ msgstr ""
 msgid "サインアップするためのURLは以下の通りです。"
 msgstr ""
 
-#: app/controllers/admin/settings_controller.rb:37
+#: app/controllers/admin/settings_controller.rb:36
 msgid "システム全体の最大許可容量に対して現在使用中の共有ファイルの容量です。"
 msgstr ""
 
@@ -2763,7 +2750,7 @@ msgstr ""
 msgid "システム情報"
 msgstr ""
 
-#: app/controllers/admin/settings_controller.rb:63
+#: app/controllers/admin/settings_controller.rb:62
 msgid "システム運用について"
 msgstr ""
 
@@ -2914,11 +2901,11 @@ msgstr ""
 msgid "以下のメールアドレスにURLを送信してください。"
 msgstr ""
 
-#: app/controllers/admin/settings_controller.rb:84
+#: app/controllers/admin/settings_controller.rb:83
 msgid "保存しました。"
 msgstr ""
 
-#: app/controllers/admin/settings_controller.rb:86
+#: app/controllers/admin/settings_controller.rb:85
 msgid "保存に失敗している項目があります。"
 msgstr ""
 
@@ -2948,7 +2935,7 @@ msgstr ""
 msgid "公開されている人にメールを送信する"
 msgstr ""
 
-#: app/controllers/admin/settings_controller.rb:35
+#: app/controllers/admin/settings_controller.rb:34
 msgid "共有ファイル関連"
 msgstr ""
 
@@ -3106,7 +3093,7 @@ msgid ""
 "ユーザは上書きする]のチェックボックスにチェックを入れてください。"
 msgstr ""
 
-#: app/controllers/admin/settings_controller.rb:56
+#: app/controllers/admin/settings_controller.rb:55
 msgid "機能に関する設定"
 msgstr ""
 
@@ -3114,7 +3101,7 @@ msgstr ""
 msgid "正しいCSVファイルの例"
 msgstr ""
 
-#: app/controllers/admin/settings_controller.rb:36
+#: app/controllers/admin/settings_controller.rb:35
 msgid "現在の利用容量"
 msgstr ""
 
