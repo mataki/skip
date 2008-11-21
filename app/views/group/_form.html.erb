@@ -8,7 +8,7 @@
 
 <% if action_value != 'update' -%>
 <div class="input_line">
-  <div class="input_label"><%= label :group, :gid %></div>
+  <div class="input_label"><%= label :group, :gid, _('Group|Gid') %></div>
   <div class="input_value"><%= text_field 'group', 'gid', :size => 40 %></div>
   <div class="param_desc" style="font-size:10px; color:gray;">
   ※グループIDは4文字以上で、数字orアルファベットor記号(ハイフン「-」 アンダーバー「_」)で入力してください。<br/>
@@ -18,7 +18,7 @@
 <% end -%>
 
 <div class="input_line">
-  <div class="input_label"><%= label :group, :name %></div>
+  <div class="input_label"><%= label :group, :name, _('Group|Name') %></div>
   <div class="input_value"><%= text_field 'group', 'name', :size => 40 %></div>
 </div>
 
@@ -41,7 +41,7 @@
 </div>
 
 <div class="input_line">
-  <div class="input_label"><%= label :group, :description %></div>
+  <div class="input_label"><%= label :group, :description, _('Group|Description') %></div>
   <div class="input_value" style="clear: left;"><%= text_area :group, :description, :class => 'invisible' %></div>
 </div>
 
