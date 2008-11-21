@@ -102,11 +102,11 @@ private
 
   def header
     _('※このメールはシステムから自動配信されています。返信しないで下さい。') + "\n\n" +
-    _('こんにちは%{sender}事務局です。') % {:sender => sender}
+    _('%{sender}からのご連絡です。') % {:sender => sender}
   end
 
   def footer
-    contact_description = _('%{sender}事務局:本メールに関するお問い合わせは、こちらへ') % {:sender => sender}
+    contact_description = _('本メールに関するお問い合わせはこちらへ') % {:sender => sender}
     "----\n*#{contact_description}\n#{contact_addr}\n\n*#{sender}\n#{site_url}"
   end
 
