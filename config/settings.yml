@@ -31,8 +31,6 @@ help_url:
   format: url
   allow_blank: true
   default: http://portal.openskip.org/                     # ヘルプのURL
-initial_anntena:
-  default: SKIPチーム                                      # 初期登録されるアンテナの名称
 login_account:
   default: ログインID                                      # ログインアカウントの名称
 footer_link:                                               # フッターの１行目（ヘルプ・規約へのリンクなどを推奨）
@@ -92,12 +90,3 @@ mypage_feed_settings:
   default:
   - :url: http://www.openskip.org/rss.xml
     :title: SKIPニュース
-
-# ==================================================================================================
-# その他設定
-# ==================================================================================================
-antenna_default_group:             # 初期のアンテナに追加されるグループを指定(なければ空配列とする)
-  serialized: true
-  default:
-  - skipdevelop
-  - openskip

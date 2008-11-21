@@ -119,14 +119,14 @@ describe Antenna, ".create_initial" do
   end
   describe "アンテナ名とアンテナグループが設定されている場合" do
     before do
-      @initial_anntena = "初期アンテナ名"
-      Admin::Setting.initial_anntena = @initial_anntena
-      Admin::Setting.antenna_default_group = ["hoge","fuga"]
+      @initial_antenna = "初期アンテナ名"
+      INITIAL_SETTINGS['initial_antenna'] = @initial_antenna
+      INITIAL_SETTINGS['antenna_default_group'] = ['vimgroup', 'emacsgroup']
     end
     describe "存在するグループが複数(2)設定されている場合" do
       before do
-        Group.stub!(:count).with(:conditions => ["gid in (?)", "hoge"]).and_return(1)
-        Group.stub!(:count).with(:conditions => ["gid in (?)", "fuga"]).and_return(1)
+        Group.stub!(:count).with(:conditions => ["gid in (?)", "vimgroup"]).and_return(1)
+        Group.stub!(:count).with(:conditions => ["gid in (?)", "emacsgroup"]).and_return(1)
 
         @antenna = Antenna.create_initial(@user)
       end
@@ -134,13 +134,13 @@ describe Antenna, ".create_initial" do
         @antenna.antenna_items.length == 2
       end
       it "アンテナ名が登録されていること" do
-        @antenna.name.should == @initial_anntena
+        @antenna.name.should == @initial_antenna
       end
     end
     describe "存在しないグループが含まれている場合" do
       before do
-        Group.stub!(:count).with(:conditions => ["gid in (?)", "hoge"]).and_return(1)
-        Group.stub!(:count).with(:conditions => ["gid in (?)", "fuga"]).and_return(0)
+        Group.stub!(:count).with(:conditions => ["gid in (?)", "vimgroup"]).and_return(1)
+        Group.stub!(:count).with(:conditions => ["gid in (?)", "emacsgroup"]).and_return(0)
 
         @antenna = Antenna.create_initial(@user)
       end
@@ -148,14 +148,14 @@ describe Antenna, ".create_initial" do
         @antenna.antenna_items.length == 1
       end
       it "アンテナ名が登録されていること" do
-        @antenna.name.should == @initial_anntena
+        @antenna.name.should == @initial_antenna
       end
     end
   end
   describe "アンテナ名が設定されていない場合" do
     before do
-      Admin::Setting.initial_anntena = ""
-      Admin::Setting.antenna_default_group = ["hoge", "fuga"]
+      INITIAL_SETTINGS['initial_antenna'] = nil
+      INITIAL_SETTINGS['antenna_default_group'] = ['vimgroup', 'emacsgroup']
     end
     it "nilが返ること" do
       Antenna.create_initial(@user).should be_nil
@@ -163,8 +163,8 @@ describe Antenna, ".create_initial" do
   end
   describe "アンテナグループが設定されていない場合" do
     before do
-      Admin::Setting.initial_anntena = "init_antena"
-      Admin::Setting.antenna_default_group = []
+      INITIAL_SETTINGS['initial_antenna'] = "初期アンテナ名"
+      INITIAL_SETTINGS['antenna_default_group'] = nil
     end
     it "nilが返ること" do
       Antenna.create_initial(@user).should be_nil

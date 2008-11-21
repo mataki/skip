@@ -125,6 +125,13 @@ default: &default
   ssl_setting: false                                                 # SSLログインを利用するかどうかの設定
   not_blank_link_re: https?:\/\/dev(.openskip.org)?\/.*              # ブログ内のリンクで新しいウインドウを開かないでリンクをするURLの正規表現
   belong_info_apps:                                                  # 所属情報を設定する { :app_name => { :api => :api_name, :hash_key => 'hash_key_name', :prefix => 'prefix' } }
+  initial_antenna:                                                   # 初期登録されるアンテナの名称(利用しない場合設定不要)
+  antenna_default_group:                                             # 初期登録されるアンテナに追加するグループIDを配列で指定(利用しない場合設定不要)
+# 設定例
+#  initial_antenna: SKIP
+#  antenna_default_group:
+#    - skip_development
+#    - skip_operation
 
 
 ####################################################################################################
