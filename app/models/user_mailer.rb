@@ -24,7 +24,7 @@ class UserMailer < ActionMailer::Base
     @from       = from
     @send_on    = Time.now
     @headers    = {}
-    @body       = {:name=>user_name, :entry_url=>entry_url, :entry_title => entry_title, :footer => footer}
+    @body       = {:name => user_name, :entry_url => entry_url, :entry_title => entry_title, :header => header, :footer => footer}
   end
 
   def sent_message(recipient, link_url, message ,message_manage_url)
@@ -33,16 +33,16 @@ class UserMailer < ActionMailer::Base
     @from       = from
     @send_on    = Time.now
     @headers    = {}
-    @body       = {:link_url=>link_url, :message => message, :message_manage_url => message_manage_url, :footer => footer}
+    @body       = {:link_url => link_url, :message => message, :message_manage_url => message_manage_url, :header => header, :footer => footer}
   end
 
-  def sent_signup_confirm(recipient, login_url)
+  def sent_signup_confirm(recipient, login_id, login_url)
     @recipients = recipient
     @subject    = UserMailer.base64("[#{Admin::Setting.abbr_app_title}] ユーザ登録の確認メールです")
     @from       = from
     @send_on    = Time.now
     @headers    = {}
-    @body       = {:login_url => login_url, :footer => footer}
+    @body       = {:login_id => login_id, :login_url => login_url, :header => header, :footer => footer}
   end
 
   def sent_apply_email_confirm(recipient, confirm_url)
@@ -51,7 +51,7 @@ class UserMailer < ActionMailer::Base
     @from       = from
     @send_on    = Time.now
     @headers    = {}
-    @body       = {:confirm_url=>confirm_url, :footer => footer}
+    @body       = {:confirm_url => confirm_url, :header => header, :footer => footer}
   end
 
   def sent_forgot_password(recipient, reset_password_url)
@@ -60,7 +60,7 @@ class UserMailer < ActionMailer::Base
     @from       = from
     @send_on    = Time.now
     @headers    = {}
-    @body       = {:reset_password_url => reset_password_url, :footer => footer}
+    @body       = {:reset_password_url => reset_password_url, :header => header, :footer => footer}
   end
 
   def sent_forgot_login_id(recipient, login_id)
@@ -69,7 +69,7 @@ class UserMailer < ActionMailer::Base
     @from       = from
     @send_on    = Time.now
     @headers    = {}
-    @body       = {:login_id => login_id, :footer => footer}
+    @body       = {:login_id => login_id, :header => header, :footer => footer}
   end
 
   def sent_activate(recipient, signup_url)
@@ -78,7 +78,7 @@ class UserMailer < ActionMailer::Base
     @from       = from
     @send_on    = Time.now
     @headers    = {}
-    @body       = {:signup_url => signup_url, :footer => footer}
+    @body       = {:signup_url => signup_url, :header => header, :footer => footer}
   end
 
 private
@@ -92,16 +92,26 @@ private
     root_url(:host => Admin::Setting.host_and_port_by_initial_settings_default)
   end
 
-  def system_mail_addr
+  def contact_addr
     Admin::Setting.contact_addr
   end
 
   def from
-    UserMailer.base64(Admin::Setting.abbr_app_title) + "<#{system_mail_addr}>"
+    UserMailer.base64(Admin::Setting.abbr_app_title) + "<#{contact_addr}>"
+  end
+
+  def header
+    _('※このメールはシステムから自動配信されています。返信しないで下さい。') + "\n\n" +
+    _('こんにちは%{sender}事務局です。') % {:sender => sender}
   end
 
   def footer
-    "----\n#{system_mail_addr}\n#{site_url}"
+    contact_description = _('%{sender}事務局:本メールに関するお問い合わせは、こちらへ') % {:sender => sender}
+    "----\n*#{contact_description}\n#{contact_addr}\n\n*#{sender}\n#{site_url}"
+  end
+
+  def sender
+    ERB::Util.html_escape(Admin::Setting.abbr_app_title)
   end
 
   def smtp_settings

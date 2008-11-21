@@ -83,7 +83,7 @@ class PortalController < ApplicationController
       @user.create_initial_entry(message)
 
       UserAccess.create!(:user_id => @user.id, :last_access => Time.now, :access_count => 0)
-      UserMailer.deliver_sent_signup_confirm(@user.user_profile.email, root_url)
+      UserMailer.deliver_sent_signup_confirm(@user.user_profile.email, @user.code, root_url)
 
       @user.activate!
 

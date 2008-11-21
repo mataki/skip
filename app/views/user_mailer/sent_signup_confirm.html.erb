@@ -1,8 +1,8 @@
+<%= @header %>
 
-こんにちは、<%= h Admin::Setting.abbr_app_title -%>事務局です。
-
-ユーザ登録ありがとうございます。
-ログインするには以下のURLにアクセスして下さい。
+ユーザ登録が完了しました。
+あなたのログインIDは<%= h @login_id %>です。
+<%= h Admin::Setting.abbr_app_title %>を利用するには以下のURLにアクセスして下さい。
 
 <%= @login_url %>
 
