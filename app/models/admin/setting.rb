@@ -90,8 +90,6 @@ class Admin::Setting < ActiveRecord::Base
   N_('Admin::Setting|Antenna settings')
   N_('Admin::Setting|Antenna default group')
   N_('Admin::Setting|Antenna default group description')
-  N_('Admin::Setting|Recent date')
-  N_('Admin::Setting|Recent date description')
 
   cattr_accessor :available_settings
   @@available_settings = YAML::load(File.open("#{RAILS_ROOT}/config/settings.yml"))

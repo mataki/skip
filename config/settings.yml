@@ -101,6 +101,3 @@ antenna_default_group:             # 初期のアンテナに追加されるグ�
   default:
   - skipdevelop
   - openskip
-recent_date:                       # 最近を示す日数
-  format: int
-  default: 10

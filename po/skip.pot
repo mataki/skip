@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-11-21 11:03+0900\n"
+"POT-Creation-Date: 2008-11-21 13:36+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -724,14 +724,6 @@ msgstr ""
 
 #: app/models/admin/setting.rb:71
 msgid "Admin::Setting|Protocol description"
-msgstr ""
-
-#: app/models/admin/setting.rb:93
-msgid "Admin::Setting|Recent date"
-msgstr ""
-
-#: app/models/admin/setting.rb:94
-msgid "Admin::Setting|Recent date description"
 msgstr ""
 
 #: app/models/admin/setting.rb:54
@@ -1630,11 +1622,11 @@ msgstr ""
 msgid "Group|説明"
 msgstr ""
 
-#: app/views/admin/settings/_other.html.erb:11
+#: app/views/admin/settings/_other.html.erb:8
 msgid "ID欄を削除"
 msgstr ""
 
-#: app/views/admin/settings/_other.html.erb:10
+#: app/views/admin/settings/_other.html.erb:7
 msgid "ID欄を追加"
 msgstr ""
 

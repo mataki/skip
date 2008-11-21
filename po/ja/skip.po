@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-11-21 11:03+0900\n"
+"POT-Creation-Date: 2008-11-21 13:36+0900\n"
 "PO-Revision-Date: 2008-11-06 14:56+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -778,16 +778,6 @@ msgid "Admin::Setting|Protocol description"
 msgstr ""
 "メール送信時に本文にリンクとして記載されるURLのプロトコルを設定します。システ"
 "ムにアクセスするURLには影響しません。"
-
-#: app/models/admin/setting.rb:93
-msgid "Admin::Setting|Recent date"
-msgstr "[最近]を示す日数"
-
-#: app/models/admin/setting.rb:94
-msgid "Admin::Setting|Recent date description"
-msgstr ""
-"[最近]を示す日数です。マイページに表示される[最近投稿された記事]等における[最"
-"近]が何日前までなのかを設定します。"
 
 #: app/models/admin/setting.rb:54
 msgid "Admin::Setting|Smtp settings"
@@ -1701,11 +1691,11 @@ msgstr ""
 msgid "Group|説明"
 msgstr ""
 
-#: app/views/admin/settings/_other.html.erb:11
+#: app/views/admin/settings/_other.html.erb:8
 msgid "ID欄を削除"
 msgstr ""
 
-#: app/views/admin/settings/_other.html.erb:10
+#: app/views/admin/settings/_other.html.erb:7
 msgid "ID欄を追加"
 msgstr ""
 
