@@ -31,7 +31,7 @@
 333333<span class="example_name">,鈴木 次郎</span><span class="example_email">,suzuki@example.com</span><span class="example_section">,開発</span></pre>
   </div>
   <% unless @users.empty? -%>
-  <h2><%= _('CSVファイルの内容') %></h2>
+  <h2><%= _('CSVファイルを元に実際に登録される内容') %></h2>
   <p><%= @error_row_only ? _('エラー行のみ表示しています。右端のアイコンをクリックするとエラーの詳細を確認出来ます。例にならって修正して下さい。') : _('エラーがある場合は各行の右端のアイコンをクリックすると詳細が表示されます。例にならって修正して下さい。') %></p>
   <table class="normal sortable">
     <thead>
