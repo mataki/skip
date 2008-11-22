@@ -165,11 +165,6 @@ module ApplicationHelper
     image_tag(file_name, options)
   end
 
-  def hiki_parse text, owner_symbol = nil
-    text ||= ''
-    parse_permalink(HikiDoc.new(text, Regexp.new(INITIAL_SETTINGS['not_blank_link_re'])).to_html, owner_symbol)
-  end
-
   def show_contents entry
     output = ""
     if entry.editor_mode == 'hiki'
@@ -178,27 +173,32 @@ module ApplicationHelper
         entry.image_url(file_name)
       }
       output_contents = SkipUtil.images_parse(output_contents, board_entry_image_url_proc)
-      output = '<div class="hiki_style">'
-      output << output_contents
-      output << '</div>'
+      output = "<div class='hiki_style'>#{output_contents}</div>"
     elsif entry.editor_mode == 'richtext'
-      output = '<div class="rich_style">'
-      output << parse_permalink(entry.contents, entry.symbol);
-      output << '</div>'
+      output = render_richtext(entry.contents, entry.symbol)
     else
       output_contents = CGI::escapeHTML(entry.contents)
       output_contents.gsub!(/((https?|ftp):\/\/[0-9a-zA-Z,;:~&=@_'%?+\-\/\$.!*()]+)/){|url|
         "<a href=\"#{url}\" target=\"_blank\">#{url}<\/a>"
       }
-      output_contents = parse_permalink(output_contents, entry.symbol);
-      output = '<pre>'
-      output << output_contents
-      output << '</pre>'
+      output = "<pre>#{parse_permalink(output_contents, entry.symbol)}</pre>"
     end
     output
   end
 
-  #ホームのあなたへの連絡、みんなへの連絡の重要マークをつける
+  def hiki_parse text, owner_symbol = nil
+    text = HikiDoc.new((text || ''), Regexp.new(INITIAL_SETTINGS['not_blank_link_re'])).to_html
+    parse_permalink(text, owner_symbol)
+  end
+
+  # リッチテキストの表示
+  def render_richtext(text, owner_symbol = nil)
+    content = parse_permalink(text, owner_symbol)
+    allow = HTML::WhiteListSanitizer.allowed_attributes.dup.add("style")
+    "<div class='rich_style'>#{sanitize(content, :attributes=>allow)}</div>"
+  end
+
+  # ホームのあなたへの連絡、みんなへの連絡の重要マークをつける
   def get_light_icon(entry)
     entry.important? ? icon_tag('lightbulb') : ''
   end

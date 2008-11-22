@@ -111,7 +111,7 @@ div.input_line div.input_bottom {
         <div class="input_value"></div>
         <div class="input_bottom"></div>
       </div>
-      <div style="border: 1px solid silver; padding: 5px;"><%= parse_permalink(@user.user_profile.self_introduction, @user.symbol) %></div>
+      <div style="border: 1px solid silver; padding: 5px;"><%= render_richtext(@user.user_profile.self_introduction, @user.symbol) %></div>
 
       <br/>
 
@@ -148,7 +148,7 @@ div.input_line div.input_bottom {
         <div class="input_value"></div>
         <div class="input_bottom"></div>
       </div>
-      <div style="border: 1px solid silver; padding: 5px;"><%= parse_permalink(@profile.introduction, @user.symbol) %></div>
+      <div style="border: 1px solid silver; padding: 5px;"><%= render_richtext(@profile.introduction, @user.symbol) %></div>
       <% elsif @user.has_profile? && !@user.profile.disclosure -%>
       <div style="text-align: center; color: blue; font-weight: bold;">属性情報・オフ情報は非公開です</div>
       <% else -%>
@@ -177,7 +177,7 @@ div.input_line div.input_bottom {
           <%= user_link_to_with_portrait(chain.from_user, :width => 60, :height => 40) %><br/>
           <%= user_link_to(chain.from_user) %>
         </th>
-        <td style="padding: 2px;"><div class="rich_style"><%= parse_permalink(chain.comment) %></div></td>
+        <td style="padding: 2px;"><%= render_richtext(chain.comment) %></td>
       </tr>
     </table>
 

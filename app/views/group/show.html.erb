@@ -93,7 +93,7 @@ div.box_space_body p.button {
   <div class="group_info_space">
     <h2 class="topix_title"><%= icon_tag('asterisk_orange') %>説明</h2>
     <div class="group_info_space_desc">
-      <div class="group_info_space_desc_body"><div class="rich_style"><%= parse_permalink(@group.description, @group.symbol) -%></div></div>
+      <div class="group_info_space_desc_body"><%= render_richtext(@group.description, @group.symbol) -%></div>
     </div>
   </div><!-- group_info_space -->
 <%= render :partial => "mypage/page_space",
