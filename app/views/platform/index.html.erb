@@ -89,7 +89,9 @@ div#main {
 <script type="text/javascript">
 <!--
 $j(function(){
-    $j('#desc_before_login').load(relative_url_root + '/custom/login_desc.html');
+    $j('#desc_before_login').load(relative_url_root + '/custom/login_desc.html', function(text) {
+      if (text == "") { $j('#desc_before_login').hide(); }
+    });
     $j('.desc, .login-box').fadeTo('slow',0.8);
 });
 //-->
