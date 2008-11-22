@@ -93,6 +93,7 @@ describe PortalController, 'POST /apply' do
         @user_uid.should_not_receive(:save!)
         @user_uids = mock('user_uids', :build => @user_uid)
         @user.stub!(:user_uids).and_return(@user_uids)
+        @user.should_receive(:code).and_return("111111")
         post_apply
       end
       it 'Userが保存されること' do
@@ -115,6 +116,7 @@ describe PortalController, 'POST /apply' do
         @user_uid.should_receive(:save!)
         @user_uids = mock('user_uids', :build => @user_uid)
         @user.should_receive(:user_uids).and_return(@user_uids)
+        @user.should_receive(:code).and_return("111111")
         post_apply
       end
       it 'Userが保存されること' do
