@@ -26,7 +26,7 @@
 
 FCKConfig.CustomConfigurationsPath = FCKConfig.BasePath + '../../skip_fckeditor_config.js' ;
 
-FCKConfig.EditorAreaCSS = FCKConfig.BasePath + 'css/skip_fck_editorarea.css' ;
+FCKConfig.EditorAreaCSS = '' ;
 FCKConfig.EditorAreaStyles = '' ;
 FCKConfig.ToolbarComboPreviewCSS = '' ;
 

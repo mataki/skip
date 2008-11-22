@@ -1,9 +1,11 @@
+FCKConfig.EditorAreaCSS = FCKConfig.BasePath + '../../../../stylesheets/skip/style.css' ;
+
 FCKConfig.Plugins.Add( 'autogrow' ) ;
 FCKConfig.Plugins.Add( 'dragresizetable' );
 FCKConfig.AutoGrowMax = 1000 ;
 
 FCKConfig.BodyId = 'fckedit' ;
-FCKConfig.BodyClass = 'fck' ;
+FCKConfig.BodyClass = 'rich_style' ;
 
 FCKConfig.DefaultLanguage               = 'ja' ;
 FCKConfig.SkinPath = FCKConfig.BasePath + 'skins/silver/';
@@ -40,5 +42,3 @@ FCKConfig.FlashUpload = false ;
 
 FCKConfig.FontNames             = 'ＭＳ Ｐゴシック;ＭＳ Ｐ明朝;ＭＳ ゴシック;ＭＳ 明朝;MS UI Gothic;Arial;Comic Sans MS;Courier New;Tahoma;Times New Roman;Verdana' ;
 
-FCKConfig.EnterMode = 'br' ;
-FCKConfig.ShiftEnterMode = 'p' ;
