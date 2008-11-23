@@ -3,20 +3,21 @@
 <table class="search_cond_box">
   <tr>
     <th>キーワード</th>
-    <td colspan="2"><%= text_field_tag('keyword', params[:keyword]) %>（タイトル、コメントが検索対象となります）</td>
-
+    <td><%= text_field_tag('keyword', params[:keyword], :size => 60) %>（タイトル、コメントが検索対象となります）</td>
+  </tr>
+  <tr>
     <th>表示順序</th>
     <td>
-      <%= radio_button_tag("sort_type", "date", params[:sort_type] == "date", :id=>"sort_type_date") -%> 登録日順
-      <%= radio_button_tag("sort_type", "name", params[:sort_type] == "name", :id=>"sort_type_name") -%> ファイル名順
+      <%= radio_button_tag("sort_type", "date", params[:sort_type] == "date", :id=>"sort_type_date") -%>登録日順
+      <%= radio_button_tag("sort_type", "name", params[:sort_type] == "name", :id=>"sort_type_name") -%>ファイル名順
     </td>
-  </td>
+  </tr>
   <%= render :partial => 'tag_search' %>
-
 </table>
 <div class="submit"><%= submit_tag '検索' %></div>
-</div>
 <% end %>
+</div>
+
 <div class="search_result_space">
 <% if @pages and @pages.item_count > 0 %>
   <div class="navi"><%= page_link(@pages) -%></div>
@@ -31,6 +32,7 @@
   <div class="navi"><%= page_link(@pages) -%></div>
 <% end %>
 </div>
+
 <script type="text/javascript">
 $j(function(){
     setupShareFileDownloadLink();
