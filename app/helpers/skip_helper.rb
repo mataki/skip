@@ -91,7 +91,23 @@ var platform_url_root = '#{root_url.chop}';
   end
 
   def skip_footer_link
-    javascript_include_tag("/services/footer.js")
+    <<-EOS
+<script language="JavaScript" type="text/javascript">
+<!--
+function sub_window_open(url, title, width, height) {
+  sub_window = window.open(url, title, 'width='+width+',height='+height+',resizable=yes,scrollbars=yes');
+  sub_window.focus();
+};
+function open_hiki() { sub_window_open('#{root_url}hiki.html', 'Hiki記法', 500,600); };
+function open_rule() { sub_window_open('#{root_url}custom/rules.html', '利用規約', 780,700); };
+function open_site() { sub_window_open('#{root_url}custom/about_this_site.html', 'このサイトについて', 720,660); };
+//-->
+</script>
+<div id="footer">
+  <div class="info"><div class="first">#{Admin::Setting.footer_first}</div><div class="second">#{Admin::Setting.footer_second}</div></div>
+  <div class="powered_by">powered by#{link_to image_tag(root_url + "/custom/images/footer_logo.png"), h(Admin::Setting.footer_image_link_url)}</div>
+</div>
+    EOS
   end
 
   # バリデーションエラーメッセージのテンプレートを置換する
