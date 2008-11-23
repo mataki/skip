@@ -19,7 +19,7 @@
   <div style="border-bottom: 1px dotted silver; margin: 3px 0 1px 0; height: 16px; position: relative;">
     <div style="width: 80%;  white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin: 0;">
       <%= get_light_icon(message) + hide_long_tags(categories, 3) + entry_link_to(message, {}, {:title => message.title + entry_infos}) -%>
-      <span style="font-size:8px; background-color: #fff8ff; vertical-align: middle; color: #bbbbbb;"><%= entry_infos -%></span>
+      <span style="font-size:8px; vertical-align: bottom; color: #808080;"><%= entry_infos -%></span>
     </div>
     <div style="position: absolute; bottom:0px; right: 0; width: 15%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; text-align: right; padding-left: 5px;font-size:10px;">
       <%= symbol2name_hash ? symbol_link_to(message.symbol, symbol2name_hash[message.symbol]) : user_link_to(message.user) -%>
