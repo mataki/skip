@@ -13,12 +13,12 @@ div.move_navi {
 }
 div.move_navi .next_entry {
   position: absolute;
-  left: 0;
+  right: 0;
   top: 0;
 }
 div.move_navi .prev_entry {
   position: absolute;
-  right: 0;
+  left: 0;
   top: 0;
 }
 div#board_entry {
@@ -221,10 +221,10 @@ form.comment_input_form textarea{
 
 <div class="move_navi">
   <% if prev_entry -%>
-  <span class="prev_entry">&lt;&nbsp;[<%= entry_link_to(prev_entry, {:truncate => 20}) %>]</span>
+  <span class="prev_entry">&lt;&nbsp;<%= entry_link_to(prev_entry, {:truncate => 20}) %></span>
   <% end -%>
   <% if next_entry -%>
-  <span class="next_entry">[<%= entry_link_to(next_entry, {:truncate => 20}) %>]&nbsp;&gt;</span>
+  <span class="next_entry"><%= entry_link_to(next_entry, {:truncate => 20}) %>&nbsp;&gt;</span>
   <% end -%>
   <a id="page_top" href="#page_bottom">[ページ末尾]</a>
 </div>
