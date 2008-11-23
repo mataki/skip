@@ -39,11 +39,11 @@ module ApplicationHelper
   def page_link pages
     option = params.clone
     output = ""
-    output << link_to('[Head]', option.update({:page => 1})) if pages.current.previous
-    output << link_to('[Prev]', option.update({:page => pages.current.previous})) if pages.current.previous
-    output << %(全#{pages.item_count}件（#{pages.current.number}/#{pages.length}ページ）)
-    output << link_to('[Next]', option.update({:page => pages.current.next})) if pages.current.next
-    output << link_to('[Last]', option.update({:page => pages.last})) if pages.current.next
+    output << link_to('[最初へ]', option.update({:page => 1})) if pages.current.previous
+    output << link_to('[前へ]', option.update({:page => pages.current.previous})) if pages.current.previous
+    output << "全#{pages.item_count}件(#{pages.current.number}/#{pages.length}ページ)"
+    output << link_to('[次へ]', option.update({:page => pages.current.next})) if pages.current.next
+    output << link_to('[最後へ]', option.update({:page => pages.last})) if pages.current.next
     output
   end
 
