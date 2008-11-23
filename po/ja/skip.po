@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-11-22 03:30+0900\n"
+"POT-Creation-Date: 2008-11-22 13:35+0900\n"
 "PO-Revision-Date: 2008-11-06 14:56+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -66,7 +66,7 @@ msgstr ""
 msgid "%{target}から検索を行ないます"
 msgstr ""
 
-#: app/controllers/admin/documents_controller.rb:89
+#: app/controllers/admin/documents_controller.rb:87
 #: app/controllers/admin/images_controller.rb:151
 msgid "%{target}を保存しました。"
 msgstr ""
@@ -156,7 +156,7 @@ msgid "Admin::Bookmark|Url"
 msgstr "URL"
 
 #: app/helpers/admin/application_helper.rb:24
-#: app/controllers/admin/documents_controller.rb:101
+#: app/controllers/admin/documents_controller.rb:99
 msgid "Admin::DocumentsController"
 msgstr "説明文設定"
 
@@ -181,30 +181,20 @@ msgstr ""
 "ます。"
 
 #: app/controllers/admin/documents_controller.rb:24
-msgid "Admin::DocumentsController|introduction"
-msgstr "イントロダクション"
-
-#: app/controllers/admin/documents_controller.rb:25
-msgid "Admin::DocumentsController|introduction_description"
-msgstr ""
-"初めてシステムを使う人向けの使い方を記述します。<br/>ユーザが始めて利用する際"
-"に表示されます。"
-
-#: app/controllers/admin/documents_controller.rb:26
 msgid "Admin::DocumentsController|login_desc"
 msgstr "ログインの説明"
 
-#: app/controllers/admin/documents_controller.rb:27
+#: app/controllers/admin/documents_controller.rb:25
 msgid "Admin::DocumentsController|login_desc_description"
 msgstr ""
 "まだログインしていないユーザ向けに、システムの簡単な紹介を記述します。<br/>シ"
 "ステムでは、ログイン画面でフォームの下側に表示しています。"
 
-#: app/controllers/admin/documents_controller.rb:28
+#: app/controllers/admin/documents_controller.rb:26
 msgid "Admin::DocumentsController|rules"
 msgstr "利用規約"
 
-#: app/controllers/admin/documents_controller.rb:29
+#: app/controllers/admin/documents_controller.rb:27
 msgid "Admin::DocumentsController|rules_description"
 msgstr ""
 "このシステム用の利用規約を記述します。<br/>システムでは、初回ログイン後に表示"
@@ -2704,7 +2694,8 @@ msgstr ""
 msgid "アカウント関連"
 msgstr ""
 
-#: app/helpers/users_helper.rb:47 app/views/users/_user.html.erb:6
+#: app/helpers/groups_helper.rb:49 app/helpers/users_helper.rb:47
+#: app/views/users/_user.html.erb:6 app/views/group/show.html.erb:46
 #: app/views/user/_portrait_box.html.erb:24
 msgid "アンテナに追加"
 msgstr ""
@@ -3016,17 +3007,17 @@ msgid ""
 "対象のカテゴリはグループ作成時に初期選択される設定のため削除出来ません。"
 msgstr ""
 
-#: app/controllers/admin/documents_controller.rb:41
+#: app/controllers/admin/documents_controller.rb:39
 msgid "対象のコンテンツが存在しません。"
 msgstr ""
 
-#: app/controllers/admin/documents_controller.rb:92
+#: app/controllers/admin/documents_controller.rb:90
 msgid ""
 "対象のコンテンツを保存することが出来ませんでした。再度お試し頂くか管理者にお"
 "問い合わせ下さい。"
 msgstr ""
 
-#: app/controllers/admin/documents_controller.rb:38
+#: app/controllers/admin/documents_controller.rb:36
 msgid "対象のコンテンツを開くことが出来ませんでした。"
 msgstr ""
 
@@ -3044,8 +3035,8 @@ msgstr ""
 msgid "対象ユーザに利用開始通知メールを送信しますが宜しいですか?"
 msgstr ""
 
-#: app/controllers/admin/documents_controller.rb:44
-#: app/controllers/admin/documents_controller.rb:95
+#: app/controllers/admin/documents_controller.rb:42
+#: app/controllers/admin/documents_controller.rb:93
 #: app/controllers/admin/images_controller.rb:157
 msgid "想定外のエラーが発生しました。管理者にお問い合わせ下さい。"
 msgstr ""

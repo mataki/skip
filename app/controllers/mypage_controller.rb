@@ -679,20 +679,14 @@ private
   def get_index_default
     recent_day = 10 # 重要な連絡・連絡・質問・ブックマーク・登録グループ・登録ユーザの表示条件日数
 
-    # お知らせ-承認待ちの一覧
-    @waiting_groups = Group.find_waitings session[:user_id]
-    # あなたへの重要な連絡
-    find_params = BoardEntry.make_conditions(login_user_symbols, {:recent_day => recent_day, :categories => ['連絡', '重要']})
-    @important_your_messages = BoardEntry.find(:all,
-                                               :conditions=> find_params[:conditions],
-                                               :order=>"last_updated DESC,board_entries.id DESC",
-                                               :include => find_params[:include] | [ :user, :state ])
-    @important_your_messages += BoardEntry.find(:all,
-                                                :conditions => ["publication_type = :publication_type and category like :category", { :publication_type => "public", :category => "%連絡%" }])
-    symbol2name_hash = BoardEntry.get_symbol2name_hash @important_your_messages
-
     # システムからの連絡
     system_messages = []
+    if @my_info[:using_day] < 30
+      system_messages << {
+        :text => "ようこそ！まずはこちらをご覧ください。", :icon => "information",
+        :option => {:controller => "mypage", :action => "welcome"}
+      }
+    end
     self_introduction = @user.user_profile.self_introduction
     if self_introduction.blank? || self_introduction.size < 10 || !UserProfile.find_by_user_id(@user.id)
       system_messages << {
@@ -706,17 +700,31 @@ private
         :option => {:controller => "mypage", :action => "manage", :menu => "manage_portrait"}
       }
     end
+    # お知らせ-承認待ちの一覧
+    @waiting_groups = Group.find_waitings session[:user_id]
 
-    # あなたへの連絡
-    find_params = BoardEntry.make_conditions(login_user_symbols, {:recent_day => recent_day})
-    find_params[:conditions][0] << " and user_readings.read = ? and user_readings.user_id = ? and entry_tags.tag_id = ?"
-    find_params[:conditions] << false << session[:user_id] << Tag.get_system_tag(Tag::NOTICE_TAG).id
+    # あなたへの連絡（公開・未読/既読は関係なし・最近のもののみ）
+    find_params = BoardEntry.make_conditions(login_user_symbols, {:recent_day => recent_day, :publication_type => "public", :category => "連絡"})
+    @important_your_messages = BoardEntry.find(:all,
+                                               :conditions=> find_params[:conditions],
+                                               :order=>"last_updated DESC,board_entries.id DESC",
+                                               :include => find_params[:include] | [ :user, :state ])
+    symbol2name_hash = BoardEntry.get_symbol2name_hash @important_your_messages
+
+    # あなたへの連絡（非公開・未読のもののみ）
+    find_params = BoardEntry.make_conditions(login_user_symbols, {:publication_type => "protected", :category=>'連絡'})
+    find_params[:conditions][0] << " and user_readings.read = ? and user_readings.user_id = ?"
+    find_params[:conditions] << false << session[:user_id]
     find_params[:include] << :user_readings
-    @mail_your_messages = BoardEntry.find(:all,
-                                          :conditions=> find_params[:conditions] ,
-                                          :order=>"last_updated DESC,board_entries.id DESC",
-                                          :limit=>5,
-                                          :include => find_params[:include] | [ :user, :state, :entry_tags ])
+    @mail_your_messages = {
+      :id_name => 'mail_your_messages',
+      :title_icon => "email",
+      :title_name => 'あなたへの連絡',
+      :pages => BoardEntry.find(:all,
+                                :conditions=> find_params[:conditions],
+                                :order =>"last_updated DESC,board_entries.id DESC",
+                                :include => find_params[:include] | [ :user, :state ])
+    }
 
     questions = find_questions_as_locals({:recent_day => recent_day, :per_page => 5}) # みんなからの質問！
     access_blogs = find_access_blogs_as_locals({:per_page => 10}) # 最近の人気記事

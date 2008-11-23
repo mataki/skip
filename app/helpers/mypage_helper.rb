@@ -53,10 +53,4 @@ module MypageHelper
     get_menu_items @@record_menus, selected_menu, "manage"
   end
 
-  def message_link_to message
-    link_text =  icon_tag('bullet_red')
-    link_text << h(message[:message])
-    link_text << icon_tag(Message::MESSAGE_TYPES[message[:message_type]][:icon_name])
-    link_to link_text, message[:link_url]
-  end
 end
