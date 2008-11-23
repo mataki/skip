@@ -54,16 +54,7 @@
   </div><!-- panel -->
 </div><!-- main -->
 
-<div id="footer">
-  <div class="site">
-    <div class="info">
-      <div class="company"><%= Admin::Setting.footer_contact -%> | <%= h Admin::Setting.footer_copyright -%></div>
-    </div>
-    <div class="sponsor">
-      powered by <%= link_to image_tag("#{controller.request.relative_url_root}/custom/images/footer_logo.png"), h(Admin::Setting.footer_image_link_url) %>
-    </div>
-  </div>
-</div><!-- footer -->
+<%= skip_footer_link -%>
 
 </body>
 </html>

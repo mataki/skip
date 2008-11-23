@@ -34,8 +34,10 @@ var relative_url_root = '<%= controller.request.relative_url_root -%>';
 }
   </style>
 </head>
+<body style="background-color: #ffffff;">
 
-<body style="background-color: #fafafa;"><center><div style="width: 50%; margin-top: 30px; border: 1px solid silver; padding: 1px; background-color: white;">
+<center style="background-color: #fafafa; border-bottom: 1px solid silver;">
+<div style="width: 50%; margin-top: 30px; border: 1px solid silver; padding: 1px; background-color: white;">
 
 <div style="margin: 0 0 0 0; padding: 4px; text-align: left; font-size: 18px; font-weight: bold; background-color:#DDFFDD;">ログインが必要です</div>
 
@@ -45,13 +47,10 @@ var relative_url_root = '<%= controller.request.relative_url_root -%>';
 
 <div id="login"><%= render :partial => 'shared/login_form' %></div>
 
-<div style="border: 1px solid silver; padding: 5px 10px; background-color: #f0f0ff; text-align: center;">
-  <a href="mailto:<%= h Admin::Setting.contact_addr -%>" target="_blank">[お問い合わせ]</a>
-  <a href="#" onclick="javascript:getSubwindowRule()">[利用規約]</a>
 </div>
+</center>
 
-<p id="my_footer"><%= h Admin::Setting.footer_copyright -%></p>
+<%= skip_footer_link -%>
 
-</div></center></body>
-
+</body>
 </html>
