@@ -1,6 +1,6 @@
 # SKIP(Social Knowledge & Innovation Platform)
 # Copyright (C) 2008 TIS Inc.
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -9,7 +9,7 @@
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-# 
+#
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -23,19 +23,19 @@ module GroupsHelper
         if options[:simple]
           output << icon_tag('emoticon_happy') + '管理者'
         else
-          output << icon_tag('emoticon_happy') + '（管理者権限があります）'
+          output << icon_tag('emoticon_happy') + '管理者権限があります'
         end
       elsif participation.waiting?
         if options[:simple]
-          output << icon_tag('hourglass') + '承認'
+          output << icon_tag('hourglass') + '承認待ち'
         else
-          output << icon_tag('hourglass') + '（現在承認待ちです）'
+          output << icon_tag('hourglass') + '現在承認待ちです'
         end
       else
         if options[:simple]
           output << icon_tag('emoticon_smile') + '参加者'
         else
-          output << icon_tag('emoticon_smile') + '（現在参加中です）'
+          output << icon_tag('emoticon_smile') + '現在参加中です'
         end
       end
     end
