@@ -37,21 +37,23 @@ div.box_space_body p.button {
 <div id="contents_left">
 
 <div class="box_space">
-  <div class="box_space_title"><%= icon_tag('text_list_bullets') -%>カテゴリ</div>
-  <div class="box_space_body">
-    <%= icon_tag(h(@group.category_icon_name.first), :title => h(@group.category_icon_name.last), :margin => true) + h(@group.category_icon_name.last) %>
+  <div class="box_space_title"><%= h @group.name %></div>
+  <div class="box_space_body"><%= show_group_status(@group, session[:user_id]) %></div>
+  <div class="box_space_bottom">
+    since <%= @group.created_on.strftime("%Y/%m/%d") -%>
   </div>
-  <div class="box_space_bottom"></div>
-</div><!-- box_space -->
-
-<div class="box_space">
-  <div class="box_space_title"><%= icon_tag('information') -%>状態</div>
-  <div class="box_space_body">
-    <% state, button = generate_visitor_state(@participation) -%>
-    <p><%= state -%></p>
-    <%= %(<p class="button">#{button}</p>) unless button.empty? -%>
+  <div class="box_space_bottom" style="text-align: center; font-size: 12px;">
+    <%= link_to(icon_tag('transmit_go', :title => _('アンテナに追加')) + _('アンテナに追加'), {:controller => "antenna", :action => "select_antenna", :symbol => @group.symbol, :dummy => '.html'}, {:class => "nyroModal"}) %><br/>
   </div>
-  <div class="box_space_bottom"></div>
+  <div class="box_space_bottom" style="text-align: center; font-size: 12px;">
+    <% if not @participation -%>
+      <%= link_to(icon_tag('group_go') + 'グループに参加', {:action=>"new_participation"}, {:class => "nyroModal"}) -%>
+    <% elsif not @participation.owned? -%>
+      <% form_tag({:action => 'leave'}) do -%>
+      <%= submit_tag('退会する', {:onclick=>'return confirm("本当に退会しますか？");'}) %>
+      <% end %>
+    <% end %>
+  </div>
 </div><!-- box_space -->
 
 <div class="box_space">
@@ -81,28 +83,21 @@ div.box_space_body p.button {
 </div><!-- contents_left -->
 
 <div id="contents_right">
-  <div class="group_info_space">
-    <h2 class="topix_title"><%= icon_tag('asterisk_orange') %>お知らせ</h2>
-    <div class="group_info_space_lines">
-      <% generate_informations(@group, @participation).each do |information| -%>
-      <div class="group_info_space_lines_line"><%= information -%></div>
-      <% end %>
-    </div>
-  </div><!-- group_info_space -->
 
   <div class="group_info_space">
-    <h2 class="topix_title"><%= icon_tag('asterisk_orange') %>説明</h2>
+    <h2 class="topix_title"><%= icon_tag('asterisk_orange') %>このグループについて</h2>
     <div class="group_info_space_desc">
       <div class="group_info_space_desc_body"><%= render_richtext(@group.description, @group.symbol) -%></div>
     </div>
   </div><!-- group_info_space -->
+
 <%= render :partial => "mypage/page_space",
            :locals => { :id_name => 'recent_messages',
-                        :title_name => '参加グループの最新の書き込み',
+                        :title_name => 'このグループの最新の書き込み',
                         :pages => @recent_messages } %>
+
 </div><!-- contents_right -->
 
-<div id="contents_bottom">
-</div><!-- contents_bottom -->
+<div id="contents_bottom"></div><!-- contents_bottom -->
 
 </div><!-- contents_container -->

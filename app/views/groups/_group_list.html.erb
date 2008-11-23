@@ -8,7 +8,21 @@
   <div class="navi"><%= page_link pages -%></div>
 
   <% if format_type == "detail" %>
-    <%= render :partial => "groups/group", :collection => groups, :locals => { :user_id => user_id, :show_favorite => show_favorite } -%>
+    <% groups.each do |group| %>
+    <table class="group_box">
+      <tr>
+        <th><%= group_link_to group %></th>
+        <td rowspan="3" class="desc"><div style="overflow: auto; height: 130px; width: 100%;"><%= render_richtext(group.description, group.symbol) %></div></td>
+        <td rowspan="3" style="width: 20px; margin: 0; padding: 0;"><%= show_group_action(show_favorite, group) %></td>
+      </tr>
+      <tr>
+        <td class="auth"><%= show_group_status(group, user_id) %></td>
+      </tr>
+      <tr>
+        <td class="since">since <%= group.created_on.strftime("%Y/%m/%d") -%></td>
+      </tr>
+    </table>
+    <% end %>
   <% else %>
     <table class="group_list_box normal">
     <tr>
@@ -21,15 +35,10 @@
     <% groups.each do |group| %>
     <tr class="<%= cycle('line_0', 'line_1') %>">
       <td><%= group_link_to group %></td>
-      <td><%= icon_tag(group.category_icon_name.first, :title => group.category_icon_name.last) + h(group.category_icon_name.last) %></td>
-      <td><%= participation_state(group, user_id, {:simple => true}) -%></td>
-      <td><%= "#{icon_tag 'key'}必要" if group.protected? %></td>
-      <td>
-        <% if show_favorite %>
-          <% participation = group.group_participations.first %><% elem_id = "group_participation_#{participation.id}" %>
-          <span id="<%= elem_id %>"><%= render :partial => "groups/favorite", :locals => { :gid => group.gid, :participation => participation, :update_elem_id => elem_id } %></span>
-        <% end %>
-      </td>
+      <td><%= icon_tag(group.category_icon_name.first) + h(group.category_icon_name.last) %></td>
+      <td><%= participation_state(group, user_id) -%></td>
+      <td><%= "#{icon_tag 'lock'}必要" if group.protected? %></td>
+      <td><%= show_group_action(show_favorite, group) %></td>
     </tr>
     <% end %>
     </table>

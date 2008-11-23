@@ -17,29 +17,36 @@ module GroupsHelper
 
   # 参加状態の条件によって表示内容を変更
   def participation_state group, user_id, options={}
-    output = ''
     if participation = group.group_participations.detect{|participation| participation.user_id == user_id }
       if participation.owned?
-        if options[:simple]
-          output << icon_tag('emoticon_happy') + '管理者'
-        else
-          output << icon_tag('emoticon_happy') + '管理者権限があります'
-        end
+        icon_tag('group_key') + '管理者です'
       elsif participation.waiting?
-        if options[:simple]
-          output << icon_tag('hourglass') + '承認待ち'
-        else
-          output << icon_tag('hourglass') + '現在承認待ちです'
-        end
+        icon_tag('hourglass') + '承認待ちです'
       else
-        if options[:simple]
-          output << icon_tag('emoticon_smile') + '参加者'
-        else
-          output << icon_tag('emoticon_smile') + '現在参加中です'
-        end
+        icon_tag('group') + '参加中です'
       end
+    else
+      icon_tag('group_error') + '未参加です'
     end
+  end
+
+  # グループの状態をまとめて表示（グループのサマリと検索詳細結果で利用）
+  def show_group_status(group, user_id)
+    output = "<p>#{icon_tag(group.category_icon_name.first) + h(group.category_icon_name.last)}<br/></p>"
+    output << "<p>#{participation_state(group, user_id)}<br/></p>"
+    output << "<p>#{(icon_tag('lock') + '参加には承認が必要') if group.protected?}<br/></p>"
     output
   end
 
+  # グループに対してできるアクションを表示（グループ一覧で利用）
+  def show_group_action(show_favorite, group)
+    output = ""
+    if show_favorite
+      participation = group.group_participations.first
+      elem_id = "group_participation_#{participation.id}"
+      output << "<span id='#{elem_id}'>#{render :partial => "groups/favorite", :locals => { :gid => group.gid, :participation => participation, :update_elem_id => elem_id }}</span>"
+    end
+    output << link_to(icon_tag('transmit_go', :title => _('アンテナに追加')), {:controller => "antenna", :action => "select_antenna", :symbol => group.symbol, :dummy => '.html'}, {:class => "nyroModal"})
+    output
+  end
 end
