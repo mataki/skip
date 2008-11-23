@@ -52,7 +52,9 @@ class MypageController < ApplicationController
     @my_antennas = find_antennas
 
     # マイページの右側部分（パラメタに応じて内容を変更）
-    if params[:year] && params[:month] && params[:day]
+    if params[:welcome]
+      @partial, @locals = "welcome", nil
+    elsif params[:year] && params[:month] && params[:day]
       @partial, @locals = get_index_day(@year, @month, @day)
     elsif antenna_type = params[:antenna_type]
       @partial, @locals = get_index_antenna_system(antenna_type)
@@ -684,7 +686,7 @@ private
     if @my_info[:using_day] < 30
       system_messages << {
         :text => "ようこそ！まずはこちらをご覧ください。", :icon => "information",
-        :option => {:controller => "mypage", :action => "welcome"}
+        :option => {:controller => "mypage", :action => "index", :welcome => "true"}
       }
     end
     self_introduction = @user.user_profile.self_introduction

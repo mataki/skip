@@ -104,7 +104,7 @@ describe PortalController, 'POST /apply' do
       end
       it 'welcomeページにリダイレクトされること' do
         post_apply
-        response.should redirect_to(:controller => 'mypage', :action => 'welcome')
+        response.should redirect_to(:controller => 'mypage', :action => 'index', :welcome => 'true')
       end
     end
     describe 'ユーザ名利用設定がonの場合' do
@@ -127,7 +127,7 @@ describe PortalController, 'POST /apply' do
       end
       it 'welcomeページにリダイレクトされること' do
         post_apply
-        response.should redirect_to(:controller => 'mypage', :action => 'welcome')
+        response.should redirect_to(:controller => 'mypage', :action => 'index', :welcome => 'true')
       end
     end
     describe 'アクティベート機能が無効の場合' do
@@ -145,7 +145,7 @@ describe PortalController, 'POST /apply' do
       end
       it 'welcomeページにリダイレクトされること' do
         post_apply
-        response.should redirect_to(:controller => 'mypage', :action => 'welcome')
+        response.should redirect_to(:controller => 'mypage', :action => 'index', :welcome => 'true')
       end
     end
     describe 'アクティベート機能が有効の場合' do
@@ -173,7 +173,7 @@ describe PortalController, 'POST /apply' do
       end
       it 'welcomeページにリダイレクトされること' do
         post_apply
-        response.should redirect_to(:controller => 'mypage', :action => 'welcome')
+        response.should redirect_to(:controller => 'mypage', :action => 'index', :welcome => 'true')
       end
     end
   end
