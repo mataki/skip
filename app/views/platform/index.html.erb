@@ -37,6 +37,10 @@ div#main {
   border-bottom: solid 1px silver;
   background-color: white;
   padding: 5px;
+
+  overflow: auto;
+  height: 130px;
+  width: 700px;
 }
 .login-box {
   position: absolute;
@@ -89,7 +93,7 @@ div#main {
 <script type="text/javascript">
 <!--
 $j(function(){
-    $j('#desc_before_login').load(relative_url_root + '/custom/login_desc.html', function(text) {
+    $j('#desc_before_login').load(relative_url_root + '/custom/about_this_site.html', function(text) {
       if (text == "") { $j('#desc_before_login').hide(); }
     });
     $j('.desc, .login-box').fadeTo('slow',0.8);

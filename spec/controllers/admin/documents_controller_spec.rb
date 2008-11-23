@@ -120,7 +120,7 @@ describe Admin::DocumentsController, 'POST /revert' do
       controller.should_receive(:open).with(anything(), 'w').and_yield(target_file)
       target_file.should_receive(:write)
       default_file.should_receive(:read)
-      @target = 'confirm_desc'
+      @target = 'rules'
       post :revert, :target => @target
     end
     it { response.should redirect_to(admin_documents_path(:target => @target)) }
