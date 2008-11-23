@@ -73,22 +73,19 @@ div#footer {
   position: relative;
   height: 50px;
 }
-div#footer .site {
-}
 div#footer .info {
   width: 50em;
   margin: auto;
-  padding: 5px 200px 3px 0;
+  padding: 5px 200px 0 0;
 }
-div#footer .info .links {
+div#footer .info .first {
   border-bottom:1px dashed silver;
   padding-bottom:4px;
-  font-weight: bold;
 }
-div#footer .info .company {
+div#footer .info .second {
   padding-top: 5px;
 }
-div#footer .sponsor {
+div#footer .powered_by {
   position: absolute; top: 0px; right: 0px;
 }
 /* ----------------------------------- */

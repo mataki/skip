@@ -33,13 +33,11 @@ help_url:
   default: http://portal.openskip.org/                     # ヘルプのURL
 login_account:
   default: ログインID                                      # ログインアカウントの名称
-footer_link:                                               # フッターの１行目（ヘルプ・規約へのリンクなどを推奨）
+footer_first:                                              # フッターの１行目（ヘルプ・規約へのリンクなどを推奨）
   default: >-
-    <a onclick="open_site();" href="#">このサイトについて</a> - <a onclick="open_rule();" href="#">利用規約</a> - <a onclick="open_hiki();" href="#">Hiki記法</a>
-footer_contact:
-  default: お問い合わせはこちら                            # フッターの２列目（提供元への連絡先などを推奨）
-footer_copyright:
-  default: Since 2008 SKIP                                 # フッターの３列目（提供もとの記載などを推奨）
+    <b><a onclick="open_site();" href="#">このサイトについて</a> - <a onclick="open_rule();" href="#">利用規約</a> - <a onclick="open_hiki();" href="#">Hiki記法</a></b>
+footer_second:
+  default: お問い合わせはこちら | Since 2008 SKIP          # フッターの２列目（提供元への連絡先などを推奨）
 footer_image_link_url:
   format: url
   default: http://www.openskip.org/                        # フッター右側に表示する画像のリンクURL
