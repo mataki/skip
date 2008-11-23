@@ -114,7 +114,7 @@ class SearchController < ApplicationController
 
 private
   # 所属情報を取得するためのメソッド
-  # user_codeを渡すとSNSの所属情報と設定のアプリの所属情報を取得する
+  # user_codeを渡すと所属情報と設定のアプリの所属情報を取得する
   def belong_symbols user_code
     symbols = ['sid:allusers'] + login_user_symbols
 
