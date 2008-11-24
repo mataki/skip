@@ -18,7 +18,7 @@ class ServicesController < ActionController::Base
   skip_before_filter :sso
 
   include ForServicesModule
-  before_filter :check_secret_key, :except => [:search_conditions, :menu]
+  before_filter :check_secret_key, :except => [:search_conditions]
   after_filter :change_charset
 
   # ユーザに関連する情報を取得する
@@ -51,10 +51,6 @@ class ServicesController < ActionController::Base
 
   def retired_users
     render :text => diff_users('retired',params[:from_date])
-  end
-
-  # ログイン後の右上メニューとしてロードされるJavaScriptを返す
-  def menu
   end
 
 private

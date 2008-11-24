@@ -1,6 +1,30 @@
 <div id="header">
   <%= header_logo_link %>
-  <%= skip_menu_link %>
+
+<div id="menu">
+  <div class="item" style="color: black;">ログインID : <%= @user.code -%></div>
+  <% help_url = h(Admin::Setting.help_url) -%>
+  <% unless help_url.blank? -%>
+  <div class="item"><a href="<%= help_url %>" target="_blank">ヘルプ</a></div>
+  <% end -%>
+  <div class="item"><%= link_to "ログアウト", :controller => "/platform", :action => :logout, :only_path => false -%></div>
+  <div class="item" style="padding: 0;">
+  <select style="vertical-align:middle;" onchange="if (this.value != '') { window.open(this.value); }">
+    <option selected="selected" value="">リンク ... </option>
+      <% COMMON_MENUS[:menus].each do |menu| %>
+        <% if menu[:url] %>
+    <option value="<%= menu[:url] -%>">&nbsp;<%=h menu[:title] -%></option>
+        <% else %>
+    <option disabled="disabled" style="color: gray;">[<%=h menu[:title] -%>]</option>
+          <% menu[:links].each do |link| %>
+    <option value="<%= link[:url] -%>">&nbsp;<%=h link[:title] -%></option>
+          <% end %>
+        <% end %>
+      <% end %>
+  </select>
+  </div>
+  <br style="clear: left" />
+</div>
 
   <% if INITIAL_SETTINGS['full_text_search_setting'] %>
   <div id="search">
@@ -21,7 +45,7 @@
     <option selected="selected" value="<%= url_for({:controller => '/mypage', :action => 'group'}) -%>">参加グループへ移動 ... </option>
     <option disabled="disabled">---</option>
     <% @favorite_groups.each do |category| %>
-    <option disabled="disabled">[<%=h category[:name] -%>]</option>
+    <option disabled="disabled" style="color: gray;">[<%=h category[:name] -%>]</option>
       <% category[:groups].each do |group| %>
       <option value="<%= url_for({:controller => '/group', :gid => group.gid, :action => 'show'}) -%>">&nbsp;<%=h group.name -%></option>
       <% end %>

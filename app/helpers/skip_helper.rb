@@ -86,10 +86,6 @@ var platform_url_root = '#{root_url.chop}';
     "sub_window = window.open('#{url}', title, 'width=#{width},height=#{height},resizable=yes,scrollbars=yes');sub_window.focus();"
   end
 
-  def skip_menu_link
-    javascript_include_tag("/services/menu.js")
-  end
-
   def skip_footer_link
     <<-EOS
 <script language="JavaScript" type="text/javascript">
