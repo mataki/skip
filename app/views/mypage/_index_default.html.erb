@@ -81,7 +81,12 @@ div.top_info {
 </div>
 <% end %>
 
-<%= render :partial => "list_block", :locals => mail_your_messages if mail_your_messages[:pages].size > 0 %>
+<% if mail_your_messages[:pages].size > 0 %>
+<%= show_title_bar(mail_your_messages[:title_icon], mail_your_messages[:title_name], {:controller => 'mypage', :action => "index", :antenna_type => mail_your_messages[:id_name]}) -%>
+<%= render :partial => "list_block", :locals => mail_your_messages %>
+<% end %>
+
+<%= show_title_bar(questions[:title_icon], questions[:title_name], {:controller => 'mypage', :action => "index", :list_type => questions[:id_name]}) -%>
 <%= render :partial => "list_block", :locals => questions %>
 
 <%= skip_stylesheet_link_tag "jquery.ui.tabs.css" %>
@@ -91,9 +96,7 @@ $j(function() {
   $j('#tabs').show();
 });
 </script>
-<div style="position: relative; _width: 100%;">
-  <h2 class="topix_title"><%= icon_tag("page_copy") -%>みんなの記事</h2>
-</div>
+<%= show_title_bar("page_copy", "公開された記事", {:controller => 'search', :action => "entry_search"}) -%>
 <div id="tabs" style="margin: 0 5px 10px 10px; display: none;">
   <ul>
     <li><a href="#<%= access_blogs[:id_name] -%>"><span><%=h access_blogs[:title_name] -%></span></a></li>
@@ -115,11 +118,7 @@ $j(function() {
 <% end %>
 </div>
 
-<div id="recent_bookmarks" style="width:100%;">
-  <div style="position: relative; _width: 100%;">
-    <h2 class="topix_title"><%= icon_tag('asterisk_orange') -%>最新のブックマーク</h2>
-    <div style="position: absolute; top: 5px; right: 10px; font-size: 14px;"><%= link_to('[すべて見る]', :controller => 'bookmarks') -%></div>
-  </div>
+<%= show_title_bar("tag_blue", "最新のブックマーク", {:controller => 'bookmarks'}) -%>
 <% if bookmarks.size > 0 %>
   <div class="topix_body" id="bookmark_body">
   <% bookmarks.each do |bookmark| -%>
@@ -131,10 +130,8 @@ $j(function() {
   <% end -%>
   </div>
 <% end -%>
-</div>
 
 </div>
-
 <br style="clear: right;"/>
 
 <% if Admin::Setting.mypage_feed_settings.size > 0 %>

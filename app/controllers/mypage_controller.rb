@@ -719,13 +719,14 @@ private
     find_params[:conditions] << false << session[:user_id]
     find_params[:include] << :user_readings
     @mail_your_messages = {
-      :id_name => 'mail_your_messages',
+      :id_name => 'message',
       :title_icon => "email",
       :title_name => 'あなたへの連絡',
       :pages => BoardEntry.find(:all,
                                 :conditions=> find_params[:conditions],
                                 :order =>"last_updated DESC,board_entries.id DESC",
-                                :include => find_params[:include] | [ :user, :state ])
+                                :include => find_params[:include] | [ :user, :state ]),
+      :delete_categories => '[連絡]'
     }
 
     questions = find_questions_as_locals({:recent_day => recent_day, :per_page => 5}) # みんなからの質問！

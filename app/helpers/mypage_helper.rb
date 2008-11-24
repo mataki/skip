@@ -15,6 +15,16 @@
 
 module MypageHelper
 
+  # タイトルバーの表示
+  def show_title_bar(icon, label, all_url)
+    <<-EOS
+<div style="position: relative; _width: 100%;">
+  <h2 class="topix_title">#{icon_tag(icon) + h(label)}</h2>
+  <div style="position: absolute; top: 5px; right: 10px; font-size: 14px;">#{link_to('[すべて見る]', all_url)}</div>
+</div>
+    EOS
+  end
+
   # 送信先の加工
   def get_link_to_name(mail, item)
     item ? item_link_to(item) : h(mail.to_address_name)

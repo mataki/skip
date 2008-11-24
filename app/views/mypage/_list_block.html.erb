@@ -5,11 +5,6 @@
 
 <%= %(<div id="#{id_name}">) %>
 
-<div style="position: relative; _width: 100%;">
-  <h2 class="topix_title"><%= icon_tag(title_icon) -%><%=h title_name %></h2>
-  <div style="position: absolute; top: 5px; right: 10px; font-size: 14px;"><%= link_to('[すべて見る]', :controller => 'mypage', :action => "index", :list_type => id_name) -%></div>
-</div>
-
 <div class="topix_body" id="<%= id_name -%>_body">
 
 <% pages.each do |message| -%>

@@ -3,6 +3,7 @@
 
 <div id="menu">
   <div class="item" style="color: black;">ログインID : <%= @current_user.code -%></div>
+  <div class="item"><%= link_to "自分の管理", :controller => "/mypage", :action => :manage, :only_path => false -%></div>
   <% help_url = h(Admin::Setting.help_url) -%>
   <% unless help_url.blank? -%>
   <div class="item"><a href="<%= help_url %>" target="_blank">ヘルプ</a></div>
@@ -29,7 +30,7 @@
   <% if INITIAL_SETTINGS['full_text_search_setting'] %>
   <div id="search">
     <% form_tag({:controller => '/search', :action => 'full_text_search'},{:method => 'get'}) do -%>
-    <input type="text" size="35" onfocus="if(this.value=='検索したいキーワードをいれてください'){this.style.color='#000000'; this.value = ''}" onblur="if(this.value==''){this.style.color='#999999'; this.form.reset()}" style="color: rgb(153, 153, 153); font-size: 13px; border: 1px solid silver;" id="full_text_query" name="full_text_query" value="検索したいキーワードをいれてください" />
+    <input type="text" size="40" onfocus="if(this.value=='検索したいキーワードをいれてください'){this.style.color='#000000'; this.value = ''}" onblur="if(this.value==''){this.style.color='#999999'; this.form.reset()}" style="color: rgb(153, 153, 153); font-size: 13px; border: 1px solid silver;" id="full_text_query" name="full_text_query" value="検索したいキーワードをいれてください" />
     <%= submit_tag '検索' -%>
     <% end -%>
   </div>
