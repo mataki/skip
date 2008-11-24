@@ -2,6 +2,7 @@
   <%= header_logo_link %>
 
 <div id="menu">
+  <div class="item" style="color: black;">ログインID : <%= @current_user.code -%></div>
   <% help_url = h(Admin::Setting.help_url) -%>
   <% unless help_url.blank? -%>
   <div class="item"><a href="<%= help_url %>" target="_blank">ヘルプ</a></div>
