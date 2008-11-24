@@ -36,7 +36,7 @@ class GroupController < ApplicationController
                                         :order => "group_participations.updated_on DESC",
                                         :owned => false,
                                         :waiting => false
-    @recent_messages = BoardEntry.find_visible(5, login_user_symbols, @group.symbol)
+    @recent_messages = BoardEntry.find_visible(10, login_user_symbols, @group.symbol)
   end
 
   # tab_menu

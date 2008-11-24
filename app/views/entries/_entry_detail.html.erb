@@ -232,16 +232,21 @@ form.comment_input_form textarea{
 <div id="board_entry">
   <div class="header">
     <div class="control">
-      <div class="date"><%=h entry.diary_date %> <%=h entry.diary_author %> <span id="permalink"><%= link_to '[permalink]', :controller=> "board_entries", :action => "forward", :id => entry.id -%></span></div>
+      <div class="date"><%=h entry.diary_date %> <%=h entry.diary_author %>
+        <span id="permalink"><%= link_to "[page:#{entry.id}]", :controller=> "board_entries", :action => "forward", :id => entry.id -%></span>
+      </div>
       <div class="count">
         <span class="info"><%= get_entry_infos(entry) -%></span>
       </div>
-      <div class="buttons" id="entry_buttons"><span style="color: #000000;">アクション:<span>
+      <div class="buttons" id="entry_buttons">
+        <span style="color: #000000;">表示:<span>
         <% if editable -%>
           <a href="#" id="access_style_button"><%= icon_tag('group', :title => "アクセス履歴") %></a>
-          <%= link_to(icon_tag('page_edit', :title=>'編集'), :controller=> "edit", :action => "edit", :id => entry, :symbol => entry.symbol) %>
         <% end -%>
-          <%= link_to(icon_tag('transmit_go', :title=>'アンテナに追加'), {:controller => "antenna", :action => "select_antenna", :symbol => entry.symbol, :dummy => '.html'}, {:class => "nyroModal"}) %>
+        <a href="#" id="default_style_button"><%= icon_tag('page_white_text', :title => "ブログ表示") %></a>
+        <a href="#" id="source_style_button"><%= icon_tag('page_white_code', :title => "ソース表示") %></a>
+        <span style="color: #000000;">アクション:<span>
+        <%= link_to(icon_tag('page_edit', :title=>'編集'), :controller=> "edit", :action => "edit", :id => entry, :symbol => entry.symbol) if editable  %>
         <%= link_to(icon_tag('tag_blue_add', :title=>'ブックマークする'), {:controller => "bookmark", :action => "edit", :url => "/page/#{entry.id.to_s}", :title => entry.title, :dummy => '.html'}, {:class => "nyroModal"}) %>
         <%= link_to(icon_tag('control_play_blue', :title=>'スライドショー'), {:controller=> "monta", :action => "execute_monta", :id => entry}, :target=>"_blank") if entry.editor_mode == 'hiki' %>
         <%= link_to(icon_tag('zoom', :title=>'印刷表示'), {:controller=> "board_entries", :action => "large", :id => entry}, :target=>"_blank") %>
@@ -286,15 +291,6 @@ form.comment_input_form textarea{
   </div>
 </div>
 <div id="board_entry_control">
-  <span class="actions">
-    [
-    <span id="default_style_label">ブログ表示</span><a href="#" id="default_style_link" class="invisible">ブログ表示</a>
-     | <span id="source_style_label" class="invisible">ソース表示</span><a href="#" id="source_style_link">ソース表示</a>
-    <% if editable %>
-     | <span id="access_style_label" class="invisible">アクセス履歴</span><a href="#" id="access_style_link">アクセス履歴</a>
-    <% end %>
-    ]
-  </span>
   <span class="info">
     <% if bookmark_comments_count > 0 -%>
       <%= link_to("[被ブクマ:#{bookmark_comments_count}人]",{:controller =>'bookmark', :action=>'show', :uri => "/page/" + entry.id.to_s}) %>
@@ -376,21 +372,21 @@ $j(function(){
     });
 
     // ブログ表示リンククリック時
-    $j('#default_style_link')
+    $j('#default_style_button')
     .click(function() {
         changeStyleMenu('default');
         return false;
     });
 
     // ソース表示リンククリック時
-    $j('#source_style_link')
+    $j('#source_style_button')
     .click(function() {
         changeStyleMenu('source');
         return false;
     });
 
     // アクセス履歴リンククリック時
-    $j('#access_style_link, #access_style_button')
+    $j('#access_style_button')
     .click(function() {
         changeStyleMenu('access');
         return false;
