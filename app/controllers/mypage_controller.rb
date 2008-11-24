@@ -729,12 +729,12 @@ private
     }
 
     questions = find_questions_as_locals({:recent_day => recent_day, :per_page => 5}) # みんなからの質問！
-    access_blogs = find_access_blogs_as_locals({:per_page => 10}) # 最近の人気記事
-    recent_blogs = find_recent_blogs_as_locals({:per_page => 3} ) # 最新のブログの記事
+    access_blogs = find_access_blogs_as_locals({:per_page => 8}) # 最近の人気記事
+    recent_blogs = find_recent_blogs_as_locals({:per_page => 8} ) # 最新のブログの記事
     recent_bbs = [] # 最新の掲示板の記事(全体公開のみ)
     gid_by_category = Group.gid_by_category
     GroupCategory.all.each do |category| # 表示順序の制御
-      options = { :group_symbols => gid_by_category[category.id], :per_page => 3 }
+      options = { :group_symbols => gid_by_category[category.id], :per_page => 8 }
       recent_bbs << find_recent_bbs_as_locals(category.code.downcase, options)
     end
     #最近のブックマーク
@@ -828,8 +828,8 @@ private
                                 :include => find_params[:include] | [ :user, :state ])
     locals = {
       :id_name => 'recent_blogs',
-      :title_icon => "page_copy",
-      :title_name => 'ユーザの記事',
+      :title_icon => "user",
+      :title_name => 'ユーザ',
       :pages => pages,
       :pages_obj => pages_obj,
       :per_page => options[:per_page]
@@ -839,7 +839,7 @@ private
   # BBS記事一覧を取得するメソッドを動的に生成(partial用のオプションを返す)
   def find_recent_bbs_as_locals code, options = {}
     category = GroupCategory.find_by_code(code)
-    title   = "グループ（#{category.name}）の記事"
+    title   = category.name
     id_name = category.code.downcase
     pages_obj, pages = nil, []
 
@@ -855,6 +855,7 @@ private
     end
     locals = {
       :id_name => id_name,
+      :title_icon => "group",
       :title_name => title,
       :pages => pages,
       :pages_obj => pages_obj,

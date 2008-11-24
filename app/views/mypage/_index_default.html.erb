@@ -83,18 +83,44 @@ div.top_info {
 
 <%= render :partial => "list_block", :locals => mail_your_messages if mail_your_messages[:pages].size > 0 %>
 <%= render :partial => "list_block", :locals => questions %>
-<%= render :partial => "list_block", :locals => access_blogs if access_blogs[:pages].size > 0 %>
-<%= render :partial => "list_block", :locals => recent_blogs %>
-<% recent_bbs.each do |bbs| %>
-  <%= render :partial => "list_block", :locals => bbs %>
-<% end %>
 
-<% if bookmarks.size > 0 %>
+<%= skip_stylesheet_link_tag "jquery.ui.tabs.css" %>
+<script type="text/javascript">
+$j(function() {
+  $j('#tabs > ul').tabs();
+  $j('#tabs').show();
+});
+</script>
+<div style="position: relative; _width: 100%;">
+  <h2 class="topix_title"><%= icon_tag("page_copy") -%>みんなの記事</h2>
+</div>
+<div id="tabs" style="margin: 0 5px 10px 10px; display: none;">
+  <ul>
+    <li><a href="#<%= access_blogs[:id_name] -%>"><span><%=h access_blogs[:title_name] -%></span></a></li>
+    <li><a href="#<%= recent_blogs[:id_name] -%>"><span><%=h recent_blogs[:title_name] -%></span></a></li>
+<% recent_bbs.each do |bbs| %>
+    <li><a href="#<%= bbs[:id_name] -%>"><span><%=h bbs[:title_name] -%></span></a></li>
+<% end %>
+  </ul>
+  <div id="<%= access_blogs[:id_name] -%>">
+    <%= render :partial => "list_block", :locals => access_blogs %>
+  </div>
+  <div id="<%= recent_blogs[:id_name] -%>">
+    <%= render :partial => "list_block", :locals => recent_blogs %>
+  </div>
+<% recent_bbs.each do |bbs| %>
+  <div id="<%= bbs[:id_name] -%>">
+    <%= render :partial => "list_block", :locals => bbs %>
+  </div>
+<% end %>
+</div>
+
 <div id="recent_bookmarks" style="width:100%;">
   <div style="position: relative; _width: 100%;">
     <h2 class="topix_title"><%= icon_tag('asterisk_orange') -%>最新のブックマーク</h2>
     <div style="position: absolute; top: 5px; right: 10px; font-size: 14px;"><%= link_to('[すべて見る]', :controller => 'bookmarks') -%></div>
   </div>
+<% if bookmarks.size > 0 %>
   <div class="topix_body" id="bookmark_body">
   <% bookmarks.each do |bookmark| -%>
     <div class="page_line">
@@ -104,8 +130,8 @@ div.top_info {
     </div>
   <% end -%>
   </div>
+<% end -%>
 </div>
-<% end %>
 
 </div>
 

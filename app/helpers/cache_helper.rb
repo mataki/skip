@@ -17,8 +17,10 @@ module CacheHelper
   PROTOTYPE_LIBRARY = {:name => 'prototype.all', :libs => ['prototype']}
 
   JQUERY_LIBRARY = {:name => 'jquery.all',
-    :libs => ['jquery', 'jquery.color', 'jquery.nyroModal', 'jquery.bgiframe',
-              'jquery.autocomplete', 'jquery.jTagging', 'jquery.jgrow', 'jquery.cluetip']}
+    :libs => ['jquery', 'jquery.cookie', 'jquery.color', 'jquery.nyroModal', 'jquery.bgiframe',
+              'jquery.autocomplete', 'jquery.jTagging', 'jquery.jgrow', 'jquery.cluetip',
+              'ui.core', 'ui.tabs'
+             ]}
 
   STYLE_LIBRARY = {:name => 'skip.style',
     :libs => ['skip/style', 'style', 'skins-base']}
