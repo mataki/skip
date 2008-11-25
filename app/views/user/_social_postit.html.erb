@@ -16,7 +16,7 @@
 
 <% if !(tag = h(params[:selected_tag])).blank? -%>
 <% text = "他に[#{tag}]の付いた人を探す" %>
-<div style="text-align: right;"><%= link_to text, {:controller => "bookmarks", :action => "search", :type => "user", :tag_words => "#{tag}"} -%></div>
+<div style="text-align: right;"><%= link_to text, {:controller => "bookmarks", :type => "user", :tag_words => "#{tag}"} -%></div>
 <% end -%>
 
 <ul class="postit_list" style="margin: 0 0 5px 20px;">
