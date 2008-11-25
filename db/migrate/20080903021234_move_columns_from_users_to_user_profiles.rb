@@ -10,15 +10,15 @@ class MoveColumnsFromUsersToUserProfiles < ActiveRecord::Migration
 
     # データ移行
     User.transaction do
-      User.all.each do |user|
+      User.find_without_retired_skip(:all).each do |user|
         attrbutes = {:email => user.email, :section => user.section}
-        if  user.unused?
+        if user.user_profile
+          attrbutes.merge!({:extension => user.extension, :self_introduction => user.introduction})
+          user.user_profile.update_attributes!(attrbutes)
+        else
           user_profile = UserProfile.new(attrbutes.merge!({:disclosure => true}))
           user.user_profile = user_profile
           user.save!
-        else
-          attrbutes.merge!({:extension => user.extension, :self_introduction => user.introduction})
-          user.user_profile.update_attributes!(attrbutes)
         end
       end
     end
