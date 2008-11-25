@@ -35,7 +35,7 @@ module Admin::SettingsHelper
 
   def settings_label_with_password_field_tag symbolize_key
     label(Admin::Setting.name, symbolize_key) +
-      password_field_tag("settings[#{symbolize_key}", Admin::Setting.send(symbolize_key.to_s), :id => "settings_#{symbolize_key}", :size => 60) +
+      password_field_tag("settings[#{symbolize_key}]", Admin::Setting.send(symbolize_key.to_s), :id => "settings_#{symbolize_key}", :size => 60) +
       help_icon_tag(:content => _(Admin::Setting.name + '|' + (symbolize_key.to_s + '_description').humanize))
   end
 end
