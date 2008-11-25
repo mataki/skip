@@ -89,7 +89,7 @@ private
   end
 
   def site_url
-    root_url(:host => Admin::Setting.host_and_port_by_initial_settings_default)
+    root_url(:protocol => Admin::Setting.protocol_by_initial_settings_default, :host => Admin::Setting.host_and_port_by_initial_settings_default)
   end
 
   def contact_addr
