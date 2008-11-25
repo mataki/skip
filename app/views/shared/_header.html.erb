@@ -2,7 +2,7 @@
   <%= header_logo_link %>
 
 <div id="menu">
-  <div class="item" style="color: black;">ログインID : <%= @current_user.code -%></div>
+  <div class="item" style="color: black;"><%= user_name_mode?(:code) ? _('Admin::User|Code') + " : " + h(@current_user.code) : _('Admin::UserUid|Uid') + " : " + h(@current_user.uid) -%></div>
   <div class="item"><%= link_to "自分の管理", :controller => "/mypage", :action => :manage, :only_path => false -%></div>
   <% help_url = h(Admin::Setting.help_url) -%>
   <% unless help_url.blank? -%>
