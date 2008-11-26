@@ -895,7 +895,8 @@ private
   end
 
   def unify_feed_form feed, title = nil, limit = nil
-    feed = feed.to_rss("2.0") if feed.is_a?(RSS::Atom::Feed)
+    feed = feed.to_rss("2.0") if !feed.is_a?(RSS::Rss) and feed.is_a?(RSS::Atom::Feed)
+
     feed.channel.title = title if title
     limit = (limit || Admin::Setting.mypage_feed_default_limit)
     feed.items.slice!(limit..-1) if feed.items.size > limit

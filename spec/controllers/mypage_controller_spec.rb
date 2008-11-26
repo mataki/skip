@@ -198,10 +198,12 @@ describe MypageController, "#unify_feed_form" do
     @limit = 1
   end
 
+  # 1.8.6系で実行できないためAtomを利用できるバージョンでのみテストする
   if defined?(RSS::Atom::Feed)
     describe "feedがRSS:Rssの場合" do
       before do
         @channel.stub!(:title=)
+        @feed.stub!(:is_a?).with(RSS::Rss).and_return(true)
       end
       it "titleが設定されること" do
         @channel.should_receive(:title=).with(@title)
@@ -211,12 +213,17 @@ describe MypageController, "#unify_feed_form" do
         feed = controller.send(:unify_feed_form, @feed, @title, @limit)
         feed.items.size.should == @limit
       end
+      it "is_a?(RSS::Atom::Feed)が呼ばれないこと" do
+        @feed.should_not_receive(:is_a?).with(RSS::Atom::Feed)
+        controller.send(:unify_feed_form, @feed, @title)
+      end
     end
     describe "feedがRSS::Atomの場合" do
       describe "Atomが利用できるライブラリのバージョンの場合" do
         before do
           @channel.stub!(:title=)
 
+          @feed.stub!(:is_a?).with(RSS::Rss).and_return(false)
           @feed.stub!(:is_a?).with(RSS::Atom::Feed).and_return(true)
           @feed.stub!(:to_rss).with("2.0").and_return(@feed)
         end
@@ -234,17 +241,18 @@ describe MypageController, "#unify_feed_form" do
         end
       end
     end
-  end
-  describe "Atomが利用できないライブラリのバージョンの場合" do
-    before do
-      @feed.stub!(:is_a?).and_raise(NameError.new("uninitialized constant RSS::Atom", "RSS::Atom::Feed"))
-    end
-    it "ログにエラーが表示されること" do
-      controller.logger.should_receive(:error).with("[Error] Rubyのライブラリが古いためAtom形式を変換できませんでした。")
-      controller.send(:unify_feed_form, @feed)
-    end
-    it "nilが返されること" do
-      controller.send(:unify_feed_form, @feed).should be_nil
+    describe "Atomが利用できないライブラリのバージョンでAtomを読み込んだ場合" do
+      before do
+        @feed.stub!(:is_a?).with(RSS::Rss).and_return(false)
+        @feed.stub!(:is_a?).with(RSS::Atom::Feed).and_raise(NameError.new("uninitialized constant RSS::Atom", "RSS::Atom::Feed"))
+      end
+      it "ログにエラーが表示されること" do
+        controller.logger.should_receive(:error).with("[Error] Rubyのライブラリが古いためAtom形式を変換できませんでした。")
+        controller.send(:unify_feed_form, @feed)
+      end
+      it "nilが返されること" do
+        controller.send(:unify_feed_form, @feed).should be_nil
+      end
     end
   end
 end
