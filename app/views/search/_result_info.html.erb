@@ -1,5 +1,5 @@
 <div class="g_result_info">
 <b><%=h query -%></b> の検索結果 約<b><%= max_count -%></b>件中 <b><%= start_count -%></b> - <b><%= end_count -%></b> 件目
-<%= link_to_search("[Prev]", query, prev_offset, params) if prev_offset -%>
-<%= link_to_search("[Next]", query, next_offset, params) if next_offset -%>
+<%= link_to_search("[前へ]", query, prev_offset, params) if prev_offset -%>
+<%= link_to_search("[次へ]", query, next_offset, params) if next_offset -%>
 </div>
