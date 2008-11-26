@@ -317,7 +317,7 @@ private
   # 独自のバリデーション（成功ならtrue）
   def validate_params params, entry
     # 公開範囲のタイプ
-    unless %(public, private, protected).include? params[:publication_type]
+    unless %w(public private protected).include? params[:publication_type]
       entry.errors.add nil, "公開範囲の指定が不正です"
     end
     # 公開範囲の値
