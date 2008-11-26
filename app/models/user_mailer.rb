@@ -14,6 +14,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class UserMailer < ActionMailer::Base
+  helper :initial_settings
   def sent_contact(recipient, user_name, entry_url, entry_title)
     if recipient.include? ","
       @bcc        = recipient
@@ -78,7 +79,7 @@ class UserMailer < ActionMailer::Base
     @from       = from
     @send_on    = Time.now
     @headers    = {}
-    @body       = {:signup_url => signup_url, :header => header, :footer => footer}
+    @body       = {:signup_url => signup_url, :site_url => site_url, :header => header, :footer => footer}
   end
 
 private
