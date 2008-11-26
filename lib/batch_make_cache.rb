@@ -146,7 +146,7 @@ class BatchMakeCache < BatchBase
         body_lines << h(profile.birth_month_day) + " - " + h(profile.blood)
         body_lines << h(profile.hometown_name) + " - " + h(profile.alma_mater)
         body_lines << h(profile.address)
-        body_lines << h(profile.hobby.chop.gsub(/\,/, ' , '))
+        body_lines << h(profile.hobby.chop.gsub(/\,/, ' , ')) if profile.hobby
         body_lines << profile.introduction
         body_lines << profile.self_introduction
       end
