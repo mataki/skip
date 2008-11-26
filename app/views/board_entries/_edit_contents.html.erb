@@ -10,7 +10,7 @@ table.input_table textarea {
   </div>
 
   <div id="contents_richtext_space" style="display: none;">
-    <label for="contents"><%= text_area_tag 'contents_richtext', h(params[:contents_richtext]), :cols => 90, :rows => 20 %></label>
+    <label for="contents"><%= text_area_tag 'contents_richtext', h(sanitize_style_with_whitelist(params[:contents_richtext])), :cols => 90, :rows => 20 %></label>
   </div>
   <div id="contents_hiki_space" style="display: none;">
     <%= link_to_hiki_help %> <a href="#" id="hiki_preview_link">【プレビューで確認する】</a>

@@ -194,8 +194,12 @@ module ApplicationHelper
   # リッチテキストの表示
   def render_richtext(text, owner_symbol = nil)
     content = parse_permalink(text, owner_symbol)
+    "<div class='rich_style'>#{sanitize_style_with_whitelist(content)}</div>"
+  end
+
+  def sanitize_style_with_whitelist(content)
     allow = HTML::WhiteListSanitizer.allowed_attributes.dup.add("style")
-    "<div class='rich_style'>#{sanitize(content, :attributes=>allow)}</div>"
+    sanitize(content, :attributes => allow)
   end
 
   # ホームのあなたへの連絡、みんなへの連絡の重要マークをつける
