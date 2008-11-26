@@ -45,14 +45,15 @@ table.normal {
   <tr>
     <th width="100px"><label for="user_uid_uid"><%= _('user name') %></label></th>
   <% if is_new -%>
-    <td><%= text_field 'user_uid', 'uid', {:tabindex => (tabindex += 1), :disabled => !INITIAL_SETTINGS['username_use_setting']} %>
+    <td><%= text_field 'user_uid', 'uid', {:tabindex => (tabindex += 1)} %>
       <span id="uid_result" style="margin-left:3px;color:gray;font-size:10px"></span>
       <span id="indicator" style="display:none;"><%= skip_image_tag 'indicator.gif' %></span>
       <div class="desc">
-        <p>4桁以上が必要です。半角英数の他にハイフン'-',アンダーバー'_'が利用できます。</p>
+        <p>「ユーザ名」には、あなたをわかりやすく表す4桁以上の半角英数字を入力して下さい。(例えばメールアドレスのアカウント名のような値)</p>
+        <p>半角英数字の他に半角のハイフン'-'、アンダーバー'_'も利用することが出来ます。</p>
+        <p>また、<%= h Admin::Setting.login_account %>と同じ値にすることは出来ません。</p>
         <p>この「ユーザ名」はシステムの中で、あなたのことをブログの記事中などで簡易的に指定する際に使います。</p>
         <p>その特性上、この「ユーザ名」は他のユーザに知られることになりますので、不用意な値は指定しないようご注意ください。</p>
-        <p>よくわからない場合、メールアドレスのアカウント名（@の左側）と同じ値でかまいません。</p>
       </div>
   <% else -%>
     <td><%= h @user.uid %></td>
