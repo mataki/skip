@@ -250,6 +250,7 @@ describe User, '#issue_activation_code' do
   before do
     @user = create_user
     @now = Time.local(2008, 11, 1)
+    User.stub!(:activation_lifetime).and_return(2)
     Time.stub!(:now).and_return(@now)
   end
   it 'activation_tokenに値が入ること' do
@@ -257,10 +258,10 @@ describe User, '#issue_activation_code' do
       @user.issue_activation_code
     end.should change(@user, :activation_token)
   end
-  it 'activation_token_expires_atが24時間後となること' do
+  it 'activation_token_expires_atが48時間後となること' do
     lambda do
       @user.issue_activation_code
-    end.should change(@user, :activation_token_expires_at).from(nil).to(@now.since(24.hour))
+    end.should change(@user, :activation_token_expires_at).from(nil).to(@now.since(48.hour))
   end
 end
 

@@ -57,6 +57,8 @@ class User < ActiveRecord::Base
   N_('User|Disclosure|true')
   N_('User|Disclosure|false')
 
+  ACTIVATION_LIFETIME = 5
+
   def to_s
     return 'uid:' + uid.to_s + ', name:' + name.to_s
   end
@@ -298,13 +300,17 @@ class User < ActiveRecord::Base
 
   def issue_activation_code
     self.activation_token = self.class.make_token
-    self.activation_token_expires_at = Time.now.since(24.hour)
+    self.activation_token_expires_at = Time.now.since(self.class.activation_lifetime.day)
   end
 
   def activate!
     self.activation_token = nil
     self.activation_token_expires_at = nil
     self.save!
+  end
+
+  def self.activation_lifetime
+    ACTIVATION_LIFETIME
   end
 
   def within_time_limit_of_activation_token?
