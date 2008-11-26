@@ -228,11 +228,6 @@ class User < ActiveRecord::Base
     user_uid ? user_uid.uid : nil
   end
 
-  # uidかe-maiかを判断し、適切なユーザを返す
-  def self.find_by_login_key login_key
-    return login_key.include?('@') ? User.find_by_email(login_key) : User.find_by_uid(login_key)
-  end
-
   # プロフィールを返す（プロパティでキャッシュする）
   def profile
     unless @profile
