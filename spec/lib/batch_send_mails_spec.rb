@@ -51,51 +51,68 @@ describe BatchSendMails, '#send_notice' do
         @user.stub!(:retired?).and_return(false)
         User.stub!(:find).and_return(@user)
       end
-      describe '送信先ユーザ(to_address)が退職している場合' do
+      describe '送信先アドレスが見つからない場合' do
         before do
-          to_user = stub_model(User)
-          to_user.stub!(:retired?).and_return(true)
-          to_user_profile = stub_model(UserProfile)
-          to_user_profile.stub!(:user).and_return(to_user)
-          UserProfile.stub!(:find_by_email).and_return(to_user_profile)
+          UserProfile.stub!(:find_by_email).and_return(nil)
         end
-        it '対象のMailsテーブルのレコードが送信済みとなること' do
+        it "対象のMailsテーブルのレコードが送信済みになること" do
           @mail.should_receive(:update_attribute).with(:send_flag,true)
           @sender.send_notice
         end
-        it '送信先ユーザへメールが送信されないこと' do
+        it '送信元ユーザからのメールが送信されないこと' do
           @mail.stub!(:update_attribute).with(:send_flag,true)
           ActionMailer::Base.deliveries.size.should == 0
           @sender.send_notice
         end
       end
-      describe '送信先ユーザ(to_address)が退職していない場合' do
-        before do
-          to_user = stub_model(User)
-          to_user.stub!(:retired?).and_return(false)
-          to_user_profile = stub_model(UserProfile)
-          to_user_profile.stub!(:user).and_return(to_user)
-          UserProfile.stub!(:find_by_email).and_return(to_user_profile)
-        end
-        describe BatchSendMails, "送信元ユーザの記事がある場合" do
+      describe '送信先アドレスが見つかる場合' do
+        describe '送信先ユーザ(to_address)が退職している場合' do
           before do
-            @board_entry = mock_model(BoardEntry, :id => 1, :title => "title")
-            BoardEntry.should_receive(:find).and_return(@board_entry)
+            to_user = stub_model(User)
+            to_user.stub!(:retired?).and_return(true)
+            to_user_profile = stub_model(UserProfile)
+            to_user_profile.stub!(:user).and_return(to_user)
+            UserProfile.stub!(:find_by_email).and_return(to_user_profile)
           end
-          it "メールが送信される" do
-            UserMailer.should_receive(:deliver_sent_contact).with(@mail.to_address, @user.name, "#{Admin::Setting.protocol_by_initial_settings_default}#{Admin::Setting.host_and_port_by_initial_settings_default}/page/1", @board_entry.title)
+          it '対象のMailsテーブルのレコードが送信済みとなること' do
+            @mail.should_receive(:update_attribute).with(:send_flag,true)
             @sender.send_notice
           end
-        end
-        describe BatchSendMails, "送信元ユーザの記事がない場合" do
-          before do
-            BoardEntry.should_receive(:find).and_return(nil)
-          end
-          it "メールが送信されない" do
-            @sender.send_notice
+          it '送信先ユーザへメールが送信されないこと' do
+            @mail.stub!(:update_attribute).with(:send_flag,true)
             ActionMailer::Base.deliveries.size.should == 0
+            @sender.send_notice
           end
         end
+        describe '送信先ユーザ(to_address)が退職していない場合' do
+          before do
+            to_user = stub_model(User)
+            to_user.stub!(:retired?).and_return(false)
+            to_user_profile = stub_model(UserProfile)
+            to_user_profile.stub!(:user).and_return(to_user)
+            UserProfile.stub!(:find_by_email).and_return(to_user_profile)
+          end
+          describe BatchSendMails, "送信元ユーザの記事がある場合" do
+            before do
+              @board_entry = mock_model(BoardEntry, :id => 1, :title => "title")
+              BoardEntry.should_receive(:find).and_return(@board_entry)
+            end
+            it "メールが送信される" do
+              UserMailer.should_receive(:deliver_sent_contact).with(@mail.to_address, @user.name, "#{Admin::Setting.protocol_by_initial_settings_default}#{Admin::Setting.host_and_port_by_initial_settings_default}/page/1", @board_entry.title)
+              @sender.send_notice
+            end
+          end
+          describe BatchSendMails, "送信元ユーザの記事がない場合" do
+            before do
+              BoardEntry.should_receive(:find).and_return(nil)
+            end
+            it "メールが送信されない" do
+              @sender.send_notice
+              ActionMailer::Base.deliveries.size.should == 0
+            end
+          end
+        end
+
       end
     end
   end
