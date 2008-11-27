@@ -109,11 +109,11 @@ default: &default
   # 全文検索に関する設定
   # ================================================================================================
   full_text_search_setting: false                                   # 全文検索入力欄の表示制御（falseの場合、下記の設定不要）
-  estraier_url: http://localhost:1987/node/node1                    # hyper estraierの検索ノードのURL
+  estraier_url: http://localhost:1978/node/node1                    # hyper estraierの検索ノードのURL
   search_apps:
     skip:
-      cache:  localhost/cache_skip
-      meta:  /data/caches/skip_meta
+      cache:  localhost:3000/cache
+      meta:  /skip_root/tmp/cache_meta
       condition_js: http://localhost:3000/services/search_conditions.js
       title: SKIP
       order: 1
