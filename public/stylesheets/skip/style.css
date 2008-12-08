@@ -251,3 +251,11 @@ div.errorExplanation li {
 .invisible {
   display: none;
 }
+/* グローバルナビ */
+#global_navi {
+ text-align: right;
+ margin: 0;
+ padding: 5px;
+ border-bottom: 1px dashed silver;
+ background-image: url(./../../images/skip/gradient.png);
+}
