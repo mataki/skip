@@ -41,9 +41,7 @@ class ImageController < ApplicationController
     # ver.0.9時点では、pathは、"/board_entries/#{user_id}/#{entry_id}_ファイル名"で構成
     if content == 'board_entries' && /\d*/ =~ user_id
       if entry_id = file_path.scan(/^(\d*)_[^\/]*\.\w*/)
-        return BoardEntry.find(entry_id.to_s).entry_publications.any? do |publication|
-          [session[:user_symbol], Symbol::SYSTEM_ALL_USER].include? publication.symbol
-        end
+        return BoardEntry.find(entry_id.to_s).publicate? login_user_symbols
       end
     end
     return false
