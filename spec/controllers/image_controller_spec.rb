@@ -37,3 +37,29 @@ describe ImageController, "GET #show" do
     it { response.body.should == "read" }
   end
 end
+
+describe ImageController, '#valid_params_and_authorize?' do
+  describe '正常に解析できる引数の場合' do
+    before do
+      @content, @user_id, @file_path = ['board_entries', '1', 'skip.png']
+      @board_entry = stub_model(BoardEntry)
+      BoardEntry.stub!(:find).and_return(@board_entry)
+    end
+    describe '対象エントリに対する閲覧権限がある場合' do
+      before do
+        @board_entry.should_receive(:publicate?).and_return(true)
+      end
+      it 'trueが返却されること' do
+        controller.send!(:valid_params_and_authorize?, @content, @user_id, @file_path).should be_true
+      end
+    end
+    describe '対象エントリに対する閲覧権限がない場合' do
+      before do
+        @board_entry.should_receive(:publicate?).and_return(false)
+      end
+      it 'falseが返却されること' do
+        controller.send!(:valid_params_and_authorize?, @content, @user_id, @file_path).should be_false
+      end
+    end
+  end
+end
