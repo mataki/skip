@@ -116,6 +116,10 @@ class UserProfileMaster < ActiveRecord::Base
       value.errors.add_to_base(_("%{name} は必須です") % { :name => master.name }) if master.required and value.value.blank?
       value.errors.add_to_base(_("%{name} は選択される値以外のものが設定されています") % { :name => master.name }) unless master.option_array_with_blank.include?(value.value)
     end
+
+    def need_option_values?
+      false
+    end
   end
 
   class TextFieldProcesser < InputTypeProcesser
@@ -138,6 +142,10 @@ class UserProfileMaster < ActiveRecord::Base
       end
       str << content_tag(:a, _("uncheck selected"), :target => "profile_value[#{master.id}]", :class => "cancel_radio") unless master.required
       str
+    end
+
+    def need_option_values?
+      true
     end
   end
 
@@ -170,6 +178,10 @@ class UserProfileMaster < ActiveRecord::Base
         return
       end
       value.errors.add_to_base(_("%{name} は4桁の数値で入力して下さい") % { :name => master.name }) unless years(master).include?(value.value)
+    end
+
+    def need_option_values?
+      true
     end
 
     private
@@ -210,6 +222,10 @@ class UserProfileMaster < ActiveRecord::Base
     def to_edit_html(master, value)
       value_str = value ? value.value : ""
       select_tag("profile_value[#{master.id}]", options_for_select(master.option_array_with_blank, value_str))
+    end
+
+    def need_option_values?
+      true
     end
 
     alias :validate :option_value_validate
@@ -256,6 +272,10 @@ class UserProfileMaster < ActiveRecord::Base
         end
         value.value = value_arr.join(',') if value_arr.is_a?(Array)
       end
+    end
+
+    def need_option_values?
+      true
     end
   end
 

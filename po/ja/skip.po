@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-12-11 10:50+0900\n"
+"POT-Creation-Date: 2008-12-11 15:15+0900\n"
 "PO-Revision-Date: 2008-12-09 18:49+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -55,14 +55,18 @@ msgstr "%{model}を削除しました。"
 msgid "%{model} was successfully updated."
 msgstr "%{model}の更新に成功しました。"
 
+#: app/models/user_profile_master.rb:251
+msgid "%{name} に不正な形式が設定されています"
+msgstr ""
+
 #: app/models/user_profile_master.rb:172
 msgid "%{name} は4桁の数値で入力して下さい"
 msgstr ""
 
 #: app/models/user_profile_master.rb:112 app/models/user_profile_master.rb:116
 #: app/models/user_profile_master.rb:126 app/models/user_profile_master.rb:169
-#: app/models/user_profile_master.rb:253 app/models/user_profile_master.rb:280
-#: app/models/user_profile_master.rb:299
+#: app/models/user_profile_master.rb:249 app/models/user_profile_master.rb:271
+#: app/models/user_profile_master.rb:290
 msgid "%{name} は必須です"
 msgstr ""
 
@@ -70,12 +74,12 @@ msgstr ""
 msgid "%{name} は数字かハイフンで入力してください"
 msgstr ""
 
-#: app/models/user_profile_master.rb:303
+#: app/models/user_profile_master.rb:294
 msgid "%{name} は正しい日付形式で入力して下さい"
 msgstr ""
 
-#: app/models/user_profile_master.rb:117 app/models/user_profile_master.rb:256
-#: app/models/user_profile_master.rb:283
+#: app/models/user_profile_master.rb:117 app/models/user_profile_master.rb:255
+#: app/models/user_profile_master.rb:274
 msgid "%{name} は選択される値以外のものが設定されています"
 msgstr ""
 
@@ -879,7 +883,7 @@ msgstr "説明"
 
 #: app/models/admin/user_profile_master_category.rb:23
 msgid "Admin::UserProfileMasterCategory|Description description"
-msgstr "このプロフィールカテゴリについての説明を入力して下さい。"
+msgstr "このプロフィールカテゴリについての説明を入力して下さい。入力した内容はプロフィール編集画面においてこのプロフィールカテゴリの表示名の右側に補足説明として表示されるようになります。"
 
 #: app/models/admin/user_profile_master_category.rb:18
 msgid "Admin::UserProfileMasterCategory|Name"
@@ -895,15 +899,18 @@ msgstr "並び順"
 
 #: app/models/admin/user_profile_master_category.rb:21
 msgid "Admin::UserProfileMasterCategory|Sort order description"
-msgstr "このプロフィールカテゴリの並び順を入力して下さい。"
+msgstr "このプロフィールカテゴリの並び順を入力して下さい。値が小さいほど上に表示されるプロフィールカテゴリとなります。"
 
-#: app/models/admin/user_profile_master.rb:29
+#: app/models/admin/user_profile_master.rb:38
 msgid "Admin::UserProfileMaster|Description"
 msgstr "説明"
 
-#: app/models/admin/user_profile_master.rb:30
+#: app/models/admin/user_profile_master.rb:39
 msgid "Admin::UserProfileMaster|Description description"
-msgstr "このプロフィール項目についての説明を入力して下さい。"
+msgstr ""
+"このプロフィール項目についての説明を入力することができます。説明を入力する"
+"と、プロフィール編集画面においてヘルプアイコンが表示されるようになり、マウス"
+"オーバーすることで説明が表示されます。"
 
 #: app/models/admin/user_profile_master.rb:21
 msgid "Admin::UserProfileMaster|Input type"
@@ -928,9 +935,46 @@ msgstr "このプロフィール項目の表示名を入力して下さい。"
 msgid "Admin::UserProfileMaster|Option values"
 msgstr "選択値"
 
+#: app/models/admin/user_profile_master.rb:34
+msgid "Admin::UserProfileMaster|Option values description|appendable_select"
+msgstr "入力する必要はありません。"
+
+#: app/models/admin/user_profile_master.rb:35
+msgid "Admin::UserProfileMaster|Option values description|check_box"
+msgstr "選択可能な値を半角カンマ(,)区切りで入力して下さい。(例:映画,スポーツ,インターネット) "
+
+#: app/models/admin/user_profile_master.rb:37
+msgid "Admin::UserProfileMaster|Option values description|datepicker"
+msgstr "入力する必要はありません。"
+
+#: app/models/admin/user_profile_master.rb:29
+msgid ""
+"Admin::UserProfileMaster|Option values description|number_and_hyphen_only"
+msgstr "入力する必要はありません。"
+
+#: app/models/admin/user_profile_master.rb:36
+msgid "Admin::UserProfileMaster|Option values description|prefecture_select"
+msgstr "入力する必要はありません。"
+
+#: app/models/admin/user_profile_master.rb:31
+msgid "Admin::UserProfileMaster|Option values description|radio"
+msgstr "選択可能な値を半角カンマ(,)区切りで入力して下さい。(例:男性,女性)"
+
+#: app/models/admin/user_profile_master.rb:30
+msgid "Admin::UserProfileMaster|Option values description|rich_text"
+msgstr "入力する必要はありません。"
+
+#: app/models/admin/user_profile_master.rb:33
+msgid "Admin::UserProfileMaster|Option values description|select"
+msgstr "選択可能な値を半角カンマ(,)区切りで入力して下さい。(例:A型,B型,AB型,O型)"
+
 #: app/models/admin/user_profile_master.rb:28
-msgid "Admin::UserProfileMaster|Option values description"
-msgstr "このプロフィール項目の選択値を入力して下さい。"
+msgid "Admin::UserProfileMaster|Option values description|text_field"
+msgstr "入力する必要はありません。"
+
+#: app/models/admin/user_profile_master.rb:32
+msgid "Admin::UserProfileMaster|Option values description|year_select"
+msgstr "選択可能な年号の範囲を半角ハイフン(-)区切りで入力することが出来ます。例えば'1980-2000'と入力すると1980年から2000年までを選択可能なセレクトボックスとなります。また、ハイフンの前後を省略することが出来ます。省略した場合は今年となります。例えば今年が2008年の場合、'1980-'と入力すると1980年から2008年までを選択可能なセレクトボックスとなります。未入力の場合は今年のみ選択可能なセレクトボックスとなります。"
 
 #: app/models/admin/user_profile_master.rb:23
 msgid "Admin::UserProfileMaster|Required"
@@ -938,7 +982,9 @@ msgstr "必須/任意"
 
 #: app/models/admin/user_profile_master.rb:24
 msgid "Admin::UserProfileMaster|Required description"
-msgstr "このプロフィール項目が必須入力か任意入力か選択して下さい。"
+msgstr ""
+"このプロフィール項目の入力が必須の場合はチェックして下さい。必須ではない場合"
+"はチェックを外して下さい。"
 
 #: app/models/admin/user_profile_master.rb:25
 msgid "Admin::UserProfileMaster|Sort order"
@@ -946,7 +992,7 @@ msgstr "並び順"
 
 #: app/models/admin/user_profile_master.rb:26
 msgid "Admin::UserProfileMaster|Sort order description"
-msgstr "このプロフィール項目の並び順を入力して下さい。"
+msgstr "このプロフィール項目の並び順を入力して下さい。値が小さいほど上に表示されるプロフィール項目となります。"
 
 #: app/models/admin/user_profile_master.rb:17
 msgid "Admin::UserProfileMaster|User profile master category"
@@ -954,7 +1000,7 @@ msgstr "プロフィールカテゴリ"
 
 #: app/models/admin/user_profile_master.rb:18
 msgid "Admin::UserProfileMaster|User profile master category description"
-msgstr "プロフィールカテゴリを選択して下さい。"
+msgstr "プロフィールカテゴリを選択して下さい。各プロフィール項目は選択したプロフィールカテゴリに分類されて表示されます。"
 
 #: app/models/admin/user_uid.rb:17 app/views/shared/_header.html.erb:5
 msgid "Admin::UserUid|Uid"
@@ -1781,7 +1827,7 @@ msgstr "新規%{model}の作成"
 msgid "New user from csv"
 msgstr "ユーザのCSVアップロード"
 
-#: app/controllers/mypage_controller.rb:308
+#: app/controllers/mypage_controller.rb:307
 msgid "OpenID URLを設定しました。"
 msgstr ""
 
@@ -2024,10 +2070,6 @@ msgstr ""
 
 #: app/models/site_count.rb:-
 msgid "SiteCount|Portrait users"
-msgstr ""
-
-#: app/models/site_count.rb:-
-msgid "SiteCount|Profile users"
 msgstr ""
 
 #: app/models/site_count.rb:-

@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-12-11 10:50+0900\n"
+"POT-Creation-Date: 2008-12-11 15:15+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -55,14 +55,18 @@ msgstr ""
 msgid "%{model} was successfully updated."
 msgstr ""
 
+#: app/models/user_profile_master.rb:251
+msgid "%{name} に不正な形式が設定されています"
+msgstr ""
+
 #: app/models/user_profile_master.rb:172
 msgid "%{name} は4桁の数値で入力して下さい"
 msgstr ""
 
 #: app/models/user_profile_master.rb:112 app/models/user_profile_master.rb:116
 #: app/models/user_profile_master.rb:126 app/models/user_profile_master.rb:169
-#: app/models/user_profile_master.rb:253 app/models/user_profile_master.rb:280
-#: app/models/user_profile_master.rb:299
+#: app/models/user_profile_master.rb:249 app/models/user_profile_master.rb:271
+#: app/models/user_profile_master.rb:290
 msgid "%{name} は必須です"
 msgstr ""
 
@@ -70,12 +74,12 @@ msgstr ""
 msgid "%{name} は数字かハイフンで入力してください"
 msgstr ""
 
-#: app/models/user_profile_master.rb:303
+#: app/models/user_profile_master.rb:294
 msgid "%{name} は正しい日付形式で入力して下さい"
 msgstr ""
 
-#: app/models/user_profile_master.rb:117 app/models/user_profile_master.rb:256
-#: app/models/user_profile_master.rb:283
+#: app/models/user_profile_master.rb:117 app/models/user_profile_master.rb:255
+#: app/models/user_profile_master.rb:274
 msgid "%{name} は選択される値以外のものが設定されています"
 msgstr ""
 
@@ -846,11 +850,11 @@ msgstr ""
 msgid "Admin::UserProfileMasterCategory|Sort order description"
 msgstr ""
 
-#: app/models/admin/user_profile_master.rb:29
+#: app/models/admin/user_profile_master.rb:38
 msgid "Admin::UserProfileMaster|Description"
 msgstr ""
 
-#: app/models/admin/user_profile_master.rb:30
+#: app/models/admin/user_profile_master.rb:39
 msgid "Admin::UserProfileMaster|Description description"
 msgstr ""
 
@@ -874,8 +878,45 @@ msgstr ""
 msgid "Admin::UserProfileMaster|Option values"
 msgstr ""
 
+#: app/models/admin/user_profile_master.rb:34
+msgid "Admin::UserProfileMaster|Option values description|appendable_select"
+msgstr ""
+
+#: app/models/admin/user_profile_master.rb:35
+msgid "Admin::UserProfileMaster|Option values description|check_box"
+msgstr ""
+
+#: app/models/admin/user_profile_master.rb:37
+msgid "Admin::UserProfileMaster|Option values description|datepicker"
+msgstr ""
+
+#: app/models/admin/user_profile_master.rb:29
+msgid ""
+"Admin::UserProfileMaster|Option values description|number_and_hyphen_only"
+msgstr ""
+
+#: app/models/admin/user_profile_master.rb:36
+msgid "Admin::UserProfileMaster|Option values description|prefecture_select"
+msgstr ""
+
+#: app/models/admin/user_profile_master.rb:31
+msgid "Admin::UserProfileMaster|Option values description|radio"
+msgstr ""
+
+#: app/models/admin/user_profile_master.rb:30
+msgid "Admin::UserProfileMaster|Option values description|rich_text"
+msgstr ""
+
+#: app/models/admin/user_profile_master.rb:33
+msgid "Admin::UserProfileMaster|Option values description|select"
+msgstr ""
+
 #: app/models/admin/user_profile_master.rb:28
-msgid "Admin::UserProfileMaster|Option values description"
+msgid "Admin::UserProfileMaster|Option values description|text_field"
+msgstr ""
+
+#: app/models/admin/user_profile_master.rb:32
+msgid "Admin::UserProfileMaster|Option values description|year_select"
 msgstr ""
 
 #: app/models/admin/user_profile_master.rb:23
@@ -1715,7 +1756,7 @@ msgstr ""
 msgid "New user from csv"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:308
+#: app/controllers/mypage_controller.rb:307
 msgid "OpenID URLを設定しました。"
 msgstr ""
 
@@ -1958,10 +1999,6 @@ msgstr ""
 
 #: app/models/site_count.rb:-
 msgid "SiteCount|Portrait users"
-msgstr ""
-
-#: app/models/site_count.rb:-
-msgid "SiteCount|Profile users"
 msgstr ""
 
 #: app/models/site_count.rb:-

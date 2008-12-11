@@ -16,4 +16,20 @@ module Admin::UserProfileMastersHelper
   def category_options
     UserProfileMasterCategory.all.collect { |category| [category.name, category.id] }
   end
+
+  def option_values_help_icon_hash_as_json
+    h = {}
+    UserProfileMaster.input_type_class_hash.keys.each do |input_type|
+      h[input_type] = help_icon_tag(:content => _("Admin::UserProfileMaster|Option values description|#{input_type}"))
+    end
+    h.to_json
+  end
+
+  def option_values_need_hash_as_json
+    h = {}
+    UserProfileMaster.input_type_class_hash.each do |key, value|
+      h[key] = value.new.need_option_values?
+    end
+    h.to_json
+  end
 end
