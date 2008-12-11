@@ -831,3 +831,6 @@ div.subtitle {
   margin-bottom: 5px;
   font-weight: bold;
 }
+div.subtitle span.description {
+  font-weight: normal;
+}

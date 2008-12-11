@@ -1,11 +1,11 @@
 <% profile_hash = @profiles.index_by(&:user_profile_master_id) %>
 <% UserProfileMasterCategory.all.each do |category| -%>
 <div>
-  <div class="subtitle"><%= category.name %></div>
+  <div class="subtitle"><%= h category.name %><span class="description"><%= h category.description %></span></div>
   <table id="user_info_box" class="normal" border="1" style="width: 600px;">
     <% category.user_profile_masters.each do |master| -%>
     <tr>
-      <th width="100px"><%= label_tag "profile_value[#{master.id}]", master.name %></th>
+      <th width="100px"><%= label_tag "profile_value[#{master.id}]", master.name %><%= master.description.blank? ? '' : help_icon_tag(:content => master.description) %></th>
       <% profile = profile_hash[master.id] %>
       <td>
         <%= master.input_type_processer.to_edit_html(master, profile) %>
