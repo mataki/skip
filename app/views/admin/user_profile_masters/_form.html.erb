@@ -12,10 +12,11 @@
 <p>
   <%= form.label :input_type %>
   <% if @user_profile_master.new_record? -%>
-    <%= form.select :input_type , UserProfileMaster.input_type_option %>
+    <%= form.select :input_type, UserProfileMaster.input_type_option %>
     <%= form.help_icon :input_type %>
   <% else -%>
     <%= _("UserProfileMaster|Input type|#{@user_profile_master.input_type}") %>
+    <%= form.hidden_field :input_type %>
   <% end -%>
 </p>
 <p>
@@ -68,6 +69,7 @@ $j(function(){
         toggleOptionValues();
     });
     changeOptionValuesDescription();
+    toggleOptionValues();
 });
 </script>
 <% end -%>
