@@ -14,7 +14,7 @@
   <% if @user_profile_master.new_record? -%>
     <%= form.select :input_type , UserProfileMaster.input_type_option %>
   <% else -%>
-    <%= _(@user_profile_master.input_type) %>
+    <%= _("UserProfileMaster|Input type|#{@user_profile_master.input_type}") %>
   <% end -%>
   <%= form.help_icon :input_type %>
 </p>
