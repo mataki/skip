@@ -63,12 +63,14 @@ ActionController::Routing::Routes.draw do |map|
     end
     admin_map.resources :users, :new => [:import, :import_confirmation, :first], :member => [:change_uid, :create_uid, :show_signup_url, :issue_activation_code, :issue_password_reset_code] do |user|
       user.resources :openid_identifiers
+      user.resource :user_profile
     end
-    admin_map.resources :user_profiles
     admin_map.resources :groups do |group|
       group.resources :group_participations
     end
     admin_map.resources :group_categories
+    admin_map.resources :user_profile_master_categories
+    admin_map.resources :user_profile_masters
     admin_map.settings_update_all 'settings/:tab/update_all', :controller => 'settings', :action => 'update_all'
     admin_map.settings_ado_feed_item 'settings/ado_feed_item', :controller => 'settings', :action => 'ado_feed_item'
     admin_map.settings 'settings/:tab', :controller => 'settings', :action => 'index', :defaults => { :tab => '' }

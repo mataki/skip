@@ -4,8 +4,6 @@ one:
   email: MyString
   name: MyString
   section: MyString
-  extension: MyString
-  introduction: MyText
   status: ACTIVE
   admin: false
 
@@ -13,7 +11,5 @@ two:
   email: MyString
   name: MyString
   section: MyString
-  extension: MyString
-  introduction: MyText
   status: ACTIVE
   admin: false

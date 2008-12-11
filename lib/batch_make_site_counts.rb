@@ -36,7 +36,6 @@ class BatchMakeSiteCounts < BatchBase
 
     create_params[:comment_users] = BoardEntryComment.count_by_sql("select count(distinct user_id) from board_entry_comments")
     create_params[:portrait_users] = Picture.count
-    create_params[:profile_users] = UserProfile.count(:conditions => ["hometown <> 1 or address_1 <> 1"])
     create_params[:active_users] = UserAccess.count(:conditions => ["last_access >= ?", Date.today - 10]) # 10日以内にアクセスしたユーザをアクティブユーザとする
 
     SiteCount.delete_all ["created_on like ?", Date.today.strftime("%Y-%m-%d") + "%"]

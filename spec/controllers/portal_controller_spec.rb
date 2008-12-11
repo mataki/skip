@@ -30,16 +30,16 @@ describe PortalController, 'GET /index' do
     before do
       session[:entrance_next_action] = :registration
 
-      @profile = stub_model(UserProfile, :email => "skip@skip.openskip.org")
+      @profiles = []
       @user = unused_user_login
-      @user.stub!(:user_profile).and_return(@profile)
+      @user.stub!(:email).and_return("skip@skip.openskip.org")
 
       get :index
     end
     it { response.should render_template('registration') }
     it "正しいインスタンス変数が設定されていること" do
       assigns[:user].should == @user
-      assigns[:profile].should_not be_nil
+      assigns[:profiles].should == @profiles
       assigns[:user_uid].should_not be_nil
       assigns[:user_uid].uid.should == "skip"
     end
@@ -55,7 +55,7 @@ describe PortalController, 'GET /index' do
 end
 
 # ここでやりたいことは何か?
-# 既にUser, UserProfile, UserUidは登録済みだ。
+# 既にUser, UserUidは登録済みだ。
 # 1. ユーザ名有効でユーザ名を変更することが出来る。(UserUidを一件作らないといけない。)
 # 2. ユーザを活性化しなければいけない。
 # 3. 初期アンテナを作成しなければいけない。
@@ -63,16 +63,13 @@ end
 # 5. 新しいalma_materの上書きをしなければいけない。
 # 6. 新しい住所の上書きをしなければいけない。
 # 7. 趣味を登録しなければいけない。
-# 8. wite_profileでdisclosureを上書きしなければいけない。
 describe PortalController, 'POST /apply' do
   before do
-    @profile = stub_model(UserProfile)
-    @profile.stub!(:attributes_for_registration)
-    @profile.stub!(:save!)
     @user = unused_user_login
     @user.stub!(:save!)
-    @user.stub!(:user_profile).and_return(@profile)
     @user.stub!(:create_initial_entry)
+    @profiles = (1..2).map{|i| stub_model(UserProfileValue, :save! => true)}
+    @user.stub!(:find_or_initialize_profiles).and_return(@profiles)
     @antenna = stub_model(Antenna)
     @antenna.stub!(:save!)
     Antenna.stub!(:create_initial!).and_return(@antenna)
@@ -99,8 +96,10 @@ describe PortalController, 'POST /apply' do
       it 'Userが保存されること' do
         verify_save_user
       end
-      it 'Profileが保存されること' do
-        verify_save_user_profile
+      it "profilesが保存されること" do
+        @user.should_receive(:find_or_initialize_profiles).with({"1"=>"ほげ", "2"=>"ふが"}).and_return(@profiles)
+        @profiles.each{ |profile| profile.should_receive(:save!) }
+        post_apply
       end
       it 'welcomeページにリダイレクトされること' do
         post_apply
@@ -122,8 +121,10 @@ describe PortalController, 'POST /apply' do
       it 'Userが保存されること' do
         verify_save_user
       end
-      it 'Profileが保存されること' do
-        verify_save_user_profile
+      it "profilesが保存されること" do
+        @user.should_receive(:find_or_initialize_profiles).with({"1"=>"ほげ", "2"=>"ふが"}).and_return(@profiles)
+        @profiles.each{ |profile| profile.should_receive(:save!) }
+        post_apply
       end
       it 'welcomeページにリダイレクトされること' do
         post_apply
@@ -194,8 +195,15 @@ describe PortalController, 'POST /apply' do
       it "適切なインスタンス変数が設定されていること" do
         post_apply
         assigns[:user].should_not be_nil
-        assigns[:profile].should_not be_nil
+        assigns[:profiles].should_not be_nil
         assigns[:user_uid].should be_nil
+      end
+      it "２つのプロフィールにエラーが設定されている場合、２つのバリデーションエラーが設定されること" do
+        errors = mock('errors', :full_messages => ["バリデーションエラーです"])
+        @profiles.map{ |profile| profile.stub!(:errors).and_return(errors) }
+
+        post_apply
+        assigns[:error_msg].grep("バリデーションエラーです").size.should == 2
       end
     end
     describe 'ユーザ名利用設定がonの場合' do
@@ -209,7 +217,7 @@ describe PortalController, 'POST /apply' do
       it "適切なインスタンス変数が設定されていること" do
         post_apply
         assigns[:user].should_not be_nil
-        assigns[:profile].should_not be_nil
+        assigns[:profiles].should_not be_nil
         assigns[:user_uid].should_not be_nil
       end
     end
@@ -223,20 +231,10 @@ describe PortalController, 'POST /apply' do
     post_apply
   end
 
-  def verify_save_user_profile
-    @profile.should_receive(:attributes_for_registration)
-    @profile.should_receive(:save!)
-    post_apply
-  end
-
   def post_apply
-    post :apply, {"user"=>{:password => "password", :password_confirmation => "password_confirmation"},
-                  "profile"=>{"email"=>"example@skip.org", "extension"=>"000000", "self_introduction"=>"00000",
-                    "section"=>"開発", "birth_month"=>"1", "join_year"=>"2008", "blood_type"=>"1", "address_1"=>"1",
-                    "alma_mater"=>"非公開", "birth_day"=>"1", "gender_type"=>"1", "address_2"=>"非公開", "introduction"=>"",
-                    "hometown"=>"1"},
-                  "user_uid"=>{"uid"=>"hogehoge"},
-                  "new_address_2"=>"", "write_profile"=>"true", "new_section"=>"営業", "new_alma_mater"=>"" }
+    post :apply, {"user"=>{:password => "password", :password_confirmation => "password_confirmation", "email"=>"example@skip.org", "section"=>"開発"}, "new_section"=>"営業",
+                  "profile_value"=>{"1"=>"ほげ", "2"=>"ふが"},
+                  "user_uid"=>{"uid"=>"hogehoge"} }
   end
 end
 
@@ -262,10 +260,8 @@ describe PortalController, "#registration" do
       @params = { "code" => @code, "email" => 'email@openskip.org', "name" => 'SKIP君'}
 
       @user_uid = stub_model(UserUid)
-      @user_profile = stub_model(User)
       @user = stub_model(User, :code => @code)
       @user.stub!(:user_uids).and_return([@user_uid])
-      @user.stub!(:user_profile).and_return(@user_profile)
       User.should_receive(:create_with_identity_url).with(@openid_url, @params).and_return(@user)
     end
     describe "保存が成功する場合" do

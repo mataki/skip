@@ -13,5 +13,26 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+class UserProfileMasterCategory < ActiveRecord::Base
+  has_many :user_profile_masters
 
+  validates_presence_of :name
+  validates_presence_of :sort_order
+
+  class << self
+    def find_with_order_by_sort_order(*args)
+      with_scope(:find => { :order => "sort_order" } ) do
+        find_without_order_by_sort_order(*args)
+      end
+    end
+    alias_method_chain :find, :order_by_sort_order
+  end
+
+  def deletable?
+    unless self.user_profile_masters.empty?
+      errors.add_to_base(_('対象のプロフィールカテゴリ属するプロフィール項目が登録済みのため削除出来ません。'))
+      return false
+    end
+    true
+  end
+end

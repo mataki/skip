@@ -17,6 +17,12 @@ div.input_line div.input_value {
   float: left;
   padding: 3px 0;
 }
+div.input_line div.rich_value {
+  clear: both;
+  float: none;
+  border: 1px solid silver;
+  padding: 5px;
+}
 div.input_line div.input_bottom {
   height: 1em;
   padding: 3px 0px;
@@ -71,6 +77,7 @@ div.input_line div.input_bottom {
     <% end -%>
 
     <div class="topix_body" style="margin-top: 5px; width: 95%; overflow: hidden">
+      <div class="subtitle">アカウント情報</div>
 
       <% if user_name_mode?(:code) -%>
       <div class="input_line">
@@ -92,67 +99,26 @@ div.input_line div.input_bottom {
         <div class="input_bottom"></div>
       </div>
       <div class="input_line">
-        <div class="input_label"><%=h _('UserProfile|Email') %></div>
-        <div class="input_value"><a href="mailto:<%=h @user.user_profile.email -%>"><%=h @user.user_profile.email -%></a></div>
+        <div class="input_label"><%=h _('User|Email') %></div>
+        <div class="input_value"><a href="mailto:<%=h @user.email -%>"><%=h @user.email -%></a></div>
         <div class="input_bottom"></div>
       </div>
       <div class="input_line">
-        <div class="input_label"><%=h _('UserProfile|Section') %></div>
-        <div class="input_value"><%=h @user.user_profile.section -%></div>
-        <div class="input_bottom"></div>
-      </div>
-      <div class="input_line">
-        <div class="input_label"><%=h _('UserProfile|Extension') %></div>
-        <div class="input_value"><%=h @user.user_profile.extension -%></div>
-        <div class="input_bottom"></div>
-      </div>
-      <div class="input_line">
-        <div class="input_label"><%=h _('UserProfile|Self introduction') %></div>
-        <div class="input_value"></div>
-        <div class="input_bottom"></div>
-      </div>
-      <div style="border: 1px solid silver; padding: 5px;"><%= render_richtext(@user.user_profile.self_introduction, @user.symbol) %></div>
-
-      <br/>
-
-      <% if @user.has_profile? && @user.profile.disclosure -%>
-      <% @profile = @user.profile -%>
-      <div class="input_line">
-        <div class="input_label">性別 - 入社年度</div>
-        <div class="input_value"><%=h @profile.gender -%> - <%=h @profile.join_year -%>年度入社</div>
-        <div class="input_bottom"></div>
-      </div>
-      <div class="input_line">
-        <div class="input_label">誕生日 - 血液型</div>
-        <div class="input_value"><%=h @profile.birth_month_day -%> - <%=h @profile.blood -%></div>
-        <div class="input_bottom"></div>
-      </div>
-      <div class="input_line">
-        <div class="input_label">出身地 - 出身校</div>
-        <div class="input_value"><%=h @profile.hometown_name -%> - <%=h @profile.alma_mater -%></div>
-        <div class="input_bottom"></div>
-      </div>
-      <div class="input_line">
-        <div class="input_label">現住所</div>
-        <div class="input_value"><%=h @profile.address -%></div>
+        <div class="input_label"><%=h _('User|Section') %></div>
+        <div class="input_value"><%=h @user.section -%></div>
         <div class="input_bottom"></div>
       </div>
 
+      <% profiles = @user.user_profile_values
+         profile_hash = profiles.index_by(&:user_profile_master_id)
+         UserProfileMasterCategory.all.each do |category| -%>
+      <div class="subtitle"><%= category.name %></div>
+      <% category.user_profile_masters.each do |master| -%>
       <div class="input_line">
-        <div class="input_label">趣味</div>
-        <div class="input_value"><%=h @profile.hobby.chop.gsub(/\,/, ' , ') if @profile.hobby %></div>
-        <div class="input_bottom"></div>
+        <div class="input_label"><%=h master.name %></div>
+        <%= master.input_type_processer.to_show_html(profile_hash[master.id]) %>
       </div>
-      <div class="input_line">
-        <div class="input_label">オフの私</div>
-        <div class="input_value"></div>
-        <div class="input_bottom"></div>
-      </div>
-      <div style="border: 1px solid silver; padding: 5px;"><%= render_richtext(@profile.introduction, @user.symbol) %></div>
-      <% elsif @user.has_profile? && !@user.profile.disclosure -%>
-      <div style="text-align: center; color: blue; font-weight: bold;">属性情報・オフ情報は非公開です</div>
-      <% else -%>
-      <div style="text-align: center; color: blue; font-weight: bold;">まだ属性情報・オフ情報は登録されていません</div>
+      <% end -%>
       <% end -%>
 
     </div>

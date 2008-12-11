@@ -37,7 +37,11 @@
     <div class="item_line" style="margin-bottom: 1px; border-bottom: 1px dashed #d0e0ff;">
       <div class="item_name"><%= item_link_to user %></div>
       <div class="item_desc" style="font-size: 10px; margin-left: 4px; color: gray;">
-        <%= truncate(strip_tags(user.user_profile.self_introduction)) if user.user_profile.self_introduction %>
+        <% profile = user.user_profile_values.rand -%>
+        <% if profile -%>
+        <p><%= profile.user_profile_master.name %></p>
+        <p><%= truncate(strip_tags(profile.value)) %></p>
+        <% end %>
       </div>
     </div>
   <% end -%>

@@ -23,7 +23,7 @@ describe UserSearchCondition do
       conditions.make_conditions.should == ["users.status in (?)", ["ACTIVE", "RETIRED"]]
 
       conditions.value_of_order_by.should == "user_accesses.last_access DESC"
-      conditions.value_of_include.should == [:user_access, :pictures, :user_profile]
+      conditions.value_of_include.should == [:user_access, :pictures]
     end
   end
   describe "名前が検索条件になっている場合" do
@@ -35,19 +35,13 @@ describe UserSearchCondition do
   describe "部門が検索条件になっている場合" do
     it "検索条件が設定されていること" do
       conditions = UserSearchCondition.create_by_params :condition => { :section => "section" }
-      conditions.make_conditions.should == ["user_profiles.section like ? AND users.status in (?)", "%section%", ["ACTIVE", "RETIRED"]]
+      conditions.make_conditions.should == ["users.section like ? AND users.status in (?)", "%section%", ["ACTIVE", "RETIRED"]]
     end
   end
   describe "ログインID/ユーザ名が検索条件になっている場合" do
     it "検索条件が設定されていること" do
       conditions = UserSearchCondition.create_by_params :condition => { :code => "code" }
       conditions.make_conditions.should == ["user_uids.uid like ? AND users.status in (?)", "%code%", ["ACTIVE", "RETIRED"]]
-    end
-  end
-  describe "自己紹介が検索条件になっている場合" do
-    it "検索条件が設定されていること" do
-      conditions = UserSearchCondition.create_by_params :condition => { :introduction => "introduction" }
-      conditions.make_conditions.should == ["user_profiles.self_introduction like ? AND users.status in (?)", "%introduction%", ["ACTIVE", "RETIRED"]]
     end
   end
   describe "ソート順がログインID順の場合" do
@@ -61,7 +55,7 @@ describe UserSearchCondition do
       @conditions.make_conditions.should == ["users.status in (?) AND user_uids.uid_type = ?", ["ACTIVE", "RETIRED"], "MASTER"]
     end
     it "includeが設定されていること" do
-      @conditions.value_of_include.should == [:user_access, :pictures, :user_uids, :user_profile]
+      @conditions.value_of_include.should == [:user_access, :pictures, :user_uids]
     end
   end
   describe "ソート順がユーザ名順の場合" do
@@ -75,7 +69,7 @@ describe UserSearchCondition do
       @conditions.make_conditions.should == ["users.status in (?) AND user_uids.uid_type = ?", ["ACTIVE", "RETIRED"], "NICKNAME"]
     end
     it "includeが設定されていること" do
-      @conditions.value_of_include.should == [:user_access, :pictures, :user_uids, :user_profile]
+      @conditions.value_of_include.should == [:user_access, :pictures, :user_uids]
     end
   end
   describe "出力形式が一覧の場合" do
@@ -98,7 +92,7 @@ describe UserSearchCondition do
       @conditions.make_conditions.should == ["users.status in (?) AND group_participations.group_id = ? AND group_participations.waiting = false", ["ACTIVE", "RETIRED"], 2]
     end
     it "includeが設定されていること" do
-      @conditions.value_of_include.should == [:user_access, :pictures, :user_profile, :group_participations]
+      @conditions.value_of_include.should == [:user_access, :pictures, :group_participations]
     end
     describe "グループの管理者を含まない場合" do
       before do

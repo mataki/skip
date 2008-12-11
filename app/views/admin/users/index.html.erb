@@ -8,7 +8,7 @@
   <%= render :partial => '/admin/search_box', :locals => { :class_name => 'Admin::User' } %>
   <%= render :partial => '/admin/shared/sortable_table',
              :locals => {
-               :columns => %w[code uid name status admin],
+               :columns => %w[code uid name email section status admin],
                :disp_columns_proc => lambda do |object,column|
       case column
       when "status"

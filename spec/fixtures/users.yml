@@ -6,6 +6,8 @@ a_user:
   name: a_user
   status: ACTIVE
   auth_session_token: <%= SkipFaker.rand_char %>
+  email: a_user@skip.jp
+  section: Programmer
 
 a_retired_user:
   created_on: <%= SkipFaker.today %>
@@ -13,6 +15,8 @@ a_retired_user:
   name: a_retired_user
   status: RETIRED
   auth_session_token: <%= SkipFaker.rand_char %>
+  email: a_retired_user@skip.jp
+  section: Programmer
 
 a_group_owned_user:
   created_on: <%= SkipFaker.today %>
@@ -20,6 +24,8 @@ a_group_owned_user:
   name: a_group_owned_user
   status: ACTIVE
   auth_session_token: <%= SkipFaker.rand_char %>
+  email: a_group_owned_user@skip.jp
+  section: Programmer
 
 a_group_joined_user:
   created_on: <%= SkipFaker.today %>
@@ -27,6 +33,8 @@ a_group_joined_user:
   name: a_group_joined_user
   status: ACTIVE
   auth_session_token: <%= SkipFaker.rand_char %>
+  email: a_group_joined_user@skip.jp
+  section: Programmer
 
 a_group_waiting_user:
   created_on: <%= SkipFaker.today %>
@@ -34,3 +42,5 @@ a_group_waiting_user:
   name: a_group_waiting_user
   status: ACTIVE
   auth_session_token: <%= SkipFaker.rand_char %>
+  email: a_group_waiting_user@skip.jp
+  section: Programmer

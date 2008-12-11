@@ -149,7 +149,7 @@ class MypageController < ApplicationController
     @menu = params[:menu] || "manage_profile"
     case @menu
     when "manage_profile"
-      @profile = @user.profile || UserProfile.new
+      @profiles = current_user.user_profile_values
     when "manage_password"
       redirect_to_with_deny_auth(:action => :manage) and return unless login_mode?(:password)
       @user = User.new
@@ -207,22 +207,21 @@ class MypageController < ApplicationController
   # post_action
   def update_profile
     @user = current_user
+    params[:user][:new_section] = params[:new_section] if params[:user]
     @user.attributes = params[:user]
-
-    @profile = @user.user_profile
-    @profile.attributes_for_registration(params)
+    @profiles = @user.find_or_initialize_profiles(params[:profile_value])
 
     User.transaction do
-      @profile.save!
       @user.save!
-
-      flash[:notice] = 'ユーザ情報の更新に成功しました。'
-      redirect_to :action => 'profile'
+      @profiles.each{|profile| profile.save!}
     end
+    flash[:notice] = 'ユーザ情報の更新に成功しました。'
+    redirect_to :action => 'profile'
   rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => e
     @error_msg = []
-    @error_msg.concat @user.errors.full_messages.reject{|msg| msg.include?("User profile") } unless @user.valid?
-    @error_msg.concat @profile.errors.full_messages if @profile and @profile.errors
+    @error_msg.concat @user.errors.full_messages unless @user.valid?
+    @error_msg.concat @profiles.map{|profile| profile.errors.full_messages}.flatten
+
     render :partial => 'manage_profile', :layout => "layout"
   end
 
@@ -277,14 +276,14 @@ class MypageController < ApplicationController
   def update_email
     if @applied_email = AppliedEmail.find_by_user_id_and_onetime_code(session[:user_id], params[:id])
       @user = current_user
-      old_email = @user.user_profile.email
-      @user.user_profile.email = @applied_email.email
-      if @user.user_profile.save
+      old_email = @user.email
+      @user.email = @applied_email.email
+      if @user.save
         @applied_email.destroy
         flash[:notice] = "メールアドレスが正しく更新されました。"
         redirect_to :action => 'profile'
       else
-        @user.user_profile.email = old_email
+        @user.email = old_email
         @menu = 'manage_email'
         flash[:notice] = "既に登録されているメールアドレスです。メールアドレスの変更をやり直してください。"
         render :partial => 'manage_email', :layout => "layout"
@@ -687,13 +686,6 @@ private
       system_messages << {
         :text => "ようこそ！まずはこちらをご覧ください。", :icon => "information",
         :option => {:controller => "mypage", :action => "index", :welcome => "true"}
-      }
-    end
-    self_introduction = @user.user_profile.self_introduction
-    if self_introduction.blank? || self_introduction.size < 10 || !UserProfile.find_by_user_id(@user.id)
-      system_messages << {
-        :text => "プロフィールを充実させましょう！",   :icon => "vcard",
-        :option => {:controller => "mypage", :action => "manage"}
       }
     end
     if @user.pictures.size < 1

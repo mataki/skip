@@ -1,9 +1,10 @@
-<%= h user_name -%>です。
+<%= h user.name %>です。
 
 ユーザ登録しました！！
 
-<% if user_introduction -%>
-以下、自己紹介
+以下、プロフィール
 ----
-<%= h user_introduction -%>
+<% user.user_profile_values.each do |profile| -%>
+<%= profile.user_profile_master.name %> :
+<%= profile.value %>
 <% end -%>

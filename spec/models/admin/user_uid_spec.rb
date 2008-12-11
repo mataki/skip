@@ -117,11 +117,10 @@ describe Admin::UserUid, "#rename" do
 
   def create_items_expect_change
     uid_str = SkipFaker.rand_char
-    @u = User.new({:name => uid_str, :password => 'password', :password_confirmation => 'password'})
+    @u = User.new({:name => uid_str, :password => 'password', :password_confirmation => 'password', :email => SkipFaker.email})
     @u.status = 'ACTIVE'
     @u.save!
     @u.user_uids.create!({:uid => uid_str})
-    @u.create_user_profile({:introduction => "uid:#{uid_str}"})
     @b = BoardEntry.create!({:title => uid_str, :contents => uid_str, :date => Date.today, :entry_type => 'DIARY', :symbol => "uid:#{uid_str}", :publication_symbols_value => "uid:#{uid_str}", :contents => "geafdsaf uid:#{uid_str} fdsaf", :user_id => @u, :last_updated => Date.today})
     @b.entry_editors.create!({:symbol => "uid:#{uid_str}"})
     @b.entry_publications.create!({:symbol => "uid:#{uid_str}"})

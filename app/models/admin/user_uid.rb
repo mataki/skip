@@ -39,8 +39,6 @@ class Admin::UserUid < UserUid
 
   def self.rename(from, to)
     ActiveRecord::Base.connection.execute("update board_entries set symbol = 'uid:#{to}' where symbol = 'uid:#{from}'")
-    ActiveRecord::Base.connection.execute("update user_profiles set self_introduction = replace(self_introduction, 'uid:#{from}', 'uid:#{to}') where self_introduction like '%uid:#{from}%'")
-    ActiveRecord::Base.connection.execute("update user_profiles set introduction = replace(introduction, 'uid:#{from}', 'uid:#{to}') where introduction like '%uid:#{from}%'")
     ActiveRecord::Base.connection.execute("update board_entries set symbol = 'uid:#{to}' where symbol = 'uid:#{from}'")
     ActiveRecord::Base.connection.execute("update board_entries set publication_symbols_value = replace(publication_symbols_value, 'uid:#{from}', 'uid:#{to}') where publication_symbols_value like '%uid:#{from}%'")
     ActiveRecord::Base.connection.execute("update board_entries set contents = replace(contents, 'uid:#{from}', 'uid:#{to}') where editor_mode = 'hiki' and contents like '%uid:#{from}%'")

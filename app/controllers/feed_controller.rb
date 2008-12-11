@@ -56,8 +56,14 @@ class FeedController < ApplicationController
   def recent_registed_users
     description = "最近登録されたユーザ"
     users = User.find(:all, :order=>"created_on DESC", :conditions=>["created_on > ?" ,Date.today-10], :limit => 10)
-    item_arry = []
-    users.map{|user| item_arry << {:type => "user", :title => user.name, :id => user.uid, :date => user.created_on, :contents => user.user_profile.self_introduction } }
+    item_arry = users.map do |user|
+      content = if profile = user.user_profile_values.rand
+                  "#{profile.user_profile_master.name}: #{profile.value}"
+                else
+                  ""
+                end
+      {:type => "user", :title => user.name, :id => user.uid, :date => user.created_on, :contents => content }
+    end
     rss_feed "recent_registed_users", description, item_arry
   end
 

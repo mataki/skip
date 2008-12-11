@@ -17,6 +17,7 @@ class Admin::User < User
   require 'fastercsv'
   has_many :user_uids, :dependent => :destroy, :class_name => 'Admin::UserUid'
   has_many :openid_identifiers, :dependent => :destroy, :class_name => 'Admin::OpenidIdentifier'
+  has_many :user_profile_values, :dependent => :destroy, :class_name => 'Admin::UserProfileValue'
 
   N_('Admin::User|Code')
   N_('Admin::User|Code description')
@@ -25,6 +26,10 @@ class Admin::User < User
   N_('Admin::User|Admin description')
   N_('Admin::User|Name')
   N_('Admin::User|Name description')
+  N_('Admin::User|Email')
+  N_('Admin::User|Email description')
+  N_('Admin::User|Section')
+  N_('Admin::User|Section description')
   N_('Admin::User|Password confirmation')
   N_('Admin::User|Password')
   N_('Admin::User|Retired')
@@ -57,24 +62,21 @@ class Admin::User < User
     users = []
     parsed_csv = FasterCSV.parse uploaded_file
     parsed_csv.each do |line|
-      user_hash, user_profile_hash, user_uid_hash = make_user_hash_from_csv_line(line, options)
-      user = make_user({:user => user_hash, :user_profile => user_profile_hash, :user_uid => user_uid_hash}, false, create_only)
+      user_hash, user_uid_hash = make_user_hash_from_csv_line(line, options)
+      user = make_user({:user => user_hash, :user_uid => user_uid_hash}, false, create_only)
       users << user if user
     end
     users
   end
 
   def self.make_new_user(params, admin = false)
-    check_params_keys(params, [:user, :user_profile, :user_uid])
+    check_params_keys(params, [:user, :user_uid])
     user = Admin::User.new(params[:user])
     user.admin = admin
     user.status = admin ? 'ACTIVE' : 'UNUSED'
-    user_profile = Admin::UserProfile.new(params[:user_profile])
-    user_profile.disclosure = true unless params[:user_profile][:disclosure]
-    user.user_profile = user_profile
     user_uid = Admin::UserUid.new(params[:user_uid].merge(:uid_type => 'MASTER'))
     user.user_uids << user_uid
-    [user, user_profile, user_uid]
+    [user, user_uid]
   end
 
   def self.make_user_by_id(params, admin = false)
@@ -89,19 +91,17 @@ class Admin::User < User
   end
 
   def self.make_user_by_uid(params, admin = false)
-    check_params_keys(params, [:user, :user_profile, :user_uid])
+    check_params_keys(params, [:user, :user_uid])
     user = Admin::User.find_by_code(params[:user_uid][:uid])
     user.attributes = params[:user]
-    user_profile = user.user_profile
-    user_profile.attributes = params[:user_profile]
     user_uid = user.user_uids.find_by_uid_type('MASTER')
-    [user, user_profile, user_uid]
+    [user, user_uid]
   end
 
   def self.make_user(params, admin = false, create_only = false)
     user = Admin::User.find_by_code(params[:user_uid][:uid])
     if user
-      params = {:user => {}, :user_uid => {:uid => params[:user_uid][:uid]}, :user_profile => {}} if create_only
+      params = {:user => {}, :user_uid => {:uid => params[:user_uid][:uid]}} if create_only
       make_user_by_uid(params, admin)
     else
       make_new_user(params, admin)
@@ -132,12 +132,11 @@ class Admin::User < User
 
     user_hash = {}
     user_hash.merge!(:name => line_hash[:name]) if line_hash[:name]
+    user_hash.merge!(:email => line_hash[:email]) if line_hash[:email]
+    user_hash.merge!(:section => line_hash[:section]) if line_hash[:section]
 
-    user_profile_hash = {}
-    user_profile_hash.merge!(:email => line_hash[:email]) if line_hash[:email]
-    user_profile_hash.merge!(:section => line_hash[:section]) if line_hash[:section]
 
-    [user_hash, user_profile_hash, user_uid_hash]
+    [user_hash, user_uid_hash]
   end
 
   def self.check_params_keys(params, keys)

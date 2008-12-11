@@ -15,8 +15,3 @@
 
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe ShareFileTag do
-  def test_truth
-    assert true
-  end
-end

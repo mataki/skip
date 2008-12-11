@@ -25,8 +25,8 @@ class BatchSendMails < BatchBase
   def send_notice
     Mail.find(:all, :conditions => "send_flag = false", :order => 'id asc', :limit => 30).each do |mail|
       user = User.find(:first, :conditions => ["user_uids.uid = ?", mail.from_user_id], :include => ['user_uids'])
-      to_user_profile = UserProfile.find_by_email(mail.to_address)
-      if user.retired? or to_user_profile.nil? or to_user_profile.user.retired?
+      to_user = User.find_by_email(mail.to_address)
+      if user.retired? or to_user.nil? or to_user.retired?
         mail.update_attribute :send_flag, true
         next
       end
@@ -60,7 +60,7 @@ class BatchSendMails < BatchBase
         message_manage_url = url_for :controller => "/mypage", :action => "manage", :menu => :manage_message
 
         begin
-          UserMailer.deliver_sent_message(user.user_profile.email, link_url, message.message, message_manage_url)
+          UserMailer.deliver_sent_message(user.email, link_url, message.message, message_manage_url)
           message.update_attribute :send_flag, true
         rescue
           self.class.log_error "failed send message [id]:" + message.id.to_s + " " + $!

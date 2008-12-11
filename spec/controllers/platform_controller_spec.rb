@@ -236,7 +236,7 @@ end
 
 describe PlatformController, 'POST /forgot_password' do
   before do
-    UserProfile.stub!(:find_by_email)
+    User.stub!(:find_by_email)
     controller.stub!(:enable_forgot_password?).and_return(true)
   end
   describe 'メールアドレスの入力がない場合' do
@@ -249,18 +249,17 @@ describe PlatformController, 'POST /forgot_password' do
   describe '登録済みのメールアドレスが送信された場合' do
     before do
       @email = 'exist@example.com'
-      @user_profile = stub_model(UserProfile, :email => @email)
-      UserProfile.should_receive(:find_by_email).and_return(@user_profile)
+      @user = stub_model(User, :email => @email, :active? => true)
+      User.should_receive(:find_by_email).and_return(@user)
     end
     describe '利用開始済みのユーザの場合' do
       before do
         @password_reset_url = 'password_reset_url'
         controller.stub!(:reset_password_url).and_return(@password_reset_url)
-        @user = stub_model(User, :password_reset_token => @password_reset_token)
+        @user.stub!(:password_reset_token).and_return(@password_reset_token)
         @user.stub!(:forgot_password)
         @user.stub!(:save!)
         UserMailer.stub!(:deliver_sent_forgot_password)
-        @user_profile.stub!(:user).and_return(@user)
       end
       it 'パスワードリセットURLを記載したメールの送信処理が呼ばれること' do
         UserMailer.should_receive(:deliver_sent_forgot_password).with(@email, @password_reset_url)
@@ -279,7 +278,7 @@ describe PlatformController, 'POST /forgot_password' do
     end
     describe '未使用ユーザの場合' do
       before do
-        @user_profile.stub!(:user).and_return(nil)
+        @user.stub!(:active?).and_return(false)
       end
       it "未登録ユーザのメールアドレスである旨のメッセージが設定されること" do
         post :forgot_password, :email => @email
@@ -290,7 +289,7 @@ describe PlatformController, 'POST /forgot_password' do
   end
   describe '未登録のメールアドレスが送信された場合' do
     before do
-      UserProfile.should_receive(:find_by_email).and_return(nil)
+      User.should_receive(:find_by_email).and_return(nil)
     end
     it 'メールアドレスが未登録である旨のメッセージが設定されること' do
       post :forgot_password, :email => 'forgot_password@example.com'
@@ -425,15 +424,13 @@ describe PlatformController, 'POST /forgot_login_id' do
   describe '登録済みのメールアドレスが送信された場合' do
     before do
       @email = 'exist@example.com'
-      @user_profile = stub_model(UserProfile, :email => @email)
-      UserProfile.should_receive(:find_by_email).and_return(@user_profile)
+      @user = stub_model(User, :email => @email, :active? => true)
+      User.should_receive(:find_by_email).and_return(@user)
     end
     describe '利用開始済みのユーザの場合' do
       before do
-        @user = stub_model(User)
         @login_id = '123456'
         @user.stub!(:code).and_return(@login_id)
-        @user_profile.stub!(:user).and_return(@user)
         UserMailer.stub!(:deliver_sent_forgot_login_id)
       end
       it 'ログインIDを記載したメールの送信処理が呼ばれること' do
@@ -448,7 +445,7 @@ describe PlatformController, 'POST /forgot_login_id' do
     end
     describe '未使用ユーザの場合' do
       before do
-        @user_profile.stub!(:user).and_return(nil)
+        @user.stub!(:active?).and_return(false)
       end
       it "未登録ユーザのメールアドレスである旨のメッセージが設定されること" do
         post :forgot_login_id, :email => "forgot_password@example.com"
@@ -459,7 +456,7 @@ describe PlatformController, 'POST /forgot_login_id' do
   end
   describe '未登録のメールアドレスが送信された場合' do
     before do
-      UserProfile.should_receive(:find_by_email).and_return(nil)
+      User.should_receive(:find_by_email).and_return(nil)
     end
     it 'メールアドレスが未登録である旨のメッセージが設定されること' do
       post :forgot_login_id, :email => 'forgot_password@example.com'
@@ -481,7 +478,7 @@ end
 
 describe PlatformController, 'POST /activate' do
   before do
-    UserProfile.stub!(:find_by_email)
+    User.stub!(:find_by_email)
     controller.stub!(:enable_activate?).and_return(true)
   end
   describe 'メールアドレスの入力がない場合' do
@@ -494,19 +491,17 @@ describe PlatformController, 'POST /activate' do
   describe '登録済みのメールアドレスが送信された場合' do
     before do
       @email = 'exist@example.com'
-      @user_profile = stub_model(UserProfile, :email => @email)
+      @user = stub_model(User, :email => @email, :activation_token => @activation_token)
       @signup_url = 'signup_url'
       controller.stub!(:signup_url).and_return(@signup_url)
-      @user = stub_model(User, :activation_token => @activation_token)
       @user.stub!(:issue_activation_code)
       @user.stub!(:save!)
       UserMailer.stub!(:deliver_sent_activate)
-      @user_profile.stub!(:user).and_return(@user)
-      UserProfile.should_receive(:find_by_email).and_return(@user_profile)
+      User.should_receive(:find_by_email).and_return(@user)
     end
     describe '未使用ユーザが見つかる場合' do
       before do
-        @user_profile.should_receive(:unused_user).and_return(@user)
+        @user.should_receive(:unused?).and_return(true)
       end
       it 'アクティベーションURLを記載したメールの送信処理が呼ばれること' do
         UserMailer.should_receive(:deliver_sent_activate).with(@email, @signup_url)
@@ -525,7 +520,7 @@ describe PlatformController, 'POST /activate' do
     end
     describe '未使用ユーザが見つからない場合' do
       before do
-        @user_profile.should_receive(:unused_user).and_return(nil)
+        @user.should_receive(:unused?).and_return(false)
       end
       it '既に利用開始済みである旨のメッセージが設定されること' do
         post :activate, :email => @email
@@ -536,7 +531,7 @@ describe PlatformController, 'POST /activate' do
   end
   describe '未登録のメールアドレスが送信された場合' do
     before do
-      UserProfile.should_receive(:find_by_email).and_return(nil)
+      User.should_receive(:find_by_email).and_return(nil)
     end
     it 'メールアドレスが未登録である旨のメッセージが設定されること' do
       post :activate, :email => 'activate@example.com'

@@ -131,24 +131,17 @@ class BatchMakeCache < BatchBase
 
   # userのプロフィール用
   def make_caches_user(contents_type, cache_path, border_time)
-    users = User.find(:all, :include => ['user_profile'], :conditions => ["updated_on > ?", border_time])
+    users = User.find(:all, :include => ['user_profile_values'], :conditions => ["updated_on > ?", border_time])
     users.each do |user|
       body_lines = []
       body_lines << h(user.uid)
       body_lines << h(user.name)
       body_lines << h(user.code)
-      if user.has_profile?
-        profile = user.profile
-        body_lines << h(profile.email)
-        body_lines << h(profile.extension)
-        body_lines << h(profile.section)
-        body_lines << h(profile.gender) + " - " + h(profile.join_year) + "年度入社"
-        body_lines << h(profile.birth_month_day) + " - " + h(profile.blood)
-        body_lines << h(profile.hometown_name) + " - " + h(profile.alma_mater)
-        body_lines << h(profile.address)
-        body_lines << h(profile.hobby.chop.gsub(/\,/, ' , ')) if profile.hobby
-        body_lines << profile.introduction
-        body_lines << profile.self_introduction
+      body_lines << h(user.email)
+      body_lines << h(user.section)
+
+      user.user_profile_values.each do |profile|
+        body_lines << h(profile.value)
       end
 
       contents = create_contents(:title => user.name,

@@ -18,50 +18,46 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe Admin::User, '.make_users' do
   before do
     @user = mock_model(Admin::User)
-    @user_profile = mock_model(Admin::UserProfile)
     @user_uid = mock_model(Admin::UserUid)
     FasterCSV.should_receive(:parse).and_return([['hoge']])
     Admin::User.stub!(:make_user_hash_from_csv_line).and_return({},{},{})
-    Admin::User.should_receive(:make_user).and_return([@user, @user_profile, @user_uid])
+    Admin::User.should_receive(:make_user).and_return([@user, @user_uid])
   end
-  it { Admin::User.send(:make_users, mock('uplocaded_file'), mock('options')).should == ([[@user, @user_profile, @user_uid]]) }
+  it { Admin::User.send(:make_users, mock('uplocaded_file'), mock('options')).should == ([[@user, @user_uid]]) }
 end
 
 describe Admin::User, '.make_user' do
   describe '既存のレコードがある場合' do
     describe "既存のユーザを更新する場合" do
       before do
-        user_profile_hash = {:section => 'プログラマ', :email => SkipFaker.email}
         user_uid_hash = {:uid => SkipFaker.rand_num(6)}
-        user = create_user :user_profile_options => user_profile_hash, :user_uid_options => user_uid_hash
+        user = create_user :user_options => {:section => 'プログラマ', :email => SkipFaker.email}, :user_uid_options => user_uid_hash
         @user_hash = user.attributes
-        @user_profile_hash = user.attributes
         @user_uid_hash = user.user_uids.find_by_uid_type('MASTER')
       end
       it 'make_user_by_uidが呼ばれること' do
         Admin::User.should_receive(:make_user_by_uid)
-        @user, @user_profile, @user_uid = Admin::User.make_user({:user => @user_hash, :user_profile => @user_profile_hash, :user_uid => @user_uid_hash}, false, false)
+        @user, @user_uid = Admin::User.make_user({:user => @user_hash, :user_uid => @user_uid_hash}, false, false)
       end
     end
     describe "既存のレコードを更新しない場合" do
       before do
-        user_profile_hash = {:section => 'プログラマ', :email => SkipFaker.email}
+        user_hash = {:section => 'プログラマ', :email => SkipFaker.email}
         user_uid_hash = {:uid => SkipFaker.rand_num(6)}
-        user = create_user :user_profile_options => user_profile_hash, :user_uid_options => user_uid_hash
+        user = create_user :user_options => user_hash, :user_uid_options => user_uid_hash
         @user_hash = user.attributes
-        @user_profile_hash = user.attributes
         @user_uid_hash = user.user_uids.find_by_uid_type('MASTER')
       end
       it 'make_user_by_uidが属性なしで呼ばれること' do
-        Admin::User.should_receive(:make_user_by_uid).with({:user => {}, :user_uid => {:uid => @user_uid_hash[:uid]}, :user_profile => {}}, false)
-        @user, @user_profile, @user_uid = Admin::User.make_user({:user => @user_hash, :user_profile => @user_profile_hash, :user_uid => @user_uid_hash}, false, true)
+        Admin::User.should_receive(:make_user_by_uid).with({:user => {}, :user_uid => {:uid => @user_uid_hash[:uid]}}, false)
+        @use, @user_uid = Admin::User.make_user({:user => @user_hash, :user_uid => @user_uid_hash}, false, true)
       end
     end
   end
   describe '既存のレコードがない場合' do
     it 'make_new_userが呼ばれること' do
       Admin::User.should_receive(:make_new_user)
-      @user, @user_profile, @user_uid = Admin::User.make_user({:user => {}, :user_profile => {}, :user_uid => {:uid => 'skipuser'}})
+      @user, @user_uid = Admin::User.make_user({:user => {}, :user_uid => {:uid => 'skipuser'}})
     end
   end
 end
@@ -73,13 +69,12 @@ describe Admin::User, '.make_new_user' do
     @password = "password"
     @fullname = "山田 太郎"
     @job_title = "経理"
-    @user_hash = {:name => @fullname, :password => @password, :password_confirmation => @password}
-    @user_profile_hash = {:section => @job_title, :email => @email}
+    @user_hash = {:name => @fullname, :password => @password, :password_confirmation => @password, :section => @job_title, :email => @email}
     @user_uid_hash = {:uid => @uid}
   end
   describe '管理者を作成する場合' do
     before do
-      @user, @user_profile, @user_uid = Admin::User.make_new_user({:user => @user_hash, :user_profile => @user_profile_hash, :user_uid => @user_uid_hash}, true)
+      @user, @user_uid = Admin::User.make_new_user({:user => @user_hash, :user_uid => @user_uid_hash}, true)
     end
     it '新規レコードであること' do
       @user.new_record?.should be_true
@@ -99,12 +94,11 @@ describe Admin::User, '.make_new_user' do
     it 'statusが有効化されていること' do
       @user.status.should == :ACTIVE.to_s
     end
-    it { @user.user_profile.should == @user_profile }
     it 'sectionが設定されていること' do
-      @user_profile.section.should == @job_title
+      @user.section.should == @job_title
     end
     it 'emailが設定されていること' do
-      @user_profile.email.should == @email
+      @user.email.should == @email
     end
     it { @user.user_uids.include?(@user_uid).should be_true }
     it 'uidが設定されていること' do
@@ -113,7 +107,7 @@ describe Admin::User, '.make_new_user' do
   end
   describe '一般ユーザを作成する場合' do
     before do
-      @user, @user_profile, @user_uid = Admin::User.make_user({:user => @user_hash, :user_profile => @user_profile_hash, :user_uid => @user_uid_hash})
+      @user, @user_uid = Admin::User.make_user({:user => @user_hash, :user_uid => @user_uid_hash})
     end
     it '管理者でないこと' do
       @user.admin.should be_false
@@ -131,11 +125,10 @@ describe Admin::User, '.make_user_by_uid' do
       @password = "password"
       @fullname = "山田 太郎"
       @job_title = "経理"
-      @user_hash = {:name => @fullname, :password => @password, :password_confirmation => @password}
-      @user_profile_hash = {:section => @job_title, :email => @email}
+      @user_hash = {:name => @fullname, :password => @password, :password_confirmation => @password, :section => @job_title, :email => @email}
       @user_uid_hash = {:uid => SkipFaker.rand_num(6)}
-      user = create_user :user_profile_options => @user_profile_hash, :user_uid_options => @user_uid_hash
-      @user, @user_profile, @user_uid = Admin::User.make_user_by_uid({:user => @user_hash, :user_profile => @user_profile_hash, :user_uid => @user_uid_hash})
+      user = create_user :user_options => @user_hash, :user_uid_options => @user_uid_hash
+      @user, @user_uid = Admin::User.make_user_by_uid({:user => @user_hash, :user_uid => @user_uid_hash})
     end
     it '新規レコードではないこと' do
       @user.new_record?.should_not be_true
@@ -150,10 +143,10 @@ describe Admin::User, '.make_user_by_uid' do
       @user.password_confirmation == @password_confirmation
     end
     it 'sectionが設定されていること' do
-      @user_profile.section.should == @job_title
+      @user.section.should == @job_title
     end
     it 'emailが設定されていること' do
-      @user_profile.email.should == @email
+      @user.email.should == @email
     end
 end
 
@@ -201,17 +194,17 @@ describe Admin::User, ".make_user_hash_from_csv_line" do
       @options.merge!(:section => "1")
     end
     it "部署を含んだ配列を返す" do
-      Admin::User.send(:make_user_hash_from_csv_line, @line, @options).should == [{:name=>"山田太郎"}, {:section=>"経理", :email=>"yamada@example.com"}, {:uid=>"111111"}]
+      Admin::User.send(:make_user_hash_from_csv_line, @line, @options).should == [{:name=>"山田太郎", :section=>"経理", :email=>"yamada@example.com"}, {:uid=>"111111"}]
     end
   end
   describe "部署をアップデートしない場合" do
     it "部署を含まない配列を返す" do
-      Admin::User.send(:make_user_hash_from_csv_line, @line, @options).should == [{:name=>"山田太郎"}, {:email=>"yamada@example.com"}, {:uid=>"111111"}]
+      Admin::User.send(:make_user_hash_from_csv_line, @line, @options).should == [{:name=>"山田太郎", :email=>"yamada@example.com"}, {:uid=>"111111"}]
     end
   end
   describe "optionsがnilの場合" do
     it "uidのみ入った配列を返す" do
-      Admin::User.send(:make_user_hash_from_csv_line, @line, nil).should == [{}, {}, {:uid=>"111111"}]
+      Admin::User.send(:make_user_hash_from_csv_line, @line, nil).should == [{}, {:uid=>"111111"}]
     end
   end
   describe "emailのみアップデートしない場合" do
@@ -220,7 +213,7 @@ describe Admin::User, ".make_user_hash_from_csv_line" do
       @options = {:name => "1", :section => "1"}
     end
     it "emailのみが設定されていないこと" do
-      Admin::User.send(:make_user_hash_from_csv_line, @line, @options).should == [{:name=>"山田太郎"}, {:section => "経理"}, {:uid=>"111111"}]
+      Admin::User.send(:make_user_hash_from_csv_line, @line, @options).should == [{:name=>"山田太郎", :section => "経理"}, {:uid=>"111111"}]
     end
   end
 end

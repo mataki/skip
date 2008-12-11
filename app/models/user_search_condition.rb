@@ -16,7 +16,7 @@
 # ユーザ検索時に使う検索条件クラス
 class UserSearchCondition < SearchCondition
 
-  @@keys = {:name => 'users.name', :section => 'user_profiles.section', :code => 'user_uids.uid', :introduction => 'user_profiles.self_introduction'}
+  @@keys = {:name => 'users.name', :section => 'users.section', :code => 'user_uids.uid'}
   @@keys.each {|key, val| attr_reader key }
 
   attr_reader :include_manager
@@ -47,7 +47,7 @@ class UserSearchCondition < SearchCondition
   end
 
   def initialize
-    @name = @section = @code = @introduction = ""
+    @name = @section = @code = ""
     @conditions_state = ""
 
     @include_manager = "0"
@@ -61,7 +61,6 @@ class UserSearchCondition < SearchCondition
     @name = params[:name] || ""
     @section = params[:section] || ""
     @code = params[:code] || ""
-    @introduction = params[:introduction] || ""
 
     @include_manager = params[:include_manager] || "0"
     @sort_type = params[:sort_type] || "0"
@@ -138,7 +137,7 @@ class UserSearchCondition < SearchCondition
 
   def value_of_include
     # パフォ劣化のため、user_uidsテーブルとの外部結合をログインIDとログインIDソートに限定した。
-    include_tables = [:user_access, :pictures, :user_uids, :user_profile]
+    include_tables = [:user_access, :pictures, :user_uids]
     include_tables.delete(:user_uids) if @code.empty? && @sort_type == "0"
     include_tables << :group_participations if @with_group
     include_tables

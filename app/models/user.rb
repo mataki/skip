@@ -13,15 +13,17 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+require 'jcode'
+
 class User < ActiveRecord::Base
   include Authentication
   include Authentication::ByCookieToken
-  attr_accessor :old_password, :password
+  attr_accessor :old_password, :password, :new_section
   attr_protected :admin, :status
 
   has_many :group_participations, :dependent => :destroy
   has_many :pictures, :dependent => :destroy
-  has_one  :user_profile, :dependent => :destroy, :validate => true
+  has_many :user_profile_values, :dependent => :destroy
   has_many :tracks, :order => "updated_on DESC", :dependent => :destroy
   has_one  :user_access, :class_name => "UserAccess", :dependent => :destroy
 
@@ -41,6 +43,11 @@ class User < ActiveRecord::Base
   validates_length_of :password, :within => 6..40, :too_short => 'は%d文字以上で入力してください', :too_long => 'は%d文字以下で入力して下さい', :if => :password_required?
 
   validates_presence_of :password_confirmation, :message => 'は必須です', :if => :password_required?
+
+  validates_presence_of :email, :message => 'は必須です'
+  validates_length_of :email, :maximum => 50, :message => 'は50桁以内で入力してください'
+  validates_format_of :email, :message => 'は正しい形式で登録してください', :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/
+  validates_uniqueness_of :email, :message => 'は既に登録されています。'
 
   N_('User|Old password')
   N_('User|Password')
@@ -70,7 +77,6 @@ class User < ActiveRecord::Base
       "name" => "名前",
       "section" => "所属",
       "email" => "メールアドレス",
-      "extension" => "連絡先"
     }
     def human_attribute_name(attribute_key_name)
       HUMANIZED_ATTRIBUTE_KEY_NAMES[attribute_key_name] || super
@@ -86,6 +92,10 @@ class User < ActiveRecord::Base
     alias_method_chain :find, :retired_skip
   end
 
+  def before_validation
+    self.section = self.new_section.tr('ａ-ｚＡ-Ｚ１-９','a-zA-Z1-9').upcase unless self.new_section.blank?
+  end
+
   def before_save
     self.crypted_password = encrypt(password) if password_required?
   end
@@ -96,6 +106,11 @@ class User < ActiveRecord::Base
     return user if user.crypted_password == encrypt(password)
   end
 
+  # Viewで使う所属一覧（セレクトボタン用）
+  def self.grouped_sections
+    all(:select => "section", :group => "section").collect { |user| user.section }
+  end
+
   def self.encrypt(password)
     Digest::SHA1.hexdigest("#{INITIAL_SETTINGS['sha1_digest_key']}--#{password}--")
   end
@@ -104,9 +119,8 @@ class User < ActiveRecord::Base
     params ||= {}
     code = params.delete(:code)
     password = encrypt(params[:code])
-    user = new(params.slice(:name).merge(:password => password, :password_confirmation => password))
+    user = new(params.slice(:name, :email).merge(:password => password, :password_confirmation => password))
     user.user_uids << UserUid.new(:uid => code, :uid_type => 'MASTER')
-    user.user_profile = UserProfile.new(params.slice(:email).merge(:disclosure => false))
     user.openid_identifiers << OpenidIdentifier.new(:url => identity_url)
     user.status = 'UNUSED'
     user
@@ -228,23 +242,6 @@ class User < ActiveRecord::Base
     user_uid ? user_uid.uid : nil
   end
 
-  # プロフィールを返す（プロパティでキャッシュする）
-  def profile
-    unless @profile
-      if self.user_profile.nil?
-        @profile =  UserProfile.new_default
-      else
-        @profile =  self.user_profile
-      end
-    end
-    return @profile
-  end
-
-  # 属性情報とオフ情報のプロフィールを入力しているかどうか
-  def has_profile?
-    !self.user_profile.nil?
-  end
-
   # ユーザ登録時にブログを投稿する
   def create_initial_entry message
     entry_params = {}
@@ -316,8 +313,17 @@ class User < ActiveRecord::Base
     !self.password_reset_token.nil? && Time.now <= self.password_reset_token_expires_at
   end
 
+  def find_or_initialize_profiles(params)
+    UserProfileMaster.all.map do |master|
+      profile_value = user_profile_values.find_or_initialize_by_user_profile_master_id(master.id)
+      profile_value.value = params[master.id.to_s] || ""
+      profile_value
+    end
+  end
+
 protected
-  @@search_cond_keys = [:name, :extension, :section, :code, :email, :introduction]
+  # TODO: self.make_conditionsメソッドは使ってなさそう確認して消す
+  @@search_cond_keys = [:name, :section, :email]
 
   def self.make_conditions(options={})
     options.assert_valid_keys @@search_cond_keys

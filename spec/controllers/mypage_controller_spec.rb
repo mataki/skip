@@ -129,39 +129,67 @@ end
 
 describe MypageController, 'POST #update_profile' do
   before do
-    @profile = stub_model(UserProfile)
-    @profile.stub!(:attributes_for_registration)
-    @profile.stub!(:save!)
     @user = user_login
-    @user.stub!(:save!)
-    @user.stub!(:user_profile).and_return(@profile)
-    @user.stub!(:within_time_limit_of_activation_token?)
+    @profiles = (1..2).map{|i| stub_model(UserProfileValue, :save! => true)}
+    @user.stub!(:find_or_initialize_profiles).and_return(@profiles)
   end
   describe '保存に成功する場合' do
     before do
-      @profile.should_receive(:attributes_for_registration)
-      @profile.should_receive(:save!)
-
-      @user.should_receive(:attributes=).with(params[:user])
+      @user.stub!(:attributes=)
       @user.should_receive(:save!)
-      controller.stub!(:current_user).and_return(@user)
-
-      post :update_profile, {"new_address_2"=>"", "commit"=>"保存", "profile"=>{"birth_month"=>"1", "join_year"=>"2008", "blood_type"=>"1", "extension"=>"111111", "address_1"=>"1", "alma_mater"=>"あああ", "birth_day"=>"1", "gender_type"=>"1", "self_introduction"=>"よろしく", "address_2"=>"あははははははは", "introduction"=>"", "section"=>"TC", "hometown"=>"1"}, "write_profile"=>"true", "action"=>"update_profile", "new_alma_mater"=>"", "controller"=>"mypage", "new_section"=>"", "hobbies"=>["習いごと", "語学", "マンガ", "美容"]}
     end
 
-    it {response.should be_redirect}
-    it {assigns[:user].should_not be_nil}
-    it {assigns[:profile].should_not be_nil}
-    it {assigns[:error_msg].should be_nil}
+    it "userにパラメータからの値が設定されること" do
+      @user.should_receive(:attributes=).with({"section"=>"開発", "new_section" => ""})
+      post_update_profile
+    end
+    it "profileが設定されること" do
+      @user.should_receive(:find_or_initialize_profiles).with({"1"=>"ほげ", "2"=>"ふが"}).and_return(@profiles)
+      post_update_profile
+    end
+    it "profileがそれぞれ保存されること" do
+      @profiles.each{ |profile| profile.should_receive(:save!) }
+      post_update_profile
+    end
+    it "自分のプロフィール表示画面にリダイレクトされること" do
+      post_update_profile
+      response.should redirect_to(:action => 'profile')
+    end
+    it "flashメッセージ「ユーザ情報の更新に成功しました。」と登録されること" do
+      post_update_profile
+      flash[:notice].should == "ユーザ情報の更新に成功しました。"
+    end
+    def post_update_profile
+      post :update_profile, {"user" => {"section"=>"開発"}, "new_section"=>"", "profile_value" => {"1"=>"ほげ", "2"=>"ふが"}}
+    end
   end
   describe '保存に失敗する場合' do
     before do
       @user.should_receive(:save!).and_raise(mock_record_invalid)
       controller.stub!(:current_user).and_return(@user)
-      post :update_profile
     end
-    it {response.should be_success}
-    it {response.should render_template('mypage/_manage_profile')}
+    it "編集画面を再度表示すること" do
+      post :update_profile
+      response.should render_template('mypage/_manage_profile')
+    end
+    it "２つのプロフィールにエラーが設定されている場合、２つのバリデーションエラーが設定されること" do
+      errors = mock('errors', :full_messages => ["バリデーションエラーです"])
+      @profiles.map{ |profile| profile.stub!(:errors).and_return(errors) }
+
+      post :update_profile
+      assigns[:error_msg].grep("バリデーションエラーです").size.should == 2
+    end
+    it "一つだけプロフィールにエラーが設定されている場合、１つのバリデーションエラーのみが設定されること" do
+      errors = mock('errors', :full_messages => ["バリデーションエラーです"])
+      @profiles.last.stub!(:errors).and_return(errors)
+
+      post :update_profile
+      assigns[:error_msg].grep("バリデーションエラーです").size.should == 1
+    end
+    it "プロフィールにエラーが無い場合、バリデーションエラーが設定されていないこと" do
+      post :update_profile
+      assigns[:error_msg].should == assigns[:user].errors.full_messages
+    end
   end
 end
 

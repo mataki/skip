@@ -26,7 +26,7 @@ module UsersHelper
         output << render(render_params)
       end
     else
-      columns = [ 'code', 'uid', 'name', 'email', 'section', 'extension', _('action') ]
+      columns = [ 'code', 'uid', 'name', 'email', 'section', _('action') ]
       columns.delete('code') unless user_name_mode?(:code)
       columns.delete('uid') unless user_name_mode?(:name)
       columns.unshift('') if options[:output_group_participation]
@@ -38,11 +38,9 @@ module UsersHelper
         when 'name'
           user_link_to user
         when 'email'
-          %(<a href="mailto:#{user.user_profile.email}">#{user.user_profile.email}</a>)
+          %(<a href="mailto:#{user.email}">#{user.email}</a>)
         when 'section'
-          h(user.user_profile.section)
-        when 'extension'
-          h(user.user_profile.extension)
+          h(user.section)
         when _('action')
           link_to(icon_tag('transmit_go', :title => _('アンテナに追加')), {:controller => "antenna", :action => "select_antenna", :symbol => user.symbol, :dummy => '.html'}, {:class => "nyroModal"}) +
           link_to(icon_tag('tag_blue_add', :title=>'ブックマークする'), {:controller => "bookmark", :action => "edit", :url => user.get_postit_url, :title => user.name, :dummy => '.html'}, {:class => "nyroModal"})

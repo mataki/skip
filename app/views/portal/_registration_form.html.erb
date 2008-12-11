@@ -4,26 +4,6 @@
 
 <%= render(:partial => "system/error_messages_for", :locals => { :messages => @error_msg }) if @error_msg %>
 
-<style type="text/css">
-div.subtitle {
-  border-left: 10px solid #aaaaff;
-  border-bottom: 1px solid #aaaaff;
-  padding-left: 5px;
-  padding-top: 3px;
-  margin-bottom: 5px;
-  font-weight: bold;
-}
-table.normal {
-  margin-bottom: 10px;
-}
-.example {
-  text-align: right;
-  font-weight: normal;
-  margin-left: 13px;
-  color: gray;
-}
-</style>
-
 <div class="subtitle">アカウント情報</div>
 
 <table id="user_info_box" class="normal" border="1">
@@ -38,8 +18,16 @@ table.normal {
     <td><%=h @user.name %></td>
   </tr>
   <tr>
-    <th width="100px"><label for="user_email"><%=h _('UserProfile|Email') %></label></th>
-    <td><%=h @profile.email %><span style="margin-left: 20px;"><%= link_to "[変更する]", :action=> 'manage', :menu => 'manage_email' if !is_new && Admin::Setting.mail_function_setting %></span></td>
+    <th width="100px"><label for="user_email"><%=h _('User|Email') %></label></th>
+    <td><%=h @user.email %><span style="margin-left: 20px;"><%= link_to "[変更する]", :action=> 'manage', :menu => 'manage_email' if !is_new && Admin::Setting.mail_function_setting %></span></td>
+  </tr>
+  <tr>
+    <th width="100px"><label for="user_section"><%=h _('User|Section') %></label></th>
+    <td>
+    <% if sections = User.grouped_sections %>
+      <%= select("user", "section", sections, {}, {:tabindex => (tabindex += 1)}) -%><br/>
+    <% end %>
+      [選択に無い場合] ： <%= text_field_tag "new_section", params[:new_section], :size => 10, :tabindex => (tabindex += 1) %> （次回以降選択項目になります）
   </tr>
   <% if user_name_mode?(:name) -%>
   <tr>
@@ -73,111 +61,15 @@ table.normal {
 <% end -%>
 </table>
 
-<div class="subtitle">基本情報</div>
+<%= render :partial => 'portal/profile_form', :locals => {:user => @user} %>
 
-<table id="user_info_box" class="normal" border="1" style="width: 600px;">
-  <tr>
-    <th width="100px"><label for="profile_section"><%=h _('UserProfile|Section') %></label></th>
-    <td>
-    <% if sections = UserProfile.grouped_sections %>
-      <%= select("profile", "section", sections, {}, {:tabindex => (tabindex += 1)}) -%><br/>
-    <% end %>
-      [選択に無い場合] ： <%= text_field_tag "new_section", params[:new_section], :size => 10, :tabindex => (tabindex += 1) %> （次回以降選択項目になります）</td>
-  </tr>
-  <tr>
-    <th width="100px"><label for="profile_extension"><%=h _('UserProfile|Extension') %></label></div></th>
-    <td><%= text_field 'profile', 'extension', :size => 10, :tabindex => (tabindex += 1) %></td>
-  </tr>
-  <tr>
-    <th width="100px"><label for="profile_self_introduction"><%=h _('UserProfile|Self introduction') %></label><div class="example" style="margin-top: 10px;">現在の業務や今までの仕事、興味や関心のある事柄などについて書いてください</div></th>
-    <td><%= text_area 'profile', 'self_introduction', :class => 'invisible', :tabindex => (tabindex += 1) %></td>
-  </tr>
-</table>
-
-<div class="subtitle">属性情報<span style="margin-left: 30px;font-weight: normal;">(属性情報を入力する・・・登録済みの場合、チェックを外して保存を実行すると非公開となります ： <%= check_box_tag("write_profile", "true", ( @profile.disclosure || params[:write_profile] )) -%>)</span></div>
-<div id="profile_box" style="display: block;">
-<table id="user_info_box" class="normal" border="1" style="width: 600px;">
-  <tr>
-    <th width="100px"><label for="profile_gender_type_1">性別</label></th>
-    <td><%= radio_buttons("profile", "gender_type", UserProfile.select_gender_type, :tabindex => (tabindex += 1)) -%></td>
-  </tr>
-  <tr>
-    <th><label for="profile_join_year">入社年度</label></th>
-    <td><%= select("profile", "join_year", UserProfile.select_join_year, {}, {:tabindex => (tabindex += 1)}) %> 年度入社</td>
-  </tr>
-
-  <tr>
-    <th><label for="profile_birth_month">誕生日</label></th>
-    <td><%= select("profile", "birth_month", 1..12, {}, {:tabindex => (tabindex += 1)}) %> 月
-      <%= select("profile", "birth_day", 1..31, {}, {:tabindex => (tabindex += 1)}) %> 日</td>
-  </tr>
-  <tr>
-    <th><label for="profile_blood_type_1">血液型</label></th>
-    <td><%= radio_buttons("profile", "blood_type", UserProfile.select_blood_type, :tabindex => (tabindex += 1)) -%></td>
-  </tr>
-
-  <tr>
-    <th><label for="profile_hometown">出身地</label></th>
-    <td><%= select("profile", "hometown", UserProfile.select_todouhuken, {}, {:tabindex => (tabindex += 1)}) -%></td>
-  </tr>
-  <tr>
-    <th><label for="profile_alma_mater">出身校</label><div class="example">例：xx大学</div></th>
-    <td><%= select("profile", "alma_mater", UserProfile.select_alma_mater, {}, {:tabindex => (tabindex += 1)}) -%><span style="color:gray;font-size:10px">(既に登録されているユーザのデータから抽出しています)</span><br/>
-      [選択に無い場合] ： <%= text_field_tag "new_alma_mater", "", :size => 30, :tabindex => (tabindex += 1) %>
-    <div class="desc">xx大学などの大体の内容で構いません（同窓生がわかる程度）</div></td>
-  </tr>
-
-  <tr>
-    <th><label for="profile_address_1">現住所１</label></th>
-    <td><%= select("profile", "address_1", UserProfile.select_todouhuken, {}, {:tabindex => (tabindex += 1)}) -%></td>
-  </tr>
-  <tr>
-    <th><label for="profile_address_2">現住所２</label><div class="example">例：xx区<br/>xx市</div></th>
-    <td><%= select("profile", "address_2", UserProfile.select_address_2, {}, {:tabindex => (tabindex += 1)}) -%><span style="color:gray;font-size:10px">(既に登録されているユーザのデータから抽出しています)</span><br/>
-      [選択に無い場合] ： <%= text_field_tag "new_address_2", "", :size => 30, :tabindex => (tabindex += 1) %>
-    <div class="desc">xx区などの大体の内容で構いません（ご近所さんがわかる程度）</div></td>
-  </tr>
-</table>
-
-<div class="subtitle">オフ情報　（入力は必須ではありません）</div>
-
-<table id="user_info_box" class="normal" border="1" style="width: 600px;">
-  <tr>
-    <th width="100px"><label for="hobbies[]">趣味</label></th>
-    <td>
-      <% index = 0; UserProfile.hobbies.each do |hobby_name| -%>
-        <%= check_box_tag("hobbies[]", hobby_name, @profile.check_hobby(hobby_name), :tabindex => (tabindex += 1)) + hobby_name -%>
-        <% index += 1 %>
-        <%= '<br/>' if (index % 5) == 0 -%>
-      <% end -%></td>
-  </tr>
-  <tr>
-    <th width="100px"><label for="profile_introduction">オフの私</label><div class="example" style="margin-top: 10px;">趣味の詳しい内容や、休日の過ごし方など、オフのあなたを少しだけ教えてください</div></th>
-    <td><%= text_area "profile", "introduction", :class => 'invisible', :tabindex => (tabindex += 1) %></td>
-  </tr>
-</table>
-</div>
 <% submit_button_value = is_new ? "ユーザ登録" : "保存" %>
 <%= submit_tag submit_button_value, {:tabindex => (tabindex += 1), :id => 'submit_button'} %>
 <% end %>
 </div>
 
-<%= skip_javascript_include_tag "fckeditor/fckeditor" %>
 <script type="text/javascript">
 $j(function(){
-    FCKeditor.BasePath = platform_url_root + "/javascripts/skip/fckeditor/";
-    new FCKeditor('profile_self_introduction', '100%', '430', 'Light').ReplaceTextarea();
-    new FCKeditor('profile_introduction', '100%', '430', 'Light').ReplaceTextarea();
-
-    // プロフィール入力の表示、非表示を切り替える
-    var toggleProfileBox = function() {
-        if($j('#write_profile').attr('checked')) {
-            $j('#profile_box').show();
-        } else {
-            $j('#profile_box').hide();
-        }
-    };
-
     $j('#user_uid_uid')
     .keyup(function() {
         $j.ajax({
@@ -197,13 +89,5 @@ $j(function(){
     .ajaxStart(function() {
         $j('#indicator').css({ display:'inline' });
     });
-
-    $j('#write_profile')
-    .click(function() {
-        toggleProfileBox();
-    });
-
-    // 以下はロード時の処理
-    toggleProfileBox();
 });
 </script>

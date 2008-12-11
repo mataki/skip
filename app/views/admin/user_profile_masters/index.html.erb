@@ -1,0 +1,36 @@
+<%= render :partial => '/admin/contents_left' %>
+<% content_for :topic_path do -%>
+<%= render :partial => '/admin/shared/topic_path' %>
+<% end -%>
+<% content_for :contents_right do -%>
+<div class="box tabular">
+  <%= render :partial => '/admin/shared/sortable_table',
+             :locals => {
+               :columns => %w[user_profile_master_category_id name input_type required description option_values sort_order],
+               :disp_columns_proc => lambda do |object,column|
+      case column
+      when "user_profile_master_category_id"
+        h object.user_profile_master_category.name
+      when "input_type"
+        _("UserProfileMaster|Input type|#{object.input_type}")
+      when "required"
+        _("UserProfileMaster|Required|#{object.required}")
+      else
+        object.send(column.to_sym)
+      end
+    end,
+               :objects => @user_profile_masters,
+               :class_name => 'Admin::UserProfileMaster',
+               :link_elem_size => 2,
+               :link_elem_proc => lambda { |object|
+      result = ""
+      result << content_tag(:td, link_to(_("Edit"), edit_admin_user_profile_master_path(object)) )
+      result << content_tag(:td, link_to(_("Destroy"), object, {:confirm => _('このプロフィール項目を登録したユーザが存在する場合、その登録情報も同時に削除されます。このプロフィール項目を削除しても宜しいですか?'), :method => :delete}) )
+      result
+    }
+             }
+  -%>
+</div>
+<br />
+<%= link_to_if UserProfileMasterCategory.count > 0, _('New %{model}') % {:model => _('user profile master')}, new_admin_user_profile_master_path %> |
+<% end -%>

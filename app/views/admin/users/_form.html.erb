@@ -1,4 +1,4 @@
-<%= error_messages_for :user, :user_profile %>
+<%= error_messages_for :user %>
 
 <p>
   <%= label Admin::UserUid.name, :uid, _("Admin::User|User uids") %>
@@ -40,13 +40,14 @@
 </p>
 <% end -%>
 <p>
-  <%= label Admin::UserProfile.name, :email %>
-  <% if @user.new_record? -%>
-  :<%= text_field :user_profile, :email %>
-  <%= help_icon Admin::UserProfile.name, :email %>
-  <% else -%>
-  :<%=h @user.user_profile.email %>
-  <% end -%>
+  <%= label Admin::User.name, :email %>
+  <%= text_field :user, :email %>
+  <%= help_icon Admin::User.name, :email %>
+</p>
+<p>
+  <%= label Admin::User.name, :section %>
+  <%= text_field :user, :section %>
+  <%= help_icon :user, :section %>
 </p>
 <% if !Admin::Setting.mail_function_setting && @user.active? && login_mode?(:password) -%>
 <p>

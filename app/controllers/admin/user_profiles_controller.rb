@@ -14,13 +14,37 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Admin::UserProfilesController < Admin::ApplicationController
-  include Admin::AdminModule::AdminRootModule
-
-  def show
-    redirect_to admin_user_profiles_path
+  def edit
+    user = Admin::User.find(params[:user_id])
+    @profiles = user.user_profile_values
+    @topics = [[_('Listing %{model}') % {:model => _('user')}, admin_users_path],
+               [_('Editing %{model}') % {:model => user.name}, edit_admin_user_path(user)],
+               [_('Editing %{model}') % {:model => _('user profile')}]]
+    render :action => :edit
   end
 
-  undef new
-  undef create
-  undef destroy
+  def update
+    user = Admin::User.find(params[:user_id])
+    @profiles = user.find_or_initialize_profiles(params[:profile_value])
+
+    begin
+      Admin::UserProfileValue.transaction do
+        @profiles.each{|profile| profile.save!}
+      end
+
+      flash[:notice] = _("%{model} was successfully updated.") % {:model => _('user profile') }
+      redirect_to :action => :edit
+    rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => e
+      @error_msg = @profiles.map{ |profile| profile.valid?; profile.errors.full_messages }.flatten
+      @topics = [[_('Listing %{model}') % {:model => _('user')}, admin_users_path],
+               [_('Editing %{model}') % {:model => user.name}, edit_admin_user_path(user)],
+                 [_('Editing %{model}') % {:model => _('user profile')}]]
+      render :action => :edit
+    end
+  end
+
+  alias :show :edit
+  alias :new :edit
+  alias :create :update
 end
+

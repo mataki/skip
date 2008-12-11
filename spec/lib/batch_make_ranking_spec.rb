@@ -246,7 +246,6 @@ describe BatchMakeRanking do
 
   def setup_test_data
     @user = create_user(:user_options => {:name => 'とあるゆーざ', :status => 'ACTIVE'},
-                        :user_profile_options => {},
                         :user_uid_options => {:uid => SkipFaker.rand_char})
     @board_entry = create_board_entry(:user_id => @user.id)
     @board_entry_point = create_board_entry_point(:board_entry_id => @board_entry.id, :updated_on => Time.now)

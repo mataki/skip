@@ -4,11 +4,13 @@
 <% end -%>
 <% content_for :contents_right do -%>
 
-<div class="box tabular">
-  <% form_for(@user_profile) do |f| %>
-  <%= render :partial => f %>
+<%= render(:partial => "system/error_messages_for", :locals => { :messages => @error_msg }) if @error_msg %>
+
+<div class="box">
+  <% form_tag({:action => :update}, {:method => :put}) do %>
+  <%= render :partial => "portal/profile_form" %>
   <p>
-  <%= f.submit _('Update'), :disable_with => _('Updating...') %>
+    <%= submit_tag _('Update'), :disable_with => _('Updating...') %>
   </p>
   <% end %>
 </div>

@@ -462,14 +462,14 @@ class BoardEntry < ActiveRecord::Base
       when "uid"
         user = User.find_by_uid(symbol)
         if user
-          to_address = user.user_profile.email
+          to_address = user.email
           to_address_name = user.name
           to_address_symbol = user.symbol
         end
       when "gid"
         group = Group.find_by_gid(symbol, :include => [{ :group_participations => :user }])
         if group
-          group.group_participations.each { |participation| to_address << participation.user.user_profile.email + "," unless participation.waiting }
+          group.group_participations.each { |participation| to_address << participation.user.email + "," unless participation.waiting }
           to_address = to_address.chop
           to_address_name = group.name
           to_address_symbol = group.symbol

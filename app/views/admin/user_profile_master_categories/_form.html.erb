@@ -1,0 +1,16 @@
+<%= error_messages_for :user_profile_master_category %>
+<p>
+  <%= form.label :name %>
+  <%= form.text_field :name %>
+  <%= form.help_icon :name %>
+</p>
+<p>
+  <%= form.label :description %>
+  <%= form.text_area :description, :rows => 5 %>
+  <%= form.help_icon :description %>
+</p>
+<p>
+  <%= form.label :sort_order %>
+  <%= form.text_field :sort_order %>
+  <%= form.help_icon :sort_order %>
+</p>

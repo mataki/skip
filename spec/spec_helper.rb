@@ -74,12 +74,10 @@ def user_login
   session[:user_code] = '111111'
   session[:prepared] = true
   u = stub_model(User)
-  up = stub_model(UserProfile)
   u.stub!(:admin).and_return(false)
   u.stub!(:active?).and_return(true)
   u.stub!(:name).and_return('ユーザ')
   u.stub!(:crypted_password).and_return('123456789')
-  u.stub!(:user_profile).and_return(up)
   if defined? controller
     controller.stub!(:current_user).and_return(u)
   else
@@ -97,12 +95,8 @@ end
 
 def create_user options = {}
   options[:user_options] ||= {}
-  user = User.new({ :name => 'ほげ ほげ', :password => 'password', :password_confirmation => 'password', :password_reset_token => nil}.merge(options[:user_options]))
+  user = User.new({ :name => 'ほげ ほげ', :password => 'password', :password_confirmation => 'password', :password_reset_token => nil, :email => SkipFaker.email, :section => 'Programmer'}.merge(options[:user_options]))
   user.status = options[:status] || 'ACTIVE'
-  if options[:user_profile_options]
-    user_profile = UserProfile.new({ :email => 'example@skip.org', :section => 'Programmer', :disclosure => true }.merge(options[:user_profile_options]))
-    user.user_profile = user_profile
-  end
   if options[:user_uid_options]
     user_uid = UserUid.new({ :uid => '123456', :uid_type => 'MASTER' }.merge(options[:user_uid_options]))
     user.user_uids << user_uid
@@ -115,13 +109,11 @@ def unused_user_login
   session[:user_code] = '111111'
   session[:prepared] = true
   u = stub_model(User)
-  up = stub_model(UserProfile)
   u.stub!(:admin).and_return(false)
   u.stub!(:active?).and_return(false)
   u.stub!(:unused?).and_return(true)
   u.stub!(:name).and_return('未登録ユーザ')
   u.stub!(:crypted_password).and_return('123456789')
-  u.stub!(:user_profile).and_return(up)
   if defined? controller
     controller.stub!(:current_user).and_return(u)
   else
@@ -181,6 +173,25 @@ def mock_uploaed_file options = {}
   # 以下をやらないとパラメータの中身がHashかどうかのチェックがらしく、リクエストが飛ばなくなるので
   file.stub!(:is_a?).with(Hash).and_return(false)
   file
+end
+
+def create_user_profile_master_category(options = {})
+  profile_master_category = UserProfileMasterCategory.new({
+    :name => '基本情報',
+    :description => '基本情報のカテゴリです'
+  }.merge(options))
+  profile_master_category.save!
+  profile_master_category
+end
+
+def create_user_profile_master(options = {})
+  profile_master = UserProfileMaster.new({
+    :user_profile_master_category_id => 1,
+    :name => '自己紹介',
+    :input_type => 'richtext'
+  }.merge(options))
+  profile_master.save_without_validation!
+  profile_master
 end
 
 ######skip関連のテストで必要

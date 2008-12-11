@@ -31,9 +31,7 @@ describe BatchSendMails, '#send_notice' do
         user.should_receive(:retired?).and_return(true)
         User.should_receive(:find).and_return(user)
         to_user = stub_model(User)
-        to_user_profile = stub_model(UserProfile)
-        to_user_profile.stub!(:user).and_return(to_user)
-        UserProfile.stub!(:find_by_email).and_return(to_user_profile)
+        User.stub!(:find_by_email).and_return(to_user)
       end
       it '対象のMailsテーブルのレコードが送信済みとなること' do
         @mail.should_receive(:update_attribute).with(:send_flag,true)
@@ -53,7 +51,7 @@ describe BatchSendMails, '#send_notice' do
       end
       describe '送信先アドレスが見つからない場合' do
         before do
-          UserProfile.stub!(:find_by_email).and_return(nil)
+          User.stub!(:find_by_email).and_return(nil)
         end
         it "対象のMailsテーブルのレコードが送信済みになること" do
           @mail.should_receive(:update_attribute).with(:send_flag,true)
@@ -70,9 +68,7 @@ describe BatchSendMails, '#send_notice' do
           before do
             to_user = stub_model(User)
             to_user.stub!(:retired?).and_return(true)
-            to_user_profile = stub_model(UserProfile)
-            to_user_profile.stub!(:user).and_return(to_user)
-            UserProfile.stub!(:find_by_email).and_return(to_user_profile)
+            User.stub!(:find_by_email).and_return(to_user)
           end
           it '対象のMailsテーブルのレコードが送信済みとなること' do
             @mail.should_receive(:update_attribute).with(:send_flag,true)
@@ -88,9 +84,7 @@ describe BatchSendMails, '#send_notice' do
           before do
             to_user = stub_model(User)
             to_user.stub!(:retired?).and_return(false)
-            to_user_profile = stub_model(UserProfile)
-            to_user_profile.stub!(:user).and_return(to_user)
-            UserProfile.stub!(:find_by_email).and_return(to_user_profile)
+            User.stub!(:find_by_email).and_return(to_user)
           end
           describe BatchSendMails, "送信元ユーザの記事がある場合" do
             before do
@@ -152,8 +146,7 @@ describe BatchSendMails, '#send_message' do
       end
       describe 'ユーザが退職していない場合' do
         before do
-          @user_profile = stub_model(UserProfile, :email => SkipFaker.email)
-          @user = stub_model(User, :retired? => false, :user_profile => @user_profile)
+          @user = stub_model(User, :retired? => false, :email => SkipFaker.email)
           User.should_receive(:find).and_return(@user)
           UserMailer.stub!(:deliver_sent_message)
         end
@@ -163,7 +156,7 @@ describe BatchSendMails, '#send_message' do
           @sender.send_message
         end
         it 'メールが送信されること' do
-          UserMailer.should_receive(:deliver_sent_message).with(@user_profile.email, "#{Admin::Setting.protocol_by_initial_settings_default}#{Admin::Setting.host_and_port_by_initial_settings_default + @message.link_url}", @message.message, "#{Admin::Setting.protocol_by_initial_settings_default}#{Admin::Setting.host_and_port_by_initial_settings_default}/mypage/manage?menu=manage_message")
+          UserMailer.should_receive(:deliver_sent_message).with(@user.email, "#{Admin::Setting.protocol_by_initial_settings_default}#{Admin::Setting.host_and_port_by_initial_settings_default + @message.link_url}", @message.message, "#{Admin::Setting.protocol_by_initial_settings_default}#{Admin::Setting.host_and_port_by_initial_settings_default}/mypage/manage?menu=manage_message")
           @sender.send_message
         end
       end

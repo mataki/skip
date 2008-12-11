@@ -1,0 +1,40 @@
+<%= error_messages_for :user_profile_master %>
+<p>
+  <%= form.label :user_profile_master_category_id %>
+  <%= form.select :user_profile_master_category_id, category_options %>
+  <%= form.help_icon :user_profile_master_category_id %>
+</p>
+<p>
+  <%= form.label :name %>
+  <%= form.text_field :name %>
+  <%= form.help_icon :name %>
+</p>
+<p>
+  <%= form.label :input_type %>
+  <% if @user_profile_master.new_record? -%>
+    <%= form.select :input_type , UserProfileMaster.input_type_option %>
+  <% else -%>
+    <%= _(@user_profile_master.input_type) %>
+  <% end -%>
+  <%= form.help_icon :input_type %>
+</p>
+<p>
+  <%= form.label :required %>
+  <%= form.check_box :required %>
+  <%= form.help_icon :required %>
+</p>
+<p>
+  <%= form.label :description %>
+  <%= form.text_area :description, :rows => 5 %>
+  <%= form.help_icon :description %>
+</p>
+<p>
+  <%= form.label :option_values %>
+  <%= form.text_area :option_values, :rows => 5 %>
+  <%= form.help_icon :option_values %>
+</p>
+<p>
+  <%= form.label :sort_order %>
+  <%= form.text_field :sort_order %>
+  <%= form.help_icon :sort_order %>
+</p>

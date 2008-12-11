@@ -34,11 +34,9 @@ class PortalController < ApplicationController
       @user = User.new
       session[:entrance_next_action] = :account_registration
     when :registration
-      params[:write_profile] = true
-      params[:hobbies] = Array.new
       @user = current_user
-      @profile = (@user.user_profile || UserProfile.new_default)
-      @user_uid = (UserUid.new({ :uid => @profile.email.split('@').first }))
+      @profiles = @user.user_profile_values
+      @user_uid = (UserUid.new({ :uid => @user.email.split('@').first }))
     end
     render :action => session[:entrance_next_action]
   end
@@ -56,6 +54,7 @@ class PortalController < ApplicationController
   #ユーザ登録処理
   def apply
     @user = current_user
+    params[:user][:new_section] = params[:new_section] if params[:user]
     @user.attributes = params[:user]
     if @user.within_time_limit_of_activation_token?
       @user.crypted_password = nil
@@ -63,8 +62,7 @@ class PortalController < ApplicationController
       @user.password_confirmation = params[:user][:password_confirmation]
     end
 
-    @profile = @user.user_profile
-    @profile.attributes_for_registration(params)
+    @profiles = @user.find_or_initialize_profiles(params[:profile_value])
 
     User.transaction do
       if INITIAL_SETTINGS['username_use_setting']
@@ -74,16 +72,16 @@ class PortalController < ApplicationController
 
       @user.status = 'ACTIVE'
       @user.save!
-      @profile.save!
+      @profiles.each{|profile| profile.save!}
 
       Antenna.create_initial!(@user)
 
       message = render_to_string(:partial => 'entries_template/user_signup',
-                                 :locals => { :user_name => @user.name, :user_introduction => @user.user_profile.self_introduction})
+                                 :locals => { :user => @user })
       @user.create_initial_entry(message)
 
       UserAccess.create!(:user_id => @user.id, :last_access => Time.now, :access_count => 0)
-      UserMailer.deliver_sent_signup_confirm(@user.user_profile.email, @user.code, root_url)
+      UserMailer.deliver_sent_signup_confirm(@user.email, @user.code, root_url)
 
       @user.activate!
 
@@ -92,9 +90,9 @@ class PortalController < ApplicationController
     end
   rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => e
     @error_msg = []
-    @error_msg.concat @user.errors.full_messages.reject{|msg| msg.include?("User uid") || msg.include?("User profile") } unless @user.valid?
+    @error_msg.concat @user.errors.full_messages.reject{|msg| msg.include?("User uid") } unless @user.valid?
     @error_msg.concat @user_uid.errors.full_messages if @user_uid and @user_uid.errors
-    @error_msg.concat @profile.errors.full_messages if @profile and @profile.errors
+    @error_msg.concat @profiles.map{|profile| profile.errors.full_messages}.flatten
 
     render :action => :registration
   end
@@ -122,9 +120,8 @@ class PortalController < ApplicationController
         redirect_to :action => :index
       else
         @error_msgs = []
-        @error_msgs.concat @user.errors.full_messages.reject{|msg| msg.include?("User uid") || msg.include?("User profile") } unless @user.valid?
+        @error_msgs.concat @user.errors.full_messages.reject{|msg| msg.include?("User uid") } unless @user.valid?
         @error_msgs.concat @user.user_uids.first.errors.full_messages unless @user.user_uids.first.errors.empty?
-        @error_msgs.concat @user.user_profile.errors.full_messages unless @user.user_profile.errors.empty?
         render :action => :account_registration
       end
     end

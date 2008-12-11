@@ -74,12 +74,11 @@ class PlatformController < ApplicationController
       flash.now[:error] = _('メールアドレスは必須です。')
       return render(:layout => 'not_logged_in')
     end
-    if @user_profile = UserProfile.find_by_email(email)
-      if @user_profile.user
-        user = @user_profile.user
-        user.forgot_password
-        user.save!
-        UserMailer.deliver_sent_forgot_password(email, reset_password_url(user.password_reset_token))
+    if @user = User.find_by_email(email)
+      if @user.active?
+        @user.forgot_password
+        @user.save!
+        UserMailer.deliver_sent_forgot_password(email, reset_password_url(@user.password_reset_token))
         flash[:notice] = _("パスワードリセットのためのURLを記載したメールを%{email}宛てに送信しました。") % {:email => email}
         redirect_to :controller => '/platform'
       else
@@ -128,9 +127,9 @@ class PlatformController < ApplicationController
       flash.now[:error] = _('メールアドレスは必須です。')
       return render(:layout => 'not_logged_in')
     end
-    if @user_profile = UserProfile.find_by_email(email)
-      if @user_profile.user
-        login_id = @user_profile.user.code
+    if @user = User.find_by_email(email)
+      if @user.active?
+        login_id = @user.code
         UserMailer.deliver_sent_forgot_login_id(email, login_id)
         flash[:notice] = _("ログインIDを記載したメールを%{email}宛てに送信しました。") % {:email => email}
         redirect_to :controller => '/platform'
@@ -155,11 +154,11 @@ class PlatformController < ApplicationController
       flash.now[:error] = _('メールアドレスは必須です。')
       return render(:layout => 'not_logged_in')
     end
-    if @user_profile = UserProfile.find_by_email(email)
-      if user = @user_profile.unused_user
-        user.issue_activation_code
-        user.save!
-        UserMailer.deliver_sent_activate(email, signup_url(user.activation_token))
+    if @user = User.find_by_email(email)
+      if  @user.unused?
+        @user.issue_activation_code
+        @user.save!
+        UserMailer.deliver_sent_activate(email, signup_url(@user.activation_token))
         flash[:notice] = _("ユーザ登録のためのURLを記載したメールを%{email}宛てに送信しました。") % {:email => email}
         redirect_to :controller => '/platform'
       else

@@ -119,11 +119,10 @@ describe User, ".new_with_identity_url" do
       @user = User.new_with_identity_url(@identity_url, @params)
     end
     it { @user.should_not be_valid }
-    it "エラーがUserUidとUserProfileに設定されていること" do
+    it "userにエラーが設定されていること" do
       @user.valid?
-      @user.errors.full_messages.size.should == 2
+      @user.errors.full_messages.size.should == 3
     end
-    it { @user.user_profile.should_not be_nil }
   end
 end
 
@@ -309,7 +308,123 @@ describe User, '#within_time_limit_of_activation_token' do
   end
 end
 
+describe User, '.grouped_sections' do
+  before do
+    User.delete_all
+    create_user :user_options => {:email => SkipFaker.email, :section => 'Programmer'}, :user_uid_options => {:uid => SkipFaker.rand_num(6)}
+    create_user :user_options => {:email => SkipFaker.email, :section => 'Programmer'}, :user_uid_options => {:uid => SkipFaker.rand_num(6)}
+    create_user :user_options => {:email => SkipFaker.email, :section => 'Tester'}, :user_uid_options => {:uid => SkipFaker.rand_num(6)}
+  end
+  it {User.grouped_sections.size.should == 2}
+end
+
+describe User, "#section" do
+  before do
+    @user = User.new
+    @attr = { :email => SkipFaker.email, :name => "名字 名前" }
+  end
+  describe "new_sectionがわたってきた場合" do
+    it "new_sectionがsectionに登録されること" do
+      @user.attributes = @attr.merge!(:section => "select_section", :new_section => "input_section")
+      @user.save!
+      @user.section.should == "INPUT_SECTION"
+    end
+    describe "全角のnew_sectionの場合" do
+      it "半角に統一されて登録されること" do
+        @user.attributes = @attr.merge!(:section => "select_section", :new_section => "INＰUＴ_部署")
+        @user.save!
+        @user.section.should == "INPUT_部署"
+      end
+    end
+  end
+  describe "new_sectionがわたってきていない場合" do
+    it "select_sectionがそのまま利用されること" do
+      @user.attributes = @attr.merge!(:section => "select_section")
+      @user.save!
+      @user.section.should == "select_section"
+    end
+  end
+  describe "new_sectionが空でわたってきた場合" do
+    it "select_sectionがそのまま利用されること" do
+      @user.attributes = @attr.merge!(:section => "select_section", :new_section => "")
+      @user.save!
+      @user.section.should == "select_section"
+    end
+  end
+end
+
+describe User, "#find_or_initialize_profiles" do
+  before do
+    @user = new_user
+    @user.save!
+    @masters = (1..3).map{|i| create_user_profile_master(:name => "master#{i}")}
+    @master_1_id = @masters[0].id
+    @master_2_id = @masters[1].id
+  end
+  describe "設定されていないプロフィールがわたってきた場合" do
+    it "新規に作成される" do
+      @user.find_or_initialize_profiles(@master_1_id.to_s => "ほげ").should_not be_empty
+    end
+    it "新規の値が設定される" do
+      @user.find_or_initialize_profiles(@master_1_id.to_s => "ほげ")
+      @user.user_profile_values.each do |values|
+        values.value.should == "ほげ" if values.user_profile_master_id == @master_1_id
+      end
+    end
+    it "保存されていないprofile_valueが返される" do
+      profiles = @user.find_or_initialize_profiles(@master_1_id.to_s => "ほげ")
+      profiles.first.should be_is_a(UserProfileValue)
+      profiles.first.value.should == "ほげ"
+      profiles.first.should be_new_record
+    end
+  end
+  describe "既に存在するプロフィールがわたってきた場合" do
+    before do
+      @user.user_profile_values.create(:user_profile_master_id => @master_1_id, :value => "ふが")
+    end
+    it "上書きされたものが返される" do
+      profiles = @user.find_or_initialize_profiles(@master_1_id.to_s => "ほげ")
+      profiles.first.should be_is_a(UserProfileValue)
+      profiles.first.value.should == "ほげ"
+      profiles.first.should be_changed
+    end
+  end
+  describe "新規の値と保存された値が渡された場合" do
+    before do
+      @user.user_profile_values.create(:user_profile_master_id => @master_1_id, :value => "ふが")
+      @profiles = @user.find_or_initialize_profiles(@master_1_id.to_s => "ほげ", @master_2_id.to_s => "ほげほげ")
+    end
+    it "保存されていたmaster_idが1のvalueは上書きされていること" do
+      @profiles.each do |profile|
+        if profile.user_profile_master_id == @master_1_id
+          profile.value.should == "ほげ"
+        end
+      end
+    end
+    it "新規のmaster_idが2のvalueは新しく作られていること" do
+      @profiles.each do |profile|
+        if profile.user_profile_master_id == @master_2_id
+          profile.value.should == "ほげほげ"
+        end
+      end
+    end
+  end
+  describe "マスタに存在する値がパラメータで送られてこない場合" do
+    before do
+      @user.user_profile_values.create(:user_profile_master_id => @master_1_id, :value => "ほげ")
+      @profiles = @user.find_or_initialize_profiles({})
+      @profile_hash = @profiles.index_by(&:user_profile_master_id)
+    end
+    it "空が登録されること" do
+      @profile_hash[@master_1_id].value.should == ""
+    end
+    it "マスタの数だけprofile_valuesが返ってくること" do
+      @profiles.size.should == @masters.size
+    end
+  end
+end
+
 def new_user options = {}
-  User.new({ :name => 'ほげ ほげ', :password => 'password', :password_confirmation => 'password'}.merge(options))
+  User.new({ :name => 'ほげ ほげ', :password => 'password', :password_confirmation => 'password', :email => SkipFaker.email, :section => 'Tester',}.merge(options))
 end
 

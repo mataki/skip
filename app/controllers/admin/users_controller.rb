@@ -23,7 +23,6 @@ class Admin::UsersController < Admin::ApplicationController
 
   def new
     @user = Admin::User.new
-    @user_profile = Admin::UserProfile.new
     @user_uid = Admin::UserUid.new
     @topics = [[_('Listing %{model}') % {:model => _('user')}, admin_users_path], _('New %{model}') % {:model => _('user')}]
   end
@@ -31,7 +30,7 @@ class Admin::UsersController < Admin::ApplicationController
   def create
     begin
       Admin::User.transaction do
-        @user, @user_profile, @user_uid = Admin::User.make_new_user({:user => params[:user], :user_profile => params[:user_profile], :user_uid => params[:user_uid]})
+        @user, @user_uid = Admin::User.make_new_user({:user => params[:user], :user_uid => params[:user_uid]})
         @user.save!
       end
       flash[:notice] = _('登録しました。')
@@ -44,7 +43,6 @@ class Admin::UsersController < Admin::ApplicationController
 
   def edit
     @user = Admin::User.find(params[:id])
-    @user_profile = @user.user_profile
     @user_uid = @user.master_user_uid
 
     @topics = [[_('Listing %{model}') % {:model => _('user')}, admin_users_path],
@@ -89,13 +87,12 @@ class Admin::UsersController < Admin::ApplicationController
     if valid_activation_code? params[:code]
       if request.get?
         @user = Admin::User.new
-        @user_profile = Admin::UserProfile.new
         @user_uid = Admin::UserUid.new
         render :layout => 'not_logged_in'
       else
         begin
           Admin::User.transaction do
-            @user, @user_profile, @user_uid = Admin::User.make_user({:user => params[:user], :user_profile => params[:user_profile], :user_uid => params[:user_uid]}, true)
+            @user, @user_uid = Admin::User.make_user({:user => params[:user], :user_uid => params[:user_uid]}, true)
             @user.user_access = UserAccess.new :last_access => Time.now, :access_count => 0
             @user.save!
             if activation = Activation.find_by_code(params[:code])
@@ -132,7 +129,7 @@ class Admin::UsersController < Admin::ApplicationController
     render :action => :import
   rescue ActiveRecord::RecordInvalid,
          ActiveRecord::RecordNotSaved => e
-    @users.each {|user, user_profile, user_uid| user.valid?}
+    @users.each {|user, user_uid| user.valid?}
     flash.now[:notice] = _('CSVファイルの内容を検証しました。')
     render :action => :import
   end
@@ -150,7 +147,7 @@ class Admin::UsersController < Admin::ApplicationController
     redirect_to admin_users_path
   rescue ActiveRecord::RecordInvalid,
          ActiveRecord::RecordNotSaved => e
-    @users.each {|user, user_profile, user_uid| user.valid?}
+    @users.each {|user, user_uid| user.valid?}
     flash.now[:error] = _('CSVファイルに不正な値が含まれています。')
   end
 
@@ -215,7 +212,7 @@ class Admin::UsersController < Admin::ApplicationController
     if user.unused?
       user.issue_activation_code
       user.save!
-      email = user.user_profile.email
+      email = user.email
       UserMailer.deliver_sent_activate(email, signup_url(user.activation_token))
       flash[:notice] = Admin::Setting.mail_function_setting ?  _("ユーザ登録のためのURLを記載したメールを%{email}宛てに送信しました。") % {:email => email} : _('利用開始URLを発行しました。確認のリンクからユーザに連絡してください。')
     else
@@ -249,10 +246,9 @@ class Admin::UsersController < Admin::ApplicationController
 
   def import!(users, rollback = true)
     Admin::User.transaction do
-      users.each do |user, user_profile, user_uid|
+      users.each do |user, user_uid|
         user.save!
         unless user.new_record?
-          user_profile.save!
           user_uid.save!
         end
       end
