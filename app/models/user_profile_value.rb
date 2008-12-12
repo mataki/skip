@@ -27,4 +27,8 @@ class UserProfileValue < ActiveRecord::Base
       errors.add_to_base(_("User profile master isn't assosiated"))
     end
   end
+
+  def before_save
+    user_profile_master.input_type_processer.before_save(user_profile_master, self)
+  end
 end

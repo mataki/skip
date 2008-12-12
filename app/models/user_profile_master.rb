@@ -120,6 +120,9 @@ class UserProfileMaster < ActiveRecord::Base
     def need_option_values?
       false
     end
+
+    def before_save(master, value)
+    end
   end
 
   class TextFieldProcesser < InputTypeProcesser
@@ -270,12 +273,16 @@ class UserProfileMaster < ActiveRecord::Base
         if (value_arr - master.option_array).size > 0
           value.errors.add_to_base(_("%{name} は選択される値以外のものが設定されています") % { :name => master.name })
         end
-        value.value = value_arr.join(',') if value_arr.is_a?(Array)
       end
     end
 
     def need_option_values?
       true
+    end
+
+    def before_save(master, value)
+      value_arr = value.value.blank? ? [] : value.value
+      value.value = value_arr.join(',') if value_arr.is_a?(Array)
     end
   end
 
@@ -309,10 +316,14 @@ class UserProfileMaster < ActiveRecord::Base
     def validate(master, value)
       value.errors.add_to_base(_("%{name} は必須です") % { :name => master.name }) if master.required and value.value.blank?
       begin
-        value.value = Date.parse(value.value).strftime('%Y/%m/%d') unless value.value.blank?
+        Date.parse(value.value) unless value.value.blank?
       rescue ArgumentError => e
         value.errors.add_to_base(_("%{name} は正しい日付形式で入力して下さい") % { :name => master.name })
       end
+    end
+
+    def before_save(master, value)
+      value.value = Date.parse(value.value).strftime('%Y/%m/%d')
     end
   end
 end

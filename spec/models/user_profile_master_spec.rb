@@ -409,6 +409,21 @@ describe UserProfileMaster::CheckBoxProcesser do
       @value.errors.full_messages.first.should == "master に不正な形式が設定されています"
     end
   end
+  describe "#before_save" do
+    describe "正しい項目が入力されている場合" do
+      before do
+        @master = stub_model(UserProfileMaster, :option_values => "check1,check2,check3", :input_type => "check_box", :name => "master")
+        @input_value = ["check1", "check2", "check3"]
+        @value = UserProfileValue.new(:user_profile_master => @master, :user => stub_model(User), :value => @input_value)
+      end
+      it "カンマ区切りの文字列に変換されること" do
+        expect_value = "check1,check2,check3"
+        lambda do
+          @processer.before_save(@master, @value)
+        end.should change(@value, :value).from(@input_value).to(expect_value)
+      end
+    end
+  end
 end
 
 describe UserProfileMaster::PrefectureSelectProcesser do
@@ -536,11 +551,6 @@ describe UserProfileMaster::DatePickerProcesser do
           @value.stub!(:errors).and_return(@errors)
           @processer.validate(@master, @value)
         end
-        it "西暦が補完されること" do
-          lambda do
-            @processer.validate(@master, @value)
-          end.should change(@value, :value).from(@input_date).to("#{Time.now.year}/#{@input_date}")
-        end
       end
       describe "妥当ではない日付の場合" do
         describe "範囲外の場合" do
@@ -562,6 +572,37 @@ describe UserProfileMaster::DatePickerProcesser do
             @value.stub!(:errors).and_return(@errors)
             @processer.validate(@master, @value)
           end
+        end
+      end
+    end
+  end
+
+  describe "#before_save" do
+    before do
+      @master = stub_model(UserProfileMaster, :name => "master")
+    end
+    describe "入力がある場合" do
+      before do
+        @input_date = "2008-11-11"
+        @value = UserProfileValue.new(:user_profile_master => @master, :user => stub_model(User), :value => @input_date)
+      end
+      describe "妥当な日付の場合" do
+        it "日付の形式が/区切りになっていること" do
+          expect_date = "2008/11/11"
+          lambda do
+            @processer.before_save(@master, @value)
+          end.should change(@value, :value).from(@input_date).to(expect_date)
+        end
+      end
+      describe "妥当だが、西暦が未指定の日付場合" do
+        before do
+          @input_date = "11/11"
+          @value = UserProfileValue.new(:user_profile_master => @master, :user => stub_model(User), :value => @input_date)
+        end
+        it "西暦が補完されること" do
+          lambda do
+            @processer.before_save(@master, @value)
+          end.should change(@value, :value).from(@input_date).to("#{Time.now.year}/#{@input_date}")
         end
       end
     end
