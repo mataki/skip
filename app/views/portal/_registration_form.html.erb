@@ -24,10 +24,14 @@
   <tr>
     <th width="100px"><label for="user_section"><%=h _('User|Section') %></label></th>
     <td>
-    <% if sections = User.grouped_sections %>
-      <%= select("user", "section", sections, {}, {:tabindex => (tabindex += 1)}) -%><br/>
-    <% end %>
-      [選択に無い場合] ： <%= text_field_tag "new_section", params[:new_section], :size => 10, :tabindex => (tabindex += 1) %> （次回以降選択項目になります）
+      <% if sections = User.grouped_sections -%>
+      <p>
+      <%= select("user", "section", sections, {}, {:tabindex => (tabindex += 1)}) + _('既に登録されている値から選択項目を表示しています') %>
+      </p>
+      <% end -%>
+      <p>
+      <%= text_field_tag("user[section]", (sections.include?(@user.section) ? '' : @user.section), :tabindex => (tabindex += 1), :class=> 'appendable_text') + _('選択項目に無いものを設定する場合はこちらに入力して下さい') %>
+      </p>
   </tr>
   <% if user_name_mode?(:name) -%>
   <tr>

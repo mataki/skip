@@ -140,7 +140,7 @@ describe MypageController, 'POST #update_profile' do
     end
 
     it "userにパラメータからの値が設定されること" do
-      @user.should_receive(:attributes=).with({"section"=>"開発", "new_section" => ""})
+      @user.should_receive(:attributes=)
       post_update_profile
     end
     it "profileが設定されること" do
@@ -160,7 +160,7 @@ describe MypageController, 'POST #update_profile' do
       flash[:notice].should == "ユーザ情報の更新に成功しました。"
     end
     def post_update_profile
-      post :update_profile, {"user" => {"section"=>"開発"}, "new_section"=>"", "profile_value" => {"1"=>"ほげ", "2"=>"ふが"}}
+      post :update_profile, {"user" => {"section"=>"開発"}, "profile_value" => {"1"=>"ほげ", "2"=>"ふが"}}
     end
   end
   describe '保存に失敗する場合' do

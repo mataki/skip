@@ -54,7 +54,6 @@ class PortalController < ApplicationController
   #ユーザ登録処理
   def apply
     @user = current_user
-    params[:user][:new_section] = params[:new_section] if params[:user]
     @user.attributes = params[:user]
     if @user.within_time_limit_of_activation_token?
       @user.crypted_password = nil

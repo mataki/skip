@@ -207,7 +207,6 @@ class MypageController < ApplicationController
   # post_action
   def update_profile
     @user = current_user
-    params[:user][:new_section] = params[:new_section] if params[:user]
     @user.attributes = params[:user]
     @profiles = @user.find_or_initialize_profiles(params[:profile_value])
 

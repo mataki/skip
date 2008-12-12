@@ -232,9 +232,7 @@ describe PortalController, 'POST /apply' do
   end
 
   def post_apply
-    post :apply, {"user"=>{:password => "password", :password_confirmation => "password_confirmation", "email"=>"example@skip.org", "section"=>"開発"}, "new_section"=>"営業",
-                  "profile_value"=>{"1"=>"ほげ", "2"=>"ふが"},
-                  "user_uid"=>{"uid"=>"hogehoge"} }
+    post :apply, {"user"=>{:password => "password", :password_confirmation => "password_confirmation", "email"=>"example@skip.org", "section"=>"開発"}, "profile_value"=>{"1"=>"ほげ", "2"=>"ふが"}, "user_uid"=>{"uid"=>"hogehoge"} }
   end
 end
 

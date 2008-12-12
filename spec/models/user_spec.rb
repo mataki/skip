@@ -323,32 +323,13 @@ describe User, "#section" do
     @user = User.new
     @attr = { :email => SkipFaker.email, :name => "名字 名前" }
   end
-  describe "new_sectionがわたってきた場合" do
-    it "new_sectionがsectionに登録されること" do
-      @user.attributes = @attr.merge!(:section => "select_section", :new_section => "input_section")
-      @user.save!
-      @user.section.should == "INPUT_SECTION"
-    end
-    describe "全角のnew_sectionの場合" do
+  describe "sectionがわたってきた場合" do
+    describe "全角のsectionの場合" do
       it "半角に統一されて登録されること" do
-        @user.attributes = @attr.merge!(:section => "select_section", :new_section => "INＰUＴ_部署")
+        @user.attributes = @attr.merge!(:section => "INＰUＴ_部署")
         @user.save!
         @user.section.should == "INPUT_部署"
       end
-    end
-  end
-  describe "new_sectionがわたってきていない場合" do
-    it "select_sectionがそのまま利用されること" do
-      @user.attributes = @attr.merge!(:section => "select_section")
-      @user.save!
-      @user.section.should == "select_section"
-    end
-  end
-  describe "new_sectionが空でわたってきた場合" do
-    it "select_sectionがそのまま利用されること" do
-      @user.attributes = @attr.merge!(:section => "select_section", :new_section => "")
-      @user.save!
-      @user.section.should == "select_section"
     end
   end
 end

@@ -18,7 +18,7 @@ require 'jcode'
 class User < ActiveRecord::Base
   include Authentication
   include Authentication::ByCookieToken
-  attr_accessor :old_password, :password, :new_section
+  attr_accessor :old_password, :password
   attr_protected :admin, :status
 
   has_many :group_participations, :dependent => :destroy
@@ -93,7 +93,7 @@ class User < ActiveRecord::Base
   end
 
   def before_validation
-    self.section = self.new_section.tr('ａ-ｚＡ-Ｚ１-９','a-zA-Z1-9').upcase unless self.new_section.blank?
+    self.section = self.section.tr('ａ-ｚＡ-Ｚ１-９','a-zA-Z1-9').upcase unless self.section.blank?
   end
 
   def before_save
