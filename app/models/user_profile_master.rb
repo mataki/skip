@@ -186,34 +186,34 @@ class UserProfileMaster < ActiveRecord::Base
 
     private
     def years(master)
-      options = (min_year(master)..max_year(master)).to_a
+      options = start_year(master) <= end_year(master) ? (start_year(master)..end_year(master)).to_a : (end_year(master)..start_year(master)).to_a.reverse
       master.required ? options : [''] + options
     end
 
-    def min_year(master)
-      max_year_and_min_year(master.option_values).first
+    def start_year(master)
+      start_year_and_end_year(master.option_values).first
     end
 
-    def max_year(master)
-      max_year_and_min_year(master.option_values).last
+    def end_year(master)
+      start_year_and_end_year(master.option_values).last
     end
 
-    def max_year_and_min_year value
-      default_min_year = Time.now.year.to_s
-      default_max_year = Time.now.year.to_s
+    def start_year_and_end_year value
+      default_start_year = Time.now.year.to_s
+      default_end_year = Time.now.year.to_s
       unless value.blank?
-        min_year_and_max_year = value.split('-')
-        if min_year_and_max_year.size == 1
-          min_year = min_year_and_max_year.first
-          max_year = min_year < default_max_year ? default_max_year : min_year
-          [min_year, max_year]
-        elsif min_year_and_max_year.size > 1
-          min_year = min_year_and_max_year.first
-          max_year = min_year < min_year_and_max_year[1] ? min_year_and_max_year[1] : min_year
-          [min_year, max_year]
+        start_year_and_end_year = value.split('-')
+        if start_year_and_end_year.size == 1
+          start_year = start_year_and_end_year.first
+          end_year = default_end_year
+          [start_year, end_year]
+        elsif start_year_and_end_year.size > 1
+          start_year = start_year_and_end_year.first.blank? ? default_start_year : start_year_and_end_year.first
+          end_year = start_year_and_end_year[1].blank? ? default_end_year : start_year_and_end_year[1]
+          [start_year, end_year]
         end
       else
-        [default_min_year, default_max_year]
+        [default_start_year, default_end_year]
       end
     end
   end

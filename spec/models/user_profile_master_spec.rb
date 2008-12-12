@@ -307,27 +307,33 @@ describe UserProfileMaster::YearSelectProcesser do
     end
   end
 
-  describe "#max_year_and_min_year" do
+  describe "#start_year_and_end_year" do
     before do
       Time.now.stub!(:year).and_return(2008)
     end
     describe "引数が空の場合" do
-      it { @processer.send!(:max_year_and_min_year, '').should == ['2008', '2008'] }
+      it { @processer.send!(:start_year_and_end_year, '').should == ['2008', '2008'] }
     end
     describe "引数が[2006]の場合" do
-      it { @processer.send!(:max_year_and_min_year, '2006').should == ['2006', '2008'] }
+      it { @processer.send!(:start_year_and_end_year, '2006').should == ['2006', '2008'] }
     end
     describe "引数が[2006-]の場合" do
-      it { @processer.send!(:max_year_and_min_year, '2006-').should == ['2006', '2008'] }
+      it { @processer.send!(:start_year_and_end_year, '2006-').should == ['2006', '2008'] }
     end
     describe "引数が[2009-]の場合" do
-      it { @processer.send!(:max_year_and_min_year, '2009-').should == ['2009', '2009'] }
+      it { @processer.send!(:start_year_and_end_year, '2009-').should == ['2009', '2008'] }
+    end
+    describe "引数が[-2006]の場合" do
+      it { @processer.send!(:start_year_and_end_year, '-2006').should == ['2008', '2006'] }
+    end
+    describe "引数が[-2009]の場合" do
+      it { @processer.send!(:start_year_and_end_year, '-2009').should == ['2008', '2009'] }
     end
     describe "引数が[2006-2008]の場合" do
-      it { @processer.send!(:max_year_and_min_year, '2006-2008').should == ['2006', '2008'] }
+      it { @processer.send!(:start_year_and_end_year, '2006-2008').should == ['2006', '2008'] }
     end
     describe "引数が[2009-2006]の場合" do
-      it { @processer.send!(:max_year_and_min_year, '2009-2006').should == ['2009', '2009'] }
+      it { @processer.send!(:start_year_and_end_year, '2009-2006').should == ['2009', '2006'] }
     end
   end
 end
