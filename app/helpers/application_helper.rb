@@ -198,8 +198,9 @@ module ApplicationHelper
   end
 
   def sanitize_style_with_whitelist(content)
-    allow = HTML::WhiteListSanitizer.allowed_attributes.dup.add("style")
-    sanitize(content, :attributes => allow)
+    allowed_tags = HTML::WhiteListSanitizer.allowed_tags.dup << "table" << "tbody" << "tr" << "th" << "td" << "caption"
+    allowed_attributes = HTML::WhiteListSanitizer.allowed_attributes.dup << "style" << "cellspacing" << "cellpadding" << "border" << "align" << "summary"
+    sanitize(content, :tags => allowed_tags, :attributes => allowed_attributes)
   end
 
   # ホームのあなたへの連絡、みんなへの連絡の重要マークをつける
