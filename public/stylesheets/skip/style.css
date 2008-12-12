@@ -258,4 +258,7 @@ div.errorExplanation li {
  padding: 5px;
  border-bottom: 1px dashed silver;
  background-image: url(./../../images/skip/gradient.png);
+ font-family: Verdana,Arial,Helvetica,sans-serif;
+ font-size: 1p3x;
+
 }
