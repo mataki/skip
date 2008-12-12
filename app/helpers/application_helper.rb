@@ -17,6 +17,7 @@ module ApplicationHelper
   include InitialSettingsHelper
   include CacheHelper
   include SkipHelper
+  include HelpIconHelper
   @@CONTROLLER_HASH = { 'uid'  => 'user',
                         'gid'  => 'group',
                         'page' => 'page'}

@@ -14,6 +14,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 module Admin::ApplicationHelper
+  include HelpIconHelper
   def generate_admin_tab_menu
     output = ''
     output << '<ul>'
@@ -81,20 +82,6 @@ module ActionView
         InstanceTag.new(object_name, method, self, nil, options.delete(:object)).to_label_tag(text, options.merge(:object => @object))
       end
       alias_method_chain :label, :gettext
-      def help_icon(object_name, method, content = nil, options = {})
-        content ||= s_("#{object_name.to_s.classify}|#{method.to_s.humanize} description")
-        help_icon_tag :content => content
-      end
-    end
-    module FormTagHelper
-      def help_icon_tag options = {:title => '', :content => ''}
-        icon_tag 'help', :title => "#{options[:title]}|#{options[:content]}"
-      end
-    end
-    class FormBuilder
-      def help_icon(method, content = nil, options = {})
-        @template.help_icon(@object.class.name, method, content, objectify_options(options))
-      end
     end
   end
 end
