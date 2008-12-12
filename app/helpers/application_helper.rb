@@ -308,12 +308,6 @@ private
     procs = [["uid", default_proc], ["gid", default_proc], ["page", default_proc]]
     procs << ["file",file_proc] if owner_symbol
 
-    # 共有ファイルのリンクに対してtarget="_blank"を付加
-#     share_file_link_regex = /(<a href=\"#{root_url.gsub('\/', '\\\/')}[^\/.?]+\/[^\/.?]+\/files\/.*?\")(.*?<\/a>)/m
-#     text.gsub!( share_file_link_regex ) do |url|
-#       "#{$1} target=\"_blank\"#{$2}"
-#     end
-
     split_mark =  "&gt;"
     procs.each { |value| text = BoardEntry.replace_symbol_link(text, value.first, value.last, split_mark) }
     return text
