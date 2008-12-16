@@ -606,6 +606,16 @@ describe UserProfileMaster::DatePickerProcesser do
         end
       end
     end
+    describe "入力が無い場合" do
+      before do
+        @value = UserProfileValue.new(:user_profile_master => @master, :user => stub_model(User), :value => "")
+      end
+      it "空のまま登録されること" do
+        lambda do
+          @processer.before_save(@master, @value)
+        end.should_not change(@value, :value)
+      end
+    end
   end
 end
 

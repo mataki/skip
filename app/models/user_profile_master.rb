@@ -323,7 +323,7 @@ class UserProfileMaster < ActiveRecord::Base
     end
 
     def before_save(master, value)
-      value.value = Date.parse(value.value).strftime('%Y/%m/%d')
+      value.value = Date.parse(value.value).strftime('%Y/%m/%d') unless value.value.blank?
     end
   end
 end
