@@ -15,7 +15,7 @@
 <%= link_to(_('Change uid'), {:action => :change_uid, :id => @user}) if @user.user_uids.size > 1 %>
 <%= link_to(_('Create %{name}') % {:name => _('user name')}, {:action => :create_uid, :id => @user}) if @user.user_uids.size == 1 and @user.active? %>
 <% end -%>
-<%= link_to(_('Editing %{model}') % {:model => _('user profile')}, admin_user_user_profile_path(@user)) %>
+<%= link_to(_('Editing %{model}') % {:model => _('user profile')}, admin_user_user_profile_path(@user)) if UserProfileMaster.count > 0 %>
 <% end -%>
 <% content_for :javascript do -%>
 <script type="text/javascript">
