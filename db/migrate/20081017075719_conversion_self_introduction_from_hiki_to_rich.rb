@@ -16,4 +16,7 @@ class ConversionSelfIntroductionFromHikiToRich < ActiveRecord::Migration
   def self.down
     # N/A
   end
+
+  class UserProfile < ActiveRecord::Base
+  end
 end
