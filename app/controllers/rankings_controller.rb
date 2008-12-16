@@ -35,8 +35,8 @@ class RankingsController < ApplicationController
 #    end
 #  end
   def index
-    today = Date.today
-    redirect_to monthly_path(:year => today.year, :month => today.month)
+    yesterday = Date.yesterday
+    redirect_to monthly_path(:year => yesterday.year, :month => yesterday.month)
   end
 
   # GET /ranking_data/:content_type/:year/:month
@@ -65,9 +65,9 @@ class RankingsController < ApplicationController
   end
 
   def monthly
-    today = Date.today
-    year = params[:year].blank? ? today.year : params[:year]
-    month = params[:month].blank? ? today.month : params[:month]
+    yesterday = Date.yesterday
+    year = params[:year].blank? ? yesterday.year : params[:year]
+    month = params[:month].blank? ? yesterday.month : params[:month]
     begin
       time = Time.local(year, month)
       @year = time.year

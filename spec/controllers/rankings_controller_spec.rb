@@ -82,12 +82,26 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe RankingsController, '#index' do
   before do
     user_login
-    @year, @month = 2008, 7
-    Date.should_receive(:today).and_return(Date.new(@year, @month))
-    get :index
   end
-  it '今月のランキングにリダイレクトされること' do
-    response.should redirect_to("/rankings/monthly/#{@year}/#{@month}")
+  describe '今日が2008/7/1の場合' do
+    before do
+      @year, @month, @day = 2008, 7, 1
+      Date.should_receive(:today).and_return(Date.new(@year, @month, @day))
+      get :index
+    end
+    it '前日の月(2008/6)のランキングにリダイレクトされること' do
+      response.should redirect_to("/rankings/monthly/2008/6")
+    end
+  end
+  describe '今日が2008/7/2の場合' do
+    before do
+      @year, @month, @day = 2008, 7, 2
+      Date.should_receive(:today).and_return(Date.new(@year, @month, @day))
+      get :index
+    end
+    it '前日の月(2008/7)のランキングにリダイレクトされること' do
+      response.should redirect_to("/rankings/monthly/2008/7")
+    end
   end
 end
 
@@ -212,11 +226,11 @@ describe RankingsController, '#monthly' do
   end
   describe '年月の指定が無い場合' do
     before do
-      @today = Date.today
+      @yesterday = Date.yesterday
       get :monthly
     end
-    it { assigns[:year].should == @today.year }
-    it { assigns[:month].should == @today.month }
+    it { assigns[:year].should == @yesterday.year }
+    it { assigns[:month].should == @yesterday.month }
     it { response.should be_success }
   end
 
@@ -234,7 +248,7 @@ describe RankingsController, '#monthly' do
     describe '年のみ指定がある場合' do
       before do
         @year = '2008'
-        @month = Date.today.month
+        @month = Date.yesterday.month
         get :monthly, :year => @year
       end
       it { assigns[:year].should == @year.to_i }
