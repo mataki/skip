@@ -15,6 +15,8 @@
 
 module HelpIconHelper
   include GetText
+  include SkipHelper
+
   def help_icon(object_name, method, content = nil, options = {})
     content ||= s_("#{object_name.to_s.classify}|#{method.to_s.humanize} description")
       help_icon_tag :content => content

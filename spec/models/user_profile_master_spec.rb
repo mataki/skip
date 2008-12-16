@@ -42,11 +42,11 @@ describe UserProfileMaster do
 end
 
 describe UserProfileMaster, "#input_type_processer" do
-  before do
+  it "input_typeがtext_fieldの場合、TextFieldのインスタンスが返ってくること" do
+    type = "text_field"
+    UserProfileMaster.should_receive(:input_type_processer).with(type).and_return(processer = mock('processer'))
     @master = create_user_profile_master(:input_type => "text_field")
-  end
-  it "TextFieldのインスタンスが返ってくること" do
-    @master.input_type_processer.should be_is_a(UserProfileMaster::TextFieldProcesser)
+    @master.input_type_processer.should == processer
   end
 end
 
@@ -54,7 +54,32 @@ describe UserProfileMaster, ".input_type_option" do
   it "セレクトボックス用の配列が返ってくること" do
     UserProfileMaster.input_type_option.size.should == 10
   end
+  it "順番通りに返ってくること" do
+    valid_option = [["UserProfileMaster|Input type|text_field", "text_field"],
+                    ["UserProfileMaster|Input type|number_and_hyphen_only", "number_and_hyphen_only"],
+                    ["UserProfileMaster|Input type|rich_text", "rich_text"],
+                    ["UserProfileMaster|Input type|check_box", "check_box"],
+                    ["UserProfileMaster|Input type|radio", "radio"],
+                    ["UserProfileMaster|Input type|select", "select"],
+                    ["UserProfileMaster|Input type|appendable_select", "appendable_select"],
+                    ["UserProfileMaster|Input type|prefecture_select", "prefecture_select"],
+                    ["UserProfileMaster|Input type|year_select", "year_select"],
+                    ["UserProfileMaster|Input type|datepicker", "datepicker"]]
+    UserProfileMaster.input_type_option.should == valid_option
+  end
 end
+
+describe UserProfileMaster, ".input_type_processer" do
+  it "存在する(text_field)が渡された場合 相当するプロセッサーのインスタンスを返すこと" do
+    type = "text_field"
+    UserProfileMaster.input_type_processer(type).should be_is_a(UserProfileMaster::TextFieldProcesser)
+  end
+  it "存在しない(hoge_field)が渡された場合 InputTypeProcesserのインスタンスが返ってくること" do
+    type = "hoge_field"
+    UserProfileMaster.input_type_processer(type).should be_is_a(UserProfileMaster::InputTypeProcesser)
+  end
+end
+
 describe UserProfileMaster::RadioProcesser do
   before do
     @processer = UserProfileMaster::RadioProcesser.new
@@ -494,9 +519,9 @@ describe UserProfileMaster::PrefectureSelectProcesser do
   end
 end
 
-describe UserProfileMaster::DatePickerProcesser do
+describe UserProfileMaster::DatepickerProcesser do
   before do
-    @processer = UserProfileMaster::DatePickerProcesser.new
+    @processer = UserProfileMaster::DatepickerProcesser.new
   end
   describe "#validate" do
     before do

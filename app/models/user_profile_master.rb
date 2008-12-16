@@ -49,10 +49,6 @@ class UserProfileMaster < ActiveRecord::Base
     valid_presence_of_category
   end
 
-  def input_type_processer
-    input_type_class_hash[self.input_type].new
-  end
-
   def option_array
     option_values.split(',') if option_values
   end
@@ -62,27 +58,25 @@ class UserProfileMaster < ActiveRecord::Base
   end
 
   def self.input_type_option
-    input_type_class_hash.keys.map{|key| [_("UserProfileMaster|Input type|#{key}"), key]}
+    input_types.map{|key| [_("UserProfileMaster|Input type|#{key}"), key]}
   end
 
-  def self.input_type_class_hash
-    h = Hash.new(InputTypeProcesser.freeze)
-    h.merge({ 'text_field'             => TextFieldProcesser,
-              'number_and_hyphen_only' => NumberAndHyphenOnlyProcesser,
-              'rich_text'              => RichTextProcesser,
-              'radio'                  => RadioProcesser,
-              'year_select'            => YearSelectProcesser,
-              'select'                 => SelectProcesser,
-              'appendable_select'      => AppendableSelectProcesser,
-              'check_box'              => CheckBoxProcesser,
-              'prefecture_select'      => PrefectureSelectProcesser,
-              'datepicker'             => DatePickerProcesser })
+  def self.input_types
+    %w(text_field number_and_hyphen_only rich_text check_box radio select appendable_select prefecture_select year_select datepicker)
   end
+
+  def input_type_processer
+    self.class.input_type_processer(self.input_type)
+  end
+
+  def self.input_type_processer(val)
+    "UserProfileMaster::#{val.classify}Processer".constantize.new
+  rescue NameError => e
+    logger.warn "UserProfileMaster - input_type is not selected in registrated value"
+    UserProfileMaster::InputTypeProcesser.new
+  end
+
   private
-  def input_type_class_hash
-    self.class.input_type_class_hash
-  end
-
   def valid_presence_of_category
     unless category = UserProfileMasterCategory.find_by_id(self.user_profile_master_category_id)
       errors.add(:user_profile_master_category_id, _('プロフィールカテゴリに存在しない値です。'))
@@ -307,7 +301,7 @@ class UserProfileMaster < ActiveRecord::Base
     end
   end
 
-  class DatePickerProcesser < InputTypeProcesser
+  class DatepickerProcesser < InputTypeProcesser
     def to_edit_html(master, value)
       value_str = value ? value.value : ""
       text_field_tag("profile_value[#{master.id}]", h(value_str), :class => "datepicker", :id => "datepicker_#{master.id}")

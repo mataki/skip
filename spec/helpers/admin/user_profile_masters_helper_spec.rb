@@ -22,4 +22,15 @@ describe Admin::UserProfileMastersHelper do
     included_modules.should include(Admin::UserProfileMastersHelper)
   end
 
+  describe "option_values_help_icon_hash_as_json" do
+    it "正しい形式のjsonが返ってくること" do
+      helper.option_values_help_icon_hash_as_json.should be_include("Admin::UserProfileMaster|Option values description|check_box")
+    end
+  end
+
+  describe "option_values_need_hash_as_json" do
+    it "正しい形式のjsonが返ってくること" do
+      helper.option_values_need_hash_as_json.should == "{\"check_box\": true, \"radio\": true, \"rich_text\": false, \"number_and_hyphen_only\": false, \"datepicker\": false, \"year_select\": true, \"select\": true, \"appendable_select\": false, \"prefecture_select\": false, \"text_field\": false}"
+    end
+  end
 end

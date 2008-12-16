@@ -13,13 +13,15 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 module Admin::UserProfileMastersHelper
+  include HelpIconHelper
+
   def category_options
     UserProfileMasterCategory.all.collect { |category| [category.name, category.id] }
   end
 
   def option_values_help_icon_hash_as_json
     h = {}
-    UserProfileMaster.input_type_class_hash.keys.each do |input_type|
+    UserProfileMaster.input_types.each do |input_type|
       h[input_type] = help_icon_tag(:content => _("Admin::UserProfileMaster|Option values description|#{input_type}"))
     end
     h.to_json
@@ -27,8 +29,8 @@ module Admin::UserProfileMastersHelper
 
   def option_values_need_hash_as_json
     h = {}
-    UserProfileMaster.input_type_class_hash.each do |key, value|
-      h[key] = value.new.need_option_values?
+    UserProfileMaster.input_types.each do |val|
+      h[val] = UserProfileMaster.input_type_processer(val).need_option_values?
     end
     h.to_json
   end
