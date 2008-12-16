@@ -25,7 +25,7 @@ class Admin::UserProfileMasterCategoriesController < Admin::ApplicationControlle
     user_profile_master_category = Admin::UserProfileMasterCategory.find(params[:id])
     if user_profile_master_category.deletable?
       user_profile_master_category.destroy
-      flash[:notice] = _('削除しました。')
+      flash[:notice] = _("%{model} was successfully deleted.") % {:model => _('user profile master category')}
     else
       message = user_profile_master_category.errors.full_messages.join('<br/>')
       flash[:error] = message unless message.blank?
@@ -33,12 +33,6 @@ class Admin::UserProfileMasterCategoriesController < Admin::ApplicationControlle
     respond_to do |format|
       format.html { redirect_to(admin_user_profile_master_categories_path) }
       format.xml { head :ok }
-    end
-  rescue ActiveRecord::RecordNotFound => e
-    flash[:error] = _('削除対象のプロフィールカテゴリが存在しませんでした。')
-    respond_to do |format|
-      format.html { redirect_to(admin_user_profile_master_categories_path) }
-      format.xml  { head :not_found }
     end
   end
 end

@@ -49,11 +49,12 @@ describe Admin::UserProfileMasterCategoriesController, 'DELETE /destroy' do
   end
   describe '対象のuser_profile_master_categoryが存在しない場合' do
     before do
-      @user_profile_master_category = stub_model(Admin::UserProfileMasterCategory)
       Admin::UserProfileMasterCategory.should_receive(:find).and_raise(ActiveRecord::RecordNotFound)
-      delete :destroy
     end
-    it { flash[:error].should_not be_nil }
-    it { response.should redirect_to(admin_user_profile_master_categories_path) }
+    it 'RecordNotFoundになること(rescueされていないこと)' do
+      lambda do
+        delete :destroy
+      end.should raise_error(ActiveRecord::RecordNotFound)
+    end
   end
 end
