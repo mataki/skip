@@ -112,7 +112,7 @@ div.input_line div.input_bottom {
       <% profiles = @user.user_profile_values
          profile_hash = profiles.index_by(&:user_profile_master_id)
          UserProfileMasterCategory.all.each do |category| -%>
-      <div class="subtitle"><%= category.name %></div>
+      <div class="subtitle"><%=h category.name %></div>
       <% category.user_profile_masters.each do |master| -%>
       <div class="input_line">
         <div class="input_label"><%=h master.name %></div>
