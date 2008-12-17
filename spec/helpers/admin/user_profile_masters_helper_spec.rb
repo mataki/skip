@@ -29,8 +29,11 @@ describe Admin::UserProfileMastersHelper do
   end
 
   describe "option_values_need_hash_as_json" do
+    before do
+      UserProfileMaster.stub!(:input_types).and_return(%w(text_field))
+    end
     it "正しい形式のjsonが返ってくること" do
-      helper.option_values_need_hash_as_json.should == "{\"check_box\": true, \"radio\": true, \"rich_text\": false, \"number_and_hyphen_only\": false, \"datepicker\": false, \"year_select\": true, \"select\": true, \"appendable_select\": false, \"prefecture_select\": false, \"text_field\": false}"
+      helper.option_values_need_hash_as_json.should == "{\"text_field\": false}"
     end
   end
 end
