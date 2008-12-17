@@ -39,6 +39,10 @@ class SkipUtil
     array.map {|col| NKF.nkf('-sZ', col) }
   end
 
+  def self.full_error_messages array
+    array.is_a?(Array) ? array.map{ |item| item.errors.full_messages unless item.valid? }.flatten.compact : []
+  end
+
   ######################################################################
   # 画像表示
   # view_str:文字列

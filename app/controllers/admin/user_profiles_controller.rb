@@ -35,7 +35,7 @@ class Admin::UserProfilesController < Admin::ApplicationController
       flash[:notice] = _("%{model} was successfully updated.") % {:model => _('user profile') }
       redirect_to :action => :edit
     rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => e
-      @error_msg = @profiles.map{ |profile| profile.valid?; profile.errors.full_messages }.flatten
+      @error_msg = SkipUtil.full_error_messages(@profiles)
       @topics = [[_('Listing %{model}') % {:model => _('user')}, admin_users_path],
                [_('Editing %{model}') % {:model => user.name}, edit_admin_user_path(user)],
                  [_('Editing %{model}') % {:model => _('user profile')}]]

@@ -130,7 +130,7 @@ end
 describe MypageController, 'POST #update_profile' do
   before do
     @user = user_login
-    @profiles = (1..2).map{|i| stub_model(UserProfileValue, :save! => true)}
+    @profiles = (1..2).map{|i| stub_model(UserProfileValue, :save! => true, :valid? => true)}
     @user.stub!(:find_or_initialize_profiles).and_return(@profiles)
   end
   describe '保存に成功する場合' do
@@ -174,13 +174,17 @@ describe MypageController, 'POST #update_profile' do
     end
     it "２つのプロフィールにエラーが設定されている場合、２つのバリデーションエラーが設定されること" do
       errors = mock('errors', :full_messages => ["バリデーションエラーです"])
-      @profiles.map{ |profile| profile.stub!(:errors).and_return(errors) }
+      @profiles.map do |profile|
+        profile.stub!(:valid?).and_return(false)
+        profile.stub!(:errors).and_return(errors)
+      end
 
       post :update_profile
       assigns[:error_msg].grep("バリデーションエラーです").size.should == 2
     end
     it "一つだけプロフィールにエラーが設定されている場合、１つのバリデーションエラーのみが設定されること" do
       errors = mock('errors', :full_messages => ["バリデーションエラーです"])
+      @profiles.last.stub!(:valid?).and_return(false)
       @profiles.last.stub!(:errors).and_return(errors)
 
       post :update_profile

@@ -219,7 +219,7 @@ class MypageController < ApplicationController
   rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => e
     @error_msg = []
     @error_msg.concat @user.errors.full_messages unless @user.valid?
-    @error_msg.concat @profiles.map{|profile| profile.errors.full_messages}.flatten
+    @error_msg.concat SkipUtil.full_error_messages(@profiles)
 
     render :partial => 'manage_profile', :layout => "layout"
   end

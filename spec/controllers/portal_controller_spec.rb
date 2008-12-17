@@ -200,7 +200,10 @@ describe PortalController, 'POST /apply' do
       end
       it "２つのプロフィールにエラーが設定されている場合、２つのバリデーションエラーが設定されること" do
         errors = mock('errors', :full_messages => ["バリデーションエラーです"])
-        @profiles.map{ |profile| profile.stub!(:errors).and_return(errors) }
+        @profiles.map do |profile|
+          profile.stub!(:valid?).and_return(false)
+          profile.stub!(:errors).and_return(errors)
+        end
 
         post_apply
         assigns[:error_msg].grep("バリデーションエラーです").size.should == 2
