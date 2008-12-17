@@ -17,8 +17,8 @@ class UserProfileValue < ActiveRecord::Base
   belongs_to :user
   belongs_to :user_profile_master
 
-  validates_presence_of :user
-  validates_presence_of :user_profile_master
+  validates_presence_of :user_id
+  validates_presence_of :user_profile_master_id
 
   def validate
     if user_profile_master
