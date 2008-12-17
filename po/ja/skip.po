@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-12-17 16:26+0900\n"
+"POT-Creation-Date: 2008-12-17 17:28+0900\n"
 "PO-Revision-Date: 2008-12-09 18:49+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,6 +25,10 @@ msgstr ""
 
 #: app/views/shared/_login_form.html.erb:15
 msgid "%{login_account_name}を忘れた方はこちら"
+msgstr ""
+
+#: app/views/admin/users/_form.html.erb:7
+msgid "%{login_account}を入力して下さい。"
 msgstr ""
 
 #: app/controllers/admin/admin_module.rb:80
@@ -503,7 +507,9 @@ msgstr "ユーザ名の最低文字数"
 
 #: app/models/admin/initial_setting.rb:49
 msgid "Admin::InitialSetting|User code minimum length description"
-msgstr "ユーザ名の最低文字数を指定しています。利用開始時のプロフィール登録の際にここで指定された文字数未満のユーザ名は登録できません。"
+msgstr ""
+"ユーザ名の最低文字数を指定しています。利用開始時のプロフィール登録の際にここ"
+"で指定された文字数未満のユーザ名は登録できません。"
 
 #: app/models/admin/initial_setting.rb:34
 msgid "Admin::InitialSetting|Usercode dips setting"
@@ -1091,7 +1097,7 @@ msgstr "ユーザの利用状態を選択します。"
 msgid "Admin::User|Uid"
 msgstr "ユーザ名"
 
-#: app/models/admin/user.rb:41 app/views/admin/users/_form.html.erb:4
+#: app/models/admin/user.rb:41
 msgid "Admin::User|User uids"
 msgstr "ログインID"
 

@@ -1,10 +1,10 @@
 <%= error_messages_for :user %>
 
 <p>
-  <%= label Admin::UserUid.name, :uid, _("Admin::User|User uids") %>
+  <%= label Admin::UserUid.name, :uid, Admin::Setting.login_account %>
   <% if @user.new_record? -%>
   <%= text_field :user_uid, :uid %>
-  <%= help_icon Admin::UserUid.name, :uid %>
+  <%= help_icon_tag :content => _('%{login_account}を入力して下さい。') % {:login_account => Admin::Setting.login_account} %>
   <% else -%>
   :<%= h @user.code %>
   <% end -%>
