@@ -358,4 +358,3 @@ class PlatformController < ApplicationController
   end
   # -----------------------------------------------
 end
-
