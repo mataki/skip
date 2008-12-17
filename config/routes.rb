@@ -28,13 +28,17 @@ ActionController::Routing::Routes.draw do |map|
               :controller => 'board_entries',
               :action => 'forward'
 
-  map.connect 'login', :controller => 'platform', :action => 'login'
-  map.connect 'logout', :controller => 'platform', :action => 'logout'
-  map.forgot_password 'platform/forgot_password', :controller => 'platform', :action => 'forgot_password'
-  map.reset_password 'platform/reset_password/:code', :controller => 'platform', :action => 'reset_password'
-  map.forgot_login_id 'platform/forgot_login_id', :controller => 'platform', :action => 'forgot_login_id'
-  map.activate 'platform/activate', :controller => 'platform', :action => 'activate'
-  map.signup 'platform/signup/:code', :controller => 'platform', :action => 'signup'
+  map.with_options(:controller => "platform") do |platform|
+    platform.connect 'login', :action => 'login'
+    platform.connect 'logout', :action => 'logout'
+    platform.forgot_password 'platform/forgot_password', :action => 'forgot_password'
+    platform.reset_password 'platform/reset_password/:code', :action => 'reset_password'
+    platform.forgot_login_id 'platform/forgot_login_id', :action => 'forgot_login_id'
+    platform.activate 'platform/activate', :action => 'activate'
+    platform.signup 'platform/signup/:code', :action => 'signup'
+    platform.forgot_openid 'platform/forgot_openid', :action => 'forgot_openid'
+    platform.reset_openid 'platform/reset_openid/:code', :action => 'reset_openid'
+  end
 
   map.monthly 'rankings/monthly/:year/:month',
               :controller => 'rankings',

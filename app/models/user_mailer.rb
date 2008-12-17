@@ -64,6 +64,15 @@ class UserMailer < ActionMailer::Base
     @body       = {:reset_password_url => reset_password_url, :header => header, :footer => footer}
   end
 
+  def sent_forgot_openid(recipient, reset_openid_url)
+    @recipients = recipient
+    @subject    = UserMailer.base64("[#{Admin::Setting.abbr_app_title}] OpenIDの再設定のメールです")
+    @from       = from
+    @send_on    = Time.now
+    @headers    = {}
+    @body       = {:reset_openid_url => reset_openid_url, :header => header, :footer => footer}
+  end
+
   def sent_forgot_login_id(recipient, login_id)
     @recipients = recipient
     @subject    = UserMailer.base64("[#{Admin::Setting.abbr_app_title}] ログインIDのお知らせです")

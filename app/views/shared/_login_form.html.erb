@@ -34,7 +34,10 @@
     </tr>
     <% else -%>
     <tr valign="top">
-      <td><label for="openid_url"><span style="font-weight: bold;">OpenID URL</span></label></td>
+      <td>
+        <label for="openid_url"><span style="font-weight: bold;">OpenID URL</span></label>
+        (<%= link_to _('OpenIDを忘れた/再設定したい方はこちら'), forgot_openid_path, {:style => 'font-size:11px', :tabindex => "103"} %>)
+      </td>
     </tr>
     <tr valign="top">
       <td><%= text_field_tag 'openid_url', nil, 'AUTOCOMPLETE' => "on" %></td>

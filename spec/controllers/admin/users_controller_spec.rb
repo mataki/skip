@@ -448,32 +448,32 @@ describe Admin::UsersController, 'POST /issue_password_reset_code' do
     end
     describe 'パスワードリセットコード未発行の場合' do
       before do
-        @user.should_receive(:password_reset_token).at_least(:once).and_return(nil)
+        @user.should_receive(:reset_auth_token).at_least(:once).and_return(nil)
       end
       it 'パスワード再設定コードの発行処理が行われること' do
-        @user.should_receive(:forgot_password)
+        @user.should_receive(:issue_reset_auth_token)
         @user.should_receive(:save!)
         post :issue_password_reset_code
       end
     end
     describe 'パスワードリセットコードが期限切れの場合' do
       before do
-        @user.should_receive(:password_reset_token).at_least(:once).and_return('password_reset_token')
-        @user.should_receive(:within_time_limit_of_password_reset_token?).and_return(false)
+        @user.should_receive(:reset_auth_token).at_least(:once).and_return('reset_auth_token')
+        @user.should_receive(:within_time_limit_of_reset_auth_token?).and_return(false)
       end
       it 'パスワード再設定コードの発行処理が行われること' do
-        @user.should_receive(:forgot_password)
+        @user.should_receive(:issue_reset_auth_token)
         @user.should_receive(:save!)
         post :issue_password_reset_code
       end
     end
     describe 'パスワードリセットコードが期限内の場合' do
       before do
-        @user.should_receive(:password_reset_token).at_least(:once).and_return('password_reset_token')
-        @user.should_receive(:within_time_limit_of_password_reset_token?).and_return(true)
+        @user.should_receive(:reset_auth_token).at_least(:once).and_return('reset_auth_token')
+        @user.should_receive(:within_time_limit_of_reset_auth_token?).and_return(true)
       end
       it 'パスワード再設定コードの発行処理が行われないこと' do
-        @user.should_not_receive(:forgot_password)
+        @user.should_not_receive(:issue_reset_auth_token)
         @user.should_not_receive(:save!)
         post :issue_password_reset_code
       end

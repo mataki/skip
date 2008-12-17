@@ -224,11 +224,11 @@ class Admin::UsersController < Admin::ApplicationController
   def issue_password_reset_code
     @user = Admin::User.find(params[:id])
     if @user.active?
-      if @user.password_reset_token.nil? || !@user.within_time_limit_of_password_reset_token?
-        @user.forgot_password
+      if @user.reset_auth_token.nil? || !@user.within_time_limit_of_reset_auth_token?
+        @user.issue_reset_auth_token
         @user.save!
       end
-      @reset_password_url = reset_password_url(@user.password_reset_token)
+      @reset_password_url = reset_password_url(@user.reset_auth_token)
       @mail_body = render_to_string(:template => "user_mailer/sent_forgot_password", :layout => false)
       render :layout => false
     else

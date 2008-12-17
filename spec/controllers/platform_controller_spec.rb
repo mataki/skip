@@ -256,8 +256,8 @@ describe PlatformController, 'POST /forgot_password' do
       before do
         @password_reset_url = 'password_reset_url'
         controller.stub!(:reset_password_url).and_return(@password_reset_url)
-        @user.stub!(:password_reset_token).and_return(@password_reset_token)
-        @user.stub!(:forgot_password)
+        @user.stub!(:reset_auth_token).and_return(@reset_auth_token)
+        @user.stub!(:issue_reset_auth_token)
         @user.stub!(:save!)
         UserMailer.stub!(:deliver_sent_forgot_password)
       end
@@ -266,7 +266,7 @@ describe PlatformController, 'POST /forgot_password' do
         post :forgot_password, :email => @email
       end
       it 'パスワードリセットコード発行処理が行われること' do
-        @user.should_receive(:forgot_password)
+        @user.should_receive(:issue_reset_auth_token)
         @user.should_receive(:save!)
         post :forgot_password, :email => @email
       end
@@ -302,11 +302,11 @@ end
 describe PlatformController, 'GET /reset_password' do
   before do
     @expires_at = Time.local(2008, 11, 1)
-    @user = stub_model(User, :password_reset_token_expires_at => @expires_at)
+    @user = stub_model(User, :reset_auth_token_expires_at => @expires_at)
   end
   describe 'パスワードリセットコードに一致するユーザが存在する場合' do
     before do
-      User.should_receive(:find_by_password_reset_token).and_return(@user)
+      User.should_receive(:find_by_reset_auth_token).and_return(@user)
     end
     describe 'パスワードリセットコードが作成されてから24時間以内の場合' do
       it '24時間未満の場合はパスワードリセット画面に遷移すること' do
@@ -331,7 +331,7 @@ describe PlatformController, 'GET /reset_password' do
   end
   describe 'パスワードリセットコードに一致するユーザが存在しない場合' do
     before do
-      User.should_receive(:find_by_password_reset_token).and_return(nil)
+      User.should_receive(:find_by_reset_auth_token).and_return(nil)
     end
     it 'ログイン画面にリダイレクトされること' do
       get :reset_password, :code => '991ea5ca6502e3ded9e494c9c5ae50ad356e4f4a'
@@ -351,8 +351,8 @@ describe PlatformController, 'POST /reset_password' do
   end
   describe 'パスワードリセットコードに一致するユーザが存在する場合' do
     before do
-      @user = stub_model(User, :password_reset_token_expires_at => @expires_at)
-      User.stub!(:find_by_password_reset_token).and_return(@user)
+      @user = stub_model(User, :reset_auth_token_expires_at => @expires_at)
+      User.stub!(:find_by_reset_auth_token).and_return(@user)
     end
     describe 'パスワードリセットコードが作成されてから24時間以内の場合' do
       before do
@@ -363,8 +363,8 @@ describe PlatformController, 'POST /reset_password' do
       describe 'パスワードリセットに成功する場合' do
         before do
           @user.should_receive(:save).and_return(true)
-          @user.should_receive(:reset_password)
-          User.should_receive(:find_by_password_reset_token).and_return(@user)
+          @user.should_receive(:determination_reset_auth_token)
+          User.should_receive(:find_by_reset_auth_token).and_return(@user)
           post_reset_password
         end
         it { flash[:notice].should_not be_nil }
@@ -373,7 +373,7 @@ describe PlatformController, 'POST /reset_password' do
       describe 'パスワードリセットに失敗する場合' do
         before do
           @user.should_receive(:save).and_return(false)
-          User.should_receive(:find_by_password_reset_token).and_return(@user)
+          User.should_receive(:find_by_reset_auth_token).and_return(@user)
           post_reset_password
         end
         it { flash[:error].should_not be_nil }
@@ -391,7 +391,7 @@ describe PlatformController, 'POST /reset_password' do
   end
   describe 'パスワードリセットコードに一致するユーザが存在しない場合' do
     before do
-      User.should_receive(:find_by_password_reset_token).and_return(nil)
+      User.should_receive(:find_by_reset_auth_token).and_return(nil)
     end
     it 'ログイン画面にリダイレクトされること' do
       post_reset_password
@@ -683,3 +683,177 @@ describe PlatformController, "#create_user_params" do
   end
 end
 
+describe PlatformController, "GET /forgot_openid" do
+  it "OpenID再設定画面が表示されること" do
+    get :forgot_openid
+    response.should render_template("forgot_openid")
+  end
+end
+
+describe PlatformController, "POST /forgot_openid" do
+  before do
+    @params_email = "a_user@example.com"
+    @reset_url = "reset_url"
+    controller.stub!(:reset_openid_url).and_return(@reset_url)
+  end
+  describe "登録されているemailが送信された場合" do
+    before do
+      @user = mock_model(User, :reset_auth_token => "reset_token", :issue_reset_auth_token => nil, :save! => nil)
+      User.should_receive(:find_by_email).with(@params_email).and_return(@user)
+    end
+    describe "emailに該当するユーザが利用中の場合" do
+      before do
+        @user.stub!(:active?).and_return(true)
+      end
+      it "ログイン画面にリダイレクトされること" do
+        post_forgot_openid
+        response.should redirect_to(:action => :index)
+      end
+      it "メールが送信されること" do
+        UserMailer.should_receive(:deliver_sent_forgot_openid).with(@params_email, @reset_url)
+        post_forgot_openid
+      end
+      it "該当するユーザのissue_reset_auth_tokenが呼ばれて、saveされること" do
+        @user.should_receive(:issue_reset_auth_token)
+        @user.should_receive(:save!)
+        post_forgot_openid
+      end
+    end
+    describe "emailに該当するユーザが利用中でない場合" do
+      before do
+        @user.stub!(:active?).and_return(false)
+      end
+      it "入力画面がレンダリングされること" do
+        post_forgot_openid
+        response.should render_template('forgot_openid')
+      end
+      it "flashメッセージが登録されていること" do
+        post_forgot_openid
+        flash[:error].should == "入力された#{@params_email}のユーザは、利用開始されていません。利用開始してください。"
+      end
+    end
+  end
+  describe "登録されていないemailが送信された場合" do
+    it "入力画面がレンダリングされること" do
+      post_forgot_openid
+      response.should render_template('forgot_openid')
+    end
+    it "flashメッセージが登録されていること" do
+      post_forgot_openid
+      flash[:error].should == "入力された#{@params_email}というメールアドレスは登録されていません。"
+    end
+  end
+  def post_forgot_openid
+    post :forgot_openid, :email => @params_email
+  end
+end
+
+describe PlatformController, "GET /reset_openid" do
+  before do
+    @reset_token = "reset_token"
+    @identity_url = "http://openid.example.com/user/a_user"
+  end
+  describe "トークンが見つかる場合" do
+    before do
+      @identifier = mock_model(OpenidIdentifier)
+      @user = mock_model(User, :openid_identifiers => [@identifier])
+      User.stub!(:find_by_reset_auth_token).and_return(@user)
+    end
+    describe "トークンが期限切れでない場合" do
+      before do
+        @user.stub!(:reset_auth_token_expires_at).and_return(Time.now + 1.hour)
+      end
+      describe "OpenIDのパラメータが存在する場合" do
+        describe "identity_urlがポストされた場合" do
+          it "OpenID認証処理が開始されること" do
+            controller.should_receive(:begin_open_id_authentication)
+            get_reset_openid({:openid_url => @identity_url})
+          end
+        end
+        describe "OpenIDのリクエストが成功した場合" do
+          before do
+            @result = mock('result', :successful? => true)
+            @identifier.stub!(:url=)
+            @user.stub!(:determination_reset_auth_token)
+            controller.should_receive(:authenticate_with_open_id).and_yield(@result, @identity_url)
+          end
+          describe "OpenID identifierの保存が成功した場合" do
+            before do
+              @identifier.stub!(:save).and_return(true)
+            end
+            it "新しく取得したopenid_identifierを設定すること" do
+              @identifier.should_receive(:url=).with(@identity_url)
+              get_reset_openid({:open_id_complete => "1"})
+            end
+            it "OpenidIdentifierが保存されること" do
+              @identifier.should_receive(:save).and_return(true)
+              get_reset_openid({:open_id_complete => "1"})
+            end
+            it "ログイン画面にリダイレクトされること" do
+              get_reset_openid({:open_id_complete => "1"})
+              response.should redirect_to(:action => :index)
+            end
+            it "トークンが初期化されること" do
+              @user.should_receive(:determination_reset_auth_token)
+              get_reset_openid({:open_id_complete => "1"})
+            end
+          end
+          describe "OpenID identifierの保存が失敗した場合" do
+            before do
+              @identifier.stub!(:save).and_return(false)
+            end
+            it "@identifierに値が存在すること" do
+              get_reset_openid({:open_id_complete => "1"})
+              assigns[:identifier].should == @identifier
+            end
+            it "reset_openidがrenderされること" do
+              get_reset_openid({:open_id_complete => "1"})
+              response.should render_template('reset_openid')
+            end
+          end
+        end
+        describe "OpenIDのリクエストが失敗した場合" do
+          it "エラーとなること" do
+            @result = mock('result', :successful? => false)
+            controller.should_receive(:authenticate_with_open_id).and_yield(@result, @identity_url)
+            get_reset_openid({:open_id_complete => "1"})
+            response.should render_template('reset_openid')
+            flash[:error].should_not be_nil
+          end
+        end
+      end
+      describe "OpenIDのパラメータが存在しない場合" do
+        before do
+          get_reset_openid
+        end
+        it "reset_openidがrenderされること" do
+          response.should render_template('reset_openid')
+        end
+        it "@identifierが設定されていること" do
+          assigns[:identifier].should_not be_nil
+        end
+      end
+    end
+    describe "トークンが期限切れの場合" do
+      it "エラーとなること" do
+        @user.stub!(:reset_auth_token_expires_at).and_return(Time.now - 1.day)
+        get_reset_openid
+        validate_error_msg_and_render_reset_openid(response, flash)
+      end
+    end
+  end
+  describe "トークンが見つからない場合" do
+    it "エラーとなること" do
+      User.stub!(:find_by_reset_auth_token)
+      get_reset_openid
+      validate_error_msg_and_render_reset_openid(response, flash)
+    end
+  end
+  def validate_error_msg_and_render_reset_openid(response, flash)
+    response.should redirect_to(:action => :index)
+    flash[:error].should_not be_nil
+  end
+  def get_reset_openid(options = {})
+    get :reset_openid, {:code => @reset_token}.merge(options)
+  end
+end

@@ -16,7 +16,7 @@
 require 'openid/extensions/ax'
 
 class PlatformController < ApplicationController
-  layout false
+  layout 'not_logged_in'
   skip_before_filter :sso, :login_required, :prepare_session
   skip_after_filter  :remove_message
 
@@ -26,6 +26,7 @@ class PlatformController < ApplicationController
   def index
     img_files = Dir.glob(File.join(RAILS_ROOT, "public", "custom", "images", "titles", "background*.{jpg,png,jpeg}"))
     @img_name = File.join("titles", File.basename(img_files[rand(img_files.size)]))
+    render :layout => false
   end
 
   def require_login
@@ -68,50 +69,47 @@ class PlatformController < ApplicationController
       flash[:error] = _('%{function}は現在利用することが出来ません。') % {:function => 'パスワード忘れ機能'}
       return redirect_to(:controller => '/platform')
     end
-    return render(:layout => 'not_logged_in') unless request.post?
+    return unless request.post?
     email = params[:email]
     if email.blank?
       flash.now[:error] = _('メールアドレスは必須です。')
-      return render(:layout => 'not_logged_in')
+      return
     end
     if @user = User.find_by_email(email)
       if @user.active?
-        @user.forgot_password
+        @user.issue_reset_auth_token
         @user.save!
-        UserMailer.deliver_sent_forgot_password(email, reset_password_url(@user.password_reset_token))
-        flash[:notice] = _("パスワードリセットのためのURLを記載したメールを%{email}宛てに送信しました。") % {:email => email}
+        UserMailer.deliver_sent_forgot_password(email, reset_password_url(@user.reset_auth_token))
+        flash[:notice] = _("%{function}のためのURLを記載したメールを%{email}宛てに送信しました。") % {:email => email, :function => _('パスワードリセット')}
         redirect_to :controller => '/platform'
       else
         flash.now[:error] = _('入力された%{email}のユーザは、利用開始されていません。利用開始してください。') % {:email => email}
-        render :layout => 'not_logged_in'
       end
     else
       flash.now[:error] = _("入力された%{email}というメールアドレスは登録されていません。") % {:email => email}
-      render :layout => 'not_logged_in'
     end
   end
 
   def reset_password
-    if @user = User.find_by_password_reset_token(params[:code])
-      if Time.now <= @user.password_reset_token_expires_at
-        return render(:layout => 'not_logged_in') unless request.post?
+    if @user = User.find_by_reset_auth_token(params[:code])
+      if Time.now <= @user.reset_auth_token_expires_at
+        return unless request.post?
         @user.crypted_password = nil
         @user.password = params[:user][:password]
         @user.password_confirmation = params[:user][:password_confirmation]
         if @user.save
-          @user.reset_password
-          flash[:notice] = "パスワードリセットが完了しました。"
+          @user.determination_reset_auth_token
+          flash[:notice] = _("%{function}が完了しました。")%{:function => _('パスワードリセット')}
           redirect_to :controller => '/platform'
         else
-          flash[:error] = "パスワードリセットに失敗しました。"
-          render :layout => 'not_logged_in'
+          flash.now[:error] = _("%{function}に失敗しました。")%{:function => _('パスワードリセット')}
         end
       else
-        flash[:error] = "パスワードリセットのためのURLの有効期限が過ぎています。"
+        flash[:error] = _("%{function}のためのURLの有効期限が過ぎています。")%{:function => _('パスワードリセット')}
         redirect_to :controller => '/platform'
       end
     else
-      flash[:error] = "パスワードリセットのためのURLが不正です。再度お試し頂くか、システム管理者にお問い合わせ下さい。"
+      flash[:error] = _("%{function}のためのURLが不正です。再度お試し頂くか、システム管理者にお問い合わせ下さい。")%{:function => _('パスワードリセット')}
       redirect_to :controller => '/platform'
     end
   end
@@ -121,11 +119,11 @@ class PlatformController < ApplicationController
       flash[:error] = _('%{function}は現在利用することが出来ません。') % {:function => 'ログインID忘れ機能'}
       return redirect_to(:controller => '/platform')
     end
-    return render(:layout => 'not_logged_in') unless request.post?
+    return unless request.post?
     email = params[:email]
     if email.blank?
       flash.now[:error] = _('メールアドレスは必須です。')
-      return render(:layout => 'not_logged_in')
+      return
     end
     if @user = User.find_by_email(email)
       if @user.active?
@@ -135,11 +133,9 @@ class PlatformController < ApplicationController
         redirect_to :controller => '/platform'
       else
         flash.now[:error] = _('入力された%{email}のユーザは、利用開始されていません。利用開始してください。') % {:email => email}
-        render :layout => 'not_logged_in'
       end
     else
       flash.now[:error] = _("入力された%{email}というメールアドレスは登録されていません。") % {:email => email}
-      render :layout => 'not_logged_in'
     end
   end
 
@@ -148,11 +144,11 @@ class PlatformController < ApplicationController
       flash[:error] = _('%{function}は現在利用することが出来ません。') % {:function => '利用開始通知'}
       return redirect_to(:controller => '/platform')
     end
-    return render(:layout => 'not_logged_in') unless request.post?
+    return unless request.post?
     email = params[:email]
     if email.blank?
       flash.now[:error] = _('メールアドレスは必須です。')
-      return render(:layout => 'not_logged_in')
+      return
     end
     if @user = User.find_by_email(email)
       if  @user.unused?
@@ -163,11 +159,9 @@ class PlatformController < ApplicationController
         redirect_to :controller => '/platform'
       else
         flash[:error] = _("メールアドレスが%{email}のユーザは既に利用を開始しています。") % {:email => email}
-        render :layout => 'not_logged_in'
       end
     else
       flash.now[:error] = _("入力された%{email}というメールアドレスは登録されていません。") % {:email => email}
-      render :layout => 'not_logged_in'
     end
   end
 
@@ -186,6 +180,60 @@ class PlatformController < ApplicationController
       end
     else
       flash[:error] = _("ユーザ登録のためのURLが不正です。再度お試し頂くか、システム管理者にお問い合わせ下さい。")
+      redirect_to :controller => '/platform'
+    end
+  end
+
+  def forgot_openid
+    return unless request.post?
+    email = params[:email]
+    if email.blank?
+      flash.now[:error] = _('メールアドレスは必須です。')
+      return
+    end
+    if user = User.find_by_email(email)
+      if user.active?
+        user.issue_reset_auth_token
+        user.save!
+        UserMailer.deliver_sent_forgot_openid(email, reset_openid_url(user.reset_auth_token))
+        flash[:notice] = _("OpenID URLを再設定するためのURLを記載したメールを%{email}宛に送信しました。") % {:email => email}
+        redirect_to :controller => "/platform"
+      else
+        flash.now[:error] = _('入力された%{email}のユーザは、利用開始されていません。利用開始してください。') % {:email => email}
+      end
+    else
+      flash.now[:error] = _("入力された%{email}というメールアドレスは登録されていません。") % {:email => email}
+    end
+  end
+
+  def reset_openid
+    if user = User.find_by_reset_auth_token(params[:code])
+      if Time.now <= user.reset_auth_token_expires_at
+        @identifier = user.openid_identifiers.first || user.openid_identifiers.build
+        if using_open_id?
+          begin
+            authenticate_with_open_id do |result, identity_url|
+              if result.successful?
+                @identifier.url = identity_url
+                if @identifier.save
+                  user.determination_reset_auth_token
+                  flash[:notice] = _("%{function}が完了しました。")%{:function => _('OpneID URLの再設定')} + _("設定したURLを入力してを入力してログインしてください。")
+                  redirect_to :action => :index
+                end
+              else
+                flash.now[:error] = _("OpenIDの処理の中でキャンセルされたか、失敗しました。")
+              end
+            end
+          rescue OpenIdAuthentication::InvalidOpenId
+            flash.now[:error] = _("OpenIDの形式が正しくありません。")
+          end
+        end
+      else
+        flash[:error] = _("%{function}のためのURLの有効期限が過ぎています。")%{:function => _('OpneID URLの再設定')}
+        redirect_to :controller => '/platform'
+      end
+    else
+      flash[:error] = _("%{function}のためのURLが不正です。再度お試し頂くか、システム管理者にお問い合わせ下さい。")%{:function => _('OpneID URLの再設定')}
       redirect_to :controller => '/platform'
     end
   end
@@ -220,8 +268,8 @@ class PlatformController < ApplicationController
         end
       end
     rescue OpenIdAuthentication::InvalidOpenId
-      flash[:error] = _("OpenIDの形式が正しくありません。")
-      render :action => :index
+      flash.now[:error] = _("OpenIDの形式が正しくありません。")
+      render :action => :index, :layout => false
     end
   end
 

@@ -210,38 +210,38 @@ describe User, "#update_auth_session_token" do
   end
 end
 
-describe User, '#forgot_password' do
+describe User, '#issue_reset_auth_token' do
   before do
     @user = create_user
     @now = Time.local(2008, 11, 1)
     Time.stub!(:now).and_return(@now)
   end
-  it 'password_reset_tokenに値が入ること' do
+  it 'reset_auth_tokenに値が入ること' do
     lambda do
-      @user.forgot_password
-    end.should change(@user, :password_reset_token)
+      @user.issue_reset_auth_token
+    end.should change(@user, :reset_auth_token)
   end
-  it 'password_reset_token_expires_atが24時間後となること' do
+  it 'reset_auth_token_expires_atが24時間後となること' do
     lambda do
-      @user.forgot_password
-    end.should change(@user, :password_reset_token_expires_at).from(nil).to(@now.since(24.hour))
+      @user.issue_reset_auth_token
+    end.should change(@user, :reset_auth_token_expires_at).from(nil).to(@now.since(24.hour))
   end
 end
 
-describe User, '#reset_password' do
-  it 'password_reset_tokenの値が更新されること' do
+describe User, '#determination_reset_auth_token' do
+  it 'reset_auth_tokenの値が更新されること' do
     prc = '6df711a1a42d110261cfe759838213143ca3c2ad'
-    u = create_user(:user_options => {:password_reset_token => prc})
+    u = create_user(:user_options => {:reset_auth_token => prc})
     lambda do
-      u.reset_password
-    end.should change(u, :password_reset_token).from(prc).to(nil)
+      u.determination_reset_auth_token
+    end.should change(u, :reset_auth_token).from(prc).to(nil)
   end
-  it 'password_reset_token_expires_atの値が更新されること' do
+  it 'reset_auth_token_expires_atの値が更新されること' do
     time = Time.now
-    u = create_user(:user_options => {:password_reset_token_expires_at => time})
+    u = create_user(:user_options => {:reset_auth_token_expires_at => time})
     lambda do
-      u.reset_password
-    end.should change(u, :password_reset_token_expires_at).from(time).to(nil)
+      u.determination_reset_auth_token
+    end.should change(u, :reset_auth_token_expires_at).from(time).to(nil)
   end
 end
 

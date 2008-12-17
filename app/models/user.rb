@@ -281,13 +281,13 @@ class User < ActiveRecord::Base
     self.auth_session_token
   end
 
-  def forgot_password
-    self.password_reset_token = self.class.make_token
-    self.password_reset_token_expires_at = Time.now.since(24.hour)
+  def issue_reset_auth_token
+    self.reset_auth_token = self.class.make_token
+    self.reset_auth_token_expires_at = Time.now.since(24.hour)
   end
 
-  def reset_password
-    update_attributes(:password_reset_token => nil, :password_reset_token_expires_at => nil)
+  def determination_reset_auth_token
+    update_attributes(:reset_auth_token => nil, :reset_auth_token_expires_at => nil)
   end
 
   def issue_activation_code
@@ -309,8 +309,8 @@ class User < ActiveRecord::Base
     !self.activation_token.nil? && Time.now <= self.activation_token_expires_at
   end
 
-  def within_time_limit_of_password_reset_token?
-    !self.password_reset_token.nil? && Time.now <= self.password_reset_token_expires_at
+  def within_time_limit_of_reset_auth_token?
+    !self.reset_auth_token.nil? && Time.now <= self.reset_auth_token_expires_at
   end
 
   def find_or_initialize_profiles(params)

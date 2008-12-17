@@ -1,0 +1,14 @@
+<div class="content">
+  <h3><%= _('OpneID URLの再設定') %></h3>
+  <% form_for :user, @identifier, reset_openid_path do |f| -%>
+    <%= error_messages_for :identifier %>
+    <%= hidden_field_tag :code, params[:code] %>
+    <table>
+      <tr>
+        <th><%= f.label :url %></th>
+        <td><%= f.text_field :url, :name => "openid_url" %></td>
+      </tr>
+    </table>
+    <%= f.submit _('Send') %>
+  <% end -%>
+</div>
