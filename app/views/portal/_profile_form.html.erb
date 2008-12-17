@@ -1,5 +1,6 @@
 <% profile_hash = @profiles.index_by(&:user_profile_master_id) %>
 <% UserProfileMasterCategory.all.each do |category| -%>
+  <% unless category.user_profile_masters.empty? -%>
 <div>
   <div class="subtitle"><%= h category.name %><span class="description"><%= h category.description %></span></div>
   <table id="user_info_box" class="normal" border="1" style="width: 600px;">
@@ -14,6 +15,7 @@
     <% end -%>
   </table>
 </div>
+  <% end -%>
 <% end -%>
 <% content_for :javascript do -%>
 <%= skip_javascript_include_tag "fckeditor/fckeditor" %>
