@@ -48,7 +48,8 @@ class Admin::SettingsController < Admin::ApplicationController
                       setting_of('usercode_dips_setting'),
                       setting_of('password_edit_setting'),
                       setting_of('username_use_setting'),
-                      setting_of('user_code_format_regex', INITIAL_SETTINGS['user_code_format_regex'] || "利用しない")
+                      setting_of('user_code_format_regex', INITIAL_SETTINGS['user_code_format_regex'] || "利用しない"),
+                      setting_of('user_code_minimum_length', INITIAL_SETTINGS['user_code_minimum_length'])
                      ]
       }
       @system_infos << {

@@ -45,6 +45,8 @@ class Admin::InitialSetting < ActiveRecord::Base
   N_('Admin::InitialSetting|Username use setting|false')
   N_('Admin::InitialSetting|User code format regex')
   N_('Admin::InitialSetting|User code format regex description')
+  N_('Admin::InitialSetting|User code minimum length')
+  N_('Admin::InitialSetting|User code minimum length description')
 
   # ================================================================================================
   # 機能に関する設定

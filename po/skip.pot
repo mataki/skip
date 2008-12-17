@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-12-17 16:21+0900\n"
+"POT-Creation-Date: 2008-12-17 16:26+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -370,27 +370,27 @@ msgstr ""
 msgid "Admin::ImagesController|title_logo_description"
 msgstr ""
 
-#: app/models/admin/initial_setting.rb:66
+#: app/models/admin/initial_setting.rb:68
 msgid "Admin::InitialSetting|Administrator addr"
 msgstr ""
 
-#: app/models/admin/initial_setting.rb:67
+#: app/models/admin/initial_setting.rb:69
 msgid "Admin::InitialSetting|Administrator addr description"
 msgstr ""
 
-#: app/models/admin/initial_setting.rb:56
+#: app/models/admin/initial_setting.rb:58
 msgid "Admin::InitialSetting|Full text search setting"
 msgstr ""
 
-#: app/models/admin/initial_setting.rb:57
+#: app/models/admin/initial_setting.rb:59
 msgid "Admin::InitialSetting|Full text search setting description"
 msgstr ""
 
-#: app/models/admin/initial_setting.rb:59
+#: app/models/admin/initial_setting.rb:61
 msgid "Admin::InitialSetting|Full text search setting|false"
 msgstr ""
 
-#: app/models/admin/initial_setting.rb:58
+#: app/models/admin/initial_setting.rb:60
 msgid "Admin::InitialSetting|Full text search setting|true"
 msgstr ""
 
@@ -450,27 +450,27 @@ msgstr ""
 msgid "Admin::InitialSetting|Password edit setting|true"
 msgstr ""
 
-#: app/models/admin/initial_setting.rb:60
+#: app/models/admin/initial_setting.rb:62
 msgid "Admin::InitialSetting|Proxy url"
 msgstr ""
 
-#: app/models/admin/initial_setting.rb:61
+#: app/models/admin/initial_setting.rb:63
 msgid "Admin::InitialSetting|Proxy url description"
 msgstr ""
 
-#: app/models/admin/initial_setting.rb:52
+#: app/models/admin/initial_setting.rb:54
 msgid "Admin::InitialSetting|Ssl setting"
 msgstr ""
 
-#: app/models/admin/initial_setting.rb:53
+#: app/models/admin/initial_setting.rb:55
 msgid "Admin::InitialSetting|Ssl setting description"
 msgstr ""
 
-#: app/models/admin/initial_setting.rb:55
+#: app/models/admin/initial_setting.rb:57
 msgid "Admin::InitialSetting|Ssl setting|false"
 msgstr ""
 
-#: app/models/admin/initial_setting.rb:54
+#: app/models/admin/initial_setting.rb:56
 msgid "Admin::InitialSetting|Ssl setting|true"
 msgstr ""
 
@@ -480,6 +480,14 @@ msgstr ""
 
 #: app/models/admin/initial_setting.rb:47
 msgid "Admin::InitialSetting|User code format regex description"
+msgstr ""
+
+#: app/models/admin/initial_setting.rb:48
+msgid "Admin::InitialSetting|User code minimum length"
+msgstr ""
+
+#: app/models/admin/initial_setting.rb:49
+msgid "Admin::InitialSetting|User code minimum length description"
 msgstr ""
 
 #: app/models/admin/initial_setting.rb:34
