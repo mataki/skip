@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-12-17 17:28+0900\n"
+"POT-Creation-Date: 2008-12-17 19:09+0900\n"
 "PO-Revision-Date: 2008-12-09 18:49+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2373,7 +2373,7 @@ msgstr ""
 msgid "UserReading|User"
 msgstr ""
 
-#: app/models/user_uid.rb:- app/models/user_uid.rb:28
+#: app/models/user_uid.rb:- app/models/user_uid.rb:27
 msgid "UserUid|Uid"
 msgstr "ユーザ名"
 
@@ -2812,8 +2812,18 @@ msgid ""
 "インしてください。"
 msgstr ""
 
+#: app/models/user_uid.rb:35
+msgid "は%{login_account}と異なる形式で入力してください。"
+msgstr ""
+
 #: app/models/group_category.rb:27
 msgid "はアルファベットで入力して下さい。"
+msgstr ""
+
+#: app/models/user_uid.rb:32
+msgid ""
+"は数字、アルファベット及び次の記号[-(ハイフン)、_(アンダースコア)、.(ドット)]"
+"が利用可能です。その他の記号、半角空白などは使えません。"
 msgstr ""
 
 #: app/controllers/admin/settings_controller.rb:45

@@ -28,46 +28,70 @@ describe UserUid, '.validation_error_message' do
   end
 end
 
-describe UserUid, '.validates_length_of' do
-  before do
-    @minimum = INITIAL_SETTINGS['user_code_minimum_length'].to_i
-  end
-  describe "uidが最小値未満の文字数の場合" do
+describe UserUid, '各種validation' do
+  describe UserUid, '.validates_length_of' do
     before do
-      @user_uid = create_user_uid(:uid => SkipFaker.rand_char(@minimum - 1))
-      @user_uid.valid?
+      @minimum = INITIAL_SETTINGS['user_code_minimum_length'].to_i
     end
-    it 'uidが短すぎる旨のエラーとなること' do
-      @user_uid.errors['uid'].should == "Uid is too short (minimum is #{@minimum} characters)"
+    describe "uidが最小値未満の文字数の場合" do
+      before do
+        @user_uid = create_user_uid(:uid => SkipFaker.rand_char(@minimum - 1))
+        @user_uid.valid?
+      end
+      it 'uidが短すぎる旨のエラーとなること' do
+        @user_uid.errors['uid'].should == "Uid is too short (minimum is #{@minimum} characters)"
+      end
+    end
+    describe "uidが最小値と等しい文字数の場合" do
+      before do
+        @user_uid = create_user_uid(:uid => SkipFaker.rand_char(@minimum))
+        @user_uid.valid?
+      end
+      it 'エラーとならないこと' do
+        @user_uid.errors['uid'].should be_nil
+      end
+    end
+    describe 'uidが30文字の場合' do
+      before do
+        @user_uid = create_user_uid(:uid => SkipFaker.rand_char(30))
+        @user_uid.valid?
+      end
+      it 'エラーとならないこと' do
+        @user_uid.errors['uid'].should be_nil
+      end
+    end
+    describe 'uidが31文字の場合' do
+      before do
+        @user_uid = create_user_uid(:uid => SkipFaker.rand_char(31))
+        @user_uid.valid?
+      end
+      it 'uidが長すぎる旨のエラーとなること' do
+        @user_uid.errors['uid'].should == 'Uid is too long (maximum is 30 characters)'
+      end
     end
   end
-  describe "uidが最小値と等しい文字数の場合" do
-    before do
-      @user_uid = create_user_uid(:uid => SkipFaker.rand_char(@minimum))
-      @user_uid.valid?
+
+  describe UserUid, '.validates_format_of' do
+    describe 'uidのフォーマットが正しい場合' do
+      it 'エラーとならないこと' do
+        %w(123456 abcdef 123abc 123ab- 123ab_ 123ab.).each do |uid|
+          user_uid = create_user_uid(:uid => uid)
+          user_uid.valid?
+          user_uid.errors['uid'].should be_nil
+        end
+      end
     end
-    it 'エラーとならないこと' do
-      @user_uid.errors['uid'].should be_nil
-    end
-  end
-  describe 'uidが30文字の場合' do
-    before do
-      @user_uid = create_user_uid(:uid => SkipFaker.rand_char(30))
-      @user_uid.valid?
-    end
-    it 'エラーとならないこと' do
-      @user_uid.errors['uid'].should be_nil
-    end
-  end
-  describe 'uidが31文字の場合' do
-    before do
-      @user_uid = create_user_uid(:uid => SkipFaker.rand_char(31))
-      @user_uid.valid?
-    end
-    it 'uidが長すぎる旨のエラーとなること' do
-      @user_uid.errors['uid'].should == 'Uid is too long (maximum is 30 characters)'
+    describe 'uidのフォーマットが正しくない場合' do
+      it 'エラーが設定されること' do
+        %w(123ab+ 123abあ).each do |uid|
+          user_uid = create_user_uid(:uid => uid)
+          user_uid.valid?
+          user_uid.errors['uid'].should == 'は数字、アルファベット及び次の記号[-(ハイフン)、_(アンダースコア)、.(ドット)]が利用可能です。その他の記号、半角空白などは使えません。'
+        end
+      end
     end
   end
+
   def create_user_uid options = {}
     UserUid.new({:uid => SkipFaker.rand_char, :uid_type => 'MASTER'}.merge(options))
   end

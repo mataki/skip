@@ -22,22 +22,26 @@ class UserUid < ActiveRecord::Base
   }
 
   UID_MAX_LENGTH = 30
-  UID_FORMAT_REGEX = /^[a-zA-Z0-9\-_]*$/
-  UID_CODE_REGEX = Regexp.new(INITIAL_SETTINGS['user_code_format_regex'])
+  UID_FORMAT_REGEX = /^[a-zA-Z0-9\-_\.]*$/
 
   N_('UserUid|Uid')
 
-  validates_presence_of :uid, :message => 'は必須です'
-  validates_uniqueness_of :uid, :message => 'は既に登録されています'
+  validates_presence_of :uid
+  validates_uniqueness_of :uid
   validates_length_of :uid, :within => INITIAL_SETTINGS['user_code_minimum_length'].to_i..UID_MAX_LENGTH
-  validates_format_of :uid, :message => 'は数字orアルファベットor記号で入力してください', :with => UID_FORMAT_REGEX
+  validates_format_of :uid, :with => UID_FORMAT_REGEX, :message => _('は数字、アルファベット及び次の記号[-(ハイフン)、_(アンダースコア)、.(ドット)]が利用可能です。その他の記号、半角空白などは使えません。')
 
   def validate
-    errors.add(:uid, "は#{Admin::Setting.login_account}と異なる形式で入力してください") if uid_type == UID_TYPE[:username] && uid =~ UID_CODE_REGEX
+    errors.add(:uid, _('は%{login_account}と異なる形式で入力してください。') % {:login_account => Admin::Setting.login_account}) if uid_type == UID_TYPE[:username] && uid =~ user_code_format_regex
   end
 
   def self.validation_error_message uid
     u = new(:uid => uid, :uid_type => UID_TYPE[:username])
     u.valid? ? nil : u.errors.full_messages.join(',')
+  end
+
+#  private
+  def user_code_format_regex
+    Regexp.new(INITIAL_SETTINGS['user_code_format_regex'])
   end
 end
