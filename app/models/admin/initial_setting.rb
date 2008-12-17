@@ -14,36 +14,27 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Admin::InitialSetting < ActiveRecord::Base
-  N_('Admin::InitialSetting|Proxy url')
-  N_('Admin::InitialSetting|Proxy url description')
+  # ================================================================================================
+  # 共有ファイル関連
+  # ================================================================================================
   N_('Admin::InitialSetting|Max share file size')
   N_('Admin::InitialSetting|Max share file size description')
   N_('Admin::InitialSetting|Max share file size per owner')
   N_('Admin::InitialSetting|Max share file size per owner description')
   N_('Admin::InitialSetting|Max share file size of system')
   N_('Admin::InitialSetting|Max share file size of system description')
-  N_('Admin::InitialSetting|Not blank link re')
-  N_('Admin::InitialSetting|Not blank link re description')
-  N_('Admin::InitialSetting|User code format regex')
-  N_('Admin::InitialSetting|User code format regex description')
-  N_('Admin::InitialSetting|Delivery method')
-  N_('Admin::InitialSetting|Delivery method description')
+
+  # ================================================================================================
+  # アカウント関連
+  # ================================================================================================
   N_('Admin::InitialSetting|Login mode')
   N_('Admin::InitialSetting|Login mode description')
   N_('Admin::InitialSetting|Login mode|password')
   N_('Admin::InitialSetting|Login mode|rp')
-  N_('Admin::InitialSetting|Fixed op url')
-  N_('Admin::InitialSetting|Fixed op url description')
-  N_('Admin::InitialSetting|Administrator addr')
-  N_('Admin::InitialSetting|Administrator addr description')
-  N_('Admin::InitialSetting|Ssl setting')
-  N_('Admin::InitialSetting|Ssl setting description')
-  N_('Admin::InitialSetting|Ssl setting|true')
-  N_('Admin::InitialSetting|Ssl setting|false')
-  N_('Admin::InitialSetting|Full text search setting')
-  N_('Admin::InitialSetting|Full text search setting description')
-  N_('Admin::InitialSetting|Full text search setting|true')
-  N_('Admin::InitialSetting|Full text search setting|false')
+  N_('Admin::InitialSetting|Usercode dips setting')
+  N_('Admin::InitialSetting|Usercode dips setting description')
+  N_('Admin::InitialSetting|Usercode dips setting|true')
+  N_('Admin::InitialSetting|Usercode dips setting|false')
   N_('Admin::InitialSetting|Password edit setting')
   N_('Admin::InitialSetting|Password edit setting description')
   N_('Admin::InitialSetting|Password edit setting|true')
@@ -52,8 +43,26 @@ class Admin::InitialSetting < ActiveRecord::Base
   N_('Admin::InitialSetting|Username use setting description')
   N_('Admin::InitialSetting|Username use setting|true')
   N_('Admin::InitialSetting|Username use setting|false')
-  N_('Admin::InitialSetting|Usercode dips setting')
-  N_('Admin::InitialSetting|Usercode dips setting description')
-  N_('Admin::InitialSetting|Usercode dips setting|true')
-  N_('Admin::InitialSetting|Usercode dips setting|false')
+  N_('Admin::InitialSetting|User code format regex')
+  N_('Admin::InitialSetting|User code format regex description')
+
+  # ================================================================================================
+  # 機能に関する設定
+  # ================================================================================================
+  N_('Admin::InitialSetting|Ssl setting')
+  N_('Admin::InitialSetting|Ssl setting description')
+  N_('Admin::InitialSetting|Ssl setting|true')
+  N_('Admin::InitialSetting|Ssl setting|false')
+  N_('Admin::InitialSetting|Full text search setting')
+  N_('Admin::InitialSetting|Full text search setting description')
+  N_('Admin::InitialSetting|Full text search setting|true')
+  N_('Admin::InitialSetting|Full text search setting|false')
+  N_('Admin::InitialSetting|Proxy url')
+  N_('Admin::InitialSetting|Proxy url description')
+
+  # ================================================================================================
+  # システム運用について
+  # ================================================================================================
+  N_('Admin::InitialSetting|Administrator addr')
+  N_('Admin::InitialSetting|Administrator addr description')
 end

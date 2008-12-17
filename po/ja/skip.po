@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-12-11 15:15+0900\n"
+"POT-Creation-Date: 2008-12-17 16:21+0900\n"
 "PO-Revision-Date: 2008-12-09 18:49+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -43,6 +43,7 @@ msgstr "%{model}の詳細"
 msgid "%{model} was successfully created."
 msgstr "%{model}の作成に成功しました。"
 
+#: app/controllers/admin/user_profile_master_categories_controller.rb:28
 #: app/controllers/admin/admin_module.rb:154
 #: app/controllers/admin/admin_module.rb:268
 msgid "%{model} was successfully deleted."
@@ -55,31 +56,31 @@ msgstr "%{model}を削除しました。"
 msgid "%{model} was successfully updated."
 msgstr "%{model}の更新に成功しました。"
 
-#: app/models/user_profile_master.rb:251
+#: app/models/user_profile_master.rb:264
 msgid "%{name} に不正な形式が設定されています"
 msgstr ""
 
-#: app/models/user_profile_master.rb:172
+#: app/models/user_profile_master.rb:177
 msgid "%{name} は4桁の数値で入力して下さい"
 msgstr ""
 
-#: app/models/user_profile_master.rb:112 app/models/user_profile_master.rb:116
-#: app/models/user_profile_master.rb:126 app/models/user_profile_master.rb:169
-#: app/models/user_profile_master.rb:249 app/models/user_profile_master.rb:271
-#: app/models/user_profile_master.rb:290
+#: app/models/user_profile_master.rb:106 app/models/user_profile_master.rb:110
+#: app/models/user_profile_master.rb:127 app/models/user_profile_master.rb:174
+#: app/models/user_profile_master.rb:262 app/models/user_profile_master.rb:292
+#: app/models/user_profile_master.rb:311
 msgid "%{name} は必須です"
 msgstr ""
 
-#: app/models/user_profile_master.rb:127
+#: app/models/user_profile_master.rb:128
 msgid "%{name} は数字かハイフンで入力してください"
 msgstr ""
 
-#: app/models/user_profile_master.rb:294
+#: app/models/user_profile_master.rb:315
 msgid "%{name} は正しい日付形式で入力して下さい"
 msgstr ""
 
-#: app/models/user_profile_master.rb:117 app/models/user_profile_master.rb:255
-#: app/models/user_profile_master.rb:274
+#: app/models/user_profile_master.rb:111 app/models/user_profile_master.rb:268
+#: app/models/user_profile_master.rb:295
 msgid "%{name} は選択される値以外のものが設定されています"
 msgstr ""
 
@@ -184,7 +185,7 @@ msgstr "タイトル"
 msgid "Admin::Bookmark|Url"
 msgstr "URL"
 
-#: app/helpers/admin/application_helper.rb:24
+#: app/helpers/admin/application_helper.rb:25
 #: app/controllers/admin/documents_controller.rb:95
 msgid "Admin::DocumentsController"
 msgstr "説明文設定"
@@ -287,7 +288,7 @@ msgstr "グループ名"
 msgid "Admin::Group|Protected"
 msgstr "参加承認"
 
-#: app/helpers/admin/application_helper.rb:23
+#: app/helpers/admin/application_helper.rb:24
 msgid "Admin::ImagesController"
 msgstr "画像設定"
 
@@ -375,185 +376,158 @@ msgstr "タイトルロゴ画像"
 msgid "Admin::ImagesController|title_logo_description"
 msgstr "ログイン画面に表示されるロゴの画像です。"
 
-#: app/models/admin/initial_setting.rb:37
+#: app/models/admin/initial_setting.rb:66
 msgid "Admin::InitialSetting|Administrator addr"
 msgstr "システム運用担当者の連絡先"
 
-#: app/models/admin/initial_setting.rb:38
+#: app/models/admin/initial_setting.rb:67
 msgid "Admin::InitialSetting|Administrator addr description"
 msgstr "システム障害時の連絡先のメールアドレスとして表示されます"
 
-#: app/models/admin/initial_setting.rb:29
-msgid "Admin::InitialSetting|Delivery method"
-msgstr "メール配信方法"
-
-#: app/models/admin/initial_setting.rb:30
-msgid "Admin::InitialSetting|Delivery method description"
-msgstr ""
-"メールの配信方法を指定しています（testの場合、実際に送信は行われません）"
-
-#: app/models/admin/initial_setting.rb:35
-msgid "Admin::InitialSetting|Fixed op url"
-msgstr "RPモードで固定OPを利用するSSOの場合のURL"
-
-#: app/models/admin/initial_setting.rb:36
-msgid "Admin::InitialSetting|Fixed op url description"
-msgstr "固定OPを利用することで強制的にこのURLで認証を行うように動きます"
-
-#: app/models/admin/initial_setting.rb:43
+#: app/models/admin/initial_setting.rb:56
 msgid "Admin::InitialSetting|Full text search setting"
 msgstr "全文検索を利用するか"
 
-#: app/models/admin/initial_setting.rb:44
+#: app/models/admin/initial_setting.rb:57
 msgid "Admin::InitialSetting|Full text search setting description"
 msgstr ""
 "全文検索を行うかどうかの設定です（利用しない場合、検索ボックスなどが表示され"
 "ません）"
 
-#: app/models/admin/initial_setting.rb:46
+#: app/models/admin/initial_setting.rb:59
 msgid "Admin::InitialSetting|Full text search setting|false"
 msgstr "利用しない"
 
-#: app/models/admin/initial_setting.rb:45
+#: app/models/admin/initial_setting.rb:58
 msgid "Admin::InitialSetting|Full text search setting|true"
 msgstr "利用する"
 
-#: app/models/admin/initial_setting.rb:31
+#: app/models/admin/initial_setting.rb:30
 msgid "Admin::InitialSetting|Login mode"
 msgstr "ユーザアカウントの管理方法"
 
-#: app/models/admin/initial_setting.rb:32
+#: app/models/admin/initial_setting.rb:31
 msgid "Admin::InitialSetting|Login mode description"
 msgstr ""
 "ユーザアカウントをどこで管理するかを指定しています（passwordの場合はパスワー"
 "ドを本体で管理を行い、RPの場合はOpenID認証を利用するため別に存在するOPで管理"
 "を行います）"
 
-#: app/models/admin/initial_setting.rb:33
+#: app/models/admin/initial_setting.rb:32
 msgid "Admin::InitialSetting|Login mode|password"
 msgstr "内部でパスワードを管理"
 
-#: app/models/admin/initial_setting.rb:34
+#: app/models/admin/initial_setting.rb:33
 msgid "Admin::InitialSetting|Login mode|rp"
 msgstr "外部のOpenID認証局を利用（パスワード管理をしない）"
 
-#: app/models/admin/initial_setting.rb:19
+#: app/models/admin/initial_setting.rb:20
 msgid "Admin::InitialSetting|Max share file size"
 msgstr "一度にアップロードが出来る容量"
 
-#: app/models/admin/initial_setting.rb:20
+#: app/models/admin/initial_setting.rb:21
 msgid "Admin::InitialSetting|Max share file size description"
 msgstr ""
 "ユーザの一度のアップロードのアクションで格納できるファイルの最大容量です"
 
-#: app/models/admin/initial_setting.rb:23
+#: app/models/admin/initial_setting.rb:24
 msgid "Admin::InitialSetting|Max share file size of system"
 msgstr "システム全体で利用可能な容量"
 
-#: app/models/admin/initial_setting.rb:24
+#: app/models/admin/initial_setting.rb:25
 msgid "Admin::InitialSetting|Max share file size of system description"
 msgstr "システム全体でアップロード可能なファイルの最大容量です。"
 
-#: app/models/admin/initial_setting.rb:21
+#: app/models/admin/initial_setting.rb:22
 msgid "Admin::InitialSetting|Max share file size per owner"
 msgstr "ユーザ・グループで利用可能な容量"
 
-#: app/models/admin/initial_setting.rb:22
+#: app/models/admin/initial_setting.rb:23
 msgid "Admin::InitialSetting|Max share file size per owner description"
 msgstr ""
 "各々のオーナー(ユーザやグループ)でアップロード可能なファイルの最大容量です。"
 
-#: app/models/admin/initial_setting.rb:25
-msgid "Admin::InitialSetting|Not blank link re"
-msgstr "ブログ内のリンクで新しいウィンドウを開かないでリンクするURLの形式"
-
-#: app/models/admin/initial_setting.rb:26
-msgid "Admin::InitialSetting|Not blank link re description"
-msgstr ""
-"ブログや掲示板の記事中でURLでリンクを指定した場合、この指定のURLの場合は新し"
-"いウィンドウを開かずに同じウィンドウで遷移します"
-
-#: app/models/admin/initial_setting.rb:47
+#: app/models/admin/initial_setting.rb:38
 msgid "Admin::InitialSetting|Password edit setting"
 msgstr "パスワードの編集可否"
 
-#: app/models/admin/initial_setting.rb:48
+#: app/models/admin/initial_setting.rb:39
 msgid "Admin::InitialSetting|Password edit setting description"
 msgstr "ユーザによるパスワードの変更ができるかどうかを指定しています"
 
-#: app/models/admin/initial_setting.rb:50
+#: app/models/admin/initial_setting.rb:41
 msgid "Admin::InitialSetting|Password edit setting|false"
 msgstr "編集できない"
 
-#: app/models/admin/initial_setting.rb:49
+#: app/models/admin/initial_setting.rb:40
 msgid "Admin::InitialSetting|Password edit setting|true"
 msgstr "編集できる"
 
-#: app/models/admin/initial_setting.rb:17
+#: app/models/admin/initial_setting.rb:60
 msgid "Admin::InitialSetting|Proxy url"
 msgstr "プロキシのURL"
 
-#: app/models/admin/initial_setting.rb:18
+#: app/models/admin/initial_setting.rb:61
 msgid "Admin::InitialSetting|Proxy url description"
 msgstr ""
 "RSSなどでアプリケーションが外部のサイトからデータ取得する場合のプロキシサーバ"
 "のURLを指定しています"
 
-#: app/models/admin/initial_setting.rb:39
+#: app/models/admin/initial_setting.rb:52
 msgid "Admin::InitialSetting|Ssl setting"
 msgstr "SSLログインを利用するか"
 
-#: app/models/admin/initial_setting.rb:40
+#: app/models/admin/initial_setting.rb:53
 msgid "Admin::InitialSetting|Ssl setting description"
 msgstr "ログイン時のSSL指定ができるかどうかを指定しています"
 
-#: app/models/admin/initial_setting.rb:42
+#: app/models/admin/initial_setting.rb:55
 msgid "Admin::InitialSetting|Ssl setting|false"
 msgstr "利用しない"
 
-#: app/models/admin/initial_setting.rb:41
+#: app/models/admin/initial_setting.rb:54
 msgid "Admin::InitialSetting|Ssl setting|true"
 msgstr "利用する"
 
-#: app/models/admin/initial_setting.rb:27
+#: app/models/admin/initial_setting.rb:46
 msgid "Admin::InitialSetting|User code format regex"
 msgstr "許可しないユーザ名の形式"
 
-#: app/models/admin/initial_setting.rb:28
+#: app/models/admin/initial_setting.rb:47
 msgid "Admin::InitialSetting|User code format regex description"
 msgstr "ユーザ名として使えない形式の指定を正規表現で行っています"
 
-#: app/models/admin/initial_setting.rb:55
+#: app/models/admin/initial_setting.rb:34
 msgid "Admin::InitialSetting|Usercode dips setting"
 msgstr "ログインIDの画面上の表示"
 
-#: app/models/admin/initial_setting.rb:56
+#: app/models/admin/initial_setting.rb:35
 msgid "Admin::InitialSetting|Usercode dips setting description"
 msgstr ""
 "ログインIDを社員番号などにしており画面上に表示したくない場合などには「表示し"
 "ない」を指定します"
 
-#: app/models/admin/initial_setting.rb:58
+#: app/models/admin/initial_setting.rb:37
 msgid "Admin::InitialSetting|Usercode dips setting|false"
 msgstr "表示しない"
 
-#: app/models/admin/initial_setting.rb:57
+#: app/models/admin/initial_setting.rb:36
 msgid "Admin::InitialSetting|Usercode dips setting|true"
 msgstr "表示する"
 
-#: app/models/admin/initial_setting.rb:51
+#: app/models/admin/initial_setting.rb:42
 msgid "Admin::InitialSetting|Username use setting"
 msgstr "ユーザ名を利用するか"
 
-#: app/models/admin/initial_setting.rb:52
+#: app/models/admin/initial_setting.rb:43
 msgid "Admin::InitialSetting|Username use setting description"
 msgstr "システム内のユーザの指定にわかりやすい「ユーザ名」を利用するかどうか"
 
-#: app/models/admin/initial_setting.rb:54
+#: app/models/admin/initial_setting.rb:45
 msgid "Admin::InitialSetting|Username use setting|false"
 msgstr "利用しない"
 
-#: app/models/admin/initial_setting.rb:53
+#: app/models/admin/initial_setting.rb:44
 msgid "Admin::InitialSetting|Username use setting|true"
 msgstr "利用する"
 
@@ -562,22 +536,22 @@ msgstr "利用する"
 msgid "Admin::OpenidIdentifier|Url"
 msgstr "OpenID URL"
 
-#: app/helpers/admin/application_helper.rb:26
+#: app/helpers/admin/application_helper.rb:27
 #: app/controllers/admin/settings_controller.rb:22
 msgid "Admin::SettingsController|feed"
 msgstr "RSSフィード設定"
 
-#: app/helpers/admin/application_helper.rb:22
+#: app/helpers/admin/application_helper.rb:23
 #: app/controllers/admin/settings_controller.rb:20
 msgid "Admin::SettingsController|literal"
 msgstr "文言設定"
 
-#: app/helpers/admin/application_helper.rb:25
+#: app/helpers/admin/application_helper.rb:26
 #: app/controllers/admin/settings_controller.rb:21
 msgid "Admin::SettingsController|mail"
 msgstr "メール関連設定"
 
-#: app/helpers/admin/application_helper.rb:20
+#: app/helpers/admin/application_helper.rb:21
 #: app/controllers/admin/settings_controller.rb:23
 msgid "Admin::SettingsController|main"
 msgstr "全体設定"
@@ -883,7 +857,10 @@ msgstr "説明"
 
 #: app/models/admin/user_profile_master_category.rb:23
 msgid "Admin::UserProfileMasterCategory|Description description"
-msgstr "このプロフィールカテゴリについての説明を入力して下さい。入力した内容はプロフィール編集画面においてこのプロフィールカテゴリの表示名の右側に補足説明として表示されるようになります。"
+msgstr ""
+"このプロフィールカテゴリについての説明を入力して下さい。入力した内容はプロ"
+"フィール編集画面においてこのプロフィールカテゴリの表示名の右側に補足説明とし"
+"て表示されるようになります。"
 
 #: app/models/admin/user_profile_master_category.rb:18
 msgid "Admin::UserProfileMasterCategory|Name"
@@ -899,7 +876,9 @@ msgstr "並び順"
 
 #: app/models/admin/user_profile_master_category.rb:21
 msgid "Admin::UserProfileMasterCategory|Sort order description"
-msgstr "このプロフィールカテゴリの並び順を入力して下さい。値が小さいほど上に表示されるプロフィールカテゴリとなります。"
+msgstr ""
+"このプロフィールカテゴリの並び順を入力して下さい。値が小さいほど上に表示され"
+"るプロフィールカテゴリとなります。"
 
 #: app/models/admin/user_profile_master.rb:38
 msgid "Admin::UserProfileMaster|Description"
@@ -941,7 +920,9 @@ msgstr "入力する必要はありません。"
 
 #: app/models/admin/user_profile_master.rb:35
 msgid "Admin::UserProfileMaster|Option values description|check_box"
-msgstr "選択可能な値を半角カンマ(,)区切りで入力して下さい。(例:映画,スポーツ,インターネット) "
+msgstr ""
+"選択可能な値を半角カンマ(,)区切りで入力して下さい。(例:映画,スポーツ,インター"
+"ネット) "
 
 #: app/models/admin/user_profile_master.rb:37
 msgid "Admin::UserProfileMaster|Option values description|datepicker"
@@ -966,7 +947,8 @@ msgstr "入力する必要はありません。"
 
 #: app/models/admin/user_profile_master.rb:33
 msgid "Admin::UserProfileMaster|Option values description|select"
-msgstr "選択可能な値を半角カンマ(,)区切りで入力して下さい。(例:A型,B型,AB型,O型)"
+msgstr ""
+"選択可能な値を半角カンマ(,)区切りで入力して下さい。(例:A型,B型,AB型,O型)"
 
 #: app/models/admin/user_profile_master.rb:28
 msgid "Admin::UserProfileMaster|Option values description|text_field"
@@ -974,7 +956,13 @@ msgstr "入力する必要はありません。"
 
 #: app/models/admin/user_profile_master.rb:32
 msgid "Admin::UserProfileMaster|Option values description|year_select"
-msgstr "選択可能な年号の範囲を半角ハイフン(-)区切りで入力することが出来ます。例えば'1980-2000'と入力すると1980年から2000年までを選択可能なセレクトボックスとなります。また、ハイフンの前後を省略することが出来ます。省略した場合は今年となります。例えば今年が2008年の場合、'1980-'と入力すると1980年から2008年までを選択可能なセレクトボックスとなります。未入力の場合は今年のみ選択可能なセレクトボックスとなります。"
+msgstr ""
+"選択可能な年号の範囲を半角ハイフン(-)区切りで入力することが出来ます。例え"
+"ば'1980-2000'と入力すると1980年から2000年までを選択可能なセレクトボックスとな"
+"ります。また、ハイフンの前後を省略することが出来ます。省略した場合は今年とな"
+"ります。例えば今年が2008年の場合、'1980-'と入力すると1980年から2008年までを選"
+"択可能なセレクトボックスとなります。未入力の場合は今年のみ選択可能なセレクト"
+"ボックスとなります。"
 
 #: app/models/admin/user_profile_master.rb:23
 msgid "Admin::UserProfileMaster|Required"
@@ -992,7 +980,9 @@ msgstr "並び順"
 
 #: app/models/admin/user_profile_master.rb:26
 msgid "Admin::UserProfileMaster|Sort order description"
-msgstr "このプロフィール項目の並び順を入力して下さい。値が小さいほど上に表示されるプロフィール項目となります。"
+msgstr ""
+"このプロフィール項目の並び順を入力して下さい。値が小さいほど上に表示されるプ"
+"ロフィール項目となります。"
 
 #: app/models/admin/user_profile_master.rb:17
 msgid "Admin::UserProfileMaster|User profile master category"
@@ -1000,7 +990,9 @@ msgstr "プロフィールカテゴリ"
 
 #: app/models/admin/user_profile_master.rb:18
 msgid "Admin::UserProfileMaster|User profile master category description"
-msgstr "プロフィールカテゴリを選択して下さい。各プロフィール項目は選択したプロフィールカテゴリに分類されて表示されます。"
+msgstr ""
+"プロフィールカテゴリを選択して下さい。各プロフィール項目は選択したプロフィー"
+"ルカテゴリに分類されて表示されます。"
 
 #: app/models/admin/user_uid.rb:17 app/views/shared/_header.html.erb:5
 msgid "Admin::UserUid|Uid"
@@ -1049,11 +1041,11 @@ msgstr "名前"
 msgid "Admin::User|Name description"
 msgstr "名前を入力して下さい。"
 
-#: app/models/admin/user.rb:34 app/views/portal/_registration_form.html.erb:54
+#: app/models/admin/user.rb:34 app/views/portal/_registration_form.html.erb:58
 msgid "Admin::User|Password"
 msgstr "パスワード"
 
-#: app/models/admin/user.rb:33 app/views/portal/_registration_form.html.erb:58
+#: app/models/admin/user.rb:33 app/views/portal/_registration_form.html.erb:62
 msgid "Admin::User|Password confirmation"
 msgstr "確認パスワード"
 
@@ -1466,7 +1458,7 @@ msgstr "%{name}作成"
 msgid "Creating..."
 msgstr "作成しています…"
 
-#: app/helpers/admin/application_helper.rb:21
+#: app/helpers/admin/application_helper.rb:22
 msgid "Data management"
 msgstr "データ管理"
 
@@ -1827,7 +1819,7 @@ msgstr "新規%{model}の作成"
 msgid "New user from csv"
 msgstr "ユーザのCSVアップロード"
 
-#: app/controllers/mypage_controller.rb:307
+#: app/controllers/mypage_controller.rb:306
 msgid "OpenID URLを設定しました。"
 msgstr ""
 
@@ -2367,7 +2359,7 @@ msgstr ""
 msgid "UserReading|User"
 msgstr ""
 
-#: app/models/user_uid.rb:- app/models/user_uid.rb:29
+#: app/models/user_uid.rb:- app/models/user_uid.rb:28
 msgid "UserUid|Uid"
 msgstr "ユーザ名"
 
@@ -2514,7 +2506,7 @@ msgstr ""
 msgid "You had been retired."
 msgstr "あなたは退職済みです。"
 
-#: app/controllers/portal_controller.rb:112
+#: app/controllers/portal_controller.rb:111
 msgid "You must login with openid."
 msgstr ""
 
@@ -2546,7 +2538,7 @@ msgstr "メールアドレス変更"
 msgid "before_uid"
 msgstr "現在のユーザ名"
 
-#: app/helpers/admin/application_helper.rb:36 app/models/board_entry.rb:-
+#: app/helpers/admin/application_helper.rb:37 app/models/board_entry.rb:-
 msgid "board entry"
 msgstr "ブログ・掲示板"
 
@@ -2559,7 +2551,7 @@ msgstr "ブログ・掲示板コメント"
 msgid "board entry point"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:37 app/models/bookmark.rb:-
+#: app/helpers/admin/application_helper.rb:38 app/models/bookmark.rb:-
 msgid "bookmark"
 msgstr "ブックマーク"
 
@@ -2603,11 +2595,11 @@ msgstr ""
 msgid "favicon画像"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:35 app/models/group.rb:-
+#: app/helpers/admin/application_helper.rb:36 app/models/group.rb:-
 msgid "group"
 msgstr "グループ"
 
-#: app/helpers/admin/application_helper.rb:34 app/models/group_category.rb:-
+#: app/helpers/admin/application_helper.rb:35 app/models/group_category.rb:-
 #: app/views/admin/group_categories/index.html.erb:36
 msgid "group category"
 msgstr "グループカテゴリ"
@@ -2657,7 +2649,7 @@ msgstr ""
 msgid "required"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:38 app/models/share_file.rb:-
+#: app/helpers/admin/application_helper.rb:39 app/models/share_file.rb:-
 msgid "share file"
 msgstr "共有ファイル"
 
@@ -2693,11 +2685,11 @@ msgstr "タグ"
 msgid "track"
 msgstr ""
 
-#: app/models/user_profile_master.rb:139
+#: app/models/user_profile_master.rb:140
 msgid "uncheck selected"
 msgstr "選択をはずす"
 
-#: app/helpers/admin/application_helper.rb:33
+#: app/helpers/admin/application_helper.rb:34
 #: app/controllers/admin/users_controller.rb:27
 #: app/controllers/admin/users_controller.rb:39
 #: app/controllers/admin/users_controller.rb:48
@@ -2729,7 +2721,7 @@ msgstr ""
 #: app/controllers/admin/users_controller.rb:183
 #: app/controllers/admin/users_controller.rb:191 app/models/share_file.rb:248
 #: app/models/user_search_condition.rb:39 app/views/user/show.html.erb:91
-#: app/views/portal/_registration_form.html.erb:34
+#: app/views/portal/_registration_form.html.erb:38
 #: app/views/admin/users/create_uid.html.erb:12
 #: app/views/admin/users/create_uid.html.erb:27
 #: app/views/admin/users/change_uid.html.erb:31
@@ -2744,14 +2736,15 @@ msgstr "ユーザ名"
 msgid "user profile"
 msgstr "プロフィール"
 
-#: app/helpers/admin/application_helper.rb:40
+#: app/helpers/admin/application_helper.rb:41
 #: app/controllers/admin/user_profile_masters_controller.rb:24
 #: app/models/user_profile_master.rb:-
 #: app/views/admin/user_profile_masters/index.html.erb:35
 msgid "user profile master"
 msgstr "プロフィール項目"
 
-#: app/helpers/admin/application_helper.rb:39
+#: app/helpers/admin/application_helper.rb:40
+#: app/controllers/admin/user_profile_master_categories_controller.rb:28
 #: app/models/user_profile_master_category.rb:-
 #: app/views/admin/user_profile_master_categories/index.html.erb:25
 msgid "user profile master category"
@@ -2865,7 +2858,7 @@ msgstr ""
 msgid "システム情報"
 msgstr ""
 
-#: app/controllers/admin/settings_controller.rb:62
+#: app/controllers/admin/settings_controller.rb:63
 msgid "システム運用について"
 msgstr ""
 
@@ -2914,7 +2907,7 @@ msgstr ""
 msgid "フッター"
 msgstr ""
 
-#: app/models/user_profile_master.rb:88
+#: app/models/user_profile_master.rb:82
 msgid "プロフィールカテゴリに存在しない値です。"
 msgstr ""
 
@@ -3027,11 +3020,11 @@ msgstr ""
 msgid "以下のメールアドレスにURLを送信してください。"
 msgstr ""
 
-#: app/controllers/admin/settings_controller.rb:83
+#: app/controllers/admin/settings_controller.rb:84
 msgid "保存しました。"
 msgstr ""
 
-#: app/controllers/admin/settings_controller.rb:85
+#: app/controllers/admin/settings_controller.rb:86
 msgid "保存に失敗している項目があります。"
 msgstr ""
 
@@ -3103,7 +3096,6 @@ msgstr ""
 msgid "利用開始通知"
 msgstr ""
 
-#: app/controllers/admin/user_profile_master_categories_controller.rb:28
 #: app/controllers/admin/group_categories_controller.rb:28
 #: app/controllers/edit_controller.rb:234
 msgid "削除しました。"
@@ -3111,10 +3103,6 @@ msgstr ""
 
 #: app/controllers/admin/group_categories_controller.rb:39
 msgid "削除対象のカテゴリが存在しませんでした。"
-msgstr ""
-
-#: app/controllers/admin/user_profile_master_categories_controller.rb:38
-msgid "削除対象のプロフィールカテゴリが存在しませんでした。"
 msgstr ""
 
 #: app/views/group/_form.html.erb:51
@@ -3202,7 +3190,8 @@ msgstr ""
 msgid "既に%{username}が登録されています。"
 msgstr ""
 
-#: app/models/user_profile_master.rb:225
+#: app/models/user_profile_master.rb:238
+#: app/views/portal/_registration_form.html.erb:29
 msgid "既に登録されている値から選択項目を表示しています"
 msgstr ""
 
@@ -3234,7 +3223,7 @@ msgid ""
 "ユーザは上書きする]のチェックボックスにチェックを入れてください。"
 msgstr ""
 
-#: app/controllers/admin/settings_controller.rb:55
+#: app/controllers/admin/settings_controller.rb:56
 msgid "機能に関する設定"
 msgstr ""
 
@@ -3267,7 +3256,7 @@ msgstr ""
 msgid "登録に成功しました。"
 msgstr ""
 
-#: app/controllers/portal_controller.rb:104
+#: app/controllers/portal_controller.rb:103
 msgid "登録可能です"
 msgstr ""
 
@@ -3310,6 +3299,10 @@ msgstr ""
 msgid "該当のブックマークがありません。"
 msgstr ""
 
-#: app/models/user_profile_master.rb:228
+#: app/models/user_profile_master.rb:241
 msgid "選択項目に無いものを設定する場合はこちらに入力してください"
+msgstr ""
+
+#: app/views/portal/_registration_form.html.erb:33
+msgid "選択項目に無いものを設定する場合はこちらに入力して下さい"
 msgstr ""
