@@ -302,7 +302,7 @@ class User < ActiveRecord::Base
   end
 
   def self.activation_lifetime
-    ACTIVATION_LIFETIME
+    Admin::Setting.activation_lifetime
   end
 
   def within_time_limit_of_activation_token?

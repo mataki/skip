@@ -281,6 +281,15 @@ describe User, '#activate!' do
   end
 end
 
+describe User, '.activation_lifetime' do
+  describe 'activation_lifetimeの設定が3(日)の場合' do
+    before do
+      Admin::Setting.stub!(:activation_lifetime).and_return(3)
+    end
+    it { User.activation_lifetime.should == 3 }
+  end
+end
+
 describe User, '#within_time_limit_of_activation_token' do
   before do
     @activation_token_expires_at = Time.local(2008, 11, 1, 0, 0, 0)

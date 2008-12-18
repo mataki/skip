@@ -1,4 +1,5 @@
-<% @revert_columns = %w(stop_new_user) -%>
+<% @revert_columns = %w(stop_new_user activation_lifetime) -%>
 <div class="box tabular">
   <p><%= settings_label_with_check_box_tag :stop_new_user %></p>
+  <p><%= settings_label_with_select_tag :activation_lifetime, (1..10).to_a, Admin::Setting.activation_lifetime.to_i %></p>
 </div>
