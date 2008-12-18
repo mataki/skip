@@ -100,8 +100,8 @@ class User < ActiveRecord::Base
     self.crypted_password = encrypt(password) if password_required?
   end
 
-  def self.auth(code, password)
-    return nil unless user = find_by_code(code)
+  def self.auth(code_or_email, password)
+    return nil unless user = find_by_code_or_email(code_or_email)
     return nil if user.unused?
     return user if user.crypted_password == encrypt(password)
   end
@@ -349,5 +349,9 @@ private
 
   def encrypt(password)
     self.class.encrypt(password)
+  end
+
+  def self.find_by_code_or_email(code_or_email)
+    find_by_code(code_or_email) || find_by_email(code_or_email)
   end
 end
