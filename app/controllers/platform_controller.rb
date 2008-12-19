@@ -30,6 +30,7 @@ class PlatformController < ApplicationController
   end
 
   def require_login
+    render :layout => false
   end
 
   # ログイン処理（トップからと、require_loginからの両方からpostされる）
