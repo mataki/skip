@@ -168,6 +168,8 @@ private
     end
     headers["Content-type"] = 'application/xml; charset=UTF-8'
     render :text => rss.to_s, :layout => false
+  rescue RSS::NotSetError => e
+    render :text => "", :layout => false
   end
 
   def board_entry_item_array find_params, order = "last_updated DESC,board_entries.id DESC"
