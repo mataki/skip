@@ -19,6 +19,9 @@
 stop_new_user:
   format: boolean
   default: false
+hide_email:
+  format: boolean
+  default: false
 
 # ==================================================================================================
 # その他設定

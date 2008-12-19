@@ -98,11 +98,13 @@ div.input_line div.input_bottom {
         <div class="input_value"><%=h @user.name -%></div>
         <div class="input_bottom"></div>
       </div>
+      <% unless Admin::Setting.hide_email -%>
       <div class="input_line">
         <div class="input_label"><%=h _('User|Email') %></div>
         <div class="input_value"><a href="mailto:<%=h @user.email -%>"><%=h @user.email -%></a></div>
         <div class="input_bottom"></div>
       </div>
+      <% end -%>
       <div class="input_line">
         <div class="input_label"><%=h _('User|Section') %></div>
         <div class="input_value"><%=h @user.section -%></div>

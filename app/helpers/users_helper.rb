@@ -29,6 +29,7 @@ module UsersHelper
       columns = [ 'code', 'uid', 'name', 'email', 'section', _('action') ]
       columns.delete('code') unless user_name_mode?(:code)
       columns.delete('uid') unless user_name_mode?(:name)
+      columns.delete('email') if Admin::Setting.hide_email
       columns.unshift('') if options[:output_group_participation]
 
       block = lambda{ |user, column|

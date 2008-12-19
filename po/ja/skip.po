@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-12-18 15:22+0900\n"
+"POT-Creation-Date: 2008-12-19 10:01+0900\n"
 "PO-Revision-Date: 2008-12-17 19:43+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -595,70 +595,71 @@ msgstr "メール関連設定"
 msgid "Admin::SettingsController|main"
 msgstr "全体設定"
 
-#: app/models/admin/setting.rb:28
+#: app/models/admin/setting.rb:30
 msgid "Admin::Setting|Abbr app title"
 msgstr "システムの名称"
 
-#: app/models/admin/setting.rb:29
+#: app/models/admin/setting.rb:31
 msgid "Admin::Setting|Abbr app title description"
 msgstr "各画面での用いるシステムの名称です。"
 
-#: app/models/admin/setting.rb:22
+#: app/models/admin/setting.rb:24
 msgid "Admin::Setting|Activation lifetime"
 msgstr "サインアップURLの有効期間"
 
-#: app/models/admin/setting.rb:23
+#: app/models/admin/setting.rb:25
 msgid "Admin::Setting|Activation lifetime description"
-msgstr "サインアップURLを発行して有効期限切れになるまでの日数を選択して下さい。"
+msgstr ""
+"サインアップURLを発行して有効期限切れになるまでの日数を選択して下さい。"
 
-#: app/models/admin/setting.rb:89
+#: app/models/admin/setting.rb:91
 msgid "Admin::Setting|Antenna default group"
 msgstr "初期登録するユーザ/グループ"
 
-#: app/models/admin/setting.rb:90
+#: app/models/admin/setting.rb:92
 msgid "Admin::Setting|Antenna default group description"
 msgstr "上記のアンテナに追加するユーザ名/グループIDを記入して下さい。"
 
-#: app/models/admin/setting.rb:88
+#: app/models/admin/setting.rb:90
 msgid "Admin::Setting|Antenna settings"
 msgstr "アンテナ設定"
 
-#: app/models/admin/setting.rb:30
+#: app/models/admin/setting.rb:32
 msgid "Admin::Setting|Contact addr"
 msgstr "お問い合わせ先メールアドレス"
 
-#: app/models/admin/setting.rb:31
+#: app/models/admin/setting.rb:33
 msgid "Admin::Setting|Contact addr description"
 msgstr ""
 "ユーザから運営者への問い合わせ先メールアドレスです。システムからのメール送信"
 "の送信元としても表示されます。"
 
-#: app/models/admin/setting.rb:38
+#: app/models/admin/setting.rb:40
 msgid "Admin::Setting|Footer first"
 msgstr "フッターの１行目"
 
-#: app/models/admin/setting.rb:39
+#: app/models/admin/setting.rb:41
 msgid "Admin::Setting|Footer first description"
 msgstr ""
 "フッターの１行目に表示されます。よく使うリンクを指定するのがお勧めです。HTML"
 "のタグをそのまま記述できます。<p style=\"color:red;\">JavaScript等を記述する"
 "ことも可能ですが、記述の際はセキュリティ上の問題に十分注意して下さい。</p>"
 
-#: app/models/admin/setting.rb:42
+#: app/models/admin/setting.rb:44
 msgid "Admin::Setting|Footer image link url"
 msgstr "フッターの画像リンクURL"
 
-#: app/models/admin/setting.rb:43
+#: app/models/admin/setting.rb:45
 msgid "Admin::Setting|Footer image link url description"
 msgstr ""
 "フッターの右端に表示される画像をクリックした際に移動する先のURLです（画像ファ"
 "イルの変更は、画像設定タブからできます）"
 
-#: app/models/admin/setting.rb:40
+#: app/models/admin/setting.rb:42
 msgid "Admin::Setting|Footer second"
 msgstr "フッターの２行目"
 
-#: app/models/admin/setting.rb:41
+#: app/models/admin/setting.rb:43
 msgid "Admin::Setting|Footer second description"
 msgstr ""
 "フッターの２行目に表示されます。問い合わせ先窓口となる、TEL or メールアドレ"
@@ -666,169 +667,177 @@ msgstr ""
 "す。<p style=\"color:red;\">JavaScript等を記述することも可能ですが、記述の際"
 "はセキュリティ上の問題に十分注意して下さい。</p>"
 
-#: app/models/admin/setting.rb:32
+#: app/models/admin/setting.rb:34
 msgid "Admin::Setting|Help url"
 msgstr "ヘルプのURL"
 
-#: app/models/admin/setting.rb:33
+#: app/models/admin/setting.rb:35
 msgid "Admin::Setting|Help url description"
 msgstr "画面右上のヘルプ用です。何も入力しない場合、リンクが表示されません。"
 
-#: app/models/admin/setting.rb:66
+#: app/models/admin/setting.rb:22
+msgid "Admin::Setting|Hide email"
+msgstr "メールアドレスを隠す"
+
+#: app/models/admin/setting.rb:23
+msgid "Admin::Setting|Hide email description"
+msgstr "チェックするとユーザのメールアドレスが非表示になります。チェックを外すとユーザのメールアドレスが表示されます。"
+
+#: app/models/admin/setting.rb:68
 msgid "Admin::Setting|Host and port"
 msgstr "サーバのホストとポート"
 
-#: app/models/admin/setting.rb:67
+#: app/models/admin/setting.rb:69
 msgid "Admin::Setting|Host and port description"
 msgstr ""
 "メール送信時に本文にリンクとして記載されるURLのホスト名とポートを設定します。"
 "システムにアクセスするURLには影響しません。"
 
-#: app/models/admin/setting.rb:34
+#: app/models/admin/setting.rb:36
 msgid "Admin::Setting|Initial anntena"
 msgstr "初期登録するアンテナ名"
 
-#: app/models/admin/setting.rb:35
+#: app/models/admin/setting.rb:37
 msgid "Admin::Setting|Initial anntena description"
 msgstr ""
 "ユーザ登録時に、アンテナを予め1つ登録しておけます。その名前を入力して下さい。"
 
-#: app/models/admin/setting.rb:36
+#: app/models/admin/setting.rb:38
 msgid "Admin::Setting|Login account"
 msgstr "ログインIDの名称"
 
-#: app/models/admin/setting.rb:37
+#: app/models/admin/setting.rb:39
 msgid "Admin::Setting|Login account description"
 msgstr ""
 "例えば、社員番号をログインIDに使っている場合、「社員番号」に変更しておくと、"
 "ユーザがログインIDを忘れにくくなります。"
 
-#: app/models/admin/setting.rb:50
+#: app/models/admin/setting.rb:52
 msgid "Admin::Setting|Mail function setting"
 msgstr "メール機能を有効にする"
 
-#: app/models/admin/setting.rb:51
+#: app/models/admin/setting.rb:53
 msgid "Admin::Setting|Mail function setting description"
 msgstr "システムから連絡メールが送信できます。併せてSMTP設定を行ってください。"
 
-#: app/models/admin/setting.rb:74
+#: app/models/admin/setting.rb:76
 msgid "Admin::Setting|Mypage feed default limit"
 msgstr "1フィードあたりのサマリの件数"
 
-#: app/models/admin/setting.rb:75
+#: app/models/admin/setting.rb:77
 msgid "Admin::Setting|Mypage feed default limit description"
 msgstr ""
 "マイページの右側にフィードブロックがあり、中にサマリを表示しています。ここ"
 "で、1フィードあたりのサマリの件数を調整し、マイページでの見映えを確認して下さ"
 "い。"
 
-#: app/models/admin/setting.rb:78
+#: app/models/admin/setting.rb:80
 msgid "Admin::Setting|Mypage feed settings"
 msgstr "フィードを追加/削除する"
 
-#: app/models/admin/setting.rb:79
+#: app/models/admin/setting.rb:81
 msgid "Admin::Setting|Mypage feed settings description"
 msgstr "マイページに表示するフィードの設定を行います。"
 
-#: app/models/admin/setting.rb:82
+#: app/models/admin/setting.rb:84
 msgid "Admin::Setting|Mypage feed settings title"
 msgstr "フィードのタイトル"
 
-#: app/models/admin/setting.rb:83
+#: app/models/admin/setting.rb:85
 msgid "Admin::Setting|Mypage feed settings title description"
 msgstr "フィードタイトルを指定します。"
 
-#: app/models/admin/setting.rb:80
+#: app/models/admin/setting.rb:82
 msgid "Admin::Setting|Mypage feed settings url"
 msgstr "フィードのURL"
 
-#: app/models/admin/setting.rb:81
+#: app/models/admin/setting.rb:83
 msgid "Admin::Setting|Mypage feed settings url description"
 msgstr "取得するフィードのURLを指定します。"
 
-#: app/models/admin/setting.rb:76
+#: app/models/admin/setting.rb:78
 msgid "Admin::Setting|Mypage feed timeout"
 msgstr "フィード取得のタイムアウト(秒)"
 
-#: app/models/admin/setting.rb:77
+#: app/models/admin/setting.rb:79
 msgid "Admin::Setting|Mypage feed timeout description"
 msgstr ""
 "フィードは、このシステム外にあるため、取得できない場合があります。タイムアウ"
 "トを経過すると、取得を中断します。"
 
-#: app/models/admin/setting.rb:44
+#: app/models/admin/setting.rb:46
 msgid "Admin::Setting|Point button"
 msgstr "ポイント評価のボタン名"
 
-#: app/models/admin/setting.rb:45
+#: app/models/admin/setting.rb:47
 msgid "Admin::Setting|Point button description"
 msgstr "掲示板やブログ等でのポイント評価のボタン名を変更できます。"
 
-#: app/models/admin/setting.rb:68
+#: app/models/admin/setting.rb:70
 msgid "Admin::Setting|Protocol"
 msgstr "サーバのプロトコル"
 
-#: app/models/admin/setting.rb:69
+#: app/models/admin/setting.rb:71
 msgid "Admin::Setting|Protocol description"
 msgstr ""
 "メール送信時に本文にリンクとして記載されるURLのプロトコルを設定します。システ"
 "ムにアクセスするURLには影響しません。"
 
-#: app/models/admin/setting.rb:52
+#: app/models/admin/setting.rb:54
 msgid "Admin::Setting|Smtp settings"
 msgstr "SMTP設定"
 
-#: app/models/admin/setting.rb:60
+#: app/models/admin/setting.rb:62
 msgid "Admin::Setting|Smtp settings address"
 msgstr "SMTPサーバのホスト名"
 
-#: app/models/admin/setting.rb:61
+#: app/models/admin/setting.rb:63
 msgid "Admin::Setting|Smtp settings address description"
 msgstr "SMTPサーバのホスト名を指定します。"
 
-#: app/models/admin/setting.rb:64
+#: app/models/admin/setting.rb:66
 msgid "Admin::Setting|Smtp settings authentication"
 msgstr "認証の種類"
 
-#: app/models/admin/setting.rb:65
+#: app/models/admin/setting.rb:67
 msgid "Admin::Setting|Smtp settings authentication description"
 msgstr ""
 "認証が必要な場合、認証の種類を指定します。指定可能な値はplain, login, "
 "cram_md5です。"
 
-#: app/models/admin/setting.rb:53
+#: app/models/admin/setting.rb:55
 msgid "Admin::Setting|Smtp settings description"
 msgstr "SMTP設定を行います。"
 
-#: app/models/admin/setting.rb:62
+#: app/models/admin/setting.rb:64
 msgid "Admin::Setting|Smtp settings domain"
 msgstr "送信元ドメイン"
 
-#: app/models/admin/setting.rb:63
+#: app/models/admin/setting.rb:65
 msgid "Admin::Setting|Smtp settings domain description"
 msgstr "送信元ドメインの指定を行います。送信メールヘッダに記載されます。"
 
-#: app/models/admin/setting.rb:54
+#: app/models/admin/setting.rb:56
 msgid "Admin::Setting|Smtp settings password"
 msgstr "パスワード"
 
-#: app/models/admin/setting.rb:55
+#: app/models/admin/setting.rb:57
 msgid "Admin::Setting|Smtp settings password description"
 msgstr "認証が必要な場合、パスワードを指定します。"
 
-#: app/models/admin/setting.rb:56
+#: app/models/admin/setting.rb:58
 msgid "Admin::Setting|Smtp settings port"
 msgstr "ポート"
 
-#: app/models/admin/setting.rb:57
+#: app/models/admin/setting.rb:59
 msgid "Admin::Setting|Smtp settings port description"
 msgstr "ポート番号を指定します。"
 
-#: app/models/admin/setting.rb:58
+#: app/models/admin/setting.rb:60
 msgid "Admin::Setting|Smtp settings user name"
 msgstr "ユーザ名"
 
-#: app/models/admin/setting.rb:59
+#: app/models/admin/setting.rb:61
 msgid "Admin::Setting|Smtp settings user name description"
 msgstr "認証が必要な場合、ユーザ名を指定します。"
 
