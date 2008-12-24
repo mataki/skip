@@ -133,19 +133,8 @@ class BatchMakeCache < BatchBase
   def make_caches_user(contents_type, cache_path, border_time)
     users = User.find(:all, :include => ['user_profile_values'], :conditions => ["updated_on > ?", border_time])
     users.each do |user|
-      body_lines = []
-      body_lines << h(user.uid)
-      body_lines << h(user.name)
-      body_lines << h(user.code)
-      body_lines << h(user.email)
-      body_lines << h(user.section)
-
-      user.user_profile_values.each do |profile|
-        body_lines << h(profile.value)
-      end
-
       contents = create_contents(:title => user.name,
-                                 :body_lines => body_lines)
+                                 :body_lines => user_body_lines(user))
 
       meta = create_meta(:contents_type => contents_type,
                          :publication_symbols => "sid:allusers",
@@ -215,6 +204,21 @@ icon_type: #{params[:icon_type]}
     FileUtils.mkdir_p(target_meta_dir)
     File.open("#{target_dir}/#{contents_id}.html", "w"){ |file| file.write(contents) }
     File.open("#{target_meta_dir}/#{contents_id}.html", "w"){ |file| file.write(meta) }
+  end
+
+  private
+  def user_body_lines(user)
+    body_lines = []
+    body_lines << h(user.uid)
+    body_lines << h(user.name)
+    body_lines << h(user.code)
+    body_lines << h(user.email) unless Admin::Setting.hide_email
+    body_lines << h(user.section)
+
+    user.user_profile_values.each do |profile|
+      body_lines << h(profile.value)
+    end
+    body_lines
   end
 end
 

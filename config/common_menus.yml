@@ -4,7 +4,7 @@
   - { :title: SKIPユーザコミュニティ, :url: http://user.openskip.org/ }
 #   - :title: 開発
 #     :links:
-#     - { :title: Subversion, :url: http://svn.openskip.org/skip/ }
+#     - { :title: Repository, :url: http://github.com/openskip/skip/ }
 #     - { :title: redmine, :url:  http://dev.openskip.org/redmine/ }
 #   - :title: 関連サイト
 #     :links:

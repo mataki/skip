@@ -28,8 +28,12 @@
   <tr>
     <th><%=h _("Admin::User|Name") %></th>
     <td><%= user_link_to user %></td>
+    <% unless Admin::Setting.hide_email -%>
     <th><%=h _("User|Email") %></th>
     <td><%=h user.email %></td>
+    <% else -%>
+    <td colspan="2"></td>
+    <% end -%>
   </tr>
   <tr>
     <th>最終アクセス</th>

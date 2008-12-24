@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-12-17 19:41+0900\n"
+"POT-Creation-Date: 2008-12-19 14:26+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,35 +16,35 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: app/controllers/platform_controller.rb:102
-#: app/controllers/platform_controller.rb:220
+#: app/controllers/platform_controller.rb:103
+#: app/controllers/platform_controller.rb:221
 msgid "%{function}が完了しました。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:105
+#: app/controllers/platform_controller.rb:106
 msgid "%{function}に失敗しました。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:112
-#: app/controllers/platform_controller.rb:236
+#: app/controllers/platform_controller.rb:113
+#: app/controllers/platform_controller.rb:237
 msgid ""
 "%{function}のためのURLが不正です。再度お試し頂くか、システム管理者にお問い合"
 "わせ下さい。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:108
-#: app/controllers/platform_controller.rb:232
+#: app/controllers/platform_controller.rb:109
+#: app/controllers/platform_controller.rb:233
 msgid "%{function}のためのURLの有効期限が過ぎています。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:83
+#: app/controllers/platform_controller.rb:84
 msgid "%{function}のためのURLを記載したメールを%{email}宛てに送信しました。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:69
-#: app/controllers/platform_controller.rb:119
-#: app/controllers/platform_controller.rb:144
-#: app/controllers/platform_controller.rb:170
+#: app/controllers/platform_controller.rb:70
+#: app/controllers/platform_controller.rb:120
+#: app/controllers/platform_controller.rb:145
+#: app/controllers/platform_controller.rb:171
 msgid "%{function}は現在利用することが出来ません。"
 msgstr ""
 
@@ -576,215 +576,223 @@ msgstr ""
 msgid "Admin::SettingsController|main"
 msgstr ""
 
-#: app/models/admin/setting.rb:28
+#: app/models/admin/setting.rb:30
 msgid "Admin::Setting|Abbr app title"
 msgstr ""
 
-#: app/models/admin/setting.rb:29
+#: app/models/admin/setting.rb:31
 msgid "Admin::Setting|Abbr app title description"
 msgstr ""
 
-#: app/models/admin/setting.rb:89
+#: app/models/admin/setting.rb:24
+msgid "Admin::Setting|Activation lifetime"
+msgstr ""
+
+#: app/models/admin/setting.rb:25
+msgid "Admin::Setting|Activation lifetime description"
+msgstr ""
+
+#: app/models/admin/setting.rb:91
 msgid "Admin::Setting|Antenna default group"
 msgstr ""
 
-#: app/models/admin/setting.rb:90
+#: app/models/admin/setting.rb:92
 msgid "Admin::Setting|Antenna default group description"
 msgstr ""
 
-#: app/models/admin/setting.rb:88
+#: app/models/admin/setting.rb:90
 msgid "Admin::Setting|Antenna settings"
 msgstr ""
 
-#: app/models/admin/setting.rb:30
+#: app/models/admin/setting.rb:32
 msgid "Admin::Setting|Contact addr"
 msgstr ""
 
-#: app/models/admin/setting.rb:31
+#: app/models/admin/setting.rb:33
 msgid "Admin::Setting|Contact addr description"
 msgstr ""
 
-#: app/models/admin/setting.rb:22
-msgid "Admin::Setting|Enable activation"
-msgstr ""
-
-#: app/models/admin/setting.rb:23
-msgid "Admin::Setting|Enable activation description"
-msgstr ""
-
-#: app/models/admin/setting.rb:38
+#: app/models/admin/setting.rb:40
 msgid "Admin::Setting|Footer first"
 msgstr ""
 
-#: app/models/admin/setting.rb:39
+#: app/models/admin/setting.rb:41
 msgid "Admin::Setting|Footer first description"
 msgstr ""
 
-#: app/models/admin/setting.rb:42
+#: app/models/admin/setting.rb:44
 msgid "Admin::Setting|Footer image link url"
 msgstr ""
 
-#: app/models/admin/setting.rb:43
+#: app/models/admin/setting.rb:45
 msgid "Admin::Setting|Footer image link url description"
 msgstr ""
 
-#: app/models/admin/setting.rb:40
+#: app/models/admin/setting.rb:42
 msgid "Admin::Setting|Footer second"
 msgstr ""
 
-#: app/models/admin/setting.rb:41
+#: app/models/admin/setting.rb:43
 msgid "Admin::Setting|Footer second description"
 msgstr ""
 
-#: app/models/admin/setting.rb:32
+#: app/models/admin/setting.rb:34
 msgid "Admin::Setting|Help url"
 msgstr ""
 
-#: app/models/admin/setting.rb:33
+#: app/models/admin/setting.rb:35
 msgid "Admin::Setting|Help url description"
 msgstr ""
 
-#: app/models/admin/setting.rb:66
-msgid "Admin::Setting|Host and port"
+#: app/models/admin/setting.rb:22
+msgid "Admin::Setting|Hide email"
 msgstr ""
 
-#: app/models/admin/setting.rb:67
-msgid "Admin::Setting|Host and port description"
-msgstr ""
-
-#: app/models/admin/setting.rb:34
-msgid "Admin::Setting|Initial anntena"
-msgstr ""
-
-#: app/models/admin/setting.rb:35
-msgid "Admin::Setting|Initial anntena description"
-msgstr ""
-
-#: app/models/admin/setting.rb:36
-msgid "Admin::Setting|Login account"
-msgstr ""
-
-#: app/models/admin/setting.rb:37
-msgid "Admin::Setting|Login account description"
-msgstr ""
-
-#: app/models/admin/setting.rb:50
-msgid "Admin::Setting|Mail function setting"
-msgstr ""
-
-#: app/models/admin/setting.rb:51
-msgid "Admin::Setting|Mail function setting description"
-msgstr ""
-
-#: app/models/admin/setting.rb:74
-msgid "Admin::Setting|Mypage feed default limit"
-msgstr ""
-
-#: app/models/admin/setting.rb:75
-msgid "Admin::Setting|Mypage feed default limit description"
-msgstr ""
-
-#: app/models/admin/setting.rb:78
-msgid "Admin::Setting|Mypage feed settings"
-msgstr ""
-
-#: app/models/admin/setting.rb:79
-msgid "Admin::Setting|Mypage feed settings description"
-msgstr ""
-
-#: app/models/admin/setting.rb:82
-msgid "Admin::Setting|Mypage feed settings title"
-msgstr ""
-
-#: app/models/admin/setting.rb:83
-msgid "Admin::Setting|Mypage feed settings title description"
-msgstr ""
-
-#: app/models/admin/setting.rb:80
-msgid "Admin::Setting|Mypage feed settings url"
-msgstr ""
-
-#: app/models/admin/setting.rb:81
-msgid "Admin::Setting|Mypage feed settings url description"
-msgstr ""
-
-#: app/models/admin/setting.rb:76
-msgid "Admin::Setting|Mypage feed timeout"
-msgstr ""
-
-#: app/models/admin/setting.rb:77
-msgid "Admin::Setting|Mypage feed timeout description"
-msgstr ""
-
-#: app/models/admin/setting.rb:44
-msgid "Admin::Setting|Point button"
-msgstr ""
-
-#: app/models/admin/setting.rb:45
-msgid "Admin::Setting|Point button description"
+#: app/models/admin/setting.rb:23
+msgid "Admin::Setting|Hide email description"
 msgstr ""
 
 #: app/models/admin/setting.rb:68
-msgid "Admin::Setting|Protocol"
+msgid "Admin::Setting|Host and port"
 msgstr ""
 
 #: app/models/admin/setting.rb:69
-msgid "Admin::Setting|Protocol description"
+msgid "Admin::Setting|Host and port description"
+msgstr ""
+
+#: app/models/admin/setting.rb:36
+msgid "Admin::Setting|Initial anntena"
+msgstr ""
+
+#: app/models/admin/setting.rb:37
+msgid "Admin::Setting|Initial anntena description"
+msgstr ""
+
+#: app/models/admin/setting.rb:38
+msgid "Admin::Setting|Login account"
+msgstr ""
+
+#: app/models/admin/setting.rb:39
+msgid "Admin::Setting|Login account description"
 msgstr ""
 
 #: app/models/admin/setting.rb:52
-msgid "Admin::Setting|Smtp settings"
-msgstr ""
-
-#: app/models/admin/setting.rb:60
-msgid "Admin::Setting|Smtp settings address"
-msgstr ""
-
-#: app/models/admin/setting.rb:61
-msgid "Admin::Setting|Smtp settings address description"
-msgstr ""
-
-#: app/models/admin/setting.rb:64
-msgid "Admin::Setting|Smtp settings authentication"
-msgstr ""
-
-#: app/models/admin/setting.rb:65
-msgid "Admin::Setting|Smtp settings authentication description"
+msgid "Admin::Setting|Mail function setting"
 msgstr ""
 
 #: app/models/admin/setting.rb:53
-msgid "Admin::Setting|Smtp settings description"
+msgid "Admin::Setting|Mail function setting description"
 msgstr ""
 
-#: app/models/admin/setting.rb:62
-msgid "Admin::Setting|Smtp settings domain"
+#: app/models/admin/setting.rb:76
+msgid "Admin::Setting|Mypage feed default limit"
 msgstr ""
 
-#: app/models/admin/setting.rb:63
-msgid "Admin::Setting|Smtp settings domain description"
+#: app/models/admin/setting.rb:77
+msgid "Admin::Setting|Mypage feed default limit description"
+msgstr ""
+
+#: app/models/admin/setting.rb:80
+msgid "Admin::Setting|Mypage feed settings"
+msgstr ""
+
+#: app/models/admin/setting.rb:81
+msgid "Admin::Setting|Mypage feed settings description"
+msgstr ""
+
+#: app/models/admin/setting.rb:84
+msgid "Admin::Setting|Mypage feed settings title"
+msgstr ""
+
+#: app/models/admin/setting.rb:85
+msgid "Admin::Setting|Mypage feed settings title description"
+msgstr ""
+
+#: app/models/admin/setting.rb:82
+msgid "Admin::Setting|Mypage feed settings url"
+msgstr ""
+
+#: app/models/admin/setting.rb:83
+msgid "Admin::Setting|Mypage feed settings url description"
+msgstr ""
+
+#: app/models/admin/setting.rb:78
+msgid "Admin::Setting|Mypage feed timeout"
+msgstr ""
+
+#: app/models/admin/setting.rb:79
+msgid "Admin::Setting|Mypage feed timeout description"
+msgstr ""
+
+#: app/models/admin/setting.rb:46
+msgid "Admin::Setting|Point button"
+msgstr ""
+
+#: app/models/admin/setting.rb:47
+msgid "Admin::Setting|Point button description"
+msgstr ""
+
+#: app/models/admin/setting.rb:70
+msgid "Admin::Setting|Protocol"
+msgstr ""
+
+#: app/models/admin/setting.rb:71
+msgid "Admin::Setting|Protocol description"
 msgstr ""
 
 #: app/models/admin/setting.rb:54
-msgid "Admin::Setting|Smtp settings password"
+msgid "Admin::Setting|Smtp settings"
+msgstr ""
+
+#: app/models/admin/setting.rb:62
+msgid "Admin::Setting|Smtp settings address"
+msgstr ""
+
+#: app/models/admin/setting.rb:63
+msgid "Admin::Setting|Smtp settings address description"
+msgstr ""
+
+#: app/models/admin/setting.rb:66
+msgid "Admin::Setting|Smtp settings authentication"
+msgstr ""
+
+#: app/models/admin/setting.rb:67
+msgid "Admin::Setting|Smtp settings authentication description"
 msgstr ""
 
 #: app/models/admin/setting.rb:55
-msgid "Admin::Setting|Smtp settings password description"
+msgid "Admin::Setting|Smtp settings description"
+msgstr ""
+
+#: app/models/admin/setting.rb:64
+msgid "Admin::Setting|Smtp settings domain"
+msgstr ""
+
+#: app/models/admin/setting.rb:65
+msgid "Admin::Setting|Smtp settings domain description"
 msgstr ""
 
 #: app/models/admin/setting.rb:56
-msgid "Admin::Setting|Smtp settings port"
+msgid "Admin::Setting|Smtp settings password"
 msgstr ""
 
 #: app/models/admin/setting.rb:57
-msgid "Admin::Setting|Smtp settings port description"
+msgid "Admin::Setting|Smtp settings password description"
 msgstr ""
 
 #: app/models/admin/setting.rb:58
-msgid "Admin::Setting|Smtp settings user name"
+msgid "Admin::Setting|Smtp settings port"
 msgstr ""
 
 #: app/models/admin/setting.rb:59
+msgid "Admin::Setting|Smtp settings port description"
+msgstr ""
+
+#: app/models/admin/setting.rb:60
+msgid "Admin::Setting|Smtp settings user name"
+msgstr ""
+
+#: app/models/admin/setting.rb:61
 msgid "Admin::Setting|Smtp settings user name description"
 msgstr ""
 
@@ -995,7 +1003,7 @@ msgstr ""
 
 #: app/models/admin/user.rb:27 app/views/admin/users/import.html.erb:21
 #: app/views/portal/_registration_form.html.erb:17
-#: app/views/user/show.html.erb:97 app/views/users/_user.html.erb:29
+#: app/views/user/show.html.erb:98 app/views/users/_user.html.erb:29
 #: app/views/users/index.html.erb:6
 msgid "Admin::User|Name"
 msgstr ""
@@ -1770,7 +1778,7 @@ msgstr ""
 msgid "New user from csv"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:199
+#: app/controllers/platform_controller.rb:200
 msgid ""
 "OpenID URLを再設定するためのURLを記載したメールを%{email}宛に送信しました。"
 msgstr ""
@@ -1779,16 +1787,16 @@ msgstr ""
 msgid "OpenID URLを設定しました。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:224
+#: app/controllers/platform_controller.rb:225
 msgid "OpenIDの処理の中でキャンセルされたか、失敗しました。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:228
-#: app/controllers/platform_controller.rb:271
+#: app/controllers/platform_controller.rb:229
+#: app/controllers/platform_controller.rb:272
 msgid "OpenIDの形式が正しくありません。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:313
+#: app/controllers/platform_controller.rb:314
 msgid "OpenIDの認証に失敗しました。"
 msgstr ""
 
@@ -1796,7 +1804,7 @@ msgstr ""
 msgid "OpenIDを忘れた/再設定したい方はこちら"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:311
+#: app/controllers/platform_controller.rb:312
 msgid ""
 "OpenIDサーバーが見つかりませんでした。正しいOpenID URLを入力してください。"
 msgstr ""
@@ -1817,9 +1825,9 @@ msgstr ""
 msgid "OpenidIdentifier|User"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:220
-#: app/controllers/platform_controller.rb:232
-#: app/controllers/platform_controller.rb:236
+#: app/controllers/platform_controller.rb:221
+#: app/controllers/platform_controller.rb:233
+#: app/controllers/platform_controller.rb:237
 #: app/views/platform/reset_openid.html.erb:2
 msgid "OpneID URLの再設定"
 msgstr ""
@@ -1935,7 +1943,7 @@ msgid "Searching..."
 msgstr ""
 
 #: app/views/platform/_mail_form.html.erb:7
-#: app/views/platform/reset_openid.html.erb:12
+#: app/views/platform/reset_openid.html.erb:13
 msgid "Send"
 msgstr ""
 
@@ -2386,7 +2394,7 @@ msgstr ""
 
 #: app/views/platform/_mail_form.html.erb:3
 #: app/views/portal/_registration_form.html.erb:21
-#: app/views/user/show.html.erb:102 app/views/users/_user.html.erb:31
+#: app/views/user/show.html.erb:104 app/views/users/_user.html.erb:32
 msgid "User|Email"
 msgstr ""
 
@@ -2419,7 +2427,7 @@ msgid "User|Reset auth token expires at"
 msgstr ""
 
 #: app/views/portal/_registration_form.html.erb:25
-#: app/views/user/show.html.erb:107 app/views/users/_user.html.erb:37
+#: app/views/user/show.html.erb:110 app/views/users/_user.html.erb:41
 msgid "User|Section"
 msgstr ""
 
@@ -2460,7 +2468,7 @@ msgstr ""
 msgid "What is Antenna"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:60
+#: app/controllers/platform_controller.rb:61
 msgid "You are now logged out."
 msgstr ""
 
@@ -2472,7 +2480,7 @@ msgstr ""
 msgid "You cannot update status and admin of yourself"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:61
+#: app/controllers/platform_controller.rb:62
 msgid "You had been retired."
 msgstr ""
 
@@ -2480,7 +2488,7 @@ msgstr ""
 msgid "You must login with openid."
 msgstr ""
 
-#: app/helpers/users_helper.rb:29 app/helpers/users_helper.rb:44
+#: app/helpers/users_helper.rb:29 app/helpers/users_helper.rb:45
 msgid "action"
 msgstr ""
 
@@ -2696,7 +2704,7 @@ msgstr ""
 #: app/views/admin/users/create_uid.html.erb:27
 #: app/views/admin/users/edit.html.erb:16
 #: app/views/portal/_registration_form.html.erb:38
-#: app/views/user/show.html.erb:91 app/views/users/_user.html.erb:24
+#: app/views/user/show.html.erb:92 app/views/users/_user.html.erb:24
 msgid "user name"
 msgstr ""
 
@@ -2763,7 +2771,7 @@ msgstr ""
 msgid "ご指定のユーザは存在しません。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:324
+#: app/controllers/platform_controller.rb:325
 msgid ""
 "そのOpenIDは、登録されていません。ログイン後管理画面でOpenID URLを登録後ログ"
 "インしてください。"
@@ -2787,7 +2795,7 @@ msgstr ""
 msgid "アカウント関連"
 msgstr ""
 
-#: app/helpers/groups_helper.rb:49 app/helpers/users_helper.rb:45
+#: app/helpers/groups_helper.rb:49 app/helpers/users_helper.rb:46
 #: app/views/group/show.html.erb:46 app/views/user/_portrait_box.html.erb:24
 #: app/views/users/_user.html.erb:6
 msgid "アンテナに追加"
@@ -2809,7 +2817,7 @@ msgstr ""
 msgid "カテゴリが選択されていないか、不正な値です。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:312
+#: app/controllers/platform_controller.rb:313
 msgid "キャンセルされました。このサーバへの認証を確認してください"
 msgstr ""
 
@@ -2851,11 +2859,11 @@ msgstr ""
 msgid "パスワードを忘れた方はこちら"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:83
-#: app/controllers/platform_controller.rb:102
-#: app/controllers/platform_controller.rb:105
-#: app/controllers/platform_controller.rb:108
-#: app/controllers/platform_controller.rb:112
+#: app/controllers/platform_controller.rb:84
+#: app/controllers/platform_controller.rb:103
+#: app/controllers/platform_controller.rb:106
+#: app/controllers/platform_controller.rb:109
+#: app/controllers/platform_controller.rb:113
 msgid "パスワードリセット"
 msgstr ""
 
@@ -2907,18 +2915,18 @@ msgid "メーラを起動して送信する（宛先と本文が設定されま�
 msgstr ""
 
 #: app/controllers/admin/users_controller.rb:219
-#: app/controllers/platform_controller.rb:161
+#: app/controllers/platform_controller.rb:162
 msgid "メールアドレスが%{email}のユーザは既に利用を開始しています。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:75
-#: app/controllers/platform_controller.rb:125
-#: app/controllers/platform_controller.rb:150
-#: app/controllers/platform_controller.rb:191
+#: app/controllers/platform_controller.rb:76
+#: app/controllers/platform_controller.rb:126
+#: app/controllers/platform_controller.rb:151
+#: app/controllers/platform_controller.rb:192
 msgid "メールアドレスは必須です。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:320
+#: app/controllers/platform_controller.rb:321
 msgid "ユーザの登録に失敗しました。管理者に連絡してください。<br/>%{msg}"
 msgstr ""
 
@@ -2931,22 +2939,22 @@ msgstr ""
 msgid "ユーザ登録してSKIPの利用を開始する"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:182
+#: app/controllers/platform_controller.rb:183
 msgid ""
 "ユーザ登録のためのURLが不正です。再度お試し頂くか、システム管理者にお問い合わ"
 "せ下さい。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:178
+#: app/controllers/platform_controller.rb:179
 msgid "ユーザ登録のためのURLの有効期限が過ぎています。"
 msgstr ""
 
 #: app/controllers/admin/users_controller.rb:217
-#: app/controllers/platform_controller.rb:158
+#: app/controllers/platform_controller.rb:159
 msgid "ユーザ登録のためのURLを記載したメールを%{email}宛てに送信しました。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:132
+#: app/controllers/platform_controller.rb:133
 msgid "ログインIDを記載したメールを%{email}宛てに送信しました。"
 msgstr ""
 
@@ -2954,7 +2962,7 @@ msgstr ""
 msgid "ログインし直して下さい。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:47
+#: app/controllers/platform_controller.rb:48
 msgid "ログインに失敗しました。"
 msgstr ""
 
@@ -3021,16 +3029,16 @@ msgstr ""
 msgid "保存に失敗しました。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:89
-#: app/controllers/platform_controller.rb:138
-#: app/controllers/platform_controller.rb:164
-#: app/controllers/platform_controller.rb:205
+#: app/controllers/platform_controller.rb:90
+#: app/controllers/platform_controller.rb:139
+#: app/controllers/platform_controller.rb:165
+#: app/controllers/platform_controller.rb:206
 msgid "入力された%{email}というメールアドレスは登録されていません。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:86
-#: app/controllers/platform_controller.rb:135
-#: app/controllers/platform_controller.rb:202
+#: app/controllers/platform_controller.rb:87
+#: app/controllers/platform_controller.rb:136
+#: app/controllers/platform_controller.rb:203
 msgid ""
 "入力された%{email}のユーザは、利用開始されていません。利用開始してください。"
 msgstr ""
@@ -3049,7 +3057,7 @@ msgstr ""
 msgid "共有ファイル関連"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:314
+#: app/controllers/platform_controller.rb:315
 msgid "内部エラーが発生しました。管理者に連絡してください。"
 msgstr ""
 
@@ -3277,7 +3285,7 @@ msgstr ""
 msgid "親コメントが存在しません。再読み込みして下さい。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:220
+#: app/controllers/platform_controller.rb:221
 msgid "設定したURLを入力してを入力してログインしてください。"
 msgstr ""
 

@@ -141,40 +141,39 @@ end
 
 describe User, ".auth" do
   before do
-    @user = mock_model(User)
-    @user.stub!(:unused?).and_return(false)
+    @valid_password = 'valid_password'
   end
-  describe "指定したログインIDに対応するユーザが存在する場合" do
+  describe "指定したログインID又はメールアドレスに対応するユーザが存在する場合" do
+    before do
+      @user = mock_model(User)
+      @user.stub!(:crypted_password).and_return(User.encrypt(@valid_password))
+      User.stub!(:find_by_code_or_email).and_return(@user)
+    end
     describe "未使用ユーザの場合" do
       before do
-        @password = 'password'
-        @user.stub!(:crypted_password).and_return(User.encrypt(@password))
         @user.stub!(:unused?).and_return(true)
-        User.should_receive(:find_by_code).and_return(@user)
+        User.should_receive(:find_by_code_or_email).and_return(@user)
       end
-      it { User.auth('code', 'password').should be_nil }
+      it { User.auth('code_or_email', @valid_password).should be_nil }
     end
-    describe "パスワードが正しい場合" do
+    describe "使用中ユーザの場合" do
       before do
-        @password = 'password'
-        @user.stub!(:crypted_password).and_return(User.encrypt(@password))
-        User.should_receive(:find_by_code).and_return(@user)
+        @user.stub!(:unused?).and_return(false)
+        User.should_receive(:find_by_code_or_email).and_return(@user)
       end
-      it { User.auth('code', @password).should == @user }
-    end
-    describe "パスワードは正しくない場合" do
-      before do
-        @user.stub!(:crypted_password).and_return('hogehoge')
-        User.should_receive(:find_by_code).and_return(@user)
+      describe "パスワードが正しい場合" do
+        it { User.auth('code_or_email', @valid_password).should == @user }
       end
-      it { User.auth('code', 'password').should be_nil }
+      describe "パスワードは正しくない場合" do
+        it { User.auth('code_or_email', 'invalid_password').should be_nil }
+      end
     end
   end
-  describe "指定したログインIDに対応するユーザが存在しない場合" do
+  describe "指定したログインID又はメールアドレスに対応するユーザが存在しない場合" do
     before do
-      User.should_receive(:find_by_code).and_return(nil)
+      User.should_receive(:find_by_code_or_email).and_return(nil)
     end
-    it { User.auth('code', 'password').should be_nil }
+    it { User.auth('code_or_email', @valid_password).should be_nil }
   end
 end
 
@@ -278,6 +277,15 @@ describe User, '#activate!' do
     lambda do
       u.activate!
     end.should change(u, :activation_token_expires_at).from(time).to(nil)
+  end
+end
+
+describe User, '.activation_lifetime' do
+  describe 'activation_lifetimeの設定が3(日)の場合' do
+    before do
+      Admin::Setting.stub!(:activation_lifetime).and_return(3)
+    end
+    it { User.activation_lifetime.should == 3 }
   end
 end
 
@@ -401,6 +409,40 @@ describe User, "#find_or_initialize_profiles" do
     end
     it "マスタの数だけprofile_valuesが返ってくること" do
       @profiles.size.should == @masters.size
+    end
+  end
+end
+
+describe User, '.find_by_code_or_email' do
+  describe 'ログインIDに一致するユーザが見つかる場合' do
+    before do
+      @user = mock_model(User)
+      User.should_receive(:find_by_code).and_return(@user)
+    end
+    it '見つかったユーザが返ること' do
+      User.find_by_code_or_email('login_id').should == @user
+    end
+  end
+  describe 'ログインIDに一致するユーザが見つからない場合' do
+    before do
+      @user = mock_model(User)
+      User.should_receive(:find_by_code).and_return(nil)
+    end
+    describe 'メールアドレスに一致するユーザが見つかる場合' do
+      before do
+        User.should_receive(:find_by_email).and_return(@user)
+      end
+      it '見つかったユーザが返ること' do
+        User.find_by_code_or_email('skip@example.org').should == @user
+      end
+    end
+    describe 'メールアドレスに一致するユーザが見つからない場合' do
+      before do
+        User.should_receive(:find_by_email).and_return(nil)
+      end
+      it 'nilが返ること' do
+        User.find_by_code_or_email('skip@example.org').should be_nil
+      end
     end
   end
 end

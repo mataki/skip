@@ -19,8 +19,10 @@ class Admin::Setting < ActiveRecord::Base
   # ================================================================================================
   N_('Admin::Setting|Stop new user')
   N_('Admin::Setting|Stop new user description')
-  N_('Admin::Setting|Enable activation')
-  N_('Admin::Setting|Enable activation description')
+  N_('Admin::Setting|Hide email')
+  N_('Admin::Setting|Hide email description')
+  N_('Admin::Setting|Activation lifetime')
+  N_('Admin::Setting|Activation lifetime description')
 
   # ================================================================================================
   # 各種文言の設定用

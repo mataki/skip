@@ -114,3 +114,61 @@ describe BatchMakeCache, "#make_caches_bookmark" do
     end
   end
 end
+
+describe BatchMakeCache, '#make_caches_user' do
+  before do
+    @bmc = BatchMakeCache.new
+  end
+  describe 'ユーザが見つかる場合' do
+    before do
+      @user = stub_model(User, :id => 'skip', :name => 'すきっぷ')
+      User.should_receive(:find).and_return([@user])
+    end
+    it 'ファイルが出力されること' do
+      body_lines = 'body_lines'
+      @bmc.should_receive(:user_body_lines).with(@user).and_return(body_lines)
+      contents = 'contents'
+      @bmc.should_receive(:create_contents).with({:title => @user.name, :body_lines => body_lines}).and_return(contents)
+      meta = 'meta'
+      @bmc.should_receive(:create_meta).and_return(meta)
+      contents_type = 'contents_type'
+      cache_path = 'cache_path'
+      @bmc.should_receive(:output_file).with(cache_path, contents_type, @user.id, contents, meta)
+      @bmc.make_caches_user(contents_type, cache_path, 'border_time')
+    end
+  end
+  describe 'ユーザが見つからない場合' do
+    before do
+      User.should_receive(:find).and_return([])
+    end
+    it 'ファイルが出力されないこと' do
+      @bmc.should_not_receive(:output_file)
+      @bmc.make_caches_user('contents_type', 'cache_path', 'border_time')
+    end
+  end
+end
+
+describe BatchMakeCache, '#user_body_lines' do
+  before do
+    @user = stub_model(User, :uid => 'uid', :name => 'name', :code => 'code', :email => 'email', :section => 'section')
+    @user_profile_value = stub_model(UserProfileValue, :value => 'value')
+    @user.stub!(:user_profile_values).and_return([@user_profile_value])
+    @bmc = BatchMakeCache.new
+  end
+  describe 'メールアドレス公開設定の場合' do
+    before do
+      Admin::Setting.should_receive(:hide_email).and_return(false)
+    end
+    it 'メールアドレスが戻り値に含まれること' do
+      @bmc.send!(:user_body_lines, @user).should == ['uid', 'name', 'code', 'email', 'section', 'value']
+    end
+  end
+  describe 'メールアドレス非公開設定の場合' do
+    before do
+      Admin::Setting.should_receive(:hide_email).and_return(true)
+    end
+    it 'メールアドレスが戻り値に含まれないこと' do
+      @bmc.send!(:user_body_lines, @user).should == ['uid', 'name', 'code', 'section', 'value']
+    end
+  end
+end
