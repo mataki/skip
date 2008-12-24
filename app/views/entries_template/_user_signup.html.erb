@@ -1,10 +1,8 @@
-<%= h user.name %>です。
-
-ユーザ登録しました！！
-
-以下、プロフィール
-----
+<p><%= h user.name %>です。</p>
+<p>ユーザ登録しました！！</p>
+<p>以下、プロフィール</p>
+<hr />
 <% user.user_profile_values.each do |profile| -%>
-<%= profile.user_profile_master.name %> :
-<%= profile.value %>
+<p><%= profile.user_profile_master.name %> :</p>
+<p><%= profile.value %></p>
 <% end -%>

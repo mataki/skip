@@ -254,6 +254,7 @@ class User < ActiveRecord::Base
     entry_params[:owner_symbol] = symbol
     entry_params[:publication_type] = 'public'
     entry_params[:publication_symbols] = [Symbol::SYSTEM_ALL_USER]
+    entry_params[:editor_mode] = 'richtext'
 
     BoardEntry.create_entry(entry_params)
   end
