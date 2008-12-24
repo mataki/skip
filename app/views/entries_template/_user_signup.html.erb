@@ -1,9 +1,9 @@
-<%= h user_name -%>です。
+<p><%= h user_name -%>です。</p>
 
-ユーザ登録しました！！
+<p>ユーザ登録しました！！</p>
 
 <% if user_introduction -%>
-以下、自己紹介
-----
-<%= h user_introduction -%>
+<p>以下、自己紹介</p>
+<hr />
+<p><%= user_introduction -%></p>
 <% end -%>
