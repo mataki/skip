@@ -24,7 +24,7 @@ class MypageController < ApplicationController
 
   verify :method => :post, :only => [ :destroy_portrait, :save_portrait, :update_profile,
                                       :update_customize, :update_message_unsubscribes, :apply_password,
-                                      :apply_ident_url, :add_antenna, :delete_antenna, :delete_antenna_item, :move_antenna_item,
+                                      :add_antenna, :delete_antenna, :delete_antenna_item, :move_antenna_item,
                                       :change_read_state, :apply_email, :set_antenna_name, :sort_antenna],
          :redirect_to => { :action => :index }
 
@@ -295,17 +295,30 @@ class MypageController < ApplicationController
 
   def apply_ident_url
     redirect_to_with_deny_auth(:action => :manage) and return unless login_mode?(:free_rp)
-    @openid_identifier = if current_user.openid_identifiers.empty?
-                           current_user.openid_identifiers.build
-                         else
-                           current_user.openid_identifiers.first
-                         end
-    @openid_identifier.url = params[:openid_identifier][:url] if params[:openid_identifier]
-
-    if @openid_identifier.save
-      flash[:notice] = _('OpenID URLを設定しました。')
-      redirect_to :action => :manage, :menu => :manage_openid
+    @openid_identifier = current_user.openid_identifiers.first || current_user.openid_identifiers.build
+    if using_open_id?
+      begin
+        authenticate_with_open_id do |result, identity_url|
+          if result.successful?
+            @openid_identifier.url = identity_url
+            if @openid_identifier.save
+              flash[:notice] = _('OpenID URLを設定しました。')
+              redirect_to :action => :manage, :menu => :manage_openid
+              return
+            else
+              render :partial => 'manage_openid', :layout => 'layout'
+            end
+          else
+            flash.now[:error] = _("OpenIDの処理の中でキャンセルされたか、失敗しました。")
+            render :partial => 'manage_openid', :layout => 'layout'
+          end
+        end
+      rescue OpenIdAuthentication::InvalidOpenId
+        flash.now[:error] = _("OpenIDの形式が正しくありません。")
+        render :partial => 'manage_openid', :layout => 'layout'
+      end
     else
+      flash.now[:error] = _("OpenIDを入力してください。")
       render :partial => 'manage_openid', :layout => 'layout'
     end
   end
