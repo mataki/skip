@@ -39,7 +39,6 @@
     <tr valign="top">
       <td>
         <label for="openid_url"><span style="font-weight: bold;">OpenID URL</span></label>
-        (<%= link_to _('OpenIDを忘れた/再設定したい方はこちら'), forgot_openid_path, {:style => 'font-size:11px', :tabindex => "103"} %>)
       </td>
     </tr>
     <tr valign="top">
@@ -63,6 +62,9 @@
     </tr>
   </table>
 <% end %>
+    <% unless login_mode?(:password) -%>
+        <%= link_to _('OpenIDを忘れた/再設定したい方はこちら'), forgot_openid_path, {:style => 'font-size:14px'} %>
+    <% end -%>
 
 <script type="text/javascript">
 $j(function(){
