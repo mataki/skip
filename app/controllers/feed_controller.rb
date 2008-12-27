@@ -91,7 +91,7 @@ class FeedController < ApplicationController
     user_id = session[:user_id]
     find_params[:conditions][0] << "and board_entry_comments.user_id = ? and user_readings.read = ? and user_readings.user_id = ?"
     find_params[:conditions] << user_id << false << user_id
-    find_params[:include] << :user_readings << :board_entry_comment
+    find_params[:include] << :user_readings << :board_entry_comments
     rss_feed "your_commented_blogs", description, board_entry_item_array(find_params)
   end
 
