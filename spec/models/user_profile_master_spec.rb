@@ -334,7 +334,7 @@ describe UserProfileMaster::YearSelectProcesser do
 
   describe "#start_year_and_end_year" do
     before do
-      Time.now.stub!(:year).and_return(2008)
+      Time.stub!(:now).and_return(Time.local(2008))
     end
     describe "引数が空の場合" do
       it { @processer.send!(:start_year_and_end_year, '').should == ['2008', '2008'] }
