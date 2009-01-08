@@ -229,4 +229,12 @@ class Group < ActiveRecord::Base
     options[:include] = :group_participations
     options
   end
+
+  def participating?(user)
+    group_participations.find_by_user_id_and_waiting(user.id, false) ? true : false
+  end
+
+  def administrator?(user)
+    group_participations. find_by_user_id_and_waiting_and_owned(user.id, false, true) ? true : false
+  end
 end

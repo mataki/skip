@@ -28,12 +28,6 @@ fixtures :share_files
     @a_share_file.owner_symbol = 'uid:hoge'
     assert_equal 'hoge', @a_share_file.owner_symbol_id
   end
-
-  def test_after_save
-    @a_share_file.category = SkipFaker.comma_tags :qt => 3
-    @a_share_file.save
-    assert_equal @a_share_file.share_file_tags.size, 3
-  end
 end
 
 describe ShareFile, '#full_path' do
@@ -51,6 +45,39 @@ describe ShareFile, '#full_path' do
     end
     it 'full_pathが取得できること' do
       @share_file.full_path.should == File.join(@share_file_path, 'user', @symbol_id, @file_name)
+    end
+  end
+end
+
+describe ShareFile, '#validate' do
+  before do
+    @share_file = ShareFile.new
+  end
+  describe '権限チェック' do
+    before do
+      Tag.stub!(:validate_tags).and_return([])
+    end
+    describe '保存権限がある場合' do
+      before do
+        @share_file.should_receive(:updatable?).and_return(true)
+      end
+      it 'エラーメッセージが設定されないこと' do
+        lambda do
+          @share_file.validate
+        end.should_not change(@share_file, :errors)
+      end
+    end
+    describe '保存権限がない場合' do
+      before do
+        @share_file.should_receive(:updatable?).and_return(false)
+        @errors = mock('errors')
+        @errors.stub!(:add_to_base)
+        @share_file.stub!(:errors).and_return(@errors)
+      end
+      it 'エラーメッセージが設定されること' do
+        @share_file.errors.should_receive(:add_to_base).with('ご指定の操作は実行できません。')
+        @share_file.validate
+      end
     end
   end
 end
@@ -261,7 +288,415 @@ describe ShareFile, '#file_size_with_unit' do
   end
 end
 
+describe ShareFile, '#readable?' do
+  before do
+    @share_file = ShareFile.new
+  end
+  describe 'accessed_userが設定されている場合' do
+    before do
+      @user = stub_model(User)
+      @share_file.accessed_user = @user
+    end
+    it 'owner_instanceのreadable?が実行されること' do
+      @owner = mock('owner')
+      @owner.should_receive(:readable?)
+      @share_file.should_receive(:owner_instance).and_return(@owner)
+      @share_file.readable?
+    end
+  end
+  describe 'accessed_userが設定されていない場合' do
+    it 'owner_instanceが実行されないこと' do
+      @share_file.should_not_receive(:owner_instance)
+      @share_file.readable?
+    end
+    it 'falseが返却されること' do
+      @share_file.readable?.should be_false
+    end
+  end
+end
+
+describe ShareFile, '#updatable?' do
+  before do
+    @share_file = ShareFile.new
+  end
+  describe 'accessed_userが設定されている場合' do
+    before do
+      @user = stub_model(User)
+      @share_file.accessed_user = @user
+    end
+    it 'owner_instanceのreadable?が実行されること' do
+      @owner = mock('owner')
+      @owner.should_receive(:updatable?)
+      @share_file.should_receive(:owner_instance).and_return(@owner)
+      @share_file.updatable?
+    end
+  end
+  describe 'accessed_userが設定されていない場合' do
+    it 'owner_instanceが実行されないこと' do
+      @share_file.should_not_receive(:owner_instance)
+      @share_file.updatable?
+    end
+    it 'falseが返却されること' do
+      @share_file.updatable?.should be_false
+    end
+  end
+end
+
+describe ShareFile::UserOwner do
+  describe ShareFile::UserOwner, '#readable?' do
+    before do
+      @user = stub_model(User, :uid => '')
+      @share_file = stub_model(ShareFile, :owner_symbol => 'uid:owner')
+      @owner = ShareFile::UserOwner.new(@share_file, @user)
+    end
+    describe '所有者が対象となるユーザの場合' do
+      before do
+        @user.stub!(:uid).and_return('owner')
+      end
+      it '権限があること' do
+        @owner.readable?.should be_true
+      end
+    end
+    describe '所有者が対象となるユーザではない場合' do
+      before do
+        @user.stub!(:uid).and_return('not_owner')
+      end
+      describe '公開範囲に対象となるユーザが含まれる場合' do
+        before do
+          @owner.should_receive(:publication_range?).and_return(true)
+        end
+        it '権限があること' do
+          @owner.readable?.should be_true
+        end
+      end
+      describe '公開範囲に対象となるユーザが含まれない場合' do
+        before do
+          @owner.should_receive(:publication_range?).and_return(false)
+        end
+        it '権限がないこと' do
+          @owner.readable?.should be_false
+        end
+      end
+    end
+  end
+
+  describe ShareFile::UserOwner, '#publication_range?' do
+    before do
+      @user = stub_model(User, :uid => '')
+      @share_file = stub_model(ShareFile, :owner_symbol => 'uid:owner')
+      @owner = ShareFile::UserOwner.new(@share_file, @user)
+    end
+    describe '全体公開の場合' do
+      before do
+        @share_file.stub!(:publication_type).and_return('public')
+      end
+      it '公開範囲である(trueを返す)こと' do
+        @owner.send!(:publication_range?).should be_true
+      end
+    end
+    describe '自分だけの場合' do
+      before do
+        @share_file.stub!(:publication_type).and_return('private')
+      end
+      it '非公開である(falseを返す)こと' do
+        @owner.send!(:publication_range?).should be_false
+      end
+    end
+    describe '直接指定の場合' do
+      before do
+        @share_file.stub!(:publication_type).and_return('protected')
+      end
+      describe '対象ユーザが直接指定されている場合' do
+        before do
+          @share_file.stub!(:publication_symbols_value).and_return("uid:#{@target_user_uid},uid:hoge,gid:fuga")
+        end
+        it '公開範囲である(trueを返す)こと' do
+          @owner.send!(:publication_range?).should be_true
+        end
+      end
+      describe '対象ユーザが直接指定されていない場合' do
+        before do
+          @share_file.stub!(:publication_symbols_value).and_return('uid:hoge,gid:fuga')
+        end
+        it '非公開である(falseを返す)こと' do
+          @owner.send!(:publication_range?).should be_false
+        end
+      end
+    end
+  end
+
+  describe ShareFile::UserOwner, '#updatable?' do
+    before do
+      @user = stub_model(User, :uid => '')
+      @share_file = stub_model(ShareFile, :owner_symbol => 'uid:owner')
+      @owner = ShareFile::UserOwner.new(@share_file, @user)
+    end
+    describe '所有者が対象となるユーザの場合' do
+      before do
+        @user.stub!(:uid).and_return('owner')
+      end
+      it '権限があること' do
+        @owner.updatable?.should be_true
+      end
+    end
+    describe '所有者が対象となるユーザではない場合' do
+      before do
+        @user.stub!(:uid).and_return('not_owner')
+      end
+      it '権限がないこと' do
+        @owner.updatable?.should be_false
+      end
+    end
+  end
+end
+
+describe ShareFile::GroupOwner do
+  describe ShareFile::GroupOwner, '#readable?' do
+    before do
+      @user = stub_model(User, :uid => '')
+      @share_file_creater_id = 99
+      @share_file = stub_model(ShareFile, :owner_symbol => 'gid:owner', :user_id => @share_file_creater_id)
+      @owner = ShareFile::GroupOwner.new(@share_file, @user)
+    end
+    describe '所有者となるグループが見つかる場合' do
+      before do
+        @group = stub_model(Group)
+        Group.should_receive(:find_by_gid).and_return(@group)
+      end
+      describe '所有者が対象ユーザが所属するグループの場合' do
+        before do
+          @group.should_receive(:participating?).with(@user).and_return(true)
+        end
+        describe '対象ユーザがグループ管理者の場合' do
+          before do
+            @group.should_receive(:administrator?).with(@user).and_return(true)
+          end
+          it '権限があること' do
+            @owner.readable?.should be_true
+          end
+        end
+        describe '対象ユーザがグループ参加者の場合' do
+          before do
+            @group.should_receive(:administrator?).with(@user).and_return(false)
+          end
+          describe '作成者が対象となるユーザの場合' do
+            before do
+              @user.stub!(:id).and_return(@share_file_creater_id)
+            end
+            it '権限があること' do
+              @owner.readable?.should be_true
+            end
+          end
+          describe '作成者が対象となるユーザではない場合' do
+            describe '公開範囲に対象となるユーザが含まれる場合' do
+              before do
+                @owner.should_receive(:publication_range?).with(true).and_return(true)
+              end
+              it '権限があること' do
+                @owner.readable?.should be_true
+              end
+            end
+            describe '公開範囲に対象となるユーザが含まれない場合' do
+              before do
+                @owner.should_receive(:publication_range?).with(true).and_return(false)
+              end
+              it '権限がないこと' do
+                @owner.readable?.should be_false
+              end
+            end
+          end
+        end
+      end
+      describe '所有者が対象ユーザが所属するグループ以外の場合' do
+        before do
+          @group.should_receive(:participating?).with(@user).and_return(false)
+        end
+        describe '公開範囲に対象となるユーザが含まれる場合' do
+          before do
+            @owner.should_receive(:publication_range?).with(false).and_return(true)
+          end
+          it '権限があること' do
+            @owner.readable?.should be_true
+          end
+        end
+        describe '公開範囲に対象となるユーザが含まれない場合' do
+          before do
+            @owner.should_receive(:publication_range?).with(false).and_return(false)
+          end
+          it '権限がないこと' do
+            @owner.readable?.should be_false
+          end
+        end
+      end
+    end
+    describe '所有者となるグループが見つからない場合' do
+      before do
+        Group.should_receive(:find_by_gid).and_return(nil)
+        @owner = ShareFile::GroupOwner.new(@share_file, @user)
+      end
+      it '権限がないこと' do
+        @owner.readable?.should be_false
+      end
+    end
+  end
+
+  describe ShareFile::GroupOwner, '#publication_range?' do
+    before do
+      @user = stub_model(User, :uid => '')
+      @share_file = stub_model(ShareFile, :owner_symbol => 'uid:owner')
+      @owner = ShareFile::GroupOwner.new(@share_file, @user)
+    end
+    describe '全体公開の場合' do
+      before do
+        @share_file.stub!(:publication_type).and_return('public')
+      end
+      it '公開範囲である(trueを返す)こと' do
+        @owner.send!(:publication_range?).should be_true
+      end
+    end
+    describe '参加者のみの場合' do
+      before do
+        @share_file.stub!(:publication_type).and_return('private')
+      end
+      describe '参加しているグループの場合' do
+        it '公開範囲である(trueを返す)こと' do
+          @owner.send!(:publication_range?, true).should be_true
+        end
+      end
+      describe '参加していないグループの場合' do
+        it '非公開である(falseを返す)こと' do
+          @owner.send!(:publication_range?, false).should be_false
+        end
+      end
+    end
+    describe '直接指定の場合' do
+      before do
+        @share_file.stub!(:publication_type).and_return('protected')
+        @target_user_uid = 'target_user_symbol'
+        @user.stub!(:uid).and_return(@target_user_uid)
+      end
+      describe '対象ユーザが直接指定されている場合' do
+        before do
+          @share_file.stub!(:publication_symbols_value).and_return("uid:#{@target_user_uid},uid:hoge,gid:fuga")
+        end
+        it '公開範囲である(trueを返す)こと' do
+          @owner.send!(:publication_range?).should be_true
+        end
+      end
+      describe '対象ユーザが直接指定されていない場合' do
+        before do
+          @share_file.stub!(:publication_symbols_value).and_return('uid:hoge,gid:fuga')
+        end
+        it '非公開である(falseを返す)こと' do
+          @owner.send!(:publication_range?).should be_false
+        end
+      end
+    end
+  end
+
+  describe ShareFile::GroupOwner, '#updatable?' do
+    before do
+      @user = stub_model(User, :uid => '')
+      @share_file_creater_id = 99
+      @share_file = stub_model(ShareFile, :owner_symbol => 'gid:owner', :user_id => @share_file_creater_id)
+      @owner = ShareFile::GroupOwner.new(@share_file, @user)
+    end
+    describe '所有者となるグループが見つかる場合' do
+      before do
+        @group = stub_model(Group)
+        Group.should_receive(:find_by_gid).and_return(@group)
+      end
+      describe '所有者が対象ユーザが所属するグループの場合' do
+        before do
+          @group.should_receive(:participating?).with(@user).and_return(true)
+        end
+        describe '対象ユーザがグループ管理者の場合' do
+          before do
+            @group.should_receive(:administrator?).with(@user).and_return(true)
+          end
+          it '権限があること' do
+            @owner.updatable?.should be_true
+          end
+        end
+        describe '対象ユーザがグループ参加者の場合' do
+          before do
+            @group.should_receive(:administrator?).with(@user).and_return(false)
+          end
+          describe '作成者が対象となるユーザの場合' do
+            before do
+              @user.stub!(:id).and_return(@share_file_creater_id)
+            end
+            it '権限があること' do
+              @owner.updatable?.should be_true
+            end
+          end
+          describe '作成者が対象となるユーザではない場合' do
+            it '権限がないこと' do
+              @owner.updatable?.should be_false
+            end
+          end
+        end
+      end
+      describe '所有者が対象ユーザが所属するグループ以外の場合' do
+        before do
+          @group.should_receive(:participating?).with(@user).and_return(false)
+        end
+        it '権限がないこと' do
+          @owner.updatable?.should be_false
+        end
+      end
+    end
+    describe '所有者となるグループが見つからない場合' do
+      before do
+        Group.should_receive(:find_by_gid).and_return(nil)
+        @owner = ShareFile::GroupOwner.new(@share_file, @user)
+      end
+      it '権限がないこと' do
+        @owner.updatable?.should be_false
+      end
+    end
+  end
+end
+
 # privateメソッドのspec
+describe ShareFile, '#user_owner?' do
+  describe '所有者がユーザの場合' do
+    before do
+      @share_file = ShareFile.new(:owner_symbol => 'uid:owner')
+    end
+    it 'trueを返すこと' do
+      @share_file.send(:user_owner?).should be_true
+    end
+  end
+  describe '所有者がユーザ以外の場合' do
+    before do
+      @share_file = ShareFile.new(:owner_symbol => 'zid:owner')
+    end
+    it 'falseを返すこと' do
+      @share_file.send(:user_owner?).should be_false
+    end
+  end
+end
+
+describe ShareFile, '#group_owner?' do
+  describe '所有者がグループの場合' do
+    before do
+      @share_file = ShareFile.new(:owner_symbol => 'gid:owner')
+    end
+    it 'trueを返すこと' do
+      @share_file.send(:group_owner?).should be_true
+    end
+  end
+  describe '所有者がグループ以外の場合' do
+    before do
+      @share_file = ShareFile.new(:owner_symbol => 'zid:owner')
+    end
+    it 'falseを返すこと' do
+      @share_file.send(:group_owner?).should be_false
+    end
+  end
+end
+
 private
 def create_share_file options = {}
   share_file = ShareFile.new({

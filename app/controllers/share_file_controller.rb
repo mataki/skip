@@ -20,8 +20,12 @@ class ShareFileController < ApplicationController
          :redirect_to => { :action => :index }
 
   def new
-    @share_file = ShareFile.new
-    @share_file.owner_symbol = params[:owner_symbol]
+    @share_file = ShareFile.new(:user_id => current_user.id, :owner_symbol => params[:owner_symbol])
+
+    unless @share_file.updatable?(current_user)
+      render_window_close
+      return
+    end
 
     params[:publication_type] = "public" if Symbol.split_symbol(@share_file.owner_symbol).first=="uid"
     params[:publication_type] ||= "private"
@@ -35,17 +39,14 @@ class ShareFileController < ApplicationController
   # post action
   def create
     @error_messages = []
-    @share_file = ShareFile.new(params[:share_file])
-    @share_file.user_id = session[:user_id]
-    @share_file.publication_type = params[:publication_type]
-    @share_file.publication_symbols_value = params[:publication_type]=='protected' ? params[:publication_symbols_value] : ""
-
-    # 所有者がマイユーザ OR マイグループ
-    unless login_user_symbols.include? @share_file.owner_symbol
-      @categories_hash = ShareFile.get_tags_hash(@share_file.owner_symbol)
-      redirect_to_with_deny_auth
+    unless params[:file]
+      render_window_close
       return
     end
+    @share_file = ShareFile.new(params[:share_file])
+    @share_file.user_id = current_user.id
+    @share_file.publication_type = params[:publication_type]
+    @share_file.publication_symbols_value = params[:publication_type]=='protected' ? params[:publication_symbols_value] : ""
 
     params[:file].each do |key, file|
       share_file = @share_file.clone
@@ -54,6 +55,7 @@ class ShareFileController < ApplicationController
         share_file.content_type = file.content_type.chomp
       end
       share_file.file = file
+      share_file.accessed_user = current_user
 
       if share_file.save
         target_symbols = analyze_param_publication_type
@@ -93,7 +95,7 @@ class ShareFileController < ApplicationController
       return
     end
 
-    unless authorize_to_save_share_file? @share_file
+    unless @share_file.updatable?(current_user)
       render_window_close
       return
     end
@@ -119,12 +121,7 @@ class ShareFileController < ApplicationController
     update_params = params[:share_file]
     update_params[:publication_type] = params[:publication_type]
     update_params[:publication_symbols_value] = params[:publication_type]=='protected' ? params[:publication_symbols_value] : ""
-
-    unless authorize_to_save_share_file? @share_file
-      @categories_hash = ShareFile.get_tags_hash(@share_file.owner_symbol)
-      redirect_to_with_deny_auth
-      return
-    end
+    @share_file.accessed_user = current_user
 
     if @share_file.update_attributes(update_params)
       @share_file.share_file_publications.clear
@@ -145,7 +142,10 @@ class ShareFileController < ApplicationController
   def destroy
     share_file = ShareFile.find(params[:id])
 
-    redirect_to_with_deny_auth and return unless authorize_to_save_share_file? share_file
+    unless share_file.updatable?(current_user)
+      redirect_to_with_deny_auth
+      return
+    end
 
     share_file.destroy
     flash[:notice] = _("ファイルの削除に成功しました。")
@@ -188,11 +188,13 @@ class ShareFileController < ApplicationController
     file_name =  params[:file_name]
     owner_symbol = "#{symbol_type_hash[params[:controller_name]]}:#{params[:symbol_id]}"
 
-    # ログインユーザが対象ファイルをダウンロードできるか否か判定
-    find_params = ShareFile.make_conditions(login_user_symbols, { :file_name => file_name, :owner_symbol => owner_symbol })
-    unless share_file = ShareFile.find(:first, :conditions => find_params[:conditions], :include => find_params[:include] )
-      flash[:warning] = _('指定されたファイルが存在しないか、アクセス権がありません。') # 本来は存在する場合でも、ファイルの存在自体を知らせないために、存在しない旨を表示
-      return redirect_to(:controller => 'mypage', :action => 'index')
+    unless share_file = ShareFile.find_by_file_name_and_owner_symbol(file_name, owner_symbol)
+      raise ActiveRecord::RecordNotFound
+    end
+
+    unless share_file.readable?(current_user)
+      redirect_to_with_deny_auth
+      return
     end
 
     if downloadable?(params[:authenticity_token], share_file)
@@ -217,7 +219,7 @@ class ShareFileController < ApplicationController
   def download_history_as_csv
     share_file = ShareFile.find(params[:id])
 
-    unless authorize_to_save_share_file? share_file
+    unless share_file.readable?(current_user)
       redirect_to_with_deny_auth
       return
     end
@@ -226,18 +228,19 @@ class ShareFileController < ApplicationController
     send_data(csv_text, :filename => nkf_file_name(file_name), :type => 'application/x-csv', :disposition => 'attachment')
   end
 
+  # ajax action
   def clear_download_history
     unless share_file = ShareFile.find(:first, :conditions => ["id = ?", params[:id]])
       return false
     end
 
-    unless authorize_to_save_share_file? share_file
-      render :nothing => true
+    unless share_file.updatable?(current_user)
+      render :text => _('この操作は、許可されていません。'), :status => :forbidden
       return
     end
 
     share_file.share_file_accesses.clear
-    render :nothing => true
+    render :text => _('ダウンロード履歴の削除に成功しました。')
   end
 
 private
@@ -267,13 +270,4 @@ private
     return  NKF::nkf('-Ws', file_name) if agent.include?("MSIE") and not agent.include?("Opera")
     return file_name
   end
-
-  # 権限チェック
-  # ・所有者がマイユーザ
-  # ・所有者がマイグループ  AND 作成者がマイユーザ
-  def authorize_to_save_share_file? share_file
-    session[:user_symbol] == share_file.owner_symbol ||
-      (login_user_groups.include?(share_file.owner_symbol) && (session[:user_id] == share_file.user_id))
-  end
-
 end

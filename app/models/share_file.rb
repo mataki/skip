@@ -20,6 +20,7 @@ class ShareFile < ActiveRecord::Base
   include Types::ContentType
 
   attr_accessor :file
+  attr_writer :accessed_user
 
   belongs_to :user
   has_many :tags, :through => :share_file_tags
@@ -49,6 +50,7 @@ class ShareFile < ActiveRecord::Base
 
   def validate
     Tag.validate_tags(category).each{ |error| errors.add(:category, error) }
+    errors.add_to_base _('ご指定の操作は実行できません。') unless updatable?
   end
 
   def validate_on_create
@@ -317,6 +319,82 @@ class ShareFile < ActiveRecord::Base
     uncheck_extention? && uncheck_content_type?
   end
 
+  def readable?(user = @accessed_user)
+    user ? owner_instance(self, user).readable? : false
+  end
+
+  def updatable?(user = @accessed_user)
+    user ? owner_instance(self, user).updatable? : false
+  end
+
+  class Owner
+    def initialize(share_file, user)
+      @share_file = share_file
+      @user = user
+    end
+
+    def readable?
+      false
+    end
+
+    def updatable?
+      false
+    end
+  end
+
+  class UserOwner < Owner
+    def readable?
+      @user.symbol == @share_file.owner_symbol ? true : publication_range?
+    end
+
+    def publication_range?
+      if @share_file.public?
+        true
+      elsif @share_file.protected?
+        @share_file.publication_symbols_value.split(',').any?{|symbol| @user.symbol == symbol }
+      else
+        false
+      end
+    end
+
+    def updatable?
+      @user.symbol == @share_file.owner_symbol
+    end
+  end
+
+  class GroupOwner < Owner
+    def readable?
+      if group = Group.find_by_gid(@share_file.owner_symbol_id)
+        participating = group.participating?(@user)
+        if participating && (group.administrator?(@user) || @user.id == @share_file.user_id)
+          true
+        else
+          publication_range?(participating)
+        end
+      else
+        false
+      end
+    end
+
+    def publication_range?(participating = true)
+      if @share_file.public?
+        true
+      elsif @share_file.protected?
+        @share_file.publication_symbols_value.split(',').any?{|symbol| @user.symbol == symbol }
+      else
+        participating
+      end
+    end
+
+    def updatable?
+      if group = Group.find_by_gid(@share_file.owner_symbol_id)
+        group.participating?(@user) && (group.administrator?(@user) || @user.id == @share_file.user_id)
+      else
+        false
+      end
+    end
+  end
+
 private
   def square_brackets_tags
     self.category = Tag.square_brackets_tags(self.category)
@@ -328,5 +406,23 @@ private
 
   def uncheck_content_type?
     CONTENT_TYPE_IMAGES.values.any?{ |content_types| content_types.split(',').include?(self.content_type) }
+  end
+
+  def owner_instance(share_file, user)
+    if user_owner?
+      UserOwner.new(share_file, user)
+    elsif group_owner?
+      GroupOwner.new(share_file, user)
+    else
+      Owner.new(share_file, user)
+    end
+  end
+
+  def user_owner?
+    self.symbol_type == User.symbol_type.to_s
+  end
+
+  def group_owner?
+    self.symbol_type == Group.symbol_type.to_s
   end
 end

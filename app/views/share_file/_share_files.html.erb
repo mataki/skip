@@ -90,9 +90,13 @@ $j(function(){
                 type: "POST",
                 data: { id: shareFileId, authenticity_token: $j('#authenticity_token').val() },
                 url: clearDownloadUrl,
-                success: function(html){
-                    alert('ダウンロード履歴の削除に成功しました');
+                success: function(text){
+                    alert(text);
+                },
+                error: function(request){
+                    alert(request.responseText);
                 }
+
             });
         }
         return false;

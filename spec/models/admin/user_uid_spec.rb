@@ -126,7 +126,9 @@ describe Admin::UserUid, "#rename" do
     @b.entry_publications.create!({:symbol => "uid:#{uid_str}"})
     @message = Message.create!({:link_url => "/user/#{uid_str}", :user_id => @u})
     file = mock_uploaed_file
-    @sf = ShareFile.create!({:file => file, :file_name => uid_str, :owner_symbol => "uid:#{uid_str}", :publication_symbols_value => "uid:#{uid_str}", :date => Date.today, :user_id => @u, :description => uid_str})
+    @sf = ShareFile.new({:file => file, :file_name => uid_str, :owner_symbol => "uid:#{uid_str}", :publication_symbols_value => "uid:#{uid_str}", :date => Date.today, :user_id => @u, :description => uid_str})
+    @sf.accessed_user = @u
+    @sf.save!
     @sf.share_file_publications.create!({:symbol => "uid:#{uid_str}"})
     @mail = Mail.create!({:from_user_id => uid_str, :to_address_symbol => "uid:#{uid_str}", :user_entry_no => 1})
     @bookmark = Bookmark.create!({:url => "/user/#{uid_str}", :title => uid_str})

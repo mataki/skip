@@ -15,64 +15,412 @@
 
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe ShareFileController, "GET /download" do
+describe ShareFileController, 'GET #new' do
   before do
     @user = user_login
-    ShareFile.stub!(:make_conditions).and_return({})
-    ShareFile.stub!(:find)
-    File.stub!(:exist?)
+    ShareFile.stub!(:get_tags_hash)
+    @share_file = stub_model(ShareFile)
+    @share_file.stub!(:updatable?).and_return(true)
+    ShareFile.stub!(:new).and_return(@share_file)
+  end
+
+  describe '作成権限がある場合' do
+    before do
+      @share_file.should_receive(:updatable?).with(@user).and_return(true)
+    end
+    it '作成画面に遷移すること' do
+      get :new, :owner_symbol => 'uid:owner'
+      response.should render_template('new')
+    end
+  end
+
+  describe '作成権限がない場合' do
+    before do
+      @share_file.should_receive(:updatable?).with(@user).and_return(false)
+    end
+    it '作成画面が閉じられること' do
+      controller.should_receive(:render_window_close)
+      get :new
+    end
+  end
+end
+
+describe ShareFileController, 'GET #create' do
+  before do
+    user_login
+  end
+  it 'GETアクセスできないこと(indexにリダイレクトされること)' do
+    get :create
+    response.should redirect_to(:action => :index)
+  end
+end
+
+describe ShareFileController, "POST #create" do
+  before do
+    @current_user = user_login
+    @share_file = stub_model(ShareFile)
+    @share_file.stub!(:user_id=)
+    @share_file.stub!(:publication_type=)
+    @share_file.stub!(:publication_symbols_value=)
+    @share_file.stub!(:accessed_user=)
+    ShareFile.stub!(:new).and_return(@share_file)
+  end
+
+  describe 'ファイルが送信されない場合' do
+    it '作成画面が閉じられること' do
+      controller.should_receive(:render_window_close)
+      post :create
+    end
+  end
+
+  describe 'ファイルが送信される場合' do
+    it '対象共有ファイルのuser_idにアクセスユーザのidが設定されること' do
+      @share_file.should_receive(:user_id=).with(@current_user.id)
+      post :create, :file => {}
+    end
+    describe 'ファイルが空の場合' do
+      it '作成画面が閉じられること' do
+        controller.should_receive(:render_window_close)
+        post :create, :file => {}
+      end
+    end
+    describe 'ファイルが空ではない場合' do
+      before do
+        @share_file.stub!(:save).and_return(true)
+        controller.stub!(:analyze_param_publication_type).and_return([])
+        @share_file.stub!(:upload_file)
+      end
+      describe '単一ファイルが送信される場合' do
+        before do
+          @file1 = mock_uploaed_file({ :original_filename => "file1.png", :content_type => "image/png", :size => 1, :read => "" })
+        end
+        it '対象共有ファイルのaccessed_userにアクセスユーザが設定されること' do
+          @share_file.should_receive(:accessed_user=).with(@current_user)
+          post :create, :file => { '1' => @file1 }
+        end
+        it '対象共有ファイルのファイル名にアップロードファイルのファイル名が設定されること' do
+          @share_file.should_receive(:file_name=).with(@file1.original_filename)
+          post :create, :file => { '1' => @file1 }
+        end
+        it '対象共有ファイルのコンテンツタイプにアップロードファイルのコンテンツタイプが設定されること' do
+          @share_file.should_receive(:content_type=).with(@file1.content_type.chomp)
+          post :create, :file => { '1' => @file1 }
+        end
+        describe '保存に成功する場合' do
+          before do
+            @share_file.should_receive(:save).and_return(true)
+          end
+          it '公開対象となるシンボルが作成されること' do
+            controller.stub!(:analyze_param_publication_type).and_return(['sid:allusers'])
+            share_file_publications = [stub_model(ShareFilePublication)]
+            share_file_publications.should_receive(:create).with(:symbol => 'sid:allusers')
+            @share_file.should_receive(:share_file_publications).and_return(share_file_publications)
+            post :create, :file => { '1' => @file1 }
+          end
+          it '実体ファイルがアップロードされること' do
+            @share_file.should_receive(:upload_file)
+            post :create, :file => { '1' => @file1 }
+          end
+          it '作成画面が閉じられること' do
+            controller.should_receive(:render_window_close)
+            post :create, :file => { '1' => @file1 }
+          end
+        end
+        describe '保存に失敗する場合' do
+          before do
+            @share_file.should_receive(:save).and_return(false)
+          end
+          it 'flashエラーメッセージが設定されること' do
+            post :create, :file => { '1' => @file1 }
+            flash[:warning].should == 'ファイルのアップロードに失敗しました。<br/>[成功:0 失敗:1]'
+          end
+          it 'ファイル毎のエラーメッセージが設定されること' do
+            post :create, :file => { '1' => @file1 }
+            assigns[:error_messages].size.should == 1
+          end
+          it '新規作成画面に遷移すること' do
+            post :create, :file => { '1' => @file1 }
+            response.should render_template('new')
+          end
+        end
+      end
+      describe '複数ファイル(2ファイル)が送信される場合' do
+        before do
+          @file1 = mock_uploaed_file({ :original_filename => "file1.png", :content_type => "image/png", :size => 1, :read => "" })
+          @file2 = mock_uploaed_file({ :original_filename => "file2.jpg", :content_type => "image/jpg", :size => 2, :read => "" })
+        end
+        it '対象共有ファイルのaccessed_userにアクセスユーザが設定されること' do
+          @share_file.should_receive(:accessed_user=).with(@current_user).twice
+          post :create, :file => { '1' => @file1, '2' => @file2 }
+        end
+        it '対象共有ファイルのファイル名にアップロードファイルのファイル名が設定されること' do
+          @share_file.should_receive(:file_name=).with(@file1.original_filename)
+          @share_file.should_receive(:file_name=).with(@file2.original_filename)
+          post :create, :file => { '1' => @file1, '2' => @file2 }
+        end
+        it '対象共有ファイルのコンテンツタイプにアップロードファイルのコンテンツタイプが設定されること' do
+          @share_file.should_receive(:content_type=).with(@file1.content_type.chomp)
+          @share_file.should_receive(:content_type=).with(@file2.content_type.chomp)
+          post :create, :file => { '1' => @file1, '2' => @file2 }
+        end
+        describe '保存に成功する場合' do
+          before do
+            @share_file.should_receive(:save).twice.and_return(true)
+          end
+          it '公開対象となるシンボルが作成されること' do
+            controller.stub!(:analyze_param_publication_type).and_return(['sid:allusers'])
+            share_file_publications = [stub_model(ShareFilePublication)]
+            share_file_publications.should_receive(:create).with(:symbol => 'sid:allusers').twice
+            @share_file.should_receive(:share_file_publications).twice.and_return(share_file_publications)
+            post :create, :file => { '1' => @file1, '2' => @file2 }
+          end
+          it '実体ファイルがアップロードされること' do
+            @share_file.should_receive(:upload_file).twice
+            post :create, :file => { '1' => @file1, '2' => @file2 }
+          end
+          it '作成画面が閉じられること' do
+            controller.should_receive(:render_window_close)
+            post :create, :file => { '1' => @file1, '2' => @file2 }
+          end
+        end
+        describe '保存に失敗する場合' do
+          before do
+            @share_file.should_receive(:save).twice.and_return(false)
+          end
+          it 'flashエラーメッセージが設定されること' do
+            post :create, :file => { '1' => @file1, '2' => @file2 }
+            flash[:warning].should == 'ファイルのアップロードに失敗しました。<br/>[成功:0 失敗:2]'
+          end
+          it 'ファイル毎のエラーメッセージが設定されること' do
+            post :create, :file => { '1' => @file1, '2' => @file2 }
+            assigns[:error_messages].size.should == 2
+          end
+          it '新規作成画面に遷移すること' do
+            post :create, :file => { '1' => @file1, '2' => @file2 }
+            response.should render_template('new')
+          end
+        end
+      end
+    end
+  end
+end
+
+describe ShareFileController, 'GET #edit' do
+  before do
+    @user = user_login
+    ShareFile.stub!(:get_tags_hash)
+  end
+
+  describe '対象の共有ファイルが見つかる場合' do
+    before do
+      @share_file = stub_model(ShareFile, :publication_type => 'public', :owner_symbol => 'uid:owner')
+      ShareFile.should_receive(:find).and_return(@share_file)
+    end
+    describe '更新権限がある場合' do
+      before do
+        @share_file.should_receive(:updatable?).with(@user).and_return(true)
+      end
+      it '編集画面に遷移すること' do
+        get :edit
+        response.should render_template('edit')
+      end
+    end
+    describe '更新権限がない場合' do
+      before do
+        @share_file.should_receive(:updatable?).with(@user).and_return(false)
+      end
+      it '編集画面が閉じられること' do
+        controller.should_receive(:render_window_close)
+        get :edit
+      end
+    end
+  end
+
+  describe '対象の共有ファイルが見つからない場合' do
+    before do
+      ShareFile.stub!(:find).and_raise(ActiveRecord::RecordNotFound)
+    end
+    it '編集画面が閉じられること' do
+      controller.should_receive(:render_window_close)
+      get :edit
+    end
+  end
+end
+
+describe ShareFileController, 'GET #update' do
+  before do
+    user_login
+  end
+  it 'GETアクセスできないこと(indexにリダイレクトされること)' do
+    get :update
+    response.should redirect_to(:action => :index)
+  end
+end
+
+describe ShareFileController, 'POST #update' do
+  before do
+    @current_user = user_login
+  end
+  describe '対象の共有ファイルが見つかる場合' do
+    before do
+      @share_file = stub_model(ShareFile, :publication_type => 'public', :owner_symbol => 'uid:owner')
+      @share_file_publications = [stub_model(ShareFilePublication)]
+      @share_file_publications.stub!(:create)
+      @share_file.stub!(:share_file_publications).and_return(@share_file_publications)
+      ShareFile.should_receive(:find).and_return(@share_file)
+      ShareFile.stub!(:get_tags_hash)
+    end
+    it '対象共有ファイルのaccessed_userにアクセスユーザが設定されること' do
+      @share_file.should_receive(:accessed_user=).with(@current_user)
+      post :update, :share_file => {}, :publication_type => 'public'
+    end
+    describe '保存に成功する場合' do
+      before do
+        @share_file.should_receive(:update_attributes).and_return(true)
+      end
+      it '権限テーブルの保存が行われること' do
+        @share_file_publications.should_receive(:create)
+        post :update, :share_file => {}, :publication_type => 'public'
+      end
+      it '編集画面が閉じられること' do
+        controller.should_receive(:render_window_close)
+        post :update, :share_file => {}, :publication_type => 'public'
+      end
+    end
+    describe '保存に失敗する場合' do
+      before do
+        @share_file.should_receive(:update_attributes).and_return(false)
+      end
+      it '編集画面に遷移すること' do
+        post :update, :share_file => {}
+        response.should render_template('edit')
+      end
+    end
+  end
+  describe '対象の共有ファイルが見つからない場合' do
+    #共通処理で404画面へ遷移する
+  end
+end
+
+describe ShareFileController, 'GET #destroy' do
+  before do
+    user_login
+  end
+  it 'GETアクセスできないこと(indexにリダイレクトされること)' do
+    get :destroy
+    response.should redirect_to(:action => :index)
+  end
+end
+
+describe ShareFileController, "POST #destroy" do
+  before do
+    @user = user_login
+  end
+  describe "ファイルが見つからなかったとき" do
+    before do
+      ShareFile.stub!(:find).with("1").and_raise(ActiveRecord::RecordNotFound)
+    end
+    it "ActiveRecord::RecordNotFoundが発生すること" do
+      lambda do
+        post :destroy, :id => 1
+      end.should raise_error(ActiveRecord::RecordNotFound)
+    end
+  end
+  describe "削除権限がなかった場合" do
+    before do
+      @share_file = stub_model(ShareFile)
+      ShareFile.stub!(:find).with("1").and_return(@share_file)
+      @share_file.should_receive(:updatable?).with(@user).and_return(false)
+    end
+    it '権限チェックエラーとなること' do
+      controller.should_receive(:redirect_to_with_deny_auth)
+      post :destroy, :id => 1
+    end
+  end
+  describe "削除に成功した場合" do
+    before do
+      @share_file = stub_model(ShareFile, :owner_symbol_type => "group", :owner_symbol_id => "hoge")
+      ShareFile.stub!(:find).with("1").and_return(@share_file)
+      @share_file.should_receive(:updatable?).with(@user).and_return(true)
+      @share_file.should_receive(:destroy).and_return(@share_file)
+      post :destroy, :id => 1
+    end
+    it { response.should redirect_to(:controller => "group", :action => "hoge", :id => "share_file") }
+    it { flash[:notice].should == "ファイルの削除に成功しました。" }
+  end
+end
+
+describe ShareFileController, "GET #download" do
+  before do
+    @user = user_login
   end
   describe '対象のShareFileが存在する場合' do
     before do
       @share_file = stub_model(ShareFile)
       @full_path = 'example.png'
       @share_file.stub!(:full_path).and_return(@full_path)
-      ShareFile.should_receive(:find).and_return(@share_file)
+      ShareFile.should_receive(:find_by_file_name_and_owner_symbol).and_return(@share_file)
     end
-    describe 'ダウンロードを許可するファイルの場合' do
+    describe '参照権限がある場合' do
       before do
-        controller.should_receive(:downloadable?).and_return(true)
+        @share_file.should_receive(:readable?).with(@user).and_return(true)
       end
-      describe '対象となる実体ファイルが存在する場合' do
+      describe 'ダウンロードを許可するファイルの場合' do
         before do
-          @share_file.stub!(:create_history)
-          @controller.stub!(:nkf_file_name)
-          @controller.stub!(:send_file)
-          File.should_receive(:exist?).with(@full_path).and_return(true)
+          controller.should_receive(:downloadable?).and_return(true)
         end
-        it '履歴が作成されること' do
-          @share_file.should_receive(:create_history).with(@user.id)
-          get :download
+        describe '対象となる実体ファイルが存在する場合' do
+          before do
+            @share_file.stub!(:create_history)
+            @controller.stub!(:nkf_file_name)
+            @controller.stub!(:send_file)
+            File.should_receive(:exist?).with(@full_path).and_return(true)
+          end
+          it '履歴が作成されること' do
+            @share_file.should_receive(:create_history).with(@user.id)
+            get :download
+          end
+          it 'ファイルがダウンロードされること' do
+            @controller.should_receive(:send_file).with(@share_file.full_path, anything())
+            get :download
+          end
         end
-        it 'ファイルがダウンロードされること' do
-          @controller.should_receive(:send_file).with(@share_file.full_path, anything())
-          get :download
+        describe '対象となる実体ファイルが存在しない場合' do
+          before do
+            File.should_receive(:exist?).with(@full_path).and_return(false)
+            get :download
+          end
+          it { flash[:warning].should_not be_nil }
+          it { response.should be_redirect }
         end
       end
-      describe '対象となる実体ファイルが存在しない場合' do
+      describe 'ダウンロードを許可しないファイルの場合' do
         before do
-          File.should_receive(:exist?).with(@full_path).and_return(false)
+          controller.should_receive(:downloadable?).and_return(false)
           get :download
         end
-        it { flash[:warning].should_not be_nil }
-        it { response.should be_redirect }
+        it { response.should render_template('confirm_download') }
       end
     end
-    describe 'ダウンロードを許可しないファイルの場合' do
+    describe '参照権限がない場合' do
       before do
-        controller.should_receive(:downloadable?).and_return(false)
+        @share_file.should_receive(:readable?).with(@user).and_return(false)
+      end
+      it '権限チェックエラーとなること' do
+        controller.should_receive(:redirect_to_with_deny_auth)
         get :download
       end
-      it { response.should render_template('confirm_download') }
     end
   end
   describe '対象のShareFileが存在しない場合' do
     before do
-      ShareFile.should_receive(:find).and_return(nil)
-      get :download
+      ShareFile.should_receive(:find_by_file_name_and_owner_symbol).and_return(nil)
     end
-    it { flash[:warning].should_not be_nil }
-    it { response.should be_redirect }
+    it 'RecordNotFoundがraiseされること' do
+      lambda do
+        get :download
+      end.should raise_error(ActiveRecord::RecordNotFound)
+    end
   end
 end
 
@@ -109,93 +457,19 @@ describe ShareFileController, '#downloadable?' do
   end
 end
 
-describe ShareFileController, "POST #create" do
+describe ShareFileController, 'GET #download_history_as_csv' do
   before do
     user_login
-    session[:user_id] = 1
-
-    controller.stub!(:login_user_symbols).and_return(["uid:hoge"])
-    controller.stub!(:valid_upload_files?).and_return(true)
-
-    ValidationsFile::FileSizeCounter.stub!(:per_system).and_return(10)
   end
-  describe "ファイルが一つの時" do
-    before do
-      @file1 = mock_uploaed_file({ :original_filename => "file1.png", :content_type => "image/png", :size => 1, :read => "" })
-      post :create, { :symbol => "", :publication_type => "public", :owner_name => 'ほげ ほげ',
-        :publication_symbols_value => "",
-        :share_file => { "date(1i)" => "2008", "date(2i)" => "9", "date(3i)" => "19",
-          "date(4i)" => "16", "date(5i)" => "07", :description => "description",
-          :category => "hoge,hoge", :owner_symbol => "uid:hoge"},
-        :file => { "1" => @file1 } }
-    end
-    it { response.body.should == "<script type='text/javascript'>window.opener.location.reload();window.close();</script>" }
-    it { assigns[:error_messages].should be_empty }
-  end
-  describe "複数ファイルが送信された場合" do
-    before do
-      @file1 = mock_uploaed_file({ :original_filename => "file1.png", :content_type => "image/png",
-                      :size => 1000, :read => "" })
-      @file2 = mock_uploaed_file({ :original_filename => "file2.png", :content_type => "image/png",
-                      :size => 1000, :read => "" })
-
-      post :create, { :symbol => "", :publication_type => "public", :owner_name => 'ほげ ほげ', :publication_symbols_value => "",
-        :share_file => { "date(1i)" => "2008", "date(2i)" => "9", "date(3i)" => "19",
-          "date(4i)" => "16", "date(5i)" => "07", :description => "description",
-          :category => "hoge,hoge", :owner_symbol => "uid:hoge"},
-        :file => { "1" => @file1, "2" => @file2 } }
-    end
-    it { response.body.should == "<script type='text/javascript'>window.opener.location.reload();window.close();</script>" }
-    it { assigns[:error_messages].should be_empty }
+  it 'GETアクセスできないこと(indexにリダイレクトされること)' do
+    get :download_history_as_csv
+    response.should redirect_to(:action => :index)
   end
 end
 
-describe ShareFileController, "POST #destroy" do
+describe ShareFileController, 'POST #download_history_as_csv' do
   before do
-    user_login
-  end
-  describe "ファイルが見つからなかったとき" do
-    before do
-      ShareFile.stub!(:find).with("1").and_raise(ActiveRecord::RecordNotFound)
-    end
-    it "ActiveRecord::RecordNotFoundが発生するとこ" do
-      lambda do
-        post :destroy, :id => 1
-      end.should raise_error(ActiveRecord::RecordNotFound)
-    end
-  end
-  describe "削除権限がなかった場合" do
-    before do
-      @share_file = stub_model(ShareFile)
-      ShareFile.stub!(:find).with("1").and_return(@share_file)
-
-      controller.should_receive(:authorize_to_save_share_file?).and_return(false)
-
-      post :destroy, :id => 1
-    end
-    it { response.should redirect_to(:controller => :mypage)}
-  end
-  describe "削除に成功した場合" do
-    before do
-      @share_file = stub_model(ShareFile, :owner_symbol_type => "group", :owner_symbol_id => "hoge")
-      ShareFile.stub!(:find).with("1").and_return(@share_file)
-
-      controller.should_receive(:authorize_to_save_share_file?).and_return(true)
-
-      @share_file.should_receive(:destroy).and_return(@share_file)
-
-      post :destroy, :id => 1
-    end
-    it { response.should redirect_to(:controller => "group", :action => "hoge", :id => "share_file") }
-    it { flash[:notice].should == "ファイルの削除に成功しました。" }
-  end
-end
-
-describe ShareFileController, 'POST /download_history_as_csv' do
-  before do
-    user_login
-    ShareFile.stub!(:find)
-    controller.stub!(:authorize_to_save_share_file?)
+    @user = user_login
   end
   describe '対象のShareFileが存在する場合' do
     before do
@@ -206,7 +480,7 @@ describe ShareFileController, 'POST /download_history_as_csv' do
     end
     describe '権限のあるファイルの場合' do
       before do
-        controller.should_receive(:authorize_to_save_share_file?).and_return(true)
+        @share_file.should_receive(:readable?).with(@user).and_return(true)
       end
       it 'csvファイルがdownloadされること' do
         controller.stub!(:nkf_file_name)
@@ -216,7 +490,7 @@ describe ShareFileController, 'POST /download_history_as_csv' do
     end
     describe '権限のないファイルの場合' do
       before do
-        controller.should_receive(:authorize_to_save_share_file?).and_return(false)
+        @share_file.should_receive(:readable?).with(@user).and_return(false)
       end
       it '権限チェックエラーとなること' do
         controller.should_not_receive(:send_data)
@@ -224,5 +498,67 @@ describe ShareFileController, 'POST /download_history_as_csv' do
         post :download_history_as_csv
       end
     end
+  end
+end
+
+describe ShareFileController, 'GET #clear_download_history' do
+  before do
+    user_login
+  end
+  it 'GETアクセスできないこと(indexにリダイレクトされること)' do
+    get :clear_download_history
+    response.should redirect_to(:action => :index)
+  end
+end
+
+describe ShareFileController, 'POST #clear_download_history' do
+  before do
+    @user = user_login
+  end
+  describe '対象の共有ファイルが見つかる場合' do
+    before do
+      @share_file = stub_model(ShareFile)
+      @share_file_accesses = [stub_model(ShareFileAccess)]
+      @share_file_accesses.stub!(:clear)
+      @share_file.stub!(:share_file_accesses).and_return(@share_file_accesses)
+      ShareFile.should_receive(:find).and_return(@share_file)
+    end
+    describe '更新権限がある場合' do
+      before do
+        @share_file.should_receive(:updatable?).with(@user).and_return(true)
+      end
+      it 'ダウンロード履歴がクリアされること' do
+        @share_file_accesses.should_receive(:clear)
+        post :clear_download_history
+      end
+      it '処理に成功すること' do
+        post :clear_download_history
+        response.should be_success
+      end
+      it '処理に成功した旨のメッセージが返却されること' do
+        post :clear_download_history
+        response.body.should == 'ダウンロード履歴の削除に成功しました。'
+      end
+    end
+    describe '更新権限がない場合' do
+      before do
+        @share_file.should_receive(:updatable?).with(@user).and_return(false)
+      end
+      it 'ダウンロード履歴がクリアされないこと' do
+        @share_file_accesses.should_not_receive(:clear)
+        post :clear_download_history
+      end
+      it '403が返却されること' do
+        post :clear_download_history
+        response.code.should == '403'
+      end
+      it '権限がない旨のメッセージが返却されること' do
+        post :clear_download_history
+        response.body.should == 'この操作は、許可されていません。'
+      end
+    end
+  end
+  describe '対象の共有ファイルが見つからない場合' do
+    #共通処理で404画面へ遷移する
   end
 end
