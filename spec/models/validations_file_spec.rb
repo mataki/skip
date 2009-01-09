@@ -189,6 +189,65 @@ describe ValidationsFile do
     end
   end
 
+  describe '#verify_extension?' do
+    before do
+      @disallow_extension = 'disallow_extension'
+      @vf.should_receive(:disallow_extensions).and_return([@disallow_extension])
+    end
+    describe '許可されない拡張子の場合' do
+      it 'falseが返ること' do
+        @vf.send(:verify_extension?, "file.#{@disallow_extension}", 'content_type').should be_false
+      end
+    end
+    describe '許可される拡張子の場合' do
+      before do
+        @allow_extension = 'allow_extension'
+        @disallow_content_type = 'disallow_content_type'
+        @vf.should_receive(:disallow_content_types).and_return([@disallow_content_type])
+      end
+      describe '許可されるcontent_typeの場合' do
+        before do
+          @allow_content_type = 'allow_content_type'
+        end
+        it 'trueが返ること' do
+          @vf.send(:verify_extension?, "file.#{@allow_extension}", @allow_content_type).should be_true
+        end
+      end
+      describe '許可されないcontent_typeの場合' do
+        it 'falseが返ること' do
+          @vf.send(:verify_extension?, "file.#{@allow_extension}", @disallow_content_type).should be_false
+        end
+      end
+    end
+  end
+
+  describe '#disallow_content_types' do
+    it 'text/htmlが含まれること' do
+      @vf.send!(:disallow_content_types).include?('text/html').should be_true
+    end
+    it 'application/x-javascriptが含まれること' do
+      @vf.send!(:disallow_content_types).include?('application/x-javascript').should be_true
+    end
+    it 'image/bmpが含まれること' do
+      @vf.send!(:disallow_content_types).include?('image/bmp').should be_true
+    end
+  end
+
+  describe '#disallow_extensions' do
+    it 'htmlが含まれること' do
+      @vf.send!(:disallow_extensions).include?('html').should be_true
+    end
+    it 'htmが含まれること' do
+      @vf.send!(:disallow_extensions).include?('htm').should be_true
+    end
+    it 'jsが含まれること' do
+      @vf.send!(:disallow_extensions).include?('js').should be_true
+    end
+    it 'bmpが含まれること' do
+      @vf.send!(:disallow_extensions).include?('bmp').should be_true
+    end
+  end
+
   def mock_model_class
     errors = mock('errors')
     errors.stub!(:add_to_base)

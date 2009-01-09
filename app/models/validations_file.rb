@@ -29,11 +29,6 @@ module ValidationsFile
     end
   end
 
-  def verify_extension? file_name, content_type
-    !['html','htm','js'].any?{|extension| extension == file_name.split('.').last } &&
-      !['text/html','application/x-javascript'].any?{|content| content == content_type }
-  end
-
   def valid_content_type_of_file(file)
     extension = file.original_filename.split('.').last
     if(content_types = CONTENT_TYPE_IMAGES[extension.to_sym])
@@ -79,5 +74,19 @@ module ValidationsFile
       end
       sum
     end
+  end
+
+  private
+  def verify_extension? file_name, content_type
+    !disallow_extensions.any?{|extension| extension == file_name.split('.').last } &&
+      !disallow_content_types.any?{|content| content == content_type }
+  end
+
+  def disallow_content_types
+    ['text/html', 'application/x-javascript', 'image/bmp']
+  end
+
+  def disallow_extensions
+    ['html', 'htm', 'js', 'bmp']
   end
 end
