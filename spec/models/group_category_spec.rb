@@ -28,6 +28,9 @@ describe GroupCategory do
       create_group_category(:code => 'SPORTS')
       @group_category.code = 'SPORTS'
       @group_category.valid?.should be_false
+      # 大文字小文字が異なる場合もNG
+      @group_category.code = 'Sports'
+      @group_category.valid?.should be_false
     end
     it 'codeが20文字以下であること' do
       @group_category.code = SkipFaker.rand_alpha(21)

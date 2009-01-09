@@ -22,7 +22,7 @@ class GroupCategory < ActiveRecord::Base
   ICONS = ['group_gear', 'ipod', 'joystick', 'money', 'music', 'page_excel', 'page_word', 'phone', 'ruby', 'tux']
 
   validates_presence_of :code
-  validates_uniqueness_of :code
+  validates_uniqueness_of :code, :case_sensitive => false
   validates_length_of :code, :maximum => 20
   validates_format_of :code, :message => _('はアルファベットで入力して下さい。'), :with => /^[a-zA-Z]*$/
 

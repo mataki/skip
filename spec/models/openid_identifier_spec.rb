@@ -25,6 +25,20 @@ describe OpenidIdentifier do
   end
 end
 
+describe OpenidIdentifier, 'validation' do
+  before do
+    @openid_identifier = OpenidIdentifier.new
+  end
+  it 'urlがユニークであること' do
+    create_openid_identifier(:url => 'http://skip.openid.com/')
+    @openid_identifier.url = 'http://skip.openid.com/'
+    @openid_identifier.valid?.should be_false
+    # 大文字小文字が異なる場合もNG
+    @openid_identifier.url = 'http://Skip.openid.com/'
+    @openid_identifier.valid?.should be_false
+  end
+end
+
 describe OpenidIdentifier, '#url' do
   before do
     @openid_identifier = OpenidIdentifier.new({ :url => "http://hoge.example.com/", :user_id => 1})
@@ -58,4 +72,10 @@ describe OpenidIdentifier, '#url' do
       }.should change(@openid_identifier, :url).from(nil).to('http://example.com/')
     end
   end
+end
+
+def create_openid_identifier(options = {})
+  openid_identifier = OpenidIdentifier.new({:url => 'http://skip.example.com/', :user_id => 1}.merge(options))
+  openid_identifier.save!
+  openid_identifier
 end

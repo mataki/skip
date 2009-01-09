@@ -18,7 +18,7 @@ class Group < ActiveRecord::Base
   belongs_to :group_category
 
   validates_presence_of :name, :description, :gid, :message =>'は必須です'
-  validates_uniqueness_of :gid, :message =>'は既に登録されています'
+  validates_uniqueness_of :gid, :case_sensitive => false, :message =>'は既に登録されています'
   validates_length_of :gid, :minimum=>4, :message =>'は4文字以上で入力してください'
   validates_length_of :gid, :maximum=>50, :message =>'は50文字以内で入力してください'
   validates_format_of :gid, :message =>'は数字orアルファベットor記号(ハイフン「-」 アンダーバー「_」)で入力してください', :with => /^[a-zA-Z0-9\-_]*$/
