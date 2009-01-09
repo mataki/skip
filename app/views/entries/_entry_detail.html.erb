@@ -524,10 +524,12 @@ $j(function(){
                 type: 'POST',
                 url: entry_point_url,
                 data: {id: '<%= entry.id %>', authenticity_token: $j('#authenticity_token').val() },
-                success: function(request){
-                    $j('#board_entry_point').html(request);
+                success: function(text){
+                    $j('#entry_point_button').val(text);
                     entry_point = ++entry_point;
-                    appendEntryPointClick();
+                },
+                error: function(request){
+                    alert(request.responseText);
                 }
             });
         });

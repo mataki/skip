@@ -88,18 +88,14 @@ class BoardEntriesController < ApplicationController
     begin
       board_entry = BoardEntry.find(params[:id])
     rescue ActiveRecord::RecordNotFound => ex
-      render :nothing => true
-      return false
+      render :text => _('対象の記事が存在しません。'), :status => :not_found and return
     end
-    unless !(session[:user_symbol] == board_entry.symbol || login_user_groups.include?(board_entry.symbol)) &&
-        board_entry.publicate?(login_user_symbols)
-      render :nothing => true
-      return false
+    if readable?(board_entry) && !board_entry.writer?(current_user.id)
+        board_entry.state.increment!(:point)
+    else
+      render :text => _('この操作は、許可されていません。'), :status => :forbidden and return
     end
-    unless board_entry.writer?(session[:user_id])
-      board_entry.state.increment!(:point)
-    end
-    render :partial => "board_entry_point", :locals => { :entry => board_entry, :editable => false }
+    render :text => "#{board_entry.point} #{Admin::Setting.point_button}"
   end
 
   def destroy_comment
@@ -195,4 +191,7 @@ private
     end
   end
 
+  def readable?(board_entry)
+    current_user.symbol == board_entry.symbol || (login_user_groups.include?(board_entry.symbol) || board_entry.publicate?(login_user_symbols))
+  end
 end
