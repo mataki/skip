@@ -95,7 +95,7 @@ class BoardEntriesController < ApplicationController
     else
       render :text => _('この操作は、許可されていません。'), :status => :forbidden and return
     end
-    render :text => "#{board_entry.point} #{Admin::Setting.point_button}"
+    render :text => "#{board_entry.point} #{ERB::Util.html_escape(Admin::Setting.point_button)}"
   end
 
   def destroy_comment
