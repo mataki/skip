@@ -101,7 +101,7 @@ function open_site() { sub_window_open('#{root_url}custom/about_this_site.html',
 </script>
 <div id="footer">
   <div class="info"><div class="first">#{Admin::Setting.footer_first}</div><div class="second">#{Admin::Setting.footer_second}</div></div>
-  <div class="powered_by">powered by#{link_to image_tag(root_url + "/custom/images/footer_logo.png"), h(Admin::Setting.footer_image_link_url)}</div>
+  <div class="powered_by">powered by#{link_to image_tag(root_url + "custom/images/footer_logo.png"), h(Admin::Setting.footer_image_link_url)}</div>
 </div>
     EOS
   end
