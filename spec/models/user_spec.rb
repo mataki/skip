@@ -44,6 +44,20 @@ describe User," is a_user" do
   end
 end
 
+describe User, 'validation' do
+  describe 'email' do
+    before do
+      @user = new_user(:email => 'skip@example.org')
+      @user.save!
+    end
+    it 'ユニークであること' do
+      new_user(:email => 'skip@example.org').valid?.should be_false
+      # 大文字小文字が異なる場合もNG
+      new_user(:email => 'Skip@example.org').valid?.should be_false
+    end
+  end
+end
+
 describe User, "#before_save" do
   before do
     @user = new_user
