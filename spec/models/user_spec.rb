@@ -427,6 +427,17 @@ describe User, "#find_or_initialize_profiles" do
   end
 end
 
+describe User, '#group_symbols' do
+  before do
+    @user = stub_model(User)
+    @group_symbols = ['gid:skip_dev']
+  end
+  it 'ユーザの所属するグループのシンボル配列を返すこと' do
+    GroupParticipation.should_receive(:get_gid_array_by_user_id).with(@user.id).and_return(@group_symbols)
+    @user.group_symbols.should == @group_symbols
+  end
+end
+
 describe User, '.find_by_code_or_email' do
   describe 'ログインIDに一致するユーザが見つかる場合' do
     before do

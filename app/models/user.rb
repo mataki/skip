@@ -322,6 +322,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def group_symbols
+    GroupParticipation.get_gid_array_by_user_id(self.id)
+  end
+
 protected
   # TODO: self.make_conditionsメソッドは使ってなさそう確認して消す
   @@search_cond_keys = [:name, :section, :email]

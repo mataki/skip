@@ -415,11 +415,23 @@ describe ShareFile::UserOwner do
         end
       end
       describe '対象ユーザが直接指定されていない場合' do
-        before do
-          @share_file.stub!(:publication_symbols_value).and_return('uid:hoge,gid:fuga')
+        describe '対象ユーザ所属グループが直接指定されている場合' do
+          before do
+            @share_file.stub!(:publication_symbols_value).and_return('uid:hoge,gid:skip_dev')
+            @user.should_receive(:group_symbols).and_return(['gid:skip_dev'])
+          end
+          it '公開である(trueを返す)こと' do
+            @owner.send!(:publication_range?).should be_true
+          end
         end
-        it '非公開である(falseを返す)こと' do
-          @owner.send!(:publication_range?).should be_false
+        describe '対象ユーザ所属グループが直接指定されていない場合' do
+          before do
+            @share_file.stub!(:publication_symbols_value).and_return('uid:hoge,gid:fuga')
+            @user.should_receive(:group_symbols).and_return(['gid:skip_dev'])
+          end
+          it '非公開である(falseを返す)こと' do
+            @owner.send!(:publication_range?).should be_false
+          end
         end
       end
     end
@@ -584,11 +596,23 @@ describe ShareFile::GroupOwner do
         end
       end
       describe '対象ユーザが直接指定されていない場合' do
-        before do
-          @share_file.stub!(:publication_symbols_value).and_return('uid:hoge,gid:fuga')
+        describe '対象ユーザ所属グループが直接指定されている場合' do
+          before do
+            @share_file.stub!(:publication_symbols_value).and_return('uid:hoge,gid:skip_dev')
+            @user.should_receive(:group_symbols).and_return(['gid:skip_dev'])
+          end
+          it '公開である(trueを返す)こと' do
+            @owner.send!(:publication_range?).should be_true
+          end
         end
-        it '非公開である(falseを返す)こと' do
-          @owner.send!(:publication_range?).should be_false
+        describe '対象ユーザ所属グループが直接指定されていない場合' do
+          before do
+            @share_file.stub!(:publication_symbols_value).and_return('uid:hoge,gid:fuga')
+            @user.should_receive(:group_symbols).and_return(['gid:skip_dev'])
+          end
+          it '非公開である(falseを返す)こと' do
+            @owner.send!(:publication_range?).should be_false
+          end
         end
       end
     end

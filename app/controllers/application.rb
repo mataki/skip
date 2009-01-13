@@ -105,7 +105,7 @@ protected
 
   # ログイン中のユーザの所属するグループのSymbolの配列
   def login_user_groups
-    @login_user_groups ||= GroupParticipation.get_gid_array_by_user_id(session[:user_id])
+    @login_user_groups ||= current_user.group_symbols
   end
 
   def logged_in?

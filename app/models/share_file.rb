@@ -348,13 +348,11 @@ class ShareFile < ActiveRecord::Base
     end
 
     def publication_range?
-      if @share_file.public?
-        true
-      elsif @share_file.protected?
-        @share_file.publication_symbols_value.split(',').any?{|symbol| @user.symbol == symbol }
-      else
-        false
+      if @share_file.protected?
+        group_symbols = @user.group_symbols
+        return @share_file.publication_symbols_value.split(',').any?{|symbol| @user.symbol == symbol || group_symbols.include?(symbol) }
       end
+      @share_file.public?
     end
 
     def updatable?
@@ -377,13 +375,11 @@ class ShareFile < ActiveRecord::Base
     end
 
     def publication_range?(participating = true)
-      if @share_file.public?
-        true
-      elsif @share_file.protected?
-        @share_file.publication_symbols_value.split(',').any?{|symbol| @user.symbol == symbol }
-      else
-        participating
+      if @share_file.protected?
+        group_symbols = @user.group_symbols
+        return @share_file.publication_symbols_value.split(',').any?{|symbol| @user.symbol == symbol || group_symbols.include?(symbol) }
       end
+      @share_file.public? || participating
     end
 
     def updatable?

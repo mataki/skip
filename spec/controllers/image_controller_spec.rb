@@ -43,11 +43,14 @@ describe ImageController, '#valid_params_and_authorize?' do
     before do
       @content, @user_id, @file_path = ['board_entries', '1', 'skip.png']
       @board_entry = stub_model(BoardEntry)
-      BoardEntry.stub!(:find).and_return(@board_entry)
+      @board_entry.stub!(:publicate?).with(@login_user_symbols)
+      BoardEntry.should_receive(:find).and_return(@board_entry)
+      @login_user_symbols = ['uid:onwer']
+      controller.stub!(:login_user_symbols).and_return(@login_user_symbols)
     end
     describe '対象エントリに対する閲覧権限がある場合' do
       before do
-        @board_entry.should_receive(:publicate?).and_return(true)
+        @board_entry.should_receive(:publicate?).with(@login_user_symbols).and_return(true)
       end
       it 'trueが返却されること' do
         controller.send!(:valid_params_and_authorize?, @content, @user_id, @file_path).should be_true
@@ -55,7 +58,7 @@ describe ImageController, '#valid_params_and_authorize?' do
     end
     describe '対象エントリに対する閲覧権限がない場合' do
       before do
-        @board_entry.should_receive(:publicate?).and_return(false)
+        @board_entry.should_receive(:publicate?).with(@login_user_symbols).and_return(false)
       end
       it 'falseが返却されること' do
         controller.send!(:valid_params_and_authorize?, @content, @user_id, @file_path).should be_false
