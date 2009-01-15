@@ -74,6 +74,7 @@ class ShareFileController < ApplicationController
     end
 
     if @error_messages.size == 0
+      flash[:notice] = _('ファイルのアップロードに成功しました。')
       render_window_close
     else
       flash.now[:warning] = "ファイルのアップロードに失敗しました。<br/>"
@@ -130,6 +131,7 @@ class ShareFileController < ApplicationController
         @share_file.share_file_publications.create(:symbol => target_symbol)
       end
 
+      flash[:notice] = _('更新しました。')
       render_window_close
     else
       @owner_name = params[:owner_name]

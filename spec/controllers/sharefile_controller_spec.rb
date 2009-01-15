@@ -121,6 +121,10 @@ describe ShareFileController, "POST #create" do
             @share_file.should_receive(:upload_file)
             post :create, :file => { '1' => @file1 }
           end
+          it 'ファイルの作成に成功した旨のメッセージが設定されること' do
+            post :create, :file => { '1' => @file1 }
+            flash[:notice].should == 'ファイルのアップロードに成功しました。'
+          end
           it '作成画面が閉じられること' do
             controller.should_receive(:render_window_close)
             post :create, :file => { '1' => @file1 }
@@ -177,6 +181,10 @@ describe ShareFileController, "POST #create" do
           it '実体ファイルがアップロードされること' do
             @share_file.should_receive(:upload_file).twice
             post :create, :file => { '1' => @file1, '2' => @file2 }
+          end
+          it 'ファイルの作成に成功した旨のメッセージが設定されること' do
+            post :create, :file => { '1' => @file1, '2' => @file2 }
+            flash[:notice].should == 'ファイルのアップロードに成功しました。'
           end
           it '作成画面が閉じられること' do
             controller.should_receive(:render_window_close)
@@ -281,6 +289,10 @@ describe ShareFileController, 'POST #update' do
       it '権限テーブルの保存が行われること' do
         @share_file_publications.should_receive(:create)
         post :update, :share_file => {}, :publication_type => 'public'
+      end
+      it '更新に成功した旨のメッセージが設定されること' do
+        post :update, :share_file => {}, :publication_type => 'public'
+        flash[:notice].should == '更新しました。'
       end
       it '編集画面が閉じられること' do
         controller.should_receive(:render_window_close)
