@@ -689,6 +689,14 @@ class BoardEntry < ActiveRecord::Base
   def all_images
     Dir.glob(File.join(image_owner_path, id.to_s + "_*"))
   end
+
+  def readable?(user)
+    user.symbol == self.symbol || (user.group_symbols.include?(self.symbol) || self.publicate?(user.belong_symbols))
+  end
+
+  def point_incrementable?(user)
+    self.readable?(user) && !self.writer?(user.id)
+  end
 private
   def generate_next_user_entry_no
     entry = BoardEntry.find(:first,

@@ -100,7 +100,7 @@ protected
   # ログイン中のユーザのシンボル＋そのユーザの所属するグループのSymbolの配列を返す
   # sid:all_userは含めていない
   def login_user_symbols
-    @login_user_symbols ||= [session[:user_symbol]] + login_user_groups
+    @login_user_symbols ||= current_user.belong_symbols
   end
 
   # ログイン中のユーザの所属するグループのSymbolの配列

@@ -296,7 +296,7 @@ form.comment_input_form textarea{
       <%= link_to("[被ブクマ:#{bookmark_comments_count}人]",{:controller =>'bookmark', :action=>'show', :uri => "/page/" + entry.id.to_s}) %>
     <% end -%>
     <span id="board_entry_point">
-    <%= render(:partial => 'board_entries/board_entry_point', :locals => { :entry => entry, :editable => editable }) %>
+    <%= render(:partial => 'board_entries/board_entry_point', :locals => { :entry => entry }) %>
     </span>
   </span>
 </div>

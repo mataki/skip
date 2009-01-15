@@ -1,10 +1,10 @@
 <%
  # ポイントボタンのパーツ
- # :locals => { :entry, :editable }
+ # :locals => { :entry }
 -%>
 
-<% if editable %>
+<% if entry.point_incrementable?(@current_user) -%>
+  <input type="button" id="entry_point_button" value="<%= "#{entry.point} #{h Admin::Setting.point_button}" %>" />
+<% else -%>
   （<%= "#{entry.point} #{h Admin::Setting.point_button}" %> 頂きました）
-<% else %>
-  <input type="button" id="entry_point_button" value="<%= "#{entry.point} #{h Admin::Setting.point_button}" -%>" />
-<% end %>
+<% end -%>

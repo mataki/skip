@@ -58,8 +58,7 @@ end
 def admin_login
   session[:user_code] = '111111'
   session[:prepared] = true
-  u = stub_model(User)
-  u.stub!(:admin).and_return(true)
+  u = stub_model(User, :symbol => 'uid:admin', :admin => true, :name => '管理者', :crypted_password => '123456789')
   u.stub!(:active?).and_return(true)
   if defined? controller
     controller.stub!(:current_user).and_return(u)
@@ -73,11 +72,8 @@ end
 def user_login
   session[:user_code] = '111111'
   session[:prepared] = true
-  u = stub_model(User)
-  u.stub!(:admin).and_return(false)
+  u = stub_model(User, :symbol => 'uid:user', :admin => false, :name => '一般ユーザ', :crypted_password => '123456789')
   u.stub!(:active?).and_return(true)
-  u.stub!(:name).and_return('ユーザ')
-  u.stub!(:crypted_password).and_return('123456789')
   if defined? controller
     controller.stub!(:current_user).and_return(u)
   else

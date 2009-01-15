@@ -438,3 +438,88 @@ describe BoardEntry, "#validate" do
     @entry.validate
   end
 end
+
+describe BoardEntry, '#readable?' do
+  before do
+    @user = stub_model(User, :symbol => 'uid:notowner')
+    @board_entry = stub_model(BoardEntry)
+  end
+  describe 'ログインユーザの記事の場合' do
+    before do
+      @user.should_receive(:symbol).and_return('uid:owner')
+      @board_entry.should_receive(:symbol).and_return('uid:owner')
+    end
+    it 'trueが返ること' do
+      @board_entry.readable?(@user).should be_true
+    end
+  end
+  describe 'ログインユーザの記事ではない場合' do
+    describe 'ログインユーザ所属グループの記事の場合' do
+      before do
+        @user.should_receive(:group_symbols).and_return(['gid:skip_dev'])
+        @board_entry.should_receive(:symbol).at_least(:once).and_return('gid:skip_dev')
+      end
+      it 'trueが返ること' do
+        @board_entry.readable?(@user).should be_true
+      end
+    end
+    describe 'ログインユーザ所属グループの記事ではない場合' do
+      before do
+        @user.should_receive(:group_symbols).at_least(:once).and_return(['gid:skip_dev'])
+        @board_entry.should_receive(:symbol).at_least(:once).and_return('uid:owner')
+      end
+      describe 'ログインユーザに公開されている記事の場合' do
+        before do
+          @board_entry.should_receive(:publicate?).and_return(true)
+        end
+        it 'trueが返ること' do
+          @board_entry.readable?(@user).should be_true
+        end
+      end
+      describe 'ログインユーザに公開されていない記事の場合' do
+        before do
+          @board_entry.should_receive(:publicate?).and_return(false)
+        end
+        it 'falseが返ること' do
+          @board_entry.readable?(@user).should be_false
+        end
+      end
+    end
+  end
+end
+
+describe BoardEntry, '#point_incrementable?' do
+  before do
+    @board_entry = stub_model(BoardEntry)
+    @user = stub_model(User)
+  end
+  describe '指定されたユーザに記事の閲覧権限がある場合' do
+    before do
+      @board_entry.should_receive(:readable?).with(@user).and_return(true)
+    end
+    describe '指定されたユーザが記事の作者ではない場合' do
+      before do
+        @board_entry.should_receive(:writer?).with(@user.id).and_return(false)
+      end
+      it 'trueが返却されること' do
+        @board_entry.point_incrementable?(@user).should be_true
+      end
+    end
+    describe '指定されたユーザが記事の作者の場合' do
+      before do
+        @board_entry.should_receive(:writer?).with(@user.id).and_return(true)
+      end
+      it 'falseが返却されること' do
+        @board_entry.point_incrementable?(@user).should be_false
+      end
+    end
+  end
+  describe '指定されたユーザに記事の閲覧権限がない場合' do
+    before do
+      @board_entry.should_receive(:readable?).with(@user).and_return(false)
+    end
+    it 'falseが返却されること' do
+      @board_entry.point_incrementable?(@user).should be_false
+    end
+  end
+end

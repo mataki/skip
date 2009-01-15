@@ -85,17 +85,14 @@ class BoardEntriesController < ApplicationController
   end
 
   def ado_pointup
-    begin
-      board_entry = BoardEntry.find(params[:id])
-    rescue ActiveRecord::RecordNotFound => ex
-      render :text => _('対象の記事が存在しません。'), :status => :not_found and return
-    end
-    if readable?(board_entry) && !board_entry.writer?(current_user.id)
-        board_entry.state.increment!(:point)
-    else
+    board_entry = BoardEntry.find(params[:id])
+    unless board_entry.point_incrementable?(current_user)
       render :text => _('この操作は、許可されていません。'), :status => :forbidden and return
     end
+    board_entry.state.increment!(:point)
     render :text => "#{board_entry.point} #{ERB::Util.html_escape(Admin::Setting.point_button)}"
+  rescue ActiveRecord::RecordNotFound => ex
+    render :text => _('対象の記事が存在しません。'), :status => :not_found and return
   end
 
   def destroy_comment
@@ -191,7 +188,4 @@ private
     end
   end
 
-  def readable?(board_entry)
-    current_user.symbol == board_entry.symbol || (login_user_groups.include?(board_entry.symbol) || board_entry.publicate?(login_user_symbols))
-  end
 end
