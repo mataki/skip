@@ -21,7 +21,7 @@ class BatchMakeCache < BatchBase
 
   # make_cachesから始まる名前のメソッドを次々と実行
   def self.execute options
-    cache_path = options[:path]
+    cache_path = INITIAL_SETTINGS['cache_path']
 
     maker = self.new()
     maker.public_methods.each do |method|
@@ -35,36 +35,12 @@ class BatchMakeCache < BatchBase
 
   # entry用
   def make_caches_entry(contents_type, cache_path, border_time)
-    # 全部includeした状態でwhere句をつけると、コメントが複数ついていてひとつだけ15分前の場合、
-    # その最新のコメントだけがincludeされた状態のentryオブジェクトになるので、ここではentry_idだけ取り出してwhere条件にする方法にした
-    conditions = ["updated_on > ?", border_time]
-    new_ids = BoardEntry.find(:all, :select => "id", :conditions => conditions).map{|entry| entry.id}
-    new_ids += BoardEntryComment.find(:all, :select => "board_entry_id", :conditions => conditions).map{|comment| comment.board_entry_id}
-    new_ids += EntryTrackback.find(:all, :select => "board_entry_id", :conditions => conditions).map{|trackback| trackback.board_entry_id}
-    return if new_ids.size < 1
-    entries = BoardEntry.find(:all,
-                              :include => [:user, {:board_entry_comments => :user}, {:entry_trackbacks => {:tb_entry => :user}}],
-                              :conditions =>["board_entries.id in (?)", new_ids.uniq])
+    entries = load_not_cached_entries(border_time)
     entries.each do |entry|
-      publication_symbols = entry.entry_publications.map{|publication| publication.symbol}.join(',')
-      body_lines = []
-      body_lines << h(entry.title)
-      body_lines << h(entry.category)
-      body_lines << h(entry.user.name)
-      body_lines << entry.contents
-
-      entry.board_entry_comments.each do|comment|
-        body_lines << h(comment.user.name)
-        body_lines << comment.contents
-      end
-      entry.entry_trackbacks.each do |trackback|
-        body_lines << h(trackback.tb_entry.user.name)
-        body_lines << trackback.tb_entry.title
-      end
-
       contents = create_contents(:title => entry.title,
-                                 :body_lines => body_lines )
+                                 :body_lines => entry_body_lines(entry) )
 
+      publication_symbols = entry.entry_publications.map{|publication| publication.symbol}.join(',')
       meta = create_meta(:contents_type => contents_type,
                          :title => entry.title,
                          :publication_symbols => publication_symbols,
@@ -77,30 +53,13 @@ class BatchMakeCache < BatchBase
 
   # ブックマーク用
   def make_caches_bookmark(contents_type, cache_path, border_time)
-    new_ids = BookmarkComment.find(:all, :select => "bookmark_id",
-                                   :conditions => ["updated_on > ?", border_time]).map{|comment| comment.bookmark_id}
-    return if new_ids.size < 1
-    bookmarks = Bookmark.find(:all, :include => [{:bookmark_comments => :user}], :conditions =>["bookmarks.id in (?)", new_ids.uniq])
+    bookmarks = load_not_cached_bookmarks(border_time)
     bookmarks.each do |bookmark|
-      body_lines = []
-      publication_symbols = bookmark.bookmark_comments.all?{|comment| !comment.public} ? [] : ["sid:allusers"]
-      body_lines << h(bookmark.title)
-
-      body_lines << bookmark.url
-      bookmark.bookmark_comments.each do|comment|
-        publication_symbols << "uid:#{h(comment.user.uid)}"
-        next unless comment.public
-        body_lines << h(comment.updated_on.strftime("%Y年%m月%d日"))
-        body_lines << h(comment.user.name)
-        body_lines << h(comment.tags)
-        body_lines << h(comment.comment)
-      end
-
       contents = create_contents(:title => bookmark.title,
-                                 :body_lines => body_lines)
+                                 :body_lines => bookmark_body_lines(bookmark))
 
       meta = create_meta(:contents_type => contents_type,
-                         :publication_symbols => publication_symbols.join(','),
+                         :publication_symbols => bookmark_publication_symbols(bookmark).join(','),
                          :link_url => "/bookmark/show/#{bookmark.url}",
                          :title => bookmark.title,
                          :icon_type => 'tag_blue')
@@ -113,11 +72,8 @@ class BatchMakeCache < BatchBase
   def make_caches_group(contents_type, cache_path, border_time)
     groups = Group.find(:all, :conditions => ["updated_on > ?", border_time])
     groups.each do |group|
-      body_lines = []
-      body_lines << group.description
-
       contents = create_contents(:title => group.name,
-                                 :body_lines => body_lines)
+                                 :body_lines => [group.description])
 
       meta = create_meta(:contents_type => contents_type,
                              :publication_symbols => "sid:allusers",
@@ -207,6 +163,66 @@ icon_type: #{params[:icon_type]}
   end
 
   private
+  def load_not_cached_entries(border_time)
+    # 全部includeした状態でwhere句をつけると、コメントが複数ついていてひとつだけ15分前の場合、
+    # その最新のコメントだけがincludeされた状態のentryオブジェクトになるので、ここではentry_idだけ取り出してwhere条件にする方法にした
+    conditions = ["updated_on > ?", border_time]
+    new_ids = BoardEntry.find(:all, :select => "id", :conditions => conditions).map{|entry| entry.id}
+    new_ids += BoardEntryComment.find(:all, :select => "board_entry_id", :conditions => conditions).map{|comment| comment.board_entry_id}
+    new_ids += EntryTrackback.find(:all, :select => "board_entry_id", :conditions => conditions).map{|trackback| trackback.board_entry_id}
+    return [] if new_ids.empty?
+    BoardEntry.find(:all,
+                    :include => [:user, {:board_entry_comments => :user}, {:entry_trackbacks => {:tb_entry => :user}}],
+                    :conditions =>["board_entries.id in (?)", new_ids.uniq])
+  end
+
+  def entry_body_lines(entry)
+    body_lines = []
+    body_lines << h(entry.title)
+    body_lines << h(entry.category)
+    body_lines << h(entry.user.name)
+    body_lines << entry.contents
+
+    entry.board_entry_comments.each do|comment|
+      body_lines << h(comment.user.name)
+      body_lines << comment.contents
+    end
+    entry.entry_trackbacks.each do |trackback|
+      body_lines << h(trackback.tb_entry.user.name)
+      body_lines << trackback.tb_entry.title
+    end
+    body_lines
+  end
+
+  def load_not_cached_bookmarks(border_time)
+    new_ids = BookmarkComment.find(:all, :select => "bookmark_id",
+                                   :conditions => ["updated_on > ?", border_time]).map{|comment| comment.bookmark_id}
+    return [] if new_ids.empty?
+    Bookmark.find(:all, :include => [{:bookmark_comments => :user}], :conditions =>["bookmarks.id in (?)", new_ids.uniq])
+  end
+
+  def bookmark_publication_symbols(bookmark)
+    publication_symbols = bookmark.bookmark_comments.all?{|comment| !comment.public} ? [] : ["sid:allusers"]
+    bookmark.bookmark_comments.each do|comment|
+      publication_symbols << "uid:#{h(comment.user.uid)}"
+    end
+    publication_symbols
+  end
+
+  def bookmark_body_lines(bookmark)
+    body_lines = []
+    body_lines << h(bookmark.title)
+    body_lines << bookmark.url
+    bookmark.bookmark_comments.each do|comment|
+      next unless comment.public
+      body_lines << h(comment.updated_on.strftime("%Y年%m月%d日"))
+      body_lines << h(comment.user.name)
+      body_lines << h(comment.tags)
+      body_lines << h(comment.comment)
+    end
+    body_lines
+  end
+
   def user_body_lines(user)
     body_lines = []
     body_lines << h(user.uid)
@@ -225,8 +241,7 @@ end
 # シェルからパラメータを受け取って実行する部分
 # パラメータは順不同、なくてもOK
 # -all すべてのキャッシュを再作成
-# -cache_path=キャッシュパス文字列
-# 実行例 ruby batch_make_cache.rb -cache_path=/var/skip_caches/systest -all
+# 実行例 ruby batch_make_cache.rb -all
 # 時間を指定しなければ15分前以降に更新されたもののキャッシュを生成する
 time = 15.minutes.ago
 ARGV.each do |arg|
@@ -236,15 +251,4 @@ ARGV.each do |arg|
 end
 time = 100.years.ago if ARGV.include?("-all")
 
-path = ""
-ARGV.each do |arg|
-  if arg.index("-cache_path=")
-    path += arg.split('=').last if arg.split('=').size > 1
-    break
-  end
-end
-if path.empty?
-  BatchMakeCache::log_error "キャッシュの生成先が指定されていません"
-else
-  BatchMakeCache.execution({ :time => time, :path => path })
-end
+BatchMakeCache.execution({ :time => time }) unless RAILS_ENV == 'test'

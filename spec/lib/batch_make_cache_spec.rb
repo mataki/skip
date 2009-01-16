@@ -172,3 +172,61 @@ describe BatchMakeCache, '#user_body_lines' do
     end
   end
 end
+
+describe BatchMakeCache, "#make_caches_entry" do
+  before do
+
+  end
+end
+
+describe BatchMakeCache, "#load_not_cached_entries" do
+  before do
+    @border_time = 15.minutes.ago
+    @bmc = BatchMakeCache.new
+  end
+  describe "１件見つかる場合" do
+    before do
+      @entry = mock_model(BoardEntry)
+      BoardEntry.should_receive(:find).with(:all, :select => "id", :conditions => ["updated_on > ?", @border_time]).and_return([@entry])
+      BoardEntryComment.stub!(:find).and_return([])
+      EntryTrackback.stub!(:find).and_return([])
+      BoardEntry.should_receive(:find).with(:all, :include => [:user, {:board_entry_comments => :user}, {:entry_trackbacks => {:tb_entry => :user}}],
+                                   :conditions =>["board_entries.id in (?)", [@entry.id]]).and_return([@entry])
+    end
+    it "記事が１件返ること" do
+      @bmc.send(:load_not_cached_entries, @border_time).should == [@entry]
+    end
+  end
+  describe "見つからない場合" do
+    before do
+      BoardEntry.should_receive(:find).once.and_return([])
+      BoardEntryComment.stub!(:find).and_return([])
+      EntryTrackback.stub!(:find).and_return([])
+    end
+    it "空の配列が返ること" do
+      @bmc.send(:load_not_cached_entries, @border_time).should == []
+    end
+  end
+end
+
+describe BatchMakeCache, "#entry_body_lines" do
+  before do
+    @tb_entry_user = stub_model(User, :name => "trackback name")
+    @tb_entry = stub_model(BoardEntry, :title => "trackback title", :user => @tb_entry_user)
+    @trackback = stub_model(EntryTrackback, :tb_entry => @tb_entry)
+
+    @comment_user = stub_model(User, :name => "comment name")
+    @comment = stub_model(BoardEntryComment, :contents => "comment contents", :user => @comment_user)
+
+    @user = stub_model(User, :name => "user name")
+    @entry = stub_model(BoardEntry, :title => "entry title", :category => "[cate][gory]", :contents => "entry contents",
+                        :user => @user, :board_entry_comments => [@comment], :entry_trackbacks => [@trackback])
+    @bmc = BatchMakeCache.new
+  end
+  it "配列に設定された値があること" do
+    ["trackback name", "trackback title", "comment name", "comment contents", "user name", "entry title", "[cate][gory]", "entry contents"].each do |s|
+      @bmc.send(:entry_body_lines, @entry).should be_include(s)
+    end
+  end
+end
+

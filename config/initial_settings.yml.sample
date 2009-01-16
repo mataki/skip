@@ -54,6 +54,7 @@ default: &default
   image_path: tmp/image_file_path                                   # ブログ/掲示板画像の保存ディレクトリ
   share_file_path: tmp/share_file_path                              # 共有ファイルの保存ディレクトリ
   batch_log_path:                                                   # バッチ実行時のログ出力先(指定がなければ log/batch.log)
+  cache_path: tmp/app_cache                                         # 全文検索用cacheファイルの出力先
 
   # ================================================================================================
   # システム運用担当者
