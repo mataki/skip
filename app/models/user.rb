@@ -282,9 +282,9 @@ class User < ActiveRecord::Base
     self.auth_session_token
   end
 
-  def issue_reset_auth_token
+  def issue_reset_auth_token(since = 24.hour)
     self.reset_auth_token = self.class.make_token
-    self.reset_auth_token_expires_at = Time.now.since(24.hour)
+    self.reset_auth_token_expires_at = Time.now.since(since)
   end
 
   def determination_reset_auth_token

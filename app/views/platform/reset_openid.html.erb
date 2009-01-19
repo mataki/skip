@@ -1,15 +1,28 @@
 <div class="content">
-  <h3><%= _('OpneID URLの再設定') %></h3>
-  <% form_for :user, @identifier, reset_openid_path do |f| -%>
+  <h3><%= _('OpenID URLの再設定') %></h3>
+  <div>
+    <div class="desc">
+      以下のサービスをご利用の方は、リンクをクリックしていただくことで、それぞれのIDを利用してログインが可能です。<br />
+      本サイトでは、IDとなるURLのみを認証のために管理し、その他の目的では利用しません。<br />
+      その他のOpenIDをご利用になる方はフォームからOpenID URLを入力してください。
+    </div>
+    <ul style="margin: 10px 20px;list-style-type:none;">
+      <li><%= link_to image_tag('idmixijp.gif') + "mixiのOpenID URLを設定する", :action => :reset_openid, :openid_url => "mixi.jp" %></li>
+      <li><%= link_to image_tag('meyahoocom.gif') + "Yahoo! JAPANのOpenID URLを設定する", :action => :reset_openid, :openid_url => "yahoo.co.jp" %></li>
+      <li><%= link_to image_tag('wwwgooglecom.gif') + "GoogleのOpenID URLを設定する", :action => :reset_openid, :openid_url => "http://www.google.com/accounts/o8/id" %></li>
+    </ul>
+  </div>
+  <div>
+    <% form_for :user, @identifier, reset_openid_path do |f| -%>
     <%= error_messages_for :identifier %>
     <%= hidden_field_tag :code, params[:code] %>
     <table>
       <tr>
-
         <th><%= f.label :url %></th>
         <td><%= f.text_field :url, :name => "openid_url" %></td>
       </tr>
     </table>
     <%= f.submit _('Send') %>
-  <% end -%>
+    <% end -%>
+  </div>
 </div>

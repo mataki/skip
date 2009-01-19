@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2008-12-19 14:26+0900\n"
+"POT-Creation-Date: 2009-01-19 11:54+0900\n"
 "PO-Revision-Date: 2008-12-19 14:26+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1864,19 +1864,25 @@ msgstr "新規%{model}の作成"
 msgid "New user from csv"
 msgstr "ユーザのCSVアップロード"
 
+#: app/views/platform/reset_openid.html.erb:2
+msgid "OpenID URLの再設定"
+msgstr ""
+
 #: app/controllers/platform_controller.rb:200
 msgid ""
 "OpenID URLを再設定するためのURLを記載したメールを%{email}宛に送信しました。"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:306
+#: app/controllers/mypage_controller.rb:305
 msgid "OpenID URLを設定しました。"
 msgstr ""
 
+#: app/controllers/mypage_controller.rb:312
 #: app/controllers/platform_controller.rb:225
 msgid "OpenIDの処理の中でキャンセルされたか、失敗しました。"
 msgstr ""
 
+#: app/controllers/mypage_controller.rb:317
 #: app/controllers/platform_controller.rb:229
 #: app/controllers/platform_controller.rb:272
 msgid "OpenIDの形式が正しくありません。"
@@ -1886,7 +1892,11 @@ msgstr ""
 msgid "OpenIDの認証に失敗しました。"
 msgstr ""
 
-#: app/views/shared/_login_form.html.erb:39
+#: app/controllers/mypage_controller.rb:321
+msgid "OpenIDを入力してください。"
+msgstr ""
+
+#: app/views/shared/_login_form.html.erb:75
 msgid "OpenIDを忘れた/再設定したい方はこちら"
 msgstr ""
 
@@ -1914,7 +1924,6 @@ msgstr "ユーザ"
 #: app/controllers/platform_controller.rb:221
 #: app/controllers/platform_controller.rb:233
 #: app/controllers/platform_controller.rb:237
-#: app/views/platform/reset_openid.html.erb:2
 msgid "OpneID URLの再設定"
 msgstr ""
 
@@ -2029,7 +2038,7 @@ msgid "Searching..."
 msgstr "検索しています…"
 
 #: app/views/platform/_mail_form.html.erb:7
-#: app/views/platform/reset_openid.html.erb:13
+#: app/views/platform/reset_openid.html.erb:25
 msgid "Send"
 msgstr "送信"
 
@@ -2480,7 +2489,8 @@ msgstr "公開"
 
 #: app/views/platform/_mail_form.html.erb:3
 #: app/views/portal/_registration_form.html.erb:21
-#: app/views/user/show.html.erb:104 app/views/users/_user.html.erb:32
+#: app/views/shared/_login_form.html.erb:14 app/views/user/show.html.erb:104
+#: app/views/users/_user.html.erb:32
 msgid "User|Email"
 msgstr "メールアドレス"
 
@@ -2785,7 +2795,7 @@ msgstr ""
 
 #: app/controllers/admin/users_controller.rb:183
 #: app/controllers/admin/users_controller.rb:191
-#: app/helpers/initial_settings_helper.rb:43 app/models/share_file.rb:248
+#: app/helpers/initial_settings_helper.rb:43 app/models/share_file.rb:250
 #: app/models/user_search_condition.rb:39
 #: app/views/admin/users/change_uid.html.erb:31
 #: app/views/admin/users/create_uid.html.erb:12
@@ -2840,6 +2850,8 @@ msgid ""
 msgstr ""
 
 #: app/controllers/application.rb:147
+#: app/controllers/board_entries_controller.rb:90
+#: app/controllers/share_file_controller.rb:240
 msgid "この操作は、許可されていません。"
 msgstr ""
 
@@ -2857,6 +2869,10 @@ msgstr ""
 #: app/controllers/admin/users_controller.rb:67
 #: app/controllers/user_controller.rb:250 app/models/board_entry.rb:57
 msgid "ご指定のユーザは存在しません。"
+msgstr ""
+
+#: app/models/share_file.rb:53
+msgid "ご指定の操作は実行できません。"
 msgstr ""
 
 #: app/controllers/platform_controller.rb:325
@@ -2939,6 +2955,10 @@ msgstr ""
 msgid "システム運用について"
 msgstr ""
 
+#: app/controllers/share_file_controller.rb:245
+msgid "ダウンロード履歴の削除に成功しました。"
+msgstr ""
+
 #: app/views/admin/users/issue_password_reset_code.html.erb:2
 msgid "パスワードを再設定するためのURLは以下の通りです。"
 msgstr ""
@@ -2959,7 +2979,11 @@ msgstr ""
 msgid "パスワード再設定のメールです"
 msgstr ""
 
-#: app/controllers/share_file_controller.rb:151
+#: app/controllers/share_file_controller.rb:77
+msgid "ファイルのアップロードに成功しました。"
+msgstr ""
+
+#: app/controllers/share_file_controller.rb:153
 msgid "ファイルの削除に成功しました。"
 msgstr ""
 
@@ -3243,6 +3267,10 @@ msgid ""
 "わせ下さい。"
 msgstr ""
 
+#: app/controllers/board_entries_controller.rb:95
+msgid "対象の記事が存在しません。"
+msgstr ""
+
 #: app/controllers/rankings_controller.rb:91
 msgid "対象データが見つかりません。"
 msgstr ""
@@ -3255,10 +3283,6 @@ msgstr ""
 #: app/controllers/admin/documents_controller.rb:89
 #: app/controllers/admin/images_controller.rb:157
 msgid "想定外のエラーが発生しました。管理者にお問い合わせ下さい。"
-msgstr ""
-
-#: app/controllers/share_file_controller.rb:194
-msgid "指定されたファイルが存在しないか、アクセス権がありません。"
 msgstr ""
 
 #: app/controllers/admin/application_controller.rb:58
@@ -3297,6 +3321,7 @@ msgid "既定の画像に戻す"
 msgstr ""
 
 #: app/controllers/admin/users_controller.rb:64
+#: app/controllers/share_file_controller.rb:134
 msgid "更新しました。"
 msgstr ""
 

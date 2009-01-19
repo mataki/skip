@@ -38,7 +38,16 @@
     <% else -%>
     <tr valign="top">
       <td>
-        <label for="openid_url"><span style="font-weight: bold;">OpenID URL</span></label>
+        <ul style="list-style-type:none; margin-bottom: 5px;">
+          <li><%= link_to image_tag('idmixijp.gif') + "mixi IDでログイン", :action => :login, :openid_url => "mixi.jp" %></li>
+          <li><%= link_to image_tag('meyahoocom.gif') + "Yahoo! JAPAN ID でログイン", :action => :login, :openid_url => "yahoo.co.jp" %></li>
+          <li><%= link_to image_tag('wwwgooglecom.gif') + "Googleでログイン", :action => :login, :openid_url => "http://www.google.com/accounts/o8/id" %></li>
+        </ul>
+      </td>
+    </tr>
+    <tr valign="top">
+      <td>
+        <label for="openid_url"><span style="font-weight: bold;">その他のOpenID URLでログイン</span></label>
       </td>
     </tr>
     <tr valign="top">
