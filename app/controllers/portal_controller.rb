@@ -85,7 +85,7 @@ class PortalController < ApplicationController
       @user.activate!
 
       session[:entrance_next_action] = nil
-      redirect_to :controller => 'mypage', :action => 'index', :welcome => 'true'
+      redirect_to :controller => 'mypage', :action => 'welcome'
     end
   rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => e
     @error_msg = []

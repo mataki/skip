@@ -1,0 +1,33 @@
+<div id="contents_container">
+  <div id="contents_left">
+    <%= render(:partial => 'user/portrait_box', :locals => { :current_user_info => @current_user_info }) %>
+    <%= render :partial => 'antenna_box', :locals => { :system_antennas => @system_antennas, :my_antennas => @my_antennas } %>
+  </div><!-- contents_left -->
+
+  <div id="contents_right">
+    <style type="text/css">
+    div#antenna_navi span.item {
+      border-right: 1px solid #555555;
+      padding-right: 3px;
+      margin-right: 7px;
+    }
+    </style>
+
+    <div style="text-align:right;">
+      <%= page_link(@entries) if @entries %>
+    </div>
+
+    <%= render :partial => "page_space",
+               :locals => { :id_name => @id_name,
+                            :title_name => @title_name,
+                            :pages => @entries_pages,
+                            :symbol2name_hash => @symbol2name_hash } %>
+
+    <div style="text-align:right;">
+      <%= page_link(@entries) if @entries %>
+    </div>
+  </div><!-- contents_right -->
+
+  <div id="contents_bottom"></div><!-- contents_bottom -->
+</div><!-- contents_container -->
+

@@ -1,0 +1,19 @@
+<%
+ system_antennas ||= []
+ my_antennas ||= []
+-%>
+<div class="box_space" style="position: relative;">
+  <div style="position: absolute; top: 4px; right: 4px;"><%= icon_tag 'help', :title => _('What is Antenna') + "|" + _('Antenna Description') %></div>
+  <div class="box_space_title">
+  <%= icon_tag 'folder_feed' %><%= link_to(_("アンテナ"), :action => 'entries_by_antenna') %>
+  </div>
+  <div class="box_space_body"><ul id="antennas_list">
+    <% system_antennas.each do |antenna| -%>
+    <li><%= icon_tag('transmit_blue') + link_to(h(antenna.name), :action => 'entries_by_antenna', :antenna_id => antenna.antenna_type) + "(#{h antenna.count})" %></li>
+    <% end -%>
+    <% my_antennas.each do |antenna| -%>
+    <li><%= icon_tag('transmit') + link_to(h(antenna.name), :action => 'entries_by_antenna', :antenna_id => antenna.id) + "(#{h antenna.count})" %></li>
+    <% end -%>
+  </ul></div>
+  <div class="box_space_bottom"><%= link_to _('【アンテナを整備する】'), :action => 'manage', :menu => 'manage_antenna' %></div>
+</div>

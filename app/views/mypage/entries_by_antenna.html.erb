@@ -1,0 +1,121 @@
+<style type="text/css">
+div#antenna_navi span.item {
+  border-right: 1px solid #555555;
+  padding-right: 3px;
+  margin-right: 7px;
+}
+div.topix_body .page_line, div.topix_body .item_line {
+  border-bottom: 1px dotted silver;
+  padding: 3px 2px;
+  margin-bottom: 4px;
+}
+</style>
+<div id="contents_container">
+  <div id="contents_left">
+    <%= render(:partial => 'user/portrait_box', :locals => { :current_user_info => @current_user_info }) %>
+    <%= render :partial => 'antenna_box', :locals => { :system_antennas => @system_antennas, :my_antennas => @my_antennas } %>
+  </div><!-- contents_left -->
+
+  <div id="contents_right">
+    <% @symbol2name_hash ||= nil -%>
+
+    <div id="antenna_navi" style="text-align: right; padding: 0pt 0pt 12pt 0pt;">
+      <div style="text-align:left; width: 40%; float: left;">
+        <a href="#" id="check_all_link">[ページ内の記事を既読]</a>
+        <a href="#" id="uncheck_all_link">[ページ内の記事を未読]</a>
+      </div>
+      <div style="overflow: hidden; width: 60%; float: right;">
+      <% if @antenna_entry.antenna && @antenna_entry.antenna.antenna_items -%>
+        <span class="item">
+          <a href="#" id="show_antenna_link">[アンテナ条件を表示]</a>
+          <a href="#" id="hide_antenna_link" style="display:none;">[アンテナ条件を隠す]</a>
+        </span>
+      <% end -%>
+        <span class="item">
+          <% if params[:read] -%>
+          <%= link_to '[既に読んだ記事を隠す]', :antenna_id => @antenna_entry.key, :read => false %>
+          <% else %>
+          <%= link_to '[既に読んだ記事を表示]', :antenna_id => @antenna_entry.key, :read => true %>
+          <% end %>
+        </span>
+        <%= page_link(@entries_pages) if @entries_pages %>
+      </div>
+    </div>
+
+    <%= hidden_field_tag "authenticity_token", form_authenticity_token %>
+
+    <% if @antenna_entry.antenna && @antenna_entry.antenna.antenna_items -%>
+    <div id="antenna_items" style="text-align:right; border-top: 1px dashed silver; background-color: #fff5ff; display:none;">
+      <% @antenna_entry.antenna.antenna_items.each do |item| -%>
+        <%= h item.value_type %>=<%= h item.value %> /
+      <% end -%>
+    </div>
+    <% end -%>
+    <%= render :partial => "page_space",
+               :locals => { :id_name => 'entries',
+                            :title_name => @antenna_entry.title,
+                            :pages => @entries,
+                            :checkable => true,
+                            :user_unreadings => @user_unreadings,
+                            :symbol2name_hash => @symbol2name_hash } %>
+
+    <div style="text-align:right;">
+      <%= page_link(@entries_pages) if @entries_pages %>
+    </div>
+  </div><!-- contents_right -->
+
+  <div id="contents_bottom"></div><!-- contents_bottom -->
+</div><!-- contents_container -->
+
+<% content_for :javascript do -%>
+<script type="text/javascript">
+$j(function() {
+    // アンテナの条件を表示・非表示をトグルする
+    $j('#show_antenna_link, #hide_antenna_link')
+    .click(function(){
+        $j('#antenna_items, #hide_antenna_link, #show_antenna_link').toggle();
+        return false;
+    });
+
+    // チェックされていない記事をすべて既読にする
+    $j('#check_all_link')
+    .click(function(){
+        $j('#entries_body :checkbox').each(function(){
+            if(!this.checked){
+                changeReadState(this, true);
+                this.checked = true;
+            }
+        });
+    });
+
+    // チェックされている記事をすべて未読にする
+    $j('#uncheck_all_link')
+    .click(function(){
+        $j('#entries_body :checked').each(function(){
+            changeReadState(this, false);
+            this.checked = false;
+        });
+    });
+
+    // チェックボックスをクリックすると既読未読が変更される
+    $j('.read_state_checkbox')
+    .click( function(){
+        changeReadState(this, this.checked);
+    });
+
+    var changeReadState = function(checkBoxObj, isRead){
+        messageId = checkBoxObj.id.split('_')[1];
+        $j.ajax({
+            type: 'POST',
+            url: "<%= url_for(:controller => 'mypage', :action => 'change_read_state') %>",
+            data: { board_entry_id:messageId,
+                    read:isRead,
+                    authenticity_token: $j('#authenticity_token').val() },
+            success: function(request) {
+            }
+        });
+
+    }
+});
+</script>
+<% end -%>

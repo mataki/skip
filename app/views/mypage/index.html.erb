@@ -1,30 +1,128 @@
+<%= skip_stylesheet_link_tag "jquery.ui.tabs.css" %>
 <div id="contents_container">
 
 <div id="contents_left">
-  <%= render(:partial => 'user/portrait_box', :locals => { :user => @user }) -%>
-
-<div class="box_space" style="position: relative;">
-  <div style="position: absolute; top: 4px; right: 4px;"><%= icon_tag 'help', :title => _('What is Antenna') + "|" + _('Antenna Description') -%></div>
-  <div class="box_space_title">
-    <%= icon_tag 'folder_feed' %><%= link_to("アンテナ", :action => "index", :list_type => "not_reading_blogs" ) -%>
-  </div>
-  <div class="box_space_body"><ul id="antennas_list">
-    <% @system_antennas.each do |antenna| -%>
-    <li><%= icon_tag('transmit_blue') + link_to(h(antenna.name), :action => "index", :antenna_type => antenna.antenna_type) + "(#{h antenna.count})" -%></li>
-    <% end -%>
-    <% @my_antennas.each do |antenna| -%>
-    <li><%= icon_tag('transmit') + link_to(h(antenna.name), :action => "index", :antenna_id => antenna.id) + "(#{h antenna.count})" -%></li>
-    <% end -%>
-  </ul></div>
-  <div class="box_space_bottom"><%= link_to '【アンテナを整備する】', :action => 'manage', :menu => 'manage_antenna' -%></div>
-</div>
-
+  <%= render(:partial => 'user/portrait_box', :locals => { :current_user_info => @current_user_info }) %>
+  <%= render :partial => 'antenna_box', :locals => { :system_antennas => @system_antennas, :my_antennas => @my_antennas } %>
 </div><!-- contents_left -->
 
 <div id="contents_right">
-<%= render :partial => @partial, :locals => @locals -%>
+  <%# ============================================================ -%>
+  <%#  right side area -%>
+  <%# ============================================================ -%>
+  <div style="float: right; width: 150px;">
+    <div id="calendar">
+      <%= render :partial => "shared/calendar", :locals => {:sel_year => @year, :sel_month => @month, :sel_day => @day, :item_count => @entry_count_hash, :action => 'entries_by_date'}  %>
+    </div>
+    <%= render :partial => 'rss_feed_box' %>
+    <%= render :partial => 'recent_group_box', :locals => {:recent_groups => @recent_groups} %>
+    <%= render :partial => 'recent_user_box', :locals => {:recent_users => @recent_users} %>
+  </div>
+
+  <%# ============================================================ -%>
+  <%#  main area -%>
+  <%# ============================================================ -%>
+  <div style="margin-right: 160px;">
+    <style type="text/css">
+    div.top_info {
+      margin-bottom: 5px;
+      padding: 3px 10px;
+      background-color: #f5f5ff;
+    }
+    </style>
+    <%# ============================================================ -%>
+    <%#  main area top messages -%>
+    <%# ============================================================ -%>
+    <% if (@message_array.size > 0) or (@waiting_groups.size > 0) or (@system_messages.size > 0) -%>
+    <div class="top_info" style="border: 2px dotted #a0a0ff;">
+      <% @system_messages.each do |message| -%>
+      <div class="item">
+        <%= link_to(icon_tag(message[:icon]) + h(message[:text]), message[:option]) %>
+      </div>
+      <% end -%>
+      <% @message_array.each do |message| -%>
+      <div class="item">
+        <%= link_to(icon_tag(Message::MESSAGE_TYPES[message[:message_type]][:icon_name]) + h(message[:message]), message[:link_url]) %>
+      </div>
+      <% end -%>
+      <% @waiting_groups.each do |group| -%>
+      <div class="item">
+        <%= item_link_to(group, {:view_text=>(icon_tag('group') + "[#{h(group.name)}]に承認待ちのユーザがいます！")}) %>
+      </div>
+      <% end -%>
+    </div>
+    <% end -%>
+
+    <% if (@important_your_messages.size > 0) %>
+    <div class="top_info" style="border: 2px dotted #ffc000; font-weight: bold; font-size: 14px;">
+      <% @important_your_messages.each do |entry| %>
+        <div class="item"><%= entry_link_to(entry, {:view_text=>get_light_icon(entry) + h(entry.title)}) %></div>
+      <% end %>
+    </div>
+    <% end %>
+
+    <% if @mail_your_messages[:pages].size > 0 %>
+      <%= show_title_bar(@mail_your_messages[:title_icon], @mail_your_messages[:title_name], {:controller => 'mypage', :action => "index", :antenna_type => @mail_your_messages[:id_name]}) %>
+      <%= render :partial => "list_block", :locals => @mail_your_messages %>
+    <% end %>
+
+    <%# ============================================================ -%>
+    <%#  main area entries -%>
+    <%# ============================================================ -%>
+    <%= show_title_bar(@questions[:title_icon], @questions[:title_name], {:controller => 'mypage', :action => "entries", :list_type => @questions[:id_name]}) -%>
+    <%= render :partial => "list_block", :locals => @questions %>
+
+    <%= show_title_bar("page_copy", _("公開された記事"), {:controller => 'search', :action => "entry_search"}) -%>
+    <div id="tabs" style="margin: 0 5px 10px 10px; display: none;">
+      <ul>
+        <li><a href="#<%= @access_blogs[:id_name] %>"><span><%=h @access_blogs[:title_name] %></span></a></li>
+        <li><a href="#<%= @recent_blogs[:id_name] %>"><span><%=h @recent_blogs[:title_name] %></span></a></li>
+    <% @recent_bbs.each do |bbs| -%>
+        <li><a href="#<%= bbs[:id_name] %>"><span><%=h bbs[:title_name] %></span></a></li>
+    <% end -%>
+      </ul>
+      <div id="<%= @access_blogs[:id_name] %>">
+        <%= render :partial => "list_block", :locals => @access_blogs %>
+      </div>
+      <div id="<%= @recent_blogs[:id_name] %>">
+        <%= render :partial => "list_block", :locals => @recent_blogs %>
+      </div>
+    <% @recent_bbs.each do |bbs| -%>
+      <div id="<%= bbs[:id_name] %>">
+        <%= render :partial => "list_block", :locals => bbs %>
+      </div>
+    <% end -%>
+    </div>
+
+    <%# ============================================================ -%>
+    <%#  main area bookmarks -%>
+    <%# ============================================================ -%>
+    <%= show_title_bar("tag_blue", _("最新のブックマーク"), {:controller => 'bookmarks'}) %>
+    <% if @bookmarks.size > 0 %>
+      <div class="topix_body" id="bookmark_body">
+      <% @bookmarks.each do |bookmark| -%>
+        <div class="page_line">
+          <div class="page_title"><%= link_to_bookmark_url bookmark, bookmark.title %></div>
+          <div class="page_from"><%= link_to(bookmark.bookmark_comments_count.to_s+"人", url_for_bookmark(bookmark.url)) %></div>
+          <div class="page_date"><%=h bookmark.updated_on.strftime("%m/%d %H:%M") %></div>
+        </div>
+      <% end -%>
+      </div>
+    <% end -%>
+  </div>
+  <br style="clear: right;"/>
 </div><!-- contents_right -->
 
 <div id="contents_bottom"></div><!-- contents_bottom -->
 
 </div><!-- contents_container -->
+
+<% content_for :javascript do -%>
+<script type="text/javascript">
+$j(function() {
+    $j('#tabs > ul').tabs();
+    $j('#tabs').show();
+});
+</script>
+<% end -%>
+
