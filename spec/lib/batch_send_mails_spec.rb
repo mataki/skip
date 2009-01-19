@@ -66,13 +66,9 @@ describe BatchSendMails, '#send_notice' do
         end
       end
       describe '送信先アドレスが見つかる場合' do
-        describe '送信先ユーザ(to_address)が退職している場合' do
+        describe '送信先ユーザ(to_address)が存在していない場合' do
           before do
-            to_user = stub_model(User)
-            to_user.stub!(:retired?).and_return(true)
-            to_user_profile = stub_model(UserProfile)
-            to_user_profile.stub!(:user).and_return(to_user)
-            UserProfile.stub!(:find_by_email).and_return(to_user_profile)
+            @sender.stub!(:retired_check_to_address).and_return(nil)
           end
           it '対象のMailsテーブルのレコードが送信済みとなること' do
             @mail.should_receive(:update_attribute).with(:send_flag,true)
@@ -84,13 +80,9 @@ describe BatchSendMails, '#send_notice' do
             @sender.send_notice
           end
         end
-        describe '送信先ユーザ(to_address)が退職していない場合' do
+        describe '送信先ユーザ(to_address)が存在している場合' do
           before do
-            to_user = stub_model(User)
-            to_user.stub!(:retired?).and_return(false)
-            to_user_profile = stub_model(UserProfile)
-            to_user_profile.stub!(:user).and_return(to_user)
-            UserProfile.stub!(:find_by_email).and_return(to_user_profile)
+            @sender.stub!(:retired_check_to_address).and_return(@mail.to_address)
           end
           describe BatchSendMails, "送信元ユーザの記事がある場合" do
             before do
@@ -184,6 +176,46 @@ describe BatchSendMails, '#send_message' do
           end.should_not change(ActionMailer::Base.deliveries, :size)
         end
       end
+    end
+  end
+end
+
+describe BatchSendMails, "#retired_check_to_address" do
+  before do
+    @sender = BatchSendMails.new
+    UserProfile.stub!(:find_by_email).and_return(nil)
+    UserProfile.stub!(:find_by_email).with('a_user@example.com').and_return(stub_model(UserProfile, :user => mock_model(User, :retired? => false)))
+    UserProfile.stub!(:find_by_email).with('b_user@example.com').and_return(stub_model(UserProfile, :user => mock_model(User, :retired? => false)))
+    UserProfile.stub!(:find_by_email).with('retired_user@example.com').and_return(stub_model(UserProfile, :user => mock_model(User, :retired? => true)))
+  end
+  describe "一つの存在するアドレスの場合" do
+    it "存在するアドレスを返す" do
+      to_address = 'a_user@example.com'
+      @sender.retired_check_to_address(to_address).should == to_address
+    end
+  end
+  describe "複数の存在するアドレスの場合" do
+    it "複数のアドレスを返す" do
+      to_address = "a_user@example.com,b_user@example.com"
+      @sender.retired_check_to_address(to_address).should == to_address
+    end
+  end
+  describe "一つの存在しないアドレスの場合" do
+    it "nilを返す" do
+      to_address = "no_user@example.com"
+      @sender.retired_check_to_address(to_address).should be_nil
+    end
+  end
+  describe "一つの存在しないアドレスの場合" do
+    it "nilを返す" do
+      to_address = "retired_user@example.com"
+      @sender.retired_check_to_address(to_address).should be_nil
+    end
+  end
+  describe "複数の中に存在しないアドレスがある場合" do
+    it "存在するアドレスのみを返す" do
+      to_address = "a_user@example.com,no_user@example.com,b_user@example.com"
+      @sender.retired_check_to_address(to_address).should == "a_user@example.com,b_user@example.com"
     end
   end
 end
