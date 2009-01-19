@@ -181,8 +181,9 @@ describe BatchSendMails, "#retired_check_to_address" do
   before do
     @sender = BatchSendMails.new
     User.stub!(:find_by_email).and_return(nil)
-    User.stub!(:find_by_email).with('a_user@example.com').and_return(stub_model(User))
-    User.stub!(:find_by_email).with('b_user@example.com').and_return(stub_model(User))
+    User.stub!(:find_by_email).with('a_user@example.com').and_return(stub_model(User, :retired? => false))
+    User.stub!(:find_by_email).with('b_user@example.com').and_return(stub_model(User, :retired? => false))
+    User.stub!(:find_by_email).with('retired_user@example.com').and_return(stub_model(User, :retired? => true))
   end
   describe "一つの存在するアドレスの場合" do
     it "存在するアドレスを返す" do
@@ -199,6 +200,12 @@ describe BatchSendMails, "#retired_check_to_address" do
   describe "一つの存在しないアドレスの場合" do
     it "nilを返す" do
       to_address = "no_user@example.com"
+      @sender.retired_check_to_address(to_address).should be_nil
+    end
+  end
+  describe "存在するが退職者のアドレスの場合" do
+    it "nilを返す" do
+      to_address = "retired_user@example.com"
       @sender.retired_check_to_address(to_address).should be_nil
     end
   end

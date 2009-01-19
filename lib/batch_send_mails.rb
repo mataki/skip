@@ -73,7 +73,7 @@ class BatchSendMails < BatchBase
   def retired_check_to_address(to_address)
     active_users = to_address.split(',').inject([]) do |result, email|
       user = User.find_by_email(email)
-      result << email if user
+      result << email if user && !user.retired?
       result
     end.join(',')
     active_users.blank? ? nil : active_users
