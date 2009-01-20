@@ -30,7 +30,7 @@ module Admin::UserProfileMastersHelper
   def option_values_need_hash_as_json
     h = {}
     UserProfileMaster.input_types.each do |val|
-      h[val] = UserProfileMaster.input_type_processer(val).need_option_values?
+      h[val] = UserProfileMaster.input_type_processer_class(val).need_option_values?
     end
     h.to_json
   end

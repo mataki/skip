@@ -15,19 +15,6 @@
 
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
-describe UserProfileValue do
-  before(:each) do
-    @valid_attributes = {
-      :user_profile_master => stub_model(UserProfileMaster),
-      :user => stub_model(User)
-    }
-  end
-
-  it "should create a new instance given valid attributes" do
-    UserProfileValue.create!(@valid_attributes)
-  end
-end
-
 describe UserProfileValue, "マスタのrequired" do
   before do
     @master = create_user_profile_master(:input_type => 'text_field', :name => "phone_no")

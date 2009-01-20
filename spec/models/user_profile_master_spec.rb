@@ -43,10 +43,8 @@ end
 
 describe UserProfileMaster, "#input_type_processer" do
   it "input_typeがtext_fieldの場合、TextFieldのインスタンスが返ってくること" do
-    type = "text_field"
-    UserProfileMaster.should_receive(:input_type_processer).with(type).and_return(processer = mock('processer'))
     @master = create_user_profile_master(:input_type => "text_field")
-    @master.input_type_processer.should == processer
+    @master.input_type_processer.should be_is_a(UserProfileMaster::TextFieldProcesser)
   end
 end
 
@@ -69,28 +67,19 @@ describe UserProfileMaster, ".input_type_option" do
   end
 end
 
-describe UserProfileMaster, ".input_type_processer" do
-  it "存在する(text_field)が渡された場合 相当するプロセッサーのインスタンスを返すこと" do
-    type = "text_field"
-    UserProfileMaster.input_type_processer(type).should be_is_a(UserProfileMaster::TextFieldProcesser)
+describe UserProfileMaster, ".input_type_processer_class" do
+  it "存在する(text_field)が渡された場合 相当するプロセッサーのクラスを返すこと" do
+    UserProfileMaster.input_type_processer_class('text_field').should == UserProfileMaster::TextFieldProcesser
   end
-  it "存在しない(hoge_field)が渡された場合 InputTypeProcesserのインスタンスが返ってくること" do
-    type = "hoge_field"
-    UserProfileMaster.input_type_processer(type).should be_is_a(UserProfileMaster::InputTypeProcesser)
-  end
-end
-
-describe UserProfileMaster::RadioProcesser do
-  before do
-    @processer = UserProfileMaster::RadioProcesser.new
-    @master = stub_model(UserProfileMaster, :name => "master", :option_values => "select1,select2", :input_type => "radio")
-    @value = UserProfileValue.new(:user_profile_master => @master, :user => stub_model(User))
+  it "存在しない(hoge_field)が渡された場合 InputTypeProcesserのクラスを返すこと" do
+    UserProfileMaster.input_type_processer_class('hoge_field').should == UserProfileMaster::InputTypeProcesser
   end
 end
 
 describe UserProfileMaster::InputTypeProcesser do
   before do
-    @processer = UserProfileMaster::InputTypeProcesser.new
+    @master = stub_model(UserProfileMaster, :name => "master")
+    @processer = UserProfileMaster::InputTypeProcesser.new(@master)
     @value = stub_model(UserProfileValue, :value => "value")
   end
   describe "#to_show_html" do
@@ -100,35 +89,37 @@ describe UserProfileMaster::InputTypeProcesser do
   end
   describe "#to_edit_html" do
     it "正しいHTMLが生成されていること" do
-      @processer.to_edit_html(stub_model(UserProfileMaster, :id => 1000), @value).should == "<input id=\"profile_value[1000]\" name=\"profile_value[1000]\" type=\"text\" value=\"value\" />"
+      @master.id = 1000
+      @processer.to_edit_html(@value).should == "<input id=\"profile_value[1000]\" name=\"profile_value[1000]\" type=\"text\" value=\"value\" />"
     end
   end
   describe "#validate" do
     before do
-      @master = stub_model(UserProfileMaster, :name => "master")
       @value = UserProfileValue.new(:user_profile_master => @master, :user => stub_model(User))
     end
     describe "バリデーションエラーの場合" do
+      before do
+        @master.required = true
+      end
       it "バリデーションエラーが設定されること" do
-        @master.stub!(:required).and_return(true)
-        errors = mock('errors')
-        errors.should_receive(:add_to_base).with("master は必須です")
-        @value.stub!(:errors).and_return(errors)
-        @processer.validate(@master, @value)
+        @processer.validate(@value)
+        @value.errors.full_messages.first.should == 'master は必須です'
       end
     end
     describe "バリデーションエラーでない場合" do
+      before do
+        @master.required = false
+      end
       it "バリデーションエラーが設定されないこと" do
-        @master.stub!(:required).and_return(false)
-        @value.should_not_receive(:errors)
-        @processer.validate(@master, @value)
+        @processer.validate(@value)
+        @value.errors.should be_empty
       end
     end
   end
   describe "#option_value_validate" do
     before do
-      @processer = UserProfileMaster::InputTypeProcesser.new
-      @master = stub_model(UserProfileMaster, :name => "master", :option_values => "select1,select2", :input_type => "radio")
+      @master = stub_model(UserProfileMaster, :name => "master", :option_values => "select1,select2", :input_type => "hoge")
+      @processer = UserProfileMaster::InputTypeProcesser.new(@master)
       @value = UserProfileValue.new(:user_profile_master => @master, :user => stub_model(User))
     end
     describe "必須の場合" do
@@ -137,12 +128,12 @@ describe UserProfileMaster::InputTypeProcesser do
       end
       it "空の場合 必須です のバリデーションエラーになること" do
         @value.value = ""
-        @value.should_not be_valid
+        @processer.option_value_validate(@value)
         @value.errors.full_messages.first.should == "master は必須です"
       end
       it "選択される項目以外の値が入っている場合 選択される値以外の値が設定されていますというバリデーションエラーになること" do
         @value.value = "unselect"
-        @value.should_not be_valid
+        @processer.option_value_validate(@value)
         @value.errors.full_messages.first.should == "master は選択される値以外のものが設定されています"
       end
     end
@@ -152,26 +143,27 @@ describe UserProfileMaster::InputTypeProcesser do
       end
       it "空の場合 何もバリデーションエラーにならないこと" do
         @value.value = ""
-        @value.should be_valid
+        @processer.option_value_validate(@value)
+        @value.errors.should be_empty
       end
       it "選択される項目以外の値が入っている場合 選択される値以外の値が設定されていますというバリデーションエラーになること" do
         @value.value = "unselect"
-        @value.should_not be_valid
+        @processer.option_value_validate(@value)
         @value.errors.full_messages.first.should == "master は選択される値以外のものが設定されています"
       end
     end
   end
   describe '#validates_presence_of_option_values' do
     before do
-      @processer = UserProfileMaster::InputTypeProcesser.new
       @master = stub_model(UserProfileMaster, :name => "master", :option_values => "", :input_type => 'text_field')
+      @processer = UserProfileMaster::InputTypeProcesser.new(@master)
       @errors = mock('errors')
       @errors.stub!(:clear)
       @master.stub!(:errors).and_return(@errors)
     end
     describe 'option_valuesが必須の場合' do
       before do
-        @processer.should_receive(:need_option_values?).and_return(true)
+        @processer.class.should_receive(:need_option_values?).and_return(true)
       end
       describe 'option_valuesに入力がある場合' do
         before do
@@ -179,7 +171,7 @@ describe UserProfileMaster::InputTypeProcesser do
         end
         it 'masterにoption_valuesのバリデーションエラーが設定されないこと' do
           @errors.should_not_receive(:add).with(:option_values, "は必須です。")
-          @processer.validates_presence_of_option_values(@master)
+          @processer.validates_presence_of_option_values
         end
       end
       describe 'option_valuesに入力がない場合' do
@@ -188,186 +180,131 @@ describe UserProfileMaster::InputTypeProcesser do
         end
         it 'masterにoption_valuesが必須である旨のバリデーションエラーが設定されること' do
           @errors.should_receive(:add).with(:option_values, "は必須です。")
-          @processer.validates_presence_of_option_values(@master)
+          @processer.validates_presence_of_option_values
         end
       end
     end
     describe 'option_valuesが必須ではない場合' do
       before do
-        @processer.should_receive(:need_option_values?).and_return(false)
+        @processer.class.should_receive(:need_option_values?).and_return(false)
       end
       it 'masterにoption_valuesのバリデーションエラーが設定されないこと' do
         @errors.should_not_receive(:add).with(:option_values, "は必須です。")
-        @processer.validates_presence_of_option_values(@master)
+        @processer.validates_presence_of_option_values
       end
     end
   end
 end
 
-describe UserProfileMaster::SelectProcesser do
-  before do
-    @processer = UserProfileMaster::SelectProcesser.new
-    @master = stub_model(UserProfileMaster, :option_values => "select1,select2", :input_type => "select", :name => "master")
-    @value = UserProfileValue.new(:user_profile_master => @master, :user => stub_model(User))
-  end
-  describe "#to_edit_html" do
-    it "selectタグが含まれるhtmlが返ること" do
-      @processer.to_edit_html(@master, @value).should have_tag("select")
-    end
-    it "データが存在している場合選択されていること" do
-      @value.value = 'select2'
-      @processer.to_edit_html(@master, @value).should have_tag("select") do
-        with_tag("option[selected=selected]", "select2")
-      end
-    end
-  end
-end
-
-describe UserProfileMaster::AppendableSelectProcesser do
-  before do
-    @processer = UserProfileMaster::AppendableSelectProcesser.new
-    @master = stub_model(UserProfileMaster, :input_type => "appendable_select", :name => "master")
-    @value = UserProfileValue.new(:user_profile_master => @master, :user => stub_model(User))
-    @values = (1..3).map{|i| "value#{i}"}
-  end
-  describe "#to_edit_html" do
-    describe "既に登録されている値がある場合" do
-      before do
-        @processer.stub!(:registrated_select_option).with(@master).and_return(@values)
-      end
-      it "selectボックスが表示されていること" do
-        @processer.to_edit_html(@master, @value).should have_tag("select") do
-          with_tag("option", "value3")
-        end
-      end
-      it "valueがselectボックスの値にある場合 selectボックスが選択されていること" do
-        @value.value = "value1"
-        @processer.to_edit_html(@master, @value).should have_tag("select") do
-          with_tag("option[selected=selected]", "value1")
-        end
-      end
-      it "text_fieldが表示されていること" do
-        @processer.to_edit_html(@master, @value).should have_tag("input[type=text]")
-      end
-      it "valueがselectボックスの値に無い場合 text_field内に表示されていること" do
-        @value.value = "text_input"
-        @processer.to_edit_html(@master, @value).should have_tag("input[value=text_input]")
-      end
-    end
-    describe "登録されている値が無い場合" do
-      before do
-        @processer.stub!(:registrated_select_option).and_return([])
-      end
-      it "selectボックスが表示されていないこと" do
-        @processer.to_edit_html(@master, @value).should_not have_tag("select")
-      end
-      it "text_fieldが表示されていること" do
-        @processer.to_edit_html(@master, @value).should have_tag("input[type=text]")
-      end
-    end
-  end
-
-  describe "#registrated_select_option" do
+describe UserProfileMaster::NumberAndHyphenOnlyProcesser do
+  describe '#validate' do
     before do
-      @master = stub_model(UserProfileMaster, :option_values => "select1,select2", :input_type => "appendable_select", :name => "master")
+      @master = stub_model(UserProfileMaster, :name => "master", :input_type => 'number_and_hyphen_only')
+      @processer = UserProfileMaster::NumberAndHyphenOnlyProcesser.new(@master)
+      @value = UserProfileValue.new(:user_profile_master => @master, :user => stub_model(User))
     end
-    describe "すべてのvalueに値が設定されている場合" do
+    describe '入力がない場合' do
       before do
-        @registrated_values = (1..3).map{|i| UserProfileValue.create!(:user_profile_master => @master, :user => mock_model(User), :value => "value#{i}") }
+        @value.value = ''
       end
-      it "requiredがtrueのとき valueの配列が返ってくること" do
-        @master.required = true
-        @processer.send(:registrated_select_option, @master).should == @registrated_values.map(&:value)
+      describe '必須の場合' do
+        before do
+          @master.required = true
+        end
+        it '必須エラーになること' do
+          @processer.validate(@value)
+          @value.errors.full_messages.first.should == "master は必須です"
+        end
       end
-      it "requiredがfalseのとき 先頭に空の入った配列が返ってくること" do
-        @master.required = false
-        @processer.send(:registrated_select_option, @master).should == @registrated_values.map(&:value).unshift("")
-      end
-    end
-    describe "valueに空が設定されている場合" do
-      before do
-        @registrated_values = (1..3).map{|i| UserProfileValue.create!(:user_profile_master => @master, :user => mock_model(User), :value => "value#{i}") }
-        @registrated_values << UserProfileValue.create!(:user_profile_master => @master, :user => mock_model(User), :value => "")
-      end
-      it "requiredがtrueのとき 空が入っていないの配列が返ってくること" do
-        @master.required = true
-        @processer.send(:registrated_select_option, @master).should == ["value1", "value2", "value3"]
-      end
-      it "requiredがfalseのとき 先頭に空の入った配列が返ってくること" do
-        @master.required = false
-        @processer.send(:registrated_select_option, @master).should == ["", "value1", "value2", "value3"]
+      describe '必須ではない場合' do
+        before do
+          @master.required = false
+        end
+        it 'エラーにならないこと' do
+          @processer.validate(@value)
+          @value.errors.should be_empty
+        end
       end
     end
-    describe "同じ値が複数個登録されている場合" do
-      before do
-        @registrated_values1 = (1..3).map{|i| UserProfileValue.create!(:user_profile_master => @master, :user => mock_model(User), :value => "value1") }
-        @registrated_values2 = (1..7).map{|i| UserProfileValue.create!(:user_profile_master => @master, :user => mock_model(User), :value => "value2") }
-        @registrated_values3 = (1..5).map{|i| UserProfileValue.create!(:user_profile_master => @master, :user => mock_model(User), :value => "value3") }
+    describe '入力がある場合' do
+      describe '数値とハイフンのみの場合' do
+        before do
+          @value.value = '123-'
+        end
+        it 'エラーにならないこと' do
+          @processer.validate(@value)
+          @value.errors.should be_empty
+        end
       end
-      it "登録数が多い順に配列が並んでいること" do
-        @master.required = true
-        @processer.send(:registrated_select_option, @master).should == [ "value2", "value3", "value1"]
+      describe '数値とハイフン以外が含まれる場合' do
+        before do
+          @value.value = 'hoge'
+        end
+        it 'フォーマットエラーとなること' do
+          @processer.validate(@value)
+          @value.errors.full_messages.first.should == "master は数字かハイフンで入力してください"
+        end
       end
     end
+  end
+end
+
+describe UserProfileMaster::RadioProcesser do
+  before do
+    @master = stub_model(UserProfileMaster, :name => "master", :option_values => "select1,select2", :input_type => "radio")
+    @processer = UserProfileMaster::RadioProcesser.new(@master)
+    @value = UserProfileValue.new(:user_profile_master => @master, :user => stub_model(User))
   end
 end
 
 describe UserProfileMaster::YearSelectProcesser do
   before do
-    @processer = UserProfileMaster::YearSelectProcesser.new
+    @master = stub_model(UserProfileMaster, :name => "master", :option_values => "2007-2008")
+    @processer = UserProfileMaster::YearSelectProcesser.new(@master)
+    @value = UserProfileValue.new(:user_profile_master => @master, :user => stub_model(User), :value => "")
   end
   describe "#validate" do
-    before do
-      @master = stub_model(UserProfileMaster, :name => "master", :option_values => "2007-2008")
-    end
     describe "入力がない場合" do
       before do
-        @value = UserProfileValue.new(:user_profile_master => @master, :user => stub_model(User), :value => "")
+        @value.value = ''
       end
       describe "必須の場合" do
         before do
           @master.stub!(:required).and_return(true)
         end
         it "必須エラーが設定されること" do
-          errors = mock('errors')
-          errors.should_receive(:add_to_base).with("master は必須です")
-          @value.stub!(:errors).and_return(errors)
-          @processer.validate(@master, @value)
+          @processer.validate(@value)
+          @value.errors.full_messages.first.should == "master は必須です"
         end
       end
       describe "必須ではない場合" do
         before do
-          @master.stub!(:required).and_return(false)
+          @master.required = false
         end
         it "必須エラーが設定されないこと" do
-          errors = mock('errors')
-          errors.should_not_receive(:add_to_base).with("master は必須です")
-          @value.stub!(:errors).and_return(errors)
-          @processer.validate(@master, @value)
+          @processer.validate(@value)
+          @value.errors.should be_empty
         end
       end
     end
     describe "入力がある場合" do
       describe "不正な年が入力されている場合" do
         before do
-          @value = UserProfileValue.new(:user_profile_master => @master, :user => stub_model(User), :value => "2006")
+          @value.value = '206'
         end
         it "入力値が不正エラーが設定されること" do
-          errors = mock('errors')
-          errors.should_receive(:add_to_base).with("master は4桁の数値で入力して下さい")
-          @value.stub!(:errors).and_return(errors)
-          @processer.validate(@master, @value)
+          @processer.validate(@value)
+          @value.errors.full_messages.first.should == "master は4桁の数値で入力して下さい"
         end
       end
       describe "正しい年が入力されている場合" do
         before do
+          @value.value = '2007'
           @value = UserProfileValue.new(:user_profile_master => @master, :user => stub_model(User), :value => "2007")
         end
         it "入力値が不正エラーが設定されないこと" do
-          errors = mock('errors')
-          errors.should_not_receive(:add_to_base).with("master は4桁の数値で入力して下さい")
-          @value.stub!(:errors).and_return(errors)
-          @processer.validate(@master, @value)
+          @processer.validate(@value)
+          @value.errors.should be_empty
         end
       end
     end
@@ -375,40 +312,36 @@ describe UserProfileMaster::YearSelectProcesser do
 
   describe '#validates_format_of_option_values' do
     before do
-      @processer = UserProfileMaster::YearSelectProcesser.new
-      @errors = mock('errors')
-      @errors.stub!(:add)
+      @master = UserProfileMaster.new(:name => "master", :option_values => "")
+      @processer = UserProfileMaster::YearSelectProcesser.new(@master)
     end
     describe '入力がない場合' do
       before do
-        @master = stub_model(UserProfileMaster, :name => "master", :option_values => "")
-        @master.stub!(:errors).and_return(@errors)
+        @master.option_values = ''
       end
       it 'フォーマットエラーが設定されないこと' do
-        @errors.should_not_receive(:add)
-        @processer.validates_format_of_option_values(@master)
+        @processer.validates_format_of_option_values
+        @master.errors.should be_empty
       end
     end
 
     describe '入力がある場合' do
       describe '数値とハイフンの文字列の場合' do
         before do
-          @master = stub_model(UserProfileMaster, :name => "master", :option_values => "2007-2008")
-          @master.stub!(:errors).and_return(@errors)
+          @master.option_values = "2007-2008"
         end
         it 'フォーマットエラーが設定されないこと' do
-          @errors.should_not_receive(:add)
-          @processer.validates_format_of_option_values(@master)
+          @processer.validates_format_of_option_values
+          @master.errors.should be_empty
         end
       end
       describe '数値とハイフン以外の文字列が含まれる場合' do
         before do
-          @master = stub_model(UserProfileMaster, :name => "master", :option_values => "2007,2008")
-          @master.stub!(:errors).and_return(@errors)
+          @master.option_values = "2007,2008"
         end
         it 'フォーマットエラーが設定されること' do
-          @errors.should_receive(:add).with(:option_values, 'は数値と-(ハイフン)で入力して下さい。')
-          @processer.validates_format_of_option_values(@master)
+          @processer.validates_format_of_option_values
+          @master.errors.full_messages.first.should == 'Option values は数値と-(ハイフン)で入力して下さい。'
         end
       end
     end
@@ -445,55 +378,165 @@ describe UserProfileMaster::YearSelectProcesser do
   end
 end
 
+describe UserProfileMaster::SelectProcesser do
+  before do
+    @master = stub_model(UserProfileMaster, :option_values => "select1,select2", :input_type => "select", :name => "master")
+    @processer = UserProfileMaster::SelectProcesser.new(@master)
+    @value = UserProfileValue.new(:user_profile_master => @master, :user => stub_model(User))
+  end
+  describe "#to_edit_html" do
+    it "selectタグが含まれるhtmlが返ること" do
+      @processer.to_edit_html(@value).should have_tag("select")
+    end
+    it "データが存在している場合選択されていること" do
+      @value.value = 'select2'
+      @processer.to_edit_html(@value).should have_tag("select") do
+        with_tag("option[selected=selected]", "select2")
+      end
+    end
+  end
+end
+
+describe UserProfileMaster::AppendableSelectProcesser do
+  before do
+    @master = stub_model(UserProfileMaster, :input_type => "appendable_select", :name => "master")
+    @processer = UserProfileMaster::AppendableSelectProcesser.new(@master)
+    @value = UserProfileValue.new(:user_profile_master => @master, :user => stub_model(User))
+    @values = (1..3).map{|i| "value#{i}"}
+  end
+  describe "#to_edit_html" do
+    describe "既に登録されている値がある場合" do
+      before do
+        @processer.stub!(:registrated_select_option).and_return(@values)
+      end
+      it "selectボックスが表示されていること" do
+        @processer.to_edit_html(@value).should have_tag("select") do
+          with_tag("option", "value3")
+        end
+      end
+      it "valueがselectボックスの値にある場合 selectボックスが選択されていること" do
+        @value.value = "value1"
+        @processer.to_edit_html(@value).should have_tag("select") do
+          with_tag("option[selected=selected]", "value1")
+        end
+      end
+      it "text_fieldが表示されていること" do
+        @processer.to_edit_html(@value).should have_tag("input[type=text]")
+      end
+      it "valueがselectボックスの値に無い場合 text_field内に表示されていること" do
+        @value.value = "text_input"
+        @processer.to_edit_html(@value).should have_tag("input[value=text_input]")
+      end
+    end
+    describe "登録されている値が無い場合" do
+      before do
+        @processer.stub!(:registrated_select_option).and_return([])
+      end
+      it "selectボックスが表示されていないこと" do
+        @processer.to_edit_html(@value).should_not have_tag("select")
+      end
+      it "text_fieldが表示されていること" do
+        @processer.to_edit_html(@value).should have_tag("input[type=text]")
+      end
+    end
+  end
+
+  describe "#registrated_select_option" do
+    before do
+      @master.option_values = "select1,select2"
+    end
+    describe "すべてのvalueに値が設定されている場合" do
+      before do
+        @registrated_values = (1..3).map{|i| UserProfileValue.create!(:user_profile_master => @master, :user => mock_model(User), :value => "value#{i}") }
+      end
+      it "requiredがtrueのとき valueの配列が返ってくること" do
+        @master.required = true
+        @processer.send(:registrated_select_option).should == @registrated_values.map(&:value)
+      end
+      it "requiredがfalseのとき 先頭に空の入った配列が返ってくること" do
+        @master.required = false
+        @processer.send(:registrated_select_option).should == @registrated_values.map(&:value).unshift("")
+      end
+    end
+    describe "valueに空が設定されている場合" do
+      before do
+        @registrated_values = (1..3).map{|i| UserProfileValue.create!(:user_profile_master => @master, :user => mock_model(User), :value => "value#{i}") }
+        @registrated_values << UserProfileValue.create!(:user_profile_master => @master, :user => mock_model(User), :value => "")
+      end
+      it "requiredがtrueのとき 空が入っていないの配列が返ってくること" do
+        @master.required = true
+        @processer.send(:registrated_select_option).should == ["value1", "value2", "value3"]
+      end
+      it "requiredがfalseのとき 先頭に空の入った配列が返ってくること" do
+        @master.required = false
+        @processer.send(:registrated_select_option).should == ["", "value1", "value2", "value3"]
+      end
+    end
+    describe "同じ値が複数個登録されている場合" do
+      before do
+        @registrated_values1 = (1..3).map{|i| UserProfileValue.create!(:user_profile_master => @master, :user => mock_model(User), :value => "value1") }
+        @registrated_values2 = (1..7).map{|i| UserProfileValue.create!(:user_profile_master => @master, :user => mock_model(User), :value => "value2") }
+        @registrated_values3 = (1..5).map{|i| UserProfileValue.create!(:user_profile_master => @master, :user => mock_model(User), :value => "value3") }
+      end
+      it "登録数が多い順に配列が並んでいること" do
+        @master.required = true
+        @processer.send(:registrated_select_option).should == [ "value2", "value3", "value1"]
+      end
+    end
+  end
+end
+
 describe UserProfileMaster::CheckBoxProcesser do
   before do
-    @processer = UserProfileMaster::CheckBoxProcesser.new
+    @master = stub_model(UserProfileMaster, :option_values => "check1", :input_type => "check_box", :name => "master")
+    @processer = UserProfileMaster::CheckBoxProcesser.new(@master)
   end
   describe "#to_edit_html" do
     before do
-      @master = stub_model(UserProfileMaster, :option_values => "check1", :input_type => "check_box", :name => "master")
       @value = UserProfileValue.new(:user_profile_master => @master, :user => stub_model(User))
     end
     describe "何も選択されていない場合" do
       it "checkboxのhtmlを返すこと" do
         @value.value = ""
-        @processer.to_edit_html(@master, @value).should have_tag("input#profile_value_#{@master.id}_check1")
+        @processer.to_edit_html(@value).should have_tag("input#profile_value_#{@master.id}_check1")
       end
     end
     describe "選択されていた場合" do
+      before do
+        @value.value = "check1"
+      end
       it "checkedがcheckedなcheckboxのhtmlを返すこと" do
-        @value.value = ["check1"]
-        @value.save!
-        @value.reload
-        @processer.to_edit_html(@master, @value).should == "<input checked=\"checked\" id=\"profile_value_#{@master.id}_check1\" name=\"profile_value[#{@master.id}][]\" type=\"checkbox\" value=\"check1\" /><label for=\"profile_value_#{@master.id}_check1\">check1</label>"
+        @processer.to_edit_html(@value).should == "<input checked=\"checked\" id=\"profile_value_#{@master.id}_check1\" name=\"profile_value[#{@master.id}][]\" type=\"checkbox\" value=\"check1\" /><label for=\"profile_value_#{@master.id}_check1\">check1</label>"
       end
     end
     describe "validateを通っていない時" do
       it "checkedがcheckedなcheckboxのhtmlを返すこと" do
-        @value.value = ["check1"]
-        @processer.to_edit_html(@master, @value).should == "<input checked=\"checked\" id=\"profile_value_#{@master.id}_check1\" name=\"profile_value[#{@master.id}][]\" type=\"checkbox\" value=\"check1\" /><label for=\"profile_value_#{@master.id}_check1\">check1</label>"
+        @value.value = "check1"
+        @processer.to_edit_html(@value).should == "<input checked=\"checked\" id=\"profile_value_#{@master.id}_check1\" name=\"profile_value[#{@master.id}][]\" type=\"checkbox\" value=\"check1\" /><label for=\"profile_value_#{@master.id}_check1\">check1</label>"
       end
     end
   end
   describe "#validate" do
     before do
       @master = stub_model(UserProfileMaster, :option_values => "check1,check2,check3", :input_type => "check_box", :name => "master", :required => true)
+      @processer = UserProfileMaster::CheckBoxProcesser.new(@master)
       @value = UserProfileValue.new(:user_profile_master => @master, :user => stub_model(User))
     end
     describe "必須の場合" do
       it "空の場合 必須です のバリデーションエラーになること" do
-        @value.value = []
-        @value.should_not be_valid
+        @value.value = ''
+        @processer.validate(@value)
         @value.errors.full_messages.first.should == "master は必須です"
       end
       it "選択される項目以外の値が入っている場合 選択される値以外の値が設定されていますというバリデーションエラーになること" do
         @value.value = ["uncheck","check1"]
-        @value.should_not be_valid
+        @processer.validate(@value)
         @value.errors.full_messages.first.should == "master は選択される値以外のものが設定されています"
       end
       it "正しい項目が入っている場合 バリデーションエラーにならないこと" do
         @value.value = ["check1","check2","check3"]
-        @value.should be_valid
+        @processer.validate(@value)
+        @value.errors.should be_empty
       end
     end
     describe "必須でない場合" do
@@ -502,17 +545,18 @@ describe UserProfileMaster::CheckBoxProcesser do
       end
       it "空の場合 何もバリデーションエラーにならないこと" do
         @value.value = nil
-        @value.should be_valid
+        @processer.validate(@value)
+        @value.errors.should be_empty
       end
       it "選択される項目以外の値が入っている場合 選択される値以外の値が設定されていますというバリデーションエラーになること" do
         @value.value = ["uncheck"]
-        @value.should_not be_valid
+        @processer.validate(@value)
         @value.errors.full_messages.first.should == "master は選択される値以外のものが設定されています"
       end
     end
     it "文字列が入っている場合 選択される値以外の値が設定されていますというバリデーションエラーになること" do
       @value.value = "uncheck"
-      @value.should_not be_valid
+      @processer.validate(@value)
       @value.errors.full_messages.first.should == "master に不正な形式が設定されています"
     end
   end
@@ -526,7 +570,7 @@ describe UserProfileMaster::CheckBoxProcesser do
       it "カンマ区切りの文字列に変換されること" do
         expect_value = "check1,check2,check3"
         lambda do
-          @processer.before_save(@master, @value)
+          @processer.before_save(@value)
         end.should change(@value, :value).from(@input_value).to(expect_value)
       end
     end
@@ -535,66 +579,51 @@ end
 
 describe UserProfileMaster::PrefectureSelectProcesser do
   before do
-    @processer = UserProfileMaster::PrefectureSelectProcesser.new
+    @master = stub_model(UserProfileMaster, :name => "master")
+    @processer = UserProfileMaster::PrefectureSelectProcesser.new(@master)
+    @value = UserProfileValue.new(:user_profile_master => @master, :user => stub_model(User), :value => "")
   end
   describe "#validate" do
-    before do
-      @master = stub_model(UserProfileMaster, :name => "master")
-    end
     describe "入力がない場合" do
       before do
-        @value = UserProfileValue.new(:user_profile_master => @master, :user => stub_model(User), :value => "")
+        @value.value = ''
       end
       describe "必須の場合" do
         before do
-          @master.stub!(:required).and_return(true)
+          @master.required = true
         end
         it "必須エラーが設定されること" do
-          errors = mock('errors')
-          errors.should_receive(:add_to_base).with("master は必須です")
-          @value.stub!(:errors).and_return(errors)
-          @processer.validate(@master, @value)
+          @processer.validate(@value)
+          @value.errors.full_messages.first.should == "master は必須です"
         end
       end
       describe "必須ではない場合" do
         before do
-          @master.stub!(:required).and_return(false)
+          @master.required = false
         end
         it "必須エラーが設定されないこと" do
-          errors = mock('errors')
-          errors.should_not_receive(:add_to_base).with("master は必須です")
-          @value.stub!(:errors).and_return(errors)
-          @processer.validate(@master, @value)
-        end
-        it "入力値不正エラーが設定されないこと" do
-          errors = mock('errors')
-          errors.should_not_receive(:add_to_base).with("master は選択される値以外のものが設定されています")
-          @value.stub!(:errors).and_return(errors)
-          @processer.validate(@master, @value)
+          @processer.validate(@value)
+          @value.errors.should be_empty
         end
       end
     end
     describe "入力がある場合" do
       describe "不正なPrefectureが入力されている場合" do
         before do
-          @value = UserProfileValue.new(:user_profile_master => @master, :user => stub_model(User), :value => "存在しない県")
+          @value.value = "存在しない県"
         end
         it "入力値が不正エラーが設定されること" do
-          errors = mock('errors')
-          errors.should_receive(:add_to_base).with("master は選択される値以外のものが設定されています")
-          @value.stub!(:errors).and_return(errors)
-          @processer.validate(@master, @value)
+          @processer.validate(@value)
+          @value.errors.full_messages.first.should == "master は選択される値以外のものが設定されています"
         end
       end
       describe "正しいPrefectureが入力されている場合" do
         before do
-          @value = UserProfileValue.new(:user_profile_master => @master, :user => stub_model(User), :value => "北海道")
+          @value.value = "北海道"
         end
         it "入力値が不正エラーが設定されないこと" do
-          errors = mock('errors')
-          errors.should_not_receive(:add_to_base).with("master は選択される値以外のものが設定されています")
-          @value.stub!(:errors).and_return(errors)
-          @processer.validate(@master, @value)
+          @processer.validate(@value)
+          @value.errors.should be_empty
         end
       end
     end
@@ -603,81 +632,70 @@ end
 
 describe UserProfileMaster::DatepickerProcesser do
   before do
-    @processer = UserProfileMaster::DatepickerProcesser.new
+    @master = stub_model(UserProfileMaster, :name => "master")
+    @processer = UserProfileMaster::DatepickerProcesser.new(@master)
+    @value = UserProfileValue.new(:user_profile_master => @master, :user => stub_model(User), :value => "")
   end
   describe "#validate" do
-    before do
-      @master = stub_model(UserProfileMaster, :name => "master")
-      @errors = mock('errors')
-      @errors.stub!(:add_to_base)
-    end
     describe "入力がない場合" do
       before do
-        @value = UserProfileValue.new(:user_profile_master => @master, :user => stub_model(User), :value => "")
+        @value.value = ''
       end
       describe "必須の場合" do
         before do
-          @master.stub!(:required).and_return(true)
+          @master.required = true
         end
         it "必須エラーが設定されること" do
-          @errors.should_receive(:add_to_base).with("master は必須です")
-          @value.stub!(:errors).and_return(@errors)
-          @processer.validate(@master, @value)
+          @processer.validate(@value)
+          @value.errors.full_messages.first.should == "master は必須です"
         end
       end
       describe "必須ではない場合" do
         before do
-          @master.stub!(:required).and_return(false)
+          @master.required = false
         end
         it "エラーが設定されないこと" do
-          @errors.should_not_receive(:add_to_base)
-          @value.stub!(:errors).and_return(@errors)
-          @processer.validate(@master, @value)
+          @processer.validate(@value)
+          @value.errors.should be_empty
         end
       end
     end
     describe "入力がある場合" do
       describe "妥当な日付の場合" do
         before do
-          @input_date = "2008/11/11"
-          @value = UserProfileValue.new(:user_profile_master => @master, :user => stub_model(User), :value => @input_date)
+          @value.value = "2008/11/11"
         end
         it "日付妥当性チェックエラーが設定されないこと" do
-          @errors.should_not_receive(:add_to_base).with("master は正しい日付形式で入力して下さい")
-          @value.stub!(:errors).and_return(@errors)
-          @processer.validate(@master, @value)
+          @processer.validate(@value)
+          @value.errors.should be_empty
         end
       end
       describe "妥当だが、西暦が未指定の日付場合" do
         before do
-          @input_date = "11/11"
-          @value = UserProfileValue.new(:user_profile_master => @master, :user => stub_model(User), :value => @input_date)
+          @value.value = "11/11"
         end
         it "日付妥当性チェックエラーが設定されないこと" do
-          @errors.should_not_receive(:add_to_base).with("master は正しい日付形式で入力して下さい")
-          @value.stub!(:errors).and_return(@errors)
-          @processer.validate(@master, @value)
+          @processer.validate(@value)
+          @value.errors.should be_empty
         end
       end
       describe "妥当ではない日付の場合" do
         describe "範囲外の場合" do
           before do
-            @value = UserProfileValue.new(:user_profile_master => @master, :user => stub_model(User), :value => "2008/13/1")
+            @value.value = "2008/13/1"
           end
           it "日付妥当性チェックエラーが設定されること" do
-            @errors.should_receive(:add_to_base).with("master は正しい日付形式で入力して下さい")
-            @value.stub!(:errors).and_return(@errors)
-            @processer.validate(@master, @value)
+            @processer.validate(@value)
+            @value.errors.full_messages.first.should == "master は正しい日付形式で入力して下さい"
           end
         end
         describe "フォーマットが不正な場合" do
           before do
-            @value = UserProfileValue.new(:user_profile_master => @master, :user => stub_model(User), :value => "2008,12,1")
+            @value.value = "2008,12,1"
           end
           it "日付妥当性チェックエラーが設定されること" do
-            @errors.should_receive(:add_to_base).with("master は正しい日付形式で入力して下さい")
-            @value.stub!(:errors).and_return(@errors)
-            @processer.validate(@master, @value)
+            @processer.validate(@value)
+            @value.errors.full_messages.first.should == "master は正しい日付形式で入力して下さい"
           end
         end
       end
@@ -697,7 +715,7 @@ describe UserProfileMaster::DatepickerProcesser do
         it "日付の形式が/区切りになっていること" do
           expect_date = "2008/11/11"
           lambda do
-            @processer.before_save(@master, @value)
+            @processer.before_save(@value)
           end.should change(@value, :value).from(@input_date).to(expect_date)
         end
       end
@@ -708,7 +726,7 @@ describe UserProfileMaster::DatepickerProcesser do
         end
         it "西暦が補完されること" do
           lambda do
-            @processer.before_save(@master, @value)
+            @processer.before_save(@value)
           end.should change(@value, :value).from(@input_date).to("#{Time.now.year}/#{@input_date}")
         end
       end
@@ -719,13 +737,12 @@ describe UserProfileMaster::DatepickerProcesser do
       end
       it "空のまま登録されること" do
         lambda do
-          @processer.before_save(@master, @value)
+          @processer.before_save(@value)
         end.should_not change(@value, :value)
       end
     end
   end
 end
-
 
 describe UserProfileMaster, "#sort_order" do
   before do

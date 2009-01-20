@@ -68,14 +68,17 @@ class UserProfileMaster < ActiveRecord::Base
   end
 
   def input_type_processer
-    self.class.input_type_processer(self.input_type)
-  end
-
-  def self.input_type_processer(val)
-    "UserProfileMaster::#{val.classify}Processer".constantize.new
+    "UserProfileMaster::#{self.input_type.classify}Processer".constantize.new(self)
   rescue NameError => e
     logger.warn "UserProfileMaster - input_type is not selected in registrated value"
-    UserProfileMaster::InputTypeProcesser.new
+    UserProfileMaster::InputTypeProcesser.new(self)
+  end
+
+  def self.input_type_processer_class(input_type)
+    "UserProfileMaster::#{input_type.classify}Processer".constantize
+  rescue NameError => e
+    logger.warn "UserProfileMaster - input_type is not selected in registrated value"
+    UserProfileMaster::InputTypeProcesser
   end
 
   private
@@ -88,11 +91,11 @@ class UserProfileMaster < ActiveRecord::Base
   end
 
   def validates_presence_of_option_values
-    input_type_processer.validates_presence_of_option_values(self)
+    input_type_processer.validates_presence_of_option_values
   end
 
   def validates_format_of_option_values
-    input_type_processer.validates_format_of_option_values(self)
+    input_type_processer.validates_format_of_option_values
   end
 
   class InputTypeProcesser
@@ -102,37 +105,41 @@ class UserProfileMaster < ActiveRecord::Base
     include GetText
     bindtextdomain 'skip'
 
+    def initialize(master)
+      @master = master
+    end
+
     def to_show_html(value)
       value_str = value ? value.value : ""
       content_tag(:div, h(value_str), :class => "input_value") + content_tag(:div, nil, :class => "input_bottom")
     end
 
-    def to_edit_html(master, value)
+    def to_edit_html(value)
       value_str = value ? value.value : ""
-      text_field_tag("profile_value[#{master.id}]", h(value_str))
+      text_field_tag("profile_value[#{@master.id}]", h(value_str))
     end
 
-    def validate(master, value)
-      value.errors.add_to_base(_("%{name} は必須です") % { :name => master.name }) if master.required and value.value.blank?
+    def validate(value)
+      value.errors.add_to_base(_("%{name} は必須です") % { :name => @master.name }) if @master.required and value.value.blank?
     end
 
-    def option_value_validate(master, value)
-      value.errors.add_to_base(_("%{name} は必須です") % { :name => master.name }) if master.required and value.value.blank?
-      value.errors.add_to_base(_("%{name} は選択される値以外のものが設定されています") % { :name => master.name }) unless master.option_array_with_blank.include?(value.value)
+    def option_value_validate(value)
+      value.errors.add_to_base(_("%{name} は必須です") % { :name => @master.name }) if @master.required and value.value.blank?
+      value.errors.add_to_base(_("%{name} は選択される値以外のものが設定されています") % { :name => @master.name }) unless @master.option_array_with_blank.include?(value.value)
     end
 
-    def need_option_values?
+    def self.need_option_values?
       false
     end
 
-    def before_save(master, value)
+    def before_save(value)
     end
 
-    def validates_presence_of_option_values(master)
-      master.errors.add(:option_values, _('は必須です。')) if need_option_values? && master.option_values.blank?
+    def validates_presence_of_option_values
+      @master.errors.add(:option_values, _('は必須です。')) if self.class.need_option_values? && @master.option_values.blank?
     end
 
-    def validates_format_of_option_values(master)
+    def validates_format_of_option_values
     end
   end
 
@@ -140,25 +147,25 @@ class UserProfileMaster < ActiveRecord::Base
   end
 
   class NumberAndHyphenOnlyProcesser < InputTypeProcesser
-    def validate(master, value)
-      value.errors.add_to_base(_("%{name} は必須です") % { :name => master.name }) if master.required and value.value.blank?
-      value.errors.add_to_base(_("%{name} は数字かハイフンで入力してください") % { :name => master.name }) unless value.value =~ /^[0-9\-]*$/
+    def validate(value)
+      value.errors.add_to_base(_("%{name} は必須です") % { :name => @master.name }) if @master.required and value.value.blank?
+      value.errors.add_to_base(_("%{name} は数字かハイフンで入力してください") % { :name => @master.name }) unless value.value =~ /^[0-9\-]*$/
     end
   end
 
   class RadioProcesser < InputTypeProcesser
     alias :validate :option_value_validate
 
-    def to_edit_html(master, value)
+    def to_edit_html(value)
       value_str = value ? value.value : ""
-      str = master.option_array.inject("") do |result, val|
-        result << radio_button_tag("profile_value[#{master.id}]", val, val == value_str) + label_tag("profile_value_#{master.id}_#{val}", val)
+      str = @master.option_array.inject("") do |result, val|
+        result << radio_button_tag("profile_value[#{@master.id}]", val, val == value_str) + label_tag("profile_value_#{@master.id}_#{val}", val)
       end
-      str << content_tag(:a, _("uncheck selected"), :target => "profile_value[#{master.id}]", :class => "cancel_radio") unless master.required
+      str << content_tag(:a, _("uncheck selected"), :target => "profile_value[#{@master.id}]", :class => "cancel_radio") unless @master.required
       str
     end
 
-    def need_option_values?
+    def self.need_option_values?
       true
     end
   end
@@ -174,46 +181,46 @@ class UserProfileMaster < ActiveRecord::Base
       content_tag(:div, render_richtext(value_str, symbol), :class => "input_value rich_value")
     end
 
-    def to_edit_html(master, value)
+    def to_edit_html(value)
       value_str = value ? value.value : ""
-      text_area_tag("profile_value[#{master.id}]", value_str, :class => "invisible min_fckeditor")
+      text_area_tag("profile_value[#{@master.id}]", value_str, :class => "invisible min_fckeditor")
     end
   end
 
   class YearSelectProcesser < InputTypeProcesser
-    def to_edit_html(master, value)
+    def to_edit_html(value)
       value_str = value ? value.value : ""
-      select_tag("profile_value[#{master.id}]", options_for_select(years(master), value_str))
+      select_tag("profile_value[#{@master.id}]", options_for_select(years, value_str))
     end
 
-    def validate(master, value)
-      if master.required and value.value.blank?
-        value.errors.add_to_base(_("%{name} は必須です") % { :name => master.name })
+    def validate(value)
+      if @master.required and value.value.blank?
+        value.errors.add_to_base(_("%{name} は必須です") % { :name => @master.name })
         return
       end
-      value.errors.add_to_base(_("%{name} は4桁の数値で入力して下さい") % { :name => master.name }) unless years(master).include?(value.value)
+      value.errors.add_to_base(_("%{name} は4桁の数値で入力して下さい") % { :name => @master.name }) unless years.include?(value.value)
     end
 
-    def need_option_values?
+    def self.need_option_values?
       true
     end
 
-    def validates_format_of_option_values(master)
-      master.errors.add(:option_values, _('は数値と-(ハイフン)で入力して下さい。')) unless master.option_values =~ /^(\d|-)*$/
+    def validates_format_of_option_values
+      @master.errors.add(:option_values, _('は数値と-(ハイフン)で入力して下さい。')) unless @master.option_values =~ /^(\d|-)*$/
     end
 
     private
-    def years(master)
-      options = start_year(master) <= end_year(master) ? (start_year(master)..end_year(master)).to_a : (end_year(master)..start_year(master)).to_a.reverse
-      master.required ? options : [''] + options
+    def years
+      options = start_year <= end_year ? (start_year..end_year).to_a : (end_year..start_year).to_a.reverse
+      @master.required ? options : [''] + options
     end
 
-    def start_year(master)
-      start_year_and_end_year(master.option_values).first
+    def start_year
+      start_year_and_end_year(@master.option_values).first
     end
 
-    def end_year(master)
-      start_year_and_end_year(master.option_values).last
+    def end_year
+      start_year_and_end_year(@master.option_values).last
     end
 
     def start_year_and_end_year value
@@ -237,12 +244,12 @@ class UserProfileMaster < ActiveRecord::Base
   end
 
   class SelectProcesser < InputTypeProcesser
-    def to_edit_html(master, value)
+    def to_edit_html(value)
       value_str = value ? value.value : ""
-      select_tag("profile_value[#{master.id}]", options_for_select(master.option_array_with_blank, value_str))
+      select_tag("profile_value[#{@master.id}]", options_for_select(@master.option_array_with_blank, value_str))
     end
 
-    def need_option_values?
+    def self.need_option_values?
       true
     end
 
@@ -252,50 +259,50 @@ class UserProfileMaster < ActiveRecord::Base
   class AppendableSelectProcesser < InputTypeProcesser
     include ActionView::Helpers::CaptureHelper
 
-    def to_edit_html(master, value)
+    def to_edit_html(value)
       value_str = value ? value.value : ""
       result = ""
       result << content_tag(:p) do
-        select_tag("profile_value[#{master.id}]", options_for_select(registrated_select_option(master), value_str)) + _("既に登録されている値から選択項目を表示しています")
-      end unless registrated_select_option(master).blank?
+        select_tag("profile_value[#{@master.id}]", options_for_select(registrated_select_option(@master), value_str)) + _("既に登録されている値から選択項目を表示しています")
+      end unless registrated_select_option(@master).blank?
       result << content_tag(:p) do
-        text_field_tag("profile_value[#{master.id}]", (registrated_select_option(master).include?(value_str) ? "" : value_str), :class => "appendable_text") + _('選択項目に無いものを設定する場合はこちらに入力してください')
+        text_field_tag("profile_value[#{@master.id}]", (registrated_select_option(@master).include?(value_str) ? "" : value_str), :class => "appendable_text") + _('選択項目に無いものを設定する場合はこちらに入力してください')
       end
     end
 
     private
-    def registrated_select_option(master)
-      result = master.user_profile_values.find(:all, :select => "count(*) as count, value", :group => "value", :order => "count DESC").map(&:value) || []
-      master.required ? result - [""] : result.unshift("").uniq
+    def registrated_select_option
+      result = @master.user_profile_values.find(:all, :select => "count(*) as count, value", :group => "value", :order => "count DESC").map(&:value) || []
+      @master.required ? result - [""] : result.unshift("").uniq
     end
   end
 
   class CheckBoxProcesser < InputTypeProcesser
-    def to_edit_html(master, value)
+    def to_edit_html(value)
       value_arr = value ? value.value : []
       value_arr = value_arr.split(',') if value_arr.is_a?(String)
-      master.option_array.inject("") do |result, val|
-        result << check_box_tag("profile_value[#{master.id}][]", val, value_arr.include?(val), :id => "profile_value_#{master.id}_#{val}") + label_tag("profile_value_#{master.id}_#{val}", val)
+      @master.option_array.inject("") do |result, val|
+        result << check_box_tag("profile_value[#{@master.id}][]", val, value_arr.include?(val), :id => "profile_value_#{@master.id}_#{val}") + label_tag("profile_value_#{@master.id}_#{val}", val)
       end
     end
 
-    def validate(master, value)
-      value.errors.add_to_base(_("%{name} は必須です") % { :name => master.name }) if master.required and value.value.blank?
+    def validate(value)
+      value.errors.add_to_base(_("%{name} は必須です") % { :name => @master.name }) if @master.required and value.value.blank?
       unless value.value.blank? or value.value.is_a?(Array)
-        value.errors.add_to_base(_("%{name} に不正な形式が設定されています") % {:name => master.name})
+        value.errors.add_to_base(_("%{name} に不正な形式が設定されています") % {:name => @master.name})
       else
         value_arr = value.value.blank? ? [] : value.value
-        if (value_arr - master.option_array).size > 0
-          value.errors.add_to_base(_("%{name} は選択される値以外のものが設定されています") % { :name => master.name })
+        if (value_arr - @master.option_array).size > 0
+          value.errors.add_to_base(_("%{name} は選択される値以外のものが設定されています") % { :name => @master.name })
         end
       end
     end
 
-    def need_option_values?
+    def self.need_option_values?
       true
     end
 
-    def before_save(master, value)
+    def before_save(value)
       value_arr = value.value.blank? ? [] : value.value
       value.value = value_arr.join(',') if value_arr.is_a?(Array)
     end
@@ -303,41 +310,41 @@ class UserProfileMaster < ActiveRecord::Base
 
   class PrefectureSelectProcesser < InputTypeProcesser
     PREFECTURES = ["北海道", "青森県", "岩手県", "宮城県", "秋田県", "山形県", "福島県", "茨城県", "栃木県", "群馬県", "埼玉県", "千葉県", "東京都", "神奈川県", "新潟県", "富山県", "石川県", "福井県", "山梨県", "長野県", "岐阜県", "静岡県", "愛知県", "三重県", "滋賀県", "京都府", "大阪府", "兵庫県", "奈良県", "和歌山県", "鳥取県", "島根県", "岡山県", "広島県", "山口県", "徳島県", "香川県", "愛媛県", "高知県", "福岡県", "佐賀県", "長崎県", "熊本県", "大分県", "宮崎県", "鹿児島県", "沖縄県"].freeze
-    def to_edit_html(master, value)
+    def to_edit_html(value)
       value_str = value ? value.value : ""
-      select_tag("profile_value[#{master.id}]", options_for_select(prefectures(master), value_str))
+      select_tag("profile_value[#{@master.id}]", options_for_select(prefectures(@master), value_str))
     end
 
-    def validate(master, value)
-      if master.required and value.value.blank?
-        value.errors.add_to_base(_("%{name} は必須です") % { :name => master.name })
+    def validate(value)
+      if @master.required and value.value.blank?
+        value.errors.add_to_base(_("%{name} は必須です") % { :name => @master.name })
         return
       end
-      value.errors.add_to_base(_("%{name} は選択される値以外のものが設定されています") % { :name => master.name }) unless prefectures(master).include?(value.value)
+      value.errors.add_to_base(_("%{name} は選択される値以外のものが設定されています") % { :name => @master.name }) unless prefectures.include?(value.value)
     end
 
     private
-    def prefectures(master)
-      options = master.required ? PREFECTURES : [''] + PREFECTURES
+    def prefectures
+      options = @master.required ? PREFECTURES : [''] + PREFECTURES
     end
   end
 
   class DatepickerProcesser < InputTypeProcesser
-    def to_edit_html(master, value)
+    def to_edit_html(value)
       value_str = value ? value.value : ""
-      text_field_tag("profile_value[#{master.id}]", h(value_str), :class => "datepicker", :id => "datepicker_#{master.id}")
+      text_field_tag("profile_value[#{@master.id}]", h(value_str), :class => "datepicker", :id => "datepicker_#{@master.id}")
     end
 
-    def validate(master, value)
-      value.errors.add_to_base(_("%{name} は必須です") % { :name => master.name }) if master.required and value.value.blank?
+    def validate(value)
+      value.errors.add_to_base(_("%{name} は必須です") % { :name => @master.name }) if @master.required and value.value.blank?
       begin
         Date.parse(value.value) unless value.value.blank?
       rescue ArgumentError => e
-        value.errors.add_to_base(_("%{name} は正しい日付形式で入力して下さい") % { :name => master.name })
+        value.errors.add_to_base(_("%{name} は正しい日付形式で入力して下さい") % { :name => @master.name })
       end
     end
 
-    def before_save(master, value)
+    def before_save(value)
       value.value = Date.parse(value.value).strftime('%Y/%m/%d') unless value.value.blank?
     end
   end
