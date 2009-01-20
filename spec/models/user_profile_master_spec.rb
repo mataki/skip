@@ -16,13 +16,13 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe UserProfileMaster do
-  describe UserProfileMaster, '.valid_presence_of_category' do
+  describe UserProfileMaster, '.validates_presence_of_category' do
     describe 'user_profile_master_categoryに対象のカテゴリが存在する場合' do
       before do
         @user_profile_master = create_user_profile_master(:user_profile_master_category_id => create_user_profile_master_category.id)
       end
       it 'validationに成功すること' do
-        @user_profile_master.send!(:valid_presence_of_category).should be_true
+        @user_profile_master.send!(:validates_presence_of_category).should be_true
       end
     end
     describe 'user_profile_master_categoryに対象のカテゴリが存在しない場合' do
@@ -30,11 +30,11 @@ describe UserProfileMaster do
         @user_profile_master = create_user_profile_master
       end
       it 'validationに失敗すること' do
-        @user_profile_master.send!(:valid_presence_of_category).should be_false
+        @user_profile_master.send!(:validates_presence_of_category).should be_false
       end
       it 'エラーメッセージが設定されること' do
         lambda do
-          @user_profile_master.send!(:valid_presence_of_category)
+          @user_profile_master.send!(:validates_presence_of_category)
         end.should change(@user_profile_master.errors, :size).from(0).to(1)
       end
     end

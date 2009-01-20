@@ -46,7 +46,7 @@ class UserProfileMaster < ActiveRecord::Base
   end
 
   def validate
-    valid_presence_of_category
+    validates_presence_of_category
   end
 
   def option_array
@@ -77,7 +77,7 @@ class UserProfileMaster < ActiveRecord::Base
   end
 
   private
-  def valid_presence_of_category
+  def validates_presence_of_category
     unless category = UserProfileMasterCategory.find_by_id(self.user_profile_master_category_id)
       errors.add(:user_profile_master_category_id, _('プロフィールカテゴリに存在しない値です。'))
       return false
