@@ -72,7 +72,7 @@ end
 def user_login
   session[:user_code] = '111111'
   session[:prepared] = true
-  u = stub_model(User, :symbol => 'uid:user', :admin => false, :name => '一般ユーザ', :crypted_password => '123456789')
+  u = stub_model(User, :symbol => 'uid:user', :admin => false, :name => '一般ユーザ', :crypted_password => '123456789', :code => "111111")
   u.stub!(:active?).and_return(true)
   if defined? controller
     controller.stub!(:current_user).and_return(u)
@@ -188,6 +188,20 @@ def create_user_profile_master(options = {})
   }.merge(options))
   profile_master.save_without_validation!
   profile_master
+end
+
+# --- OpenID Provider関連テスト用
+def checkid_request_params
+  { 'openid.ns' => OpenID::OPENID2_NS,
+    'openid.mode' => 'checkid_setup',
+    'openid.realm' => 'http://test.com/',
+    'openid.trust_root' => 'http://test.com/',
+    'openid.return_to' => 'http://test.com/return',
+    'openid.claimed_id' => 'http://dennisbloete.de/',
+    'openid.identity' => 'http://openid.innovated.de/dbloete' }
+end
+def identifier(user)
+  "http://test.host/user/#{user.code}"
 end
 
 ######skip関連のテストで必要

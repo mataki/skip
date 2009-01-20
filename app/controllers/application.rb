@@ -263,6 +263,10 @@ protected
     return true
   end
 
+  def scheme
+    INITIAL_SETTINGS['use_ssl'] ? 'https' : 'http'
+  end
+
 private
   def sso
     if login_mode?(:fixed_rp) and !logged_in?
