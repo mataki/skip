@@ -151,7 +151,7 @@ class GroupController < ApplicationController
   # tab_menu
   def share_file
     params.store(:owner_name, @group.name)
-    params.store(:visitor_is_uploader, @participation)
+    params.store(:visitor_is_uploader, @group.participating?(current_user))
     text = render_component_as_string :controller => 'share_file', :action => 'list', :id => @group.symbol, :params => params
     render :text => text, :layout => 'layout'
   end
@@ -385,6 +385,7 @@ private
     @participation = @group.group_participations.find_by_user_id(session[:user_id])
   end
 
+  # TODO Group#participating?に順次置き換えていって最終的に削除する。
   def participating?
     @participation and @participation.waiting? != true
   end
