@@ -123,7 +123,11 @@ class ConversionProfileToCustomizableProfile < ActiveRecord::Migration
           # 属性情報の移行
           Admin::UserProfileValue.create!(:user_id => user_id, :user_profile_master_id => gender_type.id,  :value => profile.gender_type.blank? ? "" : GENDER[profile.gender_type])
           Admin::UserProfileValue.create!(:user_id => user_id, :user_profile_master_id => join_year.id,    :value => profile.join_year.blank? ? "" : profile.join_year.to_s)
-          Admin::UserProfileValue.create!(:user_id => user_id, :user_profile_master_id => birth_date.id,   :value => (profile.birth_month.blank? || profile.birth_day.blank?) ? "" : "#{profile.birth_month}/#{profile.birth_day}")
+          begin
+            Admin::UserProfileValue.create!(:user_id => user_id, :user_profile_master_id => birth_date.id,   :value => (profile.birth_month.blank? || profile.birth_day.blank?) ? "" : "#{profile.birth_month}/#{profile.birth_day}")
+          rescue ActiveRecord::RecordInvalid
+            Admin::UserProfileValue.create!(:user_id => user_id, :user_profile_master_id => birth_date.id,   :value => "")
+          end
           Admin::UserProfileValue.create!(:user_id => user_id, :user_profile_master_id => blood_type.id,   :value => profile.blood_type.blank? ? "" : BLOOD[profile.blood_type])
           Admin::UserProfileValue.create!(:user_id => user_id, :user_profile_master_id => hometown.id,     :value => profile.hometown.blank? ? "" : TODOUHUKEN[profile.hometown])
           Admin::UserProfileValue.create!(:user_id => user_id, :user_profile_master_id => alma_mater.id,   :value => profile.alma_mater.blank? ? "" : profile.alma_mater)
