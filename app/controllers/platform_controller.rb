@@ -13,8 +13,6 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-require 'openid/extensions/ax'
-
 class PlatformController < ApplicationController
   layout 'not_logged_in'
   skip_before_filter :sso, :login_required, :prepare_session

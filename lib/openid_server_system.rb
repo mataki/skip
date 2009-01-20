@@ -104,6 +104,7 @@ module OpenidServerSystem
   # http://openid.net/specs/openid-provider-authentication-policy-extension-1_0-02.html#anchor9
   def pape_requirements_met?(auth_time)
     return true unless pape_request && pape_request.max_auth_age
+    return false if auth_time.nil?
     (Time.now - auth_time).to_i <= pape_request.max_auth_age
   end
 

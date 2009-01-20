@@ -201,7 +201,7 @@ def checkid_request_params
     'openid.identity' => 'http://openid.innovated.de/dbloete' }
 end
 def identifier(user)
-  "http://test.host/user/#{user.code}"
+  "http://test.host/id/#{user.code}"
 end
 
 ######skip関連のテストで必要

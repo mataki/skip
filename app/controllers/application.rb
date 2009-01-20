@@ -30,6 +30,8 @@ class ApplicationController < ActionController::Base
   after_filter  :remove_message
 
   init_gettext "skip"
+
+  helper_method :scheme, :endpoint_url, :identifier
 protected
   include InitialSettingsHelper
   # アプリケーションで利用するセッションの準備をする
@@ -265,6 +267,15 @@ protected
 
   def scheme
     INITIAL_SETTINGS['use_ssl'] ? 'https' : 'http'
+  end
+
+  def endpoint_url
+    server_url(:protocol => scheme)
+  end
+
+  def identifier(user)
+    user_str = user.is_a?(User) ? user.code : user
+    identity_url(:user => user_str, :protocol => scheme)
   end
 
 private

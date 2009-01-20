@@ -1,6 +1,3 @@
-require 'openid/extensions/pape'
-require 'openid/extensions/ax'
-
 class ServerController < ApplicationController
   include OpenidServerSystem
 
@@ -14,7 +11,7 @@ class ServerController < ApplicationController
   skip_after_filter :remove_message
   before_filter :ensure_valid_checkid_request, :except => [:index]
   # These methods are used to display information about the request to the user
-  helper_method :sreg_request, :ax_fetch_request, :endpoint_url
+  helper_method :sreg_request, :ax_fetch_request
 
   # This is the server endpoint which handles all incoming OpenID requests.
   # Associate and CheckAuth requests are answered directly - functionality
@@ -168,15 +165,6 @@ class ServerController < ApplicationController
       hash["value.#{i[0]}"] = user.send(i[2].to_sym)
     end
     hash
-  end
-
-  def endpoint_url
-    server_url(:protocol => scheme)
-  end
-
-  def identifier(user)
-    user_str = user.is_a?(User) ? user.code : user
-    identity_url(:user => user_str, :protocol => scheme)
   end
 
   def checkid_request
