@@ -66,13 +66,19 @@ h3.topics {
   padding: 0 0 0 7px;
 }
 .fieldWithErrors {
-  display: inline;
-  padding: 2px;
-  background-color: #F6F6F6;
+  display: table;
+  border: 1px solid pink;
+  /* IE6用 */
+  _display: inline;
   _background-color: pink;
+  _border: 1px solid pink;
 }
 .fieldWithErrors label {
   background-color: pink;
+}
+.richtext .fieldWithErrors {
+  border:1px solid pink;
+  display: block;
 }
 div.feed_item {
   border: 1px dotted blue;

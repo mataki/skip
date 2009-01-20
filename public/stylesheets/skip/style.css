@@ -145,12 +145,21 @@ div.errorExplanation li {
   margin: 0;
   padding: 1px 2px 0px 2px;
 }
+
 .fieldWithErrors {
-  padding: 2px;
-  background-color: red;
   display: table;
-  /* IE6でスクロールしないと背景色が表示されないバグ対応のため */
-  _height:1%;
+  border: 1px solid pink;
+  /* IE6用 */
+  _display: inline;
+  _background-color: pink;
+  _border: 1px solid pink;
+}
+.fieldWithErrors label {
+  background-color: pink;
+}
+.richtext .fieldWithErrors {
+  border:1px solid pink;
+  display: block;
 }
 /* ----------------------------------- */
 /* hiki_style */
