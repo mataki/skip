@@ -373,6 +373,47 @@ describe UserProfileMaster::YearSelectProcesser do
     end
   end
 
+  describe '#validates_format_of_option_values' do
+    before do
+      @processer = UserProfileMaster::YearSelectProcesser.new
+      @errors = mock('errors')
+      @errors.stub!(:add)
+    end
+    describe '入力がない場合' do
+      before do
+        @master = stub_model(UserProfileMaster, :name => "master", :option_values => "")
+        @master.stub!(:errors).and_return(@errors)
+      end
+      it 'フォーマットエラーが設定されないこと' do
+        @errors.should_not_receive(:add)
+        @processer.validates_format_of_option_values(@master)
+      end
+    end
+
+    describe '入力がある場合' do
+      describe '数値とハイフンの文字列の場合' do
+        before do
+          @master = stub_model(UserProfileMaster, :name => "master", :option_values => "2007-2008")
+          @master.stub!(:errors).and_return(@errors)
+        end
+        it 'フォーマットエラーが設定されないこと' do
+          @errors.should_not_receive(:add)
+          @processer.validates_format_of_option_values(@master)
+        end
+      end
+      describe '数値とハイフン以外の文字列が含まれる場合' do
+        before do
+          @master = stub_model(UserProfileMaster, :name => "master", :option_values => "2007,2008")
+          @master.stub!(:errors).and_return(@errors)
+        end
+        it 'フォーマットエラーが設定されること' do
+          @errors.should_receive(:add).with(:option_values, 'は数値と-(ハイフン)で入力して下さい。')
+          @processer.validates_format_of_option_values(@master)
+        end
+      end
+    end
+  end
+
   describe "#start_year_and_end_year" do
     before do
       Time.stub!(:now).and_return(Time.local(2008))
