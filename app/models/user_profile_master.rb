@@ -47,6 +47,7 @@ class UserProfileMaster < ActiveRecord::Base
 
   def validate
     validates_presence_of_category
+    validates_presence_of_option_values
   end
 
   def option_array
@@ -85,6 +86,10 @@ class UserProfileMaster < ActiveRecord::Base
     true
   end
 
+  def validates_presence_of_option_values
+    input_type_processer.validates_presence_of_option_values(self)
+  end
+
   class InputTypeProcesser
     include ActionView::Helpers::TagHelper
     include ActionView::Helpers::FormTagHelper
@@ -116,6 +121,10 @@ class UserProfileMaster < ActiveRecord::Base
     end
 
     def before_save(master, value)
+    end
+
+    def validates_presence_of_option_values(master)
+      master.errors.add(:option_values, _('は必須です。')) if need_option_values? && master.option_values.blank?
     end
   end
 

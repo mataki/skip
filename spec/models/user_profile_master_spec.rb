@@ -15,7 +15,7 @@
 
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
-describe UserProfileMaster do
+describe UserProfileMaster, 'validation' do
   describe UserProfileMaster, '.validates_presence_of_category' do
     describe 'user_profile_master_categoryに対象のカテゴリが存在する場合' do
       before do
@@ -158,6 +158,47 @@ describe UserProfileMaster::InputTypeProcesser do
         @value.value = "unselect"
         @value.should_not be_valid
         @value.errors.full_messages.first.should == "master は選択される値以外のものが設定されています"
+      end
+    end
+  end
+  describe '#validates_presence_of_option_values' do
+    before do
+      @processer = UserProfileMaster::InputTypeProcesser.new
+      @master = stub_model(UserProfileMaster, :name => "master", :option_values => "", :input_type => 'text_field')
+      @errors = mock('errors')
+      @errors.stub!(:clear)
+      @master.stub!(:errors).and_return(@errors)
+    end
+    describe 'option_valuesが必須の場合' do
+      before do
+        @processer.should_receive(:need_option_values?).and_return(true)
+      end
+      describe 'option_valuesに入力がある場合' do
+        before do
+          @master.option_values = 'skip'
+        end
+        it 'masterにoption_valuesのバリデーションエラーが設定されないこと' do
+          @errors.should_not_receive(:add).with(:option_values, "は必須です。")
+          @processer.validates_presence_of_option_values(@master)
+        end
+      end
+      describe 'option_valuesに入力がない場合' do
+        before do
+          @master.option_values = ''
+        end
+        it 'masterにoption_valuesが必須である旨のバリデーションエラーが設定されること' do
+          @errors.should_receive(:add).with(:option_values, "は必須です。")
+          @processer.validates_presence_of_option_values(@master)
+        end
+      end
+    end
+    describe 'option_valuesが必須ではない場合' do
+      before do
+        @processer.should_receive(:need_option_values?).and_return(false)
+      end
+      it 'masterにoption_valuesのバリデーションエラーが設定されないこと' do
+        @errors.should_not_receive(:add).with(:option_values, "は必須です。")
+        @processer.validates_presence_of_option_values(@master)
       end
     end
   end
