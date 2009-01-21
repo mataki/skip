@@ -9,7 +9,7 @@
       <th width="100px"><%= label_tag "profile_value[#{master.id}]", h(master.name) %><%= master.description.blank? ? '' : help_icon_tag(:content => master.description) %></th>
       <% profile = profile_hash[master.id] %>
       <td>
-        <%= master.input_type_processer.to_edit_html(master, profile) %>
+        <%= master.input_type_processer.to_edit_html(profile) %>
       </td>
     </tr>
     <% end -%>

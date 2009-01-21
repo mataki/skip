@@ -263,10 +263,10 @@ class UserProfileMaster < ActiveRecord::Base
       value_str = value ? value.value : ""
       result = ""
       result << content_tag(:p) do
-        select_tag("profile_value[#{@master.id}]", options_for_select(registrated_select_option(@master), value_str)) + _("既に登録されている値から選択項目を表示しています")
-      end unless registrated_select_option(@master).blank?
+        select_tag("profile_value[#{@master.id}]", options_for_select(registrated_select_option, value_str)) + _("既に登録されている値から選択項目を表示しています")
+      end unless registrated_select_option.blank?
       result << content_tag(:p) do
-        text_field_tag("profile_value[#{@master.id}]", (registrated_select_option(@master).include?(value_str) ? "" : value_str), :class => "appendable_text") + _('選択項目に無いものを設定する場合はこちらに入力してください')
+        text_field_tag("profile_value[#{@master.id}]", (registrated_select_option.include?(value_str) ? "" : value_str), :class => "appendable_text") + _('選択項目に無いものを設定する場合はこちらに入力してください')
       end
     end
 
@@ -312,7 +312,7 @@ class UserProfileMaster < ActiveRecord::Base
     PREFECTURES = ["北海道", "青森県", "岩手県", "宮城県", "秋田県", "山形県", "福島県", "茨城県", "栃木県", "群馬県", "埼玉県", "千葉県", "東京都", "神奈川県", "新潟県", "富山県", "石川県", "福井県", "山梨県", "長野県", "岐阜県", "静岡県", "愛知県", "三重県", "滋賀県", "京都府", "大阪府", "兵庫県", "奈良県", "和歌山県", "鳥取県", "島根県", "岡山県", "広島県", "山口県", "徳島県", "香川県", "愛媛県", "高知県", "福岡県", "佐賀県", "長崎県", "熊本県", "大分県", "宮崎県", "鹿児島県", "沖縄県"].freeze
     def to_edit_html(value)
       value_str = value ? value.value : ""
-      select_tag("profile_value[#{@master.id}]", options_for_select(prefectures(@master), value_str))
+      select_tag("profile_value[#{@master.id}]", options_for_select(prefectures, value_str))
     end
 
     def validate(value)
