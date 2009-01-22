@@ -6,6 +6,8 @@ ENV['RAILS_ENV'] ||= 'production'
 
 RAILS_GEM_VERSION = '2.1.2' unless defined? RAILS_GEM_VERSION
 
+SKIP_VERSION = '1.0.0'
+
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
 

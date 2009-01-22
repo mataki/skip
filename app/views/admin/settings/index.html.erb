@@ -13,6 +13,12 @@
 <% if params[:tab] == 'main' -%>
 <div class="content">
   <h3 class="topics"><%= _('システム情報') %></h3>
+  <h4><%= _('基本情報') %></h4>
+  <div class="box tabular">
+    <p class="initial_setting">
+    <label><%= _('SKIP version') %></label> : <%= h SKIP_VERSION %>
+    </p>
+  </div>
   <% @system_infos.each do |category| -%>
   <h4><%=h category[:name] %></h4>
   <div class="box tabular">
