@@ -159,10 +159,10 @@ class RankingsController < ApplicationController
   def setup_layout
     @main_menu = @title = 'ランキング'
 
-    @tab_menu_source = [ ['月別ランキング', 'monthly'],
-                         ['総合ランキング', 'all'],
-                         ['人気ブックマーク', 'bookmark'],
-                         ['サイト情報', 'statistics'] ]
+    @tab_menu_source = [ {:label => _('月別総合ランキング'), :options => {:action => 'monthly'}},
+                         {:label => _('総合ランキング'), :options => {:action => 'all'}},
+                         {:label => _('人気ブックマーク'), :options => {:action => 'bookmark'}},
+                         {:label => _('サイト情報'), :options => {:action => 'statistics'}} ]
   end
 
   def get_site_count_hash_by_day date

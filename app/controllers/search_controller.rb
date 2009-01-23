@@ -21,7 +21,7 @@ class SearchController < ApplicationController
   # tab_menu
   def entry_search
     @main_menu = @title = '記事'
-    @tab_menu_source = [ ['記事を探す', 'entry_search'] ]
+    @tab_menu_source = [ {:label => _('記事を探す'), :options => {:action => 'entry_search'}} ]
 
     params[:tag_select] ||= "AND"
     find_params = BoardEntry.make_conditions(login_user_symbols, {:keyword =>params[:keyword],
@@ -63,7 +63,7 @@ class SearchController < ApplicationController
   # tab_menu
   def share_file_search
     @main_menu = @title = 'ファイル'
-    @tab_menu_source = [ ['ファイルを探す', 'share_file_search'] ]
+    @tab_menu_source = [ {:label => _('ファイルを探す'), :options => {:action => 'share_file_search'}} ]
 
     @tags = ShareFile.get_popular_tag_words
 

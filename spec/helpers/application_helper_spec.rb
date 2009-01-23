@@ -31,6 +31,69 @@ describe ApplicationHelper, "#show_contents" do
   end
 end
 
+describe ApplicationHelper, '#generate_tab_menu' do
+  before do
+    @action = 'action'
+    @label = 'label'
+    @controller = mock('controller')
+    helper.stub!(:controller).and_return(@controller)
+  end
+  describe 'selected_actionsが指定されている場合' do
+    before do
+      @selected_actions = ['selected_action']
+    end
+    describe 'controllerのactionがselected_actionsに含まれる場合' do
+      before do
+        @controller.stub!(:action_name).and_return('selected_action')
+        expected_link_tag = '<a href="/controller/action" class="selected"><span>label</span></a>'
+        @expected_html = content_tag(:ul, content_tag(:li, expected_link_tag))
+      end
+      it 'html_options[:class]にselectedが含まれること' do
+        tab_menu_sources = [{:label => @label, :options => {:controller => 'controller', :action => @action}, :selected_actions => @selected_actions}]
+        helper.generate_tab_menu(tab_menu_sources).should == @expected_html
+      end
+    end
+    describe 'controllerのactionがselected_actionsに含まれない場合' do
+      before do
+        @controller.stub!(:action_name).and_return('not_selected_action')
+        expected_link_tag = '<a href="/controller/action"><span>label</span></a>'
+        @expected_html = content_tag(:ul, content_tag(:li, expected_link_tag))
+      end
+      it 'html_options[:class]にselectedが含まれないこと' do
+        tab_menu_sources = [{:label => @label, :options => {:controller => 'controller', :action => @action}, :selected_actions => @selected_actions}]
+        helper.generate_tab_menu(tab_menu_sources).should == @expected_html
+      end
+    end
+  end
+  describe 'selected_actionsが指定されていない場合' do
+    before do
+      @selected_actions = nil
+    end
+    describe 'controllerのactionがoptions[:action]と等しい場合' do
+      before do
+        @controller.stub!(:action_name).and_return(@action)
+        expected_link_tag = '<a href="/controller/action" class="selected"><span>label</span></a>'
+        @expected_html = content_tag(:ul, content_tag(:li, expected_link_tag))
+      end
+      it 'aタグのclassにselectedが含まれていること' do
+        tab_menu_sources = [{:label => @label, :options => {:controller => 'controller', :action => @action}, :selected_actions => @selected_actions}]
+        helper.generate_tab_menu(tab_menu_sources).should == @expected_html
+      end
+    end
+    describe 'controllerのactionがoptions[:action]と等しくない場合' do
+      before do
+        @controller.stub!(:action_name).and_return('hoge')
+        expected_link_tag = '<a href="/controller/action"><span>label</span></a>'
+        @expected_html = content_tag(:ul, content_tag(:li, expected_link_tag))
+      end
+      it 'aタグのclassにselectedが含まれていること' do
+        tab_menu_sources = [{:label => @label, :options => {:controller => 'controller', :action => @action}, :selected_actions => @selected_actions}]
+        helper.generate_tab_menu(tab_menu_sources).should == @expected_html
+      end
+    end
+  end
+end
+
 describe ApplicationHelper, '#user_link_to_with_portrait' do
   before do
     @user = stub_model(User, :uid => 'uid:skipkuma', :name => 'skipkuma')

@@ -106,7 +106,7 @@ class BookmarkController < ApplicationController
 
     @main_menu = 'ブックマーク'
     @title = 'ブックマーク[' + @bookmark.title + ']'
-    @tab_menu_source = [ ['ブックマークコメント', 'show'] ]
+    @tab_menu_source = [ {:label => _('ブックマークコメント'), :options => {:action => 'show'}} ]
     @tab_menu_option = { :uri => @bookmark.url }
 
     # TODO: SQLを発行しなくても判断できるのでrubyで処理する様に

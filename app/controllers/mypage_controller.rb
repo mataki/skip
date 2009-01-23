@@ -523,15 +523,15 @@ class MypageController < ApplicationController
   def setup_layout
     @main_menu = @title = 'マイページ'
 
-    @tab_menu_source = [ ['ホーム', 'index'],
-                         ['プロフィール', 'profile'],
-                         ['ブログ', 'blog'],
-                         ['ファイル','share_file'],
-                         ['ソーシャル', 'social'],
-                         ['グループ', 'group'],
-                         ['ブックマーク', 'bookmark'],
-                         ['足跡', 'trace'],
-                         ['管理', 'manage'] ]
+    @tab_menu_source = [ {:label => _('ホーム'), :options => {:action => 'index'}, :selected_actions => %w(index entries entries_by_date entries_by_antenna)},
+                         {:label => _('プロフィール'), :options => {:action => 'profile'}},
+                         {:label => _('ブログ'), :options => {:action => 'blog'}},
+                         {:label => _('ファイル'), :options => {:action => 'share_file'}},
+                         {:label => _('ソーシャル'), :options => {:action => 'social'}},
+                         {:label => _('グループ'), :options => {:action => 'group'}},
+                         {:label => _('ブックマーク'), :options => {:action => 'bookmark'}},
+                         {:label => _('足跡'), :options => {:action => 'trace'}},
+                         {:label => _('管理'), :options => {:action => 'manage'}} ]
   end
 
   # アンテナボックス表示のための情報を設定する

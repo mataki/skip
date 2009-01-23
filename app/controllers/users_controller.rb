@@ -66,8 +66,8 @@ private
   def setup_layout
     @main_menu = @title = 'ユーザ'
 
-    @tab_menu_source = [ ['ユーザを探す', 'index'],
-                         ['紹介文', 'chain_search'] ]
+    @tab_menu_source = [ {:label => _('ユーザを探す'), :options => {:action => 'index'}},
+                         {:label => _('紹介文'), :options => {:action => 'chain_search'}} ]
   end
 end
 

@@ -366,12 +366,12 @@ private
     @title = @group.name if @group
 
     @tab_menu_source = []
-    @tab_menu_source << ['サマリ', 'show']
-    @tab_menu_source << ['参加者一覧', 'users']
-    @tab_menu_source << ['掲示板', 'bbs']
-    @tab_menu_source << ['新規投稿', 'new'] if participating?
-    @tab_menu_source << ['ファイル', 'share_file']
-    @tab_menu_source << ['管理', 'manage'] if participating? and @participation.owned?
+    @tab_menu_source << {:label => _('サマリ'), :options => {:action => 'show'}}
+    @tab_menu_source << {:label => _('参加者一覧'), :options => {:action => 'users'}}
+    @tab_menu_source << {:label => _('掲示版'), :options => {:action => 'bbs'}}
+    @tab_menu_source << {:label => _('新規投稿'), :options => {:action => 'new'}} if participating?
+    @tab_menu_source << {:label => _('ファイル'), :options => {:action => 'share_file'}}
+    @tab_menu_source << {:label => _('管理'), :options => {:action => 'manage'}} if participating? and @participation.owned?
 
     @tab_menu_option = { :gid => @group.gid }
   end

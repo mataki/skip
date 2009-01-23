@@ -35,7 +35,7 @@ private
   def setup_layout
     @main_menu = @title = 'ブックマーク'
 
-    @tab_menu_source = [ ['ブックマークを探す', 'index'],
-                         ['ブックマークレット', 'setup'] ]
+    @tab_menu_source = [ {:label => _('ブックマークを探す'), :options => {:action => 'index'}},
+                         {:label => _('ブックマークレット'), :options => {:action => 'setup'}} ]
   end
 end

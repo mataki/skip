@@ -216,28 +216,29 @@ class UserController < ApplicationController
 
 private
   def setup_layout
-    @tab_menu_source = [ ['プロフィール', 'show'],
-                         ['ブログ', 'blog'],
-                         ['ファイル','share_file'],
-                         ['ソーシャル', 'social'],
-                         ['グループ', 'group'],
-                         ['ブックマーク', 'bookmark'] ]
+    @tab_menu_source = [ {:label => _('プロフィール'), :options => {:action => 'show'}},
+                         {:label => _('ブログ'), :options => {:action => 'blog'}},
+                         {:label => _('ファイル'), :options => {:action => 'share_file'}},
+                         {:label => _('ソーシャル'), :options => {:action => 'social'}},
+                         {:label => _('グループ'), :options => {:action => 'group'}},
+                         {:label => _('ブックマーク'), :options => {:action => 'bookmark'}} ]
 
     if @user.id != session[:user_id]
       @main_menu = 'ユーザ'
       @title = @user.name + 'さん'
 
       if Chain.count(:conditions => ["from_user_id = ? and to_user_id = ?", session[:user_id], @user.id]) <= 0
-        @tab_menu_source << ['紹介文を作る', 'new_chain']
+        @tab_menu_source << {:label => _('紹介文を作る'), :options => {:action => 'new_chain'}}
       else
-        @tab_menu_source << ['紹介文の変更', 'edit_chain']
+        @tab_menu_source << {:label => _('紹介文の変更'), :options => {:action => 'edit_chain'}}
       end
     else
+      # TODO mypage_controllerの一部とまったく同じコード…なんとかDRYにしたいところ
       @main_menu = @title = 'マイページ'
 
-      @tab_menu_source.unshift ['ホーム', 'index']
-      @tab_menu_source << ['足跡', 'trace']
-      @tab_menu_source << ['管理', 'manage']
+      @tab_menu_source.unshift({:label => _('ホーム'), :options => {:action => 'index'}, :selected_actions => %w(index entries entries_by_date entries_by_antenna)}) 
+      @tab_menu_source << {:label => _('足跡'), :options => {:action => 'trace'}}
+      @tab_menu_source << {:label => _('管理'), :options => {:action => 'manage'}}
     end
 
     @tab_menu_option = { :uid => @user.uid }

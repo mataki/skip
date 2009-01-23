@@ -67,7 +67,7 @@ private
   def setup_layout
     @main_menu = @title = 'グループ'
 
-    @tab_menu_source = [ ['グループを探す', 'index'],
-                         ['グループの新規作成', 'new'] ]
+    @tab_menu_source = [ {:label => _('グループを探す'), :options => {:action => 'index'}},
+                         {:label => _('グループの新規作成'), :options => {:action => 'new'}} ]
   end
 end

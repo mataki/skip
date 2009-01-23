@@ -23,17 +23,17 @@ module ApplicationHelper
                         'page' => 'page'}
 
   # レイアウトのタブメニューを生成する
-  # menu_source:: メニュー名とアクションを配列にした項目の配列 ex.[ [name, action] ]
-  # option:: リンクにつけるオプションのHash（デフォルト空）
-  def generate_tab_menu menu_source, option = {}
-    menu_source ||= []
-    option ||= {}
-
+  def generate_tab_menu(tab_menu_sources)
     output = ''
-    menu_source.each do |menu|
-      output << generate_tab_link(menu.first, option.merge({ :action => menu.last }))
+    tab_menu_sources.each do |source|
+      html_options = source[:html_options] || {}
+      if controller.action_name == source[:options][:action] || (source[:selected_actions] && source[:selected_actions].include?(controller.action_name))
+        html_options.merge!(:class => 'selected')
+      end
+      title =  content_tag(:span, source[:label])
+      output << content_tag(:li, link_to(title, source[:options], html_options))
     end
-    '<ul>' + output + '</ul>'
+    content_tag :ul, output
   end
 
   # 指定の件数を超えた場合のページ遷移のナビゲージョンリンクを生成する
@@ -283,11 +283,6 @@ module ApplicationHelper
   end
 
 private
-  def generate_tab_link name, options
-    html_option = {:class => 'selected'} if @controller.action_name == options[:action]
-    '<li>' + link_to('<span>' + name + '</span>', options, html_option) + '</li>'
-  end
-
   def relative_url_root
     @controller.request.relative_url_root
   end
