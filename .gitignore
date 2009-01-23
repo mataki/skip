@@ -7,6 +7,7 @@ public/custom/*
 public/javascripts/prototype.all.js
 public/javascripts/jquery.all.js
 public/stylesheets/skip.style.css
+lib/tasks/rspec.rake
 vendor/rails
 coverage
 tmp/*
