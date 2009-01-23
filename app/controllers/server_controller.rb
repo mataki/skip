@@ -108,6 +108,7 @@ class ServerController < ApplicationController
       flash[:notice] = logged_in? && !pape_requirements_met?(auth_time) ?
         'The Service Provider requires reauthentication, because your last login is too long ago.' :
         'Please log in to verify your identity.'
+      logout_killing_session!([:request_token])
       redirect_to login_path(:return_to => URI.encode(proceed_path))
     end
   end

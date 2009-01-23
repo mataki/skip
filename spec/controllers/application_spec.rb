@@ -263,3 +263,28 @@ describe ApplicationController, '#login_from_cookie' do
     end
   end
 end
+
+describe ApplicationController, "#logout_killing_session!" do
+  before do
+    controller.should_receive(:kill_remember_cookie!)
+    controller.should_receive(:reset_session)
+  end
+  describe "引数無しの時" do
+    it "session.updateが呼ばれないこと" do
+      controller.should_not_receive(:update)
+      controller.send(:logout_killing_session!)
+    end
+  end
+  describe "引数ありの時" do
+    it "session.updateが呼ばれること" do
+      controller.should_not_receive(:update)
+      controller.send(:logout_killing_session!, [:a, :b])
+    end
+  end
+  it "kill_remember_cookie!が呼ばれること" do
+    controller.send(:logout_killing_session!)
+  end
+  it "reset_sessionが呼ばれること" do
+    controller.send(:logout_killing_session!)
+  end
+end

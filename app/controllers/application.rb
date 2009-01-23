@@ -240,6 +240,20 @@ protected
     cookies.delete :auth_token
   end
 
+  def logout_killing_session!(keeping = [])
+    h = Hash[*keeping.inject([]) do |result, item|
+               result << item << session[item] if session[item]
+               result
+             end
+            ]
+    @current_user.forget_me if @current_user.is_a? User
+    kill_remember_cookie!
+    reset_session
+    h.each do |key, val|
+      session[key] = val
+    end
+  end
+
   def send_remember_cookie!
     cookies[:auth_token] = {
       :value   => @current_user.remember_token,

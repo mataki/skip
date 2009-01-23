@@ -294,16 +294,8 @@ class PlatformController < ApplicationController
     redirect_to({:action => :index})
   end
 
-  def logout_killing_session!
-    @current_user.forget_me if @current_user.is_a? User
-    kill_remember_cookie!
-    reset_session
-  end
-
   def login_with_password
-    request_token = session[:request_token]
-    logout_killing_session!
-    session[:request_token] = request_token
+    logout_killing_session!([:request_token])
     if params[:login] and self.current_user = User.auth(params[:login][:key], params[:login][:password])
       handle_remember_cookie!(params[:login_save] == 'true')
 
