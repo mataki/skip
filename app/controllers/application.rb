@@ -17,6 +17,7 @@ require 'symbol'
 require 'tempfile'
 
 class ApplicationController < ActionController::Base
+  include OpenidServerSystem
   include ExceptionNotifiable if INITIAL_SETTINGS['exception_notifier']['enable']
   layout 'layout'
   filter_parameter_logging :password
@@ -31,7 +32,7 @@ class ApplicationController < ActionController::Base
 
   init_gettext "skip"
 
-  helper_method :scheme, :endpoint_url, :identifier
+  helper_method :scheme, :endpoint_url, :identifier, :checkid_request, :extract_login_from_identifier
 protected
   include InitialSettingsHelper
   # アプリケーションで利用するセッションの準備をする
@@ -286,7 +287,23 @@ protected
     identity_url(:user => user_str, :protocol => scheme)
   end
 
-private
+  def checkid_request
+    unless @checkid_request
+      req = openid_server.decode_request(current_openid_request.parameters) if current_openid_request
+      @checkid_request = req.is_a?(OpenID::Server::CheckIDRequest) ? req : false
+    end
+    @checkid_request
+  end
+
+  def current_openid_request
+    @current_openid_request ||= OpenIdRequest.find_by_token(session[:request_token]) if session[:request_token]
+  end
+
+  def extract_login_from_identifier(openid_url)
+    openid_url.gsub(identifier(''), '')
+  end
+
+  private
   def sso
     if login_mode?(:fixed_rp) and !logged_in?
       redirect_to :controller => '/platform', :action => :login, :openid_url => INITIAL_SETTINGS['fixed_op_url'], :return_to => URI.encode(request.url)

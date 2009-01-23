@@ -1,6 +1,4 @@
 class ServerController < ApplicationController
-  include OpenidServerSystem
-
   # CSRF-protection must be skipped, because incoming
   # OpenID requests lack an authenticity token
   skip_before_filter :verify_authenticity_token
@@ -164,17 +162,5 @@ class ServerController < ApplicationController
       hash["value.#{i[0]}"] = user.send(i[2].to_sym)
     end
     hash
-  end
-
-  def checkid_request
-    unless @checkid_request
-      req = openid_server.decode_request(current_openid_request.parameters) if current_openid_request
-      @checkid_request = req.is_a?(OpenID::Server::CheckIDRequest) ? req : false
-    end
-    @checkid_request
-  end
-
-  def current_openid_request
-    @current_openid_request ||= OpenIdRequest.find_by_token(session[:request_token]) if session[:request_token]
   end
 end
