@@ -115,31 +115,6 @@ class PlatformController < ApplicationController
     end
   end
 
-  def forgot_login_id
-    unless enable_forgot_password?
-      flash[:error] = _('%{function}は現在利用することが出来ません。') % {:function => 'ログインID忘れ機能'}
-      return redirect_to(:controller => '/platform')
-    end
-    return unless request.post?
-    email = params[:email]
-    if email.blank?
-      flash.now[:error] = _('メールアドレスは必須です。')
-      return
-    end
-    if @user = User.find_by_email(email)
-      if @user.active?
-        login_id = @user.code
-        UserMailer.deliver_sent_forgot_login_id(email, login_id)
-        flash[:notice] = _("ログインIDを記載したメールを%{email}宛てに送信しました。") % {:email => email}
-        redirect_to :controller => '/platform'
-      else
-        flash.now[:error] = _('入力された%{email}のユーザは、利用開始されていません。利用開始してください。') % {:email => email}
-      end
-    else
-      flash.now[:error] = _("入力された%{email}というメールアドレスは登録されていません。") % {:email => email}
-    end
-  end
-
   def activate
     unless enable_activate?
       flash[:error] = _('%{function}は現在利用することが出来ません。') % {:function => '利用開始通知'}

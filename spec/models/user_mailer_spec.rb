@@ -41,7 +41,7 @@ describe UserMailer, "#smtp_settings" do
   end
   it "Net::SMTPメソッドでDBの内容を利用して送信すること" do
     Net::SMTP.should_receive(:start).with("address", "port", "domain", "user_name", "password", "authentication").and_yield(@smtp)
-    UserMailer.deliver_sent_forgot_login_id("test@test.com", "test")
+    UserMailer.deliver_sent_forgot_password("test@test.com", "password")
   end
   after(:all) do
     ActionMailer::Base.delivery_method = @before_method

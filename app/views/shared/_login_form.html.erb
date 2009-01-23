@@ -11,9 +11,7 @@
   <table class="box" style="font-size: 12px; width: 300px;">
     <% if login_mode?(:password) -%>
     <tr valign="top">
-      <td><label for="login_key"><span style="font-weight: bold;"><%= h Admin::Setting.login_account %> or <%= _('User|Email') %></span></label>
-        <% login_id_forgot_link_text = _('%{login_account_name}を忘れた方はこちら') % {:login_account_name => h(Admin::Setting.login_account)} -%>
-        <%= "(#{link_to(login_id_forgot_link_text, forgot_login_id_path, {:style => 'font-size:11px', :tabindex => '101'})})" if enable_forgot_password? %></td>
+      <td><label for="login_key"><span style="font-weight: bold;"><%= h Admin::Setting.login_account %> or <%= _('User|Email') %></span></label></td>
     </tr>
     <tr valign="top">
       <td><%= text_field 'login', 'key', :size => 35, :autocomplete => :on, :style => "font-family:Tahoma", :tabindex => "1" -%></td>

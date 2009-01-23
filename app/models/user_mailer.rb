@@ -73,15 +73,6 @@ class UserMailer < ActionMailer::Base
     @body       = {:reset_openid_url => reset_openid_url, :header => header, :footer => footer}
   end
 
-  def sent_forgot_login_id(recipient, login_id)
-    @recipients = recipient
-    @subject    = UserMailer.base64("[#{Admin::Setting.abbr_app_title}] ログインIDのお知らせです")
-    @from       = from
-    @send_on    = Time.now
-    @headers    = {}
-    @body       = {:login_id => login_id, :header => header, :footer => footer}
-  end
-
   def sent_activate(recipient, signup_url)
     @recipients = recipient
     @subject    = UserMailer.base64("[#{Admin::Setting.abbr_app_title}] " + _('利用開始確認メールです'))
