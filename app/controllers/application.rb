@@ -177,6 +177,13 @@ protected
     end
   end
 
+  def render_404
+    respond_to do |format|
+      format.html { render :file => File.join(RAILS_ROOT, 'public', '404.html'), :status => :not_found }
+      format.all { render :nothing => true, :status => :not_found }
+    end
+  end
+
   # 本番環境(リバースプロキシあり)では、リモートからのリクエストでもリバースプロキシで、
   # ハンドリングされるので、ローカルからのリクエストとRailsが認識していう場合がある。
   # (lighttpd の mod_extfoward が根本の問題)

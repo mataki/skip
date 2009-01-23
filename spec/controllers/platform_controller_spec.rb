@@ -225,76 +225,98 @@ describe PlatformController, "#logout" do
 end
 
 describe PlatformController, 'GET /forgot_password' do
-  before do
-    controller.stub!(:enable_forgot_password?).and_return(true)
+  describe 'パスワード忘れ機能が有効な場合' do
+    before do
+      controller.stub!(:enable_forgot_password?).and_return(true)
+    end
+    it 'パスワード忘れ画面に遷移すること' do
+      get :forgot_password
+      response.should be_success
+    end
   end
-  it 'パスワード忘れ画面に遷移すること' do
-    get :forgot_password
-    response.should be_success
+  describe 'パスワード忘れ機能が無効な場合' do
+    before do
+      controller.stub!(:enable_forgot_password?).and_return(false)
+    end
+    it '404エラーになること' do
+      get :forgot_password
+      response.code.should == '404'
+    end
   end
 end
 
 describe PlatformController, 'POST /forgot_password' do
-  before do
-    User.stub!(:find_by_email)
-    controller.stub!(:enable_forgot_password?).and_return(true)
-  end
-  describe 'メールアドレスの入力がない場合' do
-    it 'メールアドレスの入力は必須である旨のメッセージを表示する' do
-      post :forgot_password, :email => ''
-      flash[:error].should == 'メールアドレスは必須です。'
-      response.should be_success
-    end
-  end
-  describe '登録済みのメールアドレスが送信された場合' do
+  describe 'パスワード忘れ機能が有効な場合' do
     before do
-      @email = 'exist@example.com'
-      @user = stub_model(User, :email => @email, :active? => true)
-      User.should_receive(:find_by_email).and_return(@user)
+      User.stub!(:find_by_email)
+      controller.stub!(:enable_forgot_password?).and_return(true)
     end
-    describe '利用開始済みのユーザの場合' do
-      before do
-        @password_reset_url = 'password_reset_url'
-        controller.stub!(:reset_password_url).and_return(@password_reset_url)
-        @user.stub!(:reset_auth_token).and_return(@reset_auth_token)
-        @user.stub!(:issue_reset_auth_token)
-        @user.stub!(:save!)
-        UserMailer.stub!(:deliver_sent_forgot_password)
-      end
-      it 'パスワードリセットURLを記載したメールの送信処理が呼ばれること' do
-        UserMailer.should_receive(:deliver_sent_forgot_password).with(@email, @password_reset_url)
-        post :forgot_password, :email => @email
-      end
-      it 'パスワードリセットコード発行処理が行われること' do
-        @user.should_receive(:issue_reset_auth_token)
-        @user.should_receive(:save!)
-        post :forgot_password, :email => @email
-      end
-      it 'メール送信した旨のメッセージが設定されてリダイレクトされること' do
-        post :forgot_password, :email => @email
-        flash[:notice].should_not be_nil
-        response.should be_redirect
+    describe 'メールアドレスの入力がない場合' do
+      it 'メールアドレスの入力は必須である旨のメッセージを表示する' do
+        post :forgot_password, :email => ''
+        flash[:error].should == 'メールアドレスは必須です。'
+        response.should be_success
       end
     end
-    describe '未使用ユーザの場合' do
+    describe '登録済みのメールアドレスが送信された場合' do
       before do
-        @user.stub!(:active?).and_return(false)
+        @email = 'exist@example.com'
+        @user = stub_model(User, :email => @email, :active? => true)
+        User.should_receive(:find_by_email).and_return(@user)
       end
-      it "未登録ユーザのメールアドレスである旨のメッセージが設定されること" do
-        post :forgot_password, :email => @email
-        flash[:error].should == "入力された#{@email}のユーザは、利用開始されていません。利用開始してください。"
-        response.should render_template('forgot_password')
+      describe '利用開始済みのユーザの場合' do
+        before do
+          @password_reset_url = 'password_reset_url'
+          controller.stub!(:reset_password_url).and_return(@password_reset_url)
+          @user.stub!(:reset_auth_token).and_return(@reset_auth_token)
+          @user.stub!(:issue_reset_auth_token)
+          @user.stub!(:save!)
+          UserMailer.stub!(:deliver_sent_forgot_password)
+        end
+        it 'パスワードリセットURLを記載したメールの送信処理が呼ばれること' do
+          UserMailer.should_receive(:deliver_sent_forgot_password).with(@email, @password_reset_url)
+          post :forgot_password, :email => @email
+        end
+        it 'パスワードリセットコード発行処理が行われること' do
+          @user.should_receive(:issue_reset_auth_token)
+          @user.should_receive(:save!)
+          post :forgot_password, :email => @email
+        end
+        it 'メール送信した旨のメッセージが設定されてリダイレクトされること' do
+          post :forgot_password, :email => @email
+          flash[:notice].should_not be_nil
+          response.should be_redirect
+        end
+      end
+      describe '未使用ユーザの場合' do
+        before do
+          @user.stub!(:active?).and_return(false)
+        end
+        it "未登録ユーザのメールアドレスである旨のメッセージが設定されること" do
+          post :forgot_password, :email => @email
+          flash[:error].should == "入力された#{@email}のユーザは、利用開始されていません。利用開始してください。"
+          response.should render_template('forgot_password')
+        end
+      end
+    end
+    describe '未登録のメールアドレスが送信された場合' do
+      before do
+        User.should_receive(:find_by_email).and_return(nil)
+      end
+      it 'メールアドレスが未登録である旨のメッセージが設定されること' do
+        post :forgot_password, :email => 'forgot_password@example.com'
+        flash[:error].should_not be_nil
+        response.should be_success
       end
     end
   end
-  describe '未登録のメールアドレスが送信された場合' do
+  describe 'パスワード忘れ機能が無効な場合' do
     before do
-      User.should_receive(:find_by_email).and_return(nil)
+      controller.stub!(:enable_forgot_password?).and_return(false)
     end
-    it 'メールアドレスが未登録である旨のメッセージが設定されること' do
-      post :forgot_password, :email => 'forgot_password@example.com'
-      flash[:error].should_not be_nil
-      response.should be_success
+    it '404エラーになること' do
+      post :forgot_password
+      response.code.should == '404'
     end
   end
 end
@@ -618,67 +640,93 @@ describe PlatformController, "#create_user_params" do
 end
 
 describe PlatformController, "GET /forgot_openid" do
-  it "OpenID再設定画面が表示されること" do
-    get :forgot_openid
-    response.should render_template("forgot_openid")
+  describe 'OpenID忘れ機能が有効な場合' do
+    before do
+      controller.should_receive(:enable_forgot_openid?).and_return(true)
+    end
+    it "OpenID再設定画面が表示されること" do
+      get :forgot_openid
+      response.should render_template("forgot_openid")
+    end
+  end
+  describe 'OpenID忘れ機能が無効な場合' do
+    before do
+      controller.should_receive(:enable_forgot_openid?).and_return(false)
+    end
+    it '404エラーになること' do
+      get :forgot_openid
+      response.code.should == '404'
+    end
   end
 end
 
 describe PlatformController, "POST /forgot_openid" do
-  before do
-    @params_email = "a_user@example.com"
-    @reset_url = "reset_url"
-    controller.stub!(:reset_openid_url).and_return(@reset_url)
-  end
-  describe "登録されているemailが送信された場合" do
+  describe 'OpenID忘れ機能が有効な場合' do
     before do
-      @user = mock_model(User, :reset_auth_token => "reset_token", :issue_reset_auth_token => nil, :save! => nil)
-      User.should_receive(:find_by_email).with(@params_email).and_return(@user)
+      controller.should_receive(:enable_forgot_openid?).and_return(true)
+      @params_email = "a_user@example.com"
+      @reset_url = "reset_url"
+      controller.stub!(:reset_openid_url).and_return(@reset_url)
     end
-    describe "emailに該当するユーザが利用中の場合" do
+    describe "登録されているemailが送信された場合" do
       before do
-        @user.stub!(:active?).and_return(true)
+        @user = mock_model(User, :reset_auth_token => "reset_token", :issue_reset_auth_token => nil, :save! => nil)
+        User.should_receive(:find_by_email).with(@params_email).and_return(@user)
       end
-      it "ログイン画面にリダイレクトされること" do
-        post_forgot_openid
-        response.should redirect_to(:action => :index)
+      describe "emailに該当するユーザが利用中の場合" do
+        before do
+          @user.stub!(:active?).and_return(true)
+        end
+        it "ログイン画面にリダイレクトされること" do
+          post_forgot_openid
+          response.should redirect_to(:action => :index)
+        end
+        it "メールが送信されること" do
+          UserMailer.should_receive(:deliver_sent_forgot_openid).with(@params_email, @reset_url)
+          post_forgot_openid
+        end
+        it "該当するユーザのissue_reset_auth_tokenが呼ばれて、saveされること" do
+          @user.should_receive(:issue_reset_auth_token)
+          @user.should_receive(:save!)
+          post_forgot_openid
+        end
       end
-      it "メールが送信されること" do
-        UserMailer.should_receive(:deliver_sent_forgot_openid).with(@params_email, @reset_url)
-        post_forgot_openid
-      end
-      it "該当するユーザのissue_reset_auth_tokenが呼ばれて、saveされること" do
-        @user.should_receive(:issue_reset_auth_token)
-        @user.should_receive(:save!)
-        post_forgot_openid
+      describe "emailに該当するユーザが利用中でない場合" do
+        before do
+          @user.stub!(:active?).and_return(false)
+        end
+        it "入力画面がレンダリングされること" do
+          post_forgot_openid
+          response.should render_template('forgot_openid')
+        end
+        it "flashメッセージが登録されていること" do
+          post_forgot_openid
+          flash[:error].should == "入力された#{@params_email}のユーザは、利用開始されていません。利用開始してください。"
+        end
       end
     end
-    describe "emailに該当するユーザが利用中でない場合" do
-      before do
-        @user.stub!(:active?).and_return(false)
-      end
+    describe "登録されていないemailが送信された場合" do
       it "入力画面がレンダリングされること" do
         post_forgot_openid
         response.should render_template('forgot_openid')
       end
       it "flashメッセージが登録されていること" do
         post_forgot_openid
-        flash[:error].should == "入力された#{@params_email}のユーザは、利用開始されていません。利用開始してください。"
+        flash[:error].should == "入力された#{@params_email}というメールアドレスは登録されていません。"
       end
     end
-  end
-  describe "登録されていないemailが送信された場合" do
-    it "入力画面がレンダリングされること" do
-      post_forgot_openid
-      response.should render_template('forgot_openid')
-    end
-    it "flashメッセージが登録されていること" do
-      post_forgot_openid
-      flash[:error].should == "入力された#{@params_email}というメールアドレスは登録されていません。"
+    def post_forgot_openid
+      post :forgot_openid, :email => @params_email
     end
   end
-  def post_forgot_openid
-    post :forgot_openid, :email => @params_email
+  describe 'OpenID忘れ機能が無効な場合' do
+    before do
+      controller.should_receive(:enable_forgot_openid?).and_return(false)
+    end
+    it '404エラーになること' do
+      post :forgot_openid
+      response.code.should == '404'
+    end
   end
 end
 

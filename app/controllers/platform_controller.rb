@@ -67,8 +67,7 @@ class PlatformController < ApplicationController
 
   def forgot_password
     unless enable_forgot_password?
-      flash[:error] = _('%{function}は現在利用することが出来ません。') % {:function => 'パスワード忘れ機能'}
-      return redirect_to(:controller => '/platform')
+      render_404 and return
     end
     return unless request.post?
     email = params[:email]
@@ -161,6 +160,9 @@ class PlatformController < ApplicationController
   end
 
   def forgot_openid
+    unless enable_forgot_openid?
+      render_404 and return
+    end
     return unless request.post?
     email = params[:email]
     if email.blank?

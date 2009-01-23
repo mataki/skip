@@ -55,4 +55,8 @@ module InitialSettingsHelper
   def enable_forgot_password?
     login_mode?(:password) && Admin::Setting.mail_function_setting
   end
+
+  def enable_forgot_openid?
+    login_mode?(:free_rp) && Admin::Setting.mail_function_setting
+  end
 end

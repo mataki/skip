@@ -133,3 +133,33 @@ describe InitialSettingsHelper, '#enable_forgot_password?' do
     it { helper.enable_forgot_password?.should be_false }
   end
 end
+
+describe InitialSettingsHelper, '#enable_forgot_openid?' do
+  describe 'フリーRPモードの場合 かつ メール機能有効の場合' do
+    before do
+      INITIAL_SETTINGS['login_mode'] = 'rp'
+      INITIAL_SETTINGS['fixed_op_url'] = nil
+      Admin::Setting.stub!(:mail_function_setting).and_return(true)
+    end
+    it { helper.enable_forgot_openid?.should be_true }
+  end
+  describe 'パスワードモードの場合' do
+    before do
+      INITIAL_SETTINGS['login_mode'] = 'password'
+    end
+    it { helper.enable_forgot_openid?.should be_false }
+  end
+  describe '固定RPモードの場合' do
+    before do
+      INITIAL_SETTINGS['login_mode'] = 'rp'
+      INITIAL_SETTINGS['fixed_op_url'] = 'http://op.openskip.org/'
+    end
+    it { helper.enable_forgot_openid?.should be_false }
+  end
+  describe 'メール機能無効の場合' do
+    before do
+      Admin::Setting.stub!(:mail_function_setting).and_return(false)
+    end
+    it { helper.enable_forgot_openid?.should be_false }
+  end
+end

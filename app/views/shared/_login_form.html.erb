@@ -69,9 +69,7 @@
     </tr>
   </table>
 <% end %>
-    <% unless login_mode?(:password) -%>
-        <%= link_to _('OpenIDを忘れた/再設定したい方はこちら'), forgot_openid_path, {:style => 'font-size:14px'} %>
-    <% end -%>
+    <%= link_to _('OpenIDを忘れた/再設定したい方はこちら'), forgot_openid_path, {:style => 'font-size:14px'} if enable_forgot_openid? %>
 
 <script type="text/javascript">
 $j(function(){
