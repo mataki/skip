@@ -62,7 +62,7 @@
     <% end %>
 
     <% if @mail_your_messages[:pages].size > 0 %>
-      <%= show_title_bar(@mail_your_messages[:title_icon], @mail_your_messages[:title_name], {:controller => 'mypage', :action => "index", :antenna_type => @mail_your_messages[:id_name]}) %>
+      <%= show_title_bar(@mail_your_messages[:title_icon], @mail_your_messages[:title_name], {:controller => 'mypage', :action => "entries_by_antenna", :antenna_id => @mail_your_messages[:id_name]}) %>
       <%= render :partial => "list_block", :locals => @mail_your_messages %>
     <% end %>
 
