@@ -246,12 +246,6 @@ protected
       :expires => @current_user.remember_token_expires_at }
   end
 
-  def logout_killing_session!
-    @current_user.forget_me if @current_user.is_a? User
-    kill_remember_cookie!
-    reset_session
-  end
-
   # ファイルアップロード時の共通チェック
   def valid_upload_file? file, max_size = 209715200
     file.is_a?(ActionController::UploadedFile) && file.size > 0 && file.size < max_size

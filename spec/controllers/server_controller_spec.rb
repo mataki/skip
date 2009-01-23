@@ -12,10 +12,9 @@ describe ServerController, "#index" do
       post :index, checkid_request_params.merge("openid.identity" => id_url, 'openid.claimed_id' => id_url)
     end
     it "ログイン画面にリダイレクトすること" do
-      response.should redirect_to(login_url)
+      response.should redirect_to(login_url(:return_to => proceed_path))
     end
     it "sessionに情報が登録されていること" do
-      session[:return_to].should_not be_nil
       session[:request_token].should_not be_nil
     end
   end

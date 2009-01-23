@@ -77,8 +77,7 @@ class ServerController < ApplicationController
       render_response(openid_request.answer(false))
     else
       save_checkid_request
-      session[:return_to] = proceed_path
-      redirect_to login_path
+      redirect_to login_path(:return_to => URI.encode(proceed_path))
     end
   end
 
@@ -109,8 +108,7 @@ class ServerController < ApplicationController
       flash[:notice] = logged_in? && !pape_requirements_met?(auth_time) ?
         'The Service Provider requires reauthentication, because your last login is too long ago.' :
         'Please log in to verify your identity.'
-      session[:return_to] = proceed_path
-      redirect_to login_path
+      redirect_to login_path(:return_to => URI.encode(proceed_path))
     end
   end
 
