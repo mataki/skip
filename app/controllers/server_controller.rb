@@ -5,9 +5,10 @@ class ServerController < ApplicationController
   # Error handling
   rescue_from OpenID::Server::ProtocolError, :with => :render_openid_error
   # Actions other than index require a logged in user
-  skip_before_filter :sso, :login_required, :prepare_session, :only => [:index]
+  skip_before_filter :sso, :login_required, :prepare_session, :only => [:index, :cancel]
   skip_after_filter :remove_message
-  before_filter :ensure_valid_checkid_request, :except => [:index]
+  before_filter :ensure_valid_checkid_request, :except => [:index, :cancel]
+  after_filter :clear_checkid_request, :only => [:cancel]
   # These methods are used to display information about the request to the user
   helper_method :sreg_request, :ax_fetch_request
 
@@ -60,6 +61,9 @@ class ServerController < ApplicationController
     end
   end
 
+  def cancel
+    redirect_to checkid_request.cancel_url
+  end
   protected
 
   # Decides how to process an incoming checkid request. If the user is

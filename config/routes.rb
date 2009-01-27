@@ -98,6 +98,7 @@ ActionController::Routing::Routes.draw do |map|
     server.formatted_server 'server.:format', :action => 'index'
     server.server 'server', :action => 'index'
     server.proceed 'server/proceed', :action => 'proceed'
+    server.cancel 'server/cancel', :action => 'cancel'
   end
 
   map.connect ':controller/:action/:id'
