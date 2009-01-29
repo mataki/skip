@@ -119,9 +119,9 @@ private
     { :address => Admin::Setting.smtp_settings_address,
       :port => Admin::Setting.smtp_settings_port,
       :domain => Admin::Setting.smtp_settings_domain,
-      :user_name => Admin::Setting.smtp_settings_user_name,
-      :password => Admin::Setting.smtp_settings_password,
-      :authentication => Admin::Setting.smtp_settings_authentication }
+      :user_name => Admin::Setting.smtp_settings_user_name.blank? ? nil : Admin::Setting.smtp_settings_user_name,
+      :password => Admin::Setting.smtp_settings_password.blank? ? nil : Admin::Setting.smtp_settings_password,
+      :authentication => Admin::Setting.smtp_settings_authentication.blank? ? nil : Admin::Setting.smtp_settings_authentication }
   end
 
   def delivery_method
