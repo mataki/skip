@@ -47,7 +47,7 @@ class Admin::ApplicationController < ApplicationController
     end
 
     if options[:extension] && !options[:extension].empty?
-      unless options[:extension] == uploaded_file.original_filename.split('.').last
+      unless options[:extension] == uploaded_file.original_filename.split('.').last.downcase
         flash.now[:error] = _('指定された拡張子のファイルはアップロード出来ません。')
         return false
       end
