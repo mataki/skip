@@ -50,9 +50,11 @@ class HyperEstraier < Search
         end # rdoc
         result_hash[:elements] = result_array
       else
-        result_hash[:header][:count] = 0
+        return { :error => "検索エンジンにアクセスできません。管理者に連絡してください。" }
       end # if nres
-    rescue Exception
+    rescue Exception => e
+      ActiveRecord::Base.logger.error e
+      e.backtrace.each { |message| ActiveRecord::Base.logger.error message }
       return { :error => "現在全文検索エンジンに問題が発生しており、検索できません。" }
     end
     return result_hash

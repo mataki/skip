@@ -51,7 +51,7 @@ class Search
       if value['meta'] && uri_text.include?("/#{value['cache']}/") #メタファイルを設定している場合
         file_path = uri_text.gsub("http://#{value['cache']}", value['meta'])
         if File.file? file_path
-          YAML::load(File.open(file_path)).each { |key,value| line_hash[key.to_sym] = value }
+          YAML::load(File.open(file_path)).each { |key,value| line_hash[key.to_sym] = value.to_s }
           line_hash[:title] = URI.decode(URI.decode(line_hash[:title]))
         else
           line_hash[:publication_symbols] = 'sid:noneuser'

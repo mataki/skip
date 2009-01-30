@@ -44,3 +44,24 @@ describe Search do
   end
 
 end
+
+describe Search, ".get_metadata" do
+  describe "メタ情報が取得される場合" do
+    before do
+      INITIAL_SETTINGS["search_apps"] = { "SKIP" => { "meta" => "/hoge/fuga/meta", "cache" => "localhost:3000/app_cache" } }
+
+      File.stub!(:file?).and_return(true)
+      File.stub!(:open)
+      YAML.stub!(:load).and_return({ "title" => "meta title", "publication_symbols" => "sid:allusers", "contents_type" => "meta", "link_url" => "http://localhost:3000/meta"})
+    end
+    it "メタ情報が返ってくること" do
+      result = Search.get_metadata "contents", "http://localhost:3000/app_cache/hoge/fuga", "title"
+      result.should == {:contents_type=>"meta", :publication_symbols=>"sid:allusers", :title=>"meta title", :contents=>"contents", :link_url=>"http://localhost:3000/meta"}
+    end
+    it "メタ情報に数字のみのvalueがある場合 メタ情報が返ってくること" do
+      YAML.stub!(:load).and_return({ "title" => 1111, "publication_symbols" => "sid:allusers", "contents_type" => "meta", "link_url" => "http://localhost:3000/meta"})
+      result = Search.get_metadata "contents", "http://localhost:3000/app_cache/hoge/fuga", "title"
+      result.should == {:contents_type=>"meta", :publication_symbols=>"sid:allusers", :title=>"1111", :contents=>"contents", :link_url=>"http://localhost:3000/meta"}
+    end
+  end
+end
