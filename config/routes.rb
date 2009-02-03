@@ -9,10 +9,11 @@ ActionController::Routing::Routes.draw do |map|
   map.share_file  ':controller_name/:symbol_id/files/:file_name',
                   :controller => 'share_file',
                   :action => 'download',
-                  :requirements => {  :file_name => /.*/ }
+                  :requirements => {  :file_name => /.*/, :symbol_id => /[a-zA-Z0-9\-_\.]+/ }
 
   map.connect 'user/:uid/:action',
               :controller => 'user',
+              :requirements => { :uid => /[a-zA-Z0-9\-_\.]+/ },
               :defaults => { :action => 'show' }
 
   map.connect 'group/:gid/:action',
