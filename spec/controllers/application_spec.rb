@@ -288,3 +288,19 @@ describe ApplicationController, "#logout_killing_session!" do
     controller.send(:logout_killing_session!)
   end
 end
+
+describe ApplicationController, "#identifier" do
+  describe "Userモデルが渡された場合" do
+    before do
+      @user = mock_model(User, :code => "code")
+      controller.stub!(:identity_url).and_return("http://test.host/id/code")
+    end
+    it "identifierが返される" do
+      controller.send(:identifier, @user).should == "http://test.host/id/code"
+    end
+    it "identity_urlに@user.codeが渡されること" do
+      controller.should_receive(:identity_url).with(:protocol => "http", :user => "code")
+      controller.send(:identifier, @user)
+    end
+  end
+end

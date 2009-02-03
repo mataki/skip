@@ -12,8 +12,8 @@ ActionController::Routing::Routes.draw do |map|
                   :requirements => {  :file_name => /.*/, :symbol_id => /[a-zA-Z0-9\-_\.]+/ }
 
   map.with_options :controller => "ids" do |ids|
-    ids.identity "id/:user", :action => 'show'
-    ids.formatted_identity "id/:user.:format", :action => "show"
+    ids.identity "id/:user", :action => 'show', :user => /[a-zA-Z0-9\-_\.]*/
+    ids.formatted_identity "id/:user/:format", :action => "show", :user => /[a-zA-Z0-9\-_\.]*/
   end
 
   map.connect 'user/:uid/:action',

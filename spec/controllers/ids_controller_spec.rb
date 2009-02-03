@@ -11,7 +11,7 @@ describe IdsController, "#show" do
     end
     it "ヘッダーに'X-XRDS-Location'が含まれること" do
       get :show, :user => "111111"
-      response.headers["X-XRDS-Location"].should == identifier(@user) + ".xrds"
+      response.headers["X-XRDS-Location"].should == identifier(@user) + "/xrds"
     end
     describe "xrdsフォーマットの場合" do
       it "xrdsを返すこと" do
