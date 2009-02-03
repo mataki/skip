@@ -145,6 +145,7 @@ development:
 
 test:
   <<: *default
+  use_ssl: false
 
 production:
   <<: *default

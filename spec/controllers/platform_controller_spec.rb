@@ -22,6 +22,7 @@ describe PlatformController, "パスワードでログインする場合" do
     @user = mock_model(User, :code => @code)
     User.stub!(:auth)
     controller.stub!(:current_user=)
+    session[:request_token] = 'request_token'
   end
   it 'セッションとクッキーがクリアされること' do
     controller.should_receive(:logout_killing_session!)
@@ -40,6 +41,10 @@ describe PlatformController, "パスワードでログインする場合" do
     it 'current_user=がよばれること' do
       controller.should_receive(:current_user=).with(@user)
       login
+    end
+    it "session[:request_token]の値が保持されていること" do
+      login
+      session[:request_token].should == "request_token"
     end
     describe '「次回から自動的にログイン」にチェックがついている場合' do
       it 'handle_remember_cookie!(true)が呼ばれること' do

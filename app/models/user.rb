@@ -103,7 +103,11 @@ class User < ActiveRecord::Base
   def self.auth(code_or_email, password)
     return nil unless user = find_by_code_or_email(code_or_email)
     return nil if user.unused?
-    return user if user.crypted_password == encrypt(password)
+    if user.crypted_password == encrypt(password)
+      user.last_authenticated_at = Time.now
+      user.save(false)
+      user
+    end
   end
 
   # Viewで使う所属一覧（セレクトボタン用）

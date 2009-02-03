@@ -263,3 +263,44 @@ describe ApplicationController, '#login_from_cookie' do
     end
   end
 end
+
+describe ApplicationController, "#logout_killing_session!" do
+  before do
+    controller.should_receive(:kill_remember_cookie!)
+    controller.should_receive(:reset_session)
+  end
+  describe "引数無しの時" do
+    it "session.updateが呼ばれないこと" do
+      controller.should_not_receive(:update)
+      controller.send(:logout_killing_session!)
+    end
+  end
+  describe "引数ありの時" do
+    it "session.updateが呼ばれること" do
+      controller.should_not_receive(:update)
+      controller.send(:logout_killing_session!, [:a, :b])
+    end
+  end
+  it "kill_remember_cookie!が呼ばれること" do
+    controller.send(:logout_killing_session!)
+  end
+  it "reset_sessionが呼ばれること" do
+    controller.send(:logout_killing_session!)
+  end
+end
+
+describe ApplicationController, "#identifier" do
+  describe "Userモデルが渡された場合" do
+    before do
+      @user = mock_model(User, :code => "code")
+      controller.stub!(:identity_url).and_return("http://test.host/id/code")
+    end
+    it "identifierが返される" do
+      controller.send(:identifier, @user).should == "http://test.host/id/code"
+    end
+    it "identity_urlに@user.codeが渡されること" do
+      controller.should_receive(:identity_url).with(:protocol => "http", :user => "code")
+      controller.send(:identifier, @user)
+    end
+  end
+end

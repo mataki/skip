@@ -173,10 +173,21 @@ describe User, ".auth" do
     describe "使用中ユーザの場合" do
       before do
         @user.stub!(:unused?).and_return(false)
+        @user.stub!(:last_authenticated_at=)
+        @user.stub!(:save).with(false)
         User.should_receive(:find_by_code_or_email).and_return(@user)
       end
       describe "パスワードが正しい場合" do
-        it { User.auth('code_or_email', @valid_password).should == @user }
+        it "検索されたユーザが返ること" do
+          User.auth('code_or_email', @valid_password).should == @user
+        end
+        it "last_authenticated_atが現在時刻に設定されること" do
+          time = Time.now
+          Time.stub!(:now).and_return(time)
+          @user.should_receive(:last_authenticated_at=).with(time)
+          @user.should_receive(:save).with(false)
+          User.auth("code_or_email", @valid_password)
+        end
       end
       describe "パスワードは正しくない場合" do
         it { User.auth('code_or_email', 'invalid_password').should be_nil }

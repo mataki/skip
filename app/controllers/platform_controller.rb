@@ -13,8 +13,6 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-require 'openid/extensions/ax'
-
 class PlatformController < ApplicationController
   layout 'not_logged_in'
   skip_before_filter :sso, :login_required, :prepare_session
@@ -24,6 +22,7 @@ class PlatformController < ApplicationController
   protect_from_forgery :except => [:login]
 
   def index
+    response.headers['X-XRDS-Location'] = formatted_server_url(:format => :xrds, :protocol => scheme)
     img_files = Dir.glob(File.join(RAILS_ROOT, "public", "custom", "images", "titles", "background*.{jpg,png,jpeg}"))
     @img_name = File.join("titles", File.basename(img_files[rand(img_files.size)]))
     render :layout => false
@@ -39,19 +38,7 @@ class PlatformController < ApplicationController
     if using_open_id?
       login_with_open_id
     else
-      logout_killing_session!
-      if params[:login] and self.current_user = User.auth(params[:login][:key], params[:login][:password])
-        handle_remember_cookie!(params[:login_save] == 'true')
-
-        redirect_to_back_or_root
-      else
-        flash[:error] = _("ログインに失敗しました。")
-        if request.env['HTTP_REFERER']
-          redirect_to :back
-        else
-          redirect_to :action => :index
-        end
-      end
+      login_with_password
     end
   end
 
@@ -220,7 +207,7 @@ class PlatformController < ApplicationController
   def require_not_login
     if current_user
       unless current_user.unused?
-        redirect_to_back_or_root
+        redirect_to_return_to_or_root
       else
         redirect_to :controller => :portal, :action => :index
       end
@@ -239,7 +226,7 @@ class PlatformController < ApplicationController
             reset_session
 
             self.current_user = identifier.user_with_unused
-            redirect_to_back_or_root(return_to)
+            redirect_to_return_to_or_root(return_to)
           end
         else
           set_error_message_form_result_and_redirect(result)
@@ -271,7 +258,7 @@ class PlatformController < ApplicationController
     end
   end
 
-  def redirect_to_back_or_root(return_to = params[:return_to])
+  def redirect_to_return_to_or_root(return_to = params[:return_to])
     return_to = return_to ? URI.encode(return_to) : nil
     redirect_to (return_to and !return_to.empty?) ? return_to : root_url
   end
@@ -307,6 +294,18 @@ class PlatformController < ApplicationController
     redirect_to({:action => :index})
   end
 
+  def login_with_password
+    logout_killing_session!([:request_token])
+    if params[:login] and self.current_user = User.auth(params[:login][:key], params[:login][:password])
+      handle_remember_cookie!(params[:login_save] == 'true')
+
+      redirect_to_return_to_or_root
+    else
+      flash[:error] = _("ログインに失敗しました。")
+
+      redirect_to(request.env['HTTP_REFERER'] ? :back : login_url)
+    end
+  end
   # -----------------------------------------------
   # over ride open_id_authentication to use OpenID::AX
   def add_simple_registration_fields(open_id_request, fields)

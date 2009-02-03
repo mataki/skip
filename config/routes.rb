@@ -11,6 +11,11 @@ ActionController::Routing::Routes.draw do |map|
                   :action => 'download',
                   :requirements => {  :file_name => /.*/, :symbol_id => /[a-zA-Z0-9\-_\.]+/ }
 
+  map.with_options :controller => "ids" do |ids|
+    ids.identity "id/:user", :action => 'show', :user => /[a-zA-Z0-9\-_\.]*/
+    ids.formatted_identity "id/:user/:format", :action => "show", :user => /[a-zA-Z0-9\-_\.]*/
+  end
+
   map.connect 'user/:uid/:action',
               :controller => 'user',
               :requirements => { :uid => /[a-zA-Z0-9\-_\.]+/ },
@@ -30,8 +35,9 @@ ActionController::Routing::Routes.draw do |map|
               :action => 'forward'
 
   map.with_options(:controller => "platform") do |platform|
-    platform.connect 'login', :action => 'login'
-    platform.connect 'logout', :action => 'logout'
+    platform.login "platform", :action => "index"
+    platform.perform_login 'login', :action => 'login'
+    platform.logout 'logout', :action => 'logout'
     platform.forgot_password 'platform/forgot_password', :action => 'forgot_password'
     platform.reset_password 'platform/reset_password/:code', :action => 'reset_password'
     platform.activate 'platform/activate', :action => 'activate'
@@ -86,6 +92,13 @@ ActionController::Routing::Routes.draw do |map|
     admin_map.images 'images', :controller => 'images', :action => 'index'
     admin_map.images_update 'images/:target/update', :controller => 'images', :action => 'update'
     admin_map.images_revert 'images/:target/revert', :controller => 'images', :action => 'revert'
+  end
+
+  map.with_options :controller => 'server' do |server|
+    server.formatted_server 'server.:format', :action => 'index'
+    server.server 'server', :action => 'index'
+    server.proceed 'server/proceed', :action => 'proceed'
+    server.cancel 'server/cancel', :action => 'cancel'
   end
 
   map.connect ':controller/:action/:id'
