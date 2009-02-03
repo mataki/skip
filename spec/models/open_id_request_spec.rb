@@ -28,8 +28,6 @@ describe OpenIdRequest do
   end
 end
 
-require File.dirname(__FILE__) + '/../spec_helper'
-
 describe OpenIdRequest do
 
   before do

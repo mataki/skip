@@ -105,6 +105,7 @@ class User < ActiveRecord::Base
     return nil if user.unused?
     if user.crypted_password == encrypt(password)
       user.last_authenticated_at = Time.now
+      user.save(false)
       user
     end
   end
