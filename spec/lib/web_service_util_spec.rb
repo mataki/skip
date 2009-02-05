@@ -83,6 +83,29 @@ describe WebServiceUtil, ".get_json" do
       end
     end
   end
+  describe "引数がnilの場合" do
+    it "nilが返ること" do
+      WebServiceUtil.get_json(nil).should be_nil
+    end
+    it "ログが出力されること" do
+      ActiveRecord::Base.logger.should_receive(:error).with(/[WebServiceUtil Error] .*/)
+      WebServiceUtil.get_json(nil).should be_nil
+    end
+  end
+  describe "返ってくるものが正しくparseできない場合" do
+    before do
+      Net::HTTP.stub!(:new).and_return(@http)
+      @response.stub!(:body).and_return("ぱーすにしっぱいする")
+      @url = "http://test.host/services/user_info?user_code=user"
+    end
+    it "nilが返ること" do
+      WebServiceUtil.get_json(@url).should be_nil
+    end
+    it "ログが出力されること" do
+      ActiveRecord::Base.logger.should_receive(:error).with(/[WebServiceUtil Error] .*/)
+      WebServiceUtil.get_json(@url).should be_nil
+    end
+  end
   describe "ホストの無いURLが渡された場合" do
     before do
       @url = "/services/user_info?user_code=user"

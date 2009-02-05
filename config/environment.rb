@@ -47,11 +47,9 @@ Rails::Initializer.run do |config|
   # config.active_record.schema_format = :ruby
 
   # See Rails::Configuration for more options
-  # config.gem "gettext"
-  # config.gem "uuidtools"
-  # config.gem "fastercsv"
-  # config.gem "ruby-openid", :lib => "openid"
-  # config.gem "mongrel"
+  config.gem 'gettext',  :lib => 'gettext/rails', :version => '1.93.0'
+  config.gem "json", :lib => "json/add/rails"
+  config.gem "fastercsv"
   # config.gem "rspec", :lib => "spec"
   # config.gem "rspec-rails"
   # config.gem "ZenTest", :lib => "zentest"

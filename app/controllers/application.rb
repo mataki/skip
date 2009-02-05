@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
   before_filter :sso, :login_required, :prepare_session
   after_filter  :remove_message
 
-  init_gettext "skip"
+  init_gettext "skip" if defined? GetText
 
   helper_method :scheme, :endpoint_url, :identifier, :checkid_request, :extract_login_from_identifier
 protected

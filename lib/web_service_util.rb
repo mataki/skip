@@ -19,7 +19,6 @@
 require 'net/http'
 require "net/https"
 require 'uri'
-require 'json_parser'
 
 class WebServiceUtil
 
@@ -57,12 +56,12 @@ class WebServiceUtil
     end
     response = http.get("#{uri.path}?#{uri.query}", "X-SECRET-KEY" => INITIAL_SETTINGS['secret_key'])
     if response.code == "200"
-      JsonParser.new.parse(response.body)
+      JSON.parse(response.body)
     else
       ActiveRecord::Base.logger.error "[WebServiceUtil Error] Response code is #{response.code} to access #{url}"
       nil
     end
-  rescue Errno::ECONNREFUSED, OpenSSL::SSL::SSLError, SocketError, ArgumentError => ex
+  rescue Errno::ECONNREFUSED, OpenSSL::SSL::SSLError, SocketError, ArgumentError, JSON::ParserError, URI::InvalidURIError => ex
     ActiveRecord::Base.logger.error "[WebServiceUtil Error] #{ex.to_s} to access #{url}"
     nil
   end
