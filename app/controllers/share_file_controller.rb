@@ -221,7 +221,7 @@ class ShareFileController < ApplicationController
   def download_history_as_csv
     share_file = ShareFile.find(params[:id])
 
-    unless share_file.readable?(current_user)
+    unless share_file.updatable?(current_user)
       redirect_to_with_deny_auth
       return
     end

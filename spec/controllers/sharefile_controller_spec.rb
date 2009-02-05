@@ -492,7 +492,7 @@ describe ShareFileController, 'POST #download_history_as_csv' do
     end
     describe '権限のあるファイルの場合' do
       before do
-        @share_file.should_receive(:readable?).with(@user).and_return(true)
+        @share_file.should_receive(:updatable?).with(@user).and_return(true)
       end
       it 'csvファイルがdownloadされること' do
         controller.stub!(:nkf_file_name)
@@ -502,7 +502,7 @@ describe ShareFileController, 'POST #download_history_as_csv' do
     end
     describe '権限のないファイルの場合' do
       before do
-        @share_file.should_receive(:readable?).with(@user).and_return(false)
+        @share_file.should_receive(:updatable?).with(@user).and_return(false)
       end
       it '権限チェックエラーとなること' do
         controller.should_not_receive(:send_data)
