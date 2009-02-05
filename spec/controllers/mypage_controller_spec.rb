@@ -34,7 +34,7 @@ describe MypageController, 'mypage > home 関連' do
     before do
       @current_user = user_login
       @current_user_info = {:using_day => 1}
-      controller.stub!(:current_user_info).and_return(@current_user_info)
+      @current_user.stub!(:info).and_return(@current_user_info)
       controller.stub!(:recent_day).and_return(7)
     end
     # ============================================================
@@ -43,11 +43,6 @@ describe MypageController, 'mypage > home 関連' do
     it 'アンテナボックスに必要な情報が設定されること' do
       controller.should_receive(:setup_for_antenna_box)
       get :index
-    end
-    it 'プロフィールボックス表示情報が設定されること' do
-      controller.should_receive(:current_user_info).and_return(@current_user_info)
-      get :index
-      assigns[:current_user_info].should == @current_user_info
     end
     # ============================================================
     #  right side area
@@ -180,17 +175,10 @@ describe MypageController, 'mypage > home 関連' do
           }
           controller.should_receive(:find_as_locals).and_return(locals)
           controller.should_receive(:valid_list_types).and_return(['questions'])
-          controller.stub!(:current_user_info)
         end
         it 'アンテナボックスに必要な情報が設定されること' do
           controller.should_receive(:setup_for_antenna_box)
           get :entries, :list_type => 'questions'
-        end
-        it 'プロフィールボックス表示情報が設定されること' do
-          @current_user_info = mock('current_user_info')
-          controller.should_receive(:current_user_info).and_return(@current_user_info)
-          get :entries, :list_type => 'questions'
-          assigns[:current_user_info].should == @current_user_info
         end
         it 'id_nameが設定されること' do
           get :entries, :list_type => 'questions'
@@ -225,7 +213,6 @@ describe MypageController, 'mypage > home 関連' do
     before do
       user_login
       controller.stub!(:setup_for_antenna_box)
-      controller.stub!(:current_user_info)
       controller.stub!(:parse_date).and_return([2009, 1, 2])
       controller.stub!(:find_entries_at_specified_date)
       controller.stub!(:first_entry_day_after_specified_date)
@@ -234,12 +221,6 @@ describe MypageController, 'mypage > home 関連' do
     it 'アンテナボックスに必要な情報が設定されること' do
       controller.should_receive(:setup_for_antenna_box)
       get :entries_by_date
-    end
-    it 'プロフィールボックス表示情報が設定されること' do
-      @current_user_info = mock('current_user_info')
-      controller.should_receive(:current_user_info).and_return(@current_user_info)
-      get :entries_by_date
-      assigns[:current_user_info].should == @current_user_info
     end
     it '日付情報が設定されること' do
       controller.should_receive(:parse_date).and_return([2009, 1, 2])
@@ -273,7 +254,6 @@ describe MypageController, 'mypage > home 関連' do
   describe MypageController, 'GET #entries_by_antenna' do
     before do
       user_login
-      controller.stub!(:current_user_info)
       @antenna_entry = stub(MypageController::AntennaEntry)
       @antenna_entry.stub!(:title=)
       @antenna_entry.stub!(:need_search?).and_return(false)
@@ -288,12 +268,6 @@ describe MypageController, 'mypage > home 関連' do
     it 'アンテナボックスに必要な情報が設定されること' do
       controller.should_receive(:setup_for_antenna_box)
       get :entries_by_antenna
-    end
-    it 'プロフィールボックス表示情報が設定されること' do
-      @current_user_info = mock('current_user_info')
-      controller.should_receive(:current_user_info).and_return(@current_user_info)
-      get :entries_by_antenna
-      assigns[:current_user_info].should == @current_user_info
     end
     it '@antenna_entryが設定されること' do
       controller.should_receive(:antenna_entry).with(params[:antenna_id], params[:read]).and_return(@antenna_entry)

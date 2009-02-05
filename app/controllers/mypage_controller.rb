@@ -43,7 +43,6 @@ class MypageController < ApplicationController
     #  left side area
     # ============================================================
     setup_for_antenna_box
-    @current_user_info = current_user_info
 
     # ============================================================
     #  right side area
@@ -56,7 +55,8 @@ class MypageController < ApplicationController
     # ============================================================
     #  main area top messages
     # ============================================================
-    @system_messages = system_messages(:show_welcome_message => @current_user_info[:using_day] < 30)
+    current_user_info = current_user.info
+    @system_messages = system_messages(:show_welcome_message => current_user_info[:using_day] < 30)
     @message_array = Message.get_message_array_by_user_id(current_user.id)
     @waiting_groups = Group.find_waitings(current_user.id)
     # あなたへの連絡（公開・未読/既読は関係なし・最近のもののみ）
@@ -160,7 +160,6 @@ class MypageController < ApplicationController
       render :file => File.join(RAILS_ROOT, 'public', '404.html'), :status => :not_found and return
     end
     setup_for_antenna_box
-    @current_user_info = current_user_info
     locals = find_as_locals(params[:list_type], {:per_page => 20})
     @id_name = locals[:id_name]
     @title_icon = locals[:title_icon]
@@ -173,7 +172,6 @@ class MypageController < ApplicationController
   # 指定日の投稿記事一覧画面を表示
   def entries_by_date
     setup_for_antenna_box
-    @current_user_info = current_user_info
     year, month, day = parse_date
     @selected_day = Date.new(year, month, day)
     @entries = find_entries_at_specified_date(@selected_day)
@@ -184,7 +182,6 @@ class MypageController < ApplicationController
   # アンテナ毎の記事一覧画面を表示
   def entries_by_antenna
     setup_for_antenna_box
-    @current_user_info = current_user_info
     @antenna_entry = antenna_entry(params[:antenna_id], params[:read])
     @antenna_entry.title = antenna_entry_title(@antenna_entry)
     if @antenna_entry.need_search?
@@ -538,16 +535,6 @@ class MypageController < ApplicationController
   def setup_for_antenna_box
     @system_antennas = Antenna.get_system_antennas(current_user.id, login_user_symbols, login_user_groups)
     @my_antennas = find_antennas
-  end
-
-  # プロフィールボックスに表示するログインユーザの情報
-  def current_user_info
-    { :access_count => current_user.user_access.access_count,
-      :subscriber_count => AntennaItem.count(:conditions => ["antenna_items.value = ?", current_user.symbol],
-                                             :select => "distinct user_id",
-                                             :joins => "left outer join antennas on antenna_id = antennas.id"),
-      :blog_count => BoardEntry.count(:conditions => ["user_id = ? and entry_type = ?", current_user.id, "DIARY"]),
-      :using_day => ((Time.now - current_user.created_on) / (60*60*24)).to_i + 1 }
   end
 
   def find_antennas

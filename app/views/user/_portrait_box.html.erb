@@ -16,7 +16,8 @@ user ||= @current_user
   </div>
 
   <div class="box_space_bottom" style="text-align: center; font-size: 12px;">
-  <% if session[:user_id] == user.id and current_user_info -%>
+  <% if @current_user.id == user.id -%>
+    <% current_user_info = @current_user.info -%>
     <span title="訪問者数（あなたのページを訪問したユーザののべ人数）"><%= icon_tag 'eye' -%><%=h current_user_info[:access_count] -%>人</span>
     <span title="購読者数（あなたのブログをアンテナでチェックしているユーザ数）"><%= icon_tag 'newspaper' -%><%=h current_user_info[:subscriber_count] -%>人</span><br/>
     <span title="投稿件数（あなたが今までに投稿した記事の数）"><%= icon_tag 'report_user' -%><%=h current_user_info[:blog_count] -%>件</span>

@@ -336,6 +336,17 @@ class User < ActiveRecord::Base
     @belong_symbols ||= [self.symbol] + self.group_symbols
   end
 
+  # プロフィールボックスに表示するユーザの情報
+  def info
+    @info ||= { :access_count => self.user_access.access_count,
+                :subscriber_count => AntennaItem.count(
+                  :conditions => ["antenna_items.value = ?", self.symbol],
+                  :select => "distinct user_id",
+                  :joins => "left outer join antennas on antenna_id = antennas.id"),
+                :blog_count => BoardEntry.count(:conditions => ["user_id = ? and entry_type = ?", self.id, "DIARY"]),
+                :using_day => ((Time.now - self.created_on) / (60*60*24)).to_i + 1 }
+  end
+
 protected
   # TODO: self.make_conditionsメソッドは使ってなさそう確認して消す
   @@search_cond_keys = [:name, :section, :email]
