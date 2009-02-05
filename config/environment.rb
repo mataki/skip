@@ -62,7 +62,6 @@ end
 ENV['IMAGE_PATH'] ||= INITIAL_SETTINGS['image_path']
 ENV['SHARE_FILE_PATH'] ||= INITIAL_SETTINGS['share_file_path']
 ENV['BATCH_LOG_PATH'] ||= INITIAL_SETTINGS['batch_log_path'] || "#{RAILS_ROOT}/log/batch.log"
-ENV['SECRET_KEY'] ||= INITIAL_SETTINGS['secret_key']
 
 menu_btns = [
              { :img_name => "house",

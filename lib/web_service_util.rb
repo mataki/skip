@@ -16,8 +16,8 @@
 # アプリケーション連携用のライブラリ
 # 別のWebアプリを呼び出す際は、WebServiceUtilを利用する
 # 呼び出されるサービスを定義する際は、ForServicesModuleをincludeする
-require 'open-uri'
-require 'logger'
+require 'net/http'
+require "net/https"
 require 'uri'
 require 'json_parser'
 
@@ -25,44 +25,53 @@ class WebServiceUtil
 
   # 別のWebアプリのWeb-APIをコールするためのユーティリティメソッド
   # Webアプリ連携の際は、このメソッドを経由して利用すること
-  # 引数:app_name = 呼び出したいWebアプリケーションのシンボル
-  # 　　:service_name = 呼び出したいWeb-APIの名前
-  # 　　:params = 呼び出す際のパラメータ
-  # 　　:controller_name = サービスのコントローラパス（デフォルトの規約は"services"）
+  # 引数
+  #    :app_name = 呼び出したいWebアプリケーションのシンボル
+  #    :service_name = 呼び出したいWeb-APIの名前
+  #    :params = 呼び出す際のパラメータ
+  #    :controller_name = サービスのコントローラパス（デフォルトの規約は"services"）
   #      services以外を指定も可能だが、それは茨の道と思へ
   def self.open_service app_name, service_name, params={}, controller_name="services"
-    result_json = nil
-    evn_url_key = app_name.to_s.upcase + '_URL'
-    url = "#{ENV[evn_url_key]}/#{controller_name}/#{service_name}?"
-    begin
-      if params != {}
-        param_str = ""
-        sorted_params = params.sort_by{ |key, value| key.to_s }
-        params_size = index_count = sorted_params.size
-        sorted_params.each do |key, value|
-          value ||= ""
-          param_str << "&" if index_count != params_size
-          param_str << "#{key}=" + URI.encode(URI.encode(value.to_s), /[\&|\+|\=|!|~|'|(|)|;|\/|?|:|$|,|\[|\]|]/)
-          index_count = index_count - 1
-        end
-        url << param_str if param_str.size > 0
-      end
-
-      request_headers = { "X-SECRET-KEY" => ENV['SECRET_KEY'] }
-      open(url, request_headers) {|f| f.each_line {|line| result_json = JsonParser.new.parse(line) } }
-    rescue Exception => ex
-      # TODO ログの出力先が、productionモードなどを意識できていない
-      Logger.new("#{RAILS_ROOT}/log/#{RAILS_ENV}.log").warn "[warn]#{ex.to_s}"
-    end
-    result_json
+    app_url, app_ca_file = if app = INITIAL_SETTINGS['collaboration_apps'][app_name.to_s]
+                             [ app["url"], app["ca_file"] ]
+                           else
+                             [nil, nil]
+                           end
+    url = "#{app_url}/#{controller_name}/#{service_name}?" +
+      params.map{|key, val| "#{URI.encode(key.to_s)}=#{URI.encode(val.to_s)}"}.join('&')
+    self.get_json(url, app_ca_file)
   end
 
+  def self.get_json(url, ca_file = nil)
+    uri = URI.parse url
+    http = Net::HTTP.new(uri.host, uri.port)
+    if uri.port == 443
+      http.use_ssl = true
+      if ca_file
+        http.verify_mode = OpenSSL::SSL::VERIFY_PEER
+        http.ca_file = ca_file
+        http.verify_depth = 5
+      else
+        http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+      end
+    end
+    response = http.get("#{uri.path}?#{uri.query}", "X-SECRET-KEY" => INITIAL_SETTINGS['secret_key'])
+    if response.code == "200"
+      JsonParser.new.parse(response.body)
+    else
+      ActiveRecord::Base.logger.error "[WebServiceUtil Error] Response code is #{response.code} to access #{url}"
+      nil
+    end
+  rescue Errno::ECONNREFUSED, OpenSSL::SSL::SSLError, SocketError, ArgumentError => ex
+    ActiveRecord::Base.logger.error "[WebServiceUtil Error] #{ex.to_s} to access #{url}"
+    nil
+  end
 end
 
 module ForServicesModule
   def check_secret_key
-    unless request.env["HTTP_X_SECRET_KEY"] && request.env["HTTP_X_SECRET_KEY"] == ENV['SECRET_KEY']
-      render :text => { :error => "不正なアクセスです" }.to_json
+    unless request.env["HTTP_X_SECRET_KEY"] && request.env["HTTP_X_SECRET_KEY"] == INITIAL_SETTINGS['secret_key']
+      render :text => { :error => "Forbidden" }.to_json, :status => :forbidden
       return false
     end
   end
