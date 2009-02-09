@@ -18,6 +18,8 @@ require 'jcode'
 class User < ActiveRecord::Base
   include Authentication
   include Authentication::ByCookieToken
+  include ActionController::UrlWriter
+
   attr_accessor :old_password, :password
   attr_protected :admin, :status
 
@@ -336,6 +338,15 @@ class User < ActiveRecord::Base
     @belong_symbols ||= [self.symbol] + self.group_symbols
   end
 
+  def belong_symbols_with_collaboration_apps
+    symbols = ['sid:allusers'] + belong_symbols
+    (INITIAL_SETTINGS['belong_info_apps'] || {}).each do |app_name, setting|
+      join_info = WebServiceUtil.open_service_with_url(setting["url"], { :user => self.openid_identifier }, setting["ca_file"])
+      symbols += join_info.map{|item| item["publication_symbols"]} if join_info
+    end
+    symbols
+  end
+
   # プロフィールボックスに表示するユーザの情報
   def info
     @info ||= { :access_count => self.user_access.access_count,
@@ -345,6 +356,10 @@ class User < ActiveRecord::Base
                   :joins => "left outer join antennas on antenna_id = antennas.id"),
                 :blog_count => BoardEntry.count(:conditions => ["user_id = ? and entry_type = ?", self.id, "DIARY"]),
                 :using_day => ((Time.now - self.created_on) / (60*60*24)).to_i + 1 }
+  end
+
+  def openid_identifier
+    identity_url(:user => self.code, :protocol => Admin::Setting.protocol_by_initial_settings_default, :host => Admin::Setting.host_and_port_by_initial_settings_default)
   end
 
 protected

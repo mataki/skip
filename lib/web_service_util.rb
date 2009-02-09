@@ -36,7 +36,12 @@ class WebServiceUtil
                            else
                              [nil, nil]
                            end
-    url = "#{app_url}/#{controller_name}/#{service_name}?" +
+    url = "#{app_url}/#{controller_name}/#{service_name}"
+    self.open_service_with_url(url, params, app_ca_file)
+  end
+
+  def self.open_service_with_url url, params = {}, app_ca_file = nil
+    url = "#{url}?" +
       params.map{|key, val| "#{URI.encode(key.to_s)}=#{URI.encode(val.to_s)}"}.join('&')
     self.get_json(url, app_ca_file)
   end

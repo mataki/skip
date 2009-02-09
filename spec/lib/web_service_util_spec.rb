@@ -19,17 +19,21 @@ describe WebServiceUtil, ".open_service" do
   before do
     INITIAL_SETTINGS["collaboration_apps"] = {}
     INITIAL_SETTINGS["collaboration_apps"]["app"] = {"url" => "http://testapp.host"}
-    @base = "http://testapp.host/services/user_info?"
+    @base = "http://testapp.host/services/user_info"
   end
-  it "get_jsonを指定の引数で呼び出すこと" do
-    WebServiceUtil.should_receive(:get_json).with(@base + "key=key&id=user", nil)
+  it "get_jsonをパラメータからURLを作りだすこと" do
+    WebServiceUtil.should_receive(:open_service_with_url).with(@base, { :id => "user", :key => "key" }, nil)
     WebServiceUtil.open_service "app", "user_info", { :id => "user", :key => "key" }
   end
-  it "値にエンコードすべき値が含まれている場合 エンコードすること" do
+end
+
+describe WebServiceUtil, "open_service_with_url" do
+  it "paramsがエンコードされてget_jsonに渡されること" do
     params = { :id => "user", :key => "ほげ%$# ふが" }
-    params_join = params.map{|key,val| "#{key}=#{URI.encode(val)}" }.join('&')
-    WebServiceUtil.should_receive(:get_json).with(@base + params_join, nil)
-    WebServiceUtil.open_service "app", "user_info", params
+    query_str = params.map{|key,val| "#{key}=#{URI.encode(val)}" }.join('&')
+
+    WebServiceUtil.should_receive(:get_json).with("url?#{query_str}", nil)
+    WebServiceUtil.open_service_with_url "url", params
   end
 end
 

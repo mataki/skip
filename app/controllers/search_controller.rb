@@ -101,7 +101,7 @@ class SearchController < ApplicationController
     params[:offset] ||= 0
 
     begin
-      search = Search.new(params, belong_symbols(session[:user_code]))
+      search = Search.new(params, current_user.belong_symbols_with_collaboration_apps)
 
       @invisible_count = search.invisible_count
 
@@ -113,20 +113,6 @@ class SearchController < ApplicationController
   end
 
 private
-  # 所属情報を取得するためのメソッド
-  # user_codeを渡すと所属情報と設定のアプリの所属情報を取得する
-  def belong_symbols user_code
-    symbols = ['sid:allusers'] + login_user_symbols
-
-    unless INITIAL_SETTINGS['belong_info_apps'].blank?
-      INITIAL_SETTINGS['belong_info_apps'].each do |app_name, setting|
-        join_info = MemcacheUtil.get(user_code, app_name, setting[:api])
-        join_info[setting[:hash_key]].each{ |key, value| symbols << "#{setting[:prefix]}:#{key.to_s}" } if join_info
-      end
-    end
-    symbols
-  end
-
   # 全文検索の各画面用に@変数を作成するメソッド
   def make_instance_variables search_result
     @result_lines = search_result[:elements]

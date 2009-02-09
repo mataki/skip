@@ -475,6 +475,74 @@ describe User, '#belong_symbols' do
   end
 end
 
+describe User, "#belong_symbols_with_collaboration_apps" do
+  before do
+    Admin::Setting.stub!(:host_and_port_by_initial_settings_default).and_return("test.host")
+    Admin::Setting.stub!(:protocol_by_initial_settings_default).and_return("http://")
+    @user = stub_model(User, :belong_symbols => ["uid:a_user", "gid:a_group"], :code => "a_user")
+  end
+  describe "INITIAL_SETTINGSが設定されている場合" do
+    before do
+      INITIAL_SETTINGS["belong_info_apps"] = { 'app' => { "url" => "http://localhost:3100/notes.js", "ca_file" => "hoge/fuga" } }
+    end
+    describe "情報が返ってくる場合" do
+      before do
+        WebServiceUtil.stub!(:open_service_with_url).and_return([{"publication_symbols" => "note:1"}, { "publication_symbols" => "note:4"}])
+      end
+      it "SKIP内の所属情報を返すこと" do
+        ["uid:a_user", "gid:a_group", Symbol::SYSTEM_ALL_USER].each do |symbol|
+          @user.belong_symbols_with_collaboration_apps.should be_include(symbol)
+        end
+      end
+      it "WebServiceUtilから他のアプリにアクセスすること" do
+        WebServiceUtil.should_receive(:open_service_with_url).with("http://localhost:3100/notes.js", { :user => "http://test.host/id/a_user" }, "hoge/fuga")
+        @user.belong_symbols_with_collaboration_apps
+      end
+      it "連携アプリ内の所属情報を返すこと" do
+        ["note:1"].each do |symbol|
+          @user.belong_symbols_with_collaboration_apps.should be_include(symbol)
+        end
+      end
+    end
+    describe "情報が取得できない場合" do
+      before do
+        WebServiceUtil.stub!(:open_service_with_url)
+      end
+      it "何も追加されないこと" do
+        @user.belong_symbols_with_collaboration_apps.size.should == 3
+      end
+    end
+  end
+  describe "INITIAL_SETTINGSが設定されていない場合" do
+    before do
+      INITIAL_SETTINGS["belong_info_apps"] = nil
+    end
+    it "SKIP内の所属情報を返すこと" do
+      ["uid:a_user", "gid:a_group", Symbol::SYSTEM_ALL_USER].each do |symbol|
+        @user.belong_symbols_with_collaboration_apps.should be_include(symbol)
+      end
+    end
+  end
+end
+
+describe User, "#openid_identifier" do
+  before do
+    Admin::Setting.stub!(:host_and_port_by_initial_settings_default).and_return("test.host")
+    Admin::Setting.stub!(:protocol_by_initial_settings_default).and_return("http://")
+    @user = stub_model(User, :code => "a_user")
+  end
+  it "OPとして発行する OpenID identifier を返すこと" do
+    @user.openid_identifier.should == "http://test.host/id/a_user"
+  end
+  it "relative_url_rootが設定されている場合 反映されること" do
+    ActionController::AbstractRequest.relative_url_root = "/skip"
+    @user.openid_identifier.should == "http://test.host/skip/id/a_user"
+  end
+  after do
+    ActionController::AbstractRequest.relative_url_root = nil
+  end
+end
+
 describe User, '.find_by_code_or_email' do
   describe 'ログインIDに一致するユーザが見つかる場合' do
     before do

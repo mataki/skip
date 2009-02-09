@@ -147,7 +147,10 @@ default: &default
 #     knowledge:
 #       url:      http://localhost:4000
 #       ca_file:
-  belong_info_apps:                                                  # 所属情報を設定する { :app_name => { :api => :api_name, :hash_key => 'hash_key_name', :prefix => 'prefix' } }
+  belong_info_apps:                                                  # 所属情報を外部のアプリケーションのAPIを利用して設定する
+#     knowledge:
+#       url:        http://localhost:4000/notes.js
+#       ca_file:  /path/to/ca_file
 
   # ================================================================================================
   # その他

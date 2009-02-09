@@ -275,7 +275,7 @@ protected
   end
 
   def scheme
-    INITIAL_SETTINGS['use_ssl'] ? 'https' : 'http'
+    Admin::Setting.protocol_by_initial_settings_default
   end
 
   def endpoint_url

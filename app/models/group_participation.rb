@@ -29,11 +29,12 @@ class GroupParticipation < ActiveRecord::Base
   # このためGroupParticipationテーブルには、deleteメソッドなど
   # after_xxx がかからないメソッドは使わないように。
   def after_save
-    MemcacheUtil.clear(user.code, :skip) unless INITIAL_SETTINGS['belong_info_apps'].blank?
+# 他のアプリケーションの所属情報を利用する方法は再度検討する為、一旦コメントアウト
+#    MemcacheUtil.clear(user.code, :skip) unless INITIAL_SETTINGS['belong_info_apps'].blank?
   end
 
   def after_destroy
-    MemcacheUtil.clear(user.code, :skip) unless INITIAL_SETTINGS['belong_info_apps'].blank?
+#    MemcacheUtil.clear(user.code, :skip) unless INITIAL_SETTINGS['belong_info_apps'].blank?
   end
 
   def to_s

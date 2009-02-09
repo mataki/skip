@@ -9,8 +9,8 @@ xml.xrds(:XRDS,
       xml.Type OpenID::SReg::NS_URI_1_1
       xml.Type OpenID::SReg::NS_URI_1_0
       xml.Type OpenID::AX::AXMessage::NS_URI
-      xml.Type OpenID::PAPE::AUTH_MULTI_FACTOR if INITIAL_SETTINGS['use_ssl']
-      xml.Type OpenID::PAPE::AUTH_PHISHING_RESISTANT if INITIAL_SETTINGS['use_ssl']
+      xml.Type OpenID::PAPE::AUTH_MULTI_FACTOR if Admin::Setting.protocol_by_initial_settings_default == "https://"
+      xml.Type OpenID::PAPE::AUTH_PHISHING_RESISTANT if Admin::Setting.protocol_by_initial_settings_default == "https://"
       xml.URI endpoint_url
     end
   end

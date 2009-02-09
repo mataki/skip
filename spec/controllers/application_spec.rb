@@ -299,7 +299,7 @@ describe ApplicationController, "#identifier" do
       controller.send(:identifier, @user).should == "http://test.host/id/code"
     end
     it "identity_urlに@user.codeが渡されること" do
-      controller.should_receive(:identity_url).with(:protocol => "http", :user => "code")
+      controller.should_receive(:identity_url).with(:protocol => "http://", :user => "code")
       controller.send(:identifier, @user)
     end
   end
