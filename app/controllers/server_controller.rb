@@ -163,7 +163,7 @@ class ServerController < ApplicationController
   # The NIST Assurance Level, see:
   # http://openid.net/specs/openid-provider-authentication-policy-extension-1_0-01.html#anchor12
   def auth_level
-    INITIAL_SETTINGS['use_ssl'] ? 2 : 0
+    Admin::Setting.protocol_by_initial_settings_default == "https://" ? 2 : 0
   end
 
   def auth_time
