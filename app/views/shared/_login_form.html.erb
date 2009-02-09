@@ -1,14 +1,20 @@
-<style type="text/css">
-#openid_url {
-  background: #FFFFFF url(/images/openid_login_bg.gif) no-repeat scroll 0pt 50%;
-  padding-left: 18px;
-  width: 92%;
-}
-</style>
+<% content_for :stylesheet do -%>
+  <style type="text/css">
+  #openid_url {
+    background: #FFFFFF url(/images/openid_login_bg.gif) no-repeat scroll 0pt 50%;
+    padding-left: 18px;
+    width: 92%;
+  }
+  #login_form td {
+    border: none;
+    padding: 0px;
+  }
+  </style>
+<% end -%>
 
-<% form_tag({:controller => :platform, :action => :login, :only_path => false}, :id => 'login_form') do %>
-  <%= hidden_field_tag "return_to", h(params[:return_to]) -%>
-  <table class="box" style="font-size: 12px; width: 300px;">
+<% form_tag({:controller => :platform, :action => :login, :only_path => false}, :id => 'login_form') do -%>
+  <%= hidden_field_tag "return_to", h(params[:return_to]) %>
+  <table style="font-size: 12px; width: 300px;">
     <% if login_mode?(:password) -%>
     <% if checkid_request && !checkid_request.id_select %>
     <tr valign="top"><td><%= _('Your OpenID:') %></td></tr>
@@ -19,7 +25,7 @@
       <td><label for="login_key"><span style="font-weight: bold;"><%= h Admin::Setting.login_account %> or <%= _('User|Email') %></span></label></td>
     </tr>
     <tr valign="top">
-      <td><%= text_field 'login', 'key', :size => 35, :autocomplete => :on, :style => "font-family:Tahoma", :tabindex => "1" -%></td>
+      <td><%= text_field 'login', 'key', :size => 35, :autocomplete => :on, :style => "font-family:Tahoma", :tabindex => "1" %></td>
     </tr>
     <% end %>
     <tr valign="top">
@@ -36,7 +42,7 @@
     <% elsif login_mode?(:fixed_rp) -%>
     <tr valign="top">
       <td>下のボタンを押して、ログインしてください。
-        <%= hidden_field_tag "openid_url", h(INITIAL_SETTINGS['fixed_op_url']) -%>
+        <%= hidden_field_tag "openid_url", h(INITIAL_SETTINGS['fixed_op_url']) %>
       </td>
     </tr>
     <% else -%>
@@ -59,7 +65,7 @@
     </tr>
     <% end -%>
 
-    <% if INITIAL_SETTINGS['ssl_setting'] %>
+    <% if INITIAL_SETTINGS['ssl_setting'] -%>
     <tr valign="top" align="left">
       <td>
         <div style="margin-top: 15px; _margin-top: 0px;">
@@ -68,15 +74,15 @@
         </div>
       </td>
     </tr>
-    <% end %>
-
+    <% end -%>
     <tr>
       <td align="right"><%= submit_tag "ログイン", :onclick=>"saveLoginData();", :tabindex => "4" %></td>
     </tr>
   </table>
-<% end %>
-    <%= link_to _('OpenIDを忘れた/再設定したい方はこちら'), forgot_openid_path, {:style => 'font-size:14px'} if enable_forgot_openid? %>
+<% end -%>
+<%= link_to _('OpenIDを忘れた/再設定したい方はこちら'), forgot_openid_path, {:style => 'font-size:14px'} if enable_forgot_openid? %>
 
+<% content_for :javascript do -%>
 <script type="text/javascript">
 $j(function(){
     var loadLoginData = function(){
@@ -101,3 +107,4 @@ $j(function(){
     });
 });
 </script>
+<% end -%>

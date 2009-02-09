@@ -1,80 +1,76 @@
-<style type="text/css">
-div.input_line {
-  border-bottom: 1px dotted silver;
-  margin-bottom: 3px;
-  padding-bottom: 2px;
-}
-div.input_line div.input_label {
-  background-color: #f0f0ff;
-  width: 115px;
-  overflow: hidden;
-  float: left;
-  font-weight: bold;
-  padding: 3px 5px;
-  margin-right: 5px;
-}
-div.input_line div.input_value {
-  float: left;
-  padding: 3px 0;
-}
-div.input_line div.rich_value {
-  clear: both;
-  float: none;
-  border: 1px solid silver;
-  padding: 5px;
-}
-div.input_line div.input_bottom {
-  height: 0;
-  line-height: 0;
-  clear: both;
-}
+<% content_for :stylesheet do -%>
+  <style type="text/css">
+  div.input_line {
+    border-bottom: 1px dotted silver;
+    margin-bottom: 3px;
+    padding-bottom: 2px;
+  }
+  div.input_line div.input_label {
+    background-color: #f0f0ff;
+    width: 115px;
+    overflow: hidden;
+    float: left;
+    font-weight: bold;
+    padding: 3px 5px;
+    margin-right: 5px;
+  }
+  div.input_line div.input_value {
+    float: left;
+    padding: 3px 0;
+  }
+  div.input_line div.rich_value {
+    clear: both;
+    float: none;
+    border: 1px solid silver;
+    padding: 5px;
+  }
+  div.input_line div.input_bottom {
+    height: 0;
+    line-height: 0;
+    clear: both;
+  }
+  </style>
+<% end -%>
 
-</style>
+<% content_for :contents_left do -%>
+  <%= render(:partial => 'user/portrait_box', :locals => { :user => @user }) %>
+  <div class="box_space" id="groups">
+    <div class="box_space_title"><%= icon_tag('group') %>参加グループ</div>
+    <div class="box_space_body">
+    <div class="helpbar">[<%= icon_tag('bullet_red') %>：管理者 <%= icon_tag('bullet_blue') %>：参加者]</div>
+    <ul>
+    <% @groups.each do |group| -%>
+      <% icon_name = group.group_participations.first.owned? ? 'bullet_red' : 'bullet_blue' -%>
+      <li><%= icon_tag(icon_name) + group_link_to(group, :view_text => truncate(h(group.name), 12), :title => group.name) %></li>
+    <% end -%>
+    </ul>
+    </div>
+    <div class="box_space_bottom"><%= link_to "[全 #{@groups_count} 件][すべて見る]", :action => 'group', :uid => @user.uid %></div>
+  </div><!-- box_space -->
 
-<div id="contents_container">
-<div id="contents_left">
+  <div class="box_space">
+    <div class="box_space_title"><%= icon_tag('user_suit') %>紹介したユーザ</div>
+    <div class="box_space_body">
+    <ul>
+    <% for chain in @follow_chains %>
+      <li><%= icon_tag('bullet_blue') + user_link_to(chain.to_user) %></li>
+    <% end %>
+    </ul>
+    </div>
+    <div class="box_space_bottom"><%= link_to '[すべて見る]', :action => 'social', :menu => 'social_chain_against', :uid => @user.uid %></div>
+  </div><!-- box_space -->
+<% end -%>
 
-<%= render(:partial => 'user/portrait_box', :locals => { :user => @user }) %>
-
-<div class="box_space" id="groups">
-  <div class="box_space_title"><%= icon_tag('group') %>参加グループ</div>
-  <div class="box_space_body">
-  <div class="helpbar">[<%= icon_tag('bullet_red') %>：管理者 <%= icon_tag('bullet_blue') %>：参加者]</div>
-  <ul>
-  <% @groups.each do |group| -%>
-    <% icon_name = group.group_participations.first.owned? ? 'bullet_red' : 'bullet_blue' -%>
-    <li><%= icon_tag(icon_name) + group_link_to(group, :view_text => truncate(h(group.name), 12), :title => group.name) %></li>
-  <% end -%>
-  </ul>
-  </div>
-  <div class="box_space_bottom"><%= link_to "[全 #{@groups_count} 件][すべて見る]", :action => 'group', :uid => @user.uid %></div>
-</div><!-- box_space -->
-
-<div class="box_space">
-  <div class="box_space_title"><%= icon_tag('user_suit') %>紹介したユーザ</div>
-  <div class="box_space_body">
-  <ul>
-  <% for chain in @follow_chains %>
-    <li><%= icon_tag('bullet_blue') + user_link_to(chain.to_user) %></li>
-  <% end %>
-  </ul>
-  </div>
-  <div class="box_space_bottom"><%= link_to '[すべて見る]', :action => 'social', :menu => 'social_chain_against', :uid => @user.uid %></div>
-</div><!-- box_space -->
-
-</div><!-- contents_left -->
-
-<div id="contents_right">
-
-  <% if @user.retired? %>
+<% content_for :contents_right do -%>
+  <% if @user.retired? -%>
   <div class="desc" style="font-weight: bold; margin-bottom: 5px;">この方は既に退職されています</div>
-  <% end %>
+  <% end -%>
 
   <div class="profile_information_space" style="margin-bottom: 10px; position: relative; width: 100%;">
-    <h2 class="topix_title"><%= icon_tag('asterisk_orange') -%>プロフィール</h2>
-    <% if @user.id == session[:user_id] %>
+    <h2 class="topix_title"><%= icon_tag('asterisk_orange') %>プロフィール</h2>
+    <% if @user.id == session[:user_id] -%>
     <div style="position: absolute; top: 5px; right: 10px;">
-      <%= link_to icon_tag('vcard_edit', :title=>'編集する') + '[編集する]', :controller => 'mypage', :action => 'manage', :menu => 'manage_profile' -%></div>
+      <%= link_to icon_tag('vcard_edit', :title=>'編集する') + '[編集する]', :controller => 'mypage', :action => 'manage', :menu => 'manage_profile' %></div>
     <% end -%>
 
     <div class="topix_body" style="margin-top: 5px; width: 95%; overflow: hidden">
@@ -125,7 +121,6 @@ div.input_line div.input_bottom {
       <% end -%>
       <% end -%>
       <% end -%>
-
     </div>
   </div>
 
@@ -134,8 +129,7 @@ div.input_line div.input_bottom {
                :user => @user,
                :tags => @tags
              } %>
-
-<% if @against_chains.size > 0 -%>
+  <% if @against_chains.size > 0 -%>
   <div class="profile_information_space" style="margin-bottom: 10px; position: relative; width: 100%;">
     <div style="position: absolute; top: 5px; right: 10px;"><%= link_to '[すべて見る]', :action => 'social', :menu => 'social_chain', :uid => @user.uid %></div>
     <h2 class="topix_title"><%= icon_tag('asterisk_orange') %>紹介文</h2>
@@ -155,10 +149,5 @@ div.input_line div.input_bottom {
     <% end -%>
     </div>
   </div>
+  <% end -%>
 <% end -%>
-
-</div><!-- contents_right -->
-
-<div id="contents_bottom"></div><!-- contents_bottom -->
-
-</div><!-- contents_container -->

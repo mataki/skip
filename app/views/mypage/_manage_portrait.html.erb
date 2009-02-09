@@ -1,39 +1,31 @@
-<div id="contents_container">
+<% content_for :contents_left do -%>
+  <%= render :partial => "manage_menu", :locals => { :selected_menu => @menu } %>
+<% end -%>
 
-<div id="contents_left">
+<% content_for :contents_right do -%>
+  <div class="desc">
+    <p>画像は１枚までしか登録できません。画像サイズは、64kbまでです。</p>
+    <p>もし画像がない場合・・・<a href="http://www.google.co.jp/search?q=<%= URI.encode('似顔絵作成') %>&lr=lang_ja&ie=utf-8&oe=utf-8">
+  「似顔絵作成」をGoogleで検索すると色々でてきます</a>ので作成してみると良いでしょう。</p>
+  </div>
 
-<%= render :partial => "manage_menu", :locals => { :selected_menu => @menu } %>
+  <%= template_error_messages_for 'picture' %>
 
-</div><!-- contents_left -->
+  <div class="portrait" style="border: 1px solid silver; margin: 10px; text-align: center;">
+  <%= showPicture(@user, 0, 150) -%>
+  </div>
 
-<div id="contents_right">
+  <% if @picture.id -%>
+    <%= link_to("[[削除]]", {:action => "destroy_portrait"}, :confirm => '本当に削除しますか?', :method => :post) %>
+  <% end -%>
 
-<div class="desc"><p>画像は１枚までしか登録できません。画像サイズは、64kbまでです。<br/>
-もし画像がない場合・・・<a href="http://www.google.co.jp/search?q=<%= URI.encode('似顔絵作成') %>&lr=lang_ja&ie=utf-8&oe=utf-8">
-「似顔絵作成」をGoogleで検索すると色々でてきます</a>ので作成してみると良いでしょう。
-</p></div>
+  <% form_tag({:action => 'save_portrait'}, :multipart => true, :id => 'picture_upload_form') do -%>
+    <%= file_field("picture", "picture") %>
+    <%= submit_tag("アップロード") %>
+  <% end -%>
+<% end -%>
 
-<%= template_error_messages_for 'picture' %>
-
-<div class="portrait" style="border: 1px solid silver; margin: 10px; text-align: center;">
-<%= showPicture(@user, 0, 150) -%>
-</div>
-
-<% if @picture.id %>
-<%= link_to("[[削除]]", {:action => "destroy_portrait"}, :confirm => '本当に削除しますか?', :method => :post) %>
-<% end %>
-
-<% form_tag({:action => 'save_portrait'}, :multipart => true, :id => 'picture_upload_form') do -%>
-  <%= file_field("picture", "picture") %><br/>
-  <%= submit_tag("アップロード") %>
-<% end %>
-
-</div><!-- contents_right -->
-
-<div id="contents_bottom">
-</div><!-- contents_bottom -->
-
-</div><!-- contents_container -->
+<% content_for :javascript do -%>
 <script type="text/javascript">
 $j(function(){
     $j("#picture_upload_form")
@@ -45,3 +37,4 @@ $j(function(){
     });
 });
 </script>
+<% end -%>

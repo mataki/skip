@@ -1,77 +1,55 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Script-Type" content="text/javascript" />
-  <link rel="shortcut icon" href="<%= controller.request.relative_url_root -%>/favicon.ico" />
-  <title><%= h Admin::Setting.abbr_app_title -%></title>
-<script language="JavaScript" type="text/javascript">
-<!--
-var relative_url_root = '<%= controller.request.relative_url_root -%>';
-//-->
-</script>
+<% content_for :stylesheet do -%>
   <%= skip_stylesheet_link_tag 'style' %>
+  <style type="text/css">
+  a:hover {
+    color: blue;
+    background-color: yellow;
+  }
+  div#main {
+    position: relative;
+    background-image: url('<%= controller.request.relative_url_root -%>/custom/images/<%= @img_name -%>');
+    _width: 100%;
+    height: 330px;
+  }
+  .desc {
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    border-bottom: solid 1px silver;
+    background-color: white;
+    padding: 5px;
 
-  <%= skip_jquery_include_tag 'jquery' %>
-  <%= skip_jquery_include_tag 'jquery.cluetip' %>
-  <script language="JavaScript" type="text/javascript">$j = jQuery.noConflict();</script>
-  <%= skip_javascript_include_tag "skip_util" %>
-  <%= javascript_include_tag "application" %>
+    overflow: auto;
+    height: 130px;
+    width: 700px;
+  }
+  .login-box {
+    position: absolute;
+    right: 10px;
+    top: 40px;
+    _height: 180px;
+    width: 300px;
+    padding: 2px;
+    background-color: #f2f2ff;
+    font-size: 12px;
+    z-index: 20;
+  }
+  .login-box p {
+    line-height: 130%;
+    padding: 2px;
+    background-color: #ddddff;
+    border-bottom: 1px solid #AAAAAF;
+    font-size: 14px;
+    font-weight: bold;
+    color: #444444;
+    text-align: center;
+  }
+  </style>
+<% end -%>
 
-<style type="text/css">
-a:hover {
-  color: blue;
-  background-color: yellow;
-}
-div#main {
-  position: relative;
-  background-image: url('<%= controller.request.relative_url_root -%>/custom/images/<%= @img_name -%>');
-  _width: 100%;
-  height: 330px;
-}
-.desc {
-  position: absolute;
-  left: 0px;
-  bottom: 0px;
-  border-bottom: solid 1px silver;
-  background-color: white;
-  padding: 5px;
-
-  overflow: auto;
-  height: 130px;
-  width: 700px;
-}
-.login-box {
-  position: absolute;
-  right: 10px;
-  top: 40px;
-  _height: 180px;
-  width: 300px;
-  padding: 2px;
-  background-color: #f2f2ff;
-  font-size: 12px;
-  z-index: 20;
-}
-.login-box p {
-  line-height: 130%;
-  padding: 2px;
-  background-color: #ddddff;
-  border-bottom: 1px solid #AAAAAF;
-  font-size: 14px;
-  font-weight: bold;
-  color: #444444;
-  text-align: center;
-}
-</style>
-</head>
-
-<body>
-<div id="logo"><%= link_to(image_tag("#{controller.request.relative_url_root}/custom/images/title_logo.png", :alt => h(Admin::Setting.abbr_app_title))) -%></div>
-<div id="top"><%= render :partial => '/layouts/flash_messages' %></div>
-
-<div id="main">
-
+<% content_for :header do -%>
+  <div id="logo"><%= link_to(image_tag("#{controller.request.relative_url_root}/custom/images/title_logo.png", :alt => h(Admin::Setting.abbr_app_title))) -%></div>
+<% end -%>
 <div id="login" class="login-box">
   <p>ログイン</p>
   <%= render :partial => 'shared/login_form' %>
@@ -81,23 +59,15 @@ div#main {
   <div style="text-align: center; font-weight: bold; font-size: 14px;"><%= link_to _('ユーザ登録してSKIPの利用を開始する'), activate_url %></div>
   <% end -%>
 </div>
-
 <div id="desc_before_login" class="desc"><%= skip_image_tag 'indicator.gif' %></div>
 
-</div><!-- main -->
-
-<%= skip_footer_link -%>
-
-</body>
-
+<% content_for :javascript do -%>
 <script type="text/javascript">
-<!--
 $j(function(){
     $j('#desc_before_login').load(relative_url_root + '/custom/about_this_site.html', function(text) {
       if (text == "") { $j('#desc_before_login').hide(); }
     });
     $j('.desc, .login-box').fadeTo('slow',0.8);
 });
-//-->
 </script>
-</html>
+<% end -%>

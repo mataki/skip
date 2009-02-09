@@ -11,6 +11,7 @@
   (直接指定の際は、"uid:ニックネーム"、"gid:グループ名"のように入力してください。また漢字氏名、部署による部分検索も可能です。ex:山田、総務)</p>
 </div>
 
+<% content_for :javascript do -%>
 <script type="text/javascript">
 /* このページで使う変数 */
 var publication_symbols_array = new Array();
@@ -164,3 +165,4 @@ $j(function() {
     });
 });
 </script>
+<% end -%>

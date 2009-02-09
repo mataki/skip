@@ -1,22 +1,13 @@
-<div id="contents_container">
+<% content_for :contents_left do -%>
+  <%= render :partial => "manage_menu", :locals => { :selected_menu => @menu } %>
+<% end -%>
 
-<div id="contents_left">
+<% content_for :contents_right do -%>
+  <div class="desc">
+    <p>本サイトで登録頂いた情報は、本サイト運営上でのみ利用いたします。</p>
+  </div>
 
-<%= render :partial => "manage_menu", :locals => { :selected_menu => @menu } %>
-
-</div><!-- contents_left -->
-
-<div id="contents_right">
-
-<div class="desc"><p>本サイトで登録頂いた情報は、本サイト運営上でのみ利用いたします。<br/></p></div>
-
-<div class="edit_form_space">
-<%= render :partial => "portal/registration_form", :locals => {:is_new => false} %>
-</div>
-
-</div><!-- contents_right -->
-
-<div id="contents_bottom">
-</div><!-- contents_bottom -->
-
-</div><!-- contents_container -->
+  <div class="edit_form_space">
+  <%= render :partial => "portal/registration_form", :locals => {:is_new => false} %>
+  </div>
+<% end -%>

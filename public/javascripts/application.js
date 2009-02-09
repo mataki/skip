@@ -170,7 +170,7 @@ $j(function(){
     }
 
     fitImageSize = function(jObj, max_width, max_height) {
-        img = new Image();
+        var img = new Image();
         img.src = jObj.attr('src');
 
         if (max_height > max_width) {

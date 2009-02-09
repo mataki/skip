@@ -1,5 +1,4 @@
 <% form_tag({:action => 'create'}, :multipart => true, :id=>'share_file_form') do -%>
-
   <%= render :partial => 'form', :locals => {:owner_name => @owner_name,
                                              :share_file => @share_file,
                                              :categories_hash => @categories_hash,
@@ -26,5 +25,4 @@
 
   <%= submit_tag "登録", :id => "submit_button" %>
   <input type="button" value="キャンセル" onclick="window.close();"></input>
-
-<% end %>
+<% end -%>

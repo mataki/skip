@@ -1,14 +1,12 @@
 <% show_favorite ||= false -%>
-
 <% if pages and pages.item_count > 0 -%>
-  <% if show_favorite %>
+  <%= hidden_field_tag("authenticity_token", form_authenticity_token) %>
+  <% if show_favorite -%>
   <div class="desc" style="margin-bottom:5px"><%= icon_tag('award_star_gold_2') %>を選択したグループのみ、画面右上のショートカットメニューに表示されます</div>
-  <% end %>
-
-  <div class="navi"><%= page_link pages -%></div>
-
-  <% if format_type == "detail" %>
-    <% groups.each do |group| %>
+  <% end -%>
+  <div class="navi"><%= page_link pages %></div>
+  <% if format_type == "detail" -%>
+    <% groups.each do |group| -%>
     <table class="group_box">
       <tr>
         <th><%= group_link_to group %></th>
@@ -22,27 +20,59 @@
         <td class="since">since <%= group.created_on.strftime("%Y/%m/%d") -%></td>
       </tr>
     </table>
-    <% end %>
-  <% else %>
+    <% end -%>
+  <% else -%>
     <table class="group_list_box normal">
-    <tr>
-      <th width="50%">グループ名</th>
-      <th>カテゴリ</th>
-      <th>状態</th>
-      <th>承認</th>
-      <th>アクション</th>
-    </tr>
-    <% groups.each do |group| %>
-    <tr class="<%= cycle('line_0', 'line_1') %>">
-      <td><%= group_link_to group %></td>
-      <td><%= icon_tag(group.category_icon_name.first) + h(group.category_icon_name.last) %></td>
-      <td><%= participation_state(group, user_id) -%></td>
-      <td><%= "#{icon_tag 'lock'}必要" if group.protected? %></td>
-      <td><%= show_group_action(show_favorite, group) %></td>
-    </tr>
-    <% end %>
+      <tr>
+        <th width="50%">グループ名</th>
+        <th>カテゴリ</th>
+        <th>状態</th>
+        <th>承認</th>
+        <th>アクション</th>
+      </tr>
+    <% groups.each do |group| -%>
+      <tr class="<%= cycle('line_0', 'line_1') %>">
+        <td><%= group_link_to group %></td>
+        <td><%= icon_tag(group.category_icon_name.first) + h(group.category_icon_name.last) %></td>
+        <td><%= participation_state(group, user_id) -%></td>
+        <td><%= "#{icon_tag 'lock'}必要" if group.protected? %></td>
+        <td><%= show_group_action(show_favorite, group) %></td>
+      </tr>
+    <% end -%>
     </table>
-  <% end %>
+  <% end -%>
+  <div class="navi"><%= page_link pages %></div>
+<% end -%>
 
-  <div class="navi"><%= page_link pages -%></div>
-<% end %>
+<% content_for :javascript do -%>
+<script type="text/javascript">
+$j(function(){
+    <%# TODO application.jsに移動する %>
+    var setupFavoliteStar = function(){
+      $j('.favorite_star')
+      .click(function() {
+          var participation_id = this.id.split('_')[3];
+          var favorited = $j(this).children().hasClass('ss_award_star_silver_2');
+          var update_elem_id = 'group_participation_' + participation_id;
+          var gid = $j('#gid_' + participation_id).val();
+          var ado_set_favorite_url = relative_url_root + '/group/' + gid + '/ado_set_favorite';
+          $j.ajax({
+              type: 'POST',
+              url: ado_set_favorite_url,
+              data: { group_participation_id : participation_id,
+                      favorite_flag : favorited,
+                      update_elem_id : update_elem_id,
+                      authenticity_token: $j("#authenticity_token").val() },
+              success: function(html) {
+                  $j('#' + update_elem_id).html(html).parent().highlight();
+                  $j('.favorite_star').unbind('click');
+                  setupFavoliteStar();
+              }
+          });
+          return false;
+      });
+    };
+    setupFavoliteStar();
+});
+</script>
+<% end -%>

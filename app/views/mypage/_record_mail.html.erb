@@ -1,57 +1,46 @@
+<% content_for :stylesheet do -%>
+  <style type="text/css">
+  table.normal td.line_0, table.normal td.line_1 {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    padding-right: 10px;
+  }
+  </style>
+<% end -%>
 
-<div id="contents_container">
+<% content_for :contents_left do -%>
+  <%= render :partial => "manage_menu", :locals => { :selected_menu => @menu } %>
+<% end -%>
 
-<div id="contents_left">
+<% content_for :contents_right do -%>
+  <div class="desc" style="margin-bottom:5px;">
+    <p>連絡機能によって、<%= h Admin::Setting.abbr_app_title %>からメールが送信されたブログや掲示板の記事の一覧です。<br/>（メール送信は、即時でなく定期的に行われます）</p>
+  </div>
 
-<%= render :partial => "manage_menu", :locals => { :selected_menu => @menu } %>
+  <div class="navi"><%= page_link(@pages) %></div>
 
-</div><!-- contents_left -->
+  <div style="margin: 5px;">
+    <table border="1" class="normal" style="width: 100%; _width: 98%;">
+      <tr>
+        <th width="30%">送信先</th>
+        <th width="">タイトル</th>
+        <th width="180px">送信日</th>
+      </tr>
+      <% even_or_odd = 0
+         @mails.each do |mail|
+           even_or_odd = 1 - even_or_odd
+           board_entry_with_mail = @board_enries_by_user_entry_no[mail.user_entry_no]
+           item =  @exist_item_by_symbol[mail.to_address_symbol]
+      -%>
+      <tr>
+        <td class="line_<%= even_or_odd %>"><%= get_link_to_name (mail, item)  %></td>
+        <td class="line_<%= even_or_odd %>"><%= get_link_to_title(mail, board_entry_with_mail) %></td>
+        <td class="line_<%= even_or_odd %>"><%=h get_send_date(mail)  %></td>
+      </tr>
+      <% end -%>
+    </table>
+  </div>
 
-<div id="contents_right">
-
-<style type="text/css">
-table.normal td.line_0, table.normal td.line_1 {
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-  padding-right: 10px;
-}
-</style>
-
-<div class="desc" style="margin-bottom:5px;">
-  <p>連絡機能によって、<%= h Admin::Setting.abbr_app_title -%>からメールが送信されたブログや掲示板の記事の一覧です。<br/>（メール送信は、即時でなく定期的に行われます）</p>
-</div>
-
-<div class="navi"><%= page_link(@pages) -%></div>
-
-<div style="margin: 5px;">
-  <table border="1" class="normal" style="width: 100%; _width: 98%;">
-    <tr>
-      <th width="30%">送信先</th>
-      <th width="">タイトル</th>
-      <th width="180px">送信日</th>
-    </tr>
-    <% even_or_odd = 0
-       @mails.each do |mail|
-         even_or_odd = 1 - even_or_odd
-         board_entry_with_mail = @board_enries_by_user_entry_no[mail.user_entry_no]
-         item =  @exist_item_by_symbol[mail.to_address_symbol]
-    -%>
-    <tr>
-      <td class="line_<%= even_or_odd -%>"> <%= get_link_to_name (mail, item)  %>  </td>
-      <td class="line_<%= even_or_odd -%>"> <%= get_link_to_title(mail, board_entry_with_mail) %>  </td>
-      <td class="line_<%= even_or_odd -%>"> <%=h  get_send_date(mail)  %>  </td>
-    </tr>
-    <% end %>
-  </table>
-</div>
-
-<div class="navi"><%= page_link(@pages) -%></div>
-
-
-</div><!-- contents_right -->
-
-<div id="contents_bottom">
-</div><!-- contents_bottom -->
-
-</div><!-- contents_container -->
+  <div class="navi"><%= page_link(@pages) %></div>
+<% end -%>

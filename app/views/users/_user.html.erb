@@ -1,45 +1,44 @@
-<% top_option ||= nil %>
-
-<% image_output = user_link_to_with_portrait(user) %>
+<% top_option ||= nil -%>
+<% image_output = user_link_to_with_portrait(user) -%>
 <div class="user_box">
   <div id="user_buttons">
     <%= link_to(icon_tag('transmit_go', :title => _('アンテナに追加')), {:controller => "antenna", :action => "select_antenna", :symbol => user.symbol, :dummy => '.html'}, {:class => "nyroModal"}) %>
     <%= link_to(icon_tag('tag_blue_add', :title=>'ブックマークする'), {:controller => "bookmark", :action => "edit", :url => user.get_postit_url, :title => user.name, :dummy => '.html'}, {:class => "nyroModal"}) %>
   </div>
-<table class="user_box">
-  <tr>
-    <% if top_option -%>
-    <td class="image" rowspan="4"><%= image_output %></td>
-    <td colspan="4"><%= top_option -%></td>
-  </tr>
-  <tr>
-    <% else -%>
-    <td class="image" rowspan="4"><%= image_output %></td>
-    <% end -%>
-    <% if user_name_mode?(:code) -%>
-    <th><%=h Admin::Setting.login_account -%></th>
-    <td><%=h user.code %></td>
-    <% end -%>
-    <% if user_name_mode?(:name) -%>
-    <th><%= _('user name') %></th>
-    <td><%=h user.uid %></td>
-    <% end -%>
-  </tr>
-  <tr>
-    <th><%=h _("Admin::User|Name") %></th>
-    <td><%= user_link_to user %></td>
-    <% unless Admin::Setting.hide_email -%>
-    <th><%=h _("User|Email") %></th>
-    <td><%=h user.email %></td>
-    <% else -%>
-    <td colspan="2"></td>
-    <% end -%>
-  </tr>
-  <tr>
-    <th>最終アクセス</th>
-    <td><%=h user.before_access %></td>
-    <th><%=h _('User|Section') %></th>
-    <td><%=h user.section %></td>
-  </tr>
-</table>
+  <table class="user_box">
+    <tr>
+      <% if top_option -%>
+      <td class="image" rowspan="4"><%= image_output %></td>
+      <td colspan="4"><%= top_option -%></td>
+    </tr>
+    <tr>
+      <% else -%>
+      <td class="image" rowspan="4"><%= image_output %></td>
+      <% end -%>
+      <% if user_name_mode?(:code) -%>
+      <th><%=h Admin::Setting.login_account -%></th>
+      <td><%=h user.code %></td>
+      <% end -%>
+      <% if user_name_mode?(:name) -%>
+      <th><%= _('user name') %></th>
+      <td><%=h user.uid %></td>
+      <% end -%>
+    </tr>
+    <tr>
+      <th><%=h _("Admin::User|Name") %></th>
+      <td><%= user_link_to user %></td>
+      <% unless Admin::Setting.hide_email -%>
+      <th><%=h _("User|Email") %></th>
+      <td><%=h user.email %></td>
+      <% else -%>
+      <td colspan="2"></td>
+      <% end -%>
+    </tr>
+    <tr>
+      <th>最終アクセス</th>
+      <td><%=h user.before_access %></td>
+      <th><%=h _('User|Section') %></th>
+      <td><%=h user.section %></td>
+    </tr>
+  </table>
 </div>

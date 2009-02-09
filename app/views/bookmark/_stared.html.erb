@@ -2,24 +2,3 @@
 <% icon_name, icon_title = 'award_star_gold_2', "スターをはずす" -%>
 <% icon_name, icon_title = 'award_star_silver_2', "スターを付ける" unless bookmark_comment.stared -%>
 <a href="#" class='bookmark_star' id="bookmark_star_link_<%= bookmark_comment.id -%>"><%= icon_tag(icon_name, :title => icon_title) -%></a>
-
-<script type="text/javascript">
-$j(function(){
-    <%# TODO idでクリックを設定するDOM要素を設定しているがクラスで設定して、application.jsなどに一箇所に書きたい %>
-    // ブックマークのスターをクリックしたときのAjaxアクションを設定する
-    $j('#bookmark_star_link_<%= bookmark_comment.id -%>')
-    .click(function() {
-        $j.ajax({
-            type: 'POST',
-            url: '<%= url_for(:controller => 'bookmark', :action => 'ado_set_stared') -%>',
-            data: { bookmark_comment_id : '<%= bookmark_comment.id -%>', stared : <%= (!bookmark_comment.stared).to_s -%>,
-          　        authenticity_token: $j("#authenticity_token").val() },
-            success: function(html) {
-                $j('#bookmark_comment_stared_<%= bookmark_comment.id -%>').html(html);
-                $j('#bookmark_comment_<%= bookmark_comment.id -%>').highlight();
-            }
-        });
-        return false;
-    });
-});
-</script>

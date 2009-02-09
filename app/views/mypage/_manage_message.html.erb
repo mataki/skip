@@ -1,33 +1,20 @@
+<% content_for :contents_left do -%>
+  <%= render :partial => "manage_menu", :locals => { :selected_menu => @menu } %>
+<% end -%>
 
-<div id="contents_container">
-
-<div id="contents_left">
-
-<%= render :partial => "manage_menu", :locals => { :selected_menu => @menu } %>
-
-</div><!-- contents_left -->
-
-<div id="contents_right">
-
-<div class="edit_form_space">
-<% form_tag :action => 'update_message_unsubscribes' do -%>
-<div class="desc">
-お知らせメールの通知を設定します。</div>
-<br/>
-<table class="normal" border="1">
-<% Message::MESSAGE_TYPES.each do |message_type, message_hash| %>
-  <tr><th width="200px"><%=h message_hash[:name] %></th><td>通知する<%= check_box_tag("message_type[#{message_type}]", "ON", !@unsubscribes.include?(message_type)) -%></td></tr>
-<% end %>
-</table>
-<br/>
-  <%= submit_tag '保存' %>
-<% end %>
-</div>
-
-</div><!-- contents_right -->
-
-<div id="contents_bottom">
-</div><!-- contents_bottom -->
-
-</div><!-- contents_container -->
-
+<% content_for :contents_right do -%>
+  <div class="desc">お知らせメールの通知を設定します。</div>
+  <div class="edit_form_space">
+  <% form_tag :action => 'update_message_unsubscribes' do -%>
+    <table class="normal" border="1">
+    <% Message::MESSAGE_TYPES.each do |message_type, message_hash| -%>
+      <tr>
+        <th width="200px"><%=h message_hash[:name] %></th>
+        <td>通知する<%= check_box_tag("message_type[#{message_type}]", "ON", !@unsubscribes.include?(message_type)) %></td>
+      </tr>
+    <% end -%>
+    </table>
+    <%= submit_tag '保存' %>
+  <% end -%>
+  </div>
+<% end -%>

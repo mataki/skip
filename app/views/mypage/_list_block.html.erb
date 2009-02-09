@@ -7,6 +7,8 @@
 <%= %(<div id="#{id_name}">) %>
 
 <div class="topix_body" id="<%= id_name -%>_body">
+  <%= hidden_field_tag 'per_page', per_page if defined? per_page %>
+  <%= hidden_field_tag 'recent_day', recent_day %>
 
 <% pages.each do |message| -%>
   <% entry_infos = get_entry_infos(message) -%>
@@ -26,56 +28,18 @@
 <% if pages_obj and pages_obj.item_count > 0 -%>
 <div style="text-align: right;"><span style="background-color: #fcffc5; padding: 0 2px 0 5px; font-size: 10px;">
   <% if pages_obj.current.previous -%>
-  <a class="first_link" id="<%= id_name -%>_first_link" href="#" >[最初へ]</a>
-  <a class="back_link" id="<%= id_name -%>_back_link" href="#" >[前へ]</a>
+    <%= hidden_field_tag 'page_back', pages_obj.current.previous.to_i %>
+  <a class="first_link" id="<%= id_name -%>-first_link" href="#" >[最初へ]</a>
+  <a class="back_link" id="<%= id_name -%>-back_link" href="#" >[前へ]</a>
   <% end -%>
   <%= %(全#{h pages_obj.item_count}件（#{h pages_obj.current.number}/#{h pages_obj.length}ページ）) %>
   <% if pages_obj.current.next -%>
-  <a class="next_link" id="<%= id_name -%>_next_link" href="#" >[次へ]</a>
-  <a class="last_link" id="<%= id_name -%>_last_link" href="#" >[最後へ]</a>
+    <%= hidden_field_tag 'page_last', pages_obj.last.to_i %>
+    <%= hidden_field_tag 'page_next', pages_obj.current.next.to_i %>
+  <a class="next_link" id="<%= id_name -%>-next_link" href="#" >[次へ]</a>
+  <a class="last_link" id="<%= id_name -%>-last_link" href="#" >[最後へ]</a>
   <% end -%>
 </span></div>
-
-<script type="text/javascript">
-<%# TODO この部分テンプレートが読み込まれる度に以下のjavascriptも読み込まれるがうまく分離できるのではないか？ %>
-$j(function(){
-    var id_name = '<%= id_name -%>';
-    var loadEntries = function(page){
-        $j.ajax({
-            url: '<%= url_for(:controller => 'mypage', :action => 'load_entries') -%>',
-            data: { page : page, page_name : 'list_block', target : id_name, per_page : '<%= per_page -%>'<%= ", recent_day : '#{recent_day}'" if recent_day -%> },
-            success: function(html) {
-                $j('#' + id_name).html(html).appendClickForToggleTag();
-                $j('#' + id_name + '_body').highlight();
-            },
-            complete: function(request) {}
-        });
-    };
-    // 最初へ,前へ,次へ,最後へリンククリック時のajaxアクション
-    $j('#' + id_name + '_first_link')
-    .click(function() {
-        loadEntries('1');
-        return false;
-    });
-    $j('#' + id_name + '_back_link')
-    .click(function() {
-        loadEntries('<%= pages_obj.current.previous.to_i -%>');
-        return false;
-    });
-
-    $j('#' + id_name + '_next_link')
-    .click(function() {
-        loadEntries('<%= pages_obj.current.next.to_i -%>');
-        return false;
-    });
-
-    $j('#' + id_name + '_last_link')
-    .click(function() {
-        loadEntries('<%= pages_obj.last.to_i -%>');
-        return false;
-    });
-});
-</script>
 <% end -%>
 
 </div><!-- topix_body -->

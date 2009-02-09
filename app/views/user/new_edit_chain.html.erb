@@ -1,25 +1,20 @@
-
 <div class="desc"><%= h @user.name -%>さんをみんなに紹介しましょう！</div>
-
 <%= render(:partial => "users/user", :object => @user) %>
-
-
 <div class="edit_form_space richtext">
 <% form_tag :action => @submit_action, :uid => @user.uid do -%>
-
-    <%= template_error_messages_for 'chain' %>
-
-    <p><label for="chain_comment">紹介文：<label></p>
-    <p><%= text_area 'chain', 'comment', :class => 'invisible' %></p>
-
-    <%= submit_tag @submit_name %>
+  <%= template_error_messages_for 'chain' %>
+  <p><label for="chain_comment">紹介文：<label></p>
+  <p><%= text_area 'chain', 'comment', :class => 'invisible' %></p>
+  <%= submit_tag @submit_name %>
 <% end %>
 </div>
 
-<%= skip_javascript_include_tag "fckeditor/fckeditor" %>
-<script type='text/javascript'>
-$j(function(){
-    FCKeditor.BasePath = platform_url_root + "/javascripts/skip/fckeditor/";
-    new FCKeditor('chain_comment', '100%', '300', 'Normal').ReplaceTextarea();
-});
-</script>
+<% content_for :javascript do -%>
+  <%= skip_javascript_include_tag "fckeditor/fckeditor" %>
+  <script type='text/javascript'>
+  $j(function(){
+      FCKeditor.BasePath = platform_url_root + "/javascripts/skip/fckeditor/";
+      new FCKeditor('chain_comment', '100%', '300', 'Normal').ReplaceTextarea();
+  });
+  </script>
+<% end -%>

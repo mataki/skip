@@ -1,12 +1,13 @@
-<%= skip_stylesheet_link_tag "jquery.ui.tabs.css" %>
-<div id="contents_container">
+<% content_for :stylesheet do -%>
+  <%= skip_stylesheet_link_tag "jquery.ui.tabs.css" %>
+<% end -%>
 
-<div id="contents_left">
+<% content_for :contents_left do -%>
   <%= render(:partial => 'user/portrait_box', :locals => { :current_user_info => @current_user_info }) %>
   <%= render :partial => 'antenna_box', :locals => { :system_antennas => @system_antennas, :my_antennas => @my_antennas } %>
-</div><!-- contents_left -->
+<% end -%>
 
-<div id="contents_right">
+<% content_for :contents_right do -%>
   <%# ============================================================ -%>
   <%#  right side area -%>
   <%# ============================================================ -%>
@@ -111,18 +112,81 @@
     <% end -%>
   </div>
   <br style="clear: right;"/>
-</div><!-- contents_right -->
-
-<div id="contents_bottom"></div><!-- contents_bottom -->
-
-</div><!-- contents_container -->
+<% end -%>
 
 <% content_for :javascript do -%>
 <script type="text/javascript">
 $j(function() {
     $j('#tabs > ul').tabs();
     $j('#tabs').show();
+
+    var loadEntries = function(data){
+        var id_name = data['target'];
+        $j.ajax({
+            url: '<%= url_for(:controller => 'mypage', :action => 'load_entries') -%>',
+            data: data,
+            success: function(html) {
+                $j('#' + id_name).html(html).appendClickForToggleTag();
+                $j('#' + id_name + '_body').highlight();
+            },
+            complete: function(request) {
+                unbindEentyPageChange();
+                setupEntryPageChange();
+            }
+        });
+    };
+
+    var unbindEentyPageChange = function(){
+        $j('.first_link').unbind('click');
+        $j('.back_link').unbind('click');
+        $j('.next_link').unbind('click');
+        $j('.last_link').unbind('click');
+    };
+
+    var setupEntryPageChange = function(){
+        // 最初へ,前へ,次へ,最後へリンククリック時のajaxアクション
+        $j('.first_link')
+        .click(function() {
+            var id_name = this.id.split('-')[0];
+            loadEntries(requestData(1, id_name));
+            return false;
+        });
+
+        $j('.back_link')
+        .click(function() {
+            var id_name = this.id.split('-')[0];
+            var base_id = '#' + id_name + '_body';
+            var page = $j('#page_back', base_id).val();
+            loadEntries(requestData(page, id_name));
+            return false;
+        });
+
+        $j('.next_link')
+        .click(function() {
+            var id_name = this.id.split('-')[0];
+            var base_id = '#' + id_name + '_body';
+            var page = $j('#page_next', base_id).val();
+            loadEntries(requestData(page, id_name));
+            return false;
+        });
+
+        $j('.last_link')
+        .click(function() {
+            var id_name = this.id.split('-')[0];
+            var base_id = '#' + id_name + '_body';
+            var page = $j('#page_last', base_id).val();
+            loadEntries(requestData(page, id_name));
+            return false;
+        });
+    };
+    setupEntryPageChange();
+
+    var requestData = function(page, id_name){
+        var base_id = '#' + id_name + '_body';
+        var per_page = $j('#per_page', base_id).val();
+        var recent_day = $j('#recent_day', base_id).val();
+        return { page : page, page_name : 'list_block', target : id_name, per_page : per_page, recent_day : recent_day };
+    };
 });
 </script>
 <% end -%>
-

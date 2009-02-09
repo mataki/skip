@@ -5,6 +5,7 @@
 <% end %>
 <div style="clear: left;"><br/></div>
 
+<% content_for :javascript do -%>
 <script type="text/javascript">
 $j(function() {
     getRanking = function(contents_type, year, month){
@@ -27,3 +28,4 @@ $j(function() {
     };
 });
 </script>
+<% end -%>

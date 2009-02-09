@@ -25,11 +25,9 @@ class PlatformController < ApplicationController
     response.headers['X-XRDS-Location'] = formatted_server_url(:format => :xrds, :protocol => scheme)
     img_files = Dir.glob(File.join(RAILS_ROOT, "public", "custom", "images", "titles", "background*.{jpg,png,jpeg}"))
     @img_name = File.join("titles", File.basename(img_files[rand(img_files.size)]))
-    render :layout => false
   end
 
   def require_login
-    render :layout => false
   end
 
   # ログイン処理（トップからと、require_loginからの両方からpostされる）

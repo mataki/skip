@@ -1,8 +1,10 @@
-<style type="text/css">
-table.input_table textarea {
-  width: 100%;
-}
-</style>
+<% content_for :stylesheet do -%>
+  <style type="text/css">
+  table.input_table textarea {
+    width: 100%;
+  }
+  </style>
+<% end -%>
 
   <div class="input_value" style="height: 2em;">
     <%= radio_button_tag("editor_mode", "richtext", params[:editor_mode] == "richtext", :id=>"editor_mode_richtext") %>リッチテキスト
@@ -17,6 +19,7 @@ table.input_table textarea {
     <label for="contents"><%= text_area_tag 'contents_hiki', h(params[:contents_hiki]), :cols => 90, :rows => 20 %></label>
   </div>
 
+<% content_for :javascript do -%>
 <%= skip_javascript_include_tag "fckeditor/fckeditor" %>
 <script type='text/javascript'>
 $j(function(){
@@ -59,3 +62,4 @@ $j(function(){
     });
 });
 </script>
+<% end -%>

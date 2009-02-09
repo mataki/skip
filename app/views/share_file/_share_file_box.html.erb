@@ -1,18 +1,20 @@
-<style type="text/css">
-div.share_file_space {
-  border: 1px solid silver;
-  width: 95%;
-  margin: 5px auto;
-  text-align: left;
-  position: relative;
-  font-size: 10px;
-}
-div.share_file_space div.share_file_line {
-  margin: 1px 0;
-  border-bottom: 1px dashed silver;
-  padding: 1px;
-}
-</style>
+<% content_for :stylesheet do -%>
+  <style type="text/css">
+  div.share_file_space {
+    border: 1px solid silver;
+    width: 95%;
+    margin: 5px auto;
+    text-align: left;
+    position: relative;
+    font-size: 10px;
+  }
+  div.share_file_space div.share_file_line {
+    margin: 1px 0;
+    border-bottom: 1px dashed silver;
+    padding: 1px;
+  }
+  </style>
+<% end -%>
 <% visibility, visibility_color = share_file.visibility %>
 
 <div class="share_file_space">

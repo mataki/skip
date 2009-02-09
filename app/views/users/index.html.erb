@@ -1,38 +1,35 @@
-
 <div class="search_cond_space">
 <% form_tag({:action => 'index'}, :method => 'get') do -%>
-<table class="search_cond_box">
-  <tr>
-    <th><%=h _("Admin::User|Name") %></th>
-    <td><%= text_field :condition, :name , :size => 40 %></td>
-  </tr>
-  <tr>
-    <th>部署</th>
-    <td><%= select(:condition, :section, User.grouped_sections.insert(0, "")) %></td>
-    <th><%=h user_name_mode_label %></th>
-    <td><%= text_field :condition, :code, :size => 25 %></td>
-  </tr>
-  <tr>
-  <th>表示順</th>
-    <td><%= select :condition, :sort_type, UserSearchCondition.sort_types %></td>
-    <th>出力形式</th>
-    <td><%= radio_buttons :condition, :output_type, UserSearchCondition.output_types %></td>
-  </tr>
-  <tr>
-    <th>退職者指定</th>
-    <td><%= check_box_tag 'condition[not_include_retired]',1,@condition.not_include_retired, :id => 'condition_not_include_retired' %>退職者を含めない</td>
-  </tr>
-</table>
-<div class="submit"><%= submit_tag '検索' %></div>
+  <table class="search_cond_box">
+    <tr>
+      <th><%=h _("Admin::User|Name") %></th>
+      <td><%= text_field :condition, :name , :size => 40 %></td>
+    </tr>
+    <tr>
+      <th>部署</th>
+      <td><%= select(:condition, :section, User.grouped_sections.insert(0, "")) %></td>
+      <th><%=h user_name_mode_label %></th>
+      <td><%= text_field :condition, :code, :size => 25 %></td>
+    </tr>
+    <tr>
+    <th>表示順</th>
+      <td><%= select :condition, :sort_type, UserSearchCondition.sort_types %></td>
+      <th>出力形式</th>
+      <td><%= radio_buttons :condition, :output_type, UserSearchCondition.output_types %></td>
+    </tr>
+    <tr>
+      <th>退職者指定</th>
+      <td><%= check_box_tag 'condition[not_include_retired]',1,@condition.not_include_retired, :id => 'condition_not_include_retired' %>退職者を含めない</td>
+    </tr>
+  </table>
+  <div class="submit"><%= submit_tag '検索' %></div>
 <% end -%>
 </div>
 
 <div class="search_result_space">
 <% if @pages and @pages.item_count > 0 -%>
-  <div class="navi"><%= page_link(@pages) -%></div>
-
+  <div class="navi"><%= page_link(@pages) %></div>
   <%= output_users_result @users, :output_normal => @condition.output_normal? %>
-
   <div class="navi"><%= page_link(@pages) %></div>
 <% end -%>
 </div>

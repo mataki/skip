@@ -1,3 +1,4 @@
+<% content_for :stylesheet do -%>
 <style type="text/css">
 table {
   table-layout: auto;
@@ -11,6 +12,7 @@ div.input_line textarea {
   width: 98%;
 }
 </style>
+<% end -%>
 
 <%= template_error_messages_for 'board_entry' %>
 
@@ -122,6 +124,7 @@ div.input_line textarea {
   <div style="clear: left"></div>
 </div>
 
+<% content_for :javascript do -%>
 <script language='javascript' type='text/javascript'>
 $j(function() {
     var setupTagComplete = function() {
@@ -237,3 +240,4 @@ $j(function() {
 <% end -%>
 });
 </script>
+<% end -%>

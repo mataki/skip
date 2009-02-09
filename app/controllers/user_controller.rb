@@ -115,7 +115,7 @@ class UserController < ApplicationController
   # tab_menu
   def social
     @menu = params[:menu] || "social_chain"
-    render_partial = @menu
+    partial_name = @menu
 
     # contents_left -> social_tags
     @tags = BookmarkComment.get_tagcloud_tags @user.get_postit_url
@@ -126,21 +126,21 @@ class UserController < ApplicationController
       prepare_chain
     when "social_chain_against"
       prepare_chain true
-      render_partial = "social_chain"
+      partial_name = "social_chain"
     when "social_postit"
       prepare_postit
     end
 
-    render :partial => render_partial, :layout => "layout"
+    render :partial => partial_name, :layout => "layout"
   end
 
   # tab_menu
   def bookmark
-    @main_menu = 'マイページ' if @user.id == session[:user_id]
+    @main_menu = 'マイページ' if @user.id == current_user.id
 
     params[:user_id] = @user.id
     text = render_component_as_string( :controller => 'bookmark', :action => 'list', :id => @user.symbol, :params => params)
-    render :text => text, :layout => 'layout'
+    render :text => text, :layout => false
   end
 
   # tab_menu
@@ -181,7 +181,7 @@ class UserController < ApplicationController
     params.store(:owner_name, @user.name)
     params.store(:visitor_is_uploader, (@user.id == session[:user_id]))
     text = render_component_as_string :controller => 'share_file', :action => 'list', :id => @user.symbol, :params => params
-    render :text => text, :layout => 'layout'
+    render :text => text, :layout => false
   end
 
   # post_action

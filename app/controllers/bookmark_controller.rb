@@ -130,7 +130,6 @@ class BookmarkController < ApplicationController
     redirect_to  :action =>'show', :uri => comment.bookmark.url
   end
 
-
   #ユーザのブックマークコメント一覧表示(ユーザのページからのリンクでくる)
   def list
     redirect_to_with_deny_auth and return if not parent_controller
@@ -161,10 +160,6 @@ class BookmarkController < ApplicationController
 
     params[:controller] = parent_controller.params[:controller]
     params[:action] = parent_controller.params[:action]
-
-    render :partial => 'user_bookmarks',
-           :object => @bookmark_comments,
-           :locals => { :pages => @pages, :login_user_id => session[:user_id] }
   end
 
   def ado_set_stared

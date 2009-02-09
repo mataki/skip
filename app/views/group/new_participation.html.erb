@@ -1,13 +1,14 @@
-
-<style type="text/css">
-div.participation_input_space {
-  border: 1px dashed silver;
-  margin-top: 10px;
-  padding: 5px;
-  margin-left: auto;
-  margin-right: auto;
-}
-</style>
+<% content_for :stylesheet do -%>
+  <style type="text/css">
+  div.participation_input_space {
+    border: 1px dashed silver;
+    margin-top: 10px;
+    padding: 5px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  </style>
+<% end -%>
 
 <div class="desc">
   <p>参加に向けてメッセージを入力してください。</p>
@@ -16,22 +17,17 @@ div.participation_input_space {
 </div>
 
 <% if @participation -%>
-
 <div style="color: red; font-weight:bold; font-size: 15px; text-align: center; margin-top: 10px;">
   <p>既に参加しています</p>
   <input type="button" onclick="location.reload();" value="閉じる" />
 </div>
-
 <% else -%>
-
 <div class="participation_input_space">
-<% form_tag({:action => 'join'}) do -%>
-
-<p style="margin-bottom: 5px;">メッセージ：<br/>
-  <%= text_area 'board_entry', 'contents', :rows =>10, :style=>"width: 98%;" %></p>
-<div style="text-align: center;"><%= submit_tag "参加申込み" %></div>
-
-<% end %>
+  <% form_tag({:action => 'join'}) do -%>
+  <p style="margin-bottom: 5px;">
+  メッセージ：<br/><%= text_area 'board_entry', 'contents', :rows =>10, :style=>"width: 98%;" %>
+  </p>
+  <div style="text-align: center;"><%= submit_tag "参加申込み" %></div>
+  <% end %>
 </div>
-
 <% end -%>

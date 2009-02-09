@@ -1,6 +1,8 @@
+<% content_for :stylesheet do -%>
 <style type="text/css">
   div.sub_condition { border:1px dotted silver;padding:1px;margin-top:5px; }
 </style>
+<% end -%>
 
 <div id="body" style="margin: 10px 5px 0px 5px">
 
@@ -36,6 +38,7 @@
   <div><%= render :partial => 'full_text_search' -%></div>
 </div>
 
+<% content_for :javascript do -%>
 <script type="text/javascript">
 $j(function(){
     // サブ検索条件選択時、選択したもの以外のラジオボタンなどをdisableに
@@ -70,3 +73,4 @@ $j(function(){
     });
 });
 </script>
+<% end -%>

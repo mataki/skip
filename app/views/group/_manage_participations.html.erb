@@ -1,76 +1,96 @@
+<% content_for :stylesheet do -%>
+  <style type="text/css">
+  div.input_line {
+    border: 1px dotted silver;
+    margin-bottom: 5px;
+    margin-top:10px;
+    padding-bottom: 2px;
+  }
+  div.input_line div.input_value {
+    padding: 5px;
+  }
+  div.input_line div.input_label {
+    background-color: #f0f0ff;
+    width: 250px;
+    float: left;
+    font-weight: bold;
+    font-size: 12px;
+    padding: 3px 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+  }
+  </style>
+<% end -%>
 
-<div id="contents_container">
-<div id="contents_left">
+<% content_for :contents_left do -%>
+  <div class="box_space">
+    <div class="box_space_title">管理メニュー</span></div>
+    <div class="box_space_body">
+    <ul>
+      <% get_manage_menu_items(@menu).each do |menu_item| %>
+      <li><%= menu_item -%></li>
+      <% end %>
+    </ul>
+    </div>
+    <div class="box_space_bottom"></div>
+  </div><!-- box_space -->
+<% end -%>
 
-<div class="box_space">
-  <div class="box_space_title">管理メニュー</span></div>
-  <div class="box_space_body">
-  <ul>
-    <% get_manage_menu_items(@menu).each do |menu_item| %>
-    <li><%= menu_item -%></li>
+<% content_for :contents_right do -%>
+  <div class="desc" style="margin-bottom: 10px;">この画面では、管理者の権限設定、強制退会が可能です。</div>
+  <%= hidden_field_tag "authenticity_token", form_authenticity_token %>
+  <div class="navi"><%= page_link @pages %></div>
+
+  <div style="margin: 10px auto 10px auto; width: 100%; text-align: center;">
+    <table border="1" class="normal" style="width: 80%; margin: auto;">
+      <tr>
+        <th style="width:10%;">管理者</th>
+        <th>名前</th>
+        <th><%= h Admin::Setting.login_account -%></th>
+        <th>アクション</th>
+      </tr>
+    <% even_or_odd = 0 -%>
+    <% @participations.each_with_index do |@participation, index| -%>
+      <% even_or_odd = 1 - even_or_odd %>
+      <tr>
+        <td class="line_<%= even_or_odd -%>">
+          <% if session[:user_id] == @participation.user_id -%>
+            管理者
+          <% else -%>
+            <%= check_box(:participation, :owned, :class => 'toggle_owned', :id => "toggle_owned_checkbox_#{@participation.id}") %>
+          <% end -%>
+        </td>
+        <td class="line_<%= even_or_odd -%>"><%= h @participation.user.name -%></td>
+        <td class="line_<%= even_or_odd -%>"><%= h @participation.user.code -%></td>
+        <td align="center" class="line_<%= even_or_odd -%>">
+          <% unless session[:user_id] == @participation.user_id -%>
+          <%= link_to "[強制退会させる]",
+               {:action => "forced_leave_user", :participation_id => @participation.id},
+               :confirm => "このユーザを強制退会させます。本当によろしいですか？",
+               :method => :post -%>
+          <% end -%>
+        </td>
+      </tr>
     <% end %>
-  </ul>
+    </table>
   </div>
-  <div class="box_space_bottom"></div>
-</div><!-- box_space -->
+  <div class="navi"><%= page_link @pages -%></div>
+  <% form_tag({:action => 'append_user'}, :id=>'group_form') do -%>
+    <div class="input_line">
+      <div class="input_value">
+        <%= hidden_field_tag 'users_symbol_value' %>
+        <div class="input_label"><%= _('招待したいユーザ/グループ') %></div>
+        <div style="clear: left"></div>
+        <input id="users_symbol" name="symbol" size="40" type="text" />
+        <div class="auto_complete" id="users_symbol_auto_complete"></div>
+        <input type="text" id="users_name" style="background-color: #f0f0ff;border: none;color: blue" disabled>
+        <input type="button" value="<%= _('参加者に登録') %>" id="users_submit">
+      </div>
+    </div>
+  <% end -%>
+<% end -%>
 
-</div><!-- contents_left -->
-
-<div id="contents_right">
-
-<div class="desc" style="margin-bottom: 10px;">この画面では、管理者の権限設定、強制退会が可能です。</div>
-<%= hidden_field_tag "authenticity_token", form_authenticity_token %>
-<div class="navi"><%= page_link @pages -%></div>
-
-<div style="margin: 10px auto 10px auto; width: 100%; text-align: center;">
-<table border="1" class="normal" style="width: 80%; margin: auto;">
-  <tr>
-    <th style="width:10%;">管理者</th>
-    <th>名前</th>
-    <th><%= h Admin::Setting.login_account -%></th>
-    <th>アクション</th>
-  </tr>
-
-  <% even_or_odd = 0 %>
-  <% @participations.each_with_index do |@participation, index| %>
-  <% even_or_odd = 1 - even_or_odd %>
-  <tr>
-    <td class="line_<%= even_or_odd -%>">
-      <% if session[:user_id] == @participation.user_id -%>
-        管理者
-      <% else -%>
-        <%= check_box(:participation, :owned, :class => 'toggle_owned', :id => "toggle_owned_checkbox_#{@participation.id}") %>
-      <% end -%>
-    </td>
-    <td class="line_<%= even_or_odd -%>"><%= h @participation.user.name -%></td>
-    <td class="line_<%= even_or_odd -%>"><%= h @participation.user.code -%></td>
-    <td align="center" class="line_<%= even_or_odd -%>">
-      <% unless session[:user_id] == @participation.user_id -%>
-      <%= link_to "[強制退会させる]",
-           {:action => "forced_leave_user", :participation_id => @participation.id},
-           :confirm => "このユーザを強制退会させます。本当によろしいですか？",
-           :method => :post -%>
-      <% end -%>
-    </td>
-  </tr>
-  <% end %>
-</table>
-</div>
-
-<div class="navi"><%= page_link @pages -%></div>
-
-<%= render :partial => 'append_users',
-           :locals => {:call_action => 'append_user',
-                       :header => "招待したいユーザ／グループ",
-                       :btn_title => "参加者に追加"} -%>
-
-</div><!-- contents_right -->
-
-<div id="contents_bottom">
-</div><!-- contents_bottom -->
-
-</div><!-- contents_container -->
-
+<% content_for :javascript do -%>
 <script type="text/javascript" >
 $j(function() {
     $j('.toggle_owned')
@@ -87,5 +107,37 @@ $j(function() {
             }
         });
     });
+
+    $j('#users_submit')
+    .click(function() {
+        var symbol = $j("#users_symbol").val();
+        var name = $j("#users_name").val();
+        if (name.length == 0) {
+            alert("存在するユーザ/グループを入力してください");
+            return;
+        }
+        var validReg = /(u|g)id:[a-zA-Z0-9]/
+        if (!validReg.test(symbol)) {
+            alert("フォーマットが不正です。uid:xxxxxxのような形で入力してください。");
+            return;
+        }
+        $j('#users_symbol_value').val(symbol);
+        $j('#group_form').submit();
+        return false;
+    });
+
+    var users_symbol_auto_complete_url = '<%= url_for(:controller => 'symbol', :action => 'auto_complete_for_item_search', :type => 'users') -%>';
+    $j('#users_symbol')
+    .autocomplete(users_symbol_auto_complete_url, {
+        formatItem: function(data) {
+            return data[0] + ' - ' + data[1];
+        }
+    })
+    .result(function(group, data, formatted) {
+        if (data) {
+            $j('#users_name:input').val(data[1]);
+        }
+    });
 });
 </script>
+<% end -%>

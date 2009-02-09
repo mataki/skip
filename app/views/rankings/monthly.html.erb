@@ -16,6 +16,8 @@
 <h1 id="ranking_title"><%= icon_tag 'chart_bar' %><%= h @year -%>年<%= h @month -%>月のランキング</h1>
 <br />
 <%= render :partial => 'list' %>
+
+<% content_for :javascript do -%>
 <script type="text/javascript">
 $j(function() {
     var contents_types = ['entry_access', 'entry_comment', 'entry_he', 'user_entry', 'user_access', 'commentator'];
@@ -36,3 +38,4 @@ $j(function() {
     });
 });
 </script>
+<% end -%>

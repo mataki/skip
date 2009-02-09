@@ -4,56 +4,69 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
-  <link rel="shortcut icon" href="<%= controller.request.relative_url_root -%>/favicon.ico" />
-  <title><%= h Admin::Setting.abbr_app_title -%> - <%= h @title -%></title>
+  <link rel="shortcut icon" href="<%= controller.request.relative_url_root %>/favicon.ico" />
+  <title><%= h Admin::Setting.abbr_app_title %> - <%= h @title %></title>
 
-  <%= all_stylesheet_link_tag "style" -%>
-  <%= stylesheet_link_tag("skins/#{session[:user_custom_theme]}/skin.css") -%>
-  <%= stylesheet_link_tag("sprites/sprite.css") -%>
+  <%= all_stylesheet_link_tag "style" %>
+  <%= stylesheet_link_tag("skins/#{session[:user_custom_theme]}/skin.css") %>
+  <%= stylesheet_link_tag("sprites/sprite.css") %>
+  <%= skip_stylesheet_link_tag 'nyroModal.full.css' %>
+  <%= skip_stylesheet_link_tag 'jquery.autocomplete.css' %>
+  <%= skip_stylesheet_link_tag "jquery.cluetip.css" %>
+  <%= yield :stylesheet %>
 </head>
 
 <body>
 <%= render :partial => "shared/header" %>
 
 <div id="main">
-
-<div id="loading" style="margin: 15px; height: 4000px;">Now loading...<br/><%= image_tag "indicator_bar.gif", :alt => "しばらくお待ち下さい" -%></div>
-
-<script language="JavaScript" type="text/javascript"><!--
-var relative_url_root = '<%= controller.request.relative_url_root -%>';
-//--></script>
-  <%= skip_stylesheet_link_tag 'nyroModal.full.css' %>
-  <%= skip_stylesheet_link_tag 'jquery.autocomplete.css' %>
-  <%= skip_stylesheet_link_tag "jquery.cluetip.css" %>
-
-  <%= all_javascript_include_tag 'jquery' %>
-  <script language="JavaScript" type="text/javascript">$j = jQuery.noConflict();</script>
-  <%= skip_javascript_include_tag 'ufo' %>
-  <%= javascript_include_tag 'application' %>
-  <%= skip_javascript_include_tag 'skip_util' %>
-<script language="JavaScript" type="text/javascript"><!--
-    $j('#loading').hide();
-//--></script>
-
-<%= render :partial => "layouts/menu" %>
-
-<div id="panel">
-  <div style="_width: 98%;">
-    <h1 id="title"><%=h @title %></h1>
-    <% if @tab_menu_source -%>
-    <div id="tab_menu"><%= generate_tab_menu(@tab_menu_source) %></div>
-    <br style="clear: left;" />
-    <% end -%>
+  <div id="loading" style="margin: 15px; height: 4000px;">
+    <%= _('Now loading...') %><br/><%= image_tag 'indicator_bar.gif', :alt => _('Now loading...') %>
   </div>
+  <%= render :partial => "layouts/menu" %>
 
-  <div id="tab_body">
-    <%= render :partial => 'layouts/flash_messages' %>
-    <%= @content_for_layout %>
-  </div><!-- tab_body -->
-</div><!-- panel -->
+  <div id="panel">
+    <div style="_width: 98%;">
+      <h1 id="title"><%=h @title %></h1>
+      <% if @tab_menu_source -%>
+      <div id="tab_menu"><%= generate_tab_menu(@tab_menu_source) %></div>
+      <br style="clear: left;" />
+      <% end -%>
+    </div>
 
-<div style="clear: both;"><br/></div>
+    <div id="tab_body">
+      <%= render :partial => 'layouts/flash_messages' %>
+      <div id="contents_container">
+        <% if @content_for_contents_left -%>
+        <div id="contents_left">
+          <%= yield :contents_left %>
+        </div><!-- contents_left -->
+        <% end -%>
 
+        <% if @content_for_topic_path -%>
+        <div id="topic_path">
+          <%= yield :topic_path %>
+        </div><!-- topic_path -->
+        <% end %>
+
+        <%= yield %>
+
+        <% if @content_for_contents_right -%>
+        <div id="contents_right">
+          <%= yield :contents_right %>
+        </div><!-- contents_right -->
+        <% end -%>
+
+        <div id="contents_bottom">
+        <% if @content_for_contents_bottom -%>
+          <%= yield :contents_bottom %>
+        <% end -%>
+        </div><!-- contents_bottom -->
+      </div><!-- contents_container -->
+    </div><!-- tab_body -->
+  </div><!-- panel -->
+
+  <div style="clear: both;"><br/></div>
 </div><!-- main -->
 
 <div id="statusbar">
@@ -67,8 +80,18 @@ var relative_url_root = '<%= controller.request.relative_url_root -%>';
 <%= skip_footer_link -%>
 
 </body>
+<%= all_javascript_include_tag 'jquery' %>
+<script type="text/javascript">$j = jQuery.noConflict();</script>
+<%= skip_jquery_include_tag 'jquery.tablesorter' %>
+<%= skip_javascript_include_tag 'ufo' %>
+<%= javascript_include_tag 'application' %>
+<%= skip_javascript_include_tag 'skip_util' %>
 <script type="text/javascript">
+var relative_url_root = '<%= controller.request.relative_url_root -%>';
 $j(function(){
+    $j('#loading').hide();
+
+    // 管理画面以外
     $j(document.getElementsByName("picture")).each(function(i) {
         fitImageSize($j(this), this.width, this.height);
     });
@@ -80,6 +103,9 @@ $j(function(){
     };
 
     $j('.zoomable').zoomable();
+
+    // 管理画面用
+    $j('table.sortable').tablesorter();
 });
 </script>
 <%= yield :javascript %>

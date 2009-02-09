@@ -6,56 +6,65 @@
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
   <link rel="shortcut icon" href="<%= controller.request.relative_url_root %>/favicon.ico" />
   <title><%= h Admin::Setting.abbr_app_title %> - <%= h @title %></title>
-  <%= skip_stylesheet_link_tag "style" %>
-  <%= stylesheet_link_tag "style" %>
+  <%= all_stylesheet_link_tag "style" %>
+  <%= stylesheet_link_tag("sprites/sprite.css") %>
   <%= stylesheet_link_tag "not_logged_in" %>
+  <%= skip_stylesheet_link_tag 'nyroModal.full.css' %>
+  <%= skip_stylesheet_link_tag 'jquery.autocomplete.css' %>
+  <%= skip_stylesheet_link_tag "jquery.cluetip.css" %>
   <%= yield :stylesheet %>
 </head>
 
 <body>
+
+<% if @content_for_header -%>
+  <%= yield :header %>
+<% else -%>
 <div id="header">
   <%= header_logo_link %>
 </div><!-- header -->
+<% end -%>
+<%= render :partial => 'layouts/flash_messages' %>
 
 <div id="main">
-  <div id="panel">
-    <div id="tab_body">
-      <%= render :partial => 'layouts/flash_messages' %>
-      <div id="contents_container">
+  <div id="contents_container">
+    <% if @content_for_contents_left -%>
+    <div id="contents_left">
+      <%= yield :contents_left %>
+    </div><!-- contents_left -->
+    <% end -%>
 
-        <% if @content_for_contents_left -%>
-        <div id="contents_left">
-          <%= yield :contents_left %>
-        </div><!-- contents_left -->
-        <% end -%>
+    <% if @content_for_topic_path -%>
+    <div id="topic_path">
+      <%= yield :topic_path %>
+    </div><!-- topic_path -->
+    <% end %>
 
-        <% if @content_for_topic_path -%>
-        <div id="topic_path">
-          <%= yield :topic_path %>
-        </div><!-- topic_path -->
-        <% end %>
+    <%= yield %>
 
-        <%= yield %>
+    <% if @content_for_contents_right -%>
+    <div id="contents_right">
+      <%= yield :contents_right %>
+    </div><!-- contents_right -->
+    <% end -%>
 
-        <% if @content_for_contents_right -%>
-        <div id="contents_right">
-          <%= yield :contents_right %>
-        </div><!-- contents_right -->
-        <% end -%>
-
-        <% if @content_for_contents_bottom -%>
-        <div id="contents_bottom">
-          <%= yield :contents_bottom %>
-        </div><!-- contents_bottom -->
-        <% end -%>
-
-      </div><!-- contents_container -->
-    </div><!-- tab_body -->
-  </div><!-- panel -->
+    <% if @content_for_contents_bottom -%>
+    <div id="contents_bottom">
+      <%= yield :contents_bottom %>
+    </div><!-- contents_bottom -->
+    <% end -%>
+  </div><!-- contents_container -->
 </div><!-- main -->
 
 <%= skip_footer_link -%>
-
 </body>
+
+<%= all_javascript_include_tag 'jquery' %>
+<script type="text/javascript">$j = jQuery.noConflict();</script>
+<%= javascript_include_tag 'application' %>
+<%= skip_javascript_include_tag 'skip_util' %>
+<script type="text/javascript">
+var relative_url_root = '<%= controller.request.relative_url_root -%>';
+</script>
 <%= yield :javascript %>
 </html>

@@ -102,7 +102,7 @@ describe BookmarkController, "GET #list" do
 
       get :list
     end
-    it { response.should render_template('bookmark/_user_bookmarks') }
+    it { response.should render_template('list') }
   end
 
   describe 'ユーザのブックマークの検索テキストボックスから検索された場合' do
@@ -114,7 +114,7 @@ describe BookmarkController, "GET #list" do
 
       get :list
     end
-    it { response.should render_template('bookmark/_user_bookmarks') }
+    it { response.should render_template('list') }
   end
 end
 

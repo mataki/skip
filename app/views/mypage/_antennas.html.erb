@@ -16,6 +16,7 @@
 <% end -%>
 </ul>
 
+<% content_for :javascript do -%>
 <%= skip_jquery_include_tag "jquery.inplace" %>
 <script type="text/javascript">
 $j(function() {
@@ -29,3 +30,4 @@ $j(function() {
     });
 });
 </script>
+<% end -%>

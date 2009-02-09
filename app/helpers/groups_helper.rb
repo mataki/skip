@@ -44,7 +44,7 @@ module GroupsHelper
     if show_favorite
       participation = group.group_participations.first
       elem_id = "group_participation_#{participation.id}"
-      output << "<span id='#{elem_id}'>#{render :partial => "groups/favorite", :locals => { :gid => group.gid, :participation => participation, :update_elem_id => elem_id }}</span>"
+      output << "<span id='#{elem_id}'>#{render :partial => "groups/favorite", :locals => { :gid => group.gid, :participation => participation }}</span>"
     end
     output << link_to(icon_tag('transmit_go', :title => _('アンテナに追加')), {:controller => "antenna", :action => "select_antenna", :symbol => group.symbol, :dummy => '.html'}, {:class => "nyroModal"})
     output

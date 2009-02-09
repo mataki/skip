@@ -5,6 +5,7 @@
 <div><a href="#" id="add_file_tag_link">[更にファイルを追加]</a></div>
 <div id="hidden_file_area" style="display:none;"></div>
 
+<% content_for :javascript do -%>
 <script type='text/javascript'>
 $j(function() {
     var index = 1;
@@ -63,6 +64,5 @@ $j(function() {
          }
      };
 });
-
-
 </script>
+<% end -%>

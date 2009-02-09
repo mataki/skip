@@ -1,4 +1,5 @@
+<%= yield :stylesheet %>
 <div class="dialog_header" style="text-align: center; background-color: #f0f0ff; border: 1px solid silver; margin-bottom: 5px;">
   <h2><%= h @title -%></h2>
 </div>
-<%= @content_for_layout %>
+<%= yield %>

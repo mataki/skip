@@ -6,34 +6,25 @@
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
   <link rel="shortcut icon" href="<%= controller.request.relative_url_root -%>/favicon.ico" />
   <title><%= h Admin::Setting.abbr_app_title -%></title>
-<script language="JavaScript" type="text/javascript">
-<!--
-var relative_url_root = '<%= controller.request.relative_url_root -%>';
-//-->
-</script>
   <%= skip_stylesheet_link_tag "style" %>
   <%= stylesheet_link_tag "style" %>
   <%= skip_stylesheet_link_tag "jquery.cluetip.css" %>
-  <%= skip_jquery_include_tag 'jquery' %>
-  <%= skip_jquery_include_tag 'jquery.cluetip' %>
-  <script language="JavaScript" type="text/javascript">$j = jQuery.noConflict();</script>
-  <%= skip_javascript_include_tag 'skip_util' %>
-  <%= javascript_include_tag 'application' %>
-<style type="text/css">
-a:hover {
-  color: blue;
-  background-color: yellow;
-  font-weight: bold;
-}
-div#main_navi div.flow_box {
-  float: left;
-  border: 1px solid silver; margin: 0 10px; padding: 10px; font-weight: bold; font-size: 13px;
-}
-div#main_navi div.next_arrow {
-  float: left;
-  border: none; margin: 0; padding: 10px;
-}
-</style>
+  <style type="text/css">
+  a:hover {
+    color: blue;
+    background-color: yellow;
+    font-weight: bold;
+  }
+  div#main_navi div.flow_box {
+    float: left;
+    border: 1px solid silver; margin: 0 10px; padding: 10px; font-weight: bold; font-size: 13px;
+  }
+  div#main_navi div.next_arrow {
+    float: left;
+    border: none; margin: 0; padding: 10px;
+  }
+  </style>
+  <%= yield :stylesheet %>
 </head>
 
 <body>
@@ -42,7 +33,6 @@ div#main_navi div.next_arrow {
 </div>
 
 <div id="top">
-  <br/>
 </div>
 
 <div id="main" style="position: relative; background-color: #f0f0f0; padding: 10px; _width: 100%;">
@@ -59,13 +49,20 @@ div#main_navi div.next_arrow {
     <div class="flow_box">利用開始！</div>
     <div style="clear: both;"></div>
   </div>
-
   <div id="main_body" style="position: relative; background-color: #ffffff; padding: 10px;">
-    <%= @content_for_layout %>
+    <%= yield %>
   </div>
 </div>
 
 <%= skip_footer_link -%>
 </body>
+
+<%= all_javascript_include_tag 'jquery' %>
+<script type="text/javascript">$j = jQuery.noConflict();</script>
+<%= javascript_include_tag 'application' %>
+<%= skip_javascript_include_tag 'skip_util' %>
+<script type="text/javascript">
+var relative_url_root = '<%= controller.request.relative_url_root -%>';
+</script>
 <%= yield :javascript %>
 </html>

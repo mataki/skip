@@ -1,16 +1,18 @@
 <%# :object => bookmarks  -%>
 
 <table border="0" class="normal" width="98%" style="overflow:hidden ; margin: 5px 10px; border: none; _width: 95%;">
-  <% even_or_odd = 0 -%>
-  <% for bookmark in bookmarks %>
+<% even_or_odd = 0 -%>
+<% for bookmark in bookmarks -%>
   <% even_or_odd = 1 - even_or_odd -%>
-  <tr><td class="line_<%= even_or_odd -%>">
+  <tr>
+    <td class="line_<%= even_or_odd -%>">
       <div class="bookmark_line">
         <span class="title"><%= link_to_bookmark_url(bookmark , bookmark.title) %></span>
         <span class="users"><%= link_to("[#{bookmark.bookmark_comments_count}人]",url_for_bookmark(bookmark.url)) %></span>
-        <%= icon_tag('new') if (Date.today - bookmark.created_on.to_date) < 10 -%>
-            <div class="tags"><%= icon_tag('tag_blue') -%><%=h bookmark.tags_as_string %></div>
-      </div><!-- bookmark_line -->
-  </td></tr>
-  <% end %>
+        <%= icon_tag('new') if (Date.today - bookmark.created_on.to_date) < 10 %>
+        <div class="tags"><%= icon_tag('tag_blue') %><%=h bookmark.tags_as_string %></div>
+      </div>
+    </td>
+  </tr>
+<% end -%>
 </table>

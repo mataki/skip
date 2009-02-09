@@ -1,58 +1,48 @@
-<style type="text/css">
-div.theme_select {
-  float: left;
-  text-align: center;
-  border: 1px solid silver;
-  padding: 3px;
-  margin-right: 3px;
-}
-</style>
-
-<div id="contents_container">
-
-<div id="contents_left">
-<%= render :partial => "manage_menu", :locals => { :selected_menu => @menu } %>
-</div><!-- contents_left -->
-
-<div id="contents_right">
-
-<div class="desc"><p>画面をあなた好みにデザインすることが可能です。</p></div>
-
-<div class="edit_form_space">
-<% form_tag({:action => 'update_customize'}) do -%>
-<%= template_error_messages_for 'user_custom' %>
-
-<div class="subtitle">スタイル</div>
-<div style="margin: 10px;">
-<%= radio_button("user_custom", "classic", false) -%>スタンダード（上部グローバルナビゲーション）<br/>
-<%= radio_button("user_custom", "classic", true) -%>クラシック（右側サイドメニュー）<br/>
-</div>
-
-<div class="subtitle">テーマ</div>
-
-<% skins_path = File.join(RAILS_ROOT, "public", "stylesheets", "skins")
-   Dir.glob(File.join(skins_path, "*")).each do |skins_dir|
-     skin = File.basename(skins_dir)
-     sample_img_path = ""
-     Dir.glob(File.join(skins_path, skin, "back.*")).each do |backs_file|
-       sample_img_path = "../stylesheets/skins/#{skin}/" + File.basename(backs_file)
-     end
--%>
-<div class="theme_select">
-  <div style="width: 100px; height: 100px; background-image:url(<%= sample_img_path -%>);">&nbsp;</div>
-  <%= radio_button("user_custom", "theme", skin) -%><%= h skin -%>
-</div>
+<% content_for :stylesheet do -%>
+  <style type="text/css">
+  div.theme_select {
+    float: left;
+    text-align: center;
+    border: 1px solid silver;
+    padding: 3px;
+    margin-right: 3px;
+  }
+  </style>
 <% end -%>
-<br style="clear: left;" />
 
+<% content_for :contents_left do -%>
+  <%= render :partial => "manage_menu", :locals => { :selected_menu => @menu } %>
+<% end -%>
 
-<%= submit_tag("変更") %>
-<% end %>
-</div>
+<% content_for :contents_right do -%>
+  <div class="desc"><p>画面をあなた好みにデザインすることが可能です。</p></div>
 
-</div><!-- contents_right -->
+  <div class="edit_form_space">
+  <% form_tag({:action => 'update_customize'}) do -%>
+    <%= template_error_messages_for 'user_custom' %>
 
-<div id="contents_bottom">
-</div><!-- contents_bottom -->
+    <div class="subtitle">スタイル</div>
+    <div style="margin: 10px;">
+    <%= radio_button("user_custom", "classic", false) %>スタンダード（上部グローバルナビゲーション）<br/>
+    <%= radio_button("user_custom", "classic", true) %>クラシック（右側サイドメニュー）<br/>
+    </div>
 
-</div><!-- contents_container -->
+    <div class="subtitle">テーマ</div>
+    <% skins_path = File.join(RAILS_ROOT, "public", "stylesheets", "skins")
+     Dir.glob(File.join(skins_path, "*")).each do |skins_dir|
+       skin = File.basename(skins_dir)
+       sample_img_path = ""
+       Dir.glob(File.join(skins_path, skin, "back.*")).each do |backs_file|
+         sample_img_path = "../stylesheets/skins/#{skin}/" + File.basename(backs_file)
+       end
+    -%>
+    <div class="theme_select">
+      <div style="width: 100px; height: 100px; background-image:url(<%= sample_img_path %>);">&nbsp;</div>
+      <%= radio_button("user_custom", "theme", skin) %><%= h skin %>
+    </div>
+    <% end -%>
+    <br style="clear: left;" />
+    <%= submit_tag("変更") %>
+  <% end -%>
+  </div>
+<% end -%>

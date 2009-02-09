@@ -1,30 +1,27 @@
-
 <div class="search_cond_space">
 <% form_tag({:action => 'users'}, :method => 'get') do -%>
-<table class="search_cond_box">
-  <tr>
-    <th>検索条件</th>
-    <td><%= radio_buttons(:condition, :include_manager, UserSearchCondition.include_manager_types) -%></td>
-  </tr>
-  <tr>
-    <th>ソート順</th>
-    <td><%= select :condition, :sort_type, UserSearchCondition.sort_types %></td>
-  </tr>
-  <tr>
-    <th>出力形式</th>
-    <td><%= radio_buttons :condition, :output_type, UserSearchCondition.output_types %></td>
-  </tr>
-</table>
-<div class="submit" style="text-align: right;"><%= submit_tag '検索' %></div>
+  <table class="search_cond_box">
+    <tr>
+      <th>検索条件</th>
+      <td><%= radio_buttons(:condition, :include_manager, UserSearchCondition.include_manager_types) -%></td>
+    </tr>
+    <tr>
+      <th>ソート順</th>
+      <td><%= select :condition, :sort_type, UserSearchCondition.sort_types %></td>
+    </tr>
+    <tr>
+      <th>出力形式</th>
+      <td><%= radio_buttons :condition, :output_type, UserSearchCondition.output_types %></td>
+    </tr>
+  </table>
+  <div class="submit" style="text-align: right;"><%= submit_tag '検索' %></div>
 <% end -%>
 </div>
 
 <div class="search_result_space">
 <% if @pages and @pages.item_count > 0 -%>
   <div class="navi"><%= page_link(@pages) %></div>
-
   <%= output_users_result @users, :output_normal => @condition.output_normal?, :output_group_participation => true %>
-
   <div class="navi"><%= page_link(@pages) %></div>
 <% end -%>
 </div>

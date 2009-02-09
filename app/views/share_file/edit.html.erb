@@ -1,11 +1,10 @@
 <% form_tag({:action => 'update'}, :id=>'share_file_form') do -%>
-
   <%= render :partial => 'form', :locals => {:owner_name => @owner_name,
                                              :share_file => @share_file,
                                              :categories_hash => @categories_hash,
                                              :symbol2name_hash => @symbol2name_hash} %>
 
-<%= hidden_field_tag 'file_id', h(@share_file.id) %>
+  <%= hidden_field_tag 'file_id', h(@share_file.id) %>
 <div class="input_line">
   <div class="input_label">ファイル</div>
   <div class="input_value"><%= h @share_file.file_name %></div>
@@ -14,4 +13,4 @@
 
   <%= submit_tag "修正" %>
   <input type="button" value="キャンセル" onclick="window.close();"></input>
-<% end %>
+<% end -%>

@@ -181,7 +181,7 @@ class ShareFileController < ApplicationController
 
     # 編集メニューの表示有無
     @visitor_is_uploader = params[:visitor_is_uploader]
-    render :partial => 'share_files', :object => @share_files, :locals => { :pages => @pages }
+    render :layout => 'layout'
   end
 
   def download

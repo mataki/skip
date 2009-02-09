@@ -4,12 +4,12 @@
 -%>
 
 <div class="box_space">
-  <div class="box_space_title"><%= icon_tag 'find' -%>検索</div>
+  <div class="box_space_title"><%= icon_tag 'find' %>検索</div>
   <div class="box_space_body">
   <% form_tag({}, {:method => 'get'}) do -%>
-  <%= text_field_tag('keyword', params[:keyword], :size=>'10') %>
-  <%= submit_tag '検索' %>
-  <% end %>
+    <%= text_field_tag('keyword', params[:keyword], :size=>'10') %>
+    <%= submit_tag '検索' %>
+  <% end -%>
   </div>
- <div class="box_space_bottom"></div>
+  <div class="box_space_bottom"></div>
 </div><!-- box_space -->

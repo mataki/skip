@@ -1,27 +1,27 @@
-<style type="text/css">
-p.welcome {
-  line-height: 1.3em;
-  background-color: #fdfdf5;
-  border-right: 1px dashed silver;
-  border-bottom: 1px dashed silver;
-}
-ul.welcome {
-  margin: 10px 0 5px 15px;
-  list-style-type: none;
-}
-ul.welcome li {
-  margin-bottom: 3px;
-}
-</style>
+<% content_for :stylesheet do -%>
+  <style type="text/css">
+  p.welcome {
+    line-height: 1.3em;
+    background-color: #fdfdf5;
+    border-right: 1px dashed silver;
+    border-bottom: 1px dashed silver;
+  }
+  ul.welcome {
+    margin: 10px 0 5px 15px;
+    list-style-type: none;
+  }
+  ul.welcome li {
+    margin-bottom: 3px;
+  }
+  </style>
+<% end -%>
 
-<div id="contents_container">
-
-<div id="contents_left">
-  <%= render(:partial => 'user/portrait_box', :locals => { :user => @user }) -%>
+<% content_for :contents_left do -%>
+  <%= render(:partial => 'user/portrait_box', :locals => { :current_user_info => @current_user_info }) %>
   <%= render :partial => 'antenna_box', :locals => { :system_antennas => @system_antennas, :my_antennas => @my_antennas } %>
-</div><!-- contents_left -->
+<% end -%>
 
-<div id="contents_right">
+<% content_for :contents_right do -%>
   <div style="background-color: #fff0ff; padding: 5px; border: 1px dashed pink; margin-bottom: 10px;">
     <h3>【<%= h Admin::Setting.abbr_app_title -%>】へようこそ！</h3>
   </div>
@@ -56,13 +56,9 @@ ul.welcome li {
   </div>
 
   <div style="border: 1px dashed pink; padding: 5px; margin-bottom: 10px;">
-  <div id="introduction"></div>
+    <div id="introduction"></div>
   </div>
-</div><!-- contents_right -->
-
-<div id="contents_bottom"></div><!-- contents_bottom -->
-
-</div><!-- contents_container -->
+<% end -%>
 
 <% content_for :javascript do -%>
 <script type="text/javascript">

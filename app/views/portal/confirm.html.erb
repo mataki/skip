@@ -6,8 +6,10 @@
 <input type="button" value="同意しない" onClick="location.href='<%= url_for(:controller => '/platform', :action => :logout) %>'"></input>
 </div>
 
+<% content_for :javascript do -%>
 <script type="text/javascript">
 $j(function() {
     $j('#rules').load(relative_url_root + '/custom/rules.html');
 });
 </script>
+<% end -%>

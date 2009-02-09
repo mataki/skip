@@ -1,3 +1,4 @@
+<% content_for :stylesheet do -%>
 <style type="text/css">
 ul {
   list-style-type: none;
@@ -7,14 +8,13 @@ ul#antennas_list li.dragenter {
   *z-index: -1; /* スタックコンテキストの問題を回避する（for IE）*/
 }
 </style>
+<% end -%>
 
-<div id="contents_container">
+<% content_for :contents_left do -%>
+  <%= render :partial => "manage_menu", :locals => { :selected_menu => @menu } %>
+<% end -%>
 
-<div id="contents_left">
-<%= render :partial => "manage_menu", :locals => { :selected_menu => @menu } %>
-</div><!-- contents_left -->
-
-<div id="contents_right">
+<% content_for :contents_right do -%>
 
 <div class="desc"><p>ここでは注目するブログなどのアンテナを整備することが可能です。<br/>
 アンテナの名称は、クリックすると編集することが可能です。<br/>
@@ -35,14 +35,11 @@ ul#antennas_list li.dragenter {
 
 </div><!-- end of 編集領域 -->
 
-</div><!-- contents_right -->
-
-<div id="contents_bottom"></div><!-- contents_bottom -->
-
-</div><!-- contents_container -->
+<% end -%>
 
 <%= hidden_field_tag("authenticity_token", form_authenticity_token) %>
 
+<% content_for :javascript do -%>
 <%= skip_jquery_include_tag 'ui.core' %>
 <%= skip_jquery_include_tag 'ui.draggable' %>
 <%= skip_jquery_include_tag 'ui.droppable' %>
@@ -273,3 +270,4 @@ $j(function() {
     setupDoraggableAntennaItem();
 });
 </script>
+<% end -%>

@@ -1,18 +1,9 @@
-<div id="contents_container">
-<div id="contents_left">
+<% content_for :contents_left do -%>
+  <%= render(:partial => 'user/portrait_box', :locals => { :user => @user }) -%>
+  <%= render :partial => "social_menu", :locals => { :selected_menu => @menu } %>
+  <%= render :partial => "social_tags", :locals => { :tags => @tags, :user => @user  } %>
+<% end -%>
 
-<%= render(:partial => 'user/portrait_box', :locals => { :user => @user }) -%>
-<%= render :partial => "social_menu", :locals => { :selected_menu => @menu } %>
-<%= render :partial => "social_tags", :locals => { :tags => @tags, :user => @user  } %>
-
-</div><!-- contents_left -->
-<div id="contents_right">
-
-<%= render :partial => "chain_table" %>
-
-</div><!-- contents_right -->
-
-<div id="contents_bottom">
-</div><!-- contents_bottom -->
-
-</div><!-- contents_container -->
+<% content_for :contents_right do -%>
+  <%= render :partial => "chain_table" %>
+<% end -%>

@@ -1,44 +1,47 @@
 <div class="search_cond_space">
 <% form_tag({:action => 'index'}, :method => 'get') do -%>
-<table class="search_cond_box">
-  <tr>
-    <th>グループ名・説明文</th>
-    <td>
-      <%= text_field_tag 'keyword' , params[:keyword], :size => 50 %><br/>
-    </td>
-  </tr>
-  <tr style="height:20px;">
-    <th>カテゴリ</th>
-    <td>
-      <%= radio_button_tag "group_category_id", "all", params[:group_category_id] == "all" -%>
-      <%= icon_tag "asterisk_orange", :margin => true -%>全て(<%= h @total_count -%>)
-      <% @group_categories.each do |category| %>
-        <%= radio_button_tag "group_category_id", category.id, params[:group_category_id] == category.id.to_s -%>
-        <%= get_group_icon category, :margin => true -%>
-        <%= h category.name %>(<%= h @group_counts[category.id] %>)
-      <% end %>
-    </td>
-  </tr>
-  <tr style="height:20px;">
-    <th>表示の形式</th>
-    <td>
-      <%= radio_button_tag "format_type", "detail", params[:format_type] == "detail" %> 詳細
-      <%= radio_button_tag "format_type", "list",   params[:format_type] == "list"  %> 一覧
-    </td>
-  </tr>
-  <tr>
-    <th>参加の状態</th>
-    <td>
-      <%= check_box_tag 'yet_participation', 'true', params[:yet_participation] %>まだ参加していないグループのみ表示
-    </td>
-  </tr>
-</table>
-<div class="submit"><%= submit_tag '検索' %></div>
-<% end %>
+  <table class="search_cond_box">
+    <tr>
+      <th>グループ名・説明文</th>
+      <td>
+        <%= text_field_tag 'keyword' , params[:keyword], :size => 50 %><br/>
+      </td>
+    </tr>
+    <tr style="height:20px;">
+      <th>カテゴリ</th>
+      <td>
+        <%= radio_button_tag "group_category_id", "all", params[:group_category_id] == "all" -%>
+        <%= icon_tag "asterisk_orange", :margin => true -%>全て(<%= h @total_count -%>)
+        <% @group_categories.each do |category| %>
+          <%= radio_button_tag "group_category_id", category.id, params[:group_category_id] == category.id.to_s -%>
+          <%= get_group_icon category, :margin => true -%>
+          <%= h category.name %>(<%= h @group_counts[category.id] %>)
+        <% end %>
+      </td>
+    </tr>
+    <tr style="height:20px;">
+      <th>表示の形式</th>
+      <td>
+        <%= radio_button_tag "format_type", "detail", params[:format_type] == "detail" %> 詳細
+        <%= radio_button_tag "format_type", "list",   params[:format_type] == "list"  %> 一覧
+      </td>
+    </tr>
+    <tr>
+      <th>参加の状態</th>
+      <td>
+        <%= check_box_tag 'yet_participation', 'true', params[:yet_participation] %>まだ参加していないグループのみ表示
+      </td>
+    </tr>
+  </table>
+  <div class="submit"><%= submit_tag '検索' %></div>
+<% end -%>
 </div><!-- search_cond_space -->
 
 <div class="search_result_space">
-<%= render :partial => 'groups/group_list',
-             :locals => { :pages => @pages, :groups => @groups,
-                          :user_id => session[:user_id], :format_type => @format_type } -%>
+  <%= render :partial => 'groups/group_list',
+             :locals => {
+               :pages => @pages,
+               :groups => @groups,
+               :user_id => session[:user_id],
+               :format_type => @format_type } %>
 </div><!-- search_result_space -->

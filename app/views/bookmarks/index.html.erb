@@ -1,36 +1,59 @@
-<%= render :partial => "new_bookmark" %>
+<div style="text-align: right; margin-bottom: 3px;  background-color: #f0e0d0; border: 1px solid silver; padding: 0 5px;">
+<% form_tag({ :controller => :bookmark, :action => :edit, :title => '' }, {:id => 'bookmark_form', :class => 'nyroModal'}) do -%>
+  URL：<input id="url" name="url" type="text" size="50" /><input id="add_bookmark_button" type="button" value="ブックマークする" />
+  <%= link_to '【便利なブックマークレットの使いかた】', :controller => "bookmarks", :action => "setup" %>
+  <%= hidden_field_tag "authenticity_token", form_authenticity_token %>
+<% end -%>
+</div>
 
 <div class="search_cond_space">
 <% form_tag({:action => 'index'}, :method => 'get') do -%>
-<table class="search_cond_box">
-  <tr>
-    <th>タイトル</th>
-    <td><%= text_field_tag('title', params[:title], :size => '60') %></td>
-  </tr>
-  <tr>
-    <th>表示順</th>
-    <td><%= selected_tag("sort_type", params[:sort_type],@sort_types) -%></td>
-  </tr>
-  <tr>
-    <th>検索範囲</th>
-    <td>
-      <%= radio_button_tag('type', 'all', params[:type]=='all') %>全て
-      <%= radio_button_tag('type', 'user', params[:type]=='user') %>ユーザ
-      <%= radio_button_tag('type', 'page', params[:type]=='page') %>ブログ/BBS
-      <%= radio_button_tag('type', 'internet', params[:type]=='internet') %>インターネット
-    </td>
-  </tr>
-  <%= render :partial => 'search/tag_search' %>
-</table>
-
-<div class="submit"><%= submit_tag '検索' %></div>
-<% end %>
+  <table class="search_cond_box">
+    <tr>
+      <th>タイトル</th>
+      <td><%= text_field_tag('title', params[:title], :size => '60') %></td>
+    </tr>
+    <tr>
+      <th>表示順</th>
+      <td><%= selected_tag("sort_type", params[:sort_type],@sort_types) %></td>
+    </tr>
+    <tr>
+      <th>検索範囲</th>
+      <td>
+        <%= radio_button_tag('type', 'all', params[:type]=='all') %>全て
+        <%= radio_button_tag('type', 'user', params[:type]=='user') %>ユーザ
+        <%= radio_button_tag('type', 'page', params[:type]=='page') %>ブログ/BBS
+        <%= radio_button_tag('type', 'internet', params[:type]=='internet') %>インターネット
+      </td>
+    </tr>
+    <%= render :partial => 'search/tag_search' %>
+  </table>
+  <div class="submit"><%= submit_tag '検索' %></div>
+<% end -%>
 </div>
 
 <div class="search_result_space" style="position: relative; width: 100%; margin-left: auto; margin-right: auto;">
 <% if @pages and @pages.item_count > 0 -%>
-  <div class="navi"><%= page_link @pages -%></div>
+  <div class="navi"><%= page_link @pages %></div>
   <%= render :partial => "bookmarks", :object => @bookmarks %>
-  <div class="navi"><%= page_link @pages -%></div>
-<% end %>
+  <div class="navi"><%= page_link @pages %></div>
+<% end -%>
 </div>
+
+<% content_for :javascript do -%>
+<script language='javascript' type='text/javascript'>
+$j(function() {
+    $j('#add_bookmark_button')
+    .click(function() {
+        if( !$j('#url').val().match(/^https?:\/\/.*/) ){
+            alert("httpで始まる形式でないとブックマークできません");
+            return false;
+        }
+        $j('#url').val(encodeURI($j('#url').val()));
+        $j('#bookmark_form').submit();
+        $j('#url').val('');
+        return false;
+    });
+});
+</script>
+<% end -%>

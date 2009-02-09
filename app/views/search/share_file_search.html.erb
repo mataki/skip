@@ -1,40 +1,42 @@
 <div class="search_cond_space">
 <% form_tag({:action => 'share_file_search'}, {:method => 'get'}) do -%>
-<table class="search_cond_box">
-  <tr>
-    <th>キーワード</th>
-    <td><%= text_field_tag('keyword', params[:keyword], :size => 60) %>（タイトル、コメントが検索対象となります）</td>
-  </tr>
-  <tr>
-    <th>表示順序</th>
-    <td>
-      <%= radio_button_tag("sort_type", "date", params[:sort_type] == "date", :id=>"sort_type_date") -%>登録日順
-      <%= radio_button_tag("sort_type", "name", params[:sort_type] == "name", :id=>"sort_type_name") -%>ファイル名順
-    </td>
-  </tr>
-  <%= render :partial => 'tag_search' %>
-</table>
-<div class="submit"><%= submit_tag '検索' %></div>
-<% end %>
+  <table class="search_cond_box">
+    <tr>
+      <th>キーワード</th>
+      <td><%= text_field_tag('keyword', params[:keyword], :size => 60) %>（タイトル、コメントが検索対象となります）</td>
+    </tr>
+    <tr>
+      <th>表示順序</th>
+      <td>
+        <%= radio_button_tag("sort_type", "date", params[:sort_type] == "date", :id=>"sort_type_date") -%>登録日順
+        <%= radio_button_tag("sort_type", "name", params[:sort_type] == "name", :id=>"sort_type_name") -%>ファイル名順
+      </td>
+    </tr>
+    <%= render :partial => 'tag_search' %>
+  </table>
+  <div class="submit"><%= submit_tag '検索' %></div>
+<% end -%>
 </div>
 
 <div class="search_result_space">
-<% if @pages and @pages.item_count > 0 %>
-  <div class="navi"><%= page_link(@pages) -%></div>
+<% if @pages and @pages.item_count > 0 -%>
+  <div class="navi"><%= page_link(@pages) %></div>
   <div class="files_body" style="width:90%;margin-left:5%;">
-    <% @share_files.each do |share_file| %>
+    <% @share_files.each do |share_file| -%>
       <%= render :partial => 'share_file/share_file_box',
                  :locals => {:share_file => share_file,
                              :visible_menu => false,
                              :visible_owner_link => true} %>
-    <% end %>
+    <% end -%>
   </div><!-- files_body -->
-  <div class="navi"><%= page_link(@pages) -%></div>
-<% end %>
+  <div class="navi"><%= page_link(@pages) %></div>
+<% end -%>
 </div>
 
+<% content_for :javascript do -%>
 <script type="text/javascript">
 $j(function(){
     setupShareFileDownloadLink();
 });
 </script>
+<% end -%>

@@ -1,28 +1,30 @@
-<style type='text/css'>
-#preview-win {
-  position: absolute;
-  width: 0px;
-  overflow: auto;
-  left: 200px;
-  top: 200px;
-  padding: 2px;
-  background-color: #ffc;
-  display: none;
-  z-index: 1000;
-  border: none;
-}
-#preview-inbox {
-  border: 1px solid #C6C7C6;
-  background-color: #ffc;
-}
-#preview-bar {
-  background-color: #eec;
-  text-align:right;
-  width:100%;
-  border-top: 1px solid #FFFFFF;
-  border-bottom: 1px solid #AAAAAF;
-}
-</style>
+<% content_for :stylesheet do -%>
+  <style type='text/css'>
+  #preview-win {
+    position: absolute;
+    width: 0px;
+    overflow: auto;
+    left: 200px;
+    top: 200px;
+    padding: 2px;
+    background-color: #ffc;
+    display: none;
+    z-index: 1000;
+    border: none;
+  }
+  #preview-inbox {
+    border: 1px solid #C6C7C6;
+    background-color: #ffc;
+  }
+  #preview-bar {
+    background-color: #eec;
+    text-align:right;
+    width:100%;
+    border-top: 1px solid #FFFFFF;
+    border-bottom: 1px solid #AAAAAF;
+  }
+  </style>
+<% end -%>
 
 <div id="preview-win"><div id="preview-inbox">
   <p style="position: absolute; text-align: left;">[プレビュー]</p>
@@ -31,6 +33,7 @@
   <p class="s10" style="text-align:right;">セレクトボックスと重なるのはIEの仕様です</p>
 </div></div>
 
+<% content_for :javascript do -%>
 <%= skip_jquery_include_tag 'ui.core' %>
 <%= skip_jquery_include_tag 'ui.draggable' %>
 <script type='text/javascript'>
@@ -46,3 +49,4 @@ $j(function() {
     });
 });
 </script>
+<% end -%>

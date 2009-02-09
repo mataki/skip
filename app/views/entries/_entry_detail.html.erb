@@ -4,220 +4,222 @@
  #              :entry_accesses, :total_count, :bookmark_comments_count }
 -%>
 
-<style type="text/css">
-div.move_navi {
-  position: relative;
-  height: 1.3em;
-  text-align: center;
-  font-size: 0.8em;
-}
-div.move_navi .next_entry {
-  position: absolute;
-  right: 0;
-  top: 0;
-}
-div.move_navi .prev_entry {
-  position: absolute;
-  left: 0;
-  top: 0;
-}
-div#board_entry {
-  border: 1px solid silver;
-  position: relative;
-  _width: 100%;
-}
-div#board_entry .header {
-  border-bottom: 1px solid silver;
-  background-color: #f0f0ff;
-}
-div#board_entry .header .control {
-  position: relative;
-  height: 2em;
-  color: #FFFFFF;
-  background-color: #4a4a4a;
-  font-size: 0.8em;
-}
-div#board_entry .header .control .date {
-  position: absolute;
-  bottom: 1px;
-  left: 2px;
-  font-size: 1.3em;
-}
-div#board_entry .header .control .buttons {
-  position: absolute;
-  top:21px;
-  right:2px;
-}
-div#board_entry .header .control .count {
-  position: absolute;
-  top:2px;
-  right:2px;
-}
-div#board_entry .header h1 {
-  margin: 1px;
-  font-size: 15px;
-}
-#permalink a, #permalink a:hover {
-  color: skyblue;
-}
-div#board_entry .contents {
-  background-color: #FFFFFF;
-  overflow-y: visible;
-  overflow: hidden;
-  width: 100%;
-}
-div#board_entry .contents_body {
-  margin: 5px;
-}
-div#board_entry .contents_body pre {
-  white-space: -moz-pre-wrap; /* Mozilla */
-  white-space: -pre-wrap;     /* Opera 4-6 */
-  white-space: -o-pre-wrap;   /* Opera 7 */
-  white-space: pre-wrap;      /* CSS3 */
-  word-wrap: break-word;      /* IE 5.5+ */
-}
-div#source_style_area, div#access_style_area {
-  background-color: #ffffdd;
-}
-div#source_style_area .header {
-  margin-bottom: 5px;
-  font-weight: bold;
-}
-div#default_style_area {
-  display: block;
-}
-div#default_style_area .images {
-  border: 2px solid silver;
-  overflow-y: visible;
-  overflow: hidden;
-  margin: 3px;
-}
-div#board_entry_control {
-  position: relative;
-  height: 2.0em;
-  font-size: 0.8em;
-}
-div#board_entry_control .actions {
-  position: absolute;
-  left: 3px;
-  top: 0;
-}
-div#board_entry_control .info {
-  position: absolute;
-  top: 0;
-  right: 0;
-}
-div#board_entry_comments {
-  border-right: 1px dotted #e0e0ff;
-  padding-right: 3px;
-  margin-top: 5px;
-}
-div#board_entry_comments #comments_header {
-  /* border: 1px solid silver; */
-  position: relative;
-  height: 1.5em;
-  font-size: 0.8em;
-}
-div#board_entry_comments #comments_header .buttons {
-  position: absolute;
-  right: 2px;
-  bottom: 0;
-}
-div#board_entry_comments .level1 {
-  margin: 0 0 5px 0;
-  background-color: #F0F0F0;
-}
-div#board_entry_comments .level2, div#board_entry_comments .level3,
-div#board_entry_comments .level4, div#board_entry_comments .level5 {
-  margin-left: 20px;
-}
-div#board_entry_comments .level2 {
-  background-color: #E8E8E8;
-}
-div#board_entry_comments .level3 {
-  background-color: #E0E0E0;
-}
-div#board_entry_comments .level4 {
-  background-color: #D8D8D8;
-}
-div#board_entry_comments .level5 {
-  background-color: #D0D0D0;
-}
-.board_entry_comment {
-  border-bottom: 2px solid silver;
-  border-left: 1px dotted #e0e0ff;
-  border-top: 1px dotted #e0e0ff;
-  _width: 100%;
-  margin-bottom: 5px;
-}
-.board_entry_comment .header {
-  _width: 100%;
-  padding: 1px 5px;
-  border-bottom: 1px dotted #aaa;
-  position: relative;
-  height: 1.5em;
-  vertical-align: text-bottom;
-}
-.board_entry_comment .header .title {
-  position: absolute;
-  left: 2px;
-  bottom: 0;
-}
-.board_entry_comment .header .title .date {
-  font-size: 0.8em;
-}
-.board_entry_comment .header .buttons {
-  position: absolute;
-  right: 2px;
-  bottom: 0;
-}
-.board_entry_comment .content {
-  _width: 100%;
-  overflow-y: visible;
-  overflow: hidden;
-  padding: 0 0 0 3px;
-}
-.board_entry_comment div.edit_nest_comment {
-  font-size: 10px;
-}
-.comment_input_space {
-  margin-top: 5px;
-}
-.comment_input_space input {
-  font-size: 10px;
-}
-.comment_input_space textarea {
-  margin-bottom: 5px;
-  width: 95%;
-}
-form#new_comment_form label {
-  display: block;
-}
-form#comment_input_form label {
-  margin-top: 3px;
-  font-size: 0.8em;
-  color: gray;
-  display: block;
-}
-form.comment_input_form textarea{
-  display: block;
-}
-.trackback_space {
-  background-color: #f0f0ff;
-}
-.trackback_space .entries {
-  margin-left: 20px;
-}
-.send_trackback {
-  padding: 5px;
-  border-top: 1px solid silver;
-}
-.sent_trackback {
-  padding: 5px;
-  margin-top: 10px;
-  border: 1px solid silver;
-}
-</style>
+<% content_for :stylesheet do -%>
+  <style type="text/css">
+  div.move_navi {
+    position: relative;
+    height: 1.3em;
+    text-align: center;
+    font-size: 0.8em;
+  }
+  div.move_navi .next_entry {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  div.move_navi .prev_entry {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+  div#board_entry {
+    border: 1px solid silver;
+    position: relative;
+    _width: 100%;
+  }
+  div#board_entry .header {
+    border-bottom: 1px solid silver;
+    background-color: #f0f0ff;
+  }
+  div#board_entry .header .control {
+    position: relative;
+    height: 2em;
+    color: #FFFFFF;
+    background-color: #4a4a4a;
+    font-size: 0.8em;
+  }
+  div#board_entry .header .control .date {
+    position: absolute;
+    bottom: 1px;
+    left: 2px;
+    font-size: 1.3em;
+  }
+  div#board_entry .header .control .buttons {
+    position: absolute;
+    top:21px;
+    right:2px;
+  }
+  div#board_entry .header .control .count {
+    position: absolute;
+    top:2px;
+    right:2px;
+  }
+  div#board_entry .header h1 {
+    margin: 1px;
+    font-size: 15px;
+  }
+  #permalink a, #permalink a:hover {
+    color: skyblue;
+  }
+  div#board_entry .contents {
+    background-color: #FFFFFF;
+    overflow-y: visible;
+    overflow: hidden;
+    width: 100%;
+  }
+  div#board_entry .contents_body {
+    margin: 5px;
+  }
+  div#board_entry .contents_body pre {
+    white-space: -moz-pre-wrap; /* Mozilla */
+    white-space: -pre-wrap;     /* Opera 4-6 */
+    white-space: -o-pre-wrap;   /* Opera 7 */
+    white-space: pre-wrap;      /* CSS3 */
+    word-wrap: break-word;      /* IE 5.5+ */
+  }
+  div#source_style_area, div#access_style_area {
+    background-color: #ffffdd;
+  }
+  div#source_style_area .header {
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  div#default_style_area {
+    display: block;
+  }
+  div#default_style_area .images {
+    border: 2px solid silver;
+    overflow-y: visible;
+    overflow: hidden;
+    margin: 3px;
+  }
+  div#board_entry_control {
+    position: relative;
+    height: 2.0em;
+    font-size: 0.8em;
+  }
+  div#board_entry_control .actions {
+    position: absolute;
+    left: 3px;
+    top: 0;
+  }
+  div#board_entry_control .info {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+  div#board_entry_comments {
+    border-right: 1px dotted #e0e0ff;
+    padding-right: 3px;
+    margin-top: 5px;
+  }
+  div#board_entry_comments #comments_header {
+    /* border: 1px solid silver; */
+    position: relative;
+    height: 1.5em;
+    font-size: 0.8em;
+  }
+  div#board_entry_comments #comments_header .buttons {
+    position: absolute;
+    right: 2px;
+    bottom: 0;
+  }
+  div#board_entry_comments .level1 {
+    margin: 0 0 5px 0;
+    background-color: #F0F0F0;
+  }
+  div#board_entry_comments .level2, div#board_entry_comments .level3,
+  div#board_entry_comments .level4, div#board_entry_comments .level5 {
+    margin-left: 20px;
+  }
+  div#board_entry_comments .level2 {
+    background-color: #E8E8E8;
+  }
+  div#board_entry_comments .level3 {
+    background-color: #E0E0E0;
+  }
+  div#board_entry_comments .level4 {
+    background-color: #D8D8D8;
+  }
+  div#board_entry_comments .level5 {
+    background-color: #D0D0D0;
+  }
+  .board_entry_comment {
+    border-bottom: 2px solid silver;
+    border-left: 1px dotted #e0e0ff;
+    border-top: 1px dotted #e0e0ff;
+    _width: 100%;
+    margin-bottom: 5px;
+  }
+  .board_entry_comment .header {
+    _width: 100%;
+    padding: 1px 5px;
+    border-bottom: 1px dotted #aaa;
+    position: relative;
+    height: 1.5em;
+    vertical-align: text-bottom;
+  }
+  .board_entry_comment .header .title {
+    position: absolute;
+    left: 2px;
+    bottom: 0;
+  }
+  .board_entry_comment .header .title .date {
+    font-size: 0.8em;
+  }
+  .board_entry_comment .header .buttons {
+    position: absolute;
+    right: 2px;
+    bottom: 0;
+  }
+  .board_entry_comment .content {
+    _width: 100%;
+    overflow-y: visible;
+    overflow: hidden;
+    padding: 0 0 0 3px;
+  }
+  .board_entry_comment div.edit_nest_comment {
+    font-size: 10px;
+  }
+  .comment_input_space {
+    margin-top: 5px;
+  }
+  .comment_input_space input {
+    font-size: 10px;
+  }
+  .comment_input_space textarea {
+    margin-bottom: 5px;
+    width: 95%;
+  }
+  form#new_comment_form label {
+    display: block;
+  }
+  form#comment_input_form label {
+    margin-top: 3px;
+    font-size: 0.8em;
+    color: gray;
+    display: block;
+  }
+  form.comment_input_form textarea{
+    display: block;
+  }
+  .trackback_space {
+    background-color: #f0f0ff;
+  }
+  .trackback_space .entries {
+    margin-left: 20px;
+  }
+  .send_trackback {
+    padding: 5px;
+    border-top: 1px solid silver;
+  }
+  .sent_trackback {
+    padding: 5px;
+    margin-top: 10px;
+    border: 1px solid silver;
+  }
+  </style>
+<% end -%>
 
 <div class="move_navi">
   <% if prev_entry -%>
@@ -346,360 +348,361 @@ form.comment_input_form textarea{
   <a id="page_bottom" href="#page_top">[ページ先頭]</a>
 </div>
 
-<script type="text/javascript">
-$j(function(){
-    // 書き込みボタン押下時
-    $j('#new_comment_form')
-    .submit(function() {
-        if(isEmpty($j('#board_entry_comment_contents').val())) {
-            return false;
-        }
-        $j.ajax({
-            type:'POST',
-            url:'<%= url_for(:controller => 'board_entries', :action => 'ado_create_comment', :id => entry.id) -%>',
-            data:$j('#new_comment_form').serialize(),
-            complete:function(request) {
-                $j('#board_entry_comments').append(request.responseText);
-                $j('#board_entry_comment_contents').val('');
-                showSortMenu();
-                setupCommentEditLink();
-                setupCommentCancelButton();
-                setupCommentInputForm();
-                setupCommentNestLink();
-            }
-        });
-        return false;
-    });
+<% content_for :javascript do -%>
+  <script type="text/javascript">
+  $j(function(){
+      // 書き込みボタン押下時
+      $j('#new_comment_form')
+      .submit(function() {
+          if(isEmpty($j('#board_entry_comment_contents').val())) {
+              return false;
+          }
+          $j.ajax({
+              type:'POST',
+              url:'<%= url_for(:controller => 'board_entries', :action => 'ado_create_comment', :id => entry.id) -%>',
+              data:$j('#new_comment_form').serialize(),
+              complete:function(request) {
+                  $j('#board_entry_comments').append(request.responseText);
+                  $j('#board_entry_comment_contents').val('');
+                  showSortMenu();
+                  setupCommentEditLink();
+                  setupCommentCancelButton();
+                  setupCommentInputForm();
+                  setupCommentNestLink();
+              }
+          });
+          return false;
+      });
 
-    // ブログ表示リンククリック時
-    $j('#default_style_button')
-    .click(function() {
-        changeStyleMenu('default');
-        return false;
-    });
+      // ブログ表示リンククリック時
+      $j('#default_style_button')
+      .click(function() {
+          changeStyleMenu('default');
+          return false;
+      });
 
-    // ソース表示リンククリック時
-    $j('#source_style_button')
-    .click(function() {
-        changeStyleMenu('source');
-        return false;
-    });
+      // ソース表示リンククリック時
+      $j('#source_style_button')
+      .click(function() {
+          changeStyleMenu('source');
+          return false;
+      });
 
-    // アクセス履歴リンククリック時
-    $j('#access_style_button')
-    .click(function() {
-        changeStyleMenu('access');
-        return false;
-    });
+      // アクセス履歴リンククリック時
+      $j('#access_style_button')
+      .click(function() {
+          changeStyleMenu('access');
+          return false;
+      });
 
-    // コメントソート(標準)リンククリック時
-    $j('#sort_default_link')
-    .click(function() {
-        sortComment('default');
-        changeSortMenu('default');
-        return false;
-    });
+      // コメントソート(標準)リンククリック時
+      $j('#sort_default_link')
+      .click(function() {
+          sortComment('default');
+          changeSortMenu('default');
+          return false;
+      });
 
-    // コメントソート(降順)リンククリック時
-    $j('#sort_desc_link')
-    .click(function() {
-        sortComment('desc')
-        changeSortMenu('desc')
-        return false;
-    });
+      // コメントソート(降順)リンククリック時
+      $j('#sort_desc_link')
+      .click(function() {
+          sortComment('desc')
+          changeSortMenu('desc')
+          return false;
+      });
 
-    // コメントソート(昇順)リンククリック時
-    $j('#sort_asc_link')
-    .click(function() {
-        sortComment('asc')
-        changeSortMenu('asc')
-        return false;
-    });
+      // コメントソート(昇順)リンククリック時
+      $j('#sort_asc_link')
+      .click(function() {
+          sortComment('asc')
+          changeSortMenu('asc')
+          return false;
+      });
 
-    // 引数の値によってコメントを標準、昇順、降順にソートする
-    var sortComment = function(sortType) {
-        // 引数のコメントツリーについて最大のコメントIDを返す
-        var getMaxCommentId = function(tree) {
-            var children = $j.makeArray($j(tree).find('.board_entry_comment'));
-            if( children.length == 0 ) {
-                return -tree.id.split('_')[1]
-            }
-            var descSortedChildren = children.sort(
-                function(leftChildren, rightChildren){
-                    return rightChildren.id.split('_')[1] - leftChildren.id.split('_')[1];
-                }
-            );
-            return -descSortedChildren[0].id.split('_')[1];
-        };
+      // 引数の値によってコメントを標準、昇順、降順にソートする
+      var sortComment = function(sortType) {
+          // 引数のコメントツリーについて最大のコメントIDを返す
+          var getMaxCommentId = function(tree) {
+              var children = $j.makeArray($j(tree).find('.board_entry_comment'));
+              if( children.length == 0 ) {
+                  return -tree.id.split('_')[1]
+              }
+              var descSortedChildren = children.sort(
+                  function(leftChildren, rightChildren){
+                      return rightChildren.id.split('_')[1] - leftChildren.id.split('_')[1];
+                  }
+              );
+              return -descSortedChildren[0].id.split('_')[1];
+          };
 
-        sortType = sortType || 'default';
-        var trees = $j.makeArray($j('#board_entry_comments .level1'));
-        var sortDefault = function(leftTree, rightTree) {
-            return leftTree.id.split('_')[1] - rightTree.id.split('_')[1];
-        };
-        $j.each(
-            trees.sort(
-                function(leftTree, rightTree) {
-                    if (sortType == 'default') {
-                        return sortDefault(leftTree, rightTree);
-                    } else if (sortType == 'asc') {
-                        return getMaxCommentId(rightTree) - getMaxCommentId(leftTree);
-                    } else if (sortType == 'desc') {
-                        return getMaxCommentId(leftTree) - getMaxCommentId(rightTree);
-                    } else {
-                        return sortDefault(leftTree, rightTree);
-                    }
-                }
-            ),
-            function(){
-                $j(this).remove().appendTo('#board_entry_comments');
-            }
-        );
-        setupCommentEditLink();
-        setupCommentCancelButton();
-        setupCommentInputForm();
-        setupCommentNestLink();
-    };
+          sortType = sortType || 'default';
+          var trees = $j.makeArray($j('#board_entry_comments .level1'));
+          var sortDefault = function(leftTree, rightTree) {
+              return leftTree.id.split('_')[1] - rightTree.id.split('_')[1];
+          };
+          $j.each(
+              trees.sort(
+                  function(leftTree, rightTree) {
+                      if (sortType == 'default') {
+                          return sortDefault(leftTree, rightTree);
+                      } else if (sortType == 'asc') {
+                          return getMaxCommentId(rightTree) - getMaxCommentId(leftTree);
+                      } else if (sortType == 'desc') {
+                          return getMaxCommentId(leftTree) - getMaxCommentId(rightTree);
+                      } else {
+                          return sortDefault(leftTree, rightTree);
+                      }
+                  }
+              ),
+              function(){
+                  $j(this).remove().appendTo('#board_entry_comments');
+              }
+          );
+          setupCommentEditLink();
+          setupCommentCancelButton();
+          setupCommentInputForm();
+          setupCommentNestLink();
+      };
 
-    // コメントソートの表示制御
-    var showSortMenu = function() {
-        if ( $j('.board_entry_comment.level1').length > 1 ) {
-            $j('#board_entry_comments > #comments_header > .buttons').show();
-        } else {
-            $j('#board_entry_comments > #comments_header > .buttons').hide();
-        }
-    };
-    showSortMenu();
+      // コメントソートの表示制御
+      var showSortMenu = function() {
+          if ( $j('.board_entry_comment.level1').length > 1 ) {
+              $j('#board_entry_comments > #comments_header > .buttons').show();
+          } else {
+              $j('#board_entry_comments > #comments_header > .buttons').hide();
+          }
+      };
+      showSortMenu();
 
-    // コメントソート(標準)、コメントソート(昇順)、コメントソート(降順)を切り替える
-    var changeSortMenu = function(sortType) {
-        var sortTypes = ['default', 'desc', 'asc'];
-        $j.each(sortTypes, function() {
-            if(this == sortType) {
-                $j('#sort_' + this + '_label').show();
-                $j('#sort_' + this + '_link').hide();
-            } else {
-                $j('#sort_' + this + '_label').hide();
-                $j('#sort_' + this + '_link').show();
-            }
-        });
-    };
+      // コメントソート(標準)、コメントソート(昇順)、コメントソート(降順)を切り替える
+      var changeSortMenu = function(sortType) {
+          var sortTypes = ['default', 'desc', 'asc'];
+          $j.each(sortTypes, function() {
+              if(this == sortType) {
+                  $j('#sort_' + this + '_label').show();
+                  $j('#sort_' + this + '_link').hide();
+              } else {
+                  $j('#sort_' + this + '_label').hide();
+                  $j('#sort_' + this + '_link').show();
+              }
+          });
+      };
 
-    // ブログ表示、ソース表示、アクセス履歴を切り替える
-    var changeStyleMenu = function(styleType) {
-        var styles = ["default", "source", "access"];
-        $j.each(styles, function() {
-            if(this == styleType) {
-                $j('#' + this + '_style_area').show('normal');
-                $j('#' + this + '_style_label').show();
-                $j('#' + this + '_style_link').hide();
-            } else {
-                $j('#' + this + '_style_area').hide('fast');
-                $j('#' + this + '_style_label').hide();
-                $j('#' + this + '_style_link').show();
-            }
-        });
-    };
+      // ブログ表示、ソース表示、アクセス履歴を切り替える
+      var changeStyleMenu = function(styleType) {
+          var styles = ["default", "source", "access"];
+          $j.each(styles, function() {
+              if(this == styleType) {
+                  $j('#' + this + '_style_area').show('normal');
+                  $j('#' + this + '_style_label').show();
+                  $j('#' + this + '_style_link').hide();
+              } else {
+                  $j('#' + this + '_style_area').hide('fast');
+                  $j('#' + this + '_style_label').hide();
+                  $j('#' + this + '_style_link').show();
+              }
+          });
+      };
 
-    // 引数の文字列が空白以外で1文字以上かどうか
-    var isEmpty = function(text) {
-        if($j.trim(text).length == 0) {
-            alert("空白以外で1文字以上入力してください。");
-            return true;
-        }
-        return false;
-    };
+      // 引数の文字列が空白以外で1文字以上かどうか
+      var isEmpty = function(text) {
+          if($j.trim(text).length == 0) {
+              alert("空白以外で1文字以上入力してください。");
+              return true;
+          }
+          return false;
+      };
 
-    //  ポイントボタン押下時の動作 board_entry_point 内の動作
-    var entry_point = 0;
-    var appendEntryPointClick = function(){
-        $j('#entry_point_button')
-        .click(function(){
-            if (entry_point > 4){
-                alert('やりすぎ！');
-                return false;
-            }
-            var entry_point_url = '<%= url_for :controller => :board_entries, :action => :ado_pointup -%>';
-            $j.ajax({
-                type: 'POST',
-                url: entry_point_url,
-                data: {id: '<%= entry.id %>', authenticity_token: $j('#authenticity_token').val() },
-                success: function(text){
-                    $j('#entry_point_button').val(text);
-                    entry_point = ++entry_point;
-                },
-                error: function(request){
-                    alert(request.responseText);
-                }
-            });
-        });
-    };
-    appendEntryPointClick();
+      //  ポイントボタン押下時の動作 board_entry_point 内の動作
+      var entry_point = 0;
+      var appendEntryPointClick = function(){
+          $j('#entry_point_button')
+          .click(function(){
+              if (entry_point > 4){
+                  alert('やりすぎ！');
+                  return false;
+              }
+              var entry_point_url = '<%= url_for :controller => :board_entries, :action => :ado_pointup -%>';
+              $j.ajax({
+                  type: 'POST',
+                  url: entry_point_url,
+                  data: {id: '<%= entry.id %>', authenticity_token: $j('#authenticity_token').val() },
+                  success: function(text){
+                      $j('#entry_point_button').val(text);
+                      entry_point = ++entry_point;
+                  },
+                  error: function(request){
+                      alert(request.responseText);
+                  }
+              });
+          });
+      };
+      appendEntryPointClick();
 
-    // 編集ボタン押下時の処理
-    var setupCommentEditLink = function() {
-        $j('.comment_edit_link')
-        .click(function() {
-            commentId = this.id.split('_')[3];
-            $j('#comment_contents_' + commentId).fadeOut(0, function() {
-                $j('#comment_area_' + commentId).fadeIn('fast', function() {
-                    $j('#comment_input_form_' + commentId + ' textarea').focus();
-                });
-            });
-            return false;
-        });
-    };
-    setupCommentEditLink();
+      // 編集ボタン押下時の処理
+      var setupCommentEditLink = function() {
+          $j('.comment_edit_link')
+          .click(function() {
+              commentId = this.id.split('_')[3];
+              $j('#comment_contents_' + commentId).fadeOut(0, function() {
+                  $j('#comment_area_' + commentId).fadeIn('fast', function() {
+                      $j('#comment_input_form_' + commentId + ' textarea').focus();
+                  });
+              });
+              return false;
+          });
+      };
+      setupCommentEditLink();
 
-    // コメント編集フォームのキャンセルボタン押下時の処理
-    var setupCommentCancelButton = function() {
-        $j('.comment_cancel_button')
-        .click(function() {
-            commentId = this.id.split('_')[3];
-            if ($j('#comment_area_' + commentId).is(':visible')) {
-                $j('#comment_area_' + commentId).fadeOut(0, function() {
-                    $j('#comment_contents_' + commentId).fadeIn('fast');
-                });
-            }
-            return false;
-        });
-    };
-    setupCommentCancelButton();
+      // コメント編集フォームのキャンセルボタン押下時の処理
+      var setupCommentCancelButton = function() {
+          $j('.comment_cancel_button')
+          .click(function() {
+              commentId = this.id.split('_')[3];
+              if ($j('#comment_area_' + commentId).is(':visible')) {
+                  $j('#comment_area_' + commentId).fadeOut(0, function() {
+                      $j('#comment_contents_' + commentId).fadeIn('fast');
+                  });
+              }
+              return false;
+          });
+      };
+      setupCommentCancelButton();
 
-    // コメント編集フォームをサブミットした時の処理
-    var setupCommentInputForm = function() {
-        $j('.comment_input_form')
-        .submit(function() {
-            commentId = this.id.split('_')[3];
-            if(isEmpty($j('#comment_input_form_' + commentId + ' textarea').val())) {
-                return false;
-            }
-            $j.ajax({
-                type:'POST',
-                url:'<%= url_for(:controller => 'board_entries', :action => 'ado_edit_comment') -%>/' + commentId,
-                data:$j('#comment_input_form_' + commentId).serialize() + '&authenticity_token=' + $j('#authenticity_token').val(),
-                complete:function(request) {
-                    $j('#comment_contents_' + commentId).html(request.responseText);
-                    if ($j('#comment_area_' + commentId).is(':visible')) {
-                        $j('#comment_area_' + commentId).fadeOut(0, function() {
-                            $j('#comment_contents_' + commentId).fadeIn('fast');
-                        });
-                    }
-                }
-            });
-            return false;
-        });
-    };
-    setupCommentInputForm();
+      // コメント編集フォームをサブミットした時の処理
+      var setupCommentInputForm = function() {
+          $j('.comment_input_form')
+          .submit(function() {
+              commentId = this.id.split('_')[3];
+              if(isEmpty($j('#comment_input_form_' + commentId + ' textarea').val())) {
+                  return false;
+              }
+              $j.ajax({
+                  type:'POST',
+                  url:'<%= url_for(:controller => 'board_entries', :action => 'ado_edit_comment') -%>/' + commentId,
+                  data:$j('#comment_input_form_' + commentId).serialize() + '&authenticity_token=' + $j('#authenticity_token').val(),
+                  complete:function(request) {
+                      $j('#comment_contents_' + commentId).html(request.responseText);
+                      if ($j('#comment_area_' + commentId).is(':visible')) {
+                          $j('#comment_area_' + commentId).fadeOut(0, function() {
+                              $j('#comment_contents_' + commentId).fadeIn('fast');
+                          });
+                      }
+                  }
+              });
+              return false;
+          });
+      };
+      setupCommentInputForm();
 
-    // 「このコメントに返信」ボタン押下時の処理
-    var setupCommentNestLink = function() {
-        $j('.comment_nest_link')
-        .click(function() {
-            commentId = this.id.split('_')[3];
-            level = this.id.split('_')[4] - 0 + 1;
-            // ネストレベルを保持するhiddenフィールドを作成
-            var hiddenLevel = function() {
-                return $j(document.createElement('input')).attr({type:'hidden', name:'level', value:level});
-            };
+      // 「このコメントに返信」ボタン押下時の処理
+      var setupCommentNestLink = function() {
+          $j('.comment_nest_link')
+          .click(function() {
+              commentId = this.id.split('_')[3];
+              level = this.id.split('_')[4] - 0 + 1;
+              // ネストレベルを保持するhiddenフィールドを作成
+              var hiddenLevel = function() {
+                  return $j(document.createElement('input')).attr({type:'hidden', name:'level', value:level});
+              };
 
-            // トークン
-            var hiddenToken = function() {
-                return $j(document.createElement('input')).attr({type:'hidden', name:'authenticity_token', value:$j('#authenticity_token').val()});
-            };
+              // トークン
+              var hiddenToken = function() {
+                  return $j(document.createElement('input')).attr({type:'hidden', name:'authenticity_token', value:$j('#authenticity_token').val()});
+              };
 
-            // 説明を作成
-            var divDesc = function() {
-                return $j(document.createElement('div'))
-                .append(document.createTextNode('このコメントに返信'))
-                .css({marginTop:'3px', fontSize:'10px', color:'gray'});
-            };
+              // 説明を作成
+              var divDesc = function() {
+                  return $j(document.createElement('div'))
+                  .append(document.createTextNode('このコメントに返信'))
+                  .css({marginTop:'3px', fontSize:'10px', color:'gray'});
+              };
 
-            // コメント入力用テキストエリアを作成
-            var divText = function() {
-                var div = $j(document.createElement('div'));
-                $j(document.createElement('textarea'))
-                .attr({rows:5, name:'contents'})
-                .css('width', '90%')
-                .appendTo(div);
-                return div
-            };
+              // コメント入力用テキストエリアを作成
+              var divText = function() {
+                  var div = $j(document.createElement('div'));
+                  $j(document.createElement('textarea'))
+                  .attr({rows:5, name:'contents'})
+                  .css('width', '90%')
+                  .appendTo(div);
+                  return div
+              };
 
-            // 保存ボタンを作成
-            var saveButton = function(jform) {
-                return $j(document.createElement('input'))
-                .attr({type:'button', value:'保存'})
-                .css({fontSize:'10px'})
-                .click(function() {
-                    if(isEmpty(jform.find('textarea').val())) {
-                        return false;
-                    }
-                    $j.ajax({
-                        type:'POST',
-                        url:'<%= url_for(:controller => 'board_entries', :action => 'ado_create_nest_comment') -%>/' + commentId,
-                        data:jform.serialize(),
-                        success:function(html) {
-                            jform.fadeOut('0', function(){
-                                $j('#link_nest_comment_' + commentId).show();
-                                $j(document.createElement('div'))
-                                .appendTo('#view_nest_comment_' + commentId)
-                                .html(html)
-                                .hide()
-                                .fadeIn('fast', function() {
-                                    setupCommentEditLink();
-                                    setupCommentCancelButton();
-                                    setupCommentInputForm();
-                                    setupCommentNestLink();
-                                });
-                                jform.remove();
-                            });
-                        },
-                        error:function(request) {
-                            alert(request.responseText);
-                        }
-                    });
-                    return false;
-                });
-            };
+              // 保存ボタンを作成
+              var saveButton = function(jform) {
+                  return $j(document.createElement('input'))
+                  .attr({type:'button', value:'保存'})
+                  .css({fontSize:'10px'})
+                  .click(function() {
+                      if(isEmpty(jform.find('textarea').val())) {
+                          return false;
+                      }
+                      $j.ajax({
+                          type:'POST',
+                          url:'<%= url_for(:controller => 'board_entries', :action => 'ado_create_nest_comment') -%>/' + commentId,
+                          data:jform.serialize(),
+                          success:function(html) {
+                              jform.fadeOut('0', function(){
+                                  $j('#link_nest_comment_' + commentId).show();
+                                  $j(document.createElement('div'))
+                                  .appendTo('#view_nest_comment_' + commentId)
+                                  .html(html)
+                                  .hide()
+                                  .fadeIn('fast', function() {
+                                      setupCommentEditLink();
+                                      setupCommentCancelButton();
+                                      setupCommentInputForm();
+                                      setupCommentNestLink();
+                                  });
+                                  jform.remove();
+                              });
+                          },
+                          error:function(request) {
+                              alert(request.responseText);
+                          }
+                      });
+                      return false;
+                  });
+              };
 
-            // キャンセルボタンを作成
-            var cancelButton = function(jform) {
-                return $j(document.createElement('input'))
-                .attr({type:'button', value:'キャンセル'})
-                .css({fontSize:'10px'})
-                .click(function() {
-                    jform.fadeOut('0', function(){
-                        $j('#link_nest_comment_' + commentId).show();
-                        jform.remove();
-                    });
-                    return false;
-                });
-            };
+              // キャンセルボタンを作成
+              var cancelButton = function(jform) {
+                  return $j(document.createElement('input'))
+                  .attr({type:'button', value:'キャンセル'})
+                  .css({fontSize:'10px'})
+                  .click(function() {
+                      jform.fadeOut('0', function(){
+                          $j('#link_nest_comment_' + commentId).show();
+                          jform.remove();
+                      });
+                      return false;
+                  });
+              };
 
-            $j('#link_nest_comment_' + commentId).hide();
-            $j('#edit_nest_comment_' + commentId).empty();
-            // コメント返信フォームを作成して表示
-            var jform = $j(document.createElement('form'));
-            jform
-            .append(hiddenLevel())
-            .append(hiddenToken())
-            .append(divDesc())
-            .append(divText())
-            .append(
-                $j(document.createElement('div'))
-                .append(saveButton(jform))
-                .append(cancelButton(jform))
-            )
-            .hide()
-            .fadeIn('fast')
-            .appendTo('#edit_nest_comment_' + commentId);
+              $j('#link_nest_comment_' + commentId).hide();
+              $j('#edit_nest_comment_' + commentId).empty();
+              // コメント返信フォームを作成して表示
+              var jform = $j(document.createElement('form'));
+              jform
+              .append(hiddenLevel())
+              .append(hiddenToken())
+              .append(divDesc())
+              .append(divText())
+              .append(
+                  $j(document.createElement('div'))
+                  .append(saveButton(jform))
+                  .append(cancelButton(jform))
+              )
+              .hide()
+              .fadeIn('fast')
+              .appendTo('#edit_nest_comment_' + commentId);
 
-            $j("textarea").jGrow({ rows: 25 });
-        });
-    };
-    setupCommentNestLink();
+              $j("textarea").jGrow({ rows: 25 });
+          });
+      };
+      setupCommentNestLink();
 
-    $j("textarea").jGrow({ rows: 25 });
-
-});
-</script>
+      $j("textarea").jGrow({ rows: 25 });
+  });
+  </script>
+<% end -%>
