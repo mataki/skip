@@ -14,36 +14,33 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Search
+  attr_reader :invisible_count, :result
+
   class SearchError < StandardError
   end
 
-  def initialize params,publication_symbols
-    @result = {
-      :header => { :count => -1, :start_count => 0, :end_count => 0, :prev => "", :next => "", :per_page => 10 },
-      :elements => []
-    }
+  def initialize params, publication_symbols
     if params[:query] && !SkipUtil.jstrip(params[:query]).empty?
-      @result = HyperEstraier.search params,@result
-    end
+      @result = HyperEstraier.search params
+      if error_message = @result[:error]
+        raise SearchError, error_message
+      end
+      new_result = self.class.remove_invisible_element(@result[:elements], publication_symbols)
 
-    if error_message = @result[:error]
-      raise SearchError, error_message
+      @invisible_count = @result[:elements].size - new_result.size
+      @result[:elements] = new_result
+    else
+      raise SearchError, "please input query"
     end
-
-    new_result = []
-    @result[:elements].each do |line_hash|
-      line_hash[:publication_symbols] = 'sid:allusers' if line_hash[:publication_symbols].blank?
-      both_arr = line_hash[:publication_symbols].split(',') & publication_symbols
-      new_result << line_hash if both_arr.size > 0
-    end
-
-    @invisible_count = @result[:elements].size - new_result.size
-    @result[:elements] = new_result
   end
 
-  attr_reader :invisible_count, :result
+  def self.remove_invisible_element elements, publication_symbols
+    elements.map do |line_hash|
+      line_hash unless ((line_hash[:publication_symbols]||"").split(',') & publication_symbols).blank?
+    end.compact
+  end
 
-  def self.get_metadata contents,uri_text,title
+  def self.get_metadata contents, uri_text, title
     line_hash = { }
     line_hash[:contents] = contents
 

@@ -18,7 +18,11 @@ require "estraierpure"
 class HyperEstraier < Search
   include EstraierPure
 
-  def self.search params,result_hash
+  def self.search params
+    result_hash = {
+      :header => { :count => -1, :start_count => 0, :end_count => 0, :prev => "", :next => "", :per_page => 10 },
+      :elements => []
+    }
     per_page = (params[:per_page] || 10).to_i
     offset = (params[:offset] || 0).to_i
 
