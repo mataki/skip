@@ -64,3 +64,30 @@ require File.dirname(__FILE__) + '/../spec_helper'
 #   end
 
 # end
+
+describe HyperEstraier, ".search" do
+  it "get_conditionにparamsが正しくわたること" do
+    HyperEstraier.should_receive(:get_condition).with("query", "target_aid", "target_contents")
+    HyperEstraier.search :query => "query", :target_aid => "target_aid", :target_contents => "target_contents"
+  end
+end
+
+describe HyperEstraier, ".get_condition" do
+  it "queryが設定されている場合 queryが設定されること" do
+    cond = HyperEstraier.get_condition("query")
+    cond.phrase.should == "query"
+  end
+  it "optionsがSIMPLEに設定されていること" do
+    cond = HyperEstraier.get_condition("query")
+    cond.options.should == HyperEstraier::Condition::SIMPLE
+  end
+  describe "target_aidが設定されている場合" do
+    before do
+      INITIAL_SETTINGS['search_apps'] = { "app" => { "cache" => "cache:3000/cache" } }
+    end
+    it "正しいattrが設定されていること" do
+      cond = HyperEstraier.get_condition("query", "app")
+      cond.attrs.should == ["@uri STRBW http://cache:3000/cache"]
+    end
+  end
+end

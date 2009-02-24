@@ -27,17 +27,9 @@ class HyperEstraier < Search
     offset = (params[:offset] || 0).to_i
 
     begin
-      node = Node::new
-      node.set_url(INITIAL_SETTINGS['estraier_url'])
-      cond = Condition::new
-      cond.set_options Condition::SIMPLE
-      cond.set_phrase(params[:query])
-      if params[:target_aid] && params[:target_aid] != 'all' && !INITIAL_SETTINGS['search_apps'][params[:target_aid]]['cache'].empty?
-        target_url = "http://#{INITIAL_SETTINGS['search_apps'][params[:target_aid]]['cache']}"
-        target_url << "/#{params[:target_contents]}" if params[:target_contents]
-        cond.add_attr("@uri STRBW #{target_url}")
-      end
-      nres = node.search(cond,1)
+      node = get_node
+      cond = get_condition(params[:query], params[:target_aid], params[:target_contents])
+      nres = node.search(cond, 1)
       if nres
         count = nres.hint('HIT').to_i
         result_hash[:header][:count] = count
@@ -46,8 +38,8 @@ class HyperEstraier < Search
         result_hash[:header][:prev] = offset > 0 ? "true" : ""
         result_hash[:header][:next] = offset+per_page < count ? "true" : ""
         result_hash[:header][:per_page] = per_page
-        result_array = []
 
+        result_array = []
         for i in offset...(nres.doc_num < offset+per_page ? nres.doc_num : offset+per_page)
           rdoc = nres.get_doc(i)
           result_array << (get_metadata ERB::Util.html_escape(rdoc.snippet), URI.decode(rdoc.attr('@uri')), rdoc.attr('@title'))
@@ -64,4 +56,21 @@ class HyperEstraier < Search
     return result_hash
   end
 
+  def self.get_condition(query, target_aid = nil, target_contents = nil)
+    cond = Condition.new
+    cond.set_options Condition::SIMPLE
+    cond.set_phrase(query)
+    if target_aid && target_aid != 'all' && !INITIAL_SETTINGS['search_apps'][target_aid]['cache'].empty?
+      target_url = "http://#{INITIAL_SETTINGS['search_apps'][target_aid]['cache']}"
+      target_url << "/#{target_contents}" if target_contents
+      cond.add_attr("@uri STRBW #{target_url}")
+    end
+    cond
+  end
+
+  def self.get_node(node_url = INITIAL_SETTINGS['estraier_url'])
+    node = Node.new
+    node.set_url(node_url)
+    node
+  end
 end

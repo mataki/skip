@@ -96,3 +96,10 @@ describe Search, ".get_metadata" do
     end
   end
 end
+
+describe HyperEstraier, ".get_node" do
+  it "nodeを返すこと" do
+    node = HyperEstraier.get_node("node_url")
+    node.should be_is_a(HyperEstraier::Node)
+  end
+end
