@@ -20,18 +20,14 @@ class Search
   end
 
   def initialize params, publication_symbols
-    if params[:query] && !SkipUtil.jstrip(params[:query]).empty?
-      @result = HyperEstraier.search params
-      if error_message = @result[:error]
-        raise SearchError, error_message
-      end
-      new_result = self.class.remove_invisible_element(@result[:elements], publication_symbols)
+    raise SearchError, "please input query" unless params[:query] && !SkipUtil.jstrip(params[:query]).empty?
+    @result = HyperEstraier.search(params)
+    raise SearchError, error_message if error_message = @result[:error]
 
-      @invisible_count = @result[:elements].size - new_result.size
-      @result[:elements] = new_result
-    else
-      raise SearchError, "please input query"
-    end
+    new_result = self.class.remove_invisible_element(@result[:elements], publication_symbols)
+
+    @invisible_count = @result[:elements].size - new_result.size
+    @result[:elements] = new_result
   end
 
   def self.remove_invisible_element elements, publication_symbols
