@@ -15,7 +15,7 @@
 
 require "estraierpure"
 
-class HyperEstraier < Search
+class HyperEstraier
   include EstraierPure
   attr_reader :offset, :per_page, :error, :result_hash
 
@@ -31,9 +31,10 @@ class HyperEstraier < Search
     cond = self.class.get_condition(params[:query], params[:target_aid], params[:target_contents])
     if nres = node.search(cond, 1)
       @result_hash[:header] = self.class.get_result_hash_header(nres.hint('HIT').to_i, @offset, @per_page)
-      @result_hash[:elements] = self.class.get_result_hash_elements(nres, result_hash[:end_count])
+      @result_hash[:elements] = self.class.get_result_hash_elements(nres, @offset, @result_hash[:header][:end_count])
     else
       # ノードにアクセスできない場合のみ nres は nil
+      ActiveRecord::Base.logger.error "[HyperEstraier Error] Connection not found to #{INITIAL_SETTINGS["estraier_url"]}"
       @error = "access denied by search node"
     end
   end
@@ -67,11 +68,11 @@ class HyperEstraier < Search
     }
   end
 
-  def self.get_result_hash_elements(nres, end_count)
+  def self.get_result_hash_elements(nres, offset, end_count)
     result_array = []
     for i in offset...end_count
       rdoc = nres.get_doc(i)
-      result_array << (self.class.get_metadata ERB::Util.html_escape(rdoc.snippet), URI.decode(rdoc.attr('@uri')), rdoc.attr('@title'))
+      result_array << (Search.get_metadata ERB::Util.html_escape(rdoc.snippet), URI.decode(rdoc.attr('@uri')), rdoc.attr('@title'))
     end
     result_array
   end
