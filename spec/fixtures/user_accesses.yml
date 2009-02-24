@@ -4,3 +4,19 @@ a_user_access:
   user: a_user
   last_access: <%= SkipFaker.yesterday %>
   access_count: <%= SkipFaker.rand_num 3 %>
+
+a_retired_user_access:
+  user: a_retired_user
+  last_access: <%= SkipFaker.yesterday %>
+
+a_group_owned_user:
+  user: a_group_owned_user
+  last_access: <%= SkipFaker.yesterday %>
+
+a_group_joined_user:
+  user: a_group_joined_user
+  last_access: <%= SkipFaker.yesterday %>
+
+a_group_waiting_user:
+  user: a_group_waiting_user
+  last_access: <%= SkipFaker.yesterday %>

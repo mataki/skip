@@ -1,9 +1,9 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  ident_url: MyString
-  account_id: 1
+  url: http://localhost:3333/user/a_user
+  user_id: 1
 
 two:
-  ident_url: MyString
-  account_id: 1
+  url: http://localhost:3333/user/hoge
+  user_id: 1
