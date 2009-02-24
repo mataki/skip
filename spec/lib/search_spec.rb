@@ -18,9 +18,8 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe Search, "#initialize" do
   describe "検索クエリが入力されていない場合" do
     it "エラーが投げられること" do
-      lambda do
-        Search.new({ :query => "" } ,['sid:allusers'])
-      end.should raise_error()
+      result = Search.new({ :query => "" } ,['sid:allusers'])
+      result.error.should == "please input query"
     end
   end
   describe "検索クエリが入力されている場合" do
@@ -50,6 +49,14 @@ describe Search, "#initialize" do
       it "結果のelementsに権限チェックを行なったelementsが入っていること" do
         result = Search.new(@query, @symbols)
         result.result[:elements].should == []
+      end
+    end
+    describe "検索でエラーがあった場合" do
+      it "エラーが設定されること" do
+        @result = mock('est_result', :error => "error")
+        HyperEstraier.stub!(:new).and_return(@result)
+        result = Search.new(@query, @symbols)
+        result.error.should == "error"
       end
     end
   end

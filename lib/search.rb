@@ -14,20 +14,22 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Search
-  attr_reader :invisible_count, :result
-
-  class SearchError < StandardError
-  end
+  attr_reader :invisible_count, :result, :error
 
   def initialize params, publication_symbols
-    raise SearchError, "please input query" unless params[:query] && !SkipUtil.jstrip(params[:query]).empty?
-    est_result = HyperEstraier.new(params)
-    raise SearchError, error_message if error_message = est_result.error
-
-    @result = est_result.result_hash
-    new_result = self.class.remove_invisible_element(@result[:elements], publication_symbols)
-    @invisible_count = @result[:elements].size - new_result.size
-    @result[:elements] = new_result
+    unless params[:query] && !SkipUtil.jstrip(params[:query]).empty?
+      @error = "please input query"
+    else
+      est_result = HyperEstraier.new(params)
+      if error_message = est_result.error
+        @error = error_message
+      else
+        @result = est_result.result_hash
+        new_result = self.class.remove_invisible_element(@result[:elements], publication_symbols)
+        @invisible_count = @result[:elements].size - new_result.size
+        @result[:elements] = new_result
+      end
+    end
   end
 
   def self.remove_invisible_element elements, publication_symbols

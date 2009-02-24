@@ -20,7 +20,7 @@ describe SearchController, "GET /full_text_search" do
     @current_user = user_login
     @params = {}
   end
-  describe SearchController, "検索クエリが投げられている場合" do
+  describe "検索クエリが投げられている場合" do
     before do
       controller.stub!(:make_instance_variables)
       Search.stub!(:new).and_return(mock_search)
@@ -38,12 +38,18 @@ describe SearchController, "GET /full_text_search" do
       get_full_text_search
     end
   end
+  describe "検索クエリが投げられていない場合" do
+    it "@error_messageが設定されること" do
+      get_full_text_search
+      assigns[:error_message].should == "please input query"
+    end
+  end
   def get_full_text_search
     get :full_text_search, @params
   end
   def mock_search(opt = {})
     @mock_search if defined?(@mock_search)
-    @mock_search = mock("search", { :invisible_count => 4, :result => mock_result }.merge(opt))
+    @mock_search = mock("search", { :invisible_count => 4, :result => mock_result, :error => nil }.merge(opt))
   end
   def mock_result(opt = {})
     @mock_result if defined?(@mock_result)

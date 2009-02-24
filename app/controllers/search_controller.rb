@@ -100,15 +100,12 @@ class SearchController < ApplicationController
     params[:per_page] = 10
     params[:offset] ||= 0
 
-    begin
-      search = Search.new(params, current_user.belong_symbols_with_collaboration_apps)
-
+    search = Search.new(params, current_user.belong_symbols_with_collaboration_apps)
+    if search.error.blank?
       @invisible_count = search.invisible_count
-
       make_instance_variables search.result
-    rescue Search::SearchError => e
-      e.backtrace.each {|msg| logger.error msg }
-      @error_message = e.message
+    else
+      @error_message = search.error
     end
   end
 
