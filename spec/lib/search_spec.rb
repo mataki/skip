@@ -31,12 +31,12 @@ describe Search, "#initialize" do
     describe "HyperEstraierで検索結果がみつかった場合" do
       before do
         element = { :publication_symbols => "uid:a_user" }
-        @result = { :elements => [element] }
-        HyperEstraier.stub!(:search).and_return(@result)
+        @result = mock('est_result', :error => nil, :offset => 0, :per_page => 10, :result_hash => {:elements => [{ :publication_symbols => "uid:a_user" }]})
+        HyperEstraier.stub!(:new).and_return(@result)
         Search.stub!(:remove_invisible_element).and_return([])
       end
       it "paramsをHyperEstraierに引き渡すこと" do
-        HyperEstraier.should_receive(:search).and_return(@result)
+        HyperEstraier.should_receive(:new).and_return(@result)
         Search.new(@query, @symbols)
       end
       it "閲覧権限のチェックを行なうこと" do
@@ -97,9 +97,3 @@ describe Search, ".get_metadata" do
   end
 end
 
-describe HyperEstraier, ".get_node" do
-  it "nodeを返すこと" do
-    node = HyperEstraier.get_node("node_url")
-    node.should be_is_a(HyperEstraier::Node)
-  end
-end

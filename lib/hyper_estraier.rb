@@ -17,49 +17,31 @@ require "estraierpure"
 
 class HyperEstraier < Search
   include EstraierPure
+  attr_reader :offset, :per_page, :error, :result_hash
 
-  def self.search params
-    result_hash = {
+  def initialize params
+    @result_hash = {
       :header => { :count => -1, :start_count => 0, :end_count => 0, :prev => "", :next => "", :per_page => 10 },
       :elements => []
     }
-    per_page = (params[:per_page] || 10).to_i
-    offset = (params[:offset] || 0).to_i
+    @per_page = (params[:per_page] || 10).to_i
+    @offset = (params[:offset] || 0).to_i
 
-    begin
-      node = get_node
-      cond = get_condition(params[:query], params[:target_aid], params[:target_contents])
-      nres = node.search(cond, 1)
-      if nres
-        count = nres.hint('HIT').to_i
-        result_hash[:header][:count] = count
-        result_hash[:header][:start_count] = offset+1
-        result_hash[:header][:end_count] = offset+per_page > count ? count : offset+per_page
-        result_hash[:header][:prev] = offset > 0 ? "true" : ""
-        result_hash[:header][:next] = offset+per_page < count ? "true" : ""
-        result_hash[:header][:per_page] = per_page
-
-        result_array = []
-        for i in offset...(nres.doc_num < offset+per_page ? nres.doc_num : offset+per_page)
-          rdoc = nres.get_doc(i)
-          result_array << (get_metadata ERB::Util.html_escape(rdoc.snippet), URI.decode(rdoc.attr('@uri')), rdoc.attr('@title'))
-        end # rdoc
-        result_hash[:elements] = result_array
-      else
-        return { :error => "検索エンジンにアクセスできません。管理者に連絡してください。" }
-      end # if nres
-    rescue Exception => e
-      ActiveRecord::Base.logger.error e
-      e.backtrace.each { |message| ActiveRecord::Base.logger.error message }
-      return { :error => "現在全文検索エンジンに問題が発生しており、検索できません。" }
+    node = self.class.get_node
+    cond = self.class.get_condition(params[:query], params[:target_aid], params[:target_contents])
+    if nres = node.search(cond, 1)
+      @result_hash[:header] = self.class.get_result_hash_header(nres.hint('HIT').to_i, @offset, @per_page)
+      @result_hash[:elements] = self.class.get_result_hash_elements(nres, result_hash[:end_count])
+    else
+      # ノードにアクセスできない場合のみ nres は nil
+      @error = "access denied by search node"
     end
-    return result_hash
   end
 
   def self.get_condition(query, target_aid = nil, target_contents = nil)
     cond = Condition.new
     cond.set_options Condition::SIMPLE
-    cond.set_phrase(query)
+    cond.set_phrase(query) unless query.blank?
     if target_aid && target_aid != 'all' && !INITIAL_SETTINGS['search_apps'][target_aid]['cache'].empty?
       target_url = "http://#{INITIAL_SETTINGS['search_apps'][target_aid]['cache']}"
       target_url << "/#{target_contents}" if target_contents
@@ -72,5 +54,25 @@ class HyperEstraier < Search
     node = Node.new
     node.set_url(node_url)
     node
+  end
+
+  def self.get_result_hash_header(count, offset, per_page)
+    {
+      :count => count,
+      :start_count => offset + 1,
+      :end_count => offset+per_page > count ? count : offset+per_page,
+      :prev => offset > 0 ? "true" : "",
+      :next => offset+per_page < count ? "true" : "",
+      :per_page => per_page
+    }
+  end
+
+  def self.get_result_hash_elements(nres, end_count)
+    result_array = []
+    for i in offset...end_count
+      rdoc = nres.get_doc(i)
+      result_array << (self.class.get_metadata ERB::Util.html_escape(rdoc.snippet), URI.decode(rdoc.attr('@uri')), rdoc.attr('@title'))
+    end
+    result_array
   end
 end

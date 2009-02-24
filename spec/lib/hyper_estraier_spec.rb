@@ -65,10 +65,42 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 # end
 
-describe HyperEstraier, ".search" do
+describe HyperEstraier, "#initialize" do
+  before do
+    @node = mock('node')
+    @node.stub!(:search)
+    HyperEstraier.stub!(:get_node).and_return(@node)
+  end
+  it "per_page, offsetを設定すること" do
+    he = HyperEstraier.new({})
+    he.per_page.should == 10
+    he.offset.should == 0
+  end
   it "get_conditionにparamsが正しくわたること" do
     HyperEstraier.should_receive(:get_condition).with("query", "target_aid", "target_contents")
-    HyperEstraier.search :query => "query", :target_aid => "target_aid", :target_contents => "target_contents"
+    HyperEstraier.new :query => "query", :target_aid => "target_aid", :target_contents => "target_contents"
+  end
+  describe "検索結果が返ってきたとき" do
+    before do
+      @nres = mock('nres', :hint => "5")
+      @node.stub!(:search).and_return(@nres)
+      HyperEstraier.stub!(:get_result_hash_header).and_return("result_header")
+      HyperEstraier.stub!(:get_result_hash_elements).and_return("result_elements")
+    end
+    it "result_hashが登録されていること" do
+      result = HyperEstraier.new({})
+      result.result_hash[:header].should == "result_header"
+      result.result_hash[:elements].should == "result_elements"
+    end
+    it "@errorが設定されていないこと" do
+
+    end
+  end
+  describe "検索ノードにアクセスできないとき" do
+    it "@errorにメッセージが登録されていること" do
+      result = HyperEstraier.new({})
+      result.error.should == "access denied by search node"
+    end
   end
 end
 
@@ -89,5 +121,12 @@ describe HyperEstraier, ".get_condition" do
       cond = HyperEstraier.get_condition("query", "app")
       cond.attrs.should == ["@uri STRBW http://cache:3000/cache"]
     end
+  end
+end
+
+describe HyperEstraier, ".get_node" do
+  it "nodeを返すこと" do
+    node = HyperEstraier.get_node("node_url")
+    node.should be_is_a(HyperEstraier::Node)
   end
 end
