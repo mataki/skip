@@ -102,6 +102,7 @@ class SearchController < ApplicationController
 
     search = Search.new(params, current_user.belong_symbols_with_collaboration_apps)
     if search.error.blank?
+      # TODO: インスタンス変数に代入することなく@searchで画面表示
       @invisible_count = search.invisible_count
       make_instance_variables search.result
     else

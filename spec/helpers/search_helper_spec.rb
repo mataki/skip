@@ -13,21 +13,5 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-module SearchHelper
-  def translate_contents_type target_contents, target_icon
-    unless target_icon.include?('http://')
-      icon_tag((target_icon || 'world_link'), { :margin => true, :title => target_contents} )
-    else
-      image_tag(target_icon, :alt => target_contents )
-    end
-  end
+require File.dirname(__FILE__) + '/../spec_helper'
 
-  def link_to_search title, query, offset, params
-    link_to(title,
-            :full_text_query => query,
-            :offset => offset,
-            :target_contents => params[:target_contents],
-            :target_aid => params[:target_aid],
-            :searcher => params[:searcher])
-  end
-end
