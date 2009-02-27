@@ -55,6 +55,5 @@ class Admin::UserUid < UserUid
     ActiveRecord::Base.connection.execute("update mails set to_address_symbol = 'uid:#{to}' where to_address_symbol = 'uid:#{from}'")
     ActiveRecord::Base.connection.execute("update bookmarks set url = replace(url, '/user/#{from}', '/user/#{to}') where url = '/user/#{from}'")
     ActiveRecord::Base.connection.execute("update antenna_items set value = 'uid:#{to}' where value = 'uid:#{from}'")
-    FileUtils.mv(ShareFile.dir_path("uid:#{from}"), ShareFile.dir_path("uid:#{to}")) if File.exist?(ShareFile.dir_path("uid:#{from}"))
   end
 end

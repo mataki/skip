@@ -19,7 +19,7 @@ describe ApplicationHelper, "#show_contents" do
   describe "hikiモードの時" do
     before do
       @entry = stub_model(BoardEntry, :editor_mode => 'hiki', :contents => "hogehoge",
-                          :symbol => "ほげ", :user_id => 1)
+                          :symbol => "uid:hoge", :user_id => 1)
       @output_contents = "output_contents {{question.gif,240,}} output_contents"
       helper.stub!(:hiki_parse).and_return(@output_contents)
 
@@ -27,7 +27,28 @@ describe ApplicationHelper, "#show_contents" do
     end
     it { @result.should have_tag("div.hiki_style") }
     it { @result.should be_include('output_contents') }
-    it { @result.should be_include("/images/board_entries%2F#{@entry.user_id}%2F#{@entry.id}_question.gif") }
+    it { @result.should be_include("/user/hoge/files/question.gif") }
+  end
+end
+
+describe ApplicationHelper, '#file_link_url' do
+  describe '第一引数がShareFileのインスタンスの場合' do
+    before do
+      @share_file = stub_model(ShareFile, :owner_symbol => 'uid:foo', :file_name => 'bar.jpg')
+    end
+    it 'share_file_urlが正しいパラメタで呼ばれること' do
+      helper.should_receive(:share_file_url).with(:controller_name => 'user', :symbol_id => 'foo', :file_name => 'bar.jpg')
+      helper.file_link_url(@share_file)
+    end
+  end
+  describe '第一引数がHashの場合' do
+    before do
+      @share_file_hash = {:owner_symbol => 'uid:foo', :file_name => 'bar.jpg'}
+    end
+    it 'share_file_urlが正しいパラメタで呼ばれること' do
+      helper.should_receive(:share_file_url).with(:controller_name => 'user', :symbol_id => 'foo', :file_name => 'bar.jpg')
+      helper.file_link_url(@share_file_hash)
+    end
   end
 end
 

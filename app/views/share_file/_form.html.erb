@@ -1,3 +1,6 @@
+<%= hidden_field_tag 'owner_name', h(params[:owner_name]) %>
+<%= hidden_field 'share_file', 'owner_symbol' %>
+
 <% content_for :stylesheet do -%>
 <style type="text/css">
 table {
@@ -7,9 +10,6 @@ table {
 <% end -%>
 
 <%= template_error_messages_for 'share_file' %>
-
-<%= hidden_field_tag 'owner_name', h(params[:owner_name]) %>
-<%= hidden_field 'share_file', 'owner_symbol' %>
 
 <div class="input_line">
   <div class="input_label" style="height: 30px;">公開日付</div>

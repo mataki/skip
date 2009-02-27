@@ -128,21 +128,6 @@ module ApplicationHelper
     link_to(h(name), {:controller => @@CONTROLLER_HASH[symbol_type], :action => "show", symbol_type => symbol_id}, :title => name)
   end
 
-  # ファイルダウンロードへのリンク
-  def file_link_to share_file, html_options = {}
-    url = file_link_url(share_file)
-    link_to h(share_file.file_name), url, html_options
-  end
-
-  def file_link_url share_file
-    symbol_type, symbol_id = SkipUtil.split_symbol share_file.owner_symbol
-    url_params = {:controller_name => @@CONTROLLER_HASH[symbol_type],
-                  :symbol_id => symbol_id,
-                  :file_name => share_file.file_name}
-    url = share_file_url(url_params)
-    url
-  end
-
   def image_link_tag title, image_name, options={}
     link_to image_tag(image_name, :alt => title) + title, options
   end
@@ -170,10 +155,10 @@ module ApplicationHelper
     output = ""
     if entry.editor_mode == 'hiki'
       output_contents = hiki_parse(entry.contents, entry.symbol)
-      board_entry_image_url_proc = proc { |file_name|
-        entry.image_url(file_name)
+      image_url_proc = proc { |file_name|
+        file_link_url :owner_symbol => entry.symbol, :file_name => file_name
       }
-      output_contents = SkipUtil.images_parse(output_contents, board_entry_image_url_proc)
+      output_contents = SkipUtil.images_parse(output_contents, image_url_proc)
       output = "<div class='hiki_style'>#{output_contents}</div>"
     elsif entry.editor_mode == 'richtext'
       output = render_richtext(entry.contents, entry.symbol)
@@ -185,6 +170,22 @@ module ApplicationHelper
       output = "<pre>#{parse_permalink(output_contents, entry.symbol)}</pre>"
     end
     output
+  end
+
+  # ファイルダウンロードへのリンク
+  def file_link_to share_file, html_options = {}
+    url = file_link_url(share_file)
+    link_to h(share_file.file_name), url, html_options
+  end
+
+  def file_link_url share_file
+    share_file = ShareFile.new share_file if share_file.is_a? Hash
+    symbol_type, symbol_id = SkipUtil.split_symbol share_file.owner_symbol
+    url_params = {:controller_name => share_file.owner_symbol_type,
+                  :symbol_id => symbol_id,
+                  :file_name => share_file.file_name}
+    url = share_file_url(url_params)
+    url
   end
 
   def hiki_parse text, owner_symbol = nil

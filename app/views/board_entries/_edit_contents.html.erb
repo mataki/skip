@@ -9,8 +9,10 @@
   <div class="input_value" style="height: 2em;">
     <%= radio_button_tag("editor_mode", "richtext", params[:editor_mode] == "richtext", :id=>"editor_mode_richtext") %>リッチテキスト
     <%= radio_button_tag("editor_mode", "hiki", params[:editor_mode] == "hiki", :id=>"editor_mode_hiki") -%>Wikiテキスト
+    <span class="share_file_uploader trigger pointer link">画像やファイルのリンクを挿入</span>
   </div>
 
+  <div id="share_file_uploader"></div>
   <div id="contents_richtext_space" class="richtext" style="display: none;">
     <label for="contents"><%= text_area_tag 'contents_richtext', h(sanitize_style_with_whitelist(params[:contents_richtext])), :cols => 90, :rows => 20 %></label>
   </div>
@@ -21,6 +23,7 @@
 
 <% content_for :javascript do -%>
 <%= skip_javascript_include_tag "fckeditor/fckeditor" %>
+<%= skip_jquery_include_tag 'iframe_upload' %>
 <script type='text/javascript'>
 $j(function(){
     FCKeditor.BasePath = platform_url_root + "/javascripts/skip/fckeditor/";
@@ -60,6 +63,31 @@ $j(function(){
         });
         return false;
     });
+
+    var config = {
+        share_files_url: '<%= share_files_url @board_entry.symbol %>',
+        message: {
+            title: '画像やファイルのリンクを挿入',
+            close: '閉じる',
+            share_files: {
+              title: '利用できる共有ファイル',
+              thumbnail: 'サムネイル',
+              display_name: 'ファイル名',
+              insert: ''
+            },
+            insert_link_label: '挿入する',
+            upload_share_file: 'ファイルをアップロードする'
+        },
+        uploader: {
+            target: '<%= IframeUploader::UPLOAD_KEY %>',
+            src: {
+                form: '<%= url_for(:controller => 'share_file', :action => 'new', :owner_symbol => @board_entry.symbol, :ajax_upload => 1, :escape => false) %>',
+                target: ''
+            },
+            callback: null
+        }
+    };
+    $j('div#share_file_uploader').shareFileUploader(config);
 });
 </script>
 <% end -%>

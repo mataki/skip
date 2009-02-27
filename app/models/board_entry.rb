@@ -32,7 +32,7 @@ class BoardEntry < ActiveRecord::Base
 
   before_create :generate_next_user_entry_no
   before_save :square_brackets_tags, :parse_symbol_link
-  after_destroy :cancel_mail, :delete_images
+  after_destroy :cancel_mail
 
   validates_presence_of :title, :message => 'は必須です'
   validates_length_of   :title, :maximum => 100, :message => 'は%d桁以内で入力してください'
@@ -42,7 +42,6 @@ class BoardEntry < ActiveRecord::Base
   validates_presence_of :user_id, :message => 'は必須です'
 
   attr_reader :owner
-  attr_accessor :image_files
   attr_accessor :send_mail
 
   N_('BoardEntry|Entry type|DIARY')
@@ -67,8 +66,6 @@ class BoardEntry < ActiveRecord::Base
     end
 
     Tag.validate_tags(category).each{ |error| errors.add(:category, error) }
-
-    validate_image_files
   end
 
   class << self
@@ -86,7 +83,6 @@ class BoardEntry < ActiveRecord::Base
 
   def after_save
     Tag.create_by_string category, entry_tags
-    upload_files image_files if image_files.is_a?(Array) and !image_files.blank?
   end
 
   def after_create
@@ -619,48 +615,6 @@ class BoardEntry < ActiveRecord::Base
     Mail.delete( unsent_mails.collect{ |mail| mail.id }) unless unsent_mails.size == 0
   end
 
-  def image_url(file_name, with_id = true)
-    file_name = with_id ? "#{id}_#{file_name}" : file_name
-    file_path = File.join('board_entries', user_id.to_s, file_name)
-    url_for(:controller => '/image', :action => :show, :path => file_path, :only_path => true)
-  end
-
-  def images_filename_to_url_mapping_hash
-    img_urls = {}
-    img_files = all_images
-    img_files.each do |img_file|
-      img_name = File.basename(img_file)
-      img_key = img_name.gsub(id.to_s+"_",'')
-      img_urls[img_key] = image_url(img_name, false)
-    end
-    return img_urls
-  end
-
-  def upload_files(files)
-    FileUtils.mkdir_p(image_owner_path)
-    files.each do |file|
-      upload_file(file)
-    end
-  end
-
-  def upload_file(file)
-    open(image_file_path(file.original_filename), "w+b") do |f|
-      f.write(file.read)
-    end
-  end
-
-  def image_file_path(file_name)
-    File.join(image_owner_path, "#{id}_#{file_name}")
-  end
-
-  def image_owner_path
-    File.join(self.class.image_root_path, user_id.to_s)
-  end
-
-  def self.image_root_path
-    File.join(ENV['IMAGE_PATH'], "board_entries")
-  end
-
   def self.owner symbol
     symbol_type, symbol_id = Symbol::split_symbol symbol
     if symbol_type == "uid"
@@ -674,20 +628,6 @@ class BoardEntry < ActiveRecord::Base
 
   def load_owner
     @owner = self.class.owner self.symbol
-  end
-
-  def self.total_image_size(owner_symbol)
-    sum = 0
-    find(:all, :conditions => { :symbol => owner_symbol }).each do |entry|
-      entry.all_images.each do |f|
-        sum += File.stat(f).size
-      end
-    end
-    sum
-  end
-
-  def all_images
-    Dir.glob(File.join(image_owner_path, id.to_s + "_*"))
   end
 
   def readable?(user)
@@ -762,10 +702,6 @@ private
     self.category = Tag.square_brackets_tags(self.category)
   end
 
-  def delete_images
-    FileUtils.rm(all_images)
-  end
-
   # 記事が指定されたユーザの記事の場合、指定されたidに一致する記事を全て返す。
   # 記事が指定されたユーザの記事ではない場合、指定されたidに一致する記事のうち、権限のある記事一覧を返す
   def authorized_entries_except_given_user(user_id, user_symbols, ids)
@@ -787,15 +723,5 @@ private
       end
     end
     entries
-  end
-
-  def validate_image_files
-    image_files and image_files.each do |file|
-      next unless valid_presence_of_file(file)
-      valid_size_of_file file
-      valid_extension_of_file file
-      valid_max_size_per_owner_of_file file, symbol
-      valid_max_size_of_system_of_file file
-    end
   end
 end

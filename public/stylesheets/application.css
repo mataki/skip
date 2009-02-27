@@ -1,0 +1,63 @@
+.pointer {
+  cursor: pointer; }
+
+.move {
+  cursor: move; }
+
+.link {
+  color: #0080DD; }
+
+.link:hover {
+  color: blue; }
+
+span.share_file_uploader.trigger {
+  font-size: 10px;
+  margin-left: 5em; }
+
+.share_file.upload iframe {
+  border: 0;
+  overflow: hidden;
+  width: 100%;
+  height: 100%; }
+.share_file.upload div.form {
+  width: 100%;
+  height: 7em; }
+.share_file.upload div.target {
+  width: 0;
+  height: 0; }
+
+div#share_file_uploader.enabled {
+  z-index: 1;
+  position: absolute;
+  background: #ffffff;
+  width: 500px;
+  border: 2px solid #99c; }
+  div#share_file_uploader.enabled .title_bar {
+    position: relative;
+    background: #ccccff;
+    border-bottom: 1px solid #99c; }
+    div#share_file_uploader.enabled .title_bar h3 {
+      margin-bottom: 5px; }
+    div#share_file_uploader.enabled .title_bar span.close {
+      font-size: 10px;
+      float: right;
+      position: absolute;
+      right: 2px;
+      top: 2px; }
+  div#share_file_uploader.enabled span.insert_link, div#share_file_uploader.enabled span.operation {
+    font-size: 10px; }
+  div#share_file_uploader.enabled div.share_files {
+    overflow: auto;
+    height: 300px; }
+  div#share_file_uploader.enabled div.share_files table {
+    width: 95%;
+    margin: 0 auto;
+    border-collapse: collapse; }
+    div#share_file_uploader.enabled div.share_files table tr, div#share_file_uploader.enabled div.share_files table th, div#share_file_uploader.enabled div.share_files table td {
+      border: 1px solid #DDDDFF; }
+    div#share_file_uploader.enabled div.share_files table td.thumbnail, div#share_file_uploader.enabled div.share_files table td.insert {
+      text-align: center; }
+    div#share_file_uploader.enabled div.share_files table td.thumbnail {
+      width: 200px; }
+    div#share_file_uploader.enabled div.share_files table td.insert {
+      width: 6em; }

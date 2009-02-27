@@ -13,5 +13,16 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-require File.dirname(__FILE__) + '/../spec_helper'
+module IframeUploader
+  UPLOAD_KEY = "ajax_upload"
+
+  def self.included(controller)
+    controller.helper_method :ajax_upload?, :iframe_upload?
+  end
+
+  def iframe_upload?
+    !!params[UPLOAD_KEY]
+  end
+  alias_method :ajax_upload?, :iframe_upload?
+end
 

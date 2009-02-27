@@ -276,7 +276,8 @@ class ShareFile < ActiveRecord::Base
                  'gid' => 'group' }
     symbol_type = owner_symbol.split(":").first
     symbol_id = owner_symbol.split(":").last
-    File.join(ENV['SHARE_FILE_PATH'], dir_hash[symbol_type], symbol_id)
+    owner = (symbol_type == User.symbol_type.to_s) ? User.find_by_uid(symbol_id) : Group.find_by_gid(symbol_id)
+    File.join(ENV['SHARE_FILE_PATH'], dir_hash[symbol_type], owner.id.to_s)
   end
 
   def self.total_share_file_size symbol

@@ -73,6 +73,117 @@ $j(function(){
 
     $j(document).appendClickForToggleTag();
 
+    $j.fn.shareFileUploader = function(config) {
+        var root = $j(this);
+        var message = config["message"];
+
+        var insertToRichEditor = function(elem){
+            FCKeditorAPI.GetInstance('contents_richtext').InsertElement(elem.get(0));
+        };
+
+        var insertToHikiEditor = function(text){
+            $j("#contents_hiki").val($j("#contents_hiki").val() + text);
+        };
+
+        var insertLink = function(data){
+            var filename = data['file_name'];
+            var src = data['src'];
+            return $j("<span>").text(message["insert_link_label"]).addClass("insert_link link pointer").click(function(){
+                if($j('#editor_mode_richtext:checked').length > 0){
+                    insertToRichEditor($j("<a>").text(filename).attr("href", src));
+                } else if($j('#editor_mode_hiki:checked').length > 0) {
+                    insertToHikiEditor('\n[file:' + filename + ']');
+                }
+            });
+        };
+
+        var insertImage = function(data){
+            var filename = data['file_name'];
+            var src = data['src'];
+            if(src){
+                var img = $j("<img />").attr("src", src).attr("alt", filename).addClass('pointer');
+                return img.clone().attr("width", 200).click(function(){
+                    if($j('#editor_mode_richtext:checked').length > 0){
+                        insertToRichEditor(img);
+                    } else if($j('#editor_mode_hiki:checked').length > 0) {
+                        insertToHikiEditor('\n{{' + filename + ',240,}}');
+                    }
+                });
+            }else{
+                return $j("<span>").text(filename.substr(0,16));
+            }
+        };
+
+        var shareFileToTableHeader = function() {
+            var tr = $j('<tr>');
+            tr.append($j('<th>').text(message['share_files']['thumbnail']));
+            tr.append($j('<th>').text(message['share_files']['display_name']));
+            return tr;
+        };
+
+        var shareFileToTableRow = function(data){
+            var tr = $j("<tr>");
+            tr.append($j("<td class='thumbnail'>").append(insertImage(data)));
+            tr.append($j("<td class='display_name'>").text(data["file_name"]));
+            tr.append($j("<td class='insert'>").append(insertLink(data)));
+            return tr;
+        };
+
+        var loadShareFiles = function(palette, url, label) {
+            if(!url) return;
+            $j.getJSON(url, function(data, stat){
+                if(data.length == 0) return;
+                var thead = $j('<thead>');
+                thead.append(shareFileToTableHeader());
+                var tbody = $j("<tbody>");
+                $j.each(data, function(_num_, share_file){
+                    tbody.append(shareFileToTableRow(share_file));
+                });
+                palette.append(
+                    $j("<table>")
+                    .append($j("<caption>").text(label))
+                    .append(thead)
+                    .append(tbody)
+                );
+            });
+        };
+
+        var hideUploader = function(){
+            root.hide();
+            $j('span.share_file_uploader').one('click', onLoad);
+        };
+
+        var uploaderButton = function(conf) {
+            conf["callback"] = function(){
+                root.find("table").remove();
+                loadShareFiles(root.find("div.share_files"), config["share_files_url"], message["share_files"]["title"]);
+            };
+
+            return $j("<div class='share_file upload' />").append(
+                $j("<span class='operation link pointer'>")
+                .text(message["upload_share_file"])
+                .one("click", function(){ $j(this).hide().parent().iframeUploader(conf) })
+            )
+        };
+
+        var onLoad = function() {
+            root.empty().attr("class", "enabled").draggable({handle: 'div.title_bar'}).append(
+                $j('<div class="title_bar move">').append(
+                    $j("<h3>").text(message["title"])
+                ).append(
+                    $j("<span class='close link pointer'>").text(message["close"]).click(hideUploader)
+                )
+            ).append(
+                $j("<div style='clear: both;'/>")
+            ).append(
+                uploaderButton(config["uploader"])
+            ).append($j("<div class='share_files' />")).show();
+
+            loadShareFiles(root.find("div.share_files"), config["share_files_url"], message["share_files"]["title"]);
+        };
+        $j('span.share_file_uploader').one('click', onLoad);
+    };
+
     /*
      * 共有ファイルのダウンロード時にダウンロード数を増やす
      */

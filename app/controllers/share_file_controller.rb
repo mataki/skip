@@ -14,6 +14,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class ShareFileController < ApplicationController
+  include IframeUploader
   layout 'subwindow'
 
   verify :method => :post, :only => [ :create, :update, :destroy, :download_history_as_csv, :clear_download_history ],
@@ -23,7 +24,7 @@ class ShareFileController < ApplicationController
     @share_file = ShareFile.new(:user_id => current_user.id, :owner_symbol => params[:owner_symbol])
 
     unless @share_file.updatable?(current_user)
-      render_window_close
+      ajax_upload? ? render(:template => 'share_file/new_ajax_upload', :layout => false) : render_window_close
       return
     end
 
@@ -34,13 +35,14 @@ class ShareFileController < ApplicationController
     @error_messages = []
     @owner_name = params[:owner_name]
     @categories_hash = ShareFile.get_tags_hash(@share_file.owner_symbol)
+    ajax_upload? ? render(:template => 'share_file/new_ajax_upload', :layout => false) : render
   end
 
   # post action
   def create
     @error_messages = []
     unless params[:file]
-      render_window_close
+      ajax_upload? ? render(:template => 'share_file/new_ajax_upload', :layout => false) : render_window_close
       return
     end
     @share_file = ShareFile.new(params[:share_file])
@@ -75,7 +77,7 @@ class ShareFileController < ApplicationController
 
     if @error_messages.size == 0
       flash[:notice] = _('ファイルのアップロードに成功しました。')
-      render_window_close
+      ajax_upload? ? render(:template => 'share_file/new_ajax_upload', :layout => false) : render_window_close
     else
       flash.now[:warning] = "ファイルのアップロードに失敗しました。<br/>"
       flash.now[:warning] << "[成功:#{params[:file].size - @error_messages.size} 失敗:#{@error_messages.size}]"
@@ -84,7 +86,7 @@ class ShareFileController < ApplicationController
       @share_file.errors.clear
       @owner_name = params[:owner_name]
       @categories_hash = ShareFile.get_tags_hash(@share_file.owner_symbol)
-      render :action => "new"
+      ajax_upload? ? render(:template => 'share_file/new_ajax_upload', :layout => false) : render(:action => "new")
     end
   end
 
@@ -181,7 +183,10 @@ class ShareFileController < ApplicationController
 
     # 編集メニューの表示有無
     @visitor_is_uploader = params[:visitor_is_uploader]
-    render :layout => 'layout'
+    respond_to do |format|
+      format.html { render :layout => 'layout' }
+      format.js { render :json => @share_files.map{|s| share_file_to_json(s) } }
+    end
   end
 
   def download
@@ -271,5 +276,14 @@ private
     agent = request.cgi.env_table["HTTP_USER_AGENT"]
     return  NKF::nkf('-Ws', file_name) if agent.include?("MSIE") and not agent.include?("Opera")
     return file_name
+  end
+
+  def share_file_to_json(share_file)
+    returning(share_file.attributes) do |json|
+      json[:src] = share_file_url(
+        :controller_name => share_file.owner_symbol_type,
+        :symbol_id => share_file.owner_symbol_id,
+        :file_name => share_file.file_name)
+    end
   end
 end
