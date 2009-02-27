@@ -96,11 +96,63 @@ describe Search, ".get_metadata" do
       result = Search.get_metadata "contents", "http://localhost:3000/app_cache/hoge/fuga", "title"
       result.should == {:contents_type=>"meta", :publication_symbols=>"sid:allusers", :title=>"meta title", :contents=>"contents", :link_url=>"http://localhost:3000/meta"}
     end
-    it "メタ情報に数字のみのvalueがある場合 メタ情報が返ってくること" do
-      YAML.stub!(:load).and_return({ "title" => 1111, "publication_symbols" => "sid:allusers", "contents_type" => "meta", "link_url" => "http://localhost:3000/meta"})
+  end
+  describe "設定ファイルから取得される場合" do
+    before do
+      INITIAL_SETTINGS["search_apps"] = { "SKIP" => { "cache" => "localhost:3000/app_cache" } }
+    end
+    it "icon_typeがある場合 設定ファイルから設定されること" do
+      INITIAL_SETTINGS["search_apps"]["SKIP"].merge!("icon_type" => "icon_a")
       result = Search.get_metadata "contents", "http://localhost:3000/app_cache/hoge/fuga", "title"
-      result.should == {:contents_type=>"meta", :publication_symbols=>"sid:allusers", :title=>"1111", :contents=>"contents", :link_url=>"http://localhost:3000/meta"}
+      result[:icon_type].should == "icon_a"
+      result[:contents_type].should == "SKIP"
+    end
+    it "icon_typeがない場合 設定ファイルから設定されること" do
+      result = Search.get_metadata "contents", "http://localhost:3000/app_cache/hoge/fuga", "title"
+      result[:contents_type].should == "SKIP"
+      result[:icon_type].should be_nil
+    end
+  end
+  describe "cacheにヒットしない場合" do
+    it "引数から設定されること" do
+      INITIAL_SETTINGS["search_apps"] = { }
+      result = Search.get_metadata "contents", "http://localhost:3000/app_cache/hoge/fuga", "title"
+      result[:title].should == "title"
+      result[:publication_symbols].should == Symbol::SYSTEM_ALL_USER
+      result[:link_url].should == "http://localhost:3000/app_cache/hoge/fuga"
     end
   end
 end
 
+describe Search, ".get_metadata_from_file" do
+  before do
+    @cache = "localhost:3000"
+    @meta = "/path/to/meta"
+    @uri_text = "http://localhost:3000/user/0000/1.html"
+    @file_path = "/path/to/meta/user/0000/1.html"
+    @yml = { :title => "ほげ ふが", :fuga => "1111" }
+  end
+  describe "ファイルが見付かる場合" do
+    before do
+      File.stub!(:file?).with(@file_path).and_return(true)
+      File.stub!(:open).with(@file_path).and_return(@yml.to_yaml)
+    end
+    it "ファイルの内容が返ること" do
+      result = Search.get_metadata_from_file(@uri_text, @cache, @meta)
+      result.should == @yml
+    end
+  end
+  describe "ファイルが見付からない場合" do
+    before do
+      File.stub!(:file?).with(@file_path).and_return(false)
+    end
+    it "ログを出力すること" do
+      ActiveRecord::Base.should_receive(:logger).and_return(mock('logger', :error => "e"))
+      Search.get_metadata_from_file(@uri_text, @cache, @meta)
+    end
+    it "publication_symbolsが sid:noneuser と登録されること" do
+      result = Search.get_metadata_from_file(@uri_text, @cache, @meta)
+      result[:publication_symbols].should == "sid:noneuser"
+    end
+  end
+end

@@ -39,27 +39,26 @@ class Search
   end
 
   def self.get_metadata contents, uri_text, title
-    line_hash = { }
-    line_hash[:contents] = contents
-
+    line_hash = { :publication_symbols => 'sid:allusers', :contents => contents, :link_url => uri_text, :title => title }
     INITIAL_SETTINGS['search_apps'].each do |key,value|
-      if value['meta'] && uri_text.include?("/#{value['cache']}/") #メタファイルを設定している場合
-        file_path = uri_text.gsub("http://#{value['cache']}", value['meta'])
-        if File.file? file_path
-          YAML::load(File.open(file_path)).each { |key,value| line_hash[key.to_sym] = value.to_s }
-          line_hash[:title] = URI.decode(URI.decode(line_hash[:title]))
+      if uri_text.include?("/#{value['cache']}/")
+        if value['meta']
+          line_hash.merge!(get_metadata_from_file(uri_text, value['cache'], value['meta']))
         else
-          line_hash[:publication_symbols] = 'sid:noneuser'
+          line_hash.merge!( :contents_type => key.to_s, :icon_type => value['icon_type'] )
         end
-      elsif uri_text.include?("/#{value['cache']}") #iconを指定する
-        line_hash[:contents_type] = key.to_s
-        line_hash[:icon_type] = value['icon_type'] if value['icon_type']
       end
-    end #INITIAL_SETTINGS['search_apps']
-    # メタファイルを設定していない場合
-    line_hash[:publication_symbols] ||= 'sid:allusers'
-    line_hash[:title] ||= title || uri_text
-    line_hash[:link_url] ||= uri_text
-    return line_hash
+    end
+    line_hash
+  end
+
+  def self.get_metadata_from_file(uri_text, cache, meta)
+    file_path = uri_text.gsub("http://#{cache}", meta)
+    if File.file? file_path
+      YAML::load(File.open(file_path)).with_indifferent_access.symbolize_keys
+    else
+      ActiveRecord::Base.logger.error "[FULL TEXT SEARCH] cannot find meta file #{file_path} to #{cache}"
+      { :publication_symbols => 'sid:noneuser' }
+    end
   end
 end
