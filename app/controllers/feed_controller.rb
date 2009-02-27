@@ -31,7 +31,7 @@ class FeedController < ApplicationController
   def recent_bbs
     category = GroupCategory.find_by_code(params[:category])
     unless category
-      render :file => File.join(RAILS_ROOT, 'public', '404.html'), :status => :not_found and return
+      render_404 and return
     end
 
     description = "最新の掲示板の記事（#{ERB::Util.h(category.name)}）"

@@ -185,6 +185,7 @@ protected
       format.html { render :file => File.join(RAILS_ROOT, 'public', '404.html'), :status => :not_found }
       format.all { render :nothing => true, :status => :not_found }
     end
+    true
   end
 
   # 本番環境(リバースプロキシあり)では、リモートからのリクエストでもリバースプロキシで、
