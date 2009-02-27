@@ -362,18 +362,33 @@ class GroupController < ApplicationController
 
 private
   def setup_layout
-    @main_menu = 'グループ'
-    @title = @group.name if @group
+    @title = title
+    @main_menu = main_menu
+    @tab_menu_source = tab_menu_source
+    @tab_menu_option = tab_menu_option
+  end
 
-    @tab_menu_source = []
-    @tab_menu_source << {:label => _('サマリ'), :options => {:action => 'show'}}
-    @tab_menu_source << {:label => _('参加者一覧'), :options => {:action => 'users'}}
-    @tab_menu_source << {:label => _('掲示版'), :options => {:action => 'bbs'}}
-    @tab_menu_source << {:label => _('新規投稿'), :options => {:action => 'new'}} if participating?
-    @tab_menu_source << {:label => _('ファイル'), :options => {:action => 'share_file'}}
-    @tab_menu_source << {:label => _('管理'), :options => {:action => 'manage'}} if participating? and @participation.owned?
+  def main_menu
+    'グループ'
+  end
 
-    @tab_menu_option = { :gid => @group.gid }
+  def title
+    @group.name if @group
+  end
+
+  def tab_menu_source
+    tab_menu_source = []
+    tab_menu_source << {:label => _('サマリ'), :options => {:action => 'show'}}
+    tab_menu_source << {:label => _('参加者一覧'), :options => {:action => 'users'}}
+    tab_menu_source << {:label => _('掲示版'), :options => {:action => 'bbs'}}
+    tab_menu_source << {:label => _('新規投稿'), :options => {:action => 'new'}} if participating?
+    tab_menu_source << {:label => _('ファイル'), :options => {:action => 'share_file'}}
+    tab_menu_source << {:label => _('管理'), :options => {:action => 'manage'}} if participating? and @participation.owned?
+    tab_menu_source
+  end
+
+  def tab_menu_option
+    { :gid => @group.gid }
   end
 
   def load_group_and_participation
