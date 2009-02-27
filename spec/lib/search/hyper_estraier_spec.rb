@@ -115,11 +115,17 @@ describe Search::HyperEstraier, ".get_condition" do
   end
   describe "target_aidが設定されている場合" do
     before do
-      INITIAL_SETTINGS['search_apps'] = { "app" => { "cache" => "cache:3000/cache" } }
+      INITIAL_SETTINGS['search_apps'] = { "app" => { "cache" => "http://cache:3000/cache" } }
     end
     it "正しいattrが設定されていること" do
       cond = Search::HyperEstraier.get_condition("query", "app")
       cond.attrs.should == ["@uri STRBW http://cache:3000/cache"]
+    end
+    describe "target_contentsが設定されている場合" do
+      it "正しいattrが設定されていること" do
+        cond = Search::HyperEstraier.get_condition("query", "app", "contents")
+        cond.attrs.should == ["@uri STRBW http://cache:3000/cache/contents"]
+      end
     end
   end
 end

@@ -44,8 +44,8 @@ class Search
       cond = Condition.new
       cond.set_options Condition::SIMPLE
       cond.set_phrase(query) unless query.blank?
-      if target_aid && target_aid != 'all' && !INITIAL_SETTINGS['search_apps'][target_aid]['cache'].empty?
-        target_url = "http://#{INITIAL_SETTINGS['search_apps'][target_aid]['cache']}"
+      if target_aid && target_aid != 'all' && !INITIAL_SETTINGS['search_apps'][target_aid]['cache'].blank?
+        target_url = INITIAL_SETTINGS['search_apps'][target_aid]['cache'].dup
         target_url << "/#{target_contents}" if target_contents
         cond.add_attr("@uri STRBW #{target_url}")
       end

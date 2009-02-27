@@ -41,7 +41,7 @@ class Search
   def self.get_metadata contents, uri_text, title
     line_hash = { :publication_symbols => 'sid:allusers', :contents => contents, :link_url => uri_text, :title => title }
     INITIAL_SETTINGS['search_apps'].each do |key,value|
-      if uri_text.include?("/#{value['cache']}/")
+      if uri_text.include?(value['cache'])
         if value['meta']
           line_hash.merge!(get_metadata_from_file(uri_text, value['cache'], value['meta']))
         else
@@ -53,7 +53,7 @@ class Search
   end
 
   def self.get_metadata_from_file(uri_text, cache, meta)
-    file_path = uri_text.gsub("http://#{cache}", meta)
+    file_path = uri_text.gsub(cache, meta)
     if File.file? file_path
       YAML::load(File.open(file_path)).with_indifferent_access.symbolize_keys
     else

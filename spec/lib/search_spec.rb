@@ -86,7 +86,7 @@ end
 describe Search, ".get_metadata" do
   describe "メタ情報が取得される場合" do
     before do
-      INITIAL_SETTINGS["search_apps"] = { "SKIP" => { "meta" => "/hoge/fuga/meta", "cache" => "localhost:3000/app_cache" } }
+      INITIAL_SETTINGS["search_apps"] = { "SKIP" => { "meta" => "/hoge/fuga/meta", "cache" => "http://localhost:3000/app_cache" } }
 
       File.stub!(:file?).and_return(true)
       File.stub!(:open)
@@ -99,7 +99,7 @@ describe Search, ".get_metadata" do
   end
   describe "設定ファイルから取得される場合" do
     before do
-      INITIAL_SETTINGS["search_apps"] = { "SKIP" => { "cache" => "localhost:3000/app_cache" } }
+      INITIAL_SETTINGS["search_apps"] = { "SKIP" => { "cache" => "http://localhost:3000/app_cache" } }
     end
     it "icon_typeがある場合 設定ファイルから設定されること" do
       INITIAL_SETTINGS["search_apps"]["SKIP"].merge!("icon_type" => "icon_a")
@@ -126,7 +126,7 @@ end
 
 describe Search, ".get_metadata_from_file" do
   before do
-    @cache = "localhost:3000"
+    @cache = "http://localhost:3000"
     @meta = "/path/to/meta"
     @uri_text = "http://localhost:3000/user/0000/1.html"
     @file_path = "/path/to/meta/user/0000/1.html"
