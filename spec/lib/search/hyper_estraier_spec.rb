@@ -13,7 +13,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-require File.dirname(__FILE__) + '/../spec_helper'
+require File.dirname(__FILE__) + '/../../spec_helper'
 
 # describe HyperEstraier do
 #   def test_truep
@@ -65,30 +65,30 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 # end
 
-describe HyperEstraier, "#initialize" do
+describe Search::HyperEstraier, "#initialize" do
   before do
     @node = mock('node')
     @node.stub!(:search)
-    HyperEstraier.stub!(:get_node).and_return(@node)
+    Search::HyperEstraier.stub!(:get_node).and_return(@node)
   end
   it "per_page, offsetを設定すること" do
-    he = HyperEstraier.new({})
+    he = Search::HyperEstraier.new({})
     he.per_page.should == 10
     he.offset.should == 0
   end
   it "get_conditionにparamsが正しくわたること" do
-    HyperEstraier.should_receive(:get_condition).with("query", "target_aid", "target_contents")
-    HyperEstraier.new :query => "query", :target_aid => "target_aid", :target_contents => "target_contents"
+    Search::HyperEstraier.should_receive(:get_condition).with("query", "target_aid", "target_contents")
+    Search::HyperEstraier.new :query => "query", :target_aid => "target_aid", :target_contents => "target_contents"
   end
   describe "検索結果が返ってきたとき" do
     before do
       @nres = mock('nres', :hint => "5")
       @node.stub!(:search).and_return(@nres)
-      HyperEstraier.stub!(:get_result_hash_header).and_return("result_header")
-      HyperEstraier.stub!(:get_result_hash_elements).and_return("result_elements")
+      Search::HyperEstraier.stub!(:get_result_hash_header).and_return("result_header")
+      Search::HyperEstraier.stub!(:get_result_hash_elements).and_return("result_elements")
     end
     it "result_hashが登録されていること" do
-      result = HyperEstraier.new({})
+      result = Search::HyperEstraier.new({})
       result.result_hash[:header].should == "result_header"
       result.result_hash[:elements].should == "result_elements"
     end
@@ -98,35 +98,35 @@ describe HyperEstraier, "#initialize" do
   end
   describe "検索ノードにアクセスできないとき" do
     it "@errorにメッセージが登録されていること" do
-      result = HyperEstraier.new({})
+      result = Search::HyperEstraier.new({})
       result.error.should == "access denied by search node"
     end
   end
 end
 
-describe HyperEstraier, ".get_condition" do
+describe Search::HyperEstraier, ".get_condition" do
   it "queryが設定されている場合 queryが設定されること" do
-    cond = HyperEstraier.get_condition("query")
+    cond = Search::HyperEstraier.get_condition("query")
     cond.phrase.should == "query"
   end
   it "optionsがSIMPLEに設定されていること" do
-    cond = HyperEstraier.get_condition("query")
-    cond.options.should == HyperEstraier::Condition::SIMPLE
+    cond = Search::HyperEstraier.get_condition("query")
+    cond.options.should == Search::HyperEstraier::Condition::SIMPLE
   end
   describe "target_aidが設定されている場合" do
     before do
       INITIAL_SETTINGS['search_apps'] = { "app" => { "cache" => "cache:3000/cache" } }
     end
     it "正しいattrが設定されていること" do
-      cond = HyperEstraier.get_condition("query", "app")
+      cond = Search::HyperEstraier.get_condition("query", "app")
       cond.attrs.should == ["@uri STRBW http://cache:3000/cache"]
     end
   end
 end
 
-describe HyperEstraier, ".get_node" do
+describe Search::HyperEstraier, ".get_node" do
   it "nodeを返すこと" do
-    node = HyperEstraier.get_node("node_url")
-    node.should be_is_a(HyperEstraier::Node)
+    node = Search::HyperEstraier.get_node("node_url")
+    node.should be_is_a(Search::HyperEstraier::Node)
   end
 end

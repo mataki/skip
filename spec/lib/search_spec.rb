@@ -31,11 +31,11 @@ describe Search, "#initialize" do
       before do
         element = { :publication_symbols => "uid:a_user" }
         @result = mock('est_result', :error => nil, :offset => 0, :per_page => 10, :result_hash => {:elements => [{ :publication_symbols => "uid:a_user" }]})
-        HyperEstraier.stub!(:new).and_return(@result)
+        Search::HyperEstraier.stub!(:new).and_return(@result)
         Search.stub!(:remove_invisible_element).and_return([])
       end
       it "paramsをHyperEstraierに引き渡すこと" do
-        HyperEstraier.should_receive(:new).and_return(@result)
+        Search::HyperEstraier.should_receive(:new).and_return(@result)
         Search.new(@query, @symbols)
       end
       it "閲覧権限のチェックを行なうこと" do
@@ -54,7 +54,7 @@ describe Search, "#initialize" do
     describe "検索でエラーがあった場合" do
       it "エラーが設定されること" do
         @result = mock('est_result', :error => "error")
-        HyperEstraier.stub!(:new).and_return(@result)
+        Search::HyperEstraier.stub!(:new).and_return(@result)
         result = Search.new(@query, @symbols)
         result.error.should == "error"
       end
