@@ -16,14 +16,15 @@ ActionController::Routing::Routes.draw do |map|
     ids.formatted_identity "id/:user/:format", :action => "show", :user => /[a-zA-Z0-9\-_\.]*/
   end
 
-  map.connect 'user/:uid/:action',
-              :controller => 'user',
-              :requirements => { :uid => /[a-zA-Z0-9\-_\.]+/ },
-              :defaults => { :action => 'show' }
+  map.with_options( :controller => 'user',:requirements => { :uid => /[a-zA-Z0-9\-_\.]+/ }, :defaults => { :action => 'show' }) do |user|
+    user.connect 'user/:uid/:action'
+    user.connect 'user/:uid/:action.:format'
+  end
 
-  map.connect 'group/:gid/:action',
-              :controller => 'group',
-              :defaults => { :action => 'show' }
+  map.with_options( :controller => 'group', :defaults => { :action => 'show' } ) do |group|
+    group.connect 'group/:gid/:action'
+    group.connect 'group/:gid/:action.:format'
+  end
 
   map.connect 'bookmark/:action/:uri',
               :controller => 'bookmark',

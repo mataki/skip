@@ -16,9 +16,9 @@
 class EditController < ApplicationController
   include BoardEntriesHelper
   before_filter :setup_layout, :load_tagwards_and_link_params,
-                :except => [ :destroy, :delete_trackback, :ado_preview, :ado_remove_image ]
+                :except => [ :destroy, :delete_trackback, :ado_preview ]
 
-  verify :method => :post, :only => [ :create, :update, :destroy, :delete_trackback, :ado_remove_image ],
+  verify :method => :post, :only => [ :create, :update, :destroy, :delete_trackback ],
          :redirect_to => { :action => :index }
 
   # tab_menu
@@ -73,7 +73,6 @@ class EditController < ApplicationController
       redirect_to_with_deny_auth and return
     end
 
-    @board_entry.image_files = params[:image].map{|key,val| val}.delete_if{|elm| elm == ""} if params[:image]
     if @board_entry.save
       target_symbols  = analyze_params
       target_symbols.first.each do |target_symbol|
@@ -146,8 +145,6 @@ class EditController < ApplicationController
       params[:contents_richtext] = @board_entry.contents
     end
 
-    @img_urls = get_img_urls @board_entry
-
     # まだ送信していないメールが存在する場合のみ、自動で送信チェックボックスをチェックする
     login_user_symbol_type, login_user_symbol_id = Symbol.split_symbol(session[:user_symbol])
     @board_entry.send_mail = "1" if Mail.find_by_from_user_id_and_user_entry_no_and_send_flag(login_user_symbol_id, @board_entry.user_entry_no, false)
@@ -158,7 +155,6 @@ class EditController < ApplicationController
     @board_entry = get_entry params[:id]
     #編集の競合をチェック
     @conflicted = false
-    @img_urls = get_img_urls @board_entry
 
     unless params[:lock_version].to_i == @board_entry.lock_version
       @board_entry.send_mail = params[:board_entry][:send_mail] if params[:board_entry]
@@ -198,9 +194,7 @@ class EditController < ApplicationController
     # ちょっとした更新でなければ、last_updatedを更新する
     update_params[:last_updated] = Time.now unless params[:non_update]
 
-    @board_entry.image_files = params[:image].map{|key,val| val}.delete_if{|elm| elm == ""} if params[:image]
     if @board_entry.update_attributes(update_params)
-
       @board_entry.entry_publications.clear
       @board_entry.entry_editors.clear
       target_symbols = analyze_params
@@ -260,18 +254,6 @@ class EditController < ApplicationController
     render :partial=>'board_entries/board_entry_box', :locals=>{:board_entry=>board_entry}
   end
 
-  # ajax_action
-  def ado_remove_image
-    @board_entry = get_entry params[:id]
-
-    # 権限チェック
-    redirect_to_with_deny_auth and return unless authorize_to_edit_board_entry? @board_entry
-
-    FileUtils.rm(File.join(@board_entry.image_owner_path, @board_entry.id.to_s + '_' + params[:filename]))
-    img_urls = get_img_urls @board_entry
-    render :partial => "board_entries/view_images", :locals => {:img_urls => img_urls, :board_entry_id => @board_entry.id, :deletable => true}
-  end
-
 private
   def setup_layout
     @main_menu = (!params[:symbol].blank? and params[:symbol].include?('gid:')) ? 'グループ' : 'マイブログ'
@@ -307,11 +289,6 @@ private
       raise "パラメータが不正です"
     end
     return target_symbols_publication, target_symbols_editor
-  end
-
-  # TODO: モデルのメソッドを直接呼び出しでもよい。他の部分でSpecを書いたら持っていく
-  def get_img_urls board_entry
-    board_entry.images_filename_to_url_mapping_hash
   end
 
   # 独自のバリデーション（成功ならtrue）

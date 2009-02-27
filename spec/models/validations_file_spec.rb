@@ -262,10 +262,9 @@ describe ValidationsFile::FileSizeCounter do
   describe ".per_owner" do
     before do
       ShareFile.should_receive(:total_share_file_size).and_return(100)
-      BoardEntry.should_receive(:total_image_size).and_return(200)
     end
     it "ファイルサイズを返す" do
-      ValidationsFile::FileSizeCounter.per_owner(@owner_symbol).should == 300
+      ValidationsFile::FileSizeCounter.per_owner(@owner_symbol).should == 100
     end
   end
   describe ".per_system" do

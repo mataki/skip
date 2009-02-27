@@ -151,17 +151,6 @@ describe EditController, "#destroy" do
   end
 end
 
-describe EditController, "#get_img_urls" do
-  before do
-    @board_entry = stub_model(BoardEntry)
-  end
-  it "board_entry#images_filename_to_url_mapping_hashがよばれること" do
-    @board_entry.should_receive(:images_filename_to_url_mapping_hash)
-
-    controller.send(:get_img_urls, @board_entry)
-  end
-end
-
 describe EditController, "#create" do
   before do
     user_login

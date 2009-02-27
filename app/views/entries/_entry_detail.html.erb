@@ -273,13 +273,6 @@
     <div class="contents_body">
       <div id="default_style_area">
         <%= show_contents entry %>
-        <% img_urls = entry.images_filename_to_url_mapping_hash -%>
-        <% unless img_urls.empty? -%>
-        <div class="images" style="border: 0; border-top: solid 1px silver; clear:left;">
-          <p style="background-color: #F0F0FF;">画像<span style="font-size: 10px;">(クリックで元の大きさで表示)</span></p>
-          <%= render :partial => 'board_entries/view_images', :locals => { :img_urls => img_urls, :board_entry_id => entry.id, :deletable => false } %>
-        </div>
-        <% end -%>
       </div>
       <div id="source_style_area" class="invisible">
         <div class="header">【ソース表示】</div><pre><%=h entry.contents.gsub("<br />", "<br/>\r\n") %></pre>

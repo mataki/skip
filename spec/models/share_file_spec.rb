@@ -42,9 +42,11 @@ describe ShareFile, '#full_path' do
       @symbol_id = '111111'
       @file_name = 'sample.csv'
       @share_file = create_share_file(:file_name => @file_name, :owner_symbol => "#{symbol_type}:#{@symbol_id}")
+      @user = stub_model(User)
+      User.stub!(:find_by_uid).with(@symbol_id).and_return(@user)
     end
     it 'full_pathが取得できること' do
-      @share_file.full_path.should == File.join(@share_file_path, 'user', @symbol_id, @file_name)
+      @share_file.full_path.should == File.join(@share_file_path, 'user', @user.id.to_s, @file_name)
     end
   end
 end
@@ -112,6 +114,7 @@ end
 describe ShareFile, '#after_destroy' do
   before do
     @share_file = create_share_file
+    ShareFile.stub!(:dir_path).and_return('dir_path')
     File.stub!(:delete)
   end
   describe '対象ファイルが存在する場合' do
@@ -162,6 +165,7 @@ end
 
 describe ShareFile, ".total_share_file_size" do
   before do
+    ShareFile.stub!(:dir_path)
     Dir.should_receive(:glob).and_return(["a"])
     file = mock('file')
     file.stub!(:size).and_return(100)

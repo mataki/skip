@@ -107,12 +107,6 @@ describe Admin::UserUid, "#rename" do
     @mail.to_address_symbol.should == @new_symbol
     @bookmark.reload
     @bookmark.url.should == "/user/#{@new_uid}"
-    File.exist?(ShareFile.dir_path(@owner_symbol_was)).should be_false
-    File.exist?(ShareFile.dir_path(@sf.owner_symbol)).should be_true
-  end
-
-  after do
-    FileUtils.rm_r(ShareFile.dir_path(@sf.owner_symbol))
   end
 
   def create_items_expect_change

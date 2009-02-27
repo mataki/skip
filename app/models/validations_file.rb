@@ -64,7 +64,6 @@ module ValidationsFile
     def self.per_owner owner_symbol
       sum = 0
       sum += ShareFile.total_share_file_size(owner_symbol)
-      sum += BoardEntry.total_image_size(owner_symbol)
       sum
     end
     def self.per_system

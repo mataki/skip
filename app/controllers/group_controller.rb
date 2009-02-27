@@ -153,7 +153,7 @@ class GroupController < ApplicationController
     params.store(:owner_name, @group.name)
     params.store(:visitor_is_uploader, @group.participating?(current_user))
     text = render_component_as_string :controller => 'share_file', :action => 'list', :id => @group.symbol, :params => params
-    render :text => text, :layout => 'layout'
+    render :text => text, :layout => false
   end
 
   # post_action

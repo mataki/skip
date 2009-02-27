@@ -14,4 +14,14 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 module EditHelper
+  def share_files_url symbol
+    symbol_type, symbol_id = Symbol.split_symbol symbol
+    if symbol_type == 'uid'
+      url_for :controller => 'user', :action => 'share_file', :uid => symbol_id, :format => 'js'
+    elsif symbol_type == 'gid'
+      url_for :controller => 'group', :action => 'share_file', :gid => symbol_id, :format => 'js'
+    else
+      ''
+    end
+  end
 end
