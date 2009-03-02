@@ -1,6 +1,6 @@
 <div style="text-align: right; margin-bottom: 3px;  background-color: #f0e0d0; border: 1px solid silver; padding: 0 5px;">
-<% form_tag({ :controller => :bookmark, :action => :edit, :title => '' }, {:id => 'bookmark_form', :class => 'nyroModal'}) do -%>
-  URL：<input id="url" name="url" type="text" size="50" /><input id="add_bookmark_button" type="button" value="ブックマークする" />
+<% form_tag({ :controller => :bookmark, :action => :edit, :title => '' }, {:id => 'bookmark_form'}) do -%>
+  URL：<input id="url" name="url" type="text" size="50" /><input id="add_bookmark_button" type="submit" value="ブックマークする" />
   <%= link_to '【便利なブックマークレットの使いかた】', :controller => "bookmarks", :action => "setup" %>
   <%= hidden_field_tag "authenticity_token", form_authenticity_token %>
 <% end -%>
@@ -43,16 +43,16 @@
 <% content_for :javascript do -%>
 <script language='javascript' type='text/javascript'>
 $j(function() {
-    $j('#add_bookmark_button')
-    .click(function() {
+    $j('#bookmark_form')
+    .submit(function(e) {
+        e.preventDefault();
         if( !$j('#url').val().match(/^https?:\/\/.*/) ){
             alert("httpで始まる形式でないとブックマークできません");
             return false;
         }
         $j('#url').val(encodeURI($j('#url').val()));
-        $j('#bookmark_form').submit();
+        $j('#bookmark_form').nyroModalManual();
         $j('#url').val('');
-        return false;
     });
 });
 </script>
