@@ -95,8 +95,6 @@ class SearchController < ApplicationController
     @main_menu = @title = '全文検索'
 
     params[:query] = params[:full_text_query] unless params[:full_text_query].blank?
-    params[:target_contents] ||= 'all'
-    params[:target_aid] ||= 'all'
     params[:per_page] = 10
     params[:offset] ||= 0
 
