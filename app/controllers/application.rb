@@ -139,7 +139,7 @@ protected
       if request.url == root_url
           redirect_to :controller => '/platform', :action => :index
         else
-          redirect_to :controller => '/platform', :action => :require_login, :return_to => URI.encode(request.url)
+          redirect_to :controller => '/platform', :action => :require_login, :return_to => URI.decode(request.url)
         end
       return false
     end
@@ -185,6 +185,7 @@ protected
       format.html { render :file => File.join(RAILS_ROOT, 'public', '404.html'), :status => :not_found }
       format.all { render :nothing => true, :status => :not_found }
     end
+    true
   end
 
   # 本番環境(リバースプロキシあり)では、リモートからのリクエストでもリバースプロキシで、

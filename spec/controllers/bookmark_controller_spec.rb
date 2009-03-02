@@ -92,10 +92,14 @@ end
 describe BookmarkController, "GET #list" do
   before do
     user_login
+    @parent_controller = mock('parent_controller')
+    @parent_controller.should_receive(:main_menu)
+    @parent_controller.should_receive(:title)
+    @parent_controller.should_receive(:tab_menu_source)
+    @parent_controller.should_receive(:tab_menu_option)
   end
   describe "ユーザのブックマークを検索された場合" do
     before do
-      @parent_controller = mock('parent_controller')
       @params = {:uid => "111111", :id => "uid:111111", :user_id => 1, :type => "page"}
       @parent_controller.stub!(:params).and_return(@params)
       controller.stub!(:parent_controller).and_return(@parent_controller)
@@ -107,7 +111,6 @@ describe BookmarkController, "GET #list" do
 
   describe 'ユーザのブックマークの検索テキストボックスから検索された場合' do
     before do
-      @parent_controller = mock('parent_controller')
       @params = {:uid => "admin", :id => "uid:admin", :user_id => 1, :keyword => "キーワード"}
       @parent_controller.stub!(:params).and_return(@params)
       controller.stub!(:parent_controller).and_return(@parent_controller)

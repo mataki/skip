@@ -157,7 +157,7 @@ class MypageController < ApplicationController
       redirect_to :controller => 'search', :action => 'entry_search' and return
     end
     unless valid_list_types.include?(params[:list_type])
-      render :file => File.join(RAILS_ROOT, 'public', '404.html'), :status => :not_found and return
+      render_404 and return
     end
     setup_for_antenna_box
     locals = find_as_locals(params[:list_type], {:per_page => 20})

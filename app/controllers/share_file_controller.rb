@@ -160,6 +160,11 @@ class ShareFileController < ApplicationController
   def list
     redirect_to_with_deny_auth and return if not parent_controller
 
+    @main_menu = parent_controller.send!(:main_menu)
+    @title = parent_controller.send!(:title)
+    @tab_menu_source = parent_controller.send!(:tab_menu_source)
+    @tab_menu_option = parent_controller.send!(:tab_menu_option)
+
     @owner_name = params[:owner_name]
     @owner_symbol = params[:id]
     @categories = ShareFile.get_tags @owner_symbol

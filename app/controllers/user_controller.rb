@@ -216,32 +216,45 @@ class UserController < ApplicationController
 
 private
   def setup_layout
-    @tab_menu_source = [ {:label => _('プロフィール'), :options => {:action => 'show'}},
-                         {:label => _('ブログ'), :options => {:action => 'blog'}},
-                         {:label => _('ファイル'), :options => {:action => 'share_file'}},
-                         {:label => _('ソーシャル'), :options => {:action => 'social'}},
-                         {:label => _('グループ'), :options => {:action => 'group'}},
-                         {:label => _('ブックマーク'), :options => {:action => 'bookmark'}} ]
+    @title = title
+    @main_menu = main_menu
+    @tab_menu_source = tab_menu_source
+    @tab_menu_option = tab_menu_option
+  end
 
-    if @user.id != session[:user_id]
-      @main_menu = 'ユーザ'
-      @title = @user.name + 'さん'
+  def main_menu
+    @user.id == current_user.id ? 'マイページ' : 'ユーザ'
+  end
 
-      if Chain.count(:conditions => ["from_user_id = ? and to_user_id = ?", session[:user_id], @user.id]) <= 0
-        @tab_menu_source << {:label => _('紹介文を作る'), :options => {:action => 'new_chain'}}
+  def title
+    @user.id == current_user.id ? 'マイページ' : "#{@user.name}さん"
+  end
+
+  def tab_menu_source
+    tab_menu_source = [
+      {:label => _('プロフィール'), :options => {:action => 'show'}},
+      {:label => _('ブログ'), :options => {:action => 'blog'}},
+      {:label => _('ファイル'), :options => {:action => 'share_file'}},
+      {:label => _('ソーシャル'), :options => {:action => 'social'}},
+      {:label => _('グループ'), :options => {:action => 'group'}},
+      {:label => _('ブックマーク'), :options => {:action => 'bookmark'}} ]
+
+    if @user.id != current_user.id
+      if Chain.count(:conditions => ["from_user_id = ? and to_user_id = ?", current_user.id, @user.id]) <= 0
+        tab_menu_source << {:label => _('紹介文を作る'), :options => {:action => 'new_chain'}}
       else
-        @tab_menu_source << {:label => _('紹介文の変更'), :options => {:action => 'edit_chain'}}
+        tab_menu_source << {:label => _('紹介文の変更'), :options => {:action => 'edit_chain'}}
       end
     else
-      # TODO mypage_controllerの一部とまったく同じコード…なんとかDRYにしたいところ
-      @main_menu = @title = 'マイページ'
-
-      @tab_menu_source.unshift({:label => _('ホーム'), :options => {:action => 'index'}, :selected_actions => %w(index entries entries_by_date entries_by_antenna)}) 
-      @tab_menu_source << {:label => _('足跡'), :options => {:action => 'trace'}}
-      @tab_menu_source << {:label => _('管理'), :options => {:action => 'manage'}}
+      tab_menu_source.unshift({:label => _('ホーム'), :options => {:action => 'index'}, :selected_actions => %w(index entries entries_by_date entries_by_antenna)}) 
+      tab_menu_source << {:label => _('足跡'), :options => {:action => 'trace'}}
+      tab_menu_source << {:label => _('管理'), :options => {:action => 'manage'}}
     end
+    tab_menu_source
+  end
 
-    @tab_menu_option = { :uid => @user.uid }
+  def tab_menu_option
+    { :uid => @user.uid }
   end
 
   def load_user
