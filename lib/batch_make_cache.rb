@@ -142,13 +142,12 @@ class BatchMakeCache < BatchBase
   #   link_url            :リンク
   #   icon_type           :検索表示に利用するiconのファイル名
   def create_meta(params)
-    return <<-EOS
-title: #{URI.encode(URI.encode(params[:title]), /[\&|\+|\=|!|~|'|(|)|;|\/|?|:|$|,|\[|\]|]/)}
-contents_type: #{params[:contents_type]}
-publication_symbols: #{params[:publication_symbols]}
-link_url: #{root_url.chop}#{params[:link_url]}
-icon_type: #{params[:icon_type]}
-    EOS
+    { :title => params[:title].to_s,
+      :contents_type => params[:contents_type],
+      :publication_symbols => params[:publication_symbols],
+      :link_url => root_url.chop + params[:link_url],
+      :icon_type => params[:icon_type]
+    }.to_yaml
   end
 
   # ファイルに出力

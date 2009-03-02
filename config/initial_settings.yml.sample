@@ -114,7 +114,7 @@ default: &default
   estraier_url: http://localhost:1978/node/node1                    # hyper estraierの検索ノードのURL
   search_apps:
     skip:
-      cache:  localhost:3000/cache
+      cache:  http://localhost:3000/cache
       meta:  /skip_root/tmp/cache_meta
       condition_js: http://localhost:3000/services/search_conditions.js
       title: SKIP
