@@ -139,7 +139,7 @@ protected
       if request.url == root_url
           redirect_to :controller => '/platform', :action => :index
         else
-          redirect_to :controller => '/platform', :action => :require_login, :return_to => URI.encode(request.url)
+          redirect_to :controller => '/platform', :action => :require_login, :return_to => URI.decode(request.url)
         end
       return false
     end
