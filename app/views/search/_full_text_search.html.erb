@@ -31,7 +31,7 @@
 
   <% @result_lines.each do |line_hash| -%>
 <div class="g_result_box" style="font-size: 12px; overflow: hidden; width: 90%;">
-  <div class="g_title"><%= link_to(translate_contents_type(line_hash[:contents_type], line_hash[:icon_type]||line_hash[:icon_url]) + h(line_hash[:title]), line_hash[:link_url] ) %></div>
+  <div class="g_title"><%= link_to(translate_contents_type(line_hash[:contents_type], line_hash.slice(:icon_type, :icon_url)) + h(line_hash[:title]), line_hash[:link_url] ) %></div>
   <div class="g_contents"><%= line_hash[:contents] %></div>
   <div class="g_link"><%= h line_hash[:link_url] %></div>
 </div>

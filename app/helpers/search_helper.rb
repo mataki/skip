@@ -15,10 +15,10 @@
 
 module SearchHelper
   def translate_contents_type target_contents, target_icon
-    unless target_icon.include?('http://')
-      icon_tag((target_icon || 'world_link'), { :margin => true, :title => target_contents} )
+    if target_icon[:icon_url]
+      image_tag(target_icon[:icon_url], :alt => target_contents )
     else
-      image_tag(target_icon, :alt => target_contents )
+      icon_tag((target_icon[:icon_type] || 'world_link'), { :margin => true, :title => target_contents} )
     end
   end
 

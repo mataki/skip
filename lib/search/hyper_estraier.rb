@@ -70,12 +70,10 @@ class Search
     end
 
     def self.get_result_hash_elements(nres, offset, end_count)
-      result_array = []
-      for i in offset...end_count
+      (offset...end_count).map do |i|
         rdoc = nres.get_doc(i)
-        result_array << (Search.get_metadata ERB::Util.html_escape(rdoc.snippet), URI.decode(rdoc.attr('@uri')), rdoc.attr('@title'))
+        Search.get_metadata(ERB::Util.html_escape(rdoc.snippet), URI.decode(rdoc.attr('@uri')), rdoc.attr('@title'))
       end
-      result_array
     end
   end
 end
