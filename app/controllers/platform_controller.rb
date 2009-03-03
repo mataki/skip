@@ -232,7 +232,7 @@ class PlatformController < ApplicationController
       end
     rescue OpenIdAuthentication::InvalidOpenId
       flash.now[:error] = _("OpenIDの形式が正しくありません。")
-      render :action => :index, :layout => false
+      render :action => :index
     end
   end
 
