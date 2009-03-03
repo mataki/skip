@@ -5,6 +5,8 @@
   .upload_form label, .upload_form input {
     font-size: 10px;
     color: #555555; }
+  form#share_file_form {
+    border-bottom: 1px solid #99c; }
   </style>
   <%= hidden_field_tag 'owner_name', h(params[:owner_name]) %>
   <%= hidden_field 'share_file', 'owner_symbol' %>
@@ -22,14 +24,17 @@
       <th class="indicator">&nbsp;</th>
     </tr>
     <tr>
+      <th class="file"><%= label_tag 'file[1]', 'ファイル' %></th>
+      <td class="file"><%= file_field_tag 'file[1]', :size => 40 %></td>
+      <td class="indicator"><%= image_tag('skip/indicator.gif', {:style => 'display:none'}) %></td>
+    </tr>
+    <tr>
       <th class="name"><%= label_tag 'share_file[description]', 'コメント' %></th>
       <td class="name"><%= text_field 'share_file', 'description', :size => 40 %></td>
       <th class="indicator">&nbsp;</th>
     </tr>
     <tr>
-      <th class="file"><%= label_tag 'file[1]', 'ファイル' %></th>
-      <td class="file"><%= file_field_tag 'file[1]', :size => 40 %></td>
-      <td class="indicator"><%= image_tag('skip/indicator.gif', {:style => 'display:none'}) %></td>
+      <td colspan="2"><%= submit_tag 'アップロード' %></th>
     </tr>
   </table>
 <% end -%>
