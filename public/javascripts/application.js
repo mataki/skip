@@ -169,10 +169,7 @@ $j(function(){
         };
 
         var uploaderButton = function(conf) {
-            conf["callback"] = function(){
-                root.find("table").remove();
-                loadShareFiles(root.find("div.share_files"), config["share_files_url"], message["share_files"]["title"]);
-            };
+            conf["callback"] = reloadUploader
 
             return $j("<div class='share_file upload' />").append(
                 $j("<span class='operation link pointer'>")
@@ -181,12 +178,21 @@ $j(function(){
             )
         };
 
+        var reloadUploader = function(){
+            root.find("table").remove();
+            loadShareFiles(root.find("div.share_files"), config["share_files_url"], message["share_files"]["title"]);
+        };
+
         var onLoad = function() {
             root.empty().attr("class", "enabled").draggable({handle: 'div.title_bar'}).append(
                 $j('<div class="title_bar move">').append(
                     $j("<h3>").text(message["title"])
                 ).append(
-                    $j("<span class='close link pointer'>").text(message["close"]).click(hideUploader)
+                    $j("<div class='operation'>").append(
+                        $j("<span class='reload link pointer'>").text(message["reload"]).click(reloadUploader)
+                    ).append(
+                        $j("<span class='close link pointer'>").text(message["close"]).click(hideUploader)
+                    )
                 )
             ).append(
                 $j("<div style='clear: both;'/>")
