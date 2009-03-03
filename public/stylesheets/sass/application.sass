@@ -68,15 +68,21 @@ div#share_file_uploader.enabled
     :overflow auto
     :height 300px
 
-  div.share_files table
-    :width 95%
-    :margin 0 auto
-    :border-collapse collapse
-    tr, th, td
-      :border 1px solid #DDDDFF
-    th, td
-      :text-align center
-    td.thumbnail
-      :width 200px
-    td.insert
-      :width 6em
+    table
+      :width 95%
+      :margin 0 auto
+      :border-collapse collapse
+      tr, th, td
+        :border 1px solid #DDDDFF
+      th, td
+        :text-align center
+      td.thumbnail
+        :width 200px
+      td.insert
+        :width 6em
+    div.paginate
+      :text-align right
+      span.info
+        :margin-right 5px
+      span.first_link, span.previous_link, span.next_link, span.last_link
+        :font-size = !small_font_size

@@ -190,7 +190,18 @@ class ShareFileController < ApplicationController
     @visitor_is_uploader = params[:visitor_is_uploader]
     respond_to do |format|
       format.html { render :layout => 'layout' }
-      format.js { render :json => @share_files.map{|s| share_file_to_json(s) } }
+      format.js {
+        render :json => {
+          :pages => {
+            :first => 1,
+            :previous => @pages.current.previous.to_i,
+            :next => @pages.current.next.to_i,
+            :last => @pages.last.to_i,
+            :current => @pages.current.number,
+            :item_count => @pages.item_count },
+          :share_files => @share_files.map{|s| share_file_to_json(s) }
+        }
+      }
     end
   end
 

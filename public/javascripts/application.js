@@ -144,21 +144,57 @@ $j(function(){
             return tr;
         };
 
-        var loadShareFiles = function(palette, url, label) {
+        var paginate = function(pages, labels){
+            var paginate_actions = $j('<div class="paginate">');
+            paginate_actions.append($j('<span class="info">').text(pages['current'] + '/' + pages['last'] + 'page'));
+            if(pages['previous'] != 0){
+                paginate_actions.append(
+                    $j('<span class="first_link link pointer">').text(labels['first']).click(function() {
+                        loadShareFiles(root.find("div.share_files"), config["share_files_url"], {page: pages['first']}, message["share_files"]);
+                    })
+                );
+                paginate_actions.append(
+                    $j('<span class="previous_link link pointer">').text(labels['previous']).click(function() {
+                        loadShareFiles(root.find("div.share_files"), config["share_files_url"], {page: pages['previous']}, message["share_files"]);
+                    })
+                );
+            }
+            if(pages['next'] != 0){
+                paginate_actions.append(
+                    $j('<span class="next_link link pointer">').text(labels['next']).click(function() {
+                        loadShareFiles(root.find("div.share_files"), config["share_files_url"], {page: pages['next']}, message["share_files"]);
+                    })
+                );
+                paginate_actions.append(
+                    $j('<span class="last_link link pointer">').text(labels['last']).click(function() {
+                        loadShareFiles(root.find("div.share_files"), config["share_files_url"], {page: pages['last']}, message["share_files"]);
+                    })
+                );
+            }
+            return paginate_actions;
+        };
+
+        var loadShareFiles = function(palette, url, requestData, labels) {
+            palette.empty();
             if(!url) return;
-            $j.getJSON(url, function(data, stat){
-                if(data.length == 0) return;
+            $j.getJSON(url, requestData, function(data, stat){
+                var share_files = data['share_files'];
+                if(share_files.length == 0) return;
                 var thead = $j('<thead>');
                 thead.append(shareFileToTableHeader());
                 var tbody = $j("<tbody>");
-                $j.each(data, function(_num_, share_file){
+                $j.each(share_files, function(_num_, share_file){
                     tbody.append(shareFileToTableRow(share_file));
                 });
                 palette.append(
+                    paginate(data['pages'], labels)
+                ).append(
                     $j("<table>")
-                    .append($j("<caption>").text(label))
+                    .append($j("<caption>").text(labels['title']))
                     .append(thead)
                     .append(tbody)
+                ).append(
+                    paginate(data['pages'], labels)
                 );
             });
         };
@@ -179,8 +215,7 @@ $j(function(){
         };
 
         var reloadUploader = function(){
-            root.find("table").remove();
-            loadShareFiles(root.find("div.share_files"), config["share_files_url"], message["share_files"]["title"]);
+            loadShareFiles(root.find("div.share_files"), config["share_files_url"], {}, message["share_files"]);
         };
 
         var onLoad = function() {
@@ -200,7 +235,7 @@ $j(function(){
                 uploaderButton(config["uploader"])
             ).append($j("<div class='share_files' />")).show();
 
-            loadShareFiles(root.find("div.share_files"), config["share_files_url"], message["share_files"]["title"]);
+            loadShareFiles(root.find("div.share_files"), config["share_files_url"], {}, message["share_files"]);
         };
         $j('span.share_file_uploader').one('click', onLoad);
     };

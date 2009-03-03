@@ -52,15 +52,21 @@ div#share_file_uploader.enabled {
   div#share_file_uploader.enabled div.share_files {
     overflow: auto;
     height: 300px; }
-  div#share_file_uploader.enabled div.share_files table {
-    width: 95%;
-    margin: 0 auto;
-    border-collapse: collapse; }
-    div#share_file_uploader.enabled div.share_files table tr, div#share_file_uploader.enabled div.share_files table th, div#share_file_uploader.enabled div.share_files table td {
-      border: 1px solid #DDDDFF; }
-    div#share_file_uploader.enabled div.share_files table th, div#share_file_uploader.enabled div.share_files table td {
-      text-align: center; }
-    div#share_file_uploader.enabled div.share_files table td.thumbnail {
-      width: 200px; }
-    div#share_file_uploader.enabled div.share_files table td.insert {
-      width: 6em; }
+    div#share_file_uploader.enabled div.share_files table {
+      width: 95%;
+      margin: 0 auto;
+      border-collapse: collapse; }
+      div#share_file_uploader.enabled div.share_files table tr, div#share_file_uploader.enabled div.share_files table th, div#share_file_uploader.enabled div.share_files table td {
+        border: 1px solid #DDDDFF; }
+      div#share_file_uploader.enabled div.share_files table th, div#share_file_uploader.enabled div.share_files table td {
+        text-align: center; }
+      div#share_file_uploader.enabled div.share_files table td.thumbnail {
+        width: 200px; }
+      div#share_file_uploader.enabled div.share_files table td.insert {
+        width: 6em; }
+    div#share_file_uploader.enabled div.share_files div.paginate {
+      text-align: right; }
+      div#share_file_uploader.enabled div.share_files div.paginate span.info {
+        margin-right: 5px; }
+      div#share_file_uploader.enabled div.share_files div.paginate span.first_link, div#share_file_uploader.enabled div.share_files div.paginate span.previous_link, div#share_file_uploader.enabled div.share_files div.paginate span.next_link, div#share_file_uploader.enabled div.share_files div.paginate span.last_link {
+        font-size: 10px; }
