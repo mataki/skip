@@ -123,7 +123,6 @@ default: &default
   # ================================================================================================
   # OpenID Providerの動作に関する設定
   # ================================================================================================
-  use_ssl: false
   white_list:
     - http://localhost:3333/consumer
   ax_props:
@@ -176,7 +175,6 @@ development:
 
 test:
   <<: *default
-  use_ssl: false
 
 production:
   <<: *default
