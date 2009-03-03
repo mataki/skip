@@ -320,6 +320,10 @@ class ShareFile < ActiveRecord::Base
     uncheck_extention? && uncheck_content_type?
   end
 
+  def image_extention?
+    CONTENT_TYPE_IMAGES.keys.any?{ |extension| extension.to_s == self.file_name.split('.').last }
+  end
+
   def readable?(user = @accessed_user)
     user ? owner_instance(self, user).readable? : false
   end
@@ -398,7 +402,7 @@ private
   end
 
   def uncheck_extention?
-    CONTENT_TYPE_IMAGES.keys.any?{ |extension| extension.to_s == self.file_name.split('.').last }
+    image_extention?
   end
 
   def uncheck_content_type?

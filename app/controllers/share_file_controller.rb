@@ -289,6 +289,7 @@ private
         :controller_name => share_file.owner_symbol_type,
         :symbol_id => share_file.owner_symbol_id,
         :file_name => share_file.file_name)
+      json[:file_type] = share_file.image_extention? ? 'image' : ''
     end
   end
 end

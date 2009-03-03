@@ -45,6 +45,7 @@ div#share_file_uploader.enabled {
       right: 2px;
       top: 2px; }
   div#share_file_uploader.enabled span.insert_link, div#share_file_uploader.enabled span.operation {
+    display: block;
     font-size: 10px; }
   div#share_file_uploader.enabled div.share_files {
     overflow: auto;

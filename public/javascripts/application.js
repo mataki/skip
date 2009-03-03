@@ -97,6 +97,19 @@ $j(function(){
             });
         };
 
+        var insertImageLink = function(data){
+            var filename = data['file_name'];
+            var src = data['src'];
+            return $j("<span>").text(message["insert_image_link_label"]).addClass("insert_link link pointer").click(function(){
+                if($j('#editor_mode_richtext:checked').length > 0){
+                    var img = $j("<img />").attr("src", src).attr("alt", filename).addClass('pointer');
+                    insertToRichEditor(img);
+                } else if($j('#editor_mode_hiki:checked').length > 0) {
+                    insertToHikiEditor('\n{{' + filename + ',240,}}');
+                }
+            });
+        };
+
         var insertImage = function(data){
             var filename = data['file_name'];
             var src = data['src'];
@@ -117,15 +130,17 @@ $j(function(){
         var shareFileToTableHeader = function() {
             var tr = $j('<tr>');
             tr.append($j('<th>').text(message['share_files']['thumbnail']));
-            tr.append($j('<th>').text(message['share_files']['display_name']));
             return tr;
         };
 
         var shareFileToTableRow = function(data){
             var tr = $j("<tr>");
             tr.append($j("<td class='thumbnail'>").append(insertImage(data)));
-            tr.append($j("<td class='display_name'>").text(data["file_name"]));
-            tr.append($j("<td class='insert'>").append(insertLink(data)));
+            var insertTd = $j("<td class='insert'>");
+            insertTd.append(insertLink(data));
+            if(data['file_type'] == 'image')
+                insertTd.append(insertImageLink(data));
+            tr.append(insertTd);
             return tr;
         };
 
