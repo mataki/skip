@@ -84,7 +84,8 @@ $j(function(){
                 form: '<%= url_for(:controller => 'share_file', :action => 'new', :owner_symbol => @board_entry.symbol, :ajax_upload => 1, :escape => false) %>',
                 target: ''
             },
-            callback: null
+            callback: null,
+            trigger: 'submit'
         }
     };
     $j('div#share_file_uploader').shareFileUploader(config);
