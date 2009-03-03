@@ -19,7 +19,6 @@
     <% if checkid_request && !checkid_request.id_select %>
     <tr valign="top"><td><%= _('Your OpenID:') %></td></tr>
     <tr valign="top"><td><%= checkid_request.identity %><%= hidden_field_tag 'login[key]', extract_login_from_identifier(checkid_request.identity) %></td></tr>
-    <tr valign="top"><td><%= link_to _('cancel this request'), cancel_path %></td></tr>
     <% else %>
     <tr valign="top">
       <td><label for="login_key"><span style="font-weight: bold;"><%= h Admin::Setting.login_account %> or <%= _('User|Email') %></span></label></td>
@@ -75,9 +74,10 @@
       </td>
     </tr>
     <% end -%>
-    <tr>
-      <td align="right"><%= submit_tag "ログイン", :onclick=>"saveLoginData();", :tabindex => "4" %></td>
-    </tr>
+    <% if checkid_request %>
+    <tr><td align="top"><%= link_to _('cancel this request'), cancel_path %></td></tr>
+    <% end %>
+    <tr><td align="right"><%= submit_tag "ログイン", :onclick=>"saveLoginData();", :tabindex => "4" %></td></tr>
   </table>
 <% end -%>
 <%= link_to _('OpenIDを忘れた/再設定したい方はこちら'), forgot_openid_path, {:style => 'font-size:14px'} if enable_forgot_openid? %>
