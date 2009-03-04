@@ -64,37 +64,7 @@ $j(function(){
         return false;
     });
 
-    var config = {
-        share_files_url: '<%= share_files_url @board_entry.symbol %>',
-        message: {
-            title: '画像やファイルのリンクを挿入',
-            close: '閉じる',
-            reload: '再読込',
-            share_files: {
-              title: '利用できる共有ファイル',
-              thumbnail: 'サムネイル',
-              display_name: 'ファイル名',
-              insert: '',
-              first: '[最初へ]',
-              previous: '[前へ]',
-              next: '[次へ]',
-              last: '[最後へ]'
-            },
-            insert_link_label: 'リンクを挿入する',
-            insert_image_link_label: '画像を挿入する',
-            upload_share_file: 'ファイルをアップロードする'
-        },
-        uploader: {
-            target: '<%= IframeUploader::UPLOAD_KEY %>',
-            src: {
-                form: '<%= url_for(:controller => 'share_file', :action => 'new', :owner_symbol => @board_entry.symbol, :ajax_upload => 1, :escape => false) %>',
-                target: ''
-            },
-            callback: null,
-            trigger: 'submit'
-        }
-    };
-    $j('div#share_file_uploader').shareFileUploader(config);
+    $j('div#share_file_uploader').shareFileUploader(<%= share_file_uploader_opt(@board_entry).to_json %>);
 });
 </script>
 <% end -%>
