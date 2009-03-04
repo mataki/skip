@@ -118,7 +118,7 @@ describe ApplicationController, '#prepare_session' do
   end
   describe 'アクティブなユーザでない場合' do
     before do
-      @user = mock_model(User)
+      @user = stub_model(User)
       @user.stub!(:active?).and_return(false)
       controller.should_receive(:current_user).and_return(@user)
     end
@@ -143,7 +143,7 @@ describe ApplicationController, '#prepare_session' do
   end
   describe 'アクティブなユーザの場合' do
     before do
-      @user = mock_model(User)
+      @user = stub_model(User)
       @user.stub!(:active?).and_return(true)
       controller.should_receive(:current_user).and_return(@user)
     end

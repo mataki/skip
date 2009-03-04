@@ -47,7 +47,7 @@ protected
     end
 
     # ログのリクエスト情報に、ユーザ情報を加える（情報漏えい事故発生時のトレーサビリティを確保)
-    logger.info("  Log_for_Inspection: {\"user_id\"=>\"#{session[:user_id]}\", \"uid\"=>\"#{session[:uid]}\"}")
+    logger.info(user.to_s_log('[Log for inspection]'))
 
     unless controller_name == 'pictures'
       UserAccess.update_all("last_access = CURRENT_TIMESTAMP", ["user_id = ? ", user.id ])

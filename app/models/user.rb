@@ -362,6 +362,18 @@ class User < ActiveRecord::Base
     identity_url(:user => self.code, :protocol => Admin::Setting.protocol_by_initial_settings_default, :host => Admin::Setting.host_and_port_by_initial_settings_default)
   end
 
+  def to_s_log message
+    self.class.to_s_log message, self.uid, self.id
+  end
+
+  def self.to_s_log message, uid, user_id = nil
+    if user_id
+      "#{message}: {\"user_id\" => \"#{user_id}\", \"uid\" => \"#{uid}\"}"
+    else
+      "#{message}: {\"uid\" => \"#{uid}\"}"
+    end
+  end
+
 protected
   # TODO: self.make_conditionsメソッドは使ってなさそう確認して消す
   @@search_cond_keys = [:name, :section, :email]

@@ -543,6 +543,15 @@ describe User, "#openid_identifier" do
   end
 end
 
+describe User, '#to_s_log' do
+  before do
+    @user = stub_model(User, :id => "99", :uid => '999999')
+  end
+  it 'ログに出力する形式に整えられた文字列を返すこと' do
+    @user.to_s_log('message').should == "message: {\"user_id\" => \"#{@user.id}\", \"uid\" => \"#{@user.uid}\"}"
+  end
+end
+
 describe User, '.find_by_code_or_email' do
   describe 'ログインIDに一致するユーザが見つかる場合' do
     before do

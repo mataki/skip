@@ -217,6 +217,7 @@ class PlatformController < ApplicationController
     begin
       authenticate_with_open_id do |result, identity_url, registration|
         if result.successful?
+          logger.info("[Login successful with OpenId] \"OpenId\" => #{identity_url}")
           unless identifier = OpenidIdentifier.find_by_url(identity_url)
             create_user_from(identity_url, registration)
           else
@@ -227,10 +228,12 @@ class PlatformController < ApplicationController
             redirect_to_return_to_or_root(return_to)
           end
         else
+          logger.info("[Login failed with OpenId] \"OpenId\" => #{identity_url}")
           set_error_message_form_result_and_redirect(result)
         end
       end
     rescue OpenIdAuthentication::InvalidOpenId
+      logger.info("[Login failed with OpenId] \"OpenId is invalid\"")
       flash[:error] = _("OpenIDの形式が正しくありません。")
       redirect_to :action => :index
     end
@@ -295,12 +298,12 @@ class PlatformController < ApplicationController
   def login_with_password
     logout_killing_session!([:request_token])
     if params[:login] and self.current_user = User.auth(params[:login][:key], params[:login][:password])
+      logger.info(current_user.to_s_log('[Login successful with password]'))
       handle_remember_cookie!(params[:login_save] == 'true')
-
       redirect_to_return_to_or_root
     else
+      logger.info(User.to_s_log('[Login failed with password]', params[:login][:key]))
       flash[:error] = _("ログインに失敗しました。")
-
       redirect_to(request.env['HTTP_REFERER'] ? :back : login_url)
     end
   end
