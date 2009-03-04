@@ -683,18 +683,19 @@ end
 
 describe PlatformController, "#create_user_params" do
   before do
-    @registration = mock('registration')
-    @registration_data = {'http://axschema.org/namePerson' => ['ほげ ふが'],
-      'http://axschema.org/contact/email' => ['hoge@hoge.jp'],
-      'http://axschema.org/namePerson/friendly' => ['opuser']
+    @registration = {
+      "http://axschema.org/namePerson/friendly" => ["opuser"],
+      "http://axschema.org/namePerson" => ["ほげ ふが"],
+      "http://axschema.org/contact/email" => ["hoge@hoge.host"]
     }
-    @registration.stub!(:data).and_return(@registration_data)
-    INITIAL_SETTINGS['ax_fetchrequest'] = [ ["http://axschema.org/namePerson", 'name'],
-                                            ["http://axschema.org/contact/email", 'email'],
-                                            ["http://axschema.org/namePerson/friendly", 'code']]
+    INITIAL_SETTINGS['ax_fetchrequest'] = {
+      :name => "http://axschema.org/namePerson",
+      :email => "http://axschema.org/contact/email",
+      :code => "http://axschema.org/namePerson/friendly"
+    }
   end
   it "正しく整形されたもんが返却されること" do
-    controller.send(:create_user_params, @registration).should == {:email=>"hoge@hoge.jp", :name=>"ほげ ふが", :code=>"opuser"}
+    controller.send(:create_user_params, @registration).should == {:email=>"hoge@hoge.host", :name=>"ほげ ふが", :code=>"opuser"}
   end
 end
 

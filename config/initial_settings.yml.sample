@@ -93,18 +93,9 @@ default: &default
   # 以下RPとして稼動の場合の設定
   fixed_op_url:                                                      # RPモードで固定OPを利用するSSOの場合のURL
   ax_fetchrequest:
-    -
-      - http://axschema.org/namePerson
-      - name
-      - true
-    -
-      - http://axschema.org/contact/email
-      - email
-      - true
-    -
-      - http://axschema.org/namePerson/friendly
-      - code
-      - true
+    :name: "http://axschema.org/namePerson"
+    :email: "http://axschema.org/contact/email"
+    :code: "http://axschema.org/namePerson/friendly"
 
   # ================================================================================================
   # 全文検索に関する設定

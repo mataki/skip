@@ -35,6 +35,6 @@ class OpenidIdentifier < ActiveRecord::Base
 
 private
   def normalize_ident_url
-    OpenIdAuthentication.normalize_url(url) unless url.blank?
+    OpenIdAuthentication.normalize_identifier(url) unless url.blank?
   end
 end
