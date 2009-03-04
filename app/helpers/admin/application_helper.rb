@@ -25,6 +25,7 @@ module Admin::ApplicationHelper
     output << generate_tab_link( _('Admin::DocumentsController'), admin_documents_path, request.url.include?(admin_documents_url) )
     output << generate_tab_link( _('Admin::SettingsController|mail'), admin_settings_path(:tab => :mail), request.url == admin_settings_url(:tab => :mail) )
     output << generate_tab_link( _('Admin::SettingsController|feed'), admin_settings_path(:tab => :feed), request.url == admin_settings_url(:tab => :feed) )
+    output << generate_tab_link( _('Admin::SettingsController|security'), admin_settings_path(:tab => :security), request.url == admin_settings_url(:tab => :security) )
     output << '</ul>'
   end
 

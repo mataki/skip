@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2009-03-04 09:44+0900\n"
+"POT-Creation-Date: 2009-03-04 14:00+0900\n"
 "PO-Revision-Date: 2009-03-03 14:42+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -588,6 +588,11 @@ msgstr "メール関連設定"
 msgid "Admin::SettingsController|main"
 msgstr "全体設定"
 
+#: app/helpers/admin/application_helper.rb:28
+#: app/controllers/admin/settings_controller.rb:24
+msgid "Admin::SettingsController|security"
+msgstr "セキュリティ設定"
+
 #: app/models/admin/setting.rb:30
 msgid "Admin::Setting|Abbr app title"
 msgstr "システムの名称"
@@ -626,6 +631,14 @@ msgid "Admin::Setting|Contact addr description"
 msgstr ""
 "ユーザから運営者への問い合わせ先メールアドレスです。システムからのメール送信"
 "の送信元としても表示されます。"
+
+#: app/models/admin/setting.rb:97
+msgid "Admin::Setting|Enable user lock"
+msgstr "ユーザ凍結機能を有効にする"
+
+#: app/models/admin/setting.rb:98
+msgid "Admin::Setting|Enable user lock description"
+msgstr "既定回数(管理画面で設定可)だけログインに失敗したユーザを凍結してログイン出来ないようにします。凍結を解除するには、対象ユーザがパスワード再設定機能を使ってパスワードを再設定しなければなりません。"
 
 #: app/models/admin/setting.rb:40
 msgid "Admin::Setting|Footer first"
@@ -845,6 +858,14 @@ msgid "Admin::Setting|Stop new user description"
 msgstr ""
 "ユーザ登録を一時停止し、現在登録済みのユーザだけで運営できます。チェックを外"
 "すと、再開します。"
+
+#: app/models/admin/setting.rb:99
+msgid "Admin::Setting|User lock trial limit"
+msgstr "ログインの試行回数の最大値"
+
+#: app/models/admin/setting.rb:100
+msgid "Admin::Setting|User lock trial limit description"
+msgstr "ログインの試行回数の最大値を指定して下さい。最大値を越えてログインに失敗すると対象となるユーザは凍結されます。"
 
 #: app/models/admin/share_file.rb:26
 msgid "Admin::ShareFile|Category"
@@ -1918,11 +1939,11 @@ msgstr ""
 
 #: app/controllers/mypage_controller.rb:484
 #: app/controllers/platform_controller.rb:191
-#: app/controllers/platform_controller.rb:234
+#: app/controllers/platform_controller.rb:237
 msgid "OpenIDの形式が正しくありません。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:276
+#: app/controllers/platform_controller.rb:279
 msgid "OpenIDの認証に失敗しました。"
 msgstr ""
 
@@ -1934,7 +1955,7 @@ msgstr ""
 msgid "OpenIDを忘れた/再設定したい方はこちら"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:274
+#: app/controllers/platform_controller.rb:277
 msgid ""
 "OpenIDサーバーが見つかりませんでした。正しいOpenID URLを入力してください。"
 msgstr ""
@@ -2701,7 +2722,7 @@ msgstr "メールアドレス変更"
 msgid "before_uid"
 msgstr "現在のユーザ名"
 
-#: app/helpers/admin/application_helper.rb:37 app/models/board_entry.rb:-
+#: app/helpers/admin/application_helper.rb:38 app/models/board_entry.rb:-
 msgid "board entry"
 msgstr "ブログ・掲示板"
 
@@ -2714,7 +2735,7 @@ msgstr "ブログ・掲示板コメント"
 msgid "board entry point"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:38 app/models/bookmark.rb:-
+#: app/helpers/admin/application_helper.rb:39 app/models/bookmark.rb:-
 msgid "bookmark"
 msgstr "ブックマーク"
 
@@ -2762,11 +2783,11 @@ msgstr ""
 msgid "favicon画像"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:36 app/models/group.rb:-
+#: app/helpers/admin/application_helper.rb:37 app/models/group.rb:-
 msgid "group"
 msgstr "グループ"
 
-#: app/helpers/admin/application_helper.rb:35 app/models/group_category.rb:-
+#: app/helpers/admin/application_helper.rb:36 app/models/group_category.rb:-
 #: app/views/admin/group_categories/index.html.erb:36
 msgid "group category"
 msgstr "グループカテゴリ"
@@ -2820,7 +2841,7 @@ msgstr ""
 msgid "required"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:39 app/models/share_file.rb:-
+#: app/helpers/admin/application_helper.rb:40 app/models/share_file.rb:-
 msgid "share file"
 msgstr "共有ファイル"
 
@@ -2860,7 +2881,7 @@ msgstr ""
 msgid "uncheck selected"
 msgstr "選択をはずす"
 
-#: app/helpers/admin/application_helper.rb:34
+#: app/helpers/admin/application_helper.rb:35
 #: app/controllers/admin/users_controller.rb:27
 #: app/controllers/admin/users_controller.rb:39
 #: app/controllers/admin/users_controller.rb:48
@@ -2907,14 +2928,14 @@ msgstr "ユーザ名"
 msgid "user profile"
 msgstr "プロフィール"
 
-#: app/helpers/admin/application_helper.rb:41
+#: app/helpers/admin/application_helper.rb:42
 #: app/controllers/admin/user_profile_masters_controller.rb:24
 #: app/models/user_profile_master.rb:-
 #: app/views/admin/user_profile_masters/index.html.erb:35
 msgid "user profile master"
 msgstr "プロフィール項目"
 
-#: app/helpers/admin/application_helper.rb:40
+#: app/helpers/admin/application_helper.rb:41
 #: app/controllers/admin/user_profile_master_categories_controller.rb:28
 #: app/models/user_profile_master_category.rb:-
 #: app/views/admin/user_profile_master_categories/index.html.erb:25
@@ -2981,7 +3002,7 @@ msgstr ""
 msgid "ご指定の操作は実行できません。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:287
+#: app/controllers/platform_controller.rb:290
 msgid ""
 "そのOpenIDは、登録されていません。ログイン後管理画面でOpenID URLを登録後ログ"
 "インしてください。"
@@ -3009,7 +3030,7 @@ msgid ""
 "が利用可能です。その他の記号、半角空白などは使えません。"
 msgstr ""
 
-#: app/controllers/admin/settings_controller.rb:45
+#: app/controllers/admin/settings_controller.rb:46
 msgid "アカウント関連"
 msgstr ""
 
@@ -3039,7 +3060,7 @@ msgstr ""
 msgid "カテゴリが選択されていないか、不正な値です。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:275
+#: app/controllers/platform_controller.rb:278
 msgid "キャンセルされました。このサーバへの認証を確認してください"
 msgstr ""
 
@@ -3082,7 +3103,7 @@ msgstr ""
 msgid "サマリ"
 msgstr ""
 
-#: app/controllers/admin/settings_controller.rb:36
+#: app/controllers/admin/settings_controller.rb:37
 msgid "システム全体の最大許可容量に対して現在使用中の共有ファイルの容量です。"
 msgstr ""
 
@@ -3090,7 +3111,7 @@ msgstr ""
 msgid "システム情報"
 msgstr ""
 
-#: app/controllers/admin/settings_controller.rb:63
+#: app/controllers/admin/settings_controller.rb:64
 msgid "システム運用について"
 msgstr ""
 
@@ -3223,7 +3244,7 @@ msgstr ""
 msgid "メールアドレスは必須です。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:283
+#: app/controllers/platform_controller.rb:286
 msgid "ユーザの登録に失敗しました。管理者に連絡してください。<br/>%{msg}"
 msgstr ""
 
@@ -3259,7 +3280,7 @@ msgstr ""
 msgid "ログインし直して下さい。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:302
+#: app/controllers/platform_controller.rb:306
 msgid "ログインに失敗しました。"
 msgstr ""
 
@@ -3314,11 +3335,11 @@ msgstr ""
 msgid "以下のメールアドレスにURLを送信してください。"
 msgstr ""
 
-#: app/controllers/admin/settings_controller.rb:84
+#: app/controllers/admin/settings_controller.rb:85
 msgid "保存しました。"
 msgstr ""
 
-#: app/controllers/admin/settings_controller.rb:86
+#: app/controllers/admin/settings_controller.rb:87
 msgid "保存に失敗している項目があります。"
 msgstr ""
 
@@ -3352,11 +3373,11 @@ msgstr ""
 msgid "公開されている人にメールを送信する"
 msgstr ""
 
-#: app/controllers/admin/settings_controller.rb:34
+#: app/controllers/admin/settings_controller.rb:35
 msgid "共有ファイル関連"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:277
+#: app/controllers/platform_controller.rb:280
 msgid "内部エラーが発生しました。管理者に連絡してください。"
 msgstr ""
 
@@ -3562,7 +3583,7 @@ msgstr ""
 msgid "未読記事の一覧"
 msgstr ""
 
-#: app/controllers/admin/settings_controller.rb:56
+#: app/controllers/admin/settings_controller.rb:57
 msgid "機能に関する設定"
 msgstr ""
 
@@ -3570,7 +3591,7 @@ msgstr ""
 msgid "正しいCSVファイルの例"
 msgstr ""
 
-#: app/controllers/admin/settings_controller.rb:35
+#: app/controllers/admin/settings_controller.rb:36
 msgid "現在の利用容量"
 msgstr ""
 

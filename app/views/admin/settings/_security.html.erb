@@ -1,0 +1,5 @@
+<% @revert_columns = %w(enable_user_lock user_lock_trial_limit) -%>
+<div class="box tabular">
+  <p><%= settings_label_with_check_box_tag :enable_user_lock %></p>
+  <p><%= settings_label_with_select_tag :user_lock_trial_limit, (3..10).to_a, Admin::Setting.user_lock_trial_limit.to_i %></p>
+</div>

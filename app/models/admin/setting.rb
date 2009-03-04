@@ -91,6 +91,14 @@ class Admin::Setting < ActiveRecord::Base
   N_('Admin::Setting|Antenna default group')
   N_('Admin::Setting|Antenna default group description')
 
+  # ================================================================================================
+  # セキュリティ設定
+  # ================================================================================================
+  N_('Admin::Setting|Enable user lock')
+  N_('Admin::Setting|Enable user lock description')
+  N_('Admin::Setting|User lock trial limit')
+  N_('Admin::Setting|User lock trial limit description')
+
   cattr_accessor :available_settings
   @@available_settings = YAML::load(File.open("#{RAILS_ROOT}/config/settings.yml"))
 
