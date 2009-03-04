@@ -159,7 +159,7 @@ describe User, ".auth" do
   end
   describe "指定したログインID又はメールアドレスに対応するユーザが存在する場合" do
     before do
-      @user = mock_model(User)
+      @user = create_user
       @user.stub!(:crypted_password).and_return(User.encrypt(@valid_password))
       User.stub!(:find_by_code_or_email).and_return(@user)
     end
@@ -173,8 +173,6 @@ describe User, ".auth" do
     describe "使用中ユーザの場合" do
       before do
         @user.stub!(:unused?).and_return(false)
-        @user.stub!(:last_authenticated_at=)
-        @user.stub!(:save).with(false)
         User.should_receive(:find_by_code_or_email).and_return(@user)
       end
       describe "パスワードが正しい場合" do
@@ -184,13 +182,65 @@ describe User, ".auth" do
         it "last_authenticated_atが現在時刻に設定されること" do
           time = Time.now
           Time.stub!(:now).and_return(time)
-          @user.should_receive(:last_authenticated_at=).with(time)
-          @user.should_receive(:save).with(false)
-          User.auth("code_or_email", @valid_password)
+          lambda do
+            User.auth("code_or_email", @valid_password)
+          end.should change(@user, :last_authenticated_at).to(time)
+        end
+        describe 'ユーザがロックされている場合' do
+          before do
+            @user.lock = true
+          end
+          it 'ログイン試行回数が変化しないこと' do
+            lambda do
+              User.auth("code_or_email", @valid_password)
+            end.should_not change(@user, :trial_num)
+          end
+        end
+        describe 'ユーザがロックされていない場合' do
+          before do
+            @user.trial_num = 2
+          end
+          it 'ログイン試行回数が0になること' do
+            lambda do
+              User.auth("code_or_email", @valid_password)
+            end.should change(@user, :trial_num).to(0)
+          end
         end
       end
       describe "パスワードは正しくない場合" do
         it { User.auth('code_or_email', 'invalid_password').should be_nil }
+        describe 'ユーザがロックされていない場合' do
+          before do
+            @user.lock = false
+          end
+          describe 'ログイン試行回数が最大値未満の場合' do
+            before do
+              @user.trial_num = 2
+              Admin::Setting.user_lock_trial_limit = 3
+            end
+            it 'ログイン試行回数が1増加すること' do
+              lambda do
+                User.auth("code_or_email", 'invalid_password')
+              end.should change(@user, :trial_num).to(3)
+            end
+          end
+          describe 'ログイン試行回数が最大値以上の場合' do
+            before do
+              @user.trial_num = 3
+              Admin::Setting.user_lock_trial_limit = 3
+            end
+            it 'ロックされること' do
+              lambda do
+                User.auth("code_or_email", 'invalid_password')
+              end.should change(@user, :lock).to(true)
+            end
+            it 'ロックした旨のログが出力されること' do
+              @user.should_receive(:to_s_log).with('[User Locked]').and_return('user locked log')
+              @user.logger.should_receive(:info).with('user locked log')
+              User.auth("code_or_email", 'invalid_password')
+            end
+          end
+        end
       end
     end
   end

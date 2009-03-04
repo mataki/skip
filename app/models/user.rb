@@ -107,8 +107,24 @@ class User < ActiveRecord::Base
     return nil if user.unused?
     if user.crypted_password == encrypt(password)
       user.last_authenticated_at = Time.now
+      user.trial_num = 0 unless user.lock
       user.save(false)
       user
+    else
+      unless user.lock
+        if user.trial_num < Admin::Setting.user_lock_trial_limit
+          user.trial_num += 1
+          user.save(false)
+        else
+          user.lock = true
+          user.save(false)
+          user.logger.info(user.to_s_log('[User Locked]'))
+        end
+      end
+      nil
+      # 失敗回数が既定回数を越える場合
+      # ロックする
+      # ロックしたログを出力する
     end
   end
 
