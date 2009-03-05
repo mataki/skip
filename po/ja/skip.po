@@ -2616,7 +2616,7 @@ msgstr "メールアドレス"
 
 #: app/models/user.rb:-
 msgid "User|Issued at"
-msgstr ""
+msgstr "ログインID発行日時"
 
 #: app/models/user.rb:-
 msgid "User|Last authenticated at"
