@@ -388,6 +388,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def locked?
+    Admin::Setting.enable_user_lock && self.lock?
+  end
+
 protected
   # TODO: self.make_conditionsメソッドは使ってなさそう確認して消す
   @@search_cond_keys = [:name, :section, :email]
@@ -423,7 +427,7 @@ private
   end
 
   def self.auth_successed user
-    unless user.lock
+    unless user.locked?
       user.last_authenticated_at = Time.now
       user.trial_num = 0
       user.save(false)
@@ -432,7 +436,7 @@ private
   end
 
   def self.auth_failed user
-    if Admin::Setting.enable_user_lock && !user.lock
+    unless user.locked?
       if user.trial_num < Admin::Setting.user_lock_trial_limit
         user.trial_num += 1
         user.save(false)

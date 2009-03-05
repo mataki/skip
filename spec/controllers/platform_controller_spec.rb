@@ -36,7 +36,7 @@ describe PlatformController, "パスワードでログインする場合" do
     end
     describe 'ロックされている場合' do
       before do
-        @user.should_receive(:lock).and_return(true)
+        @user.should_receive(:locked?).and_return(true)
       end
       it '前のページにリダイレクトされること' do
         login
@@ -53,7 +53,7 @@ describe PlatformController, "パスワードでログインする場合" do
     end
     describe 'ロックされていない場合' do
       before do
-        @user.should_receive(:lock).and_return(false)
+        @user.should_receive(:locked?).and_return(false)
       end
       it 'root_urlにリダイレクトされること' do
         login

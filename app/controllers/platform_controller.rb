@@ -298,7 +298,7 @@ class PlatformController < ApplicationController
   def login_with_password
     logout_killing_session!([:request_token])
     if params[:login] and user = User.auth(params[:login][:key], params[:login][:password])
-      if user.lock
+      if user.locked?
         logger.info(user.to_s_log('[Login failed with password]'))
         flash[:error] = _("入力されたログインIDのユーザは凍結されているためログインできません。凍結を解除するにはパスワードの再設定を行って下さい。")
         redirect_to(request.env['HTTP_REFERER'] ? :back : login_url)
