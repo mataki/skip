@@ -179,16 +179,14 @@ describe User, ".auth" do
         it "検索されたユーザが返ること" do
           User.auth('code_or_email', @valid_password).should == @user
         end
-        it "last_authenticated_atが現在時刻に設定されること" do
-          time = Time.now
-          Time.stub!(:now).and_return(time)
-          lambda do
-            User.auth("code_or_email", @valid_password)
-          end.should change(@user, :last_authenticated_at).to(time)
-        end
         describe 'ユーザがロックされている場合' do
           before do
             @user.lock = true
+          end
+          it 'last_authenticated_atが変化しないこと' do
+            lambda do
+              User.auth("code_or_email", @valid_password)
+            end.should_not change(@user, :last_authenticated_at)
           end
           it 'ログイン試行回数が変化しないこと' do
             lambda do
@@ -199,6 +197,13 @@ describe User, ".auth" do
         describe 'ユーザがロックされていない場合' do
           before do
             @user.trial_num = 2
+          end
+          it "last_authenticated_atが現在時刻に設定されること" do
+            time = Time.now
+            Time.stub!(:now).and_return(time)
+            lambda do
+              User.auth("code_or_email", @valid_password)
+            end.should change(@user, :last_authenticated_at).to(time)
           end
           it 'ログイン試行回数が0になること' do
             lambda do

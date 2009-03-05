@@ -106,9 +106,11 @@ class User < ActiveRecord::Base
     return nil unless user = find_by_code_or_email(code_or_email)
     return nil if user.unused?
     if user.crypted_password == encrypt(password)
-      user.last_authenticated_at = Time.now
-      user.trial_num = 0 unless user.lock
-      user.save(false)
+      unless user.lock
+        user.last_authenticated_at = Time.now
+        user.trial_num = 0
+        user.save(false)
+      end
       user
     else
       unless user.lock
@@ -122,9 +124,6 @@ class User < ActiveRecord::Base
         end
       end
       nil
-      # 失敗回数が既定回数を越える場合
-      # ロックする
-      # ロックしたログを出力する
     end
   end
 
