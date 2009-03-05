@@ -119,8 +119,8 @@
         <div class="input_bottom"></div>
       </div>
       <div class="input_line">
-        <div class="input_label"><%=h _('User|Last password updated at') %></div>
-        <div class="input_value"><%=h @user.last_password_updated_at.blank? ? '' : @user.last_password_updated_at.strftime("%Y/%m/%d %H:%M:%S") %></div>
+        <div class="input_label"><%=h _('User|Password expires at') %></div>
+        <div class="input_value"><%=h @user.password_expires_at.blank? ? '' : @user.password_expires_at.strftime("%Y/%m/%d %H:%M:%S") %></div>
         <div class="input_bottom"></div>
       </div>
       <% end -%>

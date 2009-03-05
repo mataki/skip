@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2009-03-05 11:20+0900\n"
+"POT-Creation-Date: 2009-03-05 13:55+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1024,10 +1024,6 @@ msgstr ""
 msgid "Admin::User|Last authenticated at"
 msgstr ""
 
-#: app/models/admin/user.rb:43
-msgid "Admin::User|Last password updated at"
-msgstr ""
-
 #: app/models/admin/user.rb:40
 msgid "Admin::User|Lock"
 msgstr ""
@@ -1049,6 +1045,10 @@ msgstr ""
 
 #: app/models/admin/user.rb:33 app/views/portal/_registration_form.html.erb:62
 msgid "Admin::User|Password confirmation"
+msgstr ""
+
+#: app/models/admin/user.rb:43
+msgid "Admin::User|Password expires at"
 msgstr ""
 
 #: app/models/admin/user.rb:38
@@ -2523,16 +2523,12 @@ msgstr ""
 msgid "User|Email"
 msgstr ""
 
-#: app/models/user.rb:-
+#: app/models/user.rb:- app/views/user/show.html.erb:112
 msgid "User|Issued at"
 msgstr ""
 
-#: app/models/user.rb:-
+#: app/models/user.rb:- app/views/user/show.html.erb:117
 msgid "User|Last authenticated at"
-msgstr ""
-
-#: app/models/user.rb:-
-msgid "User|Last password updated at"
 msgstr ""
 
 #: app/models/user.rb:-
@@ -2557,6 +2553,10 @@ msgstr ""
 
 #: app/models/user.rb:56
 msgid "User|Password confirmation"
+msgstr ""
+
+#: app/models/user.rb:- app/views/user/show.html.erb:122
+msgid "User|Password expires at"
 msgstr ""
 
 #: app/models/user.rb:-
@@ -2749,7 +2749,7 @@ msgid "group participation"
 msgstr ""
 
 #: app/views/admin/users/index.html.erb:36
-msgid "issued_atlast_authenticated_atlast_password_updated_at"
+msgid "issued_atlast_authenticated_atpassword_expires_at"
 msgstr ""
 
 #: app/models/mail.rb:-

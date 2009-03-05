@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2009-03-05 11:20+0900\n"
+"POT-Creation-Date: 2009-03-05 13:55+0900\n"
 "PO-Revision-Date: 2009-03-03 14:42+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1103,10 +1103,6 @@ msgstr "ログインID発行日時"
 msgid "Admin::User|Last authenticated at"
 msgstr "最終ログイン日時"
 
-#: app/models/admin/user.rb:43
-msgid "Admin::User|Last password updated at"
-msgstr "最終パスワード変更日時"
-
 #: app/models/admin/user.rb:40
 msgid "Admin::User|Lock"
 msgstr "凍結状態"
@@ -1129,6 +1125,10 @@ msgstr "パスワード"
 #: app/models/admin/user.rb:33 app/views/portal/_registration_form.html.erb:62
 msgid "Admin::User|Password confirmation"
 msgstr "確認パスワード"
+
+#: app/models/admin/user.rb:43
+msgid "Admin::User|Password expires at"
+msgstr "パスワード有効期限"
 
 #: app/models/admin/user.rb:38
 msgid "Admin::User|Password reset token"
@@ -2614,17 +2614,13 @@ msgstr "公開"
 msgid "User|Email"
 msgstr "メールアドレス"
 
-#: app/models/user.rb:-
+#: app/models/user.rb:- app/views/user/show.html.erb:112
 msgid "User|Issued at"
 msgstr "ログインID発行日時"
 
-#: app/models/user.rb:-
+#: app/models/user.rb:- app/views/user/show.html.erb:117
 msgid "User|Last authenticated at"
 msgstr "最終ログイン日時"
-
-#: app/models/user.rb:-
-msgid "User|Last password updated at"
-msgstr "最終パスワード更新日時"
 
 #: app/models/user.rb:-
 msgid "User|Lock"
@@ -2649,6 +2645,10 @@ msgstr "パスワード"
 #: app/models/user.rb:56
 msgid "User|Password confirmation"
 msgstr "確認パスワード"
+
+#: app/models/user.rb:- app/views/user/show.html.erb:122
+msgid "User|Password expires at"
+msgstr "パスワード有効期限"
 
 #: app/models/user.rb:-
 msgid "User|Remember token"
@@ -2842,7 +2842,7 @@ msgid "group participation"
 msgstr "グループ参加"
 
 #: app/views/admin/users/index.html.erb:36
-msgid "issued_atlast_authenticated_atlast_password_updated_at"
+msgid "issued_atlast_authenticated_atpassword_expires_at"
 msgstr ""
 
 #: app/models/mail.rb:-

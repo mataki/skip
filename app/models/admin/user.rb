@@ -40,7 +40,7 @@ class Admin::User < User
   N_('Admin::User|Lock')
   N_('Admin::User|Issued at')
   N_('Admin::User|Last authenticated at')
-  N_('Admin::User|Last password updated at')
+  N_('Admin::User|Password expires at')
 
   N_('Admin::User|User uids')
 
