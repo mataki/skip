@@ -297,10 +297,17 @@ class PlatformController < ApplicationController
 
   def login_with_password
     logout_killing_session!([:request_token])
-    if params[:login] and self.current_user = User.auth(params[:login][:key], params[:login][:password])
-      logger.info(current_user.to_s_log('[Login successful with password]'))
-      handle_remember_cookie!(params[:login_save] == 'true')
-      redirect_to_return_to_or_root
+    if params[:login] and user = User.auth(params[:login][:key], params[:login][:password])
+      if user.lock
+        logger.info(user.to_s_log('[Login failed with password]'))
+        flash[:error] = _("入力されたログインIDのユーザは凍結されているためログインできません。凍結を解除するにはパスワードの再設定を行って下さい。")
+        redirect_to(request.env['HTTP_REFERER'] ? :back : login_url)
+      else
+        self.current_user = user
+        logger.info(current_user.to_s_log('[Login successful with password]'))
+        handle_remember_cookie!(params[:login_save] == 'true')
+        redirect_to_return_to_or_root
+      end
     else
       logger.info(User.to_s_log('[Login failed with password]', params[:login][:key]))
       flash[:error] = _("ログインに失敗しました。")
