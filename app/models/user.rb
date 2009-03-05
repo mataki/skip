@@ -421,7 +421,7 @@ private
   end
 
   def self.auth_failed user
-    unless user.lock
+    if Admin::Setting.enable_user_lock && !user.lock
       if user.trial_num < Admin::Setting.user_lock_trial_limit
         user.trial_num += 1
         user.save(false)
