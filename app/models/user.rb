@@ -105,6 +105,10 @@ class User < ActiveRecord::Base
     self.crypted_password = encrypt(password) if password_required?
   end
 
+  def before_create
+    self.issued_at = Time.now
+  end
+
   def self.auth(code_or_email, password)
     return nil unless user = find_by_code_or_email(code_or_email)
     return nil if user.unused?

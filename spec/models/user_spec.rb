@@ -80,6 +80,19 @@ describe User, "#before_save" do
   end
 end
 
+describe User, '#before_create' do
+  before do
+    @user = new_user
+  end
+  it '新規作成の際にはissued_atに現在日時が設定される' do
+    time = Time.now
+    Time.stub!(:now).and_return(time)
+    lambda do
+      @user.save
+    end.should change(@user, :issued_at).to(nil)
+  end
+end
+
 describe User, '#change_password' do
   before do
     @user = create_user
