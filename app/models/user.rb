@@ -109,24 +109,9 @@ class User < ActiveRecord::Base
     return nil unless user = find_by_code_or_email(code_or_email)
     return nil if user.unused?
     if user.crypted_password == encrypt(password)
-      unless user.lock
-        user.last_authenticated_at = Time.now
-        user.trial_num = 0
-        user.save(false)
-      end
-      user
+      auth_successed(user)
     else
-      unless user.lock
-        if user.trial_num < Admin::Setting.user_lock_trial_limit
-          user.trial_num += 1
-          user.save(false)
-        else
-          user.lock = true
-          user.save(false)
-          user.logger.info(user.to_s_log('[User Locked]'))
-        end
-      end
-      nil
+      auth_failed(user)
     end
   end
 
@@ -425,4 +410,29 @@ private
   def self.find_by_code_or_email(code_or_email)
     find_by_code(code_or_email) || find_by_email(code_or_email)
   end
+
+  def self.auth_successed user
+    unless user.lock
+      user.last_authenticated_at = Time.now
+      user.trial_num = 0
+      user.save(false)
+    end
+    user
+  end
+
+  def self.auth_failed user
+    unless user.lock
+      if user.trial_num < Admin::Setting.user_lock_trial_limit
+        user.trial_num += 1
+        user.save(false)
+      else
+        user.lock = true
+        user.save(false)
+        user.logger.info(user.to_s_log('[User Locked]'))
+      end
+    end
+    nil
+  end
+
+  private_class_method :find_by_code_or_email, :auth_successed, :auth_failed
 end

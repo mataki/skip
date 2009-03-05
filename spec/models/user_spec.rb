@@ -176,75 +176,15 @@ describe User, ".auth" do
         User.should_receive(:find_by_code_or_email).and_return(@user)
       end
       describe "パスワードが正しい場合" do
-        it "検索されたユーザが返ること" do
-          User.auth('code_or_email', @valid_password).should == @user
-        end
-        describe 'ユーザがロックされている場合' do
-          before do
-            @user.lock = true
-          end
-          it 'last_authenticated_atが変化しないこと' do
-            lambda do
-              User.auth("code_or_email", @valid_password)
-            end.should_not change(@user, :last_authenticated_at)
-          end
-          it 'ログイン試行回数が変化しないこと' do
-            lambda do
-              User.auth("code_or_email", @valid_password)
-            end.should_not change(@user, :trial_num)
-          end
-        end
-        describe 'ユーザがロックされていない場合' do
-          before do
-            @user.trial_num = 2
-          end
-          it "last_authenticated_atが現在時刻に設定されること" do
-            time = Time.now
-            Time.stub!(:now).and_return(time)
-            lambda do
-              User.auth("code_or_email", @valid_password)
-            end.should change(@user, :last_authenticated_at).to(time)
-          end
-          it 'ログイン試行回数が0になること' do
-            lambda do
-              User.auth("code_or_email", @valid_password)
-            end.should change(@user, :trial_num).to(0)
-          end
+        it '認証成功処理が行われること' do
+          User.should_receive(:auth_successed).with(@user)
+          User.auth('code_or_email', @valid_password)
         end
       end
       describe "パスワードは正しくない場合" do
-        it { User.auth('code_or_email', 'invalid_password').should be_nil }
-        describe 'ユーザがロックされていない場合' do
-          before do
-            @user.lock = false
-          end
-          describe 'ログイン試行回数が最大値未満の場合' do
-            before do
-              @user.trial_num = 2
-              Admin::Setting.user_lock_trial_limit = 3
-            end
-            it 'ログイン試行回数が1増加すること' do
-              lambda do
-                User.auth("code_or_email", 'invalid_password')
-              end.should change(@user, :trial_num).to(3)
-            end
-          end
-          describe 'ログイン試行回数が最大値以上の場合' do
-            before do
-              @user.trial_num = 3
-              Admin::Setting.user_lock_trial_limit = 3
-            end
-            it 'ロックされること' do
-              lambda do
-                User.auth("code_or_email", 'invalid_password')
-              end.should change(@user, :lock).to(true)
-            end
-            it 'ロックした旨のログが出力されること' do
-              @user.should_receive(:to_s_log).with('[User Locked]').and_return('user locked log')
-              @user.logger.should_receive(:info).with('user locked log')
-              User.auth("code_or_email", 'invalid_password')
-            end
-          end
+        it '認証失敗処理が行われること' do
+          User.should_receive(:auth_failed).with(@user)
+          User.auth('code_or_email', 'invalid_password')
         end
       end
     end
@@ -614,7 +554,7 @@ describe User, '.find_by_code_or_email' do
       User.should_receive(:find_by_code).and_return(@user)
     end
     it '見つかったユーザが返ること' do
-      User.find_by_code_or_email('login_id').should == @user
+      User.send!(:find_by_code_or_email, 'login_id').should == @user
     end
   end
   describe 'ログインIDに一致するユーザが見つからない場合' do
@@ -627,7 +567,7 @@ describe User, '.find_by_code_or_email' do
         User.should_receive(:find_by_email).and_return(@user)
       end
       it '見つかったユーザが返ること' do
-        User.find_by_code_or_email('skip@example.org').should == @user
+        User.send!(:find_by_code_or_email, 'skip@example.org').should == @user
       end
     end
     describe 'メールアドレスに一致するユーザが見つからない場合' do
@@ -635,7 +575,89 @@ describe User, '.find_by_code_or_email' do
         User.should_receive(:find_by_email).and_return(nil)
       end
       it 'nilが返ること' do
-        User.find_by_code_or_email('skip@example.org').should be_nil
+        User.send!(:find_by_code_or_email, 'skip@example.org').should be_nil
+      end
+    end
+  end
+end
+
+describe User, '.auth_successed' do
+  before do
+    @user = create_user
+  end
+  it "検索されたユーザが返ること" do
+    User.send!(:auth_successed, @user).should == @user
+  end
+  describe 'ユーザがロックされている場合' do
+    before do
+      @user.lock = true
+    end
+    it 'last_authenticated_atが変化しないこと' do
+      lambda do
+        User.send!(:auth_successed, @user)
+      end.should_not change(@user, :last_authenticated_at)
+    end
+    it 'ログイン試行回数が変化しないこと' do
+      lambda do
+        User.send!(:auth_successed, @user)
+      end.should_not change(@user, :trial_num)
+    end
+  end
+  describe 'ユーザがロックされていない場合' do
+    before do
+      @user.trial_num = 2
+    end
+    it "last_authenticated_atが現在時刻に設定されること" do
+      time = Time.now
+      Time.stub!(:now).and_return(time)
+      lambda do
+        User.send!(:auth_successed, @user)
+      end.should change(@user, :last_authenticated_at).to(time)
+    end
+    it 'ログイン試行回数が0になること' do
+      lambda do
+        User.send!(:auth_successed, @user)
+      end.should change(@user, :trial_num).to(0)
+    end
+  end
+end
+
+describe User, '.auth_failed' do
+  before do
+    @user = create_user
+  end
+  it 'nilが返ること' do
+    User.send!(:auth_failed, @user).should be_nil
+  end
+  describe 'ユーザがロックされていない場合' do
+    before do
+      @user.lock = false
+    end
+    describe 'ログイン試行回数が最大値未満の場合' do
+      before do
+        @user.trial_num = 2
+        Admin::Setting.user_lock_trial_limit = 3
+      end
+      it 'ログイン試行回数が1増加すること' do
+        lambda do
+          User.send!(:auth_failed, @user)
+        end.should change(@user, :trial_num).to(3)
+      end
+    end
+    describe 'ログイン試行回数が最大値以上の場合' do
+      before do
+        @user.trial_num = 3
+        Admin::Setting.user_lock_trial_limit = 3
+      end
+      it 'ロックされること' do
+        lambda do
+          User.send!(:auth_failed, @user)
+        end.should change(@user, :lock).to(true)
+      end
+      it 'ロックした旨のログが出力されること' do
+        @user.should_receive(:to_s_log).with('[User Locked]').and_return('user locked log')
+        @user.logger.should_receive(:info).with('user locked log')
+        User.send!(:auth_failed, @user)
       end
     end
   end
