@@ -229,10 +229,6 @@ describe PortalController, 'POST /apply' do
   def verify_save_user
     @user.should_receive(:attributes=)
     @user.should_receive(:status=).with('ACTIVE')
-    time = Time.now
-    Time.stub!(:now).and_return(time)
-    Admin::Setting.password_change_interval = 90
-    @user.should_receive(:password_expires_at=).with(Time.now.ago(90.day))
     @user.should_receive(:save!)
     @user.should_receive(:activate!)
     controller.should_receive(:current_user).and_return(@user)

@@ -59,24 +59,48 @@ describe User, 'validation' do
 end
 
 describe User, "#before_save" do
-  before do
-    @user = new_user
+
+  describe '新規の場合' do
+    before do
+      @user = new_user
+      Admin::Setting.password_change_interval = 90
+    end
+    it "保存する際はパスワードが暗号化される" do
+      lambda do
+        @user.save
+      end.should change(@user, :crypted_password).to(User.encrypt('password'))
+    end
+    it 'パスワード有効期限が設定される' do
+      time = Time.now
+      Time.stub!(:now).and_return(time)
+      lambda do
+        @user.save
+      end.should change(@user, :password_expires_at).to(Time.now.ago(90.day))
+    end
   end
 
-  it "保存する際はパスワードが暗号化される" do
-    @user.save.should be_true
-    @user.crypted_password.should == User.encrypt('password')
-  end
-
-  it "パスワード以外の変更で再度保存される場合はパスワードは変更されない" do
-    @user.save
-    # password_required?の条件でpasswordが空になる必要があるためロードし直す
-    @user = User.find_by_id(@user.id)
-
-    @user.should_not_receive(:crypted_password=)
-    @user.name = 'fuga'
-    @user.send(:password_required?).should be_false
-    @user.save
+  describe '更新の場合' do
+    before do
+      @user = new_user
+      @user.save
+    end
+    describe 'パスワード以外の変更の場合' do
+      before do
+        # password_required?の条件でpasswordが空になる必要があるためロードし直す
+        @user = User.find_by_id(@user.id)
+        @user.name = 'fuga'
+      end
+      it "パスワードは変更されないこと" do
+        lambda do
+          @user.save
+        end.should_not change(@user, :crypted_password)
+      end
+      it 'パスワード有効期限は設定されないこと' do
+        lambda do
+          @user.save
+        end.should_not change(@user, :password_expires_at)
+      end
+    end
   end
 end
 
@@ -289,14 +313,6 @@ describe User, '#after_reset_password' do
     lambda do
       @user.after_reset_password
     end.should change(@user, :trial_num).to(0)
-  end
-  it 'password_expires_atの値が更新されること' do
-    time = Time.now
-    Time.stub!(:now).and_return(time)
-    Admin::Setting.password_change_interval = 90
-    lambda do
-      @user.after_reset_password
-    end.should change(@user, :password_expires_at).to(Time.now.ago(90.day))
   end
 end
 
