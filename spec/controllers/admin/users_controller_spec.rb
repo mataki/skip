@@ -101,9 +101,11 @@ describe Admin::UsersController, 'POST #update' do
     before do
       @before_status = mock('before_status')
       @before_admin = mock('before admin')
+      @before_lock = mock('before_lock')
       @admin_user = admin_login
       @admin_user.stub!(:status).and_return(@before_status)
       @admin_user.stub!(:admin).and_return(@before_admin)
+      @admin_user.stub!(:lock).and_return(@before_lock)
       @admin_user.stub!(:id).and_return(@user.id)
 
       @user.stub!(:save!)
@@ -116,9 +118,33 @@ describe Admin::UsersController, 'POST #update' do
       @user.should_receive(:admin=).with(@before_admin)
       post :update
     end
+    it '凍結状態が変更されない' do
+      @user.should_receive(:lock=).with(@before_lock)
+      post :update
+    end
     it "編集画面がrenderされる" do
       post :update
       response.should render_template('admin/users/edit')
+    end
+  end
+  describe '他者を更新する場合' do
+    describe 'ロックされていない場合' do
+      before do
+        @user.lock = false
+      end
+      it '試行回数に0が設定されること' do
+        @user.should_receive(:trial_num=).with(0)
+        post :update
+      end
+    end
+    describe 'ロックされている場合' do
+      before do
+        @user.lock = true
+      end
+      it '試行回数が設定されないこと' do
+        @user.should_not_receive(:trial_num=)
+        post :update
+      end
     end
   end
 end

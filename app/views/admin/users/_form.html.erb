@@ -33,10 +33,16 @@
   <% end -%>
   <% end %>
 </p>
-<% unless @user.new_record? -%><p>
+<% unless @user.new_record? -%>
+<p>
   <%= label Admin::User.name, :admin %>
   :<%= check_box :user, :admin %>
   <%= help_icon Admin::User.name, :admin %>
+</p>
+<p>
+  <%= label Admin::User.name, :lock %>
+  :<%= check_box :user, :lock %>
+  <%= help_icon Admin::User.name, :lock %>
 </p>
 <% end -%>
 <p>
