@@ -301,7 +301,7 @@ class User < ActiveRecord::Base
   end
 
   def determination_reset_auth_token
-    update_attributes(:reset_auth_token => nil, :reset_auth_token_expires_at => nil, :lock => false)
+    update_attributes(:reset_auth_token => nil, :reset_auth_token_expires_at => nil, :lock => false, :trial_num => 0)
   end
 
   def issue_activation_code

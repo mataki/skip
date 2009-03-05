@@ -284,6 +284,12 @@ describe User, '#determination_reset_auth_token' do
       @user.determination_reset_auth_token
     end.should change(@user, :lock).to(false)
   end
+  it 'trial_numの値が0に更新されること' do
+    @user.trial_num = 3
+    lambda do
+      @user.determination_reset_auth_token
+    end.should change(@user, :trial_num).to(0)
+  end
   it 'password_expires_atの値が更新されること'
 end
 
