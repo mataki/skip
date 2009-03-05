@@ -66,6 +66,9 @@ class User < ActiveRecord::Base
   N_('User|Disclosure|true')
   N_('User|Disclosure|false')
 
+  N_('User|Lock|true')
+  N_('User|Lock|false')
+
   ACTIVATION_LIFETIME = 5
 
   def to_s

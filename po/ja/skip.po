@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2009-03-04 14:00+0900\n"
+"POT-Creation-Date: 2009-03-05 11:20+0900\n"
 "PO-Revision-Date: 2009-03-03 14:42+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -638,7 +638,10 @@ msgstr "ユーザ凍結機能を有効にする"
 
 #: app/models/admin/setting.rb:98
 msgid "Admin::Setting|Enable user lock description"
-msgstr "既定回数(管理画面で設定可)だけログインに失敗したユーザを凍結してログイン出来ないようにします。凍結を解除するには、対象ユーザがパスワード再設定機能を使ってパスワードを再設定しなければなりません。"
+msgstr ""
+"既定回数(管理画面で設定可)だけログインに失敗したユーザを凍結してログイン出来"
+"ないようにします。凍結を解除するには、対象ユーザがパスワード再設定機能を使っ"
+"てパスワードを再設定しなければなりません。"
 
 #: app/models/admin/setting.rb:40
 msgid "Admin::Setting|Footer first"
@@ -865,7 +868,9 @@ msgstr "ログインの試行回数の最大値"
 
 #: app/models/admin/setting.rb:100
 msgid "Admin::Setting|User lock trial limit description"
-msgstr "ログインの試行回数の最大値を指定して下さい。最大値を越えてログインに失敗すると対象となるユーザは凍結されます。"
+msgstr ""
+"ログインの試行回数の最大値を指定して下さい。最大値を越えてログインに失敗する"
+"と対象となるユーザは凍結されます。"
 
 #: app/models/admin/share_file.rb:26
 msgid "Admin::ShareFile|Category"
@@ -1090,6 +1095,22 @@ msgstr "メールアドレス"
 msgid "Admin::User|Email description"
 msgstr "メールアドレスを入力して下さい。"
 
+#: app/models/admin/user.rb:41
+msgid "Admin::User|Issued at"
+msgstr "ログインID発行日時"
+
+#: app/models/admin/user.rb:42
+msgid "Admin::User|Last authenticated at"
+msgstr "最終ログイン日時"
+
+#: app/models/admin/user.rb:43
+msgid "Admin::User|Last password updated at"
+msgstr "最終パスワード変更日時"
+
+#: app/models/admin/user.rb:40
+msgid "Admin::User|Lock"
+msgstr "凍結状態"
+
 #: app/models/admin/user.rb:27 app/views/user/show.html.erb:94
 #: app/views/portal/_registration_form.html.erb:17
 #: app/views/admin/users/import.html.erb:21 app/views/users/_user.html.erb:28
@@ -1143,7 +1164,7 @@ msgstr "ユーザの利用状態を選択します。"
 msgid "Admin::User|Uid"
 msgstr "ユーザ名"
 
-#: app/models/admin/user.rb:41
+#: app/models/admin/user.rb:45
 msgid "Admin::User|User uids"
 msgstr "ログインID"
 
@@ -1226,7 +1247,7 @@ msgstr "関連するコメントも一緒に削除されますが、よろしい
 #: app/views/admin/user_profile_master_categories/index.html.erb:18
 #: app/views/admin/users/create_uid.html.erb:27
 #: app/views/admin/users/change_uid.html.erb:31
-#: app/views/admin/users/index.html.erb:43
+#: app/views/admin/users/index.html.erb:48
 msgid "Are you sure?"
 msgstr "本当に宜しいですか？"
 
@@ -1541,7 +1562,7 @@ msgstr "データ管理"
 #: app/views/admin/group_categories/index.html.erb:29
 #: app/views/admin/user_profile_master_categories/index.html.erb:18
 #: app/views/admin/user_profile_masters/index.html.erb:28
-#: app/views/admin/users/index.html.erb:43
+#: app/views/admin/users/index.html.erb:48
 msgid "Destroy"
 msgstr "削除"
 
@@ -1549,7 +1570,7 @@ msgstr "削除"
 #: app/views/admin/group_categories/index.html.erb:28
 #: app/views/admin/user_profile_master_categories/index.html.erb:17
 #: app/views/admin/user_profile_masters/index.html.erb:27
-#: app/views/admin/users/index.html.erb:42
+#: app/views/admin/users/index.html.erb:47
 msgid "Edit"
 msgstr "編集"
 
@@ -1901,13 +1922,13 @@ msgstr ""
 #: app/views/admin/group_categories/index.html.erb:36
 #: app/views/admin/user_profile_master_categories/index.html.erb:25
 #: app/views/admin/user_profile_masters/index.html.erb:35
-#: app/views/admin/users/index.html.erb:50
+#: app/views/admin/users/index.html.erb:55
 msgid "New %{model}"
 msgstr "新規%{model}の作成"
 
 #: app/controllers/admin/users_controller.rb:121
 #: app/controllers/admin/users_controller.rb:138
-#: app/views/admin/users/index.html.erb:51
+#: app/views/admin/users/index.html.erb:56
 msgid "New user from csv"
 msgstr "ユーザのCSVアップロード"
 
@@ -2594,8 +2615,28 @@ msgid "User|Email"
 msgstr "メールアドレス"
 
 #: app/models/user.rb:-
-msgid "User|Last authenticated at"
+msgid "User|Issued at"
 msgstr ""
+
+#: app/models/user.rb:-
+msgid "User|Last authenticated at"
+msgstr "最終ログイン日時"
+
+#: app/models/user.rb:-
+msgid "User|Last password updated at"
+msgstr "最終パスワード更新日時"
+
+#: app/models/user.rb:-
+msgid "User|Lock"
+msgstr "凍結状態"
+
+#: app/models/user.rb:70
+msgid "User|Lock|false"
+msgstr " "
+
+#: app/models/user.rb:69
+msgid "User|Lock|true"
+msgstr "凍結"
 
 #: app/models/user.rb:54
 msgid "User|Old password"
@@ -2647,6 +2688,10 @@ msgstr "退職"
 #: app/views/admin/users/_form.html.erb:32
 msgid "User|Status|UNUSED"
 msgstr "未使用"
+
+#: app/models/user.rb:-
+msgid "User|Trial num"
+msgstr ""
 
 #: app/models/user.rb:-
 msgid "User|Updated on"
@@ -2796,6 +2841,10 @@ msgstr "グループカテゴリ"
 msgid "group participation"
 msgstr "グループ参加"
 
+#: app/views/admin/users/index.html.erb:36
+msgid "issued_atlast_authenticated_atlast_password_updated_at"
+msgstr ""
+
 #: app/models/mail.rb:-
 msgid "mail"
 msgstr ""
@@ -2893,7 +2942,7 @@ msgstr "選択をはずす"
 #: app/controllers/admin/user_profiles_controller.rb:20
 #: app/controllers/admin/user_profiles_controller.rb:39 app/models/user.rb:-
 #: app/views/admin/users/import.html.erb:74
-#: app/views/admin/users/index.html.erb:50
+#: app/views/admin/users/index.html.erb:55
 msgid "user"
 msgstr "ユーザ"
 
@@ -3280,7 +3329,7 @@ msgstr ""
 msgid "ログインし直して下さい。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:306
+#: app/controllers/platform_controller.rb:313
 msgid "ログインに失敗しました。"
 msgstr ""
 
@@ -3359,6 +3408,12 @@ msgid ""
 "入力された%{email}のユーザは、利用開始されていません。利用開始してください。"
 msgstr ""
 
+#: app/controllers/platform_controller.rb:303
+msgid ""
+"入力されたログインIDのユーザは凍結されているためログインできません。凍結を解"
+"除するにはパスワードの再設定を行って下さい。"
+msgstr ""
+
 #: app/views/admin/settings/index.html.erb:5
 msgid ""
 "全ての入力値を、初期設定値に置き換えます。保存ボタンを押さない限り、保存され"
@@ -3393,7 +3448,7 @@ msgstr ""
 msgid "利用開始URLを発行しました。確認のリンクからユーザに連絡してください。"
 msgstr ""
 
-#: app/views/admin/users/index.html.erb:65
+#: app/views/admin/users/index.html.erb:70
 msgid ""
 "利用開始URLを発行します。次の画面で確認リンクを押して表示されるURLをユーザに"
 "送信してください。"
@@ -3499,7 +3554,7 @@ msgstr ""
 msgid "対象データが見つかりません。"
 msgstr ""
 
-#: app/views/admin/users/index.html.erb:65
+#: app/views/admin/users/index.html.erb:70
 msgid "対象ユーザに利用開始通知メールを送信しますが宜しいですか?"
 msgstr ""
 

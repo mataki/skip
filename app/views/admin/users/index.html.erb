@@ -8,7 +8,7 @@
   <%= render :partial => '/admin/search_box', :locals => { :class_name => 'Admin::User' } %>
   <%= render :partial => '/admin/shared/sortable_table',
              :locals => {
-               :columns => %w[code uid name email section status admin],
+               :columns => %w[code uid name email section status admin lock issued_at last_authenticated_at last_password_updated_at],
                :disp_columns_proc => lambda do |object,column|
       case column
       when "status"
@@ -30,6 +30,11 @@
         end
       when "admin"
         _("User|Admin|#{object.admin}")
+      when "lock"
+        _("User|Lock|#{object.lock}")
+      when "issued_at", "last_authenticated_at", "last_password_updated_at"
+        time = object.send(column.to_sym)
+        time.blank? ? '' : time.strftime("%Y/%m/%d %H:%M:%S")
       else
         object.send(column.to_sym)
       end

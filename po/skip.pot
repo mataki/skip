@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2009-03-04 14:00+0900\n"
+"POT-Creation-Date: 2009-03-05 11:20+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1016,6 +1016,22 @@ msgstr ""
 msgid "Admin::User|Email description"
 msgstr ""
 
+#: app/models/admin/user.rb:41
+msgid "Admin::User|Issued at"
+msgstr ""
+
+#: app/models/admin/user.rb:42
+msgid "Admin::User|Last authenticated at"
+msgstr ""
+
+#: app/models/admin/user.rb:43
+msgid "Admin::User|Last password updated at"
+msgstr ""
+
+#: app/models/admin/user.rb:40
+msgid "Admin::User|Lock"
+msgstr ""
+
 #: app/models/admin/user.rb:27 app/views/user/show.html.erb:94
 #: app/views/portal/_registration_form.html.erb:17
 #: app/views/admin/users/import.html.erb:21 app/views/users/_user.html.erb:28
@@ -1067,7 +1083,7 @@ msgstr ""
 msgid "Admin::User|Uid"
 msgstr ""
 
-#: app/models/admin/user.rb:41
+#: app/models/admin/user.rb:45
 msgid "Admin::User|User uids"
 msgstr ""
 
@@ -1140,7 +1156,7 @@ msgstr ""
 #: app/views/admin/user_profile_master_categories/index.html.erb:18
 #: app/views/admin/users/create_uid.html.erb:27
 #: app/views/admin/users/change_uid.html.erb:31
-#: app/views/admin/users/index.html.erb:43
+#: app/views/admin/users/index.html.erb:48
 msgid "Are you sure?"
 msgstr ""
 
@@ -1455,7 +1471,7 @@ msgstr ""
 #: app/views/admin/group_categories/index.html.erb:29
 #: app/views/admin/user_profile_master_categories/index.html.erb:18
 #: app/views/admin/user_profile_masters/index.html.erb:28
-#: app/views/admin/users/index.html.erb:43
+#: app/views/admin/users/index.html.erb:48
 msgid "Destroy"
 msgstr ""
 
@@ -1463,7 +1479,7 @@ msgstr ""
 #: app/views/admin/group_categories/index.html.erb:28
 #: app/views/admin/user_profile_master_categories/index.html.erb:17
 #: app/views/admin/user_profile_masters/index.html.erb:27
-#: app/views/admin/users/index.html.erb:42
+#: app/views/admin/users/index.html.erb:47
 msgid "Edit"
 msgstr ""
 
@@ -1815,13 +1831,13 @@ msgstr ""
 #: app/views/admin/group_categories/index.html.erb:36
 #: app/views/admin/user_profile_master_categories/index.html.erb:25
 #: app/views/admin/user_profile_masters/index.html.erb:35
-#: app/views/admin/users/index.html.erb:50
+#: app/views/admin/users/index.html.erb:55
 msgid "New %{model}"
 msgstr ""
 
 #: app/controllers/admin/users_controller.rb:121
 #: app/controllers/admin/users_controller.rb:138
-#: app/views/admin/users/index.html.erb:51
+#: app/views/admin/users/index.html.erb:56
 msgid "New user from csv"
 msgstr ""
 
@@ -2508,7 +2524,27 @@ msgid "User|Email"
 msgstr ""
 
 #: app/models/user.rb:-
+msgid "User|Issued at"
+msgstr ""
+
+#: app/models/user.rb:-
 msgid "User|Last authenticated at"
+msgstr ""
+
+#: app/models/user.rb:-
+msgid "User|Last password updated at"
+msgstr ""
+
+#: app/models/user.rb:-
+msgid "User|Lock"
+msgstr ""
+
+#: app/models/user.rb:70
+msgid "User|Lock|false"
+msgstr ""
+
+#: app/models/user.rb:69
+msgid "User|Lock|true"
 msgstr ""
 
 #: app/models/user.rb:54
@@ -2560,6 +2596,10 @@ msgstr ""
 #: app/models/user.rb:60 app/views/admin/users/_form.html.erb:26
 #: app/views/admin/users/_form.html.erb:32
 msgid "User|Status|UNUSED"
+msgstr ""
+
+#: app/models/user.rb:-
+msgid "User|Trial num"
 msgstr ""
 
 #: app/models/user.rb:-
@@ -2708,6 +2748,10 @@ msgstr ""
 msgid "group participation"
 msgstr ""
 
+#: app/views/admin/users/index.html.erb:36
+msgid "issued_atlast_authenticated_atlast_password_updated_at"
+msgstr ""
+
 #: app/models/mail.rb:-
 msgid "mail"
 msgstr ""
@@ -2805,7 +2849,7 @@ msgstr ""
 #: app/controllers/admin/user_profiles_controller.rb:20
 #: app/controllers/admin/user_profiles_controller.rb:39 app/models/user.rb:-
 #: app/views/admin/users/import.html.erb:74
-#: app/views/admin/users/index.html.erb:50
+#: app/views/admin/users/index.html.erb:55
 msgid "user"
 msgstr ""
 
@@ -3192,7 +3236,7 @@ msgstr ""
 msgid "ログインし直して下さい。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:306
+#: app/controllers/platform_controller.rb:313
 msgid "ログインに失敗しました。"
 msgstr ""
 
@@ -3271,6 +3315,12 @@ msgid ""
 "入力された%{email}のユーザは、利用開始されていません。利用開始してください。"
 msgstr ""
 
+#: app/controllers/platform_controller.rb:303
+msgid ""
+"入力されたログインIDのユーザは凍結されているためログインできません。凍結を解"
+"除するにはパスワードの再設定を行って下さい。"
+msgstr ""
+
 #: app/views/admin/settings/index.html.erb:5
 msgid ""
 "全ての入力値を、初期設定値に置き換えます。保存ボタンを押さない限り、保存され"
@@ -3305,7 +3355,7 @@ msgstr ""
 msgid "利用開始URLを発行しました。確認のリンクからユーザに連絡してください。"
 msgstr ""
 
-#: app/views/admin/users/index.html.erb:65
+#: app/views/admin/users/index.html.erb:70
 msgid ""
 "利用開始URLを発行します。次の画面で確認リンクを押して表示されるURLをユーザに"
 "送信してください。"
@@ -3411,7 +3461,7 @@ msgstr ""
 msgid "対象データが見つかりません。"
 msgstr ""
 
-#: app/views/admin/users/index.html.erb:65
+#: app/views/admin/users/index.html.erb:70
 msgid "対象ユーザに利用開始通知メールを送信しますが宜しいですか?"
 msgstr ""
 

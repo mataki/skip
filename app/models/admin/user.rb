@@ -37,6 +37,10 @@ class Admin::User < User
   N_('Admin::User|Status description')
   N_('Admin::User|Password reset token')
   N_('Admin::User|Password reset token description')
+  N_('Admin::User|Lock')
+  N_('Admin::User|Issued at')
+  N_('Admin::User|Last authenticated at')
+  N_('Admin::User|Last password updated at')
 
   N_('Admin::User|User uids')
 
