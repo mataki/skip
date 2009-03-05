@@ -248,20 +248,30 @@ describe User, '#issue_reset_auth_token' do
 end
 
 describe User, '#determination_reset_auth_token' do
+  before do
+    @user = create_user
+  end
   it 'reset_auth_tokenの値が更新されること' do
     prc = '6df711a1a42d110261cfe759838213143ca3c2ad'
-    u = create_user(:user_options => {:reset_auth_token => prc})
+    @user.reset_auth_token = prc
     lambda do
-      u.determination_reset_auth_token
-    end.should change(u, :reset_auth_token).from(prc).to(nil)
+      @user.determination_reset_auth_token
+    end.should change(@user, :reset_auth_token).from(prc).to(nil)
   end
   it 'reset_auth_token_expires_atの値が更新されること' do
     time = Time.now
-    u = create_user(:user_options => {:reset_auth_token_expires_at => time})
+    @user.reset_auth_token_expires_at = time
     lambda do
-      u.determination_reset_auth_token
-    end.should change(u, :reset_auth_token_expires_at).from(time).to(nil)
+      @user.determination_reset_auth_token
+    end.should change(@user, :reset_auth_token_expires_at).from(time).to(nil)
   end
+  it 'lockの値がfalseに更新されること' do
+    @user.lock = true
+    lambda do
+      @user.determination_reset_auth_token
+    end.should change(@user, :lock).to(false)
+  end
+  it 'password_expires_atの値が更新されること'
 end
 
 describe User, '#issue_activation_code' do
