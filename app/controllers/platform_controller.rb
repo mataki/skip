@@ -83,7 +83,7 @@ class PlatformController < ApplicationController
         @user.password = params[:user][:password]
         @user.password_confirmation = params[:user][:password_confirmation]
         if @user.save
-          @user.determination_reset_auth_token
+          @user.after_reset_password
           flash[:notice] = _("%{function}が完了しました。")%{:function => _('パスワードリセット')}
           redirect_to :controller => '/platform'
         else

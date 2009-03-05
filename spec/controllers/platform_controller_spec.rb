@@ -423,7 +423,7 @@ describe PlatformController, 'POST /reset_password' do
       describe 'パスワードリセットに成功する場合' do
         before do
           @user.should_receive(:save).and_return(true)
-          @user.should_receive(:determination_reset_auth_token)
+          @user.should_receive(:after_reset_password)
           User.should_receive(:find_by_reset_auth_token).and_return(@user)
           post_reset_password
         end

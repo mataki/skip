@@ -260,6 +260,46 @@ describe User, '#issue_reset_auth_token' do
   end
 end
 
+describe User, '#after_reset_password' do
+  before do
+    @user = create_user
+  end
+  it 'reset_auth_tokenの値が更新されること' do
+    prc = '6df711a1a42d110261cfe759838213143ca3c2ad'
+    @user.reset_auth_token = prc
+    lambda do
+      @user.after_reset_password
+    end.should change(@user, :reset_auth_token).from(prc).to(nil)
+  end
+  it 'reset_auth_token_expires_atの値が更新されること' do
+    time = Time.now
+    @user.reset_auth_token_expires_at = time
+    lambda do
+      @user.after_reset_password
+    end.should change(@user, :reset_auth_token_expires_at).from(time).to(nil)
+  end
+  it 'lockの値がfalseに更新されること' do
+    @user.lock = true
+    lambda do
+      @user.after_reset_password
+    end.should change(@user, :lock).to(false)
+  end
+  it 'trial_numの値が0に更新されること' do
+    @user.trial_num = 3
+    lambda do
+      @user.after_reset_password
+    end.should change(@user, :trial_num).to(0)
+  end
+  it 'password_expires_atの値が更新されること' do
+    time = Time.now
+    Time.stub!(:now).and_return(time)
+    Admin::Setting.password_change_interval = 90
+    lambda do
+      @user.after_reset_password
+    end.should change(@user, :password_expires_at).to(Time.now.ago(90.day))
+  end
+end
+
 describe User, '#determination_reset_auth_token' do
   before do
     @user = create_user
@@ -278,19 +318,6 @@ describe User, '#determination_reset_auth_token' do
       @user.determination_reset_auth_token
     end.should change(@user, :reset_auth_token_expires_at).from(time).to(nil)
   end
-  it 'lockの値がfalseに更新されること' do
-    @user.lock = true
-    lambda do
-      @user.determination_reset_auth_token
-    end.should change(@user, :lock).to(false)
-  end
-  it 'trial_numの値が0に更新されること' do
-    @user.trial_num = 3
-    lambda do
-      @user.determination_reset_auth_token
-    end.should change(@user, :trial_num).to(0)
-  end
-  it 'password_expires_atの値が更新されること'
 end
 
 describe User, '#issue_activation_code' do

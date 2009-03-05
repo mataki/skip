@@ -300,8 +300,12 @@ class User < ActiveRecord::Base
     self.reset_auth_token_expires_at = Time.now.since(since)
   end
 
+  def after_reset_password
+    update_attributes(:reset_auth_token => nil, :reset_auth_token_expires_at => nil, :lock => false, :trial_num => 0, :password_expires_at => Time.now.ago(Admin::Setting.password_change_interval.day))
+  end
+
   def determination_reset_auth_token
-    update_attributes(:reset_auth_token => nil, :reset_auth_token_expires_at => nil, :lock => false, :trial_num => 0)
+    update_attributes(:reset_auth_token => nil, :reset_auth_token_expires_at => nil)
   end
 
   def issue_activation_code
