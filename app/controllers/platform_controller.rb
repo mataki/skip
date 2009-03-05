@@ -303,10 +303,16 @@ class PlatformController < ApplicationController
         flash[:error] = _("入力されたログインIDのユーザは凍結されているためログインできません。凍結を解除するにはパスワードの再設定を行って下さい。")
         redirect_to(request.env['HTTP_REFERER'] ? :back : login_url)
       else
-        self.current_user = user
-        logger.info(current_user.to_s_log('[Login successful with password]'))
-        handle_remember_cookie!(params[:login_save] == 'true')
-        redirect_to_return_to_or_root
+        unless user.within_time_limit_of_password?
+          logger.info(user.to_s_log('[Login failed with password]'))
+          flash[:error] = _("パスワードの有効期限を過ぎています。パスワードの再設定を行って下さい。")
+          redirect_to(request.env['HTTP_REFERER'] ? :back : login_url)
+        else
+          self.current_user = user
+          logger.info(current_user.to_s_log('[Login successful with password]'))
+          handle_remember_cookie!(params[:login_save] == 'true')
+          redirect_to_return_to_or_root
+        end
       end
     else
       logger.info(User.to_s_log('[Login failed with password]', params[:login][:key]))

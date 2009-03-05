@@ -59,7 +59,6 @@ describe User, 'validation' do
 end
 
 describe User, "#before_save" do
-
   describe '新規の場合' do
     before do
       @user = new_user
@@ -75,7 +74,7 @@ describe User, "#before_save" do
       Time.stub!(:now).and_return(time)
       lambda do
         @user.save
-      end.should change(@user, :password_expires_at).to(Time.now.ago(90.day))
+      end.should change(@user, :password_expires_at).to(Time.now.since(90.day))
     end
   end
 
@@ -625,7 +624,7 @@ describe User, '#locked?' do
   end
   describe 'ユーザ凍結機能が有効な場合' do
     before do
-      Admin::Setting.enable_user_lock = true
+      Admin::Setting.enable_user_lock = 'true'
     end
     describe 'ユーザが凍結されている場合' do
       before do
@@ -646,10 +645,48 @@ describe User, '#locked?' do
   end
   describe 'ユーザ凍結機能が無効な場合' do
     before do
-      Admin::Setting.enable_user_lock = false
+      Admin::Setting.enable_user_lock = 'false'
     end
     it 'ロックされていないと判定されること' do
       @user.locked?.should be_false
+    end
+  end
+end
+
+describe User, '#within_time_limit_of_password?' do
+  before do
+    @user = stub_model(User)
+    @user.password_expires_at = Time.local(2009, 3, 1, 0, 0, 0)
+  end
+  describe 'パスワード変更強制機能が有効な場合' do
+    before do
+      Admin::Setting.enable_password_periodic_change = 'true'
+    end
+    describe 'パスワード有効期限切れの場合' do
+      before do
+        now = Time.local(2009, 3, 1, 0, 0, 1)
+        Time.stub!(:now).and_return(now)
+      end
+      it 'パスワード有効期限切れと判定されること' do
+        @user.within_time_limit_of_password?.should be_false
+      end
+    end
+    describe 'パスワード有効期限内の場合' do
+      before do
+        now = Time.local(2009, 3, 1, 0, 0, 0)
+        Time.stub!(:now).and_return(now)
+      end
+      it 'パスワード有効期限内と判定されること' do
+        @user.within_time_limit_of_password?.should be_true
+      end
+    end
+  end
+  describe 'パスワード変更強制機能が無効な場合' do
+    before do
+      Admin::Setting.enable_password_periodic_change = 'false'
+    end
+    it 'パスワード有効期限内と判定されること' do
+      @user.within_time_limit_of_password?.should be_true
     end
   end
 end

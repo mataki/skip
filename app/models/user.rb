@@ -104,7 +104,7 @@ class User < ActiveRecord::Base
   def before_save
     if password_required?
       self.crypted_password = encrypt(password)
-      self.password_expires_at = Time.now.ago(Admin::Setting.password_change_interval.day)
+      self.password_expires_at = Time.now.since(Admin::Setting.password_change_interval.day)
     end
   end
 
@@ -390,6 +390,14 @@ class User < ActiveRecord::Base
 
   def locked?
     Admin::Setting.enable_user_lock && self.lock?
+  end
+
+  def within_time_limit_of_password?
+    if Admin::Setting.enable_password_periodic_change
+      Time.now <= self.password_expires_at
+    else
+      true
+    end
   end
 
 protected

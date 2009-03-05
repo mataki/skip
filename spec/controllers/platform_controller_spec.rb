@@ -15,7 +15,7 @@
 
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe PlatformController, "パスワードでログインする場合" do
+describe PlatformController, "#login(パスワードでのログイン)" do
   before do
     @code = "111111"
     @password = "password"
@@ -55,32 +55,54 @@ describe PlatformController, "パスワードでログインする場合" do
       before do
         @user.should_receive(:locked?).and_return(false)
       end
-      it 'root_urlにリダイレクトされること' do
-        login
-        response.should redirect_to(root_url)
-      end
-      it 'current_userが設定されること' do
-        login
-        controller.send!(:current_user).should == @user
-      end
-      it "session[:request_token]の値が保持されていること" do
-        login
-        session[:request_token].should == "request_token"
-      end
-      it 'ログインに成功した旨のログ出力が行われること' do
-        @user.should_receive(:to_s_log).with('[Login successful with password]')
-        login
-      end
-      describe '「次回から自動的にログイン」にチェックがついている場合' do
-        it 'handle_remember_cookie!(true)が呼ばれること' do
-          controller.should_receive(:handle_remember_cookie!).with(true)
-          login(true)
+      describe 'パスワードの有効期限切れの場合' do
+        before do
+          @user.should_receive(:within_time_limit_of_password?).and_return(false)
+        end
+        it '前のページにリダイレクトされること' do
+          login
+          response.should redirect_to(:back)
+        end
+        it 'エラーメッセージが設定されること' do
+          login
+          flash[:error].should_not be_nil
+        end
+        it 'ログインに失敗した旨のログ出力が行われること' do
+          @user.should_receive(:to_s_log).with('[Login failed with password]')
+          login
         end
       end
-      describe '「次回から自動的にログイン」にチェックがついていない場合' do
-        it 'handle_remember_cookie!(false)が呼ばれること' do
-          controller.should_receive(:handle_remember_cookie!).with(false)
+      describe 'パスワードが有効期限内の場合' do
+        before do
+          @user.should_receive(:within_time_limit_of_password?).and_return(true)
+        end
+        it 'root_urlにリダイレクトされること' do
           login
+          response.should redirect_to(root_url)
+        end
+        it 'current_userが設定されること' do
+          login
+          controller.send!(:current_user).should == @user
+        end
+        it "session[:request_token]の値が保持されていること" do
+          login
+          session[:request_token].should == "request_token"
+        end
+        it 'ログインに成功した旨のログ出力が行われること' do
+          @user.should_receive(:to_s_log).with('[Login successful with password]')
+          login
+        end
+        describe '「次回から自動的にログイン」にチェックがついている場合' do
+          it 'handle_remember_cookie!(true)が呼ばれること' do
+            controller.should_receive(:handle_remember_cookie!).with(true)
+            login(true)
+          end
+        end
+        describe '「次回から自動的にログイン」にチェックがついていない場合' do
+          it 'handle_remember_cookie!(false)が呼ばれること' do
+            controller.should_receive(:handle_remember_cookie!).with(false)
+            login
+          end
         end
       end
     end
@@ -112,7 +134,7 @@ describe PlatformController, "パスワードでログインする場合" do
   end
 end
 
-describe PlatformController, "ログイン時にOpenIdのアカウントが渡された場合" do
+describe PlatformController, "#login(OpenIDでのログイン)" do
   before do
     @registration = mock('registration')
     @registration_data = {'http://axschema.org/namePerson' => ['ほげ ふが'],
