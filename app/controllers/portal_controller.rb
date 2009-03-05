@@ -70,6 +70,7 @@ class PortalController < ApplicationController
       end
 
       @user.status = 'ACTIVE'
+      @user.password_expires_at = Time.now.ago(Admin::Setting.password_change_interval.day)
       @user.save!
       @profiles.each{|profile| profile.save!}
 
