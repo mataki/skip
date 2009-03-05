@@ -98,6 +98,10 @@ class Admin::Setting < ActiveRecord::Base
   N_('Admin::Setting|Enable user lock description')
   N_('Admin::Setting|User lock trial limit')
   N_('Admin::Setting|User lock trial limit description')
+  N_('Admin::Setting|Enable password periodic change')
+  N_('Admin::Setting|Enable password periodic change description')
+  N_('Admin::Setting|Password change interval')
+  N_('Admin::Setting|Password change interval description')
 
   cattr_accessor :available_settings
   @@available_settings = YAML::load(File.open("#{RAILS_ROOT}/config/settings.yml"))

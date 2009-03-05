@@ -106,4 +106,9 @@ enable_user_lock:
 user_lock_trial_limit:
   format: int
   default: 3
-
+enable_password_periodic_change:
+  format: boolean
+  default: true
+password_change_interval:
+  format: int
+  default: 180

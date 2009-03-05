@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2009-03-05 14:39+0900\n"
+"POT-Creation-Date: 2009-03-05 15:32+0900\n"
 "PO-Revision-Date: 2009-03-03 14:42+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -632,9 +632,17 @@ msgstr ""
 "ユーザから運営者への問い合わせ先メールアドレスです。システムからのメール送信"
 "の送信元としても表示されます。"
 
+#: app/models/admin/setting.rb:101
+msgid "Admin::Setting|Enable password periodic change"
+msgstr "パスワード定期変更機能を使う"
+
+#: app/models/admin/setting.rb:102
+msgid "Admin::Setting|Enable password periodic change description"
+msgstr "チェックするとパスワード有効期限切れになったユーザはログインが出来なくなります。ログインするにはパスワードを再設定しなければなりません。"
+
 #: app/models/admin/setting.rb:97
 msgid "Admin::Setting|Enable user lock"
-msgstr "ユーザ凍結機能を有効にする"
+msgstr "ユーザ凍結機能を使う"
 
 #: app/models/admin/setting.rb:98
 msgid "Admin::Setting|Enable user lock description"
@@ -775,6 +783,14 @@ msgid "Admin::Setting|Mypage feed timeout description"
 msgstr ""
 "フィードは、このシステム外にあるため、取得できない場合があります。タイムアウ"
 "トを経過すると、取得を中断します。"
+
+#: app/models/admin/setting.rb:103
+msgid "Admin::Setting|Password change interval"
+msgstr "パスワード定期変更間隔"
+
+#: app/models/admin/setting.rb:104
+msgid "Admin::Setting|Password change interval description"
+msgstr "パスワードの定期変更間隔を日単位で設定します。ユーザ登録や、パスワード変更時にここで設定された定期変更間隔日後となるパスワード有効期限が設定されます。"
 
 #: app/models/admin/setting.rb:46
 msgid "Admin::Setting|Point button"
@@ -1467,7 +1483,7 @@ msgstr "タイトル"
 msgid "CSVファイル"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:147
+#: app/controllers/admin/users_controller.rb:148
 msgid "CSVファイルからのユーザ登録/更新に成功しました。"
 msgstr ""
 
@@ -1475,12 +1491,12 @@ msgstr ""
 msgid "CSVファイルでインポートする際の注意"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:152
+#: app/controllers/admin/users_controller.rb:153
 msgid "CSVファイルに不正な値が含まれています。"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:129
-#: app/controllers/admin/users_controller.rb:134
+#: app/controllers/admin/users_controller.rb:130
+#: app/controllers/admin/users_controller.rb:135
 msgid "CSVファイルの内容を検証しました。"
 msgstr ""
 
@@ -1512,7 +1528,7 @@ msgstr "更新日時"
 msgid "Chain|紹介文"
 msgstr "紹介文"
 
-#: app/controllers/admin/users_controller.rb:159
+#: app/controllers/admin/users_controller.rb:160
 #: app/views/admin/users/edit.html.erb:15
 msgid "Change uid"
 msgstr "ユーザ名変更"
@@ -1532,7 +1548,7 @@ msgstr "閉じる"
 msgid "Create"
 msgstr "作成"
 
-#: app/controllers/admin/users_controller.rb:184
+#: app/controllers/admin/users_controller.rb:185
 #: app/views/admin/users/edit.html.erb:16
 msgid "Create %{name}"
 msgstr "%{name}作成"
@@ -1579,9 +1595,9 @@ msgstr "編集"
 #: app/controllers/admin/openid_identifiers_controller.rb:40
 #: app/controllers/admin/openid_identifiers_controller.rb:41
 #: app/controllers/admin/users_controller.rb:49
-#: app/controllers/admin/users_controller.rb:72
-#: app/controllers/admin/users_controller.rb:158
-#: app/controllers/admin/users_controller.rb:183
+#: app/controllers/admin/users_controller.rb:73
+#: app/controllers/admin/users_controller.rb:159
+#: app/controllers/admin/users_controller.rb:184
 #: app/controllers/admin/admin_module.rb:107
 #: app/controllers/admin/admin_module.rb:134
 #: app/controllers/admin/admin_module.rb:216
@@ -1819,11 +1835,11 @@ msgstr "行"
 #: app/controllers/admin/users_controller.rb:27
 #: app/controllers/admin/users_controller.rb:39
 #: app/controllers/admin/users_controller.rb:48
-#: app/controllers/admin/users_controller.rb:71
-#: app/controllers/admin/users_controller.rb:122
-#: app/controllers/admin/users_controller.rb:139
-#: app/controllers/admin/users_controller.rb:157
-#: app/controllers/admin/users_controller.rb:182
+#: app/controllers/admin/users_controller.rb:72
+#: app/controllers/admin/users_controller.rb:123
+#: app/controllers/admin/users_controller.rb:140
+#: app/controllers/admin/users_controller.rb:158
+#: app/controllers/admin/users_controller.rb:183
 #: app/controllers/admin/admin_module.rb:67
 #: app/controllers/admin/admin_module.rb:79
 #: app/controllers/admin/admin_module.rb:93
@@ -1926,8 +1942,8 @@ msgstr ""
 msgid "New %{model}"
 msgstr "新規%{model}の作成"
 
-#: app/controllers/admin/users_controller.rb:122
-#: app/controllers/admin/users_controller.rb:139
+#: app/controllers/admin/users_controller.rb:123
+#: app/controllers/admin/users_controller.rb:140
 #: app/views/admin/users/index.html.erb:56
 msgid "New user from csv"
 msgstr "ユーザのCSVアップロード"
@@ -2371,7 +2387,7 @@ msgstr "アップロードしています…"
 msgid "User profile master isn't assosiated"
 msgstr "プロフィール項目が設定されていません"
 
-#: app/controllers/admin/users_controller.rb:80
+#: app/controllers/admin/users_controller.rb:81
 msgid "User was successfuly deleted."
 msgstr "ユーザの削除に成功しました。"
 
@@ -2717,15 +2733,15 @@ msgstr "アンテナとは"
 msgid "You are now logged out."
 msgstr "ログアウトしました。"
 
-#: app/controllers/admin/users_controller.rb:82
+#: app/controllers/admin/users_controller.rb:83
 msgid "You cannot delete user who is not unused."
 msgstr "未使用のユーザ以外削除できません。"
 
 #: app/controllers/admin/users_controller.rb:61
 msgid "You cannot update status and admin and lock of yourself"
 msgstr ""
-"管理者は自分自身のステータスと管理権限及び凍結状態は変更できません。他の管理者アカウント"
-"から変更してください。"
+"管理者は自分自身のステータスと管理権限及び凍結状態は変更できません。他の管理"
+"者アカウントから変更してください。"
 
 #: app/controllers/platform_controller.rb:47
 msgid "You had been retired."
@@ -2934,11 +2950,11 @@ msgstr "選択をはずす"
 #: app/controllers/admin/users_controller.rb:27
 #: app/controllers/admin/users_controller.rb:39
 #: app/controllers/admin/users_controller.rb:48
-#: app/controllers/admin/users_controller.rb:71
-#: app/controllers/admin/users_controller.rb:122
-#: app/controllers/admin/users_controller.rb:139
-#: app/controllers/admin/users_controller.rb:157
-#: app/controllers/admin/users_controller.rb:182
+#: app/controllers/admin/users_controller.rb:72
+#: app/controllers/admin/users_controller.rb:123
+#: app/controllers/admin/users_controller.rb:140
+#: app/controllers/admin/users_controller.rb:158
+#: app/controllers/admin/users_controller.rb:183
 #: app/controllers/admin/user_profiles_controller.rb:20
 #: app/controllers/admin/user_profiles_controller.rb:39 app/models/user.rb:-
 #: app/views/admin/users/import.html.erb:74
@@ -2959,8 +2975,8 @@ msgid "user message unsubscribe"
 msgstr ""
 
 #: app/helpers/initial_settings_helper.rb:43
-#: app/controllers/admin/users_controller.rb:184
-#: app/controllers/admin/users_controller.rb:192 app/models/share_file.rb:250
+#: app/controllers/admin/users_controller.rb:185
+#: app/controllers/admin/users_controller.rb:193 app/models/share_file.rb:250
 #: app/models/user_search_condition.rb:39 app/views/user/show.html.erb:88
 #: app/views/portal/_registration_form.html.erb:38
 #: app/views/admin/users/create_uid.html.erb:12
@@ -3031,7 +3047,7 @@ msgstr ""
 msgid "この操作は、許可されていません。"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:115
+#: app/controllers/admin/users_controller.rb:116
 msgid ""
 "この操作は、許可されていません。URLをご確認の上再度お試し頂くか、%"
 "{contact_link}下さい。"
@@ -3043,7 +3059,7 @@ msgstr ""
 
 #: app/controllers/user_controller.rb:264
 #: app/controllers/admin/users_controller.rb:51
-#: app/controllers/admin/users_controller.rb:68 app/models/board_entry.rb:56
+#: app/controllers/admin/users_controller.rb:69 app/models/board_entry.rb:56
 msgid "ご指定のユーザは存在しません。"
 msgstr ""
 
@@ -3283,7 +3299,7 @@ msgid "メーラを起動して送信する（宛先と本文が設定されま�
 msgstr ""
 
 #: app/controllers/platform_controller.rb:121
-#: app/controllers/admin/users_controller.rb:220
+#: app/controllers/admin/users_controller.rb:221
 msgid "メールアドレスが%{email}のユーザは既に利用を開始しています。"
 msgstr ""
 
@@ -3301,7 +3317,7 @@ msgstr ""
 msgid "ユーザを探す"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:175
+#: app/controllers/admin/users_controller.rb:176
 msgid "ユーザ名が見つかりませんでした。"
 msgstr ""
 
@@ -3321,11 +3337,11 @@ msgid "ユーザ登録のためのURLの有効期限が過ぎています。"
 msgstr ""
 
 #: app/controllers/platform_controller.rb:118
-#: app/controllers/admin/users_controller.rb:218
+#: app/controllers/admin/users_controller.rb:219
 msgid "ユーザ登録のためのURLを記載したメールを%{email}宛てに送信しました。"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:103
+#: app/controllers/admin/users_controller.rb:104
 msgid "ログインし直して下さい。"
 msgstr ""
 
@@ -3444,7 +3460,7 @@ msgstr ""
 msgid "初期値に戻す"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:218
+#: app/controllers/admin/users_controller.rb:219
 msgid "利用開始URLを発行しました。確認のリンクからユーザに連絡してください。"
 msgstr ""
 
@@ -3503,7 +3519,7 @@ msgstr ""
 msgid "基本情報"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:169
+#: app/controllers/admin/users_controller.rb:170
 msgid "変更しました"
 msgstr ""
 
@@ -3588,7 +3604,7 @@ msgstr ""
 msgid "新規投稿"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:192
+#: app/controllers/admin/users_controller.rb:193
 msgid "既に%{username}が登録されています。"
 msgstr ""
 
@@ -3597,7 +3613,7 @@ msgstr ""
 msgid "既に登録されている値から選択項目を表示しています"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:112
+#: app/controllers/admin/users_controller.rb:113
 msgid ""
 "既に管理者ユーザが登録済みです。ログインして下さい。ログイン出来ない場合は%"
 "{contact_link}下さい。"
@@ -3611,7 +3627,7 @@ msgstr ""
 msgid "既定の画像に戻す"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:65
+#: app/controllers/admin/users_controller.rb:66
 #: app/controllers/share_file_controller.rb:136
 msgid "更新しました。"
 msgstr ""
@@ -3624,7 +3640,7 @@ msgstr ""
 msgid "月別総合ランキング"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:236
+#: app/controllers/admin/users_controller.rb:237
 msgid "未使用ユーザのパスワード再設定コードは発行できません。"
 msgstr ""
 
@@ -3663,11 +3679,11 @@ msgid "現在設定中の画像が消えてしまいますがよろしいです�
 msgstr ""
 
 #: app/controllers/admin/users_controller.rb:36
-#: app/controllers/admin/users_controller.rb:103
+#: app/controllers/admin/users_controller.rb:104
 msgid "登録しました。"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:199
+#: app/controllers/admin/users_controller.rb:200
 msgid "登録に成功しました。"
 msgstr ""
 
