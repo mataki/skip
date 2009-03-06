@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2009-03-05 15:32+0900\n"
+"POT-Creation-Date: 2009-03-06 09:43+0900\n"
 "PO-Revision-Date: 2009-03-03 14:42+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -610,18 +610,6 @@ msgid "Admin::Setting|Activation lifetime description"
 msgstr ""
 "サインアップURLを発行して有効期限切れになるまでの日数を選択して下さい。"
 
-#: app/models/admin/setting.rb:91
-msgid "Admin::Setting|Antenna default group"
-msgstr "初期登録するユーザ/グループ"
-
-#: app/models/admin/setting.rb:92
-msgid "Admin::Setting|Antenna default group description"
-msgstr "上記のアンテナに追加するユーザ名/グループIDを記入して下さい。"
-
-#: app/models/admin/setting.rb:90
-msgid "Admin::Setting|Antenna settings"
-msgstr "アンテナ設定"
-
 #: app/models/admin/setting.rb:32
 msgid "Admin::Setting|Contact addr"
 msgstr "お問い合わせ先メールアドレス"
@@ -632,19 +620,21 @@ msgstr ""
 "ユーザから運営者への問い合わせ先メールアドレスです。システムからのメール送信"
 "の送信元としても表示されます。"
 
-#: app/models/admin/setting.rb:101
+#: app/models/admin/setting.rb:94
 msgid "Admin::Setting|Enable password periodic change"
 msgstr "パスワード定期変更機能を使う"
 
-#: app/models/admin/setting.rb:102
+#: app/models/admin/setting.rb:95
 msgid "Admin::Setting|Enable password periodic change description"
-msgstr "チェックするとパスワード有効期限切れになったユーザはログインが出来なくなります。ログインするにはパスワードを再設定しなければなりません。"
+msgstr ""
+"チェックするとパスワード有効期限切れになったユーザはログインが出来なくなりま"
+"す。ログインするにはパスワードを再設定しなければなりません。"
 
-#: app/models/admin/setting.rb:97
+#: app/models/admin/setting.rb:90
 msgid "Admin::Setting|Enable user lock"
 msgstr "ユーザ凍結機能を使う"
 
-#: app/models/admin/setting.rb:98
+#: app/models/admin/setting.rb:91
 msgid "Admin::Setting|Enable user lock description"
 msgstr ""
 "既定回数(管理画面で設定可)だけログインに失敗したユーザを凍結してログイン出来"
@@ -784,13 +774,15 @@ msgstr ""
 "フィードは、このシステム外にあるため、取得できない場合があります。タイムアウ"
 "トを経過すると、取得を中断します。"
 
-#: app/models/admin/setting.rb:103
+#: app/models/admin/setting.rb:96
 msgid "Admin::Setting|Password change interval"
 msgstr "パスワード定期変更間隔"
 
-#: app/models/admin/setting.rb:104
+#: app/models/admin/setting.rb:97
 msgid "Admin::Setting|Password change interval description"
-msgstr "パスワードの定期変更間隔を日単位で設定します。ユーザ登録や、パスワード変更時にここで設定された定期変更間隔日後となるパスワード有効期限が設定されます。"
+msgstr ""
+"パスワードの定期変更間隔を日単位で設定します。ユーザ登録や、パスワード変更時"
+"にここで設定された定期変更間隔日後となるパスワード有効期限が設定されます。"
 
 #: app/models/admin/setting.rb:46
 msgid "Admin::Setting|Point button"
@@ -878,11 +870,11 @@ msgstr ""
 "ユーザ登録を一時停止し、現在登録済みのユーザだけで運営できます。チェックを外"
 "すと、再開します。"
 
-#: app/models/admin/setting.rb:99
+#: app/models/admin/setting.rb:92
 msgid "Admin::Setting|User lock trial limit"
 msgstr "ログインの試行回数の最大値"
 
-#: app/models/admin/setting.rb:100
+#: app/models/admin/setting.rb:93
 msgid "Admin::Setting|User lock trial limit description"
 msgstr ""
 "ログインの試行回数の最大値を指定して下さい。最大値を越えてログインに失敗する"
@@ -3189,6 +3181,10 @@ msgstr ""
 msgid "ダウンロード履歴の削除に成功しました。"
 msgstr ""
 
+#: app/controllers/platform_controller.rb:308
+msgid "パスワードの有効期限を過ぎています。パスワードの再設定を行って下さい。"
+msgstr ""
+
 #: app/views/admin/users/issue_password_reset_code.html.erb:2
 msgid "パスワードを再設定するためのURLは以下の通りです。"
 msgstr ""
@@ -3345,7 +3341,7 @@ msgstr ""
 msgid "ログインし直して下さい。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:313
+#: app/controllers/platform_controller.rb:319
 msgid "ログインに失敗しました。"
 msgstr ""
 

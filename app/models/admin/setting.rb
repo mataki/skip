@@ -85,13 +85,6 @@ class Admin::Setting < ActiveRecord::Base
   N_('Admin::Setting|Mypage feed settings title description')
 
   # ================================================================================================
-  # その他設定
-  # ================================================================================================
-  N_('Admin::Setting|Antenna settings')
-  N_('Admin::Setting|Antenna default group')
-  N_('Admin::Setting|Antenna default group description')
-
-  # ================================================================================================
   # セキュリティ設定
   # ================================================================================================
   N_('Admin::Setting|Enable user lock')

@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2009-03-05 15:32+0900\n"
+"POT-Creation-Date: 2009-03-06 09:43+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -591,18 +591,6 @@ msgstr ""
 msgid "Admin::Setting|Activation lifetime description"
 msgstr ""
 
-#: app/models/admin/setting.rb:91
-msgid "Admin::Setting|Antenna default group"
-msgstr ""
-
-#: app/models/admin/setting.rb:92
-msgid "Admin::Setting|Antenna default group description"
-msgstr ""
-
-#: app/models/admin/setting.rb:90
-msgid "Admin::Setting|Antenna settings"
-msgstr ""
-
 #: app/models/admin/setting.rb:32
 msgid "Admin::Setting|Contact addr"
 msgstr ""
@@ -611,19 +599,19 @@ msgstr ""
 msgid "Admin::Setting|Contact addr description"
 msgstr ""
 
-#: app/models/admin/setting.rb:101
+#: app/models/admin/setting.rb:94
 msgid "Admin::Setting|Enable password periodic change"
 msgstr ""
 
-#: app/models/admin/setting.rb:102
+#: app/models/admin/setting.rb:95
 msgid "Admin::Setting|Enable password periodic change description"
 msgstr ""
 
-#: app/models/admin/setting.rb:97
+#: app/models/admin/setting.rb:90
 msgid "Admin::Setting|Enable user lock"
 msgstr ""
 
-#: app/models/admin/setting.rb:98
+#: app/models/admin/setting.rb:91
 msgid "Admin::Setting|Enable user lock description"
 msgstr ""
 
@@ -739,11 +727,11 @@ msgstr ""
 msgid "Admin::Setting|Mypage feed timeout description"
 msgstr ""
 
-#: app/models/admin/setting.rb:103
+#: app/models/admin/setting.rb:96
 msgid "Admin::Setting|Password change interval"
 msgstr ""
 
-#: app/models/admin/setting.rb:104
+#: app/models/admin/setting.rb:97
 msgid "Admin::Setting|Password change interval description"
 msgstr ""
 
@@ -827,11 +815,11 @@ msgstr ""
 msgid "Admin::Setting|Stop new user description"
 msgstr ""
 
-#: app/models/admin/setting.rb:99
+#: app/models/admin/setting.rb:92
 msgid "Admin::Setting|User lock trial limit"
 msgstr ""
 
-#: app/models/admin/setting.rb:100
+#: app/models/admin/setting.rb:93
 msgid "Admin::Setting|User lock trial limit description"
 msgstr ""
 
@@ -3096,6 +3084,10 @@ msgstr ""
 msgid "ダウンロード履歴の削除に成功しました。"
 msgstr ""
 
+#: app/controllers/platform_controller.rb:308
+msgid "パスワードの有効期限を過ぎています。パスワードの再設定を行って下さい。"
+msgstr ""
+
 #: app/views/admin/users/issue_password_reset_code.html.erb:2
 msgid "パスワードを再設定するためのURLは以下の通りです。"
 msgstr ""
@@ -3252,7 +3244,7 @@ msgstr ""
 msgid "ログインし直して下さい。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:313
+#: app/controllers/platform_controller.rb:319
 msgid "ログインに失敗しました。"
 msgstr ""
 
