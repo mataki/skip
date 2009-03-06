@@ -12,10 +12,11 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 
-class MoveAttachmentImage < BatchBase
+class MoveAttachmentImage
+  @@logger = ActiveRecord::Base.logger
+
   def self.execute options = {}
     # 共有ファイルのディレクトリリネーム
     log_info('start rename uid directory ...')
@@ -39,59 +40,89 @@ class MoveAttachmentImage < BatchBase
     end
   end
 
-  # 共有ファイルの実体ファイル配備ディレクトリuidをidに変換
+  # ユーザの共有ファイルのパスを取得
+  # 取得できない場合はnilが返る
+  def self.user_share_file_path
+    share_file_path = INITIAL_SETTINGS['share_file_path']
+    if share_file_path && File.exist?(share_file_path)
+      share_file_user_path = "#{share_file_path}/user"
+      File.exist?(share_file_user_path) ? share_file_user_path : nil
+    else
+      nil
+    end
+  end
+
+  # ユーザ所有の共有ファイルの実体ファイル配備ディレクトリ名に使われているuidをidに変換
   def self.rename_uid_dir
-    user_base_path = "#{INITIAL_SETTINGS['share_file_path']}/user"
-    return unless File.exist?(user_base_path)
-    Dir.foreach(user_base_path) do |uid|
-      next if (uid == '.' || uid == '..')
-      src = "#{user_base_path}/#{uid}"
-      if user = User.find_by_uid(uid)
-        dest = "#{user_base_path}/#{user.id}"
-        FileUtils.mv src, dest
-        log_info("Success rename directory name from #{src} to #{dest}.")
-      else
-        log_warn("Failure rename directory(#{src}). Because user is not found that uid is #{uid}")
+    if user_base_path = user_share_file_path
+      Dir.foreach(user_base_path) do |uid|
+        next if (uid == '.' || uid == '..')
+        src = "#{user_base_path}/#{uid}"
+        if user = User.find_by_uid(uid)
+          dest = "#{user_base_path}/#{user.id}"
+          FileUtils.mv src, dest
+          log_info("Success rename directory name from #{src} to #{dest}.")
+        else
+          log_warn("Failure rename directory(#{src}). Because user is not found that uid is #{uid}")
+        end
       end
     end
   end
 
-  # 共有ファイルの実体ファイル配備ディレクトリgidをidに変換
+  # グループの共有ファイルのパスを取得
+  # 取得できない場合はnilが返る
+  def self.group_share_file_path
+    share_file_path = INITIAL_SETTINGS['share_file_path']
+    if share_file_path && File.exist?(share_file_path)
+      share_file_group_path = "#{share_file_path}/group"
+      File.exist?(share_file_group_path) ? share_file_group_path : nil
+    else
+      nil
+    end
+  end
+
+  # グループ所有の共有ファイルの実体ファイル配備ディレクトリ名に使われているgidをidに変換
   def self.rename_gid_dir
-    group_base_path = "#{INITIAL_SETTINGS['share_file_path']}/group"
-    return unless File.exist?(group_base_path)
-    Dir.foreach(group_base_path) do |gid|
-      next if (gid == '.' || gid == '..')
-      if group = Group.find_by_gid(gid)
-        src = "#{group_base_path}/#{gid}"
-        dest = "#{group_base_path}/#{group.id}"
-        FileUtils.mv src, dest
-        log_info("Success rename directory name from #{src} to #{dest}.")
-      else
-        log_warn("Failure rename directory name from #{src} to #{dest}. Because group is not found that gid is #{gid}")
+    if group_base_path = group_share_file_path
+      Dir.foreach(group_base_path) do |gid|
+        next if (gid == '.' || gid == '..')
+        if group = Group.find_by_gid(gid)
+          src = "#{group_base_path}/#{gid}"
+          dest = "#{group_base_path}/#{group.id}"
+          FileUtils.mv src, dest
+          log_info("Success rename directory name from #{src} to #{dest}.")
+        else
+          log_warn("Failure rename directory name from #{src} to #{dest}. Because group is not found that gid is #{gid}")
+        end
       end
     end
+  end
+
+  def self.entry_image_base_path
+    base_path = "#{INITIAL_SETTINGS['image_path']}/board_entries"
+    File.exist?(base_path) ? base_path : nil
   end
 
   # 記事の添付画像の実体ファイルを共有ファイルのディレクトリへ移動
   # 記事の添付画像に関するデータをshare_filesテーブルに保存
   def self.move_attachment_image
-    base_path = "#{INITIAL_SETTINGS['image_path']}/board_entries"
-    ShareFile.transaction do
-      Dir.foreach(base_path) do |user_dir_name|
-        next if (user_dir_name == '.' || user_dir_name == '..')
-        user_dir_path = "#{base_path}/#{user_dir_name}"
-        Dir.foreach(user_dir_path) do |filename|
-          next if (filename == '.' || filename == '..')
-          next unless (share_file = new_share_file(user_dir_name, filename))
+    if base_path = entry_image_base_path
+      ShareFile.transaction do
+        Dir.foreach(base_path) do |user_dir_name|
+          next if (user_dir_name == '.' || user_dir_name == '..')
+          user_dir_path = "#{base_path}/#{user_dir_name}"
+          Dir.foreach(user_dir_path) do |filename|
+            next if (filename == '.' || filename == '..')
+            next unless (share_file = new_share_file(user_dir_name, filename))
 
-          # 実ファイルコピー
-          src = "#{user_dir_path}/#{filename}"
-          dest = share_file.full_path
-          FileUtils.cp src, dest
+            # 実ファイル移動
+            src = "#{user_dir_path}/#{filename}"
+            dest = share_file.full_path
+            FileUtils.mv src, dest
 
-          # DBレコード作成
-          share_file.save_without_validation!
+            # DBレコード作成
+            share_file.save_without_validation!
+          end
         end
       end
     end
@@ -167,4 +198,13 @@ class MoveAttachmentImage < BatchBase
   def self.image_attached_entry image_file_name
     BoardEntry.find_by_id(image_file_name.split('_', 2).first.to_i)
   end
+
+  def self.log_info message
+    @@logger.info message
+  end
+
+  def self.log_warn message
+    @@logger.warn message
+  end
+
 end

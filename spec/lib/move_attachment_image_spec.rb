@@ -15,116 +15,398 @@
 
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe MoveAttachmentImage, '.new_share_file' do
-  describe '移行対象の画像が添付された記事が存在する場合' do
-    before do
-      @board_entry = stub_model(BoardEntry, :symbol => 'symbol', :publication_type => 'publication_type', :publication_symbols_value => 'publication_symbols_value')
-      MoveAttachmentImage.should_receive(:image_attached_entry).and_return(@board_entry)
-      @share_file = MoveAttachmentImage.new_share_file(99, '99_image_file.png')
+describe MoveAttachmentImage do
+  before do
+    @share_file_path = "#{RAILS_ROOT}/spec/tmp/share_file_path"
+    @share_file_user_path = "#{@share_file_path}/user"
+    @share_file_group_path = "#{@share_file_path}/group"
+    INITIAL_SETTINGS.stub!('[]', 'share_file_path').and_return(@share_file_path)
+  end
+  describe MoveAttachmentImage, '.user_share_file_path' do
+    describe '共有ファイル保存ディレクトリが存在する場合' do
+      before do
+        FileUtils.mkdir_p @share_file_path
+      end
+      describe 'userディレクトリが存在する場合' do
+        before do
+          FileUtils.mkdir_p @share_file_user_path
+        end
+        it 'userディレクトリが返ること' do
+          MoveAttachmentImage.user_share_file_path.should  == @share_file_user_path
+        end
+        after do
+          FileUtils.rm_rf @share_file_user_path
+        end
+      end
+      describe 'userディレクトリが存在しない場合' do
+        it 'nilが返ること' do
+          MoveAttachmentImage.user_share_file_path.should be_nil
+        end
+      end
     end
-    it '共有ファイルの値が設定されること' do
-      @share_file.file_name.should == 'image_file.png'
-      @share_file.owner_symbol.should == 'symbol'
-      @share_file.date.should_not be_nil
-      @share_file.user_id.should == 99
-      @share_file.content_type.should == 'image/png'
-      @share_file.publication_type.should == 'publication_type'
-      @share_file.publication_symbols_value == 'publication_symbols_value'
+    describe '共有ファイル保存ディレクトリが存在しない場合' do
+      it 'nilが返ること' do
+        MoveAttachmentImage.user_share_file_path.should be_nil
+      end
     end
   end
-  describe '移行対象の画像が添付された記事が存在しない場合' do
+
+  describe MoveAttachmentImage, '.rename_uid_dir' do
+    describe 'ユーザの共有ファイルパスが存在する場合' do
+      before do
+        FileUtils.mkdir_p @share_file_user_path
+      end
+      describe 'uidディレクトリが一件(uid:foo)存在する場合' do
+        before do
+          @uid_foo = 'foo'
+          @user_id_foo = 99
+          @share_file_foo_path = "#{@share_file_user_path}/#{@uid_foo}"
+          FileUtils.mkdir_p @share_file_foo_path
+        end
+        describe 'uid:fooのUserが存在する場合' do
+          before do
+            @user_foo = stub_model(User, :uid => @uid_foo, :id => @user_id_foo)
+            User.should_receive(:find_by_uid).and_return(@user_foo)
+          end
+          it 'uidディレクトリがidディレクトリにmoveされること' do
+            MoveAttachmentImage.rename_uid_dir
+            File.exist?(@share_file_foo_path).should be_false
+            File.exist?("#{@share_file_user_path}/#{@user_id_foo}").should be_true
+          end
+          it '成功ログが出力されること' do
+            MoveAttachmentImage.should_receive(:log_info)
+            MoveAttachmentImage.rename_uid_dir
+          end
+        end
+        describe 'uid:fooのUserが存在しない場合' do
+          before do
+            User.should_receive(:find_by_uid).and_return(nil)
+          end
+          it 'uidディレクトリがidディレクトリにmoveされないこと' do
+            MoveAttachmentImage.rename_uid_dir
+            File.exist?(@share_file_foo_path).should be_true
+            File.exist?("#{@share_file_user_path}/#{@user_id_foo}").should be_false
+          end
+          it '失敗ログが出力されること' do
+            MoveAttachmentImage.should_receive(:log_warn)
+            MoveAttachmentImage.rename_uid_dir
+          end
+        end
+        after do
+          FileUtils.rm_rf @share_file_foo_path
+        end
+      end
+      describe 'uidディレクトリが存在しない場合' do
+        it '何もロギングされないこと' do
+          MoveAttachmentImage.should_not_receive(:log_info)
+          MoveAttachmentImage.should_not_receive(:log_warn)
+          MoveAttachmentImage.rename_uid_dir
+        end
+      end
+    end
+    describe 'ユーザの共有ファイルパスが存在しない場合' do
+      before do
+        MoveAttachmentImage.should_receive(:user_share_file_path).and_return(nil)
+      end
+      it '何もロギングされないこと' do
+        MoveAttachmentImage.should_not_receive(:log_info)
+        MoveAttachmentImage.should_not_receive(:log_warn)
+        MoveAttachmentImage.rename_uid_dir
+      end
+    end
+  end
+
+  describe MoveAttachmentImage, '.group_share_file_path' do
+    describe '共有ファイル保存ディレクトリが存在する場合' do
+      before do
+        FileUtils.mkdir_p @share_file_path
+      end
+      describe 'groupディレクトリが存在する場合' do
+        before do
+          FileUtils.mkdir_p @share_file_group_path
+        end
+        it 'groupディレクトリが返ること' do
+          MoveAttachmentImage.group_share_file_path.should == @share_file_group_path
+        end
+      end
+      describe 'groupディレクトリが存在しない場合' do
+        it 'nilが返ること' do
+          MoveAttachmentImage.group_share_file_path.should be_nil
+        end
+      end
+    end
+    describe '共有ファイル保存ディレクトリが存在しない場合' do
+      it 'nilが返ること' do
+        MoveAttachmentImage.group_share_file_path.should be_nil
+      end
+    end
+  end
+
+  describe MoveAttachmentImage, '.rename_gid_dir' do
+    describe 'グループの共有ファイルパスが存在する場合' do
+      before do
+        FileUtils.mkdir_p @share_file_group_path
+      end
+      describe 'gidディレクトリが一件(gid:bar)存在する場合' do
+        before do
+          @gid_bar = 'bar'
+          @group_id_bar = 99
+          @share_file_bar_path = "#{@share_file_group_path}/#{@gid_bar}"
+          FileUtils.mkdir_p @share_file_bar_path
+        end
+        describe 'gid:barのGroupが存在する場合' do
+          before do
+            @group_bar = stub_model(Group, :gid => @gid_bar, :id => @group_id_bar)
+            Group.should_receive(:find_by_gid).and_return(@group_bar)
+          end
+          it 'gidディレクトリがidディレクトリにmoveされること' do
+            MoveAttachmentImage.rename_gid_dir
+            File.exist?(@share_file_bar_path).should be_false
+            File.exist?("#{@share_file_group_path}/#{@group_id_bar}").should be_true
+          end
+          it '成功ログが出力されること' do
+            MoveAttachmentImage.should_receive(:log_info)
+            MoveAttachmentImage.rename_gid_dir
+          end
+        end
+        describe 'gid:barのGroupが存在しない場合' do
+          before do
+            Group.should_receive(:find_by_gid).and_return(nil)
+          end
+          it 'gidディレクトリがidディレクトリにmoveされないこと' do
+            MoveAttachmentImage.rename_gid_dir
+            File.exist?(@share_file_bar_path).should be_true
+            File.exist?("#{@share_file_group_path}/#{@group_id_bar}").should be_false
+          end
+          it '失敗ログが出力されること' do
+            MoveAttachmentImage.should_receive(:log_warn)
+            MoveAttachmentImage.rename_gid_dir
+          end
+        end
+      end
+      describe 'gidディレクトリが存在しない場合' do
+        before do
+          MoveAttachmentImage.should_receive(:group_share_file_path).and_return(nil)
+        end
+        it '何もロギングされないこと' do
+          MoveAttachmentImage.should_not_receive(:log_info)
+          MoveAttachmentImage.should_not_receive(:log_warn)
+          MoveAttachmentImage.rename_gid_dir
+        end
+      end
+    end
+
+    describe 'グループの共有ファイルパスが存在しない場合' do
+      before do
+        MoveAttachmentImage.should_receive(:group_share_file_path).and_return(nil)
+      end
+      it '何もロギングされないこと' do
+        MoveAttachmentImage.should_not_receive(:log_info)
+        MoveAttachmentImage.should_not_receive(:log_warn)
+        MoveAttachmentImage.rename_gid_dir
+      end
+    end
+  end
+
+  describe MoveAttachmentImage, '.move_attachment_image' do
     before do
-      MoveAttachmentImage.should_receive(:image_attached_entry).and_return(nil)
+      @image_file_path = "#{RAILS_ROOT}/spec/tmp/image_file_path"
+      FileUtils.mkdir_p @image_file_path
+      INITIAL_SETTINGS.stub!('[]', 'image_file_path').and_return(@image_file_path)
     end
-    it 'nilが返ること' do
-      MoveAttachmentImage.new_share_file(99, '99_image_file.png').should be_nil
+    describe 'ベースとなるディレクトリが存在する場合' do
+      before do
+        @entry_image_base_path = "#{@image_file_path}/board_entries"
+        MoveAttachmentImage.should_receive(:entry_image_base_path).and_return(@entry_image_base_path)
+        FileUtils.mkdir_p @entry_image_base_path
+      end
+      describe 'user_idディレクトリが一件存在する場合' do
+        before do
+          @entry_user_id = 99
+          @entry_image_user_path = "#{@entry_image_base_path}/#{@entry_user_id}"
+          FileUtils.mkdir_p @entry_image_user_path
+        end
+        describe 'ファイルが一件存在する場合' do
+          before do
+            @file_name = 'file_name'
+            @old_file_path = "#{@entry_image_user_path}/#{@file_name}"
+            FileUtils.touch @old_file_path
+            new_file_dir = "#{@entry_image_base_path}/new"
+            FileUtils.mkdir_p new_file_dir
+            @new_file_path = "#{new_file_dir}/#{@file_name}"
+            @share_file = ShareFile.new(
+              :file_name => @file_name,
+              :owner_symbol => 'uid:foo',
+              :user_id => @entry_user_id,
+              :content_type => 'application/octet-stream',
+              :publication_type => 'public')
+            @share_file.stub!(:full_path).and_return(@new_file_path)
+            MoveAttachmentImage.should_receive(:new_share_file).and_return(@share_file)
+          end
+          it '共有ファイルが一件保存されること' do
+            MoveAttachmentImage.move_attachment_image
+            @share_file.new_record?.should be_false
+          end
+          it '共有ファイルの実体ファイルが保存されること' do
+            MoveAttachmentImage.move_attachment_image
+            File.exist?(@new_file_path).should be_true
+          end
+          it '元画像ファイルが削除されていること' do
+            MoveAttachmentImage.move_attachment_image
+            File.exist?(@old_file_path).should be_false
+          end
+        end
+        describe 'ファイルが一件も存在しない場合' do
+          it '共有ファイルが保存されないこと' do
+            MoveAttachmentImage.should_not_receive(:new_share_file)
+            MoveAttachmentImage.move_attachment_image
+          end
+        end
+      end
+      describe 'user_idディレクトリが存在しない場合' do
+        it '共有ファイルが保存されないこと' do
+          MoveAttachmentImage.should_not_receive(:new_share_file)
+          MoveAttachmentImage.move_attachment_image
+        end
+      end
     end
+    describe 'ベースとなるディレクトリが存在しない場合' do
+      before do
+        MoveAttachmentImage.should_receive(:entry_image_base_path).and_return(nil)
+      end
+      it '共有ファイルが作成されないこと' do
+        MoveAttachmentImage.should_not_receive(:new_share_file)
+        MoveAttachmentImage.move_attachment_image
+      end
+    end
+    after do
+      FileUtils.rm_rf @image_file_path
+    end
+  end
+
+  describe MoveAttachmentImage, '.replace_direct_link' do
+
+  end
+
+  describe MoveAttachmentImage, '.replaced_text' do
+
+  end
+
+  describe MoveAttachmentImage, '.new_share_file' do
+    describe '移行対象の画像が添付された記事が存在する場合' do
+      before do
+        @board_entry = stub_model(BoardEntry, :symbol => 'symbol', :publication_type => 'publication_type', :publication_symbols_value => 'publication_symbols_value')
+        MoveAttachmentImage.should_receive(:image_attached_entry).and_return(@board_entry)
+        @share_file = MoveAttachmentImage.new_share_file(99, '99_image_file.png')
+      end
+      it '共有ファイルのインスタンスに必要な値が設定されること' do
+        @share_file.file_name.should == 'image_file.png'
+        @share_file.owner_symbol.should == 'symbol'
+        @share_file.date.should_not be_nil
+        @share_file.user_id.should == 99
+        @share_file.content_type.should == 'image/png'
+        @share_file.publication_type.should == 'publication_type'
+        @share_file.publication_symbols_value == 'publication_symbols_value'
+      end
+    end
+    describe '移行対象の画像が添付された記事が存在しない場合' do
+      before do
+        MoveAttachmentImage.should_receive(:image_attached_entry).and_return(nil)
+      end
+      it 'nilが返ること' do
+        MoveAttachmentImage.new_share_file(99, '99_image_file.png').should be_nil
+      end
+    end
+  end
+
+  describe MoveAttachmentImage, '.share_file_name' do
+    describe '対象の所有者に既に同名ファイルが登録されている場合' do
+      before do
+        ShareFile.should_receive(:find_by_owner_symbol_and_file_name).with('uid:owner', 'image_name.png').and_return(stub_model(ShareFile))
+        ShareFile.should_receive(:find_by_owner_symbol_and_file_name).with('uid:owner', 'image_name_.png').and_return(nil)
+      end
+      it 'ファイル名末尾に_(アンダースコア)が付加されたファイル名が取得出来ること' do
+        MoveAttachmentImage.share_file_name('uid:owner', '7_image_name.png').should == 'image_name_.png'
+      end
+    end
+    describe '対象の所有者にまだ同名ファイルが登録されていない場合' do
+      before do
+        ShareFile.should_receive(:find_by_owner_symbol_and_file_name).with('uid:owner', 'image_name.png').and_return(nil)
+      end
+      it '共有ファイルに登録するファイル名が取得出来ること' do
+        MoveAttachmentImage.share_file_name('uid:owner', '7_image_name.png').should == 'image_name.png'
+      end
+    end
+  end
+
+  describe MoveAttachmentImage, '.image_attached_entry' do
+    it '画像の添付対象記事を取得しようとすること' do
+      BoardEntry.should_receive(:find_by_id).with(7)
+      MoveAttachmentImage.image_attached_entry('7_image_name.png')
+    end
+  end
+
+  describe MoveAttachmentImage, '.replace_direct_link' do
+    describe 'オーナーがユーザの記事本文及びコメントに添付画像への直リンクが書かれている場合' do
+      before do
+        @board_entry = create_entry_wrote_direct_attachment_link('uid:foo')
+
+        BoardEntry.should_receive(:all).and_return([@board_entry])
+        BoardEntry.stub!(:find_by_id).with(9).and_return(@board_entry)
+
+        @user = stub_model(User)
+        User.stub!(:find_by_uid).and_return(@user)
+      end
+      it '記事本文の添付画像への直リンクがデータ移行後の共有ファイルへのリンクになっていること' do
+        MoveAttachmentImage.replace_direct_link
+        @board_entry.contents.include?("http://localhost:3000/share_file/user/#{@user.id}/foo.png").should be_true
+      end
+      it 'コメント内の添付画像への直リンクがデータ移行後の共有ファイルへのリンクになっていること' do
+        MoveAttachmentImage.replace_direct_link
+        @board_entry.board_entry_comments[0].contents.include?("http://localhost:3000/share_file/user/#{@user.id}/foo.png").should be_true
+      end
+    end
+    describe 'オーナーがグループの記事本文及びコメントに添付画像への直リンクが書かれている場合' do
+      before do
+        @board_entry = create_entry_wrote_direct_attachment_link('gid:bar')
+
+        BoardEntry.should_receive(:all).and_return([@board_entry])
+        BoardEntry.stub!(:find_by_id).with(9).and_return(@board_entry)
+
+        @group = stub_model(Group)
+        Group.stub!(:find_by_gid).and_return(@group)
+      end
+      it '記事本文の添付画像への直リンクがデータ移行後の共有ファイルへのリンクになっていること' do
+        MoveAttachmentImage.replace_direct_link
+        @board_entry.contents.include?("http://localhost:3000/share_file/group/#{@group.id}/foo.png").should be_true
+      end
+      it 'コメント内の添付画像への直リンクがデータ移行後の共有ファイルへのリンクになっていること' do
+        MoveAttachmentImage.replace_direct_link
+        @board_entry.board_entry_comments[0].contents.include?("http://localhost:3000/share_file/group/#{@group.id}/foo.png").should be_true
+      end
+    end
+
+    def create_entry_wrote_direct_attachment_link symbol
+      board_entry = BoardEntry.new({
+        :title => 'foo',
+        :contents => 'http://localhost:3000/images/board_entries%2F9%2F99_foo.png',
+        :symbol => symbol,
+        :date => Date.today,
+        :user_id => 9,
+        :last_updated => Date.today
+      })
+      board_entry.save!
+      board_entry_comment = BoardEntryComment.new({
+        :contents => 'http://localhost:3000/images/board_entries/9/99_foo.png',
+        :user_id => 9,
+        :board_entry_id => board_entry.id
+      })
+      board_entry_comment.save!
+      board_entry
+    end
+  end
+  after do
+    FileUtils.rm_rf "#{RAILS_ROOT}/spec/tmp/"
   end
 end
 
-describe MoveAttachmentImage, '.share_file_name' do
-  describe '対象の所有者に既に同名ファイルが登録されている場合' do
-    before do
-      ShareFile.should_receive(:find_by_owner_symbol_and_file_name).with('uid:owner', 'image_name.png').and_return(stub_model(ShareFile))
-      ShareFile.should_receive(:find_by_owner_symbol_and_file_name).with('uid:owner', 'image_name_.png').and_return(nil)
-    end
-    it 'ファイル名末尾に_(アンダースコア)が付加されたファイル名が取得出来ること' do
-      MoveAttachmentImage.share_file_name('uid:owner', '7_image_name.png').should == 'image_name_.png'
-    end
-  end
-  describe '対象の所有者にまだ同名ファイルが登録されていない場合' do
-    before do
-      ShareFile.should_receive(:find_by_owner_symbol_and_file_name).with('uid:owner', 'image_name.png').and_return(nil)
-    end
-    it '共有ファイルに登録するファイル名が取得出来ること' do
-      MoveAttachmentImage.share_file_name('uid:owner', '7_image_name.png').should == 'image_name.png'
-    end
-  end
-end
-
-describe MoveAttachmentImage, '.image_attached_entry' do
-  it '画像の添付対象記事を取得しようとすること' do
-    BoardEntry.should_receive(:find_by_id).with(7)
-    MoveAttachmentImage.image_attached_entry('7_image_name.png')
-  end
-end
-
-describe MoveAttachmentImage, '.replace_direct_link' do
-  describe 'オーナーがユーザの記事本文及びコメントに添付画像への直リンクが書かれている場合' do
-    before do
-      @board_entry = create_entry_wrote_direct_attachment_link('uid:foo')
-
-      BoardEntry.should_receive(:all).and_return([@board_entry])
-      BoardEntry.stub!(:find_by_id).with(9).and_return(@board_entry)
-
-      @user = stub_model(User)
-      User.stub!(:find_by_uid).and_return(@user)
-    end
-    it '記事本文の添付画像への直リンクがデータ移行後の共有ファイルへのリンクになっていること' do
-      MoveAttachmentImage.replace_direct_link
-      @board_entry.contents.include?("http://localhost:3000/share_file/user/#{@user.id}/foo.png").should be_true
-    end
-    it 'コメント内の添付画像への直リンクがデータ移行後の共有ファイルへのリンクになっていること' do
-      MoveAttachmentImage.replace_direct_link
-      @board_entry.board_entry_comments[0].contents.include?("http://localhost:3000/share_file/user/#{@user.id}/foo.png").should be_true
-    end
-  end
-  describe 'オーナーがグループの記事本文及びコメントに添付画像への直リンクが書かれている場合' do
-    before do
-      @board_entry = create_entry_wrote_direct_attachment_link('gid:bar')
-
-      BoardEntry.should_receive(:all).and_return([@board_entry])
-      BoardEntry.stub!(:find_by_id).with(9).and_return(@board_entry)
-
-      @group = stub_model(Group)
-      Group.stub!(:find_by_gid).and_return(@group)
-    end
-    it '記事本文の添付画像への直リンクがデータ移行後の共有ファイルへのリンクになっていること' do
-      MoveAttachmentImage.replace_direct_link
-      @board_entry.contents.include?("http://localhost:3000/share_file/group/#{@group.id}/foo.png").should be_true
-    end
-    it 'コメント内の添付画像への直リンクがデータ移行後の共有ファイルへのリンクになっていること' do
-      MoveAttachmentImage.replace_direct_link
-      @board_entry.board_entry_comments[0].contents.include?("http://localhost:3000/share_file/group/#{@group.id}/foo.png").should be_true
-    end
-  end
-
-  def create_entry_wrote_direct_attachment_link symbol
-    board_entry = BoardEntry.new({
-      :title => 'foo',
-      :contents => 'http://localhost:3000/images/board_entries%2F9%2F99_foo.png',
-      :symbol => symbol,
-      :date => Date.today,
-      :user_id => 9,
-      :last_updated => Date.today
-    })
-    board_entry.save!
-    board_entry_comment = BoardEntryComment.new({
-      :contents => 'http://localhost:3000/images/board_entries/9/99_foo.png',
-      :user_id => 9,
-      :board_entry_id => board_entry.id
-    })
-    board_entry_comment.save!
-    board_entry
-  end
-end
