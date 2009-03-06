@@ -284,8 +284,44 @@ describe MoveAttachmentImage do
     end
   end
 
-  describe MoveAttachmentImage, '.replace_direct_link' do
+  describe MoveAttachmentImage, '.replace_entry_direct_link' do
+    before do
+      @image_path_11_foo_png = 'http://localhost:3000/images/board_entries/1/11_foo.png'
+      @image_path_22_bar_jpg = 'https://localhost:3000/images/board_entries%2F1%2F22_bar.jpg'
+      contents_foo = "foo#{@image_path_11_foo_png}\r\nfoo#{@image_path_22_bar_jpg}"
+      @board_entry_foo = create_board_entry(:contents => contents_foo)
+      @board_entry_bar = stub_model(BoardEntry, :symbol => 'uid:bar')
+      BoardEntry.stub!(:find_by_id).and_return(@board_entry_bar)
+    end
+    it 'contents_will_change!が呼ばれること(呼んでおかないと=での変更ではないため更新されない)' do
+      @board_entry_foo.should_receive(:contents_will_change!)
+      MoveAttachmentImage.replace_entry_direct_link @board_entry_foo
+    end
+    it '置換処理が呼ばれること' do
+      MoveAttachmentImage.should_receive(:replaced_text).with('uid:bar', 'foo.png')
+      MoveAttachmentImage.should_receive(:replaced_text).with('uid:bar', 'bar.jpg')
+      MoveAttachmentImage.replace_entry_direct_link @board_entry_foo
+    end
+  end
 
+  describe MoveAttachmentImage, '.replace_entry_comment_direct_link' do
+    before do
+      @image_path_11_foo_png = 'http://localhost:3000/images/board_entries/1/11_foo.png'
+      @image_path_22_bar_jpg = 'https://localhost:3000/images/board_entries%2F1%2F22_bar.jpg'
+      contents_foo = "foo#{@image_path_11_foo_png}\r\nfoo#{@image_path_22_bar_jpg}"
+      @board_entry_comment_foo = create_board_entry_comment(:contents => contents_foo)
+      @board_entry_bar = stub_model(BoardEntry, :symbol => 'uid:bar')
+      BoardEntry.stub!(:find_by_id).and_return(@board_entry_bar)
+    end
+    it 'contents_will_change!が呼ばれること(呼んでおかないと=での変更ではないため更新されない)' do
+      @board_entry_comment_foo.should_receive(:contents_will_change!)
+      MoveAttachmentImage.replace_entry_direct_link @board_entry_comment_foo
+    end
+    it '置換処理が呼ばれること' do
+      MoveAttachmentImage.should_receive(:replaced_text).with('uid:bar', 'foo.png')
+      MoveAttachmentImage.should_receive(:replaced_text).with('uid:bar', 'bar.jpg')
+      MoveAttachmentImage.replace_entry_comment_direct_link @board_entry_comment_foo
+    end
   end
 
   describe MoveAttachmentImage, '.replaced_text' do
@@ -346,65 +382,6 @@ describe MoveAttachmentImage do
     end
   end
 
-  describe MoveAttachmentImage, '.replace_direct_link' do
-    describe 'オーナーがユーザの記事本文及びコメントに添付画像への直リンクが書かれている場合' do
-      before do
-        @board_entry = create_entry_wrote_direct_attachment_link('uid:foo')
-
-        BoardEntry.should_receive(:all).and_return([@board_entry])
-        BoardEntry.stub!(:find_by_id).with(9).and_return(@board_entry)
-
-        @user = stub_model(User)
-        User.stub!(:find_by_uid).and_return(@user)
-      end
-      it '記事本文の添付画像への直リンクがデータ移行後の共有ファイルへのリンクになっていること' do
-        MoveAttachmentImage.replace_direct_link
-        @board_entry.contents.include?("http://localhost:3000/share_file/user/#{@user.id}/foo.png").should be_true
-      end
-      it 'コメント内の添付画像への直リンクがデータ移行後の共有ファイルへのリンクになっていること' do
-        MoveAttachmentImage.replace_direct_link
-        @board_entry.board_entry_comments[0].contents.include?("http://localhost:3000/share_file/user/#{@user.id}/foo.png").should be_true
-      end
-    end
-    describe 'オーナーがグループの記事本文及びコメントに添付画像への直リンクが書かれている場合' do
-      before do
-        @board_entry = create_entry_wrote_direct_attachment_link('gid:bar')
-
-        BoardEntry.should_receive(:all).and_return([@board_entry])
-        BoardEntry.stub!(:find_by_id).with(9).and_return(@board_entry)
-
-        @group = stub_model(Group)
-        Group.stub!(:find_by_gid).and_return(@group)
-      end
-      it '記事本文の添付画像への直リンクがデータ移行後の共有ファイルへのリンクになっていること' do
-        MoveAttachmentImage.replace_direct_link
-        @board_entry.contents.include?("http://localhost:3000/share_file/group/#{@group.id}/foo.png").should be_true
-      end
-      it 'コメント内の添付画像への直リンクがデータ移行後の共有ファイルへのリンクになっていること' do
-        MoveAttachmentImage.replace_direct_link
-        @board_entry.board_entry_comments[0].contents.include?("http://localhost:3000/share_file/group/#{@group.id}/foo.png").should be_true
-      end
-    end
-
-    def create_entry_wrote_direct_attachment_link symbol
-      board_entry = BoardEntry.new({
-        :title => 'foo',
-        :contents => 'http://localhost:3000/images/board_entries%2F9%2F99_foo.png',
-        :symbol => symbol,
-        :date => Date.today,
-        :user_id => 9,
-        :last_updated => Date.today
-      })
-      board_entry.save!
-      board_entry_comment = BoardEntryComment.new({
-        :contents => 'http://localhost:3000/images/board_entries/9/99_foo.png',
-        :user_id => 9,
-        :board_entry_id => board_entry.id
-      })
-      board_entry_comment.save!
-      board_entry
-    end
-  end
   after do
     FileUtils.rm_rf "#{RAILS_ROOT}/spec/tmp/"
   end

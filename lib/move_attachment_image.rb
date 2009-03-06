@@ -131,22 +131,35 @@ class MoveAttachmentImage
   # 記事の本文やコメントの添付画像への直リンクを置換
   def self.replace_direct_link
     BoardEntry.all.each do |board_entry|
-      image_link_re = /\/images\/board_entries(\/|%2F)([0-9]+)(\/|%2F)[0-9]+_(.+)/
-      board_entry.contents.gsub!(image_link_re) do |matched|
-        board_entry = BoardEntry.find_by_id($2.to_i)
-        file_name = $4
-        replaced_text(board_entry.symbol, file_name) || matched
-      end
-      board_entry.save!
+      replace_entry_direct_link board_entry
       board_entry.board_entry_comments.each do |board_entry_comment|
-        board_entry_comment.contents.gsub!(image_link_re) do |matched|
-          board_entry = BoardEntry.find_by_id($2.to_i)
-          file_name = $4
-          replaced_text(board_entry.symbol, file_name) || matched
-        end
-        board_entry_comment.save!
+        replace_entry_comment_direct_link board_entry_comment
       end
     end
+  end
+
+  def self.replace_entry_direct_link entry
+    entry.contents_will_change!
+    entry.contents.gsub!(image_link_re) do |matched|
+      matched_entry = BoardEntry.find_by_id($3.to_i)
+      file_name = $4
+      replaced_text(matched_entry.symbol, file_name) || matched
+    end
+    entry.save_without_validation!
+  end
+
+  def self.replace_entry_comment_direct_link entry_comment
+    entry_comment.contents_will_change!
+    entry_comment.contents.gsub!(image_link_re) do |matched|
+      matched_entry = BoardEntry.find_by_id($3.to_i)
+      file_name = $4
+      replaced_text(matched_entry.symbol, file_name) || matched
+    end
+    entry_comment.save_without_validation!
+  end
+
+  def self.image_link_re
+    /\/images\/board_entries(\/|%2F)[0-9]+(\/|%2F)([0-9]+)_([^\r\n]+)/
   end
 
   # 置換成功時は置換したテキスト、失敗時はnilを返す
@@ -168,22 +181,30 @@ class MoveAttachmentImage
     return unless(image_attached_entry = image_attached_entry(image_file_name))
     owner_symbol = image_attached_entry.symbol
     share_file_name = share_file_name(owner_symbol, image_file_name)
-    extension = share_file_name.split('.').last.downcase
     share_file = ShareFile.new(
       :file_name => share_file_name,
       :description => '',
       :owner_symbol => owner_symbol,
       :date => Time.now,
       :user_id => created_user_id,
-      :content_type =>  "image/#{extension}",
       :publication_type => image_attached_entry.publication_type,
       :publication_symbols_value => image_attached_entry.publication_symbols_value
     )
+    share_file.content_type = content_type(share_file)
     image_attached_entry.entry_publications.each do |entry_publication|
       share_file_publication = ShareFilePublication.new(:symbol => entry_publication.symbol)
       share_file.share_file_publications << share_file_publication
     end
     share_file
+  end
+
+  def self.content_type share_file
+    extension = share_file.file_name.split('.').last.downcase
+    if share_file.image_extention?
+      "image/#{extension}"
+    else
+      "application/octet-stream"
+    end
   end
 
   def self.share_file_name owner_symbol, image_file_name
@@ -206,5 +227,4 @@ class MoveAttachmentImage
   def self.log_warn message
     @@logger.warn message
   end
-
 end
