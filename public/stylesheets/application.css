@@ -16,15 +16,19 @@ span.share_file_uploader.trigger {
 
 .share_file.upload iframe {
   border: 0;
-  overflow: hidden;
-  width: 100%;
-  height: 100%; }
+  overflow: hidden; }
 .share_file.upload div.form {
   width: 100%;
   height: 9em; }
+  .share_file.upload div.form iframe {
+    width: 100%;
+    height: 100%; }
 .share_file.upload div.target {
   width: 0;
   height: 0; }
+  .share_file.upload div.target iframe {
+    width: 0;
+    height: 0; }
 
 div#share_file_uploader.enabled {
   z-index: 1;

@@ -88,7 +88,7 @@ $j(function(){
         var insertLink = function(data){
             var filename = data['file_name'];
             var src = data['src'];
-            return $j("<span>").text(message["insert_link_label"]).addClass("insert_link link pointer").click(function(){
+            return $j("<span></span>").text(message["insert_link_label"]).addClass("insert_link link pointer").click(function(){
                 if($j('#editor_mode_richtext:checked').length > 0){
                     insertToRichEditor($j("<a>").text(filename).attr("href", src));
                 } else if($j('#editor_mode_hiki:checked').length > 0) {
@@ -100,7 +100,7 @@ $j(function(){
         var insertImageLink = function(data){
             var filename = data['file_name'];
             var src = data['src'];
-            return $j("<span>").text(message["insert_image_link_label"]).addClass("insert_link link pointer").click(function(){
+            return $j("<span></span>").text(message["insert_image_link_label"]).addClass("insert_link link pointer").click(function(){
                 if($j('#editor_mode_richtext:checked').length > 0){
                     var img = $j("<img />").attr("src", src).attr("alt", filename).addClass('pointer');
                     insertToRichEditor(img);
@@ -130,6 +130,7 @@ $j(function(){
         var shareFileToTableHeader = function() {
             var tr = $j('<tr>');
             tr.append($j('<th>').text(message['share_files']['thumbnail']));
+            tr.append($j('<th>'));
             return tr;
         };
 
@@ -208,7 +209,7 @@ $j(function(){
             conf["callback"] = reloadUploader
 
             return $j("<div class='share_file upload' />").append(
-                $j("<span class='operation link pointer'>")
+                $j("<span class='operation link pointer'></span>")
                 .text(message["upload_share_file"])
                 .one("click", function(){ $j(this).hide().parent().iframeUploader(conf) })
             )
@@ -221,12 +222,12 @@ $j(function(){
         var onLoad = function() {
             root.empty().attr("class", "enabled").draggable({handle: 'div.title_bar'}).append(
                 $j('<div class="title_bar move">').append(
-                    $j("<h3>").text(message["title"])
+                    $j("<h3></h3>").text(message["title"])
                 ).append(
                     $j("<div class='operation'>").append(
-                        $j("<span class='reload link pointer'>").text(message["reload"]).click(reloadUploader)
+                        $j("<span class='reload link pointer'></span>").text(message["reload"]).click(reloadUploader)
                     ).append(
-                        $j("<span class='close link pointer'>").text(message["close"]).click(hideUploader)
+                        $j("<span class='close link pointer'></span>").text(message["close"]).click(hideUploader)
                     )
                 )
             ).append(
