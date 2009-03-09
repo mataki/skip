@@ -394,7 +394,7 @@ class User < ActiveRecord::Base
 
   def within_time_limit_of_password?
     if Admin::Setting.enable_password_periodic_change
-      Time.now <= self.password_expires_at
+      self.password_expires_at && Time.now <= self.password_expires_at
     else
       true
     end

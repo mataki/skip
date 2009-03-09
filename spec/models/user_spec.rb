@@ -656,30 +656,43 @@ end
 describe User, '#within_time_limit_of_password?' do
   before do
     @user = stub_model(User)
-    @user.password_expires_at = Time.local(2009, 3, 1, 0, 0, 0)
   end
   describe 'パスワード変更強制機能が有効な場合' do
     before do
       Admin::Setting.enable_password_periodic_change = 'true'
     end
-    describe 'パスワード有効期限切れの場合' do
+    describe 'パスワードの有効期限切れ日が設定されている場合' do
       before do
-        now = Time.local(2009, 3, 1, 0, 0, 1)
-        Time.stub!(:now).and_return(now)
+        @user.password_expires_at = Time.local(2009, 3, 1, 0, 0, 0)
+      end
+      describe 'パスワード有効期限切れの場合' do
+        before do
+          now = Time.local(2009, 3, 1, 0, 0, 1)
+          Time.stub!(:now).and_return(now)
+        end
+        it 'パスワード有効期限切れと判定されること' do
+          @user.within_time_limit_of_password?.should be_false
+        end
+      end
+      describe 'パスワード有効期限内の場合' do
+        before do
+          now = Time.local(2009, 3, 1, 0, 0, 0)
+          Time.stub!(:now).and_return(now)
+        end
+        it 'パスワード有効期限内と判定されること' do
+          @user.within_time_limit_of_password?.should be_true
+        end
+      end
+    end
+    describe 'パスワードの有効期限切れ日が設定されていない場合' do
+      before do
+        @user.password_expires_at = nil
       end
       it 'パスワード有効期限切れと判定されること' do
-        @user.within_time_limit_of_password?.should be_false
+        @user.within_time_limit_of_password?.should be_nil
       end
     end
-    describe 'パスワード有効期限内の場合' do
-      before do
-        now = Time.local(2009, 3, 1, 0, 0, 0)
-        Time.stub!(:now).and_return(now)
-      end
-      it 'パスワード有効期限内と判定されること' do
-        @user.within_time_limit_of_password?.should be_true
-      end
-    end
+
   end
   describe 'パスワード変更強制機能が無効な場合' do
     before do
