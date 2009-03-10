@@ -36,7 +36,7 @@
       <td><%= password_field 'login', 'password', { 'size' => 35, :onfocus=>'select();', 'AUTOCOMPLETE' => "on", :style => "font-family:Tahoma", :tabindex => "2" } %></td>
     </tr>
     <tr valign="top">
-      <td><input id="login_save" name="login_save" type="checkbox" value="true" checked="checked", tabindex="3" /> 次回から自動的にログイン</td>
+      <td><%= check_box_tag "login_save", true, true, :tabindex => 3%><%= label_tag "login_save", _("次回から自動的にログイン") %></td>
     </tr>
     <% elsif login_mode?(:fixed_rp) -%>
     <tr valign="top">
