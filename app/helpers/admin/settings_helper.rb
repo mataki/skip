@@ -14,9 +14,10 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 module Admin::SettingsHelper
-  def settings_label_with_text_field_tag symbolize_key
+  def settings_label_with_text_field_tag symbolize_key, options = {}
+    options = {:id => "setting_#{symbolize_key}"}.merge(options)
     label(Admin::Setting.name, symbolize_key) +
-      text_field_tag("settings[#{symbolize_key}]", Admin::Setting.send(symbolize_key.to_s), :id => "setting_#{symbolize_key}", :size => 70) +
+      text_field_tag("settings[#{symbolize_key}]", Admin::Setting.send(symbolize_key.to_s), options) +
       help_icon_tag(:content => _(Admin::Setting.name + '|' + (symbolize_key.to_s + '_description').humanize))
   end
 
@@ -33,9 +34,10 @@ module Admin::SettingsHelper
       help_icon_tag(:content => _(Admin::Setting.name + '|' + (symbolize_key.to_s + '_description').humanize))
   end
 
-  def settings_label_with_password_field_tag symbolize_key
+  def settings_label_with_password_field_tag symbolize_key, options = {}
+    options = {:id => "setting_#{symbolize_key}"}.merge(options)
     label(Admin::Setting.name, symbolize_key) +
-      password_field_tag("settings[#{symbolize_key}]", Admin::Setting.send(symbolize_key.to_s), :id => "settings_#{symbolize_key}", :size => 60) +
+      password_field_tag("settings[#{symbolize_key}]", Admin::Setting.send(symbolize_key.to_s), options) +
       help_icon_tag(:content => _(Admin::Setting.name + '|' + (symbolize_key.to_s + '_description').humanize))
   end
 end

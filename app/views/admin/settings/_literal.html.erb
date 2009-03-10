@@ -19,6 +19,6 @@
 <h4><%= _('フッター') %></h4>
 <div class="box tabular">
 <% footer_columns.each do |key| -%>
-  <p><%= settings_label_with_text_field_tag key.to_sym %></p>
+  <p><%= settings_label_with_text_field_tag key.to_sym, :size => 70 %></p>
 <% end -%>
 </div>
