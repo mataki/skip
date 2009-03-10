@@ -776,7 +776,7 @@ msgstr ""
 
 #: app/models/admin/setting.rb:96
 msgid "Admin::Setting|Password change interval"
-msgstr "パスワード定期変更間隔"
+msgstr "パスワード定期変更間隔(日)"
 
 #: app/models/admin/setting.rb:97
 msgid "Admin::Setting|Password change interval description"
