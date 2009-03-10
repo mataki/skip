@@ -269,7 +269,7 @@ describe ValidationsFile::FileSizeCounter do
   end
   describe ".per_system" do
     before do
-      Dir.should_receive(:glob).with("#{ENV['SHARE_FILE_PATH']}/**/*\0#{ENV['IMAGE_PATH']}/**/*").and_return(["a", "a"])
+      Dir.should_receive(:glob).with("#{ENV['SHARE_FILE_PATH']}/**/*").and_return(["a", "a"])
       file = mock('file')
       file.stub!(:size).and_return(100)
       File.should_receive(:stat).with('a').at_least(:once).and_return(file)

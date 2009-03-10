@@ -68,7 +68,7 @@ module ValidationsFile
     end
     def self.per_system
       sum = 0
-      Dir.glob("#{ENV['SHARE_FILE_PATH']}/**/*\0#{ENV['IMAGE_PATH']}/**/*").each do |f|
+      Dir.glob("#{ENV['SHARE_FILE_PATH']}/**/*").each do |f|
         sum += File.stat(f).size
       end
       sum

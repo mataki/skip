@@ -57,7 +57,6 @@ Rails::Initializer.run do |config|
 end
 
 # Include your application configuration below
-ENV['IMAGE_PATH'] ||= INITIAL_SETTINGS['image_path']
 ENV['SHARE_FILE_PATH'] ||= INITIAL_SETTINGS['share_file_path']
 ENV['BATCH_LOG_PATH'] ||= INITIAL_SETTINGS['batch_log_path'] || "#{RAILS_ROOT}/log/batch.log"
 
