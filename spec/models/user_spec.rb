@@ -56,6 +56,33 @@ describe User, 'validation' do
       new_user(:email => 'Skip@example.org').valid?.should be_false
     end
   end
+  describe 'pssword' do
+    before do
+      @user = create_user
+      @user.stub!(:password_required?).and_return(true)
+    end
+    it '必須であること' do
+      @user.password = ''
+      @user.valid?.should be_false
+      @user.errors['password'].include?('は必須です').should be_true
+    end
+    it '確認用パスワードと一致すること' do
+      @user.password = 'valid_password'
+      @user.password_confirmation = 'invalid_password'
+      @user.valid?.should be_false
+      @user.errors['password'].include?('は確認用パスワードと一致しません').should be_true
+    end
+    it '6文字以上であること' do
+      @user.password = 'abcd'
+      @user.valid?.should be_false
+      @user.errors['password'].include?('は6文字以上で入力してください').should be_true
+    end
+    it '40文字以内であること' do
+      @user.password = SkipFaker.rand_char(41)
+      @user.valid?.should be_false
+      @user.errors['password'].include?('は40文字以下で入力して下さい').should be_true
+    end
+  end
 end
 
 describe User, "#before_save" do
