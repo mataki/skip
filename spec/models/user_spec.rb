@@ -82,6 +82,12 @@ describe User, 'validation' do
       @user.valid?.should be_false
       @user.errors['password'].include?('は40文字以下で入力して下さい').should be_true
     end
+    it 'ログインIDと異なること' do
+      @user.stub!(:uid).and_return('yamada')
+      @user.password = 'yamada'
+      @user.valid?
+      @user.errors['password'].include?('はログインIDと同一の値は登録できません。').should be_true
+    end
   end
 end
 

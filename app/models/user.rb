@@ -101,6 +101,12 @@ class User < ActiveRecord::Base
     self.section = self.section.tr('ａ-ｚＡ-Ｚ１-９','a-zA-Z1-9').upcase unless self.section.blank?
   end
 
+  def validate
+    if password_required?
+      errors.add(:password, _('はログインIDと同一の値は登録できません。')) if self.uid == self.password
+    end
+  end
+
   def before_save
     if password_required?
       self.crypted_password = encrypt(password)
