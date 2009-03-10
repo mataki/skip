@@ -85,8 +85,14 @@ describe User, 'validation' do
     it 'ログインIDと異なること' do
       @user.stub!(:uid).and_return('yamada')
       @user.password = 'yamada'
-      @user.valid?
+      @user.valid?.should be_false
       @user.errors['password'].include?('はログインIDと同一の値は登録できません。').should be_true
+    end
+    it '現在のパスワードと異なること' do
+      @user.crypted_password = User.encrypt('password')
+      @user.password = 'password'
+      @user.valid?.should be_false
+      @user.errors['password'].include?('は前回と同一の値は登録できません。').should be_true
     end
   end
 end
@@ -390,14 +396,16 @@ end
 describe User, '#activate!' do
   it 'activation_tokenの値が更新されること' do
     activation_token = '6df711a1a42d110261cfe759838213143ca3c2ad'
-    u = create_user(:user_options => {:activation_token=> activation_token})
+    u = create_user(:user_options => {:activation_token=> activation_token}, :status => 'UNUSED')
+    u.password = ''
     lambda do
       u.activate!
     end.should change(u, :activation_token).from(activation_token).to(nil)
   end
   it 'activation_token_expires_atの値が更新されること' do
     time = Time.now
-    u = create_user(:user_options => {:activation_token_expires_at => time})
+    u = create_user(:user_options => {:activation_token_expires_at => time}, :status => 'UNUSED')
+    u.password = ''
     lambda do
       u.activate!
     end.should change(u, :activation_token_expires_at).from(time).to(nil)

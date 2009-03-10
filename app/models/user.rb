@@ -104,6 +104,7 @@ class User < ActiveRecord::Base
   def validate
     if password_required?
       errors.add(:password, _('はログインIDと同一の値は登録できません。')) if self.uid == self.password
+      errors.add(:password, _('は前回と同一の値は登録できません。')) if self.crypted_password == encrypt(password)
     end
   end
 
