@@ -103,6 +103,10 @@ class Admin::Setting < ActiveRecord::Base
   N_('Admin::Setting|Password strength|Validation message middle')
   N_('Admin::Setting|Password strength|low')
   N_('Admin::Setting|Password strength|Validation message low')
+  N_('Admin::Setting|Enable login keyphrase')
+  N_('Admin::Setting|Enable login keyphrase description')
+  N_('Admin::Setting|Login keyphrase')
+  N_('Admin::Setting|Login keyphrase description')
 
   cattr_accessor :available_settings
   @@available_settings = YAML::load(File.open("#{RAILS_ROOT}/config/settings.yml"))

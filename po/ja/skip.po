@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2009-03-11 14:12+0900\n"
+"POT-Creation-Date: 2009-03-11 16:32+0900\n"
 "PO-Revision-Date: 2009-03-03 14:42+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -620,6 +620,14 @@ msgstr ""
 "ユーザから運営者への問い合わせ先メールアドレスです。システムからのメール送信"
 "の送信元としても表示されます。"
 
+#: app/models/admin/setting.rb:106
+msgid "Admin::Setting|Enable login keyphrase"
+msgstr "ログインキーフレーズを使う"
+
+#: app/models/admin/setting.rb:107
+msgid "Admin::Setting|Enable login keyphrase description"
+msgstr "ログインID, パスワードに加えて任意のキーフレーズをログインフォームに追加します。ログインID, パスワード、キーフレーズの3つが一致しない場合はログイン出来ないようになります。"
+
 #: app/models/admin/setting.rb:94
 msgid "Admin::Setting|Enable password periodic change"
 msgstr "パスワード定期変更機能を使う"
@@ -721,6 +729,14 @@ msgstr ""
 "例えば、社員番号をログインIDに使っている場合、「社員番号」に変更しておくと、"
 "ユーザがログインIDを忘れにくくなります。"
 
+#: app/models/admin/setting.rb:108
+msgid "Admin::Setting|Login keyphrase"
+msgstr "ログインキーフレーズ"
+
+#: app/models/admin/setting.rb:109
+msgid "Admin::Setting|Login keyphrase description"
+msgstr "ログインキーフレーズを英数字で設定します。"
+
 #: app/models/admin/setting.rb:52
 msgid "Admin::Setting|Mail function setting"
 msgstr "メール機能を有効にする"
@@ -799,15 +815,19 @@ msgstr ""
 
 #: app/models/admin/setting.rb:101
 msgid "Admin::Setting|Password strength|Validation message high"
-msgstr "は8文字以上の半角英数字及び記号(!@#$%^&*?_~)で入力して下さい。また、英字の大文字、小文字、数字、記号がそれぞれ最低一文字ずつ含まれている必要があります。"
+msgstr ""
+"は8文字以上の半角英数字及び記号(!@#$%^&*?_~)で入力して下さい。また、英字の大"
+"文字、小文字、数字、記号がそれぞれ最低一文字ずつ含まれている必要があります。"
 
 #: app/models/admin/setting.rb:105
 msgid "Admin::Setting|Password strength|Validation message low"
 msgstr "は6文字以上の半角英数字及び記号(!@#$%^&*?_~)で入力して下さい。"
 
-#: app/models/admin/setting.rb:103 app/models/admin/setting.rb:232
+#: app/models/admin/setting.rb:103 app/models/admin/setting.rb:231
 msgid "Admin::Setting|Password strength|Validation message middle"
-msgstr "は8文字以上の半角英数字及び記号(!@#$%^&*?_~)で入力して下さい。また、英字の大文字、小文字、数字がそれぞれ最低一文字ずつ含まれている必要があります。"
+msgstr ""
+"は8文字以上の半角英数字及び記号(!@#$%^&*?_~)で入力して下さい。また、英字の大"
+"文字、小文字、数字がそれぞれ最低一文字ずつ含まれている必要があります。"
 
 #: app/models/admin/setting.rb:100
 msgid "Admin::Setting|Password strength|high"
@@ -3398,6 +3418,10 @@ msgstr ""
 msgid "ログインに失敗しました。"
 msgstr ""
 
+#: app/views/admin/settings/_security.html.erb:16
+msgid "ログインキーフレーズ"
+msgstr ""
+
 #: app/views/admin/settings/_security.html.erb:2
 msgid "ログイン制限"
 msgstr ""
@@ -3709,6 +3733,10 @@ msgstr ""
 
 #: app/controllers/admin/settings_controller.rb:57
 msgid "機能に関する設定"
+msgstr ""
+
+#: app/views/shared/_login_form.html.erb:39
+msgid "次回から自動的にログイン"
 msgstr ""
 
 #: app/views/admin/users/import.html.erb:27
