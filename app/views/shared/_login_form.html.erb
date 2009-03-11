@@ -35,8 +35,16 @@
     <tr valign="top">
       <td><%= password_field 'login', 'password', { 'size' => 35, :onfocus=>'select();', 'AUTOCOMPLETE' => "on", :style => "font-family:Tahoma", :tabindex => "2" } %></td>
     </tr>
+    <% if Admin::Setting.enable_login_keyphrase -%>
     <tr valign="top">
-      <td><%= check_box_tag "login_save", true, true, :tabindex => 3%><%= label_tag "login_save", _("次回から自動的にログイン") %></td>
+      <td><label for="login_keyphrase"><span style="font-weight: bold;"><%= _('Admin::Setting|Login keyphrase') %></span></label>
+    </tr>
+    <tr valign="top">
+      <td><%= password_field 'login', 'keyphrase', { :size => 35, :autocomplete => :on, :tabindex => "3" } %></td>
+    </tr>
+    <% end -%>
+    <tr valign="top">
+      <td><%= check_box_tag "login_save", true, true, :tabindex => 4 %><%= label_tag "login_save", _("次回から自動的にログイン") %></td>
     </tr>
     <% elsif login_mode?(:fixed_rp) -%>
     <tr valign="top">
@@ -77,7 +85,7 @@
     <% if checkid_request %>
     <tr><td align="top"><%= link_to _('cancel this request'), cancel_path %></td></tr>
     <% end %>
-    <tr><td align="right"><%= submit_tag "ログイン", :onclick=>"saveLoginData();", :tabindex => "4" %></td></tr>
+    <tr><td align="right"><%= submit_tag "ログイン", :onclick=>"saveLoginData();", :tabindex => "5" %></td></tr>
   </table>
 <% end -%>
 <%= link_to _('OpenIDを忘れた/再設定したい方はこちら'), forgot_openid_path, {:style => 'font-size:14px'} if enable_forgot_openid? %>
