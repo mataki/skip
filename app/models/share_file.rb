@@ -321,7 +321,7 @@ class ShareFile < ActiveRecord::Base
   end
 
   def image_extention?
-    CONTENT_TYPE_IMAGES.keys.any?{ |extension| extension.to_s == self.file_name.split('.').last }
+    CONTENT_TYPE_IMAGES.keys.any?{ |extension| extension.to_s.downcase == File.extname(file_name).sub(/\A\./,'').downcase }
   end
 
   def readable?(user = @accessed_user)

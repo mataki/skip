@@ -212,7 +212,7 @@ describe ShareFile, '#uncheck_authenticity?' do
 end
 
 describe ShareFile, '#uncheck_extention?' do
-  describe 'authenticityチェックしない拡張子の場合' do
+  describe 'authenticityチェックしない拡張子(uncheck.jpg)の場合' do
     before do
       @share_file = stub_model(ShareFile, :file_name => 'uncheck.jpg')
     end
@@ -220,9 +220,28 @@ describe ShareFile, '#uncheck_extention?' do
       @share_file.send(:uncheck_extention?).should be_true
     end
   end
+
+  describe 'authenticityチェックしない拡張子(uncheck.JPG)の場合' do
+    before do
+      @share_file = stub_model(ShareFile, :file_name => 'uncheck.JPG')
+    end
+    it 'trueを返すこと' do
+      @share_file.send(:uncheck_extention?).should be_true
+    end
+  end
+
   describe 'authenticityチェックする拡張子の場合' do
     before do
       @share_file = stub_model(ShareFile, :file_name => 'uncheck.xls')
+    end
+    it 'falseを返すこと' do
+      @share_file.send(:uncheck_extention?).should be_false
+    end
+  end
+
+  describe '拡張子がなく、紛らわしいファイル名の場合' do
+    before do
+      @share_file = stub_model(ShareFile, :file_name => 'jpg')
     end
     it 'falseを返すこと' do
       @share_file.send(:uncheck_extention?).should be_false
