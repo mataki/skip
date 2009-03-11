@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2009-03-06 09:43+0900\n"
+"POT-Creation-Date: 2009-03-11 10:13+0900\n"
 "PO-Revision-Date: 2009-03-03 14:42+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -783,6 +783,26 @@ msgid "Admin::Setting|Password change interval description"
 msgstr ""
 "パスワードの定期変更間隔を日単位で設定します。ユーザ登録や、パスワード変更時"
 "にここで設定された定期変更間隔日後となるパスワード有効期限が設定されます。"
+
+#: app/models/admin/setting.rb:98
+msgid "Admin::Setting|Password strength"
+msgstr "パスワード強度"
+
+#: app/models/admin/setting.rb:102
+msgid "Admin::Setting|Password strength description"
+msgstr "パスワード強度を設定します。<p>弱 : 英数字記号6桁以上の入力が必要です。</p><p>中 : 英数字記号8桁以上の入力が必要です。また、大文字、小文字、数字のそれぞれが最低1文字以上入力されていなければなりません。</p><p>強 : 英数字記号8桁以上の入力が必要です。また、大文字、小文字、数字、記号のそれぞれが最低1文字以上入力されていなければなりません。</p>"
+
+#: app/models/admin/setting.rb:99
+msgid "Admin::Setting|Password strength|high"
+msgstr "強"
+
+#: app/models/admin/setting.rb:101
+msgid "Admin::Setting|Password strength|low"
+msgstr "弱"
+
+#: app/models/admin/setting.rb:100
+msgid "Admin::Setting|Password strength|middle"
+msgstr "中"
 
 #: app/models/admin/setting.rb:46
 msgid "Admin::Setting|Point button"
@@ -2587,11 +2607,11 @@ msgstr ""
 msgid "User|Admin"
 msgstr ""
 
-#: app/models/user.rb:64
+#: app/models/user.rb:66
 msgid "User|Admin|false"
 msgstr " "
 
-#: app/models/user.rb:63
+#: app/models/user.rb:65
 msgid "User|Admin|true"
 msgstr "管理者"
 
@@ -2607,11 +2627,11 @@ msgstr ""
 msgid "User|Crypted password"
 msgstr ""
 
-#: app/models/user.rb:67
+#: app/models/user.rb:69
 msgid "User|Disclosure|false"
 msgstr "非公開"
 
-#: app/models/user.rb:66
+#: app/models/user.rb:68
 msgid "User|Disclosure|true"
 msgstr "公開"
 
@@ -2634,23 +2654,23 @@ msgstr "最終ログイン日時"
 msgid "User|Lock"
 msgstr "凍結状態"
 
-#: app/models/user.rb:70
+#: app/models/user.rb:72
 msgid "User|Lock|false"
 msgstr " "
 
-#: app/models/user.rb:69
+#: app/models/user.rb:71
 msgid "User|Lock|true"
 msgstr "凍結"
 
-#: app/models/user.rb:54
+#: app/models/user.rb:56
 msgid "User|Old password"
 msgstr "現在のパスワード"
 
-#: app/models/user.rb:55
+#: app/models/user.rb:57
 msgid "User|Password"
 msgstr "パスワード"
 
-#: app/models/user.rb:56
+#: app/models/user.rb:58
 msgid "User|Password confirmation"
 msgstr "確認パスワード"
 
@@ -2684,15 +2704,15 @@ msgstr "部署"
 msgid "User|Status"
 msgstr "ステータス"
 
-#: app/models/user.rb:58
+#: app/models/user.rb:60
 msgid "User|Status|ACTIVE"
 msgstr "使用中"
 
-#: app/models/user.rb:59
+#: app/models/user.rb:61
 msgid "User|Status|RETIRED"
 msgstr "退職"
 
-#: app/models/user.rb:60 app/views/admin/users/_form.html.erb:26
+#: app/models/user.rb:62 app/views/admin/users/_form.html.erb:26
 #: app/views/admin/users/_form.html.erb:32
 msgid "User|Status|UNUSED"
 msgstr "未使用"
@@ -3073,6 +3093,14 @@ msgstr ""
 msgid "はアルファベットで入力して下さい。"
 msgstr ""
 
+#: app/models/user.rb:108
+msgid "はログインIDと同一の値は登録できません。"
+msgstr ""
+
+#: app/models/user.rb:109
+msgid "は前回と同一の値は登録できません。"
+msgstr ""
+
 #: app/models/user_profile_master.rb:139
 msgid "は必須です。"
 msgstr ""
@@ -3203,6 +3231,14 @@ msgstr ""
 
 #: app/views/admin/users/issue_password_reset_code.html.erb:7
 msgid "パスワード再設定のメールです"
+msgstr ""
+
+#: app/views/admin/settings/_security.html.erb:7
+msgid "パスワード定期変更"
+msgstr ""
+
+#: app/views/admin/settings/_security.html.erb:12
+msgid "パスワード強度"
 msgstr ""
 
 #: app/controllers/mypage_controller.rb:526
@@ -3343,6 +3379,10 @@ msgstr ""
 
 #: app/controllers/platform_controller.rb:319
 msgid "ログインに失敗しました。"
+msgstr ""
+
+#: app/views/admin/settings/_security.html.erb:2
+msgid "ログイン制限"
 msgstr ""
 
 #: app/views/admin/images/index.html.erb:15

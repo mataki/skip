@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2009-03-06 09:43+0900\n"
+"POT-Creation-Date: 2009-03-11 10:13+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -733,6 +733,26 @@ msgstr ""
 
 #: app/models/admin/setting.rb:97
 msgid "Admin::Setting|Password change interval description"
+msgstr ""
+
+#: app/models/admin/setting.rb:98
+msgid "Admin::Setting|Password strength"
+msgstr ""
+
+#: app/models/admin/setting.rb:102
+msgid "Admin::Setting|Password strength description"
+msgstr ""
+
+#: app/models/admin/setting.rb:99
+msgid "Admin::Setting|Password strength|high"
+msgstr ""
+
+#: app/models/admin/setting.rb:101
+msgid "Admin::Setting|Password strength|low"
+msgstr ""
+
+#: app/models/admin/setting.rb:100
+msgid "Admin::Setting|Password strength|middle"
 msgstr ""
 
 #: app/models/admin/setting.rb:46
@@ -2492,11 +2512,11 @@ msgstr ""
 msgid "User|Admin"
 msgstr ""
 
-#: app/models/user.rb:64
+#: app/models/user.rb:66
 msgid "User|Admin|false"
 msgstr ""
 
-#: app/models/user.rb:63
+#: app/models/user.rb:65
 msgid "User|Admin|true"
 msgstr ""
 
@@ -2512,11 +2532,11 @@ msgstr ""
 msgid "User|Crypted password"
 msgstr ""
 
-#: app/models/user.rb:67
+#: app/models/user.rb:69
 msgid "User|Disclosure|false"
 msgstr ""
 
-#: app/models/user.rb:66
+#: app/models/user.rb:68
 msgid "User|Disclosure|true"
 msgstr ""
 
@@ -2539,23 +2559,23 @@ msgstr ""
 msgid "User|Lock"
 msgstr ""
 
-#: app/models/user.rb:70
+#: app/models/user.rb:72
 msgid "User|Lock|false"
 msgstr ""
 
-#: app/models/user.rb:69
+#: app/models/user.rb:71
 msgid "User|Lock|true"
 msgstr ""
 
-#: app/models/user.rb:54
+#: app/models/user.rb:56
 msgid "User|Old password"
 msgstr ""
 
-#: app/models/user.rb:55
+#: app/models/user.rb:57
 msgid "User|Password"
 msgstr ""
 
-#: app/models/user.rb:56
+#: app/models/user.rb:58
 msgid "User|Password confirmation"
 msgstr ""
 
@@ -2589,15 +2609,15 @@ msgstr ""
 msgid "User|Status"
 msgstr ""
 
-#: app/models/user.rb:58
+#: app/models/user.rb:60
 msgid "User|Status|ACTIVE"
 msgstr ""
 
-#: app/models/user.rb:59
+#: app/models/user.rb:61
 msgid "User|Status|RETIRED"
 msgstr ""
 
-#: app/models/user.rb:60 app/views/admin/users/_form.html.erb:26
+#: app/models/user.rb:62 app/views/admin/users/_form.html.erb:26
 #: app/views/admin/users/_form.html.erb:32
 msgid "User|Status|UNUSED"
 msgstr ""
@@ -2976,6 +2996,14 @@ msgstr ""
 msgid "はアルファベットで入力して下さい。"
 msgstr ""
 
+#: app/models/user.rb:108
+msgid "はログインIDと同一の値は登録できません。"
+msgstr ""
+
+#: app/models/user.rb:109
+msgid "は前回と同一の値は登録できません。"
+msgstr ""
+
 #: app/models/user_profile_master.rb:139
 msgid "は必須です。"
 msgstr ""
@@ -3106,6 +3134,14 @@ msgstr ""
 
 #: app/views/admin/users/issue_password_reset_code.html.erb:7
 msgid "パスワード再設定のメールです"
+msgstr ""
+
+#: app/views/admin/settings/_security.html.erb:7
+msgid "パスワード定期変更"
+msgstr ""
+
+#: app/views/admin/settings/_security.html.erb:12
+msgid "パスワード強度"
 msgstr ""
 
 #: app/controllers/mypage_controller.rb:526
@@ -3246,6 +3282,10 @@ msgstr ""
 
 #: app/controllers/platform_controller.rb:319
 msgid "ログインに失敗しました。"
+msgstr ""
+
+#: app/views/admin/settings/_security.html.erb:2
+msgid "ログイン制限"
 msgstr ""
 
 #: app/views/admin/images/index.html.erb:15

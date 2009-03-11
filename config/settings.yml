@@ -112,3 +112,5 @@ enable_password_periodic_change:
 password_change_interval:
   format: int
   default: 180
+password_strength:
+  default: middle

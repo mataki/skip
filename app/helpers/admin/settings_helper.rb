@@ -40,4 +40,13 @@ module Admin::SettingsHelper
       password_field_tag("settings[#{symbolize_key}]", Admin::Setting.send(symbolize_key.to_s), options) +
       help_icon_tag(:content => _(Admin::Setting.name + '|' + (symbolize_key.to_s + '_description').humanize))
   end
+
+  def password_strength_container
+    returning container = [] do
+      Admin::Setting::PASSWORD_STRENGTH_VALUES.each do |value|
+        container.push [_(Admin::Setting.name + '|Password strength|' + value), value]
+      end
+    end
+  end
 end
+

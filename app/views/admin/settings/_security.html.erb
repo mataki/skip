@@ -1,7 +1,15 @@
-<% @revert_columns = %w(enable_user_lock user_lock_trial_limit enable_password_periodic_change password_change_interval) -%>
+<% @revert_columns = %w(enable_user_lock user_lock_trial_limit enable_password_periodic_change password_change_interval password_strength) -%>
+<h3><%= _('ログイン制限') %></h3>
 <div class="box tabular">
   <p><%= settings_label_with_check_box_tag :enable_user_lock %></p>
   <p><%= settings_label_with_select_tag :user_lock_trial_limit, (3..10).to_a, Admin::Setting.user_lock_trial_limit.to_i %></p>
+</div>
+<h3><%= _('パスワード定期変更') %></h3>
+<div class="box tabular">
   <p><%= settings_label_with_check_box_tag :enable_password_periodic_change %></p>
   <p><%= settings_label_with_text_field_tag :password_change_interval %></p>
+</div>
+<h3><%= _('パスワード強度') %></h3>
+<div class="box tabular">
+  <p><%= settings_label_with_select_tag :password_strength, password_strength_container, h(Admin::Setting.password_strength.to_s) %></p>
 </div>

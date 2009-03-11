@@ -95,9 +95,16 @@ class Admin::Setting < ActiveRecord::Base
   N_('Admin::Setting|Enable password periodic change description')
   N_('Admin::Setting|Password change interval')
   N_('Admin::Setting|Password change interval description')
+  N_('Admin::Setting|Password strength')
+  N_('Admin::Setting|Password strength|high')
+  N_('Admin::Setting|Password strength|middle')
+  N_('Admin::Setting|Password strength|low')
+  N_('Admin::Setting|Password strength description')
 
   cattr_accessor :available_settings
   @@available_settings = YAML::load(File.open("#{RAILS_ROOT}/config/settings.yml"))
+
+  PASSWORD_STRENGTH_VALUES = %w(low middle high).freeze
 
   validates_uniqueness_of :name
   validates_inclusion_of :name, :in => @@available_settings.keys
