@@ -111,7 +111,7 @@ describe Admin::UserUid, "#rename" do
 
   def create_items_expect_change
     uid_str = SkipFaker.rand_char
-    @u = User.new({:name => uid_str, :password => 'password', :password_confirmation => 'password', :email => SkipFaker.email})
+    @u = User.new({:name => uid_str, :password => 'Password1', :password_confirmation => 'Password1', :email => SkipFaker.email})
     @u.status = 'ACTIVE'
     @u.save!
     @u.user_uids.create!({:uid => uid_str})

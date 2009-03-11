@@ -69,9 +69,9 @@ class PortalController < ApplicationController
         @user_uid.save!
       end
 
+      @profiles.each{|profile| profile.save!}
       @user.status = 'ACTIVE'
       @user.save!
-      @profiles.each{|profile| profile.save!}
 
       Antenna.create_initial!(@user)
 

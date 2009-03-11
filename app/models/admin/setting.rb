@@ -96,10 +96,13 @@ class Admin::Setting < ActiveRecord::Base
   N_('Admin::Setting|Password change interval')
   N_('Admin::Setting|Password change interval description')
   N_('Admin::Setting|Password strength')
-  N_('Admin::Setting|Password strength|high')
-  N_('Admin::Setting|Password strength|middle')
-  N_('Admin::Setting|Password strength|low')
   N_('Admin::Setting|Password strength description')
+  N_('Admin::Setting|Password strength|high')
+  N_('Admin::Setting|Password strength|Validation message high')
+  N_('Admin::Setting|Password strength|middle')
+  N_('Admin::Setting|Password strength|Validation message middle')
+  N_('Admin::Setting|Password strength|low')
+  N_('Admin::Setting|Password strength|Validation message low')
 
   cattr_accessor :available_settings
   @@available_settings = YAML::load(File.open("#{RAILS_ROOT}/config/settings.yml"))
@@ -194,6 +197,35 @@ class Admin::Setting < ActiveRecord::Base
 
   def self.protocol_by_initial_settings_default
     INITIAL_SETTINGS['protocol'] || self.protocol
+  end
+
+  def self.password_strength_regex
+    lower = 'a-z'
+    lower_negative_lookahead = "(?!^[^#{lower}]*$)"
+    upper = 'A-Z'
+    upper_negative_lookahead = "(?!^[^#{upper}]*$)"
+    digit = '0-9'
+    digit_negative_lookahead = "(?!^[^#{digit}]*$)"
+    symbol = '!@#\$%\^&\*\?_~'
+    symbol_negative_lookahead = "(?!^[^#{symbol}]*$)"
+    lower_upper_digit_symbol = "#{lower}#{upper}#{digit}#{symbol}"
+    low_regex_s = "^[#{lower_upper_digit_symbol}]{6,}$"
+    middle_regex_s = "#{lower_negative_lookahead}#{upper_negative_lookahead}#{digit_negative_lookahead}^[#{lower_upper_digit_symbol}]{8,}$"
+    high_regex_s = "#{symbol_negative_lookahead}#{middle_regex_s}"
+    case password_strength
+      when 'low' then /#{low_regex_s}/
+      when 'middle' then /#{middle_regex_s}/
+      when 'high' then /#{high_regex_s}/
+      else /#{middle_regex_s}/
+    end
+  end
+
+  def self.password_strength_validation_error_message
+    if PASSWORD_STRENGTH_VALUES.include? Admin::Setting.password_strength
+      _('Admin::Setting|Password strength|Validation message ' + password_strength)
+    else
+      _('Admin::Setting|Password strength|Validation message middle')
+    end
   end
 
   private

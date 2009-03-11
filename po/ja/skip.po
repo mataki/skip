@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2009-03-11 10:13+0900\n"
+"POT-Creation-Date: 2009-03-11 14:12+0900\n"
 "PO-Revision-Date: 2009-03-03 14:42+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -788,19 +788,36 @@ msgstr ""
 msgid "Admin::Setting|Password strength"
 msgstr "パスワード強度"
 
-#: app/models/admin/setting.rb:102
-msgid "Admin::Setting|Password strength description"
-msgstr "パスワード強度を設定します。<p>弱 : 英数字記号6桁以上の入力が必要です。</p><p>中 : 英数字記号8桁以上の入力が必要です。また、大文字、小文字、数字のそれぞれが最低1文字以上入力されていなければなりません。</p><p>強 : 英数字記号8桁以上の入力が必要です。また、大文字、小文字、数字、記号のそれぞれが最低1文字以上入力されていなければなりません。</p>"
-
 #: app/models/admin/setting.rb:99
+msgid "Admin::Setting|Password strength description"
+msgstr ""
+"パスワード強度を設定します。<p>弱 : 英数字記号6桁以上の入力が必要です。</"
+"p><p>中 : 英数字記号8桁以上の入力が必要です。また、大文字、小文字、数字のそれ"
+"ぞれが最低1文字以上入力されていなければなりません。</p><p>強 : 英数字記号8桁"
+"以上の入力が必要です。また、大文字、小文字、数字、記号のそれぞれが最低1文字以"
+"上入力されていなければなりません。</p>"
+
+#: app/models/admin/setting.rb:101
+msgid "Admin::Setting|Password strength|Validation message high"
+msgstr "は8文字以上の半角英数字及び記号(!@#$%^&*?_~)で入力して下さい。また、英字の大文字、小文字、数字、記号がそれぞれ最低一文字ずつ含まれている必要があります。"
+
+#: app/models/admin/setting.rb:105
+msgid "Admin::Setting|Password strength|Validation message low"
+msgstr "は6文字以上の半角英数字及び記号(!@#$%^&*?_~)で入力して下さい。"
+
+#: app/models/admin/setting.rb:103 app/models/admin/setting.rb:232
+msgid "Admin::Setting|Password strength|Validation message middle"
+msgstr "は8文字以上の半角英数字及び記号(!@#$%^&*?_~)で入力して下さい。また、英字の大文字、小文字、数字がそれぞれ最低一文字ずつ含まれている必要があります。"
+
+#: app/models/admin/setting.rb:100
 msgid "Admin::Setting|Password strength|high"
 msgstr "強"
 
-#: app/models/admin/setting.rb:101
+#: app/models/admin/setting.rb:104
 msgid "Admin::Setting|Password strength|low"
 msgstr "弱"
 
-#: app/models/admin/setting.rb:100
+#: app/models/admin/setting.rb:102
 msgid "Admin::Setting|Password strength|middle"
 msgstr "中"
 
@@ -2607,11 +2624,11 @@ msgstr ""
 msgid "User|Admin"
 msgstr ""
 
-#: app/models/user.rb:66
+#: app/models/user.rb:65
 msgid "User|Admin|false"
 msgstr " "
 
-#: app/models/user.rb:65
+#: app/models/user.rb:64
 msgid "User|Admin|true"
 msgstr "管理者"
 
@@ -2627,11 +2644,11 @@ msgstr ""
 msgid "User|Crypted password"
 msgstr ""
 
-#: app/models/user.rb:69
+#: app/models/user.rb:68
 msgid "User|Disclosure|false"
 msgstr "非公開"
 
-#: app/models/user.rb:68
+#: app/models/user.rb:67
 msgid "User|Disclosure|true"
 msgstr "公開"
 
@@ -2654,23 +2671,23 @@ msgstr "最終ログイン日時"
 msgid "User|Lock"
 msgstr "凍結状態"
 
-#: app/models/user.rb:72
+#: app/models/user.rb:71
 msgid "User|Lock|false"
 msgstr " "
 
-#: app/models/user.rb:71
+#: app/models/user.rb:70
 msgid "User|Lock|true"
 msgstr "凍結"
 
-#: app/models/user.rb:56
+#: app/models/user.rb:55
 msgid "User|Old password"
 msgstr "現在のパスワード"
 
-#: app/models/user.rb:57
+#: app/models/user.rb:56
 msgid "User|Password"
 msgstr "パスワード"
 
-#: app/models/user.rb:58
+#: app/models/user.rb:57
 msgid "User|Password confirmation"
 msgstr "確認パスワード"
 
@@ -2704,15 +2721,15 @@ msgstr "部署"
 msgid "User|Status"
 msgstr "ステータス"
 
-#: app/models/user.rb:60
+#: app/models/user.rb:59
 msgid "User|Status|ACTIVE"
 msgstr "使用中"
 
-#: app/models/user.rb:61
+#: app/models/user.rb:60
 msgid "User|Status|RETIRED"
 msgstr "退職"
 
-#: app/models/user.rb:62 app/views/admin/users/_form.html.erb:26
+#: app/models/user.rb:61 app/views/admin/users/_form.html.erb:26
 #: app/views/admin/users/_form.html.erb:32
 msgid "User|Status|UNUSED"
 msgstr "未使用"
@@ -3093,11 +3110,11 @@ msgstr ""
 msgid "はアルファベットで入力して下さい。"
 msgstr ""
 
-#: app/models/user.rb:108
+#: app/models/user.rb:107
 msgid "はログインIDと同一の値は登録できません。"
 msgstr ""
 
-#: app/models/user.rb:109
+#: app/models/user.rb:108
 msgid "は前回と同一の値は登録できません。"
 msgstr ""
 

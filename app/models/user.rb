@@ -44,9 +44,8 @@ class User < ActiveRecord::Base
     me.validates_presence_of :password
     me.validates_confirmation_of :password
     me.validates_length_of :password, :within => 6..40
+    me.validates_presence_of :password_confirmation
   end
-
-  validates_presence_of :password_confirmation, :message => 'は必須です', :if => :password_required?
 
   validates_presence_of :email, :message => 'は必須です'
   validates_length_of :email, :maximum => 50, :message => 'は50桁以内で入力してください'
@@ -106,7 +105,8 @@ class User < ActiveRecord::Base
   def validate
     if password_required?
       errors.add(:password, _('はログインIDと同一の値は登録できません。')) if self.uid == self.password
-      errors.add(:password, _('は前回と同一の値は登録できません。')) if self.crypted_password == encrypt(password)
+      errors.add(:password, _('は前回と同一の値は登録できません。')) if self.crypted_password_was == encrypt(self.password)
+      errors.add(:password, Admin::Setting.password_strength_validation_error_message) unless Admin::Setting.password_strength_regex.match(self.password)
     end
   end
 
@@ -328,7 +328,7 @@ class User < ActiveRecord::Base
   def activate!
     self.activation_token = nil
     self.activation_token_expires_at = nil
-    self.save!
+    self.save_without_validation!
   end
 
   def self.activation_lifetime
@@ -432,7 +432,11 @@ protected
 
 private
   def password_required?
-    active? and crypted_password.blank? or !password.blank?
+    if INITIAL_SETTINGS['login_mode'] == 'password'
+      active? and crypted_password.blank? or !password.blank?
+    else
+      false
+    end
   end
 
   def encrypt(password)

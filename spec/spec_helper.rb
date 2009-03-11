@@ -91,7 +91,7 @@ end
 
 def create_user options = {}
   options[:user_options] ||= {}
-  user = User.new({ :name => 'ほげ ほげ', :password => 'password', :password_confirmation => 'password', :reset_auth_token => nil, :email => SkipFaker.email, :section => 'Programmer'}.merge(options[:user_options]))
+  user = User.new({ :name => 'ほげ ほげ', :password => 'Password1', :password_confirmation => 'Password1', :reset_auth_token => nil, :email => SkipFaker.email, :section => 'Programmer'}.merge(options[:user_options]))
   user.status = options[:status] || 'ACTIVE'
   if options[:user_uid_options]
     user_uid = UserUid.new({ :uid => '123456', :uid_type => 'MASTER' }.merge(options[:user_uid_options]))

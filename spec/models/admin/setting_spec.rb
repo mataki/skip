@@ -59,9 +59,6 @@ describe Admin::Setting, '.[]=' do
   end
 end
 
-describe Admin::Setting, '@@available_settingsの要素に対するaccesser' do
-end
-
 describe Admin::Setting, '.check_cache' do
   before do
     @now = Time.now
@@ -94,6 +91,41 @@ describe Admin::Setting, '.check_cache' do
       Admin::Setting.instance_variable_get(:@cached_cleared_on).should == @now
     end
     it "ログが出力されない" do
+    end
+  end
+end
+
+describe Admin::Setting, '.password_strength_regex' do
+  describe 'パスワード強度がlowの場合' do
+    before do
+      Admin::Setting.should_receive(:password_strength).and_return('low')
+    end
+    it '英数字記号6桁以上の入力を受け入れる正規表現を返すこと' do
+      Admin::Setting.password_strength_regex.should == /^[a-zA-Z0-9!@#\$%\^&\*\?_~]{6,}$/
+    end
+  end
+  describe 'パスワード強度がmiddleの場合' do
+    before do
+      Admin::Setting.should_receive(:password_strength).and_return('middle')
+    end
+    it '英数字記号8桁以上(小文字、大文字、数字が1文字ずつ含まれる)を受け入れる正規表現を返すこと' do
+      Admin::Setting.password_strength_regex.should == /(?!^[^a-z]*$)(?!^[^A-Z]*$)(?!^[^0-9]*$)^[a-zA-Z0-9!@#\$%\^&\*\?_~]{8,}$/
+    end
+  end
+  describe 'パスワード強度がhighの場合' do
+    before do
+      Admin::Setting.should_receive(:password_strength).and_return('high')
+    end
+    it '英数字記号8桁以上(小文字、大文字、数字、記号が1文字ずつ含まれる)を受け入れる正規表現を返すこと' do
+      Admin::Setting.password_strength_regex.should == /(?!^[^!@#\$%\^&\*\?_~]*$)(?!^[^a-z]*$)(?!^[^A-Z]*$)(?!^[^0-9]*$)^[a-zA-Z0-9!@#\$%\^&\*\?_~]{8,}$/
+    end
+  end
+  describe 'パスワード強度が不明の場合' do
+    before do
+      Admin::Setting.should_receive(:password_strength).and_return(nil)
+    end
+    it '英数字記号8桁以上(小文字、大文字、数字が1文字ずつ含まれる)を受け入れる正規表現を返すこと' do
+      Admin::Setting.password_strength_regex.should == /(?!^[^a-z]*$)(?!^[^A-Z]*$)(?!^[^0-9]*$)^[a-zA-Z0-9!@#\$%\^&\*\?_~]{8,}$/
     end
   end
 end

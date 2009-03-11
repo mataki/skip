@@ -89,24 +89,132 @@ describe User, 'validation' do
       @user.errors['password'].include?('はログインIDと同一の値は登録できません。').should be_true
     end
     it '現在のパスワードと異なること' do
-      @user.crypted_password = User.encrypt('password')
-      @user.password = 'password'
+      @user.password = 'Password2'
+      @user.password_confirmation = 'Password2'
+      @user.save!
+      @user.password = 'Password2'
       @user.valid?.should be_false
       @user.errors['password'].include?('は前回と同一の値は登録できません。').should be_true
+    end
+    describe 'パスワード強度が弱の場合' do
+      before do
+        Admin::Setting.stub!(:password_strength).and_return('low')
+        @message = 'Admin::Setting|Password strength|Validation message low'
+      end
+      it '6文字以上の英数字記号であること' do
+        @user.password = 'abcde'
+        @user.valid?
+        @user.errors['password'].include?(@message).should be_true
+        @user.password = 'abcdef'
+        @user.valid?
+        @user.errors['password'].include?(@message).should be_false
+      end
+    end
+    describe 'パスワード強度が中の場合' do
+      before do
+        Admin::Setting.stub!(:password_strength).and_return('middle')
+        @message = 'Admin::Setting|Password strength|Validation message middle'
+      end
+      it '7文字の場合エラー' do
+        @user.password = 'abcdeF0'
+        @user.valid?
+        @user.errors['password'].include?(@message).should be_true
+      end
+      describe '8文字以上の場合' do
+        it '小文字のみの場合エラー' do
+          @user.password = 'abcdefgh'
+          @user.valid?
+          @user.errors['password'].include?(@message).should be_true
+        end
+        it '大文字のみの場合エラー' do
+          @user.password = 'ABCDEFGH'
+          @user.valid?
+          @user.errors['password'].include?(@message).should be_true
+        end
+        it '数字のみの場合エラー' do
+          @user.password = '12345678'
+          @user.valid?
+          @user.errors['password'].include?(@message).should be_true
+        end
+        it '記号のみの場合エラー' do
+          @user.password = '####&&&&'
+          @user.valid?
+          @user.errors['password'].include?(@message).should be_true
+        end
+        it '小文字、大文字のみの場合エラー' do
+          @user.password = 'abcdEFGH'
+          @user.valid?
+          @user.errors['password'].include?(@message).should be_true
+        end
+        it '小文字、大文字、数字の場合エラーにならないこと' do
+          @user.password = 'abcdEF012'
+          @user.valid?
+          @user.errors['password'].include?(@message).should be_false
+        end
+      end
+    end
+    describe 'パスワード強度が強の場合' do
+      before do
+        Admin::Setting.stub!(:password_strength).and_return('high')
+        @message = 'Admin::Setting|Password strength|Validation message high'
+      end
+      it '7文字の場合エラー' do
+        @user.password = 'abcdeF0'
+        @user.valid?
+        @user.errors['password'].include?(@message).should be_true
+      end
+      describe '8文字以上の場合' do
+        it '小文字のみの場合エラー' do
+          @user.password = 'abcdefgh'
+          @user.valid?
+          @user.errors['password'].include?(@message).should be_true
+        end
+        it '大文字のみの場合エラー' do
+          @user.password = 'ABCDEFGH'
+          @user.valid?
+          @user.errors['password'].include?(@message).should be_true
+        end
+        it '数字のみの場合エラー' do
+          @user.password = '12345678'
+          @user.valid?
+          @user.errors['password'].include?(@message).should be_true
+        end
+        it '記号のみの場合エラー' do
+          @user.password = '####&&&&'
+          @user.valid?
+          @user.errors['password'].include?(@message).should be_true
+        end
+        it '小文字、大文字のみの場合エラー' do
+          @user.password = 'abcdEFGH'
+          @user.valid?
+          @user.errors['password'].include?(@message).should be_true
+        end
+        it '小文字、大文字、数字の場合エラー' do
+          @user.password = 'abcdEF01'
+          @user.valid?
+          @user.errors['password'].include?(@message).should be_true
+        end
+        it '小文字、大文字、数字, 記号の場合エラーとならないこと' do
+          @user.password = 'abcdeF0@#'
+          @user.valid?
+          @user.errors['password'].include?(@message).should be_false
+        end
+      end
     end
   end
 end
 
 describe User, "#before_save" do
+  before do
+    INITIAL_SETTINGS['login_mode'] = 'password'
+  end
   describe '新規の場合' do
     before do
       @user = new_user
       Admin::Setting.password_change_interval = 90
     end
     it "保存する際はパスワードが暗号化される" do
-      lambda do
         @user.save
-      end.should change(@user, :crypted_password).to(User.encrypt('password'))
     end
     it 'パスワード有効期限が設定される' do
       time = Time.now
@@ -157,9 +265,10 @@ end
 
 describe User, '#change_password' do
   before do
+    INITIAL_SETTINGS['login_mode'] = 'password'
     @user = create_user
     @old_password = @user.password
-    @new_password = 'hogehoge'
+    @new_password = 'Hogehoge1'
 
     @params = { :old_password => @old_password, :password => @new_password, :password_confirmation => @new_password }
   end
@@ -189,13 +298,13 @@ describe User, '#change_password' do
 end
 
 describe User, ".new_with_identity_url" do
+  before do
+    @identity_url = "http://test.com/identity"
+    @params = { :code => 'hoge', :name => "ほげ ふが", :email => 'hoge@hoge.com' }
+    @user = User.new_with_identity_url(@identity_url, @params)
+    @user.stub!(:password_required?).and_return(false)
+  end
   describe "正しく保存される場合" do
-    before do
-      @identity_url = "http://test.com/identity"
-      @params = { :code => 'hoge', :name => "ほげ ふが", :email => 'hoge@hoge.com' }
-      @user = User.new_with_identity_url(@identity_url, @params)
-    end
-
     it { @user.should be_valid }
     it { @user.should be_is_a(User) }
     it { @user.openid_identifiers.should_not be_nil }
@@ -203,9 +312,8 @@ describe User, ".new_with_identity_url" do
   end
   describe "バリデーションエラーの場合" do
     before do
-      @identity_url = "http://test.com/identity"
-      @params = { :code => 'hoge', :name => '', :email => "" }
-      @user = User.new_with_identity_url(@identity_url, @params)
+      @user.name = ''
+      @user.email = ''
     end
     it { @user.should_not be_valid }
     it "userにエラーが設定されていること" do
@@ -745,6 +853,67 @@ describe User, '#within_time_limit_of_password?' do
   end
 end
 
+describe User, 'password_required?' do
+  before do
+    @user = new_user
+  end
+  describe 'パスワードモードの場合' do
+    before do
+      INITIAL_SETTINGS.stub!('[]').with('login_mode').and_return('password')
+    end
+    describe 'パスワードが空の場合' do
+      before do
+        @user.password = ''
+      end
+      describe 'ユーザが利用中の場合' do
+        before do
+          @user.status = 'ACTIVE'
+        end
+        describe 'crypted_passwordが空の場合' do
+          before do
+            @user.crypted_password = ''
+          end
+          it '必要(true)と判定されること' do
+            @user.send!(:password_required?).should be_true
+          end
+        end
+        describe 'crypted_passwordが空ではない場合' do
+          before do
+            @user.crypted_password = 'password'
+          end
+          it '必要ではない(false)と判定されること' do
+            @user.send!(:password_required?).should be_false
+          end
+        end
+      end
+      describe 'ユーザが利用中ではない場合' do
+        before do
+          @user.status = 'UNUSED'
+        end
+        it '必要ではない(false)と判定されること' do
+          @user.send!(:password_required?).should be_false
+        end
+      end
+    end
+    describe 'パスワードが空ではない場合' do
+      before do
+        @user.password = 'Password1'
+      end
+      it '必要(true)と判定されること' do
+        @user.send!(:password_required?).should be_true
+      end
+    end
+  end
+  describe 'パスワードモード以外の場合' do
+    before do
+      INITIAL_SETTINGS.stub!('[]').with('login_mode').and_return('rp')
+    end
+    it '必要ではない(false)と判定されること' do
+      @user.send!(:password_required?).should be_false
+    end
+  end
+end
+
 describe User, '.find_by_code_or_email' do
   describe 'ログインIDに一致するユーザが見つかる場合' do
     before do
@@ -882,6 +1051,6 @@ describe User, '.auth_failed' do
 end
 
 def new_user options = {}
-  User.new({ :name => 'ほげ ほげ', :password => 'password', :password_confirmation => 'password', :email => SkipFaker.email, :section => 'Tester',}.merge(options))
+  User.new({ :name => 'ほげ ほげ', :password => 'Password1', :password_confirmation => 'Password1', :email => SkipFaker.email, :section => 'Tester',}.merge(options))
 end
 
