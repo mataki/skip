@@ -344,19 +344,19 @@ describe User, ".auth" do
     before do
       @user = create_user
       @user.stub!(:crypted_password).and_return(User.encrypt(@valid_password))
-      User.stub!(:find_by_code_or_email).and_return(@user)
+      User.stub!(:find_by_code_or_email_with_key_phrase).and_return(@user)
     end
     describe "未使用ユーザの場合" do
       before do
         @user.stub!(:unused?).and_return(true)
-        User.should_receive(:find_by_code_or_email).and_return(@user)
+        User.should_receive(:find_by_code_or_email_with_key_phrase).and_return(@user)
       end
       it { User.auth('code_or_email', @valid_password).should be_nil }
     end
     describe "使用中ユーザの場合" do
       before do
         @user.stub!(:unused?).and_return(false)
-        User.should_receive(:find_by_code_or_email).and_return(@user)
+        User.should_receive(:find_by_code_or_email_with_key_phrase).and_return(@user)
       end
       describe "パスワードが正しい場合" do
         it '認証成功処理が行われること' do
@@ -374,7 +374,7 @@ describe User, ".auth" do
   end
   describe "指定したログインID又はメールアドレスに対応するユーザが存在しない場合" do
     before do
-      User.should_receive(:find_by_code_or_email).and_return(nil)
+      User.should_receive(:find_by_code_or_email_with_key_phrase).and_return(nil)
     end
     it { User.auth('code_or_email', @valid_password).should be_nil }
   end
@@ -910,6 +910,43 @@ describe User, 'password_required?' do
     end
     it '必要ではない(false)と判定されること' do
       @user.send!(:password_required?).should be_false
+    end
+  end
+end
+
+describe User, '.find_by_code_or_email_with_key_phrase' do
+  before do
+    @user = stub_model(User)
+    User.stub!(:find_by_code_or_email).and_return(@user)
+  end
+  describe 'ログインキーフレーズが有効な場合' do
+    before do
+      Admin::Setting.should_receive(:enable_login_keyphrase).and_return(true)
+      Admin::Setting.should_receive(:login_keyphrase).and_return('key_phrase')
+    end
+    describe 'ログインキーフレーズが設定値と一致する場合' do
+      before do
+        @key_phrase = 'key_phrase'
+      end
+      it 'ログインIDまたはemailで検索した結果が返ること' do
+        User.send!(:find_by_code_or_email_with_key_phrase, 'code_or_email', @key_phrase).should == @user
+      end
+    end
+    describe 'ログインキーフレーズが設定値と一致しない場合' do
+      before do
+        @key_phrase = 'invalid_key_phrase'
+      end
+      it 'nilが返ること' do
+        User.send!(:find_by_code_or_email_with_key_phrase, 'code_or_email', @key_phrase).should be_nil
+      end
+    end
+  end
+  describe 'ログインキーフレーズが無効な場合' do
+    before do
+      Admin::Setting.should_receive(:enable_login_keyphrase).and_return(false)
+    end
+    it 'ログインIDまたはemailで検索した結果が返ること' do
+      User.send!(:find_by_code_or_email_with_key_phrase, 'code_or_email', @key_phrase).should == @user
     end
   end
 end

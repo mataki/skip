@@ -121,8 +121,8 @@ class User < ActiveRecord::Base
     self.issued_at = Time.now
   end
 
-  def self.auth(code_or_email, password)
-    return nil unless user = find_by_code_or_email(code_or_email)
+  def self.auth(code_or_email, password, key_phrase = nil)
+    return nil unless user = find_by_code_or_email_with_key_phrase(code_or_email, key_phrase)
     return nil if user.unused?
     if user.crypted_password == encrypt(password)
       auth_successed(user)
@@ -447,6 +447,14 @@ private
     find_by_code(code_or_email) || find_by_email(code_or_email)
   end
 
+  def self.find_by_code_or_email_with_key_phrase(code_or_email, key_phrase)
+    if Admin::Setting.enable_login_keyphrase
+      find_by_code_or_email(code_or_email) if Admin::Setting.login_keyphrase == key_phrase
+    else
+      find_by_code_or_email(code_or_email)
+    end
+  end
+
   def self.auth_successed user
     unless user.locked?
       user.last_authenticated_at = Time.now
@@ -470,5 +478,5 @@ private
     nil
   end
 
-  private_class_method :find_by_code_or_email, :auth_successed, :auth_failed
+  private_class_method :find_by_code_or_email, :find_by_code_or_email_with_key_phrase, :auth_successed, :auth_failed
 end

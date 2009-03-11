@@ -31,7 +31,7 @@ describe PlatformController, "#login(パスワードでのログイン)" do
   describe "認証に成功する場合" do
     before do
       request.env['HTTP_REFERER'] = @back = "http://test.host/previous/page"
-      User.should_receive(:auth).with(@code, @password).and_return(@user)
+      User.should_receive(:auth).with(@code, @password, anything()).and_return(@user)
       controller.stub!(:handle_remember_cookie!)
     end
     describe 'ロックされている場合' do
