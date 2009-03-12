@@ -122,7 +122,7 @@ describe Admin::User, '.make_user_by_uid' do
     before do
       @uid = '999999'
       @email = "yamada@example.com"
-      @password = "password"
+      @password = "Password1"
       @fullname = "山田 太郎"
       @job_title = "経理"
       @user_hash = {:name => @fullname, :password => @password, :password_confirmation => @password, :section => @job_title, :email => @email}
