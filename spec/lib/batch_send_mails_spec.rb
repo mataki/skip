@@ -39,8 +39,9 @@ describe BatchSendMails, '#send_notice' do
       end
       it '送信元ユーザからのメールが送信されないこと' do
         @mail.stub!(:update_attribute).with(:send_flag,true)
-        ActionMailer::Base.deliveries.size.should == 0
-        @sender.send_notice
+        lambda do
+          @sender.send_notice
+        end.should_not change(ActionMailer::Base.deliveries, :size)
       end
     end
     describe '送信元ユーザ(from_user_id)が退職していない場合' do
@@ -52,30 +53,32 @@ describe BatchSendMails, '#send_notice' do
       describe '送信先アドレスが見つからない場合' do
         before do
           User.stub!(:find_by_email).and_return(nil)
+          @mail.stub!(:update_attribute)
         end
         it "対象のMailsテーブルのレコードが送信済みになること" do
           @mail.should_receive(:update_attribute).with(:send_flag,true)
           @sender.send_notice
         end
         it '送信元ユーザからのメールが送信されないこと' do
-          @mail.stub!(:update_attribute).with(:send_flag,true)
-          ActionMailer::Base.deliveries.size.should == 0
-          @sender.send_notice
+          lambda do
+            @sender.send_notice
+          end.should_not change(ActionMailer::Base.deliveries, :size)
         end
       end
       describe '送信先アドレスが見つかる場合' do
         describe '送信先ユーザ(to_address)が存在していない場合' do
           before do
             @sender.stub!(:retired_check_to_address).and_return(nil)
+            @mail.stub!(:update_attribute)
           end
           it '対象のMailsテーブルのレコードが送信済みとなること' do
             @mail.should_receive(:update_attribute).with(:send_flag,true)
             @sender.send_notice
           end
           it '送信先ユーザへメールが送信されないこと' do
-            @mail.stub!(:update_attribute).with(:send_flag,true)
-            ActionMailer::Base.deliveries.size.should == 0
-            @sender.send_notice
+            lambda do
+              @sender.send_notice
+            end.should_not change(ActionMailer::Base.deliveries, :size)
           end
         end
         describe '送信先ユーザ(to_address)が退職していない場合' do
@@ -88,8 +91,9 @@ describe BatchSendMails, '#send_notice' do
               BoardEntry.should_receive(:find).and_return(@board_entry)
             end
             it "メールが送信される" do
-              UserMailer.should_receive(:deliver_sent_contact).with(@mail.to_address, @user.name, "#{Admin::Setting.protocol_by_initial_settings_default}#{Admin::Setting.host_and_port_by_initial_settings_default}/page/1", @board_entry.title)
-              @sender.send_notice
+              lambda do
+                @sender.send_notice
+              end.should change(ActionMailer::Base.deliveries, :size).to(1)
             end
           end
           describe BatchSendMails, "送信元ユーザの記事がない場合" do
@@ -97,12 +101,12 @@ describe BatchSendMails, '#send_notice' do
               BoardEntry.should_receive(:find).and_return(nil)
             end
             it "メールが送信されない" do
-              @sender.send_notice
-              ActionMailer::Base.deliveries.size.should == 0
+              lambda do
+                @sender.send_notice
+              end.should_not change(ActionMailer::Base.deliveries, :size).to(0)
             end
           end
         end
-
       end
     end
   end
@@ -144,7 +148,6 @@ describe BatchSendMails, '#send_message' do
         before do
           @user = stub_model(User, :retired? => false, :email => SkipFaker.email)
           User.should_receive(:find).and_return(@user)
-          UserMailer.stub!(:deliver_sent_message)
         end
         it 'messagesテーブルの対象レコードが送信済みとなること' do
           Message.should_receive(:find).and_return([@message])
@@ -152,8 +155,9 @@ describe BatchSendMails, '#send_message' do
           @sender.send_message
         end
         it 'メールが送信されること' do
-          UserMailer.should_receive(:deliver_sent_message).with(@user.email, "#{Admin::Setting.protocol_by_initial_settings_default}#{Admin::Setting.host_and_port_by_initial_settings_default + @message.link_url}", @message.message, "#{Admin::Setting.protocol_by_initial_settings_default}#{Admin::Setting.host_and_port_by_initial_settings_default}/mypage/manage?menu=manage_message")
-          @sender.send_message
+          lambda do
+            @sender.send_message
+          end.should change(ActionMailer::Base.deliveries, :size).to(1)
         end
       end
       describe 'ユーザが退職している場合' do
