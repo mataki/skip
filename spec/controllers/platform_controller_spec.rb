@@ -285,16 +285,16 @@ describe PlatformController, "#logout" do
 end
 
 describe PlatformController, 'GET /forgot_password' do
-  describe 'パスワード忘れ機能が有効な場合' do
+  describe 'パスワード再設定機能が有効な場合' do
     before do
       controller.stub!(:enable_forgot_password?).and_return(true)
     end
-    it 'パスワード忘れ画面に遷移すること' do
+    it 'パスワード再設定画面に遷移すること' do
       get :forgot_password
       response.should be_success
     end
   end
-  describe 'パスワード忘れ機能が無効な場合' do
+  describe 'パスワード再設定機能が無効な場合' do
     before do
       controller.stub!(:enable_forgot_password?).and_return(false)
     end
@@ -306,7 +306,7 @@ describe PlatformController, 'GET /forgot_password' do
 end
 
 describe PlatformController, 'POST /forgot_password' do
-  describe 'パスワード忘れ機能が有効な場合' do
+  describe 'パスワード再設定機能が有効な場合' do
     before do
       User.stub!(:find_by_email)
       controller.stub!(:enable_forgot_password?).and_return(true)
@@ -370,7 +370,7 @@ describe PlatformController, 'POST /forgot_password' do
       end
     end
   end
-  describe 'パスワード忘れ機能が無効な場合' do
+  describe 'パスワード再設定機能が無効な場合' do
     before do
       controller.stub!(:enable_forgot_password?).and_return(false)
     end

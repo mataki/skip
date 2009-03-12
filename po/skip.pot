@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2009-03-12 15:12+0900\n"
+"POT-Creation-Date: 2009-03-12 15:16+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3173,7 +3173,7 @@ msgid "パスワードを再設定するためのURLは以下の通りです。"
 msgstr ""
 
 #: app/views/shared/_login_form.html.erb:32
-msgid "パスワードを忘れた方はこちら"
+msgid "パスワードを忘れた/再設定したい方はこちら"
 msgstr ""
 
 #: app/controllers/platform_controller.rb:68

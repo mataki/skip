@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2009-03-12 15:12+0900\n"
+"POT-Creation-Date: 2009-03-12 15:16+0900\n"
 "PO-Revision-Date: 2009-03-03 14:42+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2813,8 +2813,8 @@ msgstr "未使用のユーザ以外削除できません。"
 #: app/controllers/admin/users_controller.rb:61
 msgid "You cannot update status and admin and lock of yourself"
 msgstr ""
-"管理者は自分自身のステータスと管理権限及びロック状態は変更できません。他の管理"
-"者アカウントから変更してください。"
+"管理者は自分自身のステータスと管理権限及びロック状態は変更できません。他の管"
+"理者アカウントから変更してください。"
 
 #: app/controllers/platform_controller.rb:47
 msgid "You had been retired."
@@ -3283,7 +3283,7 @@ msgid "パスワードを再設定するためのURLは以下の通りです。"
 msgstr ""
 
 #: app/views/shared/_login_form.html.erb:32
-msgid "パスワードを忘れた方はこちら"
+msgid "パスワードを忘れた/再設定したい方はこちら"
 msgstr ""
 
 #: app/controllers/platform_controller.rb:68

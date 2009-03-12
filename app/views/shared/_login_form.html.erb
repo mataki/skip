@@ -29,7 +29,7 @@
     <% end %>
     <tr valign="top">
       <td><label for="login_password"><span style="font-weight: bold;">パスワード</span></label>
-        <% password_forgot_link_text = _('パスワードを忘れた方はこちら') -%>
+        <% password_forgot_link_text = _('パスワードを忘れた/再設定したい方はこちら') -%>
         <%= "(#{link_to(password_forgot_link_text, forgot_password_path, {:style => 'font-size:11px', :tabindex => '102'})})" if enable_forgot_password? %></td>
     </tr>
     <tr valign="top">
