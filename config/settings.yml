@@ -119,3 +119,9 @@ enable_login_keyphrase:
   default: false
 login_keyphrase:
   default: skip
+enable_user_cleaning_notification:
+  format: boolean
+  default: false
+user_cleaning_notification_interval:
+  format: int
+  default: 3
