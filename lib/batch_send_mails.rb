@@ -20,6 +20,7 @@ class BatchSendMails < BatchBase
     sender = self.new
     sender.send_notice
     sender.send_message
+    sender.send_cleaning_notification
   end
 
   def send_notice
@@ -70,6 +71,15 @@ class BatchSendMails < BatchBase
     end
   end
 
+  def send_cleaning_notification
+    if Admin::Setting.enable_user_cleaning_notification
+      now = Time.now
+      if now.month % Admin::Setting.user_cleaning_notification_interval == 0 && now.day == 1
+        UserMailer.deliver_sent_cleaning_notification cleaning_notification_to_addresses
+      end
+    end
+  end
+
   def retired_check_to_address(to_address)
     active_users = to_address.split(',').inject([]) do |result, email|
       user = User.find_by_email(email)
@@ -77,6 +87,11 @@ class BatchSendMails < BatchBase
       result
     end.join(',')
     active_users.blank? ? nil : active_users
+  end
+
+  private
+  def cleaning_notification_to_addresses
+    Admin::User.admin.active.map { |u| u.email }.join(',')
   end
 end
 

@@ -15,6 +15,28 @@
 
 require File.dirname(__FILE__) + '/../spec_helper'
 
+describe BatchSendMails, '#.execute' do
+  before do
+    @sender = BatchSendMails.new
+    BatchSendMails.should_receive(:new).and_return(@sender)
+    @sender.stub!(:send_notice)
+    @sender.stub!(:send_message)
+    @sender.stub!(:send_cleaning_notification)
+  end
+  it 'noticeメールの送信処理がおこなわれること' do
+    @sender.should_receive(:send_notice)
+    BatchSendMails.execute []
+  end
+  it 'messageメールの送信処理がおこなわれること' do
+    @sender.should_receive(:send_message)
+    BatchSendMails.execute []
+  end
+  it 'クリーニング依頼メールの送信処理がおこなわれること' do
+    @sender.should_receive(:send_cleaning_notification)
+    BatchSendMails.execute []
+  end
+end
+
 describe BatchSendMails, '#send_notice' do
   before do
     @sender = BatchSendMails.new
@@ -177,6 +199,127 @@ describe BatchSendMails, '#send_message' do
           end.should_not change(ActionMailer::Base.deliveries, :size)
         end
       end
+    end
+  end
+end
+
+describe BatchSendMails, '#send_cleaning_notification' do
+  before do
+    @sender = BatchSendMails.new
+    @sender.stub!(:cleaning_notification_to_addresses).and_return('email1, email2')
+    ActionMailer::Base.deliveries.clear
+  end
+  describe 'クリーニング依頼メールを送信する設定の場合' do
+    before do
+      Admin::Setting.should_receive(:enable_user_cleaning_notification).and_return(true)
+    end
+    describe '送信間隔が3ヶ月の場合' do
+      before do
+        Admin::Setting.should_receive(:user_cleaning_notification_interval).and_return(3)
+      end
+      describe '実行日時が3/1の場合' do
+        before do
+          @now = Time.local(2009, 3, 1)
+          Time.stub!(:now).and_return(@now)
+        end
+        it 'メール送信されること' do
+          lambda do
+            @sender.send_cleaning_notification
+          end.should change(ActionMailer::Base.deliveries, :size).to(1)
+        end
+      end
+      describe '実行日時が3/2の場合' do
+        before do
+          @now = Time.local(2009, 3, 2)
+          Time.stub!(:now).and_return(@now)
+        end
+        it 'メール送信されないこと' do
+          lambda do
+            @sender.send_cleaning_notification
+          end.should_not change(ActionMailer::Base.deliveries, :size)
+        end
+      end
+      describe '実行日時が4/1の場合' do
+        before do
+          @now = Time.local(2009, 4, 1)
+          Time.stub!(:now).and_return(@now)
+        end
+        it 'メール送信されないこと' do
+          lambda do
+            @sender.send_cleaning_notification
+          end.should_not change(ActionMailer::Base.deliveries, :size)
+        end
+      end
+      describe '実行日時が6/1の場合' do
+        before do
+          @now = Time.local(2009, 6, 1)
+          Time.stub!(:now).and_return(@now)
+        end
+        it 'メール送信されること' do
+          lambda do
+            @sender.send_cleaning_notification
+          end.should change(ActionMailer::Base.deliveries, :size).to(1)
+        end
+      end
+    end
+    describe '送信間隔が6ヶ月の場合' do
+      before do
+        Admin::Setting.should_receive(:user_cleaning_notification_interval).and_return(6)
+      end
+      describe '実行日時が3/1の場合' do
+        before do
+          @now = Time.local(2009, 3, 1)
+          Time.stub!(:now).and_return(@now)
+        end
+        it 'メール送信されないこと' do
+          lambda do
+            @sender.send_cleaning_notification
+          end.should_not change(ActionMailer::Base.deliveries, :size)
+        end
+      end
+      describe '実行日時が4/1の場合' do
+        before do
+          @now = Time.local(2009, 4, 1)
+          Time.stub!(:now).and_return(@now)
+        end
+        it 'メール送信されないこと' do
+          lambda do
+            @sender.send_cleaning_notification
+          end.should_not change(ActionMailer::Base.deliveries, :size)
+        end
+      end
+      describe '実行日時が6/1の場合' do
+        before do
+          @now = Time.local(2009, 6, 1)
+          Time.stub!(:now).and_return(@now)
+        end
+        it 'メール送信されること' do
+          lambda do
+            @sender.send_cleaning_notification
+          end.should change(ActionMailer::Base.deliveries, :size).to(1)
+        end
+      end
+      describe '実行日時が6/2の場合' do
+        before do
+          @now = Time.local(2009, 6, 2)
+          Time.stub!(:now).and_return(@now)
+        end
+        it 'メール送信されないこと' do
+          lambda do
+            @sender.send_cleaning_notification
+          end.should_not change(ActionMailer::Base.deliveries, :size)
+        end
+      end
+    end
+  end
+  describe 'クリーニング依頼メールを送信しない設定の場合' do
+    before do
+      Admin::Setting.should_receive(:enable_user_cleaning_notification).and_return(false)
+    end
+    it 'メール送信されないこと' do
+      lambda do
+        @sender.send_cleaning_notification
+      end.should_not change(ActionMailer::Base.deliveries, :size)
     end
   end
 end

@@ -72,6 +72,9 @@ class User < ActiveRecord::Base
 
   ACTIVATION_LIFETIME = 5
 
+  named_scope :admin, :conditions => {:admin => true}
+  named_scope :active, :conditions => {:status => 'ACTIVE'}
+
   def to_s
     return 'uid:' + uid.to_s + ', name:' + name.to_s
   end

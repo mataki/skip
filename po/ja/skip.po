@@ -947,8 +947,7 @@ msgstr "メール送信間隔(月)"
 #: app/models/admin/setting.rb:113
 msgid "Admin::Setting|User cleaning notification interval description"
 msgstr ""
-"クリーニング依頼メールの送信間隔を月単位で指定します。ここで指定された送信間"
-"隔毎にクリーニング依頼メールがシステム運用担当者に送信されます。"
+"クリーニング依頼メールの送信間隔を月単位で指定します。ここで指定された値の倍数月の1日にクリーニング依頼メールが管理者ユーザ宛てに送信されます。例えば3が指定されている場合は、3/1, 6/1, 9/1, 12/1に送信されます。"
 
 #: app/models/admin/setting.rb:92
 msgid "Admin::Setting|User lock trial limit"
