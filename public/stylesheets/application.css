@@ -74,3 +74,21 @@ div#share_file_uploader.enabled {
         margin-right: 5px; }
       div#share_file_uploader.enabled div.share_files div.paginate span.first_link, div#share_file_uploader.enabled div.share_files div.paginate span.previous_link, div#share_file_uploader.enabled div.share_files div.paginate span.next_link, div#share_file_uploader.enabled div.share_files div.paginate span.last_link {
         font-size: 10px; }
+
+div#table_columns {
+  background-color: #f0f0ff;
+  border: 2px dotted #ffc000;
+  margin: 5px;
+  padding: 6px 8px; }
+  div#table_columns ul {
+    list-style: none; }
+  div#table_columns li {
+    margin-left: 5px;
+    display: inline;
+    cursor: pointer; }
+  div#table_columns li.visible {
+    color: #555;
+    font-weight: bold;
+    text-decoration: underline; }
+  div#table_columns li.invisible {
+    color: #999999; }

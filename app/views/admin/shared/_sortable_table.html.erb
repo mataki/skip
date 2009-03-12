@@ -13,11 +13,13 @@
      data = data[/.{1,100}/] if data.is_a?(String)
      data
    end
+   hide_columns ||= []
 %>
 
 <% if @pages %>
 <div class="navi"><%= page_link(@pages) -%></div>
 <% end %>
+<div id="table_columns"><%= _('カラムの表示制御(クリックで表示/非表示を切り替えます。)') %></div>
 <table class="normal sortable">
   <thead>
     <tr>
@@ -43,3 +45,14 @@
 <% if @pages %>
 <div class="navi"><%= page_link(@pages) -%></div>
 <% end %>
+
+<% content_for :javascript do -%>
+<%= skip_jquery_include_tag 'jquery.columnmanager' %>
+<script type="text/javascript">
+$j(function(){
+    <% link_indexes = ((columns.size + 1)..(columns.size + 1 + link_elem_size)).to_a.join(',') %>
+    <% hide_columns_indexes = hide_columns.map { |col| columns.index(col) + 1 }.join(',') %>
+    $j('table.normal').columnManager({listTargetID: 'table_columns', onClass: 'visible', offClass: 'invisible', hideInList:[<%= link_indexes %>], colsHidden: [<%= hide_columns_indexes %>]});
+});
+</script>
+<% end -%>
