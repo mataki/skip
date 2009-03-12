@@ -115,6 +115,7 @@ class Admin::Setting < ActiveRecord::Base
   cattr_accessor :available_settings
   @@available_settings = YAML::load(File.open("#{RAILS_ROOT}/config/settings.yml"))
 
+  SMTP_AUTHENTICATIONS = %w(plain login cram_md5).freeze
   PASSWORD_STRENGTH_VALUES = %w(low middle high).freeze
 
   validates_uniqueness_of :name

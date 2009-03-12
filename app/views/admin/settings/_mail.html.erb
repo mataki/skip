@@ -9,7 +9,7 @@
   <p><%= settings_label_with_text_field_tag :smtp_settings_address %></p>
   <p><%= settings_label_with_text_field_tag :smtp_settings_domain %></p>
   <p><%= settings_label_with_text_field_tag :smtp_settings_port %></p>
-  <p><%= settings_label_with_select_tag :smtp_settings_authentication, ['', 'plain', 'login', 'cram_md5'], Admin::Setting.smtp_settings_authentication.to_s %></p>
+  <p><%= settings_label_with_select_tag :smtp_settings_authentication, smtp_authentication_container, Admin::Setting.smtp_settings_authentication.to_s %></p>
   <p><%= settings_label_with_text_field_tag :smtp_settings_user_name %></p>
   <p><%= settings_label_with_password_field_tag :smtp_settings_password %></p>
 </div>

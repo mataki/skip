@@ -41,6 +41,10 @@ module Admin::SettingsHelper
       help_icon_tag(:content => _(Admin::Setting.name + '|' + (symbolize_key.to_s + '_description').humanize))
   end
 
+  def smtp_authentication_container
+    [''] + Admin::Setting::SMTP_AUTHENTICATIONS
+  end
+
   def password_strength_container
     returning container = [] do
       Admin::Setting::PASSWORD_STRENGTH_VALUES.each do |value|
