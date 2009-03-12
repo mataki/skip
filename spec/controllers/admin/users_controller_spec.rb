@@ -118,7 +118,7 @@ describe Admin::UsersController, 'POST #update' do
       @user.should_receive(:admin=).with(@before_admin)
       post :update
     end
-    it '凍結状態が変更されない' do
+    it 'ロック状態が変更されない' do
       @user.should_receive(:lock=).with(@before_lock)
       post :update
     end

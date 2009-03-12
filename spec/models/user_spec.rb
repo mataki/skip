@@ -771,11 +771,11 @@ describe User, '#locked?' do
   before do
     @user = stub_model(User)
   end
-  describe 'ユーザ凍結機能が有効な場合' do
+  describe 'ユーザロック機能が有効な場合' do
     before do
       Admin::Setting.enable_user_lock = 'true'
     end
-    describe 'ユーザが凍結されている場合' do
+    describe 'ユーザがロックされている場合' do
       before do
         @user.lock = true
       end
@@ -783,7 +783,7 @@ describe User, '#locked?' do
         @user.locked?.should be_true
       end
     end
-    describe 'ユーザが凍結されていない場合' do
+    describe 'ユーザがロックされていない場合' do
       before do
         @user.lock = false
       end
@@ -792,7 +792,7 @@ describe User, '#locked?' do
       end
     end
   end
-  describe 'ユーザ凍結機能が無効な場合' do
+  describe 'ユーザロック機能が無効な場合' do
     before do
       Admin::Setting.enable_user_lock = 'false'
     end

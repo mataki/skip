@@ -300,7 +300,7 @@ class PlatformController < ApplicationController
     if params[:login] and user = User.auth(params[:login][:key], params[:login][:password], params[:login][:keyphrase])
       if user.locked?
         logger.info(user.to_s_log('[Login failed with password]'))
-        flash[:error] = _("入力されたログインIDのユーザは凍結されているためログインできません。凍結を解除するにはパスワードの再設定を行って下さい。")
+        flash[:error] = _("入力されたログインIDのユーザはロックされているためログインできません。ロックを解除するにはパスワードの再設定を行って下さい。")
         redirect_to(request.env['HTTP_REFERER'] ? :back : login_url)
       else
         unless user.within_time_limit_of_password?

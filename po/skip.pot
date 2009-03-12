@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2009-03-12 11:36+0900\n"
+"POT-Creation-Date: 2009-03-12 15:12+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -767,7 +767,7 @@ msgstr ""
 msgid "Admin::Setting|Password strength description"
 msgstr ""
 
-#: app/models/admin/setting.rb:233
+#: app/models/admin/setting.rb:234
 msgid "Admin::Setting|Password strength|Validation message "
 msgstr ""
 
@@ -779,7 +779,7 @@ msgstr ""
 msgid "Admin::Setting|Password strength|Validation message low"
 msgstr ""
 
-#: app/models/admin/setting.rb:103 app/models/admin/setting.rb:235
+#: app/models/admin/setting.rb:103 app/models/admin/setting.rb:236
 msgid "Admin::Setting|Password strength|Validation message middle"
 msgstr ""
 
@@ -3044,11 +3044,11 @@ msgstr ""
 msgid "はアルファベットで入力して下さい。"
 msgstr ""
 
-#: app/models/user.rb:107
+#: app/models/user.rb:110
 msgid "はログインIDと同一の値は登録できません。"
 msgstr ""
 
-#: app/models/user.rb:108
+#: app/models/user.rb:111
 msgid "は前回と同一の値は登録できません。"
 msgstr ""
 
@@ -3341,7 +3341,7 @@ msgid "ログインキーフレーズ"
 msgstr ""
 
 #: app/views/admin/settings/_security.html.erb:2
-msgid "ログイン制限"
+msgid "ログイン失敗によるロック"
 msgstr ""
 
 #: app/views/admin/images/index.html.erb:15
@@ -3421,8 +3421,8 @@ msgstr ""
 
 #: app/controllers/platform_controller.rb:303
 msgid ""
-"入力されたログインIDのユーザは凍結されているためログインできません。凍結を解"
-"除するにはパスワードの再設定を行って下さい。"
+"入力されたログインIDのユーザはロックされているためログインできません。ロック"
+"を解除するにはパスワードの再設定を行って下さい。"
 msgstr ""
 
 #: app/views/admin/settings/index.html.erb:5

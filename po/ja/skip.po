@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2009-03-12 11:36+0900\n"
+"POT-Creation-Date: 2009-03-12 15:12+0900\n"
 "PO-Revision-Date: 2009-03-03 14:42+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -653,14 +653,14 @@ msgstr ""
 
 #: app/models/admin/setting.rb:90
 msgid "Admin::Setting|Enable user lock"
-msgstr "ユーザ凍結機能を使う"
+msgstr "ログイン失敗でロックする"
 
 #: app/models/admin/setting.rb:91
 msgid "Admin::Setting|Enable user lock description"
 msgstr ""
-"既定回数(管理画面で設定可)だけログインに失敗したユーザを凍結してログイン出来"
-"ないようにします。凍結を解除するには、対象ユーザがパスワード再設定機能を使っ"
-"てパスワードを再設定しなければなりません。"
+"既定回数(管理画面で設定可)だけログインに失敗したユーザをロックしてログイン出"
+"来ないようにします。ロックを解除するには、対象ユーザがパスワード再設定機能を"
+"使ってパスワードを再設定しなければなりません。"
 
 #: app/models/admin/setting.rb:40
 msgid "Admin::Setting|Footer first"
@@ -836,7 +836,7 @@ msgstr ""
 msgid "Admin::Setting|Password strength|Validation message low"
 msgstr "は6文字以上の半角英数字及び記号(!@#$%^&*?_~)で入力して下さい。"
 
-#: app/models/admin/setting.rb:103 app/models/admin/setting.rb:235
+#: app/models/admin/setting.rb:103 app/models/admin/setting.rb:236
 msgid "Admin::Setting|Password strength|Validation message middle"
 msgstr ""
 "は8文字以上の半角英数字及び記号(!@#$%^&*?_~)で入力して下さい。また、英字の大"
@@ -947,7 +947,9 @@ msgstr "メール送信間隔(月)"
 #: app/models/admin/setting.rb:113
 msgid "Admin::Setting|User cleaning notification interval description"
 msgstr ""
-"クリーニング依頼メールの送信間隔を月単位で指定します。ここで指定された値の倍数月の1日にクリーニング依頼メールが管理者ユーザ宛てに送信されます。例えば3が指定されている場合は、3/1, 6/1, 9/1, 12/1に送信されます。"
+"クリーニング依頼メールの送信間隔を月単位で指定します。ここで指定された値の倍"
+"数月の1日にクリーニング依頼メールが管理者ユーザ宛てに送信されます。例えば3が"
+"指定されている場合は、3/1, 6/1, 9/1, 12/1に送信されます。"
 
 #: app/models/admin/setting.rb:92
 msgid "Admin::Setting|User lock trial limit"
@@ -957,7 +959,7 @@ msgstr "ログインの試行回数の最大値"
 msgid "Admin::Setting|User lock trial limit description"
 msgstr ""
 "ログインの試行回数の最大値を指定して下さい。最大値を越えてログインに失敗する"
-"と対象となるユーザは凍結されます。"
+"と対象となるユーザはロックされます。"
 
 #: app/models/admin/share_file.rb:26
 msgid "Admin::ShareFile|Category"
@@ -1192,7 +1194,7 @@ msgstr "最終ログイン日時"
 
 #: app/models/admin/user.rb:40
 msgid "Admin::User|Lock"
-msgstr "凍結状態"
+msgstr "ロック状態"
 
 #: app/models/admin/user.rb:27 app/views/user/show.html.erb:94
 #: app/views/portal/_registration_form.html.erb:17
@@ -2711,7 +2713,7 @@ msgstr "最終ログイン日時"
 
 #: app/models/user.rb:-
 msgid "User|Lock"
-msgstr "凍結状態"
+msgstr "ロック状態"
 
 #: app/models/user.rb:71
 msgid "User|Lock|false"
@@ -2719,7 +2721,7 @@ msgstr " "
 
 #: app/models/user.rb:70
 msgid "User|Lock|true"
-msgstr "凍結"
+msgstr "ロック"
 
 #: app/models/user.rb:55
 msgid "User|Old password"
@@ -2811,7 +2813,7 @@ msgstr "未使用のユーザ以外削除できません。"
 #: app/controllers/admin/users_controller.rb:61
 msgid "You cannot update status and admin and lock of yourself"
 msgstr ""
-"管理者は自分自身のステータスと管理権限及び凍結状態は変更できません。他の管理"
+"管理者は自分自身のステータスと管理権限及びロック状態は変更できません。他の管理"
 "者アカウントから変更してください。"
 
 #: app/controllers/platform_controller.rb:47
@@ -3152,11 +3154,11 @@ msgstr ""
 msgid "はアルファベットで入力して下さい。"
 msgstr ""
 
-#: app/models/user.rb:107
+#: app/models/user.rb:110
 msgid "はログインIDと同一の値は登録できません。"
 msgstr ""
 
-#: app/models/user.rb:108
+#: app/models/user.rb:111
 msgid "は前回と同一の値は登録できません。"
 msgstr ""
 
@@ -3449,7 +3451,7 @@ msgid "ログインキーフレーズ"
 msgstr ""
 
 #: app/views/admin/settings/_security.html.erb:2
-msgid "ログイン制限"
+msgid "ログイン失敗によるロック"
 msgstr ""
 
 #: app/views/admin/images/index.html.erb:15
@@ -3529,8 +3531,8 @@ msgstr ""
 
 #: app/controllers/platform_controller.rb:303
 msgid ""
-"入力されたログインIDのユーザは凍結されているためログインできません。凍結を解"
-"除するにはパスワードの再設定を行って下さい。"
+"入力されたログインIDのユーザはロックされているためログインできません。ロック"
+"を解除するにはパスワードの再設定を行って下さい。"
 msgstr ""
 
 #: app/views/admin/settings/index.html.erb:5
