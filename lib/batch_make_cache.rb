@@ -60,12 +60,16 @@ class BatchMakeCache < BatchBase
 
       meta = create_meta(:contents_type => contents_type,
                          :publication_symbols => bookmark_publication_symbols(bookmark).join(','),
-                         :link_url => "/bookmark/show/#{bookmark.url}",
+                         :link_url => "/bookmark/show/#{convert_bookmark_url(bookmark.url)}",
                          :title => bookmark.title,
                          :icon_type => 'tag_blue')
 
       output_file(cache_path, contents_type, bookmark.id, contents, meta)
     end
+  end
+
+  def convert_bookmark_url url
+    URI.encode( url, Regexp.new("[^#{URI::PATTERN::ALNUM}]") )
   end
 
   # groupのサマリ用
