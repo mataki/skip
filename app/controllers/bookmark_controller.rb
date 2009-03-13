@@ -213,7 +213,7 @@ private
       @bookmark_comment = BookmarkComment.new(:public => true)
 
       unless @bookmark = Bookmark.find_by_url(params[:url])
-        @bookmark = Bookmark.new(:url => params[:url], :title => params[:title].toutf8)
+        @bookmark = Bookmark.new(:url => params[:url], :title => params[:title])
       end
     end
 
