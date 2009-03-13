@@ -42,10 +42,13 @@
       jQuery("<iframe>").attr("src", config["src"]["form"]).load(attachUploader)
     ).appendTo(root);
 
-    jQuery("<div>").addClass("target").append(
-      jQuery("<iframe>").attr("src", config["src"]["target"]).attr("name", config["target"]).
-        one("load", function(){ jQuery(this).load(callback) })
-    ).appendTo(root);
+    var targetIFrame = jQuery("<iframe>").attr("src", config["src"]["target"]).attr("name", config["target"]).
+      one("load", function(){ jQuery(this).load(callback) })
+
+    jQuery("<div>").addClass("target").append(targetIFrame).appendTo(root);
+
+    // IE6対策
+    targetIFrame.get(0).contentWindow.name = config["target"];
   }
 })(jQuery);
 
