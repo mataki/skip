@@ -78,7 +78,7 @@ $j(function(){
         var message = config["message"];
 
         var insertToRichEditor = function(elem){
-            FCKeditorAPI.GetInstance('contents_richtext').InsertElement(elem.get(0));
+            FCKeditorAPI.GetInstance('contents_richtext').InsertHtml(elem.wrap('<span></span>').parent().html());
         };
 
         var insertToHikiEditor = function(text){
@@ -90,7 +90,7 @@ $j(function(){
             var src = data['src'];
             return $j("<span></span>").text(message["insert_link_label"]).addClass("insert_link link pointer").click(function(){
                 if($j('#editor_mode_richtext:checked').length > 0){
-                    insertToRichEditor($j("<a>").text(filename).attr("href", src));
+                    insertToRichEditor($j("<a></a>").text(filename).attr("href", src));
                 } else if($j('#editor_mode_hiki:checked').length > 0) {
                     insertToHikiEditor('\n[file:' + filename + ']');
                 }
@@ -102,7 +102,7 @@ $j(function(){
             var src = data['src'];
             return $j("<span></span>").text(message["insert_image_link_label"]).addClass("insert_link link pointer").click(function(){
                 if($j('#editor_mode_richtext:checked').length > 0){
-                    var img = $j("<img />").attr("src", src).attr("alt", filename).addClass('pointer');
+                    var img = $j("<img></img>").attr("src", src).attr("alt", filename).addClass('pointer');
                     insertToRichEditor(img);
                 } else if($j('#editor_mode_hiki:checked').length > 0) {
                     insertToHikiEditor('\n{{' + filename + ',240,}}');
@@ -114,7 +114,7 @@ $j(function(){
             var filename = data['file_name'];
             var src = data['src'];
             if(src){
-                var img = $j("<img />").attr("src", src).attr("alt", filename).addClass('pointer');
+                var img = $j("<img></img>").attr("src", src).attr("alt", filename).addClass('pointer');
                 return img.clone().attr("width", 200).click(function(){
                     if($j('#editor_mode_richtext:checked').length > 0){
                         insertToRichEditor(img);
@@ -123,21 +123,21 @@ $j(function(){
                     }
                 });
             }else{
-                return $j("<span>").text(filename.substr(0,16));
+                return $j("<span></span>").text(filename.substr(0,16));
             }
         };
 
         var shareFileToTableHeader = function() {
-            var tr = $j('<tr>');
-            tr.append($j('<th>').text(message['share_files']['thumbnail']));
-            tr.append($j('<th>'));
+            var tr = $j('<tr></tr>');
+            tr.append($j('<th></th>').text(message['share_files']['thumbnail']));
+            tr.append($j('<th></th>'));
             return tr;
         };
 
         var shareFileToTableRow = function(data){
-            var tr = $j("<tr>");
-            tr.append($j("<td class='thumbnail'>").append(insertImage(data)));
-            var insertTd = $j("<td class='insert'>");
+            var tr = $j("<tr></tr>");
+            tr.append($j("<td class='thumbnail'></td>").append(insertImage(data)));
+            var insertTd = $j("<td class='insert'></td>");
             insertTd.append(insertLink(data));
             if(data['file_type'] == 'image')
                 insertTd.append(insertImageLink(data));
@@ -146,28 +146,28 @@ $j(function(){
         };
 
         var paginate = function(pages, labels){
-            var paginate_actions = $j('<div class="paginate">');
-            paginate_actions.append($j('<span class="info">').text(pages['current'] + '/' + pages['last'] + 'page'));
+            var paginate_actions = $j('<div class="paginate"></div>');
+            paginate_actions.append($j('<span class="info"></span>').text(pages['current'] + '/' + pages['last'] + 'page'));
             if(pages['previous'] != 0){
                 paginate_actions.append(
-                    $j('<span class="first_link link pointer">').text(labels['first']).click(function() {
+                    $j('<span class="first_link link pointer"></span>').text(labels['first']).click(function() {
                         loadShareFiles(root.find("div.share_files"), config["share_files_url"], {page: pages['first']}, message["share_files"]);
                     })
                 );
                 paginate_actions.append(
-                    $j('<span class="previous_link link pointer">').text(labels['previous']).click(function() {
+                    $j('<span class="previous_link link pointer"></span>').text(labels['previous']).click(function() {
                         loadShareFiles(root.find("div.share_files"), config["share_files_url"], {page: pages['previous']}, message["share_files"]);
                     })
                 );
             }
             if(pages['next'] != 0){
                 paginate_actions.append(
-                    $j('<span class="next_link link pointer">').text(labels['next']).click(function() {
+                    $j('<span class="next_link link pointer"></span>').text(labels['next']).click(function() {
                         loadShareFiles(root.find("div.share_files"), config["share_files_url"], {page: pages['next']}, message["share_files"]);
                     })
                 );
                 paginate_actions.append(
-                    $j('<span class="last_link link pointer">').text(labels['last']).click(function() {
+                    $j('<span class="last_link link pointer"></span>').text(labels['last']).click(function() {
                         loadShareFiles(root.find("div.share_files"), config["share_files_url"], {page: pages['last']}, message["share_files"]);
                     })
                 );
@@ -181,17 +181,17 @@ $j(function(){
             $j.getJSON(url, requestData, function(data, stat){
                 var share_files = data['share_files'];
                 if(share_files.length == 0) return;
-                var thead = $j('<thead>');
+                var thead = $j('<thead></thead>');
                 thead.append(shareFileToTableHeader());
-                var tbody = $j("<tbody>");
+                var tbody = $j("<tbody></tbody>");
                 $j.each(share_files, function(_num_, share_file){
                     tbody.append(shareFileToTableRow(share_file));
                 });
                 palette.append(
                     paginate(data['pages'], labels)
                 ).append(
-                    $j("<table>")
-                    .append($j("<caption>").text(labels['title']))
+                    $j("<table></table>")
+                    .append($j("<caption></caption>").text(labels['title']))
                     .append(thead)
                     .append(tbody)
                 ).append(
@@ -208,7 +208,7 @@ $j(function(){
         var uploaderButton = function(conf) {
             conf["callback"] = reloadUploader
 
-            return $j("<div class='share_file upload' />").append(
+            return $j("<div class='share_file upload'></div>").append(
                 $j("<span class='operation link pointer'></span>")
                 .text(message["upload_share_file"])
                 .one("click", function(){ $j(this).hide().parent().iframeUploader(conf) })
@@ -221,20 +221,20 @@ $j(function(){
 
         var onLoad = function() {
             root.empty().attr("class", "enabled").draggable({handle: 'div.title_bar'}).append(
-                $j('<div class="title_bar move">').append(
+                $j('<div class="title_bar move"></div>').append(
                     $j("<h3></h3>").text(message["title"])
                 ).append(
-                    $j("<div class='operation'>").append(
+                    $j("<div class='operation'></div>").append(
                         $j("<span class='reload link pointer'></span>").text(message["reload"]).click(reloadUploader)
                     ).append(
                         $j("<span class='close link pointer'></span>").text(message["close"]).click(hideUploader)
                     )
                 )
             ).append(
-                $j("<div style='clear: both;'/>")
+                $j("<div style='clear: both;'></div>")
             ).append(
                 uploaderButton(config["uploader"])
-            ).append($j("<div class='share_files' />")).show();
+            ).append($j("<div class='share_files'></did>")).show();
 
             loadShareFiles(root.find("div.share_files"), config["share_files_url"], {}, message["share_files"]);
         };
