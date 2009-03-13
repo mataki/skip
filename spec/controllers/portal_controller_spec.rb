@@ -16,41 +16,51 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe PortalController, 'GET /index' do
-  before do
-    @user = unused_user_login
-  end
   describe "entrance_next_actionが何もない時" do
     before do
       get :index
     end
     it { response.should render_template('confirm') }
   end
-
-  describe "entrance_next_actionが:registrationの場合" do
-    before do
-      session[:entrance_next_action] = :registration
-
-      @profiles = []
-      @user = unused_user_login
-      @user.stub!(:email).and_return("skip@skip.openskip.org")
-
-      get :index
-    end
-    it { response.should render_template('registration') }
-    it "正しいインスタンス変数が設定されていること" do
-      assigns[:user].should == @user
-      assigns[:profiles].should == @profiles
-      assigns[:user_uid].should_not be_nil
-      assigns[:user_uid].uid.should == "skip"
-    end
-  end
   describe "entrance_next_actionが:account_registrationの場合" do
     before do
       session[:entrance_next_action] = :account_registration
+      @user = unused_user_login
       get :index
     end
     it { response.should render_template('account_registration')}
     it { assigns[:user].should be_is_a(User) }
+  end
+  describe "entrance_next_actionが:registrationの場合" do
+    before do
+      session[:entrance_next_action] = :registration
+    end
+    describe '未登録のログインユーザが存在する(正しくsignupしている)場合' do
+      before do
+        @profiles = []
+        @user = unused_user_login
+        @user.stub!(:email).and_return("skip@skip.openskip.org")
+
+        get :index
+      end
+      it { response.should render_template('registration') }
+      it "正しいインスタンス変数が設定されていること" do
+        assigns[:user].should == @user
+        assigns[:profiles].should == @profiles
+        assigns[:user_uid].should_not be_nil
+        assigns[:user_uid].uid.should == "skip"
+      end
+    end
+    describe '未登録のログインユーザが存在しない(正しくsignup出来ていない or セッション切れ)場合' do
+      it 'ユーザ登録が継続できない旨のエラーメッセージが出力されること' do
+        get :index
+        flash[:error].should_not be_nil
+      end
+      it 'ログイン画面にリダイレクトされること' do
+        get :index
+        response.should redirect_to(:controller => 'platform', :action => 'index')
+      end
+    end
   end
 end
 
