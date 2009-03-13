@@ -42,3 +42,11 @@
   </div><!-- statistics_history -->
   <% end -%>
 <% end -%>
+
+<% content_for :javascript do -%>
+<script type="text/javascript">
+$j(function() {
+    setupLoadCalendar();
+});
+</script>
+<% end -%>

@@ -70,9 +70,56 @@ $j(function(){
         });
         return this;
     }
-
     $j(document).appendClickForToggleTag();
 
+    /*
+     * カレンダーのロード
+     */
+    var loadCalendar = function(year, month){
+        $j.ajax({
+            url: relative_url_root + "/mypage/load_calendar",
+            data: { year : year , month : month },
+            success: function(html) {
+               $j('#calendar').html(html);
+               $j('#calendar_body').highlight();
+            },
+            complete: function(request) {
+                setupLoadCalendar();
+            }
+        });
+    };
+
+    var unbindLoadCalendar = function() {
+        $j('#prev_month_link').unbind('click');
+        $j('#next_month_link').unbind('click');
+    };
+
+    var bindLoadCalendar = function() {
+        // カレンダーの前月、次月リンククリック時のajaxアクション
+        $j('#prev_month_link')
+        .click(function() {
+            loadCalendar($j(this).attr('year'), $j(this).attr('month'));
+            return false;
+        });
+
+        $j('#next_month_link')
+        .click(function() {
+            loadCalendar($j(this).attr('year'), $j(this).attr('month'));
+            return false;
+        });
+    };
+
+    /*
+     * カレンダーのロードをセットアップ
+     */
+    setupLoadCalendar = function() {
+        unbindLoadCalendar();
+        bindLoadCalendar();
+    };
+
+    /*
+     * 記事作成/編集でのファイルアップローダー
+     */
     $j.fn.shareFileUploader = function(config) {
         var root = $j(this);
         var message = config["message"];

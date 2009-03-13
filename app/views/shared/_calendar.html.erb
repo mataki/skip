@@ -27,37 +27,8 @@
     -%>
   </div>
   <div class="box_space_bottom">
-    <a id="prev_month_link" href="#" >[前月]</a>
-    <%= link_to('[今日]', {:action => action, :year => now_month.year, :month => now_month.month, :day => now_month.day}) %>
-    <a id="next_month_link" href="#" >[次月]</a>
+    <%= link_to('[' + _('前月') + ']', '#', :id => 'prev_month_link', :year => prev_month.year, :month => prev_month.month) %>
+    <%= link_to('[' + _('今日') + ']', {:action => action, :year => now_month.year, :month => now_month.month, :day => now_month.day}) %>
+    <%= link_to('[' + _('次月') + ']', '#', :id => 'next_month_link', :year => next_month.year, :month => next_month.month) %>
   </div>
 </div><!-- box_space -->
-<% content_for :javascript do -%>
-<script type="text/javascript">
-$j(function(){
-    var loadCalendar = function(year, month){
-        $j.ajax({
-            url: '<%= url_for( :action => 'load_calendar') %>',
-            data: { year : year , month : month },
-            success: function(html) {
-               $j('#calendar').html(html);
-               $j('#calendar_body').highlight();
-            }
-        });
-    };
-
-    // カレンダーの前月、次月リンククリック時のajaxアクション
-    $j('#prev_month_link')
-    .click(function() {
-        loadCalendar(<%= prev_month.year %>, <%= prev_month.month %>);
-        return false;
-    });
-
-    $j('#next_month_link')
-    .click(function() {
-        loadCalendar(<%= next_month.year %>, <%= next_month.month %>);
-        return false;
-    });
-});
-</script>
-<% end -%>
