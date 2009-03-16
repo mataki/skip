@@ -48,9 +48,10 @@
   <param name="allowScriptAccess" value="sameDomain" />
   <param name="allowFullScreen" value="false" />
   <param name="movie" value="<%= riddit_swf_url %>" />
+  <param name="flashvars" value="number=<%= @user.user_profile_values.first.value %>" />
   <param name="quality" value="high" />
   <param name="bgcolor" value="#ffffff" />
-  <embed src="<%= riddit_swf_url %>" quality="high" bgcolor="#ffffff" width="190" height="300" name="SimplePhone" align="middle" allowScriptAccess="sameDomain" allowFullScreen="false" type="application/x-shockwave-flash" pluginspage="http://www.adobe.com/go/getflashplayer" />
+  <embed src="<%= riddit_swf_url %>" quality="high" bgcolor="#ffffff" width="190" height="300" name="SimplePhone" align="middle" allowScriptAccess="sameDomain" allowFullScreen="false" type="application/x-shockwave-flash" pluginspage="http://www.adobe.com/go/getflashplayer" flashvars="number=<%= @user.user_profile_values.first.value %>"/>
 </object>
 <!--
 <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="<%= riddit_swf_url %>" width="200" height="150" id="aaa" align="middle">
