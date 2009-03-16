@@ -44,14 +44,13 @@
     <div class="box_space_bottom" style="text-align: center; font-size: 12px;">
 
 <% riddit_swf_url = url_for('/MyFirstRibbitCall.swf') %>
-<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="<%= riddit_swf_url %>"
-width="600" height="150" id="aaa" align="middle">
+<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="<%= riddit_swf_url %>" width="200" height="150" id="aaa" align="middle">
   <param name="allowScriptAccess" value="sameDomain" />
   <param name="movie" value="<%= riddit_swf_url %>" />
-  <param name="flashvars" value="s_width=600&s_height=150&ratio=95" />
+  <param name="flashvars" value="phoneno=<%= @user.user_profile_values.first.value %>" />
   <param name="quality" value="high" />
   <param name="bgcolor" value="#ffff99" />
-  <embed src="<%= riddit_swf_url %>" quality="high" bgcolor="#ffffff" width="600" height="150" name="aaa" align="middle" allowScriptAccess="sameDomain" type="application/x-shockwave-flash" pluginspage="<%= riddit_swf_url %>" flashvars="s_width=600&s_height=150&ratio=95" />
+  <embed src="<%= riddit_swf_url %>" quality="high" bgcolor="#ffffff" width="200" height="150" name="aaa" align="middle" allowScriptAccess="sameDomain" type="application/x-shockwave-flash" pluginspage="<%= riddit_swf_url %>" flashvars="phoneno=<%= @user.user_profile_values.first.value %>" />
 </object>
 
     </div>
