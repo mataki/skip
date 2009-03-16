@@ -214,6 +214,11 @@ class UserController < ApplicationController
     end
   end
 
+  def call
+    @title = "電話をかける"
+    render :layout => "dialog"
+  end
+
 private
   def setup_layout
     @title = title
@@ -246,7 +251,7 @@ private
         tab_menu_source << {:label => _('紹介文の変更'), :options => {:action => 'edit_chain'}}
       end
     else
-      tab_menu_source.unshift({:label => _('ホーム'), :options => {:action => 'index'}, :selected_actions => %w(index entries entries_by_date entries_by_antenna)}) 
+      tab_menu_source.unshift({:label => _('ホーム'), :options => {:action => 'index'}, :selected_actions => %w(index entries entries_by_date entries_by_antenna)})
       tab_menu_source << {:label => _('足跡'), :options => {:action => 'trace'}}
       tab_menu_source << {:label => _('管理'), :options => {:action => 'manage'}}
     end

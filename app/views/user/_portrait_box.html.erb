@@ -24,7 +24,8 @@ user ||= @current_user
     <span title="あなたがユーザ登録してからの日数"><%= icon_tag 'user_go' -%><%=h current_user_info[:using_day] -%>日</span>
   <% else -%>
     <%= link_to(icon_tag('transmit_go', :title => _('アンテナに追加')) + _('アンテナに追加'), {:controller => "antenna", :action => "select_antenna", :symbol => user.symbol, :dummy => '.html'}, {:class => "nyroModal"}) %><br/>
-    <%= link_to(icon_tag('tag_blue_add', :title=>'ブックマークする') + 'ブックマークする', {:controller => "bookmark", :action => "edit", :url => user.get_postit_url, :title => user.name, :dummy => '.html'}, {:class => "nyroModal"}) %>
+    <%= link_to(icon_tag('tag_blue_add', :title=>'ブックマークする') + 'ブックマークする', {:controller => "bookmark", :action => "edit", :url => user.get_postit_url, :title => user.name, :dummy => '.html'}, {:class => "nyroModal"}) %><br/>
+    <%= link_to(icon_tag('telephone', :title => _('電話する')) + _('電話する'), {:controller => "user", :action => "call"}, :popup => true) %>
   <% end -%>
   </div>
 

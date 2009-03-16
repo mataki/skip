@@ -1,0 +1,59 @@
+<%-# show.html.erb からコピペ -%>
+<% content_for :stylesheet do -%>
+  <%= all_stylesheet_link_tag "style" %>
+  <style type="text/css">
+  div.input_line {
+    border-bottom: 1px dotted silver;
+    margin-bottom: 3px;
+    padding-bottom: 2px;
+  }
+  div.input_line div.input_label {
+    background-color: #f0f0ff;
+    width: 115px;
+    overflow: hidden;
+    float: left;
+    font-weight: bold;
+    padding: 3px 5px;
+    margin-right: 5px;
+  }
+  div.input_line div.input_value {
+    float: left;
+    padding: 3px 0;
+  }
+  div.input_line div.rich_value {
+    clear: both;
+    float: none;
+    border: 1px solid silver;
+    padding: 5px;
+  }
+  div.input_line div.input_bottom {
+    height: 0;
+    line-height: 0;
+    clear: both;
+  }
+  </style>
+<% end -%>
+<div style="width: 200px;">
+  <div class="box_space">
+    <div class="box_space_title"><%= h @user.name %><span class="small">さん</span></div>
+    <div class="box_space_img_body"><%= showPicture(@user, 120, 80, true) %></div>
+    <div class="box_space_bottom">
+      最終アクセス：<%= @user.before_access %>
+    </div>
+
+    <div class="box_space_bottom" style="text-align: center; font-size: 12px;">
+
+<% riddit_swf_url = url_for('/MyFirstRibbitCall.swf') %>
+<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="<%= riddit_swf_url %>"
+width="600" height="150" id="aaa" align="middle">
+  <param name="allowScriptAccess" value="sameDomain" />
+  <param name="movie" value="<%= riddit_swf_url %>" />
+  <param name="flashvars" value="s_width=600&s_height=150&ratio=95" />
+  <param name="quality" value="high" />
+  <param name="bgcolor" value="#ffff99" />
+  <embed src="<%= riddit_swf_url %>" quality="high" bgcolor="#ffffff" width="600" height="150" name="aaa" align="middle" allowScriptAccess="sameDomain" type="application/x-shockwave-flash" pluginspage="<%= riddit_swf_url %>" flashvars="s_width=600&s_height=150&ratio=95" />
+</object>
+
+    </div>
+  </div><!-- box_space -->
+</div>
