@@ -19,7 +19,9 @@
 <% if @pages %>
 <div class="navi"><%= page_link(@pages) -%></div>
 <% end %>
-<div id="table_columns"><%= _('カラムの表示制御(クリックで表示/非表示を切り替えます。)') %></div>
+<div id="table_columns">
+  <h4><%= _('列の表示制御(クリックで表示/非表示を切り替えます。)') %></h4>
+</div>
 <table class="normal sortable">
   <thead>
     <tr>
