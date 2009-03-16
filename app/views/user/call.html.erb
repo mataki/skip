@@ -43,7 +43,16 @@
 
     <div class="box_space_bottom" style="text-align: center; font-size: 12px;">
 
-<% riddit_swf_url = url_for('/MyFirstRibbitCall.swf') %>
+<% riddit_swf_url = url_for('/SimplePhone.swf') %>
+<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,0,0" width="190" height="300" id="SimplePhone" align="middle">
+  <param name="allowScriptAccess" value="sameDomain" />
+  <param name="allowFullScreen" value="false" />
+  <param name="movie" value="<%= riddit_swf_url %>" />
+  <param name="quality" value="high" />
+  <param name="bgcolor" value="#ffffff" />
+  <embed src="<%= riddit_swf_url %>" quality="high" bgcolor="#ffffff" width="190" height="300" name="SimplePhone" align="middle" allowScriptAccess="sameDomain" allowFullScreen="false" type="application/x-shockwave-flash" pluginspage="http://www.adobe.com/go/getflashplayer" />
+</object>
+<!--
 <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="<%= riddit_swf_url %>" width="200" height="150" id="aaa" align="middle">
   <param name="allowScriptAccess" value="sameDomain" />
   <param name="movie" value="<%= riddit_swf_url %>" />
@@ -52,7 +61,7 @@
   <param name="bgcolor" value="#ffff99" />
   <embed src="<%= riddit_swf_url %>" quality="high" bgcolor="#ffffff" width="200" height="150" name="aaa" align="middle" allowScriptAccess="sameDomain" type="application/x-shockwave-flash" pluginspage="<%= riddit_swf_url %>" flashvars="phoneno=<%= @user.user_profile_values.first.value %>" />
 </object>
-
+-->
     </div>
   </div><!-- box_space -->
 </div>
