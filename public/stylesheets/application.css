@@ -10,6 +10,27 @@
 .link:hover {
   color: blue; }
 
+.fieldWithErrors {
+  display: inline;
+  border: 1px solid pink;
+  _display: inline;
+  _background-color: pink;
+  _border: 1px solid pink; }
+  .fieldWithErrors label {
+    background-color: pink; }
+
+.richtext div.fieldWithErrors {
+  border: 1px solid pink;
+  display: block; }
+
+div#contents_container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left; }
+  div#contents_container .content {
+    margin-bottom: 20px; }
+
 span.share_file_uploader.trigger {
   font-size: 10px;
   margin-left: 5em; }
@@ -75,6 +96,60 @@ div#share_file_uploader.enabled {
       div#share_file_uploader.enabled div.share_files div.paginate span.first_link, div#share_file_uploader.enabled div.share_files div.paginate span.previous_link, div#share_file_uploader.enabled div.share_files div.paginate span.next_link, div#share_file_uploader.enabled div.share_files div.paginate span.last_link {
         font-size: 10px; }
 
+h3.topics {
+  background-color: #f0f0ff;
+  border-top: 3px double silver;
+  border-bottom: 1px dashed silver;
+  margin-bottom: 2px;
+  padding: 0 0 0 7px; }
+
+div.box.tabular {
+  color: #505050;
+  background-color: #f6f6f6;
+  border: 1px solid #e4e4e4;
+  line-height: 1.5em;
+  padding: 6px; }
+  div.box.tabular label {
+    float: left;
+    font-weight: bold;
+    text-align: right;
+    width: 200px; }
+  div.box.tabular p {
+    overflow: hidden;
+    height: 1%;
+    margin: 0;
+    padding: 5px 0px 8px 0px; }
+  div.box.tabular p.initial_setting {
+    padding: 1px 0px 1px 0px; }
+
+span.ss_help {
+  vertical-align: top; }
+
+div.search_box {
+  margin: 5px;
+  padding: 6px 8px;
+  border: 2px dotted #ffc000; }
+
+table.sortable {
+  text-align: left;
+  width: 97%;
+  margin: 5px auto; }
+  table.sortable thead tr th, table.sortable tfoot tr th {
+    padding: 4px 20px 4px 4px; }
+  table.sortable thead tr th.header {
+    background-image: url(/images/skip/jquery/tablesorter/bg.gif);
+    background-repeat: no-repeat;
+    background-position: center right;
+    cursor: pointer; }
+  table.sortable thead tr th.headerSortUp {
+    background-image: url(/images/skip/jquery/tablesorter/asc.gif); }
+  table.sortable thead tr th.headerSortDown {
+    background-image: url(/images/skip/jquery/tablesorter/desc.gif); }
+  table.sortable thead tr td.link {
+    width: 3em; }
+  table.sortable tbody tr td {
+    overflow: hidden; }
+
 div#table_columns {
   background-color: #f0f0ff;
   border: 2px dotted #ffc000;
@@ -92,3 +167,14 @@ div#table_columns {
     text-decoration: underline; }
   div#table_columns li.invisible {
     color: #999999; }
+
+div.onetime_url {
+  font-weight: bold;
+  font-size: 1em; }
+  div.onetime_url p {
+    padding: 10px; }
+
+div.feed_item {
+  border: 1px dotted blue;
+  width: 90%;
+  margin-bottom: 8px; }

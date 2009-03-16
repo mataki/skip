@@ -393,13 +393,7 @@ div.auto_complete ul strong.highlight {
 }
 /* ----------------------------------- */
 /* コンテンツの左メニュー・右中身の構造 */
-/* レイアウトのコンテナ */
-div#contents_container {
-  width:100%;
-  margin-left:auto;
-  margin-right:auto;
-  text-align:left;
-}
+
 /* レイアウトの左側 */
 div#contents_left {
   width:150px;

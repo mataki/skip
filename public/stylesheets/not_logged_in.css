@@ -48,19 +48,3 @@
   margin: 0px;
   padding: 5px 0px 8px 0px;
 }
-
-.fieldWithErrors {
-  display: table;
-  border: 1px solid pink;
-  /* IE6用 */
-  _display: inline;
-  _background-color: pink;
-  _border: 1px solid pink;
-}
-.fieldWithErrors label {
-  background-color: pink;
-}
-.richtext .fieldWithErrors {
-  border:1px solid pink;
-  display: block;
-}
