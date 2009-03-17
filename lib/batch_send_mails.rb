@@ -56,7 +56,9 @@ class BatchSendMails < BatchBase
           message.update_attribute :send_flag, true
           next
         end
-        link_url = root_url.chop + message.link_url
+        #TODO 後日、message.link_urlをそのままセットする形にする。
+        # http://dev.openskip.org/redmine/issues/show/516 の修正に伴う後方互換のため1.1時点では従来通りの挙動を残してある。
+        link_url = message.link_url =~ /^https?.*/ ? message.link_url : root_url.chop + message.link_url
         message_manage_url = url_for :controller => "/mypage", :action => "manage", :menu => :manage_message
 
         begin

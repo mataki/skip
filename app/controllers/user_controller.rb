@@ -310,7 +310,7 @@ private
 
   def make_chain_message
     return unless @chain
-    link_url = url_for(:controller => 'user', :uid => @user.uid, :action => 'social', :menu => 'social_chain' , :only_path => true)
+    link_url = url_for(:controller => 'user', :uid => @user.uid, :action => 'social', :menu => 'social_chain')
     Message.save_message("CHAIN", @user.id, link_url)
   end
 

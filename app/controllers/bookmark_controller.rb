@@ -75,7 +75,7 @@ class BookmarkController < ApplicationController
         uid = @bookmark.url.slice(/^\/user\/(.*)/, 1)
         user = User.find_by_uid(uid)
         link_url = url_for(:controller => 'user', :uid => uid,
-                           :action => 'social', :menu => 'social_postit' , :only_path => true)
+                           :action => 'social', :menu => 'social_postit')
         Message.save_message("POSTIT", user.id, link_url)
       end
     end

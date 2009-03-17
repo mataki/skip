@@ -183,7 +183,7 @@ private
   def make_comment_message
     return unless @board_entry
     unless @board_entry.writer?(session[:user_id])
-      link_url = url_for(@board_entry.get_url_hash.update({:only_path => true}))
+      link_url = url_for(@board_entry.get_url_hash)
       Message.save_message("COMMENT", @board_entry.user_id, link_url, @board_entry.title)
     end
   end
