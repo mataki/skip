@@ -381,7 +381,7 @@ describe MypageController, 'mypage > home 関連' do
     end
   end
 
-  describe "MypageController::AntennaEntry" do
+  describe MypageController::AntennaEntry do
     before do
       @current_user = stub_model(User)
       @antenna_entry = MypageController::AntennaEntry.new(@current_user)
@@ -396,7 +396,7 @@ describe MypageController, 'mypage > home 関連' do
     end
   end
 
-  describe "MypageController::SystemAntennaEntry" do
+  describe MypageController::SystemAntennaEntry do
     before do
       @current_user = stub_model(User)
       @antenna_entry = MypageController::SystemAntennaEntry.new(@current_user, 'message')

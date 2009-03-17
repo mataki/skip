@@ -378,7 +378,7 @@ describe UserProfileMaster::YearSelectProcesser do
   end
 end
 
-describe "UserProfileMaster::SelectProcesser" do
+describe UserProfileMaster::SelectProcesser do
   before do
     @master = stub_model(UserProfileMaster, :option_values => "select1,select2", :input_type => "select", :name => "master")
     @processer = UserProfileMaster::SelectProcesser.new(@master)
@@ -397,7 +397,7 @@ describe "UserProfileMaster::SelectProcesser" do
   end
 end
 
-describe "UserProfileMaster::AppendableSelectProcesser" do
+describe UserProfileMaster::AppendableSelectProcesser do
   before do
     @master = stub_model(UserProfileMaster, :input_type => "appendable_select", :name => "master")
     @processer = UserProfileMaster::AppendableSelectProcesser.new(@master)
@@ -486,7 +486,7 @@ describe "UserProfileMaster::AppendableSelectProcesser" do
   end
 end
 
-describe "UserProfileMaster::CheckBoxProcesser" do
+describe UserProfileMaster::CheckBoxProcesser do
   before do
     @master = stub_model(UserProfileMaster, :option_values => "check1", :input_type => "check_box", :name => "master")
     @processer = UserProfileMaster::CheckBoxProcesser.new(@master)
@@ -577,7 +577,7 @@ describe "UserProfileMaster::CheckBoxProcesser" do
   end
 end
 
-describe "UserProfileMaster::PrefectureSelectProcesser" do
+describe UserProfileMaster::PrefectureSelectProcesser do
   before do
     @master = stub_model(UserProfileMaster, :name => "master")
     @processer = UserProfileMaster::PrefectureSelectProcesser.new(@master)
@@ -630,7 +630,7 @@ describe "UserProfileMaster::PrefectureSelectProcesser" do
   end
 end
 
-describe "UserProfileMaster::DatepickerProcesser" do
+describe UserProfileMaster::DatepickerProcesser do
   before do
     @master = stub_model(UserProfileMaster, :name => "master")
     @processer = UserProfileMaster::DatepickerProcesser.new(@master)
