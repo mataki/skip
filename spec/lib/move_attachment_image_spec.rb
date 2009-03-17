@@ -231,7 +231,7 @@ describe MoveAttachmentImage do
             @file_name = 'file_name'
             @old_file_path = "#{@entry_image_user_path}/#{@file_name}"
             FileUtils.touch @old_file_path
-            new_file_dir = "#{@entry_image_base_path}/new"
+            new_file_dir = "#{RAILS_ROOT}/spec/tmp/new_file_path"
             FileUtils.mkdir_p new_file_dir
             @new_file_path = "#{new_file_dir}/#{@file_name}"
             @share_file = ShareFile.new(
