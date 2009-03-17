@@ -20,14 +20,27 @@ describe ApplicationController, "#sso" do
     before do
       INITIAL_SETTINGS['login_mode'] = "rp"
       INITIAL_SETTINGS['fixed_op_url'] = 'http://localhost.com/'
-      @return_to = 'http://www.openskip.org/return_to'
-      controller.stub!(:request).and_return(mock('request', :url => @return_to))
     end
     describe "未ログイン時" do
-      it "ログインへリダイレクトされる" do
-        controller.stub!(:logged_in?).and_return(false)
-        controller.should_receive(:redirect_to).with({:controller => '/platform', :action => :login, :openid_url => INITIAL_SETTINGS['fixed_op_url'], :return_to => @return_to})
-        controller.send(:sso).should be_false
+      describe 'Ajaxリクエストの場合' do
+        before do
+          controller.stub!(:request).and_return(mock('request', :url => 'url', :env => {'HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest'}))
+        end
+        it 'ステータスコードが400であること' do
+          controller.should_receive(:render)
+          controller.send(:sso).should be_false
+        end
+      end
+      describe '通常のリクエストの場合' do
+        before do
+          @return_to = 'http://www.openskip.org/return_to'
+          controller.stub!(:request).and_return(mock('request', :url => @return_to, :env => {}))
+        end
+        it "ログインへリダイレクトされる" do
+          controller.stub!(:logged_in?).and_return(false)
+          controller.should_receive(:redirect_to).with({:controller => '/platform', :action => :login, :openid_url => INITIAL_SETTINGS['fixed_op_url'], :return_to => @return_to})
+          controller.send(:sso).should be_false
+        end
       end
     end
 
@@ -163,26 +176,40 @@ describe ApplicationController, '#login_required' do
   describe "ログインしていない場合" do
     before do
       controller.should_receive(:current_user).and_return(nil)
-
-      @root_url = 'http://skip.openskip.org/'
-      controller.should_receive(:root_url).and_return(@root_url)
     end
-    after do
-      controller.send(:login_required)
-    end
-
-    describe 'root_urlに遷移し来ていた場合' do
+    describe 'Ajaxリクエストの場合' do
       before do
-        controller.stub!(:request).and_return(mock('request', :url => @root_url))
+        controller.stub!(:request).and_return(mock('request', :url => 'url', :env => {'HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest'}))
       end
-      it { controller.should_receive(:redirect_to).with(:controller => '/platform', :action => :index) }
+      it 'ステータスコードが400であること' do
+        controller.should_receive(:render)
+        controller.send(:login_required)
+      end
     end
-    describe 'その他のURLに遷移してきていた場合' do
+    describe '通常のリクエストの場合' do
       before do
-        @other_url = 'http://skip.openskip.org/page/1234'
-        controller.stub!(:request).and_return(mock('request', :url => @other_url))
+        @root_url = 'http://skip.openskip.org/'
+        controller.should_receive(:root_url).and_return(@root_url)
       end
-      it { controller.should_receive(:redirect_to).with(:controller => '/platform', :action => :require_login, :return_to => URI.encode(@other_url)) }
+      describe 'root_urlに遷移し来ていた場合' do
+        before do
+          controller.stub!(:request).and_return(mock('request', :url => @root_url, :env => {}))
+        end
+        it 'ログイン画面にリダイレクトされること' do
+          controller.should_receive(:redirect_to).with(:controller => '/platform', :action => :index)
+          controller.send(:login_required)
+        end
+      end
+      describe 'その他のURLに遷移してきていた場合' do
+        before do
+          @other_url = 'http://skip.openskip.org/page/1234'
+          controller.stub!(:request).and_return(mock('request', :url => @other_url, :env => {}))
+        end
+        it 'required_login画面にリダイレクトされること' do
+          controller.should_receive(:redirect_to).with(:controller => '/platform', :action => :require_login, :return_to => URI.encode(@other_url))
+          controller.send(:login_required)
+        end
+      end
     end
   end
 end

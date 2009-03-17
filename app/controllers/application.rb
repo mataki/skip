@@ -140,11 +140,15 @@ protected
 
   def login_required
     if current_user.nil?
-      if request.url == root_url
+      if request.env['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest'
+        render :text => _('ログインが必要です。ログインし直して下さい。'), :status => :bad_request
+      else
+        if request.url == root_url
           redirect_to :controller => '/platform', :action => :index
         else
           redirect_to :controller => '/platform', :action => :require_login, :return_to => URI.decode(request.url)
         end
+      end
       return false
     end
     true
@@ -311,7 +315,11 @@ protected
   private
   def sso
     if login_mode?(:fixed_rp) and !logged_in?
-      redirect_to :controller => '/platform', :action => :login, :openid_url => INITIAL_SETTINGS['fixed_op_url'], :return_to => URI.encode(request.url)
+      if request.env['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest'
+        render :text => _('ログインが必要です。ログインし直して下さい。'), :status => :bad_request
+      else
+        redirect_to :controller => '/platform', :action => :login, :openid_url => INITIAL_SETTINGS['fixed_op_url'], :return_to => URI.encode(request.url)
+      end
       return false
     end
     true
