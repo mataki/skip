@@ -15,13 +15,20 @@
 
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe AppliedEmail, "に値が設定されていない場合" do
-  before(:each) do
-    @applied_email = AppliedEmail.new
+describe AppliedEmail, 'validation' do
+  describe 'email' do
+    before do
+      @applied_email = AppliedEmail.new
+    end
+    it 'ドメイン名に大文字を含むアドレスを許容すること' do
+      @applied_email.email = 'foo@Example.jp'
+      @applied_email.valid?.should be_true
+    end
+    it 'アカウント名とドメイン名に大文字を含むアドレスを許容すること' do
+      @applied_email.email = 'Foo@Example.jp'
+      @applied_email.valid?.should be_true
+    end
   end
-
-  it { @applied_email.should_not be_valid }
-  it { @applied_email.should have(2).errors_on(:email) }
 end
 
 describe AppliedEmail, "に正しい値が設定されている場合" do

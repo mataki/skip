@@ -55,6 +55,12 @@ describe User, 'validation' do
       # 大文字小文字が異なる場合もNG
       new_user(:email => 'Skip@example.org').valid?.should be_false
     end
+    it 'ドメイン名に大文字を含むアドレスを許容すること' do
+      new_user(:email => 'foo@Example.org').valid?.should be_true
+    end
+    it 'アカウント名とドメイン名に大文字を含むアドレスを許容すること' do
+      new_user(:email => 'Foo@Example.org').valid?.should be_true
+    end
   end
   describe 'pssword' do
     before do

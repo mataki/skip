@@ -49,7 +49,7 @@ class User < ActiveRecord::Base
 
   validates_presence_of :email, :message => 'は必須です'
   validates_length_of :email, :maximum => 50, :message => 'は50桁以内で入力してください'
-  validates_format_of :email, :message => 'は正しい形式で登録してください', :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/
+  validates_format_of :email, :message => 'は正しい形式で登録してください', :with => Authentication.email_regex
   validates_uniqueness_of :email, :case_sensitive => false, :message => 'は既に登録されています。'
 
   N_('User|Old password')
