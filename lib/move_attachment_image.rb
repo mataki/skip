@@ -58,6 +58,7 @@ class MoveAttachmentImage
       Dir.foreach(user_base_path) do |uid|
         next if (uid == '.' || uid == '..')
         src = "#{user_base_path}/#{uid}"
+        User.reset_column_information
         if user = User.find_by_uid(uid)
           dest = "#{user_base_path}/#{user.id}"
           FileUtils.mv src, dest
