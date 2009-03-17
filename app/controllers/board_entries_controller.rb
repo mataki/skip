@@ -33,23 +33,20 @@ class BoardEntriesController < ApplicationController
   # ルートコメントの作成
   def ado_create_comment
     if params[:board_entry_comment] == nil or params[:board_entry_comment][:contents] == ""
-      render :nothing => true
-      return false
+      render(:text => _('不正なパラメタです。'), :status => :bad_request) and return
     end
 
     find_params = BoardEntry.make_conditions(login_user_symbols, {:id => params[:id]})
     unless @board_entry = BoardEntry.find(:first,
                                           :conditions => find_params[:conditions],
                                           :include => find_params[:include] | [ :user, :board_entry_comments, :state ])
-      render :nothing => true
-      return false
+      render(:text => _('対象の%{target}が存在しませんでした。')%{:target => _('board entry')}, :status => :bad_request) and return
     end
 
     params[:board_entry_comment][:user_id] = session[:user_id]
     comment = @board_entry.board_entry_comments.create(params[:board_entry_comment])
     unless comment.errors.empty?
-      render :nothing => true
-      return false
+      render(:text => _('保存に失敗しました。'), :status => :bad_request) and return
     end
 
     render :partial => "board_entry_comment", :locals => { :comment => comment }
@@ -72,7 +69,7 @@ class BoardEntriesController < ApplicationController
     unless @board_entry = BoardEntry.find(:first,
                                           :conditions => find_params[:conditions],
                                           :include => find_params[:include] | [ :user, :board_entry_comments, :state ])
-      render(:text => _('コメント対象の記事は存在しません。'), :status => :not_found) and return
+      render(:text => _('対象の%{target}が存在しませんでした。')%{:target => _('board entry')}, :status => :bad_request) and return
     end
 
     comment = parent_comment.children.create(:board_entry_id => parent_comment.board_entry_id,
@@ -131,7 +128,11 @@ class BoardEntriesController < ApplicationController
 
   # ajax_action
   def ado_edit_comment
-    comment = BoardEntryComment.find(params[:id])
+    begin
+      comment = BoardEntryComment.find(params[:id])
+    rescue ActiveRecord::RecordNotFound => ex
+      render(:text => _('対象の%{target}が存在しませんでした。')%{:target => _('board entry comment')}, :status => :bad_request) and return
+    end
     board_entry = comment.board_entry
 
     # 権限チェック
@@ -152,8 +153,7 @@ class BoardEntriesController < ApplicationController
       end
     end
 
-    redirect_to_with_deny_auth and return unless authorize
-
+    render(:text => _('この操作は、許可されていません。'), :status => :bad_request) and return unless authorize
 
     comment.update_attribute :contents, params[:comment][:contents]
     render :partial => "comment_contents", :locals =>{ :comment => comment }

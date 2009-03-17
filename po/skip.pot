@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2009-03-12 15:16+0900\n"
+"POT-Creation-Date: 2009-03-17 12:58+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1228,7 +1228,7 @@ msgstr ""
 #: app/views/admin/user_profile_master_categories/index.html.erb:18
 #: app/views/admin/users/create_uid.html.erb:27
 #: app/views/admin/users/change_uid.html.erb:31
-#: app/views/admin/users/index.html.erb:48
+#: app/views/admin/users/index.html.erb:49
 msgid "Are you sure?"
 msgstr ""
 
@@ -1543,7 +1543,7 @@ msgstr ""
 #: app/views/admin/group_categories/index.html.erb:29
 #: app/views/admin/user_profile_master_categories/index.html.erb:18
 #: app/views/admin/user_profile_masters/index.html.erb:28
-#: app/views/admin/users/index.html.erb:48
+#: app/views/admin/users/index.html.erb:49
 msgid "Destroy"
 msgstr ""
 
@@ -1551,7 +1551,7 @@ msgstr ""
 #: app/views/admin/group_categories/index.html.erb:28
 #: app/views/admin/user_profile_master_categories/index.html.erb:17
 #: app/views/admin/user_profile_masters/index.html.erb:27
-#: app/views/admin/users/index.html.erb:47
+#: app/views/admin/users/index.html.erb:48
 msgid "Edit"
 msgstr ""
 
@@ -1903,13 +1903,13 @@ msgstr ""
 #: app/views/admin/group_categories/index.html.erb:36
 #: app/views/admin/user_profile_master_categories/index.html.erb:25
 #: app/views/admin/user_profile_masters/index.html.erb:35
-#: app/views/admin/users/index.html.erb:55
+#: app/views/admin/users/index.html.erb:56
 msgid "New %{model}"
 msgstr ""
 
 #: app/controllers/admin/users_controller.rb:123
 #: app/controllers/admin/users_controller.rb:140
-#: app/views/admin/users/index.html.erb:56
+#: app/views/admin/users/index.html.erb:57
 msgid "New user from csv"
 msgstr ""
 
@@ -2710,7 +2710,7 @@ msgstr ""
 msgid "You had been retired."
 msgstr ""
 
-#: app/controllers/portal_controller.rb:111
+#: app/controllers/portal_controller.rb:116
 msgid "You must login with openid."
 msgstr ""
 
@@ -2726,7 +2726,7 @@ msgstr ""
 msgid "activation"
 msgstr ""
 
-#: app/views/admin/users/index.html.erb:32
+#: app/views/admin/users/index.html.erb:33
 msgid "admin"
 msgstr ""
 
@@ -2746,10 +2746,13 @@ msgstr ""
 msgid "before_uid"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:38 app/models/board_entry.rb:-
+#: app/helpers/admin/application_helper.rb:38
+#: app/controllers/board_entries_controller.rb:43
+#: app/controllers/board_entries_controller.rb:72 app/models/board_entry.rb:-
 msgid "board entry"
 msgstr ""
 
+#: app/controllers/board_entries_controller.rb:134
 #: app/models/board_entry_comment.rb:-
 #: app/views/admin/board_entries/show.html.erb:43
 msgid "board entry comment"
@@ -2820,7 +2823,7 @@ msgstr ""
 msgid "group participation"
 msgstr ""
 
-#: app/views/admin/users/index.html.erb:36
+#: app/views/admin/users/index.html.erb:37
 msgid "issued_atlast_authenticated_atpassword_expires_at"
 msgstr ""
 
@@ -2921,7 +2924,7 @@ msgstr ""
 #: app/controllers/admin/user_profiles_controller.rb:20
 #: app/controllers/admin/user_profiles_controller.rb:39 app/models/user.rb:-
 #: app/views/admin/users/import.html.erb:74
-#: app/views/admin/users/index.html.erb:55
+#: app/views/admin/users/index.html.erb:56
 msgid "user"
 msgstr ""
 
@@ -3004,8 +3007,9 @@ msgid ""
 "されます。このプロフィール項目を削除しても宜しいですか?"
 msgstr ""
 
-#: app/controllers/application.rb:150
-#: app/controllers/board_entries_controller.rb:90
+#: app/controllers/application.rb:154
+#: app/controllers/board_entries_controller.rb:87
+#: app/controllers/board_entries_controller.rb:156
 #: app/controllers/share_file_controller.rb:261
 msgid "この操作は、許可されていません。"
 msgstr ""
@@ -3123,12 +3127,8 @@ msgid ""
 "て削除されている必要があります。"
 msgstr ""
 
-#: app/controllers/board_entries_controller.rb:67
+#: app/controllers/board_entries_controller.rb:64
 msgid "コメントの入力は必須です。"
-msgstr ""
-
-#: app/controllers/board_entries_controller.rb:75
-msgid "コメント対象の記事は存在しません。"
 msgstr ""
 
 #: app/controllers/rankings_controller.rb:165
@@ -3308,6 +3308,10 @@ msgstr ""
 msgid "ユーザ名が見つかりませんでした。"
 msgstr ""
 
+#: app/controllers/portal_controller.rb:38
+msgid "ユーザ登録が継続出来ません。最初からやり直して下さい。"
+msgstr ""
+
 #: app/views/user_mailer/sent_activate.html.erb:9
 #: app/views/platform/index.html.erb:59
 msgid "ユーザ登録してSKIPの利用を開始する"
@@ -3360,6 +3364,11 @@ msgstr ""
 msgid "不正なグループです。"
 msgstr ""
 
+#: app/controllers/application.rb:28
+msgid "不正なセッションです。再度ログインし直して下さい。"
+msgstr ""
+
+#: app/controllers/board_entries_controller.rb:36
 #: app/controllers/rankings_controller.rb:77
 msgid "不正なパラメタです。"
 msgstr ""
@@ -3375,6 +3384,10 @@ msgstr ""
 
 #: app/controllers/rankings_controller.rb:164
 msgid "人気ブックマーク"
+msgstr ""
+
+#: app/views/shared/_calendar.html.erb:31
+msgid "今日"
 msgstr ""
 
 #: app/views/platform/forgot_openid.html.erb:3
@@ -3403,7 +3416,8 @@ msgstr ""
 msgid "保存に失敗している項目があります。"
 msgstr ""
 
-#: app/controllers/board_entries_controller.rb:82
+#: app/controllers/board_entries_controller.rb:49
+#: app/controllers/board_entries_controller.rb:79
 msgid "保存に失敗しました。"
 msgstr ""
 
@@ -3451,6 +3465,10 @@ msgstr ""
 msgid "再設定URLを表示する"
 msgstr ""
 
+#: app/views/admin/shared/_sortable_table.html.erb:14
+msgid "列の表示制御(クリックで表示/非表示を切り替えます。)"
+msgstr ""
+
 #: app/views/admin/settings/index.html.erb:9
 msgid "初期値に戻す"
 msgstr ""
@@ -3459,17 +3477,17 @@ msgstr ""
 msgid "利用開始URLを発行しました。確認のリンクからユーザに連絡してください。"
 msgstr ""
 
-#: app/views/admin/users/index.html.erb:70
+#: app/views/admin/users/index.html.erb:71
 msgid ""
 "利用開始URLを発行します。次の画面で確認リンクを押して表示されるURLをユーザに"
 "送信してください。"
 msgstr ""
 
-#: app/views/admin/users/index.html.erb:18
+#: app/views/admin/users/index.html.erb:19
 msgid "利用開始待ち"
 msgstr ""
 
-#: app/views/admin/users/index.html.erb:20
+#: app/views/admin/users/index.html.erb:21
 msgid "利用開始待ちにする"
 msgstr ""
 
@@ -3477,7 +3495,7 @@ msgstr ""
 msgid "利用開始確認メールです"
 msgstr ""
 
-#: app/views/admin/users/index.html.erb:20
+#: app/views/admin/users/index.html.erb:21
 msgid "利用開始通知"
 msgstr ""
 
@@ -3488,6 +3506,10 @@ msgstr ""
 
 #: app/controllers/admin/group_categories_controller.rb:39
 msgid "削除対象のカテゴリが存在しませんでした。"
+msgstr ""
+
+#: app/views/shared/_calendar.html.erb:30
+msgid "前月"
 msgstr ""
 
 #: app/views/group/_form.html.erb:51
@@ -3520,6 +3542,12 @@ msgstr ""
 
 #: app/controllers/antenna_controller.rb:73
 msgid "存在しないオーナーが指定されました。"
+msgstr ""
+
+#: app/controllers/board_entries_controller.rb:43
+#: app/controllers/board_entries_controller.rb:72
+#: app/controllers/board_entries_controller.rb:134
+msgid "対象の%{target}が存在しませんでした。"
 msgstr ""
 
 #: app/models/group_category.rb:53
@@ -3557,7 +3585,7 @@ msgid ""
 "わせ下さい。"
 msgstr ""
 
-#: app/controllers/board_entries_controller.rb:95
+#: app/controllers/board_entries_controller.rb:92
 msgid "対象の記事が存在しません。"
 msgstr ""
 
@@ -3565,7 +3593,7 @@ msgstr ""
 msgid "対象データが見つかりません。"
 msgstr ""
 
-#: app/views/admin/users/index.html.erb:70
+#: app/views/admin/users/index.html.erb:71
 msgid "対象ユーザに利用開始通知メールを送信しますが宜しいですか?"
 msgstr ""
 
@@ -3657,6 +3685,10 @@ msgstr ""
 msgid "次回から自動的にログイン"
 msgstr ""
 
+#: app/views/shared/_calendar.html.erb:32
+msgid "次月"
+msgstr ""
+
 #: app/views/admin/users/import.html.erb:27
 msgid "正しいCSVファイルの例"
 msgstr ""
@@ -3686,7 +3718,7 @@ msgstr ""
 msgid "登録に成功しました。"
 msgstr ""
 
-#: app/controllers/portal_controller.rb:103
+#: app/controllers/portal_controller.rb:108
 msgid "登録可能です"
 msgstr ""
 
@@ -3700,7 +3732,7 @@ msgid ""
 "ている場合でも上書きされますのでご注意下さい。"
 msgstr ""
 
-#: app/views/admin/users/index.html.erb:17
+#: app/views/admin/users/index.html.erb:18
 msgid "確認"
 msgstr ""
 
@@ -3734,7 +3766,7 @@ msgstr ""
 msgid "編集する"
 msgstr ""
 
-#: app/controllers/board_entries_controller.rb:63
+#: app/controllers/board_entries_controller.rb:60
 msgid "親コメントが存在しません。再読み込みして下さい。"
 msgstr ""
 

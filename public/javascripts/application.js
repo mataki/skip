@@ -3,8 +3,12 @@ $j(function(){
     $j.ajaxSetup({
         ifModified: false,
         cache: false,
-        error: function(event) {
-            alert("通信に失敗しました");
+        error: function(request) {
+            if(request.responseText == ''){
+                alert("通信に失敗しました。");
+            } else {
+                alert(request.responseText);
+            }
         }
     });
 

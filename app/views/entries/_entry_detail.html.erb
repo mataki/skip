@@ -354,8 +354,8 @@
               type:'POST',
               url:'<%= url_for(:controller => 'board_entries', :action => 'ado_create_comment', :id => entry.id) -%>',
               data:$j('#new_comment_form').serialize(),
-              complete:function(request) {
-                  $j('#board_entry_comments').append(request.responseText);
+              success: function(html) {
+                  $j('#board_entry_comments').append(html);
                   $j('#board_entry_comment_contents').val('');
                   showSortMenu();
                   setupCommentEditLink();
@@ -523,9 +523,6 @@
                   success: function(text){
                       $j('#entry_point_button').val(text);
                       entry_point = ++entry_point;
-                  },
-                  error: function(request){
-                      alert(request.responseText);
                   }
               });
           });
@@ -574,8 +571,8 @@
                   type:'POST',
                   url:'<%= url_for(:controller => 'board_entries', :action => 'ado_edit_comment') -%>/' + commentId,
                   data:$j('#comment_input_form_' + commentId).serialize() + '&authenticity_token=' + $j('#authenticity_token').val(),
-                  complete:function(request) {
-                      $j('#comment_contents_' + commentId).html(request.responseText);
+                  success :function(html) {
+                      $j('#comment_contents_' + commentId).html(html);
                       if ($j('#comment_area_' + commentId).is(':visible')) {
                           $j('#comment_area_' + commentId).fadeOut(0, function() {
                               $j('#comment_contents_' + commentId).fadeIn('fast');
@@ -649,9 +646,6 @@
                                   });
                                   jform.remove();
                               });
-                          },
-                          error:function(request) {
-                              alert(request.responseText);
                           }
                       });
                       return false;

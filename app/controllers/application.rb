@@ -24,7 +24,11 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery
   rescue_from ActionController::InvalidAuthenticityToken do |exception|
-    redirect_to_with_deny_auth
+    if request.env['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest'
+      render :text => _('不正なセッションです。再度ログインし直して下さい。'), :status => :bad_request
+    else
+      redirect_to_with_deny_auth
+    end
   end
 
   before_filter :sso, :login_required, :prepare_session

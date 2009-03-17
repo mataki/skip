@@ -56,11 +56,11 @@ describe BoardEntriesController, 'POST #ado_create_nest_comment' do
       BoardEntry.should_receive(:find).and_return(nil)
       post :ado_create_nest_comment, :contents => 'contents'
     end
-    it 'ステータスコード404が設定されること' do
-      response.code.should == '404'
+    it 'ステータスコード400が設定されること' do
+      response.code.should == '400'
     end
     it '対象の記事が存在しない旨のメッセージが設定されること' do
-      response.body.should == 'コメント対象の記事は存在しません。'
+      response.body.should == '対象のboard entryが存在しませんでした。'
     end
   end
 end
