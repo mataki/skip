@@ -1,29 +1,4 @@
 /* ----------------------------------- */
-* {
-  margin: 0;
-  padding: 0;
-}
-img {
-  vertical-align: middle;
-  border: 0;
-}
-a {
-  text-decoration: none;
-  color: #0080dd;
-}
-/* ----------------------------------- */
-body {
-  position: absolute;
-  left: 0;
-  margin: 0;
-  text-align: left;
-  font-size: 12px;
-  font-family: Verdana, Arial, sans-serif;
-  background-color: #ffffff;
-  color: #555555;
-  width: 100%;
-}
-/* ----------------------------------- */
 div#header {
   border-bottom: 1px dashed silver;
   height: 50px;
