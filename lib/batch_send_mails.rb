@@ -20,7 +20,6 @@ class BatchSendMails < BatchBase
     sender = self.new
     sender.send_notice
     sender.send_message
-    sender.send_cleaning_notification
   end
 
   def send_notice

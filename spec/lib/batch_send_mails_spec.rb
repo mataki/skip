@@ -31,10 +31,6 @@ describe BatchSendMails, '#.execute' do
     @sender.should_receive(:send_message)
     BatchSendMails.execute []
   end
-  it 'クリーニング依頼メールの送信処理がおこなわれること' do
-    @sender.should_receive(:send_cleaning_notification)
-    BatchSendMails.execute []
-  end
 end
 
 describe BatchSendMails, '#send_notice' do

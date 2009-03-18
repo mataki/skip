@@ -36,4 +36,4 @@ class BatchSendCleaningNotification < BatchBase
   end
 end
 
-BatchSendMails.execution unless RAILS_ENV == 'test'
+BatchSendCleaningNotification.execution unless RAILS_ENV == 'test'
