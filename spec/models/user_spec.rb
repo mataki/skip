@@ -109,6 +109,7 @@ describe User, 'validation' do
       end
       it '6文字以上の英数字記号であること' do
         @user.password = 'abcde'
+        @user.password_confirmation = 'abcde'
         @user.valid?
         @user.errors['password'].include?(@message).should be_true
         @user.password = 'abcdef'
@@ -154,8 +155,9 @@ describe User, 'validation' do
         end
         it '小文字、大文字、数字の場合エラーにならないこと' do
           @user.password = 'abcdEF012'
+          @user.password_confirmation = 'abcdEF012'
           @user.valid?
-          @user.errors['password'].include?(@message).should be_false
+          @user.errors.empty?.should be_true
         end
       end
     end
@@ -202,8 +204,8 @@ describe User, 'validation' do
         end
         it '小文字、大文字、数字, 記号の場合エラーとならないこと' do
           @user.password = 'abcdeF0@#'
-          @user.valid?
-          @user.errors['password'].include?(@message).should be_false
+          @user.password_confirmation = 'abcdeF0@#'
+          @user.errors.empty?.should be_true
         end
       end
     end
@@ -219,10 +221,12 @@ describe User, "#before_save" do
       @user = new_user
       Admin::Setting.password_change_interval = 90
     end
-    it "保存する際はパスワードが暗号化される" do
+    it 'パスワードが保存されること' do
+      lambda do
         @user.save
+      end.should change(@user, :crypted_password).from(nil)
     end
-    it 'パスワード有効期限が設定される' do
+    it 'パスワード有効期限が設定されること' do
       time = Time.now
       Time.stub!(:now).and_return(time)
       lambda do
@@ -235,14 +239,57 @@ describe User, "#before_save" do
     before do
       @user = new_user
       @user.save
+      @user.reset_auth_token = 'reset_auth_token'
+      @user.reset_auth_token_expires_at = Time.now
+      @user.lock = true
+      @user.trial_num = 1
+      @user.save
+      Admin::Setting.password_change_interval = 90
     end
+    describe 'パスワードの変更の場合' do
+      before do
+        @user.password = 'Password99'
+        @user.password_confirmation = 'Password99'
+      end
+      it 'パスワードが保存される' do
+        lambda do
+          @user.save
+        end.should change(@user, :crypted_password).from(nil)
+      end
+      it 'パスワード有効期限が設定される' do
+        time = Time.now
+        Time.stub!(:now).and_return(time)
+        lambda do
+          @user.save
+        end.should change(@user, :password_expires_at).to(Time.now.since(90.day))
+      end
+      it 'reset_auth_tokenがクリアされること' do
+        lambda do
+          @user.save
+        end.should change(@user, :reset_auth_token).to(nil)
+      end
+      it 'reset_auth_token_expires_atがクリアされること' do
+        lambda do
+          @user.save
+        end.should change(@user, :reset_auth_token_expires_at).to(nil)
+      end
+      it 'lockがクリアされること' do
+        lambda do
+          @user.save
+        end.should change(@user, :lock).to(false)
+      end
+      it 'trial_numがクリアされること' do
+        lambda do
+          @user.save
+        end.should change(@user, :trial_num).to(0)
+      end
+    end
+
     describe 'パスワード以外の変更の場合' do
       before do
-        # password_required?の条件でpasswordが空になる必要があるためロードし直す
-        @user = User.find_by_id(@user.id)
         @user.name = 'fuga'
       end
-      it "パスワードは変更されないこと" do
+      it 'パスワードは変更されないこと' do
         lambda do
           @user.save
         end.should_not change(@user, :crypted_password)
@@ -251,6 +298,26 @@ describe User, "#before_save" do
         lambda do
           @user.save
         end.should_not change(@user, :password_expires_at)
+      end
+      it 'reset_auth_tokenが変わらないこと' do
+        lambda do
+          @user.save
+        end.should_not change(@user, :reset_auth_token)
+      end
+      it 'reset_auth_token_expires_atが変わらないこと' do
+        lambda do
+          @user.save
+        end.should_not change(@user, :reset_auth_token_expires_at)
+      end
+      it 'lockが変わらないこと' do
+        lambda do
+          @user.save
+        end.should_not change(@user, :lock)
+      end
+      it 'trial_numが変わらないこと' do
+        lambda do
+          @user.save
+        end.should_not change(@user, :trial_num)
       end
     end
   end
@@ -272,8 +339,8 @@ end
 describe User, '#change_password' do
   before do
     INITIAL_SETTINGS['login_mode'] = 'password'
-    @user = create_user
-    @old_password = @user.password
+    @user = create_user(:user_options => {:password => 'Password1'})
+    @old_password = 'Password1'
     @new_password = 'Hogehoge1'
 
     @params = { :old_password => @old_password, :password => @new_password, :password_confirmation => @new_password }
@@ -433,38 +500,6 @@ describe User, '#issue_reset_auth_token' do
     lambda do
       @user.issue_reset_auth_token
     end.should change(@user, :reset_auth_token_expires_at).from(nil).to(@now.since(24.hour))
-  end
-end
-
-describe User, '#after_reset_password' do
-  before do
-    @user = create_user
-  end
-  it 'reset_auth_tokenの値が更新されること' do
-    prc = '6df711a1a42d110261cfe759838213143ca3c2ad'
-    @user.reset_auth_token = prc
-    lambda do
-      @user.after_reset_password
-    end.should change(@user, :reset_auth_token).from(prc).to(nil)
-  end
-  it 'reset_auth_token_expires_atの値が更新されること' do
-    time = Time.now
-    @user.reset_auth_token_expires_at = time
-    lambda do
-      @user.after_reset_password
-    end.should change(@user, :reset_auth_token_expires_at).from(time).to(nil)
-  end
-  it 'lockの値がfalseに更新されること' do
-    @user.lock = true
-    lambda do
-      @user.after_reset_password
-    end.should change(@user, :lock).to(false)
-  end
-  it 'trial_numの値が0に更新されること' do
-    @user.trial_num = 3
-    lambda do
-      @user.after_reset_password
-    end.should change(@user, :trial_num).to(0)
   end
 end
 

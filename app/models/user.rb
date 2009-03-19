@@ -117,11 +117,21 @@ class User < ActiveRecord::Base
     if password_required?
       self.crypted_password = encrypt(password)
       self.password_expires_at = Time.now.since(Admin::Setting.password_change_interval.day)
+      self.reset_auth_token = nil
+      self.reset_auth_token_expires_at = nil
+      self.lock = false
+      self.trial_num = 0
     end
   end
 
   def before_create
     self.issued_at = Time.now
+  end
+
+  def after_save
+    self.password = nil
+    self.password_confirmation = nil
+    self.old_password = nil
   end
 
   def self.auth(code_or_email, password, key_phrase = nil)
@@ -313,10 +323,6 @@ class User < ActiveRecord::Base
   def issue_reset_auth_token(since = 24.hour)
     self.reset_auth_token = self.class.make_token
     self.reset_auth_token_expires_at = Time.now.since(since)
-  end
-
-  def after_reset_password
-    update_attributes(:reset_auth_token => nil, :reset_auth_token_expires_at => nil, :lock => false, :trial_num => 0)
   end
 
   def determination_reset_auth_token
