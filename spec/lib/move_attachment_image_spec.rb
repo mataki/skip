@@ -286,46 +286,83 @@ describe MoveAttachmentImage do
 
   describe MoveAttachmentImage, '.replace_entry_direct_link' do
     before do
-      @image_path_11_foo_png = 'http://localhost:3000/images/board_entries/1/11_foo.png'
-      @image_path_22_bar_jpg = 'https://localhost:3000/images/board_entries%2F1%2F22_bar.jpg'
-      contents_foo = "foo#{@image_path_11_foo_png}\r\nfoo#{@image_path_22_bar_jpg}"
-      @board_entry_foo = create_board_entry(:contents => contents_foo)
+      @replace_text = 'replace_text'
+      contents = "foo#{@replace_text}"
+      MoveAttachmentImage.stub!(:image_link_re).and_return(/#{@replace_text}/)
+      @board_entry_foo = create_board_entry(:contents => contents, :category => 'skip,rails')
       @board_entry_bar = stub_model(BoardEntry, :symbol => 'uid:bar')
       BoardEntry.stub!(:find_by_id).and_return(@board_entry_bar)
     end
-    it 'contents_will_change!が呼ばれること(呼んでおかないと=での変更ではないため更新されない)' do
-      @board_entry_foo.should_receive(:contents_will_change!)
-      MoveAttachmentImage.replace_entry_direct_link @board_entry_foo
+    describe '置換される場合(replaced_textの結果がnil以外)' do
+      before do
+        @replaced_text = 'replaced_text'
+        MoveAttachmentImage.stub!(:replaced_text).and_return(@replaced_text)
+      end
+      it 'contentsが変換されること' do
+#        lambda do
+#          MoveAttachmentImage.replace_entry_direct_link @board_entry_foo
+#        end.should change(@board_entry_foo, :contents).from("foo#{@replace_text}").to(replaced_contents)
+        # 上記だとなぜか通らないので(#{column}_with_change!してるから?)以下のようにしておく。
+        replaced_contents = "foo#{@replaced_text}"
+        MoveAttachmentImage.replace_entry_direct_link @board_entry_foo
+        @board_entry_foo.contents.should == replaced_contents
+      end
+      it 'categoryが変化しないこと' do
+        lambda do
+          MoveAttachmentImage.replace_entry_direct_link @board_entry_foo
+        end.should_not change(@board_entry_foo, :category)
+      end
+      it 'updated_onが変化しないこと' do
+        lambda do
+          MoveAttachmentImage.replace_entry_direct_link @board_entry_foo
+        end.should_not change(@board_entry_foo, :updated_on)
+      end
     end
-    it '置換処理が呼ばれること' do
-      MoveAttachmentImage.should_receive(:replaced_text).with('uid:bar', 'foo.png')
-      MoveAttachmentImage.should_receive(:replaced_text).with('uid:bar', 'bar.jpg')
-      MoveAttachmentImage.replace_entry_direct_link @board_entry_foo
+    describe '置換されない場合(replaced_textの結果がnil)' do
+      before do
+        MoveAttachmentImage.stub!(:replaced_text).and_return(nil)
+      end
+      it '保存されないこと' do
+        @board_entry_foo.should_not_receive(:save!)
+        MoveAttachmentImage.replace_entry_direct_link @board_entry_foo
+      end
     end
   end
 
   describe MoveAttachmentImage, '.replace_entry_comment_direct_link' do
     before do
-      @image_path_11_foo_png = 'http://localhost:3000/images/board_entries/1/11_foo.png'
-      @image_path_22_bar_jpg = 'https://localhost:3000/images/board_entries%2F1%2F22_bar.jpg'
-      contents_foo = "foo#{@image_path_11_foo_png}\r\nfoo#{@image_path_22_bar_jpg}"
-      @board_entry_comment_foo = create_board_entry_comment(:contents => contents_foo)
+      @replace_text = 'replace_text'
+      contents = "foo#{@replace_text}"
+      MoveAttachmentImage.stub!(:image_link_re).and_return(/#{@replace_text}/)
+      @board_entry_comment_foo = create_board_entry_comment(:contents => contents)
       @board_entry_bar = stub_model(BoardEntry, :symbol => 'uid:bar')
       BoardEntry.stub!(:find_by_id).and_return(@board_entry_bar)
     end
-    it 'contents_will_change!が呼ばれること(呼んでおかないと=での変更ではないため更新されない)' do
-      @board_entry_comment_foo.should_receive(:contents_will_change!)
-      MoveAttachmentImage.replace_entry_direct_link @board_entry_comment_foo
+    describe '置換される場合(replaced_textの結果がnil以外' do
+      before do
+        @replaced_text = 'replaced_text'
+        MoveAttachmentImage.stub!(:replaced_text).and_return(@replaced_text)
+      end
+      it 'contentsが変換されること' do
+        replaced_contents = "foo#{@replaced_text}"
+        MoveAttachmentImage.replace_entry_comment_direct_link @board_entry_comment_foo
+        @board_entry_comment_foo.contents.should == replaced_contents
+      end
+      it 'updated_onが変化しないこと' do
+        lambda do
+          MoveAttachmentImage.replace_entry_comment_direct_link @board_entry_comment_foo
+        end.should_not change(@board_entry_comment_foo, :contents)
+      end
     end
-    it '置換処理が呼ばれること' do
-      MoveAttachmentImage.should_receive(:replaced_text).with('uid:bar', 'foo.png')
-      MoveAttachmentImage.should_receive(:replaced_text).with('uid:bar', 'bar.jpg')
-      MoveAttachmentImage.replace_entry_comment_direct_link @board_entry_comment_foo
+    describe '置換されない場合(replaced_textの結果がnil' do
+      before do
+        MoveAttachmentImage.stub!(:replaced_text).and_return(nil)
+      end
+      it '保存されないこと' do
+        @board_entry_comment_foo.should_not_receive(:save!)
+        MoveAttachmentImage.replace_entry_comment_direct_link @board_entry_comment_foo
+      end
     end
-  end
-
-  describe MoveAttachmentImage, '.replaced_text' do
-
   end
 
   describe MoveAttachmentImage, '.new_share_file' do

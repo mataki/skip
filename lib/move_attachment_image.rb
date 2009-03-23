@@ -140,23 +140,30 @@ class MoveAttachmentImage
   end
 
   def self.replace_entry_direct_link entry
-    entry.contents_will_change!
+    BoardEntry.record_timestamps = false
     entry.contents.gsub!(image_link_re) do |matched|
       matched_entry = BoardEntry.find_by_id($3.to_i)
       file_name = $4
-      replaced_text(matched_entry.symbol, file_name) || matched
+      if replaced_text = replaced_text(matched_entry.symbol, file_name)
+        entry.contents_will_change!
+        entry.category = entry.comma_category
+        replaced_text
+      end
     end
-    entry.save_without_validation!
+    entry.save! if entry.changed?
   end
 
   def self.replace_entry_comment_direct_link entry_comment
-    entry_comment.contents_will_change!
+    BoardEntryComment.record_timestamps = false
     entry_comment.contents.gsub!(image_link_re) do |matched|
       matched_entry = BoardEntry.find_by_id($3.to_i)
       file_name = $4
-      replaced_text(matched_entry.symbol, file_name) || matched
+      if replaced_text = replaced_text(matched_entry.symbol, file_name)
+        entry_comment.contents_will_change!
+        replaced_text
+      end
     end
-    entry_comment.save_without_validation!
+    entry_comment.save! if entry_comment.changed?
   end
 
   def self.image_link_re
