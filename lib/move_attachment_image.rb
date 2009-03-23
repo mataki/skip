@@ -167,7 +167,7 @@ class MoveAttachmentImage
   end
 
   def self.image_link_re
-    /\/images\/board_entries(\/|%2F)[0-9]+(\/|%2F)([0-9]+)_([^\r\n]+)/
+    /\/images\/board_entries(\/|%2F)[0-9]+(\/|%2F)([0-9]+)_([^\r\n\.]+\.[a-zA-Z0-9]+)/
   end
 
   # 置換成功時は置換したテキスト、失敗時はnilを返す
