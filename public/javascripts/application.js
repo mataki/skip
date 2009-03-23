@@ -161,20 +161,25 @@ $j(function(){
             });
         };
 
-        var insertImage = function(data){
+        var insertThumbnail = function(data){
             var filename = data['file_name'];
-            var src = data['src'];
-            if(src){
-                var img = $j("<img></img>").attr("src", src).attr("alt", filename).addClass('pointer');
-                return img.clone().attr("width", 200).click(function(){
-                    if($j('#editor_mode_richtext:checked').length > 0){
-                        insertToRichEditor(img);
-                    } else if($j('#editor_mode_hiki:checked').length > 0) {
-                        insertToHikiEditor('\n{{' + filename + ',240,}}');
-                    }
-                });
-            }else{
-                return $j("<span></span>").text(filename.substr(0,16));
+            var extension = filename.toLowerCase().split('.')[1];
+            if($j.inArray(extension, config['image_extensions']) >= 0) {
+                var src = data['src'];
+                if(src){
+                    var img = $j("<img></img>").attr("src", src).attr("alt", filename).addClass('pointer');
+                    return img.clone().attr("width", 200).click(function(){
+                        if($j('#editor_mode_richtext:checked').length > 0){
+                            insertToRichEditor(img);
+                        } else if($j('#editor_mode_hiki:checked').length > 0) {
+                            insertToHikiEditor('\n{{' + filename + ',240,}}');
+                        }
+                    });
+                }else{
+                    return $j("<span></span>").text(filename.substr(0,32));
+                }
+            } else {
+                return $j("<span></span>").text(filename.substr(0,32));
             }
         };
 
@@ -187,7 +192,7 @@ $j(function(){
 
         var shareFileToTableRow = function(data){
             var tr = $j("<tr></tr>");
-            tr.append($j("<td class='thumbnail'></td>").append(insertImage(data)));
+            tr.append($j("<td class='thumbnail'></td>").append(insertThumbnail(data)));
             var insertTd = $j("<td class='insert'></td>");
             insertTd.append(insertLink(data));
             if(data['file_type'] == 'image')

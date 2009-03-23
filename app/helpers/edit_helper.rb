@@ -28,6 +28,7 @@ module EditHelper
   def share_file_uploader_opt board_entry
     {
       :share_files_url => share_files_url(board_entry.symbol),
+      :image_extensions => ShareFile::CONTENT_TYPE_IMAGES.keys,
       :message => {
         :title => _('Insert share file as image or link'),
         :close => _('Close'),
