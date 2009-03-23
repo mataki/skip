@@ -175,11 +175,9 @@ class MoveAttachmentImage
     type = symbol.split(':').first
     value = symbol.split(':').last
     if type == 'uid'
-      return nil unless user = User.find_by_uid(value)
-      "/share_file/user/#{user.id}/#{file_name}"
+      "/user/#{value}/files/#{file_name}"
     elsif type == 'gid'
-      return nil unless group = Group.find_by_gid(value)
-      "/share_file/group/#{group.id}/#{file_name}"
+      "/group/#{value}/files/#{file_name}"
     else
       nil
     end
