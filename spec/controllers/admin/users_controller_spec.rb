@@ -225,9 +225,25 @@ describe Admin::UsersController, 'POST /first' do
   describe '無効なactivation_codeの場合' do
     before do
       controller.should_receive(:valid_activation_code?).and_return(false)
-      post :first
     end
-    it {response.code.should == '403'}
+    describe "管理者ユーザが登録されていない場合" do
+      before do
+        User.should_receive(:find_by_admin).and_return(nil)
+        post :first
+      end
+      it "forbiddenのレスポンスが返ること" do
+        response.code.should == '403'
+      end
+    end
+    describe "管理者ユーザが登録されている場合" do
+      before do
+        User.should_receive(:find_by_admin).and_return(stub_model(User))
+        post :first
+      end
+      it "リダイレクトされること" do
+        response.should be_redirect
+      end
+    end
   end
 end
 
