@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
 "POT-Creation-Date: 2009-03-17 12:58+0900\n"
-"PO-Revision-Date: 2009-03-03 14:42+0900\n"
+"PO-Revision-Date: 2009-03-24 18:16+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2395,11 +2395,11 @@ msgstr "更新日時"
 
 #: app/controllers/server_controller.rb:44
 msgid "This is an OpenID server endpoint, not a human readable resource."
-msgstr ""
+msgstr "このURLは、OpenID用です。一般の方は、利用できません。"
 
 #: app/controllers/server_controller.rb:74
 msgid "This site is not allowed"
-msgstr ""
+msgstr "このサイトは利用許可されていません。"
 
 #: app/helpers/edit_helper.rb:37
 msgid "Thumbnail"
@@ -2407,19 +2407,19 @@ msgstr "サムネイル"
 
 #: app/models/track.rb:-
 msgid "Track|Created on"
-msgstr ""
+msgstr "作成日時"
 
 #: app/models/track.rb:-
 msgid "Track|Updated on"
-msgstr ""
+msgstr "更新日時"
 
 #: app/models/track.rb:-
 msgid "Track|User"
-msgstr ""
+msgstr "ユーザ"
 
 #: app/models/track.rb:-
 msgid "Track|Visitor"
-msgstr ""
+msgstr "来訪者"
 
 #: app/views/admin/user_profiles/edit.html.erb:13
 #: app/views/admin/openid_identifiers/edit.html.erb:16
@@ -2466,43 +2466,43 @@ msgstr "ユーザの削除に成功しました。"
 
 #: app/models/user_access.rb:-
 msgid "UserAccess|Access count"
-msgstr ""
+msgstr "アクセス数"
 
 #: app/models/user_access.rb:-
 msgid "UserAccess|Created on"
-msgstr ""
+msgstr "作成日時"
 
 #: app/models/user_access.rb:-
 msgid "UserAccess|Last access"
-msgstr ""
+msgstr "最終アクセス日時"
 
 #: app/models/user_access.rb:-
 msgid "UserAccess|Updated on"
-msgstr ""
+msgstr "更新日時"
 
 #: app/models/user_access.rb:-
 msgid "UserAccess|User"
-msgstr ""
+msgstr "ユーザ"
 
 #: app/models/user_custom.rb:-
 msgid "UserCustom|Classic"
-msgstr ""
+msgstr "クラシック"
 
 #: app/models/user_custom.rb:-
 msgid "UserCustom|Theme"
-msgstr ""
+msgstr "テーマ"
 
 #: app/models/user_custom.rb:-
 msgid "UserCustom|User"
-msgstr ""
+msgstr "ユーザ"
 
 #: app/models/user_message_unsubscribe.rb:-
 msgid "UserMessageUnsubscribe|Message type"
-msgstr ""
+msgstr "メッセージ種別"
 
 #: app/models/user_message_unsubscribe.rb:-
 msgid "UserMessageUnsubscribe|User"
-msgstr ""
+msgstr "ユーザ"
 
 #: app/models/user_profile_master_category.rb:-
 msgid "UserProfileMasterCategory|Created at"
@@ -2618,7 +2618,7 @@ msgstr "更新日時"
 
 #: app/models/user_profile_value.rb:-
 msgid "UserProfileValue|User"
-msgstr ""
+msgstr "ユーザ"
 
 #: app/models/user_profile_value.rb:-
 msgid "UserProfileValue|User profile master"
