@@ -142,71 +142,6 @@ div.helpbar {
   margin-bottom: 2px;
 }
 /* ----------------------------------- */
-/* タイトル＋一覧系 */
-h2.topix_title {
-  border-top: 1px solid silver;
-  border-bottom: 1px dashed silver;
-  padding: 4px 0px 2px 7px;
-  background-color: #f3f3ff;
-  margin-bottom: 0px;
-
-  font-size: 16px;
-  font-weight: bold;
-  vertical-align: bottom;
-  margin-left: 5px;
-  color: #003399;
-  background-image: url(./../images/skip/gradient.png);
-}
-div.topix_body {
-  margin-left: 5px;
-  margin-bottom: 10px;
-}
-div.topix_body a:visited {
-  color: purple;
-}
-div.topix_body .page_line, div.topix_body .item_line {
-  border-bottom: 1px dotted silver;
-  padding: 1px 2px 3px 2px;
-  margin-bottom: 2px;
-}
-div.topix_body .page_reading {
-  float: left;
-  margin-right: 5px;
-}
-div.topix_body .page_title {
-  width: 65%;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  float: left;
-}
-div.topix_body .page_from {
-  float: left;
-  margin-left: 5px;
-  width: 70px;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-div.topix_body .page_date, div.topix_body .item_date {
-  text-align: right;
-  font-size: 10px;
-}
-div.topix_body .item_name {
-  width:120px;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  float: left;
-  margin-right: 15px;
-}
-div.topix_body .item_desc {
-  float: left;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  width: 50%;
-}
 /* ----------------------------------- */
 /* flashで表示するメッセージ */
 div.notice {
@@ -225,56 +160,6 @@ div.notice span, div.warning span {
   position: absolute;
   right: 15px;
   top: 15px;
-  font-size: 10px;
-}
-/* ----------------------------------- */
-/* ボックス型 */
-/* 外側の表示枠 */
-div.box_space {
-  background-color: #ffffff;
-  border: 1px solid silver;
-  padding: 1px;
-  margin-bottom: 5px;
-  border-right: 2px solid silver;
-  border-bottom: 2px solid #aaaaaa;
-}
-/* タイトル部分 */
-div.box_space div.box_space_title {
-  padding: 1px;
-  border-top: 1px solid silver;
-  border-left: 1px solid silver;
-  color: #0033cc;
-  font-size: 15px;
-  font-weight: bold;
-  background-image: url(./../images/label_bar.png);
-}
-/* タイトル中のサイズの小さい文字 */
-div.box_space div.box_space_title span.small {
-  font-size: 10px;
-  margin-left: 3px;
-}
-/* 本体部分 */
-div.box_space div.box_space_body {
-  text-align: left;
-  margin: 2px;
-  word-break:break-all;
-  overflow: hidden;
-}
-/* 本体部分 */
-div.box_space div.box_space_img_body {
-  text-align: center;
-  margin: 2px;
-}
-/* 本体の中の箇条書き */
-div.box_space div.box_space_body ul {
-  list-style-type: none;
-}
-/* 底の部分 */
-div.box_space div.box_space_bottom {
-  text-align: right;
-  border-right: 1px solid silver;
-  border-bottom: 1px solid silver;
-  padding: 1px;
   font-size: 10px;
 }
 
@@ -342,21 +227,6 @@ div.auto_complete ul strong.highlight {
 /* ----------------------------------- */
 /* コンテンツの左メニュー・右中身の構造 */
 
-/* レイアウトの左側 */
-div#contents_left {
-  width:150px;
-  float:left;
-}
-/* レイアウトの右側 */
-div#contents_right {
-  margin-left: 160px;
-  _width: 100%;
-}
-/* レイアウトの下側 */
-div#contents_bottom {
-  width:100%;
-  clear:left;
-}
 /* ----------------------------------- */
 /* 紹介文のところで使う */
 table.chain_table {

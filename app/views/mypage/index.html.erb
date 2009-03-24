@@ -11,7 +11,7 @@
   <%# ============================================================ -%>
   <%#  right side area -%>
   <%# ============================================================ -%>
-  <div style="float: right; width: 150px;">
+  <div id="mypage_right">
     <div id="calendar">
       <%= render :partial => "shared/calendar", :locals => {:sel_year => @year, :sel_month => @month, :sel_day => @day, :item_count => @entry_count_hash, :action => 'entries_by_date'}  %>
     </div>
@@ -23,19 +23,12 @@
   <%# ============================================================ -%>
   <%#  main area -%>
   <%# ============================================================ -%>
-  <div style="margin-right: 160px;">
-    <style type="text/css">
-    div.top_info {
-      margin-bottom: 5px;
-      padding: 3px 10px;
-      background-color: #f5f5ff;
-    }
-    </style>
+  <div id="mypage_left">
     <%# ============================================================ -%>
     <%#  main area top messages -%>
     <%# ============================================================ -%>
     <% if (@message_array.size > 0) or (@waiting_groups.size > 0) or (@system_messages.size > 0) -%>
-    <div class="top_info" style="border: 2px dotted #a0a0ff;">
+    <div class="top_info system_message">
       <% @system_messages.each do |message| -%>
       <div class="item">
         <%= link_to(icon_tag(message[:icon]) + h(message[:text]), message[:option]) %>
@@ -55,7 +48,7 @@
     <% end -%>
 
     <% if (@important_your_messages.size > 0) %>
-    <div class="top_info" style="border: 2px dotted #ffc000; font-weight: bold; font-size: 14px;">
+    <div class="top_info important_message">
       <% @important_your_messages.each do |entry| %>
         <div class="item"><%= entry_link_to(entry, {:view_text=>get_light_icon(entry) + h(entry.title)}) %></div>
       <% end %>
