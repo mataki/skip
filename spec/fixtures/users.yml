@@ -9,6 +9,8 @@ a_user:
   email: a_user@skip.jp
   section: Programmer
   crypted_password: db9c93f05d2e41dc2256c3890d5d78ca6e48d418
+  password_expires_at: <%= SkipFaker.tomorrow %>
+  admin: true
 
 a_retired_user:
   created_on: <%= SkipFaker.today %>
@@ -19,6 +21,7 @@ a_retired_user:
   email: a_retired_user@skip.jp
   section: Programmer
   crypted_password: db9c93f05d2e41dc2256c3890d5d78ca6e48d418
+  password_expires_at: <%= SkipFaker.tomorrow %>
 
 a_group_owned_user:
   created_on: <%= SkipFaker.today %>
@@ -29,6 +32,8 @@ a_group_owned_user:
   email: a_group_owned_user@skip.jp
   section: Programmer
   crypted_password: db9c93f05d2e41dc2256c3890d5d78ca6e48d418
+  password_expires_at: <%= SkipFaker.tomorrow %>
+  admin: true
 
 a_group_joined_user:
   created_on: <%= SkipFaker.today %>
@@ -39,6 +44,7 @@ a_group_joined_user:
   email: a_group_joined_user@skip.jp
   section: Programmer
   crypted_password: db9c93f05d2e41dc2256c3890d5d78ca6e48d418
+  password_expires_at: <%= SkipFaker.tomorrow %>
 
 a_group_waiting_user:
   created_on: <%= SkipFaker.today %>
@@ -49,3 +55,4 @@ a_group_waiting_user:
   email: a_group_waiting_user@skip.jp
   section: Programmer
   crypted_password: db9c93f05d2e41dc2256c3890d5d78ca6e48d418
+  password_expires_at: <%= SkipFaker.tomorrow %>
