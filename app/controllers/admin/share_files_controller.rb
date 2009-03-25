@@ -24,6 +24,6 @@ class Admin::ShareFilesController < Admin::ApplicationController
 
   def download
     share_file = Admin::ShareFile.find(params[:id])
-    send_file(share_file.full_path, :filename => share_file.file_name, :type => share_file.content_type, :stream => false, :disposition => 'attachment')
+    send_file(share_file.full_path, :filename => share_file.file_name, :type => share_file.content_type || Types::ContentType::DEFAULT_CONTENT_TYPE , :stream => false, :disposition => 'attachment')
   end
 end

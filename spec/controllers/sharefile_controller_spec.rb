@@ -129,6 +129,15 @@ describe ShareFileController, "POST #create" do
             controller.should_receive(:render_window_close)
             post :create, :file => { '1' => @file1 }
           end
+          describe "content_typeが送信されていない場合" do
+            before do
+              @file1.should_receive(:content_type).and_return(nil)
+            end
+            it "content_typeには application/octet-stream が設定されること" do
+              @share_file.should_receive(:content_type=).with(Types::ContentType::DEFAULT_CONTENT_TYPE)
+              post :create, :file => { '1' => @file1 }
+            end
+          end
         end
         describe '保存に失敗する場合' do
           before do

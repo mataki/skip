@@ -54,7 +54,7 @@ class ShareFileController < ApplicationController
       share_file = @share_file.clone
       if file.is_a?(ActionController::UploadedFile)
         share_file.file_name = file.original_filename
-        share_file.content_type = file.content_type.chomp
+        share_file.content_type = file.content_type || Types::ContentType::DEFAULT_CONTENT_TYPE
       end
       share_file.file = file
       share_file.accessed_user = current_user
@@ -227,7 +227,7 @@ class ShareFileController < ApplicationController
       end
 
       share_file.create_history current_user.id
-      send_file(share_file.full_path, :filename => nkf_file_name(file_name), :type => share_file.content_type, :stream => false, :disposition => 'attachment')
+      send_file(share_file.full_path, :filename => nkf_file_name(file_name), :type => share_file.content_type || Types::ContentType::DEFAULT_CONTENT_TYPE, :stream => false, :disposition => 'attachment')
     else
       @main_menu = @title = 'ファイルのダウンロード'
       render :action => 'confirm_download', :layout => 'layout'
