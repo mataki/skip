@@ -114,6 +114,10 @@ password_change_interval:
   default: 180
 password_strength:
   default: middle
+custom_password_strength_regex:
+  default:
+custom_password_strength_validation_message:
+  default:
 enable_login_keyphrase:
   format: boolean
   default: false

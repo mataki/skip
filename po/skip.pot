@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2009-03-25 10:22+0900\n"
+"POT-Creation-Date: 2009-03-25 13:24+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -599,11 +599,27 @@ msgstr ""
 msgid "Admin::Setting|Contact addr description"
 msgstr ""
 
-#: app/models/admin/setting.rb:106
+#: app/models/admin/setting.rb:107
+msgid "Admin::Setting|Custom password strength regex"
+msgstr ""
+
+#: app/models/admin/setting.rb:108
+msgid "Admin::Setting|Custom password strength regex description"
+msgstr ""
+
+#: app/models/admin/setting.rb:109
+msgid "Admin::Setting|Custom password strength validation message"
+msgstr ""
+
+#: app/models/admin/setting.rb:110
+msgid "Admin::Setting|Custom password strength validation message description"
+msgstr ""
+
+#: app/models/admin/setting.rb:111
 msgid "Admin::Setting|Enable login keyphrase"
 msgstr ""
 
-#: app/models/admin/setting.rb:107
+#: app/models/admin/setting.rb:112
 msgid "Admin::Setting|Enable login keyphrase description"
 msgstr ""
 
@@ -615,11 +631,11 @@ msgstr ""
 msgid "Admin::Setting|Enable password periodic change description"
 msgstr ""
 
-#: app/models/admin/setting.rb:110
+#: app/models/admin/setting.rb:115
 msgid "Admin::Setting|Enable user cleaning notification"
 msgstr ""
 
-#: app/models/admin/setting.rb:111
+#: app/models/admin/setting.rb:116
 msgid "Admin::Setting|Enable user cleaning notification description"
 msgstr ""
 
@@ -695,11 +711,11 @@ msgstr ""
 msgid "Admin::Setting|Login account description"
 msgstr ""
 
-#: app/models/admin/setting.rb:108 app/views/shared/_login_form.html.erb:40
+#: app/models/admin/setting.rb:113 app/views/shared/_login_form.html.erb:40
 msgid "Admin::Setting|Login keyphrase"
 msgstr ""
 
-#: app/models/admin/setting.rb:109
+#: app/models/admin/setting.rb:114
 msgid "Admin::Setting|Login keyphrase description"
 msgstr ""
 
@@ -767,7 +783,7 @@ msgstr ""
 msgid "Admin::Setting|Password strength description"
 msgstr ""
 
-#: app/models/admin/setting.rb:234
+#: app/models/admin/setting.rb:239
 msgid "Admin::Setting|Password strength|Validation message "
 msgstr ""
 
@@ -779,8 +795,12 @@ msgstr ""
 msgid "Admin::Setting|Password strength|Validation message low"
 msgstr ""
 
-#: app/models/admin/setting.rb:103 app/models/admin/setting.rb:236
+#: app/models/admin/setting.rb:103 app/models/admin/setting.rb:241
 msgid "Admin::Setting|Password strength|Validation message middle"
+msgstr ""
+
+#: app/models/admin/setting.rb:106
+msgid "Admin::Setting|Password strength|custom"
 msgstr ""
 
 #: app/models/admin/setting.rb:100
@@ -875,11 +895,11 @@ msgstr ""
 msgid "Admin::Setting|Stop new user description"
 msgstr ""
 
-#: app/models/admin/setting.rb:112
+#: app/models/admin/setting.rb:117
 msgid "Admin::Setting|User cleaning notification interval"
 msgstr ""
 
-#: app/models/admin/setting.rb:113
+#: app/models/admin/setting.rb:118
 msgid "Admin::Setting|User cleaning notification interval description"
 msgstr ""
 
@@ -3108,7 +3128,7 @@ msgstr ""
 msgid "キャンセルされました。このサーバへの認証を確認してください"
 msgstr ""
 
-#: app/views/admin/settings/_security.html.erb:21
+#: app/views/admin/settings/_security.html.erb:25
 msgid "クリーニング依頼メール"
 msgstr ""
 
@@ -3348,7 +3368,7 @@ msgstr ""
 msgid "ログインに失敗しました。"
 msgstr ""
 
-#: app/views/admin/settings/_security.html.erb:16
+#: app/views/admin/settings/_security.html.erb:20
 msgid "ログインキーフレーズ"
 msgstr ""
 

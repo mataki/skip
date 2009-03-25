@@ -103,6 +103,11 @@ class Admin::Setting < ActiveRecord::Base
   N_('Admin::Setting|Password strength|Validation message middle')
   N_('Admin::Setting|Password strength|low')
   N_('Admin::Setting|Password strength|Validation message low')
+  N_('Admin::Setting|Password strength|custom')
+  N_('Admin::Setting|Custom password strength regex')
+  N_('Admin::Setting|Custom password strength regex description')
+  N_('Admin::Setting|Custom password strength validation message')
+  N_('Admin::Setting|Custom password strength validation message description')
   N_('Admin::Setting|Enable login keyphrase')
   N_('Admin::Setting|Enable login keyphrase description')
   N_('Admin::Setting|Login keyphrase')
@@ -116,7 +121,7 @@ class Admin::Setting < ActiveRecord::Base
   @@available_settings = YAML::load(File.open("#{RAILS_ROOT}/config/settings.yml"))
 
   SMTP_AUTHENTICATIONS = %w(plain login cram_md5).freeze
-  PASSWORD_STRENGTH_VALUES = %w(low middle high).freeze
+  PASSWORD_STRENGTH_VALUES = %w(low middle high custom).freeze
 
   validates_uniqueness_of :name
   validates_inclusion_of :name, :in => @@available_settings.keys
