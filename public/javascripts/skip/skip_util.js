@@ -11,7 +11,7 @@ function saveCookie(key,value,exp){
             _exp = ";expires=" + xDay.toGMTString();
         }
         else _exp ="";
-        document.cookie = escape(key) + "=" + escape(value) + _exp + ";path=/"
+        document.cookie = escape(key) + "=" + escape(value) + _exp + ";path=/";
     }
 }
 /* -------------------------------------------------- */
@@ -26,18 +26,18 @@ function loadCookie(key){
         value = value.substring(startPoint2,endPoint);
         value = unescape(value);
     }
-    return value
+    return value;
 }
 /* -------------------------------------------------- */
 function getSubwindowScript(url, height, width, title) {
     if(title == undefined) {
-        title = 'subwindow'
+        title = 'subwindow';
     }
     if(height == undefined) {
-        height = 780
+        height = 780;
     }
     if(width == undefined) {
-        width = 700
+        width = 700;
     }
     window.open(url, title, 'width='+width+',height='+height+',resizable=yes,scrollbars=yes').focus();
 }

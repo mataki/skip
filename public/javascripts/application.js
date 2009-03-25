@@ -73,7 +73,7 @@ $j(function(){
             return false;
         });
         return this;
-    }
+    };
     $j(document).appendClickForToggleTag();
 
     /*
@@ -262,13 +262,13 @@ $j(function(){
         };
 
         var uploaderButton = function(conf) {
-            conf["callback"] = reloadUploader
+            conf["callback"] = reloadUploader;
 
             return $j("<div class='share_file upload'></div>").append(
                 $j("<span class='operation link pointer'></span>")
                 .text(message["upload_share_file"])
-                .one("click", function(){ $j(this).hide().parent().iframeUploader(conf) })
-            )
+                .one("click", function(){ $j(this).hide().parent().iframeUploader(conf); })
+            );
         };
 
         var reloadUploader = function(){
@@ -323,10 +323,10 @@ $j(function(){
      */
     showCategoryBox = function() {
         $j('#category_box:hidden').slideDown();
-    }
+    };
     hideCategoryBox = function() {
         $j('#category_box:visible').slideUp();
-    }
+    };
 
     /*
      * ブックマークのタイトルを取得する
@@ -355,7 +355,7 @@ $j(function(){
                 alert("通信に失敗しました");
             }
         });
-    }
+    };
 
     /*
      * jTaggingで利用するタグリストを生成して返す。引数のtagsはタグの配列
@@ -391,7 +391,7 @@ $j(function(){
         var currentMinute = currentDatetime.getMinutes();
         if (currentMinute < 10) currentMinute = "0" + currentMinute;
         minute_obj[0].value = currentMinute;
-    }
+    };
 
     fitImageSize = function(jObj, max_width, max_height) {
         var img = new Image();
@@ -418,7 +418,7 @@ $j(function(){
                 jObj.attr({ height: value, width: max_width });
             }
         }
-    }
+    };
 
     /*
      * ログイン画面のクッキー保存と読み込み（2週間）
@@ -430,6 +430,6 @@ $j(function(){
             saveCookie('ssl_enable', $j('#ssl_enable_radio').attr('checked').toString(), exp_days);
         }
         return true;
-    }
+    };
 });
 
