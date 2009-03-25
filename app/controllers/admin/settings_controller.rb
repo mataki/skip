@@ -69,8 +69,8 @@ class Admin::SettingsController < Admin::ApplicationController
   end
 
   def update_all
-    settings = (params[:settings] || {}).dup.symbolize_keys
-    objects = settings.map do |name, value|
+    objects = (params[:settings] || {}).dup.symbolize_keys
+    settings = objects.map do |name, value|
       # remove blank values in array settings
       value.delete_if {|v| v.blank? } if value.is_a?(Array)
       if [:mypage_feed_settings].include? name
@@ -81,13 +81,13 @@ class Admin::SettingsController < Admin::ApplicationController
       Admin::Setting.[]=(name,value)
     end
 
-    if objects.all? { |o| o.errors.empty? }
+    @error_messages = Admin::Setting.error_messages(settings)
+    if @error_messages.empty?
       flash[:notice] = _('保存しました。')
+      redirect_to :action => params[:tab] ? params[:tab] : 'index'
     else
-      flash[:error] = _('保存に失敗している項目があります。')
+      render :action => 'index'
     end
-
-    redirect_to :action => params[:tab] ? params[:tab] : 'index'
   end
 
   def ado_feed_item
@@ -111,5 +111,4 @@ class Admin::SettingsController < Admin::ApplicationController
       :value => value ? value : _("#{Admin::InitialSetting.name}|#{key.humanize}|#{INITIAL_SETTINGS[key]}")
     }
   end
-
 end

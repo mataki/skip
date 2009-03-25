@@ -4,6 +4,7 @@
 <% end -%>
 <% help_msg = _('全ての入力値を、初期設定値に置き換えます。保存ボタンを押さない限り、保存されません。') -%>
 <% form_tag(admin_settings_update_all_path(:tab => params[:tab])) do -%>
+  <%= render :partial => 'system/error_messages_for', :locals => {:messages => @error_messages} if @error_messages %>
 <%= render :partial => params[:tab] %>
 <%= submit_tag _('Save'), :disable_with => _('Saving...') %>
 <%= link_to _('初期値に戻す'), '#', :id => 'revert_to_default_link' %><%#= help_icon_tag :content => help_msg %>

@@ -15,6 +15,11 @@
 
 class Admin::Setting < ActiveRecord::Base
   # ================================================================================================
+  # 通常のカラム
+  # ================================================================================================
+  N_('Admin::Setting|Value')
+
+  # ================================================================================================
   # 全体設定用
   # ================================================================================================
   N_('Admin::Setting|Stop new user')
@@ -242,6 +247,12 @@ class Admin::Setting < ActiveRecord::Base
     end
   end
 
+  def self.error_messages(settings)
+    settings.map do |setting|
+      _("#{Admin::Setting}|#{setting.name.humanize}") + setting.errors.on('value') unless setting.valid?
+    end.compact
+  end
+
   private
   # Returns the Setting instance for the setting named name
   # (record found in database or new record with default value)
@@ -251,4 +262,5 @@ class Admin::Setting < ActiveRecord::Base
     setting = find_by_name(name)
     setting ||= new(:name => name, :value => @@available_settings[name]['default'])
   end
+  private_class_method :find_or_default
 end
