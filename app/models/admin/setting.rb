@@ -252,13 +252,18 @@ class Admin::Setting < ActiveRecord::Base
       when 'low' then /#{low_regex_s}/
       when 'middle' then /#{middle_regex_s}/
       when 'high' then /#{high_regex_s}/
+      when 'custom' then /#{Admin::Setting.custom_password_strength_regex}/
       else /#{middle_regex_s}/
     end
   end
 
   def self.password_strength_validation_error_message
     if PASSWORD_STRENGTH_VALUES.include? Admin::Setting.password_strength
-      _('Admin::Setting|Password strength|Validation message ' + password_strength)
+      if Admin::Setting.password_strength == 'custom'
+        Admin::Setting.custom_password_strength_validation_message
+      else
+        _('Admin::Setting|Password strength|Validation message ' + password_strength)
+      end
     else
       _('Admin::Setting|Password strength|Validation message middle')
     end

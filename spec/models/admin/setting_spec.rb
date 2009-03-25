@@ -210,6 +210,15 @@ describe Admin::Setting, '.password_strength_regex' do
       Admin::Setting.password_strength_regex.should == /(?!^[^!@#\$%\^&\*\?_~]*$)(?!^[^a-z]*$)(?!^[^A-Z]*$)(?!^[^0-9]*$)^[a-zA-Z0-9!@#\$%\^&\*\?_~]{8,}$/
     end
   end
+  describe 'パスワード強度がcustomの場合' do
+    before do
+      Admin::Setting.should_receive(:password_strength).and_return('custom')
+      Admin::Setting.should_receive(:custom_password_strength_regex).and_return('custom_password_strength_regex')
+    end
+    it 'ユーザ定義のパスワード強度の正規表現を返すこと' do
+      Admin::Setting.password_strength_regex.should == /custom_password_strength_regex/
+    end
+  end
   describe 'パスワード強度が不明の場合' do
     before do
       Admin::Setting.should_receive(:password_strength).and_return(nil)
