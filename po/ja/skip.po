@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2009-03-17 12:58+0900\n"
+"POT-Creation-Date: 2009-03-25 10:22+0900\n"
 "PO-Revision-Date: 2009-03-24 18:16+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -36,7 +36,7 @@ msgstr ""
 msgid "%{function}のためのURLの有効期限が過ぎています。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:68
+#: app/controllers/platform_controller.rb:69
 msgid "%{function}のためのURLを記載したメールを%{email}宛てに送信しました。"
 msgstr ""
 
@@ -1184,17 +1184,21 @@ msgstr "メールアドレス"
 msgid "Admin::User|Email description"
 msgstr "メールアドレスを入力して下さい。"
 
-#: app/models/admin/user.rb:41
+#: app/models/admin/user.rb:42
 msgid "Admin::User|Issued at"
 msgstr "ログインID発行日時"
 
-#: app/models/admin/user.rb:42
+#: app/models/admin/user.rb:43
 msgid "Admin::User|Last authenticated at"
 msgstr "最終ログイン日時"
 
 #: app/models/admin/user.rb:40
 msgid "Admin::User|Lock"
 msgstr "ロック状態"
+
+#: app/models/admin/user.rb:41
+msgid "Admin::User|Lock description"
+msgstr "チェックすると対象のユーザをロックします。ロックすると対象ユーザはログイン出来ないようになります。チェックを解除するか、対象のユーザがパスワード再設定を行うことでログイン出来るようになります。"
 
 #: app/models/admin/user.rb:27 app/views/user/show.html.erb:94
 #: app/views/portal/_registration_form.html.erb:17
@@ -1215,7 +1219,7 @@ msgstr "パスワード"
 msgid "Admin::User|Password confirmation"
 msgstr "確認パスワード"
 
-#: app/models/admin/user.rb:43
+#: app/models/admin/user.rb:44
 msgid "Admin::User|Password expires at"
 msgstr "パスワード有効期限"
 
@@ -1253,7 +1257,7 @@ msgstr "ユーザの利用状態を選択します。"
 msgid "Admin::User|Uid"
 msgstr "ユーザ名"
 
-#: app/models/admin/user.rb:45
+#: app/models/admin/user.rb:46
 msgid "Admin::User|User uids"
 msgstr "ログインID"
 
@@ -1340,7 +1344,7 @@ msgstr "関連するコメントも一緒に削除されますが、よろしい
 msgid "Are you sure?"
 msgstr "本当に宜しいですか？"
 
-#: app/helpers/edit_helper.rb:36
+#: app/helpers/edit_helper.rb:37
 msgid "Avalilable share files"
 msgstr "利用可能な共有ファイル"
 
@@ -1606,7 +1610,7 @@ msgstr "紹介文"
 msgid "Change uid"
 msgstr "ユーザ名変更"
 
-#: app/helpers/edit_helper.rb:33
+#: app/helpers/edit_helper.rb:34
 msgid "Close"
 msgstr "閉じる"
 
@@ -1735,11 +1739,11 @@ msgstr "話題の元の記事"
 msgid "EntryTrackback|話題を元に書いた記事"
 msgstr "話題を元に書かれた記事"
 
-#: app/helpers/edit_helper.rb:38
+#: app/helpers/edit_helper.rb:39
 msgid "Filename"
 msgstr "ファイル名"
 
-#: app/helpers/edit_helper.rb:39
+#: app/helpers/edit_helper.rb:40
 msgid "First page"
 msgstr "[最初へ]"
 
@@ -1883,19 +1887,19 @@ msgstr ""
 msgid "Import confirmation"
 msgstr "アップロード(確認)"
 
-#: app/helpers/edit_helper.rb:45
+#: app/helpers/edit_helper.rb:46
 msgid "Insert image"
 msgstr "画像を挿入する"
 
-#: app/helpers/edit_helper.rb:44
+#: app/helpers/edit_helper.rb:45
 msgid "Insert link"
 msgstr "リンクを挿入する"
 
-#: app/helpers/edit_helper.rb:32
+#: app/helpers/edit_helper.rb:33
 msgid "Insert share file as image or link"
 msgstr "画像やファイルのリンクを挿入"
 
-#: app/helpers/edit_helper.rb:42
+#: app/helpers/edit_helper.rb:43
 msgid "Last page"
 msgstr "[最後へ]"
 
@@ -2021,7 +2025,7 @@ msgstr "新規%{model}の作成"
 msgid "New user from csv"
 msgstr "ユーザのCSVアップロード"
 
-#: app/helpers/edit_helper.rb:41
+#: app/helpers/edit_helper.rb:42
 msgid "Next page"
 msgstr "[次へ]"
 
@@ -2038,26 +2042,26 @@ msgid ""
 "OpenID URLを再設定するためのURLを記載したメールを%{email}宛に送信しました。"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:472
+#: app/controllers/mypage_controller.rb:473
 msgid "OpenID URLを設定しました。"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:479
+#: app/controllers/mypage_controller.rb:480
 #: app/controllers/platform_controller.rb:187
 msgid "OpenIDの処理の中でキャンセルされたか、失敗しました。"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:484
+#: app/controllers/mypage_controller.rb:485
 #: app/controllers/platform_controller.rb:191
-#: app/controllers/platform_controller.rb:237
+#: app/controllers/platform_controller.rb:238
 msgid "OpenIDの形式が正しくありません。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:279
+#: app/controllers/platform_controller.rb:280
 msgid "OpenIDの認証に失敗しました。"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:488
+#: app/controllers/mypage_controller.rb:489
 msgid "OpenIDを入力してください。"
 msgstr ""
 
@@ -2065,7 +2069,7 @@ msgstr ""
 msgid "OpenIDを忘れた/再設定したい方はこちら"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:277
+#: app/controllers/platform_controller.rb:278
 msgid ""
 "OpenIDサーバーが見つかりませんでした。正しいOpenID URLを入力してください。"
 msgstr ""
@@ -2148,7 +2152,7 @@ msgstr ""
 msgid "PopularBookmark|Date"
 msgstr ""
 
-#: app/helpers/edit_helper.rb:40
+#: app/helpers/edit_helper.rb:41
 msgid "Previous page"
 msgstr "[前へ]"
 
@@ -2204,7 +2208,7 @@ msgstr ""
 msgid "Ranking|Url"
 msgstr ""
 
-#: app/helpers/edit_helper.rb:34
+#: app/helpers/edit_helper.rb:35
 msgid "Reload"
 msgstr "リロード"
 
@@ -2401,7 +2405,7 @@ msgstr "このURLは、OpenID用です。一般の方は、利用できません
 msgid "This site is not allowed"
 msgstr "このサイトは利用許可されていません。"
 
-#: app/helpers/edit_helper.rb:37
+#: app/helpers/edit_helper.rb:38
 msgid "Thumbnail"
 msgstr "サムネイル"
 
@@ -2446,7 +2450,7 @@ msgstr "更新しています…"
 msgid "Upload"
 msgstr "アップロード"
 
-#: app/helpers/edit_helper.rb:46
+#: app/helpers/edit_helper.rb:47
 msgid "Upload share file"
 msgstr "ファイルをアップロード"
 
@@ -2802,7 +2806,7 @@ msgstr ""
 msgid "What is Antenna"
 msgstr "アンテナとは"
 
-#: app/controllers/platform_controller.rb:46
+#: app/controllers/platform_controller.rb:47
 msgid "You are now logged out."
 msgstr "ログアウトしました。"
 
@@ -2816,7 +2820,7 @@ msgstr ""
 "管理者は自分自身のステータスと管理権限及びロック状態は変更できません。他の管"
 "理者アカウントから変更してください。"
 
-#: app/controllers/platform_controller.rb:47
+#: app/controllers/platform_controller.rb:48
 msgid "You had been retired."
 msgstr "あなたは退職済みです。"
 
@@ -3099,11 +3103,11 @@ msgstr ""
 msgid "【アンテナを整備する】"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:1009
+#: app/controllers/mypage_controller.rb:1010
 msgid "あなたがブックマークした記事"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:1007
+#: app/controllers/mypage_controller.rb:1008
 msgid "あなたへ宛てた連絡"
 msgstr ""
 
@@ -3117,7 +3121,7 @@ msgid ""
 "されます。このプロフィール項目を削除しても宜しいですか?"
 msgstr ""
 
-#: app/controllers/application.rb:154
+#: app/controllers/application.rb:158
 #: app/controllers/board_entries_controller.rb:87
 #: app/controllers/board_entries_controller.rb:156
 #: app/controllers/share_file_controller.rb:261
@@ -3144,7 +3148,7 @@ msgstr ""
 msgid "ご指定の操作は実行できません。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:290
+#: app/controllers/platform_controller.rb:291
 msgid ""
 "そのOpenIDは、登録されていません。ログイン後管理画面でOpenID URLを登録後ログ"
 "インしてください。"
@@ -3210,7 +3214,7 @@ msgstr ""
 msgid "カテゴリが選択されていないか、不正な値です。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:278
+#: app/controllers/platform_controller.rb:279
 msgid "キャンセルされました。このサーバへの認証を確認してください"
 msgstr ""
 
@@ -3218,7 +3222,7 @@ msgstr ""
 msgid "クリーニング依頼メール"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:528
+#: app/controllers/mypage_controller.rb:529
 #: app/controllers/user_controller.rb:239
 msgid "グループ"
 msgstr ""
@@ -3265,7 +3269,7 @@ msgstr ""
 msgid "システム運用について"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:527
+#: app/controllers/mypage_controller.rb:528
 #: app/controllers/user_controller.rb:238
 msgid "ソーシャル"
 msgstr ""
@@ -3274,7 +3278,7 @@ msgstr ""
 msgid "ダウンロード履歴の削除に成功しました。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:308
+#: app/controllers/platform_controller.rb:309
 msgid "パスワードの有効期限を過ぎています。パスワードの再設定を行って下さい。"
 msgstr ""
 
@@ -3286,7 +3290,7 @@ msgstr ""
 msgid "パスワードを忘れた/再設定したい方はこちら"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:68
+#: app/controllers/platform_controller.rb:69
 #: app/controllers/platform_controller.rb:87
 #: app/controllers/platform_controller.rb:90
 #: app/controllers/platform_controller.rb:93
@@ -3306,7 +3310,7 @@ msgstr ""
 msgid "パスワード強度"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:526
+#: app/controllers/mypage_controller.rb:527
 #: app/controllers/user_controller.rb:237
 #: app/controllers/group_controller.rb:385
 msgid "ファイル"
@@ -3348,7 +3352,7 @@ msgstr ""
 msgid "フッター"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:529
+#: app/controllers/mypage_controller.rb:530
 #: app/controllers/user_controller.rb:240
 msgid "ブックマーク"
 msgstr ""
@@ -3365,12 +3369,12 @@ msgstr ""
 msgid "ブックマークレット"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:525
+#: app/controllers/mypage_controller.rb:526
 #: app/controllers/user_controller.rb:236
 msgid "ブログ"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:524
+#: app/controllers/mypage_controller.rb:525
 #: app/controllers/user_controller.rb:235
 msgid "プロフィール"
 msgstr ""
@@ -3385,7 +3389,7 @@ msgid ""
 "フィール項目が全て削除されている必要があります。"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:523
+#: app/controllers/mypage_controller.rb:524
 #: app/controllers/user_controller.rb:249
 msgid "ホーム"
 msgstr ""
@@ -3400,13 +3404,13 @@ msgstr ""
 msgid "メールアドレスが%{email}のユーザは既に利用を開始しています。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:60
+#: app/controllers/platform_controller.rb:61
 #: app/controllers/platform_controller.rb:110
 #: app/controllers/platform_controller.rb:154
 msgid "メールアドレスは必須です。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:286
+#: app/controllers/platform_controller.rb:287
 msgid "ユーザの登録に失敗しました。管理者に連絡してください。<br/>%{msg}"
 msgstr ""
 
@@ -3442,11 +3446,15 @@ msgstr ""
 msgid "ユーザ登録のためのURLを記載したメールを%{email}宛てに送信しました。"
 msgstr ""
 
+#: app/controllers/application.rb:144 app/controllers/application.rb:319
+msgid "ログインが必要です。ログインし直して下さい。"
+msgstr ""
+
 #: app/controllers/admin/users_controller.rb:104
 msgid "ログインし直して下さい。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:319
+#: app/controllers/platform_controller.rb:320
 msgid "ログインに失敗しました。"
 msgstr ""
 
@@ -3531,19 +3539,19 @@ msgstr ""
 msgid "保存に失敗しました。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:74
+#: app/controllers/platform_controller.rb:75
 #: app/controllers/platform_controller.rb:124
 #: app/controllers/platform_controller.rb:168
 msgid "入力された%{email}というメールアドレスは登録されていません。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:71
+#: app/controllers/platform_controller.rb:72
 #: app/controllers/platform_controller.rb:165
 msgid ""
 "入力された%{email}のユーザは、利用開始されていません。利用開始してください。"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:303
+#: app/controllers/platform_controller.rb:304
 msgid ""
 "入力されたログインIDのユーザはロックされているためログインできません。ロック"
 "を解除するにはパスワードの再設定を行って下さい。"
@@ -3555,7 +3563,7 @@ msgid ""
 "ません。"
 msgstr ""
 
-#: app/views/mypage/index.html.erb:76
+#: app/views/mypage/index.html.erb:69
 msgid "公開された記事"
 msgstr ""
 
@@ -3567,7 +3575,7 @@ msgstr ""
 msgid "共有ファイル関連"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:280
+#: app/controllers/platform_controller.rb:281
 msgid "内部エラーが発生しました。管理者に連絡してください。"
 msgstr ""
 
@@ -3626,7 +3634,7 @@ msgstr ""
 msgid "参加するのにオーナーの承認が必要ですか？"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:1010
+#: app/controllers/mypage_controller.rb:1011
 msgid "参加中のグループの掲示版の書き込み"
 msgstr ""
 
@@ -3765,7 +3773,7 @@ msgstr ""
 msgid "更新しました。"
 msgstr ""
 
-#: app/views/mypage/index.html.erb:101
+#: app/views/mypage/index.html.erb:94
 msgid "最新のブックマーク"
 msgstr ""
 
@@ -3783,7 +3791,7 @@ msgid ""
 "ユーザは上書きする]のチェックボックスにチェックを入れてください。"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:1012
+#: app/controllers/mypage_controller.rb:1013
 msgid "未読記事の一覧"
 msgstr ""
 
@@ -3846,7 +3854,7 @@ msgstr ""
 msgid "確認"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:531
+#: app/controllers/mypage_controller.rb:532
 #: app/controllers/user_controller.rb:251
 #: app/controllers/group_controller.rb:386
 msgid "管理"
@@ -3901,12 +3909,12 @@ msgstr ""
 msgid "該当のブックマークがありません。"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:530
+#: app/controllers/mypage_controller.rb:531
 #: app/controllers/user_controller.rb:250
 msgid "足跡"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:1008
+#: app/controllers/mypage_controller.rb:1009
 msgid "過去にあなたがコメントを残した記事"
 msgstr ""
 
