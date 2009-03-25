@@ -407,7 +407,7 @@ class User < ActiveRecord::Base
   end
 
   def locked?
-    Admin::Setting.enable_user_lock && self.lock?
+    self.lock
   end
 
   def within_time_limit_of_password?
@@ -474,7 +474,7 @@ private
   end
 
   def self.auth_failed user
-    unless user.locked?
+    if !user.locked? && Admin::Setting.enable_user_lock
       if user.trial_num < Admin::Setting.user_lock_trial_limit
         user.trial_num += 1
         user.save(false)

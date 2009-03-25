@@ -837,8 +837,21 @@ describe User, '#locked?' do
     before do
       Admin::Setting.enable_user_lock = 'false'
     end
-    it 'ロックされていないと判定されること' do
-      @user.locked?.should be_false
+    describe 'ユーザがロックされている場合' do
+      before do
+        @user.lock = true
+      end
+      it 'ロックされていると判定されること' do
+        @user.locked?.should be_true
+      end
+    end
+    describe 'ユーザがロックされていない場合' do
+      before do
+        @user.lock = false
+      end
+      it 'ロックされていないと判定されること' do
+        @user.locked?.should be_false
+      end
     end
   end
 end
@@ -1083,10 +1096,25 @@ describe User, '.auth_failed' do
         @user.trial_num = 2
         Admin::Setting.user_lock_trial_limit = 3
       end
-      it 'ログイン試行回数が1増加すること' do
-        lambda do
-          User.send!(:auth_failed, @user)
-        end.should change(@user, :trial_num).to(3)
+      describe 'ユーザロック機能が有効な場合' do
+        before do
+          Admin::Setting.enable_user_lock = 'true'
+        end
+        it 'ログイン試行回数が1増加すること' do
+          lambda do
+            User.send!(:auth_failed, @user)
+          end.should change(@user, :trial_num).to(3)
+        end
+      end
+      describe 'ユーザロック機能が無効な場合' do
+        before do
+          Admin::Setting.enable_user_lock = 'false'
+        end
+        it 'ログイン試行回数が変化しないこと' do
+          lambda do
+            User.send!(:auth_failed, @user)
+          end.should_not change(@user, :trial_num)
+        end
       end
     end
     describe 'ログイン試行回数が最大値以上の場合' do
@@ -1094,15 +1122,35 @@ describe User, '.auth_failed' do
         @user.trial_num = 3
         Admin::Setting.user_lock_trial_limit = 3
       end
-      it 'ロックされること' do
-        lambda do
+      describe 'ユーザロック機能が有効な場合' do
+        before do
+          Admin::Setting.enable_user_lock = 'true'
+        end
+        it 'ロックされること' do
+          lambda do
+            User.send!(:auth_failed, @user)
+          end.should change(@user, :lock).to(true)
+        end
+        it 'ロックした旨のログが出力されること' do
+          @user.should_receive(:to_s_log).with('[User Locked]').and_return('user locked log')
+          @user.logger.should_receive(:info).with('user locked log')
           User.send!(:auth_failed, @user)
-        end.should change(@user, :lock).to(true)
+        end
       end
-      it 'ロックした旨のログが出力されること' do
-        @user.should_receive(:to_s_log).with('[User Locked]').and_return('user locked log')
-        @user.logger.should_receive(:info).with('user locked log')
-        User.send!(:auth_failed, @user)
+      describe 'ユーザロック機能が無効な場合' do
+        before do
+          Admin::Setting.enable_user_lock = 'false'
+        end
+        it 'ロック状態が変化しないこと' do
+          lambda do
+            User.send!(:auth_failed, @user)
+          end.should_not change(@user, :lock)
+        end
+        it 'ロックした旨のログが出力されないこと' do
+          @user.stub!(:to_s_log).with('[User Locked]').and_return('user locked log')
+          @user.logger.should_not_receive(:info).with('user locked log')
+          User.send!(:auth_failed, @user)
+        end
       end
     end
   end
