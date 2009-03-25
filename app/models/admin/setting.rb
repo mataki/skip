@@ -141,9 +141,26 @@ class Admin::Setting < ActiveRecord::Base
                       :with => URI.regexp(['http', 'https']),
                       :if => Proc.new { |setting| @@available_settings[setting.name]['format'] == 'url' && @@available_settings[setting.name]['allow_blank'].nil? }
 
+  validates_presence_of :value, :if => :value_required?
+
   # Hash used to cache setting values
   @cached_settings = {}
   @cached_cleared_on = Time.now
+
+  def value_required?
+    self.class.password_strength == 'custom' && self.name == 'custom_password_strength_regex' || self.name == 'custom_password_strength_validation_message'
+  end
+
+  def validate
+    v = read_attribute(:value)
+    if @@available_settings[name]['format'] == 'regex' && !v.blank?
+      begin
+        Regexp.compile(v)
+      rescue RegexpError => e
+        errors.add('value', _('は正しい正規表現で入力して下さい。'))
+      end
+    end
+  end
 
   def value
     v = read_attribute(:value)
@@ -262,5 +279,4 @@ class Admin::Setting < ActiveRecord::Base
     setting = find_by_name(name)
     setting ||= new(:name => name, :value => @@available_settings[name]['default'])
   end
-  private_class_method :find_or_default
 end

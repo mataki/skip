@@ -22,6 +22,96 @@ describe Admin::Setting, '@@available_settings' do
   end
 end
 
+describe Admin::Setting, 'validate' do
+  describe 'nameがcustom_password_strength_regexなvalue' do
+    describe 'nameがpassword_strengthなvalueがcustomの場合' do
+      before do
+        Admin::Setting.should_receive(:password_strength).and_return('custom')
+      end
+      describe '入力がない場合' do
+        before do
+          @setting = Admin::Setting.[]=('custom_password_strength_regex', '')
+        end
+        it '必須エラーとなること' do
+          @setting.errors['value'].should_not be_nil
+        end
+      end
+      describe '入力がある場合' do
+        before do
+          @setting = Admin::Setting.[]=('custom_password_strength_regex', 'skip')
+        end
+        it '必須エラーとならないこと' do
+          @setting.errors['value'].should be_nil
+        end
+      end
+    end
+    describe 'nameがpassword_strengthなvalueがcustom以外の場合' do
+      before do
+        Admin::Setting.should_receive(:password_strength).and_return('middle')
+      end
+      describe '入力がない場合' do
+        before do
+          @setting = Admin::Setting.[]=('custom_password_strength_regex', '')
+        end
+        it '必須エラーとならないこと' do
+          @setting.errors['value'].should be_nil
+        end
+      end
+    end
+  end
+
+  describe 'nameがcustom_password_strength_validation_messageなvalue' do
+    describe 'nameがpassword_strengthなvalueがcustomの場合' do
+      before do
+        Admin::Setting.should_receive(:password_strength).and_return('custom')
+      end
+      describe '入力がない場合' do
+        before do
+          @setting = Admin::Setting.[]=('custom_password_strength_validation_message', '')
+        end
+        it '必須エラーとなること' do
+          @setting.errors['value'].should_not be_nil
+        end
+      end
+      describe '入力がある場合' do
+        before do
+          @setting = Admin::Setting.[]=('custom_password_strength_validation_message', 'error')
+        end
+        it '必須エラーとならないこと' do
+          @setting.errors['value'].should be_nil
+        end
+      end
+    end
+  end
+
+  describe 'formatがregexなvalue' do
+    before do
+      Admin::Setting.available_settings['regex_setting'] = {}
+    end
+    describe '設定項目のformatがregexの場合' do
+      before do
+        Admin::Setting.available_settings['regex_setting']['format'] = 'regex'
+      end
+      describe '正規表現として妥当な値が設定されている場合' do
+        before do
+          @setting = Admin::Setting.[]=('regex_setting', 'skip')
+        end
+        it '正規表現が不正なエラーが設定されないこと' do
+          @setting.errors['value'].should be_nil
+        end
+      end
+      describe '正規表現として不正な値が設定されている場合' do
+        before do
+          @setting = Admin::Setting.[]=('regex_setting', '++')
+        end
+        it '正規表現が不正なエラーが設定されること' do
+          @setting.errors['value'].should_not be_nil
+        end
+      end
+    end
+  end
+end
+
 describe Admin::Setting, '.[]' do
   describe '引数に一致する値がキャッシュされている場合' do
     before do
