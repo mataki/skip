@@ -526,3 +526,17 @@ describe Admin::UsersController, 'POST /issue_password_reset_code' do
     end
   end
 end
+
+describe Admin::UsersController, 'POST /lock_actives' do
+  before do
+    admin_login
+    Admin::User.should_receive(:lock_actives).and_return(10)
+    post :lock_actives
+  end
+  it 'xx件のユーザをロックした旨のflashメッセージが設定されること' do
+    flash[:notice].should == '10件更新しました。'
+  end
+  it 'ユーザ一覧画面のリダイレクトされること' do
+    response.should redirect_to(admin_users_path)
+  end
+end

@@ -217,3 +217,60 @@ describe Admin::User, ".make_user_hash_from_csv_line" do
     end
   end
 end
+
+describe Admin::User, '.lock_actives' do
+  before do
+    @active_user = create_user
+    @admin_user = create_user(:user_options => {:admin => true})
+    @unused_user = create_user(:status => 'UNUSED')
+  end
+  describe '利用中ユーザ全てをロックできる場合' do
+    before do
+      Admin::User.should_receive(:enable_forgot_password).and_return(true)
+    end
+    it '一般の利用中ユーザがロックされること' do
+      lambda do
+        Admin::User.lock_actives
+        @active_user.reload
+      end.should change(@active_user, :lock).to(true)
+    end
+    it '管理者ユーザがロックされること' do
+      lambda do
+        Admin::User.lock_actives
+        @admin_user.reload
+      end.should change(@admin_user, :lock).to(true)
+    end
+    it '未使用ユーザがロックされないこと' do
+      lambda do
+        Admin::User.lock_actives
+        @unused_user = Admin::User.find_by_id(@unused_user.id)
+      end.should_not change(@unused_user, :lock)
+    end
+  end
+  describe '利用中ユーザ全てをロックできない場合' do
+    before do
+      Admin::User.should_receive(:enable_forgot_password).and_return(false)
+    end
+    it '一般の利用中ユーザがロックされないこと' do
+      lambda do
+        Admin::User.lock_actives
+        @active_user.reload
+      end.should_not change(@unused_user, :lock)
+    end
+    it '管理者ユーザがロックされないこと' do
+      lambda do
+        Admin::User.lock_actives
+        @admin_user.reload
+      end.should_not change(@unused_user, :lock)
+    end
+    it '未使用ユーザがロックされないこと' do
+      lambda do
+        Admin::User.lock_actives
+        @unused_user = Admin::User.find_by_id(@unused_user.id)
+      end.should_not change(@unused_user, :lock)
+    end
+    it '0が返ること' do
+      Admin::User.lock_actives.should == 0
+    end
+  end
+end

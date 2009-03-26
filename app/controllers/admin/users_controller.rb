@@ -16,6 +16,8 @@
 class Admin::UsersController < Admin::ApplicationController
   include Admin::AdminModule::AdminRootModule
 
+  verify :method => :post, :only => ['lock_actives']
+
   skip_before_filter :sso, :only => [:first]
   skip_before_filter :login_required, :only => [:first]
   skip_before_filter :prepare_session, :only => [:first]
@@ -237,6 +239,11 @@ class Admin::UsersController < Admin::ApplicationController
       flash[:error] = _('未使用ユーザのパスワード再設定コードは発行できません。')
       redirect_to edit_admin_user_path(params[:id])
     end
+  end
+
+  def lock_actives
+    flash[:notice] = _('%{count}件更新しました。')%{:count => Admin::User.lock_actives}
+    redirect_to admin_settings_path(:tab => :security)
   end
 
   private

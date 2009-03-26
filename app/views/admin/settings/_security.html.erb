@@ -11,7 +11,11 @@
 </div>
 <h3><%= _('パスワード強度') %></h3>
 <div class="box tabular">
-  <p><%= settings_label_with_select_tag :password_strength, password_strength_container, h(Admin::Setting.password_strength.to_s) %></p>
+  <p>
+    <%= settings_label_with_select_tag :password_strength, password_strength_container, h(Admin::Setting.password_strength.to_s) %>
+    <%= link_to(_('[全ユーザにパスワード再設定を求める]'), lock_actives_admin_users_path, :id => 'lock_actives', :confirm => _('あなたを含む使用中ユーザの次回ログイン時に、パスワード再設定が必要になりますが宜しいですか?'), :method => :post) if enable_forgot_password? %>
+    <%= help_icon_tag :content => _('利用中の全ユーザをロックします。実行することで各ユーザは次回ログイン時のパスワードの再設定が必要になります。 パスワード強度を強めた場合など、全ユーザにパスワード再設定を求めたい場合に使います。') %>
+  </p>
   <span id="custom_password_strength">
     <p><%= settings_label_with_text_field_tag :custom_password_strength_regex, :size => 40, :disabled => 'disabled' %></p>
     <p><%= settings_label_with_text_field_tag :custom_password_strength_validation_message, :size => 40, :disabled => 'disabled' %></p>

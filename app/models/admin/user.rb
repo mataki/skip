@@ -46,6 +46,7 @@ class Admin::User < User
   N_('Admin::User|User uids')
 
   class << self
+    include InitialSettingsHelper
     alias :find :find_without_retired_skip
   end
 
@@ -115,6 +116,10 @@ class Admin::User < User
 
   def master_user_uid
     user_uids.find_by_uid_type('MASTER')
+  end
+
+  def self.lock_actives
+    enable_forgot_password ? update_all('`lock` = 1', ['status = ?', 'ACTIVE']) : 0
   end
 
   private
