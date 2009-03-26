@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2009-03-26 13:53+0900\n"
+"POT-Creation-Date: 2009-03-26 17:30+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,6 +15,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: app/controllers/admin/users_controller.rb:245
+msgid "%{count}件更新しました。"
+msgstr ""
 
 #: app/controllers/platform_controller.rb:87
 #: app/controllers/platform_controller.rb:183
@@ -66,15 +70,15 @@ msgstr ""
 msgid "%{model} was successfully created."
 msgstr ""
 
+#: app/controllers/admin/user_profile_master_categories_controller.rb:28
 #: app/controllers/admin/admin_module.rb:154
 #: app/controllers/admin/admin_module.rb:268
-#: app/controllers/admin/user_profile_master_categories_controller.rb:28
 msgid "%{model} was successfully deleted."
 msgstr ""
 
+#: app/controllers/admin/openid_identifiers_controller.rb:35
 #: app/controllers/admin/admin_module.rb:138
 #: app/controllers/admin/admin_module.rb:252
-#: app/controllers/admin/openid_identifiers_controller.rb:35
 #: app/controllers/admin/user_profiles_controller.rb:35
 msgid "%{model} was successfully updated."
 msgstr ""
@@ -119,8 +123,8 @@ msgstr ""
 msgid "%{target}から検索を行ないます"
 msgstr ""
 
-#: app/controllers/admin/documents_controller.rb:83
 #: app/controllers/admin/images_controller.rb:151
+#: app/controllers/admin/documents_controller.rb:83
 msgid "%{target}を保存しました。"
 msgstr ""
 
@@ -212,8 +216,8 @@ msgstr ""
 msgid "Admin::Bookmark|Url"
 msgstr ""
 
-#: app/controllers/admin/documents_controller.rb:95
 #: app/helpers/admin/application_helper.rb:25
+#: app/controllers/admin/documents_controller.rb:95
 msgid "Admin::DocumentsController"
 msgstr ""
 
@@ -554,36 +558,36 @@ msgstr ""
 msgid "Admin::OpenidIdentifier|Url"
 msgstr ""
 
-#: app/controllers/admin/settings_controller.rb:22
 #: app/helpers/admin/application_helper.rb:27
+#: app/controllers/admin/settings_controller.rb:22
 msgid "Admin::SettingsController|feed"
 msgstr ""
 
-#: app/controllers/admin/settings_controller.rb:20
 #: app/helpers/admin/application_helper.rb:23
+#: app/controllers/admin/settings_controller.rb:20
 msgid "Admin::SettingsController|literal"
 msgstr ""
 
-#: app/controllers/admin/settings_controller.rb:21
 #: app/helpers/admin/application_helper.rb:26
+#: app/controllers/admin/settings_controller.rb:21
 msgid "Admin::SettingsController|mail"
 msgstr ""
 
-#: app/controllers/admin/settings_controller.rb:23
 #: app/helpers/admin/application_helper.rb:21
+#: app/controllers/admin/settings_controller.rb:23
 msgid "Admin::SettingsController|main"
 msgstr ""
 
-#: app/controllers/admin/settings_controller.rb:24
 #: app/helpers/admin/application_helper.rb:28
+#: app/controllers/admin/settings_controller.rb:24
 msgid "Admin::SettingsController|security"
 msgstr ""
 
-#: app/models/admin/setting.rb:35
+#: app/models/admin/setting.rb:37
 msgid "Admin::Setting|Abbr app title"
 msgstr ""
 
-#: app/models/admin/setting.rb:36
+#: app/models/admin/setting.rb:38
 msgid "Admin::Setting|Abbr app title description"
 msgstr ""
 
@@ -595,91 +599,99 @@ msgstr ""
 msgid "Admin::Setting|Activation lifetime description"
 msgstr ""
 
-#: app/models/admin/setting.rb:37
+#: app/models/admin/setting.rb:39
 msgid "Admin::Setting|Contact addr"
 msgstr ""
 
-#: app/models/admin/setting.rb:38
+#: app/models/admin/setting.rb:40
 msgid "Admin::Setting|Contact addr description"
 msgstr ""
 
-#: app/models/admin/setting.rb:112
+#: app/models/admin/setting.rb:114
 msgid "Admin::Setting|Custom password strength regex"
 msgstr ""
 
-#: app/models/admin/setting.rb:113
+#: app/models/admin/setting.rb:115
 msgid "Admin::Setting|Custom password strength regex description"
 msgstr ""
 
-#: app/models/admin/setting.rb:114
+#: app/models/admin/setting.rb:116
 msgid "Admin::Setting|Custom password strength validation message"
 msgstr ""
 
-#: app/models/admin/setting.rb:115
+#: app/models/admin/setting.rb:117
 msgid "Admin::Setting|Custom password strength validation message description"
 msgstr ""
 
-#: app/models/admin/setting.rb:116
+#: app/models/admin/setting.rb:118
 msgid "Admin::Setting|Enable login keyphrase"
 msgstr ""
 
-#: app/models/admin/setting.rb:117
+#: app/models/admin/setting.rb:119
 msgid "Admin::Setting|Enable login keyphrase description"
 msgstr ""
 
-#: app/models/admin/setting.rb:99
+#: app/models/admin/setting.rb:101
 msgid "Admin::Setting|Enable password periodic change"
 msgstr ""
 
-#: app/models/admin/setting.rb:100
+#: app/models/admin/setting.rb:102
 msgid "Admin::Setting|Enable password periodic change description"
 msgstr ""
 
-#: app/models/admin/setting.rb:120
+#: app/models/admin/setting.rb:31
+msgid "Admin::Setting|Enable single session"
+msgstr ""
+
+#: app/models/admin/setting.rb:32
+msgid "Admin::Setting|Enable single session description"
+msgstr ""
+
+#: app/models/admin/setting.rb:122
 msgid "Admin::Setting|Enable user cleaning notification"
 msgstr ""
 
-#: app/models/admin/setting.rb:121
+#: app/models/admin/setting.rb:123
 msgid "Admin::Setting|Enable user cleaning notification description"
 msgstr ""
 
-#: app/models/admin/setting.rb:95
+#: app/models/admin/setting.rb:97
 msgid "Admin::Setting|Enable user lock"
 msgstr ""
 
-#: app/models/admin/setting.rb:96
+#: app/models/admin/setting.rb:98
 msgid "Admin::Setting|Enable user lock description"
 msgstr ""
 
-#: app/models/admin/setting.rb:45
+#: app/models/admin/setting.rb:47
 msgid "Admin::Setting|Footer first"
 msgstr ""
 
-#: app/models/admin/setting.rb:46
+#: app/models/admin/setting.rb:48
 msgid "Admin::Setting|Footer first description"
 msgstr ""
 
-#: app/models/admin/setting.rb:49
+#: app/models/admin/setting.rb:51
 msgid "Admin::Setting|Footer image link url"
 msgstr ""
 
-#: app/models/admin/setting.rb:50
+#: app/models/admin/setting.rb:52
 msgid "Admin::Setting|Footer image link url description"
 msgstr ""
 
-#: app/models/admin/setting.rb:47
+#: app/models/admin/setting.rb:49
 msgid "Admin::Setting|Footer second"
 msgstr ""
 
-#: app/models/admin/setting.rb:48
+#: app/models/admin/setting.rb:50
 msgid "Admin::Setting|Footer second description"
 msgstr ""
 
-#: app/models/admin/setting.rb:39
+#: app/models/admin/setting.rb:41
 msgid "Admin::Setting|Help url"
 msgstr ""
 
-#: app/models/admin/setting.rb:40
+#: app/models/admin/setting.rb:42
 msgid "Admin::Setting|Help url description"
 msgstr ""
 
@@ -691,203 +703,203 @@ msgstr ""
 msgid "Admin::Setting|Hide email description"
 msgstr ""
 
-#: app/models/admin/setting.rb:73
+#: app/models/admin/setting.rb:75
 msgid "Admin::Setting|Host and port"
 msgstr ""
 
-#: app/models/admin/setting.rb:74
+#: app/models/admin/setting.rb:76
 msgid "Admin::Setting|Host and port description"
 msgstr ""
 
-#: app/models/admin/setting.rb:41
+#: app/models/admin/setting.rb:43
 msgid "Admin::Setting|Initial anntena"
 msgstr ""
 
-#: app/models/admin/setting.rb:42
+#: app/models/admin/setting.rb:44
 msgid "Admin::Setting|Initial anntena description"
 msgstr ""
 
-#: app/models/admin/setting.rb:43
+#: app/models/admin/setting.rb:45
 msgid "Admin::Setting|Login account"
 msgstr ""
 
-#: app/models/admin/setting.rb:44
+#: app/models/admin/setting.rb:46
 msgid "Admin::Setting|Login account description"
 msgstr ""
 
-#: app/models/admin/setting.rb:118 app/views/shared/_login_form.html.erb:40
+#: app/models/admin/setting.rb:120 app/views/shared/_login_form.html.erb:40
 msgid "Admin::Setting|Login keyphrase"
 msgstr ""
 
-#: app/models/admin/setting.rb:119
+#: app/models/admin/setting.rb:121
 msgid "Admin::Setting|Login keyphrase description"
 msgstr ""
 
-#: app/models/admin/setting.rb:57
+#: app/models/admin/setting.rb:59
 msgid "Admin::Setting|Mail function setting"
 msgstr ""
 
-#: app/models/admin/setting.rb:58
+#: app/models/admin/setting.rb:60
 msgid "Admin::Setting|Mail function setting description"
 msgstr ""
 
-#: app/models/admin/setting.rb:81
+#: app/models/admin/setting.rb:83
 msgid "Admin::Setting|Mypage feed default limit"
 msgstr ""
 
-#: app/models/admin/setting.rb:82
+#: app/models/admin/setting.rb:84
 msgid "Admin::Setting|Mypage feed default limit description"
 msgstr ""
 
-#: app/models/admin/setting.rb:85
+#: app/models/admin/setting.rb:87
 msgid "Admin::Setting|Mypage feed settings"
 msgstr ""
 
-#: app/models/admin/setting.rb:86
+#: app/models/admin/setting.rb:88
 msgid "Admin::Setting|Mypage feed settings description"
 msgstr ""
 
-#: app/models/admin/setting.rb:89
+#: app/models/admin/setting.rb:91
 msgid "Admin::Setting|Mypage feed settings title"
 msgstr ""
 
-#: app/models/admin/setting.rb:90
+#: app/models/admin/setting.rb:92
 msgid "Admin::Setting|Mypage feed settings title description"
 msgstr ""
 
-#: app/models/admin/setting.rb:87
+#: app/models/admin/setting.rb:89
 msgid "Admin::Setting|Mypage feed settings url"
 msgstr ""
 
-#: app/models/admin/setting.rb:88
+#: app/models/admin/setting.rb:90
 msgid "Admin::Setting|Mypage feed settings url description"
 msgstr ""
 
-#: app/models/admin/setting.rb:83
+#: app/models/admin/setting.rb:85
 msgid "Admin::Setting|Mypage feed timeout"
 msgstr ""
 
-#: app/models/admin/setting.rb:84
+#: app/models/admin/setting.rb:86
 msgid "Admin::Setting|Mypage feed timeout description"
 msgstr ""
 
-#: app/models/admin/setting.rb:101
+#: app/models/admin/setting.rb:103
 msgid "Admin::Setting|Password change interval"
 msgstr ""
 
-#: app/models/admin/setting.rb:102
+#: app/models/admin/setting.rb:104
 msgid "Admin::Setting|Password change interval description"
 msgstr ""
 
-#: app/models/admin/setting.rb:103
+#: app/models/admin/setting.rb:105
 msgid "Admin::Setting|Password strength"
 msgstr ""
 
-#: app/models/admin/setting.rb:104
+#: app/models/admin/setting.rb:106
 msgid "Admin::Setting|Password strength description"
 msgstr ""
 
-#: app/models/admin/setting.rb:261
+#: app/models/admin/setting.rb:263
 msgid "Admin::Setting|Password strength|Validation message "
 msgstr ""
 
-#: app/models/admin/setting.rb:106
+#: app/models/admin/setting.rb:108
 msgid "Admin::Setting|Password strength|Validation message high"
 msgstr ""
 
-#: app/models/admin/setting.rb:110
+#: app/models/admin/setting.rb:112
 msgid "Admin::Setting|Password strength|Validation message low"
 msgstr ""
 
-#: app/models/admin/setting.rb:108 app/models/admin/setting.rb:264
+#: app/models/admin/setting.rb:110 app/models/admin/setting.rb:266
 msgid "Admin::Setting|Password strength|Validation message middle"
 msgstr ""
 
-#: app/models/admin/setting.rb:111
+#: app/models/admin/setting.rb:113
 msgid "Admin::Setting|Password strength|custom"
 msgstr ""
 
-#: app/models/admin/setting.rb:105
+#: app/models/admin/setting.rb:107
 msgid "Admin::Setting|Password strength|high"
 msgstr ""
 
-#: app/models/admin/setting.rb:109
+#: app/models/admin/setting.rb:111
 msgid "Admin::Setting|Password strength|low"
 msgstr ""
 
-#: app/models/admin/setting.rb:107
+#: app/models/admin/setting.rb:109
 msgid "Admin::Setting|Password strength|middle"
 msgstr ""
 
-#: app/models/admin/setting.rb:51
+#: app/models/admin/setting.rb:53
 msgid "Admin::Setting|Point button"
 msgstr ""
 
-#: app/models/admin/setting.rb:52
+#: app/models/admin/setting.rb:54
 msgid "Admin::Setting|Point button description"
 msgstr ""
 
-#: app/models/admin/setting.rb:75
+#: app/models/admin/setting.rb:77
 msgid "Admin::Setting|Protocol"
 msgstr ""
 
-#: app/models/admin/setting.rb:76
+#: app/models/admin/setting.rb:78
 msgid "Admin::Setting|Protocol description"
 msgstr ""
 
-#: app/models/admin/setting.rb:59
+#: app/models/admin/setting.rb:61
 msgid "Admin::Setting|Smtp settings"
 msgstr ""
 
-#: app/models/admin/setting.rb:67
+#: app/models/admin/setting.rb:69
 msgid "Admin::Setting|Smtp settings address"
 msgstr ""
 
-#: app/models/admin/setting.rb:68
+#: app/models/admin/setting.rb:70
 msgid "Admin::Setting|Smtp settings address description"
 msgstr ""
 
-#: app/models/admin/setting.rb:71
+#: app/models/admin/setting.rb:73
 msgid "Admin::Setting|Smtp settings authentication"
 msgstr ""
 
-#: app/models/admin/setting.rb:72
+#: app/models/admin/setting.rb:74
 msgid "Admin::Setting|Smtp settings authentication description"
 msgstr ""
 
-#: app/models/admin/setting.rb:60
+#: app/models/admin/setting.rb:62
 msgid "Admin::Setting|Smtp settings description"
 msgstr ""
 
-#: app/models/admin/setting.rb:69
+#: app/models/admin/setting.rb:71
 msgid "Admin::Setting|Smtp settings domain"
 msgstr ""
 
-#: app/models/admin/setting.rb:70
+#: app/models/admin/setting.rb:72
 msgid "Admin::Setting|Smtp settings domain description"
 msgstr ""
 
-#: app/models/admin/setting.rb:61
+#: app/models/admin/setting.rb:63
 msgid "Admin::Setting|Smtp settings password"
 msgstr ""
 
-#: app/models/admin/setting.rb:62
+#: app/models/admin/setting.rb:64
 msgid "Admin::Setting|Smtp settings password description"
 msgstr ""
 
-#: app/models/admin/setting.rb:63
+#: app/models/admin/setting.rb:65
 msgid "Admin::Setting|Smtp settings port"
 msgstr ""
 
-#: app/models/admin/setting.rb:64
+#: app/models/admin/setting.rb:66
 msgid "Admin::Setting|Smtp settings port description"
 msgstr ""
 
-#: app/models/admin/setting.rb:65
+#: app/models/admin/setting.rb:67
 msgid "Admin::Setting|Smtp settings user name"
 msgstr ""
 
-#: app/models/admin/setting.rb:66
+#: app/models/admin/setting.rb:68
 msgid "Admin::Setting|Smtp settings user name description"
 msgstr ""
 
@@ -899,19 +911,19 @@ msgstr ""
 msgid "Admin::Setting|Stop new user description"
 msgstr ""
 
-#: app/models/admin/setting.rb:122
+#: app/models/admin/setting.rb:124
 msgid "Admin::Setting|User cleaning notification interval"
 msgstr ""
 
-#: app/models/admin/setting.rb:123
+#: app/models/admin/setting.rb:125
 msgid "Admin::Setting|User cleaning notification interval description"
 msgstr ""
 
-#: app/models/admin/setting.rb:97
+#: app/models/admin/setting.rb:99
 msgid "Admin::Setting|User lock trial limit"
 msgstr ""
 
-#: app/models/admin/setting.rb:98
+#: app/models/admin/setting.rb:100
 msgid "Admin::Setting|User lock trial limit description"
 msgstr ""
 
@@ -1132,9 +1144,9 @@ msgstr ""
 msgid "Admin::User|Lock description"
 msgstr ""
 
-#: app/models/admin/user.rb:27 app/views/admin/users/import.html.erb:21
+#: app/models/admin/user.rb:27 app/views/user/show.html.erb:94
 #: app/views/portal/_registration_form.html.erb:17
-#: app/views/user/show.html.erb:94 app/views/users/_user.html.erb:28
+#: app/views/admin/users/import.html.erb:21 app/views/users/_user.html.erb:28
 #: app/views/users/index.html.erb:5
 msgid "Admin::User|Name"
 msgstr ""
@@ -1191,13 +1203,13 @@ msgstr ""
 msgid "Admin::User|User uids"
 msgstr ""
 
-#: app/views/admin/users/change_uid.html.erb:6
 #: app/views/admin/users/create_uid.html.erb:6
+#: app/views/admin/users/change_uid.html.erb:6
 msgid "Admin|Create Change Uid|Caution"
 msgstr ""
 
-#: app/views/admin/users/change_uid.html.erb:7
 #: app/views/admin/users/create_uid.html.erb:7
+#: app/views/admin/users/change_uid.html.erb:7
 msgid "Admin|Create Change Uid|Caution Description"
 msgstr ""
 
@@ -1250,16 +1262,16 @@ msgid "Are you sure destroing with nest comments?"
 msgstr ""
 
 #: app/views/admin/board_entries/index.html.erb:34
-#: app/views/admin/bookmark_comments/index.html.erb:30
-#: app/views/admin/bookmarks/index.html.erb:19
-#: app/views/admin/group_categories/index.html.erb:29
-#: app/views/admin/group_participations/index.html.erb:30
-#: app/views/admin/groups/index.html.erb:31
-#: app/views/admin/openid_identifiers/index.html.erb:18
 #: app/views/admin/share_files/index.html.erb:36
+#: app/views/admin/bookmarks/index.html.erb:19
+#: app/views/admin/groups/index.html.erb:31
+#: app/views/admin/bookmark_comments/index.html.erb:30
+#: app/views/admin/openid_identifiers/index.html.erb:18
+#: app/views/admin/group_participations/index.html.erb:30
+#: app/views/admin/group_categories/index.html.erb:29
 #: app/views/admin/user_profile_master_categories/index.html.erb:18
-#: app/views/admin/users/change_uid.html.erb:31
 #: app/views/admin/users/create_uid.html.erb:27
+#: app/views/admin/users/change_uid.html.erb:31
 #: app/views/admin/users/index.html.erb:49
 msgid "Are you sure?"
 msgstr ""
@@ -1480,7 +1492,7 @@ msgstr ""
 msgid "CSVファイル"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:148
+#: app/controllers/admin/users_controller.rb:150
 msgid "CSVファイルからのユーザ登録/更新に成功しました。"
 msgstr ""
 
@@ -1488,12 +1500,12 @@ msgstr ""
 msgid "CSVファイルでインポートする際の注意"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:153
+#: app/controllers/admin/users_controller.rb:155
 msgid "CSVファイルに不正な値が含まれています。"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:130
-#: app/controllers/admin/users_controller.rb:135
+#: app/controllers/admin/users_controller.rb:132
+#: app/controllers/admin/users_controller.rb:137
 msgid "CSVファイルの内容を検証しました。"
 msgstr ""
 
@@ -1525,7 +1537,7 @@ msgstr ""
 msgid "Chain|紹介文"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:160
+#: app/controllers/admin/users_controller.rb:162
 #: app/views/admin/users/edit.html.erb:15
 msgid "Change uid"
 msgstr ""
@@ -1534,24 +1546,24 @@ msgstr ""
 msgid "Close"
 msgstr ""
 
-#: app/views/admin/group_categories/new.html.erb:10
+#: app/views/portal/account_registration.html.erb:25
 #: app/views/admin/openid_identifiers/new.html.erb:17
+#: app/views/admin/group_categories/new.html.erb:10
 #: app/views/admin/user_profile_master_categories/new.html.erb:10
 #: app/views/admin/user_profile_masters/new.html.erb:10
 #: app/views/admin/users/create_uid.html.erb:16
 #: app/views/admin/users/first.html.erb:31
 #: app/views/admin/users/new.html.erb:12
-#: app/views/portal/account_registration.html.erb:25
 msgid "Create"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:185
+#: app/controllers/admin/users_controller.rb:187
 #: app/views/admin/users/edit.html.erb:16
 msgid "Create %{name}"
 msgstr ""
 
-#: app/views/admin/group_categories/new.html.erb:10
 #: app/views/admin/openid_identifiers/new.html.erb:17
+#: app/views/admin/group_categories/new.html.erb:10
 #: app/views/admin/user_profile_master_categories/new.html.erb:10
 #: app/views/admin/user_profile_masters/new.html.erb:10
 #: app/views/admin/users/create_uid.html.erb:28
@@ -1566,43 +1578,43 @@ msgstr ""
 
 #: app/views/admin/board_entries/index.html.erb:34
 #: app/views/admin/board_entry_comments/index.html.erb:26
-#: app/views/admin/bookmark_comments/index.html.erb:30
-#: app/views/admin/bookmarks/index.html.erb:19
-#: app/views/admin/group_categories/index.html.erb:29
-#: app/views/admin/group_participations/index.html.erb:30
-#: app/views/admin/groups/index.html.erb:31
-#: app/views/admin/openid_identifiers/index.html.erb:18
 #: app/views/admin/share_files/index.html.erb:36
+#: app/views/admin/bookmarks/index.html.erb:19
+#: app/views/admin/groups/index.html.erb:31
+#: app/views/admin/bookmark_comments/index.html.erb:30
+#: app/views/admin/openid_identifiers/index.html.erb:18
+#: app/views/admin/group_participations/index.html.erb:30
+#: app/views/admin/group_categories/index.html.erb:29
 #: app/views/admin/user_profile_master_categories/index.html.erb:18
 #: app/views/admin/user_profile_masters/index.html.erb:28
 #: app/views/admin/users/index.html.erb:49
 msgid "Destroy"
 msgstr ""
 
-#: app/views/admin/group_categories/index.html.erb:28
 #: app/views/admin/openid_identifiers/index.html.erb:17
+#: app/views/admin/group_categories/index.html.erb:28
 #: app/views/admin/user_profile_master_categories/index.html.erb:17
 #: app/views/admin/user_profile_masters/index.html.erb:27
 #: app/views/admin/users/index.html.erb:48
 msgid "Edit"
 msgstr ""
 
-#: app/controllers/admin/admin_module.rb:107
-#: app/controllers/admin/admin_module.rb:134
-#: app/controllers/admin/admin_module.rb:216
-#: app/controllers/admin/admin_module.rb:248
 #: app/controllers/admin/openid_identifiers_controller.rb:25
 #: app/controllers/admin/openid_identifiers_controller.rb:26
 #: app/controllers/admin/openid_identifiers_controller.rb:40
 #: app/controllers/admin/openid_identifiers_controller.rb:41
+#: app/controllers/admin/users_controller.rb:51
+#: app/controllers/admin/users_controller.rb:75
+#: app/controllers/admin/users_controller.rb:161
+#: app/controllers/admin/users_controller.rb:186
+#: app/controllers/admin/admin_module.rb:107
+#: app/controllers/admin/admin_module.rb:134
+#: app/controllers/admin/admin_module.rb:216
+#: app/controllers/admin/admin_module.rb:248
 #: app/controllers/admin/user_profiles_controller.rb:21
 #: app/controllers/admin/user_profiles_controller.rb:22
 #: app/controllers/admin/user_profiles_controller.rb:40
 #: app/controllers/admin/user_profiles_controller.rb:41
-#: app/controllers/admin/users_controller.rb:49
-#: app/controllers/admin/users_controller.rb:73
-#: app/controllers/admin/users_controller.rb:159
-#: app/controllers/admin/users_controller.rb:184
 #: app/views/admin/users/edit.html.erb:18
 msgid "Editing %{model}"
 msgstr ""
@@ -1827,6 +1839,16 @@ msgstr ""
 msgid "Line"
 msgstr ""
 
+#: app/controllers/admin/openid_identifiers_controller.rb:24
+#: app/controllers/admin/openid_identifiers_controller.rb:39
+#: app/controllers/admin/users_controller.rb:29
+#: app/controllers/admin/users_controller.rb:41
+#: app/controllers/admin/users_controller.rb:50
+#: app/controllers/admin/users_controller.rb:74
+#: app/controllers/admin/users_controller.rb:125
+#: app/controllers/admin/users_controller.rb:142
+#: app/controllers/admin/users_controller.rb:160
+#: app/controllers/admin/users_controller.rb:185
 #: app/controllers/admin/admin_module.rb:67
 #: app/controllers/admin/admin_module.rb:79
 #: app/controllers/admin/admin_module.rb:93
@@ -1845,19 +1867,9 @@ msgstr ""
 #: app/controllers/admin/admin_module.rb:225
 #: app/controllers/admin/admin_module.rb:245
 #: app/controllers/admin/admin_module.rb:247
-#: app/controllers/admin/openid_identifiers_controller.rb:24
-#: app/controllers/admin/openid_identifiers_controller.rb:39
 #: app/controllers/admin/user_profile_masters_controller.rb:24
 #: app/controllers/admin/user_profiles_controller.rb:20
 #: app/controllers/admin/user_profiles_controller.rb:39
-#: app/controllers/admin/users_controller.rb:27
-#: app/controllers/admin/users_controller.rb:39
-#: app/controllers/admin/users_controller.rb:48
-#: app/controllers/admin/users_controller.rb:72
-#: app/controllers/admin/users_controller.rb:123
-#: app/controllers/admin/users_controller.rb:140
-#: app/controllers/admin/users_controller.rb:158
-#: app/controllers/admin/users_controller.rb:183
 #: app/views/admin/board_entries/show.html.erb:43
 #: app/views/admin/bookmarks/show.html.erb:19
 #: app/views/admin/groups/show.html.erb:35
@@ -1925,22 +1937,22 @@ msgstr ""
 msgid "Message|User"
 msgstr ""
 
+#: app/controllers/admin/users_controller.rb:29
+#: app/controllers/admin/users_controller.rb:41
 #: app/controllers/admin/admin_module.rb:94
 #: app/controllers/admin/admin_module.rb:115
 #: app/controllers/admin/admin_module.rb:201
 #: app/controllers/admin/admin_module.rb:226
-#: app/controllers/admin/users_controller.rb:27
-#: app/controllers/admin/users_controller.rb:39
-#: app/views/admin/group_categories/index.html.erb:36
 #: app/views/admin/openid_identifiers/index.html.erb:23
+#: app/views/admin/group_categories/index.html.erb:36
 #: app/views/admin/user_profile_master_categories/index.html.erb:25
 #: app/views/admin/user_profile_masters/index.html.erb:35
 #: app/views/admin/users/index.html.erb:56
 msgid "New %{model}"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:123
-#: app/controllers/admin/users_controller.rb:140
+#: app/controllers/admin/users_controller.rb:125
+#: app/controllers/admin/users_controller.rb:142
 #: app/views/admin/users/index.html.erb:57
 msgid "New user from csv"
 msgstr ""
@@ -2140,13 +2152,13 @@ msgstr ""
 msgid "SKIP version"
 msgstr ""
 
-#: app/views/admin/documents/index.html.erb:10
 #: app/views/admin/settings/index.html.erb:9
+#: app/views/admin/documents/index.html.erb:10
 msgid "Save"
 msgstr ""
 
-#: app/views/admin/documents/index.html.erb:10
 #: app/views/admin/settings/index.html.erb:9
+#: app/views/admin/documents/index.html.erb:10
 msgid "Saving..."
 msgstr ""
 
@@ -2349,21 +2361,21 @@ msgstr ""
 msgid "Track|Visitor"
 msgstr ""
 
-#: app/views/admin/group_categories/edit.html.erb:11
+#: app/views/admin/user_profiles/edit.html.erb:13
 #: app/views/admin/openid_identifiers/edit.html.erb:16
+#: app/views/admin/group_categories/edit.html.erb:11
 #: app/views/admin/user_profile_master_categories/edit.html.erb:11
 #: app/views/admin/user_profile_masters/edit.html.erb:10
-#: app/views/admin/user_profiles/edit.html.erb:13
 #: app/views/admin/users/change_uid.html.erb:20
 #: app/views/admin/users/edit.html.erb:10
 msgid "Update"
 msgstr ""
 
-#: app/views/admin/group_categories/edit.html.erb:11
+#: app/views/admin/user_profiles/edit.html.erb:13
 #: app/views/admin/openid_identifiers/edit.html.erb:16
+#: app/views/admin/group_categories/edit.html.erb:11
 #: app/views/admin/user_profile_master_categories/edit.html.erb:11
 #: app/views/admin/user_profile_masters/edit.html.erb:10
-#: app/views/admin/user_profiles/edit.html.erb:13
 #: app/views/admin/users/change_uid.html.erb:32
 #: app/views/admin/users/edit.html.erb:10
 msgid "Updating..."
@@ -2388,7 +2400,7 @@ msgstr ""
 msgid "User profile master isn't assosiated"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:81
+#: app/controllers/admin/users_controller.rb:83
 msgid "User was successfuly deleted."
 msgstr ""
 
@@ -2624,10 +2636,10 @@ msgstr ""
 msgid "User|Disclosure|true"
 msgstr ""
 
-#: app/views/platform/_mail_form.html.erb:3
+#: app/views/user/show.html.erb:100
 #: app/views/portal/_registration_form.html.erb:21
-#: app/views/shared/_login_form.html.erb:24 app/views/user/show.html.erb:100
-#: app/views/users/_user.html.erb:31
+#: app/views/shared/_login_form.html.erb:24
+#: app/views/platform/_mail_form.html.erb:3 app/views/users/_user.html.erb:31
 msgid "User|Email"
 msgstr ""
 
@@ -2683,8 +2695,9 @@ msgstr ""
 msgid "User|Reset auth token expires at"
 msgstr ""
 
+#: app/views/user/show.html.erb:106
 #: app/views/portal/_registration_form.html.erb:25
-#: app/views/user/show.html.erb:106 app/views/users/_user.html.erb:40
+#: app/views/users/_user.html.erb:40
 msgid "User|Section"
 msgstr ""
 
@@ -2733,11 +2746,11 @@ msgstr ""
 msgid "You are now logged out."
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:83
+#: app/controllers/admin/users_controller.rb:85
 msgid "You cannot delete user who is not unused."
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:61
+#: app/controllers/admin/users_controller.rb:63
 msgid "You cannot update status and admin and lock of yourself"
 msgstr ""
 
@@ -2751,6 +2764,10 @@ msgstr ""
 
 #: app/views/shared/_login_form.html.erb:20
 msgid "Your OpenID:"
+msgstr ""
+
+#: app/views/admin/settings/_security.html.erb:16
+msgid "[全ユーザにパスワード再設定を求める]"
 msgstr ""
 
 #: app/helpers/users_helper.rb:29 app/helpers/users_helper.rb:45
@@ -2781,9 +2798,9 @@ msgstr ""
 msgid "before_uid"
 msgstr ""
 
+#: app/helpers/admin/application_helper.rb:38
 #: app/controllers/board_entries_controller.rb:43
-#: app/controllers/board_entries_controller.rb:72
-#: app/helpers/admin/application_helper.rb:38 app/models/board_entry.rb:-
+#: app/controllers/board_entries_controller.rb:72 app/models/board_entry.rb:-
 msgid "board entry"
 msgstr ""
 
@@ -2947,17 +2964,17 @@ msgstr ""
 msgid "uncheck selected"
 msgstr ""
 
+#: app/helpers/admin/application_helper.rb:35
+#: app/controllers/admin/users_controller.rb:29
+#: app/controllers/admin/users_controller.rb:41
+#: app/controllers/admin/users_controller.rb:50
+#: app/controllers/admin/users_controller.rb:74
+#: app/controllers/admin/users_controller.rb:125
+#: app/controllers/admin/users_controller.rb:142
+#: app/controllers/admin/users_controller.rb:160
+#: app/controllers/admin/users_controller.rb:185
 #: app/controllers/admin/user_profiles_controller.rb:20
-#: app/controllers/admin/user_profiles_controller.rb:39
-#: app/controllers/admin/users_controller.rb:27
-#: app/controllers/admin/users_controller.rb:39
-#: app/controllers/admin/users_controller.rb:48
-#: app/controllers/admin/users_controller.rb:72
-#: app/controllers/admin/users_controller.rb:123
-#: app/controllers/admin/users_controller.rb:140
-#: app/controllers/admin/users_controller.rb:158
-#: app/controllers/admin/users_controller.rb:183
-#: app/helpers/admin/application_helper.rb:35 app/models/user.rb:-
+#: app/controllers/admin/user_profiles_controller.rb:39 app/models/user.rb:-
 #: app/views/admin/users/import.html.erb:74
 #: app/views/admin/users/index.html.erb:56
 msgid "user"
@@ -2975,16 +2992,15 @@ msgstr ""
 msgid "user message unsubscribe"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:185
-#: app/controllers/admin/users_controller.rb:193
-#: app/helpers/initial_settings_helper.rb:43 app/models/share_file.rb:250
-#: app/models/user_search_condition.rb:39
-#: app/views/admin/users/change_uid.html.erb:31
+#: app/helpers/initial_settings_helper.rb:43
+#: app/controllers/admin/users_controller.rb:187
+#: app/controllers/admin/users_controller.rb:195 app/models/share_file.rb:250
+#: app/models/user_search_condition.rb:39 app/views/user/show.html.erb:88
+#: app/views/portal/_registration_form.html.erb:38
 #: app/views/admin/users/create_uid.html.erb:12
 #: app/views/admin/users/create_uid.html.erb:27
-#: app/views/admin/users/edit.html.erb:16
-#: app/views/portal/_registration_form.html.erb:38
-#: app/views/user/show.html.erb:88 app/views/users/_user.html.erb:23
+#: app/views/admin/users/change_uid.html.erb:31
+#: app/views/admin/users/edit.html.erb:16 app/views/users/_user.html.erb:23
 msgid "user name"
 msgstr ""
 
@@ -2995,15 +3011,15 @@ msgstr ""
 msgid "user profile"
 msgstr ""
 
-#: app/controllers/admin/user_profile_masters_controller.rb:24
 #: app/helpers/admin/application_helper.rb:42
+#: app/controllers/admin/user_profile_masters_controller.rb:24
 #: app/models/user_profile_master.rb:-
 #: app/views/admin/user_profile_masters/index.html.erb:35
 msgid "user profile master"
 msgstr ""
 
-#: app/controllers/admin/user_profile_master_categories_controller.rb:28
 #: app/helpers/admin/application_helper.rb:41
+#: app/controllers/admin/user_profile_master_categories_controller.rb:28
 #: app/models/user_profile_master_category.rb:-
 #: app/views/admin/user_profile_master_categories/index.html.erb:25
 msgid "user profile master category"
@@ -3033,6 +3049,12 @@ msgstr ""
 msgid "あなたへ宛てた連絡"
 msgstr ""
 
+#: app/views/admin/settings/_security.html.erb:16
+msgid ""
+"あなたを含む使用中ユーザの次回ログイン時に、パスワード再設定が必要になります"
+"が宜しいですか?"
+msgstr ""
+
 #: app/views/admin/settings/_literal.html.erb:11
 msgid "お問い合わせ・ヘルプ"
 msgstr ""
@@ -3050,7 +3072,7 @@ msgstr ""
 msgid "この操作は、許可されていません。"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:116
+#: app/controllers/admin/users_controller.rb:118
 msgid ""
 "この操作は、許可されていません。URLをご確認の上再度お試し頂くか、%"
 "{contact_link}下さい。"
@@ -3060,9 +3082,9 @@ msgstr ""
 msgid "ご指定のグループは存在しません。"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:51
-#: app/controllers/admin/users_controller.rb:69
-#: app/controllers/user_controller.rb:264 app/models/board_entry.rb:56
+#: app/controllers/user_controller.rb:264
+#: app/controllers/admin/users_controller.rb:53
+#: app/controllers/admin/users_controller.rb:71 app/models/board_entry.rb:56
 msgid "ご指定のユーザは存在しません。"
 msgstr ""
 
@@ -3106,7 +3128,7 @@ msgid ""
 "が利用可能です。その他の記号、半角空白などは使えません。"
 msgstr ""
 
-#: app/models/admin/setting.rb:156
+#: app/models/admin/setting.rb:158
 msgid "は正しい正規表現で入力して下さい。"
 msgstr ""
 
@@ -3118,8 +3140,8 @@ msgstr ""
 msgid "アンテナ"
 msgstr ""
 
-#: app/helpers/groups_helper.rb:49 app/helpers/users_helper.rb:46
-#: app/views/group/show.html.erb:44 app/views/user/_portrait_box.html.erb:26
+#: app/helpers/users_helper.rb:46 app/helpers/groups_helper.rb:49
+#: app/views/user/_portrait_box.html.erb:26 app/views/group/show.html.erb:44
 #: app/views/users/_user.html.erb:5
 msgid "アンテナに追加"
 msgstr ""
@@ -3144,7 +3166,7 @@ msgstr ""
 msgid "キャンセルされました。このサーバへの認証を確認してください"
 msgstr ""
 
-#: app/views/admin/settings/_security.html.erb:25
+#: app/views/admin/settings/_security.html.erb:29
 msgid "クリーニング依頼メール"
 msgstr ""
 
@@ -3236,9 +3258,9 @@ msgstr ""
 msgid "パスワード強度"
 msgstr ""
 
-#: app/controllers/group_controller.rb:385
 #: app/controllers/mypage_controller.rb:527
 #: app/controllers/user_controller.rb:237
+#: app/controllers/group_controller.rb:385
 msgid "ファイル"
 msgstr ""
 
@@ -3325,8 +3347,8 @@ msgstr ""
 msgid "メーラを起動して送信する（宛先と本文が設定されます）"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:221
 #: app/controllers/platform_controller.rb:121
+#: app/controllers/admin/users_controller.rb:223
 msgid "メールアドレスが%{email}のユーザは既に利用を開始しています。"
 msgstr ""
 
@@ -3344,7 +3366,7 @@ msgstr ""
 msgid "ユーザを探す"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:176
+#: app/controllers/admin/users_controller.rb:178
 msgid "ユーザ名が見つかりませんでした。"
 msgstr ""
 
@@ -3352,8 +3374,8 @@ msgstr ""
 msgid "ユーザ登録が継続出来ません。最初からやり直して下さい。"
 msgstr ""
 
-#: app/views/platform/index.html.erb:59
 #: app/views/user_mailer/sent_activate.html.erb:9
+#: app/views/platform/index.html.erb:59
 msgid "ユーザ登録してSKIPの利用を開始する"
 msgstr ""
 
@@ -3367,8 +3389,8 @@ msgstr ""
 msgid "ユーザ登録のためのURLの有効期限が過ぎています。"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:219
 #: app/controllers/platform_controller.rb:118
+#: app/controllers/admin/users_controller.rb:221
 msgid "ユーザ登録のためのURLを記載したメールを%{email}宛てに送信しました。"
 msgstr ""
 
@@ -3376,7 +3398,7 @@ msgstr ""
 msgid "ログインが必要です。ログインし直して下さい。"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:104
+#: app/controllers/admin/users_controller.rb:106
 msgid "ログインし直して下さい。"
 msgstr ""
 
@@ -3384,7 +3406,7 @@ msgstr ""
 msgid "ログインに失敗しました。"
 msgstr ""
 
-#: app/views/admin/settings/_security.html.erb:20
+#: app/views/admin/settings/_security.html.erb:24
 msgid "ログインキーフレーズ"
 msgstr ""
 
@@ -3475,8 +3497,8 @@ msgstr ""
 
 #: app/controllers/platform_controller.rb:304
 msgid ""
-"入力されたログインIDのユーザはロックされているためログインできません。ロック"
-"を解除するにはパスワードの再設定を行って下さい。"
+"入力されたログインIDのユーザのパスワードが現在無効になっています。パスワード"
+"の再設定を行って下さい。"
 msgstr ""
 
 #: app/views/admin/settings/index.html.erb:5
@@ -3513,7 +3535,14 @@ msgstr ""
 msgid "初期値に戻す"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:219
+#: app/views/admin/settings/_security.html.erb:17
+msgid ""
+"利用中の全ユーザをロックします。実行することで各ユーザは次回ログイン時のパス"
+"ワードの再設定が必要になります。 パスワード強度を強めた場合など、全ユーザにパ"
+"スワード再設定を求めたい場合に使います。"
+msgstr ""
+
+#: app/controllers/admin/users_controller.rb:221
 msgid "利用開始URLを発行しました。確認のリンクからユーザに連絡してください。"
 msgstr ""
 
@@ -3576,7 +3605,7 @@ msgstr ""
 msgid "基本情報"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:170
+#: app/controllers/admin/users_controller.rb:172
 msgid "変更しました"
 msgstr ""
 
@@ -3637,9 +3666,9 @@ msgstr ""
 msgid "対象ユーザに利用開始通知メールを送信しますが宜しいですか?"
 msgstr ""
 
+#: app/controllers/admin/images_controller.rb:157
 #: app/controllers/admin/documents_controller.rb:38
 #: app/controllers/admin/documents_controller.rb:89
-#: app/controllers/admin/images_controller.rb:157
 msgid "想定外のエラーが発生しました。管理者にお問い合わせ下さい。"
 msgstr ""
 
@@ -3667,7 +3696,7 @@ msgstr ""
 msgid "新規投稿"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:193
+#: app/controllers/admin/users_controller.rb:195
 msgid "既に%{username}が登録されています。"
 msgstr ""
 
@@ -3676,7 +3705,7 @@ msgstr ""
 msgid "既に登録されている値から選択項目を表示しています"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:113
+#: app/controllers/admin/users_controller.rb:115
 msgid ""
 "既に管理者ユーザが登録済みです。ログインして下さい。ログイン出来ない場合は%"
 "{contact_link}下さい。"
@@ -3690,7 +3719,7 @@ msgstr ""
 msgid "既定の画像に戻す"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:66
+#: app/controllers/admin/users_controller.rb:68
 #: app/controllers/share_file_controller.rb:136
 msgid "更新しました。"
 msgstr ""
@@ -3703,7 +3732,7 @@ msgstr ""
 msgid "月別総合ランキング"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:237
+#: app/controllers/admin/users_controller.rb:239
 msgid "未使用ユーザのパスワード再設定コードは発行できません。"
 msgstr ""
 
@@ -3749,12 +3778,12 @@ msgstr ""
 msgid "現在設定中の画像が消えてしまいますがよろしいですか?"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:36
-#: app/controllers/admin/users_controller.rb:104
+#: app/controllers/admin/users_controller.rb:38
+#: app/controllers/admin/users_controller.rb:106
 msgid "登録しました。"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:200
+#: app/controllers/admin/users_controller.rb:202
 msgid "登録に成功しました。"
 msgstr ""
 
@@ -3776,9 +3805,9 @@ msgstr ""
 msgid "確認"
 msgstr ""
 
-#: app/controllers/group_controller.rb:386
 #: app/controllers/mypage_controller.rb:532
 #: app/controllers/user_controller.rb:251
+#: app/controllers/group_controller.rb:386
 msgid "管理"
 msgstr ""
 
@@ -3822,8 +3851,8 @@ msgstr ""
 msgid "設定・管理"
 msgstr ""
 
-#: app/controllers/group_controller.rb:54
 #: app/controllers/users_controller.rb:29
+#: app/controllers/group_controller.rb:54
 msgid "該当するユーザは存在しませんでした。"
 msgstr ""
 

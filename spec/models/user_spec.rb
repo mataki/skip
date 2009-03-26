@@ -476,12 +476,47 @@ describe User, "#update_auth_session_token" do
     @auth_session_token = User.make_token
     User.stub!(:make_token).and_return(@auth_session_token)
   end
-  it "トークンが保存されること" do
-    @user.update_auth_session_token!
-    @user.auth_session_token.should == @auth_session_token
+  describe 'シングルセッション機能が有効な場合' do
+    before do
+      Admin::Setting.should_receive(:enable_single_session).and_return(true)
+    end
+    it "トークンが保存されること" do
+      @user.update_auth_session_token!
+      @user.auth_session_token.should == @auth_session_token
+    end
+    it "トークンが返されること" do
+      @user.update_auth_session_token!.should == @auth_session_token
+    end
   end
-  it "トークンが返されること" do
-    @user.update_auth_session_token!.should == @auth_session_token
+  describe 'シングルセッション機能が無効な場合' do
+    before do
+      Admin::Setting.should_receive(:enable_single_session).and_return(false)
+    end
+    describe '新規ログインの場合(auth_session_tokenに値が入っていない)' do
+      before do
+        @user.auth_session_token = nil
+      end
+      it "トークンが保存されること" do
+        @user.update_auth_session_token!
+        @user.auth_session_token.should == @auth_session_token
+      end
+      it "トークンが返されること" do
+        @user.update_auth_session_token!.should == @auth_session_token
+      end
+    end
+    describe 'ログイン済みの場合(auth_session_tokenに値が入っている)' do
+      before do
+        @user.auth_session_token = 'auth_session_token'
+      end
+      it 'トークンが変化しないこと' do
+        lambda do
+          @user.update_auth_session_token!
+        end.should_not change(@user, :auth_session_token)
+      end
+      it 'トークンが返されること' do
+        @user.update_auth_session_token!.should == 'auth_session_token'
+      end
+    end
   end
 end
 

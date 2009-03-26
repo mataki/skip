@@ -315,7 +315,9 @@ class User < ActiveRecord::Base
   end
 
   def update_auth_session_token!
-    self.auth_session_token = self.class.make_token
+    if Admin::Setting.enable_single_session || self.auth_session_token.blank?
+      self.auth_session_token = self.class.make_token
+    end
     save(false)
     self.auth_session_token
   end

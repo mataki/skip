@@ -22,6 +22,9 @@ stop_new_user:
 hide_email:
   format: boolean
   default: false
+enable_single_session:
+  format: boolean
+  default: true
 
 # ==================================================================================================
 # その他設定
