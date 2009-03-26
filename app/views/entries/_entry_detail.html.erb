@@ -356,13 +356,11 @@
               url:'<%= url_for(:controller => 'board_entries', :action => 'ado_create_comment', :id => entry.id) -%>',
               data:$j('#new_comment_form').serialize(),
               success: function(html) {
-                  $j('#board_entry_comments').append(html);
+                  jhtml = $j(html);
+                  setupComment(jhtml);
+                  $j('#board_entry_comments').append(jhtml);
                   $j('#board_entry_comment_contents').val('');
                   showSortMenu();
-                  setupCommentEditLink();
-                  setupCommentCancelButton();
-                  setupCommentInputForm();
-                  setupCommentNestLink();
               }
           });
           return false;
@@ -452,10 +450,7 @@
                   $j(this).remove().appendTo('#board_entry_comments');
               }
           );
-          setupCommentEditLink();
-          setupCommentCancelButton();
-          setupCommentInputForm();
-          setupCommentNestLink();
+          setupComment(document);
       };
 
       // コメントソートの表示制御
@@ -531,8 +526,9 @@
       appendEntryPointClick();
 
       // 編集ボタン押下時の処理
-      var setupCommentEditLink = function() {
-          $j('.comment_edit_link')
+      var setupCommentEditLink = function(target) {
+          $j(target)
+          .find('.comment_edit_link')
           .click(function() {
               commentId = this.id.split('_')[3];
               $j('#comment_contents_' + commentId).fadeOut(0, function() {
@@ -543,11 +539,11 @@
               return false;
           });
       };
-      setupCommentEditLink();
 
       // コメント編集フォームのキャンセルボタン押下時の処理
-      var setupCommentCancelButton = function() {
-          $j('.comment_cancel_button')
+      var setupCommentCancelButton = function(target) {
+          $j(target)
+          .find('.comment_cancel_button')
           .click(function() {
               commentId = this.id.split('_')[3];
               if ($j('#comment_area_' + commentId).is(':visible')) {
@@ -558,11 +554,11 @@
               return false;
           });
       };
-      setupCommentCancelButton();
 
       // コメント編集フォームをサブミットした時の処理
-      var setupCommentInputForm = function() {
-          $j('.comment_input_form')
+      var setupCommentInputForm = function(target) {
+          $j(target)
+          .find('.comment_input_form')
           .submit(function() {
               commentId = this.id.split('_')[3];
               if(isEmpty($j('#comment_input_form_' + commentId + ' textarea').val())) {
@@ -584,11 +580,11 @@
               return false;
           });
       };
-      setupCommentInputForm();
 
       // 「このコメントに返信」ボタン押下時の処理
-      var setupCommentNestLink = function() {
-          $j('.comment_nest_link')
+      var setupCommentNestLink = function(target) {
+          $j(target)
+          .find('.comment_nest_link')
           .click(function() {
               commentId = this.id.split('_')[3];
               level = this.id.split('_')[4] - 0 + 1;
@@ -633,18 +629,15 @@
                           url:'<%= url_for(:controller => 'board_entries', :action => 'ado_create_nest_comment') -%>/' + commentId,
                           data:jform.serialize(),
                           success:function(html) {
+                              jhtml = $j(html)
+                              setupComment(jhtml);
                               jform.fadeOut('0', function(){
                                   $j('#link_nest_comment_' + commentId).show();
                                   $j(document.createElement('div'))
                                   .appendTo('#view_nest_comment_' + commentId)
-                                  .html(html)
+                                  .append(jhtml)
                                   .hide()
-                                  .fadeIn('fast', function() {
-                                      setupCommentEditLink();
-                                      setupCommentCancelButton();
-                                      setupCommentInputForm();
-                                      setupCommentNestLink();
-                                  });
+                                  .fadeIn('fast');
                                   jform.remove();
                               });
                           }
@@ -688,7 +681,13 @@
               $j("textarea").jGrow({ rows: 25 });
           });
       };
-      setupCommentNestLink();
+      var setupComment = function(target){
+          setupCommentEditLink(target);
+          setupCommentCancelButton(target);
+          setupCommentInputForm(target);
+          setupCommentNestLink(target);
+      };
+      setupComment(document);
 
       $j("textarea").jGrow({ rows: 25 });
   });
