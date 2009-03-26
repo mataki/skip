@@ -21,7 +21,7 @@ class BatchMakeCache < BatchBase
 
   # make_cachesから始まる名前のメソッドを次々と実行
   def self.execute options
-    cache_path = get_cache_path
+    cache_path = INITIAL_SETTINGS['cache_path']
 
     maker = self.new()
     maker.public_methods.each do |method|
@@ -31,15 +31,6 @@ class BatchMakeCache < BatchBase
       end
     end
     File.symlink( ENV['SHARE_FILE_PATH'],"#{cache_path}/share_file" ) unless FileTest.symlink?("#{cache_path}/share_file")
-  end
-
-  def self.get_cache_path
-    cache_path = INITIAL_SETTINGS['cache_path']
-    if cache_path
-      cache_path
-    else
-      raise StandardError, "Invalid cache path (cache_path: #{cache_path}). Please check your initial_settings.yml."
-    end
   end
 
   # entry用

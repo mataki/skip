@@ -537,6 +537,6 @@ describe Admin::UsersController, 'POST /lock_actives' do
     flash[:notice].should == '10件更新しました。'
   end
   it 'ユーザ一覧画面のリダイレクトされること' do
-    response.should redirect_to(admin_settings_path(:tab => :security))
+    response.should redirect_to(admin_users_path)
   end
 end
