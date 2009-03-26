@@ -15,56 +15,6 @@
 
 require File.dirname(__FILE__) + '/../../spec_helper'
 
-# describe HyperEstraier do
-#   def test_truep
-#     assert true
-#   end
-
-#   def test_search
-#     params = { }
-#     params[:full_text_query] = "中井"
-#     result_hash = {
-#       :header => { :count => -1, :start_count => 0, :end_count => 0, :prev => "", :next => "", :per_page => 10 },
-#       :elements => []
-#     }
-#     result = HyperEstraier.search params,result_hash
-
-#     assert result[:error].blank?
-#     assert_equal(result[:header][:count].to_i,42)
-#   end
-
-#   def test_search_by_uri
-#     params = { }
-#     params[:full_text_query] = '中井'
-#     params[:target_aid] = 'skip'
-#     params[:target_contents] = 'user'
-#     result_hash = {
-#       :header => { :count => -1, :start_count => 0, :end_count => 0, :prev => "", :next => "", :per_page => 10 },
-#       :elements => []
-#     }
-#     result = HyperEstraier.search params,result_hash
-
-#     assert result[:error].blank?
-#     assert_equal(result[:header][:count].to_i,2)
-#   end
-
-#   def test_search_next
-#     params = { }
-#     params[:full_text_query] = "中井"
-#     params[:offset] = 40
-#     result_hash = {
-#       :header => { :count => -1, :start_count => 0, :end_count => 0, :prev => "", :next => "", :per_page => 10 },
-#       :elements => []
-#     }
-#     result = HyperEstraier.search params,result_hash
-
-#     assert result[:error].blank?
-#     assert_equal(result[:header][:count].to_i,42)
-#     assert_equal(result[:elements].size,2)
-#   end
-
-# end
-
 describe Search::HyperEstraier, "#initialize" do
   before do
     @node = mock('node')
@@ -99,7 +49,7 @@ describe Search::HyperEstraier, "#initialize" do
   describe "検索ノードにアクセスできないとき" do
     it "@errorにメッセージが登録されていること" do
       result = Search::HyperEstraier.new({})
-      result.error.should == "access denied by search node"
+      result.error.should == Search::HyperEstraier::ACCESS_DENIED_ERROR_MSG
     end
   end
 end

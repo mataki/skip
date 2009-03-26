@@ -14,11 +14,13 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Search
+  NO_QUERY_ERROR_MSG = "Please input search query."
+
   attr_reader :invisible_count, :result, :error
 
   def initialize params, publication_symbols
     unless params[:query] && !SkipUtil.jstrip(params[:query]).empty?
-      @error = "please input query"
+      @error = NO_QUERY_ERROR_MSG
     else
       est_result = HyperEstraier.new(params)
       if error_message = est_result.error

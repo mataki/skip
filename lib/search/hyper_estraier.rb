@@ -17,6 +17,7 @@ require "estraierpure"
 
 class Search
   class HyperEstraier
+    ACCESS_DENIED_ERROR_MSG = "Access denied by search node. Please contact system owner."
     include EstraierPure
     attr_reader :offset, :per_page, :error, :result_hash
 
@@ -36,7 +37,7 @@ class Search
       else
         # ノードにアクセスできない場合のみ nres は nil
         ActiveRecord::Base.logger.error "[HyperEstraier Error] Connection not found to #{INITIAL_SETTINGS["estraier_url"]}"
-        @error = "access denied by search node"
+        @error = ACCESS_DENIED_ERROR_MSG
       end
     end
 

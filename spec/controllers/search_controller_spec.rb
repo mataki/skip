@@ -41,7 +41,7 @@ describe SearchController, "GET /full_text_search" do
   describe "検索クエリが投げられていない場合" do
     it "@error_messageが設定されること" do
       get_full_text_search
-      assigns[:error_message].should == "please input query"
+      assigns[:error_message].should == Search::NO_QUERY_ERROR_MSG
     end
   end
   def get_full_text_search

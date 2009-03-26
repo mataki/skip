@@ -104,6 +104,9 @@ class SearchController < ApplicationController
       @invisible_count = search.invisible_count
       make_instance_variables search.result
     else
+      # Searchクラスのメッセージの国際化
+      N_("Please input search query.")
+      N_("Access denied by search node. Please contact system owner.")
       @error_message = search.error
     end
   end

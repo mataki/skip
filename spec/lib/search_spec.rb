@@ -19,7 +19,7 @@ describe Search, "#initialize" do
   describe "検索クエリが入力されていない場合" do
     it "エラーが投げられること" do
       result = Search.new({ :query => "" } ,['sid:allusers'])
-      result.error.should == "please input query"
+      result.error.should == Search::NO_QUERY_ERROR_MSG
     end
   end
   describe "検索クエリが入力されている場合" do
