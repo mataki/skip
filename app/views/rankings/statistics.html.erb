@@ -46,7 +46,7 @@
 <% content_for :javascript do -%>
 <script type="text/javascript">
 $j(function() {
-    setupLoadCalendar();
+    setupLoadCalendar("<%= url_for(:action => 'load_calendar') %>");
 });
 </script>
 <% end -%>

@@ -79,16 +79,16 @@ $j(function(){
     /*
      * カレンダーのロード
      */
-    var loadCalendar = function(year, month){
+    var loadCalendar = function(year, month, url){
         $j.ajax({
-            url: relative_url_root + "/mypage/load_calendar",
+            url: url,
             data: { year : year , month : month },
             success: function(html) {
                $j('#calendar').html(html);
                $j('#calendar_body').highlight();
             },
             complete: function(request) {
-                setupLoadCalendar();
+                setupLoadCalendar(url);
             }
         });
     };
@@ -98,17 +98,17 @@ $j(function(){
         $j('#next_month_link').unbind('click');
     };
 
-    var bindLoadCalendar = function() {
+    var bindLoadCalendar = function(url) {
         // カレンダーの前月、次月リンククリック時のajaxアクション
         $j('#prev_month_link')
         .click(function() {
-            loadCalendar($j(this).attr('year'), $j(this).attr('month'));
+            loadCalendar($j(this).attr('year'), $j(this).attr('month'), url);
             return false;
         });
 
         $j('#next_month_link')
         .click(function() {
-            loadCalendar($j(this).attr('year'), $j(this).attr('month'));
+            loadCalendar($j(this).attr('year'), $j(this).attr('month'), url);
             return false;
         });
     };
@@ -116,9 +116,9 @@ $j(function(){
     /*
      * カレンダーのロードをセットアップ
      */
-    setupLoadCalendar = function() {
+    setupLoadCalendar = function(url) {
         unbindLoadCalendar();
-        bindLoadCalendar();
+        bindLoadCalendar(url);
     };
 
     /*

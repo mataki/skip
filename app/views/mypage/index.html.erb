@@ -181,7 +181,7 @@ $j(function() {
         return { page : page, page_name : 'list_block', target : id_name, per_page : per_page, recent_day : recent_day };
     };
 
-    setupLoadCalendar();
+    setupLoadCalendar("<%= url_for(:action => 'load_calendar') %>");
 });
 </script>
 <% end -%>

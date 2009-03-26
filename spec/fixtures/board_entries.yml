@@ -10,7 +10,7 @@ a_entry:
   contents: <%= SkipFaker.rand_char %>
   date: <%= SkipFaker.yesterday %>
   user: a_user
-  category: [日記]
+  category: "[日記]"
   entry_type: DIARY
   ignore_times: 0
   last_updated: <%= SkipFaker.yesterday %>
@@ -31,7 +31,7 @@ a_trackback_entry:
   contents: <%= SkipFaker.rand_char %>
   date: <%= SkipFaker.yesterday %>
   user: a_user
-  category: [日記]
+  category: "[日記]"
   entry_type: DIARY
   ignore_times: 0
   last_updated: <%= SkipFaker.yesterday %>
@@ -52,7 +52,7 @@ a_private_entry:
   contents: <%= SkipFaker.rand_char %>
   date: <%= SkipFaker.yesterday %>
   user: a_user
-  category: [日記]
+  category: "[日記]"
   entry_type: DIARY
   ignore_times: 0
   last_updated: <%= SkipFaker.yesterday %>

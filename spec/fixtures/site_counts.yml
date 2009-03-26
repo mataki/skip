@@ -1,2 +1,45 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+one:
+  created_on: <%= SkipFaker.today %>
+  total_user_count: 10
+  today_user_count: 10
+  total_blog_count: 10
+  today_blog_count: 10
+  writer_at_month: 10
+  user_access_at_month: 10
+  write_users_all: 10
+  write_users_with_pvt: 10
+  write_users_with_bbs: 10
+  comment_users: 10
+  portrait_users: 10
+  active_users: 10
 
+two:
+  created_on: <%= SkipFaker.yesterday %>
+  total_user_count: 2
+  today_user_count: 2
+  total_blog_count: 2
+  today_blog_count: 2
+  writer_at_month: 2
+  user_access_at_month: 2
+  write_users_all: 2
+  write_users_with_pvt: 2
+  write_users_with_bbs: 2
+  comment_users: 2
+  portrait_users: 2
+  active_users: 2
+
+three:
+  created_on: <%= (Time.now - 1.month).to_date.to_s %>
+  total_user_count: 1
+  today_user_count: 1
+  total_blog_count: 1
+  today_blog_count: 1
+  writer_at_month: 1
+  user_access_at_month: 1
+  write_users_all: 1
+  write_users_with_pvt: 1
+  write_users_with_bbs: 1
+  comment_users: 1
+  portrait_users: 1
+  active_users: 1
