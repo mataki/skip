@@ -152,6 +152,7 @@ describe Group do
       @share_file = share_files(:a_share_file)
       @board_entry.symbol = @group.symbol
       @board_entry.entry_type = BoardEntry::GROUP_BBS
+      @board_entry.category = @board_entry.comma_category
       @board_entry.save!
 
       @share_file.owner_symbol = @group.symbol
