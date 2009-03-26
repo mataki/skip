@@ -141,15 +141,11 @@ class Admin::Setting < ActiveRecord::Base
                       :with => URI.regexp(['http', 'https']),
                       :if => Proc.new { |setting| @@available_settings[setting.name]['format'] == 'url' && @@available_settings[setting.name]['allow_blank'].nil? }
 
-  validates_presence_of :value, :if => :value_required?
+  validates_presence_of :value, :if => Proc.new{ |setting| setting.class.password_strength == 'custom' && setting.name == 'custom_password_strength_regex' || setting.name == 'custom_password_strength_validation_message' }
 
   # Hash used to cache setting values
   @cached_settings = {}
   @cached_cleared_on = Time.now
-
-  def value_required?
-    self.class.password_strength == 'custom' && self.name == 'custom_password_strength_regex' || self.name == 'custom_password_strength_validation_message'
-  end
 
   def validate
     v = read_attribute(:value)
