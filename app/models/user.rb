@@ -376,7 +376,8 @@ class User < ActiveRecord::Base
       join_info = WebServiceUtil.open_service_with_url(setting["url"], { :user => self.openid_identifier }, setting["ca_file"])
       symbols += join_info.map{|item| item["publication_symbols"]} if join_info
     end
-    symbols
+    # TODO: 外のアプリの全公開のコンテンツは、"public"とする。今後、Symbol::SYSTEM_ALL_USERを単に、"public"に変更する。
+    symbols << "public"
   end
 
   # プロフィールボックスに表示するユーザの情報

@@ -764,8 +764,10 @@ describe User, "#belong_symbols_with_collaboration_apps" do
       before do
         WebServiceUtil.stub!(:open_service_with_url)
       end
-      it "何も追加されないこと" do
-        @user.belong_symbols_with_collaboration_apps.size.should == 3
+      it "publicが追加されること" do
+        ["uid:a_user", "gid:a_group", Symbol::SYSTEM_ALL_USER, "public"].each do |symbol|
+          @user.belong_symbols_with_collaboration_apps.should be_include(symbol)
+        end
       end
     end
   end
@@ -774,7 +776,7 @@ describe User, "#belong_symbols_with_collaboration_apps" do
       INITIAL_SETTINGS["belong_info_apps"] = nil
     end
     it "SKIP内の所属情報を返すこと" do
-      ["uid:a_user", "gid:a_group", Symbol::SYSTEM_ALL_USER].each do |symbol|
+      ["uid:a_user", "gid:a_group", Symbol::SYSTEM_ALL_USER, "public"].each do |symbol|
         @user.belong_symbols_with_collaboration_apps.should be_include(symbol)
       end
     end
