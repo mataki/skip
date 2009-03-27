@@ -71,6 +71,11 @@ form
     :margin 0px
     :padding 2px
 
+table
+  :font-size = !base_font_size
+  :table-layout fixed
+  :border-collapse collapse
+
 // 特定の機能用ではない汎用css
 // ------------------------------------------------------------
 .pointer
@@ -199,7 +204,7 @@ div.topix_body
     :text-overflow ellipsis
     :width 50%
 
-// 編集フォーム
+// 編集フォーム(共通)
 // ------------------------------------------------------------
 h2.subtitle
   :border
@@ -212,6 +217,28 @@ h2.subtitle
   :padding 3px 0px 0px 5px
   span.description
     :font-weight normal
+form.edit
+  :margin 10px
+
+// 編集フォーム(テーブルレイアウト)
+// ------------------------------------------------------------
+table.normal
+  :border = !base_border
+  tr.line_0
+    :background-color #f8f8ff
+  tr.line_1
+    :background-color #fff
+  th
+    :background-color #f0f0ff
+    form &
+      :text-align left
+  th, td
+    :border = !base_border
+    :padding 1px 4px
+table.user_info
+  :width 97%
+  th
+    :width 100px
 
 // ============================================================
 // 2. 共通の構造

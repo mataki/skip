@@ -48,6 +48,11 @@ form {
     margin: 0px;
     padding: 2px; }
 
+table {
+  font-size: 12px;
+  table-layout: fixed;
+  border-collapse: collapse; }
+
 .pointer {
   cursor: pointer; }
 
@@ -173,6 +178,28 @@ h2.subtitle {
   padding: 3px 0px 0px 5px; }
   h2.subtitle span.description {
     font-weight: normal; }
+
+form.edit {
+  margin: 10px; }
+
+table.normal {
+  border: 1px solid #cccccc; }
+  table.normal tr.line_0 {
+    background-color: #f8f8ff; }
+  table.normal tr.line_1 {
+    background-color: #fff; }
+  table.normal th {
+    background-color: #f0f0ff; }
+    form table.normal th {
+      text-align: left; }
+  table.normal th, table.normal td {
+    border: 1px solid #cccccc;
+    padding: 1px 4px; }
+
+table.user_info {
+  width: 97%; }
+  table.user_info th {
+    width: 100px; }
 
 div#contents_container {
   width: 100%;

@@ -9,7 +9,7 @@
 
   <div class="edit_form_space">
     <% form_for :openid_identifier, @openid_identifier, {:url => {:action => :apply_ident_url}} do |f| -%>
-    <table id="user_info_box" class="normal" border="1">
+    <table class="normal user_info">
       <tr>
         <th width="100px"><%= f.label :url, "OpenID URL" %></th>
         <td style="padding:5px;"><%= f.text_field :url, :name => "openid_url" %></td>

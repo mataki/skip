@@ -12,7 +12,7 @@
   <div class="edit_form_space">
   <%= content_tag(:p, '既にメールアドレスの変更を申請済みです。記入したメールアドレスで再申請します。') if @applied_email.id %>
   <% form_tag :action => 'apply_email' do -%>
-    <table id="user_info_box" class="normal" border="1">
+    <table class="normal user_info">
       <tr>
         <th width="100px"><label for="page_title">変更前メールアドレス</label></th>
         <td style="padding:5px;"><%=h @user.email %></td>

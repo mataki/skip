@@ -19,41 +19,6 @@ div.input_line div.input_label {
 div.input_line textarea {
   width: 95%;
 }
-/* ----------------------------------- */
-table {
-  font-size: 12px;
-  table-layout: fixed;
-}
-table.normal {
-  font-size: 12px;
-  border-collapse: collapse;
-  border: 1px solid silver;
-}
-/* --- for IE only -----*/
-* html table.normal{
-  table-layout: auto;
-}
-* html table.normal th{
-  text-align: left;
-}
-/* -- for IE7 only --*/
-*:first-child+html table.normal{
-  table-layout: auto;
-}
-/* ---------------------*/
-table.normal th {
-  background-color: #f0f0ff;
-}
-table.normal td.line_0, table.normal tr.line_0 {
-  background-color: #f8f8ff;
-}
-table.normal td.line_1, table.normal tr.line_1 {
-  background-color: #ffffff;
-}
-table.normal th, table.normal td {
-  border: 1px solid silver;
-  padding: 1px 4px 1px 4px;
-}
 
 /* ----------------------------------- */
 div#header {
@@ -123,7 +88,6 @@ div.search_result_space {
 /* エディット時のフォーム入力スペース */
 div.edit_form_space {
   border: 1px dashed silver;
-  padding: 10px;
   margin-bottom: 5px;
 }
 div.edit_form_space p {
@@ -631,3 +595,4 @@ div.title {
   font-size: 10px;
   color: green;
 }
+
