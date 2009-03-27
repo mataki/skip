@@ -675,9 +675,7 @@ msgstr "複数セッションを許可しない"
 
 #: app/models/admin/setting.rb:32
 msgid "Admin::Setting|Enable single session description"
-msgstr ""
-"チェックするとセッション数を一つに制限することが出来ます。"
-"複数のブラウザでのログインを許可する場合はチェックを外して下さい。"
+msgstr "チェックするとセッション数を一つに制限します。あるブラウザでのログインセッションを別のブラウザでログインし直すことで無効化できるため、ログアウト忘れの防止や、他者によるなりすましの防止に効果があります。複数のブラウザでのログインを許可したい場合はチェックを外して下さい。"
 
 #: app/models/admin/setting.rb:122
 msgid "Admin::Setting|Enable user cleaning notification"
