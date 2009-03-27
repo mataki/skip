@@ -74,7 +74,7 @@ describe UserUid, '各種validation' do
   describe UserUid, '.validates_format_of' do
     describe 'uidのフォーマットが正しい場合' do
       it 'エラーとならないこと' do
-        %w(123456 abcdef 123abc 123ab- 123ab_ 123ab.).each do |uid|
+        %w(123456 abcdef 123abc 123ab- 123ab_ 123ab).each do |uid|
           user_uid = valid_user_uid(:uid => uid)
           user_uid.valid?
           user_uid.errors['uid'].should be_nil

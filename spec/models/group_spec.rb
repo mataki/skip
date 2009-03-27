@@ -224,7 +224,7 @@ describe Group do
       :description =>  '',
       :protected => true,
       :gid => '',
-      :group_category_id => create_group_category(:initial_selected => true, :code => 'VALID').id
+      :group_category_id => create_group_category(:initial_selected => true, :code => SkipFaker.rand_alpha(5).upcase).id
     })
     group
   end
@@ -232,7 +232,7 @@ describe Group do
   def create_group(options = {})
     group = valid_group
     group.attributes = options
-    group.save!
+    group.save
     group
   end
 end
