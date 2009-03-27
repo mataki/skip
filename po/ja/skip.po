@@ -611,7 +611,7 @@ msgstr "各画面での用いるシステムの名称です。"
 
 #: app/models/admin/setting.rb:29
 msgid "Admin::Setting|Activation lifetime"
-msgstr "サインアップURLの有効期間"
+msgstr "サインアップURLの有効期間(日)"
 
 #: app/models/admin/setting.rb:30
 msgid "Admin::Setting|Activation lifetime description"
@@ -994,7 +994,7 @@ msgstr ""
 
 #: app/models/admin/setting.rb:99
 msgid "Admin::Setting|User lock trial limit"
-msgstr "ログインの試行回数の最大値"
+msgstr "ログインの試行回数の最大値(回)"
 
 #: app/models/admin/setting.rb:100
 msgid "Admin::Setting|User lock trial limit description"
