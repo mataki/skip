@@ -11,6 +11,7 @@ lib/tasks/rspec.rake
 vendor/rails
 coverage
 tmp/*
+pkg/*
 *flymake.rb
 *#*#
 *.#*
