@@ -21,4 +21,6 @@ module Types::ContentType
     :gif  => 'image/gif',
     :bmp  => 'image/bmp'
   }.freeze
+
+  DEFAULT_CONTENT_TYPE = "application/octet-stream"
 end
