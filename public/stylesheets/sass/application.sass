@@ -110,6 +110,7 @@ table
   :display block
 
 // サイドカラムに配置するボックス
+// TODO box_spaceではなく、box.sideにしたい。
 // ------------------------------------------------------------
 div.box_space
   :background-color = !base_background_color
@@ -149,6 +150,16 @@ div.box_space
     :padding 1px
     :font-size 10px
 
+// 汎用的なメッセージ表示ボックス(ページ先頭の説明文など)
+// TODO div.descをdiv.box.messageに移行後に削除する
+// ------------------------------------------------------------
+div.box.message
+  :font-size = !base_font_size
+  :margin-bottom 5px
+  :padding 3px 10px
+  :background-color #f0f0ff
+  :border 1px dashed #ffc000
+
 // 記事やブックマークのリスト表示
 // ------------------------------------------------------------
 h2.topix_title
@@ -163,6 +174,7 @@ h2.topix_title
   :color #003399
   :vertical-align bottom
   :margin-left 5px
+  :margin-bottom 5px
 div.topix_body
   :margin 0px 0px 10px 5px
   a:visited
@@ -221,10 +233,20 @@ h2.subtitle
   span.description
     :font-weight normal
 
+div.box.relative100
+  :position relative
+  :width 100%
+  :margin-bottom 10px
+  div.operation
+    :position absolute
+    :top 5px
+    :right 10px
+
 // 編集フォーム(テーブルレイアウト)
 // ------------------------------------------------------------
 table.normal
   :border = !base_border
+  :width 95%
   tr.line_0
     :background-color #f8f8ff
   tr.line_1
@@ -237,9 +259,24 @@ table.normal
     :border = !base_border
     :padding 1px 4px
 table.user_info
-  :width 95%
   th
-    :width 100px
+    :width 120px
+    :text-align left
+  // 表示用
+  &.show
+    :border none
+    tr
+      :line-height 24px
+      :border none
+      :border-bottom 1px dotted #ccc
+    td, th
+      :border none
+      :border-bottom 1px dotted #ccc
+
+table.user_chain
+  th
+    :width 80px
+    :text-align center
 
 // ============================================================
 // 2. 共通の構造
@@ -409,6 +446,7 @@ span.ss_help
 // ------------------------------------------------------------
 
 // 検索ボックス
+// TODO search_boxではなくbox.searchにしたい
 div.search_box
   :background-color #ffffff
   :border 2px solid #cccccc

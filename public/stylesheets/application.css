@@ -119,6 +119,13 @@ div.box_space {
     padding: 1px;
     font-size: 10px; }
 
+div.box.message {
+  font-size: 12px;
+  margin-bottom: 5px;
+  padding: 3px 10px;
+  background-color: #f0f0ff;
+  border: 1px dashed #ffc000; }
+
 h2.topix_title {
   border-top: 1px solid #cccccc;
   border-bottom: 1px dashed #ccc;
@@ -129,7 +136,8 @@ h2.topix_title {
   font-weight: bold;
   color: #003399;
   vertical-align: bottom;
-  margin-left: 5px; }
+  margin-left: 5px;
+  margin-bottom: 5px; }
 
 div.topix_body {
   margin: 0px 0px 10px 5px; }
@@ -182,8 +190,18 @@ h2.subtitle {
   h2.subtitle span.description {
     font-weight: normal; }
 
+div.box.relative100 {
+  position: relative;
+  width: 100%;
+  margin-bottom: 10px; }
+  div.box.relative100 div.operation {
+    position: absolute;
+    top: 5px;
+    right: 10px; }
+
 table.normal {
-  border: 1px solid #cccccc; }
+  border: 1px solid #cccccc;
+  width: 95%; }
   table.normal tr.line_0 {
     background-color: #f8f8ff; }
   table.normal tr.line_1 {
@@ -196,10 +214,22 @@ table.normal {
     border: 1px solid #cccccc;
     padding: 1px 4px; }
 
-table.user_info {
-  width: 95%; }
-  table.user_info th {
-    width: 100px; }
+table.user_info th {
+  width: 120px;
+  text-align: left; }
+table.user_info.show {
+  border: none; }
+  table.user_info.show tr {
+    line-height: 24px;
+    border: none;
+    border-bottom: 1px dotted #ccc; }
+  table.user_info.show td, table.user_info.show th {
+    border: none;
+    border-bottom: 1px dotted #ccc; }
+
+table.user_chain th {
+  width: 80px;
+  text-align: center; }
 
 div#contents_container {
   width: 100%;

@@ -1,37 +1,3 @@
-<% content_for :stylesheet do -%>
-  <style type="text/css">
-  div.input_line {
-    border-bottom: 1px dotted silver;
-    margin-bottom: 3px;
-    padding-bottom: 2px;
-  }
-  div.input_line div.input_label {
-    background-color: #f0f0ff;
-    width: 115px;
-    overflow: hidden;
-    float: left;
-    font-weight: bold;
-    padding: 3px 5px;
-    margin-right: 5px;
-  }
-  div.input_line div.input_value {
-    float: left;
-    padding: 3px 0;
-  }
-  div.input_line div.rich_value {
-    clear: both;
-    float: none;
-    border: 1px solid silver;
-    padding: 5px;
-  }
-  div.input_line div.input_bottom {
-    height: 0;
-    line-height: 0;
-    clear: both;
-  }
-  </style>
-<% end -%>
-
 <% content_for :contents_left do -%>
   <%= render(:partial => 'user/portrait_box', :locals => { :user => @user }) %>
   <div class="box_space" id="groups">
@@ -63,82 +29,76 @@
 
 <% content_for :contents_right do -%>
   <% if @user.retired? -%>
-  <div class="desc" style="font-weight: bold; margin-bottom: 5px;">この方は既に退職されています</div>
+  <div class="box message">この方は既に退職されています</div>
   <% end -%>
 
-  <div class="profile_information_space" style="margin-bottom: 10px; position: relative; width: 100%;">
+  <div class="box relative100">
     <h2 class="topix_title"><%= icon_tag('asterisk_orange') %>プロフィール</h2>
-    <% if @user.id == session[:user_id] -%>
-    <div style="position: absolute; top: 5px; right: 10px;">
-      <%= link_to icon_tag('vcard_edit', :title=>'編集する') + '[編集する]', :controller => 'mypage', :action => 'manage', :menu => 'manage_profile' %></div>
+    <% if @user.id == @current_user.id -%>
+    <div class="operation">
+      <%= link_to icon_tag('vcard_edit', :title=>'編集する') + '[編集する]', :controller => 'mypage', :action => 'manage', :menu => 'manage_profile' %>
+    </div>
     <% end -%>
 
-    <div class="topix_body" style="margin-top: 5px; width: 95%; overflow: hidden">
-      <h2 class="subtitle">アカウント情報</h2>
+    <h2 class="subtitle">アカウント情報</h2>
+    <table class="normal user_info show">
+    <% if user_name_mode?(:code) -%>
+      <tr>
+        <th><%=h Admin::Setting.login_account -%></th>
+        <td><%=h @user.code -%></td>
+      </tr>
+    <% end %>
+    <% if user_name_mode?(:name) -%>
+      <tr>
+        <th><%=h _('user name') -%></th>
+        <td><%=h @user.uid -%></td>
+      </tr>
+    <% end %>
+      <tr>
+        <th><%=h _("Admin::User|Name") %></th>
+        <td><%=h @user.name -%></td>
+      </tr>
+    <% unless Admin::Setting.hide_email -%>
+      <tr>
+        <th><%=h _('User|Email') %></th>
+        <td><a href="mailto:<%=h @user.email -%>"><%=h @user.email -%></a></td>
+      </tr>
+    <% end -%>
+      <tr>
+        <th><%=h _('User|Section') %></th>
+        <td><%=h @user.section -%></td>
+      </tr>
+    <% if @current_user.id == @user.id -%>
+      <tr>
+        <th><%=h _('User|Issued at') %></th>
+        <td><%=h @user.issued_at.blank? ? '' : @user.issued_at.strftime("%Y/%m/%d %H:%M:%S") %></td>
+      </tr>
+      <tr>
+        <th><%=h _('User|Last authenticated at') %></th>
+        <td><%=h @user.last_authenticated_at.blank? ? '' : @user.last_authenticated_at.strftime("%Y/%m/%d %H:%M:%S") %></td>
+      </tr>
+      <tr>
+        <th><%=h _('User|Password expires at') %></th>
+        <td><%=h @user.password_expires_at.blank? ? '' : @user.password_expires_at.strftime("%Y/%m/%d %H:%M:%S") %></td>
+      </tr>
+    <% end -%>
+    </table>
 
-      <% if user_name_mode?(:code) -%>
-      <div class="input_line">
-        <div class="input_label"><%=h Admin::Setting.login_account -%></div>
-        <div class="input_value"><%=h @user.code -%></div>
-        <div class="input_bottom"></div>
-      </div>
-      <% end %>
-      <% if user_name_mode?(:name) -%>
-      <div class="input_line">
-        <div class="input_label"><%=h _('user name') -%></div>
-        <div class="input_value"><%=h @user.uid -%></div>
-        <div class="input_bottom"></div>
-      </div>
-      <% end %>
-      <div class="input_line">
-        <div class="input_label"><%=h _("Admin::User|Name") %></div>
-        <div class="input_value"><%=h @user.name -%></div>
-        <div class="input_bottom"></div>
-      </div>
-      <% unless Admin::Setting.hide_email -%>
-      <div class="input_line">
-        <div class="input_label"><%=h _('User|Email') %></div>
-        <div class="input_value"><a href="mailto:<%=h @user.email -%>"><%=h @user.email -%></a></div>
-        <div class="input_bottom"></div>
-      </div>
-      <% end -%>
-      <div class="input_line">
-        <div class="input_label"><%=h _('User|Section') %></div>
-        <div class="input_value"><%=h @user.section -%></div>
-        <div class="input_bottom"></div>
-      </div>
-      <% if @current_user.id == @user.id -%>
-      <div class="input_line">
-        <div class="input_label"><%=h _('User|Issued at') %></div>
-        <div class="input_value"><%=h @user.issued_at.blank? ? '' : @user.issued_at.strftime("%Y/%m/%d %H:%M:%S") %></div>
-        <div class="input_bottom"></div>
-      </div>
-      <div class="input_line">
-        <div class="input_label"><%=h _('User|Last authenticated at') %></div>
-        <div class="input_value"><%=h @user.last_authenticated_at.blank? ? '' : @user.last_authenticated_at.strftime("%Y/%m/%d %H:%M:%S") %></div>
-        <div class="input_bottom"></div>
-      </div>
-      <div class="input_line">
-        <div class="input_label"><%=h _('User|Password expires at') %></div>
-        <div class="input_value"><%=h @user.password_expires_at.blank? ? '' : @user.password_expires_at.strftime("%Y/%m/%d %H:%M:%S") %></div>
-        <div class="input_bottom"></div>
-      </div>
-      <% end -%>
-
-      <% profiles = @user.user_profile_values
-         profile_hash = profiles.index_by(&:user_profile_master_id)
-         UserProfileMasterCategory.all.each do |category| -%>
+    <% profiles = @user.user_profile_values
+       profile_hash = profiles.index_by(&:user_profile_master_id)
+       UserProfileMasterCategory.all.each do |category| -%>
       <% unless category.user_profile_masters.empty? -%>
       <h2 class="subtitle"><%=h category.name %></h2>
-      <% category.user_profile_masters.each do |master| -%>
-      <div class="input_line">
-        <div class="input_label"><%=h master.name %></div>
-        <%= master.input_type_processer.to_show_html(profile_hash[master.id]) %>
-      </div>
+      <table class="normal user_info show">
+        <% category.user_profile_masters.each do |master| -%>
+        <tr>
+          <th><%=h master.name %></th>
+          <td><%= master.input_type_processer.to_show_html(profile_hash[master.id]) %></td>
+        </tr>
+        <% end -%>
+      </table>
       <% end -%>
-      <% end -%>
-      <% end -%>
-    </div>
+    <% end -%>
   </div>
 
   <%= render :partial => "postit_cloud",
@@ -147,23 +107,21 @@
                :tags => @tags
              } %>
   <% if @against_chains.size > 0 -%>
-  <div class="profile_information_space" style="margin-bottom: 10px; position: relative; width: 100%;">
-    <div style="position: absolute; top: 5px; right: 10px;"><%= link_to '[すべて見る]', :action => 'social', :menu => 'social_chain', :uid => @user.uid %></div>
+  <div class="box relative100">
+    <div class="operation"><%= link_to '[すべて見る]', :action => 'social', :menu => 'social_chain', :uid => @user.uid %></div>
     <h2 class="topix_title"><%= icon_tag('asterisk_orange') %>紹介文</h2>
-    <div class="topix_body" style="margin-top: 5px; width: 100%">
+    <div class="topix_body">
+    <table class="normal user_chain">
     <% for chain in @against_chains -%>
-
-    <table border="1" class="normal" style="width: 95%; margin-bottom: 5px;">
       <tr>
-        <th style="width: 80px; text-align: center;">
+        <th>
           <%= user_link_to_with_portrait(chain.from_user, :width => 60, :height => 40) %><br/>
           <%= user_link_to(chain.from_user) %>
         </th>
-        <td style="padding: 2px;"><%= render_richtext(chain.comment) %></td>
+        <td><%= render_richtext(chain.comment) %></td>
       </tr>
-    </table>
-
     <% end -%>
+    </table>
     </div>
   </div>
   <% end -%>
