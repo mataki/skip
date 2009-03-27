@@ -28,11 +28,10 @@ class UserUid < ActiveRecord::Base
 
   N_('UserUid|Uid')
 
-  validates_presence_of :uid, :message => 'は必須です'
-  validates_uniqueness_of :uid, :message => 'は既に登録されています'
-  validates_length_of :uid, :minimum => UID_MIN_LENGTH, :message => "は%d文字以上で入力してください"
-  validates_length_of :uid, :maximum => UID_MAX_LENGTH, :message => "は%d文字以内で入力してください"
-  validates_format_of :uid, :message => 'は数字orアルファベットor記号で入力してください', :with => UID_FORMAT_REGEX
+  validates_presence_of :uid
+  validates_uniqueness_of :uid, :case_sensitive => false
+  validates_length_of :uid, :within => INITIAL_SETTINGS['user_code_minimum_length'].to_i..UID_MAX_LENGTH
+  validates_format_of :uid, :with => UID_FORMAT_REGEX, :message => _('は数字、アルファベット及び次の記号[-(ハイフン)、_(アンダースコア)、.(ドット)]が利用可能です。その他の記号、半角空白などは使えません。')
 
   def validate
     errors.add(:uid, "は#{Admin::Setting.login_account}と異なる形式で入力してください") if uid_type == UID_TYPE[:username] && uid =~ UID_CODE_REGEX

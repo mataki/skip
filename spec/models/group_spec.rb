@@ -54,6 +54,14 @@ describe Group do
         end
       end
     end
+    it 'gidがユニークであること' do
+      create_group(:gid => 'SKIP_GID')
+      @group.gid = 'SKIP_GID'
+      @group.valid?.should be_false
+      # 大文字小文字が異なる場合もNG
+      @group.gid = 'Skip_gid'
+      @group.valid?.should be_false
+    end
   end
 
   describe Group, "承認待ちのユーザがいるとき" do
@@ -216,7 +224,7 @@ describe Group do
       :description =>  '',
       :protected => true,
       :gid => '',
-      :group_category_id => create_group_category(:initial_selected => true).id
+      :group_category_id => create_group_category(:initial_selected => true, :code => 'VALID').id
     })
     group
   end

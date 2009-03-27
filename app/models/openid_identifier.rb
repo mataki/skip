@@ -17,7 +17,7 @@ class OpenidIdentifier < ActiveRecord::Base
   belongs_to :user
 
   validates_presence_of :url
-  validates_uniqueness_of :url
+  validates_uniqueness_of :url, :case_sensitive => false
 
   def validate
     normalize_ident_url
