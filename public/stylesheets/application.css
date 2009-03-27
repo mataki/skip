@@ -67,6 +67,9 @@ table {
   color: blue;
   text-decoration: underline; }
 
+.margin10 {
+  margin: 10px; }
+
 .fieldWithErrors {
   display: inline;
   border: 1px solid pink;
@@ -179,9 +182,6 @@ h2.subtitle {
   h2.subtitle span.description {
     font-weight: normal; }
 
-form.edit {
-  margin: 10px; }
-
 table.normal {
   border: 1px solid #cccccc; }
   table.normal tr.line_0 {
@@ -197,7 +197,7 @@ table.normal {
     padding: 1px 4px; }
 
 table.user_info {
-  width: 97%; }
+  width: 95%; }
   table.user_info th {
     width: 100px; }
 

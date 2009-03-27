@@ -1,6 +1,6 @@
 <% tabindex = 0 %>
 <% action_value = is_new ? :apply : :update_profile %>
-<% form_tag({:action => action_value}, {:id => "registration_form", :class => 'edit'}) do %>
+<% form_tag({:action => action_value}, {:id => "registration_form", :class => 'margin10'}) do %>
 
 <%= render(:partial => "system/error_messages_for", :locals => { :messages => @error_msg }) if @error_msg %>
 
