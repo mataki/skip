@@ -36,9 +36,15 @@ class PortalController < ApplicationController
     when :registration
       params[:write_profile] = true
       params[:hobbies] = Array.new
+      unless current_user
+        flash[:error] = _('ユーザ登録が継続出来ません。最初からやり直して下さい。')
+        redirect_to :controller => '/platform', :action => :index
+        return
+      end
       @user = current_user
       @profile = (@user.user_profile || UserProfile.new_default)
-      @user_uid = (UserUid.new({ :uid => @profile.email.split('@').first }))
+      uid = @profile.email.blank? ? "" : @profile.email.split('@').first
+      @user_uid = (UserUid.new({ :uid => uid }))
     end
     render :action => session[:entrance_next_action]
   end
