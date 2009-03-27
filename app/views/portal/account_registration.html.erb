@@ -6,7 +6,7 @@
 <% form_for(@user, :url => { :controller => :portal, :action => :registration }) do |f| -%>
 <% @uid = @user.user_uids.first %>
 <%= render(:partial => "system/error_messages_for", :locals => { :messages => @error_msgs }) if @error_msgs %>
-<div class="subtitle">アカウント情報</div>
+<h2 class="subtitle">アカウント情報</h2>
 <table id="user_info_box" class="normal" border="1">
   <tr>
     <th width="100px"><label for="user_code">ログインID</label></th>

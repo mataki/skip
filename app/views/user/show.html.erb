@@ -74,7 +74,7 @@
     <% end -%>
 
     <div class="topix_body" style="margin-top: 5px; width: 95%; overflow: hidden">
-      <div class="subtitle">アカウント情報</div>
+      <h2 class="subtitle">アカウント情報</h2>
 
       <% if user_name_mode?(:code) -%>
       <div class="input_line">
@@ -129,7 +129,7 @@
          profile_hash = profiles.index_by(&:user_profile_master_id)
          UserProfileMasterCategory.all.each do |category| -%>
       <% unless category.user_profile_masters.empty? -%>
-      <div class="subtitle"><%=h category.name %></div>
+      <h2 class="subtitle"><%=h category.name %></h2>
       <% category.user_profile_masters.each do |master| -%>
       <div class="input_line">
         <div class="input_label"><%=h master.name %></div>

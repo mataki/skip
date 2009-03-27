@@ -21,13 +21,13 @@
   <% form_tag({:action => 'update_customize'}) do -%>
     <%= template_error_messages_for 'user_custom' %>
 
-    <div class="subtitle">スタイル</div>
+    <h2 class="subtitle">スタイル</h2>
     <div style="margin: 10px;">
     <%= radio_button("user_custom", "classic", false) %>スタンダード（上部グローバルナビゲーション）<br/>
     <%= radio_button("user_custom", "classic", true) %>クラシック（右側サイドメニュー）<br/>
     </div>
 
-    <div class="subtitle">テーマ</div>
+    <h2 class="subtitle">テーマ</h2>
     <% skins_path = File.join(RAILS_ROOT, "public", "stylesheets", "skins")
      Dir.glob(File.join(skins_path, "*")).each do |skins_dir|
        skin = File.basename(skins_dir)
