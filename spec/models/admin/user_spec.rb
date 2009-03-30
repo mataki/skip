@@ -226,7 +226,7 @@ describe Admin::User, '.lock_actives' do
   end
   describe '利用中ユーザ全てをロックできる場合' do
     before do
-      Admin::User.should_receive(:enable_forgot_password).and_return(true)
+      Admin::User.should_receive(:enable_forgot_password?).and_return(true)
     end
     it '一般の利用中ユーザがロックされること' do
       lambda do
@@ -249,7 +249,7 @@ describe Admin::User, '.lock_actives' do
   end
   describe '利用中ユーザ全てをロックできない場合' do
     before do
-      Admin::User.should_receive(:enable_forgot_password).and_return(false)
+      Admin::User.should_receive(:enable_forgot_password?).and_return(false)
     end
     it '一般の利用中ユーザがロックされないこと' do
       lambda do
