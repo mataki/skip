@@ -17,8 +17,8 @@ Given /^メール機能を有効にする$/ do
   Admin::Setting['mail_function_setting'] = true
 end
 
-Given /^ログインIDが"(.*)"でパスワードが"(.*)"のユーザでログインする$/ do |id, password|
-  create_user(id, password)
+Given /^ログインIDが"(.*)"でパスワードが"(.*)"のあるユーザでログインする$/ do |id, password|
+  @user = create_user(id, password)
   visit "/platform"
   fill_in("ログインID", :with => id)
   fill_in("パスワード", :with => password)

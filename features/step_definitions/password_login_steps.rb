@@ -17,8 +17,8 @@ Given /ログインページを表示している/ do
   visit "/platform"
 end
 
-Given /^ログインIDが"(.*)"でパスワードが"(.*)"のユーザを作成する$/ do |id, password|
-  create_user(id,password)
+Given /^ログインIDが"(.*)"でパスワードが"(.*)"のあるユーザを作成する$/ do |id, password|
+  @user = create_user(id,password)
 end
 
 def create_user(id, password)
@@ -30,5 +30,10 @@ def create_user(id, password)
   u.save!
   u.status = "ACTIVE"
   u.save!
+  u
 end
 
+Given /^あるユーザはロックされている$/ do
+  @user.locked = true
+  @user.save
+end
