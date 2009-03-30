@@ -13,6 +13,14 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-Given /メール機能を有効にする/ do
+Given /^メール機能を有効にする$/ do
   Admin::Setting['mail_function_setting'] = true
+end
+
+Given /^ログインIDが"(.*)"でパスワードが"(.*)"のユーザでログインする$/ do |id, password|
+  create_user(id, password)
+  visit "/platform"
+  fill_in("ログインID", :with => id)
+  fill_in("パスワード", :with => password)
+  click_button("ログイン")
 end
