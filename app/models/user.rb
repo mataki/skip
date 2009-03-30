@@ -67,8 +67,8 @@ class User < ActiveRecord::Base
   N_('User|Disclosure|true')
   N_('User|Disclosure|false')
 
-  N_('User|Lock|true')
-  N_('User|Lock|false')
+  N_('User|Locked|true')
+  N_('User|Locked|false')
 
   ACTIVATION_LIFETIME = 5
 
@@ -119,7 +119,7 @@ class User < ActiveRecord::Base
       self.password_expires_at = Time.now.since(Admin::Setting.password_change_interval.day)
       self.reset_auth_token = nil
       self.reset_auth_token_expires_at = nil
-      self.lock = false
+      self.locked = false
       self.trial_num = 0
     end
   end
@@ -410,7 +410,7 @@ class User < ActiveRecord::Base
   end
 
   def locked?
-    self.lock
+    self.locked
   end
 
   def within_time_limit_of_password?
@@ -482,7 +482,7 @@ private
         user.trial_num += 1
         user.save(false)
       else
-        user.lock = true
+        user.locked = true
         user.save(false)
         user.logger.info(user.to_s_log('[User Locked]'))
       end

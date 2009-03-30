@@ -232,19 +232,19 @@ describe Admin::User, '.lock_actives' do
       lambda do
         Admin::User.lock_actives
         @active_user.reload
-      end.should change(@active_user, :lock).to(true)
+      end.should change(@active_user, :locked).to(true)
     end
     it '管理者ユーザがロックされること' do
       lambda do
         Admin::User.lock_actives
         @admin_user.reload
-      end.should change(@admin_user, :lock).to(true)
+      end.should change(@admin_user, :locked).to(true)
     end
     it '未使用ユーザがロックされないこと' do
       lambda do
         Admin::User.lock_actives
         @unused_user = Admin::User.find_by_id(@unused_user.id)
-      end.should_not change(@unused_user, :lock)
+      end.should_not change(@unused_user, :locked)
     end
   end
   describe '利用中ユーザ全てをロックできない場合' do
@@ -255,19 +255,19 @@ describe Admin::User, '.lock_actives' do
       lambda do
         Admin::User.lock_actives
         @active_user.reload
-      end.should_not change(@unused_user, :lock)
+      end.should_not change(@unused_user, :locked)
     end
     it '管理者ユーザがロックされないこと' do
       lambda do
         Admin::User.lock_actives
         @admin_user.reload
-      end.should_not change(@unused_user, :lock)
+      end.should_not change(@unused_user, :locked)
     end
     it '未使用ユーザがロックされないこと' do
       lambda do
         Admin::User.lock_actives
         @unused_user = Admin::User.find_by_id(@unused_user.id)
-      end.should_not change(@unused_user, :lock)
+      end.should_not change(@unused_user, :locked)
     end
     it '0が返ること' do
       Admin::User.lock_actives.should == 0

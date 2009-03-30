@@ -56,14 +56,14 @@ class Admin::UsersController < Admin::ApplicationController
 
   def update
     @user = Admin::User.make_user_by_id(params)
-    if @user.id == current_user.id and (@user.status != current_user.status or @user.admin != current_user.admin or @user.lock != current_user.lock)
+    if @user.id == current_user.id and (@user.status != current_user.status or @user.admin != current_user.admin or @user.locked != current_user.locked)
       @user.status = current_user.status
       @user.admin = current_user.admin
-      @user.lock = current_user.lock
+      @user.locked = current_user.locked
       @user.errors.add_to_base(_('You cannot update status and admin and lock of yourself'))
       raise ActiveRecord::RecordInvalid.new(@user)
     end
-    @user.trial_num = 0 unless @user.lock
+    @user.trial_num = 0 unless @user.locked
     @user.save!
     flash[:notice] = _('更新しました。')
     redirect_to :action => "edit"

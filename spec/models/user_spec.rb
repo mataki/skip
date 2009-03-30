@@ -241,7 +241,7 @@ describe User, "#before_save" do
       @user.save
       @user.reset_auth_token = 'reset_auth_token'
       @user.reset_auth_token_expires_at = Time.now
-      @user.lock = true
+      @user.locked = true
       @user.trial_num = 1
       @user.save
       Admin::Setting.password_change_interval = 90
@@ -273,10 +273,10 @@ describe User, "#before_save" do
           @user.save
         end.should change(@user, :reset_auth_token_expires_at).to(nil)
       end
-      it 'lockがクリアされること' do
+      it 'lockedがクリアされること' do
         lambda do
           @user.save
-        end.should change(@user, :lock).to(false)
+        end.should change(@user, :locked).to(false)
       end
       it 'trial_numがクリアされること' do
         lambda do
@@ -309,10 +309,10 @@ describe User, "#before_save" do
           @user.save
         end.should_not change(@user, :reset_auth_token_expires_at)
       end
-      it 'lockが変わらないこと' do
+      it 'lockedが変わらないこと' do
         lambda do
           @user.save
-        end.should_not change(@user, :lock)
+        end.should_not change(@user, :locked)
       end
       it 'trial_numが変わらないこと' do
         lambda do
@@ -855,7 +855,7 @@ describe User, '#locked?' do
     end
     describe 'ユーザがロックされている場合' do
       before do
-        @user.lock = true
+        @user.locked = true
       end
       it 'ロックされていると判定されること' do
         @user.locked?.should be_true
@@ -863,7 +863,7 @@ describe User, '#locked?' do
     end
     describe 'ユーザがロックされていない場合' do
       before do
-        @user.lock = false
+        @user.locked = false
       end
       it 'ロックされていないと判定されること' do
         @user.locked?.should be_false
@@ -876,7 +876,7 @@ describe User, '#locked?' do
     end
     describe 'ユーザがロックされている場合' do
       before do
-        @user.lock = true
+        @user.locked = true
       end
       it 'ロックされていると判定されること' do
         @user.locked?.should be_true
@@ -884,7 +884,7 @@ describe User, '#locked?' do
     end
     describe 'ユーザがロックされていない場合' do
       before do
-        @user.lock = false
+        @user.locked = false
       end
       it 'ロックされていないと判定されること' do
         @user.locked?.should be_false
@@ -1166,7 +1166,7 @@ describe User, '.auth_failed' do
         it 'ロックされること' do
           lambda do
             User.send!(:auth_failed, @user)
-          end.should change(@user, :lock).to(true)
+          end.should change(@user, :locked).to(true)
         end
         it 'ロックした旨のログが出力されること' do
           @user.should_receive(:to_s_log).with('[User Locked]').and_return('user locked log')
@@ -1181,7 +1181,7 @@ describe User, '.auth_failed' do
         it 'ロック状態が変化しないこと' do
           lambda do
             User.send!(:auth_failed, @user)
-          end.should_not change(@user, :lock)
+          end.should_not change(@user, :locked)
         end
         it 'ロックした旨のログが出力されないこと' do
           @user.stub!(:to_s_log).with('[User Locked]').and_return('user locked log')
@@ -1203,7 +1203,7 @@ describe User, '.auth_failed' do
     it 'ロック状態が変化しないこと' do
       lambda do
         User.send!(:auth_failed, @user)
-      end.should_not change(@user, :lock)
+      end.should_not change(@user, :locked)
     end
     it 'ロックした旨のログが出力されないこと' do
       @user.stub!(:to_s_log).with('[User Locked]').and_return('user locked log')

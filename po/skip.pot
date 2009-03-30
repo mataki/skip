@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2009-03-26 17:30+0900\n"
+"POT-Creation-Date: 2009-03-30 12:38+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1137,14 +1137,14 @@ msgid "Admin::User|Last authenticated at"
 msgstr ""
 
 #: app/models/admin/user.rb:40
-msgid "Admin::User|Lock"
+msgid "Admin::User|Locked"
 msgstr ""
 
 #: app/models/admin/user.rb:41
-msgid "Admin::User|Lock description"
+msgid "Admin::User|Locked description"
 msgstr ""
 
-#: app/models/admin/user.rb:27 app/views/user/show.html.erb:94
+#: app/models/admin/user.rb:27 app/views/user/show.html.erb:58
 #: app/views/portal/_registration_form.html.erb:17
 #: app/views/admin/users/import.html.erb:21 app/views/users/_user.html.erb:28
 #: app/views/users/index.html.erb:5
@@ -2636,31 +2636,31 @@ msgstr ""
 msgid "User|Disclosure|true"
 msgstr ""
 
-#: app/views/user/show.html.erb:100
+#: app/views/user/show.html.erb:63
 #: app/views/portal/_registration_form.html.erb:21
 #: app/views/shared/_login_form.html.erb:24
 #: app/views/platform/_mail_form.html.erb:3 app/views/users/_user.html.erb:31
 msgid "User|Email"
 msgstr ""
 
-#: app/models/user.rb:- app/views/user/show.html.erb:112
+#: app/models/user.rb:- app/views/user/show.html.erb:73
 msgid "User|Issued at"
 msgstr ""
 
-#: app/models/user.rb:- app/views/user/show.html.erb:117
+#: app/models/user.rb:- app/views/user/show.html.erb:77
 msgid "User|Last authenticated at"
 msgstr ""
 
 #: app/models/user.rb:-
-msgid "User|Lock"
+msgid "User|Locked"
 msgstr ""
 
 #: app/models/user.rb:71
-msgid "User|Lock|false"
+msgid "User|Locked|false"
 msgstr ""
 
 #: app/models/user.rb:70
-msgid "User|Lock|true"
+msgid "User|Locked|true"
 msgstr ""
 
 #: app/models/user.rb:55
@@ -2675,7 +2675,7 @@ msgstr ""
 msgid "User|Password confirmation"
 msgstr ""
 
-#: app/models/user.rb:- app/views/user/show.html.erb:122
+#: app/models/user.rb:- app/views/user/show.html.erb:81
 msgid "User|Password expires at"
 msgstr ""
 
@@ -2695,7 +2695,7 @@ msgstr ""
 msgid "User|Reset auth token expires at"
 msgstr ""
 
-#: app/views/user/show.html.erb:106
+#: app/views/user/show.html.erb:68
 #: app/views/portal/_registration_form.html.erb:25
 #: app/views/users/_user.html.erb:40
 msgid "User|Section"
@@ -2995,7 +2995,7 @@ msgstr ""
 #: app/helpers/initial_settings_helper.rb:43
 #: app/controllers/admin/users_controller.rb:187
 #: app/controllers/admin/users_controller.rb:195 app/models/share_file.rb:250
-#: app/models/user_search_condition.rb:39 app/views/user/show.html.erb:88
+#: app/models/user_search_condition.rb:39 app/views/user/show.html.erb:53
 #: app/views/portal/_registration_form.html.erb:38
 #: app/views/admin/users/create_uid.html.erb:12
 #: app/views/admin/users/create_uid.html.erb:27
@@ -3215,6 +3215,10 @@ msgstr ""
 
 #: app/controllers/admin/settings_controller.rb:64
 msgid "システム運用について"
+msgstr ""
+
+#: app/views/admin/settings/_security.html.erb:34
+msgid "セッション制限"
 msgstr ""
 
 #: app/controllers/mypage_controller.rb:528

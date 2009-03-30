@@ -37,8 +37,8 @@ class Admin::User < User
   N_('Admin::User|Status description')
   N_('Admin::User|Password reset token')
   N_('Admin::User|Password reset token description')
-  N_('Admin::User|Lock')
-  N_('Admin::User|Lock description')
+  N_('Admin::User|Locked')
+  N_('Admin::User|Locked description')
   N_('Admin::User|Issued at')
   N_('Admin::User|Last authenticated at')
   N_('Admin::User|Password expires at')
@@ -119,7 +119,7 @@ class Admin::User < User
   end
 
   def self.lock_actives
-    enable_forgot_password ? update_all('`lock` = 1', ['status = ?', 'ACTIVE']) : 0
+    enable_forgot_password ? update_all('locked = 1', ['status = ?', 'ACTIVE']) : 0
   end
 
   private

@@ -105,7 +105,7 @@ describe Admin::UsersController, 'POST #update' do
       @admin_user = admin_login
       @admin_user.stub!(:status).and_return(@before_status)
       @admin_user.stub!(:admin).and_return(@before_admin)
-      @admin_user.stub!(:lock).and_return(@before_lock)
+      @admin_user.stub!(:locked).and_return(@before_lock)
       @admin_user.stub!(:id).and_return(@user.id)
 
       @user.stub!(:save!)
@@ -119,7 +119,7 @@ describe Admin::UsersController, 'POST #update' do
       post :update
     end
     it 'ロック状態が変更されない' do
-      @user.should_receive(:lock=).with(@before_lock)
+      @user.should_receive(:locked=).with(@before_lock)
       post :update
     end
     it "編集画面がrenderされる" do
@@ -130,7 +130,7 @@ describe Admin::UsersController, 'POST #update' do
   describe '他者を更新する場合' do
     describe 'ロックされていない場合' do
       before do
-        @user.lock = false
+        @user.locked = false
       end
       it '試行回数に0が設定されること' do
         @user.should_receive(:trial_num=).with(0)
@@ -139,7 +139,7 @@ describe Admin::UsersController, 'POST #update' do
     end
     describe 'ロックされている場合' do
       before do
-        @user.lock = true
+        @user.locked = true
       end
       it '試行回数が設定されないこと' do
         @user.should_not_receive(:trial_num=)
