@@ -36,7 +36,7 @@ SKIPを動かすにあたり以下の環境で検証を行っています。
 
 1. gemsのインストール
 --------------------------------------------------------------------------------
-    $ sudo gem install gettext
+    $ sudo gem install gettext --version 1.93.0
     $ sudo gem install fastercsv
     $ sudo gem install ruby-openid
     $ sudo gem install rails --version 2.1.2
