@@ -18,7 +18,7 @@ namespace :skip do
       %w[log tmp].each{|d| Dir.mkdir d }
     end
     Dir.chdir("pkg") do
-      system("zip #{out}.zip #{out}/**/*")
+      system("zip -r #{out}.zip #{out}")
       system("tar zcvf #{out}.tar.gz #{out}")
       FileUtils.rm_rf out
     end
