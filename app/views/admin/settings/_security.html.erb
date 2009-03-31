@@ -39,13 +39,52 @@
 <% content_for :javascript do -%>
 <script type="text/javascript">
 $j(function(){
+    var toggleByCheckbox = function(checkboxId){
+      var jcheckbox = $j('#' + checkboxId);
+      if(jcheckbox.is(':checked')){
+        jcheckbox.parent().nextAll().find(':input').removeAttr('disabled');
+        jcheckbox.parent().nextAll().find('label').css('color', '#505050');
+      }else{
+        jcheckbox.parent().nextAll().find(':input').attr('disabled', 'disabled');
+        jcheckbox.parent().nextAll().find('label').css('color', '#999');
+      }
+    };
+    var toggleLoginTrialLimit = function() {
+        toggleByCheckbox('setting_enable_user_lock');
+    };
+    var togglePasswordChangeInterval = function() {
+        toggleByCheckbox('setting_enable_password_periodic_change');
+    };
     var toggleCustomPasswordStrength = function() {
         if($j('#setting_password_strength').val() == 'custom') {
             $j('#custom_password_strength input').removeAttr('disabled');
+            $j('#custom_password_strength label').css('color',  '#505050');
         } else {
             $j('#custom_password_strength input').attr('disabled', 'disabled');
+            $j('#custom_password_strength label').css('color',  '#999');
         }
     };
+    var toggleLoginKeyPhrase = function() {
+        toggleByCheckbox('setting_enable_login_keyphrase');
+    };
+    var toggleCleaningNotificationInterval = function() {
+        toggleByCheckbox('setting_enable_user_cleaning_notification');
+    };
+    var setupSecurityForm = function() {
+        toggleLoginTrialLimit();
+        togglePasswordChangeInterval();
+        toggleCustomPasswordStrength();
+        toggleLoginKeyPhrase();
+        toggleCleaningNotificationInterval();
+    };
+    $j('#setting_enable_user_lock')
+    .click(function() {
+        toggleLoginTrialLimit();
+    });
+    $j('#setting_enable_password_periodic_change')
+    .click(function() {
+        togglePasswordChangeInterval();
+    });
     $j('#setting_password_strength')
     .keyup(function(event){
         if(event.keyCode == 38 || event.keyCode == 40)
@@ -54,7 +93,15 @@ $j(function(){
     .change(function(){
         toggleCustomPasswordStrength();
     });
-    toggleCustomPasswordStrength();
+    $j('#setting_enable_login_keyphrase')
+    .click(function() {
+        toggleLoginKeyPhrase();
+    });
+    $j('#setting_enable_user_cleaning_notification')
+    .click(function() {
+        toggleCleaningNotificationInterval();
+    });
+    setupSecurityForm();
 });
 </script>
 <% end -%>
