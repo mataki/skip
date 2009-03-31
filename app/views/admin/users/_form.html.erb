@@ -18,7 +18,6 @@
 <p>
   <%= label Admin::User.name, :name %>
   :<%= text_field :user, :name %>
-  <%= help_icon Admin::User.name, :name %>
 </p>
 <p>
   <%= label Admin::User.name, :status %>
@@ -48,12 +47,10 @@
 <p>
   <%= label Admin::User.name, :email %>
   <%= text_field :user, :email %>
-  <%= help_icon Admin::User.name, :email %>
 </p>
 <p>
   <%= label Admin::User.name, :section %>
   <%= text_field :user, :section %>
-  <%= help_icon Admin::User.name, :section %>
 </p>
 <% if !Admin::Setting.mail_function_setting && @user.active? && login_mode?(:password) -%>
 <p>
