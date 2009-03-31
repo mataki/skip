@@ -2,7 +2,6 @@ namespace :skip do
   desc "create release .zip archive."
   task :release do
     raise "This directory is not Git repository." unless File.directory?(".git")
-    require 'zip/zip'
     require 'fileutils'
 
     commit = ENV["COMMIT"] || "HEAD"
@@ -19,7 +18,7 @@ namespace :skip do
       %w[log tmp].each{|d| Dir.mkdir d }
     end
     Dir.chdir("pkg") do
-      system("zip #{out}.zip #{out}")
+      system("zip #{out}.zip #{out}/**/*")
       system("tar zcvf #{out}.tar.gz #{out}")
       FileUtils.rm_rf out
     end
