@@ -150,6 +150,26 @@ div.box_space
     :padding 1px
     :font-size 10px
 
+// サイドカラムのカレンダーボックス
+// ------------------------------------------------------------
+table.calendar
+  :border none
+  :border-collapse separate
+  :width 100%
+  :_width 94%
+  tr, th, td
+    :text-align center
+  tr.monthName, tr.dayName
+    :background-color #abf
+  td.day
+    :background-color #f0f0ff
+  td.holiday
+    :background-color #ffe0e0
+  td.today
+    :background-color #c0ffc0
+  td.selected
+    :background-color #ffffa0
+
 // 汎用的なメッセージ表示ボックス(ページ先頭の説明文など)
 // TODO div.descをdiv.box.messageに移行後に削除する
 // ------------------------------------------------------------

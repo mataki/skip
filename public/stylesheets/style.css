@@ -152,42 +152,7 @@ div.auto_complete ul strong.highlight {
   margin:0;
   padding:0;
 }
-/* ----------------------------------- */
-/* カレンダー */
-.calendar {
-  border: none;
-  width: 100%;
-  _width: 94%;
-}
-.calendar, .calendar tr, .calendar th, .calendar td {
-  text-align: center;
-}
-.calendar tbody td {
-}
-.calendar hr {
-  border: solid thin #46f;
-}
-.monthName {
-  background-color: #abf;
-}
-.dayName {
-  background-color: #abf;
-  border: solid 1px #46f;
-}
-.otherMonth {
-}
-.day {
-  background-color: #f0f0ff;
-}
-.holiday {
-  background-color: #ffe0e0;
-}
-.today {
-  background-color: #c0ffc0;
-}
-.selected {
-  background-color: #ffffa0;
-}
+
 /* ----------------------------------- */
 /* コンテンツの左メニュー・右中身の構造 */
 

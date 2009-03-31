@@ -119,6 +119,24 @@ div.box_space {
     padding: 1px;
     font-size: 10px; }
 
+table.calendar {
+  border: none;
+  border-collapse: separate;
+  width: 100%;
+  _width: 94%; }
+  table.calendar tr, table.calendar th, table.calendar td {
+    text-align: center; }
+  table.calendar tr.monthName, table.calendar tr.dayName {
+    background-color: #abf; }
+  table.calendar td.day {
+    background-color: #f0f0ff; }
+  table.calendar td.holiday {
+    background-color: #ffe0e0; }
+  table.calendar td.today {
+    background-color: #c0ffc0; }
+  table.calendar td.selected {
+    background-color: #ffffa0; }
+
 div.box.message {
   font-size: 12px;
   margin-bottom: 5px;
