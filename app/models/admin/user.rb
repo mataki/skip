@@ -119,7 +119,7 @@ class Admin::User < User
   end
 
   def self.lock_actives
-    enable_forgot_password? ? update_all('locked = 1', ['status = ?', 'ACTIVE']) : 0
+    enable_forgot_password? ? update_all('locked = 1, auth_session_token = NULL, remember_token = NULL, remember_token_expires_at = NULL', ['status = ?', 'ACTIVE']) : 0
   end
 
   private

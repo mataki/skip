@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2009-03-30 12:38+0900\n"
+"POT-Creation-Date: 2009-03-31 16:25+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2766,7 +2766,7 @@ msgstr ""
 msgid "Your OpenID:"
 msgstr ""
 
-#: app/views/admin/settings/_security.html.erb:16
+#: app/views/admin/settings/_security.html.erb:17
 msgid "[全ユーザにパスワード再設定を求める]"
 msgstr ""
 
@@ -3049,10 +3049,11 @@ msgstr ""
 msgid "あなたへ宛てた連絡"
 msgstr ""
 
-#: app/views/admin/settings/_security.html.erb:16
+#: app/views/admin/settings/_security.html.erb:17
 msgid ""
-"あなたを含む使用中ユーザの次回ログイン時に、パスワード再設定が必要になります"
-"が宜しいですか?"
+"あなたを含む使用中のユーザ全てをロックします。ログイン中のユーザは強制ログア"
+"ウト状態になり、再度ログインするにはパスワードの再設定が必要になります。実行"
+"しても宜しいですか?"
 msgstr ""
 
 #: app/views/admin/settings/_literal.html.erb:11
@@ -3166,7 +3167,7 @@ msgstr ""
 msgid "キャンセルされました。このサーバへの認証を確認してください"
 msgstr ""
 
-#: app/views/admin/settings/_security.html.erb:29
+#: app/views/admin/settings/_security.html.erb:31
 msgid "クリーニング依頼メール"
 msgstr ""
 
@@ -3217,7 +3218,7 @@ msgstr ""
 msgid "システム運用について"
 msgstr ""
 
-#: app/views/admin/settings/_security.html.erb:34
+#: app/views/admin/settings/_security.html.erb:36
 msgid "セッション制限"
 msgstr ""
 
@@ -3410,7 +3411,7 @@ msgstr ""
 msgid "ログインに失敗しました。"
 msgstr ""
 
-#: app/views/admin/settings/_security.html.erb:24
+#: app/views/admin/settings/_security.html.erb:26
 msgid "ログインキーフレーズ"
 msgstr ""
 
@@ -3539,7 +3540,7 @@ msgstr ""
 msgid "初期値に戻す"
 msgstr ""
 
-#: app/views/admin/settings/_security.html.erb:17
+#: app/views/admin/settings/_security.html.erb:18
 msgid ""
 "利用中の全ユーザをロックします。実行することで各ユーザは次回ログイン時のパス"
 "ワードの再設定が必要になります。 パスワード強度を強めた場合など、全ユーザにパ"

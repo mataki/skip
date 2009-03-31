@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2009-03-30 12:38+0900\n"
+"POT-Creation-Date: 2009-03-31 16:25+0900\n"
 "PO-Revision-Date: 2009-03-26 13:54+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -676,7 +676,10 @@ msgstr "ログインできるブラウザを一つにする"
 #: app/models/admin/setting.rb:32
 msgid "Admin::Setting|Enable single session description"
 msgstr ""
-"チェックするとユーザ毎にログインできるブラウザ数を一つに制限します。あるブラウザでのログイン状態が別のブラウザでログインし直すことで無効化(ログアウト忘れ時に遠隔ログアウト)されます。 複数のブラウザでのログインを許可したい場合はチェックを外して下さい。"
+"チェックするとユーザ毎にログインできるブラウザ数を一つに制限します。あるブラ"
+"ウザでのログイン状態が別のブラウザでログインし直すことで無効化(ログアウト忘れ"
+"時に遠隔ログアウト)されます。 複数のブラウザでのログインを許可したい場合は"
+"チェックを外して下さい。"
 
 #: app/models/admin/setting.rb:122
 msgid "Admin::Setting|Enable user cleaning notification"
@@ -2885,7 +2888,7 @@ msgstr ""
 msgid "Your OpenID:"
 msgstr "あなたの認証中のID:"
 
-#: app/views/admin/settings/_security.html.erb:16
+#: app/views/admin/settings/_security.html.erb:17
 msgid "[全ユーザにパスワード再設定を求める]"
 msgstr ""
 
@@ -3168,10 +3171,11 @@ msgstr ""
 msgid "あなたへ宛てた連絡"
 msgstr ""
 
-#: app/views/admin/settings/_security.html.erb:16
+#: app/views/admin/settings/_security.html.erb:17
 msgid ""
-"あなたを含む使用中ユーザの次回ログイン時に、パスワード再設定が必要になります"
-"が宜しいですか?"
+"あなたを含む使用中のユーザ全てをロックします。ログイン中のユーザは強制ログア"
+"ウト状態になり、再度ログインするにはパスワードの再設定が必要になります。実行"
+"しても宜しいですか?"
 msgstr ""
 
 #: app/views/admin/settings/_literal.html.erb:11
@@ -3285,7 +3289,7 @@ msgstr ""
 msgid "キャンセルされました。このサーバへの認証を確認してください"
 msgstr ""
 
-#: app/views/admin/settings/_security.html.erb:29
+#: app/views/admin/settings/_security.html.erb:31
 msgid "クリーニング依頼メール"
 msgstr ""
 
@@ -3336,7 +3340,7 @@ msgstr ""
 msgid "システム運用について"
 msgstr ""
 
-#: app/views/admin/settings/_security.html.erb:34
+#: app/views/admin/settings/_security.html.erb:36
 msgid "セッション制限"
 msgstr ""
 
@@ -3529,7 +3533,7 @@ msgstr ""
 msgid "ログインに失敗しました。"
 msgstr ""
 
-#: app/views/admin/settings/_security.html.erb:24
+#: app/views/admin/settings/_security.html.erb:26
 msgid "ログインキーフレーズ"
 msgstr ""
 
@@ -3658,7 +3662,7 @@ msgstr ""
 msgid "初期値に戻す"
 msgstr ""
 
-#: app/views/admin/settings/_security.html.erb:17
+#: app/views/admin/settings/_security.html.erb:18
 msgid ""
 "利用中の全ユーザをロックします。実行することで各ユーザは次回ログイン時のパス"
 "ワードの再設定が必要になります。 パスワード強度を強めた場合など、全ユーザにパ"
