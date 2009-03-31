@@ -33,7 +33,7 @@ class EditController < ApplicationController
     params[:symbol] ||= @board_entry.symbol
 
     params[:publication_type] ||= "public"
-    params[:publication_symbols_value] = ""
+    params[:publication_symbols_value] ||= ""
 
     case params[:editor_mode] ||= "richtext"
     when "richtext"
