@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2009-03-31 16:25+0900\n"
+"POT-Creation-Date: 2009-03-31 17:06+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1128,19 +1128,19 @@ msgstr ""
 msgid "Admin::User|Email description"
 msgstr ""
 
-#: app/models/admin/user.rb:42
+#: app/models/admin/user.rb:40
 msgid "Admin::User|Issued at"
 msgstr ""
 
-#: app/models/admin/user.rb:43
+#: app/models/admin/user.rb:41
 msgid "Admin::User|Last authenticated at"
 msgstr ""
 
-#: app/models/admin/user.rb:40
+#: app/models/admin/user.rb:38
 msgid "Admin::User|Locked"
 msgstr ""
 
-#: app/models/admin/user.rb:41
+#: app/models/admin/user.rb:39
 msgid "Admin::User|Locked description"
 msgstr ""
 
@@ -1163,16 +1163,8 @@ msgstr ""
 msgid "Admin::User|Password confirmation"
 msgstr ""
 
-#: app/models/admin/user.rb:44
+#: app/models/admin/user.rb:42
 msgid "Admin::User|Password expires at"
-msgstr ""
-
-#: app/models/admin/user.rb:38
-msgid "Admin::User|Password reset token"
-msgstr ""
-
-#: app/models/admin/user.rb:39
-msgid "Admin::User|Password reset token description"
 msgstr ""
 
 #: app/models/admin/user.rb:35
@@ -1199,7 +1191,7 @@ msgstr ""
 msgid "Admin::User|Uid"
 msgstr ""
 
-#: app/models/admin/user.rb:46
+#: app/models/admin/user.rb:44
 msgid "Admin::User|User uids"
 msgstr ""
 
@@ -3237,6 +3229,12 @@ msgstr ""
 
 #: app/views/admin/users/issue_password_reset_code.html.erb:2
 msgid "パスワードを再設定するためのURLは以下の通りです。"
+msgstr ""
+
+#: app/views/admin/users/_form.html.erb:62
+msgid ""
+"パスワードを再設定するためのURLを表示します。ユーザがパスワードを忘れた場合"
+"は、リンクをクリックして表示されるURLをメールでユーザに送信して下さい。"
 msgstr ""
 
 #: app/views/shared/_login_form.html.erb:32
