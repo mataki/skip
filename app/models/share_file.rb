@@ -92,6 +92,17 @@ class ShareFile < ActiveRecord::Base
     owner ? owner.name : ''
   end
 
+  def owner_id
+    self.class.owner_id owner_symbol
+  end
+
+  def self.owner_id owner_symbol
+    symbol_type = owner_symbol.split(":").first
+    symbol_id = owner_symbol.split(":").last
+    owner = (symbol_type == User.symbol_type.to_s) ? User.find_by_uid(symbol_id) : Group.find_by_gid(symbol_id)
+    owner.id
+  end
+
   # 所属するグループの公開範囲により、共有ファイルの公開範囲を判定する
   def owner_is_public?
     Symbol.public_symbol_obj? owner_symbol
@@ -275,9 +286,7 @@ class ShareFile < ActiveRecord::Base
     dir_hash = { 'uid' => 'user',
                  'gid' => 'group' }
     symbol_type = owner_symbol.split(":").first
-    symbol_id = owner_symbol.split(":").last
-    owner = (symbol_type == User.symbol_type.to_s) ? User.find_by_uid(symbol_id) : Group.find_by_gid(symbol_id)
-    File.join(ENV['SHARE_FILE_PATH'], dir_hash[symbol_type], owner.id.to_s)
+    File.join(ENV['SHARE_FILE_PATH'], dir_hash[symbol_type], owner_id(owner_symbol).to_s)
   end
 
   def self.total_share_file_size symbol

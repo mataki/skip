@@ -125,7 +125,7 @@ class BatchMakeCache < BatchBase
                          :title => file.file_name,
                          :icon_type => 'disk_multiple')
 
-      target_dir = "#{cache_path}_meta/share_file/#{file.owner_symbol_type}/#{file.owner_symbol_id}"
+      target_dir = "#{cache_path}_meta/share_file/#{file.owner_symbol_type}/#{file.owner_id}"
       FileUtils.mkdir_p target_dir
       File.open("#{target_dir}/#{file.file_name}", "w"){ |file| file.write(meta) }
     end
