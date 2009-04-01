@@ -39,7 +39,9 @@
     }
     var afterLoadCallback = function(){
       if(submitCallback){submitCallback.call();}
-      callback.call();
+      var doc = targetIFrame.get(0).contentDocument ? targetIFrame.get(0).contentDocument : targetIFrame.get(0).contentWindow.document;
+      response = doc.body.innerHTML;
+      callback.call(self, response);
     };
 
     var root = jQuery(this);

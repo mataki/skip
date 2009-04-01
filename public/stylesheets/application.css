@@ -349,6 +349,10 @@ div#share_file_uploader.enabled {
         margin-right: 5px; }
       div#share_file_uploader.enabled div.share_files div.paginate span.first_link, div#share_file_uploader.enabled div.share_files div.paginate span.previous_link, div#share_file_uploader.enabled div.share_files div.paginate span.next_link, div#share_file_uploader.enabled div.share_files div.paginate span.last_link {
         font-size: 10px; }
+  div#share_file_uploader.enabled div.messages {
+    border: 1px solid red;
+    margin: 3px;
+    background-color: pink; }
 
 h3.topics {
   background-color: #f0f0ff;
