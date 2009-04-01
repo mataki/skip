@@ -220,9 +220,14 @@ end
 
 describe Admin::User, '.lock_actives' do
   before do
-    @active_user = create_user
-    @admin_user = create_user(:user_options => {:admin => true})
-    @unused_user = create_user(:status => 'UNUSED')
+    user_options = {
+      :auth_session_token => 'auth_session_token',
+      :remember_token => 'remember_token',
+      :remember_token_expires_at => Time.now
+    }
+    @active_user = create_user(:user_options  => user_options)
+    @admin_user = create_user(:user_options => user_options.merge!(:admin => true))
+    @unused_user = create_user(:user_options => user_options, :status => 'UNUSED')
   end
   describe '利用中ユーザ全てをロックできる場合' do
     before do
@@ -234,11 +239,25 @@ describe Admin::User, '.lock_actives' do
         @active_user.reload
       end.should change(@active_user, :locked).to(true)
     end
+    it '一般の利用中ユーザの認証情報がクリアされること' do
+      Admin::User.lock_actives
+      @active_user.reload
+      @active_user.auth_session_token.should be_nil
+      @active_user.remember_token.should be_nil
+      @active_user.remember_token_expires_at.should be_nil
+    end
     it '管理者ユーザがロックされること' do
       lambda do
         Admin::User.lock_actives
         @admin_user.reload
       end.should change(@admin_user, :locked).to(true)
+    end
+    it '管理者ユーザの認証情報がクリアされること' do
+      Admin::User.lock_actives
+      @admin_user.reload
+      @admin_user.auth_session_token.should be_nil
+      @admin_user.remember_token.should be_nil
+      @admin_user.remember_token_expires_at.should be_nil
     end
     it '未使用ユーザがロックされないこと' do
       lambda do
@@ -251,23 +270,23 @@ describe Admin::User, '.lock_actives' do
     before do
       Admin::User.should_receive(:enable_forgot_password?).and_return(false)
     end
-    it '一般の利用中ユーザがロックされないこと' do
+    it '一般の利用中ユーザの情報(ロック、認証)に変化がないこと' do
       lambda do
         Admin::User.lock_actives
         @active_user.reload
-      end.should_not change(@unused_user, :locked)
+      end.should_not change(@unused_user, :to_s)
     end
-    it '管理者ユーザがロックされないこと' do
+    it '管理者ユーザの情報(ロック、認証)に変化がないこと' do
       lambda do
         Admin::User.lock_actives
         @admin_user.reload
-      end.should_not change(@unused_user, :locked)
+      end.should_not change(@unused_user, :to_s)
     end
-    it '未使用ユーザがロックされないこと' do
+    it '未使用ユーザの情報(ロック、認証)に変化がないこと' do
       lambda do
         Admin::User.lock_actives
         @unused_user = Admin::User.find_by_id(@unused_user.id)
-      end.should_not change(@unused_user, :locked)
+      end.should_not change(@unused_user, :to_s)
     end
     it '0が返ること' do
       Admin::User.lock_actives.should == 0

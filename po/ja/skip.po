@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2009-03-30 12:38+0900\n"
+"POT-Creation-Date: 2009-03-31 17:06+0900\n"
 "PO-Revision-Date: 2009-03-26 13:54+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -676,7 +676,10 @@ msgstr "ログインできるブラウザを一つにする"
 #: app/models/admin/setting.rb:32
 msgid "Admin::Setting|Enable single session description"
 msgstr ""
-"チェックするとユーザ毎にログインできるブラウザ数を一つに制限します。あるブラウザでのログイン状態が別のブラウザでログインし直すことで無効化(ログアウト忘れ時に遠隔ログアウト)されます。 複数のブラウザでのログインを許可したい場合はチェックを外して下さい。"
+"チェックするとユーザ毎にログインできるブラウザ数を一つに制限します。あるブラ"
+"ウザでのログイン状態が別のブラウザでログインし直すことで無効化(ログアウト忘れ"
+"時に遠隔ログアウト)されます。 複数のブラウザでのログインを許可したい場合は"
+"チェックを外して下さい。"
 
 #: app/models/admin/setting.rb:122
 msgid "Admin::Setting|Enable user cleaning notification"
@@ -1228,21 +1231,21 @@ msgstr "メールアドレス"
 
 #: app/models/admin/user.rb:30
 msgid "Admin::User|Email description"
-msgstr "メールアドレスを入力して下さい。"
+msgstr " "
 
-#: app/models/admin/user.rb:42
+#: app/models/admin/user.rb:40
 msgid "Admin::User|Issued at"
 msgstr "ログインID発行日時"
 
-#: app/models/admin/user.rb:43
+#: app/models/admin/user.rb:41
 msgid "Admin::User|Last authenticated at"
 msgstr "最終ログイン日時"
 
-#: app/models/admin/user.rb:40
+#: app/models/admin/user.rb:38
 msgid "Admin::User|Locked"
 msgstr "ロック状態"
 
-#: app/models/admin/user.rb:41
+#: app/models/admin/user.rb:39
 msgid "Admin::User|Locked description"
 msgstr ""
 "チェックすると対象のユーザをロックします。ロックすると対象ユーザはログイン出"
@@ -1258,7 +1261,7 @@ msgstr "名前"
 
 #: app/models/admin/user.rb:28
 msgid "Admin::User|Name description"
-msgstr "名前を入力して下さい。"
+msgstr " "
 
 #: app/models/admin/user.rb:34 app/views/portal/_registration_form.html.erb:58
 msgid "Admin::User|Password"
@@ -1268,19 +1271,9 @@ msgstr "パスワード"
 msgid "Admin::User|Password confirmation"
 msgstr "確認パスワード"
 
-#: app/models/admin/user.rb:44
+#: app/models/admin/user.rb:42
 msgid "Admin::User|Password expires at"
 msgstr "パスワード有効期限"
-
-#: app/models/admin/user.rb:38
-msgid "Admin::User|Password reset token"
-msgstr "パスワード再設定コード"
-
-#: app/models/admin/user.rb:39
-msgid "Admin::User|Password reset token description"
-msgstr ""
-"パスワードを再設定するためのURLを表示します。ユーザがパスワードを忘れた場合"
-"は、リンクをクリックして表示されるURLをメールでユーザに送信して下さい。"
 
 #: app/models/admin/user.rb:35
 msgid "Admin::User|Retired"
@@ -1292,7 +1285,7 @@ msgstr "部署"
 
 #: app/models/admin/user.rb:32
 msgid "Admin::User|Section description"
-msgstr "部署を入力して下さい。"
+msgstr " "
 
 #: app/models/admin/user.rb:36
 msgid "Admin::User|Status"
@@ -1306,7 +1299,7 @@ msgstr "ユーザの利用状態を選択します。"
 msgid "Admin::User|Uid"
 msgstr "ユーザ名"
 
-#: app/models/admin/user.rb:46
+#: app/models/admin/user.rb:44
 msgid "Admin::User|User uids"
 msgstr "ログインID"
 
@@ -2885,7 +2878,7 @@ msgstr ""
 msgid "Your OpenID:"
 msgstr "あなたの認証中のID:"
 
-#: app/views/admin/settings/_security.html.erb:16
+#: app/views/admin/settings/_security.html.erb:17
 msgid "[全ユーザにパスワード再設定を求める]"
 msgstr ""
 
@@ -3168,10 +3161,11 @@ msgstr ""
 msgid "あなたへ宛てた連絡"
 msgstr ""
 
-#: app/views/admin/settings/_security.html.erb:16
+#: app/views/admin/settings/_security.html.erb:17
 msgid ""
-"あなたを含む使用中ユーザの次回ログイン時に、パスワード再設定が必要になります"
-"が宜しいですか?"
+"あなたを含む使用中のユーザ全てをロックします。ログイン中のユーザは強制ログア"
+"ウト状態になり、再度ログインするにはパスワードの再設定が必要になります。実行"
+"しても宜しいですか?"
 msgstr ""
 
 #: app/views/admin/settings/_literal.html.erb:11
@@ -3285,7 +3279,7 @@ msgstr ""
 msgid "キャンセルされました。このサーバへの認証を確認してください"
 msgstr ""
 
-#: app/views/admin/settings/_security.html.erb:29
+#: app/views/admin/settings/_security.html.erb:31
 msgid "クリーニング依頼メール"
 msgstr ""
 
@@ -3336,7 +3330,7 @@ msgstr ""
 msgid "システム運用について"
 msgstr ""
 
-#: app/views/admin/settings/_security.html.erb:34
+#: app/views/admin/settings/_security.html.erb:36
 msgid "セッション制限"
 msgstr ""
 
@@ -3355,6 +3349,12 @@ msgstr ""
 
 #: app/views/admin/users/issue_password_reset_code.html.erb:2
 msgid "パスワードを再設定するためのURLは以下の通りです。"
+msgstr ""
+
+#: app/views/admin/users/_form.html.erb:62
+msgid ""
+"パスワードを再設定するためのURLを表示します。ユーザがパスワードを忘れた場合"
+"は、リンクをクリックして表示されるURLをメールでユーザに送信して下さい。"
 msgstr ""
 
 #: app/views/shared/_login_form.html.erb:32
@@ -3529,7 +3529,7 @@ msgstr ""
 msgid "ログインに失敗しました。"
 msgstr ""
 
-#: app/views/admin/settings/_security.html.erb:24
+#: app/views/admin/settings/_security.html.erb:26
 msgid "ログインキーフレーズ"
 msgstr ""
 
@@ -3658,7 +3658,7 @@ msgstr ""
 msgid "初期値に戻す"
 msgstr ""
 
-#: app/views/admin/settings/_security.html.erb:17
+#: app/views/admin/settings/_security.html.erb:18
 msgid ""
 "利用中の全ユーザをロックします。実行することで各ユーザは次回ログイン時のパス"
 "ワードの再設定が必要になります。 パスワード強度を強めた場合など、全ユーザにパ"
@@ -3999,3 +3999,11 @@ msgstr ""
 #: app/views/portal/_registration_form.html.erb:33
 msgid "選択項目に無いものを設定する場合はこちらに入力して下さい"
 msgstr ""
+
+#~ msgid "Admin::User|Password reset token"
+#~ msgstr "パスワード再設定コード"
+
+#~ msgid "Admin::User|Password reset token description"
+#~ msgstr ""
+#~ "パスワードを再設定するためのURLを表示します。ユーザがパスワードを忘れた場"
+#~ "合は、リンクをクリックして表示されるURLをメールでユーザに送信して下さい。"

@@ -321,6 +321,57 @@ describe User, "#before_save" do
       end
     end
   end
+
+  describe 'ロックする場合' do
+    before do
+      @user = create_user(:user_options => {
+        :auth_session_token => 'auth_session_token',
+        :remember_token => 'remember_token',
+        :remember_token_expires_at => Time.now
+      })
+      @user.locked = true
+    end
+    it 'セッション認証用のtokenが破棄されること' do
+      lambda do
+        @user.save
+      end.should change(@user, :auth_session_token).to(nil)
+    end
+    it 'クッキー認証用のtokenが破棄されること' do
+      lambda do
+        @user.save
+      end.should change(@user, :remember_token).to(nil)
+    end
+    it 'クッキー認証用のtokenの有効期限が破棄されること' do
+      lambda do
+        @user.save
+      end.should change(@user, :remember_token_expires_at).to(nil)
+    end
+  end
+
+  describe 'ロック状態が変化しない場合' do
+    before do
+      @user = create_user(:user_options => {
+        :auth_session_token => 'auth_session_token',
+        :remember_token => 'remember_token',
+        :remember_token_expires_at => Time.now
+      })
+    end
+    it 'セッション認証用のtokenが破棄されないこと' do
+      lambda do
+        @user.save
+      end.should_not change(@user, :auth_session_token)
+    end
+    it 'クッキー認証用のtokenが破棄されないこと' do
+      lambda do
+        @user.save
+      end.should_not change(@user, :remember_token)
+    end
+    it 'クッキー認証用のtokenの有効期限が破棄されないこと' do
+      lambda do
+        @user.save
+      end.should_not change(@user, :remember_token_expires_at)
+    end
+  end
 end
 
 describe User, '#before_create' do

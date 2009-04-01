@@ -36,7 +36,7 @@ SKIPを動かすにあたり以下の環境で検証を行っています。
 
 1. gemsのインストール
 --------------------------------------------------------------------------------
-    $ sudo gem install gettext
+    $ sudo gem install gettext --version 1.93.0
     $ sudo gem install fastercsv
     $ sudo gem install ruby-openid
     $ sudo gem install rails --version 2.1.2
@@ -59,7 +59,7 @@ SKIPを動かすにあたり以下の環境で検証を行っています。
 
 5. 初期管理者ユーザ登録URLの生成
 --------------------------------------------------------------------------------
-    $ ruby lib/create_new_admin_url.rb --code
+    $ RAILS_ENV=production ruby lib/create_new_admin_url.rb --code
 
 6. サーバ起動（2回目以降は以下のコマンドだけでかまいません）
 --------------------------------------------------------------------------------

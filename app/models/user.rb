@@ -122,6 +122,12 @@ class User < ActiveRecord::Base
       self.locked = false
       self.trial_num = 0
     end
+
+    if !self.locked_was && self.locked
+      self.auth_session_token = nil
+      self.remember_token = nil
+      self.remember_token_expires_at = nil
+    end
   end
 
   def before_create
