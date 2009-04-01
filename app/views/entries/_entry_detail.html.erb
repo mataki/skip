@@ -335,10 +335,10 @@
     </li>
 <% end -%>
   </ul>
-  <p><%= link_to _("[この記事を「話題」にして、新しいブログを書く]"), :controller => "edit", :trackbacks => entry.id, :title => "RE: " + entry.title, :category => entry.category %><%= help_icon_tag :content => _('記事の公開範囲によらず全体公開のブログとして新しい記事を作成します。') %></p>
   <% unless entry.diary? -%>
     <p><%= link_to _("[この記事を「話題」にして、掲示板に新しい記事を投稿する]"), :controller => "edit", :trackbacks => entry.id, :title => "RE: " + entry.title, :category => entry.category, :publication_type => entry.publication_type, :entry_type => entry.entry_type, :symbol => entry.symbol, :publication_symbols_value => entry.publication_symbols_value %><%= help_icon_tag :content => _('記事の公開範囲を引き継いだ掲示板として新しい記事を作成します。') %></p>
   <% end -%>
+  <p><%= link_to _("[この記事を「話題」にして、新しいブログを書く]"), :controller => "edit", :trackbacks => entry.id, :title => "RE: " + entry.title, :category => entry.category %><%= help_icon_tag :content => _('記事の公開範囲によらず全体公開のブログとして新しい記事を作成します。') %></p>
 </div>
 
 <div class="move_navi">
