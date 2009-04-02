@@ -16,10 +16,10 @@
 module BoardEntriesHelper
 
   # ネスト構造のコメントを生成する
-  def render_nest_comment comment, level
+  def render_nest_comment comment, level, checked_on
     result = ""
     comment.children.each do |child_comment|
-      result << render(:partial => "board_entries/board_entry_comment", :locals => { :comment => child_comment, :level => level })
+      result << render(:partial => "board_entries/board_entry_comment", :locals => { :comment => child_comment, :level => level, :checked_on => checked_on })
     end
     result
   end

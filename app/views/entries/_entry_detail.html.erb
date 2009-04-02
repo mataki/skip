@@ -1,6 +1,7 @@
 <%
  # ブログ・掲示板の詳細表示（１記事指定）
  # :locals => { :entry, :prev_entry, :next_entry, :tb_entries, :to_tb_entries, :editable,
+ #              :checked_on,
  #              :entry_accesses, :total_count, :bookmark_comments_count }
 -%>
 
@@ -308,7 +309,7 @@
     </span>
   </div>
 <% entry.root_comments.each do |comment| -%>
-  <%= render(:partial => "board_entries/board_entry_comment", :locals=>{:comment=>comment}) %>
+  <%= render(:partial => "board_entries/board_entry_comment", :locals=>{:comment=>comment, :checked_on => checked_on }) %>
 <% end -%>
 </div>
 

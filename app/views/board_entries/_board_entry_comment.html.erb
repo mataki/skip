@@ -1,10 +1,17 @@
 <% level ||= 1 -%>
 <% nest_limit = 5 -%>
 <% comment_class = "board_entry_comment level#{level}" -%>
+<%
+if comment.user_id == @current_user.id
+  highlight_style = 'background-color: #FFEFCC;'
+elsif !checked_on || (checked_on <= comment.created_on)
+  highlight_style = 'background-color: #DDFFDD;'
+end
+-%>
 
 <div class="<%= comment_class %>" id="comment_<%= comment.id %>_<%= level %>">
   <div class="header">
-    <span class="title" style="<%=h 'background-color: #FFEFCC;' if comment.user_id == session[:user_id] -%>">
+    <span class="title" style="<%=h highlight_style %>">
       <%= user_link_to(comment.user) %><span class="date"><%= date_with_icon(comment.created_on) %></span>
     </span>
     <span class="buttons">
@@ -31,6 +38,6 @@
   </div><!-- comment_input_space -->
 
   <div class="edit_nest_comment" id='edit_nest_comment_<%= comment.id %>'></div>
-  <div id='view_nest_comment_<%= comment.id %>'><%= render_nest_comment comment, level+1 %></div>
+  <div id='view_nest_comment_<%= comment.id %>'><%= render_nest_comment comment, level+1, checked_on %></div>
 
 </div><!-- comment_# -->
