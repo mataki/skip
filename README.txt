@@ -1,5 +1,5 @@
 ================================================================================
-=  SKIP version 1.0.0                                http://www.openskip.org/  =
+=  SKIP version 1.1RC1                             http://www.openskip.org/    =
 ================================================================================
 
 SKIPのダウンロードありがとうございます。
@@ -44,7 +44,7 @@ SKIPを動かすにあたり以下の環境で検証を行っています。
 
 2. SKIPのファイル解凍
 --------------------------------------------------------------------------------
-    $ tar xvzf skip-1.0.0.tar.gz
+    $ tar xvzf skip-1.1rc1.tar.gz
 
 3. 設定ファイルの準備・編集（initial_settings.yml, database.yml）
 --------------------------------------------------------------------------------
@@ -129,7 +129,7 @@ SKIPのダウンロードありがとうございます。
   SKIPユーザグループ = http://user.openskip.org/
 
 * ライセンス  ・・・  GPL ver.3 (http://www.gnu.org/licenses/gpl.html)
-* アイコン提供・・・　famfamfam.com (http://www.famfamfam.com/lab/icons/silk/)
+* アイコン提供・・・  famfamfam.com (http://www.famfamfam.com/lab/icons/silk/)
 
 ================================================================================
 =  お問い合わせは・・・ info@openskip.org                                      =

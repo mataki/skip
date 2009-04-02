@@ -35,9 +35,6 @@ div#nyroModalFull div#nyroModalWrapper a#closeBut {
   background: url(../../images/skip/jquery/nyroModal/close.gif) no-repeat;
 	outline: 0;
 }
-div#nyroModalFull div#nyroModalWrapper div.wrapper div#nyroModalContent {
-	padding: 5px;
-}
 div#nyroModalFull div#nyroModalWrapper div.wrapperImg div#nyroModalContent {
 	position: relative;
 	overflow: hidden;

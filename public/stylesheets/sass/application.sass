@@ -28,6 +28,16 @@
 =link_hover_text
   :color blue
   :text-decoration underline
+=clearfix
+  display: inline-block
+  &:after
+    content: "."
+    display: block
+    height: 0
+    clear: both
+    visibility: hidden
+  * html &
+    height: 1px
 
 // 基本スタイル
 // ------------------------------------------------------------
@@ -75,6 +85,12 @@ table
   :font-size = !base_font_size
   :table-layout fixed
   :border-collapse collapse
+
+// jquery.ui.tabsでタブ折り返し時にliがulをはみ出してしまう対策
+// ------------------------------------------------------------
+ul.ui-tabs-nav
+  :height 100%
+  +clearfix
 
 // 特定の機能用ではない汎用css
 // ------------------------------------------------------------
@@ -149,6 +165,26 @@ div.box_space
     :border-bottom = !base_border
     :padding 1px
     :font-size 10px
+
+// サイドカラムのカレンダーボックス
+// ------------------------------------------------------------
+table.calendar
+  :border none
+  :border-collapse separate
+  :width 100%
+  :_width 94%
+  tr, th, td
+    :text-align center
+  tr.monthName, tr.dayName
+    :background-color #abf
+  td.day
+    :background-color #f0f0ff
+  td.holiday
+    :background-color #ffe0e0
+  td.today
+    :background-color #c0ffc0
+  td.selected
+    :background-color #ffffa0
 
 // 汎用的なメッセージ表示ボックス(ページ先頭の説明文など)
 // TODO div.descをdiv.box.messageに移行後に削除する
@@ -400,6 +436,11 @@ div#share_file_uploader.enabled
       span.first_link, span.previous_link, span.next_link, span.last_link
         :font-size = !small_font_size
 
+  div.messages
+    :border 1px solid red
+    :margin 3px
+    :background-color pink
+
 // ============================================================
 // 4. 管理機能
 // ============================================================
@@ -508,7 +549,7 @@ div#table_columns
 div.onetime_url
   :font
     :weight bold
-    :size 1em
+    :size 16px
   p
     :padding 10px
 

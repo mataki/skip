@@ -2,11 +2,11 @@
 <% url = url_for({:action => 'create'}.merge(params.slice(IframeUploader::UPLOAD_KEY))) -%>
 <% form_tag(url, html_options) do -%>
   <style type="text/css">
-  .upload_form label, .upload_form input {
+form#share_file_form {
+  border-bottom: 1px solid #99c; }
+  form#share_file_form table.upload_form label, form#share_file_form table.upload_form input {
     font-size: 10px;
-    color: #555555; }
-  form#share_file_form {
-    border-bottom: 1px solid #99c; }
+    color: #555; }
   </style>
   <%= hidden_field_tag 'owner_name', h(params[:owner_name]) %>
   <%= hidden_field 'share_file', 'owner_symbol' %>

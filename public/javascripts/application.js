@@ -262,7 +262,7 @@ $j(function(){
         };
 
         var uploaderButton = function(conf) {
-            conf["callback"] = reloadUploader;
+            conf["callback"] = onComplete;
 
             return $j("<div class='share_file upload'></div>").append(
                 $j("<span class='operation link pointer'></span>")
@@ -273,6 +273,19 @@ $j(function(){
 
         var reloadUploader = function(){
             loadShareFiles(root.find("div.share_files"), config["share_files_url"], {}, message["share_files"]);
+        };
+
+        var refreshMessage = function(response){
+            if(response != '') {
+                $j('div#share_file_uploader div.messages').html(response).show();
+            } else {
+                $j('div#share_file_uploader div.messages').hide();
+            }
+        };
+
+        var onComplete = function(response){
+            refreshMessage(response);
+            reloadUploader();
         };
 
         var onLoad = function() {
@@ -288,6 +301,8 @@ $j(function(){
                 )
             ).append(
                 $j("<div style='clear: both;'></div>")
+            ).append(
+                $j('<div class="messages invisible"></div>')
             ).append(
                 uploaderButton(config["uploader"])
             ).append($j("<div class='share_files'></did>")).show();

@@ -53,6 +53,18 @@ table {
   table-layout: fixed;
   border-collapse: collapse; }
 
+ul.ui-tabs-nav {
+  height: 100%;
+  display: inline-block; }
+  ul.ui-tabs-nav:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden; }
+  * html ul.ui-tabs-nav {
+    height: 1px; }
+
 .pointer {
   cursor: pointer; }
 
@@ -118,6 +130,24 @@ div.box_space {
     border-bottom: 1px solid #cccccc;
     padding: 1px;
     font-size: 10px; }
+
+table.calendar {
+  border: none;
+  border-collapse: separate;
+  width: 100%;
+  _width: 94%; }
+  table.calendar tr, table.calendar th, table.calendar td {
+    text-align: center; }
+  table.calendar tr.monthName, table.calendar tr.dayName {
+    background-color: #abf; }
+  table.calendar td.day {
+    background-color: #f0f0ff; }
+  table.calendar td.holiday {
+    background-color: #ffe0e0; }
+  table.calendar td.today {
+    background-color: #c0ffc0; }
+  table.calendar td.selected {
+    background-color: #ffffa0; }
 
 div.box.message {
   font-size: 12px;
@@ -331,6 +361,10 @@ div#share_file_uploader.enabled {
         margin-right: 5px; }
       div#share_file_uploader.enabled div.share_files div.paginate span.first_link, div#share_file_uploader.enabled div.share_files div.paginate span.previous_link, div#share_file_uploader.enabled div.share_files div.paginate span.next_link, div#share_file_uploader.enabled div.share_files div.paginate span.last_link {
         font-size: 10px; }
+  div#share_file_uploader.enabled div.messages {
+    border: 1px solid red;
+    margin: 3px;
+    background-color: pink; }
 
 h3.topics {
   background-color: #f0f0ff;
@@ -417,7 +451,7 @@ div#table_columns {
 
 div.onetime_url {
   font-weight: bold;
-  font-size: 1em; }
+  font-size: 16px; }
   div.onetime_url p {
     padding: 10px; }
 
