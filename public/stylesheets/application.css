@@ -53,6 +53,18 @@ table {
   table-layout: fixed;
   border-collapse: collapse; }
 
+ul.ui-tabs-nav {
+  height: 100%;
+  display: inline-block; }
+  ul.ui-tabs-nav:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden; }
+  * html ul.ui-tabs-nav {
+    height: 1px; }
+
 .pointer {
   cursor: pointer; }
 

@@ -28,6 +28,16 @@
 =link_hover_text
   :color blue
   :text-decoration underline
+=clearfix
+  display: inline-block
+  &:after
+    content: "."
+    display: block
+    height: 0
+    clear: both
+    visibility: hidden
+  * html &
+    height: 1px
 
 // 基本スタイル
 // ------------------------------------------------------------
@@ -75,6 +85,12 @@ table
   :font-size = !base_font_size
   :table-layout fixed
   :border-collapse collapse
+
+// jquery.ui.tabsでタブ折り返し時にliがulをはみ出してしまう対策
+// ------------------------------------------------------------
+ul.ui-tabs-nav
+  :height 100%
+  +clearfix
 
 // 特定の機能用ではない汎用css
 // ------------------------------------------------------------
