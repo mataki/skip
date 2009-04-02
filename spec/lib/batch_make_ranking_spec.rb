@@ -128,7 +128,7 @@ describe BatchMakeRanking do
         end
         describe '記事が全公開ではない場合' do
           before do
-            @maker.stub!(:published?).and_return(false)
+            @maker.should_receive(:published?).and_return(false)
           end
           it 'ランキングが生成されないこと' do
             @maker.should_not_receive(:create_ranking_by_entry)

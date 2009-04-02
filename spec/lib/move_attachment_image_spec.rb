@@ -422,5 +422,8 @@ describe MoveAttachmentImage do
   after do
     FileUtils.rm_rf "#{RAILS_ROOT}/spec/tmp/"
   end
+  after(:all) do
+    BoardEntry.record_timestamps = true
+  end
 end
 
