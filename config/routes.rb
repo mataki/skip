@@ -17,6 +17,7 @@ ActionController::Routing::Routes.draw do |map|
   end
 
   map.with_options( :controller => 'user',:requirements => { :uid => /[a-zA-Z0-9\-_\.]+/ }, :defaults => { :action => 'show' }) do |user|
+    user.ribbit  'user/:uid/ribbits/:action', :controller => "ribbits", :defaults => { :action => "messages" }
     user.connect 'user/:uid/:action'
     user.connect 'user/:uid/:action.:format'
   end

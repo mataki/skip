@@ -1,17 +1,11 @@
-<%# locals: menu_items, selected_menu %>
-<% selected_menu ||= menu_items.first[:name] -%>
-
-  <div class="box_space">
-    <div class="box_space_title">メニュー</div>
-    <div class="box_space_body">
-<% menu_items.each do |menu_item| %>
-<%   if menu_item[:name] == selected_menu %>
-  <div style="background-color: yellow; font-weight: bold;">
-<%   else %>
-  <div>
-<% end %>
-  <%= icon_tag menu_item[:icon] -%><span><%= link_to menu_item[:name], menu_item[:url] -%></span></div>
-<% end %>
-    </div>
-    <div class="box_space_bottom"></div>
-  </div><!-- box_space -->
+<div class="box_space">
+  <div class="box_space_title">メニュー</span></div>
+  <div class="box_space_body">
+  <ul>
+    <% menu_items.each do |menu_item| %>
+    <li><%= menu_item -%></li>
+    <% end %>
+  </ul>
+  </div>
+  <div class="box_space_bottom"></div>
+</div><!-- box_space -->

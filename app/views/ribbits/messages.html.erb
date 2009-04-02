@@ -1,0 +1,17 @@
+<% content_for :contents_left do -%>
+  <%= render(:partial => 'user/portrait_box', :locals => { :user => @user }) -%>
+  <% menu = get_menu_items([{:name => _("messages"), :menu => "messages"}, {:name => _("Call history"), :menu => "history"}],
+  'messages', "messages")
+  %>
+  <%= render(:partial => "shared/menu", :locals => { :menu_items => menu }) %>
+<% end -%>
+<% content_for :contents_right do -%>
+<ul class="ribbit">
+<% @messages.each do |message| -%>
+<li>
+  <div class="title"><%= message[:title] %></div>
+  <div class="body"><%= message[:body] %></div>
+</li>
+<% end -%>
+</ul>
+<% end -%>

@@ -237,23 +237,24 @@ private
 
   def tab_menu_source
     tab_menu_source = [
-      {:label => _('プロフィール'), :options => {:action => 'show'}},
-      {:label => _('ブログ'), :options => {:action => 'blog'}},
-      {:label => _('ファイル'), :options => {:action => 'share_file'}},
-      {:label => _('ソーシャル'), :options => {:action => 'social'}},
-      {:label => _('グループ'), :options => {:action => 'group'}},
-      {:label => _('ブックマーク'), :options => {:action => 'bookmark'}} ]
+      {:label => _('プロフィール'), :options => {:action => 'show', :controller => "user"}},
+      {:label => _('ブログ'), :options => {:action => 'blog', :controller => "user"}},
+      {:label => _('ファイル'), :options => {:action => 'share_file', :controller => "user"}},
+      {:label => _('ソーシャル'), :options => {:action => 'social', :controller => "user"}},
+      {:label => _('グループ'), :options => {:action => 'group', :controller => "user"}},
+      {:label => _('ブックマーク'), :options => {:action => 'bookmark', :controller => "user"}},
+      {:label => _('Ribbit'), :options => {:controller => "ribbits", :action => "messages", :uid => @user.uid} }                      ]
 
     if @user.id != current_user.id
       if Chain.count(:conditions => ["from_user_id = ? and to_user_id = ?", current_user.id, @user.id]) <= 0
-        tab_menu_source << {:label => _('紹介文を作る'), :options => {:action => 'new_chain'}}
+        tab_menu_source << {:label => _('紹介文を作る'), :options => {:action => 'new_chain', :controller => "user"}}
       else
-        tab_menu_source << {:label => _('紹介文の変更'), :options => {:action => 'edit_chain'}}
+        tab_menu_source << {:label => _('紹介文の変更'), :options => {:action => 'edit_chain', :controller => "user"}}
       end
     else
-      tab_menu_source.unshift({:label => _('ホーム'), :options => {:action => 'index'}, :selected_actions => %w(index entries entries_by_date entries_by_antenna)})
-      tab_menu_source << {:label => _('足跡'), :options => {:action => 'trace'}}
-      tab_menu_source << {:label => _('管理'), :options => {:action => 'manage'}}
+      tab_menu_source.unshift({:label => _('ホーム'), :options => {:action => 'index', :controller => 'mypage'}, :selected_actions => %w(index entries entries_by_date entries_by_antenna)})
+      tab_menu_source << {:label => _('足跡'), :options => {:action => 'trace', :controller => 'mypage'}}
+      tab_menu_source << {:label => _('管理'), :options => {:action => 'manage', :controller => 'mypage'}}
     end
     tab_menu_source
   end
@@ -268,11 +269,6 @@ private
     else
       flash[:warning] = _('ご指定のユーザは存在しません。')
       redirect_to :controller => 'mypage', :action => 'index'
-      return false
-    end
-
-    if @user.id == session[:user_id] and %(index, trace, manage).include?(self.action_name)
-      redirect_to :controller => 'mypage', :action => self.action_name
       return false
     end
   end

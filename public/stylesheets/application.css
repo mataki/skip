@@ -366,6 +366,12 @@ div#share_file_uploader.enabled {
     margin: 3px;
     background-color: pink; }
 
+ul.ribbit {
+  list-style: none; }
+  ul.ribbit li {
+    border: 1px solid #cccccc;
+    margin: 3px 0px; }
+
 h3.topics {
   background-color: #f0f0ff;
   border-top: 3px double silver;

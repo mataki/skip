@@ -528,6 +528,7 @@ class MypageController < ApplicationController
                          {:label => _('ソーシャル'), :options => {:action => 'social'}},
                          {:label => _('グループ'), :options => {:action => 'group'}},
                          {:label => _('ブックマーク'), :options => {:action => 'bookmark'}},
+                         {:label => _('Ribbit'), :options => {:controller => "ribbits", :uid => current_user.uid, :action => "messages"}},
                          {:label => _('足跡'), :options => {:action => 'trace'}},
                          {:label => _('管理'), :options => {:action => 'manage'}} ]
   end
