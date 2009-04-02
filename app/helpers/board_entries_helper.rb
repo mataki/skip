@@ -71,4 +71,14 @@ module BoardEntriesHelper
       return url_for(:controller => 'group', :action => 'bbs', :gid => owner.gid) if owner.class == Group
     end
   end
+
+  def comment_title_class current_user, comment, checked_on
+    if current_user.id == comment.user_id
+      'title current_user'
+    elsif checked_on && checked_on <= comment.updated_on
+      'title other_user not_read'
+    else
+      'title other_user read'
+    end
+  end
 end

@@ -301,6 +301,37 @@ span.share_file_uploader.trigger {
   font-size: 10px;
   margin-left: 5em; }
 
+div#board_entry_comments {
+  border-right: 1px dotted #e0e0ff;
+  padding-right: 3px;
+  margin-top: 5px; }
+  div#board_entry_comments div.board_entry_comment {
+    border-bottom: 2px solid silver;
+    border-left: 1px dotted #e0e0ff;
+    border-top: 1px dotted #e0e0ff;
+    margin-bottom: 5px;
+    _width: 100%; }
+    div#board_entry_comments div.board_entry_comment div.header {
+      border-bottom: 1px dotted #aaa;
+      position: relative;
+      height: 1.5em;
+      padding: 1px 5px;
+      vertical-align: text-bottom;
+      _width: 100%; }
+      div#board_entry_comments div.board_entry_comment div.header span.title, div#board_entry_comments div.board_entry_comment div.header span.buttons {
+        position: absolute;
+        bottom: 0; }
+      div#board_entry_comments div.board_entry_comment div.header span.title {
+        left: 2px; }
+        div#board_entry_comments div.board_entry_comment div.header span.title span.date {
+          font-size: 0.8em; }
+        div#board_entry_comments div.board_entry_comment div.header span.title.current_user {
+          background-color: #ffefcc; }
+        div#board_entry_comments div.board_entry_comment div.header span.title.other_user.not_read {
+          background-color: #ddffdd; }
+      div#board_entry_comments div.board_entry_comment div.header span.buttons {
+        right: 2px; }
+
 .share_file.upload iframe {
   border: 0;
   overflow: hidden; }

@@ -1,17 +1,10 @@
 <% level ||= 1 -%>
 <% nest_limit = 5 -%>
 <% comment_class = "board_entry_comment level#{level}" -%>
-<%
-if comment.user_id == @current_user.id
-  highlight_style = 'background-color: #FFEFCC;'
-elsif !checked_on || (checked_on <= comment.created_on)
-  highlight_style = 'background-color: #DDFFDD;'
-end
--%>
 
 <div class="<%= comment_class %>" id="comment_<%= comment.id %>_<%= level %>">
   <div class="header">
-    <span class="title" style="<%=h highlight_style %>">
+    <span class="<%= comment_title_class @current_user, comment, checked_on %>">
       <%= user_link_to(comment.user) %><span class="date"><%= date_with_icon(comment.created_on) %></span>
     </span>
     <span class="buttons">
