@@ -1,4 +1,7 @@
 # submit_tagのdisable_withがIE6でjavascriptエラーになるのを修正したモンキーパッチ
+# TODO 下記で報告が上がっている。パッチも添付されているのでパッチが取り込まれたRailsにバージョンアップした際に当ファイルは消すこと。
+# https://rails.lighthouseapp.com/projects/8994/tickets/1955-disable_with-option-to-submit_tag-doesnt-work-with-ie
+#
 module ActionView
   module Helpers
     module FormTagHelper
