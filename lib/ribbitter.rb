@@ -1,5 +1,5 @@
 
-class Ribbit
+class Ribbitter
   class << self
     def messages(uid)
       attr = %w(id from title time body)

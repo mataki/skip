@@ -28,6 +28,7 @@ class User < ActiveRecord::Base
   has_many :user_profile_values, :dependent => :destroy
   has_many :tracks, :order => "updated_on DESC", :dependent => :destroy
   has_one  :user_access, :class_name => "UserAccess", :dependent => :destroy
+  has_one  :ribbit, :dependent => :destroy
 
   has_many :groups, :through => :group_participations
 

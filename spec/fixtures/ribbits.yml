@@ -1,0 +1,9 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  purpose_number: MyString
+  user:
+
+two:
+  purpose_number: MyString
+  user:

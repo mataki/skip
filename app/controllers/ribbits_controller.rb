@@ -14,11 +14,37 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class RibbitsController < UserController
+  verify :method => :post, :only => :update
+
   def messages
-    @messages = Ribbit.messages(@user.uid)
+    @messages = Ribbitter.messages(@user.uid)
   end
 
   def call_history
-    @histories = Ribbit.call_history(@user.uid)
+    @histories = Ribbitter.call_history(@user.uid)
   end
+
+  def edit
+    @ribbit = @user.ribbit || @user.build_ribbit
+  end
+
+  def update
+    @ribbit = @user.ribbit || @user.build_ribbit
+    if @ribbit.update_attributes(params[:ribbit])
+      flash[:notice] = _("%{model} was successfully updated.") % { :model => _('ribbit')}
+      redirect_to(:action => :edit)
+    else
+      render :edit
+    end
+  end
+
+  def call
+    @title = _("電話をかける")
+    if @ribbit = @user.ribbit
+      render :layout => "dialog"
+    else
+      render :text => _("このユーザはRibbitの利用設定を行なっておりません。")
+    end
+  end
+
 end

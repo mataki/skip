@@ -1,0 +1,12 @@
+<% content_for :contents_left do -%>
+<%= render(:partial => 'user/portrait_box', :locals => { :user => @user }) -%>
+<%= render(:partial => "shared/menu", :locals => { :menu_items => ribbit_menu_items("edit") }) %>
+<% end -%>
+
+<% content_for :contents_right do -%>
+<% form_for(@ribbit, :url => {:controller => :ribbits, :action => :update}) do |f| -%>
+<%= f.label :purpose_number %>
+<%= f.text_field :purpose_number %>
+<%= f.submit %>
+<% end -%>
+<% end -%>

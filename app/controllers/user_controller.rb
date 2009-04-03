@@ -214,11 +214,6 @@ class UserController < ApplicationController
     end
   end
 
-  def call
-    @title = "電話をかける"
-    render :layout => "dialog"
-  end
-
 private
   def setup_layout
     @title = title

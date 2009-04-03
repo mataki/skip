@@ -14,4 +14,10 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 module RibbitsHelper
+  def ribbit_menu_items(current_action)
+    @@menu = [{:name => _("messages"), :menu => "message", :url => { :action => "messages"}},
+              {:name => _("Call history"), :menu => "call_history", :url => { :action => "call_history" }},
+              {:name => _("edit"), :menu => "edit", :url => { :action => "edit"}}]
+    get_menu_items(@@menu, current_action, "message")
+  end
 end

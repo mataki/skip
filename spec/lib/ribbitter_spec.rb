@@ -15,9 +15,9 @@
 
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe Ribbit, "message" do
+describe Ribbitter, "message" do
   it "Hashが帰ってくること" do
-    Ribbit.messages("a_user").should be_is_a(Array)
-    Ribbit.messages("a_user").first.should be_is_a(Hash)
+    Ribbitter.messages("a_user").should be_is_a(Array)
+    Ribbitter.messages("a_user").first.should be_is_a(Hash)
   end
 end
