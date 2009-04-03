@@ -15,6 +15,10 @@
 
 class RibbitsController < UserController
   def messages
-    @messages = Ribbit.messages(params[:uid])
+    @messages = Ribbit.messages(@user.uid)
+  end
+
+  def call_history
+    @histories = Ribbit.call_history(@user.uid)
   end
 end

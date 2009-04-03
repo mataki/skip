@@ -240,16 +240,14 @@ module ApplicationHelper
   end
 
   def get_menu_items menus, selected_menu, action
-    menu_items = []
-    menus.each do |menu|
+    menus.map do |menu|
       if menu[:menu] == selected_menu
-        menu_items << icon_tag('bullet_red') + "<b>#{menu[:name]}</b>"
+        icon_tag('bullet_red') + "<b>#{menu[:name]}</b>"
       else
-        link_to_params = { :action => action, :menu => menu[:menu] }
-        menu_items << icon_tag('bullet_blue') + link_to(menu[:name], link_to_params, :confirm => menu[:confirm])
+        link_to_params = menu[:url] || { :action => action, :menu => menu[:menu] }
+        icon_tag('bullet_blue') + link_to(menu[:name], link_to_params, :confirm => menu[:confirm])
       end
     end
-    menu_items
   end
 
   # タグクラウドを生成する

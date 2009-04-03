@@ -1,7 +1,6 @@
 <% content_for :contents_left do -%>
   <%= render(:partial => 'user/portrait_box', :locals => { :user => @user }) -%>
-  <% menu = get_menu_items([{:name => _("messages"), :menu => "messages"}, {:name => _("Call history"), :menu => "history"}],
-  'messages', "messages")
+  <% menu = get_menu_items([{:name => _("messages"), :menu => "messages", :url => {:action => "messages"}}, {:name => _("Call history"), :menu => "call_history", :url => {:action => "call_history"}}], 'messages', "messages")
   %>
   <%= render(:partial => "shared/menu", :locals => { :menu_items => menu }) %>
 <% end -%>

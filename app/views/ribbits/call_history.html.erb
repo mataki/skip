@@ -1,0 +1,17 @@
+<% content_for :contents_left do -%>
+  <%= render(:partial => 'user/portrait_box', :locals => { :user => @user }) -%>
+  <% menu = get_menu_items([{:name => _("messages"), :menu => "messages"}, {:name => _("Call history"), :menu => "call_history"}],
+  'call_history', "messages")
+  %>
+  <%= render(:partial => "shared/menu", :locals => { :menu_items => menu }) %>
+<% end -%>
+<% content_for :contents_right do -%>
+<ul class="ribbit">
+<% @histories.each do |history| -%>
+<li>
+  <div class="title"><%= "#{history[:id]}: #{history[:name]}" %></div>
+  <div class="body"><%= history[:number] %></div>
+</li>
+<% end -%>
+</ul>
+<% end -%>

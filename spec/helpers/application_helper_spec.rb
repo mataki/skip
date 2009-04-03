@@ -138,3 +138,36 @@ describe ApplicationHelper, '#user_link_to_with_portrait' do
     end
   end
 end
+
+describe ApplicationHelper, "#get_menu_items" do
+  before do
+    @menus = [{ :name => "name1", :menu => "menu1"}, { :name => "name2", :menu => "menu2"}]
+    request.path_parameters = { :controller => "mypage" }
+  end
+  it "menu1が選択されている場合 menu2にはリンクが含まれていること" do
+    ar = helper.get_menu_items(@menus, "menu1", "action")
+    ar.first.should have_tag("b", "name1")
+    ar.first.should_not have_tag("a", "name1")
+    ar.last.should have_tag("a[href=/mypage/action?menu=menu2]", "name2")
+    ar.last.should_not have_tag("b", "name2")
+  end
+  it "menu2が選択されている場合 menu1にはリンクが含まれていること" do
+    ar = helper.get_menu_items(@menus, "menu2", "action")
+    ar.first.should_not have_tag("b", "name1")
+    ar.first.should have_tag("a[href=/mypage/action?menu=menu1]", "name1")
+    ar.last.should_not have_tag("a", "name2")
+    ar.last.should have_tag("b", "name2")
+  end
+  describe "@menusの中にurlパラメータを含める場合" do
+    before do
+      @menus.each do |menu|
+        menu[:url] = { :action => menu[:menu], :controller => "mypage" }
+      end
+    end
+    it "menu1が選択されている場合 menu2にはurlのパラメータを利用したリンクが含まれていること" do
+      ar = helper.get_menu_items(@menus, "menu1", "action")
+    ar.last.should have_tag("a[href=/mypage/menu2]", "name2")
+    end
+  end
+end
+
