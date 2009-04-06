@@ -18,3 +18,12 @@ class AddIssuedAtAndPasswordExpiresAtToUser < ActiveRecord::Migration
     remove_column :users, :password_expires_at
   end
 end
+
+class Admin::User < User
+  def locked
+    lock
+  end
+  def locked_was
+    lock_was
+  end
+end
