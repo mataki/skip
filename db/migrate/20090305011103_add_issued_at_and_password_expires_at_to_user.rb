@@ -5,7 +5,7 @@ class AddIssuedAtAndPasswordExpiresAtToUser < ActiveRecord::Migration
     User.transaction do
       now = Time.now
       password_expires_at = now.since(90.day)
-      Admin::User.all.each do |user|
+      User.all.each do |user|
         user.issued_at = now
         user.password_expires_at = password_expires_at
         user.save!
@@ -17,13 +17,7 @@ class AddIssuedAtAndPasswordExpiresAtToUser < ActiveRecord::Migration
     remove_column :users, :issued_at
     remove_column :users, :password_expires_at
   end
-end
 
-class Admin::User < User
-  def locked
-    lock
-  end
-  def locked_was
-    lock_was
+  class User < ActiveRecord::Base
   end
 end

@@ -4,7 +4,7 @@ class MoveEmailAndSectionFromUserProfilesToUsers < ActiveRecord::Migration
     add_column :users, :section, :string, :limit => 100
 
     User.transaction do
-      User.find_without_retired_skip(:all).each do |user|
+      User.all.each do |user|
         profile = UserProfile.find_by_user_id(user.id)
         if profile
           user.email = profile.email
@@ -23,7 +23,7 @@ class MoveEmailAndSectionFromUserProfilesToUsers < ActiveRecord::Migration
     add_column :user_profiles, :section, :string, :limit => 100
 
     User.transaction do
-      User.find_without_retired_skip(:all).each do |user|
+      User.all.each do |user|
         profile = UserProfile.find_by_user_id(user.id)
         if profile
           profile.email = user.email
@@ -35,6 +35,9 @@ class MoveEmailAndSectionFromUserProfilesToUsers < ActiveRecord::Migration
 
     remove_column :users, :email
     remove_column :users, :section
+  end
+
+  class User < ActiveRecord::Base
   end
 
   class UserProfile < ActiveRecord::Base
