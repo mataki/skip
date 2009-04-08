@@ -74,12 +74,13 @@ class GroupController < ApplicationController
                                :include => find_params[:include] | [ :user, :board_entry_comments, :state ])
 
       if @entry
-        login_user_id = session[:user_id]
-        @entry.accessed(login_user_id)
+        user_reading = UserReading.find_by_user_id_and_board_entry_id(current_user.id, @entry.id)
+        @checked_on = user_reading.checked_on if user_reading
+        @entry.accessed(current_user.id)
         @prev_entry, @next_entry = @entry.get_around_entry(login_user_symbols)
         @editable = @entry.editable?(login_user_symbols, session[:user_id], session[:user_symbol], login_user_groups)
-        @tb_entries = @entry.trackback_entries(login_user_id, login_user_symbols)
-        @to_tb_entries = @entry.to_trackback_entries(login_user_id, login_user_symbols)
+        @tb_entries = @entry.trackback_entries(current_user.id, login_user_symbols)
+        @to_tb_entries = @entry.to_trackback_entries(current_user.id, login_user_symbols)
         @title += " - " + @entry.title
 
         @entry_accesses =  EntryAccess.find_by_entry_id @entry.id
