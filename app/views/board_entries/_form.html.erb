@@ -219,7 +219,7 @@ $j(function() {
     });
 
     var isShowOptions = function() {
-        var isNewRecord = <%= @board_entry.new_record? %>;
+        var isNewRecord = <%= !!(@board_entry.new_record?) %>;
         return !isNewRecord || $j('#trackbacks').val() != '';
     };
 
