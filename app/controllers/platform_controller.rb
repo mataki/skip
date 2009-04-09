@@ -180,7 +180,7 @@ class PlatformController < ApplicationController
                 @identifier.url = identity_url
                 if @identifier.save
                   user.determination_reset_auth_token
-                  flash[:notice] = _("%{function}が完了しました。")%{:function => _('OpneID URLの再設定')} + _("設定したURLを入力してを入力してログインしてください。")
+                  flash[:notice] = _("%{function}が完了しました。")%{:function => _('OpenID URLの再設定')} + _("設定したURLを入力してログインしてください。")
                   redirect_to :action => :index
                 end
               else
@@ -192,11 +192,11 @@ class PlatformController < ApplicationController
           end
         end
       else
-        flash[:error] = _("%{function}のためのURLの有効期限が過ぎています。")%{:function => _('OpneID URLの再設定')}
+        flash[:error] = _("%{function}のためのURLの有効期限が過ぎています。")%{:function => _('OpenID URLの再設定')}
         redirect_to :controller => '/platform'
       end
     else
-      flash[:error] = _("%{function}のためのURLが不正です。再度お試し頂くか、システム管理者にお問い合わせ下さい。")%{:function => _('OpneID URLの再設定')}
+      flash[:error] = _("%{function}のためのURLが不正です。再度お試し頂くか、システム管理者にお問い合わせ下さい。")%{:function => _('OpenID URLの再設定')}
       redirect_to :controller => '/platform'
     end
   end
