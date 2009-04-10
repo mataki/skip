@@ -237,8 +237,8 @@ private
       {:label => _('ファイル'), :options => {:action => 'share_file', :controller => "user"}},
       {:label => _('ソーシャル'), :options => {:action => 'social', :controller => "user"}},
       {:label => _('グループ'), :options => {:action => 'group', :controller => "user"}},
-      {:label => _('ブックマーク'), :options => {:action => 'bookmark', :controller => "user"}},
-      {:label => _('Ribbit'), :options => {:controller => "ribbits", :action => "messages", :uid => @user.uid} }                      ]
+      {:label => _('ブックマーク'), :options => {:action => 'bookmark', :controller => "user"}} ]
+    tab_menu_source << {:label => _('Ribbit'), :options => {:controller => "ribbits", :action => "messages", :uid => @user.uid} } if @user == current_user
 
     if @user.id != current_user.id
       if Chain.count(:conditions => ["from_user_id = ? and to_user_id = ?", current_user.id, @user.id]) <= 0

@@ -14,19 +14,17 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class RibbitsController < UserController
-  verify :method => :post, :only => :update
+  before_filter :access_denied_other, :except => :call
 
   def messages
-    @messages = Ribbitter.messages(@user.uid)
+    @ribbit = @user.ribbit
   end
-
-  def call_history
-    @histories = Ribbitter.call_history(@user.uid)
-  end
+  alias call_history messages
 
   def edit
     @ribbit = @user.ribbit || @user.build_ribbit
   end
+  alias new edit
 
   def update
     @ribbit = @user.ribbit || @user.build_ribbit
@@ -37,14 +35,23 @@ class RibbitsController < UserController
       render :edit
     end
   end
+  alias create update
 
   def call
-    @title = _("電話をかける")
+    @title = _("Call")
     if @ribbit = @user.ribbit
       render :layout => "dialog"
     else
-      render :text => _("このユーザはRibbitの利用設定を行なっておりません。")
+      render :text => _("This user don't set Ribbit account.")
     end
   end
 
+  private
+  def access_denied_other
+    unless @user == current_user
+      flash[:error] = _('Access Denied')
+      redirect_to(:controller => :user, :uid => @user.uid, :action => :show)
+      false
+    end
+  end
 end

@@ -5,8 +5,20 @@
 
 <% content_for :contents_right do -%>
 <% form_for(@ribbit, :url => {:controller => :ribbits, :action => :update}) do |f| -%>
-<%= f.label :purpose_number %>
-<%= f.text_field :purpose_number %>
-<%= f.submit %>
+<p>
+  <%= f.label :purpose_number %>
+  <%= f.text_field :purpose_number %>
+</p>
+<p>
+  <%= f.label :username %>
+  <%= f.text_field :username %>
+</p>
+<p>
+  <%= f.label :password %>
+  <%= f.password_field :password %>
+</p>
+<p>
+  <%= f.submit %>
+</p>
 <% end -%>
 <% end -%>

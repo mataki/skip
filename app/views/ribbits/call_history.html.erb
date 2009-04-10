@@ -5,42 +5,24 @@
 
 <% content_for :contents_right do -%>
 <ul class="ribbit">
-  <!--
-<% @histories.each do |history| -%>
-<li>
-  <div class="title"><%= "#{history[:id]}: #{history[:name]}" %></div>
-  <div class="body"><%= history[:number] %></div>
-</li>
-<% end -%>
--->
+  <div id="alternative"></div>
 </ul>
 <% end -%>
-<% call_log_swf_url = url_for("/RibbitOnSKIPCallLogs.swf") %>
-        <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
-                        id="RibbitOnSKIPCallLogs" width="100%" height="100%"
-                        codebase="http://fpdownload.macromedia.com/get/flashplayer/current/swflash.cab">
-                        <param name="movie" value="<%= call_log_swf_url %>" />
-                        <param name="quality" value="high" />
-                        <param name="bgcolor" value="#869ca7" />
-                        <param name="allowScriptAccess" value="sameDomain" />
-                        <embed src="<%= call_log_swf_url %>" quality="high" bgcolor="#869ca7"
-                                width="100%" height="100%" name="RibbitOnSKIPCallLogs" align="middle"
-                                play="true"
-                                loop="false"
-                                quality="high"
-                                allowScriptAccess="sameDomain"
-                                type="application/x-shockwave-flash"
-                                pluginspage="http://www.adobe.com/go/getflashplayer">
-                        </embed>
-        </object>
 <% content_for :javascript do -%>
+<%= skip_javascript_include_tag "swfobject.js" %>
 <script type="text/javascript">
-var renderTable = function(list,str){
-    var ulObj = $j('ul.ribbit');
-    $j.each(list, function() {
-        var liObj = $j('<li><div calss="title">' + this.id + ":" + this.number +'</div><div class="body">' + this.name + '</div></li>');
-        ulObj.append(liObj);
-    });
-};
+$j(function() {
+    <% if @ribbit %>
+    swfobject.embedSWF("<%= url_for('/RibbitOnSKIPCallLogs.swf') %>", "alternative", "244", "132", "9.0.0", "<%= url_for('/expressInstall.swf') %>", <%= get_flash_vars(@ribbit) %>);
+    <% end %>
+});
+    var renderTable = function(list,str){
+        var ulObj = $j('ul.ribbit');
+        $j.each(list, function() {
+            var liObj = $j('<li><div class="title">' + this.id + ":" + this.number +'</div><div class="body">' + this.name + '</div></li>');
+            ulObj.append(liObj);
+        });
+        $j('object#alternative').hide();
+    };
 </script>
 <% end -%>

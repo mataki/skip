@@ -20,4 +20,8 @@ module RibbitsHelper
               {:name => _("edit"), :menu => "edit", :url => { :action => "edit"}}]
     get_menu_items(@@menu, current_action, "message")
   end
+
+  def get_flash_vars(ribbit)
+    { :username => ribbit.username, :password => ribbit.password, "appId" => INITIAL_SETTINGS["ribbit"]["app_id"], "secretKey" => INITIAL_SETTINGS["ribbit"]["secret_key"]}.to_json
+  end
 end

@@ -1,7 +1,7 @@
 class CreateRibbits < ActiveRecord::Migration
   def self.up
     create_table :ribbits do |t|
-      t.string :purpose_number
+      t.string :purpose_number, :username, :password
       t.references :user
 
       t.timestamps
