@@ -25,7 +25,7 @@ user ||= @current_user
   <% else -%>
     <%= link_to(icon_tag('transmit_go', :title => _('アンテナに追加')) + _('アンテナに追加'), {:controller => "antenna", :action => "select_antenna", :symbol => user.symbol, :dummy => '.html'}, {:class => "nyroModal"}) %><br/>
     <%= link_to(icon_tag('tag_blue_add', :title=>'ブックマークする') + 'ブックマークする', {:controller => "bookmark", :action => "edit", :url => user.get_postit_url, :title => user.name, :dummy => '.html'}, {:class => "nyroModal"}) %><br/>
-    <%= link_to(icon_tag('telephone', :title => _('電話する')) + _('電話する'), {:controller => "ribbits", :action => "call"}, :popup => true) if @ribbit %>
+    <%= link_to(icon_tag('telephone', :title => _('電話する')) + _('電話する'), {:controller => "ribbits", :action => "call"}, :popup => true) if @user.ribbit %>
   <% end -%>
   </div>
 
