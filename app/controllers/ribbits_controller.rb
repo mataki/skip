@@ -17,7 +17,7 @@ class RibbitsController < UserController
   before_filter :access_denied_other, :except => :call
 
   def messages
-    @ribbit = @user.ribbit
+    @ribbit = current_user.ribbit
   end
   alias call_history messages
 
