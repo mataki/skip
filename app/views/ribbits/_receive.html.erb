@@ -1,0 +1,20 @@
+<%
+ # :locals => { :ribbit }
+-%>
+
+<div class="box_space">
+  <div class="box_space_title">電話を受ける</div>
+  <div class="box_space_bottom">
+    <div id="ribbit_recieve"></div>
+  </div>
+</div><!-- box_space -->
+<% content_for :javascript do -%>
+<%= skip_javascript_include_tag "swfobject.js" %>
+<script type="text/javascript">
+$j(function() {
+    <% if ribbit %>
+    swfobject.embedSWF("<%= url_for('/RibbitOnSKIPReceive.swf') %>", "ribbit_recieve", "140", "140", "9.0.0", "<%= url_for('/expressInstall.swf') %>", <%= get_flash_vars(ribbit) %>);
+    <% end %>
+});
+</script>
+<% end -%>

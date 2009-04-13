@@ -1,11 +1,12 @@
 <% content_for :contents_left do -%>
   <%= render(:partial => 'user/portrait_box', :locals => { :user => @user }) -%>
   <%= render(:partial => "shared/menu", :locals => { :menu_items => ribbit_menu_items("message") }) %>
+  <%= render(:partial => "receive", :locals => {:ribbit => current_user.ribbit}) if current_user.ribbit %>
+  <div id="alternative"></div>
 <% end -%>
 
 <% content_for :contents_right do -%>
 <ul class="ribbit">
-  <div id="alternative"></div>
 </ul>
 <div id="topic-grid"></div>
 <% end -%>
@@ -14,7 +15,7 @@
 <script type="text/javascript">
 $j(function() {
     <% if @ribbit %>
-    swfobject.embedSWF("<%= url_for('/RibbitOnSKIPMessages.swf') %>", "alternative", "244", "132", "9.0.0", "<%= url_for('/expressInstall.swf') %>", <%= get_flash_vars(@ribbit) %>);
+    swfobject.embedSWF("<%= url_for('/RibbitOnSKIPMessages.swf') %>", "alternative", "1", "1", "9.0.0", "<%= url_for('/expressInstall.swf') %>", <%= get_flash_vars(@ribbit) %>);
     <% end %>
 //-----
 createGrid = function(data){
