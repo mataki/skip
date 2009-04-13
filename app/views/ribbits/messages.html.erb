@@ -2,98 +2,58 @@
   <%= render(:partial => 'user/portrait_box', :locals => { :user => @user }) -%>
   <%= render(:partial => "shared/menu", :locals => { :menu_items => ribbit_menu_items("message") }) %>
   <%= render(:partial => "receive", :locals => {:ribbit => current_user.ribbit}) if current_user.ribbit %>
-  <div id="alternative"></div>
 <% end -%>
-
 <% content_for :contents_right do -%>
-<ul class="ribbit">
-</ul>
-<div id="topic-grid"></div>
+<div class="desc">
+  <%= _('Ribbitのメッセージを表示します。') %>
+</div>
+<div id="load_message"><%= _('Now Loading from Ribbit ...') %></div>
+<table class="ribbit normal sortable">
+  <thead>
+    <tr>
+      <th><%= _('Call ID') %></th>
+      <th><%= _('From Number') %></th>
+      <th><%= _('Title') %></th>
+      <th><%= _('Notes') %></th>
+      <th><%= _('Name') %></th>
+      <th><%= _('Start Time') %></th>
+      <th><%= _('Call Type') %></th>
+      <th><%= _('transcription') %></th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
 <% end -%>
 <% content_for :javascript do -%>
 <%= skip_javascript_include_tag "swfobject.js" %>
+<%= skip_jquery_include_tag 'jquery.tablesorter' %>
 <script type="text/javascript">
-$j(function() {
-    <% if @ribbit %>
-    swfobject.embedSWF("<%= url_for('/RibbitOnSKIPMessages.swf') %>", "alternative", "1", "1", "9.0.0", "<%= url_for('/expressInstall.swf') %>", <%= get_flash_vars(@ribbit) %>);
-    <% end %>
-//-----
-createGrid = function(data){
-    Ext.state.Manager.setProvider(new Ext.state.CookieProvider());
-
-    var myData = data;
-
-    // example of custom renderer function
-    function change(val){
-        if(val > 0){
-            return '<span style="color:green;">' + val + '</span>';
-        }else if(val < 0){
-            return '<span style="color:red;">' + val + '</span>';
-        }
-        return val;
-    }
-
-    // example of custom renderer function
-    function pctChange(val){
-        if(val > 0){
-            return '<span style="color:green;">' + val + '%</span>';
-        }else if(val < 0){
-            return '<span style="color:red;">' + val + '%</span>';
-        }
-        return val;
-    }
-// {id:item.id, name:item.name, number:item.number, startTime:item.startTime, callType:item.callType, title:item.title, transcription:item.transcription, notes:item.notes}
-
-    // create the data store
-    var store = new Ext.data.SimpleStore({
-        fields: [
-           {name: 'id'},
-           {name: 'name'},
-           {name: 'number'},
-           {name: 'startTime'},
-           {name: 'callType'},
-           {name: 'title'},
-           {name: 'transcription'},
-           {name: 'notes'}
-        ]
-    });
-    store.loadData(myData);
-
-    // create the Grid
-    var grid = new Ext.grid.GridPanel({
-        store: store,
-        columns: [
-            {header: "Id", width: 160, sortable: true, dataIndex: 'id'},
-            {header: "Name", width: 75, sortable: true, dataIndex: 'name'},
-            {header: "Number", width: 75, sortable: true, dataIndex: 'number'},
-            {header: "Start time", width: 75, sortable: true, dataIndex: 'startTime'},
-            {header: "Call type", width: 75, sortable: true, dataIndex: 'callType'},
-            {header: "Title", width: 75, sortable: true, dataIndex: 'title'},
-            {header: "Transcription", width: 75, sortable: true, dataIndex: 'transcription'},
-            {header: "Notes", width: 75, sortable: true, dataIndex: 'notes'}
-        ],
-        stripeRows: true,
-        autoExpandColumn: 'id',
-        height:350,
-        width:600,
-        title:'Array Grid'
-    });
-
-    grid.render('topic-grid');
-
-};
-
-});
-    var renderTable = function(list){
-        var ulObj = $j('ul.ribbit');
+    var getMessages = function(list){
+        var createObj = function(obj){
+            var idStr =       "<td>" + obj.id + "</td>";
+            var numberStr =   "<td>" + obj.number + "</td>";
+            var callTypeStr = "<td>" + obj.callType.TYPE + "</td>";
+            var notesStr = "<td>" + obj.notes + "</td>";
+            var startTimeStr = "<td>" + obj.startTime + "</td>";
+            var nameStr =     "<td>" + obj.name + "</td>";
+            var titleStr =     "<td>" + obj.title + "</td>";
+            var transcriptionStr =     "<td>" + obj.transcription + "</td>";
+            var concatStr = '<tr>' + idStr + numberStr + titleStr + notesStr + nameStr + startTimeStr + callTypeStr + transcriptionStr + '</tr>';
+            return concatStr;
+        };
+        var tableObj = $j('table.ribbit');
         $j.each(list, function() {
-            var liObj = $j('<li><div class="title">' + this.id + ":" + this.number +'</div><div class="body">' + this.name + '</div></li>');
-            ulObj.append(liObj);
+            var liObj = $j(createObj(this));
+            tableObj.find('tbody').append(liObj);
+            tableObj.tablesorter();
         });
-        $j('object#alternative').hide();
-//        createGrid(list);
-        return true;
+        tableObj.show();
+        $j('div#load_message').hide();
     };
+$j(function(){
+    var tableObj = $j('table.ribbit').hide();
+});
 </script>
 <% end -%>
 

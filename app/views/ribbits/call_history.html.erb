@@ -2,28 +2,52 @@
   <%= render(:partial => 'user/portrait_box', :locals => { :user => @user }) -%>
   <%= render(:partial => "shared/menu", :locals => { :menu_items => ribbit_menu_items("call_history") }) %>
   <%= render(:partial => "receive", :locals => {:ribbit => current_user.ribbit}) if current_user.ribbit %>
-  <div id="alternative"></div>
 <% end -%>
 
 <% content_for :contents_right do -%>
-<ul class="ribbit">
-</ul>
+<div class="desc">
+  <%= _('Ribbitの通話履歴を表示します。') %>
+</div>
+<div id="load_message"><%= _('Now Loading from Ribbit ...') %></div>
+<table class="ribbit normal sortable">
+  <thead>
+    <tr>
+      <th><%= _('Call ID') %></th>
+      <th><%= _('From Number') %></th>
+      <th><%= _('Call Type') %></th>
+      <th><%= _('Date Left') %></th>
+      <th><%= _('Call Name') %></th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
 <% end -%>
 <% content_for :javascript do -%>
 <%= skip_javascript_include_tag "swfobject.js" %>
+<%= skip_jquery_include_tag 'jquery.tablesorter' %>
 <script type="text/javascript">
-$j(function() {
-    <% if @ribbit %>
-//    swfobject.embedSWF("<%= url_for('/RibbitOnSKIPCallLogs.swf') %>", "alternative", "1", "1", "9.0.0", "<%= url_for('/expressInstall.swf') %>", <%= get_flash_vars(@ribbit) %>);
-    <% end %>
-});
-    var renderTable = function(list,str){
-        var ulObj = $j('ul.ribbit');
+    var getCallLogs = function(list,str){
+        var createObj = function(obj){
+            var idStr =       "<td>" + obj.id + "</td>";
+            var numberStr =   "<td>" + obj.number + "</td>";
+            var callTypeStr = "<td>" + obj.callType + "</td>";
+            var dateLeftStr = "<td>" + obj.dateLeft + "</td>";
+            var nameStr =     "<td>" + obj.name + "</td>";
+            var concatStr = '<tr>' + idStr + numberStr + nameStr + callTypeStr + dateLeftStr + '</tr>';
+            return concatStr;
+        };
+        var tableObj = $j('table.ribbit');
         $j.each(list, function() {
-            var liObj = $j('<li><div class="title">' + this.id + ":" + this.number +'</div><div class="body">' + this.name + '</div></li>');
-            ulObj.append(liObj);
+            var liObj = $j(createObj(this));
+            tableObj.find('tbody').append(liObj);
+            tableObj.tablesorter();
         });
-        $j('object#alternative').hide();
+        tableObj.show();
+        $j('div#load_message').hide();
     };
+$j(function(){
+    var tableObj = $j('table.ribbit').hide();
+});
 </script>
 <% end -%>
