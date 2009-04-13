@@ -367,6 +367,39 @@ span.share_file_uploader.trigger
   :font-size = !small_font_size
   :margin-left 5em
 
+// 記事のコメント
+// ------------------------------------------------------------
+div#board_entry_comments
+  :border-right 1px dotted #e0e0ff
+  :padding-right 3px
+  :margin-top 5px
+  div.board_entry_comment
+    :border-bottom 2px solid silver
+    :border-left 1px dotted #e0e0ff
+    :border-top 1px dotted #e0e0ff
+    :margin-bottom 5px
+    :_width 100%
+    div.header
+      :border-bottom 1px dotted #aaa
+      :position relative
+      :height 1.5em
+      :padding 1px 5px
+      :vertical-align text-bottom
+      :_width 100%
+      span.title, span.buttons
+        :position absolute
+        :bottom 0
+      span.title
+        :left 2px
+        span.date
+          :font-size 0.8em
+        &.current_user
+          :background-color #ffefcc
+        &.other_user.not_read
+          :background-color #ddffdd
+      span.buttons
+        :right 2px
+
 // 共有ファイルアップローダー
 // ------------------------------------------------------------
 .share_file.upload

@@ -16,10 +16,10 @@
 module BoardEntriesHelper
 
   # ネスト構造のコメントを生成する
-  def render_nest_comment comment, level
+  def render_nest_comment comment, level, checked_on
     result = ""
     comment.children.each do |child_comment|
-      result << render(:partial => "board_entries/board_entry_comment", :locals => { :comment => child_comment, :level => level })
+      result << render(:partial => "board_entries/board_entry_comment", :locals => { :comment => child_comment, :level => level, :checked_on => checked_on })
     end
     result
   end
@@ -69,6 +69,16 @@ module BoardEntriesHelper
     if owner
       return url_for(:controller => 'user', :action => 'blog', :uid => owner.uid, :archive => 'all') if owner.class == User
       return url_for(:controller => 'group', :action => 'bbs', :gid => owner.gid) if owner.class == Group
+    end
+  end
+
+  def comment_title_class current_user, comment, checked_on
+    if current_user.id == comment.user_id
+      'title current_user'
+    elsif checked_on && checked_on <= comment.updated_on
+      'title other_user not_read'
+    else
+      'title other_user read'
     end
   end
 end

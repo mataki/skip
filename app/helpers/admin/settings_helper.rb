@@ -17,20 +17,20 @@ module Admin::SettingsHelper
   def settings_label_with_text_field_tag symbolize_key, options = {}
     options = {:id => "setting_#{symbolize_key}"}.merge(options)
     label(Admin::Setting.name, symbolize_key) +
-      text_field_tag("settings[#{symbolize_key}]", Admin::Setting.send(symbolize_key.to_s), options) +
+      text_field_tag("settings[#{symbolize_key}]", current_setting(symbolize_key), options) +
       help_icon_tag(:content => _(Admin::Setting.name + '|' + (symbolize_key.to_s + '_description').humanize))
   end
 
   def settings_label_with_check_box_tag symbolize_key
     label(Admin::Setting.name, symbolize_key) +
-      check_box_tag("settings[#{symbolize_key}]", "true", Admin::Setting.send("#{symbolize_key}"), :id => "setting_#{symbolize_key}") +
+      check_box_tag("settings[#{symbolize_key}]", "true", current_setting(symbolize_key), :id => "setting_#{symbolize_key}") +
       help_icon_tag(:content => _(Admin::Setting.name + '|' + (symbolize_key.to_s + '_description').humanize)) +
       hidden_field_tag("settings[#{symbolize_key}]", "false")
   end
 
   def settings_label_with_select_tag symbolize_key, container, selected = nil
     label(Admin::Setting.name, symbolize_key) +
-      select_tag("settings[#{symbolize_key}]", options_for_select(container, selected), :id => "setting_#{symbolize_key}") +
+      select_tag("settings[#{symbolize_key}]", options_for_select(container, selected || current_setting(symbolize_key)), :id => "setting_#{symbolize_key}") +
       help_icon_tag(:content => _(Admin::Setting.name + '|' + (symbolize_key.to_s + '_description').humanize))
   end
 

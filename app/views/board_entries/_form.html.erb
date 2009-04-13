@@ -214,13 +214,17 @@ $j(function() {
     // オプション入力項目の表示制御
     $j('#show_option_link')
     .click(function() {
-        $j('.input_option').show();
+        $j('div.input_option').show();
         $j('#show_option').hide();
     });
 
-<% unless @board_entry.new_record? -%>
-    $j('#show_option_link').click();
-<% end -%>
+    var isShowOptions = function() {
+        var isNewRecord = <%= !!(@board_entry.new_record?) %>;
+        return !isNewRecord || $j('#trackbacks').val() != '';
+    };
+
+    if(isShowOptions())
+        $j('#show_option_link').click();
 });
 </script>
 <% end -%>

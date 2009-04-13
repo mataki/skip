@@ -23,8 +23,11 @@ class Admin::SettingsController < Admin::ApplicationController
   N_('Admin::SettingsController|main')
   N_('Admin::SettingsController|security')
 
+  helper_method :current_setting
+
   def index
     @topics = [[_("#{self.class.name}|#{params[:tab]}")]]
+    @current_setting_hash = {}
     if params[:tab].blank?
       redirect_to admin_settings_path(:tab => :literal)
     end
@@ -69,19 +72,24 @@ class Admin::SettingsController < Admin::ApplicationController
   end
 
   def update_all
-    objects = (params[:settings] || {}).dup.symbolize_keys
-    settings = objects.map do |name, value|
-      # remove blank values in array settings
-      value.delete_if {|v| v.blank? } if value.is_a?(Array)
-      if [:mypage_feed_settings].include? name
-        value = {} if value.blank?
-        value = value.values.delete_if { |item| (item.class == String) ? item.blank? : has_empty_value?(item.values) }
+    @current_setting_hash = params[:settings] || {}
+    objects = @current_setting_hash.dup.symbolize_keys
+    settings = []
+    Admin::Setting.transaction do
+      settings = objects.map do |name, value|
+        # remove blank values in array settings
+        value.delete_if {|v| v.blank? } if value.is_a?(Array)
+        if [:mypage_feed_settings].include? name
+          value = {} if value.blank?
+          value = value.values.delete_if { |item| (item.class == String) ? item.blank? : has_empty_value?(item.values) }
+        end
+        # Admin::Setting[name] = value と評価すると value の値がmapに収納されてしまうので
+        Admin::Setting.[]=(name,value)
       end
-      # Admin::Setting[name] = value と評価すると value の値がmapに収納されてしまうので
-      Admin::Setting.[]=(name,value)
+      @error_messages = Admin::Setting.error_messages(settings)
+      raise ActiveRecord::Rollback unless @error_messages.empty?
     end
 
-    @error_messages = Admin::Setting.error_messages(settings)
     if @error_messages.empty?
       flash[:notice] = _('保存しました。')
       redirect_to :action => params[:tab] ? params[:tab] : 'index'
@@ -94,6 +102,17 @@ class Admin::SettingsController < Admin::ApplicationController
     @feed_setting = {:url => '', :title => ''}
     @index =  params[:index]
     render :partial => 'feed_item'
+  end
+
+  def current_setting symbolize_key
+    value = @current_setting_hash[symbolize_key] || ERB::Util.h(Admin::Setting.send(symbolize_key.to_s))
+    if value == 'true'
+      true
+    elsif value == 'false'
+      false
+    else
+      value
+    end
   end
 
   private
