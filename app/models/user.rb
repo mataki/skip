@@ -277,12 +277,12 @@ class User < ActiveRecord::Base
   end
 
   def uid
-    user_uid = user_uids.find(:first, :conditions => ['uid_type = ?', UserUid::UID_TYPE[:username]])
+    user_uid = user_uids.detect { |u| u.uid_type == UserUid::UID_TYPE[:username] }
     user_uid ? user_uid.uid : code
   end
 
   def code
-    user_uid = user_uids.find(:first, :conditions => ['uid_type = ?', UserUid::UID_TYPE[:master]])
+    user_uid = user_uids.detect { |u| u.uid_type == UserUid::UID_TYPE[:master] }
     user_uid ? user_uid.uid : nil
   end
 

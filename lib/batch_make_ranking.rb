@@ -20,51 +20,55 @@ require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 # 表示時には、本バッチで生成したデータを集計するのみ。
 class BatchMakeRanking < BatchBase
   def self.execute options
-    unless exec_date = options[:exec_day]
-      exec_date = Date.today.yesterday
-    end
     @maker = BatchMakeRanking.new
 
     begin
+      log_info '[START] make rankings'
       ActiveRecord::Base.transaction do
-        # バッチのリラン用
-        Ranking.destroy_all(['extracted_on = ?', exec_date])
+        (options[:from]..options[:to]).each do |exec_date|
+          start = Time.now
+          log_info "[START] make ranking at #{exec_date}"
+          # バッチのリラン用
+          Ranking.destroy_all(['extracted_on = ?', exec_date])
 
-        # アクセス数
-        @maker.create_access_ranking exec_date
+          # アクセス数
+          @maker.create_access_ranking exec_date
 
-        # へー
-        @maker.create_point_ranking exec_date
+          # へー
+          @maker.create_point_ranking exec_date
 
-        # コメント数
-        @maker.create_comment_ranking exec_date
+          # コメント数
+          @maker.create_comment_ranking exec_date
 
-        # 投稿数
-        @maker.create_post_ranking exec_date
+          # 投稿数
+          @maker.create_post_ranking exec_date
 
-        # 訪問者数
-        @maker.create_visited_ranking exec_date
+          # 訪問者数
+          @maker.create_visited_ranking exec_date
 
-        # コメンテータ
-        @maker.create_commentator_ranking exec_date
+          # コメンテータ
+          @maker.create_commentator_ranking exec_date
+          log_info "[END] make ranking at #{exec_date} %2fsec"%(Time.now - start).to_f
+        end
       end
+      log_info '[END] make rankings'
     rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => e
-      e.backtrace.each { |line| self.class.log_error line}
+      e.backtrace.each { |line| log_error line}
     end
   end
 
   def create_access_ranking exec_date
-    BoardEntryPoint.find(:all, :conditions => make_conditions("access_count > 0", exec_date)).each do |entrypoint|
-      entry = entrypoint.board_entry
+    rankings = BoardEntryPoint.find(:all, :conditions => make_conditions("access_count > 0", exec_date)).map do |entrypoint|
+      entry = find_entry_by_id(entrypoint.board_entry_id)
       if published? entry
         create_ranking_by_entry entry, entrypoint.access_count, "entry_access", exec_date
       end
-    end
+    end.compact
   end
 
   def create_point_ranking exec_date
     BoardEntryPoint.find(:all, :conditions => make_conditions("point > 0", exec_date)).each do |entrypoint|
-      entry = entrypoint.board_entry
+      entry = find_entry_by_id entrypoint.board_entry_id
       if published? entry
         create_ranking_by_entry entry, entrypoint.point, "entry_he", exec_date
       end
@@ -72,8 +76,8 @@ class BatchMakeRanking < BatchBase
   end
 
   def create_comment_ranking exec_date
-    BoardEntry.find(:all, :conditions => make_conditions("board_entry_comments_count > 0", exec_date)).each do |entry|
-      if published? entry
+    BoardEntry.find(:all, :conditions => make_conditions("board_entry_comments_count > 0", exec_date), :include => entry_include).each do |entry|
+      if published? find_entry_by_id(entry.id)
         create_ranking_by_entry entry, entry.board_entry_comments_count, "entry_comment", exec_date
       end
     end
@@ -83,14 +87,28 @@ class BatchMakeRanking < BatchBase
     BoardEntry.find(:all, :conditions => [" entry_type = 'DIARY' AND DATE_FORMAT(created_on,'%Y%m%d') <= ? ", exec_date.strftime('%Y%m%d')],
                     :select => "user_id, COUNT(*) as user_entry_no",
                     :group => "user_id").each do |record|
-      user = User.find(record.user_id)
-      create_ranking_by_user user, record.user_entry_no, "user_entry", exec_date
-    end
+                      user = find_user_by_id(record.user_id)
+                      create_ranking_by_user user, record.user_entry_no, "user_entry", exec_date
+                    end
+  end
+
+  def find_user_by_id user_id
+    @users ||= User.find(:all, :include => 'user_uids')
+    @users.find { |u| u.id == user_id }
+  end
+
+  def find_entry_by_id entry_id
+    @board_entries ||= BoardEntry.find(:all, :include => entry_include)
+    @board_entries.find { |b| b.id == entry_id }
+  end
+
+  def entry_include
+    [:board_entry_comments, :entry_publications, {:user => :user_uids}]
   end
 
   def create_visited_ranking exec_date
     UserAccess.find(:all, :conditions => ["access_count > 0 AND DATE_FORMAT(updated_on,'%Y%m%d') <= ? ", exec_date.strftime('%Y%m%d')]).each do |access|
-      user = access.user
+      user = find_user_by_id(access.user_id)
       create_ranking_by_user user, access.access_count, "user_access", exec_date
     end
   end
@@ -111,13 +129,13 @@ class BatchMakeRanking < BatchBase
           GROUP BY user_id
           SQL
     BoardEntryComment.find_by_sql([sql, { :commentator_conditions => exec_date.strftime('%Y%m%d') }]).each do |record|
-      user = User.find(record.user_id)
+      user = find_user_by_id(record.user_id)
       create_ranking_by_user user, record.comment_count, "commentator", exec_date
     end
   end
 
   def make_conditions condition, exec_date
-    [condition + " AND DATE_FORMAT(created_on,'%Y%m%d') = ? ", exec_date.strftime('%Y%m%d')]
+    [condition + " AND DATE_FORMAT(updated_on,'%Y%m') = ? ", exec_date.strftime('%Y%m')]
   end
 
   def published? entry
@@ -170,15 +188,15 @@ unless RAILS_ENV == 'test'
     end
   end
 
-  from_date = ARGV[0]
-  to_date   = ARGV[1]
+  from = ARGV[0]
+  to   = ARGV[1]
 
-  unless to_date
-    exec_date = from_date ? parse_date(from_date) : Date.today.yesterday
-    BatchMakeRanking.execution({:exec_day => exec_date})
+  unless to
+    from = to = from ? parse_date(from) : Date.today.yesterday
+    BatchMakeRanking.execution({:from => from, :to => to})
   else
-    (parse_date(from_date)..parse_date(to_date)).each do |exec_date|
-      BatchMakeRanking.execution({:exec_day => exec_date})
-    end
+    from = parse_date(from)
+    to = parse_date(to)
+    BatchMakeRanking.execution({:from => from, :to => to})
   end
 end
