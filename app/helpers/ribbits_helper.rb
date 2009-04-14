@@ -23,6 +23,7 @@ module RibbitsHelper
 
   def get_flash_vars(ribbit, target = nil)
     target ||= ribbit
-    { :username => ribbit.username, :password => ribbit.password, "purposeNumber" => target.purpose_number, "appId" => INITIAL_SETTINGS["ribbit"]["app_id"], "secretKey" => INITIAL_SETTINGS["ribbit"]["secret_key"]}.to_json
+    # { :username => ribbit.username, :password => ribbit.password, "purposeNumber" => target.purpose_number, "appId" => INITIAL_SETTINGS["ribbit"]["app_id"], "secretKey" => INITIAL_SETTINGS["ribbit"]["secret_key"]}.to_json
+    { :username => ribbit.username, :password => ribbit.password, "purposeNumber" => target.purpose_number}.to_json
   end
 end

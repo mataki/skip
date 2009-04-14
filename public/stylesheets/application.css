@@ -110,7 +110,8 @@ div.box_space {
     font-size: 15px;
     font-weight: bold;
     color: #03c;
-    background-image: url(./../images/label_bar.png); }
+    background-image: url(./../images/label_bar.png);
+    background-repeat: repeat-y; }
     div.box_space div.box_space_title span.small {
       font-size: 10px;
       margin-left: 3px; }

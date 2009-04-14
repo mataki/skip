@@ -52,7 +52,7 @@
 <script type="text/javascript">
 $(function() {
     <% if @ribbit and current_user.ribbit %>
-    swfobject.embedSWF("<%= url_for('/RibbitOnSKIPCall.swf') %>", "alternative", "179", "69", "9.0.0", "<%= url_for('/expressInstall.swf') %>", <%= get_flash_vars(current_user.ribbit, @ribbit) %>);
+    swfobject.embedSWF("<%= url_for('/RibbitOnSKIPCall.swf') %>", "alternative", "215", "138", "9.0.0", "<%= url_for('/expressInstall.swf') %>", <%= get_flash_vars(current_user.ribbit, @ribbit) %>);
     <% end %>
 });
 </script>

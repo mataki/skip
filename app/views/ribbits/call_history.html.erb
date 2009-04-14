@@ -1,3 +1,7 @@
+<style type="text/css">
+  div#tab_body div#contents_container div#contents_left { width: 220px; }
+  div#tab_body div#contents_container div#contents_right { margin-left: 225px; }
+</style>
 <% content_for :contents_left do -%>
   <%= render(:partial => 'user/portrait_box', :locals => { :user => @user }) -%>
   <%= render(:partial => "shared/menu", :locals => { :menu_items => ribbit_menu_items("call_history") }) %>
