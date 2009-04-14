@@ -139,7 +139,7 @@ module ApplicationHelper
     if user.retired?
       file_name = 'retired.png'
     elsif picture = user.pictures.first
-      file_name = '/pictures/picture/' + picture.id.to_s + '.png'
+      file_name = url_for(:controller => 'pictures', :action => 'picture', :id => picture.id, :format => :png)
       if popup
         pop_name = url_for(:controller => 'pictures', :action => 'picture', :id => picture.id.to_s)
         options[:title] = "クリックすると実際の大きさで表示されます"
@@ -279,7 +279,7 @@ module ApplicationHelper
   end
 
   def header_logo_link(url = url_for(:controller => '/mypage', :action => 'index'))
-    img_url = "#{@controller.request.relative_url_root}/custom/images/header_logo.png"
+    img_url = url_for('/custom/images/header_logo.png')
     "<div id=\"logo\">" + link_to(image_tag(img_url, :alt => h(Admin::Setting.abbr_app_title), :height => "45"), url) + "</div>"
   end
 
