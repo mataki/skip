@@ -1,6 +1,7 @@
 <%-# show.html.erb からコピペ -%>
 <% content_for :stylesheet do -%>
   <%= all_stylesheet_link_tag "style" %>
+  <%= stylesheet_link_tag("application") %>
   <style type="text/css">
   div.input_line {
     border-bottom: 1px dotted silver;
@@ -33,7 +34,7 @@
   }
   </style>
 <% end -%>
-<div style="width: 200px;">
+<div style="width: 220px;">
   <div class="box_space">
     <div class="box_space_title"><%= h @user.name %><span class="small">さん</span></div>
     <div class="box_space_img_body"><%= showPicture(@user, 120, 80, true) %></div>
