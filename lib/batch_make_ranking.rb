@@ -58,17 +58,17 @@ class BatchMakeRanking < BatchBase
   end
 
   def create_access_ranking exec_date
-    rankings = BoardEntryPoint.find(:all, :conditions => make_conditions("access_count > 0", exec_date)).map do |entrypoint|
-      entry = find_entry_by_id(entrypoint.board_entry_id)
+    BoardEntryPoint.find(:all, :conditions => make_conditions("access_count > 0", exec_date), :include => :board_entry).map do |entrypoint|
+      entry = entrypoint.board_entry
       if published? entry
         create_ranking_by_entry entry, entrypoint.access_count, "entry_access", exec_date
       end
-    end.compact
+    end
   end
 
   def create_point_ranking exec_date
-    BoardEntryPoint.find(:all, :conditions => make_conditions("point > 0", exec_date)).each do |entrypoint|
-      entry = find_entry_by_id entrypoint.board_entry_id
+    BoardEntryPoint.find(:all, :conditions => make_conditions("point > 0", exec_date), :include => :board_entry).each do |entrypoint|
+      entry = entrypoint.board_entry
       if published? entry
         create_ranking_by_entry entry, entrypoint.point, "entry_he", exec_date
       end
@@ -77,29 +77,25 @@ class BatchMakeRanking < BatchBase
 
   def create_comment_ranking exec_date
     BoardEntry.find(:all, :conditions => make_conditions("board_entry_comments_count > 0", exec_date), :include => entry_include).each do |entry|
-      if published? find_entry_by_id(entry.id)
+      if published? entry
         create_ranking_by_entry entry, entry.board_entry_comments_count, "entry_comment", exec_date
       end
     end
   end
 
   def create_post_ranking exec_date
-    BoardEntry.find(:all, :conditions => [" entry_type = 'DIARY' AND DATE_FORMAT(created_on,'%Y%m%d') <= ? ", exec_date.strftime('%Y%m%d')],
-                    :select => "user_id, COUNT(*) as user_entry_no",
-                    :group => "user_id").each do |record|
-                      user = find_user_by_id(record.user_id)
-                      create_ranking_by_user user, record.user_entry_no, "user_entry", exec_date
-                    end
+    BoardEntry.find(
+      :all, :conditions => [" entry_type = 'DIARY' AND DATE_FORMAT(created_on,'%Y%m%d') <= ? ", exec_date.strftime('%Y%m%d')],
+      :select => "user_id, COUNT(*) as user_entry_no",
+      :group => "user_id").each do |record|
+        user = find_user_by_id(record.user_id)
+        create_ranking_by_user user, record.user_entry_no, "user_entry", exec_date
+      end
   end
 
   def find_user_by_id user_id
     @users ||= User.find(:all, :include => 'user_uids')
     @users.find { |u| u.id == user_id }
-  end
-
-  def find_entry_by_id entry_id
-    @board_entries ||= BoardEntry.find(:all, :include => entry_include)
-    @board_entries.find { |b| b.id == entry_id }
   end
 
   def entry_include
@@ -135,7 +131,7 @@ class BatchMakeRanking < BatchBase
   end
 
   def make_conditions condition, exec_date
-    [condition + " AND DATE_FORMAT(updated_on,'%Y%m') = ? ", exec_date.strftime('%Y%m')]
+    [condition + " AND DATE_FORMAT(updated_on,'%Y%m%d') = ? ", exec_date.strftime('%Y%m%d')]
   end
 
   def published? entry
