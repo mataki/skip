@@ -53,7 +53,7 @@ div.input_line textarea {
   <div class="input_label" style="height: 30px;">日付</div>
   <div class="input_value">
     <p><%= datetime_select 'board_entry', 'date', :use_month_numbers => true -%></p>
-    <p><a href="#" onclick="setCurrentDatetime('board_entry', 'date');">[現在時刻を設定]</a>
+    <p><a href="#" onclick="setCurrentDatetime('board_entry', 'date');return false;">[現在時刻を設定]</a>
       <%= check_box 'board_entry', 'ignore_times' -%>時刻は表示しない</p>
   </div>
   <div style="clear: left"></div>
@@ -216,6 +216,7 @@ $j(function() {
     .click(function() {
         $j('div.input_option').show();
         $j('#show_option').hide();
+        return false;
     });
 
     var isShowOptions = function() {
