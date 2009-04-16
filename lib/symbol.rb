@@ -24,7 +24,7 @@ class Symbol
     return symbol_type, symbol_id
   end
 
-  # symbolからオブジェクト(User,Group,Eventのどれか)を取り出す
+  # symbolからオブジェクト(User,Groupのどれか)を取り出す
   def self.get_item_by_symbol symbol
     symbol_type, symbol_id = split_symbol symbol
     item = nil
@@ -37,7 +37,7 @@ class Symbol
     return item
   end
 
-  # symbolで示されるオブジェクト（user/group/event）が全体公開か否か
+  # symbolで示されるオブジェクト（user/group）が全体公開か否か
   def self.public_symbol_obj? symbol
     symbol_type, symbol_id = Symbol.split_symbol symbol
     case symbol_type

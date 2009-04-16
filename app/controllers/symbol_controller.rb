@@ -35,7 +35,7 @@ class SymbolController < ApplicationController
     else
       result = ''
       @items.each do |item|
-        result << "#{item.symbol}|#{item.name}\n"
+        result << ERB::Util.h("#{item.symbol}|#{item.name}\n")
       end
       render :text => result
     end
