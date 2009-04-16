@@ -327,8 +327,6 @@ div#board_entry_comments {
           font-size: 0.8em; }
         div#board_entry_comments div.board_entry_comment div.header span.title.current_user {
           background-color: #ffefcc; }
-        div#board_entry_comments div.board_entry_comment div.header span.title.other_user.not_read {
-          background-color: #ddffdd; }
       div#board_entry_comments div.board_entry_comment div.header span.buttons {
         right: 2px; }
 
