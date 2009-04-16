@@ -40,4 +40,14 @@ module UserHelper
     output
   end
 
+  def profile_show_tag input_type_processer, user_profile_value
+    if input_type_processer.class == UserProfileMaster::RichTextProcesser
+      value_str = user_profile_value ? user_profile_value.value : ""
+      symbol = user_profile_value ? user_profile_value.user.symbol : nil
+      content_tag(:div, render_richtext(value_str, symbol), :class => "input_value rich_value")
+    else
+      value_str = user_profile_value ? user_profile_value.value : ""
+      content_tag(:div, h(value_str), :class => "input_value") + content_tag(:div, nil, :class => "input_bottom")
+    end
+  end
 end

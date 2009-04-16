@@ -109,11 +109,6 @@ class UserProfileMaster < ActiveRecord::Base
       @master = master
     end
 
-    def to_show_html(value)
-      value_str = value ? value.value : ""
-      content_tag(:div, h(value_str), :class => "input_value") + content_tag(:div, nil, :class => "input_bottom")
-    end
-
     def to_edit_html(value)
       value_str = value ? value.value : ""
       text_field_tag("profile_value[#{@master.id}]", h(value_str))
@@ -171,16 +166,6 @@ class UserProfileMaster < ActiveRecord::Base
   end
 
   class RichTextProcesser < InputTypeProcesser
-    include ActionController::UrlWriter
-    include ApplicationHelper
-    include ActionView::Helpers::SanitizeHelper
-
-    def to_show_html(value)
-      value_str = value ? value.value : ""
-      symbol = value ? value.user.symbol : nil
-      content_tag(:div, render_richtext(value_str, symbol), :class => "input_value rich_value")
-    end
-
     def to_edit_html(value)
       value_str = value ? value.value : ""
       text_area_tag("profile_value[#{@master.id}]", value_str, :class => "invisible min_fckeditor")

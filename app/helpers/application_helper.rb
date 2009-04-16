@@ -285,7 +285,7 @@ module ApplicationHelper
 
 private
   def relative_url_root
-    @controller.request.relative_url_root
+    ActionController::AbstractRequest.relative_url_root
   end
 
   def parse_permalink text, owner_symbol = nil

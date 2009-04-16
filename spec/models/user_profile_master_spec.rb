@@ -82,11 +82,6 @@ describe UserProfileMaster::InputTypeProcesser do
     @processer = UserProfileMaster::InputTypeProcesser.new(@master)
     @value = stub_model(UserProfileValue, :value => "value")
   end
-  describe "#to_show_html" do
-    it "valueの値が入っていること" do
-      @processer.to_show_html(@value).should == "<div class=\"input_value\">value</div><div class=\"input_bottom\"></div>"
-    end
-  end
   describe "#to_edit_html" do
     it "正しいHTMLが生成されていること" do
       @master.id = 1000
