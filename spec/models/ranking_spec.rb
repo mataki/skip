@@ -109,22 +109,7 @@ describe Ranking, '.monthly' do
     end
   end
 
-  describe '月を跨ぐデータがある場合' do
-    before do
-      @datetime = Time.local(2008, 7, 15)
-      create_ranking(:url => 'http://user.openskip.org/1', :contents_type => 'comment_access', :extracted_on => @datetime, :amount => 1)
-      create_ranking(:url => 'http://user.openskip.org/1', :contents_type => 'comment_access', :extracted_on => @datetime.tomorrow, :amount => 2)
-      @beginning_of_next_month = @datetime.next_month.beginning_of_month
-      create_ranking(:url => 'http://user.openskip.org/1', :contents_type => 'comment_access', :extracted_on => @beginning_of_next_month, :amount => 8)
-      create_ranking(:url => 'http://user.openskip.org/1', :contents_type => 'comment_access', :extracted_on => @beginning_of_next_month.tomorrow, :amount => 10)
-    end
-    it 'amountが前月最後のデータとの差分となること' do
-      Ranking.monthly(:comment_access, @beginning_of_next_month.year, @beginning_of_next_month.month).should have(1).items
-      Ranking.monthly(:comment_access, @beginning_of_next_month.year, @beginning_of_next_month.month)[0].amount.should == 8
-    end
-  end
-
-  describe '対象月以前のデータがあり、対象月のデータがない場合' do
+  describe '対象月のデータがなく、対象月以前のデータがある場合' do
     before do
       @target_date = Time.local(2008, 7, 15)
       extracted_on = Time.local(2008, 6, 15)
@@ -133,6 +118,45 @@ describe Ranking, '.monthly' do
     end
     it '結果に含まれないこと' do
       Ranking.monthly(:comment_access, @target_date.year, @target_date.month).should == []
+    end
+  end
+
+  describe '対象月のデータがある場合' do
+    before do
+      @target_month = 4
+      @target_date = Time.local(2009, @target_month, 15)
+      create_ranking(:url => 'http://user.openskip.org/1', :contents_type => 'comment_access', :extracted_on => @target_date, :amount => 100)
+      create_ranking(:url => 'http://user.openskip.org/1', :contents_type => 'comment_access', :extracted_on => @target_date.tomorrow, :amount => 101)
+    end
+    describe '対象月の前月以前のデータがある場合' do
+      describe '対象月の前月のデータがある場合' do
+        before do
+          @target_date_ago_one_month = @target_date.ago 1.month
+          create_ranking(:url => 'http://user.openskip.org/1', :contents_type => 'comment_access', :extracted_on => @target_date_ago_one_month, :amount => 50)
+          create_ranking(:url => 'http://user.openskip.org/1', :contents_type => 'comment_access', :extracted_on => @target_date_ago_one_month.tomorrow, :amount => 51)
+        end
+        it 'amountが前月最後のデータとの差分となること' do
+          Ranking.monthly(:comment_access, @target_date.year, @target_date.month).should have(1).items
+          Ranking.monthly(:comment_access, @target_date.year, @target_date.month)[0].amount.should == 50
+        end
+      end
+      describe '対象月の前々月のデータがある場合' do
+        before do
+          @target_date_ago_two_month = @target_date.ago 2.month
+          create_ranking(:url => 'http://user.openskip.org/1', :contents_type => 'comment_access', :extracted_on => @target_date_ago_two_month, :amount => 25)
+          create_ranking(:url => 'http://user.openskip.org/1', :contents_type => 'comment_access', :extracted_on => @target_date_ago_two_month.tomorrow, :amount => 26)
+        end
+        it 'amountが前々月最後のデータとの差分となること' do
+          Ranking.monthly(:comment_access, @target_date.year, @target_date.month).should have(1).items
+          Ranking.monthly(:comment_access, @target_date.year, @target_date.month)[0].amount.should == 75
+        end
+      end
+    end
+    describe '対象の前月以前のデータがない場合' do
+      it 'amountが対象月最後のデータとの差分となること' do
+        Ranking.monthly(:comment_access, @target_date.year, @target_date.month).should have(1).items
+        Ranking.monthly(:comment_access, @target_date.year, @target_date.month)[0].amount.should == 101
+      end
     end
   end
 end
