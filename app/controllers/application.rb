@@ -32,6 +32,7 @@ class ApplicationController < ActionController::Base
   end
 
   before_filter :sso, :login_required, :prepare_session
+  # FIXME: 全体に発行する必要はない。Messageが削除されるアクションのみに制限すべき。
   after_filter  :remove_message
 
   init_gettext "skip" if defined? GetText
@@ -88,18 +89,13 @@ protected
   end
 
   def remove_message
-    return true unless session[:user_id]
+    return true unless logged_in?
 
-    server_addr = request.protocol+ request.host_with_port + request.relative_url_root
-    if headers["Status"].to_s.split(" ").first == "302" #redirect
-      current_url = headers["location"].gsub(server_addr, "") if headers["location"]
-    else
-      current_url = request.env["REQUEST_URI"].gsub(server_addr,"") if request.env["REQUEST_URI"]
-    end
-
-    Message.get_message_array_by_user_id(session[:user_id]).each do |message|
-      if message[:link_url] == current_url
-        Message.delete_all(["link_url = ? and user_id = ?", current_url, session[:user_id]])
+    Message.find_all_by_user_id(current_user.id).each do |message|
+      # TODO: ver1.0のデータ構造との兼ね合いで URL全体 と PATHの部分 のみの両方でマッチングしているが
+      #       ver1.2とかになると URL全体 だけで判断すればよい
+      if message.link_url == request.request_uri or message.link_url == request.url
+        message.destroy
       end
     end
   end
