@@ -37,6 +37,8 @@ class MoveAttachmentImage
       log_info('start replace attachment link ...')
       replace_direct_link
       log_info('end replace attachment link ...')
+    else
+      log_warn('skipped move attachment image')
     end
   end
 
