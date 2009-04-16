@@ -423,7 +423,9 @@ describe MoveAttachmentImage do
     FileUtils.rm_rf "#{RAILS_ROOT}/spec/tmp/"
   end
   after(:all) do
+    # TODO move_attachment_image自体で元に戻しておくべき
     BoardEntry.record_timestamps = true
+    BoardEntryComment.record_timestamps = true
   end
 end
 

@@ -76,7 +76,8 @@ class BatchMakeRanking < BatchBase
   end
 
   def create_comment_ranking exec_date
-    BoardEntry.find(:all, :conditions => make_conditions("board_entry_comments_count > 0", exec_date), :include => entry_include).each do |entry|
+    BoardEntryComment.find(:all, :conditions => ["DATE_FORMAT(created_on, '%Y%m%d') = ?", exec_date.strftime('%Y%m%d')], :include => [:board_entry, :user]).each do |entry_comment|
+      entry = entry_comment.board_entry
       if published? entry
         create_ranking_by_entry entry, entry.board_entry_comments_count, "entry_comment", exec_date
       end
@@ -103,7 +104,7 @@ class BatchMakeRanking < BatchBase
   end
 
   def create_visited_ranking exec_date
-    UserAccess.find(:all, :conditions => ["access_count > 0 AND DATE_FORMAT(updated_on,'%Y%m%d') <= ? ", exec_date.strftime('%Y%m%d')]).each do |access|
+    UserAccess.find(:all, :conditions => ["access_count > 0 AND DATE_FORMAT(updated_on,'%Y%m%d') = ? ", exec_date.strftime('%Y%m%d')]).each do |access|
       user = find_user_by_id(access.user_id)
       create_ranking_by_user user, access.access_count, "user_access", exec_date
     end
