@@ -316,7 +316,11 @@ class PlatformController < ApplicationController
         end
       end
     else
-      logger.info(User.to_s_log('[Login failed with password]', params[:login][:key]))
+      if params[:login]
+        logger.info(User.to_s_log('[Login failed with password]', params[:login][:key]))
+      else
+        logger.info('[Login failed for parameter is not specified]')
+      end
       flash[:error] = _("ログインに失敗しました。")
       redirect_to(request.env['HTTP_REFERER'] ? :back : login_url)
     end
