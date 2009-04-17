@@ -131,6 +131,28 @@ describe BatchMakeRanking do
           end
         end
       end
+      describe '実行日付にコメントが2つ作成された場合' do
+        before do
+          create_board_entry_comment(:user_id => @user.id, :board_entry_id => @board_entry.id)
+          create_board_entry_comment(:user_id => @user.id, :board_entry_id => @board_entry.id)
+        end
+        describe '記事が全公開の場合' do
+          before do
+            @maker.should_receive(:published?).and_return(true)
+          end
+          it 'ランキングが1つ生成されること' do
+            execute_create_comment_ranking.should change(Ranking, :count).by(1)
+          end
+        end
+        describe '記事が全公開ではない場合' do
+          before do
+            @maker.should_receive(:published?).and_return(false)
+          end
+          it 'ランキングが生成されないこと' do
+            execute_create_comment_ranking.should change(Ranking, :count).by(0)
+          end
+        end
+      end
       describe '実行日付以前にコメントが作成されて、実行日付に記事が更新された場合' do
         before do
           create_board_entry_comment(:user_id => @user.id, :board_entry_id => @board_entry.id, :created_on => @exec_date.yesterday)

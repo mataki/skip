@@ -76,7 +76,7 @@ class BatchMakeRanking < BatchBase
   end
 
   def create_comment_ranking exec_date
-    BoardEntryComment.find(:all, :conditions => ["DATE_FORMAT(created_on, '%Y%m%d') = ?", exec_date.strftime('%Y%m%d')], :include => [:board_entry, :user]).each do |entry_comment|
+    BoardEntryComment.find(:all, :conditions => ["DATE_FORMAT(created_on, '%Y%m%d') = ?", exec_date.strftime('%Y%m%d')], :include => [:board_entry, :user], :group => :board_entry_id).each do |entry_comment|
       entry = entry_comment.board_entry
       if published? entry
         create_ranking_by_entry entry, entry.board_entry_comments_count, "entry_comment", exec_date
