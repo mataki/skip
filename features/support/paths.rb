@@ -1,34 +1,29 @@
-# SKIP(Social Knowledge & Innovation Platform)
-# Copyright (C) 2008 TIS Inc.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#  This program is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU General Public License for more details.
-#
-#  You should have received a copy of the GNU General Public License
-#  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 module NavigationHelpers
+  # Maps a static name to a static route.
+  #
+  # This method is *not* designed to map from a dynamic name to a 
+  # dynamic route like <tt>post_comments_path(post)</tt>. For dynamic 
+  # routes like this you should *not* rely on #path_to, but write 
+  # your own step definitions instead. Example:
+  #
+  #   Given /I am on the comments page for the "(.+)" post/ |name|
+  #     post = Post.find_by_name(name)
+  #     visit post_comments_path(post)
+  #   end
+  #
   def path_to(page_name)
     case page_name
-
+    
     when /the homepage/
       root_path
-
+    
     # Add more page name => path mappings here
-
+    
     else
-      raise "Can't find mapping from \"#{page_name}\" to a path."
+      raise "Can't find mapping from \"#{page_name}\" to a path.\n" +
+        "Now, go and add a mapping in features/support/paths.rb"
     end
   end
 end
 
-World do |world|
-  world.extend NavigationHelpers
-  world
-end
+World(NavigationHelpers)

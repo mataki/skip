@@ -6,10 +6,10 @@ a_user:
   name: a_user
   status: ACTIVE
   auth_session_token: <%= SkipFaker.rand_char %>
-  email: a_user@skip.jp
+  email: a_user@example.com
   section: Programmer
   crypted_password: db9c93f05d2e41dc2256c3890d5d78ca6e48d418
-  password_expires_at: <%= SkipFaker.tomorrow %>
+  password_expires_at: <%= 1.month.since.to_s(:db) %>
   admin: true
 
 a_retired_user:
@@ -18,10 +18,10 @@ a_retired_user:
   name: a_retired_user
   status: RETIRED
   auth_session_token: <%= SkipFaker.rand_char %>
-  email: a_retired_user@skip.jp
+  email: a_retired_user@example.com
   section: Programmer
   crypted_password: db9c93f05d2e41dc2256c3890d5d78ca6e48d418
-  password_expires_at: <%= SkipFaker.tomorrow %>
+  password_expires_at: <%= 1.month.since.to_s(:db) %>
 
 a_group_owned_user:
   created_on: <%= SkipFaker.today %>
@@ -29,10 +29,10 @@ a_group_owned_user:
   name: a_group_owned_user
   status: ACTIVE
   auth_session_token: <%= SkipFaker.rand_char %>
-  email: a_group_owned_user@skip.jp
+  email: a_group_owned_user@example.com
   section: Programmer
   crypted_password: db9c93f05d2e41dc2256c3890d5d78ca6e48d418
-  password_expires_at: <%= SkipFaker.tomorrow %>
+  password_expires_at: <%= 1.month.since.to_s(:db) %>
   admin: true
 
 a_group_joined_user:
@@ -41,10 +41,10 @@ a_group_joined_user:
   name: a_group_joined_user
   status: ACTIVE
   auth_session_token: <%= SkipFaker.rand_char %>
-  email: a_group_joined_user@skip.jp
+  email: a_group_joined_user@example.com
   section: Programmer
   crypted_password: db9c93f05d2e41dc2256c3890d5d78ca6e48d418
-  password_expires_at: <%= SkipFaker.tomorrow %>
+  password_expires_at: <%= 1.month.since.to_s(:db) %>
 
 a_group_waiting_user:
   created_on: <%= SkipFaker.today %>
@@ -52,7 +52,7 @@ a_group_waiting_user:
   name: a_group_waiting_user
   status: ACTIVE
   auth_session_token: <%= SkipFaker.rand_char %>
-  email: a_group_waiting_user@skip.jp
+  email: a_group_waiting_user@example.com
   section: Programmer
   crypted_password: db9c93f05d2e41dc2256c3890d5d78ca6e48d418
-  password_expires_at: <%= SkipFaker.tomorrow %>
+  password_expires_at: <%= 1.month.since.to_s(:db) %>

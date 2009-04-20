@@ -1,8 +1,8 @@
 <% unless @rankings.empty? -%>
 <table class="ranking_square">
-  <tbody>
+  <thead>
     <tr><th class="title" colspan="4"><%= icon_tag('star') %><%= ranking_title params[:content_type].to_sym %></th></tr>
-    <tr><td colspan="4"><%= ranking_caption params[:content_type].to_sym -%></th></tr>
+    <tr><td colspan="4"><%= ranking_caption params[:content_type].to_sym -%></td></tr>
     <tr>
       <th></th>
     <% if show_title_col? params[:content_type].to_sym -%>
@@ -11,6 +11,8 @@
       <th>ユーザ</th>
       <th class="point"><%= ranking_amount_name params[:content_type].to_sym %></th>
     </tr>
+  </thead>
+  <tbody>
 <% @rankings.each_with_index do |ranking, i| -%>
     <tr>
       <td class="rank"><%= i + 1 %>
