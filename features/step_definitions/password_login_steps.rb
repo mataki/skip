@@ -24,7 +24,7 @@ end
 def create_user(id, password)
   uid = UserUid.find_by_uid(id)
   uid.destroy if uid
-  u = User.new({ :name => 'ほげ ほげ', :password => password, :password_confirmation => password, :reset_auth_token => nil, :email => "111111@example.com" })
+  u = User.new({ :name => id, :password => password, :password_confirmation => password, :reset_auth_token => nil, :email => "example#{id}@example.com" })
   u.user_uids.build(:uid => id, :uid_type => 'MASTER')
   u.build_user_access(:last_access => Time.now, :access_count => 0)
   u.save!

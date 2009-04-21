@@ -1,3 +1,27 @@
+Given /^"(.*)"ユーザのプロフィールページに"(.*)"回アクセスする$/ do |user, num|
+  num.to_i.times do
+    visit url_for(:controller => "user", :action => "show", :uid => user)
+  end
+end
+
+Given /^ランキングの"(.*)"位が"(.*)"のユーザであること$/ do |rank,uid|
+  Nokogiri::HTML(response.body).search("table.ranking_square tbody tr:nth(#{rank}) td.user_name").text.should == uid
+end
+
+Given /^"(.*)"で"(.*)"つめのブログにポイントを"(.*)"回つける$/ do |user,target,num|
+  Given %!"#{user}"でログインする!
+  entry = @entries[target.to_i - 1]
+  num.to_i.times do
+    token = get_authenticity_token(entry)
+    visit(url_for(:controller => :board_entries, :action => :ado_pointup, :id => entry[:id], :authenticity_token => token), :post)
+  end
+end
+
+def get_authenticity_token(entry)
+  visit(url_for(:controller => "user", :entry_id => entry[:id], :action => "blog", :uid => entry[:uid]))
+  Nokogiri::HTML(response.body).search("input#authenticity_token").attr("value")
+end
+
 Given /^"(.*)"回再読み込みする$/ do |num|
   num.to_i.times do |i|
     Given "再読み込みする"
@@ -21,11 +45,18 @@ Given /^"(.*)"ランキングの"(.*)"分を表示する$/ do |category, date|
   visit ranking_data_path(:content_type => category, :year => year, :month => month)
 end
 
+Given /^"(.*)"つめのブログに"(.*)"回コメントを書く$/ do |num,times_num|
+  entry = @entries[num.to_i - 1]
+  (1..times_num.to_i).each do
+    token = get_authenticity_token
+    visit(url_for(:controller => :board_entries, :action => :ado_create_comment,:id => entry[:id], :board_entry_comment => { :contents => "test" }, :authenticity_token => token), :post)
+  end
+end
+
 Given /^"(.*)"で"(.*)"つめのブログにアクセスする$/ do |user, num|
-  @entries ||= []
   Given %!"#{user}"でログインする!
   entry = @entries[num.to_i - 1]
-  visit url_for(:controller => "user", :entry_id => entry.id, :action => "blog", :uid => entry.symbol.split(":").last)
+  visit url_for(:controller => "user", :entry_id => entry[:id], :action => "blog", :uid => entry[:uid])
 end
 
 Given /^"(.*)"でブログを書く$/ do |user|
@@ -36,7 +67,8 @@ Given /^"(.*)"でブログを書く$/ do |user|
   Given %!"#{"editor_mode_hiki"}"を選択する!
   Given %!"#{"contents_hiki"}"に"#{"test"}"と入力する!
   Given %!"#{"作成"}"ボタンをクリックする!
-  @entries << BoardEntry.last
+  entry = BoardEntry.last
+  @entries << { :id => entry.id, :uid => entry.symbol.split(":").last }
 end
 
 Given /^ログアウトする$/ do
@@ -51,9 +83,9 @@ Given /^"(.*)"でログインする$/ do |user|
   Given %!"#{"ログイン"}"ボタンをクリックする!
 end
 
-Given /^ランキングのバッチで"(.*)"分を実行する$/ do |date|
+Given /^ランキングのバッチで"(.*)"の"(.*)"分を実行する$/ do |method, date|
   @@bmr = BatchMakeRanking.new
-  @@bmr.send(:create_access_ranking, Time.local(*date.split("-")))
+  @@bmr.send(method.to_sym, Time.local(*date.split("-")))
 end
 # TODO: DRY
 #       Time.localに変数を渡せない...
