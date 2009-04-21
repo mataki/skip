@@ -725,16 +725,14 @@ class MypageController < ApplicationController
   # TODO BoardEntryに移動する
   # あなたへの連絡（非公開・未読のもののみ）
   def mail_your_messages
-    find_params = BoardEntry.make_conditions(login_user_symbols, {:publication_type => "protected", :category=>'連絡'})
-    find_params[:conditions][0] << " and user_readings.read = ? and user_readings.user_id = ?"
-    find_params[:conditions] << false << current_user.id
+    find_params = BoardEntry.make_conditions(login_user_symbols, {:category=>'連絡'})
+    find_params[:conditions][0] << " and publication_type in (?) and user_readings.read = ? and user_readings.user_id = ?"
+    find_params[:conditions] << %w(private protected) << false << current_user.id
     find_params[:include] << :user_readings
     { :id_name => 'message',
       :title_icon => "email",
       :title_name => 'あなたへの連絡',
-      :pages => BoardEntry.all(:conditions=> find_params[:conditions],
-                               :order =>"last_updated DESC,board_entries.id DESC",
-                               :include => find_params[:include] | [ :user, :state ]),
+      :pages => BoardEntry.all(:conditions=> find_params[:conditions], :order =>"last_updated DESC,board_entries.id DESC", :include => find_params[:include] | [ :user, :state ]),
       :delete_categories => '[連絡]' }
   end
 
