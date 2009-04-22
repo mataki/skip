@@ -473,7 +473,7 @@ describe Admin::UsersController, 'POST /issue_password_reset_code' do
   describe '未使用ユーザの場合' do
     before do
       @user = stub_model(Admin::User, :status => 'UNUSED')
-      @user.stub!(:save!)
+      @user.stub!(:save_without_validation!)
       Admin::User.should_receive(:find).and_return(@user)
     end
     it '未使用ユーザのパスワード再設定コードは発行できない旨のメッセージが設定されること' do
@@ -485,7 +485,7 @@ describe Admin::UsersController, 'POST /issue_password_reset_code' do
   describe '利用開始済みユーザの場合' do
     before do
       @user = stub_model(Admin::User, :status => 'ACTIVE')
-      @user.stub!(:save!)
+      @user.stub!(:save_without_validation!)
       Admin::User.should_receive(:find).and_return(@user)
     end
     describe 'パスワードリセットコード未発行の場合' do
@@ -494,7 +494,7 @@ describe Admin::UsersController, 'POST /issue_password_reset_code' do
       end
       it 'パスワード再設定コードの発行処理が行われること' do
         @user.should_receive(:issue_reset_auth_token)
-        @user.should_receive(:save!)
+        @user.should_receive(:save_without_validation!)
         post :issue_password_reset_code
       end
     end
@@ -505,7 +505,7 @@ describe Admin::UsersController, 'POST /issue_password_reset_code' do
       end
       it 'パスワード再設定コードの発行処理が行われること' do
         @user.should_receive(:issue_reset_auth_token)
-        @user.should_receive(:save!)
+        @user.should_receive(:save_without_validation!)
         post :issue_password_reset_code
       end
     end
@@ -516,7 +516,7 @@ describe Admin::UsersController, 'POST /issue_password_reset_code' do
       end
       it 'パスワード再設定コードの発行処理が行われないこと' do
         @user.should_not_receive(:issue_reset_auth_token)
-        @user.should_not_receive(:save!)
+        @user.should_not_receive(:save_without_validation!)
         post :issue_password_reset_code
       end
     end

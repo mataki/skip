@@ -230,7 +230,7 @@ class Admin::UsersController < Admin::ApplicationController
     if @user.active?
       if @user.reset_auth_token.nil? || !@user.within_time_limit_of_reset_auth_token?
         @user.issue_reset_auth_token
-        @user.save!
+        @user.save_without_validation!
       end
       @reset_password_url = reset_password_url(@user.reset_auth_token)
       @mail_body = render_to_string(:template => "user_mailer/sent_forgot_password", :layout => false)
