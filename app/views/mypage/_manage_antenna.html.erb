@@ -27,7 +27,7 @@ ul#antennas_list li.dragenter {
     <%= render :partial => 'antennas', :object => @antennas -%>
   </div>
 
-  <div style="border: 1px solid silver; background-color: #f0f0ff; margin-top: 5px;">
+  <div id="add_antenna_area">
     <p><%= icon_tag 'transmit_add' -%>アンテナの追加
     <input type="edit" size="20" id="add_antenna_name" />
     <input type="button" value="追加" id="add_antenna_btn" /></p>
@@ -200,6 +200,7 @@ $j(function() {
                     setupAddAntennaItemLink();
                 }
             });
+            return false;
         });
     };
     setupDeleteAntennaItemLink();

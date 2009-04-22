@@ -297,6 +297,14 @@ div#mypage_right {
   float: right;
   width: 150px; }
 
+div#antennas_list_container {
+  margin: 10px 10px 5px 10px; }
+
+div#add_antenna_area {
+  margin: 0 10px 10px 10px;
+  border: 1px solid #cccccc;
+  background-color: #f0f0ff; }
+
 span.share_file_uploader.trigger {
   font-size: 10px;
   margin-left: 5em; }
