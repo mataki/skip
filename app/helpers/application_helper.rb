@@ -173,9 +173,10 @@ module ApplicationHelper
   end
 
   # ファイルダウンロードへのリンク
-  def file_link_to share_file, html_options = {}
+  def file_link_to share_file, options = {}, html_options = {}
+    file_name = options[:truncate] ? truncate(share_file.file_name, options[:truncate]) : share_file.file_name
     url = file_link_url(share_file)
-    link_to h(share_file.file_name), url, html_options
+    link_to h(file_name), url, html_options
   end
 
   def file_link_url share_file
