@@ -1,6 +1,6 @@
 <div style="text-align: right; margin-bottom: 3px;  background-color: #f0e0d0; border: 1px solid silver; padding: 0 5px;">
 <% form_tag({ :controller => :bookmark, :action => :edit, :title => '' }, {:id => 'bookmark_form'}) do -%>
-  URL：<input id="url" name="url" type="text" size="50" /><input id="add_bookmark_button" type="submit" value="ブックマークする" />
+  <%= label_tag("url", _('URL')) + "：" + text_field_tag("url", "", :size => 50) + submit_tag("ブックマークする", :id => "add_bookmark_button") %>
   <%= link_to '【便利なブックマークレットの使いかた】', :controller => "bookmarks", :action => "setup" %>
   <%= hidden_field_tag "authenticity_token", form_authenticity_token %>
 <% end -%>
@@ -10,20 +10,20 @@
 <% form_tag({:action => 'index'}, :method => 'get') do -%>
   <table class="search_cond_box">
     <tr>
-      <th>タイトル</th>
+      <th><%= label_tag('title', _('タイトル')) %></th>
       <td><%= text_field_tag('title', params[:title], :size => '60') %></td>
     </tr>
     <tr>
-      <th>表示順</th>
+      <th><%= label_tag("sort_type", _('表示順')) %></th>
       <td><%= selected_tag("sort_type", params[:sort_type],@sort_types) %></td>
     </tr>
     <tr>
       <th>検索範囲</th>
       <td>
-        <%= radio_button_tag('type', 'all', params[:type]=='all') %>全て
-        <%= radio_button_tag('type', 'user', params[:type]=='user') %>ユーザ
-        <%= radio_button_tag('type', 'page', params[:type]=='page') %>ブログ/BBS
-        <%= radio_button_tag('type', 'internet', params[:type]=='internet') %>インターネット
+        <%= radio_button_tag('type', 'all', params[:type]=='all') + label_tag("type_all", _('全て')) %>
+        <%= radio_button_tag('type', 'user', params[:type]=='user') + label_tag("type_user", _("ユーザ")) %>
+        <%= radio_button_tag('type', 'page', params[:type]=='page') + label_tag("type_page", _('記事')) %>
+        <%= radio_button_tag('type', 'internet', params[:type]=='internet') + label_tag("type_internet", _('インターネット')) %>
       </td>
     </tr>
     <%= render :partial => 'search/tag_search' %>

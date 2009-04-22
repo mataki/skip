@@ -1,6 +1,7 @@
 page_data = [
 <% @contents.each do |content| -%>
-  '<%= radio_button_tag "target_contents", content[:type], (params[:target_contents] == content[:type] || content[:type].empty? ) && params[:target_aid] == 'skip' -%><%= icon_tag content[:icon], :margin => true %><%= h content[:name] -%>',
+  '<%= radio_button_tag "target_contents", content[:type], (params[:target_contents] == content[:type] || content[:type].empty? ) && params[:target_aid] == 'skip' -%>',
+  '<%= label_tag("target_contents_#{content[:type]}", icon_tag(content[:icon], :margin => true) + content[:name]) -%>',
 <% end -%>
 ].join(' ');
 

@@ -17,11 +17,11 @@ module RankingsHelper
   def ranking_title contents_type
     case contents_type
     when :entry_access
-      "人気ブログランキング(アクセス）"
+      "人気記事ランキング(アクセス）"
     when :entry_comment
-      "人気ブログランキング(コメント）"
+      "人気記事ランキング(コメント）"
     when :entry_he
-      "人気ブログランキング(#{h Admin::Setting.point_button})"
+      "人気記事ランキング(#{h Admin::Setting.point_button})"
     when :user_access
       "人気ユーザランキング"
     when :user_entry
@@ -32,13 +32,13 @@ module RankingsHelper
       ""
     end
   end
-  
+
   def ranking_caption contents_type
     case contents_type
     when :entry_access
       "みんなによく読まれたブログ/掲示板です(公開範囲が「全公開」のみ)"
     when :entry_comment
-      "みんなからコメントが活発に付いたブログです(公開範囲が「全公開」のみ)"
+      "みんなからコメントが活発に付いたブログ/掲示板です(公開範囲が「全公開」のみ)"
     when :entry_he
       "みんなから最も#{h Admin::Setting.point_button}を貰ったブログ/掲示板です(公開範囲が「全公開」のみ)"
     when :user_access
@@ -77,9 +77,9 @@ module RankingsHelper
 
   def ranking_data_type contents_type
     case contents_type
-    when :entry_access 
+    when :entry_access
       "entry"
-    when :entry_comment 
+    when :entry_comment
       "entry"
     when :entry_he
       "entry"

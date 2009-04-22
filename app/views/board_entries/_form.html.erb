@@ -25,7 +25,7 @@ div.input_line textarea {
 <%= hidden_field_tag 'lock_version', h(@board_entry.lock_version) -%>
 
 <div class="input_line">
-  <div class="input_label">タグ</div>
+  <div class="input_label"><%= label(:board_entry, :category, _('タグ')) -%></div>
   <div class="input_value"><%= text_field 'board_entry', 'category', :size => '60', :value => @board_entry.comma_category %>
     <div id="category_box" style="display:none;">
       <div id="candidates_list"><p>foo,barの形で複数指定できます</p></div>
@@ -39,7 +39,7 @@ div.input_line textarea {
 </div>
 
 <div class="input_line">
-  <div class="input_label">タイトル</div>
+  <div class="input_label"><%= label(:board_entry, :title, _('タイトル')) -%></div>
   <div class="input_value"><%= text_field 'board_entry', 'title', :size =>60 %></div>
   <div style="clear: left"></div>
 </div>
@@ -54,7 +54,7 @@ div.input_line textarea {
   <div class="input_value">
     <p><%= datetime_select 'board_entry', 'date', :use_month_numbers => true -%></p>
     <p><a href="#" onclick="setCurrentDatetime('board_entry', 'date');return false;">[現在時刻を設定]</a>
-      <%= check_box 'board_entry', 'ignore_times' -%>時刻は表示しない</p>
+      <%= check_box 'board_entry', 'ignore_times' -%><%= label(:board_entry, :ignore_times, _('時刻は表示しない')) %></p>
   </div>
   <div style="clear: left"></div>
 </div>
@@ -68,10 +68,10 @@ div.input_line textarea {
   <div class="input_value" id="input_value_publication"><table><tr><td>
     <% display_type = (@board_entry.owner_is_public? ? "" : "none") %>
     <span style="display:<%= display_type %>">
-      <%= radio_button_tag("publication_type", "public", params[:publication_type] == "public", :id=>"publication_type_public") -%>全体に公開
+      <%= radio_button_tag("publication_type", "public", params[:publication_type] == "public", :id=>"publication_type_public") -%><%= label_tag("publication_type_public", _('全体に公開')) %>
     </span>
-    <%= radio_button_tag("publication_type", "private", params[:publication_type] == "private", :id=>"publication_type_private") -%><%= @board_entry.diary? ? "自分だけ" : "参加者のみ" -%>
-    <%= radio_button_tag("publication_type", "protected", params[:publication_type] == "protected", :id=>"publication_type_protected") %>直接指定
+    <%= radio_button_tag("publication_type", "private", params[:publication_type] == "private", :id=>"publication_type_private") -%><%= label_tag("publication_type_private", @board_entry.diary? ? _("自分だけ") : _("参加者のみ")) %>
+    <%= radio_button_tag("publication_type", "protected", params[:publication_type] == "protected", :id=>"publication_type_protected") %><%= label_tag("publication_type_protected", _('直接指定')) %>
 
     <div id="editor_symbols_space" style="display: none; margin-top: 5px;">
       <%= check_box_tag 'editor_symbol', value = params[:symbol], params[:editor_symbol] -%>参加者の編集可
@@ -96,7 +96,7 @@ div.input_line textarea {
 <% end %>
 
 <div class="input_line input_option invisible">
-  <div class="input_label" style="height: 3em;">話題の記事</div>
+  <div class="input_label" style="height: 3em;"><%= label_tag("trackbacks", _('話題の記事')) %></div>
   <div class="input_value">
     <div id="option_space">
       <p><%= text_field_tag 'trackbacks', params[:trackbacks], {:size => 60} %></p>

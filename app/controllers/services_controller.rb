@@ -38,7 +38,7 @@ class ServicesController < ActionController::Base
 
   def search_conditions
     @contents = [ { :type => "",            :icon => 'asterisk_orange', :name => "すべて" },
-                  { :type => "entry",       :icon => 'report',          :name => "ブログ/BBS" },
+                  { :type => "entry",       :icon => 'report',          :name => "記事" },
                   { :type => "bookmark",    :icon => 'tag_blue',        :name => "ブックマーク" },
                   { :type => "user",        :icon => 'user_suit',       :name => "ユーザ" },
                   { :type => "group",       :icon => 'group',           :name => "グループ" },
