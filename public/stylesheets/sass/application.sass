@@ -442,6 +442,7 @@ div#board_entry_comments
 
 // ブックマーク
 // ------------------------------------------------------------
+// 一覧
 div.bookmark_space
   :border = !base_border
   :width 98%
@@ -467,6 +468,27 @@ div.bookmark_space
     :text-align right
     span.tags
       :color blue
+
+// 新規,編集
+div.edit_form_space.bookmark
+  :height 500px
+  :border none
+  :margin 5px
+  div.update_form_wrapper
+    :margin-top 5px
+    table
+      :table-layout auto
+      :width 100%
+      th
+        :background-color #f0f0ff
+        :font-weight bold
+        :font-size 12px
+        :padding 1px 5px
+        :border = !base_border
+      td
+        :border = !base_border
+        &.operation
+          :text-align center
 
 // 共有ファイルアップローダー
 // ------------------------------------------------------------

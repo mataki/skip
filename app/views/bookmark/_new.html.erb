@@ -7,36 +7,13 @@
 <%   desc = "タグをつけてコメントすることができます<br/>（#{h Admin::Setting.abbr_app_title}内のユーザやブログはページ内のリンクからブックマークすることをおすすめします）" %>
 <% end -%>
 
-<style type="text/css">
-div.formarea {
-  margin: 5px;
-  border: 1px solid silver;
-  margin-right: auto;
-}
-table {
-  table-layout: auto;
-}
-th {
-  background-color: #f0f0ff;
-  font-weight: bold;
-  font-size: 12px;
-  width: 60px;
-  padding: 1px 5px;
-}
-td {
-  border-bottom: 1px dotted silver;
-  width: 350px;
-}
-</style>
-
-<div style="height: 500px">
-<div class="desc"><%= desc -%></div>
-<div>
-  <div id="update_body"></div>
-  <form id="update_form">
-    <%= hidden_field_tag 'layout', h(layout) -%>
-    <%= hidden_field 'bookmark', 'url', :value => escape_bookmark_url(@bookmark.url) %>
-    <div class="formarea">
+<div class="edit_form_space bookmark">
+  <div class="desc"><%= desc -%></div>
+  <div class="update_form_wrapper">
+    <div id="update_body"></div>
+    <form id="update_form">
+      <%= hidden_field_tag 'layout', h(layout) -%>
+      <%= hidden_field 'bookmark', 'url', :value => escape_bookmark_url(@bookmark.url) %>
       <table>
         <tr>
           <th>URL</th>
@@ -83,17 +60,20 @@ td {
           <th>コメント</th>
           <td><%= text_field 'bookmark_comment', 'comment', :size => 50 %></td>
         </tr>
+        <tr>
+          <td colspan="2" class="operation">
+          <%= submit_tag "OK", :id => "submit_button" %>
+          <% if @bookmark.is_type_internet? && @bookmarklet -%>
+          <input type="button" value="Cancel" onclick="location.href='<%= escape_bookmark_url @bookmark.url %>'"></input>
+          <% end -%>
+          </td>
+        </tr>
       </table>
-    <%= hidden_field_tag("authenticity_token", form_authenticity_token) %>
-      <div style="text-align: center;"><%= submit_tag "OK", :id => "submit_button" %>
-        <% if @bookmark.is_type_internet? && @bookmarklet -%>
-        <input type="button" value="Cancel" onclick="location.href='<%= escape_bookmark_url @bookmark.url -%>'"></input>
-        <% end -%>
-      </div>
-    </div>
-  </form>
+      <%= hidden_field_tag("authenticity_token", form_authenticity_token) %>
+    </form>
+  </div>
 </div>
-</div>
+<% content_for :javascript do -%>
 <script language='javascript' type='text/javascript'>
 //<![CDATA[
 $j(function(){
@@ -156,3 +136,4 @@ $j(function(){
 });
 //]]>
 </script>
+<% end -%>
