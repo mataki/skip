@@ -375,6 +375,34 @@ div#add_antenna_area
   :border = !base_border
   :background-color #f0f0ff
 
+// ユーザ
+// ------------------------------------------------------------
+// ユーザ一覧、グループ参加者一覧の部分
+div.user_box
+  :position relative
+  :margin 5px 10px
+  :width 95%
+  div.operation
+    :position absolute
+    :top 2px
+    :right 5px
+
+table.user_box
+  :width 100%
+  :border = !base_border
+  th
+    :width 20%
+    :background-color #f0f0ff
+    :padding-left 5px
+    :border = !base_border
+  td
+    :padding-left 5px
+    :border = !base_border
+    &.image
+      :padding 0px
+      :width 130px
+      :text-align center
+
 // 記事
 // ------------------------------------------------------------
 span.share_file_uploader.trigger
