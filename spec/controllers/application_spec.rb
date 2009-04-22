@@ -22,6 +22,9 @@ describe ApplicationController, "#sso" do
       INITIAL_SETTINGS['fixed_op_url'] = 'http://localhost.com/'
     end
     describe "未ログイン時" do
+      before do
+        controller.stub!(:logged_in?).and_return(false)
+      end
       describe 'Ajaxリクエストの場合' do
         before do
           controller.stub!(:request).and_return(mock('request', :url => 'url', :env => {'HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest'}))
