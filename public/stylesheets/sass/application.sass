@@ -16,6 +16,7 @@
   :font
     :size = !base_font_size
     :family Verdana, Arial, sans-serif
+    :weight normal
   :color = !base_color
 =form_text
   :font
@@ -156,6 +157,9 @@ div.box_space
     :overflow hidden
     ul
       :list-style-type none
+    span.category_count
+      :font-size = !small_font_size
+      :color #ccc
   div.box_space_img_body
     :text-align center
     :margin 2px
@@ -407,6 +411,34 @@ div#board_entry_comments
           :background-color #ffefcc
       span.buttons
         :right 2px
+
+// ブックマーク
+// ------------------------------------------------------------
+div.bookmark_space
+  :border = !base_border
+  :width 98%
+  :text-align left
+  :margin 3px auto
+  :position relative
+  :font-size 10px
+  :overflow hidden
+  div.header, div.title
+    :margin 0
+    :border-bottom 1px dashed #ccc
+    :padding 0
+    :background-color = !base_background_color
+    +base_text
+    span.other_user_count
+      :font-size = !small_font_size
+  div.header
+    :background-color #ffeeff
+  div.title
+    :font-size 12px
+  div.description
+    :font-size 12px
+    :text-align right
+    span.tags
+      :color blue
 
 // 共有ファイルアップローダー
 // ------------------------------------------------------------
