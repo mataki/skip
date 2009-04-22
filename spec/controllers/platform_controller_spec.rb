@@ -723,6 +723,7 @@ end
 describe PlatformController, "POST /forgot_openid" do
   describe 'OpenID忘れ機能が有効な場合' do
     before do
+      User.delete_all
       controller.should_receive(:enable_forgot_openid?).and_return(true)
       @params_email = "a_user@example.com"
       @reset_url = "reset_url"
