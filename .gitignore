@@ -10,6 +10,7 @@ public/javascripts/jquery.all.js
 public/stylesheets/skip.style.css
 lib/tasks/rspec.rake
 vendor/rails
+vendor/plugins/haml
 coverage
 tmp/*
 pkg/*
