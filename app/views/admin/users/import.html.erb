@@ -9,7 +9,7 @@
   <p style="color:red;"><b><%= _('未登録のユーザは追加されます。登録済みのユーザを更新したい場合は、[登録済みのユーザは上書きする]のチェックボックスにチェックを入れてください。') %></b></p>
   <p style="color:red;"><b><%= _('登録済みのユーザを更新する場合、ユーザが部署やパスワード等を自分自身で変更している場合でも上書きされますのでご注意下さい。') %></b></p>
 
-  <div class="search_box">
+  <div class="upload_area">
     <% form_tag import_new_admin_user_path, :multipart => true, :id => 'import_form' do -%>
       <label for="file"><%= _('CSVファイル') %></label><%= file_field_tag :file %>
       <button id="import_confirmation_button"><%= _('Import confirmation') %></button>
