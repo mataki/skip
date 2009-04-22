@@ -1,5 +1,6 @@
 config/database.yml
 config/initial_settings.yml
+config/common_menus.yml
 db/schema.rb
 log/*.log*
 public/custom/*.html

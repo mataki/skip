@@ -46,11 +46,12 @@ SKIPを動かすにあたり以下の環境で検証を行っています。
 --------------------------------------------------------------------------------
     $ tar xvzf skip-1.1rc2.tar.gz
 
-3. 設定ファイルの準備・編集（initial_settings.yml, database.yml）
+3. 設定ファイルの準備・編集（initial_settings.yml, database.yml, common_menus.yml）
 --------------------------------------------------------------------------------
     $ cp config/initial_settings.yml.sample config/initial_settings.yml
     $ cp config/database.yml.sample config/database.yml
-  （config/initial_settings.yml, config/database.ymlを適切に編集してください）
+    $ cp config/common_menus.yml.sample config/common_menus.yml
+  （config/initial_settings.yml, config/database.yml, config/common_menus.ymlを適切に編集してください）
 
 4. データベースの作成（mysqlが起動済みであること）
 --------------------------------------------------------------------------------
