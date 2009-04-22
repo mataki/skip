@@ -8,7 +8,7 @@ a_user:
   auth_session_token: <%= SkipFaker.rand_char %>
   email: a_user@example.com
   section: Programmer
-  crypted_password: db9c93f05d2e41dc2256c3890d5d78ca6e48d418
+  crypted_password: 27c66f0f08602c8cd26969ee3c3de5bde33dc7d6
   password_expires_at: <%= 1.month.since.to_s(:db) %>
   admin: true
 
@@ -20,7 +20,7 @@ a_retired_user:
   auth_session_token: <%= SkipFaker.rand_char %>
   email: a_retired_user@example.com
   section: Programmer
-  crypted_password: db9c93f05d2e41dc2256c3890d5d78ca6e48d418
+  crypted_password: 27c66f0f08602c8cd26969ee3c3de5bde33dc7d6
   password_expires_at: <%= 1.month.since.to_s(:db) %>
 
 a_group_owned_user:
@@ -31,7 +31,7 @@ a_group_owned_user:
   auth_session_token: <%= SkipFaker.rand_char %>
   email: a_group_owned_user@example.com
   section: Programmer
-  crypted_password: db9c93f05d2e41dc2256c3890d5d78ca6e48d418
+  crypted_password: 27c66f0f08602c8cd26969ee3c3de5bde33dc7d6
   password_expires_at: <%= 1.month.since.to_s(:db) %>
   admin: true
 
@@ -43,7 +43,7 @@ a_group_joined_user:
   auth_session_token: <%= SkipFaker.rand_char %>
   email: a_group_joined_user@example.com
   section: Programmer
-  crypted_password: db9c93f05d2e41dc2256c3890d5d78ca6e48d418
+  crypted_password: 27c66f0f08602c8cd26969ee3c3de5bde33dc7d6
   password_expires_at: <%= 1.month.since.to_s(:db) %>
 
 a_group_waiting_user:
@@ -54,5 +54,5 @@ a_group_waiting_user:
   auth_session_token: <%= SkipFaker.rand_char %>
   email: a_group_waiting_user@example.com
   section: Programmer
-  crypted_password: db9c93f05d2e41dc2256c3890d5d78ca6e48d418
+  crypted_password: 27c66f0f08602c8cd26969ee3c3de5bde33dc7d6
   password_expires_at: <%= 1.month.since.to_s(:db) %>

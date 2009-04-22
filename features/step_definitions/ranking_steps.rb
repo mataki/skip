@@ -45,10 +45,16 @@ Given /^"(.*)"ランキングの"(.*)"分を表示する$/ do |category, date|
   visit ranking_data_path(:content_type => category, :year => year, :month => month)
 end
 
+Given /^"(.*)"でコメントを"(.*)"回書く$/ do |user, times|
+  Given "ログアウトする"
+  Given %!"#{user}"でログインする!
+  Given %!"1"つめのブログに"#{times}"回コメントを書く!
+end
+
 Given /^"(.*)"つめのブログに"(.*)"回コメントを書く$/ do |num,times_num|
   entry = @entries[num.to_i - 1]
   (1..times_num.to_i).each do
-    token = get_authenticity_token
+    token = get_authenticity_token(entry)
     visit(url_for(:controller => :board_entries, :action => :ado_create_comment,:id => entry[:id], :board_entry_comment => { :contents => "test" }, :authenticity_token => token), :post)
   end
 end
@@ -71,6 +77,13 @@ Given /^"(.*)"でブログを書く$/ do |user|
   @entries << { :id => entry.id, :uid => entry.symbol.split(":").last }
 end
 
+Given /^"(.*)"でブログを"(.*)"回書く$/ do |user, num|
+  num.to_i.times do
+    Given "ログアウトする"
+    Given %!"#{user}"でブログを書く!
+  end
+end
+
 Given /^ログアウトする$/ do
   visit logout_path
 end
@@ -79,7 +92,7 @@ Given /^"(.*)"でログインする$/ do |user|
   @user = User.find_by_name(user)
   Given "ログインページを表示している"
   Given %!"#{"ログインID"}"に"#{@user.email}"と入力する!
-  Given %!"#{"パスワード"}"に"#{"password"}"と入力する!
+  Given %!"#{"パスワード"}"に"#{"Password1"}"と入力する!
   Given %!"#{"ログイン"}"ボタンをクリックする!
 end
 
