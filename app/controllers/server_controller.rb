@@ -182,9 +182,4 @@ class ServerController < ApplicationController
     end
     hash
   end
-
-  # TODO: ApplicationControllerのメソッドと統一する
-  def logged_in?
-    !!current_user
-  end
 end

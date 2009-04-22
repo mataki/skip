@@ -89,7 +89,7 @@ protected
   end
 
   def remove_message
-    return true unless current_user
+    return true unless logged_in?
 
     Message.find_all_by_user_id(current_user.id).each do |message|
       # TODO: ver1.0のデータ構造との兼ね合いで URL全体 と PATHの部分 のみの両方でマッチングしているが
@@ -112,8 +112,7 @@ protected
   end
 
   def logged_in?
-    # TODO 1.2以降でcurrent_userを使った形に書き換える
-    !!session[:user_code]
+    !!current_user
   end
 
   def current_user
