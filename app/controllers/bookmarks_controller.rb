@@ -22,12 +22,12 @@ class BookmarksController < ApplicationController
     @sort_types = Bookmark.get_sort_types
     @tags = BookmarkComment.get_popular_tag_words()
 
-    order = params[:sort_type] || "bookmarks.created_on DESC" #ソート順(初期値は登録日降順)
+    order = (!(index = @sort_types.map{|a| a.last}.index(params[:sort_type])).nil? ? @sort_types[index].last : "bookmarks.created_on DESC")#ソート順(初期値は登録日降順)
     @pages, @bookmarks = paginate(:bookmarks,
                                   :per_page => 20,
                                   :conditions => Bookmark.make_conditions(params),
                                   :include => :bookmark_comments,
-                                  :order =>order )
+                                  :order => order )
     flash.now[:notice] = '該当するブックマークはありませんでした。' unless @bookmarks && @bookmarks.size > 0
   end
 
