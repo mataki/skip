@@ -120,7 +120,8 @@ admin_btns = [
 ADMIN_MENU_BTNS = admin_btns
 
 # 共通メニュー
-COMMON_MENUS = YAML::load(File.open(File.join(RAILS_ROOT, 'config', 'common_menus.yml')))
+common_menu_path = File.join(RAILS_ROOT, 'config', 'common_menus.yml')
+COMMON_MENUS = File.exist?(common_menu_path) ? YAML::load(File.open(File.join(RAILS_ROOT, 'config', 'common_menus.yml'))) : {}
 
 # 祝日マスタ
 HOLIDAYS = YAML::load(File.open(File.join(RAILS_ROOT, 'config', 'holiday.yml')))

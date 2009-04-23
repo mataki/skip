@@ -9,6 +9,7 @@
   <div class="item"><a href="<%= help_url %>" target="_blank">ヘルプ</a></div>
   <% end -%>
   <div class="item"><%= link_to "ログアウト", :controller => "/platform", :action => :logout, :only_path => false -%></div>
+  <% unless COMMON_MENUS.empty? -%>
   <div class="item" style="padding: 0;">
   <select style="vertical-align:middle;" onchange="if (this.value != '') { window.open(this.value); }">
     <option selected="selected" value="">リンク ... </option>
@@ -24,6 +25,7 @@
       <% end %>
   </select>
   </div>
+  <% end -%>
   <br style="clear: left" />
 </div>
 
