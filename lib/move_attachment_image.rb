@@ -207,8 +207,8 @@ class MoveAttachmentImage
   end
 
   def self.content_type share_file
-    extension = share_file.file_name.split('.').last.downcase
     if share_file.image_extention?
+      extension = File.extname(share_file.file_name).sub(/\A\./,'').downcase
       "image/#{extension}"
     else
       "application/octet-stream"

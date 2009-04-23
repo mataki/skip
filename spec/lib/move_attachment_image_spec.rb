@@ -392,6 +392,54 @@ describe MoveAttachmentImage do
     end
   end
 
+  describe MoveAttachmentImage, '.content_type' do
+    before do
+      @share_file = stub_model(ShareFile)
+    end
+    describe '拡張子が指定されている場合' do
+      describe '画像の拡張子(小文字)の場合' do
+        before do
+          @share_file.file_name = 'hoge.png'
+        end
+        it '結果がimage/pngとなること' do
+          MoveAttachmentImage.content_type(@share_file).should == 'image/png'
+        end
+      end
+      describe '画像の拡張子(大文字)の場合' do
+        before do
+          @share_file.file_name = 'hoge.PNG'
+        end
+        it '結果がimage/pngとなること' do
+          MoveAttachmentImage.content_type(@share_file).should == 'image/png'
+        end
+      end
+      describe '画像以外の拡張子の場合' do
+        before do
+          @share_file.file_name = 'hoge.txt'
+        end
+        it '結果がapplication/octet-streamとなること' do
+          MoveAttachmentImage.content_type(@share_file).should == 'application/octet-stream'
+        end
+      end
+    end
+    describe '拡張子が指定されていない場合' do
+      before do
+        @share_file.file_name = 'hoge'
+      end
+      it '結果がapplication/octet-streamとなること' do
+        MoveAttachmentImage.content_type(@share_file).should == 'application/octet-stream'
+      end
+    end
+    describe 'ファイル名が[...]の場合' do
+      before do
+        @share_file.file_name = '...'
+      end
+      it '結果がapplication/octet-streamとなること' do
+        MoveAttachmentImage.content_type(@share_file).should == 'application/octet-stream'
+      end
+    end
+  end
+
   describe MoveAttachmentImage, '.share_file_name' do
     describe '対象の所有者に既に同名ファイルが登録されている場合' do
       before do
