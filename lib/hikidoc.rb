@@ -365,6 +365,7 @@ class HikiDoc < String
   BRACKET_LINK_RE = /\[\[(.+?)\]\]|\[link:(.+?)\]/
   NAMED_LINK_RE = [/(.+?)\|(.+)/, /(.+?)&gt;(.+)/]
   URI_RE = /(?:(?:https?|ftp):|mailto:|file:\/\/|Notes:\/\/)[\wA-Za-z0-9;\/?:@&=+$,\-_.!~*\'()#%]+/
+  HEAD_URI_RE = /^(?:(?:https?|ftp):|mailto:|file:\/\/|Notes:\/\/)[\wA-Za-z0-9;\/?:@&=+$,\-_.!~*\'()#%]+/
 
   def parse_link( text )
     ret = text
@@ -382,7 +383,7 @@ class HikiDoc < String
       link_str = ''
       if @site_re =~ uri
         link_str = %Q|<a href="#{escape_quote( uri )}">#{title}</a>|
-      elsif URI_RE =~ uri
+      elsif HEAD_URI_RE =~ uri
         link_str = %Q|<a href="#{escape_quote( uri )}" target='_blank'>#{title}</a>|
       else
         link_str = bracket_value[0] ? %Q|[[#{link}]]| : %Q|[link:#{link}]|
