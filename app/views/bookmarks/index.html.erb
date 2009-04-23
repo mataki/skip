@@ -15,7 +15,7 @@
     </tr>
     <tr>
       <th><%= label_tag("sort_type", _('表示順')) %></th>
-      <td><%= selected_tag("sort_type", params[:sort_type],@sort_types) %></td>
+      <td><%= selected_tag("sort_type", params[:sort_type], Bookmark::SORT_TYPES.map{|type| [type[0], type[1]]}) %></td>
     </tr>
     <tr>
       <th>検索範囲</th>

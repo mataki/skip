@@ -27,6 +27,7 @@ class Bookmark < ActiveRecord::Base
   validates_presence_of :title, :message =>'は必須です'
   validates_length_of :title, :maximum=>255, :message =>'は255文字以内で入力してください'
 
+  SORT_TYPES = [["登録日順(降順)","bookmarks.updated_on DESC"],["登録日順(昇順)","bookmarks.updated_on"],["ユーザ数順","bookmark_comments_count DESC"]].freeze
   class << self
     HUMANIZED_ATTRIBUTE_KEY_NAMES = {
       "url" => "URL",
@@ -49,10 +50,6 @@ class Bookmark < ActiveRecord::Base
       ex.backtrace.each {  |message| logger.error message }
     end
     return ""
-  end
-
-  def self.get_sort_types
-    return [["登録日順(降順)","bookmarks.updated_on DESC"],["登録日順(昇順)","bookmarks.updated_on"],["ユーザ数順","bookmark_comments_count DESC"]]
   end
 
   def self.make_conditions(options={ })

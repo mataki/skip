@@ -35,3 +35,18 @@ describe BookmarksController, "GET index" do
     end
   end
 end
+
+describe BookmarksController, "#get_order_query" do
+  describe "パラメータが規定の値の場合" do
+    it "パラメータに該当する値を返すこと" do
+      Bookmark::SORT_TYPES.each do |sort_type|
+        controller.send(:get_order_query, sort_type.last).should == sort_type.last
+      end
+    end
+  end
+  describe "パラメータが規定の値以外の場合" do
+    it "デフォルト値を返すこと" do
+      controller.send(:get_order_query, "created_on; SELECT * from users").should == Bookmark::SORT_TYPES.first.last
+    end
+  end
+end

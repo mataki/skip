@@ -19,15 +19,13 @@ class BookmarksController < ApplicationController
   def index
     params[:tag_select] ||= "AND"
     params[:type] ||= "all"
-    @sort_types = Bookmark.get_sort_types
     @tags = BookmarkComment.get_popular_tag_words()
 
-    order = (!(index = @sort_types.map{|a| a.last}.index(params[:sort_type])).nil? ? @sort_types[index].last : "bookmarks.created_on DESC")#ソート順(初期値は登録日降順)
     @pages, @bookmarks = paginate(:bookmarks,
                                   :per_page => 20,
                                   :conditions => Bookmark.make_conditions(params),
                                   :include => :bookmark_comments,
-                                  :order => order )
+                                  :order => get_order_query(params[:sort_type]) )
     flash.now[:notice] = '該当するブックマークはありませんでした。' unless @bookmarks && @bookmarks.size > 0
   end
 
@@ -37,5 +35,13 @@ private
 
     @tab_menu_source = [ {:label => _('ブックマークを探す'), :options => {:action => 'index'}},
                          {:label => _('ブックマークレット'), :options => {:action => 'setup'}} ]
+  end
+
+  def get_order_query(params_order)
+    if !(index = Bookmark::SORT_TYPES.map{|a| a.last }.index(params_order)).nil?
+      Bookmark::SORT_TYPES[index].last
+    else
+      Bookmark::SORT_TYPES.first.last
+    end
   end
 end
