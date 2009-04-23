@@ -117,6 +117,7 @@ class MoveAttachmentImage
           Dir.foreach(user_dir_path) do |filename|
             next if (filename == '.' || filename == '..')
             next unless (share_file = new_share_file(user_dir_name, filename))
+            measures_to_same_file(share_file, filename)
 
             # 実ファイル移動
             src = "#{user_dir_path}/#{filename}"
@@ -153,6 +154,8 @@ class MoveAttachmentImage
       end
     end
     entry.save! if entry.changed?
+  ensure
+    BoardEntry.record_timestamps = true
   end
 
   def self.replace_entry_comment_direct_link entry_comment
@@ -166,6 +169,8 @@ class MoveAttachmentImage
       end
     end
     entry_comment.save! if entry_comment.changed?
+  ensure
+    BoardEntryComment.record_timestamps = true
   end
 
   def self.image_link_re
@@ -226,6 +231,24 @@ class MoveAttachmentImage
 
   def self.image_attached_entry image_file_name
     BoardEntry.find_by_id(image_file_name.split('_', 2).first.to_i)
+  end
+
+  def self.measures_to_same_file share_file, image_file_name
+    orign_file_name = image_file_name.split('_', 2).last
+    new_file_name = share_file.file_name
+    unless orign_file_name == new_file_name
+      BoardEntry.record_timestamps = false
+      return unless(image_attached_entry = image_attached_entry(image_file_name))
+      image_attached_entry.contents.gsub!(/#{orign_file_name}/) do |matched|
+        image_attached_entry.contents_will_change!
+        image_attached_entry.category = image_attached_entry.comma_category
+        new_file_name
+      end
+      image_attached_entry.save! if image_attached_entry.changed?
+      true
+    end
+  ensure
+    BoardEntry.record_timestamps = true
   end
 
   def self.log_info message

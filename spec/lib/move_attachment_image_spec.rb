@@ -467,6 +467,50 @@ describe MoveAttachmentImage do
     end
   end
 
+  describe MoveAttachmentImage, '.measures_to_same_file' do
+    describe 'ファイル名が同一の場合' do
+      before do
+        @share_file = stub_model(ShareFile, :file_name => 'skip.png')
+        @image_file_name = '2_skip.png'
+      end
+      it 'nilが返ること' do
+        MoveAttachmentImage.measures_to_same_file(@share_file, @image_file_name).should be_nil
+      end
+    end
+    describe 'ファイル名が異なる場合' do
+      before do
+        @share_file = stub_model(ShareFile, :file_name => 'skip_.png')
+        @image_file_name = '2_skip.png'
+      end
+      describe '移行対象画像が添付された記事が存在する場合' do
+        before do
+          @board_entry = create_board_entry(:contents => 'skip.png\nskip.png', :category => 'skip,rails')
+          MoveAttachmentImage.should_receive(:image_attached_entry).and_return(@board_entry)
+        end
+        it '対象ファイルの属する記事の本文内のファイル名が置換されること' do
+#          lambda do
+#            MoveAttachmentImage.measures_to_same_file(@share_file, @image_file_name)
+#          end.should change(@board_entry, :contents).to('skip_.png\nskip_.png')
+          # 上記だとなぜか通らないので(#{column}_with_change!してるから?)以下のようにしておく。
+          replaced_contents = "skip_.png\\nskip_.png"
+          MoveAttachmentImage.measures_to_same_file(@share_file, @image_file_name)
+          @board_entry.contents.should == replaced_contents
+        end
+        it 'trueが返ること' do
+          MoveAttachmentImage.measures_to_same_file(@share_file, @image_file_name).should be_true
+        end
+      end
+      describe '移行対象画像が添付された記事が存在しない場合' do
+        before do
+          MoveAttachmentImage.should_receive(:image_attached_entry).and_return(nil)
+        end
+        it 'nilが返ること' do
+          MoveAttachmentImage.measures_to_same_file(@share_file, @image_file_name).should be_nil
+        end
+      end
+    end
+  end
+
   after do
     FileUtils.rm_rf "#{RAILS_ROOT}/spec/tmp/"
   end
