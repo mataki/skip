@@ -121,11 +121,15 @@ class MoveAttachmentImage
 
             # 実ファイル移動
             src = "#{user_dir_path}/#{filename}"
-            dest = share_file.full_path
-            FileUtils.mv src, dest
+            begin
+              dest = share_file.full_path
+              FileUtils.mv src, dest
 
-            # DBレコード作成
-            share_file.save_without_validation!
+              # DBレコード作成
+              share_file.save_without_validation!
+            rescue => e
+              log_warn("Failure move file(#{src}). Because [#{e.message}]")
+            end
           end
         end
       end
@@ -135,6 +139,10 @@ class MoveAttachmentImage
   # 記事の本文やコメントの添付画像への直リンクを置換
   def self.replace_direct_link
     BoardEntry.all.each do |board_entry|
+      unless BoardEntry.owner board_entry.symbol
+        log_warn("Failure replace direct link(#{board_entry}). Because owner cannot be found by #{board_entry.symbol}")
+        next
+      end
       replace_entry_direct_link board_entry
       board_entry.board_entry_comments.each do |board_entry_comment|
         replace_entry_comment_direct_link board_entry_comment
