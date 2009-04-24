@@ -1,6 +1,33 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-one:
+text_field:
+  user_profile_master_category: category_one
+  name: "<script>alert('name1');</script>"
+  input_type: text_field
+  required: false
+  sort_order: 20
+  option_values: "<script>alert('value2');</script>,HOGE,餃子定食"
+  description: "<script>alert('description1');</script>"
+
+number_and_hyphen:
+  user_profile_master_category: category_one
+  name: "<script>alert('name1');</script>"
+  input_type: numbar_and_hyphone_only
+  required: false
+  sort_order: 30
+  option_values: "<script>alert('value2');</script>,HOGE,餃子定食"
+  description: "<script>alert('description1');</script>"
+
+radio:
+  user_profile_master_category: category_two
+  name: "<script>alert('name2');</script>"
+  input_type: radio
+  required: true
+  sort_order: 10
+  option_values: "<script>alert('value2');</script>,HOGE,餃子定食"
+  description: "<script>alert('description2');</script>"
+
+rich_text:
   user_profile_master_category: category_one
   name: "<script>alert('name1');</script>"
   input_type: rich_text
@@ -9,11 +36,57 @@ one:
   option_values:
   description: "<script>alert('description1');</script>"
 
-two:
-  user_profile_master_category: category_two
-  name: "<script>alert('name2');</script>"
-  input_type: radio
-  required: true
-  sort_order: 10
+year_select:
+  user_profile_master_category: category_one
+  name: "<script>alert('name1');</script>"
+  input_type: year_select
+  required: false
+  sort_order: 30
+  option_values:
+  description: "<script>alert('description1');</script>"
+
+select:
+  user_profile_master_category: category_one
+  name: "<script>alert('name1');</script>"
+  input_type: select
+  required: false
+  sort_order: 30
   option_values: "<script>alert('value2');</script>,HOGE,餃子定食"
-  description: "<script>alert('description2');</script>"
+  description: "<script>alert('description1');</script>"
+
+appendable_select:
+  user_profile_master_category: category_one
+  name: "<script>alert('name1');</script>"
+  input_type: appendable_select
+  required: false
+  sort_order: 30
+  option_values: "<script>alert('value2');</script>,HOGE,餃子定食"
+  description: "<script>alert('description1');</script>"
+
+check_box:
+  user_profile_master_category: category_one
+  name: "<script>alert('name1');</script>"
+  input_type: check_box
+  required: false
+  sort_order: 30
+  option_values: "<script>alert('value2');</script>,HOGE,餃子定食"
+  description: "<script>alert('description1');</script>"
+
+prefecture:
+  user_profile_master_category: category_one
+  name: "<script>alert('name1');</script>"
+  input_type: prefecture
+  required: false
+  sort_order: 30
+  option_values: "<script>alert('value2');</script>,HOGE,餃子定食"
+  description: "<script>alert('description1');</script>"
+
+datepicker:
+  user_profile_master_category: category_one
+  name: "<script>alert('name1');</script>"
+  input_type: datepicker
+  required: false
+  sort_order: 30
+  option_values: "<script>alert('value2');</script>,HOGE,餃子定食"
+  description: "<script>alert('description1');</script>"
+

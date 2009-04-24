@@ -5,7 +5,11 @@
   <table class="normal user_info">
     <% category.user_profile_masters.each do |master| -%>
     <tr>
-      <th><%= label_tag "profile_value[#{master.id}]", h(master.name) %><%= master.description.blank? ? '' : help_icon_tag(:content => master.description) %></th>
+      <th>
+        <%= label_tag "profile_value[#{master.id}]", h(master.name) %>
+        <%# 下で2回 html_escape して、descriptionを表示しているのは、cluetipでアンエスケープが行なわれるため -%>
+        <%= master.description.blank? ? '' : help_icon_tag(:content => h(h(master.description))) %>
+      </th>
       <% profile = profile_hash[master.id] %>
       <td>
         <%= master.input_type_processer.to_edit_html(profile) %>
