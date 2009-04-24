@@ -284,6 +284,12 @@ module ApplicationHelper
     "<div id=\"logo\">" + link_to(image_tag(img_url, :alt => h(Admin::Setting.abbr_app_title), :height => "45"), url) + "</div>"
   end
 
+  def favicon_include_tag
+    favicon_url = url_for("/custom/favicon.ico")
+    %!<link rel="shortcut icon" href="#{favicon_url}" />! +
+      %!<link rel="icon" href="#{favicon_url}" type="image/ico" />!
+  end
+
 private
   def relative_url_root
     ActionController::AbstractRequest.relative_url_root

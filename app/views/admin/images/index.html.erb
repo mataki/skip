@@ -26,7 +26,7 @@
   <% target_name = Admin::ImagesController::FaviconImage::IMAGE_NAMES[0] -%>
   <%= render :partial => 'form',
              :locals => { :target_name => target_name,
-                          :target_path => "/#{target_name}.ico",
+                          :target_path => "/custom/#{target_name}.ico",
                           :title => _("Admin::ImagesController|favicon"),
                           :description => _("Admin::ImagesController|favicon_description") } %>
 </div>
