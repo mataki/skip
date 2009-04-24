@@ -13,12 +13,12 @@
     <div id="update_body"></div>
     <form id="update_form">
       <%= hidden_field_tag 'layout', h(layout) -%>
-      <%= hidden_field 'bookmark', 'url', :value => escape_bookmark_url(@bookmark.url) %>
+      <%= hidden_field 'bookmark', 'url', :value => @bookmark.escaped_url %>
       <table>
         <tr>
           <th>URL</th>
           <td>
-            <a href="<%= escape_bookmark_url(@bookmark.url) -%>" title="<%= escape_bookmark_url(@bookmark.url) -%>" target="_blank"><%= escape_bookmark_url(truncate(@bookmark.url, 60)) -%></a><br/>
+            <%= link_to truncate(@bookmark.escaped_url, 60), @bookmark.escaped_url, :title => h(@bookmark.title), :target => '_blank' %><br/>
             <span style="font-size: 10px; color: #555555;">（別ウィンドウで開きます）</span>
           </td>
         </tr>
@@ -28,7 +28,7 @@
             <span style="font-size: 15px; font-weight: bold;">
             <% if @bookmark.is_type_internet? -%>
               <%= text_field 'bookmark', 'title' -%>
-              <span id="refresher"><a href="javascript: reloadTitle('<%= escape_bookmark_url(@bookmark.url) -%>', 'bookmark_title');"><%= icon_tag 'arrow_rotate_clockwise', :title => "タイトルを再取得する" -%></a></span>
+              <span id="refresher"><%= icon_tag 'arrow_rotate_clockwise', :title => "タイトルを再取得する" %></span>
               <span id="indicator" style="display:none;font-size:10px;"><%= skip_image_tag 'indicator.gif' %>更新中...</span>
               <br/><span style="font-size: 10px; color: green;">タイトルは全ユーザ共通です。修正の際はご注意ください。</span>
             <% else -%>
@@ -62,9 +62,9 @@
         </tr>
         <tr>
           <td colspan="2" class="operation">
-          <%= submit_tag "OK", :id => "submit_button" %>
+          <%= submit_tag _('Save'), :id => "submit_button" %>
           <% if @bookmark.is_type_internet? && @bookmarklet -%>
-          <input type="button" value="Cancel" onclick="location.href='<%= escape_bookmark_url @bookmark.url %>'"></input>
+          <input type="button" value=<%= _('戻る') %> onclick="location.href='<%= @bookmark.escaped_url %>'"></input>
           <% end -%>
           </td>
         </tr>
@@ -130,8 +130,14 @@ $j(function(){
         return false;
     });
 
+    $j('#refresher')
+    .click(function() {
+        reloadTitle('<%= @bookmark.escaped_url %>', 'bookmark_title');
+        return false;
+    });
+
     if ($j('#bookmark_title').val() == '') {
-        reloadTitle('<%= escape_bookmark_url(@bookmark.url) -%>', 'bookmark_title');
+        reloadTitle('<%= @bookmark.escaped_url %>', 'bookmark_title');
     }
 });
 //]]>

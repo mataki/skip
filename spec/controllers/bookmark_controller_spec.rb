@@ -81,7 +81,6 @@ describe BookmarkController, "GET #show" do
       assigns[:bookmark].should_not be_nil
       assigns[:main_menu].should_not be_nil
       assigns[:tab_menu_source].should_not be_nil
-      assigns[:tab_menu_option].should_not be_nil
       assigns[:title].should_not be_nil
       assigns[:tags].should_not be_nil
       assigns[:create_button_show].should_not be_nil

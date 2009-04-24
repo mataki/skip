@@ -98,8 +98,12 @@ class Bookmark < ActiveRecord::Base
     !(is_type_page?) and !(is_type_user?)
   end
 
-  def get_encode_url
-    return  URI.escape(url, /[\&|\+|\=|!|~|'|(|)|;|\/|?|:|$|,|\[|\]|]/)
+  def escaped_url
+    URI.escape(URI.unescape(url)).gsub(/'/,'&#39;')
+  end
+
+  def self.unescaped_url url
+    url.blank? ? '' : url.gsub(/&#39\;/, "'")
   end
 
   # ブックマークされたURLが全公開であるか

@@ -49,7 +49,7 @@ class BookmarkController < ApplicationController
 
   # ブックマークの更新（存在しない場合は作成）
   def update
-    url = params[:bookmark][:url]
+    url = Bookmark.unescaped_url(params[:bookmark][:url])
 
     unless check_url_format? url
       messages = []
@@ -91,13 +91,12 @@ class BookmarkController < ApplicationController
   end
 
   def ado_get_title
-    render :text => Bookmark.get_title_from_url(params[:url])
+    render :text => Bookmark.get_title_from_url(Bookmark.unescaped_url(params[:url]))
   end
 
   # tab_menu
   def show
-    uri = params[:uri] ? URI.decode(params[:uri]) : ""
-    uri.gsub!('+', ' ')
+    uri = params[:uri] ? Bookmark.unescaped_url(params[:uri]) : ""
     unless @bookmark = Bookmark.find_by_url(uri, :include => :bookmark_comments )
       flash[:warning] = _("指定のＵＲＬは誰もブックマークしていません。")
       redirect_to :controller => 'mypage', :action => 'index'
@@ -107,7 +106,6 @@ class BookmarkController < ApplicationController
     @main_menu = 'ブックマーク'
     @title = 'ブックマーク[' + @bookmark.title + ']'
     @tab_menu_source = [ {:label => _('ブックマークコメント'), :options => {:action => 'show'}} ]
-    @tab_menu_option = { :uri => @bookmark.url }
 
     # TODO: SQLを発行しなくても判断できるのでrubyで処理する様に
     comment =  BookmarkComment.find(:first,
@@ -203,7 +201,8 @@ private
 
   def prepare_bookmark params
     conditions = ["bookmark_comments.user_id = ? and bookmarks.url = ?"]
-    conditions << session[:user_id] << params[:url]
+    unescaped_url = Bookmark.unescaped_url params[:url]
+    conditions << session[:user_id] << unescaped_url
     @bookmark_comment = BookmarkComment.find(:first,
                                              :conditions => conditions,
                                              :include => [:bookmark])
@@ -212,12 +211,12 @@ private
     else
       @bookmark_comment = BookmarkComment.new(:public => true)
 
-      unless @bookmark = Bookmark.find_by_url(params[:url])
-        @bookmark = Bookmark.new(:url => params[:url], :title => params[:title])
+      unless @bookmark = Bookmark.find_by_url(unescaped_url)
+        @bookmark = Bookmark.new(:url => unescaped_url, :title => params[:title] ? params[:title].toutf8 : '')
       end
     end
 
-    user_tags = BookmarkComment.get_tagcloud_tags params[:url]
+    user_tags = BookmarkComment.get_tagcloud_tags unescaped_url
     user_tags.map! {|tag| tag.name }
 
     other_tags = BookmarkComment.get_bookmark_tags @bookmark.is_type_user?

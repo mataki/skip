@@ -52,25 +52,20 @@
     <div class="bookmark_space" id="bookmark_comment_<%= comment.id %>">
       <div class="header">
         <%=h comment.created_on.strftime("%Y年%m月%d日") %>
-        <span class="other_user_count"><%= link_to("[他のユーザ:#{comment.bookmark.bookmark_comments_count}人]", url_for_bookmark(comment.bookmark.url)) %></span>
+        <span class="other_user_count"><%= link_to("[他のユーザ:#{comment.bookmark.bookmark_comments_count}人]", url_for_bookmark(comment.bookmark)) %></span>
       </div>
       <div class="title">
         <% if params[:user_id] == @current_user.id -%>
         <% elem_id = "bookmark_comment_stared_#{comment.id}" -%>
         <span id="<%= elem_id %>"><%= render :partial => "stared", :locals => {:bookmark_comment => comment} %></span>
         <% end -%>
-        <%= link_to_bookmark_url(comment.bookmark,comment.bookmark.title) %>
+        <%= link_to_bookmark_url comment.bookmark %>
       </div>
       <div class="description">
         <span class="tags"><%=h comment.tags %></span><%=h comment.comment %>
         <% if @current_user.id == comment.user_id %>
-          <%= link_to(icon_tag('tag_blue_edit', :title => '編集'), {:controller => "bookmark", :action => "edit", :url => escape_bookmark_url(comment.bookmark.url), :title => comment.bookmark.title, :dummy => '.html'}, {:class => "nyroModal"}) %>
-          <%= link_to_function icon_tag('tag_blue_delete', :title => '削除'),"if (confirm('本当に削除しますか')) { var f = document.createElement('form'); this.parentNode.appendChild(f); f.method = 'POST';f.action = get_action_value(this.href, #{comment.id}); var input = document.createElement('input');  input.type = 'hidden'; input.name = 'authenticity_token'; input.value = document.getElementById('authenticity_token').value; f.appendChild(input); f.submit();}",:href => url_for(:controller =>'bookmark', :action =>'destroy'), :title => "削除"  %>
-          <script  language='javascript' type='text/javascript'>
-          function get_action_value(href, comment_id){
-            return  href +'/' + escape('<%= escape_bookmark_url comment.bookmark.get_encode_url %>') + '?comment_id=' + comment_id;
-          }
-          </script>
+          <%= link_to(icon_tag('tag_blue_edit', :title => '編集'), {:controller => "bookmark", :action => "edit", :url => comment.bookmark.escaped_url, :title => h(comment.bookmark.title), :dummy => '.html'}, {:class => "nyroModal"}) %>
+          <%= link_to_function icon_tag('tag_blue_delete', :title => '削除'),"if (confirm('本当に削除しますか')) { var f = document.createElement('form'); this.parentNode.appendChild(f); f.method = 'POST';f.action = '#{url_for(:controller =>'bookmark', :action =>'destroy', :uri => comment.bookmark.escaped_url, :comment_id => comment.id)}'; var input = document.createElement('input');  input.type = 'hidden'; input.name = 'authenticity_token'; input.value = document.getElementById('authenticity_token').value; f.appendChild(input); f.submit();}",:href => url_for(:controller =>'bookmark', :action =>'destroy'), :title => "削除"  %>
         <% end %>
       </div>
     </div>

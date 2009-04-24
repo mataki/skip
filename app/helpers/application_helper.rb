@@ -271,12 +271,8 @@ module ApplicationHelper
     icon_tag(category.icon, options)
   end
 
-  def url_for_bookmark url
-    url_for :controller => 'bookmark', :action => 'show', :uri => escape_bookmark_url(url)
-  end
-
-  def escape_bookmark_url url
-    h(URI.encode(url)).gsub(/'/,'&#39;')
+  def url_for_bookmark bookmark
+    url_for :controller => 'bookmark', :action => 'show', :uri => bookmark.escaped_url
   end
 
   def header_logo_link(url = url_for(:controller => '/mypage', :action => 'index'))
@@ -317,18 +313,18 @@ private
     return text
   end
 
-  def link_to_bookmark_url(bookmark, name = nil)
+  def link_to_bookmark_url(bookmark, title = nil)
     url = bookmark.url
-    title = bookmark.title
+    title ||= bookmark.title
 
     if bookmark.is_type_page?
       url =  relative_url_root + url
-      return "<a href=#{escape_bookmark_url(url)} title='#{h(title)}'>#{icon_tag('report_link')} #{h(name)}</a>"
+      link_to "#{icon_tag('report_link')} #{h title}", bookmark.escaped_url, :title => title
     elsif bookmark.is_type_user?
       url =  relative_url_root + url
-      return "<a href=#{escape_bookmark_url(url)} title='#{h(title)}'>#{icon_tag('user')} #{h(name)}</a>"
+      link_to "#{icon_tag('user')} #{h title}", bookmark.escaped_url, :title => title
     else
-      return "<a href=#{escape_bookmark_url(url)} title='#{h(title)}'>#{icon_tag('world_link')} #{h(truncate(name, 115))}</a>"
+      link_to "#{icon_tag('world_link')} #{h truncate(title, 115)}", bookmark.escaped_url, :title => title
     end
   end
 

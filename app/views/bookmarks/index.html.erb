@@ -50,7 +50,6 @@ $j(function() {
             alert("httpで始まる形式でないとブックマークできません");
             return false;
         }
-        $j('#url').val(encodeURI($j('#url').val()));
         $j('#bookmark_form').nyroModalManual();
         $j('#url').val('');
     });
