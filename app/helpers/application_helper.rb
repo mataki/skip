@@ -285,7 +285,7 @@ module ApplicationHelper
   end
 
   def favicon_include_tag
-    favicon_url = url_for("/custom/favicon.ico")
+    favicon_url = url_for(relative_url_root + "/custom/favicon.ico")
     %!<link rel="shortcut icon" href="#{favicon_url}" />! +
       %!<link rel="icon" href="#{favicon_url}" type="image/ico" />!
   end
