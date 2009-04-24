@@ -74,7 +74,7 @@ class EditController < ApplicationController
     end
 
     if @board_entry.save
-      target_symbols  = analyze_params
+      target_symbols  = analyze_params(@board_entry)
       target_symbols.first.each do |target_symbol|
         @board_entry.entry_publications.create(:symbol => target_symbol)
       end
@@ -197,7 +197,7 @@ class EditController < ApplicationController
     if @board_entry.update_attributes(update_params)
       @board_entry.entry_publications.clear
       @board_entry.entry_editors.clear
-      target_symbols = analyze_params
+      target_symbols = analyze_params(@board_entry)
       target_symbols.first.each do |target_symbol|
         @board_entry.entry_publications.create(:symbol => target_symbol)
       end
@@ -270,7 +270,7 @@ private
     @categories_hash =  BoardEntry.get_categories_hash(login_user_symbols, {:symbol => symbol})
   end
 
-  def analyze_params
+  def analyze_params board_entry
     target_symbols_publication = []
     target_symbols_editor = []
     case params[:publication_type]
@@ -280,11 +280,11 @@ private
     when "private"
       target_symbols_publication << params[:board_entry][:symbol] unless params[:entry_type] == 'DIARY'
       target_symbols_editor  << params[:editor_symbol] if (params[:entry_type] != 'DIARY' && params[:editor_symbol])
-      target_symbols_publication << User.find(@board_entry.user_id).symbol
+      target_symbols_publication << User.find(board_entry.user_id).symbol
     when "protected"
       target_symbols_publication = params[:publication_symbols_value].split(/,/).map {|symbol| symbol.strip }
       target_symbols_editor = params[:editor_symbols_value].split(/,/).map {|symbol| symbol.strip }
-      target_symbols_publication << User.find(@board_entry.user_id).symbol
+      target_symbols_publication << User.find(board_entry.user_id).symbol
     else
       raise "パラメータが不正です"
     end
