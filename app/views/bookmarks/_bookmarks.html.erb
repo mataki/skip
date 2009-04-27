@@ -2,7 +2,7 @@
 
 <table border="0" class="normal" width="98%" style="overflow:hidden ; margin: 5px 10px; border: none; _width: 95%;">
 <% even_or_odd = 0 -%>
-<% for bookmark in bookmarks -%>
+<% bookmarks.each do |bookmark| -%>
   <% even_or_odd = 1 - even_or_odd -%>
   <tr>
     <td class="line_<%= even_or_odd -%>">

@@ -32,6 +32,9 @@ class BookmarkController < ApplicationController
              :your_tags_array => your_tags,
              :layout => "subwindow"
            })
+  rescue Bookmark::InvalidMultiByteURIError => e
+    flash[:error] = _('URLの形式が不正です。')
+    redirect_to root_url
   end
 
   # ブックマーク更新画面の表示（存在しない場合は作成）
@@ -45,6 +48,8 @@ class BookmarkController < ApplicationController
              :your_tags_array => your_tags,
              :layout => "dialog"
            })
+  rescue Bookmark::InvalidMultiByteURIError => e
+    render :text => _('URLの形式が不正です。')
   end
 
   # ブックマークの更新（存在しない場合は作成）
@@ -88,10 +93,14 @@ class BookmarkController < ApplicationController
     messages.concat @bookmark_comment.errors.full_messages unless @bookmark_comment.valid?
 
     render :partial => "system/error_messages_for", :locals=> { :messages => messages }
+  rescue Bookmark::InvalidMultiByteURIError => e
+    render :partial => "system/error_messages_for", :locals=> { :messages => [_('URLの形式が不正です。')] }
   end
 
   def ado_get_title
     render :text => Bookmark.get_title_from_url(Bookmark.unescaped_url(params[:url]))
+  rescue Bookmark::InvalidMultiByteURIError => e
+    render :text => _('URLの形式が不正です。')
   end
 
   # tab_menu

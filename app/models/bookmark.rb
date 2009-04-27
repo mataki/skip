@@ -38,6 +38,8 @@ class Bookmark < ActiveRecord::Base
     end
   end
 
+  class InvalidMultiByteURIError < RuntimeError;end
+
   def self.get_title_from_url url
     begin
       open(url, :proxy => INITIAL_SETTINGS['proxy_url']) do |f|
@@ -99,11 +101,24 @@ class Bookmark < ActiveRecord::Base
   end
 
   def escaped_url
-    URI.escape(URI.unescape(url)).gsub(/'/,'&#39;')
+    URI.unescape(url).unpack('U*')
+    url.blank? ? '' : url.gsub(/'/,'&#39;')
+  rescue ArgumentError => e
+    self.url = 'invalid_url'
   end
 
   def self.unescaped_url url
+    URI.unescape(url).unpack('U*')
     url.blank? ? '' : url.gsub(/&#39\;/, "'")
+  rescue ArgumentError => e
+    raise Bookmark::InvalidMultiByteURIError.new(e.message)
+  end
+
+  def title
+    URI.unescape(url).unpack('U*')
+    read_attribute(:title)
+  rescue ArgumentError => e
+    write_attribute(:title, _('invalid url'))
   end
 
   # ブックマークされたURLが全公開であるか

@@ -119,7 +119,7 @@ describe Bookmark, '#escaped_url' do
     before do
       @bookmark.url = 'http://ja.wikipedia.org/wiki/%E3%82%BD%E3%83%8B%E3%83%83%E3%82%AF'
     end
-    it '正しくエスケープされること' do
+    it 'URLが変化しないこと' do
       @bookmark.escaped_url.should == 'http://ja.wikipedia.org/wiki/%E3%82%BD%E3%83%8B%E3%83%83%E3%82%AF'
     end
   end
@@ -127,32 +127,32 @@ describe Bookmark, '#escaped_url' do
     before do
       @bookmark.url = 'http://ja.wikipedia.org/wiki/ソニック'
     end
-    it '正しくエスケープされること' do
-      @bookmark.escaped_url.should == 'http://ja.wikipedia.org/wiki/%E3%82%BD%E3%83%8B%E3%83%83%E3%82%AF'
+    it 'URLが変化しないこと' do
+      @bookmark.escaped_url.should == 'http://ja.wikipedia.org/wiki/ソニック'
     end
   end
   describe 'エスケープ、未エスケープ混在のURLの場合' do
     before do
       @bookmark.url = 'http://ja.wikipedia.org/wiki/ソ%E3%83%8B%E3%83%83%E3%82%AF'
     end
-    it '正しくエスケープされること' do
-      @bookmark.escaped_url.should == 'http://ja.wikipedia.org/wiki/%E3%82%BD%E3%83%8B%E3%83%83%E3%82%AF'
+    it 'URLが変化しないこと' do
+      @bookmark.escaped_url.should == 'http://ja.wikipedia.org/wiki/ソ%E3%83%8B%E3%83%83%E3%82%AF'
     end
   end
   describe 'フラグメント付きのURLの場合' do
     before do
       @bookmark.url = 'http://ja.wikipedia.org/wiki/%E7%8C%AB#.E8.BA.AB.E4.BD.93.E7.9A.84.E7.89.B9.E5.BE.B4'
     end
-    it '正しくエスケープされること' do
-      @bookmark.escaped_url.should == 'http://ja.wikipedia.org/wiki/%E7%8C%AB%23.E8.BA.AB.E4.BD.93.E7.9A.84.E7.89.B9.E5.BE.B4'
+    it 'URLが変化しないこと' do
+      @bookmark.escaped_url.should == 'http://ja.wikipedia.org/wiki/%E7%8C%AB#.E8.BA.AB.E4.BD.93.E7.9A.84.E7.89.B9.E5.BE.B4'
     end
   end
   describe 'クエリ付きのURLの場合' do
     before do
       @bookmark.url = 'http://b.hatena.ne.jp/search?ie=utf8&q=vim+エディタ&x=0&y=0'
     end
-    it '正しくエスケープされること' do
-      @bookmark.escaped_url.should == 'http://b.hatena.ne.jp/search?ie=utf8&q=vim+%E3%82%A8%E3%83%87%E3%82%A3%E3%82%BF&x=0&y=0'
+    it 'URLが変化しないこと' do
+      @bookmark.escaped_url.should == 'http://b.hatena.ne.jp/search?ie=utf8&q=vim+エディタ&x=0&y=0'
     end
   end
   describe 'シングルクォート付きのURLの場合' do
@@ -163,13 +163,14 @@ describe Bookmark, '#escaped_url' do
       @bookmark.escaped_url.should == "http://localhost?foo=&#39;bar&#39;"
     end
   end
-  # テストが通らない。なんらかの半端なバイト対策が必要。
   describe '半端なバイトになるエスケープシーケンス付きのURLの場合' do
     before do
       @bookmark.url = "http://localhost/%c0"
     end
-    it 'エスケープされていること' do
-      @bookmark.escaped_url.should == "http://localhost/%25c0"
+    it 'urlが[invalid_url]となること' do
+      lambda do
+        @bookmark.escaped_url.should == 'invalid_url'
+      end
     end
   end
 end
@@ -180,6 +181,38 @@ describe Bookmark, '.unescaped_url' do
   end
   it 'htmlエスケープされたシングルクォート付きのURLがアンエスケープされること' do
     Bookmark.unescaped_url(@url).should == "http://localhost?foo='bar'"
+  end
+  describe '半端なバイトになるエスケープシーケンス付きのURLの場合' do
+    before do
+      @url = "http://localhost/%c0"
+    end
+    it '半端なバイトエラー(InvalidMultiByteURIError)となること' do
+      lambda do
+        Bookmark.unescaped_url @url
+      end.should raise_error(Bookmark::InvalidMultiByteURIError)
+    end
+  end
+end
+
+describe Bookmark, '#title' do
+  before do
+    @bookmark = Bookmark.new(:title => 'title')
+  end
+  describe '正常なURLの場合' do
+    before do
+      @bookmark.url = "http://localhost/"
+    end
+    it 'titleがモデルに登録されているものとなっていること' do
+      @bookmark.title.should == 'title'
+    end
+  end
+  describe '半端なバイトになるエスケープシーケンス付きのURLの場合' do
+    before do
+      @bookmark.url = "http://localhost/%c0"
+    end
+    it 'titleが[invalid url]となること' do
+      @bookmark.title.should == 'invalid url'
+    end
   end
 end
 

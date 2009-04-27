@@ -144,7 +144,7 @@ describe ApplicationHelper, '#url_for_bookmark' do
     @bookmark = Bookmark.new :url => 'http://b.hatena.ne.jp/search?ie=utf8&q=vim+エディタ&x=0&y=0'
   end
   it '正しいURLが生成されること' do
-    helper.url_for_bookmark(@bookmark).should == '/bookmark/show/http:%2F%2Fb.hatena.ne.jp%2Fsearch%3Fie=utf8&amp;q=vim+%25E3%2582%25A8%25E3%2583%2587%25E3%2582%25A3%25E3%2582%25BF&amp;x=0&amp;y=0'
+    helper.url_for_bookmark(@bookmark).should == '/bookmark/show/http:%2F%2Fb.hatena.ne.jp%2Fsearch%3Fie=utf8&amp;q=vim+%E3%82%A8%E3%83%87%E3%82%A3%E3%82%BF&amp;x=0&amp;y=0'
   end
 end
 
