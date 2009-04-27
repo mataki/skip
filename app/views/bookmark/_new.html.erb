@@ -11,7 +11,7 @@
   <div class="desc"><%= desc -%></div>
   <div class="update_form_wrapper">
     <div id="update_body"></div>
-    <form id="update_form">
+    <form id="update_form" action="<%= url_for({ :controller => :bookmark, :action => :update }) %>" method="post">
       <%= hidden_field_tag 'layout', h(layout) -%>
       <%= hidden_field 'bookmark', 'url', :value => @bookmark.escaped_url %>
       <table>
@@ -23,7 +23,7 @@
           </td>
         </tr>
         <tr>
-          <th>タイトル</th>
+          <th><%= label :bookmark, :title, _("タイトル") %></th>
           <td>
             <span style="font-size: 15px; font-weight: bold;">
             <% if @bookmark.is_type_internet? -%>
@@ -45,7 +45,7 @@
         </tr>
         <% end -%>
         <tr>
-          <th>タグ</th>
+          <th><%= label(:bookmark_comment, :tags, _('タグ')) %></th>
           <td>
             <%= text_field 'bookmark_comment', 'tags', :size => '50', :value => @bookmark_comment.comma_tags %>
             <div id="category_box">
@@ -57,7 +57,7 @@
           </td>
         </tr>
         <tr>
-          <th>コメント</th>
+          <th><%= label(:bookmark_comment, :comment, _('コメント')) %></th>
           <td><%= text_field 'bookmark_comment', 'comment', :size => 50 %></td>
         </tr>
         <tr>

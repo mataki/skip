@@ -73,7 +73,7 @@ When /^"(.*)"としてファイル"(.*)"を添付する$/ do |field, path|
   attach_file(field, path)
 end
 
-Then /^"(.*)"と表示されていること$/ do |text|
+Then /^"(.*)"と表示されて?い?ること$/ do |text|
   response_body_text.should =~ /#{Regexp.escape(text)}/m
 end
 
@@ -85,7 +85,7 @@ Then /^"(.*)"がチェックされていること$/ do |label|
   field_labeled(label).should be_checked
 end
 
-Then %r!デバッグのためページを確認する! do
+Then %r!デバッグのための?ページを確認する! do
   save_and_open_page
 end
 
