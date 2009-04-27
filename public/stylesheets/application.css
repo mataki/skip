@@ -416,6 +416,17 @@ div.edit_form_space.bookmark {
         div.edit_form_space.bookmark div.update_form_wrapper table td.operation {
           text-align: center; }
 
+div.bookmark {
+  border-bottom: 1px solid #cccccc;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+  position: relative; }
+  div.bookmark div.title {
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #f0f0ff;
+    padding: 2px; }
+
 .share_file.upload iframe {
   border: 0;
   overflow: hidden; }
