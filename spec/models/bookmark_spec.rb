@@ -119,40 +119,40 @@ describe Bookmark, '#escaped_url' do
     before do
       @bookmark.url = 'http://ja.wikipedia.org/wiki/%E3%82%BD%E3%83%8B%E3%83%83%E3%82%AF'
     end
-    it 'URLが変化しないこと' do
-      @bookmark.escaped_url.should == 'http://ja.wikipedia.org/wiki/%E3%82%BD%E3%83%8B%E3%83%83%E3%82%AF'
+    it '正しくエスケープされること' do
+      @bookmark.escaped_url.should == 'http://ja.wikipedia.org/wiki/%25E3%2582%25BD%25E3%2583%258B%25E3%2583%2583%25E3%2582%25AF'
     end
   end
   describe '未エスケープのURLの場合' do
     before do
       @bookmark.url = 'http://ja.wikipedia.org/wiki/ソニック'
     end
-    it 'URLが変化しないこと' do
-      @bookmark.escaped_url.should == 'http://ja.wikipedia.org/wiki/ソニック'
+    it '正しくエスケープされること' do
+      @bookmark.escaped_url.should == 'http://ja.wikipedia.org/wiki/%E3%82%BD%E3%83%8B%E3%83%83%E3%82%AF'
     end
   end
   describe 'エスケープ、未エスケープ混在のURLの場合' do
     before do
       @bookmark.url = 'http://ja.wikipedia.org/wiki/ソ%E3%83%8B%E3%83%83%E3%82%AF'
     end
-    it 'URLが変化しないこと' do
-      @bookmark.escaped_url.should == 'http://ja.wikipedia.org/wiki/ソ%E3%83%8B%E3%83%83%E3%82%AF'
+    it '正しくエスケープされること' do
+      @bookmark.escaped_url.should == 'http://ja.wikipedia.org/wiki/%E3%82%BD%25E3%2583%258B%25E3%2583%2583%25E3%2582%25AF'
     end
   end
   describe 'フラグメント付きのURLの場合' do
     before do
       @bookmark.url = 'http://ja.wikipedia.org/wiki/%E7%8C%AB#.E8.BA.AB.E4.BD.93.E7.9A.84.E7.89.B9.E5.BE.B4'
     end
-    it 'URLが変化しないこと' do
-      @bookmark.escaped_url.should == 'http://ja.wikipedia.org/wiki/%E7%8C%AB#.E8.BA.AB.E4.BD.93.E7.9A.84.E7.89.B9.E5.BE.B4'
+    it '正しくエスケープされること' do
+      @bookmark.escaped_url.should == 'http://ja.wikipedia.org/wiki/%25E7%258C%25AB%23.E8.BA.AB.E4.BD.93.E7.9A.84.E7.89.B9.E5.BE.B4'
     end
   end
   describe 'クエリ付きのURLの場合' do
     before do
       @bookmark.url = 'http://b.hatena.ne.jp/search?ie=utf8&q=vim+エディタ&x=0&y=0'
     end
-    it 'URLが変化しないこと' do
-      @bookmark.escaped_url.should == 'http://b.hatena.ne.jp/search?ie=utf8&q=vim+エディタ&x=0&y=0'
+    it '正しくエスケープされること' do
+      @bookmark.escaped_url.should == 'http://b.hatena.ne.jp/search?ie=utf8&q=vim+%E3%82%A8%E3%83%87%E3%82%A3%E3%82%BF&x=0&y=0'
     end
   end
   describe 'シングルクォート付きのURLの場合' do
@@ -160,24 +160,23 @@ describe Bookmark, '#escaped_url' do
       @bookmark.url = "http://localhost?foo='bar'"
     end
     it 'シングルクォートがhtmlエスケープされること(&#39;に変換される)' do
-      @bookmark.escaped_url.should == "http://localhost?foo=&#39;bar&#39;"
+      @bookmark.escaped_url.should == "http://localhost?foo=%27bar%27"
     end
   end
+  # テストが通らない。なんらかの半端なバイト対策が必要。
   describe '半端なバイトになるエスケープシーケンス付きのURLの場合' do
     before do
       @bookmark.url = "http://localhost/%c0"
     end
-    it 'urlが[invalid_url]となること' do
-      lambda do
-        @bookmark.escaped_url.should == 'invalid_url'
-      end
+    it 'invalid_urlが返ること' do
+      @bookmark.escaped_url.should == 'invalid_url'
     end
   end
 end
 
 describe Bookmark, '.unescaped_url' do
   before do
-    @url = "http://localhost?foo=&#39;bar&#39;"
+    @url = "http://localhost?foo=%27bar%27"
   end
   it 'htmlエスケープされたシングルクォート付きのURLがアンエスケープされること' do
     Bookmark.unescaped_url(@url).should == "http://localhost?foo='bar'"

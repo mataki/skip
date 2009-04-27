@@ -102,14 +102,15 @@ class Bookmark < ActiveRecord::Base
 
   def escaped_url
     URI.unescape(url).unpack('U*')
-    url.blank? ? '' : url.gsub(/'/,'&#39;')
+    URI.escape(URI.escape(url), "'")
   rescue ArgumentError => e
     self.url = 'invalid_url'
   end
 
   def self.unescaped_url url
-    URI.unescape(url).unpack('U*')
-    url.blank? ? '' : url.gsub(/&#39\;/, "'")
+    returning u = URI.unescape(url) do
+      u.unpack('U*')
+    end
   rescue ArgumentError => e
     raise Bookmark::InvalidMultiByteURIError.new(e.message)
   end
