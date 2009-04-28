@@ -101,7 +101,7 @@ class BookmarkController < ApplicationController
   def ado_get_title
     render :text => Bookmark.get_title_from_url(Bookmark.unescaped_url(params[:url]))
   rescue Bookmark::InvalidMultiByteURIError => e
-    render :text => _('URLの形式が不正です。')
+    render :text => _('URLの形式が不正です。'), :status => :bad_request
   end
 
   # tab_menu

@@ -16,6 +16,8 @@
 require 'kconv'
 require 'uri'
 require 'open-uri'
+require "resolv-replace"
+require 'timeout'
 
 class Bookmark < ActiveRecord::Base
   has_many :bookmark_comments, :dependent => :destroy
@@ -28,6 +30,7 @@ class Bookmark < ActiveRecord::Base
   validates_length_of :title, :maximum=>255, :message =>'は255文字以内で入力してください'
 
   SORT_TYPES = [["登録日順(降順)","bookmarks.updated_on DESC"],["登録日順(昇順)","bookmarks.updated_on"],["ユーザ数順","bookmark_comments_count DESC"]].freeze
+  GET_TITLE_TIMEOUT = 7
   class << self
     HUMANIZED_ATTRIBUTE_KEY_NAMES = {
       "url" => "URL",
@@ -42,16 +45,17 @@ class Bookmark < ActiveRecord::Base
 
   def self.get_title_from_url url
     begin
-      open(url, :proxy => INITIAL_SETTINGS['proxy_url']) do |f|
-        re = /<(title|TITLE)>(.*?)<\/(title|TITLE)>/
-        f.each_line do |line|
-          return $2.toutf8 if re.match(line)
+      timeout(GET_TITLE_TIMEOUT) do
+        open(url, :proxy => INITIAL_SETTINGS['proxy_url']) do |f|
+          f.each_line do |line|
+            return $2.toutf8 if /<(title|TITLE)>(.*?)<\/(title|TITLE)>/.match(line)
+          end
         end
       end
     rescue Exception => ex
-      ex.backtrace.each {  |message| logger.error message }
+      ex.backtrace.each { |message| logger.error message }
     end
-    return ""
+    ""
   end
 
   def self.make_conditions(options={ })

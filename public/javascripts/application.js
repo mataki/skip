@@ -366,8 +366,8 @@ $j(function(){
                 $j('#indicator').hide();
                 $j('#refresher').show();
             },
-            error: function(event){
-                alert("通信に失敗しました");
+            error: function(request){
+                alert(request.responseText);
             }
         });
     };
