@@ -65,6 +65,7 @@ class BookmarkController < ApplicationController
 
     @bookmark = Bookmark.find_by_url(url) || Bookmark.new
     @bookmark.attributes = params[:bookmark]
+    @bookmark.url = url
 
     @bookmark_comment = @bookmark.bookmark_comments.find(:first, :conditions => ["bookmark_comments.user_id = ?", session[:user_id]]) || @bookmark.bookmark_comments.build
     @bookmark_comment.attributes = params[:bookmark_comment]

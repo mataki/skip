@@ -12,7 +12,7 @@
     <span style='color: silver; font-size: 10px;'>(<%= h count -%>)</span>
   <% end -%>
   </div>
-  <div style="overflow: hidden;">[URL]　<%= link_to_bookmark_url @bookmark, @bookmark.url %><br/>
+  <div style="overflow: hidden;">[URL]　<%= link_to_bookmark_url @bookmark, @bookmark.escaped_url %><br/>
        [登録ユーザ]　<%=h @bookmark.bookmark_comments_count %>人<span style="font-size: 10px;">(非公開の人数含む) </span></div>
 </div>
 
