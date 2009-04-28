@@ -1,4 +1,4 @@
-<div class="bookmark">
+<div class="bookmark show">
   <% if @create_button_show %>
   <div style="position: absolute; top: 5px; right: 10px;">
     <%= link_to(icon_tag('tag_blue_add', :title=>'コメントの追加') + 'コメントの追加！', {:controller => "bookmark", :action => "edit", :url => @bookmark.url, :title => @bookmark.title, :dummy => '.html'}, {:class => "nyroModal"}) %>

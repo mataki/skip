@@ -396,32 +396,32 @@ div.bookmark_space {
     div.bookmark_space div.description span.tags {
       color: blue; }
 
-div.edit_form_space.bookmark {
+div.edit_form_space.bookmark.edit {
   height: 500px;
   border: none;
   margin: 5px; }
-  div.edit_form_space.bookmark div.update_form_wrapper {
+  div.edit_form_space.bookmark.edit div.update_form_wrapper {
     margin-top: 5px; }
-    div.edit_form_space.bookmark div.update_form_wrapper table {
+    div.edit_form_space.bookmark.edit div.update_form_wrapper table {
       table-layout: auto;
       width: 100%; }
-      div.edit_form_space.bookmark div.update_form_wrapper table th {
+      div.edit_form_space.bookmark.edit div.update_form_wrapper table th {
         background-color: #f0f0ff;
         font-weight: bold;
         font-size: 12px;
         padding: 1px 5px;
         border: 1px solid #cccccc; }
-      div.edit_form_space.bookmark div.update_form_wrapper table td {
+      div.edit_form_space.bookmark.edit div.update_form_wrapper table td {
         border: 1px solid #cccccc; }
-        div.edit_form_space.bookmark div.update_form_wrapper table td.operation {
+        div.edit_form_space.bookmark.edit div.update_form_wrapper table td.operation {
           text-align: center; }
 
-div.bookmark {
+div.bookmark.show {
   border-bottom: 1px solid #cccccc;
   padding-bottom: 5px;
   margin-bottom: 10px;
   position: relative; }
-  div.bookmark div.title {
+  div.bookmark.show div.title {
     font-size: 16px;
     font-weight: bold;
     background-color: #f0f0ff;
