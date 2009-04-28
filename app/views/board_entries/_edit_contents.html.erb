@@ -9,7 +9,7 @@
   <div class="input_value" style="height: 2em;">
     <%= radio_button_tag("editor_mode", "richtext", params[:editor_mode] == "richtext", :id=>"editor_mode_richtext") + label_tag("editor_mode_richtext", _("リッチテキスト")) %>
     <%= radio_button_tag("editor_mode", "hiki", params[:editor_mode] == "hiki", :id=>"editor_mode_hiki") + label_tag("editor_mode_hiki", _('Wikiテキスト')) -%>
-    <span class="share_file_uploader trigger pointer link">画像やファイルのリンクを挿入</span>
+    <span class="share_file_uploader trigger pointer link"><span class="ss_sprite ss_attach">&nbsp;</span><%= _('本文にファイルを差し込む') %></span>
   </div>
 
   <div id="share_file_uploader"></div>

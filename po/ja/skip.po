@@ -855,11 +855,6 @@ msgstr ""
 "上入力されていなければなりません。</p><p>ユーザ定義 : 独自のパスワード強度を"
 "正規表現で記述することが出来ます。</p>"
 
-#: app/models/admin/setting.rb:263
-#, fuzzy
-msgid "Admin::Setting|Password strength|Validation message "
-msgstr "は6文字以上の半角英数字及び記号(!@#$%^&*?_~)で入力して下さい。"
-
 #: app/models/admin/setting.rb:108
 msgid "Admin::Setting|Password strength|Validation message high"
 msgstr ""
@@ -1698,7 +1693,7 @@ msgstr "全公開"
 
 #: app/helpers/edit_helper.rb:35
 msgid "Reload"
-msgstr "リロード"
+msgstr "再読込"
 
 #: app/views/admin/settings/index.html.erb:20
 msgid "SKIP version"

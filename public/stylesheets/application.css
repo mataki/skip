@@ -335,8 +335,8 @@ table.user_box {
       text-align: center; }
 
 span.share_file_uploader.trigger {
-  font-size: 10px;
-  margin-left: 5em; }
+  font-size: 14px;
+  margin-left: 1em; }
 
 div#board_entry_comments {
   border-right: 1px dotted #e0e0ff;
