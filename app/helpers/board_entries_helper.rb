@@ -75,6 +75,7 @@ module BoardEntriesHelper
     text = ''
     text << '[新着]' if Time.now - comment.created_on < 24.hour
     text << '[未読]' if current_user.id != comment.user_id && (checked_on && checked_on <= comment.updated_on)
-    text.blank? ? text : "#{icon_tag :emoticon_happy}#{text}"
+    icon_type = Time.now - comment.created_on < 12.hour ? :emoticon_happy : :emoticon_smile
+    text.blank? ? "" : "#{icon_tag icon_type}#{text}"
   end
 end
