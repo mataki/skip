@@ -587,6 +587,12 @@ div.onetime_url {
   div.onetime_url p {
     padding: 10px; }
 
+div.box.entry div.contents {
+  border: 1px solid #cccccc;
+  background: #ffffff; }
+div.box.entry div.rich_style, div.box.entry div.hiki_style {
+  margin: 5px; }
+
 div.feed_item {
   border: 1px dotted blue;
   width: 90%;

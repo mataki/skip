@@ -20,7 +20,7 @@
       when "publication_type"
         object.publication_type_name
       when "contents"
-        object.contents[/.{1,100}/]
+        strip_tags(object.contents[/.{1,100}/])
       else
         object.send(column.to_sym)
       end
