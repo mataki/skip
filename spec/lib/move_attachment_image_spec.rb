@@ -500,6 +500,20 @@ describe MoveAttachmentImage do
           MoveAttachmentImage.measures_to_same_file(@share_file, @image_file_name).should be_true
         end
       end
+      describe '対象ファイルの属する記事が存在するが、所有するグループ/ユーザが存在しない場合' do
+        before do
+          @board_entry = create_board_entry(:contents => 'skip.png\nskip.png', :category => 'skip,rails')
+          @board_entry.should_receive(:save).and_return(false)
+          MoveAttachmentImage.should_receive(:image_attached_entry).and_return(@board_entry)
+        end
+        it 'エラーログが表示されること' do
+          MoveAttachmentImage.should_receive(:log_warn)
+          MoveAttachmentImage.measures_to_same_file(@share_file, @image_file_name)
+        end
+        it 'nilが返ること' do
+          MoveAttachmentImage.measures_to_same_file(@share_file, @image_file_name).should be_nil
+        end
+      end
       describe '移行対象画像が添付された記事が存在しない場合' do
         before do
           MoveAttachmentImage.should_receive(:image_attached_entry).and_return(nil)

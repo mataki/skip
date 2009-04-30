@@ -252,8 +252,12 @@ class MoveAttachmentImage
         image_attached_entry.category = image_attached_entry.comma_category
         new_file_name
       end
-      image_attached_entry.save! if image_attached_entry.changed?
-      true
+      if image_attached_entry.changed? and !image_attached_entry.save
+        log_warn("Failure save entry(#{image_attached_entry.id}). Because the entry do not save that entry is #{image_attached_entry.errors.full_messages.join(",")}")
+        nil
+      else
+        true
+      end
     end
   ensure
     BoardEntry.record_timestamps = true
