@@ -859,17 +859,17 @@ msgstr ""
 msgid "Admin::Setting|Password strength|Validation message high"
 msgstr ""
 "は8文字以上の半角英数字及び記号(!@#$%^&*?_~)で入力して下さい。また、英字の大"
-"文字、小文字、数字、記号がそれぞれ最低一文字ずつ含まれている必要があります。"
+"文字、小文字、数字、記号がそれぞれ最低一文字ずつ含まれている必要があります。(例)P@ssword1"
 
 #: app/models/admin/setting.rb:112
 msgid "Admin::Setting|Password strength|Validation message low"
-msgstr "は6文字以上の半角英数字及び記号(!@#$%^&*?_~)で入力して下さい。"
+msgstr "は6文字以上の半角英数字及び記号(!@#$%^&*?_~)で入力して下さい。(例)password"
 
 #: app/models/admin/setting.rb:110 app/models/admin/setting.rb:266
 msgid "Admin::Setting|Password strength|Validation message middle"
 msgstr ""
 "は8文字以上の半角英数字及び記号(!@#$%^&*?_~)で入力して下さい。また、英字の大"
-"文字、小文字、数字がそれぞれ最低一文字ずつ含まれている必要があります。"
+"文字、小文字、数字がそれぞれ最低一文字ずつ含まれている必要があります。(例)Password1"
 
 #: app/models/admin/setting.rb:113
 msgid "Admin::Setting|Password strength|custom"
