@@ -224,8 +224,34 @@ describe BatchMakeCache, "#entry_body_lines" do
     @bmc = BatchMakeCache.new
   end
   it "配列に設定された値があること" do
-    ["trackback name", "trackback title", "comment name", "comment contents", "user name", "entry title", "[cate][gory]", "entry contents"].each do |s|
+    ["trackback name", "trackback title", "comment name", "comment contents", "user name", "entry title", "[cate][gory]", "<p>entry contents</p>\n"].each do |s|
       @bmc.send(:entry_body_lines, @entry).should be_include(s)
+    end
+  end
+  describe 'hikiの場合' do
+    before do
+      @entry.editor_mode = 'hiki'
+    end
+    describe '本文にhiki記法を含む場合' do
+      before do
+        @entry.contents = "<<<\r\nentry_contents\r\n>>>"
+      end
+      it 'html化されていること' do
+        @bmc.send(:entry_body_lines, @entry).should be_include("<pre>\nentry_contents\n</pre>\n")
+      end
+    end
+  end
+  describe 'richの場合' do
+    before do
+      @entry.editor_mode = 'richtext'
+    end
+    describe '本文にhiki記法を含む場合' do
+      before do
+        @entry.contents = "<<<\r\nentry_contents\r\n>>>"
+      end
+      it 'html化されていないこと' do
+        @bmc.send(:entry_body_lines, @entry).should be_include("<<<\r\nentry_contents\r\n>>>")
+      end
     end
   end
 end

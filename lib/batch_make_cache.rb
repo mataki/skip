@@ -192,7 +192,7 @@ class BatchMakeCache < BatchBase
     body_lines << h(entry.title)
     body_lines << h(entry.category)
     body_lines << h(entry.user.name)
-    body_lines << entry.contents
+    body_lines << (entry.editor_mode == 'hiki' ? HikiDoc.new((entry.contents || ''), Regexp.new(INITIAL_SETTINGS['not_blank_link_re'])).to_html : entry.contents)
 
     entry.board_entry_comments.each do|comment|
       body_lines << h(comment.user.name)
