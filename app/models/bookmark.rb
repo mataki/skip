@@ -53,7 +53,7 @@ class Bookmark < ActiveRecord::Base
         end
       end
     rescue Exception => ex
-      ex.backtrace.each { |message| logger.error message }
+      logger.error "[GET TITLE ERROR] #{ex.class}: #{ex.message}"
     end
     ""
   end
