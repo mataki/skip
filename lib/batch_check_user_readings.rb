@@ -38,9 +38,8 @@ class BatchCheckUserReadings < BatchBase
 end
 
 # シェルからパラメータを受け取って実行する部分
-# パラメータはなくてもOK
 # num 本日よりnumヶ月前以前の未読記事を既読にする
-# 実行例　ruby batch_check_user_readings.rb 3
+# 実行例 ruby batch_check_user_readings.rb 3
 
 check_month = ARGV[0]
 if check_month.index(/[0-9]+/)
