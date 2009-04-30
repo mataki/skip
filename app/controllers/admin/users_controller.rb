@@ -215,7 +215,7 @@ class Admin::UsersController < Admin::ApplicationController
     user = Admin::User.find(params[:id])
     if user.unused?
       user.issue_activation_code
-      user.save!
+      user.save_without_validation!
       email = user.email
       UserMailer.deliver_sent_activate(email, signup_url(user.activation_token))
       flash[:notice] = Admin::Setting.mail_function_setting ?  _("ユーザ登録のためのURLを記載したメールを%{email}宛てに送信しました。") % {:email => email} : _('利用開始URLを発行しました。確認のリンクからユーザに連絡してください。')

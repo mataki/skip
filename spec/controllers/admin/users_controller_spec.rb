@@ -435,7 +435,7 @@ describe Admin::UsersController, 'POST /issue_activation_code' do
   describe '未使用ユーザの場合' do
     before do
       @user = stub_model(Admin::User, :status => 'UNUSED', :email => SkipFaker.email)
-      @user.stub!(:save!)
+      @user.stub!(:save_without_validation!)
       Admin::User.should_receive(:find).and_return(@user)
     end
     it 'アクティベーションURLを記載したメールの送信処理が呼ばれること' do
@@ -444,7 +444,7 @@ describe Admin::UsersController, 'POST /issue_activation_code' do
     end
     it 'アクティベーションコード発行処理が行われること' do
       @user.should_receive(:issue_activation_code)
-      @user.should_receive(:save!)
+      @user.should_receive(:save_without_validation!)
       post :issue_activation_code
     end
     it 'メール送信した旨のメッセージが設定されてリダイレクトされること' do
