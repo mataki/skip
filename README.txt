@@ -1,5 +1,5 @@
 ================================================================================
-=  SKIP version 1.1RC2                             http://www.openskip.org/    =
+=  SKIP version 1.1.0                              http://www.openskip.org/    =
 ================================================================================
 
 SKIPのダウンロードありがとうございます。
@@ -36,15 +36,13 @@ SKIPを動かすにあたり以下の環境で検証を行っています。
 
 1. gemsのインストール
 --------------------------------------------------------------------------------
-    $ sudo gem install gettext --version 1.93.0
-    $ sudo gem install fastercsv
-    $ sudo gem install ruby-openid
     $ sudo gem install rails --version 2.1.2
-    $ sudo gem install mysql
+    $ sudo gem install gettext --version 1.93.0
+    $ sudo gem install mysql fastercsv ruby-openid json
 
 2. SKIPのファイル解凍
 --------------------------------------------------------------------------------
-    $ tar xvzf skip-1.1rc2.tar.gz
+    $ tar xvzf skip-1.1.0.tar.gz
 
 3. 設定ファイルの準備・編集（initial_settings.yml, database.yml, common_menus.yml）
 --------------------------------------------------------------------------------
@@ -133,7 +131,7 @@ SKIPのダウンロードありがとうございます。
 * アイコン提供・・・  famfamfam.com (http://www.famfamfam.com/lab/icons/silk/)
 
 ================================================================================
-=  お問い合わせは・・・ info@openskip.org                                      =
+=  お問い合わせは・・・ info@openskip.org                                         =
 ================================================================================
 =  SKIP                                              http://www.openskip.org/  =
 ================================================================================
