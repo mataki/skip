@@ -73,8 +73,8 @@ class Search
     def self.get_result_hash_elements(nres, offset, end_count)
       (offset...end_count).map do |i|
         rdoc = nres.get_doc(i)
-        Search.get_metadata(ERB::Util.html_escape(rdoc.snippet), URI.decode(rdoc.attr('@uri')), rdoc.attr('@title'))
-      end
+        Search.get_metadata(ERB::Util.html_escape(rdoc.snippet), URI.decode(rdoc.attr('@uri')), rdoc.attr('@title')) unless rdoc.nil?
+      end.compact
     end
   end
 end

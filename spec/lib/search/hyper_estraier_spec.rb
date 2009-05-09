@@ -86,3 +86,26 @@ describe Search::HyperEstraier, ".get_node" do
     node.should be_is_a(Search::HyperEstraier::Node)
   end
 end
+
+describe Search::HyperEstraier, ".get_result_hash_elements" do
+  before do
+    Search.stub!(:get_metadata).and_return(mock('result'))
+    @doc = mock('doc', :snippet => "snippet", :attr => "attr")
+    @nres = mock("nres", :get_doc => @doc)
+  end
+  describe "正しい結果がHyperEstraierから返ってきた場合" do
+    it "その件数を返すこと" do
+      result = Search::HyperEstraier.get_result_hash_elements(@nres, 20, 27)
+      result.size.should == 7
+    end
+  end
+  describe "件数が足りない場合" do
+    before do
+      @nres.should_receive(:get_doc).with(27).and_return(nil)
+    end
+    it "足りない分は、へらして返すこと" do
+      result = Search::HyperEstraier.get_result_hash_elements(@nres, 20, 28)
+      result.size.should == 7
+    end
+  end
+end
