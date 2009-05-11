@@ -93,6 +93,38 @@ ul.ui-tabs-nav
   :height 100%
   +clearfix
 
+// 基本レイアウト
+// ------------------------------------------------------------
+div#header
+  :position relative
+  :height 65px
+  div#global_top
+    :border-bottom 1px dashed #ccc
+    :height 20px
+    div#application_link, div#menu
+      :padding 4px 5px
+    div#application_link
+      :float left
+    div#menu
+      :position absolute
+      :top 0
+      :right 0
+      :border none
+      :font-size 12px
+      :text-align right
+  div#logo
+    :float left
+    :vertical-align top
+    :margin 3px 0 0 10px
+  div#search
+    :position absolute
+    :bottom 0px
+    :right 0px
+
+div#top
+  :clear both
+  :border-bottom = !base_border
+
 // 特定の機能用ではない汎用css
 // ------------------------------------------------------------
 .pointer
@@ -157,6 +189,12 @@ div.box_space
     :overflow hidden
     ul
       :list-style-type none
+      & li select
+        :font-size 13px
+        :border = !base_border
+        :vertical-align middle
+        :padding 1px
+        :width 100px
     span.category_count
       :font-size = !small_font_size
       :color #ccc

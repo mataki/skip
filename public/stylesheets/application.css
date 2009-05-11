@@ -66,6 +66,36 @@ ul.ui-tabs-nav {
   * html ul.ui-tabs-nav {
     height: 1px; }
 
+div#header {
+  position: relative;
+  height: 65px; }
+  div#header div#global_top {
+    border-bottom: 1px dashed #ccc;
+    height: 20px; }
+    div#header div#global_top div#application_link, div#header div#global_top div#menu {
+      padding: 4px 5px; }
+    div#header div#global_top div#application_link {
+      float: left; }
+    div#header div#global_top div#menu {
+      position: absolute;
+      top: 0;
+      right: 0;
+      border: none;
+      font-size: 12px;
+      text-align: right; }
+  div#header div#logo {
+    float: left;
+    vertical-align: top;
+    margin: 3px 0 0 10px; }
+  div#header div#search {
+    position: absolute;
+    bottom: 0px;
+    right: 0px; }
+
+div#top {
+  clear: both;
+  border-bottom: 1px solid #cccccc; }
+
 .pointer {
   cursor: pointer; }
 
@@ -122,6 +152,12 @@ div.box_space {
     overflow: hidden; }
     div.box_space div.box_space_body ul {
       list-style-type: none; }
+      div.box_space div.box_space_body ul li select {
+        font-size: 13px;
+        border: 1px solid #cccccc;
+        vertical-align: middle;
+        padding: 1px;
+        width: 100px; }
     div.box_space div.box_space_body span.category_count {
       font-size: 10px;
       color: #ccc; }

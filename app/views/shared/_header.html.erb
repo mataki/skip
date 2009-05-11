@@ -1,33 +1,43 @@
 <div id="header">
-  <%= header_logo_link %>
-
-<div id="menu">
-  <div class="item" style="color: black;"><%= user_name_mode?(:code) ? "#{h(Admin::Setting.login_account)} : #{h(@current_user.code)}" : "#{_('Admin::UserUid|Uid')} : #{h(@current_user.uid)}" %></div>
-  <div class="item"><%= link_to "自分の管理", :controller => "/mypage", :action => :manage, :only_path => false -%></div>
-  <% help_url = h(Admin::Setting.help_url) -%>
-  <% unless help_url.blank? -%>
-  <div class="item"><a href="<%= help_url %>" target="_blank">ヘルプ</a></div>
-  <% end -%>
-  <div class="item"><%= link_to "ログアウト", :controller => "/platform", :action => :logout, :only_path => false -%></div>
-  <% unless COMMON_MENUS.empty? -%>
-  <div class="item" style="padding: 0;">
-  <select style="vertical-align:middle;" onchange="if (this.value != '') { window.open(this.value); }">
-    <option selected="selected" value="">リンク ... </option>
-      <% COMMON_MENUS[:menus].each do |menu| %>
-        <% if menu[:url] %>
-    <option value="<%= menu[:url] -%>">&nbsp;<%=h menu[:title] -%></option>
-        <% else %>
-    <option disabled="disabled" style="color: gray;">[<%=h menu[:title] -%>]</option>
-          <% menu[:links].each do |link| %>
-    <option value="<%= link[:url] -%>">&nbsp;<%=h link[:title] -%></option>
+  <div id="global_top">
+    <div id="application_link">
+      <b>SKIP</b>
+      |
+      <%= link_to 'SKIP-WIKI', '#' %>
+      |
+      <%= link_to 'その他 ▼', '#' %>
+    </div>
+    <div id="menu">
+      <b><%= user_name_mode?(:code) ? "#{h(Admin::Setting.login_account)} : #{h(@current_user.code)}" : "#{_('Admin::UserUid|Uid')} : #{h(@current_user.uid)}" %></b>
+      |
+      <%= link_to "自分の管理", :controller => "/mypage", :action => :manage, :only_path => false %>
+      |
+      <% help_url = h(Admin::Setting.help_url) -%>
+      <% unless help_url.blank? -%>
+      <a href="<%= help_url %>" target="_blank">ヘルプ</a>
+      |
+      <% end -%>
+      <%= link_to "ログアウト", :controller => "/platform", :action => :logout, :only_path => false -%>
+      <% unless COMMON_MENUS.empty? -%>
+      <select style="vertical-align:middle;" onchange="if (this.value != '') { window.open(this.value); }">
+        <option selected="selected" value="">リンク ... </option>
+          <% COMMON_MENUS[:menus].each do |menu| %>
+            <% if menu[:url] %>
+        <option value="<%= menu[:url] -%>">&nbsp;<%=h menu[:title] -%></option>
+            <% else %>
+        <option disabled="disabled" style="color: gray;">[<%=h menu[:title] -%>]</option>
+              <% menu[:links].each do |link| %>
+        <option value="<%= link[:url] -%>">&nbsp;<%=h link[:title] -%></option>
+              <% end %>
+            <% end %>
           <% end %>
-        <% end %>
-      <% end %>
-  </select>
+      </select>
+      <% end -%>
+      <br style="clear: left" />
+    </div>
   </div>
-  <% end -%>
-  <br style="clear: left" />
-</div>
+
+  <%= header_logo_link %>
 
   <% if INITIAL_SETTINGS['full_text_search_setting'] %>
   <div id="search">
@@ -39,21 +49,3 @@
   <% end %>
 
 </div><!-- header -->
-
-<div id="top">
-  <%= link_to icon_tag(:report_edit, :title => 'ブログを書く') + 'ブログを書く', :controller => '/edit', :action => :index %>
-
-  <%= icon_tag(:group_go, :title => 'マイグループ') -%>
-  <select style="font-size: 13px; border:1px solid silver; vertical-align:middle; padding:1px;" onchange="if (this.value != '') { window.location = this.value; }">
-    <option selected="selected" value="<%= url_for({:controller => '/mypage', :action => 'group'}) -%>">参加グループへ移動 ... </option>
-    <option disabled="disabled">---</option>
-    <% @favorite_groups.each do |category| %>
-    <option disabled="disabled" style="color: gray;">[<%=h category[:name] -%>]</option>
-      <% category[:groups].each do |group| %>
-      <option value="<%= url_for({:controller => '/group', :gid => group.gid, :action => 'show'}) -%>">&nbsp;<%=h group.name -%></option>
-      <% end %>
-    <% end %>
-    <option disabled="disabled">---</option>
-    <option value="<%= url_for({:controller => '/mypage', :action => 'group'}) -%>">参加グループの一覧へ</option>
-  </select>
-</div>

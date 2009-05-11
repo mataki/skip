@@ -1,33 +1,4 @@
 /* ----------------------------------- */
-div#header {
-  border-bottom: 1px dashed silver;
-  height: 50px;
-}
-div#header div#logo {
-  float: left;
-}
-div#header div#search {
-  float: right;
-  padding-top: 2px;
-  padding-right: 6px;
-}
-div#header span#services a {
-  color: blue;
-  text-decoration: none;
-  padding: 0 5px 2px 5px;
-}
-div#header span#services a:hover {
-  color: blue;
-  background-color: yellow;
-}
-/* ----------------------------------- */
-div#top {
-  clear: both;
-  text-align: right;
-  border-bottom: 1px solid silver;
-  padding: 1px 5px;
-}
-/* ----------------------------------- */
 div#statusbar {
   clear: both;
   border-top: 1px solid silver;

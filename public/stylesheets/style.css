@@ -21,51 +21,6 @@ div.input_line textarea {
 }
 
 /* ----------------------------------- */
-div#header {
-  position: relative;
-  border-bottom: 1px dashed silver;
-  height: 50px;
-}
-div#header div#logo {
-  float: left;
-  vertical-align: top;
-  margin: 3px 0 0 10px;
-}
-div#header div#menu {
-  position: absolute;
-  top: 0;
-  right: 0;
-  border: none;
-  font-size: 12px;
-  text-align: right;
-  background-color: #d0e0f0;
-  padding: 1px 5px;
-}
-div#header div#menu .item {
-  float: left;
-  padding: 3px 10px 1px 10px;
-  font-weight: bold;
-}
-div#header div#menu .item a {
-  color: blue;
-  text-decoration: none;
-}
-div#header div#menu .item a:hover {
-  text-decoration: underline;
-}
-div#header div#search {
-  position: absolute;
-  top: 21px;
-  right: 0;
-}
-/* ----------------------------------- */
-div#top {
-  clear: both;
-  text-align: right;
-  border-bottom: 1px solid silver;
-  padding: 1px 5px;
-}
-/* ----------------------------------- */
 /* 共通系 */
 /* 件数や次ページなどのナビ */
 div.navi {
