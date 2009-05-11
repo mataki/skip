@@ -66,23 +66,24 @@ ul.ui-tabs-nav {
   * html ul.ui-tabs-nav {
     height: 1px; }
 
+div#global_top {
+  border-bottom: 1px dashed #ccc;
+  height: 20px; }
+  div#global_top div#application_link, div#global_top div#menu {
+    padding: 4px 5px; }
+  div#global_top div#application_link {
+    float: left; }
+  div#global_top div#menu {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: none;
+    font-size: 12px;
+    text-align: right; }
+
 div#header {
   position: relative;
-  height: 65px; }
-  div#header div#global_top {
-    border-bottom: 1px dashed #ccc;
-    height: 20px; }
-    div#header div#global_top div#application_link, div#header div#global_top div#menu {
-      padding: 4px 5px; }
-    div#header div#global_top div#application_link {
-      float: left; }
-    div#header div#global_top div#menu {
-      position: absolute;
-      top: 0;
-      right: 0;
-      border: none;
-      font-size: 12px;
-      text-align: right; }
+  height: 45px; }
   div#header div#logo {
     float: left;
     vertical-align: top;

@@ -1,42 +1,41 @@
-<div id="header">
-  <div id="global_top">
-    <div id="application_link">
-      <b>SKIP</b>
-      |
-      <%= link_to 'SKIP-WIKI', '#' %>
-      |
-      <%= link_to 'その他 ▼', '#' %>
-    </div>
-    <div id="menu">
-      <b><%= user_name_mode?(:code) ? "#{h(Admin::Setting.login_account)} : #{h(@current_user.code)}" : "#{_('Admin::UserUid|Uid')} : #{h(@current_user.uid)}" %></b>
-      |
-      <%= link_to "自分の管理", :controller => "/mypage", :action => :manage, :only_path => false %>
-      |
-      <% help_url = h(Admin::Setting.help_url) -%>
-      <% unless help_url.blank? -%>
-      <a href="<%= help_url %>" target="_blank">ヘルプ</a>
-      |
-      <% end -%>
-      <%= link_to "ログアウト", :controller => "/platform", :action => :logout, :only_path => false -%>
-      <% unless COMMON_MENUS.empty? -%>
-      <select style="vertical-align:middle;" onchange="if (this.value != '') { window.open(this.value); }">
-        <option selected="selected" value="">リンク ... </option>
-          <% COMMON_MENUS[:menus].each do |menu| %>
-            <% if menu[:url] %>
-        <option value="<%= menu[:url] -%>">&nbsp;<%=h menu[:title] -%></option>
-            <% else %>
-        <option disabled="disabled" style="color: gray;">[<%=h menu[:title] -%>]</option>
-              <% menu[:links].each do |link| %>
-        <option value="<%= link[:url] -%>">&nbsp;<%=h link[:title] -%></option>
-              <% end %>
+<div id="global_top">
+  <div id="application_link">
+    <b>SKIP</b>
+    |
+    <%= link_to 'SKIP-WIKI', '#' %>
+    |
+    <%= link_to 'その他 ▼', '#' %>
+  </div>
+  <div id="menu">
+    <b><%= user_name_mode?(:code) ? "#{h(Admin::Setting.login_account)} : #{h(@current_user.code)}" : "#{_('Admin::UserUid|Uid')} : #{h(@current_user.uid)}" %></b>
+    |
+    <%= link_to "自分の管理", :controller => "/mypage", :action => :manage, :only_path => false %>
+    |
+    <% help_url = h(Admin::Setting.help_url) -%>
+    <% unless help_url.blank? -%>
+    <a href="<%= help_url %>" target="_blank">ヘルプ</a>
+    |
+    <% end -%>
+    <%= link_to "ログアウト", :controller => "/platform", :action => :logout, :only_path => false -%>
+    <% unless COMMON_MENUS.empty? -%>
+    <select style="vertical-align:middle;" onchange="if (this.value != '') { window.open(this.value); }">
+      <option selected="selected" value="">リンク ... </option>
+        <% COMMON_MENUS[:menus].each do |menu| %>
+          <% if menu[:url] %>
+      <option value="<%= menu[:url] -%>">&nbsp;<%=h menu[:title] -%></option>
+          <% else %>
+      <option disabled="disabled" style="color: gray;">[<%=h menu[:title] -%>]</option>
+            <% menu[:links].each do |link| %>
+      <option value="<%= link[:url] -%>">&nbsp;<%=h link[:title] -%></option>
             <% end %>
           <% end %>
-      </select>
-      <% end -%>
-      <br style="clear: left" />
-    </div>
+        <% end %>
+    </select>
+    <% end -%>
+    <br style="clear: left" />
   </div>
-
+</div>
+<div id="header">
   <%= header_logo_link %>
 
   <% if INITIAL_SETTINGS['full_text_search_setting'] %>
