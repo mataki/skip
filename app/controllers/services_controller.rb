@@ -18,7 +18,7 @@ class ServicesController < ActionController::Base
   skip_before_filter :sso
 
   include ForServicesModule
-  before_filter :check_secret_key, :except => [:search_conditions]
+  before_filter :check_secret_key, :except => [:search_conditions, :skip_header]
   after_filter :change_charset
 
   # ユーザに関連する情報を取得する
@@ -51,6 +51,9 @@ class ServicesController < ActionController::Base
 
   def retired_users
     render :text => diff_users('retired',params[:from_date])
+  end
+
+  def skip_header
   end
 
 private

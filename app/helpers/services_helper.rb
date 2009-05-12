@@ -15,4 +15,11 @@
 
 module ServicesHelper
   include ApplicationHelper
+  def application_link
+    if collaboration_apps = INITIAL_SETTINGS['collaboration_apps']
+      application_links = collaboration_apps.values.map{|m| link_to( m['name'], m['url'] )} || []
+      application_links.unshift link_to( 'SKIP', root_url ) unless application_links.empty?
+      application_links.join(' | ')
+    end
+  end
 end

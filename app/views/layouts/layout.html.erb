@@ -89,6 +89,7 @@
 <%= skip_javascript_include_tag 'ufo' %>
 <%= javascript_include_tag 'application' %>
 <%= skip_javascript_include_tag 'skip_util' %>
+<%= javascript_include_tag url_for(:controller => 'services', :action => 'skip_header.js') %>
 <script type="text/javascript">
 var relative_url_root = '<%= controller.request.relative_url_root -%>';
 $j(function(){

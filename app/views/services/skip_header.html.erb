@@ -1,0 +1,15 @@
+<%=
+  <<-RUBY
+(function() {
+    // ロゴのリプレイス
+    jQuery('div#logo').html('#{header_logo_link}');
+    // 広告のリプレイス
+    // アプリメニューのリプレイス
+    jQuery('div#application_link').html('#{application_link}');
+    jQuery('div#application_link a').each(function() {
+      if(jQuery(this).attr('href').search(document.location.host) > 0)
+        jQuery(this).replaceWith('<b>' + jQuery(this).text() + '</b>');
+    });
+})(jQuery);
+  RUBY
+%>
