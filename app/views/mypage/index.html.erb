@@ -1,5 +1,6 @@
 <% content_for :stylesheet do -%>
-  <%= skip_stylesheet_link_tag "jquery.ui.tabs.css" %>
+  <%= skip_stylesheet_link_tag "themes/redmond/ui.theme.css" %>
+  <%= skip_stylesheet_link_tag "themes/redmond/ui.tabs.css" %>
 <% end -%>
 
 <% content_for :contents_left do -%>
@@ -111,7 +112,7 @@
 <% content_for :javascript do -%>
 <script type="text/javascript">
 $j(function() {
-    $j('#tabs > ul').tabs();
+    $j('#tabs').tabs();
     $j('#tabs').show();
 
     var loadEntries = function(data){
