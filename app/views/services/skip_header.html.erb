@@ -1,15 +1,39 @@
 <%=
   <<-RUBY
 (function() {
+    var bannerLink = function(ads) {
+      ad = ads[Math.floor(Math.random() * ads.length)];
+      return jQuery('<div style="height: 45px; border: 1px solid #ccc;"></div>')
+      .append(
+        jQuery('<a></a>')
+        .attr('href', ad.advertisement.link_url)
+        .append(
+          jQuery('<img></img>')
+          .attr('src', ad.advertisement.image_url)
+          .attr('alt', ad.advertisement.title)
+          .css('height', '45px')
+        )
+      );
+    };
+
     // ロゴのリプレイス
-    jQuery('div#logo').html('#{header_logo_link}');
+    jQuery('div#logo').replaceWith('#{header_logo_link}');
     // 広告のリプレイス
+    // TODO adJsonは広告配信アプリから取得する形式に切り替える
+    var adJson = [
+      {"advertisement": {"created_at": "2009-05-11T05:33:14Z", "title": "localhost3100", "image_url": "http://localhost:3000/custom/images/header_logo.png", "updated_at": "2009-05-11T05:33:14Z", "publishing_deadline": null, "id": 1, "link_url": "http://localhost:3000/"}},
+      {"advertisement": {"created_at": "2009-05-11T05:49:51Z", "title": "hogehogehoge", "image_url": "fdsafsd", "updated_at": "2009-05-11T05:49:51Z", "publishing_deadline": null, "id": 2, "link_url": "fsadfasd"}},
+      {"advertisement": {"created_at": "2009-05-11T06:09:14Z", "title": "fugafugafuga", "image_url": "ffsadf", "updated_at": "2009-05-11T06:09:14Z", "publishing_deadline": null, "id": 3, "link_url": "http://localhost/aaaa"}}
+    ];
+
+    jQuery('div#header > div.banner').html(bannerLink(adJson));
     // アプリメニューのリプレイス
     jQuery('div#application_link').html('#{application_link}');
     jQuery('div#application_link a').each(function() {
       if(jQuery(this).attr('href').search(document.location.host) > 0)
         jQuery(this).replaceWith('<b>' + jQuery(this).text() + '</b>');
     });
+
 })(jQuery);
   RUBY
 %>
