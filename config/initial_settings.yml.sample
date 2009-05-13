@@ -155,6 +155,7 @@ default: &default
 #  antenna_default_group:
 #    - skip_development
 #    - skip_operation
+  advertisements_url:                                                # 広告領域に表示するデータのJSON又はJSONPを返すURL
 
 
 ####################################################################################################
