@@ -24,13 +24,13 @@
   </div>
 
   <div class='comment_input_space invisible' id='comment_area_<%= comment.id %>'>
-    <form id="comment_input_form_<%= comment.id %>" class="comment_input_form">
+    <% form_tag({:controller => 'board_entries', :action => 'ado_edit_comment', :id => comment.id}, {:id => "comment_input_form_#{comment.id}", :class => "comment_input_form"}) do -%>
     <% @comment = BoardEntryComment.new(:contents => comment.contents) -%>
       <label for="comment_contents">コメントの編集</label>
       <%= text_area 'comment', 'contents', :cols => 90, :rows =>5 %>
       <%= submit_tag '保存' %>
       <input id="comment_cancel_button_<%= comment.id %>" class="comment_cancel_button" type="button" value="キャンセル"/>
-    </form>
+    <% end -%>
   </div><!-- comment_input_space -->
 
   <div class="edit_nest_comment" id='edit_nest_comment_<%= comment.id %>'></div>

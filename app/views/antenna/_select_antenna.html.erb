@@ -20,7 +20,7 @@
   <% if antenna.included -%>
     <% already_include = true -%>
   <% else -%>
-    <a href="#" id="add_symbol_link_<%= antenna.id -%>" class="add_symbol_link"><%= h(antenna.name) -%></a>&nbsp;/
+    <%= link_to h(antenna.name), {:controller => "antenna", :action => "add_symbol"}, {:id => "add_symbol_link_#{antenna.id}", :class => "add_symbol_link"} %>&nbsp;/
   <% end %>
 <% end %></p>
 </div>
@@ -36,23 +36,25 @@
 <% end -%>
 
 <div style="border: 1px solid silver; background-color: #f0f0ff; margin: 8px; padding: 5px; padding-top: 0; ">
-<form id='add_antenna_and_symbol_form'>
-  新しいアンテナを作成して追加：<%= text_field :antenna, :name %><%= hidden_field_tag :symbol, h(symbol) %><%= submit_tag "追加" %>
+  <% form_tag({ :controller => :antenna, :action => :add_antenna_and_symbol }, { :id => "add_antenna_and_symbol_form" }) do -%>
+    新しいアンテナを作成して追加：
+    <%= text_field :antenna, :name %>
+    <%= hidden_field_tag :symbol, h(symbol) %>
     <%= hidden_field_tag("authenticity_token", form_authenticity_token) %>
-</form>
+    <%= submit_tag "追加" %>
+  <% end -%>
 </div>
 
 </div>
-<script type="text/javascript" >
+<script type="text/javascript">
 $j(function() {
     $j('.add_symbol_link')
     .click(function() {
-        var url = '<%= url_for({:controller => "antenna", :action => "add_symbol"}) -%>';
-        var antennaId = this.id.split('_')[3]
+        var antennaId = this.id.split('_')[3];
         var symbol = '<%= h(symbol) -%>';
         $j.ajax({
             type: 'POST',
-            url: url,
+            url: $j(this).attr('href'),
             data: { antenna_id: antennaId, symbol: symbol, authenticity_token: $j('#authenticity_token').val() },
             success: function(html) {
                 $j('#select_antenna_body').html(html);
@@ -63,10 +65,9 @@ $j(function() {
 
     $j('#add_antenna_and_symbol_form')
     .submit(function() {
-        var url = '<%= url_for({ :controller => :antenna, :action => :add_antenna_and_symbol }) -%>';
         $j.ajax({
             type: 'POST',
-            url: url,
+            url: $j(this).attr('action'),
             data: $j(this).serialize(),
             success: function(html) {
                 $j('#select_antenna_body').html(html);

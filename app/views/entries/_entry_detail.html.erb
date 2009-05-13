@@ -281,14 +281,11 @@
 </div>
 
 <div class="comment_input_space">
-  <form id="new_comment_form">
-    <p>
-      <label for="board_entry_comment_contents">コメントを書く</label>
-      <%= hidden_field_tag("authenticity_token", form_authenticity_token) %>
-      <%= text_area 'board_entry_comment', 'contents', :cols => 40, :rows => 5 %><br/>
-      <%= submit_tag "書き込み" %>
-    </p>
-  </form>
+  <% form_tag({:controller => 'board_entries', :action => 'ado_create_comment', :id => entry.id}, {:id => "new_comment_form"}) do -%>
+    <%= label "board_entry_comment", "contents", _('コメントを書く') %>
+    <%= text_area 'board_entry_comment', 'contents', :cols => 40, :rows => 5 %><br/>
+    <%= submit_tag "書き込み" %>
+  <% end -%>
 </div>
 
 <div class="trackback_space sent_trackback">
@@ -324,8 +321,8 @@
           }
           $j.ajax({
               type:'POST',
-              url:'<%= url_for(:controller => 'board_entries', :action => 'ado_create_comment', :id => entry.id) -%>',
-              data:$j('#new_comment_form').serialize(),
+              url: $j(this).attr('action'),
+              data: $j(this).serialize(),
               success: function(html) {
                   jhtml = $j(html);
                   setupComment(jhtml);
@@ -532,13 +529,13 @@
           .find('.comment_input_form')
           .submit(function() {
               commentId = this.id.split('_')[3];
-              if(isEmpty($j('#comment_input_form_' + commentId + ' textarea').val())) {
+              if(isEmpty($j(this).find('textarea').val())) {
                   return false;
               }
               $j.ajax({
-                  type:'POST',
-                  url:'<%= url_for(:controller => 'board_entries', :action => 'ado_edit_comment') -%>/' + commentId,
-                  data:$j('#comment_input_form_' + commentId).serialize() + '&authenticity_token=' + $j('#authenticity_token').val(),
+                  type: 'POST',
+                  url: $j(this).attr('action'),
+                  data: $j(this).serialize(),
                   success :function(html) {
                       $j('#comment_contents_' + commentId).html(html);
                       if ($j('#comment_area_' + commentId).is(':visible')) {

@@ -11,7 +11,7 @@
   <div class="desc"><%= desc -%></div>
   <div class="update_form_wrapper">
     <div id="update_body"></div>
-    <form id="update_form" action="<%= url_for({ :controller => :bookmark, :action => :update }) %>" method="post">
+    <% form_tag({ :controller => :bookmark, :action => :update }, {:id => "update_form"}) do -%>
       <%= hidden_field_tag 'layout', h(layout) -%>
       <%= hidden_field 'bookmark', 'url', :value => @bookmark.escaped_url %>
       <table>
@@ -69,8 +69,7 @@
           </td>
         </tr>
       </table>
-      <%= hidden_field_tag("authenticity_token", form_authenticity_token) %>
-    </form>
+    <% end -%>
   </div>
 </div>
 <% content_for :javascript do -%>
@@ -114,10 +113,9 @@ $j(function(){
                 return false;
             }
         }
-        var url = '<%= url_for({ :controller => :bookmark, :action => :update }); -%>'
         $j.ajax({
             type: 'POST',
-            url: url,
+            url: $j(this).attr('action'),
             data: $j(this).serialize(),
             success: function(html) {
                 if(html == 'success'){
