@@ -1,0 +1,96 @@
+.hiki_style, .rich_style
+  p
+    :color #555555
+    :font-size 12px
+    :font-family Verdana, Arial, sans-serif
+    :margin 10px 0
+    :line-height 1.2
+
+  hr
+    :margin 3px
+
+  h1
+    :border 1px solid silver
+    :background-color #f0f0f0
+    :margin-top 0.8em
+
+  h2
+    :border-left 10px solid silver
+    :border-bottom 1px solid silver
+    :margin-top 0.8em
+    :padding-left 3px
+
+  h3
+    :border-left 5px solid silver
+    :border-bottom 1px dashed silver
+    :margin-top 0.8em
+    :padding-left 3px
+
+  h4
+    :border-left 2px solid silver
+    :border-bottom 1px dotted silver
+    :margin-top 0.8em
+    :padding-left 3px
+
+  h5
+    :border-bottom 1px dotted silver
+    :margin-top 0.8em
+
+  ul
+    :list-style-type disc
+    :padding-left 25px
+
+    li
+  ol
+    :list-style-type decimal
+    :padding-left 25px
+
+  pre
+    // Mozilla
+    :white-space -moz-pre-wrap
+    // Opera 4-6
+    :white-space -pre-wrap
+    // Opera 7
+    :white-space -o-pre-wrap
+    // CSS3
+    :white-space pre-wrap
+    // IE 5.5+
+    :word-wrap break-word
+    :background-color #f7f7ff
+    :margin-left 5px
+    :border 1px dashed silver
+    :padding 5px
+
+  blockquote
+    :background-color #fff7f7
+    :margin 2px 2px 2px 10px
+    :border 1px dashed silver
+    :padding 2px 2px 2px 5px
+
+  big
+    :font-size 30px
+    :font-weight bold
+
+.rich_style
+  :background-color #FFFFFF
+  :color #555555
+  :width 98%
+
+  td
+    :font-family Arial, Verdana, sans-serif
+    :font-size 12px
+    :color #555555
+
+  a[href]
+    // For Firefox... mark as important, otherwise it becomes black
+    :color -moz-hyperlinktext !important
+    // For Firefox 3, otherwise no underline will be used
+    :text-decoration -moz-anchor-decoration
+
+  // TODO 以下のdivは必要なければ消す。(元のCSSに記述があったので入れてあるだけ
+  div
+    :color #555555
+    :font-size 12px
+    :font-family Verdana, Arial, sans-serif
+    :margin 10px 0
+    :line-height 1.2

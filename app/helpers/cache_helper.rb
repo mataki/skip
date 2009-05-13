@@ -17,13 +17,9 @@ module CacheHelper
   PROTOTYPE_LIBRARY = {:name => 'prototype.all', :libs => ['prototype']}
 
   JQUERY_LIBRARY = {:name => 'jquery.all',
-    :libs => ['jquery', 'jquery.cookie', 'jquery.color', 'jquery.nyroModal', 'jquery.bgiframe',
-              'jquery.autocomplete', 'jquery.jTagging', 'jquery.jgrow', 'jquery.cluetip',
-              'ui.core', 'ui.tabs'
-             ]}
+    :libs => %w(jquery jquery.cookie jquery.color jquery.nyroModal jquery.bgiframe jquery.autocomplete jquery.jTagging jquery.jgrow jquery.cluetip ui.core ui.tabs)}
 
-  STYLE_LIBRARY = {:name => 'skip.style',
-    :libs => ['skip/style', 'style', 'skins-base']}
+  STYLE_LIBRARY = {:name => 'skip.style', :libs => %w(application sprites/sprite skins-base)}
 
   def all_javascript_include_tag source
     library = {'prototype' => PROTOTYPE_LIBRARY, 'jquery' => JQUERY_LIBRARY}[source]
@@ -36,6 +32,7 @@ module CacheHelper
     javascript_include_tag(*lib_str)
   end
 
+  # TODO sourceが意味をなしてない。リファクタする
   def all_stylesheet_link_tag source
     library = {'style' => STYLE_LIBRARY }[source]
     lib_str = []

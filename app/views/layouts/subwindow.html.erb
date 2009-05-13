@@ -1,32 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
-
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
   <title><%= h Admin::Setting.abbr_app_title -%> - サブウィンドウ</title>
-<script language="JavaScript" type="text/javascript">
-<!--
-var relative_url_root = '<%= controller.request.relative_url_root -%>';
-//-->
-</script>
-  <%= skip_stylesheet_link_tag 'style' %>
-  <%= stylesheet_link_tag 'style' %>
-  <%= stylesheet_link_tag("application") %>
-  <%= stylesheet_link_tag("sprites/sprite.css") %>
+  <%= all_stylesheet_link_tag "style" %>
   <%= skip_stylesheet_link_tag 'nyroModal.full.css' %>
   <%= skip_stylesheet_link_tag 'jquery.autocomplete.css' %>
-
-  <%= skip_jquery_include_tag 'jquery' %>
-  <%= skip_jquery_include_tag 'jquery.color' %>
-  <%= skip_jquery_include_tag "jquery.nyroModal" %>
-  <%= skip_jquery_include_tag "jquery.bgiframe" %>
-  <%= skip_jquery_include_tag "jquery.autocomplete" %>
-  <%= skip_jquery_include_tag "jquery.jTagging" %>
-  <%= skip_jquery_include_tag 'jquery.cluetip' %>
-  <script language="JavaScript" type="text/javascript">$j = jQuery.noConflict();</script>
-  <%= javascript_include_tag 'application' %>
+  <%= skip_stylesheet_link_tag "jquery.cluetip.css" %>
+  <%= yield :stylesheet %>
 </head>
 
 <body>
@@ -36,5 +19,12 @@ var relative_url_root = '<%= controller.request.relative_url_root -%>';
 </div><!-- main -->
 
 </body>
+
+<%= all_javascript_include_tag 'jquery' %>
+<script type="text/javascript">$j = jQuery.noConflict();</script>
+<%= javascript_include_tag 'application' %>
+<script type="text/javascript">
+var relative_url_root = '<%= controller.request.relative_url_root -%>';
+</script>
 <%= yield :javascript %>
 </html>

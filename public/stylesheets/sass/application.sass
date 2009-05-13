@@ -9,6 +9,8 @@
 !base_font_size = 12px
 !small_font_size = 10px
 !base_border = 1px solid #ccc
+!base_dashed_border = 1px dashed #ccc
+!base_dotted_border = 1px dotted #ccc
 
 // Mix-in
 // ------------------------------------------------------------
@@ -93,41 +95,15 @@ ul.ui-tabs-nav
   :height 100%
   +clearfix
 
-// 基本レイアウト
+// jqueryの画像拡大をする(zoomable)際にマウスオーバーで虫眼鏡を表示する
 // ------------------------------------------------------------
-div#header
-  :position relative
-  :height 70px
-  div#global_top
-    :border-bottom 1px dashed #ccc
-    :height 20px
-    div#application_link, div#menu
-      :padding 4px 5px
-    div#application_link
-      :float left
-    div#menu
-      :position absolute
-      :top 0
-      :right 0
-      :border none
-      :font-size 12px
-      :text-align right
-  div#logo
-    :float left
-    :vertical-align top
-    :margin 1px 0 0 10px
-  div.banner
-    :height 45px
-    :width 450px
-    :margin 1px 0 0 160px
-  div#search
-    :position absolute
-    :bottom 0px
-    :right 0px
+.image_over
+  :background url(../../images/skip/zoom.gif) no-repeat 50% 50%
+  :filter alpha(opacity=50)
+  :-moz-opacity 0.5
+  :-khtml-opacity 0.5
+  :opacity 0.5
 
-div#top
-  :clear both
-  :border-bottom = !base_border
 
 // 特定の機能用ではない汎用css
 // ------------------------------------------------------------
@@ -145,8 +121,56 @@ div#top
 .margin10
   :margin 10px
 
+// 不可視にする要素に使う
+.invisible
+  :display none
+
+// Railsのflash message用
+// ------------------------------------------------------------
+div.notice, div.warning, div.error
+  :margin = 3px 0 !base_font_size 0
+  :font-size = !base_font_size
+
+div.notice
+  :border 2px solid limegreen
+  :background-color palegreen
+
+div.warning
+  :border 2px solid orange
+  :background-color yellow
+
+div.error
+  :border 2px solid red
+  :background-color pink
+
 // Railsのvalidation error用
 // ------------------------------------------------------------
+div.errorExplanation
+  :margin = 3px 0px !base_font_size 0px
+  :padding 0px
+  :border 2px solid red
+  // IE6でスクロールしないと背景色が表示されないバグ対応のため
+  :_height 1%
+
+  h2
+    :border-bottom 1px solid red
+    :background-color pink
+
+  p
+    :margin 5px 0px 1px 0px
+    :padding 1px
+    :text-align left
+
+  ul
+    :list-style-type square
+    :margin-left 20px
+    :padding 3px 0 0 10px
+
+  li
+    :line-height 1.3
+    :margin 0
+    :padding 1px 2px 0px 2px
+
 .fieldWithErrors
   // 管理画面のform内部をtableにしたらdisplayをtableにする
   // :display table
@@ -233,7 +257,6 @@ table.calendar
     :background-color #ffffa0
 
 // 汎用的なメッセージ表示ボックス(ページ先頭の説明文など)
-// TODO div.descをdiv.box.messageに移行後に削除する
 // ------------------------------------------------------------
 div.box.message
   :font-size = !base_font_size
@@ -242,11 +265,23 @@ div.box.message
   :background-color #f0f0ff
   :border 1px dashed #ffc000
 
+// TODO div.box.messageに移行してから削除する
+div.desc
+  :padding 3px 10px
+  :background-color #f0f0ff
+  :border 1px dashed #ffc000
+
+// 一行のヘルプバー
+div.helpbar
+  :background-color #fff0f0
+  :text-align center
+  :margin-bottom 2px
+
 // 記事やブックマークのリスト表示
 // ------------------------------------------------------------
 h2.topix_title
   :border-top = !base_border
-  :border-bottom 1px dashed #ccc
+  :border-bottom  = !base_dashed_border
   :padding 4px 0px 2px 7px
   :background-color #f3f3ff
   :background-image url(./../images/skip/gradient.png)
@@ -301,8 +336,89 @@ div.topix_body
     :text-overflow ellipsis
     :width 50%
 
+// タグクラウド
+// ------------------------------------------------------------
+.tag1
+  :font-size = !base_font_size
+.tag2
+  :font-size = !base_font_size + 3px
+.tag3
+  :font-size = !base_font_size + 6px
+.tag4
+  :font-size = !base_font_size + 9px
+.tag5
+  :font-size = !base_font_size + 12px
+.tag6
+  :font-size = !base_font_size + 15px
+
+// 検索条件部(共通)
+div.search_cond_space
+  :border = !base_dashed_border
+  :padding 5px
+  :_width 100%
+  div.title
+    :background-color #f0f0ff
+    :padding 2px 2px
+    :font
+      :size 16px
+      :weight bold
+  // TODO table.category, table.sortが使われている箇所がなさそう。なかったら消す。
+  table
+    &.cateogry
+      :border-collapse separate
+    &.category
+      th
+        :background-color #f0f0ff
+        :padding 0px 5px
+        :border-top = !base_border
+        :border-bottom = !base_border
+        :width 120px
+      td
+        :font-size = !small_font_size
+        :width 105px
+        &.title
+          :color gray
+          :font-weight bold
+          :background-color #eee
+          :width 80px
+          :text-align center
+    &.sort th
+      :background-color #f0f0ff
+      :padding 0px 5px
+      :border-top = !base_border
+      :border-bottom = !base_border
+      :width 120px
+  table.search_cond_box
+    :border-collapse separate
+    :width 100%
+    th
+      :width 130px
+      :background-color #f0f0ff
+      :padding 0px 5px
+      :border-top = !base_border
+      :border-bottom = !base_border
+
+// 検索結果部(共通)
+div.search_result_space
+  :margin-top 10px
+  :_width 100%
+
+// pagenate(共通)
+// TODO pagenateのスタイルは全体で統合したい
+div.navi
+  :border 1px solid #e0e0ff
+  :padding 1px
+  :background-color #f8f8ff
+  :text-align right
+
 // 編集フォーム(共通)
 // ------------------------------------------------------------
+div.edit_form_space
+  :border = !base_border
+  :margin-bottom 5px
+  p
+    :margin 5px 0
+
 h2.subtitle
   :border
     :bottom 1px solid #aaf
@@ -323,6 +439,28 @@ div.box.relative100
     :position absolute
     :top 5px
     :right 10px
+
+// TODO formに関しては基本的にテーブルレイアウトにしてこの辺は無くしたい
+div.submit
+  :text-align right
+
+div.input_line
+  :border-bottom 1px dotted silver
+  :margin-bottom 5px
+  :padding-bottom 2px
+
+  div.input_label
+    :background-color #f0f0ff
+    :width 100px
+    :overflow hidden
+    :float left
+    :font-weight bold
+    :font-size 12px
+    :padding 3px 5px
+    :margin-right 5px
+
+  textarea
+    :width 95%
 
 // 編集フォーム(テーブルレイアウト)
 // ------------------------------------------------------------
@@ -360,9 +498,47 @@ table.user_chain
     :width 80px
     :text-align center
 
+// rich 及び hikiの表示スタイル
+// ------------------------------------------------------------
+@import editor_area.sass
+
 // ============================================================
 // 2. 共通の構造
 // ============================================================
+div#header
+  :position relative
+  :height 70px
+  div#global_top
+    :border-bottom = !base_dashed_border
+    :height 20px
+    div#application_link, div#menu
+      :padding 4px 5px
+    div#application_link
+      :float left
+    div#menu
+      :position absolute
+      :top 0
+      :right 0
+      :border none
+      :font-size 12px
+      :text-align right
+  div#logo
+    :float left
+    :vertical-align top
+    :margin 1px 0 0 10px
+  div.banner
+    :height 45px
+    :width 450px
+    :margin 1px 0 0 160px
+  div#search
+    :position absolute
+    :bottom 0px
+    :right 0px
+
+div#top
+  :clear both
+  :border-bottom = !base_border
+
 div#contents_container
   :width 100%
   :margin
@@ -380,6 +556,37 @@ div#contents_container
   div#contents_bottom
     :width 100%
     :clear left
+
+div#statusbar
+  :border
+    :top = !base_border
+    :bottom = !base_border
+  :padding 2px 0 2px 10px
+  :font-size = !small_font_size
+  :background-color #f3f3f3
+  span
+    :margin 0 3px
+    :vertical-align middle
+
+div#footer
+  :color #A9A9A9
+  :overflow hidden
+  :text-align center
+  :position relative
+  :height 50px
+  .info
+    :width 800px
+    :margin auto
+    :padding 5px 200px 0 0
+    .first
+      :border-bottom = !base_dashed_border
+      :padding-bottom 4px
+    .second
+      :padding-top 5px
+  .powered_by
+    :position absolute
+    :top 0px
+    :right 0px
 
 // ============================================================
 // 3. 通常機能
@@ -407,6 +614,43 @@ div#mypage_right
   :float right
   :width 150px
 
+// マイページ > ソーシャル
+// ------------------------------------------------------------
+table.chain_table
+  :width 100%
+  :margin 5px 0
+  :border-collapse separate
+  :empty-cells hide
+  th
+    :background-color #f0f0ff
+    :width 120px
+    :text-align center
+    :border = !base_border
+  td
+    &.message div
+      :border = !base_border
+      :overflow hidden
+      :padding 5px
+      :word-break break-all
+    &.arrow
+      :width 10px
+
+// マイページ > 足跡
+// ------------------------------------------------------------
+div.access_count
+  :text-align center
+  :font
+    :size 15px
+    :weight bold
+  :border 1px dashed #ffc000
+  :margin 2px 0
+
+ul.access_tracks
+  :list-style-type none
+  :margin 5px 15px
+  li
+    :border-bottom = !base_dotted_border
+
 // マイページ > 管理 > アンテナの整備
 // ------------------------------------------------------------
 div#antennas_list_container
@@ -419,7 +663,7 @@ div#add_antenna_area
 
 // ユーザ
 // ------------------------------------------------------------
-// ユーザ一覧、グループ参加者一覧の部分
+// ユーザ一覧、グループ参加者一覧の一行毎
 div.user_box
   :position relative
   :margin 5px 10px
@@ -444,6 +688,48 @@ table.user_box
       :padding 0px
       :width 130px
       :text-align center
+
+// グループ
+// ------------------------------------------------------------
+// グループ一覧の一行毎
+table.group_box
+  :margin 5px
+  :width 98%
+  :border-collapse collapse
+  :border = !base_border
+  :table-layout fixed
+  th
+    :width 200px
+    :padding-left 5px
+    :border = !base_border
+    :background-color #F8F8FF
+    :font
+      :size 14px
+      :weight bold
+  td
+    :padding 0px 5px
+    :font-size 10px
+    :border = !base_border
+    :color #808080
+    &.auth
+      :text-align left
+      p
+        :margin 5px
+    &.since
+      :text-align right
+
+table.group_list_box
+  :margin 5px 10px
+  :width 95%
+  :border-collapse collapse
+  :border = !base_border
+  th
+    :text-align left
+    :background-color #f0f0ff
+    :padding-left 5px
+    :border = !base_border
+  td
+    :padding 0px 5px
 
 // 記事
 // ------------------------------------------------------------
@@ -484,7 +770,23 @@ div#board_entry_comments
 
 // ブックマーク
 // ------------------------------------------------------------
-// 一覧
+// 一覧(全体)
+div.bookmark_line
+  :margin-top 5px
+  :padding-left 5px
+  :border-bottom 1px dotted silver
+  span.title
+    :font-size 15px
+  span.users
+    :font-size 10px
+    :font-weight bold
+    :background-color #ffe0e0
+  div.tags
+    :margin 3px 0 3px 15px
+    :font-size 10px
+    :color green
+
+// 一覧(ユーザ毎)
 div.bookmark_space
   :border = !base_border
   :width 98%
@@ -495,7 +797,7 @@ div.bookmark_space
   :overflow hidden
   div.header, div.title
     :margin 0
-    :border-bottom 1px dashed #ccc
+    :border-bottom = !base_dashed_border
     :padding 0
     :background-color = !base_background_color
     +base_text
@@ -544,6 +846,18 @@ div.bookmark.show
       :weight bold
     :background-color #f0f0ff
     :padding 2px
+
+// 共有ファイル
+// ------------------------------------------------------------
+// 新規
+div.error_files
+  :color gray
+  :font-size 10px
+  :margin-top 5px
+
+div.error_messages
+  :margin-left 20px
+  :width 350px
 
 // 共有ファイルアップローダー
 // ------------------------------------------------------------
@@ -619,6 +933,125 @@ div#share_file_uploader.enabled
     :margin 3px
     :background-color pink
 
+// TODO assistant/calendar.rbもろとも使われてない可能性が高いので調査して削除する
+//table.calendar_table
+//  :font-size 12px
+//  :width 150px
+//  th
+//    :background-color #EEEEEE
+
+// ランキング > 月次ランキング/総合ランキング
+// ------------------------------------------------------------
+h1#ranking_title
+  :color #0033CC
+  :font-size 14px
+  :font-weight bold
+  :margin-left 5px
+  :vertical-align middle
+
+table.ranking_square
+  :padding 0px 0px 0px 0px
+  :margin 0 0 10px 0
+  :background-color #f0f0ff
+  :border #C6C7C6 1px solid
+  :font-size 12px
+  :table-layout auto
+  .title
+    :margin 1px
+    :padding 5px
+    :background-color #f0f0ff
+    :border #C6C7C6 1px solid
+    :font-size 14px
+    :font-weight bold
+    :color #77778C
+    :text-align center
+  table
+    :text-align left
+    :font-size 12px
+  tr
+    :background-color #ffffff
+  th
+    :padding 3px 0 3px 0
+    :font-size 12px
+    :background-color #f8f8ff
+    :text-align left
+
+    &.point
+      :text-align center
+  td.rank
+    :padding 3px
+    :width 15px
+    :font-size 12px
+    :text-align center
+  td.link_text
+    :padding 3px 0 3px 0
+    :font-size 12px
+    :width 350px
+  td.user_name
+    :padding 3px 0 3px 0
+    :font-size 12px
+    :width 100px
+  td.point
+    :padding 3px 0 3px 0
+    :font-size 12px
+    :text-align center
+    :width 100px
+
+div.ranking_menu
+  :margin-bottom 20px
+
+div.ranking_data
+  :margin-top 10px
+
+div.ranking_menu_title
+  :margin-bottom 10px
+
+// ランキング > サイト情報
+// ------------------------------------------------------------
+div.statistics_history
+  :margin-top 20px
+
+div.statistics_line
+  :font-size 11px
+  :padding 3px
+  :border-bottom 1px dashed silver
+  :margin 0px 5px
+  :float left
+
+  .statistics_desc
+    :width 240px
+    :float left
+
+  .statistics_value
+    :width 45px
+    :text-align right
+    :float left
+
+  .statistics_menu
+    :font-size 10px
+    :width 200px
+    :margin-left 10px
+    :float left
+
+div.monthly_statictics_box
+  :width 300px
+  :margin 10px
+  :padding 10px
+  :border 1px solid silver
+  :background-color #eee
+
+div.monthly_statictics_line
+  :float left
+  :border-bottom 1px dotted silver
+
+div.monthly_statistics_inner_space
+  :padding 3px
+  :background-color #fff
+
+div.current_statistics
+  :float left
+  :width 100%
+
 // ============================================================
 // 4. 管理機能
 // ============================================================
@@ -630,7 +1063,7 @@ h3.topics
   :background-color #f0f0ff
   :border
     :top 3px double silver
-    :bottom 1px dashed silver
+    :bottom = !base_dashed_border
   :margin-bottom 2px
   :padding 0 0 0 7px
 
