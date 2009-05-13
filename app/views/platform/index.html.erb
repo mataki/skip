@@ -1,10 +1,6 @@
 <% content_for :stylesheet do -%>
   <%= skip_stylesheet_link_tag 'style' %>
   <style type="text/css">
-  a:hover {
-    color: blue;
-    background-color: yellow;
-  }
   div#main {
     position: relative;
     background-image: url('<%= controller.request.relative_url_root -%>/custom/images/<%= @img_name -%>');
