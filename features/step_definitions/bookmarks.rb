@@ -26,3 +26,7 @@ end
 Given /^マイページを表示する$/ do
   visit root_path
 end
+
+Given /^全体からのブックマーク検索画面を表示する$/ do
+  visit url_for(:controller => 'bookmarks')
+end
