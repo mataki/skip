@@ -37,7 +37,7 @@ Feature: ブックマークの管理
     And     "ブックマーク"リンクをクリックする
     And     URLが"http://test.host/"で文字列が"タイトル1"のリンクが存在すること
     And     "コメント1"と表示されていること
-    And     URLが"http://test.host/%2527%253Cscript%253Ealert(1)%253C/script%253E%2527"で文字列が"タイトル2"のリンクが存在すること
+    And     URLが"http://test.host/%27%3Cscript%3Ealert(1)%3C/script%3E%27"で文字列が"タイトル2"のリンクが存在すること
     And     "シングルクオート"と表示されていること
 
   Scenario: ブックマークの詳細画面を表示する
