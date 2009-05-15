@@ -483,7 +483,7 @@
               $j.ajax({
                   type: 'POST',
                   url: entry_point_url,
-                  data: {id: '<%= entry.id %>', authenticity_token: $j('#authenticity_token').val() },
+                  data: {id: '<%= entry.id %>', authenticity_token: authenticity_token() },
                   success: function(text){
                       $j('#entry_point_button').val(text);
                       entry_point = ++entry_point;
@@ -563,7 +563,7 @@
 
               // トークン
               var hiddenToken = function() {
-                  return $j(document.createElement('input')).attr({type:'hidden', name:'authenticity_token', value:$j('#authenticity_token').val()});
+                  return $j(document.createElement('input')).attr({type:'hidden', name:'authenticity_token', value: authenticity_token()});
               };
 
               // 説明を作成
@@ -656,6 +656,10 @@
           setupCommentNestLink(target);
       };
       setupComment(document);
+
+      var authenticity_token = function(){
+          return $j('input[name="authenticity_token"]').eq(0).val();
+      };
 
       $j("textarea").jGrow({ rows: 25 });
   });
