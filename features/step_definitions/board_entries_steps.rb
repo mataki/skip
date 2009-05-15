@@ -18,7 +18,6 @@ end
 
 Given /^"(.*)"でブログを"(.*)"回書く$/ do |user, num|
   num.to_i.times do
-    Given "ログアウトする"
     Given %!"#{user}"でブログを書く!
   end
 end
@@ -32,7 +31,6 @@ Given /^"(.*)"で"(.*)"つめのブログにポイントを"(.*)"回つける$/ 
 end
 
 Given /^"(.*)"でコメントを"(.*)"回書く$/ do |user, times|
-  Given "ログアウトする"
   Given %!"#{user}"でログインする!
   Given %!"1"つめのブログに"#{times}"回コメントを書く!
 end

@@ -36,18 +36,25 @@ Given /^ログアウトする$/ do
 end
 
 Given /^"(.*)"でログインする$/ do |user_name|
-  if @user
-    if @user.name != user_name
+  if @login_user
+    if @login_user.name != user_name
       Given "ログアウトする"
-      @user = User.find_by_name(user_name)
+      @login_user = perform_login(user_name)
+    else
+      Given "マイページを表示する"
     end
   else
-    @user = User.find_by_name(user_name)
+    @login_user = perform_login(user_name)
   end
+end
+
+def perform_login(user_name)
+  user = User.find_by_name(user_name)
   Given "ログインページを表示している"
-  Given %!"#{"ログインID"}"に"#{@user.email}"と入力する!
+  Given %!"#{"ログインID"}"に"#{user.email}"と入力する!
   Given %!"#{"パスワード"}"に"#{"Password1"}"と入力する!
   Given %!"#{"ログイン"}"ボタンをクリックする!
+  user
 end
 
 Given /^ランキングのバッチで"(.*)"の"(.*)"分を実行する$/ do |method, date|
