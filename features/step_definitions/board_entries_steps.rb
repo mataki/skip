@@ -27,8 +27,7 @@ Given /^"(.*)"で"(.*)"つめのブログにポイントを"(.*)"回つける$/ 
   Given %!"#{user}"でログインする!
   entry = @entries[target.to_i - 1]
   num.to_i.times do
-    token = get_authenticity_token(entry)
-    visit(url_for(:controller => :board_entries, :action => :ado_pointup, :id => entry[:id], :authenticity_token => token), :post)
+    visit(url_for(:controller => :board_entries, :action => :ado_pointup, :id => entry[:id]), :post)
   end
 end
 
@@ -41,7 +40,6 @@ end
 Given /^"(.*)"つめのブログに"(.*)"回コメントを書く$/ do |num,times_num|
   entry = @entries[num.to_i - 1]
   (1..times_num.to_i).each do
-    token = get_authenticity_token(entry)
-    visit(url_for(:controller => :board_entries, :action => :ado_create_comment,:id => entry[:id], :board_entry_comment => { :contents => "test" }, :authenticity_token => token), :post)
+    visit(url_for(:controller => :board_entries, :action => :ado_create_comment,:id => entry[:id], :board_entry_comment => { :contents => "test" }), :post)
   end
 end

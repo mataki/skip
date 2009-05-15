@@ -8,11 +8,6 @@ Given /^ランキングの"(.*)"位が"(.*)"のユーザであること$/ do |ra
   Nokogiri::HTML(response.body).search("table.ranking_square tbody tr:nth(#{rank}) td.user_name").text.should == uid
 end
 
-def get_authenticity_token(entry)
-  visit(url_for(:controller => "user", :entry_id => entry[:id], :action => "blog", :uid => entry[:uid]))
-  Nokogiri::HTML(response.body).search("input#authenticity_token").attr("value")
-end
-
 Given /^"(.*)"回再読み込みする$/ do |num|
   num.to_i.times do |i|
     Given "再読み込みする"
