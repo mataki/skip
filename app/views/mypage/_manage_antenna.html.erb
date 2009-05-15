@@ -28,9 +28,11 @@ ul#antennas_list li.dragenter {
   </div>
 
   <div id="add_antenna_area">
-    <p><%= icon_tag 'transmit_add' -%>アンテナの追加
-    <input type="edit" size="20" id="add_antenna_name" />
-    <input type="button" value="追加" id="add_antenna_btn" /></p>
+    <% form_tag url_for(:controller => 'mypage', :action => 'add_antenna'), :id => 'add_antenna_form' do -%>
+    <%= icon_tag 'transmit_add' %><label for="antenna_name">アンテナの追加</label>
+    <%= text_field_tag 'antenna_name', '', :size => '20' %>
+    <%= submit_tag _('Save'), :id => 'add_antenna_btn' %>
+    <% end -%>
   </div>
 
 </div><!-- end of 編集領域 -->
@@ -48,9 +50,9 @@ ul#antennas_list li.dragenter {
 $j(function() {
     // アンテナの追加
     var setupAddAntennaBtn = function() {
-      $j('#add_antenna_btn')
-      .click(function() {
-          var antenna_name = $j('#add_antenna_name').val();
+      $j('form#add_antenna_form')
+      .submit(function() {
+          var antenna_name = $j('#antenna_name').val();
           if (antenna_name == '') {
               alert('アンテナ名は必須です。');
               return false;
@@ -59,17 +61,13 @@ $j(function() {
               alert('アンテナ名は10文字以内で入力して下さい。');
               return false;
           }
-          var add_antenna_url = relative_url_root + "/mypage/add_antenna";
           $j.ajax({
               type: 'POST',
-              url: add_antenna_url,
-              data: { name: antenna_name, authenticity_token: $j('#authenticity_token').val() },
+              url: $j(this).attr('action'),
+              data: $j(this).serialize(),
               success: function(request) {
-                  $j('#add_antenna_name').val('');
+                  $j('#antenna_name').val('');
                   $j('#antennas_list_container').html(request).highlight();
-              },
-              error: function(event){
-                  alert("通信に失敗しました");
               },
               complete: function(request) {
                   setupDeleteAntennaLink();

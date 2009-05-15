@@ -30,8 +30,9 @@ When /^"(.*)"ボタンをクリックする$/ do |button|
   click_button(button)
 end
 
-When(/^"([^"]*)"リンクをクリックする$/)do |link|
-  click_link(link)
+When(/^"([^"]*)"リンクを(.*)クリックする$/)do |link, method|
+  method = method.blank? ? :get : method.downcase.to_sym
+  click_link(link, :method => method)
 end
 
 When /^"(.*)"中の"(.*)"リンクをクリックする$/ do |selector, link|

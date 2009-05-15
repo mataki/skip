@@ -303,7 +303,7 @@ class MypageController < ApplicationController
   end
 
   def add_antenna
-    Antenna.create(:user_id => session[:user_id], :name => params[:name])
+    Antenna.create(:user_id => session[:user_id], :name => params[:antenna_name])
     render :partial => 'antennas', :object => find_antennas
   end
 
