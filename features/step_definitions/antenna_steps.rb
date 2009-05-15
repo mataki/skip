@@ -7,6 +7,6 @@ Given /^"(.*)"ユーザのプロフィールページを表示する$/ do |user|
 end
 
 When /^"([^\"]*)"というアンテナを追加する$/ do |antenna_name|
-  fills_in "アンテナの追加", :with => antenna_name
+  fill_in "アンテナの追加", :with => antenna_name
   click_button "保存"
 end

@@ -8,15 +8,6 @@ Given /^ランキングの"(.*)"位が"(.*)"のユーザであること$/ do |ra
   Nokogiri::HTML(response.body).search("table.ranking_square tbody tr:nth(#{rank}) td.user_name").text.should == uid
 end
 
-Given /^"(.*)"で"(.*)"つめのブログにポイントを"(.*)"回つける$/ do |user,target,num|
-  Given %!"#{user}"でログインする!
-  entry = @entries[target.to_i - 1]
-  num.to_i.times do
-    token = get_authenticity_token(entry)
-    visit(url_for(:controller => :board_entries, :action => :ado_pointup, :id => entry[:id], :authenticity_token => token), :post)
-  end
-end
-
 def get_authenticity_token(entry)
   visit(url_for(:controller => "user", :entry_id => entry[:id], :action => "blog", :uid => entry[:uid]))
   Nokogiri::HTML(response.body).search("input#authenticity_token").attr("value")
@@ -43,45 +34,6 @@ end
 Given /^"(.*)"ランキングの"(.*)"分を表示する$/ do |category, date|
   year, month = date.split("-")
   visit ranking_data_path(:content_type => category, :year => year, :month => month)
-end
-
-Given /^"(.*)"でコメントを"(.*)"回書く$/ do |user, times|
-  Given "ログアウトする"
-  Given %!"#{user}"でログインする!
-  Given %!"1"つめのブログに"#{times}"回コメントを書く!
-end
-
-Given /^"(.*)"つめのブログに"(.*)"回コメントを書く$/ do |num,times_num|
-  entry = @entries[num.to_i - 1]
-  (1..times_num.to_i).each do
-    token = get_authenticity_token(entry)
-    visit(url_for(:controller => :board_entries, :action => :ado_create_comment,:id => entry[:id], :board_entry_comment => { :contents => "test" }, :authenticity_token => token), :post)
-  end
-end
-
-Given /^"(.*)"で"(.*)"つめのブログにアクセスする$/ do |user, num|
-  Given %!"#{user}"でログインする!
-  entry = @entries[num.to_i - 1]
-  visit url_for(:controller => "user", :entry_id => entry[:id], :action => "blog", :uid => entry[:uid])
-end
-
-Given /^"(.*)"でブログを書く$/ do |user|
-  @entries ||= []
-  Given %!"#{user}"でログインする!
-  Given %!"ブログを書く"リンクをクリックする!
-  Given %!"#{"board_entry[title]"}"に"#{"test"+(@entries.size+1).to_s}"と入力する!
-  Given %!"#{"editor_mode_hiki"}"を選択する!
-  Given %!"#{"contents_hiki"}"に"#{"test"}"と入力する!
-  Given %!"#{"作成"}"ボタンをクリックする!
-  entry = BoardEntry.last
-  @entries << { :id => entry.id, :uid => entry.symbol.split(":").last }
-end
-
-Given /^"(.*)"でブログを"(.*)"回書く$/ do |user, num|
-  num.to_i.times do
-    Given "ログアウトする"
-    Given %!"#{user}"でブログを書く!
-  end
 end
 
 Given /^ログアウトする$/ do
