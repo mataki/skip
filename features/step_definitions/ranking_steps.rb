@@ -40,8 +40,15 @@ Given /^ログアウトする$/ do
   visit logout_path
 end
 
-Given /^"(.*)"でログインする$/ do |user|
-  @user = User.find_by_name(user)
+Given /^"(.*)"でログインする$/ do |user_name|
+  if @user
+    if @user.name != user_name
+      Given "ログアウトする"
+      @user = User.find_by_name(user_name)
+    end
+  else
+    @user = User.find_by_name(user_name)
+  end
   Given "ログインページを表示している"
   Given %!"#{"ログインID"}"に"#{@user.email}"と入力する!
   Given %!"#{"パスワード"}"に"#{"Password1"}"と入力する!

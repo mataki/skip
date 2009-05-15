@@ -473,22 +473,22 @@
       //  ポイントボタン押下時の動作 board_entry_point 内の動作
       var entry_point = 0;
       var appendEntryPointClick = function(){
-          $j('#entry_point_button')
-          .click(function(){
+          $j('#entry_point_form')
+          .submit(function() {
               if (entry_point > 4){
                   alert('やりすぎ！');
                   return false;
               }
-              var entry_point_url = '<%= url_for :controller => :board_entries, :action => :ado_pointup -%>';
               $j.ajax({
                   type: 'POST',
-                  url: entry_point_url,
-                  data: {id: '<%= entry.id %>', authenticity_token: authenticity_token() },
+                  url: $j(this).attr('action'),
+                  data: $j(this).serialize(),
                   success: function(text){
-                      $j('#entry_point_button').val(text);
+                      $j('#entry_point_form :input[type="submit"]').val(text);
                       entry_point = ++entry_point;
                   }
               });
+              return false;
           });
       };
       appendEntryPointClick();

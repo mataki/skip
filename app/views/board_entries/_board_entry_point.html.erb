@@ -4,7 +4,9 @@
 -%>
 
 <% if entry.point_incrementable?(@current_user) -%>
-  <input type="button" id="entry_point_button" value="<%= "#{entry.point} #{h Admin::Setting.point_button}" %>" />
+  <% form_tag url_for(:controller => :board_entries, :action => :ado_pointup, :id => entry.id), :id => 'entry_point_form' do -%>
+    <%= submit_tag "#{entry.point} #{h Admin::Setting.point_button}" %>
+  <% end -%>
 <% else -%>
   （<%= "#{entry.point} #{h Admin::Setting.point_button}" %> 頂きました）
 <% end -%>
