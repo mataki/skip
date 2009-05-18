@@ -18,7 +18,7 @@ require 'tempfile'
 
 class ApplicationController < ActionController::Base
   include OpenidServerSystem
-  include ExceptionNotifiable if INITIAL_SETTINGS['exception_notifier']['enable']
+  include ExceptionNotifiable if SkipEmbedded::InitialSettings['exception_notifier']['enable']
   layout 'layout'
   filter_parameter_logging :password
 
@@ -171,7 +171,7 @@ protected
     else
       render :template => "system/500" , :status => :internal_server_error
 
-      if INITIAL_SETTINGS['exception_notifier']['enable']
+      if SkipEmbedded::InitialSettings['exception_notifier']['enable']
         deliverer = self.class.exception_data
         data = case deliverer
           when nil then {}
@@ -314,7 +314,7 @@ protected
       if request.env['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest'
         render :text => _('ログインが必要です。ログインし直して下さい。'), :status => :bad_request
       else
-        redirect_to :controller => '/platform', :action => :login, :openid_url => INITIAL_SETTINGS['fixed_op_url'], :return_to => URI.encode(request.url)
+        redirect_to :controller => '/platform', :action => :login, :openid_url => SkipEmbedded::InitialSettings['fixed_op_url'], :return_to => URI.encode(request.url)
       end
       return false
     end

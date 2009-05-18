@@ -120,8 +120,8 @@ describe Antenna, ".create_initial" do
   describe "アンテナ名とアンテナグループが設定されている場合" do
     before do
       @initial_antenna = "初期アンテナ名"
-      INITIAL_SETTINGS['initial_antenna'] = @initial_antenna
-      INITIAL_SETTINGS['antenna_default_group'] = ['vimgroup', 'emacsgroup']
+      SkipEmbedded::InitialSettings.stub!("[]").with('initial_antenna').and_return(@initial_antenna)
+      SkipEmbedded::InitialSettings.stub!("[]").with('antenna_default_group').and_return(['vimgroup', 'emacsgroup'])
     end
     describe "存在するグループが複数(2)設定されている場合" do
       before do
@@ -154,8 +154,8 @@ describe Antenna, ".create_initial" do
   end
   describe "アンテナ名が設定されていない場合" do
     before do
-      INITIAL_SETTINGS['initial_antenna'] = nil
-      INITIAL_SETTINGS['antenna_default_group'] = ['vimgroup', 'emacsgroup']
+      SkipEmbedded::InitialSettings.stub!("[]").with('initial_antenna').and_return(nil)
+      SkipEmbedded::InitialSettings.stub!("[]").with('antenna_default_group').and_return(['vimgroup', 'emacsgroup'])
     end
     it "nilが返ること" do
       Antenna.create_initial(@user).should be_nil
@@ -163,8 +163,8 @@ describe Antenna, ".create_initial" do
   end
   describe "アンテナグループが設定されていない場合" do
     before do
-      INITIAL_SETTINGS['initial_antenna'] = "初期アンテナ名"
-      INITIAL_SETTINGS['antenna_default_group'] = nil
+      SkipEmbedded::InitialSettings.stub!("[]").with('initial_antenna').and_return("初期アンテナ名")
+      SkipEmbedded::InitialSettings.stub!("[]").with('antenna_default_group').and_return(nil)
     end
     it "nilが返ること" do
       Antenna.create_initial(@user).should be_nil

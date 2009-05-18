@@ -46,7 +46,7 @@ class Bookmark < ActiveRecord::Base
   def self.get_title_from_url url
     begin
       timeout(GET_TITLE_TIMEOUT) do
-        open(url, :proxy => INITIAL_SETTINGS['proxy_url']) do |f|
+        open(url, :proxy => SkipEmbedded::InitialSettings['proxy_url']) do |f|
           f.each_line do |line|
             return $2.toutf8 if /<(title|TITLE)>(.*?)<\/(title|TITLE)>/.match(line)
           end

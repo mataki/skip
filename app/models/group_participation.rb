@@ -30,11 +30,11 @@ class GroupParticipation < ActiveRecord::Base
   # after_xxx がかからないメソッドは使わないように。
   def after_save
 # 他のアプリケーションの所属情報を利用する方法は再度検討する為、一旦コメントアウト
-#    MemcacheUtil.clear(user.code, :skip) unless INITIAL_SETTINGS['belong_info_apps'].blank?
+#    MemcacheUtil.clear(user.code, :skip) unless SkipEmbedded::InitialSettings['belong_info_apps'].blank?
   end
 
   def after_destroy
-#    MemcacheUtil.clear(user.code, :skip) unless INITIAL_SETTINGS['belong_info_apps'].blank?
+#    MemcacheUtil.clear(user.code, :skip) unless SkipEmbedded::InitialSettings['belong_info_apps'].blank?
   end
 
   def to_s

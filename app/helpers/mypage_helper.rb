@@ -44,7 +44,7 @@ module MypageHelper
   def get_manage_menu_items selected_menu
     @@menus = []
     @@menus << {:name => "プロフィール変更", :menu => "manage_profile" }
-    @@menus << {:name => "パスワード変更", :menu => "manage_password" } if INITIAL_SETTINGS['password_edit_setting'] and login_mode?(:password)
+    @@menus << {:name => "パスワード変更", :menu => "manage_password" } if SkipEmbedded::InitialSettings['password_edit_setting'] and login_mode?(:password)
     @@menus << {:name => "メールアドレス変更", :menu => "manage_email" } if Admin::Setting.mail_function_setting
     @@menus << {:name => "OpenID URL変更", :menu => "manage_openid" } if login_mode?(:free_rp)
     @@menus << {:name => "プロフィール画像変更", :menu => "manage_portrait" }

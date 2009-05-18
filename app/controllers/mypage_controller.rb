@@ -231,7 +231,7 @@ class MypageController < ApplicationController
     Admin::Setting.mypage_feed_settings.each do |setting|
       feed = nil
       timeout(Admin::Setting.mypage_feed_timeout.to_i) do
-        feed = open(setting[:url], :proxy => INITIAL_SETTINGS['proxy_url']){ |f| RSS::Parser.parse(f.read) }
+        feed = open(setting[:url], :proxy => SkipEmbedded::InitialSettings['proxy_url']){ |f| RSS::Parser.parse(f.read) }
       end
       feed = unify_feed_form(feed, setting[:title], setting[:limit])
       feeds << feed if feed

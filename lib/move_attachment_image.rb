@@ -27,7 +27,7 @@ class MoveAttachmentImage
     rename_gid_dir
     log_info('end rename gid directory')
 
-    if INITIAL_SETTINGS['image_path'] && File.exist?(INITIAL_SETTINGS['image_path'])
+    if SkipEmbedded::InitialSettings['image_path'] && File.exist?(SkipEmbedded::InitialSettings['image_path'])
       # 記事の添付画像の移行
       log_info('start move attachment image ...')
       move_attachment_image
@@ -45,7 +45,7 @@ class MoveAttachmentImage
   # ユーザの共有ファイルのパスを取得
   # 取得できない場合はnilが返る
   def self.user_share_file_path
-    share_file_path = INITIAL_SETTINGS['share_file_path']
+    share_file_path = SkipEmbedded::InitialSettings['share_file_path']
     if share_file_path && File.exist?(share_file_path)
       share_file_user_path = "#{share_file_path}/user"
       File.exist?(share_file_user_path) ? share_file_user_path : nil
@@ -75,7 +75,7 @@ class MoveAttachmentImage
   # グループの共有ファイルのパスを取得
   # 取得できない場合はnilが返る
   def self.group_share_file_path
-    share_file_path = INITIAL_SETTINGS['share_file_path']
+    share_file_path = SkipEmbedded::InitialSettings['share_file_path']
     if share_file_path && File.exist?(share_file_path)
       share_file_group_path = "#{share_file_path}/group"
       File.exist?(share_file_group_path) ? share_file_group_path : nil
@@ -102,7 +102,7 @@ class MoveAttachmentImage
   end
 
   def self.entry_image_base_path
-    base_path = "#{INITIAL_SETTINGS['image_path']}/board_entries"
+    base_path = "#{SkipEmbedded::InitialSettings['image_path']}/board_entries"
     File.exist?(base_path) ? base_path : nil
   end
 

@@ -18,8 +18,8 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe ApplicationController, "#sso" do
   describe "固定OP利用設定の場合" do
     before do
-      INITIAL_SETTINGS['login_mode'] = "rp"
-      INITIAL_SETTINGS['fixed_op_url'] = 'http://localhost.com/'
+      SkipEmbedded::InitialSettings.stub!("[]").with('login_mode').and_return("rp")
+      SkipEmbedded::InitialSettings.stub!("[]").with('fixed_op_url').and_return('http://localhost.com/')
     end
     describe "未ログイン時" do
       before do
@@ -41,7 +41,7 @@ describe ApplicationController, "#sso" do
         end
         it "ログインへリダイレクトされる" do
           controller.stub!(:logged_in?).and_return(false)
-          controller.should_receive(:redirect_to).with({:controller => '/platform', :action => :login, :openid_url => INITIAL_SETTINGS['fixed_op_url'], :return_to => @return_to})
+          controller.should_receive(:redirect_to).with({:controller => '/platform', :action => :login, :openid_url => SkipEmbedded::InitialSettings['fixed_op_url'], :return_to => @return_to})
           controller.send(:sso).should be_false
         end
       end

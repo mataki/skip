@@ -214,7 +214,8 @@ end
 
 describe User, "#before_save" do
   before do
-    INITIAL_SETTINGS['login_mode'] = 'password'
+    SkipEmbedded::InitialSettings.stub!("[]").with('login_mode').and_return('password')
+    SkipEmbedded::InitialSettings.stub!("[]").with('sha1_digest_key').and_return("digest_key")
   end
   describe '新規の場合' do
     before do
@@ -389,7 +390,8 @@ end
 
 describe User, '#change_password' do
   before do
-    INITIAL_SETTINGS['login_mode'] = 'password'
+    SkipEmbedded::InitialSettings.stub!("[]").with('login_mode').and_return('password')
+    SkipEmbedded::InitialSettings.stub!("[]").with('sha1_digest_key').and_return("digest_key")
     @user = create_user(:user_options => {:password => 'Password1'})
     @old_password = 'Password1'
     @new_password = 'Hogehoge1'
@@ -823,9 +825,9 @@ describe User, "#belong_symbols_with_collaboration_apps" do
     Admin::Setting.stub!(:protocol_by_initial_settings_default).and_return("http://")
     @user = stub_model(User, :belong_symbols => ["uid:a_user", "gid:a_group"], :code => "a_user")
   end
-  describe "INITIAL_SETTINGSが設定されている場合" do
+  describe "SkipEmbedded::InitialSettingsが設定されている場合" do
     before do
-      INITIAL_SETTINGS["belong_info_apps"] = { 'app' => { "url" => "http://localhost:3100/notes.js", "ca_file" => "hoge/fuga" } }
+      SkipEmbedded::InitialSettings.stub!("[]").with("belong_info_apps").and_return({ 'app' => { "url" => "http://localhost:3100/notes.js", "ca_file" => "hoge/fuga" } })
     end
     describe "情報が返ってくる場合" do
       before do
@@ -857,9 +859,9 @@ describe User, "#belong_symbols_with_collaboration_apps" do
       end
     end
   end
-  describe "INITIAL_SETTINGSが設定されていない場合" do
+  describe "SkipEmbedded::InitialSettingsが設定されていない場合" do
     before do
-      INITIAL_SETTINGS["belong_info_apps"] = nil
+      SkipEmbedded::InitialSettings.stub!("[]").with("belong_info_apps").and_return(nil)
     end
     it "SKIP内の所属情報を返すこと" do
       ["uid:a_user", "gid:a_group", Symbol::SYSTEM_ALL_USER, "public"].each do |symbol|
@@ -1001,7 +1003,7 @@ describe User, 'password_required?' do
   end
   describe 'パスワードモードの場合' do
     before do
-      INITIAL_SETTINGS.stub!('[]').with('login_mode').and_return('password')
+      SkipEmbedded::InitialSettings.stub!('[]').with('login_mode').and_return('password')
     end
     describe 'パスワードが空の場合' do
       before do
@@ -1048,7 +1050,7 @@ describe User, 'password_required?' do
   end
   describe 'パスワードモード以外の場合' do
     before do
-      INITIAL_SETTINGS.stub!('[]').with('login_mode').and_return('rp')
+      SkipEmbedded::InitialSettings.stub!('[]').with('login_mode').and_return('rp')
     end
     it '必要ではない(false)と判定されること' do
       @user.send!(:password_required?).should be_false

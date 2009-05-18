@@ -110,7 +110,7 @@ class Admin::UsersController < Admin::ApplicationController
         end
       end
     else
-      contact_link = "<a href=\"mailto:#{INITIAL_SETTINGS['administrator_addr']}\" target=\"_blank\">お問い合わせ</a>"
+      contact_link = "<a href=\"mailto:#{SkipEmbedded::InitialSettings['administrator_addr']}\" target=\"_blank\">お問い合わせ</a>"
       if User.find_by_admin(true)
         flash[:error] = _('既に管理者ユーザが登録済みです。ログインして下さい。ログイン出来ない場合は%{contact_link}下さい。') % {:contact_link => contact_link}
         redirect_to :controller => "/platform", :action => :index

@@ -508,7 +508,7 @@ describe MypageController, 'mypage > manage(管理) 関連' do
 
   describe MypageController, "POST #apply_password" do
     before do
-      INITIAL_SETTINGS['login_mode'] = 'password'
+      SkipEmbedded::InitialSettings.stub!("[]").with('login_mode').and_return('password')
 
       @user = user_login
       @user.should_receive(:change_password)
@@ -539,8 +539,9 @@ describe MypageController, 'mypage > manage(管理) 関連' do
     before do
       @user = user_login
       ActionMailer::Base.deliveries.clear
-      INITIAL_SETTINGS['login_mode'] = 'rp'
-      INITIAL_SETTINGS['fixed_op_url'] = nil
+      SkipEmbedded::InitialSettings.stub!("[]").with('login_mode').and_return('rp')
+      SkipEmbedded::InitialSettings.stub!("[]").with('fixed_op_url').and_return(nil)
+      SkipEmbedded::InitialSettings.stub!("[]").with('password_edit_setting').and_return(true)
       @openid_url = "http://id.example.com/a_user"
     end
     describe '認証を開始した場合' do

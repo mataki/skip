@@ -93,7 +93,8 @@ describe ServerController, "#proceed" do
   end
   describe "ホワイトリストのアプリケーションの場合" do
     before do
-      INITIAL_SETTINGS['white_list'] = ["http://test.com/"]
+      SkipEmbedded::InitialSettings.stub!("[]").with('white_list').and_return(["http://test.com/"])
+      SkipEmbedded::InitialSettings.stub!("[]").with('protocol').and_return("http://")
 
       openid_params = checkid_request_params.merge('openid.identity' => @id_url, 'openid.claimed_id' => @id_url)
       @checkid_request = OpenIdRequest.create!(:parameters => openid_params)
@@ -118,7 +119,10 @@ describe ServerController, "#proceed" do
 
   describe "ホワイトリストのアプリケーションでない場合" do
     before do
-      INITIAL_SETTINGS['white_list'] = ["http://127.0.0.1/"]
+      SkipEmbedded::InitialSettings.stub!("[]").with('white_list').and_return(["http://127.0.0.1/"])
+      SkipEmbedded::InitialSettings.stub!("[]").with('protocol').and_return("http://")
+      SkipEmbedded::InitialSettings.stub!("[]").with('host_and_port').and_return("localhost:3100")
+
       openid_params = checkid_request_params.merge('openid.identity' => @id_url, 'openid.claimed_id' => @id_url)
       @checkid_request = OpenIdRequest.create!(:parameters => openid_params)
       @request.session[:request_token] = @checkid_request.token

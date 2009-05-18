@@ -31,7 +31,7 @@ end
 describe UserUid, '各種validation' do
   describe UserUid, '.validates_length_of' do
     before do
-      @minimum = INITIAL_SETTINGS['user_code_minimum_length'].to_i
+      @minimum = SkipEmbedded::InitialSettings['user_code_minimum_length'].to_i
     end
     describe "uidが最小値未満の文字数の場合" do
       before do

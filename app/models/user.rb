@@ -162,7 +162,7 @@ class User < ActiveRecord::Base
   end
 
   def self.encrypt(password)
-    Digest::SHA1.hexdigest("#{INITIAL_SETTINGS['sha1_digest_key']}--#{password}--")
+    Digest::SHA1.hexdigest("#{SkipEmbedded::InitialSettings['sha1_digest_key']}--#{password}--")
   end
 
   def self.new_with_identity_url(identity_url, params)
@@ -386,7 +386,7 @@ class User < ActiveRecord::Base
 
   def belong_symbols_with_collaboration_apps
     symbols = ['sid:allusers'] + belong_symbols
-    (INITIAL_SETTINGS['belong_info_apps'] || {}).each do |app_name, setting|
+    (SkipEmbedded::InitialSettings['belong_info_apps'] || {}).each do |app_name, setting|
       join_info = WebServiceUtil.open_service_with_url(setting["url"], { :user => self.openid_identifier }, setting["ca_file"])
       symbols += join_info.map{|item| item["publication_symbols"]} if join_info
     end
@@ -456,7 +456,7 @@ protected
 
 private
   def password_required?
-    if INITIAL_SETTINGS['login_mode'] == 'password'
+    if SkipEmbedded::InitialSettings['login_mode'] == 'password'
       active? and crypted_password.blank? or !password.blank?
     else
       false

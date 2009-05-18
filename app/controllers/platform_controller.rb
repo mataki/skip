@@ -48,7 +48,7 @@ class PlatformController < ApplicationController
     notice = notice + "<br>" + _('You had been retired.') unless params[:message].blank?
     flash[:notice] = notice
 
-    redirect_to login_mode?(:fixed_rp) ? "#{INITIAL_SETTINGS['fixed_op_url']}logout" : {:action => "index"}
+    redirect_to login_mode?(:fixed_rp) ? "#{SkipEmbedded::InitialSettings['fixed_op_url']}logout" : {:action => "index"}
   end
 
   def forgot_password
@@ -216,7 +216,7 @@ class PlatformController < ApplicationController
     session[:return_to] = params[:return_to] if !params[:return_to].blank? and params[:open_id_complete].blank?
     begin
       authenticate_with_open_id( params[:openid_url],
-                                 :required => INITIAL_SETTINGS["ax_fetchrequest"].values.flatten) do |result, identity_url, registration|
+                                 :required => SkipEmbedded::InitialSettings["ax_fetchrequest"].values.flatten) do |result, identity_url, registration|
         if result.successful?
           logger.info("[Login successful with OpenId] \"OpenId\" => #{identity_url}")
           unless identifier = OpenidIdentifier.find_by_url(identity_url)
@@ -241,7 +241,7 @@ class PlatformController < ApplicationController
   end
 
   def create_user_from(identity_url, registration)
-    if login_mode?(:fixed_rp) and identity_url.include?(INITIAL_SETTINGS['fixed_op_url'])
+    if login_mode?(:fixed_rp) and identity_url.include?(SkipEmbedded::InitialSettings['fixed_op_url'])
       user = User.create_with_identity_url(identity_url, create_user_params(registration))
       if user.valid?
         reset_session
@@ -267,7 +267,7 @@ class PlatformController < ApplicationController
 
   def create_user_params(fetched)
     returning({}) do |res|
-      INITIAL_SETTINGS["ax_fetchrequest"].each do |k, vs|
+      SkipEmbedded::InitialSettings["ax_fetchrequest"].each do |k, vs|
         fetched.each{|fk, (fv,_)| res[k] = fv if !fv.blank? && vs == fk }
       end
     end

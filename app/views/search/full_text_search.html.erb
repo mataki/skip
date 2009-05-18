@@ -15,13 +15,13 @@
         <input id="internet_google_search_button" type="button" value="インターネット検索" /><br/>
       </div>
       <div style="margin-top: 5px;">
-        <% orderd_search_apps = INITIAL_SETTINGS['search_apps'].sort_by{|key, value| value["order"]}.unshift(['all' , {'title' => '全体'}]) %>
+        <% orderd_search_apps = SkipEmbedded::InitialSettings['search_apps'].sort_by{|key, value| value["order"]}.unshift(['all' , {'title' => '全体'}]) %>
         <% orderd_search_apps.each do |app| %>
         <%= radio_button_tag "target_aid", app.first, params[:target_aid] == app.first, {:id => "target_aid_#{app.first}", :class => "condition_radio_button"} %><%= label_tag "target_aid_#{app.first}", "#{h(app.last['title'])}から検索&nbsp;" -%>
         <% end # each %>
       </div>
       <div>
-        <% INITIAL_SETTINGS['search_apps'].each do |key,value| %>
+        <% SkipEmbedded::InitialSettings['search_apps'].each do |key,value| %>
         <% if value['condition_js'] %>
         <div class="sub_condition" id="<%= key -%>_conditions" style="display:<%= params[:target_aid]==key ? 'block' : 'none' -%>;">
           <script type="text/javascript" src='<%= "#{value['condition_js']}?target_aid=#{h(params[:target_aid])}&target_contents=#{h(params[:target_contents])}" -%>' ></script>

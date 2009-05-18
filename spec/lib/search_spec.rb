@@ -86,7 +86,7 @@ end
 describe Search, ".get_metadata" do
   describe "メタ情報が取得される場合" do
     before do
-      INITIAL_SETTINGS["search_apps"] = { "SKIP" => { "meta" => "/hoge/fuga/meta", "cache" => "http://localhost:3000/app_cache" } }
+      SkipEmbedded::InitialSettings.stub!("[]").with("search_apps").and_return({ "SKIP" => { "meta" => "/hoge/fuga/meta", "cache" => "http://localhost:3000/app_cache" } })
 
       File.stub!(:file?).and_return(true)
       File.stub!(:open)
@@ -99,10 +99,10 @@ describe Search, ".get_metadata" do
   end
   describe "設定ファイルから取得される場合" do
     before do
-      INITIAL_SETTINGS["search_apps"] = { "SKIP" => { "cache" => "http://localhost:3000/app_cache" } }
+      SkipEmbedded::InitialSettings.stub!("[]").with("search_apps").and_return({ "SKIP" => { "cache" => "http://localhost:3000/app_cache" } })
     end
     it "icon_typeがある場合 設定ファイルから設定されること" do
-      INITIAL_SETTINGS["search_apps"]["SKIP"].merge!("icon_type" => "icon_a")
+      SkipEmbedded::InitialSettings.stub!("[]").with("search_apps").and_return({ "SKIP" => { "cache" => "http://localhost:3000/app_cache", "icon_type" => "icon_a" } })
       result = Search.get_metadata "contents", "http://localhost:3000/app_cache/hoge/fuga", "title"
       result[:icon_type].should == "icon_a"
       result[:contents_type].should == "SKIP"
@@ -115,7 +115,7 @@ describe Search, ".get_metadata" do
   end
   describe "cacheにヒットしない場合" do
     it "引数から設定されること" do
-      INITIAL_SETTINGS["search_apps"] = { }
+      SkipEmbedded::InitialSettings.stub!("[]").with("search_apps").and_return({ })
       result = Search.get_metadata "contents", "http://localhost:3000/app_cache/hoge/fuga", "title"
       result[:title].should == "title"
       result[:publication_symbols].should == Symbol::SYSTEM_ALL_USER

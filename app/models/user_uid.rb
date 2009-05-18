@@ -32,7 +32,7 @@ class UserUid < ActiveRecord::Base
 
   validates_presence_of :uid
   validates_uniqueness_of :uid, :case_sensitive => false
-  validates_length_of :uid, :within => INITIAL_SETTINGS['user_code_minimum_length'].to_i..UID_MAX_LENGTH
+  validates_length_of :uid, :within => SkipEmbedded::InitialSettings['user_code_minimum_length'].to_i..UID_MAX_LENGTH
   validates_format_of :uid, :with => UID_FORMAT_REGEX, :message => _('は数字、アルファベット及び次の記号[-(ハイフン)、_(アンダースコア)、.(ドット)]が利用可能です。その他の記号、半角空白などは使えません。')
 
   def validate
@@ -46,6 +46,6 @@ class UserUid < ActiveRecord::Base
 
 #  private
   def user_code_format_regex
-    Regexp.new(INITIAL_SETTINGS['user_code_format_regex'])
+    Regexp.new(SkipEmbedded::InitialSettings['user_code_format_regex'])
   end
 end

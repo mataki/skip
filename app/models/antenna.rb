@@ -150,9 +150,9 @@ class Antenna < ActiveRecord::Base
   end
 
   def self.create_initial user
-    unless INITIAL_SETTINGS['initial_antenna'].blank? or INITIAL_SETTINGS['antenna_default_group'].blank?
-      antenna = new(:user_id => user.id, :name => INITIAL_SETTINGS['initial_antenna'], :position => 1)
-      INITIAL_SETTINGS['antenna_default_group'].each do |default_gid|
+    unless SkipEmbedded::InitialSettings['initial_antenna'].blank? or SkipEmbedded::InitialSettings['antenna_default_group'].blank?
+      antenna = new(:user_id => user.id, :name => SkipEmbedded::InitialSettings['initial_antenna'], :position => 1)
+      SkipEmbedded::InitialSettings['antenna_default_group'].each do |default_gid|
         if Group.count(:conditions => ["gid in (?)", default_gid]) > 0
           antenna.antenna_items.build(:value_type => "symbol", :value => "gid:"+default_gid)
         end

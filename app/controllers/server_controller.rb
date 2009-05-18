@@ -61,7 +61,7 @@ class ServerController < ApplicationController
   # to the decision page.
   def proceed
     identity = identifier(current_user)
-    if INITIAL_SETTINGS['white_list'].include? checkid_request.trust_root
+    if SkipEmbedded::InitialSettings['white_list'].include? checkid_request.trust_root
       resp = checkid_request.answer(true, nil, identity)
       props = convert_ax_props(current_user)
       resp = add_ax(resp, props)
@@ -174,7 +174,7 @@ class ServerController < ApplicationController
     []
   end
 
-  def convert_ax_props(user, from = INITIAL_SETTINGS['ax_props'])
+  def convert_ax_props(user, from = SkipEmbedded::InitialSettings['ax_props'])
     hash = {}
     from.each do |i|
       hash["type.#{i[0]}"] = i[1]

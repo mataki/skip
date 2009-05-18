@@ -49,7 +49,7 @@
     <% elsif login_mode?(:fixed_rp) -%>
     <tr valign="top">
       <td>下のボタンを押して、ログインしてください。
-        <%= hidden_field_tag "openid_url", h(INITIAL_SETTINGS['fixed_op_url']) %>
+        <%= hidden_field_tag "openid_url", h(SkipEmbedded::InitialSettings['fixed_op_url']) %>
       </td>
     </tr>
     <% else -%>
@@ -72,7 +72,7 @@
     </tr>
     <% end -%>
 
-    <% if INITIAL_SETTINGS['ssl_setting'] -%>
+    <% if SkipEmbedded::InitialSettings['ssl_setting'] -%>
     <tr valign="top" align="left">
       <td>
         <div style="margin-top: 15px; _margin-top: 0px;">

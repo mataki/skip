@@ -39,7 +39,7 @@ class BatchDeleteCache < BatchBase
     end
 
     def root_cache_path
-      INITIAL_SETTINGS['cache_path']
+      SkipEmbedded::InitialSettings['cache_path']
     end
 
     def dir_id(id)

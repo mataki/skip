@@ -69,7 +69,7 @@ class PortalController < ApplicationController
     @profiles = @user.find_or_initialize_profiles(params[:profile_value])
 
     User.transaction do
-      if INITIAL_SETTINGS['username_use_setting']
+      if SkipEmbedded::InitialSettings['username_use_setting']
         @user_uid = @user.user_uids.build(params[:user_uid].update(:uid_type => UserUid::UID_TYPE[:username]))
         @user_uid.save!
       end

@@ -32,7 +32,7 @@ class WebServiceUtil
   #    :controller_name = サービスのコントローラパス（デフォルトの規約は"services"）
   #      services以外を指定も可能だが、それは茨の道と思へ
   def self.open_service app_name, service_name, params={}, controller_name="services"
-    app_url, app_ca_file = if app = INITIAL_SETTINGS['collaboration_apps'][app_name.to_s]
+    app_url, app_ca_file = if app = SkipEmbedded::InitialSettings['collaboration_apps'][app_name.to_s]
                              [ app["url"], app["ca_file"] ]
                            else
                              [nil, nil]
@@ -60,7 +60,7 @@ class WebServiceUtil
         http.verify_mode = OpenSSL::SSL::VERIFY_NONE
       end
     end
-    response = http.get("#{uri.path}?#{uri.query}", "X-SECRET-KEY" => INITIAL_SETTINGS['secret_key'])
+    response = http.get("#{uri.path}?#{uri.query}", "X-SECRET-KEY" => SkipEmbedded::InitialSettings['secret_key'])
     if response.code == "200"
       JSON.parse(response.body)
     else
@@ -75,7 +75,7 @@ end
 
 module ForServicesModule
   def check_secret_key
-    unless request.env["HTTP_X_SECRET_KEY"] && request.env["HTTP_X_SECRET_KEY"] == INITIAL_SETTINGS['secret_key']
+    unless request.env["HTTP_X_SECRET_KEY"] && request.env["HTTP_X_SECRET_KEY"] == SkipEmbedded::InitialSettings['secret_key']
       render :text => { :error => "Forbidden" }.to_json, :status => :forbidden
       return false
     end

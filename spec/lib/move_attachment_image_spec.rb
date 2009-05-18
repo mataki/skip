@@ -20,7 +20,7 @@ describe MoveAttachmentImage do
     @share_file_path = "#{RAILS_ROOT}/spec/tmp/share_file_path"
     @share_file_user_path = "#{@share_file_path}/user"
     @share_file_group_path = "#{@share_file_path}/group"
-    INITIAL_SETTINGS.stub!('[]', 'share_file_path').and_return(@share_file_path)
+    SkipEmbedded::InitialSettings.stub!('[]').with('share_file_path').and_return(@share_file_path)
   end
   describe MoveAttachmentImage, '.user_share_file_path' do
     describe '共有ファイル保存ディレクトリが存在する場合' do
@@ -212,7 +212,7 @@ describe MoveAttachmentImage do
     before do
       @image_file_path = "#{RAILS_ROOT}/spec/tmp/image_file_path"
       FileUtils.mkdir_p @image_file_path
-      INITIAL_SETTINGS.stub!('[]', 'image_file_path').and_return(@image_file_path)
+      SkipEmbedded::InitialSettings.stub!('[]').with('image_file_path').and_return(@image_file_path)
     end
     describe 'ベースとなるディレクトリが存在する場合' do
       before do

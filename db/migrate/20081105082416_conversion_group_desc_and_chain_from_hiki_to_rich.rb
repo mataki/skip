@@ -17,7 +17,7 @@ class ConversionGroupDescAndChainFromHikiToRich < ActiveRecord::Migration
 private
   def self.convert_to_rich_from_hiki(content)
     return "" if content.blank?
-    hiki_html = HikiDoc.new(content, Regexp.new(INITIAL_SETTINGS['not_blank_link_re'])).to_html
+    hiki_html = HikiDoc.new(content, Regexp.new(SkipEmbedded::InitialSettings['not_blank_link_re'])).to_html
     return hiki_html.gsub("<big>","<span style=\"font-size: xx-large; \"><strong>").gsub("</big>","</strong></span>")
   end
 end

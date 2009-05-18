@@ -65,7 +65,7 @@ describe Search::HyperEstraier, ".get_condition" do
   end
   describe "target_aidが設定されている場合" do
     before do
-      INITIAL_SETTINGS['search_apps'] = { "app" => { "cache" => "http://cache:3000/cache" } }
+      SkipEmbedded::InitialSettings.stub!("[]").with('search_apps').and_return({ "app" => { "cache" => "http://cache:3000/cache" } })
     end
     it "正しいattrが設定されていること" do
       cond = Search::HyperEstraier.get_condition("query", "app")

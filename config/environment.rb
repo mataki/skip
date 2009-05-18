@@ -11,11 +11,11 @@ SKIP_VERSION = '1.1.0'
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
 
-require 'yaml'
-INITIAL_SETTINGS = YAML.load(File.read(RAILS_ROOT + "/config/initial_settings.yml"))[RAILS_ENV]
 
 Rails::Initializer.run do |config|
-  config.action_controller.session = INITIAL_SETTINGS['session']
+  # TODO: Rails 2.3 にバージョンアップする際に独自でyamlをパースすることを無くす
+  require 'yaml'
+  config.action_controller.session = YAML.load(File.read(RAILS_ROOT + "/config/initial_settings.yml"))[RAILS_ENV]['session']
   # config.action_controller.session_store = :p_store
 
   # Skip frameworks you're not going to use
@@ -50,15 +50,23 @@ Rails::Initializer.run do |config|
   config.gem 'gettext',  :lib => 'gettext/rails', :version => '1.93.0'
   config.gem "json", :lib => "json/add/rails"
   config.gem "fastercsv"
-  # config.gem "rspec", :lib => "spec"
-  # config.gem "rspec-rails"
-  # config.gem "ZenTest", :lib => "zentest"
-  # config.gem "ruby-debug"
-end
+  config.gem 'openskip-skip_embedded', :lib => 'skip_embedded', :version => '>=0.9.2', :source => 'http://gems.github.com'
+#     config.gem "rspec", :lib => "spec"
+#     config.gem "rspec-rails"
+#     config.gem "ZenTest", :lib => "zentest"
+#     config.gem "ruby-debug"
 
-# Include your application configuration below
-ENV['SHARE_FILE_PATH'] ||= INITIAL_SETTINGS['share_file_path']
-ENV['BATCH_LOG_PATH'] ||= INITIAL_SETTINGS['batch_log_path'] || "#{RAILS_ROOT}/log/batch.log"
+  config.plugins = %w[
+    acts_as_list
+    acts_as_tree
+    classic_pagination
+    exception_notification
+    open_id_authentication
+    restful-authentication
+  ]
+
+  config.plugins << "openskip-skip_embedded" if Gem.source_index.any?{|_,y| y.name =~ /(?:[:ascii:]+-)?openskip-skip_embedded/  }
+end
 
 menu_btns = [
              { :img_name => "house",
@@ -107,7 +115,7 @@ menu_btns << { :img_name => "page_find",
                :id => "btn_search",
                :name => "全文検索",
                :url => {:controller => '/search', :action => 'full_text_search' },
-               :desc => "キーワードでサイト全体から検索します" } if INITIAL_SETTINGS['full_text_search_setting']
+               :desc => "キーワードでサイト全体から検索します" } if SkipEmbedded::InitialSettings['full_text_search_setting']
 MENU_BTNS = menu_btns
 
 admin_btns = [

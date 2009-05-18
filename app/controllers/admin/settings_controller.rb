@@ -38,34 +38,34 @@ class Admin::SettingsController < Admin::ApplicationController
         :name => _("共有ファイル関連"),
         :settings => [{ :label => _("現在の利用容量"),
                         :help => _("システム全体の最大許可容量に対して現在使用中の共有ファイルの容量です。"),
-                        :value => "#{ValidationsFile::FileSizeCounter.per_system/1.megabyte} / #{INITIAL_SETTINGS['max_share_file_size_of_system']/1.megabyte} (MB)"
+                        :value => "#{ValidationsFile::FileSizeCounter.per_system/1.megabyte} / #{SkipEmbedded::InitialSettings['max_share_file_size_of_system']/1.megabyte} (MB)"
                       },
-                      setting_of('max_share_file_size_of_system', "#{INITIAL_SETTINGS['max_share_file_size_of_system'].to_i/1.megabyte}(MB)"),
-                      setting_of('max_share_file_size_per_owner', "#{INITIAL_SETTINGS['max_share_file_size_per_owner'].to_i/1.megabyte}(MB)"),
-                      setting_of('max_share_file_size', "#{INITIAL_SETTINGS['max_share_file_size'].to_i/1.megabyte}(MB)")
+                      setting_of('max_share_file_size_of_system', "#{SkipEmbedded::InitialSettings['max_share_file_size_of_system'].to_i/1.megabyte}(MB)"),
+                      setting_of('max_share_file_size_per_owner', "#{SkipEmbedded::InitialSettings['max_share_file_size_per_owner'].to_i/1.megabyte}(MB)"),
+                      setting_of('max_share_file_size', "#{SkipEmbedded::InitialSettings['max_share_file_size'].to_i/1.megabyte}(MB)")
                      ]
       }
       @system_infos << {
         :name => _("アカウント関連"),
         :settings => [setting_of('login_mode'),
-                      login_mode?(:fixed_rp) ? setting_of('fixed_op_url', INITIAL_SETTINGS['fixed_op_url'] || "利用しない") : nil,
+                      login_mode?(:fixed_rp) ? setting_of('fixed_op_url', SkipEmbedded::InitialSettings['fixed_op_url'] || "利用しない") : nil,
                       setting_of('usercode_dips_setting'),
                       setting_of('password_edit_setting'),
                       setting_of('username_use_setting'),
-                      setting_of('user_code_format_regex', INITIAL_SETTINGS['user_code_format_regex'] || "利用しない"),
-                      setting_of('user_code_minimum_length', INITIAL_SETTINGS['user_code_minimum_length'])
+                      setting_of('user_code_format_regex', SkipEmbedded::InitialSettings['user_code_format_regex'] || "利用しない"),
+                      setting_of('user_code_minimum_length', SkipEmbedded::InitialSettings['user_code_minimum_length'])
                      ]
       }
       @system_infos << {
         :name => _("機能に関する設定"),
         :settings => [setting_of('ssl_setting'),
                       setting_of('full_text_search_setting'),
-                      setting_of('proxy_url', INITIAL_SETTINGS['proxy_url'] || "利用しない")
+                      setting_of('proxy_url', SkipEmbedded::InitialSettings['proxy_url'] || "利用しない")
                      ]
       }
       @system_infos << {
         :name => _("システム運用について"),
-        :settings => [setting_of('administrator_addr', INITIAL_SETTINGS['administrator_addr'] || "指定なし")
+        :settings => [setting_of('administrator_addr', SkipEmbedded::InitialSettings['administrator_addr'] || "指定なし")
                      ]
       }
     end
@@ -127,7 +127,7 @@ class Admin::SettingsController < Admin::ApplicationController
   def setting_of key, value=nil
     { :label => _("#{Admin::InitialSetting.name}|#{key.humanize}"),
       :help => _("#{Admin::InitialSetting.name}|#{key.humanize} description"),
-      :value => value ? value : _("#{Admin::InitialSetting.name}|#{key.humanize}|#{INITIAL_SETTINGS[key]}")
+      :value => value ? value : _("#{Admin::InitialSetting.name}|#{key.humanize}|#{SkipEmbedded::InitialSettings[key]}")
     }
   end
 end

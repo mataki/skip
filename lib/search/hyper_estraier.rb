@@ -36,7 +36,7 @@ class Search
         @result_hash[:elements] = self.class.get_result_hash_elements(nres, @offset, @result_hash[:header][:end_count])
       else
         # ノードにアクセスできない場合のみ nres は nil
-        ActiveRecord::Base.logger.error "[HyperEstraier Error] Connection not found to #{INITIAL_SETTINGS["estraier_url"]}"
+        ActiveRecord::Base.logger.error "[HyperEstraier Error] Connection not found to #{SkipEmbedded::InitialSettings["estraier_url"]}"
         @error = ACCESS_DENIED_ERROR_MSG
       end
     end
@@ -45,15 +45,15 @@ class Search
       cond = Condition.new
       cond.set_options Condition::SIMPLE
       cond.set_phrase(query) unless query.blank?
-      if target_aid && INITIAL_SETTINGS['search_apps'][target_aid] && !INITIAL_SETTINGS['search_apps'][target_aid]['cache'].blank?
-        target_url = INITIAL_SETTINGS['search_apps'][target_aid]['cache'].dup
+      if target_aid && SkipEmbedded::InitialSettings['search_apps'][target_aid] && !SkipEmbedded::InitialSettings['search_apps'][target_aid]['cache'].blank?
+        target_url = SkipEmbedded::InitialSettings['search_apps'][target_aid]['cache'].dup
         target_url << "/#{target_contents}" if target_contents
         cond.add_attr("@uri STRBW #{target_url}")
       end
       cond
     end
 
-    def self.get_node(node_url = INITIAL_SETTINGS['estraier_url'])
+    def self.get_node(node_url = SkipEmbedded::InitialSettings['estraier_url'])
       node = Node.new
       node.set_url(node_url)
       node

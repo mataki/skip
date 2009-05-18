@@ -42,7 +42,7 @@ class Search
 
   def self.get_metadata contents, uri_text, title
     line_hash = { :publication_symbols => 'sid:allusers', :contents => contents, :link_url => uri_text, :title => title }
-    INITIAL_SETTINGS['search_apps'].each do |key,value|
+    SkipEmbedded::InitialSettings['search_apps'].each do |key,value|
       if uri_text.include?(value['cache'])
         if value['meta']
           line_hash.merge!(get_metadata_from_file(uri_text, value['cache'], value['meta']))

@@ -190,7 +190,7 @@ module ApplicationHelper
   end
 
   def hiki_parse text, owner_symbol = nil
-    text = HikiDoc.new((text || ''), Regexp.new(INITIAL_SETTINGS['not_blank_link_re'])).to_html
+    text = HikiDoc.new((text || ''), Regexp.new(SkipEmbedded::InitialSettings['not_blank_link_re'])).to_html
     parse_permalink(text, owner_symbol)
   end
 
@@ -288,7 +288,7 @@ module ApplicationHelper
 
   def application_link
     application_links = [link_to('SKIP', root_url)]
-    if collaboration_apps = INITIAL_SETTINGS['collaboration_apps']
+    if collaboration_apps = SkipEmbedded::InitialSettings['collaboration_apps']
       application_links << collaboration_apps.values.map{|m| link_to( m['name'], m['url'] )}
     end
     other_links = []

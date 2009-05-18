@@ -63,8 +63,8 @@ describe ValidationsFile do
     end
     describe "ファイルサイズが最大値を超えている場合" do
       it "エラーが追加されること" do
-        @muf.stub!(:size).and_return(INITIAL_SETTINGS['max_share_file_size'].to_i + 100)
-        @vf.errors.should_receive(:add_to_base).with("#{INITIAL_SETTINGS['max_share_file_size'].to_i/1.megabyte}Mバイト以上のファイルはアップロードできません。")
+        @muf.stub!(:size).and_return(SkipEmbedded::InitialSettings['max_share_file_size'].to_i + 100)
+        @vf.errors.should_receive(:add_to_base).with("#{SkipEmbedded::InitialSettings['max_share_file_size'].to_i/1.megabyte}Mバイト以上のファイルはアップロードできません。")
         @vf.valid_size_of_file(@muf)
       end
     end
@@ -75,7 +75,7 @@ describe ValidationsFile do
       it "エラーが追加されること" do
         @muf.stub!(:size).and_return(101)
         owner_symbol = "git:hoge"
-        ValidationsFile::FileSizeCounter.should_receive(:per_owner).with(owner_symbol).and_return(INITIAL_SETTINGS['max_share_file_size_per_owner'].to_i - 100)
+        ValidationsFile::FileSizeCounter.should_receive(:per_owner).with(owner_symbol).and_return(SkipEmbedded::InitialSettings['max_share_file_size_per_owner'].to_i - 100)
         @vf.errors.should_receive(:add_to_base).with("共有ファイル保存領域の利用容量が最大値を越えてしまうためアップロードできません。")
         @vf.valid_max_size_per_owner_of_file(@muf, owner_symbol)
       end
@@ -86,7 +86,7 @@ describe ValidationsFile do
     describe "ファイルサイズがオーナーの最大許可容量を超えている場合" do
       it "エラーが追加されること" do
         @muf.stub!(:size).and_return(101)
-        ValidationsFile::FileSizeCounter.should_receive(:per_system).and_return(INITIAL_SETTINGS['max_share_file_size_of_system'].to_i - 100)
+        ValidationsFile::FileSizeCounter.should_receive(:per_system).and_return(SkipEmbedded::InitialSettings['max_share_file_size_of_system'].to_i - 100)
         @vf.errors.should_receive(:add_to_base).with('システム全体における共有ファイル保存領域の利用容量が最大値を越えてしまうためアップロードできません。')
         @vf.valid_max_size_of_system_of_file(@muf)
       end
@@ -269,7 +269,7 @@ describe ValidationsFile::FileSizeCounter do
   end
   describe ".per_system" do
     before do
-      Dir.should_receive(:glob).with("#{ENV['SHARE_FILE_PATH']}/**/*").and_return(["a", "a"])
+      Dir.should_receive(:glob).with("#{SkipEmbedded::InitialSettings['share_file_path']}/**/*").and_return(["a", "a"])
       file = mock('file')
       file.stub!(:size).and_return(100)
       File.should_receive(:stat).with('a').at_least(:once).and_return(file)

@@ -1,8 +1,8 @@
 <% @revert_columns = %w(mail_function_setting smtp_settings_address smtp_settings_domain smtp_settings_port smtp_settings_authentication smtp_settings_user_name smtp_settings_password host_and_port protocol) -%>
 <div class="box tabular">
   <p><%= settings_label_with_check_box_tag :mail_function_setting %></p>
-  <p><%= settings_label_with_text_field_tag :host_and_port unless INITIAL_SETTINGS['host_and_port']  %></p>
-  <p><%= settings_label_with_text_field_tag :protocol unless INITIAL_SETTINGS['protocol'] %></p>
+  <p><%= settings_label_with_text_field_tag :host_and_port unless SkipEmbedded::InitialSettings['host_and_port']  %></p>
+  <p><%= settings_label_with_text_field_tag :protocol unless SkipEmbedded::InitialSettings['protocol'] %></p>
 </div>
 <h3><%= label Admin::Setting.name, :smtp_settings %></h3>
 <div class="box tabular">

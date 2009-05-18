@@ -17,8 +17,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe WebServiceUtil, ".open_service" do
   before do
-    INITIAL_SETTINGS["collaboration_apps"] = {}
-    INITIAL_SETTINGS["collaboration_apps"]["app"] = {"url" => "http://testapp.host"}
+    SkipEmbedded::InitialSettings.stub!("[]").with("collaboration_apps").and_return({"app" => { "url" => "http://testapp.host" }})
     @base = "http://testapp.host/services/user_info"
   end
   it "get_jsonをパラメータからURLを作りだすこと" do

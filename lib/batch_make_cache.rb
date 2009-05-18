@@ -30,11 +30,11 @@ class BatchMakeCache < BatchBase
         maker.send(method, contents_type, cache_path, options[:time])
       end
     end
-    File.symlink( ENV['SHARE_FILE_PATH'],"#{cache_path}/share_file" ) unless FileTest.symlink?("#{cache_path}/share_file")
+    File.symlink( SkipEmbedded::InitialSettings['share_file_path'],"#{cache_path}/share_file" ) unless FileTest.symlink?("#{cache_path}/share_file")
   end
 
   def self.get_cache_path
-    if cache_path = INITIAL_SETTINGS['cache_path']
+    if cache_path = SkipEmbedded::InitialSettings['cache_path']
       cache_path
     else
       raise StandardError, "Invalid cache path (cache_path: #{cache_path}). Please check your initial_settings.yml."
@@ -249,7 +249,7 @@ class BatchMakeCache < BatchBase
   end
 
   def convert_hiki_to_html hiki_text
-    HikiDoc.new((hiki_text || ''), Regexp.new(INITIAL_SETTINGS['not_blank_link_re'])).to_html
+    HikiDoc.new((hiki_text || ''), Regexp.new(SkipEmbedded::InitialSettings['not_blank_link_re'])).to_html
   end
 end
 

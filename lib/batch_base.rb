@@ -20,7 +20,7 @@ class BatchBase
   default_url_options[:host] = Admin::Setting.host_and_port_by_initial_settings_default
   default_url_options[:protocol] = Admin::Setting.protocol_by_initial_settings_default
 
-  @@logger = Logger.new(ENV['BATCH_LOG_PATH'])
+  @@logger = Logger.new(SkipEmbedded::InitialSettings['batch_log_path'])
 
   def self.execution options = {}
     starttime = Time.now

@@ -17,11 +17,11 @@ module InitialSettingsHelper
   def login_mode?(mode)
     case mode
     when :password
-      return INITIAL_SETTINGS['login_mode'] == 'password'
+      return SkipEmbedded::InitialSettings['login_mode'] == 'password'
     when :free_rp
-      return (INITIAL_SETTINGS['login_mode'] == 'rp' and INITIAL_SETTINGS['fixed_op_url'].blank?)
+      return (SkipEmbedded::InitialSettings['login_mode'] == 'rp' and SkipEmbedded::InitialSettings['fixed_op_url'].blank?)
     when :fixed_rp
-      return (INITIAL_SETTINGS['login_mode'] == 'rp' and !INITIAL_SETTINGS['fixed_op_url'].blank?)
+      return (SkipEmbedded::InitialSettings['login_mode'] == 'rp' and !SkipEmbedded::InitialSettings['fixed_op_url'].blank?)
     else
       return false
     end
@@ -30,9 +30,9 @@ module InitialSettingsHelper
   def user_name_mode?(mode)
     case mode
     when :name
-      return INITIAL_SETTINGS['username_use_setting']
+      return SkipEmbedded::InitialSettings['username_use_setting']
     when :code
-      return INITIAL_SETTINGS['usercode_dips_setting']
+      return SkipEmbedded::InitialSettings['usercode_dips_setting']
     end
     false
   end

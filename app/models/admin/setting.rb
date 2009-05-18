@@ -226,11 +226,11 @@ class Admin::Setting < ActiveRecord::Base
   end
 
   def self.host_and_port_by_initial_settings_default
-    INITIAL_SETTINGS['host_and_port'] || self.host_and_port
+    SkipEmbedded::InitialSettings['host_and_port'] || self.host_and_port
   end
 
   def self.protocol_by_initial_settings_default
-    INITIAL_SETTINGS['protocol'] || self.protocol
+    SkipEmbedded::InitialSettings['protocol'] || self.protocol
   end
 
   def self.password_strength_regex
