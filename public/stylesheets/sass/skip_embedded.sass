@@ -1,0 +1,65 @@
+// ============================================================
+// 1. 共通
+// ============================================================
+// 基本部分
+// ------------------------------------------------------------
+@import skip_base.sass
+// ヘッダ
+// ------------------------------------------------------------
+@import skip_header.sass
+// フッタ
+// ------------------------------------------------------------
+@import skip_footer.sass
+
+#flash_message
+  :position absolute
+  :top 3px
+  :left 15%
+  :right 15%
+  :width 70%
+  :z-index 2
+  div
+    :width 100%
+    :margin 0
+    :text-align center
+    :font-size 12px
+    :border-width 2px
+    :border-style solid
+    h3
+      :margin 10px
+      :width 100%
+
+      span
+        :position static
+        :font-size 10px
+        :margin-left 20px
+        :right 15px
+        :top 15px
+    &.warn
+      :border-color orange
+      :background-color yellow
+    &.notice
+      :border-color limegreen
+      :background-color palegreen
+    &.error
+      :border-color red
+      :background-color pink
+
+input
+  &.input_submit
+    :padding 0
+    :font-size 11px
+  &.input_text
+    :padding 0
+
+.labeled-field
+  :border 1px solid silver
+  :color rgb(153, 153, 153)
+  :font-size 13px
+
+  &.focus
+    :color #000000
+
+iframe#ie-select-fix
+  :border 0
+  :position absolute

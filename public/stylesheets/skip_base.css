@@ -1,0 +1,55 @@
+* {
+  margin: 0;
+  padding: 0; }
+
+body {
+  font-size: 12px;
+  font-family: Verdana, Arial, sans-serif;
+  font-weight: normal;
+  color: #555555;
+  position: absolute;
+  left: 0;
+  margin: 0;
+  text-align: left;
+  background-color: #ffffff;
+  width: 100%; }
+
+img {
+  vertical-align: middle;
+  border: 0; }
+
+a {
+  text-decoration: none;
+  color: #0080dd; }
+  a:hover {
+    color: blue;
+    text-decoration: underline; }
+
+form {
+  padding: 0px;
+  margin: 0px; }
+  form input {
+    font-size: 12px;
+    font-family: Verdana, Arial, sans-serif;
+    color: #000000;
+    margin: 0px;
+    padding: 2px; }
+  form select {
+    font-size: 12px;
+    font-family: Verdana, Arial, sans-serif;
+    color: #000000;
+    margin: 0 2px 0 0;
+    padding: 0;
+    letter-spacing: 2px;
+    z-index: 0; }
+  form textarea {
+    font-size: 12px;
+    font-family: Verdana, Arial, sans-serif;
+    color: #000000;
+    margin: 0px;
+    padding: 2px; }
+
+table {
+  font-size: 12px;
+  table-layout: fixed;
+  border-collapse: collapse; }

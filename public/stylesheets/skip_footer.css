@@ -1,0 +1,19 @@
+div#footer {
+  color: #A9A9A9;
+  overflow: hidden;
+  text-align: center;
+  position: relative;
+  height: 50px; }
+  div#footer .info {
+    width: 800px;
+    margin: auto;
+    padding: 5px 200px 0 0; }
+    div#footer .info .first {
+      border-bottom: 1px dashed #ccc;
+      padding-bottom: 4px; }
+    div#footer .info .second {
+      padding-top: 5px; }
+  div#footer .powered_by {
+    position: absolute;
+    top: 0px;
+    right: 0px; }

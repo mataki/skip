@@ -1,0 +1,86 @@
+// グローバル変数定義
+// ------------------------------------------------------------
+!base_color ||= #555
+!base_background_color ||= #fff
+!base_font_size ||= 12px
+!small_font_size ||= 10px
+!base_border ||= 1px solid #ccc
+!base_dashed_border ||= 1px dashed #ccc
+!base_dotted_border ||= 1px dotted #ccc
+
+// Mix-in
+// ------------------------------------------------------------
+=base_text
+  :font
+    :size = !base_font_size
+    :family Verdana, Arial, sans-serif
+    :weight normal
+  :color = !base_color
+=form_text
+  :font
+    :size = !base_font_size
+    :family Verdana, Arial, sans-serif
+  :color = #000
+=link_text
+  :text-decoration none
+  :color #0080dd
+=link_hover_text
+  :color blue
+  :text-decoration underline
+=clearfix
+  display: inline-block
+  &:after
+    content: "."
+    display: block
+    height: 0
+    clear: both
+    visibility: hidden
+  * html &
+    height: 1px
+
+// 基本スタイル
+// ------------------------------------------------------------
+*
+  :margin 0
+  :padding 0
+
+body
+  +base_text
+  :position absolute
+  :left 0
+  :margin 0
+  :text-align left
+  :background-color = !base_background_color
+  :width 100%
+
+img
+  :vertical-align middle
+  :border 0
+
+a
+  +link_text
+  &:hover
+    +link_hover_text
+
+form
+  :padding 0px
+  :margin 0px
+  input
+    +form_text
+    :margin 0px
+    :padding 2px
+  select
+    +form_text
+    :margin 0 2px 0 0
+    :padding 0
+    :letter-spacing 2px
+    :z-index 0
+  textarea
+    +form_text
+    :margin 0px
+    :padding 2px
+
+table
+  :font-size = !base_font_size
+  :table-layout fixed
+  :border-collapse collapse
