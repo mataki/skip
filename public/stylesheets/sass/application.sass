@@ -505,34 +505,7 @@ table.user_chain
 // ============================================================
 // 2. 共通の構造
 // ============================================================
-div#header
-  :position relative
-  :height 70px
-  div#global_top
-    :border-bottom = !base_dashed_border
-    :height 20px
-    :margin 4px 5px
-    div#application_link
-      :float left
-    div#menu
-      :position absolute
-      :top 0
-      :right 0
-      :border none
-      :font-size 12px
-      :text-align right
-  div#logo
-    :float left
-    :vertical-align top
-    :margin 1px 0 0 10px
-  div.banner
-    :height 45px
-    :width 450px
-    :margin 1px 0 0 160px
-  div#search
-    :position absolute
-    :bottom 0px
-    :right 0px
+@import skip_header.sass
 
 div#top
   :clear both
