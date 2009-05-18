@@ -29,8 +29,8 @@ end
 
 describe WebServiceUtil, "open_service_with_url" do
   it "paramsがエンコードされてget_jsonに渡されること" do
-    params = { :id => "user", :key => "ほげ%$# ふが" }
-    query_str = "key=%E3%81%BB%E3%81%92%25%24%23%20%E3%81%B5%E3%81%8C&id=user"
+    params = { :id => "user", :key => "ほげ ふが" }
+    query_str = params.map {|i| "#{i[0]}=#{URI.escape(i[1])}" }.join('&')
 
     WebServiceUtil.should_receive(:get_json).with("url?#{query_str}", nil)
     WebServiceUtil.open_service_with_url "url", params
