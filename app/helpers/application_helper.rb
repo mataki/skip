@@ -276,7 +276,7 @@ module ApplicationHelper
   end
 
   def header_logo_link(url = url_for(:controller => '/mypage', :action => 'index'))
-    img_url = url_for('/custom/images/header_logo.png')
+    img_url = url_for("#{root_url}/custom/images/header_logo.png")
     "<div id=\"logo\">" + link_to(image_tag(img_url, :alt => h(Admin::Setting.abbr_app_title), :height => "45"), url) + "</div>"
   end
 
