@@ -1,12 +1,12 @@
 <% content_for :stylesheet do -%>
-  <%= skip_stylesheet_link_tag "themes/redmond/ui.theme.css" %>
-  <%= skip_stylesheet_link_tag "themes/redmond/ui.tabs.css" %>
+  <%= skip_stylesheet_link_tag "themes/cupertino/ui.theme.css" %>
+  <%= skip_stylesheet_link_tag "themes/cupertino/ui.tabs.css" %>
 <% end -%>
 
 <% content_for :contents_left do -%>
   <%= render(:partial => 'user/portrait_box', :locals => { :current_user_info => @current_user_info }) %>
-  <%= render :partial => 'antenna_box', :locals => { :system_antennas => @system_antennas, :my_antennas => @my_antennas } %>
   <%= render :partial => 'short_cut' %>
+  <%= render :partial => 'antenna_box', :locals => { :system_antennas => @system_antennas, :my_antennas => @my_antennas } %>
 <% end -%>
 
 <% content_for :contents_right do -%>
