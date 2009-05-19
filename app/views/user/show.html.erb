@@ -93,7 +93,7 @@
         <% category.user_profile_masters.each do |master| -%>
         <tr>
           <th><%=h master.name %></th>
-          <td><%= master.input_type_processer.to_show_html(profile_hash[master.id]) %></td>
+          <td><%= profile_show_tag(master.input_type_processer, profile_hash[master.id]) %></td>
         </tr>
         <% end -%>
       </table>

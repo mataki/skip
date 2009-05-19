@@ -7,51 +7,28 @@
 <%   desc = "タグをつけてコメントすることができます<br/>（#{h Admin::Setting.abbr_app_title}内のユーザやブログはページ内のリンクからブックマークすることをおすすめします）" %>
 <% end -%>
 
-<style type="text/css">
-div.formarea {
-  margin: 5px;
-  border: 1px solid silver;
-  margin-right: auto;
-}
-table {
-  table-layout: auto;
-}
-th {
-  background-color: #f0f0ff;
-  font-weight: bold;
-  font-size: 12px;
-  width: 60px;
-  padding: 1px 5px;
-}
-td {
-  border-bottom: 1px dotted silver;
-  width: 350px;
-}
-</style>
-
-<div style="height: 500px">
-<div class="desc"><%= desc -%></div>
-<div>
-  <div id="update_body"></div>
-  <form id="update_form">
-    <%= hidden_field_tag 'layout', h(layout) -%>
-    <%= hidden_field 'bookmark', 'url', :value => escape_bookmark_url(@bookmark.url) %>
-    <div class="formarea">
+<div class="edit_form_space bookmark edit">
+  <div class="desc"><%= desc -%></div>
+  <div class="update_form_wrapper">
+    <div id="update_body"></div>
+    <form id="update_form" action="<%= url_for({ :controller => :bookmark, :action => :update }) %>" method="post">
+      <%= hidden_field_tag 'layout', h(layout) -%>
+      <%= hidden_field 'bookmark', 'url', :value => @bookmark.escaped_url %>
       <table>
         <tr>
           <th>URL</th>
           <td>
-            <a href="<%= escape_bookmark_url(@bookmark.url) -%>" title="<%= escape_bookmark_url(@bookmark.url) -%>" target="_blank"><%= escape_bookmark_url(truncate(@bookmark.url, 60)) -%></a><br/>
+            <%= link_to truncate(@bookmark.escaped_url, 60), @bookmark.escaped_url, :title => h(@bookmark.title), :target => '_blank' %><br/>
             <span style="font-size: 10px; color: #555555;">（別ウィンドウで開きます）</span>
           </td>
         </tr>
         <tr>
-          <th>タイトル</th>
+          <th><%= label :bookmark, :title, _("タイトル") %></th>
           <td>
             <span style="font-size: 15px; font-weight: bold;">
             <% if @bookmark.is_type_internet? -%>
               <%= text_field 'bookmark', 'title' -%>
-              <span id="refresher"><a href="javascript: reloadTitle('<%= escape_bookmark_url(@bookmark.url) -%>', 'bookmark_title');"><%= icon_tag 'arrow_rotate_clockwise', :title => "タイトルを再取得する" -%></a></span>
+              <span id="refresher"><%= icon_tag 'arrow_rotate_clockwise', :title => "タイトルを再取得する" %></span>
               <span id="indicator" style="display:none;font-size:10px;"><%= skip_image_tag 'indicator.gif' %>更新中...</span>
               <br/><span style="font-size: 10px; color: green;">タイトルは全ユーザ共通です。修正の際はご注意ください。</span>
             <% else -%>
@@ -68,7 +45,7 @@ td {
         </tr>
         <% end -%>
         <tr>
-          <th>タグ</th>
+          <th><%= label(:bookmark_comment, :tags, _('タグ')) %></th>
           <td>
             <%= text_field 'bookmark_comment', 'tags', :size => '50', :value => @bookmark_comment.comma_tags %>
             <div id="category_box">
@@ -80,20 +57,23 @@ td {
           </td>
         </tr>
         <tr>
-          <th>コメント</th>
+          <th><%= label(:bookmark_comment, :comment, _('コメント')) %></th>
           <td><%= text_field 'bookmark_comment', 'comment', :size => 50 %></td>
         </tr>
+        <tr>
+          <td colspan="2" class="operation">
+          <%= submit_tag _('Save'), :id => "submit_button" %>
+          <% if @bookmark.is_type_internet? && @bookmarklet -%>
+          <input type="button" value=<%= _('戻る') %> onclick="location.href='<%= @bookmark.escaped_url %>'"></input>
+          <% end -%>
+          </td>
+        </tr>
       </table>
-    <%= hidden_field_tag("authenticity_token", form_authenticity_token) %>
-      <div style="text-align: center;"><%= submit_tag "OK", :id => "submit_button" %>
-        <% if @bookmark.is_type_internet? && @bookmarklet -%>
-        <input type="button" value="Cancel" onclick="location.href='<%= escape_bookmark_url @bookmark.url -%>'"></input>
-        <% end -%>
-      </div>
-    </div>
-  </form>
+      <%= hidden_field_tag("authenticity_token", form_authenticity_token) %>
+    </form>
+  </div>
 </div>
-</div>
+<% content_for :javascript do -%>
 <script language='javascript' type='text/javascript'>
 //<![CDATA[
 $j(function(){
@@ -150,9 +130,16 @@ $j(function(){
         return false;
     });
 
+    $j('#refresher')
+    .click(function() {
+        reloadTitle('<%= @bookmark.escaped_url %>', 'bookmark_title');
+        return false;
+    });
+
     if ($j('#bookmark_title').val() == '') {
-        reloadTitle('<%= escape_bookmark_url(@bookmark.url) -%>', 'bookmark_title');
+        reloadTitle('<%= @bookmark.escaped_url %>', 'bookmark_title');
     }
 });
 //]]>
 </script>
+<% end -%>

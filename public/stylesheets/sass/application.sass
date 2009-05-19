@@ -16,6 +16,7 @@
   :font
     :size = !base_font_size
     :family Verdana, Arial, sans-serif
+    :weight normal
   :color = !base_color
 =form_text
   :font
@@ -158,6 +159,9 @@ div.box_space
     :overflow hidden
     ul
       :list-style-type none
+    span.category_count
+      :font-size = !small_font_size
+      :color #ccc
   div.box_space_img_body
     :text-align center
     :margin 2px
@@ -363,11 +367,49 @@ div#mypage_right
   :float right
   :width 150px
 
+// マイページ > 管理 > アンテナの整備
+// ------------------------------------------------------------
+div#antennas_list_container
+  :margin 10px 10px 5px 10px
+
+div#add_antenna_area
+  :margin 0 10px 10px 10px
+  :border = !base_border
+  :background-color #f0f0ff
+
+// ユーザ
+// ------------------------------------------------------------
+// ユーザ一覧、グループ参加者一覧の部分
+div.user_box
+  :position relative
+  :margin 5px 10px
+  :width 95%
+  div.operation
+    :position absolute
+    :top 2px
+    :right 5px
+
+table.user_box
+  :width 100%
+  :border = !base_border
+  th
+    :width 20%
+    :background-color #f0f0ff
+    :padding-left 5px
+    :border = !base_border
+  td
+    :padding-left 5px
+    :border = !base_border
+    &.image
+      :padding 0px
+      :width 130px
+      :text-align center
+
 // 記事
 // ------------------------------------------------------------
 span.share_file_uploader.trigger
-  :font-size = !small_font_size
-  :margin-left 5em
+  :font-size = 14px
+  :margin-left 1em
 
 // 記事のコメント
 // ------------------------------------------------------------
@@ -397,10 +439,71 @@ div#board_entry_comments
           :font-size 0.8em
         &.current_user
           :background-color #ffefcc
-        &.other_user.not_read
-          :background-color #ddffdd
       span.buttons
         :right 2px
+
+// ブックマーク
+// ------------------------------------------------------------
+// 一覧
+div.bookmark_space
+  :border = !base_border
+  :width 98%
+  :text-align left
+  :margin 3px auto
+  :position relative
+  :font-size 10px
+  :overflow hidden
+  div.header, div.title
+    :margin 0
+    :border-bottom 1px dashed #ccc
+    :padding 0
+    :background-color = !base_background_color
+    +base_text
+    span.other_user_count
+      :font-size = !small_font_size
+  div.header
+    :background-color #ffeeff
+  div.title
+    :font-size 12px
+  div.description
+    :font-size 12px
+    :text-align right
+    span.tags
+      :color blue
+
+// 新規,編集
+div.edit_form_space.bookmark.edit
+  :height 500px
+  :border none
+  :margin 5px
+  div.update_form_wrapper
+    :margin-top 5px
+    table
+      :table-layout auto
+      :width 100%
+      th
+        :background-color #f0f0ff
+        :font-weight bold
+        :font-size 12px
+        :padding 1px 5px
+        :border = !base_border
+      td
+        :border = !base_border
+        &.operation
+          :text-align center
+
+// 表示
+div.bookmark.show
+  :border-bottom = !base_border
+  :padding-bottom 5px
+  :margin-bottom 10px
+  :position relative
+  div.title
+    :font
+      :size 16px
+      :weight bold
+    :background-color #f0f0ff
+    :padding 2px
 
 // 共有ファイルアップローダー
 // ------------------------------------------------------------
@@ -502,28 +605,34 @@ h3.topics
   :margin-bottom 2px
   :padding 0 0 0 7px
 
-// 表タイプの設定項目
-div.box.tabular
+div.box
   :color #505050
   :background-color #f6f6f6
   :border 1px solid #e4e4e4
-  :line-height 1.5em
   :padding 2px
   :margin-bottom 5px
-  :overflow-x auto
   :width 100%
-  label
-    :float left
-    :font-weight bold
-    :text-align right
-    :width 200px
-  p
-    :overflow hidden
-    :height 1%
-    :margin 0
-    :padding 5px 0px 8px 0px
-  p.initial_setting
-    :padding 1px 0px 1px 0px
+  // 表タイプの設定項目
+  &.tabular
+    :overflow-x auto
+    :line-height 1.5em
+    label
+      :float left
+      :font-weight bold
+      :text-align right
+      :width 200px
+    p
+      :overflow hidden
+      :height 1%
+      :margin 0
+      :padding 5px 0px 8px 0px
+    p.initial_setting
+      :padding 1px 0px 1px 0px
+  div.upload_area
+    :background-color #f0f0ff
+    :border 2px dotted #ffc000
+    :margin 5px
+    :padding 5px
 
 // ポップアップヘルプ
 span.ss_help
@@ -598,6 +707,14 @@ div.onetime_url
     :size 16px
   p
     :padding 10px
+
+// ブログ・掲示板 表示
+div.box.entry
+  div.contents
+    :border = !base_border
+    :background = !base_background_color
+  div.rich_style, div.hiki_style
+    :margin 5px
 
 // 設定・管理 > RSSフィード設定
 // ------------------------------------------------------------

@@ -17,7 +17,7 @@
       <div style="margin-top: 5px;">
         <% orderd_search_apps = INITIAL_SETTINGS['search_apps'].sort_by{|key, value| value["order"]}.unshift(['all' , {'title' => '全体'}]) %>
         <% orderd_search_apps.each do |app| %>
-        <%= radio_button_tag "target_aid", app.first, params[:target_aid] == app.first, {:id => "target_aid_#{app.first}", :class => "condition_radio_button"} %><%=h app.last['title']-%>から検索&nbsp;
+        <%= radio_button_tag "target_aid", app.first, params[:target_aid] == app.first, {:id => "target_aid_#{app.first}", :class => "condition_radio_button"} %><%= label_tag "target_aid_#{app.first}", "#{h(app.last['title'])}から検索&nbsp;" -%>
         <% end # each %>
       </div>
       <div>

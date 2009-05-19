@@ -19,7 +19,9 @@
 
 <div class="share_file_space">
   <div style="position: absolute; top:0; right: 1px;">
-    所属：<%= symbol_link_to share_file.owner_symbol if visible_owner_link %>
+    <% if visible_owner_link -%>
+    所属：<%= symbol_link_to share_file.owner_symbol %>
+    <% end -%>
     登録者：<%= user_link_to(share_file.user) %>
     DL数：<span id="download_count_<%= h share_file.id %>"><%= h share_file.total_count %></span>
     サイズ：<%= share_file.file_size_with_unit %>
@@ -31,7 +33,7 @@
 
   <div style="margin:3px 0 <%= visible_menu ? 15 : 3 -%>px 3px;">
     <div style="font-size: 12px;">
-      <%= file_link_to(share_file, :id => "share_file_download_link_#{share_file.id}", :class => "share_file_download_link") %>
+      <%= file_link_to(share_file, { :truncate => 40 }, :id => "share_file_download_link_#{share_file.id}", :class => "share_file_download_link") %>
       <% form_tag file_link_url(share_file), :id => "share_file_download_form_#{share_file.id}", :class => 'invisible' do -%>
         <%= hidden_field_tag 'authenticity_token', form_authenticity_token %>
       <% end -%>

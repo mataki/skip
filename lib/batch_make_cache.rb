@@ -1,5 +1,5 @@
 # SKIP(Social Knowledge & Innovation Platform)
-# Copyright (C) 2008 TIS Inc.
+# Copyright (C) 2008-2009 TIS Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -192,11 +192,11 @@ class BatchMakeCache < BatchBase
     body_lines << h(entry.title)
     body_lines << h(entry.category)
     body_lines << h(entry.user.name)
-    body_lines << entry.contents
+    body_lines << (entry.editor_mode == 'hiki' ? convert_hiki_to_html(entry.contents) : entry.contents)
 
     entry.board_entry_comments.each do|comment|
       body_lines << h(comment.user.name)
-      body_lines << comment.contents
+      body_lines << convert_hiki_to_html(comment.contents)
     end
     entry.entry_trackbacks.each do |trackback|
       body_lines << h(trackback.tb_entry.user.name)
@@ -246,6 +246,10 @@ class BatchMakeCache < BatchBase
       body_lines << h(profile.value)
     end
     body_lines
+  end
+
+  def convert_hiki_to_html hiki_text
+    HikiDoc.new((hiki_text || ''), Regexp.new(INITIAL_SETTINGS['not_blank_link_re'])).to_html
   end
 end
 

@@ -1,5 +1,5 @@
 # SKIP(Social Knowledge & Innovation Platform)
-# Copyright (C) 2008 TIS Inc.
+# Copyright (C) 2008-2009 TIS Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ class SymbolController < ApplicationController
     else
       result = ''
       @items.each do |item|
-        result << "#{item.symbol}|#{item.name}\n"
+        result << ERB::Util.h("#{item.symbol}|#{item.name}\n")
       end
       render :text => result
     end

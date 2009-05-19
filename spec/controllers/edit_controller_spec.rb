@@ -1,5 +1,5 @@
 # SKIP(Social Knowledge & Innovation Platform)
-# Copyright (C) 2008 TIS Inc.
+# Copyright (C) 2008-2009 TIS Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -209,6 +209,105 @@ describe EditController, "#create" do
         flash[:notice].should == '正しく作成されました。'
       end
       it "メール送信が予約されないこと" do
+      end
+    end
+  end
+end
+
+describe EditController, "#analize_params" do
+  before do
+    @params = {
+      :publication_type => "public",
+      :editor_symbol => "true",
+      :entry_type => "DIARY",
+      :publication_symbols_value => "uid:100001,uid:a_group_owned_user,gin:a_protected_group1",
+      :editor_symbols_value => "uid:100001,uid:a_group_owned_user,gin:hoge",
+      :board_entry => { :symbol => "gid:a_protected_group1" }
+    }
+    @board_entry = stub_model(BoardEntry, :user_id => 1)
+    User.stub!(:find).and_return(stub_model(User, :symbol => "uid:a_user"))
+  end
+  describe "publication_type が public の場合" do
+    describe "ブログの場合" do
+      before do
+        controller.stub!(:params).and_return(@params)
+        @result = controller.send(:analyze_params, @board_entry)
+      end
+      it "firstに sid:allusers が返ること" do
+        @result.first.should == [Symbol::SYSTEM_ALL_USER]
+      end
+      it "lastに 空配列 が返ること" do
+        @result.last.should == []
+      end
+    end
+    describe "掲示板の場合" do
+      before do
+        controller.stub!(:params).and_return(@params.merge(:entry_type => BoardEntry::GROUP_BBS))
+        @result = controller.send(:analyze_params, @board_entry)
+      end
+      it "firstに sid:allusers が返ること" do
+        @result.first.should == [Symbol::SYSTEM_ALL_USER]
+      end
+      it "lastに true が返ること" do
+        @result.last.should == ["true"]
+      end
+    end
+  end
+  describe "publication_type が private の場合" do
+    before do
+      @params.update(:publication_type => "private")
+    end
+    describe "ブログの場合" do
+      before do
+        controller.stub!(:params).and_return(@params)
+        @result = controller.send(:analyze_params, @board_entry)
+      end
+      it "firstに 作者のuid が返ること" do
+        @result.first.should == ["uid:a_user"]
+      end
+      it "lastに 空配列 が返ること" do
+        @result.last.should == []
+      end
+    end
+    describe "掲示板の場合" do
+      before do
+        controller.stub!(:params).and_return(@params.merge(:entry_type => BoardEntry::GROUP_BBS))
+        @result = controller.send(:analyze_params, @board_entry)
+      end
+      it "firstに グループのidと作者のid が返ること" do
+        @result.first.should == ["gid:a_protected_group1", "uid:a_user"]
+      end
+      it "lastに true が返ること" do
+        @result.last.should == ["true"]
+      end
+    end
+  end
+  describe "publication_type が protected の場合" do
+    before do
+      @params.update(:publication_type => "protected")
+    end
+    describe "ブログの場合" do
+      before do
+        controller.stub!(:params).and_return(@params)
+        @result = controller.send(:analyze_params, @board_entry)
+      end
+      it "firstに 作者のuid が返ること" do
+        @result.first.should == ["uid:100001", "uid:a_group_owned_user", "gin:a_protected_group1", "uid:a_user"]
+      end
+      it "lastに 空配列 が返ること" do
+        @result.last.should == ["uid:100001", "uid:a_group_owned_user", "gin:hoge"]
+      end
+    end
+    describe "掲示板の場合" do
+      before do
+        controller.stub!(:params).and_return(@params.merge(:entry_type => BoardEntry::GROUP_BBS))
+        @result = controller.send(:analyze_params, @board_entry)
+      end
+      it "firstに グループのidと作者のid が返ること" do
+        @result.first.should == ["uid:100001", "uid:a_group_owned_user", "gin:a_protected_group1", "uid:a_user"]
+      end
+      it "lastに true が返ること" do
+        @result.last.should == ["uid:100001", "uid:a_group_owned_user", "gin:hoge"]
       end
     end
   end

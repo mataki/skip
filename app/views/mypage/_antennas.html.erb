@@ -1,7 +1,6 @@
 <ul id="antennas_list">
 <% antennas.each do |@antenna| -%>
   <li id="antenna_<%= @antenna.id -%>" class="antenna" style="border: 1px solid silver; margin-bottom: 5px; padding-bottom: 5px;">
-    <%= hidden_field_tag("authenticity_token", form_authenticity_token) %>
 
     <div style="border-bottom: 1px dashed silver; background-color: #f0f0ff;">
       <%= icon_tag 'transmit' -%>

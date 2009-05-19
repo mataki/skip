@@ -1,5 +1,5 @@
 # SKIP(Social Knowledge & Innovation Platform)
-# Copyright (C) 2008 TIS Inc.
+# Copyright (C) 2008-2009 TIS Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,6 +16,8 @@
 require 'kconv'
 require 'uri'
 require 'open-uri'
+require "resolv-replace"
+require 'timeout'
 
 class Bookmark < ActiveRecord::Base
   has_many :bookmark_comments, :dependent => :destroy
@@ -27,6 +29,8 @@ class Bookmark < ActiveRecord::Base
   validates_presence_of :title, :message =>'は必須です'
   validates_length_of :title, :maximum=>255, :message =>'は255文字以内で入力してください'
 
+  SORT_TYPES = [["登録日順(降順)","bookmarks.updated_on DESC"],["登録日順(昇順)","bookmarks.updated_on"],["ユーザ数順","bookmark_comments_count DESC"]].freeze
+  GET_TITLE_TIMEOUT = 7
   class << self
     HUMANIZED_ATTRIBUTE_KEY_NAMES = {
       "url" => "URL",
@@ -37,22 +41,21 @@ class Bookmark < ActiveRecord::Base
     end
   end
 
+  class InvalidMultiByteURIError < RuntimeError;end
+
   def self.get_title_from_url url
     begin
-      open(url, :proxy => INITIAL_SETTINGS['proxy_url']) do |f|
-        re = /<(title|TITLE)>(.*?)<\/(title|TITLE)>/
-        f.each_line do |line|
-          return $2.toutf8 if re.match(line)
+      timeout(GET_TITLE_TIMEOUT) do
+        open(url, :proxy => INITIAL_SETTINGS['proxy_url']) do |f|
+          f.each_line do |line|
+            return $2.toutf8 if /<(title|TITLE)>(.*?)<\/(title|TITLE)>/.match(line)
+          end
         end
       end
     rescue Exception => ex
-      ex.backtrace.each {  |message| logger.error message }
+      logger.error "[GET TITLE ERROR] #{ex.class}: #{ex.message}"
     end
-    return ""
-  end
-
-  def self.get_sort_types
-    return [["登録日順(降順)","bookmarks.updated_on DESC"],["登録日順(昇順)","bookmarks.updated_on"],["ユーザ数順","bookmark_comments_count DESC"]]
+    ""
   end
 
   def self.make_conditions(options={ })
@@ -101,8 +104,26 @@ class Bookmark < ActiveRecord::Base
     !(is_type_page?) and !(is_type_user?)
   end
 
-  def get_encode_url
-    return  URI.escape(url, /[\&|\+|\=|!|~|'|(|)|;|\/|?|:|$|,|\[|\]|]/)
+  def escaped_url
+    URI.unescape(url).unpack('U*')
+    URI.escape(URI.escape(url), "'")
+  rescue ArgumentError => e
+    self.url = 'invalid_url'
+  end
+
+  def self.unescaped_url url
+    returning u = URI.unescape(url) do
+      u.unpack('U*')
+    end
+  rescue ArgumentError => e
+    raise Bookmark::InvalidMultiByteURIError.new(e.message)
+  end
+
+  def title
+    URI.unescape(url).unpack('U*')
+    read_attribute(:title)
+  rescue ArgumentError => e
+    write_attribute(:title, _('invalid url'))
   end
 
   # ブックマークされたURLが全公開であるか

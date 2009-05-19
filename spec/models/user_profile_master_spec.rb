@@ -1,5 +1,5 @@
 # SKIP(Social Knowledge & Innovation Platform)
-# Copyright (C) 2008 TIS Inc.
+# Copyright (C) 2008-2009 TIS Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -81,11 +81,6 @@ describe UserProfileMaster::InputTypeProcesser do
     @master = stub_model(UserProfileMaster, :name => "master")
     @processer = UserProfileMaster::InputTypeProcesser.new(@master)
     @value = stub_model(UserProfileValue, :value => "value")
-  end
-  describe "#to_show_html" do
-    it "valueの値が入っていること" do
-      @processer.to_show_html(@value).should == "<div class=\"input_value\">value</div><div class=\"input_bottom\"></div>"
-    end
   end
   describe "#to_edit_html" do
     it "正しいHTMLが生成されていること" do

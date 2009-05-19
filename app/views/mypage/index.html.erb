@@ -96,8 +96,8 @@
       <div class="topix_body" id="bookmark_body">
       <% @bookmarks.each do |bookmark| -%>
         <div class="page_line">
-          <div class="page_title"><%= link_to_bookmark_url bookmark, bookmark.title %></div>
-          <div class="page_from"><%= link_to(bookmark.bookmark_comments_count.to_s+"人", url_for_bookmark(bookmark.url)) %></div>
+          <div class="page_title"><%= link_to_bookmark_url bookmark %></div>
+          <div class="page_from"><%= link_to(bookmark.bookmark_comments_count.to_s+"人", url_for_bookmark(bookmark)) %></div>
           <div class="page_date"><%=h bookmark.updated_on.strftime("%m/%d %H:%M") %></div>
         </div>
       <% end -%>

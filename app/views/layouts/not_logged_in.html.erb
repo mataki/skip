@@ -4,7 +4,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
-  <link rel="shortcut icon" href="<%= controller.request.relative_url_root %>/favicon.ico" />
+  <%= favicon_include_tag %>
   <title><%= h Admin::Setting.abbr_app_title %> - <%= h @title %></title>
   <%= all_stylesheet_link_tag "style" %>
   <%= stylesheet_link_tag("application") %>

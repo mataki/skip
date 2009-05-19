@@ -4,7 +4,7 @@
 <% end -%>
 <% content_for :contents_right do -%>
 
-<div class="box">
+<div class="box entry">
 <p>
   <b><%= label @board_entry.class, :Entry_type %>:</b>
   <%=h _("BoardEntry|Entry type|#{@board_entry.entry_type}") %>
@@ -32,7 +32,7 @@
 
 <p>
   <b><%= label @board_entry.class, :Contents %>:</b>
-  <%=h @board_entry.contents %>
+  <div class="contents"><%= show_contents @board_entry %></div>
 </p>
 
 <p>

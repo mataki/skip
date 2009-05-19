@@ -1,5 +1,5 @@
 # SKIP(Social Knowledge & Innovation Platform)
-# Copyright (C) 2008 TIS Inc.
+# Copyright (C) 2008-2009 TIS Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -141,6 +141,120 @@ describe BoardEntriesHelper, '#write_place_url' do
       end
       it 'nilが返却されること' do
         helper.write_place_url(@owner).should be_nil
+      end
+    end
+  end
+end
+
+describe BoardEntriesHelper, "#icon_with_information" do
+  before do
+    @user = mock('User',:id => 1)
+  end
+  describe "12時間以内の場合" do
+    before do
+      @comment = stub_model(BoardEntryComment, :created_on => 10.hour.ago, :updated_on => 8.hour.ago, :id => 1)
+      helper.stub!(:icon_tag).with(:emoticon_happy)
+    end
+    describe "未読の場合" do
+      before do
+        @checked_on = 10.hour.ago
+      end
+      it "emoticon_happyのアイコンを含むこと" do
+        helper.should_receive(:icon_tag).with(:emoticon_happy)
+        helper.icon_with_information(@user, @comment, @checked_on)
+      end
+      it "未読が含まれること" do
+        helper.icon_with_information(@user, @comment, @checked_on).should be_include("[未読]")
+      end
+      it "新着が含まれること" do
+        helper.icon_with_information(@user, @comment, @checked_on).should be_include("[新着]")
+      end
+    end
+    describe "未読でない場合" do
+      before do
+        @checked_on = 6.hour.ago
+      end
+      it "emoticon_happyのアイコンを含むこと" do
+        helper.should_receive(:icon_tag).with(:emoticon_happy)
+        helper.icon_with_information(@user, @comment, @checked_on)
+      end
+      it "未読が含まれないこと" do
+        helper.icon_with_information(@user, @comment, @checked_on).should_not be_include("[未読]")
+      end
+      it "新着が含まれること" do
+        helper.icon_with_information(@user, @comment, @checked_on).should be_include("[新着]")
+      end
+    end
+  end
+  describe "24時間以内の場合" do
+    before do
+      @comment = stub_model(BoardEntryComment, :created_on => 16.hour.ago, :updated_on => 8.hour.ago, :id => 1)
+      helper.stub!(:icon_tag).with(:emoticon_smile)
+    end
+    describe "未読の場合" do
+      before do
+        @checked_on = 10.hour.ago
+      end
+      it "emoticon_smileのアイコンを含むこと" do
+        helper.should_receive(:icon_tag).with(:emoticon_smile)
+        helper.icon_with_information(@user, @comment, @checked_on)
+      end
+      it "未読が含まれること" do
+        helper.icon_with_information(@user, @comment, @checked_on).should be_include("[未読]")
+      end
+      it "新着が含まれること" do
+        helper.icon_with_information(@user, @comment, @checked_on).should be_include("[新着]")
+      end
+    end
+    describe "未読でない場合" do
+      before do
+        @checked_on = 6.hour.ago
+      end
+      it "emoticon_smileのアイコンが含まれること" do
+        helper.should_receive(:icon_tag).with(:emoticon_smile)
+        helper.icon_with_information(@user, @comment, @checked_on)
+      end
+      it "未読が含まれないこと" do
+        helper.icon_with_information(@user, @comment, @checked_on).should_not be_include("[未読]")
+      end
+      it "新着が含まれること" do
+        helper.icon_with_information(@user, @comment, @checked_on).should be_include("[新着]")
+      end
+    end
+  end
+  describe "24時間をすぎている場合" do
+    before do
+      @comment = stub_model(BoardEntryComment, :created_on => 30.hour.ago, :updated_on => 8.hour.ago, :id => 1)
+      helper.stub!(:icon_tag).with(:emoticon_smile)
+    end
+    describe "未読の場合" do
+      before do
+        @checked_on = 10.hour.ago
+      end
+      it "emoticon_smileのアイコンを含むこと" do
+        helper.should_receive(:icon_tag).with(:emoticon_smile)
+        helper.icon_with_information(@user, @comment, @checked_on)
+      end
+      it "未読が含まれること" do
+        helper.icon_with_information(@user, @comment, @checked_on).should be_include("[未読]")
+      end
+      it "新着が含まれないこと" do
+        helper.icon_with_information(@user, @comment, @checked_on).should_not be_include("[新着]")
+      end
+    end
+    describe "未読でない場合" do
+      before do
+        @checked_on = 6.hour.ago
+      end
+      it "emoticon_smileのアイコンが含まれないこと" do
+        helper.should_not_receive(:icon_tag)
+        helper.icon_with_information(@user, @comment, @checked_on)
+      end
+      it "未読が含まれないこと" do
+        helper.icon_with_information(@user, @comment, @checked_on).should_not be_include("[未読]")
+      end
+      it "新着が含まれないこと" do
+        helper.icon_with_information(@user, @comment, @checked_on).should_not be_include("[新着]")
       end
     end
   end

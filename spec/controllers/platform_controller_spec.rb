@@ -1,5 +1,5 @@
 # SKIP(Social Knowledge & Innovation Platform)
-# Copyright (C) 2008 TIS Inc.
+# Copyright (C) 2008-2009 TIS Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -330,7 +330,7 @@ describe PlatformController, 'POST /forgot_password' do
           controller.stub!(:reset_password_url).and_return(@password_reset_url)
           @user.stub!(:reset_auth_token).and_return(@reset_auth_token)
           @user.stub!(:issue_reset_auth_token)
-          @user.stub!(:save!)
+          @user.stub!(:save_without_validation!)
           UserMailer.stub!(:deliver_sent_forgot_password)
         end
         it 'パスワードリセットURLを記載したメールの送信処理が呼ばれること' do
@@ -339,7 +339,7 @@ describe PlatformController, 'POST /forgot_password' do
         end
         it 'パスワードリセットコード発行処理が行われること' do
           @user.should_receive(:issue_reset_auth_token)
-          @user.should_receive(:save!)
+          @user.should_receive(:save_without_validation!)
           post :forgot_password, :email => @email
         end
         it 'メール送信した旨のメッセージが設定されてリダイレクトされること' do
@@ -510,7 +510,7 @@ describe PlatformController, 'POST /activate' do
       @signup_url = 'signup_url'
       controller.stub!(:signup_url).and_return(@signup_url)
       @user.stub!(:issue_activation_code)
-      @user.stub!(:save!)
+      @user.stub!(:save_without_validation!)
       UserMailer.stub!(:deliver_sent_activate)
       User.should_receive(:find_by_email).and_return(@user)
     end
@@ -524,7 +524,7 @@ describe PlatformController, 'POST /activate' do
       end
       it 'アクティベーションコード発行処理が行われること' do
         @user.should_receive(:issue_activation_code)
-        @user.should_receive(:save!)
+        @user.should_receive(:save_without_validation!)
         post :activate, :email => @email
       end
       it 'メール送信した旨のメッセージが設定されてリダイレクトされること' do
@@ -723,6 +723,7 @@ end
 describe PlatformController, "POST /forgot_openid" do
   describe 'OpenID忘れ機能が有効な場合' do
     before do
+      User.delete_all
       controller.should_receive(:enable_forgot_openid?).and_return(true)
       @params_email = "a_user@example.com"
       @reset_url = "reset_url"
@@ -730,7 +731,7 @@ describe PlatformController, "POST /forgot_openid" do
     end
     describe "登録されているemailが送信された場合" do
       before do
-        @user = mock_model(User, :reset_auth_token => "reset_token", :issue_reset_auth_token => nil, :save! => nil)
+        @user = mock_model(User, :reset_auth_token => "reset_token", :issue_reset_auth_token => nil, :save_without_validation! => nil)
         User.should_receive(:find_by_email).with(@params_email).and_return(@user)
       end
       describe "emailに該当するユーザが利用中の場合" do
@@ -747,7 +748,7 @@ describe PlatformController, "POST /forgot_openid" do
         end
         it "該当するユーザのissue_reset_auth_tokenが呼ばれて、saveされること" do
           @user.should_receive(:issue_reset_auth_token)
-          @user.should_receive(:save!)
+          @user.should_receive(:save_without_validation!)
           post_forgot_openid
         end
       end

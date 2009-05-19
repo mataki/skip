@@ -1,5 +1,5 @@
 # SKIP(Social Knowledge & Innovation Platform)
-# Copyright (C) 2008 TIS Inc.
+# Copyright (C) 2008-2009 TIS Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -49,6 +49,10 @@ class UserProfileMaster < ActiveRecord::Base
     validates_presence_of_category
     validates_presence_of_option_values
     validates_format_of_option_values
+  end
+
+  def name_with_escape
+    ERB::Util.h(name)
   end
 
   def option_array
@@ -109,23 +113,18 @@ class UserProfileMaster < ActiveRecord::Base
       @master = master
     end
 
-    def to_show_html(value)
-      value_str = value ? value.value : ""
-      content_tag(:div, h(value_str), :class => "input_value") + content_tag(:div, nil, :class => "input_bottom")
-    end
-
     def to_edit_html(value)
       value_str = value ? value.value : ""
       text_field_tag("profile_value[#{@master.id}]", h(value_str))
     end
 
     def validate(value)
-      value.errors.add_to_base(_("%{name} は必須です") % { :name => @master.name }) if @master.required and value.value.blank?
+      value.errors.add_to_base(_("%{name} は必須です") % { :name => @master.name_with_escape }) if @master.required and value.value.blank?
     end
 
     def option_value_validate(value)
-      value.errors.add_to_base(_("%{name} は必須です") % { :name => @master.name }) if @master.required and value.value.blank?
-      value.errors.add_to_base(_("%{name} は選択される値以外のものが設定されています") % { :name => @master.name }) unless @master.option_array_with_blank.include?(value.value)
+      value.errors.add_to_base(_("%{name} は必須です") % { :name => @master.name_with_escape }) if @master.required and value.value.blank?
+      value.errors.add_to_base(_("%{name} は選択される値以外のものが設定されています") % { :name => @master.name_with_escape }) unless @master.option_array_with_blank.include?(value.value)
     end
 
     def self.need_option_values?
@@ -148,8 +147,8 @@ class UserProfileMaster < ActiveRecord::Base
 
   class NumberAndHyphenOnlyProcesser < InputTypeProcesser
     def validate(value)
-      value.errors.add_to_base(_("%{name} は必須です") % { :name => @master.name }) if @master.required and value.value.blank?
-      value.errors.add_to_base(_("%{name} は数字かハイフンで入力してください") % { :name => @master.name }) unless value.value =~ /^[0-9\-]*$/
+      value.errors.add_to_base(_("%{name} は必須です") % { :name => @master.name_with_escape }) if @master.required and value.value.blank?
+      value.errors.add_to_base(_("%{name} は数字かハイフンで入力してください") % { :name => @master.name_with_escape }) unless value.value =~ /^[0-9\-]*$/
     end
   end
 
@@ -159,7 +158,7 @@ class UserProfileMaster < ActiveRecord::Base
     def to_edit_html(value)
       value_str = value ? value.value : ""
       str = @master.option_array.inject("") do |result, val|
-        result << radio_button_tag("profile_value[#{@master.id}]", val, val == value_str) + label_tag("profile_value_#{@master.id}_#{val}", val)
+        result << radio_button_tag("profile_value[#{@master.id}]", val, val == value_str) + label_tag("profile_value_#{@master.id}_#{val}", ERB::Util.h(val))
       end
       str << content_tag(:a, _("uncheck selected"), :target => "profile_value[#{@master.id}]", :class => "cancel_radio") unless @master.required
       str
@@ -171,16 +170,6 @@ class UserProfileMaster < ActiveRecord::Base
   end
 
   class RichTextProcesser < InputTypeProcesser
-    include ActionController::UrlWriter
-    include ApplicationHelper
-    include ActionView::Helpers::SanitizeHelper
-
-    def to_show_html(value)
-      value_str = value ? value.value : ""
-      symbol = value ? value.user.symbol : nil
-      content_tag(:div, render_richtext(value_str, symbol), :class => "input_value rich_value")
-    end
-
     def to_edit_html(value)
       value_str = value ? value.value : ""
       text_area_tag("profile_value[#{@master.id}]", value_str, :class => "invisible min_fckeditor")
@@ -195,10 +184,10 @@ class UserProfileMaster < ActiveRecord::Base
 
     def validate(value)
       if @master.required and value.value.blank?
-        value.errors.add_to_base(_("%{name} は必須です") % { :name => @master.name })
+        value.errors.add_to_base(_("%{name} は必須です") % { :name => @master.name_with_escape })
         return
       end
-      value.errors.add_to_base(_("%{name} は4桁の数値で入力して下さい") % { :name => @master.name }) unless years.include?(value.value)
+      value.errors.add_to_base(_("%{name} は4桁の数値で入力して下さい") % { :name => @master.name_with_escape }) unless years.include?(value.value)
     end
 
     def self.need_option_values?
@@ -282,18 +271,18 @@ class UserProfileMaster < ActiveRecord::Base
       value_arr = value ? value.value : []
       value_arr = value_arr.split(',') if value_arr.is_a?(String)
       @master.option_array.inject("") do |result, val|
-        result << check_box_tag("profile_value[#{@master.id}][]", val, value_arr.include?(val), :id => "profile_value_#{@master.id}_#{val}") + label_tag("profile_value_#{@master.id}_#{val}", val)
+        result << check_box_tag("profile_value[#{@master.id}][]", val, value_arr.include?(val), :id => "profile_value_#{@master.id}_#{val}") + label_tag("profile_value_#{@master.id}_#{val}", ERB::Util.h(val))
       end
     end
 
     def validate(value)
-      value.errors.add_to_base(_("%{name} は必須です") % { :name => @master.name }) if @master.required and value.value.blank?
+      value.errors.add_to_base(_("%{name} は必須です") % { :name => @master.name_with_escape }) if @master.required and value.value.blank?
       unless value.value.blank? or value.value.is_a?(Array)
-        value.errors.add_to_base(_("%{name} に不正な形式が設定されています") % {:name => @master.name})
+        value.errors.add_to_base(_("%{name} に不正な形式が設定されています") % {:name => @master.name_with_escape})
       else
         value_arr = value.value.blank? ? [] : value.value
         if (value_arr - @master.option_array).size > 0
-          value.errors.add_to_base(_("%{name} は選択される値以外のものが設定されています") % { :name => @master.name })
+          value.errors.add_to_base(_("%{name} は選択される値以外のものが設定されています") % { :name => @master.name_with_escape })
         end
       end
     end
@@ -317,10 +306,10 @@ class UserProfileMaster < ActiveRecord::Base
 
     def validate(value)
       if @master.required and value.value.blank?
-        value.errors.add_to_base(_("%{name} は必須です") % { :name => @master.name })
+        value.errors.add_to_base(_("%{name} は必須です") % { :name => @master.name_with_escape })
         return
       end
-      value.errors.add_to_base(_("%{name} は選択される値以外のものが設定されています") % { :name => @master.name }) unless prefectures.include?(value.value)
+      value.errors.add_to_base(_("%{name} は選択される値以外のものが設定されています") % { :name => @master.name_with_escape }) unless prefectures.include?(value.value)
     end
 
     private
@@ -336,11 +325,11 @@ class UserProfileMaster < ActiveRecord::Base
     end
 
     def validate(value)
-      value.errors.add_to_base(_("%{name} は必須です") % { :name => @master.name }) if @master.required and value.value.blank?
+      value.errors.add_to_base(_("%{name} は必須です") % { :name => @master.name_with_escape }) if @master.required and value.value.blank?
       begin
         Date.parse(value.value) unless value.value.blank?
       rescue ArgumentError => e
-        value.errors.add_to_base(_("%{name} は正しい日付形式で入力して下さい") % { :name => @master.name })
+        value.errors.add_to_base(_("%{name} は正しい日付形式で入力して下さい") % { :name => @master.name_with_escape })
       end
     end
 

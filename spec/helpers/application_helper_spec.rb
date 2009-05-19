@@ -1,5 +1,5 @@
 # SKIP(Social Knowledge & Innovation Platform)
-# Copyright (C) 2008 TIS Inc.
+# Copyright (C) 2008-2009 TIS Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -171,3 +171,59 @@ describe ApplicationHelper, "#get_menu_items" do
   end
 end
 
+describe ApplicationHelper, '#url_for_bookmark' do
+  before do
+    @bookmark = Bookmark.new :url => 'http://b.hatena.ne.jp/search?ie=utf8&q=vim+エディタ&x=0&y=0'
+  end
+  it '正しいURLが生成されること' do
+    helper.url_for_bookmark(@bookmark).should == '/bookmark/show/http:%2F%2Fb.hatena.ne.jp%2Fsearch%3Fie=utf8&amp;q=vim+%25E3%2582%25A8%25E3%2583%2587%25E3%2582%25A3%25E3%2582%25BF&amp;x=0&amp;y=0'
+  end
+end
+
+describe ApplicationHelper, '#link_to_bookmark_url' do
+  before do
+    helper.stub!(:relative_url_root).and_return('')
+    @bookmark = stub_model(Bookmark)
+  end
+  describe '対象のブックマークが記事の場合' do
+    before do
+      @bookmark.url = '/page/99'
+    end
+    it '記事へのリンクとなること' do
+      helper.send!(:link_to_bookmark_url, @bookmark).include?('report_link').should be_true
+    end
+  end
+  describe '対象のブックマークがユーザの場合' do
+    before do
+      @bookmark.url = '/user/99'
+    end
+    it 'ユーザへのリンクとなること' do
+      helper.send!(:link_to_bookmark_url, @bookmark).include?('user').should be_true
+    end
+  end
+  describe '対象のブックマークがwwwの場合' do
+    before do
+      @bookmark.url = 'http://localhost'
+    end
+    it 'wwwへのリンクとなること' do
+      helper.send!(:link_to_bookmark_url, @bookmark).include?('world_link').should be_true
+    end
+  end
+  describe 'titleが指定されている場合' do
+    before do
+      @bookmark.url = 'http://localhost'
+    end
+    it '指定されたタイトルになること' do
+      helper.send!(:link_to_bookmark_url, @bookmark, 'skip_user_group').include?('skip_user_group').should be_true
+    end
+  end
+  describe 'titleが指定されていない場合' do
+    before do
+      @bookmark.url = 'http://localhost'
+      @bookmark.title = 'world_wide_web'
+    end
+    it '登録済みのタイトルになること' do
+      helper.send!(:link_to_bookmark_url, @bookmark).include?('world_wide_web').should be_true
+    end
+  end
+end

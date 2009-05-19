@@ -6,7 +6,7 @@ ENV['RAILS_ENV'] ||= 'production'
 
 RAILS_GEM_VERSION = '2.1.2' unless defined? RAILS_GEM_VERSION
 
-SKIP_VERSION = '1.1RC1'
+SKIP_VERSION = '1.1.0'
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
@@ -120,7 +120,8 @@ admin_btns = [
 ADMIN_MENU_BTNS = admin_btns
 
 # 共通メニュー
-COMMON_MENUS = YAML::load(File.open(File.join(RAILS_ROOT, 'config', 'common_menus.yml')))
+common_menu_path = File.join(RAILS_ROOT, 'config', 'common_menus.yml')
+COMMON_MENUS = File.exist?(common_menu_path) ? YAML::load(File.open(File.join(RAILS_ROOT, 'config', 'common_menus.yml'))) : {}
 
 # 祝日マスタ
 HOLIDAYS = YAML::load(File.open(File.join(RAILS_ROOT, 'config', 'holiday.yml')))

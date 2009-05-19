@@ -1,5 +1,5 @@
 # SKIP(Social Knowledge & Innovation Platform)
-# Copyright (C) 2008 TIS Inc.
+# Copyright (C) 2008-2009 TIS Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -32,6 +32,9 @@ class BookmarkController < ApplicationController
              :your_tags_array => your_tags,
              :layout => "subwindow"
            })
+  rescue Bookmark::InvalidMultiByteURIError => e
+    flash[:error] = _('URLの形式が不正です。')
+    redirect_to root_url
   end
 
   # ブックマーク更新画面の表示（存在しない場合は作成）
@@ -45,11 +48,13 @@ class BookmarkController < ApplicationController
              :your_tags_array => your_tags,
              :layout => "dialog"
            })
+  rescue Bookmark::InvalidMultiByteURIError => e
+    render :text => _('URLの形式が不正です。')
   end
 
   # ブックマークの更新（存在しない場合は作成）
   def update
-    url = params[:bookmark][:url]
+    url = Bookmark.unescaped_url(params[:bookmark][:url])
 
     unless check_url_format? url
       messages = []
@@ -60,6 +65,7 @@ class BookmarkController < ApplicationController
 
     @bookmark = Bookmark.find_by_url(url) || Bookmark.new
     @bookmark.attributes = params[:bookmark]
+    @bookmark.url = url
 
     @bookmark_comment = @bookmark.bookmark_comments.find(:first, :conditions => ["bookmark_comments.user_id = ?", session[:user_id]]) || @bookmark.bookmark_comments.build
     @bookmark_comment.attributes = params[:bookmark_comment]
@@ -88,16 +94,19 @@ class BookmarkController < ApplicationController
     messages.concat @bookmark_comment.errors.full_messages unless @bookmark_comment.valid?
 
     render :partial => "system/error_messages_for", :locals=> { :messages => messages }
+  rescue Bookmark::InvalidMultiByteURIError => e
+    render :partial => "system/error_messages_for", :locals=> { :messages => [_('URLの形式が不正です。')] }
   end
 
   def ado_get_title
-    render :text => Bookmark.get_title_from_url(params[:url])
+    render :text => Bookmark.get_title_from_url(Bookmark.unescaped_url(params[:url]))
+  rescue Bookmark::InvalidMultiByteURIError => e
+    render :text => _('URLの形式が不正です。'), :status => :bad_request
   end
 
   # tab_menu
   def show
-    uri = params[:uri] ? URI.decode(params[:uri]) : ""
-    uri.gsub!('+', ' ')
+    uri = params[:uri] ? Bookmark.unescaped_url(params[:uri]) : ""
     unless @bookmark = Bookmark.find_by_url(uri, :include => :bookmark_comments )
       flash[:warning] = _("指定のＵＲＬは誰もブックマークしていません。")
       redirect_to :controller => 'mypage', :action => 'index'
@@ -107,7 +116,6 @@ class BookmarkController < ApplicationController
     @main_menu = 'ブックマーク'
     @title = 'ブックマーク[' + @bookmark.title + ']'
     @tab_menu_source = [ {:label => _('ブックマークコメント'), :options => {:action => 'show'}} ]
-    @tab_menu_option = { :uri => @bookmark.url }
 
     # TODO: SQLを発行しなくても判断できるのでrubyで処理する様に
     comment =  BookmarkComment.find(:first,
@@ -203,7 +211,8 @@ private
 
   def prepare_bookmark params
     conditions = ["bookmark_comments.user_id = ? and bookmarks.url = ?"]
-    conditions << session[:user_id] << params[:url]
+    unescaped_url = Bookmark.unescaped_url params[:url]
+    conditions << session[:user_id] << unescaped_url
     @bookmark_comment = BookmarkComment.find(:first,
                                              :conditions => conditions,
                                              :include => [:bookmark])
@@ -212,12 +221,12 @@ private
     else
       @bookmark_comment = BookmarkComment.new(:public => true)
 
-      unless @bookmark = Bookmark.find_by_url(params[:url])
-        @bookmark = Bookmark.new(:url => params[:url], :title => params[:title])
+      unless @bookmark = Bookmark.find_by_url(unescaped_url)
+        @bookmark = Bookmark.new(:url => unescaped_url, :title => params[:title] ? params[:title].toutf8 : '')
       end
     end
 
-    user_tags = BookmarkComment.get_tagcloud_tags params[:url]
+    user_tags = BookmarkComment.get_tagcloud_tags unescaped_url
     user_tags.map! {|tag| tag.name }
 
     other_tags = BookmarkComment.get_bookmark_tags @bookmark.is_type_user?

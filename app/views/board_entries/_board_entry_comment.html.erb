@@ -6,7 +6,9 @@
 <div class="<%= comment_class %>" id="comment_<%= comment.id %>_<%= level %>">
   <div class="header">
     <span class="<%= comment_title_class @current_user, comment, checked_on %>">
-      <%= user_link_to(comment.user) %><span class="date"><%= date_with_icon(comment.created_on) %></span>
+      <%= user_link_to(comment.user) %>
+      <span class="date"><%= "[ #{comment.created_on.to_s(:standard)} ]" %></span>
+      <%= icon_with_information(@current_user, comment, checked_on) %>
     </span>
     <span class="buttons">
       <%= dummy_link_to(icon_tag('comment_edit', { :title => "編集" }), :id => "comment_edit_link_#{comment.id}", :class => "comment_edit_link") if writer?(comment, session[:user_id]) %>

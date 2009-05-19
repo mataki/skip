@@ -1,5 +1,5 @@
 # SKIP(Social Knowledge & Innovation Platform)
-# Copyright (C) 2008 TIS Inc.
+# Copyright (C) 2008-2009 TIS Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -100,7 +100,7 @@ class ShareFile < ActiveRecord::Base
     symbol_type = owner_symbol.split(":").first
     symbol_id = owner_symbol.split(":").last
     owner = (symbol_type == User.symbol_type.to_s) ? User.find_by_uid(symbol_id) : Group.find_by_gid(symbol_id)
-    owner.id
+    owner ? owner.id : raise("Owner cannot be found by '#{owner_symbol}'")
   end
 
   # 所属するグループの公開範囲により、共有ファイルの公開範囲を判定する

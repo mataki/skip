@@ -1,5 +1,5 @@
 # SKIP(Social Knowledge & Innovation Platform)
-# Copyright (C) 2008 TIS Inc.
+# Copyright (C) 2008-2009 TIS Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -71,7 +71,7 @@ class Admin::ImagesController < Admin::ApplicationController
       @file_name = param[:target]
       @file = param[self.file_name.to_sym]
       @content_types = []
-      @base_dir = @save_dir = "#{RAILS_ROOT}/public"
+      @base_dir = @save_dir = "#{RAILS_ROOT}/public/custom"
     end
 
     def full_path
@@ -96,7 +96,7 @@ class Admin::ImagesController < Admin::ApplicationController
     def initialize param = {}
       super
       @content_types = CONTENT_TYPE_IMAGES[:png]
-      @save_dir = "#{base_dir}/custom/images"
+      @save_dir = "#{base_dir}/images"
     end
 
     def self.extension
@@ -110,7 +110,7 @@ class Admin::ImagesController < Admin::ApplicationController
     def initialize param = {}
       super
       @content_types = CONTENT_TYPE_IMAGES[:jpg]
-      @save_dir = "#{base_dir}/custom/images/titles"
+      @save_dir = "#{base_dir}/images/titles"
     end
 
     def self.extension

@@ -1,5 +1,5 @@
 # SKIP(Social Knowledge & Innovation Platform)
-# Copyright (C) 2008 TIS Inc.
+# Copyright (C) 2008-2009 TIS Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -159,6 +159,32 @@ describe ShareFile, '#owner_symbol_name' do
     end
     it '空文字が返却されること' do
       @share_file.owner_symbol_name.should == ''
+    end
+  end
+end
+
+describe ShareFile, '#owner_id' do
+  before do
+    @share_file = ShareFile.new(:owner_symbol => 'uid:hoge')
+  end
+  describe 'owner_symbolに対する所有者が取得できる場合' do
+    before do
+      @user = stub_model(User, :id => 99)
+      User.should_receive(:find_by_uid).and_return(@user)
+    end
+    it 'idが返ること' do
+      @share_file.owner_id.should == 99
+    end
+  end
+  describe 'owner_symbolに対する所有者が取得できない場合' do
+    before do
+      User.should_receive(:find_by_uid).and_return(nil)
+    end
+    it 'owner_symbolに対する所有者が存在しないことを示す例外を送出すること' do
+      # これが起きるケースはデータ不整合が起こっていると考えられる。
+      lambda do
+        @share_file.owner_id
+      end.should raise_error(RuntimeError, "Owner cannot be found by '#{@share_file.owner_symbol}'")
     end
   end
 end

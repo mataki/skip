@@ -1,5 +1,5 @@
 # SKIP(Social Knowledge & Innovation Platform)
-# Copyright (C) 2008 TIS Inc.
+# Copyright (C) 2008-2009 TIS Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -392,6 +392,54 @@ describe MoveAttachmentImage do
     end
   end
 
+  describe MoveAttachmentImage, '.content_type' do
+    before do
+      @share_file = stub_model(ShareFile)
+    end
+    describe '拡張子が指定されている場合' do
+      describe '画像の拡張子(小文字)の場合' do
+        before do
+          @share_file.file_name = 'hoge.png'
+        end
+        it '結果がimage/pngとなること' do
+          MoveAttachmentImage.content_type(@share_file).should == 'image/png'
+        end
+      end
+      describe '画像の拡張子(大文字)の場合' do
+        before do
+          @share_file.file_name = 'hoge.PNG'
+        end
+        it '結果がimage/pngとなること' do
+          MoveAttachmentImage.content_type(@share_file).should == 'image/png'
+        end
+      end
+      describe '画像以外の拡張子の場合' do
+        before do
+          @share_file.file_name = 'hoge.txt'
+        end
+        it '結果がapplication/octet-streamとなること' do
+          MoveAttachmentImage.content_type(@share_file).should == 'application/octet-stream'
+        end
+      end
+    end
+    describe '拡張子が指定されていない場合' do
+      before do
+        @share_file.file_name = 'hoge'
+      end
+      it '結果がapplication/octet-streamとなること' do
+        MoveAttachmentImage.content_type(@share_file).should == 'application/octet-stream'
+      end
+    end
+    describe 'ファイル名が[...]の場合' do
+      before do
+        @share_file.file_name = '...'
+      end
+      it '結果がapplication/octet-streamとなること' do
+        MoveAttachmentImage.content_type(@share_file).should == 'application/octet-stream'
+      end
+    end
+  end
+
   describe MoveAttachmentImage, '.share_file_name' do
     describe '対象の所有者に既に同名ファイルが登録されている場合' do
       before do
@@ -419,11 +467,71 @@ describe MoveAttachmentImage do
     end
   end
 
+  describe MoveAttachmentImage, '.measures_to_same_file' do
+    describe 'ファイル名が同一の場合' do
+      before do
+        @share_file = stub_model(ShareFile, :file_name => 'skip.png')
+        @image_file_name = '2_skip.png'
+      end
+      it 'nilが返ること' do
+        MoveAttachmentImage.measures_to_same_file(@share_file, @image_file_name).should be_nil
+      end
+    end
+    describe 'ファイル名が異なる場合' do
+      before do
+        @share_file = stub_model(ShareFile, :file_name => 'skip_.png')
+        @image_file_name = '2_skip.png'
+      end
+      describe '移行対象画像が添付された記事が存在する場合' do
+        before do
+          @board_entry = create_board_entry(:contents => 'skip.png\nskip.png', :category => 'skip,rails')
+          MoveAttachmentImage.should_receive(:image_attached_entry).and_return(@board_entry)
+        end
+        it '対象ファイルの属する記事の本文内のファイル名が置換されること' do
+#          lambda do
+#            MoveAttachmentImage.measures_to_same_file(@share_file, @image_file_name)
+#          end.should change(@board_entry, :contents).to('skip_.png\nskip_.png')
+          # 上記だとなぜか通らないので(#{column}_with_change!してるから?)以下のようにしておく。
+          replaced_contents = "skip_.png\\nskip_.png"
+          MoveAttachmentImage.measures_to_same_file(@share_file, @image_file_name)
+          @board_entry.contents.should == replaced_contents
+        end
+        it 'trueが返ること' do
+          MoveAttachmentImage.measures_to_same_file(@share_file, @image_file_name).should be_true
+        end
+      end
+      describe '対象ファイルの属する記事が存在するが、所有するグループ/ユーザが存在しない場合' do
+        before do
+          @board_entry = create_board_entry(:contents => 'skip.png\nskip.png', :category => 'skip,rails')
+          @board_entry.should_receive(:save).and_return(false)
+          MoveAttachmentImage.should_receive(:image_attached_entry).and_return(@board_entry)
+        end
+        it 'エラーログが表示されること' do
+          MoveAttachmentImage.should_receive(:log_warn)
+          MoveAttachmentImage.measures_to_same_file(@share_file, @image_file_name)
+        end
+        it 'nilが返ること' do
+          MoveAttachmentImage.measures_to_same_file(@share_file, @image_file_name).should be_nil
+        end
+      end
+      describe '移行対象画像が添付された記事が存在しない場合' do
+        before do
+          MoveAttachmentImage.should_receive(:image_attached_entry).and_return(nil)
+        end
+        it 'nilが返ること' do
+          MoveAttachmentImage.measures_to_same_file(@share_file, @image_file_name).should be_nil
+        end
+      end
+    end
+  end
+
   after do
     FileUtils.rm_rf "#{RAILS_ROOT}/spec/tmp/"
   end
   after(:all) do
+    # TODO move_attachment_image自体で元に戻しておくべき
     BoardEntry.record_timestamps = true
+    BoardEntryComment.record_timestamps = true
   end
 end
 

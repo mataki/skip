@@ -1,5 +1,5 @@
 # SKIP(Social Knowledge & Innovation Platform)
-# Copyright (C) 2008 TIS Inc.
+# Copyright (C) 2008-2009 TIS Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -37,6 +37,8 @@ class MoveAttachmentImage
       log_info('start replace attachment link ...')
       replace_direct_link
       log_info('end replace attachment link ...')
+    else
+      log_warn('skipped move attachment image')
     end
   end
 
@@ -115,14 +117,19 @@ class MoveAttachmentImage
           Dir.foreach(user_dir_path) do |filename|
             next if (filename == '.' || filename == '..')
             next unless (share_file = new_share_file(user_dir_name, filename))
+            measures_to_same_file(share_file, filename)
 
             # 実ファイル移動
             src = "#{user_dir_path}/#{filename}"
-            dest = share_file.full_path
-            FileUtils.mv src, dest
+            begin
+              dest = share_file.full_path
+              FileUtils.mv src, dest
 
-            # DBレコード作成
-            share_file.save_without_validation!
+              # DBレコード作成
+              share_file.save_without_validation!
+            rescue => e
+              log_warn("Failure move file(#{src}). Because [#{e.message}]")
+            end
           end
         end
       end
@@ -132,6 +139,10 @@ class MoveAttachmentImage
   # 記事の本文やコメントの添付画像への直リンクを置換
   def self.replace_direct_link
     BoardEntry.all.each do |board_entry|
+      unless BoardEntry.owner board_entry.symbol
+        log_warn("Failure replace direct link(#{board_entry}). Because owner cannot be found by #{board_entry.symbol}")
+        next
+      end
       replace_entry_direct_link board_entry
       board_entry.board_entry_comments.each do |board_entry_comment|
         replace_entry_comment_direct_link board_entry_comment
@@ -151,6 +162,8 @@ class MoveAttachmentImage
       end
     end
     entry.save! if entry.changed?
+  ensure
+    BoardEntry.record_timestamps = true
   end
 
   def self.replace_entry_comment_direct_link entry_comment
@@ -164,6 +177,8 @@ class MoveAttachmentImage
       end
     end
     entry_comment.save! if entry_comment.changed?
+  ensure
+    BoardEntryComment.record_timestamps = true
   end
 
   def self.image_link_re
@@ -205,8 +220,8 @@ class MoveAttachmentImage
   end
 
   def self.content_type share_file
-    extension = share_file.file_name.split('.').last.downcase
     if share_file.image_extention?
+      extension = File.extname(share_file.file_name).sub(/\A\./,'').downcase
       "image/#{extension}"
     else
       "application/octet-stream"
@@ -224,6 +239,28 @@ class MoveAttachmentImage
 
   def self.image_attached_entry image_file_name
     BoardEntry.find_by_id(image_file_name.split('_', 2).first.to_i)
+  end
+
+  def self.measures_to_same_file share_file, image_file_name
+    orign_file_name = image_file_name.split('_', 2).last
+    new_file_name = share_file.file_name
+    unless orign_file_name == new_file_name
+      BoardEntry.record_timestamps = false
+      return unless(image_attached_entry = image_attached_entry(image_file_name))
+      image_attached_entry.contents.gsub!(/#{orign_file_name}/) do |matched|
+        image_attached_entry.contents_will_change!
+        image_attached_entry.category = image_attached_entry.comma_category
+        new_file_name
+      end
+      if image_attached_entry.changed? and !image_attached_entry.save
+        log_warn("Failure save entry(#{image_attached_entry.id}). Because the entry do not save that entry is #{image_attached_entry.errors.full_messages.join(",")}")
+        nil
+      else
+        true
+      end
+    end
+  ensure
+    BoardEntry.record_timestamps = true
   end
 
   def self.log_info message

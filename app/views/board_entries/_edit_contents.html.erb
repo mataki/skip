@@ -7,18 +7,18 @@
 <% end -%>
 
   <div class="input_value" style="height: 2em;">
-    <%= radio_button_tag("editor_mode", "richtext", params[:editor_mode] == "richtext", :id=>"editor_mode_richtext") %>リッチテキスト
-    <%= radio_button_tag("editor_mode", "hiki", params[:editor_mode] == "hiki", :id=>"editor_mode_hiki") -%>Wikiテキスト
-    <span class="share_file_uploader trigger pointer link">画像やファイルのリンクを挿入</span>
+    <%= radio_button_tag("editor_mode", "richtext", params[:editor_mode] == "richtext", :id=>"editor_mode_richtext") + label_tag("editor_mode_richtext", _("リッチテキスト")) %>
+    <%= radio_button_tag("editor_mode", "hiki", params[:editor_mode] == "hiki", :id=>"editor_mode_hiki") + label_tag("editor_mode_hiki", _('Wikiテキスト')) -%>
+    <span class="share_file_uploader trigger pointer link"><span class="ss_sprite ss_attach">&nbsp;</span><%= _('本文にファイルを差し込む') %></span>
   </div>
 
   <div id="share_file_uploader"></div>
   <div id="contents_richtext_space" class="richtext" style="display: none;">
-    <label for="contents"><%= text_area_tag 'contents_richtext', h(sanitize_style_with_whitelist(params[:contents_richtext])), :cols => 90, :rows => 20 %></label>
+    <%= text_area_tag 'contents_richtext', h(sanitize_style_with_whitelist(params[:contents_richtext])), :cols => 90, :rows => 20 %>
   </div>
   <div id="contents_hiki_space" style="display: none;">
     <%= link_to_hiki_help %> <a href="#" id="hiki_preview_link">【プレビューで確認する】</a>
-    <label for="contents"><%= text_area_tag 'contents_hiki', h(params[:contents_hiki]), :cols => 90, :rows => 20 %></label>
+    <%= text_area_tag 'contents_hiki', h(params[:contents_hiki]), :cols => 90, :rows => 20 %>
   </div>
 
 <% content_for :javascript do -%>

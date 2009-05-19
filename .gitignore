@@ -1,5 +1,6 @@
 config/database.yml
 config/initial_settings.yml
+config/common_menus.yml
 db/schema.rb
 log/*.log*
 public/custom/*.html
@@ -9,6 +10,7 @@ public/javascripts/jquery.all.js
 public/stylesheets/skip.style.css
 lib/tasks/rspec.rake
 vendor/rails
+vendor/plugins/haml
 coverage
 tmp/*
 pkg/*

@@ -13,7 +13,7 @@
 
 <p>
   <b><%= label @bookmark.class, :url %>:</b>
-  <%= escape_bookmark_url @bookmark.url %><br/>
+  <%= @bookmark.escaped_url %><br/>
 </p>
 </div>
 <%= link_to _('Listing %{model}') % {:model => _('bookmark comment')}, admin_bookmark_bookmark_comments_path(@bookmark) %>

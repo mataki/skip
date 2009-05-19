@@ -1,5 +1,5 @@
 # SKIP(Social Knowledge & Innovation Platform)
-# Copyright (C) 2008 TIS Inc.
+# Copyright (C) 2008-2009 TIS Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -278,12 +278,12 @@ class User < ActiveRecord::Base
   end
 
   def uid
-    user_uid = user_uids.find(:first, :conditions => ['uid_type = ?', UserUid::UID_TYPE[:username]])
+    user_uid = user_uids.detect { |u| u.uid_type == UserUid::UID_TYPE[:username] }
     user_uid ? user_uid.uid : code
   end
 
   def code
-    user_uid = user_uids.find(:first, :conditions => ['uid_type = ?', UserUid::UID_TYPE[:master]])
+    user_uid = user_uids.detect { |u| u.uid_type == UserUid::UID_TYPE[:master] }
     user_uid ? user_uid.uid : nil
   end
 

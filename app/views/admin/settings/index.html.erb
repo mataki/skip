@@ -54,12 +54,13 @@ $j(function(){
 
     $j('#revert_to_default_link').click(function(){
         if(!confirm('<%= help_msg %>')){
-            return;
+            return false;
         }
 <% @revert_columns ||= [] -%>
 <% @revert_columns.each do |key| -%>
         revertToDefault('setting_' + '<%= key %>', '<%= Admin::Setting.send("default_" + key) %>');
 <% end -%>
+        return false;
     });
 });
 </script>

@@ -1,5 +1,5 @@
 # SKIP(Social Knowledge & Innovation Platform)
-# Copyright (C) 2008 TIS Inc.
+# Copyright (C) 2008-2009 TIS Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -215,7 +215,7 @@ class Admin::UsersController < Admin::ApplicationController
     user = Admin::User.find(params[:id])
     if user.unused?
       user.issue_activation_code
-      user.save!
+      user.save_without_validation!
       email = user.email
       UserMailer.deliver_sent_activate(email, signup_url(user.activation_token))
       flash[:notice] = Admin::Setting.mail_function_setting ?  _("ユーザ登録のためのURLを記載したメールを%{email}宛てに送信しました。") % {:email => email} : _('利用開始URLを発行しました。確認のリンクからユーザに連絡してください。')
@@ -230,7 +230,7 @@ class Admin::UsersController < Admin::ApplicationController
     if @user.active?
       if @user.reset_auth_token.nil? || !@user.within_time_limit_of_reset_auth_token?
         @user.issue_reset_auth_token
-        @user.save!
+        @user.save_without_validation!
       end
       @reset_password_url = reset_password_url(@user.reset_auth_token)
       @mail_body = render_to_string(:template => "user_mailer/sent_forgot_password", :layout => false)

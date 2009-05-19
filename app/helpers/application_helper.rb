@@ -1,5 +1,5 @@
 # SKIP(Social Knowledge & Innovation Platform)
-# Copyright (C) 2008 TIS Inc.
+# Copyright (C) 2008-2009 TIS Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -139,7 +139,7 @@ module ApplicationHelper
     if user.retired?
       file_name = 'retired.png'
     elsif picture = user.pictures.first
-      file_name = '/pictures/picture/' + picture.id.to_s + '.png'
+      file_name = url_for(:controller => 'pictures', :action => 'picture', :id => picture.id, :format => :png)
       if popup
         pop_name = url_for(:controller => 'pictures', :action => 'picture', :id => picture.id.to_s)
         options[:title] = "クリックすると実際の大きさで表示されます"
@@ -173,9 +173,10 @@ module ApplicationHelper
   end
 
   # ファイルダウンロードへのリンク
-  def file_link_to share_file, html_options = {}
+  def file_link_to share_file, options = {}, html_options = {}
+    file_name = options[:truncate] ? truncate(share_file.file_name, options[:truncate]) : share_file.file_name
     url = file_link_url(share_file)
-    link_to h(share_file.file_name), url, html_options
+    link_to h(file_name), url, html_options
   end
 
   def file_link_url share_file
@@ -200,7 +201,7 @@ module ApplicationHelper
   end
 
   def sanitize_style_with_whitelist(content)
-    allowed_tags = HTML::WhiteListSanitizer.allowed_tags.dup << "table" << "tbody" << "tr" << "th" << "td" << "caption"
+    allowed_tags = HTML::WhiteListSanitizer.allowed_tags.dup << "table" << "tbody" << "tr" << "th" << "td" << "caption" << "strike" << "u"
     allowed_attributes = HTML::WhiteListSanitizer.allowed_attributes.dup << "style" << "cellspacing" << "cellpadding" << "border" << "align" << "summary"
     sanitize(content, :tags => allowed_tags, :attributes => allowed_attributes)
   end
@@ -268,22 +269,24 @@ module ApplicationHelper
     icon_tag(category.icon, options)
   end
 
-  def url_for_bookmark url
-    url_for :controller => 'bookmark', :action => 'show', :uri => escape_bookmark_url(url)
-  end
-
-  def escape_bookmark_url url
-    h(URI.encode(url)).gsub(/'/,'&#39;')
+  def url_for_bookmark bookmark
+    url_for :controller => 'bookmark', :action => 'show', :uri => bookmark.escaped_url
   end
 
   def header_logo_link(url = url_for(:controller => '/mypage', :action => 'index'))
-    img_url = "#{@controller.request.relative_url_root}/custom/images/header_logo.png"
+    img_url = url_for('/custom/images/header_logo.png')
     "<div id=\"logo\">" + link_to(image_tag(img_url, :alt => h(Admin::Setting.abbr_app_title), :height => "45"), url) + "</div>"
+  end
+
+  def favicon_include_tag
+    favicon_url = url_for(relative_url_root + "/custom/favicon.ico")
+    %!<link rel="shortcut icon" href="#{favicon_url}" />! +
+      %!<link rel="icon" href="#{favicon_url}" type="image/ico" />!
   end
 
 private
   def relative_url_root
-    @controller.request.relative_url_root
+    ActionController::AbstractRequest.relative_url_root
   end
 
   def parse_permalink text, owner_symbol = nil
@@ -308,18 +311,18 @@ private
     return text
   end
 
-  def link_to_bookmark_url(bookmark, name = nil)
+  def link_to_bookmark_url(bookmark, title = nil)
     url = bookmark.url
-    title = bookmark.title
+    title ||= bookmark.title
 
     if bookmark.is_type_page?
       url =  relative_url_root + url
-      return "<a href=#{escape_bookmark_url(url)} title='#{h(title)}'>#{icon_tag('report_link')} #{h(name)}</a>"
+      link_to "#{icon_tag('report_link')} #{h title}", bookmark.escaped_url, :title => title
     elsif bookmark.is_type_user?
       url =  relative_url_root + url
-      return "<a href=#{escape_bookmark_url(url)} title='#{h(title)}'>#{icon_tag('user')} #{h(name)}</a>"
+      link_to "#{icon_tag('user')} #{h title}", bookmark.escaped_url, :title => title
     else
-      return "<a href=#{escape_bookmark_url(url)} title='#{h(title)}'>#{icon_tag('world_link')} #{h(truncate(name, 115))}</a>"
+      link_to "#{icon_tag('world_link')} #{h truncate(title, 115)}", bookmark.escaped_url, :title => title
     end
   end
 

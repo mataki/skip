@@ -1,18 +1,18 @@
-<div class="bookmark_space" style="border-bottom: 1px solid silver; padding-bottom: 5px; margin-bottom: 10px; position: relative;">
+<div class="bookmark show">
   <% if @create_button_show %>
   <div style="position: absolute; top: 5px; right: 10px;">
     <%= link_to(icon_tag('tag_blue_add', :title=>'コメントの追加') + 'コメントの追加！', {:controller => "bookmark", :action => "edit", :url => @bookmark.url, :title => @bookmark.title, :dummy => '.html'}, {:class => "nyroModal"}) %>
   </div>
   <% end %>
-  <div class="title"><%= link_to_bookmark_url(@bookmark, h(@bookmark.title)) %> </div>
+  <div class="title"><%= link_to_bookmark_url @bookmark %></div>
   [タグ]
   <div style="margin: 5px 10px; background-color: #fff0f0; padding: 5px;">
   <% tag_cloud @tags do |name, count, css_class| -%>
-    <%= link_to name, {:controller => "bookmarks", :action => "search", :tag_words => name}, :class => css_class -%>
+    <%= link_to name, {:controller => "bookmarks", :action => "index", :tag_words => name}, :class => css_class -%>
     <span style='color: silver; font-size: 10px;'>(<%= h count -%>)</span>
   <% end -%>
   </div>
-  <div style="overflow: hidden;">[URL]　<%= link_to_bookmark_url(@bookmark, @bookmark.url) %></a><br>
+  <div style="overflow: hidden;">[URL]　<%= link_to_bookmark_url @bookmark, @bookmark.escaped_url %><br/>
        [登録ユーザ]　<%=h @bookmark.bookmark_comments_count %>人<span style="font-size: 10px;">(非公開の人数含む) </span></div>
 </div>
 
@@ -28,16 +28,8 @@
         <%= hidden_field_tag("authenticity_token", form_authenticity_token) %>
         <%= icon_tag('key', :title=>"非公開") unless bookmark_comment.public %>
         <%= link_to(icon_tag('tag_blue_edit', :title => '編集'), {:controller => "bookmark", :action => "edit", :url => @bookmark.url, :title => @bookmark.title, :dummy => '.html'}, {:class => "nyroModal"}) %>
-        <%= link_to_function icon_tag('tag_blue_delete', :title => '削除'),"if (confirm('本当に削除しますか')) { var f = document.createElement('form'); this.parentNode.appendChild(f); f.method = 'POST';f.action = get_action_value(this.href, #{bookmark_comment.id}); var input = document.createElement('input'); input.type = 'hidden'; input.name = 'authenticity_token'; input.value = document.getElementById('authenticity_token').value; f.appendChild(input); f.submit();}",:href => url_for(:controller =>'bookmark', :action =>'destroy') %>
+        <%= link_to_function icon_tag('tag_blue_delete', :title => '削除'),"if (confirm('本当に削除しますか')) { var f = document.createElement('form'); this.parentNode.appendChild(f); f.method = 'POST';f.action = '#{url_for(:controller =>'bookmark', :action =>'destroy', :uri => @bookmark.escaped_url, :comment_id => bookmark_comment.id)}'; var input = document.createElement('input'); input.type = 'hidden'; input.name = 'authenticity_token'; input.value = document.getElementById('authenticity_token').value; f.appendChild(input); f.submit();}",:href => url_for(:controller =>'bookmark', :action =>'destroy') %>
       <% end -%>
     </div>
   <% end -%>
-<% end -%>
-
-<% content_for :javascript do -%>
-<script  language='javascript' type='text/javascript'>
-function get_action_value(href, comment_id) {
-    return  href +'/' + escape('<%= @bookmark.get_encode_url %>') + '?comment_id=' + comment_id;
-}
-</script>
 <% end -%>

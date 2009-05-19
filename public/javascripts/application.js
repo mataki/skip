@@ -294,9 +294,9 @@ $j(function(){
                     $j("<h3></h3>").text(message["title"])
                 ).append(
                     $j("<div class='operation'></div>").append(
-                        $j("<span class='reload link pointer'></span>").text(message["reload"]).click(reloadUploader)
+                        $j("<span class='reload link pointer'></span>").append("<span class='ss_sprite ss_arrow_rotate_clockwise'>&nbsp;</span>").append(message["reload"]).click(reloadUploader)
                     ).append(
-                        $j("<span class='close link pointer'></span>").text(message["close"]).click(hideUploader)
+                        $j("<span class='close link pointer'></span>").append("<span class='ss_sprite ss_cross close'>&nbsp;</span>").append(message["close"]).click(hideUploader)
                     )
                 )
             ).append(
@@ -366,8 +366,8 @@ $j(function(){
                 $j('#indicator').hide();
                 $j('#refresher').show();
             },
-            error: function(event){
-                alert("通信に失敗しました");
+            error: function(request){
+                alert(request.responseText);
             }
         });
     };

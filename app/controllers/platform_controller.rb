@@ -1,5 +1,5 @@
 # SKIP(Social Knowledge & Innovation Platform)
-# Copyright (C) 2008 TIS Inc.
+# Copyright (C) 2008-2009 TIS Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -64,7 +64,7 @@ class PlatformController < ApplicationController
     if @user = User.find_by_email(email)
       if @user.active?
         @user.issue_reset_auth_token
-        @user.save!
+        @user.save_without_validation!
         UserMailer.deliver_sent_forgot_password(email, reset_password_url(@user.reset_auth_token))
         flash[:notice] = _("%{function}のためのURLを記載したメールを%{email}宛てに送信しました。") % {:email => email, :function => _('パスワードリセット')}
         redirect_to :controller => '/platform'
@@ -113,7 +113,7 @@ class PlatformController < ApplicationController
     if @user = User.find_by_email(email)
       if  @user.unused?
         @user.issue_activation_code
-        @user.save!
+        @user.save_without_validation!
         UserMailer.deliver_sent_activate(email, signup_url(@user.activation_token))
         flash[:notice] = _("ユーザ登録のためのURLを記載したメールを%{email}宛てに送信しました。") % {:email => email}
         redirect_to :controller => '/platform'
@@ -157,7 +157,7 @@ class PlatformController < ApplicationController
     if user = User.find_by_email(email)
       if user.active?
         user.issue_reset_auth_token
-        user.save!
+        user.save_without_validation!
         UserMailer.deliver_sent_forgot_openid(email, reset_openid_url(user.reset_auth_token))
         flash[:notice] = _("OpenID URLを再設定するためのURLを記載したメールを%{email}宛に送信しました。") % {:email => email}
         redirect_to :controller => "/platform"
@@ -316,7 +316,11 @@ class PlatformController < ApplicationController
         end
       end
     else
-      logger.info(User.to_s_log('[Login failed with password]', params[:login][:key]))
+      if params[:login]
+        logger.info(User.to_s_log('[Login failed with password]', params[:login][:key]))
+      else
+        logger.info('[Login failed for parameter is not specified]')
+      end
       flash[:error] = _("ログインに失敗しました。")
       redirect_to(request.env['HTTP_REFERER'] ? :back : login_url)
     end
