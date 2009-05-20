@@ -2,19 +2,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Script-Type" content="text/javascript" />
-  <%= favicon_include_tag %>
-  <title><%= h Admin::Setting.abbr_app_title %> - <%= h @title %></title>
-  <%= all_stylesheet_link_tag "style" %>
-  <%= stylesheet_link_tag "not_logged_in" %>
-  <%= skip_stylesheet_link_tag 'nyroModal.full.css' %>
-  <%= skip_stylesheet_link_tag 'jquery.autocomplete.css' %>
-  <%= skip_stylesheet_link_tag "jquery.cluetip.css" %>
-  <%= yield :stylesheet %>
+  <%= render :partial => 'shared/common_header', :locals => {:title => @title } %>
 </head>
 
 <body>
+<%= render :partial => "shared/flash_message" %>
 
 <% if @content_for_header -%>
   <%= yield :header %>
@@ -23,7 +15,6 @@
   <%= header_logo_link %>
 </div><!-- header -->
 <% end -%>
-<%= render :partial => 'layouts/flash_messages' %>
 
 <div id="main">
   <div id="contents_container">
@@ -59,11 +50,17 @@
 </body>
 
 <%= all_javascript_include_tag 'jquery' %>
-<script type="text/javascript">$j = jQuery.noConflict();</script>
+<% javascript_tag do -%>
+$j = jQuery.noConflict();
+var relative_url_root = '<%= controller.request.relative_url_root %>';
+<% end -%>
 <%= javascript_include_tag 'application' %>
 <%= skip_javascript_include_tag 'skip_util' %>
-<script type="text/javascript">
-var relative_url_root = '<%= controller.request.relative_url_root -%>';
-</script>
+<%= javascript_include_tag "flashMessage.js" %>
+<% javascript_tag do -%>
+$j(function(){
+    <%= yield :javascript_initializers %>
+});
+<% end -%>
 <%= yield :javascript %>
 </html>

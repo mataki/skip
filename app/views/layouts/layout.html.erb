@@ -2,21 +2,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Script-Type" content="text/javascript" />
-  <%= favicon_include_tag %>
-  <title><%= h Admin::Setting.abbr_app_title %> - <%= h @title %></title>
-
-  <%= all_stylesheet_link_tag "style" %>
-  <%= stylesheet_link_tag("skins/#{session[:user_custom_theme]}/skin.css") %>
-  <%= skip_stylesheet_link_tag 'nyroModal.full.css' %>
-  <%= skip_stylesheet_link_tag 'jquery.autocomplete.css' %>
-  <%= skip_stylesheet_link_tag "jquery.cluetip.css" %>
-  <%= yield :stylesheet %>
+  <%= render :partial => 'shared/common_header', :locals => {:title => @title } %>
 </head>
 
 <body>
 <%= render :partial => "shared/header" %>
+<%= render :partial=>"shared/flash_message" %>
 
 <div id="top"></div>
 
@@ -36,7 +27,6 @@
     </div>
 
     <div id="tab_body">
-      <%= render :partial => 'layouts/flash_messages' %>
       <div id="contents_container">
         <% if @content_for_contents_left -%>
         <div id="contents_left">
@@ -82,14 +72,17 @@
 
 </body>
 <%= all_javascript_include_tag 'jquery' %>
-<script type="text/javascript">$j = jQuery.noConflict();</script>
-<%= skip_jquery_include_tag 'jquery.tablesorter' %>
-<%= skip_javascript_include_tag 'ufo' %>
+<% javascript_tag do -%>
+$j = jQuery.noConflict();
+var relative_url_root = '<%= controller.request.relative_url_root %>';
+<% end -%>
 <%= javascript_include_tag 'application' %>
 <%= skip_javascript_include_tag 'skip_util' %>
+<%= javascript_include_tag "flashMessage.js" %>
 <%= skip_header_javascript_include_tag %>
-<script type="text/javascript">
-var relative_url_root = '<%= controller.request.relative_url_root -%>';
+<%= skip_jquery_include_tag 'jquery.tablesorter' %>
+<%= skip_javascript_include_tag 'ufo' %>
+<% javascript_tag do -%>
 $j(function(){
     $j('#loading').hide();
 
@@ -108,7 +101,9 @@ $j(function(){
 
     // 管理画面用
     $j('table.sortable').tablesorter();
+
+    <%= yield :javascript_initializers %>
 });
-</script>
+<% end -%>
 <%= yield :javascript %>
 </html>

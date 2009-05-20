@@ -56,7 +56,7 @@ class EditController < ApplicationController
 
     unless validate_params params, @board_entry
       @board_entry.send_mail = params[:board_entry][:send_mail] if params[:board_entry]
-      flash[:warning] = "不正なパラメータがあります"
+      flash[:warn] = "不正なパラメータがあります"
       render :action => 'index'
       return
     end
@@ -159,14 +159,14 @@ class EditController < ApplicationController
     unless params[:lock_version].to_i == @board_entry.lock_version
       @board_entry.send_mail = params[:board_entry][:send_mail] if params[:board_entry]
       @conflicted = true
-      flash.now[:warning] = "他の人によって同じ投稿に更新がかかっています。編集をやり直しますか？"
+      flash.now[:warn] = "他の人によって同じ投稿に更新がかかっています。編集をやり直しますか？"
       render :action => 'edit'
       return
     end
 
     unless validate_params params, @board_entry
       @board_entry.send_mail = params[:board_entry][:send_mail] if params[:board_entry]
-      flash[:warning] = "不正なパラメータがあります"
+      flash[:warn] = "不正なパラメータがあります"
       render :action => 'edit'
       return
     end

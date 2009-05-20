@@ -108,7 +108,7 @@ class BookmarkController < ApplicationController
   def show
     uri = params[:uri] ? Bookmark.unescaped_url(params[:uri]) : ""
     unless @bookmark = Bookmark.find_by_url(uri, :include => :bookmark_comments )
-      flash[:warning] = _("指定のＵＲＬは誰もブックマークしていません。")
+      flash[:warn] = _("指定のＵＲＬは誰もブックマークしていません。")
       redirect_to :controller => 'mypage', :action => 'index'
       return
     end
@@ -198,7 +198,7 @@ class BookmarkController < ApplicationController
 private
   def check_params
     unless params[:url] && check_url_format?(params[:url])
-      flash[:warning] = "そのURLは有効ではありません。"
+      flash[:warn] = "そのURLは有効ではありません。"
       redirect_to :controller => 'mypage', :action => 'index'
       return false
     end

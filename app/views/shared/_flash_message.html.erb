@@ -1,0 +1,15 @@
+<div id="flash_message">
+  <% %w[error warn notice].each do |klass| -%>
+    <% content_tag(:div, :class => klass, :style => "display:none") do -%>
+      <%= content_tag("h3", "&nbsp;")%>
+      <%= content_tag("span", _("[Click to hide]")) %>
+    <%end -%>
+  <% end -%>
+</div>
+
+<% content_for :javascript_initializers do -%>
+jQuery("#flash_message").flashMessage(
+  <%= [:error, :warn, :notice].inject({}){|r, k| r.update(k => flash[k]) }.reject{|k,v|v.nil?}.to_json %>,
+  "<%= request.relative_url_root %>"
+);
+<% end -%>

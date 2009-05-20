@@ -276,7 +276,7 @@ class MypageController < ApplicationController
         flash[:notice] = "画像を変更しました"
       end
     rescue ActiveRecord::RecordInvalid => e
-      flash[:warning] = e.message
+      flash[:warn] = e.message
     end
     redirect_to :action => 'manage', :menu => 'manage_portrait'
   end
@@ -433,7 +433,7 @@ class MypageController < ApplicationController
       UserMailer.deliver_sent_apply_email_confirm(@applied_email.email, "#{root_url}mypage/update_email/#{@applied_email.onetime_code}/")
       flash.now[:notice] = "メールアドレス変更の申請を受け付けました。メールをご確認ください。"
     else
-      flash.now[:warning] = "処理に失敗しました。もう一度申請してください。"
+      flash.now[:warn] = "処理に失敗しました。もう一度申請してください。"
     end
     @menu = 'manage_email'
     @user = current_user

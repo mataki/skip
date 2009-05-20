@@ -145,7 +145,7 @@ describe ShareFileController, "POST #create" do
           end
           it 'flashエラーメッセージが設定されること' do
             post :create, :file => { '1' => @file1 }
-            flash[:warning].should == 'ファイルのアップロードに失敗しました。<br/>[成功:0 失敗:1]'
+            flash[:warn].should == 'ファイルのアップロードに失敗しました。<br/>[成功:0 失敗:1]'
           end
           it 'ファイル毎のエラーメッセージが設定されること' do
             post :create, :file => { '1' => @file1 }
@@ -206,7 +206,7 @@ describe ShareFileController, "POST #create" do
           end
           it 'flashエラーメッセージが設定されること' do
             post :create, :file => { '1' => @file1, '2' => @file2 }
-            flash[:warning].should == 'ファイルのアップロードに失敗しました。<br/>[成功:0 失敗:2]'
+            flash[:warn].should == 'ファイルのアップロードに失敗しました。<br/>[成功:0 失敗:2]'
           end
           it 'ファイル毎のエラーメッセージが設定されること' do
             post :create, :file => { '1' => @file1, '2' => @file2 }
@@ -411,7 +411,7 @@ describe ShareFileController, "GET #download" do
             File.should_receive(:exist?).with(@full_path).and_return(false)
             get :download
           end
-          it { flash[:warning].should_not be_nil }
+          it { flash[:warn].should_not be_nil }
           it { response.should be_redirect }
         end
       end

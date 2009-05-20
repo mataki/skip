@@ -79,8 +79,8 @@ class ShareFileController < ApplicationController
       flash[:notice] = _('ファイルのアップロードに成功しました。')
       ajax_upload? ? render(:text => '') : render_window_close
     else
-      flash.now[:warning] = "ファイルのアップロードに失敗しました。<br/>"
-      flash.now[:warning] << "[成功:#{params[:file].size - @error_messages.size} 失敗:#{@error_messages.size}]"
+      flash.now[:warn] = "ファイルのアップロードに失敗しました。<br/>"
+      flash.now[:warn] << "[成功:#{params[:file].size - @error_messages.size} 失敗:#{@error_messages.size}]"
 
       @reload_parent_window = (params[:file].size - @error_messages.size > 0)
       @share_file.errors.clear
@@ -222,7 +222,7 @@ class ShareFileController < ApplicationController
 
     if downloadable?(params[:authenticity_token], share_file)
       unless File.exist?(share_file.full_path)
-        flash[:warning] = '指定されたファイルの実体が存在しません。お手数ですが管理者にご連絡をお願いいたします。'
+        flash[:warn] = '指定されたファイルの実体が存在しません。お手数ですが管理者にご連絡をお願いいたします。'
         return redirect_to(:controller => 'mypage', :action => "index")
       end
 

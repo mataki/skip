@@ -118,11 +118,11 @@ class BoardEntriesController < ApplicationController
       @board_entry_comment.destroy
       flash[:notice] = "コメントを削除しました。"
     else
-      flash[:warning] = "このコメントに対するコメントがあるため削除できません。"
+      flash[:warn] = "このコメントに対するコメントがあるため削除できません。"
     end
     redirect_to :action => "forward", :id => @board_entry_comment.board_entry.id
   rescue ActiveRecord::RecordNotFound => ex
-    flash[:warning] = "コメントは既に削除された模様です"
+    flash[:warn] = "コメントは既に削除された模様です"
     redirect_to :controller => "mypage", :action => "index"
   end
 
@@ -163,7 +163,7 @@ class BoardEntriesController < ApplicationController
     begin
       entry = BoardEntry.find(params[:id])
     rescue ActiveRecord::RecordNotFound => ex
-      flash[:warning] = "指定のページは存在していません。"
+      flash[:warn] = "指定のページは存在していません。"
       redirect_to :controller => 'mypage', :action => ''
       return false
     end
@@ -172,7 +172,7 @@ class BoardEntriesController < ApplicationController
                      'gid' => { :controller => 'group', :id =>'bbs'  } }
 
     flash.keep(:notice)
-    flash.keep(:warning)
+    flash.keep(:warn)
     redirect_to :controller => forward_hash[entry.symbol_type][:controller],
                 :action     => entry.symbol_id,
                 :id         => forward_hash[entry.symbol_type][:id],

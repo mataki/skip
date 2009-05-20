@@ -262,7 +262,7 @@ private
     if @user = User.find_by_uid(params[:uid])
       @user.mark_track session[:user_id] if @user.id != session[:user_id]
     else
-      flash[:warning] = _('ご指定のユーザは存在しません。')
+      flash[:warn] = _('ご指定のユーザは存在しません。')
       redirect_to :controller => 'mypage', :action => 'index'
       return false
     end

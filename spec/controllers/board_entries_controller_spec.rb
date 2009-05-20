@@ -159,7 +159,7 @@ describe BoardEntriesController, "GET #destroy_comment" do
     end
     it { response.should redirect_to(:action => "forward", :id => @board_entry.id ) }
     it "flashにメッセージが登録されていること" do
-      flash[:warning].should == "このコメントに対するコメントがあるため削除できません。"
+      flash[:warn].should == "このコメントに対するコメントがあるため削除できません。"
     end
   end
 end

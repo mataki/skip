@@ -39,7 +39,7 @@ describe GroupController, "POST #destroy" do
       response.should redirect_to(:action => "show")
     end
     it "flashにメッセージが登録されている" do
-      flash[:warning].should == '自分以外のユーザがまだ存在しています。削除できません。'
+      flash[:warn].should == '自分以外のユーザがまだ存在しています。削除できません。'
     end
   end
   describe "削除される場合" do

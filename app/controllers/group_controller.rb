@@ -140,7 +140,7 @@ class GroupController < ApplicationController
       @pages, @participations = paginate_participations(@group, false)
     when "manage_permit"
       unless @group.protected?
-        flash[:warning] = "参加に承認は不要です"
+        flash[:warn] = "参加に承認は不要です"
         redirect_to :action => :manage
         return
       end
@@ -223,7 +223,7 @@ class GroupController < ApplicationController
     if group_participation.save
       flash[:notice] = '変更しました。'
     else
-      flash[:warning] = '権限変更に失敗しました。'
+      flash[:warn] = '権限変更に失敗しました。'
     end
     redirect_to :action => 'manage', :menu => 'manage_participations'
   end
@@ -259,7 +259,7 @@ class GroupController < ApplicationController
   # 参加の許可か棄却
   def change_participation
     unless @group.protected?
-      flash[:warning] = "参加に承認は不要です"
+      flash[:warn] = "参加に承認は不要です"
       redirect_to :action => :show
     end
     type_name = params[:submit_type] == 'permit' ? "許可" : "棄却"
@@ -270,7 +270,7 @@ class GroupController < ApplicationController
           participation = GroupParticipation.find(participation_id)
           if participation.group_id == @participation.group_id &&
             !participation.waiting
-            flash[:warning] = "このグループに参加済みのユーザが含まれています。"
+            flash[:warn] = "このグループに参加済みのユーザが含まれています。"
             redirect_to :action => 'manage', :menu => 'manage_permit'
             return false
           end
@@ -302,7 +302,7 @@ class GroupController < ApplicationController
   # 削除
   def destroy
     if @group.group_participations.size > 1
-      flash[:warning] = '自分以外のユーザがまだ存在しています。削除できません。'
+      flash[:warn] = '自分以外のユーザがまだ存在しています。削除できません。'
       redirect_to :action => 'show'
     else
       @group.destroy
@@ -349,7 +349,7 @@ class GroupController < ApplicationController
       @group.save
       flash[:notice] = "#{group.name}のメンバーを参加者に追加し、連絡の掲示板を作成しました。"
     else
-      flash[:warning] = "ユーザ／グループの指定方法が間違っています"
+      flash[:warn] = "ユーザ／グループの指定方法が間違っています"
     end
 
     # BBSにsymbol直接指定[連絡]で新規投稿(自動で投稿されて保存される)
@@ -394,7 +394,7 @@ private
 
   def load_group_and_participation
     unless @group = Group.find_by_gid(params[:gid])
-      flash[:warning] = "指定のグループは存在していません"
+      flash[:warn] = "指定のグループは存在していません"
       redirect_to :controller => 'mypage', :action => 'index'
       return false
     end
@@ -408,7 +408,7 @@ private
 
   def check_owned
     unless @participation and @participation.owned?
-      flash[:warning] = 'その操作は管理者権限が必要です。'
+      flash[:warn] = 'その操作は管理者権限が必要です。'
       redirect_to :controller => 'mypage', :action => 'index'
       return false
     end

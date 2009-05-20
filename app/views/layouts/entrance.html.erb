@@ -2,12 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Script-Type" content="text/javascript" />
-  <%= favicon_include_tag %>
-  <title><%= h Admin::Setting.abbr_app_title -%></title>
-  <%= stylesheet_link_tag("application") %>
-  <%= skip_stylesheet_link_tag "jquery.cluetip.css" %>
+  <%= render :partial => 'shared/common_header', :locals => {:title => @title } %>
   <style type="text/css">
   div#main_navi div.flow_box {
     float: left;
@@ -18,13 +13,13 @@
     border: none; margin: 0; padding: 10px;
   }
   </style>
-  <%= yield :stylesheet %>
 </head>
 
 <body>
 <div id="header">
   <%= header_logo_link(url_for(:controller => '/platform', :action => :logout)) %>
 </div>
+<%= render :partial=>"shared/flash_message" %>
 
 <div id="top"></div>
 
@@ -51,11 +46,17 @@
 </body>
 
 <%= all_javascript_include_tag 'jquery' %>
-<script type="text/javascript">$j = jQuery.noConflict();</script>
+<% javascript_tag do -%>
+$j = jQuery.noConflict();
+var relative_url_root = '<%= controller.request.relative_url_root %>';
+<% end -%>
 <%= javascript_include_tag 'application' %>
 <%= skip_javascript_include_tag 'skip_util' %>
-<script type="text/javascript">
-var relative_url_root = '<%= controller.request.relative_url_root -%>';
-</script>
+<%= javascript_include_tag "flashMessage.js" %>
+<% javascript_tag do -%>
+$j(function(){
+    <%= yield :javascript_initializers %>
+});
+<% end -%>
 <%= yield :javascript %>
 </html>

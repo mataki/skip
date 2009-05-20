@@ -13,18 +13,24 @@
 </head>
 
 <body>
+<%= render :partial => "shared/flash_message" %>
 <div id="main" style="margin: 10px;">
-  <%= render :partial => 'layouts/flash_messages' %>
-  <%= @content_for_layout %>
+  <%= yield %>
 </div><!-- main -->
 
 </body>
 
 <%= all_javascript_include_tag 'jquery' %>
-<script type="text/javascript">$j = jQuery.noConflict();</script>
+<% javascript_tag do -%>
+$j = jQuery.noConflict();
+var relative_url_root = '<%= controller.request.relative_url_root %>';
+<% end -%>
 <%= javascript_include_tag 'application' %>
-<script type="text/javascript">
-var relative_url_root = '<%= controller.request.relative_url_root -%>';
-</script>
+<%= javascript_include_tag "flashMessage.js" %>
+<% javascript_tag do -%>
+$j(function(){
+    <%= yield :javascript_initializers %>
+});
+<% end -%>
 <%= yield :javascript %>
 </html>
