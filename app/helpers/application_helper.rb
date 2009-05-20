@@ -291,9 +291,9 @@ module ApplicationHelper
     if collaboration_apps = INITIAL_SETTINGS['collaboration_apps']
       application_links << collaboration_apps.values.map{|m| link_to( m['name'], m['url'] )}
     end
-    application_links << link_to( _('Other'), '#', :id => 'other_link')
     other_links = []
     unless COMMON_MENUS.empty?
+      application_links << link_to( _('Other'), '#', :id => 'other_link')
       COMMON_MENUS[:menus].each do |menu|
         if menu[:url]
           other_links << link_to(h(menu[:title]), menu[:url], :target => '_blank')
