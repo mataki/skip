@@ -9,12 +9,11 @@
 <% end %>
 </div>
 
-<% content_for :javascript do -%>
+<% content_for :javascript_includes do -%>
   <%= skip_javascript_include_tag "fckeditor/fckeditor" %>
-  <script type='text/javascript'>
-  $j(function(){
+<% end -%>
+
+<% content_for :javascript_initializers do -%>
       FCKeditor.BasePath = platform_url_root + "/javascripts/skip/fckeditor/";
       new FCKeditor('chain_comment', '100%', '300', 'Normal').ReplaceTextarea();
-  });
-  </script>
 <% end -%>

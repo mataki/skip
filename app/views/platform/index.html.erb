@@ -56,13 +56,9 @@
 </div>
 <div id="desc_before_login" class="desc"><%= skip_image_tag 'indicator.gif' %></div>
 
-<% content_for :javascript do -%>
-<script type="text/javascript">
-$j(function(){
+<% content_for :javascript_initializers do -%>
     $j('#desc_before_login').load(relative_url_root + '/custom/about_this_site.html', function(text) {
       if (text == "") { $j('#desc_before_login').hide(); }
     });
     $j('.desc, .login-box').fadeTo('slow',0.8);
-});
-</script>
 <% end -%>

@@ -72,9 +72,7 @@
 <% end %>
 </div>
 
-<% content_for :javascript do -%>
-<script type="text/javascript">
-$j(function(){
+<% content_for :javascript_initializers do -%>
     $j('#user_uid_uid')
     .keyup(function() {
         $j.ajax({
@@ -94,6 +92,4 @@ $j(function(){
     .ajaxStart(function() {
         $j('#indicator').css({ display:'inline' });
     });
-});
-</script>
 <% end -%>

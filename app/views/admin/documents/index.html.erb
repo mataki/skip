@@ -11,9 +11,11 @@
     <%= link_to '[' + _('既定のページに戻す') + ']', admin_documents_revert_path(:target => params[:target]), :method => :post, :confirm => _('現在設定中のページが消えてしまいますがよろしいですか?') %>
     </div>
     <% end -%>
-    <% content_for :javascript do -%>
+    <% content_for :javascript_includes do -%>
     <%= skip_javascript_include_tag "fckeditor/fckeditor" %>
-    <script type="text/javascript">
+    <% end -%>
+
+    <% content_for :javascript_initializers do -%>
     $j(function(){
         FCKeditor.BasePath = platform_url_root + "/javascripts/skip/fckeditor/";
         var editor = new FCKeditor('documents_<%= params[:target] %>', '100%', '600', 'Normal');
@@ -21,8 +23,6 @@
         editor.Config["FullPage"] = true;
 <% end %>
         editor.ReplaceTextarea();
-    });
-    </script>
     <% end -%>
   <% else -%>
     <div class="box">

@@ -10,8 +10,7 @@
   <p>(直接指定の際は、"uid:ニックネーム"、"gid:グループ名"のように入力してください。また漢字氏名、部署による部分検索も可能です。ex:山田、総務)</p>
 </div>
 
-<% content_for :javascript do -%>
-<script type="text/javascript">
+<% content_for :javascript_initializers do -%>
 /* このページで使う変数 */
 var publication_symbols_array = new Array();
 if ($j('#publication_symbols_value').val().length > 0) {
@@ -26,7 +25,6 @@ if(edit_checkbox) {
     }
 }
 
-$j(function() {
     var createSymbolRecord = function(symbol, checked, name) {
         var base = $j(document.createElement("li")).css({ padding:'1px 0 1px 5px', marginTop:'3px', color:'#999999' });
 
@@ -162,6 +160,4 @@ $j(function() {
             $j('#publication_name:input').val(data[1]);
         }
     });
-});
-</script>
 <% end -%>

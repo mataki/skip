@@ -39,9 +39,8 @@
   <%= form.text_field :sort_order %>
   <%= form.help_icon :sort_order %>
 </p>
-<% content_for :javascript do -%>
-<script type="text/javascript">
-$j(function(){
+
+<% content_for :javascript_initializers do -%>
     var changeOptionValuesDescription = function(){
         h = <%= option_values_help_icon_hash_as_json %>;
         var helpIconTag = h[$j('#admin_user_profile_master_input_type').val()];
@@ -70,6 +69,4 @@ $j(function(){
     });
     changeOptionValuesDescription();
     toggleOptionValues();
-});
-</script>
 <% end -%>

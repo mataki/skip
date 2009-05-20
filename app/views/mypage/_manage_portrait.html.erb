@@ -25,9 +25,7 @@
   <% end -%>
 <% end -%>
 
-<% content_for :javascript do -%>
-<script type="text/javascript">
-$j(function(){
+<% content_for :javascript_initializers do -%>
     $j("#picture_upload_form")
     .submit(function(){
         if($j("#picture_picture").val() == ""){
@@ -35,6 +33,4 @@ $j(function(){
             return false;
         }
     });
-});
-</script>
 <% end -%>

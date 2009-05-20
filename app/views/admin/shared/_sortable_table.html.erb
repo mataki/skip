@@ -48,13 +48,12 @@
 <div class="navi"><%= page_link(@pages) -%></div>
 <% end %>
 
-<% content_for :javascript do -%>
+<% content_for :javascript_includes do -%>
 <%= skip_jquery_include_tag 'jquery.columnmanager' %>
-<script type="text/javascript">
-$j(function(){
+<% end -%>
+
+<% content_for :javascript_initializers do -%>
     <% link_indexes = ((columns.size + 1)..(columns.size + 1 + link_elem_size)).to_a.join(',') %>
     <% hide_columns_indexes = hide_columns.map { |col| columns.index(col) + 1 }.join(',') %>
     $j('table.normal').columnManager({listTargetID: 'table_columns', onClass: 'visible', offClass: 'invisible', hideInList:[<%= link_indexes %>], colsHidden: [<%= hide_columns_indexes %>]});
-});
-</script>
 <% end -%>

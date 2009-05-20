@@ -74,9 +74,7 @@
   <%= link_to _('Listing %{model}') % {:model => _('user')}, admin_users_path %>
 <% end -%>
 
-<% content_for :javascript do -%>
-<script type="text/javascript">
-$j(function(){
+<% content_for :javascript_initializers do -%>
     $j('#import_confirmation_button')
     .click(function(){
         $j(this)
@@ -141,7 +139,4 @@ $j(function(){
         }
     };
     checkUpdateRegistered($j('#update_registered')[0]);
-
-});
-</script>
 <% end -%>

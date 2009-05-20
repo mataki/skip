@@ -90,9 +90,7 @@
   <% end -%>
 <% end -%>
 
-<% content_for :javascript do -%>
-<script type="text/javascript" >
-$j(function() {
+<% content_for :javascript_initializers do -%>
     $j('.toggle_owned')
     .click(function() {
         var url = '<%= url_for(:action => "toggle_owned") -%>';
@@ -138,6 +136,4 @@ $j(function() {
             $j('#users_name:input').val(data[1]);
         }
     });
-});
-</script>
 <% end -%>

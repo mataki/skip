@@ -9,14 +9,10 @@
   <tr><td colspan="2"><div id="tag_list"></div></td></tr>
   <tr><td colspan="2"><div style="font-size: 10px;">(人気のタグを<%=h @tags.size %>件表示しています)</div></td></tr>
 
-<% content_for :javascript do -%>
-  <script type="text/javascript">
-  $j(function() {
+<% content_for :javascript_initializers do -%>
       $j('#tag_words').jTagging(
           $j('#tag_list').append(
               createTagsLink(new Array(<%= @tags.map{|tag| ("'#{tag}'")}.join(',') %>))
           )
       );
-  });
-  </script>
 <% end -%>

@@ -38,9 +38,7 @@
   <p><%= settings_label_with_check_box_tag :enable_single_session %></p>
 </div>
 
-<% content_for :javascript do -%>
-<script type="text/javascript">
-$j(function(){
+<% content_for :javascript_initializers do -%>
     var toggleByCheckbox = function(checkboxId){
       var jcheckbox = $j('#' + checkboxId);
       if(jcheckbox.is(':checked')){
@@ -104,6 +102,4 @@ $j(function(){
         toggleCleaningNotificationInterval();
     });
     setupSecurityForm();
-});
-</script>
 <% end -%>

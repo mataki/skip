@@ -23,9 +23,7 @@
 </div>
 <% end -%>
 
-<% content_for :javascript do -%>
-<script type="text/javascript">
-$j(function(){
+<% content_for :javascript_initializers do -%>
     $j('form')
     .submit(function() {
         if(confirm('<%= _('%{name}を変更します。') % {:name => _('user name')} + _('Are you sure?') %>')) {
@@ -34,6 +32,4 @@ $j(function(){
             return false;
         }
     });
-});
-</script>
 <% end -%>

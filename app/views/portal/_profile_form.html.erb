@@ -19,14 +19,16 @@
   </table>
   <% end -%>
 <% end -%>
-<% content_for :javascript do -%>
+
+<% content_for :javascript_includes do -%>
 <%= skip_javascript_include_tag "fckeditor/fckeditor" %>
 <%= skip_stylesheet_link_tag "themes/cupertino/ui.theme.css" %>
 <%= skip_stylesheet_link_tag "themes/cupertino/ui.datepicker.css" %>
 <%= skip_jquery_include_tag 'ui.datepicker' %>
 <%= skip_javascript_include_tag "jquery/ui/i18n/ui.datepicker-ja.js" %>
-<script type="text/javascript">
-$j(function(){
+<% end -%>
+
+<% content_for :javascript_initializers do -%>
     FCKeditor.BasePath = platform_url_root + "/javascripts/skip/fckeditor/";
     $j('.min_fckeditor').each(function(){
         new FCKeditor(this.id, '100%', '430', 'Light').ReplaceTextarea();
@@ -69,7 +71,4 @@ $j(function(){
     .each(function(){
         toggleAppendableSelect(this);
     });
-
-});
-</script>
 <% end -%>

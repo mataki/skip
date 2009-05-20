@@ -42,8 +42,7 @@
   <% end -%>
 <% end -%>
 
-<% content_for :javascript do -%>
-  <script type="text/javascript">
+<% content_for :javascript_initializers do -%>
   /*
    * 正規表現にマッチした名前のチェックボックスをオン・オフ
    * match_name : 正規表現（RegExp）
@@ -59,5 +58,4 @@
       }
     }
   }
-  </script>
 <% end -%>

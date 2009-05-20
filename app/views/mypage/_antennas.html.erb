@@ -15,10 +15,11 @@
 <% end -%>
 </ul>
 
-<% content_for :javascript do -%>
+<% content_for :javascript_includes do -%>
 <%= skip_jquery_include_tag "jquery.inplace" %>
-<script type="text/javascript">
-$j(function() {
+<% end -%>
+
+<% content_for :javascript_initializers do -%>
     var ado_inplace_edit_url = '<%= url_for(:action => :set_antenna_name) %>';
     $j('.editable_antenna_name').editInPlace({
         url: ado_inplace_edit_url,
@@ -27,6 +28,4 @@ $j(function() {
         save_button: '<a href="#" class="inplace_save">[保存]</a>',
         cancel_button: '<a href="#" class="inplace_cancel">[キャンセル]</a>'
     });
-});
-</script>
 <% end -%>

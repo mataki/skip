@@ -17,14 +17,11 @@
 <% end -%>
 <%= link_to(_('Editing %{model}') % {:model => _('user profile')}, admin_user_user_profile_path(@user)) if UserProfileMaster.count > 0 %>
 <% end -%>
-<% content_for :javascript do -%>
-<script type="text/javascript">
-$j(function(){
+
+<% content_for :javascript_initializers do -%>
     $j.fn.nyroModal.settings.processHandler = function(settings) {
         $j.nyroModalSettings({
             minWidth: 10, minHeight: 10
         });
     };
-});
-</script>
 <% end -%>

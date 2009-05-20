@@ -72,10 +72,8 @@
     <% end -%>
   </div>
 </div>
-<% content_for :javascript do -%>
-<script language='javascript' type='text/javascript'>
-//<![CDATA[
-$j(function(){
+
+<% content_for :javascript_initializers do -%>
     var setupTagComplete = function() {
         var userTags = new Array(<%= user_tags_array.map{|str| ("'#{str}'")}.join(',') %>);
         var otherTags = new Array(<%= other_tags_array.map{|str| ("'#{str}'")}.join(',') %>);
@@ -137,7 +135,4 @@ $j(function(){
     if ($j('#bookmark_title').val() == '') {
         reloadTitle('<%= @bookmark.escaped_url %>', 'bookmark_title');
     }
-});
-//]]>
-</script>
 <% end -%>

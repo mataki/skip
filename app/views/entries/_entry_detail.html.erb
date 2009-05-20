@@ -310,9 +310,7 @@
   <a id="page_bottom" href="#page_top">[ページ先頭]</a>
 </div>
 
-<% content_for :javascript do -%>
-  <script type="text/javascript">
-  $j(function(){
+<% content_for :javascript_initializers do -%>
       // 書き込みボタン押下時
       $j('#new_comment_form')
       .submit(function() {
@@ -662,6 +660,4 @@
       };
 
       $j("textarea").jGrow({ rows: 25 });
-  });
-  </script>
 <% end -%>

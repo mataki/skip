@@ -90,9 +90,7 @@
 <% end -%>
 <%= link_to _('OpenIDを忘れた/再設定したい方はこちら'), forgot_openid_path, {:style => 'font-size:14px'} if enable_forgot_openid? %>
 
-<% content_for :javascript do -%>
-<script type="text/javascript">
-$j(function(){
+<% content_for :javascript_initializers do -%>
     var loadLoginData = function(){
         login_save = false;
         if (loadCookie('login_save') == 'true')
@@ -113,6 +111,4 @@ $j(function(){
             $j(this).attr('action', $j(this).attr('action').replace('http://', 'https://'));
         }
     });
-});
-</script>
 <% end -%>

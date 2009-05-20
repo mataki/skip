@@ -5,9 +5,7 @@
 <% end %>
 <div style="clear: left;"><br/></div>
 
-<% content_for :javascript do -%>
-<script type="text/javascript">
-$j(function() {
+<% content_for :javascript_initializers do -%>
     getRanking = function(contents_type, year, month){
         var url = relative_url_root + '/ranking_data/' + contents_type;
         if ( year != undefined ) {
@@ -26,6 +24,4 @@ $j(function() {
             }
         });
     };
-});
-</script>
 <% end -%>

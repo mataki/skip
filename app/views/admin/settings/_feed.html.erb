@@ -15,9 +15,7 @@
   </div>
 </div>
 
-<% content_for :javascript do -%>
-<script type="text/javascript">
-$j(function(){
+<% content_for :javascript_initializers do -%>
     var index = <%= @index || 0 %>;
     $j('#add_feed_item')
     .click(function(){
@@ -40,6 +38,4 @@ $j(function(){
             $j('#feed_items').append('<%= hidden_field_tag 'settings[mypage_feed_settings]', '' %>')
         }
     });
-});
-</script>
 <% end -%>

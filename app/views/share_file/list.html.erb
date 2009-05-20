@@ -75,9 +75,7 @@
   <% end %>
 <% end -%>
 
-<% content_for :javascript do -%>
-  <script type="text/javascript">
-  $j(function(){
+<% content_for :javascript_initializers do -%>
       $j('.clear_download_history_link')
       .click(function(){
           if (confirm('本当に削除しますか？')) {
@@ -118,6 +116,4 @@
       });
 
       setupShareFileDownloadLink();
-  });
-  </script>
 <% end -%>

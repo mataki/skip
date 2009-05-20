@@ -53,10 +53,11 @@ var relative_url_root = '<%= controller.request.relative_url_root %>';
 <%= javascript_include_tag 'application' %>
 <%= skip_javascript_include_tag 'skip_util' %>
 <%= javascript_include_tag "flashMessage.js" %>
+<%= yield :javascript_includes %>
+
 <% javascript_tag do -%>
 $j(function(){
     <%= yield :javascript_initializers %>
 });
 <% end -%>
-<%= yield :javascript %>
 </html>

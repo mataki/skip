@@ -67,9 +67,7 @@ div.topix_body .page_line, div.topix_body .item_line {
   <div id="contents_bottom"></div><!-- contents_bottom -->
 </div><!-- contents_container -->
 
-<% content_for :javascript do -%>
-<script type="text/javascript">
-$j(function() {
+<% content_for :javascript_initializers do -%>
     // アンテナの条件を表示・非表示をトグルする
     $j('#show_antenna_link, #hide_antenna_link')
     .click(function(){
@@ -116,6 +114,4 @@ $j(function() {
         });
 
     }
-});
-</script>
 <% end -%>

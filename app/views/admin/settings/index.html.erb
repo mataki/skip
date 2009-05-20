@@ -35,9 +35,7 @@
 </div>
 <% end -%>
 
-<% content_for :javascript do -%>
-<script type="text/javascript">
-$j(function(){
+<% content_for :javascript_initializers do -%>
     var revertToDefault = function(target_id, value) {
         var targetObj = $j('#' + target_id);
         if(targetObj.attr('type') == 'checkbox') {
@@ -62,6 +60,4 @@ $j(function(){
 <% end -%>
         return false;
     });
-});
-</script>
 <% end -%>

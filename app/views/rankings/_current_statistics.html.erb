@@ -48,9 +48,7 @@
 <div style="clear: left"></div>
 <% end -%>
 
-<% content_for :javascript do -%>
-<script type="text/javascript">
-$j(function() {
+<% content_for :javascript_initializers do -%>
     $j('.statistics_history_link')
     .click(function() {
         var url = relative_url_root + '/rankings/ado_statistics_history';
@@ -71,6 +69,4 @@ $j(function() {
         });
         return false;
     });
-});
-</script>
 <% end -%>

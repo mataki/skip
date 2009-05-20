@@ -60,9 +60,7 @@ table {
   <div style="clear: left"></div>
 </div>
 
-<% content_for :javascript do -%>
-<script type='text/javascript'>
-$j(function() {
+<% content_for :javascript_initializers do -%>
     // TODO 下のメソッド二つはおそらく記事の部分でも使えそう。
     var changePublicationType = function() {
         if ($j('#publication_type_protected:checked').length > 0) {
@@ -125,6 +123,4 @@ $j(function() {
         $j('#share_file_category').jTagging($j('#user_tags_list'));
     };
     setupTagComplete();
-});
-</script>
 <% end -%>

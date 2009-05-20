@@ -17,9 +17,7 @@
 <br />
 <%= render :partial => 'list' %>
 
-<% content_for :javascript do -%>
-<script type="text/javascript">
-$j(function() {
+<% content_for :javascript_initializers do -%>
     var contents_types = ['entry_access', 'entry_comment', 'entry_he', 'user_entry', 'user_access', 'commentator'];
     var loadRanking = function(){
         var year = <%= h @year -%>;
@@ -36,6 +34,4 @@ $j(function() {
         var month = year_month[1];
         location.href = relative_url_root + '/rankings/monthly/' + year + '/' + month;
     });
-});
-</script>
 <% end -%>

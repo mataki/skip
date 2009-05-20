@@ -106,9 +106,7 @@ div.input_line textarea {
   <div style="clear: left"></div>
 </div>
 
-<% content_for :javascript do -%>
-<script language='javascript' type='text/javascript'>
-$j(function() {
+<% content_for :javascript_initializers do -%>
     var setupTagComplete = function() {
         var tags = new Array(<%= @categories_hash[:mine].map{|str| ("'#{str}'")}.join(',') %>);
         var stdTags = new Array(<%= @categories_hash[:standard].map{|str| ("'#{str}'")}.join(',') %>);
@@ -226,6 +224,4 @@ $j(function() {
 
     if(isShowOptions())
         $j('#show_option_link').click();
-});
-</script>
 <% end -%>

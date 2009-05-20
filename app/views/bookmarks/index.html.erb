@@ -40,9 +40,7 @@
 <% end -%>
 </div>
 
-<% content_for :javascript do -%>
-<script language='javascript' type='text/javascript'>
-$j(function() {
+<% content_for :javascript_initializers do -%>
     $j('#bookmark_form')
     .submit(function(e) {
         e.preventDefault();
@@ -53,6 +51,4 @@ $j(function() {
         $j('#bookmark_form').nyroModalManual();
         $j('#url').val('');
     });
-});
-</script>
 <% end -%>

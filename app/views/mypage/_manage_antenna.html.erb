@@ -41,13 +41,14 @@ ul#antennas_list li.dragenter {
 
 <%= hidden_field_tag("authenticity_token", form_authenticity_token) %>
 
-<% content_for :javascript do -%>
+<% content_for :javascript_includes do -%>
 <%= skip_jquery_include_tag 'ui.core' %>
 <%= skip_jquery_include_tag 'ui.draggable' %>
 <%= skip_jquery_include_tag 'ui.droppable' %>
 <%= skip_jquery_include_tag 'ui.sortable' %>
-<script type="text/javascript">
-$j(function() {
+<% end -%>
+
+<% content_for :javascript_initializers do -%>
     // アンテナの追加
     var setupAddAntennaBtn = function() {
       $j('form#add_antenna_form')
@@ -267,6 +268,4 @@ $j(function() {
         });
     };
     setupDoraggableAntennaItem();
-});
-</script>
 <% end -%>

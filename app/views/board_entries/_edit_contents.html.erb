@@ -21,11 +21,12 @@
     <%= text_area_tag 'contents_hiki', h(params[:contents_hiki]), :cols => 90, :rows => 20 %>
   </div>
 
-<% content_for :javascript do -%>
+<% content_for :javascript_includes do -%>
 <%= skip_javascript_include_tag "fckeditor/fckeditor" %>
 <%= skip_jquery_include_tag 'iframe_upload' %>
-<script type='text/javascript'>
-$j(function(){
+<% end -%>
+
+<% content_for :javascript_initializers do -%>
     FCKeditor.BasePath = platform_url_root + "/javascripts/skip/fckeditor/";
     new FCKeditor('contents_richtext', '100%', '330', 'Normal').ReplaceTextarea();
 
@@ -65,6 +66,4 @@ $j(function(){
     });
 
     $j('div#share_file_uploader').shareFileUploader(<%= share_file_uploader_opt(@board_entry).to_json %>);
-});
-</script>
 <% end -%>

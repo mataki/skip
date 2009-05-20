@@ -29,9 +29,7 @@
   <%= form.help_icon :initial_selected %>
 </p>
 
-<% content_for :javascript do -%>
-<script type="text/javascript">
-$j(function(){
+<% content_for :javascript_initializers do -%>
     var changeCategoryIcon = function(){
         var icon = $j('#admin_group_category_icon').val();
         var icon_class = 'ss_sprite ss_' + icon;
@@ -49,6 +47,4 @@ $j(function(){
     .change(function(){
         changeCategoryIcon();
     });
-});
-</script>
 <% end -%>

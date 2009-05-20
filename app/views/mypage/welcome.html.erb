@@ -60,10 +60,6 @@
   </div>
 <% end -%>
 
-<% content_for :javascript do -%>
-<script type="text/javascript">
-$j(function(){
+<% content_for :javascript_initializers do -%>
     $j('#introduction').load(relative_url_root + "/custom/about_this_site.html");
-});
-</script>
 <% end -%>

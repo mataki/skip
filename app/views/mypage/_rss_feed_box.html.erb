@@ -2,9 +2,8 @@
 <div class="box_space" id="rss_feed">
   <%= skip_image_tag 'indicator.gif' %> <span style="color:gray">外部から読み込み中...</span>
 </div><!-- box_space -->
-<% content_for :javascript do -%>
-<script type='text/javascript'>
-$j(function(){
+
+<% content_for :javascript_initializers do -%>
     $j.ajax({
         url: '<%= url_for(:controller => 'mypage', :action => 'load_rss_feed') %>',
         success: function(html) {
@@ -15,7 +14,5 @@ $j(function(){
         complete: function(request) {
         }
     });
-});
-</script>
 <% end -%>
 <% end -%>

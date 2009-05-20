@@ -38,9 +38,7 @@
   <div><%= render :partial => 'full_text_search' -%></div>
 </div>
 
-<% content_for :javascript do -%>
-<script type="text/javascript">
-$j(function(){
+<% content_for :javascript_initializers do -%>
     // サブ検索条件選択時、選択したもの以外のラジオボタンなどをdisableに
     // disableにしないと、HTML上先に存在するラジオボタンなどが条件として送られるため
     $j('.condition_radio_button')
@@ -71,6 +69,4 @@ $j(function(){
         var url = "http://www.google.co.jp/search?hl=ja&btnG=Google+%E6%A4%9C%E7%B4%A2&lr=&q=" + query;
         window.open(encodeURI(url), '_blank').foccus();
     });
-});
-</script>
 <% end -%>

@@ -44,9 +44,7 @@
   <div class="navi"><%= page_link pages %></div>
 <% end -%>
 
-<% content_for :javascript do -%>
-<script type="text/javascript">
-$j(function(){
+<% content_for :javascript_initializers do -%>
     <%# TODO application.jsに移動する %>
     var setupFavoliteStar = function(){
       $j('.favorite_star')
@@ -73,6 +71,4 @@ $j(function(){
       });
     };
     setupFavoliteStar();
-});
-</script>
 <% end -%>
