@@ -28,6 +28,33 @@
   <tbody>
   </tbody>
 </table>
+<!--
+<div class="desc">
+  <%= _('RESTでメッセージを表示します。') %>
+</div>
+<table class="rest normal sortable">
+  <thead>
+    <tr>
+      <th><%= _('Call ID') %></th>
+      <th><%= _('From Number') %></th>
+      <th><%= _('Title') %></th>
+      <th><%= _('Notes') %></th>
+      <th><%= _('Name') %></th>
+      <th><%= _('Start Time') %></th>
+      <th><%= _('Call Type') %></th>
+      <th><%= _('transcription') %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @messages.each do |m| -%>
+      <tr>
+        <td><%= m %></td>
+      </tr>
+    <% end -%>
+  </tbody>
+</table>
+-->
+
 <% end -%>
 <% content_for :javascript do -%>
 <%= skip_javascript_include_tag "swfobject.js" %>

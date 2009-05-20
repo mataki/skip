@@ -13,13 +13,27 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+require "oauth/consumer"
+
 class RibbitsController < UserController
   before_filter :access_denied_other, :except => :call
 
   def messages
     @ribbit = current_user.ribbit
+    @messages = JSON.parse(user_access(@ribbit).get("/rest/1.0/messages/#{@ribbit.guid}/inbox").body)["entry"]
+    debugger
+    logger.info "----- [messages]: #{@messages.inspect}"
   end
-  alias call_history messages
+
+  def call_history
+    @ribbit = current_user.ribbit
+    @call_histories = if((body = user_access(@ribbit).get("/rest/1.0/calls/#{@ribbit.guid}").body) != "null")
+                        JSON.parse(body)["entry"]
+                      else
+                        []
+                      end
+    logger.info "----- [call_histories]: #{@call_histories.inspect}"
+  end
 
   def edit
     @ribbit = @user.ribbit || @user.build_ribbit
@@ -53,5 +67,16 @@ class RibbitsController < UserController
       redirect_to(:controller => :user, :uid => @user.uid, :action => :show)
       false
     end
+  end
+
+  def consumer
+    @consumer ||= OAuth::Consumer.new(INITIAL_SETTINGS['ribbit']['consumer_key'],
+                               INITIAL_SETTINGS['ribbit']['consumer_secret'],
+                               :site => "https://rest.ribbit.com/rest/1.0",
+                               :realm => "http://oauth.ribbit.com")
+  end
+
+  def user_access(ribbit)
+    @user_access ||= OAuth::AccessToken.new(consumer, ribbit.access_token, ribbit.access_secret)
   end
 end

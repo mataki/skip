@@ -144,6 +144,8 @@ default: &default
   ribbit:
     app_id: "app_sample"
     secret_key: "set_developer_secret_key"
+    consumer_key:
+    consumer_secret:
 
   # ================================================================================================
   # その他

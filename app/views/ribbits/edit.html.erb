@@ -18,6 +18,18 @@
   <%= f.password_field :password %>
 </p>
 <p>
+  <%= f.label :access_token %>
+  <%= f.password_field :access_token %>
+</p>
+<p>
+  <%= f.label :access_secret %>
+  <%= f.password_field :access_secret %>
+</p>
+<p>
+  <%= f.label :guid %>
+  <%= f.text_field :guid %>
+</p>
+<p>
   <%= f.submit %>
 </p>
 <% end -%>
