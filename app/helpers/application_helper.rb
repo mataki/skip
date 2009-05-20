@@ -286,6 +286,34 @@ module ApplicationHelper
       %!<link rel="icon" href="#{favicon_url}" type="image/ico" />!
   end
 
+  def application_link
+    application_links = [link_to('SKIP', root_url)]
+    if collaboration_apps = INITIAL_SETTINGS['collaboration_apps']
+      application_links << collaboration_apps.values.map{|m| link_to( m['name'], m['url'] )}
+    end
+    application_links << link_to( _('Other'), '#', :id => 'other_link')
+    other_links = []
+    unless COMMON_MENUS.empty?
+      COMMON_MENUS[:menus].each do |menu|
+        if menu[:url]
+          other_links << link_to(h(menu[:title]), menu[:url], :target => '_blank')
+        else
+          other_links << content_tag(:p, h(menu[:title]))
+          menu[:links].each do |link|
+            other_links << link_to(h(link[:title]), link[:url], :target => '_blank')
+          end
+        end
+      end
+    end
+    application_link = content_tag :div, :id => 'application_link' do
+      application_links.join(' | ')
+    end
+    other_link = content_tag :div, :id => 'other_links', :class => 'invisible' do
+      other_links.join('')
+    end
+    "#{application_link}#{other_link}"
+  end
+
 private
   def relative_url_root
     ActionController::AbstractRequest.relative_url_root

@@ -1,12 +1,6 @@
 <div id="header">
   <div id="global_top">
-    <div id="application_link">
-      <b>SKIP</b>
-      |
-      <%= link_to 'SKIP-WIKI', '#' %>
-      |
-      <%= link_to 'その他 ▼', '#' %>
-    </div>
+    <%= application_link %>
     <div id="menu">
       <b><%= user_name_mode?(:code) ? "#{h(Admin::Setting.login_account)} : #{h(@current_user.code)}" : "#{_('Admin::UserUid|Uid')} : #{h(@current_user.uid)}" %></b>
       |
@@ -18,21 +12,6 @@
       |
       <% end -%>
       <%= link_to "ログアウト", :controller => "/platform", :action => :logout, :only_path => false -%>
-      <% unless COMMON_MENUS.empty? -%>
-      <select style="vertical-align:middle;" onchange="if (this.value != '') { window.open(this.value); }">
-        <option selected="selected" value="">リンク ... </option>
-          <% COMMON_MENUS[:menus].each do |menu| %>
-            <% if menu[:url] %>
-        <option value="<%= menu[:url] -%>">&nbsp;<%=h menu[:title] -%></option>
-            <% else %>
-        <option disabled="disabled" style="color: gray;">[<%=h menu[:title] -%>]</option>
-              <% menu[:links].each do |link| %>
-        <option value="<%= link[:url] -%>">&nbsp;<%=h link[:title] -%></option>
-              <% end %>
-            <% end %>
-          <% end %>
-      </select>
-      <% end -%>
       <br style="clear: left" />
     </div>
   </div>
@@ -47,5 +26,4 @@
     <% end -%>
   </div>
   <% end %>
-
 </div><!-- header -->

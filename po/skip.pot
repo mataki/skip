@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2009-04-22 15:20+0900\n"
+"POT-Creation-Date: 2009-05-20 10:46+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -70,44 +70,44 @@ msgstr ""
 msgid "%{model} was successfully created."
 msgstr ""
 
+#: app/controllers/admin/user_profile_master_categories_controller.rb:28
 #: app/controllers/admin/admin_module.rb:168
 #: app/controllers/admin/admin_module.rb:282
-#: app/controllers/admin/user_profile_master_categories_controller.rb:28
 msgid "%{model} was successfully deleted."
 msgstr ""
 
+#: app/controllers/admin/openid_identifiers_controller.rb:35
 #: app/controllers/admin/admin_module.rb:152
 #: app/controllers/admin/admin_module.rb:266
-#: app/controllers/admin/openid_identifiers_controller.rb:35
 #: app/controllers/admin/user_profiles_controller.rb:35
 msgid "%{model} was successfully updated."
 msgstr ""
 
-#: app/models/user_profile_master.rb:277
+#: app/models/user_profile_master.rb:281
 msgid "%{name} に不正な形式が設定されています"
 msgstr ""
 
-#: app/models/user_profile_master.rb:186
+#: app/models/user_profile_master.rb:190
 msgid "%{name} は4桁の数値で入力して下さい"
 msgstr ""
 
-#: app/models/user_profile_master.rb:118 app/models/user_profile_master.rb:122
-#: app/models/user_profile_master.rb:146 app/models/user_profile_master.rb:183
-#: app/models/user_profile_master.rb:275 app/models/user_profile_master.rb:305
-#: app/models/user_profile_master.rb:324
+#: app/models/user_profile_master.rb:122 app/models/user_profile_master.rb:126
+#: app/models/user_profile_master.rb:150 app/models/user_profile_master.rb:187
+#: app/models/user_profile_master.rb:279 app/models/user_profile_master.rb:309
+#: app/models/user_profile_master.rb:328
 msgid "%{name} は必須です"
 msgstr ""
 
-#: app/models/user_profile_master.rb:147
+#: app/models/user_profile_master.rb:151
 msgid "%{name} は数字かハイフンで入力してください"
 msgstr ""
 
-#: app/models/user_profile_master.rb:328
+#: app/models/user_profile_master.rb:332
 msgid "%{name} は正しい日付形式で入力して下さい"
 msgstr ""
 
-#: app/models/user_profile_master.rb:123 app/models/user_profile_master.rb:281
-#: app/models/user_profile_master.rb:308
+#: app/models/user_profile_master.rb:127 app/models/user_profile_master.rb:285
+#: app/models/user_profile_master.rb:312
 msgid "%{name} は選択される値以外のものが設定されています"
 msgstr ""
 
@@ -123,13 +123,25 @@ msgstr ""
 msgid "%{target}から検索を行ないます"
 msgstr ""
 
-#: app/controllers/admin/documents_controller.rb:83
 #: app/controllers/admin/images_controller.rb:151
+#: app/controllers/admin/documents_controller.rb:83
 msgid "%{target}を保存しました。"
 msgstr ""
 
-#: app/controllers/search_controller.rb:109
+#: app/controllers/search_controller.rb:110
 msgid "Access denied by search node. Please contact system owner."
+msgstr ""
+
+#: app/models/activation.rb:-
+msgid "Activation|Code"
+msgstr ""
+
+#: app/models/activation.rb:-
+msgid "Activation|Created at"
+msgstr ""
+
+#: app/models/activation.rb:-
+msgid "Activation|Updated at"
 msgstr ""
 
 #: app/models/admin/board_entry_comment.rb:17
@@ -204,8 +216,8 @@ msgstr ""
 msgid "Admin::Bookmark|Url"
 msgstr ""
 
-#: app/controllers/admin/documents_controller.rb:95
 #: app/helpers/admin/application_helper.rb:25
+#: app/controllers/admin/documents_controller.rb:95
 msgid "Admin::DocumentsController"
 msgstr ""
 
@@ -546,28 +558,28 @@ msgstr ""
 msgid "Admin::OpenidIdentifier|Url"
 msgstr ""
 
-#: app/controllers/admin/settings_controller.rb:22
 #: app/helpers/admin/application_helper.rb:27
+#: app/controllers/admin/settings_controller.rb:22
 msgid "Admin::SettingsController|feed"
 msgstr ""
 
-#: app/controllers/admin/settings_controller.rb:20
 #: app/helpers/admin/application_helper.rb:23
+#: app/controllers/admin/settings_controller.rb:20
 msgid "Admin::SettingsController|literal"
 msgstr ""
 
-#: app/controllers/admin/settings_controller.rb:21
 #: app/helpers/admin/application_helper.rb:26
+#: app/controllers/admin/settings_controller.rb:21
 msgid "Admin::SettingsController|mail"
 msgstr ""
 
-#: app/controllers/admin/settings_controller.rb:23
 #: app/helpers/admin/application_helper.rb:21
+#: app/controllers/admin/settings_controller.rb:23
 msgid "Admin::SettingsController|main"
 msgstr ""
 
-#: app/controllers/admin/settings_controller.rb:24
 #: app/helpers/admin/application_helper.rb:28
+#: app/controllers/admin/settings_controller.rb:24
 msgid "Admin::SettingsController|security"
 msgstr ""
 
@@ -1132,9 +1144,9 @@ msgstr ""
 msgid "Admin::User|Locked description"
 msgstr ""
 
-#: app/models/admin/user.rb:27 app/views/admin/users/import.html.erb:21
+#: app/models/admin/user.rb:27 app/views/user/show.html.erb:58
 #: app/views/portal/_registration_form.html.erb:17
-#: app/views/user/show.html.erb:58 app/views/users/_user.html.erb:28
+#: app/views/admin/users/import.html.erb:21 app/views/users/_user.html.erb:32
 #: app/views/users/index.html.erb:5
 msgid "Admin::User|Name"
 msgstr ""
@@ -1183,13 +1195,13 @@ msgstr ""
 msgid "Admin::User|User uids"
 msgstr ""
 
-#: app/views/admin/users/change_uid.html.erb:6
 #: app/views/admin/users/create_uid.html.erb:6
+#: app/views/admin/users/change_uid.html.erb:6
 msgid "Admin|Create Change Uid|Caution"
 msgstr ""
 
-#: app/views/admin/users/change_uid.html.erb:7
 #: app/views/admin/users/create_uid.html.erb:7
+#: app/views/admin/users/change_uid.html.erb:7
 msgid "Admin|Create Change Uid|Caution Description"
 msgstr ""
 
@@ -1197,27 +1209,135 @@ msgstr ""
 msgid "Antenna Description"
 msgstr ""
 
+#: app/models/antenna_item.rb:-
+msgid "AntennaItem|"
+msgstr ""
+
+#: app/models/antenna_item.rb:-
+msgid "AntennaItem|Antenna"
+msgstr ""
+
+#: app/models/antenna_item.rb:-
+msgid "AntennaItem|Value type"
+msgstr ""
+
+#: app/models/antenna.rb:-
+msgid "Antenna|Position"
+msgstr ""
+
+#: app/models/antenna.rb:-
+msgid "Antenna|User"
+msgstr ""
+
+#: app/models/antenna.rb:-
+msgid "Antenna|アンテナ名"
+msgstr ""
+
+#: app/models/applied_email.rb:-
+msgid "AppliedEmail|Created on"
+msgstr ""
+
+#: app/models/applied_email.rb:-
+msgid "AppliedEmail|Onetime code"
+msgstr ""
+
+#: app/models/applied_email.rb:-
+msgid "AppliedEmail|User"
+msgstr ""
+
+#: app/models/applied_email.rb:-
+msgid "AppliedEmail|メールアドレス"
+msgstr ""
+
 #: app/views/admin/board_entry_comments/index.html.erb:26
 msgid "Are you sure destroing with nest comments?"
 msgstr ""
 
 #: app/views/admin/board_entries/index.html.erb:34
-#: app/views/admin/bookmark_comments/index.html.erb:30
-#: app/views/admin/bookmarks/index.html.erb:19
-#: app/views/admin/group_categories/index.html.erb:29
-#: app/views/admin/group_participations/index.html.erb:30
-#: app/views/admin/groups/index.html.erb:31
-#: app/views/admin/openid_identifiers/index.html.erb:18
 #: app/views/admin/share_files/index.html.erb:36
+#: app/views/admin/bookmarks/index.html.erb:19
+#: app/views/admin/groups/index.html.erb:31
+#: app/views/admin/bookmark_comments/index.html.erb:30
+#: app/views/admin/openid_identifiers/index.html.erb:18
+#: app/views/admin/group_participations/index.html.erb:30
+#: app/views/admin/group_categories/index.html.erb:29
 #: app/views/admin/user_profile_master_categories/index.html.erb:18
-#: app/views/admin/users/change_uid.html.erb:31
 #: app/views/admin/users/create_uid.html.erb:27
+#: app/views/admin/users/change_uid.html.erb:31
 #: app/views/admin/users/index.html.erb:49
 msgid "Are you sure?"
 msgstr ""
 
 #: app/helpers/edit_helper.rb:37
 msgid "Avalilable share files"
+msgstr ""
+
+#: app/models/board_entry_comment.rb:-
+msgid "BoardEntryComment|Created on"
+msgstr ""
+
+#: app/models/board_entry_comment.rb:-
+msgid "BoardEntryComment|Parent"
+msgstr ""
+
+#: app/models/board_entry_comment.rb:-
+msgid "BoardEntryComment|Updated on"
+msgstr ""
+
+#: app/models/board_entry_comment.rb:-
+msgid "BoardEntryComment|コメント先の投稿"
+msgstr ""
+
+#: app/models/board_entry_comment.rb:-
+msgid "BoardEntryComment|内容"
+msgstr ""
+
+#: app/models/board_entry_comment.rb:-
+msgid "BoardEntryComment|著者"
+msgstr ""
+
+#: app/models/board_entry_point.rb:-
+msgid "BoardEntryPoint|Access count"
+msgstr ""
+
+#: app/models/board_entry_point.rb:-
+msgid "BoardEntryPoint|Board entry"
+msgstr ""
+
+#: app/models/board_entry_point.rb:-
+msgid "BoardEntryPoint|Created on"
+msgstr ""
+
+#: app/models/board_entry_point.rb:-
+msgid "BoardEntryPoint|Point"
+msgstr ""
+
+#: app/models/board_entry_point.rb:-
+msgid "BoardEntryPoint|Today access count"
+msgstr ""
+
+#: app/models/board_entry_point.rb:-
+msgid "BoardEntryPoint|Updated on"
+msgstr ""
+
+#: app/models/board_entry.rb:-
+msgid "BoardEntry|Board entry comments count"
+msgstr ""
+
+#: app/models/board_entry.rb:-
+msgid "BoardEntry|Created on"
+msgstr ""
+
+#: app/models/board_entry.rb:-
+msgid "BoardEntry|Editor mode"
+msgstr ""
+
+#: app/models/board_entry.rb:-
+msgid "BoardEntry|Entry trackbacks count"
+msgstr ""
+
+#: app/models/board_entry.rb:-
+msgid "BoardEntry|Entry type"
 msgstr ""
 
 #: app/models/board_entry.rb:47
@@ -1228,6 +1348,86 @@ msgstr ""
 msgid "BoardEntry|Entry type|GROUP_BBS"
 msgstr ""
 
+#: app/models/board_entry.rb:-
+msgid "BoardEntry|Ignore times"
+msgstr ""
+
+#: app/models/board_entry.rb:-
+msgid "BoardEntry|Last updated"
+msgstr ""
+
+#: app/models/board_entry.rb:-
+msgid "BoardEntry|Lock version"
+msgstr ""
+
+#: app/models/board_entry.rb:-
+msgid "BoardEntry|Publication symbols value"
+msgstr ""
+
+#: app/models/board_entry.rb:-
+msgid "BoardEntry|Publication type"
+msgstr ""
+
+#: app/models/board_entry.rb:-
+msgid "BoardEntry|Symbol"
+msgstr ""
+
+#: app/models/board_entry.rb:-
+msgid "BoardEntry|Updated on"
+msgstr ""
+
+#: app/models/board_entry.rb:-
+msgid "BoardEntry|User entry no"
+msgstr ""
+
+#: app/models/board_entry.rb:-
+msgid "BoardEntry|タイトル"
+msgstr ""
+
+#: app/models/board_entry.rb:-
+msgid "BoardEntry|タグ"
+msgstr ""
+
+#: app/models/board_entry.rb:-
+msgid "BoardEntry|内容"
+msgstr ""
+
+#: app/models/board_entry.rb:-
+msgid "BoardEntry|日付"
+msgstr ""
+
+#: app/models/board_entry.rb:-
+msgid "BoardEntry|著者"
+msgstr ""
+
+#: app/models/bookmark_comment_tag.rb:-
+msgid "BookmarkCommentTag|Bookmark comment"
+msgstr ""
+
+#: app/models/bookmark_comment_tag.rb:-
+msgid "BookmarkCommentTag|Created on"
+msgstr ""
+
+#: app/models/bookmark_comment_tag.rb:-
+msgid "BookmarkCommentTag|Tag"
+msgstr ""
+
+#: app/models/bookmark_comment.rb:-
+msgid "BookmarkComment|Bookmark"
+msgstr ""
+
+#: app/models/bookmark_comment.rb:-
+msgid "BookmarkComment|Comment"
+msgstr ""
+
+#: app/models/bookmark_comment.rb:-
+msgid "BookmarkComment|Created on"
+msgstr ""
+
+#: app/models/bookmark_comment.rb:-
+msgid "BookmarkComment|Public"
+msgstr ""
+
 #: app/models/bookmark_comment.rb:25
 msgid "BookmarkComment|Public|false"
 msgstr ""
@@ -1236,12 +1436,48 @@ msgstr ""
 msgid "BookmarkComment|Public|true"
 msgstr ""
 
+#: app/models/bookmark_comment.rb:-
+msgid "BookmarkComment|Stared"
+msgstr ""
+
 #: app/models/bookmark_comment.rb:27
 msgid "BookmarkComment|Stared|false"
 msgstr ""
 
 #: app/models/bookmark_comment.rb:26
 msgid "BookmarkComment|Stared|true"
+msgstr ""
+
+#: app/models/bookmark_comment.rb:-
+msgid "BookmarkComment|Updated on"
+msgstr ""
+
+#: app/models/bookmark_comment.rb:-
+msgid "BookmarkComment|User"
+msgstr ""
+
+#: app/models/bookmark_comment.rb:-
+msgid "BookmarkComment|タグ"
+msgstr ""
+
+#: app/models/bookmark.rb:-
+msgid "Bookmark|Bookmark comments count"
+msgstr ""
+
+#: app/models/bookmark.rb:-
+msgid "Bookmark|Created on"
+msgstr ""
+
+#: app/models/bookmark.rb:-
+msgid "Bookmark|URL"
+msgstr ""
+
+#: app/models/bookmark.rb:-
+msgid "Bookmark|Updated on"
+msgstr ""
+
+#: app/models/bookmark.rb:-
+msgid "Bookmark|タイトル"
 msgstr ""
 
 #: app/views/admin/users/import.html.erb:14
@@ -1273,6 +1509,26 @@ msgstr ""
 msgid "CSVファイルを元に実際に登録される内容"
 msgstr ""
 
+#: app/models/chain.rb:-
+msgid "Chain|Created on"
+msgstr ""
+
+#: app/models/chain.rb:-
+msgid "Chain|From user"
+msgstr ""
+
+#: app/models/chain.rb:-
+msgid "Chain|To user"
+msgstr ""
+
+#: app/models/chain.rb:-
+msgid "Chain|Updated on"
+msgstr ""
+
+#: app/models/chain.rb:-
+msgid "Chain|紹介文"
+msgstr ""
+
 #: app/controllers/admin/users_controller.rb:162
 #: app/views/admin/users/edit.html.erb:15
 msgid "Change uid"
@@ -1282,14 +1538,14 @@ msgstr ""
 msgid "Close"
 msgstr ""
 
-#: app/views/admin/group_categories/new.html.erb:10
+#: app/views/portal/account_registration.html.erb:25
 #: app/views/admin/openid_identifiers/new.html.erb:17
+#: app/views/admin/group_categories/new.html.erb:10
 #: app/views/admin/user_profile_master_categories/new.html.erb:10
 #: app/views/admin/user_profile_masters/new.html.erb:10
 #: app/views/admin/users/create_uid.html.erb:16
 #: app/views/admin/users/first.html.erb:31
 #: app/views/admin/users/new.html.erb:12
-#: app/views/portal/account_registration.html.erb:25
 msgid "Create"
 msgstr ""
 
@@ -1298,8 +1554,8 @@ msgstr ""
 msgid "Create %{name}"
 msgstr ""
 
-#: app/views/admin/group_categories/new.html.erb:10
 #: app/views/admin/openid_identifiers/new.html.erb:17
+#: app/views/admin/group_categories/new.html.erb:10
 #: app/views/admin/user_profile_master_categories/new.html.erb:10
 #: app/views/admin/user_profile_masters/new.html.erb:10
 #: app/views/admin/users/create_uid.html.erb:28
@@ -1314,45 +1570,97 @@ msgstr ""
 
 #: app/views/admin/board_entries/index.html.erb:34
 #: app/views/admin/board_entry_comments/index.html.erb:26
-#: app/views/admin/bookmark_comments/index.html.erb:30
-#: app/views/admin/bookmarks/index.html.erb:19
-#: app/views/admin/group_categories/index.html.erb:29
-#: app/views/admin/group_participations/index.html.erb:30
-#: app/views/admin/groups/index.html.erb:31
-#: app/views/admin/openid_identifiers/index.html.erb:18
 #: app/views/admin/share_files/index.html.erb:36
+#: app/views/admin/bookmarks/index.html.erb:19
+#: app/views/admin/groups/index.html.erb:31
+#: app/views/admin/bookmark_comments/index.html.erb:30
+#: app/views/admin/openid_identifiers/index.html.erb:18
+#: app/views/admin/group_participations/index.html.erb:30
+#: app/views/admin/group_categories/index.html.erb:29
 #: app/views/admin/user_profile_master_categories/index.html.erb:18
 #: app/views/admin/user_profile_masters/index.html.erb:28
 #: app/views/admin/users/index.html.erb:49
 msgid "Destroy"
 msgstr ""
 
-#: app/views/admin/group_categories/index.html.erb:28
 #: app/views/admin/openid_identifiers/index.html.erb:17
+#: app/views/admin/group_categories/index.html.erb:28
 #: app/views/admin/user_profile_master_categories/index.html.erb:17
 #: app/views/admin/user_profile_masters/index.html.erb:27
 #: app/views/admin/users/index.html.erb:48
 msgid "Edit"
 msgstr ""
 
-#: app/controllers/admin/admin_module.rb:121
-#: app/controllers/admin/admin_module.rb:148
-#: app/controllers/admin/admin_module.rb:230
-#: app/controllers/admin/admin_module.rb:262
 #: app/controllers/admin/openid_identifiers_controller.rb:25
 #: app/controllers/admin/openid_identifiers_controller.rb:26
 #: app/controllers/admin/openid_identifiers_controller.rb:40
 #: app/controllers/admin/openid_identifiers_controller.rb:41
-#: app/controllers/admin/user_profiles_controller.rb:21
-#: app/controllers/admin/user_profiles_controller.rb:22
-#: app/controllers/admin/user_profiles_controller.rb:40
-#: app/controllers/admin/user_profiles_controller.rb:41
 #: app/controllers/admin/users_controller.rb:51
 #: app/controllers/admin/users_controller.rb:75
 #: app/controllers/admin/users_controller.rb:161
 #: app/controllers/admin/users_controller.rb:186
+#: app/controllers/admin/admin_module.rb:121
+#: app/controllers/admin/admin_module.rb:148
+#: app/controllers/admin/admin_module.rb:230
+#: app/controllers/admin/admin_module.rb:262
+#: app/controllers/admin/user_profiles_controller.rb:21
+#: app/controllers/admin/user_profiles_controller.rb:22
+#: app/controllers/admin/user_profiles_controller.rb:40
+#: app/controllers/admin/user_profiles_controller.rb:41
 #: app/views/admin/users/edit.html.erb:18
 msgid "Editing %{model}"
+msgstr ""
+
+#: app/models/entry_access.rb:-
+msgid "EntryAccess|Board entry"
+msgstr ""
+
+#: app/models/entry_access.rb:-
+msgid "EntryAccess|Updated on"
+msgstr ""
+
+#: app/models/entry_access.rb:-
+msgid "EntryAccess|Visitor"
+msgstr ""
+
+#: app/models/entry_editor.rb:-
+msgid "EntryEditor|Board entry"
+msgstr ""
+
+#: app/models/entry_editor.rb:-
+msgid "EntryEditor|Symbol"
+msgstr ""
+
+#: app/models/entry_publication.rb:-
+msgid "EntryPublication|Board entry"
+msgstr ""
+
+#: app/models/entry_publication.rb:-
+msgid "EntryPublication|Symbol"
+msgstr ""
+
+#: app/models/entry_tag.rb:-
+msgid "EntryTag|Board entry"
+msgstr ""
+
+#: app/models/entry_tag.rb:-
+msgid "EntryTag|Created on"
+msgstr ""
+
+#: app/models/entry_tag.rb:-
+msgid "EntryTag|Tag"
+msgstr ""
+
+#: app/models/entry_trackback.rb:-
+msgid "EntryTrackback|Updated on"
+msgstr ""
+
+#: app/models/entry_trackback.rb:-
+msgid "EntryTrackback|話題の元になった記事"
+msgstr ""
+
+#: app/models/entry_trackback.rb:-
+msgid "EntryTrackback|話題を元に書いた記事"
 msgstr ""
 
 #: app/helpers/edit_helper.rb:39
@@ -1363,12 +1671,48 @@ msgstr ""
 msgid "First page"
 msgstr ""
 
+#: app/models/group_category.rb:-
+msgid "GroupCategory|Code"
+msgstr ""
+
+#: app/models/group_category.rb:-
+msgid "GroupCategory|Created at"
+msgstr ""
+
+#: app/models/group_category.rb:-
+msgid "GroupCategory|Description"
+msgstr ""
+
+#: app/models/group_category.rb:-
+msgid "GroupCategory|Icon"
+msgstr ""
+
+#: app/models/group_category.rb:-
+msgid "GroupCategory|Initial selected"
+msgstr ""
+
 #: app/models/group_category.rb:20
 msgid "GroupCategory|Initial selected|false"
 msgstr ""
 
 #: app/models/group_category.rb:19
 msgid "GroupCategory|Initial selected|true"
+msgstr ""
+
+#: app/models/group_category.rb:-
+msgid "GroupCategory|Name"
+msgstr ""
+
+#: app/models/group_category.rb:-
+msgid "GroupCategory|Updated at"
+msgstr ""
+
+#: app/models/group_participation.rb:-
+msgid "GroupParticipation|Created on"
+msgstr ""
+
+#: app/models/group_participation.rb:-
+msgid "GroupParticipation|Favorite"
 msgstr ""
 
 #: app/models/group_participation.rb:25
@@ -1379,12 +1723,32 @@ msgstr ""
 msgid "GroupParticipation|Favorite|true"
 msgstr ""
 
+#: app/models/group_participation.rb:-
+msgid "GroupParticipation|Group"
+msgstr ""
+
+#: app/models/group_participation.rb:-
+msgid "GroupParticipation|Owned"
+msgstr ""
+
 #: app/models/group_participation.rb:23
 msgid "GroupParticipation|Owned|false"
 msgstr ""
 
 #: app/models/group_participation.rb:22
 msgid "GroupParticipation|Owned|true"
+msgstr ""
+
+#: app/models/group_participation.rb:-
+msgid "GroupParticipation|Updated on"
+msgstr ""
+
+#: app/models/group_participation.rb:-
+msgid "GroupParticipation|User"
+msgstr ""
+
+#: app/models/group_participation.rb:-
+msgid "GroupParticipation|Waiting"
 msgstr ""
 
 #: app/models/group_participation.rb:21
@@ -1395,6 +1759,10 @@ msgstr ""
 msgid "GroupParticipation|Waiting|true"
 msgstr ""
 
+#: app/models/group.rb:-
+msgid "Group|Created on"
+msgstr ""
+
 #: app/models/group.rb:31 app/views/group/_form.html.erb:44
 msgid "Group|Description"
 msgstr ""
@@ -1403,8 +1771,16 @@ msgstr ""
 msgid "Group|Gid"
 msgstr ""
 
+#: app/models/group.rb:-
+msgid "Group|Group category"
+msgstr ""
+
 #: app/models/group.rb:30 app/views/group/_form.html.erb:21
 msgid "Group|Name"
+msgstr ""
+
+#: app/models/group.rb:-
+msgid "Group|Protected"
 msgstr ""
 
 #: app/models/group.rb:27
@@ -1413,6 +1789,22 @@ msgstr ""
 
 #: app/models/group.rb:26
 msgid "Group|Protected|true"
+msgstr ""
+
+#: app/models/group.rb:-
+msgid "Group|Updated on"
+msgstr ""
+
+#: app/models/group.rb:-
+msgid "Group|グループID"
+msgstr ""
+
+#: app/models/group.rb:-
+msgid "Group|名前"
+msgstr ""
+
+#: app/models/group.rb:-
+msgid "Group|説明"
 msgstr ""
 
 #: app/views/admin/users/import.html.erb:15
@@ -1439,6 +1831,16 @@ msgstr ""
 msgid "Line"
 msgstr ""
 
+#: app/controllers/admin/openid_identifiers_controller.rb:24
+#: app/controllers/admin/openid_identifiers_controller.rb:39
+#: app/controllers/admin/users_controller.rb:29
+#: app/controllers/admin/users_controller.rb:41
+#: app/controllers/admin/users_controller.rb:50
+#: app/controllers/admin/users_controller.rb:74
+#: app/controllers/admin/users_controller.rb:125
+#: app/controllers/admin/users_controller.rb:142
+#: app/controllers/admin/users_controller.rb:160
+#: app/controllers/admin/users_controller.rb:185
 #: app/controllers/admin/admin_module.rb:81
 #: app/controllers/admin/admin_module.rb:93
 #: app/controllers/admin/admin_module.rb:107
@@ -1457,19 +1859,9 @@ msgstr ""
 #: app/controllers/admin/admin_module.rb:239
 #: app/controllers/admin/admin_module.rb:259
 #: app/controllers/admin/admin_module.rb:261
-#: app/controllers/admin/openid_identifiers_controller.rb:24
-#: app/controllers/admin/openid_identifiers_controller.rb:39
 #: app/controllers/admin/user_profile_masters_controller.rb:24
 #: app/controllers/admin/user_profiles_controller.rb:20
 #: app/controllers/admin/user_profiles_controller.rb:39
-#: app/controllers/admin/users_controller.rb:29
-#: app/controllers/admin/users_controller.rb:41
-#: app/controllers/admin/users_controller.rb:50
-#: app/controllers/admin/users_controller.rb:74
-#: app/controllers/admin/users_controller.rb:125
-#: app/controllers/admin/users_controller.rb:142
-#: app/controllers/admin/users_controller.rb:160
-#: app/controllers/admin/users_controller.rb:185
 #: app/views/admin/board_entries/show.html.erb:43
 #: app/views/admin/bookmarks/show.html.erb:19
 #: app/views/admin/groups/show.html.erb:35
@@ -1477,14 +1869,74 @@ msgstr ""
 msgid "Listing %{model}"
 msgstr ""
 
+#: app/models/mail.rb:-
+msgid "Mail|Created on"
+msgstr ""
+
+#: app/models/mail.rb:-
+msgid "Mail|From user"
+msgstr ""
+
+#: app/models/mail.rb:-
+msgid "Mail|Send flag"
+msgstr ""
+
+#: app/models/mail.rb:-
+msgid "Mail|Title"
+msgstr ""
+
+#: app/models/mail.rb:-
+msgid "Mail|To address"
+msgstr ""
+
+#: app/models/mail.rb:-
+msgid "Mail|To address name"
+msgstr ""
+
+#: app/models/mail.rb:-
+msgid "Mail|To address symbol"
+msgstr ""
+
+#: app/models/mail.rb:-
+msgid "Mail|Updated on"
+msgstr ""
+
+#: app/models/mail.rb:-
+msgid "Mail|User entry no"
+msgstr ""
+
+#: app/models/message.rb:-
+msgid "Message|Created on"
+msgstr ""
+
+#: app/models/message.rb:-
+msgid "Message|Link url"
+msgstr ""
+
+#: app/models/message.rb:-
+msgid "Message|Message"
+msgstr ""
+
+#: app/models/message.rb:-
+msgid "Message|Message type"
+msgstr ""
+
+#: app/models/message.rb:-
+msgid "Message|Send flag"
+msgstr ""
+
+#: app/models/message.rb:-
+msgid "Message|User"
+msgstr ""
+
+#: app/controllers/admin/users_controller.rb:29
+#: app/controllers/admin/users_controller.rb:41
 #: app/controllers/admin/admin_module.rb:108
 #: app/controllers/admin/admin_module.rb:129
 #: app/controllers/admin/admin_module.rb:215
 #: app/controllers/admin/admin_module.rb:240
-#: app/controllers/admin/users_controller.rb:29
-#: app/controllers/admin/users_controller.rb:41
-#: app/views/admin/group_categories/index.html.erb:36
 #: app/views/admin/openid_identifiers/index.html.erb:23
+#: app/views/admin/group_categories/index.html.erb:36
 #: app/views/admin/user_profile_master_categories/index.html.erb:25
 #: app/views/admin/user_profile_masters/index.html.erb:35
 #: app/views/admin/users/index.html.erb:56
@@ -1549,8 +2001,85 @@ msgid ""
 "OpenIDサーバーが見つかりませんでした。正しいOpenID URLを入力してください。"
 msgstr ""
 
-#: app/controllers/search_controller.rb:108
+#: app/models/open_id_request.rb:-
+msgid "OpenIdRequest|Created at"
+msgstr ""
+
+#: app/models/open_id_request.rb:-
+msgid "OpenIdRequest|Parameters"
+msgstr ""
+
+#: app/models/open_id_request.rb:-
+msgid "OpenIdRequest|Token"
+msgstr ""
+
+#: app/models/open_id_request.rb:-
+msgid "OpenIdRequest|Updated at"
+msgstr ""
+
+#: app/models/openid_identifier.rb:-
+msgid "OpenidIdentifier|Created at"
+msgstr ""
+
+#: app/models/openid_identifier.rb:-
+msgid "OpenidIdentifier|Updated at"
+msgstr ""
+
+#: app/models/openid_identifier.rb:-
+msgid "OpenidIdentifier|Url"
+msgstr ""
+
+#: app/models/openid_identifier.rb:-
+msgid "OpenidIdentifier|User"
+msgstr ""
+
+#: app/helpers/application_helper.rb:294
+#: app/views/shared/_header_application_link.html.erb:6
+msgid "Other"
+msgstr ""
+
+#: app/models/picture.rb:-
+msgid "Picture|Content type"
+msgstr ""
+
+#: app/models/picture.rb:-
+msgid "Picture|Created on"
+msgstr ""
+
+#: app/models/picture.rb:-
+msgid "Picture|Data"
+msgstr ""
+
+#: app/models/picture.rb:-
+msgid "Picture|Name"
+msgstr ""
+
+#: app/models/picture.rb:-
+msgid "Picture|Updated on"
+msgstr ""
+
+#: app/models/picture.rb:-
+msgid "Picture|User"
+msgstr ""
+
+#: app/controllers/search_controller.rb:109
 msgid "Please input search query."
+msgstr ""
+
+#: app/models/popular_bookmark.rb:-
+msgid "PopularBookmark|Bookmark"
+msgstr ""
+
+#: app/models/popular_bookmark.rb:-
+msgid "PopularBookmark|Count"
+msgstr ""
+
+#: app/models/popular_bookmark.rb:-
+msgid "PopularBookmark|Created on"
+msgstr ""
+
+#: app/models/popular_bookmark.rb:-
+msgid "PopularBookmark|Date"
 msgstr ""
 
 #: app/helpers/edit_helper.rb:41
@@ -1573,6 +2102,42 @@ msgstr ""
 msgid "Publication type|public"
 msgstr ""
 
+#: app/models/ranking.rb:-
+msgid "Ranking|Amount"
+msgstr ""
+
+#: app/models/ranking.rb:-
+msgid "Ranking|Author"
+msgstr ""
+
+#: app/models/ranking.rb:-
+msgid "Ranking|Author url"
+msgstr ""
+
+#: app/models/ranking.rb:-
+msgid "Ranking|Contents type"
+msgstr ""
+
+#: app/models/ranking.rb:-
+msgid "Ranking|Created at"
+msgstr ""
+
+#: app/models/ranking.rb:-
+msgid "Ranking|Extracted on"
+msgstr ""
+
+#: app/models/ranking.rb:-
+msgid "Ranking|Title"
+msgstr ""
+
+#: app/models/ranking.rb:-
+msgid "Ranking|Updated at"
+msgstr ""
+
+#: app/models/ranking.rb:-
+msgid "Ranking|Url"
+msgstr ""
+
 #: app/helpers/edit_helper.rb:35
 msgid "Reload"
 msgstr ""
@@ -1581,13 +2146,15 @@ msgstr ""
 msgid "SKIP version"
 msgstr ""
 
-#: app/views/admin/documents/index.html.erb:10
+#: app/views/mypage/_manage_antenna.html.erb:34
 #: app/views/admin/settings/index.html.erb:9
+#: app/views/admin/documents/index.html.erb:10
+#: app/views/bookmark/_new.html.erb:65
 msgid "Save"
 msgstr ""
 
-#: app/views/admin/documents/index.html.erb:10
 #: app/views/admin/settings/index.html.erb:9
+#: app/views/admin/documents/index.html.erb:10
 msgid "Saving..."
 msgstr ""
 
@@ -1604,14 +2171,138 @@ msgstr ""
 msgid "Send"
 msgstr ""
 
+#: app/models/share_file_access.rb:-
+msgid "ShareFileAccess|Created at"
+msgstr ""
+
+#: app/models/share_file_access.rb:-
+msgid "ShareFileAccess|Share file"
+msgstr ""
+
+#: app/models/share_file_access.rb:-
+msgid "ShareFileAccess|User"
+msgstr ""
+
+#: app/models/share_file_publication.rb:-
+msgid "ShareFilePublication|Share file"
+msgstr ""
+
+#: app/models/share_file_publication.rb:-
+msgid "ShareFilePublication|Symbol"
+msgstr ""
+
+#: app/models/share_file_tag.rb:-
+msgid "ShareFileTag|Created on"
+msgstr ""
+
+#: app/models/share_file_tag.rb:-
+msgid "ShareFileTag|Share file"
+msgstr ""
+
+#: app/models/share_file_tag.rb:-
+msgid "ShareFileTag|Tag"
+msgstr ""
+
+#: app/models/share_file.rb:-
+msgid "ShareFile|Content type"
+msgstr ""
+
+#: app/models/share_file.rb:-
+msgid "ShareFile|Owner symbol"
+msgstr ""
+
+#: app/models/share_file.rb:-
+msgid "ShareFile|Publication symbols value"
+msgstr ""
+
+#: app/models/share_file.rb:-
+msgid "ShareFile|Publication type"
+msgstr ""
+
+#: app/models/share_file.rb:-
+msgid "ShareFile|Total count"
+msgstr ""
+
+#: app/models/share_file.rb:-
+msgid "ShareFile|User"
+msgstr ""
+
+#: app/models/share_file.rb:-
+msgid "ShareFile|コメント"
+msgstr ""
+
+#: app/models/share_file.rb:-
+msgid "ShareFile|タグ"
+msgstr ""
+
+#: app/models/share_file.rb:-
+msgid "ShareFile|ファイル"
+msgstr ""
+
+#: app/models/share_file.rb:-
+msgid "ShareFile|日付"
+msgstr ""
+
 #: app/views/admin/board_entries/index.html.erb:33
 #: app/views/admin/bookmarks/index.html.erb:18
 #: app/views/admin/groups/index.html.erb:30
 msgid "Show"
 msgstr ""
 
-#: app/views/platform/activate.html.erb:2 app/views/platform/index.html.erb:58
+#: app/views/platform/activate.html.erb:2 app/views/platform/index.html.erb:53
 msgid "Signup"
+msgstr ""
+
+#: app/models/site_count.rb:-
+msgid "SiteCount|Active users"
+msgstr ""
+
+#: app/models/site_count.rb:-
+msgid "SiteCount|Comment users"
+msgstr ""
+
+#: app/models/site_count.rb:-
+msgid "SiteCount|Created on"
+msgstr ""
+
+#: app/models/site_count.rb:-
+msgid "SiteCount|Portrait users"
+msgstr ""
+
+#: app/models/site_count.rb:-
+msgid "SiteCount|Today blog count"
+msgstr ""
+
+#: app/models/site_count.rb:-
+msgid "SiteCount|Today user count"
+msgstr ""
+
+#: app/models/site_count.rb:-
+msgid "SiteCount|Total blog count"
+msgstr ""
+
+#: app/models/site_count.rb:-
+msgid "SiteCount|Total user count"
+msgstr ""
+
+#: app/models/site_count.rb:-
+msgid "SiteCount|User access at month"
+msgstr ""
+
+#: app/models/site_count.rb:-
+msgid "SiteCount|Write users all"
+msgstr ""
+
+#: app/models/site_count.rb:-
+msgid "SiteCount|Write users with bbs"
+msgstr ""
+
+#: app/models/site_count.rb:-
+msgid "SiteCount|Write users with pvt"
+msgstr ""
+
+#: app/models/site_count.rb:-
+msgid "SiteCount|Writer at month"
 msgstr ""
 
 #: app/models/admin/share_file.rb:22
@@ -1620,6 +2311,22 @@ msgstr ""
 
 #: app/models/admin/share_file.rb:21
 msgid "Symbol|Type|user"
+msgstr ""
+
+#: app/models/tag.rb:-
+msgid "Tag|Created on"
+msgstr ""
+
+#: app/models/tag.rb:-
+msgid "Tag|Name"
+msgstr ""
+
+#: app/models/tag.rb:-
+msgid "Tag|Tag type"
+msgstr ""
+
+#: app/models/tag.rb:-
+msgid "Tag|Updated on"
 msgstr ""
 
 #: app/controllers/server_controller.rb:44
@@ -1634,25 +2341,48 @@ msgstr ""
 msgid "Thumbnail"
 msgstr ""
 
+#: app/models/track.rb:-
+msgid "Track|Created on"
+msgstr ""
+
+#: app/models/track.rb:-
+msgid "Track|Updated on"
+msgstr ""
+
+#: app/models/track.rb:-
+msgid "Track|User"
+msgstr ""
+
+#: app/models/track.rb:-
+msgid "Track|Visitor"
+msgstr ""
+
 #: app/views/bookmarks/index.html.erb:3
 msgid "URL"
 msgstr ""
 
-#: app/views/admin/group_categories/edit.html.erb:11
+#: app/controllers/bookmark_controller.rb:36
+#: app/controllers/bookmark_controller.rb:52
+#: app/controllers/bookmark_controller.rb:98
+#: app/controllers/bookmark_controller.rb:104
+msgid "URLの形式が不正です。"
+msgstr ""
+
+#: app/views/admin/user_profiles/edit.html.erb:13
 #: app/views/admin/openid_identifiers/edit.html.erb:16
+#: app/views/admin/group_categories/edit.html.erb:11
 #: app/views/admin/user_profile_master_categories/edit.html.erb:11
 #: app/views/admin/user_profile_masters/edit.html.erb:10
-#: app/views/admin/user_profiles/edit.html.erb:13
 #: app/views/admin/users/change_uid.html.erb:20
 #: app/views/admin/users/edit.html.erb:10
 msgid "Update"
 msgstr ""
 
-#: app/views/admin/group_categories/edit.html.erb:11
+#: app/views/admin/user_profiles/edit.html.erb:13
 #: app/views/admin/openid_identifiers/edit.html.erb:16
+#: app/views/admin/group_categories/edit.html.erb:11
 #: app/views/admin/user_profile_master_categories/edit.html.erb:11
 #: app/views/admin/user_profile_masters/edit.html.erb:10
-#: app/views/admin/user_profiles/edit.html.erb:13
 #: app/views/admin/users/change_uid.html.erb:32
 #: app/views/admin/users/edit.html.erb:10
 msgid "Updating..."
@@ -1679,6 +2409,78 @@ msgstr ""
 
 #: app/controllers/admin/users_controller.rb:83
 msgid "User was successfuly deleted."
+msgstr ""
+
+#: app/models/user_access.rb:-
+msgid "UserAccess|Access count"
+msgstr ""
+
+#: app/models/user_access.rb:-
+msgid "UserAccess|Created on"
+msgstr ""
+
+#: app/models/user_access.rb:-
+msgid "UserAccess|Last access"
+msgstr ""
+
+#: app/models/user_access.rb:-
+msgid "UserAccess|Updated on"
+msgstr ""
+
+#: app/models/user_access.rb:-
+msgid "UserAccess|User"
+msgstr ""
+
+#: app/models/user_custom.rb:-
+msgid "UserCustom|Classic"
+msgstr ""
+
+#: app/models/user_custom.rb:-
+msgid "UserCustom|Theme"
+msgstr ""
+
+#: app/models/user_custom.rb:-
+msgid "UserCustom|User"
+msgstr ""
+
+#: app/models/user_message_unsubscribe.rb:-
+msgid "UserMessageUnsubscribe|Message type"
+msgstr ""
+
+#: app/models/user_message_unsubscribe.rb:-
+msgid "UserMessageUnsubscribe|User"
+msgstr ""
+
+#: app/models/user_profile_master_category.rb:-
+msgid "UserProfileMasterCategory|Created at"
+msgstr ""
+
+#: app/models/user_profile_master_category.rb:-
+msgid "UserProfileMasterCategory|Description"
+msgstr ""
+
+#: app/models/user_profile_master_category.rb:-
+msgid "UserProfileMasterCategory|Name"
+msgstr ""
+
+#: app/models/user_profile_master_category.rb:-
+msgid "UserProfileMasterCategory|Sort order"
+msgstr ""
+
+#: app/models/user_profile_master_category.rb:-
+msgid "UserProfileMasterCategory|Updated at"
+msgstr ""
+
+#: app/models/user_profile_master.rb:-
+msgid "UserProfileMaster|Created at"
+msgstr ""
+
+#: app/models/user_profile_master.rb:-
+msgid "UserProfileMaster|Description"
+msgstr ""
+
+#: app/models/user_profile_master.rb:-
+msgid "UserProfileMaster|Input type"
 msgstr ""
 
 #: app/models/user_profile_master.rb:23
@@ -1721,6 +2523,18 @@ msgstr ""
 msgid "UserProfileMaster|Input type|year_select"
 msgstr ""
 
+#: app/models/user_profile_master.rb:-
+msgid "UserProfileMaster|Name"
+msgstr ""
+
+#: app/models/user_profile_master.rb:-
+msgid "UserProfileMaster|Option values"
+msgstr ""
+
+#: app/models/user_profile_master.rb:-
+msgid "UserProfileMaster|Required"
+msgstr ""
+
 #: app/models/user_profile_master.rb:29
 msgid "UserProfileMaster|Required|false"
 msgstr ""
@@ -1729,8 +2543,76 @@ msgstr ""
 msgid "UserProfileMaster|Required|true"
 msgstr ""
 
-#: app/models/user_uid.rb:27
+#: app/models/user_profile_master.rb:-
+msgid "UserProfileMaster|Sort order"
+msgstr ""
+
+#: app/models/user_profile_master.rb:-
+msgid "UserProfileMaster|Updated at"
+msgstr ""
+
+#: app/models/user_profile_master.rb:-
+msgid "UserProfileMaster|User profile master category"
+msgstr ""
+
+#: app/models/user_profile_value.rb:-
+msgid "UserProfileValue|Created at"
+msgstr ""
+
+#: app/models/user_profile_value.rb:-
+msgid "UserProfileValue|Updated at"
+msgstr ""
+
+#: app/models/user_profile_value.rb:-
+msgid "UserProfileValue|User"
+msgstr ""
+
+#: app/models/user_profile_value.rb:-
+msgid "UserProfileValue|User profile master"
+msgstr ""
+
+#: app/models/user_profile_value.rb:-
+msgid "UserProfileValue|Value"
+msgstr ""
+
+#: app/models/user_reading.rb:-
+msgid "UserReading|Board entry"
+msgstr ""
+
+#: app/models/user_reading.rb:-
+msgid "UserReading|Checked on"
+msgstr ""
+
+#: app/models/user_reading.rb:-
+msgid "UserReading|Read"
+msgstr ""
+
+#: app/models/user_reading.rb:-
+msgid "UserReading|User"
+msgstr ""
+
+#: app/models/user_uid.rb:- app/models/user_uid.rb:27
 msgid "UserUid|Uid"
+msgstr ""
+
+#: app/models/user_uid.rb:-
+msgid "UserUid|Uid type"
+msgstr ""
+
+#: app/models/user_uid.rb:-
+msgid "UserUid|User"
+msgstr ""
+
+#: app/models/user.rb:-
+msgid "User|Activation token"
+msgstr ""
+
+#: app/models/user.rb:-
+msgid "User|Activation token expires at"
+msgstr ""
+
+#: app/models/user.rb:-
+msgid "User|Admin"
 msgstr ""
 
 #: app/models/user.rb:65
@@ -1741,6 +2623,18 @@ msgstr ""
 msgid "User|Admin|true"
 msgstr ""
 
+#: app/models/user.rb:-
+msgid "User|Auth session token"
+msgstr ""
+
+#: app/models/user.rb:-
+msgid "User|Created on"
+msgstr ""
+
+#: app/models/user.rb:-
+msgid "User|Crypted password"
+msgstr ""
+
 #: app/models/user.rb:68
 msgid "User|Disclosure|false"
 msgstr ""
@@ -1749,19 +2643,23 @@ msgstr ""
 msgid "User|Disclosure|true"
 msgstr ""
 
-#: app/views/platform/_mail_form.html.erb:3
+#: app/views/user/show.html.erb:63
 #: app/views/portal/_registration_form.html.erb:21
-#: app/views/shared/_login_form.html.erb:24 app/views/user/show.html.erb:63
-#: app/views/users/_user.html.erb:31
+#: app/views/shared/_login_form.html.erb:24
+#: app/views/platform/_mail_form.html.erb:3 app/views/users/_user.html.erb:35
 msgid "User|Email"
 msgstr ""
 
-#: app/views/user/show.html.erb:73
+#: app/models/user.rb:- app/views/user/show.html.erb:73
 msgid "User|Issued at"
 msgstr ""
 
-#: app/views/user/show.html.erb:77
+#: app/models/user.rb:- app/views/user/show.html.erb:77
 msgid "User|Last authenticated at"
+msgstr ""
+
+#: app/models/user.rb:-
+msgid "User|Locked"
 msgstr ""
 
 #: app/models/user.rb:71
@@ -1784,13 +2682,34 @@ msgstr ""
 msgid "User|Password confirmation"
 msgstr ""
 
-#: app/views/user/show.html.erb:81
+#: app/models/user.rb:- app/views/user/show.html.erb:81
 msgid "User|Password expires at"
 msgstr ""
 
+#: app/models/user.rb:-
+msgid "User|Remember token"
+msgstr ""
+
+#: app/models/user.rb:-
+msgid "User|Remember token expires at"
+msgstr ""
+
+#: app/models/user.rb:-
+msgid "User|Reset auth token"
+msgstr ""
+
+#: app/models/user.rb:-
+msgid "User|Reset auth token expires at"
+msgstr ""
+
+#: app/views/user/show.html.erb:68
 #: app/views/portal/_registration_form.html.erb:25
-#: app/views/user/show.html.erb:68 app/views/users/_user.html.erb:40
+#: app/views/users/_user.html.erb:44
 msgid "User|Section"
+msgstr ""
+
+#: app/models/user.rb:-
+msgid "User|Status"
 msgstr ""
 
 #: app/models/user.rb:59
@@ -1804,6 +2723,26 @@ msgstr ""
 #: app/models/user.rb:61 app/views/admin/users/_form.html.erb:25
 #: app/views/admin/users/_form.html.erb:31
 msgid "User|Status|UNUSED"
+msgstr ""
+
+#: app/models/user.rb:-
+msgid "User|Trial num"
+msgstr ""
+
+#: app/models/user.rb:-
+msgid "User|Updated on"
+msgstr ""
+
+#: app/models/user.rb:-
+msgid "User|メールアドレス"
+msgstr ""
+
+#: app/models/user.rb:-
+msgid "User|名前"
+msgstr ""
+
+#: app/models/user.rb:-
+msgid "User|所属"
 msgstr ""
 
 #: app/views/mypage/_antenna_box.html.erb:6
@@ -1838,11 +2777,11 @@ msgstr ""
 msgid "Your OpenID:"
 msgstr ""
 
-#: app/views/entries/_entry_detail.html.erb:307
+#: app/views/entries/_entry_detail.html.erb:304
 msgid "[この記事を「話題」にして、掲示板に新しい記事を投稿する]"
 msgstr ""
 
-#: app/views/entries/_entry_detail.html.erb:309
+#: app/views/entries/_entry_detail.html.erb:306
 msgid "[この記事を「話題」にして、新しいブログを書く]"
 msgstr ""
 
@@ -1854,66 +2793,132 @@ msgstr ""
 msgid "action"
 msgstr ""
 
+#: app/models/activation.rb:-
+msgid "activation"
+msgstr ""
+
 #: app/views/admin/users/index.html.erb:33
 msgid "admin"
+msgstr ""
+
+#: app/models/antenna.rb:-
+msgid "antenna"
+msgstr ""
+
+#: app/models/antenna_item.rb:-
+msgid "antenna item"
+msgstr ""
+
+#: app/models/applied_email.rb:-
+msgid "applied email"
 msgstr ""
 
 #: app/views/admin/users/change_uid.html.erb:12
 msgid "before_uid"
 msgstr ""
 
-#: app/controllers/board_entries_controller.rb:43
-#: app/controllers/board_entries_controller.rb:72
 #: app/helpers/admin/application_helper.rb:38
+#: app/controllers/board_entries_controller.rb:43
+#: app/controllers/board_entries_controller.rb:72 app/models/board_entry.rb:-
 msgid "board entry"
 msgstr ""
 
 #: app/controllers/board_entries_controller.rb:134
+#: app/models/board_entry_comment.rb:-
 #: app/views/admin/board_entries/show.html.erb:43
 msgid "board entry comment"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:39
+#: app/models/board_entry_point.rb:-
+msgid "board entry point"
+msgstr ""
+
+#: app/helpers/admin/application_helper.rb:39 app/models/bookmark.rb:-
 msgid "bookmark"
 msgstr ""
 
-#: app/views/admin/bookmarks/show.html.erb:19
+#: app/models/bookmark_comment.rb:- app/views/admin/bookmarks/show.html.erb:19
 msgid "bookmark comment"
+msgstr ""
+
+#: app/models/bookmark_comment_tag.rb:-
+msgid "bookmark comment tag"
 msgstr ""
 
 #: app/views/shared/_login_form.html.erb:86
 msgid "cancel this request"
 msgstr ""
 
+#: app/models/chain.rb:-
+msgid "chain"
+msgstr ""
+
 #: app/views/admin/groups/index.html.erb:18
 msgid "description"
+msgstr ""
+
+#: app/models/entry_access.rb:-
+msgid "entry access"
+msgstr ""
+
+#: app/models/entry_editor.rb:-
+msgid "entry editor"
+msgstr ""
+
+#: app/models/entry_publication.rb:-
+msgid "entry publication"
+msgstr ""
+
+#: app/models/entry_tag.rb:-
+msgid "entry tag"
+msgstr ""
+
+#: app/models/entry_trackback.rb:-
+msgid "entry trackback"
 msgstr ""
 
 #: app/views/admin/images/index.html.erb:24
 msgid "favicon画像"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:37
+#: app/helpers/admin/application_helper.rb:37 app/models/group.rb:-
 msgid "group"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:36
+#: app/helpers/admin/application_helper.rb:36 app/models/group_category.rb:-
 #: app/views/admin/group_categories/index.html.erb:36
 msgid "group category"
 msgstr ""
 
-#: app/views/admin/groups/show.html.erb:35
+#: app/models/group_participation.rb:- app/views/admin/groups/show.html.erb:35
 msgid "group participation"
+msgstr ""
+
+#: app/models/bookmark.rb:126
+msgid "invalid url"
 msgstr ""
 
 #: app/views/admin/users/index.html.erb:37
 msgid "issued_atlast_authenticated_atpassword_expires_at"
 msgstr ""
 
+#: app/models/mail.rb:-
+msgid "mail"
+msgstr ""
+
+#: app/models/message.rb:-
+msgid "message"
+msgstr ""
+
 #: app/views/admin/users/change_uid.html.erb:16
 msgid "new_uid"
 msgstr ""
 
+#: app/models/open_id_request.rb:-
+msgid "open id request"
+msgstr ""
+
+#: app/models/openid_identifier.rb:-
 #: app/views/admin/openid_identifiers/index.html.erb:23
 msgid "openid identifier"
 msgstr ""
@@ -1926,12 +2931,40 @@ msgstr ""
 msgid "owner_symbol"
 msgstr ""
 
+#: app/models/picture.rb:-
+msgid "picture"
+msgstr ""
+
+#: app/models/popular_bookmark.rb:-
+msgid "popular bookmark"
+msgstr ""
+
+#: app/models/ranking.rb:-
+msgid "ranking"
+msgstr ""
+
 #: app/views/admin/user_profile_masters/index.html.erb:17
 msgid "required"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:40
+#: app/helpers/admin/application_helper.rb:40 app/models/share_file.rb:-
 msgid "share file"
+msgstr ""
+
+#: app/models/share_file_access.rb:-
+msgid "share file access"
+msgstr ""
+
+#: app/models/share_file_publication.rb:-
+msgid "share file publication"
+msgstr ""
+
+#: app/models/share_file_tag.rb:-
+msgid "share file tag"
+msgstr ""
+
+#: app/models/site_count.rb:-
+msgid "site count"
 msgstr ""
 
 #: app/views/admin/bookmark_comments/index.html.erb:20
@@ -1942,12 +2975,19 @@ msgstr ""
 msgid "symbol"
 msgstr ""
 
-#: app/models/user_profile_master.rb:159
+#: app/models/tag.rb:-
+msgid "tag"
+msgstr ""
+
+#: app/models/track.rb:-
+msgid "track"
+msgstr ""
+
+#: app/models/user_profile_master.rb:163
 msgid "uncheck selected"
 msgstr ""
 
-#: app/controllers/admin/user_profiles_controller.rb:20
-#: app/controllers/admin/user_profiles_controller.rb:39
+#: app/helpers/admin/application_helper.rb:35
 #: app/controllers/admin/users_controller.rb:29
 #: app/controllers/admin/users_controller.rb:41
 #: app/controllers/admin/users_controller.rb:50
@@ -1956,22 +2996,34 @@ msgstr ""
 #: app/controllers/admin/users_controller.rb:142
 #: app/controllers/admin/users_controller.rb:160
 #: app/controllers/admin/users_controller.rb:185
-#: app/helpers/admin/application_helper.rb:35
+#: app/controllers/admin/user_profiles_controller.rb:20
+#: app/controllers/admin/user_profiles_controller.rb:39 app/models/user.rb:-
 #: app/views/admin/users/import.html.erb:74
 #: app/views/admin/users/index.html.erb:56
 msgid "user"
 msgstr ""
 
+#: app/models/user_access.rb:-
+msgid "user access"
+msgstr ""
+
+#: app/models/user_custom.rb:-
+msgid "user custom"
+msgstr ""
+
+#: app/models/user_message_unsubscribe.rb:-
+msgid "user message unsubscribe"
+msgstr ""
+
+#: app/helpers/initial_settings_helper.rb:43
 #: app/controllers/admin/users_controller.rb:187
-#: app/controllers/admin/users_controller.rb:195
-#: app/helpers/initial_settings_helper.rb:43 app/models/share_file.rb:261
-#: app/models/user_search_condition.rb:39
-#: app/views/admin/users/change_uid.html.erb:31
+#: app/controllers/admin/users_controller.rb:195 app/models/share_file.rb:261
+#: app/models/user_search_condition.rb:39 app/views/user/show.html.erb:53
+#: app/views/portal/_registration_form.html.erb:38
 #: app/views/admin/users/create_uid.html.erb:12
 #: app/views/admin/users/create_uid.html.erb:27
-#: app/views/admin/users/edit.html.erb:16
-#: app/views/portal/_registration_form.html.erb:38
-#: app/views/user/show.html.erb:53 app/views/users/_user.html.erb:23
+#: app/views/admin/users/change_uid.html.erb:31
+#: app/views/admin/users/edit.html.erb:16 app/views/users/_user.html.erb:25
 msgid "user name"
 msgstr ""
 
@@ -1982,16 +3034,30 @@ msgstr ""
 msgid "user profile"
 msgstr ""
 
-#: app/controllers/admin/user_profile_masters_controller.rb:24
 #: app/helpers/admin/application_helper.rb:42
+#: app/controllers/admin/user_profile_masters_controller.rb:24
+#: app/models/user_profile_master.rb:-
 #: app/views/admin/user_profile_masters/index.html.erb:35
 msgid "user profile master"
 msgstr ""
 
-#: app/controllers/admin/user_profile_master_categories_controller.rb:28
 #: app/helpers/admin/application_helper.rb:41
+#: app/controllers/admin/user_profile_master_categories_controller.rb:28
+#: app/models/user_profile_master_category.rb:-
 #: app/views/admin/user_profile_master_categories/index.html.erb:25
 msgid "user profile master category"
+msgstr ""
+
+#: app/models/user_profile_value.rb:-
+msgid "user profile value"
+msgstr ""
+
+#: app/models/user_reading.rb:-
+msgid "user reading"
+msgstr ""
+
+#: app/models/user_uid.rb:-
+msgid "user uid"
 msgstr ""
 
 #: app/views/mypage/_antenna_box.html.erb:18
@@ -2040,9 +3106,9 @@ msgstr ""
 msgid "ご指定のグループは存在しません。"
 msgstr ""
 
+#: app/controllers/user_controller.rb:265
 #: app/controllers/admin/users_controller.rb:53
-#: app/controllers/admin/users_controller.rb:71
-#: app/controllers/user_controller.rb:265 app/models/board_entry.rb:56
+#: app/controllers/admin/users_controller.rb:71 app/models/board_entry.rb:56
 msgid "ご指定のユーザは存在しません。"
 msgstr ""
 
@@ -2072,11 +3138,11 @@ msgstr ""
 msgid "は前回と同一の値は登録できません。"
 msgstr ""
 
-#: app/models/user_profile_master.rb:134
+#: app/models/user_profile_master.rb:138
 msgid "は必須です。"
 msgstr ""
 
-#: app/models/user_profile_master.rb:194
+#: app/models/user_profile_master.rb:198
 msgid "は数値と-(ハイフン)で入力して下さい。"
 msgstr ""
 
@@ -2098,8 +3164,8 @@ msgstr ""
 msgid "アンテナ"
 msgstr ""
 
-#: app/helpers/groups_helper.rb:49 app/helpers/users_helper.rb:46
-#: app/views/group/show.html.erb:44 app/views/user/_portrait_box.html.erb:26
+#: app/helpers/users_helper.rb:46 app/helpers/groups_helper.rb:49
+#: app/views/user/_portrait_box.html.erb:26 app/views/group/show.html.erb:44
 #: app/views/users/_user.html.erb:5
 msgid "アンテナに追加"
 msgstr ""
@@ -2151,8 +3217,16 @@ msgid ""
 "て削除されている必要があります。"
 msgstr ""
 
+#: app/views/bookmark/_new.html.erb:60
+msgid "コメント"
+msgstr ""
+
 #: app/controllers/board_entries_controller.rb:64
 msgid "コメントの入力は必須です。"
+msgstr ""
+
+#: app/views/entries/_entry_detail.html.erb:285
+msgid "コメントを書く"
 msgstr ""
 
 #: app/controllers/rankings_controller.rb:165
@@ -2189,11 +3263,12 @@ msgid "ソーシャル"
 msgstr ""
 
 #: app/views/board_entries/_form.html.erb:42
-#: app/views/bookmarks/index.html.erb:13
+#: app/views/bookmarks/index.html.erb:13 app/views/bookmark/_new.html.erb:26
 msgid "タイトル"
 msgstr ""
 
 #: app/views/board_entries/_form.html.erb:28
+#: app/views/bookmark/_new.html.erb:48
 msgid "タグ"
 msgstr ""
 
@@ -2239,9 +3314,9 @@ msgstr ""
 msgid "パスワード強度"
 msgstr ""
 
-#: app/controllers/group_controller.rb:386
 #: app/controllers/mypage_controller.rb:527
 #: app/controllers/user_controller.rb:238
+#: app/controllers/group_controller.rb:386
 msgid "ファイル"
 msgstr ""
 
@@ -2286,15 +3361,15 @@ msgstr ""
 msgid "ブックマーク"
 msgstr ""
 
-#: app/controllers/bookmarks_controller.rb:38
+#: app/controllers/bookmarks_controller.rb:36
 msgid "ブックマークを探す"
 msgstr ""
 
-#: app/controllers/bookmark_controller.rb:109
+#: app/controllers/bookmark_controller.rb:118
 msgid "ブックマークコメント"
 msgstr ""
 
-#: app/controllers/bookmarks_controller.rb:39
+#: app/controllers/bookmarks_controller.rb:37
 msgid "ブックマークレット"
 msgstr ""
 
@@ -2308,7 +3383,7 @@ msgstr ""
 msgid "プロフィール"
 msgstr ""
 
-#: app/models/user_profile_master.rb:87
+#: app/models/user_profile_master.rb:91
 msgid "プロフィールカテゴリに存在しない値です。"
 msgstr ""
 
@@ -2328,8 +3403,8 @@ msgstr ""
 msgid "メーラを起動して送信する（宛先と本文が設定されます）"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:223
 #: app/controllers/platform_controller.rb:121
+#: app/controllers/admin/users_controller.rb:223
 msgid "メールアドレスが%{email}のユーザは既に利用を開始しています。"
 msgstr ""
 
@@ -2359,8 +3434,8 @@ msgstr ""
 msgid "ユーザ登録が継続出来ません。最初からやり直して下さい。"
 msgstr ""
 
-#: app/views/platform/index.html.erb:59
 #: app/views/user_mailer/sent_activate.html.erb:9
+#: app/views/platform/index.html.erb:54
 msgid "ユーザ登録してSKIPの利用を開始する"
 msgstr ""
 
@@ -2374,8 +3449,8 @@ msgstr ""
 msgid "ユーザ登録のためのURLの有効期限が過ぎています。"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:221
 #: app/controllers/platform_controller.rb:118
+#: app/controllers/admin/users_controller.rb:221
 msgid "ユーザ登録のためのURLを記載したメールを%{email}宛てに送信しました。"
 msgstr ""
 
@@ -2504,7 +3579,7 @@ msgstr ""
 msgid "全体に公開"
 msgstr ""
 
-#: app/views/mypage/index.html.erb:69
+#: app/views/mypage/index.html.erb:71
 msgid "公開された記事"
 msgstr ""
 
@@ -2594,6 +3669,10 @@ msgstr ""
 msgid "参加者のみ"
 msgstr ""
 
+#: app/views/board_entries/_form.html.erb:77
+msgid "参加者の編集可"
+msgstr ""
+
 #: app/controllers/group_controller.rb:383
 msgid "参加者一覧"
 msgstr ""
@@ -2645,8 +3724,9 @@ msgstr ""
 
 #: app/models/user_profile_master_category.rb:33
 msgid ""
-"対象のプロフィールカテゴリ属するプロフィール項目が登録済みのため削除出来ませ"
-"ん。"
+"対象のプロフィールカテゴリに属するプロフィール項目が登録されているため削除出"
+"来ません。このカテゴリに登録されているプロフィール項目を全て削除した後実行し"
+"てください。"
 msgstr ""
 
 #: app/controllers/admin/images_controller.rb:154
@@ -2667,10 +3747,14 @@ msgstr ""
 msgid "対象ユーザに利用開始通知メールを送信しますが宜しいですか?"
 msgstr ""
 
+#: app/controllers/admin/images_controller.rb:157
 #: app/controllers/admin/documents_controller.rb:38
 #: app/controllers/admin/documents_controller.rb:89
-#: app/controllers/admin/images_controller.rb:157
 msgid "想定外のエラーが発生しました。管理者にお問い合わせ下さい。"
+msgstr ""
+
+#: app/views/bookmark/_new.html.erb:67
+msgid "戻る"
 msgstr ""
 
 #: app/views/group/_manage_participations.html.erb:82
@@ -2685,7 +3769,7 @@ msgstr ""
 msgid "指定された拡張子のファイルはアップロード出来ません。"
 msgstr ""
 
-#: app/controllers/bookmark_controller.rb:102
+#: app/controllers/bookmark_controller.rb:111
 msgid "指定のＵＲＬは誰もブックマークしていません。"
 msgstr ""
 
@@ -2701,7 +3785,7 @@ msgstr ""
 msgid "既に%{username}が登録されています。"
 msgstr ""
 
-#: app/models/user_profile_master.rb:251
+#: app/models/user_profile_master.rb:255
 #: app/views/portal/_registration_form.html.erb:29
 msgid "既に登録されている値から選択項目を表示しています"
 msgstr ""
@@ -2729,7 +3813,7 @@ msgstr ""
 msgid "更新しました。"
 msgstr ""
 
-#: app/views/mypage/index.html.erb:94
+#: app/views/mypage/index.html.erb:96
 msgid "最新のブックマーク"
 msgstr ""
 
@@ -2749,6 +3833,10 @@ msgstr ""
 
 #: app/controllers/mypage_controller.rb:1011
 msgid "未読記事の一覧"
+msgstr ""
+
+#: app/views/board_entries/_edit_contents.html.erb:12
+msgid "本文にファイルを差し込む"
 msgstr ""
 
 #: app/controllers/admin/settings_controller.rb:60
@@ -2814,9 +3902,9 @@ msgstr ""
 msgid "確認"
 msgstr ""
 
-#: app/controllers/group_controller.rb:387
 #: app/controllers/mypage_controller.rb:532
 #: app/controllers/user_controller.rb:252
+#: app/controllers/group_controller.rb:387
 msgid "管理"
 msgstr ""
 
@@ -2860,11 +3948,11 @@ msgstr ""
 msgid "記事"
 msgstr ""
 
-#: app/views/entries/_entry_detail.html.erb:309
+#: app/views/entries/_entry_detail.html.erb:306
 msgid "記事の公開範囲によらず全体公開のブログとして新しい記事を作成します。"
 msgstr ""
 
-#: app/views/entries/_entry_detail.html.erb:307
+#: app/views/entries/_entry_detail.html.erb:304
 msgid "記事の公開範囲を引き継いだ掲示板として新しい記事を作成します。"
 msgstr ""
 
@@ -2884,8 +3972,8 @@ msgstr ""
 msgid "話題の記事"
 msgstr ""
 
-#: app/controllers/group_controller.rb:54
 #: app/controllers/users_controller.rb:29
+#: app/controllers/group_controller.rb:54
 msgid "該当するユーザは存在しませんでした。"
 msgstr ""
 
@@ -2898,11 +3986,15 @@ msgstr ""
 msgid "足跡"
 msgstr ""
 
+#: app/views/mypage/_manage_message.html.erb:14
+msgid "通知する"
+msgstr ""
+
 #: app/controllers/mypage_controller.rb:1007
 msgid "過去にあなたがコメントを残した記事"
 msgstr ""
 
-#: app/models/user_profile_master.rb:254
+#: app/models/user_profile_master.rb:258
 msgid "選択項目に無いものを設定する場合はこちらに入力してください"
 msgstr ""
 

@@ -1,8 +1,5 @@
-<%=
-  <<-RUBY
-(function() {
-    // ロゴのリプレイス
-    jQuery('div#logo').replaceWith('#{header_logo_link}');
+<%
+  replace_advertisement_js = <<-RUBY
     // 広告のリプレイス
     var replaceBannerLink = function(ads) {
       ad = ads[Math.floor(Math.random() * ads.length)];
@@ -19,15 +16,30 @@
       );
     };
     var url = '#{INITIAL_SETTINGS['advertisements_url']}'
-    // TODO Rubyのifで分岐させて出力自体しないようにする
     if( url != '' )
       jQuery.getJSON(url, replaceBannerLink);
+  RUBY
+  replace_application_link_js = <<-RUBY
     // アプリメニューのリプレイス
     jQuery('div#application_link').html('#{application_link}');
-    jQuery('div#application_link a').each(function() {
-      if(jQuery(this).attr('href').search(document.location.host) > 0)
-        jQuery(this).replaceWith('<b>' + jQuery(this).text() + '</b>');
+  RUBY
+  header_js = <<-RUBY
+(function() {
+    // ロゴのリプレイス
+    jQuery('div#logo').replaceWith('#{header_logo_link}');
+    #{replace_advertisement_js if INITIAL_SETTINGS['advertisements_url']}
+    #{replace_application_link_js if INITIAL_SETTINGS['collaboration_apps']}
+    jQuery('a#other_link')
+    .toggle(function() {
+        jQuery('div#other_links').css('left',jQuery('div#application_link').width()).show();
+    }, function() {
+        jQuery('div#other_links').hide();
+    });
+    jQuery('body')
+    .click(function() {
+        jQuery('div#other_links').hide();
     });
 })(jQuery);
   RUBY
-%>
+-%>
+<%= header_js %>
