@@ -16,12 +16,12 @@
 require "oauth/consumer"
 
 class RibbitsController < UserController
-  before_filter :access_denied_other, :except => :call
+  before_filter :access_denied_other, :except => [:call, :user_image]
+  skip_before_filter :sso, :requre_login, :load_user, :setup_layout, :only => :user_image
 
   def messages
     @ribbit = current_user.ribbit
     @messages = JSON.parse(user_access(@ribbit).get("/rest/1.0/messages/#{@ribbit.guid}/inbox").body)["entry"]
-    debugger
     logger.info "----- [messages]: #{@messages.inspect}"
   end
 
@@ -33,6 +33,14 @@ class RibbitsController < UserController
                         []
                       end
     logger.info "----- [call_histories]: #{@call_histories.inspect}"
+  end
+
+  def user_image
+    if ribbit = Ribbit.find_by_purpose_number(params[:id]) and user = ribbit.user and picture = user.pictures.first
+      send_data(picture.data, :filename => picture.name, :type => picture.content_type, :disposition => "inline")
+    else
+      render_404
+    end
   end
 
   def edit
