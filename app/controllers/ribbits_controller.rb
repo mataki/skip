@@ -21,18 +21,18 @@ class RibbitsController < UserController
 
   def messages
     @ribbit = current_user.ribbit
-    @messages = JSON.parse(user_access(@ribbit).get("/rest/1.0/messages/#{@ribbit.guid}/inbox").body)["entry"]
-    logger.info "----- [messages]: #{@messages.inspect}"
+#     @messages = JSON.parse(user_access(@ribbit).get("/rest/1.0/messages/#{@ribbit.guid}/inbox").body)["entry"]
+#     logger.info "----- [messages]: #{@messages.inspect}"
   end
 
   def call_history
     @ribbit = current_user.ribbit
-    @call_histories = if((body = user_access(@ribbit).get("/rest/1.0/calls/#{@ribbit.guid}").body) != "null")
-                        JSON.parse(body)["entry"]
-                      else
-                        []
-                      end
-    logger.info "----- [call_histories]: #{@call_histories.inspect}"
+#     @call_histories = if((body = user_access(@ribbit).get("/rest/1.0/calls/#{@ribbit.guid}").body) != "null")
+#                         JSON.parse(body)["entry"]
+#                       else
+#                         []
+#                       end
+#     logger.info "----- [call_histories]: #{@call_histories.inspect}"
   end
 
   def user_image
