@@ -17,7 +17,7 @@
 
 class RibbitsController < UserController
   before_filter :access_denied_other, :except => [:call, :user_image]
-  skip_before_filter :sso, :requre_login, :load_user, :setup_layout, :only => :user_image
+  skip_before_filter :sso, :login_required, :prepare_session, :load_user, :setup_layout, :only => :user_image
 
   def messages
     @ribbit = current_user.ribbit
