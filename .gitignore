@@ -7,6 +7,7 @@ public/custom/*.html
 public/custom/*
 public/javascripts/prototype.all.js
 public/javascripts/jquery.all.js
+public/services/skip_header.js
 public/stylesheets/skip.style.css
 lib/tasks/rspec.rake
 vendor/rails

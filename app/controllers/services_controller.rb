@@ -16,6 +16,7 @@
 class ServicesController < ActionController::Base
   session :off
   skip_before_filter :sso
+  caches_page :skip_header
 
   include ForServicesModule
   before_filter :check_secret_key, :except => [:search_conditions, :skip_header]
