@@ -133,7 +133,8 @@ default: &default
   # 連携アプリに関する設定
   # ================================================================================================
   collaboration_apps:
-#     knowledge:
+#     wiki:
+#       name:     SKIP-WIKI
 #       url:      http://localhost:4000
 #       ca_file:
   belong_info_apps:                                                  # 所属情報を外部のアプリケーションのAPIを利用して設定する
