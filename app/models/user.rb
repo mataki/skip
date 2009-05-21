@@ -36,6 +36,7 @@ class User < ActiveRecord::Base
   has_many :user_uids, :dependent => :destroy
 
   has_many :openid_identifiers
+  has_many :user_oauth_accesses
 
   validates_presence_of :name, :message => 'は必須です'
   validates_length_of :name, :maximum => 60, :message => 'は60桁以内で入力してください'
