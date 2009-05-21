@@ -136,4 +136,3 @@ HOLIDAYS = YAML::load(File.open(File.join(RAILS_ROOT, 'config', 'holiday.yml')))
 
 require File.join(File.dirname(__FILE__), '..', 'lib', 'hikidoc')
 require 'skip_util'
-require 'web_service_util'

@@ -831,15 +831,15 @@ describe User, "#belong_symbols_with_collaboration_apps" do
     end
     describe "情報が返ってくる場合" do
       before do
-        WebServiceUtil.stub!(:open_service_with_url).and_return([{"publication_symbols" => "note:1"}, { "publication_symbols" => "note:4"}])
+        SkipEmbedded::WebServiceUtil.stub!(:open_service_with_url).and_return([{"publication_symbols" => "note:1"}, { "publication_symbols" => "note:4"}])
       end
       it "SKIP内の所属情報を返すこと" do
         ["uid:a_user", "gid:a_group", Symbol::SYSTEM_ALL_USER].each do |symbol|
           @user.belong_symbols_with_collaboration_apps.should be_include(symbol)
         end
       end
-      it "WebServiceUtilから他のアプリにアクセスすること" do
-        WebServiceUtil.should_receive(:open_service_with_url).with("http://localhost:3100/notes.js", { :user => "http://test.host/id/a_user" }, "hoge/fuga")
+      it "SkipEmbedded::WebServiceUtilから他のアプリにアクセスすること" do
+        SkipEmbedded::WebServiceUtil.should_receive(:open_service_with_url).with("http://localhost:3100/notes.js", { :user => "http://test.host/id/a_user" }, "hoge/fuga")
         @user.belong_symbols_with_collaboration_apps
       end
       it "連携アプリ内の所属情報を返すこと" do
@@ -850,7 +850,7 @@ describe User, "#belong_symbols_with_collaboration_apps" do
     end
     describe "情報が取得できない場合" do
       before do
-        WebServiceUtil.stub!(:open_service_with_url)
+        SkipEmbedded::WebServiceUtil.stub!(:open_service_with_url)
       end
       it "publicが追加されること" do
         ["uid:a_user", "gid:a_group", Symbol::SYSTEM_ALL_USER, "public"].each do |symbol|

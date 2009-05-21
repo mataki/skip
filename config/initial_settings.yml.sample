@@ -31,7 +31,6 @@ default: &default
     :session_key: _skip_session                                     # セッションの名称です。
     :secret: change-mechange-mechange-mechange-me                   # cookieの暗号化に使う鍵です。
   sha1_digest_key: change-me                                        # ユーザのパスワードを登録する際に使う鍵です。
-  secret_key: change-me                                             # 必ず変更して下さい。
 
   # ================================================================================================
   # バッチ・メール送信時のシステムのURLに含まれるホスト情報の設定(空の場合、管理画面から設定できます)
@@ -141,6 +140,8 @@ default: &default
 #     knowledge:
 #       url:        http://localhost:4000/notes.js
 #       ca_file:  /path/to/ca_file
+  skip_collaboration:
+    secret_key: change-me                                             # 必ず変更して下さい。
 
   # ================================================================================================
   # その他

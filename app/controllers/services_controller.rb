@@ -18,7 +18,7 @@ class ServicesController < ActionController::Base
   skip_before_filter :sso
   caches_page :skip_header
 
-  include ForServicesModule
+  include SkipEmbedded::WebServiceUtil::Server
   before_filter :check_secret_key, :except => [:search_conditions, :skip_header]
   after_filter :change_charset
 
