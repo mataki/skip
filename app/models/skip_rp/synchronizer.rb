@@ -13,6 +13,8 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+require 'skip_embedded/rp_service/client'
+
 module SkipRp
   module Synchronizer
     def service
@@ -21,10 +23,14 @@ module SkipRp
       collaboration_apps = INITIAL_SETTINGS['collaboration_apps']
       app = collaboration_apps[@name]
       if provider = OauthProvider.find_by_app_name(@name)
-        SkipRp::Service.new(@name, app['url'], :key => provider.token, :secret => provider.secret)
+        service = SkipEmbedded::RpService::Client.new(@name, app['url'], :key => provider.token, :secret => provider.secret)
+        service.connection = SkipEmbedded::RpService::HttpConnection.new
+        service.backend = SkipOauthBackend.new(@name)
+        service
       else
-        service = SkipRp::Service.register!(@name, app['url'], :url => "#{INITIAL_SETTINGS['protocol']}#{INITIAL_SETTINGS['host_and_port']}")
+        service = SkipEmbedded::RpService::Client.register!(@name, app['url'], :url => "#{INITIAL_SETTINGS['protocol']}#{INITIAL_SETTINGS['host_and_port']}")
         OauthProvider.create! :app_name => @name, :token => service.key, :secret => service.secret
+        service.backend = SkipOauthBackend.new(@name)
         service
       end
     end

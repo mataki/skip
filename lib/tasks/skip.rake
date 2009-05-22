@@ -23,4 +23,22 @@ namespace :skip do
       FileUtils.rm_rf out
     end
   end
+
+  namespace :service do
+    desc "Synchronize the users and groups of the given oauth provider"
+    task :sync do
+      require File.expand_path(File.dirname(__FILE__) + "/../../config/environment")
+      app_name = ENV['app_name']
+      abort 'app_name was not specifed. ex) % rake skip:service:sync app_name=\'wiki\' ' unless app_name
+      abort 'collaboration_apps[\'app_name\'] was not specifed' unless INITIAL_SETTINGS['collaboration_apps'][app_name]
+      SkipRp::UserSynchronizer.new(app_name).sync
+      # TODO ユーザが動作するようになったらグループも確認する
+      # SkipRp::GroupSynchronizer.new(app_name).sync
+    end
+# TODO 後で
+#    desc "Synchronize the users and groups of all oauth providers"
+#    task :sync_all do
+#      require File.expand_path(File.dirname(__FILE__) + "/../../config/environment")
+#    end
+  end
 end

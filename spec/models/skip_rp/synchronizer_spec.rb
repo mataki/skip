@@ -28,11 +28,12 @@ describe SkipRp::Synchronizer, '#service' do
       @skip_url = 'http://skip'
       INITIAL_SETTINGS['protocol'] = 'http://'
       INITIAL_SETTINGS['host_and_port'] = 'skip'
-      @service = stub(SkipRp::Service, :key => 'token', :secret => 'secret')
-      SkipRp::Service.stub!(:register!).and_return(@service)
+      @service = stub(SkipEmbedded::RpService::Client, :key => 'token', :secret => 'secret')
+      @service.stub!(:backend=)
+      SkipEmbedded::RpService::Client.stub!(:register!).and_return(@service)
     end
     it 'SKIPを指定したサービスにconsumerとして登録しにいくこと' do
-      SkipRp::Service.should_receive(:register!).with(@app_name, @provider_url, :url => @skip_url)
+      SkipEmbedded::RpService::Client.should_receive(:register!).with(@app_name, @provider_url, :url => @skip_url)
       @synchronizer.service
     end
     it '指定したサービスのconsumer_tokenとconsumer_keyが保存されること' do

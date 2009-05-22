@@ -18,7 +18,7 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 describe SkipRp::GroupSynchronizer, '#sync' do
   before do
     @synchronizer = SkipRp::GroupSynchronizer.new 'wiki'
-    @service = stub(SkipRp::Service, :key => 'key', :secret => 'secret')
+    @service = stub(SkipEmbedded::RpService::Client, :key => 'key', :secret => 'secret')
     @synchronizer.should_receive(:service).and_return(@service)
   end
   it 'SkipRp::Service#sync_groupsが実行されること' do
