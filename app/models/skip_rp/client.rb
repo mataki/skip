@@ -16,22 +16,22 @@
 require 'skip_embedded/rp_service/client'
 
 module SkipRp
-  module Synchronizer
-    def service
+  module Client
+    def client(name = @name)
       # TODO collaboration_appsが未設定時の処理をどうするか検討
       # if collaboration_apps = INITIAL_SETTINGS['collaboration_apps']
       collaboration_apps = INITIAL_SETTINGS['collaboration_apps']
-      app = collaboration_apps[@name]
-      if provider = OauthProvider.find_by_app_name(@name)
-        service = SkipEmbedded::RpService::Client.new(@name, app['url'], :key => provider.token, :secret => provider.secret)
-        service.connection = SkipEmbedded::RpService::HttpConnection.new
-        service.backend = SkipOauthBackend.new(@name)
-        service
+      app = collaboration_apps[name]
+      if provider = OauthProvider.find_by_app_name(name)
+        client = SkipEmbedded::RpService::Client.new(name, app['url'], :key => provider.token, :secret => provider.secret)
+        client.connection = SkipEmbedded::RpService::HttpConnection.new
+        client.backend = SkipOauthBackend.new(name)
+        client
       else
-        service = SkipEmbedded::RpService::Client.register!(@name, app['url'], :url => "#{INITIAL_SETTINGS['protocol']}#{INITIAL_SETTINGS['host_and_port']}")
-        OauthProvider.create! :app_name => @name, :token => service.key, :secret => service.secret
-        service.backend = SkipOauthBackend.new(@name)
-        service
+        client = SkipEmbedded::RpService::Client.register!(name, app['url'], :url => "#{INITIAL_SETTINGS['protocol']}#{INITIAL_SETTINGS['host_and_port']}")
+        OauthProvider.create! :app_name => name, :token => client.key, :secret => client.secret
+        client.backend = SkipOauthBackend.new(name)
+        client
       end
     end
   end

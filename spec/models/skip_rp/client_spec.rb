@@ -15,7 +15,7 @@
 
 require File.dirname(__FILE__) + '/../../spec_helper'
 
-describe SkipRp::Synchronizer, '#service' do
+describe SkipRp::Client, '#client' do
   before do
     @app_name = 'wiki'
     @provider_url = 'http://skip/wiki/'
@@ -28,23 +28,23 @@ describe SkipRp::Synchronizer, '#service' do
       @skip_url = 'http://skip'
       INITIAL_SETTINGS['protocol'] = 'http://'
       INITIAL_SETTINGS['host_and_port'] = 'skip'
-      @service = stub(SkipEmbedded::RpService::Client, :key => 'token', :secret => 'secret')
-      @service.stub!(:backend=)
-      SkipEmbedded::RpService::Client.stub!(:register!).and_return(@service)
+      @client = stub(SkipEmbedded::RpService::Client, :key => 'token', :secret => 'secret')
+      @client.stub!(:backend=)
+      SkipEmbedded::RpService::Client.stub!(:register!).and_return(@client)
     end
     it 'SKIPを指定したサービスにconsumerとして登録しにいくこと' do
       SkipEmbedded::RpService::Client.should_receive(:register!).with(@app_name, @provider_url, :url => @skip_url)
-      @synchronizer.service
+      @synchronizer.client
     end
     it '指定したサービスのconsumer_tokenとconsumer_keyが保存されること' do
       lambda do
-        @synchronizer.service
+        @synchronizer.client
       end.should change(OauthProvider, :count).by(1)
     end
-    it 'Serviceオブジェクトが返ること' do
-      service = @synchronizer.service
-      service.key.should == 'token'
-      service.secret.should == 'secret'
+    it 'Clientオブジェクトが返ること' do
+      client = @synchronizer.client
+      client.key.should == 'token'
+      client.secret.should == 'secret'
     end
   end
   describe '指定されたサービスがproviderとして登録されている場合' do
@@ -53,15 +53,15 @@ describe SkipRp::Synchronizer, '#service' do
       OauthProvider.should_receive(:find_by_app_name).and_return(@oauth_provider)
       @synchronizer = TestSynchronizer.new(@app_name)
     end
-    it 'Serviceオブジェクトが返ること' do
-      service = @synchronizer.service
-      service.key.should == 'token'
-      service.secret.should == 'secret'
+    it 'Clientオブジェクトが返ること' do
+      client = @synchronizer.client
+      client.key.should == 'token'
+      client.secret.should == 'secret'
     end
   end
 
   class TestSynchronizer
-    include SkipRp::Synchronizer
+    include SkipRp::Client
     def initialize name
       @name = name
     end

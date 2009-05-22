@@ -18,13 +18,13 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 describe SkipRp::UserSynchronizer, '#sync' do
   before do
     @synchronizer = SkipRp::UserSynchronizer.new 'wiki'
-    @service = stub(SkipEmbedded::RpService::Client, :key => 'key', :secret => 'secret')
-    @synchronizer.should_receive(:service).and_return(@service)
+    @client = stub(SkipEmbedded::RpService::Client, :key => 'key', :secret => 'secret')
+    @synchronizer.should_receive(:client).and_return(@client)
   end
   it 'SkipRp::Service#sync_usersが実行されること' do
     synchronize_users = [["http://skip/id/boob", "boob", "ボブ", false], ["http://skip/id/alice", "alice", "アリス", true]]
     User.should_receive(:synchronize_users).and_return(synchronize_users)
-    @service.should_receive(:sync_users).with(synchronize_users)
+    @client.should_receive(:sync_users).with(synchronize_users)
     @synchronizer.sync
   end
 end

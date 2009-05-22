@@ -18,8 +18,8 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 describe SkipRp::GroupSynchronizer, '#sync' do
   before do
     @synchronizer = SkipRp::GroupSynchronizer.new 'wiki'
-    @service = stub(SkipEmbedded::RpService::Client, :key => 'key', :secret => 'secret')
-    @synchronizer.should_receive(:service).and_return(@service)
+    @client = stub(SkipEmbedded::RpService::Client, :key => 'key', :secret => 'secret')
+    @synchronizer.should_receive(:client).and_return(@client)
   end
   it 'SkipRp::Service#sync_groupsが実行されること' do
     synchronize_groups = [
@@ -27,7 +27,7 @@ describe SkipRp::GroupSynchronizer, '#sync' do
       ["emacs_study", "emacs_study", "Emacs勉強会", ["http://localhost:3000/id/boob"]]
     ]
     Group.should_receive(:synchronize_groups).and_return(synchronize_groups)
-    @service.should_receive(:sync_groups).with(synchronize_groups)
+    @client.should_receive(:sync_groups).with(synchronize_groups)
     @synchronizer.sync
   end
 end

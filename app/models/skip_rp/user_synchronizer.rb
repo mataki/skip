@@ -14,14 +14,14 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 module SkipRp
   class UserSynchronizer
-    include Synchronizer
+    include Client
 
     def initialize name
       @name = name
     end
 
     def sync
-      service.sync_users User.synchronize_users
+      client.sync_users User.synchronize_users
     end
   end
 end
