@@ -16,8 +16,8 @@
 # require "oauth/consumer"
 
 class RibbitsController < UserController
-  before_filter :access_denied_other, :except => [:call, :user_image]
-  skip_before_filter :sso, :login_required, :prepare_session, :load_user, :setup_layout, :only => :user_image
+  before_filter :access_denied_other, :except => [:call, :user_image, :user_name]
+  skip_before_filter :sso, :login_required, :prepare_session, :load_user, :setup_layout, :only => [:user_image, :user_name]
 
   def messages
     @ribbit = current_user.ribbit
@@ -38,6 +38,14 @@ class RibbitsController < UserController
   def user_image
     if ribbit = Ribbit.find_by_purpose_number(params[:id]) and user = ribbit.user and picture = user.pictures.first
       send_data(picture.data, :filename => picture.name, :type => picture.content_type, :disposition => "inline")
+    else
+      render_404
+    end
+  end
+
+  def user_name
+    if ribbit = Ribbit.find_by_purpose_number(params[:id]) and user = ribbit.user
+      render :text => user.name
     else
       render_404
     end
