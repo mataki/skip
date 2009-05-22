@@ -20,9 +20,9 @@ module SkipRp
     end
 
     def add_access_token(identity_url, token, secret)
-      if openid_identifier = OpenidIdentifier.find_by_url(identity_url)
-        unless UserOauthAccess.find_by_app_name_and_user_id(@name, openid_identifier.user.id)
-          openid_identifier.user.user_oauth_accesses.create! :app_name => @name, :token => token, :secret => secret
+      if user = User.find_by_openid_identifier(identity_url)
+        unless UserOauthAccess.find_by_app_name_and_user_id(@name, user.id)
+          user.user_oauth_accesses.create! :app_name => @name, :token => token, :secret => secret
         end
       end
     end

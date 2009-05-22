@@ -22,8 +22,8 @@ describe SkipRp::SkipOauthBackend, '#add_access_token' do
   end
   describe 'identity_urlに一致するユーザが存在する場合' do
     before do
-      @openid = 'http://example.com/id'
-      @bob = create_user :openid_identifier_options => {:url => @openid}
+      @openid = 'http://example.com/id/boob'
+      @bob = create_user :user_uid_options => {:uid => 'boob'}
     end
     describe '指定アプリに対する、対象ユーザのアクセストークンが登録済みの場合' do
       before do

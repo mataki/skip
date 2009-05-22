@@ -438,6 +438,12 @@ class User < ActiveRecord::Base
     User.all.map { |u| [u.openid_identifier, u.uid, u.name, u.admin] }
   end
 
+  def self.find_by_openid_identifier openid_identifier
+    return nil if openid_identifier.blank?
+    uid = openid_identifier.split('/').last
+    User.find_by_uid uid
+  end
+
 protected
   # TODO: self.make_conditionsメソッドは使ってなさそう確認して消す
   @@search_cond_keys = [:name, :section, :email]
