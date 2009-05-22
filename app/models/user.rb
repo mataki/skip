@@ -434,6 +434,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def self.synchronize_users
+    User.all.map { |u| [u.openid_identifier, u.uid, u.name, u.admin] }
+  end
+
 protected
   # TODO: self.make_conditionsメソッドは使ってなさそう確認して消す
   @@search_cond_keys = [:name, :section, :email]

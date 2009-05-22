@@ -244,4 +244,8 @@ class Group < ActiveRecord::Base
   def administrator?(user)
     group_participations. find_by_user_id_and_waiting_and_owned(user.id, false, true) ? true : false
   end
+  
+  def self.synchronize_groups
+    Group.all.map { |g| [g.gid, g.gid, g.name, g.participation_users(:waiting => false).map { |u| u.openid_identifier }] }
+  end
 end

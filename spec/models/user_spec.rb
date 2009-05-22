@@ -997,6 +997,27 @@ describe User, '#within_time_limit_of_password?' do
   end
 end
 
+describe User, '.synchronize_users' do
+  describe '二人の同期対象ユーザが存在する場合' do
+    before do
+      User.delete_all
+      Admin::Setting.stub!(:protocol_by_initial_settings_default).and_return('http://')
+      Admin::Setting.stub!(:host_and_port_by_initial_settings_default).and_return('localhost:3000')
+      @bob = create_user :user_options => {:name => 'ボブ', :admin => false}, :user_uid_options => {:uid => 'boob'}
+      @alice = create_user :user_options => {:name => 'アリス', :admin => true}, :user_uid_options => {:uid => 'alice'}
+    end
+    it '二件のユーザ同期情報を取得できること' do
+      User.synchronize_users.size.should == 2
+    end
+    it 'ボブの情報が正しく設定されていること' do
+      User.synchronize_users.first.should == ['http://localhost:3000/id/boob', 'boob', 'ボブ', false]
+    end
+    it 'アリスの情報が正しく設定されていること' do
+      User.synchronize_users.last.should == ['http://localhost:3000/id/alice', 'alice', 'アリス', true]
+    end
+  end
+end
+
 describe User, 'password_required?' do
   before do
     @user = new_user
