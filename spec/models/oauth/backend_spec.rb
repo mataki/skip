@@ -27,7 +27,7 @@ describe Oauth::Backend, '#add_access_token' do
     end
     describe '指定アプリに対する、対象ユーザのアクセストークンが登録済みの場合' do
       before do
-        @bob.user_oauth_accesses.create! :app_name => @app_name, :token => 'token', :secret => 'secret' 
+        @bob.user_oauth_accesses.create! :app_name => @app_name, :token => 'token', :secret => 'secret'
       end
       it 'user_oauth_accessesに登録されないこと' do
         lambda do

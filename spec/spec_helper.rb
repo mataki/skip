@@ -104,10 +104,6 @@ def create_user options = {}
     user_uid = UserUid.new({ :uid => '123456', :uid_type => 'MASTER' }.merge(options[:user_uid_options]))
     user.user_uids << user_uid
   end
-  if options[:openid_identifier_options]
-    openid_identifier = OpenidIdentifier.new({ :url => 'http://example.com/id' }.merge(options[:openid_identifier_options]))
-    user.openid_identifiers << openid_identifier
-  end
   user.save!
   user
 end
