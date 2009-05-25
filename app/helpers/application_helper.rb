@@ -14,12 +14,10 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 module ApplicationHelper
-  include SkipEmbedded::Helpers
   include InitialSettingsHelper
   include CacheHelper
   include SkipHelper
   include HelpIconHelper
-
   @@CONTROLLER_HASH = { 'uid'  => 'user',
                         'gid'  => 'group',
                         'page' => 'page'}
@@ -199,7 +197,13 @@ module ApplicationHelper
   # リッチテキストの表示
   def render_richtext(text, owner_symbol = nil)
     content = parse_permalink(text, owner_symbol)
-    "<div class='rich_style'>#{sanitize_richtext(content)}</div>"
+    "<div class='rich_style'>#{sanitize_style_with_whitelist(content)}</div>"
+  end
+
+  def sanitize_style_with_whitelist(content)
+    allowed_tags = HTML::WhiteListSanitizer.allowed_tags.dup << "table" << "tbody" << "tr" << "th" << "td" << "caption" << "strike" << "u"
+    allowed_attributes = HTML::WhiteListSanitizer.allowed_attributes.dup << "style" << "cellspacing" << "cellpadding" << "border" << "align" << "summary"
+    sanitize(content, :tags => allowed_tags, :attributes => allowed_attributes)
   end
 
   # ホームのあなたへの連絡、みんなへの連絡の重要マークをつける
