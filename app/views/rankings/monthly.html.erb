@@ -5,7 +5,7 @@
     <tr>
       <th>期間</th>
       <td>
-<%= select_tag 'date_list', options_for_select(@dates, "#{@year}-#{@month.to_s.rjust(2,'0')}"), :id => 'date_list' -%>
+        <%= select_tag 'date_list', ranking_navi_for_month(@dates, @year, @month), :id => 'select_navi' -%>
       </td>
     </tr>
   </table>
@@ -26,12 +26,4 @@
             getRanking(contents_types[i], year, month);
     };
     loadRanking();
-
-    $j('#date_list')
-    .change(function(){
-        var year_month = $j('#date_list :selected').val().split('-');
-        var year = year_month[0];
-        var month = year_month[1];
-        location.href = relative_url_root + '/rankings/monthly/' + year + '/' + month;
-    });
 <% end -%>

@@ -15,12 +15,17 @@
 
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
-describe RankingsHelper do
-  
-  #Delete this example and add some real ones or delete this file
-  it "should be included in the object returned by #helper" do
-    included_modules = (class << helper; self; end).send :included_modules
-    included_modules.should include(RankingsHelper)
+describe RankingsHelper, "#ranking_navi_for_month" do
+  before do
+    @source = ["2009-01", "2009-02", "2009-03"]
   end
-
+  it "表示に[YYYY-MM], valueにURLとなること" do
+    helper.ranking_navi_for_month(@source, "2009", "2").should have_tag("option[value=\"#{monthly_path(:year => "2009", :month => "01")}\"]", "2009-01")
+  end
+  it "月の引数が2の場合、選択されること" do
+    helper.ranking_navi_for_month(@source, "2009", "2").should have_tag("option[value=\"#{monthly_path(:year => "2009", :month => "02")}\"][selected]", "2009-02")
+  end
+  it "月の引数が02の場合、選択されること" do
+    helper.ranking_navi_for_month(@source, "2009", "02").should have_tag("option[value=\"#{monthly_path(:year => "2009", :month => "02")}\"][selected]", "2009-02")
+  end
 end

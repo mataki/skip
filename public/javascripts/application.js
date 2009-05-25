@@ -76,6 +76,12 @@ $j(function(){
     };
     $j(document).appendClickForToggleTag();
 
+
+    /*
+     * セレクトボックスのリンクナビゲーション
+     */
+    $j('select#select_navi').dropdownNavigation();
+
     /*
      * カレンダーのロード
      */
