@@ -79,11 +79,12 @@
 <%= skip_footer_link -%>
 
 </body>
-  <%= all_javascript_include_tag 'jquery' %>
-  <script language="JavaScript" type="text/javascript">$j = jQuery.noConflict();</script>
-  <%= skip_jquery_include_tag 'jquery.tablesorter' %>
-  <%= javascript_include_tag 'application' %>
-  <%= skip_javascript_include_tag 'skip_util' %>
+<%= all_javascript_include_tag 'jquery' %>
+<script language="JavaScript" type="text/javascript">$j = jQuery.noConflict();</script>
+<%= skip_jquery_include_tag 'jquery.tablesorter' %>
+<%= javascript_include_tag 'application' %>
+<%= skip_javascript_include_tag 'skip_util' %>
+<%= skip_header_javascript_include_tag %>
 <script type="text/javascript">
 var relative_url_root = '<%= controller.request.relative_url_root -%>';
 $j(function(){
