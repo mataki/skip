@@ -15,10 +15,10 @@
 
 require File.dirname(__FILE__) + '/../../spec_helper'
 
-describe Oauth::SkipOauthBackend, '#add_access_token' do
+describe Oauth::Backend, '#add_access_token' do
   before do
     @app_name = 'wiki'
-    @backend = Oauth::SkipOauthBackend.new @app_name
+    @backend = Oauth::Backend.new @app_name
   end
   describe 'identity_urlに一致するユーザが存在する場合' do
     before do

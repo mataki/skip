@@ -25,12 +25,12 @@ module Oauth
       if provider = OauthProvider.find_by_app_name(name)
         client = SkipEmbedded::RpService::Client.new(name, app['url'], :key => provider.token, :secret => provider.secret)
         client.connection = SkipEmbedded::RpService::HttpConnection.new
-        client.backend = SkipOauthBackend.new(name)
+        client.backend = Backend.new(name)
         client
       else
         client = SkipEmbedded::RpService::Client.register!(name, app['url'], :url => "#{INITIAL_SETTINGS['protocol']}#{INITIAL_SETTINGS['host_and_port']}")
         OauthProvider.create! :app_name => name, :token => client.key, :secret => client.secret
-        client.backend = SkipOauthBackend.new(name)
+        client.backend = Backend.new(name)
         client
       end
     end

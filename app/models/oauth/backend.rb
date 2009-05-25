@@ -14,7 +14,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 module Oauth
-  class SkipOauthBackend
+  class Backend
     def initialize name
       @name = name
     end
