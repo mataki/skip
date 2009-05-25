@@ -15,7 +15,7 @@
 
 require File.dirname(__FILE__) + '/../../spec_helper'
 
-describe SkipRp::Client, '#client' do
+describe Oauth::Client, '#client' do
   before do
     @app_name = 'wiki'
     @provider_url = 'http://skip/wiki/'
@@ -61,7 +61,7 @@ describe SkipRp::Client, '#client' do
   end
 
   class TestSynchronizer
-    include SkipRp::Client
+    include Oauth::Client
     def initialize name
       @name = name
     end

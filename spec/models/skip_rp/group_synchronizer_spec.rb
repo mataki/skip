@@ -15,13 +15,13 @@
 
 require File.dirname(__FILE__) + '/../../spec_helper'
 
-describe SkipRp::GroupSynchronizer, '#sync' do
+describe Oauth::GroupSynchronizer, '#sync' do
   before do
-    @synchronizer = SkipRp::GroupSynchronizer.new 'wiki'
+    @synchronizer = Oauth::GroupSynchronizer.new 'wiki'
     @client = stub(SkipEmbedded::RpService::Client, :key => 'key', :secret => 'secret')
     @synchronizer.should_receive(:client).and_return(@client)
   end
-  it 'SkipRp::Service#sync_groupsが実行されること' do
+  it 'Oauth::Service#sync_groupsが実行されること' do
     synchronize_groups = [
       ["vim_study", "vim_study", "Vim勉強会", ["http://localhost:3000/id/boob", "http://localhost:3000/id/alice"]],
       ["emacs_study", "emacs_study", "Emacs勉強会", ["http://localhost:3000/id/boob"]]

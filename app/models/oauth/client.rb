@@ -15,7 +15,7 @@
 
 require 'skip_embedded/rp_service/client'
 
-module SkipRp
+module Oauth
   module Client
     def client(name = @name)
       # TODO collaboration_appsが未設定時の処理をどうするか検討

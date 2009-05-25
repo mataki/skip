@@ -12,27 +12,16 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+module Oauth
+  class UserSynchronizer
+    include Client
 
-module SkipRp
-  class SkipOauthBackend
     def initialize name
       @name = name
     end
 
-    def add_access_token(identity_url, token, secret)
-      if user = User.find_by_openid_identifier(identity_url)
-        unless UserOauthAccess.find_by_app_name_and_user_id(@name, user.id)
-          user.user_oauth_accesses.create! :app_name => @name, :token => token, :secret => secret
-        end
-      end
-    end
-
-    def update_user(identity_url, data)
-      :noop
-    end
-
-    def update_group(gid, data)
-      :noop
+    def sync
+      client.sync_users User.synchronize_users
     end
   end
 end

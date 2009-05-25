@@ -12,8 +12,8 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-module SkipRp
-  class UserSynchronizer
+module Oauth
+  class GroupSynchronizer
     include Client
 
     def initialize name
@@ -21,7 +21,7 @@ module SkipRp
     end
 
     def sync
-      client.sync_users User.synchronize_users
+      client.sync_groups Group.synchronize_groups
     end
   end
 end
