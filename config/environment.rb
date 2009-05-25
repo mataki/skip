@@ -65,6 +65,7 @@ Rails::Initializer.run do |config|
     restful-authentication
   ]
 
+  config.plugins << "haml" if Gem.source_index.any?{|_,y| y.name =~ /(?:[:ascii:]+-)?haml/  }
   config.plugins << "openskip-skip_embedded" if Gem.source_index.any?{|_,y| y.name =~ /(?:[:ascii:]+-)?openskip-skip_embedded/  }
 end
 
