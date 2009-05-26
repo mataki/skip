@@ -56,17 +56,9 @@ Rails::Initializer.run do |config|
 #     config.gem "ZenTest", :lib => "zentest"
 #     config.gem "ruby-debug"
 
-  config.plugins = %w[
-    acts_as_list
-    acts_as_tree
-    classic_pagination
-    exception_notification
-    open_id_authentication
-    restful-authentication
-  ]
+  config.plugins = %w[all]
 
-  config.plugins << "haml" if Gem.source_index.any?{|_,y| y.name =~ /(?:[:ascii:]+-)?haml/  }
-  config.plugins << "openskip-skip_embedded" if Gem.source_index.any?{|_,y| y.name =~ /(?:[:ascii:]+-)?openskip-skip_embedded/  }
+  config.plugins << "openskip-skip_embedded" if Gem.source_index.any?{|_,y| y.name =~ /(?:[:ascii:]+-)?openskip-skip_embedded/ }
 end
 
 menu_btns = [
