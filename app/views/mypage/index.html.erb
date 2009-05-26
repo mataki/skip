@@ -91,6 +91,13 @@
     </div>
 
     <%# ============================================================ -%>
+    <%#  main area collaboration_apps feeds -%>
+    <%# ============================================================ -%>
+    <% if collaboration_apps = INITIAL_SETTINGS['collaboration_apps'] -%>
+    <%= render :partial => 'update_info' %>
+    <% end -%>
+
+    <%# ============================================================ -%>
     <%#  main area bookmarks -%>
     <%# ============================================================ -%>
     <%= show_title_bar("tag_blue", _("最新のブックマーク"), {:controller => 'bookmarks'}) %>

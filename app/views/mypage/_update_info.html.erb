@@ -1,0 +1,18 @@
+<div id="collaboration_apps">
+  <%= show_title_bar("tag_blue", _("更新情報"), {}) %>
+  <%= skip_image_tag 'indicator.gif' %>
+</div>
+
+<% content_for :javascript do -%>
+  <% javascript_tag do -%>
+$j(function() {
+    $j.ajax({
+        url: '<%= url_for(:controller => 'mypage', :action => 'collaboration_apps') %>',
+        success: function(html) {
+            $j('div#collaboration_apps').html(html);
+        }
+    });
+});
+  <% end -%>
+<% end -%>
+
