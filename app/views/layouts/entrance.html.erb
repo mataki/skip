@@ -52,9 +52,7 @@ var relative_url_root = '<%= controller.request.relative_url_root %>';
 <% end -%>
 <%= javascript_include_tag 'application' %>
 <%= skip_javascript_include_tag 'skip_util' %>
-<%= javascript_include_tag "flashMessage.js" %>
-<%= javascript_include_tag "dropdown_navigation.js" %>
-<%= javascript_include_tag "labeled_text_field.js" %>
+<%= javascript_include_tag :skip, :cache => "skip_embedded" %>
 <%= yield :javascript_includes %>
 
 <% javascript_tag do -%>
