@@ -14,5 +14,13 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class UserOauthAccess < ActiveRecord::Base
+  include Oauth::Client
   belongs_to :users
+
+  def resource resource_path
+    timeout(Admin::Setting.mypage_feed_timeout.to_i) do
+      return client(self.app_name).oauth(self.token, self.secret).get_resource(resource_path)
+    end
+    nil
+  end
 end

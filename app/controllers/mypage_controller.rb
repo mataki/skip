@@ -19,7 +19,6 @@ require "resolv-replace"
 require 'timeout'
 require 'rss'
 class MypageController < ApplicationController
-  include Oauth::Client
   before_filter :setup_layout
   skip_before_filter :verify_authenticity_token, :only => :apply_ident_url
   helper :calendar
@@ -150,24 +149,8 @@ class MypageController < ApplicationController
   end
 
   def collaboration_apps
-    @feed = collaboration_apps_feed
+    @feed_items = CollaborationApp.all_feed_items_by_user(current_user)
     render :layout => false
-  end
-
-  def collaboration_apps_feed
-    # TODO collaboration_appsの数だけfeed取得
-    # 時系列にfeedを並び替える
-    # 上位20件のみにする
-    collaboration_apps_feed_by_app_name 'wiki'
-  end
-
-  def collaboration_apps_feed_by_app_name app_name
-    uoa = UserOauthAccess.find_by_app_name_and_user_id(app_name, current_user.id)
-    feed_path =  'notes.rss'
-    timeout(Admin::Setting.mypage_feed_timeout.to_i) do
-      feed = RSS::Parser.parse(client(app_name).oauth(uoa.token, uoa.secret).get_resource(feed_path))
-      unify_feed_form(feed)
-    end
   end
 
   # ================================================================================
