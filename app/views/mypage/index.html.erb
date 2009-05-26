@@ -93,9 +93,7 @@
     <%# ============================================================ -%>
     <%#  main area collaboration_apps feeds -%>
     <%# ============================================================ -%>
-    <% if collaboration_apps = INITIAL_SETTINGS['collaboration_apps'] -%>
-    <%= render :partial => 'update_info' %>
-    <% end -%>
+    <%= render(:partial => 'update_info') if CollaborationApp.enabled? %>
 
     <%# ============================================================ -%>
     <%#  main area bookmarks -%>

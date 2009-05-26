@@ -19,8 +19,7 @@ require 'rss'
 class CollaborationApp
   def initialize app_name
     @app_name = app_name
-    # FIXME 設定ファイル化する
-    @feed_path =  'notes.rss'
+    @feed_path = INITIAL_SETTINGS['collaboration_apps'][@app_name]['feed_path']
   end
 
   def self.enabled?

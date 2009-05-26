@@ -18,8 +18,6 @@ require 'skip_embedded/rp_service/client'
 module Oauth
   module Client
     def client(name = @name)
-      # TODO collaboration_appsが未設定時の処理をどうするか検討
-      # if collaboration_apps = INITIAL_SETTINGS['collaboration_apps']
       collaboration_apps = INITIAL_SETTINGS['collaboration_apps']
       app = collaboration_apps[name]
       if provider = OauthProvider.find_by_app_name(name)
