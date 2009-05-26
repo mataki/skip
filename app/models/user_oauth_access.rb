@@ -18,6 +18,7 @@ class UserOauthAccess < ActiveRecord::Base
   belongs_to :users
 
   def resource resource_path
+    # TODO タイムアウト設定は別設定にしたほうがいいかも
     timeout(Admin::Setting.mypage_feed_timeout.to_i) do
       return client(self.app_name).oauth(self.token, self.secret).get_resource(resource_path)
     end

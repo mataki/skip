@@ -35,25 +35,11 @@ class CollaborationApp
     names.each do |name|
       feed_items += CollaborationApp.new(name).feed_items_by_user(user)
     end
-    feed_items.sort{|x, y| y.date <=> x.date}.slice(0..(limit - 1))
+    feed_items.sort{|x, y| y.date <=> x.date}.slice(0...limit)
   end
 
   def feed_items_by_user user
     uoa = UserOauthAccess.find_by_app_name_and_user_id(@app_name, user.id)
-    uoa ? unify_feed_form(RSS::Parser.parse(uoa.resource(@feed_path))).items : []
-  end
-
-  private
-  # FIXME mypage_controllerからのコピペなので外部に切り出す
-  def unify_feed_form feed, title = nil, limit = nil
-    feed = feed.to_rss("2.0") if !feed.is_a?(RSS::Rss) and feed.is_a?(RSS::Atom::Feed)
-
-    feed.channel.title = title if title
-    limit = (limit || Admin::Setting.mypage_feed_default_limit)
-    feed.items.slice!(limit..-1) if feed.items.size > limit
-    feed
-  rescue NameError => e
-    logger.error "[Error] Rubyのライブラリが古いためAtom形式を変換できませんでした。"
-    return nil
+    uoa ? RSS::Parser.parse(uoa.resource(@feed_path)).items : []
   end
 end
