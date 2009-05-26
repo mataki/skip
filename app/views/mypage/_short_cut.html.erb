@@ -4,7 +4,7 @@
     <ul>
     <li><%= link_to icon_tag(:report_edit, :title => 'ブログを書く') + 'ブログを書く', :controller => '/edit', :action => :index %></li>
     <li><%= icon_tag(:group_go, :title => 'マイグループ') %>
-      <select id="select_navi">
+      <select class="select_navi">
         <option selected="selected" value="<%= url_for({:controller => '/mypage', :action => 'group'}) -%>">参加グループへ移動 ... </option>
         <option disabled="disabled">---</option>
         <% @favorite_groups.each do |category| %>

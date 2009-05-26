@@ -80,7 +80,7 @@ $j(function(){
     /*
      * セレクトボックスのリンクナビゲーション
      */
-    $j('select#select_navi').dropdownNavigation();
+    $j('select.select_navi').dropdownNavigation();
 
     /*
      * カレンダーのロード
