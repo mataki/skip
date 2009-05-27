@@ -325,12 +325,6 @@ describe Group do
     group
   end
 
-  def create_group(options = {})
-    group = Group.new({:name => 'SKIP開発', :description => 'SKIP開発中', :protected => false, :gid => 'skip_dev', :group_category_id => create_group_category(:initial_selected => true).id}.merge(options))
-    group.save!
-    group
-  end
-
   def create_group_participation(options = {})
     group_participation = GroupParticipation.new({:user_id => 1, :group_id => 1, :waiting => 0, :owned => 0, :favorite => 0}.merge(options))
     group_participation.save!

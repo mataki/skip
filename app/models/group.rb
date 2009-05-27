@@ -30,6 +30,13 @@ class Group < ActiveRecord::Base
   N_('Group|Name')
   N_('Group|Description')
 
+  named_scope :partial_match_gid, proc {|word|
+    {:conditions =>["gid LIKE ?", SkipUtil.to_lqs(word)]}
+  }
+  named_scope :partial_match_gid_or_name, proc {|word|
+    {:conditions =>["gid LIKE ? OR name LIKE ?", SkipUtil.to_lqs(word), SkipUtil.to_lqs(word)]}
+  }
+
   alias initialize_old initialize
 
   def initialize(attributes = nil)

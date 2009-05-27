@@ -74,6 +74,12 @@ class User < ActiveRecord::Base
 
   named_scope :admin, :conditions => {:admin => true}
   named_scope :active, :conditions => {:status => 'ACTIVE'}
+  named_scope :partial_match_uid, proc {|word|
+    {:conditions => ["users.id in (?)", UserUid.partial_match_uid(word).map{|uu| uu.user_id}], :include => [:user_uids]}
+  }
+  named_scope :partial_match_uid_or_name, proc {|word|
+    {:conditions => ["users.id in (?) OR name LIKE ?", UserUid.partial_match_uid(word).map{|uu| uu.user_id}, SkipUtil.to_lqs(word)], :include => [:user_uids]}
+  }
 
   def to_s
     return 'uid:' + uid.to_s + ', name:' + name.to_s

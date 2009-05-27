@@ -23,41 +23,11 @@ class SymbolController < ApplicationController
 
   # ajax_action
   def auto_complete_for_item_search
-    symbol = params[:q] #symbol又は名前(ユーザ、グループ)
-
-    if params[:q] =~ /\A(uid:|gid:).*/
-      @items = get_items_by_like_query_symbol(symbol) || []
-    else
-      @items = get_items_by_like_query_name(symbol) || []
-    end
-    if @items.empty?
+    items = Symbol.items_by_partial_match_symbol_or_name(params[:q])
+    if items.empty?
       render :nothing => true
     else
-      result = ''
-      @items.each do |item|
-        result << ERB::Util.h("#{item.symbol}|#{item.name}\n")
-      end
-      render :text => result
+      render :text => items.map{|item| ERB::Util.h("#{item.symbol}|#{item.name}")}.join("\n")
     end
   end
-
-private
-  # symbolの一部からオブジェクトの配列を取り出す(ログインユーザに公開されているもののみ)
-  def get_items_by_like_query_symbol symbol
-    symbol_type, symbol_id = Symbol.split_symbol symbol
-    case symbol_type
-    when "uid"
-      return  User.find(:all, :conditions =>["user_uids.uid LIKE ?", SkipUtil.to_lqs(symbol_id)], :include => [:user_uids])
-    when "gid"
-      return  Group.find(:all, :conditions =>["gid LIKE ?", SkipUtil.to_lqs(symbol_id)])
-    end
-  end
-
-  # symbolの一部からオブジェクトの配列を取り出す(ログインユーザに公開されているもののみ)
-  def get_items_by_like_query_name name
-    items = User.find(:all, :conditions =>["name LIKE ?", SkipUtil.to_lqs(name)])
-    items.concat Group.find(:all, :conditions =>["name LIKE ?", SkipUtil.to_lqs(name)])
-    return items
-  end
-
 end

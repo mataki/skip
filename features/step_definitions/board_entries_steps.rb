@@ -16,6 +16,20 @@ Given /^"(.*)"でブログを書く$/ do |user|
   @entries << { :id => entry.id, :uid => entry.symbol.split(":").last }
 end
 
+Given /^"([^\"]*)"で"([^\"]*)"を直接指定したブログを書く$/ do |user, publication_symbol|
+  @entries ||= []
+  Given %!"#{user}"でログインする!
+  Given %!"ブログを書く"リンクをクリックする!
+  Given %!"#{"board_entry[title]"}"に"test"と入力する!
+  Given %!"#{"publication_type_protected"}"を選択する!
+  Given %!"#{"publication_symbols_value"}"に"#{publication_symbol}"と入力する!
+  Given %!"#{"editor_mode_hiki"}"を選択する!
+  Given %!"#{"contents_hiki"}"に"#{"test"}"と入力する!
+  Given %!"#{"作成"}"ボタンをクリックする!
+  entry = BoardEntry.last
+  @entries << { :id => entry.id, :uid => entry.symbol.split(":").last }
+end
+
 Given /^"(.*)"でブログを"(.*)"回書く$/ do |user, num|
   num.to_i.times do
     Given %!"#{user}"でブログを書く!

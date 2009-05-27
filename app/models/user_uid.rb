@@ -26,6 +26,10 @@ class UserUid < ActiveRecord::Base
 
   N_('UserUid|Uid')
 
+  named_scope :partial_match_uid, proc {|word|
+    {:conditions => ["uid LIKE ?", SkipUtil.to_lqs(word)]}
+  }
+
   validates_presence_of :uid
   validates_uniqueness_of :uid, :case_sensitive => false
   validates_length_of :uid, :within => INITIAL_SETTINGS['user_code_minimum_length'].to_i..UID_MAX_LENGTH

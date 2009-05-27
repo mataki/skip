@@ -23,7 +23,7 @@ describe SymbolController, "GET auto_complete_for_item_search" do
   end
   describe "uid:xxxxと入力した場合" do
     before do
-      controller.should_receive(:get_items_by_like_query_symbol).and_return(@items)
+      Symbol.should_receive(:items_by_partial_match_symbol_or_name).and_return(@items)
       get :auto_complete_for_item_search, :q => "uid:xxx"
     end
     it "アイテムが|で繋がれて返ること" do
