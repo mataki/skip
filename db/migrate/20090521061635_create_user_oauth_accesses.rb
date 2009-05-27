@@ -7,6 +7,7 @@ class CreateUserOauthAccesses < ActiveRecord::Migration
       t.integer :user_id
     end
     add_index :user_oauth_accesses, :user_id
+    add_index :user_oauth_accesses, :app_name
   end
 
   def self.down
