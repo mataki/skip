@@ -16,7 +16,7 @@ Feature: ブックマークの管理
 
   Scenario: ブックマークレットで半端なマルチバイトのURLのブックマークを登録する
     When    ブックマークレットのページをURL"http://test.host/%c0aaa"で表示する
-    Then    "URLの形式が不正です。"と表示されていること
+    Then    flashメッセージに"URLの形式が不正です。"と表示されていること
 
   Scenario: ブックマークレットでシングルクオートのURLのブックマークを登録する
     When    ブックマークレットのページをURL"http://test.host/'<script>alert(1)</script>'"で表示する

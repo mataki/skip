@@ -26,5 +26,5 @@ Feature: マイページのメールアドレス管理
     And     "applied_email_email"に"Test_User@example.com"と入力する
     And     "申請"ボタンをクリックする
 
-    Then    "メールアドレス変更の申請を受け付けました。メールをご確認ください。"と表示されていること
+    Then    flashメッセージに"メールアドレス変更の申請を受け付けました。メールをご確認ください。"と表示されていること
     And     メールが"test_user@example.com"宛に送信されていること
