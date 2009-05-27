@@ -145,7 +145,8 @@ def create_group_category(options = {})
 end
 
 def create_group(options = {})
-  group = Group.new({:name => 'SKIP開発', :description => 'SKIP開発中', :protected => false, :gid => 'skip_dev', :group_category_id => create_group_category(:initial_selected => true).id}.merge(options))
+  group = Group.new({:name => 'SKIP開発', :description => 'SKIP開発中', :protected => false, :gid => 'skip_dev'}.merge(options))
+  group.group_category_id = create_group_category(:initial_selected => true).id if group.group_category_id == 0
   group.save!
   group
 end
