@@ -29,7 +29,7 @@ namespace :skip do
     task :sync_users do
       require File.expand_path(File.dirname(__FILE__) + "/../../config/environment")
       app_name = ENV['app_name']
-      abort 'app_name was not specifed. ex) % rake skip:service:sync app_name=\'wiki\' ' unless app_name
+      abort 'app_name was not specifed. ex) % rake skip:collaboration_apps:sync app_name=\'wiki\' ' unless app_name
       abort 'collaboration_apps[\'app_name\'] was not specifed' unless INITIAL_SETTINGS['collaboration_apps'][app_name]
       Oauth::UserSynchronizer.new(app_name).sync
     end
@@ -38,7 +38,7 @@ namespace :skip do
     task :sync_groups do
       require File.expand_path(File.dirname(__FILE__) + "/../../config/environment")
       app_name = ENV['app_name']
-      abort 'app_name was not specifed. ex) % rake skip:service:sync app_name=\'wiki\' ' unless app_name
+      abort 'app_name was not specifed. ex) % rake skip:collaboration_apps:sync app_name=\'wiki\' ' unless app_name
       abort 'collaboration_apps[\'app_name\'] was not specifed' unless INITIAL_SETTINGS['collaboration_apps'][app_name]
       Oauth::GroupSynchronizer.new(app_name).sync
     end
