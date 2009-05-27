@@ -69,7 +69,7 @@ describe CollaborationApp, '#feed_items_by_user' do
       UserOauthAccess.should_receive(:find_by_app_name_and_user_id).and_return(nil)
     end
     it '空配列が取得できること' do
-      CollaborationApp.new('wiki').feed_items_by_user(mock(User)).should == []
+      CollaborationApp.new('wiki').feed_items_by_user(stub_model(User)).should == []
     end
   end
   describe '対象ユーザのOAuthアクセストークンが登録されている場合' do
@@ -96,7 +96,7 @@ describe CollaborationApp, '#feed_items_by_user' do
       UserOauthAccess.should_receive(:find_by_app_name_and_user_id).and_return(@user_oauth_access)
     end
     it 'サイズ1の配列が取得できること' do
-      CollaborationApp.new('wiki').feed_items_by_user(mock(User)).size.should == 1
+      CollaborationApp.new('wiki').feed_items_by_user(stub_model(User)).size.should == 1
     end
   end
 end
