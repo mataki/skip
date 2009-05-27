@@ -18,7 +18,7 @@ require 'skip_embedded/rp_service/client'
 module Oauth
   module Client
     def client(name = @name)
-      collaboration_apps = INITIAL_SETTINGS['collaboration_apps']
+      collaboration_apps = SkipEmbedded::InitialSettings['collaboration_apps']
       app = collaboration_apps[name]
       if provider = OauthProvider.find_by_app_name(name)
         client = SkipEmbedded::RpService::Client.new(name, app['url'], :key => provider.token, :secret => provider.secret)
@@ -26,7 +26,7 @@ module Oauth
         client.backend = Backend.new(name)
         client
       else
-        client = SkipEmbedded::RpService::Client.register!(name, app['url'], :url => "#{INITIAL_SETTINGS['protocol']}#{INITIAL_SETTINGS['host_and_port']}")
+        client = SkipEmbedded::RpService::Client.register!(name, app['url'], :url => "#{SkipEmbedded::InitialSettings['protocol']}#{SkipEmbedded::InitialSettings['host_and_port']}")
         OauthProvider.create! :app_name => name, :token => client.key, :secret => client.secret
         client.backend = Backend.new(name)
         client

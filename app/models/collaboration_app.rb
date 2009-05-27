@@ -19,15 +19,15 @@ require 'rss'
 class CollaborationApp
   def initialize app_name
     @app_name = app_name
-    @feed_path = INITIAL_SETTINGS['collaboration_apps'][@app_name]['feed_path']
+    @feed_path = SkipEmbedded::InitialSettings['collaboration_apps'][@app_name]['feed_path']
   end
 
   def self.enabled?
-    INITIAL_SETTINGS['collaboration_apps']
+    SkipEmbedded::InitialSettings['collaboration_apps']
   end
 
   def self.names
-    enabled? ? INITIAL_SETTINGS['collaboration_apps'].map{|k, v| k} : []
+    enabled? ? SkipEmbedded::InitialSettings['collaboration_apps'].map{|k, v| k} : []
   end
 
   def self.all_feed_items_by_user user, limit = 20
