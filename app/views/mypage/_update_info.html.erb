@@ -3,16 +3,12 @@
   <%= skip_image_tag 'indicator.gif' %>
 </div>
 
-<% content_for :javascript do -%>
-  <% javascript_tag do -%>
-$j(function() {
-    $j.ajax({
-        url: '<%= url_for(:controller => 'mypage', :action => 'collaboration_apps') %>',
-        success: function(html) {
-            $j('div#collaboration_apps').html(html);
-        }
-    });
-});
-  <% end -%>
+<% content_for :javascript_initializers do -%>
+  $j.ajax({
+      url: '<%= url_for(:controller => 'mypage', :action => 'collaboration_apps') %>',
+      success: function(html) {
+          $j('div#collaboration_apps').html(html);
+      }
+  });
 <% end -%>
 
