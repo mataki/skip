@@ -2179,7 +2179,7 @@ msgstr ""
 
 #: app/controllers/search_controller.rb:109
 msgid "Please input search query."
-msgstr "検索条件を入力してください"
+msgstr "検索したいキーワードを入れてください"
 
 #: app/models/popular_bookmark.rb:-
 msgid "PopularBookmark|Bookmark"
