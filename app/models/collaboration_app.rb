@@ -19,6 +19,7 @@ require 'rss'
 class CollaborationApp
   def initialize app_name
     @app_name = app_name
+    # TODO nilのチェックが必要
     @feed_path = SkipEmbedded::InitialSettings['collaboration_apps'][@app_name]['feed_path']
   end
 

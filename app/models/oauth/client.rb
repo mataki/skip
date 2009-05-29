@@ -26,7 +26,7 @@ module Oauth
         client.backend = Backend.new(name)
         client
       else
-        client = SkipEmbedded::RpService::Client.register!(name, app['url'], :url => "#{SkipEmbedded::InitialSettings['protocol']}#{SkipEmbedded::InitialSettings['host_and_port']}")
+        client = SkipEmbedded::RpService::Client.register!(name, app['url'], :url => "#{Admin::Setting.protocol_by_initial_settings_default}#{Admin::Setting.host_and_port_by_initial_settings_default}")
         OauthProvider.create! :app_name => name, :token => client.key, :secret => client.secret
         client.backend = Backend.new(name)
         client
