@@ -15,12 +15,6 @@
 
 module SkipHelper
 
-  # アイコンタグを参照する
-  def icon_tag(name, options = {})
-    result = content_tag(:span, '&nbsp;', {:class =>"ss_sprite ss_#{name}"}.merge(options))
-    options[:margin] ? result + " " : result
-  end
-
   # （images/skip以下に格納されている）画像を参照する
   def skip_image_tag(source, options = {})
     url = "/images/skip/#{source}"
