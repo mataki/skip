@@ -68,7 +68,7 @@
 <%= render :partial => 'portal/profile_form', :locals => {:user => @user} %>
 
 <% submit_button_value = is_new ? "ユーザ登録" : "保存" %>
-<%= submit_tag submit_button_value, {:tabindex => (tabindex += 1), :id => 'submit_button'} %>
+<%= submit_tag submit_button_value, {:tabindex => (tabindex += 1), :id => 'submit_button', :disable_with => (submit_button_value + "中...")} %>
 <% end %>
 </div>
 
