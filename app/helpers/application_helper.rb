@@ -289,7 +289,7 @@ module ApplicationHelper
   end
 
   def application_link
-    application_links = [link_to('SKIP', root_url)]
+    application_links = []
     if collaboration_apps = SkipEmbedded::InitialSettings['collaboration_apps']
       application_links << collaboration_apps.values.map{|m| link_to( m['name'], m['url'] )}
     end
@@ -307,13 +307,16 @@ module ApplicationHelper
         end
       end
     end
-    application_link = content_tag :div, :id => 'application_link' do
-      application_links.join(' | ')
+    unless application_links.empty?
+      application_links.unshift(link_to('SKIP', root_url))
+      application_link = content_tag :div, :id => 'application_link' do
+        application_links.join(' | ')
+      end
+      other_link = content_tag :div, :id => 'other_links', :class => 'invisible' do
+        other_links.join('')
+      end
+      "#{application_link}#{other_link}"
     end
-    other_link = content_tag :div, :id => 'other_links', :class => 'invisible' do
-      other_links.join('')
-    end
-    "#{application_link}#{other_link}"
   end
 
 private
