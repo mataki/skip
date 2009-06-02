@@ -18,7 +18,6 @@ module ApplicationHelper
   include CacheHelper
   include SkipHelper
   include HelpIconHelper
-  include SkipEmbedded::Helpers
 
   @@CONTROLLER_HASH = { 'uid'  => 'user',
                         'gid'  => 'group',
