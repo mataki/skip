@@ -1,5 +1,5 @@
 <%# TODO cssをsass化する %>
-<%= show_title_bar("rss", _("更新情報(仮)"), {}) %>
+<%= show_title_bar("rss", _("Update info"), {}) %>
 <div class="topix_body">
   <% @feed_items.each do |item| %>
   <div style="border-bottom: 1px dotted silver; margin: 3px 0 1px 0; height: 16px; position: relative;">
@@ -8,7 +8,6 @@
       <span style="font-size:8px; vertical-align: bottom; color: #808080;"><%= item.date.to_formatted_s(:standard) %></span>
     </div>
     <div style="position: absolute; bottom:0px; right: 0; width: 15%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; text-align: right; padding-left: 5px;font-size:10px;">
-      xxxxxx(FIXME)
     </div>
   </div>
   <% end %>
