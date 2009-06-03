@@ -43,4 +43,18 @@ class CollaborationApp
     uoa = UserOauthAccess.find_by_app_name_and_user_id(@app_name, user.id)
     uoa ? RSS::Parser.parse(uoa.resource(@feed_path)).items : []
   end
+
+  def operations_by_view_place view_place
+    operations = SkipEmbedded::InitialSettings['collaboration_apps'][@app_name]['operations']
+    operations.delete_if{|f| !f['view_place'] == 'view_place'} if view_place
+  end
+
+  def feeds_by_view_place view_place
+    feeds = SkipEmbedded::InitialSettings['collaboration_apps'][@app_name]['feeds']
+    feeds.delete_if{|f| !f['view_place'] == 'view_place'} if view_place
+  end
+
+  def self.using
+    OauthProvider.enable.map{|provider| self.new(provider.app_name) }
+  end
 end

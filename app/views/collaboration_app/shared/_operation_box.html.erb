@@ -1,0 +1,11 @@
+<div class="box_space">
+  <div class="box_space_title"><%= h title %></div>
+  <div class="box_space_body">
+    <ul>
+      <% links.each do |link| -%>
+      <li><%= link_to link['label'], link['url'] %></li>
+      <% end -%>
+    </ul>
+  </div>
+  <div class="box_space_bottom"></div>
+</div>

@@ -7,6 +7,11 @@
   <%= render(:partial => 'user/portrait_box', :locals => { :current_user_info => @current_user_info }) %>
   <%= render :partial => 'short_cut' %>
   <%= render :partial => 'antenna_box', :locals => { :system_antennas => @system_antennas, :my_antennas => @my_antennas } %>
+  <% CollaborationApp.using.each do |app| -%>
+    <% app.operations_by_view_place(params[:controller]).each do |operation| -%>
+      <%= render :partial => 'collaboration_app/shared/operation_box', :locals => {:title => operation['title'], :links => operation['links']} %>
+    <% end -%>
+  <% end -%>
 <% end -%>
 
 <% content_for :contents_right do -%>
@@ -93,7 +98,7 @@
     <%# ============================================================ -%>
     <%#  main area collaboration_apps feeds -%>
     <%# ============================================================ -%>
-    <%= render(:partial => 'update_info') if CollaborationApp.enabled? %>
+    <%= render(:partial => 'collaboration_app/mypage/feeds') %>
 
     <%# ============================================================ -%>
     <%#  main area bookmarks -%>
