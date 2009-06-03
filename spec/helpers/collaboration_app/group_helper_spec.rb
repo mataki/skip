@@ -13,8 +13,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class CollaborationApp::MypageController < ApplicationController
-  def feed
-    render :layout => false
-  end
+require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+
+describe CollaborationApp::GroupHelper do
 end

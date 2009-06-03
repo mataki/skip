@@ -13,8 +13,5 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class CollaborationApp::MypageController < ApplicationController
-  def feed
-    render :layout => false
-  end
+module CollaborationApp::GroupHelper
 end

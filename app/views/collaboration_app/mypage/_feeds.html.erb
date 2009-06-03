@@ -9,7 +9,7 @@
     </div>
     <% content_for :javascript_initializers do -%>
       $j.ajax({
-          url: '<%= url_for(:controller => 'mypage', :action => 'collaboration_apps') %>',
+          url: '<%= url_for(:controller => "collaboration_app/#{params[:controller]}", :action => 'feed') %>',
           success: function(html) {
               $j('div#collaboration_apps').html(html);
           }

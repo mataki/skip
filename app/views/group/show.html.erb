@@ -77,6 +77,9 @@
     </div>
     <div class="box_space_bottom"><%= link_to "[すべて見る]", :action => 'users' %></div>
   </div><!-- box_space -->
+
+  <%= render :partial => 'collaboration_app/shared/operation_boxes' %>
+
 <% end -%>
 
 <% content_for :contents_right do -%>
