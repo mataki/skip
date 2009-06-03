@@ -5,6 +5,7 @@ class CreateUserOauthAccesses < ActiveRecord::Migration
       t.string :token
       t.string :secret
       t.integer :user_id
+      t.timestamps
     end
     add_index :user_oauth_accesses, :user_id
     add_index :user_oauth_accesses, :app_name
