@@ -13,6 +13,21 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class OauthProvider < ActiveRecord::Base
-  attr_protected :enable
+class Admin::OauthProvidersController < Admin::ApplicationController
+  def index
+    @oauth_providers = Admin::OauthProvider.all
+    @topics = [_(self.class.name.to_s)]
+  end
+
+  def start
+    @oauth_provider = Admin::OauthProvider.find(params[:id])
+    @oauth_provider.start
+    flash.now[:notice] = _("%{model} was successfully updated.") % {:model => _('Admin::OauthProvider')}
+    redirect_to admin_oauth_providers_path
+  end
+
+  private
+  def topics
+    [[_('Admin::OauthProvidersController'), admin_oauth_providers_path]]
+  end
 end

@@ -13,6 +13,14 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class OauthProvider < ActiveRecord::Base
-  attr_protected :enable
+class Admin::OauthProvider < OauthProvider
+
+  N_('Admin::OauthProvider|App name')
+
+  def start
+    unless self.enable?
+      self.enable = true
+      self.save
+    end
+  end
 end

@@ -93,6 +93,8 @@ ActionController::Routing::Routes.draw do |map|
     admin_map.images 'images', :controller => 'images', :action => 'index'
     admin_map.images_update 'images/:target/update', :controller => 'images', :action => 'update'
     admin_map.images_revert 'images/:target/revert', :controller => 'images', :action => 'revert'
+
+    admin_map.resources :oauth_providers, :member => {:start => :post}
   end
 
   map.with_options :controller => 'server' do |server|

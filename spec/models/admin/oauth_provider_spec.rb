@@ -13,6 +13,25 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class OauthProvider < ActiveRecord::Base
-  attr_protected :enable
+require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+
+describe Admin::OauthProvider , '#start' do
+  describe 'まだ有効になっていない場合' do
+    before do
+      @oauth_provider = Admin::OauthProvider.create!(:app_name => 'app_name', :enable => false)
+    end
+    it '有効になること' do
+      lambda do
+        @oauth_provider.start
+      end.should change(@oauth_provider, :enable).from(false).to(true)
+    end
+  end
+  describe '既に有効になっている場合' do
+    before do
+      @oauth_provider = Admin::OauthProvider.create!(:app_name => 'app_name', :enable => true)
+      lambda do
+        @oauth_provider.start
+      end.should_not change(@oauth_provider)
+    end
+  end
 end
