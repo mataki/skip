@@ -148,11 +148,6 @@ class MypageController < ApplicationController
     render :partial => @menu, :layout => "layout"
   end
 
-  def collaboration_apps
-    @feed_items = CollaborationApp.all_feed_items_by_user(current_user)
-    render :layout => false
-  end
-
   # ================================================================================
   #  mypage > home 関連
   # ================================================================================

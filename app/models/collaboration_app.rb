@@ -17,6 +17,7 @@ require "resolv-replace"
 require 'timeout'
 require 'rss'
 class CollaborationApp
+  attr_reader :app_name
   def initialize app_name
     @app_name = app_name
     # TODO nilのチェックが必要
@@ -39,7 +40,7 @@ class CollaborationApp
     feed_items.sort{|x, y| y.date <=> x.date}.slice(0...limit)
   end
 
-  def feed_items_by_user user
+  def feed_items_by_user user, group = nil
     uoa = UserOauthAccess.find_by_app_name_and_user_id(@app_name, user.id)
     uoa ? RSS::Parser.parse(uoa.resource(@feed_path)).items : []
   end

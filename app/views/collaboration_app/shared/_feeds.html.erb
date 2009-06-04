@@ -1,0 +1,17 @@
+<% CollaborationApp.using.each do |app| -%>
+  <% app.feeds_by_view_place(params[:controller]).each do |feed_setting| -%>
+    <div id="collaboration_apps">
+      <%
+        # FIXME すべてみるのリンク先を設定する
+      %>
+      <div class="title_bar" style="position: relative; _width: 100%;">
+        <h2 class="topix_title"><%= "#{icon_tag('rss')}#{h(feed_setting['title'])}" %></h2>
+        <div style="position: absolute; top: 5px; right: 10px; font-size: 14px;"><%= link_to('[すべて見る]', '#') %></div>
+      </div>
+      <div class="topix_body">
+        <%= skip_image_tag 'indicator.gif' %>
+      </div>
+    </div>
+    <%= render :partial => "collaboration_app/#{params[:controller]}/load_feed_js", :locals => {:app_name => app.app_name, :path => feed_setting['path']} %>
+  <% end -%>
+<% end -%>

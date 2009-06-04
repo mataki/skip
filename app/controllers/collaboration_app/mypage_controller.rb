@@ -15,6 +15,7 @@
 
 class CollaborationApp::MypageController < ApplicationController
   def feed
-    render :layout => false
+    @feed_items = CollaborationApp.all_feed_items_by_user(current_user)
+    render :partial => 'collaboration_app/shared/feed', :locals => {:feed_items => @feed_items}, :layout => false
   end
 end
