@@ -21,14 +21,14 @@ describe CollaborationApp, '.all_feed_items_by_user' do
       CollaborationApp.should_receive(:names).and_return(%w[wiki talk])
 
       collaboration_app_wiki = CollaborationApp.new('wiki')
-      collaboration_app_wiki.should_receive(:feed_items_by_user).and_return([
+      collaboration_app_wiki.should_receive(:feed_items_by_user).and_yield(true, [
         stub_feed_item(Time.local(2009, 1, 3), '1/3wiki'),
         stub_feed_item(Time.local(2009, 1, 1), '1/1wiki')
       ])
       CollaborationApp.stub!(:new, 'wiki').and_return(collaboration_app_wiki)
 
       collaboration_app_talk = CollaborationApp.new('talk')
-      collaboration_app_talk.should_receive(:feed_items_by_user).and_return([
+      collaboration_app_talk.should_receive(:feed_items_by_user).and_yield(true, [
         stub_feed_item(Time.local(2009, 1, 5), '1/5talk'),
         stub_feed_item(Time.local(2009, 1, 4), '1/4talk'),
         stub_feed_item(Time.local(2009, 1, 2), '1/2talk')
@@ -48,7 +48,8 @@ describe CollaborationApp, '.all_feed_items_by_user' do
     before do
       CollaborationApp.should_receive(:names).and_return(%w[wiki])
       collaboration_app_wiki = CollaborationApp.new('wiki')
-      collaboration_app_wiki.should_receive(:feed_items_by_user).and_return(
+      collaboration_app_wiki.should_receive(:feed_items_by_user).and_yield(
+        true,
         (0..20).map{|i| stub_feed_item(Time.local(2009, 1, i + 1), 'wiki')}
       )
       CollaborationApp.stub!(:new, 'wiki').and_return(collaboration_app_wiki)
@@ -69,7 +70,9 @@ describe CollaborationApp, '#feed_items_by_user' do
       UserOauthAccess.should_receive(:find_by_app_name_and_user_id).and_return(nil)
     end
     it '空配列が取得できること' do
-      CollaborationApp.new('wiki').feed_items_by_user(stub_model(User)).should == []
+      CollaborationApp.new('wiki').feed_items_by_user(stub_model(User)) do |result, items|
+        items.should == []
+      end
     end
   end
   describe '対象ユーザのOAuthアクセストークンが登録されている場合' do
@@ -96,7 +99,10 @@ describe CollaborationApp, '#feed_items_by_user' do
       UserOauthAccess.should_receive(:find_by_app_name_and_user_id).and_return(@user_oauth_access)
     end
     it 'サイズ1の配列が取得できること' do
-      CollaborationApp.new('wiki').feed_items_by_user(stub_model(User)).size.should == 1
+      CollaborationApp.new('wiki').feed_items_by_user(stub_model(User)) do |result, feed_items|
+        result.should be_true
+        feed_items.size.should == 1
+      end
     end
   end
 end

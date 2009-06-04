@@ -15,7 +15,12 @@
 
 class CollaborationApp::MypageController < ApplicationController
   def feed
-    @feed_items = CollaborationApp.all_feed_items_by_user(current_user)
-    render :partial => 'collaboration_app/shared/feed', :locals => {:feed_items => @feed_items}, :layout => false
+    CollaborationApp.new(params[:app_name], params[:path]).feed_items_by_user(current_user) do |result, feed_items|
+      if result
+        render :partial => 'collaboration_app/shared/feed', :locals => {:feed_items => feed_items}, :layout => false
+      else
+        render :text => _('取得できませんでした。')
+      end
+    end
   end
 end

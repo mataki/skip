@@ -1,12 +1,13 @@
 <% CollaborationApp.using.each do |app| -%>
+  <%
+    #FIXME このままだと複数件ある場合に全部のボックスの内容が同じになってしまう
+    #FIXME 全て見る がクエリパラメタが必要な場合に問題がある
+  %>
   <% app.feeds_by_view_place(params[:controller]).each do |feed_setting| -%>
     <div id="collaboration_apps">
-      <%
-        # FIXME すべてみるのリンク先を設定する
-      %>
       <div class="title_bar" style="position: relative; _width: 100%;">
         <h2 class="topix_title"><%= "#{icon_tag('rss')}#{h(feed_setting['title'])}" %></h2>
-        <div style="position: absolute; top: 5px; right: 10px; font-size: 14px;"><%= link_to('[すべて見る]', '#') %></div>
+        <div style="position: absolute; top: 5px; right: 10px; font-size: 14px;"><%= link_to('[すべて見る]', URI.join(app.base_url, feed_setting['path'].split('.').first).to_s) %></div>
       </div>
       <div class="topix_body">
         <%= skip_image_tag 'indicator.gif' %>

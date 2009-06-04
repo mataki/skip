@@ -17,11 +17,13 @@ require "resolv-replace"
 require 'timeout'
 require 'rss'
 class CollaborationApp
-  attr_reader :app_name
-  def initialize app_name
+  attr_reader :app_name, :base_url
+  def initialize app_name, resource_path = nil
     @app_name = app_name
-    # TODO nilのチェックが必要
-    @feed_path = SkipEmbedded::InitialSettings['collaboration_apps'][@app_name]['feed_path']
+    app_setting = SkipEmbedded::InitialSettings['collaboration_apps'][@app_name]
+    @base_url = app_setting ? app_setting['url'] : ''
+    # TODO feed_items_by_userの引き数にする
+    @resource_path = resource_path
   end
 
   def self.enabled?
@@ -32,27 +34,41 @@ class CollaborationApp
     enabled? ? SkipEmbedded::InitialSettings['collaboration_apps'].map{|k, v| k} : []
   end
 
+  # TODO 使ってない。全連携アプリのフィードを統合する必要がないなら消す
   def self.all_feed_items_by_user user, limit = 20
     feed_items = []
     names.each do |name|
-      feed_items += CollaborationApp.new(name).feed_items_by_user(user)
+      CollaborationApp.new(name).feed_items_by_user(user) do |result, items|
+        feed_items += items if result
+      end
     end
     feed_items.sort{|x, y| y.date <=> x.date}.slice(0...limit)
   end
 
-  def feed_items_by_user user, group = nil
+  def feed_items_by_user user, limit = 20, &block
     uoa = UserOauthAccess.find_by_app_name_and_user_id(@app_name, user.id)
-    uoa ? RSS::Parser.parse(uoa.resource(@feed_path)).items : []
+    if uoa
+      resource = RSS::Parser.parse(uoa.resource(@resource_path))
+      yield(true, resource.items.sort{|x, y| y.date <=> x.date}.slice(0...limit))
+    else
+      yield(false, [])
+    end
+  rescue => e
+    ::Rails.logger.error(e)
+    e.backtrace.each { |line| ::Rails.logger.error line}
+    yield(false, [])
   end
 
+  # TODO 回帰テストを書く
   def operations_by_view_place view_place
-    operations = SkipEmbedded::InitialSettings['collaboration_apps'][@app_name]['operations']
-    operations.delete_if{|f| !f['view_place'] == 'view_place'} if view_place
+    operations = SkipEmbedded::InitialSettings['collaboration_apps'][@app_name]['operations'] || []
+    operations.delete_if{|f| !(f['view_place'] == view_place)} if view_place
   end
 
+  # TODO 回帰テストを書く
   def feeds_by_view_place view_place
-    feeds = SkipEmbedded::InitialSettings['collaboration_apps'][@app_name]['feeds']
-    feeds.delete_if{|f| !f['view_place'] == 'view_place'} if view_place
+    feeds = SkipEmbedded::InitialSettings['collaboration_apps'][@app_name]['feeds'] || []
+    feeds.delete_if{|f| !(f['view_place'] == view_place)} if view_place
   end
 
   def self.using
