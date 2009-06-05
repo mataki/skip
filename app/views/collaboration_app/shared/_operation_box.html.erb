@@ -3,7 +3,7 @@
   <div class="box_space_body">
     <ul>
       <% links.each do |link| -%>
-      <li><%= link_to link['label'], link['url'] %></li>
+      <li><%= link_to h(link['label']), link['url'] %></li>
       <% end -%>
     </ul>
   </div>
