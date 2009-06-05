@@ -12,16 +12,20 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-module Oauth
-  class UserSynchronizer
-    include Client
 
-    def initialize name
-      @name = name
-    end
+require File.dirname(__FILE__) + '/../../../spec_helper'
 
-    def sync
-      client.sync_users User.synchronize_users
-    end
+describe CollaborationApp::Oauth::UserSynchronizer, '#sync' do
+  before do
+    @synchronizer = CollaborationApp::Oauth::UserSynchronizer.new 'wiki'
+    @client = stub(SkipEmbedded::RpService::Client, :key => 'key', :secret => 'secret')
+    @synchronizer.should_receive(:client).and_return(@client)
+  end
+  it 'CollaborationApp::Oauth::Service#sync_usersが実行されること' do
+    synchronize_users = [["http://skip/id/boob", "boob", "ボブ", false], ["http://skip/id/alice", "alice", "アリス", true]]
+    User.should_receive(:synchronize_users).and_return(synchronize_users)
+    @client.should_receive(:sync_users).with(synchronize_users)
+    @synchronizer.sync
   end
 end
+

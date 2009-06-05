@@ -13,15 +13,15 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-require File.dirname(__FILE__) + '/../../spec_helper'
+require File.dirname(__FILE__) + '/../../../spec_helper'
 
-describe Oauth::GroupSynchronizer, '#sync' do
+describe CollaborationApp::Oauth::GroupSynchronizer, '#sync' do
   before do
-    @synchronizer = Oauth::GroupSynchronizer.new 'wiki'
+    @synchronizer = CollaborationApp::Oauth::GroupSynchronizer.new 'wiki'
     @client = stub(SkipEmbedded::RpService::Client, :key => 'key', :secret => 'secret')
     @synchronizer.should_receive(:client).and_return(@client)
   end
-  it 'Oauth::Service#sync_groupsが実行されること' do
+  it 'CollaborationApp::Oauth::Service#sync_groupsが実行されること' do
     synchronize_groups = [
       ["vim_study", "vim_study", "Vim勉強会", ["http://localhost:3000/id/boob", "http://localhost:3000/id/alice"]],
       ["emacs_study", "emacs_study", "Emacs勉強会", ["http://localhost:3000/id/boob"]]

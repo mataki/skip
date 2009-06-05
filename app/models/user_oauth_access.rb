@@ -14,7 +14,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class UserOauthAccess < ActiveRecord::Base
-  include Oauth::Client
+  include CollaborationApp::Oauth::Client
   belongs_to :users
 
   def resource resource_path

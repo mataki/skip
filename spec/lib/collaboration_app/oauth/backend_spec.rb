@@ -13,12 +13,12 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-require File.dirname(__FILE__) + '/../../spec_helper'
+require File.dirname(__FILE__) + '/../../../spec_helper'
 
-describe Oauth::Backend, '#add_access_token' do
+describe CollaborationApp::Oauth::Backend, '#add_access_token' do
   before do
     @app_name = 'wiki'
-    @backend = Oauth::Backend.new @app_name
+    @backend = CollaborationApp::Oauth::Backend.new @app_name
   end
   describe 'identity_urlに一致するユーザが存在する場合' do
     before do

@@ -31,7 +31,7 @@ namespace :skip do
       app_name = ENV['app_name']
       abort 'app_name was not specifed. ex) % rake skip:collaboration_apps:sync app_name=\'wiki\' ' unless app_name
       abort 'collaboration_apps[\'app_name\'] was not specifed' unless SkipEmbedded::InitialSettings['collaboration_apps'][app_name]
-      Oauth::UserSynchronizer.new(app_name).sync
+      CollaborationApp::Oauth::UserSynchronizer.new(app_name).sync
     end
 
     desc "Synchronize the groups of the given oauth provider"
@@ -40,7 +40,7 @@ namespace :skip do
       app_name = ENV['app_name']
       abort 'app_name was not specifed. ex) % rake skip:collaboration_apps:sync app_name=\'wiki\' ' unless app_name
       abort 'collaboration_apps[\'app_name\'] was not specifed' unless SkipEmbedded::InitialSettings['collaboration_apps'][app_name]
-      Oauth::GroupSynchronizer.new(app_name).sync
+      CollaborationApp::Oauth::GroupSynchronizer.new(app_name).sync
     end
 
     desc "Synchronize the users and groups of the given oauth provider"

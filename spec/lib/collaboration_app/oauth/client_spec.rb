@@ -13,9 +13,9 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-require File.dirname(__FILE__) + '/../../spec_helper'
+require File.dirname(__FILE__) + '/../../../spec_helper'
 
-describe Oauth::Client, '#client' do
+describe CollaborationApp::Oauth::Client, '#client' do
   before do
     @app_name = 'wiki'
     @provider_url = 'http://skip/wiki/'
@@ -62,7 +62,7 @@ describe Oauth::Client, '#client' do
   end
 
   class TestSynchronizer
-    include Oauth::Client
+    include CollaborationApp::Oauth::Client
     def initialize name
       @name = name
     end

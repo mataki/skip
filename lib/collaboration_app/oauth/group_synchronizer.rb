@@ -12,16 +12,19 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-module Oauth
-  class GroupSynchronizer
-    include Client
 
-    def initialize name
-      @name = name
-    end
+class CollaborationApp
+  module Oauth
+    class GroupSynchronizer
+      include Client
 
-    def sync
-      client.sync_groups Group.synchronize_groups
+      def initialize name
+        @name = name
+      end
+
+      def sync
+        client.sync_groups Group.synchronize_groups
+      end
     end
   end
 end
