@@ -30,7 +30,6 @@ class CollaborationApp
 
   def self.sorted_feed_items rss_body, limit = 20, &block
     returning [] do |items|
-      rss = RSS::Parser.parse(rss_body)
       items.concat(feed_items(rss_body).sort{|x, y| y.date <=> x.date}.slice(0...limit))
       yield(true, items) if block_given?
     end
