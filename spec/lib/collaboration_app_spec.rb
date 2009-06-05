@@ -15,69 +15,45 @@
 
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe CollaborationApp, '.all_feed_items_by_user' do
+describe CollaborationApp, '.sorted_feed_items' do
   describe 'feed_itemの取得件数が5件の場合' do
     before do
-      CollaborationApp.should_receive(:names).and_return(%w[wiki talk])
-
-      collaboration_app_wiki = CollaborationApp.new('wiki')
-      collaboration_app_wiki.should_receive(:feed_items_by_user).and_yield(true, [
+      CollaborationApp.should_receive(:feed_items).and_return([
         stub_feed_item(Time.local(2009, 1, 3), '1/3wiki'),
-        stub_feed_item(Time.local(2009, 1, 1), '1/1wiki')
+        stub_feed_item(Time.local(2009, 1, 1), '1/1wiki'),
+        stub_feed_item(Time.local(2009, 1, 5), '1/5wiki'),
+        stub_feed_item(Time.local(2009, 1, 4), '1/4wiki'),
+        stub_feed_item(Time.local(2009, 1, 2), '1/2wiki')
       ])
-      CollaborationApp.stub!(:new, 'wiki').and_return(collaboration_app_wiki)
-
-      collaboration_app_talk = CollaborationApp.new('talk')
-      collaboration_app_talk.should_receive(:feed_items_by_user).and_yield(true, [
-        stub_feed_item(Time.local(2009, 1, 5), '1/5talk'),
-        stub_feed_item(Time.local(2009, 1, 4), '1/4talk'),
-        stub_feed_item(Time.local(2009, 1, 2), '1/2talk')
-      ])
-      CollaborationApp.stub!(:new, 'talk').and_return(collaboration_app_talk)
     end
     it 'feed_itemが5件取得されること' do
-      CollaborationApp.all_feed_items_by_user(mock(User)).size.should == 5
+      CollaborationApp.sorted_feed_items('rss_body').size.should == 5
     end
     it 'feed_itemが更新日の新しい順番に並んでいること' do
-      CollaborationApp.all_feed_items_by_user(mock(User)).map do |item|
+      CollaborationApp.sorted_feed_items('rss_body').map do |item|
         item.title
-      end.should == %w(1/5talk 1/4talk 1/3wiki 1/2talk 1/1wiki)
+      end.should == %w(1/5wiki 1/4wiki 1/3wiki 1/2wiki 1/1wiki)
     end
   end
   describe 'feed_itemの取得件数が21件の場合' do
     before do
-      CollaborationApp.should_receive(:names).and_return(%w[wiki])
-      collaboration_app_wiki = CollaborationApp.new('wiki')
-      collaboration_app_wiki.should_receive(:feed_items_by_user).and_yield(
-        true,
+      CollaborationApp.should_receive(:feed_items).and_return(
         (0..20).map{|i| stub_feed_item(Time.local(2009, 1, i + 1), 'wiki')}
       )
-      CollaborationApp.stub!(:new, 'wiki').and_return(collaboration_app_wiki)
     end
     it 'feed_itemが20件取得されること' do
-      CollaborationApp.all_feed_items_by_user(mock(User)).size.should == 20
+      CollaborationApp.sorted_feed_items('rss_body').size.should == 20
     end
   end
-
   def stub_feed_item date = Time.now, title = '', link = ''
     stub(Object, :date => date, :title => title, :link => link)
   end
 end
 
-describe CollaborationApp, '#feed_items_by_user' do
-  describe '対象ユーザのOAuthアクセストークンが登録されていない場合' do
+describe CollaborationApp, '.feed_items' do
+  describe 'RSSとして妥当な文字列の場合' do
     before do
-      UserOauthAccess.should_receive(:find_by_app_name_and_user_id).and_return(nil)
-    end
-    it '空配列が取得できること' do
-      CollaborationApp.new('wiki').feed_items_by_user(stub_model(User)) do |result, items|
-        items.should == []
-      end
-    end
-  end
-  describe '対象ユーザのOAuthアクセストークンが登録されている場合' do
-    before do
-      rss_str = <<-RUBY
+      @rss_body = <<-RUBY
 <?xml version='1.0' encoding='utf-8' ?>
 <rss version='2.0' xml:lang='ja' xmlns:content='http://purl.org/rss/1.0/modules/content/' xmlns:dc='http://purl.org/dc/elements/1.1/'>
   <channel>
@@ -94,14 +70,56 @@ describe CollaborationApp, '#feed_items_by_user' do
   </channel>
 </rss>
       RUBY
-      @user_oauth_access = stub_model(UserOauthAccess)
-      @user_oauth_access.should_receive(:resource).and_return(rss_str)
-      UserOauthAccess.should_receive(:find_by_app_name_and_user_id).and_return(@user_oauth_access)
     end
     it 'サイズ1の配列が取得できること' do
-      CollaborationApp.new('wiki').feed_items_by_user(stub_model(User)) do |result, feed_items|
-        result.should be_true
-        feed_items.size.should == 1
+      CollaborationApp.feed_items(@rss_body).size.should == 1
+    end
+  end
+  describe 'RSSとして不正な文字列の場合' do
+    it 'サイズ0の配列が取得できること' do
+      CollaborationApp.feed_items('rss_body').should be_empty
+    end
+  end
+end
+
+describe CollaborationApp, '#resource' do
+  describe '不正なユーザが指定された場合' do
+    describe 'Userクラスのインスタンスではない場合' do
+      it '空文字が返ること' do
+        CollaborationApp.new('wiki').resource(mock('user'), 'path').should == ''
+      end
+    end
+    describe 'idがnilまたは空の場合' do
+      it '空文字が返ること' do
+        CollaborationApp.new('wiki').resource(stub(User, :id => nil), 'path').should == ''
+      end
+    end
+  end
+  describe '正しいユーザの場合' do
+    before do
+      @user = stub_model(User, :id => 99)
+    end
+    describe '対象ユーザのOAuthアクセストークンが登録されていない場合' do
+      before do
+        UserOauthAccess.should_receive(:find_by_app_name_and_user_id).and_return(nil)
+      end
+      it '空文字が返ること' do
+        CollaborationApp.new('wiki').resource(@user, 'path').should == ''
+      end
+      it '対象ユーザのOAuthアクセストークンが登録されていない旨がロギングされること' do
+        @user.should_receive(:to_s_log).with('[OAuth Token was not exist]')
+        CollaborationApp.new('wiki').resource(@user, 'path')
+      end
+    end
+    describe '対象ユーザのOAuthアクセストークンが登録されている場合' do
+      before do
+        @resource_body = 'resource_body'
+        @user_oauth_access = stub_model(UserOauthAccess)
+        @user_oauth_access.should_receive(:resource).and_return(@resource_body)
+        UserOauthAccess.should_receive(:find_by_app_name_and_user_id).and_return(@user_oauth_access)
+      end
+      it 'リソースのBodyが取得できること' do
+        CollaborationApp.new('wiki').resource(@user, 'path').should == @resource_body
       end
     end
   end

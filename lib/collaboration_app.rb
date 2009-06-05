@@ -18,60 +18,63 @@ require 'timeout'
 require 'rss'
 class CollaborationApp
   attr_reader :app_name, :base_url
-  def initialize app_name, resource_path = nil
+  def initialize app_name
     @app_name = app_name
     app_setting = SkipEmbedded::InitialSettings['collaboration_apps'][@app_name]
     @base_url = app_setting ? app_setting['url'] : ''
-    # TODO feed_items_by_userの引き数にする
-    @resource_path = resource_path
   end
 
-  def self.enabled?
-    SkipEmbedded::InitialSettings['collaboration_apps']
+  def self.enable
+    OauthProvider.enable.map{|provider| self.new(provider.app_name) }
   end
 
-  def self.names
-    enabled? ? SkipEmbedded::InitialSettings['collaboration_apps'].map{|k, v| k} : []
-  end
-
-  # TODO 使ってない。全連携アプリのフィードを統合する必要がないなら消す
-  def self.all_feed_items_by_user user, limit = 20
-    feed_items = []
-    names.each do |name|
-      CollaborationApp.new(name).feed_items_by_user(user) do |result, items|
-        feed_items += items if result
-      end
+  def self.sorted_feed_items rss_body, limit = 20, &block
+    returning [] do |items|
+      rss = RSS::Parser.parse(rss_body)
+      items.concat(feed_items(rss_body).sort{|x, y| y.date <=> x.date}.slice(0...limit))
+      yield(true, items) if block_given?
     end
-    feed_items.sort{|x, y| y.date <=> x.date}.slice(0...limit)
   end
 
-  def feed_items_by_user user, limit = 20, &block
+  def self.feed_items rss_body
+    RSS::Parser.parse(rss_body).items
+  rescue => e
+    returning [] do
+      ::Rails.logger.error(e)
+      e.backtrace.each { |line| ::Rails.logger.error line}
+    end
+  end
+
+  def resource user, resource_path, &block
+    return '' if (!user.is_a?(User) || user.id.blank?)
     uoa = UserOauthAccess.find_by_app_name_and_user_id(@app_name, user.id)
     if uoa
-      resource = RSS::Parser.parse(uoa.resource(@resource_path))
-      yield(true, resource.items.sort{|x, y| y.date <=> x.date}.slice(0...limit))
+      returning resource_body = uoa.resource(resource_path) do
+        yield(true, resource_body) if block_given?
+      end
     else
-      yield(false, [])
+      returning resource_body = '' do
+        user.to_s_log('[OAuth Token was not exist]')
+        yield(false, resource_body) if block_given?
+      end
     end
   rescue => e
-    ::Rails.logger.error(e)
-    e.backtrace.each { |line| ::Rails.logger.error line}
-    yield(false, [])
+    returning resource_body = '' do
+      ::Rails.logger.error(e)
+      e.backtrace.each { |line| ::Rails.logger.error line}
+      yield(false, resource_body) if block_given?
+    end
   end
 
   # TODO 回帰テストを書く
   def operations_by_view_place view_place
     operations = SkipEmbedded::InitialSettings['collaboration_apps'][@app_name]['operations'] || []
-    operations.delete_if{|f| !(f['view_place'] == view_place)} if view_place
+    operations.dup.delete_if{|f| !(f['view_place'] == view_place)} if view_place
   end
 
   # TODO 回帰テストを書く
   def feeds_by_view_place view_place
     feeds = SkipEmbedded::InitialSettings['collaboration_apps'][@app_name]['feeds'] || []
-    feeds.delete_if{|f| !(f['view_place'] == view_place)} if view_place
-  end
-
-  def self.using
-    OauthProvider.enable.map{|provider| self.new(provider.app_name) }
+    feeds.dup.delete_if{|f| !(f['view_place'] == view_place)} if view_place
   end
 end
