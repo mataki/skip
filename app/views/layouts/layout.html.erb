@@ -79,7 +79,7 @@ var relative_url_root = '<%= controller.request.relative_url_root %>';
 <%= javascript_include_tag 'application' %>
 <%= skip_javascript_include_tag 'skip_util' %>
 <%= skip_header_javascript_include_tag %>
-<%= javascript_include_tag :skip, :cache => "skip_embedded" %>
+<%= javascript_include_tag :skip_embedded, :cache => "skip_embedded" %>
 <%= skip_jquery_include_tag 'jquery.tablesorter' %>
 <%= skip_javascript_include_tag 'ufo' %>
 <%= yield :javascript_includes %>
