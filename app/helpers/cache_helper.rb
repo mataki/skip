@@ -19,7 +19,7 @@ module CacheHelper
   JQUERY_LIBRARY = {:name => 'jquery.all',
     :libs => %w(jquery jquery.cookie jquery.color jquery.nyroModal jquery.bgiframe jquery.autocomplete jquery.jTagging jquery.jgrow jquery.cluetip ui.core ui.tabs)}
 
-  STYLE_LIBRARY = {:name => 'skip.style', :libs => %w(application sprites skins-base)}
+  STYLE_LIBRARY = {:name => 'skip.style', :libs => %w(application skins-base)}
 
   def all_javascript_include_tag source
     library = {'prototype' => PROTOTYPE_LIBRARY, 'jquery' => JQUERY_LIBRARY}[source]

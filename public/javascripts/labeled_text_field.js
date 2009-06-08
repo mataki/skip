@@ -16,6 +16,10 @@
           target.removeClass(focusClass).val(message);
         };
       });
+    target.parents("form").submit(function(){
+        if(target.val() == message){ target.val("") };
+        return true;
+      });
     return target;
   };
 })(jQuery);
