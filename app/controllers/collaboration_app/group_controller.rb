@@ -15,9 +15,9 @@
 
 class CollaborationApp::GroupController < ApplicationController
   def feed
-    CollaborationApp.new(params[:app_name]).resource(current_user, "#{params[:path]}?skip_gid=#{params[:gid]}") do |result, body|
+    UserOauthAccess.resource(params[:app_name], current_user, "#{params[:path]}?skip_gid=#{params[:gid]}") do |result, body|
       if result
-        feed_items = CollaborationApp.sorted_feed_items(body)
+        feed_items = UserOauthAccess.sorted_feed_items(body)
         render :partial => 'collaboration_app/shared/feed', :locals => {:feed_items => feed_items}, :layout => false
       else
         render :text => _('取得できませんでした。')

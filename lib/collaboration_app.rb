@@ -13,56 +13,12 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-require "resolv-replace"
-require 'timeout'
-require 'rss'
 class CollaborationApp
   attr_reader :app_name, :base_url
   def initialize app_name
     @app_name = app_name
     app_setting = SkipEmbedded::InitialSettings['collaboration_apps'][@app_name]
     @base_url = app_setting ? app_setting['url'] : ''
-  end
-
-  def self.enable
-    OauthProvider.enable.map{|provider| self.new(provider.app_name) }
-  end
-
-  def self.sorted_feed_items rss_body, limit = 20, &block
-    returning [] do |items|
-      items.concat(feed_items(rss_body).sort{|x, y| y.date <=> x.date}.slice(0...limit))
-      yield(true, items) if block_given?
-    end
-  end
-
-  def self.feed_items rss_body
-    RSS::Parser.parse(rss_body).items
-  rescue => e
-    returning [] do
-      ::Rails.logger.error(e)
-      e.backtrace.each { |line| ::Rails.logger.error line}
-    end
-  end
-
-  def resource user, resource_path, &block
-    return '' if (!user.is_a?(User) || user.id.blank?)
-    uoa = UserOauthAccess.find_by_app_name_and_user_id(@app_name, user.id)
-    if uoa
-      returning resource_body = uoa.resource(resource_path) do
-        yield(true, resource_body) if block_given?
-      end
-    else
-      returning resource_body = '' do
-        user.to_s_log('[OAuth Token was not exist]')
-        yield(false, resource_body) if block_given?
-      end
-    end
-  rescue => e
-    returning resource_body = '' do
-      ::Rails.logger.error(e)
-      e.backtrace.each { |line| ::Rails.logger.error line}
-      yield(false, resource_body) if block_given?
-    end
   end
 
   # TODO 回帰テストを書く

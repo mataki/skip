@@ -13,6 +13,10 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+require "resolv-replace"
+require 'timeout'
+require 'rss'
+
 class UserOauthAccess < ActiveRecord::Base
   include CollaborationApp::Oauth::Client
   belongs_to :users
@@ -23,5 +27,47 @@ class UserOauthAccess < ActiveRecord::Base
       return client(self.app_name).oauth(self.token, self.secret).get_resource(resource_path)
     end
     nil
+  end
+
+  def self.resource app_name, user, resource_path
+    return '' if (!user.is_a?(User) || user.id.blank?)
+    uoa = UserOauthAccess.find_by_app_name_and_user_id(app_name, user.id)
+    if uoa
+      returning resource_body = uoa.resource(resource_path) do
+        yield(true, resource_body) if block_given?
+      end
+    else
+      returning resource_body = '' do
+        user.to_s_log('[OAuth Token was not exist]')
+        yield(false, resource_body) if block_given?
+      end
+    end
+  rescue => e
+    returning resource_body = '' do
+      logger.error e
+      e.backtrace.each { |line| logger.error line }
+      yield(false, resource_body) if block_given?
+    end
+  end
+
+  def self.enable
+    # FIXME CollaborationApp::Settingクラスを利用するようにする
+    OauthProvider.enable.map{|provider| CollaborationApp.new(provider.app_name) }
+  end
+
+  def self.sorted_feed_items rss_body, limit = 20, &block
+    returning [] do |items|
+      items.concat(feed_items(rss_body).sort{|x, y| y.date <=> x.date}.slice(0...limit))
+      yield(true, items) if block_given?
+    end
+  end
+
+  def self.feed_items rss_body
+    RSS::Parser.parse(rss_body).items
+  rescue => e
+    returning [] do
+      logger.error e
+      e.backtrace.each { |line| logger.error line }
+    end
   end
 end

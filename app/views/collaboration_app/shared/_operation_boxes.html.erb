@@ -1,4 +1,4 @@
-<% CollaborationApp.enable.each do |app| -%>
+<% UserOauthAccess.enable.each do |app| -%>
   <% app.operations_by_view_place(params[:controller]).each do |operation| -%>
     <%= render :partial => 'collaboration_app/shared/operation_box', :locals => {:title => operation['title'], :links => operation['links']} %>
   <% end -%>
