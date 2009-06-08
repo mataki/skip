@@ -32,7 +32,7 @@ class UserOauthAccess < ActiveRecord::Base
   def self.resource app_name, user, resource_path
     return '' if (!user.is_a?(User) || user.id.blank?)
     uoa = UserOauthAccess.find_by_app_name_and_user_id(app_name, user.id)
-    if uoa
+    if uoa && !uoa.token.blank?
       returning resource_body = uoa.resource(resource_path) do
         yield(true, resource_body) if block_given?
       end
@@ -42,7 +42,7 @@ class UserOauthAccess < ActiveRecord::Base
         yield(false, resource_body) if block_given?
       end
     end
-  rescue => e
+  rescue Timeout::Error, StandardError => e
     returning resource_body = '' do
       logger.error e
       e.backtrace.each { |line| logger.error line }
@@ -55,7 +55,7 @@ class UserOauthAccess < ActiveRecord::Base
     OauthProvider.enable.map{|provider| CollaborationApp.new(provider.app_name) }
   end
 
-  def self.sorted_feed_items rss_body, limit = 20, &block
+  def self.sorted_feed_items rss_body, limit = 20
     returning [] do |items|
       items.concat(feed_items(rss_body).sort{|x, y| y.date <=> x.date}.slice(0...limit))
       yield(true, items) if block_given?
