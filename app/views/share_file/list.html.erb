@@ -86,7 +86,7 @@
                   data: { id: shareFileId, authenticity_token: $j('#authenticity_token').val() },
                   url: clearDownloadUrl,
                   success: function(text){
-                      alert(text);
+                      $j("#flash_message").trigger("notice", text);
                   },
                   error: function(request){
                       alert(request.responseText);
