@@ -16,4 +16,8 @@
 class OauthProvider < ActiveRecord::Base
   attr_protected :enable
   named_scope :enable, {:conditions => {:enable => true}}
+
+  def setting
+    @setting ||= CollaborationApp::Setting.new self.app_name
+  end
 end

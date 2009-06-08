@@ -19,7 +19,7 @@ describe CollaborationApp::Oauth::Client, '#client' do
   before do
     @app_name = 'wiki'
     @provider_url = 'http://skip/wiki/'
-    apps_hash = {@app_name => {'name' => 'SKIP-WIKI', 'url' => @provider_url}}
+    apps_hash = {@app_name => {'name' => 'SKIP-WIKI', 'root_url' => @provider_url}}
     SkipEmbedded::InitialSettings.stub!('[]').with('collaboration_apps').and_return(apps_hash)
   end
   describe '指定されたサービスがproviderとして登録されていない場合' do
@@ -50,7 +50,7 @@ describe CollaborationApp::Oauth::Client, '#client' do
   end
   describe '指定されたサービスがproviderとして登録されている場合' do
     before do
-      @oauth_provider = stub_model(OauthProvider, :token => 'token', :secret => 'secret')
+      @oauth_provider = OauthProvider.new(:app_name => 'wiki', :token => 'token', :secret => 'secret')
       OauthProvider.should_receive(:find_by_app_name).and_return(@oauth_provider)
       @synchronizer = TestSynchronizer.new(@app_name)
     end

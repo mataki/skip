@@ -132,21 +132,26 @@ default: &default
   # 連携アプリに関する設定
   # ================================================================================================
   collaboration_apps:
-#      wiki:
-#        name:     SKIP-WIKI
-#        url:      http://localhost:4000
-#        ca_file:
-#        feeds:
-#          - view_place: mypage
-#            title: SKIP-WIKIの更新情報
-#            path: pages.rss
-
-#        operations:
-#          - view_place: mypage
-#            title: SKIP-WIKIの操作
-#            links:
-#              - label: 新しいノートを作る
-#                url: http://localhost:4000/notes/new
+#    wiki:
+#      name: SKIP-WIKI
+#      root_url: http://localhost:4000
+#      ca_file:
+#
+#      feeds:
+#        - title:
+#          path: pages.rss
+#
+#      operations:
+#        - view_place: mypage
+#          title: SKIP-WIKIの操作
+#          links:
+#            - label: 新しいノートを作る
+#              url: http://localhost:4000/notes/new
+#        - view_place: group
+#          title: SKIP-WIKIの操作
+#          links:
+#            - label: 新しいノートを作る
+#              url: http://localhost:4000/notes/new
 
   belong_info_apps:                                                  # 所属情報を外部のアプリケーションのAPIを利用して設定する
 #     wiki:
@@ -181,21 +186,21 @@ development:
 test:
   <<: *default
   collaboration_apps:
-     wiki:
-       name:     SKIP-WIKI
-       url:      http://localhost:4000
-       ca_file:
-     feeds:
-       - view_place: mypage
-         title: SKIP-WIKIの更新情報
-         path: pages.rss
-
-     operations:
-       - view_place: mypage
-         title: SKIP-WIKIの操作
-         links:
-           - label: 新しいノートを作る
-             url: http://localhost:4000/notes/new
+    wiki:
+      name: SKIP-WIKI
+      root_url: http://localhost:4000
+      ca_file:
+  
+      feeds:
+        - title:
+          path: pages.rss
+  
+      operations:
+        - view_place: mypage
+          title: SKIP-WIKIの操作
+          links:
+            - label: 新しいノートを作る
+              url: http://localhost:4000/notes/new
 
 production:
   <<: *default

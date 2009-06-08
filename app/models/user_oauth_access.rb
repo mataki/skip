@@ -50,11 +50,6 @@ class UserOauthAccess < ActiveRecord::Base
     end
   end
 
-  def self.enable
-    # FIXME CollaborationApp::Settingクラスを利用するようにする
-    OauthProvider.enable.map{|provider| CollaborationApp.new(provider.app_name) }
-  end
-
   def self.sorted_feed_items rss_body, limit = 20
     returning [] do |items|
       items.concat(feed_items(rss_body).sort{|x, y| y.date <=> x.date}.slice(0...limit))

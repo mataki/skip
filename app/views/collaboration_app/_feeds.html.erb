@@ -1,13 +1,13 @@
-<% UserOauthAccess.enable.each do |app| -%>
+<% OauthProvider.enable.each do |provider| -%>
   <%
     #FIXME このままだと複数件ある場合に全部のボックスの内容が同じになってしまう
     #FIXME 全て見る がクエリパラメタが必要な場合に問題がある
   %>
-  <% app.feed_settings.each do |feed_setting| -%>
+  <% provider.setting.feeds.each do |feed_setting| -%>
     <div id="collaboration_apps">
       <div class="title_bar" style="position: relative; _width: 100%;">
         <h2 class="topix_title"><%= "#{icon_tag('rss')}#{h(feed_setting['title'] || 'FEXME')}" %></h2>
-        <div style="position: absolute; top: 5px; right: 10px; font-size: 14px;"><%= link_to('[すべて見る]', URI.join(app.base_url, feed_setting['path'].split('.').first).to_s) %></div>
+        <div style="position: absolute; top: 5px; right: 10px; font-size: 14px;"><%= link_to('[すべて見る]', URI.join(provider.setting.root_url, feed_setting['path'].split('.').first).to_s) %></div>
       </div>
       <div class="topix_body">
         <%= skip_image_tag 'indicator.gif' %>
@@ -15,7 +15,7 @@
     </div>
     <% content_for :javascript_initializers do -%>
     $j.ajax({
-    url: '<%= url_for :controller => 'collaboration_app', :action => 'feed', :app_name => app.app_name, :path => feed_setting['path'], :gid => params[:gid], :escape => false %>',
+    url: '<%= url_for :controller => 'collaboration_app', :action => 'feed', :app_name => provider.app_name, :path => feed_setting['path'], :gid => params[:gid], :escape => false %>',
         success: function(html) {
           $j('div#collaboration_apps > div.topix_body').html(html);
         }
