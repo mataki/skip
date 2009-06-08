@@ -28,8 +28,7 @@ class CollaborationApp
   end
 
   # TODO 回帰テストを書く
-  def feeds_by_view_place view_place
+  def feed_settings
     feeds = SkipEmbedded::InitialSettings['collaboration_apps'][@app_name]['feeds'] || []
-    feeds.dup.delete_if{|f| !(f['view_place'] == view_place)} if view_place
   end
 end

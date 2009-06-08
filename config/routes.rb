@@ -97,11 +97,6 @@ ActionController::Routing::Routes.draw do |map|
     admin_map.resources :oauth_providers, :member => {:start => :post}
   end
 
-  map.namespace "collaboration_app" do |collabo_map|
-    collabo_map.mypage_feed 'mypage/feed/:app_name', :controller => 'mypage', :action => 'feed'
-    collabo_map.group_feed 'group/:gid/feed/:app_name', :controller => 'group', :action => 'feed'
-  end
-
   map.with_options :controller => 'server' do |server|
     server.formatted_server 'server.:format', :action => 'index'
     server.server 'server', :action => 'index'

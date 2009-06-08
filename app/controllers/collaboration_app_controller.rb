@@ -13,7 +13,16 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
-
-describe CollaborationApp::MypageController do
+class CollaborationAppController < ApplicationController
+  def feed
+    path_with_query = params[:gid] ? "#{params[:path]}?skip_gid=#{params[:gid]}" : params[:path]
+    UserOauthAccess.resource(params[:app_name], current_user, path_with_query) do |result, body|
+      if result
+        @feed_items = UserOauthAccess.sorted_feed_items(body)
+        render :layout => false
+      else
+        render :text => _('取得できませんでした。')
+      end
+    end
+  end
 end

@@ -1,6 +1,6 @@
 <%# TODO cssをsass化する %>
 <div class="topix_body">
-  <% feed_items.each do |item| %>
+  <% @feed_items.each do |item| %>
   <div style="border-bottom: 1px dotted silver; margin: 3px 0 1px 0; height: 16px; position: relative;">
     <div style="width: 80%;  white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin: 0;">
       <%= link_to h(item.title), h(item.link), :target => "_blank" %>

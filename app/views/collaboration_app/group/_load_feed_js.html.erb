@@ -1,8 +1,0 @@
-<% content_for :javascript_initializers do -%>
-$j.ajax({
-    url: '<%= collaboration_app_group_feed_url :app_name => app_name, :path => path, :gid => params[:gid] %>',
-    success: function(html) {
-      $j('div#collaboration_apps > div.topix_body').html(html);
-    }
-});
-<% end -%>
