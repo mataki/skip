@@ -1,13 +1,16 @@
 <% OauthProvider.enable.each do |provider| -%>
   <%
     #FIXME このままだと複数件ある場合に全部のボックスの内容が同じになってしまう
-    #FIXME 全て見る がクエリパラメタが必要な場合に問題がある
   %>
   <% provider.setting.feeds.each do |feed_setting| -%>
     <div id="collaboration_apps">
       <div class="title_bar" style="position: relative; _width: 100%;">
         <h2 class="topix_title"><%= icon_tag('rss') + h(feed_setting['title'] || "#{provider.setting.name}の更新情報") %></h2>
-        <div style="position: absolute; top: 5px; right: 10px; font-size: 14px;"><%= link_to('[すべて見る]', URI.join(provider.setting.root_url, feed_setting['path'].split('.').first).to_s) %></div>
+        <%
+          uri = URI.join(provider.setting.root_url, feed_setting['path'].split('.').first.to_s)
+          uri.query = params[:gid] ? "skip_gid=#{params[:gid]}" : nil
+        -%>
+        <div style="position: absolute; top: 5px; right: 10px; font-size: 14px;"><%= link_to('[すべて見る]', uri.to_s) %></div>
       </div>
       <div class="topix_body">
         <%= skip_image_tag 'indicator.gif' %>
