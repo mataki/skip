@@ -38,7 +38,7 @@ class Admin::SettingsController < Admin::ApplicationController
         :name => _("共有ファイル関連"),
         :settings => [{ :label => _("現在の利用容量"),
                         :help => _("システム全体の最大許可容量に対して現在使用中の共有ファイルの容量です。"),
-                        :value => "#{ValidationsFile::FileSizeCounter.per_system/1.megabyte} / #{SkipEmbedded::InitialSettings['max_share_file_size_of_system']/1.megabyte} (MB)"
+                        :value => "#{QuotaValidation::FileSizeCounter.per_system/1.megabyte} / #{SkipEmbedded::InitialSettings['max_share_file_size_of_system']/1.megabyte} (MB)"
                       },
                       setting_of('max_share_file_size_of_system', "#{SkipEmbedded::InitialSettings['max_share_file_size_of_system'].to_i/1.megabyte}(MB)"),
                       setting_of('max_share_file_size_per_owner', "#{SkipEmbedded::InitialSettings['max_share_file_size_per_owner'].to_i/1.megabyte}(MB)"),

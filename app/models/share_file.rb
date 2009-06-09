@@ -16,8 +16,9 @@
 require 'csv'
 class ShareFile < ActiveRecord::Base
   include Publication
-  include ValidationsFile
-  include Types::ContentType
+  include ::QuotaValidation
+  include ::SkipEmbedded::ValidationsFile
+  include ::SkipEmbedded::Types::ContentType
 
   attr_accessor :file
   attr_writer :accessed_user

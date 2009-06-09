@@ -15,7 +15,6 @@
 
 class BoardEntry < ActiveRecord::Base
   include Publication
-  include ValidationsFile
   include ActionController::UrlWriter
 
   belongs_to :user
