@@ -20,11 +20,12 @@ module CollaborationApp
 
     VIEW_PLACES = [VIEW_PLACE_MYPAGE, VIEW_PLACE_GROUP].freeze
 
-    attr_reader :app_name, :root_url, :ca_file, :feeds
+    attr_reader :app_name, :name, :root_url, :ca_file, :feeds
 
     def initialize app_name
       @app_name = app_name
       app_config = SkipEmbedded::InitialSettings['collaboration_apps'][@app_name]
+      @name = app_config ? app_config['name'] : ''
       @root_url = app_config ? app_config['root_url'] : ''
       @ca_file = app_config ? app_config['ca_file'] : ''
       @feeds = app_config ? app_config['feeds'] : []
