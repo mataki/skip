@@ -289,7 +289,10 @@ $j(function(){
             }
         };
 
-        var onComplete = function(response){
+        var onComplete = function(targetIFrame){
+            var doc = targetIFrame.get(0).contentDocument ? targetIFrame.get(0).contentDocument : targetIFrame.get(0).contentWindow.document;
+            var response = doc.body.innerHTML;
+
             refreshMessage(response);
             reloadUploader();
         };

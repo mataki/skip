@@ -50,15 +50,7 @@ Rails::Initializer.run do |config|
   config.gem 'gettext',  :lib => 'gettext/rails', :version => '1.93.0'
   config.gem "json", :lib => "json/add/rails"
   config.gem "fastercsv"
-  config.gem 'openskip-skip_embedded', :lib => 'skip_embedded', :version => '>=0.9.8', :source => 'http://gems.github.com'
-#     config.gem "rspec", :lib => "spec"
-#     config.gem "rspec-rails"
-#     config.gem "ZenTest", :lib => "zentest"
-#     config.gem "ruby-debug"
-
-  config.plugins = %w[all]
-
-  config.plugins << "openskip-skip_embedded" if Gem.source_index.any?{|_,y| y.name =~ /(?:[:ascii:]+-)?openskip-skip_embedded/ }
+  config.gem 'openskip-skip_embedded', :lib => 'skip_embedded', :version => '>=0.9.9', :source => 'http://gems.github.com'
 end
 
 menu_btns = [
