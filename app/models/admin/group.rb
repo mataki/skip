@@ -22,6 +22,7 @@ class Admin::Group < Group
   N_('Admin::Group|Description')
   N_('Admin::Group|Protected')
   N_('Admin::Group|Group category')
+  N_('Admin::Group|Deleted at')
 
   def self.search_columns
     %w(name gid description)

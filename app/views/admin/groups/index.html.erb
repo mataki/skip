@@ -9,7 +9,7 @@
   <%= render :partial => '/admin/search_box', :locals => { :class_name => 'Admin::Group' } %>
   <%= render :partial => '/admin/shared/sortable_table',
              :locals => {
-               :columns => %w[name gid description protected group_category_id],
+               :columns => %w[name gid description protected group_category_id deleted_at],
                :disp_columns_proc => lambda do |object,column|
       case column
       when "protected"
@@ -18,6 +18,8 @@
         object.description[/.{1,100}/]
       when "group_category_id"
         object.group_category.name
+      when "deleted_at"
+        object.deleted_at ? object.deleted_at.to_formatted_s(:standard) : ''
       else
         object.send(column.to_sym)
       end
@@ -28,7 +30,7 @@
                :link_elem_proc => lambda { |object|
       result = ""
       result << content_tag(:td, link_to(_("Show"), object) )
-      result << content_tag(:td, link_to(_("Destroy"), object, {:confirm => _('Are you sure?'), :method => :delete}) )
+      result << content_tag(:td, link_to_unless(object.deleted_at, _("Destroy"), object, {:confirm => _('Are you sure?'), :method => :delete}) )
     }
              }
   -%>

@@ -20,4 +20,15 @@ class Admin::GroupsController < Admin::ApplicationController
   undef create
   undef edit
   undef update
+
+  def destroy
+    @group = Admin::Group.find(params[:id])
+    @group.logical_destroy
+
+    respond_to do |format|
+      flash[:notice] = _("%{model} was successfully deleted.") % {:model => _('group')}
+      format.html { redirect_to(admin_groups_url) }
+      format.xml  { head :ok }
+    end
+  end
 end
