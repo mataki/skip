@@ -435,7 +435,7 @@ class User < ActiveRecord::Base
   end
 
   def self.synchronize_users
-    User.all.map { |u| [u.openid_identifier, u.uid, u.name, u.admin] }
+    User.all.map { |u| [u.openid_identifier, u.uid, u.name, u.admin, u.retired?] }
   end
 
   def self.find_by_openid_identifier openid_identifier
