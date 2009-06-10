@@ -144,7 +144,7 @@ describe Group do
     end
   end
 
-  describe Group, "#after_destroy グループに掲示板と共有ファイルがある場合" do
+  describe Group, "#logical_after_destroy グループに掲示板と共有ファイルがある場合" do
     fixtures :groups, :board_entries, :share_files, :users, :user_uids
     before(:each) do
       @group = groups(:a_protected_group1)
@@ -161,8 +161,8 @@ describe Group do
       File.stub!(:delete)
     end
 
-    it { lambda { @group.destroy }.should change(BoardEntry, :count).by(-1) }
-    it { lambda { @group.destroy }.should change(ShareFile, :count).by(-1) }
+    it { lambda { @group.logical_destroy }.should change(BoardEntry, :count).by(-1) }
+    it { lambda { @group.logical_destroy }.should change(ShareFile, :count).by(-1) }
   end
 
   describe Group, "count_by_category" do

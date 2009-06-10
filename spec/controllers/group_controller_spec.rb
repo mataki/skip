@@ -46,7 +46,7 @@ describe GroupController, "POST #destroy" do
     before do
       @group_participations.should_receive(:size).and_return(1)
 
-      @group.should_receive(:destroy).and_return(true)
+      @group.should_receive(:logical_destroy).and_return(true)
 
       post :destroy
     end

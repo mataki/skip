@@ -305,7 +305,7 @@ class GroupController < ApplicationController
       flash[:warn] = '自分以外のユーザがまだ存在しています。削除できません。'
       redirect_to :action => 'show'
     else
-      @group.destroy
+      @group.logical_destroy
       flash[:notice] = 'グループは削除されました。'
       redirect_to :controller => 'groups'
     end
@@ -393,7 +393,7 @@ private
   end
 
   def load_group_and_participation
-    unless @group = Group.find_by_gid(params[:gid])
+    unless @group = Group.active.find_by_gid(params[:gid])
       flash[:warn] = "指定のグループは存在していません"
       redirect_to :controller => 'mypage', :action => 'index'
       return false

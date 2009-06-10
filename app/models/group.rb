@@ -14,6 +14,8 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Group < ActiveRecord::Base
+  include LogicalDestroyable
+
   has_many :group_participations, :dependent => :destroy
   belongs_to :group_category
 
@@ -135,7 +137,7 @@ class Group < ActiveRecord::Base
   end
 
   # グループに関連する情報の削除
-  def after_destroy
+  def after_logical_destroy
     BoardEntry.destroy_all(["symbol = ?", self.symbol])
     ShareFile.destroy_all(["owner_symbol = ?", self.symbol])
   end
