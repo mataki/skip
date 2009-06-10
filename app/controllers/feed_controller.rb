@@ -47,7 +47,7 @@ class FeedController < ApplicationController
 
   def recent_registed_groups
     description = "最近登録されたグループ"
-    groups = Group.find(:all, :order=>"created_on DESC", :conditions=>["created_on > ?" ,Date.today-10], :limit => 10)
+    groups = Group.active.find(:all, :order=>"created_on DESC", :conditions=>["created_on > ?" ,Date.today-10], :limit => 10)
     item_arry = []
     groups.map{|group| item_arry << {:type => "group", :title => group.name, :id => group.gid, :date => group.created_on, :contents => group.description } }
     rss_feed "recent_registed_groups", description, item_arry

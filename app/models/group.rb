@@ -108,13 +108,14 @@ class Group < ActiveRecord::Base
     [group_category.icon, group_category.name]
   end
 
+  # TODO waitingという名前でnamed_scopeにする
   def self.find_waitings(user_id)
     sub_query = "select group_id from group_participations where waiting = 1"
     participations = GroupParticipation.find(:all, :conditions =>["user_id = ? and owned = 1 and group_id in (#{sub_query})", user_id])
     result = []
     if participations.size > 0
       group_ids =  participations.map {|participation| participation.group_id.to_s }
-      result = Group.find(:all, :conditions =>["id IN (?)", group_ids] )
+      result = Group.active.find(:all, :conditions => ["id IN (?)", group_ids])
     end
     result
   end
@@ -129,10 +130,10 @@ class Group < ActiveRecord::Base
 
   # グループのカテゴリごとのgidの配列を返す(SQL発行あり)
   #   { "BIZ" => ["gid:swat","gid:qms"], "LIFE" => [] ... }
+  # TODO 回帰テストを書く
   def self.gid_by_category
     group_by_category = Hash.new{|h, key| h[key] = []}
-
-    find(:all, :select => "group_category_id, gid").each{ |group| group_by_category[group.group_category_id] << "gid:#{group.gid}" }
+    active(:select => "group_category_id, gid").each{ |group| group_by_category[group.group_category_id] << "gid:#{group.gid}" }
     group_by_category
   end
 
@@ -142,13 +143,14 @@ class Group < ActiveRecord::Base
     ShareFile.destroy_all(["owner_symbol = ?", self.symbol])
   end
 
-  def self.count_by_category user_id=nil
+  # TODO named_scope化する
+  def self.count_by_category user_id = nil
     conditions = user_id ? ['group_participations.user_id = ?', user_id] : []
-    groups = find(:all,
-                  :select => 'group_category_id, count(distinct(groups.id)) as count',
-                  :group => 'groups.group_category_id',
-                  :conditions => conditions,
-                  :joins => [:group_participations])
+    groups = active.all(
+      :select => 'group_category_id, count(distinct(groups.id)) as count',
+      :group => 'groups.group_category_id',
+      :conditions => conditions,
+      :joins => [:group_participations])
     group_counts = Hash.new(0)
     total_count = 0
     groups.each do |group_count|
@@ -187,6 +189,8 @@ class Group < ActiveRecord::Base
   end
 
   # paginateで使う検索条件を作成する
+  # TODO 回帰テストを書く
+  # TODO named_scope化してwill_paginateに対応させる
   def self.paginate_option target_user_id, params = { :page => 1 }
     conditions = [""]
 
@@ -210,6 +214,9 @@ class Group < ActiveRecord::Base
       conditions[0] << "group_category_id = ?"
       conditions << group_category_id
     end
+
+    conditions[0] << " and " unless conditions[0].empty?
+    conditions[0] << "deleted_at IS NULL"
 
     options = {}
     if sort_type = params[:sort_type] and sort_type == "name"

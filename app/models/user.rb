@@ -29,7 +29,7 @@ class User < ActiveRecord::Base
   has_many :tracks, :order => "updated_on DESC", :dependent => :destroy
   has_one  :user_access, :class_name => "UserAccess", :dependent => :destroy
 
-  has_many :groups, :through => :group_participations
+  has_many :groups, :through => :group_participations, :conditions => 'groups.deleted_at IS NULL'
 
   has_many :bookmark_comments, :dependent => :destroy
   has_many :antennas, :dependent => :destroy

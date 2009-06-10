@@ -58,7 +58,7 @@ class BoardEntry < ActiveRecord::Base
       end
     elsif self.entry_type == GROUP_BBS
       if symbol_type == "gid"
-        errors.add_to_base(_("ご指定のグループは存在しません。")) unless Group.find_by_gid(symbol_id)
+        errors.add_to_base(_("ご指定のグループは存在しません。")) unless Group.active.find_by_gid(symbol_id)
       else
         errors.add_to_base(_("不正なグループです。"))
       end
@@ -396,7 +396,7 @@ class BoardEntry < ActiveRecord::Base
       end
     end
     if group_symbol_ids.size > 0
-      Group.find(:all, :conditions =>["gid IN (?)", group_symbol_ids]).each do |item|
+      Group.active.find(:all, :conditions =>["gid IN (?)", group_symbol_ids]).each do |item|
         symbol2name_hash[item.symbol] = item.name
       end
     end
@@ -462,7 +462,7 @@ class BoardEntry < ActiveRecord::Base
           to_address_symbol = user.symbol
         end
       when "gid"
-        group = Group.find_by_gid(symbol, :include => [{ :group_participations => :user }])
+        group = Group.active.find_by_gid(symbol, :include => [{ :group_participations => :user }])
         if group
           group.group_participations.each { |participation| to_address << participation.user.email + "," unless participation.waiting }
           to_address = to_address.chop
@@ -585,7 +585,7 @@ class BoardEntry < ActiveRecord::Base
         tmp_users << User.find_by_uid(symbol_id)
 
         when "gid"
-        tmp_users = Group.find_by_gid(symbol_id, :include => [:group_participations]).group_participations.map { |part| part.user }
+        tmp_users = Group.active.find_by_gid(symbol_id, :include => [:group_participations]).group_participations.map { |part| part.user }
 
       end # end case
 
@@ -619,7 +619,7 @@ class BoardEntry < ActiveRecord::Base
     if symbol_type == "uid"
       User.find_by_uid(symbol_id)
     elsif symbol_type == "gid"
-      Group.find_by_gid(symbol_id)
+      Group.active.find_by_gid(symbol_id)
     else
       nil
     end
@@ -651,7 +651,7 @@ private
       transfer_symbol_link(symbol, link_str, proc {|symbol_id| (user =  User.find_by_uid(symbol_id)) ? user.name : nil })
     }
     group_proc = proc { |symbol, link_str|
-      transfer_symbol_link(symbol, link_str, proc {|symbol_id| (group = Group.find_by_gid(symbol_id)) ? group.name : nil })
+      transfer_symbol_link(symbol, link_str, proc {|symbol_id| (group = Group.active.find_by_gid(symbol_id)) ? group.name : nil })
     }
     page_proc = proc { |symbol, link_str|
       transfer_symbol_link(symbol, link_str, proc {|symbol_id| (entry = BoardEntry.find_by_id(symbol_id)) ? entry.title : nil })

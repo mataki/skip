@@ -50,7 +50,7 @@ class MypageController < ApplicationController
     # ============================================================
     @year, @month, @day = parse_date
     @entry_count_hash = get_entry_count(@year, @month)
-    @recent_groups =  Group.all(:order=>"created_on DESC", :conditions=>["created_on > ?" ,Date.today-recent_day], :limit => 10)
+    @recent_groups =  Group.active.all(:order=>"created_on DESC", :conditions=>["created_on > ?" ,Date.today-recent_day], :limit => 10)
     @recent_users = User.all(:order=>"created_on DESC", :conditions=>["created_on > ?" ,Date.today-recent_day], :limit => 10)
 
     # ============================================================
@@ -900,7 +900,7 @@ class MypageController < ApplicationController
       users.each{ |user|  @exist_item_by_symbol.store(user.symbol, user) }
     end
     if gid_list.size > 0
-      groups = Group.find(:all, :conditions =>['gid in (?)', gid_list])
+      groups = Group.active.find(:all, :conditions =>['gid in (?)', gid_list])
       groups.each{ |group|  @exist_item_by_symbol.store(group.symbol, group) }
     end
   end

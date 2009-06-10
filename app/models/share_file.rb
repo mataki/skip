@@ -100,7 +100,7 @@ class ShareFile < ActiveRecord::Base
   def self.owner_id owner_symbol
     symbol_type = owner_symbol.split(":").first
     symbol_id = owner_symbol.split(":").last
-    owner = (symbol_type == User.symbol_type.to_s) ? User.find_by_uid(symbol_id) : Group.find_by_gid(symbol_id)
+    owner = (symbol_type == User.symbol_type.to_s) ? User.find_by_uid(symbol_id) : Group.active.find_by_gid(symbol_id)
     owner ? owner.id : raise("Owner cannot be found by '#{owner_symbol}'")
   end
 
@@ -377,7 +377,7 @@ class ShareFile < ActiveRecord::Base
 
   class GroupOwner < Owner
     def readable?
-      if group = Group.find_by_gid(@share_file.owner_symbol_id)
+      if group = Group.active.find_by_gid(@share_file.owner_symbol_id)
         participating = group.participating?(@user)
         if participating && (group.administrator?(@user) || @user.id == @share_file.user_id)
           true
@@ -398,7 +398,7 @@ class ShareFile < ActiveRecord::Base
     end
 
     def updatable?
-      if group = Group.find_by_gid(@share_file.owner_symbol_id)
+      if group = Group.active.find_by_gid(@share_file.owner_symbol_id)
         group.participating?(@user) && (group.administrator?(@user) || @user.id == @share_file.user_id)
       else
         false

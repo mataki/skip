@@ -340,7 +340,7 @@ class GroupController < ApplicationController
         flash[:notice] = "#{user.name}さんを参加者に追加し、連絡の掲示板を作成しました。"
       end
     when 'gid'
-      group = Group.find_by_gid(symbol_id, :include => :group_participations)
+      group = Group.active.find_by_gid(symbol_id, :include => :group_participations)
       group.group_participations.each do |participation|
         unless @group.group_participations.find_by_user_id(participation.user_id)
           @group.group_participations.build(:user_id => participation.user_id, :owned => false)

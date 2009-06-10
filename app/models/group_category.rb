@@ -14,7 +14,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class GroupCategory < ActiveRecord::Base
-  has_many :groups
+  has_many :groups, :conditions => 'groups.deleted_at IS NULL'
 
   N_('GroupCategory|Initial selected|true')
   N_('GroupCategory|Initial selected|false')

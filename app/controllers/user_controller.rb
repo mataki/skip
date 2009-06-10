@@ -28,12 +28,12 @@ class UserController < ApplicationController
 
     # 参加しているグループ一覧
     conditions = ["group_participations.user_id = ?", @user.id]
-    @groups = Group.find(:all, :limit => limit,
-                         :conditions => conditions,
-                         :order => "group_participations.created_on DESC",
-                         :include => :group_participations)
-    @groups_count = Group.count(:conditions => conditions,
+    @groups = Group.active.find(:all, :limit => limit,
+                                :conditions => conditions,
+                                :order => "group_participations.created_on DESC",
                                 :include => :group_participations)
+    @groups_count = Group.active.count(:conditions => conditions,
+                                       :include => :group_participations)
 
     # 紹介した人一覧
     @follow_chains =  Chain.find(:all, :limit => limit,

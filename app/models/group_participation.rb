@@ -15,7 +15,7 @@
 
 class GroupParticipation < ActiveRecord::Base
   belongs_to :user
-  belongs_to :group
+  belongs_to :group, :conditions => 'groups.deleted_at IS NULL'
 
   N_('GroupParticipation|Waiting|true')
   N_('GroupParticipation|Waiting|false')

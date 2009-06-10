@@ -82,7 +82,7 @@ class BatchMakeCache < BatchBase
 
   # groupのサマリ用
   def make_caches_group(contents_type, cache_path, border_time)
-    groups = Group.find(:all, :conditions => ["updated_on > ?", border_time])
+    groups = Group.active.find(:all, :conditions => ["updated_on > ?", border_time])
     groups.each do |group|
       contents = create_contents(:title => group.name,
                                  :body_lines => [group.description])

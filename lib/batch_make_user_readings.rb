@@ -30,10 +30,10 @@ class BatchMakeUserReadings < BatchBase
 
       # 全グループに基づく更新
       if symbol_type == "gid"
-        group = Group.find(:first,
-                           :conditions => ["gid = ? and group_participations.waiting = 0", symbol_id],
-                           :select => "group_participations.user_id",
-                           :include => :group_participations)
+        group = Group.active.find(:first,
+                                  :conditions => ["gid = ? and group_participations.waiting = 0", symbol_id],
+                                  :select => "group_participations.user_id",
+                                  :include => :group_participations)
         user_ids += group.group_participations.map { |gr_p| gr_p.user_id }
       end
 
