@@ -83,7 +83,7 @@ class BatchMakeUserReadings < BatchBase
   def self.viewable?(user_id, publications)
     user = User.find(user_id)
     viewable_symbols = ["sid:allusers", user.symbol]
-    viewable_symbols += GroupParticipation.get_gid_array_by_user_id(user_id)
+    viewable_symbols += user.group_symbols
 
     for publication in publications
       return true if viewable_symbols.include?(publication.symbol)

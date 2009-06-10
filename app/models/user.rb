@@ -377,7 +377,7 @@ class User < ActiveRecord::Base
 
   # ユーザが所属するグループのシンボルを配列で返す
   def group_symbols
-    @group_symbols ||= GroupParticipation.get_gid_array_by_user_id(self.id)
+    @group_symbols ||= Group.active.participating(self).map(&:symbol)
   end
 
   # ユーザが所属するシンボル(本人 + 本人の所属するグループ)のシンボルを配列で返す

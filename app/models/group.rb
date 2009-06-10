@@ -33,10 +33,14 @@ class Group < ActiveRecord::Base
   N_('Group|Description')
 
   named_scope :partial_match_gid, proc {|word|
-    {:conditions =>["gid LIKE ?", SkipUtil.to_lqs(word)]}
+    {:conditions => ["gid LIKE ?", SkipUtil.to_lqs(word)]}
   }
   named_scope :partial_match_gid_or_name, proc {|word|
-    {:conditions =>["gid LIKE ? OR name LIKE ?", SkipUtil.to_lqs(word), SkipUtil.to_lqs(word)]}
+    {:conditions => ["gid LIKE ? OR name LIKE ?", SkipUtil.to_lqs(word), SkipUtil.to_lqs(word)]}
+  }
+  named_scope :participating, proc {|user|
+    return {} unless user
+    {:conditions => ["group_participations.user_id = ? AND group_participations.waiting = 0", user.id], :include => :group_participations}
   }
 
   alias initialize_old initialize

@@ -40,11 +40,4 @@ class GroupParticipation < ActiveRecord::Base
   def to_s
     return '[id:' + id.to_s + ', user_id:' + user_id.to_s + ', group_id:' + group_id.to_s + ']'
   end
-
-  #ユーザを指定して、その人が所属するgidの配列を取得する
-  def self.get_gid_array_by_user_id(user_id)
-    find(:all,
-         :conditions => [" waiting = 0 and user_id = ?", user_id],
-         :include =>'group').map {|group_participation| "gid:#{group_participation.group.gid}" } || []
-  end
 end

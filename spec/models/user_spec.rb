@@ -784,9 +784,11 @@ end
 
 describe User, '#group_symbols' do
   before do
-    @user = stub_model(User)
+    @user = create_user
+    @group = create_group(:gid => 'skip_dev') do |g|
+      g.group_participations.build(:user_id => @user.id, :owned => true)
+    end
     @group_symbols = ['gid:skip_dev']
-    GroupParticipation.should_receive(:get_gid_array_by_user_id).with(@user.id).once.and_return(@group_symbols)
   end
   describe '1度だけ呼ぶ場合' do
     it 'ユーザの所属するグループのシンボル配列を返すこと' do
