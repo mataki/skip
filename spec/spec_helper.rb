@@ -146,6 +146,7 @@ end
 
 def create_group(options = {})
   group = Group.new({:name => 'SKIP開発', :description => 'SKIP開発中', :protected => false, :gid => 'skip_dev', :deleted_at => nil}.merge(options))
+  group.deleted_at = options[:deleted_at]
   group.group_category_id = create_group_category(:initial_selected => true).id if group.group_category_id == 0
   yield group if block_given?
   group.save!

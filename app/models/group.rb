@@ -242,7 +242,6 @@ class Group < ActiveRecord::Base
   end
 
   def self.synchronize_groups
-    # TODO g.id, g.gidかもしれない。要確認
-    Group.all.map { |g| [g.gid, g.gid, g.name, g.participation_users(:waiting => false).map { |u| u.openid_identifier }] }
+    Group.all.map { |g| [g.gid, g.gid, g.name, g.participation_users(:waiting => false).map { |u| u.openid_identifier }, !!g.deleted_at] }
   end
 end

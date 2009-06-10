@@ -320,27 +320,32 @@ describe Group do
         Group.delete_all
         Admin::Setting.stub!(:protocol_by_initial_settings_default).and_return('http://')
         Admin::Setting.stub!(:host_and_port_by_initial_settings_default).and_return('localhost:3000')
-        @bob = create_user :user_options => {:name => 'ボブ', :admin => false}, :user_uid_options => {:uid => 'boob'}
-        @alice = create_user :user_options => {:name => 'アリス', :admin => true}, :user_uid_options => {:uid => 'alice'}
-        @tom = create_user :user_options => {:name => 'トム', :admin => true}, :user_uid_options => {:uid => 'toom'}
+        bob = create_user :user_options => {:name => 'ボブ', :admin => false}, :user_uid_options => {:uid => 'boob'}
+        alice = create_user :user_options => {:name => 'アリス', :admin => true}, :user_uid_options => {:uid => 'alice'}
+        tom = create_user :user_options => {:name => 'トム', :admin => true}, :user_uid_options => {:uid => 'toom'}
         group_category_id = create_group_category(:code => 'study').id
         # Vim勉強会には@bob, @aliceが参加していて、@tomは参加待ち
-        @vim_group = create_group :name => 'Vim勉強会', :gid => 'vim_study', :group_category_id => group_category_id
-        create_group_participation(:user_id => @bob.id, :group_id => @vim_group.id, :owned => true)
-        create_group_participation(:user_id => @alice.id, :group_id => @vim_group.id, :owned => false)
-        create_group_participation(:user_id => @tom.id, :group_id => @vim_group.id, :waiting => true)
+        create_group :name => 'Vim勉強会', :gid => 'vim_study', :group_category_id => group_category_id do |g|
+          g.group_participations.build(:user_id => bob.id, :owned => true)
+          g.group_participations.build(:user_id => alice.id, :owned => false)
+          g.group_participations.build(:user_id => tom.id, :waiting => true)
+        end
         # Emacs勉強会には@bobのみ参加している
-        @emacs_group = create_group :name => 'Emacs勉強会', :gid => 'emacs_study', :group_category_id => group_category_id
-        create_group_participation(:user_id => @bob.id, :group_id => @emacs_group.id, :owned => true)
+        create_group :name => 'Emacs勉強会', :gid => 'emacs_study', :group_category_id => group_category_id, :deleted_at => Time.now do |g|
+          g.group_participations.build(:user_id => bob.id, :owned => true)
+        end
+
+        @groups = Group.synchronize_groups
+        @vim_group_attr, @emacs_group_attr = @groups
       end
       it '二件のグループ同期情報を取得できること' do
-        Group.synchronize_groups.size.should == 2
+        @groups.size.should == 2
       end
       it 'Vim勉強会の情報が正しく設定されていること' do
-        Group.synchronize_groups.first.should == ['vim_study', 'vim_study', 'Vim勉強会', %w[boob alice].map{|u| "http://localhost:3000/id/#{u}" }]
+        @vim_group_attr.should == ['vim_study', 'vim_study', 'Vim勉強会', %w[boob alice].map{|u| "http://localhost:3000/id/#{u}" }, false]
       end
       it 'Emacs勉強会の情報が正しく設定されていること' do
-        Group.synchronize_groups.last.should == ['emacs_study', 'emacs_study', 'Emacs勉強会', ["http://localhost:3000/id/boob"] ]
+        @emacs_group_attr.should == ['emacs_study', 'emacs_study', 'Emacs勉強会', ["http://localhost:3000/id/boob"], true]
       end
     end
   end
