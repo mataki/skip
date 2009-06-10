@@ -106,23 +106,6 @@ class Group < ActiveRecord::Base
     [group_category.icon, group_category.name]
   end
 
-  def self.make_conditions(options={})
-    options.assert_valid_keys [:name, :participation, :participation_group_ids]
-
-    conditions_state = ""
-    conditions_param = []
-
-    name = options[:name] || ""
-    conditions_state << "name like ?"
-    conditions_param << SkipUtil.to_like_query_string(name)
-
-    if options[:participation] and options[:participation_group_ids].size > 0
-        conditions_state << " and id not in (?)"
-        conditions_param << options[:participation_group_ids]
-    end
-    return conditions_param.unshift(conditions_state)
-  end
-
   def self.find_waitings(user_id)
     sub_query = "select group_id from group_participations where waiting = 1"
     participations = GroupParticipation.find(:all, :conditions =>["user_id = ? and owned = 1 and group_id in (#{sub_query})", user_id])
