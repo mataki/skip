@@ -192,6 +192,32 @@ div.topix_body
   :margin 0px 0px 10px 5px
   a:visited
     :color purple
+  .topix_line
+    :border-bottom = !base_dotted_border
+    :margin 3px 0 1px 0
+    :height 16px
+    :position relative
+    .title
+      :width 80%
+      :white-space nowrap
+      :overflow hidden
+      :text-overflow ellipsis
+      :margin 0
+      .supplement
+        :font-size 8px
+        :vertical-align bottom
+        :color #808080
+    .owner
+      :position absolute
+      :bottom 0px
+      :right 0
+      :width 15%
+      :white-space nowrap
+      :overflow hidden
+      :text-overflow ellipsis
+      :text-align right
+      :padding-left 5px
+      :font-size 10px
   .page_line, .item_line
     :border-bottom 1px dotted silver
     :padding 1px 2px 3px 2px
