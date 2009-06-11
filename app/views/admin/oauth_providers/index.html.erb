@@ -3,14 +3,16 @@
 <% end -%>
 <h4><%= _('連携アプリ一覧') %></h4>
 <div class="box tabular">
-  <table class="sortable normal" style='width: 300px;'>
+  <table class="sortable normal">
     <tr>
       <th><%= _('Admin::OauthProvider|App name') %></th>
+      <th><%= _('description') %></th>
       <th></th>
     </tr>
     <% @oauth_providers.each do |provider| -%>
     <tr>
       <td><%= h provider.app_name %></td>
+      <td><%= h provider.setting.description %></td>
       <td>
         <% form_for :provider, :url => start_admin_oauth_provider_path(provider) do |f| -%>
         <%= provider.enable? ? _('Using') : f.submit(_('Start')) -%>

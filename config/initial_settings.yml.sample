@@ -134,6 +134,7 @@ default: &default
   collaboration_apps:
 #    wiki:
 #      name: SKIP-WIKI
+#      description: SKIPと連携するWikiアプリケーションです。
 #      root_url: http://localhost:4000
 #      ca_file:
 #
@@ -188,6 +189,7 @@ test:
   collaboration_apps:
     wiki:
       name: SKIP-WIKI
+      description: SKIPと連携するWikiアプリケーションです。
       root_url: http://localhost:4000
       ca_file:
   
