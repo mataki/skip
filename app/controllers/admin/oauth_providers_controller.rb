@@ -22,7 +22,7 @@ class Admin::OauthProvidersController < Admin::ApplicationController
   def toggle_status
     @oauth_provider = Admin::OauthProvider.find(params[:id])
     @oauth_provider.toggle_status
-    flash.now[:notice] = _("%{model} was successfully updated.") % {:model => _('Admin::OauthProvider')}
+    flash[:notice] = _("%{model} was successfully updated.") % {:model => _('Admin::OauthProvider')}
     redirect_to admin_oauth_providers_path
   end
 
