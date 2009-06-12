@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2009-06-10 18:28+0900\n"
+"POT-Creation-Date: 2009-06-12 10:45+0900\n"
 "PO-Revision-Date: 2009-04-30 20:56+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1759,9 +1759,13 @@ msgstr "詳細"
 msgid "Signup"
 msgstr "ユーザ登録"
 
-#: app/views/admin/oauth_providers/index.html.erb:16
+#: app/views/admin/oauth_providers/index.html.erb:18
 msgid "Start"
 msgstr "開始"
+
+#: app/views/admin/oauth_providers/index.html.erb:18
+msgid "Stop"
+msgstr "停止"
 
 #: app/models/admin/share_file.rb:22
 msgid "Symbol|Type|group"
@@ -1963,7 +1967,7 @@ msgstr "退職"
 msgid "User|Status|UNUSED"
 msgstr "未使用"
 
-#: app/views/admin/oauth_providers/index.html.erb:16
+#: app/views/admin/oauth_providers/index.html.erb:18
 msgid "Using"
 msgstr "利用中"
 
@@ -2052,6 +2056,7 @@ msgstr "ブックマークコメント"
 msgid "cancel this request"
 msgstr "認証を利用しない"
 
+#: app/views/admin/oauth_providers/index.html.erb:9
 #: app/views/admin/groups/index.html.erb:18
 msgid "description"
 msgstr "説明"

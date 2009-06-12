@@ -14,8 +14,8 @@
       <td><%= h provider.app_name %></td>
       <td><%= h provider.setting.description %></td>
       <td>
-        <% form_for :provider, :url => start_admin_oauth_provider_path(provider) do |f| -%>
-        <%= provider.enable? ? _('Using') : f.submit(_('Start')) -%>
+        <% form_for :provider, :url => toggle_status_admin_oauth_provider_path(provider) do |f| -%>
+          <%= provider.enable? ? _('Using') + '&nbsp;' + f.submit(_('Stop')) : f.submit(_('Start')) -%>
       <% end -%>
       </td>
     </tr>

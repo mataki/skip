@@ -15,23 +15,27 @@
 
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe Admin::OauthProvider , '#start' do
+describe Admin::OauthProvider, '#toggle_status' do
   describe 'まだ有効になっていない場合' do
     before do
-      @oauth_provider = Admin::OauthProvider.create!(:app_name => 'app_name', :enable => false)
+      @oauth_provider = Admin::OauthProvider.create! :app_name => 'app_name'
     end
     it '有効になること' do
       lambda do
-        @oauth_provider.start
+        @oauth_provider.toggle_status
       end.should change(@oauth_provider, :enable).from(false).to(true)
     end
   end
   describe '既に有効になっている場合' do
     before do
-      @oauth_provider = Admin::OauthProvider.create!(:app_name => 'app_name', :enable => true)
+      @oauth_provider = Admin::OauthProvider.create! :app_name => 'app_name' do |o|
+        o.enable = true
+      end
+    end
+    it '無効になること' do
       lambda do
-        @oauth_provider.start
-      end.should_not change(@oauth_provider)
+        @oauth_provider.toggle_status
+      end.should change(@oauth_provider, :enable).from(true).to(false)
     end
   end
 end

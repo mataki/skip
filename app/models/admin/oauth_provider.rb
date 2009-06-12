@@ -17,10 +17,8 @@ class Admin::OauthProvider < OauthProvider
 
   N_('Admin::OauthProvider|App name')
 
-  def start
-    unless self.enable?
-      self.enable = true
-      self.save
-    end
+  def toggle_status
+    self.enable? ?  self.enable = false : self.enable = true
+    self.save
   end
 end

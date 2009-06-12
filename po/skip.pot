@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2009-06-10 18:28+0900\n"
+"POT-Creation-Date: 2009-06-12 10:45+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1641,8 +1641,12 @@ msgstr ""
 msgid "Signup"
 msgstr ""
 
-#: app/views/admin/oauth_providers/index.html.erb:16
+#: app/views/admin/oauth_providers/index.html.erb:18
 msgid "Start"
+msgstr ""
+
+#: app/views/admin/oauth_providers/index.html.erb:18
+msgid "Stop"
 msgstr ""
 
 #: app/models/admin/share_file.rb:22
@@ -1845,7 +1849,7 @@ msgstr ""
 msgid "User|Status|UNUSED"
 msgstr ""
 
-#: app/views/admin/oauth_providers/index.html.erb:16
+#: app/views/admin/oauth_providers/index.html.erb:18
 msgid "Using"
 msgstr ""
 
@@ -1932,6 +1936,7 @@ msgstr ""
 msgid "cancel this request"
 msgstr ""
 
+#: app/views/admin/oauth_providers/index.html.erb:9
 #: app/views/admin/groups/index.html.erb:18
 msgid "description"
 msgstr ""
