@@ -8,7 +8,7 @@
   <% end -%>
 </div>
 
-<%- content_for :javascript_initializer do %>
+<%- content_for :javascript_initializers do %>
   jQuery("#flash_message").flashMessage(
     <%= [:error, :warn, :notice].inject({}){|r, k| r.update(k => flash[k]) }.reject{|k,v|v.nil?}.to_json %>,
     "<%= request.relative_url_root %>"
