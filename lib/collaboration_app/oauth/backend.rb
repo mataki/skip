@@ -22,7 +22,9 @@ module CollaborationApp
 
       def add_access_token(identity_url, token, secret)
         if user = User.find_by_openid_identifier(identity_url)
-          unless UserOauthAccess.find_by_app_name_and_user_id(@name, user.id)
+          if oauth_access = UserOauthAccess.find_by_app_name_and_user_id(@name, user.id)
+            oauth_access.update_attributes! :token => token, :secret => secret
+          else
             user.user_oauth_accesses.create! :app_name => @name, :token => token, :secret => secret
           end
         end

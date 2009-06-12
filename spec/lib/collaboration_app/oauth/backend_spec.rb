@@ -27,12 +27,23 @@ describe CollaborationApp::Oauth::Backend, '#add_access_token' do
     end
     describe '指定アプリに対する、対象ユーザのアクセストークンが登録済みの場合' do
       before do
-        @bob.user_oauth_accesses.create! :app_name => @app_name, :token => 'token', :secret => 'secret'
+        @oauth_token = @bob.user_oauth_accesses.create! :app_name => @app_name, :token => 'token', :secret => 'secret'
       end
-      it 'user_oauth_accessesに登録されないこと' do
-        lambda do
-          @backend.add_access_token @openid, 'token', 'secret'
-        end.should_not change(UserOauthAccess, :count)
+      describe '登録済みのtokenと指定されたtokenが一致する場合' do
+        it 'user_oauth_accessesが変化しないこと' do
+          lambda do
+            @backend.add_access_token @openid, 'token', 'secret'
+            @oauth_token.reload
+          end.should_not change(@oauth_token, :attributes)
+        end
+      end
+      describe '登録済みのtokenと指定されたtokenが一致しない場合' do
+        it 'user_oauth_accessesが指定されたtokenで更新されること' do
+          lambda do
+            @backend.add_access_token @openid, 'new_token', 'secret'
+            @oauth_token.reload
+          end.should change(@oauth_token, :token).to('new_token')
+        end
       end
     end
     describe '指定アプリに対する、対象ユーザのアクセストークンが未登録の場合' do
