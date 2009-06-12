@@ -18,7 +18,7 @@ class CollaborationAppController < ApplicationController
     path_with_query = params[:gid] ? "#{params[:path]}?skip_gid=#{params[:gid]}" : params[:path]
     UserOauthAccess.resource(params[:app_name], current_user, path_with_query) do |result, body|
       if result
-        @feed_items = UserOauthAccess.sorted_feed_items(body)
+        @feed_items = UserOauthAccess.sorted_feed_items(body, 5)
         render :layout => false
       else
         render :text => _('取得できませんでした。')
