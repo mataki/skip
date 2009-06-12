@@ -2,91 +2,91 @@
 
 text_field:
   user_profile_master_category: category_one
-  name: "<script>alert('name1');</script>"
+  name: "<script>alert('text_field');</script>"
   input_type: text_field
-  required: false
+  required: true
   sort_order: 20
-  option_values: "<script>alert('value2');</script>,HOGE,餃子定食"
-  description: "<script>alert('description1');</script>"
+  option_values: "<script>alert('text_field');</script>,HOGE,餃子定食"
+  description: "<script>alert('text_field');</script>"
 
 number_and_hyphen:
   user_profile_master_category: category_one
-  name: "<script>alert('name1');</script>"
+  name: "<script>alert('number_and_hyphen');</script>"
   input_type: numbar_and_hyphone_only
   required: false
   sort_order: 30
-  option_values: "<script>alert('value2');</script>,HOGE,餃子定食"
-  description: "<script>alert('description1');</script>"
+  option_values: "<script>alert('number_and_hyphen');</script>,HOGE,餃子定食"
+  description: "<script>alert('number_and_hyphen');</script>"
 
 radio:
   user_profile_master_category: category_two
-  name: "<script>alert('name2');</script>"
+  name: "<script>alert('radio');</script>"
   input_type: radio
-  required: true
+  required: false
   sort_order: 10
-  option_values: "<script>alert('value2');</script>,HOGE,餃子定食"
-  description: "<script>alert('description2');</script>"
+  option_values: "<script>alert('radio');</script>,HOGE,餃子定食"
+  description: "<script>alert('radio');</script>"
 
 rich_text:
   user_profile_master_category: category_one
-  name: "<script>alert('name1');</script>"
+  name: "<script>alert('rich_text');</script>"
   input_type: rich_text
-  required: true
+  required: false
   sort_order: 10
   option_values:
-  description: "<script>alert('description1');</script>"
+  description: "<script>alert('rich_text');</script>"
 
 year_select:
   user_profile_master_category: category_one
-  name: "<script>alert('name1');</script>"
+  name: "<script>alert('year_select');</script>"
   input_type: year_select
   required: false
   sort_order: 30
   option_values:
-  description: "<script>alert('description1');</script>"
+  description: "<script>alert('year_select');</script>"
 
 select:
   user_profile_master_category: category_one
-  name: "<script>alert('name1');</script>"
+  name: "<script>alert('select');</script>"
   input_type: select
   required: false
   sort_order: 30
-  option_values: "<script>alert('value2');</script>,HOGE,餃子定食"
-  description: "<script>alert('description1');</script>"
+  option_values: "<script>alert('select');</script>,HOGE,餃子定食"
+  description: "<script>alert('select');</script>"
 
 appendable_select:
   user_profile_master_category: category_one
-  name: "<script>alert('name1');</script>"
+  name: "<script>alert('appendable_select');</script>"
   input_type: appendable_select
   required: false
   sort_order: 30
-  option_values: "<script>alert('value2');</script>,HOGE,餃子定食"
-  description: "<script>alert('description1');</script>"
+  option_values: "<script>alert('appendable_select');</script>,HOGE,餃子定食"
+  description: "<script>alert('appendable_select');</script>"
 
 check_box:
   user_profile_master_category: category_one
-  name: "<script>alert('name1');</script>"
+  name: "<script>alert('check_box');</script>"
   input_type: check_box
   required: false
   sort_order: 30
-  option_values: "<script>alert('value2');</script>,HOGE,餃子定食"
-  description: "<script>alert('description1');</script>"
+  option_values: "<script>alert('check_box');</script>,HOGE,餃子定食"
+  description: "<script>alert('check_box');</script>"
 
 prefecture:
   user_profile_master_category: category_one
-  name: "<script>alert('name1');</script>"
+  name: "<script>alert('prefecture');</script>"
   input_type: prefecture
   required: false
   sort_order: 30
-  option_values: "<script>alert('value2');</script>,HOGE,餃子定食"
-  description: "<script>alert('description1');</script>"
+  option_values: "<script>alert('prefecture');</script>,HOGE,餃子定食"
+  description: "<script>alert('prefecture');</script>"
 
 datepicker:
   user_profile_master_category: category_one
-  name: "<script>alert('name1');</script>"
+  name: "<script>alert('datepicker');</script>"
   input_type: datepicker
   required: false
   sort_order: 30
-  option_values: "<script>alert('value2');</script>,HOGE,餃子定食"
-  description: "<script>alert('description1');</script>"
+  option_values: "<script>alert('datepicker');</script>,HOGE,餃子定食"
+  description: "<script>alert('datepicker');</script>"
 

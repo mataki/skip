@@ -2,8 +2,8 @@
 <div id="rules" style="overflow: auto; height: 250px; width: 100%; border-top: 1px solid silver; border-bottom: 1px solid silver; background-color: #fdfdf5;"></div>
 
 <div style="text-align: center; margin: 10px;">
-<input type="button" value="上記内容に同意する" onClick="location.href='<%= url_for(:action => :agreement) %>'"></input>
-<input type="button" value="同意しない" onClick="location.href='<%= url_for(:controller => '/platform', :action => :logout) %>'"></input>
+  <%= button_to _("上記内容に同意する"), {:action => :agreement}, :method => :get %>
+  <%= button_to _('同意しない'), logout_path, :method => :get %>
 </div>
 
 <% content_for :javascript_initializers do -%>

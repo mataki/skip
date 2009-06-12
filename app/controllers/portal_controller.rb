@@ -14,7 +14,6 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # プロフィール情報を登録するためのアクションをまとめたクラス
-require "jcode"
 class PortalController < ApplicationController
   layout 'entrance'
   verify :method => :post, :only => [ :apply, :registration ], :redirect_to => { :action => :index }
