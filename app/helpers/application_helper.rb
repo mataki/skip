@@ -290,7 +290,7 @@ module ApplicationHelper
   def application_link
     application_links = []
     if collaboration_apps = SkipEmbedded::InitialSettings['collaboration_apps']
-      application_links << collaboration_apps.values.map{|m| link_to( m['name'], m['url'] )}
+      application_links << collaboration_apps.values.map{|m| link_to( m['name'], m['root_url'] )}
     end
     other_links = []
     unless COMMON_MENUS.empty?
