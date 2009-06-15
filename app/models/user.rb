@@ -145,6 +145,8 @@ class User < ActiveRecord::Base
     self.password = nil
     self.password_confirmation = nil
     self.old_password = nil
+
+    user_oauth_accesses.delete_all if retired?
   end
 
   def self.auth(code_or_email, password, key_phrase = nil)

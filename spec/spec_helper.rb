@@ -105,6 +105,7 @@ def create_user options = {}
     user.user_uids << user_uid
   end
   user.save!
+  yield user if block_given?
   user
 end
 

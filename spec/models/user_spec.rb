@@ -388,6 +388,35 @@ describe User, '#before_create' do
   end
 end
 
+describe User, '#after_save' do
+  describe '退職になったユーザの場合' do
+    before do
+      @user = create_user do |u|
+        u.user_oauth_accesses.create(:app_name => 'wiki', :token => 'token', :secret => 'secret')
+      end
+    end
+    it '対象ユーザのOAuthアクセストークンが削除されること' do
+      lambda do
+        @user.status = 'RETIRED'
+        @user.save
+      end.should change(@user.user_oauth_accesses, :size).by(-1)
+    end
+  end
+  describe '利用中のユーザの場合' do
+    before do
+      @user = create_user do |u|
+        u.user_oauth_accesses.create(:app_name => 'wiki', :token => 'token', :secret => 'secret')
+      end
+    end
+    it '対象ユーザのOAuthアクセストークンが変化しないこと' do
+      lambda do
+        @user.name = 'new_name'
+        @user.save
+      end.should_not change(@user.user_oauth_accesses, :size)
+    end
+  end
+end
+
 describe User, '#change_password' do
   before do
     SkipEmbedded::InitialSettings.stub!("[]").with('login_mode').and_return('password')
