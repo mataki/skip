@@ -40,7 +40,7 @@ var platform_url_root = '#{root_url.chop}';
   end
 
   def skip_header_javascript_include_tag
-    unless SkipEmbedded::InitialSettings['advertisements_url'].blank?
+    unless SkipEmbedded::InitialSettings['advertisements_url'].blank? and COMMON_MENUS.empty?
       javascript_include_tag(url_for(:controller => '/services', :action => 'skip_header.js'))
     end
   end
