@@ -290,11 +290,11 @@ module ApplicationHelper
   def application_link
     application_links = []
     if collaboration_apps = SkipEmbedded::InitialSettings['collaboration_apps']
-      application_links << collaboration_apps.values.map{|m| link_to( m['name'], m['root_url'] )}
+      application_links << collaboration_apps.values.map{|m| link_to(m['name'], m['root_url'], :class => "underline_link")}
     end
     other_links = []
     unless COMMON_MENUS.empty?
-      application_links << link_to( _('Other'), '#', :id => 'other_link')
+      application_links << link_to( content_tag('u',_('more')) + content_tag('small', "▼"), '#', :id => 'other_link')
       COMMON_MENUS[:menus].each do |menu|
         if menu[:url]
           other_links << link_to(h(menu[:title]), menu[:url], :target => '_blank')
@@ -307,14 +307,14 @@ module ApplicationHelper
       end
     end
     unless application_links.empty?
-      application_links.unshift(link_to('SKIP', root_url))
-      application_link = content_tag :div, :id => 'application_link' do
-        application_links.join(' | ')
+      application_links.unshift(link_to(Admin::Setting.abbr_app_title, root_url, :class => "underline_link"))
+      application_link = content_tag :div, :id => 'collaboration_apps_link' do
+        application_links.join('&nbsp')
       end
-      other_link = content_tag :div, :id => 'other_links', :class => 'invisible' do
+      other_links_tag = content_tag :div, :id => 'other_links', :class => 'invisible' do
         other_links.join('')
       end
-      "#{application_link}#{other_link}"
+      "#{application_link}#{other_links_tag}"
     end
   end
 

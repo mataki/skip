@@ -21,23 +21,23 @@
   RUBY
   replace_application_link_js = <<-RUBY
     // アプリメニューのリプレイス
-    jQuery('div#application_link').html('#{application_link}');
+    jQuery('#application_link').html('#{application_link}');
   RUBY
   header_js = <<-RUBY
 (function() {
     // ロゴのリプレイス
-    jQuery('div#logo').replaceWith('#{header_logo_link}');
+    jQuery('#logo').replaceWith('#{header_logo_link}');
     #{replace_advertisement_js if SkipEmbedded::InitialSettings['advertisements_url']}
     #{replace_application_link_js if SkipEmbedded::InitialSettings['collaboration_apps']}
-    jQuery('a#other_link')
+    jQuery('#other_link')
     .toggle(function() {
-        jQuery('div#other_links').css('left',jQuery('div#application_link').width()).show();
+        jQuery('#other_links').css('left',jQuery(this).offset().left).show();
     }, function() {
-        jQuery('div#other_links').hide();
+        jQuery('#other_links').hide();
     });
     jQuery('body')
     .click(function() {
-        jQuery('div#other_links').hide();
+        jQuery('#other_links').hide();
     });
 })(jQuery);
   RUBY
