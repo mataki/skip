@@ -9,6 +9,13 @@ ul.ui-tabs-nav
   :height 100%
   +clearfix
 
+// ui.theme.cssでタブ内部のaタグのスタイルが上書きされないように
+// ------------------------------------------------------------
+#tabs .ui-widget-content a
+  +default_link
+  &:visited
+    +link_visited_text
+
 // jqueryの画像拡大をする(zoomable)際にマウスオーバーで虫眼鏡を表示する
 // ------------------------------------------------------------
 .image_over

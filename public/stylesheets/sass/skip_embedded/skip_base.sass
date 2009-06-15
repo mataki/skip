@@ -27,6 +27,12 @@
 =link_hover_text
   :color blue
   :text-decoration underline
+=link_visited_text
+  :color purple
+=default_link
+  +link_text
+  &:hover
+    +link_hover_text
 =clearfix
   display: inline-block
   &:after
@@ -58,9 +64,7 @@ img
   :border 0
 
 a
-  +link_text
-  &:hover
-    +link_hover_text
+  +default_link
 
 form
   :padding 0px
