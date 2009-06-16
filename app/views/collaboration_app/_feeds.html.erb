@@ -21,6 +21,9 @@
     url: '<%= url_for :controller => 'collaboration_app', :action => 'feed', :app_name => provider.app_name, :path => feed_setting['path'], :gid => params[:gid], :escape => false %>',
         success: function(html) {
           $j('div#collaboration_apps > div.topix_body').html(html);
+        },
+        error: function(event) {
+            // ロード中のエラーをalert表示させないため
         }
     });
     <% end -%>

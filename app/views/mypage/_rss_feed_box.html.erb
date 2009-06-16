@@ -10,8 +10,7 @@
             $j('#rss_feed').html(html);
         },
         error: function(event) {
-        },
-        complete: function(request) {
+            // ロード中のエラーをalert表示させないため
         }
     });
 <% end -%>
