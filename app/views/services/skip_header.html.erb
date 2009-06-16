@@ -26,7 +26,7 @@
   header_js = <<-RUBY
 (function() {
     // ロゴのリプレイス
-    jQuery('#logo').replaceWith('#{header_logo_link}');
+    jQuery('#logo').find('img').attr('src', '#{root_url + "custom/images/header_logo.png"}');
     #{replace_advertisement_js if SkipEmbedded::InitialSettings['advertisements_url']}
     #{replace_application_link_js if SkipEmbedded::InitialSettings['collaboration_apps']}
     jQuery('#other_link')
