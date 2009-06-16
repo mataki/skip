@@ -5,16 +5,16 @@
       <%= application_link %>
     </div>
     <div id="menu">
-      <b><%= user_name_mode?(:code) ? "#{h(Admin::Setting.login_account)} : #{h(@current_user.code)}" : "#{_('Admin::UserUid|Uid')} : #{h(@current_user.uid)}" %></b>
+      <b><%= user_name_mode?(:code) ? h(current_user.code) : h(current_user.uid) %></b>
       |
-      <%= link_to "自分の管理", {:controller => "/mypage", :action => :manage, :only_path => false}, :class => "underline_link" %>
+      <%= link_to _("My Account"), {:controller => "/mypage", :action => :manage, :only_path => false}, :class => "underline_link" %>
       |
       <% help_url = h(Admin::Setting.help_url) -%>
       <% unless help_url.blank? -%>
       <%= link_to _('Help'), help_url, :target => "_blank", :class => "underline_link" %>
       |
       <% end -%>
-      <%= link_to "ログアウト", logout_url, :class => "underline_link" -%>
+      <%= link_to _("Sign out"), logout_url, :class => "underline_link" -%>
       <br style="clear: left" />
     </div>
   </div>
