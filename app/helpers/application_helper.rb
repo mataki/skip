@@ -288,9 +288,8 @@ module ApplicationHelper
   end
 
   def application_link
-    application_links = []
-    if collaboration_apps = SkipEmbedded::InitialSettings['collaboration_apps']
-      application_links << collaboration_apps.values.map{|m| link_to(m['name'], m['root_url'], :class => "underline_link")}
+    application_links = OauthProvider.enable.map do |p|
+      link_to(h(p.setting.name), h(p.setting.root_url), :class => "underline_link")
     end
     other_links = []
     unless COMMON_MENUS.empty?

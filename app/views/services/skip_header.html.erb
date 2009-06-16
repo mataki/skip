@@ -28,7 +28,7 @@
     // ロゴのリプレイス
     jQuery('#logo').find('img').attr('src', '#{root_url + "custom/images/header_logo.png"}');
     #{replace_advertisement_js if SkipEmbedded::InitialSettings['advertisements_url']}
-    #{replace_application_link_js if SkipEmbedded::InitialSettings['collaboration_apps']}
+    #{replace_application_link_js unless OauthProvider.enable.empty?}
     jQuery('#other_link')
     .toggle(function() {
         jQuery('#other_links').css('left',jQuery(this).offset().left).show();
