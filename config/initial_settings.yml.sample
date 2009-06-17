@@ -186,23 +186,26 @@ development:
 
 test:
   <<: *default
+  delivery_method: test
   collaboration_apps:
     wiki:
       name: SKIP-WIKI
       description: SKIPと連携するWikiアプリケーションです。
       root_url: http://localhost:4000
       ca_file:
-  
       feeds:
         - title:
           path: pages.rss
-  
       operations:
         - view_place: mypage
           title: SKIP-WIKIの操作
           links:
             - label: 新しいノートを作る
               url: http://localhost:4000/notes/new
+
+cucumber:
+  <<: *default
+  delivery_method: test
 
 production:
   <<: *default
