@@ -34,7 +34,7 @@ describe CollaborationApp::Oauth::Backend, '#add_access_token' do
           lambda do
             @backend.add_access_token @openid, 'token', 'secret'
             @oauth_token.reload
-          end.should_not change(@oauth_token, :attributes)
+          end.should_not change(@oauth_token.attributes, :values)
         end
       end
       describe '登録済みのtokenと指定されたtokenが一致しない場合' do
