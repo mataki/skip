@@ -1,9 +1,9 @@
 
-こんにちは、<%= h Admin::Setting.abbr_app_title -%>事務局です。
+<%= _("Hello, this is the secretariat of %s.") % h(Admin::Setting.abbr_app_title) %>
 
-ユーザ登録ありがとうございます。
-現在あなたのメールアドレスとしてこのメールを指定しています。
-変更をご希望の場合は、以下のページからお願いします。
+<%= _('Welcome to our site!')%>
+<%= _('You have registered this email address with us.')%>
+<%= _('Chanages can be made from the page below:')%>
 
 <%= @confirm_url %>
 

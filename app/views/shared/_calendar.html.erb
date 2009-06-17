@@ -27,9 +27,9 @@
     -%>
   </div>
   <div class="box_space_bottom">
-    <a id="prev_month_link" href="#" >[前月]</a>
-    <%= link_to('[今日]', {:action => action, :year => now_month.year, :month => now_month.month, :day => now_month.day}) %>
-    <a id="next_month_link" href="#" >[次月]</a>
+    <a id="prev_month_link" href="#" ><%= _('[Prev month]')%></a>
+    <%= link_to(_('[Today]'), {:action => action, :year => now_month.year, :month => now_month.month, :day => now_month.day}) %>
+    <a id="next_month_link" href="#" ><%= _('[Next month]')%></a>
   </div>
 </div><!-- box_space -->
 

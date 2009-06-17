@@ -18,18 +18,18 @@
 
 <% if @site_count.write_users_all > 0 %>
 <% statistics_items = [ # :categoryはSiteCountの属性と同名
-                       { :desc => "10日間以内にアクセスしたことがある人", :category => 'active_users'},
-                       { :desc => "ブログを書いたことのある人<br/>　（掲示板除く・公開のみ・自動投稿除く）", :category => 'write_users_all'},
-                       { :desc => "・・・上記に非公開を含めると・・・", :category => 'write_users_with_pvt'},
-                       { :desc => "・・・さらに掲示板も含めると・・・", :category => 'write_users_with_bbs'},
-                       { :desc => "コメントを書いたことのある人", :category => 'comment_users'},
-                       { :desc => "プロフィール画像を変えている人", :category => 'portrait_users'},
-                       { :desc => "プロフィールを入力している人", :category => 'profile_users'},
-                       { :desc => "背景をカスタマイズしたことある人", :category => 'custom_users'}
+                       { :desc => _("Users accessed within last 10 days"), :category => 'active_users'},
+                       { :desc => _("Users who ever posted blog entries.<br/>&nbsp;(Excluding BBS posts and auto-genarated messages. Public entries only)"), :category => 'write_users_all'},
+                       { :desc => _("... What if including limited entries ..."), :category => 'write_users_with_pvt'},
+                       { :desc => _("... and BBS posts ..."), :category => 'write_users_with_bbs'},
+                       { :desc => _("Users wrote their comments"), :category => 'comment_users'},
+                       { :desc => _("Users who have changed thier profile pitures"), :category => 'portrait_users'},
+                       { :desc => _("Users who have registered their profiles"), :category => 'profile_users'},
+                       { :desc => _("Users who ever customized the background"), :category => 'custom_users'}
                       ]
 %>
 <% user_count = @site_count.total_user_count -%>
-<div class="topix_title"><%= icon_tag('asterisk_orange') -%><span>その他の指標値（参考）</span></div>
+<div class="topix_title"><%= icon_tag('asterisk_orange') -%><span><%= _('Other indices (FYI)')%></span></div>
 <% statistics_items.each do |item| %>
   <% count_value = @site_count[item[:category]] %>
 <div class="statistics_line">

@@ -1,7 +1,7 @@
 <div style="text-align: right; margin-bottom: 3px;  background-color: #f0e0d0; border: 1px solid silver; padding: 0 5px;">
 <% form_tag({ :controller => :bookmark, :action => :edit, :title => '' }, {:id => 'bookmark_form', :class => 'nyroModal'}) do %>
-  URL：<input id="url" name="url" type="text" size="50" /><input id="add_bookmark_button" type="button" value="ブックマークする" />
-  <%= link_to '【便利なブックマークレットの使いかた】', :controller => "bookmarks", :action => "setup" -%>
+  <%= _('URL：')%><input id="url" name="url" type="text" size="50" /><input id="add_bookmark_button" type="button" value="<%= _('Bookmark this')%>" />
+  <%= link_to _('[Handy usage of bookmarklet]'), :controller => "bookmarks", :action => "setup" -%>
 <% end %>
 </div>
 <%= hidden_field_tag "authenticity_token", form_authenticity_token %>
@@ -10,9 +10,9 @@ $j(function() {
     $j('#add_bookmark_button')
     .click(function() {
         if( !$j('#url').val().match(/^https?:\/\/.*/) ){
-            alert("httpで始まる形式でないとブックマークできません");
+            alert('<%= _("URL to be bookmarked must start with \"http\".")%>');
             return false;
-        }            
+        }
         $j('#url').val(encodeURI($j('#url').val()));
         $j('#bookmark_form').submit();
         $j('#url').val('');

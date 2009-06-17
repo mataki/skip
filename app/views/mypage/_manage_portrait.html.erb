@@ -8,9 +8,7 @@
 
 <div id="contents_right">
 
-<div class="desc"><p>画像は１枚までしか登録できません。画像サイズは、64kbまでです。<br/>
-もし画像がない場合・・・<a href="http://www.google.co.jp/search?q=<%= URI.encode('似顔絵作成') %>&lr=lang_ja&ie=utf-8&oe=utf-8">
-「似顔絵作成」をGoogleで検索すると色々でてきます</a>ので作成してみると良いでしょう。
+<div class="desc"><p><%= _("You can only upload 1 picture. The file size is limited to 64kb.<br/>\nYou can find something by <a href=\"http://www.google.com/search?q=%s\">searching \"Portrait Making\" in Google</a>\nif you don't have a suitable picture") % URI.encode(_('portrait making'))%>
 </p></div>
 
 <%= template_error_messages_for 'picture' %>
@@ -20,12 +18,12 @@
 </div>
 
 <% if @picture.id %>
-<%= link_to("[[削除]]", {:action => "destroy_portrait"}, :confirm => '本当に削除しますか?', :method => :post) %>
+<%= link_to(_("[[Delete]]"), {:action => "destroy_portrait"}, :confirm => _('Are you sure to delete?'), :method => :post) %>
 <% end %>
 
 <% form_tag({:action => 'save_portrait'}, :multipart => true, :id => 'picture_upload_form') do -%>
   <%= file_field("picture", "picture") %><br/>
-  <%= submit_tag("アップロード") %>
+  <%= submit_tag(_("Upload")) %>
 <% end %>
 
 </div><!-- contents_right -->
@@ -39,7 +37,7 @@ $j(function(){
     $j("#picture_upload_form")
     .submit(function(){
         if($j("#picture_picture").val() == ""){
-            alert('ファイル名を入力してください。');
+            alert('<%= _("File name is mandatory.")%>');
             return false;
         }
     });

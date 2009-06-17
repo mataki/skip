@@ -53,7 +53,7 @@ class BookmarkController < ApplicationController
 
     unless check_url_format? url
       messages = []
-      messages << 'このURLは、ブックマークできません。'
+      messages << _('This URL cannot be bookmarked.')
       render :partial => "system/error_messages_for", :locals=> { :messages => messages }
       return
     end
@@ -80,7 +80,7 @@ class BookmarkController < ApplicationController
       end
     end
 
-    flash[:notice] = is_new_record ? 'ブックマークを登録しました。' : 'ブックマークを更新しました。' if params[:layout] == "dialog"
+    flash[:notice] = is_new_record ? _('Bookmark was successfully created.') : _('Bookmark was successfully updated.') if params[:layout] == "dialog"
     render :text => 'success'
   rescue ActiveRecord::RecordInvalid => ex
     messages = []
@@ -99,14 +99,14 @@ class BookmarkController < ApplicationController
     uri = params[:uri] ? URI.decode(params[:uri]) : ""
     uri.gsub!('+', ' ')
     unless @bookmark = Bookmark.find_by_url(uri, :include => :bookmark_comments )
-      flash[:warning] = _("指定のＵＲＬは誰もブックマークしていません。")
+      flash[:warning] = _("URL not bookmarked by anyone.")
       redirect_to :controller => 'mypage', :action => 'index'
       return
     end
 
-    @main_menu = 'ブックマーク'
-    @title = 'ブックマーク[' + @bookmark.title + ']'
-    @tab_menu_source = [ ['ブックマークコメント', 'show'] ]
+    @main_menu = _('Bookmarks')
+    @title = _("Bookmark[%{title}]") % {:title => @bookmark.title}
+    @tab_menu_source = [ [_('Bookmark Comment'), 'show'] ]
     @tab_menu_option = { :uri => @bookmark.url }
 
     # TODO: SQLを発行しなくても判断できるのでrubyで処理する様に
@@ -126,7 +126,7 @@ class BookmarkController < ApplicationController
     redirect_to_with_deny_auth and return unless comment.user_id == session[:user_id]
 
     comment.destroy
-    flash[:notice] = '削除しました。'
+    flash[:notice] = _('Deletion completed.')
     redirect_to  :action =>'show', :uri => comment.bookmark.url
   end
 
@@ -153,9 +153,9 @@ class BookmarkController < ApplicationController
                                           :include => :bookmark)
     unless @bookmark_comments && @bookmark_comments.size > 0
       if params[:commit] || params[:category] || params[:type]
-        flash.now[:notice] = '該当するブックマークはありませんでした。'
+        flash.now[:notice] = _('No matching bookmarks found.')
       else
-        flash.now[:notice] = '現在ブックマークは登録されていません。'
+        flash.now[:notice] = _('No bookmarks have been registered.')
       end
     end
 
@@ -190,7 +190,7 @@ class BookmarkController < ApplicationController
 private
   def check_params
     unless params[:url] && check_url_format?(params[:url])
-      flash[:warning] = "そのURLは有効ではありません。"
+      flash[:warning] = _("The URL is invalid.")
       redirect_to :controller => 'mypage', :action => 'index'
       return false
     end

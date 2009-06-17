@@ -17,10 +17,10 @@ module Types::Blood
 
   A = 1; B = 2; AB = 3; O = 4;
   BLOOD = {
-     A   => 'Ａ型',
-     B   => 'Ｂ型',
-     AB  => 'ＡＢ型',
-     O   => 'Ｏ型'
+     A   => GetText._('Type A'),
+     B   => GetText._('Type B'),
+     AB  => GetText._('Type AB'),
+     O   => GetText._('Type O')
   }
 
 end

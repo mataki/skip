@@ -20,7 +20,7 @@ class Admin::GroupCategoriesController < Admin::ApplicationController
     group_category = Admin::GroupCategory.find(params[:id])
     if group_category.deletable?
       group_category.destroy
-      flash[:notice] = _('削除しました。')
+      flash[:notice] = _('Deletion complete.')
     else
       message = ''
       group_category.errors.full_messages.each{|msg| message += msg + '<br/>'}
@@ -31,7 +31,7 @@ class Admin::GroupCategoriesController < Admin::ApplicationController
       format.xml  { head :ok }
     end
   rescue ActiveRecord::RecordNotFound => e
-    flash[:error] = _('削除対象のカテゴリが存在しませんでした。')
+    flash[:error] = _('Category to be deleted does not exist.')
     respond_to do |format|
       format.html { redirect_to(admin_group_categories_path) }
       format.xml  { head :not_found }

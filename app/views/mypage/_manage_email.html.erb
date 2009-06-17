@@ -8,27 +8,26 @@
 
 <div id="contents_right">
 
-<div class="desc"><p>メールアドレス存在確認のため、入力されたメールアドレスにメールを送信します。<br/>
-24時間以内にそのメールに記載されたURLを開くことで申請が完了します。</p></div>
+<div class="desc"><p><%= _("An email will be sent to the address you have entered in order to confirm the existence.<br/>\nThe request will be completed by visiting the URL given in the email within 24 hours.")%></p></div>
 
 <%= template_error_messages_for 'applied_email' %>
 
 <div class="edit_form_space">
 <% form_tag :action => 'apply_email' do -%>
 
-<% submit_value = "申請" %>
+<% submit_value = _("Apply") %>
 <% if @applied_email.id %>
-<% submit_value = "再申請" %>
-既にメールアドレスの変更を申請済みです。記入したメールアドレスで再申請します。
+<% submit_value = _("Reapply") %>
+<%= _('Another request for changing email found. The former request will be discarded and we will proceed on the new email address.')%>
 <% end %>
 
 <table id="user_info_box" class="normal" border="1">
   <tr>
-    <th width="100px"><label for="page_title">変更前メールアドレス</label></th>
+    <th width="100px"><label for="page_title"><%= _('Current Email Address')%></label></th>
     <td style="padding:5px;"><%=h @user.user_profile.email%></td>
   </tr>
   <tr>
-    <th><label for="page_title">変更後メールアドレス</label></th>
+    <th><label for="page_title"><%= _('New Email Address')%></label></th>
     <td style="padding:5px;"><%= text_field 'applied_email', 'email' %></td>
   </tr>
 </table>

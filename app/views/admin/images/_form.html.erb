@@ -4,5 +4,5 @@
   <%= submit_tag _('Upload'), :disable_with => _('Uploading...') %>
 <% end -%>
 <%= help_icon_tag :content => description %> |
-<%= link_to _('現在の画像を表示'), image_path(target_path), :popup => true %> |
-<%= link_to _('既定の画像に戻す'), admin_images_revert_path(:target => target_name), :method => :post, :confirm => _('現在設定中の画像が消えてしまいますがよろしいですか?') %>
+<%= link_to _('Show current image'), image_path(target_path), :popup => true %> |
+<%= link_to _('Revert to default image'), admin_images_revert_path(:target => target_name), :method => :post, :confirm => _('Current image will be overwritten.  Are you sure to continue?') %>

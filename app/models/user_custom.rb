@@ -14,7 +14,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class UserCustom < ActiveRecord::Base
-  validates_presence_of :theme, :message =>'は必須です'
+  validates_presence_of :theme, :message =>_('is mandatory.')
 
   def to_s
     "user_id:" + user_id.to_s + ", theme:" + theme

@@ -4,7 +4,7 @@
 -%>
 
 <div class="box_space">
-  <div class="box_space_title"><%= icon_tag 'page_copy' -%>最近の投稿</div>
+  <div class="box_space_title"><%= icon_tag 'page_copy' -%><%= _('Last Entries')%></div>
   <div class="box_space_body" style="font-size: 10px;">
   <ul>
   <% recent_entries.each do |entry| -%>
@@ -12,6 +12,6 @@
   <% end -%>
   </ul>
   </div>
-  <div class="box_space_bottom"><%= link_to '過去の一覧', :archive => "all" -%></div>
+  <div class="box_space_bottom"><%= link_to _('Past List'), :archive => "all" -%></div>
 
 </div><!-- box_space -->

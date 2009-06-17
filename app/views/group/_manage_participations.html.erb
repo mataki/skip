@@ -3,7 +3,7 @@
 <div id="contents_left">
 
 <div class="box_space">
-  <div class="box_space_title">管理メニュー</span></div>
+  <div class="box_space_title"><%= _('Admin Menu')%></span></div>
   <div class="box_space_body">
   <ul>
     <% get_manage_menu_items(@menu).each do |menu_item| %>
@@ -18,17 +18,17 @@
 
 <div id="contents_right">
 
-<div class="desc" style="margin-bottom: 10px;">この画面では、管理者の権限設定、強制退会が可能です。</div>
+<div class="desc" style="margin-bottom: 10px;"><%= _('Here you can manage admin privilages and force users to leave the group.')%></div>
 <%= hidden_field_tag "authenticity_token", form_authenticity_token %>
 <div class="navi"><%= page_link @pages -%></div>
 
 <div style="margin: 10px auto 10px auto; width: 100%; text-align: center;">
 <table border="1" class="normal" style="width: 80%; margin: auto;">
   <tr>
-    <th style="width:10%;">管理者</th>
-    <th>名前</th>
+    <th style="width:10%;"><%= _('Administrator')%></th>
+    <th><%= _('Name')%></th>
     <th><%= h Admin::Setting.login_account -%></th>
-    <th>アクション</th>
+    <th><%= _('Action')%></th>
   </tr>
 
   <% even_or_odd = 0 %>
@@ -37,7 +37,7 @@
   <tr>
     <td class="line_<%= even_or_odd -%>">
       <% if session[:user_id] == @participation.user_id -%>
-        管理者
+        <%= _('Administrator')%>
       <% else -%>
         <%= check_box(:participation, :owned, :class => 'toggle_owned', :id => "toggle_owned_checkbox_#{@participation.id}") %>
       <% end -%>
@@ -46,9 +46,9 @@
     <td class="line_<%= even_or_odd -%>"><%= h @participation.user.code -%></td>
     <td align="center" class="line_<%= even_or_odd -%>">
       <% unless session[:user_id] == @participation.user_id -%>
-      <%= link_to "[強制退会させる]",
+      <%= link_to _("[Force to leave the group]"),
            {:action => "forced_leave_user", :participation_id => @participation.id},
-           :confirm => "このユーザを強制退会させます。本当によろしいですか？",
+           :confirm => _("Are you sure to force this user to leave the group?"),
            :method => :post -%>
       <% end -%>
     </td>
@@ -61,8 +61,8 @@
 
 <%= render :partial => 'append_users',
            :locals => {:call_action => 'append_user',
-                       :header => "招待したいユーザ／グループ",
-                       :btn_title => "参加者に追加"} -%>
+                       :header => _("Users / groups to invite"),
+                       :btn_title => _("Add as Member")} -%>
 
 </div><!-- contents_right -->
 
@@ -83,7 +83,7 @@ $j(function() {
           data: { participation_id: participation_id, 
                   authenticity_token: $j('#authenticity_token').val() },
           success: function(html) {
-            alert('管理者を変更しました。')
+            alert('<%= _("Administrator was changed successuflly.")%>')
           }
       });
   });

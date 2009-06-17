@@ -8,22 +8,21 @@
 
 <% if action_value != 'update' %>
 <div class="input_line">
-  <div class="input_label">グループID</div>
+  <div class="input_label"><%= _('Group ID')%></div>
   <div class="input_value"><%= text_field 'group', 'gid', :size => 40 %></div>
   <div class="param_desc" style="font-size:10px; color:gray;">
-  ※グループIDは4文字以上で、数字orアルファベットor記号(ハイフン「-」 アンダーバー「_」)で入力してください。<br/>
-  ※グループIDはグループを識別する文字列として、URLなどの様々な場面で使いますので、分かりやすい文字列を選んでください。
+  <%= _("*A group ID consists of 4 or more letters of alphabets, numbers, \"-\" and \"_\".<br>\n  *Group ID is used in many situations e.g. URLs to identify the group so choose a understandable one.")%>
   </div>
 </div>
 <% end %>
 
 <div class="input_line">
-  <div class="input_label">名称</div>
+  <div class="input_label"><%= _('Name of Group')%></div>
   <div class="input_value"><%= text_field 'group', 'name', :size => 40 %></div>
 </div>
 
 <div class="input_line">
-  <div class="input_label">カテゴリ</div>
+  <div class="input_label"><%= _('Category')%></div>
   <div class="input_value">
     <table style="margin-left:3px;border:0;">
     <tr><th width="100px"></th><th></th></tr>
@@ -39,15 +38,15 @@
 </div>
 
 <div class="input_line">
- <p><label for="group_desc"><div class="input_label">説明</div>　　<%= link_to_hiki_help %></label><br/>
+ <p><label for="group_desc"><div class="input_label"><%= _('Explanation')%></div>&nbsp;&nbsp;<%= link_to_hiki_help %></label><br/>
    <%= text_area 'group', 'description', :cols => 90, :rows => 20 %></p>
 </div>
 
 <div class="input_line">
-  <div class="input_label">グループに参加</div>
-<p><label for="group_protected">参加するのにオーナーの承認が必要ですか？</label>
+  <div class="input_label"><%= _('Joining the group')%></div>
+<p><label for="group_protected"><%= _('Approval from owner required?')%></label>
   <select id="group_protected" name="group[protected]">
-    <%= options_for_select({ "いいえ" => false, "はい" => true }, @group.protected) %>
+    <%= options_for_select({ _("No") => false, _("Yes") => true }, @group.protected) %>
 </select></p>
 </div>
 
@@ -58,7 +57,7 @@
 
 <% if action_value == 'update' %>
 <div class="desc" style="margin-top: 10px; padding: 5px;">
-  <%= link_to("[[削除する]]", {:action => 'destroy'}, :confirm => '本当に削除しますか？', :method => :post ) %>
+  <%= link_to(_"[[Delete]]"), {:action => 'destroy'}, :confirm => _('Are you sure to delete?'), :method => :post ) %>
 </div>
 <% end %>
 

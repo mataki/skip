@@ -33,7 +33,7 @@ class ImageController < ApplicationController
     logger.error e
     e.backtrace.each { |message| logger.error message }
 
-    render :text => '見つかりません!！'
+    render :text => _('Not found!!')
   end
 
   private

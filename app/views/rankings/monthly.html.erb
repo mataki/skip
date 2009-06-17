@@ -1,9 +1,9 @@
-<%= h Admin::Setting.abbr_app_title %>の月間ランキングです。 ( 対象期間：月初～昨日まで。日次で更新しています）<br/>
+<%=h _("Monthly ranking of %s (Since the first day of current month up to yesterday. Updated daily)") % Admin::Setting.abbr_app_title %><br/>
 <br />
 <div class="search_cond_space">
   <table class="search_cond_box">
     <tr>
-      <th>期間</th>
+      <th><%= _('Period')%></th>
       <td>
 <%= select_tag 'date_list', options_for_select(@dates, "#{@year}-#{@month.to_s.rjust(2,'0')}"), :id => 'date_list' -%>
       </td>
@@ -13,7 +13,7 @@
 <br />
 <hr />
 <br />
-<h1 id="ranking_title"><%= icon_tag 'chart_bar' %><%= h @year -%>年<%= h @month -%>月のランキング</h1>
+<h1 id="ranking_title"><%= icon_tag 'chart_bar' %><%=h _("%{month}/%{year} Ranking") % {:year => @year, :month => @month}%></h1>
 <br />
 <%= render :partial => 'list' %>
 <script type="text/javascript">

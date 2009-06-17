@@ -7,13 +7,13 @@
 
 <% if Admin::Setting.mypage_feed_settings.size > 0 -%>
 <div class="box_space" id="rss_feed">
-  <%= skip_image_tag 'indicator.gif' %> <span style="color:gray">読み込み中...</span>
+  <%= skip_image_tag 'indicator.gif' %> <span style="color:gray"><%= _('Loading...')%></span>
 </div><!-- box_space -->
 <% end -%>
 
 <% if recent_groups.size > 0 -%>
 <div class="box_space">
-  <div class="box_space_title">最近のグループ</div>
+  <div class="box_space_title"><%= _('Recent Groups')%></div>
   <div class="box_space_body">
   <% recent_groups.each do |group| -%>
     <div class="item_line" style="margin-bottom: 1px; border-bottom: 1px dashed #d0e0ff;">
@@ -27,7 +27,7 @@
 
 <% if recent_users.size > 0 -%>
 <div class="box_space">
-  <div class="box_space_title">最近登録した社員</div>
+  <div class="box_space_title"><%= _('Recently Registered Members')%></div>
   <div class="box_space_body">
   <% recent_users.each do |user| -%>
     <div class="item_line" style="margin-bottom: 1px; border-bottom: 1px dashed #d0e0ff;">
@@ -60,8 +60,8 @@ span.important {
 </style>
 <div class="top_info">
   <% important_your_messages.each do |entry| %>
-    <% link_text = icon_tag('lightbulb', :title => "重要") %>
-    <% link_text << "重要な連絡<span class='important'>[#{truncate(h(entry.title),30)}]</span>があります" %>
+    <% link_text = icon_tag('lightbulb', :title => _("Important")) %>
+    <% link_text << _("You have important message <span class='important'>[%s]</span>.") % truncate(h(entry.title),30) %>
     <div class="item"><%= entry_link_to(entry, {:view_text=>link_text}) %><%= get_publication_type_icon(entry) %></div>
   <% end %>
   <% message_array.each do |message| %>
@@ -69,7 +69,7 @@ span.important {
   <% end %>
   <% waiting_groups.each do |group| %>
     <% link_text = icon_tag('bullet_star') %>
-    <% link_text << "[#{h(group.name)}]に承認待ちのユーザがいます！" %>
+    <% link_text << _("User(s) waiting for approval to join [%s]!") % h(group.name) %>
     <% link_text << icon_tag('group') %>
     <div class="item"><%= item_link_to(group, {:view_text=>link_text}) %></div>
   <% end %>
@@ -84,7 +84,7 @@ span.important {
 
 <%= render :partial => "list_block",
            :locals => { :id_name => 'mail_your_messages',
-                        :title_name => 'あなたへの連絡',
+                        :title_name => _('Messages for you'),
                         :pages => mail_your_messages } if mail_your_messages.size > 0 %>
 
 <%= render :partial => "list_block", :locals => questions    if questions[:pages].size > 0 %>
@@ -96,7 +96,7 @@ span.important {
 
 <% if bookmarks.size > 0 %>
 <div id="recent_bookmarks" style="width:100%;">
-  <div class="topix_title"><%= icon_tag('asterisk_orange') -%><span>最新のブックマーク</span></div>
+  <div class="topix_title"><%= icon_tag('asterisk_orange') -%><span><%= _('Recent Bookmarks')%></span></div>
   <div class="topix_body" id="bookmark_body">
   <% bookmarks.each do |bookmark| -%>
     <div class="page_line">
@@ -105,7 +105,7 @@ span.important {
       <div class="page_date"><%=h bookmark.updated_on.strftime("%m/%d %H:%M") %></div>
     </div>
   <% end -%>
-<div style="text-align:right; margin-bottom:3px;padding-bottom: 1px;"><%= link_to('[全て見る]', :controller => 'bookmarks', :action => 'search')%></div>
+<div style="text-align:right; margin-bottom:3px;padding-bottom: 1px;"><%= link_to(_('[See all]'), :controller => 'bookmarks', :action => 'search')%></div>
   </div>
 </div>
 <% end %>

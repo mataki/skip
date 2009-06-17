@@ -18,7 +18,7 @@ module Admin::DocumentsHelper
     output = ''
     output << '<ul>'
     Admin::DocumentsController::CONTENT_NAMES.each do |name|
-      output << generate_box_menu_link( _("Admin::DocumentsController|#{name}"), admin_documents_path(name), request.url == admin_documents_url(name) )
+      output << generate_box_menu_link( s_("Admin::DocumentsController|#{name}"), admin_documents_path(name), request.url == admin_documents_url(name) )
     end
     output << '</ul>'
   end

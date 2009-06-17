@@ -41,12 +41,12 @@ $j(function() {
         var symbol = $j("#users_symbol").val();
         var name = $j("#users_name").val();
         if (name.length == 0) {
-            alert("存在するユーザ/グループを入力してください");
+            alert("<%= _('Enter the name of existent users / groups.')%>");
             return;
         }
         var validReg = /(u|g)id:[a-zA-Z0-9]/
         if (!validReg.test(symbol)) {
-            alert("フォーマットが不正です。uid:xxxxxxのような形で入力してください。");
+            alert("<%= _('Invalid input format. Should be in uid:xxxxxx format.')%>");
             return;
         }
         $j('#users_symbol_value').val(symbol);

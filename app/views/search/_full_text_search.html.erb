@@ -14,18 +14,18 @@
 </style>
 
 <% if params[:offset] && params[:offset].to_i > 990 %>
- <div style="margin-top:15px">Google では 1000 件以上の検索結果は表示しておりません </div>
+ <div style="margin-top:15px"><%= _('Google does not show more than 1000 search results.')%></div>
 <% elsif @error_message %>
  <div style="margin-top:15px"><%= @error_message %></div>
 <% elsif @max_count == 0 %>
- <div style="margin-top:15px">該当する検索結果がありませんでした。</div>
+ <div style="margin-top:15px"><%= _('No matching results found.')%></div>
 <% elsif @max_count < 0 %>
- <div style="margin-top:15px">検索条件を入力してください。</div>
+ <div style="margin-top:15px"><%= _('Enter search conditions.')%></div>
 <% else %>
  <%= render :partial => "result_info", :locals => @result_info_locals %>
 
  <% if @result_lines.size == 0 %>
- <div class="auto_page_transition">閲覧制限のため、あなたが見られるページはありませんでした。</div>
+ <div class="auto_page_transition"><%= _('There are no pages you can see because of the publicity limits.')%></div>
  <% end %>
 
  <% @result_lines.each do |line_hash| %>
@@ -38,7 +38,7 @@
 
  <%= render :partial => "page_navi", :locals => @page_navi_locals if @max_count > @per_page -%>
  <%= render :partial => "result_info", :locals => @result_info_locals %>
- <% if @invisible_count > 0 -%><div class="g_desc">[注]閲覧制限のため実件数よりも少なく表示されています。</div><% end -%>
+ <% if @invisible_count > 0 -%><div class="g_desc"><%= _('[Note] Showing less than actual hits because of access limitations.')%></div><% end -%>
 
 <% end %>
 <script type="text/javascript">

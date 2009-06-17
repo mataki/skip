@@ -20,16 +20,16 @@ div.entry_space div.entry_line {
 </style>
 
 <% if year and month -%>
-<div style=""><%= "【#{h year}年#{h month}月のアーカイブ】" -%></div>
+<div style=""><%= _("[Archive of %{month}/%{year}]") % {:year => h(year), :month => h(month)} -%></div>
 <% end -%>
 
 <% if pages and pages.item_count > 0 %>
   <div class="navi" style="position: relative; _width: 100%">
-    <div style="position: absolute; top:1px; left: 2px; font-size: 10px;"><%= icon_tag 'table_refresh', :title => "並び順" -%>
+    <div style="position: absolute; top:1px; left: 2px; font-size: 10px;"><%= icon_tag 'table_refresh', :title => _("Sort Order") -%>
       <% if params[:sort_type] == "date" %>
-        <span style="font-weight: bold;">[更新順]</span><%= link_to "[アクセス順]", params.merge({:sort_type => "access"}) -%>
+        <span style="font-weight: bold;"><%= _('[Sort by modified date]')%></span><%= link_to _("[Sort by access count]"), params.merge({:sort_type => "access"}) -%>
       <% else %>
-        <%= link_to "[更新順]", params.merge({:sort_type => "date"}) -%><span style="font-weight: bold;">[アクセス順]</span>
+        <%= link_to _("[Sort by modified date]"), params.merge({:sort_type => "date"}) -%><span style="font-weight: bold;"><%= _('[Sort by access]')%></span>
       <% end %>
     </div>
     <%= page_link(pages) -%>
@@ -46,7 +46,7 @@ div.entry_space div.entry_line {
     </div>
     <div style="text-align: right; font-size: 90%;">
       <span style='background-color: <%=visibility_color%>;'><%= visibility %></span><%= get_entry_infos entry %>
-      - 最終更新:<%=h entry.last_updated.strftime("%y/%m/%d %H:%M") %>
+      - <%= _('Last Update: ')%><%=h entry.last_updated.strftime(_('%m/%d/%y %H:%M')) %>
     </div>
   </div>
 

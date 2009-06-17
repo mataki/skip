@@ -4,7 +4,7 @@
 <div id="contents_left">
 
 <div class="box_space">
-  <div class="box_space_title">管理メニュー</span></div>
+  <div class="box_space_title"><%= _('Admin Menu')%></span></div>
   <div class="box_space_body">
   <ul>
     <% get_manage_menu_items(@menu).each do |menu_item| %>
@@ -19,7 +19,7 @@
 
 <div id="contents_right">
 
-<%= render(:partial => "group/form", :locals => { :action_value => 'update', :submit_value => '更新' } )  %>
+<%= render(:partial => "group/form", :locals => { :action_value => 'update', :submit_value => _('Update') } )  %>
 
 </div><!-- contents_right -->
 

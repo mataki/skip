@@ -1,5 +1,5 @@
 <% @revert_columns = %w(abbr_app_title login_account point_button) -%>
-<h4><%= _('名称・名前') %></h4>
+<h4><%= _('Names') %></h4>
 <div class="box tabular">
 <% @revert_columns.each do |key| -%>
   <p><%= settings_label_with_text_field_tag key.to_sym %></p>
@@ -7,7 +7,7 @@
 </div>
 
 <% @revert_columns = %w(contact_addr help_url) -%>
-<h4><%= _('お問い合わせ・ヘルプ') %></h4>
+<h4><%=h _('Help & Support') %></h4>
 <div class="box tabular">
 <% @revert_columns.each do |key| -%>
   <p><%= settings_label_with_text_field_tag key.to_sym %></p>
@@ -15,7 +15,7 @@
 </div>
 
 <% @revert_columns = %w(footer_link footer_contact footer_copyright) -%>
-<h4><%= _('フッター') %></h4>
+<h4><%= _('Footer') %></h4>
 <div class="box tabular">
 <% @revert_columns.each do |key| -%>
   <p><%= settings_label_with_text_field_tag key.to_sym %></p>

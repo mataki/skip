@@ -74,8 +74,9 @@ class ShareFileController < ApplicationController
     if @error_messages.size == 0
       render_window_close
     else
-      flash.now[:warning] = "ファイルのアップロードに失敗しました。<br/>"
-      flash.now[:warning] << "[成功:#{params[:file].size - @error_messages.size} 失敗:#{@error_messages.size}]"
+      flash.now[:warning] = _("Failed to upload file(s).")
+      flash.now[:warning] << n_("[Success:%{success} ", "[Successes:%{success} ", params[:file].size - @error_messages.size) % {:success => params[:file].size - @error_messages.size}
+      flash.now[:warning] << n_("Failure:%{failure}]", "Failures:%{failure}]", @error_messages.size) % {:failure => @error_messages.size}
 
       @reload_parent_window = (params[:file].size - @error_messages.size > 0)
       @share_file.errors.clear
@@ -148,7 +149,7 @@ class ShareFileController < ApplicationController
     redirect_to_with_deny_auth and return unless authorize_to_save_share_file? share_file
 
     share_file.destroy
-    flash[:notice] = _("ファイルの削除に成功しました。")
+    flash[:notice] = _("File was successfully deleted.")
 
     redirect_to :controller => share_file.owner_symbol_type, :action => share_file.owner_symbol_id, :id => 'share_file'
   end
@@ -174,7 +175,7 @@ class ShareFileController < ApplicationController
                                     :order => order_by,
                                     :per_page => 10)
     unless @share_files && @share_files.size > 0
-      flash.now[:notice] = '該当する共有ファイルはありませんでした。'
+      flash.now[:notice] = _('No matching shared files found.')
     end
 
     # 編集メニューの表示有無
@@ -192,12 +193,12 @@ class ShareFileController < ApplicationController
     # ログインユーザが対象ファイルをダウンロードできるか否か判定
     find_params = ShareFile.make_conditions(login_user_symbols, { :file_name => file_name, :owner_symbol => owner_symbol })
     unless share_file = ShareFile.find(:first, :conditions => find_params[:conditions], :include => find_params[:include] )
-      flash[:warning] = '指定されたファイルは存在しません' # 本来は存在する場合でも、ファイルの存在自体を知らせないために、存在しない旨を表示
+      flash[:warning] = _('Specified file not found.') # 本来は存在する場合でも、ファイルの存在自体を知らせないために、存在しない旨を表示
       return redirect_to(:controller => 'mypage', :action => 'index')
     end
 
     unless File.exist?(share_file.full_path)
-      flash[:warning] = '指定されたファイルの実体が存在しません。お手数ですが管理者にご連絡をお願いいたします。'
+      flash[:warning] = _('Could not find the entity of the specified file. Contact system administrator.')
       return redirect_to(:controller => 'mypage', :action => "index")
     end
 
@@ -244,7 +245,7 @@ private
       target_symbols = params[:publication_symbols_value].split(/,/).map {|symbol| symbol.strip }
       target_symbols << session[:user_symbol]
     else
-      raise "パラメータが不正です"
+      raise _("Invalid parameter(s).")
     end
     target_symbols
   end

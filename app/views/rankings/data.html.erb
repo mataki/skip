@@ -6,9 +6,9 @@
     <tr>
       <th></th>
     <% if show_title_col? params[:content_type].to_sym -%>
-      <th>タイトル</th>
+      <th><%= _('Title')%></th>
     <% end -%>
-      <th>ユーザ</th>
+      <th><%= _('User')%></th>
       <th class="point"><%= ranking_amount_name params[:content_type].to_sym %></th>
     </tr>
 <% @rankings.each_with_index do |ranking, i| -%>

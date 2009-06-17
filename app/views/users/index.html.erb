@@ -3,29 +3,29 @@
 <% form_tag({:action => 'index'}, :method => 'get') do -%>
 <table class="search_cond_box">
   <tr>
-    <th><%=h _("Admin::User|Name") %></th>
+    <th><%=h s_("Admin::User|Name") %></th>
     <td><%= text_field :condition, :name , :size => 25 %></td>
-    <th>自己紹介文</th>
+    <th><%= _('Self Introduction')%></th>
     <td><%= text_field :condition, :introduction, :size => 25 %></td>
   </tr>
   <tr>
-    <th>所属</th>
+    <th><%= _('Section')%></th>
     <td><%= select(:condition, :section, UserProfile.grouped_sections.insert(0, "")) %></td>
     <th><%=h user_name_mode_label %></th>
     <td><%= text_field :condition, :code, :size => 25 %></td>
   </tr>
   <tr>
-  <th>表示順</th>
+  <th><%= _('Display Order')%></th>
     <td><%= select :condition, :sort_type, UserSearchCondition.sort_types %></td>
-    <th>出力形式</th>
+    <th><%= _('Output Format')%></th>
     <td><%= radio_buttons :condition, :output_type, UserSearchCondition.output_types %></td>
   </tr>
   <tr>
-    <th>退職者指定</th>
-    <td><%= check_box_tag 'condition[not_include_retired]',1,@condition.not_include_retired, :id => 'condition_not_include_retired' %>退職者を含めない</td>
+    <th><%= _('Retired Users')%></th>
+    <td><%= check_box_tag 'condition[not_include_retired]',1,@condition.not_include_retired, :id => 'condition_not_include_retired' %><%= _('Excluding retired users')%></td>
   </tr>
 </table>
-<div class="submit"><%= submit_tag '検索' %></div>
+<div class="submit"><%= submit_tag _('Search') %></div>
 <% end -%>
 </div>
 

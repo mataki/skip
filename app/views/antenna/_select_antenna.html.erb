@@ -1,10 +1,10 @@
 <% messages ||= "" %>
-<% @title = 'アンテナへの追加' %>
+<% @title = _('Adding to antenna') %>
 
 <div id="select_antenna_body">
 
-<div class="desc">このブログをアンテナに追加できます。
-<br/>追加するアンテナを選択してください</div>
+<div class="desc"><%= _('You can add this blog into your antenna.')%>
+<br/><%= _('Select the antenna to add.')%></div>
 
 <% unless messages.empty? %>
   <div class="warning" onclick="this.style.display = 'none';">
@@ -14,7 +14,7 @@
 
 <% already_include = false -%>
 <div style="margin: 3px;">
-<p style="font-size: 10px;">あなたのアンテナ：</p>
+<p style="font-size: 10px;"><%= _('Your antennas: ')%></p>
 <p style="border: 1px solid silver; background-color: #f0f0ff; margin: 0 5px; padding: 0 5px;">
 <% antennas.each do |antenna| -%>
   <% if antenna.included -%>
@@ -27,7 +27,7 @@
 
 <% if already_include -%>
 <div style="margin: 3px;">
-<p style="font-size: 10px;">このユーザは以下のアンテナに既に登録済みです：</p>
+<p style="font-size: 10px;"><%= _('This user has been added into antennas below: ')%></p>
 <p style="border: 1px solid silver; background-color: #f0f0ff; margin: 0 5px; padding: 0 5px;">
 <% antennas.each do |antenna| -%>
   <%= h(antenna.name) + ' /' if antenna.included -%>
@@ -37,7 +37,7 @@
 
 <div style="border: 1px solid silver; background-color: #f0f0ff; margin: 8px; padding: 5px; padding-top: 0; ">
 <form id='add_antenna_and_symbol_form'>
-  新しいアンテナを作成して追加：<%= text_field :antenna, :name %><%= hidden_field_tag :symbol, h(symbol) %><%= submit_tag "追加" %>
+  <%= _('Create new anntenna and add: ')%><%= text_field :antenna, :name %><%= hidden_field_tag :symbol, h(symbol) %><%= submit_tag _("Add") %>
     <%= hidden_field_tag("authenticity_token", form_authenticity_token) %>
 </form>
 </div>

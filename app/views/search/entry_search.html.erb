@@ -3,18 +3,18 @@
 <% form_tag({:action => 'index'}, {:method => 'get'}) do -%>
 <table class="search_cond_box">
   <tr>
-    <th>キーワード</th>
-    <td colspan="4"><%= text_field_tag('keyword', params[:keyword]) %>（タグ、タイトル、本文が検索対象となります）</td>
+    <th><%= _('Keywords')%></th>
+    <td colspan="4"><%= text_field_tag('keyword', params[:keyword]) %><%= _('(The search targets are tags, titles and bodies)')%></td>
   </tr>
   <tr>
-    <th>検索範囲</th>
-    <td colspan="4"><%= check_box_tag('user', "1", params[:user]) -%>ユーザの日記
-        <%= check_box_tag('group', "1", params[:group]) -%>グループの掲示板<br/>
-        （全チェックなしは全てを対象とします）</td>
-  </tr
+    <th><%= _('Search Range')%></th>
+    <td colspan="4"><%= check_box_tag('user', "1", params[:user]) -%><%= _("Users' Diaries")%>
+        <%= check_box_tag('group', "1", params[:group]) -%><%= _('BBS entries of the group')%><br/>
+        <%= _('(Both will be searched if none checked)')%></td>
+  </tr>
   <%= render :partial => 'tag_search' %>
 </table>
-<div class="submit"><%= submit_tag '検索' %></div>
+<div class="submit"><%= submit_tag _('Search') %></div>
 <% end %>
 </div>
 
@@ -29,7 +29,7 @@
   <div style="border: 1px solid silver; width: 90%; margin: auto; text-align: left; margin-top: 5px; margin-bottom: 5px; position: relative;">
     <div style="float: left; width: 100px;"><%= entry_link_to(diary, :view_text => showPicture(diary.user,90,60)) %></div>
     <div style="float: left; font-size: 10px; overflow: hidden; width: 80%;">
-      <div style="position: absolute; top:0; right:0;">最終更新日時:<%=h diary.last_updated.strftime("%Y/%m/%d %H:%M") %></div>
+      <div style="position: absolute; top:0; right:0;"><%= _('Datetime Last Updated: ')%><%=h diary.last_updated.strftime(_('%m/%d/%Y %H:%M')) %></div>
       <div style="margin: 1px 0; border-bottom: 1px dashed silver; padding: 1px; margin-top: 10px;"><%=h diary.diary_date %> - <%=h diary.category %></div>
       <div style="margin: 1px 0; border-bottom: 1px dashed silver; padding: 1px;"><span style="font-size: 12px;"><%= entry_link_to(diary) %></span> - <%= user_link_to diary.user %></div>
       <div style="margin: 1px 0; border-bottom: 1px dashed silver; padding: 1px; margin-bottom: 0;"><%=h @symbol2name_hash[diary.symbol] %> - <span style='background-color: <%=visibility_color%>;'> <%= visibility %></span></div>

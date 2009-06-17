@@ -5,27 +5,27 @@
   <% unless params[:target].blank? -%>
     <% form_tag(admin_documents_update_path(:target => params[:target])) do -%>
     <div class="box tabular">
-      <p><%= _("Admin::DocumentsController|#{params[:target]}_description") %></p> 
+      <p><%= s_("Admin::DocumentsController|#{params[:target]}_description") %></p>
       <p>
       <%= text_area_tag("documents[#{params[:target]}]", @document, :id => "documents_#{params[:target]}", :size => '80x40') %>
-      <%= help_icon_tag :content => _("Admin::DocumentsController|#{params[:target]}_description") %>
+      <%= help_icon_tag :content => s_("Admin::DocumentsController|#{params[:target]}_description") %>
       </p>
     <%= submit_tag _('Save'), :disable_with => _('Saving...') %>
-    <%= link_to '[' + _('現在のページを表示') + ']', "#{controller.request.relative_url_root}/custom/#{params[:target]}.html", :popup => true %>
-    <%= link_to '[' + _('既定のページに戻す') + ']', admin_documents_revert_path(:target => params[:target]), :method => :post, :confirm => _('現在設定中のページが消えてしまいますがよろしいですか?') %>
+    <%= link_to '[' + _('Show current page') + ']', "#{controller.request.relative_url_root}/custom/#{params[:target]}.html", :popup => true %>
+    <%= link_to '[' + _('Revert to default page') + ']', admin_documents_revert_path(:target => params[:target]), :method => :post, :confirm => _('Current page will be overwritten.  Are you sure to continue?') %>
     </div>
     <% end -%>
   <% else -%>
     <div class="box">
       <p>
-        初めて使われるユーザ向けに、システムでは説明画面を用意しています。<br />
-        用途に合わせて、説明文の雛形を修正して下さい。<br />
+        <%= _("The system provides online document for inexperienced users.<br />")%>
+        <%= _("Customize the document template to fit your usage.<br />")%>
       </p>
       <p>
-        左のメニューから編集したいページを選択して下さい。
+        <%= _("Select a page to edit from the menu on left.")%>
       </p>
       <p style="color:red;">
-        <b>※説明文は、HTML形式で記述して下さい。セキュリティ上問題の有るコード(javascriptなど)は、利用しないで下さい。</b>
+        <b><%= _("*Input explanation in HTML format. Do not use codes that can cause security issues (e.g. javascripts).")%></b>
       </p>
     </div>
   <% end -%>

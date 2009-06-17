@@ -1,16 +1,16 @@
 <%# locals : entries, prev_day, next_day %>
 
 <table width="100%"><tr>
-<td align="left"><%= link_to "前の日(#{prev_day.strftime('%Y/%m/%d')})", :year => prev_day.year, :month => prev_day.month, :day => prev_day.day if prev_day -%></td>
-<td align="right"><%= link_to "次の日(#{next_day.strftime('%Y/%m/%d')})", :year => next_day.year, :month => next_day.month, :day => next_day.day if next_day -%></td>
+<td align="left"><%= link_to _("Previous Day (%s)") % prev_day.strftime(_('%m/%d/%Y')), :year => prev_day.year, :month => prev_day.month, :day => prev_day.day if prev_day -%></td>
+<td align="right"><%= link_to _("Next Day (%s)") % next_day.strftime(_('%m/%d/%Y')), :year => next_day.year, :month => next_day.month, :day => next_day.day if next_day -%></td>
 </tr></table>
 
 <%= render :partial => "page_space",
            :locals => { :id_name => 'entries',
-                        :title_name => selected_day.strftime("%Y年%m月%d日") + "(#{SkipUtil::WDAYS[selected_day.wday]}) - #{entries.size}件",
+                        :title_name => _("%{date}(%{wday}) - %{entries} entries") % {:date => selected_day.strftime("%Y年%m月%d日"), :wday => SkipUtil::WDAYS[selected_day.wday], :entries => entries.size},
                         :pages => entries} %>
 
 <table width="100%"><tr>
-<td align="left"><%= link_to "前の日(#{prev_day.strftime('%Y/%m/%d')})", :year => prev_day.year, :month => prev_day.month, :day => prev_day.day if prev_day -%></td>
-<td align="right"><%= link_to "次の日(#{next_day.strftime('%Y/%m/%d')})", :year => next_day.year, :month => next_day.month, :day => next_day.day if next_day -%></td>
+<td align="left"><%= link_to _("Previous Day (%s)") % prev_day.strftime(_('%m/%d/%Y')), :year => prev_day.year, :month => prev_day.month, :day => prev_day.day if prev_day -%></td>
+<td align="right"><%= link_to _("Next Day (%s)") % next_day.strftime(_('%m/%d/%Y')), :year => next_day.year, :month => next_day.month, :day => next_day.day if next_day -%></td>
 </tr></table>

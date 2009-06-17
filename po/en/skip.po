@@ -14,7 +14,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #: app/views/share_file/_file_size_box.html.erb:4
 msgid " (MB)"
@@ -433,7 +433,7 @@ msgstr ""
 
 #: app/views/user/_portrait_box.html.erb:7
 msgid "<span class=\"small\">Mr./Ms. </span>%s"
-msgstr ""
+msgstr "%s"
 
 #: app/models/tag.rb:54
 msgid "A tag can only accept 30 characters."
@@ -663,47 +663,58 @@ msgstr ""
 #: app/controllers/admin/documents_controller.rb:101
 #: app/helpers/admin/application_helper.rb:24
 msgid "Admin::DocumentsController"
-msgstr ""
+msgstr "Documents"
 
 #: app/controllers/admin/documents_controller.rb:20
 msgid "Admin::DocumentsController|about_this_site"
-msgstr ""
+msgstr "About this site"
 
 #: app/controllers/admin/documents_controller.rb:21
 msgid "Admin::DocumentsController|about_this_site_description"
 msgstr ""
+"Write about the purpose and outline of the site. It is linked from the "
+"footer by default."
 
 #: app/controllers/admin/documents_controller.rb:22
 msgid "Admin::DocumentsController|confirm_desc"
-msgstr ""
+msgstr "Confirmation"
 
 #: app/controllers/admin/documents_controller.rb:23
 msgid "Admin::DocumentsController|confirm_desc_description"
 msgstr ""
+"Urges the user to agree with the terms of use. It will be shown right after "
+"the first login by default."
 
 #: app/controllers/admin/documents_controller.rb:24
 msgid "Admin::DocumentsController|introduction"
-msgstr ""
+msgstr "Introduction"
 
 #: app/controllers/admin/documents_controller.rb:25
 msgid "Admin::DocumentsController|introduction_description"
 msgstr ""
+"A brief introduction of how to use the site for the users using the site for "
+"the first time. It is shown right after the registration of user profiles by "
+"default."
 
 #: app/controllers/admin/documents_controller.rb:26
 msgid "Admin::DocumentsController|login_desc"
-msgstr ""
+msgstr "Login Description"
 
 #: app/controllers/admin/documents_controller.rb:27
 msgid "Admin::DocumentsController|login_desc_description"
 msgstr ""
+"A brief introduction of the site for the users who have not logged in the "
+"system. It is shown under the form of the login screen."
 
 #: app/controllers/admin/documents_controller.rb:28
 msgid "Admin::DocumentsController|rules"
-msgstr ""
+msgstr "Terms of Use"
 
 #: app/controllers/admin/documents_controller.rb:29
 msgid "Admin::DocumentsController|rules_description"
 msgstr ""
+"Write the terms of use here. It is shown right after the first login and "
+"linked from the header by default."
 
 #: app/models/admin/group_category.rb:19
 msgid "Admin::GroupCategory|Code"
@@ -747,7 +758,7 @@ msgstr ""
 
 #: app/models/admin/group.rb:21
 msgid "Admin::Group|Gid"
-msgstr ""
+msgstr "Group ID"
 
 #: app/models/admin/group.rb:24
 msgid "Admin::Group|Group category"
@@ -763,57 +774,59 @@ msgstr ""
 
 #: app/helpers/admin/application_helper.rb:23
 msgid "Admin::ImagesController"
-msgstr ""
+msgstr "Images"
 
 #: app/controllers/admin/images_controller.rb:25
 #: app/views/admin/images/index.html.erb:21
 msgid "Admin::ImagesController|background"
-msgstr ""
+msgstr "Background"
 
 #: app/controllers/admin/images_controller.rb:27
 msgid "Admin::ImagesController|background001"
-msgstr ""
+msgstr "Background 1"
 
 #: app/controllers/admin/images_controller.rb:28
 msgid "Admin::ImagesController|background002"
-msgstr ""
+msgstr "Background 2"
 
 #: app/controllers/admin/images_controller.rb:29
 msgid "Admin::ImagesController|background003"
-msgstr ""
+msgstr "Background 3"
 
 #: app/controllers/admin/images_controller.rb:30
 msgid "Admin::ImagesController|background004"
-msgstr ""
+msgstr "Background 4"
 
 #: app/controllers/admin/images_controller.rb:31
 msgid "Admin::ImagesController|background005"
-msgstr ""
+msgstr "Background 5"
 
 #: app/controllers/admin/images_controller.rb:32
 msgid "Admin::ImagesController|background006"
-msgstr ""
+msgstr "Background 6"
 
 #: app/controllers/admin/images_controller.rb:33
 msgid "Admin::ImagesController|background007"
-msgstr ""
+msgstr "Background 7"
 
 #: app/controllers/admin/images_controller.rb:34
 msgid "Admin::ImagesController|background008"
-msgstr ""
+msgstr "Background 8"
 
 #: app/controllers/admin/images_controller.rb:35
 msgid "Admin::ImagesController|background009"
-msgstr ""
+msgstr "Background 9"
 
 #: app/controllers/admin/images_controller.rb:36
 msgid "Admin::ImagesController|background010"
-msgstr ""
+msgstr "Background 10"
 
 #: app/controllers/admin/images_controller.rb:26
 #: app/views/admin/images/index.html.erb:22
 msgid "Admin::ImagesController|background_description"
 msgstr ""
+"The background image shown randomly in the login screen. You can register up "
+"to 10 images."
 
 #: app/controllers/admin/images_controller.rb:37
 #: app/views/admin/images/index.html.erb:30
@@ -823,111 +836,117 @@ msgstr ""
 #: app/controllers/admin/images_controller.rb:38
 #: app/views/admin/images/index.html.erb:31
 msgid "Admin::ImagesController|favicon_description"
-msgstr ""
+msgstr "You can set your own favicon."
 
 #: app/controllers/admin/images_controller.rb:23
 msgid "Admin::ImagesController|footer_logo"
-msgstr ""
+msgstr "Footer Logo Image"
 
 #: app/controllers/admin/images_controller.rb:24
 msgid "Admin::ImagesController|footer_logo_description"
-msgstr ""
+msgstr "The logo image shown in the right-bottom footer."
 
 #: app/controllers/admin/images_controller.rb:21
 msgid "Admin::ImagesController|header_logo"
-msgstr ""
+msgstr "Header Logo Image"
 
 #: app/controllers/admin/images_controller.rb:22
 msgid "Admin::ImagesController|header_logo_description"
-msgstr ""
+msgstr "The logo image shown in the left-top header."
 
 #: app/controllers/admin/images_controller.rb:19
 msgid "Admin::ImagesController|title_logo"
-msgstr ""
+msgstr "Title Logo Image"
 
 #: app/controllers/admin/images_controller.rb:20
 msgid "Admin::ImagesController|title_logo_description"
-msgstr ""
+msgstr "The logo image shown in the login screen."
 
 #: app/models/admin/initial_setting.rb:37
 msgid "Admin::InitialSetting|Administrator addr"
-msgstr ""
+msgstr "System Administrator Address"
 
 #: app/models/admin/initial_setting.rb:38
 msgid "Admin::InitialSetting|Administrator addr description"
-msgstr ""
+msgstr "The email address shown as the contact upon system failure."
 
 #: app/models/admin/initial_setting.rb:29
 msgid "Admin::InitialSetting|Delivery method"
-msgstr ""
+msgstr "Email Delivery Method"
 
 #: app/models/admin/initial_setting.rb:30
 msgid "Admin::InitialSetting|Delivery method description"
 msgstr ""
+"Setting for the email delivery method (Not delivered when set to \"test\")"
 
 #: app/models/admin/initial_setting.rb:35
 msgid "Admin::InitialSetting|Fixed op url"
-msgstr ""
+msgstr "The URL used for SSO using fixed OP in RP mode."
 
 #: app/models/admin/initial_setting.rb:36
 msgid "Admin::InitialSetting|Fixed op url description"
-msgstr ""
+msgstr "Enable RP mode to force authenticate using the URL."
 
 #: app/models/admin/initial_setting.rb:43
 msgid "Admin::InitialSetting|Full text search setting"
-msgstr ""
+msgstr "Enable full text search"
 
 #: app/models/admin/initial_setting.rb:44
 msgid "Admin::InitialSetting|Full text search setting description"
 msgstr ""
+"Enable full text search feature or not (Search boxes will not be shown when "
+"disabled)"
 
 #: app/models/admin/initial_setting.rb:46
 msgid "Admin::InitialSetting|Full text search setting|false"
-msgstr ""
+msgstr "Disable"
 
 #: app/models/admin/initial_setting.rb:45
 msgid "Admin::InitialSetting|Full text search setting|true"
-msgstr ""
+msgstr "Enable"
 
 #: app/models/admin/initial_setting.rb:31
 msgid "Admin::InitialSetting|Login mode"
-msgstr ""
+msgstr "How to manage login info"
 
 #: app/models/admin/initial_setting.rb:32
 msgid "Admin::InitialSetting|Login mode description"
 msgstr ""
+"Setting for how to manage login info. (Manages login passwords internaly "
+"when set to \"password\" and enables OpenID authentication and uses the "
+"external OP when set to \"RP\")"
 
 #: app/models/admin/initial_setting.rb:33
 msgid "Admin::InitialSetting|Login mode|password"
-msgstr ""
+msgstr "Internal"
 
 #: app/models/admin/initial_setting.rb:34
 msgid "Admin::InitialSetting|Login mode|rp"
-msgstr ""
+msgstr "Use external OpenID authority"
 
 #: app/models/admin/initial_setting.rb:19
 msgid "Admin::InitialSetting|Max share file size"
-msgstr ""
+msgstr "Maximum size of shared file"
 
 #: app/models/admin/initial_setting.rb:20
 msgid "Admin::InitialSetting|Max share file size description"
-msgstr ""
+msgstr "The maximum size of shared file a user allowed upload at a time."
 
 #: app/models/admin/initial_setting.rb:23
 msgid "Admin::InitialSetting|Max share file size of system"
-msgstr ""
+msgstr "System wide disk space for shared files"
 
 #: app/models/admin/initial_setting.rb:24
 msgid "Admin::InitialSetting|Max share file size of system description"
-msgstr ""
+msgstr "System wide total disk space designated for shared files"
 
 #: app/models/admin/initial_setting.rb:21
 msgid "Admin::InitialSetting|Max share file size per owner"
-msgstr ""
+msgstr "User / group quota for shared files"
 
 #: app/models/admin/initial_setting.rb:22
 msgid "Admin::InitialSetting|Max share file size per owner description"
-msgstr ""
+msgstr "Disk space allowed for share files of each user / group"
 
 #: app/models/admin/initial_setting.rb:25
 msgid "Admin::InitialSetting|Not blank link re"
@@ -1708,7 +1727,7 @@ msgstr ""
 
 #: app/views/user/show.html.erb:126
 msgid "Birthday - Blood Type"
-msgstr ""
+msgstr "Birth - Blood"
 
 #: app/controllers/mypage_controller.rb:451
 #: app/controllers/user_controller.rb:230
@@ -2770,7 +2789,7 @@ msgstr ""
 
 #: app/controllers/assistant/calendar.rb:19 app/helpers/calendar_helper.rb:88
 msgid "Fri"
-msgstr ""
+msgstr "F"
 
 #: app/controllers/search_controller.rb:114
 #: app/views/search/full_text_search.html.erb:12
@@ -3064,7 +3083,7 @@ msgstr ""
 
 #: app/views/user/show.html.erb:131
 msgid "Hometown - Alma Mater"
-msgstr ""
+msgstr "Town - School"
 
 #: app/views/bookmarks/setup.html.erb:75
 msgid "How to use bookmarklet \"Bookmark in %s\""
@@ -3591,7 +3610,7 @@ msgstr ""
 
 #: app/controllers/assistant/calendar.rb:19 app/helpers/calendar_helper.rb:88
 msgid "Mon"
-msgstr ""
+msgstr "M"
 
 #: app/views/portal/_registration_form.html.erb:99
 msgid ""
@@ -3619,7 +3638,7 @@ msgstr ""
 
 #: app/views/user/_postit_cloud.html.erb:8
 msgid "Mr./Ms. %s from other users' view"
-msgstr ""
+msgstr "%s from other users' view"
 
 #: app/views/board_entries/_form.html.erb:29
 #: app/views/bookmark/_new.html.erb:75 app/views/share_file/_form.html.erb:47
@@ -3633,15 +3652,15 @@ msgstr ""
 #: app/controllers/edit_controller.rb:285
 #: app/controllers/user_controller.rb:58 config/environment.rb:71
 msgid "My Blog"
-msgstr ""
+msgstr "Blog"
 
 #: config/environment.rb:72
 msgid "My Bookmarks"
-msgstr ""
+msgstr "Bookmarks"
 
 #: app/controllers/user_controller.rb:186 config/environment.rb:73
 msgid "My Files"
-msgstr ""
+msgstr "Files"
 
 #: app/views/layouts/admin/application.html.erb:28
 #: app/views/layouts/layout.html.erb:35
@@ -4260,7 +4279,7 @@ msgstr ""
 
 #: app/views/mypage/index.html.erb:14
 msgid "Recent Popular Entries"
-msgstr ""
+msgstr "Recent Popular"
 
 #: app/controllers/feed_controller.rb:68
 #: app/controllers/mypage_controller.rb:880
@@ -4287,7 +4306,7 @@ msgstr ""
 #: app/controllers/feed_controller.rb:27
 #: app/controllers/mypage_controller.rb:812 app/views/mypage/index.html.erb:15
 msgid "Recently Posted Entries"
-msgstr ""
+msgstr "Recent Posted"
 
 #: app/views/mypage/_index_default.html.erb:27
 msgid "Recently Registered Members"
@@ -4425,7 +4444,7 @@ msgstr ""
 
 #: app/controllers/assistant/calendar.rb:19 app/helpers/calendar_helper.rb:88
 msgid "Sat"
-msgstr ""
+msgstr "S"
 
 #: app/views/admin/documents/index.html.erb:13
 #: app/views/admin/settings/index.html.erb:8
@@ -4482,7 +4501,7 @@ msgstr ""
 
 #: app/controllers/search_controller.rb:110 config/environment.rb:78
 msgid "Search for Data"
-msgstr ""
+msgstr "Data Search"
 
 #: app/controllers/search_controller.rb:112
 msgid "Search for Entries"
@@ -4597,7 +4616,7 @@ msgstr ""
 
 #: app/views/user/show.html.erb:121
 msgid "Sex - Year Joined"
-msgstr ""
+msgstr "Sex - Joined"
 
 #: app/models/share_file_access.rb:-
 msgid "ShareFileAccess|Created at"
@@ -4956,7 +4975,7 @@ msgstr ""
 
 #: app/controllers/assistant/calendar.rb:19 app/helpers/calendar_helper.rb:88
 msgid "Sun"
-msgstr ""
+msgstr "Su"
 
 #: app/views/shared/_symbol_autocomplete_field.html.erb:125
 msgid "Symbol already exists."
@@ -4973,7 +4992,7 @@ msgstr ""
 #: app/controllers/admin/application_controller.rb:28
 #: app/views/layouts/admin/application.html.erb:8 config/environment.rb:89
 msgid "System Administration"
-msgstr ""
+msgstr "Sys Admin"
 
 #: app/views/admin/settings/index.html.erb:15
 msgid "System Info"
@@ -5156,7 +5175,7 @@ msgstr ""
 
 #: app/controllers/assistant/calendar.rb:19 app/helpers/calendar_helper.rb:88
 msgid "Thu"
-msgstr ""
+msgstr "Th"
 
 #: app/views/bookmarks/index.html.erb:6
 msgid "Time Last Updated: "
@@ -5259,7 +5278,7 @@ msgstr ""
 
 #: app/controllers/assistant/calendar.rb:19 app/helpers/calendar_helper.rb:88
 msgid "Tue"
-msgstr ""
+msgstr "T"
 
 #: app/models/types/blood.rb:20
 msgid "Type A"
@@ -5309,7 +5328,7 @@ msgstr ""
 
 #: app/views/mypage/index.html.erb:16
 msgid "Unread Entries in Antennas"
-msgstr ""
+msgstr "Unread Antennas"
 
 #: app/views/bookmark/_stared.html.erb:2 app/views/groups/_favorite.html.erb:2
 msgid "Unstar"
@@ -5742,7 +5761,7 @@ msgstr ""
 
 #: app/controllers/assistant/calendar.rb:19 app/helpers/calendar_helper.rb:88
 msgid "Wed"
-msgstr ""
+msgstr "W"
 
 #: app/views/mypage/welcome.html.erb:22
 msgid "Welcome to [%s]!"
@@ -6145,7 +6164,7 @@ msgstr ""
 #: app/views/rankings/_monthly_history.html.erb:7
 #: app/views/shared/_calendar.html.erb:32
 msgid "[Next month]"
-msgstr ""
+msgstr "[Next]"
 
 #: app/views/mypage/_list_block.html.erb:39
 #: app/views/search/_result_info.html.erb:4
@@ -6179,7 +6198,7 @@ msgstr ""
 #: app/views/rankings/_monthly_history.html.erb:5
 #: app/views/shared/_calendar.html.erb:30
 msgid "[Prev month]"
-msgstr ""
+msgstr "[Prev]"
 
 #: app/views/mypage/_list_block.html.erb:35
 #: app/views/search/_result_info.html.erb:3
@@ -6292,7 +6311,7 @@ msgstr ""
 
 #: app/views/shared/_calendar.html.erb:31
 msgid "[Today]"
-msgstr ""
+msgstr "[Current]"
 
 #: app/views/entries/_entry_detail.html.erb:345
 msgid "[Top of page]"

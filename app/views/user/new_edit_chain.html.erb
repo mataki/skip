@@ -1,5 +1,5 @@
 
-<div class="desc"><%= h @user.name -%>さんをみんなに紹介しましょう！</div>
+<div class="desc"><%= _("Introduce %s to others!") % h(@user.name)%></div>
 
 <%= render(:partial => "users/user", :object => @user) %>
 
@@ -9,7 +9,7 @@
 
     <%= template_error_messages_for 'chain' %>
 
-    <p><label for="chain_comment">紹介文：<label> <%= link_to_hiki_help %><br/>
+    <p><label for="chain_comment"><%= _('Introduction: ')%><label> <%= link_to_hiki_help %><br/>
     <%= text_area 'chain', 'comment', :cols => 80, :rows => 6 %></p>
 
     <%= submit_tag @submit_name %>

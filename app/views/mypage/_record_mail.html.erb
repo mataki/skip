@@ -19,7 +19,7 @@ table.normal td.line_0, table.normal td.line_1 {
 </style>
 
 <div class="desc" style="margin-bottom:5px;">
-  <p>連絡機能によって、<%= h Admin::Setting.abbr_app_title -%>からメールが送信されたブログや掲示板の記事の一覧です。<br/>（メール送信は、即時でなく定期的に行われます）</p>
+  <p><%= _("List of blog / BBS entries made use of contact function to send email notifications from %s<br/>(Emails are sent periodically in a batch)") % h(Admin::Setting.abbr_app_title) %></p>
 </div>
 
 <div class="navi"><%= page_link(@pages) -%></div>
@@ -27,9 +27,9 @@ table.normal td.line_0, table.normal td.line_1 {
 <div style="margin: 5px;">
   <table border="1" class="normal" style="width: 100%; _width: 98%;">
     <tr>
-      <th width="30%">送信先</th>
-      <th width="">タイトル</th>
-      <th width="180px">送信日</th>
+      <th width="30%"><%= _('To')%></th>
+      <th width=""><%= _('Title')%></th>
+      <th width="180px"><%= _('Sent Date')%></th>
     </tr>
     <% even_or_odd = 0
        @mails.each do |mail|

@@ -21,25 +21,25 @@ module GroupHelper
   def generate_visitor_state participation
     state = ''
     if not participation
-      state = 'まだ申し込みしていません'
+      state = _('Not joined')
     elsif participation.owned?
-      state = '管理者です！'
+      state = _('Administrator!')
     elsif participation.waiting?
-      state = '参加承認待ち！'
+      state = _('Waiting for Approval!')
     else
-      state = '参加中です！'
+      state = _('Already Joined!')
     end
 
     button = ""
     if participation
       if !participation.owned?
         button << form_tag(:action=> 'leave')
-        button << submit_tag('退会する', {:onclick=>'return confirm("本当に退会しますか？");'})
+        button << submit_tag(_('Leave Group'), {:onclick=>'return confirm("' + _('Are you sure to leave the group?') + '");'})
         # FIXME form_tag の 閉じは end にしたい
         button << "</form>"
       end
     else
-      button << link_to('[参加申込みへ]', {:action=>"new_participation"}, {:class => "nyroModal"})
+      button << link_to(_('[Request to join]'), {:action=>"new_participation"}, {:class => "nyroModal"})
     end
 
     return state, button
@@ -50,18 +50,18 @@ module GroupHelper
   def generate_informations group, participation
     informations = []
     if group.protected?
-      informations << icon_tag('key') + "このグループは参加するのにグループ管理者の承認が必要です。"
+      informations << icon_tag('key') + _("Approval from group administrator needed to join this group.")
     else
-      informations << icon_tag('bullet_blue') + "このグループへの参加は自由です。"
+      informations << icon_tag('bullet_blue') + _("This is an open group.")
     end
 
     unless participation
       url_param = {:controller => "group", :action => "new_participation"}
-      informations << icon_tag('group_go') + link_to('【このグループへ参加申込みをする】', url_param, {:class => "nyroModal"})
+      informations << icon_tag('group_go') + link_to(_('[Request to join this group]'), url_param, {:class => "nyroModal"})
     end
 
     if group.has_waiting and participation and participation.owned?
-      informations << icon_tag('bell') + "承認待ちのメンバーがいます。"
+      informations << icon_tag('bell') + _("There are members to be approved.")
     end
     informations
   end
@@ -107,9 +107,9 @@ module GroupHelper
 
   # 管理メニューの生成
   def get_manage_menu_items selected_menu
-    @@menus = [{:name => "グループ情報変更", :menu => "manage_info" },
-               {:name => "参加者管理",       :menu => "manage_participations"} ]
-    @@menus << {:name => "参加者の承認",     :menu => "manage_permit" } if @group.protected?
+    @@menus = [{:name => _("Edit Group Information"), :menu => "manage_info" },
+               {:name => _("Manage Members"),       :menu => "manage_participations"} ]
+    @@menus << {:name => _("Approve Member"),     :menu => "manage_permit" } if @group.protected?
 
     get_menu_items @@menus, selected_menu, "manage"
   end
@@ -124,9 +124,9 @@ private
   def user_state user
     output = ""
     if user.group_participations.first.owned?
-      output << icon_tag('star') + '管理者'
+      output << icon_tag('star') + _('Administrator')
     else
-      output << icon_tag('user') + '参加者'
+      output << icon_tag('user') + _('Member')
     end
     output
   end

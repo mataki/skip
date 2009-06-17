@@ -16,7 +16,7 @@
            } %>
 
 <% if !(tag = h(params[:selected_tag])).blank? -%>
-<% text = "他に[#{tag}]の付いた人を探す" %>
+<% text = _("Find other [%s]ed users") % tag %>
 <div style="text-align: right;"><%= link_to text, {:controller => "bookmarks", :action => "search", :type => "user", :tag_words => "#{tag}"} -%></div>
 <% end -%>
 

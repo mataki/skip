@@ -4,7 +4,7 @@
   </div><!-- contents_left -->
 
   <div id="contents_right">
-    <div class="desc"><p>以下のフォームにOpenIDのURLを入力してください。</p></div>
+    <div class="desc"><p><%= _('Enter your OpenID URL in the form below.')%></p></div>
 
     <%= template_error_messages_for 'openid_identifier' %>
 
@@ -12,11 +12,11 @@
       <% form_for :openid_identifier, @openid_identifier, {:url => {:action => :apply_ident_url}} do |f| -%>
       <table id="user_info_box" class="normal" border="1">
         <tr>
-          <th width="100px"><%= f.label :url, "OpenID URL" %></th>
+          <th width="100px"><%= f.label :url, _("OpenID URL") %></th>
           <td style="padding:5px;"><%= f.text_field :url -%></td>
         </tr>
       </table>
-      <%= submit_tag '保存' %>
+      <%= submit_tag _('Save') %>
       <% end %>
     </div>
   </div><!-- contents_right -->

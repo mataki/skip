@@ -34,7 +34,7 @@ class GroupsController < ApplicationController
     @pages, @groups = paginate(:group, options)
 
     unless @groups && @groups.size > 0
-      flash.now[:notice] = '該当するグループはありませんでした。'
+      flash.now[:notice] = _('No matching groups found.')
     end
   end
 
@@ -44,7 +44,7 @@ class GroupsController < ApplicationController
     @group = Group.new
     @group_categories = GroupCategory.all
     render(:partial => "group/form", :layout => 'layout',
-            :locals => { :action_value => 'create', :submit_value => '作成' } )
+            :locals => { :action_value => 'create', :submit_value => _('Create') } )
   end
 
   # post_action
@@ -55,19 +55,19 @@ class GroupsController < ApplicationController
     @group.group_participations.build(:user_id => session[:user_id], :owned => true)
 
     if @group.save
-      flash[:notice] = 'グループが正しく作成されました。'
+      flash[:notice] = _('Group was created successfully.')
       redirect_to :controller => 'group', :action => 'show', :gid => @group.gid
     else
       render(:partial => "group/form", :layout => 'layout',
-              :locals => { :action_value => 'create', :submit_value => '作成' } )
+              :locals => { :action_value => 'create', :submit_value => _('Create') } )
     end
   end
 
 private
   def setup_layout
-    @main_menu = @title = 'グループ'
+    @main_menu = @title = _('Groups')
 
-    @tab_menu_source = [ ['グループの検索', 'index'],
-                         ['グループの新規作成', 'new'] ]
+    @tab_menu_source = [ [_('Search for groups'), 'index'],
+                         [_('Create a new group'), 'new'] ]
   end
 end

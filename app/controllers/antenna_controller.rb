@@ -53,7 +53,7 @@ class AntennaController < ApplicationController
         @antenna.errors.each_full {  |msg| messages <<  msg }
       end
     else
-      messages = "アンテナ名称は必須です"
+      messages = _("Antenna name is mandatory.")
     end
 
     unless messages.empty?

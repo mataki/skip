@@ -21,15 +21,15 @@
     <% end -%>
   </tr>
   <tr>
-    <th><%=h _("Admin::User|Name") %></th>
+    <th><%=h s_("Admin::User|Name") %></th>
     <td><%= user_link_to user %></td>
-    <th><%=h _("UserProfile|Email") %></th>
+    <th><%=h s_("UserProfile|Email") %></th>
     <td><%=h user.user_profile.email %></td>
   </tr>
   <tr>
-    <th>最終アクセス</th>
+    <th><%= _('Last Access')%></th>
     <td><%=h user.before_access %></td>
-    <th><%=h _('UserProfile|Section') %></th>
+    <th><%=h s_('UserProfile|Section') %></th>
     <td><%=h user.user_profile.section %></td>
   </tr>
 </table>

@@ -1,6 +1,6 @@
 <html>
 <head>
-  <title>スライドショー : <%=h @board_entry.title %></title>
+  <title><%= _("Slide Show: %s") % h(@board_entry.title)%></title>
   <%= skip_javascript_include_tag 'prototype' %>
   <%= skip_jquery_include_tag 'jquery' %>
   <%= skip_jquery_include_tag 'jquery.hotkeys' %>

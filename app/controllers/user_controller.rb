@@ -55,7 +55,7 @@ class UserController < ApplicationController
 
   # tab_menu
   def blog
-    @main_menu = 'マイブログ' if @user.id == session[:user_id]
+    @main_menu = _('My Blog') if @user.id == session[:user_id]
 
     options = { :symbol => "uid:" + @user.uid }
     setup_blog_left_box options
@@ -84,12 +84,12 @@ class UserController < ApplicationController
                                   :conditions => find_params[:conditions],
                                   :include => find_params[:include] | [ :user, :board_entry_comments, :state ])
       unless @entries && @entries.size > 0
-        flash.now[:notice] = '該当する投稿はありませんでした。'
+        flash.now[:notice] = _('No matching entries found.')
       end
     else
       if entry_id = params[:entry_id]
         unless entry = BoardEntry.find_by_id(entry_id)
-          flash.now[:notice] = '現在投稿がありません。'
+          flash.now[:notice] = _('There are no entries posted.')
           return
         end
         options[:id] = entry_id
@@ -113,7 +113,7 @@ class UserController < ApplicationController
         bookmark = Bookmark.find(:first, :conditions =>["url = ?", "/page/"+@entry.id.to_s])
         @bookmark_comments_count = bookmark ? bookmark.bookmark_comments_count : 0
       else
-        flash.now[:notice] = options[:id] ? '閲覧権限がありません。' : '現在投稿がありません。'
+        flash.now[:notice] = options[:id] ? _('You are not allowed to see the page.') : _('There are no entries posted.')
       end
     end
   end
@@ -166,7 +166,7 @@ class UserController < ApplicationController
     options[:per_page] = params[:format_type] == "list" ? 30 : 5
     @pages, @groups = paginate(:group, options)
 
-    flash.now[:notice] = '該当するグループはありませんでした。' unless @groups && @groups.size > 0
+    flash.now[:notice] = _('No matching groups found.') unless @groups && @groups.size > 0
   end
 
   # tab_menu
@@ -183,7 +183,7 @@ class UserController < ApplicationController
 
   # tab_menu
   def share_file
-    @main_menu = 'マイファイル' if @user.id == session[:user_id]
+    @main_menu = _('My Files') if @user.id == session[:user_id]
 
     params.store(:owner_name, @user.name)
     params.store(:visitor_is_uploader, (@user.id == session[:user_id]))
@@ -197,7 +197,7 @@ class UserController < ApplicationController
                         :to_user_id => @user.id,
                         :comment => params[:chain][:comment])
     if @chain.save
-      flash[:notice] = '紹介文を作成しました'
+      flash[:notice] = _('Introduction was created successfully.')
       redirect_to_index
     else
       show_new_chain
@@ -211,10 +211,10 @@ class UserController < ApplicationController
     if params[:chain][:comment].empty?
       @chain.destroy
       @chain = nil
-      flash[:notice] = '紹介文を削除しました'
+      flash[:notice] = _('Introduction was deleted successfully.')
       redirect_to_index
     elsif @chain.update_attributes(params[:chain])
-      flash[:notice] = '紹介文を更新しました'
+      flash[:notice] = _('Introduction was updated successfully.')
       redirect_to_index
     else
       show_edit_chain
@@ -223,24 +223,24 @@ class UserController < ApplicationController
 
 private
   def setup_layout
-    @main_menu = (@user.id == session[:user_id] ? 'プロフィール' : 'ユーザ')
-    @title = @user.name + 'さん'
+    @main_menu = (@user.id == session[:user_id] ? _('Profile') : _('User'))
+    @title = _("About %s") % @user.name
 
-    @tab_menu_source = [ ['プロフィール', 'show'],
-                         ['ブログ', 'blog'],
-                         ['ソーシャル', 'social'],
-                         ['ブックマーク', 'bookmark'],
-                         ['共有ファイル','share_file'],
-                         ['参加グループ', 'group'] ]
+    @tab_menu_source = [ [_('Profile'), 'show'],
+                         [_('Blog'), 'blog'],
+                         [_('Socials'), 'social'],
+                         [_('Bookmarks'), 'bookmark'],
+                         [_('Shared Files'),'share_file'],
+                         [_('Groups Joined'), 'group'] ]
 
     if @user.id != session[:user_id]
       if Chain.count(:conditions => ["from_user_id = ? and to_user_id = ?", session[:user_id], @user.id]) <= 0
-        @tab_menu_source << ['紹介文を作る', 'new_chain']
+        @tab_menu_source << [_('Create Introductions'), 'new_chain']
       else
-        @tab_menu_source << ['紹介文の変更', 'edit_chain']
+        @tab_menu_source << [_('Edit Introductions'), 'edit_chain']
       end
     else
-      @tab_menu_source.unshift ['マイページ', 'mypage']
+      @tab_menu_source.unshift [_('My Page'), 'mypage']
     end
 
     @tab_menu_option = { :uid => @user.uid }
@@ -250,7 +250,7 @@ private
     if @user = User.find_by_uid(params[:uid])
       @user.mark_track session[:user_id] if @user.id != session[:user_id]
     else
-      flash[:warning] = _('ご指定のユーザは存在しません。')
+      flash[:warning] = _('User does not exist.')
       redirect_to :controller => 'mypage', :action => 'index'
       return false
     end
@@ -262,13 +262,13 @@ private
 
   def show_new_chain
     @submit_action = 'create_chain'
-    @submit_name = '作成'
+    @submit_name = _('Create')
     render :action=>'new_edit_chain'
   end
 
   def show_edit_chain
     @submit_action = 'update_chain'
-    @submit_name = '更新'
+    @submit_name = _('Update')
     render :action=>'new_edit_chain'
   end
 
@@ -325,7 +325,7 @@ private
     end
 
     unless @pages && @pages.item_count > 0
-      flash.now[:notice] = '現在紹介文はありません。'
+      flash.now[:notice] = _('There are no introductions.')
     end
   end
 
@@ -348,7 +348,7 @@ private
                                     :joins => join_state,
                                     :include => [ :bookmark, :user ])
     unless @postits && @postits.size > 0
-      flash.now[:notice] = '現在ブックマークはありません。'
+      flash.now[:notice] = _('You have no bookmarks currently.')
     end
   end
 

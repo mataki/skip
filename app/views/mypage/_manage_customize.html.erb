@@ -15,13 +15,13 @@
 
 <div id="contents_right">
 
-<div class="desc"><p>サイトの環境をカスタマイズすることが可能です。</p></div>
+<div class="desc"><p><%= _('You can customize the site environment.')%></p></div>
 
 <div class="edit_form_space">
 <% form_tag({:action => 'update_customize'}) do -%>
 <%= template_error_messages_for 'user_custom' %>
 
-<p><label for="theme">テーマ</label><br/>
+<p><label for="theme"><%= _('Themes')%></label><br/>
 <table>
 <%
    skins_path = File.join(RAILS_ROOT, "public", "stylesheets", "skins")
@@ -42,7 +42,7 @@
 <% end -%>
 </table>
 
-<div><%= submit_tag("変更") %></div>
+<div><%= submit_tag(_("Change")) %></div>
 <% end %>
 </div>
 

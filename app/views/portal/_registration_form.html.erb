@@ -24,7 +24,7 @@ table.normal {
 }
 </style>
 
-<div class="subtitle">アカウント情報</div>
+<div class="subtitle"><%= _('Account Information')%></div>
 
 <table id="user_info_box" class="normal" border="1">
   <% if user_name_mode?(:code) -%>
@@ -39,7 +39,7 @@ table.normal {
   </tr>
   <tr>
     <th width="100px"><label for="user_email"><%=h _('UserProfile|Email') %></label></th>
-    <td><%=h @profile.email %><span style="margin-left: 20px;"><%= link_to "[変更する]", :action=> 'manage', :menu => 'manage_email' if !is_new && Admin::Setting.mail_function_setting %></span></td>
+    <td><%=h @profile.email %><span style="margin-left: 20px;"><%= link_to _("[Change]"), :action=> 'manage', :menu => 'manage_email' if !is_new && Admin::Setting.mail_function_setting %></span></td>
   </tr>
   <% if user_name_mode?(:name) -%>
   <tr>
@@ -49,10 +49,10 @@ table.normal {
       <span id="uid_result" style="margin-left:3px;color:gray;font-size:10px"></span>
       <span id="indicator" style="display:none;"><%= skip_image_tag 'indicator.gif' %></span>
       <div class="desc">
-        <p>4桁以上が必要です。半角英数の他にハイフン'-',アンダーバー'_'が利用できます。</p>
-        <p>この「ユーザ名」はシステムの中で、あなたのことをブログの記事中などで簡易的に指定する際に使います。</p>
-        <p>その特性上、この「ユーザ名」は他のユーザに知られることになりますので、不用意な値は指定しないようご注意ください。</p>
-        <p>よくわからない場合、メールアドレスのアカウント名（@の左側）と同じ値でかまいません。</p>
+        <p><%= _("4 or more letters required. You can use alphabets, numbers, \"-\" and \"_\".")%></p>
+        <p><%= _("\"User name\" is used to identify yourself in short in blog entries etc. by the system.")%></p>
+        <p><%= _("It is the nature of the \"user name\" to be known by other users in the site, be careful to avoid using inproper values for it.")%></p>
+        <p><%= _("Make it the same as the account name of your email address (left of \"@\") if you are not sure what to use for it.")%></p>
       </div>
   <% else -%>
     <td><%= h @user.uid %></td>
@@ -61,7 +61,7 @@ table.normal {
   <% end -%>
 </table>
 
-<div class="subtitle">基本情報</div>
+<div class="subtitle"><%= _('Basic Information')%></div>
 
 <table id="user_info_box" class="normal" border="1" style="width: 600px;">
   <tr>
@@ -70,82 +70,81 @@ table.normal {
     <% if sections = UserProfile.grouped_sections %>
       <%= select("profile", "section", sections, {}, {:tabindex => (tabindex += 1)}) -%><br/>
     <% end %>
-      [選択に無い場合] ： <%= text_field_tag "new_section", params[:new_section], :size => 10, :tabindex => (tabindex += 1) %> （次回以降選択項目になります）</td>
+      <%= _('[Not in the list] : ')%><%= text_field_tag "new_section", params[:new_section], :size => 10, :tabindex => (tabindex += 1) %><%= _(' (Will be added for selection upon next access)')%></td>
   </tr>
   <tr>
     <th width="100px"><label for="profile_extension"><%=h _('UserProfile|Extension') %></label></div></th>
     <td><%= text_field 'profile', 'extension', :size => 10, :tabindex => (tabindex += 1) %></td>
   </tr>
   <tr>
-    <th width="100px"><label for="profile_self_introduction"><%=h _('UserProfile|Self introduction') %></label><div class="example" style="margin-top: 10px;">現在の業務や今までの仕事、興味や関心のある事柄などについて書いてください</div></th>
+    <th width="100px"><label for="profile_self_introduction"><%=h _('UserProfile|Self introduction') %></label><div class="example" style="margin-top: 10px;"><%= _('Write about your current and past jobs, your interests and concerns.')%></div></th>
     <td><%= text_area 'profile', 'self_introduction', :cols => 55, :rows => 15, :tabindex => (tabindex += 1) %></td>
   </tr>
 </table>
 
-<div class="subtitle">属性情報<span style="margin-left: 30px;font-weight: normal;">(属性情報を入力する・・・登録済みの場合、チェックを外して保存を実行すると非公開となります ： <%= check_box_tag("write_profile", "true", ( @profile.disclosure || params[:write_profile] )) -%>)</span></div>
+<div class="subtitle"><%= _('Profile Information')%><span style="margin-left: 30px;font-weight: normal;"><%= _('Input profile information (Saving with the checkbox unchecked results in existing profile to get unpublicized): ')%><%= check_box_tag("write_profile", "true", ( @profile.disclosure || params[:write_profile] )) -%>)</span></div>
 <div id="profile_box" style="display: block;">
 <table id="user_info_box" class="normal" border="1" style="width: 600px;">
   <tr>
-    <th width="100px"><label for="profile_gender_type_1">性別</label></th>
+    <th width="100px"><label for="profile_gender_type_1"><%= _('Sex')%></label></th>
     <td><%= radio_buttons("profile", "gender_type", UserProfile.select_gender_type, :tabindex => (tabindex += 1)) -%></td>
   </tr>
   <tr>
-    <th><label for="profile_join_year">入社年度</label></th>
-    <td><%= select("profile", "join_year", UserProfile.select_join_year, {}, {:tabindex => (tabindex += 1)}) %> 年度入社</td>
+    <th><label for="profile_join_year"><%= _('Year Joined')%></label></th>
+    <td><%= _("Year %{year}") % {:year => select("profile", "join_year", UserProfile.select_join_year, {}, {:tabindex => (tabindex += 1)})} %></td>
   </tr>
 
   <tr>
-    <th><label for="profile_birth_month">誕生日</label></th>
-    <td><%= select("profile", "birth_month", 1..12, {}, {:tabindex => (tabindex += 1)}) %> 月
-      <%= select("profile", "birth_day", 1..31, {}, {:tabindex => (tabindex += 1)}) %> 日</td>
+    <th><label for="profile_birth_month"><%= _('Birthday')%></label></th>
+    <td><%= _("Month: %{month} \n      Day: %{day}") % {:month => select("profile", "birth_month", 1..12, {}, {:tabindex => (tabindex += 1)}), :day =>select("profile", "birth_day", 1..31, {}, {:tabindex => (tabindex += 1)})} %></td>
   </tr>
   <tr>
-    <th><label for="profile_blood_type_1">血液型</label></th>
+    <th><label for="profile_blood_type_1"><%= _('Blood Type')%></label></th>
     <td><%= radio_buttons("profile", "blood_type", UserProfile.select_blood_type, :tabindex => (tabindex += 1)) -%></td>
   </tr>
 
   <tr>
-    <th><label for="profile_hometown">出身地</label></th>
+    <th><label for="profile_hometown"><%= _('Hometown')%></label></th>
     <td><%= select("profile", "hometown", UserProfile.select_todouhuken, {}, {:tabindex => (tabindex += 1)}) -%></td>
   </tr>
   <tr>
-    <th><label for="profile_alma_mater">出身校</label><div class="example">例：xx大学</div></th>
-    <td><%= select("profile", "alma_mater", UserProfile.select_alma_mater, {}, {:tabindex => (tabindex += 1)}) -%><span style="color:gray;font-size:10px">(既に登録されているユーザのデータから抽出しています)</span><br/>
-      [選択に無い場合] ： <%= text_field_tag "new_alma_mater", "", :size => 30, :tabindex => (tabindex += 1) %>
-    <div class="desc">xx大学などの大体の内容で構いません（同窓生がわかる程度）</div></td>
+    <th><label for="profile_alma_mater"><%= _('Alma Mater')%></label><div class="example"><%= _('e.g. xx University')%></div></th>
+    <td><%= select("profile", "alma_mater", UserProfile.select_alma_mater, {}, {:tabindex => (tabindex += 1)}) -%><span style="color:gray;font-size:10px"><%= _('(Extracted from existing user data)')%></span><br/>
+      <%= _('[Not in the list] : ')%><%= text_field_tag "new_alma_mater", "", :size => 30, :tabindex => (tabindex += 1) %>
+    <div class="desc"><%= _('Approximate information (xx University) is just fine (for finding alumni).')%></div></td>
   </tr>
 
   <tr>
-    <th><label for="profile_address_1">現住所１</label></th>
+    <th><label for="profile_address_1"><%= _('Address 1')%></label></th>
     <td><%= select("profile", "address_1", UserProfile.select_todouhuken, {}, {:tabindex => (tabindex += 1)}) -%></td>
   </tr>
   <tr>
-    <th><label for="profile_address_2">現住所２</label><div class="example">例：xx区<br/>xx市</div></th>
-    <td><%= select("profile", "address_2", UserProfile.select_address_2, {}, {:tabindex => (tabindex += 1)}) -%><span style="color:gray;font-size:10px">(既に登録されているユーザのデータから抽出しています)</span><br/>
-      [選択に無い場合] ： <%= text_field_tag "new_address_2", "", :size => 30, :tabindex => (tabindex += 1) %>
-    <div class="desc">xx区などの大体の内容で構いません（ご近所さんがわかる程度）</div></td>
+    <th><label for="profile_address_2"><%= _('Address 2')%></label><div class="example"><%= _('e.g. xx District<br/>xx City')%></div></th>
+    <td><%= select("profile", "address_2", UserProfile.select_address_2, {}, {:tabindex => (tabindex += 1)}) -%><span style="color:gray;font-size:10px"><%= _('(Extracted from existing user data)')%></span><br/>
+      <%= _('[Not in the list] : ')%><%= text_field_tag "new_address_2", "", :size => 30, :tabindex => (tabindex += 1) %>
+    <div class="desc"><%= _('Approximate location (xx District) is just fine (for finding your neighbors).')%></div></td>
   </tr>
 </table>
 
-<div class="subtitle">オフ情報　（入力は必須ではありません）</div>
+<div class="subtitle"><%= _('Introduction (optional)')%></div>
 
 <table id="user_info_box" class="normal" border="1" style="width: 600px;">
   <tr>
-    <th width="100px"><label for="hobbies[]">趣味</label></th>
+    <th width="100px"><label for="hobbies[]"><%= _('Hobbies')%></label></th>
     <td>
       <% index = 0; UserProfile.hobbies.each do |hobby_name| -%>
-        <%= check_box_tag("hobbies[]", hobby_name, @profile.check_hobby(hobby_name), :tabindex => (tabindex += 1)) + hobby_name -%>
+        <%= check_box_tag("hobbies[]", hobby_name, @profile.check_hobby(hobby_name), :tabindex => (tabindex += 1)) + _(hobby_name) -%>
         <% index += 1 %>
         <%= '<br/>' if (index % 5) == 0 -%>
       <% end -%></td>
   </tr>
   <tr>
-    <th width="100px"><label for="profile_introduction">オフの私</label><div class="example" style="margin-top: 10px;">趣味の詳しい内容や、休日の過ごし方など、オフのあなたを少しだけ教えてください</div></th>
+    <th width="100px"><label for="profile_introduction"><%= _('Introduction')%></label><div class="example" style="margin-top: 10px;"><%= _('Tell us a little about you in the day off, e.g. the details of your hobbies or how you spend your holidays.')%></div></th>
     <td><%= text_area "profile", "introduction", :cols => 55, :rows => 15, :tabindex => (tabindex += 1) %></td>
   </tr>
 </table>
 </div>
-<% submit_button_value = is_new ? "ユーザ登録" : "保存" %>
+<% submit_button_value = is_new ? _("Register User") : _("Save") %>
 <%= submit_tag submit_button_value, {:tabindex => (tabindex += 1), :id => 'submit_button'} %>
 <% end %>
 </div>

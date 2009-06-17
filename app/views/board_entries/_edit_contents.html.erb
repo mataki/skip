@@ -1,19 +1,19 @@
-<style type="text/css">
+<br /><style type="text/css">
 table.input_table textarea {
   width: 100%;
 }
 </style>
 
   <div class="input_value" style="height: 2em;">
-    <%= radio_button_tag("editor_mode", "richtext", params[:editor_mode] == "richtext", :id=>"editor_mode_richtext") %>リッチテキスト
-    <%= radio_button_tag("editor_mode", "hiki", params[:editor_mode] == "hiki", :id=>"editor_mode_hiki") -%>Wikiテキスト
+    <%= radio_button_tag("editor_mode", "richtext", params[:editor_mode] == "richtext", :id=>"editor_mode_richtext") %><%= _('Rich Text')%>
+    <%= radio_button_tag("editor_mode", "hiki", params[:editor_mode] == "hiki", :id=>"editor_mode_hiki") -%><%= _('Wiki text')%>
   </div>
 
   <div id="contents_richtext_space" style="display: none;">
     <label for="contents"><%= text_area_tag 'contents_richtext', h(params[:contents_richtext]), :cols => 90, :rows => 20 %></label>
   </div>
   <div id="contents_hiki_space" style="display: none;">
-    <%= link_to_hiki_help %> <a href="#" id="hiki_preview_link">【プレビューで確認する】</a>
+    <%= link_to_hiki_help %> <a href="#" id="hiki_preview_link"><%= _('[See preview]')%></a>
     <label for="contents"><%= text_area_tag 'contents_hiki', h(params[:contents_hiki]), :cols => 90, :rows => 20 %></label>
   </div>
 

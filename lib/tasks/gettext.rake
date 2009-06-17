@@ -8,5 +8,5 @@ end
 desc "Update pot/po files to match new version."
 task :updatepo do
   ENV["MSGMERGE_PATH"] = "msgmerge --sort-output"
-  GetText.update_pofiles("skip", Dir.glob("{app}/**/*.{rb,erb}") + ["lib/symbol.rb"] - ["app/models/user_mailer.rb"], "skip 0.1.0")
+  GetText.update_pofiles("skip", Dir.glob("{app}/**/*.{rb,erb}") + ["lib/symbol.rb"] + ["config/environment.rb"] - ["app/models/user_mailer.rb"], "skip 0.1.0")
 end

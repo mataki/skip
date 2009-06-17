@@ -17,11 +17,13 @@ class Chain < ActiveRecord::Base
   belongs_to :from_user, :class_name => "User", :foreign_key => "from_user_id"
   belongs_to :to_user,   :class_name => "User", :foreign_key => "to_user_id"
 
-  validates_presence_of :comment, :message =>'は必須です'
+  validates_presence_of :comment, :message =>_('is mandatory.')
+
+  N_('Chain|Comment')
 
   class << self
     HUMANIZED_ATTRIBUTE_KEY_NAMES = {
-      "comment" => "紹介文"
+      "comment" => "Comment"  #紹介文
     }
     def human_attribute_name(attribute_key_name)
       HUMANIZED_ATTRIBUTE_KEY_NAMES[attribute_key_name] || super

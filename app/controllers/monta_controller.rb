@@ -19,7 +19,7 @@ class MontaController < ApplicationController
 
   def execute_monta
     unless check_entry_permission
-      render :text => "不正な操作です"
+      render :text => _("Invalid operation.")
       return false
     end
     return unless get_board_entry
@@ -30,7 +30,7 @@ class MontaController < ApplicationController
 
   def ado_view_contents
     unless check_entry_permission
-      render :text => "不正な操作です"
+      render :text => _("Invalid operation.")
       return false
     end
     return unless get_board_entry
@@ -63,7 +63,7 @@ class MontaController < ApplicationController
     else
       index = content_array.size
       @text_align = "center"
-      @content = @hidden_content = '<a href="#" onclick="window.close();">おしまい</a>'
+      @content = @hidden_content = '<a href="#" onclick="window.close();">' + _('End Monta') + '</a>'
     end
 
     @next_url = url_for(:action => 'ado_view_contents', :id => @board_entry.id, :index => index+1)

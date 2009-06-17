@@ -116,9 +116,9 @@ span.blue { color: blue; }
 <div id="top">
   <div id="menu_btn"></div>
   <div id="user_ctl">
-    <a href="mailto:<%= h Admin::Setting.contact_addr -%>" target="_blank">お問い合わせ</a>
-    <a href="#" onclick="javascript:getSubwindowRule()"> 利用規約</a>
-    <a href="#" onclick="javascript:getSubwindowScript(relative_url_root + '/custom/about_this_site.html', 720, 660)">このサイトについて</a>
+    <a href="mailto:<%= h Admin::Setting.contact_addr -%>" target="_blank"><%= _('Inquiries')%></a>
+    <a href="#" onclick="javascript:getSubwindowRule()"> <%= _('Terms of Use')%></a>
+    <a href="#" onclick="javascript:getSubwindowScript(relative_url_root + '/custom/about_this_site.html', 720, 660)"><%= _('About this site')%></a>
   </div>
   <%= render :partial => '/layouts/flash_messages' %>
   <%= render :partial => "login_failed_message" %>
@@ -126,7 +126,7 @@ span.blue { color: blue; }
 
 <div id="main">
 
-<div id="login"><p id="login-title">ログイン</p><%= render :partial => 'shared/login_form' %></div>
+<div id="login"><p id="login-title"><%=_("Login")%></p><%= render :partial => 'shared/login_form' %></div>
 <div id="desc_before_login" class="desc"></div>
 
 </div><!-- main -->

@@ -17,8 +17,8 @@ module Types::Gender
 
   MAN = 1; WOMAN = 2;
   GENDER = {
-     MAN   => '男性',
-     WOMAN => '女性'
+     MAN   => GetText._('Male'),
+     WOMAN => GetText._('Female')
   }
 
 end

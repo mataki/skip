@@ -30,9 +30,9 @@ div.input_line div.input_bottom {
 <%= render(:partial => 'user/portrait_box', :locals => { :user => @user }) -%>
 
 <div class="box_space" id="groups">
-  <div class="box_space_title"><%= icon_tag('group') %>参加グループ</div>
+  <div class="box_space_title"><%= icon_tag('group') %><%= _('Groups Joined')%></div>
   <div class="box_space_body">
-  <div id="group_participation_help" class="helpbar" style="display: none;">[<%= icon_tag('bullet_red') -%>：管理者 <%= icon_tag('bullet_blue') -%>：参加者]</div>
+  <div id="group_participation_help" class="helpbar" style="display: none;">[<%= _("%s: Administrators") % icon_tag('bullet_red') -%> <%= _("%s: Members") % icon_tag('bullet_blue') -%>]</div>
   <ul>
   <% @groups.each do |group| -%>
     <% icon_name = group.group_participations.first.owned? ? 'bullet_red' : 'bullet_blue' -%>
@@ -40,11 +40,11 @@ div.input_line div.input_bottom {
   <% end -%>
   </ul>
   </div>
-  <div class="box_space_bottom"><%= link_to "[全 #{@groups_count} 件...全てを見る]", :action => 'group', :uid => @user.uid %></div>
+  <div class="box_space_bottom"><%= link_to n_("[Total %{count} hit...see all]", "[Total %{count} hits...see all]",@groups_count) % {:count => @groups_count}, :action => 'group', :uid => @user.uid %></div>
 </div><!-- box_space -->
 
 <div class="box_space">
-  <div class="box_space_title"><%= icon_tag('user_suit') %>紹介したユーザ</div>
+  <div class="box_space_title"><%= icon_tag('user_suit') %><%= _('About Users')%></div>
   <div class="box_space_body">
   <ul>
   <% for chain in @follow_chains %>
@@ -52,7 +52,7 @@ div.input_line div.input_bottom {
   <% end %>
   </ul>
   </div>
-  <div class="box_space_bottom"><%= link_to '[全てを見る]', :action => 'social', :menu => 'social_chain_against', :uid => @user.uid %></div>
+  <div class="box_space_bottom"><%= link_to _('[See all]'), :action => 'social', :menu => 'social_chain_against', :uid => @user.uid %></div>
 </div><!-- box_space -->
 
 </div><!-- contents_left -->
@@ -60,14 +60,14 @@ div.input_line div.input_bottom {
 <div id="contents_right">
 
   <% if @user.retired? %>
-  <div class="desc" style="font-weight: bold; margin-bottom: 5px;">この方は既に退職されています</div>
+  <div class="desc" style="font-weight: bold; margin-bottom: 5px;"><%= _('This user has already left.')%></div>
   <% end %>
 
   <div class="profile_information_space" style="margin-bottom: 10px; position: relative; width: 100%;">
-    <div class="topix_title"><%= icon_tag('asterisk_orange') -%><span>プロフィール</span></div>
+    <div class="topix_title"><%= icon_tag('asterisk_orange') -%><span><%= _('Profile')%></span></div>
     <% if @user.id == session[:user_id] %>
     <div style="position: absolute; top: 5px; right: 10px;">
-      <%= link_to icon_tag('vcard_edit', :alt=>'編集する') + '[編集する]', :controller => 'mypage', :action => 'manage', :menu => 'manage_profile' -%></div>
+      <%= link_to icon_tag('vcard_edit', :alt=>_('Edit')) + _('[Edit]'), :controller => 'mypage', :action => 'manage', :menu => 'manage_profile' -%></div>
     <% end -%>
 
     <div class="topix_body" style="margin-top: 5px; width: 95%; overflow: hidden">
@@ -87,27 +87,27 @@ div.input_line div.input_bottom {
       </div>
       <% end %>
       <div class="input_line">
-        <div class="input_label"><%=h _("Admin::User|Name") %></div>
+        <div class="input_label"><%=h s_("Admin::User|Name") %></div>
         <div class="input_value"><%=h @user.name -%></div>
         <div class="input_bottom"></div>
       </div>
       <div class="input_line">
-        <div class="input_label"><%=h _('UserProfile|Email') %></div>
+        <div class="input_label"><%=h s_('UserProfile|Email') %></div>
         <div class="input_value"><a href="mailto:<%=h @user.user_profile.email -%>"><%=h @user.user_profile.email -%></a></div>
         <div class="input_bottom"></div>
       </div>
       <div class="input_line">
-        <div class="input_label"><%=h _('UserProfile|Section') %></div>
+        <div class="input_label"><%=h s_('UserProfile|Section') %></div>
         <div class="input_value"><%=h @user.user_profile.section -%></div>
         <div class="input_bottom"></div>
       </div>
       <div class="input_line">
-        <div class="input_label"><%=h _('UserProfile|Extension') %></div>
+        <div class="input_label"><%=h s_('UserProfile|Extension') %></div>
         <div class="input_value"><%=h @user.user_profile.extension -%></div>
         <div class="input_bottom"></div>
       </div>
       <div class="input_line">
-        <div class="input_label"><%=h _('UserProfile|Self introduction') %></div>
+        <div class="input_label"><%=h s_('UserProfile|Self introduction') %></div>
         <div class="input_value"></div>
         <div class="input_bottom"></div>
       </div>
@@ -118,41 +118,41 @@ div.input_line div.input_bottom {
       <% if @user.has_profile? && @user.profile.disclosure -%>
       <% @profile = @user.profile -%>
       <div class="input_line">
-        <div class="input_label">性別 - 入社年度</div>
-        <div class="input_value"><%=h @profile.gender -%> - <%=h @profile.join_year -%>年度入社</div>
+        <div class="input_label"><%= _('Sex - Year Joined')%></div>
+        <div class="input_value"><%=h @profile.gender -%> - <%=h _("Year %s" % @profile.join_year)%></div>
         <div class="input_bottom"></div>
       </div>
       <div class="input_line">
-        <div class="input_label">誕生日 - 血液型</div>
+        <div class="input_label"><%= _('Birthday - Blood Type')%></div>
         <div class="input_value"><%=h @profile.birth_month_day -%> - <%=h @profile.blood -%></div>
         <div class="input_bottom"></div>
       </div>
       <div class="input_line">
-        <div class="input_label">出身地 - 出身校</div>
+        <div class="input_label"><%= _('Hometown - Alma Mater')%></div>
         <div class="input_value"><%=h @profile.hometown_name -%> - <%=h @profile.alma_mater -%></div>
         <div class="input_bottom"></div>
       </div>
       <div class="input_line">
-        <div class="input_label">現住所</div>
+        <div class="input_label"><%= _('Address')%></div>
         <div class="input_value"><%=h @profile.address -%></div>
         <div class="input_bottom"></div>
       </div>
 
       <div class="input_line">
-        <div class="input_label">趣味</div>
+        <div class="input_label"><%= _('Hobbies')%></div>
         <div class="input_value"><%=h @profile.hobby.chop.gsub(/\,/, ' , ') if @profile.hobby %></div>
         <div class="input_bottom"></div>
       </div>
       <div class="input_line">
-        <div class="input_label">オフの私</div>
+        <div class="input_label"><%= _('Introduction')%></div>
         <div class="input_value"></div>
         <div class="input_bottom"></div>
       </div>
       <div style="border: 1px solid silver; padding: 5px;"><%= parse_permalink(@profile.introduction, @user.symbol) %></div>
       <% elsif @user.has_profile? && !@user.profile.disclosure -%>
-      <div style="text-align: center; color: blue; font-weight: bold;">属性情報・オフ情報は非公開です</div>
+      <div style="text-align: center; color: blue; font-weight: bold;"><%= _('Profile information and introduction information are closed.')%></div>
       <% else -%>
-      <div style="text-align: center; color: blue; font-weight: bold;">まだ属性情報・オフ情報は登録されていません</div>
+      <div style="text-align: center; color: blue; font-weight: bold;"><%= _('No user profile or introduction registered.')%></div>
       <% end -%>
 
     </div>
@@ -167,7 +167,7 @@ div.input_line div.input_bottom {
 
 <% if @against_chains.size > 0 %>
   <div class="profile_information_space" style="margin-bottom: 10px; position: relative; width: 100%;">
-    <div class="topix_title"><%= icon_tag('asterisk_orange') -%><span>紹介文</span></div>
+    <div class="topix_title"><%= icon_tag('asterisk_orange') -%><span><%= _('Introductions')%></span></div>
     <div class="topix_body" style="margin-top: 5px; width: 100%">
     <% for chain in @against_chains %>
 
@@ -180,7 +180,7 @@ div.input_line div.input_bottom {
 
     <% end %>
     </div>
-    <div style="position: absolute; top: 5px; right: 10px;"><%= link_to '[全てを見る]', :action => 'social', :menu => 'social_chain', :uid => @user.uid %></div>
+    <div style="position: absolute; top: 5px; right: 10px;"><%= link_to _('[See all]'), :action => 'social', :menu => 'social_chain', :uid => @user.uid %></div>
   </div>
 <% end %>
 

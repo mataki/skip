@@ -53,7 +53,7 @@ class HyperEstraier < Search
         result_hash[:header][:count] = 0
       end # if nres
     rescue Exception
-      return { :error => "現在全文検索エンジンに問題が発生しており、検索できません。" }
+      return { :error => _("We have some problems with the full-text search engine.") }
     end
     return result_hash
   end

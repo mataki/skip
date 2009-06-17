@@ -21,14 +21,14 @@ class UserProfile < ActiveRecord::Base
 
   belongs_to :user
 
-  validates_presence_of :email, :message => 'は必須です'
-  validates_length_of :email, :maximum => 50, :message => 'は50桁以内で入力してください'
-  validates_format_of :email, :message => 'は正しい形式で登録してください', :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/
-  validates_uniqueness_of :email, :message => 'は既に登録されています。'
+  validates_presence_of :email, :message => _('is mandatory.')
+  validates_length_of :email, :maximum => 50, :message => _('accepts 50 or less characters only.')
+  validates_format_of :email, :message => _('requires proper format.'), :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/
+  validates_uniqueness_of :email, :message => _('has already been registered.')
 
-  validates_length_of :alma_mater, :maximum=>20, :message =>'は20文字以内で入力してください', :allow_nil => true
+  validates_length_of :alma_mater, :maximum=>20, :message =>_('accepts 20 or less characters only.'), :allow_nil => true
 
-  validates_length_of :address_2,  :maximum=>100, :message =>'は100文字以内で入力してください', :allow_nil => true
+  validates_length_of :address_2,  :maximum=>100, :message =>_('accepts 100 or less characters only.'), :allow_nil => true
 
   N_('UserProfile|Alma mater')
   N_('UserProfile|Address 2')
@@ -38,8 +38,8 @@ class UserProfile < ActiveRecord::Base
 
   class << self
     HUMANIZED_ATTRIBUTE_KEY_NAMES = {
-      "alma_mater" => "出身校",
-      "address_2" => "現住所２"
+      "alma_mater" => "Alma mater",
+      "address_2" => "Address 2"
     }
     def human_attribute_name(attribute_key_name)
       HUMANIZED_ATTRIBUTE_KEY_NAMES[attribute_key_name] || super
@@ -64,13 +64,14 @@ class UserProfile < ActiveRecord::Base
 
   # 誕生日を返す
   def birth_month_day
-    return self.birth_month.to_s + '月' + self.birth_day.to_s + '日'
+    return _("%{month}/%{day}") % {:month => self.birth_month.to_s, :day => self.birth_day.to_s}
   end
 
   # 住所を返す
   def address
     return '' if self.address_1.blank?
     address = TODOUHUKEN[self.address_1]
+    #Fixme
     address = address + ' ' + self.address_2 unless self.address_2 == "非公開"
     return address
   end

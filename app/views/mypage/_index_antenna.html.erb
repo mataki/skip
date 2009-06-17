@@ -18,21 +18,21 @@ div.topix_body .page_line, div.topix_body .item_line {
 
 <div id="antenna_navi" style="text-align: right; padding: 0pt 0pt 12pt 0pt;">
   <div style="text-align:left; width: 40%; float: left;">
-    <a href="#" id="check_all_link">[ページ内の記事を既読]</a>
-    <a href="#" id="uncheck_all_link">[ページ内の記事を未読]</a>
+    <a href="#" id="check_all_link"><%= _('[Set entries in the page as read]')%></a>
+    <a href="#" id="uncheck_all_link"><%= _('[Set entries in the page as unread]')%></a>
   </div>
   <div style="overflow: hidden; width: 60%; float: right;">
   <% if type_symbol == :antenna_id -%>
     <span class="item">
-      <a href="#" id="show_antenna_link">[アンテナ条件を表示]</a>
-      <a href="#" id="hide_antenna_link" style="display:none;">[アンテナ条件を隠す]</a>
+      <a href="#" id="show_antenna_link"><%= _('[Show antenna links]')%></a>
+      <a href="#" id="hide_antenna_link" style="display:none;"><%= _('[Hide antenna links]')%></a>
     </span>
     <% end -%>
     <span class="item">
       <% if params[:read] -%>
-      <%= link_to '[既に読んだ記事を隠す]', type_symbol => type_value, :read => false -%>
+      <%= link_to _('[Hide read entries]'), type_symbol => type_value, :read => false -%>
       <% else %>
-      <%= link_to '[既に読んだ記事を表示]', type_symbol => type_value, :read => true -%>
+      <%= link_to _('[Show read entries]'), type_symbol => type_value, :read => true -%>
       <% end %>
     </span>
     <%= page_link(entries_pages) if entries_pages -%>

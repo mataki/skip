@@ -3,8 +3,8 @@
 </div>
 
 <div style="text-align: center; margin: 10px;">
-<input type="button" value="上記内容に同意する" onClick="location.href='<%= url_for(:action => :agreement) %>'"></input>
-<input type="button" value="ログアウト" onClick="location.href='<%= url_for(:controller => '/platform', :action => :logout) %>'"></input>
+<input type="button" value="<%= _('Accept the terms above')%>" onClick="location.href='<%= url_for(:action => :agreement) %>'"></input>
+<input type="button" value="<%= _('Logout')%>" onClick="location.href='<%= url_for(:controller => '/platform', :action => :logout) %>'"></input>
 </div>
 
 <script type="text/javascript">

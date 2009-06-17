@@ -37,17 +37,17 @@ var relative_url_root = '<%= controller.request.relative_url_root -%>';
 
 <body style="background-color: #fafafa;"><center><div style="width: 50%; margin-top: 30px; border: 1px solid silver; padding: 1px; background-color: white;">
 
-<div style="margin: 0 0 0 0; padding: 4px; text-align: left; font-size: 18px; font-weight: bold; background-color:#DDFFDD;">ログインが必要です</div>
+<div style="margin: 0 0 0 0; padding: 4px; text-align: left; font-size: 18px; font-weight: bold; background-color:#DDFFDD;"><%= _('Login Required')%></div>
 
-<div style="margin: 5px 0px 10px 0px; padding: 3px 10px 3px 10px; background-color: #EEFFEE; border: #FFC000 1px dashed;"><p>以降の操作のためには<%= h Admin::Setting.abbr_app_title -%>へのログインが必要です。以下よりログインしてください。</p></div>
+<div style="margin: 5px 0px 10px 0px; padding: 3px 10px 3px 10px; background-color: #EEFFEE; border: #FFC000 1px dashed;"><p><%= _("Login to %s required for further operations. Login from below.") % h(Admin::Setting.abbr_app_title)%></p></div>
 
 <%= render :partial => "login_failed_message" %>
 
 <div id="login"><%= render :partial => 'shared/login_form' %></div>
 
 <div style="border: 1px solid silver; padding: 5px 10px; background-color: #f0f0ff; text-align: center;">
-  <a href="mailto:<%= h Admin::Setting.contact_addr -%>" target="_blank">[お問い合わせ]</a>
-  <a href="#" onclick="javascript:getSubwindowRule()">[利用規約]</a>
+  <a href="mailto:<%= h Admin::Setting.contact_addr -%>" target="_blank"><%= _('[Inquiry]')%></a>
+  <a href="#" onclick="javascript:getSubwindowRule()"><%= _('[Terms of service]')%></a>
 </div>
 
 <p id="my_footer"><%= h Admin::Setting.footer_copyright -%></p>

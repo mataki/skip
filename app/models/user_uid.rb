@@ -28,19 +28,19 @@ class UserUid < ActiveRecord::Base
 
   N_('UserUid|Uid')
 
-  validates_presence_of :uid, :message => 'は必須です'
-  validates_uniqueness_of :uid, :message => 'は既に登録されています'
-  validates_length_of :uid, :minimum => UID_MIN_LENGTH, :message => "は%d文字以上で入力してください"
-  validates_length_of :uid, :maximum => UID_MAX_LENGTH, :message => "は%d文字以内で入力してください"
-  validates_format_of :uid, :message => 'は数字orアルファベットor記号で入力してください', :with => UID_FORMAT_REGEX
+  validates_presence_of :uid, :message => _('is mandatory.')
+  validates_uniqueness_of :uid, :message => _('has already been registered.')
+  validates_length_of :uid, :minimum => UID_MIN_LENGTH, :message => _("requires %d or more characters.")
+  validates_length_of :uid, :maximum => UID_MAX_LENGTH, :message => _("accepts %d or less characters only.")
+  validates_format_of :uid, :message => _('accepts numbers, alphapets and symbols.'), :with => UID_FORMAT_REGEX
 
   def validate
-    errors.add(:uid, "は#{Admin::Setting.login_account}と異なる形式で入力してください") if uid_type == UID_TYPE[:username] && uid =~ UID_CODE_REGEX
+    errors.add(:uid, _("needs to be in different format from %s.") % Admin::Setting.login_account) if uid_type == UID_TYPE[:username] && uid =~ UID_CODE_REGEX
   end
 
   # uid入力チェック（ajaxのアクションから利用）
   def self.check_uid uid
     u = new(:uid => uid, :uid_type => UID_TYPE[:username])
-    u.valid? ? _('登録可能です') : u.errors.full_messages.join(',')
+    u.valid? ? _('Usable.') : u.errors.full_messages.join(',')
   end
 end

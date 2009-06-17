@@ -2,7 +2,7 @@
 
 <table class="group_box">
   <tr>
-    <th>グループ名</th>
+    <th><%= _('Group Name')%></th>
     <td width="50%">
       <% if show_favorite %>
         <% participation = group.group_participations.first %>
@@ -17,12 +17,12 @@
     </td>
   </tr>
   <tr>
-    <th>説明</th>
+    <th><%= _('Explanation')%></th>
     <td colspan="3" class="desc"><div style="overflow: auto; height: 80px; width: 100%;"><div class="hiki_style"><%= hiki_parse(group.description, group.symbol) %></div></div></td>
   </tr>
   <tr>
     <td></td>
-    <td style="font-size:10px"><%= '※参加には承認が必要' if group.protected? -%></td>
-    <td colspan="2" class="since">since <%= group.created_on.strftime("%Y/%m/%d") -%></td>
+    <td style="font-size:10px"><%= _('*Approval needed for joining') if group.protected? -%></td>
+    <td colspan="2" class="since">since <%= group.created_on.strftime(_('%m/%d/%Y')) -%></td>
   </tr>
 </table>

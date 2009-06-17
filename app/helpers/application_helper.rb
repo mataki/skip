@@ -41,7 +41,7 @@ module ApplicationHelper
     output = ""
     output << link_to('[Head]', option.update({:page => 1})) if pages.current.previous
     output << link_to('[Prev]', option.update({:page => pages.current.previous})) if pages.current.previous
-    output << %(全#{pages.item_count}件（#{pages.current.number}/#{pages.length}ページ）)
+    output << _("Total %{items} hits (Page %{page} / %{pages})") % {:items => pages.item_count, :page => pages.current.number, :pages =>pages.length}
     output << link_to('[Next]', option.update({:page => pages.current.next})) if pages.current.next
     output << link_to('[Last]', option.update({:page => pages.last})) if pages.current.next
     output
@@ -145,7 +145,7 @@ module ApplicationHelper
       file_name = '/pictures/picture/' + picture.id.to_s + '.png'
       if popup
         pop_name = url_for(:controller => 'pictures', :action => 'picture', :id => picture.id.to_s)
-        options[:title] = "クリックすると実際の大きさで表示されます"
+        options[:title] = _("Click to see in original size.")
         return link_to(image_tag(file_name, options), file_name, :class => 'nyroModal')
       end
     else
@@ -212,10 +212,10 @@ module ApplicationHelper
 
   # [コメント(n)-ポイント(n)-話題(n)-アクセス(n)]の表示
   def get_entry_infos entry
-    output = "[コメント(#{entry.board_entry_comments_count})"
+    output = n_("[Comment(%s)", "[Comments(%s)", entry.board_entry_comments_count) % h(entry.board_entry_comments_count.to_s)
     output << "-#{h Admin::Setting.point_button}(#{h entry.point.to_s})"
-    output << "-話題(#{h entry.entry_trackbacks_count})"
-    output << "-アクセス(#{h entry.state.access_count.to_s})]"
+    output << n_("-Trackback(%s)", "-Trackbacks(%s)", entry.entry_trackbacks_count) % h(entry.entry_trackbacks_count.to_s)
+    output << n_("-Access(%s)]", "-Accesses(%s)]", entry.state.access_count) % h(entry.state.access_count.to_s)
     return output
   end
 

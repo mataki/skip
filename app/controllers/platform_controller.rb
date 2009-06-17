@@ -45,7 +45,7 @@ class PlatformController < ApplicationController
 
         redirect_to_back_or_root
       else
-        flash[:auth_fail_message] ||={ "message" => _("ログインに失敗しました。"), "detail" => _("下部に記載されているお問い合わせ先にご連絡下さい。")}
+        flash[:auth_fail_message] ||={ "message" => _("Log in failed."), "detail" => _("Refer to the contact information shown at the bottom of the screen to report the error.")}
         if request.env['HTTP_REFERER']
           redirect_to :back
         else
@@ -73,10 +73,10 @@ class PlatformController < ApplicationController
       user.forgot_password
       user.save!
       UserMailer.deliver_sent_forgot_password(email, reset_password_url(user.password_reset_token))
-      flash[:notice] = "パスワードリセットのためのURLを記載したメールを#{email}宛てに送信しました。"
+      flash[:notice] = _("An email contains the URL for resetting the password has been sent to %s.") % email
       redirect_to :controller => '/platform'
     else
-      flash[:error] = "入力された#{email}というメールアドレスは登録されていません。"
+      flash[:error] = _("Entered email address %s has not been registered in the site.") % email
       render :layout => 'not_logged_in'
     end
   end
@@ -89,18 +89,18 @@ class PlatformController < ApplicationController
         @user.password_confirmation = params[:user][:password_confirmation]
         if @user.save
           @user.reset_password
-          flash[:notice] = "パスワードリセットが完了しました。"
+          flash[:notice] = _("Password was successfully reset.")
           redirect_to :controller => '/platform'
         else
-          flash[:error] = "パスワードリセットに失敗しました。"
+          flash[:error] = _("Failed to reset password.")
           render :layout => 'not_logged_in'
         end
       else
-        flash[:error] = "パスワードリセットのためのURLの有効期限が過ぎています。"
+        flash[:error] = _("The URL for resetting password has already expired.")
         redirect_to :controller => '/platform'
       end
     else
-      flash[:error] = "パスワードリセットのためのURLが不正です。再度お試し頂くか、システム管理者にお問い合わせ下さい。"
+      flash[:error] = _("Invalid password reset URL. Try again or contact system administrator.")
       redirect_to :controller => '/platform'
     end
   end
@@ -111,10 +111,10 @@ class PlatformController < ApplicationController
     if @user_profile = UserProfile.find_by_email(email)
       login_id = @user_profile.user.code
       UserMailer.deliver_sent_forgot_login_id(email, login_id)
-      flash[:notice] = "ログインIDを記載したメールを#{email}宛てに送信しました。"
+      flash[:notice] = _("An email containing your login id is sent to %s.") % email
       redirect_to :controller => '/platform'
     else
-      flash[:error] = "入力された#{email}というメールアドレスは登録されていません。"
+      flash[:error] = _("Entered email address %s has not been registered in the site.") % email
       render :layout => 'not_logged_in'
     end
   end
@@ -187,20 +187,20 @@ class PlatformController < ApplicationController
 
   def set_error_message_form_result_and_redirect(result)
     error_messages = {
-      :missing      => [_("OpenIDサーバーが見つかりませんでした。"), _("正しいOpenID URLを入力してください。")] ,
-      :canceled     => [_("キャンセルされました。"), _("このサーバへの認証を確認してください") ],
-      :failed       => [_("認証に失敗しました。"), "" ],
-      :setup_needed => [_("内部エラーが発生しました。"), _("管理者に連絡してください。") ]
+      :missing      => [_("OpenID server not found."), _("Please provide a correct OpenID URL.")] ,
+      :canceled     => [_("Operation cancelled."), _("Please confirm to authenticate with the server.") ],
+      :failed       => [_("Authentication failed."), "" ],
+      :setup_needed => [_("Internal error(s) occured."), _("Contact administrator.") ]
     }
     set_error_message_and_redirect error_messages[result.instance_variable_get(:@code)], {:controller => :platform, :action => :login}
   end
 
   def set_error_message_from_user_and_redirect(user)
-    set_error_message_and_redirect [_("ユーザの登録に失敗しました。"), _("管理者に連絡してください。<br/>%{msg}")%{:msg => user.errors.full_messages}], :action => :index
+    set_error_message_and_redirect [_("Failed to register user."), _("Contact administrator.<br/>%{msg}")%{:msg => user.errors.full_messages}], :action => :index
   end
 
   def set_error_message_not_create_new_user_and_redirect
-    set_error_message_and_redirect [_("そのOpenIDは、登録されていません。"), _("ログイン後管理画面でOpenID URLを登録後ログインしてください。")], :action => :index
+    set_error_message_and_redirect [_("OpenID had not been registered."), _("Log in, register the OpenID URL in the administration screen then log in again.")], :action => :index
   end
 
   def set_error_message_and_redirect(message, url)

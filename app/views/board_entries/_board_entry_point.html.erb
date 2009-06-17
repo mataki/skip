@@ -4,7 +4,7 @@
 -%>
 
 <% if editable %>
-  （<%= "#{entry.point} #{h Admin::Setting.point_button}" %> 頂きました）
+  <%= _("(Got %{point} %{point_button} from you)") % {:point => entry.point , :point_button => h(Admin::Setting.point_button)}%>
 <% else %>
   <input type="button" id="entry_point_button" value="<%= "#{entry.point} #{h Admin::Setting.point_button}" -%>" />
 <% end %>

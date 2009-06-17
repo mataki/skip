@@ -2,9 +2,9 @@
 
 <div class="profile_information_space" style="margin-bottom: 10px; position: relative; width: 100%;">
   <div style="position: absolute; top: 5px; right: 10px;">
-    <%= link_to(icon_tag('tag_blue_add', :alt=>'ブックマーク！') + 'ブックマーク！', {:controller => "bookmark", :action => "edit", :url => postit_url, :title => user.name, :dummy => '.html'}, {:class => "nyroModal"}) %>
-    <%= link_to(icon_tag('tag_blue', :alt=>'全てを見る') + '[全てを見る]', {:uid => @user.uid, :action => "social", :menu => "social_postit"}) %>
+    <%= link_to(icon_tag('tag_blue_add', :alt=>_('Bookmark!')) + _('Bookmark!'), {:controller => "bookmark", :action => "edit", :url => postit_url, :title => user.name, :dummy => '.html'}, {:class => "nyroModal"}) %>
+    <%= link_to(icon_tag('tag_blue', :alt=>_('See all')) + _('[See all]'), {:uid => @user.uid, :action => "social", :menu => "social_postit"}) %>
   </div>
-  <div class="topix_title"><%= icon_tag('asterisk_orange') -%><span>他の人から見た<%=h user.name %>さん</span></div>
+  <div class="topix_title"><%= icon_tag('asterisk_orange') -%><span><%=h _("Mr./Ms. %s from other users' view") % user.name%></span></div>
   <div class="topix_body" style="margin-top: 5px; width: 100%"><%= social_tag_cloud tags, user.uid -%></div>
 </div>

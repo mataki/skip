@@ -40,7 +40,7 @@ class BookmarksController < ApplicationController
 
       @last_updated = popular_bookmarks.first.created_on.strftime("%Y/%m/%d %H:%M")
     else
-      flash.now[:notice] = '現在ブックマークは登録されていません。'
+      flash.now[:notice] = _('No bookmarks have been registered.')
     end
 
   end
@@ -58,15 +58,15 @@ class BookmarksController < ApplicationController
                                   :conditions => Bookmark.make_conditions(params),
                                   :include => :bookmark_comments,
                                   :order =>order )
-    flash.now[:notice] = '該当するブックマークはありませんでした。' unless @bookmarks && @bookmarks.size > 0
+    flash.now[:notice] = _('No matching bookmarks found.') unless @bookmarks && @bookmarks.size > 0
   end
 
 private
   def setup_layout
-    @main_menu = @title = 'ブックマーク'
+    @main_menu = @title = _('Bookmarks')
 
-    @tab_menu_source = [ ['人気ランキング', 'index'],
-                         ['検索', 'search'],
-                         ['セットアップ', 'setup'] ]
+    @tab_menu_source = [ [_('Popularity Rankings'), 'index'],
+                         [_('Search'), 'search'],
+                         [_('Setup'), 'setup'] ]
   end
 end

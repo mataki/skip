@@ -1,13 +1,13 @@
 <div class="content">
-  <h3><%= h Admin::Setting.login_account %>リマインダー</h3>
-  <p>以下で指定されたメールアドレスにログインIDを送信します。</p>
+  <h3><%= h Admin::Setting.login_account %><%= _('Reminder')%></h3>
+  <p><%= _('The login ID will be sent to the email address entered below.')%></p>
   <% form_tag :action => :forgot_login_id do -%>
     <table>
       <tr>
-        <th><label for="email">メールアドレス</label></th>
+        <th><label for="email"><%= _('Email Address')%></label></th>
         <td><%= text_field_tag(:email, params[:email]) %></td>
       </tr>
     </table>
-    <%= submit_tag "送信する" %>
+    <%= submit_tag _("Send") %>
   <% end -%>
 </div>

@@ -15,27 +15,27 @@
     <% if login_mode?(:password) -%>
     <tr valign="top">
       <td><label for="login_key"><span style="font-weight: bold;"><%= h Admin::Setting.login_account %></span></label>
-        (<%= link_to "#{h(Admin::Setting.login_account)}を忘れた方はこちら", forgot_login_id_path, {:style => 'font-size:11px', :tabindex => "101"} %>)</td>
+        (<%= link_to _("Lost your %s?") % h(Admin::Setting.login_account), forgot_login_id_path, {:style => 'font-size:11px', :tabindex => "101"} %>)</td>
     </tr>
     <tr valign="top">
       <td><%= text_field 'login', 'key', :size => 30, :autocomplete => :on, :style => "font-family:Tahoma", :tabindex => "1" -%></td>
     </tr>
     <tr valign="top">
-      <td><label for="login_password"><span style="font-weight: bold;">パスワード</span></label>
-        (<%= link_to 'パスワードを忘れた方はこちら', forgot_password_path, {:style => 'font-size:11px', :tabindex => "102"} %>)</td>
+      <td><label for="login_password"><span style="font-weight: bold;"><%= _('Password')%></span></label>
+        (<%= link_to _('Forgot your password? Click here.'), forgot_password_path, {:style => 'font-size:11px', :tabindex => "102"} %>)</td>
     </tr>
     <tr valign="top">
       <td><%= password_field 'login', 'password', { 'size' => 30, :onfocus=>'select();', 'AUTOCOMPLETE' => "on", :style => "font-family:Tahoma", :tabindex => "2" } %></td>
     </tr>
     <% elsif login_mode?(:fixed_rp) -%>
     <tr valign="top">
-      <td>下のボタンを押して、ログインしてください。
+      <td><%= _('Click the button below to login.')%>
         <%= hidden_field_tag "openid_url", h(INITIAL_SETTINGS['fixed_op_url']) -%>
       </td>
     </tr>
     <% else -%>
     <tr valign="top">
-      <td><label for="openid_url"><span style="font-weight: bold;">OpenID URL</span></label></td>
+      <td><label for="openid_url"><span style="font-weight: bold;"><%= _('OpenID URL')%></span></label></td>
     </tr>
     <tr valign="top">
       <td><%= text_field_tag 'openid_url', nil, 'AUTOCOMPLETE' => "on" %></td>
@@ -54,10 +54,10 @@
     <% end %>
 
     <tr valign="top">
-      <td><input id="login_save" name="login_save" type="checkbox" value="true" checked="checked", tabindex="3" /> 次回から自動的にログイン</td>
+      <td><input id="login_save" name="login_save" type="checkbox" value="true" checked="checked", tabindex="3" /> <%= _('Login automatically from next time')%></td>
     </tr>
     <tr>
-      <td align="right"><%= submit_tag "ログイン", :onclick=>"saveLoginData();", :tabindex => "4" %></td>
+      <td align="right"><%= submit_tag _("Login"), :onclick=>"saveLoginData();", :tabindex => "4" %></td>
     </tr>
   </table>
 <% end %>

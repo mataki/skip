@@ -33,14 +33,14 @@ class User < ActiveRecord::Base
 
   has_many :openid_identifiers
 
-  validates_presence_of :name, :message => 'は必須です'
-  validates_length_of :name, :maximum => 60, :message => 'は60桁以内で入力してください'
+  validates_presence_of :name, :message => _('is mandatory.')
+  validates_length_of :name, :maximum => 60, :message => _('accepts 60 or less characters only.')
 
-  validates_presence_of :password, :message => 'は必須です', :if => :password_required?
-  validates_confirmation_of :password, :message => 'は確認用パスワードと一致しません', :if => :password_required?
-  validates_length_of :password, :within => 6..40, :too_short => 'は%d文字以上で入力してください', :too_long => 'は%d文字以下で入力して下さい', :if => :password_required?
+  validates_presence_of :password, :message => _('is mandatory.'), :if => :password_required?
+  validates_confirmation_of :password, :message => _('does not match the confirmation password.'), :if => :password_required?
+  validates_length_of :password, :within => 6..40, :too_short => _('requires %d or more characters.'), :too_long => _('accepts %d or less characters only.'), :if => :password_required?
 
-  validates_presence_of :password_confirmation, :message => 'は必須です', :if => :password_required?
+  validates_presence_of :password_confirmation, :message => _('is mandatory.'), :if => :password_required?
 
   N_('User|Old password')
   # ステータスの状態
@@ -60,13 +60,14 @@ class User < ActiveRecord::Base
   end
 
   class << self
+    #Fixme
     HUMANIZED_ATTRIBUTE_KEY_NAMES = {
-      "uid" => "ユーザ名",
+      "uid" => "User name",
       "code" => Admin::Setting.login_account,
-      "name" => "名前",
-      "section" => "所属",
-      "email" => "メールアドレス",
-      "extension" => "内線"
+      "name" => "Name",
+      "section" => "Section",
+      "email" => "Email address",
+      "extension" => "Extension"
     }
     def human_attribute_name(attribute_key_name)
       HUMANIZED_ATTRIBUTE_KEY_NAMES[attribute_key_name] || super
@@ -128,12 +129,12 @@ class User < ActiveRecord::Base
   def change_password(params = {})
     if params[:old_password] and crypted_password == encrypt(params[:old_password])
       if params[:password].blank?
-        errors.add(:password, "が入力されていません。")
+        errors.add(:password, _("not provided."))
       else
         self.update_attributes params.slice(:password, :password_confirmation)
       end
     else
-      errors.add(:old_password, "が間違っています。")
+      errors.add(:old_password, _("incorrect."))
     end
   end
 
@@ -158,19 +159,19 @@ class User < ActiveRecord::Base
     mins = mins[0].to_i
 
     if days >= 180
-      "約半年以上アクセスなし"
+      _("Has not accessed for 6 or more months.")
     elsif days >= 90
-      "約3ヶ月以上アクセスなし"
+      _("Has not accessed for 3 or more months.")
     elsif days >= 10
-      "10日以上"
+      _("Within 10 days and more")
     elsif days >= 1
-      "#{days} 日以内"
+      n_("Within %d day", "Within %d days", days) % days
     elsif hours >= 1
-      "#{hours} 時間以内"
+      n_("Within %d hour", "Within %d hours", hours) % hours
     elsif mins >= 1
-      "#{mins} 分以内"
+      n_("Within %d minute", "Within %d minutes", mins) % mins
     else
-      "1分以内"
+      _("Within a minute")
     end
   end
 
@@ -236,7 +237,7 @@ class User < ActiveRecord::Base
   # ユーザ登録時にブログを投稿する
   def create_initial_entry message
     entry_params = {}
-    entry_params[:title] ="ユーザー登録しました！"
+    entry_params[:title] =_("I have joined the site!")
     entry_params[:message] = message
     entry_params[:tags] = ""
     entry_params[:user_symbol] = symbol

@@ -5,16 +5,16 @@
   <div align="center">
   <% file_ext = img_name.downcase.split(".").last -%>
   <% if ["flv", "swf"].include?(file_ext) -%>
-    <%= image_tag 'http://www.adobe.com/shockwave/download/images/flash_rune.gif', :alt => "flv形式の動画", :height => "64px", :width => "64px" %>
+    <%= image_tag 'http://www.adobe.com/shockwave/download/images/flash_rune.gif', :alt => _("flv format movie"), :height => "64px", :width => "64px" %>
   <% elsif ["jpg","png","jpeg","gif","bmp"].include?(file_ext) -%>
     <%= link_to image_tag ( img_url, :alt => h(img_name), :width => '64', :height => '64' ), img_url, :class => 'nyroModal', :rel => 'gal' %>
   <% else -%>
-    <%= image_tag "question.gif", :alt => "不明なファイル形式", :height => "64px", :width => "64px" -%>
+    <%= image_tag "question.gif", :alt => _("Unknown File Type"), :height => "64px", :width => "64px" -%>
   <% end -%>
   </div>
   <% if deletable -%>
     <div style="text-align:right;">
-      <a href="#" id="remove_image_link_<%= index -%>" class="remove_image_link" >...[削除]</a>
+      <a href="#" id="remove_image_link_<%= index -%>" class="remove_image_link" ><%= _('...[Delete]')%></a>
     </div>
   <% end -%>
   </div>
@@ -28,7 +28,7 @@ $j(function() {
     .click(function() {
         var url = '<%= url_for :action => :ado_remove_image, :id => board_entry_id -%>';
         var filename = $j('#image_name_' + this.id.split('_')[3]).html();
-        if(confirm('本当に削除しますか？')) {
+        if(confirm('<%= _("Are you sure to delete?")%>')) {
             $j.ajax({
                 type: "POST",
                 url: url,

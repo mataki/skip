@@ -1,13 +1,13 @@
   <tr>
-    <th>タグ</th>
+    <th><%= _('Tags')%></th>
       <%  params[:tag] ||= {:words =>"", :select =>'AND'} %>
     <td colspan="4"><%= text_field_tag('tag_words', Tag.comma_tags(params[:tag_words]), :size => '60') %>
-    [タグ検索指定]:　AND<%= radio_button_tag('tag_select', 'AND', params[:tag_select]=='AND') %>
-                     OR<%= radio_button_tag('tag_select', 'OR', params[:tag_select]=='OR') %>
+    <%= _('[Tag search mode]:&nbsp;AND')%><%= radio_button_tag('tag_select', 'AND', params[:tag_select]=='AND') %>
+                     <%= _('OR')%><%= radio_button_tag('tag_select', 'OR', params[:tag_select]=='OR') %>
     </td>
   </tr>
   <tr><td colspan="5"><div id="tag_list" style="color: blue;"></div></td></tr>
-  <tr><td colspan="5"><div style="font-size: 10px; text-align: right;">※人気のタグを<%=h @tags.size %>件表示しています。</div></td></tr>
+  <tr><td colspan="5"><div style="font-size: 10px; text-align: right;"><%= n_("*Showing %s popular tag.", "*Showing %s popular tags.", @tags.size) % h(@tags.size) %></div></td></tr>
 
 <script type="text/javascript">
 $j(function() {

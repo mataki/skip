@@ -1,10 +1,6 @@
 
-こんにちは、<%= h Admin::Setting.abbr_app_title %>事務局です。
+<%= _("Hello, this is the secretariat of %s.") % h(Admin::Setting.abbr_app_title)%>
 
-あなたの<%= h Admin::Setting.login_account %>は
-
-  <%= @login_id %>
-
-です。
+<%= _("Your %{account} is \n\n %{id}\n") % {:account => h(Admin::Setting.login_account), :id => h(@login_id)}%><%=  %>
 
 <%= @footer %>

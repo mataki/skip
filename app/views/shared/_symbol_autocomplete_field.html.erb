@@ -7,7 +7,7 @@
   <input id="publication_symbol" name="symbol" size="40" type="text" />
   <div class="auto_complete" id="publication_symbol_auto_complete"></div>
   <input type="text" id="publication_name" style="background-color: #f0f0ff; border: none; color: blue;" disabled="disabled">
-  <input type="button" value="追加" id="btn_add_publication_symbol"></p>
+  <input type="button" value="<%= _('Add')%>" id="btn_add_publication_symbol"></p>
 </div>
 
 <script type="text/javascript">
@@ -81,7 +81,7 @@ $j(function() {
                 $j('#editor_symbols_value').val(editor_symbols_array.toString());
             });
             element.append(input_tag);
-            element.append(document.createTextNode("編集可"));
+            element.append(document.createTextNode("<%= _('Editable')%>"));
         }
         return element;
     };
@@ -114,15 +114,15 @@ $j(function() {
 
         var validReg = /(u|g|e)id:[a-zA-Z0-9\-_]*$/
         if (!validReg.test(symbol)) {
-            alert("フォーマットが不正です。uid:xxxxxxのような形で入力してください。");
+            alert("<%= _('Invalid input format. Should be in uid:xxxxxx format.')%>");
             return
         }
         if (name.length == 0) {
-            alert("存在するユーザ/グループを入力してください");
+            alert("<%= _('Enter the name of existent users / groups.')%>");
             return;
         }
         if (publication_symbols_array.include(symbol)) {
-            alert("既に追加されています");
+            alert("<%= _('Symbol already exists.')%>");
             return;
         }
         createSymbolRecord(symbol, false, name);

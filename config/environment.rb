@@ -63,30 +63,30 @@ ENV['BATCH_LOG_PATH'] ||= INITIAL_SETTINGS['batch_log_path'] || "#{RAILS_ROOT}/l
 ENV['SECRET_KEY'] ||= INITIAL_SETTINGS['secret_key']
 
 menu_btns = [
-  { :img_name => "house",         :id => "btn_mypage", :name => "マイページ", :url => {:controller => '/mypage', :action => 'index'} },
+  { :img_name => "house",         :id => "btn_mypage", :name => GetText.N_("My Page"), :url => {:controller => '/mypage', :action => 'index'} },
 
-  { :separator => true, :name => "[マイメニュー]"},
+  { :separator => true, :name => GetText.N_("[My Menu]")},
 
-  { :img_name => "vcard",         :id => "btn_profile", :name => "プロフィール", :url => {:controller => '/mypage', :action => 'profile'} },
-  { :img_name => "report",        :id => "btn_my_blog", :name => "マイブログ", :url => {:controller => '/mypage', :action => 'blog'} },
-  { :img_name => "book_open",     :id => "btn_my_bookmark", :name => "マイブクマ", :url => {:controller => '/mypage', :action => 'bookmark'} },
-  { :img_name => "disk_multiple", :id => "btn_manage", :name => "マイファイル", :url => {:controller => '/mypage', :action => 'share_file'} },
-  { :img_name => "cog",           :id => "btn_manage", :name => "自分の管理", :url => {:controller => '/mypage', :action => 'manage'} },
+  { :img_name => "vcard",         :id => "btn_profile", :name => GetText.N_("Profile"), :url => {:controller => '/mypage', :action => 'profile'} },
+  { :img_name => "report",        :id => "btn_my_blog", :name => GetText.N_("My Blog"), :url => {:controller => '/mypage', :action => 'blog'} },
+  { :img_name => "book_open",     :id => "btn_my_bookmark", :name => GetText.N_("My Bookmarks"), :url => {:controller => '/mypage', :action => 'bookmark'} },
+  { :img_name => "disk_multiple", :id => "btn_manage", :name => GetText.N_("My Files"), :url => {:controller => '/mypage', :action => 'share_file'} },
+  { :img_name => "cog",           :id => "btn_manage", :name => GetText.N_("Self Admin"), :url => {:controller => '/mypage', :action => 'manage'} },
 
-  { :separator => true, :name => "[全体メニュー]"},
+  { :separator => true, :name => GetText.N_("[Site Menu]")},
 
-  { :img_name => "page_find",     :id => "btn_search", :name => "データを探す", :url => {:controller => '/search', :action => (INITIAL_SETTINGS['full_text_search_setting'] ? 'full_text_search' : 'entry_search') } },
-  { :img_name => "user_suit",     :id => "btn_users", :name => "ユーザ", :url => {:controller => '/users', :action => 'index'} },
-  { :img_name => "group",         :id => "btn_groups", :name => "グループ", :url => {:controller => '/groups', :action => 'index'} },
-  { :img_name => "book",          :id => "btn_bookmarks", :name => "ブックマーク", :url => {:controller => '/bookmarks', :action => 'index'} },
-  { :img_name => "chart_bar",     :id => "btn_rankings", :name => "ランキング", :url => {:controller => '/rankings', :action => 'index'} },
+  { :img_name => "page_find",     :id => "btn_search", :name => GetText.N_("Search for Data"), :url => {:controller => '/search', :action => (INITIAL_SETTINGS['full_text_search_setting'] ? 'full_text_search' : 'entry_search') } },
+  { :img_name => "user_suit",     :id => "btn_users", :name => GetText.N_("Users"), :url => {:controller => '/users', :action => 'index'} },
+  { :img_name => "group",         :id => "btn_groups", :name => GetText.N_("Groups"), :url => {:controller => '/groups', :action => 'index'} },
+  { :img_name => "book",          :id => "btn_bookmarks", :name => GetText.N_("Bookmarks"), :url => {:controller => '/bookmarks', :action => 'index'} },
+  { :img_name => "chart_bar",     :id => "btn_rankings", :name => GetText.N_("Rankings"), :url => {:controller => '/rankings', :action => 'index'} },
 ]
 MENU_BTNS = menu_btns
 
 admin_menu_btns = [
-  { :separator => true, :name => "[管理メニュー]"},
+  { :separator => true, :name => GetText.N_("[Admin Menu]")},
 
-  { :img_name => "database_gear",         :id => "btn_admin", :name => "システム管理", :url => {:controller => '/admin', :action => 'index'} },
+  { :img_name => "database_gear",         :id => "btn_admin", :name => GetText.N_("System Administration"), :url => {:controller => '/admin', :action => 'index'} },
 ]
 ADMIN_MENU_BTNS = admin_menu_btns
 

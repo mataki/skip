@@ -21,21 +21,21 @@ module GroupsHelper
     if participation = group.group_participations.detect{|participation| participation.user_id == user_id }
       if participation.owned?
         if options[:simple]
-          output << icon_tag('emoticon_happy') + '管理者'
+          output << icon_tag('emoticon_happy') + _('Administrator')
         else
-          output << icon_tag('emoticon_happy') + '（管理者権限があります）'
+          output << icon_tag('emoticon_happy') + _('(Have the administrative rights)')
         end
       elsif participation.waiting?
         if options[:simple]
-          output << icon_tag('hourglass') + '承認'
+          output << icon_tag('hourglass') + _('Approval')
         else
-          output << icon_tag('hourglass') + '（現在承認待ちです）'
+          output << icon_tag('hourglass') + _('(Waiting for approval of the administrator)')
         end
       else
         if options[:simple]
-          output << icon_tag('emoticon_smile') + '参加者'
+          output << icon_tag('emoticon_smile') + _('Member')
         else
-          output << icon_tag('emoticon_smile') + '（現在参加中です）'
+          output << icon_tag('emoticon_smile') + _('(Currently joined in the group)')
         end
       end
     end

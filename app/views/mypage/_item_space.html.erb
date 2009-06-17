@@ -6,7 +6,7 @@
   <div class="item_line">
     <div class="item_name"><%= item[:name] %></div>
     <div class="item_desc"><%= item[:desc] %></div>
-    <div class="item_date"><%= item[:date].strftime("%Y/%m/%d %H:%M") %></div>
+    <div class="item_date"><%= item[:date].strftime(_('%m/%d/%Y %H:%M')) %></div>
   </div>
 <% end -%>
 </div>

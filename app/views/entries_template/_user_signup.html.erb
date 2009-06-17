@@ -1,9 +1,9 @@
-<%= h user_name -%>です。
+<%= h(_("Hello, my name is %s.") % user_name) -%>
 
-ユーザ登録しました！！
+<%= _('I have joined the site!!')%>
 
 <% if user_introduction -%>
-以下、自己紹介
+<%= _('Self introduction follows:')%>
 ----
 <%= h user_introduction -%>
 <% end -%>

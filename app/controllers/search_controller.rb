@@ -51,7 +51,7 @@ class SearchController < ApplicationController
                                       :conditions => find_params[:conditions],
                                       :include => find_params[:include] | [ :user, :state ])
     unless @board_entries && @board_entries.size > 0
-      flash.now[:notice] = '該当するデータはありませんでした。'
+      flash.now[:notice] = _('No matching data found.')
     end
 
     @symbol2name_hash = BoardEntry.get_symbol2name_hash @board_entries
@@ -78,9 +78,9 @@ class SearchController < ApplicationController
                                     :per_page => 10)
     unless @share_files && @share_files.size > 0
       if params[:commit] || params[:category]
-        flash.now[:notice] = '該当する共有ファイルはありませんでした。'
+        flash.now[:notice] = _('No matching shared files found.')
       else
-        flash.now[:notice] = '現在共有されているファイルはありません。'
+        flash.now[:notice] = _('There are no shared files uploaded.')
       end
     end
   end
@@ -107,11 +107,11 @@ class SearchController < ApplicationController
 
 private
   def setup_layout
-    @main_menu = @title = 'データを探す'
+    @main_menu = @title = _('Search for Data')
 
-    @tab_menu_source = [ ['記事を探す', 'entry_search'],
-                         ['ファイルを探す', 'share_file_search'] ]
-    @tab_menu_source.unshift(['全文検索', 'full_text_search']) if INITIAL_SETTINGS['full_text_search_setting']
+    @tab_menu_source = [ [_('Search for Entries'), 'entry_search'],
+                         [_('Search for Files'), 'share_file_search'] ]
+    @tab_menu_source.unshift([_('Full-text Search'), 'full_text_search']) if INITIAL_SETTINGS['full_text_search_setting']
   end
 
   # 所属情報を取得するためのメソッド

@@ -20,7 +20,7 @@ $j(function() {
                 $j('#' + contents_type).html(html);
             },
             error: function() {
-                $j('#' + contents_type).html('ランキングデータの取得に失敗しました。')
+                $j('#' + contents_type).html('<%= _("Failed to acquire rankings data.")%>')
             }
         });
     };

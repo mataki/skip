@@ -3,30 +3,30 @@
 <% end -%>
 
 <div class="box tabular">
-  <h4><%= _('ロゴ画像') %></h4>
-  <p><%= _('ファイル形式は%{extentions}形式を利用可能できます。ファイルサイズは%{size}Kbyteまでアップロード可能です。' % {:extentions => Admin::ImagesController::LogoImage.extentions, :size => Admin::ImagesController::LogoImage.max_size / 1.kilobyte}) %></p>
+  <h4><%= _('Logo image') %></h4>
+  <p><%= _('%{extentions} formats are accepted. Maximum file size is %{size}Kbytes.') % {:extentions => Admin::ImagesController::LogoImage.extentions, :size => Admin::ImagesController::LogoImage.max_size / 1.kilobyte} %></p>
   <% Admin::ImagesController::LogoImage::IMAGE_NAMES.each do |target_name| -%>
     <%= render :partial => 'form',
                :locals => { :target_name => target_name,
                             :target_path => "/custom/images/#{target_name}.png",
-                            :title => _("Admin::ImagesController|#{target_name}"),
-                            :description => _("Admin::ImagesController|#{target_name}_description") } %>
+                            :title => s_("Admin::ImagesController|#{target_name}"),
+                            :description => s_("Admin::ImagesController|#{target_name}_description") } %>
   <% end -%>
-  <h4><%= _('ログイン画面の背景画像') %></h4>
-  <p><%= _('ファイル形式は%{extentions}形式を利用可能できます。ファイルサイズは%{size}Kbyteまでアップロード可能です。' % {:extentions => Admin::ImagesController::BackGroundImage.extentions, :size => Admin::ImagesController::BackGroundImage.max_size / 1.kilobyte}) %></p>
+  <h4><%= _('Background image of log in screen.') %></h4>
+  <p><%= _('%{extentions} formats are accepted. Maximum file size is %{size}Kbytes.') % {:extentions => Admin::ImagesController::BackGroundImage.extentions, :size => Admin::ImagesController::BackGroundImage.max_size / 1.kilobyte} %></p>
   <% Admin::ImagesController::BackGroundImage::IMAGE_NAMES.each_with_index do |target_name, index| -%>
     <%= render :partial => 'form',
                :locals => { :target_name => target_name,
                             :target_path => "/custom/images/titles/#{target_name}.jpg",
-                            :title => _("Admin::ImagesController|background") + (index + 1).to_s,
-                            :description => _("Admin::ImagesController|background_description") } %>
+                            :title => s_("Admin::ImagesController|background") + (index + 1).to_s,
+                            :description => s_("Admin::ImagesController|background_description") } %>
   <% end -%>
-  <h4><%= _('favicon画像') %></h4>
-  <p><%= _('ファイル形式は%{extentions}形式を利用可能できます。ファイルサイズは%{size}Kbyteまでアップロード可能です。' % {:extentions => Admin::ImagesController::FaviconImage.extentions, :size => Admin::ImagesController::FaviconImage.max_size / 1.kilobyte}) %></p>
+  <h4><%= _('favicon image') %></h4>
+  <p><%= _('%{extentions} formats are accepted. Maximum file size is %{size}Kbytes.') % {:extentions => Admin::ImagesController::FaviconImage.extentions, :size => Admin::ImagesController::FaviconImage.max_size / 1.kilobyte} %></p>
   <% target_name = Admin::ImagesController::FaviconImage::IMAGE_NAMES[0] -%>
   <%= render :partial => 'form',
              :locals => { :target_name => target_name,
                           :target_path => "/#{target_name}.ico",
-                          :title => _("Admin::ImagesController|favicon"),
-                          :description => _("Admin::ImagesController|favicon_description") } %>
+                          :title => s_("Admin::ImagesController|favicon"),
+                          :description => s_("Admin::ImagesController|favicon_description") } %>
 </div>

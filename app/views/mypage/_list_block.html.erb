@@ -31,15 +31,15 @@
 <% if pages_obj -%>
 <div style="text-align: right; font-size: 10px;"><span style="background-color: #fcffc5; padding: 0 2px 0 5px;">
 <% if pages_obj.current.previous -%>
-  <a class="first_link" id="<%= id_name -%>_first_link" href="#" >[最初へ]</a>
-  <a class="back_link" id="<%= id_name -%>_back_link" href="#" >[前へ]</a>
+  <a class="first_link" id="<%= id_name -%>_first_link" href="#" ><%= _('[Top]')%></a>
+  <a class="back_link" id="<%= id_name -%>_back_link" href="#" ><%= _('[Prev]')%></a>
 <% end -%>
-<%= %(全#{h pages_obj.item_count}件（#{h pages_obj.current.number}/#{h pages_obj.length}ページ）) %>
+<%= _("Total %{items} hits (Page %{page} / %{pages})") % {:items => h(pages_obj.item_count), :page => h(pages_obj.current.number), :pages => h(pages_obj.length)} %>
 <% if pages_obj.current.next -%>
-  <a class="next_link" id="<%= id_name -%>_next_link" href="#" >[次へ]</a>
-  <a class="last_link" id="<%= id_name -%>_last_link" href="#" >[最後へ]</a>
+  <a class="next_link" id="<%= id_name -%>_next_link" href="#" ><%= _('[Next]')%></a>
+  <a class="last_link" id="<%= id_name -%>_last_link" href="#" ><%= _('[Bottom]')%></a>
 <% end -%>
-<%= link_to('[ぜんぶ見る]', :controller => 'mypage', :action => "index", :list_type => id_name) -%>
+<%= link_to(_('[See all]'), :controller => 'mypage', :action => "index", :list_type => id_name) -%>
 </span></div>
 
 <% end %>

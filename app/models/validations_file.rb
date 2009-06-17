@@ -16,7 +16,7 @@
 module ValidationsFile
   def valid_presence_of_file(file)
     unless file.is_a?(ActionController::UploadedFile)
-      errors.add_to_base "ファイルが指定されていません。"
+      errors.add_to_base _("No files marked for upload.")
       return false
     end
     true
@@ -24,27 +24,27 @@ module ValidationsFile
 
   def valid_extension_of_file(file)
     unless SkipUtil.verify_extension? file.original_filename, file.content_type
-      errors.add_to_base "この形式のファイルは、アップロードできません。"
+      errors.add_to_base _("Files of this format are not accepted.")
     end
   end
 
   def valid_size_of_file(file)
     if file.size == 0
-      errors.add_to_base "存在しないもしくはサイズ０のファイルはアップロードできません。"
+      errors.add_to_base _("Nonexistent or empty files are not accepted for uploading.")
     elsif file.size > INITIAL_SETTINGS['max_share_file_size'].to_i
-      errors.add_to_base "#{INITIAL_SETTINGS['max_share_file_size'].to_i/1.megabyte}Mバイト以上のファイルはアップロードできません。"
+      errors.add_to_base _("Files larger than %dMBytes are not permitted.") % INITIAL_SETTINGS['max_share_file_size'].to_i/1.megabyte
     end
   end
 
   def valid_max_size_per_owner_of_file(file, owner_symbol)
     if (FileSizeCounter.per_owner(owner_symbol) + file.size) > INITIAL_SETTINGS['max_share_file_size_per_owner'].to_i
-      errors.add_to_base "共有ファイル保存領域の利用容量が最大値を越えてしまうためアップロードできません。"
+      errors.add_to_base _("Upload denied due to excess of assigned shared files disk capacity.")
     end
   end
 
   def valid_max_size_of_system_of_file(file)
     if (FileSizeCounter.per_system + file.size) > INITIAL_SETTINGS['max_share_file_size_of_system'].to_i
-      errors.add_to_base "システム全体における共有ファイル保存領域の利用容量が最大値を越えてしまうためアップロードできません。"
+      errors.add_to_base _("Upload denied due to excess of system wide shared files disk capacity.")
     end
   end
 

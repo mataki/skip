@@ -2,17 +2,17 @@
 <% content_for :topic_path do -%>
 <%= render :partial => '/admin/shared/topic_path' %>
 <% end -%>
-<% help_msg = _('全ての入力値を、初期設定値に置き換えます。保存ボタンを押さない限り、保存されません。') -%>
+<% help_msg = _('Reverting all values with initial settings. Settings are not saved unless "Save" button being clicked.') -%>
 <% form_tag(admin_settings_update_all_path(:tab => params[:tab])) do -%>
 <%= render :partial => params[:tab] %>
 <%= submit_tag _('Save'), :disable_with => _('Saving...') %>
-<%= link_to _('初期値に戻す'), '#', :id => 'revert_to_default_link' %><%#= help_icon_tag :content => help_msg %>
+<%= link_to _('Revert to default values'), '#', :id => 'revert_to_default_link' %><%#= help_icon_tag :content => help_msg %>
 <% end -%>
 </div>
 
 <% if params[:tab] == 'main' -%>
 <div class="content">
-  <h3 class="topics"><%= _('システム情報') %></h3>
+  <h3 class="topics"><%= _('System Info') %></h3>
   <% @system_infos.each do |category| -%>
   <h4><%=h category[:name] %></h4>
   <div class="box tabular">

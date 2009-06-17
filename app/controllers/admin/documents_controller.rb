@@ -35,13 +35,13 @@ class Admin::DocumentsController < Admin::ApplicationController
     @topics = topics
     @topics << @content_name
   rescue Errno::EACCES => e
-    flash.now[:error] = _('対象のコンテンツを開くことが出来ませんでした。')
+    flash.now[:error] = _('Failed to open the content.')
     render :status => :forbidden
   rescue Errno::ENOENT => e
-    flash.now[:error] = _('対象のコンテンツが存在しません。')
+    flash.now[:error] = _('Content not found.')
     render :status => :not_found
   rescue => e
-    flash.now[:error] = _('想定外のエラーが発生しました。管理者にお問い合わせ下さい。')
+    flash.now[:error] = _('Unexpected error occured. Contact administrator.')
     logger.error e
     e.backtrace.each { |message| logger.error message }
     render :status => :internal_server_error
@@ -86,13 +86,13 @@ class Admin::DocumentsController < Admin::ApplicationController
       return redirect_to(admin_documents_path)
     end
     yield
-    flash[:notice] = _('%{target}を保存しました。' % {:target => _("Admin::DocumentsController|#{params[:target]}")})
+    flash[:notice] = _('%{target} was successfully saved.' % {:target => s_("Admin::DocumentsController|#{params[:target]}")})
     redirect_to admin_documents_path(:target => params[:target])
   rescue Errno::EACCES => e
-    flash.now[:error] = _('対象のコンテンツを保存することが出来ませんでした。再度お試し頂くか管理者にお問い合わせ下さい。')
+    flash.now[:error] = _('Failed to save the content.  Try again or contact administrator.')
     render :action => :index, :target => params[:target], :status => :forbidden
   rescue => e
-    flash.now[:error] = _('想定外のエラーが発生しました。管理者にお問い合わせ下さい。')
+    flash.now[:error] = _('Unexpected error occured. Contact administrator.')
     e.backtrace.each { |message| logger.error message }
     render :action => :index, :target => params[:target], :status => :internal_server_error
   end
