@@ -1,12 +1,12 @@
 div#header
   :position relative
   :height 70px
-  :margin-bottom 2px
+  :border-bottom 1px solid #ccc
   // IEでpositionがstatic以外の場合にz-indexが正しく適用されないバグ対応
   :z-index 1
   div#global_top
     :border-bottom 1px solid #ccc
-    :height 20px
+    :height 18px
     :margin 4px 5px
     a
       :color #00c
@@ -31,9 +31,6 @@ div#header
           :color #fff
           :background-color #36c
     div#menu
-      :position absolute
-      :top 0
-      :right 0
       :border none
       :font-size 12px
       :text-align right
