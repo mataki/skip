@@ -163,7 +163,7 @@ $j(function() {
             var tb = Trim(tb_array[i]);
             if(tb != ""){
                 if (isNaN(tb)){
-                    alert("<%= _("Illegal format in \"Topic entry\".\\r\\nList the page IDs and separate each other by commas.")%>");
+                    alert('<%= _('Illegal format in "Topic entry".\r\nList the page IDs and separate each other by commas.')%>');
                     return false;
                 }
                 if (contents_value.match(new RegExp("page:" + tb + ".*]")) == null) {
@@ -174,7 +174,7 @@ $j(function() {
 
         if ($j('#publication_type_protected:checked').size() > 0){
             if ($j('#board_entry_category').val().match(new RegExp("連絡", "g")) == null) {
-                if (confirm("<%= _('The recipient(s) may not notice your message since it is missing a "連絡" tag. Are you sure to proceed?')%>") == false) {
+                if (confirm('<%= _('The recipient(s) may not notice your message since it is missing a "連絡" tag. Are you sure to proceed?')%>') == false) {
                     return false;
                 }
             }
