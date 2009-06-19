@@ -175,3 +175,22 @@ describe GroupCategory do
     end
   end
 end
+
+describe GroupCategory, '#groups' do
+  before do
+    @group_category = create_group_category
+    @group_category.groups.create!(:name => 'name', :description => 'description', :gid => 'ggid')
+  end
+  it '一件のグループが取得できること' do
+    @group_category.groups.size.should == 1
+  end
+  describe 'グループを論理削除された場合' do
+    before do
+      @group_category.groups.first.logical_destroy
+      @group_category.reload
+    end
+    it 'グループが取得できないこと' do
+      @group_category.groups.size.should == 0
+    end
+  end
+end

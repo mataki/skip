@@ -211,28 +211,53 @@ private
   end
 end
 
-describe BoardEntry, '#authorized_entries_except_given_user' do
-  before do
-    # satoはsuzukiの記事の閲覧権限がない
-    @sato = create_user(:user_options => {:name => 'Sato'}, :user_uid_options => {:uid => 'sato'})
-    @sato_symbols = ["uid:#{@sato.uid}"]
-    # yamadaはsuzukiの記事の閲覧権限がある
-    @yamada = create_user(:user_options => {:name => 'Yamada'}, :user_uid_options => {:uid => 'yamada'})
-    @yamada_symbols = ["uid:#{@yamada.uid}"]
-    @yamada_entry = create_board_entry(:user_id => @yamada.id)
-    @suzuki = create_user(:user_options => {:name => 'Suzuki'}, :user_uid_options => {:uid => 'suzuki'})
-    @suzuki_entry = create_board_entry(:user_id => @suzuki.id, :publication_type => 'private')
-    create_entry_publications(:board_entry_id => @suzuki_entry.id, :symbol => "uid:#{@suzuki.uid}")
-    @entry_ids = [@yamada_entry.id, @suzuki_entry.id]
-  end
-  describe '[全公開の記事とSatoが閲覧できないprotectedな記事]からSatoが閲覧可能な記事を取得する場合' do
-    it '一件の記事が取得できること' do
-      @yamada_entry.send(:authorized_entries_except_given_user, @sato.id, @sato_symbols, @entry_ids).size.should == 1
+describe BoardEntry, '.get_symbol2name_hash' do
+  describe 'あるグループの掲示板が存在する場合' do
+    before do
+      @group = create_group(:gid => 'skip_group', :name => 'SKIPグループ')
+      @user = create_user
+      @entry = create_board_entry(:symbol => 'gid:skip_group', :user_id => @user.id)
+    end
+    it '対象記事を所有するグループのgidをキー、名前を値とするハッシュが取得できること' do
+      BoardEntry.get_symbol2name_hash([@entry]).should == {'gid:skip_group' => 'SKIPグループ'}
+    end
+    describe '記事を所有するグループが論理削除された場合' do
+      before do
+        @group.logical_destroy
+      end
+      it '空ハッシュが取得できること' do
+        BoardEntry.get_symbol2name_hash([@entry]).should == {}
+      end
     end
   end
-  describe '[全公開の記事とYamadaが閲覧できるprotectedな記事]からYamadaが閲覧可能な記事を取得する場合' do
-    it '二件の記事が取得できること' do
-      @yamada_entry.send(:authorized_entries_except_given_user, @yamada.id, @yamada_symbols, @entry_ids).size.should == 2
+end
+
+describe BoardEntry, '#prepare_send_mail' do
+  describe 'あるグループの掲示板が存在する場合' do
+    before do
+      @alice = create_user :user_options => {:name => 'アリス', :admin => true}, :user_uid_options => {:uid => 'alice'}
+      @group = create_group(:gid => 'skip_group', :name => 'SKIPグループ') do |g|
+        g.group_participations.build(:user_id => @alice.id, :owned => true)
+      end
+      @entry = create_board_entry(:symbol => 'gid:skip_group', :publication_type => 'protected', :user_id => @alice.id) do |e|
+        e.entry_publications.build(:symbol => 'gid:skip_group')
+      end
+      Mail.delete_all
+    end
+    it 'Mailに送信予定のレコードが作成されること' do
+      lambda do
+        @entry.prepare_send_mail
+      end.should change(Mail, :count).by(1)
+    end
+    describe '記事を所有するグループが論理削除された場合' do
+      before do
+        @group.logical_destroy
+      end
+      it 'Mailに送信予定のレコードが作成されないこと' do
+        lambda do
+          @entry.prepare_send_mail
+        end.should_not change(Mail, :count)
+      end
     end
   end
 end
@@ -267,6 +292,36 @@ describe BoardEntry, '#to_trackback_entries' do
   end
 end
 
+describe BoardEntry, '#publication_users' do
+  describe 'あるグループの掲示板が存在する場合' do
+    before do
+      # あるグループの管理者がアリス, 参加者がマイク
+      @alice = create_user :user_options => {:name => 'アリス', :admin => true}, :user_uid_options => {:uid => 'alice'}
+      @mike = create_user :user_options => {:name => 'マイク', :admin => true}, :user_uid_options => {:uid => 'mike'}
+      @group = create_group(:gid => 'skip_group', :name => 'SKIPグループ') do |g|
+        g.group_participations.build(:user_id => @alice.id, :owned => true)
+        g.group_participations.build(:user_id => @mike.id, :owned => false)
+      end
+      # アリスのブログで、そのグループ及びマイクが直接指定されている
+      @entry = create_board_entry(:symbol => 'uid:alice', :publication_type => 'protected', :user_id => @alice.id) do |e|
+        e.entry_publications.build(:symbol => 'gid:skip_group')
+        e.entry_publications.build(:symbol => 'uid:mike')
+      end
+    end
+    it '公開されているユーザの配列が返ること' do
+      @entry.publication_users.should == [@alice, @mike]
+    end
+    describe '記事を所有するグループが論理削除された場合' do
+      before do
+        @group.logical_destroy
+      end
+      it '公開されているユーザの配列が返ること' do
+        @entry.publication_users.should == [@mike]
+      end
+    end
+  end
+end
+
 describe BoardEntry, '.owner' do
   describe '書き込み場所がUserの場合(symbolがuid:xxxxxx)' do
     before do
@@ -280,12 +335,18 @@ describe BoardEntry, '.owner' do
   end
   describe '書き込み場所がGroupの場合(symbolがgid:xxxxxx)' do
     before do
-      @symbol = 'gid:111111'
-      @group = mock_model(Group)
-      Group.should_receive(:find_by_gid).and_return(@group)
+      @group = create_group :gid => 'skip_group'
     end
     it '書き込み場所(所有者)としてグループが返却されること' do
-      BoardEntry.owner(@symbol).should == @group
+      BoardEntry.owner('gid:skip_group').should == @group
+    end
+    describe '書き込み場所のグループが論理削除された場合' do
+      before do
+        @group.logical_destroy
+      end
+      it 'nilが返ること' do
+        BoardEntry.owner('gid:skip_group').should be_nil
+      end
     end
   end
   describe '書き込み場所が不明な場合' do
@@ -385,3 +446,30 @@ describe BoardEntry, '#point_incrementable?' do
     end
   end
 end
+
+describe BoardEntry, '#authorized_entries_except_given_user' do
+  before do
+    # satoはsuzukiの記事の閲覧権限がない
+    @sato = create_user(:user_options => {:name => 'Sato'}, :user_uid_options => {:uid => 'sato'})
+    @sato_symbols = ["uid:#{@sato.uid}"]
+    # yamadaはsuzukiの記事の閲覧権限がある
+    @yamada = create_user(:user_options => {:name => 'Yamada'}, :user_uid_options => {:uid => 'yamada'})
+    @yamada_symbols = ["uid:#{@yamada.uid}"]
+    @yamada_entry = create_board_entry(:user_id => @yamada.id)
+    @suzuki = create_user(:user_options => {:name => 'Suzuki'}, :user_uid_options => {:uid => 'suzuki'})
+    @suzuki_entry = create_board_entry(:user_id => @suzuki.id, :publication_type => 'private')
+    create_entry_publications(:board_entry_id => @suzuki_entry.id, :symbol => "uid:#{@suzuki.uid}")
+    @entry_ids = [@yamada_entry.id, @suzuki_entry.id]
+  end
+  describe '[全公開の記事とSatoが閲覧できないprotectedな記事]からSatoが閲覧可能な記事を取得する場合' do
+    it '一件の記事が取得できること' do
+      @yamada_entry.send(:authorized_entries_except_given_user, @sato.id, @sato_symbols, @entry_ids).size.should == 1
+    end
+  end
+  describe '[全公開の記事とYamadaが閲覧できるprotectedな記事]からYamadaが閲覧可能な記事を取得する場合' do
+    it '二件の記事が取得できること' do
+      @yamada_entry.send(:authorized_entries_except_given_user, @yamada.id, @yamada_symbols, @entry_ids).size.should == 2
+    end
+  end
+end
+

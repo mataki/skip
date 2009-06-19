@@ -15,6 +15,25 @@
 
 require File.dirname(__FILE__) + '/../spec_helper'
 
+describe User, '#groups' do
+  before do
+    @user = create_user
+    @group = create_group
+    group_participation = GroupParticipation.create!(:user_id => @user.id, :group_id => @group.id)
+  end
+  it '一件のグループが取得できること' do
+    @user.groups.size.should == 1
+  end
+  describe 'グループを論理削除された場合' do
+    before do
+      @group.logical_destroy
+    end
+    it 'グループが取得できないこと' do
+      @user.groups.size.should == 0
+    end
+  end
+end
+
 describe User," is a_user" do
   fixtures :users, :user_accesses, :user_uids
   before(:each) do

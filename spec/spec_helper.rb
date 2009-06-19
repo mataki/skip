@@ -161,6 +161,7 @@ def create_board_entry options = {}
                                :user_id => 1,
                                :last_updated => Date.today,
                                :publication_type => 'public'}.merge(options))
+  yield board_entry if block_given?
   board_entry.save!
   create_entry_publications(:board_entry_id => board_entry.id, :symbol => Symbol::SYSTEM_ALL_USER) if board_entry.public?
   board_entry

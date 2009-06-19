@@ -15,6 +15,39 @@
 
 require File.dirname(__FILE__) + '/../spec_helper'
 
+describe Symbol, '.get_item_by_symbol' do
+  describe '指定されたuidのユーザが見つかる場合' do
+    before do
+      create_user :user_uid_options => {:uid => 'skip'}
+    end
+    it '対象のUserが返ること' do
+      Symbol.get_item_by_symbol('uid:skip').uid.should == 'skip'
+    end
+  end
+  describe '指定されたuidのユーザが見つからない場合' do
+    it 'nilが返ること' do
+      Symbol.get_item_by_symbol('uid:skip').should be_nil
+    end
+  end
+  describe '指定されたgidのグループが見つかる場合' do
+    before do
+      @group = create_group(:gid => 'skip_group')
+    end
+    it '対象のGroupが返ること' do
+      Symbol.get_item_by_symbol('gid:skip_group').gid.should == 'skip_group'
+    end
+    describe '指定されたgidのグループが論理削除された場合' do
+      before do
+        @group.logical_destroy
+      end
+      it 'nilが返ること' do
+        Symbol.get_item_by_symbol('gid:skip_group').should be_nil
+      end
+    end
+  end
+end
+
+
 describe Symbol, '.items_by_partial_match_symbol_or_name' do
   describe '検索句が空の場合' do
     it '空配列が返ること' do
@@ -51,6 +84,14 @@ describe Symbol, '.items_by_partial_match_symbol_or_name' do
       end
       it '対象グループが取得できること' do
         Symbol.items_by_partial_match_symbol_or_name('gid:imgrou').should == [@group]
+      end
+      describe '対象のグループが論理削除された場合' do
+        before do
+          @group.logical_destroy
+        end
+        it '空配列が返ること' do
+          Symbol.items_by_partial_match_symbol_or_name('gid:imgrou').should == []
+        end
       end
     end
   end

@@ -576,28 +576,17 @@ class BoardEntry < ActiveRecord::Base
   # 戻り値：Userオブジェクトの配列（重複なし）
   def publication_users
     users = []
-    user_ids = []
     entry_publications.each do |pub|
-      tmp_users = []
       symbol_type, symbol_id = SkipUtil.split_symbol(pub.symbol)
       case symbol_type
         when "uid"
-        tmp_users << User.find_by_uid(symbol_id)
-
+          users << User.find_by_uid(symbol_id)
         when "gid"
-        tmp_users = Group.active.find_by_gid(symbol_id, :include => [:group_participations]).group_participations.map { |part| part.user }
-
-      end # end case
-
-      tmp_users.each do |user|
-        unless user_ids.include?(user.id)
-          users << user
-          user_ids << user.id
-        end
+          group = Group.active.find_by_gid(symbol_id, :include => [:group_participations])
+          users << group.group_participations.map { |part| part.user } if group
       end
-
-    end # end each
-    return users
+    end
+    users.flatten.uniq
   end
 
   def root_comments

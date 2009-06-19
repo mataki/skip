@@ -107,25 +107,24 @@ describe Group do
   end
 
   describe Group, "Group.find_waitings" do
-    fixtures :groups
     describe "あるユーザの管理しているグループに承認待ちのユーザがいる場合" do
-
-      before(:each) do
-        @participation = mock_model(GroupParticipation)
-        @group_id = groups(:a_protected_group1).id
-        @participation.stub!(:group_id).and_return(@group_id)
-        GroupParticipation.stub!(:find).and_return([@participation])
+      before do
+        @alice = create_user :user_options => {:name => 'アリス', :admin => true}, :user_uid_options => {:uid => 'alice'}
+        @group = create_group(:gid => 'skip_group', :name => 'SKIPグループ') do |g|
+          g.group_participations.build(:user_id => @alice.id, :owned => true, :waiting => true)
+        end
       end
-
-      it { Group.find_waitings(1).first.id.should == @group_id }
-    end
-
-    describe "あるユーザの管理しているグループに承認待ちのユーザがいない場合" do
-      before(:each) do
-        GroupParticipation.stub!(:find).and_return([])
+      it '指定したユーザに対する承認待ちのグループが取得できること' do
+        Group.find_waitings(@alice.id).first.should == @group
       end
-
-      it { Group.find_waitings(1).should be_empty }
+      describe '承認待ちになっているグループが論理削除された場合' do
+        before do
+          @group.logical_destroy
+        end
+        it '対象のグループが取得できないこと' do
+          Group.find_waitings(@alice.id).should be_empty
+        end
+      end
     end
   end
 
@@ -141,6 +140,22 @@ describe Group do
 
     it "管理者ユーザが返る" do
       @group.get_owners.should == [@user]
+    end
+  end
+
+  describe Group, '.gid_by_category' do
+    before do
+      Group.delete_all
+      @group_category = create_group_category
+      @vim_group = create_group :gid => 'vim_group', :group_category_id => @group_category.id
+      @emacs_group = create_group :gid => 'emacs_group', :group_category_id => @group_category.id
+    end
+    it '対象のカテゴリに対するgidのハッシュが返ること' do
+      Group.gid_by_category.should == {@group_category.id => ['gid:vim_group', 'gid:emacs_group']}
+    end
+    it '論理削除されたグループのgidは含まれないこと' do
+      @vim_group.logical_destroy
+      Group.gid_by_category.should == {@group_category.id => ['gid:emacs_group']}
     end
   end
 
@@ -166,21 +181,38 @@ describe Group do
   end
 
   describe Group, "count_by_category" do
-    before(:each) do
-      @group1 = mock_model(Group)
-      @group1.stub!(:group_category_id).and_return('1')
-      @group1.stub!(:count).and_return('2')
-      @group2 = mock_model(Group)
-      @group2.stub!(:group_category_id).and_return('2')
-      @group2.stub!(:count).and_return('1')
-      Group.should_receive(:find).and_return([@group1,@group2])
+    before do
+      @alice = create_user :user_options => {:name => 'アリス', :admin => true}, :user_uid_options => {:uid => 'alice'}
+      @dev_category = create_group_category :code => 'dev'
+      @vim_group = create_group :gid => 'vim_group', :group_category_id => @dev_category.id do |g|
+        g.group_participations.build(:user_id => @alice.id, :owned => true)
+      end
+      @tom = create_user :user_options => {:name => 'トム', :admin => true}, :user_uid_options => {:uid => 'toom'}
+      @emacs_group = create_group :gid => 'emacs_group', :group_category_id => @dev_category.id do |g|
+        g.group_participations.build(:user_id => @tom.id, :owned => true)
+      end
+      @life_category = create_group_category :code => 'life'
+      @move_group = create_group :gid => 'move_group', :group_category_id => @life_category.id do |g|
+        g.group_participations.build(:user_id => @tom.id, :owned => true)
+      end
     end
 
-    it "グループのカテゴリとそのカテゴリのグループ数および全グループ数を返す" do
-      group_counts, total_count = Group.count_by_category
-      group_counts['1'].should == 2
-      group_counts['2'].should == 1
-      total_count.should == 3
+    describe 'ユーザを指定しない場合' do
+      it "グループのカテゴリとそのカテゴリのグループ数および全グループ数を返す" do
+        group_counts, total_count = Group.count_by_category
+        group_counts[@dev_category.id].should == 2
+        group_counts[@life_category.id].should == 1
+        total_count.should == 3
+      end
+    end
+
+    describe 'ユーザを指定する場合' do
+      it 'ユーザの所属するグループのカテゴリとそのカテゴリのグループ数及び全グループ数を返す' do
+        group_counts, total_count = Group.count_by_category(@alice.id)
+        group_counts[@dev_category.id].should == 1
+        group_counts[@life_category.id].should == 0
+        total_count.should == 1
+      end
     end
   end
 

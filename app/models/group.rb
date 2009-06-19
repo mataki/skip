@@ -134,7 +134,6 @@ class Group < ActiveRecord::Base
 
   # グループのカテゴリごとのgidの配列を返す(SQL発行あり)
   #   { "BIZ" => ["gid:swat","gid:qms"], "LIFE" => [] ... }
-  # TODO 回帰テストを書く
   def self.gid_by_category
     group_by_category = Hash.new{|h, key| h[key] = []}
     active(:select => "group_category_id, gid").each{ |group| group_by_category[group.group_category_id] << "gid:#{group.gid}" }
@@ -161,8 +160,7 @@ class Group < ActiveRecord::Base
       group_counts[group_count.group_category_id] = group_count.count.to_i
       total_count += group_count.count.to_i
     end
-
-    return group_counts, total_count
+    [group_counts, total_count]
   end
 
   # グループに所属しているユーザを取得する。

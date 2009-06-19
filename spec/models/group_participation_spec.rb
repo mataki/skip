@@ -15,8 +15,21 @@
 
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe GroupParticipation do
-  def test_truth
-    assert true
+describe GroupParticipation, '#group' do
+  before do
+    user = create_user
+    @group = create_group
+    @group_participation = GroupParticipation.create!(:user_id => user.id, :group_id => @group.id)
+  end
+  it '一件のグループが取得できること' do
+    @group_participation.group.should_not be_nil
+  end
+  describe 'グループを論理削除された場合' do
+    before do
+      @group.logical_destroy
+    end
+    it 'グループが取得できないこと' do
+      @group_participation.group.should be_nil
+    end
   end
 end
