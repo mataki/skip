@@ -16,11 +16,11 @@
   <% delete_categories.each {|categ| categories.delete(categ) } -%>
   <div class="topix_line">
     <div class="title">
-      <%= get_light_icon(message) + hide_long_tags(categories, 3) + entry_link_to(message, {}, {:title => message.title + entry_infos}) -%>
-      <span class="supplement"><%= entry_infos -%></span>
+      <%= get_light_icon(message) + hide_long_tags(categories, 3) + entry_link_to(message, {}, {:title => h(message.title + entry_infos)}) %>
+      <span class="supplement"><%=h entry_infos %></span>
     </div>
     <div class="owner">
-      <%= symbol2name_hash ? symbol_link_to(message.symbol, symbol2name_hash[message.symbol]) : user_link_to(message.user) -%>
+      <%= symbol2name_hash ? symbol_link_to(message.symbol, symbol2name_hash[message.symbol]) : user_link_to(message.user) %>
     </div>
   </div>
 <% end -%>
