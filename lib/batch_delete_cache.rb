@@ -38,6 +38,10 @@ class BatchDeleteCache < BatchBase
       @all_ids = []
     end
 
+    def last_id
+      all_ids.last
+    end
+
     def root_cache_path
       SkipEmbedded::InitialSettings['cache_path']
     end
@@ -62,7 +66,7 @@ class BatchDeleteCache < BatchBase
 
     def execute
       unless all_ids.empty?
-        ((1..all_ids.last).to_a - all_ids).each do |i|
+        ((1..last_id).to_a - all_ids).each do |i|
           delete_cache(i)
           delete_meta(i)
         end
@@ -94,6 +98,15 @@ class BatchDeleteCache < BatchBase
 
   class GroupDeleter < DefaultDeleter
     BatchDeleteCache.add_deleter self
+    def all_ids
+      @all_ids if @all_ids
+      @all_ids = Group.active.all(:select => "id", :order => "id asc").map(&:id)
+    end
+
+    def last_id
+      Group.last.id
+    end
+
     def cache_path(id)
       File.join(root_cache_path, "group", dir_id(id), "#{id}.html")
     end
