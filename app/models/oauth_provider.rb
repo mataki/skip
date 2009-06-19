@@ -20,4 +20,8 @@ class OauthProvider < ActiveRecord::Base
   def setting
     @setting ||= CollaborationApp::Setting.new self.app_name
   end
+
+  def after_save
+    ActionController::Base.expire_page  '/services/skip_header.js'
+  end
 end
