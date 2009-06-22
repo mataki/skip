@@ -22,8 +22,8 @@ module CollaborationApp
         @name = name
       end
 
-      def sync
-        client.sync_users User.synchronize_users
+      def sync ago = nil
+        client.sync_users User.synchronize_users(ago)
       end
     end
   end

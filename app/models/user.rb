@@ -436,8 +436,9 @@ class User < ActiveRecord::Base
     end
   end
 
-  def self.synchronize_users
-    User.find_without_retired_skip(:all).map { |u| [u.openid_identifier, u.uid, u.name, u.admin, u.retired?] }
+  def self.synchronize_users ago = nil
+    conditions = ago ? ['updated_on >= ?', Time.now.ago(ago.to_i.minute)] : []
+    User.scoped(:conditions => conditions, :include => :user_uids).find_without_retired_skip(:all).map { |u| [u.openid_identifier, u.uid, u.name, u.admin, u.retired?] }
   end
 
   def self.find_by_openid_identifier openid_identifier

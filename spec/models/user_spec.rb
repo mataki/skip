@@ -1053,10 +1053,10 @@ describe User, '.synchronize_users' do
       User.delete_all
       Admin::Setting.stub!(:protocol_by_initial_settings_default).and_return('http://')
       Admin::Setting.stub!(:host_and_port_by_initial_settings_default).and_return('localhost:3000')
-      create_user :user_options => {:name => 'ボブ', :admin => false}, :user_uid_options => {:uid => 'boob'}
-      create_user :user_options => {:name => 'アリス', :admin => true}, :user_uid_options => {:uid => 'alice'}
-      create_user :user_options => {:name => 'キャロル', :admin => false}, :user_uid_options => {:uid => 'carol'}, :status => 'RETIRED'
-      create_user :user_options => { :name => "マイケル", :admin => false }, :user_uid_options => { :uid => 'michael' }, :status => "UNUSED"
+      @bob = create_user :user_options => {:name => 'ボブ', :admin => false}, :user_uid_options => {:uid => 'boob'}
+      @alice = create_user :user_options => {:name => 'アリス', :admin => true}, :user_uid_options => {:uid => 'alice'}
+      @carol = create_user :user_options => {:name => 'キャロル', :admin => false}, :user_uid_options => {:uid => 'carol'}, :status => 'RETIRED'
+      @michael = create_user :user_options => { :name => "マイケル", :admin => false }, :user_uid_options => { :uid => 'michael' }, :status => "UNUSED"
       @users = User.synchronize_users
       @bob_attr, @alice_attr, @carol_attr, @michael_attr = @users
     end
@@ -1074,6 +1074,34 @@ describe User, '.synchronize_users' do
     end
     it "マイケルの情報が正しく設定されていること" do
       @michael_attr.should == ["http://localhost:3000/id/michael", 'michael', "マイケル", false, false]
+    end
+
+    describe 'ボブが4分59秒前に更新、アリスが5分前に更新、キャロル, マイケルが5分1秒前に更新されており、5分以内に更新があったユーザのみ取得する場合' do
+      before do
+        Time.stub!(:now).and_return(Time.local(2009, 6, 2, 0, 0, 0))
+        User.record_timestamps = false
+        @bob.update_attribute(:updated_on, Time.local(2009, 6, 1, 23, 54, 59))
+        @alice.update_attribute(:updated_on, Time.local(2009, 6, 1, 23, 55, 0))
+        @carol.update_attribute(:updated_on, Time.local(2009, 6, 1, 23, 55, 1))
+        @michael.update_attribute(:updated_on, Time.local(2009, 6, 1, 23, 55, 1))
+        @users = User.synchronize_users 5
+        @alice_attr, @carol_attr, @michael_attr = @users
+      end
+      it '3件のユーザ同期情報を取得できること' do
+        @users.size.should == 3
+      end
+      it 'アリスの情報が正しく設定されていること' do
+        @alice_attr.should == ['http://localhost:3000/id/alice', 'alice', 'アリス', true, false]
+      end
+      it 'キャロルの情報が正しく設定されていること' do
+        @carol_attr.should == ['http://localhost:3000/id/carol', 'carol', 'キャロル', false, true]
+      end
+      it "マイケルの情報が正しく設定されていること" do
+        @michael_attr.should == ["http://localhost:3000/id/michael", 'michael', "マイケル", false, false]
+      end
+      after do
+        User.record_timestamps = true
+      end
     end
   end
 end
