@@ -22,8 +22,8 @@ module CollaborationApp
         @name = name
       end
 
-      def sync
-        client.sync_groups Group.synchronize_groups
+      def sync ago = nil
+        client.sync_groups Group.synchronize_groups(ago)
       end
     end
   end

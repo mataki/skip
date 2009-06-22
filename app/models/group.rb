@@ -239,7 +239,8 @@ class Group < ActiveRecord::Base
     group_participations. find_by_user_id_and_waiting_and_owned(user.id, false, true) ? true : false
   end
 
-  def self.synchronize_groups
-    Group.all.map { |g| [g.gid, g.gid, g.name, g.participation_users(:waiting => false).map { |u| u.openid_identifier }, !!g.deleted_at] }
+  def self.synchronize_groups ago = nil
+    conditions = ago ? ['updated_on >= ?', Time.now.ago(ago.to_i.minute)] : []
+    Group.scoped(:conditions => conditions).all.map { |g| [g.gid, g.gid, g.name, g.participation_users(:waiting => false).map { |u| u.openid_identifier }, !!g.deleted_at] }
   end
 end

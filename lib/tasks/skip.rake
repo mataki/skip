@@ -39,9 +39,10 @@ namespace :skip do
     task :sync_groups do
       require File.expand_path(File.dirname(__FILE__) + "/../../config/environment")
       app_name = ENV['APP_NAME']
+      ago = ENV['AGO']
       abort 'app_name was not specifed. ex) % rake skip:collaboration_apps:sync APP_NAME=\'wiki\' ' unless app_name
       abort 'collaboration_apps[\'app_name\'] was not specifed' unless SkipEmbedded::InitialSettings['collaboration_apps'][app_name]
-      CollaborationApp::Oauth::GroupSynchronizer.new(app_name).sync
+      CollaborationApp::Oauth::GroupSynchronizer.new(app_name).sync(ago)
     end
 
     desc "Synchronize the users and groups of the given oauth provider"
