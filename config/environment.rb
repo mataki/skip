@@ -53,89 +53,65 @@ Rails::Initializer.run do |config|
   config.gem 'openskip-skip_embedded', :lib => 'skip_embedded', :version => '>=0.9.9', :source => 'http://gems.github.com'
 end
 
+# FIXME i18n
 menu_btns = [
-<<<<<<< HEAD:config/environment.rb
              { :img_name => "house",
                :id => "btn_mypage",
-               :name => "マイページ",
+               :name => GetText.N_("My Page"),
                :url => {:controller => '/mypage', :action => 'index'},
                :desc => "自分用のトップページに戻ります"},
 
              { :img_name => "report",
                :id => "btn_entries",
-               :name => "記事",
+               :name => GetText.N_("Entries"),
                :url => {:controller => '/search', :action => 'entry_search' },
                :desc => "ブログや掲示板の記事を探します"},
 
              { :img_name => "disk_multiple",
                :id => "btn_share_files",
-               :name => "ファイル",
+               :name => GetText.N_("Files"),
                :url => {:controller => '/search', :action => 'share_file_search' },
                :desc => "ユーザやグループで共有しているファイルを探します"},
 
              { :img_name => "user_suit",
                :id => "btn_users",
-               :name => "ユーザ",
+               :name => GetText.N_("Users"),
                :url => {:controller => '/users', :action => 'index'},
                :desc => "利用中のユーザや紹介文を探します"},
 
              { :img_name => "group",
                :id => "btn_groups",
-               :name => "グループ",
+               :name => GetText.N_("Groups"),
                :url => {:controller => '/groups', :action => 'index'},
                :desc => "他のユーザが作ったグループを探します"},
 
              { :img_name => "tag_blue",
                :id => "btn_bookmarks",
-               :name => "ブックマーク",
+               :name => GetText.N_("Bookmarks"),
                :url => {:controller => '/bookmarks', :action => 'index'},
                :desc => "共有しているブックマーク（URL）を探します"},
 
              { :img_name => "chart_bar",
                :id => "btn_rankings",
-               :name => "ランキング",
+               :name => GetText.N_("Rankings"),
                :url => {:controller => '/rankings', :action => 'index'},
                :desc => "ランキング情報と統計情報を見ます"}
-=======
-  { :img_name => "house",         :id => "btn_mypage", :name => GetText.N_("My Page"), :url => {:controller => '/mypage', :action => 'index'} },
-
-  { :separator => true, :name => GetText.N_("[My Menu]")},
-
-  { :img_name => "vcard",         :id => "btn_profile", :name => GetText.N_("Profile"), :url => {:controller => '/mypage', :action => 'profile'} },
-  { :img_name => "report",        :id => "btn_my_blog", :name => GetText.N_("My Blog"), :url => {:controller => '/mypage', :action => 'blog'} },
-  { :img_name => "book_open",     :id => "btn_my_bookmark", :name => GetText.N_("My Bookmarks"), :url => {:controller => '/mypage', :action => 'bookmark'} },
-  { :img_name => "disk_multiple", :id => "btn_manage", :name => GetText.N_("My Files"), :url => {:controller => '/mypage', :action => 'share_file'} },
-  { :img_name => "cog",           :id => "btn_manage", :name => GetText.N_("Self Admin"), :url => {:controller => '/mypage', :action => 'manage'} },
-
-  { :separator => true, :name => GetText.N_("[Site Menu]")},
-
-  { :img_name => "page_find",     :id => "btn_search", :name => GetText.N_("Search for Data"), :url => {:controller => '/search', :action => (INITIAL_SETTINGS['full_text_search_setting'] ? 'full_text_search' : 'entry_search') } },
-  { :img_name => "user_suit",     :id => "btn_users", :name => GetText.N_("Users"), :url => {:controller => '/users', :action => 'index'} },
-  { :img_name => "group",         :id => "btn_groups", :name => GetText.N_("Groups"), :url => {:controller => '/groups', :action => 'index'} },
-  { :img_name => "book",          :id => "btn_bookmarks", :name => GetText.N_("Bookmarks"), :url => {:controller => '/bookmarks', :action => 'index'} },
-  { :img_name => "chart_bar",     :id => "btn_rankings", :name => GetText.N_("Rankings"), :url => {:controller => '/rankings', :action => 'index'} },
->>>>>>> for_i18n:config/environment.rb
 ]
+# FIXME i18n
 menu_btns << { :img_name => "page_find",
                :id => "btn_search",
-               :name => "全文検索",
+               :name => GetText.N_("Search for Data"),
                :url => {:controller => '/search', :action => 'full_text_search' },
                :desc => "キーワードでサイト全体から検索します" } if SkipEmbedded::InitialSettings['full_text_search_setting']
 MENU_BTNS = menu_btns
 
-<<<<<<< HEAD:config/environment.rb
+# FIXME i18n
 admin_btns = [
-              {:img_name => "database_gear",
-               :id => "btn_admin",
-               :name => "設定・管理",
-               :url => {:controller => '/admin', :action => 'index'},
-               :desc => "このシステムの設定や管理を行います" },
-=======
-admin_menu_btns = [
-  { :separator => true, :name => GetText.N_("[Admin Menu]")},
-
-  { :img_name => "database_gear",         :id => "btn_admin", :name => GetText.N_("System Administration"), :url => {:controller => '/admin', :action => 'index'} },
->>>>>>> for_i18n:config/environment.rb
+  {:img_name => "database_gear",
+   :id => "btn_admin",
+   :name => GetText.N_("System Administration"),
+   :url => {:controller => '/admin', :action => 'index'},
+   :desc => GetText.N_("このシステムの設定や管理を行います") }
 ]
 ADMIN_MENU_BTNS = admin_btns
 
