@@ -1,5 +1,6 @@
 <div class="search_cond_space">
 <% form_tag({:action => 'index'}, :method => 'get') do -%>
+<<<<<<< HEAD:app/views/users/index.html.erb
   <table class="search_cond_box">
     <tr>
       <th><%=h _("Admin::User|Name") %></th>
@@ -23,6 +24,33 @@
     </tr>
   </table>
   <div class="submit"><%= submit_tag '検索' %></div>
+=======
+<table class="search_cond_box">
+  <tr>
+    <th><%=h s_("Admin::User|Name") %></th>
+    <td><%= text_field :condition, :name , :size => 25 %></td>
+    <th><%= _('Self Introduction')%></th>
+    <td><%= text_field :condition, :introduction, :size => 25 %></td>
+  </tr>
+  <tr>
+    <th><%= _('Section')%></th>
+    <td><%= select(:condition, :section, UserProfile.grouped_sections.insert(0, "")) %></td>
+    <th><%=h user_name_mode_label %></th>
+    <td><%= text_field :condition, :code, :size => 25 %></td>
+  </tr>
+  <tr>
+  <th><%= _('Display Order')%></th>
+    <td><%= select :condition, :sort_type, UserSearchCondition.sort_types %></td>
+    <th><%= _('Output Format')%></th>
+    <td><%= radio_buttons :condition, :output_type, UserSearchCondition.output_types %></td>
+  </tr>
+  <tr>
+    <th><%= _('Retired Users')%></th>
+    <td><%= check_box_tag 'condition[not_include_retired]',1,@condition.not_include_retired, :id => 'condition_not_include_retired' %><%= _('Excluding retired users')%></td>
+  </tr>
+</table>
+<div class="submit"><%= submit_tag _('Search') %></div>
+>>>>>>> for_i18n:app/views/users/index.html.erb
 <% end -%>
 </div>
 

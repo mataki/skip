@@ -21,13 +21,19 @@
     <tr valign="top"><td><%= checkid_request.identity %><%= hidden_field_tag 'login[key]', extract_login_from_identifier(checkid_request.identity) %></td></tr>
     <% else %>
     <tr valign="top">
+<<<<<<< HEAD:app/views/shared/_login_form.html.erb
       <td><label for="login_key"><span style="font-weight: bold;"><%= h Admin::Setting.login_account %> or <%= _('User|Email') %></span></label></td>
+=======
+      <td><label for="login_key"><span style="font-weight: bold;"><%= h Admin::Setting.login_account %></span></label>
+        (<%= link_to _("Lost your %s?") % h(Admin::Setting.login_account), forgot_login_id_path, {:style => 'font-size:11px', :tabindex => "101"} %>)</td>
+>>>>>>> for_i18n:app/views/shared/_login_form.html.erb
     </tr>
     <tr valign="top">
       <td><%= text_field 'login', 'key', :size => 35, :autocomplete => :on, :style => "font-family:Tahoma", :tabindex => "1" %></td>
     </tr>
     <% end %>
     <tr valign="top">
+<<<<<<< HEAD:app/views/shared/_login_form.html.erb
       <td><label for="login_password"><span style="font-weight: bold;">パスワード</span></label>
         <% password_forgot_link_text = _('パスワードを忘れた/再設定したい方はこちら') -%>
         <%= "(#{link_to(password_forgot_link_text, forgot_password_path, {:style => 'font-size:11px', :tabindex => '102'})})" if enable_forgot_password? %></td>
@@ -38,6 +44,10 @@
     <% if Admin::Setting.enable_login_keyphrase -%>
     <tr valign="top">
       <td><label for="login_keyphrase"><span style="font-weight: bold;"><%= _('Admin::Setting|Login keyphrase') %></span></label>
+=======
+      <td><label for="login_password"><span style="font-weight: bold;"><%= _('Password')%></span></label>
+        (<%= link_to _('Forgot your password? Click here.'), forgot_password_path, {:style => 'font-size:11px', :tabindex => "102"} %>)</td>
+>>>>>>> for_i18n:app/views/shared/_login_form.html.erb
     </tr>
     <tr valign="top">
       <td><%= password_field 'login', 'keyphrase', { :size => 35, :autocomplete => :on, :tabindex => "3" } %></td>
@@ -48,12 +58,18 @@
     </tr>
     <% elsif login_mode?(:fixed_rp) -%>
     <tr valign="top">
+<<<<<<< HEAD:app/views/shared/_login_form.html.erb
       <td>下のボタンを押して、ログインしてください。
         <%= hidden_field_tag "openid_url", h(SkipEmbedded::InitialSettings['fixed_op_url']) %>
+=======
+      <td><%= _('Click the button below to login.')%>
+        <%= hidden_field_tag "openid_url", h(INITIAL_SETTINGS['fixed_op_url']) -%>
+>>>>>>> for_i18n:app/views/shared/_login_form.html.erb
       </td>
     </tr>
     <% else -%>
     <tr valign="top">
+<<<<<<< HEAD:app/views/shared/_login_form.html.erb
       <td>
         <ul style="list-style-type:none; margin-bottom: 5px;">
           <li><%= link_to image_tag('idmixijp.gif') + "mixi IDでログイン", :action => :login, :openid_url => "mixi.jp" %></li>
@@ -66,6 +82,9 @@
       <td>
         <label for="openid_url"><span style="font-weight: bold;">その他のOpenID URLでログイン</span></label>
       </td>
+=======
+      <td><label for="openid_url"><span style="font-weight: bold;"><%= _('OpenID URL')%></span></label></td>
+>>>>>>> for_i18n:app/views/shared/_login_form.html.erb
     </tr>
     <tr valign="top">
       <td><%= text_field_tag 'openid_url', nil, 'AUTOCOMPLETE' => "on" %></td>
@@ -85,7 +104,17 @@
     <% if checkid_request %>
     <tr><td align="top"><%= link_to _('cancel this request'), cancel_path %></td></tr>
     <% end %>
+<<<<<<< HEAD:app/views/shared/_login_form.html.erb
     <tr><td align="right"><%= submit_tag "ログイン", :onclick=>"saveLoginData();", :tabindex => "5" %></td></tr>
+=======
+
+    <tr valign="top">
+      <td><input id="login_save" name="login_save" type="checkbox" value="true" checked="checked", tabindex="3" /> <%= _('Login automatically from next time')%></td>
+    </tr>
+    <tr>
+      <td align="right"><%= submit_tag _("Login"), :onclick=>"saveLoginData();", :tabindex => "4" %></td>
+    </tr>
+>>>>>>> for_i18n:app/views/shared/_login_form.html.erb
   </table>
 <% end -%>
 <%= link_to _('OpenIDを忘れた/再設定したい方はこちら'), forgot_openid_path, {:style => 'font-size:14px'} if enable_forgot_openid? %>

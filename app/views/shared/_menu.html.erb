@@ -2,7 +2,7 @@
 <% selected_menu ||= menu_items.first[:name] -%>
 
   <div class="box_space">
-    <div class="box_space_title">メニュー</div>
+    <div class="box_space_title"><%= _('Menu')%></div>
     <div class="box_space_body">
 <% menu_items.each do |menu_item| %>
 <%   if menu_item[:name] == selected_menu %>

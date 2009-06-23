@@ -1,5 +1,6 @@
 <%= @header %>
 
+<<<<<<< HEAD:app/views/user_mailer/sent_signup_confirm.html.erb
 ユーザ登録が完了しました。
 あなたのログインIDは<%= h @login_id %>です。
 <%= h Admin::Setting.abbr_app_title %>を利用するには以下のURLにアクセスして下さい。
@@ -7,6 +8,13 @@
 <%= @login_url %>
 
 ログインID: <%= h @login_id %>
+=======
+<%= _("Hello, this is the secretariat of %s.") % h(Admin::Setting.abbr_app_title) %>
+
+<%= _('Welcome to our site!')%>
+<%= _('You have registered this email address with us.')%>
+<%= _('Chanages can be made from the page below:')%>
+>>>>>>> for_i18n:app/views/user_mailer/sent_signup_confirm.html.erb
 
 
 <%= @footer %>

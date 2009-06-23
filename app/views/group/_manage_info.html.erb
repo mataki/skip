@@ -1,3 +1,4 @@
+<<<<<<< HEAD:app/views/group/_manage_info.html.erb
 <% content_for :contents_left do -%>
   <div class="box_space">
     <div class="box_space_title">管理メニュー</span></div>
@@ -15,3 +16,34 @@
 <% content_for :contents_right do -%>
   <%= render(:partial => "group/form", :locals => { :action_value => 'update', :submit_value => '更新' } )  %>
 <% end -%>
+=======
+
+<div id="contents_container">
+
+<div id="contents_left">
+
+<div class="box_space">
+  <div class="box_space_title"><%= _('Admin Menu')%></span></div>
+  <div class="box_space_body">
+  <ul>
+    <% get_manage_menu_items(@menu).each do |menu_item| %>
+    <li><%= menu_item -%></li>
+    <% end %>
+  </ul>
+  </div>
+  <div class="box_space_bottom"></div>
+</div><!-- box_space -->
+
+</div><!-- contents_left -->
+
+<div id="contents_right">
+
+<%= render(:partial => "group/form", :locals => { :action_value => 'update', :submit_value => _('Update') } )  %>
+
+</div><!-- contents_right -->
+
+<div id="contents_bottom">
+</div><!-- contents_bottom -->
+
+</div><!-- contents_container -->
+>>>>>>> for_i18n:app/views/group/_manage_info.html.erb

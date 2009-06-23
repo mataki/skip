@@ -26,7 +26,7 @@
   <thead>
     <tr>
       <% columns.each do |column| -%>
-      <th><%=h _("#{class_name}|#{column.humanize}") %></th>
+      <th><%=h s_("#{class_name}|#{column.humanize}") %></th>
       <% end -%>
       <% link_elem_size.times do %>
       <td class="link" />

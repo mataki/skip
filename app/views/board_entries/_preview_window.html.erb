@@ -27,10 +27,10 @@
 <% end -%>
 
 <div id="preview-win"><div id="preview-inbox">
-  <p style="position: absolute; text-align: left;">[プレビュー]</p>
+  <p style="position: absolute; text-align: left;"><%= _('[Preview]')%></p>
   <div id="preview-bar"><input type="button" id="close" value="close" /></div>
-  <div id="preview">loading...</div>
-  <p class="s10" style="text-align:right;">セレクトボックスと重なるのはIEの仕様です</p>
+  <div id="preview"><%= _('loading...')%></div>
+  <p class="s10" style="text-align:right;"><%= _('It is a behavior by design of IE that this area gets overlapped by select boxes.')%></p>
 </div></div>
 
 <% content_for :javascript_includes do -%>

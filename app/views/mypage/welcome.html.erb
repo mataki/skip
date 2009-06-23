@@ -16,6 +16,7 @@
   </style>
 <% end -%>
 
+<<<<<<< HEAD:app/views/mypage/welcome.html.erb
 <% content_for :contents_left do -%>
   <%= render(:partial => 'user/portrait_box', :locals => { :current_user_info => @current_user_info }) %>
   <%= render :partial => 'antenna_box', :locals => { :system_antennas => @system_antennas, :my_antennas => @my_antennas } %>
@@ -24,6 +25,23 @@
 <% content_for :contents_right do -%>
   <div style="background-color: #fff0ff; padding: 5px; border: 1px dashed pink; margin-bottom: 10px;">
     <h3>【<%= h Admin::Setting.abbr_app_title -%>】へようこそ！</h3>
+=======
+<div style="background-color: #fff0ff; padding: 5px; border: 1px dashed pink; margin-bottom: 10px;">
+  <h3><%= _("Welcome to [%s]!") % h(Admin::Setting.abbr_app_title) %></h3>
+</div>
+
+<div style="border: 1px dashed pink; padding: 5px; margin-bottom: 10px;">
+  <h3 style="color: blue; background-color: #f0f0ff; padding: 3px; border-left: 10px solid skyblue; border-bottom: 1px dashed skyblue;"><%= _('User registration completed.')%></h3>
+  <div style="margin-left: 15px; margin-top: 5px;">
+    <p class="welcome"><%= _("Completed registering your user information.<br/>\n      You can start writing entries right away since we have created your own blog.<br/>\n      You can also change your profile image and color theme of this site.")%></p>
+    <ul class="welcome">
+      <li><%= icon_tag 'vcard' -%><%= _("Your profile from other users' view ...")%><%= link_to _('[Profile]'), :action => 'profile' %></li>
+      <li><%= icon_tag 'wrench' -%><%= _('Modify the registered profile from here ... ')%><%= link_to _('[Edit profile]'), :action => 'manage' %></li>
+      <li><%= icon_tag 'picture' -%><%= _('Click here to change profile picutre ... ')%><%= link_to _('[Change profile photo]'), :action => 'manage', :menu => 'manage_portrait' %></li>
+      <li><%= icon_tag 'layers' -%><%= _('Change color theme of the site ... ')%><%= link_to _('[Customize]'), :action => 'manage', :menu => 'manage_customize' %></li>
+      <li><%= icon_tag 'tick' -%><%= _("You can access from %s next time.") % link_to(root_url, root_url) -%>%></li>
+    </ul>
+>>>>>>> for_i18n:app/views/mypage/welcome.html.erb
   </div>
 
   <div style="border: 1px dashed pink; padding: 5px; margin-bottom: 10px;">

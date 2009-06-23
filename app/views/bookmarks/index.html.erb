@@ -7,6 +7,7 @@
 </div>
 
 <div class="search_cond_space">
+<<<<<<< HEAD:app/views/bookmarks/index.html.erb
 <% form_tag({:action => 'index'}, :method => 'get') do -%>
   <table class="search_cond_box">
     <tr>
@@ -30,6 +31,18 @@
   </table>
   <div class="submit"><%= submit_tag '検索' %></div>
 <% end -%>
+=======
+<div class="title"><u><%=h _("Popular postings in %s―") % @target_date %></u>
+  <span style="color: darkgray; font-size: 10px; font-weight: normal;"><%= _('Time Last Updated: ')%><%=h @last_updated %></span></div>
+<div style="margin-left: 15px;"><%=h _("Bookmarks that got most comments during a week between %{from} and %{to}:") % {:from => @target_date-6, :to => @target_date} %></div>
+<div style="text-align: right;">
+<% if Date.today > @target_date %>
+<%= link_to(_("Popular postings in %s―") % (@target_date+1).to_s,{:controller =>'bookmarks', :action => 'index', :target_date => @target_date+1})  %>
+ /
+<% end %>
+<%= link_to(_("Popular postings in %s―") % (@target_date-1).to_s,{:controller =>'bookmarks', :action => 'index', :target_date => @target_date-1})  %>
+</div>
+>>>>>>> for_i18n:app/views/bookmarks/index.html.erb
 </div>
 
 <div class="search_result_space" style="position: relative; width: 100%; margin-left: auto; margin-right: auto;">

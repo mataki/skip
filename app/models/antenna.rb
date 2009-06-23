@@ -18,12 +18,12 @@ class Antenna < ActiveRecord::Base
   has_many :antenna_items, :dependent => :destroy
   acts_as_list :scope => :user_id
 
-  validates_length_of :name, :minimum=>1, :message =>'は1文字以上で入力してください'
-  validates_length_of :name, :maximum=>10, :message =>'は10文字以内で入力してください'
+  validates_length_of :name, :minimum=>1, :message =>_('requires 1 or more characters.')
+  validates_length_of :name, :maximum=>10, :message =>_('accepts 10 or less characters only.')
 
   class << self
     HUMANIZED_ATTRIBUTE_KEY_NAMES = {
-      "name" => "アンテナ名",
+      "name" => "Name of Antena",
     }
     def human_attribute_name(attribute_key_name)
       HUMANIZED_ATTRIBUTE_KEY_NAMES[attribute_key_name] || super
@@ -101,7 +101,7 @@ class Antenna < ActiveRecord::Base
     find_params = BoardEntry.make_conditions(login_user_symbols, {:category=>'連絡'})
     find_params[:conditions][0] << " and user_readings.read = ? and user_readings.user_id = ?"
     find_params[:conditions] << false << user_id
-    antenna_message = Antenna.new(:name => "あなたへの連絡", :user_id => user_id)
+    antenna_message = Antenna.new(:name => _("Messages for you"), :user_id => user_id)
     antenna_message.antenna_type = "message"
     antenna_message.count = BoardEntry.count(:conditions => find_params[:conditions],
                                              :include => find_params[:include] | [:user_readings])
@@ -113,7 +113,7 @@ class Antenna < ActiveRecord::Base
     find_params[:conditions] << false << user_id
     find_params[:conditions][0] << " and board_entry_comments.user_id = ?"
     find_params[:conditions] << user_id
-    antenna_comment = Antenna.new(:name => "コメントの行方", :user_id => user_id)
+    antenna_comment = Antenna.new(:name => _("Trace Comments"), :user_id => user_id)
     antenna_comment.antenna_type = "comment"
     antenna_comment.count = BoardEntry.count(:conditions => find_params[:conditions],
                                              :include => find_params[:include] | [:user_readings, :board_entry_comments])
@@ -128,7 +128,7 @@ class Antenna < ActiveRecord::Base
                               :conditions => ["user_readings.read = ? and user_id = ?", false, user_id])
       urls.map! {|item| '/page/'+item.board_entry_id.to_s }
 
-      antenna_comment = Antenna.new(:name => "ブクマの行方", :user_id => user_id)
+      antenna_comment = Antenna.new(:name => _("Track of Bookmarks"), :user_id => user_id)
       antenna_comment.antenna_type = "bookmark"
       antenna_comment.count = 0
       bookmarks.each { |bookmark| antenna_comment.count+=1 if urls.include?(bookmark.url) } if urls.size > 0
@@ -139,7 +139,7 @@ class Antenna < ActiveRecord::Base
       find_params = BoardEntry.make_conditions login_user_symbols, { :symbols => login_user_groups }
       find_params[:conditions][0] << " and user_readings.read = ? and user_readings.user_id = ?"
       find_params[:conditions] << false << user_id
-      antenna_group = Antenna.new(:name => "参加グループ", :user_id => user_id)
+      antenna_group = Antenna.new(:name => _("Your Groups"), :user_id => user_id)
       antenna_group.antenna_type = "group"
       antenna_group.count = BoardEntry.count(:conditions => find_params[:conditions],
                                            :include => find_params[:include] | [:user_readings])

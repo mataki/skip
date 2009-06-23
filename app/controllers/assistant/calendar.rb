@@ -16,7 +16,7 @@
 module Assistant
 
   class Calendar #カレンダークラス作成
-  WeekName = [ '日', '月', '火', '水', '木', '金', '土', ]
+  WeekName = [ _('Sun'), _('Mon'), _('Tue'), _('Wed'), _('Thu'), _('Fri'), _('Sat'), ]
   WeekColor = [
   '#ff0000', #Sun
   '#000000', #Mon

@@ -1,22 +1,37 @@
+<<<<<<< HEAD:app/views/admin/settings/_literal.html.erb
 <% @revert_columns = [] -%>
 <% @revert_columns.concat(name_columns = %w(abbr_app_title login_account point_button)) -%>
 <h4><%= _('名称・名前') %></h4>
+=======
+<% @revert_columns = %w(abbr_app_title login_account point_button) -%>
+<h4><%= _('Names') %></h4>
+>>>>>>> for_i18n:app/views/admin/settings/_literal.html.erb
 <div class="box tabular">
 <% name_columns.each do |key| -%>
   <p><%= settings_label_with_text_field_tag key.to_sym %></p>
 <% end -%>
 </div>
 
+<<<<<<< HEAD:app/views/admin/settings/_literal.html.erb
 <% @revert_columns.concat(inform_columns = %w(contact_addr help_url)) -%>
 <h4><%= _('お問い合わせ・ヘルプ') %></h4>
+=======
+<% @revert_columns = %w(contact_addr help_url) -%>
+<h4><%=h _('Help & Support') %></h4>
+>>>>>>> for_i18n:app/views/admin/settings/_literal.html.erb
 <div class="box tabular">
 <% inform_columns.each do |key| -%>
   <p><%= settings_label_with_text_field_tag key.to_sym %></p>
 <% end -%>
 </div>
 
+<<<<<<< HEAD:app/views/admin/settings/_literal.html.erb
 <% @revert_columns.concat(footer_columns = %w(footer_first footer_second)) -%>
 <h4><%= _('フッター') %></h4>
+=======
+<% @revert_columns = %w(footer_link footer_contact footer_copyright) -%>
+<h4><%= _('Footer') %></h4>
+>>>>>>> for_i18n:app/views/admin/settings/_literal.html.erb
 <div class="box tabular">
 <% footer_columns.each do |key| -%>
   <p><%= settings_label_with_text_field_tag key.to_sym, :size => 70 %></p>

@@ -37,12 +37,13 @@ module MypageHelper
 
   # 送信日の加工
   def get_send_date(mail)
-    mail.send_flag ?  Time.parse(mail.mail_updated_on).strftime("%Y年%m月%d日 %H時%M分") : "送信待ち"
+    mail.send_flag ?  Time.parse(mail.mail_updated_on).strftime(_("%c")) : _("Waiting to be Sent")
   end
 
   # 管理メニューの生成
   def get_manage_menu_items selected_menu
     @@menus = []
+<<<<<<< HEAD:app/helpers/mypage_helper.rb
     @@menus << {:name => "プロフィール変更", :menu => "manage_profile" }
     @@menus << {:name => "パスワード変更", :menu => "manage_password" } if SkipEmbedded::InitialSettings['password_edit_setting'] and login_mode?(:password)
     @@menus << {:name => "メールアドレス変更", :menu => "manage_email" } if Admin::Setting.mail_function_setting
@@ -51,14 +52,24 @@ module MypageHelper
     @@menus << {:name => "画面デザイン変更", :menu => "manage_customize" }
     @@menus << {:name => "アンテナの整備", :menu => "manage_antenna" }
     @@menus << {:name => "メール通知設定", :menu => "manage_message" } if Admin::Setting.mail_function_setting
+=======
+    @@menus << {:name => _("Edit Profile"), :menu => "manage_profile" }
+    @@menus << {:name => _("Change Password"), :menu => "manage_password" } if INITIAL_SETTINGS['password_edit_setting'] and login_mode?(:password)
+    @@menus << {:name => _("Change Email Address"), :menu => "manage_email" } if Admin::Setting.mail_function_setting
+    @@menus << {:name => _("Change OpenID URL"), :menu => "manage_openid" } if login_mode?(:free_rp)
+    @@menus << {:name => _("Change Profile Picture"), :menu => "manage_portrait" }
+    @@menus << {:name => _("Customize"), :menu => "manage_customize" }
+    @@menus << {:name => _("Manage Antennas"), :menu => "manage_antenna" }
+    @@menus << {:name => _("Email Notification"), :menu => "manage_message" } if Admin::Setting.mail_function_setting
+>>>>>>> for_i18n:app/helpers/mypage_helper.rb
     get_menu_items @@menus, selected_menu, "manage"
   end
 
   # 履歴メニューの生成
   def get_record_menu_items selected_menu
     @@record_menus = []
-    @@record_menus << {:name => "メール送信履歴", :menu => "record_mail" } if Admin::Setting.mail_function_setting
-    @@record_menus << {:name => "記事履歴", :menu => "record_post" }
+    @@record_menus << {:name => _("Email History"), :menu => "record_mail" } if Admin::Setting.mail_function_setting
+    @@record_menus << {:name => _("History of Entries"), :menu => "record_post" }
 
     get_menu_items @@record_menus, selected_menu, "manage"
   end

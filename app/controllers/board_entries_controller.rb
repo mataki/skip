@@ -23,7 +23,7 @@ class BoardEntriesController < ApplicationController
   # 巨大化表示
   def large
     unless @entry = check_entry_permission
-      render :text => "不正な操作です"
+      render :text => _("Invalid operation.")
       return false
     end
 
@@ -116,13 +116,21 @@ class BoardEntriesController < ApplicationController
 
     if @board_entry_comment.children.size == 0
       @board_entry_comment.destroy
-      flash[:notice] = "コメントを削除しました。"
+      flash[:notice] = _("Comment was successfully deleted.")
     else
+<<<<<<< HEAD:app/controllers/board_entries_controller.rb
       flash[:warn] = "このコメントに対するコメントがあるため削除できません。"
     end
     redirect_to :action => "forward", :id => @board_entry_comment.board_entry.id
   rescue ActiveRecord::RecordNotFound => ex
     flash[:warn] = "コメントは既に削除された模様です"
+=======
+      flash[:warning] = _("This comment cannot be deleted since it has been commented.")
+    end
+    redirect_to :action => "forward", :id => @board_entry_comment.board_entry.id
+  rescue ActiveRecord::RecordNotFound => ex
+    flash[:warning] = _("Comment seems have already deleted.")
+>>>>>>> for_i18n:app/controllers/board_entries_controller.rb
     redirect_to :controller => "mypage", :action => "index"
   end
 
@@ -163,7 +171,11 @@ class BoardEntriesController < ApplicationController
     begin
       entry = BoardEntry.find(params[:id])
     rescue ActiveRecord::RecordNotFound => ex
+<<<<<<< HEAD:app/controllers/board_entries_controller.rb
       flash[:warn] = "指定のページは存在していません。"
+=======
+      flash[:warning] = _("Specified page does not exist.")
+>>>>>>> for_i18n:app/controllers/board_entries_controller.rb
       redirect_to :controller => 'mypage', :action => ''
       return false
     end

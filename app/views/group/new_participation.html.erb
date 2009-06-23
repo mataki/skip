@@ -11,23 +11,33 @@
 <% end -%>
 
 <div class="desc">
-  <p>参加に向けてメッセージを入力してください。</p>
-  <p>参加するために管理者の承認が必要な場合は、申請理由を書くと良いでしょう。</p>
-  <p>なお、このメッセージはグループ管理者のみが閲覧できますので、自己紹介は別記事でお願いします。</p>
+  <p><%= _('Leave a message upon participation.')%></p>
+  <p><%= _('It is recommended to provide the reason of application if an approval from the administrator is required to join the group.')%></p>
+  <p><%= _('This message is viewable by group admin only. Write a separate entry to introduce yourself to other members!')%></p>
 </div>
 
 <% if @participation -%>
 <div style="color: red; font-weight:bold; font-size: 15px; text-align: center; margin-top: 10px;">
-  <p>既に参加しています</p>
-  <input type="button" onclick="location.reload();" value="閉じる" />
+  <p><%= _('You are already a member of the group.')%></p>
+  <input type="button" onclick="location.reload();" value="<%= _('Close')%>" />
 </div>
 <% else -%>
 <div class="participation_input_space">
+<<<<<<< HEAD:app/views/group/new_participation.html.erb
   <% form_tag({:action => 'join'}) do -%>
   <p style="margin-bottom: 5px;">
   メッセージ：<br/><%= text_area 'board_entry', 'contents', :rows =>10, :style=>"width: 98%;" %>
   </p>
   <div style="text-align: center;"><%= submit_tag "参加申込み" %></div>
   <% end %>
+=======
+<% form_tag({:action => 'join'}) do -%>
+
+<p style="margin-bottom: 5px;"><%= _('Message: ')%><br/>
+  <%= text_area 'board_entry', 'contents', :rows =>10, :style=>"width: 98%;" %></p>
+<div style="text-align: center;"><%= submit_tag _("Request to Join Group") %></div>
+
+<% end %>
+>>>>>>> for_i18n:app/views/group/new_participation.html.erb
 </div>
 <% end -%>

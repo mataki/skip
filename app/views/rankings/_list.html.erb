@@ -19,8 +19,13 @@
             success: function(html) {
                 $j('#' + contents_type).html(html);
             },
+<<<<<<< HEAD:app/views/rankings/_list.html.erb
             error: function(request) {
                 $j('#' + contents_type).html(request.responseText)
+=======
+            error: function() {
+                $j('#' + contents_type).html('<%= _("Failed to acquire rankings data.")%>')
+>>>>>>> for_i18n:app/views/rankings/_list.html.erb
             }
         });
     };

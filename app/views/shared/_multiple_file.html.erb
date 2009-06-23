@@ -1,8 +1,8 @@
 <% blog_mode ||= false %>
 
-（注意！）セキュリティ上の問題があるファイルは、アップロードしないで下さい。
+<%= _('(Caution!) Never upload files that may cause security issues.')%>
 <div id="input_value_area"></div>
-<div><a href="#" id="add_file_tag_link">[更にファイルを追加]</a></div>
+<div><a href="#" id="add_file_tag_link"><%= _('[Add more files]')%></a></div>
 <div id="hidden_file_area" style="display:none;"></div>
 
 <% content_for :javascript_initializers do -%>
@@ -20,6 +20,22 @@
             })
         )
         .appendTo('#input_value_area');
+<<<<<<< HEAD:app/views/shared/_multiple_file.html.erb
+=======
+
+        if(<%= blog_mode %>) {
+            elemDiv.append(
+                $j(document.createElement("a"))
+                .css({
+                    backgroundColor: "#eef",
+                    margin: "0 0 0 3px"
+                })
+                .attr('href',"javascript:insertPicRef("+index+");")
+                .attr('class', "hiki_support")
+                .append(document.createTextNode("<%= _('Append to the body')%>"))
+            );
+        }
+>>>>>>> for_i18n:app/views/shared/_multiple_file.html.erb
         index++;
      };
 

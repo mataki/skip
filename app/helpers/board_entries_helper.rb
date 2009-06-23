@@ -36,6 +36,20 @@ module BoardEntriesHelper
     writer?(comment, user_id) || (comment.board_entry.user_id == user_id)
   end
 
+<<<<<<< HEAD:app/helpers/board_entries_helper.rb
+=======
+  def date_with_icon date
+    formated_date = "[ #{date.strftime('%Y/%m/%d-%H:%M')} ]"
+    if Time.now - date < 12.hour
+      "#{formated_date} #{icon_tag :emoticon_happy, :alt => _('[12時間以内のコメント]'), :title => _('[12時間以内のコメント]')}"
+    elsif Time.now - date < 24.hour
+      "#{formated_date} #{icon_tag :emoticon_smile, :alt => _('[24時間以内のコメント]'), :title => _('[24時間以内のコメント]')}"
+    else
+      formated_date
+    end
+  end
+
+>>>>>>> for_i18n:app/helpers/board_entries_helper.rb
   def link_to_write_place owner
     name = write_place_name(owner)
     unless name.blank?
@@ -48,8 +62,13 @@ module BoardEntriesHelper
   # edit_controllerからも呼ばれているため、ERBクラスを指定してサニタイズする
   def write_place_name owner
     if owner
+<<<<<<< HEAD:app/helpers/board_entries_helper.rb
       return "#{ERB::Util.html_escape(owner.name)}のブログ" if owner.class == User
       return "#{ERB::Util.html_escape(owner.name)}の掲示板" if owner.class == Group
+=======
+      return _("%s's Blog") % owner.name if owner.class == User
+      return _("BBS of %s") % owner.name if owner.class == Group
+>>>>>>> for_i18n:app/helpers/board_entries_helper.rb
     end
     ''
   end

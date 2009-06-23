@@ -1,0 +1,31 @@
+<%# locals : title_name, pages, pages_obj %>
+<% symbol2name_hash ||= nil -%>
+
+<style type="text/css">
+div#antenna_navi span.item {
+  border-right: 1px solid #555555;
+  padding-right: 3px;
+  margin-right: 7px;
+}
+</style>
+
+<div style="text-align:right;">
+  <span style="border-right: 1px solid #555555; padding-right: 3px; margin-right: 7px;">
+    <% if params[:all] -%>
+    <%= link_to _('[Hide entries 10 and more days old]'), :list_type => id_name, :all => false -%>
+    <% else %>
+    <%= link_to _('[Show all past entries]'), :list_type => id_name, :all => true -%>
+    <% end %>
+  </span>
+  <%= page_link(pages_obj) if pages_obj -%>
+</div>
+
+<%= render :partial => "page_space",
+           :locals => { :id_name => id_name,
+                        :title_name => title_name,
+                        :pages => pages,
+                        :symbol2name_hash => symbol2name_hash } %>
+
+<div style="text-align:right;">
+  <%= page_link(pages_obj) if pages_obj -%>
+</div>

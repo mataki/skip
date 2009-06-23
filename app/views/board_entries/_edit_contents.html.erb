@@ -1,3 +1,4 @@
+<<<<<<< HEAD:app/views/board_entries/_edit_contents.html.erb
 <% content_for :stylesheet do -%>
   <style type="text/css">
   table.input_table textarea {
@@ -10,6 +11,17 @@
     <%= radio_button_tag("editor_mode", "richtext", params[:editor_mode] == "richtext", :id=>"editor_mode_richtext") + label_tag("editor_mode_richtext", _("リッチテキスト")) %>
     <%= radio_button_tag("editor_mode", "hiki", params[:editor_mode] == "hiki", :id=>"editor_mode_hiki") + label_tag("editor_mode_hiki", _('Wikiテキスト')) -%>
     <span class="share_file_uploader trigger pointer link"><span class="ss_sprite ss_attach">&nbsp;</span><%= _('本文にファイルを差し込む') %></span>
+=======
+<br /><style type="text/css">
+table.input_table textarea {
+  width: 100%;
+}
+</style>
+
+  <div class="input_value" style="height: 2em;">
+    <%= radio_button_tag("editor_mode", "richtext", params[:editor_mode] == "richtext", :id=>"editor_mode_richtext") %><%= _('Rich Text')%>
+    <%= radio_button_tag("editor_mode", "hiki", params[:editor_mode] == "hiki", :id=>"editor_mode_hiki") -%><%= _('Wiki text')%>
+>>>>>>> for_i18n:app/views/board_entries/_edit_contents.html.erb
   </div>
 
   <div id="share_file_uploader"></div>
@@ -17,8 +29,13 @@
     <%= text_area_tag 'contents_richtext', h(sanitize_style_with_whitelist(params[:contents_richtext])), :cols => 90, :rows => 20 %>
   </div>
   <div id="contents_hiki_space" style="display: none;">
+<<<<<<< HEAD:app/views/board_entries/_edit_contents.html.erb
     <%= link_to_hiki_help %> <a href="#" id="hiki_preview_link">【プレビューで確認する】</a>
     <%= text_area_tag 'contents_hiki', h(params[:contents_hiki]), :cols => 90, :rows => 20 %>
+=======
+    <%= link_to_hiki_help %> <a href="#" id="hiki_preview_link"><%= _('[See preview]')%></a>
+    <label for="contents"><%= text_area_tag 'contents_hiki', h(params[:contents_hiki]), :cols => 90, :rows => 20 %></label>
+>>>>>>> for_i18n:app/views/board_entries/_edit_contents.html.erb
   </div>
 
 <% content_for :javascript_includes do -%>

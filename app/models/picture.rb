@@ -16,7 +16,7 @@
 class Picture < ActiveRecord::Base
   belongs_to :user, :class_name => "User", :foreign_key => "user_id"
 
-  validates_format_of :content_type, :with => /^image/, :message =>"アップロードできるのは画像のみです"
+  validates_format_of :content_type, :with => /^image/, :message =>_("Uploads are limited to pictures only.")
 
   def picture=(picture_field)
     self.name = base_part_of(picture_field.original_filename)
@@ -32,7 +32,7 @@ class Picture < ActiveRecord::Base
 
   def validate
     @picture = Picture.find(:first, :conditions =>['user_id = ?', self.user_id])
-    errors.add("", "画像は１つまでしかアップロードできません。") if @picture
-    errors.add("", "ファイルサイズが大きすぎます。") if @filesize > 65535
+    errors.add("", _("You can only upload 1 picuture.")) if @picture
+    errors.add("", _("File size too large.")) if @filesize > 65535
   end
 end

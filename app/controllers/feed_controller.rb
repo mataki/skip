@@ -18,13 +18,13 @@ class FeedController < ApplicationController
   #DRY
   def recent_questions
     find_params = BoardEntry.make_conditions(login_user_symbols, {:recent_day=> 10, :category=>'質問'})
-    rss_feed "recent_questions", "みんなからの質問!", board_entry_item_array(find_params)
+    rss_feed "recent_questions", _("Recent Questions"), board_entry_item_array(find_params)
   end
 
   def recent_blogs
     find_params = BoardEntry.make_conditions(login_user_symbols, {:entry_type=>'DIARY', :recent_day=> 10, :publication_type => 'public'})
-    find_params[:conditions][0] << " and board_entries.title <> 'ユーザー登録しました！'"
-    rss_feed "recent_blogs","最近投稿された記事", board_entry_item_array(find_params)
+    find_params[:conditions][0] << " and board_entries.title <> _('ユーザー登録しました！')"
+    rss_feed "recent_blogs",_("Recently Posted Entries"), board_entry_item_array(find_params)
   end
 
   # 最近のBBS記事一覧のRSSを生成する
@@ -34,7 +34,13 @@ class FeedController < ApplicationController
       render_404 and return
     end
 
+<<<<<<< HEAD:app/controllers/feed_controller.rb
     description = "最新の掲示板の記事（#{ERB::Util.h(category.name)}）"
+=======
+  # 最近のBBS記事一覧のRSSを生成する
+  def recent_bbs action_name, category
+    description = _("Recent BBS posts (%{category)") % {:category =>ERB::Util.h(category.name)}
+>>>>>>> for_i18n:app/controllers/feed_controller.rb
     find_options = {:exclude_entry_type=>'DIARY', :publication_type => 'public', :recent_day=> 10}
     find_options[:symbols] = Group.gid_by_category[category.id]
     items = []
@@ -46,15 +52,20 @@ class FeedController < ApplicationController
   end
 
   def recent_registed_groups
+<<<<<<< HEAD:app/controllers/feed_controller.rb
     description = "最近登録されたグループ"
     groups = Group.active.find(:all, :order=>"created_on DESC", :conditions=>["created_on > ?" ,Date.today-10], :limit => 10)
+=======
+    description = _("Recently Created Groups")
+    groups = Group.find(:all, :order=>"created_on DESC", :conditions=>["created_on > ?" ,Date.today-10], :limit => 10)
+>>>>>>> for_i18n:app/controllers/feed_controller.rb
     item_arry = []
     groups.map{|group| item_arry << {:type => "group", :title => group.name, :id => group.gid, :date => group.created_on, :contents => group.description } }
     rss_feed "recent_registed_groups", description, item_arry
   end
 
   def recent_registed_users
-    description = "最近登録されたユーザ"
+    description = _("Recently Registered Users")
     users = User.find(:all, :order=>"created_on DESC", :conditions=>["created_on > ?" ,Date.today-10], :limit => 10)
     item_arry = users.map do |user|
       content = if profile = user.user_profile_values.rand
@@ -68,7 +79,7 @@ class FeedController < ApplicationController
   end
 
   def recent_popular_blogs
-    description = "最近の人気記事（質問除く）"
+    description = _("Recent Popular Entries (excluding questions)")
     find_params = BoardEntry.make_conditions(login_user_symbols, {:publication_type => 'public'})
     find_params[:conditions][0] << " and board_entries.category not like ?"
     find_params[:conditions] << '%[質問]%'
@@ -79,14 +90,14 @@ class FeedController < ApplicationController
   end
 
   def message_for_you
-    description = "あなたへの連絡"
+    description = _("Messages for you")
     find_params = BoardEntry.make_conditions login_user_symbols, { :category=>'連絡' }
     user_reading_condition find_params
     rss_feed "message_for_you", description, board_entry_item_array(find_params)
   end
 
   def your_commented_blogs
-    description = "コメントの行方"
+    description = _("Trace Comments")
     find_params = BoardEntry.make_conditions(login_user_symbols)
     user_id = session[:user_id]
     find_params[:conditions][0] << "and board_entry_comments.user_id = ? and user_readings.read = ? and user_readings.user_id = ?"
@@ -96,7 +107,7 @@ class FeedController < ApplicationController
   end
 
   def your_bookmarked_blogs
-    description = "ブクマの行方"
+    description = _("Track of Bookmarks")
     bookmarks = Bookmark.find(:all,
                               :conditions => ["bookmark_comments.user_id = ? and bookmarks.url like '/page/%'", session[:user_id]],
                               :include => [:bookmark_comments])
@@ -112,7 +123,7 @@ class FeedController < ApplicationController
   end
 
   def participate_group_bbs
-    description = "参加グループ"
+    description = _("Groups Joined")
     find_params = BoardEntry.make_conditions login_user_symbols, { :symbols => login_user_groups }
     user_reading_condition find_params
     rss_feed "participate_group_bbs", description, board_entry_item_array(find_params)
@@ -138,12 +149,12 @@ private
     server_addr = root_url
     rss = RSS::Maker.make("1.0") do |maker|
       maker.channel.about = url_for(:controller => "feed", :action => action_name)
-      maker.channel.title = "マイページ/" + description
+      maker.channel.title = _("My Page / %s") % description
       maker.channel.link = server_addr
       maker.channel.description = description
       item_arry.each do |item_value|
         item = maker.items.new_item
-        item.title = item_value[:title]+"　コメント数:("+item_value[:comment_count].to_s+")"
+        item.title = n_("%{title_val} Comment:(%{comment_count_val})", "%{title_val} Comments:(%{comment_count_val})", item_value[:comment_count]) % {:title_val => item_value[:title], :comment_count_val => item_value[:comment_count].to_s}
         item.link = ""
         item.link <<  server_addr
         case item_value[:type]

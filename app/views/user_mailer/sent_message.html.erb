@@ -1,12 +1,20 @@
+<<<<<<< HEAD:app/views/user_mailer/sent_message.html.erb
 <%= @header %>
+=======
+<%= _("Hello, this is the secretariat of %s.") % h(Admin::Setting.abbr_app_title)%>
+>>>>>>> for_i18n:app/views/user_mailer/sent_message.html.erb
 
 <%= @message %>
 
-内容を確認するには、以下のURLをクリックしてください。
+<%= _("Click on the URL to see the content.\n\n&npsp;%s") % @link_url%>
 
-　<%= @link_url %>
 
+<<<<<<< HEAD:app/views/user_mailer/sent_message.html.erb
 メッセージメールが不要な場合はこちらで設定が出来ます。
+=======
+
+<%= _('You can disable message notification email from here.')%>
+>>>>>>> for_i18n:app/views/user_mailer/sent_message.html.erb
 <%= @message_manage_url %>
 
 <%= @footer %>

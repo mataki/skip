@@ -54,7 +54,7 @@
 </div>
 <% if login_mode?(:password) -%>
 <%= link_to _('New %{model}') % {:model => _('user')}, new_admin_user_path %> |
-<%= link_to _('New user from csv'), import_new_admin_user_path %>
+<%= link_to _('New users from CSV'), import_new_admin_user_path %>
 <% end -%>
 <% end -%>
 

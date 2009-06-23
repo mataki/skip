@@ -4,9 +4,20 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
+<<<<<<< HEAD:app/views/layouts/subwindow.html.erb
   <title><%= h Admin::Setting.abbr_app_title -%> - サブウィンドウ</title>
   <%= all_stylesheet_link_tag "style" %>
   <%= stylesheet_link_tag :skip_embedded_sprites %>
+=======
+  <title><%= h Admin::Setting.abbr_app_title -%> - <%= _('Subwindow')%></title>
+<script language="JavaScript" type="text/javascript">
+<!--
+var relative_url_root = '<%= controller.request.relative_url_root -%>';
+//-->
+</script>
+  <%= skip_stylesheet_link_tag 'style' %>
+  <%= stylesheet_link_tag 'style' %>
+>>>>>>> for_i18n:app/views/layouts/subwindow.html.erb
   <%= skip_stylesheet_link_tag 'nyroModal.full.css' %>
   <%= skip_stylesheet_link_tag 'jquery.autocomplete.css' %>
   <%= skip_stylesheet_link_tag "jquery.cluetip.css" %>

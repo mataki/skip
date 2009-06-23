@@ -10,7 +10,11 @@
   <% form_tag({:action => :update}, {:method => :put}) do %>
   <%= render :partial => "portal/profile_form" %>
   <p>
+<<<<<<< HEAD:app/views/admin/user_profiles/edit.html.erb
     <%= submit_tag _('Update'), :disable_with => _('Updating...') %>
+=======
+  <%= f.submit _('Update'), :disable_with => _('Now Updating...') %>
+>>>>>>> for_i18n:app/views/admin/user_profiles/edit.html.erb
   </p>
   <% end %>
 </div>

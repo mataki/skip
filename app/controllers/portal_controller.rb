@@ -138,14 +138,12 @@ class PortalController < ApplicationController
     end
 
     if Admin::Setting.stop_new_user
-      deny_message = "現在、新規のユーザ登録の処理は停止させて頂いております。"
+      deny_message = _("New user registration is suspended for now.")
     end
     if deny_message
       render :layout => "entrance",
-      :text => <<-EOS
-               <div style="font-weight: bold; font-size: 18px;">大変申し訳ございません。<br/>#{deny_message}<br/>
-               <input type="button" value="ログアウト"  onClick="location.href = '#{url_for(:controller => "/platform", :action => :logout)}';"></input></div>
-             EOS
+      :text => '<div style="font-weight: bold; font-size: 18px;">' + _("%s<br/>We apologize for the inconvenience caused.<br/>") % deny_message + "\n" +
+               '<input type="button" value="' + _('Logout') + "\"  onClick=\"location.href = '#{url_for(:controller => "/platform", :action => :logout)}';\"></input></div>\n"
       return false
     end
   end

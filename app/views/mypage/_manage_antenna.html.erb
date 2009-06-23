@@ -16,10 +16,7 @@ ul#antennas_list li.dragenter {
 
 <% content_for :contents_right do -%>
 
-<div class="desc"><p>ここでは注目するブログなどのアンテナを整備することが可能です。<br/>
-アンテナの名称は、クリックすると編集することが可能です。<br/>
-アンテナの一覧<%= icon_tag 'transmit' -%>は、上下にドラッグ＆ドロップすることで並び替えをすることができます。<br/>
-また、条件部分の<%= icon_tag 'report_user' -%>を掴んで、アンテナにドロップすれば、移動させることもできます。</p></div>
+<div class="desc"><p><%= _("You can manage antennas for the blogs you follow etc.<br/>\nYou can edit the name of the antenna by clicking on it.<br/>\nThe list of antennas%{transmi} can be reordered by drag &amp; drop.<br/>\nYou can also move the items between antennas it by dragging the %{report_user} in the condition area.") % {:transmit => icon_tag('transmit'), :report_user => icon_tag('report_user')}%></p></div>
 
 <div class="edit_form_space"><!-- 編集領域  -->
 
@@ -27,12 +24,19 @@ ul#antennas_list li.dragenter {
     <%= render :partial => 'antennas', :object => @antennas -%>
   </div>
 
+<<<<<<< HEAD:app/views/mypage/_manage_antenna.html.erb
   <div id="add_antenna_area">
     <% form_tag url_for(:controller => 'mypage', :action => 'add_antenna'), :id => 'add_antenna_form' do -%>
     <%= icon_tag 'transmit_add' %><label for="antenna_name">アンテナの追加</label>
     <%= text_field_tag 'antenna_name', '', :size => '20' %>
     <%= submit_tag _('Save'), :id => 'add_antenna_btn' %>
     <% end -%>
+=======
+  <div style="border: 1px solid silver; background-color: #f0f0ff; margin-top: 5px;">
+    <p><%= icon_tag 'transmit_add' -%><%= _('Add Antenna')%>
+    <input type="edit" size="20" id="add_antenna_name" />
+    <input type="button" value="<%= _('Add')%>" id="add_antenna_btn" /></p>
+>>>>>>> for_i18n:app/views/mypage/_manage_antenna.html.erb
   </div>
 
 </div><!-- end of 編集領域 -->
@@ -55,11 +59,11 @@ ul#antennas_list li.dragenter {
       .submit(function() {
           var antenna_name = $j('#antenna_name').val();
           if (antenna_name == '') {
-              alert('アンテナ名は必須です。');
+              alert('<%= _("Antenna name is mandatory.")%>');
               return false;
           }
           if (antenna_name.length > 10) {
-              alert('アンテナ名は10文字以内で入力して下さい。');
+              alert('<%= _("Antenna name accepts 10 or less characters only.")%>');
               return false;
           }
           $j.ajax({
@@ -70,6 +74,12 @@ ul#antennas_list li.dragenter {
                   $j('#antenna_name').val('');
                   $j('#antennas_list_container').html(request).highlight();
               },
+<<<<<<< HEAD:app/views/mypage/_manage_antenna.html.erb
+=======
+              error: function(event){
+                  alert("<%= _('Communication failure.')%>");
+              },
+>>>>>>> for_i18n:app/views/mypage/_manage_antenna.html.erb
               complete: function(request) {
                   setupDeleteAntennaLink();
                   setupDeleteAntennaItemLink();
@@ -87,7 +97,7 @@ ul#antennas_list li.dragenter {
     var setupDeleteAntennaLink = function() {
         $j('.delete_antenna_link')
         .click(function() {
-              if (!confirm('本当に削除しますか?')) {
+              if (!confirm('<%= _("Are you sure to delete?")%>')) {
                   return;
               }
               var antenna_id = this.id.split('_')[3];
@@ -100,7 +110,7 @@ ul#antennas_list li.dragenter {
                       $j('#antennas_list_container').html(request).highlight();
                   },
                   error: function(event){
-                      alert("通信に失敗しました");
+                      alert("<%= _('Communication failure.')%>");
                   },
                   complete: function(request) {
                       setupDeleteAntennaLink();
@@ -173,7 +183,7 @@ ul#antennas_list li.dragenter {
     var setupDeleteAntennaItemLink = function() {
         $j('.delete_antenna_item_link')
         .click(function() {
-            if (!confirm('本当に削除しますか?')) {
+            if (!confirm('<%= _("Are you sure to delete?")%>')) {
                 return;
             }
             var antenna_id = this.id.split('_')[4];
@@ -189,7 +199,7 @@ ul#antennas_list li.dragenter {
                     $j('#antennas_list_container').html(request).highlight();
                 },
                 error: function(event){
-                    alert("通信に失敗しました");
+                    alert("<%= _('Communication failure.')%>");
                 },
                 complete: function(request) {
                     setupDeleteAntennaLink();
@@ -226,7 +236,7 @@ ul#antennas_list li.dragenter {
                     url: url,
                     data: { source_antenna_id: source_antenna_id, target_pos: target_pos, authenticity_token: $j('#authenticity_token').val() },
                     error: function(event){
-                        alert("通信に失敗しました");
+                        alert("<%= _('Communication failure.')%>");
                     },
                     success: function(request) {
                         $j('#antennas_list_container').highlight();
@@ -253,7 +263,11 @@ ul#antennas_list li.dragenter {
                           url: url,
                           data: { antenna_id: antenna_id, antenna_item_id: antenna_item_id, authenticity_token: $j('#authenticity_token').val() },
                           error: function(event){
+<<<<<<< HEAD:app/views/mypage/_manage_antenna.html.erb
                               alert(event.responseText);
+=======
+                              alert("<%= _('Communication failure.')%>");
+>>>>>>> for_i18n:app/views/mypage/_manage_antenna.html.erb
                           },
                           success: function(request) {
                               dropObj.append(ui.draggable);

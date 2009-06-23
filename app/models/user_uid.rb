@@ -26,6 +26,7 @@ class UserUid < ActiveRecord::Base
 
   N_('UserUid|Uid')
 
+<<<<<<< HEAD:app/models/user_uid.rb
   named_scope :partial_match_uid, proc {|word|
     {:conditions => ["uid LIKE ?", SkipUtil.to_lqs(word)]}
   }
@@ -37,15 +38,29 @@ class UserUid < ActiveRecord::Base
 
   def validate
     errors.add(:uid, _('は%{login_account}と異なる形式で入力してください。') % {:login_account => Admin::Setting.login_account}) if uid_type == UID_TYPE[:username] && uid =~ user_code_format_regex
+=======
+  validates_presence_of :uid, :message => _('is mandatory.')
+  validates_uniqueness_of :uid, :message => _('has already been registered.')
+  validates_length_of :uid, :minimum => UID_MIN_LENGTH, :message => _("requires %d or more characters.")
+  validates_length_of :uid, :maximum => UID_MAX_LENGTH, :message => _("accepts %d or less characters only.")
+  validates_format_of :uid, :message => _('accepts numbers, alphapets and symbols.'), :with => UID_FORMAT_REGEX
+
+  def validate
+    errors.add(:uid, _("needs to be in different format from %s.") % Admin::Setting.login_account) if uid_type == UID_TYPE[:username] && uid =~ UID_CODE_REGEX
+>>>>>>> for_i18n:app/models/user_uid.rb
   end
 
   def self.validation_error_message uid
     u = new(:uid => uid, :uid_type => UID_TYPE[:username])
+<<<<<<< HEAD:app/models/user_uid.rb
     u.valid? ? nil : u.errors.full_messages.join(',')
   end
 
 #  private
   def user_code_format_regex
     Regexp.new(SkipEmbedded::InitialSettings['user_code_format_regex'])
+=======
+    u.valid? ? _('Usable.') : u.errors.full_messages.join(',')
+>>>>>>> for_i18n:app/models/user_uid.rb
   end
 end

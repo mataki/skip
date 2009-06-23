@@ -22,16 +22,24 @@
 <% month ||= nil -%>
 
 <% if year and month -%>
+<<<<<<< HEAD:app/views/entries/_entries_list.html.erb
 <div style=""><%= "【#{h year}年#{h month}月のアーカイブ】" %></div>
+=======
+<div style=""><%= _("[Archive of %{month}/%{year}]") % {:year => h(year), :month => h(month)} -%></div>
+>>>>>>> for_i18n:app/views/entries/_entries_list.html.erb
 <% end -%>
 
 <% if pages and pages.item_count > 0 -%>
   <div class="navi" style="position: relative; _width: 100%">
+<<<<<<< HEAD:app/views/entries/_entries_list.html.erb
     <div style="position: absolute; top:1px; left: 2px;">
+=======
+    <div style="position: absolute; top:1px; left: 2px; font-size: 10px;"><%= icon_tag 'table_refresh', :title => _("Sort Order") -%>
+>>>>>>> for_i18n:app/views/entries/_entries_list.html.erb
       <% if params[:sort_type] == "date" %>
-        <span style="font-weight: bold;">[更新順]</span><%= link_to "[アクセス順]", params.merge({:sort_type => "access"}) -%>
+        <span style="font-weight: bold;"><%= _('[Sort by modified date]')%></span><%= link_to _("[Sort by access count]"), params.merge({:sort_type => "access"}) -%>
       <% else %>
-        <%= link_to "[更新順]", params.merge({:sort_type => "date"}) -%><span style="font-weight: bold;">[アクセス順]</span>
+        <%= link_to _("[Sort by modified date]"), params.merge({:sort_type => "date"}) -%><span style="font-weight: bold;"><%= _('[Sort by access]')%></span>
       <% end %>
     </div>
     <%= page_link(pages) -%>
@@ -51,7 +59,17 @@
         <%= get_entry_infos entry %> - 最終更新:<%=h entry.last_updated.strftime("%y/%m/%d %H:%M") %>
       </div>
     </div>
+<<<<<<< HEAD:app/views/entries/_entries_list.html.erb
   <% end -%>
+=======
+    <div style="text-align: right; font-size: 90%;">
+      <span style='background-color: <%=visibility_color%>;'><%= visibility %></span><%= get_entry_infos entry %>
+      - <%= _('Last Update: ')%><%=h entry.last_updated.strftime(_('%m/%d/%y %H:%M')) %>
+    </div>
+  </div>
+
+  <% end %>
+>>>>>>> for_i18n:app/views/entries/_entries_list.html.erb
   </div>
 
   <div class="navi"><%= page_link(pages) %></div>

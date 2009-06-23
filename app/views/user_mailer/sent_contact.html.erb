@@ -1,10 +1,15 @@
+<<<<<<< HEAD:app/views/user_mailer/sent_contact.html.erb
 <%= @header %>
+=======
 
-<%= h @name %> さんから連絡が届いています。
-連絡の内容を確認するには、以下のURLをクリックしてください。
+<%= _("Hello, this is the secretariat of %s.") % h(Admin::Setting.abbr_app_title)%>
+>>>>>>> for_i18n:app/views/user_mailer/sent_contact.html.erb
+
+<%= _("You have message(s) from %s") % h(@name) %>
+<%= _("Click the URL below to see the content of message.")%>
 
 [<%= h @entry_title %>]
-　<%= @entry_url %>
-　※ブログに直接遷移します。
+<%= _("&nbsp;%{url}") % {:url => @entry_url}%>
+<%= _("&npsp;*Jumps directly to the blog entry.")%>
 
 <%= @footer %>

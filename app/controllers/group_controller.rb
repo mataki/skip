@@ -26,6 +26,10 @@ class GroupController < ApplicationController
          :only => [ :join, :destroy, :leave, :update, :change_participation,
                     :ado_set_favorite, :toggle_owned, :forced_leave_user, :append_user ],
          :redirect_to => { :action => :show }
+  N_('GroupController|ApproveSuceeded')
+  N_('GroupController|ApproveFailed')
+  N_('GroupController|DisapproveSuceeded')
+  N_('GroupController|DispproveFailed')
 
   # tab_menu
   def show
@@ -51,7 +55,7 @@ class GroupController < ApplicationController
                               :order_by => @condition.value_of_order_by,
                               :include => @condition.value_of_include)
     unless @users && @users.size > 0
-      flash.now[:notice] = _('該当するユーザは存在しませんでした。')
+      flash.now[:notice] = _('User not found.')
     end
   end
 
@@ -140,7 +144,11 @@ class GroupController < ApplicationController
       @pages, @participations = paginate_participations(@group, false)
     when "manage_permit"
       unless @group.protected?
+<<<<<<< HEAD:app/controllers/group_controller.rb
         flash[:warn] = "参加に承認は不要です"
+=======
+        flash[:warning] = _("No approval needed to join this group.")
+>>>>>>> for_i18n:app/controllers/group_controller.rb
         redirect_to :action => :manage
         return
       end
@@ -161,17 +169,17 @@ class GroupController < ApplicationController
   # 参加申込み
   def join
     if @participation
-      flash[:notice] = '既に参加しています。'
+      flash[:notice] = _('You are already a member of the group.')
     else
       participation = GroupParticipation.new(:user_id => session[:user_id], :group_id => @group.id)
       participation.waiting = true if @group.protected?
 
       if participation.save
         if participation.waiting?
-          flash[:notice] = '参加申し込みをしました。承認されるのをお待ちください。'
+          flash[:notice] = _('Request sent. Please wait for the approval.')
         else
           login_user_groups << @group.symbol
-          flash[:notice] = 'グループに参加しました。'
+          flash[:notice] = _('Joined the group successfully.')
         end
 
         message = params[:board_entry][:contents]
@@ -179,11 +187,11 @@ class GroupController < ApplicationController
         #グループのownerのシンボル(複数と取ってきて、publication_symbolsに入れる)
         owner_symbols = @group.get_owners.map { |user| user.symbol }
         entry_params = { }
-        entry_params[:title] = "参加申し込みをしました！"
+        entry_params[:title] = _("Request to join the group has been sent out!")
         entry_params[:message] = render_to_string(:partial => 'entries_template/group_join',
                                                   :locals => { :user_name => current_user.name,
                                                                :message => message })
-        entry_params[:tags] = "参加申し込み"
+        entry_params[:tags] = _("Request to Join Group")
         entry_params[:tags] << ",#{Tag::NOTICE_TAG}" if @group.protected?
         entry_params[:user_symbol] = session[:user_symbol]
         entry_params[:user_id] = session[:user_id]
@@ -204,9 +212,9 @@ class GroupController < ApplicationController
     if @participation
       @participation.destroy
       login_user_groups.delete(@group.symbol)
-      flash[:notice] = '退会しました。'
+      flash[:notice] = _('Successfully left the group.')
     else
-      flash[:notice] = 'そのグループには参加していません。'
+      flash[:notice] = _('You are not a member of the group.')
     end
     redirect_to :action => 'show'
   end
@@ -221,9 +229,13 @@ class GroupController < ApplicationController
     group_participation.owned = !group_participation.owned?
 
     if group_participation.save
-      flash[:notice] = '変更しました。'
+      flash[:notice] = _('Changed.')
     else
+<<<<<<< HEAD:app/controllers/group_controller.rb
       flash[:warn] = '権限変更に失敗しました。'
+=======
+      flash[:warning] = _('Failed to change status.')
+>>>>>>> for_i18n:app/controllers/group_controller.rb
     end
     redirect_to :action => 'manage', :menu => 'manage_participations'
   end
@@ -239,8 +251,8 @@ class GroupController < ApplicationController
 
     # BBSにuid直接指定[連絡]で新規投稿(自動で投稿されて保存される)
     entry_params = { }
-    entry_params[:title] ="【#{@group.name}】退会処理"
-    entry_params[:message] = "[#{@group.symbol}>]から#{user.name}さんの退会処理を実行しました"
+    entry_params[:title] =_("Leave [%s]") % @group.name
+    entry_params[:message] = _("Removed %{user} from [%{group}>]") % {:group => @group.symbol, :user => user.name}
     entry_params[:tags] = "#{Tag::NOTICE_TAG}"
     entry_params[:user_symbol] = session[:user_symbol]
     entry_params[:user_id] = session[:user_id]
@@ -251,7 +263,7 @@ class GroupController < ApplicationController
     entry_params[:publication_symbols] << user.symbol
     entry = BoardEntry.create_entry(entry_params)
 
-    flash[:notice] = "退会者向けに掲示板にメッセージを作成しました。内容は必要に応じて変更してください"
+    flash[:notice] = _("Created an entry on the BBS about the removal of user. Edit the entry when needed.")
     redirect_to :action => 'bbs', :entry_id => entry.id
   end
 
@@ -259,10 +271,14 @@ class GroupController < ApplicationController
   # 参加の許可か棄却
   def change_participation
     unless @group.protected?
+<<<<<<< HEAD:app/controllers/group_controller.rb
       flash[:warn] = "参加に承認は不要です"
+=======
+      flash[:warning] = _("No approval needed to join this group.")
+>>>>>>> for_i18n:app/controllers/group_controller.rb
       redirect_to :action => :show
     end
-    type_name = params[:submit_type] == 'permit' ? "許可" : "棄却"
+    type_name = params[:submit_type] == 'permit' ? _('GroupController|Approve') : _('GroupController|Disapprove') #"許可" : "棄却"
 
     if states = params[:participation_state]
       states.each do |participation_id, state|
@@ -270,7 +286,11 @@ class GroupController < ApplicationController
           participation = GroupParticipation.find(participation_id)
           if participation.group_id == @participation.group_id &&
             !participation.waiting
+<<<<<<< HEAD:app/controllers/group_controller.rb
             flash[:warn] = "このグループに参加済みのユーザが含まれています。"
+=======
+            flash[:warning] = _("Part of the users are already members of this group.")
+>>>>>>> for_i18n:app/controllers/group_controller.rb
             redirect_to :action => 'manage', :menu => 'manage_permit'
             return false
           end
@@ -282,7 +302,7 @@ class GroupController < ApplicationController
             result = participation.destroy
           end
 
-          flash[:notice] = type_name + ( result ? 'しました。' : 'に失敗しました。')
+          flash[:notice] = _("%{rslt} to %{type}.") % {:type => type_name, :rslt => result ? _('Succeeded') : _('Failed')} #'しました' : 'に失敗しました。'
         end
       end
     end
@@ -293,7 +313,7 @@ class GroupController < ApplicationController
   # 更新
   def update
     if @group.update_attributes(params[:group])
-      flash.now[:notice] = 'グループ情報は正しく更新されました。'
+      flash.now[:notice] = _('Group information was successfully updated.')
     end
     manage
   end
@@ -302,11 +322,19 @@ class GroupController < ApplicationController
   # 削除
   def destroy
     if @group.group_participations.size > 1
+<<<<<<< HEAD:app/controllers/group_controller.rb
       flash[:warn] = '自分以外のユーザがまだ存在しています。削除できません。'
       redirect_to :action => 'show'
     else
       @group.logical_destroy
       flash[:notice] = 'グループは削除されました。'
+=======
+      flash[:warning] = _('Failed to delete since there are still other users in the group.')
+      redirect_to :action => 'show'
+    else
+      @group.destroy
+      flash[:notice] = _('Group was successfully deleted.')
+>>>>>>> for_i18n:app/controllers/group_controller.rb
       redirect_to :controller => 'groups'
     end
   end
@@ -333,11 +361,11 @@ class GroupController < ApplicationController
     when 'uid'
       user = User.find_by_uid(symbol_id)
       if @group.group_participations.find_by_user_id(user.id)
-        flash[:notice] = "#{user.name}さんは既に参加済み/参加申請済みです。"
+        flash[:notice] = _("%s has already joined / applied to join this group.") % user.name
       else
         @group.group_participations.build(:user_id => user.id, :owned => false)
         @group.save
-        flash[:notice] = "#{user.name}さんを参加者に追加し、連絡の掲示板を作成しました。"
+        flash[:notice] = _("Added %s as a member and created a BBS for messaging.") % user.name
       end
     when 'gid'
       group = Group.active.find_by_gid(symbol_id, :include => :group_participations)
@@ -347,9 +375,13 @@ class GroupController < ApplicationController
         end
       end
       @group.save
-      flash[:notice] = "#{group.name}のメンバーを参加者に追加し、連絡の掲示板を作成しました。"
+      flash[:notice] = _("Added members of %s as members of the group and created a BBS for messaging.") % group.name
     else
+<<<<<<< HEAD:app/controllers/group_controller.rb
       flash[:warn] = "ユーザ／グループの指定方法が間違っています"
+=======
+      flash[:warning] = _("Users / groups selection invalid.")
+>>>>>>> for_i18n:app/controllers/group_controller.rb
     end
 
     # BBSにsymbol直接指定[連絡]で新規投稿(自動で投稿されて保存される)
@@ -363,6 +395,7 @@ class GroupController < ApplicationController
 
 private
   def setup_layout
+<<<<<<< HEAD:app/controllers/group_controller.rb
     @title = title
     @main_menu = main_menu
     @tab_menu_source = tab_menu_source
@@ -395,6 +428,25 @@ private
   def load_group_and_participation
     unless @group = Group.active.find_by_gid(params[:gid])
       flash[:warn] = "指定のグループは存在していません"
+=======
+    @main_menu = 'グループ'
+    @title = @group.name if @group
+
+    @tab_menu_source = []
+    @tab_menu_source << [_('Summary'), 'show']
+    @tab_menu_source << [_('Members List'), 'users']
+    @tab_menu_source << [_('BBS'), 'bbs']
+    @tab_menu_source << [_('New Posts'), 'new'] if participating?
+    @tab_menu_source << [_('Shared Files'), 'share_file']
+    @tab_menu_source << [_('Admin'), 'manage'] if participating? and @participation.owned?
+
+    @tab_menu_option = { :gid => @group.gid }
+  end
+
+  def load_group_and_participation
+    unless @group = Group.find_by_gid(params[:gid])
+      flash[:warning] = _("Specified group does not exist.")
+>>>>>>> for_i18n:app/controllers/group_controller.rb
       redirect_to :controller => 'mypage', :action => 'index'
       return false
     end
@@ -408,7 +460,11 @@ private
 
   def check_owned
     unless @participation and @participation.owned?
+<<<<<<< HEAD:app/controllers/group_controller.rb
       flash[:warn] = 'その操作は管理者権限が必要です。'
+=======
+      flash[:warning] = _('Administrative privillage required for the action.')
+>>>>>>> for_i18n:app/controllers/group_controller.rb
       redirect_to :controller => 'mypage', :action => 'index'
       return false
     end

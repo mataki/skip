@@ -74,7 +74,7 @@ class RankingsController < ApplicationController
       @month = time.month
       @dates = Ranking.extracted_dates
     rescue => e
-      flash.now[:error] = _('不正なパラメタです。')
+      flash.now[:error] = _('Invalid parameter(s) detected.')
       e.backtrace.each { |message| logger.error message }
       render :text => '', :status => :bad_request
     end
@@ -88,7 +88,7 @@ class RankingsController < ApplicationController
     else
       @site_count = SiteCount.find(:first, :order => "created_on desc") || SiteCount.new
     end
-    flash[:notice] = _('対象データが見つかりません。') if @site_count.new_record?
+    flash[:notice] = _('Data not found.') if @site_count.new_record?
     @item_count = get_site_count_hash_by_day @date
   end
 
@@ -157,12 +157,18 @@ class RankingsController < ApplicationController
 
   private
   def setup_layout
-    @main_menu = @title = 'ランキング'
+    @main_menu = @title = _('Rankings')
 
+<<<<<<< HEAD:app/controllers/rankings_controller.rb
     @tab_menu_source = [ {:label => _('月別総合ランキング'), :options => {:action => 'monthly'}},
                          {:label => _('総合ランキング'), :options => {:action => 'all'}},
                          {:label => _('人気ブックマーク'), :options => {:action => 'bookmark'}},
                          {:label => _('サイト情報'), :options => {:action => 'statistics'}} ]
+=======
+    @tab_menu_source = [ [_('Monthly Rankings'), 'monthly'],
+                         [_('Overall Rankings'), 'all'],
+                         [_('Site Information'), 'statistics'] ]
+>>>>>>> for_i18n:app/controllers/rankings_controller.rb
   end
 
   def get_site_count_hash_by_day date

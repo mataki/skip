@@ -31,18 +31,18 @@ class ShareFile < ActiveRecord::Base
 
   before_save :square_brackets_tags
 
-  validates_length_of   :description, :maximum=>100, :message =>'は100桁以内で入力してください'
-  validates_presence_of :file_name, :message =>'は必須です'
-  validates_presence_of :date, :message =>'は必須です'
-  validates_presence_of :user_id, :message =>'は必須です'
-  validates_uniqueness_of :file_name, :scope => :owner_symbol, :message =>'名が同一のファイルが既に登録されています'
+  validates_length_of   :description, :maximum=>100, :message =>_('accepts 100 or less characters only.')
+  validates_presence_of :file_name, :message =>_('is mandatory.')
+  validates_presence_of :date, :message =>_('is mandatory.')
+  validates_presence_of :user_id, :message =>_('is mandatory.')
+  validates_uniqueness_of :file_name, :scope => :owner_symbol, :message =>_('File with the same name already uploaded.')
 
   class << self
     HUMANIZED_ATTRIBUTE_KEY_NAMES = {
-      "description" => "コメント",
-      "category" => "タグ",
-      "date" => "日付",
-      "file_name" => "ファイル"
+      "description" => "Description",
+      "category" => "Tags",
+      "date" => "Date",
+      "file_name" => "File name"
     }
     def human_attribute_name(attribute_key_name)
       HUMANIZED_ATTRIBUTE_KEY_NAMES[attribute_key_name] || super
@@ -228,13 +228,13 @@ class ShareFile < ActiveRecord::Base
   def visibility
     text = color = ""
     if public?
-      text = "[全体に公開]"
+      text = _("[Open to all]")
       color = "yellow"
     elsif private?
       if owner_symbol.include?("uid")
-        text = "[自分だけ]"
+        text = _("[Owner only]")
       else
-        text = "[参加者のみ]"
+        text = _("[Group members only]")
       end
       color = "#FFDD75"
     end
@@ -259,7 +259,7 @@ class ShareFile < ActiveRecord::Base
                                                :include => :user)
     buf = ""
     CSV::Writer.generate(buf) do |csv|
-      header = ["アクセス日時", Admin::Setting.login_account, _('user name')]
+      header = [_("Date Accessed"), Admin::Setting.login_account, _('user name')]
       header.map! {|col| NKF.nkf('-sZ', col) }
       csv << header
       share_file_accesses.each do |access|

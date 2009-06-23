@@ -1,3 +1,4 @@
+<<<<<<< HEAD:app/views/users/_user.html.erb
 <% top_option ||= nil -%>
 <% image_output = user_link_to_with_portrait(user) -%>
 <div class="user_box">
@@ -46,3 +47,40 @@
     </tr>
   </table>
 </div>
+=======
+<% top_option ||= nil %>
+
+<% image_output = user_link_to(user, { :view_text => showPicture(user, 120, 80) }) %>
+<table class="user_box">
+  <tr>
+    <% if top_option -%>
+    <td class="image" rowspan="4"><%= image_output %></td>
+    <td colspan="4"><%= top_option -%></td>
+  </tr>
+  <tr>
+    <% else -%>
+    <td class="image" rowspan="4"><%= image_output %></td>
+    <% end -%>
+    <% if user_name_mode?(:code) -%>
+    <th><%=h Admin::Setting.login_account -%></th>
+    <td><%=h user.code %></td>
+    <% end -%>
+    <% if user_name_mode?(:name) -%>
+    <th><%= _('user name') %></th>
+    <td><%=h user.uid %></td>
+    <% end -%>
+  </tr>
+  <tr>
+    <th><%=h s_("Admin::User|Name") %></th>
+    <td><%= user_link_to user %></td>
+    <th><%=h s_("UserProfile|Email") %></th>
+    <td><%=h user.user_profile.email %></td>
+  </tr>
+  <tr>
+    <th><%= _('Last Access')%></th>
+    <td><%=h user.before_access %></td>
+    <th><%=h s_('UserProfile|Section') %></th>
+    <td><%=h user.user_profile.section %></td>
+  </tr>
+</table>
+>>>>>>> for_i18n:app/views/users/_user.html.erb

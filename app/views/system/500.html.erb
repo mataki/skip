@@ -1,4 +1,8 @@
-<h1>Application error</h1>
-<p><h4>サーバ内エラーです。システムに何らかのエラーが発生しています。お手数ですが、管理者までお知らせください。</h4></p>
+<h1><%= _('Application error')%></h1>
+<p><h4><%= _('Internal error occured. Some error popped out somewhere in the system. Please contact system administrator.')%></h4></p>
 <br/>
+<<<<<<< HEAD:app/views/system/500.html.erb
 <p>連絡先：<%= SkipEmbedded::InitialSettings['administrator_addr'] %></p>
+=======
+<p><%= _('Contact Address: ')%><%=h INITIAL_SETTINGS['administrator_addr'] %></p>
+>>>>>>> for_i18n:app/views/system/500.html.erb

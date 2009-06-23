@@ -18,7 +18,7 @@ class SymbolController < ApplicationController
   # ajax_action
   def get_name_by_symbol
     item = Symbol.get_item_by_symbol(params[:symbol])
-    render :text => item ? item.name : '対象が見つかりません。'
+    render :text => item ? item.name : _('Target not found.')
   end
 
   # ajax_action

@@ -18,9 +18,9 @@ module UserHelper
 
   # メニューの生成
   def get_social_menu_items selected_menu
-    @@menus = [{:name => "他の人からの紹介文",     :menu => "social_chain" },
-               {:name => "他の人への紹介文",   :menu => "social_chain_against" },
-               {:name => "他の人からの印象",       :menu => "social_postit" },
+    @@menus = [{:name => _("Introduction from other users"),     :menu => "social_chain" },
+               {:name => _("Introduction for other users"),   :menu => "social_chain_against" },
+               {:name => _("Impression of other users"),       :menu => "social_postit" },
               ]
     get_menu_items @@menus, selected_menu, "social"
   end

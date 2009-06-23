@@ -1,3 +1,4 @@
+<<<<<<< HEAD:app/views/user/group.html.erb
 <% content_for :contents_left do -%>
   <% form_tag( { :action => 'group'}, { :method => 'get' } ) do -%>
   <div class="box_space">
@@ -38,6 +39,51 @@
     </div>
   </div><!-- box_space -->
   <% end -%>
+=======
+<!-- グループーの一覧表示 -->
+<div id="contents_container">
+
+<div id="contents_left">
+
+<% form_tag( { :action => 'group'}, { :method => 'get' } ) do -%>
+<div class="box_space">
+  <div class="box_space_title"><%= icon_tag 'text_list_bullets'%><%= _('Category')%></div>
+  <div class="box_space_body" style="font-size:10px">
+    <%= radio_button_tag "group_category_id", "all",  params[:group_category_id] == "all", :class => "category_radio"  %>
+    <%= icon_tag "asterisk_orange", :margin => true %><%= _("All (%{num})") % {:num => @total_count}%><br/>
+    <% #TODO group/index.rhtmlにほぼ同じ記述がある。helper化すべきか? %>
+    <% @group_categories.each do |category| %>
+      <%= radio_button_tag "group_category_id", category.id, params[:group_category_id] == category.id.to_s, :class => "category_radio" %>
+      <%= get_group_icon category, :margin => true %>
+      <%= h category.name -%>(<%= h @group_counts[category.id] %>)<br/>
+    <% end %>
+   </div>
+</div><!-- box_space -->
+
+<div class="box_space">
+  <div class="box_space_title"><%= icon_tag 'table_lightning' %><%= _('Display Format')%></div>
+  <div class="box_space_body">
+    <%= radio_button_tag "format_type", "list",   params[:format_type] == "list",   :class => "format_radio"  %> <%= _('List')%><br/>
+    <%= radio_button_tag "format_type", "detail", params[:format_type] == "detail", :class => "format_radio"  %> <%= _('Detailed')%>
+   </div>
+</div><!-- box_space -->
+
+<div class="box_space">
+  <div class="box_space_title"><%= icon_tag 'table_refresh' -%><%= _('Display Order')%></div>
+  <div class="box_space_body">
+    <%= radio_button_tag("sort_type", "date", params[:sort_type] == "date", :class => "sort_radio") -%> <%= _('Sort by Date Joined')%> <br/>
+    <%= radio_button_tag("sort_type", "name", params[:sort_type] == "name", :class => "sort_radio") -%> <%= _('Sort by Group Name')%>
+  </div>
+</div><!-- box_space -->
+
+<div class="box_space">
+  <div class="box_space_title"><%= icon_tag 'find' -%><%= _('Search')%></div>
+  <div class="box_space_body">
+  <%= text_field_tag('keyword', params[:keyword], :size=>'10') %>
+  <%= submit_tag _('Search') %><br/>
+  </div>
+</div><!-- box_space -->
+>>>>>>> for_i18n:app/views/user/group.html.erb
 <% end -%>
 
 <% content_for :contents_right do -%>

@@ -51,16 +51,16 @@ class Tag < ActiveRecord::Base
     errors = []
     tags_as_string.split(',').each do |tag_name|
       if tag_name.split(//u).size > 30
-        errors << "ひとつのタグにつき30文字以上入力できません。"
+        errors << _("A tag can only accept 30 characters.")
       end
     end
 
     unless tags_as_string =~ /^(\w|\+|\/|\.|\-|\_|,)*$/
-      errors << '使用可能な記号は「+/.-_」及び「,」(タグの区切り)のみです。その他の記号、半角空白は使えません。'
+      errors << _("Acceptable symbols are \"+/.-\" and \",\" (for separation of multiple tags) only. Other symbols and white spaces are not accepted.")
     end
 
     if tags_as_string.split(//u).size > 255
-      errors << 'は255文字以内で入力してください'
+      errors << _('accepts 255 or less characters only.')
     end
 
     return errors

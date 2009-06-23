@@ -3,6 +3,7 @@
  # :locals => { :entry }
 -%>
 
+<<<<<<< HEAD:app/views/board_entries/_board_entry_point.html.erb
 <% if entry.point_incrementable?(@current_user) -%>
   <% form_tag url_for(:controller => :board_entries, :action => :ado_pointup, :id => entry.id), :id => 'entry_point_form' do -%>
     <%= submit_tag "#{entry.point} #{h Admin::Setting.point_button}" %>
@@ -10,3 +11,10 @@
 <% else -%>
   （<%= "#{entry.point} #{h Admin::Setting.point_button}" %> 頂きました）
 <% end -%>
+=======
+<% if editable %>
+  <%= _("(Got %{point} %{point_button} from you)") % {:point => entry.point , :point_button => h(Admin::Setting.point_button)}%>
+<% else %>
+  <input type="button" id="entry_point_button" value="<%= "#{entry.point} #{h Admin::Setting.point_button}" -%>" />
+<% end %>
+>>>>>>> for_i18n:app/views/board_entries/_board_entry_point.html.erb

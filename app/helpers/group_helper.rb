@@ -15,14 +15,106 @@
 
 module GroupHelper
   include BoardEntriesHelper
+<<<<<<< HEAD:app/helpers/group_helper.rb
   include UsersHelper
   include GroupsHelper
+=======
+
+  # グループのサマリに出す状態を状況に応じて出力する
+  # 表示文字列と、可能な操作の文字列のペアを返す
+  def generate_visitor_state participation
+    state = ''
+    if not participation
+      state = _('Not joined')
+    elsif participation.owned?
+      state = _('Administrator!')
+    elsif participation.waiting?
+      state = _('Waiting for Approval!')
+    else
+      state = _('Already Joined!')
+    end
+
+    button = ""
+    if participation
+      if !participation.owned?
+        button << form_tag(:action=> 'leave')
+        button << submit_tag(_('Leave Group'), {:onclick=>'return confirm("' + _('Are you sure to leave the group?') + '");'})
+        # FIXME form_tag の 閉じは end にしたい
+        button << "</form>"
+      end
+    else
+      button << link_to(_('[Request to join]'), {:action=>"new_participation"}, {:class => "nyroModal"})
+    end
+
+    return state, button
+  end
+
+  # グループのサマリに出すお知らせを状況に応じて出力する
+  # 表示したい文字列の配列を返す
+  def generate_informations group, participation
+    informations = []
+    if group.protected?
+      informations << icon_tag('key') + _("Approval from group administrator needed to join this group.")
+    else
+      informations << icon_tag('bullet_blue') + _("This is an open group.")
+    end
+
+    unless participation
+      url_param = {:controller => "group", :action => "new_participation"}
+      informations << icon_tag('group_go') + link_to(_('[Request to join this group]'), url_param, {:class => "nyroModal"})
+    end
+
+    if group.has_waiting and participation and participation.owned?
+      informations << icon_tag('bell') + _("There are members to be approved.")
+    end
+    informations
+  end
+
+  def output_users_result output_normal, users
+    output = ""
+    if output_normal
+      users.each do |user|
+        output << render( :partial => "users/user",
+                          :object => user,
+                          :locals => { :top_option => user_state(user) } )
+      end
+    else
+      table_columns = [ "name", "email", "section", "extension" ]
+      table_columns.unshift('uid') if user_name_mode?(:name)
+      table_columns.unshift('code') if user_name_mode?(:code)
+      table_columns.unshift('')
+
+      block = lambda{ |user, column|
+        case column
+        when ""
+          user_state(user)
+        when "name"
+          user_link_to user
+        when "email"
+          %(<a href="mailto:#{user.user_profile.email}">#{user.user_profile.email}</a>)
+        when "section"
+          user.user_profile.section
+        when "extension"
+          user.user_profile.extension
+        else
+          h(user.send(column))
+        end
+      }
+      output = render( :partial => "shared/table",
+                       :locals => { :records => users,
+                                    :target_class => User,
+                                    :table_columns => table_columns,
+                                    :value_logic => block  } )
+    end
+    output
+  end
+>>>>>>> for_i18n:app/helpers/group_helper.rb
 
   # 管理メニューの生成
   def get_manage_menu_items selected_menu
-    @@menus = [{:name => "グループ情報変更", :menu => "manage_info" },
-               {:name => "参加者管理",       :menu => "manage_participations"} ]
-    @@menus << {:name => "参加者の承認",     :menu => "manage_permit" } if @group.protected?
+    @@menus = [{:name => _("Edit Group Information"), :menu => "manage_info" },
+               {:name => _("Manage Members"),       :menu => "manage_participations"} ]
+    @@menus << {:name => _("Approve Member"),     :menu => "manage_permit" } if @group.protected?
 
     get_menu_items @@menus, selected_menu, "manage"
   end
@@ -33,4 +125,18 @@ module GroupHelper
     options_hash
   end
 
+<<<<<<< HEAD:app/helpers/group_helper.rb
+=======
+private
+  def user_state user
+    output = ""
+    if user.group_participations.first.owned?
+      output << icon_tag('star') + _('Administrator')
+    else
+      output << icon_tag('user') + _('Member')
+    end
+    output
+  end
+
+>>>>>>> for_i18n:app/helpers/group_helper.rb
 end

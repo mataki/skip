@@ -1,0 +1,129 @@
+<%# locals : new_comment_entries, waiting_groups
+             mail_your_messages, questions, access_blogs, recent_blogs
+             bookmarks, recent_users, recent_groups, recent_bbs
+ %>
+
+<div style="float: right; width: 150px;">
+
+<% if Admin::Setting.mypage_feed_settings.size > 0 -%>
+<div class="box_space" id="rss_feed">
+  <%= skip_image_tag 'indicator.gif' %> <span style="color:gray"><%= _('Loading...')%></span>
+</div><!-- box_space -->
+<% end -%>
+
+<% if recent_groups.size > 0 -%>
+<div class="box_space">
+  <div class="box_space_title"><%= _('Recent Groups')%></div>
+  <div class="box_space_body">
+  <% recent_groups.each do |group| -%>
+    <div class="item_line" style="margin-bottom: 1px; border-bottom: 1px dashed #d0e0ff;">
+      <div class="item_name"><%= get_group_icon(group.group_category) %> <%= item_link_to group %></div>
+      <div class="item_desc" style="font-size: 10px; margin-left: 4px; color: gray;"><%= truncate(h(group.description), 30) %></div>
+    </div>
+  <% end -%>
+  </div>
+</div>
+<% end -%>
+
+<% if recent_users.size > 0 -%>
+<div class="box_space">
+  <div class="box_space_title"><%= _('Recently Registered Members')%></div>
+  <div class="box_space_body">
+  <% recent_users.each do |user| -%>
+    <div class="item_line" style="margin-bottom: 1px; border-bottom: 1px dashed #d0e0ff;">
+      <div class="item_name"><%= item_link_to user %></div>
+      <div class="item_desc" style="font-size: 10px; margin-left: 4px; color: gray;"><%=h user.user_profile.self_introduction %></div>
+    </div>
+  <% end -%>
+  </div>
+</div>
+<% end -%>
+
+</div>
+
+<div style="margin-right: 160px;">
+
+<% if (message_array.size > 0) or
+      (waiting_groups.size > 0) or
+      (important_your_messages.size > 0) or
+      (system_messages.size > 0) %>
+<style type="text/css">
+div.top_info {
+  padding: 3px 10px;
+  background-color: #f5f5ff;
+  border: 1px dashed #ffc000;
+  margin-bottom: 10px;
+}
+span.important {
+  font-weight: bold;
+}
+</style>
+<div class="top_info">
+  <% important_your_messages.each do |entry| %>
+    <% link_text = icon_tag('lightbulb', :title => _("Important")) %>
+    <% link_text << _("You have important message <span class='important'>[%s]</span>.") % truncate(h(entry.title),30) %>
+    <div class="item"><%= entry_link_to(entry, {:view_text=>link_text}) %><%= get_publication_type_icon(entry) %></div>
+  <% end %>
+  <% message_array.each do |message| %>
+    <div class="item"><%= message_link_to(message) %></div>
+  <% end %>
+  <% waiting_groups.each do |group| %>
+    <% link_text = icon_tag('bullet_star') %>
+    <% link_text << _("User(s) waiting for approval to join [%s]!") % h(group.name) %>
+    <% link_text << icon_tag('group') %>
+    <div class="item"><%= item_link_to(group, {:view_text=>link_text}) %></div>
+  <% end %>
+  <% system_messages.each do |message| %>
+    <% link_text = icon_tag('bullet_star') %>
+    <% link_text << h(message[:text]) %>
+    <% link_text << icon_tag(message[:icon]) %>
+    <div class="item"><%= link_to(link_text, message[:option]) %></div>
+  <% end %>
+</div>
+<% end %>
+
+<%= render :partial => "list_block",
+           :locals => { :id_name => 'mail_your_messages',
+                        :title_name => _('Messages for you'),
+                        :pages => mail_your_messages } if mail_your_messages.size > 0 %>
+
+<%= render :partial => "list_block", :locals => questions    if questions[:pages].size > 0 %>
+<%= render :partial => "list_block", :locals => access_blogs if access_blogs[:pages].size > 0 %>
+<%= render :partial => "list_block", :locals => recent_blogs if recent_blogs[:pages].size > 0 %>
+<% recent_bbs.each do |bbs| %>
+  <%= render :partial => "list_block", :locals => bbs if bbs[:pages].size > 0 %>
+<% end %>
+
+<% if bookmarks.size > 0 %>
+<div id="recent_bookmarks" style="width:100%;">
+  <div class="topix_title"><%= icon_tag('asterisk_orange') -%><span><%= _('Recent Bookmarks')%></span></div>
+  <div class="topix_body" id="bookmark_body">
+  <% bookmarks.each do |bookmark| -%>
+    <div class="page_line">
+      <div class="page_title"><%= link_to_bookmark_url bookmark, bookmark.title -%></div>
+      <div class="page_from"><%= link_to(bookmark.bookmark_comments_count.to_s+"人", url_for_bookmark(bookmark.url)) %></div>
+      <div class="page_date"><%=h bookmark.updated_on.strftime("%m/%d %H:%M") %></div>
+    </div>
+  <% end -%>
+<div style="text-align:right; margin-bottom:3px;padding-bottom: 1px;"><%= link_to(_('[See all]'), :controller => 'bookmarks', :action => 'search')%></div>
+  </div>
+</div>
+<% end %>
+
+</div>
+
+<br style="clear: right;"/>
+
+<% if Admin::Setting.mypage_feed_settings.size > 0 %>
+<script type='text/javascript'>
+$j(function(){
+    $j.ajax({
+        url: '<%= url_for(:controller => 'mypage', :action => 'load_rss_feed') -%>',
+        complete: function(request) {
+            $j('#rss_feed').html(request.responseText);
+            fnLoadPngs();
+        }
+    });
+});
+</script>
+<% end %>

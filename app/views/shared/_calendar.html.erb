@@ -27,8 +27,14 @@
     -%>
   </div>
   <div class="box_space_bottom">
+<<<<<<< HEAD:app/views/shared/_calendar.html.erb
     <%= link_to('[' + _('前月') + ']', '#', :id => 'prev_month_link', :year => prev_month.year, :month => prev_month.month) %>
     <%= link_to('[' + _('今日') + ']', {:action => action, :year => now_month.year, :month => now_month.month, :day => now_month.day}) %>
     <%= link_to('[' + _('次月') + ']', '#', :id => 'next_month_link', :year => next_month.year, :month => next_month.month) %>
+=======
+    <a id="prev_month_link" href="#" ><%= _('[Prev month]')%></a>
+    <%= link_to(_('[Today]'), {:action => action, :year => now_month.year, :month => now_month.month, :day => now_month.day}) %>
+    <a id="next_month_link" href="#" ><%= _('[Next month]')%></a>
+>>>>>>> for_i18n:app/views/shared/_calendar.html.erb
   </div>
 </div><!-- box_space -->

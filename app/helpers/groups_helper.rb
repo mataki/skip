@@ -19,11 +19,31 @@ module GroupsHelper
   def participation_state group, user_id, options={}
     if participation = group.group_participations.detect{|participation| participation.user_id == user_id }
       if participation.owned?
+<<<<<<< HEAD:app/helpers/groups_helper.rb
         icon_tag('group_key') + '管理者です'
       elsif participation.waiting?
         icon_tag('hourglass') + '承認待ちです'
       else
         icon_tag('group') + '参加中です'
+=======
+        if options[:simple]
+          output << icon_tag('emoticon_happy') + _('Administrator')
+        else
+          output << icon_tag('emoticon_happy') + _('(Have the administrative rights)')
+        end
+      elsif participation.waiting?
+        if options[:simple]
+          output << icon_tag('hourglass') + _('Approval')
+        else
+          output << icon_tag('hourglass') + _('(Waiting for approval of the administrator)')
+        end
+      else
+        if options[:simple]
+          output << icon_tag('emoticon_smile') + _('Member')
+        else
+          output << icon_tag('emoticon_smile') + _('(Currently joined in the group)')
+        end
+>>>>>>> for_i18n:app/helpers/groups_helper.rb
       end
     else
       icon_tag('group_error') + '未参加です'

@@ -25,24 +25,28 @@ class Admin::ApplicationController < ApplicationController
   end
 
   def setup_layout
+<<<<<<< HEAD:app/controllers/admin/application_controller.rb
     @title = @main_menu = "設定・管理"
+=======
+    @title = @main_menu = _("System Administration")
+>>>>>>> for_i18n:app/controllers/admin/application_controller.rb
   end
 
   protected
   def valid_file?(uploaded_file, options = {})
     options = {:max_size => 1.megabyte, :content_types => []}.merge(options)
     if uploaded_file.blank?
-      flash.now[:error] = _('ファイルを指定して下さい。')
+      flash.now[:error] = _('File not specified.')
       return false
     end
 
     if uploaded_file.size == 0
-      flash.now[:error] = _('ファイルサイズが0です。')
+      flash.now[:error] = _('0 file size detected.')
       return false
     end
 
     if uploaded_file.size > options[:max_size]
-      flash.now[:error] = _('ファイルサイズが上限を超えています。')
+      flash.now[:error] = _('File size exceeded the limit.')
       return false
     end
 
@@ -55,7 +59,7 @@ class Admin::ApplicationController < ApplicationController
 
     if options[:content_types] && !options[:content_types].empty?
       unless options[:content_types].include?(uploaded_file.content_type)
-        flash.now[:error] = _('指定された形式のファイルはアップロード出来ません。')
+        flash.now[:error] = _('Disallowed file type.')
         return false
       end
     end

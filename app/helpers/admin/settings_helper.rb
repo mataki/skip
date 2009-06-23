@@ -17,19 +17,31 @@ module Admin::SettingsHelper
   def settings_label_with_text_field_tag symbolize_key, options = {}
     options = {:id => "setting_#{symbolize_key}"}.merge(options)
     label(Admin::Setting.name, symbolize_key) +
+<<<<<<< HEAD:app/helpers/admin/settings_helper.rb
       text_field_tag("settings[#{symbolize_key}]", current_setting(symbolize_key), options) +
       help_icon_tag(:content => _(Admin::Setting.name + '|' + (symbolize_key.to_s + '_description').humanize))
+=======
+    text_field_tag("settings[#{symbolize_key.to_s}]", Admin::Setting.send(symbolize_key.to_s), :id => "setting_#{symbolize_key.to_s}", :size => 60) +
+    help_icon_tag(:content => s_(Admin::Setting.name + '|' + (symbolize_key.to_s + '_description').humanize))
+>>>>>>> for_i18n:app/helpers/admin/settings_helper.rb
   end
 
   def settings_label_with_check_box_tag symbolize_key
     label(Admin::Setting.name, symbolize_key) +
+<<<<<<< HEAD:app/helpers/admin/settings_helper.rb
       check_box_tag("settings[#{symbolize_key}]", "true", current_setting(symbolize_key), :id => "setting_#{symbolize_key}") +
       help_icon_tag(:content => _(Admin::Setting.name + '|' + (symbolize_key.to_s + '_description').humanize)) +
       hidden_field_tag("settings[#{symbolize_key}]", "false")
+=======
+    check_box_tag("settings[#{symbolize_key.to_s}]", "true", Admin::Setting.send("#{symbolize_key.to_s}"), :id => "setting_#{symbolize_key.to_s}") +
+    help_icon_tag(:content => s_(Admin::Setting.name + '|' + (symbolize_key.to_s + '_description').humanize)) +
+    hidden_field_tag("settings[#{symbolize_key.to_s}]", "false")
+>>>>>>> for_i18n:app/helpers/admin/settings_helper.rb
   end
 
   def settings_label_with_select_tag symbolize_key, container, selected = nil
     label(Admin::Setting.name, symbolize_key) +
+<<<<<<< HEAD:app/helpers/admin/settings_helper.rb
       select_tag("settings[#{symbolize_key}]", options_for_select(container, selected || current_setting(symbolize_key)), :id => "setting_#{symbolize_key}") +
       help_icon_tag(:content => _(Admin::Setting.name + '|' + (symbolize_key.to_s + '_description').humanize))
   end
@@ -51,6 +63,10 @@ module Admin::SettingsHelper
         container.push [_(Admin::Setting.name + '|Password strength|' + value), value]
       end
     end
+=======
+    select_tag("settings[#{symbolize_key.to_s}]", options_for_select(container, selected), :id => "setting_#{symbolize_key.to_s}") +
+    help_icon_tag(:content => s_(Admin::Setting.name + '|' + (symbolize_key.to_s + '_description').humanize))
+>>>>>>> for_i18n:app/helpers/admin/settings_helper.rb
   end
 end
 

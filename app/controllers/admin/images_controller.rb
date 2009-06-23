@@ -148,13 +148,13 @@ class Admin::ImagesController < Admin::ApplicationController
     end
     yield
     ActionView::Base.computed_public_paths.clear
-    flash[:notice] = _('%{target}を保存しました。' % {:target => _("Admin::ImagesController|#{params[:target]}")})
+    flash[:notice] = _('%{target} was successfully saved.' % {:target => s_("Admin::ImagesController|#{params[:target]}")})
     redirect_to admin_images_path
   rescue Errno::EACCES => e
-    flash.now[:error] = _('対象の画像を保存することが出来ませんでした。再度お試し頂くか管理者にお問い合わせ下さい。')
+    flash.now[:error] = _('Failed to save the image. Try again or contact administrator.')
     render :action => :index, :target => params[:target], :status => :forbidden
   rescue => e
-    flash.now[:error] = _('想定外のエラーが発生しました。管理者にお問い合わせ下さい。')
+    flash.now[:error] = _('Unexpected error occured. Contact administrator.')
     e.backtrace.each { |message| logger.error message }
     render :action => :index, :target => params[:target], :status => :internal_server_error
   end

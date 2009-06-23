@@ -21,8 +21,13 @@ class UserMailer < ActionMailer::Base
     else
       @recipients = recipient
     end
+<<<<<<< HEAD:app/models/user_mailer.rb
     @subject    = UserMailer.base64("[#{Admin::Setting.abbr_app_title}] #{user_name}さんから連絡がきています")
     @from       = from
+=======
+    @subject    = UserMailer.base64(_("[%{title}] %{user}さんから連絡がきています") % {:title => Admin::Setting.abbr_app_title, :user => user_name})
+    @from       = @@from
+>>>>>>> for_i18n:app/models/user_mailer.rb
     @send_on    = Time.now
     @headers    = {}
     @body       = {:name => user_name, :entry_url => entry_url, :entry_title => entry_title, :header => header, :footer => footer}
@@ -39,8 +44,13 @@ class UserMailer < ActionMailer::Base
 
   def sent_signup_confirm(recipient, login_id, login_url)
     @recipients = recipient
+<<<<<<< HEAD:app/models/user_mailer.rb
     @subject    = UserMailer.base64("[#{Admin::Setting.abbr_app_title}] ユーザ登録が完了しました")
     @from       = from
+=======
+    @subject    = UserMailer.base64(_("[%s] ユーザ登録の確認メールです") % Admin::Setting.abbr_app_title)
+    @from       = @@from
+>>>>>>> for_i18n:app/models/user_mailer.rb
     @send_on    = Time.now
     @headers    = {}
     @body       = {:login_id => login_id, :login_url => login_url, :header => header, :footer => footer}
@@ -48,8 +58,13 @@ class UserMailer < ActionMailer::Base
 
   def sent_apply_email_confirm(recipient, confirm_url)
     @recipients = recipient
+<<<<<<< HEAD:app/models/user_mailer.rb
     @subject    = UserMailer.base64("[#{Admin::Setting.abbr_app_title}] メールアドレス変更の確認メールです")
     @from       = from
+=======
+    @subject    = UserMailer.base64(_("[%s] メールアドレス変更の確認メールです") % Admin::Setting.abbr_app_title)
+    @from       = @@from
+>>>>>>> for_i18n:app/models/user_mailer.rb
     @send_on    = Time.now
     @headers    = {}
     @body       = {:confirm_url => confirm_url, :header => header, :footer => footer}
@@ -57,8 +72,13 @@ class UserMailer < ActionMailer::Base
 
   def sent_forgot_password(recipient, reset_password_url)
     @recipients = recipient
+<<<<<<< HEAD:app/models/user_mailer.rb
     @subject    = UserMailer.base64("[#{Admin::Setting.abbr_app_title}] パスワード再設定のメールです")
     @from       = from
+=======
+    @subject    = UserMailer.base64(_("[%s] パスワードリセットの確認メールです") % Admin::Setting.abbr_app_title)
+    @from       = @@from
+>>>>>>> for_i18n:app/models/user_mailer.rb
     @send_on    = Time.now
     @headers    = {}
     @body       = {:reset_password_url => reset_password_url, :header => header, :footer => footer}
@@ -66,8 +86,13 @@ class UserMailer < ActionMailer::Base
 
   def sent_forgot_openid(recipient, reset_openid_url)
     @recipients = recipient
+<<<<<<< HEAD:app/models/user_mailer.rb
     @subject    = UserMailer.base64("[#{Admin::Setting.abbr_app_title}] OpenIDの再設定のメールです")
     @from       = from
+=======
+    @subject    = UserMailer.base64(_("[%s] ログインIDのお知らせです") % Admin::Setting.abbr_app_title)
+    @from       = @@from
+>>>>>>> for_i18n:app/models/user_mailer.rb
     @send_on    = Time.now
     @headers    = {}
     @body       = {:reset_openid_url => reset_openid_url, :header => header, :footer => footer}
@@ -93,6 +118,7 @@ class UserMailer < ActionMailer::Base
 
 private
   def self.base64(text, charset="iso-2022-jp", convert=true)
+    #Fixme: Japanese dependent
     text = NKF.nkf('-j -m0 --cp932', text) if convert and charset == "iso-2022-jp"
     text = [text].pack('m').delete("\r\n")
     return "=?#{charset}?B?#{text}?="

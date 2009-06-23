@@ -4,13 +4,21 @@
 <% end -%>
 <% content_for :contents_right do -%>
 <div class="box">
+<<<<<<< HEAD:app/views/admin/users/import.html.erb
   <h3><%= _('CSVファイルでインポートする際の注意') %></h3>
   <p style="color:red;"><b><%= _('CSVファイルの文字コードはUTF-8にしてアップロードするようにして下さい。') %></b></p>
   <p style="color:red;"><b><%= _('未登録のユーザは追加されます。登録済みのユーザを更新したい場合は、[登録済みのユーザは上書きする]のチェックボックスにチェックを入れてください。') %></b></p>
   <p style="color:red;"><b><%= _('登録済みのユーザを更新する場合、ユーザが部署やパスワード等を自分自身で変更している場合でも上書きされますのでご注意下さい。') %></b></p>
+=======
+  <h3><%= _('Instructions for importing from a CSV file.') %></h3>
+  <p style="color:red;"><b><%= _('CSV file needs to be encoded in UTF-8.') %></b></p>
+  <p style="color:red;"><b><%= _('New user records will be created when the first column of the CSV file does not match the login ID of any existing record, while matching records will be updated.') %></b></p>
+  <p style="color:red;"><b><%= _('Changes made to departments, passwords etc by users will be overwritten upon data update.') %></b></p>
+>>>>>>> for_i18n:app/views/admin/users/import.html.erb
 
   <div class="upload_area">
     <% form_tag import_new_admin_user_path, :multipart => true, :id => 'import_form' do -%>
+<<<<<<< HEAD:app/views/admin/users/import.html.erb
       <label for="file"><%= _('CSVファイル') %></label><%= file_field_tag :file %>
       <button id="import_confirmation_button"><%= _('Import confirmation') %></button>
       <%= submit_tag _('Upload'), :disable_with => _('Uploading...') %>
@@ -22,10 +30,24 @@
         <label for="options[email]"><%= _("Admin::User|Email") %></label><%= check_box_tag "options[email]", "1", options[:email], :class => "csv_options disable_uncheck_update_registered" %>
         <label for="options[section]"><%= _("Admin::User|Section") %></label><%= check_box_tag "options[section]", "1", options[:section], :class => "csv_options" %>
       </p>
+=======
+    <label for="file"><%= _('CSV file') %></label><%= file_field_tag :file %>
+    <button id="import_confirmation_button"><%= _('Import confirmation') %></button>
+    <%= submit_tag _('Upload'), :disable_with => _('Uploading...') %>
+   <p><label for="create_only"><%= _("Append unregistered users only") %></label><%= check_box_tag "create_only", "1", true %><%= help_icon_tag :content => _("|You can ignore existing users and append unregistered users only by checking the checkbox.<br/>Uncheck and set attributes below if you want to batch update informations of existing users.") %></p>
+    <h4><%= _('Update attributes below:')%><%= help_icon_tag :content => _("|You can update certain attribute(s) by checking the checkboxes. See the sample to create CSV file.<br/>Name, password and email address are mandatory items for new users.") %></h4>
+    <p>
+      <label for="options[name]"><%= s_("Admin::User|Name") %></label><%= check_box_tag "options[name]", "1", true, :class => "csv_options disable_uncheck_create_only" %>
+      <label for="options[password]"><%= s_("Admin::User|Password") %></label><%= check_box_tag "options[password]", "1", true, :class => "csv_options disable_uncheck_create_only" %>
+      <label for="options[email]"><%= s_("Admin::UserProfile|Email") %></label><%= check_box_tag "options[email]", "1", true, :class => "csv_options disable_uncheck_create_only" %>
+      <label for="options[section]"><%= s_("Admin::UserProfile|Section") %></label><%= check_box_tag "options[section]", "1", true, :class => "csv_options" %>
+    </p>
+>>>>>>> for_i18n:app/views/admin/users/import.html.erb
     <% end -%>
 
-    <h3><%= _('正しいCSVファイルの例') %></h3>
+    <h3><%= _('Sample CSV file format') %></h3>
 <pre>
+<<<<<<< HEAD:app/views/admin/users/import.html.erb
 111111<span class="example_name">,山田 太郎</span><span class="example_email">,yamada@example.com</span></span><span class="example_section">,経理</span>
 222222<span class="example_name">,山田 花子</span><span class="example_email">,h_yamada@example.com</span><span class="example_section">,人事</span>
 333333<span class="example_name">,鈴木 次郎</span><span class="example_email">,suzuki@example.com</span><span class="example_section">,開発</span></pre>
@@ -33,6 +55,15 @@
   <% unless @users.empty? -%>
   <h2><%= _('CSVファイルを元に実際に登録される内容') %></h2>
   <p><%= @error_row_only ? _('エラー行のみ表示しています。右端のアイコンをクリックするとエラーの詳細を確認出来ます。例にならって修正して下さい。') : _('エラーがある場合は各行の右端のアイコンをクリックすると詳細が表示されます。例にならって修正して下さい。') %></p>
+=======
+111111<span class="example_name">,<%= _('Taro Yamada')%></span><span class="example_password">,password</span><span class="example_email">,yamada@example.com</span></span><span class="example_section">,<%= _('Accounting')%></span>
+222222<span class="example_name">,<%= _('Hanako Yamada')%></span><span class="example_password">,password</span><span class="example_email">,h_yamada@example.com</span><span class="example_section">,<%= _('Human Resources')%></span>
+333333<span class="example_name">,<%= _('Jiro Suzuki')%></span><span class="example_password">,password</span><span class="example_email">,suzuki@example.com</span><span class="example_section">,<%= _('Development')%></span></pre>
+  </div>
+  <% unless @users.empty? -%>
+  <h2><%= _('Content of CSV file') %></h2>
+  <p><%= @error_row_only ? _('Showing lines containing error(s) only. Click the icon on the right edge of each row containing error(s) to show the detail. Follow the example to fix.') : _('Click the icon on the right edge of each row containing error(s) to show the detail. Follow the example to fix.') %></p>
+>>>>>>> for_i18n:app/views/admin/users/import.html.erb
   <table class="normal sortable">
     <thead>
       <tr>

@@ -18,16 +18,15 @@
 <% end -%>
 
 <% if entry_accesses.size == 0 %>
-    この記事には、まだアクセスがありません。
+    <%= _('This entry has not been accessed.')%>
 <% else %>
-<div class="desc" style="font-size: 10px;"><p>この記事へのアクセス数と、最近の訪問ユーザを最大30件まで表示しています。<br/>
-同じ日付に同一ユーザが複数回アクセスしている場合、最新のアクセス時間を表示しています。</p></div>
+<div class="desc" style="font-size: 10px;"><p><%=_("Showing total access count of this entry and recent visitors (max. 30).<br/>\nOnly the newest access is shown in case a user has visited multiple times in a day.")%></p></div>
 
-<div class="access_count">アクセス数：<%= h total_count -%></div>
+<div class="access_count"><%= _('Access Count: ')%><%= h total_count -%></div>
 
 <ul class="access_tracks">
   <% entry_accesses.each do |access| %>
-    <li><%=h access.updated_on.strftime("%Y年%m月%d日 %H時%M分 - ") -%>
+    <li><%=h access.updated_on.strftime(_('%B %d %Y %H:%M - ')) -%>
     <%= user_link_to access.visitor -%></li>
   <% end %>
 </ul>

@@ -53,7 +53,7 @@ class SearchController < ApplicationController
                                       :conditions => find_params[:conditions],
                                       :include => find_params[:include] | [ :user, :state ])
     unless @board_entries && @board_entries.size > 0
-      flash.now[:notice] = '該当するデータはありませんでした。'
+      flash.now[:notice] = _('No matching data found.')
     end
 
     @symbol2name_hash = BoardEntry.get_symbol2name_hash @board_entries
@@ -83,9 +83,15 @@ class SearchController < ApplicationController
                                     :per_page => 10)
     unless @share_files && @share_files.size > 0
       if params[:commit] || params[:category]
+<<<<<<< HEAD:app/controllers/search_controller.rb
         flash.now[:notice] = '該当するファイルはありませんでした。'
       else
         flash.now[:notice] = '現在公開されているファイルはありません。'
+=======
+        flash.now[:notice] = _('No matching shared files found.')
+      else
+        flash.now[:notice] = _('There are no shared files uploaded.')
+>>>>>>> for_i18n:app/controllers/search_controller.rb
       end
     end
   end
@@ -113,6 +119,31 @@ class SearchController < ApplicationController
   end
 
 private
+<<<<<<< HEAD:app/controllers/search_controller.rb
+=======
+  def setup_layout
+    @main_menu = @title = _('Search for Data')
+
+    @tab_menu_source = [ [_('Search for Entries'), 'entry_search'],
+                         [_('Search for Files'), 'share_file_search'] ]
+    @tab_menu_source.unshift([_('Full-text Search'), 'full_text_search']) if INITIAL_SETTINGS['full_text_search_setting']
+  end
+
+  # 所属情報を取得するためのメソッド
+  # user_codeを渡すとSNSの所属情報と設定のアプリの所属情報を取得する
+  def belong_symbols user_code
+    symbols = ['sid:allusers'] + login_user_symbols
+
+    unless INITIAL_SETTINGS['belong_info_apps'].blank?
+      INITIAL_SETTINGS['belong_info_apps'].each do |app_name, setting|
+        join_info = MemcacheUtil.get(user_code, app_name, setting[:api])
+        join_info[setting[:hash_key]].each{ |key, value| symbols << "#{setting[:prefix]}:#{key.to_s}" } if join_info
+      end
+    end
+    symbols
+  end
+
+>>>>>>> for_i18n:app/controllers/search_controller.rb
   # 全文検索の各画面用に@変数を作成するメソッド
   def make_instance_variables search_result
     @result_lines = search_result[:elements]

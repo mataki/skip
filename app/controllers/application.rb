@@ -151,7 +151,11 @@ protected
   end
 
   def redirect_to_with_deny_auth(url = { :controller => :mypage, :action => :index })
+<<<<<<< HEAD:app/controllers/application.rb
     flash[:warn] = _('この操作は、許可されていません。')
+=======
+    flash[:warning] = _('Operation unauthorized.')
+>>>>>>> for_i18n:app/controllers/application.rb
     redirect_to url
   end
 

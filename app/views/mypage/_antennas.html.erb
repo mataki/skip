@@ -5,11 +5,22 @@
     <div style="border-bottom: 1px dashed silver; background-color: #f0f0ff;">
       <%= icon_tag 'transmit' -%>
       <span class="editable_antenna_name" id="editable_antenna_name_<%= @antenna.id -%>"><%=h @antenna.name -%></span>
+<<<<<<< HEAD:app/views/mypage/_antennas.html.erb
       <a id="add_antenna_item_link_<%= @antenna.id %>" class="add_antenna_item_link" href="#">[アイテム追加]</a>
       <a id="delete_antenna_link_<%= @antenna.id %>" class="delete_antenna_link" href="#">[削除]</a>
     </div>
     <ul id="antenna_items_list_<%= @antenna.id %>" class="antenna_items_list" style="cursor: move; margin-left: 25px;">
       <%= render :partial => 'antenna/antenna_item', :collection => @antenna.antenna_items, :locals => {:antenna_id => @antenna.id} %>
+=======
+      <a id="delete_antenna_link_<%= @antenna.id %>" class="delete_antenna_link" href="#"><%= _('[Delete]')%></a>
+    </div>
+    <ul id="antenna_items_list" style="cursor: move; margin-left: 25px;">
+      <% @antenna.antenna_items.each do |item| -%>
+      <li id="antenna_item_<%= item.id %>" class="antenna_item" ><%= icon_tag 'report_user' -%> <%=h item.value -%>
+      <a id="delete_antenna_item_link_<%= @antenna.id %>_<%= item.id %>" class="delete_antenna_item_link" href="#"><%= _('[Delete]')%></a>
+      </li>
+      <% end -%>
+>>>>>>> for_i18n:app/views/mypage/_antennas.html.erb
     </ul>
   </li>
 <% end -%>
@@ -25,7 +36,36 @@
         url: ado_inplace_edit_url,
         params: 'authenticity_token='+$j('#authenticity_token').val(),
         update_value: 'value',
-        save_button: '<a href="#" class="inplace_save">[保存]</a>',
-        cancel_button: '<a href="#" class="inplace_cancel">[キャンセル]</a>'
+        save_button: '<a href="#" class="inplace_save"><%= _("[Save]")%></a>',
+        cancel_button: '<a href="#" class="inplace_cancel"><%= _("[Cancel]")%></a>'
     });
+<<<<<<< HEAD:app/views/mypage/_antennas.html.erb
+=======
+    fnLoadPngs();
+});
+</script>
+
+<% else -%>
+
+<div class="box_space">
+  <div class="box_space_title"><%= _('Antennas')%></div>
+  <div class="box_space_body" id="antennas_body"><ul id="antennas_list">
+    <% system_antennas.each do |antenna| -%>
+    <li id="antenna_<%= antenna.antenna_type -%>"><%= icon_tag 'transmit_blue' -%>
+      <%= link_to h(antenna.name), :action => "index", :antenna_type => antenna.antenna_type -%>
+      （<%=h antenna.count -%>）
+    </li>
+    <% end -%>
+
+    <% antennas.each do |antenna| -%>
+    <li id="antenna_<%= antenna.id -%>"><%= icon_tag 'transmit' -%>
+      <%= link_to h(antenna.name), :action => "index", :antenna_id => antenna.id -%>
+      （<%=h antenna.count -%>）
+    </li>
+    <% end -%>
+  </ul></div>
+  <div class="box_space_bottom"><%= link_to _('[Manage antennas]'), :action => 'manage', :menu => 'manage_antenna' -%></div>
+</div><!-- box_space -->
+
+>>>>>>> for_i18n:app/views/mypage/_antennas.html.erb
 <% end -%>

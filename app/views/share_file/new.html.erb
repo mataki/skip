@@ -4,6 +4,7 @@
                                              :share_file => @share_file,
                                              :categories_hash => @categories_hash,
                                              :symbol2name_hash => @symbol2name_hash} %>
+<<<<<<< HEAD:app/views/share_file/new.html.erb
   <div class="input_line">
     <div class="input_label">ファイル</div>
     <div style="float:left;">
@@ -16,6 +17,19 @@
           <li><%= error_message %></li>
         <% end %>
         </ul></div>
+=======
+
+<div class="input_line">
+  <div class="input_label"><%= _('Files')%></div>
+  <div style="float:left;">
+    <%= render :partial => "shared/multiple_file" , :locals => {:file_field_name => "file", :submit_button_id => "submit_button"} -%>
+    <div class="error_files">
+    <% if @error_messages and @error_messages.size > 0 %>
+      <%= n_('Failed to upload the following file.', 'Failed to upload the following files.', @error_messages.size)%><br/>
+      <div class="error_messages"><ul>
+      <% @error_messages.each do |error_message| %>
+        <li><%= error_message %></li>
+>>>>>>> for_i18n:app/views/share_file/new.html.erb
       <% end %>
       </div>
     </div>
@@ -23,6 +37,13 @@
     <div id="hidden_file_area" style="display:none;"></div>
   </div>
 
+<<<<<<< HEAD:app/views/share_file/new.html.erb
   <%= submit_tag "登録", :id => "submit_button" %>
   <input type="button" value="キャンセル" onclick="window.close();"></input>
 <% end -%>
+=======
+  <%= submit_tag _("Submit"), :id => "submit_button" %>
+  <input type="button" value="<%= _('Cancel')%>" onclick="window.close();"></input>
+
+<% end %>
+>>>>>>> for_i18n:app/views/share_file/new.html.erb

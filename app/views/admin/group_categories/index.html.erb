@@ -6,7 +6,7 @@
 <% content_for :contents_right do -%>
 <div class="box tabular">
   <%= render :partial => '/admin/search_box', :locals => { :class_name => 'Admin::GroupCategory' } %>
-  <p><%= _('グループカテゴリを削除したい場合、対象のグループカテゴリに属するグループが全て削除されている必要があります。') %></p>
+  <p><%= _('Delete all the groups under the group category before you delete it.') %></p>
   <%= render :partial => '/admin/shared/sortable_table',
              :locals => {
                :columns => %w[code name icon description initial_selected],

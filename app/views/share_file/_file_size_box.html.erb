@@ -1,6 +1,10 @@
 <div class="box_space">
-  <div class="box_space_title"><%= icon_tag 'database_save' -%>利用容量</div>
+  <div class="box_space_title"><%= icon_tag 'database_save' -%><%= _('Disk Usage')%></div>
   <div class="box_space_body">
+<<<<<<< HEAD:app/views/share_file/_file_size_box.html.erb
     <%=h QuotaValidation::FileSizeCounter.per_owner(owner_symbol)/1.megabyte %> / <%=h SkipEmbedded::InitialSettings['max_share_file_size_per_owner']/1.megabyte %> (MB)
+=======
+    <%=h ValidationsFile::FileSizeCounter.per_owner(owner_symbol)/1.megabyte %> / <%=h INITIAL_SETTINGS['max_share_file_size_per_owner']/1.megabyte %><%= _(' (MB)')%>
+>>>>>>> for_i18n:app/views/share_file/_file_size_box.html.erb
   </div>
 </div>
