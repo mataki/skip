@@ -86,7 +86,7 @@ describe UserUid, '各種validation' do
         %w(123ab+ 123abあ).each do |uid|
           user_uid = valid_user_uid(:uid => uid)
           user_uid.valid?
-          user_uid.errors['uid'].should == 'は数字、アルファベット及び次の記号[-(ハイフン)、_(アンダースコア)、.(ドット)]が利用可能です。その他の記号、半角空白などは使えません。'
+          user_uid.errors['uid'].should == "accepts numbers, alphapets, hiphens(\"-\"), underscores(\"_\") and dot(\".\")."
         end
       end
     end

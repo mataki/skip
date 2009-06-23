@@ -466,7 +466,7 @@ describe MypageController, 'mypage > manage(管理) 関連' do
       end
       it "flashメッセージ「ユーザ情報の更新に成功しました。」と登録されること" do
         post_update_profile
-        flash[:notice].should == "ユーザ情報の更新に成功しました。"
+        flash[:notice].should == "User information was successfully updated."
       end
       def post_update_profile
         post :update_profile, {"user" => {"section"=>"開発"}, "profile_value" => {"1"=>"ほげ", "2"=>"ふが"}}
@@ -753,14 +753,14 @@ describe MypageController, '#antenna_entry_title' do
     end
     describe 'アンテナが指定されていない場合' do
       describe 'システムアンテナの場合' do
-        it { @controller.send!(:antenna_entry_title, stub('entry_antenna', :antenna => nil, :key => 'message')).should == 'あなたへ宛てた連絡' }
-        it { @controller.send!(:antenna_entry_title, stub('entry_antenna', :antenna => nil, :key => 'comment')).should == '過去にあなたがコメントを残した記事'}
-        it { @controller.send!(:antenna_entry_title, stub('entry_antenna', :antenna => nil, :key => 'bookmark')).should == 'あなたがブックマークした記事' }
-        it { @controller.send!(:antenna_entry_title, stub('entry_antenna', :antenna => nil, :key => 'group')).should == '参加中のグループの掲示版の書き込み' }
+        it { @controller.send!(:antenna_entry_title, stub('entry_antenna', :antenna => nil, :key => 'message')).should == 'Messages for you' }
+        it { @controller.send!(:antenna_entry_title, stub('entry_antenna', :antenna => nil, :key => 'comment')).should == 'Entries you have made comments'}
+        it { @controller.send!(:antenna_entry_title, stub('entry_antenna', :antenna => nil, :key => 'bookmark')).should == 'Entries bookmarked by yourself' }
+        it { @controller.send!(:antenna_entry_title, stub('entry_antenna', :antenna => nil, :key => 'group')).should == 'Posts in the groups joined' }
       end
       describe 'システムアンテナではない場合' do
-        it { @controller.send!(:antenna_entry_title, stub('entry_antenna', :antenna => nil, :key => nil)).should == '未読記事の一覧' }
-        it { @controller.send!(:antenna_entry_title, stub('entry_antenna', :antenna => nil, :key => 'invalid')).should == '未読記事の一覧' }
+        it { @controller.send!(:antenna_entry_title, stub('entry_antenna', :antenna => nil, :key => nil)).should == 'List of unread entries' }
+        it { @controller.send!(:antenna_entry_title, stub('entry_antenna', :antenna => nil, :key => 'invalid')).should == 'List of unread entries' }
       end
     end
   end

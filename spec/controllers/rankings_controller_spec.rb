@@ -320,7 +320,7 @@ describe RankingsController, "GET #statistics" do
         assigns[:site_count].should be_new_record
       end
       it "flashにメッセージが設定されていること" do
-        flash[:notice].should == '対象データが見つかりません。'
+        flash[:notice].should == 'Data not found.'
       end
     end
   end
@@ -357,7 +357,7 @@ describe RankingsController, "GET #statistics" do
         assigns[:site_count].should be_new_record
       end
       it "flashにメッセージが設定されていること" do
-        flash[:notice].should == '対象データが見つかりません。'
+        flash[:notice].should == 'Data not found.'
       end
     end
   end

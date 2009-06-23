@@ -145,7 +145,7 @@ describe ShareFileController, "POST #create" do
           end
           it 'flashエラーメッセージが設定されること' do
             post :create, :file => { '1' => @file1 }
-            flash[:warn].should == 'ファイルのアップロードに失敗しました。<br/>[成功:0 失敗:1]'
+            flash[:warn].should == 'Failed to upload file(s).[Successes:0 Failure:1]'
           end
           it 'ファイル毎のエラーメッセージが設定されること' do
             post :create, :file => { '1' => @file1 }
@@ -206,7 +206,7 @@ describe ShareFileController, "POST #create" do
           end
           it 'flashエラーメッセージが設定されること' do
             post :create, :file => { '1' => @file1, '2' => @file2 }
-            flash[:warn].should == 'ファイルのアップロードに失敗しました。<br/>[成功:0 失敗:2]'
+            flash[:warn].should == 'Failed to upload file(s).[Successes:0 Failures:2]'
           end
           it 'ファイル毎のエラーメッセージが設定されること' do
             post :create, :file => { '1' => @file1, '2' => @file2 }
@@ -367,7 +367,7 @@ describe ShareFileController, "POST #destroy" do
       post :destroy, :id => 1
     end
     it { response.should redirect_to(:controller => "group", :action => "hoge", :id => "share_file") }
-    it { flash[:notice].should == "ファイルの削除に成功しました。" }
+    it { flash[:notice].should == "File was successfully deleted." }
   end
 end
 

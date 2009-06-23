@@ -65,7 +65,7 @@ describe BookmarkController, "GET #show" do
     end
     it { response.should redirect_to(:controller => :mypage, :action => :index) }
     it "flashメッセージが設定されていること" do
-      flash[:warn].should == "指定のＵＲＬは誰もブックマークしていません。"
+      flash[:warn].should == "URL not bookmarked by anyone."
     end
   end
   describe "存在するブックマークがパラメータとして与えられた場合" do

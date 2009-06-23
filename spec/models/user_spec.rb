@@ -53,7 +53,7 @@ describe User," is a_user" do
   end
 
   it "get before_access" do
-    @user.before_access.should == "1 日以内"
+    @user.before_access.should == "Within 1 day"
   end
 
   it "set mark_track" do

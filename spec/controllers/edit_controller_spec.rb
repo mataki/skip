@@ -81,8 +81,8 @@ describe EditController, "GET #index" do
     end
     it { response.should render_template('edit/index') }
     it "適切なインスタンス変数が設定されていること" do
-      assigns[:title].should == "#{@title_prefix}を書く"
-      assigns[:main_menu].should == "マイブログ"
+      assigns[:title].should == "Write #{@title_prefix}"
+      assigns[:main_menu].should == "My Blog"
     end
   end
   describe "掲示板を書くの場合" do
@@ -91,8 +91,8 @@ describe EditController, "GET #index" do
     end
     it { response.should render_template('edit/index') }
     it "適切なインスタンス変数が設定されていること" do
-      assigns[:title].should == "#{@title_prefix}を書く"
-      assigns[:main_menu].should == "グループ"
+      assigns[:title].should == "Write #{@title_prefix}"
+      assigns[:main_menu].should == "Groups"
     end
   end
 end
@@ -114,8 +114,8 @@ describe EditController, "GET #edit" do
     end
     it { response.should be_redirect }
     it "適切なインスタンス変数が設定されていること" do
-      assigns[:title].should == "#{@title_prefix}を編集する"
-      assigns[:main_menu].should == "マイブログ"
+      assigns[:title].should == "Edit #{@title_prefix}"
+      assigns[:main_menu].should == "My Blog"
     end
   end
   describe "掲示板の場合" do
@@ -124,8 +124,8 @@ describe EditController, "GET #edit" do
     end
     it { response.should be_redirect }
     it "適切なインスタンス変数が設定されていること" do
-      assigns[:title].should == "#{@title_prefix}を編集する"
-      assigns[:main_menu].should == "グループ"
+      assigns[:title].should == "Edit #{@title_prefix}"
+      assigns[:main_menu].should == "Groups"
     end
   end
 end
@@ -147,7 +147,7 @@ describe EditController, "#destroy" do
   end
   it { response.should redirect_to(@url) }
   it "flashメッセージが設定されていること" do
-    flash[:notice].should == '削除しました。'
+    flash[:notice].should == 'Deletion complete.'
   end
 end
 
@@ -190,7 +190,7 @@ describe EditController, "#create" do
       it "メールが送信が予約されること" do
       end
       it "flashメッセージが設定されていること" do
-        flash[:notice].should == '正しく作成されました。'
+        flash[:notice].should == 'Created successfully.'
       end
     end
 
@@ -206,7 +206,7 @@ describe EditController, "#create" do
         response.should redirect_to(@entry.get_url_hash)
       end
       it "flashメッセージが設定されていること" do
-        flash[:notice].should == '正しく作成されました。'
+        flash[:notice].should == 'Created successfully.'
       end
       it "メール送信が予約されないこと" do
       end
