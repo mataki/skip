@@ -29,7 +29,7 @@ class Bookmark < ActiveRecord::Base
   validates_presence_of :title, :message =>_('is mandatory.')
   validates_length_of :title, :maximum=>255, :message =>_('accepts 255 or less characters only.')
 
-  SORT_TYPES = [["登録日順(降順)","bookmarks.updated_on DESC"],["登録日順(昇順)","bookmarks.updated_on"],["ユーザ数順","bookmark_comments_count DESC"]].freeze
+  SORT_TYPES = [[_("Sort by Registered Dates (Descending)"),"bookmarks.updated_on DESC"],[_("Sort by Registered Dates (Ascending)"),"bookmarks.updated_on"],[_("Sort by number of users"),"bookmark_comments_count DESC"]].freeze
   GET_TITLE_TIMEOUT = 7
   class << self
     HUMANIZED_ATTRIBUTE_KEY_NAMES = {
@@ -55,15 +55,7 @@ class Bookmark < ActiveRecord::Base
     rescue Exception => ex
       logger.error "[GET TITLE ERROR] #{ex.class}: #{ex.message}"
     end
-<<<<<<< HEAD:app/models/bookmark.rb
     ""
-=======
-    return ""
-  end
-
-  def self.get_sort_types
-    return [[_("Sort by Registered Dates (Descending)"),"bookmarks.updated_on DESC"],[_("Sort by Registered Dates (Ascending)"),"bookmarks.updated_on"],[_("Sort by number of users"),"bookmark_comments_count DESC"]]
->>>>>>> for_i18n:app/models/bookmark.rb
   end
 
   def self.make_conditions(options={ })

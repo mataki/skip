@@ -19,19 +19,11 @@ class Group < ActiveRecord::Base
   has_many :group_participations, :dependent => :destroy
   belongs_to :group_category
 
-<<<<<<< HEAD:app/models/group.rb
-  validates_presence_of :name, :description, :gid, :message =>'は必須です'
-  validates_uniqueness_of :gid, :case_sensitive => false, :message =>'は既に登録されています'
-  validates_length_of :gid, :minimum=>4, :message =>'は4文字以上で入力してください'
-  validates_length_of :gid, :maximum=>50, :message =>'は50文字以内で入力してください'
-  validates_format_of :gid, :message =>'は数字orアルファベットor記号(ハイフン「-」 アンダーバー「_」)で入力してください', :with => /^[a-zA-Z0-9\-_]*$/
-=======
   validates_presence_of :name, :description, :gid, :message =>_('is mandatory.')
-  validates_uniqueness_of :gid, :message =>_('has already been registered.')
+  validates_uniqueness_of :gid, :case_sensitive => false, :message => _('has already been registered.')
   validates_length_of :gid, :minimum=>4, :message =>_('requires 4 or more characters.')
   validates_length_of :gid, :maximum=>50, :message =>_('accepts 50 or less characters only.')
   validates_format_of :gid, :message =>_("accepts numbers, alphabets, hiphens(\"-\") and underscores(\"_\")."), :with => /^[a-zA-Z0-9\-_]*$/
->>>>>>> for_i18n:app/models/group.rb
 
   N_('Group|Protected|true')
   N_('Group|Protected|false')

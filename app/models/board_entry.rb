@@ -58,11 +58,7 @@ class BoardEntry < ActiveRecord::Base
       end
     elsif self.entry_type == GROUP_BBS
       if symbol_type == "gid"
-<<<<<<< HEAD:app/models/board_entry.rb
-        errors.add_to_base(_("ご指定のグループは存在しません。")) unless Group.active.find_by_gid(symbol_id)
-=======
-        errors.add_to_base(_("Group does not exist.")) unless Group.find_by_gid(symbol_id)
->>>>>>> for_i18n:app/models/board_entry.rb
+        errors.add_to_base(_("Group does not exist.")) unless Group.active.find_by_gid(symbol_id)
       else
         errors.add_to_base(_("Invalid group detected."))
       end

@@ -14,15 +14,9 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class AppliedEmail < ActiveRecord::Base
-<<<<<<< HEAD:app/models/applied_email.rb
-  validates_presence_of :email, :message =>'は必須です'
-  validates_length_of :email, :maximum=>50, :message =>'は50桁以内で入力してください'
-  validates_format_of :email, :message =>'は正しい形式で登録してください', :with => Authentication.email_regex
-=======
   validates_presence_of :email, :message =>_('is mandatory.')
   validates_length_of :email, :maximum=>50, :message =>_('accepts 50 or less characters only.')
-  validates_format_of :email, :message =>_('requires proper format.'), :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/
->>>>>>> for_i18n:app/models/applied_email.rb
+  validates_format_of :email, :message =>_('requires proper format.'), :with => Authentication.email_regex
 
   class << self
     HUMANIZED_ATTRIBUTE_KEY_NAMES = {

@@ -41,7 +41,6 @@ class User < ActiveRecord::Base
   validates_presence_of :name, :message => _('is mandatory.')
   validates_length_of :name, :maximum => 60, :message => _('accepts 60 or less characters only.')
 
-<<<<<<< HEAD:app/models/user.rb
   with_options(:if => :password_required?) do |me|
     me.validates_presence_of :password
     me.validates_confirmation_of :password
@@ -49,17 +48,11 @@ class User < ActiveRecord::Base
     me.validates_presence_of :password_confirmation
   end
 
-  validates_presence_of :email, :message => 'は必須です'
+  validates_presence_of :email, :message => _('is mandatory.')
+  # FIXME keyを英語化する
   validates_length_of :email, :maximum => 50, :message => 'は50桁以内で入力してください'
   validates_format_of :email, :message => 'は正しい形式で登録してください', :with => Authentication.email_regex
   validates_uniqueness_of :email, :case_sensitive => false, :message => 'は既に登録されています。'
-=======
-  validates_presence_of :password, :message => _('is mandatory.'), :if => :password_required?
-  validates_confirmation_of :password, :message => _('does not match the confirmation password.'), :if => :password_required?
-  validates_length_of :password, :within => 6..40, :too_short => _('requires %d or more characters.'), :too_long => _('accepts %d or less characters only.'), :if => :password_required?
-
-  validates_presence_of :password_confirmation, :message => _('is mandatory.'), :if => :password_required?
->>>>>>> for_i18n:app/models/user.rb
 
   N_('User|Old password')
   N_('User|Password')
@@ -95,20 +88,13 @@ class User < ActiveRecord::Base
   end
 
   class << self
-    #Fixme
+    # FIXME 不要になるので消す
     HUMANIZED_ATTRIBUTE_KEY_NAMES = {
       "uid" => "User name",
       "code" => Admin::Setting.login_account,
-<<<<<<< HEAD:app/models/user.rb
-      "name" => "名前",
-      "section" => "所属",
-      "email" => "メールアドレス",
-=======
       "name" => "Name",
       "section" => "Section",
       "email" => "Email address",
-      "extension" => "Extension"
->>>>>>> for_i18n:app/models/user.rb
     }
     def human_attribute_name(attribute_key_name)
       HUMANIZED_ATTRIBUTE_KEY_NAMES[attribute_key_name] || super
