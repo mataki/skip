@@ -38,21 +38,12 @@ class ServicesController < ActionController::Base
   end
 
   def search_conditions
-<<<<<<< HEAD:app/controllers/services_controller.rb
-    @contents = [ { :type => "",            :icon => 'asterisk_orange', :name => "すべて" },
-                  { :type => "entry",       :icon => 'report',          :name => "記事" },
-                  { :type => "bookmark",    :icon => 'tag_blue',        :name => "ブックマーク" },
-                  { :type => "user",        :icon => 'user_suit',       :name => "ユーザ" },
-                  { :type => "group",       :icon => 'group',           :name => "グループ" },
-                  { :type => "share_file", :icon => 'disk_multiple',   :name => "ファイル" } ]
-=======
     @contents = [ { :type => "",            :icon => 'asterisk_orange', :name => _("All") },
                   { :type => "entry",       :icon => 'report',          :name => _("Blogs / BBSs") },
                   { :type => "bookmark",    :icon => 'book',            :name => _("Bookmarks") },
                   { :type => "user",        :icon => 'user_suit',       :name => _("Users") },
                   { :type => "group",       :icon => 'group',           :name => _("Groups") },
                   { :type => "share_file", :icon => 'disk_multiple',   :name => _("Files") } ]
->>>>>>> for_i18n:app/controllers/services_controller.rb
   end
 
   def new_users

@@ -144,11 +144,7 @@ class GroupController < ApplicationController
       @pages, @participations = paginate_participations(@group, false)
     when "manage_permit"
       unless @group.protected?
-<<<<<<< HEAD:app/controllers/group_controller.rb
-        flash[:warn] = "参加に承認は不要です"
-=======
-        flash[:warning] = _("No approval needed to join this group.")
->>>>>>> for_i18n:app/controllers/group_controller.rb
+        flash[:warn] = _("No approval needed to join this group.")
         redirect_to :action => :manage
         return
       end
@@ -231,11 +227,7 @@ class GroupController < ApplicationController
     if group_participation.save
       flash[:notice] = _('Changed.')
     else
-<<<<<<< HEAD:app/controllers/group_controller.rb
-      flash[:warn] = '権限変更に失敗しました。'
-=======
-      flash[:warning] = _('Failed to change status.')
->>>>>>> for_i18n:app/controllers/group_controller.rb
+      flash[:warn] = _('Failed to change status.')
     end
     redirect_to :action => 'manage', :menu => 'manage_participations'
   end
@@ -271,11 +263,7 @@ class GroupController < ApplicationController
   # 参加の許可か棄却
   def change_participation
     unless @group.protected?
-<<<<<<< HEAD:app/controllers/group_controller.rb
-      flash[:warn] = "参加に承認は不要です"
-=======
-      flash[:warning] = _("No approval needed to join this group.")
->>>>>>> for_i18n:app/controllers/group_controller.rb
+      flash[:warn] = _("No approval needed to join this group.")
       redirect_to :action => :show
     end
     type_name = params[:submit_type] == 'permit' ? _('GroupController|Approve') : _('GroupController|Disapprove') #"許可" : "棄却"
@@ -286,11 +274,7 @@ class GroupController < ApplicationController
           participation = GroupParticipation.find(participation_id)
           if participation.group_id == @participation.group_id &&
             !participation.waiting
-<<<<<<< HEAD:app/controllers/group_controller.rb
-            flash[:warn] = "このグループに参加済みのユーザが含まれています。"
-=======
-            flash[:warning] = _("Part of the users are already members of this group.")
->>>>>>> for_i18n:app/controllers/group_controller.rb
+            flash[:warn] = _("Part of the users are already members of this group.")
             redirect_to :action => 'manage', :menu => 'manage_permit'
             return false
           end
@@ -322,19 +306,11 @@ class GroupController < ApplicationController
   # 削除
   def destroy
     if @group.group_participations.size > 1
-<<<<<<< HEAD:app/controllers/group_controller.rb
-      flash[:warn] = '自分以外のユーザがまだ存在しています。削除できません。'
+      flash[:warn] = _('Failed to delete since there are still other users in the group.')
       redirect_to :action => 'show'
     else
       @group.logical_destroy
-      flash[:notice] = 'グループは削除されました。'
-=======
-      flash[:warning] = _('Failed to delete since there are still other users in the group.')
-      redirect_to :action => 'show'
-    else
-      @group.destroy
       flash[:notice] = _('Group was successfully deleted.')
->>>>>>> for_i18n:app/controllers/group_controller.rb
       redirect_to :controller => 'groups'
     end
   end
@@ -377,11 +353,7 @@ class GroupController < ApplicationController
       @group.save
       flash[:notice] = _("Added members of %s as members of the group and created a BBS for messaging.") % group.name
     else
-<<<<<<< HEAD:app/controllers/group_controller.rb
-      flash[:warn] = "ユーザ／グループの指定方法が間違っています"
-=======
-      flash[:warning] = _("Users / groups selection invalid.")
->>>>>>> for_i18n:app/controllers/group_controller.rb
+      flash[:warn] = _("Users / groups selection invalid.")
     end
 
     # BBSにsymbol直接指定[連絡]で新規投稿(自動で投稿されて保存される)
@@ -395,7 +367,6 @@ class GroupController < ApplicationController
 
 private
   def setup_layout
-<<<<<<< HEAD:app/controllers/group_controller.rb
     @title = title
     @main_menu = main_menu
     @tab_menu_source = tab_menu_source
@@ -412,12 +383,12 @@ private
 
   def tab_menu_source
     tab_menu_source = []
-    tab_menu_source << {:label => _('サマリ'), :options => {:action => 'show'}}
-    tab_menu_source << {:label => _('参加者一覧'), :options => {:action => 'users'}}
-    tab_menu_source << {:label => _('掲示版'), :options => {:action => 'bbs'}}
-    tab_menu_source << {:label => _('新規投稿'), :options => {:action => 'new'}} if participating?
-    tab_menu_source << {:label => _('ファイル'), :options => {:action => 'share_file'}}
-    tab_menu_source << {:label => _('管理'), :options => {:action => 'manage'}} if participating? and @participation.owned?
+    tab_menu_source << {:label => _('Summary'), :options => {:action => 'show'}}
+    tab_menu_source << {:label => _('Members List'), :options => {:action => 'users'}}
+    tab_menu_source << {:label => _('BBS'), :options => {:action => 'bbs'}}
+    tab_menu_source << {:label => _('New Posts'), :options => {:action => 'new'}} if participating?
+    tab_menu_source << {:label => _('Shared Files'), :options => {:action => 'share_file'}}
+    tab_menu_source << {:label => _('Admin'), :options => {:action => 'manage'}} if participating? and @participation.owned?
     tab_menu_source
   end
 
@@ -427,26 +398,8 @@ private
 
   def load_group_and_participation
     unless @group = Group.active.find_by_gid(params[:gid])
-      flash[:warn] = "指定のグループは存在していません"
-=======
-    @main_menu = 'グループ'
-    @title = @group.name if @group
-
-    @tab_menu_source = []
-    @tab_menu_source << [_('Summary'), 'show']
-    @tab_menu_source << [_('Members List'), 'users']
-    @tab_menu_source << [_('BBS'), 'bbs']
-    @tab_menu_source << [_('New Posts'), 'new'] if participating?
-    @tab_menu_source << [_('Shared Files'), 'share_file']
-    @tab_menu_source << [_('Admin'), 'manage'] if participating? and @participation.owned?
-
-    @tab_menu_option = { :gid => @group.gid }
-  end
-
-  def load_group_and_participation
-    unless @group = Group.find_by_gid(params[:gid])
-      flash[:warning] = _("Specified group does not exist.")
->>>>>>> for_i18n:app/controllers/group_controller.rb
+      # FIXME i18n
+      flash[:warn] = _("指定のグループは存在していません")
       redirect_to :controller => 'mypage', :action => 'index'
       return false
     end
@@ -460,11 +413,7 @@ private
 
   def check_owned
     unless @participation and @participation.owned?
-<<<<<<< HEAD:app/controllers/group_controller.rb
-      flash[:warn] = 'その操作は管理者権限が必要です。'
-=======
-      flash[:warning] = _('Administrative privillage required for the action.')
->>>>>>> for_i18n:app/controllers/group_controller.rb
+      flash[:warn] = _('Administrative privillage required for the action.')
       redirect_to :controller => 'mypage', :action => 'index'
       return false
     end

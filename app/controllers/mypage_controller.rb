@@ -38,7 +38,6 @@ class MypageController < ApplicationController
   #  tab menu actions
   # ================================================================================
 
-<<<<<<< HEAD:app/controllers/mypage_controller.rb
   # mypage > home
   def index
     # ============================================================
@@ -78,29 +77,6 @@ class MypageController < ApplicationController
     #  main area bookmarks
     # ============================================================
     @bookmarks = Bookmark.find_visible(5, recent_day)
-=======
-  def load_rss_feed
-    feeds = []
-    Admin::Setting.mypage_feed_settings.each do |setting|
-      feed = nil
-      timeout(Admin::Setting.mypage_feed_timeout.to_i) do
-        feed = open(setting[:url], :proxy => INITIAL_SETTINGS['proxy_url']){ |f| RSS::Parser.parse(f.read) }
-      end
-      feed.channel.title = setting[:title] if setting[:title]
-      limit = (setting[:limit]||Admin::Setting.mypage_feed_default_limit)
-      feed.items.slice!(limit..-1) if feed.items.size > limit
-      feeds << feed
-    end
-    render :partial => "rss_feed", :locals => { :feeds => feeds }
-  rescue TimeoutError
-    render :text => _("RSSの読み込みがタイムアウトしました。")
-    return false
-  rescue Exception => e
-    logger.error e
-    e.backtrace.each { |line| logger.error line}
-    render :text => _("RSSの読み込みに失敗しました。")
-    return false
->>>>>>> for_i18n:app/controllers/mypage_controller.rb
   end
 
   # mypage > profile
@@ -262,11 +238,13 @@ class MypageController < ApplicationController
     end
     render :partial => "rss_feed", :locals => { :feeds => feeds }
   rescue Timeout::Error
+    # FIXME i18n
     render :text => "RSSの読み込みがタイムアウトしました。"
     return false
   rescue Exception => e
     logger.error e
     e.backtrace.each { |line| logger.error line}
+    # FIXME i18n
     render :text => "RSSの読み込みに失敗しました。"
     return false
   end
@@ -404,15 +382,9 @@ class MypageController < ApplicationController
 
     User.transaction do
       @user.save!
-<<<<<<< HEAD:app/controllers/mypage_controller.rb
       @profiles.each{|profile| profile.save!}
-=======
-
-      flash[:notice] = _('User information was successfully updated.')
-      redirect_to :action => 'profile'
->>>>>>> for_i18n:app/controllers/mypage_controller.rb
     end
-    flash[:notice] = 'ユーザ情報の更新に成功しました。'
+    flash[:notice] = _('User information was successfully updated.')
     redirect_to :action => 'profile'
   rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => e
     @error_msg = []
@@ -463,11 +435,7 @@ class MypageController < ApplicationController
       UserMailer.deliver_sent_apply_email_confirm(@applied_email.email, "#{root_url}mypage/update_email/#{@applied_email.onetime_code}/")
       flash.now[:notice] = _("Your request of changing email address accepted. Check your email to complete the process.")
     else
-<<<<<<< HEAD:app/controllers/mypage_controller.rb
-      flash.now[:warn] = "処理に失敗しました。もう一度申請してください。"
-=======
-      flash.now[:warning] = _("Failed to process your request. Try resubmitting your request again.")
->>>>>>> for_i18n:app/controllers/mypage_controller.rb
+      flash.now[:warn] = _("Failed to process your request. Try resubmitting your request again.")
     end
     @menu = 'manage_email'
     @user = current_user
@@ -497,7 +465,6 @@ class MypageController < ApplicationController
 
   def apply_ident_url
     redirect_to_with_deny_auth(:action => :manage) and return unless login_mode?(:free_rp)
-<<<<<<< HEAD:app/controllers/mypage_controller.rb
     @openid_identifier = current_user.openid_identifiers.first || current_user.openid_identifiers.build
     if using_open_id?
       begin
@@ -505,34 +472,25 @@ class MypageController < ApplicationController
           if result.successful?
             @openid_identifier.url = identity_url
             if @openid_identifier.save
-              flash[:notice] = _('OpenID URLを設定しました。')
+              flash[:notice] = _('OpenID URL was successfully set.')
               redirect_to :action => :manage, :menu => :manage_openid
               return
             else
               render :partial => 'manage_openid', :layout => 'layout'
             end
           else
+            # FIXME keyを英語化する
             flash.now[:error] = _("OpenIDの処理の中でキャンセルされたか、失敗しました。")
             render :partial => 'manage_openid', :layout => 'layout'
           end
         end
       rescue OpenIdAuthentication::InvalidOpenId
+        # FIXME keyを英語化する
         flash.now[:error] = _("OpenIDの形式が正しくありません。")
         render :partial => 'manage_openid', :layout => 'layout'
       end
-=======
-    @openid_identifier = if current_user.openid_identifiers.empty?
-                           current_user.openid_identifiers.build
-                         else
-                           current_user.openid_identifiers.first
-                         end
-    @openid_identifier.url = params[:openid_identifier][:url] if params[:openid_identifier]
-
-    if @openid_identifier.save
-      flash[:notice] = _('OpenID URL was successfully set.')
-      redirect_to :action => :manage, :menu => :manage_openid
->>>>>>> for_i18n:app/controllers/mypage_controller.rb
     else
+      # FIXME keyを英語化する
       flash.now[:error] = _("OpenIDを入力してください。")
       render :partial => 'manage_openid', :layout => 'layout'
     end
@@ -566,17 +524,17 @@ class MypageController < ApplicationController
   end
 
   def setup_layout
-    @main_menu = @title = 'マイページ'
+    @main_menu = @title = _('My Page')
 
-    @tab_menu_source = [ {:label => _('ホーム'), :options => {:action => 'index'}, :selected_actions => %w(index entries entries_by_date entries_by_antenna)},
-                         {:label => _('プロフィール'), :options => {:action => 'profile'}},
-                         {:label => _('ブログ'), :options => {:action => 'blog'}},
-                         {:label => _('ファイル'), :options => {:action => 'share_file'}},
-                         {:label => _('ソーシャル'), :options => {:action => 'social'}},
-                         {:label => _('グループ'), :options => {:action => 'group'}},
-                         {:label => _('ブックマーク'), :options => {:action => 'bookmark'}},
-                         {:label => _('足跡'), :options => {:action => 'trace'}},
-                         {:label => _('管理'), :options => {:action => 'manage'}} ]
+    @tab_menu_source = [ {:label => _('Home'), :options => {:action => 'index'}, :selected_actions => %w(index entries entries_by_date entries_by_antenna)},
+                         {:label => _('Profile'), :options => {:action => 'profile'}},
+                         {:label => _('Blog'), :options => {:action => 'blog'}},
+                         {:label => _('Shared Files'), :options => {:action => 'share_file'}},
+                         {:label => _('Socials'), :options => {:action => 'social'}},
+                         {:label => _('Groups Joined'), :options => {:action => 'group'}},
+                         {:label => _('Bookmarks'), :options => {:action => 'bookmark'}},
+                         {:label => _('Footprints'), :options => {:action => 'trace'}},
+                         {:label => _('Admin'), :options => {:action => 'manage'}} ]
   end
 
   # アンテナボックス表示のための情報を設定する
@@ -671,7 +629,6 @@ class MypageController < ApplicationController
       !(@key == 'group' && @current_user.group_symbols.size == 0)
     end
 
-<<<<<<< HEAD:app/controllers/mypage_controller.rb
     private
     # #TODO BoardEntryに移動する
     # システムアンテナ[message]の記事を取得するための検索条件
@@ -746,6 +703,7 @@ class MypageController < ApplicationController
   def system_messages(options = {:show_welcome_message => false})
     system_messages = []
     if options[:show_welcome_message]
+      # FIXME i18n
       system_messages << {
         :text => "ようこそ！まずはこちらをご覧ください。", :icon => "information",
         :option => {:controller => "mypage", :action => "welcome"}
@@ -753,7 +711,7 @@ class MypageController < ApplicationController
     end
     if current_user.pictures.size < 1
       system_messages << {
-        :text => "プロフィール画像を変更しましょう！", :icon => "picture",
+        :text => _("Change your profile picture!"), :icon => "picture",
         :option => {:controller => "mypage", :action => "manage", :menu => "manage_portrait"}
       }
     end
@@ -779,7 +737,7 @@ class MypageController < ApplicationController
     find_params[:include] << :user_readings
     { :id_name => 'message',
       :title_icon => "email",
-      :title_name => 'あなたへの連絡',
+      :title_name => _("Messages for you"),
       :pages => BoardEntry.all(:conditions=> find_params[:conditions], :order =>"last_updated DESC,board_entries.id DESC", :include => find_params[:include] | [ :user, :state ]),
       :delete_categories => '[連絡]' }
   end
@@ -807,7 +765,7 @@ class MypageController < ApplicationController
     locals = {
       :id_name => 'questions',
       :title_icon => "user_comment",
-      :title_name => 'みんなからの質問！',
+      :title_name => _('Recent Questions'),
       :pages => pages,
       :pages_obj => pages_obj,
       :per_page => options[:per_page],
@@ -829,7 +787,7 @@ class MypageController < ApplicationController
     locals = {
       :id_name => 'access_blogs',
       :title_icon => "star",
-      :title_name => '最近の人気記事',
+      :title_name => _('Recent Popular Entries (excluding questions)'),
       :pages => pages,
       :pages_obj => pages_obj,
       :per_page => options[:per_page],
@@ -913,24 +871,6 @@ class MypageController < ApplicationController
   rescue NameError => e
     logger.error "[Error] Rubyのライブラリが古いためAtom形式を変換できませんでした。"
     return nil
-=======
-  def antenna_list
-    render :text => current_user_antennas_as_json
-  end
-private
-  def setup_layout
-    @main_menu = @title = _('My Page')
-
-    @tab_menu_source = [ [_('Home'), 'index'],
-                         [_('Profile'), 'profile'],
-                         [_('Blog'), 'blog'],
-                         [_('Socials'), 'social'],
-                         [_('Bookmarks'), 'bookmark'],
-                         [_('Shared Files'),'share_file'],
-                         [_('Groups Joined'), 'group'],
-                         [_('Footprints'), 'trace'],
-                         [_('Admin'), 'manage'] ]
->>>>>>> for_i18n:app/controllers/mypage_controller.rb
   end
 
   def set_data_for_record_mail
@@ -1061,7 +1001,6 @@ private
     prev_day ? prev_day.date : nil
   end
 
-<<<<<<< HEAD:app/controllers/mypage_controller.rb
   # TODO helperへ移動する
   # アンテナの記事一覧のタイトル
   def antenna_entry_title(antenna_entry)
@@ -1070,52 +1009,13 @@ private
     else
       key = antenna_entry.key
       case
-      when key == 'message'  then _('あなたへ宛てた連絡')
-      when key == 'comment'  then _('過去にあなたがコメントを残した記事')
-      when key == 'bookmark' then _('あなたがブックマークした記事')
-      when key == 'group'    then _('参加中のグループの掲示版の書き込み')
+      when key == 'message'  then _("Messages for you")
+      when key == 'comment'  then _("Entries you have made comments")
+      when key == 'bookmark' then _("Entries bookmarked by yourself")
+      when key == 'group'    then _("Posts in the groups joined")
       else
-        _('未読記事の一覧')
+        _('List of unread entries')
       end
-=======
-  # マイページでシステムアンテナの記事を表示するためのデータを取得する
-  # 引数は、システムアンテナのタイプ
-  def get_index_antenna_system(antenna_type)
-    partial = "index_antenna"
-    locals = {
-      :type_symbol => :antenna_type, :type_value => antenna_type,
-      :entries => [], :entries_pages => nil, :user_unreadings => {}
-    }
-
-    find_params = []
-    case antenna_type
-    when "message"
-      locals[:title_name] = _("Messages for you")
-      find_params = BoardEntry.make_conditions login_user_symbols, { :category=>'連絡' }
-    when "comment"
-      locals[:title_name] = _("Entries you have made comments")
-      find_params = BoardEntry.make_conditions(login_user_symbols)
-      find_params[:conditions][0] << " and board_entry_comments.user_id = ?"
-      find_params[:conditions] << session[:user_id]
-      find_params[:include] << :board_entry_comments
-    when "bookmark"
-      bookmarks = Bookmark.find(:all,
-                                :conditions => ["bookmark_comments.user_id = ? and bookmarks.url like '/page/%'", session[:user_id]],
-                                :include => [:bookmark_comments])
-      ids = []
-      bookmarks.each do |bookmark|
-        ids << bookmark.url.gsub(/\/page\//, "")
-      end
-
-      locals[:title_name] = _("Entries bookmarked by yourself")
-      find_params = BoardEntry.make_conditions(login_user_symbols)
-      find_params[:conditions][0] << " and board_entries.id in (?)"
-      find_params[:conditions] << ids
-    when "group"
-      return if login_user_groups.size <= 0
-      locals[:title_name] = _("Posts in the groups joined")
-      find_params = BoardEntry.make_conditions login_user_symbols, { :symbols => login_user_groups }
->>>>>>> for_i18n:app/controllers/mypage_controller.rb
     end
   end
 
@@ -1130,292 +1030,7 @@ private
       user_readings.each do |user_reading|
         result[user_reading.board_entry_id] = user_reading unless user_reading.read
       end
-<<<<<<< HEAD:app/controllers/mypage_controller.rb
     end
     result
-=======
-
-      locals[:symbol2name_hash] = BoardEntry.get_symbol2name_hash locals[:entries]
-    end
-    return partial, locals
-  end
-
-  # マイページでアンテナの記事を表示するためのデータを取得する
-  # 引数は、アンテナのID
-  def get_index_antenna(antenna_id)
-    partial = "index_antenna"
-    locals = {
-      :type_symbol => :antenna_id, :type_value => antenna_id,
-      :entries => [], :entries_pages => nil, :user_unreadings => {}
-    }
-
-    antenna = Antenna.find(antenna_id)
-    locals[:title_name] = antenna.name
-    locals[:antenna_items] = antenna.antenna_items
-    if antenna.antenna_items.size > 0
-      symbols, keyword = antenna.get_search_conditions
-
-      find_params = BoardEntry.make_conditions(login_user_symbols, :symbols => symbols, :keyword => keyword)
-      unless params[:read]
-        find_params[:conditions][0] << " and user_readings.read = ? and user_readings.user_id = ?"
-        find_params[:conditions] << false << session[:user_id]
-        find_params[:include] << :user_readings
-      end
-      locals[:entries_pages], locals[:entries] = paginate(:board_entry,
-                                                          :per_page => 20,
-                                                          :order_by => "last_updated DESC,board_entries.id DESC",
-                                                          :conditions=> find_params[:conditions],
-                                                          :include => find_params[:include] | [ :user, :state ])
-      if locals[:entries].size > 0
-        user_readings_conditions = ["user_id = ? and board_entry_id in (?)"]
-        user_readings_conditions << session[:user_id] <<  locals[:entries].map {|entry| entry.id }
-        user_readings = UserReading.find(:all, :conditions => user_readings_conditions)
-        user_readings.each do |user_reading|
-          locals[:user_unreadings][user_reading.board_entry_id] = user_reading unless user_reading.read
-        end
-      end
-    end
-    return partial, locals
-  end
-
-  def get_index_list(list_type, show_all = false)
-    partial = "index_list"
-    options = {:per_page => 20}
-    options[:recent_day] = 10 unless show_all
-
-    # partialへのlocal変数で渡すから"_as_locals"
-    return partial, self.send('find_' +  list_type + '_as_locals', options)
-  end
-
-  def get_index_default
-    partial = "index_default"
-    recent_day = Admin::Setting.recent_date
-
-    # お知らせ-承認待ちの一覧
-    @waiting_groups = Group.find_waitings session[:user_id]
-
-    # あなたへの重要な連絡
-    find_params = BoardEntry.make_conditions(login_user_symbols, {:recent_day => recent_day, :categories => ['連絡', '重要']})
-    @important_your_messages = BoardEntry.find(:all,
-                                               :conditions=> find_params[:conditions],
-                                               :order=>"last_updated DESC,board_entries.id DESC",
-                                               :include => find_params[:include] | [ :user, :state ])
-    symbol2name_hash = BoardEntry.get_symbol2name_hash @important_your_messages
-
-    # システムからの連絡
-    system_messages = []
-    self_introduction = @user.user_profile.self_introduction
-    if self_introduction.blank? || self_introduction.size < 10 || !UserProfile.find_by_user_id(@user.id)
-      system_messages << {
-        :text => _("Enrich your profile!"),
-        :icon => "vcard",
-        :option => {:controller => "mypage", :action => "manage"}
-      }
-    end
-    if @user.pictures.size < 1
-      system_messages << {
-        :text => _("Change your profile picutre!"),
-        :icon => "picture",
-        :option => {:controller => "mypage", :action => "manage", :menu => "manage_portrait"}
-      }
-    end
-
-    system_messages
-
-    # あなたへの連絡
-    find_params = BoardEntry.make_conditions(login_user_symbols, {:recent_day => recent_day})
-    find_params[:conditions][0] << " and user_readings.read = ? and user_readings.user_id = ? and entry_tags.tag_id = ?" #[連絡]タグのTagsテーブルのIDが4
-    find_params[:conditions] << false << session[:user_id] << Tag.get_system_tag(Tag::NOTICE_TAG).id
-    find_params[:include] << :user_readings
-    @mail_your_messages = BoardEntry.find(:all,
-                                          :conditions=> find_params[:conditions] ,
-                                          :order=>"last_updated DESC,board_entries.id DESC",
-                                          :limit=>5,
-                                          :include => find_params[:include] | [ :user, :state, :entry_tags ])
-    # みんなからの質問！
-    questions = find_questions_as_locals(:recent_day => recent_day)
-    # 最近の人気記事
-    access_blogs = find_access_blogs_as_locals(:recent_day => recent_day)
-    # 最新のブログの記事
-    recent_blogs = find_recent_blogs_as_locals(:recent_day => recent_day)
-    # 最新の掲示板の記事(全体公開のみ)
-    recent_bbs = []
-    gid_by_category = Group.gid_by_category
-    GroupCategory.all.each do |category| # 表示順序の制御
-      options = { :group_symbols => gid_by_category[category.id], :recent_day => recent_day, :per_page => 3 }
-      recent_bbs << self.send("find_recent_bbs_#{category.code.downcase}_as_locals", options)
-    end
-
-    #最近のブックマーク
-    @bookmarks = Bookmark.find_visible(5, recent_day)
-
-    # 最近登録されたグループ
-    @recent_groups =  Group.find(:all, :order=>"created_on DESC", :conditions=>["created_on > ?" ,Date.today-recent_day], :limit => 10)
-
-    # 最近登録されたユーザ
-    @recent_users = User.find(:all, :order=>"created_on DESC", :conditions=>["created_on > ?" ,Date.today-recent_day], :limit => 10)
-
-    locals = {
-      :symbol2name_hash => symbol2name_hash,
-      :new_comment_entries => @new_comment_entries,
-      :waiting_groups => @waiting_groups,
-      :important_your_messages => @important_your_messages,
-      :system_messages => system_messages,
-      :mail_your_messages => @mail_your_messages,
-      :questions => questions,
-      :access_blogs => access_blogs,
-      :recent_blogs => recent_blogs,
-      :bookmarks => @bookmarks,
-      :recent_users => @recent_users,
-      :recent_groups => @recent_groups,
-      :recent_bbs => recent_bbs,
-      :message_array => Message.get_message_array_by_user_id(session[:user_id])
-    }
-    return partial, locals
-  end
-
-  # 最近の記事一覧を取得する（partial用のオプションを返す）
-  # 引数：recent_day = 最近を示す日数（デフォルト10日）
-  # 引数：per_page   = １ページの表示数（デフォルト5件）
-  def find_recent_blogs_as_locals options = {}
-    options = { :recent_day => 10, :per_page => 4 }.merge(options)
-    find_params = BoardEntry.make_conditions(login_user_symbols, {:entry_type=>'DIARY', :recent_day=>options[:recent_day], :publication_type => 'public'})
-    find_params[:conditions][0] << " and board_entries.title <> 'ユーザー登録しました！'"
-    pages_obj, pages = paginate(:board_entry,
-                                :per_page =>options[:per_page],
-                                :order=>"last_updated DESC,board_entries.id DESC",
-                                :conditions=> find_params[:conditions],
-                                :include => find_params[:include] | [ :user, :state ])
-    locals = {
-      :id_name => 'recent_blogs',
-      :title_name => _('Recently Posted Entries'),
-      :pages => pages,
-      :pages_obj => pages_obj,
-      :title_icon => "page_copy"
-    }
-  end
-
-  # 最近のBBS記事一覧を取得するメソッドを動的に生成(partial用のオプションを返す)
-  # sendで呼び出すためにカテゴリごとにメソッドを生成
-  #
-  # 引数：group_symbols    = 検索対象のグループシンボル(デフォルトnil)
-  # 引数：recent_day       = 最近を示す日数（デフォルト10日）
-  # 引数：per_page         = １ページの表示数（デフォルト3件）
-  GroupCategory.all.each do |category|
-    define_method( "find_recent_bbs_#{category.code.downcase}_as_locals" ) do |options|
-      options ||= {}
-      options[:recent_day] ||= 10
-      options[:per_page] ||= 3
-      recent_bbs_proc category, options
-    end
-  end
-
-  # 最新のBBS記事一覧partial用オプション生成メソッド
-  def recent_bbs_proc category, options
-    title   = _("Recent BBS posts (%s)") % category.name
-    id_name = "recent_bbs_#{category.code.downcase}"
-    pages_obj, pages = nil, []
-
-    find_options = {:exclude_entry_type=>'DIARY', :publication_type => 'public', :recent_day=>options[:recent_day]}
-    find_options[:symbols] = options[:group_symbols] || Group.gid_by_category[category.id]
-    if find_options[:symbols].size > 0
-      find_params = BoardEntry.make_conditions(login_user_symbols, find_options)
-      pages_obj, pages = paginate(:board_entry,
-                                  :per_page => options[:per_page],
-                                  :order=>"last_updated DESC, board_entries.id DESC",
-                                  :conditions=> find_params[:conditions],
-                                  :include => find_params[:include] | [ :user, :state ])
-    end
-
-    locals = {
-      :id_name => id_name,
-      :title_name => title,
-      :pages => pages,
-      :pages_obj => pages_obj,
-      :symbol2name_hash => BoardEntry.get_symbol2name_hash(pages)
-    }
-  end
-
-
-  # 最近の人気記事一覧を取得する（partial用のオプションを返す）
-  # 引数：recent_day = 最近を示す日数（デフォルト10日）
-  # 引数：per_page   = １ページの表示数（デフォルト10件）
-  def find_access_blogs_as_locals options = {}
-    options = { :recent_day => 10, :per_page => 10 }.merge(options)
-    find_params = BoardEntry.make_conditions(login_user_symbols, {:publication_type => 'public'})
-    find_params[:conditions][0] << " and board_entries.category not like ?"
-    find_params[:conditions] << '%[質問]%'
-    if options[:recent_day]
-      find_params[:conditions][0] << " and last_updated > ?"
-      find_params[:conditions] << Date.today-options[:recent_day]
-    end
-    pages_obj, pages = paginate(:board_entry,
-                                :per_page =>options[:per_page],
-                                :order=>"board_entry_points.today_access_count DESC, board_entry_points.access_count DESC, board_entries.last_updated DESC, board_entries.id DESC",
-                                :conditions=> find_params[:conditions],
-                                :include => find_params[:include] | [ :user, :state ])
-    locals = {
-      :id_name => 'access_blogs',
-      :title_name => _('Recent Popular Entries (excluding questions)'),
-      :pages => pages,
-      :pages_obj => pages_obj,
-      :symbol2name_hash => BoardEntry.get_symbol2name_hash(pages),
-      :title_icon => "star"
-    }
-  end
-
-  # 質問記事一覧を取得する（partial用のオプションを返す）
-  # 引数：recent_day = 最近を示す日数（デフォルト10日）
-  # 引数：per_page   = １ページの表示数（デフォルト5件）
-  def find_questions_as_locals options = {}
-    options = { :recent_day => 10, :per_page => 5 }.merge(options)
-    find_params = BoardEntry.make_conditions(login_user_symbols, {:recent_day=>options[:recent_day], :category=>'質問'})
-    pages_obj, pages = paginate(:board_entry,
-                                :per_page =>options[:per_page],
-                                :order =>"last_updated DESC,board_entries.id DESC",
-                                :conditions=> find_params[:conditions],
-                                :include => find_params[:include] | [ :user, :state ])
-    locals = {
-      :id_name => 'questions',
-      :title_name => _('Recent Questions'),
-      :pages => pages,
-      :pages_obj => pages_obj,
-      :title_icon => "user_comment",
-      :delete_categories => '[質問]'
-    }
-  end
-
-  # 未読記事一覧を取得する（partial用のオプションを返す）
-  # 引数：recent_day = 最近を示す日数（デフォルト10日）
-  # 引数：per_page   = １ページの表示数（デフォルト5件）
-  def find_not_reading_blogs_as_locals options = {}
-    options = { :recent_day => 10, :per_page => 5 }.merge(options)
-    find_params = BoardEntry.make_conditions(login_user_symbols, {:recent_day=>options[:recent_day]})
-    find_params[:conditions][0] << " and user_readings.read = ? and user_readings.user_id = ?"
-    find_params[:conditions] << false << session[:user_id]
-    find_params[:include] << :user_readings
-    pages_obj, pages = paginate(:board_entry,
-                                :per_page =>options[:per_page],
-                                :order =>"last_updated DESC,board_entries.id DESC",
-                                :conditions=> find_params[:conditions],
-                                :include => find_params[:include] | [ :state ])
-
-    locals = {
-      :id_name => 'not_reading_blogs',
-      :title_name => _('List of unread entries'),
-      :pages => pages,
-      :pages_obj => pages_obj,
-      :symbol2name_hash => BoardEntry.get_symbol2name_hash(pages)
-    }
-  end
-
-  def current_user_antennas_as_json
-    antennas = Antenna.all(:conditions => ["user_id = ?" , current_user.id])
-    result = {
-      :antenna_list => antennas.map do |antenna|
-        { :name => antenna.name, :url => url_for(:controller => :feed, :action => :user_antenna, :id => antenna.id) }
-      end
-    }.to_json
->>>>>>> for_i18n:app/controllers/mypage_controller.rb
   end
 end

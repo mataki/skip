@@ -108,25 +108,14 @@ class BookmarkController < ApplicationController
   def show
     uri = params[:uri] ? Bookmark.unescaped_url(params[:uri]) : ""
     unless @bookmark = Bookmark.find_by_url(uri, :include => :bookmark_comments )
-<<<<<<< HEAD:app/controllers/bookmark_controller.rb
-      flash[:warn] = _("指定のＵＲＬは誰もブックマークしていません。")
-=======
-      flash[:warning] = _("URL not bookmarked by anyone.")
->>>>>>> for_i18n:app/controllers/bookmark_controller.rb
+      flash[:warn] = _("URL not bookmarked by anyone.")
       redirect_to :controller => 'mypage', :action => 'index'
       return
     end
 
-<<<<<<< HEAD:app/controllers/bookmark_controller.rb
-    @main_menu = 'ブックマーク'
-    @title = 'ブックマーク[' + @bookmark.title + ']'
-    @tab_menu_source = [ {:label => _('ブックマークコメント'), :options => {:action => 'show'}} ]
-=======
     @main_menu = _('Bookmarks')
     @title = _("Bookmark[%{title}]") % {:title => @bookmark.title}
-    @tab_menu_source = [ [_('Bookmark Comment'), 'show'] ]
-    @tab_menu_option = { :uri => @bookmark.url }
->>>>>>> for_i18n:app/controllers/bookmark_controller.rb
+    @tab_menu_source = [ {:label => _('Bookmark Comment'), :options => {:action => 'show'}} ]
 
     # TODO: SQLを発行しなくても判断できるのでrubyで処理する様に
     comment =  BookmarkComment.find(:first,
@@ -209,11 +198,7 @@ class BookmarkController < ApplicationController
 private
   def check_params
     unless params[:url] && check_url_format?(params[:url])
-<<<<<<< HEAD:app/controllers/bookmark_controller.rb
-      flash[:warn] = "そのURLは有効ではありません。"
-=======
-      flash[:warning] = _("The URL is invalid.")
->>>>>>> for_i18n:app/controllers/bookmark_controller.rb
+      flash[:warn] = _("The URL is invalid.")
       redirect_to :controller => 'mypage', :action => 'index'
       return false
     end

@@ -25,11 +25,7 @@ class Admin::ApplicationController < ApplicationController
   end
 
   def setup_layout
-<<<<<<< HEAD:app/controllers/admin/application_controller.rb
-    @title = @main_menu = "設定・管理"
-=======
     @title = @main_menu = _("System Administration")
->>>>>>> for_i18n:app/controllers/admin/application_controller.rb
   end
 
   protected

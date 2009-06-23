@@ -49,11 +49,7 @@ class UserController < ApplicationController
 
   # tab_menu
   def blog
-<<<<<<< HEAD:app/controllers/user_controller.rb
-    @main_menu = 'マイページ' if @user.id == session[:user_id]
-=======
-    @main_menu = _('My Blog') if @user.id == session[:user_id]
->>>>>>> for_i18n:app/controllers/user_controller.rb
+    @main_menu = _('My Page)' if @user.id == session[:user_id]
 
     options = { :symbol => "uid:" + @user.uid }
     setup_blog_left_box options
@@ -141,7 +137,7 @@ class UserController < ApplicationController
 
   # tab_menu
   def bookmark
-    @main_menu = 'マイページ' if @user.id == current_user.id
+    @main_menu = _('My Page') if @user.id == current_user.id
 
     params[:user_id] = @user.id
     text = render_component_as_string( :controller => 'bookmark', :action => 'list', :id => @user.symbol, :params => params)
@@ -181,11 +177,7 @@ class UserController < ApplicationController
 
   # tab_menu
   def share_file
-<<<<<<< HEAD:app/controllers/user_controller.rb
-    @main_menu = 'マイページ' if @user.id == session[:user_id]
-=======
-    @main_menu = _('My Files') if @user.id == session[:user_id]
->>>>>>> for_i18n:app/controllers/user_controller.rb
+    @main_menu = _('My Page') if @user.id == session[:user_id]
 
     params.store(:owner_name, @user.name)
     params.store(:visitor_is_uploader, (@user.id == session[:user_id]))
@@ -225,7 +217,6 @@ class UserController < ApplicationController
 
 private
   def setup_layout
-<<<<<<< HEAD:app/controllers/user_controller.rb
     @title = title
     @main_menu = main_menu
     @tab_menu_source = tab_menu_source
@@ -233,52 +224,32 @@ private
   end
 
   def main_menu
-    @user.id == current_user.id ? 'マイページ' : 'ユーザ'
+    @user.id == current_user.id ? _('My Page') : _('Users')
   end
 
   def title
-    @user.id == current_user.id ? 'マイページ' : "#{@user.name}さん"
+    @user.id == current_user.id ? _('My Page') : "#{@user.name}さん"
   end
 
   def tab_menu_source
     tab_menu_source = [
-      {:label => _('プロフィール'), :options => {:action => 'show'}},
-      {:label => _('ブログ'), :options => {:action => 'blog'}},
-      {:label => _('ファイル'), :options => {:action => 'share_file'}},
-      {:label => _('ソーシャル'), :options => {:action => 'social'}},
-      {:label => _('グループ'), :options => {:action => 'group'}},
-      {:label => _('ブックマーク'), :options => {:action => 'bookmark'}} ]
+      {:label => _('Profile'), :options => {:action => 'show'}},
+      {:label => _('Blog'), :options => {:action => 'blog'}},
+      {:label => _('Shared Files'), :options => {:action => 'share_file'}},
+      {:label => _('Socials'), :options => {:action => 'social'}},
+      {:label => _('Groups joined'), :options => {:action => 'group'}},
+      {:label => _('Bookmarks'), :options => {:action => 'bookmark'}} ]
 
     if @user.id != current_user.id
       if Chain.count(:conditions => ["from_user_id = ? and to_user_id = ?", current_user.id, @user.id]) <= 0
-        tab_menu_source << {:label => _('紹介文を作る'), :options => {:action => 'new_chain'}}
+        tab_menu_source << {:label => _('Create introductions'), :options => {:action => 'new_chain'}}
       else
-        tab_menu_source << {:label => _('紹介文の変更'), :options => {:action => 'edit_chain'}}
+        tab_menu_source << {:label => _('Edit introductions'), :options => {:action => 'edit_chain'}}
       end
     else
-      tab_menu_source.unshift({:label => _('ホーム'), :options => {:action => 'index'}, :selected_actions => %w(index entries entries_by_date entries_by_antenna)}) 
-      tab_menu_source << {:label => _('足跡'), :options => {:action => 'trace'}}
-      tab_menu_source << {:label => _('管理'), :options => {:action => 'manage'}}
-=======
-    @main_menu = (@user.id == session[:user_id] ? _('Profile') : _('User'))
-    @title = _("About %s") % @user.name
-
-    @tab_menu_source = [ [_('Profile'), 'show'],
-                         [_('Blog'), 'blog'],
-                         [_('Socials'), 'social'],
-                         [_('Bookmarks'), 'bookmark'],
-                         [_('Shared Files'),'share_file'],
-                         [_('Groups Joined'), 'group'] ]
-
-    if @user.id != session[:user_id]
-      if Chain.count(:conditions => ["from_user_id = ? and to_user_id = ?", session[:user_id], @user.id]) <= 0
-        @tab_menu_source << [_('Create Introductions'), 'new_chain']
-      else
-        @tab_menu_source << [_('Edit Introductions'), 'edit_chain']
-      end
-    else
-      @tab_menu_source.unshift [_('My Page'), 'mypage']
->>>>>>> for_i18n:app/controllers/user_controller.rb
+      tab_menu_source.unshift({:label => _('Home'), :options => {:action => 'index'}, :selected_actions => %w(index entries entries_by_date entries_by_antenna)}) 
+      tab_menu_source << {:label => _('Footprints'), :options => {:action => 'trace'}}
+      tab_menu_source << {:label => _('Admin'), :options => {:action => 'manage'}}
     end
     tab_menu_source
   end
@@ -291,11 +262,7 @@ private
     if @user = User.find_by_uid(params[:uid])
       @user.mark_track session[:user_id] if @user.id != session[:user_id]
     else
-<<<<<<< HEAD:app/controllers/user_controller.rb
-      flash[:warn] = _('ご指定のユーザは存在しません。')
-=======
-      flash[:warning] = _('User does not exist.')
->>>>>>> for_i18n:app/controllers/user_controller.rb
+      flash[:warn] = _('User does not exist.')
       redirect_to :controller => 'mypage', :action => 'index'
       return false
     end

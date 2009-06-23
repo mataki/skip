@@ -17,38 +17,6 @@ class BookmarksController < ApplicationController
   before_filter :setup_layout
 
   def index
-<<<<<<< HEAD:app/controllers/bookmarks_controller.rb
-=======
-    @target_date = Date.today
-    if params[:target_date]
-      date_array =  params[:target_date].split('-')
-      @target_date = Date.new(date_array[0].to_i, date_array[1].to_i, date_array[2].to_i)
-    end
-    popular_bookmarks = PopularBookmark.find(:all,
-                                             :conditions => ["date = ?", @target_date],
-                                             :order =>'count DESC' ,
-                                             :include => [:bookmark])
-    @bookmarks = []
-    if popular_bookmarks && popular_bookmarks.size > 0
-      popular_bookmarks.each do |popular_bookmark|
-        popular_bookmark.bookmark.bookmark_comments.each do |comment|
-          if comment.public
-            @bookmarks << popular_bookmark.bookmark
-            break
-          end
-        end
-      end
-
-      @last_updated = popular_bookmarks.first.created_on.strftime("%Y/%m/%d %H:%M")
-    else
-      flash.now[:notice] = _('No bookmarks have been registered.')
-    end
-
-  end
-
-  # tab_menu
-  def search
->>>>>>> for_i18n:app/controllers/bookmarks_controller.rb
     params[:tag_select] ||= "AND"
     params[:type] ||= "all"
     @tags = BookmarkComment.get_popular_tag_words()
@@ -57,22 +25,16 @@ class BookmarksController < ApplicationController
                                   :per_page => 20,
                                   :conditions => Bookmark.make_conditions(params),
                                   :include => :bookmark_comments,
-<<<<<<< HEAD:app/controllers/bookmarks_controller.rb
                                   :order => get_order_query(params[:sort_type]) )
-    flash.now[:notice] = '該当するブックマークはありませんでした。' unless @bookmarks && @bookmarks.size > 0
-=======
-                                  :order =>order )
-    flash.now[:notice] = _('No matching bookmarks found.') unless @bookmarks && @bookmarks.size > 0
->>>>>>> for_i18n:app/controllers/bookmarks_controller.rb
+    flash.now[:notice] = _('No matching bookmarks found') unless @bookmarks && @bookmarks.size > 0
   end
 
 private
   def setup_layout
     @main_menu = @title = _('Bookmarks')
 
-<<<<<<< HEAD:app/controllers/bookmarks_controller.rb
-    @tab_menu_source = [ {:label => _('ブックマークを探す'), :options => {:action => 'index'}},
-                         {:label => _('ブックマークレット'), :options => {:action => 'setup'}} ]
+    @tab_menu_source = [ {:label => _('Search for Bookmarks'), :options => {:action => 'index'}},
+                         {:label => _('Setup'), :options => {:action => 'setup'}} ]
   end
 
   def get_order_query(params_order)
@@ -81,10 +43,5 @@ private
     else
       Bookmark::SORT_TYPES.first.last
     end
-=======
-    @tab_menu_source = [ [_('Popularity Rankings'), 'index'],
-                         [_('Search'), 'search'],
-                         [_('Setup'), 'setup'] ]
->>>>>>> for_i18n:app/controllers/bookmarks_controller.rb
   end
 end

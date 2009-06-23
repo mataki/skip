@@ -34,13 +34,7 @@ class FeedController < ApplicationController
       render_404 and return
     end
 
-<<<<<<< HEAD:app/controllers/feed_controller.rb
-    description = "最新の掲示板の記事（#{ERB::Util.h(category.name)}）"
-=======
-  # 最近のBBS記事一覧のRSSを生成する
-  def recent_bbs action_name, category
     description = _("Recent BBS posts (%{category)") % {:category =>ERB::Util.h(category.name)}
->>>>>>> for_i18n:app/controllers/feed_controller.rb
     find_options = {:exclude_entry_type=>'DIARY', :publication_type => 'public', :recent_day=> 10}
     find_options[:symbols] = Group.gid_by_category[category.id]
     items = []
@@ -52,13 +46,8 @@ class FeedController < ApplicationController
   end
 
   def recent_registed_groups
-<<<<<<< HEAD:app/controllers/feed_controller.rb
-    description = "最近登録されたグループ"
-    groups = Group.active.find(:all, :order=>"created_on DESC", :conditions=>["created_on > ?" ,Date.today-10], :limit => 10)
-=======
     description = _("Recently Created Groups")
-    groups = Group.find(:all, :order=>"created_on DESC", :conditions=>["created_on > ?" ,Date.today-10], :limit => 10)
->>>>>>> for_i18n:app/controllers/feed_controller.rb
+    groups = Group.active.find(:all, :order=>"created_on DESC", :conditions=>["created_on > ?" ,Date.today-10], :limit => 10)
     item_arry = []
     groups.map{|group| item_arry << {:type => "group", :title => group.name, :id => group.gid, :date => group.created_on, :contents => group.description } }
     rss_feed "recent_registed_groups", description, item_arry

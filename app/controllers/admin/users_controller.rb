@@ -59,12 +59,8 @@ class Admin::UsersController < Admin::ApplicationController
     if @user.id == current_user.id and (@user.status != current_user.status or @user.admin != current_user.admin or @user.locked != current_user.locked)
       @user.status = current_user.status
       @user.admin = current_user.admin
-<<<<<<< HEAD:app/controllers/admin/users_controller.rb
       @user.locked = current_user.locked
-      @user.errors.add_to_base(_('You cannot update status and admin and lock of yourself'))
-=======
-      @user.errors.add_to_base(_('Admins are not allowed to change their own status and admin rights. Log in with another admin account to do so.'))
->>>>>>> for_i18n:app/controllers/admin/users_controller.rb
+      @user.errors.add_to_base(_('Admins are not allowed to change their own status, admin and lock rights. Log in with another admin account to do so.'))
       raise ActiveRecord::RecordInvalid.new(@user)
     end
     @user.trial_num = 0 unless @user.locked
@@ -114,11 +110,7 @@ class Admin::UsersController < Admin::ApplicationController
         end
       end
     else
-<<<<<<< HEAD:app/controllers/admin/users_controller.rb
-      contact_link = "<a href=\"mailto:#{SkipEmbedded::InitialSettings['administrator_addr']}\" target=\"_blank\">お問い合わせ</a>"
-=======
-      contact_link = "<a href=\"mailto:#{INITIAL_SETTINGS['administrator_addr']}\" target=\"_blank\">" + _('Inquiries') + '</a>'
->>>>>>> for_i18n:app/controllers/admin/users_controller.rb
+      contact_link = "<a href=\"mailto:#{SkipEmbedded::InitialSettings['administrator_addr']}\" target=\"_blank\">" + _('Inquiries') + '</a>'
       if User.find_by_admin(true)
         flash[:error] = _('Administrative user has already been registered. Log in with the account or contact {contact_link} in case of failure.') % {:contact_link => contact_link}
         redirect_to :controller => "/platform", :action => :index
@@ -141,13 +133,8 @@ class Admin::UsersController < Admin::ApplicationController
     render :action => :import
   rescue ActiveRecord::RecordInvalid,
          ActiveRecord::RecordNotSaved => e
-<<<<<<< HEAD:app/controllers/admin/users_controller.rb
     @users.each {|user, user_uid| user.valid?}
-    flash.now[:notice] = _('CSVファイルの内容を検証しました。')
-=======
-    @users.each {|user, user_profile, user_uid| user.valid?}
     flash.now[:notice] = _('Verified content of CSV file.')
->>>>>>> for_i18n:app/controllers/admin/users_controller.rb
     render :action => :import
   end
 
@@ -164,13 +151,8 @@ class Admin::UsersController < Admin::ApplicationController
     redirect_to admin_users_path
   rescue ActiveRecord::RecordInvalid,
          ActiveRecord::RecordNotSaved => e
-<<<<<<< HEAD:app/controllers/admin/users_controller.rb
     @users.each {|user, user_uid| user.valid?}
-    flash.now[:error] = _('CSVファイルに不正な値が含まれています。')
-=======
-    @users.each {|user, user_profile, user_uid| user.valid?}
     flash.now[:error] = _('Illegal value(s) found in CSV file.')
->>>>>>> for_i18n:app/controllers/admin/users_controller.rb
   end
 
   def change_uid

@@ -79,14 +79,9 @@ class ShareFileController < ApplicationController
       flash[:notice] = _('ファイルのアップロードに成功しました。')
       ajax_upload? ? render(:text => '') : render_window_close
     else
-<<<<<<< HEAD:app/controllers/share_file_controller.rb
-      flash.now[:warn] = "ファイルのアップロードに失敗しました。<br/>"
-      flash.now[:warn] << "[成功:#{params[:file].size - @error_messages.size} 失敗:#{@error_messages.size}]"
-=======
-      flash.now[:warning] = _("Failed to upload file(s).")
-      flash.now[:warning] << n_("[Success:%{success} ", "[Successes:%{success} ", params[:file].size - @error_messages.size) % {:success => params[:file].size - @error_messages.size}
-      flash.now[:warning] << n_("Failure:%{failure}]", "Failures:%{failure}]", @error_messages.size) % {:failure => @error_messages.size}
->>>>>>> for_i18n:app/controllers/share_file_controller.rb
+      flash.now[:warn] = _("Failed to upload file(s).")
+      flash.now[:warn] << n_("[Success:%{success} ", "[Successes:%{success} ", params[:file].size - @error_messages.size) % {:success => params[:file].size - @error_messages.size}
+      flash.now[:warn] << n_("Failure:%{failure}]", "Failures:%{failure}]", @error_messages.size) % {:failure => @error_messages.size}
 
       @reload_parent_window = (params[:file].size - @error_messages.size > 0)
       @share_file.errors.clear
@@ -189,11 +184,7 @@ class ShareFileController < ApplicationController
                                     :order => order_by,
                                     :per_page => 10)
     unless @share_files && @share_files.size > 0
-<<<<<<< HEAD:app/controllers/share_file_controller.rb
-      flash.now[:notice] = '該当するファイルはありませんでした。'
-=======
       flash.now[:notice] = _('No matching shared files found.')
->>>>>>> for_i18n:app/controllers/share_file_controller.rb
     end
 
     # 編集メニューの表示有無
@@ -221,7 +212,6 @@ class ShareFileController < ApplicationController
     file_name =  params[:file_name]
     owner_symbol = "#{symbol_type_hash[params[:controller_name]]}:#{params[:symbol_id]}"
 
-<<<<<<< HEAD:app/controllers/share_file_controller.rb
     unless share_file = ShareFile.find_by_file_name_and_owner_symbol(file_name, owner_symbol)
       raise ActiveRecord::RecordNotFound
     end
@@ -233,27 +223,16 @@ class ShareFileController < ApplicationController
 
     if downloadable?(params[:authenticity_token], share_file)
       unless File.exist?(share_file.full_path)
-        flash[:warn] = '指定されたファイルの実体が存在しません。お手数ですが管理者にご連絡をお願いいたします。'
+        flash[:warn] = _('Could not find the entity of the specified file. Contact system administrator.')
         return redirect_to(:controller => 'mypage', :action => "index")
       end
 
       share_file.create_history current_user.id
       send_file(share_file.full_path, :filename => nkf_file_name(file_name), :type => share_file.content_type || Types::ContentType::DEFAULT_CONTENT_TYPE, :stream => false, :disposition => 'attachment')
     else
-      @main_menu = @title = 'ファイルのダウンロード'
+      # FIXME i18n
+      @main_menu = @title = _('ファイルのダウンロード')
       render :action => 'confirm_download', :layout => 'layout'
-=======
-    # ログインユーザが対象ファイルをダウンロードできるか否か判定
-    find_params = ShareFile.make_conditions(login_user_symbols, { :file_name => file_name, :owner_symbol => owner_symbol })
-    unless share_file = ShareFile.find(:first, :conditions => find_params[:conditions], :include => find_params[:include] )
-      flash[:warning] = _('Specified file not found.') # 本来は存在する場合でも、ファイルの存在自体を知らせないために、存在しない旨を表示
-      return redirect_to(:controller => 'mypage', :action => 'index')
-    end
-
-    unless File.exist?(share_file.full_path)
-      flash[:warning] = _('Could not find the entity of the specified file. Contact system administrator.')
-      return redirect_to(:controller => 'mypage', :action => "index")
->>>>>>> for_i18n:app/controllers/share_file_controller.rb
     end
   end
 

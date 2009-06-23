@@ -55,13 +55,8 @@ class EditController < ApplicationController
     end
 
     unless validate_params params, @board_entry
-<<<<<<< HEAD:app/controllers/edit_controller.rb
       @board_entry.send_mail = params[:board_entry][:send_mail] if params[:board_entry]
-      flash[:warn] = "不正なパラメータがあります"
-=======
-      @sent_mail_flag = "checked" if params[:sent_mail] and params[:sent_mail][:send_flag] == "1"
-      flash[:warning] = _("Invalid parameter(s) found.")
->>>>>>> for_i18n:app/controllers/edit_controller.rb
+      flash[:warn] = _("Invalid parameter(s) found.")
       render :action => 'index'
       return
     end
@@ -90,14 +85,10 @@ class EditController < ApplicationController
       message, new_trackbacks = @board_entry.send_trackbacks(login_user_symbols, params[:trackbacks])
       make_trackback_message(new_trackbacks)
 
-<<<<<<< HEAD:app/controllers/edit_controller.rb
       @board_entry.cancel_mail
       @board_entry.prepare_send_mail if @board_entry.send_mail?
 
-      flash[:notice] = '正しく作成されました。' + message
-=======
       flash[:notice] = _('Created successfully.') + message
->>>>>>> for_i18n:app/controllers/edit_controller.rb
       redirect_to @board_entry.get_url_hash
       return
     else
@@ -168,25 +159,14 @@ class EditController < ApplicationController
     unless params[:lock_version].to_i == @board_entry.lock_version
       @board_entry.send_mail = params[:board_entry][:send_mail] if params[:board_entry]
       @conflicted = true
-<<<<<<< HEAD:app/controllers/edit_controller.rb
-      flash.now[:warn] = "他の人によって同じ投稿に更新がかかっています。編集をやり直しますか？"
-=======
-      flash.now[:warning] = _("Update on the same entry from other users detected. Reset the edit?")
-      @img_urls = get_img_urls @board_entry
-      @sent_mail_flag = "checked" if params[:sent_mail] and params[:sent_mail][:send_flag] == "1"
->>>>>>> for_i18n:app/controllers/edit_controller.rb
+      flash.now[:warn] = _("Update on the same entry from other users detected. Reset the edit?")
       render :action => 'edit'
       return
     end
 
     unless validate_params params, @board_entry
-<<<<<<< HEAD:app/controllers/edit_controller.rb
       @board_entry.send_mail = params[:board_entry][:send_mail] if params[:board_entry]
-      flash[:warn] = "不正なパラメータがあります"
-=======
-      @sent_mail_flag = "checked" if params[:sent_mail] and params[:sent_mail][:send_flag] == "1"
-      flash[:warning] = _("Invalid parameter(s) found.")
->>>>>>> for_i18n:app/controllers/edit_controller.rb
+      flash[:warn] = _("Invalid parameter(s) found.")
       render :action => 'edit'
       return
     end
@@ -228,14 +208,10 @@ class EditController < ApplicationController
       message, new_trackbacks = @board_entry.send_trackbacks(login_user_symbols, params[:trackbacks])
       make_trackback_message(new_trackbacks)
 
-<<<<<<< HEAD:app/controllers/edit_controller.rb
       @board_entry.cancel_mail
       @board_entry.prepare_send_mail if @board_entry.send_mail?
 
-      flash[:notice] = '記事の更新に成功しました。' + message
-=======
       flash[:notice] = _('Entry was successfully updated.') + message
->>>>>>> for_i18n:app/controllers/edit_controller.rb
       redirect_to @board_entry.get_url_hash
       return
     end
@@ -317,13 +293,8 @@ private
   # 独自のバリデーション（成功ならtrue）
   def validate_params params, entry
     # 公開範囲のタイプ
-<<<<<<< HEAD:app/controllers/edit_controller.rb
     unless %w(public private protected).include? params[:publication_type]
-      entry.errors.add nil, "公開範囲の指定が不正です"
-=======
-    unless %(public, private, protected).include? params[:publication_type]
       entry.errors.add nil, _("Invalid privacy setting.")
->>>>>>> for_i18n:app/controllers/edit_controller.rb
     end
     # 公開範囲の値
     if params[:publication_type] == "protected" && params[:publication_symbols_value]

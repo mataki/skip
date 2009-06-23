@@ -67,12 +67,7 @@ private
   def setup_layout
     @main_menu = @title = _('Groups')
 
-<<<<<<< HEAD:app/controllers/groups_controller.rb
-    @tab_menu_source = [ {:label => _('グループを探す'), :options => {:action => 'index'}},
-                         {:label => _('グループの新規作成'), :options => {:action => 'new'}} ]
-=======
-    @tab_menu_source = [ [_('Search for groups'), 'index'],
-                         [_('Create a new group'), 'new'] ]
->>>>>>> for_i18n:app/controllers/groups_controller.rb
+    @tab_menu_source = [ {:label => _('Search for groups'), :options => {:action => 'index'}},
+                         {:label => _('Create a new group'), :options => {:action => 'new'}} ]
   end
 end

@@ -66,13 +66,8 @@ private
   def setup_layout
     @main_menu = @title = _('Users')
 
-<<<<<<< HEAD:app/controllers/users_controller.rb
-    @tab_menu_source = [ {:label => _('ユーザを探す'), :options => {:action => 'index'}},
-                         {:label => _('紹介文'), :options => {:action => 'chain_search'}} ]
-=======
-    @tab_menu_source = [ [_('Search Users'), 'index'],
-                         [_('Introductions'), 'chain_search'] ]
->>>>>>> for_i18n:app/controllers/users_controller.rb
+    @tab_menu_source = [ {:label => _('Search Users'), :options => {:action => 'index'}},
+                         {:label => _('Introductions'), :options => {:action => 'chain_search'}} ]
   end
 end
 
