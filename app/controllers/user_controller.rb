@@ -49,7 +49,7 @@ class UserController < ApplicationController
 
   # tab_menu
   def blog
-    @main_menu = _('My Page)' if @user.id == session[:user_id]
+    @main_menu = _('My Page') if @user.id == session[:user_id]
 
     options = { :symbol => "uid:" + @user.uid }
     setup_blog_left_box options
@@ -247,7 +247,7 @@ private
         tab_menu_source << {:label => _('Edit introductions'), :options => {:action => 'edit_chain'}}
       end
     else
-      tab_menu_source.unshift({:label => _('Home'), :options => {:action => 'index'}, :selected_actions => %w(index entries entries_by_date entries_by_antenna)}) 
+      tab_menu_source.unshift({:label => _('Home'), :options => {:action => 'index'}, :selected_actions => %w(index entries entries_by_date entries_by_antenna)})
       tab_menu_source << {:label => _('Footprints'), :options => {:action => 'trace'}}
       tab_menu_source << {:label => _('Admin'), :options => {:action => 'manage'}}
     end

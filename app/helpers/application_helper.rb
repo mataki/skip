@@ -233,7 +233,7 @@ module ApplicationHelper
   # [コメント(n)-ポイント(n)-話題(n)-アクセス(n)]の表示
   def get_entry_infos entry
     output = ""
-    output << n_("Comment(%s)", "Comments(%s)", entry.board_entry_comments_count) % h(entry.board_entry_comments_count.to_s) if enty.board_entry_comments_count > 0
+    output << n_("Comment(%s)", "Comments(%s)", entry.board_entry_comments_count) % h(entry.board_entry_comments_count.to_s) if entry.board_entry_comments_count > 0
     output << "#{h Admin::Setting.point_button}(#{h entry.point.to_s})" if entry.point > 0
     output << n_("Trackback(%s)", "Trackbacks(%s)", entry.entry_trackbacks_count) % h(entry.entry_trackbacks_count.to_s) if entry.entry_trackbacks_count > 0
     output << n_("Access(%s)]", "Accesses(%s)]", entry.state.access_count) % h(entry.state.access_count.to_s) if entry.state.access_count > 0
