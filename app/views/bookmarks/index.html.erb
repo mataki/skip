@@ -7,42 +7,29 @@
 </div>
 
 <div class="search_cond_space">
-<<<<<<< HEAD:app/views/bookmarks/index.html.erb
 <% form_tag({:action => 'index'}, :method => 'get') do -%>
   <table class="search_cond_box">
     <tr>
-      <th><%= label_tag('title', _('タイトル')) %></th>
+      <th><%= label_tag('title', _('Title')) %></th>
       <td><%= text_field_tag('title', params[:title], :size => '60') %></td>
     </tr>
     <tr>
-      <th><%= label_tag("sort_type", _('表示順')) %></th>
+      <th><%= label_tag("sort_type", _('Display Order')) %></th>
       <td><%= selected_tag("sort_type", params[:sort_type], Bookmark::SORT_TYPES.map{|type| [type[0], type[1]]}) %></td>
     </tr>
     <tr>
-      <th>検索範囲</th>
+      <th><%= _('Search Range') %></th>
       <td>
-        <%= radio_button_tag('type', 'all', params[:type]=='all') + label_tag("type_all", _('全て')) %>
-        <%= radio_button_tag('type', 'user', params[:type]=='user') + label_tag("type_user", _("ユーザ")) %>
-        <%= radio_button_tag('type', 'page', params[:type]=='page') + label_tag("type_page", _('記事')) %>
-        <%= radio_button_tag('type', 'internet', params[:type]=='internet') + label_tag("type_internet", _('インターネット')) %>
+        <%= radio_button_tag('type', 'all', params[:type]=='all') + label_tag("type_all", _('All')) %>
+        <%= radio_button_tag('type', 'user', params[:type]=='user') + label_tag("type_user", _("Users")) %>
+        <%= radio_button_tag('type', 'page', params[:type]=='page') + label_tag("type_page", _('Entries')) %>
+        <%= radio_button_tag('type', 'internet', params[:type]=='internet') + label_tag("type_internet", _('Internet')) %>
       </td>
     </tr>
     <%= render :partial => 'search/tag_search' %>
   </table>
-  <div class="submit"><%= submit_tag '検索' %></div>
+  <div class="submit"><%= submit_tag _('Search') %></div>
 <% end -%>
-=======
-<div class="title"><u><%=h _("Popular postings in %s―") % @target_date %></u>
-  <span style="color: darkgray; font-size: 10px; font-weight: normal;"><%= _('Time Last Updated: ')%><%=h @last_updated %></span></div>
-<div style="margin-left: 15px;"><%=h _("Bookmarks that got most comments during a week between %{from} and %{to}:") % {:from => @target_date-6, :to => @target_date} %></div>
-<div style="text-align: right;">
-<% if Date.today > @target_date %>
-<%= link_to(_("Popular postings in %s―") % (@target_date+1).to_s,{:controller =>'bookmarks', :action => 'index', :target_date => @target_date+1})  %>
- /
-<% end %>
-<%= link_to(_("Popular postings in %s―") % (@target_date-1).to_s,{:controller =>'bookmarks', :action => 'index', :target_date => @target_date-1})  %>
-</div>
->>>>>>> for_i18n:app/views/bookmarks/index.html.erb
 </div>
 
 <div class="search_result_space" style="position: relative; width: 100%; margin-left: auto; margin-right: auto;">

@@ -5,21 +5,10 @@
   <% unless params[:target].blank? -%>
     <% form_tag(admin_documents_update_path(:target => params[:target])) do -%>
     <div class="box tabular">
-<<<<<<< HEAD:app/views/admin/documents/index.html.erb
       <p><%= _("Admin::DocumentsController|#{params[:target]}_description") %></p>
       <p><%= text_area_tag("documents[#{params[:target]}]", @document, :id => "documents_#{params[:target]}", :class => "invisible") %></p>
     <%= submit_tag _('Save'), :disable_with => _('Saving...') %>
-    <%= link_to '[' + _('既定のページに戻す') + ']', admin_documents_revert_path(:target => params[:target]), :method => :post, :confirm => _('現在設定中のページが消えてしまいますがよろしいですか?') %>
-=======
-      <p><%= s_("Admin::DocumentsController|#{params[:target]}_description") %></p>
-      <p>
-      <%= text_area_tag("documents[#{params[:target]}]", @document, :id => "documents_#{params[:target]}", :size => '80x40') %>
-      <%= help_icon_tag :content => s_("Admin::DocumentsController|#{params[:target]}_description") %>
-      </p>
-    <%= submit_tag _('Save'), :disable_with => _('Saving...') %>
-    <%= link_to '[' + _('Show current page') + ']', "#{controller.request.relative_url_root}/custom/#{params[:target]}.html", :popup => true %>
     <%= link_to '[' + _('Revert to default page') + ']', admin_documents_revert_path(:target => params[:target]), :method => :post, :confirm => _('Current page will be overwritten.  Are you sure to continue?') %>
->>>>>>> for_i18n:app/views/admin/documents/index.html.erb
     </div>
     <% end -%>
     <% content_for :javascript_includes do -%>
@@ -37,9 +26,6 @@
     <% end -%>
   <% else -%>
     <div class="box">
-<<<<<<< HEAD:app/views/admin/documents/index.html.erb
-      <p>用途に合わせて、説明文の雛形を修正して下さい。<br />左のメニューから編集したいページを選択して下さい。<br /></p>
-=======
       <p>
         <%= _("The system provides online document for inexperienced users.<br />")%>
         <%= _("Customize the document template to fit your usage.<br />")%>
@@ -50,7 +36,6 @@
       <p style="color:red;">
         <b><%= _("*Input explanation in HTML format. Do not use codes that can cause security issues (e.g. javascripts).")%></b>
       </p>
->>>>>>> for_i18n:app/views/admin/documents/index.html.erb
     </div>
   <% end -%>
 <% end -%>

@@ -4,11 +4,7 @@
 -%>
 
 <div class="box_space">
-<<<<<<< HEAD:app/views/entries/_user_archive_box.html.erb
-  <div class="box_space_title"><%= icon_tag 'user_comment' %>投稿者の一覧</div>
-=======
-  <div class="box_space_title"><%= icon_tag 'user_comment' -%><%= _('List of Authors')%></div>
->>>>>>> for_i18n:app/views/entries/_user_archive_box.html.erb
+  <div class="box_space_title"><%= icon_tag 'user_comment' %><%= _('List of Authors')%></div>
   <div class="box_space_body" style="font-size: 10px;">
     <ul style="list-style-position: inside; list-style-type: disc;">
     <% user_archives.each do |archive| -%>

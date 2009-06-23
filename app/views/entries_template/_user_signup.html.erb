@@ -1,19 +1,8 @@
-<<<<<<< HEAD:app/views/entries_template/_user_signup.html.erb
-<p><%= h user.name %>です。</p>
-<p>ユーザ登録しました！！</p>
-<p>以下、プロフィール</p>
+<p><%= h(_("Hello, my name is %s.") % user_name) %></p>
+<p><%= _('I have joined the site!!')%></p>
+<p><%= _('Self introduction follows:')%></p>
 <hr />
 <% user.user_profile_values.each do |profile| -%>
 <p><%= profile.user_profile_master.name %> :</p>
 <p><%= profile.value %></p>
-=======
-<%= h(_("Hello, my name is %s.") % user_name) -%>
-
-<%= _('I have joined the site!!')%>
-
-<% if user_introduction -%>
-<%= _('Self introduction follows:')%>
-----
-<%= h user_introduction -%>
->>>>>>> for_i18n:app/views/entries_template/_user_signup.html.erb
 <% end -%>

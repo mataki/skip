@@ -8,11 +8,7 @@
 
 <% if action_value != 'update' -%>
 <div class="input_line">
-<<<<<<< HEAD:app/views/group/_form.html.erb
-  <div class="input_label"><%= label :group, :gid, _('Group|Gid') %></div>
-=======
-  <div class="input_label"><%= _('Group ID')%></div>
->>>>>>> for_i18n:app/views/group/_form.html.erb
+  <div class="input_label"><%= label :group, :gid, _('Group ID') %></div>
   <div class="input_value"><%= text_field 'group', 'gid', :size => 40 %></div>
   <div class="param_desc" style="font-size:10px; color:gray;">
   <%= _("*A group ID consists of 4 or more letters of alphabets, numbers, \"-\" and \"_\".<br>\n  *Group ID is used in many situations e.g. URLs to identify the group so choose a understandable one.")%>
@@ -21,11 +17,7 @@
 <% end -%>
 
 <div class="input_line">
-<<<<<<< HEAD:app/views/group/_form.html.erb
-  <div class="input_label"><%= label :group, :name, _('Group|Name') %></div>
-=======
-  <div class="input_label"><%= _('Name of Group')%></div>
->>>>>>> for_i18n:app/views/group/_form.html.erb
+  <div class="input_label"><%= label :group, :name, _('Name of Group') %></div>
   <div class="input_value"><%= text_field 'group', 'name', :size => 40 %></div>
 </div>
 
@@ -48,29 +40,16 @@
 </div>
 
 <div class="input_line">
-<<<<<<< HEAD:app/views/group/_form.html.erb
-  <div class="input_label"><%= label :group, :description, _('Group|Description') %></div>
+  <div class="input_label"><%= label :group, :description, s_('Group|Description') %></div>
   <div class="input_value richtext" style="clear: left;"><%= text_area :group, :description, :class => 'invisible' %></div>
 </div>
 
 <div class="input_line">
-  <div class="input_label">グループに参加</div>
+  <div class="input_label"><%= _('Joining the group') %></div>
   <div class="input_value">
-    <%= label :group, :protected, _("参加するのにオーナーの承認が必要ですか？") %>
-    <%= select :group, :protected, { "いいえ" => false, "はい" => true } %>
+    <%= label :group, :protected, _('Approval from owner required?') %>
+    <%= select :group, :protected, { _("No") => false, _("Yes") => true } %>
   </div>
-=======
- <p><label for="group_desc"><div class="input_label"><%= _('Explanation')%></div>&nbsp;&nbsp;<%= link_to_hiki_help %></label><br/>
-   <%= text_area 'group', 'description', :cols => 90, :rows => 20 %></p>
-</div>
-
-<div class="input_line">
-  <div class="input_label"><%= _('Joining the group')%></div>
-<p><label for="group_protected"><%= _('Approval from owner required?')%></label>
-  <select id="group_protected" name="group[protected]">
-    <%= options_for_select({ _("No") => false, _("Yes") => true }, @group.protected) %>
-</select></p>
->>>>>>> for_i18n:app/views/group/_form.html.erb
 </div>
 <%= submit_tag submit_value %>
 <% end -%>

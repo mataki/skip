@@ -3,13 +3,8 @@
 
 <div id="select_antenna_body">
 
-<<<<<<< HEAD:app/views/antenna/_select_antenna.html.erb
-<div class="desc">このブログ/掲示板をアンテナに追加できます。
-<br/>追加するアンテナを選択してください</div>
-=======
 <div class="desc"><%= _('You can add this blog into your antenna.')%>
 <br/><%= _('Select the antenna to add.')%></div>
->>>>>>> for_i18n:app/views/antenna/_select_antenna.html.erb
 
 <% unless messages.empty? %>
   <div class="warning" onclick="this.style.display = 'none';">
@@ -41,17 +36,11 @@
 <% end -%>
 
 <div style="border: 1px solid silver; background-color: #f0f0ff; margin: 8px; padding: 5px; padding-top: 0; ">
-<<<<<<< HEAD:app/views/antenna/_select_antenna.html.erb
   <% form_tag({ :controller => :antenna, :action => :add_antenna_and_symbol }, { :id => "add_antenna_and_symbol_form" }) do -%>
-    <%= label :antenna, :name, '新しいアンテナを作成して追加' %>
+    <%= label :antenna, :name, _('Create new anntenna and add: ') %>
     <%= text_field :antenna, :name %>
     <%= hidden_field_tag :symbol, h(symbol) %>
-=======
-<form id='add_antenna_and_symbol_form'>
-  <%= _('Create new anntenna and add: ')%><%= text_field :antenna, :name %><%= hidden_field_tag :symbol, h(symbol) %><%= submit_tag _("Add") %>
->>>>>>> for_i18n:app/views/antenna/_select_antenna.html.erb
-    <%= hidden_field_tag("authenticity_token", form_authenticity_token) %>
-    <%= submit_tag "追加" %>
+    <%= submit_tag _("Add") %>
   <% end -%>
 </div>
 

@@ -25,11 +25,7 @@ div.input_line textarea {
 <%= hidden_field_tag 'lock_version', h(@board_entry.lock_version) -%>
 
 <div class="input_line">
-<<<<<<< HEAD:app/views/board_entries/_form.html.erb
-  <div class="input_label"><%= label(:board_entry, :category, _('タグ')) -%></div>
-=======
-  <div class="input_label"><%= _('Tags')%></div>
->>>>>>> for_i18n:app/views/board_entries/_form.html.erb
+  <div class="input_label"><%= label(:board_entry, :category, _('Tags')) -%></div>
   <div class="input_value"><%= text_field 'board_entry', 'category', :size => '60', :value => @board_entry.comma_category %>
     <div id="category_box" style="display:none;">
       <div id="candidates_list"><p><%= _('Multiple values can be given in foo,bar format')%></p></div>
@@ -43,11 +39,7 @@ div.input_line textarea {
 </div>
 
 <div class="input_line">
-<<<<<<< HEAD:app/views/board_entries/_form.html.erb
-  <div class="input_label"><%= label(:board_entry, :title, _('タイトル')) -%></div>
-=======
-  <div class="input_label"><%= _('Title')%></div>
->>>>>>> for_i18n:app/views/board_entries/_form.html.erb
+  <div class="input_label"><%= label(:board_entry, :title, _('Title')) -%></div>
   <div class="input_value"><%= text_field 'board_entry', 'title', :size =>60 %></div>
   <div style="clear: left"></div>
 </div>
@@ -57,75 +49,32 @@ div.input_line textarea {
   <%= render :partial => "board_entries/edit_contents" %>
 </div>
 
-<<<<<<< HEAD:app/views/board_entries/_form.html.erb
 <div class="input_line input_option invisible">
-  <div class="input_label" style="height: 30px;">日付</div>
-  <div class="input_value">
-    <p><%= datetime_select 'board_entry', 'date', :use_month_numbers => true -%></p>
-    <p><a href="#" onclick="setCurrentDatetime('board_entry', 'date');return false;">[現在時刻を設定]</a>
-      <%= check_box 'board_entry', 'ignore_times' -%><%= label(:board_entry, :ignore_times, _('時刻は表示しない')) %></p>
-=======
-<% if @img_urls and not @img_urls.empty? -%>
-<div style="border: solid 1px skyblue; margin: 5px 0px; padding: 2px; clear:left;">
-  <p style="background-color: #CCFFFF;"><%= _('Attached Picture(s) (click to expand)')%></p>
-  <div id="images" style="float:left;">
-    <%= render :partial=>'board_entries/view_images', :locals=>{:img_urls=>@img_urls, :board_entry_id=>@board_entry.id, :deletable => true} %>
-  </div>
-  <div style="clear:both;"></div>
-</div>
-<p id="indicator" style="display:none;margin-top:0px;"><%= skip_image_tag 'indicator.gif' %><%= _('Updating...')%></p>
-<% end -%>
-
-<div class="input_line">
-  <div class="input_label" style="height: 3em;"><%= _('Files')%></div>
-  <div style="float:left;">
-    <%= render :partial => "shared/multiple_file" , :locals => {:file_field_name => "image", :submit_button_id => "submit_button", :blog_mode => true} -%>
-  </div>
-  <div style="clear: left"></div>
-</div>
-
-<div class="input_line">
   <div class="input_label" style="height: 30px;"><%= _('Date')%></div>
   <div class="input_value">
     <p><%= datetime_select 'board_entry', 'date', :use_month_numbers => true -%></p>
-    <p><a href="#" onclick="setCurrentDatetime('board_entry', 'date');"><%= _('[Set current time]')%></a>
-      <%= check_box 'board_entry', 'ignore_times' -%><%= _('Hide Time')%></p>
->>>>>>> for_i18n:app/views/board_entries/_form.html.erb
+    <p><a href="#" onclick="setCurrentDatetime('board_entry', 'date');return false;"><%= _('[Set current time]')%></a>
+      <%= check_box 'board_entry', 'ignore_times' -%><%= label(:board_entry, :ignore_times, _('Hide Time')) %></p>
   </div>
   <div style="clear: left"></div>
 </div>
 
-<<<<<<< HEAD:app/views/board_entries/_form.html.erb
 <div class="input_line" id="show_option">
-<p><a href="#" id="show_option_link">[オプションを表示]</a></p>
+<p><a href="#" id="show_option_link"><%= _('Show Option') %></a></p>
 </div>
 
 <div class="input_line input_option invisible">
-  <div class="input_label" style="height: 3em;" id="input_label_publication">公開範囲</div>
-  <div class="input_value" id="input_value_publication"><table><tr><td>
-    <% display_type = (@board_entry.owner_is_public? ? "" : "none") %>
-    <span style="display:<%= display_type %>">
-      <%= radio_button_tag("publication_type", "public", params[:publication_type] == "public", :id=>"publication_type_public") -%><%= label_tag("publication_type_public", _('全体に公開')) %>
-    </span>
-    <%= radio_button_tag("publication_type", "private", params[:publication_type] == "private", :id=>"publication_type_private") -%><%= label_tag("publication_type_private", @board_entry.diary? ? _("自分だけ") : _("参加者のみ")) %>
-    <%= radio_button_tag("publication_type", "protected", params[:publication_type] == "protected", :id=>"publication_type_protected") %><%= label_tag("publication_type_protected", _('直接指定')) %>
-
-    <div id="editor_symbols_space" style="display: none; margin-top: 5px;">
-      <%= check_box_tag 'editor_symbol', value = params[:symbol], params[:editor_symbol] -%><%= label_tag :editor_symbol, _('参加者の編集可') %>
-=======
-<div class="input_line">
   <div class="input_label" style="height: 3em;" id="input_label_publication"><%= _('Privacy Settings')%></div>
   <div class="input_value" id="input_value_publication"><table><tr><td>
     <% display_type = (@board_entry.owner_is_public? ? "" : "none") %>
     <span style="display:<%= display_type %>">
-      <%= radio_button_tag("publication_type", "public", params[:publication_type] == "public", :id=>"publication_type_public") -%><%= _('Open to All')%>
+      <%= radio_button_tag("publication_type", "public", params[:publication_type] == "public", :id=>"publication_type_public") -%><%= label_tag("publication_type_public", _('Open to All')) %>
     </span>
-    <%= radio_button_tag("publication_type", "private", params[:publication_type] == "private", :id=>"publication_type_private") -%><%= @board_entry.diary? ? _("Owner Only") : _("Members Only") -%>
-    <%= radio_button_tag("publication_type", "protected", params[:publication_type] == "protected", :id=>"publication_type_protected") %><%= _('Specify Directly')%>
+    <%= radio_button_tag("publication_type", "private", params[:publication_type] == "private", :id=>"publication_type_private") -%><%= label_tag("publication_type_private", @board_entry.diary? ? _("Owner Only") : _("Members Only")) %>
+    <%= radio_button_tag("publication_type", "protected", params[:publication_type] == "protected", :id=>"publication_type_protected") %><%= label_tag("publication_type_protected", _('Specify Directly')) %>
 
     <div id="editor_symbols_space" style="display: none; margin-top: 5px;">
-      <%= check_box_tag 'editor_symbol', value = params[:symbol], params[:editor_symbol] -%><%= _('Edit by Members Allowed')%>
->>>>>>> for_i18n:app/views/board_entries/_form.html.erb
+      <%= check_box_tag 'editor_symbol', value = params[:symbol], params[:editor_symbol] -%><%= label_tag :editor_symbol, _('Edit by Members Allowed') %>
     </div>
     <%= render :partial => "shared/symbol_autocomplete_field", :locals => {:publication_symbols_value => params[:publication_symbols_value], :editor_symbols_value => params[:editor_symbols_value], :edit_checkbox => true } %>
     </td></tr></table>
@@ -134,34 +83,20 @@ div.input_line textarea {
 </div>
 
 <% if Admin::Setting.mail_function_setting %>
-<<<<<<< HEAD:app/views/board_entries/_form.html.erb
 <div class="input_line input_option invisible">
-  <div class="input_label" style="height: 3em;">メール</div>
-  <div class="input_value">
-    <div id="option_space">
-      <p><%= check_box :board_entry, :send_mail %><%= label :board_entry, :send_mail, _('公開されている人にメールを送信する') %></p>
-      <p>（全体に公開時と自分だけの場合は送信されません）</p>
-=======
-<div class="input_line">
   <div class="input_label" style="height: 3em;"><%= _('Email')%></div>
   <div class="input_value">
     <div id="option_space">
-      <p><%= check_box 'sent_mail', 'send_flag', {:checked => @sent_mail_flag } %><%= _('Send email notification for messages with [連絡] tags')%></p>
+      <p><%= check_box :board_entry, :send_mail %><%= label :board_entry, :send_mail, _('Send email to accessible members') %></p>
       <p><%= _('(Will not be sent when the entry is open to all users or limited to owner only)')%></p>
->>>>>>> for_i18n:app/views/board_entries/_form.html.erb
     </div>
   </div>
   <div style="clear: left"></div>
 </div>
 <% end %>
 
-<<<<<<< HEAD:app/views/board_entries/_form.html.erb
 <div class="input_line input_option invisible">
-  <div class="input_label" style="height: 3em;"><%= label_tag("trackbacks", _('話題の記事')) %></div>
-=======
-<div class="input_line">
-  <div class="input_label" style="height: 3em;"><%= _('Topic Entry')%></div>
->>>>>>> for_i18n:app/views/board_entries/_form.html.erb
+  <div class="input_label" style="height: 3em;"><%= label_tag("trackbacks", _('Topic Entry')) %></div>
   <div class="input_value">
     <div id="option_space">
       <p><%= text_field_tag 'trackbacks', params[:trackbacks], {:size => 60} %></p>

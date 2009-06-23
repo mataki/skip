@@ -1,25 +1,16 @@
 <%
- # ブログ・掲示板の左側のボックス（最近の投稿）
- # :locals => { :recent_entries }
--%>
+  # ブログ・掲示板の左側のボックス（最近の投稿）
+  # :locals => { :recent_entries }
+  -%>
 
 <div class="box_space">
-<<<<<<< HEAD:app/views/entries/_recent_box.html.erb
-  <div class="box_space_title"><%= icon_tag 'page_copy' %>最近の投稿</div>
-=======
-  <div class="box_space_title"><%= icon_tag 'page_copy' -%><%= _('Last Entries')%></div>
->>>>>>> for_i18n:app/views/entries/_recent_box.html.erb
+  <div class="box_space_title"><%= icon_tag 'page_copy' %><%= _('Last Entries')%></div>
   <div class="box_space_body" style="font-size: 10px;">
-  <ul>
-  <% recent_entries.each do |entry| -%>
-    <li><%= entry_link_to entry, :truncate => 16 %></li>
-  <% end -%>
-  </ul>
+    <ul>
+      <% recent_entries.each do |entry| -%>
+        <li><%= entry_link_to entry, :truncate => 16 %></li>
+      <% end -%>
+    </ul>
   </div>
-<<<<<<< HEAD:app/views/entries/_recent_box.html.erb
-  <div class="box_space_bottom"><%= link_to '過去の一覧', :archive => "all" %></div>
-=======
-  <div class="box_space_bottom"><%= link_to _('Past List'), :archive => "all" -%></div>
-
->>>>>>> for_i18n:app/views/entries/_recent_box.html.erb
+  <div class="box_space_bottom"><%= link_to _('Past List'), :archive => "all" %></div>
 </div><!-- box_space -->

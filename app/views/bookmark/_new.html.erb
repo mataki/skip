@@ -18,34 +18,19 @@
         <tr>
           <th><%= _('URL')%></th>
           <td>
-<<<<<<< HEAD:app/views/bookmark/_new.html.erb
             <%= link_to truncate(@bookmark.escaped_url, 60), @bookmark.escaped_url, :title => h(@bookmark.title), :target => '_blank' %><br/>
-            <span style="font-size: 10px; color: #555555;">（別ウィンドウで開きます）</span>
-          </td>
-        </tr>
-        <tr>
-          <th><%= label :bookmark, :title, _("タイトル") %></th>
-=======
-            <a href="<%= escape_bookmark_url(@bookmark.url) -%>" title="<%= escape_bookmark_url(@bookmark.url) -%>" target="_blank"><%= escape_bookmark_url(truncate(@bookmark.url, 60)) -%></a><br/>
             <span style="font-size: 10px; color: #555555;"><%= _('(Will open as a new window)')%></span>
           </td>
         </tr>
         <tr>
-          <th><%= _('Title')%></th>
->>>>>>> for_i18n:app/views/bookmark/_new.html.erb
+          <th><%= label :bookmark, :title, _('Title') %></th>
           <td>
             <span style="font-size: 15px; font-weight: bold;">
             <% if @bookmark.is_type_internet? -%>
               <%= text_field 'bookmark', 'title' -%>
-<<<<<<< HEAD:app/views/bookmark/_new.html.erb
-              <span id="refresher"><%= icon_tag 'arrow_rotate_clockwise', :title => "タイトルを再取得する" %></span>
-              <span id="indicator" style="display:none;font-size:10px;"><%= skip_image_tag 'indicator.gif' %>更新中...</span>
-              <br/><span style="font-size: 10px; color: green;">タイトルは全ユーザ共通です。修正の際はご注意ください。</span>
-=======
-              <span id="refresher"><a href="javascript: reloadTitle('<%= escape_bookmark_url(@bookmark.url) -%>', 'bookmark_title');"><%= icon_tag 'arrow_rotate_clockwise', :title => _("Reacquire the title") -%></a></span>
+              <span id="refresher"><%= icon_tag 'arrow_rotate_clockwise', :title => _("Reacquire the title") %></span>
               <span id="indicator" style="display:none;font-size:10px;"><%= skip_image_tag 'indicator.gif' %><%= _('Updating...')%></span>
               <br/><span style="font-size: 10px; color: green;"><%= _('The titles are shared among all users so be careful upon updating.')%></span>
->>>>>>> for_i18n:app/views/bookmark/_new.html.erb
             <% else -%>
               <%= h(@bookmark.title) -%>
               <%= hidden_field 'bookmark', 'title' -%>
@@ -60,11 +45,7 @@
         </tr>
         <% end -%>
         <tr>
-<<<<<<< HEAD:app/views/bookmark/_new.html.erb
-          <th><%= label(:bookmark_comment, :tags, _('タグ')) %></th>
-=======
-          <th><%= _('Tags')%></th>
->>>>>>> for_i18n:app/views/bookmark/_new.html.erb
+          <th><%= label(:bookmark_comment, :tags, _('Tags')) %></th>
           <td>
             <%= text_field 'bookmark_comment', 'tags', :size => '50', :value => @bookmark_comment.comma_tags %>
             <div id="category_box">
@@ -76,11 +57,7 @@
           </td>
         </tr>
         <tr>
-<<<<<<< HEAD:app/views/bookmark/_new.html.erb
-          <th><%= label(:bookmark_comment, :comment, _('コメント')) %></th>
-=======
-          <th><%= _('Comment')%></th>
->>>>>>> for_i18n:app/views/bookmark/_new.html.erb
+          <th><%= label(:bookmark_comment, :comment, _('Comment')) %></th>
           <td><%= text_field 'bookmark_comment', 'comment', :size => 50 %></td>
         </tr>
         <tr>

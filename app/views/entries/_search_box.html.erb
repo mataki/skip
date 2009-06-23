@@ -4,21 +4,12 @@
 -%>
 
 <div class="box_space">
-<<<<<<< HEAD:app/views/entries/_search_box.html.erb
-  <div class="box_space_title"><%= icon_tag 'find' %>検索</div>
-  <div class="box_space_body">
-  <% form_tag({}, {:method => 'get'}) do -%>
-    <%= text_field_tag('keyword', params[:keyword], :size=>'10') %>
-    <%= submit_tag '検索' %>
-  <% end -%>
-=======
-  <div class="box_space_title"><%= icon_tag 'find' -%><%= _('Search')%></div>
+  <div class="box_space_title"><%= icon_tag 'find' %><%= _('Search') %></div>
   <div class="box_space_body">
   <% form_tag({}, {:method => 'get'}) do -%>
   <%= text_field_tag('keyword', params[:keyword], :size=>'10') %>
   <%= submit_tag _('Search') %>
-  <% end %>
->>>>>>> for_i18n:app/views/entries/_search_box.html.erb
+  <% end -%>
   </div>
   <div class="box_space_bottom"></div>
 </div><!-- box_space -->

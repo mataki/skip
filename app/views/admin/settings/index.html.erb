@@ -13,17 +13,13 @@
 
 <% if params[:tab] == 'main' -%>
 <div class="content">
-<<<<<<< HEAD:app/views/admin/settings/index.html.erb
-  <h3 class="topics"><%= _('システム情報') %></h3>
-  <h4><%= _('基本情報') %></h4>
+  <h3 class="topics"><%= _('System Info') %></h3>
+  <h4><%= _('Basic Info') %></h4>
   <div class="box tabular">
     <p class="initial_setting">
     <label><%= _('SKIP version') %></label> : <%= h SKIP_VERSION %>
     </p>
   </div>
-=======
-  <h3 class="topics"><%= _('System Info') %></h3>
->>>>>>> for_i18n:app/views/admin/settings/index.html.erb
   <% @system_infos.each do |category| -%>
   <h4><%=h category[:name] %></h4>
   <div class="box tabular">

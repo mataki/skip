@@ -23,14 +23,6 @@
 </div>
 <% else -%>
 <div class="participation_input_space">
-<<<<<<< HEAD:app/views/group/new_participation.html.erb
-  <% form_tag({:action => 'join'}) do -%>
-  <p style="margin-bottom: 5px;">
-  メッセージ：<br/><%= text_area 'board_entry', 'contents', :rows =>10, :style=>"width: 98%;" %>
-  </p>
-  <div style="text-align: center;"><%= submit_tag "参加申込み" %></div>
-  <% end %>
-=======
 <% form_tag({:action => 'join'}) do -%>
 
 <p style="margin-bottom: 5px;"><%= _('Message: ')%><br/>
@@ -38,6 +30,5 @@
 <div style="text-align: center;"><%= submit_tag _("Request to Join Group") %></div>
 
 <% end %>
->>>>>>> for_i18n:app/views/group/new_participation.html.erb
 </div>
 <% end -%>
