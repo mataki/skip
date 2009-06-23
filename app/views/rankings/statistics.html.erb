@@ -1,4 +1,3 @@
-<<<<<<< HEAD:app/views/rankings/statistics.html.erb
 <% content_for :contents_left do -%>
   <div id="calendar">
     <%= render :partial => "shared/calendar",
@@ -21,15 +20,15 @@
   <div id="statistics_history" class="statistics_history">
     <% if @site_count.write_users_all > 0 -%>
       <% statistics_items = [ # :categoryはSiteCountの属性と同名
-        { :desc => "10日間以内にアクセスしたことがある人", :category => 'active_users'},
-        { :desc => "ブログを書いたことのある人<br/>　（掲示板除く・公開のみ・自動投稿除く）", :category => 'write_users_all'},
-        { :desc => "・・・上記に非公開を含めると・・・", :category => 'write_users_with_pvt'},
-        { :desc => "・・・さらに掲示板も含めると・・・", :category => 'write_users_with_bbs'},
-        { :desc => "コメントを書いたことのある人", :category => 'comment_users'},
-        { :desc => "プロフィール画像を変えている人", :category => 'portrait_users'} ] -%>
+        { :desc => _("Users accessed within last 10 days"), :category => 'active_users'},
+        { :desc => _("Users who ever posted blog entries.<br/>&nbsp;(Excluding BBS posts and auto-genarated messages. Public entries only)"), :category => 'write_users_all'},
+        { :desc => _("... What if including limited entries ..."), :category => 'write_users_with_pvt'},
+        { :desc => _("... and BBS posts ..."), :category => 'write_users_with_bbs'},
+        { :desc => _("Users wrote their comments"), :category => 'comment_users'},
+        { :desc => _("Users who have changed thier profile pitures"), :category => 'portrait_users'} ] -%>
 
       <% user_count = @site_count.total_user_count -%>
-    <h2 class="topix_title"><%= icon_tag('asterisk_orange') -%>その他の指標値（参考）</h2>
+    <h2 class="topix_title"><%= icon_tag('asterisk_orange') -%><%= _('Other indices (FYI)')%></h2>
       <% statistics_items.each do |item| -%>
         <% count_value = @site_count[item[:category]] -%>
     <div class="statistics_line">
@@ -47,57 +46,3 @@
 <% content_for :javascript_initializers do -%>
     setupLoadCalendar("<%= url_for(:action => 'load_calendar') %>");
 <% end -%>
-=======
-<div id="contents_container">
-<div id="contents_left">
-  <div id="calendar"><%= render :partial => "shared/calendar", :locals => {:sel_year => @date.year,
-                                                                           :sel_month => @date.month,
-                                                                           :sel_day => @date.day,
-                                                                           :item_count => @item_count,
-                                                                           :action => "statistics"}  %></div>
-</div><!-- contents_left -->
-
-<div id="contents_right">
-<% unless @site_count.new_record? %>
-<div id="current_statistics" class="current_statistics">
-<%= render :partial => "current_statistics", :locals => { :site_count => @site_count } %>
-</div>
-
-<div style="clear:left;margin-top:5px;">　</div>
-<div id="statistics_history" class="statistics_history">
-
-<% if @site_count.write_users_all > 0 %>
-<% statistics_items = [ # :categoryはSiteCountの属性と同名
-                       { :desc => _("Users accessed within last 10 days"), :category => 'active_users'},
-                       { :desc => _("Users who ever posted blog entries.<br/>&nbsp;(Excluding BBS posts and auto-genarated messages. Public entries only)"), :category => 'write_users_all'},
-                       { :desc => _("... What if including limited entries ..."), :category => 'write_users_with_pvt'},
-                       { :desc => _("... and BBS posts ..."), :category => 'write_users_with_bbs'},
-                       { :desc => _("Users wrote their comments"), :category => 'comment_users'},
-                       { :desc => _("Users who have changed thier profile pitures"), :category => 'portrait_users'},
-                       { :desc => _("Users who have registered their profiles"), :category => 'profile_users'},
-                       { :desc => _("Users who ever customized the background"), :category => 'custom_users'}
-                      ]
-%>
-<% user_count = @site_count.total_user_count -%>
-<div class="topix_title"><%= icon_tag('asterisk_orange') -%><span><%= _('Other indices (FYI)')%></span></div>
-<% statistics_items.each do |item| %>
-  <% count_value = @site_count[item[:category]] %>
-<div class="statistics_line">
-  <div class="statistics_desc"><%= icon_tag 'group' %>　<%= item[:desc] %></div>
-  <div class="statistics_value"><%= count_value %>人</div>
-  <div class="statistics_menu" style="margin-left: 10px;"> - <%= (count_value.prec_f*10000.prec_f / user_count.prec_f).round / 100.prec_f %>％</div>
-</div>
-<div style="clear: left"></div>
-<% end %>
-
-<% end %>
-
-</div>
-<% end %>
-
-</div><!-- contents_right -->
-
-<div id="contents_bottom"></div><!-- contents_bottom -->
-
-</div><!-- contents_container -->
->>>>>>> for_i18n:app/views/rankings/statistics.html.erb

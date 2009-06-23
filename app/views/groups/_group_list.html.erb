@@ -1,9 +1,8 @@
 <% show_favorite ||= false -%>
 <% if pages and pages.item_count > 0 -%>
-<<<<<<< HEAD:app/views/groups/_group_list.html.erb
   <%= hidden_field_tag("authenticity_token", form_authenticity_token) %>
   <% if show_favorite -%>
-  <div class="desc" style="margin-bottom:5px"><%= icon_tag('award_star_gold_2') %>を選択したグループのみ、画面右上のショートカットメニューに表示されます</div>
+  <div class="desc" style="margin-bottom:5px"><%= _("Only groups with %s icons will be shown in \"My Groups\" of the right-top shortcut menu.") % icon_tag('award_star_gold_2') %></div>
   <% end -%>
   <div class="navi"><%= page_link pages %></div>
   <% if format_type == "detail" -%>
@@ -25,55 +24,21 @@
   <% else -%>
     <table class="group_list_box normal">
       <tr>
-        <th width="50%">グループ名</th>
-        <th>カテゴリ</th>
-        <th>状態</th>
-        <th>承認</th>
-        <th>アクション</th>
+        <th width="50%"><%= _('Group Name')%></th>
+        <th><%= _('Category') %></th>
+        <th><%= _('Status') %></th>
+        <th><%= _('Approval') %></th>
+        <th><%= _('Action') %></th>
       </tr>
     <% groups.each do |group| -%>
       <tr class="<%= cycle('line_0', 'line_1') %>">
         <td><%= group_link_to group %></td>
         <td><%= icon_tag(group.category_icon_name.first) + h(group.category_icon_name.last) %></td>
         <td><%= participation_state(group, user_id) -%></td>
-        <td><%= "#{icon_tag 'lock'}必要" if group.protected? %></td>
+        <td><%= _("%s Required") % icon_tag('key') if group.protected? %></td>
         <td><%= show_group_action(show_favorite, group) %></td>
       </tr>
     <% end -%>
-=======
-  <% if show_favorite %>
-  <div class="desc" style="margin-bottom:5px"><%= _("Only groups with %s icons will be shown in \"My Groups\" of the right-top shortcut menu.") % icon_tag('award_star_gold_2') %></div>
-  <% end %>
-
-  <div class="navi"><%= page_link pages -%></div>
-  <% if format_type == "detail" %>
-    <%= render :partial => "groups/group", :collection => groups, :locals => { :user_id => user_id, :show_favorite => show_favorite } -%>
-  <% else %>
-    <table class="group_list_box normal">
-    <tr>
-      <th width="60%"><%= _('Group Name')%></th>
-      <th><%= _('Category')%></th>
-      <th><%= _('Status')%></th>
-      <th><%= _('Approval')%></th>
-    </tr>
-    <% groups.each do |group| %>
-    <tr class="<%= cycle('line_0', 'line_1') %>">
-      <td>
-        <% if show_favorite %>
-          <% participation = group.group_participations.first %>
-          <% elem_id = "group_participation_#{participation.id}" %>
-          <span id="<%= elem_id %>"><%= render :partial => "groups/favorite", :locals => { :gid => group.gid, :participation => participation, :update_elem_id => elem_id } %></span>
-        <% end %>
-        <%= group_link_to group %>
-      </td>
-      <td>
-        <%= icon_tag(group.category_icon_name.first, :title => group.category_icon_name.last, :margin => true) + group.category_icon_name.last %>
-      </td>
-      <td><%= participation_state(group, user_id, {:simple => true}) -%></td>
-      <td><%= _("%s Required") % icon_tag('key') if group.protected? %></td>
-    </tr>
-    <% end %>
->>>>>>> for_i18n:app/views/groups/_group_list.html.erb
     </table>
   <% end -%>
   <div class="navi"><%= page_link pages %></div>

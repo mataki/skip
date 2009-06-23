@@ -2,13 +2,8 @@
 <div id="rules" style="overflow: auto; height: 250px; width: 100%; border-top: 1px solid silver; border-bottom: 1px solid silver; background-color: #fdfdf5;"></div>
 
 <div style="text-align: center; margin: 10px;">
-<<<<<<< HEAD:app/views/portal/confirm.html.erb
-  <%= button_to _("上記内容に同意する"), {:action => :agreement}, :method => :get %>
-  <%= button_to _('同意しない'), logout_path, :method => :get %>
-=======
-<input type="button" value="<%= _('Accept the terms above')%>" onClick="location.href='<%= url_for(:action => :agreement) %>'"></input>
-<input type="button" value="<%= _('Logout')%>" onClick="location.href='<%= url_for(:controller => '/platform', :action => :logout) %>'"></input>
->>>>>>> for_i18n:app/views/portal/confirm.html.erb
+  <%= button_to _('Accept the terms above'), {:action => :agreement}, :method => :get %>
+  <%= button_to _('Not Accept'), logout_path, :method => :get %>
 </div>
 
 <% content_for :javascript_initializers do -%>

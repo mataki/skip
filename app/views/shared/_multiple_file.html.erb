@@ -20,22 +20,6 @@
             })
         )
         .appendTo('#input_value_area');
-<<<<<<< HEAD:app/views/shared/_multiple_file.html.erb
-=======
-
-        if(<%= blog_mode %>) {
-            elemDiv.append(
-                $j(document.createElement("a"))
-                .css({
-                    backgroundColor: "#eef",
-                    margin: "0 0 0 3px"
-                })
-                .attr('href',"javascript:insertPicRef("+index+");")
-                .attr('class', "hiki_support")
-                .append(document.createTextNode("<%= _('Append to the body')%>"))
-            );
-        }
->>>>>>> for_i18n:app/views/shared/_multiple_file.html.erb
         index++;
      };
 

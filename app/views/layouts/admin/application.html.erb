@@ -2,8 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
 <head>
-<<<<<<< HEAD:app/views/layouts/admin/application.html.erb
-  <%= render :partial => 'shared/common_header', :locals => {:title => _('設定・管理') } %>
+  <%= render :partial => 'shared/common_header', :locals => {:title => _('Setting / Administration') } %>
 </head>
 
 <body>
@@ -13,56 +12,6 @@
 <div id="main">
 
 <%= render :partial => "layouts/menu" %>
-=======
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Script-Type" content="text/javascript" />
-  <link rel="shortcut icon" href="<%= controller.request.relative_url_root %>/favicon.ico" />
-  <title><%= h Admin::Setting.abbr_app_title %> - <%= _('System Administration') %></title>
-  <%= skip_stylesheet_link_tag "style" %>
-  <%= stylesheet_link_tag "style" %>
-  <%= stylesheet_link_tag "skins-base" %>
-  <%= stylesheet_link_tag("skins/#{session[:user_custom_theme]}/skin.css") %>
-  <%= stylesheet_link_tag "admin" %>
-  <%= skip_stylesheet_link_tag "jquery.cluetip.css" %>
-  <%= yield :stylesheet %>
-</head>
-
-<body>
-<div id="header">
-  <%= header_logo_link %>
-  <%= skip_menu_link %>
-  <%= render :partial => "shared/full_text_search" if INITIAL_SETTINGS['full_text_search_setting'] %>
-</div><!-- header -->
-
-<div id="top">
-  <div id="user_ctl">
-    <%= link_to icon_tag(:report_edit, :alt=> _('Write a blog entry'), :title => _('Write a blog entry')) + _('Write a blog entry'), :controller => '/edit', :action => :index %>
-    <a id="my_group_link" href="#" ><%= icon_tag(:group_go, :alt=> _('My Groups'), :title => _('My Groups')) -%><span id="link_my_group"><%= _('Shortcuts to the groups joined')%></span></a>
-    <% help_url = h(Admin::Setting.help_url) -%>
-    <% unless help_url.blank? -%>
-      <a href="<%= help_url %>" target="_blank"><%= icon_tag(:help, :alt=> _('Help'), :title => _('Help')) -%><span id="link_help"><%= _('Help')%></span></a>
-    <% end -%>
-  </div>
-  <div id="select_my_group" style="margin-top: 5px; display: none;"></div>
-</div>
-
-<div id="main">
-
-<div id="side">
-  <ul id="main_menu">
-<% menus = @current_user.admin ? MENU_BTNS + ADMIN_MENU_BTNS : MENU_BTNS -%>
-<% menus.each do |btn| -%>
-  <% if btn[:separator] -%>
-  <li class="separator"><%= btn[:name] -%></li>
-  <% elsif @main_menu == btn[:name] -%>
-  <li class="selected"><%= link_to icon_tag(btn[:img_name], {:alt=>_(btn[:name]), :title=>_(btn[:name])}) + _(btn[:name]), btn[:url] -%></li>
-  <% else -%>
-  <li class="normal"><%= link_to icon_tag(btn[:img_name], {:alt=>_(btn[:name]), :title=>_(btn[:name])}) + _(btn[:name]), btn[:url] -%></li>
-  <% end -%>
-<% end -%>
-  </ul>
-</div><!-- side -->
->>>>>>> for_i18n:app/views/layouts/admin/application.html.erb
 
 <div id="panel">
   <div style="_width: 98%;">
@@ -135,68 +84,6 @@ var relative_url_root = '<%= controller.request.relative_url_root %>';
 
 <% javascript_tag do -%>
 $j(function(){
-<<<<<<< HEAD:app/views/layouts/admin/application.html.erb
-=======
-    var clickMyItems = function(actionUrl, updateId, linkUrlBase, _options) {
-        // ajaxUpdate対象の要素が空じゃない（つまり2回目以降の場合はtoggleするだけ)
-        if (!$j(updateId).is(':empty')) {
-            $j(updateId).toggle();
-            return;
-        }
-        // ajaxLoad中のインジケータ表示
-        $j(updateId).append('<img src="' + platform_url_root + '/images/skip/indicator.gif" />');
-        $j(updateId).show();
-
-        // ajaxLoad(jsonデータ取得)
-        $j.getJSON(actionUrl, function(items) {
-            // request完了後一旦ajaxUpdate対象の要素をクリアしておく(以下の処理で要素が空かどうかで判断するため)
-            $j(updateId).empty();
-            $j.each(items, function(itemId, val) {
-                // ajaxUpdate対象の要素が空(つまりループの最初のみテキストを追加)
-                $j(updateId + ':empty').append(document.createTextNode(_options.result_message));
-                var url = relative_url_root + linkUrlBase + itemId;
-                $j(updateId)
-                .append(
-                    $j('<a href="' + url + '"></a>')
-                    .append(document.createTextNode('[' + val + ']'))
-                    .css('marginRight', '5px')
-                );
-            });
-            // ajaxUpdate対象の要素が空(つまり表示するものがない場合のテキスト追加)
-            $j(updateId + ':empty').append(document.createTextNode(_options.nothing_message));
-            // 区切り線を追加
-            $j(updateId).prepend($j('<div>').css({ borderTop : '1px dashed silver', marginTop : '3px' }));
-        });
-    };
-
-    $j('#my_group_link')
-    .click(function() {
-        clickMyItems('<%= url_for(:controller => "/mypage", :action => "ado_my_groups") -%>', '#select_my_group', '/group/',
-            { nothing_message: '<%= _("No groups to show.")%>', result_message: '<%= _("Select a group: ")%>' });
-        return false;
-    });
-
-    var imageSizing = function() {
-        var imgs = document.getElementsByName("picture");
-        if(!imgs) return;
-        for(i = 0; i < imgs.length; i++){
-            width = imgs[i].width;
-            height = imgs[i].height;
-            fitImageSize(imgs[i], width, height);
-        }
-    };
-    imageSizing();
-    fnLoadPngs();
-
-    $j('img.help').cluetip({
-        splitTitle: '|',
-        dropShadow: false,
-        cluetipClass: 'jtip',
-        arrows: true,
-        activation: 'click'
-    });
-
->>>>>>> for_i18n:app/views/layouts/admin/application.html.erb
     $j('table.sortable').tablesorter();
     <%= yield :javascript_initializers %>
 });

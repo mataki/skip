@@ -1,4 +1,3 @@
-<<<<<<< HEAD:app/views/mypage/index.html.erb
 <% content_for :stylesheet do -%>
   <%= skip_stylesheet_link_tag "themes/cupertino/ui.theme.css" %>
   <%= skip_stylesheet_link_tag "themes/cupertino/ui.tabs.css" %>
@@ -22,50 +21,6 @@
     <%= render :partial => 'rss_feed_box' %>
     <%= render :partial => 'recent_group_box', :locals => {:recent_groups => @recent_groups} %>
     <%= render :partial => 'recent_user_box', :locals => {:recent_users => @recent_users} %>
-=======
-
-<div id="contents_container">
-
-<div id="contents_left">
-
-  <%= render(:partial => 'user/portrait_box', :locals => { :user => @user }) -%>
-
-  <div id="calendar"><%= render :partial => "shared/calendar", :locals => {:sel_year => @year, :sel_month => @month, :sel_day => @day, :item_count => @entry_count, :action => 'index'}  %></div>
-
-<div class="box_space">
-  <div class="box_space_title"><%= _('See in List')%></div>
-  <div class="box_space_body"><ul>
-    <li><%= icon_tag 'folder_user' -%><%= link_to(_("Recent Questions"), :action => "index", :list_type => "questions", :all => true ) -%></li>
-    <li><%= icon_tag 'folder_star' -%><%= link_to(_("Recent Popular Entries"), :action => "index", :list_type => "access_blogs" ) -%></li>
-    <li><%= icon_tag 'folder_page' -%><%= link_to(_("Recently Posted Entries"), :action => "index", :list_type => "recent_blogs" ) -%></li>
-    <li><%= icon_tag 'folder_feed' -%><%= link_to(_("Unread Entries in Antennas"), :action => "index", :list_type => "not_reading_blogs", :all => true ) -%></li>
-  </ul></div>
-  <div class="box_space_bottom"><!--【メニューを管理する】--></div>
-</div><!-- box_space -->
-
-  <div id="antennas">
-<div class="box_space">
-  <div class="box_space_title"><%= _('Antennas')%></div>
-  <%= skip_image_tag 'indicator.gif' %> <span style="color:gray"><%= _('Loading...')%></span>
-</div>
-</div>
-
-  <div id="my_infos">
-<div class="box_space">
-  <div class="box_space_title"><%= _('Your info')%></div>
-  <div class="box_space_body"><ul>
-    <li><%= icon_tag 'rosette' -%><span id="access_count"><%= dummy_link_to _('Access Count')-%><%= _(": %d") % @my_info[:access_count] -%></span>
-      <div id="access_count_help" class="help" style="display:none;"><%= _('(The total number of access to your page by other users)')%></div></li>
-    <li><%= icon_tag 'newspaper' -%><span id="subscriber_count"><%= dummy_link_to _('Subscribers') -%><%= _(": %d users") % @my_info[:access_count] -%></span>
-      <div id="subscriber_count_help" class="help" style="display:none;"><%= _('(The number of users who are checking your blog with the antenna)')%></div></li>
-    <li><%= icon_tag 'report_user' -%><span id="blog_count"><%= dummy_link_to _('Blogs') -%><%= n_(": %d entry", ": %d entries", @my_info[:blog_count]) % @my_info[:blog_count] -%></span>
-      <div id="blog_count_help" class="help" style="display:none;"><%= _('(The number of blog entries you posted)')%></div></li>
-    <li><%= icon_tag 'user_suit' -%><span id="using_day"><%= dummy_link_to _('Registered') -%><%= _(": %d days") % @my_info[:using_day] -%></span>
-      <div id="using_day_help" class="help" style="display:none;"><%= _('(Days since you registered with the site)')%></div></li>
-  </ul></div>
-  <div class="box_space_bottom"></div>
-</div><!-- box_space -->
->>>>>>> for_i18n:app/views/mypage/index.html.erb
   </div>
 
   <%# ============================================================ -%>
@@ -89,7 +44,7 @@
       <% end -%>
       <% @waiting_groups.each do |group| -%>
       <div class="item">
-        <%= item_link_to(group, {:view_text=>(icon_tag('group') + "[#{h(group.name)}]に承認待ちのユーザがいます！")}) %>
+        <%= item_link_to(group, {:view_text=>( icon_tag('group') + _('New user is waiting for approval in %s[FIXME]') % h(group.name) )}) %>
       </div>
       <% end -%>
     </div>
@@ -114,7 +69,7 @@
     <%= show_title_bar(@questions[:title_icon], @questions[:title_name], {:controller => 'mypage', :action => "entries", :list_type => @questions[:id_name]}) -%>
     <%= render :partial => "list_block", :locals => @questions %>
 
-    <%= show_title_bar("page_copy", _("公開された記事"), {:controller => 'search', :action => "entry_search"}) -%>
+    <%= show_title_bar("page_copy", _("Publicated Entry"), {:controller => 'search', :action => "entry_search"}) -%>
     <div id="tabs" style="margin: 0 5px 10px 10px; display: none;">
       <ul>
         <li><a href="#<%= @access_blogs[:id_name] %>"><span><%=h @access_blogs[:title_name] %></span></a></li>
@@ -144,14 +99,14 @@
     <%# ============================================================ -%>
     <%#  main area bookmarks -%>
     <%# ============================================================ -%>
-    <%= show_title_bar("tag_blue", _("最新のブックマーク"), {:controller => 'bookmarks'}) %>
+    <%= show_title_bar("tag_blue", _("New bookmarks"), {:controller => 'bookmarks'}) %>
     <% if @bookmarks.size > 0 %>
       <div class="topix_body" id="bookmark_body">
       <% @bookmarks.each do |bookmark| -%>
         <div class="page_line">
           <div class="page_title"><%= link_to_bookmark_url bookmark %></div>
-          <div class="page_from"><%= link_to(bookmark.bookmark_comments_count.to_s+"人", url_for_bookmark(bookmark)) %></div>
-          <div class="page_date"><%=h bookmark.updated_on.strftime("%m/%d %H:%M") %></div>
+          <div class="page_from"><%= link_to( _('%s[FIXME]') % bookmark.bookmark_comments_count.to_s, url_for_bookmark(bookmark)) %></div>
+          <div class="page_date"><%=h bookmark.updated_on.strftime(_("%m/%d %H:%M[FIXME]")) %></div>
         </div>
       <% end -%>
       </div>

@@ -2,42 +2,20 @@
   <%= render :partial => "manage_menu", :locals => { :selected_menu => @menu } %>
 <% end -%>
 
-<<<<<<< HEAD:app/views/mypage/_manage_openid.html.erb
 <% content_for :contents_right do -%>
-  <div class="desc"><p>以下のフォームにOpenIDのURLを入力してください。</p></div>
-=======
-  <div id="contents_right">
-    <div class="desc"><p><%= _('Enter your OpenID URL in the form below.')%></p></div>
->>>>>>> for_i18n:app/views/mypage/_manage_openid.html.erb
+  <div class="desc"><p><%= _('Enter your OpenID URL in the form below.')%></p></div>
 
   <%= error_messages_for 'openid_identifier' %>
 
-<<<<<<< HEAD:app/views/mypage/_manage_openid.html.erb
   <div class="edit_form_space">
     <% form_for :openid_identifier, @openid_identifier, {:url => {:action => :apply_ident_url}} do |f| -%>
     <table class="normal user_info">
       <tr>
-        <th width="100px"><%= f.label :url, "OpenID URL" %></th>
+        <th width="100px"><%= f.label :url, _("OpenID URL") %></th>
         <td style="padding:5px;"><%= f.text_field :url, :name => "openid_url" %></td>
       </tr>
     </table>
-    <%= submit_tag '保存' %>
+    <%= submit_tag _('Save') %>
     <% end -%>
   </div>
 <% end -%>
-=======
-    <div class="edit_form_space">
-      <% form_for :openid_identifier, @openid_identifier, {:url => {:action => :apply_ident_url}} do |f| -%>
-      <table id="user_info_box" class="normal" border="1">
-        <tr>
-          <th width="100px"><%= f.label :url, _("OpenID URL") %></th>
-          <td style="padding:5px;"><%= f.text_field :url -%></td>
-        </tr>
-      </table>
-      <%= submit_tag _('Save') %>
-      <% end %>
-    </div>
-  </div><!-- contents_right -->
-  <div id="contents_bottom"></div><!-- contents_bottom -->
-</div><!-- contents_container -->
->>>>>>> for_i18n:app/views/mypage/_manage_openid.html.erb

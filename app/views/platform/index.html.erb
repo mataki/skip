@@ -46,65 +46,19 @@
   <div id="logo"><%= link_to(image_tag("#{controller.request.relative_url_root}/custom/images/title_logo.png", :alt => h(Admin::Setting.abbr_app_title))) -%></div>
 <% end -%>
 <div id="login" class="login-box">
-  <p>ログイン</p>
+  <p><%= _('Login')%></p>
   <%= render :partial => 'shared/login_form' %>
 
-<<<<<<< HEAD:app/views/platform/index.html.erb
   <% if enable_activate? -%>
   <p><%= _('Signup') %></p>
-  <div style="text-align: center; font-weight: bold; font-size: 14px;"><%= link_to _('ユーザ登録してSKIPの利用を開始する'), activate_url %></div>
+  <div style="text-align: center; font-weight: bold; font-size: 14px;"><%= link_to _('Registration'), activate_url %></div>
   <% end -%>
-=======
-<body>
-<div id="logo"><%= link_to(image_tag("#{controller.request.relative_url_root}/custom/images/title_logo.png", :alt => h(Admin::Setting.abbr_app_title))) -%></div>
-
-<div id="top">
-  <div id="menu_btn"></div>
-  <div id="user_ctl">
-    <a href="mailto:<%= h Admin::Setting.contact_addr -%>" target="_blank"><%= _('Inquiries')%></a>
-    <a href="#" onclick="javascript:getSubwindowRule()"> <%= _('Terms of Use')%></a>
-    <a href="#" onclick="javascript:getSubwindowScript(relative_url_root + '/custom/about_this_site.html', 720, 660)"><%= _('About this site')%></a>
-  </div>
-  <%= render :partial => '/layouts/flash_messages' %>
-  <%= render :partial => "login_failed_message" %>
->>>>>>> for_i18n:app/views/platform/index.html.erb
 </div>
 <div id="desc_before_login" class="desc"><%= skip_image_tag 'indicator.gif' %></div>
 
-<<<<<<< HEAD:app/views/platform/index.html.erb
 <% content_for :javascript_initializers do -%>
     $j('#desc_before_login').load(relative_url_root + '/custom/about_this_site.html', function(text) {
       if (text == "") { $j('#desc_before_login').hide(); }
     });
     $j('.desc, .login-box').fadeTo('slow',0.8);
 <% end -%>
-=======
-<div id="main">
-
-<div id="login"><p id="login-title"><%=_("Login")%></p><%= render :partial => 'shared/login_form' %></div>
-<div id="desc_before_login" class="desc"></div>
-
-</div><!-- main -->
-
-<div id="footer">
-  <div class="site">
-    <div class="info">
-      <div class="company"><%= Admin::Setting.footer_contact -%> | <%= h Admin::Setting.footer_copyright -%></div>
-    </div>
-    <div class="sponsor">
-      powered by <%= link_to image_tag("#{controller.request.relative_url_root}/custom/images/footer_logo.png"), h(Admin::Setting.footer_image_link_url) %>
-    </div>
-  </div>
-</div><!-- footer -->
-
-</body>
-<script type="text/javascript">
-<!--
-$j(function(){
-    $j('.desc, #login').fadeTo('slow',0.8);
-    $j('#desc_before_login').load(relative_url_root + '/custom/login_desc.html');
-});
-//-->
-</script>
-</html>
->>>>>>> for_i18n:app/views/platform/index.html.erb

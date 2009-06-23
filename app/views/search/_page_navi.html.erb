@@ -1,11 +1,10 @@
-<<<<<<< HEAD:app/views/search/_page_navi.html.erb
 <center>
   <table cellspacing="0" cellpadding="0" border="0" align="center" style="table-layout: fixed; font-size: 12px;">
     <tbody>
       <tr valign="top" align="center" style="text-align: center;">
-        <td valign="bottom" nowrap="" width="100px">検索結果ページ: </td>
+        <td valign="bottom" nowrap="" width="100px"><%= _('Search Result Pages: ')%> </td>
         <td nowrap="" width="80px" align="left" style="text-align:right">
-          <div class="g_navi"><%= link_to_search("前へ", query, prev_offset, params) if prev_offset %></div>
+          <div class="g_navi"><%= link_to_search(_("Prev"), query, prev_offset, params) if prev_offset %></div>
         </td>
         <% for index in start_index..end_index do -%><!-- start o.fig -->
         <td nowrap="" width="20px">
@@ -18,37 +17,9 @@
         </td>
         <% end -%>
         <td nowrap="" width="100px" align="left" style="text-align:left">
-          <div class="g_navi"><%= link_to_search("次へ", query, next_offset, params) if next_offset -%></div>
+          <div class="g_navi"><%= link_to_search(_("Next"), query, next_offset, params) if next_offset -%></div>
         </td>
       </tr>
     </tbody>
   </table>
 </center>
-=======
-<center><table cellspacing="0" cellpadding="0" border="0" align="center" style="table-layout: fixed; font-size: 12px;"><tbody>
-<tr valign="top" align="center" style="text-align: center;">
-
-<td valign="bottom" nowrap="" width="100px"><%= _('Search Result Pages: ')%> </td>
-
-<td nowrap="" width="80px" align="left" style="text-align:right">
-  <div class="g_navi"><%= link_to_search(_("Prev"), query, prev_offset, params) if prev_offset -%></div>
-</td>
-
-<% for index in start_index..end_index do %><!-- start o.fig -->
-<td nowrap="" width="20px">
-<% if current_page == index %>
-  <span style="background-color: yellow;"><%= index %></span>
-  <% break unless next_offset %>
-<% else %>
-  <span style="text-decoration:underline;color:#75f;"><%= link_to_search(index, query, (index - 1) * per_page, params) -%></span>
-<% end %>
-</td>
-<% end %>
-
-<td nowrap="" width="100px" align="left" style="text-align:left">
-  <div class="g_navi"><%= link_to_search("次へ", query, next_offset, params) if next_offset -%></div>
-</td>
-
-</tr>
-</tbody></table></center>
->>>>>>> for_i18n:app/views/search/_page_navi.html.erb

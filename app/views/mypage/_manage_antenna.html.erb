@@ -24,19 +24,12 @@ ul#antennas_list li.dragenter {
     <%= render :partial => 'antennas', :object => @antennas -%>
   </div>
 
-<<<<<<< HEAD:app/views/mypage/_manage_antenna.html.erb
   <div id="add_antenna_area">
     <% form_tag url_for(:controller => 'mypage', :action => 'add_antenna'), :id => 'add_antenna_form' do -%>
-    <%= icon_tag 'transmit_add' %><label for="antenna_name">アンテナの追加</label>
+    <%= icon_tag 'transmit_add' %><label for="antenna_name"><%= _('Add Antenna')%></label>
     <%= text_field_tag 'antenna_name', '', :size => '20' %>
-    <%= submit_tag _('Save'), :id => 'add_antenna_btn' %>
+    <%= submit_tag _('Add'), :id => 'add_antenna_btn' %>
     <% end -%>
-=======
-  <div style="border: 1px solid silver; background-color: #f0f0ff; margin-top: 5px;">
-    <p><%= icon_tag 'transmit_add' -%><%= _('Add Antenna')%>
-    <input type="edit" size="20" id="add_antenna_name" />
-    <input type="button" value="<%= _('Add')%>" id="add_antenna_btn" /></p>
->>>>>>> for_i18n:app/views/mypage/_manage_antenna.html.erb
   </div>
 
 </div><!-- end of 編集領域 -->
@@ -74,12 +67,6 @@ ul#antennas_list li.dragenter {
                   $j('#antenna_name').val('');
                   $j('#antennas_list_container').html(request).highlight();
               },
-<<<<<<< HEAD:app/views/mypage/_manage_antenna.html.erb
-=======
-              error: function(event){
-                  alert("<%= _('Communication failure.')%>");
-              },
->>>>>>> for_i18n:app/views/mypage/_manage_antenna.html.erb
               complete: function(request) {
                   setupDeleteAntennaLink();
                   setupDeleteAntennaItemLink();
@@ -263,11 +250,7 @@ ul#antennas_list li.dragenter {
                           url: url,
                           data: { antenna_id: antenna_id, antenna_item_id: antenna_item_id, authenticity_token: $j('#authenticity_token').val() },
                           error: function(event){
-<<<<<<< HEAD:app/views/mypage/_manage_antenna.html.erb
                               alert(event.responseText);
-=======
-                              alert("<%= _('Communication failure.')%>");
->>>>>>> for_i18n:app/views/mypage/_manage_antenna.html.erb
                           },
                           success: function(request) {
                               dropObj.append(ui.draggable);

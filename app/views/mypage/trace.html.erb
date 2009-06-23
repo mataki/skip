@@ -1,23 +1,12 @@
-<<<<<<< HEAD:app/views/mypage/trace.html.erb
 <div class="desc">
-  <p>あなたのページ全体のアクセス数と、最近の訪問ユーザを最大30件まで表示しています。</p>
-  <p>同じ日付に同一ユーザが複数回アクセスしている場合、最新のアクセス時間を表示しています。</p>
+  <p><%= _("Showing total access count of all your pages and recent visitors (max. 30).<br/>\nOnly the newest access is shown in case a user has visited multiple times in a day.")%></p>
 </div>
-=======
-
-<div class="desc"><p><%= _("Showing total access count of all your pages and recent visitors (max. 30).<br/>\nOnly the newest access is shown in case a user has visited multiple times in a day.")%></p></div>
->>>>>>> for_i18n:app/views/mypage/trace.html.erb
 
 <div class="access_count"><%= _('Access Count: ')%><%= h @access_count %></div>
 
 <ul class="access_tracks">
 <% @access_tracks.each do |track| -%>
-<<<<<<< HEAD:app/views/mypage/trace.html.erb
-  <li><%=h track.updated_on.strftime("%Y年%m月%d日 %H時%M分 - ") %>
+  <li><%=h track.updated_on.strftime(_('%c - ')) %>
   <%= user_link_to track.visitor %></li>
-=======
-  <li><%=h track.updated_on.strftime(_('%c - ')) -%>
-  <%= user_link_to track.visitor -%></li>
->>>>>>> for_i18n:app/views/mypage/trace.html.erb
 <% end -%>
 </ul>

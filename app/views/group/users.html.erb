@@ -1,38 +1,20 @@
 <div class="search_cond_space">
 <% form_tag({:action => 'users'}, :method => 'get') do -%>
-<<<<<<< HEAD:app/views/group/users.html.erb
   <table class="search_cond_box">
     <tr>
-      <th>検索条件</th>
+      <th><%= _('Search Conditions')%></th>
       <td><%= radio_buttons(:condition, :include_manager, UserSearchCondition.include_manager_types) -%></td>
     </tr>
     <tr>
-      <th>ソート順</th>
+      <th><%= _('Sort by')%></th>
       <td><%= select :condition, :sort_type, UserSearchCondition.sort_types %></td>
     </tr>
     <tr>
-      <th>出力形式</th>
+      <th><%= _('Output Format')%></th>
       <td><%= radio_buttons :condition, :output_type, UserSearchCondition.output_types %></td>
     </tr>
   </table>
-  <div class="submit" style="text-align: right;"><%= submit_tag '検索' %></div>
-=======
-<table class="search_cond_box">
-  <tr>
-    <th><%= _('Search Conditions')%></th>
-    <td><%= radio_buttons(:condition, :include_manager, UserSearchCondition.include_manager_types) -%></td>
-  </tr>
-  <tr>
-    <th><%= _('Sort by')%></th>
-    <td><%= select :condition, :sort_type, UserSearchCondition.sort_types %></td>
-  </tr>
-  <tr>
-    <th><%= _('Output Format')%></th>
-    <td><%= radio_buttons :condition, :output_type, UserSearchCondition.output_types %></td>
-  </tr>
-</table>
-<div class="submit" style="text-align: right;"><%= submit_tag _('Search') %></div>
->>>>>>> for_i18n:app/views/group/users.html.erb
+  <div class="submit" style="text-align: right;"><%= submit_tag _('Search') %></div>
 <% end -%>
 </div>
 

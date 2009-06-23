@@ -27,51 +27,21 @@
   </div><!-- box_space -->
 <% end -%>
 
-<<<<<<< HEAD:app/views/mypage/_record_post.html.erb
 <% content_for :contents_right do -%>
   <div class="desc" style="margin-bottom:5px;">
-    <p>ブログやグループの掲示板であなたが投稿した記事の一覧です。</p>
-=======
-<div id="contents_left">
-
-<%= render :partial => "manage_menu", :locals => { :selected_menu => @menu } %>
-
-<div class="box_space">
-  <div class="box_space_title"><%= icon_tag 'find' -%><%= _('Search')%></div>
-  <div class="box_space_body">
-  <% form_tag({:controller => 'mypage', :action => 'manage'}, {:method => 'get'}) do -%>
-  <%= text_field_tag('keyword', params[:keyword], :size=>'13') %><br/>
-  <input type=hidden name="select" value="blog">
-  <input type=hidden name="menu" value="record_post">
-  <%= submit_tag _('Search') %>
-  <% end %>
-  <div class="desc"><%= _('The search targets are tags, titles and bodies.')%></div>
-  </div>
-  <div class="box_space_bottom"></div>
-</div><!-- box_space -->
-
-<div class="box_space">
-  <div class="box_space_title"><%= icon_tag 'tag_blue' -%><%= _('Tags')%></div>
-  <div class="box_space_body" style="font-size: 10px;">
-  <% for category in @categories %>
-    <%= %(<b>) if params[:category] == category -%>
-    <%= link_to(h('[' + category + ']'), :action=>'manage', :menu=>'record_post', :category=>category, :select=>'blog') %>
-    <%= %(</b>) if params[:category] == category -%>
-  <% end %>
->>>>>>> for_i18n:app/views/mypage/_record_post.html.erb
+    <p><%= _('Entries you posted to your blog and group BBSs.')%></p>
   </div>
 
-<<<<<<< HEAD:app/views/mypage/_record_post.html.erb
   <div class="navi"><%= page_link(@pages) %></div>
 
   <div style="margin: 5px;">
     <table border="1" class="normal" style="width: 100%; _width: 98%;">
       <tr>
-        <th width="5%">No. </th>
-        <th width="15%">日時</th>
-        <th width="25%">所在</th>
-        <th width="20%">タグ</th>
-        <th width="35%">タイトル</th>
+        <th width="5%"><%= _('No.')%></th>
+        <th width="15%"><%= _('Datetime')%></th>
+        <th width="25%"><%= _('Location')%></th>
+        <th width="20%"><%= _('Tags')%></th>
+        <th width="35%"><%= _('Title')%></th>
       </tr>
       <% even_or_odd = 0 -%>
       <% for board_entry in @board_entries -%>
@@ -91,48 +61,6 @@
       <% end -%>
     </table>
   </div>
-=======
-<div class="desc" style="margin-bottom:5px;">
-<p><%= _('Entries you posted to your blog and group BBSs.')%></p>
-</div>
-
-<div class="navi"><%= page_link(@pages) -%></div>
-
-<div style="margin: 5px;">
-  <table border="1" class="normal" style="width: 100%; _width: 98%;">
-    <tr>
-      <th width="5%"><%= _('No.')%> </th>
-      <th width="15%"><%= _('Datetime')%></th>
-      <th width="25%"><%= _('Location')%></th>
-      <th width="20%"><%= _('Tags')%></th>
-      <th width="35%"><%= _('Title')%></th>
-    </tr>
-    <% even_or_odd = 0 %>
-    <% for board_entry in @board_entries %>
-      <% even_or_odd = 1 - even_or_odd %>
-    <tr>
-      <td class="line_<%= even_or_odd -%>"> <%=h board_entry.user_entry_no %>  </td>
-      <td class="line_<%= even_or_odd -%>"> <span style="font-size:10px"><%=h board_entry.diary_date %></span> </td>
-      <% visibility, visibility_color = board_entry.visibility %>
-      <td class="line_<%= even_or_odd -%>"> <%=h @symbol2name_hash[board_entry.symbol] %><br>
-        <span  style='background-color: <%=visibility_color%>;font-size:10px'><%=h visibility %></span>
-      </td>
-      <td class="line_<%= even_or_odd -%>"> <%=h board_entry.category %>  </td>
-      <td class="line_<%= even_or_odd -%>"> <%= entry_link_to board_entry %>
-        <div style='font-size:10px;'><%= get_entry_infos board_entry %></div>
-      </td>
-    </tr>
-    <% end %>
-  </table>
-</div>
-
-<div class="navi"><%= page_link(@pages) -%></div>
-
-</div><!-- contents_right -->
-
-<div id="contents_bottom">
-</div><!-- contents_bottom -->
->>>>>>> for_i18n:app/views/mypage/_record_post.html.erb
 
   <div class="navi"><%= page_link(@pages) -%></div>
 <% end -%>

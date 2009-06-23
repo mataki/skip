@@ -33,113 +33,29 @@
   </style>
 <% end -%>
 
-<<<<<<< HEAD:app/views/group/show.html.erb
 <% content_for :contents_left do -%>
   <div class="box_space">
     <div class="box_space_title"><%= h @group.name %></div>
     <div class="box_space_body"><%= show_group_status(@group, session[:user_id]) %></div>
     <div class="box_space_bottom">
-      since <%= @group.created_on.strftime("%Y/%m/%d") -%>
+      since <%= @group.created_on.strftime(_("%Y/%m/%d")) -%>
     </div>
     <div class="box_space_bottom" style="text-align: center; font-size: 12px;">
-      <%= link_to(icon_tag('transmit_go', :title => _('アンテナに追加')) + _('アンテナに追加'), {:controller => "antenna", :action => "select_antenna", :symbol => @group.symbol, :dummy => '.html'}, {:class => "nyroModal"}) %><br/>
+      <%= link_to(icon_tag('transmit_go', :title => _('Add to antenna')) + _('Add to antenna'), {:controller => "antenna", :action => "select_antenna", :symbol => @group.symbol, :dummy => '.html'}, {:class => "nyroModal"}) %><br/>
     </div>
     <div class="box_space_bottom" style="text-align: center; font-size: 12px;">
       <% if not @participation -%>
-        <%= link_to(icon_tag('group_go') + 'グループに参加', {:action=>"new_participation"}, {:class => "nyroModal"}) -%>
+        <%= link_to(icon_tag('group_go') + _('Join this group'), {:action=>"new_participation"}, {:class => "nyroModal"}) -%>
       <% elsif not @participation.owned? -%>
         <% form_tag({:action => 'leave'}) do -%>
-        <%= submit_tag('退会する', {:onclick=>'return confirm("本当に退会しますか？");'}) %>
+        <%= submit_tag(_('Leave the group'), {:onclick=>"return confirm('#{_('Are you sure leave the group?')}');"}) %>
         <% end %>
       <% end %>
     </div>
   </div><!-- box_space -->
-=======
-<style type="text/css">
-div.group_info_space {
-  margin-bottom: 10px;
-  width: 100%;
-  _text-align: right;
-}
-div.group_info_space_desc {
-  margin-top: 5px;
-  margin-left: auto;
-  width: 97%;
-  text-align: left;
-  border: 1px solid silver;
-  overflow: hidden;
-}
-div.group_info_space_desc_body {
-  margin: 5px;
-}
-div.group_info_space_lines {
-  margin-left: auto;
-  width: 97%;
-  text-align: left;
-  overflow: hidden;
-  font-weight: bold;
-}
-div.group_info_space_lines_line {
-  margin-top: 5px;
-  border-bottom: 1px dashed silver;
-}
-div.box_space_body p.button {
-  text-align: center;
-  margin-top: 5px;
-}
-</style>
-
-<div id="contents_container">
-
-<div id="contents_left">
-
-<div class="box_space">
-  <div class="box_space_title"><%= icon_tag('text_list_bullets') -%><%= _('Category')%></div>
-  <div class="box_space_body">
-    <%= icon_tag(h(@group.category_icon_name.first), :title => h(@group.category_icon_name.last), :margin => true) + h(@group.category_icon_name.last) %>
-  </div>
-  <div class="box_space_bottom"></div>
-</div><!-- box_space -->
-
-<div class="box_space">
-  <div class="box_space_title"><%= icon_tag('information') -%><%= _('Status')%></div>
-  <div class="box_space_body">
-    <% state, button = generate_visitor_state(@participation) -%>
-    <p><%= state -%></p>
-    <%= %(<p class="button">#{button}</p>) unless button.empty? -%>
-  </div>
-  <div class="box_space_bottom"></div>
-</div><!-- box_space -->
-
-<div class="box_space">
-  <div class="box_space_title"><%= icon_tag('user_suit') -%><%= _('Administrator')%></div>
-  <div class="box_space_body">
-    <ul>
-    <% @admin_users.each do |user| %>
-      <li><%= user_link_to user %></li>
-      <% end %>
-    </ul>
-  </div>
-  <div class="box_space_bottom"></div>
-</div><!-- box_space -->
-
-<div class="box_space">
-  <div class="box_space_title"><%= icon_tag('group') -%><%= _('Members')%></div>
-  <div class="box_space_body">
-    <ul>
-    <% @users.each do |user| %>
-      <li><%= user_link_to user %></li>
-    <% end %>
-    </ul>
-  </div>
-  <div class="box_space_bottom"><%= link_to _("[...See all]"), :action => 'users' %></div>
-</div><!-- box_space -->
-
-</div><!-- contents_left -->
->>>>>>> for_i18n:app/views/group/show.html.erb
 
   <div class="box_space">
-    <div class="box_space_title"><%= icon_tag('user_suit') -%>管理者</div>
+    <div class="box_space_title"><%= icon_tag('user_suit') -%><%= _('Administrator')%></div>
     <div class="box_space_body">
       <ul>
       <% @admin_users.each do |user| %>
@@ -150,24 +66,16 @@ div.box_space_body p.button {
     <div class="box_space_bottom"></div>
   </div><!-- box_space -->
 
-<<<<<<< HEAD:app/views/group/show.html.erb
   <div class="box_space">
-    <div class="box_space_title"><%= icon_tag('group') -%>参加者</div>
+    <div class="box_space_title"><%= icon_tag('group') -%><%= _('Members')%></div>
     <div class="box_space_body">
       <ul>
       <% @users.each do |user| %>
         <li><%= user_link_to user %></li>
-=======
-  <div class="group_info_space">
-    <div class="topix_title" style="text-align: left;"><%= icon_tag('asterisk_orange') -%><span><%= _('Notice')%></span></div>
-    <div class="group_info_space_lines">
-      <% generate_informations(@group, @participation).each do |information| -%>
-      <div class="group_info_space_lines_line"><%= information -%></div>
->>>>>>> for_i18n:app/views/group/show.html.erb
       <% end %>
       </ul>
     </div>
-    <div class="box_space_bottom"><%= link_to "[すべて見る]", :action => 'users' %></div>
+    <div class="box_space_bottom"><%= link_to _("[...See all]"), :action => 'users' %></div>
   </div><!-- box_space -->
 
   <%= render :partial => 'collaboration_app/operation_boxes' %>
@@ -176,33 +84,17 @@ div.box_space_body p.button {
 
 <% content_for :contents_right do -%>
   <div class="group_info_space">
-<<<<<<< HEAD:app/views/group/show.html.erb
-    <h2 class="topix_title"><%= icon_tag('asterisk_orange') %>このグループについて</h2>
-=======
-    <div class="topix_title" style="text-align: left;"><%= icon_tag('asterisk_orange') -%><span><%= _('Explanation')%></span></div>
->>>>>>> for_i18n:app/views/group/show.html.erb
+    <h2 class="topix_title"><%= icon_tag('asterisk_orange') %><%= _('Explanation')%></h2>
     <div class="group_info_space_desc">
       <div class="group_info_space_desc_body"><%= render_richtext(@group.description, @group.symbol) -%></div>
     </div>
   </div><!-- group_info_space -->
 
-<<<<<<< HEAD:app/views/group/show.html.erb
   <%= render :partial => "mypage/page_space",
              :locals => {
                :id_name => 'recent_messages',
-               :title_name => 'このグループの最新の書き込み',
+               :title_name => _('Recent posts in the groups joined'),
                :pages => @recent_messages } %>
-=======
-<%= render :partial => "mypage/page_space",
-           :locals => { :id_name => 'recent_messages',
-                        :title_name => _('Recent posts in the groups joined'),
-                        :pages => @recent_messages } %>
-
-</div><!-- contents_right -->
-
-<div id="contents_bottom">
-</div><!-- contents_bottom -->
->>>>>>> for_i18n:app/views/group/show.html.erb
 
   <%= render(:partial => 'collaboration_app/feeds') %>
 <% end -%>

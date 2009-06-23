@@ -1,77 +1,27 @@
-<<<<<<< HEAD:app/views/mypage/_manage_email.html.erb
 <% content_for :contents_left do -%>
   <%= render :partial => "manage_menu", :locals => { :selected_menu => @menu } %>
 <% end -%>
 
 <% content_for :contents_right do -%>
   <div class="desc">
-    <p>メールアドレス存在確認のため、入力されたメールアドレスにメールを送信します。</p>
-    <p>24時間以内にそのメールに記載されたURLを開くことで申請が完了します。</p>
+    <p><%= _("An email will be sent to the address you have entered in order to confirm the existence.<br/>\nThe request will be completed by visiting the URL given in the email within 24 hours.")%></p>
   </div>
   <%= template_error_messages_for 'applied_email' %>
 
   <div class="edit_form_space">
-  <%= content_tag(:p, '既にメールアドレスの変更を申請済みです。記入したメールアドレスで再申請します。') if @applied_email.id %>
+  <%= content_tag(:p, _('Another request for changing email found. The former request will be discarded and we will proceed on the new email address.')) if @applied_email.id %>
   <% form_tag :action => 'apply_email' do -%>
     <table class="normal user_info">
       <tr>
-        <th width="100px"><label for="page_title">変更前メールアドレス</label></th>
+        <th width="100px"><label for="page_title"><%= _('Current Email Address')%></label></th>
         <td style="padding:5px;"><%=h @user.email %></td>
       </tr>
       <tr>
-        <th><label for="page_title">変更後メールアドレス</label></th>
+        <th><label for="page_title"><%= _('New Email Address')%></label></th>
         <td style="padding:5px;"><%= text_field 'applied_email', 'email' %></td>
       </tr>
     </table>
-    <%= submit_tag(@applied_email.id ? '再申請' : '申請') %>
+    <%= submit_tag _("Apply") %>
   <% end -%>
   </div>
 <% end -%>
-=======
-<div id="contents_container">
-
-<div id="contents_left">
-
-<%= render :partial => "manage_menu", :locals => { :selected_menu => @menu } %>
-
-</div><!-- contents_left -->
-
-<div id="contents_right">
-
-<div class="desc"><p><%= _("An email will be sent to the address you have entered in order to confirm the existence.<br/>\nThe request will be completed by visiting the URL given in the email within 24 hours.")%></p></div>
-
-<%= template_error_messages_for 'applied_email' %>
-
-<div class="edit_form_space">
-<% form_tag :action => 'apply_email' do -%>
-
-<% submit_value = _("Apply") %>
-<% if @applied_email.id %>
-<% submit_value = _("Reapply") %>
-<%= _('Another request for changing email found. The former request will be discarded and we will proceed on the new email address.')%>
-<% end %>
-
-<table id="user_info_box" class="normal" border="1">
-  <tr>
-    <th width="100px"><label for="page_title"><%= _('Current Email Address')%></label></th>
-    <td style="padding:5px;"><%=h @user.user_profile.email%></td>
-  </tr>
-  <tr>
-    <th><label for="page_title"><%= _('New Email Address')%></label></th>
-    <td style="padding:5px;"><%= text_field 'applied_email', 'email' %></td>
-  </tr>
-</table>
-
-  <%= submit_tag submit_value %>
-<% end %>
-</div>
-
-
-
-</div><!-- contents_right -->
-
-<div id="contents_bottom">
-</div><!-- contents_bottom -->
-
-</div><!-- contents_container -->
->>>>>>> for_i18n:app/views/mypage/_manage_email.html.erb
