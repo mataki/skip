@@ -19,33 +19,14 @@ module GroupsHelper
   def participation_state group, user_id, options={}
     if participation = group.group_participations.detect{|participation| participation.user_id == user_id }
       if participation.owned?
-<<<<<<< HEAD:app/helpers/groups_helper.rb
-        icon_tag('group_key') + '管理者です'
+        icon_tag('group_key') + _('Administrator')
       elsif participation.waiting?
-        icon_tag('hourglass') + '承認待ちです'
+        icon_tag('hourglass') + _('(Waiting for approval of the administrator)')
       else
-        icon_tag('group') + '参加中です'
-=======
-        if options[:simple]
-          output << icon_tag('emoticon_happy') + _('Administrator')
-        else
-          output << icon_tag('emoticon_happy') + _('(Have the administrative rights)')
-        end
-      elsif participation.waiting?
-        if options[:simple]
-          output << icon_tag('hourglass') + _('Approval')
-        else
-          output << icon_tag('hourglass') + _('(Waiting for approval of the administrator)')
-        end
-      else
-        if options[:simple]
-          output << icon_tag('emoticon_smile') + _('Member')
-        else
-          output << icon_tag('emoticon_smile') + _('(Currently joined in the group)')
-        end
->>>>>>> for_i18n:app/helpers/groups_helper.rb
+        icon_tag('group') + ('Member')
       end
     else
+      # FIXME i18n
       icon_tag('group_error') + '未参加です'
     end
   end
@@ -66,6 +47,7 @@ module GroupsHelper
       elem_id = "group_participation_#{participation.id}"
       output << "<span id='#{elem_id}'>#{render :partial => "groups/favorite", :locals => { :gid => group.gid, :participation => participation }}</span>"
     end
+    # FIXME i18n
     output << link_to(icon_tag('transmit_go', :title => _('アンテナに追加')), {:controller => "antenna", :action => "select_antenna", :symbol => group.symbol, :dummy => '.html'}, {:class => "nyroModal"})
     output
   end

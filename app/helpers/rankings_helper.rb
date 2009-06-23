@@ -17,19 +17,11 @@ module RankingsHelper
   def ranking_title contents_type
     case contents_type
     when :entry_access
-<<<<<<< HEAD:app/helpers/rankings_helper.rb
-      "人気記事ランキング(アクセス）"
-    when :entry_comment
-      "人気記事ランキング(コメント）"
-    when :entry_he
-      "人気記事ランキング(#{h Admin::Setting.point_button})"
-=======
       _("Ranking of Popular Blogs (Access)")
     when :entry_comment
       _("Ranking of Popular Blogs (Comments)")
     when :entry_he
      _("Ranking of Popular Blogs (%s)") % h(_(Admin::Setting.point_button))
->>>>>>> for_i18n:app/helpers/rankings_helper.rb
     when :user_access
       _("Ranking of Popular Users")
     when :user_entry
@@ -46,11 +38,7 @@ module RankingsHelper
     when :entry_access
       _("Most read blog / BBS entries (public entries only)")
     when :entry_comment
-<<<<<<< HEAD:app/helpers/rankings_helper.rb
-      "みんなからコメントが活発に付いたブログ/掲示板です(公開範囲が「全公開」のみ)"
-=======
       _("Entries most commented (public entries only)")
->>>>>>> for_i18n:app/helpers/rankings_helper.rb
     when :entry_he
       _("Blog / BBS entries got most %s from others (public entries only)") % h(_(Admin::Setting.point_button))
     when :user_access
