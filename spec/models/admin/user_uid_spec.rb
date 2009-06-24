@@ -17,7 +17,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe Admin::UserUid, "#after_update" do
   before do
-    @user = stub_model(User)
+    @user = create_user
     @user.stub!(:delete_auth_tokens!)
     @before_uid = SkipFaker.rand_char
     @uid = Admin::UserUid.create!(:uid => @before_uid, :uid_type => UserUid::UID_TYPE[:username], :user_id => @user.id)
@@ -35,6 +35,11 @@ describe Admin::UserUid, "#after_update" do
       @user.should_receive(:delete_auth_tokens!)
       @uid.save!
     end
+    it 'Userの更新日が更新されること' do
+      lambda do
+        @uid.save!
+      end.should change(@user, :updated_on)
+    end
   end
   describe "同じIDで更新する場合" do
     before do
@@ -43,6 +48,11 @@ describe Admin::UserUid, "#after_update" do
     it "renameが呼ばれないこと" do
       Admin::UserUid.should_not_receive(:rename)
       @uid.save!
+    end
+    it 'Userの更新日が更新されないこと' do
+      lambda do
+        @uid.save!
+      end.should_not change(@user, :attributes)
     end
   end
 end
@@ -59,6 +69,12 @@ describe Admin::UserUid, "#after_create" do
         Admin::UserUid.should_receive(:rename).with(@master_uid, new_uid)
         Admin::UserUid.create!(:uid => new_uid, :uid_type => UserUid::UID_TYPE[:username], :user_id => @user.id)
       end
+      it 'Userの更新日が更新されること' do
+        lambda do
+          Admin::UserUid.create!(:uid => 'username', :uid_type => UserUid::UID_TYPE[:username], :user_id => @user.id)
+          @user.reload
+        end.should change(@user, :updated_on)
+      end
     end
     describe "usernameが存在している場合" do
       before do
@@ -69,6 +85,12 @@ describe Admin::UserUid, "#after_create" do
         new_uid = "username"
         Admin::UserUid.should_not_receive(:rename)
         Admin::UserUid.create!(:uid => new_uid, :uid_type => UserUid::UID_TYPE[:username], :user_id => @user.id)
+      end
+      it 'Userが更新されないこと' do
+        lambda do
+          Admin::UserUid.create!(:uid => 'username', :uid_type => UserUid::UID_TYPE[:username], :user_id => @user.id)
+          @user.reload
+        end.should_not change(@user.updated_on, :to_s)
       end
     end
   end

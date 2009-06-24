@@ -22,6 +22,7 @@ class Admin::UserUid < UserUid
     if uid_changed?
       self.class.rename(uid_was, uid)
       self.user.delete_auth_tokens!
+      self.user.update_attribute(:updated_on, Time.now)
     end
   end
 
@@ -30,6 +31,7 @@ class Admin::UserUid < UserUid
         self.class.find(:all, :conditions => { :uid_type => UserUid::UID_TYPE[:username], :user_id => user_id }).size == 1
       self.class.rename(master.uid, uid)
       self.user.delete_auth_tokens!
+      self.user.update_attribute(:updated_on, Time.now)
     end
   end
 
