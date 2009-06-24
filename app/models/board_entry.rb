@@ -30,7 +30,6 @@ class BoardEntry < ActiveRecord::Base
   has_many :user_readings, :dependent => :destroy
 
   before_create :generate_next_user_entry_no
-  before_save :square_brackets_tags, :parse_symbol_link
   after_destroy :cancel_mail
 
   validates_presence_of :title, :message => 'は必須です'
@@ -78,6 +77,12 @@ class BoardEntry < ActiveRecord::Base
     def human_attribute_name(attribute_key_name)
       HUMANIZED_ATTRIBUTE_KEY_NAMES[attribute_key_name] || super
     end
+  end
+
+  def before_save
+    square_brackets_tags
+    parse_symbol_link
+    self.contents = CGI.unescapeHTML(self.contents) if self.editor_mode == 'richtext'
   end
 
   def after_save
