@@ -29,7 +29,51 @@ describe GroupParticipation, '#group' do
       @group.logical_destroy
     end
     it 'グループが取得できないこと' do
+      @group_participation.reload
       @group_participation.group.should be_nil
     end
+  end
+end
+
+describe GroupParticipation, '#after_save' do
+  before do
+    @bob = create_user :user_options => {:name => 'ボブ', :admin => false}, :user_uid_options => {:uid => 'boob'}
+    Group.record_timestamps = false
+    @vim_group = create_group :name => 'Vim勉強会', :gid => 'vim_study', :updated_on => Time.now.yesterday, :created_on => Time.now.yesterday
+    Group.record_timestamps = true
+  end
+  describe '参加待ちの場合' do
+    it '所属するグループのupdate_onが変わらないこと' do
+      before_updated_on = @vim_group.updated_on
+      @vim_group.group_participations.create(:user_id => @bob.id, :waiting => true)
+      @vim_group.reload
+      before_updated_on.tv_sec.should == @vim_group.updated_on.tv_sec
+    end
+  end
+  describe '参加中の場合' do
+    it '所属するグループの更新日が更新されること' do
+      before_updated_on = @vim_group.updated_on
+      @vim_group.group_participations.create(:user_id => @bob.id, :waiting => false)
+      @vim_group.reload
+      before_updated_on.tv_sec.should_not == @vim_group.updated_on.tv_sec
+    end
+  end
+end
+
+describe GroupParticipation, '#after_destroy' do
+  before do
+    bob = create_user :user_options => {:name => 'ボブ', :admin => false}, :user_uid_options => {:uid => 'boob'}
+    Group.record_timestamps = false
+    @vim_group = create_group :name => 'Vim勉強会', :gid => 'vim_study' do |g|
+      @group_participation = g.group_participations.build(:user_id => bob.id, :owned => true)
+    end
+    @vim_group.update_attributes(:updated_on => Time.now.yesterday, :created_on => Time.now.yesterday)
+    Group.record_timestamps = true
+  end
+  it '所属するグループのupdated_onが更新されること' do
+    before_updated_on = @vim_group.reload.updated_on
+    @group_participation.destroy
+    @vim_group.reload
+    before_updated_on.tv_sec.should_not == @vim_group.updated_on.tv_sec
   end
 end
