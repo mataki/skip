@@ -58,8 +58,7 @@ class PlatformController < ApplicationController
     return unless request.post?
     email = params[:email]
     if email.blank?
-      # FIXME i18n
-      flash.now[:error] = _('メールアドレスは必須です。')
+      flash.now[:error] = _('Email is mandatory.')
       return
     end
     if @user = User.find_by_email(email)
@@ -70,8 +69,7 @@ class PlatformController < ApplicationController
         flash[:notice] = _("An email contains the URL for resetting the password has been sent to %s.") % email
         redirect_to :controller => '/platform'
       else
-        # FIXME i18n
-        flash.now[:error] = _('入力された%{email}のユーザは、利用開始されていません。利用開始してください。') % {:email => email}
+        flash.now[:error] = _('User has entered email address %s is not in use. Please start with the site.') % email
       end
     else
       flash[:error] = _("Entered email address %s has not been registered in the site.") % email
@@ -303,14 +301,12 @@ class PlatformController < ApplicationController
     if params[:login] and user = User.auth(params[:login][:key], params[:login][:password], params[:login][:keyphrase])
       if user.locked?
         logger.info(user.to_s_log('[Login failed with password]'))
-        # FIXME i18n
-        flash[:error] = _("入力されたログインIDのユーザのパスワードが現在無効になっています。パスワードの再設定を行って下さい。")
+        flash[:error] = _("Password is expired. Please reset password.")
         redirect_to(request.env['HTTP_REFERER'] ? :back : login_url)
       else
         unless user.within_time_limit_of_password?
           logger.info(user.to_s_log('[Login failed with password]'))
-          # FIXME i18n
-          flash[:error] = _("パスワードの有効期限を過ぎています。パスワードの再設定を行って下さい。")
+          flash[:error] = _("Password is expired. Please reset password.")
           redirect_to(request.env['HTTP_REFERER'] ? :back : login_url)
         else
           self.current_user = user

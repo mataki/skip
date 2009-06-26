@@ -8,5 +8,5 @@
     <%= submit_tag "#{entry.point} #{h Admin::Setting.point_button}" %>
   <% end -%>
 <% else -%>
-  (<%= _("(Got %{point} %{point_button} from you)") % {:point => entry.point , :point_button => h(Admin::Setting.point_button)}%>)
+  (<%= _("(Got %{point} %{point_button})") % {:point => entry.point , :point_button => h(Admin::Setting.point_button)}%>)
 <% end -%>

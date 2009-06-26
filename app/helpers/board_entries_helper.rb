@@ -36,17 +36,6 @@ module BoardEntriesHelper
     writer?(comment, user_id) || (comment.board_entry.user_id == user_id)
   end
 
-  def date_with_icon date
-    formated_date = "[ #{date.strftime('%Y/%m/%d-%H:%M')} ]"
-    if Time.now - date < 12.hour
-      "#{formated_date} #{icon_tag :emoticon_happy, :alt => _('[12時間以内のコメント]'), :title => _('[12時間以内のコメント]')}"
-    elsif Time.now - date < 24.hour
-      "#{formated_date} #{icon_tag :emoticon_smile, :alt => _('[24時間以内のコメント]'), :title => _('[24時間以内のコメント]')}"
-    else
-      formated_date
-    end
-  end
-
   def link_to_write_place owner
     name = write_place_name(owner)
     unless name.blank?

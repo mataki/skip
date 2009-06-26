@@ -238,14 +238,12 @@ class MypageController < ApplicationController
     end
     render :partial => "rss_feed", :locals => { :feeds => feeds }
   rescue Timeout::Error
-    # FIXME i18n
-    render :text => "RSSの読み込みがタイムアウトしました。"
+    render :text => _("Timeout to loading rss.")
     return false
   rescue Exception => e
     logger.error e
     e.backtrace.each { |line| logger.error line}
-    # FIXME i18n
-    render :text => "RSSの読み込みに失敗しました。"
+    render :text => _("Failed to load rss.")
     return false
   end
 
@@ -479,19 +477,16 @@ class MypageController < ApplicationController
               render :partial => 'manage_openid', :layout => 'layout'
             end
           else
-            # FIXME keyを英語化する
-            flash.now[:error] = _("OpenIDの処理の中でキャンセルされたか、失敗しました。")
+            flash.now[:error] = _("OpenId process is cancelled or failed.")
             render :partial => 'manage_openid', :layout => 'layout'
           end
         end
       rescue OpenIdAuthentication::InvalidOpenId
-        # FIXME keyを英語化する
-        flash.now[:error] = _("OpenIDの形式が正しくありません。")
+        flash.now[:error] = _("Invalid OpenID URL format.")
         render :partial => 'manage_openid', :layout => 'layout'
       end
     else
-      # FIXME keyを英語化する
-      flash.now[:error] = _("OpenIDを入力してください。")
+      flash.now[:error] = _("Please input OpenID URL.")
       render :partial => 'manage_openid', :layout => 'layout'
     end
   end
@@ -703,9 +698,8 @@ class MypageController < ApplicationController
   def system_messages(options = {:show_welcome_message => false})
     system_messages = []
     if options[:show_welcome_message]
-      # FIXME i18n
       system_messages << {
-        :text => "ようこそ！まずはこちらをご覧ください。", :icon => "information",
+        :text => _("Welcome! Read detailed help."), :icon => "information",
         :option => {:controller => "mypage", :action => "welcome"}
       }
     end

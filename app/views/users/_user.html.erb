@@ -2,9 +2,8 @@
 <% image_output = user_link_to_with_portrait(user) -%>
 <div class="user_box">
   <div class="operation">
-    <% # FIXME i18n -%>
-    <%= link_to(icon_tag('transmit_go', :title => _('アンテナに追加')), {:controller => "antenna", :action => "select_antenna", :symbol => user.symbol, :dummy => '.html'}, {:class => "nyroModal"}) %>
-    <%= link_to(icon_tag('tag_blue_add', :title => _('ブックマークする')), {:controller => "bookmark", :action => "edit", :url => user.get_postit_url, :title => user.name, :dummy => '.html'}, {:class => "nyroModal"}) %>
+    <%= link_to(icon_tag('transmit_go', :title => _('Add an antenna')), {:controller => "antenna", :action => "select_antenna", :symbol => user.symbol, :dummy => '.html'}, {:class => "nyroModal"}) %>
+    <%= link_to(icon_tag('tag_blue_add', :title => _('Add a bookmark')), {:controller => "bookmark", :action => "edit", :url => user.get_postit_url, :title => user.name, :dummy => '.html'}, {:class => "nyroModal"}) %>
   </div>
   <table class="user_box">
     <tr>

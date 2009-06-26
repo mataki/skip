@@ -44,7 +44,7 @@
       <% end -%>
       <% @waiting_groups.each do |group| -%>
       <div class="item">
-        <%= item_link_to(group, {:view_text=>( icon_tag('group') + _('New user is waiting for approval in %s[FIXME]') % h(group.name) )}) %>
+        <%= item_link_to(group, {:view_text=>( icon_tag('group') + _('New user is waiting for approval in %s') % h(group.name) )}) %>
       </div>
       <% end -%>
     </div>
@@ -105,8 +105,8 @@
       <% @bookmarks.each do |bookmark| -%>
         <div class="page_line">
           <div class="page_title"><%= link_to_bookmark_url bookmark %></div>
-          <div class="page_from"><%= link_to( _('%s[FIXME]') % bookmark.bookmark_comments_count.to_s, url_for_bookmark(bookmark)) %></div>
-          <div class="page_date"><%=h bookmark.updated_on.strftime(_("%m/%d %H:%M[FIXME]")) %></div>
+          <div class="page_from"><%= link_to( _('%s users') % bookmark.bookmark_comments_count.to_s, url_for_bookmark(bookmark)) %></div>
+          <div class="page_date"><%=h bookmark.updated_on.strftime(_("%B %d %Y %H:%M")) %></div>
         </div>
       <% end -%>
       </div>

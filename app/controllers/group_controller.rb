@@ -398,8 +398,7 @@ private
 
   def load_group_and_participation
     unless @group = Group.active.find_by_gid(params[:gid])
-      # FIXME i18n
-      flash[:warn] = _("指定のグループは存在していません")
+      flash[:warn] = _("Specified group does not exist.")
       redirect_to :controller => 'mypage', :action => 'index'
       return false
     end

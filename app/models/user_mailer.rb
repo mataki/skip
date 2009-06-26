@@ -112,9 +112,8 @@ private
   end
 
   def header
-    # FIXME i18n
-    _('※このメールはシステムから自動配信されています。返信しないで下さい。') + "\n\n" +
-    _('%{sender}からのご連絡です。') % {:sender => sender}
+    _('*This email is automatically delivered from the system. Please do not reply.') + "\n\n" +
+    _('This email is a contact from %{sender}') % {:sender => sender}
   end
 
   def footer

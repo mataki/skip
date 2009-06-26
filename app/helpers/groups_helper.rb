@@ -21,13 +21,12 @@ module GroupsHelper
       if participation.owned?
         icon_tag('group_key') + _('Administrator')
       elsif participation.waiting?
-        icon_tag('hourglass') + _('(Waiting for approval of the administrator)')
+        icon_tag('hourglass') + _('Waiting for approval of the administrator')
       else
-        icon_tag('group') + ('Member')
+        icon_tag('group') + _('Member')
       end
     else
-      # FIXME i18n
-      icon_tag('group_error') + '未参加です'
+      icon_tag('group_error') + _('Not member[FIXME]')
     end
   end
 
@@ -35,7 +34,7 @@ module GroupsHelper
   def show_group_status(group, user_id)
     output = "<p>#{icon_tag(group.category_icon_name.first) + h(group.category_icon_name.last)}<br/></p>"
     output << "<p>#{participation_state(group, user_id)}<br/></p>"
-    output << "<p>#{(icon_tag('lock') + '参加には承認が必要') if group.protected?}<br/></p>"
+    output << "<p>#{(icon_tag('lock') + _('Need approval of the Administrator.')) if group.protected?}<br/></p>"
     output
   end
 
@@ -47,8 +46,7 @@ module GroupsHelper
       elem_id = "group_participation_#{participation.id}"
       output << "<span id='#{elem_id}'>#{render :partial => "groups/favorite", :locals => { :gid => group.gid, :participation => participation }}</span>"
     end
-    # FIXME i18n
-    output << link_to(icon_tag('transmit_go', :title => _('アンテナに追加')), {:controller => "antenna", :action => "select_antenna", :symbol => group.symbol, :dummy => '.html'}, {:class => "nyroModal"})
+    output << link_to(icon_tag('transmit_go', :title => _('Add to antenna')), {:controller => "antenna", :action => "select_antenna", :symbol => group.symbol, :dummy => '.html'}, {:class => "nyroModal"})
     output
   end
 end

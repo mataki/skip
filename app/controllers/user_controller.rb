@@ -228,7 +228,7 @@ private
   end
 
   def title
-    @user.id == current_user.id ? _('My Page') : "#{@user.name}さん"
+    @user.id == current_user.id ? _('My Page') : _("Mr./Ms. %s") % @user.name
   end
 
   def tab_menu_source

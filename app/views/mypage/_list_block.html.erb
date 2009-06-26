@@ -26,7 +26,7 @@
 <% end -%>
 
 <% if pages_obj and pages_obj.item_count > 0 -%>
-<div style="text-align: right; font-size: 10px;"><span style="background-color: #fcffc5; padding: 0 2px 0 5px;">
+<div style="text-align: right;"><span style="background-color: #fcffc5; padding: 0 2px 0 5px; font-size: 10px;">
   <% if pages_obj.current.previous -%>
     <%= hidden_field_tag 'page_back', pages_obj.current.previous.to_i %>
   <a class="first_link" id="<%= id_name -%>_first_link" href="#" ><%= _('[Top]')%></a>
