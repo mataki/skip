@@ -1,7 +1,0 @@
-<% %w(warning notice error).each do |item| -%>
-  <% if flash[item.to_sym] != nil -%>
-  <div class="<%= item -%>" onclick="this.style.display = 'none';">
-    <h3 style="text-align: left; width: 100%;"><%= flash[item.to_sym] %><%= _('[Click to clear the message]')%></h3>
-  </div>
-  <% end -%>
-<% end -%>
