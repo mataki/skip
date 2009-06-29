@@ -72,7 +72,7 @@ class PlatformController < ApplicationController
         flash.now[:error] = _('User has entered email address %s is not in use. Please start with the site.') % email
       end
     else
-      flash[:error] = _("Entered email address %s has not been registered in the site.") % email
+      flash.now[:error] = _("Entered email address %s has not been registered in the site.") % email
     end
   end
 
@@ -115,13 +115,13 @@ class PlatformController < ApplicationController
         @user.issue_activation_code
         @user.save_without_validation!
         UserMailer.deliver_sent_activate(email, signup_url(@user.activation_token))
-        flash[:notice] = _("ユーザ登録のためのURLを記載したメールを%{email}宛てに送信しました。") % {:email => email}
+        flash[:notice] = _("An email containing the URL for signup will be sent to %{email}.") % {:email => email}
         redirect_to :controller => '/platform'
       else
-        flash[:error] = _("メールアドレスが%{email}のユーザは既に利用を開始しています。") % {:email => email}
+        flash.now[:error] =_("Email address %s has been registered in the site") % email
       end
     else
-      flash.now[:error] = _("入力された%{email}というメールアドレスは登録されていません。") % {:email => email}
+      flash.now[:error] = _("Entered email address %s has not been registered in the site.") % email
     end
   end
 

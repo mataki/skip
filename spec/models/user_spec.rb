@@ -678,6 +678,27 @@ describe User, '#issue_activation_code' do
   end
 end
 
+describe User, '.issue_activation_codes' do
+  before do
+    @now = Time.local(2008, 11, 1)
+    User.stub!(:activation_lifetime).and_return(2)
+    Time.stub!(:now).and_return(@now)
+  end
+  describe '指定したIDのユーザが存在する場合' do
+    before do
+      @user = create_user(:status => 'UNUSED')
+    end
+    it '未使用ユーザのactivation_tokenに値が入ること' do
+      unused_users, active_users = User.issue_activation_codes([@user.id])
+      unused_users.first.activation_token.should_not be_nil
+    end
+    it '未使用ユーザのactivation_token_expires_atが48時間後となること' do
+      unused_users, active_users = User.issue_activation_codes([@user.id])
+      unused_users.first.activation_token_expires_at.should == @now.since(48.hour)
+    end
+  end
+end
+
 describe User, '#activate!' do
   it 'activation_tokenの値が更新されること' do
     activation_token = '6df711a1a42d110261cfe759838213143ca3c2ad'

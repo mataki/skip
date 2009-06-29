@@ -353,6 +353,24 @@ class User < ActiveRecord::Base
     self.activation_token_expires_at = Time.now.since(self.class.activation_lifetime.day)
   end
 
+  def self.issue_activation_codes user_ids
+    unused_users = []
+    active_users = []
+    users = User.scoped(:conditions => ['id in (?)', user_ids]).find_without_retired_skip(:all)
+    users.each do |u|
+      if u.unused?
+        u.activation_token = make_token
+        u.activation_token_expires_at = Time.now.since(activation_lifetime.day)
+        u.save_without_validation!
+        unused_users << u
+      elsif u.active?
+        active_users << u
+      end
+    end
+    yield unused_users, active_users if block_given?
+    [unused_users, active_users]
+  end
+
   def activate!
     self.activation_token = nil
     self.activation_token_expires_at = nil

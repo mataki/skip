@@ -72,7 +72,7 @@ ActionController::Routing::Routes.draw do |map|
     admin_map.resources :bookmarks do |bookmark|
       bookmark.resources :bookmark_comments
     end
-    admin_map.resources :users, :new => [:import, :import_confirmation, :first], :member => [:change_uid, :create_uid, :show_signup_url, :issue_activation_code, :issue_password_reset_code], :collection => [:lock_actives] do |user|
+    admin_map.resources :users, :new => [:import, :import_confirmation, :first], :member => [:change_uid, :create_uid, :show_signup_url, :issue_activation_code, :issue_password_reset_code], :collection => [:lock_actives, :issue_activation_codes] do |user|
       user.resources :openid_identifiers
       user.resource :user_profile
     end

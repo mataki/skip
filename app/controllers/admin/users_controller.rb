@@ -212,16 +212,12 @@ class Admin::UsersController < Admin::ApplicationController
   end
 
   def issue_activation_code
-    user = Admin::User.find(params[:id])
-    if user.unused?
-      user.issue_activation_code
-      user.save_without_validation!
-      email = user.email
-      UserMailer.deliver_sent_activate(email, signup_url(user.activation_token))
-      flash[:notice] = Admin::Setting.mail_function_setting ?  _("ユーザ登録のためのURLを記載したメールを%{email}宛てに送信しました。") % {:email => email} : _('利用開始URLを発行しました。確認のリンクからユーザに連絡してください。')
-    else
-      flash[:error] = _("メールアドレスが%{email}のユーザは既に利用を開始しています。") % {:email => email}
-    end
+    do_issue_activation_codes([params[:id]])
+    redirect_to admin_users_path
+  end
+
+  def issue_activation_codes
+    do_issue_activation_codes params[:ids]
     redirect_to admin_users_path
   end
 
@@ -262,6 +258,28 @@ class Admin::UsersController < Admin::ApplicationController
         end
       end
       raise ActiveRecord::Rollback if rollback
+    end
+  end
+
+  def do_issue_activation_codes user_ids
+    User.issue_activation_codes(user_ids) do |unused_users, active_users|
+      unused_users.each do |unused_user|
+        UserMailer.deliver_sent_activate(unused_user.email, signup_url(unused_user.activation_token))
+      end
+      unless unused_users.empty?
+        email = unused_users.map(&:email).join(',')
+        flash[:notice] =
+          if Admin::Setting.mail_function_setting
+            n_("An email containing the URL for signup will be sent to %{email}.", "%{num} emails containing the URL for signup will be sent to the following email address. %{email}", unused_users.size) % {:num => unused_users.size, :email => email}
+
+          else
+            n_("The URL for signup issued. Please contact a use from comfirm link", "The URLs for signup issued. Please contact some users from comfirm link", unused_users.size)
+          end
+      end
+
+      unless active_users.empty?
+        flash[:error] = _("Email address %s has been registered in the site") % active_users.map(&:email).join(',')
+      end
     end
   end
 end
