@@ -278,7 +278,7 @@ class Admin::UsersController < Admin::ApplicationController
       end
 
       unless active_users.empty?
-        flash[:error] = _("Email address %s has been registered in the site") % active_users.map(&:email).join(',')
+        flash[:error] = n_("Email address %{email} has been registered in the site", "%{num} emails have been registered in the site", active_users.size) % {:num => active_users.size, :email => active_users.map(&:email).join(',')}
       end
     end
   end
