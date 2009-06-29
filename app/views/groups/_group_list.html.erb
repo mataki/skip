@@ -17,7 +17,7 @@
         <td class="auth"><%= show_group_status(group, user_id) %></td>
       </tr>
       <tr>
-        <td class="since">since <%= group.created_on.strftime("%Y/%m/%d") -%></td>
+        <td class="since">since <%= group.created_on.strftime(_("%Y/%m/%d")) -%></td>
       </tr>
     </table>
     <% end -%>

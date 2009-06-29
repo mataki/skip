@@ -40,6 +40,6 @@
   <%= render :partial => "page_navi", :locals => @page_navi_locals if @max_count > @per_page %>
   <%= render :partial => "result_info", :locals => @result_info_locals %>
   <% if @invisible_count > 0 -%>
-<div class="g_desc"><%= _('Because of the limited view, is less than the actual number.')</div>
+<div class="g_desc"><%= _('Because of the limited view, is less than the actual number.') %></div>
   <% end -%>
 <% end %>

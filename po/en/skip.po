@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2009-06-26 16:40+0900\n"
+"POT-Creation-Date: 2009-06-29 17:39+0900\n"
 "PO-Revision-Date: 2009-06-29 13:31+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,11 +30,11 @@ msgid ""
 "the system."
 msgstr ""
 
-#: app/models/board_entry.rb:308 app/views/bookmark/show.html.erb:23
+#: app/models/board_entry.rb:313 app/views/bookmark/show.html.erb:23
 msgid "%B %d %Y"
 msgstr ""
 
-#: app/models/board_entry.rb:310 app/models/board_entry_comment.rb:37
+#: app/models/board_entry.rb:315 app/models/board_entry_comment.rb:37
 #: app/views/mypage/index.html.erb:109
 msgid "%B %d %Y %H:%M"
 msgstr ""
@@ -43,7 +43,7 @@ msgstr ""
 msgid "%B %d %Y %H:%M - "
 msgstr ""
 
-#: app/views/group/show.html.erb:41
+#: app/views/group/show.html.erb:41 app/views/groups/_group_list.html.erb:20
 msgid "%Y/%m/%d"
 msgstr ""
 
@@ -280,11 +280,11 @@ msgstr ""
 msgid "(The search targets are titles and comments)"
 msgstr ""
 
-#: app/models/board_entry.rb:352
+#: app/models/board_entry.rb:357
 msgid "(This entry is generated automatically by the system)"
 msgstr ""
 
-#: app/models/board_entry.rb:548
+#: app/models/board_entry.rb:553
 msgid "(Unknown topic entry found. However, this has been ignored)"
 msgstr ""
 
@@ -537,7 +537,7 @@ msgstr ""
 msgid "Add as Member"
 msgstr ""
 
-#: app/helpers/groups_helper.rb:49 app/views/group/show.html.erb:44
+#: app/helpers/groups_helper.rb:51 app/views/group/show.html.erb:44
 msgid "Add to antenna"
 msgstr ""
 
@@ -2122,11 +2122,11 @@ msgstr ""
 msgid "BoardEntry|Entry type"
 msgstr ""
 
-#: app/models/board_entry.rb:46
+#: app/models/board_entry.rb:45
 msgid "BoardEntry|Entry type|DIARY"
 msgstr ""
 
-#: app/models/board_entry.rb:47
+#: app/models/board_entry.rb:46
 msgid "BoardEntry|Entry type|GROUP_BBS"
 msgstr ""
 
@@ -2699,10 +2699,6 @@ msgstr ""
 msgid "Disk Usage"
 msgstr ""
 
-#: app/views/entries/_entry_detail.html.erb:213
-msgid "Display"
-msgstr ""
-
 #: app/views/groups/index.html.erb:23 app/views/user/group.html.erb:18
 msgid "Display Format"
 msgstr ""
@@ -2715,6 +2711,10 @@ msgstr ""
 
 #: app/views/portal/_registration_form.html.erb:28
 msgid "Display a selection from the value that is already registered.[FIXME]"
+msgstr ""
+
+#: app/views/entries/_entry_detail.html.erb:213
+msgid "Display: "
 msgstr ""
 
 #: app/views/share_file/_share_file_box.html.erb:26
@@ -3018,8 +3018,16 @@ msgstr ""
 msgid "Find other [%s]ed users"
 msgstr ""
 
+#: app/views/mypage/welcome.html.erb:44
+msgid "Find your friend ... [FIXME]"
+msgstr ""
+
 #: app/helpers/edit_helper.rb:40
 msgid "First page"
+msgstr ""
+
+#: app/views/mypage/welcome.html.erb:43
+msgid "First read blogs ... [FIXME]"
 msgstr ""
 
 #: app/views/admin/settings/_literal.html.erb:19
@@ -3063,7 +3071,7 @@ msgstr ""
 msgid "Group Name / Explanation"
 msgstr ""
 
-#: app/models/board_entry.rb:61
+#: app/models/board_entry.rb:60
 msgid "Group does not exist."
 msgstr ""
 
@@ -3451,7 +3459,7 @@ msgstr ""
 msgid "Invalid format. Please input like uid:xxxxx"
 msgstr ""
 
-#: app/models/board_entry.rb:63
+#: app/models/board_entry.rb:62
 msgid "Invalid group detected."
 msgstr ""
 
@@ -3488,7 +3496,7 @@ msgstr ""
 msgid "Invalid privacy setting."
 msgstr ""
 
-#: app/models/board_entry.rb:57
+#: app/models/board_entry.rb:56
 msgid "Invalid user detected."
 msgstr ""
 
@@ -3584,7 +3592,7 @@ msgid "Leave the group"
 msgstr ""
 
 #: app/views/mypage/welcome.html.erb:42
-msgid "Let"
+msgid "Let's read popular blogs ... [FIXME]"
 msgstr ""
 
 #: app/views/admin/users/import.html.erb:39
@@ -3905,6 +3913,10 @@ msgstr ""
 
 #: app/views/admin/settings/_literal.html.erb:3
 msgid "Names"
+msgstr ""
+
+#: app/helpers/groups_helper.rb:38
+msgid "Need approval of the Administrator."
 msgstr ""
 
 #: app/controllers/admin/admin_module.rb:108
@@ -4510,6 +4522,10 @@ msgstr ""
 msgid "Reacquire the title"
 msgstr ""
 
+#: app/views/mypage/welcome.html.erb:51
+msgid "Read detailed help ... [FIXME]"
+msgstr ""
+
 #: app/controllers/feed_controller.rb:37
 msgid "Recent BBS posts (%{category)"
 msgstr ""
@@ -4722,7 +4738,7 @@ msgid "Search bookmarks."
 msgstr "Data Search"
 
 #: config/environment.rb:104
-msgid "Search contents of the site by keywork."
+msgid "Search contents of the site by keyword."
 msgstr ""
 
 #: app/views/search/_full_text_search.html.erb:19
@@ -4776,6 +4792,10 @@ msgstr ""
 
 #: config/environment.rb:79
 msgid "Search users."
+msgstr ""
+
+#: app/views/mypage/welcome.html.erb:45
+msgid "Search your interest group ... [FIXME]"
 msgstr ""
 
 #: app/views/admin/_search_box.html.erb:5
@@ -4991,6 +5011,10 @@ msgstr ""
 
 #: app/views/platform/activate.html.erb:2 app/views/platform/index.html.erb:53
 msgid "Signup"
+msgstr ""
+
+#: app/views/mypage/welcome.html.erb:47
+msgid "Site Infomation[FIXME]"
 msgstr ""
 
 #: app/controllers/rankings_controller.rb:165
@@ -5581,7 +5605,7 @@ msgstr ""
 
 #: app/controllers/admin/users_controller.rb:53
 #: app/controllers/admin/users_controller.rb:71
-#: app/controllers/user_controller.rb:265 app/models/board_entry.rb:55
+#: app/controllers/user_controller.rb:265 app/models/board_entry.rb:54
 msgid "User does not exist."
 msgstr ""
 
@@ -6228,6 +6252,10 @@ msgstr ""
 msgid "You recieved a comment on your entry [?]!"
 msgstr ""
 
+#: app/views/mypage/welcome.html.erb:53
+msgid "You will access this site from %s [FIXME]"
+msgstr ""
+
 #: app/views/bookmarks/setup.html.erb:85
 msgid ""
 "You will find your bookmarks when you click on \"My Bookmarks\" located in "
@@ -6371,12 +6399,16 @@ msgstr ""
 msgid "[Get download history in CSV]"
 msgstr ""
 
-#: app/models/board_entry.rb:330 app/models/share_file.rb:237
+#: app/models/board_entry.rb:335 app/models/share_file.rb:237
 msgid "[Group members only]"
 msgstr ""
 
 #: app/helpers/application_helper.rb:44
 msgid "[Head]"
+msgstr ""
+
+#: app/views/mypage/welcome.html.erb:51
+msgid "[Help]"
 msgstr ""
 
 #: app/helpers/skip_helper.rb:82
@@ -6387,7 +6419,7 @@ msgstr ""
 msgid "[Last]"
 msgstr ""
 
-#: app/models/board_entry.rb:666
+#: app/models/board_entry.rb:671
 msgid "[Link does not exist...%s>]"
 msgstr ""
 
@@ -6406,13 +6438,18 @@ msgstr "[Next]"
 msgid "[Next]"
 msgstr ""
 
-#: app/models/board_entry.rb:324 app/models/share_file.rb:231
+#: app/models/board_entry.rb:329 app/models/share_file.rb:231
 msgid "[Open to all]"
 msgstr ""
 
-#: app/models/board_entry.rb:328 app/models/share_file.rb:235
+#: app/models/board_entry.rb:333 app/models/share_file.rb:235
 msgid "[Owner only]"
 msgstr ""
+
+#: app/views/mypage/welcome.html.erb:42
+#, fuzzy
+msgid "[Popular Blogs]"
+msgstr "Bookmarks"
 
 #: app/views/rankings/_monthly_history.html.erb:5
 #: app/views/shared/_calendar.html.erb:30
@@ -6433,6 +6470,10 @@ msgstr ""
 msgid "[Profile]"
 msgstr ""
 
+#: app/views/mypage/welcome.html.erb:43
+msgid "[Recent Blogs]"
+msgstr ""
+
 #: app/views/bookmark/show.html.erb:16
 msgid "[Registered user]&nbsp;%s"
 msgid_plural "[Registered users]&nbsp;%s"
@@ -6441,6 +6482,14 @@ msgstr[1] ""
 
 #: app/views/mypage/_antennas.html.erb:28
 msgid "[Save]"
+msgstr ""
+
+#: app/views/mypage/welcome.html.erb:45
+msgid "[Search Groups]"
+msgstr ""
+
+#: app/views/mypage/welcome.html.erb:44
+msgid "[Search Users]"
 msgstr ""
 
 #: app/views/user/_postit_cloud.html.erb:5 app/views/user/show.html.erb:26
@@ -6527,7 +6576,7 @@ msgstr ""
 msgid "[全ユーザにパスワード再設定を求める]"
 msgstr ""
 
-#: app/models/board_entry.rb:37
+#: app/models/board_entry.rb:36
 msgid "accepts %d or less characters only."
 msgstr ""
 
@@ -6697,9 +6746,9 @@ msgstr ""
 msgid "invalid url"
 msgstr ""
 
-#: app/models/applied_email.rb:17 app/models/board_entry.rb:36
-#: app/models/board_entry.rb:39 app/models/board_entry.rb:40
-#: app/models/board_entry.rb:41 app/models/board_entry_comment.rb:21
+#: app/models/applied_email.rb:17 app/models/board_entry.rb:35
+#: app/models/board_entry.rb:38 app/models/board_entry.rb:39
+#: app/models/board_entry.rb:40 app/models/board_entry_comment.rb:21
 #: app/models/board_entry_comment.rb:22 app/models/board_entry_comment.rb:23
 #: app/models/bookmark.rb:26 app/models/bookmark.rb:29 app/models/chain.rb:20
 #: app/models/entry_trackback.rb:20 app/models/entry_trackback.rb:21

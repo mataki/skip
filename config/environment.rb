@@ -58,50 +58,50 @@ menu_btns = [
                :id => "btn_mypage",
                :name => GetText.N_("My Page"),
                :url => {:controller => '/mypage', :action => 'index'},
-               :desc => GetText._("Back to mypage.")},
+               :desc => GetText.N_("Back to mypage.")},
 
              { :img_name => "report",
                :id => "btn_entries",
                :name => GetText.N_("Entries"),
                :url => {:controller => '/search', :action => 'entry_search' },
-               :desc => GetText._("Search entries.")},
+               :desc => GetText.N_("Search entries.")},
 
              { :img_name => "disk_multiple",
                :id => "btn_share_files",
                :name => GetText.N_("Files"),
                :url => {:controller => '/search', :action => 'share_file_search' },
-               :desc => GetText._("Search share files.")},
+               :desc => GetText.N_("Search share files.")},
 
              { :img_name => "user_suit",
                :id => "btn_users",
                :name => GetText.N_("Users"),
                :url => {:controller => '/users', :action => 'index'},
-               :desc => GetText._("Search users.")},
+               :desc => GetText.N_("Search users.")},
 
              { :img_name => "group",
                :id => "btn_groups",
                :name => GetText.N_("Groups"),
                :url => {:controller => '/groups', :action => 'index'},
-               :desc => GetText._("Search groups.")},
+               :desc => GetText.N_("Search groups.")},
 
              { :img_name => "tag_blue",
                :id => "btn_bookmarks",
                :name => GetText.N_("Bookmarks"),
                :url => {:controller => '/bookmarks', :action => 'index'},
-               :desc => GetText._("Search bookmarks.")},
+               :desc => GetText.N_("Search bookmarks.")},
 
              { :img_name => "chart_bar",
                :id => "btn_rankings",
                :name => GetText.N_("Rankings"),
                :url => {:controller => '/rankings', :action => 'index'},
-               :desc => GetText._("Show ranking and site infomation.")}
+               :desc => GetText.N_("Show ranking and site infomation.")}
 ]
 
 menu_btns << { :img_name => "page_find",
                :id => "btn_search",
                :name => GetText.N_("Search for Data"),
                :url => {:controller => '/search', :action => 'full_text_search' },
-               :desc => GetText._("Search contents of the site by keywork.") } if SkipEmbedded::InitialSettings['full_text_search_setting']
+               :desc => GetText.N_("Search contents of the site by keyword.") } if SkipEmbedded::InitialSettings['full_text_search_setting']
 MENU_BTNS = menu_btns
 
 admin_btns = [

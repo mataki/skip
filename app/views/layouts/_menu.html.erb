@@ -5,8 +5,8 @@
 <div id="side">
   <ul id="main_menu">
 <% menus.each do |btn| -%>
-  <% if @main_menu == btn[:name] -%><li class="selected"><% else -%><li class="normal"><% end -%>
-  <%= link_to icon_tag(btn[:img_name], {:title=>btn[:name]}) + btn[:name], btn[:url] -%></li>
+  <% if @main_menu == _(btn[:name]) -%><li class="selected"><% else -%><li class="normal"><% end -%>
+  <%= link_to icon_tag(btn[:img_name], {:title=>_(btn[:name])}) + _(btn[:name]), btn[:url] -%></li>
 <% end -%>
   </ul>
 </div><!-- side -->
@@ -22,8 +22,8 @@ div#panel {
 <div id="globalnavi">
   <ul>
 <% menus.each do |btn| -%>
-  <li title="<%=h btn[:desc] -%>" <%= "class=first" if menus.first == btn -%>>
-  <%= link_to icon_tag(btn[:img_name]) + btn[:name], btn[:url], @main_menu == btn[:name] ? {:class => "current"} : nil -%>
+  <li title="<%=h _(btn[:desc]) -%>" <%= "class=first" if menus.first == btn -%>>
+  <%= link_to icon_tag(btn[:img_name]) + _(btn[:name]), btn[:url], @main_menu == _(btn[:name]) ? {:class => "current"} : nil -%>
   </li>
 <% end -%>
   </ul>

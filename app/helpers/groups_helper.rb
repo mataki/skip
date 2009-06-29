@@ -34,7 +34,9 @@ module GroupsHelper
   def show_group_status(group, user_id)
     output = "<p>#{icon_tag(group.category_icon_name.first) + h(group.category_icon_name.last)}<br/></p>"
     output << "<p>#{participation_state(group, user_id)}<br/></p>"
-    output << "<p>#{(icon_tag('lock') + _('Need approval of the Administrator.')) if group.protected?}<br/></p>"
+    output << "<p>"
+    output << (icon_tag('lock') + _('Need approval of the Administrator.')) if group.protected?
+    output << "<br/></p>"
     output
   end
 
