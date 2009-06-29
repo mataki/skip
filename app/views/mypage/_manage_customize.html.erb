@@ -18,13 +18,13 @@
   <div class="desc"><p><%= _('You can customize the site environment.')%></p></div>
 
   <div class="edit_form_space">
-  <% form_tag({:action => 'update_customize'}) do -%>
-    <%= template_error_messages_for 'user_custom' %>
+  <% form_for @user_custom, :url => {:action => 'update_customize'} do |f| -%>
+    <%= error_messages_for :user_custom %>
 
     <h2 class="subtitle"><%= _('Style') %></h2>
     <div style="margin: 10px;">
-    <%= radio_button("user_custom", "classic", false) %><%= _('Standerd (Top gloval menu)') %><br/>
-    <%= radio_button("user_custom", "classic", true) %><%= _('Classic (Right side gloval menu)') %><br/>
+      <%= f.radio_button(:classic, false) %><%= f.label :classic_false, _('Standerd (Top gloval menu)') %><br/>
+      <%= f.radio_button(:classic, true) %><%= f.label :classic_true, _('Classic (Right side gloval menu)') %><br/>
     </div>
 
     <h2 class="subtitle"><%= _('Themes')%></h2>
@@ -38,11 +38,19 @@
     -%>
     <div class="theme_select">
       <div style="width: 100px; height: 100px; background-image:url(<%= sample_img_path %>);">&nbsp;</div>
-      <%= radio_button("user_custom", "theme", skin) %><%= h skin %>
+      <%= f.radio_button(:theme, skin) %><%= label_tag "user_custom_theme_#{h skin}", h(skin) %>
     </div>
     <% end -%>
     <br style="clear: left;" />
+
+    <h2 class="subtitle"><%= _('Shortcut') %></h2>
+    <div style="margin: 10px;">
+    <%= f.radio_button(:always_show_shortcut, true) %><%= f.label :always_show_shortcut_true, _('Always Show') %><br/>
+    <%= f.radio_button(:always_show_shortcut, false) %><%= f.label :always_show_shortcut_false, _('Show only mypage') %><br/>
+    </div>
+
     <%= submit_tag _("Change") %>
   <% end -%>
   </div>
+
 <% end -%>

@@ -317,6 +317,28 @@ module ApplicationHelper
     end
   end
 
+  def shortcut_menus favorite_groups = []
+    menus =  []
+    menus << link_to(icon_tag(:report_edit, :title => 'ブログを書く') + 'ブログを書く', :controller => '/edit', :action => :index)
+
+    option_tags = []
+    option_tags << content_tag(:option, _('参加グループへ移動 ... '), :value => url_for({:controller => '/mypage', :action => 'group'}))
+    option_tags << content_tag(:option, '----', :value => '----')
+
+    favorite_groups.each do |category|
+      option_tags << content_tag(:option, "[#{h(category[:name])}]", :disabled => 'disabled', :style => 'color: gray')
+      category[:groups].each do |group|
+        option_tags << content_tag(:option, "&nbsp;#{h(group.name)}", :value => url_for({:controller => '/group', :gid => group.gid, :action => 'show'}))
+      end
+    end
+
+    option_tags << content_tag(:option, '----', :value => '----')
+    option_tags << content_tag(:option, _('参加グループ'), :value => url_for({:controller => '/mypage', :action => 'group'}))
+
+    menus << "#{icon_tag(:group_go, :title => _('マイグループ'))}<select class=\"select_navi\">#{option_tags.join('')}</select>"
+    menus
+  end
+
 private
   def relative_url_root
     ActionController::AbstractRequest.relative_url_root

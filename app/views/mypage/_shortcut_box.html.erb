@@ -1,0 +1,10 @@
+<div class="box_space">
+  <div class="box_space_title"><%= 'ショートカット' %></div>
+  <div class="box_space_body">
+    <ul>
+    <% shortcut_menus(@favorite_groups).each do |shortcut_menu| -%>
+      <li><%= shortcut_menu %></li>
+    <% end -%>
+    </ul>
+  </div>
+</div>

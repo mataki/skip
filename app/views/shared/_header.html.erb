@@ -32,4 +32,11 @@
     $j('input#full_text_query').labeledTextField(<%= {:message => search_label}.to_json %>);
   <% end -%>
   <% end %>
+
 </div><!-- header -->
+
+<% if session[:user_custom_always_show_shortcut] -%>
+<div id="global_shortcut">
+  <%= shortcut_menus @favorite_groups %>
+</div>
+<% end -%>

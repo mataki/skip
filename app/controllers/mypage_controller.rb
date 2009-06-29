@@ -24,10 +24,11 @@ class MypageController < ApplicationController
   helper :calendar
 
   verify :method => :post, :only => [ :destroy_portrait, :save_portrait, :update_profile,
-                                      :update_customize, :update_message_unsubscribes, :apply_password,
+                                      :update_message_unsubscribes, :apply_password,
                                       :add_antenna, :delete_antenna, :delete_antenna_item, :move_antenna_item,
                                       :change_read_state, :apply_email, :set_antenna_name, :sort_antenna],
          :redirect_to => { :action => :index }
+  verify :method => :put, :only => [ :update_customize], :redirect_to => { :action => :index }
 
   # welcome画面を表示
   def welcome
@@ -506,6 +507,7 @@ class MypageController < ApplicationController
       flash[:notice] = _('Updated successfully.')
       session[:user_custom_theme] = @user_custom.theme
       session[:user_custom_classic] = @user_custom.classic
+      session[:user_custom_always_show_shortcut] = @user_custom.always_show_shortcut
       redirect_to :action => 'manage', :menu => 'manage_customize'
     else
       render :partial => 'manage_customize', :layout => "layout"
