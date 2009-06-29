@@ -317,7 +317,7 @@ module ApplicationHelper
     end
   end
 
-  def shortcut_menus favorite_groups = []
+  def shortcut_menus
     menus =  []
     menus << link_to(icon_tag(:report_edit, :title => 'ブログを書く') + 'ブログを書く', :controller => '/edit', :action => :index)
 
@@ -325,7 +325,7 @@ module ApplicationHelper
     option_tags << content_tag(:option, _('参加グループへ移動 ... '), :value => url_for({:controller => '/mypage', :action => 'group'}))
     option_tags << content_tag(:option, '----', :value => '----')
 
-    favorite_groups.each do |category|
+    Group.favorites_per_category(current_user).each do |category|
       option_tags << content_tag(:option, "[#{h(category[:name])}]", :disabled => 'disabled', :style => 'color: gray')
       category[:groups].each do |group|
         option_tags << content_tag(:option, "&nbsp;#{h(group.name)}", :value => url_for({:controller => '/group', :gid => group.gid, :action => 'show'}))

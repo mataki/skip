@@ -243,4 +243,16 @@ class Group < ActiveRecord::Base
     conditions = ago ? ['updated_on >= ?', Time.now.ago(ago.to_i.minute)] : []
     Group.scoped(:conditions => conditions).all.map { |g| [g.gid, g.gid, g.name, g.participation_users(:waiting => false).map { |u| u.openid_identifier }, !!g.deleted_at] }
   end
+
+  def self.favorites_per_category user
+    favorite_groups = []
+    GroupCategory.find(:all).each do |category|
+      groups = Group.active.all(
+        :conditions => ["group_category_id = ? and group_participations.user_id = ? and group_participations.favorite = true", category.id, user.id],
+        :order => "group_participations.created_on DESC",
+        :include => :group_participations)
+      favorite_groups << {:name => category.name, :groups => groups} if groups.size > 0
+    end
+    favorite_groups
+  end
 end

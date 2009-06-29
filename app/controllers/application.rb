@@ -59,15 +59,6 @@ protected
       @site_count = SiteCount.find(:first, :order => "created_on desc") || SiteCount.new
     end
 
-    @favorite_groups = []
-    GroupCategory.find(:all).each do |category|
-      groups = Group.active.all(
-        :conditions => ["group_category_id = ? and group_participations.user_id = ? and group_participations.favorite = true", category.id, user.id],
-        :order => "group_participations.created_on DESC",
-        :include => :group_participations)
-      @favorite_groups << {:name => category.name, :groups => groups} if groups.size > 0
-    end
-
     # Settingのキャッシュをチェックする
     Admin::Setting.check_cache
 
