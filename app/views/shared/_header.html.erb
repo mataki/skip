@@ -35,7 +35,7 @@
 
 </div><!-- header -->
 
-<% if session[:user_custom_always_show_shortcut] -%>
+<% if current_user.user_custom.always_show_shortcut -%>
 <div id="global_shortcut">
   <%= shortcut_menus %>
 </div>

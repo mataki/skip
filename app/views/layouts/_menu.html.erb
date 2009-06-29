@@ -1,6 +1,6 @@
 <% menus = @current_user.admin ? MENU_BTNS + ADMIN_MENU_BTNS : MENU_BTNS -%>
 
-<% if session[:user_custom_classic] == true %>
+<% if current_user.user_custom.classic %>
 
 <div id="side">
   <ul id="main_menu">

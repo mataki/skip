@@ -6,7 +6,7 @@
 <%= all_stylesheet_link_tag "style" %>
 <%= stylesheet_link_tag 'not_logged_in' unless logged_in? %>
 <%= stylesheet_link_tag :skip_embedded_sprites %>
-<%= stylesheet_link_tag("skins/#{session[:user_custom_theme]}/skin.css") if logged_in? %>
+<%= stylesheet_link_tag("skins/#{current_user.user_custom.theme}/skin.css") if logged_in? %>
 <%= skip_stylesheet_link_tag 'nyroModal.full.css' %>
 <%= skip_stylesheet_link_tag 'jquery.autocomplete.css' %>
 <%= skip_stylesheet_link_tag "jquery.cluetip.css" %>

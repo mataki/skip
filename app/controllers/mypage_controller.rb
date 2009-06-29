@@ -505,9 +505,6 @@ class MypageController < ApplicationController
 
     if result
       flash[:notice] = _('Updated successfully.')
-      session[:user_custom_theme] = @user_custom.theme
-      session[:user_custom_classic] = @user_custom.classic
-      session[:user_custom_always_show_shortcut] = @user_custom.always_show_shortcut
       redirect_to :action => 'manage', :menu => 'manage_customize'
     else
       render :partial => 'manage_customize', :layout => "layout"

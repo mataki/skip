@@ -28,6 +28,7 @@ class User < ActiveRecord::Base
   has_many :user_profile_values, :dependent => :destroy
   has_many :tracks, :order => "updated_on DESC", :dependent => :destroy
   has_one  :user_access, :class_name => "UserAccess", :dependent => :destroy
+  has_one  :user_custom, :dependent => :destroy
 
   has_many :groups, :through => :group_participations, :conditions => 'groups.deleted_at IS NULL'
 
@@ -82,6 +83,7 @@ class User < ActiveRecord::Base
   named_scope :partial_match_uid_or_name, proc {|word|
     {:conditions => ["users.id in (?) OR name LIKE ?", UserUid.partial_match_uid(word).map{|uu| uu.user_id}, SkipUtil.to_lqs(word)], :include => [:user_uids]}
   }
+  named_scope :with_basic_associations, :include => [:user_uids, :user_custom]
 
   def to_s
     return 'uid:' + uid.to_s + ', name:' + name.to_s
@@ -195,9 +197,7 @@ class User < ActiveRecord::Base
   end
 
   def self.find_by_auth_session_token(token)
-    find_without_retired_skip(:first,
-                              :include => :user_uids,
-                              :conditions => { :auth_session_token => token })
+    with_basic_associations.find_without_retired_skip(:first, :conditions => { :auth_session_token => token })
   end
 
   def self.find_by_activation_token(token)

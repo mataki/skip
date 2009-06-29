@@ -69,9 +69,6 @@ protected
     user_custom = (UserCustom.find_by_user_id(user.id) || UserCustom.new)
 
     session[:prepared] = true
-    session[:user_custom_theme] = user_custom.theme
-    session[:user_custom_classic] = user_custom.classic
-    session[:user_custom_always_show_shortcut] = user_custom.always_show_shortcut
     session[:user_id] = user.id
     session[:user_symbol] = user.symbol
     session[:uid] = user.uid
