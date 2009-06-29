@@ -1,8 +1,5 @@
 <div class="desc" style="margin-bottom: 10px;">
-<%= h Admin::Setting.abbr_app_title %>を利用する際に他のユーザから見えるプロフィールの登録を行います。<br/>
-ここで登録頂く情報は、あくまで、ユーザ間のコミュニケーションのきっかけ作りとなるものです。<br/>
-（例えば、同じ大学出身だと知らなかった人でも親しみがわきますよね？）<br/>
-よって、登録頂いた情報は、当然ですが、本サービスの運営以外では利用いたしません。<br/>
+<%= _("You are about to register your profile that will be shown to the users of %s.<br/>\nThe information is not to be used for employee management but only a start of communications between users.<br/>\n(You will feel more familiar with one that came from the same university, right?)<br/>\nTherefore, of course, the information you have registered will not be used for any purpose other than running this service.<br/>") % h(Admin::Setting.abbr_app_title)%>
 </div>
 
 <%= render :partial => "registration_form", :locals => {:is_new => true} %>

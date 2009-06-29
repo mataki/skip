@@ -39,7 +39,7 @@ describe GroupController, "POST #destroy" do
       response.should redirect_to(:action => "show")
     end
     it "flashにメッセージが登録されている" do
-      flash[:warn].should == '自分以外のユーザがまだ存在しています。削除できません。'
+      flash[:warn].should == 'Failed to delete since there are still other users in the group.'
     end
   end
   describe "削除される場合" do
@@ -54,7 +54,7 @@ describe GroupController, "POST #destroy" do
       response.should redirect_to(:controller => "groups")
     end
     it "flashにメッセージが登録されている" do
-      flash[:notice].should == 'グループは削除されました。'
+      flash[:notice].should == 'Group was successfully deleted.'
     end
   end
 end
@@ -85,7 +85,7 @@ describe GroupController, "POST #leave" do
     end
     it { response.should redirect_to(:action => :show) }
     it "flashにメッセージが登録されていること" do
-      flash[:notice].should == '退会しました。'
+      flash[:notice].should == 'Successfully left the group.'
     end
   end
   describe "参加していない場合" do
@@ -96,7 +96,7 @@ describe GroupController, "POST #leave" do
     end
     it { response.should redirect_to(:action => :show) }
     it "flashにメッセージが登録されていること" do
-      flash[:notice].should == 'そのグループには参加していません。'
+      flash[:notice].should == 'You are not a member of the group.'
     end
   end
 end

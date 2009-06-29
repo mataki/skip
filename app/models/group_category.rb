@@ -24,7 +24,7 @@ class GroupCategory < ActiveRecord::Base
   validates_presence_of :code
   validates_uniqueness_of :code, :case_sensitive => false
   validates_length_of :code, :maximum => 20
-  validates_format_of :code, :message => _('はアルファベットで入力して下さい。'), :with => /^[a-zA-Z]*$/
+  validates_format_of :code, :message => _('accepts alphabet (a-z, A-Z) only.'), :with => /^[a-zA-Z]*$/
 
   validates_presence_of :name
   validates_length_of :name, :maximum => 20
@@ -46,11 +46,11 @@ class GroupCategory < ActiveRecord::Base
 
   def deletable?
     if self.initial_selected?
-      errors.add_to_base(_('対象のカテゴリはグループ作成時に初期選択される設定のため削除出来ません。'))
+      errors.add_to_base(_('Category could not be deleted since it is set to be selected by default upon group creation.'))
       return false
     else
       unless self.groups.empty?
-        errors.add_to_base(_('対象のカテゴリのグループが存在するため削除できません。'))
+        errors.add_to_base(_('Category could not be deleted due to groups belonging to itself.'))
         return false
       end
     end

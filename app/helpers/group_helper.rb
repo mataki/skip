@@ -20,9 +20,9 @@ module GroupHelper
 
   # 管理メニューの生成
   def get_manage_menu_items selected_menu
-    @@menus = [{:name => "グループ情報変更", :menu => "manage_info" },
-               {:name => "参加者管理",       :menu => "manage_participations"} ]
-    @@menus << {:name => "参加者の承認",     :menu => "manage_permit" } if @group.protected?
+    @@menus = [{:name => _("Edit Group Information"), :menu => "manage_info" },
+               {:name => _("Manage Members"),       :menu => "manage_participations"} ]
+    @@menus << {:name => _("Approve Member"),     :menu => "manage_permit" } if @group.protected?
 
     get_menu_items @@menus, selected_menu, "manage"
   end
@@ -32,5 +32,4 @@ module GroupHelper
     owners.each { |owner| options_hash.store(owner.name, owner.id) }
     options_hash
   end
-
 end

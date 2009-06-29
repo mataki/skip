@@ -29,7 +29,7 @@
 
 <% content_for :contents_right do -%>
   <div class="desc" style="margin-bottom:5px;">
-    <p>ブログやグループの掲示板であなたが投稿した記事の一覧です。</p>
+    <p><%= _('Entries you posted to your blog and group BBSs.')%></p>
   </div>
 
   <div class="navi"><%= page_link(@pages) %></div>
@@ -37,11 +37,11 @@
   <div style="margin: 5px;">
     <table border="1" class="normal" style="width: 100%; _width: 98%;">
       <tr>
-        <th width="5%">No. </th>
-        <th width="15%">日時</th>
-        <th width="25%">所在</th>
-        <th width="20%">タグ</th>
-        <th width="35%">タイトル</th>
+        <th width="5%"><%= _('No.')%></th>
+        <th width="15%"><%= _('Datetime')%></th>
+        <th width="25%"><%= _('Location')%></th>
+        <th width="20%"><%= _('Tags')%></th>
+        <th width="35%"><%= _('Title')%></th>
       </tr>
       <% even_or_odd = 0 -%>
       <% for board_entry in @board_entries -%>

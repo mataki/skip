@@ -79,8 +79,9 @@ class ShareFileController < ApplicationController
       flash[:notice] = _('ファイルのアップロードに成功しました。')
       ajax_upload? ? render(:text => '') : render_window_close
     else
-      flash.now[:warn] = "ファイルのアップロードに失敗しました。<br/>"
-      flash.now[:warn] << "[成功:#{params[:file].size - @error_messages.size} 失敗:#{@error_messages.size}]"
+      flash.now[:warn] = _("Failed to upload file(s).")
+      flash.now[:warn] << n_("[Success:%{success} ", "[Successes:%{success} ", params[:file].size - @error_messages.size) % {:success => params[:file].size - @error_messages.size}
+      flash.now[:warn] << n_("Failure:%{failure}]", "Failures:%{failure}]", @error_messages.size) % {:failure => @error_messages.size}
 
       @reload_parent_window = (params[:file].size - @error_messages.size > 0)
       @share_file.errors.clear
@@ -152,7 +153,7 @@ class ShareFileController < ApplicationController
     end
 
     share_file.destroy
-    flash[:notice] = _("ファイルの削除に成功しました。")
+    flash[:notice] = _("File was successfully deleted.")
 
     redirect_to :controller => share_file.owner_symbol_type, :action => share_file.owner_symbol_id, :id => 'share_file'
   end
@@ -183,7 +184,7 @@ class ShareFileController < ApplicationController
                                     :order => order_by,
                                     :per_page => 10)
     unless @share_files && @share_files.size > 0
-      flash.now[:notice] = '該当するファイルはありませんでした。'
+      flash.now[:notice] = _('No matching shared files found.')
     end
 
     # 編集メニューの表示有無
@@ -222,14 +223,15 @@ class ShareFileController < ApplicationController
 
     if downloadable?(params[:authenticity_token], share_file)
       unless File.exist?(share_file.full_path)
-        flash[:warn] = '指定されたファイルの実体が存在しません。お手数ですが管理者にご連絡をお願いいたします。'
+        flash[:warn] = _('Could not find the entity of the specified file. Contact system administrator.')
         return redirect_to(:controller => 'mypage', :action => "index")
       end
 
       share_file.create_history current_user.id
       send_file(share_file.full_path, :filename => nkf_file_name(file_name), :type => share_file.content_type || Types::ContentType::DEFAULT_CONTENT_TYPE, :stream => false, :disposition => 'attachment')
     else
-      @main_menu = @title = 'ファイルのダウンロード'
+      # FIXME i18n
+      @main_menu = @title = _('ファイルのダウンロード')
       render :action => 'confirm_download', :layout => 'layout'
     end
   end
@@ -279,7 +281,7 @@ private
       target_symbols = params[:publication_symbols_value].split(/,/).map {|symbol| symbol.strip }
       target_symbols << session[:user_symbol]
     else
-      raise "パラメータが不正です"
+      raise _("Invalid parameter(s).")
     end
     target_symbols
   end

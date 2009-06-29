@@ -20,14 +20,14 @@
 <div class="share_file_space">
   <div style="position: absolute; top:0; right: 1px;">
     <% if visible_owner_link -%>
-    所属：<%= symbol_link_to share_file.owner_symbol %>
+    <%= _("Belongs to: %s") % symbol_link_to(share_file.owner_symbol) if visible_owner_link %>
     <% end -%>
-    登録者：<%= user_link_to(share_file.user) %>
-    DL数：<span id="download_count_<%= h share_file.id %>"><%= h share_file.total_count %></span>
-    サイズ：<%= share_file.file_size_with_unit %>
+    <%= _("Uploaded by: %s") % user_link_to(share_file.user)%>
+    <%= _('Downloads: %s') % content_tag('span', h(share_file.total_count), :id => "download_count_#{share_file.id}") %>
+    <%= _('File size: %s') % share_file.file_size_with_unit %>
   </div>
   <div class="share_file_line" style="margin-top:13px;">
-    <%=h share_file.date.strftime("%Y/%m/%d %H:%M") %> -
+    <%=h share_file.date.strftime(_('%m/%d/%Y %H:%M')) %> -
     <span style='background-color: <%=visibility_color%>;'> <%= visibility %></span> - <%= h share_file.category %>
   </div>
 

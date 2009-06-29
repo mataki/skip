@@ -33,10 +33,10 @@ class UserUid < ActiveRecord::Base
   validates_presence_of :uid
   validates_uniqueness_of :uid, :case_sensitive => false
   validates_length_of :uid, :within => SkipEmbedded::InitialSettings['user_code_minimum_length'].to_i..UID_MAX_LENGTH
-  validates_format_of :uid, :with => UID_FORMAT_REGEX, :message => _('は数字、アルファベット及び次の記号[-(ハイフン)、_(アンダースコア)、.(ドット)]が利用可能です。その他の記号、半角空白などは使えません。')
+  validates_format_of :uid, :with => UID_FORMAT_REGEX, :message => _("accepts numbers, alphapets, hiphens(\"-\"), underscores(\"_\") and dot(\".\").")
 
   def validate
-    errors.add(:uid, _('は%{login_account}と異なる形式で入力してください。') % {:login_account => Admin::Setting.login_account}) if uid_type == UID_TYPE[:username] && uid =~ user_code_format_regex
+    errors.add(:uid, _("needs to be in different format from %s.") % Admin::Setting.login_account) if uid_type == UID_TYPE[:username] && uid =~ user_code_format_regex
   end
 
   def self.validation_error_message uid

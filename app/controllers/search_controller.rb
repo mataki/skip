@@ -20,8 +20,8 @@ class SearchController < ApplicationController
 
   # tab_menu
   def entry_search
-    @main_menu = @title = '記事'
-    @tab_menu_source = [ {:label => _('記事を探す'), :options => {:action => 'entry_search'}} ]
+    @main_menu = @title = _('Entries')
+    @tab_menu_source = [ {:label => _('Search for Entries'), :options => {:action => 'entry_search'}} ]
 
     params[:tag_select] ||= "AND"
     find_params = BoardEntry.make_conditions(login_user_symbols, {:keyword =>params[:keyword],
@@ -53,7 +53,7 @@ class SearchController < ApplicationController
                                       :conditions => find_params[:conditions],
                                       :include => find_params[:include] | [ :user, :state ])
     unless @board_entries && @board_entries.size > 0
-      flash.now[:notice] = '該当するデータはありませんでした。'
+      flash.now[:notice] = _('No matching data found.')
     end
 
     @symbol2name_hash = BoardEntry.get_symbol2name_hash @board_entries
@@ -62,8 +62,8 @@ class SearchController < ApplicationController
 
   # tab_menu
   def share_file_search
-    @main_menu = @title = 'ファイル'
-    @tab_menu_source = [ {:label => _('ファイルを探す'), :options => {:action => 'share_file_search'}} ]
+    @main_menu = @title = _('Files')
+    @tab_menu_source = [ {:label => _('Search for Files'), :options => {:action => 'share_file_search'}} ]
 
     @tags = ShareFile.get_popular_tag_words
 
@@ -83,16 +83,16 @@ class SearchController < ApplicationController
                                     :per_page => 10)
     unless @share_files && @share_files.size > 0
       if params[:commit] || params[:category]
-        flash.now[:notice] = '該当するファイルはありませんでした。'
+        flash.now[:notice] = _('No matching shared files found.')
       else
-        flash.now[:notice] = '現在公開されているファイルはありません。'
+        flash.now[:notice] = _('There are no shared files uploaded.')
       end
     end
   end
 
   #全文検索
   def full_text_search
-    @main_menu = @title = '全文検索'
+    @main_menu = @title = _('Search for Data')
 
     params[:target_aid] ||= "all"
     params[:query] = params[:full_text_query] unless params[:full_text_query].blank?

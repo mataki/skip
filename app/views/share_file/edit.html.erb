@@ -6,11 +6,11 @@
 
   <%= hidden_field_tag 'file_id', h(@share_file.id) %>
 <div class="input_line">
-  <div class="input_label">ファイル</div>
+  <div class="input_label"><%= _('Files')%></div>
   <div class="input_value"><%= h @share_file.file_name %></div>
   <div style="clear: left"></div>
 </div>
 
-  <%= submit_tag "修正" %>
-  <input type="button" value="キャンセル" onclick="window.close();"></input>
+  <%= submit_tag _("Revise") %>
+  <input type="button" value="<%= _('Cancel')%>" onclick="window.close();"></input>
 <% end -%>

@@ -25,56 +25,56 @@ div.input_line textarea {
 <%= hidden_field_tag 'lock_version', h(@board_entry.lock_version) -%>
 
 <div class="input_line">
-  <div class="input_label"><%= label(:board_entry, :category, _('タグ')) -%></div>
+  <div class="input_label"><%= label(:board_entry, :category, _('Tags')) -%></div>
   <div class="input_value"><%= text_field 'board_entry', 'category', :size => '60', :value => @board_entry.comma_category %>
     <div id="category_box" style="display:none;">
-      <div id="candidates_list"><p>foo,barの形で複数指定できます</p></div>
-      <div style="font-size:10pt; font-weight:bold;">あなたのタグ：</div><div id="tags_list" style="margin-bottom:5px;"></div>
-      <div style="font-size:10pt; font-weight:bold;">オススメ・定番のタグ：</div><div id="std_tags_list" style="margin-bottom:5px;"></div>
-      <div style="font-size:10pt; font-weight:bold;">他のユーザの最近のタグ：</div><div id="user_tags_list" style="margin-bottom:5px;"></div>
-      <div style="font-size:10pt; font-weight:bold;">システムタグ（付けることで振る舞いが変わります）：</div><div id="sys_tags_list" style="margin-bottom:5px;"></div>
+      <div id="candidates_list"><p><%= _('Multiple values can be given in foo,bar format')%></p></div>
+      <div style="font-size:10pt; font-weight:bold;"><%= _('Your tags: ')%></div><div id="tags_list" style="margin-bottom:5px;"></div>
+      <div style="font-size:10pt; font-weight:bold;"><%= _('Recommended tags: ')%></div><div id="std_tags_list" style="margin-bottom:5px;"></div>
+      <div style="font-size:10pt; font-weight:bold;"><%= _('Recent tags of other users: ')%></div><div id="user_tags_list" style="margin-bottom:5px;"></div>
+      <div style="font-size:10pt; font-weight:bold;"><%= _('System Tags (changes the behavior by applying): ')%></div><div id="sys_tags_list" style="margin-bottom:5px;"></div>
     </div>
   </div>
   <div style="clear: left"></div>
 </div>
 
 <div class="input_line">
-  <div class="input_label"><%= label(:board_entry, :title, _('タイトル')) -%></div>
+  <div class="input_label"><%= label(:board_entry, :title, _('Title')) -%></div>
   <div class="input_value"><%= text_field 'board_entry', 'title', :size =>60 %></div>
   <div style="clear: left"></div>
 </div>
 
 <div class="input_line">
-  <div class="input_label">内容</div>
+  <div class="input_label"><%= _('Contents')%></div>
   <%= render :partial => "board_entries/edit_contents" %>
 </div>
 
 <div class="input_line input_option invisible">
-  <div class="input_label" style="height: 30px;">日付</div>
+  <div class="input_label" style="height: 30px;"><%= _('Date')%></div>
   <div class="input_value">
     <p><%= datetime_select 'board_entry', 'date', :use_month_numbers => true -%></p>
-    <p><a href="#" onclick="setCurrentDatetime('board_entry', 'date');return false;">[現在時刻を設定]</a>
-      <%= check_box 'board_entry', 'ignore_times' -%><%= label(:board_entry, :ignore_times, _('時刻は表示しない')) %></p>
+    <p><a href="#" onclick="setCurrentDatetime('board_entry', 'date');return false;"><%= _('[Set current time]')%></a>
+      <%= check_box 'board_entry', 'ignore_times' -%><%= label(:board_entry, :ignore_times, _('Hide Time')) %></p>
   </div>
   <div style="clear: left"></div>
 </div>
 
 <div class="input_line" id="show_option">
-<p><a href="#" id="show_option_link">[オプションを表示]</a></p>
+<p><a href="#" id="show_option_link"><%= _('Show Option') %></a></p>
 </div>
 
 <div class="input_line input_option invisible">
-  <div class="input_label" style="height: 3em;" id="input_label_publication">公開範囲</div>
+  <div class="input_label" style="height: 3em;" id="input_label_publication"><%= _('Privacy Settings')%></div>
   <div class="input_value" id="input_value_publication"><table><tr><td>
     <% display_type = (@board_entry.owner_is_public? ? "" : "none") %>
     <span style="display:<%= display_type %>">
-      <%= radio_button_tag("publication_type", "public", params[:publication_type] == "public", :id=>"publication_type_public") -%><%= label_tag("publication_type_public", _('全体に公開')) %>
+      <%= radio_button_tag("publication_type", "public", params[:publication_type] == "public", :id=>"publication_type_public") -%><%= label_tag("publication_type_public", _('Open to All')) %>
     </span>
-    <%= radio_button_tag("publication_type", "private", params[:publication_type] == "private", :id=>"publication_type_private") -%><%= label_tag("publication_type_private", @board_entry.diary? ? _("自分だけ") : _("参加者のみ")) %>
-    <%= radio_button_tag("publication_type", "protected", params[:publication_type] == "protected", :id=>"publication_type_protected") %><%= label_tag("publication_type_protected", _('直接指定')) %>
+    <%= radio_button_tag("publication_type", "private", params[:publication_type] == "private", :id=>"publication_type_private") -%><%= label_tag("publication_type_private", @board_entry.diary? ? _("Owner Only") : _("Members Only")) %>
+    <%= radio_button_tag("publication_type", "protected", params[:publication_type] == "protected", :id=>"publication_type_protected") %><%= label_tag("publication_type_protected", _('Specify Directly')) %>
 
     <div id="editor_symbols_space" style="display: none; margin-top: 5px;">
-      <%= check_box_tag 'editor_symbol', value = params[:symbol], params[:editor_symbol] -%><%= label_tag :editor_symbol, _('参加者の編集可') %>
+      <%= check_box_tag 'editor_symbol', value = params[:symbol], params[:editor_symbol] -%><%= label_tag :editor_symbol, _('Edit by Members Allowed') %>
     </div>
     <%= render :partial => "shared/symbol_autocomplete_field", :locals => {:publication_symbols_value => params[:publication_symbols_value], :editor_symbols_value => params[:editor_symbols_value], :edit_checkbox => true } %>
     </td></tr></table>
@@ -84,11 +84,11 @@ div.input_line textarea {
 
 <% if Admin::Setting.mail_function_setting %>
 <div class="input_line input_option invisible">
-  <div class="input_label" style="height: 3em;">メール</div>
+  <div class="input_label" style="height: 3em;"><%= _('Email')%></div>
   <div class="input_value">
     <div id="option_space">
-      <p><%= check_box :board_entry, :send_mail %><%= label :board_entry, :send_mail, _('公開されている人にメールを送信する') %></p>
-      <p>（全体に公開時と自分だけの場合は送信されません）</p>
+      <p><%= check_box :board_entry, :send_mail %><%= label :board_entry, :send_mail, _('Send email to accessible members') %></p>
+      <p><%= _('(Will not be sent when the entry is open to all users or limited to owner only)')%></p>
     </div>
   </div>
   <div style="clear: left"></div>
@@ -96,11 +96,11 @@ div.input_line textarea {
 <% end %>
 
 <div class="input_line input_option invisible">
-  <div class="input_label" style="height: 3em;"><%= label_tag("trackbacks", _('話題の記事')) %></div>
+  <div class="input_label" style="height: 3em;"><%= label_tag("trackbacks", _('Topic Entry')) %></div>
   <div class="input_value">
     <div id="option_space">
       <p><%= text_field_tag 'trackbacks', params[:trackbacks], {:size => 60} %></p>
-      <p>（カンマ区切りでページのIDを入力してください。ex:1123,1234）</p>
+      <p><%= _('(Provide page IDs in comma separated format. e.g. 1123,1124)')%></p>
     </div>
   </div>
   <div style="clear: left"></div>
@@ -148,7 +148,7 @@ div.input_line textarea {
             var tb = Trim(tb_array[i]);
             if(tb != ""){
                 if (isNaN(tb)){
-                    alert("「話題の記事」の指定が不正な形式です。\r\nカンマ区切りでページのIDを列挙してください。");
+                    alert('<%= _('Illegal format in "Topic entry".\r\nList the page IDs and separate each other by commas.')%>');
                     return false;
                 }
                 if (contents_value.match(new RegExp("page:" + tb + ".*]")) == null) {
@@ -159,12 +159,12 @@ div.input_line textarea {
 
         if ($j('#publication_type_protected:checked').size() > 0){
             if ($j('#board_entry_category').val().match(new RegExp("連絡", "g")) == null) {
-                if (confirm("連絡タグがついていないため、\r\n相手に気づいてもらえないかもしれませんが、よろしいですか？") == false) {
+                if (confirm('<%= _('The recipient(s) may not notice your message since it is missing a "連絡" tag. Are you sure to proceed?')%>') == false) {
                     return false;
                 }
             }
             if ($j('#publication_symbols_value').val() == ""){
-                if (confirm("ユーザの指定がされていません。\r\nこのままだと、「全体に公開」になりますがよろしいですか？") == true) {
+                if (confirm("<%= _('No user selected. \r\nAre you sure to make this open to all users?')%>") == true) {
                     $j('#publication_type_public').attr('checked',true);
                     changePublicationType();
                 } else {

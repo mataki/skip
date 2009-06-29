@@ -2,11 +2,9 @@
 
 <%= @message %>
 
-内容を確認するには、以下のURLをクリックしてください。
+<%= _("Click on the URL to see the content.\n\n&npsp;%s") % @link_url%>
 
-　<%= @link_url %>
-
-メッセージメールが不要な場合はこちらで設定が出来ます。
+<%= _('You can disable message notification email from here.')%>
 <%= @message_manage_url %>
 
 <%= @footer %>

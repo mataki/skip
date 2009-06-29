@@ -26,7 +26,7 @@ class UsersController < ApplicationController
                               :order_by => @condition.value_of_order_by,
                               :include => @condition.value_of_include)
     unless @users && @users.size > 0
-      flash.now[:notice] = _('該当するユーザは存在しませんでした。')
+      flash.now[:notice] = _('User not found.')
     end
   end
 
@@ -64,10 +64,10 @@ class UsersController < ApplicationController
 
 private
   def setup_layout
-    @main_menu = @title = 'ユーザ'
+    @main_menu = @title = _('Users')
 
-    @tab_menu_source = [ {:label => _('ユーザを探す'), :options => {:action => 'index'}},
-                         {:label => _('紹介文'), :options => {:action => 'chain_search'}} ]
+    @tab_menu_source = [ {:label => _('Search Users'), :options => {:action => 'index'}},
+                         {:label => _('Introductions'), :options => {:action => 'chain_search'}} ]
   end
 end
 

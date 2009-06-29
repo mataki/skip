@@ -1,9 +1,9 @@
-<div class="desc"><%= h @user.name -%>さんをみんなに紹介しましょう！</div>
+<div class="desc"><%= _("Introduce %s to others!") % h(@user.name)%></div>
 <%= render(:partial => "users/user", :object => @user) %>
 <div class="edit_form_space richtext">
 <% form_tag :action => @submit_action, :uid => @user.uid do -%>
   <%= template_error_messages_for 'chain' %>
-  <p><label for="chain_comment">紹介文：<label></p>
+  <p><label for="chain_comment"><%= _('Introduction: ')%><label></p>
   <p><%= text_area 'chain', 'comment', :class => 'invisible' %></p>
   <%= submit_tag @submit_name %>
 <% end %>

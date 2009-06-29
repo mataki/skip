@@ -18,27 +18,27 @@ module Admin::SettingsHelper
     options = {:id => "setting_#{symbolize_key}"}.merge(options)
     label(Admin::Setting.name, symbolize_key) +
       text_field_tag("settings[#{symbolize_key}]", current_setting(symbolize_key), options) +
-      help_icon_tag(:content => _(Admin::Setting.name + '|' + (symbolize_key.to_s + '_description').humanize))
+      help_icon_tag(:content => s_(Admin::Setting.name + '|' + (symbolize_key.to_s + '_description').humanize))
   end
 
   def settings_label_with_check_box_tag symbolize_key
     label(Admin::Setting.name, symbolize_key) +
       check_box_tag("settings[#{symbolize_key}]", "true", current_setting(symbolize_key), :id => "setting_#{symbolize_key}") +
-      help_icon_tag(:content => _(Admin::Setting.name + '|' + (symbolize_key.to_s + '_description').humanize)) +
+      help_icon_tag(:content => s_(Admin::Setting.name + '|' + (symbolize_key.to_s + '_description').humanize)) +
       hidden_field_tag("settings[#{symbolize_key}]", "false")
   end
 
   def settings_label_with_select_tag symbolize_key, container, selected = nil
     label(Admin::Setting.name, symbolize_key) +
       select_tag("settings[#{symbolize_key}]", options_for_select(container, selected || current_setting(symbolize_key)), :id => "setting_#{symbolize_key}") +
-      help_icon_tag(:content => _(Admin::Setting.name + '|' + (symbolize_key.to_s + '_description').humanize))
+      help_icon_tag(:content => s_(Admin::Setting.name + '|' + (symbolize_key.to_s + '_description').humanize))
   end
 
   def settings_label_with_password_field_tag symbolize_key, options = {}
     options = {:id => "setting_#{symbolize_key}"}.merge(options)
     label(Admin::Setting.name, symbolize_key) +
       password_field_tag("settings[#{symbolize_key}]", Admin::Setting.send(symbolize_key.to_s), options) +
-      help_icon_tag(:content => _(Admin::Setting.name + '|' + (symbolize_key.to_s + '_description').humanize))
+      help_icon_tag(:content => s_(Admin::Setting.name + '|' + (symbolize_key.to_s + '_description').humanize))
   end
 
   def smtp_authentication_container
@@ -48,7 +48,7 @@ module Admin::SettingsHelper
   def password_strength_container
     returning container = [] do
       Admin::Setting::PASSWORD_STRENGTH_VALUES.each do |value|
-        container.push [_(Admin::Setting.name + '|Password strength|' + value), value]
+        container.push [s_(Admin::Setting.name + '|Password strength|' + value), value]
       end
     end
   end

@@ -44,7 +44,7 @@
       <% end -%>
       <% @waiting_groups.each do |group| -%>
       <div class="item">
-        <%= item_link_to(group, {:view_text=>(icon_tag('group') + "[#{h(group.name)}]に承認待ちのユーザがいます！")}) %>
+        <%= item_link_to(group, {:view_text=>( icon_tag('group') + _('New user is waiting for approval in %s') % h(group.name) )}) %>
       </div>
       <% end -%>
     </div>
@@ -69,7 +69,7 @@
     <%= show_title_bar(@questions[:title_icon], @questions[:title_name], {:controller => 'mypage', :action => "entries", :list_type => @questions[:id_name]}) -%>
     <%= render :partial => "list_block", :locals => @questions %>
 
-    <%= show_title_bar("page_copy", _("公開された記事"), {:controller => 'search', :action => "entry_search"}) -%>
+    <%= show_title_bar("page_copy", _("Publicated Entry"), {:controller => 'search', :action => "entry_search"}) -%>
     <div id="tabs" style="margin: 0 5px 10px 10px; display: none;">
       <ul>
         <li><a href="#<%= @access_blogs[:id_name] %>"><span><%=h @access_blogs[:title_name] %></span></a></li>
@@ -99,14 +99,14 @@
     <%# ============================================================ -%>
     <%#  main area bookmarks -%>
     <%# ============================================================ -%>
-    <%= show_title_bar("tag_blue", _("最新のブックマーク"), {:controller => 'bookmarks'}) %>
+    <%= show_title_bar("tag_blue", _("New bookmarks"), {:controller => 'bookmarks'}) %>
     <% if @bookmarks.size > 0 %>
       <div class="topix_body" id="bookmark_body">
       <% @bookmarks.each do |bookmark| -%>
         <div class="page_line">
           <div class="page_title"><%= link_to_bookmark_url bookmark %></div>
-          <div class="page_from"><%= link_to(bookmark.bookmark_comments_count.to_s+"人", url_for_bookmark(bookmark)) %></div>
-          <div class="page_date"><%=h bookmark.updated_on.strftime("%m/%d %H:%M") %></div>
+          <div class="page_from"><%= link_to( _('%s users') % bookmark.bookmark_comments_count.to_s, url_for_bookmark(bookmark)) %></div>
+          <div class="page_date"><%=h bookmark.updated_on.strftime(_("%B %d %Y %H:%M")) %></div>
         </div>
       <% end -%>
       </div>

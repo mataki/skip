@@ -58,7 +58,7 @@ class PlatformController < ApplicationController
     return unless request.post?
     email = params[:email]
     if email.blank?
-      flash.now[:error] = _('メールアドレスは必須です。')
+      flash.now[:error] = _('Email is mandatory.')
       return
     end
     if @user = User.find_by_email(email)
@@ -66,13 +66,13 @@ class PlatformController < ApplicationController
         @user.issue_reset_auth_token
         @user.save_without_validation!
         UserMailer.deliver_sent_forgot_password(email, reset_password_url(@user.reset_auth_token))
-        flash[:notice] = _("%{function}のためのURLを記載したメールを%{email}宛てに送信しました。") % {:email => email, :function => _('パスワードリセット')}
+        flash[:notice] = _("An email contains the URL for resetting the password has been sent to %s.") % email
         redirect_to :controller => '/platform'
       else
-        flash.now[:error] = _('入力された%{email}のユーザは、利用開始されていません。利用開始してください。') % {:email => email}
+        flash.now[:error] = _('User has entered email address %s is not in use. Please start with the site.') % email
       end
     else
-      flash.now[:error] = _("入力された%{email}というメールアドレスは登録されていません。") % {:email => email}
+      flash[:error] = _("Entered email address %s has not been registered in the site.") % email
     end
   end
 
@@ -84,17 +84,17 @@ class PlatformController < ApplicationController
         @user.password = params[:user][:password]
         @user.password_confirmation = params[:user][:password_confirmation]
         if @user.save
-          flash[:notice] = _("%{function}が完了しました。")%{:function => _('パスワードリセット')}
+          flash[:notice] = _("Password was successfully reset.")
           redirect_to :controller => '/platform'
         else
-          flash.now[:error] = _("%{function}に失敗しました。")%{:function => _('パスワードリセット')}
+          flash.now[:error] = _("Failed to reset password.")
         end
       else
-        flash[:error] = _("%{function}のためのURLの有効期限が過ぎています。")%{:function => _('パスワードリセット')}
+        flash[:error] = _("The URL for resetting password has already expired.")
         redirect_to :controller => '/platform'
       end
     else
-      flash[:error] = _("%{function}のためのURLが不正です。再度お試し頂くか、システム管理者にお問い合わせ下さい。")%{:function => _('パスワードリセット')}
+      flash[:error] = _("Invalid password reset URL. Try again or contact system administrator.")
       redirect_to :controller => '/platform'
     end
   end
@@ -275,20 +275,20 @@ class PlatformController < ApplicationController
 
   def set_error_message_form_result_and_redirect(result)
     error_messages = {
-      :missing      => _("OpenIDサーバーが見つかりませんでした。正しいOpenID URLを入力してください。"),
-      :canceled     => _("キャンセルされました。このサーバへの認証を確認してください"),
-      :failed       => _("OpenIDの認証に失敗しました。"),
-      :setup_needed => _("内部エラーが発生しました。管理者に連絡してください。")
+      :missing      => _("OpenID server not found. Please provide a correct OpenID URL."),
+      :canceled     => _("Operation cancelled. Please confirm to authenticate with the server."),
+      :failed       => _("Authentication failed."),
+      :setup_needed => _("Internal error(s) occured. Contact administrator.")
     }
     set_error_message_and_redirect error_messages[result.instance_variable_get(:@code)]
   end
 
   def set_error_message_from_user_and_redirect(user)
-    set_error_message_and_redirect _("ユーザの登録に失敗しました。管理者に連絡してください。<br/>%{msg}")%{:msg => user.errors.full_messages}
+    set_error_message_and_redirect _("Failed to register user. Contact administrator.<br/>%{msg}")%{:msg => user.errors.full_messages}
   end
 
   def set_error_message_not_create_new_user_and_redirect
-    set_error_message_and_redirect _("そのOpenIDは、登録されていません。ログイン後管理画面でOpenID URLを登録後ログインしてください。")
+    set_error_message_and_redirect _("OpenID had not been registered. Log in, register the OpenID URL in the administration screen then log in again.")
   end
 
   def set_error_message_and_redirect(message)
@@ -301,12 +301,12 @@ class PlatformController < ApplicationController
     if params[:login] and user = User.auth(params[:login][:key], params[:login][:password], params[:login][:keyphrase])
       if user.locked?
         logger.info(user.to_s_log('[Login failed with password]'))
-        flash[:error] = _("入力されたログインIDのユーザのパスワードが現在無効になっています。パスワードの再設定を行って下さい。")
+        flash[:error] = _("Password is expired. Please reset password.")
         redirect_to(request.env['HTTP_REFERER'] ? :back : login_url)
       else
         unless user.within_time_limit_of_password?
           logger.info(user.to_s_log('[Login failed with password]'))
-          flash[:error] = _("パスワードの有効期限を過ぎています。パスワードの再設定を行って下さい。")
+          flash[:error] = _("Password is expired. Please reset password.")
           redirect_to(request.env['HTTP_REFERER'] ? :back : login_url)
         else
           self.current_user = user
@@ -321,7 +321,7 @@ class PlatformController < ApplicationController
       else
         logger.info('[Login failed for parameter is not specified]')
       end
-      flash[:error] = _("ログインに失敗しました。")
+      flash[:error] = _("Log in failed.")
       redirect_to(request.env['HTTP_REFERER'] ? :back : login_url)
     end
   end

@@ -1,13 +1,13 @@
-<h2 class="topix_title"><%= icon_tag('asterisk_orange') -%><%=  history_title %>の推移</h2>
+<h2 class="topix_title"><%= icon_tag('asterisk_orange') -%><%= _("History of %s") % history_title -%></h2>
 
 <div class="monthly_statictics_box">
 <div class="navigate_menu">
-  <%= link_to '[前月]', '#', :id => "month_link_#{date.to_time.last_month.year}_#{date.to_time.last_month.month}", :class => 'change_month_link' %>
-  <%= link_to '[今月]', '#', :id => "month_link_#{Date.today.year}_#{Date.today.month}", :class => 'change_month_link' %>
-  <%= link_to '[次月]', '#', :id => "month_link_#{date.to_time.next_month.year}_#{date.to_time.next_month.month}", :class => 'change_month_link' %>
+  <%= link_to _('[Prev month]'), '#', :id => "month_link_#{date.to_time.last_month.year}_#{date.to_time.last_month.month}", :class => 'change_month_link' %>
+  <%= link_to _('[This month]'), '#', :id => "month_link_#{Date.today.year}_#{Date.today.month}", :class => 'change_month_link' %>
+  <%= link_to _('[Next month]'), '#', :id => "month_link_#{date.to_time.next_month.year}_#{date.to_time.next_month.month}", :class => 'change_month_link' %>
 </div><!-- navigate_menu -->
 
-<div style="border:1px solid #aaa;background-color:gray;color:white;margin-top:3px;font-weight:bold;"><%= date.strftime('%Y年%m月') %>の推移</div>
+<div style="border:1px solid #aaa;background-color:gray;color:white;margin-top:3px;font-weight:bold;"><%= _("History of %s") % date.strftime(_('%b %Y')) %></div>
 
 <% unless site_counts.empty? %>
 <% pixel_par_value = 100.0 / max_value %>
@@ -17,7 +17,7 @@
   <% graph_color = max_value == value ? 'red' : 'silver' %>
   <div class="monthly_statictics_line">
     <div style="float:left;width:100px">
-      <%= link_to site_count.created_on.strftime('%m月%d日(%a)'), '#', :id => "current_statistics_link_#{site_count.created_on.year}_#{site_count.created_on.month}_#{site_count.created_on.day}", :class => 'current_statistics_link', :title => "#{site_count.created_on.strftime('%m月%d日(%a)')}のデータを画面上部に表示します。" %>
+      <%= link_to site_count.created_on.strftime(_('%b %d(%a)')), '#', :id => "current_statistics_link_#{site_count.created_on.year}_#{site_count.created_on.month}_#{site_count.created_on.day}", :class => 'current_statistics_link', :title => _("Showing data for the period starting from %s on the screen top.") % site_count.created_on.strftime(_('%b %d(%a)')) %>
     </div>
     <div style="float:left;width:40px;"><%= value %></div>
     <div style="float:left;margin-left:10px;background-color:<%= graph_color %>;width:<%= pixel_par_value * value %>px;">　</div>
@@ -31,7 +31,7 @@
 </div><!-- monthly_statistics_box -->
 
 <% else %>
-この月のデータはありません。
+<%= _('Data of this month not available.')%>
 <% end %>
 
 <script type="text/javascript">
@@ -47,7 +47,7 @@ $j(function() {
                     day: this.id.split('_')[5]
             },
             error: function(event){
-                alert("通信に失敗しました");
+                alert("<%= _('Communication failure.')%>");
             },
             success: function(request) {
                 $j('#current_statistics').html(request).highlight();
@@ -69,7 +69,7 @@ $j(function() {
                     month: this.id.split('_')[3]
             },
             error: function(event){
-                alert("通信に失敗しました");
+                alert("<%= _('Communication failure.')%>");
             },
             success: function(request) {
                 $j('#statistics_history').html(request).highlight();

@@ -16,10 +16,10 @@
 class Message < ActiveRecord::Base
 
   MESSAGE_TYPES = {
-    "COMMENT"   => { :name => "あなたの記事へのコメント", :message => "あなたの記事[?]に新着コメントがあります！", :icon_name => 'comments'},
-    "CHAIN"     => { :name => "あなたへの紹介文", :message => "あなたの紹介文が追加されました！", :icon_name => 'user_comment'},
-    "TRACKBACK" => { :name => "あなたの記事を話題にした記事", :message => "あなたの記事を話題にした新着記事[?]があります！", :icon_name => 'report_go'},
-    "POSTIT"    => { :name => "あなたへのブックマーク", :message => "あなたのプロフィールにブックマークされました！", :icon_name => 'tag_blue'}
+    "COMMENT"   => { :name => _("New Comment"), :message => _("You recieved a comment on your entry [?]!"), :icon_name => 'comments'},
+    "CHAIN"     => { :name => _("New Introduction"), :message => _("You received an introduction!"), :icon_name => 'user_comment'},
+    "TRACKBACK" => { :name => _("New Entry"), :message => _("There is a new entry talking about your entry [?]!"), :icon_name => 'report_go'},
+    "POSTIT"    => { :name => _("New Bookmark"), :message => _("New bookmark in your profile!"), :icon_name => 'tag_blue'}
   }
 
   def self.save_message(message_type, user_id, link_url, title = nil)

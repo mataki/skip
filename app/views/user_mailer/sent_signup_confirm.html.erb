@@ -1,12 +1,11 @@
 <%= @header %>
 
-ユーザ登録が完了しました。
-あなたのログインIDは<%= h @login_id %>です。
-<%= h Admin::Setting.abbr_app_title %>を利用するには以下のURLにアクセスして下さい。
+<%= _('Your registration is complete.') %>
+<%= _('Your Login ID is %s.') % h(@login_id) %>
+<%= _('Access to %s. Click here.') % h(Admin::Setting.abbr_app_title) %>
 
 <%= @login_url %>
 
-ログインID: <%= h @login_id %>
-
+<%= _('Login ID: %s') % h(@login_id) %>
 
 <%= @footer %>

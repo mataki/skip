@@ -18,15 +18,15 @@ class BoardEntryComment < ActiveRecord::Base
   belongs_to :user
   belongs_to :board_entry, :counter_cache => true
 
-  validates_presence_of :board_entry_id, :message =>'は必須です'
-  validates_presence_of :contents, :message =>'は必須です'
-  validates_presence_of :user_id, :message =>'は必須です'
+  validates_presence_of :board_entry_id, :message =>_('is mandatory.')
+  validates_presence_of :contents, :message =>_('is mandatory.')
+  validates_presence_of :user_id, :message =>_('is mandatory.')
 
   class << self
     HUMANIZED_ATTRIBUTE_KEY_NAMES = {
-      "board_entry_id" => "コメント先の投稿",
-      "contents" => "内容",
-      "user_id" => "著者"
+      "board_entry_id" => "Parent board entry",
+      "contents" => "Content",
+      "user_id" => "Author"
     }
     def human_attribute_name(attribute_key_name)
       HUMANIZED_ATTRIBUTE_KEY_NAMES[attribute_key_name] || super
@@ -34,7 +34,7 @@ class BoardEntryComment < ActiveRecord::Base
   end
 
   def comment_created_time
-    format = "%Y年%m月%d日 %H:%M"
+    format = _("%B %d %Y %H:%M")
     created_on.strftime(format)
   end
 

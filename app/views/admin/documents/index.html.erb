@@ -8,7 +8,7 @@
       <p><%= _("Admin::DocumentsController|#{params[:target]}_description") %></p>
       <p><%= text_area_tag("documents[#{params[:target]}]", @document, :id => "documents_#{params[:target]}", :class => "invisible") %></p>
     <%= submit_tag _('Save'), :disable_with => _('Saving...') %>
-    <%= link_to '[' + _('既定のページに戻す') + ']', admin_documents_revert_path(:target => params[:target]), :method => :post, :confirm => _('現在設定中のページが消えてしまいますがよろしいですか?') %>
+    <%= link_to '[' + _('Revert to default page') + ']', admin_documents_revert_path(:target => params[:target]), :method => :post, :confirm => _('Current page will be overwritten.  Are you sure to continue?') %>
     </div>
     <% end -%>
     <% content_for :javascript_includes do -%>
@@ -26,7 +26,16 @@
     <% end -%>
   <% else -%>
     <div class="box">
-      <p>用途に合わせて、説明文の雛形を修正して下さい。<br />左のメニューから編集したいページを選択して下さい。<br /></p>
+      <p>
+        <%= _("The system provides online document for inexperienced users.<br />")%>
+        <%= _("Customize the document template to fit your usage.<br />")%>
+      </p>
+      <p>
+        <%= _("Select a page to edit from the menu on left.")%>
+      </p>
+      <p style="color:red;">
+        <b><%= _("*Input explanation in HTML format. Do not use codes that can cause security issues (e.g. javascripts).")%></b>
+      </p>
     </div>
   <% end -%>
 <% end -%>

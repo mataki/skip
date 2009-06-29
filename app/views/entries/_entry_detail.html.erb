@@ -197,7 +197,7 @@
   <% if next_entry -%>
   <span class="next_entry"><%= entry_link_to(next_entry, {:truncate => 20}) %>&nbsp;&gt;</span>
   <% end -%>
-  <a id="page_top" href="#page_bottom">[ページ末尾]</a>
+  <a id="page_top" href="#page_bottom"><%= _('[Bottom of page]')%></a>
 </div>
 
 <div id="board_entry">
@@ -210,23 +210,23 @@
         <span class="info"><%= get_entry_infos(entry) -%></span>
       </div>
       <div class="buttons" id="entry_buttons">
-        <span style="color: #000000;">表示:<span>
+        <span style="color: #000000;"><%= _('Display') %><span>
         <% if editable -%>
-          <a href="#" id="access_style_button"><%= icon_tag('group', :title => "アクセス履歴") %></a>
+          <a href="#" id="access_style_button"><%= icon_tag('group', :title => _("Access Log")) %></a>
         <% end -%>
-        <a href="#" id="default_style_button"><%= icon_tag('page_white_text', :title => "ブログ表示") %></a>
-        <a href="#" id="source_style_button"><%= icon_tag('page_white_code', :title => "ソース表示") %></a>
-        <span style="color: #000000;">アクション:<span>
-        <%= link_to(icon_tag('page_edit', :title=>'編集'), :controller=> "edit", :action => "edit", :id => entry, :symbol => entry.symbol) if editable  %>
-        <%= link_to(icon_tag('tag_blue_add', :title=>'ブックマークする'), {:controller => "bookmark", :action => "edit", :url => "/page/#{entry.id.to_s}", :title => entry.title, :dummy => '.html'}, {:class => "nyroModal"}) %>
-        <%= link_to(icon_tag('control_play_blue', :title=>'スライドショー'), {:controller=> "monta", :action => "execute_monta", :id => entry}, :target=>"_blank") if entry.editor_mode == 'hiki' %>
-        <%= link_to(icon_tag('zoom', :title=>'印刷表示'), {:controller=> "board_entries", :action => "large", :id => entry}, :target=>"_blank") %>
+        <a href="#" id="default_style_button"><%= icon_tag('page_white_text', :title => _('Blog Entry View')) %></a>
+        <a href="#" id="source_style_button"><%= icon_tag('page_white_code', :title => _('View Source')) %></a>
+        <span style="color: #000000;"><%= _('Action:') %><span>
+        <%= link_to(icon_tag('page_edit', :title => _('Edit')), :controller=> "edit", :action => "edit", :id => entry, :symbol => entry.symbol) if editable  %>
+        <%= link_to(icon_tag('tag_blue_add', :title => _('Bookmark this')), {:controller => "bookmark", :action => "edit", :url => "/page/#{entry.id.to_s}", :title => entry.title, :dummy => '.html'}, {:class => "nyroModal"}) %>
+        <%= link_to(icon_tag('control_play_blue', :title => _('Slide Show')), {:controller=> "monta", :action => "execute_monta", :id => entry}, :target=>"_blank") if entry.editor_mode == 'hiki' %>
+        <%= link_to(icon_tag('zoom', :title => _('Maximize!')), {:controller=> "board_entries", :action => "large", :id => entry}, :target=>"_blank") %>
       </div>
     </div>
     <h1><%= get_publication_type_icon(entry) -%> <%=h entry.category %> <%=h entry.title %></h1>
     <% unless to_tb_entries.empty? -%>
     <div class="trackback_space send_trackback">
-      話題の記事：
+      <%= _('Topic Entry: ')%>
       <ul class="entries">
     <% symbol2name_hash = BoardEntry.get_symbol2name_hash to_tb_entries -%>
     <% to_tb_entries.each do |to_tb_entry|  -%>
@@ -244,7 +244,7 @@
         <%= show_contents entry %>
       </div>
       <div id="source_style_area" class="invisible">
-        <div class="header">【ソース表示】</div><pre><%=h entry.contents.gsub("<br />", "<br/>\r\n") %></pre>
+        <div class="header"><%= _('[Show source]')%></div><pre><%=h entry.contents.gsub("<br />", "<br/>\r\n") %></pre>
       </div>
       <div id="access_style_area" class="invisible">
       <% if editable %>
@@ -257,7 +257,7 @@
 <div id="board_entry_control">
   <span class="info">
     <% if bookmark_comments_count > 0 -%>
-      <%= link_to("[被ブクマ:#{bookmark_comments_count}人]",{:controller =>'bookmark', :action=>'show', :uri => "/page/" + entry.id.to_s}) %>
+      <%= link_to(n_("[Bookmarked by: %d member]", "[Bookmarked by: %d members]", bookmark_comments_count) % bookmark_comments_count,{:controller =>'bookmark', :action=>'show', :uri => "/page/" + entry.id.to_s}) %>
     <% end -%>
     <span id="board_entry_point">
     <%= render(:partial => 'board_entries/board_entry_point', :locals => { :entry => entry }) %>
@@ -269,9 +269,9 @@
   <div id="comments_header">
     <span class="buttons invisible">
       [
-       <span id="sort_desc_label" class="invisible">新しい順に並べる</span><a href="#" id="sort_desc_link">新しい順に並べる</a>
-       | <span id="sort_asc_label" class="invisible">古い順に並べる</span><a href="#" id="sort_asc_link">古い順に並べる</a>
-       | <span id="sort_default_label">元の順に戻す</span><a href="#" id="sort_default_link" class="invisible">元の順に戻す</a>
+       <span id="sort_desc_label" class="invisible"><%= _('New Entries on Top')%></span><a href="#" id="sort_desc_link"><%= _('New Entries on Top')%></a>
+       | <span id="sort_asc_label" class="invisible"><%= _('Old Entries on Top')%></span><a href="#" id="sort_asc_link"><%= _('Old Entries on Top')%></a>
+       | <span id="sort_default_label"><%= _('Resume default order')%></span><a href="#" id="sort_default_link" class="invisible"><%= _('Resume default order')%></a>
       ]
     </span>
   </div>
@@ -282,32 +282,32 @@
 
 <div class="comment_input_space">
   <% form_tag({:controller => 'board_entries', :action => 'ado_create_comment', :id => entry.id}, {:id => "new_comment_form"}) do -%>
-    <%= label "board_entry_comment", "contents", _('コメントを書く') %>
+    <%= label "board_entry_comment", "contents", _('Write a comment') %>
     <%= text_area 'board_entry_comment', 'contents', :cols => 40, :rows => 5 %><br/>
-    <%= submit_tag "書き込み" %>
+    <%= submit_tag _("Post") %>
   <% end -%>
 </div>
 
 <div class="trackback_space sent_trackback">
 <% if tb_entries.size > 0 -%>
-  この記事を話題にした記事：
+  <%= _('Entries talking about this entry:')%>
 <% end -%>
   <ul class="entries">
 <% tb_entries.each do |tb_entry|  -%>
     <li>
     <%= entry_link_to tb_entry %> - <%= user_link_to tb_entry.user %>（<%= link_to_write_place tb_entry.owner%>）
-      <- <%= link_to " [削除する]", {:controller => "edit", :action => "delete_trackback", :id => entry.id, :tb_entry_id => tb_entry.id}, {:confirm => "本当に削除しますか？",  :method => :post} if session[:user_id] == entry.user_id %>
+      <- <%= link_to _(" [Delete]"), {:controller => "edit", :action => "delete_trackback", :id => entry.id, :tb_entry_id => tb_entry.id}, {:confirm => __("本当に削除しますか？"),  :method => :post} if session[:user_id] == entry.user_id %>
     </li>
 <% end -%>
   </ul>
   <% unless entry.diary? -%>
-    <p><%= link_to _("[この記事を「話題」にして、掲示板に新しい記事を投稿する]"), :controller => "edit", :trackbacks => entry.id, :title => "RE: " + entry.title, :category => entry.category, :publication_type => entry.publication_type, :entry_type => entry.entry_type, :symbol => entry.symbol, :publication_symbols_value => entry.publication_symbols_value %><%= help_icon_tag :content => _('記事の公開範囲を引き継いだ掲示板として新しい記事を作成します。') %></p>
+    <p><%= link_to _("[Compose a new bbs with this as topic]"), :controller => "edit", :trackbacks => entry.id, :title => "RE: " + entry.title, :category => entry.category, :publication_type => entry.publication_type, :entry_type => entry.entry_type, :symbol => entry.symbol, :publication_symbols_value => entry.publication_symbols_value %><%= help_icon_tag :content => _('記事の公開範囲を引き継いだ掲示板として新しい記事を作成します。') %></p>
   <% end -%>
-  <p><%= link_to _("[この記事を「話題」にして、新しいブログを書く]"), :controller => "edit", :trackbacks => entry.id, :title => "RE: " + entry.title, :category => entry.category %><%= help_icon_tag :content => _('記事の公開範囲によらず全体公開のブログとして新しい記事を作成します。') %></p>
+  <p><%= link_to _("[Compose a new blog with this as topic]"), :controller => "edit", :trackbacks => entry.id, :title => "RE: " + entry.title, :category => entry.category %><%= help_icon_tag :content => _('記事の公開範囲によらず全体公開のブログとして新しい記事を作成します。') %></p>
 </div>
 
 <div class="move_navi">
-  <a id="page_bottom" href="#page_top">[ページ先頭]</a>
+  <a id="page_bottom" href="#page_top"><%= _('[Top of page]')%></a>
 </div>
 
 <% content_for :javascript_initializers do -%>
@@ -462,7 +462,7 @@
       // 引数の文字列が空白以外で1文字以上かどうか
       var isEmpty = function(text) {
           if($j.trim(text).length == 0) {
-              alert("空白以外で1文字以上入力してください。");
+              alert("<%= _('One or more characters other than spaces required.')%>");
               return true;
           }
           return false;
@@ -474,7 +474,7 @@
           $j('#entry_point_form')
           .submit(function() {
               if (entry_point > 4){
-                  alert('やりすぎ！');
+                  alert('<%= _("Too many points!")%>');
                   return false;
               }
               $j.ajax({
@@ -567,7 +567,7 @@
               // 説明を作成
               var divDesc = function() {
                   return $j(document.createElement('div'))
-                  .append(document.createTextNode('このコメントに返信'))
+                  .append(document.createTextNode('<%= _("Reply to this comment")%>'))
                   .css({marginTop:'3px', fontSize:'10px', color:'gray'});
               };
 
@@ -584,7 +584,7 @@
               // 保存ボタンを作成
               var saveButton = function(jform) {
                   return $j(document.createElement('input'))
-                  .attr({type:'button', value:'保存'})
+                  .attr({type:'button', value:'<%= _("Save")%>'})
                   .css({fontSize:'10px'})
                   .click(function() {
                       if(isEmpty(jform.find('textarea').val())) {
@@ -615,7 +615,7 @@
               // キャンセルボタンを作成
               var cancelButton = function(jform) {
                   return $j(document.createElement('input'))
-                  .attr({type:'button', value:'キャンセル'})
+                  .attr({type:'button', value:'<%= _("Cancel")%>'})
                   .css({fontSize:'10px'})
                   .click(function() {
                       jform.fadeOut('0', function(){

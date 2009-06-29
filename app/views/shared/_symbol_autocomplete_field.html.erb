@@ -7,7 +7,7 @@
   <p>
   <input type="text" id="publication_name" style="background-color: #f0f0ff; border: none; color: blue;" disabled="disabled">
   <input type="button" value="追加" id="btn_add_publication_symbol"><br/>
-  <p>(直接指定の際は、"uid:ニックネーム"、"gid:グループ名"のように入力してください。また漢字氏名、部署による部分検索も可能です。ex:山田、総務)</p>
+  <p><%= _('(Please input like "uid:nickname", "gid:group_name" when 直接指定.また漢字氏名、部署による部分検索も可能です。ex:山田、総務)[FIXME]') %></p>
 </div>
 
 <% content_for :javascript_initializers do -%>
@@ -81,7 +81,7 @@ if(edit_checkbox) {
                 $j('#editor_symbols_value').val(editor_symbols_array.toString());
             });
             element.append(input_tag);
-            element.append(document.createTextNode("編集可"));
+            element.append(document.createTextNode("<%= _('Editable')%>"));
         }
         return element;
     };
@@ -118,15 +118,15 @@ if(edit_checkbox) {
 
         var validReg = /(u|g|e)id:[a-zA-Z0-9\-_]*$/
         if (!validReg.test(symbol)) {
-            alert("フォーマットが不正です。uid:xxxxxxのような形で入力してください。");
+            alert("<%= _('Invalid input format. Should be in uid:xxxxxx format.')%>");
             return
         }
         if (name.length == 0) {
-            alert("存在するユーザ/グループを入力してください");
+            alert("<%= _('Enter the name of existent users / groups.')%>");
             return;
         }
         if ($j.inArray(symbol, publication_symbols_array) != -1) {
-            alert("既に追加されています");
+            alert("<%= _('Symbol already exists.')%>");
             return;
         }
         createSymbolRecord(symbol, false, name);

@@ -32,12 +32,12 @@ class BoardEntry < ActiveRecord::Base
   before_create :generate_next_user_entry_no
   after_destroy :cancel_mail
 
-  validates_presence_of :title, :message => 'は必須です'
-  validates_length_of   :title, :maximum => 100, :message => 'は%d桁以内で入力してください'
+  validates_presence_of :title, :message => _('is mandatory.')
+  validates_length_of   :title, :maximum => 100, :message => _('accepts %d or less characters only.')
 
-  validates_presence_of :contents, :message => 'は必須です'
-  validates_presence_of :date, :message => 'は必須です'
-  validates_presence_of :user_id, :message => 'は必須です'
+  validates_presence_of :contents, :message => _('is mandatory.')
+  validates_presence_of :date, :message => _('is mandatory.')
+  validates_presence_of :user_id, :message => _('is mandatory.')
 
   attr_reader :owner
   attr_accessor :send_mail
@@ -51,15 +51,15 @@ class BoardEntry < ActiveRecord::Base
     symbol_type, symbol_id = Symbol::split_symbol self.symbol
     if self.entry_type == DIARY
       if symbol_type == "uid"
-        errors.add_to_base(_("ご指定のユーザは存在しません。")) unless User.find_by_uid(symbol_id)
+        errors.add_to_base(_("User does not exist.")) unless User.find_by_uid(symbol_id)
       else
-        errors.add_to_base(_("不正なユーザです。"))
+        errors.add_to_base(_("Invalid user detected."))
       end
     elsif self.entry_type == GROUP_BBS
       if symbol_type == "gid"
-        errors.add_to_base(_("ご指定のグループは存在しません。")) unless Group.active.find_by_gid(symbol_id)
+        errors.add_to_base(_("Group does not exist.")) unless Group.active.find_by_gid(symbol_id)
       else
-        errors.add_to_base(_("不正なグループです。"))
+        errors.add_to_base(_("Invalid group detected."))
       end
     end
 
@@ -68,11 +68,11 @@ class BoardEntry < ActiveRecord::Base
 
   class << self
     HUMANIZED_ATTRIBUTE_KEY_NAMES = {
-      "title" => "タイトル",
-      "category" => "タグ",
-      "contents" => "内容",
-      "date" => "日付",
-      "user_id" => "著者"
+      "title" => "Subject",
+      "category" => "Tags",
+      "contents" => "Content",
+      "date" => "Date",
+      "user_id" => "Author"
     }
     def human_attribute_name(attribute_key_name)
       HUMANIZED_ATTRIBUTE_KEY_NAMES[attribute_key_name] || super
@@ -310,9 +310,9 @@ class BoardEntry < ActiveRecord::Base
   end
 
   def diary_date
-    format = "%Y年%m月%d日"
+    format = _("%B %d %Y")
     unless ignore_times
-      format << " %H:%M"
+      format = _("%B %d %Y %H:%M")
     end
     date.strftime(format)
   end
@@ -326,13 +326,13 @@ class BoardEntry < ActiveRecord::Base
   def visibility
     text = color = ""
     if public?
-      text = "[全体に公開]"
+      text = _("[Open to all]")
       color = "yellow"
     elsif private?
       if diary?
-        text = "[自分だけ]"
+        text = _("[Owner only]")
       else
-        text = "[参加者のみ]"
+        text = _("[Group members only]")
       end
       color = "#FFDD75"
     end
@@ -354,7 +354,7 @@ class BoardEntry < ActiveRecord::Base
                                :publication_type, :publication_symbols, :non_auto, :date, :editor_mode]
 
 
-    contents = params[:non_auto] ? "" : "(この投稿はシステムにより自動的に用意されました)"
+    contents = params[:non_auto] ? "" : _("(This entry is generated automatically by the system)")
     contents << LINE_FEED
     contents << params[:message]
 
@@ -550,7 +550,7 @@ class BoardEntry < ActiveRecord::Base
                                 :conditions => find_params[:conditions],
                                 :include => find_params[:include])
       if entries.length != ids.length
-        message = "（話題元の記事が不明でしたが無視しました）"
+        message = _("(Unknown topic entry found. However, this has been ignored)")
       end
 
       entries.each do |entry|
@@ -668,7 +668,7 @@ private
       else
         symbol_type, symbol_id = SkipUtil.split_symbol symbol
         link_str = link_str_proc.call(symbol_id)
-        link_str ? "[#{symbol}>#{link_str}]" : "[リンク先が存在しません...#{symbol}>]"
+        link_str ? "[#{symbol}>#{link_str}]" : _("[Link does not exist...%s>]") % symbol
       end
   end
 

@@ -4,8 +4,7 @@
 
 <%= render(:partial => "system/error_messages_for", :locals => { :messages => @error_msg }) if @error_msg %>
 
-<h2 class="subtitle">アカウント情報</h2>
-
+<h2 class="subtitle"><%= _('Account Information')%></h2>
 <table class="normal user_info">
   <% if user_name_mode?(:code) -%>
   <tr>
@@ -19,18 +18,18 @@
   </tr>
   <tr>
     <th><label for="user_email"><%=h _('User|Email') %></label></th>
-    <td><%=h @user.email %><span style="margin-left: 20px;"><%= link_to "[変更する]", :action=> 'manage', :menu => 'manage_email' if !is_new && Admin::Setting.mail_function_setting %></span></td>
+    <td><%=h @user.email %><span style="margin-left: 20px;"><%= link_to _("[Change]"), :action=> 'manage', :menu => 'manage_email' if !is_new && Admin::Setting.mail_function_setting %></span></td>
   </tr>
   <tr>
     <th><label for="user_section"><%=h _('User|Section') %></label></th>
     <td>
       <% if sections = User.grouped_sections -%>
       <p>
-      <%= select("user", "section", sections, {}, {:tabindex => (tabindex += 1)}) + _('既に登録されている値から選択項目を表示しています') %>
+      <%= select("user", "section", sections, {}, {:tabindex => (tabindex += 1)}) + _('Display a selection from the value that is already registered.[FIXME]') %>
       </p>
       <% end -%>
       <p>
-      <%= text_field_tag("user[section]", (sections.include?(@user.section) ? '' : @user.section), :tabindex => (tabindex += 1), :class=> 'appendable_text') + _('選択項目に無いものを設定する場合はこちらに入力して下さい') %>
+      <%= text_field_tag("user[section]", (sections.include?(@user.section) ? '' : @user.section), :tabindex => (tabindex += 1), :class=> 'appendable_text') + _('If you are not set as the selection, please enter here.[FIXME]') %>
       </p>
   </tr>
   <% if user_name_mode?(:name) -%>
@@ -41,11 +40,10 @@
       <span id="uid_result" style="margin-left:3px;color:gray;font-size:10px"></span>
       <span id="indicator" style="display:none;"><%= skip_image_tag 'indicator.gif' %></span>
       <div class="desc">
-        <p>「ユーザ名」には、あなたをわかりやすく表す4桁以上の半角英数字を入力して下さい。(例えばメールアドレスのアカウント名のような値)</p>
-        <p>半角英数字の他に半角のハイフン'-'、アンダーバー'_'も利用することが出来ます。</p>
-        <p>また、<%= h Admin::Setting.login_account %>と同じ値にすることは出来ません。</p>
-        <p>この「ユーザ名」はシステムの中で、あなたのことをブログの記事中などで簡易的に指定する際に使います。</p>
-        <p>その特性上、この「ユーザ名」は他のユーザに知られることになりますので、不用意な値は指定しないようご注意ください。</p>
+        <p><%= _("4 or more letters required. You can use alphabets, numbers, \"-\" and \"_\".")%></p>
+        <p><%= _("\"User name\" is used to identify yourself in short in blog entries etc. by the system.")%></p>
+        <p><%= _("It is the nature of the \"user name\" to be known by other users in the site, be careful to avoid using inproper values for it.")%></p>
+        <p><%= _("Make it the same as the account name of your email address (left of \"@\") if you are not sure what to use for it.")%></p>
       </div>
   <% else -%>
     <td><%= h @user.uid %></td>
@@ -67,8 +65,8 @@
 
 <%= render :partial => 'portal/profile_form', :locals => {:user => @user} %>
 
-<% submit_button_value = is_new ? "ユーザ登録" : "保存" %>
-<%= submit_tag submit_button_value, {:tabindex => (tabindex += 1), :id => 'submit_button', :disable_with => (submit_button_value + "中...")} %>
+<% submit_button_value = is_new ? _("Register User") : _("Save") %>
+<%= submit_tag submit_button_value, {:tabindex => (tabindex += 1), :id => 'submit_button', :disable_with => ("Saving...")} %>
 <% end %>
 </div>
 

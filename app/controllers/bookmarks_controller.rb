@@ -26,15 +26,15 @@ class BookmarksController < ApplicationController
                                   :conditions => Bookmark.make_conditions(params),
                                   :include => :bookmark_comments,
                                   :order => get_order_query(params[:sort_type]) )
-    flash.now[:notice] = '該当するブックマークはありませんでした。' unless @bookmarks && @bookmarks.size > 0
+    flash.now[:notice] = _('No matching bookmarks found') unless @bookmarks && @bookmarks.size > 0
   end
 
 private
   def setup_layout
-    @main_menu = @title = 'ブックマーク'
+    @main_menu = @title = _('Bookmarks')
 
-    @tab_menu_source = [ {:label => _('ブックマークを探す'), :options => {:action => 'index'}},
-                         {:label => _('ブックマークレット'), :options => {:action => 'setup'}} ]
+    @tab_menu_source = [ {:label => _('Search for Bookmarks'), :options => {:action => 'index'}},
+                         {:label => _('Setup'), :options => {:action => 'setup'}} ]
   end
 
   def get_order_query(params_order)

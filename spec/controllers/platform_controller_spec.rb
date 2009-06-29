@@ -314,7 +314,7 @@ describe PlatformController, 'POST /forgot_password' do
     describe 'メールアドレスの入力がない場合' do
       it 'メールアドレスの入力は必須である旨のメッセージを表示する' do
         post :forgot_password, :email => ''
-        flash[:error].should == 'メールアドレスは必須です。'
+        flash[:error].should == 'Email is mandatory.'
         response.should be_success
       end
     end
@@ -354,7 +354,7 @@ describe PlatformController, 'POST /forgot_password' do
         end
         it "未登録ユーザのメールアドレスである旨のメッセージが設定されること" do
           post :forgot_password, :email => @email
-          flash[:error].should == "入力された#{@email}のユーザは、利用開始されていません。利用開始してください。"
+          flash[:error].should == "User has entered email address #{@email} is not in use. Please start with the site."
           response.should render_template('forgot_password')
         end
       end

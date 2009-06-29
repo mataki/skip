@@ -118,7 +118,7 @@ class MypageController < ApplicationController
 
   # mypage > manage(管理)
   def manage
-    @title = "自分の管理"
+    @title = _("Self Admin")
     @user = current_user
     @menu = params[:menu] || "manage_profile"
     case @menu
@@ -238,12 +238,12 @@ class MypageController < ApplicationController
     end
     render :partial => "rss_feed", :locals => { :feeds => feeds }
   rescue Timeout::Error
-    render :text => "RSSの読み込みがタイムアウトしました。"
+    render :text => _("Timeout to loading rss.")
     return false
   rescue Exception => e
     logger.error e
     e.backtrace.each { |line| logger.error line}
-    render :text => "RSSの読み込みに失敗しました。"
+    render :text => _("Failed to load rss.")
     return false
   end
 
@@ -255,7 +255,7 @@ class MypageController < ApplicationController
   def destroy_portrait
     if picture = Picture.find_by_user_id(session[:user_id])
       picture.destroy
-      flash[:notice] = "画像を削除しました"
+      flash[:notice] = _("Picture was deleted successfully.")
     end
     redirect_to :action => 'manage', :menu => 'manage_portrait'
   end
@@ -264,7 +264,7 @@ class MypageController < ApplicationController
   def save_portrait
     begin
       unless params[:picture][:picture].is_a? ActionController::UploadedFile
-        raise ActiveRecord::RecordInvalid::new("ファイル形式が不正です。")
+        raise ActiveRecord::RecordInvalid::new(_("File format invalid."))
       end
       Picture.transaction do
         if picture = Picture.find_by_user_id(session[:user_id])
@@ -273,7 +273,7 @@ class MypageController < ApplicationController
         picture = Picture.new(params[:picture])
         picture.user_id = session[:user_id]
         picture.save!
-        flash[:notice] = "画像を変更しました"
+        flash[:notice] = _("Picture was updated successfully.")
       end
     rescue ActiveRecord::RecordInvalid => e
       flash[:warn] = e.message
@@ -382,7 +382,7 @@ class MypageController < ApplicationController
       @user.save!
       @profiles.each{|profile| profile.save!}
     end
-    flash[:notice] = 'ユーザ情報の更新に成功しました。'
+    flash[:notice] = _('User information was successfully updated.')
     redirect_to :action => 'profile'
   rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => e
     @error_msg = []
@@ -403,7 +403,7 @@ class MypageController < ApplicationController
         UserMessageUnsubscribe.create(:user_id => session[:user_id], :message_type => message_type )
       end
     end
-    flash[:notice] = 'お知らせメールの通知設定を更新しました。'
+    flash[:notice] = _('Updated notification email settings.')
     redirect_to :action => 'manage', :menu => 'manage_message'
   end
 
@@ -413,7 +413,7 @@ class MypageController < ApplicationController
     @user = current_user
     @user.change_password(params[:user])
     if @user.errors.empty?
-      flash[:notice] = 'パスワードを変更しました。'
+      flash[:notice] = _('Password was successfully updated.')
       redirect_to :action => :manage, :menu => :manage_password
     else
       @menu = 'manage_password'
@@ -431,9 +431,9 @@ class MypageController < ApplicationController
 
     if @applied_email.save
       UserMailer.deliver_sent_apply_email_confirm(@applied_email.email, "#{root_url}mypage/update_email/#{@applied_email.onetime_code}/")
-      flash.now[:notice] = "メールアドレス変更の申請を受け付けました。メールをご確認ください。"
+      flash.now[:notice] = _("Your request of changing email address accepted. Check your email to complete the process.")
     else
-      flash.now[:warn] = "処理に失敗しました。もう一度申請してください。"
+      flash.now[:warn] = _("Failed to process your request. Try resubmitting your request again.")
     end
     @menu = 'manage_email'
     @user = current_user
@@ -447,16 +447,16 @@ class MypageController < ApplicationController
       @user.email = @applied_email.email
       if @user.save
         @applied_email.destroy
-        flash[:notice] = "メールアドレスが正しく更新されました。"
+        flash[:notice] = _("Email address was updated successfully.")
         redirect_to :action => 'profile'
       else
         @user.email = old_email
         @menu = 'manage_email'
-        flash[:notice] = "既に登録されているメールアドレスです。メールアドレスの変更をやり直してください。"
+        flash[:notice] = _("The specified email address has already been registered. Try resubmitting the request with another address.")
         render :partial => 'manage_email', :layout => "layout"
       end
     else
-      flash[:notice] = '指定されたページは存在しません。'
+      flash[:notice] = _('Specified page not found.')
       redirect_to :action => 'index'
     end
   end
@@ -470,23 +470,23 @@ class MypageController < ApplicationController
           if result.successful?
             @openid_identifier.url = identity_url
             if @openid_identifier.save
-              flash[:notice] = _('OpenID URLを設定しました。')
+              flash[:notice] = _('OpenID URL was successfully set.')
               redirect_to :action => :manage, :menu => :manage_openid
               return
             else
               render :partial => 'manage_openid', :layout => 'layout'
             end
           else
-            flash.now[:error] = _("OpenIDの処理の中でキャンセルされたか、失敗しました。")
+            flash.now[:error] = _("OpenId process is cancelled or failed.")
             render :partial => 'manage_openid', :layout => 'layout'
           end
         end
       rescue OpenIdAuthentication::InvalidOpenId
-        flash.now[:error] = _("OpenIDの形式が正しくありません。")
+        flash.now[:error] = _("Invalid OpenID URL format.")
         render :partial => 'manage_openid', :layout => 'layout'
       end
     else
-      flash.now[:error] = _("OpenIDを入力してください。")
+      flash.now[:error] = _("Please input OpenID URL.")
       render :partial => 'manage_openid', :layout => 'layout'
     end
   end
@@ -503,7 +503,7 @@ class MypageController < ApplicationController
     end
 
     if result
-      flash[:notice] = '正しく更新されました。'
+      flash[:notice] = _('Updated successfully.')
       session[:user_custom_theme] = @user_custom.theme
       session[:user_custom_classic] = @user_custom.classic
       redirect_to :action => 'manage', :menu => 'manage_customize'
@@ -519,17 +519,17 @@ class MypageController < ApplicationController
   end
 
   def setup_layout
-    @main_menu = @title = 'マイページ'
+    @main_menu = @title = _('My Page')
 
-    @tab_menu_source = [ {:label => _('ホーム'), :options => {:action => 'index'}, :selected_actions => %w(index entries entries_by_date entries_by_antenna)},
-                         {:label => _('プロフィール'), :options => {:action => 'profile'}},
-                         {:label => _('ブログ'), :options => {:action => 'blog'}},
-                         {:label => _('ファイル'), :options => {:action => 'share_file'}},
-                         {:label => _('ソーシャル'), :options => {:action => 'social'}},
-                         {:label => _('グループ'), :options => {:action => 'group'}},
-                         {:label => _('ブックマーク'), :options => {:action => 'bookmark'}},
-                         {:label => _('足跡'), :options => {:action => 'trace'}},
-                         {:label => _('管理'), :options => {:action => 'manage'}} ]
+    @tab_menu_source = [ {:label => _('Home'), :options => {:action => 'index'}, :selected_actions => %w(index entries entries_by_date entries_by_antenna)},
+                         {:label => _('Profile'), :options => {:action => 'profile'}},
+                         {:label => _('Blog'), :options => {:action => 'blog'}},
+                         {:label => _('Shared Files'), :options => {:action => 'share_file'}},
+                         {:label => _('Socials'), :options => {:action => 'social'}},
+                         {:label => _('Groups Joined'), :options => {:action => 'group'}},
+                         {:label => _('Bookmarks'), :options => {:action => 'bookmark'}},
+                         {:label => _('Footprints'), :options => {:action => 'trace'}},
+                         {:label => _('Admin'), :options => {:action => 'manage'}} ]
   end
 
   # アンテナボックス表示のための情報を設定する
@@ -699,13 +699,13 @@ class MypageController < ApplicationController
     system_messages = []
     if options[:show_welcome_message]
       system_messages << {
-        :text => "ようこそ！まずはこちらをご覧ください。", :icon => "information",
+        :text => _("Welcome! Read detailed help."), :icon => "information",
         :option => {:controller => "mypage", :action => "welcome"}
       }
     end
     if current_user.pictures.size < 1
       system_messages << {
-        :text => "プロフィール画像を変更しましょう！", :icon => "picture",
+        :text => _("Change your profile picture!"), :icon => "picture",
         :option => {:controller => "mypage", :action => "manage", :menu => "manage_portrait"}
       }
     end
@@ -731,7 +731,7 @@ class MypageController < ApplicationController
     find_params[:include] << :user_readings
     { :id_name => 'message',
       :title_icon => "email",
-      :title_name => 'あなたへの連絡',
+      :title_name => _("Messages for you"),
       :pages => BoardEntry.all(:conditions=> find_params[:conditions], :order =>"last_updated DESC,board_entries.id DESC", :include => find_params[:include] | [ :user, :state ]),
       :delete_categories => '[連絡]' }
   end
@@ -759,7 +759,7 @@ class MypageController < ApplicationController
     locals = {
       :id_name => 'questions',
       :title_icon => "user_comment",
-      :title_name => 'みんなからの質問！',
+      :title_name => _('Recent Questions'),
       :pages => pages,
       :pages_obj => pages_obj,
       :per_page => options[:per_page],
@@ -781,7 +781,7 @@ class MypageController < ApplicationController
     locals = {
       :id_name => 'access_blogs',
       :title_icon => "star",
-      :title_name => '最近の人気記事',
+      :title_name => _('Recent Popular Entries (excluding questions)'),
       :pages => pages,
       :pages_obj => pages_obj,
       :per_page => options[:per_page],
@@ -1003,12 +1003,12 @@ class MypageController < ApplicationController
     else
       key = antenna_entry.key
       case
-      when key == 'message'  then _('あなたへ宛てた連絡')
-      when key == 'comment'  then _('過去にあなたがコメントを残した記事')
-      when key == 'bookmark' then _('あなたがブックマークした記事')
-      when key == 'group'    then _('参加中のグループの掲示版の書き込み')
+      when key == 'message'  then _("Messages for you")
+      when key == 'comment'  then _("Entries you have made comments")
+      when key == 'bookmark' then _("Entries bookmarked by yourself")
+      when key == 'group'    then _("Posts in the groups joined")
       else
-        _('未読記事の一覧')
+        _('List of unread entries')
       end
     end
   end

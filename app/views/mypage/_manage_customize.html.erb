@@ -15,19 +15,19 @@
 <% end -%>
 
 <% content_for :contents_right do -%>
-  <div class="desc"><p>画面をあなた好みにデザインすることが可能です。</p></div>
+  <div class="desc"><p><%= _('You can customize the site environment.')%></p></div>
 
   <div class="edit_form_space">
   <% form_tag({:action => 'update_customize'}) do -%>
     <%= template_error_messages_for 'user_custom' %>
 
-    <h2 class="subtitle">スタイル</h2>
+    <h2 class="subtitle"><%= _('Style') %></h2>
     <div style="margin: 10px;">
-    <%= radio_button("user_custom", "classic", false) %>スタンダード（上部グローバルナビゲーション）<br/>
-    <%= radio_button("user_custom", "classic", true) %>クラシック（右側サイドメニュー）<br/>
+    <%= radio_button("user_custom", "classic", false) %><%= _('Standerd (Top gloval menu)') %><br/>
+    <%= radio_button("user_custom", "classic", true) %><%= _('Classic (Right side gloval menu)') %><br/>
     </div>
 
-    <h2 class="subtitle">テーマ</h2>
+    <h2 class="subtitle"><%= _('Themes')%></h2>
     <% skins_path = File.join(RAILS_ROOT, "public", "stylesheets", "skins")
      Dir.glob(File.join(skins_path, "*")).each do |skins_dir|
        skin = File.basename(skins_dir)
@@ -42,7 +42,7 @@
     </div>
     <% end -%>
     <br style="clear: left;" />
-    <%= submit_tag("変更") %>
+    <%= submit_tag _("Change") %>
   <% end -%>
   </div>
 <% end -%>

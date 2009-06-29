@@ -46,12 +46,12 @@
   <div id="logo"><%= link_to(image_tag("#{controller.request.relative_url_root}/custom/images/title_logo.png", :alt => h(Admin::Setting.abbr_app_title))) -%></div>
 <% end -%>
 <div id="login" class="login-box">
-  <p>ログイン</p>
+  <p><%= _('Login')%></p>
   <%= render :partial => 'shared/login_form' %>
 
   <% if enable_activate? -%>
   <p><%= _('Signup') %></p>
-  <div style="text-align: center; font-weight: bold; font-size: 14px;"><%= link_to _('ユーザ登録してSKIPの利用を開始する'), activate_url %></div>
+  <div style="text-align: center; font-weight: bold; font-size: 14px;"><%= link_to _('Registration'), activate_url %></div>
   <% end -%>
 </div>
 <div id="desc_before_login" class="desc"><%= skip_image_tag 'indicator.gif' %></div>

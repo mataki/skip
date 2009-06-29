@@ -1,21 +1,21 @@
 <div class="search_cond_space">
 <% form_tag({:action => 'entry_search'}, {:method => 'get'}) do -%>
-  <table class="search_cond_box">
-    <tr>
-      <th>キーワード</th>
-      <td><%= text_field_tag('keyword', params[:keyword], :size => 60) %>（タグ、タイトル、本文が検索対象となります）</td>
-    </tr>
-    <tr>
-      <th>検索範囲</th>
-      <td>
-        <%= check_box_tag('user', "1", params[:user]) -%>ユーザのブログ
-        <%= check_box_tag('group', "1", params[:group]) -%>グループの掲示板
-        （全チェックなしは全てを対象とします）
-      </td>
-    </tr>
-    <%= render :partial => 'tag_search' %>
-  </table>
-  <div class="submit"><%= submit_tag '検索' %></div>
+<table class="search_cond_box">
+  <tr>
+    <th><%= _('Keywords')%></th>
+    <td><%= text_field_tag('keyword', params[:keyword], :size => 60) %><%= _('(The search targets are tags, titles and bodies)')%></td>
+  </tr>
+  <tr>
+    <th><%= _('Search Range')%></th>
+    <td>
+      <%= check_box_tag('user', "1", params[:user]) -%><%= _("Users' Diaries")%>
+      <%= check_box_tag('group', "1", params[:group]) -%><%= _('BBS entries of the group')%>
+      <%= _('(Both will be searched if none checked)')%>
+    </td>
+  </tr>
+  <%= render :partial => 'tag_search' %>
+</table>
+<div class="submit"><%= submit_tag _('Search') %></div>
 <% end -%>
 </div>
 
@@ -29,7 +29,7 @@
       <tr>
         <td rowspan="3" style="width: 90px; text-align: center;"><%= entry_link_to(diary, :view_text => showPicture(diary.user,90,60)) %></td>
         <th><%=h diary.diary_date %> - <%=h diary.category %></th>
-        <td style="text-align: right; width: 300px;">最終更新日時:<%=h diary.last_updated.strftime("%Y/%m/%d %H:%M") %></td>
+        <td style="text-align: right; width: 300px;"><%= _('Datetime Last Updated: ')%><%=h diary.last_updated.strftime(_('%m/%d/%Y %H:%M')) %></td>
       </tr>
       <tr>
         <th colspan="2"><span style="font-size: 12px;"><%= entry_link_to(diary) %></span> - <%= user_link_to diary.user %></th>

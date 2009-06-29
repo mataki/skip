@@ -17,17 +17,17 @@ module RankingsHelper
   def ranking_title contents_type
     case contents_type
     when :entry_access
-      "人気記事ランキング(アクセス）"
+      _("Ranking of Popular Blogs (Access)")
     when :entry_comment
-      "人気記事ランキング(コメント）"
+      _("Ranking of Popular Blogs (Comments)")
     when :entry_he
-      "人気記事ランキング(#{h Admin::Setting.point_button})"
+     _("Ranking of Popular Blogs (%s)") % h(_(Admin::Setting.point_button))
     when :user_access
-      "人気ユーザランキング"
+      _("Ranking of Popular Users")
     when :user_entry
-      "ブログ投稿数ランキング"
+      _("Ranking of Blog Entries Posted")
     when :commentator
-      "コメント投稿数ランキング"
+      _("Ranking of Comments Posted")
     else
       ""
     end
@@ -36,17 +36,17 @@ module RankingsHelper
   def ranking_caption contents_type
     case contents_type
     when :entry_access
-      "みんなによく読まれたブログ/掲示板です(公開範囲が「全公開」のみ)"
+      _("Most read blog / BBS entries (public entries only)")
     when :entry_comment
-      "みんなからコメントが活発に付いたブログ/掲示板です(公開範囲が「全公開」のみ)"
+      _("Entries most commented (public entries only)")
     when :entry_he
-      "みんなから最も#{h Admin::Setting.point_button}を貰ったブログ/掲示板です(公開範囲が「全公開」のみ)"
+      _("Blog / BBS entries got most %s from others (public entries only)") % h(_(Admin::Setting.point_button))
     when :user_access
-      "みんなから書いたブログや自身のプロフィールによく訪れてもらったユーザです"
+      _("Users got most access to his / her entries and profile.")
     when :user_entry
-      "最もブログを投稿したユーザです(公開範囲に関わらず、カウント)"
+      _("Users posted most blog entries (disregarding the publicity)")
     when :commentator
-      "最もコメントを付けたユーザです(公開範囲に関わらず、カウント)"
+      _("Users made most comments (disregarding the publicity)")
     else
       ""
     end
@@ -55,17 +55,17 @@ module RankingsHelper
   def ranking_amount_name contents_type
     case contents_type
     when :entry_access
-      "アクセス数"
+      _("Access Count")
     when :entry_comment
-      "コメント件数"
+      _("Comment Count")
     when :entry_he
-      "#{h Admin::Setting.point_button}"
+      h(_(Admin::Setting.point_button))
     when :user_access
-      "アクセス数"
+      _("Access Count")
     when :user_entry
-      "ブログ件数"
+      _("Blog Entry Count")
     when :commentator
-      "コメント件数"
+      _("Comment Count")
     else
       ""
     end

@@ -19,11 +19,11 @@ class Group < ActiveRecord::Base
   has_many :group_participations, :dependent => :destroy
   belongs_to :group_category
 
-  validates_presence_of :name, :description, :gid, :message =>'は必須です'
-  validates_uniqueness_of :gid, :case_sensitive => false, :message =>'は既に登録されています'
-  validates_length_of :gid, :minimum=>4, :message =>'は4文字以上で入力してください'
-  validates_length_of :gid, :maximum=>50, :message =>'は50文字以内で入力してください'
-  validates_format_of :gid, :message =>'は数字orアルファベットor記号(ハイフン「-」 アンダーバー「_」)で入力してください', :with => /^[a-zA-Z0-9\-_]*$/
+  validates_presence_of :name, :description, :gid, :message =>_('is mandatory.')
+  validates_uniqueness_of :gid, :case_sensitive => false, :message => _('has already been registered.')
+  validates_length_of :gid, :minimum=>4, :message =>_('requires 4 or more characters.')
+  validates_length_of :gid, :maximum=>50, :message =>_('accepts 50 or less characters only.')
+  validates_format_of :gid, :message =>_("accepts numbers, alphabets, hiphens(\"-\") and underscores(\"_\")."), :with => /^[a-zA-Z0-9\-_]*$/
 
   N_('Group|Protected|true')
   N_('Group|Protected|false')
@@ -57,9 +57,9 @@ class Group < ActiveRecord::Base
 
   class << self
     HUMANIZED_ATTRIBUTE_KEY_NAMES = {
-      "name" => "名前",
-      "description" => "説明",
-      "gid" => "グループID"
+      "name" => "Name",
+      "description" => "Description",
+      "gid" => "Group ID"
     }
     def human_attribute_name(attribute_key_name)
       HUMANIZED_ATTRIBUTE_KEY_NAMES[attribute_key_name] || super
@@ -71,7 +71,7 @@ class Group < ActiveRecord::Base
 
   def validate
     unless GroupCategory.find_by_id(self.group_category_id)
-      errors.add(:group_category_id, _('カテゴリが選択されていないか、不正な値です。'))
+      errors.add(:group_category_id, _('Category not selected or value invalid.'))
     end
   end
 
@@ -96,8 +96,8 @@ class Group < ActiveRecord::Base
 
   def create_entry_invite_group user_id, user_symbol, publication_symbols
     entry_params = { }
-    entry_params[:title] ="グループ：#{self.name}に招待しました"
-    entry_params[:message] = "[#{self.symbol}>]にあなたを招待しました。"
+    entry_params[:title] =_("Invited to Group: %s") % self.name
+    entry_params[:message] = _("You have been invited to join [%s>].") % self.symbol
     entry_params[:tags] = "#{Tag::NOTICE_TAG}"
     entry_params[:user_id] = user_id
     entry_params[:user_symbol] = user_symbol

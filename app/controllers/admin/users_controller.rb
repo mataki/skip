@@ -35,7 +35,7 @@ class Admin::UsersController < Admin::ApplicationController
         @user, @user_uid = Admin::User.make_new_user({:user => params[:user], :user_uid => params[:user_uid]})
         @user.save!
       end
-      flash[:notice] = _('登録しました。')
+      flash[:notice] = _('Registered.')
       redirect_to admin_users_path
     rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => e
       @topics = [[_('Listing %{model}') % {:model => _('user')}, admin_users_path], _('New %{model}') % {:model => _('user')}]
@@ -50,7 +50,7 @@ class Admin::UsersController < Admin::ApplicationController
     @topics = [[_('Listing %{model}') % {:model => _('user')}, admin_users_path],
                _('Editing %{model}') % {:model => @user.topic_title }]
   rescue ActiveRecord::RecordNotFound => e
-    flash[:notice] = _('ご指定のユーザは存在しません。')
+    flash[:notice] = _('User does not exist.')
     redirect_to admin_users_path
   end
 
@@ -60,15 +60,15 @@ class Admin::UsersController < Admin::ApplicationController
       @user.status = current_user.status
       @user.admin = current_user.admin
       @user.locked = current_user.locked
-      @user.errors.add_to_base(_('You cannot update status and admin and lock of yourself'))
+      @user.errors.add_to_base(_('Admins are not allowed to change their own status, admin and lock rights. Log in with another admin account to do so.'))
       raise ActiveRecord::RecordInvalid.new(@user)
     end
     @user.trial_num = 0 unless @user.locked
     @user.save!
-    flash[:notice] = _('更新しました。')
+    flash[:notice] = _('Updated.')
     redirect_to :action => "edit"
   rescue ActiveRecord::RecordNotFound => e
-    flash[:notice] = _('ご指定のユーザは存在しません。')
+    flash[:notice] = _('User does not exist.')
     redirect_to admin_users_path
   rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => e
     @topics = [[_('Listing %{model}') % {:model => _('user')}, admin_users_path],
@@ -103,43 +103,43 @@ class Admin::UsersController < Admin::ApplicationController
               activation.update_attributes(:code => nil)
             end
           end
-          flash[:notice] = _('登録しました。') + _('ログインし直して下さい。')
+          flash[:notice] = _('Registered.') + _('Log in again.')
           redirect_to :controller => "/platform", :action => :index
         rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => e
           render :layout => 'not_logged_in'
         end
       end
     else
-      contact_link = "<a href=\"mailto:#{SkipEmbedded::InitialSettings['administrator_addr']}\" target=\"_blank\">お問い合わせ</a>"
+      contact_link = "<a href=\"mailto:#{SkipEmbedded::InitialSettings['administrator_addr']}\" target=\"_blank\">" + _('Inquiries') + '</a>'
       if User.find_by_admin(true)
-        flash[:error] = _('既に管理者ユーザが登録済みです。ログインして下さい。ログイン出来ない場合は%{contact_link}下さい。') % {:contact_link => contact_link}
+        flash[:error] = _('Administrative user has already been registered. Log in with the account or contact {contact_link} in case of failure.') % {:contact_link => contact_link}
         redirect_to :controller => "/platform", :action => :index
       else
-        flash.now[:error] = _('この操作は、許可されていません。URLをご確認の上再度お試し頂くか、%{contact_link}下さい。') % {:contact_link => contact_link}
+        flash.now[:error] = _('Operation unauthorized. Verify the URL and retry. Contact %{contact_link} if the problem persists.') % {:contact_link => contact_link}
         render :text => '', :status => :forbidden, :layout => 'not_logged_in'
       end
     end
   end
 
   def import_confirmation
-    @topics = [[_('Listing %{model}') % {:model => _('user')}, admin_users_path], _('New user from csv')]
+    @topics = [[_('Listing %{model}') % {:model => _('user')}, admin_users_path], _('New users from CSV')]
     if request.get? || !valid_file?(params[:file], :content_types => ['text/csv', 'application/x-csv', 'application/vnd.ms-excel'])
       @users = []
       return render(:action => :import)
     end
     @users = Admin::User.make_users(params[:file], params[:options], params[:update_registered].blank?)
     import!(@users)
-    flash.now[:notice] = _('CSVファイルの内容を検証しました。')
+    flash.now[:notice] = _('Verified content of CSV file.')
     render :action => :import
   rescue ActiveRecord::RecordInvalid,
          ActiveRecord::RecordNotSaved => e
     @users.each {|user, user_uid| user.valid?}
-    flash.now[:notice] = _('CSVファイルの内容を検証しました。')
+    flash.now[:notice] = _('Verified content of CSV file.')
     render :action => :import
   end
 
   def import
-    @topics = [[_('Listing %{model}') % {:model => _('user')}, admin_users_path], _('New user from csv')]
+    @topics = [[_('Listing %{model}') % {:model => _('user')}, admin_users_path], _('New users from CSV')]
     @error_row_only = true
     if request.get? || !valid_file?(params[:file], :content_types => ['text/csv', 'application/x-csv', 'application/vnd.ms-excel'])
       @users = []
@@ -147,12 +147,12 @@ class Admin::UsersController < Admin::ApplicationController
     end
     @users = Admin::User.make_users(params[:file], params[:options], params[:update_registered].blank?)
     import!(@users, false)
-    flash[:notice] = _('CSVファイルからのユーザ登録/更新に成功しました。')
+    flash[:notice] = _('Successfully added/updated users from CSV file.')
     redirect_to admin_users_path
   rescue ActiveRecord::RecordInvalid,
          ActiveRecord::RecordNotSaved => e
     @users.each {|user, user_uid| user.valid?}
-    flash.now[:error] = _('CSVファイルに不正な値が含まれています。')
+    flash.now[:error] = _('Illegal value(s) found in CSV file.')
   end
 
   def change_uid
@@ -169,13 +169,13 @@ class Admin::UsersController < Admin::ApplicationController
     if uid = @user.user_uids.find(:first, :conditions => ['uid_type = ?', UserUid::UID_TYPE[:username]])
       uid.uid = params[:user_uid] ? params[:user_uid][:uid] : ''
       if uid.save
-        flash[:notice] = _("変更しました")
+        flash[:notice] = _("Update complete.")
         redirect_to :action => "edit"
       else
         @user_uid = uid
       end
     else
-      flash[:notice] = _("ユーザ名が見つかりませんでした。")
+      flash[:notice] = _("User name not found.")
       redirect_to admin_users_path
     end
   end
@@ -192,14 +192,14 @@ class Admin::UsersController < Admin::ApplicationController
     end
 
     if @user.user_uids.find(:first, :conditions => ['uid_type = ?', UserUid::UID_TYPE[:username]])
-      flash[:error] = _("既に%{username}が登録されています。") % {:username => _('user name')}
+      flash[:error] = _("User %{username} has already been registered.") % {:username => _('user name')}
       redirect_to(@user)
       return
     end
 
     @user_uid = @user.user_uids.build(params[:user_uid].merge!(:uid_type => UserUid::UID_TYPE[:username]))
     if @user_uid.save
-      flash[:notice] = _('登録に成功しました。')
+      flash[:notice] = _('User was successfully registered.')
       redirect_to :action => "edit"
     end
   end

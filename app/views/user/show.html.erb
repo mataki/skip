@@ -1,9 +1,9 @@
 <% content_for :contents_left do -%>
   <%= render(:partial => 'user/portrait_box', :locals => { :user => @user }) %>
   <div class="box_space" id="groups">
-    <div class="box_space_title"><%= icon_tag('group') %>参加グループ</div>
+    <div class="box_space_title"><%= icon_tag('group') %><%= _('Groups Joined') %></div>
     <div class="box_space_body">
-    <div class="helpbar">[<%= icon_tag('bullet_red') %>：管理者 <%= icon_tag('bullet_blue') %>：参加者]</div>
+    <div class="helpbar">[<%= _("%s: Administrators") % icon_tag('bullet_red') -%> <%= _("%s: Members") % icon_tag('bullet_blue') -%>]</div>
     <ul>
     <% @groups.each do |group| -%>
       <% icon_name = group.group_participations.first.owned? ? 'bullet_red' : 'bullet_blue' -%>
@@ -11,11 +11,11 @@
     <% end -%>
     </ul>
     </div>
-    <div class="box_space_bottom"><%= link_to "[全 #{@groups_count} 件][すべて見る]", :action => 'group', :uid => @user.uid %></div>
+    <div class="box_space_bottom"><%= link_to n_("[Total %{count} hit...see all]", "[Total %{count} hits...see all]",@groups_count) % {:count => @groups_count}, :action => 'group', :uid => @user.uid %></div>
   </div><!-- box_space -->
 
   <div class="box_space">
-    <div class="box_space_title"><%= icon_tag('user_suit') %>紹介したユーザ</div>
+    <div class="box_space_title"><%= icon_tag('user_suit') %><%= _('About Users') %></div>
     <div class="box_space_body">
     <ul>
     <% for chain in @follow_chains %>
@@ -23,24 +23,24 @@
     <% end %>
     </ul>
     </div>
-    <div class="box_space_bottom"><%= link_to '[すべて見る]', :action => 'social', :menu => 'social_chain_against', :uid => @user.uid %></div>
+    <div class="box_space_bottom"><%= link_to _('[See all]'), :action => 'social', :menu => 'social_chain_against', :uid => @user.uid %></div>
   </div><!-- box_space -->
 <% end -%>
 
 <% content_for :contents_right do -%>
   <% if @user.retired? -%>
-  <div class="box message">この方は既に退職されています</div>
+  <div class="box message"><%= _('This user has already left.') %></div>
   <% end -%>
 
   <div class="box relative100">
-    <h2 class="topix_title"><%= icon_tag('asterisk_orange') %>プロフィール</h2>
+    <h2 class="topix_title"><%= icon_tag('asterisk_orange') %><%= _('Profile') %></h2>
     <% if @user.id == @current_user.id -%>
     <div class="operation">
-      <%= link_to icon_tag('vcard_edit', :title=>'編集する') + '[編集する]', :controller => 'mypage', :action => 'manage', :menu => 'manage_profile' %>
+      <%= link_to icon_tag('vcard_edit', :title=>_('Edit')) + _('[Edit]'), :controller => 'mypage', :action => 'manage', :menu => 'manage_profile' %>
     </div>
     <% end -%>
 
-    <h2 class="subtitle">アカウント情報</h2>
+    <h2 class="subtitle"><% _('Account information') %></h2>
     <table class="normal user_info show">
     <% if user_name_mode?(:code) -%>
       <tr>
@@ -55,30 +55,30 @@
       </tr>
     <% end %>
       <tr>
-        <th><%=h _("Admin::User|Name") %></th>
+        <th><%=h s_("Admin::User|Name") %></th>
         <td><%=h @user.name -%></td>
       </tr>
     <% unless Admin::Setting.hide_email -%>
       <tr>
-        <th><%=h _('User|Email') %></th>
+        <th><%=h s_('User|Email') %></th>
         <td><a href="mailto:<%=h @user.email -%>"><%=h @user.email -%></a></td>
       </tr>
     <% end -%>
       <tr>
-        <th><%=h _('User|Section') %></th>
+        <th><%=h s_('User|Section') %></th>
         <td><%=h @user.section -%></td>
       </tr>
     <% if @current_user.id == @user.id -%>
       <tr>
-        <th><%=h _('User|Issued at') %></th>
+        <th><%=h s_('User|Issued at') %></th>
         <td><%=h @user.issued_at.blank? ? '' : @user.issued_at.strftime("%Y/%m/%d %H:%M:%S") %></td>
       </tr>
       <tr>
-        <th><%=h _('User|Last authenticated at') %></th>
+        <th><%=h s_('User|Last authenticated at') %></th>
         <td><%=h @user.last_authenticated_at.blank? ? '' : @user.last_authenticated_at.strftime("%Y/%m/%d %H:%M:%S") %></td>
       </tr>
       <tr>
-        <th><%=h _('User|Password expires at') %></th>
+        <th><%=h s_('User|Password expires at') %></th>
         <td><%=h @user.password_expires_at.blank? ? '' : @user.password_expires_at.strftime("%Y/%m/%d %H:%M:%S") %></td>
       </tr>
     <% end -%>
@@ -108,8 +108,8 @@
              } %>
   <% if @against_chains.size > 0 -%>
   <div class="box relative100">
-    <div class="operation"><%= link_to '[すべて見る]', :action => 'social', :menu => 'social_chain', :uid => @user.uid %></div>
-    <h2 class="topix_title"><%= icon_tag('asterisk_orange') %>紹介文</h2>
+    <div class="operation"><%= link_to _('[See all]'), :action => 'social', :menu => 'social_chain', :uid => @user.uid %></div>
+    <h2 class="topix_title"><%= icon_tag('asterisk_orange') %><%= _('Introductions') %></h2>
     <div class="topix_body">
     <table class="normal user_chain">
     <% for chain in @against_chains -%>

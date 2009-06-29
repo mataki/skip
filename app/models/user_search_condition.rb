@@ -29,20 +29,20 @@ class UserSearchCondition < SearchCondition
     include InitialSettingsHelper
 
     def include_manager_types
-      [ ['参加者のみ', "0"],
-        ['管理者を含む', "1"] ]
+      [ [_('Members Only'), "0"],
+        [_('Including Administrators'), "1"] ]
     end
 
     def sort_types
-      options = [ ['最近ログインした順', "0"] ]
-      options << ["#{Admin::Setting.login_account}順", "1"] if user_name_mode?(:code)
-      options << [_('user name') + "順", "2"] if user_name_mode?(:name)
+      options = [ [_('Sort by last login'), "0"] ]
+      options << [_("Sort by %s") % Admin::Setting.login_account, "1"] if user_name_mode?(:code)
+      options << [_('Sort by user name'), "2"] if user_name_mode?(:name)
       options
     end
 
     def output_types
-      [ ['通常', 'normal'],
-        ['一覧形式', 'list'] ]
+      [ [_('Normal View'), 'normal'],
+        [_('List View'), 'list'] ]
     end
   end
 

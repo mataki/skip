@@ -28,9 +28,8 @@
     </tr>
     <% end %>
     <tr valign="top">
-      <td><label for="login_password"><span style="font-weight: bold;">パスワード</span></label>
-        <% password_forgot_link_text = _('パスワードを忘れた/再設定したい方はこちら') -%>
-        <%= "(#{link_to(password_forgot_link_text, forgot_password_path, {:style => 'font-size:11px', :tabindex => '102'})})" if enable_forgot_password? %></td>
+      <td><label for="login_password"><span style="font-weight: bold;"><%= _('Password') %></span></label>
+        <%= "(#{link_to(_('Forgot your password? Click here.'), forgot_password_path, {:style => 'font-size:11px', :tabindex => '102'})})" if enable_forgot_password? %></td>
     </tr>
     <tr valign="top">
       <td><%= password_field 'login', 'password', { 'size' => 35, :onfocus=>'select();', 'AUTOCOMPLETE' => "on", :style => "font-family:Tahoma", :tabindex => "2" } %></td>
@@ -44,11 +43,11 @@
     </tr>
     <% end -%>
     <tr valign="top">
-      <td><%= check_box_tag "login_save", true, true, :tabindex => 4 %><%= label_tag "login_save", _("次回から自動的にログイン") %></td>
+      <td><%= check_box_tag "login_save", true, true, :tabindex => 4 %><%= label_tag "login_save", _('Login automatically from next time') %></td>
     </tr>
     <% elsif login_mode?(:fixed_rp) -%>
     <tr valign="top">
-      <td>下のボタンを押して、ログインしてください。
+      <td><%= _('Click the button below to login.')%>
         <%= hidden_field_tag "openid_url", h(SkipEmbedded::InitialSettings['fixed_op_url']) %>
       </td>
     </tr>
@@ -56,15 +55,15 @@
     <tr valign="top">
       <td>
         <ul style="list-style-type:none; margin-bottom: 5px;">
-          <li><%= link_to image_tag('idmixijp.gif') + "mixi IDでログイン", :action => :login, :openid_url => "mixi.jp" %></li>
-          <li><%= link_to image_tag('meyahoocom.gif') + "Yahoo! JAPAN ID でログイン", :action => :login, :openid_url => "yahoo.co.jp" %></li>
-          <li><%= link_to image_tag('wwwgooglecom.gif') + "Googleでログイン", :action => :login, :openid_url => "http://www.google.com/accounts/o8/id" %></li>
+          <li><%= link_to image_tag('idmixijp.gif') + _("Login with mixi ID"), :action => :login, :openid_url => "mixi.jp" %></li>
+          <li><%= link_to image_tag('meyahoocom.gif') + _("Login with Yahoo! JAPAN ID"), :action => :login, :openid_url => "yahoo.co.jp" %></li>
+          <li><%= link_to image_tag('wwwgooglecom.gif') + _("Login with Google"), :action => :login, :openid_url => "http://www.google.com/accounts/o8/id" %></li>
         </ul>
       </td>
     </tr>
     <tr valign="top">
       <td>
-        <label for="openid_url"><span style="font-weight: bold;">その他のOpenID URLでログイン</span></label>
+        <label for="openid_url"><span style="font-weight: bold;"><%= _('Login with other OpenID URL.')%></span></label>
       </td>
     </tr>
     <tr valign="top">
@@ -85,10 +84,10 @@
     <% if checkid_request %>
     <tr><td align="top"><%= link_to _('cancel this request'), cancel_path %></td></tr>
     <% end %>
-    <tr><td align="right"><%= submit_tag "ログイン", :onclick=>"saveLoginData();", :tabindex => "5" %></td></tr>
+    <tr><td align="right"><%= submit_tag _("Login"), :onclick=>"saveLoginData();", :tabindex => "5" %></td></tr>
   </table>
 <% end -%>
-<%= link_to _('OpenIDを忘れた/再設定したい方はこちら'), forgot_openid_path, {:style => 'font-size:14px'} if enable_forgot_openid? %>
+<%= link_to _('Forgot or Reset your OpenID? Click here.'), forgot_openid_path, {:style => 'font-size:14px'} if enable_forgot_openid? %>
 
 <% content_for :javascript_initializers do -%>
     var loadLoginData = function(){

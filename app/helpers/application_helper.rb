@@ -41,11 +41,11 @@ module ApplicationHelper
   def page_link pages
     option = params.clone
     output = ""
-    output << link_to('[最初へ]', option.update({:page => 1})) if pages.current.previous
-    output << link_to('[前へ]', option.update({:page => pages.current.previous})) if pages.current.previous
-    output << "全#{pages.item_count}件(#{pages.current.number}/#{pages.length}ページ)"
-    output << link_to('[次へ]', option.update({:page => pages.current.next})) if pages.current.next
-    output << link_to('[最後へ]', option.update({:page => pages.last})) if pages.current.next
+    output << link_to(_('[Head]'), option.update({:page => 1})) if pages.current.previous
+    output << link_to(_('[Prev]'), option.update({:page => pages.current.previous})) if pages.current.previous
+    output << _("Total %{items} hits (Page %{page} / %{pages})") % {:items => pages.item_count, :page => pages.current.number, :pages =>pages.length}
+    output << link_to(_('[Next]'), option.update({:page => pages.current.next})) if pages.current.next
+    output << link_to(_('[Last]'), option.update({:page => pages.last})) if pages.current.next
     output
   end
 
@@ -143,7 +143,7 @@ module ApplicationHelper
       file_name = url_for(:controller => 'pictures', :action => 'picture', :id => picture.id, :format => :png)
       if popup
         pop_name = url_for(:controller => 'pictures', :action => 'picture', :id => picture.id.to_s)
-        options[:title] = "クリックすると実際の大きさで表示されます"
+        options[:title] = _("Click to see in original size.")
         return link_to(image_tag(file_name, options), file_name, :class => 'nyroModal zoomable')
       end
     else
@@ -233,10 +233,10 @@ module ApplicationHelper
   # [コメント(n)-ポイント(n)-話題(n)-アクセス(n)]の表示
   def get_entry_infos entry
     output = ""
-    output << "コメント(#{entry.board_entry_comments_count})" if entry.board_entry_comments_count > 0
+    output << n_("Comment(%s)", "Comments(%s)", entry.board_entry_comments_count) % h(entry.board_entry_comments_count.to_s) if entry.board_entry_comments_count > 0
     output << "#{h Admin::Setting.point_button}(#{h entry.point.to_s})" if entry.point > 0
-    output << "話題(#{h entry.entry_trackbacks_count})" if entry.entry_trackbacks_count > 0
-    output << "アクセス(#{h entry.state.access_count.to_s})" if entry.state.access_count > 0
+    output << n_("Trackback(%s)", "Trackbacks(%s)", entry.entry_trackbacks_count) % h(entry.entry_trackbacks_count.to_s) if entry.entry_trackbacks_count > 0
+    output << n_("Access(%s)", "Accesses(%s)", entry.state.access_count) % h(entry.state.access_count.to_s) if entry.state.access_count > 0
     output = "[#{output}]" if output.size > 0
     return output
   end

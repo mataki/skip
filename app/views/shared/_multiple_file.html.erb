@@ -1,8 +1,8 @@
 <% blog_mode ||= false %>
 
-（注意！）セキュリティ上の問題があるファイルは、アップロードしないで下さい。
+<%= _('(Caution!) Never upload files that may cause security issues.')%>
 <div id="input_value_area"></div>
-<div><a href="#" id="add_file_tag_link">[更にファイルを追加]</a></div>
+<div><a href="#" id="add_file_tag_link"><%= _('[Add more files]')%></a></div>
 <div id="hidden_file_area" style="display:none;"></div>
 
 <% content_for :javascript_initializers do -%>

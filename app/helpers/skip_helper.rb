@@ -79,7 +79,7 @@ var platform_url_root = '#{root_url.chop}';
 
   def link_to_hiki_help
     sub_window_script = get_subwindow_script "#{root_url}hiki.html", 500, 600
-    link_to '【本文の書き方に関するヒント】', "javascript:void(0)", :onclick => "#{sub_window_script}"
+    link_to _('[Hints on writing entries]'), "javascript:void(0)", :onclick => "#{sub_window_script}"
   end
 
   def get_subwindow_script url, width, height, title='subwindow'

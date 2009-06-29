@@ -1,10 +1,10 @@
 <% content_for :contents_left do -%>
   <% form_tag( { :action => 'group'}, { :method => 'get' } ) do -%>
   <div class="box_space">
-    <div class="box_space_title"><%= icon_tag 'text_list_bullets'%>カテゴリ</div>
+    <div class="box_space_title"><%= icon_tag 'text_list_bullets'%><%= _('Category') %></div>
     <div class="box_space_body" style="font-size:10px">
       <%= radio_button_tag "group_category_id", "all",  params[:group_category_id] == "all", :class => "category_radio"  %>
-      <%= icon_tag "asterisk_orange", :margin => true %>全て(<%= @total_count %>)<br/>
+      <%= icon_tag "asterisk_orange", :margin => true %><%= _("All (%{num})") % {:num => @total_count}%><br/>
       <% #TODO group/index.rhtmlにほぼ同じ記述がある。helper化すべきか? %>
       <% @group_categories.each do |category| -%>
         <%= radio_button_tag "group_category_id", category.id, params[:group_category_id] == category.id.to_s, :class => "category_radio" %>
@@ -15,26 +15,26 @@
   </div><!-- box_space -->
 
   <div class="box_space">
-    <div class="box_space_title"><%= icon_tag 'table_lightning' %>表示形式</div>
+    <div class="box_space_title"><%= icon_tag 'table_lightning' %><%= _('Display Format') %></div>
     <div class="box_space_body">
-      <%= radio_button_tag "format_type", "list",   params[:format_type] == "list",   :class => "format_radio"  %> 一覧<br/>
-      <%= radio_button_tag "format_type", "detail", params[:format_type] == "detail", :class => "format_radio"  %> 詳細
+      <%= radio_button_tag "format_type", "list",   params[:format_type] == "list",   :class => "format_radio"  %> <%= _('List')%><br/>
+      <%= radio_button_tag "format_type", "detail", params[:format_type] == "detail", :class => "format_radio"  %> <%= _('Detailed')%>
      </div>
   </div><!-- box_space -->
 
   <div class="box_space">
-    <div class="box_space_title"><%= icon_tag 'table_refresh' -%>表示順</div>
+    <div class="box_space_title"><%= icon_tag 'table_refresh' -%><%= _('Display Order') %></div>
     <div class="box_space_body">
-      <%= radio_button_tag("sort_type", "date", params[:sort_type] == "date", :class => "sort_radio") -%> 参加日順 <br/>
-      <%= radio_button_tag("sort_type", "name", params[:sort_type] == "name", :class => "sort_radio") -%> グループ名順
+      <%= radio_button_tag("sort_type", "date", params[:sort_type] == "date", :class => "sort_radio") -%> <%= _('Sort by Date Joined') %><br/>
+      <%= radio_button_tag("sort_type", "name", params[:sort_type] == "name", :class => "sort_radio") -%> <%= _('Sort by Group Name') %>
     </div>
   </div><!-- box_space -->
 
   <div class="box_space">
-    <div class="box_space_title"><%= icon_tag 'find' -%>検索</div>
+    <div class="box_space_title"><%= icon_tag 'find' -%><%= _('Search') %></div>
     <div class="box_space_body">
     <%= text_field_tag('keyword', params[:keyword], :size=>'10') %>
-    <%= submit_tag '検索' %><br/>
+    <%= submit_tag _('Search') %><br/>
     </div>
   </div><!-- box_space -->
   <% end -%>

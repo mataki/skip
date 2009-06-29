@@ -53,7 +53,7 @@ describe Admin::SettingsController, 'POST /update_all' do
       end
       it "保存に成功したメッセージがflashに格納されていること" do
         post :update_all, 'settings' => {@key => @value}
-        flash[:notice].should == '保存しました。'
+        flash[:notice].should == 'Settings were saved successfully.'
       end
     end
     describe '通常のsettingsパラメタがふたつ送信された場合' do

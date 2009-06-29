@@ -11,10 +11,10 @@
       <%= icon_with_information(@current_user, comment, checked_on) %>
     </span>
     <span class="buttons">
-      <%= dummy_link_to(icon_tag('comment_edit', { :title => "編集" }), :id => "comment_edit_link_#{comment.id}", :class => "comment_edit_link") if writer?(comment, session[:user_id]) %>
-      <%= link_to(icon_tag('comment_delete', { :title => "削除" }), {:controller => "board_entries", :action => "destroy_comment", :id => comment.id}, :confirm => '本当に削除しますか？', :method => :post) if (comment_writer?(comment, session[:user_id]) && comment.children.size == 0) %>
+      <%= dummy_link_to(icon_tag('comment_edit', { :alt => _("Edit"), :title => _("Edit") }), :id => "comment_edit_link_#{comment.id}", :class => "comment_edit_link") if writer?(comment, session[:user_id]) %>
+      <%= link_to(icon_tag('comment_delete', { :alt => _("Delete"), :title => _("Delete") }), {:controller => "board_entries", :action => "destroy_comment", :id => comment.id}, :confirm => _('Are you sure to delete?'), :method => :post) if (comment_writer?(comment, session[:user_id]) && comment.children.size == 0) %>
       <% if level < nest_limit -%>
-      <span class="link_nest_comment" id='link_nest_comment_<%= comment.id %>'><%= dummy_link_to(icon_tag("comment_add", {:title => "このコメントに返信"}), :id => "comment_nest_link_#{comment.id}_#{level}", :class => "comment_nest_link") %></span>
+      <span class="link_nest_comment" id='link_nest_comment_<%= comment.id %>'><%= dummy_link_to(icon_tag("comment_add", { :alt => _("Reply to this comment"), :title => _("Reply to this comment")}), :id => "comment_nest_link_#{comment.id}_#{level}", :class => "comment_nest_link") %></span>
       <% end -%>
     </span>
   </div><!-- header -->
@@ -26,10 +26,10 @@
   <div class='comment_input_space invisible' id='comment_area_<%= comment.id %>'>
     <% form_tag({:controller => 'board_entries', :action => 'ado_edit_comment', :id => comment.id}, {:id => "comment_input_form_#{comment.id}", :class => "comment_input_form"}) do -%>
     <% @comment = BoardEntryComment.new(:contents => comment.contents) -%>
-      <label for="comment_contents">コメントの編集</label>
+      <label for="comment_contents"><%= _('Edit Comment')%></label>
       <%= text_area 'comment', 'contents', :cols => 90, :rows =>5 %>
-      <%= submit_tag '保存' %>
-      <input id="comment_cancel_button_<%= comment.id %>" class="comment_cancel_button" type="button" value="キャンセル"/>
+      <%= submit_tag _('Save') %>
+      <input id="comment_cancel_button_<%= comment.id %>" class="comment_cancel_button" type="button" value="<%= _('Cancel')%>"/>
     <% end -%>
   </div><!-- comment_input_space -->
 

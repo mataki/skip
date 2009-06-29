@@ -4,14 +4,14 @@
 <% form_tag({:action => 'update', :id=>@board_entry}, :multipart => true, :id=>'board_entry_form') do -%>
   <%= render :partial => 'board_entries/form' %>
   <% if @conflicted %>
-  <div class="desc">＊編集をやり直す場合は、"やり直し"ボタンを、他の人の編集内容を上書きする場合は"更新"ボタンを押してください</div>
+  <div class="desc"><%= _("*Click on &quot;Reset&quot; to reset the edit or &quot;Update&quot; to overwrite other's edit.")%></div>
 　<% edit_url = url_for(:action => 'edit', :id => @board_entry.id) %>
-  <%= button_to_function("やり直し", "if(confirm('編集内容が破棄されますが、よろしいですか？')){window.location.href='#{edit_url}' }") %>
+  <%= button_to_function(_("Reset"), "if(confirm('" + _('All changes will be discarded. Are you sure to proceed?') + "')){window.location.href='#{edit_url}' }") %>
   <% end %>
-  <%= submit_tag "更新", :id => 'submit_button' %>
-  <%= check_box_tag("non_update", "true") %>ちょっとした更新<br/>
+  <%= submit_tag _("Update"), :id => 'submit_button' %>
+  <%= check_box_tag("non_update", "true") %><%= _('Minor update')%><br/>
 <% end %>
 
 <div class="desc" style="margin-top: 10px;">
-  <%= link_to("[削除する]", {:action => "destroy", :id => @board_entry}, :confirm => "本当に削除しますか？", :method => :post)%>
+  <%= link_to(_("[Delete]"), {:action => "destroy", :id => @board_entry}, :confirm => _("Are you sure to delete?"), :method => :post)%>
 </div>

@@ -18,14 +18,14 @@ module Admin::ApplicationHelper
   def generate_admin_tab_menu
     output = ''
     output << '<ul>'
-    output << generate_tab_link( _('Admin::SettingsController|main'), admin_settings_path(:tab => :main), request.url == admin_settings_url(:tab => :main) || request.url == admin_root_url)
+    output << generate_tab_link( s_('Admin::SettingsController|main'), admin_settings_path(:tab => :main), request.url == admin_settings_url(:tab => :main) || request.url == admin_root_url)
     output << generate_tab_link( _('Data management'), admin_users_path, (!(request.url.include?(admin_settings_url) || request.url.include?(admin_documents_url) || request.url.include?(admin_images_url)) and !(request.url == admin_root_url)) )
-    output << generate_tab_link( _('Admin::SettingsController|literal'), admin_settings_path(:tab => :literal), request.url == admin_settings_url(:tab => :literal) )
+    output << generate_tab_link( s_('Admin::SettingsController|literal'), admin_settings_path(:tab => :literal), request.url == admin_settings_url(:tab => :literal) )
     output << generate_tab_link( _('Admin::ImagesController'), admin_images_path, request.url.include?(admin_images_url) )
     output << generate_tab_link( _('Admin::DocumentsController'), admin_documents_path, request.url.include?(admin_documents_url) )
-    output << generate_tab_link( _('Admin::SettingsController|mail'), admin_settings_path(:tab => :mail), request.url == admin_settings_url(:tab => :mail) )
-    output << generate_tab_link( _('Admin::SettingsController|feed'), admin_settings_path(:tab => :feed), request.url == admin_settings_url(:tab => :feed) )
-    output << generate_tab_link( _('Admin::SettingsController|security'), admin_settings_path(:tab => :security), request.url == admin_settings_url(:tab => :security) )
+    output << generate_tab_link( s_('Admin::SettingsController|mail'), admin_settings_path(:tab => :mail), request.url == admin_settings_url(:tab => :mail) )
+    output << generate_tab_link( s_('Admin::SettingsController|feed'), admin_settings_path(:tab => :feed), request.url == admin_settings_url(:tab => :feed) )
+    output << generate_tab_link( s_('Admin::SettingsController|security'), admin_settings_path(:tab => :security), request.url == admin_settings_url(:tab => :security) )
     output << generate_tab_link( _('Admin::OauthProvidersController'), admin_oauth_providers_path, request.url.include?(admin_oauth_providers_url) ) unless OauthProvider.count.zero?
     output << '</ul>'
   end

@@ -11,13 +11,13 @@
       <% form_tag({:controller => 'search', :action => 'full_text_search'} ,:method => 'get', :id => 'full_text_form') do -%>
       <div>
         <%= text_field_tag('query', params[:query], :size => 50 ) -%>
-        <%= submit_tag '全文検索' -%>
-        <input id="internet_google_search_button" type="button" value="インターネット検索" /><br/>
+        <%= submit_tag _('Full-text Search') -%>
+        <input id="internet_google_search_button" type="button" value="<%= _('Search in Internet')%>" /><br/>
       </div>
       <div style="margin-top: 5px;">
-        <% orderd_search_apps = SkipEmbedded::InitialSettings['search_apps'].sort_by{|key, value| value["order"]}.unshift(['all' , {'title' => '全体'}]) %>
+        <% orderd_search_apps = SkipEmbedded::InitialSettings['search_apps'].sort_by{|key, value| value["order"]}.unshift(['all' , {'title' => _('all')}]) %>
         <% orderd_search_apps.each do |app| %>
-        <%= radio_button_tag "target_aid", app.first, params[:target_aid] == app.first, {:id => "target_aid_#{app.first}", :class => "condition_radio_button"} %><%= label_tag "target_aid_#{app.first}", "#{h(app.last['title'])}から検索&nbsp;" -%>
+        <%= radio_button_tag "target_aid", app.first, params[:target_aid] == app.first, {:id => "target_aid_#{app.first}", :class => "condition_radio_button"} %><%= label_tag "target_aid_#{app.first}", _("Search from %s&nbsp;") % h(app.last['title']) -%>
         <% end # each %>
       </div>
       <div>

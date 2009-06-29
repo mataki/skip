@@ -28,7 +28,7 @@ class BookmarkComment < ActiveRecord::Base
 
   class << self
     HUMANIZED_ATTRIBUTE_KEY_NAMES = {
-      "tags" => "タグ"
+      "tags" => "Tags"
     }
     def human_attribute_name(attribute_key_name)
       HUMANIZED_ATTRIBUTE_KEY_NAMES[attribute_key_name] || super
@@ -40,7 +40,7 @@ class BookmarkComment < ActiveRecord::Base
   end
 
   def BookmarkComment.public_types
-    [ ['公開する', 'true'],      ['非公開', 'false'] ]
+    [ [_('Publish'), 'true'],      [_('Closed'), 'false'] ]
   end
 
   def after_save

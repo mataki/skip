@@ -23,18 +23,18 @@ class Bookmark < ActiveRecord::Base
   has_many :bookmark_comments, :dependent => :destroy
   has_many :popular_bookmarks, :dependent => :destroy
 
-  validates_presence_of :url, :message =>'は必須です'
-  validates_length_of :url, :maximum=>255, :message =>'は255文字以内で入力してください'
-  validates_format_of :url, :message =>'はhttp://...の形式で入力してください(httpsも可)', :with => URI.regexp, :if => :is_type_internet?
-  validates_presence_of :title, :message =>'は必須です'
-  validates_length_of :title, :maximum=>255, :message =>'は255文字以内で入力してください'
+  validates_presence_of :url, :message =>_('is mandatory.')
+  validates_length_of :url, :maximum=>255, :message =>_('accepts 255 or less characters only.')
+  validates_format_of :url, :message =>_('needs to be in "http(or https)://..." format.'), :with => URI.regexp, :if => :is_type_internet?
+  validates_presence_of :title, :message =>_('is mandatory.')
+  validates_length_of :title, :maximum=>255, :message =>_('accepts 255 or less characters only.')
 
-  SORT_TYPES = [["登録日順(降順)","bookmarks.updated_on DESC"],["登録日順(昇順)","bookmarks.updated_on"],["ユーザ数順","bookmark_comments_count DESC"]].freeze
+  SORT_TYPES = [[_("Sort by Registered Dates (Descending)"),"bookmarks.updated_on DESC"],[_("Sort by Registered Dates (Ascending)"),"bookmarks.updated_on"],[_("Sort by number of users"),"bookmark_comments_count DESC"]].freeze
   GET_TITLE_TIMEOUT = 7
   class << self
     HUMANIZED_ATTRIBUTE_KEY_NAMES = {
       "url" => "URL",
-      "title" => "タイトル",
+      "title" => "Title",
     }
     def human_attribute_name(attribute_key_name)
       HUMANIZED_ATTRIBUTE_KEY_NAMES[attribute_key_name] || super

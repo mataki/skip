@@ -21,7 +21,7 @@ class UserMailer < ActionMailer::Base
     else
       @recipients = recipient
     end
-    @subject    = UserMailer.base64("[#{Admin::Setting.abbr_app_title}] #{user_name}さんから連絡がきています")
+    @subject    = UserMailer.base64(_("[%{title}] %{user}さんから連絡がきています") % {:title => Admin::Setting.abbr_app_title, :user => user_name})
     @from       = from
     @send_on    = Time.now
     @headers    = {}
@@ -39,7 +39,7 @@ class UserMailer < ActionMailer::Base
 
   def sent_signup_confirm(recipient, login_id, login_url)
     @recipients = recipient
-    @subject    = UserMailer.base64("[#{Admin::Setting.abbr_app_title}] ユーザ登録が完了しました")
+    @subject    = UserMailer.base64(_("[%s] ユーザ登録が完了しました") % Admin::Setting.abbr_app_title)
     @from       = from
     @send_on    = Time.now
     @headers    = {}
@@ -48,7 +48,7 @@ class UserMailer < ActionMailer::Base
 
   def sent_apply_email_confirm(recipient, confirm_url)
     @recipients = recipient
-    @subject    = UserMailer.base64("[#{Admin::Setting.abbr_app_title}] メールアドレス変更の確認メールです")
+    @subject    = UserMailer.base64(_("[%s] メールアドレス変更の確認メールです") % Admin::Setting.abbr_app_title)
     @from       = from
     @send_on    = Time.now
     @headers    = {}
@@ -57,7 +57,7 @@ class UserMailer < ActionMailer::Base
 
   def sent_forgot_password(recipient, reset_password_url)
     @recipients = recipient
-    @subject    = UserMailer.base64("[#{Admin::Setting.abbr_app_title}] パスワード再設定のメールです")
+    @subject    = UserMailer.base64(_("[%s] パスワード再設定のメールです") % Admin::Setting.abbr_app_title)
     @from       = from
     @send_on    = Time.now
     @headers    = {}
@@ -66,7 +66,7 @@ class UserMailer < ActionMailer::Base
 
   def sent_forgot_openid(recipient, reset_openid_url)
     @recipients = recipient
-    @subject    = UserMailer.base64("[#{Admin::Setting.abbr_app_title}] OpenIDの再設定のメールです")
+    @subject    = UserMailer.base64(_("[%s] OpenIDの再設定のメールです") % Admin::Setting.abbr_app_title)
     @from       = from
     @send_on    = Time.now
     @headers    = {}
@@ -93,6 +93,7 @@ class UserMailer < ActionMailer::Base
 
 private
   def self.base64(text, charset="iso-2022-jp", convert=true)
+    #Fixme: Japanese dependent
     text = NKF.nkf('-j -m0 --cp932', text) if convert and charset == "iso-2022-jp"
     text = [text].pack('m').delete("\r\n")
     return "=?#{charset}?B?#{text}?="
@@ -111,8 +112,8 @@ private
   end
 
   def header
-    _('※このメールはシステムから自動配信されています。返信しないで下さい。') + "\n\n" +
-    _('%{sender}からのご連絡です。') % {:sender => sender}
+    _('*This email is automatically delivered from the system. Please do not reply.') + "\n\n" +
+    _('This email is a contact from %{sender}') % {:sender => sender}
   end
 
   def footer

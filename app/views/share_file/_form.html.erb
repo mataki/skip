@@ -12,29 +12,29 @@ table {
 <%= template_error_messages_for 'share_file' %>
 
 <div class="input_line">
-  <div class="input_label" style="height: 30px;">公開日付</div>
+  <div class="input_label" style="height: 30px;"><%= _('Publish Date')%></div>
   <div class="input_value">
     <p><%= datetime_select 'share_file', 'date', :use_month_numbers => true -%></p>
-    <p><a href="#" onclick="setCurrentDatetime('share_file', 'date');return false;">[現在時刻を設定]</a>
+    <p><a href="#" onclick="setCurrentDatetime('share_file', 'date');"><%= _('[Set current time]')%></a>
   </div>
   <div style="clear: left"></div>
 </div>
 
 <div class="input_line">
-  <div class="input_label">保存場所</div>
+  <div class="input_label"><%= _('Where to Save')%></div>
   <div class="input_value"><%= h(owner_name) -%></div>
   <div style="clear: left"></div>
 </div>
 
 <div class="input_line">
-  <div class="input_label" style="height: 30px;" id="input_label_publication">公開範囲</div>
+  <div class="input_label" style="height: 30px;" id="input_label_publication"><%= _('Privacy Settings')%></div>
   <div class="input_value" id="input_value_publication"><table><tr><td>
     <% display_type = (@share_file.owner_is_public? ? "" : "none") %>
     <span style="display:<%= display_type %>">
-      <%= radio_button_tag("publication_type", "public", params[:publication_type] == "public", :id=>"publication_type_public") -%>全体に公開
+      <%= radio_button_tag("publication_type", "public", params[:publication_type] == "public", :id=>"publication_type_public") -%><%= _('Open to All')%>
     </span>
     <%= radio_button_tag("publication_type", "private", params[:publication_type] == "private", :id=>"publication_type_private") -%><%= show_private_value share_file -%>
-    <%= radio_button_tag("publication_type", "protected", params[:publication_type] == "protected", :id=>"publication_type_protected") %>直接指定
+    <%= radio_button_tag("publication_type", "protected", params[:publication_type] == "protected", :id=>"publication_type_protected") %><%= _('Specify Directly')%>
 
     <%= render :partial => "shared/symbol_autocomplete_field", :locals => {:publication_symbols_value => params[:publication_symbols_value], :editor_symbols_value => params[:editor_symbols_value], :edit_checkbox => false } %>
     </td></tr></table>
@@ -43,19 +43,19 @@ table {
 </div>
 
 <div class="input_line">
-  <div class="input_label">タグ</div>
+  <div class="input_label"><%= _('Tags')%></div>
   <div class="input_value"><%= text_field 'share_file', 'category', :size => '60', :value => @share_file.comma_category %>
     <div id="category_box" style="display:none;">
-      <div id="candidates_list"><p>foo,barの形で複数指定できます</p></div>
-      <div style="font-size:10pt; font-weight:bold;">タグ：</div><div id="tags_list" style="margin-bottom:5px;"></div>
-      <div style="font-size:10pt; font-weight:bold;">人気のタグ：</div><div id="user_tags_list" style="margin-bottom:5px;"></div>
+      <div id="candidates_list"><p><%= _('Multiple values can be given in foo,bar format')%></p></div>
+      <div style="font-size:10pt; font-weight:bold;"><%= _('Tags: ')%></div><div id="tags_list" style="margin-bottom:5px;"></div>
+      <div style="font-size:10pt; font-weight:bold;"><%= _('Popular Tags: ')%></div><div id="user_tags_list" style="margin-bottom:5px;"></div>
     </div>
   </div>
   <div style="clear: left"></div>
 </div>
 
 <div class="input_line">
-  <div class="input_label">コメント</div>
+  <div class="input_label"><%= _('Comment')%></div>
   <div class="input_value"><%= text_field 'share_file', 'description', :size =>60 %></div>
   <div style="clear: left"></div>
 </div>
@@ -78,7 +78,7 @@ table {
         }
         if ($j('#publication_type_protected:checked').length > 0) {
             if ( publicationSymbolsValue.val() == '' ) {
-                if (confirm("ユーザの指定がされていません。\r\nこのままだと、「全体に公開」になりますがよろしいですか？")) {
+                if (confirm("<%= _('No user selected. \r\nAre you sure to make this open to all users?')%>")) {
                     $j('#publication_type_public').attr('checked', true);
                     changePublicationType();
                 } else {

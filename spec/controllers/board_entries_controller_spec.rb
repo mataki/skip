@@ -147,7 +147,7 @@ describe BoardEntriesController, "GET #destroy_comment" do
     end
     it { response.should redirect_to(:action => "forward", :id => @board_entry.id ) }
     it "flashにメッセージが登録されていること" do
-      flash[:notice].should == "コメントを削除しました。"
+      flash[:notice].should == "Comment was successfully deleted."
     end
   end
   describe "ネストのコメントが存在する場合" do
@@ -159,7 +159,7 @@ describe BoardEntriesController, "GET #destroy_comment" do
     end
     it { response.should redirect_to(:action => "forward", :id => @board_entry.id ) }
     it "flashにメッセージが登録されていること" do
-      flash[:warn].should == "このコメントに対するコメントがあるため削除できません。"
+      flash[:warn].should == "This comment cannot be deleted since it has been commented."
     end
   end
 end

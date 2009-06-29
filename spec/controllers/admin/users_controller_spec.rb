@@ -82,7 +82,7 @@ describe Admin::UsersController, 'POST #update' do
       post :update
     end
     it "flashに更新しましたのメッセージが入っていること" do
-      flash[:notice].should == '更新しました。'
+      flash[:notice].should == 'Updated.'
     end
     it { response.should be_redirect }
   end
@@ -400,7 +400,7 @@ describe Admin::UsersController, "POST #create_uid" do
       end
       it { response.should be_redirect }
       it "flashにメッセージが登録されていること" do
-        flash[:notice].should == "登録に成功しました。"
+        flash[:notice].should == "User was successfully registered."
       end
     end
     describe "バリデーションエラーの場合" do
@@ -423,7 +423,7 @@ describe Admin::UsersController, "POST #create_uid" do
     end
     it { response.should redirect_to(admin_user_path(@user)) }
     it "flashにメッセージが登録されていること" do
-      flash[:error].should == "既にuser nameが登録されています。"
+      flash[:error].should == "User user name has already been registered."
     end
   end
 end

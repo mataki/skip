@@ -22,7 +22,7 @@ class OpenidIdentifier < ActiveRecord::Base
   def validate
     normalize_ident_url
   rescue OpenIdAuthentication::InvalidOpenId => e
-    errors.add(:url, 'の形式が間違っています。')
+    errors.add(:url, _('has an invalid format.'))
   end
 
   def before_save

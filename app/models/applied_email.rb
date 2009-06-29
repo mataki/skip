@@ -14,13 +14,13 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class AppliedEmail < ActiveRecord::Base
-  validates_presence_of :email, :message =>'は必須です'
-  validates_length_of :email, :maximum=>50, :message =>'は50桁以内で入力してください'
-  validates_format_of :email, :message =>'は正しい形式で登録してください', :with => Authentication.email_regex
+  validates_presence_of :email, :message =>_('is mandatory.')
+  validates_length_of :email, :maximum=>50, :message =>_('accepts 50 or less characters only.')
+  validates_format_of :email, :message =>_('requires proper format.'), :with => Authentication.email_regex
 
   class << self
     HUMANIZED_ATTRIBUTE_KEY_NAMES = {
-      "email" => "メールアドレス",
+      "email" => "Email address",
     }
     def human_attribute_name(attribute_key_name)
       HUMANIZED_ATTRIBUTE_KEY_NAMES[attribute_key_name] || super

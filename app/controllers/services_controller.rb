@@ -32,18 +32,18 @@ class ServicesController < ActionController::Base
       end
       result = { :user_uid => user.uid, :group_symbols => group_hash }
     else
-      result = { :error => "#{Admin::Setting.abbr_app_title}にユーザ情報が登録されていません。" }
+      result = { :error => _("No user information registered in %s." ) % Admin::Setting.abbr_app_title}
     end
     render :text => result.to_json
   end
 
   def search_conditions
-    @contents = [ { :type => "",            :icon => 'asterisk_orange', :name => "すべて" },
-                  { :type => "entry",       :icon => 'report',          :name => "記事" },
-                  { :type => "bookmark",    :icon => 'tag_blue',        :name => "ブックマーク" },
-                  { :type => "user",        :icon => 'user_suit',       :name => "ユーザ" },
-                  { :type => "group",       :icon => 'group',           :name => "グループ" },
-                  { :type => "share_file", :icon => 'disk_multiple',   :name => "ファイル" } ]
+    @contents = [ { :type => "",            :icon => 'asterisk_orange', :name => _("All") },
+                  { :type => "entry",       :icon => 'report',          :name => _("Blogs / BBSs") },
+                  { :type => "bookmark",    :icon => 'book',            :name => _("Bookmarks") },
+                  { :type => "user",        :icon => 'user_suit',       :name => _("Users") },
+                  { :type => "group",       :icon => 'group',           :name => _("Groups") },
+                  { :type => "share_file", :icon => 'disk_multiple',   :name => _("Files") } ]
   end
 
   def new_users

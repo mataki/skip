@@ -73,16 +73,19 @@ module CalendarHelper
 
     first = Date.civil(options[:year], options[:month], 1)
     last = Date.civil(options[:year], options[:month], -1)
+    month_hash = {1 => _('January'), 2 => _('February'), 3 => _('March'), 4 => _('April'),
+      5 => _('May'), 6 => _('June'), 7 => _('July'), 8 => _('August'),
+      9 => _('September'), 10 => _('October'), 11 => _('November'), 12 => _('December')}
 
     cal = <<EOF
 <table class="#{options[:table_class]}">
 <thead>
 <tr class="#{options[:month_name_class]}">
-<th colspan="7">#{ options[:month]}月</th>
+<th colspan="7">#{month_hash[options[:month]]}</th>
 </tr>
 <tr class="#{ options[:day_name_class]}">
 EOF
-    %w[日 月 火 水 木 金 土].each {|d| cal << "<th>#{d[options[:abbrev]]}</th>"}
+    [_('Sun'), _('Mon'), _('Tue'), _('Wed'), _('Thu'), _('Fri'), _('Sat')].each {|d| cal << "<th>#{d[options[:abbrev]]}</th>"}
     cal << "</tr>
 </thead>
 <tbody>

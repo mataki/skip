@@ -59,11 +59,11 @@
 </div><!-- main -->
 
 <div id="statusbar">
-  <span><%= icon_tag 'table'              -%> 登録ユーザ数：<%= h @site_count.total_user_count %>人</span>
-  <span><%= icon_tag 'table_lightning'    -%> 本日のアクセス数：<%= h @site_count.today_user_count %>人</span>
-  <span><%= icon_tag 'database'           -%> 総記事件数：<%= h @site_count.total_blog_count %>件</span>
-  <span><%= icon_tag 'database_lightning' -%> 本日の記事数：<%= h @site_count.today_blog_count %>件</span>
-  <span><%= icon_tag 'chart_curve'        -%> <%= link_to("統計を見る", :controller => "/rankings", :action => :statistics) -%></span>
+  <span><%= icon_tag 'table'              -%> <%= _("Registered Users: %s users") % h(@site_count.total_user_count)%></span>
+  <span><%= icon_tag 'table_lightning'    -%> <%= _("Today's Access: %s access") % h(@site_count.today_user_count)%></span>
+  <span><%= icon_tag 'database'           -%> <%= _("Total Entries: %s entries") % h(@site_count.total_blog_count) %></span>
+  <span><%= icon_tag 'database_lightning' -%> <%= _("Today's Entries: %s entries") % h(@site_count.today_blog_count) %></span>
+  <span><%= icon_tag 'chart_curve'        -%> <%= link_to(_("See Statistics"), :controller => "/rankings", :action => :statistics) -%></span>
 </div>
 
 <%= skip_footer_link -%>

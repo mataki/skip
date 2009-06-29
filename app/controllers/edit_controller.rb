@@ -56,7 +56,7 @@ class EditController < ApplicationController
 
     unless validate_params params, @board_entry
       @board_entry.send_mail = params[:board_entry][:send_mail] if params[:board_entry]
-      flash[:warn] = "不正なパラメータがあります"
+      flash[:warn] = _("Invalid parameter(s) found.")
       render :action => 'index'
       return
     end
@@ -88,7 +88,7 @@ class EditController < ApplicationController
       @board_entry.cancel_mail
       @board_entry.prepare_send_mail if @board_entry.send_mail?
 
-      flash[:notice] = '正しく作成されました。' + message
+      flash[:notice] = _('Created successfully.') + message
       redirect_to @board_entry.get_url_hash
       return
     else
@@ -159,14 +159,14 @@ class EditController < ApplicationController
     unless params[:lock_version].to_i == @board_entry.lock_version
       @board_entry.send_mail = params[:board_entry][:send_mail] if params[:board_entry]
       @conflicted = true
-      flash.now[:warn] = "他の人によって同じ投稿に更新がかかっています。編集をやり直しますか？"
+      flash.now[:warn] = _("Update on the same entry from other users detected. Reset the edit?")
       render :action => 'edit'
       return
     end
 
     unless validate_params params, @board_entry
       @board_entry.send_mail = params[:board_entry][:send_mail] if params[:board_entry]
-      flash[:warn] = "不正なパラメータがあります"
+      flash[:warn] = _("Invalid parameter(s) found.")
       render :action => 'edit'
       return
     end
@@ -211,7 +211,7 @@ class EditController < ApplicationController
       @board_entry.cancel_mail
       @board_entry.prepare_send_mail if @board_entry.send_mail?
 
-      flash[:notice] = '記事の更新に成功しました。' + message
+      flash[:notice] = _('Entry was successfully updated.') + message
       redirect_to @board_entry.get_url_hash
       return
     end
@@ -225,7 +225,7 @@ class EditController < ApplicationController
     redirect_to_with_deny_auth and return unless authorize_to_edit_board_entry? @board_entry
 
     @board_entry.destroy
-    flash[:notice] = _('削除しました。')
+    flash[:notice] = _('Deletion complete.')
     # そのユーザのブログ一覧画面に遷移する
     # TODO: この部分をメソッド化した方がいいかも(by mat_aki)
     redirect_to @board_entry.get_url_hash.delete_if{|key,val| key == :entry_id}
@@ -241,7 +241,7 @@ class EditController < ApplicationController
       tb_entry.destroy
     end
 
-    flash[:notice] = "指定の話題のリンクを削除しました"
+    flash[:notice] = _("Specified trackback was deleted successfully.")
     redirect_to @board_entry.get_url_hash
   end
 
@@ -256,12 +256,11 @@ class EditController < ApplicationController
 
 private
   def setup_layout
-    @main_menu = (!params[:symbol].blank? and params[:symbol].include?('gid:')) ? 'グループ' : 'マイブログ'
+    @main_menu = (!params[:symbol].blank? and params[:symbol].include?('gid:')) ? _('Groups') : _('My Blog')
 
     symbol = params[:symbol] || session[:user_symbol]
     owner = BoardEntry.owner(symbol)
-    @title = "#{write_place_name(owner)}を"
-    @title << (["edit", "update"].include?(action_name) ? '編集する' : '書く')
+    @title = _("%{action} %{write_place}") % {:action => (["edit", "update"].include?(action_name) ? _('Edit') : _('Write')), :write_place => write_place_name(owner)}
   end
 
   def load_tagwards_and_link_params
@@ -286,7 +285,7 @@ private
       target_symbols_editor = params[:editor_symbols_value].split(/,/).map {|symbol| symbol.strip }
       target_symbols_publication << User.find(board_entry.user_id).symbol
     else
-      raise "パラメータが不正です"
+      raise _("Invalid parameter(s).")
     end
     return target_symbols_publication, target_symbols_editor
   end
@@ -295,19 +294,19 @@ private
   def validate_params params, entry
     # 公開範囲のタイプ
     unless %w(public private protected).include? params[:publication_type]
-      entry.errors.add nil, "公開範囲の指定が不正です"
+      entry.errors.add nil, _("Invalid privacy setting.")
     end
     # 公開範囲の値
     if params[:publication_type] == "protected" && params[:publication_symbols_value]
       unless params[:publication_symbols_value].empty?
         unless /\A[\s]*((u|g|e)id:[^,]*,)*[\s]*(u|g|e)id[^,]*\Z/ =~ params[:publication_symbols_value]
-          entry.errors.add nil, "公開範囲の指定が不正です"
+          entry.errors.add nil, _("Invalid privacy setting.")
         end
       end
     end
     # 公開日付
     unless Date.valid_date?(*params[:board_entry].values_at('date(1i)', 'date(2i)', 'date(3i)').map(&:to_i))
-      entry.errors.add(:date, "には存在する日付を指定してください")
+      entry.errors.add(:date, _("needs to be a valid date."))
     end
     entry.errors.empty?
   end

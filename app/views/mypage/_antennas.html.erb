@@ -5,8 +5,8 @@
     <div style="border-bottom: 1px dashed silver; background-color: #f0f0ff;">
       <%= icon_tag 'transmit' -%>
       <span class="editable_antenna_name" id="editable_antenna_name_<%= @antenna.id -%>"><%=h @antenna.name -%></span>
-      <a id="add_antenna_item_link_<%= @antenna.id %>" class="add_antenna_item_link" href="#">[アイテム追加]</a>
-      <a id="delete_antenna_link_<%= @antenna.id %>" class="delete_antenna_link" href="#">[削除]</a>
+      <a id="add_antenna_item_link_<%= @antenna.id %>" class="add_antenna_item_link" href="#"><%= _('[Add item]') %></a>
+      <a id="delete_antenna_link_<%= @antenna.id %>" class="delete_antenna_link" href="#"><%= _('[Delete]')%></a>
     </div>
     <ul id="antenna_items_list_<%= @antenna.id %>" class="antenna_items_list" style="cursor: move; margin-left: 25px;">
       <%= render :partial => 'antenna/antenna_item', :collection => @antenna.antenna_items, :locals => {:antenna_id => @antenna.id} %>
@@ -25,7 +25,7 @@
         url: ado_inplace_edit_url,
         params: 'authenticity_token='+$j('#authenticity_token').val(),
         update_value: 'value',
-        save_button: '<a href="#" class="inplace_save">[保存]</a>',
-        cancel_button: '<a href="#" class="inplace_cancel">[キャンセル]</a>'
+        save_button: '<a href="#" class="inplace_save"><%= _("[Save]")%></a>',
+        cancel_button: '<a href="#" class="inplace_cancel"><%= _("[Cancel]")%></a>'
     });
 <% end -%>
