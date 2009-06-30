@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2009-06-30 16:53+0900\n"
+"POT-Creation-Date: 2009-06-30 17:11+0900\n"
 "PO-Revision-Date: 2009-06-30 14:52+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3306,7 +3306,7 @@ msgstr "はい"
 msgid "Groups"
 msgstr "グループ"
 
-#: app/helpers/application_helper.rb:336
+#: app/helpers/application_helper.rb:337
 #: app/controllers/mypage_controller.rb:519
 #: app/controllers/user_controller.rb:240
 #: app/controllers/feed_controller.rb:115 app/views/user/show.html.erb:4
@@ -3985,7 +3985,7 @@ msgstr ""
 msgid "Most read blog / BBS entries (public entries only)"
 msgstr "みんなによく読まれたブログ/掲示板です(公開範囲が「全公開」のみ)"
 
-#: app/helpers/application_helper.rb:325
+#: app/helpers/application_helper.rb:326
 msgid "Move to groups joined ..."
 msgstr "参加グループへ移動 ..."
 
@@ -5848,6 +5848,10 @@ msgid "UserCustom|Classic"
 msgstr ""
 
 #: app/models/user_custom.rb:-
+msgid "UserCustom|Display entries format"
+msgstr ""
+
+#: app/models/user_custom.rb:-
 msgid "UserCustom|Theme"
 msgstr ""
 
@@ -6303,6 +6307,10 @@ msgstr "ブログを書く"
 #: app/views/entries/_entry_detail.html.erb:285
 msgid "Write a comment"
 msgstr "コメントを書く"
+
+#: app/helpers/application_helper.rb:323
+msgid "Write a question"
+msgstr "質問を書く"
 
 #: app/views/group/_form.html.erb:43
 msgid "Yes"
@@ -7470,6 +7478,10 @@ msgstr ""
 
 #: app/controllers/rankings_controller.rb:154
 msgid "該当のブックマークがありません。"
+msgstr ""
+
+#: app/helpers/application_helper.rb:323
+msgid "質問"
 msgstr ""
 
 #: app/views/mypage/_manage_message.html.erb:14
