@@ -21,15 +21,6 @@ class Antenna < ActiveRecord::Base
   validates_length_of :name, :minimum=>1, :message =>_('requires 1 or more characters.')
   validates_length_of :name, :maximum=>10, :message =>_('accepts 10 or less characters only.')
 
-  class << self
-    HUMANIZED_ATTRIBUTE_KEY_NAMES = {
-      "name" => "Name of Antena",
-    }
-    def human_attribute_name(attribute_key_name)
-      HUMANIZED_ATTRIBUTE_KEY_NAMES[attribute_key_name] || super
-    end
-  end
-
   def count
     @count
   end

@@ -31,15 +31,6 @@ class Bookmark < ActiveRecord::Base
 
   SORT_TYPES = [[_("Sort by Registered Dates (Descending)"),"bookmarks.updated_on DESC"],[_("Sort by Registered Dates (Ascending)"),"bookmarks.updated_on"],[_("Sort by number of users"),"bookmark_comments_count DESC"]].freeze
   GET_TITLE_TIMEOUT = 7
-  class << self
-    HUMANIZED_ATTRIBUTE_KEY_NAMES = {
-      "url" => "URL",
-      "title" => "Title",
-    }
-    def human_attribute_name(attribute_key_name)
-      HUMANIZED_ATTRIBUTE_KEY_NAMES[attribute_key_name] || super
-    end
-  end
 
   class InvalidMultiByteURIError < RuntimeError;end
 

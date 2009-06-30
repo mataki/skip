@@ -66,19 +66,6 @@ class BoardEntry < ActiveRecord::Base
     Tag.validate_tags(category).each{ |error| errors.add(:category, error) }
   end
 
-  class << self
-    HUMANIZED_ATTRIBUTE_KEY_NAMES = {
-      "title" => "Subject",
-      "category" => "Tags",
-      "contents" => "Content",
-      "date" => "Date",
-      "user_id" => "Author"
-    }
-    def human_attribute_name(attribute_key_name)
-      HUMANIZED_ATTRIBUTE_KEY_NAMES[attribute_key_name] || super
-    end
-  end
-
   def before_save
     square_brackets_tags
     parse_symbol_link

@@ -26,15 +26,6 @@ class BookmarkComment < ActiveRecord::Base
   N_('BookmarkComment|Stared|true')
   N_('BookmarkComment|Stared|false')
 
-  class << self
-    HUMANIZED_ATTRIBUTE_KEY_NAMES = {
-      "tags" => "Tags"
-    }
-    def human_attribute_name(attribute_key_name)
-      HUMANIZED_ATTRIBUTE_KEY_NAMES[attribute_key_name] || super
-    end
-  end
-
   def validate
     Tag.validate_tags(tags).each{ |error| errors.add(:tags, error) }
   end

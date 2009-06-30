@@ -90,17 +90,6 @@ class User < ActiveRecord::Base
   end
 
   class << self
-    # FIXME 不要になるので消す
-    HUMANIZED_ATTRIBUTE_KEY_NAMES = {
-      "uid" => "User name",
-      "code" => Admin::Setting.login_account,
-      "name" => "Name",
-      "section" => "Section",
-      "email" => "Email address",
-    }
-    def human_attribute_name(attribute_key_name)
-      HUMANIZED_ATTRIBUTE_KEY_NAMES[attribute_key_name] || super
-    end
     def symbol_type
       :uid
     end

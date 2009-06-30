@@ -19,14 +19,4 @@ class EntryTrackback < ActiveRecord::Base
 
   validates_presence_of :board_entry_id, :message =>_('is mandatory.')
   validates_presence_of :tb_entry_id, :message =>_('is mandatory.')
-
-  class << self
-    HUMANIZED_ATTRIBUTE_KEY_NAMES = {
-      "board_entry_id" => "Original topic",
-      "tb_entry_id" => "Entry based on the original topic"
-    }
-    def human_attribute_name(attribute_key_name)
-      HUMANIZED_ATTRIBUTE_KEY_NAMES[attribute_key_name] || super
-    end
-  end
 end

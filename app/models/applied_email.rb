@@ -18,19 +18,9 @@ class AppliedEmail < ActiveRecord::Base
   validates_length_of :email, :maximum=>50, :message =>_('accepts 50 or less characters only.')
   validates_format_of :email, :message =>_('requires proper format.'), :with => Authentication.email_regex
 
-  class << self
-    HUMANIZED_ATTRIBUTE_KEY_NAMES = {
-      "email" => "Email address",
-    }
-    def human_attribute_name(attribute_key_name)
-      HUMANIZED_ATTRIBUTE_KEY_NAMES[attribute_key_name] || super
-    end
-  end
-
   def before_save
     source = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
     self.onetime_code = ""
     50.times {|i| self.onetime_code << source[rand(source.size)] }
   end
-
 end

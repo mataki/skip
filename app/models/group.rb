@@ -27,10 +27,6 @@ class Group < ActiveRecord::Base
 
   N_('Group|Protected|true')
   N_('Group|Protected|false')
-  # TODO HUMANIZED_ATTRIBUTE_KEY_NAMESが存在しているので一時的に追加
-  N_('Group|Gid')
-  N_('Group|Name')
-  N_('Group|Description')
 
   named_scope :partial_match_gid, proc {|word|
     {:conditions => ["gid LIKE ?", SkipUtil.to_lqs(word)]}
@@ -56,14 +52,6 @@ class Group < ActiveRecord::Base
   end
 
   class << self
-    HUMANIZED_ATTRIBUTE_KEY_NAMES = {
-      "name" => "Name",
-      "description" => "Description",
-      "gid" => "Group ID"
-    }
-    def human_attribute_name(attribute_key_name)
-      HUMANIZED_ATTRIBUTE_KEY_NAMES[attribute_key_name] || super
-    end
     def symbol_type
       :gid
     end

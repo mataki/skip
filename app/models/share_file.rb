@@ -37,18 +37,6 @@ class ShareFile < ActiveRecord::Base
   validates_presence_of :user_id, :message =>_('is mandatory.')
   validates_uniqueness_of :file_name, :scope => :owner_symbol, :message =>_('File with the same name already uploaded.')
 
-  class << self
-    HUMANIZED_ATTRIBUTE_KEY_NAMES = {
-      "description" => "Description",
-      "category" => "Tags",
-      "date" => "Date",
-      "file_name" => "File name"
-    }
-    def human_attribute_name(attribute_key_name)
-      HUMANIZED_ATTRIBUTE_KEY_NAMES[attribute_key_name] || super
-    end
-  end
-
   def validate
     Tag.validate_tags(category).each{ |error| errors.add(:category, error) }
     errors.add_to_base _('ご指定の操作は実行できません。') unless updatable?

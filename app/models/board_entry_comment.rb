@@ -22,20 +22,8 @@ class BoardEntryComment < ActiveRecord::Base
   validates_presence_of :contents, :message =>_('is mandatory.')
   validates_presence_of :user_id, :message =>_('is mandatory.')
 
-  class << self
-    HUMANIZED_ATTRIBUTE_KEY_NAMES = {
-      "board_entry_id" => "Parent board entry",
-      "contents" => "Content",
-      "user_id" => "Author"
-    }
-    def human_attribute_name(attribute_key_name)
-      HUMANIZED_ATTRIBUTE_KEY_NAMES[attribute_key_name] || super
-    end
-  end
-
   def comment_created_time
     format = _("%B %d %Y %H:%M")
     created_on.strftime(format)
   end
-
 end

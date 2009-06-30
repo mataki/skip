@@ -17,14 +17,4 @@ class AntennaItem < ActiveRecord::Base
   belongs_to :antenna
 
   validates_uniqueness_of :value, :scope => [:antenna_id, :value_type], :message => _("Already registered in the antenna.")
-
-  class << self
-    HUMANIZED_ATTRIBUTE_KEY_NAMES = {
-      "value" => "",
-    }
-    def human_attribute_name(attribute_key_name)
-      HUMANIZED_ATTRIBUTE_KEY_NAMES[attribute_key_name] || super
-    end
-  end
-
 end
