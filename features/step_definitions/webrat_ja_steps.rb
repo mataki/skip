@@ -86,6 +86,11 @@ Then /^"(.*)"がチェックされていること$/ do |label|
   field_labeled(label).should be_checked
 end
 
+
+Then /^"(.*)"が選択されていること$/ do |label|
+  field_labeled(label).should be_checked
+end
+
 Then %r!デバッグのための?ページを確認する! do
   save_and_open_page
 end

@@ -1,15 +1,13 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+biz:
+  code: BIZ
+  name: ビジネス
+  icon: page_word
+  description:
+  initial_selected: true
 
-one:
-  code: MyString1
-  name: MyString1
-  icon: MyString1
-  description: MyString1
-  initial_selected: false
-
-two:
-  code: MyString2
-  name: MyString2
-  icon: MyString2
-  description: MyString2
+life:
+  code: LIFE
+  name: ライフ
+  icon: group_gear
+  description:
   initial_selected: false

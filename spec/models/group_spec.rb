@@ -203,8 +203,8 @@ describe Group do
       @emacs_group = create_group :gid => 'emacs_group', :group_category_id => @dev_category.id do |g|
         g.group_participations.build(:user_id => @tom.id, :owned => true)
       end
-      @life_category = create_group_category :code => 'life'
-      @move_group = create_group :gid => 'move_group', :group_category_id => @life_category.id do |g|
+      @misc_category = create_group_category :code => 'misc'
+      @move_group = create_group :gid => 'move_group', :group_category_id => @misc_category.id do |g|
         g.group_participations.build(:user_id => @tom.id, :owned => true)
       end
     end
@@ -213,7 +213,7 @@ describe Group do
       it "グループのカテゴリとそのカテゴリのグループ数および全グループ数を返す" do
         group_counts, total_count = Group.count_by_category
         group_counts[@dev_category.id].should == 2
-        group_counts[@life_category.id].should == 1
+        group_counts[@misc_category.id].should == 1
         total_count.should == 3
       end
     end
@@ -222,7 +222,7 @@ describe Group do
       it 'ユーザの所属するグループのカテゴリとそのカテゴリのグループ数及び全グループ数を返す' do
         group_counts, total_count = Group.count_by_category(@alice.id)
         group_counts[@dev_category.id].should == 1
-        group_counts[@life_category.id].should == 0
+        group_counts[@misc_category.id].should == 0
         total_count.should == 1
       end
     end

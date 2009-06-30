@@ -6,7 +6,7 @@ a_protected_group1:
   protected: 1
   created_on: <%= SkipFaker.today %>
   updated_on: <%= SkipFaker.today %>
-  group_category: one
+  group_category: biz
 
 a_protected_group2:
   name: <%= SkipFaker.rand_char %>
@@ -15,4 +15,4 @@ a_protected_group2:
   protected: 1
   created_on: <%= SkipFaker.today %>
   updated_on: <%= SkipFaker.today %>
-  group_category: two
+  group_category: life
