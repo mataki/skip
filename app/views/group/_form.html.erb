@@ -1,21 +1,13 @@
-<% action_value ||= "" -%>
-<% submit_value ||= "" -%>
-
-<div class="edit_form_space">
-
-<% form_tag({:action => action_value}, :id=>'group_form') do -%>
-  <%= template_error_messages_for 'group' %>
-
-<% if action_value != 'update' -%>
-<div class="input_line">
-  <div class="input_label"><%= label :group, :gid, _('Group ID') %></div>
-  <div class="input_value"><%= text_field 'group', 'gid', :size => 40 %></div>
-  <div class="param_desc" style="font-size:10px; color:gray;">
-  <%= _("*A group ID consists of 4 or more letters of alphabets, numbers, \"-\" and \"_\".<br>\n  *Group ID is used in many situations e.g. URLs to identify the group so choose a understandable one.")%>
+<%= template_error_messages_for 'group' %>
+<% if @group && @group.new_record? -%>
+  <div class="input_line">
+    <div class="input_label"><%= label :group, :gid, _('Group ID') %></div>
+    <div class="input_value"><%= text_field 'group', 'gid', :size => 40 %></div>
+    <div class="param_desc" style="font-size:10px; color:gray;">
+    <%= _("*A group ID consists of 4 or more letters of alphabets, numbers, \"-\" and \"_\".<br>\n  *Group ID is used in many situations e.g. URLs to identify the group so choose a understandable one.")%>
+    </div>
   </div>
-</div>
 <% end -%>
-
 <div class="input_line">
   <div class="input_label"><%= label :group, :name, _('Name of Group') %></div>
   <div class="input_value"><%= text_field 'group', 'name', :size => 40 %></div>
@@ -51,15 +43,14 @@
     <%= select :group, :protected, { _("No") => false, _("Yes") => true } %>
   </div>
 </div>
-<%= submit_tag submit_value %>
-<% end -%>
-</div>
 
-<% if action_value == 'update' -%>
-<div class="desc" style="margin-top: 10px; padding: 5px;">
-  <%= link_to(_("[[Delete]]"), {:action => 'destroy'}, :confirm => _('Are you sure to delete?'), :method => :post ) %>
+<div class="input_line">
+  <div class="input_label"><%= _('Default Privacy Settings') %></div>
+  <div class="input_value"><table><tr><td>
+    <%= radio_button('group', 'default_publication_type', 'public', :id => 'default_publication_type_public', :class => 'default_publication_type') %><%= label_tag('default_publication_type_public', _('Open to All')) %>
+    <%= radio_button('group', 'default_publication_type', 'private', :id => 'default_publication_type_private', :class => 'default_publication_type') %><%= label_tag('default_publication_type_private', _("Members Only")) %>
+  </td></tr></table></div>
 </div>
-<% end -%>
 
 <% content_for :javascript_includes do -%>
   <%= skip_javascript_include_tag "fckeditor/fckeditor" %>

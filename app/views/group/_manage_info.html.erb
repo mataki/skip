@@ -13,5 +13,13 @@
 <% end -%>
 
 <% content_for :contents_right do -%>
-  <%= render(:partial => "group/form", :locals => { :action_value => 'update', :submit_value => _('Update') } )  %>
+<div class="edit_form_space">
+  <% form_tag({:action => 'update'}, :id => 'group_form') do -%>
+    <%= render :partial => "group/form" %>
+    <%= submit_tag _('Update'), :disable_with => _('Updating...') %>
+  <% end -%>
+  <div class="desc" style="margin-top: 10px; padding: 5px;">
+    <%= link_to(_("[[Delete]]"), {:action => 'destroy'}, :confirm => _('Are you sure to delete?'), :method => :post ) %>
+  </div>
+</div>
 <% end -%>

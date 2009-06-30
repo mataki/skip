@@ -43,8 +43,6 @@ class GroupsController < ApplicationController
   def new
     @group = Group.new
     @group_categories = GroupCategory.all
-    render(:partial => "group/form", :layout => 'layout',
-            :locals => { :action_value => 'create', :submit_value => _('Create') } )
   end
 
   # post_action
@@ -58,8 +56,7 @@ class GroupsController < ApplicationController
       flash[:notice] = _('Group was created successfully.')
       redirect_to :controller => 'group', :action => 'show', :gid => @group.gid
     else
-      render(:partial => "group/form", :layout => 'layout',
-              :locals => { :action_value => 'create', :submit_value => _('Create') } )
+      render :action => 'new'
     end
   end
 

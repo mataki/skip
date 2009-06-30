@@ -62,6 +62,18 @@ describe Group do
       @group.gid = 'Skip_gid'
       @group.valid?.should be_false
     end
+    it 'default_publication_typeに、publicを指定できること' do
+      @group.default_publication_type = 'public'
+      @group.valid?.should be_true
+    end
+    it 'default_publication_typeに、privateを指定できること' do
+      @group.default_publication_type = 'private'
+      @group.valid?.should be_true
+    end
+    it 'default_publication_typeに、publicとprivate以外を指定するとエラーになること' do
+      @group.default_publication_type = 'foo'
+      @group.valid?.should be_false
+    end
   end
 
   describe Group, "承認待ちのユーザがいるとき" do
@@ -404,10 +416,10 @@ describe Group do
 
   def valid_group
     group = Group.new({
-      :name => '',
-      :description =>  '',
+      :name => 'name',
+      :description =>  'description',
       :protected => true,
-      :gid => '',
+      :gid => 'valid_gid',
       :group_category_id => create_group_category(:initial_selected => true, :code => 'VALID').id
     })
     group

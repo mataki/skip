@@ -61,7 +61,7 @@ describe GroupsController, "GET #new" do
 
     get :new
   end
-  it { response.should render_template("group/_form") }
+  it { response.should render_template("new") }
 end
 
 describe GroupsController, "POST #create" do
@@ -97,7 +97,7 @@ describe GroupsController, "POST #create" do
 
       post :create
     end
-    it { response.should render_template("group/_form") }
+    it { response.should render_template("new") }
   end
 end
 

@@ -1,0 +1,6 @@
+<div class="edit_form_space">
+<% form_tag({:action => 'create'}, :id => 'group_form') do -%>
+  <%= render :partial => "group/form" %>
+  <%= submit_tag _('Create'), :disable_with => _('Creating...') %>
+<% end -%>
+</div>

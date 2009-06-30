@@ -125,7 +125,7 @@ class GroupController < ApplicationController
                 :action => '',
                 :entry_type => BoardEntry::GROUP_BBS,
                 :symbol => @group.symbol,
-                :publication_type => "private")
+                :publication_type => @group.default_publication_type)
   end
 
   # tab_menu

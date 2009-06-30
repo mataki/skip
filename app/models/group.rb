@@ -23,6 +23,7 @@ class Group < ActiveRecord::Base
   validates_uniqueness_of :gid, :case_sensitive => false
   validates_length_of :gid, :within => 4..50
   validates_format_of :gid, :message => _("accepts numbers, alphabets, hiphens(\"-\") and underscores(\"_\")."), :with => /^[a-zA-Z0-9\-_]*$/
+  validates_inclusion_of :default_publication_type, :in => ['public', 'private']
 
   N_('Group|Protected|true')
   N_('Group|Protected|false')
