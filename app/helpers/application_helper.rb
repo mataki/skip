@@ -319,10 +319,10 @@ module ApplicationHelper
 
   def shortcut_menus
     menus =  []
-    menus << link_to(icon_tag(:report_edit, :title => 'ブログを書く') + 'ブログを書く', :controller => '/edit', :action => :index)
+    menus << link_to(icon_tag(:report_edit, :title => _('Write a blog entry')) + _('Write a blog entry'), :controller => '/edit', :action => :index)
 
     option_tags = []
-    option_tags << content_tag(:option, _('参加グループへ移動 ... '), :value => url_for({:controller => '/mypage', :action => 'group'}))
+    option_tags << content_tag(:option, _('Move to groups joined ...'), :value => url_for({:controller => '/mypage', :action => 'group'}))
     option_tags << content_tag(:option, '----', :value => '----')
 
     Group.favorites_per_category(current_user).each do |category|
@@ -333,9 +333,9 @@ module ApplicationHelper
     end
 
     option_tags << content_tag(:option, '----', :value => '----')
-    option_tags << content_tag(:option, _('参加グループ'), :value => url_for({:controller => '/mypage', :action => 'group'}))
+    option_tags << content_tag(:option, _('Groups Joined'), :value => url_for({:controller => '/mypage', :action => 'group'}))
 
-    menus << "#{icon_tag(:group_go, :title => _('マイグループ'))}<select class=\"select_navi\">#{option_tags.join('')}</select>"
+    menus << "#{icon_tag(:group_go, :title => _('My Groups'))}<select class=\"select_navi\">#{option_tags.join('')}</select>"
     menus
   end
 

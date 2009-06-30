@@ -237,7 +237,7 @@ private
       {:label => _('Blog'), :options => {:action => 'blog'}},
       {:label => _('Shared Files'), :options => {:action => 'share_file'}},
       {:label => _('Socials'), :options => {:action => 'social'}},
-      {:label => _('Groups joined'), :options => {:action => 'group'}},
+      {:label => _('Groups Joined'), :options => {:action => 'group'}},
       {:label => _('Bookmarks'), :options => {:action => 'bookmark'}} ]
 
     if @user.id != current_user.id
