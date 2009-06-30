@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2009-06-30 08:51+0900\n"
+"POT-Creation-Date: 2009-06-30 09:30+0900\n"
 "PO-Revision-Date: 2009-06-29 17:31+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1844,8 +1844,7 @@ msgid "An email containing the URL for signup will be sent to %{email}."
 msgid_plural ""
 "%{num} emails containing the URL for signup will be sent to the following "
 "email address. %{email}"
-msgstr[0] ""
-"ユーザ登録のためのURLを記載したメールを%{email}宛に送信しました。"
+msgstr[0] "ユーザ登録のためのURLを記載したメールを%{email}宛に送信しました。"
 
 #: app/controllers/platform_controller.rb:69
 msgid ""
@@ -2827,6 +2826,10 @@ msgstr "足跡"
 #: app/views/shared/_login_form.html.erb:90
 msgid "Forgot or Reset your OpenID? Click here."
 msgstr "OpenIDを忘れた or リセットしたい方はこちら"
+
+#: app/views/shared/_login_form.html.erb:32
+msgid "Forgot your password? Click here."
+msgstr "パスワードを忘れた or リセットしたい方はこちら"
 
 #: app/helpers/calendar_helper.rb:88 app/controllers/assistant/calendar.rb:19
 msgid "Fri"
@@ -4135,7 +4138,7 @@ msgstr "登録しました。"
 
 #: app/views/platform/index.html.erb:54
 msgid "Registration"
-msgstr "登録"
+msgstr "ユーザ登録してSKIPの利用を開始する"
 
 #: app/views/group/_manage_permit.html.erb:21
 msgid "Reject"
@@ -4500,7 +4503,7 @@ msgstr "ログアウト"
 
 #: app/views/platform/activate.html.erb:2 app/views/platform/index.html.erb:53
 msgid "Signup"
-msgstr "サインアップ"
+msgstr "ユーザ登録"
 
 #: app/views/mypage/welcome.html.erb:47
 msgid "Site Infomation[FIXME]"
