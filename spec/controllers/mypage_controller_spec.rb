@@ -614,6 +614,46 @@ describe MypageController, 'アンテナの整備関連' do
   end
 end
 
+describe MypageController, "POST or PUT /update_customize" do
+  before do
+    @user = user_login
+  end
+  describe "ログインしているユーザがuser_customを未設定の場合" do
+    before do
+      mock_custom = mock_model(UserCustom)
+      mock_custom.should_receive(:update_attributes).with({"theme" => "green", "classic" => true}).and_return(true)
+      @user.stub(:custom).and_return(mock_custom)
+    end
+    it "user_customが追加されること" do
+      post :update_customize, {:user_custom => {:theme => "green", :classic => true}}
+    end
+
+    it "カスタマイズ画面にリダイレクトすること" do
+      post :update_customize, {:user_custom => {:theme => "green", :classic => true}}
+      response.should redirect_to(:action => "manage", :menu => "manage_customize")
+    end
+  end
+  describe "ログインしているユーザがuser_customを設定済みの場合" do
+    before do
+      mock_custom = mock_model(UserCustom)
+      mock_custom.should_receive(:update_attributes).with({"theme" => "green", "classic" => true}).and_return(true)
+      @user.stub(:custom).and_return(mock_custom)
+    end
+    it "user_customが更新されること" do
+      put :update_customize, {:user_custom => {:theme => "green", :classic => true}}
+    end
+    it "user_customsが追加されないこと" do
+      lambda do
+        put :update_customize, {:user_custom => {:theme => "green", :classic => true}}
+      end.should_not change(UserCustom, :count)
+    end
+    it "カスタマイズ画面にリダイレクトすること" do
+      put :update_customize, {:user_custom => {:theme => "green", :classic => true}}
+      response.should redirect_to(:action => "manage", :menu => "manage_customize")
+    end
+  end
+end
+
 #privateメソッドのspec
 describe MypageController, '#setup_for_antenna_box' do
   before do

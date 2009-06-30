@@ -1,0 +1,16 @@
+<%= show_title_bar("page_copy", @access_blogs[:title_name], {:controller => 'mypage', :action => "entries", :list_type => @access_blogs[:id_name]}) -%>
+<div id="<%= @access_blogs[:id_name] %>">
+  <%= render :partial => "list_block", :locals => @access_blogs %>
+</div>
+<%= show_title_bar("page_copy", @recent_blogs[:title_name], {:controller => 'mypage', :action => "entries", :list_type => @recent_blogs[:id_name]}) -%>
+<div id="<%= @recent_blogs[:id_name] %>">
+  <%= render :partial => "list_block", :locals => @recent_blogs %>
+</div>
+<% @recent_bbs.each do |bbs| -%>
+  <% unless bbs[:pages].empty? -%>
+  <%= show_title_bar("page_copy", bbs[:title_name], {:controller => 'mypage', :action => "entries", :list_type => bbs[:id_name]}) -%>
+  <div id="<%= bbs[:id_name] %>">
+    <%= render :partial => "list_block", :locals => bbs %>
+  </div>
+  <% end -%>
+<% end -%>

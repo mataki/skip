@@ -15,6 +15,8 @@
 
 class UserCustom < ActiveRecord::Base
   validates_presence_of :theme
+  validates_presence_of :display_entries_format
+  validates_inclusion_of :display_entries_format, :in => %w(tabs flat)
 
   def to_s
     "user_id:" + user_id.to_s + ", theme:" + theme

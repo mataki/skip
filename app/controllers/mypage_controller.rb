@@ -28,7 +28,7 @@ class MypageController < ApplicationController
                                       :add_antenna, :delete_antenna, :delete_antenna_item, :move_antenna_item,
                                       :change_read_state, :apply_email, :set_antenna_name, :sort_antenna],
          :redirect_to => { :action => :index }
-  verify :method => :put, :only => [ :update_customize], :redirect_to => { :action => :index }
+  verify :method => [:post, :put], :only => [ :update_customize], :redirect_to => { :action => :index }
 
   # welcome画面を表示
   def welcome
@@ -492,18 +492,9 @@ class MypageController < ApplicationController
     end
   end
 
-  # post_action
+  # POST or PUT action
   def update_customize
-    result = false
-    if @user_custom = UserCustom.find_by_user_id(session[:user_id])
-      result = @user_custom.update_attributes(params[:user_custom])
-    else
-      @user_custom = UserCustom.new(params[:user_custom])
-      @user_custom.user_id = session[:user_id]
-      result = @user_custom.save
-    end
-
-    if result
+    if current_user.custom.update_attributes(params[:user_custom])
       flash[:notice] = _('Updated successfully.')
       redirect_to :action => 'manage', :menu => 'manage_customize'
     else
@@ -800,7 +791,7 @@ class MypageController < ApplicationController
     locals = {
       :id_name => 'recent_blogs',
       :title_icon => "user",
-      :title_name => 'ユーザ',
+      :title_name => _('Blogs'),
       :pages => pages,
       :pages_obj => pages_obj,
       :per_page => options[:per_page]

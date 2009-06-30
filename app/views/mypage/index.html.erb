@@ -69,27 +69,7 @@
     <%= show_title_bar(@questions[:title_icon], @questions[:title_name], {:controller => 'mypage', :action => "entries", :list_type => @questions[:id_name]}) -%>
     <%= render :partial => "list_block", :locals => @questions %>
 
-    <%= show_title_bar("page_copy", _("Publicated Entry"), {:controller => 'search', :action => "entry_search"}) -%>
-    <div id="tabs" style="margin: 0 5px 10px 10px; display: none;">
-      <ul>
-        <li><a href="#<%= @access_blogs[:id_name] %>"><span><%=h @access_blogs[:title_name] %></span></a></li>
-        <li><a href="#<%= @recent_blogs[:id_name] %>"><span><%=h @recent_blogs[:title_name] %></span></a></li>
-    <% @recent_bbs.each do |bbs| -%>
-        <li><a href="#<%= bbs[:id_name] %>"><span><%=h bbs[:title_name] %></span></a></li>
-    <% end -%>
-      </ul>
-      <div id="<%= @access_blogs[:id_name] %>">
-        <%= render :partial => "list_block", :locals => @access_blogs %>
-      </div>
-      <div id="<%= @recent_blogs[:id_name] %>">
-        <%= render :partial => "list_block", :locals => @recent_blogs %>
-      </div>
-    <% @recent_bbs.each do |bbs| -%>
-      <div id="<%= bbs[:id_name] %>">
-        <%= render :partial => "list_block", :locals => bbs %>
-      </div>
-    <% end -%>
-    </div>
+    <%= render :partial => "publicated_entries_#{current_user.custom.display_entries_format}" %>
 
     <%# ============================================================ -%>
     <%#  main area collaboration_apps feeds -%>
