@@ -16,12 +16,11 @@
     <% end -%>
 
     <% content_for :javascript_initializers do -%>
-    $j(function(){
         FCKeditor.BasePath = platform_url_root + "/javascripts/skip/fckeditor/";
         var editor = new FCKeditor('documents_<%= params[:target] %>', '100%', '600', 'Normal');
-<% if %w(rules about_this_site).include?(params[:target]) -%>
+      <% if %w(rules about_this_site).include?(params[:target]) -%>
         editor.Config["FullPage"] = true;
-<% end %>
+      <% end -%>
         editor.ReplaceTextarea();
     <% end -%>
   <% else -%>
