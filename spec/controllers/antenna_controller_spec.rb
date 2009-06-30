@@ -55,7 +55,7 @@ describe AntennaController, 'GET ado_add_antenna_item' do
       post :ado_add_antenna_item
     end
     it '追加したアンテナの部分テンプレートがrenderされること' do
-      response.should render_template('antenna/antenna_item')
+      response.should render_template('antenna/_antenna_item')
     end
   end
   describe 'アンテナアイテムの追加に失敗する場合' do

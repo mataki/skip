@@ -571,7 +571,7 @@ describe MypageController, 'mypage > manage(管理) 関連' do
             get :apply_ident_url, :openid_url => @openid_url
           end
           it "openidの設定画面がrenderされること" do
-            response.should render_template('manage_openid')
+            response.should render_template('mypage/_manage_openid')
           end
         end
       end
@@ -584,7 +584,7 @@ describe MypageController, 'mypage > manage(管理) 関連' do
           flash[:error].should == "OpenId process is cancelled or failed."
         end
         it "openidの設定画面がrenderされること" do
-          response.should render_template('manage_openid')
+          response.should render_template('mypage/_manage_openid')
         end
       end
     end
@@ -596,7 +596,7 @@ describe MypageController, 'mypage > manage(管理) 関連' do
         flash[:error].should == "Please input OpenID URL."
       end
       it "openidの設定画面がrenderされること" do
-        response.should render_template('manage_openid')
+        response.should render_template('mypage/_manage_openid')
       end
     end
   end
