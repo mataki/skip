@@ -18,9 +18,9 @@ class BoardEntryComment < ActiveRecord::Base
   belongs_to :user
   belongs_to :board_entry, :counter_cache => true
 
-  validates_presence_of :board_entry_id, :message =>_('is mandatory.')
-  validates_presence_of :contents, :message =>_('is mandatory.')
-  validates_presence_of :user_id, :message =>_('is mandatory.')
+  validates_presence_of :board_entry_id
+  validates_presence_of :contents
+  validates_presence_of :user_id
 
   def comment_created_time
     format = _("%B %d %Y %H:%M")

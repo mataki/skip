@@ -18,8 +18,7 @@ class Antenna < ActiveRecord::Base
   has_many :antenna_items, :dependent => :destroy
   acts_as_list :scope => :user_id
 
-  validates_length_of :name, :minimum=>1, :message =>_('requires 1 or more characters.')
-  validates_length_of :name, :maximum=>10, :message =>_('accepts 10 or less characters only.')
+  validates_length_of :name, :within => 1..10
 
   def count
     @count

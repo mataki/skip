@@ -19,11 +19,10 @@ class Group < ActiveRecord::Base
   has_many :group_participations, :dependent => :destroy
   belongs_to :group_category
 
-  validates_presence_of :name, :description, :gid, :message =>_('is mandatory.')
-  validates_uniqueness_of :gid, :case_sensitive => false, :message => _('has already been registered.')
-  validates_length_of :gid, :minimum=>4, :message =>_('requires 4 or more characters.')
-  validates_length_of :gid, :maximum=>50, :message =>_('accepts 50 or less characters only.')
-  validates_format_of :gid, :message =>_("accepts numbers, alphabets, hiphens(\"-\") and underscores(\"_\")."), :with => /^[a-zA-Z0-9\-_]*$/
+  validates_presence_of :name, :description, :gid
+  validates_uniqueness_of :gid, :case_sensitive => false
+  validates_length_of :gid, :within => 4..50
+  validates_format_of :gid, :message => _("accepts numbers, alphabets, hiphens(\"-\") and underscores(\"_\")."), :with => /^[a-zA-Z0-9\-_]*$/
 
   N_('Group|Protected|true')
   N_('Group|Protected|false')

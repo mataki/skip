@@ -32,12 +32,12 @@ class BoardEntry < ActiveRecord::Base
   before_create :generate_next_user_entry_no
   after_destroy :cancel_mail
 
-  validates_presence_of :title, :message => _('is mandatory.')
-  validates_length_of   :title, :maximum => 100, :message => _('accepts %d or less characters only.')
+  validates_presence_of :title
+  validates_length_of   :title, :maximum => 100
 
-  validates_presence_of :contents, :message => _('is mandatory.')
-  validates_presence_of :date, :message => _('is mandatory.')
-  validates_presence_of :user_id, :message => _('is mandatory.')
+  validates_presence_of :contents
+  validates_presence_of :date
+  validates_presence_of :user_id
 
   attr_reader :owner
   attr_accessor :send_mail

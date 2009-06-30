@@ -17,6 +17,6 @@ class EntryTrackback < ActiveRecord::Base
   belongs_to :board_entry, :counter_cache => true
   belongs_to :tb_entry, :foreign_key => 'tb_entry_id', :class_name => 'BoardEntry'
 
-  validates_presence_of :board_entry_id, :message =>_('is mandatory.')
-  validates_presence_of :tb_entry_id, :message =>_('is mandatory.')
+  validates_presence_of :board_entry_id
+  validates_presence_of :tb_entry_id
 end

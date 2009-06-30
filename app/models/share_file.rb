@@ -31,10 +31,10 @@ class ShareFile < ActiveRecord::Base
 
   before_save :square_brackets_tags
 
-  validates_length_of   :description, :maximum=>100, :message =>_('accepts 100 or less characters only.')
-  validates_presence_of :file_name, :message =>_('is mandatory.')
-  validates_presence_of :date, :message =>_('is mandatory.')
-  validates_presence_of :user_id, :message =>_('is mandatory.')
+  validates_length_of   :description, :maximum => 100
+  validates_presence_of :file_name
+  validates_presence_of :date
+  validates_presence_of :user_id
   validates_uniqueness_of :file_name, :scope => :owner_symbol, :message =>_('File with the same name already uploaded.')
 
   def validate

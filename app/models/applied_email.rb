@@ -14,8 +14,8 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class AppliedEmail < ActiveRecord::Base
-  validates_presence_of :email, :message =>_('is mandatory.')
-  validates_length_of :email, :maximum=>50, :message =>_('accepts 50 or less characters only.')
+  validates_presence_of :email
+  validates_length_of :email, :maximum => 50
   validates_format_of :email, :message =>_('requires proper format.'), :with => Authentication.email_regex
 
   def before_save

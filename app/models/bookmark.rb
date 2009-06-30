@@ -23,11 +23,11 @@ class Bookmark < ActiveRecord::Base
   has_many :bookmark_comments, :dependent => :destroy
   has_many :popular_bookmarks, :dependent => :destroy
 
-  validates_presence_of :url, :message =>_('is mandatory.')
-  validates_length_of :url, :maximum=>255, :message =>_('accepts 255 or less characters only.')
+  validates_presence_of :url
+  validates_length_of :url, :maximum => 255
   validates_format_of :url, :message =>_('needs to be in "http(or https)://..." format.'), :with => URI.regexp, :if => :is_type_internet?
-  validates_presence_of :title, :message =>_('is mandatory.')
-  validates_length_of :title, :maximum=>255, :message =>_('accepts 255 or less characters only.')
+  validates_presence_of :title
+  validates_length_of :title, :maximum => 255
 
   SORT_TYPES = [[_("Sort by Registered Dates (Descending)"),"bookmarks.updated_on DESC"],[_("Sort by Registered Dates (Ascending)"),"bookmarks.updated_on"],[_("Sort by number of users"),"bookmark_comments_count DESC"]].freeze
   GET_TITLE_TIMEOUT = 7

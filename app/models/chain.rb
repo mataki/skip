@@ -17,5 +17,5 @@ class Chain < ActiveRecord::Base
   belongs_to :from_user, :class_name => "User", :foreign_key => "from_user_id"
   belongs_to :to_user,   :class_name => "User", :foreign_key => "to_user_id"
 
-  validates_presence_of :comment, :message =>_('is mandatory.')
+  validates_presence_of :comment
 end

@@ -39,8 +39,8 @@ class User < ActiveRecord::Base
   has_many :openid_identifiers
   has_many :user_oauth_accesses
 
-  validates_presence_of :name, :message => _('is mandatory.')
-  validates_length_of :name, :maximum => 60, :message => _('accepts 60 or less characters only.')
+  validates_presence_of :name
+  validates_length_of :name, :maximum => 60
 
   with_options(:if => :password_required?) do |me|
     me.validates_presence_of :password
@@ -50,10 +50,9 @@ class User < ActiveRecord::Base
   end
 
   validates_presence_of :email, :message => _('is mandatory.')
-  # FIXME keyを英語化する
-  validates_length_of :email, :maximum => 50, :message => 'は50桁以内で入力してください'
-  validates_format_of :email, :message => 'は正しい形式で登録してください', :with => Authentication.email_regex
-  validates_uniqueness_of :email, :case_sensitive => false, :message => 'は既に登録されています。'
+  validates_length_of :email, :maximum => 50
+  validates_format_of :email, :message =>_('requires proper format.'), :with => Authentication.email_regex
+  validates_uniqueness_of :email, :case_sensitive => false
 
   N_('User|Old password')
   N_('User|Password')

@@ -16,5 +16,5 @@
 class AntennaItem < ActiveRecord::Base
   belongs_to :antenna
 
-  validates_uniqueness_of :value, :scope => [:antenna_id, :value_type], :message => _("Already registered in the antenna.")
+  validates_uniqueness_of :value, :scope => [:antenna_id, :value_type]
 end
