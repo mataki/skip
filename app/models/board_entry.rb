@@ -340,8 +340,8 @@ class BoardEntry < ActiveRecord::Base
     params.assert_valid_keys [:title, :message, :tags, :user_symbol, :user_id, :entry_type, :owner_symbol,
                                :publication_type, :publication_symbols, :non_auto, :date, :editor_mode]
 
-
-    contents = params[:non_auto] ? "" : _("(This entry is generated automatically by the system)")
+    contents = ""
+    contents << _("(This entry is generated automatically by the system)") unless params[:non_auto]
     contents << LINE_FEED
     contents << params[:message]
 

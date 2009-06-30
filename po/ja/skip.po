@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
 "POT-Creation-Date: 2009-06-30 09:30+0900\n"
-"PO-Revision-Date: 2009-06-29 17:31+0900\n"
+"PO-Revision-Date: 2009-06-30 11:33+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1660,7 +1660,7 @@ msgstr ""
 
 #: app/models/admin/user_uid.rb:17
 msgid "Admin::UserUid|Uid"
-msgstr "ユーザID"
+msgstr "ユーザ名"
 
 #: app/models/admin/user_uid.rb:18
 msgid "Admin::UserUid|Uid description"
@@ -1902,7 +1902,7 @@ msgstr "申請"
 
 #: app/views/layouts/entrance.html.erb:25
 msgid "Apply your profile"
-msgstr "プロフィールを充実させましょう！"
+msgstr "利用者のプロフィール情報の登録"
 
 #: app/views/groups/_group_list.html.erb:30
 msgid "Approval"
@@ -5115,7 +5115,7 @@ msgstr "必須"
 
 #: app/models/user_uid.rb:27
 msgid "UserUid|Uid"
-msgstr "ユーザID"
+msgstr "ユーザ名"
 
 #: app/controllers/users_controller.rb:67
 #: app/controllers/services_controller.rb:44

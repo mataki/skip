@@ -120,5 +120,5 @@ COMMON_MENUS = File.exist?(common_menu_path) ? YAML::load(File.open(File.join(RA
 # 祝日マスタ
 HOLIDAYS = YAML::load(File.open(File.join(RAILS_ROOT, 'config', 'holiday.yml')))
 
-require File.join(File.dirname(__FILE__), '..', 'lib', 'hikidoc')
+require 'hikidoc'
 require 'skip_util'

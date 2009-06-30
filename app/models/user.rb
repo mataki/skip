@@ -455,6 +455,10 @@ class User < ActiveRecord::Base
     User.find_by_uid uid
   end
 
+  def custom
+    self.user_custom || self.build_user_custom
+  end
+
 protected
   # TODO: self.make_conditionsメソッドは使ってなさそう確認して消す
   @@search_cond_keys = [:name, :section, :email]

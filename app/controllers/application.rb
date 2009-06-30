@@ -66,8 +66,6 @@ protected
     session[:prepared] = nil if controller_name == 'mypage' && action_name == 'welcome'
     return true if session[:prepared]
 
-    user_custom = (UserCustom.find_by_user_id(user.id) || UserCustom.new)
-
     session[:prepared] = true
     session[:user_id] = user.id
     session[:user_symbol] = user.symbol

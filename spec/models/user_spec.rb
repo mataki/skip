@@ -1127,6 +1127,21 @@ describe User, '.synchronize_users' do
   end
 end
 
+describe User, "#custom" do
+  it "関連するuser_customが存在するユーザの場合、そのuser_customが返る" do
+    user = create_user
+    custom = user.create_user_custom(:theme => "green", :classic => true, :always_show_shortcut => true)
+
+    user.custom.should == custom
+  end
+  it "関連するuser_customが存在しないユーザの場合、新規のuser_customが取得返る" do
+    user = create_user
+
+    user.custom.should be_is_a(UserCustom)
+    user.custom.should be_new_record
+  end
+end
+
 describe User, 'password_required?' do
   before do
     @user = new_user
