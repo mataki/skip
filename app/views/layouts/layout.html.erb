@@ -13,7 +13,7 @@
   <div id="loading" style="margin: 15px; height: 4000px;">
     <%= _('Now loading...') %><br/><%= image_tag 'indicator_bar.gif', :alt => _('Now loading...') %>
   </div>
-  <%= render :partial => "layouts/menu" %>
+  <%= render :partial => "layouts/menu" if current_user && current_user.active? %>
 
   <div id="panel">
     <div style="_width: 98%;">
@@ -58,6 +58,7 @@
   <div style="clear: both;"><br/></div>
 </div><!-- main -->
 
+<% if @site_count -%>
 <div id="statusbar">
   <span><%= icon_tag 'table'              -%> <%= _("Registered Users: %s users") % h(@site_count.total_user_count)%></span>
   <span><%= icon_tag 'table_lightning'    -%> <%= _("Today's Access: %s access") % h(@site_count.today_user_count)%></span>
@@ -65,6 +66,7 @@
   <span><%= icon_tag 'database_lightning' -%> <%= _("Today's Entries: %s entries") % h(@site_count.today_blog_count) %></span>
   <span><%= icon_tag 'chart_curve'        -%> <%= link_to(_("See Statistics"), :controller => "/rankings", :action => :statistics) -%></span>
 </div>
+<% end -%>
 
 <%= skip_footer_link -%>
 
