@@ -317,6 +317,16 @@ module ApplicationHelper
     end
   end
 
+  def footer_link
+    returning str = "" do |s|
+      s << content_tag(:div, :class => "info") do
+        content_tag(:div, Admin::Setting.footer_first, :class => "first") +
+          content_tag(:div, Admin::Setting.footer_second, :class => "second")
+      end
+      s << content_tag(:div, ("powered_by"+link_to(image_tag(root_url + "custom/images/footer_logo.png"), h(Admin::Setting.footer_image_link_url))), :class => "powered_by")
+    end
+  end
+
   def shortcut_menus
     menus =  []
     option_tags = []

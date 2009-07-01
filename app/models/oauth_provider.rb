@@ -22,6 +22,6 @@ class OauthProvider < ActiveRecord::Base
   end
 
   def after_save
-    ActionController::Base.expire_page  '/services/skip_header.js'
+    ActionController::Base.expire_page  '/services/skip_reflect_customized.js'
   end
 end

@@ -16,10 +16,10 @@
 class ServicesController < ActionController::Base
   session :off
   skip_before_filter :sso
-  caches_page :skip_header
+  caches_page :skip_reflect_customized
 
   include SkipEmbedded::WebServiceUtil::Server
-  before_filter :check_secret_key, :except => [:search_conditions, :skip_header]
+  before_filter :check_secret_key, :except => [:search_conditions, :skip_reflect_customized]
   after_filter :change_charset
 
   # ユーザに関連する情報を取得する
@@ -54,7 +54,7 @@ class ServicesController < ActionController::Base
     render :text => diff_users('retired',params[:from_date])
   end
 
-  def skip_header
+  def skip_reflect_customized
   end
 
 private

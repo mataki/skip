@@ -67,7 +67,7 @@
   <span><%= icon_tag 'chart_curve'        -%> <%= link_to(_("See Statistics"), :controller => "/rankings", :action => :statistics) -%></span>
 </div>
 
-<%= skip_footer_link -%>
+<%= render :partial => "shared/footer" -%>
 
 </body>
 <%= all_javascript_include_tag 'jquery' %>
@@ -77,7 +77,7 @@ var relative_url_root = '<%= controller.request.relative_url_root %>';
 <% end -%>
 <%= javascript_include_tag 'application' %>
 <%= skip_javascript_include_tag 'skip_util' %>
-<%= skip_header_javascript_include_tag %>
+<%= skip_reflect_customized_javascript_include_tag %>
 <%= javascript_include_tag :skip_embedded, :cache => "skip_embedded" %>
 <%= skip_jquery_include_tag 'jquery.tablesorter' %>
 <%= yield :javascript_includes %>

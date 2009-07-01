@@ -29,6 +29,8 @@
     jQuery('#logo').find('img').attr('src', '#{root_url + "custom/images/header_logo.png"}');
     #{replace_advertisement_js if SkipEmbedded::InitialSettings['advertisements_url']}
     #{replace_application_link_js unless OauthProvider.enable.empty?}
+    // フッターのリプレイス
+    jQuery('#footer').html('#{footer_link}');
     jQuery('#other_link')
     .toggle(function() {
         jQuery('#other_links').css('left',jQuery(this).offset().left).show();
@@ -40,6 +42,14 @@
         jQuery('#other_links').hide();
     });
 })(jQuery);
+// フッターで利用できるサブウインドウポップアップ表示メソッド
+function sub_window_open(url, title, width, height) {
+  sub_window = window.open(url, title, 'width='+width+',height='+height+',resizable=yes,scrollbars=yes');
+  sub_window.focus();
+};
+function open_hiki() { sub_window_open('#{root_url}hiki.html', 'Hiki記法', 500,600); };
+function open_rule() { sub_window_open('#{root_url}custom/rules.html', '利用規約', 780,700); };
+function open_site() { sub_window_open('#{root_url}custom/about_this_site.html', 'このサイトについて', 720,660); };
   RUBY
 -%>
 <%= header_js %>

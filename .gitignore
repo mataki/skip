@@ -8,7 +8,7 @@ public/custom/*
 public/javascripts/prototype.all.js
 public/javascripts/jquery.all.js
 public/javascripts/skip_embedded.js
-public/services/skip_header.js
+public/services/skip_reflect_customized.js
 public/stylesheets/skip.style.css
 vendor/rails
 vendor/plugins/haml
