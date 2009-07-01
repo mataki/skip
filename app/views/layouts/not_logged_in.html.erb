@@ -6,15 +6,8 @@
 </head>
 
 <body>
+<%= render :partial => "shared/header" %>
 <%= render :partial => "shared/flash_message" %>
-
-<% if @content_for_header -%>
-  <%= yield :header %>
-<% else -%>
-<div id="header">
-  <%= header_logo_link %>
-</div><!-- header -->
-<% end -%>
 
 <div id="main">
   <div id="contents_container">
