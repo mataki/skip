@@ -38,3 +38,42 @@ describe BoardEntryComment, "は適切な値が定義されている場合 保�
   end
 end
 
+describe BoardEntryComment, '#editable?' do
+  before do
+    @bob = create_user :user_options => {:name => 'ボブ', :admin => true}, :user_uid_options => {:uid => 'boob'}
+    @bob_s_comment = BoardEntryComment.create({:board_entry_id => 1, :user_id => @bob.id, :contents => 'contents'})
+    @alice = create_user :user_options => {:name => 'アリス', :admin => true}, :user_uid_options => {:uid => 'alice'}
+  end
+  describe 'コメントの所属する記事の閲覧権限がある場合' do
+    before do
+      @board_entry = create_board_entry
+      BoardEntry.should_receive(:find).and_return(@board_entry)
+    end
+    describe 'コメントの所有者が指定されたユーザの場合' do
+      it '編集権限があると判定される(trueが返る)こと' do
+        @bob_s_comment.editable?(@bob).should be_true
+      end
+    end
+    describe 'コメントの所有者が指定されたユーザではない場合' do
+      it '編集権限がないと判定される(falseが返る)こと' do
+        @bob_s_comment.editable?(@alice).should be_false
+      end
+    end
+  end
+  describe 'コメントの所属する記事の閲覧権限がない場合' do
+    before do
+      BoardEntry.should_receive(:find).and_return(nil)
+    end
+    describe 'コメントの所有者が指定されたユーザの場合' do
+      it '編集権限がないと判定される(falseが返る)こと' do
+        @bob_s_comment.editable?(@bob).should be_false
+      end
+    end
+    describe 'コメントの所有者が指定されたユーザではない場合' do
+      it '編集権限がないと判定される(falseが返る)こと' do
+        @bob_s_comment.editable?(@alice).should be_false
+      end
+    end
+  end
+end
+

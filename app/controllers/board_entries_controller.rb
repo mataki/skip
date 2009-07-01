@@ -36,6 +36,7 @@ class BoardEntriesController < ApplicationController
       render(:text => _('不正なパラメタです。'), :status => :bad_request) and return
     end
 
+    # TODO 権限のあるBoardEntryを取得するnamed_scopeに置き換える
     find_params = BoardEntry.make_conditions(login_user_symbols, {:id => params[:id]})
     unless @board_entry = BoardEntry.find(:first,
                                           :conditions => find_params[:conditions],
@@ -64,6 +65,7 @@ class BoardEntriesController < ApplicationController
       render(:text => _('コメントの入力は必須です。'), :status => :bad_request) and return
     end
 
+    # TODO 権限のあるBoardEntryを取得するnamed_scopeに置き換える
     @board_entry = parent_comment.board_entry
     find_params = BoardEntry.make_conditions(login_user_symbols, {:id => @board_entry.id})
     unless @board_entry = BoardEntry.find(:first,
@@ -133,27 +135,9 @@ class BoardEntriesController < ApplicationController
     rescue ActiveRecord::RecordNotFound => ex
       render(:text => _('対象の%{target}が存在しませんでした。')%{:target => _('board entry comment')}, :status => :bad_request) and return
     end
-    board_entry = comment.board_entry
-
-    # 権限チェック
-    authorize = false
-
-    if comment.user_id == session[:user_id]
-      if board_entry.symbol == session[:user_symbol]
-        authorize = true
-      end
-      if login_user_groups.include?(board_entry.symbol)
-        if session[:user_id] == board_entry.user_id
-          authorize = true
-        elsif board_entry.publicate?(login_user_symbols)
-          authorize = true
-        end
-      elsif board_entry.publicate?(login_user_groups)
-        authorize = true
-      end
+    unless comment.editable? current_user
+      render(:text => _('この操作は、許可されていません。'), :status => :bad_request) and return
     end
-
-    render(:text => _('この操作は、許可されていません。'), :status => :bad_request) and return unless authorize
 
     comment.update_attribute :contents, params[:comment][:contents]
     render :partial => "comment_contents", :locals =>{ :comment => comment }
