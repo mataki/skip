@@ -62,5 +62,4 @@ module MypageHelper
 
     get_menu_items @@record_menus, selected_menu, "manage"
   end
-
 end

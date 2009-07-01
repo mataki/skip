@@ -319,9 +319,6 @@ module ApplicationHelper
 
   def shortcut_menus
     menus =  []
-    menus << link_to(icon_tag(:report_edit, :title => _('Write a blog entry')) + _('Write a blog entry'), :controller => '/edit', :action => :index)
-    menus << link_to(icon_tag(:user_comment, :title => _('Write a question')) + _('Write a question'), :controller => '/edit', :action => :index, :category => _('質問'))
-
     option_tags = []
     option_tags << content_tag(:option, _('Move to groups joined ...'), :value => url_for({:controller => '/mypage', :action => 'group'}))
     option_tags << content_tag(:option, '----', :value => '----')
