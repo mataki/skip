@@ -201,8 +201,8 @@ class MypageController < ApplicationController
   # ajax_action
   # 未読・既読を変更する
   def change_read_state
-    UserReading.create_or_update(session[:user_id], params[:board_entry_id], params[:read])
-    render :text => ""
+    ur = UserReading.create_or_update(session[:user_id], params[:board_entry_id], params[:read])
+    render :text => ur.read? ? _('Entry was successfully marked read.') : _('Entry was successfully marked unread.')
   end
 
   # ajax action

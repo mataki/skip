@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2009-06-30 17:11+0900\n"
+"POT-Creation-Date: 2009-07-01 11:49+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -81,7 +81,7 @@ msgstr ""
 msgid "%s Required"
 msgstr ""
 
-#: app/controllers/group_controller.rb:340
+#: app/controllers/group_controller.rb:338
 msgid "%s has already joined / applied to join this group."
 msgstr ""
 
@@ -219,7 +219,7 @@ msgid_plural "%{num} errors occured."
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/controllers/group_controller.rb:289
+#: app/controllers/group_controller.rb:287
 msgid "%{rslt} to %{type}."
 msgstr "%{type}%{rslt}。"
 
@@ -284,7 +284,7 @@ msgstr ""
 msgid "(This entry is generated automatically by the system)"
 msgstr ""
 
-#: app/models/board_entry.rb:540
+#: app/models/board_entry.rb:538
 msgid "(Unknown topic entry found. However, this has been ignored)"
 msgstr ""
 
@@ -540,11 +540,11 @@ msgstr ""
 msgid "Add to antenna"
 msgstr ""
 
-#: app/controllers/group_controller.rb:344
+#: app/controllers/group_controller.rb:342
 msgid "Added %s as a member and created a BBS for messaging."
 msgstr ""
 
-#: app/controllers/group_controller.rb:354
+#: app/controllers/group_controller.rb:352
 msgid ""
 "Added members of %s as members of the group and created a BBS for messaging."
 msgstr ""
@@ -554,8 +554,8 @@ msgid "Adding to antenna"
 msgstr ""
 
 #: app/controllers/mypage_controller.rb:522
-#: app/controllers/user_controller.rb:252
-#: app/controllers/group_controller.rb:391
+#: app/controllers/user_controller.rb:250
+#: app/controllers/group_controller.rb:389
 msgid "Admin"
 msgstr ""
 
@@ -1639,7 +1639,7 @@ msgstr ""
 msgid "Administration of the site."
 msgstr ""
 
-#: app/controllers/group_controller.rb:415
+#: app/controllers/group_controller.rb:413
 msgid "Administrative privillage required for the action."
 msgstr ""
 
@@ -1864,7 +1864,7 @@ msgstr ""
 msgid "Average access during the recent month"
 msgstr ""
 
-#: app/controllers/group_controller.rb:388
+#: app/controllers/group_controller.rb:386
 msgid "BBS"
 msgstr ""
 
@@ -1897,7 +1897,7 @@ msgid "Belongs to: %s"
 msgstr ""
 
 #: app/controllers/mypage_controller.rb:516
-#: app/controllers/user_controller.rb:237
+#: app/controllers/user_controller.rb:235
 msgid "Blog"
 msgstr ""
 
@@ -2164,7 +2164,7 @@ msgstr ""
 
 #: app/controllers/mypage_controller.rb:520
 #: app/controllers/services_controller.rb:43
-#: app/controllers/user_controller.rb:241
+#: app/controllers/user_controller.rb:239
 #: app/controllers/bookmark_controller.rb:116
 #: app/controllers/bookmarks_controller.rb:34 config/environment.rb:89
 msgid "Bookmarks"
@@ -2281,7 +2281,7 @@ msgstr ""
 msgid "Change your profile picture!"
 msgstr ""
 
-#: app/controllers/group_controller.rb:228
+#: app/controllers/group_controller.rb:226
 msgid "Changed."
 msgstr ""
 
@@ -2410,7 +2410,7 @@ msgid ""
 "administrator."
 msgstr ""
 
-#: app/controllers/user_controller.rb:282 app/views/edit/index.html.erb:6
+#: app/controllers/user_controller.rb:280 app/views/edit/index.html.erb:6
 #: app/views/portal/account_registration.html.erb:25
 #: app/views/groups/new.html.erb:4
 #: app/views/admin/openid_identifiers/new.html.erb:17
@@ -2436,7 +2436,7 @@ msgstr ""
 msgid "Create administrative user"
 msgstr ""
 
-#: app/controllers/user_controller.rb:245
+#: app/controllers/user_controller.rb:243
 msgid "Create introductions"
 msgstr ""
 
@@ -2444,7 +2444,7 @@ msgstr ""
 msgid "Create new anntenna and add: "
 msgstr ""
 
-#: app/controllers/group_controller.rb:258
+#: app/controllers/group_controller.rb:256
 msgid ""
 "Created an entry on the BBS about the removal of user. Edit the entry when "
 "needed."
@@ -2636,7 +2636,7 @@ msgstr ""
 msgid "Edit by Members Allowed"
 msgstr ""
 
-#: app/controllers/user_controller.rb:247
+#: app/controllers/user_controller.rb:245
 msgid "Edit introductions"
 msgstr ""
 
@@ -2748,6 +2748,14 @@ msgstr ""
 msgid "Entries you posted to your blog and group BBSs."
 msgstr ""
 
+#: app/controllers/mypage_controller.rb:205
+msgid "Entry was successfully marked read."
+msgstr ""
+
+#: app/controllers/mypage_controller.rb:205
+msgid "Entry was successfully marked unread."
+msgstr ""
+
 #: app/controllers/edit_controller.rb:214
 msgid "Entry was successfully updated."
 msgstr ""
@@ -2812,15 +2820,15 @@ msgstr ""
 msgid "Explanation"
 msgstr ""
 
-#: app/controllers/group_controller.rb:289
+#: app/controllers/group_controller.rb:287
 msgid "Failed"
 msgstr "に失敗しました"
 
-#: app/controllers/group_controller.rb:230
+#: app/controllers/group_controller.rb:228
 msgid "Failed to change status."
 msgstr ""
 
-#: app/controllers/group_controller.rb:309
+#: app/controllers/group_controller.rb:307
 msgid "Failed to delete since there are still other users in the group."
 msgstr ""
 
@@ -2935,7 +2943,7 @@ msgid "Footer"
 msgstr ""
 
 #: app/controllers/mypage_controller.rb:521
-#: app/controllers/user_controller.rb:251
+#: app/controllers/user_controller.rb:249
 msgid "Footprints"
 msgstr ""
 
@@ -2979,7 +2987,7 @@ msgstr ""
 msgid "Group does not exist."
 msgstr ""
 
-#: app/controllers/group_controller.rb:300
+#: app/controllers/group_controller.rb:298
 msgid "Group information was successfully updated."
 msgstr ""
 
@@ -2987,7 +2995,7 @@ msgstr ""
 msgid "Group was created successfully."
 msgstr ""
 
-#: app/controllers/group_controller.rb:313
+#: app/controllers/group_controller.rb:311
 msgid "Group was successfully deleted."
 msgstr ""
 
@@ -3027,7 +3035,7 @@ msgstr ""
 msgid "GroupCategory|Updated at"
 msgstr ""
 
-#: app/controllers/group_controller.rb:269
+#: app/controllers/group_controller.rb:267
 msgid "GroupController|Approve"
 msgstr ""
 
@@ -3039,7 +3047,7 @@ msgstr ""
 msgid "GroupController|ApproveSuceeded"
 msgstr ""
 
-#: app/controllers/group_controller.rb:269
+#: app/controllers/group_controller.rb:267
 msgid "GroupController|Disapprove"
 msgstr ""
 
@@ -3111,7 +3119,7 @@ msgstr ""
 
 #: app/helpers/application_helper.rb:337
 #: app/controllers/mypage_controller.rb:519
-#: app/controllers/user_controller.rb:240
+#: app/controllers/user_controller.rb:238
 #: app/controllers/feed_controller.rb:115 app/views/user/show.html.erb:4
 msgid "Groups Joined"
 msgstr ""
@@ -3207,7 +3215,7 @@ msgid "History of Entries"
 msgstr ""
 
 #: app/controllers/mypage_controller.rb:514
-#: app/controllers/user_controller.rb:250
+#: app/controllers/user_controller.rb:248
 msgid "Home"
 msgstr ""
 
@@ -3331,15 +3339,15 @@ msgstr ""
 msgid "Introduction from other users"
 msgstr ""
 
-#: app/controllers/user_controller.rb:194
+#: app/controllers/user_controller.rb:192
 msgid "Introduction was created successfully."
 msgstr ""
 
-#: app/controllers/user_controller.rb:208
+#: app/controllers/user_controller.rb:206
 msgid "Introduction was deleted successfully."
 msgstr ""
 
-#: app/controllers/user_controller.rb:211
+#: app/controllers/user_controller.rb:209
 msgid "Introduction was updated successfully."
 msgstr ""
 
@@ -3442,7 +3450,7 @@ msgstr ""
 msgid "Join this group"
 msgstr ""
 
-#: app/controllers/group_controller.rb:178
+#: app/controllers/group_controller.rb:176
 msgid "Joined the group successfully."
 msgstr ""
 
@@ -3483,7 +3491,7 @@ msgstr ""
 msgid "Last page"
 msgstr ""
 
-#: app/controllers/group_controller.rb:246
+#: app/controllers/group_controller.rb:244
 msgid "Leave [%s]"
 msgstr ""
 
@@ -3678,6 +3686,10 @@ msgstr ""
 msgid "March"
 msgstr ""
 
+#: app/views/entries/_entry_detail.html.erb:226
+msgid "Mark read"
+msgstr ""
+
 #: app/views/entries/_entry_detail.html.erb:223
 msgid "Maximize!"
 msgstr ""
@@ -3694,7 +3706,7 @@ msgstr ""
 msgid "Members"
 msgstr ""
 
-#: app/controllers/group_controller.rb:387
+#: app/controllers/group_controller.rb:385
 msgid "Members List"
 msgstr ""
 
@@ -3775,7 +3787,7 @@ msgstr ""
 msgid "Move to groups joined ..."
 msgstr ""
 
-#: app/controllers/user_controller.rb:231
+#: app/controllers/user_controller.rb:229
 msgid "Mr./Ms. %s"
 msgstr ""
 
@@ -3798,10 +3810,10 @@ msgstr ""
 
 #: app/controllers/mypage_controller.rb:512
 #: app/controllers/user_controller.rb:52
-#: app/controllers/user_controller.rb:140
-#: app/controllers/user_controller.rb:180
-#: app/controllers/user_controller.rb:227
-#: app/controllers/user_controller.rb:231 config/environment.rb:59
+#: app/controllers/user_controller.rb:138
+#: app/controllers/user_controller.rb:178
+#: app/controllers/user_controller.rb:225
+#: app/controllers/user_controller.rb:229 config/environment.rb:59
 msgid "My Page"
 msgstr ""
 
@@ -3865,7 +3877,7 @@ msgstr ""
 msgid "New Introduction"
 msgstr ""
 
-#: app/controllers/group_controller.rb:389
+#: app/controllers/group_controller.rb:387
 msgid "New Posts"
 msgstr ""
 
@@ -3914,8 +3926,8 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: app/controllers/group_controller.rb:147
-#: app/controllers/group_controller.rb:266
+#: app/controllers/group_controller.rb:145
+#: app/controllers/group_controller.rb:264
 msgid "No approval needed to join this group."
 msgstr ""
 
@@ -3940,7 +3952,7 @@ msgid "No matching entries found."
 msgstr ""
 
 #: app/controllers/groups_controller.rb:37
-#: app/controllers/user_controller.rb:163
+#: app/controllers/user_controller.rb:161
 msgid "No matching groups found."
 msgstr ""
 
@@ -4170,7 +4182,7 @@ msgstr ""
 msgid "Owner Only"
 msgstr ""
 
-#: app/controllers/group_controller.rb:277
+#: app/controllers/group_controller.rb:275
 msgid "Part of the users are already members of this group."
 msgstr ""
 
@@ -4324,7 +4336,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: app/controllers/mypage_controller.rb:515
-#: app/controllers/user_controller.rb:236 app/views/user/show.html.erb:36
+#: app/controllers/user_controller.rb:234 app/views/user/show.html.erb:36
 msgid "Profile"
 msgstr ""
 
@@ -4510,7 +4522,7 @@ msgstr ""
 msgid "Reload"
 msgstr ""
 
-#: app/controllers/group_controller.rb:247
+#: app/controllers/group_controller.rb:245
 msgid "Removed %{user} from [%{group}>]"
 msgstr ""
 
@@ -4519,11 +4531,11 @@ msgstr ""
 msgid "Reply to this comment"
 msgstr ""
 
-#: app/controllers/group_controller.rb:175
+#: app/controllers/group_controller.rb:173
 msgid "Request sent. Please wait for the approval."
 msgstr ""
 
-#: app/controllers/group_controller.rb:190
+#: app/controllers/group_controller.rb:188
 #: app/views/group/new_participation.html.erb:30
 msgid "Request to Join Group"
 msgstr ""
@@ -4532,7 +4544,7 @@ msgstr ""
 msgid "Request to Join the Group from %s"
 msgstr ""
 
-#: app/controllers/group_controller.rb:186
+#: app/controllers/group_controller.rb:184
 msgid "Request to join the group has been sent out!"
 msgstr ""
 
@@ -4843,8 +4855,8 @@ msgid "ShareFile|User"
 msgstr ""
 
 #: app/controllers/mypage_controller.rb:517
-#: app/controllers/user_controller.rb:238
-#: app/controllers/group_controller.rb:390
+#: app/controllers/user_controller.rb:236
+#: app/controllers/group_controller.rb:388
 msgid "Shared Files"
 msgstr ""
 
@@ -5007,7 +5019,7 @@ msgid "So you have the page bookmarked in %s."
 msgstr ""
 
 #: app/controllers/mypage_controller.rb:518
-#: app/controllers/user_controller.rb:239
+#: app/controllers/user_controller.rb:237
 msgid "Socials"
 msgstr ""
 
@@ -5055,7 +5067,7 @@ msgstr ""
 msgid "Sort by user name"
 msgstr ""
 
-#: app/controllers/group_controller.rb:401
+#: app/controllers/group_controller.rb:399
 msgid "Specified group does not exist."
 msgstr ""
 
@@ -5112,7 +5124,7 @@ msgstr ""
 msgid "Subwindow"
 msgstr ""
 
-#: app/controllers/group_controller.rb:289
+#: app/controllers/group_controller.rb:287
 msgid "Succeeded"
 msgstr ""
 
@@ -5124,7 +5136,7 @@ msgstr ""
 msgid "Successfully added/updated users from CSV file."
 msgstr ""
 
-#: app/controllers/group_controller.rb:211
+#: app/controllers/group_controller.rb:209
 msgid "Successfully left the group."
 msgstr ""
 
@@ -5132,7 +5144,7 @@ msgstr ""
 msgid "Successfully update administrator."
 msgstr ""
 
-#: app/controllers/group_controller.rb:386
+#: app/controllers/group_controller.rb:384
 msgid "Summary"
 msgstr ""
 
@@ -5259,11 +5271,11 @@ msgid "Themes"
 msgstr ""
 
 #: app/controllers/user_controller.rb:86
-#: app/controllers/user_controller.rb:111
+#: app/controllers/user_controller.rb:109
 msgid "There are no entries posted."
 msgstr ""
 
-#: app/controllers/user_controller.rb:345
+#: app/controllers/user_controller.rb:343
 msgid "There are no introductions."
 msgstr ""
 
@@ -5383,7 +5395,7 @@ msgid "Topic Entry: "
 msgstr ""
 
 #: app/helpers/application_helper.rb:46
-#: app/views/mypage/_list_block.html.erb:35
+#: app/views/mypage/_list_block.html.erb:36
 msgid "Total %{items} hits (Page %{page} / %{pages})"
 msgstr ""
 
@@ -5455,7 +5467,7 @@ msgstr ""
 msgid "Unstar"
 msgstr ""
 
-#: app/controllers/user_controller.rb:288 app/views/edit/edit.html.erb:11
+#: app/controllers/user_controller.rb:286 app/views/edit/edit.html.erb:11
 #: app/views/group/_manage_info.html.erb:19
 #: app/views/admin/user_profiles/edit.html.erb:13
 #: app/views/admin/openid_identifiers/edit.html.erb:16
@@ -5530,7 +5542,7 @@ msgstr ""
 msgid "User %{username} has already been registered."
 msgstr ""
 
-#: app/controllers/user_controller.rb:265
+#: app/controllers/user_controller.rb:263
 #: app/controllers/admin/users_controller.rb:53
 #: app/controllers/admin/users_controller.rb:71 app/models/board_entry.rb:54
 msgid "User does not exist."
@@ -5788,12 +5800,12 @@ msgstr ""
 
 #: app/controllers/users_controller.rb:67
 #: app/controllers/services_controller.rb:44
-#: app/controllers/user_controller.rb:227
+#: app/controllers/user_controller.rb:225
 #: app/views/bookmarks/index.html.erb:24 config/environment.rb:77
 msgid "Users"
 msgstr ""
 
-#: app/controllers/group_controller.rb:356
+#: app/controllers/group_controller.rb:354
 msgid "Users / groups selection invalid."
 msgstr ""
 
@@ -6082,16 +6094,16 @@ msgid ""
 "for any purpose other than running this service.<br/>"
 msgstr ""
 
-#: app/controllers/group_controller.rb:168
+#: app/controllers/group_controller.rb:166
 #: app/views/group/new_participation.html.erb:21
 msgid "You are already a member of the group."
 msgstr ""
 
-#: app/controllers/group_controller.rb:213
+#: app/controllers/group_controller.rb:211
 msgid "You are not a member of the group."
 msgstr ""
 
-#: app/controllers/user_controller.rb:111
+#: app/controllers/user_controller.rb:109
 msgid "You are not allowed to see the page."
 msgstr ""
 
@@ -6168,7 +6180,7 @@ msgstr ""
 msgid "You have message(s) from %s"
 msgstr ""
 
-#: app/controllers/user_controller.rb:366
+#: app/controllers/user_controller.rb:364
 msgid "You have no bookmarks currently."
 msgstr ""
 
@@ -6262,7 +6274,7 @@ msgstr[1] ""
 msgid "[Bottom of page]"
 msgstr ""
 
-#: app/views/mypage/_list_block.html.erb:41
+#: app/views/mypage/_list_block.html.erb:42
 msgid "[Bottom]"
 msgstr ""
 
@@ -6351,7 +6363,7 @@ msgstr ""
 msgid "[Last]"
 msgstr ""
 
-#: app/models/board_entry.rb:658
+#: app/models/board_entry.rb:656
 msgid "[Link does not exist...%s>]"
 msgstr ""
 
@@ -6365,7 +6377,7 @@ msgid "[Next month]"
 msgstr ""
 
 #: app/helpers/application_helper.rb:47
-#: app/views/mypage/_list_block.html.erb:40
+#: app/views/mypage/_list_block.html.erb:41
 #: app/views/search/_result_info.html.erb:4
 msgid "[Next]"
 msgstr ""
@@ -6388,7 +6400,7 @@ msgid "[Prev month]"
 msgstr ""
 
 #: app/helpers/application_helper.rb:45
-#: app/views/mypage/_list_block.html.erb:33
+#: app/views/mypage/_list_block.html.erb:34
 #: app/views/search/_result_info.html.erb:3
 msgid "[Prev]"
 msgstr ""
@@ -6480,7 +6492,7 @@ msgstr ""
 msgid "[Top of page]"
 msgstr ""
 
-#: app/views/mypage/_list_block.html.erb:32
+#: app/views/mypage/_list_block.html.erb:33
 msgid "[Top]"
 msgstr ""
 

@@ -507,8 +507,6 @@ class BoardEntry < ActiveRecord::Base
 
   # アクセスしたことを示す（アクセス履歴）
   def accessed(login_user_id)
-    UserReading.create_or_update(login_user_id, self.id)
-
     unless writer?(login_user_id)
       state.increment(:access_count)
       state.increment(:today_access_count)
@@ -521,8 +519,8 @@ class BoardEntry < ActiveRecord::Base
         EntryAccess.find(:first, :conditions => ["board_entry_id = ?", id], :order => "updated_on ASC").destroy
       end
       EntryAccess.create(:board_entry_id => id, :visitor_id => login_user_id)
-
     end
+    UserReading.create_or_update(login_user_id, self.id)
   end
 
   # 話題の信号を送りつける

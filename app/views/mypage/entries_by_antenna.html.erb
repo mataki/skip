@@ -80,7 +80,8 @@ div.topix_body .page_line, div.topix_body .item_line {
     .click(function(){
         $j('#entries_body :checkbox').each(function(){
             if(!this.checked){
-                changeReadState(this, true);
+                entryId = this.id.split('_')[1];
+                changeReadState(entryId, true, $j('#authenticity_token').val());
                 this.checked = true;
             }
         });
@@ -90,7 +91,8 @@ div.topix_body .page_line, div.topix_body .item_line {
     $j('#uncheck_all_link')
     .click(function(){
         $j('#entries_body :checked').each(function(){
-            changeReadState(this, false);
+            entryId = this.id.split('_')[1];
+            changeReadState(entryId, false, $j('#authenticity_token').val());
             this.checked = false;
         });
     });
@@ -98,20 +100,7 @@ div.topix_body .page_line, div.topix_body .item_line {
     // チェックボックスをクリックすると既読未読が変更される
     $j('.read_state_checkbox')
     .click( function(){
-        changeReadState(this, this.checked);
+        entryId = this.id.split('_')[1];
+        changeReadState(entryId, this.checked, $j('#authenticity_token').val());
     });
-
-    var changeReadState = function(checkBoxObj, isRead){
-        messageId = checkBoxObj.id.split('_')[1];
-        $j.ajax({
-            type: 'POST',
-            url: "<%= url_for(:controller => 'mypage', :action => 'change_read_state') %>",
-            data: { board_entry_id:messageId,
-                    read:isRead,
-                    authenticity_token: $j('#authenticity_token').val() },
-            success: function(request) {
-            }
-        });
-
-    }
 <% end -%>

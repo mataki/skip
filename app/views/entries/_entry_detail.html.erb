@@ -223,7 +223,7 @@
         <%= link_to(icon_tag('zoom', :title => _('Maximize!')), {:controller=> "board_entries", :action => "large", :id => entry}, :target=>"_blank") %>
       </div>
     </div>
-    <h1><%= get_publication_type_icon(entry) -%> <%=h entry.category %> <%=h entry.title %></h1>
+    <h1><%= check_box_tag 'read_state_check', 'true', checked_on, :title => _('Mark read') %><%= get_publication_type_icon(entry) -%> <%=h entry.category %> <%=h entry.title %></h1>
     <% unless to_tb_entries.empty? -%>
     <div class="trackback_space send_trackback">
       <%= _('Topic Entry: ')%>
@@ -654,6 +654,11 @@
           setupCommentNestLink(target);
       };
       setupComment(document);
+
+      // 「記事を未読にする」チェックボックス押下時の処理
+      $j('#read_state_check').click(function() {
+          changeReadState(<%= entry.id %>, this.checked, authenticity_token);
+      });
 
       var authenticity_token = function(){
           return $j('input[name="authenticity_token"]').eq(0).val();

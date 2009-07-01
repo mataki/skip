@@ -128,6 +128,23 @@ $j(function(){
     };
 
     /*
+     * 記事を未読/既読状態にする
+     */
+    changeReadState = function(entryId, isRead, authenticityToken){
+        var changeReadStateURL = relative_url_root + "/mypage/change_read_state";
+        $j.ajax({
+            type: 'POST',
+            url: changeReadStateURL,
+            data: { board_entry_id: entryId,
+                    read: isRead,
+                    authenticity_token: authenticityToken },
+            success: function(msg) {
+                $j("#flash_message").trigger("notice", msg);
+            }
+        });
+    }
+
+    /*
      * 記事作成/編集でのファイルアップローダー
      */
     $j.fn.shareFileUploader = function(config) {
