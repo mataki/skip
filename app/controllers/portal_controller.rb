@@ -15,7 +15,6 @@
 
 # プロフィール情報を登録するためのアクションをまとめたクラス
 class PortalController < ApplicationController
-  layout 'layout'
   verify :method => :post, :only => [ :apply, :registration ], :redirect_to => { :action => :index }
 
   skip_before_filter :prepare_session
