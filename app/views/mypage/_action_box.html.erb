@@ -2,8 +2,8 @@
   <div class="box_space_title"></div>
   <div class="box_space_body">
     <ul>
-      <li><%= link_to(icon_tag(:report_edit, :title => _('Write a blog entry')) + _('Write a blog entry'), :controller => '/edit', :action => :index) %></li>
-      <li><%= link_to(icon_tag(:user_comment, :title => _('Write a question')) + _('Write a question'), :controller => '/edit', :action => :index, :category => _('質問')) %></li>
+      <li><%= link_to('', {:controller => '/edit', :action => :index}, :title => _('Write a blog entry'), :class => 'skip_sprites ss_blog') %></li>
+      <li><%= link_to('', {:controller => '/edit', :action => :index, :category => _('質問')}, :title => _('Write a question'), :class => 'skip_sprites ss_question') %></li>
     </ul>
   </div>
 </div>
