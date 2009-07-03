@@ -1,8 +1,8 @@
-<p><%= h(_("Hello, my name is %s.") % user.name) %></p>
-<p><%= _('I have joined the site!!')%></p>
-<p><%= _('Self introduction follows:')%></p>
+<p><%= _("Hello, my name is %s.") % h(user.name) %></p>
+<p><%= _('I have joined the site!!') %></p>
+<p><%= _('Self introduction follows:') %></p>
 <hr />
 <% user.user_profile_values.each do |profile| -%>
-<p><%= profile.user_profile_master.name %> :</p>
-<p><%= profile.value %></p>
+<p><%= h(profile.user_profile_master.name) %> :</p>
+<p><%= h(profile.value) %></p>
 <% end -%>

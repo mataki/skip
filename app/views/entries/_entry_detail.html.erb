@@ -296,7 +296,7 @@
 <% tb_entries.each do |tb_entry|  -%>
     <li>
     <%= entry_link_to tb_entry %> - <%= user_link_to tb_entry.user %>（<%= link_to_write_place tb_entry.owner%>）
-      <- <%= link_to _(" [Delete]"), {:controller => "edit", :action => "delete_trackback", :id => entry.id, :tb_entry_id => tb_entry.id}, {:confirm => __("本当に削除しますか？"),  :method => :post} if session[:user_id] == entry.user_id %>
+      <- <%= link_to _(" [Delete]"), {:controller => "edit", :action => "delete_trackback", :id => entry.id, :tb_entry_id => tb_entry.id}, {:confirm => _("Are you sure to delete?"),  :method => :post} if session[:user_id] == entry.user_id %>
     </li>
 <% end -%>
   </ul>

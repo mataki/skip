@@ -17,7 +17,7 @@
 
     <% content_for :javascript_initializers do -%>
         FCKeditor.BasePath = platform_url_root + "/javascripts/skip/fckeditor/";
-        var editor = new FCKeditor('documents_<%= params[:target] %>', '100%', '600', 'Normal');
+        var editor = new FCKeditor('documents_<%= h(params[:target]) %>', '100%', '600', 'Normal');
       <% if %w(rules about_this_site).include?(params[:target]) -%>
         editor.Config["FullPage"] = true;
       <% end -%>
