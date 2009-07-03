@@ -13,12 +13,14 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-Feature: マイページのメールアドレス管理
-  メールアドレスをマイページから変更したい
+Feature: 自分の管理
+  メールアドレスなどを自分に関する情報を変更できるページ
+
+  Background:
+    Given   言語は"ja-JP"
 
   Scenario: メールアドレスの変更を申請する
-    Given   言語は"ja-JP"
-    And     メール機能を有効にする
+    Given   メール機能を有効にする
     And     ログインIDが"111111"でパスワードが"Password1"のあるユーザでログインする
 
     And     "自分の管理"リンクをクリックする
@@ -28,3 +30,19 @@ Feature: マイページのメールアドレス管理
 
     Then    flashメッセージに"メールアドレス変更の申請を受け付けました。メールをご確認ください。"と表示されていること
     And     メールが"test_user@example.com"宛に送信されていること
+
+  Scenario: ショートカット表示をカスタマイズする
+    Given "a_user"でログインする
+
+    When "自分の管理"リンクをクリックする
+    And "カスタマイズ"リンクをクリックする
+    And "常に表示する"を選択する
+    And "変更"ボタンをクリックする
+    Then "参加グループへ移動"と表示されていること
+
+    When "マイページのみに表示"を選択する
+    And "変更"ボタンをクリックする
+    Then "参加グループへ移動"と表示されていないこと
+
+    When マイページを表示する
+    Then "参加グループへ移動"と表示されていること
