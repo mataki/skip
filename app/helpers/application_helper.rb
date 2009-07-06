@@ -343,7 +343,7 @@ module ApplicationHelper
     option_tags << content_tag(:option, '----', :value => '----')
     option_tags << content_tag(:option, _('Groups Joined'), :value => url_for({:controller => '/mypage', :action => 'group'}))
 
-    menus << "#{icon_tag(:group_go, :title => _('My Groups'))}<select class=\"select_navi\">#{option_tags.join('')}</select>"
+    menus << "<select class=\"select_navi\">#{option_tags.join('')}</select>"
     menus
   end
 
