@@ -14,7 +14,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #: app/views/share_file/_file_size_box.html.erb:4
 msgid " (MB)"
@@ -2880,8 +2880,8 @@ msgstr "入力された%sというメールアドレスは登録されていま�
 #: app/controllers/admin/users_controller.rb:281
 msgid "Email address %{email} has been registered in the site"
 msgid_plural "%{num} emails have been registered in the site"
-msgstr[0] "指定された%{email}というメールアドレスは登録されていません。"
-msgstr[1] "指定されたうち%{num}個のメールアドレスが登録されていません。"
+msgstr[0] "指定された%{email}というメールアドレスは既に利用登録済みです。"
+msgstr[1] "指定されたうち%{num}個のメールアドレスは既に利用登録済みです。"
 
 #: app/controllers/mypage_controller.rb:451
 msgid "Email address was updated successfully."
