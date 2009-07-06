@@ -14,7 +14,7 @@
   <% entry_infos = get_entry_infos(message) -%>
   <% categories = message.category.scan(/\[[^\]]*\]/) -%>
   <% delete_categories.each {|categ| categories.delete(categ) } -%>
-  <% entry_search_links_by_category = categories.map{ |category| link_to h(category), :controller => 'search', :action => :entry_search, :tag_words => Tag.comma_tags(h(category)) } -%>
+  <% entry_search_links_by_category = categories.map{ |category| link_to h(category), {:controller => 'search', :action => :entry_search, :tag_words => Tag.comma_tags(h(category))}, :class => 'list_tag' } -%>
   <div class="topix_line">
     <div class="title">
       <%= get_light_icon(message) + hide_long_tags(entry_search_links_by_category, 3) + entry_link_to(message, {}, {:title => h(message.title + entry_infos)}) %>
