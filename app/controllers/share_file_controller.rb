@@ -28,8 +28,12 @@ class ShareFileController < ApplicationController
       return
     end
 
-    params[:publication_type] = "public" if Symbol.split_symbol(@share_file.owner_symbol).first=="uid"
-    params[:publication_type] ||= "private"
+    params[:publication_type] =
+      if Symbol.split_symbol(@share_file.owner_symbol).first == "uid"
+        'public'
+      else
+        @share_file.owner.default_publication_type
+      end
     params[:publication_symbols_value] = ""
 
     @error_messages = []

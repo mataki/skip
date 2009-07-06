@@ -459,6 +459,10 @@ class User < ActiveRecord::Base
     self.user_custom || self.build_user_custom
   end
 
+  def default_publication_type
+    'public'
+  end
+
 protected
   # TODO: self.make_conditionsメソッドは使ってなさそう確認して消す
   @@search_cond_keys = [:name, :section, :email]

@@ -86,10 +86,18 @@ class ShareFile < ActiveRecord::Base
   end
 
   def self.owner_id owner_symbol
+    owner(owner_symbol).id
+  end
+
+  def owner
+    self.class.owner owner_symbol
+  end
+
+  def self.owner owner_symbol
     symbol_type = owner_symbol.split(":").first
     symbol_id = owner_symbol.split(":").last
     owner = (symbol_type == User.symbol_type.to_s) ? User.find_by_uid(symbol_id) : Group.active.find_by_gid(symbol_id)
-    owner ? owner.id : raise("Owner cannot be found by '#{owner_symbol}'")
+    owner ? owner : raise("Owner cannot be found by '#{owner_symbol}'")
   end
 
   # 所属するグループの公開範囲により、共有ファイルの公開範囲を判定する
