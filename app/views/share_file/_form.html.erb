@@ -31,12 +31,12 @@ table {
   <div class="input_value" id="input_value_publication"><table><tr><td>
     <% display_type = (@share_file.owner_is_public? ? "" : "none") %>
     <span style="display:<%= display_type %>">
-      <%= radio_button_tag("publication_type", "public", params[:publication_type] == "public", :id=>"publication_type_public") -%><%= _('Open to All')%>
+      <%= radio_button(:share_file, :publication_type, "public", :id => "publication_type_public") %><%= _('Open to All') %>
     </span>
-    <%= radio_button_tag("publication_type", "private", params[:publication_type] == "private", :id=>"publication_type_private") -%><%= show_private_value share_file -%>
-    <%= radio_button_tag("publication_type", "protected", params[:publication_type] == "protected", :id=>"publication_type_protected") %><%= _('Specify Directly')%>
+    <%= radio_button(:share_file, :publication_type, "private", :id => "publication_type_private") %><%= show_private_value share_file %>
+    <%= radio_button(:share_file, :publication_type, "protected", :id => "publication_type_protected") %><%= _('Specify Directly') %>
 
-    <%= render :partial => "shared/symbol_autocomplete_field", :locals => {:publication_symbols_value => params[:publication_symbols_value], :editor_symbols_value => params[:editor_symbols_value], :edit_checkbox => false } %>
+    <%= render :partial => "shared/symbol_autocomplete_field", :locals => {:publication_symbols_value => @share_file.publication_symbols_value, :editor_symbols_value => params[:editor_symbols_value], :edit_checkbox => false } %>
     </td></tr></table>
   </div>
   <div style="clear: left"></div>
