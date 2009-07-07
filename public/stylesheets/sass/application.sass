@@ -211,11 +211,13 @@ div.topix_body
   a:visited
     :color purple
   // ボックス内でのタグ一覧表示
-  a.list_tag
+  .list_tags
     :font-size = !small_font_size
     :color #8080FF
-    &:visited
+    & a
       :color #8080FF
+      &:visited
+        :color #8080FF
   .topix_line
     :border-bottom = !base_dotted_border
     :margin 3px 0 1px 0
