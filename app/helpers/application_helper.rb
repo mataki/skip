@@ -352,6 +352,7 @@ private
     ActionController::AbstractRequest.relative_url_root
   end
 
+  # TODO 仕組みが複雑すぎる。BoardEntry.replace_symbol_linkと合わせてシンプルな作りにしたい。
   def parse_permalink text, owner_symbol = nil
     return '' unless text
     # closure
@@ -363,6 +364,7 @@ private
     file_proc = proc {|file_symbol, link_str|
                       symbol_type, symbol_id = SkipUtil.split_symbol owner_symbol
                       f_symbol_type, file_name = SkipUtil.split_symbol file_symbol
+                      file_name.gsub!(/\r\n|\r|\n/, '')
                       url = share_file_url :controller_name => @@CONTROLLER_HASH[symbol_type], :symbol_id => symbol_id, :file_name => file_name.strip, :authenticity_token => form_authenticity_token
                       link_to(link_str, url) }
 
