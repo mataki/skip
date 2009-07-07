@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2009-07-03 17:38+0900\n"
+"POT-Creation-Date: 2009-07-07 10:48+0900\n"
 "PO-Revision-Date: 2009-06-29 13:31+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2536,7 +2536,7 @@ msgid ""
 "page&quot;."
 msgstr ""
 
-#: app/controllers/share_file_controller.rb:226
+#: app/controllers/share_file_controller.rb:214
 msgid ""
 "Could not find the entity of the specified file. Contact system "
 "administrator."
@@ -2641,7 +2641,7 @@ msgstr ""
 msgid "Date"
 msgstr ""
 
-#: app/models/share_file.rb:250
+#: app/models/share_file.rb:272
 msgid "Date Accessed"
 msgstr ""
 
@@ -2992,7 +2992,7 @@ msgstr ""
 msgid "Failed to save the image. Try again or contact administrator."
 msgstr ""
 
-#: app/controllers/share_file_controller.rb:82
+#: app/controllers/share_file_controller.rb:79
 msgid "Failed to upload file(s)."
 msgstr ""
 
@@ -3002,7 +3002,7 @@ msgid_plural "Failed to upload the following files."
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/controllers/share_file_controller.rb:84
+#: app/controllers/share_file_controller.rb:81
 msgid "Failure:%{failure}]"
 msgid_plural "Failures:%{failure}]"
 msgstr[0] ""
@@ -3011,6 +3011,11 @@ msgstr[1] ""
 #: app/helpers/calendar_helper.rb:76
 msgid "February"
 msgstr ""
+
+#: app/views/share_file/new_ajax_upload.html.erb:27
+#, fuzzy
+msgid "File"
+msgstr "に失敗しました"
 
 #: app/controllers/mypage_controller.rb:268
 msgid "File format invalid."
@@ -3036,11 +3041,11 @@ msgstr ""
 msgid "File size: %s"
 msgstr ""
 
-#: app/controllers/share_file_controller.rb:156
+#: app/controllers/share_file_controller.rb:144
 msgid "File was successfully deleted."
 msgstr ""
 
-#: app/models/share_file.rb:38
+#: app/models/share_file.rb:36
 msgid "File with the same name already uploaded."
 msgstr ""
 
@@ -3541,7 +3546,7 @@ msgstr ""
 msgid "Invalid parameter(s) found."
 msgstr ""
 
-#: app/controllers/share_file_controller.rb:284
+#: app/controllers/share_file_controller.rb:273
 #: app/controllers/edit_controller.rb:288
 msgid "Invalid parameter(s)."
 msgstr ""
@@ -4113,7 +4118,7 @@ msgid "No matching results found."
 msgstr ""
 
 #: app/controllers/search_controller.rb:86
-#: app/controllers/share_file_controller.rb:187
+#: app/controllers/share_file_controller.rb:175
 msgid "No matching shared files found."
 msgstr ""
 
@@ -4217,6 +4222,7 @@ msgid ""
 msgstr ""
 
 #: app/views/board_entries/_form.html.erb:71 app/views/group/_form.html.erb:50
+#: app/views/share_file/new_ajax_upload.html.erb:21
 #: app/views/share_file/_form.html.erb:34
 msgid "Open to All"
 msgstr ""
@@ -4991,7 +4997,7 @@ msgstr ""
 msgid "ShareFile|Date"
 msgstr ""
 
-#: app/models/share_file.rb:-
+#: app/models/share_file.rb:- app/views/share_file/new_ajax_upload.html.erb:32
 msgid "ShareFile|Description"
 msgstr ""
 
@@ -5007,7 +5013,7 @@ msgstr ""
 msgid "ShareFile|Publication symbols value"
 msgstr ""
 
-#: app/models/share_file.rb:-
+#: app/models/share_file.rb:- app/views/share_file/new_ajax_upload.html.erb:19
 msgid "ShareFile|Publication type"
 msgstr ""
 
@@ -5677,6 +5683,7 @@ msgid "Updating..."
 msgstr ""
 
 #: app/views/mypage/_manage_portrait.html.erb:22
+#: app/views/share_file/new_ajax_upload.html.erb:37
 #: app/views/admin/images/_form.html.erb:4
 #: app/views/admin/users/import.html.erb:16
 msgid "Upload"
@@ -6540,7 +6547,7 @@ msgstr ""
 msgid "[Get download history in CSV]"
 msgstr ""
 
-#: app/models/share_file.rb:225 app/models/board_entry.rb:322
+#: app/models/share_file.rb:247 app/models/board_entry.rb:322
 msgid "[Group members only]"
 msgstr ""
 
@@ -6579,11 +6586,11 @@ msgstr "[Next]"
 msgid "[Next]"
 msgstr ""
 
-#: app/models/share_file.rb:219 app/models/board_entry.rb:316
+#: app/models/share_file.rb:241 app/models/board_entry.rb:316
 msgid "[Open to all]"
 msgstr ""
 
-#: app/models/share_file.rb:223 app/models/board_entry.rb:320
+#: app/models/share_file.rb:245 app/models/board_entry.rb:320
 msgid "[Owner only]"
 msgstr ""
 
@@ -6664,7 +6671,7 @@ msgstr ""
 msgid "[Sort by modified date]"
 msgstr ""
 
-#: app/controllers/share_file_controller.rb:83
+#: app/controllers/share_file_controller.rb:80
 msgid "[Success:%{success} "
 msgid_plural "[Successes:%{success} "
 msgstr[0] ""
@@ -7029,7 +7036,7 @@ msgstr ""
 
 #: app/helpers/initial_settings_helper.rb:43
 #: app/controllers/admin/users_controller.rb:187
-#: app/controllers/admin/users_controller.rb:195 app/models/share_file.rb:250
+#: app/controllers/admin/users_controller.rb:195 app/models/share_file.rb:272
 #: app/views/user/show.html.erb:53
 #: app/views/portal/_registration_form.html.erb:37
 #: app/views/admin/users/create_uid.html.erb:12
@@ -7116,11 +7123,11 @@ msgstr ""
 
 #: app/controllers/board_entries_controller.rb:89
 #: app/controllers/board_entries_controller.rb:139
-#: app/controllers/share_file_controller.rb:263
+#: app/controllers/share_file_controller.rb:251
 msgid "この操作は、許可されていません。"
 msgstr ""
 
-#: app/models/share_file.rb:42
+#: app/models/share_file.rb:57
 msgid "ご指定の操作は実行できません。"
 msgstr ""
 
@@ -7168,7 +7175,7 @@ msgstr ""
 msgid "セッション制限"
 msgstr ""
 
-#: app/controllers/share_file_controller.rb:268
+#: app/controllers/share_file_controller.rb:256
 msgid "ダウンロード履歴の削除に成功しました。"
 msgstr ""
 
@@ -7194,11 +7201,11 @@ msgstr ""
 msgid "パスワード強度"
 msgstr ""
 
-#: app/controllers/share_file_controller.rb:79
+#: app/controllers/share_file_controller.rb:75
 msgid "ファイルのアップロードに成功しました。"
 msgstr ""
 
-#: app/controllers/share_file_controller.rb:234
+#: app/controllers/share_file_controller.rb:222
 msgid "ファイルのダウンロード"
 msgstr ""
 
@@ -7374,7 +7381,7 @@ msgstr ""
 msgid "既に登録されている値から選択項目を表示しています"
 msgstr ""
 
-#: app/controllers/share_file_controller.rb:137
+#: app/controllers/share_file_controller.rb:125
 msgid "更新しました。"
 msgstr ""
 
