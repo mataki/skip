@@ -135,7 +135,7 @@ class MypageController < ApplicationController
       @openid_identifier = @user.openid_identifiers.first || OpenidIdentifier.new
     when "manage_portrait"
       @picture = current_user.picture || current_user.build_picture
-      render :partial => 'pictures/new', :layout => 'layout' and return
+      render :template => 'pictures/new', :layout => 'layout' and return
     when "manage_customize"
       @user_custom = UserCustom.find_by_user_id(@user.id) || UserCustom.new
     when "manage_antenna"
