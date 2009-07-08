@@ -21,14 +21,8 @@
     <%= text_area_tag 'contents_hiki', h(params[:contents_hiki]), :cols => 90, :rows => 20 %>
   </div>
 
-<% content_for :javascript_includes do -%>
-<%= skip_javascript_include_tag "fckeditor/fckeditor" %>
-<% end -%>
-
+<% ckeditor 'toolbar' => "Entry" %>
 <% content_for :javascript_initializers do -%>
-    FCKeditor.BasePath = platform_url_root + "/javascripts/skip/fckeditor/";
-    new FCKeditor('contents_richtext', '100%', '330', 'Normal').ReplaceTextarea();
-
     changeEditorMode = function(){
         $j('#contents_hiki_space, #contents_richtext_space, .hiki_support').hide();
 

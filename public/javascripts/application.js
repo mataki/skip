@@ -142,7 +142,7 @@ $j(function(){
                 $j("#flash_message").trigger("notice", msg);
             }
         });
-    }
+    };
 
     /*
      * 記事作成/編集でのファイルアップローダー
@@ -152,7 +152,7 @@ $j(function(){
         var message = config["message"];
 
         var insertToRichEditor = function(elem){
-            FCKeditorAPI.GetInstance('contents_richtext').InsertHtml(elem.wrap('<span></span>').parent().html());
+            CKEDITOR.instances.contents_richtext.insertHtml(elem.wrap('<span></span>').parent().html());
         };
 
         var insertToHikiEditor = function(text){

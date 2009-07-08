@@ -96,4 +96,17 @@ var platform_url_root = '#{root_url.chop}';
       :locals=> { :messages=>object.errors.full_messages, :object=>object }
     end
   end
+
+  def ckeditor opt = {}
+    default_opt = {
+      'customConfig' => url_for("/javascripts/skip_embedded/ckeditor_config.js"),
+      'toolbar' => 'Entry'
+    }.merge(opt)
+    content_for :javascript_includes do
+      javascript_include_tag "skip_embedded/ckeditor/ckeditor.js"
+    end
+    content_for :javascript_initializers do
+      "CKEDITOR.replace('contents_richtext', #{default_opt.to_json});"
+    end
+  end
 end
