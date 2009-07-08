@@ -14,7 +14,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Group < ActiveRecord::Base
-  include LogicalDestroyable
+  include SkipEmbedded::LogicalDestroyable
 
   has_many :group_participations, :dependent => :destroy
   belongs_to :group_category
