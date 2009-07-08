@@ -11,18 +11,7 @@
     <%= link_to '[' + _('Revert to default page') + ']', admin_documents_revert_path(:target => params[:target]), :method => :post, :confirm => _('Current page will be overwritten.  Are you sure to continue?') %>
     </div>
     <% end -%>
-    <% content_for :javascript_includes do -%>
-    <%= skip_javascript_include_tag "fckeditor/fckeditor" %>
-    <% end -%>
-
-    <% content_for :javascript_initializers do -%>
-        FCKeditor.BasePath = platform_url_root + "/javascripts/skip/fckeditor/";
-        var editor = new FCKeditor('documents_<%= h(params[:target]) %>', '100%', '600', 'Normal');
-      <% if %w(rules about_this_site).include?(params[:target]) -%>
-        editor.Config["FullPage"] = true;
-      <% end -%>
-        editor.ReplaceTextarea();
-    <% end -%>
+    <% ckeditor "documents_#{h(params[:target])}", 'fullPage' => true %>
   <% else -%>
     <div class="box">
       <p>

@@ -21,7 +21,7 @@
     <%= text_area_tag 'contents_hiki', h(params[:contents_hiki]), :cols => 90, :rows => 20 %>
   </div>
 
-<% ckeditor 'toolbar' => "Entry" %>
+<% ckeditor 'contents_richtext', 'toolbar' => "Entry" %>
 <% content_for :javascript_initializers do -%>
     changeEditorMode = function(){
         $j('#contents_hiki_space, #contents_richtext_space, .hiki_support').hide();

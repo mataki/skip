@@ -97,7 +97,7 @@ var platform_url_root = '#{root_url.chop}';
     end
   end
 
-  def ckeditor opt = {}
+  def ckeditor target, opt = {}
     default_opt = {
       'customConfig' => url_for("/javascripts/skip_embedded/ckeditor_config.js"),
       'toolbar' => 'Entry'
@@ -106,7 +106,7 @@ var platform_url_root = '#{root_url.chop}';
       javascript_include_tag "skip_embedded/ckeditor/ckeditor.js"
     end
     content_for :javascript_initializers do
-      "CKEDITOR.replace('contents_richtext', #{default_opt.to_json});"
+      "CKEDITOR.replace('#{target}', #{default_opt.to_json});"
     end
   end
 end
