@@ -54,7 +54,7 @@ module Admin::ApplicationHelper
     if selected
       "<li>#{icon_tag('bullet_red')}<b>#{name}</b></li>"
     else
-      "<li>#{icon_tag('bullet_blue')}#{link_to(name, path, html_options)}</b></li>"
+      "<li>#{icon_tag('bullet_blue')}#{link_to(name, path, html_options)}</li>"
     end
   end
 
