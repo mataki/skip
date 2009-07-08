@@ -461,7 +461,9 @@ class MypageController < ApplicationController
 
   # POST or PUT action
   def update_customize
-    if current_user.custom.update_attributes(params[:user_custom])
+    @user_custom = current_user.custom
+    if @user_custom.update_attributes(params[:user_custom])
+      setup_custom_cookies
       flash[:notice] = _('Updated successfully.')
       redirect_to :action => 'manage', :menu => 'manage_customize'
     else

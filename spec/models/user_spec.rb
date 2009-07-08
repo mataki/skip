@@ -1130,7 +1130,7 @@ end
 describe User, "#custom" do
   it "関連するuser_customが存在するユーザの場合、そのuser_customが返る" do
     user = create_user
-    custom = user.create_user_custom(:theme => "green", :classic => true, :always_show_shortcut => true)
+    custom = user.create_user_custom(:theme => "green", :classic => true, :always_show_shortcut => true, :editor_mode => "hiki")
 
     user.custom.should == custom
   end

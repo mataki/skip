@@ -87,6 +87,13 @@ protected
     end
   end
 
+  def setup_custom_cookies
+    cookies[:editor_mode] = {
+      :value => current_user.custom.editor_mode,
+      :expires => 1.month.from_now
+    }
+  end
+
   # ログイン中のユーザのシンボル＋そのユーザの所属するグループのSymbolの配列を返す
   # sid:all_userは含めていない
   def login_user_symbols
@@ -109,6 +116,7 @@ protected
   def current_user=(user)
     session[:auth_session_token] = user ? user.update_auth_session_token! : nil
     session[:user_code] = user ? user.code : nil
+    setup_custom_cookies
     @current_user = user || nil
   end
 
