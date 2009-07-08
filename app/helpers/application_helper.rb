@@ -139,12 +139,16 @@ module ApplicationHelper
     options[:height] = height unless height == 0
     if user.retired?
       file_name = 'retired.png'
-    elsif picture = user.pictures.first
-      file_name = url_for(:controller => 'pictures', :action => 'picture', :id => picture.id, :format => :png)
-      if popup
-        pop_name = url_for(:controller => 'pictures', :action => 'picture', :id => picture.id.to_s)
-        options[:title] = _("Click to see in original size.")
-        return link_to(image_tag(file_name, options), file_name, :class => 'nyroModal zoomable')
+    elsif picture = user.picture
+      unless picture.new_record?
+        file_name = url_for(:controller => '/pictures', :action => 'picture', :id => picture.id, :format => :png)
+        if popup
+          pop_name = url_for(:controller => '/pictures', :action => 'picture', :id => picture.id.to_s)
+          options[:title] = _("Click to see in original size.")
+          return link_to(image_tag(file_name, options), file_name, :class => 'nyroModal zoomable')
+        end
+      else
+        file_name = 'default_picture.png'
       end
     else
       file_name = 'default_picture.png'

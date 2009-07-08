@@ -18,6 +18,7 @@ class Admin::User < User
   has_many :user_uids, :dependent => :destroy, :class_name => 'Admin::UserUid'
   has_many :openid_identifiers, :dependent => :destroy, :class_name => 'Admin::OpenidIdentifier'
   has_many :user_profile_values, :dependent => :destroy, :class_name => 'Admin::UserProfileValue'
+  has_one :picture, :dependent => :destroy, :class_name => 'Admin::Picture'
 
   N_('Admin::User|Code')
   N_('Admin::User|Code description')

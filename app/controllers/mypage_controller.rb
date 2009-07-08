@@ -134,7 +134,8 @@ class MypageController < ApplicationController
       redirect_to_with_deny_auth(:action => :manage) and return unless login_mode?(:free_rp)
       @openid_identifier = @user.openid_identifiers.first || OpenidIdentifier.new
     when "manage_portrait"
-      @picture = Picture.find_by_user_id(@user.id) || Picture.new
+      @picture = current_user.picture || current_user.build_picture
+      render :partial => 'pictures/new', :layout => 'layout' and return
     when "manage_customize"
       @user_custom = UserCustom.find_by_user_id(@user.id) || UserCustom.new
     when "manage_antenna"
@@ -246,40 +247,6 @@ class MypageController < ApplicationController
     e.backtrace.each { |line| logger.error line}
     render :text => _("Failed to load rss.")
     return false
-  end
-
-  # ================================================================================
-  #  プロフィール画像関連
-  # ================================================================================
-
-  # post_action
-  def destroy_portrait
-    if picture = Picture.find_by_user_id(session[:user_id])
-      picture.destroy
-      flash[:notice] = _("Picture was deleted successfully.")
-    end
-    redirect_to :action => 'manage', :menu => 'manage_portrait'
-  end
-
-  # post_action
-  def save_portrait
-    begin
-      unless params[:picture][:picture].is_a? ActionController::UploadedFile
-        raise ActiveRecord::RecordInvalid::new(_("File format invalid."))
-      end
-      Picture.transaction do
-        if picture = Picture.find_by_user_id(session[:user_id])
-          picture.destroy
-        end
-        picture = Picture.new(params[:picture])
-        picture.user_id = session[:user_id]
-        picture.save!
-        flash[:notice] = _("Picture was updated successfully.")
-      end
-    rescue ActiveRecord::RecordInvalid => e
-      flash[:warn] = e.message
-    end
-    redirect_to :action => 'manage', :menu => 'manage_portrait'
   end
 
   # ================================================================================
@@ -693,7 +660,7 @@ class MypageController < ApplicationController
         :option => {:controller => "mypage", :action => "welcome"}
       }
     end
-    if current_user.pictures.size < 1
+    unless current_user.picture
       system_messages << {
         :text => _("Change your profile picture!"), :icon => "picture",
         :option => {:controller => "mypage", :action => "manage", :menu => "manage_portrait"}

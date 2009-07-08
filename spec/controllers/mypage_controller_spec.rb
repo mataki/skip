@@ -692,7 +692,7 @@ end
 describe MypageController, '#system_messages' do
   before do
     @controller = MypageController.new
-    @user = stub_model(User, :pictures => [])
+    @user = stub_model(User, :picture => nil)
     @controller.stub!(:current_user).and_return(@user)
   end
   describe 'ようこそメッセージを表示する場合' do

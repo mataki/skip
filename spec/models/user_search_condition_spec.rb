@@ -23,7 +23,7 @@ describe UserSearchCondition do
       conditions.make_conditions.should == ["users.status in (?)", ["ACTIVE", "RETIRED"]]
 
       conditions.value_of_order_by.should == "user_accesses.last_access DESC"
-      conditions.value_of_include.should == [:user_access, :pictures]
+      conditions.value_of_include.should == [:user_access, :picture]
     end
   end
   describe "名前が検索条件になっている場合" do
@@ -55,7 +55,7 @@ describe UserSearchCondition do
       @conditions.make_conditions.should == ["users.status in (?) AND user_uids.uid_type = ?", ["ACTIVE", "RETIRED"], "MASTER"]
     end
     it "includeが設定されていること" do
-      @conditions.value_of_include.should == [:user_access, :pictures, :user_uids]
+      @conditions.value_of_include.should == [:user_access, :picture, :user_uids]
     end
   end
   describe "ソート順がユーザ名順の場合" do
@@ -69,7 +69,7 @@ describe UserSearchCondition do
       @conditions.make_conditions.should == ["users.status in (?) AND user_uids.uid_type = ?", ["ACTIVE", "RETIRED"], "NICKNAME"]
     end
     it "includeが設定されていること" do
-      @conditions.value_of_include.should == [:user_access, :pictures, :user_uids]
+      @conditions.value_of_include.should == [:user_access, :picture, :user_uids]
     end
   end
   describe "出力形式が一覧の場合" do
@@ -92,7 +92,7 @@ describe UserSearchCondition do
       @conditions.make_conditions.should == ["users.status in (?) AND group_participations.group_id = ? AND group_participations.waiting = false", ["ACTIVE", "RETIRED"], 2]
     end
     it "includeが設定されていること" do
-      @conditions.value_of_include.should == [:user_access, :pictures, :group_participations]
+      @conditions.value_of_include.should == [:user_access, :picture, :group_participations]
     end
     describe "グループの管理者を含まない場合" do
       before do

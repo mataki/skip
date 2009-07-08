@@ -24,7 +24,7 @@ class User < ActiveRecord::Base
   attr_protected :admin, :status
 
   has_many :group_participations, :dependent => :destroy
-  has_many :pictures, :dependent => :destroy
+  has_one :picture, :dependent => :destroy
   has_many :user_profile_values, :dependent => :destroy
   has_many :tracks, :order => "updated_on DESC", :dependent => :destroy
   has_one  :user_access, :class_name => "UserAccess", :dependent => :destroy

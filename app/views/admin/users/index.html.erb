@@ -56,10 +56,13 @@
   <%= submit_tag Admin::Setting.mail_function_setting ? _('Send activate email to selected users') : _('Issue activation url for selected users') %>
   <% end -%>
 </div>
+<% footer_links = [] -%>
 <% if login_mode?(:password) -%>
-<%= link_to _('New %{model}') % {:model => _('user')}, new_admin_user_path %> |
-<%= link_to _('New users from CSV'), import_new_admin_user_path %>
+<% footer_links << link_to(_('New %{model}') % {:model => _('user')}, new_admin_user_path) %>
+<% footer_links << link_to(_('New users from CSV'), import_new_admin_user_path) %>
 <% end -%>
+<% footer_links << link_to(_('Listing %{model}') % {:model => _('picture')}, admin_pictures_path) %>
+<%= footer_links.join(' | ') %>
 <% end -%>
 
 <% content_for :javascript_initializers do -%>

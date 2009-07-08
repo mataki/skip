@@ -11,11 +11,15 @@
   <% end %>
 </div>
 
+<% links = [] -%>
 <% if user_name_mode?(:name) -%>
-<%= link_to(_('Change uid'), {:action => :change_uid, :id => @user}) if @user.user_uids.size > 1 %>
-<%= link_to(_('Create %{name}') % {:name => _('user name')}, {:action => :create_uid, :id => @user}) if @user.user_uids.size == 1 and @user.active? %>
+<% links << link_to(_('Change uid'), {:action => :change_uid, :id => @user}) if @user.user_uids.size > 1 %>
+<% links << link_to(_('Create %{name}') % {:name => _('user name')}, {:action => :create_uid, :id => @user}) if @user.user_uids.size == 1 and @user.active? %>
 <% end -%>
-<%= link_to(_('Editing %{model}') % {:model => _('user profile')}, admin_user_user_profile_path(@user)) if UserProfileMaster.count > 0 %>
+<% links << link_to(_('Editing %{model}') % {:model => _('user profile')}, admin_user_user_profile_path(@user)) if UserProfileMaster.count > 0 %>
+<% links << link_to(_('Editing %{model}') % {:model => _('picture')}, edit_admin_user_picture_path(@user)) if @user.picture %>
+<% links << link_to(_('Create %{model}') % {:model => _('picture')}, new_admin_user_picture_path(@user)) unless @user.picture %>
+<%= links.join(' | ') %>
 <% end -%>
 
 <% content_for :javascript_initializers do -%>

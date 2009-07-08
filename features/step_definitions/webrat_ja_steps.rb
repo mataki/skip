@@ -104,3 +104,7 @@ When /^デバッガで止める$/ do
   require "ruby-debug"
   debugger
 end
+
+When /^"([^\"]*)"としてファイル"([^\"]*)"をContent\-Type"([^\"]*)"として添付する$/ do |field, path, content_type|
+  attach_file(field, path, content_type)
+end

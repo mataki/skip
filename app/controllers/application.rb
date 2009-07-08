@@ -54,10 +54,8 @@ protected
     # ログのリクエスト情報に、ユーザ情報を加える（情報漏えい事故発生時のトレーサビリティを確保)
     logger.info(user.to_s_log('[Log for inspection]'))
 
-    unless controller_name == 'pictures'
-      UserAccess.update_all("last_access = CURRENT_TIMESTAMP", ["user_id = ? ", user.id ])
-      @site_count = SiteCount.find(:first, :order => "created_on desc") || SiteCount.new
-    end
+    UserAccess.update_all("last_access = CURRENT_TIMESTAMP", ["user_id = ? ", user.id ])
+    @site_count = SiteCount.find(:first, :order => "created_on desc") || SiteCount.new
 
     # Settingのキャッシュをチェックする
     Admin::Setting.check_cache

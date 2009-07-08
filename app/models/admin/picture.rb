@@ -13,30 +13,16 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class Picture < ActiveRecord::Base
-  belongs_to :user
+class Admin::Picture < Picture
+  belongs_to :user, :class_name => 'Admin::User'
 
-  attr_accessor :file
+  N_('Admin::Picture|File')
 
-  N_('Picture|File')
-
-  validates_format_of :content_type, :with => /^image/, :message =>_("Uploads are limited to pictures only.")
-
-  def before_validation
-    if file
-      self.name = base_part_of(file.original_filename)
-      self.content_type = file.content_type.chomp
-      self.data = file.read
-      @filesize = file.size
-    end
+  def self.search_columns
+    %w(name)
   end
 
-  def validate
-    errors.add("", _("File size too large.")) if @filesize > 65535
-  end
-
-  def base_part_of(file_name)
-    name = File.basename(file_name)
-    name.gsub(/[^\w._-]/, '')
+  def topic_title
+    name
   end
 end
