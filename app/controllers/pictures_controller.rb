@@ -14,7 +14,6 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class PicturesController < ApplicationController
-
   def picture
     @picture = Picture.find(params[:id])
     send_data(@picture.data, :filename => @picture.name, :type => @picture.content_type, :disposition => "inline")
@@ -47,9 +46,17 @@ class PicturesController < ApplicationController
 
   def destroy
     picture = current_user.picture
-    picture.destroy
     respond_to do |format|
-      flash[:notice] = _("Picture was deleted successfully.")
+      unless picture
+        flash[:warn] = _('Picture could not be deleted since it does not found.')
+      else
+        if Admin::Setting.enable_change_picture
+          picture.destroy
+          flash[:notice] = _("Picture was deleted successfully.")
+        else
+          flash[:warn] = _("Picture could not be changed.")
+        end
+      end
       format.html { redirect_to url_for(:controller => 'mypage', :action => 'manage', :menu => 'manage_portrait') }
     end
   end

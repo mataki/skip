@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2009-07-08 15:27+0900\n"
+"POT-Creation-Date: 2009-07-09 11:40+0900\n"
 "PO-Revision-Date: 2009-06-30 14:52+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -585,7 +585,7 @@ msgstr "%sのメンバーを参加者に追加し、連絡の掲示板を作成�
 msgid "Adding to antenna"
 msgstr "アンテナへの追加"
 
-#: app/controllers/mypage_controller.rb:527
+#: app/controllers/mypage_controller.rb:489
 #: app/controllers/user_controller.rb:250
 #: app/controllers/group_controller.rb:389
 msgid "Admin"
@@ -1047,7 +1047,7 @@ msgstr "アプリ名"
 msgid "Admin::OpenidIdentifier|Url"
 msgstr "OpenID URL"
 
-#: app/models/admin/picture.rb:21
+#: app/models/admin/picture.rb:19
 msgid "Admin::Picture|File"
 msgstr "ファイル"
 
@@ -1123,6 +1123,18 @@ msgstr ""
 "パスワード強度をユーザ定義とする場合に許容されない文字列がパスワードとして入"
 "力された際に出力するエラーメッセージを入力して下さい。"
 
+#: app/models/admin/setting.rb:31
+msgid "Admin::Setting|Enable change picture"
+msgstr "プロフィール画像の変更を許可する"
+
+#: app/models/admin/setting.rb:32
+msgid "Admin::Setting|Enable change picture description"
+msgstr ""
+"チェックをつけると各々のユーザが自由にプロフィール画像を変更出来ます。チェッ"
+"クを外すと各々のユーザはプロフィール画像を変更出来ないようになります。管理者"
+"が強制的に各々のユーザのプロフィール画像を設定したい場合はチェックを外して下"
+"さい。"
+
 #: app/models/admin/setting.rb:118
 msgid "Admin::Setting|Enable login keyphrase"
 msgstr "ログインキーフレーズを使う"
@@ -1144,11 +1156,11 @@ msgstr ""
 "チェックするとパスワード有効期限切れになったユーザはログインが出来なくなりま"
 "す。ログインするにはパスワードを再設定しなければなりません。"
 
-#: app/models/admin/setting.rb:31
+#: app/models/admin/setting.rb:126
 msgid "Admin::Setting|Enable single session"
 msgstr "ログインできるブラウザを一つにする"
 
-#: app/models/admin/setting.rb:32
+#: app/models/admin/setting.rb:127
 msgid "Admin::Setting|Enable single session description"
 msgstr ""
 "チェックするとユーザ毎にログインできるブラウザ数を一つに制限します。あるブラ"
@@ -1342,7 +1354,7 @@ msgstr ""
 "上入力されていなければなりません。</p><p>ユーザ定義 : 独自のパスワード強度を"
 "正規表現で記述することが出来ます。</p>"
 
-#: app/models/admin/setting.rb:263
+#: app/models/admin/setting.rb:265
 msgid "Admin::Setting|Password strength|Validation message "
 msgstr " "
 
@@ -1356,7 +1368,7 @@ msgstr ""
 msgid "Admin::Setting|Password strength|Validation message low"
 msgstr "は6文字以上の半角英数字及び記号(!@#$%^&*?_~)で入力して下さい。"
 
-#: app/models/admin/setting.rb:110 app/models/admin/setting.rb:266
+#: app/models/admin/setting.rb:110 app/models/admin/setting.rb:268
 msgid "Admin::Setting|Password strength|Validation message middle"
 msgstr ""
 "は8文字以上の半角英数字及び記号(!@#$%^&*?_~)で入力して下さい。また、英字の大"
@@ -1984,8 +1996,7 @@ msgstr "関連するコメントも一緒に削除されますが、よろしい
 
 #: app/helpers/share_file_helper.rb:32
 #: app/views/entries/_entry_detail.html.erb:299
-#: app/views/edit/edit.html.erb:16 app/views/pictures/_edit.html.erb:17
-#: app/views/pictures/_new.html.erb:17
+#: app/views/edit/edit.html.erb:16 app/views/pictures/new.html.erb:20
 #: app/views/board_entries/_board_entry_comment.html.erb:15
 #: app/views/group/_manage_info.html.erb:22
 #: app/views/mypage/_manage_antenna.html.erb:87
@@ -2061,7 +2072,7 @@ msgstr "閲覧権限がないか、ページが存在しません。"
 msgid "Belongs to: %s"
 msgstr "所属：%s"
 
-#: app/controllers/mypage_controller.rb:521
+#: app/controllers/mypage_controller.rb:483
 #: app/controllers/user_controller.rb:235
 msgid "Blog"
 msgstr "ブログ"
@@ -2078,7 +2089,7 @@ msgstr "ブログ件数"
 msgid "Blog Entry View"
 msgstr "ブログ表示"
 
-#: app/controllers/mypage_controller.rb:799
+#: app/controllers/mypage_controller.rb:761
 msgid "Blogs"
 msgstr "ブログ"
 
@@ -2347,7 +2358,7 @@ msgstr ""
 "\n"
 "（登録自体は１度きり、１分も必要ありません。）"
 
-#: app/controllers/mypage_controller.rb:525
+#: app/controllers/mypage_controller.rb:487
 #: app/controllers/services_controller.rb:43
 #: app/controllers/user_controller.rb:239
 #: app/controllers/bookmark_controller.rb:116
@@ -2463,7 +2474,7 @@ msgstr "プロフィール画像変更"
 msgid "Change uid"
 msgstr "ユーザ名変更"
 
-#: app/controllers/mypage_controller.rb:703
+#: app/controllers/mypage_controller.rb:665
 msgid "Change your profile picture!"
 msgstr "プロフィール画像を変更しましょう！"
 
@@ -2898,7 +2909,7 @@ msgid_plural "%{num} emails have been registered in the site"
 msgstr[0] "指定された%{email}というメールアドレスは既に利用登録済みです。"
 msgstr[1] "指定されたうち%{num}個のメールアドレスは既に利用登録済みです。"
 
-#: app/controllers/mypage_controller.rb:456
+#: app/controllers/mypage_controller.rb:418
 msgid "Email address was updated successfully."
 msgstr "メールアドレスが正しく更新されました。"
 
@@ -2932,7 +2943,7 @@ msgstr "入力された%sというメールアドレスは登録されていま�
 msgid "Entries"
 msgstr "記事"
 
-#: app/controllers/mypage_controller.rb:1003
+#: app/controllers/mypage_controller.rb:965
 msgid "Entries bookmarked by yourself"
 msgstr "あなたがブックマークした記事"
 
@@ -2948,7 +2959,7 @@ msgstr "みんなからコメントが活発に付いたブログです(公開�
 msgid "Entries talking about this entry:"
 msgstr "この記事を話題にした記事："
 
-#: app/controllers/mypage_controller.rb:1002
+#: app/controllers/mypage_controller.rb:964
 msgid "Entries you have made comments"
 msgstr "過去にあなたがコメントを残した記事"
 
@@ -2956,11 +2967,11 @@ msgstr "過去にあなたがコメントを残した記事"
 msgid "Entries you posted to your blog and group BBSs."
 msgstr "ブログやグループの掲示板であなたが投稿した記事の一覧です。"
 
-#: app/controllers/mypage_controller.rb:210
+#: app/controllers/mypage_controller.rb:206
 msgid "Entry was successfully marked read."
 msgstr "記事を既読にしました。"
 
-#: app/controllers/mypage_controller.rb:210
+#: app/controllers/mypage_controller.rb:206
 msgid "Entry was successfully marked unread."
 msgstr "記事を未読にしました。"
 
@@ -3040,7 +3051,7 @@ msgstr "権限変更に失敗しました。"
 msgid "Failed to delete since there are still other users in the group."
 msgstr "自分以外のユーザがまだ存在しています。削除できません。"
 
-#: app/controllers/mypage_controller.rb:252
+#: app/controllers/mypage_controller.rb:248
 msgid "Failed to load rss."
 msgstr "RSSの読み込みに失敗しました。"
 
@@ -3048,7 +3059,7 @@ msgstr "RSSの読み込みに失敗しました。"
 msgid "Failed to open the content."
 msgstr "対象のコンテンツを開くことが出来ませんでした。"
 
-#: app/controllers/mypage_controller.rb:442
+#: app/controllers/mypage_controller.rb:404
 msgid "Failed to process your request. Try resubmitting your request again."
 msgstr "処理に失敗しました。もう一度申請してください。"
 
@@ -3090,16 +3101,11 @@ msgstr[0] "失敗:%{failure}"
 msgid "February"
 msgstr "2月"
 
-#: app/views/pictures/_edit.html.erb:21
 #: app/views/share_file/new_ajax_upload.html.erb:27
 msgid "File"
 msgstr "ファイル"
 
-#: app/controllers/mypage_controller.rb:273
-msgid "File format invalid."
-msgstr "ファイル形式が不正です。"
-
-#: app/views/pictures/_edit.html.erb:31 app/views/pictures/_new.html.erb:31
+#: app/views/pictures/new.html.erb:27
 msgid "File name is mandatory."
 msgstr "ファイル名を入力してください。"
 
@@ -3111,7 +3117,7 @@ msgstr "ファイルを指定して下さい。"
 msgid "File size exceeded the limit."
 msgstr "ファイルサイズが上限を超えています。"
 
-#: app/models/picture.rb:37 app/models/admin/picture.rb:33
+#: app/models/picture.rb:37 app/models/admin/picture.rb:22
 msgid "File size too large."
 msgstr "ファイルサイズが大きすぎます。"
 
@@ -3157,7 +3163,7 @@ msgstr "まずは既に投稿されたブログを読んでみましょう！ ..
 msgid "Footer"
 msgstr "フッター"
 
-#: app/controllers/mypage_controller.rb:526
+#: app/controllers/mypage_controller.rb:488
 #: app/controllers/user_controller.rb:249
 msgid "Footprints"
 msgstr "足跡"
@@ -3333,7 +3339,7 @@ msgid "Groups"
 msgstr "グループ"
 
 #: app/helpers/application_helper.rb:348
-#: app/controllers/mypage_controller.rb:524
+#: app/controllers/mypage_controller.rb:486
 #: app/controllers/user_controller.rb:238
 #: app/controllers/feed_controller.rb:115 app/views/user/show.html.erb:4
 msgid "Groups Joined"
@@ -3433,7 +3439,7 @@ msgstr "%sの推移"
 msgid "History of Entries"
 msgstr "記事履歴"
 
-#: app/controllers/mypage_controller.rb:519
+#: app/controllers/mypage_controller.rb:481
 #: app/controllers/user_controller.rb:248
 msgid "Home"
 msgstr "ホーム"
@@ -3584,7 +3590,7 @@ msgstr "紹介文："
 msgid "Introductions"
 msgstr "紹介文"
 
-#: app/controllers/mypage_controller.rb:491
+#: app/controllers/mypage_controller.rb:453
 msgid "Invalid OpenID URL format."
 msgstr "不正な形式のOpenID URLです。"
 
@@ -3761,7 +3767,7 @@ msgstr ""
 "連絡機能によって、%sからメールが送信されたブログや掲示板の記事の一覧です。"
 "<br/>（メール送信は、即時でなく定期的に行われます）"
 
-#: app/controllers/mypage_controller.rb:1006
+#: app/controllers/mypage_controller.rb:968
 msgid "List of unread entries"
 msgstr "未読記事の一覧"
 
@@ -3969,8 +3975,8 @@ msgstr "メニュー"
 msgid "Message: "
 msgstr "メッセージ："
 
-#: app/controllers/mypage_controller.rb:729
-#: app/controllers/mypage_controller.rb:1001
+#: app/controllers/mypage_controller.rb:691
+#: app/controllers/mypage_controller.rb:963
 #: app/controllers/feed_controller.rb:82 app/models/antenna.rb:94
 msgid "Messages for you"
 msgstr "あなたへの連絡"
@@ -4055,7 +4061,7 @@ msgstr "自分の管理"
 msgid "My Blog"
 msgstr "マイブログ"
 
-#: app/controllers/mypage_controller.rb:517
+#: app/controllers/mypage_controller.rb:479
 #: app/controllers/user_controller.rb:52
 #: app/controllers/user_controller.rb:138
 #: app/controllers/user_controller.rb:178
@@ -4334,7 +4340,7 @@ msgstr "全体に公開"
 msgid "OpenID URL"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:479
+#: app/controllers/mypage_controller.rb:441
 msgid "OpenID URL was successfully set."
 msgstr "OpenID URLを設定しました。"
 
@@ -4369,7 +4375,7 @@ msgstr ""
 msgid "OpenIDの形式が正しくありません。"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:486
+#: app/controllers/mypage_controller.rb:448
 msgid "OpenId process is cancelled or failed."
 msgstr ""
 
@@ -4409,7 +4415,7 @@ msgstr "ユーザ"
 msgid "Operation cancelled. Please confirm to authenticate with the server."
 msgstr "キャンセルされました。もう一度認証してください。"
 
-#: app/controllers/application.rb:139
+#: app/controllers/application.rb:141
 msgid "Operation unauthorized."
 msgstr "この操作は、許可されていません。"
 
@@ -4474,7 +4480,7 @@ msgstr "パスワードが無効になっています。再設定を行なって
 msgid "Password was successfully reset."
 msgstr "パスワードリセットが完了しました。"
 
-#: app/controllers/mypage_controller.rb:422
+#: app/controllers/mypage_controller.rb:384
 msgid "Password was successfully updated."
 msgstr "パスワードを変更しました。"
 
@@ -4490,12 +4496,20 @@ msgstr "処理を実行する"
 msgid "Period"
 msgstr "期間"
 
-#: app/controllers/mypage_controller.rb:264
+#: app/controllers/pictures_controller.rb:57 app/models/picture.rb:36
+msgid "Picture could not be changed."
+msgstr "画像の変更は許可されていません。"
+
+#: app/controllers/pictures_controller.rb:51
+msgid "Picture could not be deleted since it does not found."
+msgstr "対象の画像が存在しないため、削除出来ません。"
+
+#: app/controllers/pictures_controller.rb:55
 msgid "Picture was deleted successfully."
 msgstr "画像を削除しました"
 
-#: app/controllers/mypage_controller.rb:282
-#: app/controllers/pictures_controller.rb:27
+#: app/controllers/pictures_controller.rb:26
+#: app/controllers/pictures_controller.rb:39
 msgid "Picture was updated successfully."
 msgstr "画像を変更しました"
 
@@ -4527,7 +4541,7 @@ msgstr "更新日時"
 msgid "Picture|User"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:495
+#: app/controllers/mypage_controller.rb:457
 msgid "Please input OpenID URL."
 msgstr "OpenID URLを入力してください。"
 
@@ -4578,7 +4592,7 @@ msgstr "書き込み"
 msgid "Posted entries or comments during the recent month"
 msgstr "直近一ヶ月に記事 ・コメントを記入"
 
-#: app/controllers/mypage_controller.rb:1004
+#: app/controllers/mypage_controller.rb:966
 msgid "Posts in the groups joined"
 msgstr "参加中のグループの掲示板の書き込み"
 
@@ -4608,7 +4622,7 @@ msgid "Problem found in following item: "
 msgid_plural "Problems found in following items: "
 msgstr[0] "次の項目に問題があります"
 
-#: app/controllers/mypage_controller.rb:520
+#: app/controllers/mypage_controller.rb:482
 #: app/controllers/user_controller.rb:234 app/views/user/show.html.erb:36
 msgid "Profile"
 msgstr "プロフィール"
@@ -4721,12 +4735,12 @@ msgstr "詳しい使い方はこちらをご覧ください ... "
 msgid "Recent BBS posts (%{category)"
 msgstr "最新の掲示板の記事（%{category}）"
 
-#: app/controllers/mypage_controller.rb:779
+#: app/controllers/mypage_controller.rb:741
 #: app/controllers/feed_controller.rb:71
 msgid "Recent Popular Entries (excluding questions)"
 msgstr "最近の人気記事"
 
-#: app/controllers/mypage_controller.rb:757
+#: app/controllers/mypage_controller.rb:719
 #: app/controllers/feed_controller.rb:21
 msgid "Recent Questions"
 msgstr "みんなからの質問!"
@@ -5131,7 +5145,7 @@ msgstr ""
 msgid "ShareFile|User"
 msgstr "ユーザ"
 
-#: app/controllers/mypage_controller.rb:522
+#: app/controllers/mypage_controller.rb:484
 #: app/controllers/user_controller.rb:236
 #: app/controllers/group_controller.rb:388
 msgid "Shared Files"
@@ -5306,7 +5320,7 @@ msgstr "スライドショー : %s"
 msgid "So you have the page bookmarked in %s."
 msgstr "これで、%s上のあなたのブックマークに登録されています。"
 
-#: app/controllers/mypage_controller.rb:523
+#: app/controllers/mypage_controller.rb:485
 #: app/controllers/user_controller.rb:237
 msgid "Socials"
 msgstr "ソーシャル"
@@ -5363,7 +5377,7 @@ msgstr "指定のグループは存在していません"
 msgid "Specified page does not exist."
 msgstr "指定のページは存在していません。"
 
-#: app/controllers/mypage_controller.rb:465
+#: app/controllers/mypage_controller.rb:427
 msgid "Specified page not found."
 msgstr "指定されたページは存在しません。"
 
@@ -5543,7 +5557,7 @@ msgstr ""
 "連絡タグがついていないため、\\r\\n相手に気づいてもらえないかもしれませんが、"
 "よろしいですか？"
 
-#: app/controllers/mypage_controller.rb:461
+#: app/controllers/mypage_controller.rb:423
 msgid ""
 "The specified email address has already been registered. Try resubmitting "
 "the request with another address."
@@ -5633,7 +5647,7 @@ msgstr "サムネイル"
 msgid "Time Last Updated: "
 msgstr "最終更新時間："
 
-#: app/controllers/mypage_controller.rb:247
+#: app/controllers/mypage_controller.rb:243
 msgid "Timeout to loading rss."
 msgstr "RSSのロード時にタイムアウトしました。"
 
@@ -5786,11 +5800,11 @@ msgstr "変更しました"
 msgid "Update on the same entry from other users detected. Reset the edit?"
 msgstr "他の人によって同じ投稿に更新がかかっています。編集をやり直しますか？"
 
-#: app/controllers/mypage_controller.rb:412
+#: app/controllers/mypage_controller.rb:374
 msgid "Updated notification email settings."
 msgstr "お知らせメールの通知設定を更新しました。"
 
-#: app/controllers/mypage_controller.rb:503
+#: app/controllers/mypage_controller.rb:465
 msgid "Updated successfully."
 msgstr "正しく更新されました。"
 
@@ -5805,7 +5819,7 @@ msgstr "更新しました。"
 msgid "Updating..."
 msgstr "更新中..."
 
-#: app/views/pictures/_edit.html.erb:23 app/views/pictures/_new.html.erb:23
+#: app/views/pictures/new.html.erb:18
 #: app/views/share_file/new_ajax_upload.html.erb:37
 #: app/views/admin/pictures/new.html.erb:10
 #: app/views/admin/pictures/edit.html.erb:10
@@ -5853,7 +5867,7 @@ msgstr ""
 "%sというメールアドレスのユーザは、利用開始していません。利用開始してくださ"
 "い。"
 
-#: app/controllers/mypage_controller.rb:391
+#: app/controllers/mypage_controller.rb:353
 msgid "User information was successfully updated."
 msgstr "ユーザ情報の更新に成功しました。"
 
@@ -6316,7 +6330,7 @@ msgstr "水"
 msgid "Welcome to [%s]!"
 msgstr "【%s】へようこそ！"
 
-#: app/controllers/mypage_controller.rb:697
+#: app/controllers/mypage_controller.rb:659
 msgid "Welcome! Read detailed help."
 msgstr "ようこそ! まずはこちらをご覧ください。"
 
@@ -6453,7 +6467,7 @@ msgstr ""
 "また、条件部分の%{report_user}を掴んで、アンテナにドロップすれば、移動させる"
 "こともできます。</p>"
 
-#: app/views/pictures/_edit.html.erb:7 app/views/pictures/_new.html.erb:7
+#: app/views/pictures/new.html.erb:7
 msgid ""
 "You can only upload 1 picture. The file size is limited to 64kb.<br/>\n"
 "You can find something by <a href=\"http://www.google.com/search?q=%s"
@@ -6465,10 +6479,6 @@ msgstr ""
 "s&lr=lang_ja&ie=utf-8&oe=utf-8\">\n"
 "「似顔絵作成」をGoogleで検索すると色々でてきます</a>ので作成してみると良いで"
 "しょう。"
-
-#: app/models/picture.rb:36
-msgid "You can only upload 1 picuture."
-msgstr "画像は１つまでしかアップロードできません。"
 
 #: app/views/bookmark/_new.html.erb:7
 msgid ""
@@ -6558,7 +6568,7 @@ msgstr "他の方から見たあなたのプロフィールはこちら ... "
 msgid "Your registration is complete."
 msgstr "ユーザ登録が完了しました"
 
-#: app/controllers/mypage_controller.rb:440
+#: app/controllers/mypage_controller.rb:402
 msgid ""
 "Your request of changing email address accepted. Check your email to "
 "complete the process."
@@ -6830,8 +6840,7 @@ msgstr "[URL]　"
 msgid "[Uncheck all]"
 msgstr "[全てのチェックをはずす]"
 
-#: app/views/pictures/_edit.html.erb:17 app/views/pictures/_new.html.erb:17
-#: app/views/group/_manage_info.html.erb:22
+#: app/views/pictures/new.html.erb:20 app/views/group/_manage_info.html.erb:22
 msgid "[[Delete]]"
 msgstr "[[削除]]"
 
@@ -7075,7 +7084,7 @@ msgstr "プロフィール画像"
 msgid "popular bookmark"
 msgstr "人気ブックマーク"
 
-#: app/views/pictures/_edit.html.erb:7 app/views/pictures/_new.html.erb:7
+#: app/views/pictures/new.html.erb:7
 msgid "portrait making"
 msgstr "似顔絵作成"
 
@@ -7287,7 +7296,7 @@ msgstr ""
 msgid "は数値と-(ハイフン)で入力して下さい。"
 msgstr ""
 
-#: app/models/admin/setting.rb:158
+#: app/models/admin/setting.rb:160
 msgid "は正しい正規表現で入力して下さい。"
 msgstr ""
 
@@ -7387,7 +7396,7 @@ msgstr ""
 msgid "ユーザ登録のためのURLの有効期限が過ぎています。"
 msgstr ""
 
-#: app/controllers/application.rb:125 app/controllers/application.rb:300
+#: app/controllers/application.rb:127 app/controllers/application.rb:302
 msgid "ログインが必要です。ログインし直して下さい。"
 msgstr ""
 
@@ -7875,6 +7884,9 @@ msgstr ""
 #~ msgid "Female"
 #~ msgstr "女性"
 
+#~ msgid "File format invalid."
+#~ msgstr "ファイル形式が不正です。"
+
 #~ msgid "Files larger than %dMBytes are not permitted."
 #~ msgstr "%dMバイト以上のファイルはアップロードできません。"
 
@@ -8251,6 +8263,9 @@ msgstr ""
 
 #~ msgid "You can access from %s next time."
 #~ msgstr "次回からのアクセスは、%sより利用可能です。"
+
+#~ msgid "You can only upload 1 picuture."
+#~ msgstr "画像は１つまでしかアップロードできません。"
 
 #~ msgid "You have important message <span class='important'>[%s]</span>."
 #~ msgstr "重要な連絡<span class='important'>[%s]</span>があります"

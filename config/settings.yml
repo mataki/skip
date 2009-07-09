@@ -22,16 +22,12 @@ stop_new_user:
 hide_email:
   format: boolean
   default: false
-enable_single_session:
-  format: boolean
-  default: true
-
-# ==================================================================================================
-# その他設定
-# ==================================================================================================
 activation_lifetime:                                       # サインアップURLの有効期間(単位:日)
   format: int
   default: 5
+enable_change_picture:
+  format: boolean
+  default: true
 
 # ==================================================================================================
 # 各種文言の設定
@@ -133,3 +129,6 @@ enable_user_cleaning_notification:
 user_cleaning_notification_interval:
   format: int
   default: 3
+enable_single_session:
+  format: boolean
+  default: true

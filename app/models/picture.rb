@@ -23,6 +23,7 @@ class Picture < ActiveRecord::Base
   validates_format_of :content_type, :with => /^image/, :message =>_("Uploads are limited to pictures only.")
 
   def before_validation
+    @filesize ||= 0
     if file
       self.name = base_part_of(file.original_filename)
       self.content_type = file.content_type.chomp
@@ -32,6 +33,7 @@ class Picture < ActiveRecord::Base
   end
 
   def validate
+    errors.add("", _("Picture could not be changed.")) unless Admin::Setting.enable_change_picture
     errors.add("", _("File size too large.")) if @filesize > 65535
   end
 

@@ -15,11 +15,59 @@
 
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
-describe PicturesController do
-
-  #Delete this example and add some real ones
-  it "should use PicturesController" do
-    controller.should be_an_instance_of(PicturesController)
+describe PicturesController, '#destroy' do
+  before do
+    @current_user = user_login
+    @current_user.stub!(:id).and_return(77)
   end
-
+  describe 'プロフィール画像が設定されている場合' do
+    before do
+      @picture = stub_model(Picture)
+      @current_user.should_receive(:picture).and_return(@picture)
+    end
+    describe 'プロフィール画像の変更が許可されている場合' do
+      before do
+        Admin::Setting.should_receive(:enable_change_picture).and_return(true)
+        @picture.stub!(:destroy)
+      end
+      it 'プロフィール画像の削除が行われること' do
+        @picture.should_receive(:destroy)
+        delete :destroy
+      end
+      it '「画像を削除しました」というメッセージが設定されること' do
+        delete :destroy
+        flash[:notice].should == 'Picture was deleted successfully.'
+      end
+      it 'プロフィール画像管理画面にリダイレクトされること' do
+        delete :destroy
+        response.should be_redirect
+      end
+    end
+    describe 'プロフィール画像の変更が許可されていない場合' do
+      before do
+        Admin::Setting.should_receive(:enable_change_picture).and_return(false)
+      end
+      it '「画像の変更は許可されていません。」というメッセージが設定されること' do
+        delete :destroy
+        flash[:warn].should == 'Picture could not be changed.'
+      end
+      it 'プロフィール画像管理画面にリダイレクトされること' do
+        delete :destroy
+        response.should be_redirect
+      end
+    end
+  end
+  describe 'プロフィール画像が設定されていない場合' do
+    before do
+      @current_user.should_receive(:picture).and_return(nil)
+    end
+    it '「プロフィール画像が存在しないため、削除できませんでした。」というメッセージが設定されること' do
+      delete :destroy
+      flash[:warn].should == 'Picture could not be deleted since it does not found.'
+    end
+    it 'プロフィール画像管理画面にリダイレクトされること' do
+      delete :destroy
+      response.should be_redirect
+    end
+  end
 end
