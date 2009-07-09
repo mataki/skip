@@ -8,10 +8,10 @@
   <%= render(
     :partial => '/admin/shared/sortable_table',
     :locals => {
-      :columns => %w[name data picture_name],
+      :columns => %w[name picture_data picture_name],
       :disp_columns_proc => lambda do |object, column|
         case column
-        when 'data'
+        when 'picture_data'
           user_link_to_with_portrait object
         when 'picture_name'
           h(object.picture.name) if object.picture

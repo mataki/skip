@@ -44,6 +44,9 @@ class Admin::User < User
 
   N_('Admin::User|User uids')
 
+  N_('Admin::User|Picture data')
+  N_('Admin::User|Picture name')
+
   class << self
     include InitialSettingsHelper
     alias :find :find_without_retired_skip

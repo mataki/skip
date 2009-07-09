@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2009-07-09 11:40+0900\n"
+"POT-Creation-Date: 2009-07-09 14:23+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -514,7 +514,7 @@ msgstr ""
 msgid "Add Antenna"
 msgstr ""
 
-#: app/views/users/_user.html.erb:6
+#: app/views/user/_portrait_box.html.erb:27 app/views/users/_user.html.erb:6
 msgid "Add a bookmark"
 msgstr ""
 
@@ -526,7 +526,7 @@ msgstr ""
 msgid "Add a comment!"
 msgstr ""
 
-#: app/views/users/_user.html.erb:5
+#: app/views/user/_portrait_box.html.erb:26 app/views/users/_user.html.erb:5
 msgid "Add an antenna"
 msgstr ""
 
@@ -1619,6 +1619,14 @@ msgstr ""
 
 #: app/models/admin/user.rb:43
 msgid "Admin::User|Password expires at"
+msgstr ""
+
+#: app/models/admin/user.rb:47
+msgid "Admin::User|Picture data"
+msgstr ""
+
+#: app/models/admin/user.rb:48
+msgid "Admin::User|Picture name"
 msgstr ""
 
 #: app/models/admin/user.rb:36
@@ -6978,6 +6986,10 @@ msgstr ""
 msgid "【アンテナを整備する】"
 msgstr ""
 
+#: app/views/user/_portrait_box.html.erb:24
+msgid "あなたがユーザ登録してからの日数"
+msgstr ""
+
 #: app/views/admin/settings/_security.html.erb:17
 msgid ""
 "あなたを含む使用中のユーザ全てをロックします。ログイン中のユーザは強制ログア"
@@ -7025,7 +7037,7 @@ msgstr ""
 msgid "アンテナ"
 msgstr ""
 
-#: app/helpers/users_helper.rb:46 app/views/user/_portrait_box.html.erb:26
+#: app/helpers/users_helper.rb:46
 msgid "アンテナに追加"
 msgstr ""
 
@@ -7243,6 +7255,10 @@ msgstr ""
 msgid "戻る"
 msgstr ""
 
+#: app/views/user/_portrait_box.html.erb:23
+msgid "投稿件数（あなたが今までに投稿した記事の数）"
+msgstr ""
+
 #: app/controllers/admin/application_controller.rb:51
 msgid "指定された拡張子のファイルはアップロード出来ません。"
 msgstr ""
@@ -7283,6 +7299,10 @@ msgstr ""
 msgid "記事の公開範囲を引き継いだ掲示板として新しい記事を作成します。"
 msgstr ""
 
+#: app/views/user/_portrait_box.html.erb:21
+msgid "訪問者数（あなたのページを訪問したユーザののべ人数）"
+msgstr ""
+
 #: app/controllers/platform_controller.rb:183
 msgid "設定したURLを入力してログインしてください。"
 msgstr ""
@@ -7293,6 +7313,10 @@ msgstr ""
 
 #: app/views/mypage/_action_box.html.erb:6
 msgid "質問"
+msgstr ""
+
+#: app/views/user/_portrait_box.html.erb:22
+msgid "購読者数（あなたのブログをアンテナでチェックしているユーザ数）"
 msgstr ""
 
 #: app/views/mypage/_manage_message.html.erb:14
