@@ -276,8 +276,12 @@ class User < ActiveRecord::Base
   end
 
   def uid
+    username || code
+  end
+
+  def username
     user_uid = user_uids.detect { |u| u.uid_type == UserUid::UID_TYPE[:username] }
-    user_uid ? user_uid.uid : code
+    user_uid ? user_uid.uid : nil
   end
 
   def code

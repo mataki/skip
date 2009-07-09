@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2009-07-09 14:23+0900\n"
+"POT-Creation-Date: 2009-07-09 15:20+0900\n"
 "PO-Revision-Date: 2009-06-30 14:52+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3468,7 +3468,7 @@ msgstr "Internet Explorer 6での登録方法"
 msgid "Human Resources"
 msgstr "人事"
 
-#: app/models/user.rb:291
+#: app/models/user.rb:295
 msgid "I have joined the site!"
 msgstr "ユーザー登録しました！"
 
@@ -7775,6 +7775,9 @@ msgstr ""
 
 #~ msgid "Admin::UserProfile|Join year"
 #~ msgstr "入社年度"
+
+#~ msgid "Admin::User|Username"
+#~ msgstr "ユーザ名"
 
 #~ msgid "Administrator!"
 #~ msgstr "管理者です！"

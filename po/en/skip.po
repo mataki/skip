@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 0.1.0\n"
-"POT-Creation-Date: 2009-07-09 14:23+0900\n"
+"POT-Creation-Date: 2009-07-09 15:20+0900\n"
 "PO-Revision-Date: 2009-06-29 13:31+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1789,8 +1789,9 @@ msgstr ""
 "linked from the header by default."
 
 #: app/models/admin/user.rb:25
+#, fuzzy
 msgid "Admin::User|Uid"
-msgstr ""
+msgstr "Group ID"
 
 #: app/models/admin/user.rb:45
 msgid "Admin::User|User uids"
@@ -3422,7 +3423,7 @@ msgstr ""
 msgid "Human Resources"
 msgstr ""
 
-#: app/models/user.rb:291
+#: app/models/user.rb:295
 msgid "I have joined the site!"
 msgstr ""
 
@@ -7548,6 +7549,10 @@ msgstr ""
 
 #~ msgid "Admin::DocumentsController|login_desc"
 #~ msgstr "Login Description"
+
+#, fuzzy
+#~ msgid "Admin::User|Username"
+#~ msgstr "Group ID"
 
 #~ msgid "Birthday - Blood Type"
 #~ msgstr "Birth - Blood"

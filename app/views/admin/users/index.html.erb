@@ -14,6 +14,8 @@
                :hide_columns => %w(locked issued_at last_authenticated_at password_expires_at),
                :disp_columns_proc => lambda do |object,column|
       case column
+      when "uid"
+        h(object.username)
       when "status"
         if object.unused?
           if !object.activation_token.nil? and object.within_time_limit_of_activation_token?
