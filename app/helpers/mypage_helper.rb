@@ -47,7 +47,7 @@ module MypageHelper
     @@menus << {:name => _("Change Password"), :menu => "manage_password" } if SkipEmbedded::InitialSettings['password_edit_setting'] and login_mode?(:password)
     @@menus << {:name => _("Change Email Address"), :menu => "manage_email" } if Admin::Setting.mail_function_setting
     @@menus << {:name => _("Change OpenID URL"), :menu => "manage_openid" } if login_mode?(:free_rp)
-    @@menus << {:name => _("Change Profile Picture"), :menu => "manage_portrait" }
+    @@menus << {:name => _("Change Profile Picture"), :menu => "manage_portrait" } if Admin::Setting.enable_change_picture
     @@menus << {:name => _("Customize"), :menu => "manage_customize" }
     @@menus << {:name => _("Manage Antennas"), :menu => "manage_antenna" }
     @@menus << {:name => _("Email Notification"), :menu => "manage_message" } if Admin::Setting.mail_function_setting
