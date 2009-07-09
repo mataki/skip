@@ -202,7 +202,11 @@ module ApplicationHelper
   # リッチテキストの表示
   def render_richtext(text, owner_symbol = nil)
     content = parse_permalink(text, owner_symbol)
-    "<div class='rich_style'>#{sanitize_style_with_whitelist(content)}</div>"
+    "<div class='rich_style'>#{sanitize_and_unescape_for_richtext(content)}</div>"
+  end
+
+  def sanitize_and_unescape_for_richtext(content)
+    sanitize_style_with_whitelist(BoardEntry.unescape_href(content))
   end
 
   def sanitize_style_with_whitelist(content)
