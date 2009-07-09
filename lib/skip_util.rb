@@ -13,6 +13,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+require 'kconv'
 class SkipUtil
   WDAYS = ["日", "月", "火", "水", "木", "金", "土"]
 
@@ -41,6 +42,12 @@ class SkipUtil
 
   def self.full_error_messages array
     array.is_a?(Array) ? array.map{ |item| item.errors.full_messages unless item.valid? }.flatten.compact : []
+  end
+
+  def self.toutf8_without_ascii_encoding string
+    if string
+      Kconv.guess(string) == Kconv::ASCII ? string : string.to_utf8
+    end
   end
 
   ######################################################################
