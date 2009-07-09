@@ -162,6 +162,10 @@ class Admin::Setting < ActiveRecord::Base
     end
   end
 
+  def after_save
+    ActionController::Base.expire_page  '/services/skip_reflect_customized.js'
+  end
+
   def value
     v = read_attribute(:value)
     # Unserialize serialized settings
