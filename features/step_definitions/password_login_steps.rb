@@ -13,10 +13,6 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-Given /ログインページを表示している/ do
-  visit "/platform"
-end
-
 Given /^ログインIDが"(.*)"でパスワードが"(.*)"のあるユーザを作成する$/ do |id, password|
   @user = create_user(id,password)
 end
