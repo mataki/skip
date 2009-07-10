@@ -23,7 +23,7 @@ user ||= @current_user
     <span title="投稿件数（あなたが今までに投稿した記事の数）"><%= icon_tag 'report_user' -%><%=h current_user_info[:blog_count] -%>件</span>
     <span title="あなたがユーザ登録してからの日数"><%= icon_tag 'user_go' -%><%=h current_user_info[:using_day] -%>日</span>
   <% else -%>
-    <%= link_to(icon_tag('transmit_go', :title => _('アンテナに追加')) + _('アンテナに追加'), {:controller => "antenna", :action => "select_antenna", :symbol => user.symbol, :dummy => '.html'}, {:class => "nyroModal"}) %><br/>
+    <%= link_to(icon_tag('transmit_go', :title => _('Add to antenna')) + _('Add to antenna'), {:controller => "antenna", :action => "select_antenna", :symbol => user.symbol, :dummy => '.html'}, {:class => "nyroModal"}) %><br/>
     <%= link_to(icon_tag('tag_blue_add', :title=>'ブックマークする') + 'ブックマークする', {:controller => "bookmark", :action => "edit", :url => user.get_postit_url, :title => user.name, :dummy => '.html'}, {:class => "nyroModal"}) %>
   <% end -%>
   </div>

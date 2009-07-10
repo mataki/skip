@@ -155,7 +155,7 @@ class Admin::Setting < ActiveRecord::Base
       begin
         Regexp.compile(v)
       rescue RegexpError => e
-        errors.add('value', _('は正しい正規表現で入力して下さい。'))
+        errors.add('value', _('requires a valid regular expression.'))
       end
     end
   end

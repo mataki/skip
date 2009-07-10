@@ -33,7 +33,7 @@ class BoardEntriesController < ApplicationController
   # ルートコメントの作成
   def ado_create_comment
     if params[:board_entry_comment] == nil or params[:board_entry_comment][:contents] == ""
-      render(:text => _('不正なパラメタです。'), :status => :bad_request) and return
+      render(:text => _('Invalid parameter(s) detected.'), :status => :bad_request) and return
     end
 
     # TODO 権限のあるBoardEntryを取得するnamed_scopeに置き換える
@@ -41,13 +41,13 @@ class BoardEntriesController < ApplicationController
     unless @board_entry = BoardEntry.find(:first,
                                           :conditions => find_params[:conditions],
                                           :include => find_params[:include] | [ :user, :board_entry_comments, :state ])
-      render(:text => _('対象の%{target}が存在しませんでした。')%{:target => _('board entry')}, :status => :bad_request) and return
+      render(:text => _('Target %{target} inexistent.')%{:target => _('board entry')}, :status => :bad_request) and return
     end
 
     params[:board_entry_comment][:user_id] = session[:user_id]
     comment = @board_entry.board_entry_comments.create(params[:board_entry_comment])
     unless comment.errors.empty?
-      render(:text => _('保存に失敗しました。'), :status => :bad_request) and return
+      render(:text => _('Failed to save the data.'), :status => :bad_request) and return
     end
 
     render :partial => "board_entry_comment", :locals => { :comment => comment }
@@ -58,11 +58,11 @@ class BoardEntriesController < ApplicationController
     begin
       parent_comment = BoardEntryComment.find(params[:id])
     rescue ActiveRecord::RecordNotFound => ex
-      render(:text => _('親コメントが存在しません。再読み込みして下さい。'), :status => :not_found) and return
+      render(:text => _('Parent comment could not be found. Try reloading the page.'), :status => :not_found) and return
     end
 
     if params[:contents].blank?
-      render(:text => _('コメントの入力は必須です。'), :status => :bad_request) and return
+      render(:text => _('Comment body is mandatory.'), :status => :bad_request) and return
     end
 
     # TODO 権限のあるBoardEntryを取得するnamed_scopeに置き換える
@@ -71,14 +71,14 @@ class BoardEntriesController < ApplicationController
     unless @board_entry = BoardEntry.find(:first,
                                           :conditions => find_params[:conditions],
                                           :include => find_params[:include] | [ :user, :board_entry_comments, :state ])
-      render(:text => _('対象の%{target}が存在しませんでした。')%{:target => _('board entry')}, :status => :bad_request) and return
+      render(:text => _('Target %{target} inexistent.')%{:target => _('board entry')}, :status => :bad_request) and return
     end
 
     comment = parent_comment.children.create(:board_entry_id => parent_comment.board_entry_id,
                                              :contents => params["contents"],
                                              :user_id => session[:user_id])
     unless comment.errors.empty?
-      render(:text => _('保存に失敗しました。'), :status => :bad_request) and return
+      render(:text => _('Failed to save the data.'), :status => :bad_request) and return
     end
     render :partial => "board_entry_comment", :locals => { :comment => parent_comment.children.last, :level => params[:level].to_i }
   end
@@ -86,12 +86,12 @@ class BoardEntriesController < ApplicationController
   def ado_pointup
     board_entry = BoardEntry.find(params[:id])
     unless board_entry.point_incrementable?(current_user)
-      render :text => _('この操作は、許可されていません。'), :status => :forbidden and return
+      render :text => _('Operation unauthorized.'), :status => :forbidden and return
     end
     board_entry.state.increment!(:point)
     render :text => "#{board_entry.point} #{ERB::Util.html_escape(Admin::Setting.point_button)}"
   rescue ActiveRecord::RecordNotFound => ex
-    render :text => _('対象の記事が存在しません。'), :status => :not_found and return
+    render :text => _('Target %{target} inexistent.')%{:target => _('board entry')}, :status => :not_found and return
   end
 
   def destroy_comment
@@ -133,10 +133,10 @@ class BoardEntriesController < ApplicationController
     begin
       comment = BoardEntryComment.find(params[:id])
     rescue ActiveRecord::RecordNotFound => ex
-      render(:text => _('対象の%{target}が存在しませんでした。')%{:target => _('board entry comment')}, :status => :bad_request) and return
+      render(:text => _('Target %{target} inexistent.')%{:target => _('board entry comment')}, :status => :bad_request) and return
     end
     unless comment.editable? current_user
-      render(:text => _('この操作は、許可されていません。'), :status => :bad_request) and return
+      render(:text => _('Operation unauthorized.'), :status => :bad_request) and return
     end
 
     comment.update_attribute :contents, params[:comment][:contents]

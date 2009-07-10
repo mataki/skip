@@ -88,7 +88,7 @@ class UserProfileMaster < ActiveRecord::Base
   private
   def validates_presence_of_category
     unless category = UserProfileMasterCategory.find_by_id(self.user_profile_master_category_id)
-      errors.add(:user_profile_master_category_id, _('プロフィールカテゴリに存在しない値です。'))
+      errors.add(:user_profile_master_category_id, _('does not exist in profile categories.'))
       return false
     end
     true
@@ -135,7 +135,7 @@ class UserProfileMaster < ActiveRecord::Base
     end
 
     def validates_presence_of_option_values
-      @master.errors.add(:option_values, _('は必須です。')) if self.class.need_option_values? && @master.option_values.blank?
+      @master.errors.add(:option_values, _('is mandatory.')) if self.class.need_option_values? && @master.option_values.blank?
     end
 
     def validates_format_of_option_values
@@ -195,7 +195,7 @@ class UserProfileMaster < ActiveRecord::Base
     end
 
     def validates_format_of_option_values
-      @master.errors.add(:option_values, _('は数値と-(ハイフン)で入力して下さい。')) unless @master.option_values =~ /^(\d|-)*$/
+      @master.errors.add(:option_values, _('accepts numbers and hiphens(\"-\") only.')) unless @master.option_values =~ /^(\d|-)*$/
     end
 
     private
@@ -252,10 +252,10 @@ class UserProfileMaster < ActiveRecord::Base
       value_str = value ? value.value : ""
       result = ""
       result << content_tag(:p) do
-        select_tag("profile_value[#{@master.id}]", options_for_select(registrated_select_option, value_str)) + _("既に登録されている値から選択項目を表示しています")
+        select_tag("profile_value[#{@master.id}]", options_for_select(registrated_select_option, value_str)) + _("Showing options from previously registered values")
       end unless registrated_select_option.blank?
       result << content_tag(:p) do
-        text_field_tag("profile_value[#{@master.id}]", (registrated_select_option.include?(value_str) ? "" : value_str), :class => "appendable_text") + _('選択項目に無いものを設定する場合はこちらに入力してください')
+        text_field_tag("profile_value[#{@master.id}]", (registrated_select_option.include?(value_str) ? "" : value_str), :class => "appendable_text") + _('Enter here if you cannot find the value in the options')
       end
     end
 

@@ -5,7 +5,7 @@
 <% content_for :contents_right do -%>
 <div class="box tabular">
   <%= render :partial => '/admin/search_box', :locals => { :class_name => 'Admin::UserProfileMasterCategory' } %>
-  <p><%= _('プロフィールカテゴリを削除したい場合、対象のプロフィールカテゴリに属するプロフィール項目が全て削除されている必要があります。') %></p>
+  <p><%= _('Related profile items will also be deleted when you delete this profile category. Are you sure to proceed?') %></p>
   <%= render :partial => '/admin/shared/sortable_table',
              :locals => {
                :columns => %w[name description sort_order],

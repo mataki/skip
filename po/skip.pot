@@ -4147,6 +4147,9 @@ msgid "Operation cancelled. Please confirm to authenticate with the server."
 msgstr ""
 
 #: app/controllers/application.rb:141
+#: app/controllers/board_entries_controller.rb:89
+#: app/controllers/board_entries_controller.rb:139
+#: app/controllers/share_file_controller.rb:263
 msgid "Operation unauthorized."
 msgstr ""
 
@@ -4757,7 +4760,7 @@ msgid "Send"
 msgstr ""
 
 #: app/views/admin/users/index.html.erb:56
-msgid "Send activate email to selected users"
+msgid "Send activation email to selected users"
 msgstr ""
 
 #: app/views/board_entries/_form.html.erb:90
@@ -6900,166 +6903,146 @@ msgid ""
 msgstr ""
 
 #: app/views/mypage/_antenna_box.html.erb:18
-msgid "【アンテナを整備する】"
+msgid "[Manage antennas]"
 msgstr ""
 
 #: app/views/admin/settings/_security.html.erb:17
-msgid ""
-"あなたを含む使用中のユーザ全てをロックします。ログイン中のユーザは強制ログア"
-"ウト状態になり、再度ログインするにはパスワードの再設定が必要になります。実行"
-"しても宜しいですか?"
+msgid "This will lock all user accounts including yourself. All logged in users will be forced to log out and passwords need to be reset to log in again. Are you sure to proceed?"
 msgstr ""
 
 #: app/views/admin/user_profile_masters/index.html.erb:28
-msgid ""
-"このプロフィール項目を登録したユーザが存在する場合、その登録情報も同時に削除"
-"されます。このプロフィール項目を削除しても宜しいですか?"
-msgstr ""
-
-#: app/controllers/board_entries_controller.rb:89
-#: app/controllers/board_entries_controller.rb:139
-#: app/controllers/share_file_controller.rb:263
-msgid "この操作は、許可されていません。"
+msgid "Related user input will also be deleted when you delete this profile item. Are you sure to proceed?"
 msgstr ""
 
 #: app/models/share_file.rb:42
-msgid "ご指定の操作は実行できません。"
+msgid "Operation inexecutable."
 msgstr ""
 
 #: app/models/user.rb:109
-msgid "はログインIDと同一の値は登録できません。"
+msgid "shall not be the same with login ID."
 msgstr ""
 
 #: app/models/user.rb:110
-msgid "は前回と同一の値は登録できません。"
+msgid "shall not be the same with the previous one."
 msgstr ""
 
 #: app/models/user_profile_master.rb:138
-msgid "は必須です。"
+msgid "is mandatory."
 msgstr ""
 
 #: app/models/user_profile_master.rb:198
-msgid "は数値と-(ハイフン)で入力して下さい。"
+msgid "accepts numbers and hiphens(\"-\") only."
 msgstr ""
 
 #: app/models/admin/setting.rb:158
-msgid "は正しい正規表現で入力して下さい。"
+msgid "requires a valid regular expression."
 msgstr ""
 
 #: app/views/mypage/_antenna_box.html.erb:8
-msgid "アンテナ"
-msgstr ""
-
-#: app/helpers/users_helper.rb:46 app/views/user/_portrait_box.html.erb:26
-msgid "アンテナに追加"
+msgid "Antennas"
 msgstr ""
 
 #: app/views/admin/settings/_security.html.erb:31
-msgid "クリーニング依頼メール"
+msgid "Prompt for user data cleaning by email"
 msgstr ""
 
 #: app/controllers/board_entries_controller.rb:65
-msgid "コメントの入力は必須です。"
+msgid "Comment body is mandatory."
 msgstr ""
 
 #: app/views/admin/users/show_signup_url.html.erb:2
-msgid "サインアップするためのURLは以下の通りです。"
+msgid "The URL for signing up as follows:"
 msgstr ""
 
 #: app/views/admin/settings/_security.html.erb:36
-msgid "セッション制限"
+msgid "Limit to single session"
 msgstr ""
 
 #: app/controllers/share_file_controller.rb:268
-msgid "ダウンロード履歴の削除に成功しました。"
+msgid "Download history was successfully deleted."
 msgstr ""
 
 #: app/views/admin/users/issue_password_reset_code.html.erb:2
-msgid "パスワードを再設定するためのURLは以下の通りです。"
+msgid "The URL for resetting your password as follows:"
 msgstr ""
 
 #: app/views/admin/users/_form.html.erb:59
-msgid ""
-"パスワードを再設定するためのURLを表示します。ユーザがパスワードを忘れた場合"
-"は、リンクをクリックして表示されるURLをメールでユーザに送信して下さい。"
+msgid "This will show the URL for resetting the password. Send the URL shown by clicking the link to the user by email."
 msgstr ""
 
 #: app/views/admin/users/issue_password_reset_code.html.erb:7
-msgid "パスワード再設定のメールです"
+msgid "Email for resetting your password"
 msgstr ""
 
 #: app/views/admin/settings/_security.html.erb:7
-msgid "パスワード定期変更"
+msgid "Require periodic change of password"
 msgstr ""
 
 #: app/views/admin/settings/_security.html.erb:12
-msgid "パスワード強度"
+msgid "Password strength"
 msgstr ""
 
 #: app/controllers/share_file_controller.rb:79
-msgid "ファイルのアップロードに成功しました。"
-msgstr ""
+msgid "File was successfully uploaded."
+msgid_plural "Files were successfully uploaded."
+msgstr[0] ""
 
 #: app/controllers/share_file_controller.rb:234
-msgid "ファイルのダウンロード"
+msgid "File Download"
 msgstr ""
 
 #: app/models/user_profile_master.rb:91
-msgid "プロフィールカテゴリに存在しない値です。"
+msgid "does not exist in profile categories."
 msgstr ""
 
 #: app/views/admin/user_profile_master_categories/index.html.erb:8
-msgid ""
-"プロフィールカテゴリを削除したい場合、対象のプロフィールカテゴリに属するプロ"
-"フィール項目が全て削除されている必要があります。"
+msgid "Related profile items will also be deleted when you delete this profile category. Are you sure to proceed?"
 msgstr ""
 
 #: app/views/admin/users/issue_password_reset_code.html.erb:7
 #: app/views/admin/users/show_signup_url.html.erb:7
-msgid "メーラを起動して送信する（宛先と本文が設定されます）"
+msgid "Send an email with your email software (Receipent and message body will be set automatically)"
 msgstr ""
 
 #: app/controllers/platform_controller.rb:110
 #: app/controllers/platform_controller.rb:154
-msgid "メールアドレスは必須です。"
+msgid "Email address is mandatory."
 msgstr ""
 
 #: app/controllers/portal_controller.rb:36
-msgid "ユーザ登録が継続出来ません。最初からやり直して下さい。"
+msgid "Unable to continue with the user registration process. A fresh start is required."
 msgstr ""
 
 #: app/views/user_mailer/sent_activate.html.erb:9
-msgid "ユーザ登録してSKIPの利用を開始する"
+msgid "Register your profile and start using SKIP"
 msgstr ""
 
 #: app/controllers/platform_controller.rb:142
-msgid ""
-"ユーザ登録のためのURLが不正です。再度お試し頂くか、システム管理者にお問い合わ"
-"せ下さい。"
+msgid "Invalid registration URL. Try again or contact system administrator."
 msgstr ""
 
 #: app/controllers/platform_controller.rb:138
-msgid "ユーザ登録のためのURLの有効期限が過ぎています。"
+msgid "The URL for registration has already expired."
 msgstr ""
 
 #: app/controllers/application.rb:127 app/controllers/application.rb:302
-msgid "ログインが必要です。ログインし直して下さい。"
+msgid "Session expired. You need to log in again."
 msgstr ""
 
 #: app/views/admin/settings/_security.html.erb:26
-msgid "ログインキーフレーズ"
+msgid "Login keyphrase"
 msgstr ""
 
 #: app/views/admin/settings/_security.html.erb:2
-msgid "ログイン失敗によるロック"
+msgid "Lock accounts by unsuccessful log in attempts"
 msgstr ""
 
 #: app/controllers/antenna_controller.rb:70
-msgid "不正なアンテナが指定されました。"
+msgid "Selected antenna invalid."
 msgstr ""
 
 #: app/controllers/application.rb:28
-msgid "不正なセッションです。再度ログインし直して下さい。"
+msgid "Invalid session. You need to log in again."
 msgstr ""
 
 #: app/controllers/board_entries_controller.rb:36
@@ -7068,92 +7051,83 @@ msgstr ""
 
 #: app/controllers/rankings_controller.rb:52
 #: app/controllers/rankings_controller.rb:58
-msgid "不正なリクエストです。"
+msgid "Invalid request."
 msgstr ""
 
 #: app/views/platform/forgot_openid.html.erb:3
-msgid "以下で指定されたメールアドレスにOpenIDの再設定のためのURLを送信します。"
+msgid "Send the URL for resetting the Open ID to the email addresss specified below."
 msgstr ""
 
 #: app/views/platform/activate.html.erb:3
-msgid "以下で指定されたメールアドレスにユーザ登録のためのURLを送信します。"
+msgid "Send the URL for user registration to the email addresss specified below."
 msgstr ""
 
 #: app/views/admin/users/issue_password_reset_code.html.erb:5
 #: app/views/admin/users/show_signup_url.html.erb:5
-msgid "以下のメールアドレスにURLを送信してください。"
+msgid "Send the URL to the email address below."
 msgstr ""
 
 #: app/controllers/board_entries_controller.rb:50
 #: app/controllers/board_entries_controller.rb:81
-msgid "保存に失敗しました。"
+msgid "Failed to save the data."
 msgstr ""
 
 #: app/controllers/platform_controller.rb:168
-msgid "入力された%{email}というメールアドレスは登録されていません。"
+msgid "Email address %{email} is not registered."
 msgstr ""
 
 #: app/controllers/platform_controller.rb:165
-msgid ""
-"入力された%{email}のユーザは、利用開始されていません。利用開始してください。"
+msgid "User with email address %{email} has not activated the account. The account has to be activated first."
 msgstr ""
 
 #: app/views/admin/users/_form.html.erb:58
-msgid "再設定URLを表示する"
+msgid ""Show URL for resetting"
 msgstr ""
 
 #: app/views/admin/shared/_sortable_table.html.erb:14
-msgid "列の表示制御(クリックで表示/非表示を切り替えます。)"
+msgid "Set column visibility (Click to switch on / off)"
 msgstr ""
 
 #: app/views/admin/settings/_security.html.erb:18
-msgid ""
-"利用中の全ユーザをロックします。実行することで各ユーザは次回ログイン時のパス"
-"ワードの再設定が必要になります。 パスワード強度を強めた場合など、全ユーザにパ"
-"スワード再設定を求めたい場合に使います。"
+msgid "Lock all current user accounts. Users will be asked to reset their passwords next time they log in. Use this when you want all users to reset their passwords in cases such as password strength has been strengthen."
 msgstr ""
 
 #: app/views/admin/users/index.html.erb:73
-msgid ""
-"利用開始URLを発行します。次の画面で確認リンクを押して表示されるURLをユーザに"
-"送信してください。"
+msgid "Activation URL is to be issued. Send the URL shown by clicking the confirmation link in the next screen to the user."
 msgstr ""
 
 #: app/views/admin/users/index.html.erb:21
-msgid "利用開始待ち"
+msgid "To be activated"
 msgstr ""
 
 #: app/views/admin/users/index.html.erb:23
-msgid "利用開始待ちにする"
+msgid "Prepare for activation"
 msgstr ""
 
 #: app/views/admin/users/show_signup_url.html.erb:7
-msgid "利用開始確認メールです"
+msgid "Activation email message"
 msgstr ""
 
 #: app/views/admin/users/index.html.erb:23
-msgid "利用開始通知"
+msgid "Notify activation"
 msgstr ""
 
 #: app/controllers/collaboration_app_controller.rb:24
-msgid "取得できませんでした。"
+msgid "Retrieval failed."
 msgstr ""
 
 #: app/controllers/antenna_controller.rb:73
-msgid "存在しないオーナーが指定されました。"
+msgid "Specified owner inexistent."
 msgstr ""
 
 #: app/controllers/board_entries_controller.rb:44
 #: app/controllers/board_entries_controller.rb:74
 #: app/controllers/board_entries_controller.rb:136
-msgid "対象の%{target}が存在しませんでした。"
+msgid "Target %{target} inexistent."
 msgstr ""
 
 #: app/models/user_profile_master_category.rb:33
-msgid ""
-"対象のプロフィールカテゴリに属するプロフィール項目が登録されているため削除出"
-"来ません。このカテゴリに登録されているプロフィール項目を全て削除した後実行し"
-"てください。"
+msgid "Profile category could not be deleted due to profile items belonging to itself. Delete all profile items belonging to this profile category before you delete it."
 msgstr ""
 
 #: app/controllers/board_entries_controller.rb:94
@@ -7161,19 +7135,19 @@ msgid "対象の記事が存在しません。"
 msgstr ""
 
 #: app/views/admin/users/index.html.erb:73
-msgid "対象ユーザに利用開始通知メールを送信しますが宜しいですか?"
+msgid "Are you sure to send activation email to target user?"
 msgstr ""
 
 #: app/views/bookmark/_new.html.erb:67
-msgid "戻る"
+msgid "Back"
 msgstr ""
 
 #: app/controllers/admin/application_controller.rb:51
-msgid "指定された拡張子のファイルはアップロード出来ません。"
+msgid "Disallowed file extension."
 msgstr ""
 
 #: app/models/user_profile_master.rb:255
-msgid "既に登録されている値から選択項目を表示しています"
+msgid "Showing options from previously registered values"
 msgstr ""
 
 #: app/controllers/share_file_controller.rb:137
@@ -7181,7 +7155,7 @@ msgid "更新しました。"
 msgstr ""
 
 #: app/controllers/admin/users_controller.rb:235
-msgid "未使用ユーザのパスワード再設定コードは発行できません。"
+msgid "Password resetting code cannot be issued for unactivated users."
 msgstr ""
 
 #: app/controllers/portal_controller.rb:106
@@ -7189,7 +7163,7 @@ msgid "登録可能です"
 msgstr ""
 
 #: app/views/admin/users/index.html.erb:20
-msgid "確認"
+msgid "Confirm"
 msgstr ""
 
 #: app/views/admin/users/_form.html.erb:67
@@ -7197,27 +7171,27 @@ msgid "編集する"
 msgstr ""
 
 #: app/controllers/board_entries_controller.rb:61
-msgid "親コメントが存在しません。再読み込みして下さい。"
+msgid "Parent comment could not be found. Try reloading the page."
 msgstr ""
 
 #: app/views/entries/_entry_detail.html.erb:306
-msgid "記事の公開範囲によらず全体公開のブログとして新しい記事を作成します。"
+msgid "Create an \"open to public\" blog entry disregarding the privacy setting."
 msgstr ""
 
 #: app/views/entries/_entry_detail.html.erb:304
-msgid "記事の公開範囲を引き継いだ掲示板として新しい記事を作成します。"
+msgid "Create a new bbs entry inheriting the privacy setting."
 msgstr ""
 
 #: app/controllers/platform_controller.rb:183
-msgid "設定したURLを入力してログインしてください。"
+msgid "Enter the previously set URL to log in."
 msgstr ""
 
 #: app/controllers/rankings_controller.rb:154
-msgid "該当のブックマークがありません。"
+msgid "No matched bookmark."
 msgstr ""
 
 #: app/views/mypage/_action_box.html.erb:6
-msgid "質問"
+msgid "Question"
 msgstr ""
 
 #: app/views/mypage/_manage_message.html.erb:14
@@ -7225,11 +7199,11 @@ msgid "通知する"
 msgstr ""
 
 #: app/views/admin/oauth_providers/index.html.erb:4
-msgid "連携アプリ一覧"
+msgid "List of applications works with SKIP"
 msgstr ""
 
 #: app/models/user_profile_master.rb:258
-msgid "選択項目に無いものを設定する場合はこちらに入力してください"
+msgid "Enter here if you cannot find the value in the options"
 msgstr ""
 
 #~ msgid "e.g. xx District<br/>xx City"

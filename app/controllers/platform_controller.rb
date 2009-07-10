@@ -107,7 +107,7 @@ class PlatformController < ApplicationController
     return unless request.post?
     email = params[:email]
     if email.blank?
-      flash.now[:error] = _('メールアドレスは必須です。')
+      flash.now[:error] = _('Email address is mandatory.')
       return
     end
     if @user = User.find_by_email(email)
@@ -135,11 +135,11 @@ class PlatformController < ApplicationController
         self.current_user = @user
         return redirect_to(:controller => :portal)
       else
-        flash[:error] = _("ユーザ登録のためのURLの有効期限が過ぎています。")
+        flash[:error] = _("The URL for registration has already expired.")
         redirect_to :controller => '/platform'
       end
     else
-      flash[:error] = _("ユーザ登録のためのURLが不正です。再度お試し頂くか、システム管理者にお問い合わせ下さい。")
+      flash[:error] = _("Invalid registration URL. Try again or contact system administrator.")
       redirect_to :controller => '/platform'
     end
   end
@@ -151,7 +151,7 @@ class PlatformController < ApplicationController
     return unless request.post?
     email = params[:email]
     if email.blank?
-      flash.now[:error] = _('メールアドレスは必須です。')
+      flash.now[:error] = _('Email address is mandatory.')
       return
     end
     if user = User.find_by_email(email)
@@ -162,7 +162,7 @@ class PlatformController < ApplicationController
         flash[:notice] = _("OpenID URLを再設定するためのURLを記載したメールを%{email}宛に送信しました。") % {:email => email}
         redirect_to :controller => "/platform"
       else
-        flash.now[:error] = _('入力された%{email}のユーザは、利用開始されていません。利用開始してください。') % {:email => email}
+        flash.now[:error] = _('User with email address %{email} has not activated the account. The account has to be activated first.') % {:email => email}
       end
     else
       flash.now[:error] = _("入力された%{email}というメールアドレスは登録されていません。") % {:email => email}
@@ -180,7 +180,7 @@ class PlatformController < ApplicationController
                 @identifier.url = identity_url
                 if @identifier.save
                   user.determination_reset_auth_token
-                  flash[:notice] = _("%{function}が完了しました。")%{:function => _('OpenID URLの再設定')} + _("設定したURLを入力してログインしてください。")
+                  flash[:notice] = _("%{function}が完了しました。")%{:function => _('OpenID URLの再設定')} + _("Enter the previously set URL to log in.")
                   redirect_to :action => :index
                 end
               else

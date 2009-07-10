@@ -67,10 +67,10 @@ class AntennaController < ApplicationController
 
   def ado_add_antenna_item
     unless login_user_antenna?(params[:antenna_id])
-      render :text => _('不正なアンテナが指定されました。'), :status => :bad_request and return
+      render :text => _('Selected antenna invalid.'), :status => :bad_request and return
     end
     unless item = Symbol.get_item_by_symbol(params[:symbol])
-      render :text => _('存在しないオーナーが指定されました。'), :status => :bad_request and return
+      render :text => _('Specified owner inexistent.'), :status => :bad_request and return
     end
     antenna_item = AntennaItem.new(:antenna_id => params[:antenna_id],
                                    :value_type => :symbol.to_s,

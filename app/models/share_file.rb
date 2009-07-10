@@ -39,7 +39,7 @@ class ShareFile < ActiveRecord::Base
 
   def validate
     Tag.validate_tags(category).each{ |error| errors.add(:category, error) }
-    errors.add_to_base _('ご指定の操作は実行できません。') unless updatable?
+    errors.add_to_base _('Operation inexecutable.') unless updatable?
   end
 
   def validate_on_create

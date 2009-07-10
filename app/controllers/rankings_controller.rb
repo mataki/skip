@@ -49,13 +49,13 @@ class RankingsController < ApplicationController
       @rankings = Ranking.total(params[:content_type])
       return render(:text => '', :status => :not_found) if @rankings.empty?
     else
-      return render(:text => _('不正なリクエストです。'), :status => :bad_request) if params[:month].blank?
+      return render(:text => _('Invalid request.'), :status => :bad_request) if params[:month].blank?
       begin
         Time.local(params[:year], params[:month])
         @rankings = Ranking.monthly(params[:content_type], params[:year], params[:month])
         return render(:text => '', :status => :not_found) if @rankings.empty?
       rescue => e
-        return render(:text => _('不正なリクエストです。'), :status => :bad_request)
+        return render(:text => _('Invalid request.'), :status => :bad_request)
       end
     end
     render :layout => false
@@ -151,7 +151,7 @@ class RankingsController < ApplicationController
       end
       @last_updated = popular_bookmarks.first.created_on.strftime("%Y/%m/%d %H:%M")
     else
-      flash.now[:notice] = _('該当のブックマークがありません。')
+      flash.now[:notice] = _('No matched bookmark.')
     end
   end
 

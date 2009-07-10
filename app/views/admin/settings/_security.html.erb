@@ -1,5 +1,5 @@
 <% @revert_columns = %w(enable_user_lock user_lock_trial_limit enable_password_periodic_change password_change_interval password_strength custom_password_strength_regex custom_password_strength_validation_message enable_login_keyphrase login_keyphrase enable_user_cleaning_notification user_cleaning_notification_interval enable_single_session) -%>
-<h3><%= _('ログイン失敗によるロック') %></h3>
+<h3><%= _('Lock accounts by unsuccessful log in attempts') %></h3>
 <div class="box tabular">
   <p><%= settings_label_with_check_box_tag :enable_user_lock %></p>
   <p><%= settings_label_with_select_tag :user_lock_trial_limit, (3..10).to_a.map{ |i| i.to_s } %></p>
@@ -9,13 +9,13 @@
   <p><%= settings_label_with_check_box_tag :enable_password_periodic_change %></p>
   <p><%= settings_label_with_text_field_tag :password_change_interval %></p>
 </div>
-<h3><%= _('パスワード強度') %></h3>
+<h3><%= _('Password strength') %></h3>
 <div class="box tabular">
   <p>
     <%= settings_label_with_select_tag :password_strength, password_strength_container %>
     <% if enable_forgot_password? -%>
-      <%= link_to(_('[全ユーザにパスワード再設定を求める]'), lock_actives_admin_users_path, :id => 'lock_actives', :confirm => _('あなたを含む使用中のユーザ全てをロックします。ログイン中のユーザは強制ログアウト状態になり、再度ログインするにはパスワードの再設定が必要になります。実行しても宜しいですか?'), :method => :post) %>
-      <%= help_icon_tag :content => _('利用中の全ユーザをロックします。実行することで各ユーザは次回ログイン時のパスワードの再設定が必要になります。 パスワード強度を強めた場合など、全ユーザにパスワード再設定を求めたい場合に使います。') %>
+      <%= link_to(_('[全ユーザにパスワード再設定を求める]'), lock_actives_admin_users_path, :id => 'lock_actives', :confirm => _('This will lock all user accounts including yourself. All logged in users will be forced to log out and passwords need to be reset to log in again. Are you sure to proceed?'), :method => :post) %>
+      <%= help_icon_tag :content => _('Lock all current user accounts. Users will be asked to reset their passwords next time they log in. Use this when you want all users to reset their passwords in cases such as password strength has been strengthen.') %>
     <% end -%>
   </p>
   <span id="custom_password_strength">
@@ -23,17 +23,17 @@
     <p><%= settings_label_with_text_field_tag :custom_password_strength_validation_message, :size => 40, :disabled => 'disabled' %></p>
   </span>
 </div>
-<h3><%= _('ログインキーフレーズ') %></h3>
+<h3><%= _('Login keyphrase') %></h3>
 <div class="box tabular">
   <p><%= settings_label_with_check_box_tag :enable_login_keyphrase %></p>
   <p><%= settings_label_with_text_field_tag :login_keyphrase %></p>
 </div>
-<h3><%= _('クリーニング依頼メール') %></h3>
+<h3><%= _('Prompt for user data cleaning by email') %></h3>
 <div class="box tabular">
   <p><%= settings_label_with_check_box_tag :enable_user_cleaning_notification %></p>
   <p><%= settings_label_with_select_tag :user_cleaning_notification_interval, ['1', '3', '6', '12'] %></p>
 </div>
-<h3><%= _('セッション制限') %></h3>
+<h3><%= _('Limit to single session') %></h3>
 <div class="box tabular">
   <p><%= settings_label_with_check_box_tag :enable_single_session %></p>
 </div>

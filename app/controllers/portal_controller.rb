@@ -33,7 +33,7 @@ class PortalController < ApplicationController
       session[:entrance_next_action] = :account_registration
     when :registration
       unless current_user
-        flash[:error] = _('ユーザ登録が継続出来ません。最初からやり直して下さい。')
+        flash[:error] = _('Unable to continue with the user registration process. A fresh start is required.')
         redirect_to :controller => '/platform', :action => :index
         return
       end
@@ -103,7 +103,7 @@ class PortalController < ApplicationController
   # 入力されているuidがユニークか否かをチェックする
   def ado_check_uid
     unless error_message = UserUid.validation_error_message(params[:uid])
-      render :text => _('登録可能です'), :status => :ok
+      render :text => _('Usable.'), :status => :ok
     else
       render :text => error_message, :status => :bad_request
     end

@@ -64,7 +64,7 @@
           <td colspan="2" class="operation">
           <%= submit_tag _('Save'), :id => "submit_button" %>
           <% if @bookmark.is_type_internet? && @bookmarklet -%>
-          <input type="button" value=<%= _('戻る') %> onclick="location.href='<%= @bookmark.escaped_url %>'"></input>
+          <input type="button" value=<%= _('Back') %> onclick="location.href='<%= @bookmark.escaped_url %>'"></input>
           <% end -%>
           </td>
         </tr>

@@ -80,7 +80,7 @@ class ShareFileController < ApplicationController
     end
 
     if @error_messages.size == 0
-      flash[:notice] = _('ファイルのアップロードに成功しました。')
+      flash[:notice] = n_('File was successfully uploaded.', 'Files were successfully uploaded.', params[:file].size)
       ajax_upload? ? render(:text => '') : render_window_close
     else
       flash.now[:warn] = _("Failed to upload file(s).")
@@ -138,7 +138,7 @@ class ShareFileController < ApplicationController
         @share_file.share_file_publications.create(:symbol => target_symbol)
       end
 
-      flash[:notice] = _('更新しました。')
+      flash[:notice] = _('Updated.')
       render_window_close
     else
       @owner_name = params[:owner_name]
@@ -235,7 +235,7 @@ class ShareFileController < ApplicationController
       send_file(share_file.full_path, :filename => nkf_file_name(file_name), :type => share_file.content_type || Types::ContentType::DEFAULT_CONTENT_TYPE, :stream => false, :disposition => 'attachment')
     else
       # FIXME i18n
-      @main_menu = @title = _('ファイルのダウンロード')
+      @main_menu = @title = _('File Download')
       render :action => 'confirm_download', :layout => 'layout'
     end
   end
@@ -264,12 +264,12 @@ class ShareFileController < ApplicationController
     end
 
     unless share_file.updatable?(current_user)
-      render :text => _('この操作は、許可されていません。'), :status => :forbidden
+      render :text => _('Operation unauthorized.'), :status => :forbidden
       return
     end
 
     share_file.share_file_accesses.clear
-    render :text => _('ダウンロード履歴の削除に成功しました。')
+    render :text => _('Download history was successfully deleted.')
   end
 
 private
