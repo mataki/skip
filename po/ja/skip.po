@@ -2759,7 +2759,7 @@ msgstr "既定の公開範囲"
 
 #: app/views/mypage/_manage_customize.html.erb:58
 msgid "Default entry edit mode"
-msgstr ""
+msgstr "既定の記事編集方法"
 
 #: app/views/board_entries/_board_entry_comment.html.erb:15
 #: app/views/bookmark/show.html.erb:31
