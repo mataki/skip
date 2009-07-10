@@ -46,7 +46,7 @@ class SkipUtil
 
   def self.toutf8_without_ascii_encoding string
     if string
-      Kconv.guess(string) == Kconv::ASCII ? string : string.to_utf8
+      Kconv.guess(string) == Kconv::ASCII ? string : string.toutf8
     end
   end
 
