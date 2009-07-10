@@ -80,7 +80,7 @@ class BoardEntry < ActiveRecord::Base
   end
 
   def self.unescape_href text
-    text.gsub!(/<a[^>]*href=[\'\"](.*?)[\'\"]>/){ CGI.unescapeHTML($&) } if text
+    text.gsub(/<a[^>]*href=[\'\"](.*?)[\'\"]>/){ CGI.unescapeHTML($&) } if text
   end
 
   def permalink

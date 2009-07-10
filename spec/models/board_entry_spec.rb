@@ -228,7 +228,9 @@ EOF
       "hoge<a href='/hoge?f=q&hl=h1' id='ff'>aa\na</a>aa&amp;aa<a href=\"/fuga?f=q&h=h\">bb&amp;b</a>"
   end
 
-
+  it '置換対象外の場合は引数がそのまま返ること' do
+    BoardEntry.unescape_href('<p>foo</p>').should == '<p>foo</p>'
+  end
 end
 
 describe BoardEntry, '.get_symbol2name_hash' do
