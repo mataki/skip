@@ -84,7 +84,7 @@ module ApplicationHelper
     output_text << (sanitize(options[:view_text]) || h(title))
 
     html_options[:title] ||= board_entry.title
-    link_to output_text, board_entry.get_url_hash, html_options
+    link_to output_text, board_entry.get_url_hash, {:class => 'entry'}.merge(html_options)
   end
 
   # ユーザのページへのリンク
@@ -414,7 +414,7 @@ private
   # javascriptで長いタグを収納する application.jsを読み込む必要あり
   # visible_size で 初期表示のタグの個数を指定できる。
   def hide_long_tags(categories, visible_size = 1)
-    output = "<span class='list_tags'>#{categories.slice!(0..visible_size-1)}"
+    output = "<span>#{categories.slice!(0..visible_size-1)}"
     if categories.size > 0
       output << "<a href='#' class='tag_open'>#{icon_tag 'bullet_toggle_plus'}</a>"
       output << "<span style='display: none;'>#{categories}"
