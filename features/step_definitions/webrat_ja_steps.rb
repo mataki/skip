@@ -22,6 +22,10 @@ def response_body_text(source = response.body)
   Nokogiri::HTML(source).text
 end
 
+When /"(.*)"にアクセスする/ do |page_name|
+  visit path_to(page_name)
+end
+
 When /言語は"(.*)"/ do |lang|
   header("ACCEPT_LANGUAGE", lang)
 end
