@@ -29,7 +29,7 @@
       </p>
       <% end -%>
       <p>
-      <%= text_field_tag("user[section]", (sections.include?(@user.section) ? '' : @user.section), :tabindex => (tabindex += 1), :class=> 'appendable_text') + _('If you are not set as the selection, please enter here.[FIXME]') %>
+      <%= text_field_tag("user[section]", (sections.include?(@user.section) ? '' : @user.section), :tabindex => (tabindex += 1), :class=> 'appendable_text') + _('Enter here if you cannot find the value in the options') %>
       </p>
   </tr>
   <% if user_name_mode?(:name) -%>

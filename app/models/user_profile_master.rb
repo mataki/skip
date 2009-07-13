@@ -119,12 +119,12 @@ class UserProfileMaster < ActiveRecord::Base
     end
 
     def validate(value)
-      value.errors.add_to_base(_("%{name} は必須です") % { :name => @master.name_with_escape }) if @master.required and value.value.blank?
+      value.errors.add_to_base(_("%{name} is mandatory.") % { :name => @master.name_with_escape }) if @master.required and value.value.blank?
     end
 
     def option_value_validate(value)
-      value.errors.add_to_base(_("%{name} は必須です") % { :name => @master.name_with_escape }) if @master.required and value.value.blank?
-      value.errors.add_to_base(_("%{name} は選択される値以外のものが設定されています") % { :name => @master.name_with_escape }) unless @master.option_array_with_blank.include?(value.value)
+      value.errors.add_to_base(_("%{name} is mandatory.") % { :name => @master.name_with_escape }) if @master.required and value.value.blank?
+      value.errors.add_to_base(_("%{name} contains value not in selectable options.") % { :name => @master.name_with_escape }) unless @master.option_array_with_blank.include?(value.value)
     end
 
     def self.need_option_values?
@@ -147,8 +147,8 @@ class UserProfileMaster < ActiveRecord::Base
 
   class NumberAndHyphenOnlyProcesser < InputTypeProcesser
     def validate(value)
-      value.errors.add_to_base(_("%{name} は必須です") % { :name => @master.name_with_escape }) if @master.required and value.value.blank?
-      value.errors.add_to_base(_("%{name} は数字かハイフンで入力してください") % { :name => @master.name_with_escape }) unless value.value =~ /^[0-9\-]*$/
+      value.errors.add_to_base(_("%{name} is mandatory.") % { :name => @master.name_with_escape }) if @master.required and value.value.blank?
+      value.errors.add_to_base(_("%{name} accepts numbers and hiphens(\"-\") only.") % { :name => @master.name_with_escape }) unless value.value =~ /^[0-9\-]*$/
     end
   end
 
@@ -184,10 +184,10 @@ class UserProfileMaster < ActiveRecord::Base
 
     def validate(value)
       if @master.required and value.value.blank?
-        value.errors.add_to_base(_("%{name} は必須です") % { :name => @master.name_with_escape })
+        value.errors.add_to_base(_("%{name} is mandatory.") % { :name => @master.name_with_escape })
         return
       end
-      value.errors.add_to_base(_("%{name} は4桁の数値で入力して下さい") % { :name => @master.name_with_escape }) unless years.include?(value.value)
+      value.errors.add_to_base(_("Enter %{name} in 4-digit numbers.") % { :name => @master.name_with_escape }) unless years.include?(value.value)
     end
 
     def self.need_option_values?
@@ -195,7 +195,7 @@ class UserProfileMaster < ActiveRecord::Base
     end
 
     def validates_format_of_option_values
-      @master.errors.add(:option_values, _('accepts numbers and hiphens(\"-\") only.')) unless @master.option_values =~ /^(\d|-)*$/
+      @master.errors.add(:option_values, _("accepts numbers and hiphens(\"-\") only.")) unless @master.option_values =~ /^(\d|-)*$/
     end
 
     private
@@ -276,13 +276,13 @@ class UserProfileMaster < ActiveRecord::Base
     end
 
     def validate(value)
-      value.errors.add_to_base(_("%{name} は必須です") % { :name => @master.name_with_escape }) if @master.required and value.value.blank?
+      value.errors.add_to_base(_("%{name} is mandatory.") % { :name => @master.name_with_escape }) if @master.required and value.value.blank?
       unless value.value.blank? or value.value.is_a?(Array)
-        value.errors.add_to_base(_("%{name} に不正な形式が設定されています") % {:name => @master.name_with_escape})
+        value.errors.add_to_base(_("Invalid format for %{name}.") % {:name => @master.name_with_escape})
       else
         value_arr = value.value.blank? ? [] : value.value
         if (value_arr - @master.option_array).size > 0
-          value.errors.add_to_base(_("%{name} は選択される値以外のものが設定されています") % { :name => @master.name_with_escape })
+          value.errors.add_to_base(_("%{name} contains value not in selectable options.") % { :name => @master.name_with_escape })
         end
       end
     end
@@ -306,10 +306,10 @@ class UserProfileMaster < ActiveRecord::Base
 
     def validate(value)
       if @master.required and value.value.blank?
-        value.errors.add_to_base(_("%{name} は必須です") % { :name => @master.name_with_escape })
+        value.errors.add_to_base(_("%{name} is mandatory.") % { :name => @master.name_with_escape })
         return
       end
-      value.errors.add_to_base(_("%{name} は選択される値以外のものが設定されています") % { :name => @master.name_with_escape }) unless prefectures.include?(value.value)
+      value.errors.add_to_base(_("%{name} contains value not in selectable options.") % { :name => @master.name_with_escape }) unless prefectures.include?(value.value)
     end
 
     private
@@ -325,11 +325,11 @@ class UserProfileMaster < ActiveRecord::Base
     end
 
     def validate(value)
-      value.errors.add_to_base(_("%{name} は必須です") % { :name => @master.name_with_escape }) if @master.required and value.value.blank?
+      value.errors.add_to_base(_("%{name} is mandatory.") % { :name => @master.name_with_escape }) if @master.required and value.value.blank?
       begin
         Date.parse(value.value) unless value.value.blank?
       rescue ArgumentError => e
-        value.errors.add_to_base(_("%{name} は正しい日付形式で入力して下さい") % { :name => @master.name_with_escape })
+        value.errors.add_to_base(_("Enter %{name} in a valid date format.") % { :name => @master.name_with_escape })
       end
     end
 

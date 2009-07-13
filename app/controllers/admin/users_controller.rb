@@ -238,7 +238,7 @@ class Admin::UsersController < Admin::ApplicationController
   end
 
   def lock_actives
-    flash[:notice] = _('%{count}件更新しました。')%{:count => Admin::User.lock_actives}
+    flash[:notice] = _('Updated %{count} records.')%{:count => Admin::User.lock_actives}
     redirect_to admin_settings_path(:tab => :security)
   end
 

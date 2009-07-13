@@ -101,7 +101,7 @@ class PlatformController < ApplicationController
 
   def activate
     unless enable_activate?
-      flash[:error] = _('%{function}は現在利用することが出来ません。') % {:function => '利用開始通知'}
+      flash[:error] = _('%{function} currently unavailable.') % {:function => '利用開始通知'}
       return redirect_to(:controller => '/platform')
     end
     return unless request.post?
@@ -127,7 +127,7 @@ class PlatformController < ApplicationController
 
   def signup
     unless enable_signup?
-      flash[:error] = _('%{function}は現在利用することが出来ません。') % {:function => '利用登録'}
+      flash[:error] = _('%{function} currently unavailable.') % {:function => '利用登録'}
       return redirect_to(:controller => '/platform')
     end
     if @user = User.find_by_activation_token(params[:code])
@@ -159,7 +159,7 @@ class PlatformController < ApplicationController
         user.issue_reset_auth_token
         user.save_without_validation!
         UserMailer.deliver_sent_forgot_openid(email, reset_openid_url(user.reset_auth_token))
-        flash[:notice] = _("OpenID URLを再設定するためのURLを記載したメールを%{email}宛に送信しました。") % {:email => email}
+        flash[:notice] = _("Sent an email containing the URL for resettig OpenID URL to %{email}.") % {:email => email}
         redirect_to :controller => "/platform"
       else
         flash.now[:error] = _('User with email address %{email} has not activated the account. The account has to be activated first.') % {:email => email}
@@ -180,23 +180,23 @@ class PlatformController < ApplicationController
                 @identifier.url = identity_url
                 if @identifier.save
                   user.determination_reset_auth_token
-                  flash[:notice] = _("%{function}が完了しました。")%{:function => _('OpenID URLの再設定')} + _("Enter the previously set URL to log in.")
+                  flash[:notice] = _("%{function} completed.")%{:function => _('Resetting OpenID URL')} + _("Enter the previously set URL to log in.")
                   redirect_to :action => :index
                 end
               else
-                flash.now[:error] = _("OpenIDの処理の中でキャンセルされたか、失敗しました。")
+                flash.now[:error] = _("OpenID processing aborted due to user cancellation or system errors.")
               end
             end
           rescue OpenIdAuthentication::InvalidOpenId
-            flash.now[:error] = _("OpenIDの形式が正しくありません。")
+            flash.now[:error] = _("OpenID format invalid.")
           end
         end
       else
-        flash[:error] = _("%{function}のためのURLの有効期限が過ぎています。")%{:function => _('OpenID URLの再設定')}
+        flash[:error] = _("The URL for %{function} has expired.")%{:function => _('resetting OpenID URL')}
         redirect_to :controller => '/platform'
       end
     else
-      flash[:error] = _("%{function}のためのURLが不正です。再度お試し頂くか、システム管理者にお問い合わせ下さい。")%{:function => _('OpenID URLの再設定')}
+      flash[:error] = _("The URL for %{function} invalid. Try again or contact system administrator.")%{:function => _('resetting OpenID URL')}
       redirect_to :controller => '/platform'
     end
   end

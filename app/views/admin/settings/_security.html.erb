@@ -14,7 +14,7 @@
   <p>
     <%= settings_label_with_select_tag :password_strength, password_strength_container %>
     <% if enable_forgot_password? -%>
-      <%= link_to(_('[全ユーザにパスワード再設定を求める]'), lock_actives_admin_users_path, :id => 'lock_actives', :confirm => _('This will lock all user accounts including yourself. All logged in users will be forced to log out and passwords need to be reset to log in again. Are you sure to proceed?'), :method => :post) %>
+      <%= link_to(_('[Request all users to reset their passwords]'), lock_actives_admin_users_path, :id => 'lock_actives', :confirm => _('This will lock all user accounts including yourself. All logged in users will be forced to log out and passwords need to be reset to log in again. Are you sure to proceed?'), :method => :post) %>
       <%= help_icon_tag :content => _('Lock all current user accounts. Users will be asked to reset their passwords next time they log in. Use this when you want all users to reset their passwords in cases such as password strength has been strengthen.') %>
     <% end -%>
   </p>
