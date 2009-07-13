@@ -357,7 +357,7 @@ module ApplicationHelper
 
 private
   def relative_url_root
-    ActionController::AbstractRequest.relative_url_root
+    ActionController::Base.relative_url_root || ''
   end
 
   # TODO 仕組みが複雑すぎる。BoardEntry.replace_symbol_linkと合わせてシンプルな作りにしたい。
