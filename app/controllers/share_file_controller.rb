@@ -28,14 +28,6 @@ class ShareFileController < ApplicationController
       return
     end
 
-    params[:publication_type] =
-      if Symbol.split_symbol(@share_file.owner_symbol).first == "uid"
-        'public'
-      else
-        @share_file.owner.default_publication_type
-      end
-    params[:publication_symbols_value] = ""
-
     @error_messages = []
     @owner_name = params[:owner_name]
     @categories_hash = ShareFile.get_tags_hash(@share_file.owner_symbol)
@@ -51,8 +43,7 @@ class ShareFileController < ApplicationController
     end
     @share_file = ShareFile.new(params[:share_file])
     @share_file.user_id = current_user.id
-    @share_file.publication_type = params[:publication_type]
-    @share_file.publication_symbols_value = params[:publication_type]=='protected' ? params[:publication_symbols_value] : ""
+    @share_file.publication_symbols_value = params[:publication_symbols_value]
 
     params[:file].each do |key, file|
       share_file = @share_file.clone
@@ -64,7 +55,8 @@ class ShareFileController < ApplicationController
       share_file.accessed_user = current_user
 
       if share_file.save
-        target_symbols = analyze_param_publication_type
+        # TODO #814のチケットを処理するタイミングで下記4行は無くす
+        target_symbols = analyze_param_publication_type share_file
         target_symbols.each do |target_symbol|
           share_file.share_file_publications.create(:symbol => target_symbol)
         end
@@ -83,9 +75,11 @@ class ShareFileController < ApplicationController
       flash[:notice] = n_('File was successfully uploaded.', 'Files were successfully uploaded.', params[:file].size)
       ajax_upload? ? render(:text => '') : render_window_close
     else
-      flash.now[:warn] = _("Failed to upload file(s).")
-      flash.now[:warn] << n_("[Success:%{success} ", "[Successes:%{success} ", params[:file].size - @error_messages.size) % {:success => params[:file].size - @error_messages.size}
-      flash.now[:warn] << n_("Failure:%{failure}]", "Failures:%{failure}]", @error_messages.size) % {:failure => @error_messages.size}
+      messages = []
+      messages << _("Failed to upload file(s).")
+      messages << n_("[Success:%{success} ", "[Successes:%{success} ", params[:file].size - @error_messages.size) % {:success => params[:file].size - @error_messages.size}
+      messages << n_("Failure:%{failure}]", "Failures:%{failure}]", @error_messages.size) % {:failure => @error_messages.size}
+      flash.now[:warn] = messages.join('')
 
       @reload_parent_window = (params[:file].size - @error_messages.size > 0)
       @share_file.errors.clear
@@ -108,16 +102,6 @@ class ShareFileController < ApplicationController
       return
     end
 
-    params[:publication_symbols_value] = ""
-    if @share_file.public?
-      params[:publication_type] = "public"
-    elsif @share_file.private?
-      params[:publication_type] = "private"
-    else
-      params[:publication_type] = "protected"
-      params[:publication_symbols_value] = @share_file.publication_symbols_value
-    end
-
     @error_messages = []
     @owner_name = params[:owner_name]
     @categories_hash = ShareFile.get_tags_hash(@share_file.owner_symbol)
@@ -127,13 +111,13 @@ class ShareFileController < ApplicationController
   def update
     @share_file = ShareFile.find(params[:file_id])
     update_params = params[:share_file]
-    update_params[:publication_type] = params[:publication_type]
-    update_params[:publication_symbols_value] = params[:publication_type]=='protected' ? params[:publication_symbols_value] : ""
+    update_params[:publication_symbols_value] = params[:publication_symbols_value]
     @share_file.accessed_user = current_user
 
     if @share_file.update_attributes(update_params)
+      # TODO #814のチケットを処理するタイミングで下記5行は無くす
       @share_file.share_file_publications.clear
-      target_symbols = analyze_param_publication_type
+      target_symbols = analyze_param_publication_type @share_file
       target_symbols.each do |target_symbol|
         @share_file.share_file_publications.create(:symbol => target_symbol)
       end
@@ -273,16 +257,17 @@ class ShareFileController < ApplicationController
   end
 
 private
-  def analyze_param_publication_type
+  # TODO #814のチケットを処理するタイミングで下記メソッドは無くす
+  def analyze_param_publication_type share_file
     target_symbols = []
-    case params[:publication_type]
+    case  share_file.publication_type
     when "public"
       target_symbols << "sid:allusers"
     when "private"
-      target_symbols << params[:share_file][:owner_symbol]
+      target_symbols << share_file.owner_symbol
       target_symbols << session[:user_symbol]
     when "protected"
-      target_symbols = params[:publication_symbols_value].split(/,/).map {|symbol| symbol.strip }
+      target_symbols = share_file.publication_symbols_value.split(/,/).map {|symbol| symbol.strip }
       target_symbols << session[:user_symbol]
     else
       raise _("Invalid parameter(s).")

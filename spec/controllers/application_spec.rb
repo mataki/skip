@@ -96,6 +96,7 @@ describe ApplicationController, "#current_user=" do
     @session = mock('session')
     @session.stub!(:[]=)
     controller.stub!(:session).and_return(@session)
+    controller.stub!(:setup_custom_cookies)
   end
   describe "userがわたってきた場合" do
     before do
@@ -112,6 +113,10 @@ describe ApplicationController, "#current_user=" do
     end
     it "userのupdate_auth_session_token!が呼ばれること" do
       @user.should_receive(:update_auth_session_token!).and_return("auth_token")
+      controller.send(:current_user=, @user)
+    end
+    it "setup_custom_cookiesが呼ばれること" do
+      controller.should_receive(:setup_custom_cookies)
       controller.send(:current_user=, @user)
     end
   end

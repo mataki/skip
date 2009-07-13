@@ -29,13 +29,28 @@ class ShareFile < ActiveRecord::Base
   has_many :share_file_publications, :dependent => :destroy
   has_many :share_file_accesses, :dependent => :destroy
 
-  before_save :square_brackets_tags
-
   validates_length_of   :description, :maximum => 100
   validates_presence_of :file_name
   validates_presence_of :date
   validates_presence_of :user_id
   validates_uniqueness_of :file_name, :scope => :owner_symbol, :message =>_('File with the same name already uploaded.')
+
+  def after_initialize
+    if self.publication_type.blank?
+      self.publication_type =
+        if user_owner?
+          'public'
+        else
+          owner ? owner.default_publication_type : 'private'
+        end
+    end
+    self.publication_symbols_value ||= ''
+  end
+
+  def before_save
+    square_brackets_tags
+    self.publication_symbols_value = '' unless self.protected?
+  end
 
   def validate
     Tag.validate_tags(category).each{ |error| errors.add(:category, error) }
@@ -97,7 +112,6 @@ class ShareFile < ActiveRecord::Base
     symbol_type = owner_symbol.split(":").first
     symbol_id = owner_symbol.split(":").last
     owner = (symbol_type == User.symbol_type.to_s) ? User.find_by_uid(symbol_id) : Group.active.find_by_gid(symbol_id)
-    owner ? owner : raise("Owner cannot be found by '#{owner_symbol}'")
   end
 
   # 所属するグループの公開範囲により、共有ファイルの公開範囲を判定する

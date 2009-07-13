@@ -617,39 +617,50 @@ end
 describe MypageController, "POST or PUT /update_customize" do
   before do
     @user = user_login
+    @user_custom_attr = {'theme' => "green", 'classic' => true, 'editor_mode' => "hiki"}
+    controller.stub(:setup_custom_cookies).and_return(true)
   end
   describe "ログインしているユーザがuser_customを未設定の場合" do
     before do
       mock_custom = mock_model(UserCustom)
-      mock_custom.should_receive(:update_attributes).with({"theme" => "green", "classic" => true}).and_return(true)
+      mock_custom.should_receive(:update_attributes).with(@user_custom_attr).and_return(true)
       @user.stub(:custom).and_return(mock_custom)
     end
     it "user_customが追加されること" do
-      post :update_customize, {:user_custom => {:theme => "green", :classic => true}}
+      post :update_customize, {:user_custom => @user_custom_attr}
     end
 
     it "カスタマイズ画面にリダイレクトすること" do
-      post :update_customize, {:user_custom => {:theme => "green", :classic => true}}
+      post :update_customize, {:user_custom => @user_custom_attr}
       response.should redirect_to(:action => "manage", :menu => "manage_customize")
+    end
+
+    it "setup_cookiesが呼ばれること" do
+      controller.should_receive(:setup_custom_cookies).and_return(true)
+      post :update_customize, {:user_custom => @user_custom_attr}
     end
   end
   describe "ログインしているユーザがuser_customを設定済みの場合" do
     before do
       mock_custom = mock_model(UserCustom)
-      mock_custom.should_receive(:update_attributes).with({"theme" => "green", "classic" => true}).and_return(true)
+      mock_custom.should_receive(:update_attributes).with(@user_custom_attr).and_return(true)
       @user.stub(:custom).and_return(mock_custom)
     end
     it "user_customが更新されること" do
-      put :update_customize, {:user_custom => {:theme => "green", :classic => true}}
+      put :update_customize, {:user_custom => @user_custom_attr}
     end
     it "user_customsが追加されないこと" do
       lambda do
-        put :update_customize, {:user_custom => {:theme => "green", :classic => true}}
+        put :update_customize, {:user_custom => @user_custom_attr}
       end.should_not change(UserCustom, :count)
     end
     it "カスタマイズ画面にリダイレクトすること" do
-      put :update_customize, {:user_custom => {:theme => "green", :classic => true}}
+      put :update_customize, {:user_custom => @user_custom_attr}
       response.should redirect_to(:action => "manage", :menu => "manage_customize")
+    end
+    it "setup_cookiesが呼ばれること" do
+      controller.should_receive(:setup_custom_cookies).and_return(true)
+      put :update_customize, {:user_custom => @user_custom_attr}
     end
   end
 end
@@ -692,7 +703,7 @@ end
 describe MypageController, '#system_messages' do
   before do
     @controller = MypageController.new
-    @user = stub_model(User, :pictures => [])
+    @user = stub_model(User, :picture => nil)
     @controller.stub!(:current_user).and_return(@user)
   end
   describe 'ようこそメッセージを表示する場合' do

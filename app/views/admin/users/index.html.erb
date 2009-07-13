@@ -14,6 +14,8 @@
                :hide_columns => %w(locked issued_at last_authenticated_at password_expires_at),
                :disp_columns_proc => lambda do |object,column|
       case column
+      when "uid"
+        h(object.username)
       when "status"
         if object.unused?
           if !object.activation_token.nil? and object.within_time_limit_of_activation_token?
@@ -56,10 +58,13 @@
   <%= submit_tag Admin::Setting.mail_function_setting ? _('Send activate email to selected users') : _('Issue activation url for selected users') %>
   <% end -%>
 </div>
+<% footer_links = [] -%>
 <% if login_mode?(:password) -%>
-<%= link_to _('New %{model}') % {:model => _('user')}, new_admin_user_path %> |
-<%= link_to _('New users from CSV'), import_new_admin_user_path %>
+<% footer_links << link_to(_('New %{model}') % {:model => _('user')}, new_admin_user_path) %>
+<% footer_links << link_to(_('New users from CSV'), import_new_admin_user_path) %>
 <% end -%>
+<% footer_links << link_to(_('Listing %{model}') % {:model => _('picture')}, admin_pictures_path) %>
+<%= footer_links.join(' | ') %>
 <% end -%>
 
 <% content_for :javascript_initializers do -%>

@@ -84,7 +84,7 @@ module ApplicationHelper
     output_text << (sanitize(options[:view_text]) || h(title))
 
     html_options[:title] ||= board_entry.title
-    link_to output_text, board_entry.get_url_hash, html_options
+    link_to output_text, board_entry.get_url_hash, {:class => 'entry'}.merge(html_options)
   end
 
   # ユーザのページへのリンク
@@ -139,12 +139,16 @@ module ApplicationHelper
     options[:height] = height unless height == 0
     if user.retired?
       file_name = 'retired.png'
-    elsif picture = user.pictures.first
-      file_name = url_for(:controller => 'pictures', :action => 'picture', :id => picture.id, :format => :png)
-      if popup
-        pop_name = url_for(:controller => 'pictures', :action => 'picture', :id => picture.id.to_s)
-        options[:title] = _("Click to see in original size.")
-        return link_to(image_tag(file_name, options), file_name, :class => 'nyroModal zoomable')
+    elsif picture = user.picture
+      unless picture.new_record?
+        file_name = url_for(:controller => '/pictures', :action => 'picture', :id => picture.id, :format => :png)
+        if popup
+          pop_name = url_for(:controller => '/pictures', :action => 'picture', :id => picture.id.to_s)
+          options[:title] = _("Click to see in original size.")
+          return link_to(image_tag(file_name, options), file_name, :class => 'nyroModal zoomable')
+        end
+      else
+        file_name = 'default_picture.png'
       end
     else
       file_name = 'default_picture.png'
@@ -198,7 +202,11 @@ module ApplicationHelper
   # リッチテキストの表示
   def render_richtext(text, owner_symbol = nil)
     content = parse_permalink(text, owner_symbol)
-    "<div class='rich_style'>#{sanitize_style_with_whitelist(content)}</div>"
+    "<div class='rich_style'>#{sanitize_and_unescape_for_richtext(content)}</div>"
+  end
+
+  def sanitize_and_unescape_for_richtext(content)
+    sanitize_style_with_whitelist(BoardEntry.unescape_href(content))
   end
 
   def sanitize_style_with_whitelist(content)
@@ -352,6 +360,7 @@ private
     ActionController::AbstractRequest.relative_url_root
   end
 
+  # TODO 仕組みが複雑すぎる。BoardEntry.replace_symbol_linkと合わせてシンプルな作りにしたい。
   def parse_permalink text, owner_symbol = nil
     return '' unless text
     # closure
@@ -363,6 +372,7 @@ private
     file_proc = proc {|file_symbol, link_str|
                       symbol_type, symbol_id = SkipUtil.split_symbol owner_symbol
                       f_symbol_type, file_name = SkipUtil.split_symbol file_symbol
+                      file_name.gsub!(/\r\n|\r|\n/, '')
                       url = share_file_url :controller_name => @@CONTROLLER_HASH[symbol_type], :symbol_id => symbol_id, :file_name => file_name.strip, :authenticity_token => form_authenticity_token
                       link_to(link_str, url) }
 

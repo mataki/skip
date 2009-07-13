@@ -54,7 +54,7 @@ protected
     # ログのリクエスト情報に、ユーザ情報を加える（情報漏えい事故発生時のトレーサビリティを確保)
     logger.info(user.to_s_log('[Log for inspection]'))
 
-    unless controller_name == 'pictures'
+    unless controller_name == 'pictures' && action_name == 'picture'
       UserAccess.update_all("last_access = CURRENT_TIMESTAMP", ["user_id = ? ", user.id ])
       @site_count = SiteCount.find(:first, :order => "created_on desc") || SiteCount.new
     end
@@ -87,6 +87,13 @@ protected
     end
   end
 
+  def setup_custom_cookies
+    cookies[:editor_mode] = {
+      :value => current_user.custom.editor_mode,
+      :expires => 1.month.from_now
+    }
+  end
+
   # ログイン中のユーザのシンボル＋そのユーザの所属するグループのSymbolの配列を返す
   # sid:all_userは含めていない
   def login_user_symbols
@@ -109,6 +116,7 @@ protected
   def current_user=(user)
     session[:auth_session_token] = user ? user.update_auth_session_token! : nil
     session[:user_code] = user ? user.code : nil
+    setup_custom_cookies
     @current_user = user || nil
   end
 

@@ -222,7 +222,7 @@ private
       @bookmark_comment = BookmarkComment.new(:public => true)
 
       unless @bookmark = Bookmark.find_by_url(unescaped_url)
-        @bookmark = Bookmark.new(:url => unescaped_url, :title => params[:title] ? params[:title].toutf8 : '')
+        @bookmark = Bookmark.new(:url => unescaped_url, :title => SkipUtil.toutf8_without_ascii_encoding(params[:title]))
       end
     end
 

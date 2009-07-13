@@ -24,7 +24,7 @@ class User < ActiveRecord::Base
   attr_protected :admin, :status
 
   has_many :group_participations, :dependent => :destroy
-  has_many :pictures, :dependent => :destroy
+  has_one :picture, :dependent => :destroy
   has_many :user_profile_values, :dependent => :destroy
   has_many :tracks, :order => "updated_on DESC", :dependent => :destroy
   has_one  :user_access, :class_name => "UserAccess", :dependent => :destroy
@@ -276,8 +276,12 @@ class User < ActiveRecord::Base
   end
 
   def uid
+    username || code
+  end
+
+  def username
     user_uid = user_uids.detect { |u| u.uid_type == UserUid::UID_TYPE[:username] }
-    user_uid ? user_uid.uid : code
+    user_uid ? user_uid.uid : nil
   end
 
   def code

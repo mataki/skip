@@ -137,7 +137,7 @@ class UserSearchCondition < SearchCondition
 
   def value_of_include
     # パフォ劣化のため、user_uidsテーブルとの外部結合をログインIDとログインIDソートに限定した。
-    include_tables = [:user_access, :pictures, :user_uids]
+    include_tables = [:user_access, :picture, :user_uids]
     include_tables.delete(:user_uids) if @code.empty? && @sort_type == "0"
     include_tables << :group_participations if @with_group
     include_tables

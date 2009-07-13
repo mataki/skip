@@ -11,30 +11,30 @@ form#share_file_form {
   <%= hidden_field_tag 'owner_name', h(params[:owner_name]) %>
   <%= hidden_field 'share_file', 'owner_symbol' %>
   <%= hidden_field_tag 'share_file[date]', Time.now.to_s %>
-  <%= hidden_field_tag 'publication_type', params[:publication_type] %>
+  <%= hidden_field 'share_file', 'publication_type' %>
   <%= hidden_field 'share_file', 'category' %>
   <%= hidden_field 'share_file', 'description' %>
   <table class="upload_form">
     <tr>
-      <th class="publication_type"><%= label_tag 'publication_type', '公開範囲' %></th>
+      <th class="publication_type"><%= label_tag 'publication_type', s_('ShareFile|Publication type') %></th>
       <td class="publication_type">
-        <%= radio_button_tag("publication_type", "public", params[:publication_type] == "public", :id=>"publication_type_public") %><label for="publication_type_public">全体に公開</label>
-        <%= radio_button_tag("publication_type", "private", params[:publication_type] == "private", :id=>"publication_type_private") %><label for="publication_type_private"><%= show_private_value @share_file %></label>
+        <%= radio_button('share_file', 'publication_type', 'public', :id => 'publication_type_public') %><%= label_tag "publication_type_public", _('Open to All') %>
+        <%= radio_button('share_file', 'publication_type', 'private', :id => 'publication_type_private') %><%= label_tag "publication_type_private", show_private_value(@share_file) %>
       </td>
       <th class="indicator">&nbsp;</th>
     </tr>
     <tr>
-      <th class="file"><%= label_tag 'file[1]', 'ファイル' %></th>
+      <th class="file"><%= label_tag 'file[1]', _('File') %></th>
       <td class="file"><%= file_field_tag 'file[1]', :size => 40 %></td>
       <td class="indicator"><%= image_tag('skip/indicator.gif', {:style => 'display:none'}) %></td>
     </tr>
     <tr>
-      <th class="name"><%= label_tag 'share_file[description]', 'コメント' %></th>
+      <th class="name"><%= label_tag 'share_file[description]', s_('ShareFile|Description') %></th>
       <td class="name"><%= text_field 'share_file', 'description', :size => 40 %></td>
       <th class="indicator">&nbsp;</th>
     </tr>
     <tr>
-      <td colspan="2"><%= submit_tag 'アップロード' %></td>
+      <td colspan="2"><%= submit_tag _('Upload') %></td>
     </tr>
   </table>
 <% end -%>

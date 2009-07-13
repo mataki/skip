@@ -13,22 +13,13 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-module LogicalDestroyable
-  def self.included(base)
-    base.named_scope(:active, {:conditions => {:deleted_at => nil}})
-    base.attr_protected :deleted_at
+require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+
+describe Admin::PicturesController do
+
+  #Delete this example and add some real ones
+  it "should use Admin::PicturesController" do
+    controller.should be_an_instance_of(Admin::PicturesController)
   end
 
-  def logical_destroy
-    before_logical_destroy
-    update_attribute(:deleted_at, Time.now)
-    after_logical_destroy
-  end
-
-  def before_logical_destroy;end
-  def after_logical_destroy;end
-
-  def recover
-    update_attribute(:deleted_at, nil)
-  end
 end

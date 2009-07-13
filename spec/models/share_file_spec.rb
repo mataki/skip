@@ -30,6 +30,36 @@ fixtures :share_files
   end
 end
 
+describe ShareFile, '.new' do
+  describe 'オーナーがユーザの場合' do
+    before do
+      @share_file = ShareFile.new(:owner_symbol => 'uid:foo')
+    end
+    it '公開範囲が全体公開になっていること' do
+      @share_file.publication_type.should == 'public'
+    end
+  end
+  describe 'オーナーがグループの場合' do
+    describe 'グループが存在し、デフォルトの公開範囲が全体公開の場合' do
+      before do
+        create_group :gid => 'vimgroup', :default_publication_type => 'public'
+        @share_file = ShareFile.new(:owner_symbol => 'gid:vimgroup')
+      end
+      it '公開範囲が全体公開になっていること' do
+        @share_file.publication_type.should == 'public'
+      end
+    end
+    describe 'グループが存在しない場合' do
+      before do
+        @share_file = ShareFile.new(:owner_symbol => 'gid:vimgroup')
+      end
+      it '公開範囲が自分だけになっていること' do
+        @share_file.publication_type.should == 'private'
+      end
+    end
+  end
+end
+
 describe ShareFile, '#full_path' do
   before do
     @share_file_path = 'temp'
@@ -184,7 +214,7 @@ describe ShareFile, '#owner_id' do
       # これが起きるケースはデータ不整合が起こっていると考えられる。
       lambda do
         @share_file.owner_id
-      end.should raise_error(RuntimeError, "Owner cannot be found by '#{@share_file.owner_symbol}'")
+      end.should raise_error(RuntimeError)
     end
   end
 end

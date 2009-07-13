@@ -33,7 +33,7 @@ module Admin::ApplicationHelper
   def generate_box_menu
     output = ''
     output << '<ul>'
-    output << generate_box_menu_link( _('user'), admin_users_path, (request.url.include?(admin_users_url) || request.url == admin_root_url))
+    output << generate_box_menu_link( _('user'), admin_users_path, (request.url.include?(admin_users_url) || request.url == admin_root_url || request.url == admin_pictures_url))
     output << generate_box_menu_link( _('group category'), admin_group_categories_path, request.url.include?(admin_group_categories_url))
     output << generate_box_menu_link( _('group'), admin_groups_path, request.url.include?(admin_groups_url))
     output << generate_box_menu_link( _('board entry'), admin_board_entries_path, request.url.include?(admin_board_entries_url))
@@ -54,7 +54,7 @@ module Admin::ApplicationHelper
     if selected
       "<li>#{icon_tag('bullet_red')}<b>#{name}</b></li>"
     else
-      "<li>#{icon_tag('bullet_blue')}#{link_to(name, path, html_options)}</b></li>"
+      "<li>#{icon_tag('bullet_blue')}#{link_to(name, path, html_options)}</li>"
     end
   end
 
