@@ -82,7 +82,7 @@ describe PlatformController, "#login(パスワードでのログイン)" do
         end
         it 'current_userが設定されること' do
           login
-          controller.send!(:current_user).should == @user
+          controller.send(:current_user).should == @user
         end
         it "session[:request_token]の値が保持されていること" do
           login

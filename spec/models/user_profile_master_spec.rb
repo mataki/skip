@@ -22,7 +22,7 @@ describe UserProfileMaster, 'validation' do
         @user_profile_master = create_user_profile_master(:user_profile_master_category_id => create_user_profile_master_category.id)
       end
       it 'validationに成功すること' do
-        @user_profile_master.send!(:validates_presence_of_category).should be_true
+        @user_profile_master.send(:validates_presence_of_category).should be_true
       end
     end
     describe 'user_profile_master_categoryに対象のカテゴリが存在しない場合' do
@@ -30,11 +30,11 @@ describe UserProfileMaster, 'validation' do
         @user_profile_master = create_user_profile_master
       end
       it 'validationに失敗すること' do
-        @user_profile_master.send!(:validates_presence_of_category).should be_false
+        @user_profile_master.send(:validates_presence_of_category).should be_false
       end
       it 'エラーメッセージが設定されること' do
         lambda do
-          @user_profile_master.send!(:validates_presence_of_category)
+          @user_profile_master.send(:validates_presence_of_category)
         end.should change(@user_profile_master.errors, :size).from(0).to(1)
       end
     end
@@ -347,28 +347,28 @@ describe UserProfileMaster::YearSelectProcesser do
       Time.stub!(:now).and_return(Time.local(2008))
     end
     describe "引数が空の場合" do
-      it { @processer.send!(:start_year_and_end_year, '').should == ['2008', '2008'] }
+      it { @processer.send(:start_year_and_end_year, '').should == ['2008', '2008'] }
     end
     describe "引数が[2006]の場合" do
-      it { @processer.send!(:start_year_and_end_year, '2006').should == ['2006', '2008'] }
+      it { @processer.send(:start_year_and_end_year, '2006').should == ['2006', '2008'] }
     end
     describe "引数が[2006-]の場合" do
-      it { @processer.send!(:start_year_and_end_year, '2006-').should == ['2006', '2008'] }
+      it { @processer.send(:start_year_and_end_year, '2006-').should == ['2006', '2008'] }
     end
     describe "引数が[2009-]の場合" do
-      it { @processer.send!(:start_year_and_end_year, '2009-').should == ['2009', '2008'] }
+      it { @processer.send(:start_year_and_end_year, '2009-').should == ['2009', '2008'] }
     end
     describe "引数が[-2006]の場合" do
-      it { @processer.send!(:start_year_and_end_year, '-2006').should == ['2008', '2006'] }
+      it { @processer.send(:start_year_and_end_year, '-2006').should == ['2008', '2006'] }
     end
     describe "引数が[-2009]の場合" do
-      it { @processer.send!(:start_year_and_end_year, '-2009').should == ['2008', '2009'] }
+      it { @processer.send(:start_year_and_end_year, '-2009').should == ['2008', '2009'] }
     end
     describe "引数が[2006-2008]の場合" do
-      it { @processer.send!(:start_year_and_end_year, '2006-2008').should == ['2006', '2008'] }
+      it { @processer.send(:start_year_and_end_year, '2006-2008').should == ['2006', '2008'] }
     end
     describe "引数が[2009-2006]の場合" do
-      it { @processer.send!(:start_year_and_end_year, '2009-2006').should == ['2009', '2006'] }
+      it { @processer.send(:start_year_and_end_year, '2009-2006').should == ['2009', '2006'] }
     end
   end
 end

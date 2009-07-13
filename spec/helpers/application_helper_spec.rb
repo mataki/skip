@@ -155,11 +155,11 @@ describe ApplicationHelper, '#parse_permalink' do
   describe '[file:foo\nbar]のように共有ファイルへのリンク中に改行コードを含む場合' do
     it 'Routing Errorとならないこと' do
       lambda do
-        helper.send!(:parse_permalink, "[file:foo\r\nbar]", 'uid:alice')
+        helper.send(:parse_permalink, "[file:foo\r\nbar]", 'uid:alice')
       end.should_not raise_error
     end
     it '改行コードが取り除かれること' do
-      helper.send!(:parse_permalink, "[file:foo\r\nbar]", 'uid:alice').should == "<a href=\"http://test.host/user/alice/files/foobar\">file:foo\r\nbar</a>"
+      helper.send(:parse_permalink, "[file:foo\r\nbar]", 'uid:alice').should == "<a href=\"http://test.host/user/alice/files/foobar\">file:foo\r\nbar</a>"
     end
   end
 end
@@ -174,7 +174,7 @@ describe ApplicationHelper, '#link_to_bookmark_url' do
       @bookmark.url = '/page/99'
     end
     it '記事へのリンクとなること' do
-      helper.send!(:link_to_bookmark_url, @bookmark).include?('report_link').should be_true
+      helper.send(:link_to_bookmark_url, @bookmark).include?('report_link').should be_true
     end
   end
   describe '対象のブックマークがユーザの場合' do
@@ -182,7 +182,7 @@ describe ApplicationHelper, '#link_to_bookmark_url' do
       @bookmark.url = '/user/99'
     end
     it 'ユーザへのリンクとなること' do
-      helper.send!(:link_to_bookmark_url, @bookmark).include?('user').should be_true
+      helper.send(:link_to_bookmark_url, @bookmark).include?('user').should be_true
     end
   end
   describe '対象のブックマークがwwwの場合' do
@@ -190,7 +190,7 @@ describe ApplicationHelper, '#link_to_bookmark_url' do
       @bookmark.url = 'http://localhost'
     end
     it 'wwwへのリンクとなること' do
-      helper.send!(:link_to_bookmark_url, @bookmark).include?('world_link').should be_true
+      helper.send(:link_to_bookmark_url, @bookmark).include?('world_link').should be_true
     end
   end
   describe 'titleが指定されている場合' do
@@ -198,7 +198,7 @@ describe ApplicationHelper, '#link_to_bookmark_url' do
       @bookmark.url = 'http://localhost'
     end
     it '指定されたタイトルになること' do
-      helper.send!(:link_to_bookmark_url, @bookmark, 'skip_user_group').include?('skip_user_group').should be_true
+      helper.send(:link_to_bookmark_url, @bookmark, 'skip_user_group').include?('skip_user_group').should be_true
     end
   end
   describe 'titleが指定されていない場合' do
@@ -207,7 +207,7 @@ describe ApplicationHelper, '#link_to_bookmark_url' do
       @bookmark.title = 'world_wide_web'
     end
     it '登録済みのタイトルになること' do
-      helper.send!(:link_to_bookmark_url, @bookmark).include?('world_wide_web').should be_true
+      helper.send(:link_to_bookmark_url, @bookmark).include?('world_wide_web').should be_true
     end
   end
 end

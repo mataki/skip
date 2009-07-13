@@ -470,7 +470,7 @@ describe ShareFile::UserOwner do
         @share_file.stub!(:publication_type).and_return('public')
       end
       it '公開範囲である(trueを返す)こと' do
-        @owner.send!(:publication_range?).should be_true
+        @owner.send(:publication_range?).should be_true
       end
     end
     describe '自分だけの場合' do
@@ -478,7 +478,7 @@ describe ShareFile::UserOwner do
         @share_file.stub!(:publication_type).and_return('private')
       end
       it '非公開である(falseを返す)こと' do
-        @owner.send!(:publication_range?).should be_false
+        @owner.send(:publication_range?).should be_false
       end
     end
     describe '直接指定の場合' do
@@ -490,7 +490,7 @@ describe ShareFile::UserOwner do
           @share_file.stub!(:publication_symbols_value).and_return("uid:#{@target_user_uid},uid:hoge,gid:fuga")
         end
         it '公開範囲である(trueを返す)こと' do
-          @owner.send!(:publication_range?).should be_true
+          @owner.send(:publication_range?).should be_true
         end
       end
       describe '対象ユーザが直接指定されていない場合' do
@@ -500,7 +500,7 @@ describe ShareFile::UserOwner do
             @user.should_receive(:group_symbols).and_return(['gid:skip_dev'])
           end
           it '公開である(trueを返す)こと' do
-            @owner.send!(:publication_range?).should be_true
+            @owner.send(:publication_range?).should be_true
           end
         end
         describe '対象ユーザ所属グループが直接指定されていない場合' do
@@ -509,7 +509,7 @@ describe ShareFile::UserOwner do
             @user.should_receive(:group_symbols).and_return(['gid:skip_dev'])
           end
           it '非公開である(falseを返す)こと' do
-            @owner.send!(:publication_range?).should be_false
+            @owner.send(:publication_range?).should be_false
           end
         end
       end
@@ -642,7 +642,7 @@ describe ShareFile::GroupOwner do
         @share_file.stub!(:publication_type).and_return('public')
       end
       it '公開範囲である(trueを返す)こと' do
-        @owner.send!(:publication_range?).should be_true
+        @owner.send(:publication_range?).should be_true
       end
     end
     describe '参加者のみの場合' do
@@ -651,12 +651,12 @@ describe ShareFile::GroupOwner do
       end
       describe '参加しているグループの場合' do
         it '公開範囲である(trueを返す)こと' do
-          @owner.send!(:publication_range?, true).should be_true
+          @owner.send(:publication_range?, true).should be_true
         end
       end
       describe '参加していないグループの場合' do
         it '非公開である(falseを返す)こと' do
-          @owner.send!(:publication_range?, false).should be_false
+          @owner.send(:publication_range?, false).should be_false
         end
       end
     end
@@ -671,7 +671,7 @@ describe ShareFile::GroupOwner do
           @share_file.stub!(:publication_symbols_value).and_return("uid:#{@target_user_uid},uid:hoge,gid:fuga")
         end
         it '公開範囲である(trueを返す)こと' do
-          @owner.send!(:publication_range?).should be_true
+          @owner.send(:publication_range?).should be_true
         end
       end
       describe '対象ユーザが直接指定されていない場合' do
@@ -681,7 +681,7 @@ describe ShareFile::GroupOwner do
             @user.should_receive(:group_symbols).and_return(['gid:skip_dev'])
           end
           it '公開である(trueを返す)こと' do
-            @owner.send!(:publication_range?).should be_true
+            @owner.send(:publication_range?).should be_true
           end
         end
         describe '対象ユーザ所属グループが直接指定されていない場合' do
@@ -690,7 +690,7 @@ describe ShareFile::GroupOwner do
             @user.should_receive(:group_symbols).and_return(['gid:skip_dev'])
           end
           it '非公開である(falseを返す)こと' do
-            @owner.send!(:publication_range?).should be_false
+            @owner.send(:publication_range?).should be_false
           end
         end
       end

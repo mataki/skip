@@ -160,7 +160,7 @@ describe BatchMakeCache, '#user_body_lines' do
       Admin::Setting.should_receive(:hide_email).and_return(false)
     end
     it 'メールアドレスが戻り値に含まれること' do
-      @bmc.send!(:user_body_lines, @user).should == ['uid', 'name', 'code', 'email', 'section', 'value']
+      @bmc.send(:user_body_lines, @user).should == ['uid', 'name', 'code', 'email', 'section', 'value']
     end
   end
   describe 'メールアドレス非公開設定の場合' do
@@ -168,7 +168,7 @@ describe BatchMakeCache, '#user_body_lines' do
       Admin::Setting.should_receive(:hide_email).and_return(true)
     end
     it 'メールアドレスが戻り値に含まれないこと' do
-      @bmc.send!(:user_body_lines, @user).should == ['uid', 'name', 'code', 'section', 'value']
+      @bmc.send(:user_body_lines, @user).should == ['uid', 'name', 'code', 'section', 'value']
     end
   end
 end

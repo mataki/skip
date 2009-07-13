@@ -1163,7 +1163,7 @@ describe User, 'password_required?' do
             @user.crypted_password = ''
           end
           it '必要(true)と判定されること' do
-            @user.send!(:password_required?).should be_true
+            @user.send(:password_required?).should be_true
           end
         end
         describe 'crypted_passwordが空ではない場合' do
@@ -1171,7 +1171,7 @@ describe User, 'password_required?' do
             @user.crypted_password = 'password'
           end
           it '必要ではない(false)と判定されること' do
-            @user.send!(:password_required?).should be_false
+            @user.send(:password_required?).should be_false
           end
         end
       end
@@ -1180,7 +1180,7 @@ describe User, 'password_required?' do
           @user.status = 'UNUSED'
         end
         it '必要ではない(false)と判定されること' do
-          @user.send!(:password_required?).should be_false
+          @user.send(:password_required?).should be_false
         end
       end
     end
@@ -1189,7 +1189,7 @@ describe User, 'password_required?' do
         @user.password = 'Password1'
       end
       it '必要(true)と判定されること' do
-        @user.send!(:password_required?).should be_true
+        @user.send(:password_required?).should be_true
       end
     end
   end
@@ -1198,7 +1198,7 @@ describe User, 'password_required?' do
       SkipEmbedded::InitialSettings.stub!('[]').with('login_mode').and_return('rp')
     end
     it '必要ではない(false)と判定されること' do
-      @user.send!(:password_required?).should be_false
+      @user.send(:password_required?).should be_false
     end
   end
 end
@@ -1218,7 +1218,7 @@ describe User, '.find_by_code_or_email_with_key_phrase' do
         @key_phrase = 'key_phrase'
       end
       it 'ログインIDまたはemailで検索した結果が返ること' do
-        User.send!(:find_by_code_or_email_with_key_phrase, 'code_or_email', @key_phrase).should == @user
+        User.send(:find_by_code_or_email_with_key_phrase, 'code_or_email', @key_phrase).should == @user
       end
     end
     describe 'ログインキーフレーズが設定値と一致しない場合' do
@@ -1226,7 +1226,7 @@ describe User, '.find_by_code_or_email_with_key_phrase' do
         @key_phrase = 'invalid_key_phrase'
       end
       it 'nilが返ること' do
-        User.send!(:find_by_code_or_email_with_key_phrase, 'code_or_email', @key_phrase).should be_nil
+        User.send(:find_by_code_or_email_with_key_phrase, 'code_or_email', @key_phrase).should be_nil
       end
     end
   end
@@ -1235,7 +1235,7 @@ describe User, '.find_by_code_or_email_with_key_phrase' do
       Admin::Setting.should_receive(:enable_login_keyphrase).and_return(false)
     end
     it 'ログインIDまたはemailで検索した結果が返ること' do
-      User.send!(:find_by_code_or_email_with_key_phrase, 'code_or_email', @key_phrase).should == @user
+      User.send(:find_by_code_or_email_with_key_phrase, 'code_or_email', @key_phrase).should == @user
     end
   end
 end
@@ -1247,7 +1247,7 @@ describe User, '.find_by_code_or_email' do
       User.should_receive(:find_by_code).and_return(@user)
     end
     it '見つかったユーザが返ること' do
-      User.send!(:find_by_code_or_email, 'login_id').should == @user
+      User.send(:find_by_code_or_email, 'login_id').should == @user
     end
   end
   describe 'ログインIDに一致するユーザが見つからない場合' do
@@ -1260,7 +1260,7 @@ describe User, '.find_by_code_or_email' do
         User.should_receive(:find_by_email).and_return(@user)
       end
       it '見つかったユーザが返ること' do
-        User.send!(:find_by_code_or_email, 'skip@example.org').should == @user
+        User.send(:find_by_code_or_email, 'skip@example.org').should == @user
       end
     end
     describe 'メールアドレスに一致するユーザが見つからない場合' do
@@ -1268,7 +1268,7 @@ describe User, '.find_by_code_or_email' do
         User.should_receive(:find_by_email).and_return(nil)
       end
       it 'nilが返ること' do
-        User.send!(:find_by_code_or_email, 'skip@example.org').should be_nil
+        User.send(:find_by_code_or_email, 'skip@example.org').should be_nil
       end
     end
   end
@@ -1279,7 +1279,7 @@ describe User, '.auth_successed' do
     @user = create_user
   end
   it "検索されたユーザが返ること" do
-    User.send!(:auth_successed, @user).should == @user
+    User.send(:auth_successed, @user).should == @user
   end
   describe 'ユーザがロックされている場合' do
     before do
@@ -1287,12 +1287,12 @@ describe User, '.auth_successed' do
     end
     it 'last_authenticated_atが変化しないこと' do
       lambda do
-        User.send!(:auth_successed, @user)
+        User.send(:auth_successed, @user)
       end.should_not change(@user, :last_authenticated_at)
     end
     it 'ログイン試行回数が変化しないこと' do
       lambda do
-        User.send!(:auth_successed, @user)
+        User.send(:auth_successed, @user)
       end.should_not change(@user, :trial_num)
     end
   end
@@ -1304,12 +1304,12 @@ describe User, '.auth_successed' do
       time = Time.now
       Time.stub!(:now).and_return(time)
       lambda do
-        User.send!(:auth_successed, @user)
+        User.send(:auth_successed, @user)
       end.should change(@user, :last_authenticated_at).to(time)
     end
     it 'ログイン試行回数が0になること' do
       lambda do
-        User.send!(:auth_successed, @user)
+        User.send(:auth_successed, @user)
       end.should change(@user, :trial_num).to(0)
     end
   end
@@ -1320,7 +1320,7 @@ describe User, '.auth_failed' do
     @user = create_user
   end
   it 'nilが返ること' do
-    User.send!(:auth_failed, @user).should be_nil
+    User.send(:auth_failed, @user).should be_nil
   end
   describe 'ユーザがロックされていない場合' do
     before do
@@ -1337,7 +1337,7 @@ describe User, '.auth_failed' do
         end
         it 'ログイン試行回数が1増加すること' do
           lambda do
-            User.send!(:auth_failed, @user)
+            User.send(:auth_failed, @user)
           end.should change(@user, :trial_num).to(3)
         end
       end
@@ -1347,7 +1347,7 @@ describe User, '.auth_failed' do
         end
         it 'ログイン試行回数が変化しないこと' do
           lambda do
-            User.send!(:auth_failed, @user)
+            User.send(:auth_failed, @user)
           end.should_not change(@user, :trial_num)
         end
       end
@@ -1363,13 +1363,13 @@ describe User, '.auth_failed' do
         end
         it 'ロックされること' do
           lambda do
-            User.send!(:auth_failed, @user)
+            User.send(:auth_failed, @user)
           end.should change(@user, :locked).to(true)
         end
         it 'ロックした旨のログが出力されること' do
           @user.should_receive(:to_s_log).with('[User Locked]').and_return('user locked log')
           @user.logger.should_receive(:info).with('user locked log')
-          User.send!(:auth_failed, @user)
+          User.send(:auth_failed, @user)
         end
       end
       describe 'ユーザロック機能が無効な場合' do
@@ -1378,13 +1378,13 @@ describe User, '.auth_failed' do
         end
         it 'ロック状態が変化しないこと' do
           lambda do
-            User.send!(:auth_failed, @user)
+            User.send(:auth_failed, @user)
           end.should_not change(@user, :locked)
         end
         it 'ロックした旨のログが出力されないこと' do
           @user.stub!(:to_s_log).with('[User Locked]').and_return('user locked log')
           @user.logger.should_not_receive(:info).with('user locked log')
-          User.send!(:auth_failed, @user)
+          User.send(:auth_failed, @user)
         end
       end
     end
@@ -1395,18 +1395,18 @@ describe User, '.auth_failed' do
     end
     it 'ログイン試行回数が変化しないこと' do
       lambda do
-        User.send!(:auth_failed, @user)
+        User.send(:auth_failed, @user)
       end.should_not change(@user, :trial_num)
     end
     it 'ロック状態が変化しないこと' do
       lambda do
-        User.send!(:auth_failed, @user)
+        User.send(:auth_failed, @user)
       end.should_not change(@user, :locked)
     end
     it 'ロックした旨のログが出力されないこと' do
       @user.stub!(:to_s_log).with('[User Locked]').and_return('user locked log')
       @user.logger.should_not_receive(:info).with('user locked log')
-      User.send!(:auth_failed, @user)
+      User.send(:auth_failed, @user)
     end
   end
 end
