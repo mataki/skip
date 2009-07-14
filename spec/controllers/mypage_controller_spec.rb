@@ -578,6 +578,7 @@ describe MypageController, 'mypage > manage(管理) 関連' do
       describe "認証が失敗した場合" do
         before do
           @result.stub!(:successful?).and_return(false)
+          stub_flash_now
           get :apply_ident_url, :openid_url => @openid_url
         end
         it "flashにエラーが設定されていること" do
