@@ -467,7 +467,7 @@ describe Admin::UsersController, 'POST /issue_password_reset_code' do
       Admin::User.should_receive(:find).and_return(@user)
     end
     it '未使用ユーザのパスワード再設定コードは発行できない旨のメッセージが設定されること' do
-      post :issue_password_reset_code
+      post :issue_password_reset_code, :id => 1
       flash[:error].should_not be_nil
       response.should be_redirect
     end

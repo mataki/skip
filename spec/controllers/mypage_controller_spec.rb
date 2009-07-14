@@ -590,6 +590,7 @@ describe MypageController, 'mypage > manage(管理) 関連' do
     end
     describe 'openidのパラメータが無い場合' do
       before do
+        stub_flash_now
         get :apply_ident_url
       end
       it "flashにエラーが設定されていること" do
