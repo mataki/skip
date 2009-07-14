@@ -23,7 +23,7 @@ class PlatformController < ApplicationController
   protect_from_forgery :except => [:login]
 
   def index
-    response.headers['X-XRDS-Location'] = formatted_server_url(:format => :xrds, :protocol => scheme)
+    response.headers['X-XRDS-Location'] = server_url(:format => :xrds, :protocol => scheme)
     img_files = Dir.glob(File.join(RAILS_ROOT, "public", "custom", "images", "titles", "background*.{jpg,png,jpeg}"))
     @img_name = File.join("titles", File.basename(img_files[rand(img_files.size)]))
   end
