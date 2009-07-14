@@ -40,6 +40,7 @@ describe GroupsController do
         @pages = mock('pages')
         @groups = mock('groups', :size => 0)
         controller.should_receive(:paginate).and_return([@pages, @groups])
+        stub_flash_now
         get :index
       end
 

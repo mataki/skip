@@ -144,6 +144,7 @@ describe ShareFileController, "POST #create" do
             @share_file.should_receive(:save).and_return(false)
           end
           it 'flashエラーメッセージが設定されること' do
+            stub_flash_now
             post :create, :file => { '1' => @file1 }
             flash[:warn].should == 'Failed to upload file(s).[Successes:0 Failure:1]'
           end
@@ -205,6 +206,7 @@ describe ShareFileController, "POST #create" do
             @share_file.should_receive(:save).twice.and_return(false)
           end
           it 'flashエラーメッセージが設定されること' do
+            stub_flash_now
             post :create, :file => { '1' => @file1, '2' => @file2 }
             flash[:warn].should == 'Failed to upload file(s).[Successes:0 Failures:2]'
           end

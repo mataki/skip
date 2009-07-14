@@ -65,6 +65,7 @@ describe Admin::ImagesController, 'POST /update' do
     describe '対象ファイルに対する権限がない場合' do
       before do
         controller.should_receive(:open).and_raise(Errno::EACCES)
+        stub_flash_now
         post :update, :target => 'title_logo', :title_logo => mock('upload_file')
       end
       it { flash[:error].should_not be_nil }
@@ -74,6 +75,7 @@ describe Admin::ImagesController, 'POST /update' do
     describe 'その他エラーが発生する場合' do
       before do
         controller.should_receive(:open).and_raise(Errno::EBUSY)
+        stub_flash_now
         post :update, :target => 'title_logo', :title_logo => mock('upload_file')
       end
       it { flash[:error].should_not be_nil }

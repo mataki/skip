@@ -226,5 +226,11 @@ def identifier(user)
   "http://test.host/id/#{user.code}"
 end
 
+# --- flash.nowがRails 2.3 + RSpec 1.2.7でテストをパスしない問題に対する対応
+# https://rspec.lighthouseapp.com/projects/5645/tickets/98-11834-fake-controller-flash-object
+def stub_flash_now
+  controller.instance_eval{flash.stub!(:sweep)}
+end
+
 ######skip関連のテストで必要
 class ApplicationController;skip_before_filter :sso; end

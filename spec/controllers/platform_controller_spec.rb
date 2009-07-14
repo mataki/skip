@@ -313,6 +313,7 @@ describe PlatformController, 'POST /forgot_password' do
     end
     describe 'メールアドレスの入力がない場合' do
       it 'メールアドレスの入力は必須である旨のメッセージを表示する' do
+        stub_flash_now
         post :forgot_password, :email => ''
         flash[:error].should == 'Email is mandatory.'
         response.should be_success
@@ -353,6 +354,7 @@ describe PlatformController, 'POST /forgot_password' do
           @user.stub!(:active?).and_return(false)
         end
         it "未登録ユーザのメールアドレスである旨のメッセージが設定されること" do
+          stub_flash_now
           post :forgot_password, :email => @email
           flash[:error].should == "User has entered email address #{@email} is not in use. Please start with the site."
           response.should render_template('forgot_password')
@@ -364,6 +366,7 @@ describe PlatformController, 'POST /forgot_password' do
         User.should_receive(:find_by_email).and_return(nil)
       end
       it 'メールアドレスが未登録である旨のメッセージが設定されること' do
+        stub_flash_now
         post :forgot_password, :email => 'forgot_password@example.com'
         flash[:error].should_not be_nil
         response.should be_success
@@ -455,6 +458,7 @@ describe PlatformController, 'POST /reset_password' do
         before do
           @user.should_receive(:save).and_return(false)
           User.should_receive(:find_by_reset_auth_token).and_return(@user)
+          stub_flash_now
           post_reset_password
         end
         it { flash[:error].should_not be_nil }
@@ -495,6 +499,7 @@ describe PlatformController, 'POST /activate' do
   before do
     User.stub!(:find_by_email)
     controller.stub!(:enable_activate?).and_return(true)
+    stub_flash_now
   end
   describe 'メールアドレスの入力がない場合' do
     it 'メールアドレスの入力は必須である旨のメッセージを表示する' do
@@ -761,6 +766,7 @@ describe PlatformController, "POST /forgot_openid" do
           response.should render_template('forgot_openid')
         end
         it "flashメッセージが登録されていること" do
+          stub_flash_now
           post_forgot_openid
           flash[:error].should == "入力された#{@params_email}のユーザは、利用開始されていません。利用開始してください。"
         end
@@ -772,6 +778,7 @@ describe PlatformController, "POST /forgot_openid" do
         response.should render_template('forgot_openid')
       end
       it "flashメッセージが登録されていること" do
+        stub_flash_now
         post_forgot_openid
         flash[:error].should == "入力された#{@params_email}というメールアドレスは登録されていません。"
       end
@@ -859,6 +866,7 @@ describe PlatformController, "GET /reset_openid" do
           it "エラーとなること" do
             @result = mock('result', :successful? => false)
             controller.should_receive(:authenticate_with_open_id).and_yield(@result, @identity_url)
+            stub_flash_now
             get_reset_openid({:open_id_complete => "1"})
             response.should render_template('reset_openid')
             flash[:error].should_not be_nil
