@@ -85,7 +85,7 @@ describe UserProfileMaster::InputTypeProcesser do
   describe "#to_edit_html" do
     it "正しいHTMLが生成されていること" do
       @master.id = 1000
-      @processer.to_edit_html(@value).should == "<input id=\"profile_value[1000]\" name=\"profile_value[1000]\" type=\"text\" value=\"value\" />"
+      @processer.to_edit_html(@value).should == "<input id=\"profile_value_1000\" name=\"profile_value[1000]\" type=\"text\" value=\"value\" />"
     end
   end
   describe "#validate" do

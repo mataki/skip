@@ -952,11 +952,11 @@ describe User, "#openid_identifier" do
     @user.openid_identifier.should == "http://test.host/id/a_user"
   end
   it "relative_url_rootが設定されている場合 反映されること" do
-    ActionController::AbstractRequest.relative_url_root = "/skip"
+    ActionController::Base.relative_url_root = "/skip"
     @user.openid_identifier.should == "http://test.host/skip/id/a_user"
   end
   after do
-    ActionController::AbstractRequest.relative_url_root = nil
+    ActionController::Base.relative_url_root = nil
   end
 end
 

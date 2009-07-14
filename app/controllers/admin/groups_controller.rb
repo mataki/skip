@@ -16,11 +16,6 @@
 class Admin::GroupsController < Admin::ApplicationController
   include Admin::AdminModule::AdminRootModule
 
-  undef new
-  undef create
-  undef edit
-  undef update
-
   def destroy
     @group = Admin::Group.find(params[:id])
     @group.logical_destroy

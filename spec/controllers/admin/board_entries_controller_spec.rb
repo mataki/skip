@@ -1,4 +1,3 @@
-
 # SKIP(Social Knowledge & Innovation Platform)
 # Copyright (C) 2008-2009 TIS Inc.
 #
@@ -16,46 +15,3 @@
 
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe Admin::BoardEntriesController, 'GET /new' do
-  before do
-    admin_login
-  end
-  it 'UnknownActionになること' do
-    lambda do
-      get :new
-    end.should raise_error(ActionController::UnknownAction)
-  end
-end
-
-describe Admin::BoardEntriesController, 'POST /create' do
-  before do
-    admin_login
-  end
-  it 'UnknownActionになること' do
-    lambda do
-      post :create
-    end.should raise_error(ActionController::UnknownAction)
-  end
-end
-
-describe Admin::BoardEntriesController, 'GET /edit' do
-  before do
-    admin_login
-  end
-  it 'UnknownActionになること' do
-    lambda do
-      get :edit
-    end.should raise_error(ActionController::UnknownAction)
-  end
-end
-
-describe Admin::BoardEntriesController, 'PUT /update' do
-  before do
-    admin_login
-  end
-  it 'UnknownActionになること' do
-    lambda do
-      put :update
-    end.should raise_error(ActionController::UnknownAction)
-  end
-end
