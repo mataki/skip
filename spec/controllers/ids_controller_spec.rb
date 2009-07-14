@@ -31,7 +31,11 @@ describe IdsController, "#show" do
     describe "xrdsフォーマットの場合" do
       it "xrdsを返すこと" do
         get :show, :user => "111111", :format => "xrds"
-        response.headers["type"].should == "application/xrds+xml; charset=utf-8"
+        response.headers["Content-Type"].should == "application/xrds+xml; charset=utf-8"
+      end
+      it "show.xrds.builderをレンダリングすること" do
+        get :show, :user => "111111", :format => "xrds"
+        response.should render_template("show.xrds.builder")
       end
     end
   end
