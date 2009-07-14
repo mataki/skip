@@ -1,6 +1,6 @@
 Given /^"(.*)"ユーザのプロフィールページに"(.*)"回アクセスする$/ do |user, num|
   num.to_i.times do
-    visit url_for(:controller => "user", :action => "show", :uid => user)
+    Given %!"#{user}のプロフィールページ"にアクセスする!
   end
 end
 
@@ -22,10 +22,6 @@ Given /^ランキングの"(.*)"位が"(.*)"つめのブログであること$/ 
   Nokogiri::HTML(response.body).search("table.ranking_square tbody tr:nth(#{rank}) td.link_text a").text.should == "test#{num}"
 end
 
-Given /^"(.*)"ランキングの総合を表示する$/ do |category|
-  visit url_for(:controller => "rankings", :action => "data", :content_type => category, :year => "", :month => "")
-end
-
 Given /^"(.*)"ランキングの"(.*)"分を表示する$/ do |category, date|
   year, month = date.split("-")
   visit ranking_data_path(:content_type => category, :year => year, :month => month)
@@ -41,7 +37,7 @@ Given /^"(.*)"でログインする$/ do |user_name|
       Given "ログアウトする"
       @login_user = perform_login(user_name)
     else
-      Given "マイページを表示する"
+      Given %!"マイページ"にアクセスする!
     end
   else
     @login_user = perform_login(user_name)
@@ -50,7 +46,7 @@ end
 
 def perform_login(user_name)
   user = User.find_by_name(user_name)
-  Given "ログインページを表示している"
+  Given %!"ログインページ"にアクセスする!
   Given %!"#{"ログインID"}"に"#{user.email}"と入力する!
   Given %!"#{"パスワード"}"に"#{"Password1"}"と入力する!
   Given %!"#{"ログイン"}"ボタンをクリックする!

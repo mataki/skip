@@ -22,11 +22,3 @@ Given /^以下のブックマークのリストを登録している:$/ do |book
     Given %!URLが"#{hash[:url]}"タイトルが"#{hash[:title]}"コメントが"#{hash[:comment]}"のブックマークを登録する!
   end
 end
-
-Given /^マイページを表示する$/ do
-  visit root_path
-end
-
-Given /^全体からのブックマーク検索画面を表示する$/ do
-  visit url_for(:controller => 'bookmarks')
-end
