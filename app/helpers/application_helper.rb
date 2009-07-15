@@ -77,7 +77,7 @@ module ApplicationHelper
     output_text << icon_tag('page') if options[:image_on]
 
     if limit = options[:truncate]
-      title = truncate(board_entry.title, limit)
+      title = truncate(board_entry.title, :length => limit)
     else
       title = board_entry.title
     end
@@ -395,7 +395,7 @@ private
       url =  relative_url_root + url
       link_to "#{icon_tag('user')} #{h title}", bookmark.escaped_url, :title => title
     else
-      link_to "#{icon_tag('world_link')} #{h truncate(title, 115)}", bookmark.escaped_url, :title => title
+      link_to "#{icon_tag('world_link')} #{h truncate(title, :length => 115)}", bookmark.escaped_url, :title => title
     end
   end
 
