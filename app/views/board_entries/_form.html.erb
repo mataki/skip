@@ -17,7 +17,6 @@ div.input_line textarea {
 <%= template_error_messages_for 'board_entry' %>
 
 <%= hidden_field_tag 'entry_type', h(params[:entry_type]) %>
-<%= hidden_field_tag 'symbol', h(params[:symbol]) %>
 
 <%= hidden_field 'board_entry', 'entry_type' %>
 <%= hidden_field 'board_entry', 'symbol' %>
@@ -74,7 +73,7 @@ div.input_line textarea {
     <%= radio_button_tag("publication_type", "protected", params[:publication_type] == "protected", :id=>"publication_type_protected") %><%= label_tag("publication_type_protected", _('Specify Directly')) %>
 
     <div id="editor_symbols_space" style="display: none; margin-top: 5px;">
-      <%= check_box_tag 'editor_symbol', value = params[:symbol], params[:editor_symbol] -%><%= label_tag :editor_symbol, _('Edit by Members Allowed') %>
+      <%= check_box_tag 'editor_symbol', @board_entry.symbol, params[:editor_symbol] %><%= label_tag :editor_symbol, _('Edit by Members Allowed') %>
     </div>
     <%= render :partial => "shared/symbol_autocomplete_field", :locals => {:publication_symbols_value => params[:publication_symbols_value], :editor_symbols_value => params[:editor_symbols_value], :edit_checkbox => true } %>
     </td></tr></table>
