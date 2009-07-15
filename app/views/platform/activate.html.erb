@@ -1,6 +1,6 @@
 <div class="content">
   <h3><%= _('Signup') %></h3>
-  <p><%= _('以下で指定されたメールアドレスにユーザ登録のためのURLを送信します。') %></p>
+  <p><%= _('Send the URL for user registration to the email addresss specified below.') %></p>
   <% form_tag :action => :activate do -%>
   <%= render :partial => 'mail_form' %>
   <% end -%>

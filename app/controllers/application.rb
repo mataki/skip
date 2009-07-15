@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   rescue_from ActionController::InvalidAuthenticityToken do |exception|
     if request.env['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest'
-      render :text => _('不正なセッションです。再度ログインし直して下さい。'), :status => :bad_request
+      render :text => _('Invalid session. You need to log in again.'), :status => :bad_request
     else
       redirect_to_with_deny_auth
     end
@@ -132,7 +132,7 @@ protected
   def login_required
     if current_user.nil?
       if request.env['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest'
-        render :text => _('ログインが必要です。ログインし直して下さい。'), :status => :bad_request
+        render :text => _('Session expired. You need to log in again.'), :status => :bad_request
       else
         if request.url == root_url
           redirect_to :controller => '/platform', :action => :index
@@ -307,7 +307,7 @@ protected
   def sso
     if login_mode?(:fixed_rp) and !logged_in?
       if request.env['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest'
-        render :text => _('ログインが必要です。ログインし直して下さい。'), :status => :bad_request
+        render :text => _('Session expired. You need to log in again.'), :status => :bad_request
       else
         redirect_to :controller => '/platform', :action => :login, :openid_url => SkipEmbedded::InitialSettings['fixed_op_url'], :return_to => URI.encode(request.url)
       end

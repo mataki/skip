@@ -21,7 +21,7 @@ class UserMailer < ActionMailer::Base
     else
       @recipients = recipient
     end
-    @subject    = UserMailer.base64(_("[%{title}] %{user}さんから連絡がきています") % {:title => Admin::Setting.abbr_app_title, :user => user_name})
+    @subject    = UserMailer.base64(_("[%{title}] You have a message from %{user}.") % {:title => Admin::Setting.abbr_app_title, :user => user_name})
     @from       = from
     @send_on    = Time.now
     @headers    = {}
@@ -39,7 +39,7 @@ class UserMailer < ActionMailer::Base
 
   def sent_signup_confirm(recipient, login_id, login_url)
     @recipients = recipient
-    @subject    = UserMailer.base64(_("[%s] ユーザ登録が完了しました") % Admin::Setting.abbr_app_title)
+    @subject    = UserMailer.base64(_("[%s] User registration completed") % Admin::Setting.abbr_app_title)
     @from       = from
     @send_on    = Time.now
     @headers    = {}
@@ -48,7 +48,7 @@ class UserMailer < ActionMailer::Base
 
   def sent_apply_email_confirm(recipient, confirm_url)
     @recipients = recipient
-    @subject    = UserMailer.base64(_("[%s] メールアドレス変更の確認メールです") % Admin::Setting.abbr_app_title)
+    @subject    = UserMailer.base64(_("[%s] Confirmation for changing email address") % Admin::Setting.abbr_app_title)
     @from       = from
     @send_on    = Time.now
     @headers    = {}
@@ -57,7 +57,7 @@ class UserMailer < ActionMailer::Base
 
   def sent_forgot_password(recipient, reset_password_url)
     @recipients = recipient
-    @subject    = UserMailer.base64(_("[%s] パスワード再設定のメールです") % Admin::Setting.abbr_app_title)
+    @subject    = UserMailer.base64(_("[%s] Resetting your password") % Admin::Setting.abbr_app_title)
     @from       = from
     @send_on    = Time.now
     @headers    = {}
@@ -66,7 +66,7 @@ class UserMailer < ActionMailer::Base
 
   def sent_forgot_openid(recipient, reset_openid_url)
     @recipients = recipient
-    @subject    = UserMailer.base64(_("[%s] OpenIDの再設定のメールです") % Admin::Setting.abbr_app_title)
+    @subject    = UserMailer.base64(_("[%s] Resetting your OpenID") % Admin::Setting.abbr_app_title)
     @from       = from
     @send_on    = Time.now
     @headers    = {}
@@ -75,7 +75,7 @@ class UserMailer < ActionMailer::Base
 
   def sent_activate(recipient, signup_url)
     @recipients = recipient
-    @subject    = UserMailer.base64("[#{Admin::Setting.abbr_app_title}] " + _('利用開始確認メールです'))
+    @subject    = UserMailer.base64("[#{Admin::Setting.abbr_app_title}] " + _('Activate your account and start using'))
     @from       = from
     @send_on    = Time.now
     @headers    = {}
@@ -84,7 +84,7 @@ class UserMailer < ActionMailer::Base
 
   def sent_cleaning_notification(recipient)
     @recipients = recipient
-    @subject    = UserMailer.base64("[#{Admin::Setting.abbr_app_title}] " + _('ユーザのクリーニングは行ってますか?'))
+    @subject    = UserMailer.base64("[#{Admin::Setting.abbr_app_title}] " + _('Remember to clean up the user data periodically'))
     @from       = from
     @send_on    = Time.now
     @headers    = {}
@@ -117,7 +117,7 @@ private
   end
 
   def footer
-    contact_description = _('本メールに関するお問い合わせはこちらへ') % {:sender => sender}
+    contact_description = _('For questions regarding this email, please contact:') % {:sender => sender}
     "----\n*#{contact_description}\n#{contact_addr}\n\n*#{sender}\n#{site_url}"
   end
 

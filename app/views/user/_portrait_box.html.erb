@@ -18,10 +18,10 @@ user ||= @current_user
   <div class="box_space_bottom" style="text-align: center; font-size: 12px;">
   <% if @current_user.id == user.id -%>
     <% current_user_info = @current_user.info -%>
-    <span title="<%= _('訪問者数（あなたのページを訪問したユーザののべ人数）') %>"><%= icon_tag 'eye' -%><%=h current_user_info[:access_count] -%>人</span>
-    <span title="<%= _('購読者数（あなたのブログをアンテナでチェックしているユーザ数）') %>"><%= icon_tag 'newspaper' -%><%=h current_user_info[:subscriber_count] -%>人</span><br/>
-    <span title="<%= _('投稿件数（あなたが今までに投稿した記事の数）') %>"><%= icon_tag 'report_user' -%><%=h current_user_info[:blog_count] -%>件</span>
-    <span title="<%= _('あなたがユーザ登録してからの日数') %>"><%= icon_tag 'user_go' -%><%=h current_user_info[:using_day] -%>日</span>
+    <span title="<%= _('Visitors (Total number of user access to your page)') %>"><%= icon_tag 'eye' -%><%=h current_user_info[:access_count] -%>人</span>
+    <span title="<%= _('Subscribers (Users checking your blog with antennas)') %>"><%= icon_tag 'newspaper' -%><%=h current_user_info[:subscriber_count] -%>人</span><br/>
+    <span title="<%= _('Posts (Entries you have posted)') %>"><%= icon_tag 'report_user' -%><%=h current_user_info[:blog_count] -%>件</span>
+    <span title="<%= _('Days since you registered with the site') %>"><%= icon_tag 'user_go' -%><%=h current_user_info[:using_day] -%>日</span>
   <% else -%>
     <%= link_to(icon_tag('transmit_go', :title => _('Add an antenna')) + _('Add an antenna'), {:controller => "antenna", :action => "select_antenna", :symbol => user.symbol, :dummy => '.html'}, {:class => "nyroModal"}) %><br/>
     <%= link_to(icon_tag('tag_blue_add', :title => _('Add a bookmark')) + _('Add a bookmark'), {:controller => "bookmark", :action => "edit", :url => user.get_postit_url, :title => user.name, :dummy => '.html'}, {:class => "nyroModal"}) %>
