@@ -33,7 +33,7 @@ class BookmarkController < ApplicationController
              :layout => "subwindow"
            })
   rescue Bookmark::InvalidMultiByteURIError => e
-    flash[:error] = _('URL format invalid.)
+    flash[:error] = _('URL format invalid.')
     redirect_to root_url
   end
 
@@ -49,7 +49,7 @@ class BookmarkController < ApplicationController
              :layout => "dialog"
            })
   rescue Bookmark::InvalidMultiByteURIError => e
-    render :text => _('URL format invalid.)
+    render :text => _('URL format invalid.')
   end
 
   # ブックマークの更新（存在しない場合は作成）
@@ -95,13 +95,13 @@ class BookmarkController < ApplicationController
 
     render :partial => "system/error_messages_for", :locals=> { :messages => messages }
   rescue Bookmark::InvalidMultiByteURIError => e
-    render :partial => "system/error_messages_for", :locals=> { :messages => [_('URL format invalid.)] }
+    render :partial => "system/error_messages_for", :locals=> { :messages => [_('URL format invalid.')] }
   end
 
   def ado_get_title
     render :text => Bookmark.get_title_from_url(Bookmark.unescaped_url(params[:url]))
   rescue Bookmark::InvalidMultiByteURIError => e
-    render :text => _('URL format invalid.), :status => :bad_request
+    render :text => _('URL format invalid.'), :status => :bad_request
   end
 
   # tab_menu
