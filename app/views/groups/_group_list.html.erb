@@ -60,7 +60,7 @@
               data: { group_participation_id : participation_id,
                       favorite_flag : favorited,
                       update_elem_id : update_elem_id,
-                      authenticity_token: $j("#authenticity_token").val() },
+                      authenticity_token: $j("input[name=authenticity_token]").val() },
               success: function(html) {
                   $j('#' + update_elem_id).html(html).parent().highlight();
                   $j('.favorite_star').unbind('click');

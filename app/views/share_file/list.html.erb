@@ -83,7 +83,7 @@
               var clearDownloadUrl = "<%= url_for(:controller => 'share_file', :action => 'clear_download_history') %>/";
               $j.ajax({
                   type: "POST",
-                  data: { id: shareFileId, authenticity_token: $j('#authenticity_token').val() },
+                  data: { id: shareFileId, authenticity_token: $j('input[name=authenticity_token]').val() },
                   url: clearDownloadUrl,
                   success: function(text){
                       $j("#flash_message").trigger("notice", text);
