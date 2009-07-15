@@ -524,7 +524,7 @@ describe Admin::UsersController, 'POST /lock_actives' do
     post :lock_actives
   end
   it 'xx件のユーザをロックした旨のflashメッセージが設定されること' do
-    flash[:notice].should == '10件更新しました。'
+    flash[:notice].should == 'Updated 10 records.'
   end
   it 'ユーザ一覧画面のリダイレクトされること' do
     response.should redirect_to(admin_settings_path(:tab => :security))

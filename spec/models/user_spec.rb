@@ -111,7 +111,7 @@ describe User, 'validation' do
       @user.stub!(:uid).and_return('yamada')
       @user.password = 'yamada'
       @user.valid?.should be_false
-      @user.errors['password'].include?('はログインIDと同一の値は登録できません。').should be_true
+      @user.errors['password'].should be_include('shall not be the same with login ID.')
     end
     it '現在のパスワードと異なること' do
       @user.password = 'Password2'
@@ -119,7 +119,7 @@ describe User, 'validation' do
       @user.save!
       @user.password = 'Password2'
       @user.valid?.should be_false
-      @user.errors['password'].include?('は前回と同一の値は登録できません。').should be_true
+      @user.errors['password'].should be_include('shall not be the same with the previous one.')
     end
     describe 'パスワード強度が弱の場合' do
       before do

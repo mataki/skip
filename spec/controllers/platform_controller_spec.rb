@@ -504,7 +504,7 @@ describe PlatformController, 'POST /activate' do
   describe 'メールアドレスの入力がない場合' do
     it 'メールアドレスの入力は必須である旨のメッセージを表示する' do
       post :activate, :email => ''
-      flash[:error].should == 'メールアドレスは必須です。'
+      flash[:error].should == 'Email address is mandatory.'
       response.should be_success
     end
   end
@@ -768,7 +768,7 @@ describe PlatformController, "POST /forgot_openid" do
         it "flashメッセージが登録されていること" do
           stub_flash_now
           post_forgot_openid
-          flash[:error].should == "入力された#{@params_email}のユーザは、利用開始されていません。利用開始してください。"
+          flash[:error].should == "User with email address #{@params_email} has not activated the account. The account has to be activated first."
         end
       end
     end

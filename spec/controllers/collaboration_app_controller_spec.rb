@@ -38,7 +38,7 @@ describe CollaborationAppController , 'GET /feed' do
     it '「取得できませんでした。」と表示されること' do
       UserOauthAccess.stub!(:resource).and_yield(false, 'failuer_body')
       get :feed
-      response.body.should == '取得できませんでした。'
+      response.body.should == 'Retrieval failed.'
     end
   end
 end

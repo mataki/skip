@@ -107,7 +107,7 @@ describe ShareFile, '#validate' do
         @share_file.stub!(:errors).and_return(@errors)
       end
       it 'エラーメッセージが設定されること' do
-        @share_file.errors.should_receive(:add_to_base).with('ご指定の操作は実行できません。')
+        @share_file.errors.should_receive(:add_to_base).with('Operation inexecutable.')
         @share_file.validate
       end
     end

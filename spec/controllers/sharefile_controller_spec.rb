@@ -123,7 +123,7 @@ describe ShareFileController, "POST #create" do
           end
           it 'ファイルの作成に成功した旨のメッセージが設定されること' do
             post :create, :file => { '1' => @file1 }
-            flash[:notice].should == 'ファイルのアップロードに成功しました。'
+            flash[:notice].should == 'File was successfully uploaded.'
           end
           it '作成画面が閉じられること' do
             controller.should_receive(:render_window_close)
@@ -194,7 +194,7 @@ describe ShareFileController, "POST #create" do
           end
           it 'ファイルの作成に成功した旨のメッセージが設定されること' do
             post :create, :file => { '1' => @file1, '2' => @file2 }
-            flash[:notice].should == 'ファイルのアップロードに成功しました。'
+            flash[:notice].should == 'Files were successfully uploaded.'
           end
           it '作成画面が閉じられること' do
             controller.should_receive(:render_window_close)
@@ -303,7 +303,7 @@ describe ShareFileController, 'POST #update' do
       end
       it '更新に成功した旨のメッセージが設定されること' do
         post :update, :share_file => {}, :publication_type => 'public'
-        flash[:notice].should == '更新しました。'
+        flash[:notice].should == 'Updated.'
       end
       it '編集画面が閉じられること' do
         controller.should_receive(:render_window_close)
@@ -560,7 +560,7 @@ describe ShareFileController, 'POST #clear_download_history' do
       end
       it '処理に成功した旨のメッセージが返却されること' do
         post :clear_download_history
-        response.body.should == 'ダウンロード履歴の削除に成功しました。'
+        response.body.should == 'Download history was successfully deleted.'
       end
     end
     describe '更新権限がない場合' do
@@ -577,7 +577,7 @@ describe ShareFileController, 'POST #clear_download_history' do
       end
       it '権限がない旨のメッセージが返却されること' do
         post :clear_download_history
-        response.body.should == 'この操作は、許可されていません。'
+        response.body.should == 'Operation unauthorized.'
       end
     end
   end
