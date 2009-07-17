@@ -70,6 +70,8 @@ class RankingsController < ApplicationController
     month = params[:month].blank? ? yesterday.month : params[:month]
     begin
       time = Time.local(year, month)
+      max_year = 2038
+      raise ArgumentError, "year must be < #{max_year}." if time.year >= max_year
       @year = time.year
       @month = time.month
       @dates = Ranking.extracted_dates
