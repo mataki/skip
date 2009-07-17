@@ -15,9 +15,11 @@
 
 require 'uri'
 class BookmarkController < ApplicationController
+  include UserLayoutModule
   verify :method => :post, :only => [:update, :destroy, :ado_set_stared ], :redirect_to => { :action => :show }
 
   before_filter :check_params, :only => [:new, :edit]
+  before_filter :load_user, :only => [:list]
 
   protect_from_forgery :except => [:new]
 
@@ -140,24 +142,24 @@ class BookmarkController < ApplicationController
 
   #ユーザのブックマークコメント一覧表示(ユーザのページからのリンクでくる)
   def list
-    redirect_to_with_deny_auth and return if not parent_controller
+    @main_menu = user_main_menu
+    @title = user_title
+    @tab_menu_source = user_tab_menu_source @user
+    @tab_menu_option = { :uid => @user.uid }
 
-    @main_menu = parent_controller.send(:main_menu)
-    @title = parent_controller.send(:title)
-    @tab_menu_source = parent_controller.send(:tab_menu_source)
-    @tab_menu_option = parent_controller.send(:tab_menu_option)
-
-    params[:user_id] = parent_controller.params[:user_id]
-    params[:page] = parent_controller.params[:page]
-    params[:keyword] = parent_controller.params[:keyword]
-    params[:category] = parent_controller.params[:category]
-    params[:type] = parent_controller.params[:type]
+    find_params = {
+      :user_id => @user.id,
+      :page => params[:page],
+      :keyword => params[:keyword],
+      :category => params[:category],
+      :type => params[:type]
+    }
 
     #タグ検索用
-    @tags = BookmarkComment.get_tags params[:user_id]
+    @tags = BookmarkComment.get_tags @user.id
 
     #結果表示用
-    conditions = BookmarkComment.make_conditions_for_comment(session[:user_id], params)
+    conditions = BookmarkComment.make_conditions_for_comment(current_user.id, find_params)
     @pages, @bookmark_comments = paginate(:bookmark_comments,
                                           :per_page => 20,
                                           :conditions => conditions,
@@ -170,9 +172,6 @@ class BookmarkController < ApplicationController
         flash.now[:notice] = _('No bookmarks have been registered.')
       end
     end
-
-    params[:controller] = parent_controller.params[:controller]
-    params[:action] = parent_controller.params[:action]
   end
 
   def ado_set_stared

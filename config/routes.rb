@@ -18,6 +18,7 @@ ActionController::Routing::Routes.draw do |map|
     ids.formatted_identity "id/:user/:format", :action => "show", :user => /[a-zA-Z0-9\-_\.]*/
   end
 
+  map.user_bookmark 'user/:uid/bookmark', :controller => 'bookmark', :action => 'list', :requirements => { :uid => /[a-zA-Z0-9\-_\.]+/ }
   map.with_options( :controller => 'user',:requirements => { :uid => /[a-zA-Z0-9\-_\.]+/ }, :defaults => { :action => 'show' }) do |user|
     user.connect 'user/:uid/:action'
     user.connect 'user/:uid/:action.:format'
