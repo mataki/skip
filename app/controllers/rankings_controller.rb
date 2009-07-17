@@ -51,8 +51,8 @@ class RankingsController < ApplicationController
     else
       return render(:text => _('Invalid request.'), :status => :bad_request) if params[:month].blank?
       begin
-        Time.local(params[:year], params[:month])
-        @rankings = Ranking.monthly(params[:content_type], params[:year], params[:month])
+        year, month = validate_time(params[:year], params[:month])
+        @rankings = Ranking.monthly(params[:content_type], year, month)
         return render(:text => '', :status => :not_found) if @rankings.empty?
       rescue => e
         return render(:text => _('Invalid request.'), :status => :bad_request)
@@ -69,11 +69,9 @@ class RankingsController < ApplicationController
     year = params[:year].blank? ? yesterday.year : params[:year]
     month = params[:month].blank? ? yesterday.month : params[:month]
     begin
-      time = Time.local(year, month)
-      max_year = 2038
-      raise ArgumentError, "year must be < #{max_year}." if time.year >= max_year
-      @year = time.year
-      @month = time.month
+      year, month = validate_time(year, month)
+      @year = year
+      @month = month
       @dates = Ranking.extracted_dates
     rescue => e
       flash.now[:error] = _('Invalid parameter(s) detected.')
@@ -175,5 +173,15 @@ class RankingsController < ApplicationController
       result[site_count.created_on.day] = 1
     end
     return result
+  end
+
+  def validate_time(year, month)
+    time = Time.local(year, month)
+    max_year = 2038
+    min_year = 2000
+    year = year.to_i
+    raise ArgumentError, "year must be < #{max_year}." if year >= max_year
+    raise ArgumentError, "year must be >= #{min_year}." if year < min_year
+    [time.year, time.month]
   end
 end
