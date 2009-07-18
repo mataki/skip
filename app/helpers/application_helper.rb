@@ -27,11 +27,9 @@ module ApplicationHelper
   def generate_tab_menu(tab_menu_sources)
     output = ''
     tab_menu_sources.each do |source|
-      html_options = source[:html_options] || {}
-      if controller.action_name == source[:options][:action] || (source[:selected_actions] && source[:selected_actions].include?(controller.action_name))
-        html_options.merge!(:class => 'selected')
-      end
-      title =  content_tag(:span, source[:label])
+      html_options = (source[:html_options] || {}).dup
+      html_options.merge!(:class => 'selected') if current_page?(source[:options])
+      title = content_tag(:span, source[:label])
       output << content_tag(:li, link_to(title, source[:options], html_options))
     end
     content_tag :ul, output
