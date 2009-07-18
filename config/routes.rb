@@ -18,12 +18,16 @@ ActionController::Routing::Routes.draw do |map|
     ids.formatted_identity "id/:user/:format", :action => "show", :user => /[a-zA-Z0-9\-_\.]*/
   end
 
-  map.user_bookmark 'user/:uid/bookmark', :controller => 'bookmark', :action => 'list', :requirements => { :uid => /[a-zA-Z0-9\-_\.]+/ }
-  map.with_options( :controller => 'user',:requirements => { :uid => /[a-zA-Z0-9\-_\.]+/ }, :defaults => { :action => 'show' }) do |user|
-    user.connect 'user/:uid/:action'
-    user.connect 'user/:uid/:action.:format'
+  map.with_options(:requirements => { :uid => /[a-zA-Z0-9\-_\.]+/ }) do |user_req|
+    user_req.user_bookmark 'user/:uid/bookmark', :controller => 'bookmark', :action => 'list'
+    user_req.user_share_file 'user/:uid/share_file', :controller => 'share_file', :action => 'list'
+    user_req.with_options( :controller => 'user',:requirements => { :uid => /[a-zA-Z0-9\-_\.]+/ }, :defaults => { :action => 'show' }) do |user|
+      user.connect 'user/:uid/:action'
+      user.connect 'user/:uid/:action.:format'
+    end
   end
 
+  map.group_share_file 'group/:gid/share_file', :controller => 'share_file', :action => 'list'
   map.with_options( :controller => 'group', :defaults => { :action => 'show' } ) do |group|
     group.connect 'group/:gid/:action'
     group.connect 'group/:gid/:action.:format'

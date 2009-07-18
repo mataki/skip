@@ -15,6 +15,8 @@
 
 class ShareFileController < ApplicationController
   include IframeUploader
+  include UserLayoutModule
+  include GroupLayoutModule
   layout 'subwindow'
 
   verify :method => :post, :only => [ :create, :update, :destroy, :download_history_as_csv, :clear_download_history ],
@@ -147,18 +149,23 @@ class ShareFileController < ApplicationController
   end
 
   def list
-    redirect_to_with_deny_auth and return if not parent_controller
+    # TODO: インスタンス変数の数を減らす
+    @owner_obj = User.find_by_uid(params[:uid]) || Group.active.find_by_gid(params[:gid])
+    if @owner_obj.nil?
+      flash[:warn] = _("Specified share file owner does not exist.")
+      redirect_to root_url
+      return
+    end
+    @participation = @owner_obj.group_participations.find_by_user_id(current_user.id) unless @owner_obj.is_a?(User)
+    @visitor_is_uploader = @owner_obj.is_a?(User) ? (@owner_obj == current_user) : @owner_obj.participating?(current_user)
+    @main_menu = @owner_obj.is_a?(User) ? user_main_menu(@owner_obj) : _('Groups')
+    @title = @owner_obj.is_a?(User) ? user_title(@owner_obj) : @owner_obj.name
+    @tab_menu_source = @owner_obj.is_a?(User) ? user_tab_menu_source(@owner_obj) : group_tab_menu_source(@participation)
+    @tab_menu_option = @owner_obj.is_a?(User) ? user_menu_option(@owner_obj) : { :gid => @owner_obj.gid }
 
-    @main_menu = parent_controller.send!(:main_menu)
-    @title = parent_controller.send!(:title)
-    @tab_menu_source = parent_controller.send!(:tab_menu_source)
-    @tab_menu_option = parent_controller.send!(:tab_menu_option)
-
-    @owner_name = params[:owner_name]
-    @owner_symbol = params[:id]
-    @categories = ShareFile.get_tags @owner_symbol
-    params[:controller] = parent_controller.params[:controller]
-    params[:action] = parent_controller.params[:action]
+    @owner_name = @owner_obj.name
+    @owner_symbol = @owner_obj.symbol
+    @categories = ShareFile.get_tags @owner_obj.symbol
 
     params[:sort_type] ||= "date"
     params_hash = { :owner_symbol => @owner_symbol, :category => params[:category],
@@ -175,8 +182,6 @@ class ShareFileController < ApplicationController
       flash.now[:notice] = _('No matching shared files found.')
     end
 
-    # 編集メニューの表示有無
-    @visitor_is_uploader = params[:visitor_is_uploader]
     respond_to do |format|
       format.html { render :layout => 'layout' }
       format.js {

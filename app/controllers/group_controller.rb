@@ -14,6 +14,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class GroupController < ApplicationController
+  include GroupLayoutModule
   helper 'board_entries'
   before_filter :load_group_and_participation, :setup_layout
 
@@ -149,14 +150,6 @@ class GroupController < ApplicationController
       @pages, @participations = paginate_participations(@group, true)
     end
     render :partial => @menu, :layout => "layout"
-  end
-
-  # tab_menu
-  def share_file
-    params.store(:owner_name, @group.name)
-    params.store(:visitor_is_uploader, @group.participating?(current_user))
-    text = render_component_as_string :controller => 'share_file', :action => 'list', :id => @group.symbol, :params => params
-    render :text => text, :layout => false
   end
 
   # post_action
@@ -372,7 +365,7 @@ private
   end
 
   def main_menu
-    'グループ'
+    _('Groups')
   end
 
   def title
@@ -380,14 +373,7 @@ private
   end
 
   def tab_menu_source
-    tab_menu_source = []
-    tab_menu_source << {:label => _('Summary'), :options => {:action => 'show'}}
-    tab_menu_source << {:label => _('Members List'), :options => {:action => 'users'}}
-    tab_menu_source << {:label => _('BBS'), :options => {:action => 'bbs'}}
-    tab_menu_source << {:label => _('New Posts'), :options => {:action => 'new'}} if participating?
-    tab_menu_source << {:label => _('Shared Files'), :options => {:action => 'share_file'}}
-    tab_menu_source << {:label => _('Admin'), :options => {:action => 'manage'}} if participating? and @participation.owned?
-    tab_menu_source
+    group_tab_menu_source @participation
   end
 
   def tab_menu_option
@@ -403,11 +389,6 @@ private
     @participation = @group.group_participations.find_by_user_id(session[:user_id])
   end
 
-  # TODO Group#participating?に順次置き換えていって最終的に削除する。
-  def participating?
-    @participation and @participation.waiting? != true
-  end
-
   def check_owned
     unless @participation and @participation.owned?
       flash[:warn] = _('Administrative privillage required for the action.')
@@ -415,7 +396,6 @@ private
       return false
     end
   end
-
 
   def paginate_participations group, waiting
     return paginate(:group_participations,

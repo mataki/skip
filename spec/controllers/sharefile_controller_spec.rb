@@ -373,6 +373,97 @@ describe ShareFileController, "POST #destroy" do
   end
 end
 
+describe ShareFileController, "GET #list" do
+  before do
+    @user = user_login
+  end
+  describe "ユーザの共有ファイル一覧を表示している場合" do
+    before do
+      controller.stub(:user_tab_menu_source).and_return(@mock_user_tab_menu_source = mock('user_tab_menu_source'))
+      controller.stub(:paginate).and_return([@pages = mock('pages'), @share_files = mock('share_files', :size => 10)])
+    end
+    describe "自分の共有ファイルを表示している場合" do
+      before do
+        User.stub(:find_by_uid).and_return(@user)
+        ShareFile.stub(:get_tags).with(@user.symbol).and_return(@categories = mock('categories'))
+        get :list, :uid => "a.user"
+      end
+      it "set assigns" do
+        assigns[:main_menu].should == "My Page"
+        assigns[:title].should == "My Page"
+        assigns[:tab_menu_source].should == @mock_user_tab_menu_source
+        assigns[:tab_menu_option].should == { :uid => @user.uid }
+        assigns[:owner_name].should == @user.name
+        assigns[:owner_symbol].should == @user.symbol
+        assigns[:categories].should == @categories
+        assigns[:pages].should == @pages
+        assigns[:share_files].should == @share_files
+        assigns[:visitor_is_uploader].should == true
+      end
+      it { response.should render_template("list") }
+    end
+    describe "他人の共有ファイルを表示している場合" do
+      before do
+        User.stub(:find_by_uid).with("b_user").and_return(@target_user = mock_model(User, :symbol => 'user:b_user', :uid => 'b_user', :name => "対象ユーザ"))
+        ShareFile.stub(:get_tags).with(@target_user.symbol).and_return(@categories = mock('categories'))
+        get :list, :uid => "b_user"
+      end
+      it "set assigns" do
+        assigns[:main_menu].should == "Users"
+        assigns[:title].should == "Mr./Ms. 対象ユーザ"
+        assigns[:tab_menu_source].should == @mock_user_tab_menu_source
+        assigns[:tab_menu_option].should == { :uid => @target_user.uid }
+        assigns[:owner_name].should == @target_user.name
+        assigns[:owner_symbol].should == @target_user.symbol
+        assigns[:categories].should == @categories
+        assigns[:pages].should == @pages
+        assigns[:share_files].should == @share_files
+        assigns[:visitor_is_uploader].should == false
+      end
+      it { response.should render_template("list") }
+    end
+  end
+  describe "グループの共有ファイル一覧を表示している場合" do
+    before do
+      controller.stub(:paginate).and_return([@pages = mock('pages'), @share_files = mock('share_files', :size => 10)])
+      controller.stub(:group_tab_menu_source).and_return(@mock_group_tab_menu_source = mock('mock_group_tab_menu_source'))
+      Group.stub(:find_by_gid).with("a_group").and_return(@group = mock_model(Group, :symbol => 'group:a_group', :name => "対象グループ", :gid => "a_group"))
+      @group.stub_chain(:group_participations, :find_by_user_id).and_return(@participation = mock('participation'))
+      @group.stub(:participating?).with(@user).and_return(@visitor_is_uploader = mock('visitor_is_uploader'))
+      ShareFile.stub(:get_tags).with(@group.symbol).and_return(@categories = mock('categories'))
+      get :list, :gid => "a_group"
+    end
+    it "set assigns" do
+      assigns[:main_menu].should == 'Groups'
+      assigns[:title].should == "対象グループ"
+      assigns[:tab_menu_source].should == @mock_group_tab_menu_source
+      assigns[:tab_menu_option].should == { :gid => @group.gid }
+      assigns[:owner_name].should == @group.name
+      assigns[:owner_symbol].should == @group.symbol
+      assigns[:categories].should == @categories
+      assigns[:pages].should == @pages
+      assigns[:share_files].should == @share_files
+      assigns[:participation].should == @participation
+      assigns[:visitor_is_uploader].should == @visitor_is_uploader
+    end
+    it { response.should render_template("list") }
+  end
+  describe "対応するユーザやグループが存在しなかった場合" do
+    before do
+      User.stub(:find_by_uid).and_return(nil)
+      Group.stub(:find_by_gid).and_return(nil)
+      get :list, :uid => 'foo', :gid => 'bar'
+    end
+    it "マイページにリダイレクトする" do
+      response.should redirect_to(root_url)
+    end
+    it "Flashが設定されていること" do
+      flash[:warn].should == "Specified share file owner does not exist."
+    end
+  end
+end
+
+
 describe ShareFileController, "GET #download" do
   before do
     @user = user_login

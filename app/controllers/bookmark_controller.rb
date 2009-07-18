@@ -142,8 +142,8 @@ class BookmarkController < ApplicationController
 
   #ユーザのブックマークコメント一覧表示(ユーザのページからのリンクでくる)
   def list
-    @main_menu = user_main_menu
-    @title = user_title
+    @main_menu = user_main_menu @user
+    @title = user_title @user
     @tab_menu_source = user_tab_menu_source @user
     @tab_menu_option = { :uid => @user.uid }
 

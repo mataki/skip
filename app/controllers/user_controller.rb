@@ -163,14 +163,6 @@ class UserController < ApplicationController
     show_edit_chain
   end
 
-  # tab_menu
-  def share_file
-    params.store(:owner_name, @user.name)
-    params.store(:visitor_is_uploader, (@user.id == session[:user_id]))
-    text = render_component_as_string :controller => 'share_file', :action => 'list', :id => @user.symbol, :params => params
-    render :text => text, :layout => false
-  end
-
   # post_action
   def create_chain
     @chain = Chain.new( :from_user_id => session[:user_id],
@@ -203,8 +195,8 @@ class UserController < ApplicationController
 
 private
   def setup_layout
-    @title = user_title
-    @main_menu = user_main_menu
+    @title = user_title @user
+    @main_menu = user_main_menu @user
     @tab_menu_source = tab_menu_source
     @tab_menu_option = tab_menu_option
   end
