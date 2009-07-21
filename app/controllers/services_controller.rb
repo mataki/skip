@@ -14,7 +14,6 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class ServicesController < ActionController::Base
-  session :off
   skip_before_filter :sso
   caches_page :skip_reflect_customized
 
