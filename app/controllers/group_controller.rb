@@ -178,7 +178,11 @@ class GroupController < ApplicationController
         entry_params[:message] = render_to_string(:partial => 'entries_template/group_join',
                                                   :locals => { :user_name => current_user.name,
                                                                :message => message })
-        entry_params[:tags] = _("Request to Join Group")
+        # TODO 国際化を踏まえた仕様の再検討を行う
+        # _('Request to Join Group')としたいが、タグのvalidateでspaceを許可していないためエラーになる。
+        # また、「参加申し込み」タグは一部システム的な動作(著者毎の記事一覧から除外)を
+        # 行っているため、国際化を踏まえた仕様を再検討しなければならない。
+        entry_params[:tags] = '参加申し込み'
         entry_params[:tags] << ",#{Tag::NOTICE_TAG}" if @group.protected?
         entry_params[:user_symbol] = session[:user_symbol]
         entry_params[:user_id] = session[:user_id]
