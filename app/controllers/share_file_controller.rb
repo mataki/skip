@@ -285,9 +285,8 @@ private
   end
 
   def nkf_file_name(file_name)
-    agent = request.cgi.env_table["HTTP_USER_AGENT"]
-    return  NKF::nkf('-Ws', file_name) if agent.include?("MSIE") and not agent.include?("Opera")
-    return file_name
+    agent = request.headers['HTTP_USER_AGENT']
+    (agent.include?("MSIE") and not agent.include?("Opera")) ? NKF.nkf('-Ws', file_name) : file_name
   end
 
   def share_file_to_json(share_file)

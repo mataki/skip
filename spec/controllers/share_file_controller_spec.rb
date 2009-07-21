@@ -676,3 +676,27 @@ describe ShareFileController, 'POST #clear_download_history' do
     #共通処理で404画面へ遷移する
   end
 end
+
+describe ShareFileController, ".nkf_file_name" do
+  before do
+    @file_name = "ファイル名"
+  end
+  describe "IEの場合" do
+    before do
+      controller.stub_chain(:request, :headers).and_return('HTTP_USER_AGENT' => "MSIE")
+    end
+    it "NKFで文字コードを変換すること" do
+      NKF.should_receive(:nkf).with('-Ws', @file_name)
+      controller.send(:nkf_file_name, @file_name)
+    end
+  end
+  describe "IE以外の場合" do
+    before do
+      controller.stub_chain(:request, :headers).and_return('HTTP_USER_AGENT' => "MSIE Opera")
+    end
+    it "NKFで文字コードを変換すること" do
+      NKF.should_not_receive(:nkf)
+      controller.send(:nkf_file_name, @file_name)
+    end
+  end
+end
