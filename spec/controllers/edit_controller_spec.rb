@@ -161,9 +161,6 @@ describe EditController, "#create" do
     before do
       new_trackbacks = mock('new_trackbacks')
 
-      @file1 = mock_uploaed_file
-      @file2 = mock_uploaed_file
-
       @entry = stub_model(BoardEntry, :entry_type => "DIARY")
       @entry.should_receive(:save).and_return(true)
       @entry.should_receive(:send_trackbacks).and_return(["", new_trackbacks])
@@ -181,7 +178,7 @@ describe EditController, "#create" do
         @entry.should_receive(:send_mail?).and_return(true)
         @entry.should_receive(:prepare_send_mail)
         post :create, {
-          :board_entry => { :symbol => @user_symbol, :send_mail => "1" }, :image => { "1" => @file1, "2" => @file2 }
+          :board_entry => { :symbol => @user_symbol, :send_mail => "1" }
         }
       end
       it "作成された掲示板にリダイレクトされる" do
@@ -199,7 +196,7 @@ describe EditController, "#create" do
         @entry.should_not_receive(:prepare_send_mail)
         @entry.should_receive(:send_mail?).and_return(false)
         post :create, {
-          :board_entry => { :symbol => @user_symbol, :send_mail => "0" }, :image => { "1" => @file1, "2" => @file2 }
+          :board_entry => { :symbol => @user_symbol, :send_mail => "0" }
         }
       end
       it "作成された掲示板にリダイレクトされる" do

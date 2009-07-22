@@ -185,11 +185,13 @@ def create_board_entry_comment options = {}
   board_entry_comment
 end
 
+# ActionController::TestProcess#fixture_file_uploadを利用した方がよいかも
 def mock_uploaed_file options = {}
   file = mock('file', { :original_filename => "file1.png", :content_type => "image/png", :size => 1000, :read => "" }.merge(options))
   file.stub!(:is_a?).with(ActionController::UploadedFile).and_return(true)
   # 以下をやらないとパラメータの中身がHashかどうかのチェックがらしく、リクエストが飛ばなくなるので
   file.stub!(:is_a?).with(Hash).and_return(false)
+  file.stub!(:is_a?).with(Array).and_return(false)
   file
 end
 
