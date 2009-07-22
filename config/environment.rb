@@ -13,9 +13,6 @@ require File.join(File.dirname(__FILE__), 'boot')
 
 
 Rails::Initializer.run do |config|
-  # TODO: Rails 2.3 にバージョンアップする際に独自でyamlをパースすることを無くす
-  require 'yaml'
-  config.action_controller.session = YAML.load(File.read(RAILS_ROOT + "/config/initial_settings.yml"))[RAILS_ENV]['session']
   # config.action_controller.session_store = :p_store
 
   # Skip frameworks you're not going to use

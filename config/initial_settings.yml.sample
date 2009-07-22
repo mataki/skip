@@ -28,7 +28,7 @@ default: &default
   # 以下の項目はセキュリティ上の観点から、インターネットでの稼動時は必ず変更して下さい
   # ================================================================================================
   session:
-    :session_key: _skip_session                                     # セッションの名称です。
+    :key: _skip_session                                     # セッションの名称です。
     :secret: change-mechange-mechange-mechange-me                   # cookieの暗号化に使う鍵です。
   sha1_digest_key: change-me                                        # ユーザのパスワードを登録する際に使う鍵です。
 
