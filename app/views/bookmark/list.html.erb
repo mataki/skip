@@ -87,7 +87,7 @@
               data: {
                 bookmark_comment_id : bookmark_comment_id,
                 stared : stared,
-                authenticity_token: $j("#authenticity_token").val() },
+                authenticity_token: $j("input[name=authenticity_token]").val() },
               success: function(html) {
                   $j('#bookmark_comment_stared_' + bookmark_comment_id).html(html);
                   $j('#bookmark_comment_' + bookmark_comment_id).highlight();

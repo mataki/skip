@@ -17,12 +17,6 @@ class Admin::BoardEntryCommentsController < Admin::ApplicationController
   before_filter :load_parent
   include Admin::AdminModule::AdminChildModule
 
-  undef new
-  undef create
-  undef edit
-  undef update
-  undef show
-
   private
   def load_parent
     @board_entry ||= Admin::BoardEntry.find(params[:board_entry_id])

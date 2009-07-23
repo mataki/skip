@@ -92,7 +92,7 @@ ul#antennas_list li.dragenter {
               $j.ajax({
                   type: 'POST',
                   url: delete_antenna_url,
-                  data: { antenna_id: antenna_id, authenticity_token: $j('#authenticity_token').val() },
+                  data: { antenna_id: antenna_id, authenticity_token: $j('input[name=authenticity_token]').val() },
                   success: function(request) {
                       $j('#antennas_list_container').html(request).highlight();
                   },
@@ -181,7 +181,7 @@ ul#antennas_list li.dragenter {
                 url: delete_antenna_item_url,
                 data: { antenna_id: antenna_id,
                         antenna_item_id: antenna_item_id,
-                        authenticity_token: $j('#authenticity_token').val() },
+                        authenticity_token: $j('input[name=authenticity_token]').val() },
                 success: function(request) {
                     $j('#antennas_list_container').html(request).highlight();
                 },
@@ -221,7 +221,7 @@ ul#antennas_list li.dragenter {
                 $j.ajax({
                     type: 'POST',
                     url: url,
-                    data: { source_antenna_id: source_antenna_id, target_pos: target_pos, authenticity_token: $j('#authenticity_token').val() },
+                    data: { source_antenna_id: source_antenna_id, target_pos: target_pos, authenticity_token: $j('input[name=authenticity_token]').val() },
                     error: function(event){
                         alert("<%= _('Communication failure.')%>");
                     },
@@ -248,7 +248,7 @@ ul#antennas_list li.dragenter {
                       $j.ajax({
                           type: 'POST',
                           url: url,
-                          data: { antenna_id: antenna_id, antenna_item_id: antenna_item_id, authenticity_token: $j('#authenticity_token').val() },
+                          data: { antenna_id: antenna_id, antenna_item_id: antenna_item_id, authenticity_token: $j('input[name=authenticity_token]').val() },
                           error: function(event){
                               alert(event.responseText);
                           },

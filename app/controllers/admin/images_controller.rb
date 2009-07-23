@@ -147,7 +147,6 @@ class Admin::ImagesController < Admin::ApplicationController
       return redirect_to(admin_images_path)
     end
     yield
-    ActionView::Base.computed_public_paths.clear
     flash[:notice] = _('%{target} was successfully saved.' % {:target => s_("Admin::ImagesController|#{params[:target]}")})
     redirect_to admin_images_path
   rescue Errno::EACCES => e

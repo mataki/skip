@@ -251,12 +251,8 @@ class UserProfileMaster < ActiveRecord::Base
     def to_edit_html(value)
       value_str = value ? value.value : ""
       result = ""
-      result << content_tag(:p) do
-        select_tag("profile_value[#{@master.id}]", options_for_select(registrated_select_option, value_str)) + _("Showing options from previously registered values")
-      end unless registrated_select_option.blank?
-      result << content_tag(:p) do
-        text_field_tag("profile_value[#{@master.id}]", (registrated_select_option.include?(value_str) ? "" : value_str), :class => "appendable_text") + _('Enter here if you cannot find the value in the options')
-      end
+      result << content_tag(:p, select_tag("profile_value[#{@master.id}]", options_for_select(registrated_select_option, value_str)) + _("Showing options from previously registered values")) unless registrated_select_option.blank?
+      result << content_tag(:p, text_field_tag("profile_value[#{@master.id}]", (registrated_select_option.include?(value_str) ? "" : value_str), :class => "appendable_text") + _('Enter here if you cannot find the value in the options'))
     end
 
     private

@@ -22,7 +22,7 @@ describe UserProfileMaster, 'validation' do
         @user_profile_master = create_user_profile_master(:user_profile_master_category_id => create_user_profile_master_category.id)
       end
       it 'validationに成功すること' do
-        @user_profile_master.send!(:validates_presence_of_category).should be_true
+        @user_profile_master.send(:validates_presence_of_category).should be_true
       end
     end
     describe 'user_profile_master_categoryに対象のカテゴリが存在しない場合' do
@@ -30,11 +30,11 @@ describe UserProfileMaster, 'validation' do
         @user_profile_master = create_user_profile_master
       end
       it 'validationに失敗すること' do
-        @user_profile_master.send!(:validates_presence_of_category).should be_false
+        @user_profile_master.send(:validates_presence_of_category).should be_false
       end
       it 'エラーメッセージが設定されること' do
         lambda do
-          @user_profile_master.send!(:validates_presence_of_category)
+          @user_profile_master.send(:validates_presence_of_category)
         end.should change(@user_profile_master.errors, :size).from(0).to(1)
       end
     end
@@ -85,7 +85,7 @@ describe UserProfileMaster::InputTypeProcesser do
   describe "#to_edit_html" do
     it "正しいHTMLが生成されていること" do
       @master.id = 1000
-      @processer.to_edit_html(@value).should == "<input id=\"profile_value[1000]\" name=\"profile_value[1000]\" type=\"text\" value=\"value\" />"
+      @processer.to_edit_html(@value).should == "<input id=\"profile_value_1000\" name=\"profile_value[1000]\" type=\"text\" value=\"value\" />"
     end
   end
   describe "#validate" do
@@ -98,7 +98,7 @@ describe UserProfileMaster::InputTypeProcesser do
       end
       it "バリデーションエラーが設定されること" do
         @processer.validate(@value)
-        @value.errors.full_messages.first.should == 'master は必須です'
+        @value.errors.full_messages.first.should == 'master is mandatory.'
       end
     end
     describe "バリデーションエラーでない場合" do
@@ -124,12 +124,12 @@ describe UserProfileMaster::InputTypeProcesser do
       it "空の場合 必須です のバリデーションエラーになること" do
         @value.value = ""
         @processer.option_value_validate(@value)
-        @value.errors.full_messages.first.should == "master は必須です"
+        @value.errors.full_messages.first.should == "master is mandatory."
       end
       it "選択される項目以外の値が入っている場合 選択される値以外の値が設定されていますというバリデーションエラーになること" do
         @value.value = "unselect"
         @processer.option_value_validate(@value)
-        @value.errors.full_messages.first.should == "master は選択される値以外のものが設定されています"
+        @value.errors.full_messages.first.should == "master contains value not in selectable options."
       end
     end
     describe "必須でない場合" do
@@ -144,7 +144,7 @@ describe UserProfileMaster::InputTypeProcesser do
       it "選択される項目以外の値が入っている場合 選択される値以外の値が設定されていますというバリデーションエラーになること" do
         @value.value = "unselect"
         @processer.option_value_validate(@value)
-        @value.errors.full_messages.first.should == "master は選択される値以外のものが設定されています"
+        @value.errors.full_messages.first.should == "master contains value not in selectable options."
       end
     end
   end
@@ -174,7 +174,7 @@ describe UserProfileMaster::InputTypeProcesser do
           @master.option_values = ''
         end
         it 'masterにoption_valuesが必須である旨のバリデーションエラーが設定されること' do
-          @errors.should_receive(:add).with(:option_values, "は必須です。")
+          @errors.should_receive(:add).with(:option_values, "is mandatory.")
           @processer.validates_presence_of_option_values
         end
       end
@@ -208,7 +208,7 @@ describe UserProfileMaster::NumberAndHyphenOnlyProcesser do
         end
         it '必須エラーになること' do
           @processer.validate(@value)
-          @value.errors.full_messages.first.should == "master は必須です"
+          @value.errors.full_messages.first.should == "master is mandatory."
         end
       end
       describe '必須ではない場合' do
@@ -237,7 +237,7 @@ describe UserProfileMaster::NumberAndHyphenOnlyProcesser do
         end
         it 'フォーマットエラーとなること' do
           @processer.validate(@value)
-          @value.errors.full_messages.first.should == "master は数字かハイフンで入力してください"
+          @value.errors.full_messages.first.should == "master accepts numbers and hiphens(\"-\") only."
         end
       end
     end
@@ -269,7 +269,7 @@ describe UserProfileMaster::YearSelectProcesser do
         end
         it "必須エラーが設定されること" do
           @processer.validate(@value)
-          @value.errors.full_messages.first.should == "master は必須です"
+          @value.errors.full_messages.first.should == "master is mandatory."
         end
       end
       describe "必須ではない場合" do
@@ -289,7 +289,7 @@ describe UserProfileMaster::YearSelectProcesser do
         end
         it "入力値が不正エラーが設定されること" do
           @processer.validate(@value)
-          @value.errors.full_messages.first.should == "master は4桁の数値で入力して下さい"
+          @value.errors.full_messages.first.should == "Enter master in 4-digit numbers."
         end
       end
       describe "正しい年が入力されている場合" do
@@ -336,7 +336,7 @@ describe UserProfileMaster::YearSelectProcesser do
         end
         it 'フォーマットエラーが設定されること' do
           @processer.validates_format_of_option_values
-          @master.errors.full_messages.first.should == 'Option values は数値と-(ハイフン)で入力して下さい。'
+          @master.errors.full_messages.first.should == "Option values accepts numbers and hiphens(\"-\") only."
         end
       end
     end
@@ -347,33 +347,33 @@ describe UserProfileMaster::YearSelectProcesser do
       Time.stub!(:now).and_return(Time.local(2008))
     end
     describe "引数が空の場合" do
-      it { @processer.send!(:start_year_and_end_year, '').should == ['2008', '2008'] }
+      it { @processer.send(:start_year_and_end_year, '').should == ['2008', '2008'] }
     end
     describe "引数が[2006]の場合" do
-      it { @processer.send!(:start_year_and_end_year, '2006').should == ['2006', '2008'] }
+      it { @processer.send(:start_year_and_end_year, '2006').should == ['2006', '2008'] }
     end
     describe "引数が[2006-]の場合" do
-      it { @processer.send!(:start_year_and_end_year, '2006-').should == ['2006', '2008'] }
+      it { @processer.send(:start_year_and_end_year, '2006-').should == ['2006', '2008'] }
     end
     describe "引数が[2009-]の場合" do
-      it { @processer.send!(:start_year_and_end_year, '2009-').should == ['2009', '2008'] }
+      it { @processer.send(:start_year_and_end_year, '2009-').should == ['2009', '2008'] }
     end
     describe "引数が[-2006]の場合" do
-      it { @processer.send!(:start_year_and_end_year, '-2006').should == ['2008', '2006'] }
+      it { @processer.send(:start_year_and_end_year, '-2006').should == ['2008', '2006'] }
     end
     describe "引数が[-2009]の場合" do
-      it { @processer.send!(:start_year_and_end_year, '-2009').should == ['2008', '2009'] }
+      it { @processer.send(:start_year_and_end_year, '-2009').should == ['2008', '2009'] }
     end
     describe "引数が[2006-2008]の場合" do
-      it { @processer.send!(:start_year_and_end_year, '2006-2008').should == ['2006', '2008'] }
+      it { @processer.send(:start_year_and_end_year, '2006-2008').should == ['2006', '2008'] }
     end
     describe "引数が[2009-2006]の場合" do
-      it { @processer.send!(:start_year_and_end_year, '2009-2006').should == ['2009', '2006'] }
+      it { @processer.send(:start_year_and_end_year, '2009-2006').should == ['2009', '2006'] }
     end
   end
 end
 
-describe UserProfileMaster::SelectProcesser do
+describe UserProfileMaster::SelectProcesser, :type => :view do
   before do
     @master = stub_model(UserProfileMaster, :option_values => "select1,select2", :input_type => "select", :name => "master")
     @processer = UserProfileMaster::SelectProcesser.new(@master)
@@ -392,7 +392,7 @@ describe UserProfileMaster::SelectProcesser do
   end
 end
 
-describe UserProfileMaster::AppendableSelectProcesser do
+describe UserProfileMaster::AppendableSelectProcesser, :type => :view do
   before do
     @master = stub_model(UserProfileMaster, :input_type => "appendable_select", :name => "master")
     @processer = UserProfileMaster::AppendableSelectProcesser.new(@master)
@@ -481,7 +481,7 @@ describe UserProfileMaster::AppendableSelectProcesser do
   end
 end
 
-describe UserProfileMaster::CheckBoxProcesser do
+describe UserProfileMaster::CheckBoxProcesser, :type => :view do
   before do
     @master = stub_model(UserProfileMaster, :option_values => "check1", :input_type => "check_box", :name => "master")
     @processer = UserProfileMaster::CheckBoxProcesser.new(@master)
@@ -521,12 +521,12 @@ describe UserProfileMaster::CheckBoxProcesser do
       it "空の場合 必須です のバリデーションエラーになること" do
         @value.value = ''
         @processer.validate(@value)
-        @value.errors.full_messages.first.should == "master は必須です"
+        @value.errors.full_messages.first.should == "master is mandatory."
       end
       it "選択される項目以外の値が入っている場合 選択される値以外の値が設定されていますというバリデーションエラーになること" do
         @value.value = ["uncheck","check1"]
         @processer.validate(@value)
-        @value.errors.full_messages.first.should == "master は選択される値以外のものが設定されています"
+        @value.errors.full_messages.first.should == "master contains value not in selectable options."
       end
       it "正しい項目が入っている場合 バリデーションエラーにならないこと" do
         @value.value = ["check1","check2","check3"]
@@ -546,13 +546,13 @@ describe UserProfileMaster::CheckBoxProcesser do
       it "選択される項目以外の値が入っている場合 選択される値以外の値が設定されていますというバリデーションエラーになること" do
         @value.value = ["uncheck"]
         @processer.validate(@value)
-        @value.errors.full_messages.first.should == "master は選択される値以外のものが設定されています"
+        @value.errors.full_messages.first.should == "master contains value not in selectable options."
       end
     end
     it "文字列が入っている場合 選択される値以外の値が設定されていますというバリデーションエラーになること" do
       @value.value = "uncheck"
       @processer.validate(@value)
-      @value.errors.full_messages.first.should == "master に不正な形式が設定されています"
+      @value.errors.full_messages.first.should == "Invalid format for master."
     end
   end
   describe "#before_save" do
@@ -572,7 +572,7 @@ describe UserProfileMaster::CheckBoxProcesser do
   end
 end
 
-describe UserProfileMaster::PrefectureSelectProcesser do
+describe UserProfileMaster::PrefectureSelectProcesser, :type => :view do
   before do
     @master = stub_model(UserProfileMaster, :name => "master")
     @processer = UserProfileMaster::PrefectureSelectProcesser.new(@master)
@@ -589,7 +589,7 @@ describe UserProfileMaster::PrefectureSelectProcesser do
         end
         it "必須エラーが設定されること" do
           @processer.validate(@value)
-          @value.errors.full_messages.first.should == "master は必須です"
+          @value.errors.full_messages.first.should == "master is mandatory."
         end
       end
       describe "必須ではない場合" do
@@ -609,7 +609,7 @@ describe UserProfileMaster::PrefectureSelectProcesser do
         end
         it "入力値が不正エラーが設定されること" do
           @processer.validate(@value)
-          @value.errors.full_messages.first.should == "master は選択される値以外のものが設定されています"
+          @value.errors.full_messages.first.should == "master contains value not in selectable options."
         end
       end
       describe "正しいPrefectureが入力されている場合" do
@@ -625,7 +625,7 @@ describe UserProfileMaster::PrefectureSelectProcesser do
   end
 end
 
-describe UserProfileMaster::DatepickerProcesser do
+describe UserProfileMaster::DatepickerProcesser, :type => :view do
   before do
     @master = stub_model(UserProfileMaster, :name => "master")
     @processer = UserProfileMaster::DatepickerProcesser.new(@master)
@@ -642,7 +642,7 @@ describe UserProfileMaster::DatepickerProcesser do
         end
         it "必須エラーが設定されること" do
           @processer.validate(@value)
-          @value.errors.full_messages.first.should == "master は必須です"
+          @value.errors.full_messages.first.should == "master is mandatory."
         end
       end
       describe "必須ではない場合" do
@@ -681,7 +681,7 @@ describe UserProfileMaster::DatepickerProcesser do
           end
           it "日付妥当性チェックエラーが設定されること" do
             @processer.validate(@value)
-            @value.errors.full_messages.first.should == "master は正しい日付形式で入力して下さい"
+            @value.errors.full_messages.first.should == "Enter master in a valid date format."
           end
         end
         describe "フォーマットが不正な場合" do
@@ -690,7 +690,7 @@ describe UserProfileMaster::DatepickerProcesser do
           end
           it "日付妥当性チェックエラーが設定されること" do
             @processer.validate(@value)
-            @value.errors.full_messages.first.should == "master は正しい日付形式で入力して下さい"
+            @value.errors.full_messages.first.should == "Enter master in a valid date format."
           end
         end
       end

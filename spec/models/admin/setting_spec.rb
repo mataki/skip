@@ -251,7 +251,7 @@ describe Admin::Setting, '.find_or_default' do
     end
     it '例外が送出されること' do
       lambda do
-        Admin::Setting.send!(:find_or_default, 'hoge')
+        Admin::Setting.send(:find_or_default, 'hoge')
       end.should raise_error
     end
   end
@@ -265,7 +265,7 @@ describe Admin::Setting, '.find_or_default' do
         Admin::Setting.should_receive(:find_by_name).and_return(@setting)
       end
       it 'dbのデータが返ること' do
-        Admin::Setting.send!(:find_or_default, 'hoge').should == @setting
+        Admin::Setting.send(:find_or_default, 'hoge').should == @setting
       end
     end
     describe 'dbにデータがない場合' do
@@ -277,14 +277,14 @@ describe Admin::Setting, '.find_or_default' do
       end
       it 'newが呼ばれること' do
         Admin::Setting.should_receive(:new)
-        Admin::Setting.send!(:find_or_default, @key)
+        Admin::Setting.send(:find_or_default, @key)
       end
       it 'newの戻り値が返ること' do
-        Admin::Setting.send!(:find_or_default, @key)
+        Admin::Setting.send(:find_or_default, @key)
       end
       it 'newの戻り値のvalueが@@available_settingsのdefault値になっていること' do
         Admin::Setting.should_receive(:new).with({:name => @key, :value => Admin::Setting.available_settings[@key]['default']})
-        Admin::Setting.send!(:find_or_default, @key)
+        Admin::Setting.send(:find_or_default, @key)
       end
     end
   end

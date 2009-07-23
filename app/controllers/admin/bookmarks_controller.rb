@@ -15,9 +15,4 @@
 
 class Admin::BookmarksController < Admin::ApplicationController
   include Admin::AdminModule::AdminRootModule
-
-  undef new
-  undef create
-  undef edit
-  undef update
 end

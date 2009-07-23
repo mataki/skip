@@ -467,7 +467,7 @@ describe Admin::UsersController, 'POST /issue_password_reset_code' do
       Admin::User.should_receive(:find).and_return(@user)
     end
     it '未使用ユーザのパスワード再設定コードは発行できない旨のメッセージが設定されること' do
-      post :issue_password_reset_code
+      post :issue_password_reset_code, :id => 1
       flash[:error].should_not be_nil
       response.should be_redirect
     end
@@ -524,7 +524,7 @@ describe Admin::UsersController, 'POST /lock_actives' do
     post :lock_actives
   end
   it 'xx件のユーザをロックした旨のflashメッセージが設定されること' do
-    flash[:notice].should == '10件更新しました。'
+    flash[:notice].should == 'Updated 10 records.'
   end
   it 'ユーザ一覧画面のリダイレクトされること' do
     response.should redirect_to(admin_settings_path(:tab => :security))

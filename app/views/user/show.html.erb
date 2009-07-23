@@ -7,7 +7,7 @@
     <ul>
     <% @groups.each do |group| -%>
       <% icon_name = group.group_participations.first.owned? ? 'bullet_red' : 'bullet_blue' -%>
-      <li><%= icon_tag(icon_name) + group_link_to(group, :view_text => truncate(h(group.name), 12), :title => group.name) %></li>
+      <li><%= icon_tag(icon_name) + group_link_to(group, :view_text => truncate(h(group.name), :length => 12), :title => group.name) %></li>
     <% end -%>
     </ul>
     </div>

@@ -34,6 +34,7 @@ describe Admin::DocumentsController, 'GET /index' do
       describe '対象ファイルに対する権限が無い場合' do
         before do
           controller.should_receive(:open).and_raise(Errno::EACCES)
+          stub_flash_now
           get :index, :target => 'rules'
         end
         it { flash[:error].should_not be_nil }
@@ -42,6 +43,7 @@ describe Admin::DocumentsController, 'GET /index' do
       describe 'その他エラーが発生する場合' do
         before do
           controller.should_receive(:open).and_raise(Errno::EBUSY)
+          stub_flash_now
           get :index, :target => 'rules'
         end
         it { flash[:error].should_not be_nil }
@@ -52,6 +54,7 @@ describe Admin::DocumentsController, 'GET /index' do
   describe '対象ファイルが存在しない場合' do
     before do
       controller.should_receive(:open).and_raise(Errno::ENOENT)
+      stub_flash_now
       get :index, :target => 'rules'
     end
     it { flash[:error].should_not be_nil }
@@ -80,6 +83,7 @@ describe Admin::DocumentsController, 'POST /update' do
     describe '対象ファイルに対する権限が無い場合' do
       before do
         controller.should_receive(:open).and_raise(Errno::EACCES)
+        stub_flash_now
         post :update, :target => 'rules', :documents => {:rules => ''}
       end
       it { flash[:error].should_not be_nil }
@@ -89,6 +93,7 @@ describe Admin::DocumentsController, 'POST /update' do
     describe 'その他エラーが発生する場合' do
       before do
         controller.should_receive(:open).and_raise(Errno::EBUSY)
+        stub_flash_now
         post :update, :target => 'rules', :documents => {:rules => ''}
       end
       it { flash[:error].should_not be_nil }
@@ -130,6 +135,7 @@ describe Admin::DocumentsController, 'POST /revert' do
     describe '対象ファイルに対する権限がない場合' do
       before do
         controller.should_receive(:open).and_raise(Errno::EACCES)
+        stub_flash_now
         post :revert, :target => 'title_logo'
       end
       it { flash[:error].should_not be_nil }
@@ -139,6 +145,7 @@ describe Admin::DocumentsController, 'POST /revert' do
     describe 'その他エラーが発生する場合' do
       before do
         controller.should_receive(:open).and_raise(Errno::EBUSY)
+        stub_flash_now
         post :revert, :target => 'title_logo'
       end
       it { flash[:error].should_not be_nil }

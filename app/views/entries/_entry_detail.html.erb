@@ -217,7 +217,7 @@
         <a href="#" id="default_style_button"><%= icon_tag('page_white_text', :title => _('Blog Entry View')) %></a>
         <a href="#" id="source_style_button"><%= icon_tag('page_white_code', :title => _('View Source')) %></a>
         <span style="color: #000000;"><%= _('Action:') %><span>
-        <%= link_to(icon_tag('page_edit', :title => _('Edit')), :controller=> "edit", :action => "edit", :id => entry, :symbol => entry.symbol) if editable  %>
+        <%= link_to(icon_tag('page_edit', :title => _('Edit')), :controller=> "edit", :action => "edit", :id => entry) if editable  %>
         <%= link_to(icon_tag('tag_blue_add', :title => _('Bookmark this')), {:controller => "bookmark", :action => "edit", :url => "/page/#{entry.id.to_s}", :title => entry.title, :dummy => '.html'}, {:class => "nyroModal"}) %>
         <%= link_to(icon_tag('control_play_blue', :title => _('Slide Show')), {:controller=> "monta", :action => "execute_monta", :id => entry}, :target=>"_blank") if entry.editor_mode == 'hiki' %>
         <%= link_to(icon_tag('zoom', :title => _('Maximize!')), {:controller=> "board_entries", :action => "large", :id => entry}, :target=>"_blank") %>

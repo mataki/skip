@@ -336,7 +336,7 @@ describe MypageController, 'mypage > home 関連' do
         MypageController::AntennaEntry.should_receive(:new).with(@user, true).and_return(@antenna_entry)
       end
       it 'AntennaEntryのインスタンスが返ること' do
-        @controller.send!(:antenna_entry, nil, true).should == @antenna_entry
+        @controller.send(:antenna_entry, nil, true).should == @antenna_entry
       end
     end
     describe '第一引数が空の場合' do
@@ -345,7 +345,7 @@ describe MypageController, 'mypage > home 関連' do
         MypageController::AntennaEntry.should_receive(:new).with(@user, true).and_return(@antenna_entry)
       end
       it 'AntennaEntryのインスタンスが返ること' do
-        @controller.send!(:antenna_entry, '', true).should == @antenna_entry
+        @controller.send(:antenna_entry, '', true).should == @antenna_entry
       end
     end
     describe '第一引数が数値に解釈できる文字列の場合' do
@@ -355,7 +355,7 @@ describe MypageController, 'mypage > home 関連' do
         MypageController::UserAntennaEntry.should_receive(:new).with(@user, @key.to_i, true).and_return(@antenna_entry)
       end
       it 'UserAntennaEntryのインスタンスが返ること' do
-        @controller.send!(:antenna_entry, @key, true).should == @antenna_entry
+        @controller.send(:antenna_entry, @key, true).should == @antenna_entry
       end
     end
     describe '第一引数が数値に解釈できない文字列の場合' do
@@ -368,13 +368,13 @@ describe MypageController, 'mypage > home 関連' do
           MypageController::SystemAntennaEntry.should_receive(:new).with(@user, @key, true).and_return(@antenna_entry)
         end
         it 'SystemAntennaEntryのインスタンスが返ること' do
-          @controller.send!(:antenna_entry, @key, true).should == @antenna_entry
+          @controller.send(:antenna_entry, @key, true).should == @antenna_entry
         end
       end
       describe 'システムアンテナとして無効な文字列の場合' do
         it 'RecordNotFoundがraiseされること' do
           lambda do
-            @controller.send!(:antenna_entry, 'invalid', true)
+            @controller.send(:antenna_entry, 'invalid', true)
           end.should raise_error(ActiveRecord::RecordNotFound)
         end
       end
@@ -578,6 +578,7 @@ describe MypageController, 'mypage > manage(管理) 関連' do
       describe "認証が失敗した場合" do
         before do
           @result.stub!(:successful?).and_return(false)
+          stub_flash_now
           get :apply_ident_url, :openid_url => @openid_url
         end
         it "flashにエラーが設定されていること" do
@@ -590,6 +591,7 @@ describe MypageController, 'mypage > manage(管理) 関連' do
     end
     describe 'openidのパラメータが無い場合' do
       before do
+        stub_flash_now
         get :apply_ident_url
       end
       it "flashにエラーが設定されていること" do
@@ -679,13 +681,13 @@ describe MypageController, '#setup_for_antenna_box' do
   it '@system_antennasが設定されること' do
     mock_system_antennas = mock('system_antennas')
     Antenna.should_receive(:get_system_antennas).and_return(mock_system_antennas)
-    @controller.send!(:setup_for_antenna_box)
+    @controller.send(:setup_for_antenna_box)
     @controller.instance_eval{ @system_antennas.should == mock_system_antennas }
   end
   it '@my_antennasが設定されること' do
     mock_my_antennas = mock('my_antennas')
     @controller.should_receive(:find_antennas).and_return(mock_my_antennas)
-    @controller.send!(:setup_for_antenna_box)
+    @controller.send(:setup_for_antenna_box)
     @controller.instance_eval{ @my_antennas.should == mock_my_antennas }
   end
 end
@@ -696,7 +698,7 @@ describe MypageController, '#parse_date' do
     @controller.stub!(:params).and_return({:year => '2009', :month => '1', :day => '2'})
   end
   it 'year, month, dayが返却されること' do
-    @controller.send!(:parse_date).should == [2009, 1, 2]
+    @controller.send(:parse_date).should == [2009, 1, 2]
   end
 end
 
@@ -707,10 +709,10 @@ describe MypageController, '#system_messages' do
     @controller.stub!(:current_user).and_return(@user)
   end
   describe 'ようこそメッセージを表示する場合' do
-    it { @controller.send!(:system_messages, {:show_welcome_message => true}).size.should == 2 }
+    it { @controller.send(:system_messages, {:show_welcome_message => true}).size.should == 2 }
   end
   describe 'ようこそメッセージを表示しない場合' do
-    it { @controller.send!(:system_messages, {:show_welcome_message => false}).size.should == 1 }
+    it { @controller.send(:system_messages, {:show_welcome_message => false}).size.should == 1 }
   end
 end
 
@@ -788,7 +790,7 @@ describe MypageController, '#valid_list_types' do
     @controller = MypageController.new
     GroupCategory.should_receive(:all).and_return([stub_model(GroupCategory, :code => 'category')])
   end
-  it { @controller.send!(:valid_list_types).should == %w(questions access_blogs recent_blogs category) }
+  it { @controller.send(:valid_list_types).should == %w(questions access_blogs recent_blogs category) }
 end
 
 describe MypageController, '#antenna_entry_title' do
@@ -804,14 +806,14 @@ describe MypageController, '#antenna_entry_title' do
     end
     describe 'アンテナが指定されていない場合' do
       describe 'システムアンテナの場合' do
-        it { @controller.send!(:antenna_entry_title, stub('entry_antenna', :antenna => nil, :key => 'message')).should == 'Messages for you' }
-        it { @controller.send!(:antenna_entry_title, stub('entry_antenna', :antenna => nil, :key => 'comment')).should == 'Entries you have made comments'}
-        it { @controller.send!(:antenna_entry_title, stub('entry_antenna', :antenna => nil, :key => 'bookmark')).should == 'Entries bookmarked by yourself' }
-        it { @controller.send!(:antenna_entry_title, stub('entry_antenna', :antenna => nil, :key => 'group')).should == 'Posts in the groups joined' }
+        it { @controller.send(:antenna_entry_title, stub('entry_antenna', :antenna => nil, :key => 'message')).should == 'Messages for you' }
+        it { @controller.send(:antenna_entry_title, stub('entry_antenna', :antenna => nil, :key => 'comment')).should == 'Entries you have made comments'}
+        it { @controller.send(:antenna_entry_title, stub('entry_antenna', :antenna => nil, :key => 'bookmark')).should == 'Entries bookmarked by yourself' }
+        it { @controller.send(:antenna_entry_title, stub('entry_antenna', :antenna => nil, :key => 'group')).should == 'Posts in the groups joined' }
       end
       describe 'システムアンテナではない場合' do
-        it { @controller.send!(:antenna_entry_title, stub('entry_antenna', :antenna => nil, :key => nil)).should == 'List of unread entries' }
-        it { @controller.send!(:antenna_entry_title, stub('entry_antenna', :antenna => nil, :key => 'invalid')).should == 'List of unread entries' }
+        it { @controller.send(:antenna_entry_title, stub('entry_antenna', :antenna => nil, :key => nil)).should == 'List of unread entries' }
+        it { @controller.send(:antenna_entry_title, stub('entry_antenna', :antenna => nil, :key => 'invalid')).should == 'List of unread entries' }
       end
     end
   end
@@ -824,12 +826,12 @@ describe MypageController, '#unread_entry_id_hash_with_user_reading' do
   end
   describe '指定された記事idがnilの場合' do
     it '空ハッシュが返ること' do
-      @controller.send!(:unread_entry_id_hash_with_user_reading, nil).should == {}
+      @controller.send(:unread_entry_id_hash_with_user_reading, nil).should == {}
     end
   end
   describe '指定された記事idの配列サイズが0の場合' do
     it '空ハッシュが返ること' do
-      @controller.send!(:unread_entry_id_hash_with_user_reading, []).should == {}
+      @controller.send(:unread_entry_id_hash_with_user_reading, []).should == {}
     end
   end
   describe '指定された記事idの配列サイズが1以上の場合' do
@@ -842,7 +844,7 @@ describe MypageController, '#unread_entry_id_hash_with_user_reading' do
       end
       it '記事のidをキーとして未読のUserReadingのハッシュが返ること' do
         @expected = { 777 => @unread_user_reading }
-        @controller.send!(:unread_entry_id_hash_with_user_reading, [77, 777]).should == @expected
+        @controller.send(:unread_entry_id_hash_with_user_reading, [77, 777]).should == @expected
       end
     end
     describe '対象のUserReadingが存在しない場合' do
@@ -850,7 +852,7 @@ describe MypageController, '#unread_entry_id_hash_with_user_reading' do
         UserReading.should_receive(:find).and_return([])
       end
       it '空ハッシュが返ること' do
-        @controller.send!(:unread_entry_id_hash_with_user_reading, [77, 777]).should == {}
+        @controller.send(:unread_entry_id_hash_with_user_reading, [77, 777]).should == {}
       end
     end
   end

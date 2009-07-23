@@ -27,11 +27,9 @@ module ApplicationHelper
   def generate_tab_menu(tab_menu_sources)
     output = ''
     tab_menu_sources.each do |source|
-      html_options = source[:html_options] || {}
-      if controller.action_name == source[:options][:action] || (source[:selected_actions] && source[:selected_actions].include?(controller.action_name))
-        html_options.merge!(:class => 'selected')
-      end
-      title =  content_tag(:span, source[:label])
+      html_options = (source[:html_options] || {}).dup
+      html_options.merge!(:class => 'selected') if current_page?(source[:options])
+      title = content_tag(:span, source[:label])
       output << content_tag(:li, link_to(title, source[:options], html_options))
     end
     content_tag :ul, output
@@ -77,7 +75,7 @@ module ApplicationHelper
     output_text << icon_tag('page') if options[:image_on]
 
     if limit = options[:truncate]
-      title = truncate(board_entry.title, limit)
+      title = truncate(board_entry.title, :length => limit)
     else
       title = board_entry.title
     end
@@ -357,7 +355,7 @@ module ApplicationHelper
 
 private
   def relative_url_root
-    ActionController::AbstractRequest.relative_url_root
+    ActionController::Base.relative_url_root || ''
   end
 
   # TODO 仕組みが複雑すぎる。BoardEntry.replace_symbol_linkと合わせてシンプルな作りにしたい。
@@ -395,7 +393,7 @@ private
       url =  relative_url_root + url
       link_to "#{icon_tag('user')} #{h title}", bookmark.escaped_url, :title => title
     else
-      link_to "#{icon_tag('world_link')} #{h truncate(title, 115)}", bookmark.escaped_url, :title => title
+      link_to "#{icon_tag('world_link')} #{h truncate(title, :length => 115)}", bookmark.escaped_url, :title => title
     end
   end
 

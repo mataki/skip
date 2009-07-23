@@ -16,12 +16,6 @@
 class Admin::ShareFilesController < Admin::ApplicationController
   include Admin::AdminModule::AdminRootModule
 
-  undef new
-  undef create
-  undef edit
-  undef update
-  undef show
-
   def download
     share_file = Admin::ShareFile.find(params[:id])
     send_file(share_file.full_path, :filename => share_file.file_name, :type => share_file.content_type || Types::ContentType::DEFAULT_CONTENT_TYPE , :stream => false, :disposition => 'attachment')

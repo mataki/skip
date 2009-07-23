@@ -185,11 +185,13 @@ def create_board_entry_comment options = {}
   board_entry_comment
 end
 
+# ActionController::TestProcess#fixture_file_uploadを利用した方がよいかも
 def mock_uploaed_file options = {}
   file = mock('file', { :original_filename => "file1.png", :content_type => "image/png", :size => 1000, :read => "" }.merge(options))
   file.stub!(:is_a?).with(ActionController::UploadedFile).and_return(true)
   # 以下をやらないとパラメータの中身がHashかどうかのチェックがらしく、リクエストが飛ばなくなるので
   file.stub!(:is_a?).with(Hash).and_return(false)
+  file.stub!(:is_a?).with(Array).and_return(false)
   file
 end
 
@@ -224,6 +226,12 @@ def checkid_request_params
 end
 def identifier(user)
   "http://test.host/id/#{user.code}"
+end
+
+# --- flash.nowがRails 2.3 + RSpec 1.2.7でテストをパスしない問題に対する対応
+# https://rspec.lighthouseapp.com/projects/5645/tickets/98-11834-fake-controller-flash-object
+def stub_flash_now
+  controller.instance_eval{flash.stub!(:sweep)}
 end
 
 ######skip関連のテストで必要

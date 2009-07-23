@@ -187,7 +187,7 @@ class EditController < ApplicationController
     redirect_to_with_deny_auth and return unless authorize_to_edit_board_entry? @board_entry
 
     # 成りすましての更新を防止
-    if params[:symbol] != @board_entry.symbol || params[:board_entry][:symbol] != @board_entry.symbol
+    if params[:board_entry][:symbol] != @board_entry.symbol
       redirect_to_with_deny_auth and return
     end
 

@@ -18,7 +18,7 @@
         <tr>
           <th><%= _('URL')%></th>
           <td>
-            <%= link_to truncate(@bookmark.escaped_url, 60), @bookmark.escaped_url, :title => h(@bookmark.title), :target => '_blank' %><br/>
+            <%= link_to truncate(@bookmark.escaped_url, :length => 60), @bookmark.escaped_url, :title => h(@bookmark.title), :target => '_blank' %><br/>
             <span style="font-size: 10px; color: #555555;"><%= _('(Will open as a new window)')%></span>
           </td>
         </tr>

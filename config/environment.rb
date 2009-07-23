@@ -4,7 +4,7 @@
 # (Use only when you can't set environment variables through your web/app server)
 ENV['RAILS_ENV'] ||= 'production'
 
-RAILS_GEM_VERSION = '2.1.2' unless defined? RAILS_GEM_VERSION
+RAILS_GEM_VERSION = '2.3.2' unless defined? RAILS_GEM_VERSION
 
 SKIP_VERSION = '1.1.0'
 
@@ -13,9 +13,6 @@ require File.join(File.dirname(__FILE__), 'boot')
 
 
 Rails::Initializer.run do |config|
-  # TODO: Rails 2.3 にバージョンアップする際に独自でyamlをパースすることを無くす
-  require 'yaml'
-  config.action_controller.session = YAML.load(File.read(RAILS_ROOT + "/config/initial_settings.yml"))[RAILS_ENV]['session']
   # config.action_controller.session_store = :p_store
 
   # Skip frameworks you're not going to use
@@ -47,10 +44,12 @@ Rails::Initializer.run do |config|
   # config.active_record.schema_format = :ruby
 
   # See Rails::Configuration for more options
-  config.gem 'gettext',  :lib => 'gettext/rails', :version => '1.93.0'
   config.gem "json", :lib => "json/add/rails"
   config.gem "fastercsv"
   config.gem 'openskip-skip_embedded', :lib => 'skip_embedded', :version => '>=0.9.9', :source => 'http://gems.github.com'
+  config.gem 'locale_rails'
+  config.gem 'gettext_activerecord'
+  config.gem 'gettext_rails'
 end
 
 menu_btns = [
