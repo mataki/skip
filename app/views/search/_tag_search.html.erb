@@ -2,7 +2,7 @@
   <tr>
     <th><%= _('Tags')%></th>
     <td><%= text_field_tag('tag_words', Tag.comma_tags(params[:tag_words]), :size => '60') %>
-    <%= _('[Tag search mode]:&nbsp;AND%{radio_and}OR%%{radio_or}') % {:radio_and => radio_button_tag('tag_select', 'AND', params[:tag_select]=='AND'), :radio_or => radio_button_tag('tag_select', 'OR', params[:tag_select]=='OR') } %>
+    <%= _('[Tag search mode]:&nbsp;AND&nbsp;%{radio_and}&nbsp;OR&nbsp;%{radio_or}') % {:radio_and => radio_button_tag('tag_select', 'AND', params[:tag_select]=='AND'), :radio_or => radio_button_tag('tag_select', 'OR', params[:tag_select]=='OR') } %>
     </td>
   </tr>
   <tr><td colspan="2"><div id="tag_list"></div></td></tr>
