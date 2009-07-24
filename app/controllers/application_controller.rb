@@ -23,6 +23,7 @@ class ApplicationController < ActionController::Base
   filter_parameter_logging :password
 
   protect_from_forgery
+
   rescue_from ActionController::InvalidAuthenticityToken do |exception|
     if request.env['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest'
       render :text => _('Invalid session. You need to log in again.'), :status => :bad_request
@@ -150,19 +151,12 @@ protected
     redirect_to url
   end
 
-  # 本番環境でのエラー画面をプラットホームにあるエラー画面にするために、rescue.rbのメソッドを
-  # オーバーライドしている。
-  # CGI::Session::CookieStore::TamperedWithCookie について
-  # Rails2.0からcookie-sessionになり、以下の場合などにunmarcial出来ない場合にエラーがraiseされる。
-  # (cookieのシークレットキーが変わったとき、ユーザが無理やりcookieを書き換えたとき)
-  # その場合、SSOの機構があるので一旦リダイレクトして同じURLに飛ばすことでcookieを作り直せる。
+  # exception_notification用にオーバーライド
   def rescue_action_in_public ex
     case ex
     when ActionController::UnknownController, ActionController::UnknownAction,
       ActionController::RoutingError, ActiveRecord::RecordNotFound
-      render :file => File.join(RAILS_ROOT, 'public', '404.html'), :status => :not_found
-    when CGI::Session::CookieStore::TamperedWithCookie
-      redirect_to request.env["REQUEST_URI"], :status => :temporary_redirect
+      render_404
     else
       render :template => "system/500" , :status => :internal_server_error
 
