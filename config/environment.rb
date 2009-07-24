@@ -44,12 +44,12 @@ Rails::Initializer.run do |config|
   # config.active_record.schema_format = :ruby
 
   # See Rails::Configuration for more options
-  config.gem "json", :lib => "json/add/rails"
   config.gem "fastercsv"
-  config.gem 'openskip-skip_embedded', :lib => 'skip_embedded', :version => '>=0.9.9', :source => 'http://gems.github.com'
-  config.gem 'locale_rails'
-  config.gem 'gettext_activerecord'
+  config.gem "json", :lib => "json/add/rails"
   config.gem 'gettext_rails'
+  config.gem 'gettext_activerecord'
+  config.gem 'locale_rails'
+  config.gem 'openskip-skip_embedded', :lib => 'skip_embedded', :version => '>=0.9.17', :source => 'http://gems.github.com'
 end
 
 menu_btns = [
