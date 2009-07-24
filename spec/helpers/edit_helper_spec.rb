@@ -15,12 +15,22 @@
 
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe EditHelper do
-
-  #Delete this example and add some real ones or delete this file
-  it "should include the EditHelper" do
-    included_modules = (class << helper; self; end).send :included_modules
-    included_modules.should include(EditHelper)
+describe EditHelper, '#share_file_url' do
+  describe 'uidの場合' do
+    it 'ユーザの共有ファイル一覧へのurlとなること' do
+      helper.send(:share_files_url, 'uid:foo').should == '/user/foo/share_file?format=js'
+    end
   end
-
+  describe 'gidの場合' do
+    it 'グループの共有ファイル一覧へのurlとなること' do
+      helper.send(:share_files_url, 'gid:bar').should == '/group/bar/share_file?format=js'
+    end
+  end
+  describe 'uid, gid以外の場合' do
+    it 'ArgumentErrorが発生すること' do
+      lambda do
+        helper.send(:share_files_url, 'zid:foo')
+      end.should raise_error(ArgumentError)
+    end
+  end
 end
