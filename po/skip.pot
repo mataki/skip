@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-07-24 17:05+0900\n"
+"POT-Creation-Date: 2009-07-24 17:41+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1851,6 +1851,10 @@ msgstr ""
 
 #: app/views/admin/board_entry_comments/index.html.erb:26
 msgid "Are you sure destroing with nest comments?"
+msgstr ""
+
+#: app/views/group/show.html.erb:51
+msgid "Are you sure leave the group?"
 msgstr ""
 
 #: app/helpers/share_file_helper.rb:32
