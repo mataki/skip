@@ -22,7 +22,7 @@ SKIPを動かすにあたり以下の環境で検証を行っています。
  - OS    : Linux (kernel 2.6系)
  - DB    : MySQL 5.0系
  - Ruby  : 1.8.6, 1.8.7
- - Rails : 2.1.2
+ - Rails : 2.3.2
 
 
 ================================================================================
@@ -31,14 +31,14 @@ SKIPを動かすにあたり以下の環境で検証を行っています。
 下記内容に従いセットアップすることで、SKIPを動かすことができます。
 前提条件は以下のようになります。
 
- - Ruby(1.8.6 or 1.8.7), RubyGems(1.3.0以上), MySQL(5.0系)がインストール済み。
+ - Ruby(1.8.6 or 1.8.7), RubyGems(1.3.5以上), MySQL(5.0系)がインストール済み。
  - 公式ページから最新版SKIPをダウンロード済み。
 
 1. gemsのインストール
 --------------------------------------------------------------------------------
-    $ sudo gem install rails --version 2.1.2
-    $ sudo gem install gettext --version 1.93.0
-    $ sudo gem install mysql fastercsv ruby-openid json
+    $ sudo gem install rails --version 2.3.2
+    $ sudo gem install gettext_rails --version 2.0.4
+    $ sudo gem install mysql fastercsv ruby-openid json openskip-skip_embedded
 
 2. SKIPのファイル解凍
 --------------------------------------------------------------------------------
@@ -107,7 +107,18 @@ SKIPでは、ユニットテストにRspecを利用しています。
     $ sudo gem install rspec
     $ sudo gem install rspec-rails
 
-2. rspecの実行
+2. (未インストールならば)hyperestraierのruby用ライブラリのインストール
+--------------------------------------------------------------------------------
+    $ wget http://hyperestraier.sourceforge.net/hyperestraier-1.4.13.tar.gz
+    $ tar zxvf hyperestraier-1.4.13.tar.gz
+    $ sudo cp hyperestraier-1.4.13/rubypure/estraierpure.rb /path_to_ruby_home/lib/ruby/site_ruby/1.8
+
+3. データベースの作成（mysqlが起動済みであること）
+--------------------------------------------------------------------------------
+    $ RAILS_ENV=test rake db:create
+    $ RAILS_ENV=test rake db:migrate
+
+4. rspecの実行
 --------------------------------------------------------------------------------
     $ rake spec
 このコマンドを発行するとユニットテストが実行されます。

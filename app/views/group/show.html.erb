@@ -48,7 +48,7 @@
         <%= link_to(icon_tag('group_go') + _('Join this group'), {:action=>"new_participation"}, {:class => "nyroModal"}) -%>
       <% elsif not @participation.owned? -%>
         <% form_tag({:action => 'leave'}) do -%>
-        <%= submit_tag(_('Leave the group'), {:onclick=>"return confirm('#{_('Are you sure leave the group?')}');"}) %>
+        <%= submit_tag(_('Leave the group'), {:onclick=>"return confirm('" + _('Are you sure leave the group?') + "');"}) %>
         <% end %>
       <% end %>
     </div>
