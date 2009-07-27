@@ -15,4 +15,5 @@ config.action_controller.perform_caching             = true
 # Disable delivery errors if you bad email addresses should just be ignored
 # config.action_mailer.raise_delivery_errors = false
 
-#ActionController::AbstractRequest.relative_url_root = "/"
+# ActionController::Base.relative_url_root = "/"
+
