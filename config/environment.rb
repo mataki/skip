@@ -11,6 +11,9 @@ SKIP_VERSION = '1.1.0'
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
 
+# TODO: lighttpdで動作するとカレントディレクトリがpublicになりgettext-2.0.4がmoファイルを取得できず正しく動作しない。
+#       gettext-rails側などで、根本解決できた場合に削除する
+Dir.chdir(RAILS_ROOT)
 
 Rails::Initializer.run do |config|
   # config.action_controller.session_store = :p_store
