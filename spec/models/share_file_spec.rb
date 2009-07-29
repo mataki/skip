@@ -556,7 +556,7 @@ describe ShareFile::GroupOwner do
       end
       describe '所有者が対象ユーザが所属するグループの場合' do
         before do
-          @group.should_receive(:participating?).with(@user).and_return(true)
+          @user.should_receive(:participating_group?).with(@group).and_return(true)
         end
         describe '対象ユーザがグループ管理者の場合' do
           before do
@@ -600,7 +600,7 @@ describe ShareFile::GroupOwner do
       end
       describe '所有者が対象ユーザが所属するグループ以外の場合' do
         before do
-          @group.should_receive(:participating?).with(@user).and_return(false)
+          @user.should_receive(:participating_group?).with(@group).and_return(false)
         end
         describe '公開範囲に対象となるユーザが含まれる場合' do
           before do
@@ -711,7 +711,7 @@ describe ShareFile::GroupOwner do
       end
       describe '所有者が対象ユーザが所属するグループの場合' do
         before do
-          @group.should_receive(:participating?).with(@user).and_return(true)
+          @user.should_receive(:participating_group?).with(@group).and_return(true)
         end
         describe '対象ユーザがグループ管理者の場合' do
           before do
@@ -742,7 +742,7 @@ describe ShareFile::GroupOwner do
       end
       describe '所有者が対象ユーザが所属するグループ以外の場合' do
         before do
-          @group.should_receive(:participating?).with(@user).and_return(false)
+          @user.should_receive(:participating_group?).with(@group).and_return(false)
         end
         it '権限がないこと' do
           @owner.updatable?.should be_false

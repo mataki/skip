@@ -158,6 +158,12 @@ def create_group(options = {})
   group
 end
 
+def create_group_participation(options = {})
+  group_participation = GroupParticipation.new({:user_id => 1, :group_id => 1, :waiting => 0, :owned => 0, :favorite => 0}.merge(options))
+  group_participation.save!
+  group_participation
+end
+
 def create_board_entry options = {}
   board_entry = BoardEntry.new({:title => 'とある記事',
                                :contents => 'とある記事の内容',

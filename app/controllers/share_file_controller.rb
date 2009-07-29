@@ -157,7 +157,7 @@ class ShareFileController < ApplicationController
       return
     end
     @participation = @owner_obj.group_participations.find_by_user_id(current_user.id) unless @owner_obj.is_a?(User)
-    @visitor_is_uploader = @owner_obj.is_a?(User) ? (@owner_obj == current_user) : @owner_obj.participating?(current_user)
+    @visitor_is_uploader = @owner_obj.is_a?(User) ? (@owner_obj == current_user) : current_user.participating_group?(@owner_obj)
     @main_menu = @owner_obj.is_a?(User) ? user_main_menu(@owner_obj) : _('Groups')
     @title = @owner_obj.is_a?(User) ? user_title(@owner_obj) : @owner_obj.name
     @tab_menu_source = @owner_obj.is_a?(User) ? user_tab_menu_source(@owner_obj) : group_tab_menu_source(@participation)
