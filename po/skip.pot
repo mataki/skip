@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-07-29 14:46+0900\n"
+"POT-Creation-Date: 2009-07-29 16:49+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -204,7 +204,7 @@ msgid "%{rslt} to %{type}."
 msgstr "%{type}%{rslt}。"
 
 #: app/controllers/admin/documents_controller.rb:83
-#: app/controllers/admin/images_controller.rb:150
+#: app/controllers/admin/images_controller.rb:148
 msgid "%{target} was successfully saved."
 msgstr ""
 
@@ -740,88 +740,80 @@ msgstr ""
 msgid "Admin::ImagesController"
 msgstr ""
 
-#: app/controllers/admin/images_controller.rb:25
+#: app/controllers/admin/images_controller.rb:23
 #: app/views/admin/images/index.html.erb:21
 msgid "Admin::ImagesController|background"
 msgstr ""
 
-#: app/controllers/admin/images_controller.rb:27
+#: app/controllers/admin/images_controller.rb:25
 msgid "Admin::ImagesController|background001"
 msgstr ""
 
-#: app/controllers/admin/images_controller.rb:28
+#: app/controllers/admin/images_controller.rb:26
 msgid "Admin::ImagesController|background002"
 msgstr ""
 
-#: app/controllers/admin/images_controller.rb:29
+#: app/controllers/admin/images_controller.rb:27
 msgid "Admin::ImagesController|background003"
 msgstr ""
 
-#: app/controllers/admin/images_controller.rb:30
+#: app/controllers/admin/images_controller.rb:28
 msgid "Admin::ImagesController|background004"
 msgstr ""
 
-#: app/controllers/admin/images_controller.rb:31
+#: app/controllers/admin/images_controller.rb:29
 msgid "Admin::ImagesController|background005"
 msgstr ""
 
-#: app/controllers/admin/images_controller.rb:32
+#: app/controllers/admin/images_controller.rb:30
 msgid "Admin::ImagesController|background006"
 msgstr ""
 
-#: app/controllers/admin/images_controller.rb:33
+#: app/controllers/admin/images_controller.rb:31
 msgid "Admin::ImagesController|background007"
 msgstr ""
 
-#: app/controllers/admin/images_controller.rb:34
+#: app/controllers/admin/images_controller.rb:32
 msgid "Admin::ImagesController|background008"
 msgstr ""
 
-#: app/controllers/admin/images_controller.rb:35
+#: app/controllers/admin/images_controller.rb:33
 msgid "Admin::ImagesController|background009"
 msgstr ""
 
-#: app/controllers/admin/images_controller.rb:36
+#: app/controllers/admin/images_controller.rb:34
 msgid "Admin::ImagesController|background010"
 msgstr ""
 
-#: app/controllers/admin/images_controller.rb:26
+#: app/controllers/admin/images_controller.rb:24
 #: app/views/admin/images/index.html.erb:22
 msgid "Admin::ImagesController|background_description"
 msgstr ""
 
-#: app/controllers/admin/images_controller.rb:37
+#: app/controllers/admin/images_controller.rb:35
 #: app/views/admin/images/index.html.erb:30
 msgid "Admin::ImagesController|favicon"
 msgstr ""
 
-#: app/controllers/admin/images_controller.rb:38
+#: app/controllers/admin/images_controller.rb:36
 #: app/views/admin/images/index.html.erb:31
 msgid "Admin::ImagesController|favicon_description"
 msgstr ""
 
-#: app/controllers/admin/images_controller.rb:23
+#: app/controllers/admin/images_controller.rb:21
 msgid "Admin::ImagesController|footer_logo"
 msgstr ""
 
-#: app/controllers/admin/images_controller.rb:24
+#: app/controllers/admin/images_controller.rb:22
 msgid "Admin::ImagesController|footer_logo_description"
 msgstr ""
 
-#: app/controllers/admin/images_controller.rb:21
+#: app/controllers/admin/images_controller.rb:19
 msgid "Admin::ImagesController|header_logo"
 msgstr ""
 
-#: app/controllers/admin/images_controller.rb:22
-msgid "Admin::ImagesController|header_logo_description"
-msgstr ""
-
-#: app/controllers/admin/images_controller.rb:19
-msgid "Admin::ImagesController|title_logo"
-msgstr ""
-
 #: app/controllers/admin/images_controller.rb:20
-msgid "Admin::ImagesController|title_logo_description"
+msgid "Admin::ImagesController|header_logo_description"
 msgstr ""
 
 #: app/models/admin/initial_setting.rb:68
@@ -2967,7 +2959,7 @@ msgstr ""
 msgid "Failed to save the data."
 msgstr ""
 
-#: app/controllers/admin/images_controller.rb:153
+#: app/controllers/admin/images_controller.rb:151
 msgid "Failed to save the image. Try again or contact administrator."
 msgstr ""
 
@@ -3750,7 +3742,7 @@ msgstr ""
 msgid "Log in failed."
 msgstr ""
 
-#: app/views/platform/index.html.erb:49
+#: app/views/platform/index.html.erb:46
 #: app/views/shared/_login_form.html.erb:87
 msgid "Login"
 msgstr ""
@@ -4780,7 +4772,7 @@ msgstr ""
 msgid "Registered."
 msgstr ""
 
-#: app/views/platform/index.html.erb:54
+#: app/views/platform/index.html.erb:51
 msgid "Registration"
 msgstr ""
 
@@ -5290,7 +5282,7 @@ msgstr ""
 msgid "Sign out"
 msgstr ""
 
-#: app/views/platform/activate.html.erb:2 app/views/platform/index.html.erb:53
+#: app/views/platform/activate.html.erb:2 app/views/platform/index.html.erb:50
 msgid "Signup"
 msgstr ""
 
@@ -5875,7 +5867,7 @@ msgstr ""
 
 #: app/controllers/admin/documents_controller.rb:38
 #: app/controllers/admin/documents_controller.rb:89
-#: app/controllers/admin/images_controller.rb:156
+#: app/controllers/admin/images_controller.rb:154
 msgid "Unexpected error occured. Contact administrator."
 msgstr ""
 

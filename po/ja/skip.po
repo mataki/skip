@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-07-29 14:46+0900\n"
-"PO-Revision-Date: 2009-07-29 14:49+0900\n"
+"POT-Creation-Date: 2009-07-29 16:49+0900\n"
+"PO-Revision-Date: 2009-07-29 16:48+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -124,7 +124,7 @@ msgstr "%{write_place}を%{action}"
 #: app/views/admin/images/index.html.erb:25
 msgid "%{extension} formats are accepted. Maximum file size is %{size}Kbytes."
 msgstr ""
-"ファイル形式は%{extention}形式を利用可能できます。ファイルサイズは%{size}"
+"ファイル形式は%{extension}形式を利用可能できます。ファイルサイズは%{size}"
 "Kbyteまでアップロード可能です。"
 
 #: app/controllers/platform_controller.rb:183
@@ -207,7 +207,7 @@ msgid "%{rslt} to %{type}."
 msgstr "%{type}%{rslt}。"
 
 #: app/controllers/admin/documents_controller.rb:83
-#: app/controllers/admin/images_controller.rb:150
+#: app/controllers/admin/images_controller.rb:148
 msgid "%{target} was successfully saved."
 msgstr "%{target}を保存しました。"
 
@@ -778,89 +778,81 @@ msgstr "参加承認"
 msgid "Admin::ImagesController"
 msgstr "画像設定"
 
-#: app/controllers/admin/images_controller.rb:25
+#: app/controllers/admin/images_controller.rb:23
 #: app/views/admin/images/index.html.erb:21
 msgid "Admin::ImagesController|background"
 msgstr "背景画像"
 
-#: app/controllers/admin/images_controller.rb:27
+#: app/controllers/admin/images_controller.rb:25
 msgid "Admin::ImagesController|background001"
 msgstr "背景画像1"
 
-#: app/controllers/admin/images_controller.rb:28
+#: app/controllers/admin/images_controller.rb:26
 msgid "Admin::ImagesController|background002"
 msgstr "背景画像2"
 
-#: app/controllers/admin/images_controller.rb:29
+#: app/controllers/admin/images_controller.rb:27
 msgid "Admin::ImagesController|background003"
 msgstr "背景画像3"
 
-#: app/controllers/admin/images_controller.rb:30
+#: app/controllers/admin/images_controller.rb:28
 msgid "Admin::ImagesController|background004"
 msgstr "背景画像4"
 
-#: app/controllers/admin/images_controller.rb:31
+#: app/controllers/admin/images_controller.rb:29
 msgid "Admin::ImagesController|background005"
 msgstr "背景画像5"
 
-#: app/controllers/admin/images_controller.rb:32
+#: app/controllers/admin/images_controller.rb:30
 msgid "Admin::ImagesController|background006"
 msgstr "背景画像6"
 
-#: app/controllers/admin/images_controller.rb:33
+#: app/controllers/admin/images_controller.rb:31
 msgid "Admin::ImagesController|background007"
 msgstr "背景画像7"
 
-#: app/controllers/admin/images_controller.rb:34
+#: app/controllers/admin/images_controller.rb:32
 msgid "Admin::ImagesController|background008"
 msgstr "背景画像8"
 
-#: app/controllers/admin/images_controller.rb:35
+#: app/controllers/admin/images_controller.rb:33
 msgid "Admin::ImagesController|background009"
 msgstr "背景画像9"
 
-#: app/controllers/admin/images_controller.rb:36
+#: app/controllers/admin/images_controller.rb:34
 msgid "Admin::ImagesController|background010"
 msgstr "背景画像10"
 
-#: app/controllers/admin/images_controller.rb:26
+#: app/controllers/admin/images_controller.rb:24
 #: app/views/admin/images/index.html.erb:22
 msgid "Admin::ImagesController|background_description"
 msgstr "ログイン画面でランダムに切り替わる背景画像です。10個まで設定できます。"
 
-#: app/controllers/admin/images_controller.rb:37
+#: app/controllers/admin/images_controller.rb:35
 #: app/views/admin/images/index.html.erb:30
 msgid "Admin::ImagesController|favicon"
 msgstr "favicon"
 
-#: app/controllers/admin/images_controller.rb:38
+#: app/controllers/admin/images_controller.rb:36
 #: app/views/admin/images/index.html.erb:31
 msgid "Admin::ImagesController|favicon_description"
 msgstr "faviconを設定できます。"
 
-#: app/controllers/admin/images_controller.rb:23
+#: app/controllers/admin/images_controller.rb:21
 msgid "Admin::ImagesController|footer_logo"
 msgstr "フッターロゴ画像"
 
-#: app/controllers/admin/images_controller.rb:24
+#: app/controllers/admin/images_controller.rb:22
 msgid "Admin::ImagesController|footer_logo_description"
 msgstr "画面右下のフッターに表示されるロゴの画像です。"
 
-#: app/controllers/admin/images_controller.rb:21
+#: app/controllers/admin/images_controller.rb:19
 msgid "Admin::ImagesController|header_logo"
 msgstr "ヘッダーロゴ画像"
 
-#: app/controllers/admin/images_controller.rb:22
+#: app/controllers/admin/images_controller.rb:20
 msgid "Admin::ImagesController|header_logo_description"
 msgstr "画面左上のヘッダーに表示されるロゴの画像です。"
-
-#: app/controllers/admin/images_controller.rb:19
-msgid "Admin::ImagesController|title_logo"
-msgstr "タイトルロゴ画像"
-
-#: app/controllers/admin/images_controller.rb:20
-msgid "Admin::ImagesController|title_logo_description"
-msgstr "ログイン画面に表示されるロゴの画像です。"
 
 #: app/models/admin/initial_setting.rb:68
 msgid "Admin::InitialSetting|Administrator addr"
@@ -3175,7 +3167,7 @@ msgstr ""
 msgid "Failed to save the data."
 msgstr "保存に失敗しました。"
 
-#: app/controllers/admin/images_controller.rb:153
+#: app/controllers/admin/images_controller.rb:151
 msgid "Failed to save the image. Try again or contact administrator."
 msgstr ""
 "対象の画像を保存することが出来ませんでした。再度お試し頂くか管理者にお問い合"
@@ -3976,7 +3968,7 @@ msgstr "ログインし直して下さい。"
 msgid "Log in failed."
 msgstr "ログインに失敗しました。"
 
-#: app/views/platform/index.html.erb:49
+#: app/views/platform/index.html.erb:46
 #: app/views/shared/_login_form.html.erb:87
 msgid "Login"
 msgstr "ログイン"
@@ -5025,7 +5017,7 @@ msgstr "登録ユーザ数：%s人"
 msgid "Registered."
 msgstr "登録しました。"
 
-#: app/views/platform/index.html.erb:54
+#: app/views/platform/index.html.erb:51
 msgid "Registration"
 msgstr "ユーザ登録してSKIPの利用を開始する"
 
@@ -5556,7 +5548,7 @@ msgstr ""
 msgid "Sign out"
 msgstr "ログアウト"
 
-#: app/views/platform/activate.html.erb:2 app/views/platform/index.html.erb:53
+#: app/views/platform/activate.html.erb:2 app/views/platform/index.html.erb:50
 msgid "Signup"
 msgstr "ユーザ登録"
 
@@ -6155,7 +6147,7 @@ msgstr "ユーザ登録が継続出来ません。最初からやり直して下
 
 #: app/controllers/admin/documents_controller.rb:38
 #: app/controllers/admin/documents_controller.rb:89
-#: app/controllers/admin/images_controller.rb:156
+#: app/controllers/admin/images_controller.rb:154
 msgid "Unexpected error occured. Contact administrator."
 msgstr "想定外のエラーが発生しました。管理者にお問い合わせ下さい。"
 
@@ -7734,3 +7726,9 @@ msgstr ""
 
 #~ msgid "&nbsp;%{url}"
 #~ msgstr "　%{url}"
+
+#~ msgid "Admin::ImagesController|title_logo"
+#~ msgstr "タイトルロゴ画像"
+
+#~ msgid "Admin::ImagesController|title_logo_description"
+#~ msgstr "ログイン画面に表示されるロゴの画像です。"

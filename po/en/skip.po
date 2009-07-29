@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-07-29 14:46+0900\n"
+"POT-Creation-Date: 2009-07-29 16:49+0900\n"
 "PO-Revision-Date: 2009-06-29 13:31+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -204,7 +204,7 @@ msgid "%{rslt} to %{type}."
 msgstr "%{type}%{rslt}。"
 
 #: app/controllers/admin/documents_controller.rb:83
-#: app/controllers/admin/images_controller.rb:150
+#: app/controllers/admin/images_controller.rb:148
 msgid "%{target} was successfully saved."
 msgstr ""
 
@@ -757,91 +757,83 @@ msgstr ""
 msgid "Admin::ImagesController"
 msgstr "Images"
 
-#: app/controllers/admin/images_controller.rb:25
+#: app/controllers/admin/images_controller.rb:23
 #: app/views/admin/images/index.html.erb:21
 msgid "Admin::ImagesController|background"
 msgstr "Background"
 
-#: app/controllers/admin/images_controller.rb:27
+#: app/controllers/admin/images_controller.rb:25
 msgid "Admin::ImagesController|background001"
 msgstr "Background 1"
 
-#: app/controllers/admin/images_controller.rb:28
+#: app/controllers/admin/images_controller.rb:26
 msgid "Admin::ImagesController|background002"
 msgstr "Background 2"
 
-#: app/controllers/admin/images_controller.rb:29
+#: app/controllers/admin/images_controller.rb:27
 msgid "Admin::ImagesController|background003"
 msgstr "Background 3"
 
-#: app/controllers/admin/images_controller.rb:30
+#: app/controllers/admin/images_controller.rb:28
 msgid "Admin::ImagesController|background004"
 msgstr "Background 4"
 
-#: app/controllers/admin/images_controller.rb:31
+#: app/controllers/admin/images_controller.rb:29
 msgid "Admin::ImagesController|background005"
 msgstr "Background 5"
 
-#: app/controllers/admin/images_controller.rb:32
+#: app/controllers/admin/images_controller.rb:30
 msgid "Admin::ImagesController|background006"
 msgstr "Background 6"
 
-#: app/controllers/admin/images_controller.rb:33
+#: app/controllers/admin/images_controller.rb:31
 msgid "Admin::ImagesController|background007"
 msgstr "Background 7"
 
-#: app/controllers/admin/images_controller.rb:34
+#: app/controllers/admin/images_controller.rb:32
 msgid "Admin::ImagesController|background008"
 msgstr "Background 8"
 
-#: app/controllers/admin/images_controller.rb:35
+#: app/controllers/admin/images_controller.rb:33
 msgid "Admin::ImagesController|background009"
 msgstr "Background 9"
 
-#: app/controllers/admin/images_controller.rb:36
+#: app/controllers/admin/images_controller.rb:34
 msgid "Admin::ImagesController|background010"
 msgstr "Background 10"
 
-#: app/controllers/admin/images_controller.rb:26
+#: app/controllers/admin/images_controller.rb:24
 #: app/views/admin/images/index.html.erb:22
 msgid "Admin::ImagesController|background_description"
 msgstr ""
 "The background image shown randomly in the login screen. You can register up "
 "to 10 images."
 
-#: app/controllers/admin/images_controller.rb:37
+#: app/controllers/admin/images_controller.rb:35
 #: app/views/admin/images/index.html.erb:30
 msgid "Admin::ImagesController|favicon"
 msgstr ""
 
-#: app/controllers/admin/images_controller.rb:38
+#: app/controllers/admin/images_controller.rb:36
 #: app/views/admin/images/index.html.erb:31
 msgid "Admin::ImagesController|favicon_description"
 msgstr "You can set your own favicon."
 
-#: app/controllers/admin/images_controller.rb:23
+#: app/controllers/admin/images_controller.rb:21
 msgid "Admin::ImagesController|footer_logo"
 msgstr "Footer Logo Image"
 
-#: app/controllers/admin/images_controller.rb:24
+#: app/controllers/admin/images_controller.rb:22
 msgid "Admin::ImagesController|footer_logo_description"
 msgstr "The logo image shown in the right-bottom footer."
 
-#: app/controllers/admin/images_controller.rb:21
+#: app/controllers/admin/images_controller.rb:19
 msgid "Admin::ImagesController|header_logo"
 msgstr "Header Logo Image"
 
-#: app/controllers/admin/images_controller.rb:22
+#: app/controllers/admin/images_controller.rb:20
 msgid "Admin::ImagesController|header_logo_description"
 msgstr "The logo image shown in the left-top header."
-
-#: app/controllers/admin/images_controller.rb:19
-msgid "Admin::ImagesController|title_logo"
-msgstr "Title Logo Image"
-
-#: app/controllers/admin/images_controller.rb:20
-msgid "Admin::ImagesController|title_logo_description"
-msgstr "The logo image shown in the login screen."
 
 #: app/models/admin/initial_setting.rb:68
 msgid "Admin::InitialSetting|Administrator addr"
@@ -3114,7 +3106,7 @@ msgstr ""
 msgid "Failed to save the data."
 msgstr ""
 
-#: app/controllers/admin/images_controller.rb:153
+#: app/controllers/admin/images_controller.rb:151
 msgid "Failed to save the image. Try again or contact administrator."
 msgstr ""
 
@@ -3924,7 +3916,7 @@ msgstr ""
 msgid "Log in failed."
 msgstr ""
 
-#: app/views/platform/index.html.erb:49
+#: app/views/platform/index.html.erb:46
 #: app/views/shared/_login_form.html.erb:87
 msgid "Login"
 msgstr ""
@@ -4976,7 +4968,7 @@ msgstr ""
 msgid "Registered."
 msgstr ""
 
-#: app/views/platform/index.html.erb:54
+#: app/views/platform/index.html.erb:51
 #, fuzzy
 msgid "Registration"
 msgstr "Sys Admin"
@@ -5491,7 +5483,7 @@ msgstr ""
 msgid "Sign out"
 msgstr ""
 
-#: app/views/platform/activate.html.erb:2 app/views/platform/index.html.erb:53
+#: app/views/platform/activate.html.erb:2 app/views/platform/index.html.erb:50
 msgid "Signup"
 msgstr ""
 
@@ -6079,7 +6071,7 @@ msgstr ""
 
 #: app/controllers/admin/documents_controller.rb:38
 #: app/controllers/admin/documents_controller.rb:89
-#: app/controllers/admin/images_controller.rb:156
+#: app/controllers/admin/images_controller.rb:154
 msgid "Unexpected error occured. Contact administrator."
 msgstr ""
 
@@ -7671,6 +7663,12 @@ msgstr ""
 #: app/controllers/platform_controller.rb:168
 msgid "入力された%{email}というメールアドレスは登録されていません。"
 msgstr ""
+
+#~ msgid "Admin::ImagesController|title_logo"
+#~ msgstr "Title Logo Image"
+
+#~ msgid "Admin::ImagesController|title_logo_description"
+#~ msgstr "The logo image shown in the login screen."
 
 #, fuzzy
 #~ msgid "admin::initialsetting"
