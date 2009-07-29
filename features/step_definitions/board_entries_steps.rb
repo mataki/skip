@@ -31,6 +31,23 @@ Given /^以下のブログを書く:$/ do |entries_table|
   end
 end
 
+Given /^以下の掲示板を書く:$/ do |entries_table|
+  @entries ||= []
+  entries_table.hashes.each do |hash|
+    Given %!"#{hash[:user]}"でログインする!
+    Given %!"#{hash[:user]}"で"#{hash[:group]}"というグループを作成する!
+    Given %!"新規投稿"リンクをクリックする!
+    Given %!"#{"board_entry[title]"}"に"#{hash[:title]}"と入力する!
+    Given %!"タグ"に"#{hash[:tag]}"と入力する!
+    Given %!"#{"editor_mode_hiki"}"を選択する!
+    Given %!"#{"contents_hiki"}"に"#{"test"}"と入力する!
+    Given %!"#{hash[:publication_type]}"を選択する!
+    Given %!"#{"作成"}"ボタンをクリックする!
+    entry = BoardEntry.last
+    @entries << { :id => entry.id, :uid => entry.symbol.split(":").last }
+  end
+end
+
 Given /^"([^\"]*)"で"([^\"]*)"を直接指定したブログを書く$/ do |user, publication_symbol|
   @entries ||= []
   Given %!"#{user}"でログインする!

@@ -22,7 +22,14 @@ class BatchBase
 
   @@logger = Logger.new(SkipEmbedded::InitialSettings['batch_log_path'])
 
+  include GetText
+  bindtextdomain("skip", { :path => File.join(RAILS_ROOT, "locale")})
+  textdomain_to(ActionView::Base, "skip") if defined? ActionView::Base
+  textdomain_to(ActionMailer::Base, "skip") if defined? ActionMailer::Base
+
   def self.execution options = {}
+    I18n.locale = SkipEmbedded::InitialSettings['default_locale'].to_sym
+
     starttime = Time.now
     log_info "[START] <#{self.to_s}> --- start batch (#{starttime.to_s})"
 

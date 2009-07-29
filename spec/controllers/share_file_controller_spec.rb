@@ -429,7 +429,7 @@ describe ShareFileController, "GET #list" do
       controller.stub(:group_tab_menu_source).and_return(@mock_group_tab_menu_source = mock('mock_group_tab_menu_source'))
       Group.stub(:find_by_gid).with("a_group").and_return(@group = mock_model(Group, :symbol => 'group:a_group', :name => "対象グループ", :gid => "a_group"))
       @group.stub_chain(:group_participations, :find_by_user_id).and_return(@participation = mock('participation'))
-      @group.stub(:participating?).with(@user).and_return(@visitor_is_uploader = mock('visitor_is_uploader'))
+      @user.stub(:participating_group?).with(@group).and_return(@visitor_is_uploader = mock('visitor_is_uploader'))
       ShareFile.stub(:get_tags).with(@group.symbol).and_return(@categories = mock('categories'))
       get :list, :gid => "a_group"
     end

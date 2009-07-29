@@ -467,6 +467,11 @@ class User < ActiveRecord::Base
     'public'
   end
 
+  def participating_group? group
+    raise ArgumentError, 'group_or_gid is invalid' unless group.is_a?(Group)
+    self.group_symbols.include? group.symbol
+  end
+
 protected
   # TODO: self.make_conditionsメソッドは使ってなさそう確認して消す
   @@search_cond_keys = [:name, :section, :email]

@@ -14,6 +14,32 @@ Feature: 記事の管理
     When    "a_user"で"1"つめのブログにアクセスする
     Then    flashメッセージに"閲覧権限がありません。"と表示されていないこと
 
+  Scenario: ユーザとして参加しているグループの全体公開の記事を表示できる
+    Given   以下の掲示板を書く:
+        |user               |group      |title      |tag    |contents   |publication_type   |
+        |a_group_owned_user |vim_group  |Vimとは    |雑談   |foobar     |全体に公開         |
+
+    When    "a_group_owned_user"で"vim_group"グループのサマリページを開く
+    And     "掲示板"リンクをクリックする
+    And     "Vimとは"リンクをクリックする
+
+    Then    "Vimとは"と表示されていること
+    And     "この記事を「話題」にして、掲示板に新しい記事を投稿する"と表示されていること
+    And     "この記事を「話題」にして、新しいブログを書く"と表示されていること
+
+  Scenario: ユーザとして参加していないグループの全体公開の記事を表示できる
+    Given   以下の掲示板を書く:
+        |user               |group      |title      |tag    |contents   |publication_type   |
+        |a_group_owned_user |vim_group  |Vimとは    |雑談   |foobar     |全体に公開         |
+
+    When    "a_user"で"vim_group"グループのサマリページを開く
+    And     "掲示板"リンクをクリックする
+    And     "Vimとは"リンクをクリックする
+
+    Then    "Vimとは"と表示されていること
+    And     "この記事を「話題」にして、掲示板に新しい記事を投稿する"と表示されていないこと
+    And     "この記事を「話題」にして、新しいブログを書く"と表示されてること
+
   Scenario: ユーザとしてグループの掲示板の作成画面の公開範囲の初期値が適切に選択されている
     Given   "a_user"で"vim_group"というグループを作成する
 

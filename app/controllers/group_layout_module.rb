@@ -10,7 +10,7 @@ module GroupLayoutModule
     tab_menu_source
   end
 
-  # TODO Group#participating?に順次置き換えていって最終的に削除する。
+  # TODO User#participating_groupで置き換えたい
   def participating? participation
     participation and participation.waiting? != true
   end

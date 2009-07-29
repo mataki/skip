@@ -43,7 +43,7 @@ describe Admin::ImagesController, 'POST /update' do
   describe '不正なファイルの場合' do
     before do
       controller.should_receive(:valid_file?).with(anything(), :max_size => 300.kilobyte, :content_types => anything(), :extension => anything()).and_return(false)
-      post :update, :target => 'title_logo', :title_logo => mock('upload_file')
+      post :update, :target => 'header_logo', :header_logo => mock('upload_file')
     end
     it { response.should render_template('index') }
     it { assigns[:topics].should_not be_nil }
@@ -57,7 +57,7 @@ describe Admin::ImagesController, 'POST /update' do
         upload_file = mock('upload_file')
         upload_file.should_receive(:read)
         controller.should_receive(:open).with(anything(), 'wb').and_yield(file)
-        post :update, :target => 'title_logo', :title_logo => upload_file
+        post :update, :target => 'header_logo', :header_logo => upload_file
       end
       it { flash[:notice].should_not be_nil }
       it { response.should be_redirect }
@@ -66,7 +66,7 @@ describe Admin::ImagesController, 'POST /update' do
       before do
         controller.should_receive(:open).and_raise(Errno::EACCES)
         stub_flash_now
-        post :update, :target => 'title_logo', :title_logo => mock('upload_file')
+        post :update, :target => 'header_logo', :header_logo => mock('upload_file')
       end
       it { flash[:error].should_not be_nil }
       it { response.code.should == '403' }
@@ -76,7 +76,7 @@ describe Admin::ImagesController, 'POST /update' do
       before do
         controller.should_receive(:open).and_raise(Errno::EBUSY)
         stub_flash_now
-        post :update, :target => 'title_logo', :title_logo => mock('upload_file')
+        post :update, :target => 'header_logo', :header_logo => mock('upload_file')
       end
       it { flash[:error].should_not be_nil }
       it { response.code.should == '500' }
@@ -98,7 +98,7 @@ describe Admin::ImagesController, 'POST /revert' do
       controller.should_receive(:open).with(anything(), 'wb').and_yield(target_file)
       target_file.should_receive(:write)
       default_file.should_receive(:read)
-      post :revert, :target => 'title_logo'
+      post :revert, :target => 'header_logo'
     end
     it { response.should redirect_to(admin_images_path) }
     it { assigns[:topics].should_not be_nil }

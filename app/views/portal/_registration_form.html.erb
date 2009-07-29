@@ -13,15 +13,15 @@
   </tr>
   <% end -%>
   <tr>
-    <th><label for="user_name"><%=h _('Admin::User|Name') %></label></th>
+    <th><label for="user_name"><%=h s_('Admin::User|Name') %></label></th>
     <td><%=h @user.name %></td>
   </tr>
   <tr>
-    <th><label for="user_email"><%=h _('User|Email') %></label></th>
+    <th><label for="user_email"><%=h s_('User|Email') %></label></th>
     <td><%=h @user.email %><span style="margin-left: 20px;"><%= link_to _("[Change]"), :action=> 'manage', :menu => 'manage_email' if !is_new && Admin::Setting.mail_function_setting %></span></td>
   </tr>
   <tr>
-    <th><label for="user_section"><%=h _('User|Section') %></label></th>
+    <th><label for="user_section"><%=h s_('User|Section') %></label></th>
     <td>
       <% if sections = User.grouped_sections -%>
       <p>
@@ -53,11 +53,11 @@
 <% if @user.within_time_limit_of_activation_token? -%>
   <%= hidden_field_tag :code, @user.activation_token %>
   <tr>
-    <th><label for="user_password"><%= _('Admin::User|Password') %></label></th>
+    <th><label for="user_password"><%= s_('Admin::User|Password') %></label></th>
     <td><%= password_field 'user', 'password', {:tabindex => (tabindex +=1)} %></td>
   </tr>
   <tr>
-    <th><label for="user_password_confirmation"><%= _('Admin::User|Password confirmation') %></label></th>
+    <th><label for="user_password_confirmation"><%= s_('Admin::User|Password confirmation') %></label></th>
     <td><%= password_field 'user', 'password_confirmation', {:tabindex => (tabindex +=1)} %></td>
   </tr>
 <% end -%>
