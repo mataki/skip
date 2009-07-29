@@ -23,9 +23,9 @@ module Admin::SettingsHelper
 
   def settings_label_with_check_box_tag symbolize_key
     label(Admin::Setting.name, symbolize_key) +
+      hidden_field_tag("settings[#{symbolize_key}]", "false") +
       check_box_tag("settings[#{symbolize_key}]", "true", current_setting(symbolize_key), :id => "setting_#{symbolize_key}") +
-      help_icon_tag(:content => s_(Admin::Setting.name + '|' + (symbolize_key.to_s + '_description').humanize)) +
-      hidden_field_tag("settings[#{symbolize_key}]", "false")
+      help_icon_tag(:content => s_(Admin::Setting.name + '|' + (symbolize_key.to_s + '_description').humanize))
   end
 
   def settings_label_with_select_tag symbolize_key, container, selected = nil
