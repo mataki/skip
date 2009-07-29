@@ -42,9 +42,6 @@
   </style>
 <% end -%>
 
-<% content_for :header do -%>
-  <div id="logo"><%= link_to(image_tag("/custom/images/title_logo.png", :alt => h(Admin::Setting.abbr_app_title))) %></div>
-<% end -%>
 <div id="login" class="login-box">
   <p><%= _('Login')%></p>
   <%= render :partial => 'shared/login_form' %>
