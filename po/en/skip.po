@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-07-30 19:40+0800\n"
+"POT-Creation-Date: 2009-07-30 21:15+0800\n"
 "PO-Revision-Date: 2009-06-29 13:31+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1989,7 +1989,7 @@ msgstr ""
 #: app/views/group/_manage_info.html.erb:22
 #: app/views/mypage/_manage_antenna.html.erb:87
 #: app/views/mypage/_manage_antenna.html.erb:173
-#: app/views/pictures/new.html.erb:20
+#: app/views/pictures/new.html.erb:20 app/views/share_file/list.html.erb:81
 msgid "Are you sure to delete?"
 msgstr ""
 
@@ -2797,7 +2797,8 @@ msgstr ""
 
 #: app/views/bookmarks/index.html.erb:17
 #: app/views/search/share_file_search.html.erb:9
-#: app/views/user/group.html.erb:26 app/views/users/index.html.erb:15
+#: app/views/share_file/list.html.erb:39 app/views/user/group.html.erb:26
+#: app/views/users/index.html.erb:15
 msgid "Display Order"
 msgstr ""
 
@@ -4053,7 +4054,8 @@ msgstr ""
 msgid "Members Only"
 msgstr ""
 
-#: app/views/shared/_menu.html.erb:5 app/views/user/_social_menu.html.erb:2
+#: app/views/shared/_menu.html.erb:5 app/views/share_file/list.html.erb:21
+#: app/views/user/_social_menu.html.erb:2
 msgid "Menu"
 msgstr ""
 
@@ -4556,6 +4558,10 @@ msgstr ""
 
 #: app/views/rankings/statistics.html.erb:31
 msgid "Other indices (FYI)"
+msgstr ""
+
+#: app/views/share_file/list.html.erb:34
+msgid "Other than \"open to public\""
 msgstr ""
 
 #: app/views/entries/_user_archive_box.html.erb:17
@@ -5112,7 +5118,8 @@ msgstr ""
 #: app/views/groups/index.html.erb:36
 #: app/views/search/entry_search.html.erb:18
 #: app/views/search/share_file_search.html.erb:17
-#: app/views/shared/_header.html.erb:30 app/views/user/group.html.erb:34
+#: app/views/shared/_header.html.erb:30 app/views/share_file/list.html.erb:30
+#: app/views/share_file/list.html.erb:33 app/views/user/group.html.erb:34
 #: app/views/user/group.html.erb:37 app/views/users/index.html.erb:25
 msgid "Search"
 msgstr ""
@@ -5578,6 +5585,7 @@ msgid "Sort by Date Joined"
 msgstr ""
 
 #: app/views/search/share_file_search.html.erb:12
+#: app/views/share_file/list.html.erb:42
 msgid "Sort by File Names"
 msgstr ""
 
@@ -5594,6 +5602,7 @@ msgid "Sort by Registered Dates (Descending)"
 msgstr ""
 
 #: app/views/search/share_file_search.html.erb:11
+#: app/views/share_file/list.html.erb:41
 msgid "Sort by Upload Dates"
 msgstr ""
 
@@ -5746,6 +5755,7 @@ msgstr ""
 #: app/views/entries/_categories_box.html.erb:7
 #: app/views/mypage/_record_post.html.erb:43
 #: app/views/search/_tag_search.html.erb:3
+#: app/views/share_file/list.html.erb:48
 #: app/views/share_file/_form.html.erb:46
 #: app/views/user/_social_tags.html.erb:2
 msgid "Tags"
@@ -6995,6 +7005,7 @@ msgid "[Bottom]"
 msgstr ""
 
 #: app/views/bookmark/list.html.erb:31 app/views/bookmark/list.html.erb:44
+#: app/views/share_file/list.html.erb:56
 msgid "[Cancel selection]"
 msgstr ""
 
