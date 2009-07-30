@@ -83,7 +83,7 @@ default: &default
   # ================================================================================================
   usercode_dips_setting: true                                        # ログインIDを表示するかどうかの設定
   password_edit_setting: true                                        # パスワード変更可能かどうかの設定
-  username_use_setting: true                                         # ユーザ登録時にユーザ名を利用するかどうかの設定
+  username_use_setting: false                                        # ユーザ登録時にユーザ名を利用するかどうかの設定
   user_code_format_regex: ^(\d{6}|[kK]\d{5})$                        # ユーザ名として許可しない形式を指定
   user_code_minimum_length: 4                                        # ユーザ名の最小文字数を指定
 
