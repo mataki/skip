@@ -1,24 +1,24 @@
 <% content_for :contents_left do -%>
   <div class="box_space">
-    <div class="box_space_title"><%= icon_tag 'find' %>検索</div>
+    <div class="box_space_title"><%= icon_tag 'find' %><%= _('Search')%></div>
       <div class="box_space_body">
       <% form_tag({:controller => 'user', :action => 'bookmark', :user_id => params[:user_id]}, {:method => 'get'}) do -%>
         <%= text_field_tag('keyword', params[:keyword], :size=>'12') %>
-        <%= submit_tag '検索' %>
+        <%= submit_tag _('Search') %>
       <% end -%>
-      <div class="desc">タイトル、コメントが検索対象となります</div>
+      <div class="desc"><%= _('The search targets are titles and comments')%></div>
     </div>
     <div class="box_space_bottom"></div>
   </div><!-- box_space -->
 
   <% @bookmark_types = [
-     {:name => 'スター', :type => 'star', :icon => 'star'},
-     {:name => 'ユーザ', :type => 'user', :icon => 'user'},
-     {:name => '記事', :type => 'page', :icon => 'report_link'},
-     {:name => 'インターネット', :type => 'internet', :icon => 'world_link'} ] -%>
+     {:name => _('Stars'), :type => 'star', :icon => 'star'},
+     {:name => _('Users'), :type => 'user', :icon => 'user'},
+     {:name => _('Entries'), :type => 'page', :icon => 'report_link'},
+     {:name => _('Internet'), :type => 'internet', :icon => 'world_link'} ] -%>
 
   <div class="box_space">
-    <div class="box_space_title"><%= icon_tag 'text_list_bullets' %>種類</div>
+    <div class="box_space_title"><%= icon_tag 'text_list_bullets' %><%= _('Types')%></div>
     <div class="box_space_body">
       <ul>
         <% @bookmark_types.each do |bookmark_type| -%>
@@ -28,11 +28,11 @@
         <% end -%>
       </ul>
     </div>
-    <div class="box_space_bottom"><%= link_to "[選択をキャンセル]", {:controller => 'user', :action=>'bookmark', :user_id => params[:user_id]} %></div>
+    <div class="box_space_bottom"><%= link_to _("[Cancel selection]"), {:controller => 'user', :action=>'bookmark', :user_id => params[:user_id]} %></div>
   </div><!-- box_space -->
 
   <div class="box_space">
-    <div class="box_space_title"><%= icon_tag 'tag_blue' %>タグ</div>
+    <div class="box_space_title"><%= icon_tag 'tag_blue' %><%= _('Tags')%></div>
     <div class="box_space_body">
       <% tag_cloud @tags do |name, count, css_class| %>
       <% if params[:category] == name -%><span style="background-color: yellow;"><% end -%>
@@ -41,7 +41,7 @@
       <span class="category_count">(<%= count %>)</span>
       <% end %>
     </div>
-    <div class="box_space_bottom"><%= link_to "[選択をキャンセル]", {:controller => 'user', :action=>'bookmark', :user_id => params[:user_id]} %></div>
+    <div class="box_space_bottom"><%= link_to _("[Cancel selection]"), {:controller => 'user', :action=>'bookmark', :user_id => params[:user_id]} %></div>
   </div><!-- box_space -->
 <% end -%>
 
@@ -51,8 +51,8 @@
     <% for comment in @bookmark_comments -%>
     <div class="bookmark_space" id="bookmark_comment_<%= comment.id %>">
       <div class="header">
-        <%=h comment.created_on.strftime("%Y年%m月%d日") %>
-        <span class="other_user_count"><%= link_to("[他のユーザ:#{comment.bookmark.bookmark_comments_count}人]", url_for_bookmark(comment.bookmark)) %></span>
+        <%=h comment.created_on.strftime(_("%B %d %Y")) %>
+        <span class="other_user_count"><%= link_to(_("[Other users: %{count} users]") % {:count => comment.bookmark.bookmark_comments_count} , url_for_bookmark(comment.bookmark)) %></span>
       </div>
       <div class="title">
         <% if params[:user_id] == @current_user.id -%>
@@ -64,8 +64,8 @@
       <div class="description">
         <span class="tags"><%=h comment.tags %></span><%=h comment.comment %>
         <% if @current_user.id == comment.user_id %>
-          <%= link_to(icon_tag('tag_blue_edit', :title => '編集'), {:controller => "bookmark", :action => "edit", :url => comment.bookmark.escaped_url, :title => h(comment.bookmark.title), :dummy => '.html'}, {:class => "nyroModal"}) %>
-          <%= link_to_function icon_tag('tag_blue_delete', :title => '削除'),"if (confirm('本当に削除しますか')) { var f = document.createElement('form'); this.parentNode.appendChild(f); f.method = 'POST';f.action = '#{url_for(:controller =>'bookmark', :action =>'destroy', :uri => comment.bookmark.escaped_url, :comment_id => comment.id)}'; var input = document.createElement('input');  input.type = 'hidden'; input.name = 'authenticity_token'; input.value = document.getElementById('authenticity_token').value; f.appendChild(input); f.submit();}",:href => url_for(:controller =>'bookmark', :action =>'destroy'), :title => "削除"  %>
+          <%= link_to(icon_tag('tag_blue_edit', :title => _('Edit')), {:controller => "bookmark", :action => "edit", :url => comment.bookmark.escaped_url, :title => h(comment.bookmark.title), :dummy => '.html'}, {:class => "nyroModal"}) %>
+          <%= link_to_function icon_tag('tag_blue_delete', :title => _('Delete')),"if (confirm('" + _("Are you sure to delete?") + "')) { var f = document.createElement('form'); this.parentNode.appendChild(f); f.method = 'POST';f.action = '#{url_for(:controller =>'bookmark', :action =>'destroy', :uri => comment.bookmark.escaped_url, :comment_id => comment.id)}'; var input = document.createElement('input');  input.type = 'hidden'; input.name = 'authenticity_token'; input.value = document.getElementById('authenticity_token').value; f.appendChild(input); f.submit();}",:href => url_for(:controller =>'bookmark', :action =>'destroy'), :title => _("Delete")  %>
         <% end %>
       </div>
     </div>
