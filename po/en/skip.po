@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-07-30 21:56+0800\n"
+"POT-Creation-Date: 2009-07-30 21:15+0800\n"
 "PO-Revision-Date: 2009-06-29 13:31+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -6165,6 +6165,10 @@ msgstr ""
 msgid "Updated."
 msgstr ""
 
+#: app/views/collaboration_app/_feeds.html.erb:8
+msgid "Updates from %{provider}"
+msgstr ""
+
 #: app/views/admin/user_profile_masters/edit.html.erb:10
 #: app/views/admin/user_profile_master_categories/edit.html.erb:11
 #: app/views/bookmark/_new.html.erb:32
@@ -7184,6 +7188,7 @@ msgstr ""
 msgid "[Search Users]"
 msgstr ""
 
+#: app/views/collaboration_app/_feeds.html.erb:13
 #: app/views/user/show.html.erb:26 app/views/user/show.html.erb:111
 #: app/views/user/_postit_cloud.html.erb:5
 msgid "[See all]"
