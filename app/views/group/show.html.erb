@@ -40,10 +40,10 @@
     <div class="box_space_bottom">
       since <%= @group.created_on.strftime(_("%Y/%m/%d")) -%>
     </div>
-    <div class="box_space_bottom" style="text-align: center; font-size: 12px;">
+    <div class="box_space_bottom" style="text-align: center; font-size: 14px;">
       <%= link_to(icon_tag('transmit_go', :title => _('Add to antenna')) + _('Add to antenna'), {:controller => "antenna", :action => "select_antenna", :symbol => @group.symbol, :dummy => '.html'}, {:class => "nyroModal"}) %><br/>
     </div>
-    <div class="box_space_bottom" style="text-align: center; font-size: 12px;">
+    <div class="box_space_bottom" style="text-align: center; font-size: 14px;">
       <% if not @participation -%>
         <%= link_to(icon_tag('group_go') + _('Join this group'), {:action=>"new_participation"}, {:class => "nyroModal"}) -%>
       <% elsif not @participation.owned? -%>

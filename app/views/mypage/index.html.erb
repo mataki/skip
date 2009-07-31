@@ -15,9 +15,11 @@
   <%#  right side area -%>
   <%# ============================================================ -%>
   <div id="mypage_right">
+    <% if current_user.custom.display_calendar -%>
     <div id="calendar">
       <%= render :partial => "shared/calendar", :locals => {:sel_year => @year, :sel_month => @month, :sel_day => @day, :item_count => @entry_count_hash, :action => 'entries_by_date'}  %>
     </div>
+    <% end -%>
     <%= render :partial => 'rss_feed_box' %>
     <%= render :partial => 'recent_group_box', :locals => {:recent_groups => @recent_groups} %>
     <%= render :partial => 'recent_user_box', :locals => {:recent_users => @recent_users} %>

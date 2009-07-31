@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-07-31 15:06+0900\n"
+"POT-Creation-Date: 2009-07-31 17:37+0900\n"
 "PO-Revision-Date: 2009-07-29 16:48+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2449,6 +2449,10 @@ msgstr "CSVファイル"
 msgid "CSV file needs to be encoded in UTF-8."
 msgstr "CSVファイルの文字コードはUTF-8にしてアップロードするようにして下さい。"
 
+#: app/views/mypage/_manage_customize.html.erb:58
+msgid "Calendar display of Mypage"
+msgstr "マイページでのカレンダーの表示"
+
 #: app/views/entries/_entry_detail.html.erb:618
 #: app/views/board_entries/_board_entry_comment.html.erb:32
 #: app/views/share_file/new.html.erb:28 app/views/share_file/edit.html.erb:15
@@ -2499,7 +2503,7 @@ msgstr "紹介された人"
 msgid "Chain|Updated on"
 msgstr "更新日時"
 
-#: app/views/mypage/_manage_customize.html.erb:64
+#: app/views/mypage/_manage_customize.html.erb:70
 msgid "Change"
 msgstr "変更"
 
@@ -2811,7 +2815,7 @@ msgstr "12月"
 msgid "Default Privacy Settings"
 msgstr "既定の公開範囲"
 
-#: app/views/mypage/_manage_customize.html.erb:58
+#: app/views/mypage/_manage_customize.html.erb:64
 msgid "Default entry edit mode"
 msgstr "既定の記事編集方法"
 
@@ -3561,6 +3565,10 @@ msgstr "ショートカットを表示しない"
 #: app/views/board_entries/_form.html.erb:56
 msgid "Hide Time"
 msgstr "時刻は表示しない"
+
+#: app/views/mypage/_manage_customize.html.erb:61
+msgid "Hide calendar"
+msgstr "カレンダーを表示しない"
 
 #: app/views/mypage/_manage_menu.html.erb:14
 msgid "History Menu"
@@ -5163,7 +5171,7 @@ msgid "Revise"
 msgstr "修正"
 
 #: app/views/board_entries/_edit_contents.html.erb:10
-#: app/views/mypage/_manage_customize.html.erb:60
+#: app/views/mypage/_manage_customize.html.erb:66
 msgid "Rich Text"
 msgstr "リッチテキスト"
 
@@ -5512,6 +5520,10 @@ msgstr "[オプションを表示]"
 #: app/views/mypage/_manage_customize.html.erb:48
 msgid "Show Shortcut"
 msgstr "ショートカットを表示する"
+
+#: app/views/mypage/_manage_customize.html.erb:60
+msgid "Show calendar"
+msgstr "カレンダーを表示する"
 
 #: app/views/admin/images/_form.html.erb:7
 msgid "Show current image"
@@ -6379,6 +6391,11 @@ msgid "UserCustom|Classic"
 msgstr "クラシック"
 
 #: app/models/user_custom.rb:-
+#, fuzzy
+msgid "UserCustom|Display calendar"
+msgstr "ユーザ"
+
+#: app/models/user_custom.rb:-
 msgid "UserCustom|Display entries format"
 msgstr ""
 
@@ -6806,7 +6823,7 @@ msgid "Where to Save"
 msgstr "保存場所"
 
 #: app/views/board_entries/_edit_contents.html.erb:11
-#: app/views/mypage/_manage_customize.html.erb:61
+#: app/views/mypage/_manage_customize.html.erb:67
 msgid "Wiki text"
 msgstr "Wikiテキスト"
 
