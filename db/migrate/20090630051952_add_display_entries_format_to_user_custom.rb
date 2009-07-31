@@ -1,4 +1,4 @@
-class AddDisplayEntriesFromatToUserCustom < ActiveRecord::Migration
+class AddDisplayEntriesFormatToUserCustom < ActiveRecord::Migration
   def self.up
     add_column :user_customs, :display_entries_format, :string, :default => "tabs", :null => false
   end
