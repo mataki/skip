@@ -35,7 +35,5 @@
 <% end -%>
 
 <% content_for :javascript_initializers do -%>
-    $j(document.getElementsByName("picture")).each(function(i) {
-        fitImageSize($j(this), this.width, this.height);
-    });
+    $j('img.fit_image').fitimage();
 <% end -%>

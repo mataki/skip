@@ -434,33 +434,6 @@ $j(function(){
         minute_obj[0].value = currentMinute;
     };
 
-    fitImageSize = function(jObj, max_width, max_height) {
-        var img = new Image();
-        img.src = jObj.attr('src');
-
-        if (max_height > max_width) {
-            if (img.width > max_width) {
-                value = img.height / (img.width/max_width);
-                if (value < 1)  { value = 1; }
-                jObj.attr({ height: value, width: max_width });
-            } else if (img.height > max_height) {
-                value = img.width / (img.height/max_height);
-                if (value < 1) { value = 1; }
-                jObj.attr({ height: max_height, width: value });
-            }
-        } else {
-            if (img.height >= max_height) {
-                value = img.width / (img.height/max_height);
-                if (value < 1) { value = 1; }
-                jObj.attr({ height: max_height, width: value });
-            } else if (img.width > max_width) {
-                value = img.height / (img.width/max_width);
-                if (value < 1)  { value = 1; }
-                jObj.attr({ height: value, width: max_width });
-            }
-        }
-    };
-
     /*
      * ログイン画面のクッキー保存と読み込み（2週間）
      */
