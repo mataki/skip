@@ -20,7 +20,7 @@ module MypageHelper
     <<-EOS
 <div style="position: relative; _width: 100%;">
   <h2 class="topix_title">#{icon_tag(icon) + h(label)}</h2>
-  <div style="position: absolute; top: 5px; right: 10px; font-size: 14px;">#{link_to('[すべて見る]', all_url)}</div>
+  <div style="position: absolute; top: 5px; right: 10px; font-size: 14px;">#{link_to(_('[See all]'), all_url)}</div>
 </div>
     EOS
   end
