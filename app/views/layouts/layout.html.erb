@@ -88,10 +88,7 @@ var relative_url_root = '<%= relative_url_root %>';
 $j(function(){
     $j('#loading').hide();
 
-    // 管理画面以外
-    $j(document.getElementsByName("picture")).each(function(i) {
-        fitImageSize($j(this), this.width, this.height);
-    });
+    $j('img.fit_image').fitimage();
 
     $j.fn.nyroModal.settings.processHandler = function(settings) {
         $j.nyroModalSettings({
