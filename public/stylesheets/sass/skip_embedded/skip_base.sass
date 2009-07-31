@@ -3,24 +3,34 @@
 !base_color ||= #555
 !base_background_color ||= #fff
 !base_font_size ||= 12px
-!small_font_size ||= 10px
+!small_font_size ||= !base_font_size - 2px
+!x_small_font_size ||= !small_font_size - 2px
+!large_font_size ||= !base_font_size + 2px
+!x_large_font_size ||= !large_font_size + 2px
 !base_border ||= 1px solid #ccc
 !base_dashed_border ||= 1px dashed #ccc
 !base_dotted_border ||= 1px dotted #ccc
 
 // Mix-in
 // ------------------------------------------------------------
-=base_text
+=text_base(!font_size = !base_font_size, !color = !base_color)
   :font
-    :size = !base_font_size
+    :size = !font_size
     :family Verdana, Arial, sans-serif
     :weight normal
-  :color = !base_color
+  :color = !color
+=middle_text(!color = !base_color)
+  +text_base
+=small_text(!color = !base_color)
+  +text_base(!small_font_size)
+=x_small_text(!color = !base_color)
+  +text_base(!x_small_font_size)
+=large_text(!color = !base_color)
+  +text_base(!large_font_size)
+=x_large_text(!color = !base_color)
+  +text_base(!x_large_font_size)
 =form_text
-  :font
-    :size = !base_font_size
-    :family Verdana, Arial, sans-serif
-  :color = #000
+  +text_base(!base_font_size, #000)
 =link_text
   :text-decoration none
   :color #0080dd
@@ -51,7 +61,7 @@
   :padding 0
 
 body
-  +base_text
+  +middle_text
   :position absolute
   :left 0
   :margin 0
