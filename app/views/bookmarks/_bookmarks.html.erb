@@ -8,7 +8,7 @@
     <td class="line_<%= even_or_odd -%>">
       <div class="bookmark_line">
         <span class="title"><%= link_to_bookmark_url bookmark %></span>
-        <span class="users"><%= link_to("[#{bookmark.bookmark_comments_count}人]",url_for_bookmark(bookmark)) %></span>
+        <span class="users"><%= link_to(n_("%{count} user", "%{count} users", bookmark.bookmark_comments_count) % {:count => bookmark.bookmark_comments_count},url_for_bookmark(bookmark)) %></span>
         <%= icon_tag('new') if (Date.today - bookmark.created_on.to_date) < 10 %>
         <div class="tags"><%= icon_tag('tag_blue') %><%=h bookmark.tags_as_string %></div>
       </div>

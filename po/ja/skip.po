@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-07-30 21:15+0800\n"
+"POT-Creation-Date: 2009-07-30 21:56+0800\n"
 "PO-Revision-Date: 2009-07-29 16:48+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -119,6 +119,27 @@ msgstr "大変申し訳ございません。<br/>%s<br/>"
 #: app/controllers/edit_controller.rb:263
 msgid "%{action} %{write_place}"
 msgstr "%{write_place}を%{action}"
+
+#: app/views/user/_portrait_box.html.erb:24
+msgid "%{count} day"
+msgid_plural "%{count} days"
+msgstr[0] "%{count}日"
+msgstr[1] "%{count}日"
+
+#: app/views/user/_portrait_box.html.erb:23
+msgid "%{count} entry"
+msgid_plural "%{count} entries"
+msgstr[0] ""
+msgstr[1] ""
+
+#: app/views/bookmarks/_bookmarks.html.erb:11
+#: app/views/rankings/statistics.html.erb:36
+#: app/views/user/_portrait_box.html.erb:21
+#: app/views/user/_portrait_box.html.erb:22
+msgid "%{count} user"
+msgid_plural "%{count} users"
+msgstr[0] "%{count}人"
+msgstr[1] "%{count}人"
 
 #: app/views/admin/images/index.html.erb:7
 #: app/views/admin/images/index.html.erb:16
@@ -4615,7 +4636,7 @@ msgstr "その他の指標値（参考）"
 
 #: app/views/share_file/list.html.erb:34
 msgid "Other than \"open to public\""
-msgstr ""
+msgstr "全体公開以外 "
 
 #: app/views/entries/_user_archive_box.html.erb:17
 msgid "Other than [Requests for participation]"
