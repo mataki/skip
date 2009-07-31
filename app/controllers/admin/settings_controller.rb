@@ -50,10 +50,7 @@ class Admin::SettingsController < Admin::ApplicationController
         :settings => [setting_of('login_mode'),
                       login_mode?(:fixed_rp) ? setting_of('fixed_op_url', SkipEmbedded::InitialSettings['fixed_op_url'] || _("Disable")) : nil,
                       setting_of('usercode_dips_setting'),
-                      setting_of('password_edit_setting'),
-                      setting_of('username_use_setting'),
-                      setting_of('user_code_format_regex', SkipEmbedded::InitialSettings['user_code_format_regex'] || _("Disable")),
-                      setting_of('user_code_minimum_length', SkipEmbedded::InitialSettings['user_code_minimum_length'])
+                      setting_of('password_edit_setting')
                      ]
       }
       @system_infos << {
