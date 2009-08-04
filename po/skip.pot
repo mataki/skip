@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-08-04 14:13+0900\n"
+"POT-Creation-Date: 2009-08-04 16:52+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2197,6 +2197,10 @@ msgstr ""
 msgid ""
 "Bookmarking a closed entry with open permission. Are you sure to proceed? "
 "(The title will be open to all users regardless of the permission of entry)"
+msgstr ""
+
+#: app/controllers/bookmarks_controller.rb:37
+msgid "Bookmarklet"
 msgstr ""
 
 #: app/views/bookmarks/setup.html.erb:30
@@ -5157,10 +5161,6 @@ msgstr ""
 
 #: app/controllers/admin/settings_controller.rb:90
 msgid "Settings were saved successfully."
-msgstr ""
-
-#: app/controllers/bookmarks_controller.rb:37
-msgid "Bookmarklet"
 msgstr ""
 
 #: app/models/share_file_access.rb:-

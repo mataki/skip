@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-08-04 14:13+0900\n"
+"POT-Creation-Date: 2009-08-04 16:52+0900\n"
 "PO-Revision-Date: 2009-06-29 13:31+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -687,7 +687,6 @@ msgid "Admin::GroupCategory|Code"
 msgstr ""
 
 #: app/models/admin/group_category.rb:20
-#, fuzzy
 msgid "Admin::GroupCategory|Code description"
 msgstr ""
 
@@ -696,7 +695,6 @@ msgid "Admin::GroupCategory|Description"
 msgstr ""
 
 #: app/models/admin/group_category.rb:26
-#, fuzzy
 msgid "Admin::GroupCategory|Description description"
 msgstr ""
 
@@ -705,7 +703,6 @@ msgid "Admin::GroupCategory|Icon"
 msgstr ""
 
 #: app/models/admin/group_category.rb:24
-#, fuzzy
 msgid "Admin::GroupCategory|Icon description"
 msgstr ""
 
@@ -714,7 +711,6 @@ msgid "Admin::GroupCategory|Initial selected"
 msgstr ""
 
 #: app/models/admin/group_category.rb:28
-#, fuzzy
 msgid "Admin::GroupCategory|Initial selected description"
 msgstr ""
 
@@ -723,7 +719,6 @@ msgid "Admin::GroupCategory|Name"
 msgstr ""
 
 #: app/models/admin/group_category.rb:22
-#, fuzzy
 msgid "Admin::GroupCategory|Name description"
 msgstr ""
 
@@ -971,7 +966,6 @@ msgid "Admin::InitialSetting|User code minimum length"
 msgstr ""
 
 #: app/models/admin/initial_setting.rb:49
-#, fuzzy
 msgid "Admin::InitialSetting|User code minimum length description"
 msgstr ""
 
@@ -1068,7 +1062,6 @@ msgid "Admin::Setting|Activation lifetime"
 msgstr ""
 
 #: app/models/admin/setting.rb:30
-#, fuzzy
 msgid "Admin::Setting|Activation lifetime description"
 msgstr ""
 
@@ -1089,7 +1082,6 @@ msgid "Admin::Setting|Custom password strength regex"
 msgstr ""
 
 #: app/models/admin/setting.rb:115
-#, fuzzy
 msgid "Admin::Setting|Custom password strength regex description"
 msgstr ""
 
@@ -1118,7 +1110,6 @@ msgid "Admin::Setting|Enable login keyphrase"
 msgstr ""
 
 #: app/models/admin/setting.rb:119
-#, fuzzy
 msgid "Admin::Setting|Enable login keyphrase description"
 msgstr ""
 
@@ -1136,7 +1127,6 @@ msgid "Admin::Setting|Enable single session"
 msgstr ""
 
 #: app/models/admin/setting.rb:127
-#, fuzzy
 msgid "Admin::Setting|Enable single session description"
 msgstr ""
 
@@ -1145,7 +1135,6 @@ msgid "Admin::Setting|Enable user cleaning notification"
 msgstr ""
 
 #: app/models/admin/setting.rb:123
-#, fuzzy
 msgid "Admin::Setting|Enable user cleaning notification description"
 msgstr ""
 
@@ -1154,7 +1143,6 @@ msgid "Admin::Setting|Enable user lock"
 msgstr ""
 
 #: app/models/admin/setting.rb:98
-#, fuzzy
 msgid "Admin::Setting|Enable user lock description"
 msgstr ""
 
@@ -1163,7 +1151,6 @@ msgid "Admin::Setting|Footer first"
 msgstr ""
 
 #: app/models/admin/setting.rb:48
-#, fuzzy
 msgid "Admin::Setting|Footer first description"
 msgstr ""
 
@@ -1180,7 +1167,6 @@ msgid "Admin::Setting|Footer second"
 msgstr ""
 
 #: app/models/admin/setting.rb:50
-#, fuzzy
 msgid "Admin::Setting|Footer second description"
 msgstr ""
 
@@ -1197,7 +1183,6 @@ msgid "Admin::Setting|Hide email"
 msgstr ""
 
 #: app/models/admin/setting.rb:28
-#, fuzzy
 msgid "Admin::Setting|Hide email description"
 msgstr ""
 
@@ -1206,7 +1191,6 @@ msgid "Admin::Setting|Host and port"
 msgstr ""
 
 #: app/models/admin/setting.rb:76
-#, fuzzy
 msgid "Admin::Setting|Host and port description"
 msgstr ""
 
@@ -1231,7 +1215,6 @@ msgid "Admin::Setting|Login keyphrase"
 msgstr ""
 
 #: app/models/admin/setting.rb:121
-#, fuzzy
 msgid "Admin::Setting|Login keyphrase description"
 msgstr ""
 
@@ -1292,7 +1275,6 @@ msgid "Admin::Setting|Password change interval"
 msgstr ""
 
 #: app/models/admin/setting.rb:104
-#, fuzzy
 msgid "Admin::Setting|Password change interval description"
 msgstr ""
 
@@ -1301,7 +1283,6 @@ msgid "Admin::Setting|Password strength"
 msgstr ""
 
 #: app/models/admin/setting.rb:106
-#, fuzzy
 msgid "Admin::Setting|Password strength description"
 msgstr ""
 
@@ -1426,7 +1407,6 @@ msgid "Admin::Setting|User cleaning notification interval"
 msgstr ""
 
 #: app/models/admin/setting.rb:125
-#, fuzzy
 msgid "Admin::Setting|User cleaning notification interval description"
 msgstr ""
 
@@ -1435,7 +1415,6 @@ msgid "Admin::Setting|User lock trial limit"
 msgstr ""
 
 #: app/models/admin/setting.rb:100
-#, fuzzy
 msgid "Admin::Setting|User lock trial limit description"
 msgstr ""
 
@@ -1500,7 +1479,6 @@ msgid "Admin::UserProfileMasterCategory|Name"
 msgstr ""
 
 #: app/models/admin/user_profile_master_category.rb:19
-#, fuzzy
 msgid "Admin::UserProfileMasterCategory|Name description"
 msgstr ""
 
@@ -1509,17 +1487,14 @@ msgid "Admin::UserProfileMasterCategory|Sort order"
 msgstr ""
 
 #: app/models/admin/user_profile_master_category.rb:21
-#, fuzzy
 msgid "Admin::UserProfileMasterCategory|Sort order description"
 msgstr ""
 
 #: app/models/admin/user_profile_master.rb:38
-#, fuzzy
 msgid "Admin::UserProfileMaster|Description"
 msgstr ""
 
 #: app/models/admin/user_profile_master.rb:39
-#, fuzzy
 msgid "Admin::UserProfileMaster|Description description"
 msgstr ""
 
@@ -1528,7 +1503,6 @@ msgid "Admin::UserProfileMaster|Input type"
 msgstr ""
 
 #: app/models/admin/user_profile_master.rb:22
-#, fuzzy
 msgid "Admin::UserProfileMaster|Input type description"
 msgstr ""
 
@@ -1537,7 +1511,6 @@ msgid "Admin::UserProfileMaster|Name"
 msgstr ""
 
 #: app/models/admin/user_profile_master.rb:20
-#, fuzzy
 msgid "Admin::UserProfileMaster|Name description"
 msgstr ""
 
@@ -1591,17 +1564,14 @@ msgid "Admin::UserProfileMaster|Required"
 msgstr ""
 
 #: app/models/admin/user_profile_master.rb:24
-#, fuzzy
 msgid "Admin::UserProfileMaster|Required description"
 msgstr ""
-""
 
 #: app/models/admin/user_profile_master.rb:25
 msgid "Admin::UserProfileMaster|Sort order"
 msgstr ""
 
 #: app/models/admin/user_profile_master.rb:26
-#, fuzzy
 msgid "Admin::UserProfileMaster|Sort order description"
 msgstr ""
 
@@ -1610,7 +1580,6 @@ msgid "Admin::UserProfileMaster|User profile master category"
 msgstr ""
 
 #: app/models/admin/user_profile_master.rb:18
-#, fuzzy
 msgid "Admin::UserProfileMaster|User profile master category description"
 msgstr ""
 
@@ -1619,7 +1588,6 @@ msgid "Admin::UserUid|Uid"
 msgstr ""
 
 #: app/models/admin/user_uid.rb:18
-#, fuzzy
 msgid "Admin::UserUid|Uid description"
 msgstr ""
 
@@ -1632,7 +1600,6 @@ msgid "Admin::User|Admin"
 msgstr ""
 
 #: app/models/admin/user.rb:27
-#, fuzzy
 msgid "Admin::User|Admin description"
 msgstr ""
 
@@ -1641,7 +1608,6 @@ msgid "Admin::User|Code"
 msgstr ""
 
 #: app/models/admin/user.rb:24
-#, fuzzy
 msgid "Admin::User|Code description"
 msgstr ""
 
@@ -1650,7 +1616,6 @@ msgid "Admin::User|Email"
 msgstr ""
 
 #: app/models/admin/user.rb:31
-#, fuzzy
 msgid "Admin::User|Email description"
 msgstr ""
 
@@ -1667,7 +1632,6 @@ msgid "Admin::User|Locked"
 msgstr ""
 
 #: app/models/admin/user.rb:40
-#, fuzzy
 msgid "Admin::User|Locked description"
 msgstr ""
 
@@ -1679,7 +1643,6 @@ msgid "Admin::User|Name"
 msgstr ""
 
 #: app/models/admin/user.rb:29
-#, fuzzy
 msgid "Admin::User|Name description"
 msgstr ""
 
@@ -1712,7 +1675,6 @@ msgid "Admin::User|Section"
 msgstr ""
 
 #: app/models/admin/user.rb:33
-#, fuzzy
 msgid "Admin::User|Section description"
 msgstr ""
 
@@ -1721,7 +1683,6 @@ msgid "Admin::User|Status"
 msgstr ""
 
 #: app/models/admin/user.rb:38
-#, fuzzy
 msgid "Admin::User|Status description"
 msgstr ""
 
@@ -2252,6 +2213,10 @@ msgstr ""
 msgid ""
 "Bookmarking a closed entry with open permission. Are you sure to proceed? "
 "(The title will be open to all users regardless of the permission of entry)"
+msgstr ""
+
+#: app/controllers/bookmarks_controller.rb:37
+msgid "Bookmarklet"
 msgstr ""
 
 #: app/views/bookmarks/setup.html.erb:30
@@ -5213,10 +5178,6 @@ msgstr "Sys Admin"
 
 #: app/controllers/admin/settings_controller.rb:90
 msgid "Settings were saved successfully."
-msgstr ""
-
-#: app/controllers/bookmarks_controller.rb:37
-msgid "Bookmarklet"
 msgstr ""
 
 #: app/models/share_file_access.rb:-

@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-08-04 14:13+0900\n"
+"POT-Creation-Date: 2009-08-04 16:52+0900\n"
 "PO-Revision-Date: 2009-07-29 16:48+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2368,6 +2368,10 @@ msgid ""
 msgstr ""
 "非公開記事ーを全公開でブックマークしますがよろしいですか？\\n（閲覧権限の有無"
 "によらずタイトルが公開されます）"
+
+#: app/controllers/bookmarks_controller.rb:37
+msgid "Bookmarklet"
+msgstr "ブックマークレット"
 
 #: app/views/bookmarks/setup.html.erb:30
 msgid ""
@@ -5410,10 +5414,6 @@ msgstr "設定・管理"
 #: app/controllers/admin/settings_controller.rb:90
 msgid "Settings were saved successfully."
 msgstr "保存しました。"
-
-#: app/controllers/bookmarks_controller.rb:37
-msgid "Bookmarklet"
-msgstr "ブックマークレット"
 
 #: app/models/share_file_access.rb:-
 msgid "ShareFileAccess|Created at"
