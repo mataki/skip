@@ -24,6 +24,10 @@ namespace :skip do
     end
   end
 
+  task :load_default_data => :environment do
+    SkipDefaultData.load
+  end
+
   namespace :collaboration_apps do
     desc "Synchronize the users of the given oauth provider"
     task :sync_users do
