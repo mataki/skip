@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-07-31 17:37+0900\n"
+"POT-Creation-Date: 2009-08-04 14:13+0900\n"
 "PO-Revision-Date: 2009-06-29 13:31+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid " (MB)"
 msgstr ""
 
-#: app/views/entries/_entry_detail.html.erb:299
+#: app/views/entries/_entry_detail.html.erb:305
 msgid " [Delete]"
 msgstr ""
 
@@ -44,7 +44,7 @@ msgid "%B %d %Y"
 msgstr ""
 
 #: app/models/board_entry.rb:305 app/models/board_entry_comment.rb:26
-#: app/views/mypage/index.html.erb:89
+#: app/views/mypage/index.html.erb:91
 msgid "%B %d %Y %H:%M"
 msgstr ""
 
@@ -94,7 +94,7 @@ msgstr ""
 msgid "%s has already joined / applied to join this group."
 msgstr ""
 
-#: app/views/mypage/index.html.erb:88
+#: app/views/mypage/index.html.erb:90
 msgid "%s users"
 msgstr ""
 
@@ -195,7 +195,7 @@ msgstr ""
 msgid "%{month}/%{year} (%{count})"
 msgstr ""
 
-#: app/views/rankings/monthly.html.erb:16
+#: app/views/rankings/monthly.html.erb:14
 msgid "%{month}/%{year} Ranking"
 msgstr ""
 
@@ -439,7 +439,7 @@ msgstr ""
 msgid "Access Count: "
 msgstr ""
 
-#: app/views/entries/_entry_detail.html.erb:215
+#: app/views/entries/_entry_detail.html.erb:216
 msgid "Access Log"
 msgstr ""
 
@@ -487,7 +487,7 @@ msgstr ""
 msgid "Action"
 msgstr ""
 
-#: app/views/entries/_entry_detail.html.erb:219
+#: app/views/entries/_entry_detail.html.erb:220
 msgid "Action:"
 msgstr ""
 
@@ -690,8 +690,6 @@ msgstr ""
 #, fuzzy
 msgid "Admin::GroupCategory|Code description"
 msgstr ""
-"A brief introduction of the site for the users who have not logged in the "
-"system. It is shown under the form of the login screen."
 
 #: app/models/admin/group_category.rb:25
 msgid "Admin::GroupCategory|Description"
@@ -701,9 +699,6 @@ msgstr ""
 #, fuzzy
 msgid "Admin::GroupCategory|Description description"
 msgstr ""
-"A brief introduction of how to use the site for the users using the site for "
-"the first time. It is shown right after the registration of user profiles by "
-"default."
 
 #: app/models/admin/group_category.rb:23
 msgid "Admin::GroupCategory|Icon"
@@ -712,7 +707,7 @@ msgstr ""
 #: app/models/admin/group_category.rb:24
 #, fuzzy
 msgid "Admin::GroupCategory|Icon description"
-msgstr "You can set your own favicon."
+msgstr ""
 
 #: app/models/admin/group_category.rb:27
 msgid "Admin::GroupCategory|Initial selected"
@@ -722,7 +717,6 @@ msgstr ""
 #, fuzzy
 msgid "Admin::GroupCategory|Initial selected description"
 msgstr ""
-"Setting for the email delivery method (Not delivered when set to \"test\")"
 
 #: app/models/admin/group_category.rb:21
 msgid "Admin::GroupCategory|Name"
@@ -732,8 +726,6 @@ msgstr ""
 #, fuzzy
 msgid "Admin::GroupCategory|Name description"
 msgstr ""
-"Write the terms of use here. It is shown right after the first login and "
-"linked from the header by default."
 
 #: app/models/admin/group_participation.rb:20
 msgid "Admin::GroupParticipation|Favorite"
@@ -975,14 +967,13 @@ msgid "Admin::InitialSetting|User code format regex description"
 msgstr ""
 
 #: app/models/admin/initial_setting.rb:48
-#, fuzzy
 msgid "Admin::InitialSetting|User code minimum length"
-msgstr "The URL used for SSO using fixed OP in RP mode."
+msgstr ""
 
 #: app/models/admin/initial_setting.rb:49
 #, fuzzy
 msgid "Admin::InitialSetting|User code minimum length description"
-msgstr "Enable RP mode to force authenticate using the URL."
+msgstr ""
 
 #: app/models/admin/initial_setting.rb:34
 msgid "Admin::InitialSetting|Usercode dips setting"
@@ -1061,11 +1052,8 @@ msgstr ""
 
 #: app/helpers/admin/application_helper.rb:28
 #: app/controllers/admin/settings_controller.rb:24
-#, fuzzy
 msgid "Admin::SettingsController|security"
 msgstr ""
-"Write the terms of use here. It is shown right after the first login and "
-"linked from the header by default."
 
 #: app/models/admin/setting.rb:37
 msgid "Admin::Setting|Abbr app title"
@@ -1076,17 +1064,13 @@ msgid "Admin::Setting|Abbr app title description"
 msgstr ""
 
 #: app/models/admin/setting.rb:29
-#, fuzzy
 msgid "Admin::Setting|Activation lifetime"
-msgstr "How to manage login info"
+msgstr ""
 
 #: app/models/admin/setting.rb:30
 #, fuzzy
 msgid "Admin::Setting|Activation lifetime description"
 msgstr ""
-"Setting for how to manage login info. (Manages login passwords internaly "
-"when set to \"password\" and enables OpenID authentication and uses the "
-"external OP when set to \"RP\")"
 
 #: app/models/admin/setting.rb:39
 msgid "Admin::Setting|Contact addr"
@@ -1108,8 +1092,6 @@ msgstr ""
 #, fuzzy
 msgid "Admin::Setting|Custom password strength regex description"
 msgstr ""
-"Enable full text search feature or not (Search boxes will not be shown when "
-"disabled)"
 
 #: app/models/admin/setting.rb:116
 msgid "Admin::Setting|Custom password strength validation message"
@@ -1123,9 +1105,8 @@ msgstr ""
 "disabled)"
 
 #: app/models/admin/setting.rb:31
-#, fuzzy
 msgid "Admin::Setting|Enable change picture"
-msgstr "The maximum size of shared file a user allowed upload at a time."
+msgstr ""
 
 #: app/models/admin/setting.rb:32
 #, fuzzy
@@ -1140,9 +1121,6 @@ msgstr ""
 #, fuzzy
 msgid "Admin::Setting|Enable login keyphrase description"
 msgstr ""
-"Setting for how to manage login info. (Manages login passwords internaly "
-"when set to \"password\" and enables OpenID authentication and uses the "
-"external OP when set to \"RP\")"
 
 #: app/models/admin/setting.rb:101
 msgid "Admin::Setting|Enable password periodic change"
@@ -1154,48 +1132,40 @@ msgid "Admin::Setting|Enable password periodic change description"
 msgstr "Disk space allowed for share files of each user / group"
 
 #: app/models/admin/setting.rb:126
-#, fuzzy
 msgid "Admin::Setting|Enable single session"
-msgstr "The maximum size of shared file a user allowed upload at a time."
+msgstr ""
 
 #: app/models/admin/setting.rb:127
 #, fuzzy
 msgid "Admin::Setting|Enable single session description"
-msgstr "The maximum size of shared file a user allowed upload at a time."
+msgstr ""
 
 #: app/models/admin/setting.rb:122
-#, fuzzy
 msgid "Admin::Setting|Enable user cleaning notification"
 msgstr ""
-"Enable full text search feature or not (Search boxes will not be shown when "
-"disabled)"
 
 #: app/models/admin/setting.rb:123
 #, fuzzy
 msgid "Admin::Setting|Enable user cleaning notification description"
 msgstr ""
-"Enable full text search feature or not (Search boxes will not be shown when "
-"disabled)"
 
 #: app/models/admin/setting.rb:97
-#, fuzzy
 msgid "Admin::Setting|Enable user lock"
-msgstr "The URL used for SSO using fixed OP in RP mode."
+msgstr ""
 
 #: app/models/admin/setting.rb:98
 #, fuzzy
 msgid "Admin::Setting|Enable user lock description"
-msgstr "Enable RP mode to force authenticate using the URL."
+msgstr ""
 
 #: app/models/admin/setting.rb:47
-#, fuzzy
 msgid "Admin::Setting|Footer first"
-msgstr "The URL used for SSO using fixed OP in RP mode."
+msgstr ""
 
 #: app/models/admin/setting.rb:48
 #, fuzzy
 msgid "Admin::Setting|Footer first description"
-msgstr "Enable RP mode to force authenticate using the URL."
+msgstr ""
 
 #: app/models/admin/setting.rb:51
 msgid "Admin::Setting|Footer image link url"
@@ -1206,15 +1176,13 @@ msgid "Admin::Setting|Footer image link url description"
 msgstr ""
 
 #: app/models/admin/setting.rb:49
-#, fuzzy
 msgid "Admin::Setting|Footer second"
-msgstr "Email Delivery Method"
+msgstr ""
 
 #: app/models/admin/setting.rb:50
 #, fuzzy
 msgid "Admin::Setting|Footer second description"
 msgstr ""
-"Setting for the email delivery method (Not delivered when set to \"test\")"
 
 #: app/models/admin/setting.rb:41
 msgid "Admin::Setting|Help url"
@@ -1225,27 +1193,22 @@ msgid "Admin::Setting|Help url description"
 msgstr ""
 
 #: app/models/admin/setting.rb:27
-#, fuzzy
 msgid "Admin::Setting|Hide email"
-msgstr "The URL used for SSO using fixed OP in RP mode."
+msgstr ""
 
 #: app/models/admin/setting.rb:28
 #, fuzzy
 msgid "Admin::Setting|Hide email description"
-msgstr "Enable RP mode to force authenticate using the URL."
+msgstr ""
 
 #: app/models/admin/setting.rb:75
-#, fuzzy
 msgid "Admin::Setting|Host and port"
-msgstr "Use external OpenID authority"
+msgstr ""
 
 #: app/models/admin/setting.rb:76
 #, fuzzy
 msgid "Admin::Setting|Host and port description"
 msgstr ""
-"Setting for how to manage login info. (Manages login passwords internaly "
-"when set to \"password\" and enables OpenID authentication and uses the "
-"external OP when set to \"RP\")"
 
 #: app/models/admin/setting.rb:43
 msgid "Admin::Setting|Initial anntena"
@@ -1264,17 +1227,13 @@ msgid "Admin::Setting|Login account description"
 msgstr ""
 
 #: app/models/admin/setting.rb:120 app/views/shared/_login_form.html.erb:39
-#, fuzzy
 msgid "Admin::Setting|Login keyphrase"
-msgstr "How to manage login info"
+msgstr ""
 
 #: app/models/admin/setting.rb:121
 #, fuzzy
 msgid "Admin::Setting|Login keyphrase description"
 msgstr ""
-"Setting for how to manage login info. (Manages login passwords internaly "
-"when set to \"password\" and enables OpenID authentication and uses the "
-"external OP when set to \"RP\")"
 
 #: app/models/admin/setting.rb:59
 msgid "Admin::Setting|Mail function setting"
@@ -1325,9 +1284,8 @@ msgid "Admin::Setting|Mypage feed timeout description"
 msgstr ""
 
 #: app/models/admin/setting.rb:-
-#, fuzzy
 msgid "Admin::Setting|Name"
-msgstr "How to manage login info"
+msgstr ""
 
 #: app/models/admin/setting.rb:103
 msgid "Admin::Setting|Password change interval"
@@ -1337,20 +1295,15 @@ msgstr ""
 #, fuzzy
 msgid "Admin::Setting|Password change interval description"
 msgstr ""
-"Setting for how to manage login info. (Manages login passwords internaly "
-"when set to \"password\" and enables OpenID authentication and uses the "
-"external OP when set to \"RP\")"
 
 #: app/models/admin/setting.rb:105
-#, fuzzy
 msgid "Admin::Setting|Password strength"
-msgstr "Internal"
+msgstr ""
 
 #: app/models/admin/setting.rb:106
 #, fuzzy
 msgid "Admin::Setting|Password strength description"
 msgstr ""
-"Setting for the email delivery method (Not delivered when set to \"test\")"
 
 #: app/models/admin/setting.rb:269
 msgid "Admin::Setting|Password strength|Validation message "
@@ -1393,17 +1346,12 @@ msgid "Admin::Setting|Point button description"
 msgstr ""
 
 #: app/models/admin/setting.rb:77
-#, fuzzy
 msgid "Admin::Setting|Protocol"
-msgstr "How to manage login info"
+msgstr ""
 
 #: app/models/admin/setting.rb:78
-#, fuzzy
 msgid "Admin::Setting|Protocol description"
 msgstr ""
-"Setting for how to manage login info. (Manages login passwords internaly "
-"when set to \"password\" and enables OpenID authentication and uses the "
-"external OP when set to \"RP\")"
 
 #: app/models/admin/setting.rb:61
 msgid "Admin::Setting|Smtp settings"
@@ -1470,9 +1418,8 @@ msgid "Admin::Setting|Stop new user description"
 msgstr ""
 
 #: app/models/admin/setting.rb:-
-#, fuzzy
 msgid "Admin::Setting|Updated at"
-msgstr "The URL used for SSO using fixed OP in RP mode."
+msgstr ""
 
 #: app/models/admin/setting.rb:124
 msgid "Admin::Setting|User cleaning notification interval"
@@ -1481,22 +1428,20 @@ msgstr ""
 #: app/models/admin/setting.rb:125
 #, fuzzy
 msgid "Admin::Setting|User cleaning notification interval description"
-msgstr "The maximum size of shared file a user allowed upload at a time."
+msgstr ""
 
 #: app/models/admin/setting.rb:99
-#, fuzzy
 msgid "Admin::Setting|User lock trial limit"
-msgstr "The URL used for SSO using fixed OP in RP mode."
+msgstr ""
 
 #: app/models/admin/setting.rb:100
 #, fuzzy
 msgid "Admin::Setting|User lock trial limit description"
-msgstr "Enable RP mode to force authenticate using the URL."
+msgstr ""
 
 #: app/models/admin/setting.rb:- app/models/admin/setting.rb:20
-#, fuzzy
 msgid "Admin::Setting|Value"
-msgstr "How to manage login info"
+msgstr ""
 
 #: app/models/admin/share_file.rb:26
 msgid "Admin::ShareFile|Category"
@@ -1543,9 +1488,8 @@ msgid "Admin::ShareFile|User"
 msgstr ""
 
 #: app/models/admin/user_profile_master_category.rb:22
-#, fuzzy
 msgid "Admin::UserProfileMasterCategory|Description"
-msgstr "The logo image shown in the login screen."
+msgstr ""
 
 #: app/models/admin/user_profile_master_category.rb:23
 msgid "Admin::UserProfileMasterCategory|Description description"
@@ -1559,9 +1503,6 @@ msgstr ""
 #, fuzzy
 msgid "Admin::UserProfileMasterCategory|Name description"
 msgstr ""
-"Setting for how to manage login info. (Manages login passwords internaly "
-"when set to \"password\" and enables OpenID authentication and uses the "
-"external OP when set to \"RP\")"
 
 #: app/models/admin/user_profile_master_category.rb:20
 msgid "Admin::UserProfileMasterCategory|Sort order"
@@ -1571,21 +1512,16 @@ msgstr ""
 #, fuzzy
 msgid "Admin::UserProfileMasterCategory|Sort order description"
 msgstr ""
-"Setting for how to manage login info. (Manages login passwords internaly "
-"when set to \"password\" and enables OpenID authentication and uses the "
-"external OP when set to \"RP\")"
 
 #: app/models/admin/user_profile_master.rb:38
 #, fuzzy
 msgid "Admin::UserProfileMaster|Description"
-msgstr "You can set your own favicon."
+msgstr ""
 
 #: app/models/admin/user_profile_master.rb:39
 #, fuzzy
 msgid "Admin::UserProfileMaster|Description description"
 msgstr ""
-"The background image shown randomly in the login screen. You can register up "
-"to 10 images."
 
 #: app/models/admin/user_profile_master.rb:21
 msgid "Admin::UserProfileMaster|Input type"
@@ -1594,7 +1530,7 @@ msgstr ""
 #: app/models/admin/user_profile_master.rb:22
 #, fuzzy
 msgid "Admin::UserProfileMaster|Input type description"
-msgstr "The logo image shown in the login screen."
+msgstr ""
 
 #: app/models/admin/user_profile_master.rb:19
 msgid "Admin::UserProfileMaster|Name"
@@ -1603,7 +1539,7 @@ msgstr ""
 #: app/models/admin/user_profile_master.rb:20
 #, fuzzy
 msgid "Admin::UserProfileMaster|Name description"
-msgstr "You can set your own favicon."
+msgstr ""
 
 #: app/models/admin/user_profile_master.rb:27
 msgid "Admin::UserProfileMaster|Option values"
@@ -1658,7 +1594,7 @@ msgstr ""
 #, fuzzy
 msgid "Admin::UserProfileMaster|Required description"
 msgstr ""
-"Setting for the email delivery method (Not delivered when set to \"test\")"
+""
 
 #: app/models/admin/user_profile_master.rb:25
 msgid "Admin::UserProfileMaster|Sort order"
@@ -1668,9 +1604,6 @@ msgstr ""
 #, fuzzy
 msgid "Admin::UserProfileMaster|Sort order description"
 msgstr ""
-"Setting for how to manage login info. (Manages login passwords internaly "
-"when set to \"password\" and enables OpenID authentication and uses the "
-"external OP when set to \"RP\")"
 
 #: app/models/admin/user_profile_master.rb:17
 msgid "Admin::UserProfileMaster|User profile master category"
@@ -1679,7 +1612,7 @@ msgstr ""
 #: app/models/admin/user_profile_master.rb:18
 #, fuzzy
 msgid "Admin::UserProfileMaster|User profile master category description"
-msgstr "Disk space allowed for share files of each user / group"
+msgstr ""
 
 #: app/models/admin/user_uid.rb:17
 msgid "Admin::UserUid|Uid"
@@ -1689,9 +1622,6 @@ msgstr ""
 #, fuzzy
 msgid "Admin::UserUid|Uid description"
 msgstr ""
-"Setting for how to manage login info. (Manages login passwords internaly "
-"when set to \"password\" and enables OpenID authentication and uses the "
-"external OP when set to \"RP\")"
 
 #: app/models/admin/user_uid.rb:19
 msgid "Admin::UserUid|Uid type"
@@ -1704,7 +1634,7 @@ msgstr ""
 #: app/models/admin/user.rb:27
 #, fuzzy
 msgid "Admin::User|Admin description"
-msgstr "You can set your own favicon."
+msgstr ""
 
 #: app/models/admin/user.rb:23
 msgid "Admin::User|Code"
@@ -1714,19 +1644,15 @@ msgstr ""
 #, fuzzy
 msgid "Admin::User|Code description"
 msgstr ""
-"Setting for how to manage login info. (Manages login passwords internaly "
-"when set to \"password\" and enables OpenID authentication and uses the "
-"external OP when set to \"RP\")"
 
 #: app/models/admin/user.rb:30 app/views/admin/users/import.html.erb:22
-#, fuzzy
 msgid "Admin::User|Email"
-msgstr "Group ID"
+msgstr ""
 
 #: app/models/admin/user.rb:31
 #, fuzzy
 msgid "Admin::User|Email description"
-msgstr "You can set your own favicon."
+msgstr ""
 
 #: app/models/admin/user.rb:41
 msgid "Admin::User|Issued at"
@@ -1744,8 +1670,6 @@ msgstr ""
 #, fuzzy
 msgid "Admin::User|Locked description"
 msgstr ""
-"The background image shown randomly in the login screen. You can register up "
-"to 10 images."
 
 #: app/models/admin/user.rb:28 app/views/user/show.html.erb:58
 #: app/views/portal/_registration_form.html.erb:16
@@ -1757,7 +1681,7 @@ msgstr ""
 #: app/models/admin/user.rb:29
 #, fuzzy
 msgid "Admin::User|Name description"
-msgstr "You can set your own favicon."
+msgstr ""
 
 #: app/models/admin/user.rb:35 app/views/portal/_registration_form.html.erb:56
 msgid "Admin::User|Password"
@@ -1772,14 +1696,12 @@ msgid "Admin::User|Password expires at"
 msgstr ""
 
 #: app/models/admin/user.rb:47
-#, fuzzy
 msgid "Admin::User|Picture data"
-msgstr "Group ID"
+msgstr ""
 
 #: app/models/admin/user.rb:48
-#, fuzzy
 msgid "Admin::User|Picture name"
-msgstr "Group ID"
+msgstr ""
 
 #: app/models/admin/user.rb:36
 msgid "Admin::User|Retired"
@@ -1792,7 +1714,7 @@ msgstr ""
 #: app/models/admin/user.rb:33
 #, fuzzy
 msgid "Admin::User|Section description"
-msgstr "You can set your own favicon."
+msgstr ""
 
 #: app/models/admin/user.rb:37
 msgid "Admin::User|Status"
@@ -1802,13 +1724,10 @@ msgstr ""
 #, fuzzy
 msgid "Admin::User|Status description"
 msgstr ""
-"Write the terms of use here. It is shown right after the first login and "
-"linked from the header by default."
 
 #: app/models/admin/user.rb:25
-#, fuzzy
 msgid "Admin::User|Uid"
-msgstr "Group ID"
+msgstr ""
 
 #: app/models/admin/user.rb:45
 msgid "Admin::User|User uids"
@@ -1831,7 +1750,7 @@ msgstr ""
 #: app/helpers/groups_helper.rb:22
 #: app/views/group/_manage_participations.html.erb:47
 #: app/views/group/_manage_participations.html.erb:58
-#: app/views/group/show.html.erb:58
+#: app/views/group/show.html.erb:54
 msgid "Administrator"
 msgstr ""
 
@@ -1948,9 +1867,8 @@ msgid "Application error"
 msgstr ""
 
 #: app/models/applied_email.rb:-
-#, fuzzy
 msgid "AppliedEmail|Created on"
-msgstr "Bookmarks"
+msgstr ""
 
 #: app/models/applied_email.rb:-
 msgid "AppliedEmail|Email"
@@ -2000,12 +1918,12 @@ msgstr ""
 msgid "Are you sure destroing with nest comments?"
 msgstr ""
 
-#: app/views/group/show.html.erb:51
+#: app/views/group/show.html.erb:48
 msgid "Are you sure leave the group?"
 msgstr ""
 
 #: app/helpers/share_file_helper.rb:32
-#: app/views/entries/_entry_detail.html.erb:299
+#: app/views/entries/_entry_detail.html.erb:305
 #: app/views/edit/edit.html.erb:16 app/views/pictures/new.html.erb:20
 #: app/views/board_entries/_board_entry_comment.html.erb:15
 #: app/views/group/_manage_info.html.erb:22
@@ -2104,7 +2022,7 @@ msgstr ""
 msgid "Blog Entry Count"
 msgstr ""
 
-#: app/views/entries/_entry_detail.html.erb:217
+#: app/views/entries/_entry_detail.html.erb:218
 msgid "Blog Entry View"
 msgstr ""
 
@@ -2177,9 +2095,8 @@ msgid "BoardEntry|Contents"
 msgstr ""
 
 #: app/models/board_entry.rb:-
-#, fuzzy
 msgid "BoardEntry|Created on"
-msgstr "Bookmarks"
+msgstr ""
 
 #: app/models/board_entry.rb:-
 msgid "BoardEntry|Date"
@@ -2254,7 +2171,7 @@ msgstr ""
 msgid "Bookmark created."
 msgstr ""
 
-#: app/views/entries/_entry_detail.html.erb:221
+#: app/views/entries/_entry_detail.html.erb:222
 #: app/views/bookmark/_new.html.erb:3
 msgid "Bookmark this"
 msgstr ""
@@ -2272,27 +2189,24 @@ msgid "BookmarkCommentTag|Bookmark comment"
 msgstr ""
 
 #: app/models/bookmark_comment_tag.rb:-
-#, fuzzy
 msgid "BookmarkCommentTag|Created on"
-msgstr "Bookmarks"
+msgstr ""
 
 #: app/models/bookmark_comment_tag.rb:-
 msgid "BookmarkCommentTag|Tag"
 msgstr ""
 
 #: app/models/bookmark_comment.rb:-
-#, fuzzy
 msgid "BookmarkComment|Bookmark"
-msgstr "Bookmarks"
+msgstr ""
 
 #: app/models/bookmark_comment.rb:-
 msgid "BookmarkComment|Comment"
 msgstr ""
 
 #: app/models/bookmark_comment.rb:-
-#, fuzzy
 msgid "BookmarkComment|Created on"
-msgstr "Bookmarks"
+msgstr ""
 
 #: app/models/bookmark_comment.rb:-
 msgid "BookmarkComment|Public"
@@ -2323,9 +2237,8 @@ msgid "BookmarkComment|Tags"
 msgstr ""
 
 #: app/models/bookmark_comment.rb:-
-#, fuzzy
 msgid "BookmarkComment|Updated on"
-msgstr "Bookmarks"
+msgstr ""
 
 #: app/models/bookmark_comment.rb:-
 msgid "BookmarkComment|User"
@@ -2376,24 +2289,20 @@ msgid ""
 msgstr ""
 
 #: app/models/bookmark.rb:-
-#, fuzzy
 msgid "Bookmark|Bookmark comments count"
-msgstr "Bookmarks"
+msgstr ""
 
 #: app/models/bookmark.rb:-
-#, fuzzy
 msgid "Bookmark|Created on"
-msgstr "Bookmarks"
+msgstr ""
 
 #: app/models/bookmark.rb:-
-#, fuzzy
 msgid "Bookmark|Title"
-msgstr "Bookmarks"
+msgstr ""
 
 #: app/models/bookmark.rb:-
-#, fuzzy
 msgid "Bookmark|Updated on"
-msgstr "Bookmarks"
+msgstr ""
 
 #: app/models/bookmark.rb:-
 msgid "Bookmark|Url"
@@ -2411,7 +2320,7 @@ msgstr ""
 msgid "Calendar display of Mypage"
 msgstr ""
 
-#: app/views/entries/_entry_detail.html.erb:618
+#: app/views/entries/_entry_detail.html.erb:624
 #: app/views/board_entries/_board_entry_comment.html.erb:32
 #: app/views/share_file/new.html.erb:28 app/views/share_file/edit.html.erb:15
 msgid "Cancel"
@@ -2643,7 +2552,7 @@ msgstr ""
 msgid "Create %{name}"
 msgstr ""
 
-#: app/views/entries/_entry_detail.html.erb:304
+#: app/views/entries/_entry_detail.html.erb:310
 msgid "Create a new bbs entry inheriting the privacy setting."
 msgstr ""
 
@@ -2655,7 +2564,7 @@ msgstr ""
 msgid "Create administrative user"
 msgstr ""
 
-#: app/views/entries/_entry_detail.html.erb:306
+#: app/views/entries/_entry_detail.html.erb:312
 msgid ""
 "Create an \"open to public\" blog entry disregarding the privacy setting."
 msgstr ""
@@ -2835,7 +2744,7 @@ msgstr ""
 msgid "Display a selection from the value that is already registered.[FIXME]"
 msgstr ""
 
-#: app/views/entries/_entry_detail.html.erb:213
+#: app/views/entries/_entry_detail.html.erb:214
 msgid "Display: "
 msgstr ""
 
@@ -2848,7 +2757,7 @@ msgid "Downloads: %s"
 msgstr ""
 
 #: app/controllers/edit_controller.rb:263
-#: app/views/entries/_entry_detail.html.erb:220
+#: app/views/entries/_entry_detail.html.erb:221
 #: app/views/board_entries/_board_entry_comment.html.erb:14
 #: app/views/user/show.html.erb:39 app/views/admin/pictures/index.html.erb:27
 #: app/views/admin/openid_identifiers/index.html.erb:17
@@ -3011,7 +2920,7 @@ msgstr ""
 msgid "Entries most commented (public entries only)"
 msgstr ""
 
-#: app/views/entries/_entry_detail.html.erb:293
+#: app/views/entries/_entry_detail.html.erb:299
 msgid "Entries talking about this entry:"
 msgstr ""
 
@@ -3092,7 +3001,7 @@ msgstr ""
 msgid "Excluding retired users"
 msgstr ""
 
-#: app/views/group/show.html.erb:87
+#: app/views/group/show.html.erb:83
 msgid "Explanation"
 msgstr ""
 
@@ -3253,7 +3162,8 @@ msgstr "F"
 msgid "From others"
 msgstr ""
 
-#: app/views/search/full_text_search.html.erb:14
+#: app/controllers/search_controller.rb:95
+#: app/views/search/full_text_search.html.erb:14 config/environment.rb:104
 msgid "Full-text Search"
 msgstr ""
 
@@ -3294,36 +3204,24 @@ msgid "Group was successfully deleted."
 msgstr ""
 
 #: app/models/group_category.rb:-
-#, fuzzy
 msgid "GroupCategory|Code"
 msgstr ""
-"A brief introduction of the site for the users who have not logged in the "
-"system. It is shown under the form of the login screen."
 
 #: app/models/group_category.rb:-
-#, fuzzy
 msgid "GroupCategory|Created at"
 msgstr ""
-"A brief introduction of the site for the users who have not logged in the "
-"system. It is shown under the form of the login screen."
 
 #: app/models/group_category.rb:-
-#, fuzzy
 msgid "GroupCategory|Description"
 msgstr ""
-"A brief introduction of the site for the users who have not logged in the "
-"system. It is shown under the form of the login screen."
 
 #: app/models/group_category.rb:-
-#, fuzzy
 msgid "GroupCategory|Icon"
-msgstr "You can set your own favicon."
+msgstr ""
 
 #: app/models/group_category.rb:-
-#, fuzzy
 msgid "GroupCategory|Initial selected"
 msgstr ""
-"Setting for the email delivery method (Not delivered when set to \"test\")"
 
 #: app/models/group_category.rb:20
 msgid "GroupCategory|Initial selected|false"
@@ -3334,18 +3232,12 @@ msgid "GroupCategory|Initial selected|true"
 msgstr ""
 
 #: app/models/group_category.rb:-
-#, fuzzy
 msgid "GroupCategory|Name"
 msgstr ""
-"Write the terms of use here. It is shown right after the first login and "
-"linked from the header by default."
 
 #: app/models/group_category.rb:-
-#, fuzzy
 msgid "GroupCategory|Updated at"
 msgstr ""
-"A brief introduction of the site for the users who have not logged in the "
-"system. It is shown under the form of the login screen."
 
 #: app/controllers/group_controller.rb:264
 msgid "GroupController|Approve"
@@ -3439,44 +3331,36 @@ msgid "Groups Joined"
 msgstr ""
 
 #: app/models/group.rb:-
-#, fuzzy
 msgid "Group|Created on"
-msgstr "Group ID"
+msgstr ""
 
 #: app/models/group.rb:-
 msgid "Group|Default publication type"
 msgstr ""
 
 #: app/models/group.rb:-
-#, fuzzy
 msgid "Group|Deleted at"
-msgstr "Group ID"
+msgstr ""
 
 #: app/models/group.rb:- app/views/group/_form.html.erb:35
 msgid "Group|Description"
 msgstr ""
 
 #: app/models/group.rb:-
-#, fuzzy
 msgid "Group|Gid"
-msgstr "Group ID"
+msgstr ""
 
 #: app/models/group.rb:-
-#, fuzzy
 msgid "Group|Group category"
 msgstr ""
-"A brief introduction of the site for the users who have not logged in the "
-"system. It is shown under the form of the login screen."
 
 #: app/models/group.rb:-
-#, fuzzy
 msgid "Group|Name"
-msgstr "Group ID"
+msgstr ""
 
 #: app/models/group.rb:-
-#, fuzzy
 msgid "Group|Protected"
-msgstr "Group ID"
+msgstr ""
 
 #: app/models/group.rb:29
 msgid "Group|Protected|false"
@@ -3487,9 +3371,8 @@ msgid "Group|Protected|true"
 msgstr ""
 
 #: app/models/group.rb:-
-#, fuzzy
 msgid "Group|Updated on"
-msgstr "Group ID"
+msgstr ""
 
 #: app/views/admin/users/import.html.erb:30
 msgid "Hanako Yamada"
@@ -3791,7 +3674,7 @@ msgstr ""
 msgid "Join status"
 msgstr ""
 
-#: app/views/group/show.html.erb:48
+#: app/views/group/show.html.erb:46
 msgid "Join this group"
 msgstr ""
 
@@ -3844,7 +3727,7 @@ msgstr ""
 msgid "Leave a message upon participation."
 msgstr ""
 
-#: app/views/group/show.html.erb:51
+#: app/views/group/show.html.erb:48
 msgid "Leave the group"
 msgstr ""
 
@@ -4061,11 +3944,11 @@ msgstr ""
 msgid "March"
 msgstr ""
 
-#: app/views/entries/_entry_detail.html.erb:226
+#: app/views/entries/_entry_detail.html.erb:232
 msgid "Mark read"
 msgstr ""
 
-#: app/views/entries/_entry_detail.html.erb:223
+#: app/views/entries/_entry_detail.html.erb:224
 msgid "Maximize!"
 msgstr ""
 
@@ -4077,7 +3960,7 @@ msgstr ""
 msgid "Member"
 msgstr ""
 
-#: app/views/group/show.html.erb:70
+#: app/views/group/show.html.erb:66
 msgid "Members"
 msgstr ""
 
@@ -4149,7 +4032,7 @@ msgstr ""
 msgid "Monthly Rankings"
 msgstr ""
 
-#: app/views/rankings/monthly.html.erb:1
+#: app/views/rankings/monthly.html.erb:2
 msgid ""
 "Monthly ranking of %s (Since the first day of current month up to yesterday. "
 "Updated daily)"
@@ -4244,7 +4127,7 @@ msgstr ""
 msgid "New Email Address"
 msgstr ""
 
-#: app/views/entries/_entry_detail.html.erb:272
+#: app/views/entries/_entry_detail.html.erb:278
 msgid "New Entries on Top"
 msgstr ""
 
@@ -4268,12 +4151,11 @@ msgstr ""
 msgid "New bookmark in your profile!"
 msgstr ""
 
-#: app/views/mypage/index.html.erb:82
-#, fuzzy
+#: app/views/mypage/index.html.erb:84
 msgid "New bookmarks"
-msgstr "Bookmarks"
+msgstr ""
 
-#: app/views/mypage/index.html.erb:47
+#: app/views/mypage/index.html.erb:49
 msgid "New user is waiting for approval in %s"
 msgstr ""
 
@@ -4416,44 +4298,38 @@ msgid ""
 msgstr ""
 
 #: app/models/oauth_provider.rb:-
-#, fuzzy
 msgid "OauthProvider|App name"
-msgstr "Group ID"
+msgstr ""
 
 #: app/models/oauth_provider.rb:-
-#, fuzzy
 msgid "OauthProvider|Created at"
-msgstr "Group ID"
+msgstr ""
 
 #: app/models/oauth_provider.rb:-
-#, fuzzy
 msgid "OauthProvider|Enable"
-msgstr "Group ID"
+msgstr ""
 
 #: app/models/oauth_provider.rb:-
-#, fuzzy
 msgid "OauthProvider|Secret"
-msgstr "Group ID"
+msgstr ""
 
 #: app/models/oauth_provider.rb:-
-#, fuzzy
 msgid "OauthProvider|Token"
-msgstr "Group ID"
+msgstr ""
 
 #: app/models/oauth_provider.rb:-
-#, fuzzy
 msgid "OauthProvider|Updated at"
-msgstr "Group ID"
+msgstr ""
 
 #: app/helpers/calendar_helper.rb:78
 msgid "October"
 msgstr ""
 
-#: app/views/entries/_entry_detail.html.erb:273
+#: app/views/entries/_entry_detail.html.erb:279
 msgid "Old Entries on Top"
 msgstr ""
 
-#: app/views/entries/_entry_detail.html.erb:465
+#: app/views/entries/_entry_detail.html.erb:471
 msgid "One or more characters other than spaces required."
 msgstr ""
 
@@ -4540,9 +4416,8 @@ msgid "OpenIdAuthentication::Nonce|Timestamp"
 msgstr ""
 
 #: app/models/open_id_request.rb:-
-#, fuzzy
 msgid "OpenIdRequest|Created at"
-msgstr "You can set your own favicon."
+msgstr ""
 
 #: app/models/open_id_request.rb:-
 msgid "OpenIdRequest|Parameters"
@@ -4553,19 +4428,16 @@ msgid "OpenIdRequest|Token"
 msgstr ""
 
 #: app/models/open_id_request.rb:-
-#, fuzzy
 msgid "OpenIdRequest|Updated at"
-msgstr "You can set your own favicon."
+msgstr ""
 
 #: app/models/openid_identifier.rb:-
-#, fuzzy
 msgid "OpenidIdentifier|Created at"
-msgstr "You can set your own favicon."
+msgstr ""
 
 #: app/models/openid_identifier.rb:-
-#, fuzzy
 msgid "OpenidIdentifier|Updated at"
-msgstr "You can set your own favicon."
+msgstr ""
 
 #: app/models/openid_identifier.rb:-
 msgid "OpenidIdentifier|Url"
@@ -4613,11 +4485,11 @@ msgid "Output Format"
 msgstr ""
 
 #: app/controllers/rankings_controller.rb:163
-#: app/views/rankings/all.html.erb:5
+#: app/views/rankings/all.html.erb:4
 msgid "Overall Rankings"
 msgstr ""
 
-#: app/views/rankings/all.html.erb:1
+#: app/views/rankings/all.html.erb:2
 msgid ""
 "Overall ranking of %s (Since the opening of the site up to yesterday. "
 "Updated daily)"
@@ -4675,7 +4547,7 @@ msgstr ""
 msgid "Perform the Action"
 msgstr ""
 
-#: app/views/rankings/monthly.html.erb:6
+#: app/views/rankings/monthly.html.erb:7
 msgid "Period"
 msgstr ""
 
@@ -4701,34 +4573,28 @@ msgid "Picture|Content type"
 msgstr ""
 
 #: app/models/picture.rb:-
-#, fuzzy
 msgid "Picture|Created on"
-msgstr "Bookmarks"
+msgstr ""
 
 #: app/models/picture.rb:-
-#, fuzzy
 msgid "Picture|Data"
-msgstr "Group ID"
+msgstr ""
 
 #: app/models/picture.rb:21
-#, fuzzy
 msgid "Picture|File"
-msgstr "Group ID"
+msgstr ""
 
 #: app/models/picture.rb:-
-#, fuzzy
 msgid "Picture|Name"
-msgstr "Group ID"
+msgstr ""
 
 #: app/models/picture.rb:-
-#, fuzzy
 msgid "Picture|Updated on"
-msgstr "Group ID"
+msgstr ""
 
 #: app/models/picture.rb:-
-#, fuzzy
 msgid "Picture|User"
-msgstr "Group ID"
+msgstr ""
 
 #: app/controllers/mypage_controller.rb:457
 msgid "Please input OpenID URL."
@@ -4744,9 +4610,8 @@ msgid "Please input valid user or group"
 msgstr ""
 
 #: app/controllers/rankings_controller.rb:164
-#, fuzzy
 msgid "Popular Bookmarks"
-msgstr "Bookmarks"
+msgstr ""
 
 #: app/views/share_file/_form.html.erb:51
 msgid "Popular Tags: "
@@ -4759,26 +4624,22 @@ msgid "Popular postings in %s―"
 msgstr ""
 
 #: app/models/popular_bookmark.rb:-
-#, fuzzy
 msgid "PopularBookmark|Bookmark"
-msgstr "Bookmarks"
+msgstr ""
 
 #: app/models/popular_bookmark.rb:-
-#, fuzzy
 msgid "PopularBookmark|Count"
-msgstr "Bookmarks"
+msgstr ""
 
 #: app/models/popular_bookmark.rb:-
-#, fuzzy
 msgid "PopularBookmark|Created on"
-msgstr "Bookmarks"
+msgstr ""
 
 #: app/models/popular_bookmark.rb:-
-#, fuzzy
 msgid "PopularBookmark|Date"
-msgstr "Bookmarks"
+msgstr ""
 
-#: app/views/entries/_entry_detail.html.erb:287
+#: app/views/entries/_entry_detail.html.erb:293
 msgid "Post"
 msgstr ""
 
@@ -4959,7 +4820,7 @@ msgstr ""
 msgid "Recent Questions"
 msgstr ""
 
-#: app/views/group/show.html.erb:96
+#: app/views/group/show.html.erb:92
 msgid "Recent posts in the groups joined"
 msgstr ""
 
@@ -5016,9 +4877,8 @@ msgid "Registered."
 msgstr ""
 
 #: app/views/platform/index.html.erb:51
-#, fuzzy
 msgid "Registration"
-msgstr "Sys Admin"
+msgstr ""
 
 #: app/views/group/_manage_permit.html.erb:21
 msgid "Reject"
@@ -5048,7 +4908,7 @@ msgstr ""
 msgid "Removed %{user} from [%{group}>]"
 msgstr ""
 
-#: app/views/entries/_entry_detail.html.erb:570
+#: app/views/entries/_entry_detail.html.erb:576
 #: app/views/board_entries/_board_entry_comment.html.erb:17
 msgid "Reply to this comment"
 msgstr ""
@@ -5082,7 +4942,7 @@ msgstr ""
 msgid "Resetting OpenID URL"
 msgstr ""
 
-#: app/views/entries/_entry_detail.html.erb:274
+#: app/views/entries/_entry_detail.html.erb:280
 msgid "Resume default order"
 msgstr ""
 
@@ -5133,7 +4993,7 @@ msgstr ""
 msgid "Sat"
 msgstr "S"
 
-#: app/views/entries/_entry_detail.html.erb:587
+#: app/views/entries/_entry_detail.html.erb:593
 #: app/views/board_entries/_board_entry_comment.html.erb:31
 #: app/views/portal/_registration_form.html.erb:68
 #: app/views/mypage/_manage_openid.html.erb:18
@@ -5182,9 +5042,8 @@ msgid "Search Users"
 msgstr ""
 
 #: config/environment.rb:93
-#, fuzzy
 msgid "Search bookmarks."
-msgstr "Data Search"
+msgstr ""
 
 #: config/environment.rb:106
 msgid "Search contents of the site by keyword."
@@ -5199,13 +5058,8 @@ msgid "Search entries."
 msgstr ""
 
 #: app/controllers/bookmarks_controller.rb:36
-#, fuzzy
 msgid "Search for Bookmarks"
-msgstr "Data Search"
-
-#: app/controllers/search_controller.rb:95 config/environment.rb:104
-msgid "Search for Data"
-msgstr "Data Search"
+msgstr ""
 
 #: app/controllers/search_controller.rb:24
 msgid "Search for Entries"
@@ -5354,7 +5208,6 @@ msgid "Set column visibility (Click to switch on / off))"
 msgstr ""
 
 #: app/views/layouts/admin/application.html.erb:5
-#, fuzzy
 msgid "Setting / Administration"
 msgstr "Sys Admin"
 
@@ -5367,9 +5220,8 @@ msgid "Setup"
 msgstr ""
 
 #: app/models/share_file_access.rb:-
-#, fuzzy
 msgid "ShareFileAccess|Created at"
-msgstr "You can set your own favicon."
+msgstr ""
 
 #: app/models/share_file_access.rb:-
 msgid "ShareFileAccess|Share file"
@@ -5599,7 +5451,7 @@ msgstr ""
 msgid "SiteCount|Writer at month"
 msgstr ""
 
-#: app/views/entries/_entry_detail.html.erb:222
+#: app/views/entries/_entry_detail.html.erb:223
 msgid "Slide Show"
 msgstr ""
 
@@ -5700,14 +5552,12 @@ msgid "Star"
 msgstr ""
 
 #: app/views/bookmark/list.html.erb:15
-#, fuzzy
 msgid "Stars"
-msgstr "S"
+msgstr ""
 
 #: app/views/admin/oauth_providers/index.html.erb:18
-#, fuzzy
 msgid "Start"
-msgstr "S"
+msgstr ""
 
 #: app/views/portal/_registration_sequence.html.erb:23
 msgid "Start with the site!"
@@ -5818,9 +5668,8 @@ msgid "Tags: "
 msgstr ""
 
 #: app/models/tag.rb:-
-#, fuzzy
 msgid "Tag|Created on"
-msgstr "Bookmarks"
+msgstr ""
 
 #: app/models/tag.rb:-
 msgid "Tag|Name"
@@ -6014,7 +5863,7 @@ msgstr ""
 #: app/views/bookmarks/index.html.erb:13
 #: app/views/mypage/_record_mail.html.erb:27
 #: app/views/mypage/_record_post.html.erb:44
-#: app/views/bookmark/_new.html.erb:26 app/views/rankings/data.html.erb:9
+#: app/views/bookmark/_new.html.erb:26 app/views/rankings/data.html.erb:10
 msgid "Title"
 msgstr ""
 
@@ -6047,7 +5896,7 @@ msgstr ""
 msgid "Today's Posts: %s posts"
 msgstr ""
 
-#: app/views/entries/_entry_detail.html.erb:477
+#: app/views/entries/_entry_detail.html.erb:483
 msgid "Too many points!"
 msgstr ""
 
@@ -6059,7 +5908,7 @@ msgstr ""
 msgid "Topic Entry"
 msgstr ""
 
-#: app/views/entries/_entry_detail.html.erb:229
+#: app/views/entries/_entry_detail.html.erb:235
 msgid "Topic Entry: "
 msgstr ""
 
@@ -6092,9 +5941,8 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: app/models/track.rb:-
-#, fuzzy
 msgid "Track|Created on"
-msgstr "Bookmarks"
+msgstr ""
 
 #: app/models/track.rb:-
 msgid "Track|Updated on"
@@ -6230,7 +6078,7 @@ msgstr ""
 msgid "Usable."
 msgstr ""
 
-#: app/views/rankings/data.html.erb:11
+#: app/views/rankings/data.html.erb:12
 msgid "User"
 msgstr ""
 
@@ -6289,24 +6137,20 @@ msgid "UserAccess|Access count"
 msgstr ""
 
 #: app/models/user_access.rb:-
-#, fuzzy
 msgid "UserAccess|Created on"
-msgstr "You can set your own favicon."
+msgstr ""
 
 #: app/models/user_access.rb:-
-#, fuzzy
 msgid "UserAccess|Last access"
-msgstr "You can set your own favicon."
+msgstr ""
 
 #: app/models/user_access.rb:-
-#, fuzzy
 msgid "UserAccess|Updated on"
-msgstr "You can set your own favicon."
+msgstr ""
 
 #: app/models/user_access.rb:-
-#, fuzzy
 msgid "UserAccess|User"
-msgstr "You can set your own favicon."
+msgstr ""
 
 #: app/models/user_custom.rb:-
 msgid "UserCustom|Always show shortcut"
@@ -6345,76 +6189,52 @@ msgid "UserMessageUnsubscribe|User"
 msgstr ""
 
 #: app/models/user_oauth_access.rb:-
-#, fuzzy
 msgid "UserOauthAccess|App name"
-msgstr "You can set your own favicon."
+msgstr ""
 
 #: app/models/user_oauth_access.rb:-
-#, fuzzy
 msgid "UserOauthAccess|Secret"
-msgstr "You can set your own favicon."
+msgstr ""
 
 #: app/models/user_oauth_access.rb:-
-#, fuzzy
 msgid "UserOauthAccess|Token"
-msgstr "You can set your own favicon."
+msgstr ""
 
 #: app/models/user_oauth_access.rb:-
-#, fuzzy
 msgid "UserOauthAccess|User"
-msgstr "You can set your own favicon."
+msgstr ""
 
 #: app/models/user_profile_master_category.rb:-
-#, fuzzy
 msgid "UserProfileMasterCategory|Created at"
 msgstr ""
-"Setting for how to manage login info. (Manages login passwords internaly "
-"when set to \"password\" and enables OpenID authentication and uses the "
-"external OP when set to \"RP\")"
 
 #: app/models/user_profile_master_category.rb:-
-#, fuzzy
 msgid "UserProfileMasterCategory|Description"
-msgstr "The logo image shown in the login screen."
+msgstr ""
 
 #: app/models/user_profile_master_category.rb:-
-#, fuzzy
 msgid "UserProfileMasterCategory|Name"
 msgstr ""
-"Setting for how to manage login info. (Manages login passwords internaly "
-"when set to \"password\" and enables OpenID authentication and uses the "
-"external OP when set to \"RP\")"
 
 #: app/models/user_profile_master_category.rb:-
-#, fuzzy
 msgid "UserProfileMasterCategory|Sort order"
 msgstr ""
-"Setting for how to manage login info. (Manages login passwords internaly "
-"when set to \"password\" and enables OpenID authentication and uses the "
-"external OP when set to \"RP\")"
 
 #: app/models/user_profile_master_category.rb:-
-#, fuzzy
 msgid "UserProfileMasterCategory|Updated at"
 msgstr ""
-"Setting for how to manage login info. (Manages login passwords internaly "
-"when set to \"password\" and enables OpenID authentication and uses the "
-"external OP when set to \"RP\")"
 
 #: app/models/user_profile_master.rb:-
-#, fuzzy
 msgid "UserProfileMaster|Created at"
-msgstr "You can set your own favicon."
+msgstr ""
 
 #: app/models/user_profile_master.rb:-
-#, fuzzy
 msgid "UserProfileMaster|Description"
-msgstr "You can set your own favicon."
+msgstr ""
 
 #: app/models/user_profile_master.rb:-
-#, fuzzy
 msgid "UserProfileMaster|Input type"
-msgstr "The logo image shown in the login screen."
+msgstr ""
 
 #: app/models/user_profile_master.rb:23
 msgid "UserProfileMaster|Input type|appendable_select"
@@ -6457,20 +6277,16 @@ msgid "UserProfileMaster|Input type|year_select"
 msgstr ""
 
 #: app/models/user_profile_master.rb:-
-#, fuzzy
 msgid "UserProfileMaster|Name"
-msgstr "You can set your own favicon."
+msgstr ""
 
 #: app/models/user_profile_master.rb:-
-#, fuzzy
 msgid "UserProfileMaster|Option values"
-msgstr "You can set your own favicon."
+msgstr ""
 
 #: app/models/user_profile_master.rb:-
-#, fuzzy
 msgid "UserProfileMaster|Required"
 msgstr ""
-"Setting for the email delivery method (Not delivered when set to \"test\")"
 
 #: app/models/user_profile_master.rb:29
 msgid "UserProfileMaster|Required|false"
@@ -6481,47 +6297,36 @@ msgid "UserProfileMaster|Required|true"
 msgstr ""
 
 #: app/models/user_profile_master.rb:-
-#, fuzzy
 msgid "UserProfileMaster|Sort order"
 msgstr ""
-"Setting for how to manage login info. (Manages login passwords internaly "
-"when set to \"password\" and enables OpenID authentication and uses the "
-"external OP when set to \"RP\")"
 
 #: app/models/user_profile_master.rb:-
-#, fuzzy
 msgid "UserProfileMaster|Updated at"
-msgstr "You can set your own favicon."
+msgstr ""
 
 #: app/models/user_profile_master.rb:-
-#, fuzzy
 msgid "UserProfileMaster|User profile master category"
-msgstr "Disk space allowed for share files of each user / group"
+msgstr ""
 
 #: app/models/user_profile_value.rb:-
-#, fuzzy
 msgid "UserProfileValue|Created at"
-msgstr "You can set your own favicon."
+msgstr ""
 
 #: app/models/user_profile_value.rb:-
-#, fuzzy
 msgid "UserProfileValue|Updated at"
-msgstr "You can set your own favicon."
+msgstr ""
 
 #: app/models/user_profile_value.rb:-
-#, fuzzy
 msgid "UserProfileValue|User"
-msgstr "Disk space allowed for share files of each user / group"
+msgstr ""
 
 #: app/models/user_profile_value.rb:-
-#, fuzzy
 msgid "UserProfileValue|User profile master"
-msgstr "Disk space allowed for share files of each user / group"
+msgstr ""
 
 #: app/models/user_profile_value.rb:-
-#, fuzzy
 msgid "UserProfileValue|Value"
-msgstr "You can set your own favicon."
+msgstr ""
 
 #: app/models/user_reading.rb:-
 msgid "UserReading|Board entry"
@@ -6626,9 +6431,8 @@ msgid "User|Auth session token"
 msgstr ""
 
 #: app/models/user.rb:-
-#, fuzzy
 msgid "User|Created on"
-msgstr "You can set your own favicon."
+msgstr ""
 
 #: app/models/user.rb:-
 msgid "User|Crypted password"
@@ -6670,9 +6474,8 @@ msgid "User|Locked|true"
 msgstr ""
 
 #: app/models/user.rb:-
-#, fuzzy
 msgid "User|Name"
-msgstr "Group ID"
+msgstr ""
 
 #: app/models/user.rb:57
 msgid "User|Old password"
@@ -6734,9 +6537,8 @@ msgid "User|Trial num"
 msgstr ""
 
 #: app/models/user.rb:-
-#, fuzzy
 msgid "User|Updated on"
-msgstr "You can set your own favicon."
+msgstr ""
 
 #: app/views/admin/oauth_providers/index.html.erb:18
 msgid "Using"
@@ -6747,7 +6549,7 @@ msgstr ""
 msgid "Verified content of CSV file."
 msgstr ""
 
-#: app/views/entries/_entry_detail.html.erb:218
+#: app/views/entries/_entry_detail.html.erb:219
 msgid "View Source"
 msgstr ""
 
@@ -6824,7 +6626,7 @@ msgstr ""
 msgid "Write a blog entry"
 msgstr ""
 
-#: app/views/entries/_entry_detail.html.erb:285
+#: app/views/entries/_entry_detail.html.erb:291
 msgid "Write a comment"
 msgstr ""
 
@@ -6981,9 +6783,8 @@ msgid "Your information"
 msgstr ""
 
 #: app/views/mypage/welcome.html.erb:36
-#, fuzzy
 msgid "Your profile from other users' view ..."
-msgstr "%s from other users' view"
+msgstr ""
 
 #: app/views/user_mailer/sent_signup_confirm.html.erb:3
 msgid "Your registration is complete."
@@ -7019,7 +6820,7 @@ msgstr ""
 msgid "[%{title}] You have a message from %{user}."
 msgstr ""
 
-#: app/views/group/show.html.erb:78
+#: app/views/group/show.html.erb:74
 msgid "[...See all]"
 msgstr ""
 
@@ -7039,13 +6840,13 @@ msgstr ""
 msgid "[Archive of %{month}/%{year}]"
 msgstr ""
 
-#: app/views/entries/_entry_detail.html.erb:260
+#: app/views/entries/_entry_detail.html.erb:266
 msgid "[Bookmarked by: %d member]"
 msgid_plural "[Bookmarked by: %d members]"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/views/entries/_entry_detail.html.erb:200
+#: app/views/entries/_entry_detail.html.erb:206
 msgid "[Bottom of page]"
 msgstr ""
 
@@ -7090,11 +6891,11 @@ msgstr ""
 msgid "[Close]"
 msgstr ""
 
-#: app/views/entries/_entry_detail.html.erb:304
+#: app/views/entries/_entry_detail.html.erb:310
 msgid "[Compose a new bbs with this as topic]"
 msgstr ""
 
-#: app/views/entries/_entry_detail.html.erb:306
+#: app/views/entries/_entry_detail.html.erb:312
 msgid "[Compose a new blog with this as topic]"
 msgstr ""
 
@@ -7179,9 +6980,8 @@ msgid "[Owner only]"
 msgstr ""
 
 #: app/views/mypage/welcome.html.erb:42
-#, fuzzy
 msgid "[Popular Blogs]"
-msgstr "Bookmarks"
+msgstr ""
 
 #: app/views/shared/_calendar.html.erb:30
 #: app/views/rankings/_monthly_history.html.erb:5
@@ -7243,7 +7043,7 @@ msgstr ""
 msgid "[Set current time]"
 msgstr ""
 
-#: app/views/entries/_entry_detail.html.erb:247
+#: app/views/entries/_entry_detail.html.erb:253
 msgid "[Show source]"
 msgstr ""
 
@@ -7282,7 +7082,7 @@ msgstr ""
 msgid "[Today]"
 msgstr "[Current]"
 
-#: app/views/entries/_entry_detail.html.erb:310
+#: app/views/entries/_entry_detail.html.erb:316
 msgid "[Top of page]"
 msgstr ""
 
@@ -7343,9 +7143,8 @@ msgid "admin"
 msgstr ""
 
 #: app/models/admin/setting.rb:-
-#, fuzzy
 msgid "admin::setting"
-msgstr "How to manage login info"
+msgstr ""
 
 #: app/views/search/full_text_search.html.erb:18
 msgid "all"
@@ -7481,9 +7280,8 @@ msgid "loading..."
 msgstr ""
 
 #: app/models/mail.rb:-
-#, fuzzy
 msgid "mail"
-msgstr "に失敗しました"
+msgstr ""
 
 #: app/models/message.rb:-
 msgid "message"
@@ -7763,21 +7561,3 @@ msgstr ""
 #: app/controllers/platform_controller.rb:168
 msgid "入力された%{email}というメールアドレスは登録されていません。"
 msgstr ""
-
-#~ msgid "Admin::ImagesController|title_logo"
-#~ msgstr "Title Logo Image"
-
-#~ msgid "Admin::ImagesController|title_logo_description"
-#~ msgstr "The logo image shown in the login screen."
-
-#, fuzzy
-#~ msgid "UserOauthAccess|Created at"
-#~ msgstr "You can set your own favicon."
-
-#, fuzzy
-#~ msgid "UserOauthAccess|Updated at"
-#~ msgstr "You can set your own favicon."
-
-#, fuzzy
-#~ msgid "admin::initialsetting"
-#~ msgstr "How to manage login info"

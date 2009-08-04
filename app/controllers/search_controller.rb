@@ -92,7 +92,7 @@ class SearchController < ApplicationController
 
   #全文検索
   def full_text_search
-    @main_menu = @title = _('Search for Data')
+    @main_menu = @title = _('Full-text Search')
 
     params[:target_aid] ||= "all"
     params[:query] = params[:full_text_query] unless params[:full_text_query].blank?

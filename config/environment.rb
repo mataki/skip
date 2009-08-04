@@ -101,7 +101,7 @@ menu_btns = [
 
 menu_btns << { :img_name => "page_find",
                :id => "btn_search",
-               :name => GetText.N_("Search for Data"),
+               :name => GetText.N_("Full-text Search"),
                :url => {:controller => '/search', :action => 'full_text_search' },
                :desc => GetText.N_("Search contents of the site by keyword.") } if SkipEmbedded::InitialSettings['full_text_search_setting']
 MENU_BTNS = menu_btns
