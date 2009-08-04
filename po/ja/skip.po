@@ -5425,7 +5425,7 @@ msgstr "作成日時"
 
 #: app/models/share_file_access.rb:-
 msgid "ShareFileAccess|Share file"
-msgstr "共有ファイル"
+msgstr "ファイル"
 
 #: app/models/share_file_access.rb:-
 msgid "ShareFileAccess|User"
@@ -5433,7 +5433,7 @@ msgstr "ユーザ"
 
 #: app/models/share_file_publication.rb:-
 msgid "ShareFilePublication|Share file"
-msgstr "共有ファイル"
+msgstr "ファイル"
 
 #: app/models/share_file_publication.rb:-
 msgid "ShareFilePublication|Symbol"
@@ -5445,7 +5445,7 @@ msgstr "作成日時"
 
 #: app/models/share_file_tag.rb:-
 msgid "ShareFileTag|Share file"
-msgstr "共有ファイル"
+msgstr "ファイル"
 
 #: app/models/share_file_tag.rb:-
 msgid "ShareFileTag|Tag"
@@ -5497,11 +5497,11 @@ msgstr "ユーザ"
 #: app/controllers/group_layout_module.rb:8
 #: app/controllers/user_layout_module.rb:6
 msgid "Shared Files"
-msgstr "共有ファイル"
+msgstr "ファイル"
 
 #: app/controllers/admin/settings_controller.rb:38
 msgid "Shared Files Settings"
-msgstr "共有ファイル関連"
+msgstr "ファイル関連"
 
 #: app/views/mypage/_manage_customize.html.erb:46
 msgid "Shortcut"
@@ -5569,7 +5569,7 @@ msgstr "既に登録されている値から選択項目を表示しています
 msgid ""
 "Showing the total capacity permitted for shared files versus current disk "
 "usage of shared files."
-msgstr "システム全体の最大許可容量に対して現在使用中の共有ファイルの容量です。"
+msgstr "システム全体の最大許可容量に対して現在使用中のファイルの容量です。"
 
 #: app/views/mypage/trace.html.erb:2
 msgid ""
@@ -6285,7 +6285,7 @@ msgstr "アップロード"
 
 #: app/helpers/edit_helper.rb:36
 msgid "Upload share file"
-msgstr "共有ファイルをアップロード"
+msgstr "ファイルをアップロード"
 
 #: app/views/share_file/_share_file_box.html.erb:25
 msgid "Uploaded by: %s"
@@ -7668,7 +7668,7 @@ msgstr "は前回と同一の値は登録できません。"
 
 #: app/helpers/admin/application_helper.rb:41 app/models/share_file.rb:-
 msgid "share file"
-msgstr "共有ファイル"
+msgstr "ファイル"
 
 #: app/models/share_file_access.rb:-
 msgid "share file access"
@@ -7822,20 +7822,3 @@ msgstr ""
 #: app/controllers/platform_controller.rb:168
 msgid "入力された%{email}というメールアドレスは登録されていません。"
 msgstr ""
-
-#~ msgid "&nbsp;%{url}"
-#~ msgstr "　%{url}"
-
-#~ msgid "Admin::ImagesController|title_logo"
-#~ msgstr "タイトルロゴ画像"
-
-#~ msgid "Admin::ImagesController|title_logo_description"
-#~ msgstr "ログイン画面に表示されるロゴの画像です。"
-
-#, fuzzy
-#~ msgid "UserOauthAccess|Created at"
-#~ msgstr "作成日時"
-
-#, fuzzy
-#~ msgid "UserOauthAccess|Updated at"
-#~ msgstr "更新日時"
