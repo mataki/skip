@@ -5160,7 +5160,7 @@ msgid "Settings were saved successfully."
 msgstr ""
 
 #: app/controllers/bookmarks_controller.rb:37
-msgid "Setup"
+msgid "Bookmarklet"
 msgstr ""
 
 #: app/models/share_file_access.rb:-

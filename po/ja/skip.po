@@ -4203,7 +4203,7 @@ msgstr "月毎の一覧"
 
 #: app/controllers/rankings_controller.rb:162
 msgid "Monthly Rankings"
-msgstr "月別ランキング"
+msgstr "月別総合ランキング"
 
 #: app/views/rankings/monthly.html.erb:2
 msgid ""
@@ -5233,7 +5233,7 @@ msgstr "検索結果ページ:"
 
 #: app/controllers/users_controller.rb:69
 msgid "Search Users"
-msgstr "ユーザの検索"
+msgstr "ユーザを探す"
 
 #: config/environment.rb:93
 msgid "Search bookmarks."
@@ -5265,7 +5265,7 @@ msgstr "ファイルを探す"
 
 #: app/controllers/groups_controller.rb:67
 msgid "Search for groups"
-msgstr "グループの検索"
+msgstr "グループを探す"
 
 #: app/views/search/full_text_search.html.erb:20
 msgid "Search from %s&nbsp;"
@@ -5412,8 +5412,8 @@ msgid "Settings were saved successfully."
 msgstr "保存しました。"
 
 #: app/controllers/bookmarks_controller.rb:37
-msgid "Setup"
-msgstr "セットアップ"
+msgid "Bookmarklet"
+msgstr "ブックマークレット"
 
 #: app/models/share_file_access.rb:-
 msgid "ShareFileAccess|Created at"
