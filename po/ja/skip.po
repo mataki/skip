@@ -3479,7 +3479,7 @@ msgstr "グループ"
 #: app/controllers/feed_controller.rb:115
 #: app/controllers/user_layout_module.rb:8 app/views/user/show.html.erb:4
 msgid "Groups Joined"
-msgstr "参加グループ"
+msgstr "グループ"
 
 #: app/models/group.rb:-
 msgid "Group|Created on"
