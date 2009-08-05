@@ -21,10 +21,10 @@ module NavigationHelpers
       admin_pictures_path
 
     when /^(.*)ユーザのプロフィールページ$/
-      url_for(:controller => "user", :action => "show", :uid => $1)
+      url_for(:controller => "/user", :action => "show", :uid => $1)
 
     when /全体からのブックマーク検索画面/
-      url_for(:controller => 'bookmarks')
+      url_for(:controller => '/bookmarks')
 
     when /ログインページ/
       "/platform"
