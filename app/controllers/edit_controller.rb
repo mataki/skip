@@ -15,8 +15,6 @@
 
 class EditController < ApplicationController
   include BoardEntriesHelper
-  before_filter :setup_layout, :load_tagwards_and_link_params,
-                :except => [ :destroy, :delete_trackback, :ado_preview ]
 
   verify :method => :post, :only => [ :create, :update, :destroy, :delete_trackback ],
          :redirect_to => { :action => :index }
@@ -41,6 +39,9 @@ class EditController < ApplicationController
     when "hiki"
       params[:contents_hiki] = params[:contents]
     end
+
+    setup_layout @board_entry
+    load_tagwards_and_link_params @board_entry
   end
 
   # post_action
@@ -92,10 +93,10 @@ class EditController < ApplicationController
       redirect_to @board_entry.get_url_hash
       return
     else
+      setup_layout @board_entry
+      load_tagwards_and_link_params @board_entry
       render :action => 'index'
-      return
     end
-    render :action => 'index'
   end
 
   # link_action
@@ -148,6 +149,9 @@ class EditController < ApplicationController
     # まだ送信していないメールが存在する場合のみ、自動で送信チェックボックスをチェックする
     login_user_symbol_type, login_user_symbol_id = Symbol.split_symbol(session[:user_symbol])
     @board_entry.send_mail = "1" if Mail.find_by_from_user_id_and_user_entry_no_and_send_flag(login_user_symbol_id, @board_entry.user_entry_no, false)
+
+    setup_layout @board_entry
+    load_tagwards_and_link_params @board_entry
   end
 
   # post_acttion
@@ -213,9 +217,11 @@ class EditController < ApplicationController
 
       flash[:notice] = _('Entry was successfully updated.') + message
       redirect_to @board_entry.get_url_hash
-      return
+    else
+      setup_layout @board_entry
+      load_tagwards_and_link_params @board_entry
+      render :action => 'edit'
     end
-    render :action => 'edit'
   end
 
   # post_action
@@ -255,27 +261,14 @@ class EditController < ApplicationController
   end
 
 private
-  # TODO: リファクタ そもそもbefore_filterで params から算出して設定する必要はない
-  # after_filterで設定される @board_entry でやったほうがよい
-  def setup_layout
-    @main_menu = (!params[:symbol].blank? and params[:symbol].include?('gid:')) ? _('Groups') : _('My Blog')
-
-    symbol = if params[:board_entry] and !params[:board_entry][:symbol].blank?
-               params[:board_entry][:symbol]
-             elsif !params[:symbol].blank?
-               params[:symbol]
-             else
-               session[:user_symbol]
-             end
-
-    owner = BoardEntry.owner(symbol)
-    @title = _("%{action} %{write_place}") % {:action => (["edit", "update"].include?(action_name) ? _('Edit') : _('Write')), :write_place => write_place_name(owner)}
+  def setup_layout board_entry
+    board_entry.load_owner unless board_entry.owner
+    @main_menu = board_entry.owner.is_a?(Group) ? _('Groups') : _('My Blog')
+    @title = _("%{action} %{write_place}") % {:action => (["edit", "update"].include?(action_name) ? _('Edit') : _('Write')), :write_place => write_place_name(board_entry.owner)}
   end
 
-  def load_tagwards_and_link_params
-    symbol = params[:symbol] || session[:user_symbol]
-
-    @categories_hash =  BoardEntry.get_categories_hash(login_user_symbols, {:symbol => symbol})
+  def load_tagwards_and_link_params board_entry
+    @categories_hash =  BoardEntry.get_categories_hash(login_user_symbols, {:symbol => board_entry.symbol})
   end
 
   def analyze_params board_entry
