@@ -197,7 +197,7 @@ class User < ActiveRecord::Base
   # 登録済みユーザのユーザID(ログインID,ユーザ名)をもとにユーザを検索する
   def self.find_by_uid(code)
     user = find(:first, :conditions => ['user_uids.uid = ?', code], :include => :user_uids)
-    user.reload
+    user ? user.reload : user
   end
 
   def change_password(params = {})
