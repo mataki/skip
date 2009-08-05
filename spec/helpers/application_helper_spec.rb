@@ -84,7 +84,7 @@ end
 describe ApplicationHelper, '#user_link_to_with_portrait' do
   before do
     @user = stub_model(User, :uid => 'uid:skipkuma', :name => 'skipkuma')
-    @url_params = {:controller => 'user', :action => 'show', :uid => @user.uid}
+    @url_params = {:controller => '/user', :action => 'show', :uid => @user.uid}
     @mock_picture = mock('picture')
   end
   describe 'width, heightの指定がない場合' do

@@ -40,12 +40,12 @@
     <div class="box_space_bottom">
       since <%= @group.created_on.strftime(_("%Y/%m/%d")) -%>
     </div>
-    <div class="box_space_bottom" style="text-align: center; font-size: 12px;">
-      <%= link_to(icon_tag('transmit_go', :title => _('Add to antenna')) + _('Add to antenna'), {:controller => "antenna", :action => "select_antenna", :symbol => @group.symbol, :dummy => '.html'}, {:class => "nyroModal"}) %><br/>
+    <div class="box_space_bottom" style="text-align: center;">
+      <%= link_to(icon_tag('transmit_go', :title => _('Add to antenna')) + _('Add to antenna'), {:controller => "antenna", :action => "select_antenna", :symbol => @group.symbol, :dummy => '.html'}, {:class => "nyroModal large_text"}) %><br/>
     </div>
-    <div class="box_space_bottom" style="text-align: center; font-size: 12px;">
+    <div class="box_space_bottom" style="text-align: center;">
       <% if not @participation -%>
-        <%= link_to(icon_tag('group_go') + _('Join this group'), {:action=>"new_participation"}, {:class => "nyroModal"}) -%>
+        <%= link_to(icon_tag('group_go') + _('Join this group'), {:action=>"new_participation"}, {:class => "nyroModal large_text"}) -%>
       <% elsif not @participation.owned? -%>
         <% form_tag({:action => 'leave'}) do -%>
         <%= submit_tag(_('Leave the group'), {:onclick=>"return confirm('" + _('Are you sure leave the group?') + "');"}) %>
