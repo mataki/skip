@@ -1,11 +1,12 @@
+<% include_title = show_title_col?(params[:content_type].to_sym) %>
 <% unless @rankings.empty? -%>
 <table class="ranking_square">
   <thead>
-    <tr><th class="title" colspan="4"><%= icon_tag('star') %><%= ranking_title params[:content_type].to_sym %></th></tr>
-    <tr><td colspan="4"><%= ranking_caption params[:content_type].to_sym -%></td></tr>
+    <tr><th class="title" colspan="<%= include_title ? 4 : 3 %>"><%= icon_tag('star') %><%= ranking_title params[:content_type].to_sym %></th></tr>
+    <tr><td colspan="<%= include_title ? 4 : 3 %>"><%= ranking_caption params[:content_type].to_sym -%></td></tr>
     <tr>
       <th></th>
-    <% if show_title_col? params[:content_type].to_sym -%>
+    <% if include_title -%>
       <th><%= _('Title')%></th>
     <% end -%>
       <th><%= _('User')%></th>
@@ -16,7 +17,7 @@
 <% @rankings.each_with_index do |ranking, i| -%>
     <tr>
       <td class="rank"><%= i + 1 %>
-    <% if show_title_col? params[:content_type].to_sym -%>
+    <% if include_title -%>
        <td class="link_text"><%= link_to h(ranking.title), h(ranking.url) %></td>
     <% end -%>
       <td class="user_name"><%= link_to h(ranking.author), h(ranking.author_url) %></td>

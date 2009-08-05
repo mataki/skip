@@ -1,9 +1,7 @@
-<%=h _("Overall ranking of %s (Since the opening of the site up to yesterday. Updated daily)") % Admin::Setting.abbr_app_title %><br/>
-<br />
-<hr />
-<br />
-<h1 id="ranking_title"><%= icon_tag 'chart_bar' %><%= _('Overall Rankings')%></h1>
-<br />
+<div class="box message">
+  <%=h _("Overall ranking of %s (Since the opening of the site up to yesterday. Updated daily)") % Admin::Setting.abbr_app_title %>
+</div>
+<h2 id="ranking_title" class="subtitle"><%= icon_tag 'chart_bar' %><%= _('Overall Rankings')%></h2>
 <%= render :partial => 'list' %>
 
 <% content_for :javascript_initializers do -%>

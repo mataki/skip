@@ -88,7 +88,7 @@ var relative_url_root = '<%= relative_url_root %>';
 $j(function(){
     $j('#loading').hide();
 
-    $j('img.fit_image').fitimage();
+    $j('img.fit_image').fitimage({ placeholder: relative_url_root + '/images/skip/jquery/fitimage/spacer.gif' });
 
     $j.fn.nyroModal.settings.processHandler = function(settings) {
         $j.nyroModalSettings({
