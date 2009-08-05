@@ -255,10 +255,19 @@ class EditController < ApplicationController
   end
 
 private
+  # TODO: リファクタ そもそもbefore_filterで params から算出して設定する必要はない
+  # after_filterで設定される @board_entry でやったほうがよい
   def setup_layout
     @main_menu = (!params[:symbol].blank? and params[:symbol].include?('gid:')) ? _('Groups') : _('My Blog')
 
-    symbol = params[:symbol] || session[:user_symbol]
+    symbol = if params[:board_entry] and !params[:board_entry][:symbol].blank?
+               params[:board_entry][:symbol]
+             elsif !params[:symbol].blank?
+               params[:symbol]
+             else
+               session[:user_symbol]
+             end
+
     owner = BoardEntry.owner(symbol)
     @title = _("%{action} %{write_place}") % {:action => (["edit", "update"].include?(action_name) ? _('Edit') : _('Write')), :write_place => write_place_name(owner)}
   end
