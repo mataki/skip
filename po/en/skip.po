@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-08-06 16:13+0800\n"
+"POT-Creation-Date: 2009-08-06 17:20+0800\n"
 "PO-Revision-Date: 2009-06-29 13:31+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -110,7 +110,7 @@ msgstr ""
 msgid "%s: Members"
 msgstr ""
 
-#: app/controllers/portal_controller.rb:144
+#: app/views/portal/deny_register.html.erb:2
 msgid "%s<br/>We apologize for the inconvenience caused.<br/>"
 msgstr ""
 
@@ -3291,7 +3291,7 @@ msgstr ""
 #: app/controllers/feed_controller.rb:115
 #: app/controllers/mypage_controller.rb:488
 #: app/controllers/user_layout_module.rb:8
-#: app/helpers/application_helper.rb:350 app/views/user/show.html.erb:4
+#: app/helpers/application_helper.rb:349 app/views/user/show.html.erb:4
 msgid "Groups Joined"
 msgstr ""
 
@@ -3848,7 +3848,7 @@ msgstr ""
 msgid "Logo image"
 msgstr ""
 
-#: app/controllers/portal_controller.rb:145
+#: app/views/portal/deny_register.html.erb:3
 msgid "Logout"
 msgstr ""
 
@@ -4004,7 +4004,7 @@ msgstr ""
 msgid "Most read blog / BBS entries (public entries only)"
 msgstr ""
 
-#: app/helpers/application_helper.rb:339
+#: app/helpers/application_helper.rb:338
 msgid "Move to groups joined ..."
 msgstr ""
 
@@ -7258,7 +7258,7 @@ msgstr ""
 msgid "message"
 msgstr ""
 
-#: app/helpers/application_helper.rb:302
+#: app/helpers/application_helper.rb:301
 msgid "more"
 msgstr ""
 
