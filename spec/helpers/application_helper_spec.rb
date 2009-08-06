@@ -105,6 +105,25 @@ describe ApplicationHelper, '#user_link_to_with_portrait' do
   end
 end
 
+describe ApplicationHelper, "#get_entry_infos" do
+  it "要素が一つもないときは、空文字になること" do
+    entry = mock_model(BoardEntry)
+    entry.stub(:board_entry_comments_count).and_return(0)
+    entry.stub(:point).and_return(0)
+    entry.stub(:entry_trackbacks_count).and_return(0)
+    entry.stub_chain(:state, :access_count).and_return(0)
+    helper.get_entry_infos(entry).should == ""
+  end
+  it "全ての要素が1の場合、-で連結されること" do
+    entry = mock_model(BoardEntry)
+    entry.stub(:board_entry_comments_count).and_return(1)
+    entry.stub(:point).and_return(1)
+    entry.stub(:entry_trackbacks_count).and_return(1)
+    entry.stub_chain(:state, :access_count).and_return(1)
+    helper.get_entry_infos(entry).should == "[Comment(1)-GoodJob(1)-Trackback(1)-Access(1)]"
+  end
+end
+
 describe ApplicationHelper, '#url_for_bookmark' do
   before do
     @bookmark = Bookmark.new :url => 'http://b.hatena.ne.jp/search?ie=utf8&q=vim+エディタ&x=0&y=0'

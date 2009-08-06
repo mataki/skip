@@ -52,7 +52,7 @@ module ApplicationHelper
     output = ""
     choices.each do |choice|
       output << radio_button(object, method, choice.last, options)
-      output << choice.first
+      output << label_tag("#{object}_#{method}_#{choice.last}", h(choice.first))
     end
     output
   end
@@ -238,13 +238,12 @@ module ApplicationHelper
 
   # [コメント(n)-ポイント(n)-話題(n)-アクセス(n)]の表示
   def get_entry_infos entry
-    output = ""
+    output = []
     output << n_("Comment(%s)", "Comments(%s)", entry.board_entry_comments_count) % h(entry.board_entry_comments_count.to_s) if entry.board_entry_comments_count > 0
     output << "#{h Admin::Setting.point_button}(#{h entry.point.to_s})" if entry.point > 0
     output << n_("Trackback(%s)", "Trackbacks(%s)", entry.entry_trackbacks_count) % h(entry.entry_trackbacks_count.to_s) if entry.entry_trackbacks_count > 0
     output << n_("Access(%s)", "Accesses(%s)", entry.state.access_count) % h(entry.state.access_count.to_s) if entry.state.access_count > 0
-    output = "[#{output}]" if output.size > 0
-    return output
+    output.size > 0 ? "[#{output.join('-')}]" : ""
   end
 
   def get_menu_items menus, selected_menu, action
