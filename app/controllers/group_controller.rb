@@ -261,7 +261,7 @@ class GroupController < ApplicationController
       flash[:warn] = _("No approval needed to join this group.")
       redirect_to :action => :show
     end
-    type_name = params[:submit_type] == 'permit' ? _('GroupController|Approve') : _('GroupController|Disapprove') #"許可" : "棄却"
+    type_name = params[:submit_type] == 'permit' ? s_('GroupController|Approve') : s_('GroupController|Disapprove') #"許可" : "棄却"
 
     if states = params[:participation_state]
       states.each do |participation_id, state|

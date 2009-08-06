@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-08-06 16:01+0800\n"
-"PO-Revision-Date: 2009-07-29 16:48+0900\n"
+"POT-Creation-Date: 2009-08-04 16:52+0900\n"
+"PO-Revision-Date: 2009-08-06 16:40+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -129,8 +129,8 @@ msgstr[1] "%{count}日"
 #: app/views/user/_portrait_box.html.erb:23
 msgid "%{count} entry"
 msgid_plural "%{count} entries"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%{count}件"
+msgstr[1] "%{count}件"
 
 #: app/views/bookmarks/_bookmarks.html.erb:11
 #: app/views/rankings/statistics.html.erb:36
@@ -3409,7 +3409,7 @@ msgstr ""
 
 #: app/controllers/group_controller.rb:264
 msgid "GroupController|Disapprove"
-msgstr ""
+msgstr "棄却"
 
 #: app/controllers/group_controller.rb:32
 msgid "GroupController|DisapproveSuceeded"
@@ -7824,6 +7824,3 @@ msgstr ""
 #: app/controllers/platform_controller.rb:168
 msgid "入力された%{email}というメールアドレスは登録されていません。"
 msgstr ""
-
-#~ msgid "I have joined the site!!"
-#~ msgstr "ユーザ登録しました！！"
