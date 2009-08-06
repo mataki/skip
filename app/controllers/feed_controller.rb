@@ -23,8 +23,8 @@ class FeedController < ApplicationController
 
   def recent_blogs
     find_params = BoardEntry.make_conditions(login_user_symbols, {:entry_type=>'DIARY', :recent_day=> 10, :publication_type => 'public'})
-    find_params[:conditions][0] << " and board_entries.title <> _('ユーザー登録しました！')"
-    rss_feed "recent_blogs",_("Recently Posted Entries"), board_entry_item_array(find_params)
+    find_params[:conditions][0] << " and board_entries.title <> '" + _('I have joined the site!') + "'"
+    rss_feed "recent_blogs", _("Recently Posted Entries"), board_entry_item_array(find_params)
   end
 
   # 最近のBBS記事一覧のRSSを生成する
