@@ -90,6 +90,9 @@ Then /^"(.*)"がチェックされていること$/ do |label|
   field_labeled(label).should be_checked
 end
 
+Then /^"(.*)"がチェックされていないこと$/ do |label|
+  field_labeled(label).should_not be_checked
+end
 
 Then /^"(.*)"が選択されていること$/ do |label|
   field_labeled(label).should be_checked
