@@ -52,7 +52,7 @@ module ApplicationHelper
     output = ""
     choices.each do |choice|
       output << radio_button(object, method, choice.last, options)
-      output << choice.first
+      output << label_tag("#{object}_#{method}_#{choice.last}", h(choice.first))
     end
     output
   end

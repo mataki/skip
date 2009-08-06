@@ -5719,7 +5719,7 @@ msgstr "ユーザ数順"
 
 #: app/models/user_search_condition.rb:39
 msgid "Sort by user name"
-msgstr "ユーザ名"
+msgstr "ユーザ名順"
 
 #: app/controllers/group_controller.rb:389
 msgid "Specified group does not exist."
