@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-08-06 17:20+0800\n"
+"POT-Creation-Date: 2009-08-06 18:30+0800\n"
 "PO-Revision-Date: 2009-08-06 17:11+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -538,6 +538,10 @@ msgid ""
 msgstr ""
 "利用開始URLを発行します。次の画面で確認リンクを押して表示されるURLをユーザに"
 "送信してください。"
+
+#: app/controllers/platform_controller.rb:104
+msgid "Activation email"
+msgstr "利用開始通知"
 
 #: app/views/admin/users/show_signup_url.html.erb:7
 msgid "Activation email message"
@@ -3057,6 +3061,10 @@ msgstr "以下のフォームにOpenIDのURLを入力してください。"
 msgid "Entered email address %s has not been registered in the site."
 msgstr "入力された%sというメールアドレスは登録されていません。"
 
+#: app/controllers/platform_controller.rb:168
+msgid "Entered email address %{email} has not been registered in the site."
+msgstr "入力された%{email}というメールアドレスは登録されていません。"
+
 #: app/controllers/search_controller.rb:23 app/views/bookmark/list.html.erb:17
 #: app/views/bookmarks/index.html.erb:25 config/environment.rb:67
 msgid "Entries"
@@ -3982,6 +3990,10 @@ msgstr "未読記事の一覧"
 msgid "Listing %{model}"
 msgstr "%{model}一覧"
 
+#: app/views/mypage/_rss_feed_box.html.erb:3
+msgid "Loading data from external site..."
+msgstr "外部から読み込み中..."
+
 #: app/views/mypage/_record_post.html.erb:42
 msgid "Location"
 msgstr "所在"
@@ -4535,6 +4547,7 @@ msgid "OpenID URL was successfully set."
 msgstr "OpenID URLを設定しました。"
 
 #: app/controllers/platform_controller.rb:191
+#: app/controllers/platform_controller.rb:238
 msgid "OpenID format invalid."
 msgstr "OpenIDの形式が正しくありません。"
 
@@ -4551,10 +4564,6 @@ msgstr "OpenIDの処理の中でキャンセルされたか、失敗しました
 #: app/controllers/platform_controller.rb:278
 msgid "OpenID server not found. Please provide a correct OpenID URL."
 msgstr "正しいOpenID URLを入力してください。"
-
-#: app/controllers/platform_controller.rb:238
-msgid "OpenIDの形式が正しくありません。"
-msgstr ""
 
 #: app/controllers/mypage_controller.rb:448
 msgid "OpenId process is cancelled or failed."
@@ -4735,6 +4744,10 @@ msgstr "処理を実行する"
 #: app/views/rankings/monthly.html.erb:7
 msgid "Period"
 msgstr "期間"
+
+#: app/views/admin/settings/_security.html.erb:7
+msgid "Periodic password change"
+msgstr "パスワード定期変更"
 
 #: app/controllers/pictures_controller.rb:57 app/models/picture.rb:36
 msgid "Picture could not be changed."
@@ -6344,6 +6357,10 @@ msgstr "該当するユーザは存在しませんでした。"
 msgid "User profile master isn't assosiated"
 msgstr ""
 
+#: app/controllers/platform_controller.rb:130
+msgid "User registration"
+msgstr "利用登録"
+
 #: app/views/mypage/welcome.html.erb:30
 msgid "User registration completed."
 msgstr "ユーザ登録が完了しました"
@@ -7816,11 +7833,3 @@ msgstr ""
 "|チェックするとその属性を更新することができます。CSVの例を参考にCSVファイルを"
 "作成してください。<br/>新規登録のユーザは、名前・パスワード・メールアドレスは"
 "必須になります。"
-
-#: app/views/admin/settings/_security.html.erb:7
-msgid "パスワード定期変更"
-msgstr ""
-
-#: app/controllers/platform_controller.rb:168
-msgid "入力された%{email}というメールアドレスは登録されていません。"
-msgstr ""

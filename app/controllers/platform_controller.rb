@@ -101,7 +101,7 @@ class PlatformController < ApplicationController
 
   def activate
     unless enable_activate?
-      flash[:error] = _('%{function} currently unavailable.') % {:function => '利用開始通知'}
+      flash[:error] = _('%{function} currently unavailable.') % {:function => _('Activation email')}
       return redirect_to(:controller => '/platform')
     end
     return unless request.post?
@@ -127,7 +127,7 @@ class PlatformController < ApplicationController
 
   def signup
     unless enable_signup?
-      flash[:error] = _('%{function} currently unavailable.') % {:function => '利用登録'}
+      flash[:error] = _('%{function} currently unavailable.') % {:function => _('User registration')}
       return redirect_to(:controller => '/platform')
     end
     if @user = User.find_by_activation_token(params[:code])
@@ -165,7 +165,7 @@ class PlatformController < ApplicationController
         flash.now[:error] = _('User with email address %{email} has not activated the account. The account has to be activated first.') % {:email => email}
       end
     else
-      flash.now[:error] = _("入力された%{email}というメールアドレスは登録されていません。") % {:email => email}
+      flash.now[:error] = _("Entered email address %{email} has not been registered in the site.") % {:email => email}
     end
   end
 
@@ -235,7 +235,7 @@ class PlatformController < ApplicationController
       end
     rescue OpenIdAuthentication::InvalidOpenId
       logger.info("[Login failed with OpenId] \"OpenId is invalid\"")
-      flash[:error] = _("OpenIDの形式が正しくありません。")
+      flash[:error] = _("OpenID format invalid.")
       redirect_to :action => :index
     end
   end
