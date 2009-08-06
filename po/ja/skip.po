@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
 "POT-Creation-Date: 2009-08-04 16:52+0900\n"
-"PO-Revision-Date: 2009-08-05 20:06+0900\n"
+"PO-Revision-Date: 2009-08-06 14:33+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -5760,7 +5760,7 @@ msgstr "スターを付ける"
 
 #: app/views/bookmark/list.html.erb:15
 msgid "Stars"
-msgstr "スターを付ける"
+msgstr "スター"
 
 #: app/views/admin/oauth_providers/index.html.erb:18
 msgid "Start"

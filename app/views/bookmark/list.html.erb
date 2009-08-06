@@ -55,7 +55,7 @@
         <span class="other_user_count"><%= link_to(_("[Other users: %{count} users]") % {:count => comment.bookmark.bookmark_comments_count} , url_for_bookmark(comment.bookmark)) %></span>
       </div>
       <div class="title">
-        <% if params[:user_id] == @current_user.id -%>
+        <% if @user == current_user -%>
         <% elem_id = "bookmark_comment_stared_#{comment.id}" -%>
         <span id="<%= elem_id %>"><%= render :partial => "stared", :locals => {:bookmark_comment => comment} %></span>
         <% end -%>
