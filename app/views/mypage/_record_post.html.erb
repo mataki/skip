@@ -1,21 +1,21 @@
 <% content_for :contents_left do -%>
   <%= render :partial => "manage_menu", :locals => { :selected_menu => @menu } %>
   <div class="box_space">
-    <div class="box_space_title"><%= icon_tag 'find' %>検索</div>
+    <div class="box_space_title"><%= icon_tag 'find' %><%= _('Search')%></div>
     <div class="box_space_body">
     <% form_tag({:controller => 'mypage', :action => 'manage'}, {:method => 'get'}) do -%>
       <%= text_field_tag('keyword', params[:keyword], :size=>'13') %><br/>
       <input type=hidden name="select" value="blog">
       <input type=hidden name="menu" value="record_post">
-    <%= submit_tag '検索' %>
+    <%= submit_tag _('Search') %>
     <% end -%>
-      <div class="desc">タグ、タイトル、本文が検索対象となります</div>
+      <div class="desc"><%= _('The search targets are tags, titles and bodies')%></div>
     </div>
     <div class="box_space_bottom"></div>
   </div><!-- box_space -->
 
   <div class="box_space">
-    <div class="box_space_title"><%= icon_tag 'tag_blue' %>タグ</div>
+    <div class="box_space_title"><%= icon_tag 'tag_blue' %><%= _('Tags')%></div>
     <div class="box_space_body" style="font-size: 10px;">
     <% for category in @categories -%>
       <%= %(<b>) if params[:category] == category %>
