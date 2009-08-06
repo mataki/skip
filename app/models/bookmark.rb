@@ -29,7 +29,12 @@ class Bookmark < ActiveRecord::Base
   validates_presence_of :title
   validates_length_of :title, :maximum => 255
 
-  SORT_TYPES = [[_("Sort by Registered Dates (Descending)"),"bookmarks.updated_on DESC"],[_("Sort by Registered Dates (Ascending)"),"bookmarks.updated_on"],[_("Sort by number of users"),"bookmark_comments_count DESC"]].freeze
+  SORT_TYPES = [
+    [ N_("Sort by Registered Dates (Descending)"), "bookmarks.updated_on DESC" ],
+    [ N_("Sort by Registered Dates (Ascending)"), "bookmarks.updated_on ASC" ],
+    [ N_("Sort by number of users"), "bookmark_comments_count DESC"]
+  ].freeze
+
   GET_TITLE_TIMEOUT = 7
 
   class InvalidMultiByteURIError < RuntimeError;end

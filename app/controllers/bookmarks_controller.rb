@@ -38,7 +38,7 @@ private
   end
 
   def get_order_query(params_order)
-    if !(index = Bookmark::SORT_TYPES.map{|a| a.last }.index(params_order)).nil?
+    if !(index = Bookmark::SORT_TYPES.map{|a| a.first }.index(params_order)).nil?
       Bookmark::SORT_TYPES[index].last
     else
       Bookmark::SORT_TYPES.first.last

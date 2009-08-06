@@ -15,7 +15,7 @@
     </tr>
     <tr>
       <th><%= label_tag("sort_type", _('Display Order')) %></th>
-      <td><%= selected_tag("sort_type", params[:sort_type], Bookmark::SORT_TYPES.map{|type| [type[0], type[1]]}) %></td>
+      <td><%= selected_tag("sort_type", params[:sort_type], Bookmark::SORT_TYPES.map{|type| [_(type[0]), type[0]]}) %></td>
     </tr>
     <tr>
       <th><%= _('Search Range') %></th>
