@@ -4,7 +4,7 @@
   <p><%= settings_label_with_check_box_tag :enable_user_lock %></p>
   <p><%= settings_label_with_select_tag :user_lock_trial_limit, (3..10).to_a.map{ |i| i.to_s } %></p>
 </div>
-<h3><%= _('パスワード定期変更') %></h3>
+<h3><%= _('Periodic password change') %></h3>
 <div class="box tabular">
   <p><%= settings_label_with_check_box_tag :enable_password_periodic_change %></p>
   <p><%= settings_label_with_text_field_tag :password_change_interval %></p>
