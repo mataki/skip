@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
 "POT-Creation-Date: 2009-08-04 16:52+0900\n"
-"PO-Revision-Date: 2009-08-06 16:40+0900\n"
+"PO-Revision-Date: 2009-08-06 17:11+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -495,7 +495,7 @@ msgstr "%sにアクセスするには、以下URLをクリックしてくださ�
 #: app/helpers/application_helper.rb:245
 msgid "Access(%s)"
 msgid_plural "Accesses(%s)"
-msgstr[0] "-アクセス(%s)"
+msgstr[0] "アクセス(%s)"
 
 #: app/views/portal/account_registration.html.erb:10
 #: app/views/portal/_registration_form.html.erb:7
