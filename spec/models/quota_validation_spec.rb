@@ -34,7 +34,7 @@ describe QuotaValidation do
         @muf.stub!(:size).and_return(101)
         owner_symbol = "git:hoge"
         QuotaValidation::FileSizeCounter.should_receive(:per_owner).with(owner_symbol).and_return(SkipEmbedded::InitialSettings['max_share_file_size_per_owner'].to_i - 100)
-        @vf.errors.should_receive(:add_to_base).with("共有ファイル保存領域の利用容量が最大値を越えてしまうためアップロードできません。")
+        @vf.errors.should_receive(:add_to_base).with("ファイル保存領域の利用容量が最大値を越えてしまうためアップロードできません。")
         @vf.valid_max_size_per_owner_of_file(@muf, owner_symbol)
       end
     end
@@ -45,7 +45,7 @@ describe QuotaValidation do
       it "エラーが追加されること" do
         @muf.stub!(:size).and_return(101)
         QuotaValidation::FileSizeCounter.should_receive(:per_system).and_return(SkipEmbedded::InitialSettings['max_share_file_size_of_system'].to_i - 100)
-        @vf.errors.should_receive(:add_to_base).with('システム全体における共有ファイル保存領域の利用容量が最大値を越えてしまうためアップロードできません。')
+        @vf.errors.should_receive(:add_to_base).with('システム全体におけるファイル保存領域の利用容量が最大値を越えてしまうためアップロードできません。')
         @vf.valid_max_size_of_system_of_file(@muf)
       end
     end
