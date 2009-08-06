@@ -17,8 +17,8 @@
   <% form_tag :action => :change_participation do -%>
   <div style="border-bottom: 1px dotted silver; margin-bottom: 10px;">
   <%= _('Action: ')%>
-  <%= radio_button_tag 'submit_type', 'permit', true %><%= _('Approve')%>
-  <%= radio_button_tag 'submit_type', 'reject', false %><%= _('Reject')%>
+  <%= radio_button_tag 'submit_type', 'permit', true %><%= label_tag 'submit_type_permit', _('Approve') %>
+  <%= radio_button_tag 'submit_type', 'reject', false %><%= label_tag 'submit_type_reject', _('Reject') %>
   <%= submit_tag _("Perform the Action"), { :name => 'action=do_reject', :onclick => _("return confirm('Are you sure to execute?');") } %>
   </div>
 
