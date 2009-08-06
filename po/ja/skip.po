@@ -7183,7 +7183,7 @@ msgstr "[参加者のみ]"
 
 #: app/helpers/application_helper.rb:42
 msgid "[Head]"
-msgstr "[ページ先頭]"
+msgstr "[最初へ]"
 
 #: app/views/mypage/welcome.html.erb:51
 msgid "[Help]"
@@ -7195,7 +7195,7 @@ msgstr "【本文の書き方に関するヒント】"
 
 #: app/helpers/application_helper.rb:46
 msgid "[Last]"
-msgstr "[ページ末尾]"
+msgstr "[最後へ]"
 
 #: app/models/board_entry.rb:659
 msgid "[Link does not exist...%s>]"

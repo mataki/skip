@@ -114,7 +114,7 @@
             alert('<%= _('Please input valid user or group') %>');
             return;
         }
-        var validReg = /(u|g)id:[a-zA-Z0-9]/
+        var validReg = /(u|g)id:[a-zA-Z0-9\-_\.]*$/
         if (!validReg.test(symbol)) {
             alert("<%= _('Invalid format. Please input like uid:xxxxx') %>");
             return;
