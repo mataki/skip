@@ -116,7 +116,7 @@ if(edit_checkbox) {
         var symbol = $j("#publication_symbol").val();
         var name = $j("#publication_name").val();
 
-        var validReg = /(u|g|e)id:[a-zA-Z0-9\-_]*$/
+        var validReg = /(u|g)id:[a-zA-Z0-9\-_\.]*$/
         if (!validReg.test(symbol)) {
             alert("<%= _('Invalid input format. Should be in uid:xxxxxx format.')%>");
             return
