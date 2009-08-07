@@ -1863,7 +1863,7 @@ msgid ""
 "Admins are not allowed to change their own status, admin and lock rights. "
 "Log in with another admin account to do so."
 msgstr ""
-"管理者は自分自身のステータスと管理権限は変更できません。他の管理者アカウント"
+"管理者は自分自身のステータス、管理権限、及びロック状態は変更できません。他の管理者アカウント"
 "から変更してください。"
 
 #: app/views/admin/users/create_uid.html.erb:6
