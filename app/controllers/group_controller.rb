@@ -328,9 +328,8 @@ class GroupController < ApplicationController
   def append_user
     # 参加制約は追加しない。制約は制約管理で。
     symbol_type, symbol_id = Symbol.split_symbol params[:symbol]
-    case symbol_type
-    when 'uid'
-      user = User.find_by_uid(symbol_id)
+    case
+    when (symbol_type == 'uid' and user = User.find_by_uid(symbol_id))
       if @group.group_participations.find_by_user_id(user.id)
         flash[:notice] = _("%s has already joined / applied to join this group.") % user.name
       else
@@ -338,8 +337,7 @@ class GroupController < ApplicationController
         @group.save
         flash[:notice] = _("Added %s as a member and created a BBS for messaging.") % user.name
       end
-    when 'gid'
-      group = Group.active.find_by_gid(symbol_id, :include => :group_participations)
+    when (symbol_type == 'gid' and group = Group.active.find_by_gid(symbol_id, :include => :group_participations))
       group.group_participations.each do |participation|
         unless @group.group_participations.find_by_user_id(participation.user_id)
           @group.group_participations.build(:user_id => participation.user_id, :owned => false)
