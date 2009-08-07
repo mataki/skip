@@ -21,6 +21,8 @@ class ServicesController < ActionController::Base
   before_filter :check_secret_key, :except => [:search_conditions, :skip_reflect_customized]
   after_filter :change_charset
 
+  init_gettext "skip" if defined? GetText
+
   # ユーザに関連する情報を取得する
   def user_info
     result = {}
