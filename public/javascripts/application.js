@@ -82,6 +82,12 @@ $j(function(){
      */
     $j('select.select_navi').dropdownNavigation();
 
+
+    /*
+     * プロフィール画像のサイズ調整
+     */
+    $j('img.fit_image').fitimage({ placeholder: relative_url_root + '/images/skip/jquery/fitimage/spacer.gif' });
+
     /*
      * カレンダーのロード
      */

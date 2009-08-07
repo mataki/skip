@@ -5,6 +5,20 @@ Feature: ユーザの初期プロフィール登録処理
     Given 言語は"ja-JP"
     And   プロフィール項目が登録されていない
 
+  Scenario: 未使用ユーザとして初期登録URLを発行できる
+    Given 以下の利用開始前のユーザを登録する:
+          |login_id|email|name|
+          |interu|interu@test.com|いん てる|
+    And   メール機能を有効にする
+
+    When  "ログインページ"にアクセスする
+    And   "ユーザ登録してSKIPの利用を開始する"リンクをクリックする
+    And   "メールアドレス"に"interu@test.com"と入力する
+    And   "送信する"ボタンをクリックする
+
+    Then  flashメッセージに"ユーザ登録のためのURLを記載したメールをinteru@test.com宛に送信しました。"と表示されていること
+    And   メールが"interu@test.com"宛に送信されていること
+
   Scenario: 初期登録URLからユーザのプロフィール登録を行なう
     Given 以下の利用開始前のユーザを登録する:
           |login_id|email|name|

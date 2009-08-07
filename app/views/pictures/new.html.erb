@@ -8,7 +8,7 @@
   </div>
 
   <div class="portrait" style="border: 1px solid silver; margin: 10px; text-align: center;">
-  <%= showPicture(@user, 0, 150) -%>
+  <%= show_picture(@user, :height => 150, :fit_image => false) -%>
   </div>
 
   <% form_for(@picture, :html => {:multipart => true}) do |f| -%>

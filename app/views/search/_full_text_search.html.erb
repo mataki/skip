@@ -18,7 +18,7 @@
 <% if params[:offset] && params[:offset].to_i > 990 -%>
  <div style="margin-top:15px"><%= _('Search does not show more than 1000 search results.')%></div>
 <% elsif @error_message -%>
- <div style="margin-top:15px"><%= @error_message %></div>
+ <div style="margin-top:15px"><%= _(@error_message) %></div>
 <% elsif @max_count == 0 -%>
  <div style="margin-top:15px"><%= _('No matching results found.')%></div>
 <% elsif @max_count < 0 -%>

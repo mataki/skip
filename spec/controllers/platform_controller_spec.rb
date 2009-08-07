@@ -497,7 +497,7 @@ end
 
 describe PlatformController, 'POST /activate' do
   before do
-    User.stub!(:find_by_email)
+    User.stub!(:find_without_retired_skip)
     controller.stub!(:enable_activate?).and_return(true)
     stub_flash_now
   end
@@ -517,7 +517,7 @@ describe PlatformController, 'POST /activate' do
       @user.stub!(:issue_activation_code)
       @user.stub!(:save_without_validation!)
       UserMailer.stub!(:deliver_sent_activate)
-      User.should_receive(:find_by_email).and_return(@user)
+      User.should_receive(:find_without_retired_skip).and_return(@user)
     end
     describe '未使用ユーザが見つかる場合' do
       before do
@@ -551,7 +551,7 @@ describe PlatformController, 'POST /activate' do
   end
   describe '未登録のメールアドレスが送信された場合' do
     before do
-      User.should_receive(:find_by_email).and_return(nil)
+      User.should_receive(:find_without_retired_skip).and_return(nil)
     end
     it 'メールアドレスが未登録である旨のメッセージが設定されること' do
       post :activate, :email => 'activate@example.com'
@@ -780,7 +780,7 @@ describe PlatformController, "POST /forgot_openid" do
       it "flashメッセージが登録されていること" do
         stub_flash_now
         post_forgot_openid
-        flash[:error].should == "入力された#{@params_email}というメールアドレスは登録されていません。"
+        flash[:error].should == "Entered email address #{@params_email} has not been registered in the site."
       end
     end
     def post_forgot_openid
