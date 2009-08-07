@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
 "POT-Creation-Date: 2009-08-07 10:59+0900\n"
-"PO-Revision-Date: 2009-08-06 17:11+0900\n"
+"PO-Revision-Date: 2009-08-07 14:36+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2124,7 +2124,7 @@ msgstr "基本情報"
 
 #: app/views/search/_full_text_search.html.erb:43
 msgid "Because of the limited view, is less than the actual number."
-msgstr "閲覧権限がないか、ページが存在しません。"
+msgstr "[注]閲覧制限のため実件数よりも少なく表示されています。"
 
 #: app/views/share_file/_share_file_box.html.erb:23
 msgid "Belongs to: %s"
