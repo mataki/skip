@@ -110,7 +110,7 @@ class PlatformController < ApplicationController
       flash.now[:error] = _('Email address is mandatory.')
       return
     end
-    if @user = User.find_by_email(email)
+    if @user = User.scoped(:conditions => ['email = ?', email]).find_without_retired_skip(:first)
       if  @user.unused?
         @user.issue_activation_code
         @user.save_without_validation!
