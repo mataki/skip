@@ -16,7 +16,7 @@ ul#antennas_list li.dragenter {
 
 <% content_for :contents_right do -%>
 
-<div class="desc"><p><%= _("You can manage antennas for the blogs you follow etc.<br/>\nYou can edit the name of the antenna by clicking on it.<br/>\nThe list of antennas%{transmi} can be reordered by drag &amp; drop.<br/>\nYou can also move the items between antennas it by dragging the %{report_user} in the condition area.") % {:transmit => icon_tag('transmit'), :report_user => icon_tag('report_user')}%></p></div>
+<div class="desc"><p><%= _("You can manage antennas for the blogs you follow etc.<br/>\nYou can edit the name of the antenna by clicking on it.<br/>\nThe list of antennas%{transmit} can be reordered by drag &amp; drop.<br/>\nYou can also move the items between antennas it by dragging the %{report_user} in the condition area.") % {:transmit => icon_tag('transmit'), :report_user => icon_tag('report_user')}%></p></div>
 
 <div class="edit_form_space"><!-- 編集領域  -->
 
@@ -130,7 +130,7 @@ ul#antennas_list li.dragenter {
                .append($j('<%= hidden_field_tag 'authenticity_token', form_authenticity_token %>'))
                .append($j('<%= hidden_field_tag 'antenna_id' %>').attr('value', antenna_id))
                .append(symbolTextField)
-               .append($j('<%= submit_tag '追加' %>'))
+               .append($j('<%= submit_tag _('Add') %>'))
                .submit(function() {
                    var url = '<%= url_for(:controller => 'antenna', :action => 'ado_add_antenna_item') %>'
                    $j.ajax({
