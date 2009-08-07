@@ -6,7 +6,7 @@ user ||= @current_user
 
 <div class="box_space">
   <div class="box_space_title"><%= _("<span class=\"small\">Mr./Ms. </span>%s") % h(user.name)%></div>
-  <div class="box_space_img_body"><%= showPicture(user, 120, 80, true) %></div>
+  <div class="box_space_img_body"><%= show_picture(user, :width => 120, :height => 80, :popup => true) %></div>
   <div class="box_space_bottom">
   <% if session[:user_id] == user.id -%>
     <%= link_to _('[Change image]'), :controller => 'mypage', :action => 'manage', :menu => 'manage_portrait' if Admin::Setting.enable_change_picture %>

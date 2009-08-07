@@ -96,7 +96,7 @@ module ApplicationHelper
 
   def user_link_to_with_portrait user, options = {}
     options = {:width => 120, :height => 80}.merge(options)
-    link_to showPicture(user, options[:width], options[:height]), {:controller => '/user', :action => 'show', :uid => user.uid}, {:title => h(user.name)}
+    link_to show_picture(user, options), {:controller => '/user', :action => 'show', :uid => user.uid}, {:title => h(user.name)}
   end
 
   # グループのページへのリンク
@@ -131,16 +131,15 @@ module ApplicationHelper
     link_to image_tag(image_name, :alt => title) + title, options
   end
 
-  def showPicture(user, width, height, popup = false)
-    options = {:border => '0', :name => 'picture', :alt => h(user.name), :class => 'fit_image'}
-    options[:width] = width unless width == 0
-    options[:height] = height unless height == 0
+  def show_picture(user, options = {})
+    options = {:border => '0', :name => 'picture', :alt => h(user.name), :popup => false, :fit_image => true}.merge(options)
+    options.merge!(:class => 'fit_image') if options.delete(:fit_image)
     if user.retired?
       file_name = 'retired.png'
     elsif picture = user.picture
       unless picture.new_record?
         file_name = url_for(:controller => '/pictures', :action => 'picture', :id => picture.id, :format => :png)
-        if popup
+        if options.delete(:popup)
           pop_name = url_for(:controller => '/pictures', :action => 'picture', :id => picture.id.to_s)
           options[:title] = _("Click to see in original size.")
           return link_to(image_tag(file_name, options), file_name, :class => 'nyroModal zoomable')
