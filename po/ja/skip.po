@@ -4730,7 +4730,7 @@ msgstr "パスワードリマインダー"
 #: app/controllers/platform_controller.rb:304
 #: app/controllers/platform_controller.rb:309
 msgid "Password is expired. Please reset password."
-msgstr "パスワードが無効になっています。再設定を行なってください。"
+msgstr "パスワードが有効期限切れです。再設定を行なってください。"
 
 #: app/controllers/admin/users_controller.rb:235
 msgid "Password resetting code cannot be issued for unactivated users."
