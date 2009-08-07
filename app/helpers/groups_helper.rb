@@ -26,7 +26,7 @@ module GroupsHelper
         icon_tag('group') + _('Member')
       end
     else
-      icon_tag('group_error') + _('Not member[FIXME]')
+      icon_tag('group_error') + _('Unjoined')
     end
   end
 

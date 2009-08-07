@@ -25,7 +25,7 @@
     <td>
       <% if sections = User.grouped_sections -%>
       <p>
-      <%= select("user", "section", sections, {}, {:tabindex => (tabindex += 1)}) + _('Display a selection from the value that is already registered.[FIXME]') %>
+      <%= select("user", "section", sections, {}, {:tabindex => (tabindex += 1)}) + _('Showing options from previously registered values') %>
       </p>
       <% end -%>
       <p>

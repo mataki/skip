@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-08-06 18:30+0800\n"
+"POT-Creation-Date: 2009-08-06 19:08+0800\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -419,6 +419,10 @@ msgstr ""
 
 #: app/views/user/show.html.erb:18
 msgid "About Users"
+msgstr ""
+
+#: app/views/mypage/welcome.html.erb:47
+msgid "About this site"
 msgstr ""
 
 #: app/views/portal/confirm.html.erb:5
@@ -2692,10 +2696,6 @@ msgstr ""
 msgid "Display Order"
 msgstr ""
 
-#: app/views/portal/_registration_form.html.erb:28
-msgid "Display a selection from the value that is already registered.[FIXME]"
-msgstr ""
-
 #: app/views/entries/_entry_detail.html.erb:214
 msgid "Display: "
 msgstr ""
@@ -3096,6 +3096,10 @@ msgstr ""
 #: app/controllers/mypage_controller.rb:490
 #: app/controllers/user_layout_module.rb:19
 msgid "Footprints"
+msgstr ""
+
+#: app/views/mypage/welcome.html.erb:51
+msgid "For detailed help see "
 msgstr ""
 
 #: app/models/user_mailer.rb:120
@@ -3847,6 +3851,10 @@ msgstr ""
 msgid "Logout"
 msgstr ""
 
+#: app/views/mypage/welcome.html.erb:45
+msgid "Look for groups you may want to join ..."
+msgstr ""
+
 #: app/models/mail.rb:-
 msgid "Mail|Created on"
 msgstr ""
@@ -4213,10 +4221,6 @@ msgstr ""
 
 #: app/controllers/admin/settings_controller.rb:65
 msgid "Not Specified"
-msgstr ""
-
-#: app/helpers/groups_helper.rb:29
-msgid "Not member[FIXME]"
 msgstr ""
 
 #: app/views/mypage/_manage_message.html.erb:14
@@ -4760,10 +4764,6 @@ msgstr ""
 msgid "Reacquire the title"
 msgstr ""
 
-#: app/views/mypage/welcome.html.erb:51
-msgid "Read detailed help ... [FIXME]"
-msgstr ""
-
 #: app/controllers/feed_controller.rb:37
 msgid "Recent BBS posts (%{category)"
 msgstr ""
@@ -5061,10 +5061,6 @@ msgstr ""
 msgid "Search users."
 msgstr ""
 
-#: app/views/mypage/welcome.html.erb:45
-msgid "Search your interest group ... [FIXME]"
-msgstr ""
-
 #: app/views/admin/_search_box.html.erb:5
 msgid "Searching from %{target}"
 msgstr ""
@@ -5318,6 +5314,7 @@ msgid ""
 msgstr ""
 
 #: app/models/user_profile_master.rb:254
+#: app/views/portal/_registration_form.html.erb:28
 msgid "Showing options from previously registered values"
 msgstr ""
 
@@ -5349,10 +5346,6 @@ msgstr ""
 
 #: app/views/platform/activate.html.erb:2 app/views/platform/index.html.erb:50
 msgid "Signup"
-msgstr ""
-
-#: app/views/mypage/welcome.html.erb:47
-msgid "Site Infomation[FIXME]"
 msgstr ""
 
 #: app/controllers/rankings_controller.rb:165
@@ -5954,6 +5947,10 @@ msgstr ""
 #: app/controllers/admin/documents_controller.rb:89
 #: app/controllers/admin/images_controller.rb:154
 msgid "Unexpected error occured. Contact administrator."
+msgstr ""
+
+#: app/helpers/groups_helper.rb:29
+msgid "Unjoined"
 msgstr ""
 
 #: app/views/bookmark/_stared.html.erb:2 app/views/groups/_favorite.html.erb:2
@@ -6642,6 +6639,10 @@ msgstr ""
 msgid "You are now logged out."
 msgstr ""
 
+#: app/views/mypage/welcome.html.erb:53
+msgid "You can access this site from %s next time."
+msgstr ""
+
 #: app/views/antenna/_select_antenna.html.erb:6
 msgid "You can add this blog into your antenna."
 msgstr ""
@@ -6721,10 +6722,6 @@ msgstr ""
 
 #: app/models/message.rb:19
 msgid "You recieved a comment on your entry [?]!"
-msgstr ""
-
-#: app/views/mypage/welcome.html.erb:53
-msgid "You will access this site from %s [FIXME]"
 msgstr ""
 
 #: app/views/bookmarks/setup.html.erb:85
@@ -7523,4 +7520,19 @@ msgid ""
 "|You can update certain attribute(s) by checking the checkboxes. See the "
 "sample to create CSV file.<br/>Name, password and email address are "
 "mandatory items for new users."
+msgstr ""
+
+#: app/models/quota_validation.rb:19
+msgid ""
+"システム全体におけるファイル保存領域の利用容量が最大値を越えてしまうためアッ"
+"プロードできません。"
+msgstr ""
+
+#: app/models/quota_validation.rb:13
+msgid ""
+"ファイル保存領域の利用容量が最大値を越えてしまうためアップロードできません。"
+msgstr ""
+
+#: app/models/quota_validation.rb:5
+msgid "存在しないもしくはサイズ０のファイルはアップロードできません。"
 msgstr ""

@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-08-06 18:30+0800\n"
+"POT-Creation-Date: 2009-08-06 19:08+0800\n"
 "PO-Revision-Date: 2009-08-06 17:11+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -450,6 +450,10 @@ msgstr "ひとつのタグにつき30文字以上入力できません。"
 #: app/views/user/show.html.erb:18
 msgid "About Users"
 msgstr "紹介したユーザ"
+
+#: app/views/mypage/welcome.html.erb:47
+msgid "About this site"
+msgstr "サイトの情報"
 
 #: app/views/portal/confirm.html.erb:5
 msgid "Accept the terms above"
@@ -2898,10 +2902,6 @@ msgstr "表示形式"
 msgid "Display Order"
 msgstr "表示順"
 
-#: app/views/portal/_registration_form.html.erb:28
-msgid "Display a selection from the value that is already registered.[FIXME]"
-msgstr " 既に登録されている値から選択項目を表示しています"
-
 #: app/views/entries/_entry_detail.html.erb:214
 msgid "Display: "
 msgstr "表示: "
@@ -3305,6 +3305,10 @@ msgstr "フッター"
 #: app/controllers/user_layout_module.rb:19
 msgid "Footprints"
 msgstr "足跡"
+
+#: app/views/mypage/welcome.html.erb:51
+msgid "For detailed help see "
+msgstr "詳しい使い方はこちらをご覧ください ... "
 
 #: app/models/user_mailer.rb:120
 msgid "For questions regarding this email, please contact:"
@@ -4074,6 +4078,10 @@ msgstr "ロゴ画像"
 msgid "Logout"
 msgstr "ログアウト"
 
+#: app/views/mypage/welcome.html.erb:45
+msgid "Look for groups you may want to join ..."
+msgstr "入ってみたいグループが無いか探してみましょう！ ..."
+
 #: app/models/mail.rb:-
 msgid "Mail|Created on"
 msgstr "作成日時"
@@ -4448,10 +4456,6 @@ msgstr "同意しない"
 #: app/controllers/admin/settings_controller.rb:65
 msgid "Not Specified"
 msgstr "指定なし"
-
-#: app/helpers/groups_helper.rb:29
-msgid "Not member[FIXME]"
-msgstr "未参加"
 
 #: app/views/mypage/_manage_message.html.erb:14
 msgid "Notify"
@@ -5002,10 +5006,6 @@ msgstr "URL"
 msgid "Reacquire the title"
 msgstr "タイトルを再取得する"
 
-#: app/views/mypage/welcome.html.erb:51
-msgid "Read detailed help ... [FIXME]"
-msgstr "詳しい使い方はこちらをご覧ください ... "
-
 #: app/controllers/feed_controller.rb:37
 msgid "Recent BBS posts (%{category)"
 msgstr "最新の掲示板の記事（%{category}）"
@@ -5311,10 +5311,6 @@ msgstr "ファイルを探す"
 msgid "Search users."
 msgstr "ユーザを探す。"
 
-#: app/views/mypage/welcome.html.erb:45
-msgid "Search your interest group ... [FIXME]"
-msgstr "入ってみたいグループが無いか探してみましょう！ ..."
-
 #: app/views/admin/_search_box.html.erb:5
 msgid "Searching from %{target}"
 msgstr "%{target}から検索を行ないます"
@@ -5572,6 +5568,7 @@ msgstr ""
 "出来ます。例にならって修正して下さい。"
 
 #: app/models/user_profile_master.rb:254
+#: app/views/portal/_registration_form.html.erb:28
 msgid "Showing options from previously registered values"
 msgstr "既に登録されている値から選択項目を表示しています"
 
@@ -5613,10 +5610,6 @@ msgstr "ログアウト"
 #: app/views/platform/activate.html.erb:2 app/views/platform/index.html.erb:50
 msgid "Signup"
 msgstr "ユーザ登録"
-
-#: app/views/mypage/welcome.html.erb:47
-msgid "Site Infomation[FIXME]"
-msgstr "サイトの情報"
 
 #: app/controllers/rankings_controller.rb:165
 msgid "Site Information"
@@ -6232,6 +6225,10 @@ msgstr "ユーザ登録が継続出来ません。最初からやり直して下
 #: app/controllers/admin/images_controller.rb:154
 msgid "Unexpected error occured. Contact administrator."
 msgstr "想定外のエラーが発生しました。管理者にお問い合わせ下さい。"
+
+#: app/helpers/groups_helper.rb:29
+msgid "Unjoined"
+msgstr "未参加"
 
 #: app/views/bookmark/_stared.html.erb:2 app/views/groups/_favorite.html.erb:2
 msgid "Unstar"
@@ -6929,6 +6926,10 @@ msgstr "閲覧権限がありません。"
 msgid "You are now logged out."
 msgstr "ログアウトしました。"
 
+#: app/views/mypage/welcome.html.erb:53
+msgid "You can access this site from %s next time."
+msgstr "次回からのアクセスは、 %s より利用可能です。"
+
 #: app/views/antenna/_select_antenna.html.erb:6
 msgid "You can add this blog into your antenna."
 msgstr "このブログをアンテナに追加できます。"
@@ -7024,10 +7025,6 @@ msgstr "あなたの紹介文が追加されました！"
 #: app/models/message.rb:19
 msgid "You recieved a comment on your entry [?]!"
 msgstr "あなたの記事[?]に新着コメントがあります！"
-
-#: app/views/mypage/welcome.html.erb:53
-msgid "You will access this site from %s [FIXME]"
-msgstr "次回からのアクセスは、 %s より利用可能です。"
 
 #: app/views/bookmarks/setup.html.erb:85
 msgid ""
@@ -7833,3 +7830,22 @@ msgstr ""
 "|チェックするとその属性を更新することができます。CSVの例を参考にCSVファイルを"
 "作成してください。<br/>新規登録のユーザは、名前・パスワード・メールアドレスは"
 "必須になります。"
+
+#: app/models/quota_validation.rb:19
+msgid ""
+"システム全体におけるファイル保存領域の利用容量が最大値を越えてしまうためアッ"
+"プロードできません。"
+msgstr ""
+
+#: app/models/quota_validation.rb:13
+msgid ""
+"ファイル保存領域の利用容量が最大値を越えてしまうためアップロードできません。"
+msgstr ""
+
+#: app/models/quota_validation.rb:5
+msgid "存在しないもしくはサイズ０のファイルはアップロードできません。"
+msgstr ""
+
+#~ msgid ""
+#~ "Display a selection from the value that is already registered.[FIXME]"
+#~ msgstr " 既に登録されている値から選択項目を表示しています"
