@@ -78,7 +78,7 @@ table {
         }
         if ($j('#publication_type_protected:checked').length > 0) {
             if ( publicationSymbolsValue.val() == '' ) {
-                if (confirm("<%= _('No user selected. \r\nAre you sure to make this open to all users?')%>")) {
+                if (confirm("<%= _('No user selected. Are you sure to make this open to all users?')%>")) {
                     $j('#publication_type_public').attr('checked', true);
                     changePublicationType();
                 } else {

@@ -3426,8 +3426,8 @@ msgstr ""
 
 #: app/views/board_entries/_form.html.erb:150
 msgid ""
-"Illegal format in \"Topic entry\".\r\n"
-"List the page IDs and separate each other by commas."
+"Illegal format in \"Topic entry\". List the page IDs and separate each other "
+"by commas."
 msgstr ""
 
 #: app/controllers/admin/users_controller.rb:155
@@ -4208,9 +4208,7 @@ msgstr ""
 
 #: app/views/board_entries/_form.html.erb:166
 #: app/views/share_file/_form.html.erb:81
-msgid ""
-"No user selected. \r\n"
-"Are you sure to make this open to all users?"
+msgid "No user selected. Are you sure to make this open to all users?"
 msgstr ""
 
 #: app/views/mypage/_record_post.html.erb:40

@@ -147,7 +147,7 @@ div.input_line textarea {
             var tb = Trim(tb_array[i]);
             if(tb != ""){
                 if (isNaN(tb)){
-                    alert('<%= _('Illegal format in "Topic entry".\r\nList the page IDs and separate each other by commas.')%>');
+                    alert('<%= _('Illegal format in "Topic entry". List the page IDs and separate each other by commas.')%>');
                     return false;
                 }
                 if (contents_value.match(new RegExp("page:" + tb + ".*]")) == null) {
@@ -163,7 +163,7 @@ div.input_line textarea {
                 }
             }
             if ($j('#publication_symbols_value').val() == ""){
-                if (confirm("<%= _('No user selected. \r\nAre you sure to make this open to all users?')%>") == true) {
+                if (confirm("<%= _('No user selected. Are you sure to make this open to all users?')%>") == true) {
                     $j('#publication_type_public').attr('checked',true);
                     changePublicationType();
                 } else {

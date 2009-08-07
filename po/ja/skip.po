@@ -3634,11 +3634,11 @@ msgstr "ユーザー登録しました！"
 
 #: app/views/board_entries/_form.html.erb:150
 msgid ""
-"Illegal format in \"Topic entry\".\r\n"
-"List the page IDs and separate each other by commas."
+"Illegal format in \"Topic entry\". List the page IDs and separate each other "
+"by commas."
 msgstr ""
-"「話題の記事」の指定が不正な形式です。\\r\\nカンマ区切りでページのIDを列挙し"
-"てください。"
+"「話題の記事」の指定が不正な形式です。カンマ区切りでページのIDを列挙してくだ"
+"さい。"
 
 #: app/controllers/admin/users_controller.rb:155
 msgid "Illegal value(s) found in CSV file."
@@ -4440,12 +4440,10 @@ msgstr "%sにユーザ情報が登録されていません。"
 
 #: app/views/board_entries/_form.html.erb:166
 #: app/views/share_file/_form.html.erb:81
-msgid ""
-"No user selected. \r\n"
-"Are you sure to make this open to all users?"
+msgid "No user selected. Are you sure to make this open to all users?"
 msgstr ""
-"ユーザの指定がされていません。\\r\\nこのままだと、「全体に公開」になりますが"
-"よろしいですか？"
+"ユーザの指定がされていません。このままだと、「全体に公開」になりますがよろし"
+"いですか？"
 
 #: app/views/mypage/_record_post.html.erb:40
 msgid "No."
@@ -5966,8 +5964,8 @@ msgid ""
 "The recipient(s) may not notice your message since it is missing a \"連絡\" "
 "tag. Are you sure to proceed?"
 msgstr ""
-"連絡タグがついていないため、\\r\\n相手に気づいてもらえないかもしれませんが、"
-"よろしいですか？"
+"連絡タグがついていないため、相手に気づいてもらえないかもしれませんがよろしい"
+"ですか？"
 
 #: app/views/mypage/_record_post.html.erb:12
 msgid "The search targets are tags, titles and bodies"
@@ -7848,8 +7846,3 @@ msgstr ""
 #: app/models/quota_validation.rb:5
 msgid "存在しないもしくはサイズ０のファイルはアップロードできません。"
 msgstr ""
-
-
-#~ msgid "User|Code"
-#~ msgstr "ログインID"
-
