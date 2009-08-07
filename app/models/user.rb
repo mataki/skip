@@ -72,6 +72,8 @@ class User < ActiveRecord::Base
   N_('User|Locked|true')
   N_('User|Locked|false')
 
+  N_('User|Uid')
+
   ACTIVATION_LIFETIME = 5
 
   named_scope :admin, :conditions => {:admin => true}

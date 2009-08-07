@@ -4,7 +4,7 @@
   <% table_columns.each do |column| %>
     <% column_width = column_width_hash[column] %>
     <%= column_width ? "<th width='#{column_width}'>" : "<th>" -%>
-      <%= target_class.human_attribute_name column -%></th>
+        <%= s_("#{target_class.name}|#{column.humanize}") %></th>
   <% end %>
   </tr>
 
