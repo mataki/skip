@@ -165,7 +165,7 @@ class PlatformController < ApplicationController
         flash.now[:error] = _('User with email address %{email} has not activated the account. The account has to be activated first.') % {:email => email}
       end
     else
-      flash.now[:error] = _("Entered email address %{email} has not been registered in the site.") % {:email => email}
+      flash.now[:error] = _("Entered email address %s has not been registered in the site.") % {:email => email}
     end
   end
 

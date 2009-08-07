@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-08-07 12:03+0800\n"
-"PO-Revision-Date: 2009-08-07 14:47+0900\n"
+"POT-Creation-Date: 2009-08-07 13:21+0900\n"
+"PO-Revision-Date: 2009-08-06 17:11+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -3000,7 +3000,7 @@ msgstr "メール通知設定"
 
 #: app/controllers/platform_controller.rb:121
 msgid "Email address %s has been registered in the site"
-msgstr "入力された%sというメールアドレスは登録されていません。"
+msgstr "指定された%sというメールアドレスは既に利用登録済みです。"
 
 #: app/controllers/admin/users_controller.rb:281
 msgid "Email address %{email} has been registered in the site"
@@ -3064,15 +3064,22 @@ msgstr "以下のフォームにOpenIDのURLを入力してください。"
 
 #: app/controllers/platform_controller.rb:75
 #: app/controllers/platform_controller.rb:124
+#: app/controllers/platform_controller.rb:168
 msgid "Entered email address %s has not been registered in the site."
 msgstr "入力された%sというメールアドレスは登録されていません。"
 
+<<<<<<< HEAD:po/ja/skip.po
 #: app/controllers/platform_controller.rb:168
 msgid "Entered email address %{email} has not been registered in the site."
 msgstr "入力された%{email}というメールアドレスは登録されていません。"
 
 #: app/controllers/search_controller.rb:23 app/views/bookmark/list.html.erb:17
 #: app/views/bookmarks/index.html.erb:25 config/environment.rb:67
+=======
+#: app/controllers/search_controller.rb:23
+#: app/views/bookmarks/index.html.erb:25 app/views/bookmark/list.html.erb:17
+#: config/environment.rb:67
+>>>>>>> [#685] 日本語の翻訳が間違っていたので:po/ja/skip.po
 msgid "Entries"
 msgstr "記事"
 
