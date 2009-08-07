@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-08-07 12:03+0800\n"
+"POT-Creation-Date: 2009-08-07 15:30+0800\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -6911,6 +6911,14 @@ msgstr ""
 msgid "[Help]"
 msgstr ""
 
+#: app/views/mypage/entries_by_antenna.html.erb:31
+msgid "[Hide antenna links]"
+msgstr ""
+
+#: app/views/mypage/entries_by_antenna.html.erb:36
+msgid "[Hide read entries]"
+msgstr ""
+
 #: app/helpers/skip_helper.rb:80
 msgid "[Hints on writing entries]"
 msgstr ""
@@ -7016,6 +7024,22 @@ msgstr ""
 #: app/views/board_entries/_form.html.erb:55
 #: app/views/share_file/_form.html.erb:18
 msgid "[Set current time]"
+msgstr ""
+
+#: app/views/mypage/entries_by_antenna.html.erb:24
+msgid "[Set entries in the page as read]"
+msgstr ""
+
+#: app/views/mypage/entries_by_antenna.html.erb:25
+msgid "[Set entries in the page as unread]"
+msgstr ""
+
+#: app/views/mypage/entries_by_antenna.html.erb:30
+msgid "[Show antenna links]"
+msgstr ""
+
+#: app/views/mypage/entries_by_antenna.html.erb:38
+msgid "[Show read entries]"
 msgstr ""
 
 #: app/views/entries/_entry_detail.html.erb:253
