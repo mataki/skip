@@ -39,7 +39,9 @@ module EditHelper
         :target => IframeUploader::UPLOAD_KEY,
         :src => {
           :form => url_for(:controller => 'share_file', :action => 'new', :owner_symbol => board_entry.symbol, :ajax_upload => 1, :escape => false),
-          :target => ''
+          # HTTPS環境で、IE6を利用するとtargetが空だとHTTPへのアクセスと判断してアラートが表示されるため
+          # http://support.microsoft.com/kb/261188/ja
+          :target => '/blank.html'
         },
         :callback => nil,
         :trigger => 'submit'
