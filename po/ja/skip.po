@@ -1843,7 +1843,7 @@ msgstr "ログインID"
 
 #: config/environment.rb:114
 msgid "Administration of the site."
-msgstr "サイトの管理"
+msgstr "このシステムの設定や管理を行います"
 
 #: app/controllers/group_controller.rb:398
 msgid "Administrative privillage required for the action."
@@ -2118,7 +2118,7 @@ msgstr "戻る"
 
 #: config/environment.rb:63
 msgid "Back to mypage."
-msgstr "マイページに戻る"
+msgstr "自分用のトップページに戻ります"
 
 #: app/views/admin/images/index.html.erb:15
 msgid "Background image of log in screen."
@@ -2786,7 +2786,7 @@ msgstr "現在設定中のページが消えてしまいますがよろしいで
 
 #: app/helpers/mypage_helper.rb:51
 msgid "Customize"
-msgstr "カスタマイズ"
+msgstr "画面デザインの変更"
 
 #: app/views/admin/documents/index.html.erb:30
 msgid "Customize the document template to fit your usage.<br />"
@@ -5253,16 +5253,16 @@ msgid "Search Result Pages: "
 msgstr "検索結果ページ:"
 
 #: app/controllers/users_controller.rb:69
-msgid "Search Users"
+msgid "Search users"
 msgstr "ユーザを探す"
 
 #: config/environment.rb:93
 msgid "Search bookmarks."
-msgstr "ブックマークを探す。"
+msgstr "共有しているブックマーク(URL)を探します"
 
 #: config/environment.rb:106
 msgid "Search contents of the site by keyword."
-msgstr ""
+msgstr "キーワードでサイト全体から探す"
 
 #: app/views/search/_full_text_search.html.erb:19
 msgid "Search does not show more than 1000 search results."
@@ -5270,7 +5270,7 @@ msgstr "1000 件以上の検索結果は表示しておりません "
 
 #: config/environment.rb:69
 msgid "Search entries."
-msgstr "記事を探す"
+msgstr "ブログや掲示板の記事を探します"
 
 #: app/controllers/bookmarks_controller.rb:36
 msgid "Search for Bookmarks"
@@ -5294,7 +5294,7 @@ msgstr "%sから検索&nbsp;"
 
 #: config/environment.rb:87
 msgid "Search groups."
-msgstr "グループを探す。"
+msgstr "他のユーザが作ったグループを探します"
 
 #: app/views/search/full_text_search.html.erb:15
 msgid "Search in Internet"
@@ -5306,11 +5306,11 @@ msgstr "<b>%s</b> の検索結果"
 
 #: config/environment.rb:75
 msgid "Search share files."
-msgstr "ファイルを探す"
+msgstr "ユーザやグループで共有しているファイルを探します"
 
 #: config/environment.rb:81
 msgid "Search users."
-msgstr "ユーザを探す。"
+msgstr "利用中のユーザや紹介文を探します"
 
 #: app/views/admin/_search_box.html.erb:5
 msgid "Searching from %{target}"
@@ -5542,7 +5542,7 @@ msgstr "まだ参加していないグループのみ表示"
 
 #: config/environment.rb:99
 msgid "Show ranking and site infomation."
-msgstr "ランキングやサイト情報を表示"
+msgstr "ランキング情報と統計情報を見ます"
 
 #: app/views/mypage/_manage_customize.html.erb:54
 msgid "Show tabs"

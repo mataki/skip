@@ -69,7 +69,7 @@ private
   def setup_layout
     @main_menu = @title = _('Users')
 
-    @tab_menu_source = [ {:label => _('Search Users'), :options => {:action => 'index'}},
+    @tab_menu_source = [ {:label => _('Search users'), :options => {:action => 'index'}},
                          {:label => _('Introductions'), :options => {:action => 'chain_search'}} ]
   end
 end
