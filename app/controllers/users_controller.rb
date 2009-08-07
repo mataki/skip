@@ -25,6 +25,9 @@ class UsersController < ApplicationController
                               :conditions => @condition.make_conditions,
                               :order_by => @condition.value_of_order_by,
                               :include => @condition.value_of_include)
+    # 検索条件や表示順の条件によって、user_uidsがMASTERかNICKNAMEのどちらかしたロードされない。
+    # そのためviewで正しく描画するためにreloadしておく
+    @users.each{|u| u.user_uids.reload}
     unless @users && @users.size > 0
       flash.now[:notice] = _('User not found.')
     end
