@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-08-10 12:00+0800\n"
+"POT-Creation-Date: 2009-08-10 14:14+0800\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3082,6 +3082,10 @@ msgstr ""
 msgid "Files"
 msgstr ""
 
+#: app/models/quota_validation.rb:7
+msgid "Files larger than %sMBytes are not permitted."
+msgstr ""
+
 #: app/views/user/_social_postit.html.erb:15
 msgid "Find other [%s]ed users"
 msgstr ""
@@ -4212,6 +4216,10 @@ msgstr ""
 
 #: app/views/mypage/_record_post.html.erb:40
 msgid "No."
+msgstr ""
+
+#: app/models/quota_validation.rb:5
+msgid "Nonexistent or empty files are not accepted for uploading."
 msgstr ""
 
 #: app/models/user_search_condition.rb:44
@@ -6021,6 +6029,14 @@ msgstr ""
 msgid "Upload"
 msgstr ""
 
+#: app/models/quota_validation.rb:13
+msgid "Upload denied due to excess of assigned shared files disk capacity."
+msgstr ""
+
+#: app/models/quota_validation.rb:19
+msgid "Upload denied due to excess of system wide shared files disk capacity."
+msgstr ""
+
 #: app/helpers/edit_helper.rb:36
 msgid "Upload share file"
 msgstr ""
@@ -7560,19 +7576,4 @@ msgid ""
 "|You can update certain attribute(s) by checking the checkboxes. See the "
 "sample to create CSV file.<br/>Name, password and email address are "
 "mandatory items for new users."
-msgstr ""
-
-#: app/models/quota_validation.rb:19
-msgid ""
-"システム全体におけるファイル保存領域の利用容量が最大値を越えてしまうためアッ"
-"プロードできません。"
-msgstr ""
-
-#: app/models/quota_validation.rb:13
-msgid ""
-"ファイル保存領域の利用容量が最大値を越えてしまうためアップロードできません。"
-msgstr ""
-
-#: app/models/quota_validation.rb:5
-msgid "存在しないもしくはサイズ０のファイルはアップロードできません。"
 msgstr ""

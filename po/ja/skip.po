@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-08-10 12:00+0800\n"
+"POT-Creation-Date: 2009-08-10 14:14+0800\n"
 "PO-Revision-Date: 2009-08-07 16:09+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3290,6 +3290,10 @@ msgstr "ファイル名"
 msgid "Files"
 msgstr "ファイル"
 
+#: app/models/quota_validation.rb:7
+msgid "Files larger than %sMBytes are not permitted."
+msgstr "%sMバイト以上のファイルはアップロードできません。"
+
 #: app/views/user/_social_postit.html.erb:15
 msgid "Find other [%s]ed users"
 msgstr "他に[%s]の付いた人を探す"
@@ -4447,6 +4451,10 @@ msgstr ""
 #: app/views/mypage/_record_post.html.erb:40
 msgid "No."
 msgstr ""
+
+#: app/models/quota_validation.rb:5
+msgid "Nonexistent or empty files are not accepted for uploading."
+msgstr "存在しないもしくはサイズ０のファイルはアップロードできません。"
 
 #: app/models/user_search_condition.rb:44
 msgid "Normal View"
@@ -6298,6 +6306,15 @@ msgstr "更新中..."
 msgid "Upload"
 msgstr "アップロード"
 
+#: app/models/quota_validation.rb:13
+msgid "Upload denied due to excess of assigned shared files disk capacity."
+msgstr ""
+"ファイル保存領域の利用容量が最大値を越えてしまうためアップロードできません。"
+
+#: app/models/quota_validation.rb:19
+msgid "Upload denied due to excess of system wide shared files disk capacity."
+msgstr ""
+
 #: app/helpers/edit_helper.rb:36
 msgid "Upload share file"
 msgstr "ファイルをアップロード"
@@ -6979,7 +6996,10 @@ msgid ""
 "You can manage your preference for email notifications.<br/>By checking the "
 "items, notification emails will be sent to your registered email address "
 "when new comments etc. are added to your profile and blog entries."
-msgstr "お知らせメールの受信について設定します。<br/>各項目にチェックを入れると、あなたのプロフィールやブログに新しくコメントなどが追加された時に、登録されているメールアドレスにお知らせメールを送信します。"
+msgstr ""
+"お知らせメールの受信について設定します。<br/>各項目にチェックを入れると、あな"
+"たのプロフィールやブログに新しくコメントなどが追加された時に、登録されている"
+"メールアドレスにお知らせメールを送信します。"
 
 #: app/views/pictures/new.html.erb:7
 msgid ""
@@ -7870,18 +7890,3 @@ msgstr ""
 "|チェックするとその属性を更新することができます。CSVの例を参考にCSVファイルを"
 "作成してください。<br/>新規登録のユーザは、名前・パスワード・メールアドレスは"
 "必須になります。"
-
-#: app/models/quota_validation.rb:19
-msgid ""
-"システム全体におけるファイル保存領域の利用容量が最大値を越えてしまうためアッ"
-"プロードできません。"
-msgstr ""
-
-#: app/models/quota_validation.rb:13
-msgid ""
-"ファイル保存領域の利用容量が最大値を越えてしまうためアップロードできません。"
-msgstr ""
-
-#: app/models/quota_validation.rb:5
-msgid "存在しないもしくはサイズ０のファイルはアップロードできません。"
-msgstr ""
