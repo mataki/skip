@@ -5593,11 +5593,11 @@ msgstr ""
 
 #: app/models/admin/share_file.rb:22
 msgid "Symbol|Type|group"
-msgstr ""
+msgstr "Group"
 
 #: app/models/admin/share_file.rb:21
 msgid "Symbol|Type|user"
-msgstr ""
+msgstr "User"
 
 #: app/controllers/admin/application_controller.rb:28
 #: config/environment.rb:112
