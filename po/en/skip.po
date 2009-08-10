@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-08-10 11:19+0800\n"
+"POT-Creation-Date: 2009-08-10 12:00+0800\n"
 "PO-Revision-Date: 2009-06-29 13:31+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4974,6 +4974,7 @@ msgstr "S"
 #: app/views/board_entries/_board_entry_comment.html.erb:31
 #: app/views/bookmark/_new.html.erb:65
 #: app/views/entries/_entry_detail.html.erb:593
+#: app/views/mypage/_manage_message.html.erb:19
 #: app/views/mypage/_manage_openid.html.erb:18
 #: app/views/mypage/_manage_password.html.erb:24
 #: app/views/platform/reset_password.html.erb:16
@@ -6687,6 +6688,13 @@ msgid ""
 "The list of antennas%{transmit} can be reordered by drag &amp; drop.<br/>\n"
 "You can also move the items between antennas it by dragging the %"
 "{report_user} in the condition area."
+msgstr ""
+
+#: app/views/mypage/_manage_message.html.erb:6
+msgid ""
+"You can manage your preference for email notifications.<br/>By checking the "
+"items, notification emails will be sent to your registered email address "
+"when new comments etc. are added to your profile and blog entries."
 msgstr ""
 
 #: app/views/pictures/new.html.erb:7
