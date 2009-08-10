@@ -6246,19 +6246,19 @@ msgstr ""
 
 #: app/models/user_profile_master.rb:26
 msgid "UserProfileMaster|Input type|datepicker"
-msgstr ""
+msgstr "Date picker"
 
 #: app/models/user_profile_master.rb:18
 msgid "UserProfileMaster|Input type|number_and_hyphen_only"
-msgstr ""
+msgstr "Number and hyphen"
 
 #: app/models/user_profile_master.rb:25
 msgid "UserProfileMaster|Input type|prefecture_select"
-msgstr ""
+msgstr "Prefecture selection"
 
 #: app/models/user_profile_master.rb:20
 msgid "UserProfileMaster|Input type|radio"
-msgstr ""
+msgstr "Radio button"
 
 #: app/models/user_profile_master.rb:19
 msgid "UserProfileMaster|Input type|rich_text"
