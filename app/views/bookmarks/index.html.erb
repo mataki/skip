@@ -45,7 +45,7 @@
     .submit(function(e) {
         e.preventDefault();
         if( !$j('#url').val().match(/^https?:\/\/.*/) ){
-            alert("<%= _('URL to be bookmarked must start with "http".')%>");
+            alert('<%= _('URL to be bookmarked must start with "http".')%>');
             return false;
         }
         $j('#bookmark_form').nyroModalManual();
