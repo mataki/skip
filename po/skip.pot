@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-08-07 15:59+0800\n"
+"POT-Creation-Date: 2009-08-10 11:19+0800\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1706,7 +1706,8 @@ msgid ""
 "contact {contact_link} in case of failure."
 msgstr ""
 
-#: app/helpers/groups_helper.rb:22 app/views/group/show.html.erb:54
+#: app/helpers/groups_helper.rb:22 app/helpers/users_helper.rb:67
+#: app/views/group/show.html.erb:54
 #: app/views/group/_manage_participations.html.erb:47
 #: app/views/group/_manage_participations.html.erb:58
 msgid "Administrator"
@@ -2129,7 +2130,8 @@ msgstr ""
 msgid "Bookmark created."
 msgstr ""
 
-#: app/views/bookmark/_new.html.erb:3
+#: app/helpers/users_helper.rb:49 app/views/bookmark/_new.html.erb:3
+#: app/views/bookmarks/index.html.erb:3
 #: app/views/entries/_entry_detail.html.erb:222
 msgid "Bookmark this"
 msgstr ""
@@ -3525,7 +3527,7 @@ msgstr ""
 msgid "Introduction: "
 msgstr ""
 
-#: app/controllers/users_controller.rb:70 app/views/user/show.html.erb:112
+#: app/controllers/users_controller.rb:73 app/views/user/show.html.erb:112
 msgid "Introductions"
 msgstr ""
 
@@ -3924,7 +3926,7 @@ msgstr ""
 msgid "May"
 msgstr ""
 
-#: app/helpers/groups_helper.rb:26
+#: app/helpers/groups_helper.rb:26 app/helpers/users_helper.rb:69
 msgid "Member"
 msgstr ""
 
@@ -5002,10 +5004,6 @@ msgstr ""
 msgid "Search Result Pages: "
 msgstr ""
 
-#: app/controllers/users_controller.rb:69
-msgid "Search Users"
-msgstr ""
-
 #: config/environment.rb:93
 msgid "Search bookmarks."
 msgstr ""
@@ -5056,6 +5054,10 @@ msgstr ""
 
 #: config/environment.rb:75
 msgid "Search share files."
+msgstr ""
+
+#: app/controllers/users_controller.rb:72
+msgid "Search users"
 msgstr ""
 
 #: config/environment.rb:81
@@ -5934,6 +5936,10 @@ msgstr ""
 msgid "URL not bookmarked by anyone."
 msgstr ""
 
+#: app/views/bookmarks/index.html.erb:48
+msgid "URL to be bookmarked must start with \"http\"."
+msgstr ""
+
 #: app/controllers/portal_controller.rb:36
 msgid ""
 "Unable to continue with the user registration process. A fresh start is "
@@ -6064,7 +6070,7 @@ msgid "User name not found."
 msgstr ""
 
 #: app/controllers/group_controller.rb:59
-#: app/controllers/users_controller.rb:29
+#: app/controllers/users_controller.rb:32
 msgid "User not found."
 msgstr ""
 
@@ -6323,7 +6329,7 @@ msgid "UserUid|User"
 msgstr ""
 
 #: app/controllers/services_controller.rb:45
-#: app/controllers/users_controller.rb:67
+#: app/controllers/users_controller.rb:70
 #: app/controllers/user_layout_module.rb:26
 #: app/views/bookmark/list.html.erb:16 app/views/bookmarks/index.html.erb:24
 #: config/environment.rb:79
@@ -6896,6 +6902,10 @@ msgstr ""
 
 #: app/models/board_entry.rb:325 app/models/share_file.rb:247
 msgid "[Group members only]"
+msgstr ""
+
+#: app/views/bookmarks/index.html.erb:4
+msgid "[Handy usage of bookmarklet]"
 msgstr ""
 
 #: app/helpers/application_helper.rb:42

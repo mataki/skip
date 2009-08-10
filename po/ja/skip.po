@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-08-07 15:59+0800\n"
+"POT-Creation-Date: 2009-08-10 11:19+0800\n"
 "PO-Revision-Date: 2009-08-07 16:09+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1857,7 +1857,8 @@ msgstr ""
 "既に管理者ユーザが登録済みです。ログインして下さい。ログイン出来ない場合は%"
 "{contact_link}下さい。"
 
-#: app/helpers/groups_helper.rb:22 app/views/group/show.html.erb:54
+#: app/helpers/groups_helper.rb:22 app/helpers/users_helper.rb:67
+#: app/views/group/show.html.erb:54
 #: app/views/group/_manage_participations.html.erb:47
 #: app/views/group/_manage_participations.html.erb:58
 msgid "Administrator"
@@ -2297,7 +2298,8 @@ msgstr "ブックマークコメント"
 msgid "Bookmark created."
 msgstr "ブックマークが作成されました。"
 
-#: app/views/bookmark/_new.html.erb:3
+#: app/helpers/users_helper.rb:49 app/views/bookmark/_new.html.erb:3
+#: app/views/bookmarks/index.html.erb:3
 #: app/views/entries/_entry_detail.html.erb:222
 msgid "Bookmark this"
 msgstr "ブックマークする"
@@ -3739,7 +3741,7 @@ msgstr "紹介文を更新しました"
 msgid "Introduction: "
 msgstr "紹介文："
 
-#: app/controllers/users_controller.rb:70 app/views/user/show.html.erb:112
+#: app/controllers/users_controller.rb:73 app/views/user/show.html.erb:112
 msgid "Introductions"
 msgstr "紹介文"
 
@@ -4153,7 +4155,7 @@ msgstr "最大化！"
 msgid "May"
 msgstr "5月"
 
-#: app/helpers/groups_helper.rb:26
+#: app/helpers/groups_helper.rb:26 app/helpers/users_helper.rb:69
 msgid "Member"
 msgstr "参加者"
 
@@ -5252,10 +5254,6 @@ msgstr "検索範囲"
 msgid "Search Result Pages: "
 msgstr "検索結果ページ:"
 
-#: app/controllers/users_controller.rb:69
-msgid "Search users"
-msgstr "ユーザを探す"
-
 #: config/environment.rb:93
 msgid "Search bookmarks."
 msgstr "共有しているブックマーク(URL)を探します"
@@ -5307,6 +5305,10 @@ msgstr "<b>%s</b> の検索結果"
 #: config/environment.rb:75
 msgid "Search share files."
 msgstr "ユーザやグループで共有しているファイルを探します"
+
+#: app/controllers/users_controller.rb:72
+msgid "Search users"
+msgstr "ユーザを探す"
 
 #: config/environment.rb:81
 msgid "Search users."
@@ -6211,6 +6213,10 @@ msgstr "URLの形式が不正です。"
 msgid "URL not bookmarked by anyone."
 msgstr "指定のＵＲＬは誰もブックマークしていません。"
 
+#: app/views/bookmarks/index.html.erb:48
+msgid "URL to be bookmarked must start with \"http\"."
+msgstr "httpで始まる形式でないとブックマークできません"
+
 #: app/controllers/portal_controller.rb:36
 msgid ""
 "Unable to continue with the user registration process. A fresh start is "
@@ -6343,7 +6349,7 @@ msgid "User name not found."
 msgstr "ユーザ名が見つかりませんでした。"
 
 #: app/controllers/group_controller.rb:59
-#: app/controllers/users_controller.rb:29
+#: app/controllers/users_controller.rb:32
 msgid "User not found."
 msgstr "該当するユーザは存在しませんでした。"
 
@@ -6603,7 +6609,7 @@ msgid "UserUid|User"
 msgstr "ユーザ"
 
 #: app/controllers/services_controller.rb:45
-#: app/controllers/users_controller.rb:67
+#: app/controllers/users_controller.rb:70
 #: app/controllers/user_layout_module.rb:26
 #: app/views/bookmark/list.html.erb:16 app/views/bookmarks/index.html.erb:24
 #: config/environment.rb:79
@@ -7200,6 +7206,10 @@ msgstr "[ダウンロード履歴をCSVで取得]"
 #: app/models/board_entry.rb:325 app/models/share_file.rb:247
 msgid "[Group members only]"
 msgstr "[参加者のみ]"
+
+#: app/views/bookmarks/index.html.erb:4
+msgid "[Handy usage of bookmarklet]"
+msgstr "【便利なブックマークレットの使いかた】"
 
 #: app/helpers/application_helper.rb:42
 msgid "[Head]"
