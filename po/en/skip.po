@@ -6262,19 +6262,19 @@ msgstr ""
 
 #: app/models/user_profile_master.rb:19
 msgid "UserProfileMaster|Input type|rich_text"
-msgstr ""
+msgstr "Rich text"
 
 #: app/models/user_profile_master.rb:22
 msgid "UserProfileMaster|Input type|select"
-msgstr ""
+msgstr "Drop-down list"
 
 #: app/models/user_profile_master.rb:17
 msgid "UserProfileMaster|Input type|text_field"
-msgstr ""
+msgstr "Text box"
 
 #: app/models/user_profile_master.rb:21
 msgid "UserProfileMaster|Input type|year_select"
-msgstr ""
+msgstr "Year selection"
 
 #: app/models/user_profile_master.rb:-
 msgid "UserProfileMaster|Name"
@@ -6290,11 +6290,11 @@ msgstr ""
 
 #: app/models/user_profile_master.rb:29
 msgid "UserProfileMaster|Required|false"
-msgstr ""
+msgstr " "
 
 #: app/models/user_profile_master.rb:28
 msgid "UserProfileMaster|Required|true"
-msgstr ""
+msgstr "Required"
 
 #: app/models/user_profile_master.rb:-
 msgid "UserProfileMaster|Sort order"
