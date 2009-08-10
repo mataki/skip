@@ -46,7 +46,7 @@ module UsersHelper
           h(user.section)
         when _('Action')
           link_to(icon_tag('transmit_go', :title => _('Add to antenna')), {:controller => "antenna", :action => "select_antenna", :symbol => user.symbol, :dummy => '.html'}, {:class => "nyroModal"}) +
-          link_to(icon_tag('tag_blue_add', :title=>'ブックマークする'), {:controller => "bookmark", :action => "edit", :url => user.get_postit_url, :title => user.name, :dummy => '.html'}, {:class => "nyroModal"})
+          link_to(icon_tag('tag_blue_add', :title=> _('Bookmark this')), {:controller => "bookmark", :action => "edit", :url => user.get_postit_url, :title => user.name, :dummy => '.html'}, {:class => "nyroModal"})
         else
           h(user.send(column))
         end
@@ -64,9 +64,9 @@ module UsersHelper
     # FIXME 前提条件がちょっと変わっただけで動作しなくなるロジックになっているので見直しが必要。
     output = ""
     if user.group_participations.first.owned?
-      output << icon_tag('star') + '管理者'
+      output << icon_tag('star') + _("Administrator")
     else
-      output << icon_tag('user') + '参加者'
+      output << icon_tag('user') + _("Member")
     end
     output
   end
