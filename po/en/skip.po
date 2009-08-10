@@ -6238,11 +6238,11 @@ msgstr ""
 
 #: app/models/user_profile_master.rb:23
 msgid "UserProfileMaster|Input type|appendable_select"
-msgstr ""
+msgstr "Appendable selection list"
 
 #: app/models/user_profile_master.rb:24
 msgid "UserProfileMaster|Input type|check_box"
-msgstr ""
+msgstr "Check box"
 
 #: app/models/user_profile_master.rb:26
 msgid "UserProfileMaster|Input type|datepicker"
