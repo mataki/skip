@@ -25,6 +25,9 @@ class UsersController < ApplicationController
                               :conditions => @condition.make_conditions,
                               :order_by => @condition.value_of_order_by,
                               :include => @condition.value_of_include)
+    # 検索条件や表示順の条件によって、user_uidsがMASTERかNICKNAMEのどちらかしたロードされない。
+    # そのためviewで正しく描画するためにreloadしておく
+    @users.each{|u| u.user_uids.reload}
     unless @users && @users.size > 0
       flash.now[:notice] = _('User not found.')
     end
@@ -66,7 +69,7 @@ private
   def setup_layout
     @main_menu = @title = _('Users')
 
-    @tab_menu_source = [ {:label => _('Search Users'), :options => {:action => 'index'}},
+    @tab_menu_source = [ {:label => _('Search users'), :options => {:action => 'index'}},
                          {:label => _('Introductions'), :options => {:action => 'chain_search'}} ]
   end
 end
