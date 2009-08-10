@@ -2086,11 +2086,11 @@ msgstr ""
 
 #: app/models/board_entry.rb:45
 msgid "BoardEntry|Entry type|DIARY"
-msgstr ""
+msgstr "Blog"
 
 #: app/models/board_entry.rb:46
 msgid "BoardEntry|Entry type|GROUP_BBS"
-msgstr ""
+msgstr "BBS"
 
 #: app/models/board_entry.rb:-
 msgid "BoardEntry|Ignore times"
@@ -2098,7 +2098,7 @@ msgstr ""
 
 #: app/models/board_entry.rb:-
 msgid "BoardEntry|Last updated"
-msgstr ""
+msgstr "Date updated"
 
 #: app/models/board_entry.rb:-
 msgid "BoardEntry|Lock version"
@@ -4696,19 +4696,19 @@ msgstr ""
 
 #: app/models/admin/share_file.rb:34
 msgid "Publication type|private|gid"
-msgstr ""
+msgstr "Members only"
 
 #: app/models/admin/share_file.rb:33
 msgid "Publication type|private|uid"
-msgstr ""
+msgstr "Owner only"
 
 #: app/models/admin/share_file.rb:32
 msgid "Publication type|protected"
-msgstr ""
+msgstr "Assign explicitly"
 
 #: app/models/admin/share_file.rb:31
 msgid "Publication type|public"
-msgstr ""
+msgstr "Open to all"
 
 #: app/models/bookmark_comment.rb:34
 msgid "Publish"
