@@ -10,7 +10,7 @@
       <tbody>
     <% Message::MESSAGE_TYPES.each do |message_type, message_hash| -%>
         <tr>
-          <th width="200px"><%=h message_hash[:name] %></th>
+          <th width="200px"><%= h _(message_hash[:name]) %></th>
           <td><%= label_tag("message_type[#{message_type}]", _('Notify')) %><%= check_box_tag("message_type[#{message_type}]", "ON", !@unsubscribes.include?(message_type)) %></td>
         </tr>
     <% end -%>
