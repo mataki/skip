@@ -8,7 +8,7 @@
         <%= get_group_icon(group.group_category) %> <%= item_link_to group %>
       </div>
       <div class="item_desc" style="font-size: 10px; margin-left: 4px; color: gray;">
-        <%=h truncate(strip_tags(group.description)) if group.description %>
+        <%= truncate(strip_tags(group.description)) if group.description %>
       </div>
     </div>
   <% end -%>
