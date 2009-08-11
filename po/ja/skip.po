@@ -6313,7 +6313,7 @@ msgstr ""
 
 #: app/models/quota_validation.rb:19
 msgid "Upload denied due to excess of system wide shared files disk capacity."
-msgstr ""
+msgstr "システム全体におけるファイル保存領域の利用容量が最大値を越えてしまうためアップロードできません。"
 
 #: app/helpers/edit_helper.rb:36
 msgid "Upload share file"
