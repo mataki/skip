@@ -70,6 +70,7 @@ describe Tag, 'validate_tags' do
   describe '許容する記号の場合' do
     it { Tag.validate_tags("あああ.いい").size.should == 0 }
     it { Tag.validate_tags("あ+ああ/い-_.い").size.should == 0 }
+    it { Tag.validate_tags("あ ああ/い-_.い").size.should == 0 }
   end
 
   describe '許容しない記号の場合' do
@@ -80,14 +81,17 @@ describe Tag, 'validate_tags' do
     it { Tag.validate_tags(SkipFaker.comma_tags(:digit => 30)).size.should == 0 }
     it { Tag.validate_tags(two_byte_tag(:digit => 30)).size.should == 0 }
   end
+
   describe 'ひとつのタグの長さが31文字の場合' do
     it { Tag.validate_tags(SkipFaker.comma_tags(:digit => 31)).size.should == 1 }
     it { Tag.validate_tags(two_byte_tag(:digit => 31)).size.should == 1 }
   end
+
   describe 'ひとつのタグの長さが29文字で全長が255文字の場合' do
     it { Tag.validate_tags(SkipFaker.comma_tags(:digit => 29, :qt => 8 ) + ',' + SkipFaker.comma_tags(:digit => 15)).size.should == 0 }
     it { Tag.validate_tags(two_byte_tag(:digit => 29 , :qt => 8) + ',' + two_byte_tag(:digit => 15)).size.should == 0 }
   end
+
   describe 'ひとつのタグの長さが29文字で全長が256文字の場合' do
     it { Tag.validate_tags(SkipFaker.comma_tags(:digit => 29, :qt => 8 ) + ',' + SkipFaker.comma_tags(:digit => 16)).size.should == 1 }
     it { Tag.validate_tags(two_byte_tag(:digit => 29 , :qt => 8) + ',' + two_byte_tag(:digit => 16)).size.should == 1 }
@@ -109,6 +113,36 @@ describe Tag, 'validate_tags' do
       array << str
     end
     array.join(',')
+  end
+end
+
+describe Tag, 'square_brackets_tags' do
+  it '文字列前方の空白文字列が取り除かれること' do
+    Tag.square_brackets_tags(' foo,bar').should == '[foo][bar]'
+  end
+  it '文字列後方の空白文字列が取り除かれること' do
+    Tag.square_brackets_tags('foo,bar ').should == '[foo][bar]'
+  end
+  it 'カンマ前方の空白文字列が取り除かれること' do
+    Tag.square_brackets_tags('foo ,bar').should == '[foo][bar]'
+  end
+  it 'カンマ後方の空白文字列が取り除かれること' do
+    Tag.square_brackets_tags('foo, bar').should == '[foo][bar]'
+  end
+  it 'タグ文字列中の空白文字列は取り除かれないこと' do
+    Tag.square_brackets_tags('f oo,bar').should == '[f oo][bar]'
+  end
+  it 'タグ文字列中の[は取り除かれること' do
+    Tag.square_brackets_tags('f[oo,bar').should == '[foo][bar]'
+  end
+  it 'タグ文字列中の]は取り除かれること' do
+    Tag.square_brackets_tags('f]oo,bar').should == '[foo][bar]'
+  end
+  it 'タグ文字列中の[]は取り除かれること' do
+    Tag.square_brackets_tags('f[]oo,bar').should == '[foo][bar]'
+  end
+  it 'nilの時は空文字となること' do
+    Tag.square_brackets_tags(nil).should == ''
   end
 end
 

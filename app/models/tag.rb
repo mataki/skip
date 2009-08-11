@@ -55,7 +55,7 @@ class Tag < ActiveRecord::Base
       end
     end
 
-    unless tags_as_string =~ /^(\w|\+|\/|\.|\-|\_|,)*$/
+    unless tags_as_string =~ /^(\w|\+|\/|\.|\-|\_|,|\s)*$/
       errors << _("Acceptable symbols are \"+/.-\" and \",\" (for separation of multiple tags) only. Other symbols and white spaces are not accepted.")
     end
 
@@ -79,6 +79,6 @@ class Tag < ActiveRecord::Base
   end
 
   def self.square_brackets_tags tags_as_string
-    tags_as_string ? ("[" + tags_as_string.strip.gsub("[", "").gsub("]", "").gsub(",", "][") + "]").gsub("[]", "") : ""
+    tags_as_string ? tags_as_string.split(',').map{|t| "[#{t.strip.gsub("[", "").gsub("]", "").gsub("[]", "")}]"}.join('') : ''
   end
 end
