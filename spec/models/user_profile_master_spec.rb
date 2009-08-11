@@ -53,16 +53,16 @@ describe UserProfileMaster, ".input_type_option" do
     UserProfileMaster.input_type_option.size.should == 10
   end
   it "順番通りに返ってくること" do
-    valid_option = [["UserProfileMaster|Input type|text_field", "text_field"],
-                    ["UserProfileMaster|Input type|number_and_hyphen_only", "number_and_hyphen_only"],
-                    ["UserProfileMaster|Input type|rich_text", "rich_text"],
-                    ["UserProfileMaster|Input type|check_box", "check_box"],
-                    ["UserProfileMaster|Input type|radio", "radio"],
-                    ["UserProfileMaster|Input type|select", "select"],
-                    ["UserProfileMaster|Input type|appendable_select", "appendable_select"],
-                    ["UserProfileMaster|Input type|prefecture_select", "prefecture_select"],
-                    ["UserProfileMaster|Input type|year_select", "year_select"],
-                    ["UserProfileMaster|Input type|datepicker", "datepicker"]]
+    valid_option = [["Text box", "text_field"],
+                    ["Number and hyphen", "number_and_hyphen_only"],
+                    ["Rich text", "rich_text"],
+                    ["Check box", "check_box"],
+                    ["Radio button", "radio"],
+                    ["Drop-down list", "select"],
+                    ["Appendable selection list", "appendable_select"],
+                    ["Prefecture selection", "prefecture_select"],
+                    ["Year selection", "year_select"],
+                    ["Date picker", "datepicker"]]
     UserProfileMaster.input_type_option.should == valid_option
   end
 end
