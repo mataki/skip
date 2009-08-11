@@ -30,7 +30,7 @@ module CollaborationApp
       @root_url = app_config ? app_config['root_url'] : ''
       @ca_file = app_config ? app_config['ca_file'] : ''
       @feeds = app_config ? app_config['feeds'] : []
-      @operations = app_config ? app_config['operations'] : []
+      @operations = app_config && app_config['operations'] ? app_config['operations'] : []
     end
 
     # TODO 回帰テストを書く
