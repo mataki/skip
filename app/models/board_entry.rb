@@ -285,8 +285,8 @@ class BoardEntry < ActiveRecord::Base
     return tags.uniq.first(40)
   end
 
-  def self.get_categories_hash(login_user_symbols, options={})
-    find_params = BoardEntry.make_conditions(login_user_symbols, options)
+  def categories_hash user
+    find_params = BoardEntry.make_conditions(user.belong_symbols, {:symbol => self.symbol})
     categories = BoardEntry.get_category_words(find_params)
     categories_hash = {}
 

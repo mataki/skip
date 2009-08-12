@@ -41,7 +41,6 @@ class EditController < ApplicationController
     end
 
     setup_layout @board_entry
-    load_tagwards_and_link_params @board_entry
   end
 
   # post_action
@@ -94,7 +93,6 @@ class EditController < ApplicationController
       return
     else
       setup_layout @board_entry
-      load_tagwards_and_link_params @board_entry
       render :action => 'index'
     end
   end
@@ -151,7 +149,6 @@ class EditController < ApplicationController
     @board_entry.send_mail = "1" if Mail.find_by_from_user_id_and_user_entry_no_and_send_flag(login_user_symbol_id, @board_entry.user_entry_no, false)
 
     setup_layout @board_entry
-    load_tagwards_and_link_params @board_entry
   end
 
   # post_acttion
@@ -160,17 +157,10 @@ class EditController < ApplicationController
     #編集の競合をチェック
     @conflicted = false
 
-    unless params[:lock_version].to_i == @board_entry.lock_version
-      @board_entry.send_mail = params[:board_entry][:send_mail] if params[:board_entry]
-      @conflicted = true
-      flash.now[:warn] = _("Update on the same entry from other users detected. Reset the edit?")
-      render :action => 'edit'
-      return
-    end
-
     unless validate_params params, @board_entry
       @board_entry.send_mail = params[:board_entry][:send_mail] if params[:board_entry]
-      flash[:warn] = _("Invalid parameter(s) found.")
+      flash.now[:warn] = _("Invalid parameter(s) found.")
+      setup_layout @board_entry
       render :action => 'edit'
       return
     end
@@ -198,30 +188,34 @@ class EditController < ApplicationController
     # ちょっとした更新でなければ、last_updatedを更新する
     update_params[:last_updated] = Time.now unless params[:non_update]
 
-    if @board_entry.update_attributes(update_params)
-      @board_entry.entry_publications.clear
-      @board_entry.entry_editors.clear
-      target_symbols = analyze_params(@board_entry)
-      target_symbols.first.each do |target_symbol|
-        @board_entry.entry_publications.create(:symbol => target_symbol)
-      end
-      target_symbols.last.each do |target_symbol|
-        @board_entry.entry_editors.create(:symbol => target_symbol)
-      end
-
-      message, new_trackbacks = @board_entry.send_trackbacks(login_user_symbols, params[:trackbacks])
-      make_trackback_message(new_trackbacks)
-
-      @board_entry.cancel_mail
-      @board_entry.prepare_send_mail if @board_entry.send_mail?
-
-      flash[:notice] = _('Entry was successfully updated.') + message
-      redirect_to @board_entry.get_url_hash
-    else
-      setup_layout @board_entry
-      load_tagwards_and_link_params @board_entry
-      render :action => 'edit'
+    @board_entry.update_attributes!(update_params)
+    @board_entry.entry_publications.clear
+    @board_entry.entry_editors.clear
+    target_symbols = analyze_params(@board_entry)
+    target_symbols.first.each do |target_symbol|
+      @board_entry.entry_publications.create(:symbol => target_symbol)
     end
+    target_symbols.last.each do |target_symbol|
+      @board_entry.entry_editors.create(:symbol => target_symbol)
+    end
+
+    message, new_trackbacks = @board_entry.send_trackbacks(login_user_symbols, params[:trackbacks])
+    make_trackback_message(new_trackbacks)
+
+    @board_entry.cancel_mail
+    @board_entry.prepare_send_mail if @board_entry.send_mail?
+
+    flash[:notice] = _('Entry was successfully updated.') + message
+    redirect_to @board_entry.get_url_hash
+  rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => e
+    setup_layout @board_entry
+    render :action => 'edit'
+  rescue ActiveRecord::StaleObjectError => e
+    @conflicted = true
+    @board_entry.lock_version = @board_entry.lock_version_was
+    flash.now[:warn] = _("Update on the same entry from other users detected. Reset the edit?")
+    setup_layout @board_entry
+    render :action => 'edit'
   end
 
   # post_action
@@ -267,10 +261,6 @@ private
     @title = _("%{action} %{write_place}") % {:action => (["edit", "update"].include?(action_name) ? _('Edit') : _('Write')), :write_place => write_place_name(board_entry.owner)}
   end
 
-  def load_tagwards_and_link_params board_entry
-    @categories_hash =  BoardEntry.get_categories_hash(login_user_symbols, {:symbol => board_entry.symbol})
-  end
-
   def analyze_params board_entry
     target_symbols_publication = []
     target_symbols_editor = []
@@ -293,6 +283,7 @@ private
   end
 
   # 独自のバリデーション（成功ならtrue）
+  # TODO チェックをモデルに寄せたい
   def validate_params params, entry
     # 公開範囲のタイプ
     unless %w(public private protected).include? params[:publication_type]

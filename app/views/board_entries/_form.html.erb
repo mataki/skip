@@ -17,11 +17,9 @@ div.input_line textarea {
 <%= template_error_messages_for 'board_entry' %>
 
 <%= hidden_field_tag 'entry_type', h(params[:entry_type]) %>
-
 <%= hidden_field 'board_entry', 'entry_type' %>
 <%= hidden_field 'board_entry', 'symbol' %>
-
-<%= hidden_field_tag 'lock_version', h(@board_entry.lock_version) -%>
+<%= hidden_field 'board_entry', 'lock_version' %>
 
 <div class="input_line">
   <div class="input_label"><%= label(:board_entry, :category, _('Tags')) -%></div>
@@ -106,11 +104,12 @@ div.input_line textarea {
 </div>
 
 <% content_for :javascript_initializers do -%>
+  <% categories_hash = @board_entry.categories_hash(current_user) -%>
     var setupTagComplete = function() {
-        var tags = new Array(<%= @categories_hash[:mine].map{|str| ("'#{str}'")}.join(',') %>);
-        var stdTags = new Array(<%= @categories_hash[:standard].map{|str| ("'#{str}'")}.join(',') %>);
-        var userTags = new Array(<%= @categories_hash[:user].map{|str| ("'#{str}'")}.join(',') %>);
-        var sysTags = new Array(<%= @categories_hash[:system].map{|str| ("'#{str}'")}.join(',') %>);
+        var tags = new Array(<%= categories_hash[:mine].map{|str| ("'#{str}'")}.join(',') %>);
+        var stdTags = new Array(<%= categories_hash[:standard].map{|str| ("'#{str}'")}.join(',') %>);
+        var userTags = new Array(<%= categories_hash[:user].map{|str| ("'#{str}'")}.join(',') %>);
+        var sysTags = new Array(<%= categories_hash[:system].map{|str| ("'#{str}'")}.join(',') %>);
 
         $j('#tags_list').append(createTagsLink(tags));
         $j('#std_tags_list').append(createTagsLink(stdTags));
