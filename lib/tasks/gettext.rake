@@ -8,5 +8,5 @@ desc "Update pot/po files to match new version."
 task :updatepo do
   require 'gettext_rails/tools'
   ENV["MSGMERGE_PATH"] = "msgmerge --sort-output --no-fuzzy-matching"
-  GetText.update_pofiles("skip", Dir.glob("{app}/**/*.{rb,erb}") + ["lib/symbol.rb"] + ["config/environment.rb"], "skip 1.1.0")
+  GetText.update_pofiles("skip", Dir.glob("{app}/**/*.{rb,erb}") + ["lib/symbol.rb"] + ['lib/skip_default_data.rb'] + ["config/environment.rb"], "skip 1.1.0")
 end
