@@ -146,6 +146,8 @@ class MypageController < ApplicationController
       set_data_for_record_mail
     when "record_post"
       set_data_for_record_blog
+    else
+      render_404 and return
     end
     render :partial => @menu, :layout => "layout"
   end
