@@ -822,7 +822,7 @@ class MypageController < ApplicationController
     feed.items.slice!(limit..-1) if feed.items.size > limit
     feed
   rescue NameError => e
-    logger.error "[Error] Rubyのライブラリが古いためAtom形式を変換できませんでした。"
+    logger.error "[Error] Atom conversion failed due to outdated ruby libraries."
     return nil
   end
 

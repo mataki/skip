@@ -775,7 +775,7 @@ describe MypageController, "#unify_feed_form" do
         @feed.stub!(:is_a?).with(RSS::Atom::Feed).and_raise(NameError.new("uninitialized constant RSS::Atom", "RSS::Atom::Feed"))
       end
       it "ログにエラーが表示されること" do
-        controller.logger.should_receive(:error).with("[Error] Rubyのライブラリが古いためAtom形式を変換できませんでした。")
+        controller.logger.should_receive(:error).with("[Error] Atom conversion failed due to outdated ruby libraries.")
         controller.send(:unify_feed_form, @feed)
       end
       it "nilが返されること" do
