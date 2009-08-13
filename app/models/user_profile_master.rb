@@ -74,14 +74,14 @@ class UserProfileMaster < ActiveRecord::Base
   def input_type_processer
     "UserProfileMaster::#{self.input_type.classify}Processer".constantize.new(self)
   rescue NameError => e
-    logger.warn "UserProfileMaster - input_type is not selected from registrated values"
+    logger.warn "UserProfileMaster - input_type is not selected from registered values"
     UserProfileMaster::InputTypeProcesser.new(self)
   end
 
   def self.input_type_processer_class(input_type)
     "UserProfileMaster::#{input_type.classify}Processer".constantize
   rescue NameError => e
-    logger.warn "UserProfileMaster - input_type is not selected from registrated values"
+    logger.warn "UserProfileMaster - input_type is not selected from registered values"
     UserProfileMaster::InputTypeProcesser
   end
 
