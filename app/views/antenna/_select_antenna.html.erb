@@ -50,7 +50,7 @@ $j(function() {
     $j('.add_symbol_link')
     .click(function() {
         var antennaId = this.id.split('_')[3];
-        var symbol = '<%= h(symbol) -%>';
+        var symbol = '<%= escape_javascript(symbol) -%>';
         $j.ajax({
             type: 'POST',
             url: $j(this).attr('href'),
