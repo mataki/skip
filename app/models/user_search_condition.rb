@@ -25,6 +25,8 @@ class UserSearchCondition < SearchCondition
   attr_reader :not_include_retired
   attr_reader :with_group
 
+  VALID_SORT_TYPES = %w(0 1 2).freeze
+
   class << self
     include InitialSettingsHelper
 
@@ -63,7 +65,7 @@ class UserSearchCondition < SearchCondition
     @code = params[:code] || ""
 
     @include_manager = params[:include_manager] || "0"
-    @sort_type = params[:sort_type] || "0"
+    @sort_type = UserSearchCondition::VALID_SORT_TYPES.include?(params[:sort_type]) ?  params[:sort_type] : '0'
     @output_type = params[:output_type] || "normal"
     @not_include_retired = params[:not_include_retired]
     @with_group = params[:with_group]
