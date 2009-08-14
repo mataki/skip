@@ -13,14 +13,25 @@
 
 <% content_for :javascript_initializers do -%>
     $j('.statistics_history_link')
-    .click(function() {
+    .live('click', function() {
+        loadStatistics(this.id, <%= site_count.created_on.year %>, <%= site_count.created_on.month %>);
+        return false;
+    });
+
+    $j('.change_month_link')
+    .live('click', function() {
+        data = $j(this).data('data')
+        loadStatistics(data.category, data.year, data.month);
+        return false;
+    });
+
+    var loadStatistics = function(category, year, month){
         var url = relative_url_root + '/rankings/ado_statistics_history';
         $j.ajax({
             url: url,
-            data: { type: 'monthly',
-                    category: this.id,
-                    year: <%= site_count.created_on.year %>,
-                    month: <%= site_count.created_on.month %>
+            data: { category: category,
+                    year: year,
+                    month: month
             },
             error: function(event){
                 alert("<%= _('Communication failure.')%>");
@@ -29,6 +40,5 @@
                 $j('#statistics_history').html(request).highlight();
             }
         });
-        return false;
-    });
+    };
 <% end -%>
