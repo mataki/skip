@@ -148,6 +148,8 @@ class GroupController < ApplicationController
         return
       end
       @pages, @participations = paginate_participations(@group, true)
+    else
+      render_404 and return
     end
     render :partial => @menu, :layout => "layout"
   end
