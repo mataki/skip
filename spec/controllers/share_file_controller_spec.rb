@@ -26,6 +26,7 @@ describe ShareFileController, 'GET #new' do
 
   describe '作成権限がある場合' do
     before do
+      Symbol.should_receive(:get_item_by_symbol).and_return(stub_model(User, :symbol => 'uid:foo'))
       @share_file.should_receive(:updatable?).with(@user).and_return(true)
     end
     it '作成画面に遷移すること' do
@@ -36,6 +37,7 @@ describe ShareFileController, 'GET #new' do
 
   describe '作成権限がない場合' do
     before do
+      Symbol.should_receive(:get_item_by_symbol).and_return(stub_model(User, :symbol => 'uid:foo'))
       @share_file.should_receive(:updatable?).with(@user).and_return(false)
     end
     it '作成画面が閉じられること' do

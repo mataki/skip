@@ -26,6 +26,7 @@ class Symbol
 
   # symbolからオブジェクト(User,Groupのどれか)を取り出す
   def self.get_item_by_symbol symbol
+    return nil if symbol.blank?
     symbol_type, symbol_id = split_symbol symbol
     item = nil
     case symbol_type
