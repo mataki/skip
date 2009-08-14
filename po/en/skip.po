@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-08-12 11:53+0900\n"
+"POT-Creation-Date: 2009-08-14 12:10+0900\n"
 "PO-Revision-Date: 2009-06-29 13:31+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -114,7 +114,7 @@ msgstr ""
 msgid "%s<br/>We apologize for the inconvenience caused.<br/>"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:267
+#: app/controllers/edit_controller.rb:280
 msgid "%{action} %{write_place}"
 msgstr ""
 
@@ -150,12 +150,12 @@ msgstr[1] ""
 msgid "%{extension} formats are accepted. Maximum file size is %{size}Kbytes."
 msgstr ""
 
-#: app/controllers/platform_controller.rb:183
+#: app/controllers/platform_controller.rb:184
 msgid "%{function} completed."
 msgstr ""
 
-#: app/controllers/platform_controller.rb:104
-#: app/controllers/platform_controller.rb:130
+#: app/controllers/platform_controller.rb:105
+#: app/controllers/platform_controller.rb:131
 msgid "%{function} currently unavailable."
 msgstr ""
 
@@ -268,7 +268,7 @@ msgstr ""
 msgid "(Including private members)"
 msgstr ""
 
-#: app/views/board_entries/_form.html.erb:102
+#: app/views/board_entries/_form.html.erb:100
 msgid "(Provide page IDs in comma separated format. e.g. 1123,1124)"
 msgstr ""
 
@@ -288,7 +288,7 @@ msgstr ""
 msgid "(Unknown topic entry found. However, this has been ignored)"
 msgstr ""
 
-#: app/views/board_entries/_form.html.erb:90
+#: app/views/board_entries/_form.html.erb:88
 msgid ""
 "(Will not be sent when the entry is open to all users or limited to owner "
 "only)"
@@ -519,7 +519,7 @@ msgid ""
 "confirmation link in the next screen to the user."
 msgstr ""
 
-#: app/controllers/platform_controller.rb:104
+#: app/controllers/platform_controller.rb:105
 msgid "Activation email"
 msgstr ""
 
@@ -591,7 +591,7 @@ msgstr ""
 msgid "Adding to antenna"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:491
+#: app/controllers/mypage_controller.rb:493
 #: app/controllers/group_layout_module.rb:9
 #: app/controllers/user_layout_module.rb:20
 msgid "Admin"
@@ -1768,7 +1768,7 @@ msgid ""
 msgstr ""
 
 #: app/controllers/admin/users_controller.rb:273
-#: app/controllers/platform_controller.rb:118
+#: app/controllers/platform_controller.rb:119
 msgid "An email containing the URL for signup will be sent to %{email}."
 msgid_plural ""
 "%{num} emails containing the URL for signup will be sent to the following "
@@ -1776,7 +1776,7 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/controllers/platform_controller.rb:69
+#: app/controllers/platform_controller.rb:70
 msgid ""
 "An email contains the URL for resetting the password has been sent to %s."
 msgstr ""
@@ -1944,7 +1944,7 @@ msgstr ""
 msgid "August"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:280
+#: app/controllers/platform_controller.rb:281
 msgid "Authentication failed."
 msgstr ""
 
@@ -1996,7 +1996,7 @@ msgstr ""
 msgid "Belongs to: %s"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:485
+#: app/controllers/mypage_controller.rb:487
 #: app/controllers/user_layout_module.rb:5
 msgid "Blog"
 msgstr ""
@@ -2013,7 +2013,7 @@ msgstr ""
 msgid "Blog Entry View"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:763
+#: app/controllers/mypage_controller.rb:765
 msgid "Blogs"
 msgstr ""
 
@@ -2270,7 +2270,7 @@ msgid ""
 "to do it once!)"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:489
+#: app/controllers/mypage_controller.rb:491
 #: app/controllers/services_controller.rb:44
 #: app/controllers/user_layout_module.rb:9
 #: app/controllers/bookmark_controller.rb:118
@@ -2393,7 +2393,7 @@ msgstr ""
 msgid "Change uid"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:667
+#: app/controllers/mypage_controller.rb:669
 msgid "Change your profile picture!"
 msgstr ""
 
@@ -2524,7 +2524,7 @@ msgstr ""
 msgid "Content of CSV file"
 msgstr ""
 
-#: app/views/board_entries/_form.html.erb:47
+#: app/views/board_entries/_form.html.erb:45
 msgid "Contents"
 msgstr ""
 
@@ -2598,7 +2598,7 @@ msgid ""
 "needed."
 msgstr ""
 
-#: app/controllers/edit_controller.rb:92
+#: app/controllers/edit_controller.rb:91
 msgid "Created successfully."
 msgstr ""
 
@@ -2653,7 +2653,7 @@ msgstr ""
 msgid "Data of this month not available."
 msgstr ""
 
-#: app/views/board_entries/_form.html.erb:52
+#: app/views/board_entries/_form.html.erb:50
 msgid "Date"
 msgstr ""
 
@@ -2699,7 +2699,7 @@ msgid "Delete all the groups under the group category before you delete it."
 msgstr ""
 
 #: app/controllers/admin/group_categories_controller.rb:28
-#: app/controllers/edit_controller.rb:234
+#: app/controllers/edit_controller.rb:243
 msgid "Deletion complete."
 msgstr ""
 
@@ -2783,7 +2783,7 @@ msgstr ""
 msgid "Driving"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:267
+#: app/controllers/edit_controller.rb:280
 #: app/views/entries/_entry_detail.html.erb:221
 #: app/views/board_entries/_board_entry_comment.html.erb:14
 #: app/views/user/show.html.erb:39 app/views/admin/pictures/index.html.erb:27
@@ -2809,7 +2809,7 @@ msgstr ""
 msgid "Edit Profile"
 msgstr ""
 
-#: app/views/board_entries/_form.html.erb:76
+#: app/views/board_entries/_form.html.erb:74
 msgid "Edit by Members Allowed"
 msgstr ""
 
@@ -2844,7 +2844,7 @@ msgstr ""
 msgid "Editing %{model}"
 msgstr ""
 
-#: app/views/board_entries/_form.html.erb:86
+#: app/views/board_entries/_form.html.erb:84
 msgid "Email"
 msgstr ""
 
@@ -2860,7 +2860,7 @@ msgstr ""
 msgid "Email Notification"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:121
+#: app/controllers/platform_controller.rb:122
 msgid "Email address %s has been registered in the site"
 msgstr ""
 
@@ -2870,12 +2870,12 @@ msgid_plural "%{num} emails have been registered in the site"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/controllers/platform_controller.rb:110
-#: app/controllers/platform_controller.rb:154
+#: app/controllers/platform_controller.rb:111
+#: app/controllers/platform_controller.rb:155
 msgid "Email address is mandatory."
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:418
+#: app/controllers/mypage_controller.rb:420
 msgid "Email address was updated successfully."
 msgstr ""
 
@@ -2883,7 +2883,7 @@ msgstr ""
 msgid "Email for resetting your password"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:61
+#: app/controllers/platform_controller.rb:62
 msgid "Email is mandatory."
 msgstr ""
 
@@ -2916,7 +2916,7 @@ msgstr ""
 msgid "Enter the name of existent users / groups."
 msgstr ""
 
-#: app/controllers/platform_controller.rb:183
+#: app/controllers/platform_controller.rb:184
 msgid "Enter the previously set URL to log in."
 msgstr ""
 
@@ -2928,9 +2928,9 @@ msgstr ""
 msgid "Enter your OpenID URL in the form below."
 msgstr ""
 
-#: app/controllers/platform_controller.rb:75
-#: app/controllers/platform_controller.rb:124
-#: app/controllers/platform_controller.rb:168
+#: app/controllers/platform_controller.rb:76
+#: app/controllers/platform_controller.rb:125
+#: app/controllers/platform_controller.rb:169
 msgid "Entered email address %s has not been registered in the site."
 msgstr ""
 
@@ -2940,7 +2940,7 @@ msgstr ""
 msgid "Entries"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:967
+#: app/controllers/mypage_controller.rb:969
 msgid "Entries bookmarked by yourself"
 msgstr ""
 
@@ -2956,7 +2956,7 @@ msgstr ""
 msgid "Entries talking about this entry:"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:966
+#: app/controllers/mypage_controller.rb:968
 msgid "Entries you have made comments"
 msgstr ""
 
@@ -2964,15 +2964,15 @@ msgstr ""
 msgid "Entries you posted to your blog and group BBSs."
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:206
+#: app/controllers/mypage_controller.rb:208
 msgid "Entry was successfully marked read."
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:206
+#: app/controllers/mypage_controller.rb:208
 msgid "Entry was successfully marked unread."
 msgstr ""
 
-#: app/controllers/edit_controller.rb:218
+#: app/controllers/edit_controller.rb:208
 msgid "Entry was successfully updated."
 msgstr ""
 
@@ -3048,7 +3048,7 @@ msgstr ""
 msgid "Failed to delete since there are still other users in the group."
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:248
+#: app/controllers/mypage_controller.rb:250
 msgid "Failed to load rss."
 msgstr ""
 
@@ -3056,15 +3056,15 @@ msgstr ""
 msgid "Failed to open the content."
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:404
+#: app/controllers/mypage_controller.rb:406
 msgid "Failed to process your request. Try resubmitting your request again."
 msgstr ""
 
-#: app/controllers/platform_controller.rb:287
+#: app/controllers/platform_controller.rb:288
 msgid "Failed to register user. Contact administrator.<br/>%{msg}"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:90
+#: app/controllers/platform_controller.rb:91
 msgid "Failed to reset password."
 msgstr ""
 
@@ -3181,7 +3181,7 @@ msgstr ""
 msgid "Footer"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:490
+#: app/controllers/mypage_controller.rb:492
 #: app/controllers/user_layout_module.rb:19
 msgid "Footprints"
 msgstr ""
@@ -3387,12 +3387,12 @@ msgstr ""
 #: app/controllers/services_controller.rb:46
 #: app/controllers/group_controller.rb:370
 #: app/controllers/share_file_controller.rb:161
-#: app/controllers/edit_controller.rb:266 config/environment.rb:85
+#: app/controllers/edit_controller.rb:279 config/environment.rb:85
 msgid "Groups"
 msgstr ""
 
 #: app/helpers/application_helper.rb:348
-#: app/controllers/mypage_controller.rb:488
+#: app/controllers/mypage_controller.rb:490
 #: app/controllers/feed_controller.rb:115
 #: app/controllers/user_layout_module.rb:8 app/views/user/show.html.erb:4
 msgid "Groups Joined"
@@ -3479,7 +3479,7 @@ msgstr ""
 msgid "Hide Shortcut"
 msgstr ""
 
-#: app/views/board_entries/_form.html.erb:56
+#: app/views/board_entries/_form.html.erb:54
 msgid "Hide Time"
 msgstr ""
 
@@ -3504,7 +3504,7 @@ msgstr ""
 msgid "Hobbies"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:483
+#: app/controllers/mypage_controller.rb:485
 #: app/controllers/user_layout_module.rb:18
 msgid "Home"
 msgstr ""
@@ -3534,7 +3534,7 @@ msgstr ""
 msgid "I have joined the site!"
 msgstr ""
 
-#: app/views/board_entries/_form.html.erb:150
+#: app/views/board_entries/_form.html.erb:149
 msgid ""
 "Illegal format in \"Topic entry\". List the page IDs and separate each other "
 "by commas."
@@ -3602,7 +3602,7 @@ msgid ""
 "Please contact system administrator."
 msgstr ""
 
-#: app/controllers/platform_controller.rb:281
+#: app/controllers/platform_controller.rb:282
 msgid "Internal error(s) occured. Contact administrator."
 msgstr ""
 
@@ -3647,7 +3647,7 @@ msgstr ""
 msgid "Introductions"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:453
+#: app/controllers/mypage_controller.rb:455
 msgid "Invalid OpenID URL format."
 msgstr ""
 
@@ -3678,26 +3678,26 @@ msgstr ""
 msgid "Invalid parameter(s) detected."
 msgstr ""
 
-#: app/controllers/edit_controller.rb:60
-#: app/controllers/edit_controller.rb:173
+#: app/controllers/edit_controller.rb:59
+#: app/controllers/edit_controller.rb:162
 msgid "Invalid parameter(s) found."
 msgstr ""
 
 #: app/controllers/share_file_controller.rb:278
-#: app/controllers/edit_controller.rb:290
+#: app/controllers/edit_controller.rb:299
 msgid "Invalid parameter(s)."
 msgstr ""
 
-#: app/controllers/platform_controller.rb:97
+#: app/controllers/platform_controller.rb:98
 msgid "Invalid password reset URL. Try again or contact system administrator."
 msgstr ""
 
-#: app/controllers/edit_controller.rb:299
-#: app/controllers/edit_controller.rb:305
+#: app/controllers/edit_controller.rb:309
+#: app/controllers/edit_controller.rb:315
 msgid "Invalid privacy setting."
 msgstr ""
 
-#: app/controllers/platform_controller.rb:142
+#: app/controllers/platform_controller.rb:143
 msgid "Invalid registration URL. Try again or contact system administrator."
 msgstr ""
 
@@ -3847,7 +3847,7 @@ msgid ""
 "notifications from %s<br/>(Emails are sent periodically in a batch)"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:970
+#: app/controllers/mypage_controller.rb:972
 msgid "List of unread entries"
 msgstr ""
 
@@ -3923,7 +3923,7 @@ msgstr ""
 msgid "Log in again."
 msgstr ""
 
-#: app/controllers/platform_controller.rb:324
+#: app/controllers/platform_controller.rb:325
 msgid "Log in failed."
 msgstr ""
 
@@ -4067,7 +4067,7 @@ msgid "Members List"
 msgstr ""
 
 #: app/helpers/share_file_helper.rb:19 app/models/user_search_condition.rb:32
-#: app/views/board_entries/_form.html.erb:72 app/views/group/_form.html.erb:51
+#: app/views/board_entries/_form.html.erb:70 app/views/group/_form.html.erb:51
 msgid "Members Only"
 msgstr ""
 
@@ -4080,8 +4080,8 @@ msgstr ""
 msgid "Message: "
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:693
-#: app/controllers/mypage_controller.rb:965
+#: app/controllers/mypage_controller.rb:695
+#: app/controllers/mypage_controller.rb:967
 #: app/controllers/feed_controller.rb:82 app/models/antenna.rb:94
 msgid "Messages for you"
 msgstr ""
@@ -4152,7 +4152,7 @@ msgstr ""
 msgid "Mr./Ms. %s from other users' view"
 msgstr "%s from other users' view"
 
-#: app/views/board_entries/_form.html.erb:30
+#: app/views/board_entries/_form.html.erb:28
 #: app/views/share_file/_form.html.erb:49 app/views/bookmark/_new.html.erb:52
 msgid "Multiple values can be given in foo,bar format"
 msgstr ""
@@ -4165,11 +4165,11 @@ msgstr ""
 msgid "My Account"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:266
+#: app/controllers/edit_controller.rb:279
 msgid "My Blog"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:481
+#: app/controllers/mypage_controller.rb:483
 #: app/controllers/user_layout_module.rb:26
 #: app/controllers/user_layout_module.rb:30 config/environment.rb:61
 msgid "My Page"
@@ -4341,7 +4341,7 @@ msgstr ""
 msgid "No user information registered in %s."
 msgstr ""
 
-#: app/views/board_entries/_form.html.erb:166
+#: app/views/board_entries/_form.html.erb:165
 #: app/views/share_file/_form.html.erb:81
 msgid "No user selected. Are you sure to make this open to all users?"
 msgstr ""
@@ -4451,7 +4451,7 @@ msgid ""
 "shortcut menu."
 msgstr ""
 
-#: app/views/board_entries/_form.html.erb:70 app/views/group/_form.html.erb:50
+#: app/views/board_entries/_form.html.erb:68 app/views/group/_form.html.erb:50
 #: app/views/share_file/new_ajax_upload.html.erb:21
 #: app/views/share_file/_form.html.erb:34
 msgid "Open to All"
@@ -4461,66 +4461,66 @@ msgstr ""
 msgid "OpenID URL"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:441
+#: app/controllers/mypage_controller.rb:443
 msgid "OpenID URL was successfully set."
 msgstr ""
 
-#: app/controllers/platform_controller.rb:191
-#: app/controllers/platform_controller.rb:238
+#: app/controllers/platform_controller.rb:192
+#: app/controllers/platform_controller.rb:239
 msgid "OpenID format invalid."
 msgstr ""
 
-#: app/controllers/platform_controller.rb:291
+#: app/controllers/platform_controller.rb:292
 msgid ""
 "OpenID had not been registered. Log in, register the OpenID URL in the "
 "administration screen then log in again."
 msgstr ""
 
-#: app/controllers/platform_controller.rb:187
+#: app/controllers/platform_controller.rb:188
 msgid "OpenID processing aborted due to user cancellation or system errors."
 msgstr ""
 
-#: app/controllers/platform_controller.rb:278
+#: app/controllers/platform_controller.rb:279
 msgid "OpenID server not found. Please provide a correct OpenID URL."
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:448
+#: app/controllers/mypage_controller.rb:450
 msgid "OpenId process is cancelled or failed."
 msgstr ""
 
-#: app/models/group.rb:-
+#: app/controllers/edit_controller.rb:-
 msgid "OpenIdAuthentication::Association|Assoc type"
 msgstr ""
 
-#: app/models/group.rb:-
+#: app/controllers/edit_controller.rb:-
 msgid "OpenIdAuthentication::Association|Handle"
 msgstr ""
 
-#: app/models/group.rb:-
+#: app/controllers/edit_controller.rb:-
 msgid "OpenIdAuthentication::Association|Issued"
 msgstr ""
 
-#: app/models/group.rb:-
+#: app/controllers/edit_controller.rb:-
 msgid "OpenIdAuthentication::Association|Lifetime"
 msgstr ""
 
-#: app/models/group.rb:-
+#: app/controllers/edit_controller.rb:-
 msgid "OpenIdAuthentication::Association|Secret"
 msgstr ""
 
-#: app/models/group.rb:-
+#: app/controllers/edit_controller.rb:-
 msgid "OpenIdAuthentication::Association|Server url"
 msgstr ""
 
-#: app/models/group.rb:-
+#: app/controllers/edit_controller.rb:-
 msgid "OpenIdAuthentication::Nonce|Salt"
 msgstr ""
 
-#: app/models/group.rb:-
+#: app/controllers/edit_controller.rb:-
 msgid "OpenIdAuthentication::Nonce|Server url"
 msgstr ""
 
-#: app/models/group.rb:-
+#: app/controllers/edit_controller.rb:-
 msgid "OpenIdAuthentication::Nonce|Timestamp"
 msgstr ""
 
@@ -4556,7 +4556,7 @@ msgstr ""
 msgid "OpenidIdentifier|User"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:279
+#: app/controllers/platform_controller.rb:280
 msgid "Operation cancelled. Please confirm to authenticate with the server."
 msgstr ""
 
@@ -4613,7 +4613,7 @@ msgid ""
 msgstr ""
 
 #: app/helpers/share_file_helper.rb:19
-#: app/views/board_entries/_form.html.erb:72
+#: app/views/board_entries/_form.html.erb:70
 msgid "Owner Only"
 msgstr ""
 
@@ -4635,8 +4635,8 @@ msgstr ""
 msgid "Password Reminder"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:304
-#: app/controllers/platform_controller.rb:309
+#: app/controllers/platform_controller.rb:305
+#: app/controllers/platform_controller.rb:310
 msgid "Password is expired. Please reset password."
 msgstr ""
 
@@ -4648,11 +4648,11 @@ msgstr ""
 msgid "Password strength"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:87
+#: app/controllers/platform_controller.rb:88
 msgid "Password was successfully reset."
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:384
+#: app/controllers/mypage_controller.rb:386
 msgid "Password was successfully updated."
 msgstr ""
 
@@ -4725,7 +4725,7 @@ msgstr ""
 msgid "Playing Sports"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:457
+#: app/controllers/mypage_controller.rb:459
 msgid "Please input OpenID URL."
 msgstr ""
 
@@ -4780,7 +4780,7 @@ msgstr ""
 msgid "Posts (Entries you have posted)"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:968
+#: app/controllers/mypage_controller.rb:970
 msgid "Posts in the groups joined"
 msgstr ""
 
@@ -4800,7 +4800,7 @@ msgstr ""
 msgid "Print"
 msgstr ""
 
-#: app/views/board_entries/_form.html.erb:66
+#: app/views/board_entries/_form.html.erb:64
 #: app/views/share_file/_form.html.erb:30
 msgid "Privacy Settings"
 msgstr ""
@@ -4815,7 +4815,7 @@ msgid_plural "Problems found in following items: "
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/controllers/mypage_controller.rb:484
+#: app/controllers/mypage_controller.rb:486
 #: app/controllers/user_layout_module.rb:4 app/views/user/show.html.erb:36
 msgid "Profile"
 msgstr ""
@@ -4943,12 +4943,12 @@ msgstr ""
 msgid "Recent Groups"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:743
+#: app/controllers/mypage_controller.rb:745
 #: app/controllers/feed_controller.rb:71
 msgid "Recent Popular Entries (excluding questions)"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:721
+#: app/controllers/mypage_controller.rb:723
 #: app/controllers/feed_controller.rb:21
 msgid "Recent Questions"
 msgstr ""
@@ -4957,7 +4957,7 @@ msgstr ""
 msgid "Recent posts in the groups joined"
 msgstr ""
 
-#: app/views/board_entries/_form.html.erb:33
+#: app/views/board_entries/_form.html.erb:31
 msgid "Recent tags of other users: "
 msgstr ""
 
@@ -4973,7 +4973,7 @@ msgstr "Recent Posted"
 msgid "Recently Registered Users"
 msgstr ""
 
-#: app/views/board_entries/_form.html.erb:32
+#: app/views/board_entries/_form.html.erb:30
 msgid "Recommended tags: "
 msgstr ""
 
@@ -5070,7 +5070,7 @@ msgstr ""
 msgid "Reset Rassword"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:183
+#: app/controllers/platform_controller.rb:184
 #: app/views/platform/reset_openid.html.erb:2
 msgid "Resetting OpenID URL"
 msgstr ""
@@ -5300,7 +5300,7 @@ msgid ""
 "set automatically)）"
 msgstr ""
 
-#: app/views/board_entries/_form.html.erb:89
+#: app/views/board_entries/_form.html.erb:87
 msgid "Send email to accessible members"
 msgstr ""
 
@@ -5323,7 +5323,7 @@ msgstr ""
 msgid "Sent Date"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:162
+#: app/controllers/platform_controller.rb:163
 msgid "Sent an email containing the URL for resettig OpenID URL to %{email}."
 msgstr ""
 
@@ -5424,7 +5424,7 @@ msgstr ""
 msgid "ShareFile|User"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:486
+#: app/controllers/mypage_controller.rb:488
 #: app/controllers/group_layout_module.rb:8
 #: app/controllers/user_layout_module.rb:6
 msgid "Shared Files"
@@ -5448,7 +5448,7 @@ msgstr ""
 msgid "Show"
 msgstr ""
 
-#: app/views/board_entries/_form.html.erb:62
+#: app/views/board_entries/_form.html.erb:60
 msgid "Show Option"
 msgstr ""
 
@@ -5601,7 +5601,7 @@ msgstr ""
 msgid "So you have the page bookmarked in %s."
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:487
+#: app/controllers/mypage_controller.rb:489
 #: app/controllers/user_layout_module.rb:7
 msgid "Socials"
 msgstr ""
@@ -5664,7 +5664,7 @@ msgstr ""
 msgid "Specified page does not exist."
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:427
+#: app/controllers/mypage_controller.rb:429
 msgid "Specified page not found."
 msgstr ""
 
@@ -5672,11 +5672,11 @@ msgstr ""
 msgid "Specified share file owner does not exist."
 msgstr ""
 
-#: app/controllers/edit_controller.rb:250
+#: app/controllers/edit_controller.rb:263
 msgid "Specified trackback was deleted successfully."
 msgstr ""
 
-#: app/views/board_entries/_form.html.erb:73
+#: app/views/board_entries/_form.html.erb:71
 #: app/views/share_file/_form.html.erb:37
 msgid "Specify Directly"
 msgstr ""
@@ -5782,7 +5782,7 @@ msgstr ""
 msgid "System Operation"
 msgstr ""
 
-#: app/views/board_entries/_form.html.erb:34
+#: app/views/board_entries/_form.html.erb:32
 msgid "System Tags (changes the behavior by applying): "
 msgstr ""
 
@@ -5791,7 +5791,7 @@ msgid "TV"
 msgstr ""
 
 #: app/views/entries/_categories_box.html.erb:7
-#: app/views/board_entries/_form.html.erb:27
+#: app/views/board_entries/_form.html.erb:25
 #: app/views/user/_social_tags.html.erb:2
 #: app/views/mypage/_record_post.html.erb:18
 #: app/views/mypage/_record_post.html.erb:43
@@ -5856,20 +5856,20 @@ msgstr ""
 msgid "The URL below will be expired 24 hours after this email has been sent."
 msgstr ""
 
-#: app/controllers/platform_controller.rb:195
+#: app/controllers/platform_controller.rb:196
 msgid "The URL for %{function} has expired."
 msgstr ""
 
-#: app/controllers/platform_controller.rb:199
+#: app/controllers/platform_controller.rb:200
 msgid ""
 "The URL for %{function} invalid. Try again or contact system administrator."
 msgstr ""
 
-#: app/controllers/platform_controller.rb:138
+#: app/controllers/platform_controller.rb:139
 msgid "The URL for registration has already expired."
 msgstr ""
 
-#: app/controllers/platform_controller.rb:93
+#: app/controllers/platform_controller.rb:94
 msgid "The URL for resetting password has already expired."
 msgstr ""
 
@@ -5892,7 +5892,7 @@ msgstr[1] ""
 msgid "The URL is invalid."
 msgstr ""
 
-#: app/views/board_entries/_form.html.erb:161
+#: app/views/board_entries/_form.html.erb:160
 msgid ""
 "The recipient(s) may not notice your message since it is missing a \"連絡\" "
 "tag. Are you sure to proceed?"
@@ -5906,7 +5906,7 @@ msgstr ""
 msgid "The search targets are titles and comments"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:423
+#: app/controllers/mypage_controller.rb:425
 msgid ""
 "The specified email address has already been registered. Try resubmitting "
 "the request with another address."
@@ -6008,7 +6008,7 @@ msgstr ""
 msgid "Time Last Updated: "
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:243
+#: app/controllers/mypage_controller.rb:245
 msgid "Timeout to loading rss."
 msgstr ""
 
@@ -6016,7 +6016,7 @@ msgstr ""
 msgid "Tips for using bookmarklet"
 msgstr ""
 
-#: app/views/board_entries/_form.html.erb:41
+#: app/views/board_entries/_form.html.erb:39
 #: app/views/bookmarks/index.html.erb:13
 #: app/views/mypage/_record_mail.html.erb:27
 #: app/views/mypage/_record_post.html.erb:44
@@ -6061,7 +6061,7 @@ msgstr ""
 msgid "Top 10 tags: "
 msgstr ""
 
-#: app/views/board_entries/_form.html.erb:98
+#: app/views/board_entries/_form.html.erb:96
 msgid "Topic Entry"
 msgstr ""
 
@@ -6184,7 +6184,11 @@ msgstr ""
 msgid "Update complete."
 msgstr ""
 
-#: app/controllers/edit_controller.rb:166
+#: app/controllers/edit_controller.rb:248
+msgid "Update on the same entry from other users detected. Please try again."
+msgstr ""
+
+#: app/controllers/edit_controller.rb:216
 msgid "Update on the same entry from other users detected. Reset the edit?"
 msgstr ""
 
@@ -6192,11 +6196,11 @@ msgstr ""
 msgid "Updated %{count} records."
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:374
+#: app/controllers/mypage_controller.rb:376
 msgid "Updated notification email settings."
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:467
+#: app/controllers/mypage_controller.rb:469
 msgid "Updated successfully."
 msgstr ""
 
@@ -6269,12 +6273,12 @@ msgstr ""
 msgid "User does not exist."
 msgstr ""
 
-#: app/controllers/platform_controller.rb:72
+#: app/controllers/platform_controller.rb:73
 msgid ""
 "User has entered email address %s is not in use. Please start with the site."
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:353
+#: app/controllers/mypage_controller.rb:355
 msgid "User information was successfully updated."
 msgstr ""
 
@@ -6291,7 +6295,7 @@ msgstr ""
 msgid "User profile master isn't assosiated"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:130
+#: app/controllers/platform_controller.rb:131
 msgid "User registration"
 msgstr ""
 
@@ -6307,7 +6311,7 @@ msgstr ""
 msgid "User was successfuly deleted."
 msgstr ""
 
-#: app/controllers/platform_controller.rb:165
+#: app/controllers/platform_controller.rb:166
 msgid ""
 "User with email address %{email} has not activated the account. The account "
 "has to be activated first."
@@ -6374,19 +6378,11 @@ msgid "UserOauthAccess|App name"
 msgstr ""
 
 #: app/models/user_oauth_access.rb:-
-msgid "UserOauthAccess|Created at"
-msgstr ""
-
-#: app/models/user_oauth_access.rb:-
 msgid "UserOauthAccess|Secret"
 msgstr ""
 
 #: app/models/user_oauth_access.rb:-
 msgid "UserOauthAccess|Token"
-msgstr ""
-
-#: app/models/user_oauth_access.rb:-
-msgid "UserOauthAccess|Updated at"
 msgstr ""
 
 #: app/models/user_oauth_access.rb:-
@@ -6774,7 +6770,7 @@ msgstr "W"
 msgid "Welcome to [%s]!"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:661
+#: app/controllers/mypage_controller.rb:663
 msgid "Welcome! Read detailed help."
 msgstr ""
 
@@ -6819,7 +6815,7 @@ msgstr ""
 msgid "Within a minute"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:267
+#: app/controllers/edit_controller.rb:280
 msgid "Write"
 msgstr ""
 
@@ -6876,7 +6872,7 @@ msgstr ""
 msgid "You are not allowed to see the page."
 msgstr ""
 
-#: app/controllers/platform_controller.rb:47
+#: app/controllers/platform_controller.rb:48
 msgid "You are now logged out."
 msgstr ""
 
@@ -6936,7 +6932,7 @@ msgstr ""
 msgid "You cannot delete user who is not unused."
 msgstr ""
 
-#: app/controllers/platform_controller.rb:48
+#: app/controllers/platform_controller.rb:49
 msgid "You had been retired."
 msgstr ""
 
@@ -7006,13 +7002,13 @@ msgstr ""
 msgid "Your registration is complete."
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:402
+#: app/controllers/mypage_controller.rb:404
 msgid ""
 "Your request of changing email address accepted. Check your email to "
 "complete the process."
 msgstr ""
 
-#: app/views/board_entries/_form.html.erb:31
+#: app/views/board_entries/_form.html.erb:29
 msgid "Your tags: "
 msgstr ""
 
@@ -7266,7 +7262,7 @@ msgstr ""
 msgid "[See preview]"
 msgstr ""
 
-#: app/views/board_entries/_form.html.erb:55
+#: app/views/board_entries/_form.html.erb:53
 #: app/views/share_file/_form.html.erb:18
 msgid "[Set current time]"
 msgstr ""
@@ -7531,7 +7527,7 @@ msgstr ""
 msgid "more"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:311
+#: app/controllers/edit_controller.rb:321
 msgid "needs to be a valid date."
 msgstr ""
 
@@ -7555,11 +7551,11 @@ msgstr ""
 msgid "oauth provider"
 msgstr ""
 
-#: app/models/group.rb:-
+#: app/controllers/edit_controller.rb:-
 msgid "open id authentication association"
 msgstr ""
 
-#: app/models/group.rb:-
+#: app/controllers/edit_controller.rb:-
 msgid "open id authentication nonce"
 msgstr ""
 
@@ -7572,11 +7568,11 @@ msgstr ""
 msgid "openid identifier"
 msgstr ""
 
-#: app/models/group.rb:-
+#: app/controllers/edit_controller.rb:-
 msgid "openidauthentication::association"
 msgstr ""
 
-#: app/models/group.rb:-
+#: app/controllers/edit_controller.rb:-
 msgid "openidauthentication::nonce"
 msgstr ""
 
@@ -7629,8 +7625,8 @@ msgstr ""
 msgid "requires proper format."
 msgstr ""
 
-#: app/controllers/platform_controller.rb:195
-#: app/controllers/platform_controller.rb:199
+#: app/controllers/platform_controller.rb:196
+#: app/controllers/platform_controller.rb:200
 msgid "resetting OpenID URL"
 msgstr ""
 

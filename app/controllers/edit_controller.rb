@@ -221,14 +221,33 @@ class EditController < ApplicationController
   # post_action
   def destroy
     @board_entry = get_entry params[:id]
+
     # 権限チェック
     redirect_to_with_deny_auth and return unless authorize_to_edit_board_entry? @board_entry
+
+    # TODO Rails2.3.2のバグ? Rails本体で修正されたらコードを修正する
+    # 下記のように定義されている場合
+    # class BoardEntry < ActiveRecord::Base
+    #   has_many :board_entry_comments, :dependent => :destroy
+    # class BoardEntryComment < ActiveRecord::Base
+    #   belongs_to :board_entry, :counter_cache => true
+    # board_entry_commentsが存在する状態でboard_entryをdestoryしようとすると
+    # board_entry_commentsが消される際にcounter_cacheによりboard_entryが更新されてlock_versionが上がってしまう。
+    # そのため、board_entryをdestoryするタイミングのレコードオブジェクトのlock_versionとDB内のlock_versionが異なって
+    # しまうため常にStaleObjectErrorが発生してしまうようだ。おそらくRails2.3.2のバグと思われる。
+    # Railsのバージョンアップにより根本対応されるまでは自前でboard_entry_commentsを消すようにして回避する
+    @board_entry.board_entry_comments.destroy_all
+    @board_entry.reload
 
     @board_entry.destroy
     flash[:notice] = _('Deletion complete.')
     # そのユーザのブログ一覧画面に遷移する
     # TODO: この部分をメソッド化した方がいいかも(by mat_aki)
     redirect_to @board_entry.get_url_hash.delete_if{|key,val| key == :entry_id}
+  rescue ActiveRecord::StaleObjectError => e
+    flash[:warn] = _("Update on the same entry from other users detected. Please try again.")
+    setup_layout @board_entry
+    redirect_to url_for(:action => 'edit', :id => @board_entry)
   end
 
   def delete_trackback

@@ -75,7 +75,7 @@ describe EditController, "#destroy" do
 
     @board_entry = stub_model(BoardEntry, :id => 2, :user_id => 2, :entry_type => "DIARY", :symbol => 'uid:skip')
     @board_entry.should_receive(:destroy).and_return(@board_entry)
-    BoardEntry.should_receive(:find).and_return(@board_entry)
+    BoardEntry.stub(:find).and_return(@board_entry)
 
     @url = @board_entry.get_url_hash.delete_if{|key,val| key == :entry_id}
 
