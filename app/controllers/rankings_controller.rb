@@ -111,7 +111,8 @@ class RankingsController < ApplicationController
 
   # ajax_action
   def ado_statistics_history
-    date = Date.new(params[:year].to_i, params[:month].to_i)
+    # parse出来ないケースで例外を起こして現在時刻を設定するため
+    date = Time.parse("#{params[:year]}/#{params[:month]}", 0) rescue Time.now
     if params[:type] == "monthly"
       site_counts = SiteCount.find(:all,
                                    :conditions => ["DATE_FORMAT(created_on, '%Y-%m') = ?", date.strftime('%Y-%m')])
