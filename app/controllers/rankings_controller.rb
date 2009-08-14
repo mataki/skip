@@ -111,19 +111,20 @@ class RankingsController < ApplicationController
 
   # ajax_action
   def ado_statistics_history
-    date = Date.new(params[:year].to_i, params[:month].to_i)
-    if params[:type] == "monthly"
-      site_counts = SiteCount.find(:all,
-                                   :conditions => ["DATE_FORMAT(created_on, '%Y-%m') = ?", date.strftime('%Y-%m')])
-      values = site_counts.map { |site_count| site_count[params[:category]] }
-      render :partial => 'monthly_history',
-             :locals => { :site_counts => site_counts,
-                          :category => params[:category],
-                          :date => date,
-                          :max_value => values.max,
-                          :min_value => values.min },
-             :layout => false
+    unless SiteCount::STATISTICS_KEYS.include? params[:category]
+      return head(:bad_request)
     end
+    # parse出来ないケースで例外を起こして現在時刻を設定するため
+    date = Time.parse("#{params[:year]}/#{params[:month]}", 0) rescue Time.now
+    site_counts = SiteCount.all :conditions => ["DATE_FORMAT(created_on, '%Y-%m') = ?", date.strftime('%Y-%m')]
+    values = site_counts.map { |site_count| site_count[params[:category]] }
+    render :partial => 'monthly_history',
+           :locals => { :site_counts => site_counts,
+                        :category => params[:category],
+                        :date => date,
+                        :max_value => values.max,
+                        :min_value => values.min },
+           :layout => false
   end
 
   def bookmark
