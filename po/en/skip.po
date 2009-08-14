@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-08-14 12:10+0900\n"
+"POT-Creation-Date: 2009-08-14 17:28+0900\n"
 "PO-Revision-Date: 2009-06-29 13:31+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -72,13 +72,13 @@ msgstr ""
 msgid "%c - "
 msgstr ""
 
-#: app/views/rankings/_current_statistics.html.erb:31
+#: app/views/rankings/_current_statistics.html.erb:8
 msgid "%m/%Y"
 msgstr ""
 
 #: app/views/share_file/_share_file_box.html.erb:30
 #: app/views/search/entry_search.html.erb:32
-#: app/views/rankings/_current_statistics.html.erb:24
+#: app/views/rankings/_current_statistics.html.erb:1
 msgid "%m/%d/%Y %H:%M"
 msgstr ""
 
@@ -90,7 +90,7 @@ msgstr ""
 msgid "%s Required"
 msgstr ""
 
-#: app/controllers/group_controller.rb:334
+#: app/controllers/group_controller.rb:336
 msgid "%s has already joined / applied to join this group."
 msgstr ""
 
@@ -114,7 +114,7 @@ msgstr ""
 msgid "%s<br/>We apologize for the inconvenience caused.<br/>"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:280
+#: app/controllers/edit_controller.rb:271
 msgid "%{action} %{write_place}"
 msgstr ""
 
@@ -159,7 +159,7 @@ msgstr ""
 msgid "%{function} currently unavailable."
 msgstr ""
 
-#: app/views/rankings/_current_statistics.html.erb:31
+#: app/views/rankings/_current_statistics.html.erb:8
 msgid "%{icon} Show history of %{time}"
 msgstr ""
 
@@ -226,7 +226,7 @@ msgid_plural "%{num} errors occured."
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/controllers/group_controller.rb:284
+#: app/controllers/group_controller.rb:286
 msgid "%{rslt} to %{type}."
 msgstr "%{type}%{rslt}。"
 
@@ -298,7 +298,7 @@ msgstr ""
 msgid "(Will open as a new window)"
 msgstr ""
 
-#: lib/skip_default_data.rb:27
+#: lib/skip_default_data.rb:34
 msgid "(optional)"
 msgstr ""
 
@@ -578,11 +578,11 @@ msgstr ""
 msgid "Add to antenna"
 msgstr ""
 
-#: app/controllers/group_controller.rb:338
+#: app/controllers/group_controller.rb:340
 msgid "Added %s as a member and created a BBS for messaging."
 msgstr ""
 
-#: app/controllers/group_controller.rb:347
+#: app/controllers/group_controller.rb:349
 msgid ""
 "Added members of %s as members of the group and created a BBS for messaging."
 msgstr ""
@@ -1711,7 +1711,7 @@ msgstr ""
 msgid "Administration of the site."
 msgstr ""
 
-#: app/controllers/group_controller.rb:396
+#: app/controllers/group_controller.rb:398
 msgid "Administrative privillage required for the action."
 msgstr ""
 
@@ -1757,7 +1757,7 @@ msgstr ""
 msgid "All changes will be discarded. Are you sure to proceed?"
 msgstr ""
 
-#: lib/skip_default_data.rb:32
+#: lib/skip_default_data.rb:39
 msgid "Alma Mater"
 msgstr ""
 
@@ -1888,7 +1888,7 @@ msgstr ""
 msgid "Approve Member"
 msgstr ""
 
-#: lib/skip_default_data.rb:32
+#: lib/skip_default_data.rb:39
 msgid ""
 "Approximate location (xx District) is just fine (for finding your neighbors)."
 msgstr ""
@@ -1952,7 +1952,7 @@ msgstr ""
 msgid "Avalilable share files"
 msgstr ""
 
-#: app/views/rankings/_current_statistics.html.erb:20
+#: app/models/site_count.rb:46
 msgid "Average access during the recent month"
 msgstr ""
 
@@ -1984,7 +1984,7 @@ msgstr ""
 msgid "Basic Info"
 msgstr ""
 
-#: lib/skip_default_data.rb:23
+#: lib/skip_default_data.rb:30
 msgid "Basic Information"
 msgstr ""
 
@@ -2149,7 +2149,7 @@ msgstr ""
 msgid "BoardEntry|User entry no"
 msgstr ""
 
-#: lib/skip_default_data.rb:16
+#: lib/skip_default_data.rb:23
 msgid "Book Review"
 msgstr ""
 
@@ -2303,7 +2303,7 @@ msgstr ""
 msgid "Bookmark|Url"
 msgstr ""
 
-#: lib/skip_default_data.rb:19
+#: lib/skip_default_data.rb:26
 msgid "Business"
 msgstr ""
 
@@ -2397,7 +2397,7 @@ msgstr ""
 msgid "Change your profile picture!"
 msgstr ""
 
-#: app/controllers/group_controller.rb:223
+#: app/controllers/group_controller.rb:225
 msgid "Changed."
 msgstr ""
 
@@ -2452,7 +2452,7 @@ msgstr ""
 msgid "Closed"
 msgstr ""
 
-#: lib/skip_default_data.rb:43
+#: lib/skip_default_data.rb:59
 msgid "Comics"
 msgstr ""
 
@@ -2485,9 +2485,8 @@ msgstr[1] ""
 #: app/views/mypage/_manage_antenna.html.erb:100
 #: app/views/mypage/_manage_antenna.html.erb:189
 #: app/views/mypage/_manage_antenna.html.erb:226
-#: app/views/rankings/_current_statistics.html.erb:50
+#: app/views/rankings/_current_statistics.html.erb:37
 #: app/views/rankings/_monthly_history.html.erb:50
-#: app/views/rankings/_monthly_history.html.erb:72
 msgid "Communication failure."
 msgstr ""
 
@@ -2512,7 +2511,7 @@ msgstr ""
 msgid "Contact Address: "
 msgstr ""
 
-#: lib/skip_default_data.rb:24
+#: lib/skip_default_data.rb:31
 msgid "Contact Information"
 msgstr ""
 
@@ -2534,11 +2533,11 @@ msgid ""
 "page&quot;."
 msgstr ""
 
-#: lib/skip_default_data.rb:43
+#: lib/skip_default_data.rb:59
 msgid "Cooking"
 msgstr ""
 
-#: lib/skip_default_data.rb:43
+#: lib/skip_default_data.rb:59
 msgid "Cosmetics"
 msgstr ""
 
@@ -2592,7 +2591,7 @@ msgstr ""
 msgid "Create new anntenna and add: "
 msgstr ""
 
-#: app/controllers/group_controller.rb:253
+#: app/controllers/group_controller.rb:255
 msgid ""
 "Created an entry on the BBS about the removal of user. Edit the entry when "
 "needed."
@@ -2661,7 +2660,7 @@ msgstr ""
 msgid "Date Accessed"
 msgstr ""
 
-#: lib/skip_default_data.rb:30
+#: lib/skip_default_data.rb:37
 msgid "Date of Birth"
 msgstr ""
 
@@ -2699,7 +2698,7 @@ msgid "Delete all the groups under the group category before you delete it."
 msgstr ""
 
 #: app/controllers/admin/group_categories_controller.rb:28
-#: app/controllers/edit_controller.rb:243
+#: app/controllers/edit_controller.rb:234
 msgid "Deletion complete."
 msgstr ""
 
@@ -2731,7 +2730,7 @@ msgstr ""
 msgid "Development"
 msgstr ""
 
-#: lib/skip_default_data.rb:16
+#: lib/skip_default_data.rb:23
 msgid "Diary"
 msgstr ""
 
@@ -2775,15 +2774,15 @@ msgstr ""
 msgid "Downloads: %s"
 msgstr ""
 
-#: lib/skip_default_data.rb:43
+#: lib/skip_default_data.rb:59
 msgid "Drinking"
 msgstr ""
 
-#: lib/skip_default_data.rb:43
+#: lib/skip_default_data.rb:59
 msgid "Driving"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:280
+#: app/controllers/edit_controller.rb:271
 #: app/views/entries/_entry_detail.html.erb:221
 #: app/views/board_entries/_board_entry_comment.html.erb:14
 #: app/views/user/show.html.erb:39 app/views/admin/pictures/index.html.erb:27
@@ -2891,7 +2890,7 @@ msgstr ""
 msgid "End Monta"
 msgstr ""
 
-#: lib/skip_default_data.rb:43
+#: lib/skip_default_data.rb:59
 msgid "Enrichment Lessons"
 msgstr ""
 
@@ -3036,15 +3035,15 @@ msgstr ""
 msgid "Explanation"
 msgstr ""
 
-#: app/controllers/group_controller.rb:284
+#: app/controllers/group_controller.rb:286
 msgid "Failed"
 msgstr "に失敗しました"
 
-#: app/controllers/group_controller.rb:225
+#: app/controllers/group_controller.rb:227
 msgid "Failed to change status."
 msgstr ""
 
-#: app/controllers/group_controller.rb:304
+#: app/controllers/group_controller.rb:306
 msgid "Failed to delete since there are still other users in the group."
 msgstr ""
 
@@ -3097,7 +3096,7 @@ msgid_plural "Failures:%{failure}]"
 msgstr[0] ""
 msgstr[1] ""
 
-#: lib/skip_default_data.rb:43
+#: lib/skip_default_data.rb:59
 msgid "Fashion"
 msgstr ""
 
@@ -3105,7 +3104,7 @@ msgstr ""
 msgid "February"
 msgstr ""
 
-#: lib/skip_default_data.rb:39
+#: lib/skip_default_data.rb:55
 msgid "Female"
 msgstr ""
 
@@ -3186,7 +3185,7 @@ msgstr ""
 msgid "Footprints"
 msgstr ""
 
-#: lib/skip_default_data.rb:19
+#: lib/skip_default_data.rb:26
 msgid "For business usage such as project management etc."
 msgstr ""
 
@@ -3194,7 +3193,7 @@ msgstr ""
 msgid "For detailed help see "
 msgstr ""
 
-#: lib/skip_default_data.rb:20
+#: lib/skip_default_data.rb:27
 msgid "For off-time activeties."
 msgstr ""
 
@@ -3227,11 +3226,11 @@ msgstr ""
 msgid "Functional Settings"
 msgstr ""
 
-#: lib/skip_default_data.rb:43
+#: lib/skip_default_data.rb:59
 msgid "Gamble"
 msgstr ""
 
-#: lib/skip_default_data.rb:43
+#: lib/skip_default_data.rb:59
 msgid "Games"
 msgstr ""
 
@@ -3239,7 +3238,7 @@ msgstr ""
 msgid "Get an account"
 msgstr ""
 
-#: lib/skip_default_data.rb:43
+#: lib/skip_default_data.rb:59
 msgid "Gourmet"
 msgstr ""
 
@@ -3259,7 +3258,7 @@ msgstr ""
 msgid "Group does not exist."
 msgstr ""
 
-#: app/controllers/group_controller.rb:295
+#: app/controllers/group_controller.rb:297
 msgid "Group information was successfully updated."
 msgstr ""
 
@@ -3267,7 +3266,7 @@ msgstr ""
 msgid "Group was created successfully."
 msgstr ""
 
-#: app/controllers/group_controller.rb:308
+#: app/controllers/group_controller.rb:310
 msgid "Group was successfully deleted."
 msgstr ""
 
@@ -3307,7 +3306,7 @@ msgstr ""
 msgid "GroupCategory|Updated at"
 msgstr ""
 
-#: app/controllers/group_controller.rb:264
+#: app/controllers/group_controller.rb:266
 msgid "GroupController|Approve"
 msgstr ""
 
@@ -3319,7 +3318,7 @@ msgstr ""
 msgid "GroupController|ApproveSuceeded"
 msgstr ""
 
-#: app/controllers/group_controller.rb:264
+#: app/controllers/group_controller.rb:266
 msgid "GroupController|Disapprove"
 msgstr ""
 
@@ -3385,9 +3384,9 @@ msgstr ""
 
 #: app/controllers/groups_controller.rb:65
 #: app/controllers/services_controller.rb:46
-#: app/controllers/group_controller.rb:370
+#: app/controllers/group_controller.rb:372
 #: app/controllers/share_file_controller.rb:161
-#: app/controllers/edit_controller.rb:279 config/environment.rb:85
+#: app/controllers/edit_controller.rb:270 config/environment.rb:85
 msgid "Groups"
 msgstr ""
 
@@ -3500,7 +3499,7 @@ msgstr ""
 msgid "History of Entries"
 msgstr ""
 
-#: lib/skip_default_data.rb:33
+#: lib/skip_default_data.rb:40
 msgid "Hobbies"
 msgstr ""
 
@@ -3509,7 +3508,7 @@ msgstr ""
 msgid "Home"
 msgstr ""
 
-#: lib/skip_default_data.rb:31
+#: lib/skip_default_data.rb:38
 msgid "Hometown"
 msgstr ""
 
@@ -3552,11 +3551,11 @@ msgstr ""
 msgid "Impression of other users"
 msgstr ""
 
-#: app/models/user_search_condition.rb:33
+#: app/models/user_search_condition.rb:35
 msgid "Including Administrators"
 msgstr ""
 
-#: app/views/rankings/_current_statistics.html.erb:24
+#: app/views/rankings/_current_statistics.html.erb:1
 msgid "Index values as of [%s]"
 msgstr ""
 
@@ -3607,7 +3606,7 @@ msgid "Internal error(s) occured. Contact administrator."
 msgstr ""
 
 #: app/views/bookmarks/index.html.erb:26 app/views/bookmark/list.html.erb:18
-#: lib/skip_default_data.rb:43
+#: lib/skip_default_data.rb:59
 msgid "Internet"
 msgstr ""
 
@@ -3615,7 +3614,7 @@ msgstr ""
 msgid "Introduce %s to others!"
 msgstr ""
 
-#: lib/skip_default_data.rb:34
+#: lib/skip_default_data.rb:41
 msgid "Introduction"
 msgstr ""
 
@@ -3684,7 +3683,7 @@ msgid "Invalid parameter(s) found."
 msgstr ""
 
 #: app/controllers/share_file_controller.rb:278
-#: app/controllers/edit_controller.rb:299
+#: app/controllers/edit_controller.rb:290
 msgid "Invalid parameter(s)."
 msgstr ""
 
@@ -3692,8 +3691,8 @@ msgstr ""
 msgid "Invalid password reset URL. Try again or contact system administrator."
 msgstr ""
 
-#: app/controllers/edit_controller.rb:309
-#: app/controllers/edit_controller.rb:315
+#: app/controllers/edit_controller.rb:300
+#: app/controllers/edit_controller.rb:306
 msgid "Invalid privacy setting."
 msgstr ""
 
@@ -3756,7 +3755,7 @@ msgstr ""
 msgid "Join this group"
 msgstr ""
 
-#: app/controllers/group_controller.rb:169
+#: app/controllers/group_controller.rb:171
 msgid "Joined the group successfully."
 msgstr ""
 
@@ -3772,7 +3771,7 @@ msgstr ""
 msgid "June"
 msgstr ""
 
-#: lib/skip_default_data.rb:43
+#: lib/skip_default_data.rb:59
 msgid "Karaoke"
 msgstr ""
 
@@ -3801,7 +3800,7 @@ msgstr ""
 msgid "Last page"
 msgstr ""
 
-#: app/controllers/group_controller.rb:241
+#: app/controllers/group_controller.rb:243
 msgid "Leave [%s]"
 msgstr ""
 
@@ -3821,7 +3820,7 @@ msgstr ""
 msgid "Line"
 msgstr ""
 
-#: lib/skip_default_data.rb:43
+#: lib/skip_default_data.rb:59
 msgid "Linguistics"
 msgstr ""
 
@@ -3829,7 +3828,7 @@ msgstr ""
 msgid "List"
 msgstr ""
 
-#: app/models/user_search_condition.rb:45
+#: app/models/user_search_condition.rb:47
 msgid "List View"
 msgstr ""
 
@@ -4026,7 +4025,7 @@ msgid ""
 "if you are not sure what to use for it."
 msgstr ""
 
-#: lib/skip_default_data.rb:39
+#: lib/skip_default_data.rb:55
 msgid "Male"
 msgstr ""
 
@@ -4066,7 +4065,7 @@ msgstr ""
 msgid "Members List"
 msgstr ""
 
-#: app/helpers/share_file_helper.rb:19 app/models/user_search_condition.rb:32
+#: app/helpers/share_file_helper.rb:19 app/models/user_search_condition.rb:34
 #: app/views/board_entries/_form.html.erb:70 app/views/group/_form.html.erb:51
 msgid "Members Only"
 msgstr ""
@@ -4126,7 +4125,7 @@ msgstr "M"
 msgid "Monthly List"
 msgstr ""
 
-#: app/controllers/rankings_controller.rb:162
+#: app/controllers/rankings_controller.rb:160
 msgid "Monthly Rankings"
 msgstr ""
 
@@ -4157,7 +4156,7 @@ msgstr "%s from other users' view"
 msgid "Multiple values can be given in foo,bar format"
 msgstr ""
 
-#: lib/skip_default_data.rb:43
+#: lib/skip_default_data.rb:59
 msgid "Music Appreciation"
 msgstr ""
 
@@ -4165,7 +4164,7 @@ msgstr ""
 msgid "My Account"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:279
+#: app/controllers/edit_controller.rb:270
 msgid "My Blog"
 msgstr ""
 
@@ -4278,7 +4277,7 @@ msgstr ""
 msgid "New users from CSV"
 msgstr ""
 
-#: lib/skip_default_data.rb:16
+#: lib/skip_default_data.rb:23
 msgid "News"
 msgstr ""
 
@@ -4295,7 +4294,7 @@ msgid "No"
 msgstr ""
 
 #: app/controllers/group_controller.rb:146
-#: app/controllers/group_controller.rb:261
+#: app/controllers/group_controller.rb:263
 msgid "No approval needed to join this group."
 msgstr ""
 
@@ -4303,7 +4302,7 @@ msgstr ""
 msgid "No bookmarks have been registered."
 msgstr ""
 
-#: app/controllers/rankings_controller.rb:154
+#: app/controllers/rankings_controller.rb:152
 msgid "No matched bookmark."
 msgstr ""
 
@@ -4354,7 +4353,7 @@ msgstr ""
 msgid "Nonexistent or empty files are not accepted for uploading."
 msgstr ""
 
-#: app/models/user_search_condition.rb:44
+#: app/models/user_search_condition.rb:46
 msgid "Normal View"
 msgstr ""
 
@@ -4429,11 +4428,11 @@ msgstr ""
 msgid "October"
 msgstr ""
 
-#: lib/skip_default_data.rb:16
+#: lib/skip_default_data.rb:23
 msgid "Off Time"
 msgstr ""
 
-#: lib/skip_default_data.rb:20
+#: lib/skip_default_data.rb:27
 msgid "Off-time"
 msgstr ""
 
@@ -4488,39 +4487,39 @@ msgstr ""
 msgid "OpenId process is cancelled or failed."
 msgstr ""
 
-#: app/controllers/edit_controller.rb:-
+#: app/models/group.rb:-
 msgid "OpenIdAuthentication::Association|Assoc type"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:-
+#: app/models/group.rb:-
 msgid "OpenIdAuthentication::Association|Handle"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:-
+#: app/models/group.rb:-
 msgid "OpenIdAuthentication::Association|Issued"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:-
+#: app/models/group.rb:-
 msgid "OpenIdAuthentication::Association|Lifetime"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:-
+#: app/models/group.rb:-
 msgid "OpenIdAuthentication::Association|Secret"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:-
+#: app/models/group.rb:-
 msgid "OpenIdAuthentication::Association|Server url"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:-
+#: app/models/group.rb:-
 msgid "OpenIdAuthentication::Nonce|Salt"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:-
+#: app/models/group.rb:-
 msgid "OpenIdAuthentication::Nonce|Server url"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:-
+#: app/models/group.rb:-
 msgid "OpenIdAuthentication::Nonce|Timestamp"
 msgstr ""
 
@@ -4577,7 +4576,7 @@ msgid ""
 "the problem persists."
 msgstr ""
 
-#: lib/skip_default_data.rb:27
+#: lib/skip_default_data.rb:34
 msgid "Other Information"
 msgstr ""
 
@@ -4593,7 +4592,7 @@ msgstr ""
 msgid "Other than [Requests for participation]"
 msgstr ""
 
-#: lib/skip_default_data.rb:43
+#: lib/skip_default_data.rb:59
 msgid "Outdoor"
 msgstr ""
 
@@ -4601,7 +4600,7 @@ msgstr ""
 msgid "Output Format"
 msgstr ""
 
-#: app/controllers/rankings_controller.rb:163
+#: app/controllers/rankings_controller.rb:161
 #: app/views/rankings/all.html.erb:4
 msgid "Overall Rankings"
 msgstr ""
@@ -4621,7 +4620,7 @@ msgstr ""
 msgid "Parent comment could not be found. Try reloading the page."
 msgstr ""
 
-#: app/controllers/group_controller.rb:272
+#: app/controllers/group_controller.rb:274
 msgid "Part of the users are already members of this group."
 msgstr ""
 
@@ -4672,7 +4671,7 @@ msgstr ""
 msgid "Periodic password change"
 msgstr ""
 
-#: lib/skip_default_data.rb:43
+#: lib/skip_default_data.rb:59
 msgid "Pets"
 msgstr ""
 
@@ -4721,7 +4720,7 @@ msgstr ""
 msgid "Picture|User"
 msgstr ""
 
-#: lib/skip_default_data.rb:43
+#: lib/skip_default_data.rb:59
 msgid "Playing Sports"
 msgstr ""
 
@@ -4738,7 +4737,7 @@ msgstr ""
 msgid "Please input valid user or group"
 msgstr ""
 
-#: app/controllers/rankings_controller.rb:164
+#: app/controllers/rankings_controller.rb:162
 msgid "Popular Bookmarks"
 msgstr ""
 
@@ -4772,7 +4771,7 @@ msgstr ""
 msgid "Post"
 msgstr ""
 
-#: app/views/rankings/_current_statistics.html.erb:17
+#: app/models/site_count.rb:41
 msgid "Posted entries or comments during the recent month"
 msgstr ""
 
@@ -4887,7 +4886,7 @@ msgstr ""
 msgid "Ranking of Popular Users"
 msgstr ""
 
-#: app/controllers/rankings_controller.rb:160 config/environment.rb:97
+#: app/controllers/rankings_controller.rb:158 config/environment.rb:97
 msgid "Rankings"
 msgstr ""
 
@@ -4931,7 +4930,7 @@ msgstr ""
 msgid "Reacquire the title"
 msgstr ""
 
-#: lib/skip_default_data.rb:43
+#: lib/skip_default_data.rb:59
 msgid "Reading"
 msgstr ""
 
@@ -4995,7 +4994,7 @@ msgstr ""
 msgid "Register your profile and start using SKIP"
 msgstr ""
 
-#: app/views/rankings/_current_statistics.html.erb:4
+#: app/models/site_count.rb:21
 msgid "Registered Users"
 msgstr ""
 
@@ -5037,7 +5036,7 @@ msgstr ""
 msgid "Remember to clean up the user data periodically"
 msgstr ""
 
-#: app/controllers/group_controller.rb:242
+#: app/controllers/group_controller.rb:244
 msgid "Removed %{user} from [%{group}>]"
 msgstr ""
 
@@ -5046,7 +5045,7 @@ msgstr ""
 msgid "Reply to this comment"
 msgstr ""
 
-#: app/controllers/group_controller.rb:166
+#: app/controllers/group_controller.rb:168
 msgid "Request sent. Please wait for the approval."
 msgstr ""
 
@@ -5058,7 +5057,7 @@ msgstr ""
 msgid "Request to Join the Group from %s"
 msgstr ""
 
-#: app/controllers/group_controller.rb:177
+#: app/controllers/group_controller.rb:179
 msgid "Request to join the group has been sent out!"
 msgstr ""
 
@@ -5271,7 +5270,7 @@ msgstr ""
 msgid "Self Admin"
 msgstr ""
 
-#: lib/skip_default_data.rb:25
+#: lib/skip_default_data.rb:32
 msgid "Self Introduction"
 msgstr ""
 
@@ -5348,7 +5347,7 @@ msgstr "Sys Admin"
 msgid "Settings were saved successfully."
 msgstr ""
 
-#: lib/skip_default_data.rb:28
+#: lib/skip_default_data.rb:35
 msgid "Sex"
 msgstr ""
 
@@ -5434,7 +5433,7 @@ msgstr ""
 msgid "Shared Files Settings"
 msgstr ""
 
-#: lib/skip_default_data.rb:43
+#: lib/skip_default_data.rb:59
 msgid "Shopping"
 msgstr ""
 
@@ -5529,7 +5528,7 @@ msgstr ""
 msgid "Signup"
 msgstr ""
 
-#: app/controllers/rankings_controller.rb:165
+#: app/controllers/rankings_controller.rb:163
 msgid "Site Information"
 msgstr ""
 
@@ -5585,7 +5584,7 @@ msgstr ""
 msgid "SiteCount|Writer at month"
 msgstr ""
 
-#: lib/skip_default_data.rb:43
+#: lib/skip_default_data.rb:59
 msgid "Sleeping"
 msgstr ""
 
@@ -5610,7 +5609,7 @@ msgstr ""
 msgid "Sort by"
 msgstr ""
 
-#: app/models/user_search_condition.rb:38
+#: app/models/user_search_condition.rb:40
 msgid "Sort by %s"
 msgstr ""
 
@@ -5640,7 +5639,7 @@ msgstr ""
 msgid "Sort by Upload Dates"
 msgstr ""
 
-#: app/models/user_search_condition.rb:37
+#: app/models/user_search_condition.rb:39
 msgid "Sort by last login"
 msgstr ""
 
@@ -5648,11 +5647,11 @@ msgstr ""
 msgid "Sort by number of users"
 msgstr ""
 
-#: app/models/user_search_condition.rb:39
+#: app/models/user_search_condition.rb:41
 msgid "Sort by user name"
 msgstr ""
 
-#: app/controllers/group_controller.rb:387
+#: app/controllers/group_controller.rb:389
 msgid "Specified group does not exist."
 msgstr ""
 
@@ -5672,7 +5671,7 @@ msgstr ""
 msgid "Specified share file owner does not exist."
 msgstr ""
 
-#: app/controllers/edit_controller.rb:263
+#: app/controllers/edit_controller.rb:254
 msgid "Specified trackback was deleted successfully."
 msgstr ""
 
@@ -5709,7 +5708,7 @@ msgstr ""
 msgid "Stop"
 msgstr ""
 
-#: lib/skip_default_data.rb:16
+#: lib/skip_default_data.rb:23
 msgid "Story"
 msgstr ""
 
@@ -5729,7 +5728,7 @@ msgstr ""
 msgid "Subwindow"
 msgstr ""
 
-#: app/controllers/group_controller.rb:284
+#: app/controllers/group_controller.rb:286
 msgid "Succeeded"
 msgstr ""
 
@@ -5741,7 +5740,7 @@ msgstr ""
 msgid "Successfully added/updated users from CSV file."
 msgstr ""
 
-#: app/controllers/group_controller.rb:206
+#: app/controllers/group_controller.rb:208
 msgid "Successfully left the group."
 msgstr ""
 
@@ -5786,7 +5785,7 @@ msgstr ""
 msgid "System Tags (changes the behavior by applying): "
 msgstr ""
 
-#: lib/skip_default_data.rb:43
+#: lib/skip_default_data.rb:59
 msgid "TV"
 msgstr ""
 
@@ -5845,7 +5844,7 @@ msgstr ""
 msgid "Taro Yamada"
 msgstr ""
 
-#: lib/skip_default_data.rb:34
+#: lib/skip_default_data.rb:41
 msgid ""
 "Tell us a little about you in the day off, e.g. the details of your hobbies "
 "or how you spend your holidays."
@@ -6032,7 +6031,7 @@ msgstr ""
 msgid "To be activated"
 msgstr ""
 
-#: app/views/rankings/_current_statistics.html.erb:7
+#: app/models/site_count.rb:26
 msgid "Today's Access"
 msgstr ""
 
@@ -6041,7 +6040,7 @@ msgstr ""
 msgid "Today's Access: %s access"
 msgstr ""
 
-#: app/views/rankings/_current_statistics.html.erb:13
+#: app/models/site_count.rb:36
 msgid "Today's Entries"
 msgstr ""
 
@@ -6074,7 +6073,7 @@ msgstr ""
 msgid "Total %{items} hits (Page %{page} / %{pages})"
 msgstr ""
 
-#: app/views/rankings/_current_statistics.html.erb:10
+#: app/models/site_count.rb:31
 msgid "Total Entries"
 msgstr ""
 
@@ -6113,7 +6112,7 @@ msgstr ""
 msgid "Track|Visitor"
 msgstr ""
 
-#: lib/skip_default_data.rb:43
+#: lib/skip_default_data.rb:59
 msgid "Traveling"
 msgstr ""
 
@@ -6184,7 +6183,7 @@ msgstr ""
 msgid "Update complete."
 msgstr ""
 
-#: app/controllers/edit_controller.rb:248
+#: app/controllers/edit_controller.rb:239
 msgid "Update on the same entry from other users detected. Please try again."
 msgstr ""
 
@@ -6549,7 +6548,7 @@ msgstr ""
 msgid "Users"
 msgstr ""
 
-#: app/controllers/group_controller.rb:349
+#: app/controllers/group_controller.rb:351
 msgid "Users / groups selection invalid."
 msgstr ""
 
@@ -6754,11 +6753,11 @@ msgstr ""
 msgid "Waiting to be Sent"
 msgstr ""
 
-#: lib/skip_default_data.rb:43
+#: lib/skip_default_data.rb:59
 msgid "Watching Movies"
 msgstr ""
 
-#: lib/skip_default_data.rb:43
+#: lib/skip_default_data.rb:59
 msgid "Watching Sports"
 msgstr ""
 
@@ -6815,7 +6814,7 @@ msgstr ""
 msgid "Within a minute"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:280
+#: app/controllers/edit_controller.rb:271
 msgid "Write"
 msgstr ""
 
@@ -6831,11 +6830,11 @@ msgstr ""
 msgid "Write a question"
 msgstr ""
 
-#: lib/skip_default_data.rb:25
+#: lib/skip_default_data.rb:32
 msgid "Write about your current and past jobs, your interests and concerns."
 msgstr ""
 
-#: lib/skip_default_data.rb:29
+#: lib/skip_default_data.rb:36
 msgid "Year Joined"
 msgstr ""
 
@@ -6859,12 +6858,12 @@ msgid ""
 "for any purpose other than running this service.<br/>"
 msgstr ""
 
-#: app/controllers/group_controller.rb:159
+#: app/controllers/group_controller.rb:161
 #: app/views/group/new_participation.html.erb:21
 msgid "You are already a member of the group."
 msgstr ""
 
-#: app/controllers/group_controller.rb:208
+#: app/controllers/group_controller.rb:210
 msgid "You are not a member of the group."
 msgstr ""
 
@@ -7448,8 +7447,7 @@ msgstr ""
 msgid "does not exist in profile categories."
 msgstr ""
 
-#: app/views/rankings/_current_statistics.html.erb:11
-#: app/views/rankings/_current_statistics.html.erb:15
+#: app/models/site_count.rb:32 app/models/site_count.rb:37
 msgid "entries"
 msgstr ""
 
@@ -7527,7 +7525,7 @@ msgstr ""
 msgid "more"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:321
+#: app/controllers/edit_controller.rb:312
 msgid "needs to be a valid date."
 msgstr ""
 
@@ -7551,11 +7549,11 @@ msgstr ""
 msgid "oauth provider"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:-
+#: app/models/group.rb:-
 msgid "open id authentication association"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:-
+#: app/models/group.rb:-
 msgid "open id authentication nonce"
 msgstr ""
 
@@ -7568,11 +7566,11 @@ msgstr ""
 msgid "openid identifier"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:-
+#: app/models/group.rb:-
 msgid "openidauthentication::association"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:-
+#: app/models/group.rb:-
 msgid "openidauthentication::nonce"
 msgstr ""
 
@@ -7768,10 +7766,8 @@ msgstr ""
 msgid "user uid"
 msgstr ""
 
-#: app/views/rankings/_current_statistics.html.erb:5
-#: app/views/rankings/_current_statistics.html.erb:8
-#: app/views/rankings/_current_statistics.html.erb:18
-#: app/views/rankings/_current_statistics.html.erb:21
+#: app/models/site_count.rb:22 app/models/site_count.rb:27
+#: app/models/site_count.rb:42 app/models/site_count.rb:47
 msgid "users"
 msgstr ""
 
