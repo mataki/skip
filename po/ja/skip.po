@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-08-14 16:35+0800\n"
+"POT-Creation-Date: 2009-08-14 16:55+0800\n"
 "PO-Revision-Date: 2009-08-07 16:09+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -78,9 +78,9 @@ msgstr "%Y年%m月%d日 %H時%M分 - "
 msgid "%m/%Y"
 msgstr "%Y/%m"
 
-#: app/views/share_file/_share_file_box.html.erb:30
-#: app/views/search/entry_search.html.erb:32
 #: app/views/rankings/_current_statistics.html.erb:1
+#: app/views/search/entry_search.html.erb:32
+#: app/views/share_file/_share_file_box.html.erb:30
 msgid "%m/%d/%Y %H:%M"
 msgstr "%Y/%m/%d %H:%M"
 
@@ -3581,11 +3581,11 @@ msgstr "いいえ"
 msgid "GroupParticipation|Waiting|true"
 msgstr "はい"
 
+#: app/controllers/edit_controller.rb:270
 #: app/controllers/groups_controller.rb:65
-#: app/controllers/services_controller.rb:46
 #: app/controllers/group_controller.rb:372
-#: app/controllers/share_file_controller.rb:161
-#: app/controllers/edit_controller.rb:270 config/environment.rb:85
+#: app/controllers/services_controller.rb:46
+#: app/controllers/share_file_controller.rb:161 config/environment.rb:85
 msgid "Groups"
 msgstr "グループ"
 
@@ -3810,7 +3810,7 @@ msgstr ""
 msgid "Internal error(s) occured. Contact administrator."
 msgstr "想定外のエラーが発生しました。管理者にお問い合わせ下さい。"
 
-#: app/views/bookmarks/index.html.erb:26 app/views/bookmark/list.html.erb:18
+#: app/views/bookmark/list.html.erb:18 app/views/bookmarks/index.html.erb:26
 #: lib/skip_default_data.rb:59
 msgid "Internet"
 msgstr "インターネット"
@@ -3887,8 +3887,8 @@ msgstr "不正なパラメタです。"
 msgid "Invalid parameter(s) found."
 msgstr "不正なパラメータがあります"
 
-#: app/controllers/share_file_controller.rb:278
 #: app/controllers/edit_controller.rb:290
+#: app/controllers/share_file_controller.rb:278
 msgid "Invalid parameter(s)."
 msgstr "パラメータが不正です"
 
@@ -4285,8 +4285,8 @@ msgstr "参加者"
 msgid "Members List"
 msgstr "参加者一覧"
 
-#: app/helpers/share_file_helper.rb:19 app/models/user_search_condition.rb:34
 #: app/helpers/application_helper.rb:233 app/helpers/share_file_helper.rb:19
+#: app/models/user_search_condition.rb:34
 #: app/views/board_entries/_form.html.erb:70 app/views/group/_form.html.erb:51
 msgid "Members Only"
 msgstr "参加者のみ"
@@ -4716,39 +4716,39 @@ msgstr "正しいOpenID URLを入力してください。"
 msgid "OpenId process is cancelled or failed."
 msgstr ""
 
-#: app/models/group.rb:-
+#: app/models/activation.rb:-
 msgid "OpenIdAuthentication::Association|Assoc type"
 msgstr ""
 
-#: app/models/group.rb:-
+#: app/models/activation.rb:-
 msgid "OpenIdAuthentication::Association|Handle"
 msgstr ""
 
-#: app/models/group.rb:-
+#: app/models/activation.rb:-
 msgid "OpenIdAuthentication::Association|Issued"
 msgstr ""
 
-#: app/models/group.rb:-
+#: app/models/activation.rb:-
 msgid "OpenIdAuthentication::Association|Lifetime"
 msgstr ""
 
-#: app/models/group.rb:-
+#: app/models/activation.rb:-
 msgid "OpenIdAuthentication::Association|Secret"
 msgstr ""
 
-#: app/models/group.rb:-
+#: app/models/activation.rb:-
 msgid "OpenIdAuthentication::Association|Server url"
 msgstr ""
 
-#: app/models/group.rb:-
+#: app/models/activation.rb:-
 msgid "OpenIdAuthentication::Nonce|Salt"
 msgstr ""
 
-#: app/models/group.rb:-
+#: app/models/activation.rb:-
 msgid "OpenIdAuthentication::Nonce|Server url"
 msgstr ""
 
-#: app/models/group.rb:-
+#: app/models/activation.rb:-
 msgid "OpenIdAuthentication::Nonce|Timestamp"
 msgstr ""
 
@@ -7860,11 +7860,11 @@ msgstr "が入力されていません。"
 msgid "oauth provider"
 msgstr "連携アプリ"
 
-#: app/models/group.rb:-
+#: app/models/activation.rb:-
 msgid "open id authentication association"
 msgstr ""
 
-#: app/models/group.rb:-
+#: app/models/activation.rb:-
 msgid "open id authentication nonce"
 msgstr ""
 
@@ -7877,11 +7877,11 @@ msgstr ""
 msgid "openid identifier"
 msgstr "OpenID"
 
-#: app/models/group.rb:-
+#: app/models/activation.rb:-
 msgid "openidauthentication::association"
 msgstr ""
 
-#: app/models/group.rb:-
+#: app/models/activation.rb:-
 msgid "openidauthentication::nonce"
 msgstr ""
 

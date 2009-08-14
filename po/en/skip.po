@@ -7,8 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-08-14 12:10+0900\n"
-"POT-Creation-Date: 2009-08-14 16:35+0800\n"
+"POT-Creation-Date: 2009-08-14 16:55+0800\n"
 "PO-Revision-Date: 2009-06-29 13:31+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3385,11 +3384,11 @@ msgstr ""
 msgid "GroupParticipation|Waiting|true"
 msgstr ""
 
+#: app/controllers/edit_controller.rb:270
 #: app/controllers/groups_controller.rb:65
-#: app/controllers/services_controller.rb:46
 #: app/controllers/group_controller.rb:372
-#: app/controllers/share_file_controller.rb:161
-#: app/controllers/edit_controller.rb:270 config/environment.rb:85
+#: app/controllers/services_controller.rb:46
+#: app/controllers/share_file_controller.rb:161 config/environment.rb:85
 msgid "Groups"
 msgstr ""
 
@@ -3608,7 +3607,7 @@ msgstr ""
 msgid "Internal error(s) occured. Contact administrator."
 msgstr ""
 
-#: app/views/bookmarks/index.html.erb:26 app/views/bookmark/list.html.erb:18
+#: app/views/bookmark/list.html.erb:18 app/views/bookmarks/index.html.erb:26
 #: lib/skip_default_data.rb:59
 msgid "Internet"
 msgstr ""
@@ -3685,8 +3684,8 @@ msgstr ""
 msgid "Invalid parameter(s) found."
 msgstr ""
 
-#: app/controllers/share_file_controller.rb:278
 #: app/controllers/edit_controller.rb:290
+#: app/controllers/share_file_controller.rb:278
 msgid "Invalid parameter(s)."
 msgstr ""
 
@@ -4068,8 +4067,8 @@ msgstr ""
 msgid "Members List"
 msgstr ""
 
-#: app/helpers/share_file_helper.rb:19 app/models/user_search_condition.rb:34
 #: app/helpers/application_helper.rb:233 app/helpers/share_file_helper.rb:19
+#: app/models/user_search_condition.rb:34
 #: app/views/board_entries/_form.html.erb:70 app/views/group/_form.html.erb:51
 msgid "Members Only"
 msgstr ""
@@ -4492,39 +4491,39 @@ msgstr ""
 msgid "OpenId process is cancelled or failed."
 msgstr ""
 
-#: app/models/group.rb:-
+#: app/models/activation.rb:-
 msgid "OpenIdAuthentication::Association|Assoc type"
 msgstr ""
 
-#: app/models/group.rb:-
+#: app/models/activation.rb:-
 msgid "OpenIdAuthentication::Association|Handle"
 msgstr ""
 
-#: app/models/group.rb:-
+#: app/models/activation.rb:-
 msgid "OpenIdAuthentication::Association|Issued"
 msgstr ""
 
-#: app/models/group.rb:-
+#: app/models/activation.rb:-
 msgid "OpenIdAuthentication::Association|Lifetime"
 msgstr ""
 
-#: app/models/group.rb:-
+#: app/models/activation.rb:-
 msgid "OpenIdAuthentication::Association|Secret"
 msgstr ""
 
-#: app/models/group.rb:-
+#: app/models/activation.rb:-
 msgid "OpenIdAuthentication::Association|Server url"
 msgstr ""
 
-#: app/models/group.rb:-
+#: app/models/activation.rb:-
 msgid "OpenIdAuthentication::Nonce|Salt"
 msgstr ""
 
-#: app/models/group.rb:-
+#: app/models/activation.rb:-
 msgid "OpenIdAuthentication::Nonce|Server url"
 msgstr ""
 
-#: app/models/group.rb:-
+#: app/models/activation.rb:-
 msgid "OpenIdAuthentication::Nonce|Timestamp"
 msgstr ""
 
@@ -7560,11 +7559,11 @@ msgstr ""
 msgid "oauth provider"
 msgstr ""
 
-#: app/models/group.rb:-
+#: app/models/activation.rb:-
 msgid "open id authentication association"
 msgstr ""
 
-#: app/models/group.rb:-
+#: app/models/activation.rb:-
 msgid "open id authentication nonce"
 msgstr ""
 
@@ -7577,11 +7576,11 @@ msgstr ""
 msgid "openid identifier"
 msgstr ""
 
-#: app/models/group.rb:-
+#: app/models/activation.rb:-
 msgid "openidauthentication::association"
 msgstr ""
 
-#: app/models/group.rb:-
+#: app/models/activation.rb:-
 msgid "openidauthentication::nonce"
 msgstr ""
 
