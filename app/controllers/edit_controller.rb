@@ -21,17 +21,11 @@ class EditController < ApplicationController
 
   # tab_menu
   def index
-    @board_entry = BoardEntry.new
-    @board_entry.entry_type = params[:entry_type] || BoardEntry::DIARY
-    @board_entry.symbol = params[:symbol] || session[:user_symbol]
-    @board_entry.title = params[:title]
-    @board_entry.category = params[:category]
+    params[:entry_type] = BoardEntry::DIARY if params[:entry_type].blank?
+    params[:symbol] = current_user.symbol if params[:symbol].blank?
 
-    params[:entry_type] ||= @board_entry.entry_type
-    params[:symbol] ||= @board_entry.symbol
-
-    params[:publication_type] ||= "public"
-    params[:publication_symbols_value] ||= ""
+    params[:publication_type] = "public" if params[:publication_type].blank?
+    params[:publication_symbols_value] = "" if params[:publication_symbols_value].blank?
 
     case params[:editor_mode] ||= current_user.custom.editor_mode
     when "richtext"
@@ -39,6 +33,12 @@ class EditController < ApplicationController
     when "hiki"
       params[:contents_hiki] = params[:contents]
     end
+
+    @board_entry = BoardEntry.new
+    @board_entry.entry_type = params[:entry_type]
+    @board_entry.symbol = params[:symbol]
+    @board_entry.title = params[:title]
+    @board_entry.category = params[:category]
 
     setup_layout @board_entry
   end
