@@ -128,11 +128,9 @@ class RankingsController < ApplicationController
   end
 
   def bookmark
-    @target_date = Date.today
-    if params[:target_date]
-      date_array =  params[:target_date].split('-')
-      @target_date = Date.new(date_array[0].to_i, date_array[1].to_i, date_array[2].to_i)
-    end
+    # parse出来ないケースで例外を起こして現在時刻を設定するため
+    @target_date = Time.parse(params[:target_date], 0) rescue Time.now
+
     popular_bookmarks = PopularBookmark.find(:all,
                                              :conditions => ["date = ?", @target_date],
                                              :order =>'count DESC' ,
