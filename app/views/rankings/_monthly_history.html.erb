@@ -1,4 +1,4 @@
-<h2 class="topix_title"><%= icon_tag('asterisk_orange') -%><%= _("History of %s") % h(history_title) -%></h2>
+<h2 class="topix_title"><%= icon_tag('asterisk_orange') -%><%= _("History of %s") % h(_(SiteCount::STATISTICS_ITEMS[category.to_sym][:desc])) -%></h2>
 
 <div class="monthly_statictics_box">
 <div class="navigate_menu">
@@ -64,7 +64,6 @@ $j(function() {
             url: url,
             data: { type: 'monthly',
                     category: '<%= category %>',
-                    desc: '<%= history_title %>',
                     year: this.id.split('_')[2],
                     month: this.id.split('_')[3]
             },

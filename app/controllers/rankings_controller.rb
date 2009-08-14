@@ -114,17 +114,14 @@ class RankingsController < ApplicationController
     date = Date.new(params[:year].to_i, params[:month].to_i)
     if params[:type] == "monthly"
       site_counts = SiteCount.find(:all,
-                                   :conditions => ["DATE_FORMAT(created_on, '%Y-%m') = ?", date.strftime('%Y-%m')]) #"
-      values = site_counts.map {|site_count| site_count[params[:category]] }
-      max_value = values.max
-      min_value = values.min
+                                   :conditions => ["DATE_FORMAT(created_on, '%Y-%m') = ?", date.strftime('%Y-%m')])
+      values = site_counts.map { |site_count| site_count[params[:category]] }
       render :partial => 'monthly_history',
-             :locals => {:history_title => params[:desc],
-                         :site_counts => site_counts,
-                         :category => params[:category],
-                         :date => date,
-                         :max_value => max_value,
-                         :min_value => min_value},
+             :locals => { :site_counts => site_counts,
+                          :category => params[:category],
+                          :date => date,
+                          :max_value => values.max,
+                          :min_value => values.min },
              :layout => false
     end
   end
