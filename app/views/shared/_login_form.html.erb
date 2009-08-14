@@ -55,9 +55,9 @@
     <tr valign="top">
       <td>
         <ul style="list-style-type:none; margin-bottom: 5px;">
-          <li><%= link_to image_tag('idmixijp.gif') + _("Login with mixi ID"), :action => :login, :openid_url => "mixi.jp" %></li>
-          <li><%= link_to image_tag('meyahoocom.gif') + _("Login with Yahoo! JAPAN ID"), :action => :login, :openid_url => "yahoo.co.jp" %></li>
-          <li><%= link_to image_tag('wwwgooglecom.gif') + _("Login with Google"), :action => :login, :openid_url => "http://www.google.com/accounts/o8/id" %></li>
+          <li><%= link_to image_tag('idmixijp.gif') + _("Login with mixi ID"), {:action => :login, :openid_url => "mixi.jp"}, :method => :post %></li>
+          <li><%= link_to image_tag('meyahoocom.gif') + _("Login with Yahoo! JAPAN ID"), {:action => :login, :openid_url => "yahoo.co.jp"}, :method => :post %></li>
+          <li><%= link_to image_tag('wwwgooglecom.gif') + _("Login with Google"), {:action => :login, :openid_url => "http://www.google.com/accounts/o8/id"}, :method => :post %></li>
         </ul>
       </td>
     </tr>

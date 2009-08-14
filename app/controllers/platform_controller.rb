@@ -20,7 +20,8 @@ class PlatformController < ApplicationController
   skip_after_filter  :remove_message
 
   before_filter :require_not_login, :except => [:logout]
-  protect_from_forgery :except => [:login]
+
+  verify :method => :post, :only => %w(login), :redirect_to => {:action => :index}
 
   def index
     response.headers['X-XRDS-Location'] = server_url(:format => :xrds, :protocol => scheme)
@@ -215,8 +216,8 @@ class PlatformController < ApplicationController
   def login_with_open_id
     session[:return_to] = params[:return_to] if !params[:return_to].blank? and params[:open_id_complete].blank?
     begin
-      authenticate_with_open_id( params[:openid_url],
-                                 :required => SkipEmbedded::InitialSettings["ax_fetchrequest"].values.flatten) do |result, identity_url, registration|
+      authenticate_with_open_id( params[:openid_url], :method => 'post',
+                                :required => SkipEmbedded::InitialSettings["ax_fetchrequest"].values.flatten) do |result, identity_url, registration|
         if result.successful?
           logger.info("[Login successful with OpenId] \"OpenId\" => #{identity_url}")
           unless identifier = OpenidIdentifier.find_by_url(identity_url)
