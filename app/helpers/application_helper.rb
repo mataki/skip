@@ -223,14 +223,14 @@ module ApplicationHelper
     case entry.publication_type
     when 'public'
       icon_name = 'page_red'
-      view_name = "全体に公開"
+      view_name = _("Open to All")
     when 'protected'
       visibility, visibility_color = entry.visibility
       icon_name = 'page_link'
-      view_name = "直接指定:" + visibility
+      view_name = _("Specified Directly:") + visibility
     when 'private'
       icon_name = 'page_key'
-      view_name = entry.diary? ? "自分だけ" : "参加者のみ"
+      view_name = entry.diary? ? _("Owner Only") : _("Members Only")
    end
     icon_tag(icon_name, :title => view_name)
   end

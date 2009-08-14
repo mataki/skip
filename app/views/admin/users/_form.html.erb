@@ -22,13 +22,13 @@
 <p>
   <%= label Admin::User.name, :status %>
   <% if @user.new_record? -%>
-  :<%= _('User|Status|UNUSED') %>
+  :<%= s_('User|Status|UNUSED') %>
   <% else -%>
   <% unless @user.unused? -%>
   :<%= select :user, :status, Admin::User.status_select.delete_if{|select| select.last == 'UNUSED'} %>
   <%= help_icon Admin::User.name, :status %>
   <% else -%>
-  :<%= _('User|Status|UNUSED') %>
+  :<%= s_('User|Status|UNUSED') %>
   <% end -%>
   <% end %>
 </p>
