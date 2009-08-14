@@ -211,9 +211,11 @@ class MypageController < ApplicationController
   # ajax action
   # 指定月のカレンダに切り替える
   def load_calendar
+    # parse出来ないケースで例外を起こして現在時刻を設定するため
+    date = Time.parse("#{params[:year]}/#{params[:month]}", 0) rescue Time.now
     render :partial => "shared/calendar",
-           :locals => { :sel_year => params[:year].to_i,
-                        :sel_month => params[:month].to_i,
+           :locals => { :sel_year => date.year,
+                        :sel_month => date.month,
                         :sel_day => nil,
                         :item_count => get_entry_count(params[:year], params[:month]),
                         :action => 'entries_by_date'}
