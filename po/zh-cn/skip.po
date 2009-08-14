@@ -76,9 +76,9 @@ msgstr ""
 msgid "%m/%Y"
 msgstr ""
 
-#: app/views/rankings/_current_statistics.html.erb:1
-#: app/views/search/entry_search.html.erb:32
 #: app/views/share_file/_share_file_box.html.erb:30
+#: app/views/search/entry_search.html.erb:32
+#: app/views/rankings/_current_statistics.html.erb:1
 msgid "%m/%d/%Y %H:%M"
 msgstr ""
 
@@ -114,7 +114,7 @@ msgstr ""
 msgid "%s<br/>We apologize for the inconvenience caused.<br/>"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:280
+#: app/controllers/edit_controller.rb:271
 msgid "%{action} %{write_place}"
 msgstr ""
 
@@ -2688,7 +2688,7 @@ msgid "Delete all the groups under the group category before you delete it."
 msgstr ""
 
 #: app/controllers/admin/group_categories_controller.rb:28
-#: app/controllers/edit_controller.rb:243
+#: app/controllers/edit_controller.rb:234
 msgid "Deletion complete."
 msgstr ""
 
@@ -2772,7 +2772,7 @@ msgstr ""
 msgid "Driving"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:280
+#: app/controllers/edit_controller.rb:271
 #: app/views/admin/group_categories/index.html.erb:28
 #: app/views/admin/openid_identifiers/index.html.erb:17
 #: app/views/admin/pictures/index.html.erb:27
@@ -3373,11 +3373,11 @@ msgstr ""
 msgid "GroupParticipation|Waiting|true"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:279
 #: app/controllers/groups_controller.rb:65
-#: app/controllers/group_controller.rb:372
 #: app/controllers/services_controller.rb:46
-#: app/controllers/share_file_controller.rb:161 config/environment.rb:85
+#: app/controllers/group_controller.rb:372
+#: app/controllers/share_file_controller.rb:161
+#: app/controllers/edit_controller.rb:270 config/environment.rb:85
 msgid "Groups"
 msgstr ""
 
@@ -3596,7 +3596,7 @@ msgstr ""
 msgid "Internal error(s) occured. Contact administrator."
 msgstr ""
 
-#: app/views/bookmark/list.html.erb:18 app/views/bookmarks/index.html.erb:26
+#: app/views/bookmarks/index.html.erb:26 app/views/bookmark/list.html.erb:18
 #: lib/skip_default_data.rb:59
 msgid "Internet"
 msgstr ""
@@ -3675,6 +3675,7 @@ msgstr ""
 
 #: app/controllers/edit_controller.rb:299
 #: app/controllers/share_file_controller.rb:278
+#: app/controllers/edit_controller.rb:290
 msgid "Invalid parameter(s)."
 msgstr ""
 
@@ -3682,8 +3683,8 @@ msgstr ""
 msgid "Invalid password reset URL. Try again or contact system administrator."
 msgstr ""
 
-#: app/controllers/edit_controller.rb:309
-#: app/controllers/edit_controller.rb:315
+#: app/controllers/edit_controller.rb:300
+#: app/controllers/edit_controller.rb:306
 msgid "Invalid privacy setting."
 msgstr ""
 
@@ -4156,7 +4157,7 @@ msgstr ""
 msgid "My Account"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:279
+#: app/controllers/edit_controller.rb:270
 msgid "My Blog"
 msgstr ""
 
@@ -4480,39 +4481,39 @@ msgstr ""
 msgid "OpenId process is cancelled or failed."
 msgstr ""
 
-#: app/controllers/edit_controller.rb:-
+#: app/models/group.rb:-
 msgid "OpenIdAuthentication::Association|Assoc type"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:-
+#: app/models/group.rb:-
 msgid "OpenIdAuthentication::Association|Handle"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:-
+#: app/models/group.rb:-
 msgid "OpenIdAuthentication::Association|Issued"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:-
+#: app/models/group.rb:-
 msgid "OpenIdAuthentication::Association|Lifetime"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:-
+#: app/models/group.rb:-
 msgid "OpenIdAuthentication::Association|Secret"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:-
+#: app/models/group.rb:-
 msgid "OpenIdAuthentication::Association|Server url"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:-
+#: app/models/group.rb:-
 msgid "OpenIdAuthentication::Nonce|Salt"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:-
+#: app/models/group.rb:-
 msgid "OpenIdAuthentication::Nonce|Server url"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:-
+#: app/models/group.rb:-
 msgid "OpenIdAuthentication::Nonce|Timestamp"
 msgstr ""
 
@@ -5667,7 +5668,7 @@ msgstr ""
 msgid "Specified share file owner does not exist."
 msgstr ""
 
-#: app/controllers/edit_controller.rb:263
+#: app/controllers/edit_controller.rb:254
 msgid "Specified trackback was deleted successfully."
 msgstr ""
 
@@ -6179,7 +6180,7 @@ msgstr ""
 msgid "Update complete."
 msgstr ""
 
-#: app/controllers/edit_controller.rb:248
+#: app/controllers/edit_controller.rb:239
 msgid "Update on the same entry from other users detected. Please try again."
 msgstr ""
 
@@ -6813,7 +6814,7 @@ msgstr ""
 msgid "Within a minute"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:280
+#: app/controllers/edit_controller.rb:271
 msgid "Write"
 msgstr ""
 
@@ -7525,7 +7526,7 @@ msgstr ""
 msgid "more"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:321
+#: app/controllers/edit_controller.rb:312
 msgid "needs to be a valid date."
 msgstr ""
 
@@ -7549,11 +7550,11 @@ msgstr ""
 msgid "oauth provider"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:-
+#: app/models/group.rb:-
 msgid "open id authentication association"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:-
+#: app/models/group.rb:-
 msgid "open id authentication nonce"
 msgstr ""
 
@@ -7566,11 +7567,11 @@ msgstr ""
 msgid "openid identifier"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:-
+#: app/models/group.rb:-
 msgid "openidauthentication::association"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:-
+#: app/models/group.rb:-
 msgid "openidauthentication::nonce"
 msgstr ""
 

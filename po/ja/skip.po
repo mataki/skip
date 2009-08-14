@@ -78,9 +78,9 @@ msgstr "%Y年%m月%d日 %H時%M分 - "
 msgid "%m/%Y"
 msgstr "%Y/%m"
 
-#: app/views/rankings/_current_statistics.html.erb:1
-#: app/views/search/entry_search.html.erb:32
 #: app/views/share_file/_share_file_box.html.erb:30
+#: app/views/search/entry_search.html.erb:32
+#: app/views/rankings/_current_statistics.html.erb:1
 msgid "%m/%d/%Y %H:%M"
 msgstr "%Y/%m/%d %H:%M"
 
@@ -116,7 +116,7 @@ msgstr "%s：参加者"
 msgid "%s<br/>We apologize for the inconvenience caused.<br/>"
 msgstr "大変申し訳ございません。<br/>%s<br/>"
 
-#: app/controllers/edit_controller.rb:280
+#: app/controllers/edit_controller.rb:271
 msgid "%{action} %{write_place}"
 msgstr "%{write_place}を%{action}"
 
@@ -2894,7 +2894,7 @@ msgstr ""
 "て削除されている必要があります。"
 
 #: app/controllers/admin/group_categories_controller.rb:28
-#: app/controllers/edit_controller.rb:243
+#: app/controllers/edit_controller.rb:234
 msgid "Deletion complete."
 msgstr "削除しました。"
 
@@ -2978,7 +2978,7 @@ msgstr "お酒"
 msgid "Driving"
 msgstr "ドライブ"
 
-#: app/controllers/edit_controller.rb:280
+#: app/controllers/edit_controller.rb:271
 #: app/views/admin/group_categories/index.html.erb:28
 #: app/views/admin/openid_identifiers/index.html.erb:17
 #: app/views/admin/pictures/index.html.erb:27
@@ -3581,11 +3581,11 @@ msgstr "いいえ"
 msgid "GroupParticipation|Waiting|true"
 msgstr "はい"
 
-#: app/controllers/edit_controller.rb:279
 #: app/controllers/groups_controller.rb:65
-#: app/controllers/group_controller.rb:372
 #: app/controllers/services_controller.rb:46
-#: app/controllers/share_file_controller.rb:161 config/environment.rb:85
+#: app/controllers/group_controller.rb:372
+#: app/controllers/share_file_controller.rb:161
+#: app/controllers/edit_controller.rb:270 config/environment.rb:85
 msgid "Groups"
 msgstr "グループ"
 
@@ -3810,7 +3810,7 @@ msgstr ""
 msgid "Internal error(s) occured. Contact administrator."
 msgstr "想定外のエラーが発生しました。管理者にお問い合わせ下さい。"
 
-#: app/views/bookmark/list.html.erb:18 app/views/bookmarks/index.html.erb:26
+#: app/views/bookmarks/index.html.erb:26 app/views/bookmark/list.html.erb:18
 #: lib/skip_default_data.rb:59
 msgid "Internet"
 msgstr "インターネット"
@@ -3887,8 +3887,8 @@ msgstr "不正なパラメタです。"
 msgid "Invalid parameter(s) found."
 msgstr "不正なパラメータがあります"
 
-#: app/controllers/edit_controller.rb:299
 #: app/controllers/share_file_controller.rb:278
+#: app/controllers/edit_controller.rb:290
 msgid "Invalid parameter(s)."
 msgstr "パラメータが不正です"
 
@@ -3898,8 +3898,8 @@ msgstr ""
 "パスワードリセットのためのURLが不正です。再度お試し頂くか、システム管理者にお"
 "問い合わせ下さい。"
 
-#: app/controllers/edit_controller.rb:309
-#: app/controllers/edit_controller.rb:315
+#: app/controllers/edit_controller.rb:300
+#: app/controllers/edit_controller.rb:306
 msgid "Invalid privacy setting."
 msgstr "公開範囲の指定が不正です"
 
@@ -4285,8 +4285,8 @@ msgstr "参加者"
 msgid "Members List"
 msgstr "参加者一覧"
 
+#: app/helpers/share_file_helper.rb:19 app/models/user_search_condition.rb:34
 #: app/helpers/application_helper.rb:233 app/helpers/share_file_helper.rb:19
-#: app/models/user_search_condition.rb:34
 #: app/views/board_entries/_form.html.erb:70 app/views/group/_form.html.erb:51
 msgid "Members Only"
 msgstr "参加者のみ"
@@ -4386,7 +4386,7 @@ msgstr "音楽鑑賞"
 msgid "My Account"
 msgstr "自分の管理"
 
-#: app/controllers/edit_controller.rb:279
+#: app/controllers/edit_controller.rb:270
 msgid "My Blog"
 msgstr "マイブログ"
 
@@ -4716,39 +4716,39 @@ msgstr "正しいOpenID URLを入力してください。"
 msgid "OpenId process is cancelled or failed."
 msgstr ""
 
-#: app/controllers/edit_controller.rb:-
+#: app/models/group.rb:-
 msgid "OpenIdAuthentication::Association|Assoc type"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:-
+#: app/models/group.rb:-
 msgid "OpenIdAuthentication::Association|Handle"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:-
+#: app/models/group.rb:-
 msgid "OpenIdAuthentication::Association|Issued"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:-
+#: app/models/group.rb:-
 msgid "OpenIdAuthentication::Association|Lifetime"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:-
+#: app/models/group.rb:-
 msgid "OpenIdAuthentication::Association|Secret"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:-
+#: app/models/group.rb:-
 msgid "OpenIdAuthentication::Association|Server url"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:-
+#: app/models/group.rb:-
 msgid "OpenIdAuthentication::Nonce|Salt"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:-
+#: app/models/group.rb:-
 msgid "OpenIdAuthentication::Nonce|Server url"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:-
+#: app/models/group.rb:-
 msgid "OpenIdAuthentication::Nonce|Timestamp"
 msgstr ""
 
@@ -5930,7 +5930,7 @@ msgstr "指定されたページは存在しません。"
 msgid "Specified share file owner does not exist."
 msgstr "指定のページは存在していません。"
 
-#: app/controllers/edit_controller.rb:263
+#: app/controllers/edit_controller.rb:254
 msgid "Specified trackback was deleted successfully."
 msgstr "指定の話題のリンクを削除しました"
 
@@ -6457,7 +6457,7 @@ msgstr "以下の属性を更新する"
 msgid "Update complete."
 msgstr "変更しました"
 
-#: app/controllers/edit_controller.rb:248
+#: app/controllers/edit_controller.rb:239
 msgid "Update on the same entry from other users detected. Please try again."
 msgstr "他の人によって同じ投稿に更新がかかっています。もう一度お試し下さい。"
 
@@ -7098,7 +7098,7 @@ msgstr "10日以上"
 msgid "Within a minute"
 msgstr "1分以内"
 
-#: app/controllers/edit_controller.rb:280
+#: app/controllers/edit_controller.rb:271
 msgid "Write"
 msgstr "書く"
 
@@ -7836,7 +7836,7 @@ msgstr "メッセージ："
 msgid "more"
 msgstr "その他"
 
-#: app/controllers/edit_controller.rb:321
+#: app/controllers/edit_controller.rb:312
 msgid "needs to be a valid date."
 msgstr "には存在する日付を指定してください"
 
@@ -7860,11 +7860,11 @@ msgstr "が入力されていません。"
 msgid "oauth provider"
 msgstr "連携アプリ"
 
-#: app/controllers/edit_controller.rb:-
+#: app/models/group.rb:-
 msgid "open id authentication association"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:-
+#: app/models/group.rb:-
 msgid "open id authentication nonce"
 msgstr ""
 
@@ -7877,11 +7877,11 @@ msgstr ""
 msgid "openid identifier"
 msgstr "OpenID"
 
-#: app/controllers/edit_controller.rb:-
+#: app/models/group.rb:-
 msgid "openidauthentication::association"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:-
+#: app/models/group.rb:-
 msgid "openidauthentication::nonce"
 msgstr ""
 

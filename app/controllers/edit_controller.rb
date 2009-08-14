@@ -225,17 +225,8 @@ class EditController < ApplicationController
     # 権限チェック
     redirect_to_with_deny_auth and return unless authorize_to_edit_board_entry? @board_entry
 
-    # TODO Rails2.3.2のバグ? Rails本体で修正されたらコードを修正する
-    # 下記のように定義されている場合
-    # class BoardEntry < ActiveRecord::Base
-    #   has_many :board_entry_comments, :dependent => :destroy
-    # class BoardEntryComment < ActiveRecord::Base
-    #   belongs_to :board_entry, :counter_cache => true
-    # board_entry_commentsが存在する状態でboard_entryをdestoryしようとすると
-    # board_entry_commentsが消される際にcounter_cacheによりboard_entryが更新されてlock_versionが上がってしまう。
-    # そのため、board_entryをdestoryするタイミングのレコードオブジェクトのlock_versionとDB内のlock_versionが異なって
-    # しまうため常にStaleObjectErrorが発生してしまうようだ。おそらくRails2.3.2のバグと思われる。
-    # Railsのバージョンアップにより根本対応されるまでは自前でboard_entry_commentsを消すようにして回避する
+    # FIXME Rails2.3.2のバグで関連コメントがある場合に常にStaleObjectErrorとなっていまう件の暫定対応
+    # 詳細は http://dev.openskip.org/redmine/issues/show/855
     @board_entry.board_entry_comments.destroy_all
     @board_entry.reload
 
