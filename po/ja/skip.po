@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-08-17 18:54+0800\n"
+"POT-Creation-Date: 2009-08-17 18:58+0800\n"
 "PO-Revision-Date: 2009-08-07 16:09+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -5231,6 +5231,10 @@ msgstr "最近の人気記事"
 msgid "Recent Questions"
 msgstr "みんなからの質問!"
 
+#: app/views/mypage/_recent_user_box.html.erb:3
+msgid "Recent Users"
+msgstr "最近登録のユーザ"
+
 #: app/views/group/show.html.erb:92
 msgid "Recent posts in the groups joined"
 msgstr "参加グループの最新の書き込み"
@@ -5248,7 +5252,6 @@ msgid "Recently Posted Entries"
 msgstr "最近投稿された記事"
 
 #: app/controllers/feed_controller.rb:57
-#: app/views/mypage/_recent_user_box.html.erb:3
 msgid "Recently Registered Users"
 msgstr "最近登録されたユーザ"
 

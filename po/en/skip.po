@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-08-17 18:54+0800\n"
+"POT-Creation-Date: 2009-08-17 18:58+0800\n"
 "PO-Revision-Date: 2009-06-29 13:31+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -5003,6 +5003,10 @@ msgstr ""
 msgid "Recent Questions"
 msgstr ""
 
+#: app/views/mypage/_recent_user_box.html.erb:3
+msgid "Recent Users"
+msgstr ""
+
 #: app/views/group/show.html.erb:92
 msgid "Recent posts in the groups joined"
 msgstr ""
@@ -5020,7 +5024,6 @@ msgid "Recently Posted Entries"
 msgstr "Recent Posted"
 
 #: app/controllers/feed_controller.rb:57
-#: app/views/mypage/_recent_user_box.html.erb:3
 msgid "Recently Registered Users"
 msgstr ""
 
