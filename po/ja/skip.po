@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-08-17 18:01+0800\n"
+"POT-Creation-Date: 2009-08-17 18:27+0800\n"
 "PO-Revision-Date: 2009-08-07 16:09+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2911,6 +2911,10 @@ msgid "Delete all the groups under the group category before you delete it."
 msgstr ""
 "グループカテゴリを削除したい場合、対象のグループカテゴリに属するグループが全"
 "て削除されている必要があります。"
+
+#: app/views/antenna/_antenna_item.html.erb:2
+msgid "Delete)).to_s); _erbout.concat "
+msgstr ""
 
 #: app/controllers/admin/group_categories_controller.rb:28
 #: app/controllers/edit_controller.rb:235
