@@ -48,7 +48,7 @@
 
   <% if enable_activate? -%>
   <p><%= _('Signup') %></p>
-  <div style="text-align: center; font-weight: bold; font-size: 14px;"><%= link_to _('Register your profile and start using SKIP'), activate_url %></div>
+  <div style="text-align: center; font-weight: bold; font-size: 14px;"><%= link_to _('Register your profile and start using %s') % Admin::Setting.abbr_app_title, activate_url %></div>
   <% end -%>
 </div>
 <div id="desc_before_login" class="desc"><%= skip_image_tag 'indicator.gif' %></div>

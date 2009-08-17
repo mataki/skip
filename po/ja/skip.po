@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-08-17 14:27+0800\n"
+"POT-Creation-Date: 2009-08-17 16:23+0800\n"
 "PO-Revision-Date: 2009-08-07 16:09+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -499,10 +499,10 @@ msgstr ""
 #: app/views/user_mailer/sent_activate.html.erb:9
 msgid ""
 "Access the URL below and click on the link [Register your profile and start "
-"using SKIP]."
+"using %s]."
 msgstr ""
-"無効になってしまった場合、以下のURLにアクセスし、[ユーザ登録してSKIPの利用を"
-"開始する]リンクをクリックして下さい。"
+"無効になってしまった場合、以下のURLにアクセスし、[ユーザ登録して%sの利用"
+"を開始する]リンクをクリックして下さい。"
 
 #: app/views/user_mailer/sent_forgot_openid.html.erb:3
 msgid "Access the URL below to complete the OpenID resetting process."
@@ -519,10 +519,6 @@ msgstr "下記URLにアクセスして、パスワードリセットを完了し
 #: app/views/user_mailer/sent_activate.html.erb:3
 msgid "Access the URL below to complete the registration process."
 msgstr "下記URLにアクセスして、ユーザ登録をお願いします。"
-
-#: app/views/user_mailer/sent_signup_confirm.html.erb:5
-msgid "Access to %s. Click here."
-msgstr "%sにアクセスするには、以下URLをクリックしてください。"
 
 #: app/helpers/application_helper.rb:244
 msgid "Access(%s)"
@@ -2619,11 +2615,15 @@ msgstr "クラシック(右側サイドメニュー)"
 msgid "Click here to change profile picutre ... "
 msgstr "プロフィール画像を変更しましょう！"
 
+#: app/views/user_mailer/sent_signup_confirm.html.erb:5
+msgid "Click on the URL below to access %s."
+msgstr "%sにアクセスするには、以下URLをクリックしてください。"
+
 #: app/views/user_mailer/sent_message.html.erb:5
 msgid ""
 "Click on the URL to see the content.\n"
 "\n"
-"&npsp;%s"
+"  %s"
 msgstr ""
 "内容を確認するには、以下のURLをクリックしてください。\n"
 "\n"
@@ -5273,8 +5273,8 @@ msgid "Register your profile"
 msgstr "プロフィールの登録"
 
 #: app/views/platform/index.html.erb:51
-msgid "Register your profile and start using SKIP"
-msgstr "ユーザ登録してSKIPの利用を開始する"
+msgid "Register your profile and start using %s"
+msgstr "ユーザ登録して%sの利用を開始する"
 
 #: app/models/site_count.rb:21
 msgid "Registered Users"
@@ -8158,6 +8158,13 @@ msgstr ""
 "|チェックするとその属性を更新することができます。CSVの例を参考にCSVファイルを"
 "作成してください。<br/>新規登録のユーザは、名前・パスワード・メールアドレスは"
 "必須になります。"
+
+#~ msgid ""
+#~ "Access the URL below and click on the link [Register your profile and "
+#~ "start using SKIP]."
+#~ msgstr ""
+#~ "無効になってしまった場合、以下のURLにアクセスし、[ユーザ登録してSKIPの利用"
+#~ "を開始する]リンクをクリックして下さい。"
 
 #~ msgid "Off"
 #~ msgstr "オフ"

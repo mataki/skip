@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-08-17 14:27+0800\n"
+"POT-Creation-Date: 2009-08-17 16:23+0800\n"
 "PO-Revision-Date: 2009-06-29 13:31+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -466,7 +466,7 @@ msgstr ""
 #: app/views/user_mailer/sent_activate.html.erb:9
 msgid ""
 "Access the URL below and click on the link [Register your profile and start "
-"using SKIP]."
+"using %s]."
 msgstr ""
 
 #: app/views/user_mailer/sent_forgot_openid.html.erb:3
@@ -483,10 +483,6 @@ msgstr ""
 
 #: app/views/user_mailer/sent_activate.html.erb:3
 msgid "Access the URL below to complete the registration process."
-msgstr ""
-
-#: app/views/user_mailer/sent_signup_confirm.html.erb:5
-msgid "Access to %s. Click here."
 msgstr ""
 
 #: app/helpers/application_helper.rb:244
@@ -2450,11 +2446,15 @@ msgstr ""
 msgid "Click here to change profile picutre ... "
 msgstr ""
 
+#: app/views/user_mailer/sent_signup_confirm.html.erb:5
+msgid "Click on the URL below to access %s."
+msgstr ""
+
 #: app/views/user_mailer/sent_message.html.erb:5
 msgid ""
 "Click on the URL to see the content.\n"
 "\n"
-"&npsp;%s"
+"  %s"
 msgstr ""
 
 #: app/views/user_mailer/sent_contact.html.erb:4
@@ -5043,7 +5043,7 @@ msgid "Register your profile"
 msgstr ""
 
 #: app/views/platform/index.html.erb:51
-msgid "Register your profile and start using SKIP"
+msgid "Register your profile and start using %s"
 msgstr ""
 
 #: app/models/site_count.rb:21
