@@ -24,7 +24,7 @@
 
 <% content_for :contents_left do -%>
   <div class="box_space">
-    <div class="box_space_title">管理メニュー</span></div>
+    <div class="box_space_title"><%= _('Admin Menu')%></span></div>
     <div class="box_space_body">
     <ul>
       <% get_manage_menu_items(@menu).each do |menu_item| %>
