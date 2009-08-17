@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-08-17 16:23+0800\n"
+"POT-Creation-Date: 2009-08-17 18:01+0800\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -7221,6 +7221,10 @@ msgstr ""
 msgid "[Mypage]"
 msgstr ""
 
+#: app/helpers/board_entries_helper.rb:76
+msgid "[New]"
+msgstr ""
+
 #: app/views/rankings/_monthly_history.html.erb:7
 #: app/views/shared/_calendar.html.erb:32
 msgid "[Next month]"
@@ -7383,6 +7387,10 @@ msgstr ""
 
 #: app/views/group/_manage_permit.html.erb:26
 msgid "[Uncheck all]"
+msgstr ""
+
+#: app/helpers/board_entries_helper.rb:77
+msgid "[Unread]"
 msgstr ""
 
 #: app/views/group/_manage_info.html.erb:22 app/views/pictures/new.html.erb:20

@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-08-17 16:23+0800\n"
+"POT-Creation-Date: 2009-08-17 18:01+0800\n"
 "PO-Revision-Date: 2009-08-07 16:09+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -501,8 +501,8 @@ msgid ""
 "Access the URL below and click on the link [Register your profile and start "
 "using %s]."
 msgstr ""
-"無効になってしまった場合、以下のURLにアクセスし、[ユーザ登録して%sの利用"
-"を開始する]リンクをクリックして下さい。"
+"無効になってしまった場合、以下のURLにアクセスし、[ユーザ登録して%sの利用を開"
+"始する]リンクをクリックして下さい。"
 
 #: app/views/user_mailer/sent_forgot_openid.html.erb:3
 msgid "Access the URL below to complete the OpenID resetting process."
@@ -7546,6 +7546,10 @@ msgstr "【アンテナを整備する】"
 msgid "[Mypage]"
 msgstr "[マイページ]"
 
+#: app/helpers/board_entries_helper.rb:76
+msgid "[New]"
+msgstr "[新着]"
+
 #: app/views/rankings/_monthly_history.html.erb:7
 #: app/views/shared/_calendar.html.erb:32
 msgid "[Next month]"
@@ -7706,6 +7710,10 @@ msgstr "[URL]　"
 #: app/views/group/_manage_permit.html.erb:26
 msgid "[Uncheck all]"
 msgstr "[全てのチェックをはずす]"
+
+#: app/helpers/board_entries_helper.rb:77
+msgid "[Unread]"
+msgstr "[未読]"
 
 #: app/views/group/_manage_info.html.erb:22 app/views/pictures/new.html.erb:20
 msgid "[[Delete]]"
