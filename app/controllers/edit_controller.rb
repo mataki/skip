@@ -22,7 +22,8 @@ class EditController < ApplicationController
   # tab_menu
   def index
     params[:entry_type] = BoardEntry::DIARY if params[:entry_type].blank?
-    params[:symbol] = current_user.symbol if params[:symbol].blank?
+    owner = Symbol.get_item_by_symbol params[:symbol]
+    params[:symbol] = owner ? owner.symbol : current_user.symbol
 
     params[:publication_type] = "public" if params[:publication_type].blank?
     params[:publication_symbols_value] = "" if params[:publication_symbols_value].blank?

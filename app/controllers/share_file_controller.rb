@@ -23,7 +23,11 @@ class ShareFileController < ApplicationController
          :redirect_to => { :action => :index }
 
   def new
-    @share_file = ShareFile.new(:user_id => current_user.id, :owner_symbol => params[:owner_symbol])
+    owner = Symbol.get_item_by_symbol params[:owner_symbol]
+    unless owner
+      render_404 and return
+    end
+    @share_file = ShareFile.new(:user_id => current_user.id, :owner_symbol => owner.symbol)
 
     unless @share_file.updatable?(current_user)
       ajax_upload? ? render(:template => 'share_file/new_ajax_upload', :layout => false) : render_window_close
@@ -31,7 +35,7 @@ class ShareFileController < ApplicationController
     end
 
     @error_messages = []
-    @owner_name = params[:owner_name]
+    @owner_name = owner.name
     @categories_hash = ShareFile.get_tags_hash(@share_file.owner_symbol)
     ajax_upload? ? render(:template => 'share_file/new_ajax_upload', :layout => false) : render
   end

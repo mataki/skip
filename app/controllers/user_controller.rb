@@ -128,6 +128,8 @@ class UserController < ApplicationController
       partial_name = "social_chain"
     when "social_postit"
       prepare_postit
+    else
+      render_404 and return
     end
 
     render :partial => partial_name, :layout => "layout"
