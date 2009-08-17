@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-08-17 13:43+0800\n"
+"POT-Creation-Date: 2009-08-17 14:27+0800\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -39,7 +39,10 @@ msgid ""
 msgstr ""
 
 #: app/models/board_entry.rb:303 app/views/bookmark/list.html.erb:54
-#: app/views/bookmark/show.html.erb:23
+#: app/views/bookmark/show.html.erb:23 app/views/rankings/bookmark.html.erb:2
+#: app/views/rankings/bookmark.html.erb:4
+#: app/views/rankings/bookmark.html.erb:7
+#: app/views/rankings/bookmark.html.erb:10
 msgid "%B %d %Y"
 msgstr ""
 
@@ -114,7 +117,7 @@ msgstr ""
 msgid "%s<br/>We apologize for the inconvenience caused.<br/>"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:271
+#: app/controllers/edit_controller.rb:272
 msgid "%{action} %{write_place}"
 msgstr ""
 
@@ -466,6 +469,10 @@ msgid ""
 "using SKIP]."
 msgstr ""
 
+#: app/views/user_mailer/sent_forgot_openid.html.erb:3
+msgid "Access the URL below to complete the OpenID resetting process."
+msgstr ""
+
 #: app/views/user_mailer/sent_apply_email_confirm.html.erb:3
 msgid "Access the URL below to complete the email address changing process."
 msgstr ""
@@ -602,7 +609,7 @@ msgid "Adding to antenna"
 msgstr ""
 
 #: app/controllers/group_layout_module.rb:9
-#: app/controllers/mypage_controller.rb:493
+#: app/controllers/mypage_controller.rb:495
 #: app/controllers/user_layout_module.rb:20
 msgid "Admin"
 msgstr ""
@@ -1995,7 +2002,7 @@ msgstr ""
 msgid "Belongs to: %s"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:487
+#: app/controllers/mypage_controller.rb:489
 #: app/controllers/user_layout_module.rb:5
 msgid "Blog"
 msgstr ""
@@ -2012,7 +2019,7 @@ msgstr ""
 msgid "Blog Entry View"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:765
+#: app/controllers/mypage_controller.rb:767
 msgid "Blogs"
 msgstr ""
 
@@ -2272,7 +2279,7 @@ msgstr ""
 
 #: app/controllers/bookmarks_controller.rb:34
 #: app/controllers/bookmark_controller.rb:118
-#: app/controllers/mypage_controller.rb:491
+#: app/controllers/mypage_controller.rb:493
 #: app/controllers/services_controller.rb:44
 #: app/controllers/user_layout_module.rb:9 config/environment.rb:91
 msgid "Bookmarks"
@@ -2393,7 +2400,7 @@ msgstr ""
 msgid "Change uid"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:669
+#: app/controllers/mypage_controller.rb:671
 msgid "Change your profile picture!"
 msgstr ""
 
@@ -2541,13 +2548,13 @@ msgstr ""
 msgid "Cosmetics"
 msgstr ""
 
-#: app/controllers/share_file_controller.rb:219
+#: app/controllers/share_file_controller.rb:223
 msgid ""
 "Could not find the entity of the specified file. Contact system "
 "administrator."
 msgstr ""
 
-#: app/controllers/user_controller.rb:219
+#: app/controllers/user_controller.rb:221
 #: app/views/admin/group_categories/new.html.erb:10
 #: app/views/admin/openid_identifiers/new.html.erb:17
 #: app/views/admin/users/create_uid.html.erb:16
@@ -2597,7 +2604,7 @@ msgid ""
 "needed."
 msgstr ""
 
-#: app/controllers/edit_controller.rb:91
+#: app/controllers/edit_controller.rb:92
 msgid "Created successfully."
 msgstr ""
 
@@ -2698,7 +2705,7 @@ msgid "Delete all the groups under the group category before you delete it."
 msgstr ""
 
 #: app/controllers/admin/group_categories_controller.rb:28
-#: app/controllers/edit_controller.rb:234
+#: app/controllers/edit_controller.rb:235
 msgid "Deletion complete."
 msgstr ""
 
@@ -2766,7 +2773,19 @@ msgstr ""
 msgid "Display: "
 msgstr ""
 
-#: app/controllers/share_file_controller.rb:261
+#: app/views/user_mailer/sent_cleaning_notification.html.erb:3
+msgid ""
+"Do you clean the user data periodically?\n"
+"\n"
+"Check periodically if the following jobs are done properly:\n"
+"User retirement procedure\n"
+"Changes to the name of users\n"
+"Grant / deny administrative rights to users\n"
+"Changes to user email addresses\n"
+"\n"
+msgstr ""
+
+#: app/controllers/share_file_controller.rb:265
 msgid "Download history was successfully deleted."
 msgstr ""
 
@@ -2782,7 +2801,7 @@ msgstr ""
 msgid "Driving"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:271
+#: app/controllers/edit_controller.rb:272
 #: app/views/admin/group_categories/index.html.erb:28
 #: app/views/admin/openid_identifiers/index.html.erb:17
 #: app/views/admin/pictures/index.html.erb:27
@@ -2875,7 +2894,7 @@ msgstr[1] ""
 msgid "Email address is mandatory."
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:420
+#: app/controllers/mypage_controller.rb:422
 msgid "Email address was updated successfully."
 msgstr ""
 
@@ -2939,7 +2958,7 @@ msgstr ""
 msgid "Entries"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:969
+#: app/controllers/mypage_controller.rb:971
 msgid "Entries bookmarked by yourself"
 msgstr ""
 
@@ -2955,7 +2974,7 @@ msgstr ""
 msgid "Entries talking about this entry:"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:968
+#: app/controllers/mypage_controller.rb:970
 msgid "Entries you have made comments"
 msgstr ""
 
@@ -2971,7 +2990,7 @@ msgstr ""
 msgid "Entry was successfully marked unread."
 msgstr ""
 
-#: app/controllers/edit_controller.rb:208
+#: app/controllers/edit_controller.rb:209
 msgid "Entry was successfully updated."
 msgstr ""
 
@@ -3047,7 +3066,7 @@ msgstr ""
 msgid "Failed to delete since there are still other users in the group."
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:250
+#: app/controllers/mypage_controller.rb:252
 msgid "Failed to load rss."
 msgstr ""
 
@@ -3055,7 +3074,7 @@ msgstr ""
 msgid "Failed to open the content."
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:406
+#: app/controllers/mypage_controller.rb:408
 msgid "Failed to process your request. Try resubmitting your request again."
 msgstr ""
 
@@ -3080,7 +3099,7 @@ msgstr ""
 msgid "Failed to save the image. Try again or contact administrator."
 msgstr ""
 
-#: app/controllers/share_file_controller.rb:81
+#: app/controllers/share_file_controller.rb:85
 msgid "Failed to upload file(s)."
 msgstr ""
 
@@ -3090,7 +3109,7 @@ msgid_plural "Failed to upload the following files."
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/controllers/share_file_controller.rb:83
+#: app/controllers/share_file_controller.rb:87
 msgid "Failure:%{failure}]"
 msgid_plural "Failures:%{failure}]"
 msgstr[0] ""
@@ -3113,7 +3132,7 @@ msgstr ""
 msgid "File"
 msgstr ""
 
-#: app/controllers/share_file_controller.rb:227
+#: app/controllers/share_file_controller.rb:231
 msgid "File Download"
 msgstr ""
 
@@ -3137,11 +3156,11 @@ msgstr ""
 msgid "File size: %s"
 msgstr ""
 
-#: app/controllers/share_file_controller.rb:146
+#: app/controllers/share_file_controller.rb:150
 msgid "File was successfully deleted."
 msgstr ""
 
-#: app/controllers/share_file_controller.rb:77
+#: app/controllers/share_file_controller.rb:81
 msgid "File was successfully uploaded."
 msgid_plural "Files were successfully uploaded."
 msgstr[0] ""
@@ -3181,7 +3200,7 @@ msgstr ""
 msgid "Footer"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:492
+#: app/controllers/mypage_controller.rb:494
 #: app/controllers/user_layout_module.rb:19
 msgid "Footprints"
 msgstr ""
@@ -3383,16 +3402,16 @@ msgstr ""
 msgid "GroupParticipation|Waiting|true"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:270
+#: app/controllers/edit_controller.rb:271
 #: app/controllers/groups_controller.rb:65
 #: app/controllers/group_controller.rb:372
 #: app/controllers/services_controller.rb:46
-#: app/controllers/share_file_controller.rb:161 config/environment.rb:85
+#: app/controllers/share_file_controller.rb:165 config/environment.rb:85
 msgid "Groups"
 msgstr ""
 
 #: app/controllers/feed_controller.rb:115
-#: app/controllers/mypage_controller.rb:490
+#: app/controllers/mypage_controller.rb:492
 #: app/controllers/user_layout_module.rb:8
 #: app/helpers/application_helper.rb:348 app/views/user/show.html.erb:4
 msgid "Groups Joined"
@@ -3504,7 +3523,7 @@ msgstr ""
 msgid "Hobbies"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:485
+#: app/controllers/mypage_controller.rb:487
 #: app/controllers/user_layout_module.rb:18
 msgid "Home"
 msgstr ""
@@ -3627,15 +3646,15 @@ msgstr ""
 msgid "Introduction from other users"
 msgstr ""
 
-#: app/controllers/user_controller.rb:173
+#: app/controllers/user_controller.rb:175
 msgid "Introduction was created successfully."
 msgstr ""
 
-#: app/controllers/user_controller.rb:187
+#: app/controllers/user_controller.rb:189
 msgid "Introduction was deleted successfully."
 msgstr ""
 
-#: app/controllers/user_controller.rb:190
+#: app/controllers/user_controller.rb:192
 msgid "Introduction was updated successfully."
 msgstr ""
 
@@ -3647,7 +3666,7 @@ msgstr ""
 msgid "Introductions"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:455
+#: app/controllers/mypage_controller.rb:457
 msgid "Invalid OpenID URL format."
 msgstr ""
 
@@ -3678,13 +3697,13 @@ msgstr ""
 msgid "Invalid parameter(s) detected."
 msgstr ""
 
-#: app/controllers/edit_controller.rb:59
-#: app/controllers/edit_controller.rb:162
+#: app/controllers/edit_controller.rb:60
+#: app/controllers/edit_controller.rb:163
 msgid "Invalid parameter(s) found."
 msgstr ""
 
-#: app/controllers/edit_controller.rb:290
-#: app/controllers/share_file_controller.rb:278
+#: app/controllers/edit_controller.rb:291
+#: app/controllers/share_file_controller.rb:282
 msgid "Invalid parameter(s)."
 msgstr ""
 
@@ -3692,8 +3711,8 @@ msgstr ""
 msgid "Invalid password reset URL. Try again or contact system administrator."
 msgstr ""
 
-#: app/controllers/edit_controller.rb:300
-#: app/controllers/edit_controller.rb:306
+#: app/controllers/edit_controller.rb:301
+#: app/controllers/edit_controller.rb:307
 msgid "Invalid privacy setting."
 msgstr ""
 
@@ -3847,7 +3866,7 @@ msgid ""
 "notifications from %s<br/>(Emails are sent periodically in a batch)"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:972
+#: app/controllers/mypage_controller.rb:974
 msgid "List of unread entries"
 msgstr ""
 
@@ -4082,8 +4101,8 @@ msgid "Message: "
 msgstr ""
 
 #: app/controllers/feed_controller.rb:82
-#: app/controllers/mypage_controller.rb:695
-#: app/controllers/mypage_controller.rb:967 app/models/antenna.rb:94
+#: app/controllers/mypage_controller.rb:697
+#: app/controllers/mypage_controller.rb:969 app/models/antenna.rb:94
 msgid "Messages for you"
 msgstr ""
 
@@ -4127,7 +4146,7 @@ msgstr ""
 msgid "Monthly List"
 msgstr ""
 
-#: app/controllers/rankings_controller.rb:160
+#: app/controllers/rankings_controller.rb:158
 msgid "Monthly Rankings"
 msgstr ""
 
@@ -4166,11 +4185,11 @@ msgstr ""
 msgid "My Account"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:270
+#: app/controllers/edit_controller.rb:271
 msgid "My Blog"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:483
+#: app/controllers/mypage_controller.rb:485
 #: app/controllers/user_layout_module.rb:26
 #: app/controllers/user_layout_module.rb:30 config/environment.rb:61
 msgid "My Page"
@@ -4304,7 +4323,7 @@ msgstr ""
 msgid "No bookmarks have been registered."
 msgstr ""
 
-#: app/controllers/rankings_controller.rb:152
+#: app/controllers/rankings_controller.rb:150
 msgid "No matched bookmark."
 msgstr ""
 
@@ -4325,7 +4344,7 @@ msgid "No matching entries found."
 msgstr ""
 
 #: app/controllers/groups_controller.rb:37
-#: app/controllers/user_controller.rb:152
+#: app/controllers/user_controller.rb:154
 msgid "No matching groups found."
 msgstr ""
 
@@ -4334,7 +4353,7 @@ msgid "No matching results found."
 msgstr ""
 
 #: app/controllers/search_controller.rb:86
-#: app/controllers/share_file_controller.rb:182
+#: app/controllers/share_file_controller.rb:186
 msgid "No matching shared files found."
 msgstr ""
 
@@ -4463,7 +4482,7 @@ msgstr ""
 msgid "OpenID URL"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:443
+#: app/controllers/mypage_controller.rb:445
 msgid "OpenID URL was successfully set."
 msgstr ""
 
@@ -4486,7 +4505,7 @@ msgstr ""
 msgid "OpenID server not found. Please provide a correct OpenID URL."
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:450
+#: app/controllers/mypage_controller.rb:452
 msgid "OpenId process is cancelled or failed."
 msgstr ""
 
@@ -4569,7 +4588,7 @@ msgstr ""
 #: app/controllers/application_controller.rb:150
 #: app/controllers/board_entries_controller.rb:89
 #: app/controllers/board_entries_controller.rb:139
-#: app/controllers/share_file_controller.rb:256
+#: app/controllers/share_file_controller.rb:260
 msgid "Operation unauthorized."
 msgstr ""
 
@@ -4603,7 +4622,7 @@ msgstr ""
 msgid "Output Format"
 msgstr ""
 
-#: app/controllers/rankings_controller.rb:161
+#: app/controllers/rankings_controller.rb:159
 #: app/views/rankings/all.html.erb:4
 msgid "Overall Rankings"
 msgstr ""
@@ -4654,7 +4673,7 @@ msgstr ""
 msgid "Password was successfully reset."
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:386
+#: app/controllers/mypage_controller.rb:388
 msgid "Password was successfully updated."
 msgstr ""
 
@@ -4727,7 +4746,7 @@ msgstr ""
 msgid "Playing Sports"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:459
+#: app/controllers/mypage_controller.rb:461
 msgid "Please input OpenID URL."
 msgstr ""
 
@@ -4740,7 +4759,7 @@ msgstr ""
 msgid "Please input valid user or group"
 msgstr ""
 
-#: app/controllers/rankings_controller.rb:162
+#: app/controllers/rankings_controller.rb:160
 msgid "Popular Bookmarks"
 msgstr ""
 
@@ -4782,7 +4801,7 @@ msgstr ""
 msgid "Posts (Entries you have posted)"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:970
+#: app/controllers/mypage_controller.rb:972
 msgid "Posts in the groups joined"
 msgstr ""
 
@@ -4817,7 +4836,7 @@ msgid_plural "Problems found in following items: "
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/controllers/mypage_controller.rb:486
+#: app/controllers/mypage_controller.rb:488
 #: app/controllers/user_layout_module.rb:4 app/views/user/show.html.erb:36
 msgid "Profile"
 msgstr ""
@@ -4889,7 +4908,7 @@ msgstr ""
 msgid "Ranking of Popular Users"
 msgstr ""
 
-#: app/controllers/rankings_controller.rb:158 config/environment.rb:97
+#: app/controllers/rankings_controller.rb:156 config/environment.rb:97
 msgid "Rankings"
 msgstr ""
 
@@ -4946,12 +4965,12 @@ msgid "Recent Groups"
 msgstr ""
 
 #: app/controllers/feed_controller.rb:71
-#: app/controllers/mypage_controller.rb:745
+#: app/controllers/mypage_controller.rb:747
 msgid "Recent Popular Entries (excluding questions)"
 msgstr ""
 
 #: app/controllers/feed_controller.rb:21
-#: app/controllers/mypage_controller.rb:723
+#: app/controllers/mypage_controller.rb:725
 msgid "Recent Questions"
 msgstr ""
 
@@ -5428,7 +5447,7 @@ msgid "ShareFile|User"
 msgstr ""
 
 #: app/controllers/group_layout_module.rb:8
-#: app/controllers/mypage_controller.rb:488
+#: app/controllers/mypage_controller.rb:490
 #: app/controllers/user_layout_module.rb:6
 msgid "Shared Files"
 msgstr ""
@@ -5532,7 +5551,7 @@ msgstr ""
 msgid "Signup"
 msgstr ""
 
-#: app/controllers/rankings_controller.rb:163
+#: app/controllers/rankings_controller.rb:161
 msgid "Site Information"
 msgstr ""
 
@@ -5604,7 +5623,7 @@ msgstr ""
 msgid "So you have the page bookmarked in %s."
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:489
+#: app/controllers/mypage_controller.rb:491
 #: app/controllers/user_layout_module.rb:7
 msgid "Socials"
 msgstr ""
@@ -5671,15 +5690,15 @@ msgstr ""
 msgid "Specified page does not exist."
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:429
+#: app/controllers/mypage_controller.rb:431
 msgid "Specified page not found."
 msgstr ""
 
-#: app/controllers/share_file_controller.rb:155
+#: app/controllers/share_file_controller.rb:159
 msgid "Specified share file owner does not exist."
 msgstr ""
 
-#: app/controllers/edit_controller.rb:254
+#: app/controllers/edit_controller.rb:255
 msgid "Specified trackback was deleted successfully."
 msgstr ""
 
@@ -5866,6 +5885,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: app/views/user_mailer/sent_apply_email_confirm.html.erb:4
+#: app/views/user_mailer/sent_forgot_openid.html.erb:4
 #: app/views/user_mailer/sent_forgot_password.html.erb:4
 msgid "The URL below will be expired 24 hours after this email has been sent."
 msgstr ""
@@ -5920,7 +5940,7 @@ msgstr ""
 msgid "The search targets are titles and comments"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:425
+#: app/controllers/mypage_controller.rb:427
 msgid ""
 "The specified email address has already been registered. Try resubmitting "
 "the request with another address."
@@ -5943,7 +5963,7 @@ msgstr ""
 msgid "There are no entries posted."
 msgstr ""
 
-#: app/controllers/user_controller.rb:282
+#: app/controllers/user_controller.rb:284
 msgid "There are no introductions."
 msgstr ""
 
@@ -6022,7 +6042,7 @@ msgstr ""
 msgid "Time Last Updated: "
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:245
+#: app/controllers/mypage_controller.rb:247
 msgid "Timeout to loading rss."
 msgstr ""
 
@@ -6178,7 +6198,7 @@ msgstr ""
 msgid "Unstar"
 msgstr ""
 
-#: app/controllers/user_controller.rb:225
+#: app/controllers/user_controller.rb:227
 #: app/views/admin/group_categories/edit.html.erb:11
 #: app/views/admin/openid_identifiers/edit.html.erb:16
 #: app/views/admin/users/change_uid.html.erb:20
@@ -6198,11 +6218,11 @@ msgstr ""
 msgid "Update complete."
 msgstr ""
 
-#: app/controllers/edit_controller.rb:239
+#: app/controllers/edit_controller.rb:240
 msgid "Update on the same entry from other users detected. Please try again."
 msgstr ""
 
-#: app/controllers/edit_controller.rb:216
+#: app/controllers/edit_controller.rb:217
 msgid "Update on the same entry from other users detected. Reset the edit?"
 msgstr ""
 
@@ -6210,16 +6230,16 @@ msgstr ""
 msgid "Updated %{count} records."
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:376
+#: app/controllers/mypage_controller.rb:378
 msgid "Updated notification email settings."
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:469
+#: app/controllers/mypage_controller.rb:471
 msgid "Updated successfully."
 msgstr ""
 
 #: app/controllers/admin/users_controller.rb:68
-#: app/controllers/share_file_controller.rb:127
+#: app/controllers/share_file_controller.rb:131
 msgid "Updated."
 msgstr ""
 
@@ -6291,7 +6311,7 @@ msgid ""
 "User has entered email address %s is not in use. Please start with the site."
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:355
+#: app/controllers/mypage_controller.rb:357
 msgid "User information was successfully updated."
 msgstr ""
 
@@ -6787,7 +6807,7 @@ msgstr ""
 msgid "Welcome to [%s]!"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:663
+#: app/controllers/mypage_controller.rb:665
 msgid "Welcome! Read detailed help."
 msgstr ""
 
@@ -6832,7 +6852,7 @@ msgstr ""
 msgid "Within a minute"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:271
+#: app/controllers/edit_controller.rb:272
 msgid "Write"
 msgstr ""
 
@@ -6973,7 +6993,7 @@ msgstr ""
 msgid "You have message(s) from %s"
 msgstr ""
 
-#: app/controllers/user_controller.rb:303
+#: app/controllers/user_controller.rb:305
 msgid "You have no bookmarks currently."
 msgstr ""
 
@@ -7023,7 +7043,7 @@ msgstr ""
 msgid "Your registration is complete."
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:404
+#: app/controllers/mypage_controller.rb:406
 msgid ""
 "Your request of changing email address accepted. Check your email to "
 "complete the process."
@@ -7321,7 +7341,7 @@ msgstr ""
 msgid "[Sort by modified date]"
 msgstr ""
 
-#: app/controllers/share_file_controller.rb:82
+#: app/controllers/share_file_controller.rb:86
 msgid "[Success:%{success} "
 msgid_plural "[Successes:%{success} "
 msgstr[0] ""
@@ -7548,7 +7568,7 @@ msgstr ""
 msgid "more"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:312
+#: app/controllers/edit_controller.rb:313
 msgid "needs to be a valid date."
 msgstr ""
 
