@@ -1,18 +1,18 @@
 <%= @header %>
 
-下記URLにアクセスして、ユーザ登録をお願いします。
-なお、本メール到着後<%= h User.activation_lifetime %>日が経過すると、下記URLは無効となりますのでご注意ください。
+<%= _('Access the URL below to complete the registration process.')%>
+<%= n_("The URL below will be expired %s day after this email has been sent.", "The URL below will be expired %s days after this email has been sent.", User.activation_lifetime) % h(User.activation_lifetime)%>
 
 <%= @signup_url %>
 
 <% if enable_activate? -%>
-無効になってしまった場合、以下のURLにアクセスし、[<%= _('Register your profile and start using SKIP') %>]リンクをクリックして下さい。
-ユーザ登録をやり直すことが出来ます。
+<%= _('Access the URL below and click on the link [Register your profile and start using SKIP].')%>
+<%= _('You can restart the user registration.')%>
 
 <%= @site_url %>
 
 <% else -%>
-無効になってしまった場合は本メール末尾の連絡先へお問い合わせ下さい。
+<%= _('Refer to the contact at the bottom of this email in case the link has expired.')%>
 
 <% end -%>
 <%= @footer %>

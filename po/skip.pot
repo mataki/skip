@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-08-14 17:49+0800\n"
+"POT-Creation-Date: 2009-08-17 13:43+0800\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -460,12 +460,22 @@ msgstr ""
 msgid "Access denied by search node. Please contact system owner."
 msgstr ""
 
+#: app/views/user_mailer/sent_activate.html.erb:9
+msgid ""
+"Access the URL below and click on the link [Register your profile and start "
+"using SKIP]."
+msgstr ""
+
 #: app/views/user_mailer/sent_apply_email_confirm.html.erb:3
 msgid "Access the URL below to complete the email address changing process."
 msgstr ""
 
 #: app/views/user_mailer/sent_forgot_password.html.erb:3
 msgid "Access the URL below to complete the password resetting process."
+msgstr ""
+
+#: app/views/user_mailer/sent_activate.html.erb:3
+msgid "Access the URL below to complete the registration process."
 msgstr ""
 
 #: app/views/user_mailer/sent_signup_confirm.html.erb:5
@@ -4969,6 +4979,12 @@ msgstr ""
 msgid "Recommended tags: "
 msgstr ""
 
+#: app/views/user_mailer/sent_activate.html.erb:15
+msgid ""
+"Refer to the contact at the bottom of this email in case the link has "
+"expired."
+msgstr ""
+
 #: app/views/portal/_registration_form.html.erb:68
 msgid "Register User"
 msgstr ""
@@ -4983,7 +4999,7 @@ msgstr ""
 msgid "Register your profile"
 msgstr ""
 
-#: app/views/user_mailer/sent_activate.html.erb:9
+#: app/views/platform/index.html.erb:51
 msgid "Register your profile and start using SKIP"
 msgstr ""
 
@@ -4999,10 +5015,6 @@ msgstr ""
 #: app/controllers/admin/users_controller.rb:38
 #: app/controllers/admin/users_controller.rb:106
 msgid "Registered."
-msgstr ""
-
-#: app/views/platform/index.html.erb:51
-msgid "Registration"
 msgstr ""
 
 #: app/views/group/_manage_permit.html.erb:21
@@ -5845,6 +5857,13 @@ msgid ""
 "Tell us a little about you in the day off, e.g. the details of your hobbies "
 "or how you spend your holidays."
 msgstr ""
+
+#: app/views/user_mailer/sent_activate.html.erb:4
+msgid "The URL below will be expired %s day after this email has been sent."
+msgid_plural ""
+"The URL below will be expired %s days after this email has been sent."
+msgstr[0] ""
+msgstr[1] ""
 
 #: app/views/user_mailer/sent_apply_email_confirm.html.erb:4
 #: app/views/user_mailer/sent_forgot_password.html.erb:4
@@ -6924,6 +6943,10 @@ msgstr ""
 msgid ""
 "You can put tags and comment on the bookmark.<br/>(It is recommended to "
 "bookmark users and entries in %s from the links within the respective pages.)"
+msgstr ""
+
+#: app/views/user_mailer/sent_activate.html.erb:10
+msgid "You can restart the user registration."
 msgstr ""
 
 #: app/controllers/admin/users_controller.rb:85

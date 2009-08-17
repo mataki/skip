@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-08-14 17:49+0800\n"
+"POT-Creation-Date: 2009-08-17 13:43+0800\n"
 "PO-Revision-Date: 2009-08-07 16:09+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -493,6 +493,14 @@ msgid "Access denied by search node. Please contact system owner."
 msgstr ""
 "検索エンジンにアクセスできませんでした。システム管理者に連絡してください。"
 
+#: app/views/user_mailer/sent_activate.html.erb:9
+msgid ""
+"Access the URL below and click on the link [Register your profile and start "
+"using SKIP]."
+msgstr ""
+"無効になってしまった場合、以下のURLにアクセスし、[ユーザ登録してSKIPの利用を"
+"開始する]リンクをクリックして下さい。"
+
 #: app/views/user_mailer/sent_apply_email_confirm.html.erb:3
 msgid "Access the URL below to complete the email address changing process."
 msgstr "下記URLにアクセスして、メールアドレス変更を完了してください。"
@@ -500,6 +508,10 @@ msgstr "下記URLにアクセスして、メールアドレス変更を完了し
 #: app/views/user_mailer/sent_forgot_password.html.erb:3
 msgid "Access the URL below to complete the password resetting process."
 msgstr "下記URLにアクセスして、パスワードリセットを完了して下さい。"
+
+#: app/views/user_mailer/sent_activate.html.erb:3
+msgid "Access the URL below to complete the registration process."
+msgstr "下記URLにアクセスして、ユーザ登録をお願いします。"
 
 #: app/views/user_mailer/sent_signup_confirm.html.erb:5
 msgid "Access to %s. Click here."
@@ -5211,6 +5223,12 @@ msgstr "最近登録されたユーザ"
 msgid "Recommended tags: "
 msgstr "オススメ・定番のタグ："
 
+#: app/views/user_mailer/sent_activate.html.erb:15
+msgid ""
+"Refer to the contact at the bottom of this email in case the link has "
+"expired."
+msgstr "無効になってしまった場合は本メール末尾の連絡先へお問い合わせ下さい。"
+
 #: app/views/portal/_registration_form.html.erb:68
 msgid "Register User"
 msgstr "ユーザ登録"
@@ -5227,7 +5245,7 @@ msgstr ""
 msgid "Register your profile"
 msgstr "プロフィールの登録"
 
-#: app/views/user_mailer/sent_activate.html.erb:9
+#: app/views/platform/index.html.erb:51
 msgid "Register your profile and start using SKIP"
 msgstr "ユーザ登録してSKIPの利用を開始する"
 
@@ -5244,10 +5262,6 @@ msgstr "登録ユーザ数：%s人"
 #: app/controllers/admin/users_controller.rb:106
 msgid "Registered."
 msgstr "登録しました。"
-
-#: app/views/platform/index.html.erb:51
-msgid "Registration"
-msgstr "ユーザ登録してSKIPの利用を開始する"
 
 #: app/views/group/_manage_permit.html.erb:21
 msgid "Reject"
@@ -6109,6 +6123,17 @@ msgid ""
 "or how you spend your holidays."
 msgstr ""
 "趣味の詳しい内容や、休日の過ごし方など、オフのあなたを少しだけ教えて下さい。"
+
+#: app/views/user_mailer/sent_activate.html.erb:4
+msgid "The URL below will be expired %s day after this email has been sent."
+msgid_plural ""
+"The URL below will be expired %s days after this email has been sent."
+msgstr[0] ""
+"なお、本メール到着後%s日が経過すると、下記URLは無効となりますのでご注意くださ"
+"い。"
+msgstr[1] ""
+"なお、本メール到着後%s日が経過すると、下記URLは無効となりますのでご注意くださ"
+"い。"
 
 #: app/views/user_mailer/sent_apply_email_confirm.html.erb:4
 #: app/views/user_mailer/sent_forgot_password.html.erb:4
@@ -7236,6 +7261,10 @@ msgstr ""
 "タグをつけてコメントすることができます<br/>（%s内のユーザやブログはページ内の"
 "リンクからブックマークすることをおすすめします）"
 
+#: app/views/user_mailer/sent_activate.html.erb:10
+msgid "You can restart the user registration."
+msgstr "ユーザ登録をやり直すことが出来ます。"
+
 #: app/controllers/admin/users_controller.rb:85
 msgid "You cannot delete user who is not unused."
 msgstr "未使用のユーザ以外削除できません。"
@@ -8104,3 +8133,6 @@ msgstr ""
 
 #~ msgid "Off"
 #~ msgstr "オフ"
+
+#~ msgid "Registration"
+#~ msgstr "ユーザ登録してSKIPの利用を開始する"
