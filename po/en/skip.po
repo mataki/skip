@@ -1299,38 +1299,43 @@ msgstr ""
 #: app/models/admin/setting.rb:106
 msgid "Admin::Setting|Password strength description"
 msgstr ""
+"Here we set the password strength.<p>Low: Needs 6 or more alpha-numericals and symbols.</"
+"p><p>Middle: Needs 8 or more alpha-numericals and symbols .  "
+"There must also be at least 1 upper case letter, 1 lower case letter and 1 number in the password.</p><p>High: needs 8 or more alpha-numericals and symbols. "
+"There must also be at least 1 upper case letter, 1 lower case letter and 1 number in the password.</p>"
+"<p>Custom: You can define your own password strength definistion using regular expression.</p>"
 
 #: app/models/admin/setting.rb:269
 msgid "Admin::Setting|Password strength|Validation message "
-msgstr ""
+msgstr " "
 
 #: app/models/admin/setting.rb:108
 msgid "Admin::Setting|Password strength|Validation message high"
-msgstr ""
+msgstr "needs 8 or more alpha-numericals and symbols (!@#$%^&*?_~). There must also be at least 1 upper case letter, 1 lower case letter, 1 number and 1 symbol in the password."
 
 #: app/models/admin/setting.rb:112
 msgid "Admin::Setting|Password strength|Validation message low"
-msgstr ""
+msgstr "needs 6 or more alpha-numericals and symbols (!@#$%^&*?_~)."
 
 #: app/models/admin/setting.rb:110 app/models/admin/setting.rb:272
 msgid "Admin::Setting|Password strength|Validation message middle"
-msgstr ""
+msgstr "needs 8 or more alpha-numericals and symbols (!@#$%^&*?_~). There must also be at least 1 upper case letter, 1 lower case letter and 1 number in the password."
 
 #: app/models/admin/setting.rb:113
 msgid "Admin::Setting|Password strength|custom"
-msgstr ""
+msgstr "Custom"
 
 #: app/models/admin/setting.rb:107
 msgid "Admin::Setting|Password strength|high"
-msgstr ""
+msgstr "High"
 
 #: app/models/admin/setting.rb:111
 msgid "Admin::Setting|Password strength|low"
-msgstr ""
+msgstr "Low"
 
 #: app/models/admin/setting.rb:109
 msgid "Admin::Setting|Password strength|middle"
-msgstr ""
+msgstr "Middle"
 
 #: app/models/admin/setting.rb:53
 msgid "Admin::Setting|Point button"
