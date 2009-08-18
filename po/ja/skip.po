@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-08-18 12:07+0800\n"
+"POT-Creation-Date: 2009-08-18 12:14+0800\n"
 "PO-Revision-Date: 2009-08-07 16:09+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -250,7 +250,7 @@ msgstr[0] "%{title_val}　コメント数:(%{comment_count_val})"
 
 #: app/views/mypage/entries_by_date.html.erb:15
 msgid "%{wday}, %{date} - %{count} Entry"
-msgid_plural "(%{wday}) - %{count} Entries"
+msgid_plural "%{wday}, %{date} - %{count} Entries"
 msgstr[0] "%{date}(%{wday}) - %{count}件"
 msgstr[1] "%{date}(%{wday}) - %{count}件"
 
