@@ -4564,7 +4564,7 @@ msgstr "[次へ]"
 #: app/views/mypage/entries_by_date.html.erb:10
 #: app/views/mypage/entries_by_date.html.erb:20
 msgid "Next Day (%s)"
-msgstr ""
+msgstr "次の日(%s)"
 
 #: app/helpers/edit_helper.rb:31
 msgid "Next page"
@@ -5084,7 +5084,7 @@ msgstr "前へ"
 #: app/views/mypage/entries_by_date.html.erb:9
 #: app/views/mypage/entries_by_date.html.erb:19
 msgid "Prev Day (%s)"
-msgstr ""
+msgstr "前の日(%s)"
 
 #: app/helpers/edit_helper.rb:30
 msgid "Previous page"
