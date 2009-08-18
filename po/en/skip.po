@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-08-17 18:58+0800\n"
+"POT-Creation-Date: 2009-08-18 11:13+0800\n"
 "PO-Revision-Date: 2009-06-29 13:31+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -39,7 +39,9 @@ msgid ""
 msgstr ""
 
 #: app/models/board_entry.rb:303 app/views/bookmark/list.html.erb:54
-#: app/views/bookmark/show.html.erb:23 app/views/rankings/bookmark.html.erb:2
+#: app/views/bookmark/show.html.erb:23
+#: app/views/mypage/entries_by_date.html.erb:15
+#: app/views/rankings/bookmark.html.erb:2
 #: app/views/rankings/bookmark.html.erb:4
 #: app/views/rankings/bookmark.html.erb:7
 #: app/views/rankings/bookmark.html.erb:10
@@ -241,6 +243,12 @@ msgstr ""
 #: app/controllers/feed_controller.rb:146
 msgid "%{title_val} Comment:(%{comment_count_val})"
 msgid_plural "%{title_val} Comments:(%{comment_count_val})"
+msgstr[0] ""
+msgstr[1] ""
+
+#: app/views/mypage/entries_by_date.html.erb:15
+msgid "(%{wday}) - %{count} Entry"
+msgid_plural "(%{wday}) - %{count} Entries"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -4335,6 +4343,11 @@ msgstr ""
 msgid "Next"
 msgstr ""
 
+#: app/views/mypage/entries_by_date.html.erb:10
+#: app/views/mypage/entries_by_date.html.erb:20
+msgid "Next Day (%s)"
+msgstr ""
+
 #: app/helpers/edit_helper.rb:31
 msgid "Next page"
 msgstr ""
@@ -4840,6 +4853,11 @@ msgstr ""
 
 #: app/views/search/_page_navi.html.erb:7
 msgid "Prev"
+msgstr ""
+
+#: app/views/mypage/entries_by_date.html.erb:9
+#: app/views/mypage/entries_by_date.html.erb:19
+msgid "Prev Day (%s)"
 msgstr ""
 
 #: app/helpers/edit_helper.rb:30
@@ -7281,6 +7299,10 @@ msgstr ""
 msgid "[Owner only]"
 msgstr ""
 
+#: lib/skip_util.rb:101
+msgid "[Play/Next]"
+msgstr ""
+
 #: app/views/mypage/welcome.html.erb:42
 msgid "[Popular Blogs]"
 msgstr ""
@@ -7316,6 +7338,10 @@ msgstr[1] ""
 
 #: app/views/admin/settings/_security.html.erb:17
 msgid "[Request all users to reset their passwords]"
+msgstr ""
+
+#: lib/skip_util.rb:102
+msgid "[Rewind]"
 msgstr ""
 
 #: app/views/mypage/_antennas.html.erb:28

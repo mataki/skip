@@ -6,18 +6,18 @@
 
   <div id="contents_right">
     <table width="100%"><tr>
-    <td align="left"><%= link_to "前の日(#{@prev_day.strftime('%Y/%m/%d')})", :year => @prev_day.year, :month => @prev_day.month, :day => @prev_day.day if @prev_day -%></td>
-    <td align="right"><%= link_to "次の日(#{@next_day.strftime('%Y/%m/%d')})", :year => @next_day.year, :month => @next_day.month, :day => @next_day.day if @next_day -%></td>
+    <td align="left"><%= link_to _("Prev Day (%s)") % @prev_day.strftime('%Y/%m/%d'), :year => @prev_day.year, :month => @prev_day.month, :day => @prev_day.day if @prev_day -%></td>
+    <td align="right"><%= link_to _("Next Day (%s)") % @next_day.strftime('%Y/%m/%d'), :year => @next_day.year, :month => @next_day.month, :day => @next_day.day if @next_day -%></td>
     </tr></table>
 
     <%= render :partial => "page_space",
                :locals => { :id_name => 'entries',
-                            :title_name => @selected_day.strftime("%Y年%m月%d日") + "(#{SkipUtil::WDAYS[@selected_day.wday]}) - #{@entries.size}件",
+                            :title_name => @selected_day.strftime(_("%B %d %Y")) + n_("(%{wday}) - %{count} Entry", "(%{wday}) - %{count} Entries", @entries.size) % {:wday => _(SkipUtil::WDAYS[@selected_day.wday]), :count => @entries.size},
                             :pages => @entries} %>
 
     <table width="100%"><tr>
-    <td align="left"><%= link_to "前の日(#{@prev_day.strftime('%Y/%m/%d')})", :year => @prev_day.year, :month => @prev_day.month, :day => @prev_day.day if @prev_day -%></td>
-    <td align="right"><%= link_to "次の日(#{@next_day.strftime('%Y/%m/%d')})", :year => @next_day.year, :month => @next_day.month, :day => @next_day.day if @next_day -%></td>
+    <td align="left"><%= link_to _("Prev Day (%s)") % @prev_day.strftime('%Y/%m/%d'), :year => @prev_day.year, :month => @prev_day.month, :day => @prev_day.day if @prev_day -%></td>
+    <td align="right"><%= link_to _("Next Day (%s)") % @next_day.strftime('%Y/%m/%d'), :year => @next_day.year, :month => @next_day.month, :day => @next_day.day if @next_day -%></td>
     </tr></table>
   </div><!-- contents_right -->
 

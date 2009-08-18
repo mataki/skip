@@ -15,7 +15,7 @@
 
 require 'kconv'
 class SkipUtil
-  WDAYS = ["日", "月", "火", "水", "木", "金", "土"]
+  WDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
 
   def self.split_symbol symbol
     symbol_type = symbol.split(":").first
@@ -98,8 +98,8 @@ class SkipUtil
         image_link << "<param name='movie' value='#{image_url}' />"
         image_link << "</object>"
         image_link << "<div style='text-align: center;'>"
-        image_link << "<a href='javascript: $j(\"#flash#{file_count}\")[0].Play();'>[再生/次へ]</a>"
-        image_link << "<a href='javascript: $j(\"#flash#{file_count}\")[0].Rewind();'>[最初から]</a>"
+        image_link << "<a href='javascript: $j(\"#flash#{file_count}\")[0].Play();'>" + _("[Play/Next]")+ "</a>"
+        image_link << "<a href='javascript: $j(\"#flash#{file_count}\")[0].Rewind();'>" + _("[Rewind]") + "</a>"
         image_link << "</div></div>"
       else
         image_link = "<a href='#{image_url}' class=\"nyroModal zoomable\" ><img src='#{image_url}' "

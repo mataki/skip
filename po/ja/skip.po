@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-08-17 18:58+0800\n"
+"POT-Creation-Date: 2009-08-18 11:13+0800\n"
 "PO-Revision-Date: 2009-08-07 16:09+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41,7 +41,9 @@ msgstr ""
 "指定する際に使います。"
 
 #: app/models/board_entry.rb:303 app/views/bookmark/list.html.erb:54
-#: app/views/bookmark/show.html.erb:23 app/views/rankings/bookmark.html.erb:2
+#: app/views/bookmark/show.html.erb:23
+#: app/views/mypage/entries_by_date.html.erb:15
+#: app/views/rankings/bookmark.html.erb:2
 #: app/views/rankings/bookmark.html.erb:4
 #: app/views/rankings/bookmark.html.erb:7
 #: app/views/rankings/bookmark.html.erb:10
@@ -245,6 +247,12 @@ msgstr "%{target}を保存しました。"
 msgid "%{title_val} Comment:(%{comment_count_val})"
 msgid_plural "%{title_val} Comments:(%{comment_count_val})"
 msgstr[0] "%{title_val}　コメント数:(%{comment_count_val})"
+
+#: app/views/mypage/entries_by_date.html.erb:15
+msgid "(%{wday}) - %{count} Entry"
+msgid_plural "(%{wday}) - %{count} Entries"
+msgstr[0] ""
+msgstr[1] ""
 
 #: app/views/shared/_symbol_autocomplete_field.html.erb:10
 msgid ""
@@ -4553,6 +4561,11 @@ msgstr "ニュース"
 msgid "Next"
 msgstr "[次へ]"
 
+#: app/views/mypage/entries_by_date.html.erb:10
+#: app/views/mypage/entries_by_date.html.erb:20
+msgid "Next Day (%s)"
+msgstr ""
+
 #: app/helpers/edit_helper.rb:31
 msgid "Next page"
 msgstr "次のページ"
@@ -5067,6 +5080,11 @@ msgstr "利用開始待ちにする"
 #: app/views/search/_page_navi.html.erb:7
 msgid "Prev"
 msgstr "前へ"
+
+#: app/views/mypage/entries_by_date.html.erb:9
+#: app/views/mypage/entries_by_date.html.erb:19
+msgid "Prev Day (%s)"
+msgstr ""
 
 #: app/helpers/edit_helper.rb:30
 msgid "Previous page"
@@ -7582,6 +7600,10 @@ msgstr "[他のユーザ:%{count}人]"
 msgid "[Owner only]"
 msgstr "[自分だけ]"
 
+#: lib/skip_util.rb:101
+msgid "[Play/Next]"
+msgstr "[再生/次へ]"
+
 #: app/views/mypage/welcome.html.erb:42
 msgid "[Popular Blogs]"
 msgstr "[最近の人気記事]"
@@ -7617,6 +7639,10 @@ msgstr[0] "[登録ユーザ]　%s人"
 #: app/views/admin/settings/_security.html.erb:17
 msgid "[Request all users to reset their passwords]"
 msgstr "[全ユーザにパスワード再設定を求める]"
+
+#: lib/skip_util.rb:102
+msgid "[Rewind]"
+msgstr "[最初から]"
 
 #: app/views/mypage/_antennas.html.erb:28
 msgid "[Save]"
