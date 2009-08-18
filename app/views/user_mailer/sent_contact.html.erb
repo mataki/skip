@@ -1,9 +1,9 @@
 <%= @header %>
 
-<%= _("You have message(s) from %s") % h(@name) %>
+<%= _("You have message(s) from %s") % @name %>
 <%= _("Click the URL below to see the content of message.")%>
 
-[<%= h @entry_title %>]
+[<%= @entry_title %>]
 <%= @entry_url %>
 <%= _("*Jumps directly to the blog entry.") %>
 

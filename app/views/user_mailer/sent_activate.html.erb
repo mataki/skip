@@ -1,7 +1,7 @@
 <%= @header %>
 
 <%= _('Access the URL below to complete the registration process.')%>
-<%= n_("The URL below will be expired %s day after this email has been sent.", "The URL below will be expired %s days after this email has been sent.", User.activation_lifetime) % h(User.activation_lifetime)%>
+<%= n_("The URL below will be expired %s day after this email has been sent.", "The URL below will be expired %s days after this email has been sent.", User.activation_lifetime) % User.activation_lifetime %>
 
 <%= @signup_url %>
 
