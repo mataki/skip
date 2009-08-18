@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-08-18 11:13+0800\n"
+"POT-Creation-Date: 2009-08-18 11:51+0800\n"
 "PO-Revision-Date: 2009-08-07 16:09+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -249,10 +249,10 @@ msgid_plural "%{title_val} Comments:(%{comment_count_val})"
 msgstr[0] "%{title_val}　コメント数:(%{comment_count_val})"
 
 #: app/views/mypage/entries_by_date.html.erb:15
-msgid "(%{wday}) - %{count} Entry"
+msgid "%{wday}, %{date} - %{count} Entry"
 msgid_plural "(%{wday}) - %{count} Entries"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%{date}(%{wday}) - %{count}件"
+msgstr[1] "%{date}(%{wday}) - %{count}件"
 
 #: app/views/shared/_symbol_autocomplete_field.html.erb:10
 msgid ""
@@ -2521,6 +2521,34 @@ msgstr "CSVファイルの文字コードはUTF-8にしてアップロードす�
 msgid "Calendar display of Mypage"
 msgstr "マイページでのカレンダーの表示"
 
+#: app/helpers/calendar_helper.rb:88
+msgid "CalendarHelper|Fri"
+msgstr "金"
+
+#: app/helpers/calendar_helper.rb:88
+msgid "CalendarHelper|Mon"
+msgstr "月"
+
+#: app/helpers/calendar_helper.rb:88
+msgid "CalendarHelper|Sat"
+msgstr "土"
+
+#: app/helpers/calendar_helper.rb:88
+msgid "CalendarHelper|Sun"
+msgstr "日"
+
+#: app/helpers/calendar_helper.rb:88
+msgid "CalendarHelper|Thu"
+msgstr "木"
+
+#: app/helpers/calendar_helper.rb:88
+msgid "CalendarHelper|Tue"
+msgstr "火"
+
+#: app/helpers/calendar_helper.rb:88
+msgid "CalendarHelper|Wed"
+msgstr "水"
+
 #: app/views/board_entries/_board_entry_comment.html.erb:32
 #: app/views/entries/_entry_detail.html.erb:624
 #: app/views/share_file/edit.html.erb:15 app/views/share_file/new.html.erb:31
@@ -3460,7 +3488,7 @@ msgstr "OpenIDを忘れた or リセットしたい方はこちら"
 msgid "Forgot your password? Click here."
 msgstr "パスワードを忘れた or リセットしたい方はこちら"
 
-#: app/helpers/calendar_helper.rb:88
+#: lib/skip_util.rb:23
 msgid "Fri"
 msgstr "金"
 
@@ -4390,7 +4418,7 @@ msgstr "ちょっとした更新"
 msgid "Modify the registered profile from here ... "
 msgstr "登録したプロフィール情報の修正はこちら ..."
 
-#: app/helpers/calendar_helper.rb:88
+#: lib/skip_util.rb:19
 msgid "Mon"
 msgstr "月"
 
@@ -5432,7 +5460,7 @@ msgstr "SKIPのバージョン"
 msgid "Sample CSV file format"
 msgstr "正しいCSVファイルの例"
 
-#: app/helpers/calendar_helper.rb:88
+#: lib/skip_util.rb:24
 msgid "Sat"
 msgstr "土"
 
@@ -6079,7 +6107,7 @@ msgstr "管理者を更新しました"
 msgid "Summary"
 msgstr "サマリ"
 
-#: app/helpers/calendar_helper.rb:88
+#: lib/skip_util.rb:18
 msgid "Sun"
 msgstr "日"
 
@@ -6350,7 +6378,7 @@ msgstr ""
 "パスワードを再設定するためのURLを表示します。ユーザがパスワードを忘れた場合"
 "は、リンクをクリックして表示されるURLをメールでユーザに送信して下さい。"
 
-#: app/helpers/calendar_helper.rb:88
+#: lib/skip_util.rb:22
 msgid "Thu"
 msgstr "木"
 
@@ -6470,7 +6498,7 @@ msgstr "アクセスした人"
 msgid "Traveling"
 msgstr "旅行"
 
-#: app/helpers/calendar_helper.rb:88
+#: lib/skip_util.rb:20
 msgid "Tue"
 msgstr "火"
 
@@ -7126,7 +7154,7 @@ msgstr "映画鑑賞"
 msgid "Watching Sports"
 msgstr "スポーツ観戦"
 
-#: app/helpers/calendar_helper.rb:88
+#: lib/skip_util.rb:21
 msgid "Wed"
 msgstr "水"
 
@@ -7600,7 +7628,7 @@ msgstr "[他のユーザ:%{count}人]"
 msgid "[Owner only]"
 msgstr "[自分だけ]"
 
-#: lib/skip_util.rb:101
+#: lib/skip_util.rb:109
 msgid "[Play/Next]"
 msgstr "[再生/次へ]"
 
@@ -7640,7 +7668,7 @@ msgstr[0] "[登録ユーザ]　%s人"
 msgid "[Request all users to reset their passwords]"
 msgstr "[全ユーザにパスワード再設定を求める]"
 
-#: lib/skip_util.rb:102
+#: lib/skip_util.rb:110
 msgid "[Rewind]"
 msgstr "[最初から]"
 

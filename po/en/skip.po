@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-08-18 11:13+0800\n"
+"POT-Creation-Date: 2009-08-18 11:51+0800\n"
 "PO-Revision-Date: 2009-06-29 13:31+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -247,7 +247,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: app/views/mypage/entries_by_date.html.erb:15
-msgid "(%{wday}) - %{count} Entry"
+msgid "%{wday}, %{date} - %{count} Entry"
 msgid_plural "(%{wday}) - %{count} Entries"
 msgstr[0] ""
 msgstr[1] ""
@@ -2355,6 +2355,34 @@ msgstr ""
 msgid "Calendar display of Mypage"
 msgstr ""
 
+#: app/helpers/calendar_helper.rb:88
+msgid "CalendarHelper|Fri"
+msgstr "F"
+
+#: app/helpers/calendar_helper.rb:88
+msgid "CalendarHelper|Mon"
+msgstr "M"
+
+#: app/helpers/calendar_helper.rb:88
+msgid "CalendarHelper|Sat"
+msgstr "S"
+
+#: app/helpers/calendar_helper.rb:88
+msgid "CalendarHelper|Sun"
+msgstr "Su"
+
+#: app/helpers/calendar_helper.rb:88
+msgid "CalendarHelper|Thu"
+msgstr "Th"
+
+#: app/helpers/calendar_helper.rb:88
+msgid "CalendarHelper|Tue"
+msgstr "T"
+
+#: app/helpers/calendar_helper.rb:88
+msgid "CalendarHelper|Wed"
+msgstr "W"
+
 #: app/views/board_entries/_board_entry_comment.html.erb:32
 #: app/views/entries/_entry_detail.html.erb:624
 #: app/views/share_file/edit.html.erb:15 app/views/share_file/new.html.erb:31
@@ -3266,9 +3294,9 @@ msgstr ""
 msgid "Forgot your password? Click here."
 msgstr ""
 
-#: app/helpers/calendar_helper.rb:88
+#: lib/skip_util.rb:23
 msgid "Fri"
-msgstr "F"
+msgstr ""
 
 #: app/views/mypage/welcome.html.erb:40
 msgid "From others"
@@ -4175,9 +4203,9 @@ msgstr ""
 msgid "Modify the registered profile from here ... "
 msgstr ""
 
-#: app/helpers/calendar_helper.rb:88
+#: lib/skip_util.rb:19
 msgid "Mon"
-msgstr "M"
+msgstr ""
 
 #: app/views/entries/_archive_box.html.erb:7
 msgid "Monthly List"
@@ -5196,9 +5224,9 @@ msgstr ""
 msgid "Sample CSV file format"
 msgstr ""
 
-#: app/helpers/calendar_helper.rb:88
+#: lib/skip_util.rb:24
 msgid "Sat"
-msgstr "S"
+msgstr ""
 
 #: app/views/admin/documents/index.html.erb:10
 #: app/views/admin/settings/index.html.erb:9
@@ -5830,9 +5858,9 @@ msgstr ""
 msgid "Summary"
 msgstr ""
 
-#: app/helpers/calendar_helper.rb:88
+#: lib/skip_util.rb:18
 msgid "Sun"
-msgstr "Su"
+msgstr ""
 
 #: app/views/shared/_symbol_autocomplete_field.html.erb:129
 msgid "Symbol already exists."
@@ -6081,9 +6109,9 @@ msgid ""
 "clicking the link to the user by email."
 msgstr ""
 
-#: app/helpers/calendar_helper.rb:88
+#: lib/skip_util.rb:22
 msgid "Thu"
-msgstr "Th"
+msgstr ""
 
 #: app/helpers/edit_helper.rb:27
 msgid "Thumbnail"
@@ -6202,9 +6230,9 @@ msgstr ""
 msgid "Traveling"
 msgstr ""
 
-#: app/helpers/calendar_helper.rb:88
+#: lib/skip_util.rb:20
 msgid "Tue"
-msgstr "T"
+msgstr ""
 
 #: app/views/bookmark/list.html.erb:21
 msgid "Types"
@@ -6850,9 +6878,9 @@ msgstr ""
 msgid "Watching Sports"
 msgstr ""
 
-#: app/helpers/calendar_helper.rb:88
+#: lib/skip_util.rb:21
 msgid "Wed"
-msgstr "W"
+msgstr ""
 
 #: app/views/mypage/welcome.html.erb:26
 msgid "Welcome to [%s]!"
@@ -7299,7 +7327,7 @@ msgstr ""
 msgid "[Owner only]"
 msgstr ""
 
-#: lib/skip_util.rb:101
+#: lib/skip_util.rb:109
 msgid "[Play/Next]"
 msgstr ""
 
@@ -7340,7 +7368,7 @@ msgstr[1] ""
 msgid "[Request all users to reset their passwords]"
 msgstr ""
 
-#: lib/skip_util.rb:102
+#: lib/skip_util.rb:110
 msgid "[Rewind]"
 msgstr ""
 

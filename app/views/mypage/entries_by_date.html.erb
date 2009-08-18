@@ -12,7 +12,7 @@
 
     <%= render :partial => "page_space",
                :locals => { :id_name => 'entries',
-                            :title_name => @selected_day.strftime(_("%B %d %Y")) + n_("(%{wday}) - %{count} Entry", "(%{wday}) - %{count} Entries", @entries.size) % {:wday => _(SkipUtil::WDAYS[@selected_day.wday]), :count => @entries.size},
+                            :title_name =>  n_("%{wday}, %{date} - %{count} Entry", "(%{wday}) - %{count} Entries", @entries.size) % {:date => @selected_day.strftime(_("%B %d %Y")), :wday => _(SkipUtil::WDAYS[@selected_day.wday]), :count => @entries.size},
                             :pages => @entries} %>
 
     <table width="100%"><tr>

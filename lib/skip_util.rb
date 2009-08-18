@@ -15,6 +15,14 @@
 
 require 'kconv'
 class SkipUtil
+  N_("Sun")
+  N_("Mon")
+  N_("Tue")
+  N_("Wed")
+  N_("Thu")
+  N_("Fri")
+  N_("Sat")
+  
   WDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
 
   def self.split_symbol symbol
