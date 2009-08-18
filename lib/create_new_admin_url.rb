@@ -21,35 +21,35 @@ class CreateNewAdminUrl < BatchBase
     cnau = CreateNewAdminUrl.new
     option_parser = OptionParser.new
     opt = {}
-    option_parser.on('--code [VAL]', '指定すると管理者ユーザ登録用のactivation_codeを発行します。またアクセス用URLを表示します。') { |v| opt[:code] = v }
+    option_parser.on('--code [VAL]', _('Issues activation_code for registering administrative user. It also shows the URL to access.')) { |v| opt[:code] = v }
     option_parser.parse!(options[:argv])
 
     if activation = Activation.first
       unless activation.code
-        p '初期管理者ユーザは登録済みです。'
+        p _('Initial administrative user has already been registered.')
         return
       end
       unless opt.has_key?(:code)
-        p 'activation_codeは発行済みです。上書きする場合は、codeを指定して下さい。現在の初期管理者登録用URLは以下の通りです。'
+        p _('activation_code has already been issued. Specify --code to overwrite. The current URL for registering initial administrative user as follows:')
         p cnau.show_new_admin_url(activation.code)
         return
       end
       if activation.update_attributes(:code => opt[:code] || make_token)
-        p "activation_codeを上書きしました。初期管理者登録用URLは#{cnau.show_new_admin_url(activation.code)}"
+        p _("Overwritten activation_code. The current URL for registering initial administrative user is %s.") % cnau.show_new_admin_url(activation.code)
       else
-        p 'ワンタイムコードの保存に失敗しました。'
+        p _('Failed to save one-time code.')
       end
     else
       unless opt.has_key?(:code)
-        p 'activation_codeが未発行です。--helpを参照の上、codeを指定して下さい。'
+        p _('activation_code has not been issued. Refer to --help and specify --code.')
         return
       end
       activation = Activation.new(:code => opt[:code] || make_token)
       if activation.save
-        p 'activation_codeを発行しました。初期管理者登録用URLは以下の通りです。'
+        p _('Issued activation_code. The URL for registering initial administrative user as follows:')
         p cnau.show_new_admin_url(activation.code)
       else
-        p 'ワンタイムコードの保存に失敗しました。'
+        p _('Failed to save one-time code.')
       end
     end
   end

@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-08-18 15:14+0800\n"
+"POT-Creation-Date: 2009-08-18 16:50+0800\n"
 "PO-Revision-Date: 2009-08-07 16:09+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3371,6 +3371,10 @@ msgstr "ユーザ登録に失敗しました。管理者に連絡してくださ
 msgid "Failed to reset password."
 msgstr "パスワードリセットに失敗しました。"
 
+#: lib/create_new_admin_url.rb:40 lib/create_new_admin_url.rb:52
+msgid "Failed to save one-time code."
+msgstr "ワンタイムコードの保存に失敗しました。"
+
 #: app/controllers/admin/documents_controller.rb:86
 msgid "Failed to save the content.  Try again or contact administrator."
 msgstr ""
@@ -3878,6 +3882,10 @@ msgid ""
 "the site."
 msgstr "本サイトで登録頂いた情報は、本サイト運営上でのみ利用いたします。"
 
+#: lib/create_new_admin_url.rb:29
+msgid "Initial administrative user has already been registered."
+msgstr "初期管理者ユーザは登録済みです。"
+
 #: app/views/mypage/_manage_password.html.erb:6
 msgid ""
 "Input current password and new password (twice for confirmation) to change "
@@ -4041,6 +4049,20 @@ msgstr "グループ：%sに招待しました"
 #: app/views/admin/users/index.html.erb:58
 msgid "Issue activation url for selected users"
 msgstr "選択したユーザを利用開始待ちにする"
+
+#: lib/create_new_admin_url.rb:49
+msgid ""
+"Issued activation_code. The URL for registering initial administrative user "
+"as follows:"
+msgstr "activation_codeを発行しました。初期管理者登録用URLは以下の通りです。"
+
+#: lib/create_new_admin_url.rb:24
+msgid ""
+"Issues activation_code for registering administrative user. It also shows "
+"the URL to access."
+msgstr ""
+"指定すると管理者ユーザ登録用のactivation_codeを発行します。またアクセス用URL"
+"を表示します。"
 
 #: app/views/board_entries/_preview_window.html.erb:33
 msgid ""
@@ -4960,6 +4982,12 @@ msgid ""
 msgstr ""
 "%sの総合ランキングです。 ( 対象期間：サイト開設〜昨日まで。日次で更新していま"
 "す）"
+
+#: lib/create_new_admin_url.rb:38
+msgid ""
+"Overwritten activation_code. The current URL for registering initial "
+"administrative user is %s."
+msgstr "activation_codeを上書きしました。初期管理者登録用URLは%s"
 
 #: app/helpers/application_helper.rb:233 app/helpers/share_file_helper.rb:19
 #: app/views/board_entries/_form.html.erb:70
@@ -7868,6 +7896,19 @@ msgstr ""
 #: app/models/activation.rb:-
 msgid "activation"
 msgstr "アクティベーション"
+
+#: lib/create_new_admin_url.rb:33
+msgid ""
+"activation_code has already been issued. Specify --code to overwrite. The "
+"current URL for registering initial administrative user as follows:"
+msgstr ""
+"activation_codeは発行済みです。上書きする場合は、codeを指定して下さい。現在の"
+"初期管理者登録用URLは以下の通りです。"
+
+#: lib/create_new_admin_url.rb:44
+msgid ""
+"activation_code has not been issued. Refer to --help and specify --code."
+msgstr "activation_codeが未発行です。--helpを参照の上、codeを指定して下さい。"
 
 #: app/views/admin/users/index.html.erb:37
 msgid "admin"

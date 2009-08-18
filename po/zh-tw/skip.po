@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-08-18 15:14+0800\n"
+"POT-Creation-Date: 2009-08-18 16:50+0800\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3151,6 +3151,10 @@ msgstr ""
 msgid "Failed to reset password."
 msgstr ""
 
+#: lib/create_new_admin_url.rb:40 lib/create_new_admin_url.rb:52
+msgid "Failed to save one-time code."
+msgstr ""
+
 #: app/controllers/admin/documents_controller.rb:86
 msgid "Failed to save the content.  Try again or contact administrator."
 msgstr ""
@@ -3654,6 +3658,10 @@ msgid ""
 "the site."
 msgstr ""
 
+#: lib/create_new_admin_url.rb:29
+msgid "Initial administrative user has already been registered."
+msgstr ""
+
 #: app/views/mypage/_manage_password.html.erb:6
 msgid ""
 "Input current password and new password (twice for confirmation) to change "
@@ -3808,6 +3816,18 @@ msgstr ""
 
 #: app/views/admin/users/index.html.erb:58
 msgid "Issue activation url for selected users"
+msgstr ""
+
+#: lib/create_new_admin_url.rb:49
+msgid ""
+"Issued activation_code. The URL for registering initial administrative user "
+"as follows:"
+msgstr ""
+
+#: lib/create_new_admin_url.rb:24
+msgid ""
+"Issues activation_code for registering administrative user. It also shows "
+"the URL to access."
 msgstr ""
 
 #: app/views/board_entries/_preview_window.html.erb:33
@@ -4705,6 +4725,12 @@ msgstr ""
 msgid ""
 "Overall ranking of %s (Since the opening of the site up to yesterday. "
 "Updated daily)"
+msgstr ""
+
+#: lib/create_new_admin_url.rb:38
+msgid ""
+"Overwritten activation_code. The current URL for registering initial "
+"administrative user is %s."
 msgstr ""
 
 #: app/helpers/application_helper.rb:233 app/helpers/share_file_helper.rb:19
@@ -7532,6 +7558,17 @@ msgstr ""
 
 #: app/models/activation.rb:-
 msgid "activation"
+msgstr ""
+
+#: lib/create_new_admin_url.rb:33
+msgid ""
+"activation_code has already been issued. Specify --code to overwrite. The "
+"current URL for registering initial administrative user as follows:"
+msgstr ""
+
+#: lib/create_new_admin_url.rb:44
+msgid ""
+"activation_code has not been issued. Refer to --help and specify --code."
 msgstr ""
 
 #: app/views/admin/users/index.html.erb:37
