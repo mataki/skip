@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-08-18 13:27+0800\n"
+"POT-Creation-Date: 2009-08-18 14:46+0800\n"
 "PO-Revision-Date: 2009-06-29 13:31+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -435,6 +435,10 @@ msgstr "%s"
 
 #: app/models/tag.rb:54
 msgid "A tag can only accept 30 characters."
+msgstr ""
+
+#: app/views/services/skip_reflect_customized.html.erb:4
+msgid "About This Site"
 msgstr ""
 
 #: app/views/user/show.html.erb:18
@@ -3583,6 +3587,10 @@ msgstr ""
 msgid "Hide calendar"
 msgstr ""
 
+#: app/views/services/skip_reflect_customized.html.erb:2
+msgid "Hiki Notation"
+msgstr ""
+
 #: app/views/mypage/_manage_menu.html.erb:14
 msgid "History Menu"
 msgstr ""
@@ -5960,6 +5968,10 @@ msgstr ""
 msgid ""
 "Tell us a little about you in the day off, e.g. the details of your hobbies "
 "or how you spend your holidays."
+msgstr ""
+
+#: app/views/services/skip_reflect_customized.html.erb:3
+msgid "Terms of Use"
 msgstr ""
 
 #: app/views/user_mailer/sent_activate.html.erb:4
