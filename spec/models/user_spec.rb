@@ -124,107 +124,105 @@ describe User, 'validation' do
     describe 'パスワード強度が弱の場合' do
       before do
         Admin::Setting.stub!(:password_strength).and_return('low')
-        @message = 'Admin::Setting|Password strength|Validation message low'
       end
       it '6文字以上の英数字記号であること' do
         @user.password = 'abcde'
         @user.password_confirmation = 'abcde'
         @user.valid?
-        @user.errors['password'].include?(@message).should be_true
+        [@user.errors['password']].flatten.size.should == 2
         @user.password = 'abcdef'
+        @user.password_confirmation = 'abcdef'
         @user.valid?
-        @user.errors['password'].include?(@message).should be_false
+        @user.errors['password'].should be_nil
       end
     end
     describe 'パスワード強度が中の場合' do
       before do
         Admin::Setting.stub!(:password_strength).and_return('middle')
-        @message = 'Admin::Setting|Password strength|Validation message middle'
       end
       it '7文字の場合エラー' do
         @user.password = 'abcdeF0'
         @user.valid?
-        @user.errors['password'].include?(@message).should be_true
+        [@user.errors['password']].flatten.size.should == 1
       end
       describe '8文字以上の場合' do
         it '小文字のみの場合エラー' do
           @user.password = 'abcdefgh'
           @user.valid?
-          @user.errors['password'].include?(@message).should be_true
+          [@user.errors['password']].flatten.size.should == 1
         end
         it '大文字のみの場合エラー' do
           @user.password = 'ABCDEFGH'
           @user.valid?
-          @user.errors['password'].include?(@message).should be_true
+          [@user.errors['password']].flatten.size.should == 1
         end
         it '数字のみの場合エラー' do
           @user.password = '12345678'
           @user.valid?
-          @user.errors['password'].include?(@message).should be_true
+          [@user.errors['password']].flatten.size.should == 1
         end
         it '記号のみの場合エラー' do
           @user.password = '####&&&&'
           @user.valid?
-          @user.errors['password'].include?(@message).should be_true
+          [@user.errors['password']].flatten.size.should == 1
         end
         it '小文字、大文字のみの場合エラー' do
           @user.password = 'abcdEFGH'
           @user.valid?
-          @user.errors['password'].include?(@message).should be_true
+          [@user.errors['password']].flatten.size.should == 1
         end
         it '小文字、大文字、数字の場合エラーにならないこと' do
           @user.password = 'abcdEF012'
           @user.password_confirmation = 'abcdEF012'
           @user.valid?
-          @user.errors.empty?.should be_true
+          @user.errors['password'].should be_nil
         end
       end
     end
     describe 'パスワード強度が強の場合' do
       before do
         Admin::Setting.stub!(:password_strength).and_return('high')
-        @message = 'Admin::Setting|Password strength|Validation message high'
       end
       it '7文字の場合エラー' do
         @user.password = 'abcdeF0'
         @user.valid?
-        @user.errors['password'].include?(@message).should be_true
+        [@user.errors['password']].flatten.size.should == 1
       end
       describe '8文字以上の場合' do
         it '小文字のみの場合エラー' do
           @user.password = 'abcdefgh'
           @user.valid?
-          @user.errors['password'].include?(@message).should be_true
+          [@user.errors['password']].flatten.size.should == 1
         end
         it '大文字のみの場合エラー' do
           @user.password = 'ABCDEFGH'
           @user.valid?
-          @user.errors['password'].include?(@message).should be_true
+          [@user.errors['password']].flatten.size.should == 1
         end
         it '数字のみの場合エラー' do
           @user.password = '12345678'
           @user.valid?
-          @user.errors['password'].include?(@message).should be_true
+          [@user.errors['password']].flatten.size.should == 1
         end
         it '記号のみの場合エラー' do
           @user.password = '####&&&&'
           @user.valid?
-          @user.errors['password'].include?(@message).should be_true
+          [@user.errors['password']].flatten.size.should == 1
         end
         it '小文字、大文字のみの場合エラー' do
           @user.password = 'abcdEFGH'
           @user.valid?
-          @user.errors['password'].include?(@message).should be_true
+          [@user.errors['password']].flatten.size.should == 1
         end
         it '小文字、大文字、数字の場合エラー' do
           @user.password = 'abcdEF01'
           @user.valid?
-          @user.errors['password'].include?(@message).should be_true
+          [@user.errors['password']].flatten.size.should == 1
         end
         it '小文字、大文字、数字, 記号の場合エラーとならないこと' do
           @user.password = 'abcdeF0@#'
           @user.password_confirmation = 'abcdeF0@#'
-          @user.errors.empty?.should be_true
+          @user.errors['password'].should be_nil
         end
       end
     end

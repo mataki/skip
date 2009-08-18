@@ -164,10 +164,10 @@ describe BoardEntriesHelper, "#icon_with_information" do
         helper.icon_with_information(@user, @comment, @checked_on)
       end
       it "未読が含まれること" do
-        helper.icon_with_information(@user, @comment, @checked_on).should be_include("[未読]")
+        helper.icon_with_information(@user, @comment, @checked_on).should be_include("[Unread]")
       end
       it "新着が含まれること" do
-        helper.icon_with_information(@user, @comment, @checked_on).should be_include("[新着]")
+        helper.icon_with_information(@user, @comment, @checked_on).should be_include("[New]")
       end
     end
     describe "未読でない場合" do
@@ -179,10 +179,10 @@ describe BoardEntriesHelper, "#icon_with_information" do
         helper.icon_with_information(@user, @comment, @checked_on)
       end
       it "未読が含まれないこと" do
-        helper.icon_with_information(@user, @comment, @checked_on).should_not be_include("[未読]")
+        helper.icon_with_information(@user, @comment, @checked_on).should_not be_include("[Unread]")
       end
       it "新着が含まれること" do
-        helper.icon_with_information(@user, @comment, @checked_on).should be_include("[新着]")
+        helper.icon_with_information(@user, @comment, @checked_on).should be_include("[New]")
       end
     end
   end
@@ -200,10 +200,10 @@ describe BoardEntriesHelper, "#icon_with_information" do
         helper.icon_with_information(@user, @comment, @checked_on)
       end
       it "未読が含まれること" do
-        helper.icon_with_information(@user, @comment, @checked_on).should be_include("[未読]")
+        helper.icon_with_information(@user, @comment, @checked_on).should be_include("[Unread]")
       end
       it "新着が含まれること" do
-        helper.icon_with_information(@user, @comment, @checked_on).should be_include("[新着]")
+        helper.icon_with_information(@user, @comment, @checked_on).should be_include("[New]")
       end
     end
     describe "未読でない場合" do
@@ -215,10 +215,10 @@ describe BoardEntriesHelper, "#icon_with_information" do
         helper.icon_with_information(@user, @comment, @checked_on)
       end
       it "未読が含まれないこと" do
-        helper.icon_with_information(@user, @comment, @checked_on).should_not be_include("[未読]")
+        helper.icon_with_information(@user, @comment, @checked_on).should_not be_include("[Unread]")
       end
       it "新着が含まれること" do
-        helper.icon_with_information(@user, @comment, @checked_on).should be_include("[新着]")
+        helper.icon_with_information(@user, @comment, @checked_on).should be_include("[New]")
       end
     end
   end
@@ -236,10 +236,10 @@ describe BoardEntriesHelper, "#icon_with_information" do
         helper.icon_with_information(@user, @comment, @checked_on)
       end
       it "未読が含まれること" do
-        helper.icon_with_information(@user, @comment, @checked_on).should be_include("[未読]")
+        helper.icon_with_information(@user, @comment, @checked_on).should be_include("[Unread]")
       end
       it "新着が含まれないこと" do
-        helper.icon_with_information(@user, @comment, @checked_on).should_not be_include("[新着]")
+        helper.icon_with_information(@user, @comment, @checked_on).should_not be_include("[New]")
       end
     end
     describe "未読でない場合" do
@@ -251,10 +251,10 @@ describe BoardEntriesHelper, "#icon_with_information" do
         helper.icon_with_information(@user, @comment, @checked_on)
       end
       it "未読が含まれないこと" do
-        helper.icon_with_information(@user, @comment, @checked_on).should_not be_include("[未読]")
+        helper.icon_with_information(@user, @comment, @checked_on).should_not be_include("[Unread]")
       end
       it "新着が含まれないこと" do
-        helper.icon_with_information(@user, @comment, @checked_on).should_not be_include("[新着]")
+        helper.icon_with_information(@user, @comment, @checked_on).should_not be_include("[New]")
       end
     end
   end
