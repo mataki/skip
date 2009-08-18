@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-08-18 14:46+0800\n"
+"POT-Creation-Date: 2009-08-18 15:14+0800\n"
 "PO-Revision-Date: 2009-06-29 13:31+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -293,6 +293,10 @@ msgstr ""
 
 #: app/models/board_entry.rb:347
 msgid "(This entry is generated automatically by the system)"
+msgstr ""
+
+#: app/views/share_file/confirm_download.html.erb:12
+msgid "(This screen is to avoid security risks ralated to direct downloading)"
 msgstr ""
 
 #: app/models/board_entry.rb:541
@@ -2526,6 +2530,10 @@ msgstr ""
 
 #: app/helpers/application_helper.rb:144
 msgid "Click to see in original size."
+msgstr ""
+
+#: app/views/share_file/confirm_download.html.erb:3
+msgid "Click to start downloading if you find the file appropriate."
 msgstr ""
 
 #: app/helpers/edit_helper.rb:23 app/views/group/new_participation.html.erb:22
@@ -6993,6 +7001,10 @@ msgstr ""
 
 #: app/views/group/_form.html.erb:43
 msgid "Yes"
+msgstr ""
+
+#: app/views/share_file/confirm_download.html.erb:2
+msgid "You are about to download a file that was uploaded to this site."
 msgstr ""
 
 #: app/views/portal/account_registration.html.erb:3

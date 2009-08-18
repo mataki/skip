@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-08-18 14:46+0800\n"
+"POT-Creation-Date: 2009-08-18 15:14+0800\n"
 "PO-Revision-Date: 2009-08-07 16:09+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -299,6 +299,12 @@ msgstr "（タイトル、コメントが検索対象となります）"
 #: app/models/board_entry.rb:347
 msgid "(This entry is generated automatically by the system)"
 msgstr "(この投稿はシステムにより自動的に用意されました)"
+
+#: app/views/share_file/confirm_download.html.erb:12
+msgid "(This screen is to avoid security risks ralated to direct downloading)"
+msgstr ""
+"（この画面は、直ダウンロードによるセキュリティ上の懸念を解消するために表示し"
+"ています）"
 
 #: app/models/board_entry.rb:541
 msgid "(Unknown topic entry found. However, this has been ignored)"
@@ -2702,6 +2708,11 @@ msgstr ""
 #: app/helpers/application_helper.rb:144
 msgid "Click to see in original size."
 msgstr "クリックすると実際の大きさで表示されます"
+
+#: app/views/share_file/confirm_download.html.erb:3
+msgid "Click to start downloading if you find the file appropriate."
+msgstr ""
+"下記のファイルで間違いなければ、クリックしてダウンロードを開始してください。"
 
 #: app/helpers/edit_helper.rb:23 app/views/group/new_participation.html.erb:22
 msgid "Close"
@@ -7275,6 +7286,11 @@ msgstr "入社年度"
 #: app/views/group/_form.html.erb:43
 msgid "Yes"
 msgstr "はい"
+
+#: app/views/share_file/confirm_download.html.erb:2
+msgid "You are about to download a file that was uploaded to this site."
+msgstr ""
+"本サイトにアップロードされたファイルのダウンロードを行おうとしています。"
 
 #: app/views/portal/account_registration.html.erb:3
 msgid "You are about to register the basic information for using %s."
