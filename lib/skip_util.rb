@@ -15,13 +15,13 @@
 
 require 'kconv'
 class SkipUtil
-  N_("Sun")
-  N_("Mon")
-  N_("Tue")
-  N_("Wed")
-  N_("Thu")
-  N_("Fri")
-  N_("Sat")
+  GetText.N_("Sun")
+  GetText.N_("Mon")
+  GetText.N_("Tue")
+  GetText.N_("Wed")
+  GetText.N_("Thu")
+  GetText.N_("Fri")
+  GetText.N_("Sat")
   
   WDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
 
@@ -106,8 +106,8 @@ class SkipUtil
         image_link << "<param name='movie' value='#{image_url}' />"
         image_link << "</object>"
         image_link << "<div style='text-align: center;'>"
-        image_link << "<a href='javascript: $j(\"#flash#{file_count}\")[0].Play();'>" + _("[Play/Next]")+ "</a>"
-        image_link << "<a href='javascript: $j(\"#flash#{file_count}\")[0].Rewind();'>" + _("[Rewind]") + "</a>"
+        image_link << "<a href='javascript: $j(\"#flash#{file_count}\")[0].Play();'>" + GetText._("[Play/Next]")+ "</a>"
+        image_link << "<a href='javascript: $j(\"#flash#{file_count}\")[0].Rewind();'>" + GetText._("[Rewind]") + "</a>"
         image_link << "</div></div>"
       else
         image_link = "<a href='#{image_url}' class=\"nyroModal zoomable\" ><img src='#{image_url}' "
