@@ -78,7 +78,7 @@ module Admin::AdminModule
                                  :conditions => [search_condition, { :lqs => SkipUtil.to_lqs(@query) }])
       set_pluralize_instance_val objects
 
-      @topics = [_('Listing %{model}') % {:model => _(singularize_name.gsub('_', ' '))}]
+      @topics = [_('Listing %{model}') % {:model => _(class_name.gsub('_', ' '))}]
 
       respond_to do |format|
         format.html # index.html.erb
@@ -90,7 +90,7 @@ module Admin::AdminModule
       object = admin_model_class.find(params[:id])
       set_singularize_instance_val object
 
-      @topics = [[_('Listing %{model}') % {:model => _(singularize_name.gsub('_', ' '))}, index_url],
+      @topics = [[_('Listing %{model}') % {:model => _(class_name.gsub('_', ' '))}, index_url],
                  _('%{model} Show') % {:model => object.topic_title}]
 
       respond_to do |format|
@@ -104,7 +104,7 @@ module Admin::AdminModule
       object = admin_model_class.new
       set_singularize_instance_val object
 
-      @topics = [[_('Listing %{model}') % {:model => _(singularize_name.gsub('_', ' '))}, index_url],
+      @topics = [[_('Listing %{model}') % {:model => _(class_name.gsub('_', ' '))}, index_url],
                  _('New %{model}') % {:model => _(singularize_name.gsub('_', ' '))}]
 
       respond_to do |format|
@@ -117,7 +117,7 @@ module Admin::AdminModule
       object = admin_model_class.find(params[:id])
       set_singularize_instance_val object
 
-      @topics = [[_('Listing %{model}') % {:model => _(singularize_name.gsub('_', ' '))}, index_url],
+      @topics = [[_('Listing %{model}') % {:model => _(class_name.gsub('_', ' '))}, index_url],
                  _('Editing %{model}') % {:model => object.topic_title}]
     end
 
@@ -125,7 +125,7 @@ module Admin::AdminModule
       object = admin_model_class.new(params[admin_params_sym])
       set_singularize_instance_val object
 
-      @topics = [[_('Listing %{model}') % {:model => _(singularize_name.gsub('_', ' '))}, index_url],
+      @topics = [[_('Listing %{model}') % {:model => _(class_name.gsub('_', ' '))}, index_url],
                  _('New %{model}') % {:model => _(singularize_name.gsub('_', ' '))}]
 
       respond_to do |format|
@@ -144,7 +144,7 @@ module Admin::AdminModule
       object = admin_model_class.find(params[:id])
       set_singularize_instance_val object
 
-      @topics = [[_('Listing %{model}') % {:model => _(singularize_name.gsub('_', ' '))}, index_url],
+      @topics = [[_('Listing %{model}') % {:model => _(class_name.gsub('_', ' '))}, index_url],
                  _('Editing %{model}') % {:model => object.topic_title}]
 
       respond_to do |format|
