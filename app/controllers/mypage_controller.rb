@@ -244,7 +244,7 @@ class MypageController < ApplicationController
     end
     render :partial => "rss_feed", :locals => { :feeds => feeds }
   rescue Timeout::Error
-    render :text => _("Timeout to loading rss.")
+    render :text => _("Timeout while loading rss.")
     return false
   rescue Exception => e
     logger.error e

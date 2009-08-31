@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-08-18 16:50+0800\n"
+"POT-Creation-Date: 2009-08-31 12:06+0800\n"
 "PO-Revision-Date: 2009-08-07 16:09+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -6448,7 +6448,7 @@ msgid "Time Last Updated: "
 msgstr "最終更新時間："
 
 #: app/controllers/mypage_controller.rb:247
-msgid "Timeout to loading rss."
+msgid "Timeout while loading rss."
 msgstr "RSSのロード時にタイムアウトしました。"
 
 #: app/views/bookmarks/setup.html.erb:24

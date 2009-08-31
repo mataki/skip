@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-08-18 16:50+0800\n"
+"POT-Creation-Date: 2009-08-31 12:06+0800\n"
 "PO-Revision-Date: 2009-06-29 13:31+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -636,15 +636,15 @@ msgstr ""
 
 #: app/models/admin/board_entry_comment.rb:17
 msgid "Admin::BoardEntryComment|Contents"
-msgstr ""
+msgstr "Comment"
 
 #: app/models/admin/board_entry_comment.rb:18
 msgid "Admin::BoardEntryComment|Id"
-msgstr ""
+msgstr "ID"
 
 #: app/models/admin/board_entry_comment.rb:20
 msgid "Admin::BoardEntryComment|Parent"
-msgstr ""
+msgstr "Parent Comment ID"
 
 #: app/models/admin/board_entry_comment.rb:19
 msgid "Admin::BoardEntryComment|User"
@@ -652,11 +652,11 @@ msgstr ""
 
 #: app/models/admin/board_entry.rb:20
 msgid "Admin::BoardEntry|Category"
-msgstr ""
+msgstr "Tags"
 
 #: app/models/admin/board_entry.rb:19
 msgid "Admin::BoardEntry|Contents"
-msgstr ""
+msgstr "Content"
 
 #: app/models/admin/board_entry.rb:21
 msgid "Admin::BoardEntry|Entry type"
@@ -668,7 +668,7 @@ msgstr ""
 
 #: app/models/admin/board_entry.rb:23
 msgid "Admin::BoardEntry|Symbol"
-msgstr ""
+msgstr "Owner"
 
 #: app/models/admin/board_entry.rb:18
 msgid "Admin::BoardEntry|Title"
@@ -704,7 +704,7 @@ msgstr ""
 
 #: app/models/admin/bookmark.rb:19
 msgid "Admin::Bookmark|Url"
-msgstr ""
+msgstr "URL"
 
 #: app/controllers/admin/documents_controller.rb:95
 #: app/helpers/admin/application_helper.rb:25
@@ -737,7 +737,7 @@ msgstr ""
 
 #: app/models/admin/group_category.rb:20
 msgid "Admin::GroupCategory|Code description"
-msgstr ""
+msgstr "Enter a unique code to indentify this group category."
 
 #: app/models/admin/group_category.rb:25
 msgid "Admin::GroupCategory|Description"
@@ -745,7 +745,7 @@ msgstr ""
 
 #: app/models/admin/group_category.rb:26
 msgid "Admin::GroupCategory|Description description"
-msgstr ""
+msgstr "Provide some description about this group category."
 
 #: app/models/admin/group_category.rb:23
 msgid "Admin::GroupCategory|Icon"
@@ -753,15 +753,16 @@ msgstr ""
 
 #: app/models/admin/group_category.rb:24
 msgid "Admin::GroupCategory|Icon description"
-msgstr ""
+msgstr "Select an icon to represent this group category."
 
 #: app/models/admin/group_category.rb:27
 msgid "Admin::GroupCategory|Initial selected"
-msgstr ""
+msgstr "Default"
 
 #: app/models/admin/group_category.rb:28
 msgid "Admin::GroupCategory|Initial selected description"
 msgstr ""
+"Check if you want to make this group category selected for a new group."
 
 #: app/models/admin/group_category.rb:21
 msgid "Admin::GroupCategory|Name"
@@ -769,7 +770,7 @@ msgstr ""
 
 #: app/models/admin/group_category.rb:22
 msgid "Admin::GroupCategory|Name description"
-msgstr ""
+msgstr "Enter the name of this group category."
 
 #: app/models/admin/group_participation.rb:20
 msgid "Admin::GroupParticipation|Favorite"
@@ -777,7 +778,7 @@ msgstr ""
 
 #: app/models/admin/group_participation.rb:19
 msgid "Admin::GroupParticipation|Owned"
-msgstr ""
+msgstr "Administrator"
 
 #: app/models/admin/group_participation.rb:17
 msgid "Admin::GroupParticipation|User"
@@ -785,7 +786,7 @@ msgstr ""
 
 #: app/models/admin/group_participation.rb:18
 msgid "Admin::GroupParticipation|Waiting"
-msgstr ""
+msgstr "Waiting for approval"
 
 #: app/models/admin/group.rb:25
 msgid "Admin::Group|Deleted at"
@@ -809,7 +810,7 @@ msgstr ""
 
 #: app/models/admin/group.rb:23
 msgid "Admin::Group|Protected"
-msgstr ""
+msgstr "Approval Required"
 
 #: app/helpers/admin/application_helper.rb:24
 msgid "Admin::ImagesController"
@@ -964,163 +965,170 @@ msgstr "Disk space allowed for share files of each user / group"
 
 #: app/models/admin/initial_setting.rb:38
 msgid "Admin::InitialSetting|Password edit setting"
-msgstr ""
+msgstr "Enable Changing Passwords"
 
 #: app/models/admin/initial_setting.rb:39
 msgid "Admin::InitialSetting|Password edit setting description"
-msgstr ""
+msgstr "Whether let users change their passwords."
 
 #: app/models/admin/initial_setting.rb:41
 msgid "Admin::InitialSetting|Password edit setting|false"
-msgstr ""
+msgstr "Disable"
 
 #: app/models/admin/initial_setting.rb:40
 msgid "Admin::InitialSetting|Password edit setting|true"
-msgstr ""
+msgstr "Enable"
 
 #: app/models/admin/initial_setting.rb:62
 msgid "Admin::InitialSetting|Proxy url"
-msgstr ""
+msgstr "Proxy URL"
 
 #: app/models/admin/initial_setting.rb:63
 msgid "Admin::InitialSetting|Proxy url description"
 msgstr ""
+"Provide the URL of proxy server for retrieving data from external sites for "
+"RSS etc."
 
 #: app/models/admin/initial_setting.rb:54
 msgid "Admin::InitialSetting|Ssl setting"
-msgstr ""
+msgstr "Enable SSL login"
 
 #: app/models/admin/initial_setting.rb:55
 msgid "Admin::InitialSetting|Ssl setting description"
-msgstr ""
+msgstr "Whether enable SSL for login."
 
 #: app/models/admin/initial_setting.rb:57
 msgid "Admin::InitialSetting|Ssl setting|false"
-msgstr ""
+msgstr "Disable"
 
 #: app/models/admin/initial_setting.rb:56
 msgid "Admin::InitialSetting|Ssl setting|true"
-msgstr ""
+msgstr "Enable"
 
 #: app/models/admin/initial_setting.rb:46
 msgid "Admin::InitialSetting|User code format regex"
-msgstr ""
+msgstr "Format not allowed for user ID"
 
 #: app/models/admin/initial_setting.rb:47
 msgid "Admin::InitialSetting|User code format regex description"
-msgstr ""
+msgstr "Specify formats not allowed for user ID by regular expression."
 
 #: app/models/admin/initial_setting.rb:48
 msgid "Admin::InitialSetting|User code minimum length"
-msgstr ""
+msgstr "Minimum length of user ID"
 
 #: app/models/admin/initial_setting.rb:49
 msgid "Admin::InitialSetting|User code minimum length description"
 msgstr ""
+"Specify the minimum length of user ID. User ID shorter than the specified "
+"length will not be allowed upon user registration."
 
 #: app/models/admin/initial_setting.rb:34
 msgid "Admin::InitialSetting|Usercode dips setting"
-msgstr ""
+msgstr "Show login ID"
 
 #: app/models/admin/initial_setting.rb:35
 msgid "Admin::InitialSetting|Usercode dips setting description"
 msgstr ""
+"You can hide login ID in case you are using employee number for login ID etc."
 
 #: app/models/admin/initial_setting.rb:37
 msgid "Admin::InitialSetting|Usercode dips setting|false"
-msgstr ""
+msgstr "Hide"
 
 #: app/models/admin/initial_setting.rb:36
 msgid "Admin::InitialSetting|Usercode dips setting|true"
-msgstr ""
+msgstr "Show"
 
 #: app/models/admin/initial_setting.rb:42
 msgid "Admin::InitialSetting|Username use setting"
-msgstr ""
+msgstr "Enable user name"
 
 #: app/models/admin/initial_setting.rb:43
 msgid "Admin::InitialSetting|Username use setting description"
-msgstr ""
+msgstr "Whether enable user name for specifying users"
 
 #: app/models/admin/initial_setting.rb:45
 msgid "Admin::InitialSetting|Username use setting|false"
-msgstr ""
+msgstr "Disable"
 
 #: app/models/admin/initial_setting.rb:44
 msgid "Admin::InitialSetting|Username use setting|true"
-msgstr ""
+msgstr "Enable"
 
 #: app/controllers/admin/oauth_providers_controller.rb:25
 msgid "Admin::OauthProvider"
-msgstr ""
+msgstr "OAuth Provider"
 
 #: app/controllers/admin/oauth_providers_controller.rb:31
 #: app/helpers/admin/application_helper.rb:29
 msgid "Admin::OauthProvidersController"
-msgstr ""
+msgstr "OAuth Settings"
 
 #: app/models/admin/oauth_provider.rb:18
 #: app/views/admin/oauth_providers/index.html.erb:8
 msgid "Admin::OauthProvider|App name"
-msgstr ""
+msgstr "Application name"
 
 #: app/models/admin/openid_identifier.rb:17
 #: app/models/admin/openid_identifier.rb:20
 msgid "Admin::OpenidIdentifier|Url"
-msgstr ""
+msgstr "OpenID URL"
 
 #: app/models/admin/picture.rb:19
 msgid "Admin::Picture|File"
-msgstr ""
+msgstr "File"
 
 #: app/controllers/admin/settings_controller.rb:22
 #: app/helpers/admin/application_helper.rb:27
 msgid "Admin::SettingsController|feed"
-msgstr ""
+msgstr "RSS feeds"
 
 #: app/controllers/admin/settings_controller.rb:20
 #: app/helpers/admin/application_helper.rb:23
 msgid "Admin::SettingsController|literal"
-msgstr ""
+msgstr "Literals"
 
 #: app/controllers/admin/settings_controller.rb:21
 #: app/helpers/admin/application_helper.rb:26
 msgid "Admin::SettingsController|mail"
-msgstr ""
+msgstr "Email"
 
 #: app/controllers/admin/settings_controller.rb:23
 #: app/helpers/admin/application_helper.rb:21
 msgid "Admin::SettingsController|main"
-msgstr ""
+msgstr "Main"
 
 #: app/controllers/admin/settings_controller.rb:24
 #: app/helpers/admin/application_helper.rb:28
 msgid "Admin::SettingsController|security"
-msgstr ""
+msgstr "Security"
 
 #: app/models/admin/setting.rb:37
 msgid "Admin::Setting|Abbr app title"
-msgstr ""
+msgstr "Name of System"
 
 #: app/models/admin/setting.rb:38
 msgid "Admin::Setting|Abbr app title description"
-msgstr ""
+msgstr "The name of system used in various screens"
 
 #: app/models/admin/setting.rb:29
 msgid "Admin::Setting|Activation lifetime"
-msgstr ""
+msgstr "Valid Duration of Activation URL"
 
 #: app/models/admin/setting.rb:30
 msgid "Admin::Setting|Activation lifetime description"
-msgstr ""
+msgstr "Choose how many days activation URLs stay valid since issued."
 
 #: app/models/admin/setting.rb:39
 msgid "Admin::Setting|Contact addr"
-msgstr ""
+msgstr "Contact Email Address"
 
 #: app/models/admin/setting.rb:40
 msgid "Admin::Setting|Contact addr description"
 msgstr ""
+"Enter email address for inquiries. It will also be used for the sender of "
+"system notification emails."
 
 #: app/models/admin/setting.rb:-
 msgid "Admin::Setting|Created at"
@@ -1128,199 +1136,242 @@ msgstr ""
 
 #: app/models/admin/setting.rb:114
 msgid "Admin::Setting|Custom password strength regex"
-msgstr ""
+msgstr "Regex for Custom Password Strength"
 
 #: app/models/admin/setting.rb:115
 msgid "Admin::Setting|Custom password strength regex description"
 msgstr ""
+"Provide the regular expression for allowed passwords when you use custom "
+"password strength."
 
 #: app/models/admin/setting.rb:116
 msgid "Admin::Setting|Custom password strength validation message"
-msgstr ""
+msgstr "Custom Password Strength Validation Error Message"
 
 #: app/models/admin/setting.rb:117
 msgid "Admin::Setting|Custom password strength validation message description"
 msgstr ""
+"Provide the error message for validation error when you use custom password "
+"strength."
 
 #: app/models/admin/setting.rb:31
 msgid "Admin::Setting|Enable change picture"
-msgstr ""
+msgstr "Enable Changing Profile Pictures"
 
 #: app/models/admin/setting.rb:32
 msgid "Admin::Setting|Enable change picture description"
 msgstr ""
+"Check to allow users to change their own profile pictures. Uncheck if you "
+"don't want users to change their profile pictures (e.g. set profile pictures "
+"by administrator)."
 
 #: app/models/admin/setting.rb:118
 msgid "Admin::Setting|Enable login keyphrase"
-msgstr ""
+msgstr "Enable Login Keyphrase"
 
 #: app/models/admin/setting.rb:119
 msgid "Admin::Setting|Enable login keyphrase description"
 msgstr ""
+"Adds a login keyphrase to the login form. Login ID, password and login "
+"keyphrase must match for successful login."
 
 #: app/models/admin/setting.rb:101
 msgid "Admin::Setting|Enable password periodic change"
-msgstr ""
+msgstr "Enable Fixed-term Passwords"
 
 #: app/models/admin/setting.rb:102
 msgid "Admin::Setting|Enable password periodic change description"
 msgstr ""
+"Check to disallow users with expired passwords to login. Passwords must be "
+"reset before login."
 
 #: app/models/admin/setting.rb:126
 msgid "Admin::Setting|Enable single session"
-msgstr ""
+msgstr "Enable Single Session"
 
 #: app/models/admin/setting.rb:127
 msgid "Admin::Setting|Enable single session description"
 msgstr ""
+"Check to disallow multiple sessions per user. The old login session will be "
+"disabled when a new login session starts (remote logout when forgot to "
+"logout). Uncheck to allow multiple sessions."
 
 #: app/models/admin/setting.rb:122
 msgid "Admin::Setting|Enable user cleaning notification"
-msgstr ""
+msgstr "Send User Data Cleaning Notification"
 
 #: app/models/admin/setting.rb:123
 msgid "Admin::Setting|Enable user cleaning notification description"
 msgstr ""
+"Check to enable email notification for periodic user data cleaning (user "
+"retirement etc.) to the system administrator."
 
 #: app/models/admin/setting.rb:97
 msgid "Admin::Setting|Enable user lock"
-msgstr ""
+msgstr "Lock Accounts on Login Failures"
 
 #: app/models/admin/setting.rb:98
 msgid "Admin::Setting|Enable user lock description"
 msgstr ""
+"Lock accounts that failed to login for certain times (can be set on "
+"administration screen). Users need to unlock the account by resetting their "
+"passwords."
 
 #: app/models/admin/setting.rb:47
 msgid "Admin::Setting|Footer first"
-msgstr ""
+msgstr "First Line of Footer"
 
 #: app/models/admin/setting.rb:48
 msgid "Admin::Setting|Footer first description"
 msgstr ""
+"Message to be shown at the first line of footer. It is recommended to put "
+"often-used links here. HTML tags are allowed.<p style=\"color:red;\">You can "
+"also use JavaScript etc. but remember to take care of security issues.</p>"
 
 #: app/models/admin/setting.rb:51
 msgid "Admin::Setting|Footer image link url"
-msgstr ""
+msgstr "Footer Image link URL"
 
 #: app/models/admin/setting.rb:52
 msgid "Admin::Setting|Footer image link url description"
 msgstr ""
+"The URL to jump to when clicking on the image at the right of the footer "
+"(image file can be changed from \"Images\" tab)."
 
 #: app/models/admin/setting.rb:49
 msgid "Admin::Setting|Footer second"
-msgstr ""
+msgstr "Second Line of Footer"
 
 #: app/models/admin/setting.rb:50
 msgid "Admin::Setting|Footer second description"
 msgstr ""
+"Message to be shown at the secibd line of footer. It is recommended to put "
+"telephone numbers / email address / contact person for inquiries.  HTML tags "
+"are allowed.<p style=\"color:red;\">You can also use JavaScript etc. but "
+"remember to take care of security issues.</p>"
 
 #: app/models/admin/setting.rb:41
 msgid "Admin::Setting|Help url"
-msgstr ""
+msgstr "Help URL"
 
 #: app/models/admin/setting.rb:42
 msgid "Admin::Setting|Help url description"
 msgstr ""
+"The URL for the link to online help shown at the right-top corner. The link "
+"will not be shown when left blank."
 
 #: app/models/admin/setting.rb:27
 msgid "Admin::Setting|Hide email"
-msgstr ""
+msgstr "Hide Email Address"
 
 #: app/models/admin/setting.rb:28
 msgid "Admin::Setting|Hide email description"
-msgstr ""
+msgstr "Check to hide email address of users. Uncheck to show."
 
 #: app/models/admin/setting.rb:75
 msgid "Admin::Setting|Host and port"
-msgstr ""
+msgstr "Hostname and Port"
 
 #: app/models/admin/setting.rb:76
 msgid "Admin::Setting|Host and port description"
 msgstr ""
+"The hostname and port used for URLs in email notification. It does not "
+"affect the URL for accessing the system."
 
 #: app/models/admin/setting.rb:43
 msgid "Admin::Setting|Initial anntena"
-msgstr ""
+msgstr "Initial Antenna"
 
 #: app/models/admin/setting.rb:44
 msgid "Admin::Setting|Initial anntena description"
-msgstr ""
+msgstr "Provide the name of the antenna registered initially for a new user."
 
 #: app/models/admin/setting.rb:45
 msgid "Admin::Setting|Login account"
-msgstr ""
+msgstr "Name for \"Login ID\""
 
 #: app/models/admin/setting.rb:46
 msgid "Admin::Setting|Login account description"
 msgstr ""
+"You can customize the name of \"Login ID\" to prevent users from forgetting "
+"their \"Login ID\". (e.g. set it to \"Employee No.\" in case you use "
+"employee number as \"Login ID\"."
 
 #: app/models/admin/setting.rb:120 app/views/shared/_login_form.html.erb:39
 msgid "Admin::Setting|Login keyphrase"
-msgstr ""
+msgstr "Login Keyphrase"
 
 #: app/models/admin/setting.rb:121
 msgid "Admin::Setting|Login keyphrase description"
-msgstr ""
+msgstr "Provide login keyphrase in alpha-numericals."
 
 #: app/models/admin/setting.rb:59
 msgid "Admin::Setting|Mail function setting"
-msgstr ""
+msgstr "Enable Email Function"
 
 #: app/models/admin/setting.rb:60
 msgid "Admin::Setting|Mail function setting description"
 msgstr ""
+"System email notifications are available. Remember to set SMTP settings as "
+"well."
 
 #: app/models/admin/setting.rb:83
 msgid "Admin::Setting|Mypage feed default limit"
-msgstr ""
+msgstr "Entries Per Feed"
 
 #: app/models/admin/setting.rb:84
 msgid "Admin::Setting|Mypage feed default limit description"
 msgstr ""
+"Summaries of RSS feed entries are shown in the feed block at the right of "
+"\"My Page\". Adjust to get optimal display result."
 
 #: app/models/admin/setting.rb:87
 msgid "Admin::Setting|Mypage feed settings"
-msgstr ""
+msgstr "Add / Delete RSS Feeds"
 
 #: app/models/admin/setting.rb:88
 msgid "Admin::Setting|Mypage feed settings description"
-msgstr ""
+msgstr "Set the RSS feeds shown in \"My Page\"."
 
 #: app/models/admin/setting.rb:91
 msgid "Admin::Setting|Mypage feed settings title"
-msgstr ""
+msgstr "Title of RSS Feed"
 
 #: app/models/admin/setting.rb:92
 msgid "Admin::Setting|Mypage feed settings title description"
-msgstr ""
+msgstr "Provide the title of RSS feed."
 
 #: app/models/admin/setting.rb:89
 msgid "Admin::Setting|Mypage feed settings url"
-msgstr ""
+msgstr "RSS Feed URL"
 
 #: app/models/admin/setting.rb:90
 msgid "Admin::Setting|Mypage feed settings url description"
-msgstr ""
+msgstr "Provide the URL of RSS feed."
 
 #: app/models/admin/setting.rb:85
 msgid "Admin::Setting|Mypage feed timeout"
-msgstr ""
+msgstr "RSS Feeds Timeout (sec)"
 
 #: app/models/admin/setting.rb:86
 msgid "Admin::Setting|Mypage feed timeout description"
 msgstr ""
+"There may be problem retrieving the feed since it is located outside of the "
+"system. The retrieval aborts when exceeding the timeout."
 
 #: app/models/admin/setting.rb:-
 msgid "Admin::Setting|Name"
-msgstr ""
+msgstr " "
 
 #: app/models/admin/setting.rb:103
 msgid "Admin::Setting|Password change interval"
-msgstr ""
+msgstr "Valid Duration of Passwords"
 
 #: app/models/admin/setting.rb:104
 msgid "Admin::Setting|Password change interval description"
 msgstr ""
+"Set the valid duration of passwords in days. The password expiry days will "
+"be set to the days set after user registration / password update."
 
 #: app/models/admin/setting.rb:105
 msgid "Admin::Setting|Password strength"
@@ -1377,11 +1428,11 @@ msgstr "Middle"
 
 #: app/models/admin/setting.rb:53
 msgid "Admin::Setting|Point button"
-msgstr ""
+msgstr "Name of Poin Button"
 
 #: app/models/admin/setting.rb:54
 msgid "Admin::Setting|Point button description"
-msgstr ""
+msgstr "You can change the name of point button for blogs and BBS."
 
 #: app/models/admin/setting.rb:77
 msgid "Admin::Setting|Protocol"
@@ -1390,70 +1441,76 @@ msgstr ""
 #: app/models/admin/setting.rb:78
 msgid "Admin::Setting|Protocol description"
 msgstr ""
+"The protocol used for URLs in email notification. It does not affect the URL "
+"for accessing the system."
 
 #: app/models/admin/setting.rb:61
 msgid "Admin::Setting|Smtp settings"
-msgstr ""
+msgstr "SMTP Settings"
 
 #: app/models/admin/setting.rb:69
 msgid "Admin::Setting|Smtp settings address"
-msgstr ""
+msgstr "SMTP Server"
 
 #: app/models/admin/setting.rb:70
 msgid "Admin::Setting|Smtp settings address description"
-msgstr ""
+msgstr "Provide the hostname of SMTP server."
 
 #: app/models/admin/setting.rb:73
 msgid "Admin::Setting|Smtp settings authentication"
-msgstr ""
+msgstr "AUTH Type"
 
 #: app/models/admin/setting.rb:74
 msgid "Admin::Setting|Smtp settings authentication description"
 msgstr ""
+"Select appropriate type of authentication in case your server requires it. "
+"Available options are plain, login and cram_md5."
 
 #: app/models/admin/setting.rb:62
 msgid "Admin::Setting|Smtp settings description"
-msgstr ""
+msgstr "Here we set the SMTP options."
 
 #: app/models/admin/setting.rb:71
 msgid "Admin::Setting|Smtp settings domain"
-msgstr ""
+msgstr "Sender Domain"
 
 #: app/models/admin/setting.rb:72
 msgid "Admin::Setting|Smtp settings domain description"
-msgstr ""
+msgstr "Provide the sender domain. It will be shown in the mail header."
 
 #: app/models/admin/setting.rb:63
 msgid "Admin::Setting|Smtp settings password"
-msgstr ""
+msgstr "Password"
 
 #: app/models/admin/setting.rb:64
 msgid "Admin::Setting|Smtp settings password description"
-msgstr ""
+msgstr "Provide the password in case your server requires authentication."
 
 #: app/models/admin/setting.rb:65
 msgid "Admin::Setting|Smtp settings port"
-msgstr ""
+msgstr "Port"
 
 #: app/models/admin/setting.rb:66
 msgid "Admin::Setting|Smtp settings port description"
-msgstr ""
+msgstr "Provide the port number."
 
 #: app/models/admin/setting.rb:67
 msgid "Admin::Setting|Smtp settings user name"
-msgstr ""
+msgstr "User Name"
 
 #: app/models/admin/setting.rb:68
 msgid "Admin::Setting|Smtp settings user name description"
-msgstr ""
+msgstr "Provide the user name in case your server requires authentication."
 
 #: app/models/admin/setting.rb:25
 msgid "Admin::Setting|Stop new user"
-msgstr ""
+msgstr "Stop User Registration"
 
 #: app/models/admin/setting.rb:26
 msgid "Admin::Setting|Stop new user description"
 msgstr ""
+"You can stop new user registrations and run the site with existing users. "
+"Uncheck to resume."
 
 #: app/models/admin/setting.rb:-
 msgid "Admin::Setting|Updated at"
@@ -1461,35 +1518,40 @@ msgstr ""
 
 #: app/models/admin/setting.rb:124
 msgid "Admin::Setting|User cleaning notification interval"
-msgstr ""
+msgstr "User Data Cleaning Notification Interval (mo.)"
 
 #: app/models/admin/setting.rb:125
 msgid "Admin::Setting|User cleaning notification interval description"
 msgstr ""
+"Provide the interval for sending user data cleaning notification emails. "
+"Emails are sent on the first days of the multiple months of the provided "
+"value (e.g. 1st of March, June, September and December when the value is set "
+"to 3)."
 
 #: app/models/admin/setting.rb:99
 msgid "Admin::Setting|User lock trial limit"
-msgstr ""
+msgstr "Login Failure Limit"
 
 #: app/models/admin/setting.rb:100
 msgid "Admin::Setting|User lock trial limit description"
 msgstr ""
+"Set the maximum allowed login failures before user accounts get locked."
 
 #: app/models/admin/setting.rb:- app/models/admin/setting.rb:20
 msgid "Admin::Setting|Value"
-msgstr ""
+msgstr " "
 
 #: app/models/admin/share_file.rb:26
 msgid "Admin::ShareFile|Category"
-msgstr ""
+msgstr "Tags"
 
 #: app/models/admin/share_file.rb:28
 msgid "Admin::ShareFile|Content type"
-msgstr ""
+msgstr "Type"
 
 #: app/models/admin/share_file.rb:24
 msgid "Admin::ShareFile|Date"
-msgstr ""
+msgstr "Uploaded Date"
 
 #: app/models/admin/share_file.rb:23
 msgid "Admin::ShareFile|Description"
@@ -1497,27 +1559,27 @@ msgstr ""
 
 #: app/models/admin/share_file.rb:17
 msgid "Admin::ShareFile|File name"
-msgstr ""
+msgstr "File Name"
 
 #: app/models/admin/share_file.rb:18
 msgid "Admin::ShareFile|Owner symbol"
-msgstr ""
+msgstr "Owner"
 
 #: app/models/admin/share_file.rb:19
 msgid "Admin::ShareFile|Owner symbol type"
-msgstr ""
+msgstr "Owner Type"
 
 #: app/models/admin/share_file.rb:35
 msgid "Admin::ShareFile|Publication symbols type"
-msgstr ""
+msgstr "Privacy Setting"
 
 #: app/models/admin/share_file.rb:29
 msgid "Admin::ShareFile|Publication type"
-msgstr ""
+msgstr "Privacy Setting"
 
 #: app/models/admin/share_file.rb:27
 msgid "Admin::ShareFile|Total count"
-msgstr ""
+msgstr "Download Count"
 
 #: app/models/admin/share_file.rb:25
 msgid "Admin::ShareFile|User"
@@ -1530,6 +1592,9 @@ msgstr ""
 #: app/models/admin/user_profile_master_category.rb:23
 msgid "Admin::UserProfileMasterCategory|Description description"
 msgstr ""
+"Provide the description for this profile category. It will be shown at the "
+"right of the name of this profile category as explanation in profile editing "
+"screen."
 
 #: app/models/admin/user_profile_master_category.rb:18
 msgid "Admin::UserProfileMasterCategory|Name"
@@ -1537,15 +1602,17 @@ msgstr ""
 
 #: app/models/admin/user_profile_master_category.rb:19
 msgid "Admin::UserProfileMasterCategory|Name description"
-msgstr ""
+msgstr "Provide the name of this profile category."
 
 #: app/models/admin/user_profile_master_category.rb:20
 msgid "Admin::UserProfileMasterCategory|Sort order"
-msgstr ""
+msgstr "Display Order"
 
 #: app/models/admin/user_profile_master_category.rb:21
 msgid "Admin::UserProfileMasterCategory|Sort order description"
 msgstr ""
+"Provide the display order of this profile category. The smallest will be "
+"shown on top."
 
 #: app/models/admin/user_profile_master.rb:38
 msgid "Admin::UserProfileMaster|Description"
@@ -1554,14 +1621,19 @@ msgstr ""
 #: app/models/admin/user_profile_master.rb:39
 msgid "Admin::UserProfileMaster|Description description"
 msgstr ""
+"Provide the description for this profile item. An icon will be shown in the "
+"profile editing screen and the description will be shown on mouse over."
 
 #: app/models/admin/user_profile_master.rb:21
 msgid "Admin::UserProfileMaster|Input type"
-msgstr ""
+msgstr "Input Type"
 
 #: app/models/admin/user_profile_master.rb:22
 msgid "Admin::UserProfileMaster|Input type description"
 msgstr ""
+"Select the input type of this profile item. Note that you cannot change the "
+"input type once registered. (However, you can delete the item and register "
+"again)"
 
 #: app/models/admin/user_profile_master.rb:19
 msgid "Admin::UserProfileMaster|Name"
@@ -1569,88 +1641,103 @@ msgstr ""
 
 #: app/models/admin/user_profile_master.rb:20
 msgid "Admin::UserProfileMaster|Name description"
-msgstr ""
+msgstr "Provide the name of this profile item."
 
 #: app/models/admin/user_profile_master.rb:27
 msgid "Admin::UserProfileMaster|Option values"
-msgstr ""
+msgstr "Candidates"
 
 #: app/models/admin/user_profile_master.rb:34
 msgid "Admin::UserProfileMaster|Option values description|appendable_select"
-msgstr ""
+msgstr "You don't need to provide the candidates."
 
 #: app/models/admin/user_profile_master.rb:35
 msgid "Admin::UserProfileMaster|Option values description|check_box"
 msgstr ""
+"Provide the candidates in comma separated format (e.g. Movie,Sports,"
+"Internet)."
 
 #: app/models/admin/user_profile_master.rb:37
 msgid "Admin::UserProfileMaster|Option values description|datepicker"
-msgstr ""
+msgstr "You don't need to provide the candidates."
 
 #: app/models/admin/user_profile_master.rb:29
 msgid ""
 "Admin::UserProfileMaster|Option values description|number_and_hyphen_only"
-msgstr ""
+msgstr "You don't need to provide the candidates."
 
 #: app/models/admin/user_profile_master.rb:36
 msgid "Admin::UserProfileMaster|Option values description|prefecture_select"
-msgstr ""
+msgstr "You don't need to provide the candidates."
 
 #: app/models/admin/user_profile_master.rb:31
 msgid "Admin::UserProfileMaster|Option values description|radio"
-msgstr ""
+msgstr "Provide the candidates in comma separated format (e.g. Male,Female)."
 
 #: app/models/admin/user_profile_master.rb:30
 msgid "Admin::UserProfileMaster|Option values description|rich_text"
-msgstr ""
+msgstr "You don't need to provide the candidates."
 
 #: app/models/admin/user_profile_master.rb:33
 msgid "Admin::UserProfileMaster|Option values description|select"
 msgstr ""
+"Provide the candidates in comma separated format (e.g. Type A,Type B, Type "
+"AB, Type O)."
 
 #: app/models/admin/user_profile_master.rb:28
 msgid "Admin::UserProfileMaster|Option values description|text_field"
-msgstr ""
+msgstr "You don't need to provide the candidates."
 
 #: app/models/admin/user_profile_master.rb:32
 msgid "Admin::UserProfileMaster|Option values description|year_select"
 msgstr ""
+"Provide the range of year for selection separated by a hyphen ('-') (e.g. if "
+"you enter '1980-2000', a drop-down list with options between 1980 and 2000 "
+"will be shown). You can also omit the number at either side of the hyphen. "
+"The omitted side will be replaced by current year (e.g. if you enter "
+"'1980-', a drop-down list with options between 1980 and 2008 will be shown, "
+"given that the current year is 2008). A drop-down list with current year as "
+"the only option will be shown in case you do not provide any values here."
 
 #: app/models/admin/user_profile_master.rb:23
 msgid "Admin::UserProfileMaster|Required"
-msgstr ""
+msgstr "Mandatory"
 
 #: app/models/admin/user_profile_master.rb:24
 msgid "Admin::UserProfileMaster|Required description"
-msgstr ""
+msgstr "Check if the item is mandatory. Unchek if it is optional."
 
 #: app/models/admin/user_profile_master.rb:25
 msgid "Admin::UserProfileMaster|Sort order"
-msgstr ""
+msgstr "Display Order"
 
 #: app/models/admin/user_profile_master.rb:26
 msgid "Admin::UserProfileMaster|Sort order description"
 msgstr ""
+"Provide the display order of this profile item. The smallest will be shown "
+"on top."
 
 #: app/models/admin/user_profile_master.rb:17
 msgid "Admin::UserProfileMaster|User profile master category"
-msgstr ""
+msgstr "Profile Category"
 
 #: app/models/admin/user_profile_master.rb:18
 msgid "Admin::UserProfileMaster|User profile master category description"
 msgstr ""
+"Select the profile category this item belogs to. Profile items will be "
+"categorized by profile categories."
 
 #: app/models/admin/user_uid.rb:17
 msgid "Admin::UserUid|Uid"
-msgstr ""
+msgstr "User ID"
 
 #: app/models/admin/user_uid.rb:18
 msgid "Admin::UserUid|Uid description"
-msgstr ""
+msgstr "Enter the User ID."
 
 #: app/models/admin/user_uid.rb:19
 msgid "Admin::UserUid|Uid type"
-msgstr ""
+msgstr "Type"
 
 #: app/models/admin/user.rb:26
 msgid "Admin::User|Admin"
@@ -1658,23 +1745,23 @@ msgstr ""
 
 #: app/models/admin/user.rb:27
 msgid "Admin::User|Admin description"
-msgstr ""
+msgstr "Check to grant administrative rights."
 
 #: app/models/admin/user.rb:23
 msgid "Admin::User|Code"
-msgstr ""
+msgstr "Login ID"
 
 #: app/models/admin/user.rb:24
 msgid "Admin::User|Code description"
-msgstr ""
+msgstr "Provide the login ID."
 
 #: app/models/admin/user.rb:30 app/views/admin/users/import.html.erb:22
 msgid "Admin::User|Email"
-msgstr ""
+msgstr "Email Address"
 
 #: app/models/admin/user.rb:31
 msgid "Admin::User|Email description"
-msgstr ""
+msgstr " "
 
 #: app/models/admin/user.rb:41
 msgid "Admin::User|Issued at"
@@ -1682,7 +1769,7 @@ msgstr ""
 
 #: app/models/admin/user.rb:42
 msgid "Admin::User|Last authenticated at"
-msgstr ""
+msgstr "Last Authenticated at"
 
 #: app/models/admin/user.rb:39
 msgid "Admin::User|Locked"
@@ -1691,6 +1778,8 @@ msgstr ""
 #: app/models/admin/user.rb:40
 msgid "Admin::User|Locked description"
 msgstr ""
+"Check to lock the user. Locked users are not allowed to login until they are "
+"unchecked or their password are reset."
 
 #: app/models/admin/user.rb:28 app/views/admin/users/import.html.erb:21
 #: app/views/portal/_registration_form.html.erb:16
@@ -1700,7 +1789,7 @@ msgstr ""
 
 #: app/models/admin/user.rb:29
 msgid "Admin::User|Name description"
-msgstr ""
+msgstr " "
 
 #: app/models/admin/user.rb:35 app/views/portal/_registration_form.html.erb:56
 msgid "Admin::User|Password"
@@ -1708,19 +1797,19 @@ msgstr ""
 
 #: app/models/admin/user.rb:34 app/views/portal/_registration_form.html.erb:60
 msgid "Admin::User|Password confirmation"
-msgstr ""
+msgstr "Password Confirmation"
 
 #: app/models/admin/user.rb:43
 msgid "Admin::User|Password expires at"
-msgstr ""
+msgstr "Password Expires at"
 
 #: app/models/admin/user.rb:47
 msgid "Admin::User|Picture data"
-msgstr ""
+msgstr "Profile Picture"
 
 #: app/models/admin/user.rb:48
 msgid "Admin::User|Picture name"
-msgstr ""
+msgstr "Picture File"
 
 #: app/models/admin/user.rb:36
 msgid "Admin::User|Retired"
@@ -1732,7 +1821,7 @@ msgstr ""
 
 #: app/models/admin/user.rb:33
 msgid "Admin::User|Section description"
-msgstr ""
+msgstr " "
 
 #: app/models/admin/user.rb:37
 msgid "Admin::User|Status"
@@ -1740,15 +1829,15 @@ msgstr ""
 
 #: app/models/admin/user.rb:38
 msgid "Admin::User|Status description"
-msgstr ""
+msgstr "Select the usage status of the user."
 
 #: app/models/admin/user.rb:25
 msgid "Admin::User|Uid"
-msgstr ""
+msgstr "User ID"
 
 #: app/models/admin/user.rb:45
 msgid "Admin::User|User uids"
-msgstr ""
+msgstr "Login ID"
 
 #: config/environment.rb:114
 msgid "Administration of the site."
@@ -1780,12 +1869,16 @@ msgstr ""
 #: app/views/admin/users/change_uid.html.erb:6
 #: app/views/admin/users/create_uid.html.erb:6
 msgid "Admin|Create Change Uid|Caution"
-msgstr ""
+msgstr "Caution!"
 
 #: app/views/admin/users/change_uid.html.erb:7
 #: app/views/admin/users/create_uid.html.erb:7
 msgid "Admin|Create Change Uid|Caution Description"
 msgstr ""
+"Changing / creating user ID affects in many ways so do this only when really "
+"in need.<br />Execute when there are less user accesses since the process "
+"takes time and may slow down the response of the site.<br />The user will be "
+"required to login again (same if you do it with your own account)."
 
 #: app/controllers/services_controller.rb:42
 #: app/views/bookmarks/index.html.erb:23 app/views/groups/index.html.erb:14
@@ -2816,7 +2909,7 @@ msgstr ""
 #: app/views/admin/user_profile_masters/index.html.erb:28
 #: app/views/admin/user_profile_master_categories/index.html.erb:18
 msgid "Destroy"
-msgstr ""
+msgstr "Delete"
 
 #: app/views/groups/index.html.erb:25 app/views/user/group.html.erb:21
 msgid "Detailed"
@@ -4815,7 +4908,7 @@ msgstr ""
 
 #: app/views/admin/settings/_security.html.erb:7
 msgid "Periodic password change"
-msgstr ""
+msgstr "Fixed-term Passwords"
 
 #: lib/skip_default_data.rb:59
 msgid "Pets"
@@ -6174,7 +6267,7 @@ msgid "Time Last Updated: "
 msgstr ""
 
 #: app/controllers/mypage_controller.rb:247
-msgid "Timeout to loading rss."
+msgid "Timeout while loading rss."
 msgstr ""
 
 #: app/views/bookmarks/setup.html.erb:24
@@ -6878,7 +6971,7 @@ msgstr ""
 #: app/views/user/show.html.erb:68 app/views/users/index.html.erb:9
 #: app/views/users/_user.html.erb:44
 msgid "User|Section"
-msgstr ""
+msgstr "Section"
 
 #: app/models/user.rb:-
 msgid "User|Status"
@@ -6886,16 +6979,16 @@ msgstr ""
 
 #: app/models/user.rb:61
 msgid "User|Status|ACTIVE"
-msgstr ""
+msgstr "Active"
 
 #: app/models/user.rb:62
 msgid "User|Status|RETIRED"
-msgstr ""
+msgstr "Retired"
 
 #: app/models/user.rb:63 app/views/admin/users/_form.html.erb:25
 #: app/views/admin/users/_form.html.erb:31
 msgid "User|Status|UNUSED"
-msgstr ""
+msgstr "Unused"
 
 #: app/models/user.rb:-
 msgid "User|Trial num"
