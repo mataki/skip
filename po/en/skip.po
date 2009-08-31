@@ -2175,7 +2175,7 @@ msgstr ""
 
 #: app/controllers/admin/admin_module.rb:74
 msgid "Board entries"
-msgstr "board entries"
+msgstr "Board Entries"
 
 #: app/models/board_entry_comment.rb:-
 msgid "BoardEntryComment|Board entry"
@@ -3475,7 +3475,7 @@ msgstr ""
 
 #: app/controllers/admin/admin_module.rb:73
 msgid "Group categories"
-msgstr "group categories"
+msgstr "Group Categories"
 
 #: app/models/board_entry.rb:60
 msgid "Group does not exist."
@@ -5622,7 +5622,7 @@ msgstr ""
 
 #: app/controllers/admin/admin_module.rb:75
 msgid "Share files"
-msgstr "shared files"
+msgstr "Shared Files"
 
 #: app/models/share_file_access.rb:-
 msgid "ShareFileAccess|Created at"
@@ -6581,7 +6581,7 @@ msgstr ""
 
 #: app/controllers/admin/admin_module.rb:76
 msgid "User profile master categories"
-msgstr "profile categories"
+msgstr "Profile Categories"
 
 #: app/models/user_profile_value.rb:27
 msgid "User profile master isn't assosiated"
@@ -8101,7 +8101,7 @@ msgstr "profile category"
 
 #: app/controllers/admin/user_profile_masters_controller.rb:24
 msgid "user profile masters"
-msgstr "profile items"
+msgstr "Profile Items"
 
 #: app/models/user_profile_value.rb:-
 msgid "user profile value"
