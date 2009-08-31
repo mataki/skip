@@ -8101,7 +8101,7 @@ msgstr "profile category"
 
 #: app/controllers/admin/user_profile_masters_controller.rb:24
 msgid "user profile masters"
-msgstr "profile categories"
+msgstr "profile items"
 
 #: app/models/user_profile_value.rb:-
 msgid "user profile value"
