@@ -18,18 +18,18 @@ module Admin::AdminModule
     private
 
     # "Admin::User"
-    def admin_model_controller_name
+    def admin_model_class_name
       "Admin::"+controller_name.classify
     end
 
     # Admin::User
     def admin_model_class
-      admin_model_controller_name.constantize
+      admin_model_class_name.constantize
     end
 
     # "admin_user"
     def admin_params_name
-      singular_controller_name(admin_model_controller_name.constantize)
+      singular_class_name(admin_model_class_name.constantize)
     end
 
     # :admin_user
@@ -74,7 +74,7 @@ module Admin::AdminModule
       @query = params[:query]
       @pages, objects = paginate(singularize_name.to_sym,
                                  :per_page => 100,
-                                 :controller_name => admin_model_controller_name,
+                                 :class_name => admin_model_class_name,
                                  :conditions => [search_condition, { :lqs => SkipUtil.to_lqs(@query) }])
       set_pluralize_instance_val objects
 
@@ -182,7 +182,7 @@ module Admin::AdminModule
 
       @topics = [[_('Listing %{model}') % {:model => _(object_name_without_admin(load_parent).gsub('_', ' '))}, parent_index_path],
                  [_('%{model} Show') % {:model => load_parent.topic_title}, load_parent],
-                 _('Listing %{model}') % {:model => _(singularize_name.gsub('_', ' '))}]
+                 _('Listing %{model}') % {:model => _(controller_name.gsub('_', ' '))}]
 
       respond_to do |format|
         format.html # index.html.erb
@@ -196,7 +196,7 @@ module Admin::AdminModule
 
       @topics = [[_('Listing %{model}') % {:model => _(object_name_without_admin(load_parent).gsub('_', ' '))}, parent_index_path],
                  [_('%{model} Show') % {:model => load_parent.topic_title}, load_parent],
-                 [_('Listing %{model}') % {:model => _(singularize_name.gsub('_', ' '))}, { :action => :index }],
+                 [_('Listing %{model}') % {:model => _(controller_name.gsub('_', ' '))}, { :action => :index }],
                  _('%{model} Show') % {:model => object.topic_title}]
 
       respond_to do |format|
@@ -211,7 +211,7 @@ module Admin::AdminModule
 
       @topics = [[_('Listing %{model}') % {:model => _(object_name_without_admin(load_parent).gsub('_', ' '))}, parent_index_path],
                  [_('%{model} Show') % {:model => load_parent.topic_title}, load_parent],
-                 [_('Listing %{model}') % {:model => _(singularize_name.gsub('_', ' '))}, { :action => :index }],
+                 [_('Listing %{model}') % {:model => _(controller_name.gsub('_', ' '))}, { :action => :index }],
                  _('New %{model}') % {:model => object.topic_title}]
 
       respond_to do |format|
@@ -226,7 +226,7 @@ module Admin::AdminModule
 
       @topics = [[_('Listing %{model}') % {:model => _(object_name_without_admin(load_parent).gsub('_', ' '))}, parent_index_path],
                  [_('%{model} Show') % {:model => load_parent.topic_title}, load_parent],
-                 [_('Listing %{model}') % {:model => _(singularize_name.gsub('_', ' '))}, { :action => :index }],
+                 [_('Listing %{model}') % {:model => _(controller_name.gsub('_', ' '))}, { :action => :index }],
                  _('Editing %{model}') % {:model => object.topic_title}]
     end
 
@@ -236,7 +236,7 @@ module Admin::AdminModule
 
       @topics = [[_('Listing %{model}') % {:model => _(object_name_without_admin(load_parent).gsub('_', ' '))}, parent_index_path],
                  [_('%{model} Show') % {:model => load_parent.topic_title}, load_parent],
-                 [_('Listing %{model}') % {:model => _(singularize_name.gsub('_', ' '))}, { :action => :index }],
+                 [_('Listing %{model}') % {:model => _(controller_name.gsub('_', ' '))}, { :action => :index }],
                  _('New %{model}') % {:model => object.topic_title}]
 
       respond_to do |format|
@@ -258,7 +258,7 @@ module Admin::AdminModule
 
       @topics = [[_('Listing %{model}') % {:model => _(object_name_without_admin(load_parent).gsub('_', ' '))}, parent_index_path],
                  [_('%{model} Show') % {:model => load_parent.topic_title}, load_parent],
-                 [_('Listing %{model}') % {:model => _(singularize_name.gsub('_', ' '))}, { :action => :index }],
+                 [_('Listing %{model}') % {:model => _(controller_name.gsub('_', ' '))}, { :action => :index }],
                  _('Editing %{model}') % {:model => object.topic_title}]
 
       respond_to do |format|
