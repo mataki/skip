@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-08-31 12:34+0800\n"
+"POT-Creation-Date: 2009-08-31 16:39+0800\n"
 "PO-Revision-Date: 2009-06-29 13:31+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -168,32 +168,32 @@ msgstr ""
 msgid "%{icon} Show history of %{time}"
 msgstr ""
 
-#: app/controllers/admin/admin_module.rb:94
-#: app/controllers/admin/admin_module.rb:184
-#: app/controllers/admin/admin_module.rb:198
-#: app/controllers/admin/admin_module.rb:200
-#: app/controllers/admin/admin_module.rb:213
-#: app/controllers/admin/admin_module.rb:228
-#: app/controllers/admin/admin_module.rb:238
-#: app/controllers/admin/admin_module.rb:260
+#: app/controllers/admin/admin_module.rb:99
+#: app/controllers/admin/admin_module.rb:189
+#: app/controllers/admin/admin_module.rb:203
+#: app/controllers/admin/admin_module.rb:205
+#: app/controllers/admin/admin_module.rb:218
+#: app/controllers/admin/admin_module.rb:233
+#: app/controllers/admin/admin_module.rb:243
+#: app/controllers/admin/admin_module.rb:265
 msgid "%{model} Show"
 msgstr ""
 
-#: app/controllers/admin/admin_module.rb:133
-#: app/controllers/admin/admin_module.rb:244
+#: app/controllers/admin/admin_module.rb:138
+#: app/controllers/admin/admin_module.rb:249
 #: app/controllers/admin/pictures_controller.rb:53
 msgid "%{model} was successfully created."
 msgstr ""
 
-#: app/controllers/admin/admin_module.rb:168
-#: app/controllers/admin/admin_module.rb:282
+#: app/controllers/admin/admin_module.rb:173
+#: app/controllers/admin/admin_module.rb:287
 #: app/controllers/admin/groups_controller.rb:24
 #: app/controllers/admin/user_profile_master_categories_controller.rb:28
 msgid "%{model} was successfully deleted."
 msgstr ""
 
-#: app/controllers/admin/admin_module.rb:152
-#: app/controllers/admin/admin_module.rb:266
+#: app/controllers/admin/admin_module.rb:157
+#: app/controllers/admin/admin_module.rb:271
 #: app/controllers/admin/oauth_providers_controller.rb:25
 #: app/controllers/admin/openid_identifiers_controller.rb:35
 #: app/controllers/admin/pictures_controller.rb:82
@@ -2173,6 +2173,10 @@ msgstr ""
 msgid "Board Entries"
 msgstr ""
 
+#: app/controllers/admin/admin_module.rb:74
+msgid "Board entries"
+msgstr "board entries"
+
 #: app/models/board_entry_comment.rb:-
 msgid "BoardEntryComment|Board entry"
 msgstr ""
@@ -3027,10 +3031,10 @@ msgstr ""
 msgid "Editable"
 msgstr ""
 
-#: app/controllers/admin/admin_module.rb:121
-#: app/controllers/admin/admin_module.rb:148
-#: app/controllers/admin/admin_module.rb:230
-#: app/controllers/admin/admin_module.rb:262
+#: app/controllers/admin/admin_module.rb:126
+#: app/controllers/admin/admin_module.rb:153
+#: app/controllers/admin/admin_module.rb:235
+#: app/controllers/admin/admin_module.rb:267
 #: app/controllers/admin/openid_identifiers_controller.rb:25
 #: app/controllers/admin/openid_identifiers_controller.rb:26
 #: app/controllers/admin/openid_identifiers_controller.rb:40
@@ -3468,6 +3472,10 @@ msgstr ""
 #: app/views/groups/index.html.erb:5
 msgid "Group Name / Explanation"
 msgstr ""
+
+#: app/controllers/admin/admin_module.rb:73
+msgid "Group categories"
+msgstr "group categories"
 
 #: app/models/board_entry.rb:60
 msgid "Group does not exist."
@@ -4086,24 +4094,24 @@ msgstr ""
 msgid "List of unread entries"
 msgstr ""
 
-#: app/controllers/admin/admin_module.rb:81
-#: app/controllers/admin/admin_module.rb:93
-#: app/controllers/admin/admin_module.rb:107
-#: app/controllers/admin/admin_module.rb:120
-#: app/controllers/admin/admin_module.rb:128
-#: app/controllers/admin/admin_module.rb:147
-#: app/controllers/admin/admin_module.rb:183
-#: app/controllers/admin/admin_module.rb:185
-#: app/controllers/admin/admin_module.rb:197
-#: app/controllers/admin/admin_module.rb:199
-#: app/controllers/admin/admin_module.rb:212
-#: app/controllers/admin/admin_module.rb:214
-#: app/controllers/admin/admin_module.rb:227
-#: app/controllers/admin/admin_module.rb:229
-#: app/controllers/admin/admin_module.rb:237
-#: app/controllers/admin/admin_module.rb:239
-#: app/controllers/admin/admin_module.rb:259
-#: app/controllers/admin/admin_module.rb:261
+#: app/controllers/admin/admin_module.rb:86
+#: app/controllers/admin/admin_module.rb:98
+#: app/controllers/admin/admin_module.rb:112
+#: app/controllers/admin/admin_module.rb:125
+#: app/controllers/admin/admin_module.rb:133
+#: app/controllers/admin/admin_module.rb:152
+#: app/controllers/admin/admin_module.rb:188
+#: app/controllers/admin/admin_module.rb:190
+#: app/controllers/admin/admin_module.rb:202
+#: app/controllers/admin/admin_module.rb:204
+#: app/controllers/admin/admin_module.rb:217
+#: app/controllers/admin/admin_module.rb:219
+#: app/controllers/admin/admin_module.rb:232
+#: app/controllers/admin/admin_module.rb:234
+#: app/controllers/admin/admin_module.rb:242
+#: app/controllers/admin/admin_module.rb:244
+#: app/controllers/admin/admin_module.rb:264
+#: app/controllers/admin/admin_module.rb:266
 #: app/controllers/admin/openid_identifiers_controller.rb:24
 #: app/controllers/admin/openid_identifiers_controller.rb:39
 #: app/controllers/admin/pictures_controller.rb:26
@@ -4437,10 +4445,10 @@ msgstr ""
 msgid "New"
 msgstr ""
 
-#: app/controllers/admin/admin_module.rb:108
-#: app/controllers/admin/admin_module.rb:129
-#: app/controllers/admin/admin_module.rb:215
-#: app/controllers/admin/admin_module.rb:240
+#: app/controllers/admin/admin_module.rb:113
+#: app/controllers/admin/admin_module.rb:134
+#: app/controllers/admin/admin_module.rb:220
+#: app/controllers/admin/admin_module.rb:245
 #: app/controllers/admin/pictures_controller.rb:39
 #: app/controllers/admin/pictures_controller.rb:50
 #: app/controllers/admin/users_controller.rb:29
@@ -5612,6 +5620,10 @@ msgstr ""
 msgid "Sex"
 msgstr ""
 
+#: app/controllers/admin/admin_module.rb:75
+msgid "Share files"
+msgstr "shared files"
+
 #: app/models/share_file_access.rb:-
 msgid "ShareFileAccess|Created at"
 msgstr ""
@@ -6566,6 +6578,10 @@ msgstr ""
 #: app/controllers/users_controller.rb:32
 msgid "User not found."
 msgstr ""
+
+#: app/controllers/admin/admin_module.rb:76
+msgid "User profile master categories"
+msgstr "profile categories"
 
 #: app/models/user_profile_value.rb:27
 msgid "User profile master isn't assosiated"
@@ -8072,7 +8088,6 @@ msgstr ""
 msgid "user profile"
 msgstr ""
 
-#: app/controllers/admin/user_profile_masters_controller.rb:24
 #: app/models/user_profile_master.rb:-
 #: app/views/admin/user_profile_masters/index.html.erb:35
 msgid "user profile master"
@@ -8083,6 +8098,10 @@ msgstr "profile item"
 #: app/views/admin/user_profile_master_categories/index.html.erb:25
 msgid "user profile master category"
 msgstr "profile category"
+
+#: app/controllers/admin/user_profile_masters_controller.rb:24
+msgid "user profile masters"
+msgstr "profile categories"
 
 #: app/models/user_profile_value.rb:-
 msgid "user profile value"
@@ -8114,3 +8133,6 @@ msgid ""
 "sample to create CSV file.<br/>Name, password and email address are "
 "mandatory items for new users."
 msgstr ""
+
+#~ msgid "user profile master categories"
+#~ msgstr "profile categories"
