@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-08-31 12:06+0800\n"
+"POT-Creation-Date: 2009-08-31 12:34+0800\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2052,6 +2052,10 @@ msgstr ""
 msgid "Blogs / BBSs"
 msgstr ""
 
+#: app/helpers/admin/application_helper.rb:39
+msgid "Board Entries"
+msgstr ""
+
 #: app/models/board_entry_comment.rb:-
 msgid "BoardEntryComment|Board entry"
 msgstr ""
@@ -2306,7 +2310,8 @@ msgstr ""
 #: app/controllers/bookmark_controller.rb:118
 #: app/controllers/mypage_controller.rb:493
 #: app/controllers/services_controller.rb:44
-#: app/controllers/user_layout_module.rb:9 config/environment.rb:91
+#: app/controllers/user_layout_module.rb:9
+#: app/helpers/admin/application_helper.rb:40 config/environment.rb:91
 msgid "Bookmarks"
 msgstr ""
 
@@ -3331,6 +3336,10 @@ msgstr ""
 msgid "Gourmet"
 msgstr ""
 
+#: app/helpers/admin/application_helper.rb:37
+msgid "Group Categories"
+msgstr ""
+
 #: app/views/group/_form.html.erb:4
 msgid "Group ID"
 msgstr ""
@@ -3475,7 +3484,8 @@ msgstr ""
 #: app/controllers/groups_controller.rb:65
 #: app/controllers/group_controller.rb:372
 #: app/controllers/services_controller.rb:46
-#: app/controllers/share_file_controller.rb:165 config/environment.rb:85
+#: app/controllers/share_file_controller.rb:165
+#: app/helpers/admin/application_helper.rb:38 config/environment.rb:85
 msgid "Groups"
 msgstr ""
 
@@ -4946,6 +4956,14 @@ msgstr[1] ""
 msgid "Profile"
 msgstr ""
 
+#: app/helpers/admin/application_helper.rb:42
+msgid "Profile Categories"
+msgstr ""
+
+#: app/helpers/admin/application_helper.rb:43
+msgid "Profile Items"
+msgstr ""
+
 #: app/models/user_profile_master_category.rb:33
 msgid ""
 "Profile category could not be deleted due to profile items belonging to "
@@ -5552,6 +5570,7 @@ msgstr ""
 #: app/controllers/group_layout_module.rb:8
 #: app/controllers/mypage_controller.rb:490
 #: app/controllers/user_layout_module.rb:6
+#: app/helpers/admin/application_helper.rb:41
 msgid "Shared Files"
 msgstr ""
 
@@ -6688,6 +6707,7 @@ msgstr ""
 #: app/controllers/services_controller.rb:45
 #: app/controllers/users_controller.rb:70
 #: app/controllers/user_layout_module.rb:26
+#: app/helpers/admin/application_helper.rb:36
 #: app/views/bookmark/list.html.erb:16 app/views/bookmarks/index.html.erb:24
 #: config/environment.rb:79
 msgid "Users"
@@ -7601,8 +7621,7 @@ msgstr ""
 
 #: app/controllers/board_entries_controller.rb:44
 #: app/controllers/board_entries_controller.rb:74
-#: app/controllers/board_entries_controller.rb:94
-#: app/helpers/admin/application_helper.rb:39 app/models/board_entry.rb:-
+#: app/controllers/board_entries_controller.rb:94 app/models/board_entry.rb:-
 msgid "board entry"
 msgstr ""
 
@@ -7616,7 +7635,7 @@ msgstr ""
 msgid "board entry point"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:40 app/models/bookmark.rb:-
+#: app/models/bookmark.rb:-
 msgid "bookmark"
 msgstr ""
 
@@ -7673,12 +7692,11 @@ msgstr ""
 msgid "favicon image"
 msgstr ""
 
-#: app/controllers/admin/groups_controller.rb:24
-#: app/helpers/admin/application_helper.rb:38 app/models/group.rb:-
+#: app/controllers/admin/groups_controller.rb:24 app/models/group.rb:-
 msgid "group"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:37 app/models/group_category.rb:-
+#: app/models/group_category.rb:-
 #: app/views/admin/group_categories/index.html.erb:36
 msgid "group category"
 msgstr ""
@@ -7843,7 +7861,7 @@ msgstr ""
 msgid "shall not be the same with the previous one."
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:41 app/models/share_file.rb:-
+#: app/models/share_file.rb:-
 msgid "share file"
 msgstr ""
 
@@ -7897,8 +7915,7 @@ msgstr ""
 #: app/controllers/admin/users_controller.rb:160
 #: app/controllers/admin/users_controller.rb:185
 #: app/controllers/admin/user_profiles_controller.rb:20
-#: app/controllers/admin/user_profiles_controller.rb:39
-#: app/helpers/admin/application_helper.rb:36 app/models/user.rb:-
+#: app/controllers/admin/user_profiles_controller.rb:39 app/models/user.rb:-
 #: app/views/admin/users/import.html.erb:74
 #: app/views/admin/users/index.html.erb:63
 msgid "user"
@@ -7940,14 +7957,12 @@ msgid "user profile"
 msgstr ""
 
 #: app/controllers/admin/user_profile_masters_controller.rb:24
-#: app/helpers/admin/application_helper.rb:43
 #: app/models/user_profile_master.rb:-
 #: app/views/admin/user_profile_masters/index.html.erb:35
 msgid "user profile master"
 msgstr ""
 
 #: app/controllers/admin/user_profile_master_categories_controller.rb:28
-#: app/helpers/admin/application_helper.rb:42
 #: app/models/user_profile_master_category.rb:-
 #: app/views/admin/user_profile_master_categories/index.html.erb:25
 msgid "user profile master category"
