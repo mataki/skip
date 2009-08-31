@@ -70,10 +70,10 @@ module Admin::AdminModule
   module AdminRootModule
     include Admin::AdminModule::AdminUtil
     
-    N_('Group categories')
-    N_('Board entries')
-    N_('Share files')
-    N_('User profile master categories')
+    GetText.N_('Group categories')
+    GetText.N_('Board entries')
+    GetText.N_('Share files')
+    GetText.N_('User profile master categories')
 
     def index
       @query = params[:query]
