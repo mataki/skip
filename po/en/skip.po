@@ -7979,7 +7979,7 @@ msgstr ""
 
 #: app/models/share_file.rb:-
 msgid "share file"
-msgstr ""
+msgstr "shared file"
 
 #: app/models/share_file_access.rb:-
 msgid "share file access"
