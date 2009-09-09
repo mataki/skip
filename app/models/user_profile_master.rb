@@ -172,7 +172,7 @@ class UserProfileMaster < ActiveRecord::Base
   class RichTextProcesser < InputTypeProcesser
     def to_edit_html(value)
       value_str = value ? value.value : ""
-      text_area_tag("profile_value[#{@master.id}]", value_str, :class => "invisible min_fckeditor")
+      text_area_tag("profile_value[#{@master.id}]", value_str, :class => "invisible min_ckeditor")
     end
   end
 

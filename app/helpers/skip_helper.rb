@@ -105,8 +105,18 @@ var platform_url_root = '#{root_url.chop}';
     content_for :javascript_includes do
       javascript_include_tag "skip_embedded/ckeditor/ckeditor.js"
     end
-    content_for :javascript_initializers do
-      "CKEDITOR.replace('#{target}', #{default_opt.to_json});"
+    unless target =~ /\A\./
+      content_for :javascript_initializers do
+        "CKEDITOR.replace('#{target}', #{default_opt.to_json});"
+      end
+    else
+      content_for :javascript_initializers do
+        <<-EOF
+jQuery('#{target}').each(function(){
+    CKEDITOR.replace(this.id, #{default_opt.to_json});
+});
+EOF
+      end
     end
   end
 

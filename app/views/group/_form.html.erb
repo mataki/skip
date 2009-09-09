@@ -52,14 +52,9 @@
   </td></tr></table></div>
 </div>
 
-<% content_for :javascript_includes do -%>
-  <%= skip_javascript_include_tag "fckeditor/fckeditor" %>
-<% end -%>
+<%= ckeditor "group_description" %>
 
 <% content_for :javascript_initializers do -%>
-      FCKeditor.BasePath = platform_url_root + "/javascripts/skip/fckeditor/";
-      new FCKeditor('group_description', '98%', '350', 'Normal').ReplaceTextarea();
-
       $j('.category_radio_button')
       .click(function(){
           $j('.category_radio_button').parent().parent().css('backgroundColor','#fff');
