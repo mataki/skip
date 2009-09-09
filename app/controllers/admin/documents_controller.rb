@@ -41,9 +41,24 @@ class Admin::DocumentsController < Admin::ApplicationController
     render :status => :internal_server_error
   end
 
+  HTML_WRAPPER = <<EOF
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="ja" xml:lang="ja" xmlns="http://www.w3.org/1999/xhtml">
+<head xmlns="">
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+  <title>TITLE_STR</title>
+</head>
+<body style="padding: 10px;">
+BODY
+</body>
+</html>
+EOF
+
   def update
     begin_update do
       document = params[:documents]["#{params[:target]}"]
+      document = HTML_WRAPPER.sub('BODY', document)
+      document = document.sub('TITLE_STR', ERB::Util.h(params[:target]).humanize)
       open(RAILS_ROOT + "/public/custom/#{params[:target]}.html", 'w') { |f| f.write(document) }
     end
   end
