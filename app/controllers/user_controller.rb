@@ -14,6 +14,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class UserController < ApplicationController
+  include UserLayoutModule
   helper 'board_entries', 'groups'
 
   before_filter :load_user, :setup_layout
@@ -49,8 +50,6 @@ class UserController < ApplicationController
 
   # tab_menu
   def blog
-    @main_menu = _('My Page') if @user.id == session[:user_id]
-
     options = { :symbol => "uid:" + @user.uid }
     setup_blog_left_box options
     order = "last_updated DESC , board_entries.id DESC"
@@ -94,7 +93,8 @@ class UserController < ApplicationController
                                :conditions => find_params[:conditions],
                                :include => find_params[:include] | [ :user, :board_entry_comments, :state ])
       if @entry
-        @checked_on = @entry.accessed(current_user.id).checked_on
+        @checked_on = UserReading.find_by_user_id_and_board_entry_id(current_user, @entry).try(:checked_on)
+        @entry.accessed(current_user.id)
         @prev_entry, @next_entry = @entry.get_around_entry(login_user_symbols)
         @editable = @entry.editable?(login_user_symbols, session[:user_id], session[:user_symbol], login_user_groups)
         @tb_entries = @entry.trackback_entries(current_user.id, login_user_symbols)
@@ -128,18 +128,11 @@ class UserController < ApplicationController
       partial_name = "social_chain"
     when "social_postit"
       prepare_postit
+    else
+      render_404 and return
     end
 
     render :partial => partial_name, :layout => "layout"
-  end
-
-  # tab_menu
-  def bookmark
-    @main_menu = _('My Page') if @user.id == current_user.id
-
-    params[:user_id] = @user.id
-    text = render_component_as_string( :controller => 'bookmark', :action => 'list', :id => @user.symbol, :params => params)
-    render :text => text, :layout => false
   end
 
   # tab_menu
@@ -171,16 +164,6 @@ class UserController < ApplicationController
   def edit_chain
     @chain = Chain.find_by_from_user_id_and_to_user_id(session[:user_id], @user.id)
     show_edit_chain
-  end
-
-  # tab_menu
-  def share_file
-    @main_menu = _('My Page') if @user.id == session[:user_id]
-
-    params.store(:owner_name, @user.name)
-    params.store(:visitor_is_uploader, (@user.id == session[:user_id]))
-    text = render_component_as_string :controller => 'share_file', :action => 'list', :id => @user.symbol, :params => params
-    render :text => text, :layout => false
   end
 
   # post_action
@@ -215,60 +198,18 @@ class UserController < ApplicationController
 
 private
   def setup_layout
-    @title = title
-    @main_menu = main_menu
+    @title = user_title @user
+    @main_menu = user_main_menu @user
     @tab_menu_source = tab_menu_source
     @tab_menu_option = tab_menu_option
   end
 
-  def main_menu
-    @user.id == current_user.id ? _('My Page') : _('Users')
-  end
-
-  def title
-    @user.id == current_user.id ? _('My Page') : _("Mr./Ms. %s") % @user.name
-  end
-
   def tab_menu_source
-    tab_menu_source = [
-      {:label => _('Profile'), :options => {:action => 'show'}},
-      {:label => _('Blog'), :options => {:action => 'blog'}},
-      {:label => _('Shared Files'), :options => {:action => 'share_file'}},
-      {:label => _('Socials'), :options => {:action => 'social'}},
-      {:label => _('Groups Joined'), :options => {:action => 'group'}},
-      {:label => _('Bookmarks'), :options => {:action => 'bookmark'}} ]
-
-    if @user.id != current_user.id
-      if Chain.count(:conditions => ["from_user_id = ? and to_user_id = ?", current_user.id, @user.id]) <= 0
-        tab_menu_source << {:label => _('Create introductions'), :options => {:action => 'new_chain'}}
-      else
-        tab_menu_source << {:label => _('Edit introductions'), :options => {:action => 'edit_chain'}}
-      end
-    else
-      tab_menu_source.unshift({:label => _('Home'), :options => {:action => 'index'}, :selected_actions => %w(index entries entries_by_date entries_by_antenna)})
-      tab_menu_source << {:label => _('Footprints'), :options => {:action => 'trace'}}
-      tab_menu_source << {:label => _('Admin'), :options => {:action => 'manage'}}
-    end
-    tab_menu_source
+    user_tab_menu_source @user
   end
 
   def tab_menu_option
     { :uid => @user.uid }
-  end
-
-  def load_user
-    if @user = User.find_by_uid(params[:uid])
-      @user.mark_track session[:user_id] if @user.id != session[:user_id]
-    else
-      flash[:warn] = _('User does not exist.')
-      redirect_to :controller => 'mypage', :action => 'index'
-      return false
-    end
-
-    if @user.id == session[:user_id] and %(index, trace, manage).include?(self.action_name)
-      redirect_to :controller => 'mypage', :action => self.action_name
-      return false
-    end
   end
 
   def redirect_to_index

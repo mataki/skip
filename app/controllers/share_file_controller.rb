@@ -15,13 +15,19 @@
 
 class ShareFileController < ApplicationController
   include IframeUploader
+  include UserLayoutModule
+  include GroupLayoutModule
   layout 'subwindow'
 
   verify :method => :post, :only => [ :create, :update, :destroy, :download_history_as_csv, :clear_download_history ],
          :redirect_to => { :action => :index }
 
   def new
-    @share_file = ShareFile.new(:user_id => current_user.id, :owner_symbol => params[:owner_symbol])
+    owner = Symbol.get_item_by_symbol params[:owner_symbol]
+    unless owner
+      render_404 and return
+    end
+    @share_file = ShareFile.new(:user_id => current_user.id, :owner_symbol => owner.symbol)
 
     unless @share_file.updatable?(current_user)
       ajax_upload? ? render(:template => 'share_file/new_ajax_upload', :layout => false) : render_window_close
@@ -29,7 +35,7 @@ class ShareFileController < ApplicationController
     end
 
     @error_messages = []
-    @owner_name = params[:owner_name]
+    @owner_name = owner.name
     @categories_hash = ShareFile.get_tags_hash(@share_file.owner_symbol)
     ajax_upload? ? render(:template => 'share_file/new_ajax_upload', :layout => false) : render
   end
@@ -72,7 +78,7 @@ class ShareFileController < ApplicationController
     end
 
     if @error_messages.size == 0
-      flash[:notice] = _('ファイルのアップロードに成功しました。')
+      flash[:notice] = n_('File was successfully uploaded.', 'Files were successfully uploaded.', params[:file].size)
       ajax_upload? ? render(:text => '') : render_window_close
     else
       messages = []
@@ -122,7 +128,7 @@ class ShareFileController < ApplicationController
         @share_file.share_file_publications.create(:symbol => target_symbol)
       end
 
-      flash[:notice] = _('更新しました。')
+      flash[:notice] = _('Updated.')
       render_window_close
     else
       @owner_name = params[:owner_name]
@@ -147,18 +153,23 @@ class ShareFileController < ApplicationController
   end
 
   def list
-    redirect_to_with_deny_auth and return if not parent_controller
+    # TODO: インスタンス変数の数を減らす
+    @owner_obj = User.find_by_uid(params[:uid]) || Group.active.find_by_gid(params[:gid])
+    if @owner_obj.nil?
+      flash[:warn] = _("Specified share file owner does not exist.")
+      redirect_to root_url
+      return
+    end
+    @participation = @owner_obj.group_participations.find_by_user_id(current_user.id) unless @owner_obj.is_a?(User)
+    @visitor_is_uploader = @owner_obj.is_a?(User) ? (@owner_obj == current_user) : current_user.participating_group?(@owner_obj)
+    @main_menu = @owner_obj.is_a?(User) ? user_main_menu(@owner_obj) : _('Groups')
+    @title = @owner_obj.is_a?(User) ? user_title(@owner_obj) : @owner_obj.name
+    @tab_menu_source = @owner_obj.is_a?(User) ? user_tab_menu_source(@owner_obj) : group_tab_menu_source(@participation)
+    @tab_menu_option = @owner_obj.is_a?(User) ? user_menu_option(@owner_obj) : { :gid => @owner_obj.gid }
 
-    @main_menu = parent_controller.send!(:main_menu)
-    @title = parent_controller.send!(:title)
-    @tab_menu_source = parent_controller.send!(:tab_menu_source)
-    @tab_menu_option = parent_controller.send!(:tab_menu_option)
-
-    @owner_name = params[:owner_name]
-    @owner_symbol = params[:id]
-    @categories = ShareFile.get_tags @owner_symbol
-    params[:controller] = parent_controller.params[:controller]
-    params[:action] = parent_controller.params[:action]
+    @owner_name = @owner_obj.name
+    @owner_symbol = @owner_obj.symbol
+    @categories = ShareFile.get_tags @owner_obj.symbol
 
     params[:sort_type] ||= "date"
     params_hash = { :owner_symbol => @owner_symbol, :category => params[:category],
@@ -175,8 +186,6 @@ class ShareFileController < ApplicationController
       flash.now[:notice] = _('No matching shared files found.')
     end
 
-    # 編集メニューの表示有無
-    @visitor_is_uploader = params[:visitor_is_uploader]
     respond_to do |format|
       format.html { render :layout => 'layout' }
       format.js {
@@ -219,7 +228,7 @@ class ShareFileController < ApplicationController
       send_file(share_file.full_path, :filename => nkf_file_name(file_name), :type => share_file.content_type || Types::ContentType::DEFAULT_CONTENT_TYPE, :stream => false, :disposition => 'attachment')
     else
       # FIXME i18n
-      @main_menu = @title = _('ファイルのダウンロード')
+      @main_menu = @title = _('File Download')
       render :action => 'confirm_download', :layout => 'layout'
     end
   end
@@ -248,12 +257,12 @@ class ShareFileController < ApplicationController
     end
 
     unless share_file.updatable?(current_user)
-      render :text => _('この操作は、許可されていません。'), :status => :forbidden
+      render :text => _('Operation unauthorized.'), :status => :forbidden
       return
     end
 
     share_file.share_file_accesses.clear
-    render :text => _('ダウンロード履歴の削除に成功しました。')
+    render :text => _('Download history was successfully deleted.')
   end
 
 private
@@ -280,9 +289,8 @@ private
   end
 
   def nkf_file_name(file_name)
-    agent = request.cgi.env_table["HTTP_USER_AGENT"]
-    return  NKF::nkf('-Ws', file_name) if agent.include?("MSIE") and not agent.include?("Opera")
-    return file_name
+    agent = request.headers['HTTP_USER_AGENT']
+    (agent.include?("MSIE") and not agent.include?("Opera")) ? NKF.nkf('-Ws', file_name) : file_name
   end
 
   def share_file_to_json(share_file)

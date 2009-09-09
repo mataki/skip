@@ -1,7 +1,6 @@
 :menus:
-  - { :title: SKIP公式サイト, :url: http://www.openskip.org/ }
-  - { :title: SKIPポータル, :url: http://portal.openskip.org/ }
-  - { :title: SKIPユーザコミュニティ, :url: http://user.openskip.org/ }
+  - { :title: SKIP公式サイト, :url: http://www.skipaas.jp/ }
+  - { :title: SKIPオープンソース, :url: http://www.openskip.org/ }
 #   - :title: 開発
 #     :links:
 #     - { :title: Repository, :url: http://github.com/openskip/skip/ }

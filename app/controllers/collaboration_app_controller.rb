@@ -21,7 +21,7 @@ class CollaborationAppController < ApplicationController
         @feed_items = UserOauthAccess.sorted_feed_items(body, 5)
         render :layout => false
       else
-        render :text => _('取得できませんでした。')
+        render :text => _('Retrieval failed.')
       end
     end
   end

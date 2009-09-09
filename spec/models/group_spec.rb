@@ -264,53 +264,6 @@ describe Group do
     end
   end
 
-  describe Group, '#participating?' do
-    before do
-      @user = stub_model(User, :id => 99)
-      @group = create_group
-    end
-    describe '指定したユーザがグループ参加者(参加済み)の場合' do
-      before do
-        group_participation = create_group_participation(:user_id => @user.id, :group_id => @group.id)
-      end
-      it 'trueが返ること' do
-        @group.participating?(@user).should be_true
-      end
-    end
-    describe '指定したユーザがグループ参加者(参加待ち)の場合' do
-      before do
-        group_participation = create_group_participation(:user_id => @user.id, :group_id => @group.id, :waiting => true)
-      end
-      it 'falseが返ること' do
-        @group.participating?(@user).should be_false
-      end
-    end
-    describe '指定したユーザがグループ管理者(参加済み)の場合' do
-      before do
-        group_participation = create_group_participation(:user_id => @user.id, :group_id => @group.id, :waiting => false, :owned => true)
-      end
-      it 'trueが返ること' do
-        @group.participating?(@user).should be_true
-      end
-    end
-    describe '指定したユーザがグループ管理者(参加待ち)の場合' do
-      before do
-        group_participation = create_group_participation(:user_id => @user.id, :group_id => @group.id, :waiting => true, :owned => true)
-      end
-      it 'falseが返ること' do
-        @group.participating?(@user).should be_false
-      end
-    end
-    describe '指定したユーザがグループ未参加者の場合' do
-      before do
-        group_participation = create_group_participation(:user_id => @user.id + 1, :group_id => @group.id)
-      end
-      it 'falseが返ること' do
-        @group.participating?(@user).should be_false
-      end
-    end
-  end
-
   describe Group, '#administrator? ' do
     before do
       @user = stub_model(User, :id => 99)
@@ -329,7 +282,7 @@ describe Group do
         group_participation = create_group_participation(:user_id => @user.id, :group_id => @group.id, :waiting => true)
       end
       it 'falseが返ること' do
-        @group.participating?(@user).should be_false
+        @group.administrator?(@user).should be_false
       end
     end
     describe '指定したユーザがグループ管理者(参加済み)の場合' do
@@ -337,7 +290,7 @@ describe Group do
         group_participation = create_group_participation(:user_id => @user.id, :group_id => @group.id, :waiting => false, :owned => true)
       end
       it 'trueが返ること' do
-        @group.participating?(@user).should be_true
+        @group.administrator?(@user).should be_true
       end
     end
     describe '指定したユーザがグループ管理者(参加待ち)の場合' do
@@ -345,7 +298,7 @@ describe Group do
         group_participation = create_group_participation(:user_id => @user.id, :group_id => @group.id, :waiting => true, :owned => true)
       end
       it 'falseが返ること' do
-        @group.participating?(@user).should be_false
+        @group.administrator?(@user).should be_false
       end
     end
     describe '指定したユーザがグループ未参加者の場合' do
@@ -353,7 +306,7 @@ describe Group do
         group_participation = create_group_participation(:user_id => @user.id + 1, :group_id => @group.id)
       end
       it 'falseが返ること' do
-        @group.participating?(@user).should be_false
+        @group.administrator?(@user).should be_false
       end
     end
   end
@@ -423,11 +376,5 @@ describe Group do
       :group_category_id => create_group_category(:initial_selected => true, :code => 'VALID').id
     })
     group
-  end
-
-  def create_group_participation(options = {})
-    group_participation = GroupParticipation.new({:user_id => 1, :group_id => 1, :waiting => 0, :owned => 0, :favorite => 0}.merge(options))
-    group_participation.save!
-    group_participation
   end
 end

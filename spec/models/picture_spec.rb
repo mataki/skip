@@ -15,8 +15,18 @@
 
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe Picture do
-  def test_truth
-    assert true
+describe Picture, '#validate' do
+  describe 'プロフィール画像の変更権限がない場合は保存出来ない' do
+    before do
+      Admin::Setting.should_receive(:enable_change_picture).and_return(false)
+      @picture = Picture.new(:content_type => 'image/png')
+    end
+    it 'プロフィール画像が変更出来ないエラーが設定されること' do
+      @picture.valid?
+      @picture.errors.full_messages.should == [' Picture could not be changed.']
+    end
+    it '保存に失敗すること' do
+      @picture.valid?.should be_false
+    end
   end
 end

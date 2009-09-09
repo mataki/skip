@@ -28,8 +28,8 @@ class Admin::Setting < ActiveRecord::Base
   N_('Admin::Setting|Hide email description')
   N_('Admin::Setting|Activation lifetime')
   N_('Admin::Setting|Activation lifetime description')
-  N_('Admin::Setting|Enable single session')
-  N_('Admin::Setting|Enable single session description')
+  N_('Admin::Setting|Enable change picture')
+  N_('Admin::Setting|Enable change picture description')
 
   # ================================================================================================
   # 各種文言の設定用
@@ -123,6 +123,8 @@ class Admin::Setting < ActiveRecord::Base
   N_('Admin::Setting|Enable user cleaning notification description')
   N_('Admin::Setting|User cleaning notification interval')
   N_('Admin::Setting|User cleaning notification interval description')
+  N_('Admin::Setting|Enable single session')
+  N_('Admin::Setting|Enable single session description')
 
   cattr_accessor :available_settings
   @@available_settings = YAML::load(File.open("#{RAILS_ROOT}/config/settings.yml"))
@@ -155,9 +157,13 @@ class Admin::Setting < ActiveRecord::Base
       begin
         Regexp.compile(v)
       rescue RegexpError => e
-        errors.add('value', _('は正しい正規表現で入力して下さい。'))
+        errors.add('value', _('requires a valid regular expression.'))
       end
     end
+  end
+
+  def after_save
+    ActionController::Base.expire_page  '/services/skip_reflect_customized.js'
   end
 
   def value

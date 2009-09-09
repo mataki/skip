@@ -90,34 +90,69 @@ end
 
 describe BookmarkController, "GET #list" do
   before do
-    user_login
-    @parent_controller = mock('parent_controller')
-    @parent_controller.should_receive(:main_menu)
-    @parent_controller.should_receive(:title)
-    @parent_controller.should_receive(:tab_menu_source)
-    @parent_controller.should_receive(:tab_menu_option)
+    @user = user_login
+    controller.stub(:paginate).and_return([@pages = mock('pages'), @bookmark_comments = mock('bookmark_comments', :size => 10)])
+    controller.stub(:user_tab_menu_source).and_return(@mock_tab_menu_source = mock('user_tab_menu_source'))
   end
-  describe "ユーザのブックマークを検索された場合" do
+  describe "自分のブックマーク一覧を表示した場合" do
     before do
-      @params = {:uid => "111111", :id => "uid:111111", :user_id => 1, :type => "page"}
-      @parent_controller.stub!(:params).and_return(@params)
-      controller.stub!(:parent_controller).and_return(@parent_controller)
-
-      get :list
+      User.stub(:find_by_uid).with("a_user").and_return(@user)
+      BookmarkComment.stub(:get_tags).with(@user.id).and_return(@tags = mock('tags'))
+      get :list, :uid => "a_user"
     end
-    it { response.should render_template('list') }
+    it "set assigns" do
+      assigns[:main_menu].should == "My Page"
+      assigns[:title].should == "My Page"
+      assigns[:tab_menu_source].should == @mock_tab_menu_source
+      assigns[:tab_menu_option].should == { :uid => @user.uid }
+      assigns[:tags].should == @tags
+      assigns[:pages].should == @pages
+      assigns[:bookmark_comments].should == @bookmark_comments
+    end
+
+    it { response.should render_template("list") }
   end
 
-  describe 'ユーザのブックマークの検索テキストボックスから検索された場合' do
+  describe "他人のブックマーク一覧を表示した場合" do
     before do
-      @params = {:uid => "admin", :id => "uid:admin", :user_id => 1, :keyword => "キーワード"}
-      @parent_controller.stub!(:params).and_return(@params)
-      controller.stub!(:parent_controller).and_return(@parent_controller)
-
-      get :list
+      User.stub(:find_by_uid).with("b_user").and_return(@target_user = mock_model(User, :name => "対象ユーザ", :uid => "b_user", :mark_track => true))
+      BookmarkComment.stub(:get_tags).with(@target_user.id).and_return(@tags = mock('tags'))
+      get :list, :uid => "b_user"
     end
-    it { response.should render_template('list') }
+    it "set assigns" do
+      assigns[:main_menu].should == "Users"
+      assigns[:title].should == "Mr./Ms. 対象ユーザ"
+      assigns[:tab_menu_source].should == @mock_tab_menu_source
+      assigns[:tab_menu_option].should == { :uid => @target_user.uid }
+      assigns[:tags].should == @tags
+      assigns[:pages].should == @pages
+      assigns[:bookmark_comments].should == @bookmark_comments
+    end
+
+    it { response.should render_template("list") }
   end
+
+#   describe "ユーザのブックマークを検索された場合" do
+#     before do
+#       @params = {:uid => "111111", :id => "uid:111111", :user_id => 1, :type => "page"}
+#       @parent_controller.stub!(:params).and_return(@params)
+#       controller.stub!(:parent_controller).and_return(@parent_controller)
+
+#       get :list
+#     end
+#     it { response.should render_template('list') }
+#   end
+
+#   describe 'ユーザのブックマークの検索テキストボックスから検索された場合' do
+#     before do
+#       @params = {:uid => "admin", :id => "uid:admin", :user_id => 1, :keyword => "キーワード"}
+#       @parent_controller.stub!(:params).and_return(@params)
+#       controller.stub!(:parent_controller).and_return(@parent_controller)
+
+#       get :list
+#     end
+#     it { response.should render_template('list') }
+#   end
 end
 
 describe BookmarkController, "POST #destroy" do

@@ -1,5 +1,6 @@
-<%=h _("Monthly ranking of %s (Since the first day of current month up to yesterday. Updated daily)") % Admin::Setting.abbr_app_title %><br/>
-<br />
+<div class="box message">
+  <%=h _("Monthly ranking of %s (Since the first day of current month up to yesterday. Updated daily)") % Admin::Setting.abbr_app_title %>
+</div>
 <div class="search_cond_space">
   <table class="search_cond_box">
     <tr>
@@ -10,11 +11,7 @@
     </tr>
   </table>
 </div>
-<br />
-<hr />
-<br />
-<h1 id="ranking_title"><%= icon_tag 'chart_bar' %><%=h _("%{month}/%{year} Ranking") % {:year => @year, :month => @month}%></h1>
-<br />
+<h2 id="ranking_title" class="subtitle"><%= icon_tag 'chart_bar' %><%=h _("%{month}/%{year} Ranking") % {:year => @year, :month => @month}%></h2>
 <%= render :partial => 'list' %>
 
 <% content_for :javascript_initializers do -%>

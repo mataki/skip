@@ -352,20 +352,6 @@ class CreateDefaultTables < ActiveRecord::Migration
       t.text     "introduction"
       t.boolean  "retired",                     :default => false, :null => false
     end
-
-    # tagのデフォルト値の登録
-    system_tags  = ["質問","解決","重要","連絡"]
-    standard_tags = ["日記","書評","オフ","ネタ","ニュース"]
-
-    tag_hash = Hash.new
-    system_tags.each do |name|
-      tag = Tag.create(:name => name, :tag_type => "SYSTEM")
-      tag_hash.store(name, tag.id)
-    end
-    standard_tags.each do  |name|
-      tag = Tag.create(:name => name, :tag_type => "STANDARD")
-      tag_hash.store(name, tag.id)
-    end
   end
 
   def self.down

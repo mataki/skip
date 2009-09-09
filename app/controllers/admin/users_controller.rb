@@ -232,13 +232,13 @@ class Admin::UsersController < Admin::ApplicationController
       @mail_body = render_to_string(:template => "user_mailer/sent_forgot_password", :layout => false)
       render :layout => false
     else
-      flash[:error] = _('未使用ユーザのパスワード再設定コードは発行できません。')
+      flash[:error] = _('Password resetting code cannot be issued for unactivated users.')
       redirect_to edit_admin_user_path(params[:id])
     end
   end
 
   def lock_actives
-    flash[:notice] = _('%{count}件更新しました。')%{:count => Admin::User.lock_actives}
+    flash[:notice] = _('Updated %{count} records.')%{:count => Admin::User.lock_actives}
     redirect_to admin_settings_path(:tab => :security)
   end
 

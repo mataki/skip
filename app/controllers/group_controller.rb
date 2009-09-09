@@ -14,6 +14,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class GroupController < ApplicationController
+  include GroupLayoutModule
   helper 'board_entries'
   before_filter :load_group_and_participation, :setup_layout
 
@@ -147,16 +148,10 @@ class GroupController < ApplicationController
         return
       end
       @pages, @participations = paginate_participations(@group, true)
+    else
+      render_404 and return
     end
     render :partial => @menu, :layout => "layout"
-  end
-
-  # tab_menu
-  def share_file
-    params.store(:owner_name, @group.name)
-    params.store(:visitor_is_uploader, @group.participating?(current_user))
-    text = render_component_as_string :controller => 'share_file', :action => 'list', :id => @group.symbol, :params => params
-    render :text => text, :layout => false
   end
 
   # post_action
@@ -185,7 +180,11 @@ class GroupController < ApplicationController
         entry_params[:message] = render_to_string(:partial => 'entries_template/group_join',
                                                   :locals => { :user_name => current_user.name,
                                                                :message => message })
-        entry_params[:tags] = _("Request to Join Group")
+        # TODO 国際化を踏まえた仕様の再検討を行う
+        # _('Request to Join Group')としたいが、タグのvalidateでspaceを許可していないためエラーになる。
+        # また、「参加申し込み」タグは一部システム的な動作(著者毎の記事一覧から除外)を
+        # 行っているため、国際化を踏まえた仕様を再検討しなければならない。
+        entry_params[:tags] = '参加申し込み'
         entry_params[:tags] << ",#{Tag::NOTICE_TAG}" if @group.protected?
         entry_params[:user_symbol] = session[:user_symbol]
         entry_params[:user_id] = session[:user_id]
@@ -264,7 +263,7 @@ class GroupController < ApplicationController
       flash[:warn] = _("No approval needed to join this group.")
       redirect_to :action => :show
     end
-    type_name = params[:submit_type] == 'permit' ? _('GroupController|Approve') : _('GroupController|Disapprove') #"許可" : "棄却"
+    type_name = params[:submit_type] == 'permit' ? s_('GroupController|Approve') : s_('GroupController|Disapprove') #"許可" : "棄却"
 
     if states = params[:participation_state]
       states.each do |participation_id, state|
@@ -331,9 +330,8 @@ class GroupController < ApplicationController
   def append_user
     # 参加制約は追加しない。制約は制約管理で。
     symbol_type, symbol_id = Symbol.split_symbol params[:symbol]
-    case symbol_type
-    when 'uid'
-      user = User.find_by_uid(symbol_id)
+    case
+    when (symbol_type == 'uid' and user = User.find_by_uid(symbol_id))
       if @group.group_participations.find_by_user_id(user.id)
         flash[:notice] = _("%s has already joined / applied to join this group.") % user.name
       else
@@ -341,8 +339,7 @@ class GroupController < ApplicationController
         @group.save
         flash[:notice] = _("Added %s as a member and created a BBS for messaging.") % user.name
       end
-    when 'gid'
-      group = Group.active.find_by_gid(symbol_id, :include => :group_participations)
+    when (symbol_type == 'gid' and group = Group.active.find_by_gid(symbol_id, :include => :group_participations))
       group.group_participations.each do |participation|
         unless @group.group_participations.find_by_user_id(participation.user_id)
           @group.group_participations.build(:user_id => participation.user_id, :owned => false)
@@ -372,7 +369,7 @@ private
   end
 
   def main_menu
-    'グループ'
+    _('Groups')
   end
 
   def title
@@ -380,14 +377,7 @@ private
   end
 
   def tab_menu_source
-    tab_menu_source = []
-    tab_menu_source << {:label => _('Summary'), :options => {:action => 'show'}}
-    tab_menu_source << {:label => _('Members List'), :options => {:action => 'users'}}
-    tab_menu_source << {:label => _('BBS'), :options => {:action => 'bbs'}}
-    tab_menu_source << {:label => _('New Posts'), :options => {:action => 'new'}} if participating?
-    tab_menu_source << {:label => _('Shared Files'), :options => {:action => 'share_file'}}
-    tab_menu_source << {:label => _('Admin'), :options => {:action => 'manage'}} if participating? and @participation.owned?
-    tab_menu_source
+    group_tab_menu_source @participation
   end
 
   def tab_menu_option
@@ -403,11 +393,6 @@ private
     @participation = @group.group_participations.find_by_user_id(session[:user_id])
   end
 
-  # TODO Group#participating?に順次置き換えていって最終的に削除する。
-  def participating?
-    @participation and @participation.waiting? != true
-  end
-
   def check_owned
     unless @participation and @participation.owned?
       flash[:warn] = _('Administrative privillage required for the action.')
@@ -415,7 +400,6 @@ private
       return false
     end
   end
-
 
   def paginate_participations group, waiting
     return paginate(:group_participations,

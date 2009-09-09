@@ -90,6 +90,8 @@ describe ServerController, "#proceed" do
     @login_user = user_login
 
     @id_url = identifier(@login_user)
+
+    controller.stub(:sso).and_return(true)
   end
   describe "ホワイトリストのアプリケーションの場合" do
     before do

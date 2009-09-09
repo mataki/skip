@@ -13,7 +13,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
+require File.expand_path(File.dirname(__FILE__) + "/batch_base")
 
 class BatchCheckUserReadings < BatchBase
 
@@ -41,7 +41,7 @@ end
 # num 本日よりnumヶ月前以前の未読記事を既読にする
 # 実行例 ruby batch_check_user_readings.rb 3
 
-check_month = ARGV[0]
+check_month = ARGV[0] || "3"
 if check_month.index(/[0-9]+/)
   BatchCheckUserReadings.execution({ :check_month => check_month})
 else

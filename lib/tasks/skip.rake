@@ -1,5 +1,5 @@
 namespace :skip do
-  desc "create release .zip archive."
+  desc "Create release .zip archive."
   task :release do
     raise "This directory is not Git repository." unless File.directory?(".git")
     require 'fileutils'
@@ -21,6 +21,31 @@ namespace :skip do
       system("zip -r #{out}.zip #{out}")
       system("tar zcvf #{out}.tar.gz #{out}")
       FileUtils.rm_rf out
+    end
+  end
+
+  desc "Load default data."
+  task :load_default_data => :environment do
+    puts
+    while true
+      print "Select language: "
+      print SkipDefaultData.valid_languages.join(',')
+      print " [#{SkipDefaultData.default_language}] "
+      STDOUT.flush
+      lang = STDIN.gets.chomp!
+      break if lang.empty?
+      break if SkipDefaultData.valid_languages.include?(lang)
+      puts "Unknown language!"
+    end
+    STDOUT.flush
+    puts "===================================="
+
+    begin
+      SkipDefaultData.load(lang)
+      puts "Default data loaded."
+    rescue => error
+      puts "Error: " + error
+      puts "Default data was not loaded."
     end
   end
 

@@ -18,34 +18,34 @@
 
   <% if @visitor_is_uploader -%>
   <div class="box_space">
-    <div class="box_space_title">メニュー</div>
+    <div class="box_space_title"><%= _("Menu")%></div>
     <div class="box_space_body">
       <%= icon_tag 'disk' %> <%= generate_new_upload_menu @owner_symbol, @owner_name %>
     </div>
   </div><!-- box_space -->
   <% end -%>
 
-  <% form_tag({:action => 'share_file'}, {:id => :sharefile_search_form, :method => :get}) do %>
+  <% form_tag({:action => 'list'}, {:id => :sharefile_search_form, :method => :get}) do %>
   <div class="box_space">
-    <div class="box_space_title"><%= icon_tag 'find' %>検索</div>
+    <div class="box_space_title"><%= icon_tag 'find' %><%= _('Search')%></div>
     <div class="box_space_body">
       <%= text_field_tag('keyword', params[:keyword], :size=>'10') %>
-      <%= submit_tag '検索' %><br/>
-      <%= check_box_tag("without_public", "true", params[:without_public]) %> 全体公開以外
+      <%= submit_tag _('Search') %><br/>
+      <%= check_box_tag("without_public", "true", params[:without_public]) %> <%= label_tag 'without_public', _('Other than "open to public"')%>
     </div>
   </div><!-- box_space -->
 
   <div class="box_space">
-    <div class="box_space_title"><%= icon_tag 'table_refresh' -%>表示順</div>
+    <div class="box_space_title"><%= icon_tag 'table_refresh' -%><%= _("Display Order")%></div>
     <div class="box_space_body">
-      <%= radio_button_tag("sort_type", "date", params[:sort_type] == "date", :id=>"sort_type_date") -%> 登録日順 <br/>
-      <%= radio_button_tag("sort_type", "name", params[:sort_type] == "name", :id=>"sort_type_name") -%> ファイル名順
+      <%= radio_button_tag("sort_type", "date", params[:sort_type] == "date", :id=>"sort_type_date") %> <%= label_tag 'sort_type_date', _("Sort by Upload Dates")%> <br/>
+      <%= radio_button_tag("sort_type", "name", params[:sort_type] == "name", :id=>"sort_type_name") %> <%= label_tag 'sort_type_name', _("Sort by File Names")%>
     </div>
   </div><!-- box_space -->
   <% end %>
 
   <div class="box_space">
-    <div class="box_space_title"><%= icon_tag 'tag_blue' -%>タグ</div>
+    <div class="box_space_title"><%= icon_tag 'tag_blue' -%><%= _('Tags')%></div>
     <div class="box_space_body">
     <% for category in @categories %>
       <%= %(<b><span id="selected_tag">) if params[:category] == category -%>
@@ -53,7 +53,7 @@
       <%= %(</span></b>) if params[:category] == category -%>
     <% end %>
     </div>
-    <div style="font-size:10px;text-align:right;"><a href="#" id="search_cancel">[選択をキャンセル]</a></div>
+    <div style="font-size:10px;text-align:right;"><a href="#" id="search_cancel"><%=_("[Cancel selection]")%></a></div>
   </div><!-- box_space -->
 
   <%= render(:partial => 'share_file/file_size_box', :locals => { :owner_symbol => @owner_symbol }) %>
@@ -78,12 +78,12 @@
 <% content_for :javascript_initializers do -%>
       $j('.clear_download_history_link')
       .click(function(){
-          if (confirm('本当に削除しますか？')) {
+          if (confirm('<%= _("Are you sure to delete?")%>')) {
               var shareFileId = this.id.split('_')[4];
               var clearDownloadUrl = "<%= url_for(:controller => 'share_file', :action => 'clear_download_history') %>/";
               $j.ajax({
                   type: "POST",
-                  data: { id: shareFileId, authenticity_token: $j('#authenticity_token').val() },
+                  data: { id: shareFileId, authenticity_token: $j('input[name=authenticity_token]').val() },
                   url: clearDownloadUrl,
                   success: function(text){
                       $j("#flash_message").trigger("notice", text);

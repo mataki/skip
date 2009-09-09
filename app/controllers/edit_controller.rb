@@ -15,32 +15,33 @@
 
 class EditController < ApplicationController
   include BoardEntriesHelper
-  before_filter :setup_layout, :load_tagwards_and_link_params,
-                :except => [ :destroy, :delete_trackback, :ado_preview ]
 
   verify :method => :post, :only => [ :create, :update, :destroy, :delete_trackback ],
          :redirect_to => { :action => :index }
 
   # tab_menu
   def index
-    @board_entry = BoardEntry.new
-    @board_entry.entry_type = params[:entry_type] || BoardEntry::DIARY
-    @board_entry.symbol = params[:symbol] || session[:user_symbol]
-    @board_entry.title = params[:title]
-    @board_entry.category = params[:category]
+    params[:entry_type] = BoardEntry::DIARY if params[:entry_type].blank?
+    owner = Symbol.get_item_by_symbol params[:symbol]
+    params[:symbol] = owner ? owner.symbol : current_user.symbol
 
-    params[:entry_type] ||= @board_entry.entry_type
-    params[:symbol] ||= @board_entry.symbol
+    params[:publication_type] = "public" if params[:publication_type].blank?
+    params[:publication_symbols_value] = "" if params[:publication_symbols_value].blank?
 
-    params[:publication_type] ||= "public"
-    params[:publication_symbols_value] ||= ""
-
-    case params[:editor_mode] ||= "richtext"
+    case params[:editor_mode] ||= current_user.custom.editor_mode
     when "richtext"
       params[:contents_richtext] = params[:contents]
     when "hiki"
       params[:contents_hiki] = params[:contents]
     end
+
+    @board_entry = BoardEntry.new
+    @board_entry.entry_type = params[:entry_type]
+    @board_entry.symbol = params[:symbol]
+    @board_entry.title = params[:title]
+    @board_entry.category = params[:category]
+
+    setup_layout @board_entry
   end
 
   # post_action
@@ -92,10 +93,9 @@ class EditController < ApplicationController
       redirect_to @board_entry.get_url_hash
       return
     else
+      setup_layout @board_entry
       render :action => 'index'
-      return
     end
-    render :action => 'index'
   end
 
   # link_action
@@ -148,6 +148,8 @@ class EditController < ApplicationController
     # まだ送信していないメールが存在する場合のみ、自動で送信チェックボックスをチェックする
     login_user_symbol_type, login_user_symbol_id = Symbol.split_symbol(session[:user_symbol])
     @board_entry.send_mail = "1" if Mail.find_by_from_user_id_and_user_entry_no_and_send_flag(login_user_symbol_id, @board_entry.user_entry_no, false)
+
+    setup_layout @board_entry
   end
 
   # post_acttion
@@ -156,17 +158,10 @@ class EditController < ApplicationController
     #編集の競合をチェック
     @conflicted = false
 
-    unless params[:lock_version].to_i == @board_entry.lock_version
-      @board_entry.send_mail = params[:board_entry][:send_mail] if params[:board_entry]
-      @conflicted = true
-      flash.now[:warn] = _("Update on the same entry from other users detected. Reset the edit?")
-      render :action => 'edit'
-      return
-    end
-
     unless validate_params params, @board_entry
       @board_entry.send_mail = params[:board_entry][:send_mail] if params[:board_entry]
-      flash[:warn] = _("Invalid parameter(s) found.")
+      flash.now[:warn] = _("Invalid parameter(s) found.")
+      setup_layout @board_entry
       render :action => 'edit'
       return
     end
@@ -187,48 +182,64 @@ class EditController < ApplicationController
     redirect_to_with_deny_auth and return unless authorize_to_edit_board_entry? @board_entry
 
     # 成りすましての更新を防止
-    if params[:symbol] != @board_entry.symbol || params[:board_entry][:symbol] != @board_entry.symbol
+    if params[:board_entry][:symbol] != @board_entry.symbol
       redirect_to_with_deny_auth and return
     end
 
     # ちょっとした更新でなければ、last_updatedを更新する
     update_params[:last_updated] = Time.now unless params[:non_update]
 
-    if @board_entry.update_attributes(update_params)
-      @board_entry.entry_publications.clear
-      @board_entry.entry_editors.clear
-      target_symbols = analyze_params(@board_entry)
-      target_symbols.first.each do |target_symbol|
-        @board_entry.entry_publications.create(:symbol => target_symbol)
-      end
-      target_symbols.last.each do |target_symbol|
-        @board_entry.entry_editors.create(:symbol => target_symbol)
-      end
-
-      message, new_trackbacks = @board_entry.send_trackbacks(login_user_symbols, params[:trackbacks])
-      make_trackback_message(new_trackbacks)
-
-      @board_entry.cancel_mail
-      @board_entry.prepare_send_mail if @board_entry.send_mail?
-
-      flash[:notice] = _('Entry was successfully updated.') + message
-      redirect_to @board_entry.get_url_hash
-      return
+    @board_entry.update_attributes!(update_params)
+    @board_entry.entry_publications.clear
+    @board_entry.entry_editors.clear
+    target_symbols = analyze_params(@board_entry)
+    target_symbols.first.each do |target_symbol|
+      @board_entry.entry_publications.create(:symbol => target_symbol)
     end
+    target_symbols.last.each do |target_symbol|
+      @board_entry.entry_editors.create(:symbol => target_symbol)
+    end
+
+    message, new_trackbacks = @board_entry.send_trackbacks(login_user_symbols, params[:trackbacks])
+    make_trackback_message(new_trackbacks)
+
+    @board_entry.cancel_mail
+    @board_entry.prepare_send_mail if @board_entry.send_mail?
+
+    flash[:notice] = _('Entry was successfully updated.') + message
+    redirect_to @board_entry.get_url_hash
+  rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => e
+    setup_layout @board_entry
+    render :action => 'edit'
+  rescue ActiveRecord::StaleObjectError => e
+    @conflicted = true
+    @board_entry.lock_version = @board_entry.lock_version_was
+    flash.now[:warn] = _("Update on the same entry from other users detected. Reset the edit?")
+    setup_layout @board_entry
     render :action => 'edit'
   end
 
   # post_action
   def destroy
     @board_entry = get_entry params[:id]
+
     # 権限チェック
     redirect_to_with_deny_auth and return unless authorize_to_edit_board_entry? @board_entry
+
+    # FIXME Rails2.3.2のバグで関連コメントがある場合に常にStaleObjectErrorとなっていまう件の暫定対応
+    # 詳細は http://dev.openskip.org/redmine/issues/show/855
+    @board_entry.board_entry_comments.destroy_all
+    @board_entry.reload
 
     @board_entry.destroy
     flash[:notice] = _('Deletion complete.')
     # そのユーザのブログ一覧画面に遷移する
     # TODO: この部分をメソッド化した方がいいかも(by mat_aki)
     redirect_to @board_entry.get_url_hash.delete_if{|key,val| key == :entry_id}
+  rescue ActiveRecord::StaleObjectError => e
+    flash[:warn] = _("Update on the same entry from other users detected. Please try again.")
+    setup_layout @board_entry
+    redirect_to url_for(:action => 'edit', :id => @board_entry)
   end
 
   def delete_trackback
@@ -255,18 +266,10 @@ class EditController < ApplicationController
   end
 
 private
-  def setup_layout
-    @main_menu = (!params[:symbol].blank? and params[:symbol].include?('gid:')) ? _('Groups') : _('My Blog')
-
-    symbol = params[:symbol] || session[:user_symbol]
-    owner = BoardEntry.owner(symbol)
-    @title = _("%{action} %{write_place}") % {:action => (["edit", "update"].include?(action_name) ? _('Edit') : _('Write')), :write_place => write_place_name(owner)}
-  end
-
-  def load_tagwards_and_link_params
-    symbol = params[:symbol] || session[:user_symbol]
-
-    @categories_hash =  BoardEntry.get_categories_hash(login_user_symbols, {:symbol => symbol})
+  def setup_layout board_entry
+    board_entry.load_owner unless board_entry.owner
+    @main_menu = board_entry.owner.is_a?(Group) ? _('Groups') : _('My Blog')
+    @title = _("%{action} %{write_place}") % {:action => (["edit", "update"].include?(action_name) ? _('Edit') : _('Write')), :write_place => write_place_name(board_entry.owner)}
   end
 
   def analyze_params board_entry
@@ -291,6 +294,7 @@ private
   end
 
   # 独自のバリデーション（成功ならtrue）
+  # TODO チェックをモデルに寄せたい
   def validate_params params, entry
     # 公開範囲のタイプ
     unless %w(public private protected).include? params[:publication_type]

@@ -30,37 +30,43 @@
   }
   div#board_entry .header {
     border-bottom: 1px solid silver;
-    background-color: #f0f0ff;
+    background-color: #f0f0f0;
   }
   div#board_entry .header .control {
     position: relative;
     height: 2em;
-    color: #FFFFFF;
-    background-color: #4a4a4a;
     font-size: 0.8em;
+    border-bottom: 1px solid silver;
+    background-color: #e1e1e1;
   }
-  div#board_entry .header .control .date {
+  div#board_entry .header .control .buttons {
+    text-align: right;
+    height: 2em;
+    position: absolute;
+    right: 2px;
+    top: 2px;
+  }
+  div#board_entry .header .information {
+    position: relative;
+    height: 2em;
+    font-size: 0.8em;
+    border-bottom: 1px solid silver;
+  }
+  div#board_entry .header .information .date {
     position: absolute;
     bottom: 1px;
     left: 2px;
     font-size: 1.3em;
   }
-  div#board_entry .header .control .buttons {
-    position: absolute;
-    top:21px;
-    right:2px;
-  }
-  div#board_entry .header .control .count {
-    position: absolute;
-    top:2px;
-    right:2px;
+  div#board_entry .header .information .date .evaluation {
+    font-size: 0.8em;
   }
   div#board_entry .header h1 {
     margin: 1px;
     font-size: 15px;
   }
   #permalink a, #permalink a:hover {
-    color: skyblue;
+    font-size: 1.2em;
   }
   div#board_entry .contents {
     background-color: #FFFFFF;
@@ -104,7 +110,7 @@
     left: 3px;
     top: 0;
   }
-  div#board_entry_control .info {
+  div#board_entry_control .evaluation {
     position: absolute;
     top: 0;
     right: 0;
@@ -203,24 +209,24 @@
 <div id="board_entry">
   <div class="header">
     <div class="control">
-      <div class="date"><%=h entry.diary_date %> <%=h entry.diary_author %>
-        <span id="permalink"><%= link_to "[page:#{entry.id}]", :controller=> "board_entries", :action => "forward", :id => entry.id -%></span>
-      </div>
-      <div class="count">
-        <span class="info"><%= get_entry_infos(entry) -%></span>
-      </div>
       <div class="buttons" id="entry_buttons">
-        <span style="color: #000000;"><%= _('Display: ') %><span>
+        <span id="permalink"><%= link_to "[page:#{entry.id}]", :controller=> "board_entries", :action => "forward", :id => entry.id -%></span>
+        <%= _('Display: ') %>
         <% if editable -%>
           <a href="#" id="access_style_button"><%= icon_tag('group', :title => _("Access Log")) %></a>
         <% end -%>
         <a href="#" id="default_style_button"><%= icon_tag('page_white_text', :title => _('Blog Entry View')) %></a>
         <a href="#" id="source_style_button"><%= icon_tag('page_white_code', :title => _('View Source')) %></a>
-        <span style="color: #000000;"><%= _('Action:') %><span>
-        <%= link_to(icon_tag('page_edit', :title => _('Edit')), :controller=> "edit", :action => "edit", :id => entry, :symbol => entry.symbol) if editable  %>
+        <%= _('Action:') %>
+        <%= link_to(icon_tag('page_edit', :title => _('Edit')), :controller=> "edit", :action => "edit", :id => entry) if editable  %>
         <%= link_to(icon_tag('tag_blue_add', :title => _('Bookmark this')), {:controller => "bookmark", :action => "edit", :url => "/page/#{entry.id.to_s}", :title => entry.title, :dummy => '.html'}, {:class => "nyroModal"}) %>
-        <%= link_to(icon_tag('control_play_blue', :title => _('Slide Show')), {:controller=> "monta", :action => "execute_monta", :id => entry}, :target=>"_blank") if entry.editor_mode == 'hiki' %>
+        <%= link_to(icon_tag('control_play_blue', :title => _('Slide Show')), {:controller => "monta", :action => "execute_monta", :id => entry}, :target=>"_blank") if entry.editor_mode == 'hiki' %>
         <%= link_to(icon_tag('zoom', :title => _('Maximize!')), {:controller=> "board_entries", :action => "large", :id => entry}, :target=>"_blank") %>
+      </div>
+    </div>
+    <div class="information">
+      <div class="date"><%=h entry.diary_date %> <%=h entry.diary_author %>
+        <span class="evaluation"><%= get_entry_infos(entry) -%></span>
       </div>
     </div>
     <h1><%= check_box_tag 'read_state_check', 'true', checked_on, :title => _('Mark read') %><%= get_publication_type_icon(entry) -%> <%=h entry.category %> <%=h entry.title %></h1>
@@ -255,7 +261,7 @@
   </div>
 </div>
 <div id="board_entry_control">
-  <span class="info">
+  <span class="evaluation">
     <% if bookmark_comments_count > 0 -%>
       <%= link_to(n_("[Bookmarked by: %d member]", "[Bookmarked by: %d members]", bookmark_comments_count) % bookmark_comments_count,{:controller =>'bookmark', :action=>'show', :uri => "/page/" + entry.id.to_s}) %>
     <% end -%>
@@ -300,10 +306,10 @@
     </li>
 <% end -%>
   </ul>
-  <% unless entry.diary? -%>
-    <p><%= link_to _("[Compose a new bbs with this as topic]"), :controller => "edit", :trackbacks => entry.id, :title => "RE: " + entry.title, :category => entry.category, :publication_type => entry.publication_type, :entry_type => entry.entry_type, :symbol => entry.symbol, :publication_symbols_value => entry.publication_symbols_value %><%= help_icon_tag :content => _('記事の公開範囲を引き継いだ掲示板として新しい記事を作成します。') %></p>
+  <% if current_user.group_symbols.include? entry.symbol -%>
+    <p><%= link_to _("[Compose a new bbs with this as topic]"), :controller => "edit", :trackbacks => entry.id, :title => "RE: " + entry.title, :category => entry.category, :publication_type => entry.publication_type, :entry_type => entry.entry_type, :symbol => entry.symbol, :publication_symbols_value => entry.publication_symbols_value %><%= help_icon_tag :content => _('Create a new bbs entry inheriting the privacy setting.') %></p>
   <% end -%>
-  <p><%= link_to _("[Compose a new blog with this as topic]"), :controller => "edit", :trackbacks => entry.id, :title => "RE: " + entry.title, :category => entry.category %><%= help_icon_tag :content => _('記事の公開範囲によらず全体公開のブログとして新しい記事を作成します。') %></p>
+  <p><%= link_to _("[Compose a new blog with this as topic]"), :controller => "edit", :trackbacks => entry.id, :title => "RE: " + entry.title, :category => entry.category %><%= help_icon_tag :content => _("Create an \"open to public\" blog entry disregarding the privacy setting.") %></p>
 </div>
 
 <div class="move_navi">

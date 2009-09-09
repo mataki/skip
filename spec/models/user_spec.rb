@@ -111,7 +111,7 @@ describe User, 'validation' do
       @user.stub!(:uid).and_return('yamada')
       @user.password = 'yamada'
       @user.valid?.should be_false
-      @user.errors['password'].include?('はログインIDと同一の値は登録できません。').should be_true
+      @user.errors['password'].should be_include('shall not be the same with login ID.')
     end
     it '現在のパスワードと異なること' do
       @user.password = 'Password2'
@@ -119,112 +119,110 @@ describe User, 'validation' do
       @user.save!
       @user.password = 'Password2'
       @user.valid?.should be_false
-      @user.errors['password'].include?('は前回と同一の値は登録できません。').should be_true
+      @user.errors['password'].should be_include('shall not be the same with the previous one.')
     end
     describe 'パスワード強度が弱の場合' do
       before do
         Admin::Setting.stub!(:password_strength).and_return('low')
-        @message = 'Admin::Setting|Password strength|Validation message low'
       end
       it '6文字以上の英数字記号であること' do
         @user.password = 'abcde'
         @user.password_confirmation = 'abcde'
         @user.valid?
-        @user.errors['password'].include?(@message).should be_true
+        [@user.errors['password']].flatten.size.should == 2
         @user.password = 'abcdef'
+        @user.password_confirmation = 'abcdef'
         @user.valid?
-        @user.errors['password'].include?(@message).should be_false
+        @user.errors['password'].should be_nil
       end
     end
     describe 'パスワード強度が中の場合' do
       before do
         Admin::Setting.stub!(:password_strength).and_return('middle')
-        @message = 'Admin::Setting|Password strength|Validation message middle'
       end
       it '7文字の場合エラー' do
         @user.password = 'abcdeF0'
         @user.valid?
-        @user.errors['password'].include?(@message).should be_true
+        [@user.errors['password']].flatten.size.should == 1
       end
       describe '8文字以上の場合' do
         it '小文字のみの場合エラー' do
           @user.password = 'abcdefgh'
           @user.valid?
-          @user.errors['password'].include?(@message).should be_true
+          [@user.errors['password']].flatten.size.should == 1
         end
         it '大文字のみの場合エラー' do
           @user.password = 'ABCDEFGH'
           @user.valid?
-          @user.errors['password'].include?(@message).should be_true
+          [@user.errors['password']].flatten.size.should == 1
         end
         it '数字のみの場合エラー' do
           @user.password = '12345678'
           @user.valid?
-          @user.errors['password'].include?(@message).should be_true
+          [@user.errors['password']].flatten.size.should == 1
         end
         it '記号のみの場合エラー' do
           @user.password = '####&&&&'
           @user.valid?
-          @user.errors['password'].include?(@message).should be_true
+          [@user.errors['password']].flatten.size.should == 1
         end
         it '小文字、大文字のみの場合エラー' do
           @user.password = 'abcdEFGH'
           @user.valid?
-          @user.errors['password'].include?(@message).should be_true
+          [@user.errors['password']].flatten.size.should == 1
         end
         it '小文字、大文字、数字の場合エラーにならないこと' do
           @user.password = 'abcdEF012'
           @user.password_confirmation = 'abcdEF012'
           @user.valid?
-          @user.errors.empty?.should be_true
+          @user.errors['password'].should be_nil
         end
       end
     end
     describe 'パスワード強度が強の場合' do
       before do
         Admin::Setting.stub!(:password_strength).and_return('high')
-        @message = 'Admin::Setting|Password strength|Validation message high'
       end
       it '7文字の場合エラー' do
         @user.password = 'abcdeF0'
         @user.valid?
-        @user.errors['password'].include?(@message).should be_true
+        [@user.errors['password']].flatten.size.should == 1
       end
       describe '8文字以上の場合' do
         it '小文字のみの場合エラー' do
           @user.password = 'abcdefgh'
           @user.valid?
-          @user.errors['password'].include?(@message).should be_true
+          [@user.errors['password']].flatten.size.should == 1
         end
         it '大文字のみの場合エラー' do
           @user.password = 'ABCDEFGH'
           @user.valid?
-          @user.errors['password'].include?(@message).should be_true
+          [@user.errors['password']].flatten.size.should == 1
         end
         it '数字のみの場合エラー' do
           @user.password = '12345678'
           @user.valid?
-          @user.errors['password'].include?(@message).should be_true
+          [@user.errors['password']].flatten.size.should == 1
         end
         it '記号のみの場合エラー' do
           @user.password = '####&&&&'
           @user.valid?
-          @user.errors['password'].include?(@message).should be_true
+          [@user.errors['password']].flatten.size.should == 1
         end
         it '小文字、大文字のみの場合エラー' do
           @user.password = 'abcdEFGH'
           @user.valid?
-          @user.errors['password'].include?(@message).should be_true
+          [@user.errors['password']].flatten.size.should == 1
         end
         it '小文字、大文字、数字の場合エラー' do
           @user.password = 'abcdEF01'
           @user.valid?
-          @user.errors['password'].include?(@message).should be_true
+          [@user.errors['password']].flatten.size.should == 1
         end
         it '小文字、大文字、数字, 記号の場合エラーとならないこと' do
           @user.password = 'abcdeF0@#'
           @user.password_confirmation = 'abcdeF0@#'
-          @user.errors.empty?.should be_true
+          @user.errors['password'].should be_nil
         end
       end
     end
@@ -952,11 +950,11 @@ describe User, "#openid_identifier" do
     @user.openid_identifier.should == "http://test.host/id/a_user"
   end
   it "relative_url_rootが設定されている場合 反映されること" do
-    ActionController::AbstractRequest.relative_url_root = "/skip"
+    ActionController::Base.relative_url_root = "/skip"
     @user.openid_identifier.should == "http://test.host/skip/id/a_user"
   end
   after do
-    ActionController::AbstractRequest.relative_url_root = nil
+    ActionController::Base.relative_url_root = nil
   end
 end
 
@@ -1130,7 +1128,7 @@ end
 describe User, "#custom" do
   it "関連するuser_customが存在するユーザの場合、そのuser_customが返る" do
     user = create_user
-    custom = user.create_user_custom(:theme => "green", :classic => true, :always_show_shortcut => true)
+    custom = user.create_user_custom(:theme => "green", :classic => true, :always_show_shortcut => true, :editor_mode => "hiki")
 
     user.custom.should == custom
   end
@@ -1139,6 +1137,58 @@ describe User, "#custom" do
 
     user.custom.should be_is_a(UserCustom)
     user.custom.should be_new_record
+  end
+end
+
+describe User, '#participating_groups?' do
+  before do
+    @user = stub_model(User, :id => 99)
+    @group = create_group
+  end
+  describe '指定したユーザがグループ参加者(参加済み)の場合' do
+    before do
+      group_participation = create_group_participation(:user_id => @user.id, :group_id => @group.id)
+    end
+    it 'trueが返ること' do
+      @user.participating_group?(@group).should be_true
+    end
+  end
+  describe '指定したユーザがグループ参加者(参加待ち)の場合' do
+    before do
+      group_participation = create_group_participation(:user_id => @user.id, :group_id => @group.id, :waiting => true)
+    end
+    it 'falseが返ること' do
+      @user.participating_group?(@group).should be_false
+    end
+  end
+  describe '指定したユーザがグループ管理者(参加済み)の場合' do
+    before do
+      group_participation = create_group_participation(:user_id => @user.id, :group_id => @group.id, :waiting => false, :owned => true)
+    end
+    it 'trueが返ること' do
+      @user.participating_group?(@group).should be_true
+    end
+  end
+  describe '指定したユーザがグループ管理者(参加待ち)の場合' do
+    before do
+      group_participation = create_group_participation(:user_id => @user.id, :group_id => @group.id, :waiting => true, :owned => true)
+    end
+    it 'falseが返ること' do
+      @user.participating_group?(@group).should be_false
+    end
+  end
+  describe '指定したユーザがグループ未参加者の場合' do
+    before do
+      group_participation = create_group_participation(:user_id => @user.id + 1, :group_id => @group.id)
+    end
+    it 'falseが返ること' do
+      @user.participating_group?(@group).should be_false
+    end
+  end
+  describe 'Group以外の場合' do
+    it 'ArgumentErrorとなること' do
+      lambda { @user.participating_group?(nil) }.should raise_error(ArgumentError)
+    end
   end
 end
 
@@ -1163,7 +1213,7 @@ describe User, 'password_required?' do
             @user.crypted_password = ''
           end
           it '必要(true)と判定されること' do
-            @user.send!(:password_required?).should be_true
+            @user.send(:password_required?).should be_true
           end
         end
         describe 'crypted_passwordが空ではない場合' do
@@ -1171,7 +1221,7 @@ describe User, 'password_required?' do
             @user.crypted_password = 'password'
           end
           it '必要ではない(false)と判定されること' do
-            @user.send!(:password_required?).should be_false
+            @user.send(:password_required?).should be_false
           end
         end
       end
@@ -1180,7 +1230,7 @@ describe User, 'password_required?' do
           @user.status = 'UNUSED'
         end
         it '必要ではない(false)と判定されること' do
-          @user.send!(:password_required?).should be_false
+          @user.send(:password_required?).should be_false
         end
       end
     end
@@ -1189,7 +1239,7 @@ describe User, 'password_required?' do
         @user.password = 'Password1'
       end
       it '必要(true)と判定されること' do
-        @user.send!(:password_required?).should be_true
+        @user.send(:password_required?).should be_true
       end
     end
   end
@@ -1198,7 +1248,7 @@ describe User, 'password_required?' do
       SkipEmbedded::InitialSettings.stub!('[]').with('login_mode').and_return('rp')
     end
     it '必要ではない(false)と判定されること' do
-      @user.send!(:password_required?).should be_false
+      @user.send(:password_required?).should be_false
     end
   end
 end
@@ -1218,7 +1268,7 @@ describe User, '.find_by_code_or_email_with_key_phrase' do
         @key_phrase = 'key_phrase'
       end
       it 'ログインIDまたはemailで検索した結果が返ること' do
-        User.send!(:find_by_code_or_email_with_key_phrase, 'code_or_email', @key_phrase).should == @user
+        User.send(:find_by_code_or_email_with_key_phrase, 'code_or_email', @key_phrase).should == @user
       end
     end
     describe 'ログインキーフレーズが設定値と一致しない場合' do
@@ -1226,7 +1276,7 @@ describe User, '.find_by_code_or_email_with_key_phrase' do
         @key_phrase = 'invalid_key_phrase'
       end
       it 'nilが返ること' do
-        User.send!(:find_by_code_or_email_with_key_phrase, 'code_or_email', @key_phrase).should be_nil
+        User.send(:find_by_code_or_email_with_key_phrase, 'code_or_email', @key_phrase).should be_nil
       end
     end
   end
@@ -1235,7 +1285,7 @@ describe User, '.find_by_code_or_email_with_key_phrase' do
       Admin::Setting.should_receive(:enable_login_keyphrase).and_return(false)
     end
     it 'ログインIDまたはemailで検索した結果が返ること' do
-      User.send!(:find_by_code_or_email_with_key_phrase, 'code_or_email', @key_phrase).should == @user
+      User.send(:find_by_code_or_email_with_key_phrase, 'code_or_email', @key_phrase).should == @user
     end
   end
 end
@@ -1247,7 +1297,7 @@ describe User, '.find_by_code_or_email' do
       User.should_receive(:find_by_code).and_return(@user)
     end
     it '見つかったユーザが返ること' do
-      User.send!(:find_by_code_or_email, 'login_id').should == @user
+      User.send(:find_by_code_or_email, 'login_id').should == @user
     end
   end
   describe 'ログインIDに一致するユーザが見つからない場合' do
@@ -1260,7 +1310,7 @@ describe User, '.find_by_code_or_email' do
         User.should_receive(:find_by_email).and_return(@user)
       end
       it '見つかったユーザが返ること' do
-        User.send!(:find_by_code_or_email, 'skip@example.org').should == @user
+        User.send(:find_by_code_or_email, 'skip@example.org').should == @user
       end
     end
     describe 'メールアドレスに一致するユーザが見つからない場合' do
@@ -1268,7 +1318,7 @@ describe User, '.find_by_code_or_email' do
         User.should_receive(:find_by_email).and_return(nil)
       end
       it 'nilが返ること' do
-        User.send!(:find_by_code_or_email, 'skip@example.org').should be_nil
+        User.send(:find_by_code_or_email, 'skip@example.org').should be_nil
       end
     end
   end
@@ -1279,7 +1329,7 @@ describe User, '.auth_successed' do
     @user = create_user
   end
   it "検索されたユーザが返ること" do
-    User.send!(:auth_successed, @user).should == @user
+    User.send(:auth_successed, @user).should == @user
   end
   describe 'ユーザがロックされている場合' do
     before do
@@ -1287,12 +1337,12 @@ describe User, '.auth_successed' do
     end
     it 'last_authenticated_atが変化しないこと' do
       lambda do
-        User.send!(:auth_successed, @user)
+        User.send(:auth_successed, @user)
       end.should_not change(@user, :last_authenticated_at)
     end
     it 'ログイン試行回数が変化しないこと' do
       lambda do
-        User.send!(:auth_successed, @user)
+        User.send(:auth_successed, @user)
       end.should_not change(@user, :trial_num)
     end
   end
@@ -1304,12 +1354,12 @@ describe User, '.auth_successed' do
       time = Time.now
       Time.stub!(:now).and_return(time)
       lambda do
-        User.send!(:auth_successed, @user)
+        User.send(:auth_successed, @user)
       end.should change(@user, :last_authenticated_at).to(time)
     end
     it 'ログイン試行回数が0になること' do
       lambda do
-        User.send!(:auth_successed, @user)
+        User.send(:auth_successed, @user)
       end.should change(@user, :trial_num).to(0)
     end
   end
@@ -1320,7 +1370,7 @@ describe User, '.auth_failed' do
     @user = create_user
   end
   it 'nilが返ること' do
-    User.send!(:auth_failed, @user).should be_nil
+    User.send(:auth_failed, @user).should be_nil
   end
   describe 'ユーザがロックされていない場合' do
     before do
@@ -1337,7 +1387,7 @@ describe User, '.auth_failed' do
         end
         it 'ログイン試行回数が1増加すること' do
           lambda do
-            User.send!(:auth_failed, @user)
+            User.send(:auth_failed, @user)
           end.should change(@user, :trial_num).to(3)
         end
       end
@@ -1347,7 +1397,7 @@ describe User, '.auth_failed' do
         end
         it 'ログイン試行回数が変化しないこと' do
           lambda do
-            User.send!(:auth_failed, @user)
+            User.send(:auth_failed, @user)
           end.should_not change(@user, :trial_num)
         end
       end
@@ -1363,13 +1413,13 @@ describe User, '.auth_failed' do
         end
         it 'ロックされること' do
           lambda do
-            User.send!(:auth_failed, @user)
+            User.send(:auth_failed, @user)
           end.should change(@user, :locked).to(true)
         end
         it 'ロックした旨のログが出力されること' do
           @user.should_receive(:to_s_log).with('[User Locked]').and_return('user locked log')
           @user.logger.should_receive(:info).with('user locked log')
-          User.send!(:auth_failed, @user)
+          User.send(:auth_failed, @user)
         end
       end
       describe 'ユーザロック機能が無効な場合' do
@@ -1378,13 +1428,13 @@ describe User, '.auth_failed' do
         end
         it 'ロック状態が変化しないこと' do
           lambda do
-            User.send!(:auth_failed, @user)
+            User.send(:auth_failed, @user)
           end.should_not change(@user, :locked)
         end
         it 'ロックした旨のログが出力されないこと' do
           @user.stub!(:to_s_log).with('[User Locked]').and_return('user locked log')
           @user.logger.should_not_receive(:info).with('user locked log')
-          User.send!(:auth_failed, @user)
+          User.send(:auth_failed, @user)
         end
       end
     end
@@ -1395,18 +1445,18 @@ describe User, '.auth_failed' do
     end
     it 'ログイン試行回数が変化しないこと' do
       lambda do
-        User.send!(:auth_failed, @user)
+        User.send(:auth_failed, @user)
       end.should_not change(@user, :trial_num)
     end
     it 'ロック状態が変化しないこと' do
       lambda do
-        User.send!(:auth_failed, @user)
+        User.send(:auth_failed, @user)
       end.should_not change(@user, :locked)
     end
     it 'ロックした旨のログが出力されないこと' do
       @user.stub!(:to_s_log).with('[User Locked]').and_return('user locked log')
       @user.logger.should_not_receive(:info).with('user locked log')
-      User.send!(:auth_failed, @user)
+      User.send(:auth_failed, @user)
     end
   end
 end

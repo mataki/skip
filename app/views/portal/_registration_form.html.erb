@@ -13,23 +13,23 @@
   </tr>
   <% end -%>
   <tr>
-    <th><label for="user_name"><%=h _('Admin::User|Name') %></label></th>
+    <th><label for="user_name"><%=h s_('Admin::User|Name') %></label></th>
     <td><%=h @user.name %></td>
   </tr>
   <tr>
-    <th><label for="user_email"><%=h _('User|Email') %></label></th>
+    <th><label for="user_email"><%=h s_('User|Email') %></label></th>
     <td><%=h @user.email %><span style="margin-left: 20px;"><%= link_to _("[Change]"), :action=> 'manage', :menu => 'manage_email' if !is_new && Admin::Setting.mail_function_setting %></span></td>
   </tr>
   <tr>
-    <th><label for="user_section"><%=h _('User|Section') %></label></th>
+    <th><label for="user_section"><%=h s_('User|Section') %></label></th>
     <td>
       <% if sections = User.grouped_sections -%>
       <p>
-      <%= select("user", "section", sections, {}, {:tabindex => (tabindex += 1)}) + _('Display a selection from the value that is already registered.[FIXME]') %>
+      <%= select("user", "section", sections, {}, {:tabindex => (tabindex += 1)}) + _('Showing options from previously registered values') %>
       </p>
       <% end -%>
       <p>
-      <%= text_field_tag("user[section]", (sections.include?(@user.section) ? '' : @user.section), :tabindex => (tabindex += 1), :class=> 'appendable_text') + _('If you are not set as the selection, please enter here.[FIXME]') %>
+      <%= text_field_tag("user[section]", (sections.include?(@user.section) ? '' : @user.section), :tabindex => (tabindex += 1), :class=> 'appendable_text') + _('Enter here if you cannot find the value in the options') %>
       </p>
   </tr>
   <% if user_name_mode?(:name) -%>
@@ -53,11 +53,11 @@
 <% if @user.within_time_limit_of_activation_token? -%>
   <%= hidden_field_tag :code, @user.activation_token %>
   <tr>
-    <th><label for="user_password"><%= _('Admin::User|Password') %></label></th>
+    <th><label for="user_password"><%= s_('Admin::User|Password') %></label></th>
     <td><%= password_field 'user', 'password', {:tabindex => (tabindex +=1)} %></td>
   </tr>
   <tr>
-    <th><label for="user_password_confirmation"><%= _('Admin::User|Password confirmation') %></label></th>
+    <th><label for="user_password_confirmation"><%= s_('Admin::User|Password confirmation') %></label></th>
     <td><%= password_field 'user', 'password_confirmation', {:tabindex => (tabindex +=1)} %></td>
   </tr>
 <% end -%>
@@ -66,7 +66,7 @@
 <%= render :partial => 'portal/profile_form', :locals => {:user => @user} %>
 
 <% submit_button_value = is_new ? _("Register User") : _("Save") %>
-<%= submit_tag submit_button_value, {:tabindex => (tabindex += 1), :id => 'submit_button', :disable_with => ("Saving...")} %>
+<%= submit_tag submit_button_value, {:tabindex => (tabindex += 1), :id => 'submit_button', :disable_with => _("Saving...")} %>
 <% end %>
 </div>
 

@@ -1,10 +1,10 @@
 <div class="content">
-  <h3><%= _('OpenID URLの再設定') %></h3>
+  <h3><%= _('Resetting OpenID URL') %></h3>
   <div>
     <div class="desc">
-      以下のサービスをご利用の方は、リンクをクリックしていただくことで、それぞれのIDを利用してログインが可能です。<br />
-      本サイトでは、IDとなるURLのみを認証のために管理し、その他の目的では利用しません。<br />
-      その他のOpenIDをご利用になる方はフォームからOpenID URLを入力してください。
+      <%= _('Users of the following services can login using their IDs by clicking the links below.')%><br />
+      <%= _('We keep the URLs as the ID for authentication only and will not utilize them for other purposes.')%><br />
+      <%= _('Users of other OpenID providers please provide the OpenID URL from the form below:')%>
     </div>
     <ul style="margin: 10px 20px;list-style-type:none;">
       <li><%= link_to image_tag('idmixijp.gif') + "mixiのOpenID URLを設定する", :action => :reset_openid, :openid_url => "mixi.jp" %></li>

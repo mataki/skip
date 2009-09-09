@@ -211,6 +211,28 @@ private
   end
 end
 
+describe BoardEntry, '.unescape_href' do
+  it "hrefの部分のみがアンエスケープされること" do
+    text = <<-EOF
+<a href=\"http://maps.google.co.jp/maps?f=q&amp;source=s_q&amp;hl=ja&amp;geocode=&amp;q=%E6%9D%B1%E4%BA%AC%E3%82%BF%E3%83%AF%E3%83%BC&amp;vps=1&amp;jsv=160f&amp;sll=36.5626,136.362305&amp;sspn=46.580215,79.101563&amp;ie=UTF8&amp;latlng=35658632,139745411,12292286392395809068&amp;ei=uX0fSoLaEIyyuwP5r8HtAw&amp;sig2=afRsS3vW83gTeW9KYfv0jg&amp;cd=1\">&amp;hoho</a>
+EOF
+    @result = BoardEntry.unescape_href(text)
+    @result.should == <<-EOF
+<a href="http://maps.google.co.jp/maps?f=q&source=s_q&hl=ja&geocode=&q=%E6%9D%B1%E4%BA%AC%E3%82%BF%E3%83%AF%E3%83%BC&vps=1&jsv=160f&sll=36.5626,136.362305&sspn=46.580215,79.101563&ie=UTF8&latlng=35658632,139745411,12292286392395809068&ei=uX0fSoLaEIyyuwP5r8HtAw&sig2=afRsS3vW83gTeW9KYfv0jg&cd=1">&amp;hoho</a>
+EOF
+  end
+
+  it "2つaタグがある場合でもただしく動作すること" do
+    text = "hoge<a href='/hoge?f=q&amp;hl=h1' id='ff'>aa\na</a>aa&amp;aa<a href=\"/fuga?f=q&amp;h=h\">bb&amp;b</a>"
+    BoardEntry.unescape_href(text).should ==
+      "hoge<a href='/hoge?f=q&hl=h1' id='ff'>aa\na</a>aa&amp;aa<a href=\"/fuga?f=q&h=h\">bb&amp;b</a>"
+  end
+
+  it '置換対象外の場合は引数がそのまま返ること' do
+    BoardEntry.unescape_href('<p>foo</p>').should == '<p>foo</p>'
+  end
+end
+
 describe BoardEntry, '.get_symbol2name_hash' do
   describe 'あるグループの掲示板が存在する場合' do
     before do

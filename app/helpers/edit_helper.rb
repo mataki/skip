@@ -14,17 +14,6 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 module EditHelper
-  def share_files_url symbol
-    symbol_type, symbol_id = Symbol.split_symbol symbol
-    if symbol_type == 'uid'
-      url_for :controller => 'user', :action => 'share_file', :uid => symbol_id, :format => 'js'
-    elsif symbol_type == 'gid'
-      url_for :controller => 'group', :action => 'share_file', :gid => symbol_id, :format => 'js'
-    else
-      ''
-    end
-  end
-
   def share_file_uploader_opt board_entry
     {
       :share_files_url => share_files_url(board_entry.symbol),
@@ -50,11 +39,20 @@ module EditHelper
         :target => IframeUploader::UPLOAD_KEY,
         :src => {
           :form => url_for(:controller => 'share_file', :action => 'new', :owner_symbol => board_entry.symbol, :ajax_upload => 1, :escape => false),
-          :target => ''
+          # HTTPS環境で、IE6を利用するとtargetが空だとHTTPへのアクセスと判断してアラートが表示されるため
+          # http://support.microsoft.com/kb/261188/ja
+          :target => '/blank.html'
         },
         :callback => nil,
         :trigger => 'submit'
       }
     }
+  end
+
+  private
+  def share_files_url symbol
+    symbol_type, symbol_id = Symbol.split_symbol symbol
+    raise ArgumentError, 'Symbol type is invalid.' unless %w(uid gid).include?(symbol_type)
+    url_for :controller => 'share_file', :action => 'list', symbol_type.to_sym => symbol_id, :format => 'js'
   end
 end

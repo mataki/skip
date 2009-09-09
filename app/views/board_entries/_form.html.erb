@@ -17,12 +17,9 @@ div.input_line textarea {
 <%= template_error_messages_for 'board_entry' %>
 
 <%= hidden_field_tag 'entry_type', h(params[:entry_type]) %>
-<%= hidden_field_tag 'symbol', h(params[:symbol]) %>
-
 <%= hidden_field 'board_entry', 'entry_type' %>
 <%= hidden_field 'board_entry', 'symbol' %>
-
-<%= hidden_field_tag 'lock_version', h(@board_entry.lock_version) -%>
+<%= hidden_field 'board_entry', 'lock_version' %>
 
 <div class="input_line">
   <div class="input_label"><%= label(:board_entry, :category, _('Tags')) -%></div>
@@ -74,7 +71,7 @@ div.input_line textarea {
     <%= radio_button_tag("publication_type", "protected", params[:publication_type] == "protected", :id=>"publication_type_protected") %><%= label_tag("publication_type_protected", _('Specify Directly')) %>
 
     <div id="editor_symbols_space" style="display: none; margin-top: 5px;">
-      <%= check_box_tag 'editor_symbol', value = params[:symbol], params[:editor_symbol] -%><%= label_tag :editor_symbol, _('Edit by Members Allowed') %>
+      <%= check_box_tag 'editor_symbol', @board_entry.symbol, params[:editor_symbol] %><%= label_tag :editor_symbol, _('Edit by Members Allowed') %>
     </div>
     <%= render :partial => "shared/symbol_autocomplete_field", :locals => {:publication_symbols_value => params[:publication_symbols_value], :editor_symbols_value => params[:editor_symbols_value], :edit_checkbox => true } %>
     </td></tr></table>
@@ -107,11 +104,12 @@ div.input_line textarea {
 </div>
 
 <% content_for :javascript_initializers do -%>
+  <% categories_hash = @board_entry.categories_hash(current_user) -%>
     var setupTagComplete = function() {
-        var tags = new Array(<%= @categories_hash[:mine].map{|str| ("'#{str}'")}.join(',') %>);
-        var stdTags = new Array(<%= @categories_hash[:standard].map{|str| ("'#{str}'")}.join(',') %>);
-        var userTags = new Array(<%= @categories_hash[:user].map{|str| ("'#{str}'")}.join(',') %>);
-        var sysTags = new Array(<%= @categories_hash[:system].map{|str| ("'#{str}'")}.join(',') %>);
+        var tags = new Array(<%= categories_hash[:mine].map{|str| ("'#{str}'")}.join(',') %>);
+        var stdTags = new Array(<%= categories_hash[:standard].map{|str| ("'#{str}'")}.join(',') %>);
+        var userTags = new Array(<%= categories_hash[:user].map{|str| ("'#{str}'")}.join(',') %>);
+        var sysTags = new Array(<%= categories_hash[:system].map{|str| ("'#{str}'")}.join(',') %>);
 
         $j('#tags_list').append(createTagsLink(tags));
         $j('#std_tags_list').append(createTagsLink(stdTags));
@@ -148,7 +146,7 @@ div.input_line textarea {
             var tb = Trim(tb_array[i]);
             if(tb != ""){
                 if (isNaN(tb)){
-                    alert('<%= _('Illegal format in "Topic entry".\r\nList the page IDs and separate each other by commas.')%>');
+                    alert('<%= _('Illegal format in "Topic entry". List the page IDs and separate each other by commas.')%>');
                     return false;
                 }
                 if (contents_value.match(new RegExp("page:" + tb + ".*]")) == null) {
@@ -164,7 +162,7 @@ div.input_line textarea {
                 }
             }
             if ($j('#publication_symbols_value').val() == ""){
-                if (confirm("<%= _('No user selected. \r\nAre you sure to make this open to all users?')%>") == true) {
+                if (confirm("<%= _('No user selected. Are you sure to make this open to all users?')%>") == true) {
                     $j('#publication_type_public').attr('checked',true);
                     changePublicationType();
                 } else {

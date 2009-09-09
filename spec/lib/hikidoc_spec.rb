@@ -15,7 +15,7 @@
 
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe HikiDoc do
+describe HikiDoc, :type => :helper do
   describe "parse_linkの [[str|link]] 変換" do
     describe "[[xss|javascript:alert(1);]]の場合" do
       it "リンクに変換されないこと" do

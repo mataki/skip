@@ -66,80 +66,16 @@ describe EditController do
     end
   end
 end
-# 途中
-describe EditController, "GET #index" do
-  before do
-    user_login
-    session[:user_symbol] = "uid:skip"
-
-    @title_prefix = 'とあるユーザ/グループのブログ/掲示板'
-    controller.stub!(:write_place_name).and_return(@title_prefix)
-  end
-  describe "ブログを書くの場合" do
-    before do
-      get :index
-    end
-    it { response.should render_template('edit/index') }
-    it "適切なインスタンス変数が設定されていること" do
-      assigns[:title].should == "Write #{@title_prefix}"
-      assigns[:main_menu].should == "My Blog"
-    end
-  end
-  describe "掲示板を書くの場合" do
-    before do
-      get :index, :symbol => "gid:hoge"
-    end
-    it { response.should render_template('edit/index') }
-    it "適切なインスタンス変数が設定されていること" do
-      assigns[:title].should == "Write #{@title_prefix}"
-      assigns[:main_menu].should == "Groups"
-    end
-  end
-end
-# 途中
-describe EditController, "GET #edit" do
-  before do
-    user_login
-    session[:user_symbol] = "uid:skip"
-
-    @board_entry = stub_model(BoardEntry)
-    BoardEntry.stub!(:find).and_return(@board_entry)
-    BoardEntry.stub!(:get_categories_hash)
-    @title_prefix = 'とあるユーザ/グループのブログ/掲示板'
-    controller.stub!(:write_place_name).and_return(@title_prefix)
-  end
-  describe "ブログの場合" do
-    before do
-      get :edit, :id => 1, :symbol => 'uid:skip'
-    end
-    it { response.should be_redirect }
-    it "適切なインスタンス変数が設定されていること" do
-      assigns[:title].should == "Edit #{@title_prefix}"
-      assigns[:main_menu].should == "My Blog"
-    end
-  end
-  describe "掲示板の場合" do
-    before do
-      get :edit, :id => 1, :symbol => 'gid:skip'
-    end
-    it { response.should be_redirect }
-    it "適切なインスタンス変数が設定されていること" do
-      assigns[:title].should == "Edit #{@title_prefix}"
-      assigns[:main_menu].should == "Groups"
-    end
-  end
-end
 
 describe EditController, "#destroy" do
   before do
     user_login
 
-    controller.stub!(:setup_layout)
     controller.stub!(:authorize_to_edit_board_entry?).and_return(true)
 
     @board_entry = stub_model(BoardEntry, :id => 2, :user_id => 2, :entry_type => "DIARY", :symbol => 'uid:skip')
     @board_entry.should_receive(:destroy).and_return(@board_entry)
-    BoardEntry.should_receive(:find).and_return(@board_entry)
+    BoardEntry.stub(:find).and_return(@board_entry)
 
     @url = @board_entry.get_url_hash.delete_if{|key,val| key == :entry_id}
 
@@ -161,15 +97,11 @@ describe EditController, "#create" do
     before do
       new_trackbacks = mock('new_trackbacks')
 
-      @file1 = mock_uploaed_file
-      @file2 = mock_uploaed_file
-
       @entry = stub_model(BoardEntry, :entry_type => "DIARY")
       @entry.should_receive(:save).and_return(true)
       @entry.should_receive(:send_trackbacks).and_return(["", new_trackbacks])
       @entry.should_receive(:cancel_mail)
 
-      controller.should_receive(:setup_layout).and_return(true)
       controller.should_receive(:validate_params).and_return(true)
       controller.should_receive(:analyze_params).and_return([["sid:allusers"], []])
       controller.should_receive(:make_trackback_message).with(new_trackbacks)
@@ -181,7 +113,7 @@ describe EditController, "#create" do
         @entry.should_receive(:send_mail?).and_return(true)
         @entry.should_receive(:prepare_send_mail)
         post :create, {
-          :board_entry => { :symbol => @user_symbol, :send_mail => "1" }, :image => { "1" => @file1, "2" => @file2 }
+          :board_entry => { :symbol => @user_symbol, :send_mail => "1" }
         }
       end
       it "作成された掲示板にリダイレクトされる" do
@@ -199,7 +131,7 @@ describe EditController, "#create" do
         @entry.should_not_receive(:prepare_send_mail)
         @entry.should_receive(:send_mail?).and_return(false)
         post :create, {
-          :board_entry => { :symbol => @user_symbol, :send_mail => "0" }, :image => { "1" => @file1, "2" => @file2 }
+          :board_entry => { :symbol => @user_symbol, :send_mail => "0" }
         }
       end
       it "作成された掲示板にリダイレクトされる" do

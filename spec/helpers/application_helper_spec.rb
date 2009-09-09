@@ -56,61 +56,27 @@ describe ApplicationHelper, '#generate_tab_menu' do
   before do
     @action = 'action'
     @label = 'label'
-    @controller = mock('controller')
-    helper.stub!(:controller).and_return(@controller)
   end
-  describe 'selected_actionsが指定されている場合' do
+  describe '現在のページを表示している場合' do
     before do
-      @selected_actions = ['selected_action']
+      helper.stub!(:current_page?).and_return(true)
+      expected_link_tag = '<a href="/controller/action" class="selected"><span>label</span></a>'
+      @expected_html = content_tag(:ul, content_tag(:li, expected_link_tag))
     end
-    describe 'controllerのactionがselected_actionsに含まれる場合' do
-      before do
-        @controller.stub!(:action_name).and_return('selected_action')
-        expected_link_tag = '<a href="/controller/action" class="selected"><span>label</span></a>'
-        @expected_html = content_tag(:ul, content_tag(:li, expected_link_tag))
-      end
-      it 'html_options[:class]にselectedが含まれること' do
-        tab_menu_sources = [{:label => @label, :options => {:controller => 'controller', :action => @action}, :selected_actions => @selected_actions}]
-        helper.generate_tab_menu(tab_menu_sources).should == @expected_html
-      end
-    end
-    describe 'controllerのactionがselected_actionsに含まれない場合' do
-      before do
-        @controller.stub!(:action_name).and_return('not_selected_action')
-        expected_link_tag = '<a href="/controller/action"><span>label</span></a>'
-        @expected_html = content_tag(:ul, content_tag(:li, expected_link_tag))
-      end
-      it 'html_options[:class]にselectedが含まれないこと' do
-        tab_menu_sources = [{:label => @label, :options => {:controller => 'controller', :action => @action}, :selected_actions => @selected_actions}]
-        helper.generate_tab_menu(tab_menu_sources).should == @expected_html
-      end
+    it 'aタグのclassにselectedが含まれていること' do
+      tab_menu_sources = [{:label => @label, :options => {:controller => 'controller', :action => @action}}]
+      helper.generate_tab_menu(tab_menu_sources).should == @expected_html
     end
   end
-  describe 'selected_actionsが指定されていない場合' do
+  describe '現在のページを表示している場合' do
     before do
-      @selected_actions = nil
+      helper.stub!(:current_page?).and_return(false)
+      expected_link_tag = '<a href="/controller/action"><span>label</span></a>'
+      @expected_html = content_tag(:ul, content_tag(:li, expected_link_tag))
     end
-    describe 'controllerのactionがoptions[:action]と等しい場合' do
-      before do
-        @controller.stub!(:action_name).and_return(@action)
-        expected_link_tag = '<a href="/controller/action" class="selected"><span>label</span></a>'
-        @expected_html = content_tag(:ul, content_tag(:li, expected_link_tag))
-      end
-      it 'aタグのclassにselectedが含まれていること' do
-        tab_menu_sources = [{:label => @label, :options => {:controller => 'controller', :action => @action}, :selected_actions => @selected_actions}]
-        helper.generate_tab_menu(tab_menu_sources).should == @expected_html
-      end
-    end
-    describe 'controllerのactionがoptions[:action]と等しくない場合' do
-      before do
-        @controller.stub!(:action_name).and_return('hoge')
-        expected_link_tag = '<a href="/controller/action"><span>label</span></a>'
-        @expected_html = content_tag(:ul, content_tag(:li, expected_link_tag))
-      end
-      it 'aタグのclassにselectedが含まれていること' do
-        tab_menu_sources = [{:label => @label, :options => {:controller => 'controller', :action => @action}, :selected_actions => @selected_actions}]
-        helper.generate_tab_menu(tab_menu_sources).should == @expected_html
-      end
+    it 'aタグのclassにselectedが含まれていること' do
+      tab_menu_sources = [{:label => @label, :options => {:controller => 'controller', :action => @action}}]
+      helper.generate_tab_menu(tab_menu_sources).should == @expected_html
     end
   end
 end
@@ -118,12 +84,12 @@ end
 describe ApplicationHelper, '#user_link_to_with_portrait' do
   before do
     @user = stub_model(User, :uid => 'uid:skipkuma', :name => 'skipkuma')
-    @url_params = {:controller => 'user', :action => 'show', :uid => @user.uid}
+    @url_params = {:controller => '/user', :action => 'show', :uid => @user.uid}
     @mock_picture = mock('picture')
   end
   describe 'width, heightの指定がない場合' do
     it 'width 120, height 80 のポートレイト画像付きユーザリンクが生成されること' do
-      helper.should_receive(:showPicture).with(@user, 120, 80).and_return(@mock_picture)
+      helper.should_receive(:show_picture).with(@user, :width => 120, :height => 80).and_return(@mock_picture)
       helper.should_receive(:link_to).with(@mock_picture, @url_params, anything())
       helper.user_link_to_with_portrait(@user)
     end
@@ -131,11 +97,30 @@ describe ApplicationHelper, '#user_link_to_with_portrait' do
   describe 'width 60, height 40の指定がある場合' do
     before do
       it 'width 60, height 40 のポートレイト画像付きユーザリンクが生成されること' do
-        helper.should_receive(:showPicture).with(@user, 60, 40).and_return(@mock_picture)
+        helper.should_receive(:show_picture).with(@user, :width => 60, :height => 40).and_return(@mock_picture)
         helper.should_receive(:link_to).with(@mock_picture, @url_params, anything())
         helper.user_link_to_with_portrait(@user)
       end
     end
+  end
+end
+
+describe ApplicationHelper, "#get_entry_infos" do
+  it "要素が一つもないときは、空文字になること" do
+    entry = mock_model(BoardEntry)
+    entry.stub(:board_entry_comments_count).and_return(0)
+    entry.stub(:point).and_return(0)
+    entry.stub(:entry_trackbacks_count).and_return(0)
+    entry.stub_chain(:state, :access_count).and_return(0)
+    helper.get_entry_infos(entry).should == ""
+  end
+  it "全ての要素が1の場合、-で連結されること" do
+    entry = mock_model(BoardEntry)
+    entry.stub(:board_entry_comments_count).and_return(1)
+    entry.stub(:point).and_return(1)
+    entry.stub(:entry_trackbacks_count).and_return(1)
+    entry.stub_chain(:state, :access_count).and_return(1)
+    helper.get_entry_infos(entry).should == "[Comment(1)-GoodJob(1)-Trackback(1)-Access(1)]"
   end
 end
 
@@ -145,6 +130,22 @@ describe ApplicationHelper, '#url_for_bookmark' do
   end
   it '正しいURLが生成されること' do
     helper.url_for_bookmark(@bookmark).should == '/bookmark/show/http:%2F%2Fb.hatena.ne.jp%2Fsearch%3Fie=utf8&amp;q=vim+%25E3%2582%25A8%25E3%2583%2587%25E3%2582%25A3%25E3%2582%25BF&amp;x=0&amp;y=0'
+  end
+end
+
+describe ApplicationHelper, '#parse_permalink' do
+  before do
+    helper.stub!(:form_authenticity_token)
+  end
+  describe '[file:foo\nbar]のように共有ファイルへのリンク中に改行コードを含む場合' do
+    it 'Routing Errorとならないこと' do
+      lambda do
+        helper.send(:parse_permalink, "[file:foo\r\nbar]", 'uid:alice')
+      end.should_not raise_error
+    end
+    it '改行コードが取り除かれること' do
+      helper.send(:parse_permalink, "[file:foo\r\nbar]", 'uid:alice').should == "<a href=\"http://test.host/user/alice/files/foobar\">file:foo\r\nbar</a>"
+    end
   end
 end
 
@@ -158,7 +159,7 @@ describe ApplicationHelper, '#link_to_bookmark_url' do
       @bookmark.url = '/page/99'
     end
     it '記事へのリンクとなること' do
-      helper.send!(:link_to_bookmark_url, @bookmark).include?('report_link').should be_true
+      helper.send(:link_to_bookmark_url, @bookmark).include?('report_link').should be_true
     end
   end
   describe '対象のブックマークがユーザの場合' do
@@ -166,7 +167,7 @@ describe ApplicationHelper, '#link_to_bookmark_url' do
       @bookmark.url = '/user/99'
     end
     it 'ユーザへのリンクとなること' do
-      helper.send!(:link_to_bookmark_url, @bookmark).include?('user').should be_true
+      helper.send(:link_to_bookmark_url, @bookmark).include?('user').should be_true
     end
   end
   describe '対象のブックマークがwwwの場合' do
@@ -174,7 +175,7 @@ describe ApplicationHelper, '#link_to_bookmark_url' do
       @bookmark.url = 'http://localhost'
     end
     it 'wwwへのリンクとなること' do
-      helper.send!(:link_to_bookmark_url, @bookmark).include?('world_link').should be_true
+      helper.send(:link_to_bookmark_url, @bookmark).include?('world_link').should be_true
     end
   end
   describe 'titleが指定されている場合' do
@@ -182,7 +183,7 @@ describe ApplicationHelper, '#link_to_bookmark_url' do
       @bookmark.url = 'http://localhost'
     end
     it '指定されたタイトルになること' do
-      helper.send!(:link_to_bookmark_url, @bookmark, 'skip_user_group').include?('skip_user_group').should be_true
+      helper.send(:link_to_bookmark_url, @bookmark, 'skip_user_group').include?('skip_user_group').should be_true
     end
   end
   describe 'titleが指定されていない場合' do
@@ -191,7 +192,7 @@ describe ApplicationHelper, '#link_to_bookmark_url' do
       @bookmark.title = 'world_wide_web'
     end
     it '登録済みのタイトルになること' do
-      helper.send!(:link_to_bookmark_url, @bookmark).include?('world_wide_web').should be_true
+      helper.send(:link_to_bookmark_url, @bookmark).include?('world_wide_web').should be_true
     end
   end
 end

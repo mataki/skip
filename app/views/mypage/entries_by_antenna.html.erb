@@ -21,21 +21,21 @@ div.topix_body .page_line, div.topix_body .item_line {
 
     <div id="antenna_navi" style="text-align: right; padding: 0pt 0pt 12pt 0pt;">
       <div style="text-align:left; width: 40%; float: left;">
-        <a href="#" id="check_all_link">[ページ内の記事を既読]</a>
-        <a href="#" id="uncheck_all_link">[ページ内の記事を未読]</a>
+        <a href="#" id="check_all_link"><%= _('[Set entries in the page as read]')%></a>
+        <a href="#" id="uncheck_all_link"><%= _('[Set entries in the page as unread]')%></a>
       </div>
       <div style="overflow: hidden; width: 60%; float: right;">
       <% if @antenna_entry.antenna && @antenna_entry.antenna.antenna_items -%>
         <span class="item">
-          <a href="#" id="show_antenna_link">[アンテナ条件を表示]</a>
-          <a href="#" id="hide_antenna_link" style="display:none;">[アンテナ条件を隠す]</a>
+          <a href="#" id="show_antenna_link"><%= _('[Show antenna links]')%></a>
+          <a href="#" id="hide_antenna_link" style="display:none;"><%= _('[Hide antenna links]')%></a>
         </span>
       <% end -%>
         <span class="item">
           <% if params[:read] -%>
-          <%= link_to '[既に読んだ記事を隠す]', :antenna_id => @antenna_entry.key, :read => false %>
+          <%= link_to _('[Hide read entries]'), :antenna_id => @antenna_entry.key, :read => false %>
           <% else %>
-          <%= link_to '[既に読んだ記事を表示]', :antenna_id => @antenna_entry.key, :read => true %>
+          <%= link_to _('[Show read entries]'), :antenna_id => @antenna_entry.key, :read => true %>
           <% end %>
         </span>
         <%= page_link(@entries_pages) if @entries_pages %>
@@ -81,7 +81,7 @@ div.topix_body .page_line, div.topix_body .item_line {
         $j('#entries_body :checkbox').each(function(){
             if(!this.checked){
                 entryId = this.id.split('_')[1];
-                changeReadState(entryId, true, $j('#authenticity_token').val());
+                changeReadState(entryId, true, $j('input[name=authenticity_token]').val());
                 this.checked = true;
             }
         });
@@ -92,7 +92,7 @@ div.topix_body .page_line, div.topix_body .item_line {
     .click(function(){
         $j('#entries_body :checked').each(function(){
             entryId = this.id.split('_')[1];
-            changeReadState(entryId, false, $j('#authenticity_token').val());
+            changeReadState(entryId, false, $j('input[name=authenticity_token]').val());
             this.checked = false;
         });
     });
@@ -101,6 +101,6 @@ div.topix_body .page_line, div.topix_body .item_line {
     $j('.read_state_checkbox')
     .click( function(){
         entryId = this.id.split('_')[1];
-        changeReadState(entryId, this.checked, $j('#authenticity_token').val());
+        changeReadState(entryId, this.checked, $j('input[name=authenticity_token]').val());
     });
 <% end -%>

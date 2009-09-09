@@ -1,0 +1,31 @@
+<% content_for :contents_left do -%>
+  <%= render :partial => "mypage/manage_menu", :locals => { :selected_menu => @menu } %>
+<% end -%>
+
+<% content_for :contents_right do -%>
+  <div class="desc">
+    <p><%= _("You can only upload 1 picture. The file size is limited to 64kb.<br/>\nYou can find something by <a href=\"http://www.google.com/search?q=%s\">searching \"Portrait Making\" in Google</a>\nif you don't have a suitable picture") % URI.encode(_('portrait making'))%></p>
+  </div>
+
+  <div class="portrait" style="border: 1px solid silver; margin: 10px; text-align: center;">
+  <%= show_picture(@user, :height => 150, :fit_image => false) -%>
+  </div>
+
+  <% form_for(@picture, :html => {:multipart => true}) do |f| -%>
+    <%= error_messages_for :picture %>
+    <%= f.label :file %>
+    <%= f.file_field :file %>
+    <%= submit_tag _("Upload") %>
+  <% end -%>
+  <%= link_to(_("[[Delete]]"), @picture, :confirm => _('Are you sure to delete?'), :method => :delete) unless @picture.new_record? %>
+<% end -%>
+
+<% content_for :javascript_initializers do -%>
+    $j("form")
+    .submit(function(){
+        if($j("#picture_file").val() == ""){
+            alert('<%= _("File name is mandatory.")%>');
+            return false;
+        }
+    });
+<% end -%>

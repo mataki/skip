@@ -21,7 +21,7 @@ class Admin::UserProfileMastersController < Admin::ApplicationController
                                                                                      :include => :user_profile_master_category,
                                                                                      :order => 'user_profile_master_categories.sort_order,user_profile_masters.sort_order')
 
-    @topics = [_('Listing %{model}') % {:model => _('user profile master')}]
+    @topics = [_('Listing %{model}') % {:model => _('user profile masters')}]
 
     respond_to do |format|
       format.html # index.html.erb

@@ -3,20 +3,20 @@
 <% end -%>
 
 <% content_for :contents_right do -%>
-  <div class="desc">お知らせメールの受信について設定します。<br/>各項目にチェックを入れると、あなたのプロフィールやブログに新しくコメントなどが追加された時に、登録されているメールアドレスにお知らせメールを送信します。</div>
+  <div class="desc"><%= _('You can manage your preference for email notifications.<br/>By checking the items, notification emails will be sent to your registered email address when new comments etc. are added to your profile and blog entries.')%></div>
   <div class="edit_form_space">
   <% form_tag :action => 'update_message_unsubscribes' do -%>
     <table class="normal margin10" border="1">
       <tbody>
     <% Message::MESSAGE_TYPES.each do |message_type, message_hash| -%>
         <tr>
-          <th width="200px"><%=h message_hash[:name] %></th>
-          <td><%= label_tag("message_type[#{message_type}]", _('通知する')) %><%= check_box_tag("message_type[#{message_type}]", "ON", !@unsubscribes.include?(message_type)) %></td>
+          <th width="200px"><%= h _(message_hash[:name]) %></th>
+          <td><%= label_tag("message_type[#{message_type}]", _('Notify')) %><%= check_box_tag("message_type[#{message_type}]", "ON", !@unsubscribes.include?(message_type)) %></td>
         </tr>
     <% end -%>
       </tbody>
     </table>
-    <%= submit_tag '保存', :class => "margin10" %>
+    <%= submit_tag _('Save'), :class => "margin10" %>
   <% end -%>
   </div>
 <% end -%>

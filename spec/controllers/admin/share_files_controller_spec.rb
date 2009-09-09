@@ -15,50 +15,6 @@
 
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
-describe Admin::ShareFilesController, 'GET /new' do
-  before do
-    admin_login
-  end
-  it 'UnknownActionになること' do
-    lambda do
-      get :new
-    end.should raise_error(ActionController::UnknownAction)
-  end
-end
-
-describe Admin::ShareFilesController, 'POST /create' do
-  before do
-    admin_login
-  end
-  it 'UnknownActionになること' do
-    lambda do
-      post :create
-    end.should raise_error(ActionController::UnknownAction)
-  end
-end
-
-describe Admin::ShareFilesController, 'GET /edit' do
-  before do
-    admin_login
-  end
-  it 'UnknownActionになること' do
-    lambda do
-      get :edit
-    end.should raise_error(ActionController::UnknownAction)
-  end
-end
-
-describe Admin::ShareFilesController, 'PUT /update' do
-  before do
-    admin_login
-  end
-  it 'UnknownActionになること' do
-    lambda do
-      put :update
-    end.should raise_error(ActionController::UnknownAction)
-  end
-end
-
 describe Admin::ShareFilesController, 'GET /download' do
   before do
     admin_login

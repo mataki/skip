@@ -26,8 +26,8 @@ module UsersHelper
         output << render(render_params)
       end
     else
-      columns = [ 'code', 'uid', 'name', 'email', 'section', _('action') ]
-      columns.delete('code') unless user_name_mode?(:code)
+      columns = [ Admin::Setting.login_account, 'uid', 'name', 'email', 'section', _('Action') ]
+      columns.delete(Admin::Setting.login_account) unless user_name_mode?(:code)
       columns.delete('uid') unless user_name_mode?(:name)
       columns.delete('email') if Admin::Setting.hide_email
       columns.unshift('') if options[:output_group_participation]
@@ -36,15 +36,17 @@ module UsersHelper
         case column
         when ''
           user_state user
+        when Admin::Setting.login_account
+          h(user.code)
         when 'name'
           user_link_to user
         when 'email'
           %(<a href="mailto:#{user.email}">#{user.email}</a>)
         when 'section'
           h(user.section)
-        when _('action')
-          link_to(icon_tag('transmit_go', :title => _('アンテナに追加')), {:controller => "antenna", :action => "select_antenna", :symbol => user.symbol, :dummy => '.html'}, {:class => "nyroModal"}) +
-          link_to(icon_tag('tag_blue_add', :title=>'ブックマークする'), {:controller => "bookmark", :action => "edit", :url => user.get_postit_url, :title => user.name, :dummy => '.html'}, {:class => "nyroModal"})
+        when _('Action')
+          link_to(icon_tag('transmit_go', :title => _('Add to antenna')), {:controller => "antenna", :action => "select_antenna", :symbol => user.symbol, :dummy => '.html'}, {:class => "nyroModal"}) +
+          link_to(icon_tag('tag_blue_add', :title=> _('Bookmark this')), {:controller => "bookmark", :action => "edit", :url => user.get_postit_url, :title => user.name, :dummy => '.html'}, {:class => "nyroModal"})
         else
           h(user.send(column))
         end
@@ -62,9 +64,9 @@ module UsersHelper
     # FIXME 前提条件がちょっと変わっただけで動作しなくなるロジックになっているので見直しが必要。
     output = ""
     if user.group_participations.first.owned?
-      output << icon_tag('star') + '管理者'
+      output << icon_tag('star') + _("Administrator")
     else
-      output << icon_tag('user') + '参加者'
+      output << icon_tag('user') + _("Member")
     end
     output
   end

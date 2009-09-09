@@ -1,34 +1,11 @@
-<% # :categoryはSiteCountの属性と同名 %>
-<% # TODO 以下のHashはSiteCountが定数として持つべき。要リファクタ。バッチも合わせて修正する %>
-<% statistics_items = { :total_user_count => { :icon => "table",
-                                               :desc => _("Registered Users"),
-                                               :unit =>_( "users" )},
-                        :today_user_count => { :icon => "table_lightning",
-                                               :desc => _("Today's Access"),
-                                               :unit => _("users") },
-                        :total_blog_count => { :icon => "database",
-                                               :desc => _("Total Entries"),
-                                               :unit => _("entries") },
-                        :today_blog_count => { :icon => "database_lightning",
-                                               :desc => _("Today's Entries"),
-
-                                               :unit => _("entries") },
-                        :writer_at_month => { :icon => "database_edit",
-                                              :desc => _("Posted entries or comments during the recent month"),
-                                              :unit => _("users") },
-                        :user_access_at_month => { :icon => "database_go",
-                                                   :desc =>  _("Average access during the recent month"),
-                                                   :unit => _("users") } }
-%>
-
 <h2 class="topix_title"><%= icon_tag('asterisk_orange') -%><%=h _("Index values as of [%s]") % site_count.created_on.strftime(_('%m/%d/%Y %H:%M'))%></h2>
-<% %w(total_user_count today_user_count total_blog_count today_blog_count writer_at_month user_access_at_month).each do |category| -%>
-  <% item = statistics_items[category.to_sym] -%>
+<% SiteCount::STATISTICS_KEYS.each do |key| -%>
+  <% item = SiteCount::STATISTICS_ITEMS[key.to_sym] -%>
 <div class="statistics_line">
-  <div class="statistics_desc"><%= icon_tag item[:icon] %>&nbsp;&nbsp;<%=h item[:desc] %></div>
-  <div class="statistics_value"><%=h site_count[category] %><%=h item[:unit] %></div>
+  <div class="statistics_desc"><%= icon_tag item[:icon] %>&nbsp;&nbsp;<%=h _(item[:desc]) %></div>
+  <div class="statistics_value"><%=h site_count[key] %><%=h _(item[:unit]) %></div>
   <div class="statistics_menu">
-    <%= link_to _("%{icon} Show history of %{time}") % {:icon => icon_tag('calendar_view_month'), :time => site_count.created_on.strftime(_('%m/%Y'))}, '#', :class => 'statistics_history_link', :id => category, :title => item[:desc] %>
+    <%= link_to _("%{icon} Show history of %{time}") % {:icon => icon_tag('calendar_view_month'), :time => site_count.created_on.strftime(_('%m/%Y'))}, '#', :class => 'statistics_history_link', :id => key, :title => h(_(item[:desc])) %>
   </div>
 </div>
 <div style="clear: left"></div>
@@ -36,15 +13,25 @@
 
 <% content_for :javascript_initializers do -%>
     $j('.statistics_history_link')
-    .click(function() {
+    .live('click', function() {
+        loadStatistics(this.id, <%= site_count.created_on.year %>, <%= site_count.created_on.month %>);
+        return false;
+    });
+
+    $j('.change_month_link')
+    .live('click', function() {
+        data = $j(this).data('data')
+        loadStatistics(data.category, data.year, data.month);
+        return false;
+    });
+
+    var loadStatistics = function(category, year, month){
         var url = relative_url_root + '/rankings/ado_statistics_history';
         $j.ajax({
             url: url,
-            data: { type: 'monthly',
-                    category: this.id,
-                    year: <%= site_count.created_on.year %>,
-                    month: <%= site_count.created_on.month %>,
-                    desc: $j(this).attr('title')
+            data: { category: category,
+                    year: year,
+                    month: month
             },
             error: function(event){
                 alert("<%= _('Communication failure.')%>");
@@ -53,6 +40,5 @@
                 $j('#statistics_history').html(request).highlight();
             }
         });
-        return false;
-    });
+    };
 <% end -%>

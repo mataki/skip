@@ -25,7 +25,7 @@
                :link_elem_proc => lambda { |object|
       result = ""
       result << content_tag(:td, link_to(_("Edit"), edit_admin_user_profile_master_path(object)) )
-      result << content_tag(:td, link_to(_("Destroy"), object, {:confirm => _('このプロフィール項目を登録したユーザが存在する場合、その登録情報も同時に削除されます。このプロフィール項目を削除しても宜しいですか?'), :method => :delete}) )
+      result << content_tag(:td, link_to(_("Destroy"), object, {:confirm => _('Related user input will also be deleted when you delete this profile item. Are you sure to proceed?'), :method => :delete}) )
       result
     }
              }

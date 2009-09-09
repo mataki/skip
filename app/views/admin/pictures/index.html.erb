@@ -1,0 +1,35 @@
+<%= render :partial => '/admin/contents_left' %>
+<% content_for :topic_path do -%>
+<%= render :partial => '/admin/shared/topic_path' %>
+<% end -%>
+<% content_for :contents_right do -%>
+<div class="box tabular">
+  <%= render :partial => '/admin/search_box', :locals => { :class_name => 'Admin::User' } %>
+  <%= render(
+    :partial => '/admin/shared/sortable_table',
+    :locals => {
+      :columns => %w[name picture_data picture_name],
+      :disp_columns_proc => lambda do |object, column|
+        case column
+        when 'picture_data'
+          user_link_to_with_portrait object
+        when 'picture_name'
+          h(object.picture.name) if object.picture
+        else
+          object.send(column.to_sym)
+        end
+      end,
+      :objects => @users,
+      :class_name => 'Admin::User',
+      :link_elem_size => 2,
+      :link_elem_proc => lambda { |object|
+        result = ""
+        result << content_tag(:td, link_to(_("Edit"), edit_admin_user_picture_path(object)) ) if object.picture
+        result << content_tag(:td, link_to(_('New'), new_admin_user_picture_path(object)) ) unless object.picture
+        result << content_tag(:td, link_to(_("Destroy"), object.picture, {:confirm => _('Are you sure?'), :method => :delete}) )
+        result
+      }
+    }) %>
+</div>
+<br />
+<% end -%>

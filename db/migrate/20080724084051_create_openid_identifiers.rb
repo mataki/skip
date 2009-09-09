@@ -40,4 +40,6 @@ class CreateOpenidIdentifiers < ActiveRecord::Migration
 
     drop_table :openid_identifiers
   end
+
+  class Account < ActiveRecord::Base;end
 end

@@ -7,7 +7,7 @@
   <p>
   <input type="text" id="publication_name" style="background-color: #f0f0ff; border: none; color: blue;" disabled="disabled">
   <input type="button" value="追加" id="btn_add_publication_symbol"><br/>
-  <p><%= _('(Please input like "uid:nickname", "gid:group_name" when 直接指定.また漢字氏名、部署による部分検索も可能です。ex:山田、総務)[FIXME]') %></p>
+  <p><%= _("((Enter in \"uid:Nickname\" or \"gid:Group Name\" format when you want to specify directly. Partial match search is also available for name and department. e.g. Yamada, administration)") %></p>
 </div>
 
 <% content_for :javascript_initializers do -%>
@@ -116,7 +116,7 @@ if(edit_checkbox) {
         var symbol = $j("#publication_symbol").val();
         var name = $j("#publication_name").val();
 
-        var validReg = /(u|g|e)id:[a-zA-Z0-9\-_]*$/
+        var validReg = /(u|g)id:[a-zA-Z0-9\-_\.]*$/
         if (!validReg.test(symbol)) {
             alert("<%= _('Invalid input format. Should be in uid:xxxxxx format.')%>");
             return

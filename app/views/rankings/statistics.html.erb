@@ -33,7 +33,7 @@
         <% count_value = @site_count[item[:category]] -%>
     <div class="statistics_line">
       <div class="statistics_desc"><%= icon_tag 'group' %>&nbsp;&nbsp;<%= item[:desc] %></div>
-      <div class="statistics_value"><%= count_value %>人</div>
+      <div class="statistics_value"><%= n_("%{count} user", "%{count} users", count_value) % {:count => count_value} %></div>
       <div class="statistics_menu" style="margin-left: 10px;"> - <%= (count_value.prec_f*10000.prec_f / user_count.prec_f).round / 100.prec_f %>%</div>
     </div>
     <div style="clear: left"></div>

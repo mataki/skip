@@ -15,14 +15,14 @@ describe QuotaValidation do
     describe "ファイルサイズが0の場合" do
       it "エラーが追加されること" do
         @muf.stub!(:size).and_return(0)
-        @vf.errors.should_receive(:add_to_base).with('存在しないもしくはサイズ０のファイルはアップロードできません。')
+        @vf.errors.should_receive(:add_to_base).with('Nonexistent or empty files are not accepted for uploading.')
         @vf.valid_size_of_file(@muf)
       end
     end
     describe "ファイルサイズが最大値を超えている場合" do
       it "エラーが追加されること" do
         @muf.stub!(:size).and_return(SkipEmbedded::InitialSettings['max_share_file_size'].to_i + 100)
-        @vf.errors.should_receive(:add_to_base).with("#{SkipEmbedded::InitialSettings['max_share_file_size'].to_i/1.megabyte}Mバイト以上のファイルはアップロードできません。")
+        @vf.errors.should_receive(:add_to_base).with("Files larger than #{SkipEmbedded::InitialSettings['max_share_file_size'].to_i/1.megabyte}MBytes are not permitted.")
         @vf.valid_size_of_file(@muf)
       end
     end
@@ -34,7 +34,7 @@ describe QuotaValidation do
         @muf.stub!(:size).and_return(101)
         owner_symbol = "git:hoge"
         QuotaValidation::FileSizeCounter.should_receive(:per_owner).with(owner_symbol).and_return(SkipEmbedded::InitialSettings['max_share_file_size_per_owner'].to_i - 100)
-        @vf.errors.should_receive(:add_to_base).with("共有ファイル保存領域の利用容量が最大値を越えてしまうためアップロードできません。")
+        @vf.errors.should_receive(:add_to_base).with("Upload denied due to excess of assigned shared files disk capacity.")
         @vf.valid_max_size_per_owner_of_file(@muf, owner_symbol)
       end
     end
@@ -45,7 +45,7 @@ describe QuotaValidation do
       it "エラーが追加されること" do
         @muf.stub!(:size).and_return(101)
         QuotaValidation::FileSizeCounter.should_receive(:per_system).and_return(SkipEmbedded::InitialSettings['max_share_file_size_of_system'].to_i - 100)
-        @vf.errors.should_receive(:add_to_base).with('システム全体における共有ファイル保存領域の利用容量が最大値を越えてしまうためアップロードできません。')
+        @vf.errors.should_receive(:add_to_base).with('Upload denied due to excess of system wide shared files disk capacity.')
         @vf.valid_max_size_of_system_of_file(@muf)
       end
     end

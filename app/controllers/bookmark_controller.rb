@@ -15,9 +15,11 @@
 
 require 'uri'
 class BookmarkController < ApplicationController
+  include UserLayoutModule
   verify :method => :post, :only => [:update, :destroy, :ado_set_stared ], :redirect_to => { :action => :show }
 
   before_filter :check_params, :only => [:new, :edit]
+  before_filter :load_user, :only => [:list]
 
   protect_from_forgery :except => [:new]
 
@@ -33,7 +35,7 @@ class BookmarkController < ApplicationController
              :layout => "subwindow"
            })
   rescue Bookmark::InvalidMultiByteURIError => e
-    flash[:error] = _('URLの形式が不正です。')
+    flash[:error] = _('URL format invalid.')
     redirect_to root_url
   end
 
@@ -49,7 +51,7 @@ class BookmarkController < ApplicationController
              :layout => "dialog"
            })
   rescue Bookmark::InvalidMultiByteURIError => e
-    render :text => _('URLの形式が不正です。')
+    render :text => _('URL format invalid.')
   end
 
   # ブックマークの更新（存在しない場合は作成）
@@ -95,13 +97,13 @@ class BookmarkController < ApplicationController
 
     render :partial => "system/error_messages_for", :locals=> { :messages => messages }
   rescue Bookmark::InvalidMultiByteURIError => e
-    render :partial => "system/error_messages_for", :locals=> { :messages => [_('URLの形式が不正です。')] }
+    render :partial => "system/error_messages_for", :locals=> { :messages => [_('URL format invalid.')] }
   end
 
   def ado_get_title
     render :text => Bookmark.get_title_from_url(Bookmark.unescaped_url(params[:url]))
   rescue Bookmark::InvalidMultiByteURIError => e
-    render :text => _('URLの形式が不正です。'), :status => :bad_request
+    render :text => _('URL format invalid.'), :status => :bad_request
   end
 
   # tab_menu
@@ -140,24 +142,24 @@ class BookmarkController < ApplicationController
 
   #ユーザのブックマークコメント一覧表示(ユーザのページからのリンクでくる)
   def list
-    redirect_to_with_deny_auth and return if not parent_controller
+    @main_menu = user_main_menu @user
+    @title = user_title @user
+    @tab_menu_source = user_tab_menu_source @user
+    @tab_menu_option = { :uid => @user.uid }
 
-    @main_menu = parent_controller.send!(:main_menu)
-    @title = parent_controller.send!(:title)
-    @tab_menu_source = parent_controller.send!(:tab_menu_source)
-    @tab_menu_option = parent_controller.send!(:tab_menu_option)
-
-    params[:user_id] = parent_controller.params[:user_id]
-    params[:page] = parent_controller.params[:page]
-    params[:keyword] = parent_controller.params[:keyword]
-    params[:category] = parent_controller.params[:category]
-    params[:type] = parent_controller.params[:type]
+    find_params = {
+      :user_id => @user.id,
+      :page => params[:page],
+      :keyword => params[:keyword],
+      :category => params[:category],
+      :type => params[:type]
+    }
 
     #タグ検索用
-    @tags = BookmarkComment.get_tags params[:user_id]
+    @tags = BookmarkComment.get_tags @user.id
 
     #結果表示用
-    conditions = BookmarkComment.make_conditions_for_comment(session[:user_id], params)
+    conditions = BookmarkComment.make_conditions_for_comment(current_user.id, find_params)
     @pages, @bookmark_comments = paginate(:bookmark_comments,
                                           :per_page => 20,
                                           :conditions => conditions,
@@ -170,9 +172,6 @@ class BookmarkController < ApplicationController
         flash.now[:notice] = _('No bookmarks have been registered.')
       end
     end
-
-    params[:controller] = parent_controller.params[:controller]
-    params[:action] = parent_controller.params[:action]
   end
 
   def ado_set_stared
@@ -222,7 +221,7 @@ private
       @bookmark_comment = BookmarkComment.new(:public => true)
 
       unless @bookmark = Bookmark.find_by_url(unescaped_url)
-        @bookmark = Bookmark.new(:url => unescaped_url, :title => params[:title] ? params[:title].toutf8 : '')
+        @bookmark = Bookmark.new(:url => unescaped_url, :title => SkipUtil.toutf8_without_ascii_encoding(params[:title]))
       end
     end
 

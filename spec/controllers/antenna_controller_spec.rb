@@ -33,7 +33,7 @@ describe AntennaController, 'GET ado_add_antenna_item' do
       response.code.should == '400'
     end
     it 'アンテナアイテムが追加できない旨メッセージ表示' do
-      response.body.should == '不正なアンテナが指定されました。'
+      response.body.should == 'Selected antenna invalid.'
     end
   end
   describe '不正なオーナーが指定された場合' do
@@ -45,7 +45,7 @@ describe AntennaController, 'GET ado_add_antenna_item' do
       response.code.should == '400'
     end
     it 'アンテナアイテムが追加できない旨メッセージ表示' do
-      response.body.should == '存在しないオーナーが指定されました。'
+      response.body.should == 'Specified owner inexistent.'
     end
   end
   describe 'アンテナアイテムの追加に成功する場合' do

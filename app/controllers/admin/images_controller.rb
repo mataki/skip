@@ -16,8 +16,6 @@
 class Admin::ImagesController < Admin::ApplicationController
   before_filter :check_params, :only => [:update, :revert]
 
-  N_('Admin::ImagesController|title_logo')
-  N_('Admin::ImagesController|title_logo_description')
   N_('Admin::ImagesController|header_logo')
   N_('Admin::ImagesController|header_logo_description')
   N_('Admin::ImagesController|footer_logo')
@@ -92,7 +90,7 @@ class Admin::ImagesController < Admin::ApplicationController
   end
 
   class LogoImage < BaseImage
-    IMAGE_NAMES = %w(title_logo header_logo).freeze
+    IMAGE_NAMES = %w(header_logo).freeze
     def initialize param = {}
       super
       @content_types = CONTENT_TYPE_IMAGES[:png]
@@ -147,7 +145,6 @@ class Admin::ImagesController < Admin::ApplicationController
       return redirect_to(admin_images_path)
     end
     yield
-    ActionView::Base.computed_public_paths.clear
     flash[:notice] = _('%{target} was successfully saved.' % {:target => s_("Admin::ImagesController|#{params[:target]}")})
     redirect_to admin_images_path
   rescue Errno::EACCES => e

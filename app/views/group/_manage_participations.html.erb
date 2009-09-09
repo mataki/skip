@@ -24,7 +24,7 @@
 
 <% content_for :contents_left do -%>
   <div class="box_space">
-    <div class="box_space_title">管理メニュー</span></div>
+    <div class="box_space_title"><%= _('Admin Menu')%></span></div>
     <div class="box_space_body">
     <ul>
       <% get_manage_menu_items(@menu).each do |menu_item| %>
@@ -99,7 +99,7 @@
             type: 'POST',
             url: url,
             data: { participation_id: participation_id,
-                    authenticity_token: $j('#authenticity_token').val() },
+                    authenticity_token: $j('input[name=authenticity_token]').val() },
             success: function(html) {
                 $j("#flash_message").trigger("notice", "<%= _("Successfully update administrator.") %>");
             }
@@ -114,7 +114,7 @@
             alert('<%= _('Please input valid user or group') %>');
             return;
         }
-        var validReg = /(u|g)id:[a-zA-Z0-9]/
+        var validReg = /(u|g)id:[a-zA-Z0-9\-_\.]*$/
         if (!validReg.test(symbol)) {
             alert("<%= _('Invalid format. Please input like uid:xxxxx') %>");
             return;

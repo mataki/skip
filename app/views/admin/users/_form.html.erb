@@ -4,7 +4,7 @@
   <%= label Admin::UserUid.name, :uid, Admin::Setting.login_account %>
   <% if @user.new_record? -%>
   <%= text_field :user_uid, :uid %>
-  <%= help_icon_tag :content => _('%{login_account}を入力して下さい。') % {:login_account => Admin::Setting.login_account} %>
+  <%= help_icon_tag :content => _('Enter your %{login_account}.') % {:login_account => Admin::Setting.login_account} %>
   <% else -%>
   :<%= h @user.code %>
   <% end -%>
@@ -22,13 +22,13 @@
 <p>
   <%= label Admin::User.name, :status %>
   <% if @user.new_record? -%>
-  :<%= _('User|Status|UNUSED') %>
+  :<%= s_('User|Status|UNUSED') %>
   <% else -%>
   <% unless @user.unused? -%>
   :<%= select :user, :status, Admin::User.status_select.delete_if{|select| select.last == 'UNUSED'} %>
   <%= help_icon Admin::User.name, :status %>
   <% else -%>
-  :<%= _('User|Status|UNUSED') %>
+  :<%= s_('User|Status|UNUSED') %>
   <% end -%>
   <% end %>
 </p>
@@ -55,8 +55,8 @@
 <% if !Admin::Setting.mail_function_setting && @user.active? && login_mode?(:password) -%>
 <p>
   <%= label Admin::User.name, :password %>
-  : [<%= link_to(_('再設定URLを表示する'), issue_password_reset_code_admin_user_path(@user), :class => 'nyroModal') %>]
-  <%= help_icon_tag :content => _('パスワードを再設定するためのURLを表示します。ユーザがパスワードを忘れた場合は、リンクをクリックして表示されるURLをメールでユーザに送信して下さい。') %>
+  : [<%= link_to(_('"Show URL for resetting'), issue_password_reset_code_admin_user_path(@user), :class => 'nyroModal') %>]
+  <%= help_icon_tag :content => _('This will show the URL for resetting the password. Send the URL shown by clicking the link to the user by email.') %>
 </p>
 <% end -%>
 <% unless login_mode?(:password) -%>
@@ -64,7 +64,7 @@
   <%= label Admin::OpenidIdentifier.name, :url %>
   <% if @user.openid_identifiers and @user.openid_identifiers.first %>
   :<%=h @user.openid_identifiers.first.url %>
-  [<%= link_to(_('編集する'), edit_admin_user_openid_identifier_path(@user, @user.openid_identifiers.first)) %>]
+  [<%= link_to(_('Edit'), edit_admin_user_openid_identifier_path(@user, @user.openid_identifiers.first)) %>]
   <% end -%>
 </p>
 <% end -%>

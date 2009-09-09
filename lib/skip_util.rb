@@ -13,8 +13,17 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+require 'kconv'
 class SkipUtil
-  WDAYS = ["日", "月", "火", "水", "木", "金", "土"]
+  GetText.N_("Sun")
+  GetText.N_("Mon")
+  GetText.N_("Tue")
+  GetText.N_("Wed")
+  GetText.N_("Thu")
+  GetText.N_("Fri")
+  GetText.N_("Sat")
+  
+  WDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
 
   def self.split_symbol symbol
     symbol_type = symbol.split(":").first
@@ -41,6 +50,12 @@ class SkipUtil
 
   def self.full_error_messages array
     array.is_a?(Array) ? array.map{ |item| item.errors.full_messages unless item.valid? }.flatten.compact : []
+  end
+
+  def self.toutf8_without_ascii_encoding string
+    if string
+      Kconv.guess(string) == Kconv::ASCII ? string : string.toutf8
+    end
   end
 
   ######################################################################
@@ -91,8 +106,8 @@ class SkipUtil
         image_link << "<param name='movie' value='#{image_url}' />"
         image_link << "</object>"
         image_link << "<div style='text-align: center;'>"
-        image_link << "<a href='javascript: $j(\"#flash#{file_count}\")[0].Play();'>[再生/次へ]</a>"
-        image_link << "<a href='javascript: $j(\"#flash#{file_count}\")[0].Rewind();'>[最初から]</a>"
+        image_link << "<a href='javascript: $j(\"#flash#{file_count}\")[0].Play();'>" + GetText._("[Play/Next]")+ "</a>"
+        image_link << "<a href='javascript: $j(\"#flash#{file_count}\")[0].Rewind();'>" + GetText._("[Rewind]") + "</a>"
         image_link << "</div></div>"
       else
         image_link = "<a href='#{image_url}' class=\"nyroModal zoomable\" ><img src='#{image_url}' "

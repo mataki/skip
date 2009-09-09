@@ -1,10 +1,10 @@
-<h2 class="topix_title"><%= icon_tag('asterisk_orange') -%><%= _("History of %s") % history_title -%></h2>
+<h2 class="topix_title"><%= icon_tag('asterisk_orange') -%><%= _("History of %s") % h(_(SiteCount::STATISTICS_ITEMS[category.to_sym][:desc])) -%></h2>
 
 <div class="monthly_statictics_box">
 <div class="navigate_menu">
-  <%= link_to _('[Prev month]'), '#', :id => "month_link_#{date.to_time.last_month.year}_#{date.to_time.last_month.month}", :class => 'change_month_link' %>
-  <%= link_to _('[This month]'), '#', :id => "month_link_#{Date.today.year}_#{Date.today.month}", :class => 'change_month_link' %>
-  <%= link_to _('[Next month]'), '#', :id => "month_link_#{date.to_time.next_month.year}_#{date.to_time.next_month.month}", :class => 'change_month_link' %>
+  <%= link_to _('[Prev month]'), '#', :class => 'change_month_link prev' %>
+  <%= link_to _('[This month]'), '#', :class => 'change_month_link current' %>
+  <%= link_to _('[Next month]'), '#', :class => 'change_month_link next' %>
 </div><!-- navigate_menu -->
 
 <div style="border:1px solid #aaa;background-color:gray;color:white;margin-top:3px;font-weight:bold;"><%= _("History of %s") % date.strftime(_('%b %Y')) %></div>
@@ -56,26 +56,8 @@ $j(function() {
         return false;
     });
 
-    // 各月の推移に切り替える
-    $j('.change_month_link')
-    .click(function() {
-        var url = relative_url_root + '/rankings/ado_statistics_history';
-        $j.ajax({
-            url: url,
-            data: { type: 'monthly',
-                    category: '<%= category %>',
-                    desc: '<%= history_title %>',
-                    year: this.id.split('_')[2],
-                    month: this.id.split('_')[3]
-            },
-            error: function(event){
-                alert("<%= _('Communication failure.')%>");
-            },
-            success: function(request) {
-                $j('#statistics_history').html(request).highlight();
-            }
-        });
-        return false;
-    });
+    $j('.change_month_link.next').data('data', { category: '<%= h(category) %>', year: '<%= date.to_time.next_month.year %>', month: '<%= date.to_time.next_month.month %>' })
+    $j('.change_month_link.current').data('data', { category: '<%= h(category) %>', year: '<%= Time.now.year %>', month: '<%= Time.now.month %>' })
+    $j('.change_month_link.prev').data('data', { category: '<%= h(category) %>', year: '<%= date.to_time.last_month.year %>', month: '<%= date.to_time.last_month.month %>' })
 });
 </script>

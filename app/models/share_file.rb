@@ -54,7 +54,7 @@ class ShareFile < ActiveRecord::Base
 
   def validate
     Tag.validate_tags(category).each{ |error| errors.add(:category, error) }
-    errors.add_to_base _('ご指定の操作は実行できません。') unless updatable?
+    errors.add_to_base _('Operation inexecutable.') unless updatable?
   end
 
   def validate_on_create
@@ -388,7 +388,7 @@ class ShareFile < ActiveRecord::Base
   class GroupOwner < Owner
     def readable?
       if group = Group.active.find_by_gid(@share_file.owner_symbol_id)
-        participating = group.participating?(@user)
+        participating = @user.participating_group?(group)
         if participating && (group.administrator?(@user) || @user.id == @share_file.user_id)
           true
         else
@@ -409,7 +409,7 @@ class ShareFile < ActiveRecord::Base
 
     def updatable?
       if group = Group.active.find_by_gid(@share_file.owner_symbol_id)
-        group.participating?(@user) && (group.administrator?(@user) || @user.id == @share_file.user_id)
+        @user.participating_group?(group) && (group.administrator?(@user) || @user.id == @share_file.user_id)
       else
         false
       end

@@ -2,20 +2,13 @@
 // 1. 共通
 // ============================================================
 @import skip_embedded/skip_embedded.sass
-@import sprites.sass
+@import rounded_button.sass
 
 // jquery.ui.tabsでタブ折り返し時にliがulをはみ出してしまう対策
 // ------------------------------------------------------------
 ul.ui-tabs-nav
   :height 100%
   +clearfix
-
-// ui.theme.cssでタブ内部のaタグのスタイルが上書きされないように
-// ------------------------------------------------------------
-#tabs .ui-widget-content a
-  +default_link
-  &:visited
-    +link_visited_text
 
 // jqueryの画像拡大をする(zoomable)際にマウスオーバーで虫眼鏡を表示する
 // ------------------------------------------------------------
@@ -178,6 +171,7 @@ div.box.message
   :padding 3px 10px
   :background-color #f0f0ff
   :border 1px dashed #ffc000
+  :width auto
 
 // TODO div.box.messageに移行してから削除する
 div.desc
@@ -208,14 +202,6 @@ h2.topix_title
   :margin-bottom 5px
 div.topix_body
   :margin 0px 0px 10px 5px
-  a:visited
-    :color purple
-  // ボックス内でのタグ一覧表示
-  a.list_tag
-    :font-size = !small_font_size
-    :color #8080FF
-    &:visited
-      :color #8080FF
   .topix_line
     :border-bottom = !base_dotted_border
     :margin 3px 0 1px 0
@@ -281,6 +267,19 @@ div.topix_body
     :overflow hidden
     :text-overflow ellipsis
     :width 50%
+  a
+    :color #0080DD
+  // リスト表示中の記事へのリンク
+  a.entry
+    +default_link
+    &:visited
+      +link_visited_text
+  // リスト表示中のタグへのリンク
+  a.tag
+    :font-size = !small_font_size
+    :color #8080FF
+    &:visited
+      :color #8080FF
 
 // タグクラウド
 // ------------------------------------------------------------
@@ -688,7 +687,7 @@ div.bookmark_space
     :border-bottom = !base_dashed_border
     :padding 0
     :background-color = !base_background_color
-    +base_text
+    +middle_text
     span.other_user_count
       :font-size = !small_font_size
   div.header
@@ -844,6 +843,7 @@ table.ranking_square
   :border #C6C7C6 1px solid
   :font-size 12px
   :table-layout auto
+  :width 600px
   .title
     :margin 1px
     :padding 5px

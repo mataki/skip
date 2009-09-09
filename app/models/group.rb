@@ -14,7 +14,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Group < ActiveRecord::Base
-  include LogicalDestroyable
+  include SkipEmbedded::LogicalDestroyable
 
   has_many :group_participations, :dependent => :destroy
   belongs_to :group_category
@@ -217,10 +217,6 @@ class Group < ActiveRecord::Base
     options[:conditions] = conditions unless conditions[0].empty?
     options[:include] = :group_participations
     options
-  end
-
-  def participating?(user)
-    group_participations.find_by_user_id_and_waiting(user.id, false) ? true : false
   end
 
   def administrator?(user)

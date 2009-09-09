@@ -22,7 +22,11 @@ def response_body_text(source = response.body)
   Nokogiri::HTML(source).text
 end
 
-When /言語は"(.*)"/ do |lang|
+When /^"(.*)"にアクセスする$/ do |page_name|
+  visit path_to(page_name)
+end
+
+When /^言語は"(.*)"$/ do |lang|
   header("ACCEPT_LANGUAGE", lang)
 end
 
@@ -86,6 +90,9 @@ Then /^"(.*)"がチェックされていること$/ do |label|
   field_labeled(label).should be_checked
 end
 
+Then /^"(.*)"がチェックされていないこと$/ do |label|
+  field_labeled(label).should_not be_checked
+end
 
 Then /^"(.*)"が選択されていること$/ do |label|
   field_labeled(label).should be_checked
@@ -103,4 +110,8 @@ end
 When /^デバッガで止める$/ do
   require "ruby-debug"
   debugger
+end
+
+When /^"([^\"]*)"としてファイル"([^\"]*)"をContent\-Type"([^\"]*)"として添付する$/ do |field, path, content_type|
+  attach_file(field, path, content_type)
 end

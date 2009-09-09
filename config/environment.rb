@@ -4,18 +4,18 @@
 # (Use only when you can't set environment variables through your web/app server)
 ENV['RAILS_ENV'] ||= 'production'
 
-RAILS_GEM_VERSION = '2.1.2' unless defined? RAILS_GEM_VERSION
+RAILS_GEM_VERSION = '2.3.2' unless defined? RAILS_GEM_VERSION
 
 SKIP_VERSION = '1.1.0'
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
 
+# TODO: lighttpdで動作するとカレントディレクトリがpublicになりgettext-2.0.4がmoファイルを取得できず正しく動作しない。
+#       gettext-rails側などで、根本解決できた場合に削除する
+Dir.chdir(RAILS_ROOT)
 
 Rails::Initializer.run do |config|
-  # TODO: Rails 2.3 にバージョンアップする際に独自でyamlをパースすることを無くす
-  require 'yaml'
-  config.action_controller.session = YAML.load(File.read(RAILS_ROOT + "/config/initial_settings.yml"))[RAILS_ENV]['session']
   # config.action_controller.session_store = :p_store
 
   # Skip frameworks you're not going to use
@@ -47,10 +47,12 @@ Rails::Initializer.run do |config|
   # config.active_record.schema_format = :ruby
 
   # See Rails::Configuration for more options
-  config.gem 'gettext',  :lib => 'gettext/rails', :version => '1.93.0'
-  config.gem "json", :lib => "json/add/rails"
   config.gem "fastercsv"
-  config.gem 'openskip-skip_embedded', :lib => 'skip_embedded', :version => '>=0.9.9', :source => 'http://gems.github.com'
+  config.gem "json", :lib => "json/add/rails"
+  config.gem 'gettext_rails'
+  config.gem 'gettext_activerecord'
+  config.gem 'locale_rails'
+  config.gem 'openskip-skip_embedded', :lib => 'skip_embedded', :version => '>=0.9.17', :source => 'http://gems.github.com'
 end
 
 menu_btns = [
@@ -99,7 +101,7 @@ menu_btns = [
 
 menu_btns << { :img_name => "page_find",
                :id => "btn_search",
-               :name => GetText.N_("Search for Data"),
+               :name => GetText.N_("Full-text Search"),
                :url => {:controller => '/search', :action => 'full_text_search' },
                :desc => GetText.N_("Search contents of the site by keyword.") } if SkipEmbedded::InitialSettings['full_text_search_setting']
 MENU_BTNS = menu_btns

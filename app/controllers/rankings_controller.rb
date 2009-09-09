@@ -49,13 +49,13 @@ class RankingsController < ApplicationController
       @rankings = Ranking.total(params[:content_type])
       return render(:text => '', :status => :not_found) if @rankings.empty?
     else
-      return render(:text => _('不正なリクエストです。'), :status => :bad_request) if params[:month].blank?
+      return render(:text => _('Invalid request.'), :status => :bad_request) if params[:month].blank?
       begin
-        Time.local(params[:year], params[:month])
-        @rankings = Ranking.monthly(params[:content_type], params[:year], params[:month])
+        year, month = validate_time(params[:year], params[:month])
+        @rankings = Ranking.monthly(params[:content_type], year, month)
         return render(:text => '', :status => :not_found) if @rankings.empty?
       rescue => e
-        return render(:text => _('不正なリクエストです。'), :status => :bad_request)
+        return render(:text => _('Invalid request.'), :status => :bad_request)
       end
     end
     render :layout => false
@@ -69,9 +69,9 @@ class RankingsController < ApplicationController
     year = params[:year].blank? ? yesterday.year : params[:year]
     month = params[:month].blank? ? yesterday.month : params[:month]
     begin
-      time = Time.local(year, month)
-      @year = time.year
-      @month = time.month
+      year, month = validate_time(year, month)
+      @year = year
+      @month = month
       @dates = Ranking.extracted_dates
     rescue => e
       flash.now[:error] = _('Invalid parameter(s) detected.')
@@ -111,30 +111,26 @@ class RankingsController < ApplicationController
 
   # ajax_action
   def ado_statistics_history
-    date = Date.new(params[:year].to_i, params[:month].to_i)
-    if params[:type] == "monthly"
-      site_counts = SiteCount.find(:all,
-                                   :conditions => ["DATE_FORMAT(created_on, '%Y-%m') = ?", date.strftime('%Y-%m')]) #"
-      values = site_counts.map {|site_count| site_count[params[:category]] }
-      max_value = values.max
-      min_value = values.min
-      render :partial => 'monthly_history',
-             :locals => {:history_title => params[:desc],
-                         :site_counts => site_counts,
-                         :category => params[:category],
-                         :date => date,
-                         :max_value => max_value,
-                         :min_value => min_value},
-             :layout => false
+    unless SiteCount::STATISTICS_KEYS.include? params[:category]
+      return head(:bad_request)
     end
+    # parse出来ないケースで例外を起こして現在時刻を設定するため
+    date = Time.parse("#{params[:year]}/#{params[:month]}", 0) rescue Time.now
+    site_counts = SiteCount.all :conditions => ["DATE_FORMAT(created_on, '%Y-%m') = ?", date.strftime('%Y-%m')]
+    values = site_counts.map { |site_count| site_count[params[:category]] }
+    render :partial => 'monthly_history',
+           :locals => { :site_counts => site_counts,
+                        :category => params[:category],
+                        :date => date,
+                        :max_value => values.max,
+                        :min_value => values.min },
+           :layout => false
   end
 
   def bookmark
-    @target_date = Date.today
-    if params[:target_date]
-      date_array =  params[:target_date].split('-')
-      @target_date = Date.new(date_array[0].to_i, date_array[1].to_i, date_array[2].to_i)
-    end
+    # parse出来ないケースで例外を起こして現在時刻を設定するため
+    @target_date = Time.parse(params[:target_date], 0) rescue Time.now
+
     popular_bookmarks = PopularBookmark.find(:all,
                                              :conditions => ["date = ?", @target_date],
                                              :order =>'count DESC' ,
@@ -151,7 +147,7 @@ class RankingsController < ApplicationController
       end
       @last_updated = popular_bookmarks.first.created_on.strftime("%Y/%m/%d %H:%M")
     else
-      flash.now[:notice] = _('該当のブックマークがありません。')
+      flash.now[:notice] = _('No matched bookmark.')
     end
   end
 
@@ -173,5 +169,15 @@ class RankingsController < ApplicationController
       result[site_count.created_on.day] = 1
     end
     return result
+  end
+
+  def validate_time(year, month)
+    time = Time.local(year, month)
+    max_year = 2038
+    min_year = 2000
+    year = year.to_i
+    raise ArgumentError, "year must be < #{max_year}." if year >= max_year
+    raise ArgumentError, "year must be >= #{min_year}." if year < min_year
+    [time.year, time.month]
   end
 end

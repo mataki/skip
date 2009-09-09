@@ -85,7 +85,7 @@ module CalendarHelper
 </tr>
 <tr class="#{ options[:day_name_class]}">
 EOF
-    [_('Sun'), _('Mon'), _('Tue'), _('Wed'), _('Thu'), _('Fri'), _('Sat')].each {|d| cal << "<th>#{d[options[:abbrev]]}</th>"}
+    [s_('CalendarHelper|Sun'), s_('CalendarHelper|Mon'), s_('CalendarHelper|Tue'), s_('CalendarHelper|Wed'), s_('CalendarHelper|Thu'), s_('CalendarHelper|Fri'), s_('CalendarHelper|Sat')].each {|d| cal << "<th>#{d[options[:abbrev]]}</th>"}
     cal << "</tr>
 </thead>
 <tbody>

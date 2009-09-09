@@ -109,4 +109,21 @@ var platform_url_root = '#{root_url.chop}';
       "CKEDITOR.replace('#{target}', #{default_opt.to_json});"
     end
   end
+
+  # Google Analytics
+  def google_analytics_tag
+    unless (ga_code = SkipEmbedded::InitialSettings['google_analytics']).blank?
+    <<-EOS
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("#{ga_code}");
+pageTracker._initData();
+pageTracker._trackPageview();
+</script>
+    EOS
+    end
+  end
 end

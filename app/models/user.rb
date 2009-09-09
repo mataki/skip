@@ -24,7 +24,7 @@ class User < ActiveRecord::Base
   attr_protected :admin, :status
 
   has_many :group_participations, :dependent => :destroy
-  has_many :pictures, :dependent => :destroy
+  has_one :picture, :dependent => :destroy
   has_many :user_profile_values, :dependent => :destroy
   has_many :tracks, :order => "updated_on DESC", :dependent => :destroy
   has_one  :user_access, :class_name => "UserAccess", :dependent => :destroy
@@ -72,6 +72,8 @@ class User < ActiveRecord::Base
   N_('User|Locked|true')
   N_('User|Locked|false')
 
+  N_('User|Uid')
+
   ACTIVATION_LIFETIME = 5
 
   named_scope :admin, :conditions => {:admin => true}
@@ -106,8 +108,8 @@ class User < ActiveRecord::Base
 
   def validate
     if password_required?
-      errors.add(:password, _('はログインIDと同一の値は登録できません。')) if self.uid == self.password
-      errors.add(:password, _('は前回と同一の値は登録できません。')) if self.crypted_password_was == encrypt(self.password)
+      errors.add(:password, _('shall not be the same with login ID.')) if self.uid == self.password
+      errors.add(:password, _('shall not be the same with the previous one.')) if self.crypted_password_was == encrypt(self.password)
       errors.add(:password, Admin::Setting.password_strength_validation_error_message) unless Admin::Setting.password_strength_regex.match(self.password)
     end
   end
@@ -196,7 +198,8 @@ class User < ActiveRecord::Base
 
   # 登録済みユーザのユーザID(ログインID,ユーザ名)をもとにユーザを検索する
   def self.find_by_uid(code)
-    find(:first, :conditions => ['user_uids.uid = ?', code], :include => :user_uids)
+    user = find(:first, :conditions => ['user_uids.uid = ?', code], :include => :user_uids)
+    user ? user.reload : user
   end
 
   def change_password(params = {})
@@ -276,8 +279,12 @@ class User < ActiveRecord::Base
   end
 
   def uid
+    username || code
+  end
+
+  def username
     user_uid = user_uids.detect { |u| u.uid_type == UserUid::UID_TYPE[:username] }
-    user_uid ? user_uid.uid : code
+    user_uid ? user_uid.uid : nil
   end
 
   def code
@@ -461,6 +468,11 @@ class User < ActiveRecord::Base
 
   def default_publication_type
     'public'
+  end
+
+  def participating_group? group
+    raise ArgumentError, 'group_or_gid is invalid' unless group.is_a?(Group)
+    self.group_symbols.include? group.symbol
   end
 
 protected

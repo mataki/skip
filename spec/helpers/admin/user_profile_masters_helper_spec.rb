@@ -24,7 +24,7 @@ describe Admin::UserProfileMastersHelper do
 
   describe "option_values_help_icon_hash_as_json" do
     it "正しい形式のjsonが返ってくること" do
-      helper.option_values_help_icon_hash_as_json.should be_include("Admin::UserProfileMaster|Option values description|check_box")
+      helper.option_values_help_icon_hash_as_json.should be_include("Provide the candidates in comma separated format (e.g. Movie,Sports,Internet).")
     end
   end
 

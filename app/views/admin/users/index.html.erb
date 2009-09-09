@@ -14,27 +14,29 @@
                :hide_columns => %w(locked issued_at last_authenticated_at password_expires_at),
                :disp_columns_proc => lambda do |object,column|
       case column
+      when "uid"
+        h(object.username)
       when "status"
         if object.unused?
           if !object.activation_token.nil? and object.within_time_limit_of_activation_token?
-            confirm_link = link_to( _('確認'), show_signup_url_admin_user_path(object), :class => 'nyroModal')
-            _('利用開始待ち') + "(#{confirm_link})"
+            confirm_link = link_to( _('Confirm'), show_signup_url_admin_user_path(object), :class => 'nyroModal')
+            _('To be activated') + "(#{confirm_link})"
           else
-            issue_link_str = Admin::Setting.mail_function_setting ? _('利用開始通知') : _('利用開始待ちにする')
+            issue_link_str = Admin::Setting.mail_function_setting ? _('Notify activation') : _('Prepare for activation')
             issue_link = link_to(issue_link_str, issue_activation_code_admin_user_path(object), :class => 'issue_activation_code_link')
             if login_mode?(:password)
-              _("User|Status|#{object.status}") + "(#{issue_link})"
+              s_("User|Status|#{object.status}") + "(#{issue_link})"
             else
-              _("User|Status|#{object.status}")
+              s_("User|Status|#{object.status}")
             end
           end
         else
-          _("User|Status|#{object.status}")
+          s_("User|Status|#{object.status}")
         end
       when "admin"
-        _("User|Admin|#{object.admin}")
+        s_("User|Admin|#{object.admin}")
       when "locked"
-        _("User|Locked|#{object.locked}")
+        s_("User|Locked|#{object.locked}")
       when "issued_at", "last_authenticated_at", "password_expires_at"
         time = object.send(column.to_sym)
         time.blank? ? '' : time.strftime("%Y/%m/%d %H:%M:%S")
@@ -53,13 +55,16 @@
     }
               }
   -%>
-  <%= submit_tag Admin::Setting.mail_function_setting ? _('Send activate email to selected users') : _('Issue activation url for selected users') %>
+  <%= submit_tag Admin::Setting.mail_function_setting ? _('Send activation email to selected users') : _('Issue activation url for selected users') %>
   <% end -%>
 </div>
+<% footer_links = [] -%>
 <% if login_mode?(:password) -%>
-<%= link_to _('New %{model}') % {:model => _('user')}, new_admin_user_path %> |
-<%= link_to _('New users from CSV'), import_new_admin_user_path %>
+<% footer_links << link_to(_('New %{model}') % {:model => _('user')}, new_admin_user_path) %>
+<% footer_links << link_to(_('New users from CSV'), import_new_admin_user_path) %>
 <% end -%>
+<% footer_links << link_to(_('Listing %{model}') % {:model => _('picture')}, admin_pictures_path) %>
+<%= footer_links.join(' | ') %>
 <% end -%>
 
 <% content_for :javascript_initializers do -%>
@@ -70,6 +75,6 @@
     };
     $j('.issue_activation_code_link')
     .click(function() {
-        return confirm('<%= Admin::Setting.mail_function_setting ? _('対象ユーザに利用開始通知メールを送信しますが宜しいですか?') : _('利用開始URLを発行します。次の画面で確認リンクを押して表示されるURLをユーザに送信してください。') %>');
+        return confirm('<%= Admin::Setting.mail_function_setting ? _('Are you sure to send activation email to target user?') : _('Activation URL is to be issued. Send the URL shown by clicking the confirmation link in the next screen to the user.') %>');
     });
 <% end -%>

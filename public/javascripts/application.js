@@ -82,6 +82,12 @@ $j(function(){
      */
     $j('select.select_navi').dropdownNavigation();
 
+
+    /*
+     * プロフィール画像のサイズ調整
+     */
+    $j('img.fit_image').fitimage({ placeholder: relative_url_root + '/images/skip/jquery/fitimage/spacer.gif' });
+
     /*
      * カレンダーのロード
      */
@@ -432,33 +438,6 @@ $j(function(){
         var currentMinute = currentDatetime.getMinutes();
         if (currentMinute < 10) currentMinute = "0" + currentMinute;
         minute_obj[0].value = currentMinute;
-    };
-
-    fitImageSize = function(jObj, max_width, max_height) {
-        var img = new Image();
-        img.src = jObj.attr('src');
-
-        if (max_height > max_width) {
-            if (img.width > max_width) {
-                value = img.height / (img.width/max_width);
-                if (value < 1)  { value = 1; }
-                jObj.attr({ height: value, width: max_width });
-            } else if (img.height > max_height) {
-                value = img.width / (img.height/max_height);
-                if (value < 1) { value = 1; }
-                jObj.attr({ height: max_height, width: value });
-            }
-        } else {
-            if (img.height >= max_height) {
-                value = img.width / (img.height/max_height);
-                if (value < 1) { value = 1; }
-                jObj.attr({ height: max_height, width: value });
-            } else if (img.width > max_width) {
-                value = img.height / (img.width/max_width);
-                if (value < 1)  { value = 1; }
-                jObj.attr({ height: value, width: max_width });
-            }
-        }
     };
 
     /*

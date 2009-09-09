@@ -16,10 +16,10 @@
 class Message < ActiveRecord::Base
 
   MESSAGE_TYPES = {
-    "COMMENT"   => { :name => _("New Comment"), :message => _("You recieved a comment on your entry [?]!"), :icon_name => 'comments'},
-    "CHAIN"     => { :name => _("New Introduction"), :message => _("You received an introduction!"), :icon_name => 'user_comment'},
-    "TRACKBACK" => { :name => _("New Entry"), :message => _("There is a new entry talking about your entry [?]!"), :icon_name => 'report_go'},
-    "POSTIT"    => { :name => _("New Bookmark"), :message => _("New bookmark in your profile!"), :icon_name => 'tag_blue'}
+    "COMMENT"   => { :name => N_("New Comment"), :message => N_("You recieved a comment on your entry [?]!"), :icon_name => 'comments'},
+    "CHAIN"     => { :name => N_("New Introduction"), :message => N_("You received an introduction!"), :icon_name => 'user_comment'},
+    "TRACKBACK" => { :name => N_("New Entry"), :message => N_("There is a new entry talking about your entry [?]!"), :icon_name => 'report_go'},
+    "POSTIT"    => { :name => N_("New Bookmark"), :message => N_("New bookmark in your profile!"), :icon_name => 'tag_blue'}
   }
 
   def self.save_message(message_type, user_id, link_url, title = nil)
@@ -27,7 +27,8 @@ class Message < ActiveRecord::Base
     create( :user_id => user_id,
             :message_type => message_type,
             :link_url => link_url,
-            :message => title ? MESSAGE_TYPES[message_type][:message].gsub('?', title) : MESSAGE_TYPES[message_type][:message])
+            # FIXME: 保存時にメッセージを国際化しているので、登録した人の言語でメッセージが登録され、実際に見るひとの言語でないものの可能性がある
+            :message => title ? _(MESSAGE_TYPES[message_type][:message]).gsub('?', title) : _(MESSAGE_TYPES[message_type][:message]))
   end
 
 

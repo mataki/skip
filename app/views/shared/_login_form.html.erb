@@ -21,7 +21,7 @@
     <tr valign="top"><td><%= checkid_request.identity %><%= hidden_field_tag 'login[key]', extract_login_from_identifier(checkid_request.identity) %></td></tr>
     <% else %>
     <tr valign="top">
-      <td><label for="login_key"><span style="font-weight: bold;"><%= h Admin::Setting.login_account %> or <%= _('User|Email') %></span></label></td>
+      <td><label for="login_key"><span style="font-weight: bold;"><%= h Admin::Setting.login_account %> or <%= s_('User|Email') %></span></label></td>
     </tr>
     <tr valign="top">
       <td><%= text_field 'login', 'key', :size => 35, :autocomplete => :on, :style => "font-family:Tahoma", :tabindex => "1" %></td>
@@ -55,9 +55,9 @@
     <tr valign="top">
       <td>
         <ul style="list-style-type:none; margin-bottom: 5px;">
-          <li><%= link_to image_tag('idmixijp.gif') + _("Login with mixi ID"), :action => :login, :openid_url => "mixi.jp" %></li>
-          <li><%= link_to image_tag('meyahoocom.gif') + _("Login with Yahoo! JAPAN ID"), :action => :login, :openid_url => "yahoo.co.jp" %></li>
-          <li><%= link_to image_tag('wwwgooglecom.gif') + _("Login with Google"), :action => :login, :openid_url => "http://www.google.com/accounts/o8/id" %></li>
+          <li><%= link_to image_tag('idmixijp.gif') + _("Login with mixi ID"), {:action => :login, :openid_url => "mixi.jp"}, :method => :post %></li>
+          <li><%= link_to image_tag('meyahoocom.gif') + _("Login with Yahoo! JAPAN ID"), {:action => :login, :openid_url => "yahoo.co.jp"}, :method => :post %></li>
+          <li><%= link_to image_tag('wwwgooglecom.gif') + _("Login with Google"), {:action => :login, :openid_url => "http://www.google.com/accounts/o8/id"}, :method => :post %></li>
         </ul>
       </td>
     </tr>

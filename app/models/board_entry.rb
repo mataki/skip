@@ -69,7 +69,6 @@ class BoardEntry < ActiveRecord::Base
   def before_save
     square_brackets_tags
     parse_symbol_link
-    self.contents = CGI.unescapeHTML(self.contents) if self.editor_mode == 'richtext'
   end
 
   def after_save
@@ -78,6 +77,10 @@ class BoardEntry < ActiveRecord::Base
 
   def after_create
     BoardEntryPoint.create(:board_entry_id=>id)
+  end
+
+  def self.unescape_href text
+    text.gsub(/<a[^>]*href=[\'\"](.*?)[\'\"]>/){ CGI.unescapeHTML($&) } if text
   end
 
   def permalink
@@ -282,8 +285,8 @@ class BoardEntry < ActiveRecord::Base
     return tags.uniq.first(40)
   end
 
-  def self.get_categories_hash(login_user_symbols, options={})
-    find_params = BoardEntry.make_conditions(login_user_symbols, options)
+  def categories_hash user
+    find_params = BoardEntry.make_conditions(user.belong_symbols, {:symbol => self.symbol})
     categories = BoardEntry.get_category_words(find_params)
     categories_hash = {}
 

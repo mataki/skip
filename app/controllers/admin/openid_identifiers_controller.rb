@@ -46,11 +46,6 @@ class Admin::OpenidIdentifiersController < Admin::ApplicationController
     end
   end
 
-  undef index
-  undef show
-  undef new
-  undef create
-
   private
   def load_parent
     @user ||= Admin::User.find(params[:user_id])

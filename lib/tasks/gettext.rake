@@ -1,12 +1,12 @@
 desc "Create mo-files for L10n"
 task :makemo do
-  require 'gettext/utils'
-  GetText.create_mofiles(true, "po", "locale")
+  require 'gettext_rails/tools'
+  GetText.create_mofiles
 end
 
 desc "Update pot/po files to match new version."
 task :updatepo do
-  require 'gettext/utils'
-  ENV["MSGMERGE_PATH"] = "msgmerge --sort-output"
-  GetText.update_pofiles("skip", Dir.glob("{app}/**/*.{rb,erb}") + ["lib/symbol.rb"] + ["config/environment.rb"] - ["app/models/user_mailer.rb"], "skip 0.1.0")
+  require 'gettext_rails/tools'
+  ENV["MSGMERGE_PATH"] = "msgmerge --sort-output --no-fuzzy-matching"
+  GetText.update_pofiles("skip", Dir.glob("{app}/**/*.{rb,erb}") + ["lib/symbol.rb"] + ['lib/skip_default_data.rb'] + ["config/environment.rb"] + ["lib/skip_util.rb"] + ["lib/create_new_admin_url.rb"], "skip 1.1.0")
 end

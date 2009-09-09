@@ -89,54 +89,56 @@ class ConversionProfileToCustomizableProfile < ActiveRecord::Migration
                      "ねること",
                     ]
   def self.up
-    UserProfileMasterCategory.transaction do
-      # 基本情報のマスタを作成
-      basic_info = UserProfileMasterCategory.create!(:name => '基本情報', :description => '', :sort_order => 10)
-      extension = UserProfileMaster.create!(:user_profile_master_category_id => basic_info.id, :name => '連絡先', :input_type => 'text_field', :sort_order => 10, :option_values => '', :description => '')
-      self_introduction = UserProfileMaster.create!(:user_profile_master_category_id => basic_info.id, :name => '自己紹介', :input_type => 'rich_text', :sort_order => 20, :option_values => '', :description => '現在の業務や今までの仕事、興味や関心のある事柄などについて書いてください')
+    if UserProfile.count > 0
+      UserProfileMasterCategory.transaction do
+        # 基本情報のマスタを作成
+        basic_info = UserProfileMasterCategory.create!(:name => '基本情報', :description => '', :sort_order => 10)
+        extension = UserProfileMaster.create!(:user_profile_master_category_id => basic_info.id, :name => '連絡先', :input_type => 'text_field', :sort_order => 10, :option_values => '', :description => '')
+        self_introduction = UserProfileMaster.create!(:user_profile_master_category_id => basic_info.id, :name => '自己紹介', :input_type => 'rich_text', :sort_order => 20, :option_values => '', :description => '現在の業務や今までの仕事、興味や関心のある事柄などについて書いてください')
 
-      # 属性情報のマスタを作成
-      extra_info  = UserProfileMasterCategory.create!(:name => '属性情報', :description => '(入力は必須ではありません)', :sort_order => 20)
-      gender_type = UserProfileMaster.create!(:user_profile_master_category_id => extra_info.id, :name => '性別',     :input_type => 'radio',             :sort_order => 10, :option_values => '男性,女性', :description => '')
-      join_year   = UserProfileMaster.create!(:user_profile_master_category_id => extra_info.id, :name => '入社年度', :input_type => 'year_select',       :sort_order => 20, :option_values => '1960-', :description => '')
-      birth_date  = UserProfileMaster.create!(:user_profile_master_category_id => extra_info.id, :name => '誕生日',   :input_type => 'datepicker',        :sort_order => 30, :option_values => '', :description => '')
-      blood_type  = UserProfileMaster.create!(:user_profile_master_category_id => extra_info.id, :name => '血液型',   :input_type => 'radio',             :sort_order => 40, :option_values => 'Ａ型,Ｂ型,ＡＢ型,Ｏ型', :description => '')
-      hometown    = UserProfileMaster.create!(:user_profile_master_category_id => extra_info.id, :name => '出身地',   :input_type => 'prefecture_select', :sort_order => 50, :option_values => '', :description => '')
-      alma_mater  = UserProfileMaster.create!(:user_profile_master_category_id => extra_info.id, :name => '出身校',   :input_type => 'appendable_select', :sort_order => 60, :option_values => '', :description => 'xx大学などの大体の内容で構いません(同窓生がわかる程度)')
-      address1    = UserProfileMaster.create!(:user_profile_master_category_id => extra_info.id, :name => '現住所1',  :input_type => 'prefecture_select', :sort_order => 70, :option_values => '', :description => '')
-      address2    = UserProfileMaster.create!(:user_profile_master_category_id => extra_info.id, :name => '現住所2',  :input_type => 'appendable_select', :sort_order => 80, :option_values => '', :description => 'xx区などの大体の内容で構いません(ご近所さんがわかる程度)')
+        # 属性情報のマスタを作成
+        extra_info  = UserProfileMasterCategory.create!(:name => '属性情報', :description => '(入力は必須ではありません)', :sort_order => 20)
+        gender_type = UserProfileMaster.create!(:user_profile_master_category_id => extra_info.id, :name => '性別',     :input_type => 'radio',             :sort_order => 10, :option_values => '男性,女性', :description => '')
+        join_year   = UserProfileMaster.create!(:user_profile_master_category_id => extra_info.id, :name => '入社年度', :input_type => 'year_select',       :sort_order => 20, :option_values => '1960-', :description => '')
+        birth_date  = UserProfileMaster.create!(:user_profile_master_category_id => extra_info.id, :name => '誕生日',   :input_type => 'datepicker',        :sort_order => 30, :option_values => '', :description => '')
+        blood_type  = UserProfileMaster.create!(:user_profile_master_category_id => extra_info.id, :name => '血液型',   :input_type => 'radio',             :sort_order => 40, :option_values => 'Ａ型,Ｂ型,ＡＢ型,Ｏ型', :description => '')
+        hometown    = UserProfileMaster.create!(:user_profile_master_category_id => extra_info.id, :name => '出身地',   :input_type => 'prefecture_select', :sort_order => 50, :option_values => '', :description => '')
+        alma_mater  = UserProfileMaster.create!(:user_profile_master_category_id => extra_info.id, :name => '出身校',   :input_type => 'appendable_select', :sort_order => 60, :option_values => '', :description => 'xx大学などの大体の内容で構いません(同窓生がわかる程度)')
+        address1    = UserProfileMaster.create!(:user_profile_master_category_id => extra_info.id, :name => '現住所1',  :input_type => 'prefecture_select', :sort_order => 70, :option_values => '', :description => '')
+        address2    = UserProfileMaster.create!(:user_profile_master_category_id => extra_info.id, :name => '現住所2',  :input_type => 'appendable_select', :sort_order => 80, :option_values => '', :description => 'xx区などの大体の内容で構いません(ご近所さんがわかる程度)')
 
-      # オフ情報のマスタを作成
-      off_info = UserProfileMasterCategory.create!(:name => 'オフ情報', :description => '(入力は必須ではありません)', :sort_order => 30)
-      hobby = UserProfileMaster.create!(:user_profile_master_category_id => off_info.id, :name => '趣味', :input_type => 'check_box', :sort_order => 10, :option_values => DEFAULT_HOBBIES.join(','), :description => '')
-      introduction = UserProfileMaster.create!(:user_profile_master_category_id => off_info.id, :name => 'オフの私', :input_type => 'rich_text', :sort_order => 20, :option_values => '', :description => '趣味の詳しい内容や、休日の過ごし方など、オフのあなたを少しだけ教えて下さい')
+        # オフ情報のマスタを作成
+        off_info = UserProfileMasterCategory.create!(:name => 'オフ情報', :description => '(入力は必須ではありません)', :sort_order => 30)
+        hobby = UserProfileMaster.create!(:user_profile_master_category_id => off_info.id, :name => '趣味', :input_type => 'check_box', :sort_order => 10, :option_values => DEFAULT_HOBBIES.join(','), :description => '')
+        introduction = UserProfileMaster.create!(:user_profile_master_category_id => off_info.id, :name => 'オフの私', :input_type => 'rich_text', :sort_order => 20, :option_values => '', :description => '趣味の詳しい内容や、休日の過ごし方など、オフのあなたを少しだけ教えて下さい')
 
-      # 旧プロフィールデータの移行を行う。
-      UserProfile.all.each do |profile|
-        user_id = profile.user_id
-        # 基本情報の移行
-        Admin::UserProfileValue.create!(:user_id => user_id, :user_profile_master_id => extension.id, :value => profile.extension.blank? ? "" : profile.extension)
-        Admin::UserProfileValue.create!(:user_id => user_id, :user_profile_master_id => self_introduction.id, :value => profile.self_introduction.blank? ? "" : profile.self_introduction)
+        # 旧プロフィールデータの移行を行う。
+        UserProfile.all.each do |profile|
+          user_id = profile.user_id
+          # 基本情報の移行
+          Admin::UserProfileValue.create!(:user_id => user_id, :user_profile_master_id => extension.id, :value => profile.extension.blank? ? "" : profile.extension)
+          Admin::UserProfileValue.create!(:user_id => user_id, :user_profile_master_id => self_introduction.id, :value => profile.self_introduction.blank? ? "" : profile.self_introduction)
 
-        # 非公開の属性情報とオフ情報は移行しない
-        if profile.disclosure
-          # 属性情報の移行
-          Admin::UserProfileValue.create!(:user_id => user_id, :user_profile_master_id => gender_type.id,  :value => profile.gender_type.blank? ? "" : GENDER[profile.gender_type])
-          Admin::UserProfileValue.create!(:user_id => user_id, :user_profile_master_id => join_year.id,    :value => profile.join_year.blank? ? "" : profile.join_year.to_s)
-          begin
-            Admin::UserProfileValue.create!(:user_id => user_id, :user_profile_master_id => birth_date.id,   :value => (profile.birth_month.blank? || profile.birth_day.blank?) ? "" : "#{profile.birth_month}/#{profile.birth_day}")
-          rescue ActiveRecord::RecordInvalid
-            Admin::UserProfileValue.create!(:user_id => user_id, :user_profile_master_id => birth_date.id,   :value => "")
+          # 非公開の属性情報とオフ情報は移行しない
+          if profile.disclosure
+            # 属性情報の移行
+            Admin::UserProfileValue.create!(:user_id => user_id, :user_profile_master_id => gender_type.id,  :value => profile.gender_type.blank? ? "" : GENDER[profile.gender_type])
+            Admin::UserProfileValue.create!(:user_id => user_id, :user_profile_master_id => join_year.id,    :value => profile.join_year.blank? ? "" : profile.join_year.to_s)
+            begin
+              Admin::UserProfileValue.create!(:user_id => user_id, :user_profile_master_id => birth_date.id,   :value => (profile.birth_month.blank? || profile.birth_day.blank?) ? "" : "#{profile.birth_month}/#{profile.birth_day}")
+            rescue ActiveRecord::RecordInvalid
+              Admin::UserProfileValue.create!(:user_id => user_id, :user_profile_master_id => birth_date.id,   :value => "")
+            end
+            Admin::UserProfileValue.create!(:user_id => user_id, :user_profile_master_id => blood_type.id,   :value => profile.blood_type.blank? ? "" : BLOOD[profile.blood_type])
+            Admin::UserProfileValue.create!(:user_id => user_id, :user_profile_master_id => hometown.id,     :value => profile.hometown.blank? ? "" : TODOUHUKEN[profile.hometown])
+            Admin::UserProfileValue.create!(:user_id => user_id, :user_profile_master_id => alma_mater.id,   :value => profile.alma_mater.blank? ? "" : profile.alma_mater)
+            Admin::UserProfileValue.create!(:user_id => user_id, :user_profile_master_id => address1.id,     :value => profile.address_1.blank? ? "" : TODOUHUKEN[profile.address_1])
+            Admin::UserProfileValue.create!(:user_id => user_id, :user_profile_master_id => address2.id,     :value => profile.address_2.blank? ? "" : profile.address_2)
+
+            # オフ情報の移行
+            Admin::UserProfileValue.create!(:user_id => user_id, :user_profile_master_id => hobby.id,        :value => profile.hobby.blank? ? "" : profile.hobby.split(','))
+            Admin::UserProfileValue.create!(:user_id => user_id, :user_profile_master_id => introduction.id, :value => profile.introduction.blank? ? "" : profile.introduction)
           end
-          Admin::UserProfileValue.create!(:user_id => user_id, :user_profile_master_id => blood_type.id,   :value => profile.blood_type.blank? ? "" : BLOOD[profile.blood_type])
-          Admin::UserProfileValue.create!(:user_id => user_id, :user_profile_master_id => hometown.id,     :value => profile.hometown.blank? ? "" : TODOUHUKEN[profile.hometown])
-          Admin::UserProfileValue.create!(:user_id => user_id, :user_profile_master_id => alma_mater.id,   :value => profile.alma_mater.blank? ? "" : profile.alma_mater)
-          Admin::UserProfileValue.create!(:user_id => user_id, :user_profile_master_id => address1.id,     :value => profile.address_1.blank? ? "" : TODOUHUKEN[profile.address_1])
-          Admin::UserProfileValue.create!(:user_id => user_id, :user_profile_master_id => address2.id,     :value => profile.address_2.blank? ? "" : profile.address_2)
-
-          # オフ情報の移行
-          Admin::UserProfileValue.create!(:user_id => user_id, :user_profile_master_id => hobby.id,        :value => profile.hobby.blank? ? "" : profile.hobby.split(','))
-          Admin::UserProfileValue.create!(:user_id => user_id, :user_profile_master_id => introduction.id, :value => profile.introduction.blank? ? "" : profile.introduction)
         end
       end
     end

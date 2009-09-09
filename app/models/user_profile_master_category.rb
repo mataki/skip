@@ -30,7 +30,7 @@ class UserProfileMasterCategory < ActiveRecord::Base
 
   def deletable?
     unless self.user_profile_masters.empty?
-      errors.add_to_base(_('対象のプロフィールカテゴリに属するプロフィール項目が登録されているため削除出来ません。このカテゴリに登録されているプロフィール項目を全て削除した後実行してください。'))
+      errors.add_to_base(_('Profile category could not be deleted due to profile items belonging to itself. Delete all profile items belonging to this profile category before you delete it.'))
       return false
     end
     true

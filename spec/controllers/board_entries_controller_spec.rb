@@ -35,7 +35,7 @@ describe BoardEntriesController, 'POST #ado_create_nest_comment' do
       response.code.should == '404'
     end
     it '親コメントが存在しない旨のメッセージが設定されること' do
-      response.body.should == '親コメントが存在しません。再読み込みして下さい。'
+      response.body.should == 'Parent comment could not be found. Try reloading the page.'
     end
   end
 
@@ -47,7 +47,7 @@ describe BoardEntriesController, 'POST #ado_create_nest_comment' do
       response.code.should == '400'
     end
     it 'コメントは必須である旨のメッセージが設定されること' do
-      response.body.should == 'コメントの入力は必須です。'
+      response.body.should == 'Comment body is mandatory.'
     end
   end
 
@@ -60,7 +60,7 @@ describe BoardEntriesController, 'POST #ado_create_nest_comment' do
       response.code.should == '400'
     end
     it '対象の記事が存在しない旨のメッセージが設定されること' do
-      response.body.should == '対象のboard entryが存在しませんでした。'
+      response.body.should == 'Target board entry inexistent.'
     end
   end
 end
@@ -105,7 +105,7 @@ describe BoardEntriesController, 'POST #ado_pointup' do
         post :ado_pointup
       end
       it '権限がない旨のメッセージが設定されること' do
-        response.body.should == 'この操作は、許可されていません。'
+        response.body.should == 'Operation unauthorized.'
       end
       it '403のレスポンスコードが返ること' do
         response.code.should == '403'
@@ -118,7 +118,7 @@ describe BoardEntriesController, 'POST #ado_pointup' do
       post :ado_pointup
     end
     it '記事が見つからない旨のメッセージが設定されること' do
-      response.body.should == '対象の記事が存在しません。'
+      response.body.should == 'Target board entry inexistent.'
     end
     it '404のレスポンスコードが返ること' do
       response.code.should == '404'

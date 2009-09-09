@@ -74,7 +74,7 @@
 <%= all_javascript_include_tag 'jquery' %>
 <% javascript_tag do -%>
 $j = jQuery.noConflict();
-var relative_url_root = '<%= controller.request.relative_url_root %>';
+var relative_url_root = '<%= relative_url_root %>';
 <% end -%>
 <%= javascript_include_tag 'application' %>
 <%= skip_javascript_include_tag 'skip_util' %>
@@ -87,11 +87,6 @@ var relative_url_root = '<%= controller.request.relative_url_root %>';
 <% javascript_tag do -%>
 $j(function(){
     $j('#loading').hide();
-
-    // 管理画面以外
-    $j(document.getElementsByName("picture")).each(function(i) {
-        fitImageSize($j(this), this.width, this.height);
-    });
 
     $j.fn.nyroModal.settings.processHandler = function(settings) {
         $j.nyroModalSettings({
@@ -107,4 +102,6 @@ $j(function(){
     <%= yield :javascript_initializers %>
 });
 <% end -%>
+
+<%= google_analytics_tag %>
 </html>

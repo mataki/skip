@@ -15,9 +15,4 @@
 
 class Admin::BoardEntriesController < Admin::ApplicationController
   include Admin::AdminModule::AdminRootModule
-
-  undef new
-  undef create
-  undef edit
-  undef update
 end

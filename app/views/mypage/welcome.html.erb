@@ -32,25 +32,25 @@
       <p class="welcome"><%= _("Completed registering your user information.<br/>\n      You can start writing entries right away since we have created your own blog.<br/>\n      You can also change your profile image and color theme of this site.")%></p>
       <h4 style="margin-top: 5px; border-left: 10px solid skyblue; border-bottom: 1px dashed skyblue; padding: 3px;"><%= _('Your information') %></h4>
       <ul class="welcome">
-        <li><%= icon_tag 'house' %><%= _('View information for you here ... [FIXME]') %><%= link_to _('[Mypage]'), :action => 'index' %></li>
+        <li><%= icon_tag 'house' %><%= _("\"My Page\" aggregates information for you...") %><%= link_to _('[Mypage]'), :action => 'index' %></li>
         <li><%= icon_tag 'vcard' %><%= _("Your profile from other users' view ...")%><%= link_to _('[Profile]'), :action => 'profile' %></li>
         <li><%= icon_tag 'wrench' %><%= _('Modify the registered profile from here ... ')%><%= link_to _('[Edit profile]'), :action => 'manage' %></li>
         <li><%= icon_tag 'picture' %><%= _('Click here to change profile picutre ... ')%><%= link_to _('[Change profile photo]'), :action => 'manage', :menu => 'manage_portrait' %></li>
       </ul>
-      <h4 style="margin-top: 5px; border-left: 10px solid skyblue; border-bottom: 1px dashed skyblue; padding: 3px;"><%= _('Infomation for everyone[FIXME]')%></h4>
+      <h4 style="margin-top: 5px; border-left: 10px solid skyblue; border-bottom: 1px dashed skyblue; padding: 3px;"><%= _('From others')%></h4>
       <ul class="welcome">
-        <li><%= icon_tag 'folder_star' -%><%= _("Let's read popular blogs ... [FIXME]") %><%= link_to(_('[Popular Blogs]'), :controller => 'mypage', :action => "entries", :list_type => "access_blogs") -%></li>
-        <li><%= icon_tag 'folder_page' -%><%= _('First read blogs ... [FIXME]') %><%= link_to(_('[Recent Blogs]'), :controller => 'mypage', :action => "entries", :list_type => "recent_blogs") -%></li>
-        <li><%= icon_tag 'user' -%><%= _('Find your friend ... [FIXME]') %><%= link_to _('[Search Users]'), :controller => 'users' %></li>
-        <li><%= icon_tag 'group' -%><%= _('Search your interest group ... [FIXME]')%> <%= link_to _('[Search Groups]'), :controller => 'groups' %></li>
+        <li><%= icon_tag 'folder_star' -%><%= _("Here are some popular blog entries...") %><%= link_to(_('[Popular Blogs]'), :controller => 'mypage', :action => "entries", :list_type => "access_blogs") -%></li>
+        <li><%= icon_tag 'folder_page' -%><%= _('First read some blog entries posted by others...') %><%= link_to(_('[Recent Blogs]'), :controller => 'mypage', :action => "entries", :list_type => "recent_blogs") -%></li>
+        <li><%= icon_tag 'user' -%><%= _("See if your friend's already there...") %><%= link_to _('[Search Users]'), :controller => 'users' %></li>
+        <li><%= icon_tag 'group' -%><%= _('Look for groups you may want to join ...')%> <%= link_to _('[Search Groups]'), :controller => 'groups' %></li>
       </ul>
-      <h4 style="margin-top: 5px; border-left: 10px solid skyblue; border-bottom: 1px dashed skyblue; padding: 3px;"><%= _('Site Infomation[FIXME]')%></h4>
+      <h4 style="margin-top: 5px; border-left: 10px solid skyblue; border-bottom: 1px dashed skyblue; padding: 3px;"><%= _('About this site')%></h4>
       <ul class="welcome">
         <% help_url = h(Admin::Setting.help_url) -%>
         <% unless help_url.blank? -%>
-        <li><%= icon_tag 'help' -%><%= _('Read detailed help ... [FIXME]') %><a href="<%= help_url -%>" target="_blank"><%= _('[Help]') %></a></li>
+        <li><%= icon_tag 'help' -%><%= _('For detailed help see ') %><a href="<%= help_url -%>" target="_blank"><%= _('[Help]') %></a></li>
         <% end -%>
-        <li><%= icon_tag 'tick' -%><%= _('You will access this site from %s [FIXME]') % link_to(root_url, root_url) -%></li>
+        <li><%= icon_tag 'tick' -%><%= _('You can access this site from %s next time.') % link_to(root_url, root_url) -%></li>
       </ul>
     </div>
   </div>

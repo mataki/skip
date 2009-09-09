@@ -20,10 +20,11 @@ class PlatformController < ApplicationController
   skip_after_filter  :remove_message
 
   before_filter :require_not_login, :except => [:logout]
-  protect_from_forgery :except => [:login]
+
+  verify :method => :post, :only => %w(login), :redirect_to => {:action => :index}
 
   def index
-    response.headers['X-XRDS-Location'] = formatted_server_url(:format => :xrds, :protocol => scheme)
+    response.headers['X-XRDS-Location'] = server_url(:format => :xrds, :protocol => scheme)
     img_files = Dir.glob(File.join(RAILS_ROOT, "public", "custom", "images", "titles", "background*.{jpg,png,jpeg}"))
     @img_name = File.join("titles", File.basename(img_files[rand(img_files.size)]))
   end
@@ -101,16 +102,16 @@ class PlatformController < ApplicationController
 
   def activate
     unless enable_activate?
-      flash[:error] = _('%{function}は現在利用することが出来ません。') % {:function => '利用開始通知'}
+      flash[:error] = _('%{function} currently unavailable.') % {:function => _('Activation email')}
       return redirect_to(:controller => '/platform')
     end
     return unless request.post?
     email = params[:email]
     if email.blank?
-      flash.now[:error] = _('メールアドレスは必須です。')
+      flash.now[:error] = _('Email address is mandatory.')
       return
     end
-    if @user = User.find_by_email(email)
+    if @user = User.scoped(:conditions => ['email = ?', email]).find_without_retired_skip(:first)
       if  @user.unused?
         @user.issue_activation_code
         @user.save_without_validation!
@@ -127,7 +128,7 @@ class PlatformController < ApplicationController
 
   def signup
     unless enable_signup?
-      flash[:error] = _('%{function}は現在利用することが出来ません。') % {:function => '利用登録'}
+      flash[:error] = _('%{function} currently unavailable.') % {:function => _('User registration')}
       return redirect_to(:controller => '/platform')
     end
     if @user = User.find_by_activation_token(params[:code])
@@ -135,11 +136,11 @@ class PlatformController < ApplicationController
         self.current_user = @user
         return redirect_to(:controller => :portal)
       else
-        flash[:error] = _("ユーザ登録のためのURLの有効期限が過ぎています。")
+        flash[:error] = _("The URL for registration has already expired.")
         redirect_to :controller => '/platform'
       end
     else
-      flash[:error] = _("ユーザ登録のためのURLが不正です。再度お試し頂くか、システム管理者にお問い合わせ下さい。")
+      flash[:error] = _("Invalid registration URL. Try again or contact system administrator.")
       redirect_to :controller => '/platform'
     end
   end
@@ -151,7 +152,7 @@ class PlatformController < ApplicationController
     return unless request.post?
     email = params[:email]
     if email.blank?
-      flash.now[:error] = _('メールアドレスは必須です。')
+      flash.now[:error] = _('Email address is mandatory.')
       return
     end
     if user = User.find_by_email(email)
@@ -159,13 +160,13 @@ class PlatformController < ApplicationController
         user.issue_reset_auth_token
         user.save_without_validation!
         UserMailer.deliver_sent_forgot_openid(email, reset_openid_url(user.reset_auth_token))
-        flash[:notice] = _("OpenID URLを再設定するためのURLを記載したメールを%{email}宛に送信しました。") % {:email => email}
+        flash[:notice] = _("Sent an email containing the URL for resettig OpenID URL to %{email}.") % {:email => email}
         redirect_to :controller => "/platform"
       else
-        flash.now[:error] = _('入力された%{email}のユーザは、利用開始されていません。利用開始してください。') % {:email => email}
+        flash.now[:error] = _('User with email address %{email} has not activated the account. The account has to be activated first.') % {:email => email}
       end
     else
-      flash.now[:error] = _("入力された%{email}というメールアドレスは登録されていません。") % {:email => email}
+      flash.now[:error] = _("Entered email address %s has not been registered in the site.") % email
     end
   end
 
@@ -180,23 +181,23 @@ class PlatformController < ApplicationController
                 @identifier.url = identity_url
                 if @identifier.save
                   user.determination_reset_auth_token
-                  flash[:notice] = _("%{function}が完了しました。")%{:function => _('OpenID URLの再設定')} + _("設定したURLを入力してログインしてください。")
+                  flash[:notice] = _("%{function} completed.")%{:function => _('Resetting OpenID URL')} + _("Enter the previously set URL to log in.")
                   redirect_to :action => :index
                 end
               else
-                flash.now[:error] = _("OpenIDの処理の中でキャンセルされたか、失敗しました。")
+                flash.now[:error] = _("OpenID processing aborted due to user cancellation or system errors.")
               end
             end
           rescue OpenIdAuthentication::InvalidOpenId
-            flash.now[:error] = _("OpenIDの形式が正しくありません。")
+            flash.now[:error] = _("OpenID format invalid.")
           end
         end
       else
-        flash[:error] = _("%{function}のためのURLの有効期限が過ぎています。")%{:function => _('OpenID URLの再設定')}
+        flash[:error] = _("The URL for %{function} has expired.")%{:function => _('resetting OpenID URL')}
         redirect_to :controller => '/platform'
       end
     else
-      flash[:error] = _("%{function}のためのURLが不正です。再度お試し頂くか、システム管理者にお問い合わせ下さい。")%{:function => _('OpenID URLの再設定')}
+      flash[:error] = _("The URL for %{function} invalid. Try again or contact system administrator.")%{:function => _('resetting OpenID URL')}
       redirect_to :controller => '/platform'
     end
   end
@@ -215,8 +216,8 @@ class PlatformController < ApplicationController
   def login_with_open_id
     session[:return_to] = params[:return_to] if !params[:return_to].blank? and params[:open_id_complete].blank?
     begin
-      authenticate_with_open_id( params[:openid_url],
-                                 :required => SkipEmbedded::InitialSettings["ax_fetchrequest"].values.flatten) do |result, identity_url, registration|
+      authenticate_with_open_id( params[:openid_url], :method => 'post',
+                                :required => SkipEmbedded::InitialSettings["ax_fetchrequest"].values.flatten) do |result, identity_url, registration|
         if result.successful?
           logger.info("[Login successful with OpenId] \"OpenId\" => #{identity_url}")
           unless identifier = OpenidIdentifier.find_by_url(identity_url)
@@ -235,7 +236,7 @@ class PlatformController < ApplicationController
       end
     rescue OpenIdAuthentication::InvalidOpenId
       logger.info("[Login failed with OpenId] \"OpenId is invalid\"")
-      flash[:error] = _("OpenIDの形式が正しくありません。")
+      flash[:error] = _("OpenID format invalid.")
       redirect_to :action => :index
     end
   end

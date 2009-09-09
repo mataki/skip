@@ -13,58 +13,58 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class Admin::InitialSetting < ActiveRecord::Base
+class Admin::InitialSetting
   # ================================================================================================
   # 共有ファイル関連
   # ================================================================================================
-  N_('Admin::InitialSetting|Max share file size')
-  N_('Admin::InitialSetting|Max share file size description')
-  N_('Admin::InitialSetting|Max share file size per owner')
-  N_('Admin::InitialSetting|Max share file size per owner description')
-  N_('Admin::InitialSetting|Max share file size of system')
-  N_('Admin::InitialSetting|Max share file size of system description')
+  GetText.N_('Admin::InitialSetting|Max share file size')
+  GetText.N_('Admin::InitialSetting|Max share file size description')
+  GetText.N_('Admin::InitialSetting|Max share file size per owner')
+  GetText.N_('Admin::InitialSetting|Max share file size per owner description')
+  GetText.N_('Admin::InitialSetting|Max share file size of system')
+  GetText.N_('Admin::InitialSetting|Max share file size of system description')
 
   # ================================================================================================
   # アカウント関連
   # ================================================================================================
-  N_('Admin::InitialSetting|Login mode')
-  N_('Admin::InitialSetting|Login mode description')
-  N_('Admin::InitialSetting|Login mode|password')
-  N_('Admin::InitialSetting|Login mode|rp')
-  N_('Admin::InitialSetting|Usercode dips setting')
-  N_('Admin::InitialSetting|Usercode dips setting description')
-  N_('Admin::InitialSetting|Usercode dips setting|true')
-  N_('Admin::InitialSetting|Usercode dips setting|false')
-  N_('Admin::InitialSetting|Password edit setting')
-  N_('Admin::InitialSetting|Password edit setting description')
-  N_('Admin::InitialSetting|Password edit setting|true')
-  N_('Admin::InitialSetting|Password edit setting|false')
-  N_('Admin::InitialSetting|Username use setting')
-  N_('Admin::InitialSetting|Username use setting description')
-  N_('Admin::InitialSetting|Username use setting|true')
-  N_('Admin::InitialSetting|Username use setting|false')
-  N_('Admin::InitialSetting|User code format regex')
-  N_('Admin::InitialSetting|User code format regex description')
-  N_('Admin::InitialSetting|User code minimum length')
-  N_('Admin::InitialSetting|User code minimum length description')
+  GetText.N_('Admin::InitialSetting|Login mode')
+  GetText.N_('Admin::InitialSetting|Login mode description')
+  GetText.N_('Admin::InitialSetting|Login mode|password')
+  GetText.N_('Admin::InitialSetting|Login mode|rp')
+  GetText.N_('Admin::InitialSetting|Usercode dips setting')
+  GetText.N_('Admin::InitialSetting|Usercode dips setting description')
+  GetText.N_('Admin::InitialSetting|Usercode dips setting|true')
+  GetText.N_('Admin::InitialSetting|Usercode dips setting|false')
+  GetText.N_('Admin::InitialSetting|Password edit setting')
+  GetText.N_('Admin::InitialSetting|Password edit setting description')
+  GetText.N_('Admin::InitialSetting|Password edit setting|true')
+  GetText.N_('Admin::InitialSetting|Password edit setting|false')
+  GetText.N_('Admin::InitialSetting|Username use setting')
+  GetText.N_('Admin::InitialSetting|Username use setting description')
+  GetText.N_('Admin::InitialSetting|Username use setting|true')
+  GetText.N_('Admin::InitialSetting|Username use setting|false')
+  GetText.N_('Admin::InitialSetting|User code format regex')
+  GetText.N_('Admin::InitialSetting|User code format regex description')
+  GetText.N_('Admin::InitialSetting|User code minimum length')
+  GetText.N_('Admin::InitialSetting|User code minimum length description')
 
   # ================================================================================================
   # 機能に関する設定
   # ================================================================================================
-  N_('Admin::InitialSetting|Ssl setting')
-  N_('Admin::InitialSetting|Ssl setting description')
-  N_('Admin::InitialSetting|Ssl setting|true')
-  N_('Admin::InitialSetting|Ssl setting|false')
-  N_('Admin::InitialSetting|Full text search setting')
-  N_('Admin::InitialSetting|Full text search setting description')
-  N_('Admin::InitialSetting|Full text search setting|true')
-  N_('Admin::InitialSetting|Full text search setting|false')
-  N_('Admin::InitialSetting|Proxy url')
-  N_('Admin::InitialSetting|Proxy url description')
+  GetText.N_('Admin::InitialSetting|Ssl setting')
+  GetText.N_('Admin::InitialSetting|Ssl setting description')
+  GetText.N_('Admin::InitialSetting|Ssl setting|true')
+  GetText.N_('Admin::InitialSetting|Ssl setting|false')
+  GetText.N_('Admin::InitialSetting|Full text search setting')
+  GetText.N_('Admin::InitialSetting|Full text search setting description')
+  GetText.N_('Admin::InitialSetting|Full text search setting|true')
+  GetText.N_('Admin::InitialSetting|Full text search setting|false')
+  GetText.N_('Admin::InitialSetting|Proxy url')
+  GetText.N_('Admin::InitialSetting|Proxy url description')
 
   # ================================================================================================
   # システム運用について
   # ================================================================================================
-  N_('Admin::InitialSetting|Administrator addr')
-  N_('Admin::InitialSetting|Administrator addr description')
+  GetText.N_('Admin::InitialSetting|Administrator addr')
+  GetText.N_('Admin::InitialSetting|Administrator addr description')
 end

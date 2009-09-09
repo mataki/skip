@@ -27,11 +27,9 @@ module ApplicationHelper
   def generate_tab_menu(tab_menu_sources)
     output = ''
     tab_menu_sources.each do |source|
-      html_options = source[:html_options] || {}
-      if controller.action_name == source[:options][:action] || (source[:selected_actions] && source[:selected_actions].include?(controller.action_name))
-        html_options.merge!(:class => 'selected')
-      end
-      title =  content_tag(:span, source[:label])
+      html_options = (source[:html_options] || {}).dup
+      html_options.merge!(:class => 'selected') if current_page?(source[:options])
+      title = content_tag(:span, source[:label])
       output << content_tag(:li, link_to(title, source[:options], html_options))
     end
     content_tag :ul, output
@@ -54,7 +52,7 @@ module ApplicationHelper
     output = ""
     choices.each do |choice|
       output << radio_button(object, method, choice.last, options)
-      output << choice.first
+      output << label_tag("#{object}_#{method}_#{choice.last}", h(choice.first))
     end
     output
   end
@@ -77,14 +75,14 @@ module ApplicationHelper
     output_text << icon_tag('page') if options[:image_on]
 
     if limit = options[:truncate]
-      title = truncate(board_entry.title, limit)
+      title = truncate(board_entry.title, :length => limit)
     else
       title = board_entry.title
     end
     output_text << (sanitize(options[:view_text]) || h(title))
 
     html_options[:title] ||= board_entry.title
-    link_to output_text, board_entry.get_url_hash, html_options
+    link_to output_text, board_entry.get_url_hash, {:class => 'entry'}.merge(html_options)
   end
 
   # ユーザのページへのリンク
@@ -98,7 +96,7 @@ module ApplicationHelper
 
   def user_link_to_with_portrait user, options = {}
     options = {:width => 120, :height => 80}.merge(options)
-    link_to showPicture(user, options[:width], options[:height]), {:controller => 'user', :action => 'show', :uid => user.uid}, {:title => h(user.name)}
+    link_to show_picture(user, options), {:controller => '/user', :action => 'show', :uid => user.uid}, {:title => h(user.name)}
   end
 
   # グループのページへのリンク
@@ -133,18 +131,21 @@ module ApplicationHelper
     link_to image_tag(image_name, :alt => title) + title, options
   end
 
-  def showPicture(user, width, height, popup = false)
-    options = {:border => '0', :name => 'picture', :alt => h(user.name)}
-    options[:width] = width unless width == 0
-    options[:height] = height unless height == 0
+  def show_picture(user, options = {})
+    options = {:border => '0', :name => 'picture', :alt => h(user.name), :popup => false, :fit_image => true}.merge(options)
+    options.merge!(:class => 'fit_image') if options.delete(:fit_image)
     if user.retired?
       file_name = 'retired.png'
-    elsif picture = user.pictures.first
-      file_name = url_for(:controller => 'pictures', :action => 'picture', :id => picture.id, :format => :png)
-      if popup
-        pop_name = url_for(:controller => 'pictures', :action => 'picture', :id => picture.id.to_s)
-        options[:title] = _("Click to see in original size.")
-        return link_to(image_tag(file_name, options), file_name, :class => 'nyroModal zoomable')
+    elsif picture = user.picture
+      unless picture.new_record?
+        file_name = url_for(:controller => '/pictures', :action => 'picture', :id => picture.id, :format => :png)
+        if options.delete(:popup)
+          pop_name = url_for(:controller => '/pictures', :action => 'picture', :id => picture.id.to_s)
+          options[:title] = _("Click to see in original size.")
+          return link_to(image_tag(file_name, options), file_name, :class => 'nyroModal zoomable')
+        end
+      else
+        file_name = 'default_picture.png'
       end
     else
       file_name = 'default_picture.png'
@@ -198,7 +199,11 @@ module ApplicationHelper
   # リッチテキストの表示
   def render_richtext(text, owner_symbol = nil)
     content = parse_permalink(text, owner_symbol)
-    "<div class='rich_style'>#{sanitize_style_with_whitelist(content)}</div>"
+    "<div class='rich_style'>#{sanitize_and_unescape_for_richtext(content)}</div>"
+  end
+
+  def sanitize_and_unescape_for_richtext(content)
+    sanitize_style_with_whitelist(BoardEntry.unescape_href(content))
   end
 
   def sanitize_style_with_whitelist(content)
@@ -218,27 +223,26 @@ module ApplicationHelper
     case entry.publication_type
     when 'public'
       icon_name = 'page_red'
-      view_name = "全体に公開"
+      view_name = _("Open to All")
     when 'protected'
       visibility, visibility_color = entry.visibility
       icon_name = 'page_link'
-      view_name = "直接指定:" + visibility
+      view_name = _("Specified Directly:") + visibility
     when 'private'
       icon_name = 'page_key'
-      view_name = entry.diary? ? "自分だけ" : "参加者のみ"
+      view_name = entry.diary? ? _("Owner Only") : _("Members Only")
    end
     icon_tag(icon_name, :title => view_name)
   end
 
   # [コメント(n)-ポイント(n)-話題(n)-アクセス(n)]の表示
   def get_entry_infos entry
-    output = ""
+    output = []
     output << n_("Comment(%s)", "Comments(%s)", entry.board_entry_comments_count) % h(entry.board_entry_comments_count.to_s) if entry.board_entry_comments_count > 0
     output << "#{h Admin::Setting.point_button}(#{h entry.point.to_s})" if entry.point > 0
     output << n_("Trackback(%s)", "Trackbacks(%s)", entry.entry_trackbacks_count) % h(entry.entry_trackbacks_count.to_s) if entry.entry_trackbacks_count > 0
     output << n_("Access(%s)", "Accesses(%s)", entry.state.access_count) % h(entry.state.access_count.to_s) if entry.state.access_count > 0
-    output = "[#{output}]" if output.size > 0
-    return output
+    output.size > 0 ? "[#{output.join('-')}]" : ""
   end
 
   def get_menu_items menus, selected_menu, action
@@ -349,9 +353,10 @@ module ApplicationHelper
 
 private
   def relative_url_root
-    ActionController::AbstractRequest.relative_url_root
+    ActionController::Base.relative_url_root || ''
   end
 
+  # TODO 仕組みが複雑すぎる。BoardEntry.replace_symbol_linkと合わせてシンプルな作りにしたい。
   def parse_permalink text, owner_symbol = nil
     return '' unless text
     # closure
@@ -363,6 +368,7 @@ private
     file_proc = proc {|file_symbol, link_str|
                       symbol_type, symbol_id = SkipUtil.split_symbol owner_symbol
                       f_symbol_type, file_name = SkipUtil.split_symbol file_symbol
+                      file_name.gsub!(/\r\n|\r|\n/, '')
                       url = share_file_url :controller_name => @@CONTROLLER_HASH[symbol_type], :symbol_id => symbol_id, :file_name => file_name.strip, :authenticity_token => form_authenticity_token
                       link_to(link_str, url) }
 
@@ -385,7 +391,7 @@ private
       url =  relative_url_root + url
       link_to "#{icon_tag('user')} #{h title}", bookmark.escaped_url, :title => title
     else
-      link_to "#{icon_tag('world_link')} #{h truncate(title, 115)}", bookmark.escaped_url, :title => title
+      link_to "#{icon_tag('world_link')} #{h truncate(title, :length => 115)}", bookmark.escaped_url, :title => title
     end
   end
 

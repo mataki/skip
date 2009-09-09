@@ -10,7 +10,7 @@
   <% form_tag({:action => :update}, {:method => :put}) do %>
   <%= render :partial => "portal/profile_form" %>
   <p>
-    <%= f.submit _('Update'), :disable_with => _('Now Updating...') %>
+    <%= submit_tag _('Update'), :disable_with => _('Now Updating...') %>
   </p>
   <% end %>
 </div>

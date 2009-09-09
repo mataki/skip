@@ -50,11 +50,11 @@ $j(function() {
     $j('.add_symbol_link')
     .click(function() {
         var antennaId = this.id.split('_')[3];
-        var symbol = '<%= h(symbol) -%>';
+        var symbol = '<%= escape_javascript(symbol) -%>';
         $j.ajax({
             type: 'POST',
             url: $j(this).attr('href'),
-            data: { antenna_id: antennaId, symbol: symbol, authenticity_token: $j('#authenticity_token').val() },
+            data: { antenna_id: antennaId, symbol: symbol, authenticity_token: $j('input[name=authenticity_token]').val() },
             success: function(html) {
                 $j('#select_antenna_body').html(html);
             }

@@ -1,6 +1,6 @@
 <div class="desc">
-<p>本サイトにアップロードされたファイルのダウンロードを行おうとしています。<br/>
-下記のファイルで間違いなければ、クリックしてダウンロードを開始してください。<br/></p>
+<p><%= _('You are about to download a file that was uploaded to this site.')%><br/>
+<%= _('Click to start downloading if you find the file appropriate.')%><br/></p>
 </div>
 
 <% form_tag(share_file_path(:symbol_id => params[:symbol_id], :file_name => params[:file_name])) do %>
@@ -9,4 +9,4 @@
   </div>
 <% end -%>
 
-<div style="text-align: right;">（この画面は、直ダウンロードによるセキュリティ上の懸念を解消するために表示しています）</div>
+<div style="text-align: right;"><%= _('(This screen is to avoid security risks ralated to direct downloading)')%></div>

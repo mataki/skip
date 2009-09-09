@@ -14,13 +14,14 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class ServicesController < ActionController::Base
-  session :off
   skip_before_filter :sso
   caches_page :skip_reflect_customized
 
   include SkipEmbedded::WebServiceUtil::Server
   before_filter :check_secret_key, :except => [:search_conditions, :skip_reflect_customized]
   after_filter :change_charset
+
+  init_gettext "skip" if defined? GetText
 
   # ユーザに関連する情報を取得する
   def user_info
