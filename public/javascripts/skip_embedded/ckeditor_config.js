@@ -8,17 +8,16 @@ CKEDITOR.editorConfig = function( config )
     config.contentsCss = CKEDITOR.getUrl( '/stylesheets/skip_embedded/ckeditor_area.css' );
 
     config.toolbar_Entry = [
-        ['Cut','Copy','Paste','PasteText','PasteFromWord','-','Print', 'SpellChecker', 'Scayt'],
-        ['Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'],
-        '/',
+        ['Cut','Copy','Paste','PasteText','PasteFromWord'],
+        ['SelectAll','RemoveFormat'],
         ['Bold','Italic','Underline','Strike'],
-        ['NumberedList','BulletedList','-','Outdent','Indent','Blockquote'],
-        ['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
+        ['NumberedList','BulletedList'],
+        ['JustifyLeft','JustifyCenter','JustifyRight'],
         ['TextColor','BGColor'],
-        ['Table','HorizontalRule','Smiley','SpecialChar'],
+        ['Table','HorizontalRule','Smiley'],
         '/',
         ['Styles','Format','Font','FontSize'],
-        ['Link','Unlink','Anchor'],
+        ['Link','Unlink'],
         ['Source','Preview'],
         ['Maximize', 'ShowBlocks','-','About']
     ];
