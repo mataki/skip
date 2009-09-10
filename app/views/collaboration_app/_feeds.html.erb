@@ -2,6 +2,7 @@
   <%
     #FIXME このままだと複数件ある場合に全部のボックスの内容が同じになってしまう
   %>
+  <% if provider.setting.feeds %>
   <% provider.setting.feeds.each do |feed_setting| -%>
     <div id="collaboration_apps">
       <div class="title_bar" style="position: relative; _width: 100%;">
@@ -27,5 +28,6 @@
         }
     });
     <% end -%>
+  <% end -%>
   <% end -%>
 <% end -%>
