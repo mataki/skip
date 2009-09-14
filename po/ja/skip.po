@@ -1310,6 +1310,14 @@ msgstr ""
 "チェックするとユーザのメールアドレスが非表示になります。チェックを外すとユー"
 "ザのメールアドレスが表示されます。"
 
+#: app/models/admin/setting.rb:33
+msgid "Admin::Setting|Access record limit"
+msgstr "アクセス履歴の件数"
+
+#: app/models/admin/setting.rb:34
+msgid "Admin::Setting|Access record limit description"
+msgstr "アクセス履歴で表示する件数を設定します。"
+
 #: app/models/admin/setting.rb:75
 msgid "Admin::Setting|Host and port"
 msgstr "サーバのホストとポート"

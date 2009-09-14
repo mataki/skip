@@ -518,7 +518,7 @@ class BoardEntry < ActiveRecord::Base
       if today_entry= EntryAccess.find(:first, :conditions =>["board_entry_id = ? and updated_on > ? and visitor_id = ?", id, Date.today, login_user_id])
         today_entry.destroy
       end
-      if  EntryAccess.count(:conditions => ["board_entry_id = ?", id]) >= 30
+      if  EntryAccess.count(:conditions => ["board_entry_id = ?", id]) >= Admin::Setting.access_record_limit
         EntryAccess.find(:first, :conditions => ["board_entry_id = ?", id], :order => "updated_on ASC").destroy
       end
       EntryAccess.create(:board_entry_id => id, :visitor_id => login_user_id)
