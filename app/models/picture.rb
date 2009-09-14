@@ -26,7 +26,7 @@ class Picture < ActiveRecord::Base
     @filesize ||= 0
     if file
       self.name = base_part_of(file.original_filename)
-      self.content_type = file.content_type.chomp
+      self.content_type = file.content_type
       self.data = file.read
       @filesize = file.size
     end

@@ -73,6 +73,12 @@ describe ShareFileController, "POST #create" do
       controller.should_receive(:render_window_close)
       post :create
     end
+    describe "ajax_uploadの場合" do
+      it "エラー内容が表示されること" do
+        post :create, :ajax_upload => "1"
+        response.body.should == "File is mandatory."
+      end
+    end
   end
 
   describe 'ファイルが送信される場合' do

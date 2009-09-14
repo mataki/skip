@@ -71,10 +71,14 @@ describe Admin::DocumentsController, 'POST /update' do
   describe '対象ファイルの読み込みに成功する場合' do
     before do
       contents = 'skip rule'
+      target = 'rules'
       file = mock('file')
-      file.should_receive(:write).with(contents)
+      document = contents
+      document = Admin::DocumentsController::HTML_WRAPPER.sub('BODY', document)
+      document = document.sub('TITLE_STR', ERB::Util.h(target).humanize)
+      file.should_receive(:write).with(document)
       controller.should_receive(:open).with(anything(), 'w').and_yield(file)
-      post :update, :target => 'rules', :documents => {:rules => contents}
+      post :update, :target => target, :documents => {:rules => contents}
     end
     it { flash[:notice].should_not be_nil }
     it { response.should be_redirect }
