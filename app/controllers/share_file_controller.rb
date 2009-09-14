@@ -44,7 +44,7 @@ class ShareFileController < ApplicationController
   def create
     @error_messages = []
     unless params[:file]
-      ajax_upload? ? render(:template => 'share_file/new_ajax_upload', :layout => false) : render_window_close
+      ajax_upload? ? render(:text => _("%{name} is mandatory.") % { :name => _('File')}, :layout => false) : render_window_close
       return
     end
     @share_file = ShareFile.new(params[:share_file])
