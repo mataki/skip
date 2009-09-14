@@ -17,10 +17,11 @@
 # 具体的には全体設定、文言設定、メール関連設定、フィード設定、その他設定の各タブの
 # 表示/更新を行う。
 class Admin::SettingsController < Admin::ApplicationController
+  TABS = %w(main literal mail feed security)
+  N_('Admin::SettingsController|main')
   N_('Admin::SettingsController|literal')
   N_('Admin::SettingsController|mail')
   N_('Admin::SettingsController|feed')
-  N_('Admin::SettingsController|main')
   N_('Admin::SettingsController|security')
 
   helper_method :current_setting
@@ -28,8 +29,9 @@ class Admin::SettingsController < Admin::ApplicationController
   def index
     @topics = [[s_("#{self.class.name}|#{params[:tab]}")]]
     @current_setting_hash = {}
-    if params[:tab].blank?
-      redirect_to admin_settings_path(:tab => :literal)
+
+    if params[:tab].blank? or !TABS.include?(params[:tab])
+      redirect_to admin_settings_path(:tab => :main)
     end
 
     if params[:tab] == 'main'
@@ -88,7 +90,7 @@ class Admin::SettingsController < Admin::ApplicationController
 
     if @error_messages.empty?
       flash[:notice] = _('Settings were saved successfully.')
-      redirect_to :action => params[:tab] ? params[:tab] : 'index'
+      redirect_to :action => 'index'
     else
       render :action => 'index'
     end
