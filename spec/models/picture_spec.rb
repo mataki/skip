@@ -16,6 +16,7 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Picture, '#validate' do
+  include ActionController::TestProcess
   describe 'プロフィール画像の変更権限がない場合は保存出来ない' do
     before do
       Admin::Setting.should_receive(:enable_change_picture).and_return(false)
@@ -27,6 +28,17 @@ describe Picture, '#validate' do
     end
     it '保存に失敗すること' do
       @picture.valid?.should be_false
+    end
+  end
+
+  describe "content_typeが空の場合" do
+    before do
+      @picture = Picture.new(:file => fixture_file_upload("data/profile.png", nil, true))
+    end
+    it "エラーが起らないこと" do
+      lambda do
+        @picture.save
+      end.should_not raise_error
     end
   end
 end
