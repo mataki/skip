@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-08-31 16:39+0800\n"
+"POT-Creation-Date: 2009-09-15 11:39+0800\n"
 "PO-Revision-Date: 2009-06-29 13:31+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -218,6 +218,7 @@ msgstr ""
 msgid "%{name} contains value not in selectable options."
 msgstr ""
 
+#: app/controllers/share_file_controller.rb:47
 #: app/models/user_profile_master.rb:122 app/models/user_profile_master.rb:126
 #: app/models/user_profile_master.rb:150 app/models/user_profile_master.rb:187
 #: app/models/user_profile_master.rb:275 app/models/user_profile_master.rb:305
@@ -235,7 +236,7 @@ msgstr[1] ""
 msgid "%{rslt} to %{type}."
 msgstr "%{type}%{rslt}。"
 
-#: app/controllers/admin/documents_controller.rb:83
+#: app/controllers/admin/documents_controller.rb:98
 #: app/controllers/admin/images_controller.rb:148
 msgid "%{target} was successfully saved."
 msgstr ""
@@ -299,7 +300,7 @@ msgstr ""
 msgid "(This screen is to avoid security risks ralated to direct downloading)"
 msgstr ""
 
-#: app/models/board_entry.rb:541
+#: app/models/board_entry.rb:543
 msgid "(Unknown topic entry found. However, this has been ignored)"
 msgstr ""
 
@@ -331,7 +332,7 @@ msgid ""
 "overwrite other's edit."
 msgstr ""
 
-#: app/views/admin/documents/index.html.erb:36
+#: app/views/admin/documents/index.html.erb:25
 msgid ""
 "*Input explanation in HTML format. Do not use codes that can cause security "
 "issues (e.g. javascripts)."
@@ -512,7 +513,7 @@ msgstr[1] ""
 msgid "Account Information"
 msgstr ""
 
-#: app/controllers/admin/settings_controller.rb:49
+#: app/controllers/admin/settings_controller.rb:51
 msgid "Account Settings"
 msgstr ""
 
@@ -706,7 +707,7 @@ msgstr ""
 msgid "Admin::Bookmark|Url"
 msgstr "URL"
 
-#: app/controllers/admin/documents_controller.rb:95
+#: app/controllers/admin/documents_controller.rb:110
 #: app/helpers/admin/application_helper.rb:25
 msgid "Admin::DocumentsController"
 msgstr "Documents"
@@ -1079,38 +1080,46 @@ msgstr "OpenID URL"
 msgid "Admin::Picture|File"
 msgstr "File"
 
-#: app/controllers/admin/settings_controller.rb:22
+#: app/controllers/admin/settings_controller.rb:24
 #: app/helpers/admin/application_helper.rb:27
 msgid "Admin::SettingsController|feed"
 msgstr "RSS feeds"
 
-#: app/controllers/admin/settings_controller.rb:20
+#: app/controllers/admin/settings_controller.rb:22
 #: app/helpers/admin/application_helper.rb:23
 msgid "Admin::SettingsController|literal"
 msgstr "Literals"
 
-#: app/controllers/admin/settings_controller.rb:21
+#: app/controllers/admin/settings_controller.rb:23
 #: app/helpers/admin/application_helper.rb:26
 msgid "Admin::SettingsController|mail"
 msgstr "Email"
 
-#: app/controllers/admin/settings_controller.rb:23
+#: app/controllers/admin/settings_controller.rb:21
 #: app/helpers/admin/application_helper.rb:21
 msgid "Admin::SettingsController|main"
 msgstr "Main"
 
-#: app/controllers/admin/settings_controller.rb:24
+#: app/controllers/admin/settings_controller.rb:25
 #: app/helpers/admin/application_helper.rb:28
 msgid "Admin::SettingsController|security"
 msgstr "Security"
 
-#: app/models/admin/setting.rb:37
+#: app/models/admin/setting.rb:39
 msgid "Admin::Setting|Abbr app title"
 msgstr "Name of System"
 
-#: app/models/admin/setting.rb:38
+#: app/models/admin/setting.rb:40
 msgid "Admin::Setting|Abbr app title description"
 msgstr "The name of system used in various screens"
+
+#: app/models/admin/setting.rb:33
+msgid "Admin::Setting|Access record limit"
+msgstr "Number of access log records"
+
+#: app/models/admin/setting.rb:34
+msgid "Admin::Setting|Access record limit description"
+msgstr "Provide the number of access record to be shown in access log."
 
 #: app/models/admin/setting.rb:29
 msgid "Admin::Setting|Activation lifetime"
@@ -1120,11 +1129,11 @@ msgstr "Valid Duration of Activation URL"
 msgid "Admin::Setting|Activation lifetime description"
 msgstr "Choose how many days activation URLs stay valid since issued."
 
-#: app/models/admin/setting.rb:39
+#: app/models/admin/setting.rb:41
 msgid "Admin::Setting|Contact addr"
 msgstr "Contact Email Address"
 
-#: app/models/admin/setting.rb:40
+#: app/models/admin/setting.rb:42
 msgid "Admin::Setting|Contact addr description"
 msgstr ""
 "Enter email address for inquiries. It will also be used for the sender of "
@@ -1134,21 +1143,21 @@ msgstr ""
 msgid "Admin::Setting|Created at"
 msgstr ""
 
-#: app/models/admin/setting.rb:114
+#: app/models/admin/setting.rb:116
 msgid "Admin::Setting|Custom password strength regex"
 msgstr "Regex for Custom Password Strength"
 
-#: app/models/admin/setting.rb:115
+#: app/models/admin/setting.rb:117
 msgid "Admin::Setting|Custom password strength regex description"
 msgstr ""
 "Provide the regular expression for allowed passwords when you use custom "
 "password strength."
 
-#: app/models/admin/setting.rb:116
+#: app/models/admin/setting.rb:118
 msgid "Admin::Setting|Custom password strength validation message"
 msgstr "Custom Password Strength Validation Error Message"
 
-#: app/models/admin/setting.rb:117
+#: app/models/admin/setting.rb:119
 msgid "Admin::Setting|Custom password strength validation message description"
 msgstr ""
 "Provide the error message for validation error when you use custom password "
@@ -1165,84 +1174,84 @@ msgstr ""
 "don't want users to change their profile pictures (e.g. set profile pictures "
 "by administrator)."
 
-#: app/models/admin/setting.rb:118
+#: app/models/admin/setting.rb:120
 msgid "Admin::Setting|Enable login keyphrase"
 msgstr "Enable Login Keyphrase"
 
-#: app/models/admin/setting.rb:119
+#: app/models/admin/setting.rb:121
 msgid "Admin::Setting|Enable login keyphrase description"
 msgstr ""
 "Adds a login keyphrase to the login form. Login ID, password and login "
 "keyphrase must match for successful login."
 
-#: app/models/admin/setting.rb:101
+#: app/models/admin/setting.rb:103
 msgid "Admin::Setting|Enable password periodic change"
 msgstr "Enable Fixed-term Passwords"
 
-#: app/models/admin/setting.rb:102
+#: app/models/admin/setting.rb:104
 msgid "Admin::Setting|Enable password periodic change description"
 msgstr ""
 "Check to disallow users with expired passwords to login. Passwords must be "
 "reset before login."
 
-#: app/models/admin/setting.rb:126
+#: app/models/admin/setting.rb:128
 msgid "Admin::Setting|Enable single session"
 msgstr "Enable Single Session"
 
-#: app/models/admin/setting.rb:127
+#: app/models/admin/setting.rb:129
 msgid "Admin::Setting|Enable single session description"
 msgstr ""
 "Check to disallow multiple sessions per user. The old login session will be "
 "disabled when a new login session starts (remote logout when forgot to "
 "logout). Uncheck to allow multiple sessions."
 
-#: app/models/admin/setting.rb:122
+#: app/models/admin/setting.rb:124
 msgid "Admin::Setting|Enable user cleaning notification"
 msgstr "Send User Data Cleaning Notification"
 
-#: app/models/admin/setting.rb:123
+#: app/models/admin/setting.rb:125
 msgid "Admin::Setting|Enable user cleaning notification description"
 msgstr ""
 "Check to enable email notification for periodic user data cleaning (user "
 "retirement etc.) to the system administrator."
 
-#: app/models/admin/setting.rb:97
+#: app/models/admin/setting.rb:99
 msgid "Admin::Setting|Enable user lock"
 msgstr "Lock Accounts on Login Failures"
 
-#: app/models/admin/setting.rb:98
+#: app/models/admin/setting.rb:100
 msgid "Admin::Setting|Enable user lock description"
 msgstr ""
 "Lock accounts that failed to login for certain times (can be set on "
 "administration screen). Users need to unlock the account by resetting their "
 "passwords."
 
-#: app/models/admin/setting.rb:47
+#: app/models/admin/setting.rb:49
 msgid "Admin::Setting|Footer first"
 msgstr "First Line of Footer"
 
-#: app/models/admin/setting.rb:48
+#: app/models/admin/setting.rb:50
 msgid "Admin::Setting|Footer first description"
 msgstr ""
 "Message to be shown at the first line of footer. It is recommended to put "
 "often-used links here. HTML tags are allowed.<p style=\"color:red;\">You can "
 "also use JavaScript etc. but remember to take care of security issues.</p>"
 
-#: app/models/admin/setting.rb:51
+#: app/models/admin/setting.rb:53
 msgid "Admin::Setting|Footer image link url"
 msgstr "Footer Image link URL"
 
-#: app/models/admin/setting.rb:52
+#: app/models/admin/setting.rb:54
 msgid "Admin::Setting|Footer image link url description"
 msgstr ""
 "The URL to jump to when clicking on the image at the right of the footer "
 "(image file can be changed from \"Images\" tab)."
 
-#: app/models/admin/setting.rb:49
+#: app/models/admin/setting.rb:51
 msgid "Admin::Setting|Footer second"
 msgstr "Second Line of Footer"
 
-#: app/models/admin/setting.rb:50
+#: app/models/admin/setting.rb:52
 msgid "Admin::Setting|Footer second description"
 msgstr ""
 "Message to be shown at the secibd line of footer. It is recommended to put "
@@ -1250,11 +1259,11 @@ msgstr ""
 "are allowed.<p style=\"color:red;\">You can also use JavaScript etc. but "
 "remember to take care of security issues.</p>"
 
-#: app/models/admin/setting.rb:41
+#: app/models/admin/setting.rb:43
 msgid "Admin::Setting|Help url"
 msgstr "Help URL"
 
-#: app/models/admin/setting.rb:42
+#: app/models/admin/setting.rb:44
 msgid "Admin::Setting|Help url description"
 msgstr ""
 "The URL for the link to online help shown at the right-top corner. The link "
@@ -1268,92 +1277,92 @@ msgstr "Hide Email Address"
 msgid "Admin::Setting|Hide email description"
 msgstr "Check to hide email address of users. Uncheck to show."
 
-#: app/models/admin/setting.rb:75
+#: app/models/admin/setting.rb:77
 msgid "Admin::Setting|Host and port"
 msgstr "Hostname and Port"
 
-#: app/models/admin/setting.rb:76
+#: app/models/admin/setting.rb:78
 msgid "Admin::Setting|Host and port description"
 msgstr ""
 "The hostname and port used for URLs in email notification. It does not "
 "affect the URL for accessing the system."
 
-#: app/models/admin/setting.rb:43
+#: app/models/admin/setting.rb:45
 msgid "Admin::Setting|Initial anntena"
 msgstr "Initial Antenna"
 
-#: app/models/admin/setting.rb:44
+#: app/models/admin/setting.rb:46
 msgid "Admin::Setting|Initial anntena description"
 msgstr "Provide the name of the antenna registered initially for a new user."
 
-#: app/models/admin/setting.rb:45
+#: app/models/admin/setting.rb:47
 msgid "Admin::Setting|Login account"
 msgstr "Name for \"Login ID\""
 
-#: app/models/admin/setting.rb:46
+#: app/models/admin/setting.rb:48
 msgid "Admin::Setting|Login account description"
 msgstr ""
 "You can customize the name of \"Login ID\" to prevent users from forgetting "
 "their \"Login ID\". (e.g. set it to \"Employee No.\" in case you use "
 "employee number as \"Login ID\"."
 
-#: app/models/admin/setting.rb:120 app/views/shared/_login_form.html.erb:39
+#: app/models/admin/setting.rb:122 app/views/shared/_login_form.html.erb:39
 msgid "Admin::Setting|Login keyphrase"
 msgstr "Login Keyphrase"
 
-#: app/models/admin/setting.rb:121
+#: app/models/admin/setting.rb:123
 msgid "Admin::Setting|Login keyphrase description"
 msgstr "Provide login keyphrase in alpha-numericals."
 
-#: app/models/admin/setting.rb:59
+#: app/models/admin/setting.rb:61
 msgid "Admin::Setting|Mail function setting"
 msgstr "Enable Email Function"
 
-#: app/models/admin/setting.rb:60
+#: app/models/admin/setting.rb:62
 msgid "Admin::Setting|Mail function setting description"
 msgstr ""
 "System email notifications are available. Remember to set SMTP settings as "
 "well."
 
-#: app/models/admin/setting.rb:83
+#: app/models/admin/setting.rb:85
 msgid "Admin::Setting|Mypage feed default limit"
 msgstr "Entries Per Feed"
 
-#: app/models/admin/setting.rb:84
+#: app/models/admin/setting.rb:86
 msgid "Admin::Setting|Mypage feed default limit description"
 msgstr ""
 "Summaries of RSS feed entries are shown in the feed block at the right of "
 "\"My Page\". Adjust to get optimal display result."
 
-#: app/models/admin/setting.rb:87
+#: app/models/admin/setting.rb:89
 msgid "Admin::Setting|Mypage feed settings"
 msgstr "Add / Delete RSS Feeds"
 
-#: app/models/admin/setting.rb:88
+#: app/models/admin/setting.rb:90
 msgid "Admin::Setting|Mypage feed settings description"
 msgstr "Set the RSS feeds shown in \"My Page\"."
 
-#: app/models/admin/setting.rb:91
+#: app/models/admin/setting.rb:93
 msgid "Admin::Setting|Mypage feed settings title"
 msgstr "Title of RSS Feed"
 
-#: app/models/admin/setting.rb:92
+#: app/models/admin/setting.rb:94
 msgid "Admin::Setting|Mypage feed settings title description"
 msgstr "Provide the title of RSS feed."
 
-#: app/models/admin/setting.rb:89
+#: app/models/admin/setting.rb:91
 msgid "Admin::Setting|Mypage feed settings url"
 msgstr "RSS Feed URL"
 
-#: app/models/admin/setting.rb:90
+#: app/models/admin/setting.rb:92
 msgid "Admin::Setting|Mypage feed settings url description"
 msgstr "Provide the URL of RSS feed."
 
-#: app/models/admin/setting.rb:85
+#: app/models/admin/setting.rb:87
 msgid "Admin::Setting|Mypage feed timeout"
 msgstr "RSS Feeds Timeout (sec)"
 
-#: app/models/admin/setting.rb:86
+#: app/models/admin/setting.rb:88
 msgid "Admin::Setting|Mypage feed timeout description"
 msgstr ""
 "There may be problem retrieving the feed since it is located outside of the "
@@ -1363,21 +1372,21 @@ msgstr ""
 msgid "Admin::Setting|Name"
 msgstr " "
 
-#: app/models/admin/setting.rb:103
+#: app/models/admin/setting.rb:105
 msgid "Admin::Setting|Password change interval"
 msgstr "Valid Duration of Passwords"
 
-#: app/models/admin/setting.rb:104
+#: app/models/admin/setting.rb:106
 msgid "Admin::Setting|Password change interval description"
 msgstr ""
 "Set the valid duration of passwords in days. The password expiry days will "
 "be set to the days set after user registration / password update."
 
-#: app/models/admin/setting.rb:105
+#: app/models/admin/setting.rb:107
 msgid "Admin::Setting|Password strength"
 msgstr ""
 
-#: app/models/admin/setting.rb:106
+#: app/models/admin/setting.rb:108
 msgid "Admin::Setting|Password strength description"
 msgstr ""
 "Here we set the password strength.<p>Low: Needs 6 or more alpha-numericals "
@@ -1388,117 +1397,117 @@ msgstr ""
 "letter and 1 number in the password.</p><p>Custom: You can define your own "
 "password strength definistion using regular expression.</p>"
 
-#: app/models/admin/setting.rb:269
+#: app/models/admin/setting.rb:271
 msgid "Admin::Setting|Password strength|Validation message "
 msgstr " "
 
-#: app/models/admin/setting.rb:108
+#: app/models/admin/setting.rb:110
 msgid "Admin::Setting|Password strength|Validation message high"
 msgstr ""
 "needs 8 or more alpha-numericals and symbols (!@#$%^&*?_~). There must also "
 "be at least 1 upper case letter, 1 lower case letter, 1 number and 1 symbol "
 "in the password."
 
-#: app/models/admin/setting.rb:112
+#: app/models/admin/setting.rb:114
 msgid "Admin::Setting|Password strength|Validation message low"
 msgstr "needs 6 or more alpha-numericals and symbols (!@#$%^&*?_~)."
 
-#: app/models/admin/setting.rb:110 app/models/admin/setting.rb:272
+#: app/models/admin/setting.rb:112 app/models/admin/setting.rb:274
 msgid "Admin::Setting|Password strength|Validation message middle"
 msgstr ""
 "needs 8 or more alpha-numericals and symbols (!@#$%^&*?_~). There must also "
 "be at least 1 upper case letter, 1 lower case letter and 1 number in the "
 "password."
 
-#: app/models/admin/setting.rb:113
+#: app/models/admin/setting.rb:115
 msgid "Admin::Setting|Password strength|custom"
 msgstr "Custom"
 
-#: app/models/admin/setting.rb:107
+#: app/models/admin/setting.rb:109
 msgid "Admin::Setting|Password strength|high"
 msgstr "High"
 
-#: app/models/admin/setting.rb:111
+#: app/models/admin/setting.rb:113
 msgid "Admin::Setting|Password strength|low"
 msgstr "Low"
 
-#: app/models/admin/setting.rb:109
+#: app/models/admin/setting.rb:111
 msgid "Admin::Setting|Password strength|middle"
 msgstr "Middle"
 
-#: app/models/admin/setting.rb:53
+#: app/models/admin/setting.rb:55
 msgid "Admin::Setting|Point button"
 msgstr "Name of Poin Button"
 
-#: app/models/admin/setting.rb:54
+#: app/models/admin/setting.rb:56
 msgid "Admin::Setting|Point button description"
 msgstr "You can change the name of point button for blogs and BBS."
 
-#: app/models/admin/setting.rb:77
+#: app/models/admin/setting.rb:79
 msgid "Admin::Setting|Protocol"
 msgstr ""
 
-#: app/models/admin/setting.rb:78
+#: app/models/admin/setting.rb:80
 msgid "Admin::Setting|Protocol description"
 msgstr ""
 "The protocol used for URLs in email notification. It does not affect the URL "
 "for accessing the system."
 
-#: app/models/admin/setting.rb:61
+#: app/models/admin/setting.rb:63
 msgid "Admin::Setting|Smtp settings"
 msgstr "SMTP Settings"
 
-#: app/models/admin/setting.rb:69
+#: app/models/admin/setting.rb:71
 msgid "Admin::Setting|Smtp settings address"
 msgstr "SMTP Server"
 
-#: app/models/admin/setting.rb:70
+#: app/models/admin/setting.rb:72
 msgid "Admin::Setting|Smtp settings address description"
 msgstr "Provide the hostname of SMTP server."
 
-#: app/models/admin/setting.rb:73
+#: app/models/admin/setting.rb:75
 msgid "Admin::Setting|Smtp settings authentication"
 msgstr "AUTH Type"
 
-#: app/models/admin/setting.rb:74
+#: app/models/admin/setting.rb:76
 msgid "Admin::Setting|Smtp settings authentication description"
 msgstr ""
 "Select appropriate type of authentication in case your server requires it. "
 "Available options are plain, login and cram_md5."
 
-#: app/models/admin/setting.rb:62
+#: app/models/admin/setting.rb:64
 msgid "Admin::Setting|Smtp settings description"
 msgstr "Here we set the SMTP options."
 
-#: app/models/admin/setting.rb:71
+#: app/models/admin/setting.rb:73
 msgid "Admin::Setting|Smtp settings domain"
 msgstr "Sender Domain"
 
-#: app/models/admin/setting.rb:72
+#: app/models/admin/setting.rb:74
 msgid "Admin::Setting|Smtp settings domain description"
 msgstr "Provide the sender domain. It will be shown in the mail header."
 
-#: app/models/admin/setting.rb:63
+#: app/models/admin/setting.rb:65
 msgid "Admin::Setting|Smtp settings password"
 msgstr "Password"
 
-#: app/models/admin/setting.rb:64
+#: app/models/admin/setting.rb:66
 msgid "Admin::Setting|Smtp settings password description"
 msgstr "Provide the password in case your server requires authentication."
 
-#: app/models/admin/setting.rb:65
+#: app/models/admin/setting.rb:67
 msgid "Admin::Setting|Smtp settings port"
 msgstr "Port"
 
-#: app/models/admin/setting.rb:66
+#: app/models/admin/setting.rb:68
 msgid "Admin::Setting|Smtp settings port description"
 msgstr "Provide the port number."
 
-#: app/models/admin/setting.rb:67
+#: app/models/admin/setting.rb:69
 msgid "Admin::Setting|Smtp settings user name"
 msgstr "User Name"
 
-#: app/models/admin/setting.rb:68
+#: app/models/admin/setting.rb:70
 msgid "Admin::Setting|Smtp settings user name description"
 msgstr "Provide the user name in case your server requires authentication."
 
@@ -1516,11 +1525,11 @@ msgstr ""
 msgid "Admin::Setting|Updated at"
 msgstr ""
 
-#: app/models/admin/setting.rb:124
+#: app/models/admin/setting.rb:126
 msgid "Admin::Setting|User cleaning notification interval"
 msgstr "User Data Cleaning Notification Interval (mo.)"
 
-#: app/models/admin/setting.rb:125
+#: app/models/admin/setting.rb:127
 msgid "Admin::Setting|User cleaning notification interval description"
 msgstr ""
 "Provide the interval for sending user data cleaning notification emails. "
@@ -1528,11 +1537,11 @@ msgstr ""
 "value (e.g. 1st of March, June, September and December when the value is set "
 "to 3)."
 
-#: app/models/admin/setting.rb:99
+#: app/models/admin/setting.rb:101
 msgid "Admin::Setting|User lock trial limit"
 msgstr "Login Failure Limit"
 
-#: app/models/admin/setting.rb:100
+#: app/models/admin/setting.rb:102
 msgid "Admin::Setting|User lock trial limit description"
 msgstr ""
 "Set the maximum allowed login failures before user accounts get locked."
@@ -2814,7 +2823,7 @@ msgstr ""
 msgid "Current Password"
 msgstr ""
 
-#: app/controllers/admin/settings_controller.rb:39
+#: app/controllers/admin/settings_controller.rb:41
 msgid "Current disk usage"
 msgstr ""
 
@@ -2830,7 +2839,7 @@ msgstr ""
 msgid "Customize"
 msgstr ""
 
-#: app/views/admin/documents/index.html.erb:30
+#: app/views/admin/documents/index.html.erb:19
 msgid "Customize the document template to fit your usage.<br />"
 msgstr ""
 
@@ -2882,6 +2891,7 @@ msgstr ""
 msgid "Default entry edit mode"
 msgstr ""
 
+#: app/views/antenna/_antenna_item.html.erb:2
 #: app/views/board_entries/_board_entry_comment.html.erb:15
 #: app/views/bookmark/list.html.erb:68 app/views/bookmark/show.html.erb:31
 msgid "Delete"
@@ -2889,10 +2899,6 @@ msgstr ""
 
 #: app/views/admin/group_categories/index.html.erb:9
 msgid "Delete all the groups under the group category before you delete it."
-msgstr ""
-
-#: app/views/antenna/_antenna_item.html.erb:2
-msgid "Delete)).to_s); _erbout.concat "
 msgstr ""
 
 #: app/controllers/admin/group_categories_controller.rb:28
@@ -2932,8 +2938,8 @@ msgstr ""
 msgid "Diary"
 msgstr ""
 
-#: app/controllers/admin/settings_controller.rb:51
-#: app/controllers/admin/settings_controller.rb:60
+#: app/controllers/admin/settings_controller.rb:53
+#: app/controllers/admin/settings_controller.rb:62
 msgid "Disable"
 msgstr ""
 
@@ -3281,7 +3287,7 @@ msgstr ""
 msgid "Failed to save one-time code."
 msgstr ""
 
-#: app/controllers/admin/documents_controller.rb:86
+#: app/controllers/admin/documents_controller.rb:101
 msgid "Failed to save the content.  Try again or contact administrator."
 msgstr ""
 
@@ -3322,6 +3328,7 @@ msgstr ""
 msgid "Female"
 msgstr ""
 
+#: app/controllers/share_file_controller.rb:47
 #: app/views/share_file/new.html.erb:69
 #: app/views/share_file/new_ajax_upload.html.erb:27
 msgid "File"
@@ -3437,7 +3444,7 @@ msgstr ""
 msgid "Full-text Search"
 msgstr ""
 
-#: app/controllers/admin/settings_controller.rb:57
+#: app/controllers/admin/settings_controller.rb:59
 msgid "Functional Settings"
 msgstr ""
 
@@ -4611,7 +4618,7 @@ msgstr ""
 msgid "Not Accept"
 msgstr ""
 
-#: app/controllers/admin/settings_controller.rb:65
+#: app/controllers/admin/settings_controller.rb:67
 msgid "Not Specified"
 msgstr ""
 
@@ -5533,7 +5540,7 @@ msgstr ""
 msgid "See if your friend's already there..."
 msgstr ""
 
-#: app/views/admin/documents/index.html.erb:33
+#: app/views/admin/documents/index.html.erb:22
 msgid "Select a page to edit from the menu on left."
 msgstr ""
 
@@ -5612,7 +5619,7 @@ msgstr ""
 msgid "Setting / Administration"
 msgstr "Sys Admin"
 
-#: app/controllers/admin/settings_controller.rb:90
+#: app/controllers/admin/settings_controller.rb:92
 msgid "Settings were saved successfully."
 msgstr ""
 
@@ -5703,7 +5710,7 @@ msgstr ""
 msgid "Shared Files"
 msgstr ""
 
-#: app/controllers/admin/settings_controller.rb:38
+#: app/controllers/admin/settings_controller.rb:40
 msgid "Shared Files Settings"
 msgstr ""
 
@@ -5772,7 +5779,7 @@ msgstr ""
 msgid "Showing options from previously registered values"
 msgstr ""
 
-#: app/controllers/admin/settings_controller.rb:40
+#: app/controllers/admin/settings_controller.rb:42
 msgid ""
 "Showing the total capacity permitted for shared files versus current disk "
 "usage of shared files."
@@ -6055,7 +6062,7 @@ msgstr "Sys Admin"
 msgid "System Info"
 msgstr ""
 
-#: app/controllers/admin/settings_controller.rb:64
+#: app/controllers/admin/settings_controller.rb:66
 msgid "System Operation"
 msgstr ""
 
@@ -6201,7 +6208,7 @@ msgid ""
 "the request with another address."
 msgstr ""
 
-#: app/views/admin/documents/index.html.erb:29
+#: app/views/admin/documents/index.html.erb:18
 msgid "The system provides online document for inexperienced users.<br />"
 msgstr ""
 
@@ -6440,7 +6447,7 @@ msgid ""
 msgstr ""
 
 #: app/controllers/admin/documents_controller.rb:38
-#: app/controllers/admin/documents_controller.rb:89
+#: app/controllers/admin/documents_controller.rb:104
 #: app/controllers/admin/images_controller.rb:154
 msgid "Unexpected error occured. Contact administrator."
 msgstr ""
@@ -6498,7 +6505,7 @@ msgstr ""
 msgid "Updated."
 msgstr ""
 
-#: app/views/collaboration_app/_feeds.html.erb:8
+#: app/views/collaboration_app/_feeds.html.erb:9
 msgid "Updates from %{provider}"
 msgstr ""
 
@@ -7491,7 +7498,7 @@ msgstr ""
 msgid "[Last]"
 msgstr ""
 
-#: app/models/board_entry.rb:659
+#: app/models/board_entry.rb:661
 msgid "[Link does not exist...%s>]"
 msgstr ""
 
@@ -7587,7 +7594,7 @@ msgstr ""
 msgid "[Search Users]"
 msgstr ""
 
-#: app/views/collaboration_app/_feeds.html.erb:13
+#: app/views/collaboration_app/_feeds.html.erb:14
 #: app/views/user/show.html.erb:26 app/views/user/show.html.erb:111
 #: app/views/user/_postit_cloud.html.erb:5
 msgid "[See all]"
@@ -7964,7 +7971,7 @@ msgstr ""
 msgid "required"
 msgstr ""
 
-#: app/models/admin/setting.rb:160
+#: app/models/admin/setting.rb:162
 msgid "requires a valid regular expression."
 msgstr ""
 
