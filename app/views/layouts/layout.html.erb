@@ -14,7 +14,7 @@
   <%= skip_stylesheet_link_tag 'nyroModal.full.css' %>
   <%= skip_stylesheet_link_tag 'jquery.autocomplete.css' %>
   <%= skip_stylesheet_link_tag "jquery.cluetip.css" %>
-  <link rel="stylesheet" type="text/css" href="http://extjs.cachefly.net/ext-2.2.1/resources/css/ext-all.css" />
+  <%= stylesheet_link_tag "ext-all.css" %>
   <%= yield :stylesheet %>
 </head>
 
@@ -88,7 +88,7 @@
 <%= skip_javascript_include_tag 'ufo' %>
 <%= javascript_include_tag 'application' %>
 <%= skip_javascript_include_tag 'skip_util' %>
-<script type="text/javascript" src="http://extjs.cachefly.net/builds/ext-cdn-778.js"></script>
+<%= javascript_include_tag "ext-cdn-778.js" %>
 <script type="text/javascript">
 var relative_url_root = '<%= controller.request.relative_url_root -%>';
 $j(function(){
