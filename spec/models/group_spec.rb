@@ -171,7 +171,7 @@ describe Group do
     end
   end
 
-  describe Group, "#logical_after_destroy グループに掲示板と共有ファイルがある場合" do
+  describe Group, "#logical_after_destroy グループに掲示板、掲示板コメント、共有ファイルがある場合" do
     fixtures :groups, :board_entries, :share_files, :users, :user_uids
     before(:each) do
       @group = groups(:a_protected_group1)
@@ -181,6 +181,7 @@ describe Group do
       @board_entry.entry_type = BoardEntry::GROUP_BBS
       @board_entry.category = @board_entry.comma_category
       @board_entry.save!
+      @board_entry.board_entry_comments.create! :contents => 'contents', :user => create_user
 
       @share_file.owner_symbol = @group.symbol
       @share_file.stub!(:updatable?).and_return(true)
@@ -190,6 +191,7 @@ describe Group do
 
     it { lambda { @group.logical_destroy }.should change(BoardEntry, :count).by(-1) }
     it { lambda { @group.logical_destroy }.should change(ShareFile, :count).by(-1) }
+    it { lambda { @group.logical_destroy }.should change(BoardEntryComment, :count).by(-1) }
   end
 
   describe Group, "count_by_category" do

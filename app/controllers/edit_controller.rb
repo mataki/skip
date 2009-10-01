@@ -226,7 +226,8 @@ class EditController < ApplicationController
     # 権限チェック
     redirect_to_with_deny_auth and return unless authorize_to_edit_board_entry? @board_entry
 
-    # FIXME Rails2.3.2のバグで関連コメントがある場合に常にStaleObjectErrorとなっていまう件の暫定対応
+    # FIXME [#855][#907]Rails2.3.2のバグでcounter_cacheと:dependent => destoryを併用すると常にStaleObjectErrorとなる
+    # SKIPではBoardEntryとBoardEntryCommentの関係が該当する。Rails2.3.5でFixされたら以下を修正すること
     # 詳細は http://dev.openskip.org/redmine/issues/show/855
     @board_entry.board_entry_comments.destroy_all
     @board_entry.reload

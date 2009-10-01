@@ -130,7 +130,12 @@ class Group < ActiveRecord::Base
 
   # グループに関連する情報の削除
   def after_logical_destroy
-    BoardEntry.destroy_all(["symbol = ?", self.symbol])
+    # FIXME [#855][#907]Rails2.3.2のバグでcounter_cacheと:dependent => destoryを併用すると常にStaleObjectErrorとなる
+    # SKIPではBoardEntryとBoardEntryCommentの関係が該当する。Rails2.3.5でFixされたら以下を修正すること
+    # 詳細は http://dev.openskip.org/redmine/issues/show/855
+    board_entry_ids = BoardEntry.scoped(:conditions => ['symbol = ?', self.symbol]).all.map(&:id)
+    BoardEntryComment.destroy_all(['board_entry_id in (?)', board_entry_ids])
+    BoardEntry.destroy_all(["id in (?)", board_entry_ids])
     ShareFile.destroy_all(["owner_symbol = ?", self.symbol])
   end
 
