@@ -203,6 +203,7 @@ module ApplicationHelper
   end
 
   def sanitize_and_unescape_for_richtext(content)
+    content.gsub!(/(?:<|&lt;)!--.*?--(?:>|&gt;)/, '')
     sanitize_style_with_whitelist(BoardEntry.unescape_href(content))
   end
 
