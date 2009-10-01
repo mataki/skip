@@ -121,16 +121,6 @@ describe BoardEntry do
     assert !@a_entry.valid?
   end
 
-  def test_after_save
-    @a_entry.category = ''
-    @a_entry.save
-    assert_equal @a_entry.entry_tags.size, 0
-
-    @a_entry.category = SkipFaker.comma_tags :qt => 2
-    @a_entry.save
-    assert_equal @a_entry.entry_tags.size, 2
-  end
-
 # FIXME テストを汎用化する
   def test_publication_users
     entry = BoardEntry.new(store_entry_params({ :user_id => @a_user.id,
@@ -208,6 +198,25 @@ private
       entry_template.store(key, value)
     end
     return entry_template
+  end
+end
+
+describe BoardEntry, '#after_save' do
+  describe 'タグの作成' do
+    describe 'タグが入力されていない場合' do
+      before do
+        @entry = create_board_entry :category => ''
+        @entry.save
+      end
+      it { @entry.entry_tags.size.should == 0 }
+    end
+    describe 'タグが入力されている場合' do
+      before do
+        @entry = create_board_entry :category => SkipFaker.comma_tags(:qt => 2)
+        @entry.save
+      end
+      it { @entry.entry_tags.size.should == 2 }
+    end
   end
 end
 
