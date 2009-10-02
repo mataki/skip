@@ -60,8 +60,11 @@ class UserController < ApplicationController
       options[:keyword] = params[:keyword]
 
       params[:sort_type] ||= "date"
-      if params[:sort_type] == "access"
+      case params[:sort_type]
+      when "access"
         order = "board_entry_points.access_count DESC"
+      when "point"
+        order = "board_entry_points.point DESC"
       end
 
       find_params = BoardEntry.make_conditions(login_user_symbols, options)

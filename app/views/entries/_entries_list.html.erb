@@ -25,16 +25,21 @@
 <div style=""><%= _("[Archive of %{month}/%{year}]") % {:year => h(year), :month => h(month)} -%></div>
 <% end -%>
 
-<% if pages and pages.item_count > 0 -%>
+<% if pages and pages.item_count > 0 %>
   <div class="navi" style="position: relative; _width: 100%">
     <div style="position: absolute; top:1px; left: 2px;">
-      <% if params[:sort_type] == "date" %>
-        <span style="font-weight: bold;"><%= _('[Sort by modified date]')%></span><%= link_to _("[Sort by access count]"), params.merge({:sort_type => "access"}) -%>
-      <% else %>
-        <%= link_to _("[Sort by modified date]"), params.merge({:sort_type => "date"}) -%><span style="font-weight: bold;"><%= _('[Sort by access]')%></span>
-      <% end %>
+      <%= _('Method of sort: ') %>
+      <%= link_to_unless_current _("[Sort by modified date]"), params.merge({:sort_type => "date"}) do
+          content_tag 'b', _('[Sort by modified date]')
+        end %>
+      <%= link_to_unless_current _("[Sort by access count]"), params.merge({:sort_type => "access"}) do
+          content_tag 'b', _('[Sort by access count]')
+        end %>
+      <%= link_to_unless_current [_("[Sort by %s]") % Admin::Setting.point_button], params.merge({:sort_type => "point"}) do
+          content_tag 'b', _("[Sort by %s]") % Admin::Setting.point_button
+        end %>
     </div>
-    <%= page_link(pages) -%>
+    <%= page_link(pages) %>
   </div>
 
   <div style="text-align: center;">
