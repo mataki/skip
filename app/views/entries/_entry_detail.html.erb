@@ -225,7 +225,7 @@
       </div>
     </div>
     <div class="information">
-      <div class="date"><%=h entry.diary_date %> <%=h entry.diary_author %>
+      <div class="date"><%=h entry.diary_date %> <%= "by #{user_link_to(entry.user)}" %>
         <span class="evaluation"><%= get_entry_infos(entry) -%></span>
       </div>
     </div>
