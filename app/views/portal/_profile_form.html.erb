@@ -9,6 +9,11 @@
         <%= label_tag "profile_value[#{master.id}]", h(master.name) %>
         <%# 下で2回 html_escape して、descriptionを表示しているのは、cluetipでアンエスケープが行なわれるため -%>
         <%= master.description.blank? ? '' : help_icon_tag(:content => h(h(master.description))) %>
+        <% if master.required %>
+          <div class="require">
+            (<%= _('required') %>)
+          </div>
+        <% end %>
       </th>
       <% profile = profile_hash[master.id] %>
       <td>
