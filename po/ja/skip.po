@@ -5018,7 +5018,7 @@ msgstr "activation_codeを上書きしました。初期管理者登録用URLは
 #: app/helpers/application_helper.rb:248 app/helpers/share_file_helper.rb:19
 #: app/views/board_entries/_form.html.erb:70
 msgid "Owner Only"
-msgstr "自分だけ"
+msgstr "下書き(自分だけに公開)"
 
 #: app/controllers/board_entries_controller.rb:61
 msgid "Parent comment could not be found. Try reloading the page."
