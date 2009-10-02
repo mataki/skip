@@ -8,13 +8,7 @@ module UserLayoutModule
       {:label => _('Groups Joined'), :options => {:controller => 'user', :action => 'group'}},
       {:label => _('Bookmarks'), :options => {:controller => 'bookmark', :action => 'list'}} ]
 
-    if user.id != current_user.id
-      if Chain.count(:conditions => ["from_user_id = ? and to_user_id = ?", current_user.id, user.id]) <= 0
-        tab_menu_source << {:label => _('Create introductions'), :options => {:controller => 'user', :action => 'new_chain'}}
-      else
-        tab_menu_source << {:label => _('Edit introductions'), :options => {:controller => 'user', :action => 'edit_chain'}}
-      end
-    else
+    if user.id == current_user.id
       tab_menu_source.unshift({:label => _('Home'), :options => {:controller => 'mypage', :action => 'index'}, :selected_actions => %w(index entries entries_by_date entries_by_antenna)})
       tab_menu_source << {:label => _('Footprints'), :options => {:controller => 'mypage', :action => 'trace'}}
       tab_menu_source << {:label => _('Admin'), :options => {:controller => 'mypage', :action => 'manage'}}

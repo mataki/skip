@@ -1,5 +1,8 @@
 <% content_for :contents_left do -%>
   <%= render(:partial => 'user/portrait_box', :locals => { :user => @user }) %>
+  <% unless @current_user.id == @user.id -%>
+    <%= render(:partial => 'user/action_box', :locals => { :against_chains => @against_chains, :user => @user }) %>
+  <% end -%>
   <div class="box_space" id="groups">
     <div class="box_space_title"><%= icon_tag('group') %><%= _('Groups Joined') %></div>
     <div class="box_space_body">
