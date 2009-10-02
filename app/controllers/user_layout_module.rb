@@ -2,7 +2,7 @@ module UserLayoutModule
   def user_tab_menu_source user
     tab_menu_source = [
       {:label => _('Profile'), :options => {:controller => 'user', :action => 'show'}},
-      {:label => _('Blog'), :options => {:controller => 'user', :action => 'blog'}},
+      {:label => _('Blog'), :options => {:controller => 'user', :action => 'blog', :archive => 'all'}},
       {:label => _('Shared Files'), :options => {:controller => 'share_file', :action => 'list'}},
       {:label => _('Socials'), :options => {:controller => 'user', :action => 'social'}},
       {:label => _('Groups Joined'), :options => {:controller => 'user', :action => 'group'}},
