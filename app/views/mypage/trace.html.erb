@@ -1,12 +1,21 @@
-<div class="desc">
-  <p><%= _("Showing total access count of all your pages and recent visitors (max. 30).<br/>\nOnly the newest access is shown in case a user has visited multiple times in a day.")%></p>
-</div>
-
-<div class="access_count"><%= _('Access Count: ')%><%= h @access_count %></div>
-
-<ul class="access_tracks">
-<% @access_tracks.each do |track| -%>
-  <li><%=h track.updated_on.strftime(_('%c - ')) %>
-  <%= user_link_to track.visitor %></li>
+<% content_for :contents_left do -%>
+  <%= render :partial => 'user/portrait_box', :locals => { :current_user_info => @current_user_info } %>
+  <%= render :partial => 'antenna_box', :locals => { :system_antennas => @system_antennas, :my_antennas => @my_antennas } %>
 <% end -%>
-</ul>
+
+<% content_for :contents_right do -%>
+  <div class="desc">
+    <p><%= _("Showing total access count of all your pages and recent visitors (max. 30).<br/>\nOnly the newest access is shown in case a user has visited multiple times in a day.")%></p>
+  </div>
+
+  <div class="access_count"><%= _('Access Count: ')%><%= h @access_count %></div>
+
+  <ul class="access_tracks">
+    <% @access_tracks.each do |track| -%>
+      <li>
+        <%=h track.updated_on.strftime(_('%c - ')) %>
+        <%= user_link_to track.visitor %>
+      </li>
+    <% end -%>
+  </ul>
+<% end -%>

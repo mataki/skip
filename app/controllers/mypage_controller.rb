@@ -490,7 +490,6 @@ class MypageController < ApplicationController
                          {:label => _('Socials'), :options => {:action => 'social'}},
                          {:label => _('Groups Joined'), :options => {:action => 'group'}},
                          {:label => _('Bookmarks'), :options => {:action => 'bookmark'}},
-                         {:label => _('Footprints'), :options => {:action => 'trace'}},
                          {:label => _('Admin'), :options => {:action => 'manage'}} ]
   end
 

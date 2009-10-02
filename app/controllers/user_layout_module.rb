@@ -10,7 +10,6 @@ module UserLayoutModule
 
     if user.id == current_user.id
       tab_menu_source.unshift({:label => _('Home'), :options => {:controller => 'mypage', :action => 'index'}, :selected_actions => %w(index entries entries_by_date entries_by_antenna)})
-      tab_menu_source << {:label => _('Footprints'), :options => {:controller => 'mypage', :action => 'trace'}}
       tab_menu_source << {:label => _('Admin'), :options => {:controller => 'mypage', :action => 'manage'}}
     end
     tab_menu_source
