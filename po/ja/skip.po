@@ -6047,7 +6047,7 @@ msgstr "これで、%s上のあなたのブックマークに登録されてい�
 #: app/controllers/mypage_controller.rb:490
 #: app/controllers/user_layout_module.rb:7
 msgid "Socials"
-msgstr "ソーシャル"
+msgstr "他己紹介"
 
 #: app/views/group/users.html.erb:9
 msgid "Sort by"
