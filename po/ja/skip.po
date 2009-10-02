@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-08-31 16:39+0800\n"
+"POT-Creation-Date: 2009-09-15 11:39+0800\n"
 "PO-Revision-Date: 2009-08-07 16:09+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -222,6 +222,7 @@ msgstr "%{name} は数字かハイフンで入力してください"
 msgid "%{name} contains value not in selectable options."
 msgstr "%{name} は選択される値以外のものが設定されています"
 
+#: app/controllers/share_file_controller.rb:47
 #: app/models/user_profile_master.rb:122 app/models/user_profile_master.rb:126
 #: app/models/user_profile_master.rb:150 app/models/user_profile_master.rb:187
 #: app/models/user_profile_master.rb:275 app/models/user_profile_master.rb:305
@@ -238,7 +239,7 @@ msgstr[0] "%{num}個のエラーが発生しました"
 msgid "%{rslt} to %{type}."
 msgstr "%{type}%{rslt}。"
 
-#: app/controllers/admin/documents_controller.rb:83
+#: app/controllers/admin/documents_controller.rb:98
 #: app/controllers/admin/images_controller.rb:148
 msgid "%{target} was successfully saved."
 msgstr "%{target}を保存しました。"
@@ -306,7 +307,7 @@ msgstr ""
 "（この画面は、直ダウンロードによるセキュリティ上の懸念を解消するために表示し"
 "ています）"
 
-#: app/models/board_entry.rb:541
+#: app/models/board_entry.rb:543
 msgid "(Unknown topic entry found. However, this has been ignored)"
 msgstr "（話題元の記事が不明でしたが無視しました）"
 
@@ -344,7 +345,7 @@ msgstr ""
 "＊編集をやり直す場合は、&quot;やり直し&quot;ボタンを、他の人の編集内容を上書"
 "きする場合は&quot;更新&quot;ボタンを押してください"
 
-#: app/views/admin/documents/index.html.erb:36
+#: app/views/admin/documents/index.html.erb:25
 msgid ""
 "*Input explanation in HTML format. Do not use codes that can cause security "
 "issues (e.g. javascripts)."
@@ -548,7 +549,7 @@ msgstr[0] "アクセス(%s)"
 msgid "Account Information"
 msgstr "アカウント情報"
 
-#: app/controllers/admin/settings_controller.rb:49
+#: app/controllers/admin/settings_controller.rb:51
 msgid "Account Settings"
 msgstr "アカウント関連"
 
@@ -744,7 +745,7 @@ msgstr "タイトル"
 msgid "Admin::Bookmark|Url"
 msgstr "URL"
 
-#: app/controllers/admin/documents_controller.rb:95
+#: app/controllers/admin/documents_controller.rb:110
 #: app/helpers/admin/application_helper.rb:25
 msgid "Admin::DocumentsController"
 msgstr "説明文設定"
@@ -1117,38 +1118,46 @@ msgstr "OpenID URL"
 msgid "Admin::Picture|File"
 msgstr "ファイル"
 
-#: app/controllers/admin/settings_controller.rb:22
+#: app/controllers/admin/settings_controller.rb:24
 #: app/helpers/admin/application_helper.rb:27
 msgid "Admin::SettingsController|feed"
 msgstr "RSSフィード設定"
 
-#: app/controllers/admin/settings_controller.rb:20
+#: app/controllers/admin/settings_controller.rb:22
 #: app/helpers/admin/application_helper.rb:23
 msgid "Admin::SettingsController|literal"
 msgstr "文言設定"
 
-#: app/controllers/admin/settings_controller.rb:21
+#: app/controllers/admin/settings_controller.rb:23
 #: app/helpers/admin/application_helper.rb:26
 msgid "Admin::SettingsController|mail"
 msgstr "メール関連設定"
 
-#: app/controllers/admin/settings_controller.rb:23
+#: app/controllers/admin/settings_controller.rb:21
 #: app/helpers/admin/application_helper.rb:21
 msgid "Admin::SettingsController|main"
 msgstr "全体設定"
 
-#: app/controllers/admin/settings_controller.rb:24
+#: app/controllers/admin/settings_controller.rb:25
 #: app/helpers/admin/application_helper.rb:28
 msgid "Admin::SettingsController|security"
 msgstr "セキュリティ設定"
 
-#: app/models/admin/setting.rb:37
+#: app/models/admin/setting.rb:39
 msgid "Admin::Setting|Abbr app title"
 msgstr "システムの名称"
 
-#: app/models/admin/setting.rb:38
+#: app/models/admin/setting.rb:40
 msgid "Admin::Setting|Abbr app title description"
 msgstr "各画面での用いるシステムの名称です。"
+
+#: app/models/admin/setting.rb:33
+msgid "Admin::Setting|Access record limit"
+msgstr "アクセス履歴の件数"
+
+#: app/models/admin/setting.rb:34
+msgid "Admin::Setting|Access record limit description"
+msgstr "アクセス履歴で表示する件数を設定します。"
 
 #: app/models/admin/setting.rb:29
 msgid "Admin::Setting|Activation lifetime"
@@ -1159,11 +1168,11 @@ msgid "Admin::Setting|Activation lifetime description"
 msgstr ""
 "サインアップURLを発行して有効期限切れになるまでの日数を選択して下さい。"
 
-#: app/models/admin/setting.rb:39
+#: app/models/admin/setting.rb:41
 msgid "Admin::Setting|Contact addr"
 msgstr "お問い合わせ先メールアドレス"
 
-#: app/models/admin/setting.rb:40
+#: app/models/admin/setting.rb:42
 msgid "Admin::Setting|Contact addr description"
 msgstr ""
 "ユーザから運営者への問い合わせ先メールアドレスです。システムからのメール送信"
@@ -1173,21 +1182,21 @@ msgstr ""
 msgid "Admin::Setting|Created at"
 msgstr "作成日時"
 
-#: app/models/admin/setting.rb:114
+#: app/models/admin/setting.rb:116
 msgid "Admin::Setting|Custom password strength regex"
 msgstr "パスワード強度の正規表現"
 
-#: app/models/admin/setting.rb:115
+#: app/models/admin/setting.rb:117
 msgid "Admin::Setting|Custom password strength regex description"
 msgstr ""
 "パスワード強度をユーザ定義とする場合にパスワードとして許可する文字列を許容す"
 "る正規表現を入力して下さい。"
 
-#: app/models/admin/setting.rb:116
+#: app/models/admin/setting.rb:118
 msgid "Admin::Setting|Custom password strength validation message"
 msgstr "パスワードの形式エラーメッセージ"
 
-#: app/models/admin/setting.rb:117
+#: app/models/admin/setting.rb:119
 msgid "Admin::Setting|Custom password strength validation message description"
 msgstr ""
 "パスワード強度をユーザ定義とする場合に許容されない文字列がパスワードとして入"
@@ -1205,32 +1214,32 @@ msgstr ""
 "が強制的に各々のユーザのプロフィール画像を設定したい場合はチェックを外して下"
 "さい。"
 
-#: app/models/admin/setting.rb:118
+#: app/models/admin/setting.rb:120
 msgid "Admin::Setting|Enable login keyphrase"
 msgstr "ログインキーフレーズを使う"
 
-#: app/models/admin/setting.rb:119
+#: app/models/admin/setting.rb:121
 msgid "Admin::Setting|Enable login keyphrase description"
 msgstr ""
 "ログインID, パスワードに加えて任意のキーフレーズをログインフォームに追加しま"
 "す。ログインID, パスワード、キーフレーズの3つが一致しない場合はログイン出来な"
 "いようになります。"
 
-#: app/models/admin/setting.rb:101
+#: app/models/admin/setting.rb:103
 msgid "Admin::Setting|Enable password periodic change"
 msgstr "パスワード定期変更機能を使う"
 
-#: app/models/admin/setting.rb:102
+#: app/models/admin/setting.rb:104
 msgid "Admin::Setting|Enable password periodic change description"
 msgstr ""
 "チェックするとパスワード有効期限切れになったユーザはログインが出来なくなりま"
 "す。ログインするにはパスワードを再設定しなければなりません。"
 
-#: app/models/admin/setting.rb:126
+#: app/models/admin/setting.rb:128
 msgid "Admin::Setting|Enable single session"
 msgstr "ログインできるブラウザを一つにする"
 
-#: app/models/admin/setting.rb:127
+#: app/models/admin/setting.rb:129
 msgid "Admin::Setting|Enable single session description"
 msgstr ""
 "チェックするとユーザ毎にログインできるブラウザ数を一つに制限します。あるブラ"
@@ -1238,53 +1247,53 @@ msgstr ""
 "時に遠隔ログアウト)されます。 複数のブラウザでのログインを許可したい場合は"
 "チェックを外して下さい。"
 
-#: app/models/admin/setting.rb:122
+#: app/models/admin/setting.rb:124
 msgid "Admin::Setting|Enable user cleaning notification"
 msgstr "クリーニング依頼メールを送る"
 
-#: app/models/admin/setting.rb:123
+#: app/models/admin/setting.rb:125
 msgid "Admin::Setting|Enable user cleaning notification description"
 msgstr ""
 "チェックすると定期的にユーザのクリーニング(ユーザの退職処理等)を促すメールを"
 "システム運用担当者に送信します。"
 
-#: app/models/admin/setting.rb:97
+#: app/models/admin/setting.rb:99
 msgid "Admin::Setting|Enable user lock"
 msgstr "ログイン失敗でロックする"
 
-#: app/models/admin/setting.rb:98
+#: app/models/admin/setting.rb:100
 msgid "Admin::Setting|Enable user lock description"
 msgstr ""
 "既定回数(管理画面で設定可)だけログインに失敗したユーザをロックしてログイン出"
 "来ないようにします。ロックを解除するには、対象ユーザがパスワード再設定機能を"
 "使ってパスワードを再設定しなければなりません。"
 
-#: app/models/admin/setting.rb:47
+#: app/models/admin/setting.rb:49
 msgid "Admin::Setting|Footer first"
 msgstr "フッターの１行目"
 
-#: app/models/admin/setting.rb:48
+#: app/models/admin/setting.rb:50
 msgid "Admin::Setting|Footer first description"
 msgstr ""
 "フッターの１行目に表示されます。よく使うリンクを指定するのがお勧めです。HTML"
 "のタグをそのまま記述できます。<p style=\"color:red;\">JavaScript等を記述する"
 "ことも可能ですが、記述の際はセキュリティ上の問題に十分注意して下さい。</p>"
 
-#: app/models/admin/setting.rb:51
+#: app/models/admin/setting.rb:53
 msgid "Admin::Setting|Footer image link url"
 msgstr "フッターの画像リンクURL"
 
-#: app/models/admin/setting.rb:52
+#: app/models/admin/setting.rb:54
 msgid "Admin::Setting|Footer image link url description"
 msgstr ""
 "フッターの右端に表示される画像をクリックした際に移動する先のURLです（画像ファ"
 "イルの変更は、画像設定タブからできます）"
 
-#: app/models/admin/setting.rb:49
+#: app/models/admin/setting.rb:51
 msgid "Admin::Setting|Footer second"
 msgstr "フッターの２行目"
 
-#: app/models/admin/setting.rb:50
+#: app/models/admin/setting.rb:52
 msgid "Admin::Setting|Footer second description"
 msgstr ""
 "フッターの２行目に表示されます。問い合わせ先窓口となる、TEL or メールアドレ"
@@ -1292,11 +1301,11 @@ msgstr ""
 "す。<p style=\"color:red;\">JavaScript等を記述することも可能ですが、記述の際"
 "はセキュリティ上の問題に十分注意して下さい。</p>"
 
-#: app/models/admin/setting.rb:41
+#: app/models/admin/setting.rb:43
 msgid "Admin::Setting|Help url"
 msgstr "ヘルプのURL"
 
-#: app/models/admin/setting.rb:42
+#: app/models/admin/setting.rb:44
 msgid "Admin::Setting|Help url description"
 msgstr "画面右上のヘルプ用です。何も入力しない場合、リンクが表示されません。"
 
@@ -1310,99 +1319,91 @@ msgstr ""
 "チェックするとユーザのメールアドレスが非表示になります。チェックを外すとユー"
 "ザのメールアドレスが表示されます。"
 
-#: app/models/admin/setting.rb:33
-msgid "Admin::Setting|Access record limit"
-msgstr "アクセス履歴の件数"
-
-#: app/models/admin/setting.rb:34
-msgid "Admin::Setting|Access record limit description"
-msgstr "アクセス履歴で表示する件数を設定します。"
-
-#: app/models/admin/setting.rb:75
+#: app/models/admin/setting.rb:77
 msgid "Admin::Setting|Host and port"
 msgstr "サーバのホストとポート"
 
-#: app/models/admin/setting.rb:76
+#: app/models/admin/setting.rb:78
 msgid "Admin::Setting|Host and port description"
 msgstr ""
 "メール送信時に本文にリンクとして記載されるURLのホスト名とポートを設定します。"
 "システムにアクセスするURLには影響しません。"
 
-#: app/models/admin/setting.rb:43
+#: app/models/admin/setting.rb:45
 msgid "Admin::Setting|Initial anntena"
 msgstr "初期登録するアンテナ名"
 
-#: app/models/admin/setting.rb:44
+#: app/models/admin/setting.rb:46
 msgid "Admin::Setting|Initial anntena description"
 msgstr ""
 "ユーザ登録時に、アンテナを予め1つ登録しておけます。その名前を記述して下さい。"
 
-#: app/models/admin/setting.rb:45
+#: app/models/admin/setting.rb:47
 msgid "Admin::Setting|Login account"
 msgstr "ログインIDの名称"
 
-#: app/models/admin/setting.rb:46
+#: app/models/admin/setting.rb:48
 msgid "Admin::Setting|Login account description"
 msgstr ""
 "例えば、社員番号をログインIDに使っている場合、「社員番号」に変更しておくと、"
 "ユーザがログインIDを忘れにくくなります。"
 
-#: app/models/admin/setting.rb:120 app/views/shared/_login_form.html.erb:39
+#: app/models/admin/setting.rb:122 app/views/shared/_login_form.html.erb:39
 msgid "Admin::Setting|Login keyphrase"
 msgstr "ログインキーフレーズ"
 
-#: app/models/admin/setting.rb:121
+#: app/models/admin/setting.rb:123
 msgid "Admin::Setting|Login keyphrase description"
 msgstr "ログインキーフレーズを英数字で設定します。"
 
-#: app/models/admin/setting.rb:59
+#: app/models/admin/setting.rb:61
 msgid "Admin::Setting|Mail function setting"
 msgstr "メール機能を有効にする"
 
-#: app/models/admin/setting.rb:60
+#: app/models/admin/setting.rb:62
 msgid "Admin::Setting|Mail function setting description"
 msgstr "システムから連絡メールが送信できます。併せてSMTP設定を行ってください。"
 
-#: app/models/admin/setting.rb:83
+#: app/models/admin/setting.rb:85
 msgid "Admin::Setting|Mypage feed default limit"
 msgstr "1フィードあたりのサマリの件数"
 
-#: app/models/admin/setting.rb:84
+#: app/models/admin/setting.rb:86
 msgid "Admin::Setting|Mypage feed default limit description"
 msgstr ""
 "マイページの右側にフィードブロックがあり、中にサマリを表示しています。ここ"
 "で、1フィードあたりのサマリの件数を調整し、マイページでの見映えを確認して下さ"
 "い。"
 
-#: app/models/admin/setting.rb:87
+#: app/models/admin/setting.rb:89
 msgid "Admin::Setting|Mypage feed settings"
 msgstr "フィードを追加/削除する"
 
-#: app/models/admin/setting.rb:88
+#: app/models/admin/setting.rb:90
 msgid "Admin::Setting|Mypage feed settings description"
 msgstr "マイページに表示するフィードの設定を行います。"
 
-#: app/models/admin/setting.rb:91
+#: app/models/admin/setting.rb:93
 msgid "Admin::Setting|Mypage feed settings title"
 msgstr "フィードのタイトル"
 
-#: app/models/admin/setting.rb:92
+#: app/models/admin/setting.rb:94
 msgid "Admin::Setting|Mypage feed settings title description"
 msgstr "フィードタイトルを指定します。"
 
-#: app/models/admin/setting.rb:89
+#: app/models/admin/setting.rb:91
 msgid "Admin::Setting|Mypage feed settings url"
 msgstr "フィードのURL"
 
-#: app/models/admin/setting.rb:90
+#: app/models/admin/setting.rb:92
 msgid "Admin::Setting|Mypage feed settings url description"
 msgstr "取得するフィードのURLを指定します。"
 
-#: app/models/admin/setting.rb:85
+#: app/models/admin/setting.rb:87
 msgid "Admin::Setting|Mypage feed timeout"
 msgstr "フィード取得のタイムアウト(秒)"
 
-#: app/models/admin/setting.rb:86
+#: app/models/admin/setting.rb:88
 msgid "Admin::Setting|Mypage feed timeout description"
 msgstr ""
 "フィードは、このシステム外にあるため、取得できない場合があります。タイムアウ"
@@ -1412,21 +1413,21 @@ msgstr ""
 msgid "Admin::Setting|Name"
 msgstr " "
 
-#: app/models/admin/setting.rb:103
+#: app/models/admin/setting.rb:105
 msgid "Admin::Setting|Password change interval"
 msgstr "パスワード定期変更間隔(日)"
 
-#: app/models/admin/setting.rb:104
+#: app/models/admin/setting.rb:106
 msgid "Admin::Setting|Password change interval description"
 msgstr ""
 "パスワードの定期変更間隔を日単位で設定します。ユーザ登録や、パスワード変更時"
 "にここで設定された定期変更間隔日後となるパスワード有効期限が設定されます。"
 
-#: app/models/admin/setting.rb:105
+#: app/models/admin/setting.rb:107
 msgid "Admin::Setting|Password strength"
 msgstr "パスワード強度"
 
-#: app/models/admin/setting.rb:106
+#: app/models/admin/setting.rb:108
 msgid "Admin::Setting|Password strength description"
 msgstr ""
 "パスワード強度を設定します。<p>弱 : 英数字記号6桁以上の入力が必要です。</"
@@ -1436,115 +1437,115 @@ msgstr ""
 "上入力されていなければなりません。</p><p>ユーザ定義 : 独自のパスワード強度を"
 "正規表現で記述することが出来ます。</p>"
 
-#: app/models/admin/setting.rb:269
+#: app/models/admin/setting.rb:271
 msgid "Admin::Setting|Password strength|Validation message "
 msgstr " "
 
-#: app/models/admin/setting.rb:108
+#: app/models/admin/setting.rb:110
 msgid "Admin::Setting|Password strength|Validation message high"
 msgstr ""
 "は8文字以上の半角英数字及び記号(!@#$%^&*?_~)で入力して下さい。また、英字の大"
 "文字、小文字、数字、記号がそれぞれ最低一文字ずつ含まれている必要があります。"
 
-#: app/models/admin/setting.rb:112
+#: app/models/admin/setting.rb:114
 msgid "Admin::Setting|Password strength|Validation message low"
 msgstr "は6文字以上の半角英数字及び記号(!@#$%^&*?_~)で入力して下さい。"
 
-#: app/models/admin/setting.rb:110 app/models/admin/setting.rb:272
+#: app/models/admin/setting.rb:112 app/models/admin/setting.rb:274
 msgid "Admin::Setting|Password strength|Validation message middle"
 msgstr ""
 "は8文字以上の半角英数字及び記号(!@#$%^&*?_~)で入力して下さい。また、英字の大"
 "文字、小文字、数字がそれぞれ最低一文字ずつ含まれている必要があります。"
 
-#: app/models/admin/setting.rb:113
+#: app/models/admin/setting.rb:115
 msgid "Admin::Setting|Password strength|custom"
 msgstr "ユーザ定義"
 
-#: app/models/admin/setting.rb:107
+#: app/models/admin/setting.rb:109
 msgid "Admin::Setting|Password strength|high"
 msgstr "強"
 
-#: app/models/admin/setting.rb:111
+#: app/models/admin/setting.rb:113
 msgid "Admin::Setting|Password strength|low"
 msgstr "弱"
 
-#: app/models/admin/setting.rb:109
+#: app/models/admin/setting.rb:111
 msgid "Admin::Setting|Password strength|middle"
 msgstr "中"
 
-#: app/models/admin/setting.rb:53
+#: app/models/admin/setting.rb:55
 msgid "Admin::Setting|Point button"
 msgstr "ポイント評価のボタン名"
 
-#: app/models/admin/setting.rb:54
+#: app/models/admin/setting.rb:56
 msgid "Admin::Setting|Point button description"
 msgstr "掲示板やブログ等でのポイント評価のボタン名を変更できます。"
 
-#: app/models/admin/setting.rb:77
+#: app/models/admin/setting.rb:79
 msgid "Admin::Setting|Protocol"
 msgstr "サーバのプロトコル"
 
-#: app/models/admin/setting.rb:78
+#: app/models/admin/setting.rb:80
 msgid "Admin::Setting|Protocol description"
 msgstr ""
 "メール送信時に本文にリンクとして記載されるURLのプロトコルを設定します。システ"
 "ムにアクセスするURLには影響しません。"
 
-#: app/models/admin/setting.rb:61
+#: app/models/admin/setting.rb:63
 msgid "Admin::Setting|Smtp settings"
 msgstr "SMTP設定"
 
-#: app/models/admin/setting.rb:69
+#: app/models/admin/setting.rb:71
 msgid "Admin::Setting|Smtp settings address"
 msgstr "SMTPサーバのホスト名"
 
-#: app/models/admin/setting.rb:70
+#: app/models/admin/setting.rb:72
 msgid "Admin::Setting|Smtp settings address description"
 msgstr "SMTPサーバのホスト名を指定します。"
 
-#: app/models/admin/setting.rb:73
+#: app/models/admin/setting.rb:75
 msgid "Admin::Setting|Smtp settings authentication"
 msgstr "認証の種類"
 
-#: app/models/admin/setting.rb:74
+#: app/models/admin/setting.rb:76
 msgid "Admin::Setting|Smtp settings authentication description"
 msgstr ""
 "認証が必要な場合、認証の種類を指定します。指定可能な値はplain, login, "
 "cram_md5です。"
 
-#: app/models/admin/setting.rb:62
+#: app/models/admin/setting.rb:64
 msgid "Admin::Setting|Smtp settings description"
 msgstr "SMTP設定を行います。"
 
-#: app/models/admin/setting.rb:71
+#: app/models/admin/setting.rb:73
 msgid "Admin::Setting|Smtp settings domain"
 msgstr "送信元ドメイン"
 
-#: app/models/admin/setting.rb:72
+#: app/models/admin/setting.rb:74
 msgid "Admin::Setting|Smtp settings domain description"
 msgstr "送信元ドメインの指定を行います。送信メールヘッダに記載されます。"
 
-#: app/models/admin/setting.rb:63
+#: app/models/admin/setting.rb:65
 msgid "Admin::Setting|Smtp settings password"
 msgstr "パスワード"
 
-#: app/models/admin/setting.rb:64
+#: app/models/admin/setting.rb:66
 msgid "Admin::Setting|Smtp settings password description"
 msgstr "認証が必要な場合、パスワードを指定します。"
 
-#: app/models/admin/setting.rb:65
+#: app/models/admin/setting.rb:67
 msgid "Admin::Setting|Smtp settings port"
 msgstr "ポート"
 
-#: app/models/admin/setting.rb:66
+#: app/models/admin/setting.rb:68
 msgid "Admin::Setting|Smtp settings port description"
 msgstr "ポート番号を指定します。"
 
-#: app/models/admin/setting.rb:67
+#: app/models/admin/setting.rb:69
 msgid "Admin::Setting|Smtp settings user name"
 msgstr "ユーザ名"
 
-#: app/models/admin/setting.rb:68
+#: app/models/admin/setting.rb:70
 msgid "Admin::Setting|Smtp settings user name description"
 msgstr "認証が必要な場合、ユーザ名を指定します。"
 
@@ -1562,22 +1563,22 @@ msgstr ""
 msgid "Admin::Setting|Updated at"
 msgstr "更新日時"
 
-#: app/models/admin/setting.rb:124
+#: app/models/admin/setting.rb:126
 msgid "Admin::Setting|User cleaning notification interval"
 msgstr "メール送信間隔(月)"
 
-#: app/models/admin/setting.rb:125
+#: app/models/admin/setting.rb:127
 msgid "Admin::Setting|User cleaning notification interval description"
 msgstr ""
 "クリーニング依頼メールの送信間隔を月単位で指定します。ここで指定された値の倍"
 "数月の1日にクリーニング依頼メールが管理者ユーザ宛てに送信されます。例えば3が"
 "指定されている場合は、3/1, 6/1, 9/1, 12/1に送信されます。"
 
-#: app/models/admin/setting.rb:99
+#: app/models/admin/setting.rb:101
 msgid "Admin::Setting|User lock trial limit"
 msgstr "ログインの試行回数の最大値(回)"
 
-#: app/models/admin/setting.rb:100
+#: app/models/admin/setting.rb:102
 msgid "Admin::Setting|User lock trial limit description"
 msgstr ""
 "ログインの試行回数の最大値を指定して下さい。最大値を越えてログインに失敗する"
@@ -2915,7 +2916,7 @@ msgstr "変更前メールアドレス"
 msgid "Current Password"
 msgstr "現在のパスワード"
 
-#: app/controllers/admin/settings_controller.rb:39
+#: app/controllers/admin/settings_controller.rb:41
 msgid "Current disk usage"
 msgstr "現在の利用容量"
 
@@ -2931,7 +2932,7 @@ msgstr "現在設定中のページが消えてしまいますがよろしいで
 msgid "Customize"
 msgstr "画面デザインの変更"
 
-#: app/views/admin/documents/index.html.erb:30
+#: app/views/admin/documents/index.html.erb:19
 msgid "Customize the document template to fit your usage.<br />"
 msgstr "用途に合わせて、説明文の雛形を修正して下さい。<br />"
 
@@ -2983,6 +2984,7 @@ msgstr "既定の公開範囲"
 msgid "Default entry edit mode"
 msgstr "既定の記事編集方法"
 
+#: app/views/antenna/_antenna_item.html.erb:2
 #: app/views/board_entries/_board_entry_comment.html.erb:15
 #: app/views/bookmark/list.html.erb:68 app/views/bookmark/show.html.erb:31
 msgid "Delete"
@@ -2993,10 +2995,6 @@ msgid "Delete all the groups under the group category before you delete it."
 msgstr ""
 "グループカテゴリを削除したい場合、対象のグループカテゴリに属するグループが全"
 "て削除されている必要があります。"
-
-#: app/views/antenna/_antenna_item.html.erb:2
-msgid "Delete)).to_s); _erbout.concat "
-msgstr ""
 
 #: app/controllers/admin/group_categories_controller.rb:28
 #: app/controllers/edit_controller.rb:235
@@ -3035,8 +3033,8 @@ msgstr "開発"
 msgid "Diary"
 msgstr "日記"
 
-#: app/controllers/admin/settings_controller.rb:51
-#: app/controllers/admin/settings_controller.rb:60
+#: app/controllers/admin/settings_controller.rb:53
+#: app/controllers/admin/settings_controller.rb:62
 msgid "Disable"
 msgstr "利用しない"
 
@@ -3392,7 +3390,7 @@ msgstr "パスワードリセットに失敗しました。"
 msgid "Failed to save one-time code."
 msgstr "ワンタイムコードの保存に失敗しました。"
 
-#: app/controllers/admin/documents_controller.rb:86
+#: app/controllers/admin/documents_controller.rb:101
 msgid "Failed to save the content.  Try again or contact administrator."
 msgstr ""
 "対象のコンテンツを保存することが出来ませんでした。再度お試し頂くか管理者にお"
@@ -3435,6 +3433,7 @@ msgstr "2月"
 msgid "Female"
 msgstr "女性"
 
+#: app/controllers/share_file_controller.rb:47
 #: app/views/share_file/new.html.erb:69
 #: app/views/share_file/new_ajax_upload.html.erb:27
 msgid "File"
@@ -3550,7 +3549,7 @@ msgstr "みんなの情報"
 msgid "Full-text Search"
 msgstr "全文検索"
 
-#: app/controllers/admin/settings_controller.rb:57
+#: app/controllers/admin/settings_controller.rb:59
 msgid "Functional Settings"
 msgstr "機能に関する設定"
 
@@ -4752,7 +4751,7 @@ msgstr "通常"
 msgid "Not Accept"
 msgstr "同意しない"
 
-#: app/controllers/admin/settings_controller.rb:65
+#: app/controllers/admin/settings_controller.rb:67
 msgid "Not Specified"
 msgstr "指定なし"
 
@@ -5690,7 +5689,7 @@ msgstr "利用規約の確認"
 msgid "See if your friend's already there..."
 msgstr "知っている人が既にいないか探してみましょう！ ... "
 
-#: app/views/admin/documents/index.html.erb:33
+#: app/views/admin/documents/index.html.erb:22
 msgid "Select a page to edit from the menu on left."
 msgstr "左のメニューから編集したいページを選択して下さい。"
 
@@ -5770,7 +5769,7 @@ msgstr "列の表示制御(クリックで表示/非表示を切り替えます�
 msgid "Setting / Administration"
 msgstr "設定・管理"
 
-#: app/controllers/admin/settings_controller.rb:90
+#: app/controllers/admin/settings_controller.rb:92
 msgid "Settings were saved successfully."
 msgstr "保存しました。"
 
@@ -5861,7 +5860,7 @@ msgstr "ユーザ"
 msgid "Shared Files"
 msgstr "ファイル"
 
-#: app/controllers/admin/settings_controller.rb:38
+#: app/controllers/admin/settings_controller.rb:40
 msgid "Shared Files Settings"
 msgstr "ファイル関連"
 
@@ -5932,7 +5931,7 @@ msgstr ""
 msgid "Showing options from previously registered values"
 msgstr "既に登録されている値から選択項目を表示しています"
 
-#: app/controllers/admin/settings_controller.rb:40
+#: app/controllers/admin/settings_controller.rb:42
 msgid ""
 "Showing the total capacity permitted for shared files versus current disk "
 "usage of shared files."
@@ -6224,7 +6223,7 @@ msgstr "設定・管理"
 msgid "System Info"
 msgstr "システム情報"
 
-#: app/controllers/admin/settings_controller.rb:64
+#: app/controllers/admin/settings_controller.rb:66
 msgid "System Operation"
 msgstr "システム運用について"
 
@@ -6382,7 +6381,7 @@ msgstr ""
 "既に登録されているメールアドレスです。メールアドレスの変更をやり直してくださ"
 "い。"
 
-#: app/views/admin/documents/index.html.erb:29
+#: app/views/admin/documents/index.html.erb:18
 msgid "The system provides online document for inexperienced users.<br />"
 msgstr ""
 "初めて使われるユーザ向けに、システムでは説明画面を用意しています。<br />"
@@ -6628,7 +6627,7 @@ msgid ""
 msgstr "ユーザ登録が継続出来ません。最初からやり直して下さい。"
 
 #: app/controllers/admin/documents_controller.rb:38
-#: app/controllers/admin/documents_controller.rb:89
+#: app/controllers/admin/documents_controller.rb:104
 #: app/controllers/admin/images_controller.rb:154
 msgid "Unexpected error occured. Contact administrator."
 msgstr "想定外のエラーが発生しました。管理者にお問い合わせ下さい。"
@@ -6686,7 +6685,7 @@ msgstr "正しく更新されました。"
 msgid "Updated."
 msgstr "更新しました。"
 
-#: app/views/collaboration_app/_feeds.html.erb:8
+#: app/views/collaboration_app/_feeds.html.erb:9
 msgid "Updates from %{provider}"
 msgstr "%{provider}の更新情報"
 
@@ -7718,7 +7717,7 @@ msgstr "【本文の書き方に関するヒント】"
 msgid "[Last]"
 msgstr "[最後へ]"
 
-#: app/models/board_entry.rb:659
+#: app/models/board_entry.rb:661
 msgid "[Link does not exist...%s>]"
 msgstr "[リンク先が存在しません...%s>]"
 
@@ -7813,7 +7812,7 @@ msgstr "[グループを探す]"
 msgid "[Search Users]"
 msgstr "[ユーザを探す]"
 
-#: app/views/collaboration_app/_feeds.html.erb:13
+#: app/views/collaboration_app/_feeds.html.erb:14
 #: app/views/user/show.html.erb:26 app/views/user/show.html.erb:111
 #: app/views/user/_postit_cloud.html.erb:5
 msgid "[See all]"
@@ -8194,7 +8193,7 @@ msgstr "ランキング"
 msgid "required"
 msgstr "必須"
 
-#: app/models/admin/setting.rb:160
+#: app/models/admin/setting.rb:162
 msgid "requires a valid regular expression."
 msgstr "は正しい正規表現で入力して下さい。"
 
