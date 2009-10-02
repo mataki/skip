@@ -1,4 +1,3 @@
-<% pages_obj ||= nil -%>
 <% symbol2name_hash ||= nil -%>
 <% title_icon ||= "user_comment" -%>
 <% delete_categories ||= [] -%>
@@ -26,21 +25,20 @@
   </div>
 <% end -%>
 
-<% if pages_obj and pages_obj.item_count > 0 -%>
+<% if pages.total_pages > 0 -%>
 <div style="text-align: right;"><span style="background-color: #fcffc5; padding: 0 2px 0 5px; font-size: 10px;">
-  <% if pages_obj.current.previous -%>
-    <%= hidden_field_tag 'page_back', pages_obj.current.previous.to_i %>
+  <% if pages.previous_page -%>
+    <%= hidden_field_tag 'page_back', pages.previous_page %>
   <a class="first_link" id="<%= id_name -%>-first_link" href="#" ><%= _('[Top]')%></a>
   <a class="back_link" id="<%= id_name -%>-back_link" href="#" ><%= _('[Prev]')%></a>
   <% end -%>
-  <%= _("Total %{items} hits (Page %{page} / %{pages})") % {:items => h(pages_obj.item_count), :page => h(pages_obj.current.number), :pages => h(pages_obj.length)} %>
-  <% if pages_obj.current.next -%>
-    <%= hidden_field_tag 'page_last', pages_obj.last.to_i %>
-    <%= hidden_field_tag 'page_next', pages_obj.current.next.to_i %>
-
+  <%= _("Total %{items} hits (Page %{page} / %{pages})") % {:items => h(pages.total_pages), :page => h(pages.current_page), :pages => h(pages.total_pages)} %>
+  <% if pages.next_page -%>
+    <%= hidden_field_tag 'page_last', pages.total_pages %>
+    <%= hidden_field_tag 'page_next', pages.next_page %>
   <a class="next_link" id="<%= id_name -%>-next_link" href="#" ><%= _('[Next]')%></a>
   <a class="last_link" id="<%= id_name -%>-last_link" href="#" ><%= _('[Bottom]')%></a>
-<% end -%>
+  <% end -%>
 </span></div>
 <% end -%>
 

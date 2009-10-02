@@ -36,6 +36,7 @@ module ApplicationHelper
   end
 
   # 指定の件数を超えた場合のページ遷移のナビゲージョンリンクを生成する
+  # TODO 全てwill_paginateに置き換えたらなくす
   def page_link pages
     option = params.clone
     output = ""
@@ -44,6 +45,19 @@ module ApplicationHelper
     output << _("Total %{items} hits (Page %{page} / %{pages})") % {:items => pages.item_count, :page => pages.current.number, :pages =>pages.length}
     output << link_to(_('[Next]'), option.update({:page => pages.current.next})) if pages.current.next
     output << link_to(_('[Last]'), option.update({:page => pages.last})) if pages.current.next
+    output
+  end
+
+  # 指定の件数を超えた場合のページ遷移のナビゲージョンリンクを生成する
+  # will_paginate用
+  def will_paginate_link pages
+    option = params.clone
+    output = ""
+    output << link_to(_('[Head]'), option.update({:page => 1})) if pages.previous_page
+    output << link_to(_('[Prev]'), option.update({:page => pages.previous_page})) if pages.previous_page
+    output << _("Total %{items} hits (Page %{page} / %{pages})") % {:items => pages.total_entries, :page => pages.current_page, :pages => pages.total_pages}
+    output << link_to(_('[Next]'), option.update({:page => pages.next_page})) if pages.next_page
+    output << link_to(_('[Last]'), option.update({:page => pages.total_pages})) if pages.next_page
     output
   end
 

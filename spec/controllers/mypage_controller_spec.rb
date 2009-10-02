@@ -161,15 +161,13 @@ describe MypageController, 'mypage > home 関連' do
           @id_name = 'id_name'
           @title_icon = 'title_icon'
           @title_name = 'title_name'
-          @entries_pages = mock('entries_pages')
           @entries = [stub_model(BoardEntry)]
           @symbol2name_hash = mock('symbol2name_hash')
           locals = {
             :id_name => @id_name,
             :title_icon => @title_icon,
             :title_name => @title_name,
-            :pages => @entries_pages,
-            :pages_obj => @entries,
+            :pages => @entries,
             :per_page => 20,
             :symbol2name_hash => @symbol2name_hash
           }
@@ -194,7 +192,6 @@ describe MypageController, 'mypage > home 関連' do
         end
         it '記事一覧が設定されること' do
           get :entries, :list_type => 'questions'
-          assigns[:entries_pages].should == @entries_pages
           assigns[:entries].should == @entries
         end
         it '記事の所有者のシンボルと名称のhashが設定されること(記事所有者へのリンクに使う)' do

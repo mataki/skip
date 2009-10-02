@@ -14,17 +14,17 @@
     </style>
 
     <div style="text-align:right;">
-      <%= page_link(@entries) if @entries %>
+      <%= will_paginate_link(@entries) if @entries %>
     </div>
 
     <%= render :partial => "page_space",
                :locals => { :id_name => @id_name,
                             :title_name => @title_name,
-                            :pages => @entries_pages,
+                            :pages => @entries,
                             :symbol2name_hash => @symbol2name_hash } %>
 
     <div style="text-align:right;">
-      <%= page_link(@entries) if @entries %>
+      <%= will_paginate_link(@entries) if @entries %>
     </div>
   </div><!-- contents_right -->
 

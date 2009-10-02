@@ -39,6 +39,29 @@ class BoardEntry < ActiveRecord::Base
   validates_presence_of :date
   validates_presence_of :user_id
 
+  named_scope :accessible, proc { |publication_symbols|
+    { :conditions => ['entry_publications.symbol in (:publication_symbols)',
+      { :publication_symbols => publication_symbols << Symbol::SYSTEM_ALL_USER }],
+      :include => [:entry_publications] }
+  }
+
+  named_scope :category_like, proc { |category|
+    { :conditions => ['category like :category', { :category => "%[#{category}]%" }] }
+  }
+
+  named_scope :category_not_like, proc { |category|
+    { :conditions => ['category not like :category', { :category => "%[#{category}]%" }] }
+  }
+
+  named_scope :recent, proc { |day_count|
+    return if day_count.blank?
+    { :conditions => ['last_updated > :date', { :date => Time.now.ago(day_count.to_i.day) }] }
+  }
+
+  named_scope :order_new, proc {
+    { :order => "last_updated DESC,board_entries.id DESC" }
+  }
+
   attr_reader :owner
   attr_accessor :send_mail
 

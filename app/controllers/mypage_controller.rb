@@ -169,8 +169,7 @@ class MypageController < ApplicationController
     @id_name = locals[:id_name]
     @title_icon = locals[:title_icon]
     @title_name = locals[:title_name]
-    @entries_pages = locals[:pages]
-    @entries = locals[:pages_obj]
+    @entries = locals[:pages]
     @symbol2name_hash = locals[:symbol2name_hash]
   end
 
@@ -713,18 +712,14 @@ class MypageController < ApplicationController
 
   # 質問記事一覧を取得する（partial用のオプションを返す）
   def find_questions_as_locals options
-    find_params = BoardEntry.make_conditions(login_user_symbols, {:recent_day => options[:recent_day], :category=>'質問'})
-    pages_obj, pages = paginate(:board_entry,
-                                :per_page =>options[:per_page],
-                                :order =>"last_updated DESC,board_entries.id DESC",
-                                :conditions=> find_params[:conditions],
-                                :include => find_params[:include] | [ :user, :state ])
+    pages = BoardEntry.accessible(login_user_symbols).recent(options[:recent_day]).category_like('質問').
+      category_not_like('解決').order_new.paginate(:page => params[:page], :per_page => options[:per_page])
+
     locals = {
       :id_name => 'questions',
       :title_icon => "user_comment",
       :title_name => _('Recent Questions'),
       :pages => pages,
-      :pages_obj => pages_obj,
       :per_page => options[:per_page],
       :recent_day => options[:recent_day],
       :delete_categories => '[質問]'
@@ -736,17 +731,17 @@ class MypageController < ApplicationController
     find_params = BoardEntry.make_conditions(login_user_symbols, {:publication_type => 'public'})
     find_params[:conditions][0] << " and board_entries.category not like ? and last_updated > ?"
     find_params[:conditions] << '%[質問]%' << Date.today - recent_day
-    pages_obj, pages = paginate(:board_entry,
-                                :per_page =>options[:per_page],
-                                :order=>"board_entry_points.today_access_count DESC, board_entry_points.access_count DESC, board_entries.last_updated DESC, board_entries.id DESC",
-                                :conditions=> find_params[:conditions],
-                                :include => find_params[:include] | [ :user, :state ])
+    pages = BoardEntry.scoped(
+      :conditions => find_params[:conditions],
+      :order => "board_entry_points.today_access_count DESC, board_entry_points.access_count DESC, board_entries.last_updated DESC, board_entries.id DESC",
+      :include => find_params[:include] | [ :user, :state ]
+    ).paginate(:page => params[:page], :per_page => options[:per_page])
+
     locals = {
       :id_name => 'access_blogs',
       :title_icon => "star",
       :title_name => _('Recent Popular Entries (excluding questions)'),
       :pages => pages,
-      :pages_obj => pages_obj,
       :per_page => options[:per_page],
       :symbol2name_hash => BoardEntry.get_symbol2name_hash(pages)
     }
@@ -756,17 +751,17 @@ class MypageController < ApplicationController
   def find_recent_blogs_as_locals options
     find_params = BoardEntry.make_conditions(login_user_symbols, {:entry_type=>'DIARY', :publication_type => 'public'})
     find_params[:conditions][0] << " and board_entries.title <> 'ユーザー登録しました！'"
-    pages_obj, pages = paginate(:board_entry,
-                                :per_page =>options[:per_page],
-                                :order=>"last_updated DESC, board_entries.id DESC",
-                                :conditions=> find_params[:conditions],
-                                :include => find_params[:include] | [ :user, :state ])
+    pages = BoardEntry.scoped(
+      :conditions => find_params[:conditions],
+      :order=>"last_updated DESC, board_entries.id DESC",
+      :include => find_params[:include] | [ :user, :state ]
+    ).paginate(:page => params[:page], :per_page => options[:per_page])
+
     locals = {
       :id_name => 'recent_blogs',
       :title_icon => "user",
       :title_name => _('Blogs'),
       :pages => pages,
-      :pages_obj => pages_obj,
       :per_page => options[:per_page]
     }
   end
@@ -776,24 +771,23 @@ class MypageController < ApplicationController
     category = GroupCategory.find_by_code(code)
     title   = category.name
     id_name = category.code.downcase
-    pages_obj, pages = nil, []
+    pages = []
 
     find_options = {:exclude_entry_type=>'DIARY', :publication_type => 'public'}
     find_options[:symbols] = options[:group_symbols] || Group.gid_by_category[category.id]
     if find_options[:symbols].size > 0
       find_params = BoardEntry.make_conditions(login_user_symbols, find_options)
-      pages_obj, pages = paginate(:board_entry,
-                                  :per_page => options[:per_page],
-                                  :order=>"last_updated DESC, board_entries.id DESC",
-                                  :conditions=> find_params[:conditions],
-                                  :include => find_params[:include] | [ :user, :state ])
+      pages = BoardEntry.scoped(
+        :conditions => find_params[:conditions],
+        :order=>"last_updated DESC, board_entries.id DESC",
+        :include => find_params[:include] | [ :user, :state ]
+      ).paginate(:page => params[:page], :per_page => options[:per_page])
     end
     locals = {
       :id_name => id_name,
       :title_icon => "group",
       :title_name => title,
       :pages => pages,
-      :pages_obj => pages_obj,
       :per_page => options[:per_page],
       :symbol2name_hash => BoardEntry.get_symbol2name_hash(pages)
     }
