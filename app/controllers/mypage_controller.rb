@@ -773,7 +773,7 @@ class MypageController < ApplicationController
     id_name = category.code.downcase
     pages = []
 
-    find_options = {:exclude_entry_type=>'DIARY', :publication_type => 'public'}
+    find_options = {:exclude_entry_type=>'DIARY'}
     find_options[:symbols] = options[:group_symbols] || Group.gid_by_category[category.id]
     if find_options[:symbols].size > 0
       find_params = BoardEntry.make_conditions(login_user_symbols, find_options)
