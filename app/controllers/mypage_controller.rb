@@ -88,7 +88,7 @@ class MypageController < ApplicationController
 
   # mypage > blog
   def blog
-    redirect_to get_url_hash('blog')
+    redirect_to get_url_hash('blog', :archive => 'all')
   end
 
   # mypage > file
@@ -883,9 +883,9 @@ class MypageController < ApplicationController
     @categories = BoardEntry.get_category_words(find_params)
   end
 
-  def get_url_hash action
+  def get_url_hash action, options = {}
     login_user_symbol_type, login_user_symbol_id = Symbol.split_symbol(session[:user_symbol])
-    { :controller => 'user', :action => action, :uid => login_user_symbol_id }
+    { :controller => 'user', :action => action, :uid => login_user_symbol_id }.merge options
   end
 
   # 月の中で記事が含まれている日付と記事数のハッシュと、
