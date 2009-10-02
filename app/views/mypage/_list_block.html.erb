@@ -25,7 +25,7 @@
   </div>
 <% end -%>
 
-<% unless pages.empty? -%>
+<% unless pages.empty? or pages.is_a?(Array) -%>
 <div style="text-align: right;"><span style="background-color: #fcffc5; padding: 0 2px 0 5px; font-size: 10px;">
   <% if pages.previous_page -%>
     <%= hidden_field_tag 'page_back', pages.previous_page %>
