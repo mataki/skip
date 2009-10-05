@@ -1,10 +1,4 @@
 :menus:
   - { :title: SKIP公式サイト, :url: http://www.skipaas.jp/ }
   - { :title: SKIPオープンソース, :url: http://www.openskip.org/ }
-#   - :title: 開発
-#     :links:
-#     - { :title: Repository, :url: http://github.com/openskip/skip/ }
-#     - { :title: redmine, :url:  http://dev.openskip.org/redmine/ }
-#   - :title: 関連サイト
-#     :links:
-#     - { :title: Ruby On Rails, :url:   http://www.rubyonrails.org/ }
+  - { :title: SKIPコミュニティ, :url: http://openskip.youroom.in/ }
