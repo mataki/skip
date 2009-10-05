@@ -38,7 +38,7 @@ access_record_limit:
 abbr_app_title:
   default: SKIP                                            # システムの名称
 contact_addr:
-  default: youradmin@example.com
+  default: info@skipaas.jp
 help_url:
   format: url
   allow_blank: true
@@ -47,7 +47,7 @@ login_account:
   default: ログインID                                      # ログインアカウントの名称
 footer_first:                                              # フッターの１行目（ヘルプ・規約へのリンクなどを推奨）
   default: >-
-    <b><a onclick="open_site(); return false;" href="#">このサイトについて</a> - <a onclick="open_rule(); return false;" href="#">利用規約</a> - <a onclick="open_hiki(); return false;" href="#">Hiki記法</a></b>
+    <b><a onclick="open_site(); return false;" href="#">このサイトについて</a> - <a onclick="open_rule(); return false;" href="#">利用規約</a></b>
 footer_second:
   default: お問い合わせはこちら | Since 2008 SKIP          # フッターの２列目（提供元への連絡先などを推奨）
 footer_image_link_url:
