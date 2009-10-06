@@ -19,7 +19,7 @@ require "resolv-replace"
 require 'timeout'
 require 'rss'
 class MypageController < ApplicationController
-  before_filter :setup_layout
+  before_filter :setup_layout, :except => :manage
   skip_before_filter :verify_authenticity_token, :only => :apply_ident_url
   helper :calendar
 
