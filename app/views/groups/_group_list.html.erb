@@ -1,7 +1,6 @@
-<% show_favorite ||= false -%>
 <% if pages and pages.item_count > 0 -%>
   <%= hidden_field_tag("authenticity_token", form_authenticity_token) %>
-  <% if show_favorite -%>
+  <% if current_user.id == user_id && current_user.custom.always_show_shortcut -%>
   <div class="desc" style="margin-bottom:5px"><%= _("Only groups with %s icons will be shown in \"My Groups\" of the right-top shortcut menu.") % icon_tag('award_star_gold_2') %></div>
   <% end -%>
   <div class="navi"><%= page_link pages %></div>
@@ -11,7 +10,6 @@
       <tr>
         <th><%= group_link_to group %></th>
         <td rowspan="3" class="desc"><div style="overflow: auto; height: 130px; width: 100%;"><%= render_richtext(group.description, group.symbol) %></div></td>
-        <td rowspan="3" style="width: 20px; margin: 0; padding: 0;"><%= show_group_action(show_favorite, group) %></td>
       </tr>
       <tr>
         <td class="auth"><%= show_group_status(group, user_id) %></td>
@@ -28,15 +26,13 @@
         <th><%= _('Category') %></th>
         <th><%= _('Status') %></th>
         <th><%= _('Approval') %></th>
-        <th><%= _('Action') %></th>
       </tr>
     <% groups.each do |group| -%>
       <tr class="<%= cycle('line_0', 'line_1') %>">
-        <td><%= group_link_to group %></td>
+        <td><%= show_group_action(group, current_user.id == user_id) %><%= group_link_to group %></td>
         <td><%= icon_tag(group.category_icon_name.first) + h(group.category_icon_name.last) %></td>
         <td><%= participation_state(group, user_id) -%></td>
         <td><%= _("%s Required") % icon_tag('key') if group.protected? %></td>
-        <td><%= show_group_action(show_favorite, group) %></td>
       </tr>
     <% end -%>
     </table>

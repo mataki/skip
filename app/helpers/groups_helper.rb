@@ -41,14 +41,13 @@ module GroupsHelper
   end
 
   # グループに対してできるアクションを表示（グループ一覧で利用）
-  def show_group_action(show_favorite, group)
+  def show_group_action(group, show_favorite = false)
     output = ""
     if show_favorite
       participation = group.group_participations.first
       elem_id = "group_participation_#{participation.id}"
       output << "<span id='#{elem_id}'>#{render :partial => "groups/favorite", :locals => { :gid => group.gid, :participation => participation }}</span>"
     end
-    output << link_to(icon_tag('transmit_go', :title => _('Add to antenna')), {:controller => "antenna", :action => "select_antenna", :symbol => group.symbol, :dummy => '.html'}, {:class => "nyroModal"})
     output
   end
 end

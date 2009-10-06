@@ -132,8 +132,6 @@ class UserController < ApplicationController
     @group_counts, @total_count = Group.count_by_category(@user.id)
     @group_categories = GroupCategory.all
 
-    @show_favorite = (@user.id == session[:user_id])
-
     options = Group.paginate_option(@user.id, params)
     options[:per_page] = params[:format_type] == "list" ? 30 : 5
     @pages, @groups = paginate(:group, options)
