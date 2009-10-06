@@ -2864,7 +2864,7 @@ msgstr "記事の公開範囲を引き継いだ掲示板として新しい記事
 
 #: app/controllers/groups_controller.rb:68
 msgid "Create a new group"
-msgstr "グループの新規作成"
+msgstr "グループを作る"
 
 #: app/views/admin/users/first.html.erb:2
 msgid "Create administrative user"

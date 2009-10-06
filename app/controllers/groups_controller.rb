@@ -14,7 +14,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class GroupsController < ApplicationController
-  before_filter :setup_layout
+  before_filter :setup_layout, :except => %w(new create)
 
   verify :method => :post, :only => [ :create ],
           :redirect_to => { :action => :index }
@@ -41,6 +41,7 @@ class GroupsController < ApplicationController
   # tab_menu
   # グループの新規作成画面の表示
   def new
+    @main_menu = @title = _('Create a new group')
     @group = Group.new
     @group_categories = GroupCategory.all
   end
@@ -48,6 +49,7 @@ class GroupsController < ApplicationController
   # post_action
   # グループの新規作成の処理
   def create
+    @main_menu = @title = _('Create a new group')
     @group = Group.new(params[:group])
     @group_categories = GroupCategory.all
     @group.group_participations.build(:user_id => session[:user_id], :owned => true)
@@ -64,7 +66,6 @@ private
   def setup_layout
     @main_menu = @title = _('Groups')
 
-    @tab_menu_source = [ {:label => _('Search for groups'), :options => {:action => 'index'}},
-                         {:label => _('Create a new group'), :options => {:action => 'new'}} ]
+    @tab_menu_source = [ {:label => _('Search for groups'), :options => {:action => 'index'}} ]
   end
 end
