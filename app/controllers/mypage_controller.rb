@@ -113,6 +113,7 @@ class MypageController < ApplicationController
 
   # mypage > trace(足跡)
   def trace
+    setup_for_antenna_box
     @access_count = current_user.user_access.access_count
     @access_tracks = current_user.tracks
   end
