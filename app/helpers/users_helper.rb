@@ -26,7 +26,7 @@ module UsersHelper
         output << render(render_params)
       end
     else
-      columns = [ Admin::Setting.login_account, 'uid', 'name', 'email', 'section', _('Action') ]
+      columns = [ Admin::Setting.login_account, 'uid', 'name', 'email', 'section' ]
       columns.delete(Admin::Setting.login_account) unless user_name_mode?(:code)
       columns.delete('uid') unless user_name_mode?(:name)
       columns.delete('email') if Admin::Setting.hide_email
@@ -44,9 +44,6 @@ module UsersHelper
           %(<a href="mailto:#{user.email}">#{user.email}</a>)
         when 'section'
           h(user.section)
-        when _('Action')
-          link_to(icon_tag('transmit_go', :title => _('Add to antenna')), {:controller => "antenna", :action => "select_antenna", :symbol => user.symbol, :dummy => '.html'}, {:class => "nyroModal"}) +
-          link_to(icon_tag('tag_blue_add', :title=> _('Bookmark this')), {:controller => "bookmark", :action => "edit", :url => user.get_postit_url, :title => user.name, :dummy => '.html'}, {:class => "nyroModal"})
         else
           h(user.send(column))
         end
