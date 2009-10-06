@@ -142,6 +142,7 @@ class MypageController < ApplicationController
       @antennas = find_antennas
     when "manage_message"
       @unsubscribes = UserMessageUnsubscribe.get_unscribe_array(session[:user_id])
+    # TODO #924で画面からリンクをなくした。1.4時点で復活しない場合は削除する
     when "record_mail"
       set_data_for_record_mail
     when "record_post"
@@ -822,6 +823,7 @@ class MypageController < ApplicationController
     return nil
   end
 
+  # TODO #924で画面からリンクをなくした。1.4時点で復活しない場合は削除する
   def set_data_for_record_mail
     @pages, @mails = paginate(:mail,
                               :per_page =>20,
@@ -860,6 +862,7 @@ class MypageController < ApplicationController
     end
   end
 
+  # TODO #924で画面からリンクをなくした。1.4時点で復活しない場合は削除する
   def set_data_for_record_blog
     login_user_id = session[:user_id]
 
