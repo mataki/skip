@@ -7722,7 +7722,7 @@ msgstr "[リンク先が存在しません...%s>]"
 
 #: app/views/mypage/_antenna_box.html.erb:18
 msgid "[Manage antennas]"
-msgstr "【アンテナを整備する】"
+msgstr "[アンテナを整備する]"
 
 #: app/views/mypage/welcome.html.erb:35
 msgid "[Mypage]"
