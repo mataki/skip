@@ -5,17 +5,17 @@
       <%= application_link %>
     </div>
     <% if current_user && current_user.active? -%>
+      <%
+        links = []
+        links << content_tag('b', user_name_mode?(:code) ? h(current_user.code) : h(current_user.uid))
+        links << link_to(_("My Account"), {:controller => "/mypage", :action => :manage, :only_path => false}, :class => "underline_link")
+        links << link_to(_("System Administration"), {:controller => "/admin", :action => "index"}, :title => _("Administration of the site."), :class => "underline_link") if current_user.admin?
+        help_url = h(Admin::Setting.help_url)
+        links << link_to(_('Help'), help_url, :target => "_blank", :class => "underline_link") unless help_url.blank?
+        links << link_to(_("Sign out"), logout_url, :class => "underline_link")
+      -%>
     <div id="menu">
-      <b><%= user_name_mode?(:code) ? h(current_user.code) : h(current_user.uid) %></b>
-      |
-      <%= link_to _("My Account"), {:controller => "/mypage", :action => :manage, :only_path => false}, :class => "underline_link" %>
-      |
-      <% help_url = h(Admin::Setting.help_url) -%>
-      <% unless help_url.blank? -%>
-      <%= link_to _('Help'), help_url, :target => "_blank", :class => "underline_link" %>
-      |
-      <% end -%>
-      <%= link_to _("Sign out"), logout_url, :class => "underline_link" -%>
+      <%= links.join ' | ' %>
       <br style="clear: left" />
     </div>
   <% end -%>

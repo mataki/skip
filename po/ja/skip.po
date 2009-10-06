@@ -6219,7 +6219,7 @@ msgstr "ユーザ"
 #: app/controllers/admin/application_controller.rb:28
 #: config/environment.rb:113
 msgid "System Administration"
-msgstr "設定・管理"
+msgstr "システムの管理"
 
 #: app/views/admin/settings/index.html.erb:16
 msgid "System Info"

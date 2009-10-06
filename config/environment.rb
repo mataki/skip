@@ -102,15 +102,6 @@ menu_btns = [
 
 MENU_BTNS = menu_btns
 
-admin_btns = [
-  {:img_name => "database_gear",
-   :id => "btn_admin",
-   :name => GetText.N_("System Administration"),
-   :url => {:controller => '/admin', :action => 'index'},
-   :desc => GetText.N_("Administration of the site.") }
-]
-ADMIN_MENU_BTNS = admin_btns
-
 # 共通メニュー
 common_menu_path = File.join(RAILS_ROOT, 'config', 'common_menus.yml')
 COMMON_MENUS = File.exist?(common_menu_path) ? YAML::load(File.open(File.join(RAILS_ROOT, 'config', 'common_menus.yml'))) : {}
