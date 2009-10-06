@@ -1,5 +1,6 @@
 module UserLayoutModule
   def user_tab_menu_source user
+    # TODO mypage#setup_layoutのtab_menu_source構築と重複が多い。DRYにしたい。
     tab_menu_source = [
       {:label => _('Profile'), :options => {:controller => 'user', :action => 'show'}},
       {:label => _('Blog'), :options => {:controller => 'user', :action => 'blog', :archive => 'all'}},
@@ -10,7 +11,6 @@ module UserLayoutModule
 
     if user.id == current_user.id
       tab_menu_source.unshift({:label => _('Home'), :options => {:controller => 'mypage', :action => 'index'}, :selected_actions => %w(index entries entries_by_date entries_by_antenna)})
-      tab_menu_source << {:label => _('Admin'), :options => {:controller => 'mypage', :action => 'manage'}}
     end
     tab_menu_source
   end

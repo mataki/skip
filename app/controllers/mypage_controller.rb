@@ -489,8 +489,7 @@ class MypageController < ApplicationController
                          {:label => _('Shared Files'), :options => {:action => 'share_file'}},
                          {:label => _('Socials'), :options => {:action => 'social'}},
                          {:label => _('Groups Joined'), :options => {:action => 'group'}},
-                         {:label => _('Bookmarks'), :options => {:action => 'bookmark'}},
-                         {:label => _('Admin'), :options => {:action => 'manage'}} ]
+                         {:label => _('Bookmarks'), :options => {:action => 'bookmark'}} ]
   end
 
   # アンテナボックス表示のための情報を設定する
