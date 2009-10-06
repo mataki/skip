@@ -2,7 +2,7 @@
   <div class="box_space_title"></div>
   <div class="box_space_body">
     <ul>
-      <% if against_chains.map(&:from_user_id).include? current_user.id -%>
+      <% if current_user.follow_chains.map(&:to_user_id).include? user.id -%>
         <li><%= link_to(content_tag('span', _('Edit introductions')), {:controller => 'user', :action => 'edit_chain' }, {:class => 'rounded'}) %></li>
       <% else -%>
         <li><%= link_to(content_tag('span', _('Create introductions')), {:controller => 'user', :action => 'new_chain' }, {:class => 'rounded'}) %></li>

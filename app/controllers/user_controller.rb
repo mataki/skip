@@ -25,25 +25,9 @@ class UserController < ApplicationController
 
   # tab_menu
   def show
-    limit = 5
-
-    # 参加しているグループ一覧
-    conditions = ["group_participations.user_id = ?", @user.id]
-    @groups = Group.active.find(:all, :limit => limit,
-                                :conditions => conditions,
-                                :order => "group_participations.created_on DESC",
-                                :include => :group_participations)
-    @groups_count = Group.active.count(:conditions => conditions,
-                                       :include => :group_participations)
-
-    # 紹介した人一覧
-    @follow_chains =  Chain.find(:all, :limit => limit,
-                                 :order => "updated_on DESC",
-                                 :conditions => ['from_user_id = ?', @user.id])
     # 紹介してくれた人一覧
-    @against_chains = Chain.find(:all, :limit => limit,
-                                 :order => "updated_on DESC",
-                                 :conditions => ['to_user_id = ?', @user.id])
+    @against_chains = @user.against_chains.order_new.limit(5)
+
     # 他の人からみた・・・
     @tags = BookmarkComment.get_tagcloud_tags @user.get_postit_url
   end

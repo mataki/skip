@@ -39,6 +39,9 @@ class User < ActiveRecord::Base
   has_many :openid_identifiers
   has_many :user_oauth_accesses
 
+  has_many :follow_chains, :class_name => 'Chain', :foreign_key => 'from_user_id'
+  has_many :against_chains, :class_name => 'Chain', :foreign_key => 'to_user_id'
+
   validates_presence_of :name
   validates_length_of :name, :maximum => 60
 

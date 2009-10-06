@@ -1,0 +1,14 @@
+<div class="box_space" id="groups">
+  <div class="box_space_title"><%= icon_tag('group') %><%= _('Groups Joined') %></div>
+  <div class="box_space_body">
+  <div class="helpbar">[<%= _("%s: Administrators") % icon_tag('bullet_red') -%> <%= _("%s: Members") % icon_tag('bullet_blue') -%>]</div>
+  <ul>
+  <% groups = user.groups.participating(user).order_participate_recent -%>
+  <% groups.limit(5).each do |group| -%>
+    <% icon_name = group.group_participations.first.owned? ? 'bullet_red' : 'bullet_blue' -%>
+    <li><%= icon_tag(icon_name) + group_link_to(group, :view_text => truncate(h(group.name), :length => 12), :title => group.name) %></li>
+  <% end -%>
+  </ul>
+  </div>
+  <div class="box_space_bottom"><%= link_to n_("[Total %{count} hit...see all]", "[Total %{count} hits...see all]",groups.count) % {:count => groups.count}, :action => 'group', :uid => user.uid %></div>
+</div><!-- box_space -->

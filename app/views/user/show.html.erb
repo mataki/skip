@@ -1,33 +1,10 @@
 <% content_for :contents_left do -%>
   <%= render(:partial => 'user/portrait_box', :locals => { :user => @user }) %>
   <% unless @current_user.id == @user.id -%>
-    <%= render(:partial => 'user/action_box', :locals => { :against_chains => @against_chains, :user => @user }) %>
+    <%= render(:partial => 'user/action_box', :locals => { :user => @user }) %>
   <% end -%>
-  <div class="box_space" id="groups">
-    <div class="box_space_title"><%= icon_tag('group') %><%= _('Groups Joined') %></div>
-    <div class="box_space_body">
-    <div class="helpbar">[<%= _("%s: Administrators") % icon_tag('bullet_red') -%> <%= _("%s: Members") % icon_tag('bullet_blue') -%>]</div>
-    <ul>
-    <% @groups.each do |group| -%>
-      <% icon_name = group.group_participations.first.owned? ? 'bullet_red' : 'bullet_blue' -%>
-      <li><%= icon_tag(icon_name) + group_link_to(group, :view_text => truncate(h(group.name), :length => 12), :title => group.name) %></li>
-    <% end -%>
-    </ul>
-    </div>
-    <div class="box_space_bottom"><%= link_to n_("[Total %{count} hit...see all]", "[Total %{count} hits...see all]",@groups_count) % {:count => @groups_count}, :action => 'group', :uid => @user.uid %></div>
-  </div><!-- box_space -->
-
-  <div class="box_space">
-    <div class="box_space_title"><%= icon_tag('user_suit') %><%= _('About Users') %></div>
-    <div class="box_space_body">
-    <ul>
-    <% for chain in @follow_chains %>
-      <li><%= icon_tag('bullet_blue') + user_link_to(chain.to_user) %></li>
-    <% end %>
-    </ul>
-    </div>
-    <div class="box_space_bottom"><%= link_to _('[See all]'), :action => 'social', :menu => 'social_chain_against', :uid => @user.uid %></div>
-  </div><!-- box_space -->
+  <%= render :partial => 'user/join_groups_box', :locals => { :user => @user } %>
+  <%= render :partial => 'user/follow_chains_box', :locals => { :user => @user } %>
 <% end -%>
 
 <% content_for :contents_right do -%>
@@ -109,13 +86,13 @@
                :user => @user,
                :tags => @tags
              } %>
-  <% if @against_chains.size > 0 -%>
+  <% unless @against_chains.empty? -%>
   <div class="box relative100">
     <div class="operation"><%= link_to _('[See all]'), :action => 'social', :menu => 'social_chain', :uid => @user.uid %></div>
     <h2 class="topix_title"><%= icon_tag('asterisk_orange') %><%= _('Introductions') %></h2>
     <div class="topix_body">
     <table class="normal user_chain">
-    <% for chain in @against_chains -%>
+    <% @against_chains.each do |chain| -%>
       <tr>
         <th>
           <%= user_link_to_with_portrait(chain.from_user, :width => 60, :height => 40) %><br/>

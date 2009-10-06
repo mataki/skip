@@ -39,6 +39,12 @@ class Group < ActiveRecord::Base
     {:conditions => ["group_participations.user_id = ? AND group_participations.waiting = 0", user.id], :include => :group_participations}
   }
 
+  named_scope :order_participate_recent, proc {
+    { :order => "group_participations.created_on DESC" }
+  }
+
+  named_scope :limit, proc { |num| { :limit => num } }
+
   alias initialize_old initialize
 
   def initialize(attributes = nil)

@@ -18,4 +18,8 @@ class Chain < ActiveRecord::Base
   belongs_to :to_user,   :class_name => "User", :foreign_key => "to_user_id"
 
   validates_presence_of :comment
+
+  named_scope :order_new, proc { { :order => 'updated_on DESC' } }
+
+  named_scope :limit, proc { |num| { :limit => num } }
 end
