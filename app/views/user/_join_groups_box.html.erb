@@ -3,7 +3,7 @@
   <div class="box_space_body">
   <ul>
   <% groups = user.groups.participating(user).order_participate_recent -%>
-  <% groups.limit(5).each do |group| -%>
+  <% groups.limit(10).each do |group| -%>
     <li><%= icon_tag('bullet_blue') + group_link_to(group, :view_text => truncate(h(group.name), :length => 12), :title => group.name) %></li>
   <% end -%>
   </ul>
