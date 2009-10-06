@@ -4624,7 +4624,7 @@ msgstr "新着紹介文"
 
 #: app/controllers/group_layout_module.rb:7
 msgid "New Posts"
-msgstr "新規投稿"
+msgstr "記事を書く"
 
 #: app/helpers/share_file_helper.rb:24
 msgid "New Upload"

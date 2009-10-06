@@ -36,7 +36,7 @@ Given /^以下の掲示板を書く:$/ do |entries_table|
   entries_table.hashes.each do |hash|
     Given %!"#{hash[:user]}"でログインする!
     Given %!"#{hash[:user]}"で"#{hash[:group]}"というグループを作成する!
-    Given %!"新規投稿"リンクをクリックする!
+    Given %!"記事を書く"リンクをクリックする!
     Given %!"#{"board_entry[title]"}"に"#{hash[:title]}"と入力する!
     Given %!"タグ"に"#{hash[:tag]}"と入力する!
     Given %!"#{"editor_mode_hiki"}"を選択する!
