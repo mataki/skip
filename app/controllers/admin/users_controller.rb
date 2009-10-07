@@ -207,7 +207,7 @@ class Admin::UsersController < Admin::ApplicationController
   def show_signup_url
     @user = Admin::User.find(params[:id])
     @signup_url = signup_url(@user.activation_token)
-    @mail_body = render_to_string(:template => "user_mailer/sent_activate", :layout => false)
+    @mail_body = render_to_string(:template => "user_mailer/smtp/sent_activate", :layout => false)
     render :layout => false
   end
 
@@ -229,7 +229,7 @@ class Admin::UsersController < Admin::ApplicationController
         @user.save_without_validation!
       end
       @reset_password_url = reset_password_url(@user.reset_auth_token)
-      @mail_body = render_to_string(:template => "user_mailer/sent_forgot_password", :layout => false)
+      @mail_body = render_to_string(:template => "user_mailer/smtp/sent_forgot_password", :layout => false)
       render :layout => false
     else
       flash[:error] = _('Password resetting code cannot be issued for unactivated users.')
@@ -264,7 +264,7 @@ class Admin::UsersController < Admin::ApplicationController
   def do_issue_activation_codes user_ids
     User.issue_activation_codes(user_ids) do |unused_users, active_users|
       unused_users.each do |unused_user|
-        UserMailer.deliver_sent_activate(unused_user.email, signup_url(unused_user.activation_token))
+        UserMailer::Smtp.deliver_sent_activate(unused_user.email, signup_url(unused_user.activation_token))
       end
       unless unused_users.empty?
         email = unused_users.map(&:email).join(',')

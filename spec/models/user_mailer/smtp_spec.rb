@@ -13,27 +13,11 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-require File.expand_path(File.dirname(__FILE__) + "/batch_base")
+require File.dirname(__FILE__) + '/../../spec_helper'
 
-class BatchSendCleaningNotification < BatchBase
-  def self.execute options
-    sender = self.new
-    sender.send_cleaning_notification
-  end
-
-  def send_cleaning_notification
-    if Admin::Setting.enable_user_cleaning_notification
-      now = Time.now
-      if now.month % Admin::Setting.user_cleaning_notification_interval == 0 && now.day == 1
-        UserMailer::Smtp.deliver_sent_cleaning_notification cleaning_notification_to_addresses
-      end
-    end
-  end
-
-  private
-  def cleaning_notification_to_addresses
-    Admin::User.admin.active.map { |u| u.email }.join(',')
+describe UserMailer::Smtp do
+  def test_sent_apply_email_confirm
+    response = UserMailer::Smtp.create_sent_apply_email_confirm SkipFaker.email, SkipFaker.rand_char
+    assert_match /https?:\/\/.*\/$/m, response.body
   end
 end
-
-BatchSendCleaningNotification.execution unless RAILS_ENV == 'test'

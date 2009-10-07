@@ -15,13 +15,6 @@
 
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe UserMailer do
-  def test_sent_apply_email_confirm
-    response = UserMailer.create_sent_apply_email_confirm SkipFaker.email, SkipFaker.rand_char
-    assert_match /https?:\/\/.*\/$/m, response.body
-  end
-end
-
 describe UserMailer, "#smtp_settings" do
   before(:all) do
     Admin::Setting.stub!(:mail_function_setting).and_return(true)
@@ -40,7 +33,7 @@ describe UserMailer, "#smtp_settings" do
   end
   it "Net::SMTPメソッドでDBの内容を利用して送信すること" do
     @smtp.should_receive(:start).with("domain", "user_name", "password", :login).and_yield(@smtp)
-    UserMailer.deliver_sent_forgot_password("test@test.com", "password")
+    UserMailer::Smtp.deliver_sent_forgot_password("test@test.com", "password")
   end
   after(:all) do
     ActionMailer::Base.delivery_method = @before_method

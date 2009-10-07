@@ -34,7 +34,7 @@ class BatchSendMails < BatchBase
       entry_url = url_for :controller => :board_entries, :action => :forward, :id => board_entry.id
 
       begin
-        UserMailer.deliver_sent_contact(to_address, user.name, entry_url, board_entry.title)
+        UserMailer::AR.deliver_sent_contact(to_address, user.name, entry_url, board_entry.title)
         mail.update_attribute :send_flag, true
       rescue
         self.class.log_error "failed send mail [id]:" + mail.id.to_s + " " + $!
@@ -61,7 +61,7 @@ class BatchSendMails < BatchBase
         message_manage_url = url_for :controller => "/mypage", :action => "manage", :menu => :manage_message
 
         begin
-          UserMailer.deliver_sent_message(user.email, link_url, message.message, message_manage_url)
+          UserMailer::AR.deliver_sent_message(user.email, link_url, message.message, message_manage_url)
           message.update_attribute :send_flag, true
         rescue
           self.class.log_error "failed send message [id]:" + message.id.to_s + " " + $!

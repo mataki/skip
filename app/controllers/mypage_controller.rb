@@ -403,7 +403,7 @@ class MypageController < ApplicationController
     end
 
     if @applied_email.save
-      UserMailer.deliver_sent_apply_email_confirm(@applied_email.email, "#{root_url}mypage/update_email/#{@applied_email.onetime_code}/")
+      UserMailer::Smtp.deliver_sent_apply_email_confirm(@applied_email.email, "#{root_url}mypage/update_email/#{@applied_email.onetime_code}/")
       flash.now[:notice] = _("Your request of changing email address accepted. Check your email to complete the process.")
     else
       flash.now[:warn] = _("Failed to process your request. Try resubmitting your request again.")

@@ -332,10 +332,10 @@ describe PlatformController, 'POST /forgot_password' do
           @user.stub!(:reset_auth_token).and_return(@reset_auth_token)
           @user.stub!(:issue_reset_auth_token)
           @user.stub!(:save_without_validation!)
-          UserMailer.stub!(:deliver_sent_forgot_password)
+          UserMailer::Smtp.stub!(:deliver_sent_forgot_password)
         end
         it 'パスワードリセットURLを記載したメールの送信処理が呼ばれること' do
-          UserMailer.should_receive(:deliver_sent_forgot_password).with(@email, @password_reset_url)
+          UserMailer::Smtp.should_receive(:deliver_sent_forgot_password).with(@email, @password_reset_url)
           post :forgot_password, :email => @email
         end
         it 'パスワードリセットコード発行処理が行われること' do
@@ -516,7 +516,7 @@ describe PlatformController, 'POST /activate' do
       controller.stub!(:signup_url).and_return(@signup_url)
       @user.stub!(:issue_activation_code)
       @user.stub!(:save_without_validation!)
-      UserMailer.stub!(:deliver_sent_activate)
+      UserMailer::Smtp.stub!(:deliver_sent_activate)
       User.should_receive(:find_without_retired_skip).and_return(@user)
     end
     describe '未使用ユーザが見つかる場合' do
@@ -524,7 +524,7 @@ describe PlatformController, 'POST /activate' do
         @user.should_receive(:unused?).and_return(true)
       end
       it 'アクティベーションURLを記載したメールの送信処理が呼ばれること' do
-        UserMailer.should_receive(:deliver_sent_activate).with(@email, @signup_url)
+        UserMailer::Smtp.should_receive(:deliver_sent_activate).with(@email, @signup_url)
         post :activate, :email => @email
       end
       it 'アクティベーションコード発行処理が行われること' do
@@ -748,7 +748,7 @@ describe PlatformController, "POST /forgot_openid" do
           response.should redirect_to(:action => :index)
         end
         it "メールが送信されること" do
-          UserMailer.should_receive(:deliver_sent_forgot_openid).with(@params_email, @reset_url)
+          UserMailer::Smtp.should_receive(:deliver_sent_forgot_openid).with(@params_email, @reset_url)
           post_forgot_openid
         end
         it "該当するユーザのissue_reset_auth_tokenが呼ばれて、saveされること" do

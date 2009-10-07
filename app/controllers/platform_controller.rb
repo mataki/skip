@@ -66,7 +66,7 @@ class PlatformController < ApplicationController
       if @user.active?
         @user.issue_reset_auth_token
         @user.save_without_validation!
-        UserMailer.deliver_sent_forgot_password(email, reset_password_url(@user.reset_auth_token))
+        UserMailer::Smtp.deliver_sent_forgot_password(email, reset_password_url(@user.reset_auth_token))
         flash[:notice] = _("An email contains the URL for resetting the password has been sent to %s.") % email
         redirect_to :controller => '/platform'
       else
@@ -115,7 +115,7 @@ class PlatformController < ApplicationController
       if  @user.unused?
         @user.issue_activation_code
         @user.save_without_validation!
-        UserMailer.deliver_sent_activate(email, signup_url(@user.activation_token))
+        UserMailer::Smtp.deliver_sent_activate(email, signup_url(@user.activation_token))
         flash[:notice] = _("An email containing the URL for signup will be sent to %{email}.") % {:email => email}
         redirect_to :controller => '/platform'
       else
@@ -159,7 +159,7 @@ class PlatformController < ApplicationController
       if user.active?
         user.issue_reset_auth_token
         user.save_without_validation!
-        UserMailer.deliver_sent_forgot_openid(email, reset_openid_url(user.reset_auth_token))
+        UserMailer::Smtp.deliver_sent_forgot_openid(email, reset_openid_url(user.reset_auth_token))
         flash[:notice] = _("Sent an email containing the URL for resettig OpenID URL to %{email}.") % {:email => email}
         redirect_to :controller => "/platform"
       else

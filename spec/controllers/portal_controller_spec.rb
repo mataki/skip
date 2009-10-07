@@ -84,7 +84,7 @@ describe PortalController, 'POST /apply' do
     @antenna.stub!(:save!)
     Antenna.stub!(:create_initial!).and_return(@antenna)
     UserAccess.stub!(:create!)
-    UserMailer.stub!(:deliver_sent_signup_confirm)
+    UserMailer::Smtp.stub!(:deliver_sent_signup_confirm)
     @user.stub!(:activate!)
     @user.stub!(:within_time_limit_of_activation_token?)
     SkipEmbedded::InitialSettings.stub!("[]").with('username_use_setting').and_return(false)
