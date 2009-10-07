@@ -52,6 +52,13 @@
   </td></tr></table></div>
 </div>
 
+<div class="input_line">
+  <div class="input_label"><%= _('Default Mail Settings') %></div>
+  <%= check_box('group', 'default_send_mail', :id => 'default_send_mail_send') %><%= label_tag('default_send_mail_send', _('Send a mail')) %>
+  <div class="input_value"><table><tr><td>
+  </td></tr></table></div>
+</div>
+
 <%= ckeditor "group_description" %>
 
 <% content_for :javascript_initializers do -%>
