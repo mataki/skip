@@ -14,9 +14,6 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 require File.expand_path(File.dirname(__FILE__) + "/batch_base")
-# ruby lib/batch_make_ranking.rb で実行すると利用しているSymbolクラスがRubyのSymbolクラスになってしまい
-# 定数が定義されていないエラーになってしまう。そもそもSymbolというクラス名が良くない。。。
-require File.expand_path(File.dirname(__FILE__) + "/symbol")
 
 # 1日分のランキング元データを生成
 # 送信するデータは、送信日時点でのこれまでの累積値(!=前日からの差分)

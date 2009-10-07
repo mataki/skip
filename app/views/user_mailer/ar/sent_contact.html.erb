@@ -1,10 +1,14 @@
 <%= @header %>
 
 <%= _("You have message(s) from %s") % @name %>
-<%= _("Click the URL below to see the content of message.")%>
-
-[<%= @entry_title %>]
-<%= @entry_url %>
-<%= _("*Jumps directly to the blog entry.") %>
+  [<%= @entry.title %>]
+<% if Admin::Setting.contact_mail_contain_contents -%>
+  <%= convert_plain(@entry) %>
+  <%= _("Click the URL below to see all.")%>
+<% else -%>
+  <%= _("Click the URL below to see the content of message.")%>
+<% end -%>
+  <%= @entry_url %>
+  <%= _("*Jumps directly to the blog entry.") %>
 
 <%= @footer %>

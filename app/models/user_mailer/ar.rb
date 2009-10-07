@@ -16,17 +16,21 @@
 class UserMailer::AR < UserMailer::Base
   self.delivery_method = Admin::Setting.mail_function_setting ? :activerecord : :test
 
-  def sent_contact(recipient, user_name, entry_url, entry_title)
+  def sent_contact(recipient, user_name, entry_url, entry)
     if recipient.include? ","
       @bcc        = recipient
     else
       @recipients = recipient
     end
-    @subject    = UserMailer::Base.base64(_("[%{title}] You have a message from %{user}.") % {:title => Admin::Setting.abbr_app_title, :user => user_name})
+    @subject    = if Admin::Setting.contact_mail_contain_contents
+                    UserMailer::Base.base64("[#{Admin::Setting.abbr_app_title}] #{user_name}:#{entry.title}")
+                  else
+                    UserMailer::Base.base64(_("[%{app_title}] You have a message from %{user}.") % {:app_title => Admin::Setting.abbr_app_title, :user => user_name})
+                  end
     @from       = from
     @send_on    = Time.now
     @headers    = {}
-    @body       = {:name => user_name, :entry_url => entry_url, :entry_title => entry_title, :header => header, :footer => footer}
+    @body       = {:name => user_name, :entry_url => entry_url, :entry => entry, :header => header, :footer => footer}
   end
 
   def sent_message(recipient, link_url, message ,message_manage_url)

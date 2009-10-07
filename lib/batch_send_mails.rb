@@ -34,10 +34,11 @@ class BatchSendMails < BatchBase
       entry_url = url_for :controller => :board_entries, :action => :forward, :id => board_entry.id
 
       begin
-        UserMailer::AR.deliver_sent_contact(to_address, user.name, entry_url, board_entry.title)
+        UserMailer::AR.deliver_sent_contact(to_address, user.name, entry_url, board_entry)
         mail.update_attribute :send_flag, true
-      rescue
-        self.class.log_error "failed send mail [id]:" + mail.id.to_s + " " + $!
+      rescue => e
+        self.class.log_error "failed send mail [id]: #{e}"
+        e.backtrace.each { |line| self.class.log_error line }
       end
     end
   end
@@ -63,8 +64,9 @@ class BatchSendMails < BatchBase
         begin
           UserMailer::AR.deliver_sent_message(user.email, link_url, message.message, message_manage_url)
           message.update_attribute :send_flag, true
-        rescue
-          self.class.log_error "failed send message [id]:" + message.id.to_s + " " + $!
+        rescue => e
+          self.class.log_error "failed send message [id]: #{e}"
+          e.backtrace.each { |line| self.class.log_error line }
         end
       else
         message.update_attribute :send_flag, true

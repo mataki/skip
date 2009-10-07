@@ -60,6 +60,8 @@ class Admin::Setting < ActiveRecord::Base
   # ================================================================================================
   N_('Admin::Setting|Mail function setting')
   N_('Admin::Setting|Mail function setting description')
+  N_('Admin::Setting|Contact mail contain contents')
+  N_('Admin::Setting|Contact mail contain contents description')
   N_('Admin::Setting|Smtp settings')
   N_('Admin::Setting|Smtp settings description')
   N_('Admin::Setting|Smtp settings password')

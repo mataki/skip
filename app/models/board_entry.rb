@@ -456,7 +456,7 @@ class BoardEntry < ActiveRecord::Base
   end
 
   def prepare_send_mail
-    return if diary? && privare?
+    return if diary? && private?
 
     users = public? ?  User.active.all : publication_users
     users.each do |u|

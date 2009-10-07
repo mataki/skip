@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-10-07 16:05+0900\n"
+"POT-Creation-Date: 2009-10-07 17:58+0900\n"
 "PO-Revision-Date: 2009-06-29 13:31+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -327,7 +327,7 @@ msgid ""
 "issues (e.g. javascripts)."
 msgstr ""
 
-#: app/views/user_mailer/ar/sent_contact.html.erb:8
+#: app/views/user_mailer/ar/sent_contact.html.erb:12
 msgid "*Jumps directly to the blog entry."
 msgstr ""
 
@@ -337,7 +337,7 @@ msgid_plural "*Showing %s popular tags."
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/models/user_mailer/base.rb:41
+#: app/models/user_mailer/base.rb:42
 msgid ""
 "*This email is automatically delivered from the system. Please do not reply."
 msgstr ""
@@ -1123,25 +1123,33 @@ msgstr ""
 "Enter email address for inquiries. It will also be used for the sender of "
 "system notification emails."
 
+#: app/models/admin/setting.rb:63
+msgid "Admin::Setting|Contact mail contain contents"
+msgstr ""
+
+#: app/models/admin/setting.rb:64
+msgid "Admin::Setting|Contact mail contain contents description"
+msgstr ""
+
 #: app/models/admin/setting.rb:-
 msgid "Admin::Setting|Created at"
 msgstr ""
 
-#: app/models/admin/setting.rb:116
+#: app/models/admin/setting.rb:118
 msgid "Admin::Setting|Custom password strength regex"
 msgstr "Regex for Custom Password Strength"
 
-#: app/models/admin/setting.rb:117
+#: app/models/admin/setting.rb:119
 msgid "Admin::Setting|Custom password strength regex description"
 msgstr ""
 "Provide the regular expression for allowed passwords when you use custom "
 "password strength."
 
-#: app/models/admin/setting.rb:118
+#: app/models/admin/setting.rb:120
 msgid "Admin::Setting|Custom password strength validation message"
 msgstr "Custom Password Strength Validation Error Message"
 
-#: app/models/admin/setting.rb:119
+#: app/models/admin/setting.rb:121
 msgid "Admin::Setting|Custom password strength validation message description"
 msgstr ""
 "Provide the error message for validation error when you use custom password "
@@ -1158,52 +1166,52 @@ msgstr ""
 "don't want users to change their profile pictures (e.g. set profile pictures "
 "by administrator)."
 
-#: app/models/admin/setting.rb:120
+#: app/models/admin/setting.rb:122
 msgid "Admin::Setting|Enable login keyphrase"
 msgstr "Enable Login Keyphrase"
 
-#: app/models/admin/setting.rb:121
+#: app/models/admin/setting.rb:123
 msgid "Admin::Setting|Enable login keyphrase description"
 msgstr ""
 "Adds a login keyphrase to the login form. Login ID, password and login "
 "keyphrase must match for successful login."
 
-#: app/models/admin/setting.rb:103
+#: app/models/admin/setting.rb:105
 msgid "Admin::Setting|Enable password periodic change"
 msgstr "Enable Fixed-term Passwords"
 
-#: app/models/admin/setting.rb:104
+#: app/models/admin/setting.rb:106
 msgid "Admin::Setting|Enable password periodic change description"
 msgstr ""
 "Check to disallow users with expired passwords to login. Passwords must be "
 "reset before login."
 
-#: app/models/admin/setting.rb:128
+#: app/models/admin/setting.rb:130
 msgid "Admin::Setting|Enable single session"
 msgstr "Enable Single Session"
 
-#: app/models/admin/setting.rb:129
+#: app/models/admin/setting.rb:131
 msgid "Admin::Setting|Enable single session description"
 msgstr ""
 "Check to disallow multiple sessions per user. The old login session will be "
 "disabled when a new login session starts (remote logout when forgot to "
 "logout). Uncheck to allow multiple sessions."
 
-#: app/models/admin/setting.rb:124
+#: app/models/admin/setting.rb:126
 msgid "Admin::Setting|Enable user cleaning notification"
 msgstr "Send User Data Cleaning Notification"
 
-#: app/models/admin/setting.rb:125
+#: app/models/admin/setting.rb:127
 msgid "Admin::Setting|Enable user cleaning notification description"
 msgstr ""
 "Check to enable email notification for periodic user data cleaning (user "
 "retirement etc.) to the system administrator."
 
-#: app/models/admin/setting.rb:99
+#: app/models/admin/setting.rb:101
 msgid "Admin::Setting|Enable user lock"
 msgstr "Lock Accounts on Login Failures"
 
-#: app/models/admin/setting.rb:100
+#: app/models/admin/setting.rb:102
 msgid "Admin::Setting|Enable user lock description"
 msgstr ""
 "Lock accounts that failed to login for certain times (can be set on "
@@ -1261,11 +1269,11 @@ msgstr "Hide Email Address"
 msgid "Admin::Setting|Hide email description"
 msgstr "Check to hide email address of users. Uncheck to show."
 
-#: app/models/admin/setting.rb:77
+#: app/models/admin/setting.rb:79
 msgid "Admin::Setting|Host and port"
 msgstr "Hostname and Port"
 
-#: app/models/admin/setting.rb:78
+#: app/models/admin/setting.rb:80
 msgid "Admin::Setting|Host and port description"
 msgstr ""
 "The hostname and port used for URLs in email notification. It does not "
@@ -1290,11 +1298,11 @@ msgstr ""
 "their \"Login ID\". (e.g. set it to \"Employee No.\" in case you use "
 "employee number as \"Login ID\"."
 
-#: app/models/admin/setting.rb:122 app/views/shared/_login_form.html.erb:39
+#: app/models/admin/setting.rb:124 app/views/shared/_login_form.html.erb:39
 msgid "Admin::Setting|Login keyphrase"
 msgstr "Login Keyphrase"
 
-#: app/models/admin/setting.rb:123
+#: app/models/admin/setting.rb:125
 msgid "Admin::Setting|Login keyphrase description"
 msgstr "Provide login keyphrase in alpha-numericals."
 
@@ -1308,45 +1316,45 @@ msgstr ""
 "System email notifications are available. Remember to set SMTP settings as "
 "well."
 
-#: app/models/admin/setting.rb:85
+#: app/models/admin/setting.rb:87
 msgid "Admin::Setting|Mypage feed default limit"
 msgstr "Entries Per Feed"
 
-#: app/models/admin/setting.rb:86
+#: app/models/admin/setting.rb:88
 msgid "Admin::Setting|Mypage feed default limit description"
 msgstr ""
 "Summaries of RSS feed entries are shown in the feed block at the right of "
 "\"My Page\". Adjust to get optimal display result."
 
-#: app/models/admin/setting.rb:89
+#: app/models/admin/setting.rb:91
 msgid "Admin::Setting|Mypage feed settings"
 msgstr "Add / Delete RSS Feeds"
 
-#: app/models/admin/setting.rb:90
+#: app/models/admin/setting.rb:92
 msgid "Admin::Setting|Mypage feed settings description"
 msgstr "Set the RSS feeds shown in \"My Page\"."
 
-#: app/models/admin/setting.rb:93
+#: app/models/admin/setting.rb:95
 msgid "Admin::Setting|Mypage feed settings title"
 msgstr "Title of RSS Feed"
 
-#: app/models/admin/setting.rb:94
+#: app/models/admin/setting.rb:96
 msgid "Admin::Setting|Mypage feed settings title description"
 msgstr "Provide the title of RSS feed."
 
-#: app/models/admin/setting.rb:91
+#: app/models/admin/setting.rb:93
 msgid "Admin::Setting|Mypage feed settings url"
 msgstr "RSS Feed URL"
 
-#: app/models/admin/setting.rb:92
+#: app/models/admin/setting.rb:94
 msgid "Admin::Setting|Mypage feed settings url description"
 msgstr "Provide the URL of RSS feed."
 
-#: app/models/admin/setting.rb:87
+#: app/models/admin/setting.rb:89
 msgid "Admin::Setting|Mypage feed timeout"
 msgstr "RSS Feeds Timeout (sec)"
 
-#: app/models/admin/setting.rb:88
+#: app/models/admin/setting.rb:90
 msgid "Admin::Setting|Mypage feed timeout description"
 msgstr ""
 "There may be problem retrieving the feed since it is located outside of the "
@@ -1356,21 +1364,21 @@ msgstr ""
 msgid "Admin::Setting|Name"
 msgstr " "
 
-#: app/models/admin/setting.rb:105
+#: app/models/admin/setting.rb:107
 msgid "Admin::Setting|Password change interval"
 msgstr "Valid Duration of Passwords"
 
-#: app/models/admin/setting.rb:106
+#: app/models/admin/setting.rb:108
 msgid "Admin::Setting|Password change interval description"
 msgstr ""
 "Set the valid duration of passwords in days. The password expiry days will "
 "be set to the days set after user registration / password update."
 
-#: app/models/admin/setting.rb:107
+#: app/models/admin/setting.rb:109
 msgid "Admin::Setting|Password strength"
 msgstr ""
 
-#: app/models/admin/setting.rb:108
+#: app/models/admin/setting.rb:110
 msgid "Admin::Setting|Password strength description"
 msgstr ""
 "Here we set the password strength.<p>Low: Needs 6 or more alpha-numericals "
@@ -1381,41 +1389,41 @@ msgstr ""
 "letter and 1 number in the password.</p><p>Custom: You can define your own "
 "password strength definistion using regular expression.</p>"
 
-#: app/models/admin/setting.rb:271
+#: app/models/admin/setting.rb:273
 msgid "Admin::Setting|Password strength|Validation message "
 msgstr " "
 
-#: app/models/admin/setting.rb:110
+#: app/models/admin/setting.rb:112
 msgid "Admin::Setting|Password strength|Validation message high"
 msgstr ""
 "needs 8 or more alpha-numericals and symbols (!@#$%^&*?_~). There must also "
 "be at least 1 upper case letter, 1 lower case letter, 1 number and 1 symbol "
 "in the password."
 
-#: app/models/admin/setting.rb:114
+#: app/models/admin/setting.rb:116
 msgid "Admin::Setting|Password strength|Validation message low"
 msgstr "needs 6 or more alpha-numericals and symbols (!@#$%^&*?_~)."
 
-#: app/models/admin/setting.rb:112 app/models/admin/setting.rb:274
+#: app/models/admin/setting.rb:114 app/models/admin/setting.rb:276
 msgid "Admin::Setting|Password strength|Validation message middle"
 msgstr ""
 "needs 8 or more alpha-numericals and symbols (!@#$%^&*?_~). There must also "
 "be at least 1 upper case letter, 1 lower case letter and 1 number in the "
 "password."
 
-#: app/models/admin/setting.rb:115
+#: app/models/admin/setting.rb:117
 msgid "Admin::Setting|Password strength|custom"
 msgstr "Custom"
 
-#: app/models/admin/setting.rb:109
+#: app/models/admin/setting.rb:111
 msgid "Admin::Setting|Password strength|high"
 msgstr "High"
 
-#: app/models/admin/setting.rb:113
+#: app/models/admin/setting.rb:115
 msgid "Admin::Setting|Password strength|low"
 msgstr "Low"
 
-#: app/models/admin/setting.rb:111
+#: app/models/admin/setting.rb:113
 msgid "Admin::Setting|Password strength|middle"
 msgstr "Middle"
 
@@ -1427,71 +1435,71 @@ msgstr "Name of Poin Button"
 msgid "Admin::Setting|Point button description"
 msgstr "You can change the name of point button for blogs and BBS."
 
-#: app/models/admin/setting.rb:79
+#: app/models/admin/setting.rb:81
 msgid "Admin::Setting|Protocol"
 msgstr ""
 
-#: app/models/admin/setting.rb:80
+#: app/models/admin/setting.rb:82
 msgid "Admin::Setting|Protocol description"
 msgstr ""
 "The protocol used for URLs in email notification. It does not affect the URL "
 "for accessing the system."
 
-#: app/models/admin/setting.rb:63
+#: app/models/admin/setting.rb:65
 msgid "Admin::Setting|Smtp settings"
 msgstr "SMTP Settings"
 
-#: app/models/admin/setting.rb:71
+#: app/models/admin/setting.rb:73
 msgid "Admin::Setting|Smtp settings address"
 msgstr "SMTP Server"
 
-#: app/models/admin/setting.rb:72
+#: app/models/admin/setting.rb:74
 msgid "Admin::Setting|Smtp settings address description"
 msgstr "Provide the hostname of SMTP server."
 
-#: app/models/admin/setting.rb:75
+#: app/models/admin/setting.rb:77
 msgid "Admin::Setting|Smtp settings authentication"
 msgstr "AUTH Type"
 
-#: app/models/admin/setting.rb:76
+#: app/models/admin/setting.rb:78
 msgid "Admin::Setting|Smtp settings authentication description"
 msgstr ""
 "Select appropriate type of authentication in case your server requires it. "
 "Available options are plain, login and cram_md5."
 
-#: app/models/admin/setting.rb:64
+#: app/models/admin/setting.rb:66
 msgid "Admin::Setting|Smtp settings description"
 msgstr "Here we set the SMTP options."
 
-#: app/models/admin/setting.rb:73
+#: app/models/admin/setting.rb:75
 msgid "Admin::Setting|Smtp settings domain"
 msgstr "Sender Domain"
 
-#: app/models/admin/setting.rb:74
+#: app/models/admin/setting.rb:76
 msgid "Admin::Setting|Smtp settings domain description"
 msgstr "Provide the sender domain. It will be shown in the mail header."
 
-#: app/models/admin/setting.rb:65
+#: app/models/admin/setting.rb:67
 msgid "Admin::Setting|Smtp settings password"
 msgstr "Password"
 
-#: app/models/admin/setting.rb:66
+#: app/models/admin/setting.rb:68
 msgid "Admin::Setting|Smtp settings password description"
 msgstr "Provide the password in case your server requires authentication."
 
-#: app/models/admin/setting.rb:67
+#: app/models/admin/setting.rb:69
 msgid "Admin::Setting|Smtp settings port"
 msgstr "Port"
 
-#: app/models/admin/setting.rb:68
+#: app/models/admin/setting.rb:70
 msgid "Admin::Setting|Smtp settings port description"
 msgstr "Provide the port number."
 
-#: app/models/admin/setting.rb:69
+#: app/models/admin/setting.rb:71
 msgid "Admin::Setting|Smtp settings user name"
 msgstr "User Name"
 
-#: app/models/admin/setting.rb:70
+#: app/models/admin/setting.rb:72
 msgid "Admin::Setting|Smtp settings user name description"
 msgstr "Provide the user name in case your server requires authentication."
 
@@ -1509,11 +1517,11 @@ msgstr ""
 msgid "Admin::Setting|Updated at"
 msgstr ""
 
-#: app/models/admin/setting.rb:126
+#: app/models/admin/setting.rb:128
 msgid "Admin::Setting|User cleaning notification interval"
 msgstr "User Data Cleaning Notification Interval (mo.)"
 
-#: app/models/admin/setting.rb:127
+#: app/models/admin/setting.rb:129
 msgid "Admin::Setting|User cleaning notification interval description"
 msgstr ""
 "Provide the interval for sending user data cleaning notification emails. "
@@ -1521,11 +1529,11 @@ msgstr ""
 "value (e.g. 1st of March, June, September and December when the value is set "
 "to 3)."
 
-#: app/models/admin/setting.rb:101
+#: app/models/admin/setting.rb:103
 msgid "Admin::Setting|User lock trial limit"
 msgstr "Login Failure Limit"
 
-#: app/models/admin/setting.rb:102
+#: app/models/admin/setting.rb:104
 msgid "Admin::Setting|User lock trial limit description"
 msgstr ""
 "Set the maximum allowed login failures before user accounts get locked."
@@ -2608,7 +2616,11 @@ msgid ""
 "  %s"
 msgstr ""
 
-#: app/views/user_mailer/ar/sent_contact.html.erb:4
+#: app/views/user_mailer/ar/sent_contact.html.erb:7
+msgid "Click the URL below to see all."
+msgstr ""
+
+#: app/views/user_mailer/ar/sent_contact.html.erb:9
 msgid "Click the URL below to see the content of message."
 msgstr ""
 
@@ -3422,7 +3434,7 @@ msgstr ""
 msgid "For off-time activeties."
 msgstr ""
 
-#: app/models/user_mailer/base.rb:46
+#: app/models/user_mailer/base.rb:47
 msgid "For questions regarding this email, please contact:"
 msgstr ""
 
@@ -6257,7 +6269,7 @@ msgstr ""
 msgid "This comment cannot be deleted since it has been commented."
 msgstr ""
 
-#: app/models/user_mailer/base.rb:42
+#: app/models/user_mailer/base.rb:43
 msgid "This email is a contact from %{sender}"
 msgstr ""
 
@@ -7363,8 +7375,8 @@ msgstr ""
 msgid "[%s] User registration completed"
 msgstr ""
 
-#: app/models/user_mailer/active_record.rb:25 app/models/user_mailer/ar.rb:25
-msgid "[%{title}] You have a message from %{user}."
+#: app/models/user_mailer/ar.rb:28
+msgid "[%{app_title}] You have a message from %{user}."
 msgstr ""
 
 #: app/views/group/show.html.erb:78
@@ -7984,7 +7996,7 @@ msgstr ""
 msgid "required"
 msgstr ""
 
-#: app/models/admin/setting.rb:162
+#: app/models/admin/setting.rb:164
 msgid "requires a valid regular expression."
 msgstr ""
 
