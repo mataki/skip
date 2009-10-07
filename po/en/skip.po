@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-10-07 10:16+0900\n"
+"POT-Creation-Date: 2009-10-07 16:05+0900\n"
 "PO-Revision-Date: 2009-06-29 13:31+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -110,7 +110,7 @@ msgstr ""
 msgid "%s<br/>We apologize for the inconvenience caused.<br/>"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:273
+#: app/controllers/edit_controller.rb:276
 msgid "%{action} %{write_place}"
 msgstr ""
 
@@ -291,14 +291,12 @@ msgstr ""
 msgid "(This screen is to avoid security risks ralated to direct downloading)"
 msgstr ""
 
-#: app/models/board_entry.rb:566
+#: app/models/board_entry.rb:540
 msgid "(Unknown topic entry found. However, this has been ignored)"
 msgstr ""
 
 #: app/views/board_entries/_form.html.erb:88
-msgid ""
-"(Will not be sent when the entry is open to all users or limited to owner "
-"only)"
+msgid "(Will not be sent when the entry is limited to owner only)"
 msgstr ""
 
 #: app/views/bookmark/_new.html.erb:22
@@ -329,7 +327,7 @@ msgid ""
 "issues (e.g. javascripts)."
 msgstr ""
 
-#: app/views/user_mailer/sent_contact.html.erb:8
+#: app/views/user_mailer/ar/sent_contact.html.erb:8
 msgid "*Jumps directly to the blog entry."
 msgstr ""
 
@@ -339,7 +337,7 @@ msgid_plural "*Showing %s popular tags."
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/models/user_mailer.rb:115
+#: app/models/user_mailer/base.rb:41
 msgid ""
 "*This email is automatically delivered from the system. Please do not reply."
 msgstr ""
@@ -471,25 +469,25 @@ msgstr ""
 msgid "Access denied by search node. Please contact system owner."
 msgstr ""
 
-#: app/views/user_mailer/sent_activate.html.erb:9
+#: app/views/user_mailer/smtp/sent_activate.html.erb:9
 msgid ""
 "Access the URL below and click on the link [Register your profile and start "
 "using %s]."
 msgstr ""
 
-#: app/views/user_mailer/sent_forgot_openid.html.erb:3
+#: app/views/user_mailer/smtp/sent_forgot_openid.html.erb:3
 msgid "Access the URL below to complete the OpenID resetting process."
 msgstr ""
 
-#: app/views/user_mailer/sent_apply_email_confirm.html.erb:3
+#: app/views/user_mailer/smtp/sent_apply_email_confirm.html.erb:3
 msgid "Access the URL below to complete the email address changing process."
 msgstr ""
 
-#: app/views/user_mailer/sent_forgot_password.html.erb:3
+#: app/views/user_mailer/smtp/sent_forgot_password.html.erb:3
 msgid "Access the URL below to complete the password resetting process."
 msgstr ""
 
-#: app/views/user_mailer/sent_activate.html.erb:3
+#: app/views/user_mailer/smtp/sent_activate.html.erb:3
 msgid "Access the URL below to complete the registration process."
 msgstr ""
 
@@ -528,7 +526,7 @@ msgstr ""
 msgid "Action: "
 msgstr ""
 
-#: app/models/user_mailer.rb:78
+#: app/models/user_mailer/smtp.rb:55
 msgid "Activate your account and start using"
 msgstr ""
 
@@ -2115,7 +2113,7 @@ msgstr ""
 msgid "Back"
 msgstr ""
 
-#: config/environment.rb:64
+#: config/environment.rb:65
 msgid "Back to mypage."
 msgstr ""
 
@@ -2426,7 +2424,7 @@ msgstr ""
 #: app/controllers/services_controller.rb:44
 #: app/controllers/user_layout_module.rb:10
 #: app/controllers/bookmark_controller.rb:118
-#: app/controllers/bookmarks_controller.rb:34 config/environment.rb:92
+#: app/controllers/bookmarks_controller.rb:34 config/environment.rb:93
 msgid "Bookmarks"
 msgstr ""
 
@@ -2599,18 +2597,18 @@ msgstr ""
 msgid "Click here to change profile picutre ... "
 msgstr ""
 
-#: app/views/user_mailer/sent_signup_confirm.html.erb:5
+#: app/views/user_mailer/smtp/sent_signup_confirm.html.erb:5
 msgid "Click on the URL below to access %s."
 msgstr ""
 
-#: app/views/user_mailer/sent_message.html.erb:5
+#: app/views/user_mailer/ar/sent_message.html.erb:5
 msgid ""
 "Click on the URL to see the content.\n"
 "\n"
 "  %s"
 msgstr ""
 
-#: app/views/user_mailer/sent_contact.html.erb:4
+#: app/views/user_mailer/ar/sent_contact.html.erb:4
 msgid "Click the URL below to see the content of message."
 msgstr ""
 
@@ -2787,7 +2785,7 @@ msgid ""
 "needed."
 msgstr ""
 
-#: app/controllers/edit_controller.rb:92
+#: app/controllers/edit_controller.rb:95
 msgid "Created successfully."
 msgstr ""
 
@@ -2893,7 +2891,7 @@ msgid "Delete all the groups under the group category before you delete it."
 msgstr ""
 
 #: app/controllers/admin/group_categories_controller.rb:28
-#: app/controllers/edit_controller.rb:236
+#: app/controllers/edit_controller.rb:239
 msgid "Deletion complete."
 msgstr ""
 
@@ -2961,7 +2959,7 @@ msgstr ""
 msgid "Display: "
 msgstr ""
 
-#: app/views/user_mailer/sent_cleaning_notification.html.erb:3
+#: app/views/user_mailer/smtp/sent_cleaning_notification.html.erb:3
 msgid ""
 "Do you clean the user data periodically?\n"
 "\n"
@@ -2989,7 +2987,7 @@ msgstr ""
 msgid "Driving"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:273
+#: app/controllers/edit_controller.rb:276
 #: app/views/entries/_entry_detail.html.erb:221
 #: app/views/board_entries/_board_entry_comment.html.erb:14
 #: app/views/user/show.html.erb:19 app/views/admin/pictures/index.html.erb:27
@@ -3093,6 +3091,26 @@ msgstr ""
 msgid "Email is mandatory."
 msgstr ""
 
+#: app/models/email.rb:-
+msgid "Email|Created on"
+msgstr ""
+
+#: app/models/email.rb:-
+msgid "Email|From"
+msgstr ""
+
+#: app/models/email.rb:-
+msgid "Email|Last send attempt"
+msgstr ""
+
+#: app/models/email.rb:-
+msgid "Email|Mail"
+msgstr ""
+
+#: app/models/email.rb:-
+msgid "Email|To"
+msgstr ""
+
 #: app/controllers/monta_controller.rb:66
 msgid "End Monta"
 msgstr ""
@@ -3142,7 +3160,7 @@ msgstr ""
 
 #: app/controllers/search_controller.rb:23
 #: app/views/bookmarks/index.html.erb:25 app/views/bookmark/list.html.erb:17
-#: config/environment.rb:68
+#: config/environment.rb:69
 msgid "Entries"
 msgstr ""
 
@@ -3178,7 +3196,7 @@ msgstr ""
 msgid "Entry was successfully marked unread."
 msgstr ""
 
-#: app/controllers/edit_controller.rb:209
+#: app/controllers/edit_controller.rb:212
 msgid "Entry was successfully updated."
 msgstr ""
 
@@ -3368,7 +3386,7 @@ msgstr ""
 
 #: app/controllers/services_controller.rb:47
 #: app/controllers/search_controller.rb:65 app/views/share_file/new.html.erb:9
-#: app/views/share_file/edit.html.erb:9 config/environment.rb:74
+#: app/views/share_file/edit.html.erb:9 config/environment.rb:75
 msgid "Files"
 msgstr ""
 
@@ -3404,7 +3422,7 @@ msgstr ""
 msgid "For off-time activeties."
 msgstr ""
 
-#: app/models/user_mailer.rb:120
+#: app/models/user_mailer/base.rb:46
 msgid "For questions regarding this email, please contact:"
 msgstr ""
 
@@ -3602,7 +3620,7 @@ msgstr ""
 #: app/controllers/services_controller.rb:46
 #: app/controllers/group_controller.rb:375
 #: app/controllers/share_file_controller.rb:165
-#: app/controllers/edit_controller.rb:272 config/environment.rb:86
+#: app/controllers/edit_controller.rb:275 config/environment.rb:87
 msgid "Groups"
 msgstr ""
 
@@ -3902,13 +3920,13 @@ msgstr ""
 msgid "Invalid parameter(s) detected."
 msgstr ""
 
-#: app/controllers/edit_controller.rb:60
-#: app/controllers/edit_controller.rb:163
+#: app/controllers/edit_controller.rb:63
+#: app/controllers/edit_controller.rb:166
 msgid "Invalid parameter(s) found."
 msgstr ""
 
 #: app/controllers/share_file_controller.rb:282
-#: app/controllers/edit_controller.rb:292
+#: app/controllers/edit_controller.rb:295
 msgid "Invalid parameter(s)."
 msgstr ""
 
@@ -3916,8 +3934,8 @@ msgstr ""
 msgid "Invalid password reset URL. Try again or contact system administrator."
 msgstr ""
 
-#: app/controllers/edit_controller.rb:302
-#: app/controllers/edit_controller.rb:308
+#: app/controllers/edit_controller.rb:305
+#: app/controllers/edit_controller.rb:311
 msgid "Invalid privacy setting."
 msgstr ""
 
@@ -4172,7 +4190,7 @@ msgstr ""
 msgid "Login ID"
 msgstr ""
 
-#: app/views/user_mailer/sent_signup_confirm.html.erb:9
+#: app/views/user_mailer/smtp/sent_signup_confirm.html.erb:9
 msgid "Login ID: %s"
 msgstr ""
 
@@ -4406,13 +4424,13 @@ msgstr ""
 msgid "My Account"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:272
+#: app/controllers/edit_controller.rb:275
 msgid "My Blog"
 msgstr ""
 
 #: app/controllers/mypage_controller.rb:486
 #: app/controllers/user_layout_module.rb:19
-#: app/controllers/user_layout_module.rb:23 config/environment.rb:62
+#: app/controllers/user_layout_module.rb:23 config/environment.rb:63
 msgid "My Page"
 msgstr ""
 
@@ -5153,7 +5171,7 @@ msgstr ""
 msgid "Ranking of Popular Users"
 msgstr ""
 
-#: app/controllers/rankings_controller.rb:156 config/environment.rb:98
+#: app/controllers/rankings_controller.rb:156 config/environment.rb:99
 msgid "Rankings"
 msgstr ""
 
@@ -5247,7 +5265,7 @@ msgstr ""
 msgid "Recommended tags: "
 msgstr ""
 
-#: app/views/user_mailer/sent_activate.html.erb:15
+#: app/views/user_mailer/smtp/sent_activate.html.erb:15
 msgid ""
 "Refer to the contact at the bottom of this email in case the link has "
 "expired."
@@ -5305,7 +5323,7 @@ msgstr ""
 msgid "Reload"
 msgstr ""
 
-#: app/models/user_mailer.rb:87
+#: app/models/user_mailer/smtp.rb:64
 msgid "Remember to clean up the user data periodically"
 msgstr ""
 
@@ -5450,7 +5468,7 @@ msgstr ""
 msgid "Search Result Pages: "
 msgstr ""
 
-#: config/environment.rb:94
+#: config/environment.rb:95
 msgid "Search bookmarks."
 msgstr ""
 
@@ -5458,7 +5476,7 @@ msgstr ""
 msgid "Search does not show more than 1000 search results."
 msgstr ""
 
-#: config/environment.rb:70
+#: config/environment.rb:71
 msgid "Search entries."
 msgstr ""
 
@@ -5482,7 +5500,7 @@ msgstr ""
 msgid "Search from %s&nbsp;"
 msgstr ""
 
-#: config/environment.rb:88
+#: config/environment.rb:89
 msgid "Search groups."
 msgstr ""
 
@@ -5494,7 +5512,7 @@ msgstr ""
 msgid "Search result of <b>%s</b>"
 msgstr ""
 
-#: config/environment.rb:76
+#: config/environment.rb:77
 msgid "Search share files."
 msgstr ""
 
@@ -5502,7 +5520,7 @@ msgstr ""
 msgid "Search users"
 msgstr ""
 
-#: config/environment.rb:82
+#: config/environment.rb:83
 msgid "Search users."
 msgstr ""
 
@@ -5743,7 +5761,7 @@ msgstr ""
 msgid "Show groups you have not joined only."
 msgstr ""
 
-#: config/environment.rb:100
+#: config/environment.rb:101
 msgid "Show ranking and site infomation."
 msgstr ""
 
@@ -5947,7 +5965,7 @@ msgstr ""
 msgid "Specified share file owner does not exist."
 msgstr ""
 
-#: app/controllers/edit_controller.rb:256
+#: app/controllers/edit_controller.rb:259
 msgid "Specified trackback was deleted successfully."
 msgstr ""
 
@@ -6130,16 +6148,16 @@ msgstr ""
 msgid "Terms of Use"
 msgstr ""
 
-#: app/views/user_mailer/sent_activate.html.erb:4
+#: app/views/user_mailer/smtp/sent_activate.html.erb:4
 msgid "The URL below will be expired %s day after this email has been sent."
 msgid_plural ""
 "The URL below will be expired %s days after this email has been sent."
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/views/user_mailer/sent_forgot_password.html.erb:4
-#: app/views/user_mailer/sent_apply_email_confirm.html.erb:4
-#: app/views/user_mailer/sent_forgot_openid.html.erb:4
+#: app/views/user_mailer/smtp/sent_forgot_password.html.erb:4
+#: app/views/user_mailer/smtp/sent_apply_email_confirm.html.erb:4
+#: app/views/user_mailer/smtp/sent_forgot_openid.html.erb:4
 msgid "The URL below will be expired 24 hours after this email has been sent."
 msgstr ""
 
@@ -6239,7 +6257,7 @@ msgstr ""
 msgid "This comment cannot be deleted since it has been commented."
 msgstr ""
 
-#: app/models/user_mailer.rb:116
+#: app/models/user_mailer/base.rb:42
 msgid "This email is a contact from %{sender}"
 msgstr ""
 
@@ -6470,11 +6488,11 @@ msgstr ""
 msgid "Update complete."
 msgstr ""
 
-#: app/controllers/edit_controller.rb:241
+#: app/controllers/edit_controller.rb:244
 msgid "Update on the same entry from other users detected. Please try again."
 msgstr ""
 
-#: app/controllers/edit_controller.rb:217
+#: app/controllers/edit_controller.rb:220
 msgid "Update on the same entry from other users detected. Reset the edit?"
 msgstr ""
 
@@ -6836,7 +6854,7 @@ msgstr ""
 #: app/controllers/services_controller.rb:45
 #: app/controllers/user_layout_module.rb:19
 #: app/views/bookmarks/index.html.erb:24 app/views/bookmark/list.html.erb:16
-#: config/environment.rb:80
+#: config/environment.rb:81
 msgid "Users"
 msgstr ""
 
@@ -7124,7 +7142,7 @@ msgstr ""
 msgid "Within a minute"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:273
+#: app/controllers/edit_controller.rb:276
 msgid "Write"
 msgstr ""
 
@@ -7207,7 +7225,7 @@ msgstr ""
 msgid "You can customize the site environment."
 msgstr ""
 
-#: app/views/user_mailer/sent_message.html.erb:7
+#: app/views/user_mailer/ar/sent_message.html.erb:7
 msgid "You can disable message notification email from here."
 msgstr ""
 
@@ -7241,7 +7259,7 @@ msgid ""
 "bookmark users and entries in %s from the links within the respective pages.)"
 msgstr ""
 
-#: app/views/user_mailer/sent_activate.html.erb:10
+#: app/views/user_mailer/smtp/sent_activate.html.erb:10
 msgid "You can restart the user registration."
 msgstr ""
 
@@ -7265,7 +7283,7 @@ msgstr ""
 msgid "You have chosen to create %{name}."
 msgstr ""
 
-#: app/views/user_mailer/sent_contact.html.erb:3
+#: app/views/user_mailer/ar/sent_contact.html.erb:3
 msgid "You have message(s) from %s"
 msgstr ""
 
@@ -7295,7 +7313,7 @@ msgstr ""
 msgid "Your Groups"
 msgstr ""
 
-#: app/views/user_mailer/sent_signup_confirm.html.erb:4
+#: app/views/user_mailer/smtp/sent_signup_confirm.html.erb:4
 msgid "Your Login ID is %s."
 msgstr ""
 
@@ -7315,7 +7333,7 @@ msgstr ""
 msgid "Your profile from other users' view ..."
 msgstr ""
 
-#: app/views/user_mailer/sent_signup_confirm.html.erb:3
+#: app/views/user_mailer/smtp/sent_signup_confirm.html.erb:3
 msgid "Your registration is complete."
 msgstr ""
 
@@ -7329,23 +7347,23 @@ msgstr ""
 msgid "Your tags: "
 msgstr ""
 
-#: app/models/user_mailer.rb:51
+#: app/models/user_mailer/smtp.rb:28
 msgid "[%s] Confirmation for changing email address"
 msgstr ""
 
-#: app/models/user_mailer.rb:69
+#: app/models/user_mailer/smtp.rb:46
 msgid "[%s] Resetting your OpenID"
 msgstr ""
 
-#: app/models/user_mailer.rb:60
+#: app/models/user_mailer/smtp.rb:37
 msgid "[%s] Resetting your password"
 msgstr ""
 
-#: app/models/user_mailer.rb:42
+#: app/models/user_mailer/smtp.rb:19
 msgid "[%s] User registration completed"
 msgstr ""
 
-#: app/models/user_mailer.rb:24
+#: app/models/user_mailer/active_record.rb:25 app/models/user_mailer/ar.rb:25
 msgid "[%{title}] You have a message from %{user}."
 msgstr ""
 
@@ -7485,7 +7503,7 @@ msgstr ""
 msgid "[Last]"
 msgstr ""
 
-#: app/models/board_entry.rb:684
+#: app/models/board_entry.rb:659
 msgid "[Link does not exist...%s>]"
 msgstr ""
 
@@ -7794,6 +7812,10 @@ msgstr ""
 msgid "does not exist in profile categories."
 msgstr ""
 
+#: app/models/email.rb:-
+msgid "email"
+msgstr ""
+
 #: app/models/site_count.rb:32 app/models/site_count.rb:37
 msgid "entries"
 msgstr ""
@@ -7871,7 +7893,7 @@ msgstr ""
 msgid "more"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:314
+#: app/controllers/edit_controller.rb:317
 msgid "needs to be a valid date."
 msgstr ""
 

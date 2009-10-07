@@ -111,12 +111,12 @@ describe BatchMakeUserReadings do
                                                 :category => "[#{Tag::NOTICE_TAG}]"}))
 
     # 単一ユーザに向けた連絡
-    entry.entry_publications.build(:symbol => "uid:#{@a_user.symbol}")
+    entry.update_attributes(:publication_symbols_value => "uid:#{@a_user.symbol}")
     contact_ids = BatchMakeUserReadings.contact_ids entry
     assert_equal 1, contact_ids.size
 
     # 複数ユーザに向けた連絡
-    entry.entry_publications.build(:symbol => "uid:#{@a_group_owned_user.symbol}")
+    entry.update_attributes(:publication_symbols_value => "uid:#{@a_user.symbol},uid:#{@a_group_owned_user.symbol}")
     contact_ids = BatchMakeUserReadings.contact_ids entry
     assert_equal 2, contact_ids.size
   end

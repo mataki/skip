@@ -111,96 +111,6 @@ describe "BoardEntry.get_popular_tag_words で複数タグが見つかったと�
   end
 end
 
-describe BoardEntry do
-  fixtures :board_entries, :groups, :users, :mails, :tags, :user_uids
-
-  def test_validate_category
-    # カテゴリに+,/,-,_,.以外の記号を含む場合 => validationにひっかかる
-    # その他タグ周りの細かいvalidateについてはTagのテストで実施している
-    @a_entry.category = "[あ=あ][*いえ]"
-    assert !@a_entry.valid?
-  end
-
-# FIXME テストを汎用化する
-  def test_publication_users
-    entry = BoardEntry.new(store_entry_params({ :user_id => @a_user.id,
-                                                :last_updated => Time.now,
-                                                :symbol => "uid:#{@a_user.uid}"}))
-
-    # 単一ユーザに対する公開
-    entry.entry_publications.build(:symbol => "uid:#{@a_group_owned_user.uid}")
-    users = entry.publication_users.map{ |user| user.id }
-    assert_equal 1, users.size
-    assert_equal @a_group_owned_user.id, users.first
-
-    # 複数ユーザに対する公開
-    entry.entry_publications.build(:symbol => "uid:#{@a_group_joined_user.uid}")
-    users = entry.publication_users.map{ |user| user.id }
-    assert_equal 2, users.size
-    assert users.include?(@a_group_owned_user.id)
-    assert users.include?(@a_group_joined_user.id)
-  end
-
-  def test_prepare_send_mail
-    # 直接指定の記事
-    entry = BoardEntry.new(store_entry_params({ :user_id => @a_user.id,
-                                                :last_updated => Time.now,
-                                                :symbol => "uid:#{@a_user.uid}",
-                                                :category => "[#{Tag::NOTICE_TAG}]",
-                                                :publication_type => 'private'}))
-
-    Mail.delete_all
-    # 単一ユーザに対する連絡
-    entry.entry_publications.build(:symbol => "uid:#{@a_group_owned_user.uid}")
-    entry.prepare_send_mail
-    mails = Mail.find(:all)
-    assert_equal 1, mails.size
-    assert_equal @a_group_owned_user.email, mails.first.to_address
-
-    Mail.delete_all
-    # 複数ユーザに対する連絡
-    entry.entry_publications.build(:symbol => "uid:#{@a_group_joined_user.uid}")
-    entry.prepare_send_mail
-    mails, mail_address = get_mails
-
-    assert_equal 2, mails.size
-    assert_not_nil mail_address.index(@a_group_owned_user.email)
-    assert_not_nil mail_address.index(@a_group_joined_user.email)
-    Mail.delete_all
-  end
-
-private
-
-  def get_mails
-    mails = Mail.find(:all)
-    mail_address = ""
-    mails.each { |mail| mail_address += mail.to_address + "," }
-    return mails, mail_address
-  end
-
-  def store_entry_params params={}
-    entry_template = {
-      :title => "test",
-      :contents => "test",
-      :date => Date.today,
-      :category => "",
-      :entry_type => "BBS",
-      :ignore_times => false,
-      :user_entry_no => 1,
-      :editor_mode => "hiki",
-      :lock_version => 0,
-      :publication_type => "public",
-      :entry_trackbacks_count => 0,
-      :board_entry_comments_count => 0
-    } # user_id, last_updated, symbolが未設定
-
-    params.each do |key, value|
-      entry_template.store(key, value)
-    end
-    return entry_template
-  end
-end
-
 describe BoardEntry, '#after_save' do
   describe 'タグの作成' do
     describe 'タグが入力されていない場合' do
@@ -264,21 +174,55 @@ describe BoardEntry, '.get_symbol2name_hash' do
 end
 
 describe BoardEntry, '#prepare_send_mail' do
-  describe 'あるグループの掲示板が存在する場合' do
+  before do
+    @alice = create_user :user_options => {:name => 'アリス', :admin => true}, :user_uid_options => {:uid => 'alice'}
+    @jack = create_user :user_options => {:name => 'ジャック', :admin => true}, :user_uid_options => {:uid => 'jack'}
+    @nancy = create_user :user_options => {:name => 'ナンシー', :admin => true}, :user_uid_options => {:uid => 'nancy'}
+    Mail.delete_all
+  end
+  describe '公開範囲が全体公開の場合' do
     before do
-      @alice = create_user :user_options => {:name => 'アリス', :admin => true}, :user_uid_options => {:uid => 'alice'}
-      @group = create_group(:gid => 'skip_group', :name => 'SKIPグループ') do |g|
-        g.group_participations.build(:user_id => @alice.id, :owned => true)
-      end
-      @entry = create_board_entry(:symbol => 'gid:skip_group', :publication_type => 'protected', :user_id => @alice.id) do |e|
-        e.entry_publications.build(:symbol => 'gid:skip_group')
-      end
-      Mail.delete_all
+      @entry = create_board_entry(:symbol => @alice.symbol, :publication_type => 'public', :user_id => @alice.id)
     end
-    it 'Mailに送信予定のレコードが作成されること' do
+    it 'アクティブなユーザ全員分(自分以外)のMailが出来ていること' do
       lambda do
         @entry.prepare_send_mail
-      end.should change(Mail, :count).by(1)
+      end.should change(Mail, :count).by(User.active.count - 1)
+    end
+  end
+  describe '公開範囲が直接指定の場合' do
+    before do
+      @entry = create_board_entry(:symbol => @alice.symbol, :publication_type => 'protected', :user_id => @alice.id, :publication_symbols_value => [@alice, @jack, @nancy].map(&:symbol).join(','))
+    end
+    it '直接指定された全員分(自分以外)のMailが出来ていること' do
+      lambda do
+        @entry.prepare_send_mail
+      end.should change(Mail, :count).by(2)
+    end
+  end
+  describe '公開範囲が自分だけのブログの場合' do
+    before do
+      @entry = create_board_entry(:symbol => 'uid:alice', :publication_type => 'private', :user_id => @alice.id)
+    end
+    it 'Mailが作られないこと' do
+      lambda do
+        @entry.prepare_send_mail
+      end.should change(Mail, :count).by(0)
+    end
+  end
+  describe '公開範囲が参加者のみの掲示板の場合' do
+    before do
+      @group = create_group(:gid => 'skip_group', :name => 'SKIPグループ') do |g|
+        g.group_participations.build(:user_id => @alice.id, :owned => true)
+        g.group_participations.build(:user_id => @jack.id)
+        g.group_participations.build(:user_id => @nancy.id)
+      end
+      @entry = create_board_entry(:symbol => @group.symbol, :publication_type => 'private', :user_id => @alice.id, :publication_symbols_value => @group.symbol)
+    end
+    it '参加者全員分(自分以外)のMailが出来ていること' do
+      lambda do
+        @entry.prepare_send_mail
+      end.should change(Mail, :count).by(2)
     end
     describe '記事を所有するグループが論理削除された場合' do
       before do
@@ -334,10 +278,7 @@ describe BoardEntry, '#publication_users' do
         g.group_participations.build(:user_id => @mike.id, :owned => false)
       end
       # アリスのブログで、そのグループ及びマイクが直接指定されている
-      @entry = create_board_entry(:symbol => 'uid:alice', :publication_type => 'protected', :user_id => @alice.id) do |e|
-        e.entry_publications.build(:symbol => 'gid:skip_group')
-        e.entry_publications.build(:symbol => 'uid:mike')
-      end
+      @entry = create_board_entry(:symbol => 'uid:alice', :publication_type => 'protected', :user_id => @alice.id, :publication_symbols_value => [@group, @mike].map(&:symbol).join(','))
     end
     it '公開されているユーザの配列が返ること' do
       @entry.publication_users.should == [@alice, @mike]

@@ -456,46 +456,20 @@ class BoardEntry < ActiveRecord::Base
   end
 
   def prepare_send_mail
-    if public? # 全公開だとpostしない
-      return
-    end
-    if (entry_publications.size == 1) and (entry_publications.first.symbol == symbol) and diary?
-      return # 自分にだけ公開の場合メールはpostしない
-    end
+    return if diary? && privare?
 
-    entry_publications.each do |entry_publication|
-      next if user.symbol == entry_publication.symbol #書いた人にはメールしない
-
-      to_address = ""
-      to_address_name = ""
-      to_address_symbol = ""
-
-      symbol = entry_publication.symbol.split(':').last
-      case entry_publication.symbol.split(':').first
-      when "uid"
-        user = User.find_by_uid(symbol)
-        if user
-          to_address = user.email
-          to_address_name = user.name
-          to_address_symbol = user.symbol
-        end
-      when "gid"
-        group = Group.active.find_by_gid(symbol, :include => [{ :group_participations => :user }])
-        if group
-          group.group_participations.each { |participation| to_address << participation.user.email + "," unless participation.waiting }
-          to_address = to_address.chop
-          to_address_name = group.name
-          to_address_symbol = group.symbol
-        end
-      end
-
-      # 存在しないグループやユーザが指定されている可能性あり
-      if to_address.length > 0
-        writer = User.find(user_id)
-
-        Mail.create({:from_user_id => writer.uid, :user_entry_no => user_entry_no, :to_address => to_address,
-                      :title => title, :to_address_name => to_address_name, :to_address_symbol => to_address_symbol})
-      end
+    users = public? ?  User.active.all : publication_users
+    users.each do |u|
+      next if u.id == self.user_id
+      owner = load_owner
+      Mail.create({
+        :from_user_id => user.uid,
+        :user_entry_no => user_entry_no,
+        :to_address => u.email,
+        :title => title,
+        :to_address_name => owner.name,
+        :to_address_symbol => owner.symbol
+      })
     end
   end
 
@@ -594,8 +568,9 @@ class BoardEntry < ActiveRecord::Base
   # 戻り値：Userオブジェクトの配列（重複なし）
   def publication_users
     users = []
-    entry_publications.each do |pub|
-      symbol_type, symbol_id = SkipUtil.split_symbol(pub.symbol)
+    return users if self.publication_symbols_value.blank?
+    self.publication_symbols_value.split(',').each do |sym|
+      symbol_type, symbol_id = SkipUtil.split_symbol(sym)
       case symbol_type
         when "uid"
           users << User.find_by_uid(symbol_id)
@@ -604,7 +579,7 @@ class BoardEntry < ActiveRecord::Base
           users << group.group_participations.map { |part| part.user } if group
       end
     end
-    users.flatten.uniq
+    users.flatten.uniq.compact
   end
 
   def root_comments

@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-10-07 10:16+0900\n"
+"POT-Creation-Date: 2009-10-07 16:05+0900\n"
 "PO-Revision-Date: 2009-08-07 16:09+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -112,7 +112,7 @@ msgstr "%sのブログ"
 msgid "%s<br/>We apologize for the inconvenience caused.<br/>"
 msgstr "大変申し訳ございません。<br/>%s<br/>"
 
-#: app/controllers/edit_controller.rb:273
+#: app/controllers/edit_controller.rb:276
 msgid "%{action} %{write_place}"
 msgstr "%{write_place}を%{action}"
 
@@ -298,15 +298,13 @@ msgstr ""
 "（この画面は、直ダウンロードによるセキュリティ上の懸念を解消するために表示し"
 "ています）"
 
-#: app/models/board_entry.rb:566
+#: app/models/board_entry.rb:540
 msgid "(Unknown topic entry found. However, this has been ignored)"
 msgstr "（話題元の記事が不明でしたが無視しました）"
 
 #: app/views/board_entries/_form.html.erb:88
-msgid ""
-"(Will not be sent when the entry is open to all users or limited to owner "
-"only)"
-msgstr "（全体に公開時と自分だけの場合は送信されません）"
+msgid "(Will not be sent when the entry is limited to owner only)"
+msgstr "（自分だけに公開の場合は送信されません）"
 
 #: app/views/bookmark/_new.html.erb:22
 msgid "(Will open as a new window)"
@@ -344,7 +342,7 @@ msgstr ""
 "※説明文は、HTML形式で記述して下さい。セキュリティ上問題の有るコード"
 "(javascriptなど)は、利用しないで下さい。"
 
-#: app/views/user_mailer/sent_contact.html.erb:8
+#: app/views/user_mailer/ar/sent_contact.html.erb:8
 msgid "*Jumps directly to the blog entry."
 msgstr "※ブログに直接遷移します。"
 
@@ -353,7 +351,7 @@ msgid "*Showing %s popular tag."
 msgid_plural "*Showing %s popular tags."
 msgstr[0] "※人気のタグを%s件表示しています。"
 
-#: app/models/user_mailer.rb:115
+#: app/models/user_mailer/base.rb:41
 msgid ""
 "*This email is automatically delivered from the system. Please do not reply."
 msgstr "*このメールはシステムから自動配信されています。返信しないで下さい。"
@@ -506,7 +504,7 @@ msgid "Access denied by search node. Please contact system owner."
 msgstr ""
 "検索エンジンにアクセスできませんでした。システム管理者に連絡してください。"
 
-#: app/views/user_mailer/sent_activate.html.erb:9
+#: app/views/user_mailer/smtp/sent_activate.html.erb:9
 msgid ""
 "Access the URL below and click on the link [Register your profile and start "
 "using %s]."
@@ -514,19 +512,19 @@ msgstr ""
 "無効になってしまった場合、以下のURLにアクセスし、[ユーザ登録して%sの利用を開"
 "始する]リンクをクリックして下さい。"
 
-#: app/views/user_mailer/sent_forgot_openid.html.erb:3
+#: app/views/user_mailer/smtp/sent_forgot_openid.html.erb:3
 msgid "Access the URL below to complete the OpenID resetting process."
 msgstr "下記URLにアクセスして、OpenIDのリセットを完了して下さい。"
 
-#: app/views/user_mailer/sent_apply_email_confirm.html.erb:3
+#: app/views/user_mailer/smtp/sent_apply_email_confirm.html.erb:3
 msgid "Access the URL below to complete the email address changing process."
 msgstr "下記URLにアクセスして、メールアドレス変更を完了してください。"
 
-#: app/views/user_mailer/sent_forgot_password.html.erb:3
+#: app/views/user_mailer/smtp/sent_forgot_password.html.erb:3
 msgid "Access the URL below to complete the password resetting process."
 msgstr "下記URLにアクセスして、パスワードリセットを完了して下さい。"
 
-#: app/views/user_mailer/sent_activate.html.erb:3
+#: app/views/user_mailer/smtp/sent_activate.html.erb:3
 msgid "Access the URL below to complete the registration process."
 msgstr "下記URLにアクセスして、ユーザ登録をお願いします。"
 
@@ -564,7 +562,7 @@ msgstr "アクション:"
 msgid "Action: "
 msgstr "処理の内容："
 
-#: app/models/user_mailer.rb:78
+#: app/models/user_mailer/smtp.rb:55
 msgid "Activate your account and start using"
 msgstr "利用開始確認メールです"
 
@@ -2171,7 +2169,7 @@ msgstr "%sの掲示板"
 msgid "Back"
 msgstr "戻る"
 
-#: config/environment.rb:64
+#: config/environment.rb:65
 msgid "Back to mypage."
 msgstr "自分用のトップページに戻ります"
 
@@ -2502,7 +2500,7 @@ msgstr ""
 #: app/controllers/services_controller.rb:44
 #: app/controllers/user_layout_module.rb:10
 #: app/controllers/bookmark_controller.rb:118
-#: app/controllers/bookmarks_controller.rb:34 config/environment.rb:92
+#: app/controllers/bookmarks_controller.rb:34 config/environment.rb:93
 msgid "Bookmarks"
 msgstr "ブックマーク"
 
@@ -2678,11 +2676,11 @@ msgstr "クラシック(右側サイドメニュー)"
 msgid "Click here to change profile picutre ... "
 msgstr "プロフィール画像を変更しましょう！"
 
-#: app/views/user_mailer/sent_signup_confirm.html.erb:5
+#: app/views/user_mailer/smtp/sent_signup_confirm.html.erb:5
 msgid "Click on the URL below to access %s."
 msgstr "%sにアクセスするには、以下URLをクリックしてください。"
 
-#: app/views/user_mailer/sent_message.html.erb:5
+#: app/views/user_mailer/ar/sent_message.html.erb:5
 msgid ""
 "Click on the URL to see the content.\n"
 "\n"
@@ -2692,7 +2690,7 @@ msgstr ""
 "\n"
 "　%s"
 
-#: app/views/user_mailer/sent_contact.html.erb:4
+#: app/views/user_mailer/ar/sent_contact.html.erb:4
 msgid "Click the URL below to see the content of message."
 msgstr "連絡の内容を確認するには、以下のURLをクリックしてください。"
 
@@ -2880,7 +2878,7 @@ msgstr ""
 "退会者向けに掲示板にメッセージを作成しました。内容は必要に応じて変更してくだ"
 "さい"
 
-#: app/controllers/edit_controller.rb:92
+#: app/controllers/edit_controller.rb:95
 msgid "Created successfully."
 msgstr "正しく作成されました。"
 
@@ -2988,7 +2986,7 @@ msgstr ""
 "て削除されている必要があります。"
 
 #: app/controllers/admin/group_categories_controller.rb:28
-#: app/controllers/edit_controller.rb:236
+#: app/controllers/edit_controller.rb:239
 msgid "Deletion complete."
 msgstr "削除しました。"
 
@@ -3056,7 +3054,7 @@ msgstr "表示順"
 msgid "Display: "
 msgstr "表示: "
 
-#: app/views/user_mailer/sent_cleaning_notification.html.erb:3
+#: app/views/user_mailer/smtp/sent_cleaning_notification.html.erb:3
 msgid ""
 "Do you clean the user data periodically?\n"
 "\n"
@@ -3092,7 +3090,7 @@ msgstr "お酒"
 msgid "Driving"
 msgstr "ドライブ"
 
-#: app/controllers/edit_controller.rb:273
+#: app/controllers/edit_controller.rb:276
 #: app/views/entries/_entry_detail.html.erb:221
 #: app/views/board_entries/_board_entry_comment.html.erb:14
 #: app/views/user/show.html.erb:19 app/views/admin/pictures/index.html.erb:27
@@ -3196,6 +3194,26 @@ msgstr "パスワード再設定のメールです"
 msgid "Email is mandatory."
 msgstr "メールアドレスは必須です"
 
+#: app/models/email.rb:-
+msgid "Email|Created on"
+msgstr ""
+
+#: app/models/email.rb:-
+msgid "Email|From"
+msgstr ""
+
+#: app/models/email.rb:-
+msgid "Email|Last send attempt"
+msgstr ""
+
+#: app/models/email.rb:-
+msgid "Email|Mail"
+msgstr ""
+
+#: app/models/email.rb:-
+msgid "Email|To"
+msgstr ""
+
 #: app/controllers/monta_controller.rb:66
 msgid "End Monta"
 msgstr "おしまい"
@@ -3245,7 +3263,7 @@ msgstr "入力された%sというメールアドレスは登録されていま�
 
 #: app/controllers/search_controller.rb:23
 #: app/views/bookmarks/index.html.erb:25 app/views/bookmark/list.html.erb:17
-#: config/environment.rb:68
+#: config/environment.rb:69
 msgid "Entries"
 msgstr "記事"
 
@@ -3281,7 +3299,7 @@ msgstr "記事を既読にしました。"
 msgid "Entry was successfully marked unread."
 msgstr "記事を未読にしました。"
 
-#: app/controllers/edit_controller.rb:209
+#: app/controllers/edit_controller.rb:212
 msgid "Entry was successfully updated."
 msgstr "記事の更新に成功しました。"
 
@@ -3473,7 +3491,7 @@ msgstr "ファイル名"
 
 #: app/controllers/services_controller.rb:47
 #: app/controllers/search_controller.rb:65 app/views/share_file/new.html.erb:9
-#: app/views/share_file/edit.html.erb:9 config/environment.rb:74
+#: app/views/share_file/edit.html.erb:9 config/environment.rb:75
 msgid "Files"
 msgstr "ファイル"
 
@@ -3509,7 +3527,7 @@ msgstr "詳しい使い方はこちらをご覧ください ... "
 msgid "For off-time activeties."
 msgstr "趣味などざっくばらんな話題で利用する場合に選択してください。"
 
-#: app/models/user_mailer.rb:120
+#: app/models/user_mailer/base.rb:46
 msgid "For questions regarding this email, please contact:"
 msgstr "本メールに関するお問い合わせはこちらへ"
 
@@ -3707,7 +3725,7 @@ msgstr "はい"
 #: app/controllers/services_controller.rb:46
 #: app/controllers/group_controller.rb:375
 #: app/controllers/share_file_controller.rb:165
-#: app/controllers/edit_controller.rb:272 config/environment.rb:86
+#: app/controllers/edit_controller.rb:275 config/environment.rb:87
 msgid "Groups"
 msgstr "グループ"
 
@@ -4013,13 +4031,13 @@ msgstr "不正な操作です"
 msgid "Invalid parameter(s) detected."
 msgstr "不正なパラメタです。"
 
-#: app/controllers/edit_controller.rb:60
-#: app/controllers/edit_controller.rb:163
+#: app/controllers/edit_controller.rb:63
+#: app/controllers/edit_controller.rb:166
 msgid "Invalid parameter(s) found."
 msgstr "不正なパラメータがあります"
 
 #: app/controllers/share_file_controller.rb:282
-#: app/controllers/edit_controller.rb:292
+#: app/controllers/edit_controller.rb:295
 msgid "Invalid parameter(s)."
 msgstr "パラメータが不正です"
 
@@ -4029,8 +4047,8 @@ msgstr ""
 "パスワードリセットのためのURLが不正です。再度お試し頂くか、システム管理者にお"
 "問い合わせ下さい。"
 
-#: app/controllers/edit_controller.rb:302
-#: app/controllers/edit_controller.rb:308
+#: app/controllers/edit_controller.rb:305
+#: app/controllers/edit_controller.rb:311
 msgid "Invalid privacy setting."
 msgstr "公開範囲の指定が不正です"
 
@@ -4297,7 +4315,7 @@ msgstr "ログイン"
 msgid "Login ID"
 msgstr "ログインID"
 
-#: app/views/user_mailer/sent_signup_confirm.html.erb:9
+#: app/views/user_mailer/smtp/sent_signup_confirm.html.erb:9
 msgid "Login ID: %s"
 msgstr "ログインID: %s"
 
@@ -4535,13 +4553,13 @@ msgstr "音楽鑑賞"
 msgid "My Account"
 msgstr "自分の管理"
 
-#: app/controllers/edit_controller.rb:272
+#: app/controllers/edit_controller.rb:275
 msgid "My Blog"
 msgstr "マイブログ"
 
 #: app/controllers/mypage_controller.rb:486
 #: app/controllers/user_layout_module.rb:19
-#: app/controllers/user_layout_module.rb:23 config/environment.rb:62
+#: app/controllers/user_layout_module.rb:23 config/environment.rb:63
 msgid "My Page"
 msgstr "マイページ"
 
@@ -5294,7 +5312,7 @@ msgstr "人気ブログランキング(コメント）"
 msgid "Ranking of Popular Users"
 msgstr "人気ユーザランキング"
 
-#: app/controllers/rankings_controller.rb:156 config/environment.rb:98
+#: app/controllers/rankings_controller.rb:156 config/environment.rb:99
 msgid "Rankings"
 msgstr "ランキング"
 
@@ -5388,7 +5406,7 @@ msgstr "最近登録されたユーザ"
 msgid "Recommended tags: "
 msgstr "オススメ・定番のタグ："
 
-#: app/views/user_mailer/sent_activate.html.erb:15
+#: app/views/user_mailer/smtp/sent_activate.html.erb:15
 msgid ""
 "Refer to the contact at the bottom of this email in case the link has "
 "expired."
@@ -5452,7 +5470,7 @@ msgstr ""
 msgid "Reload"
 msgstr "再読み込み"
 
-#: app/models/user_mailer.rb:87
+#: app/models/user_mailer/smtp.rb:64
 msgid "Remember to clean up the user data periodically"
 msgstr "ユーザのクリーニングは行ってますか?"
 
@@ -5599,7 +5617,7 @@ msgstr "検索範囲"
 msgid "Search Result Pages: "
 msgstr "検索結果ページ:"
 
-#: config/environment.rb:94
+#: config/environment.rb:95
 msgid "Search bookmarks."
 msgstr "共有しているブックマーク(URL)を探します"
 
@@ -5607,7 +5625,7 @@ msgstr "共有しているブックマーク(URL)を探します"
 msgid "Search does not show more than 1000 search results."
 msgstr "1000 件以上の検索結果は表示しておりません "
 
-#: config/environment.rb:70
+#: config/environment.rb:71
 msgid "Search entries."
 msgstr "ブログや掲示板の記事を探します"
 
@@ -5631,7 +5649,7 @@ msgstr "グループを探す"
 msgid "Search from %s&nbsp;"
 msgstr "%sから検索&nbsp;"
 
-#: config/environment.rb:88
+#: config/environment.rb:89
 msgid "Search groups."
 msgstr "他のユーザが作ったグループを探します"
 
@@ -5643,7 +5661,7 @@ msgstr "インターネット検索"
 msgid "Search result of <b>%s</b>"
 msgstr "<b>%s</b> の検索結果"
 
-#: config/environment.rb:76
+#: config/environment.rb:77
 msgid "Search share files."
 msgstr "ユーザやグループで共有しているファイルを探します"
 
@@ -5651,7 +5669,7 @@ msgstr "ユーザやグループで共有しているファイルを探します
 msgid "Search users"
 msgstr "ユーザを探す"
 
-#: config/environment.rb:82
+#: config/environment.rb:83
 msgid "Search users."
 msgstr "利用中のユーザや紹介文を探します"
 
@@ -5893,7 +5911,7 @@ msgstr "並べて表示"
 msgid "Show groups you have not joined only."
 msgstr "まだ参加していないグループのみ表示"
 
-#: config/environment.rb:100
+#: config/environment.rb:101
 msgid "Show ranking and site infomation."
 msgstr "ランキング情報と統計情報を見ます"
 
@@ -6108,7 +6126,7 @@ msgstr "指定されたページは存在しません。"
 msgid "Specified share file owner does not exist."
 msgstr "指定のページは存在していません。"
 
-#: app/controllers/edit_controller.rb:256
+#: app/controllers/edit_controller.rb:259
 msgid "Specified trackback was deleted successfully."
 msgstr "指定の話題のリンクを削除しました"
 
@@ -6292,7 +6310,7 @@ msgstr ""
 msgid "Terms of Use"
 msgstr "利用規約"
 
-#: app/views/user_mailer/sent_activate.html.erb:4
+#: app/views/user_mailer/smtp/sent_activate.html.erb:4
 msgid "The URL below will be expired %s day after this email has been sent."
 msgid_plural ""
 "The URL below will be expired %s days after this email has been sent."
@@ -6303,9 +6321,9 @@ msgstr[1] ""
 "なお、本メール到着後%s日が経過すると、下記URLは無効となりますのでご注意くださ"
 "い。"
 
-#: app/views/user_mailer/sent_forgot_password.html.erb:4
-#: app/views/user_mailer/sent_apply_email_confirm.html.erb:4
-#: app/views/user_mailer/sent_forgot_openid.html.erb:4
+#: app/views/user_mailer/smtp/sent_forgot_password.html.erb:4
+#: app/views/user_mailer/smtp/sent_apply_email_confirm.html.erb:4
+#: app/views/user_mailer/smtp/sent_forgot_openid.html.erb:4
 msgid "The URL below will be expired 24 hours after this email has been sent."
 msgstr ""
 "なお、本メール到着後24時間が経過すると、下記URLは無効となりますのでご注意くだ"
@@ -6413,7 +6431,7 @@ msgstr "このURLは、ブックマークできません。"
 msgid "This comment cannot be deleted since it has been commented."
 msgstr "このコメントに対するコメントがあるため削除できません。"
 
-#: app/models/user_mailer.rb:116
+#: app/models/user_mailer/base.rb:42
 msgid "This email is a contact from %{sender}"
 msgstr "%{sender}からのご連絡です。"
 
@@ -6650,11 +6668,11 @@ msgstr "以下の属性を更新する"
 msgid "Update complete."
 msgstr "変更しました"
 
-#: app/controllers/edit_controller.rb:241
+#: app/controllers/edit_controller.rb:244
 msgid "Update on the same entry from other users detected. Please try again."
 msgstr "他の人によって同じ投稿に更新がかかっています。もう一度お試し下さい。"
 
-#: app/controllers/edit_controller.rb:217
+#: app/controllers/edit_controller.rb:220
 msgid "Update on the same entry from other users detected. Reset the edit?"
 msgstr "他の人によって同じ投稿に更新がかかっています。編集をやり直しますか？"
 
@@ -7022,7 +7040,7 @@ msgstr "ユーザ"
 #: app/controllers/services_controller.rb:45
 #: app/controllers/user_layout_module.rb:19
 #: app/views/bookmarks/index.html.erb:24 app/views/bookmark/list.html.erb:16
-#: config/environment.rb:80
+#: config/environment.rb:81
 msgid "Users"
 msgstr "ユーザ"
 
@@ -7316,7 +7334,7 @@ msgstr "10日以上"
 msgid "Within a minute"
 msgstr "1分以内"
 
-#: app/controllers/edit_controller.rb:273
+#: app/controllers/edit_controller.rb:276
 msgid "Write"
 msgstr "書く"
 
@@ -7409,7 +7427,7 @@ msgstr ""
 msgid "You can customize the site environment."
 msgstr "サイトの環境をカスタマイズすることが可能です。"
 
-#: app/views/user_mailer/sent_message.html.erb:7
+#: app/views/user_mailer/ar/sent_message.html.erb:7
 msgid "You can disable message notification email from here."
 msgstr "メッセージメールが不要な場合はこちらで設定が出来ます。"
 
@@ -7459,7 +7477,7 @@ msgstr ""
 "タグをつけてコメントすることができます<br/>（%s内のユーザやブログはページ内の"
 "リンクからブックマークすることをおすすめします）"
 
-#: app/views/user_mailer/sent_activate.html.erb:10
+#: app/views/user_mailer/smtp/sent_activate.html.erb:10
 msgid "You can restart the user registration."
 msgstr "ユーザ登録をやり直すことが出来ます。"
 
@@ -7483,7 +7501,7 @@ msgstr "%{name}を変更します。"
 msgid "You have chosen to create %{name}."
 msgstr "%{name}を作成します。"
 
-#: app/views/user_mailer/sent_contact.html.erb:3
+#: app/views/user_mailer/ar/sent_contact.html.erb:3
 msgid "You have message(s) from %s"
 msgstr "%s さんから連絡が届いています。"
 
@@ -7515,7 +7533,7 @@ msgstr ""
 msgid "Your Groups"
 msgstr "参加グループ"
 
-#: app/views/user_mailer/sent_signup_confirm.html.erb:4
+#: app/views/user_mailer/smtp/sent_signup_confirm.html.erb:4
 msgid "Your Login ID is %s."
 msgstr "あなたのログインIDは %s です。"
 
@@ -7535,7 +7553,7 @@ msgstr "アカウント情報"
 msgid "Your profile from other users' view ..."
 msgstr "他の方から見たあなたのプロフィールはこちら ..."
 
-#: app/views/user_mailer/sent_signup_confirm.html.erb:3
+#: app/views/user_mailer/smtp/sent_signup_confirm.html.erb:3
 msgid "Your registration is complete."
 msgstr "ユーザ登録が完了しました"
 
@@ -7549,23 +7567,23 @@ msgstr "メールアドレス変更の申請を受け付けました。メール
 msgid "Your tags: "
 msgstr "あなたのタグ："
 
-#: app/models/user_mailer.rb:51
+#: app/models/user_mailer/smtp.rb:28
 msgid "[%s] Confirmation for changing email address"
 msgstr "[%s] メールアドレス変更の確認メールです"
 
-#: app/models/user_mailer.rb:69
+#: app/models/user_mailer/smtp.rb:46
 msgid "[%s] Resetting your OpenID"
 msgstr "[%s] OpenIDの再設定のメールです"
 
-#: app/models/user_mailer.rb:60
+#: app/models/user_mailer/smtp.rb:37
 msgid "[%s] Resetting your password"
 msgstr "[%s] パスワード再設定のメールです"
 
-#: app/models/user_mailer.rb:42
+#: app/models/user_mailer/smtp.rb:19
 msgid "[%s] User registration completed"
 msgstr "[%s] ユーザ登録が完了しました"
 
-#: app/models/user_mailer.rb:24
+#: app/models/user_mailer/active_record.rb:25 app/models/user_mailer/ar.rb:25
 msgid "[%{title}] You have a message from %{user}."
 msgstr "[%{title}] %{user}さんから連絡がきています"
 
@@ -7704,7 +7722,7 @@ msgstr "【本文の書き方に関するヒント】"
 msgid "[Last]"
 msgstr "[最後へ]"
 
-#: app/models/board_entry.rb:684
+#: app/models/board_entry.rb:659
 msgid "[Link does not exist...%s>]"
 msgstr "[リンク先が存在しません...%s>]"
 
@@ -8016,6 +8034,10 @@ msgstr "説明"
 msgid "does not exist in profile categories."
 msgstr "プロフィールカテゴリに存在しない値です。"
 
+#: app/models/email.rb:-
+msgid "email"
+msgstr ""
+
 #: app/models/site_count.rb:32 app/models/site_count.rb:37
 msgid "entries"
 msgstr "件"
@@ -8093,7 +8115,7 @@ msgstr "メッセージ："
 msgid "more"
 msgstr "その他"
 
-#: app/controllers/edit_controller.rb:314
+#: app/controllers/edit_controller.rb:317
 msgid "needs to be a valid date."
 msgstr "には存在する日付を指定してください"
 
