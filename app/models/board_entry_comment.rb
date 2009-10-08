@@ -22,6 +22,10 @@ class BoardEntryComment < ActiveRecord::Base
   validates_presence_of :contents
   validates_presence_of :user_id
 
+  def after_save
+    board_entry.reload.update_attribute :last_updated, Time.now
+  end
+
   def comment_created_time
     format = _("%B %d %Y %H:%M")
     created_on.strftime(format)

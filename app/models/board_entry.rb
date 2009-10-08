@@ -62,6 +62,22 @@ class BoardEntry < ActiveRecord::Base
     { :order => "last_updated DESC,board_entries.id DESC" }
   }
 
+  named_scope :order_access, proc {
+    { :order => 'board_entry_points.access_count DESC' }
+  }
+
+  named_scope :order_point, proc {
+    { :order => 'board_entry_points.point DESC' }
+  }
+
+  named_scope :order_sort_type, proc { |sort_type|
+    case sort_type
+    when "date" then self.order_new.proxy_options
+    when "access" then self.order_access.proxy_options
+    when "point" then self.order_point.proxy_options
+    end
+  }
+
   attr_reader :owner
   attr_accessor :send_mail
 
@@ -618,6 +634,7 @@ class BoardEntry < ActiveRecord::Base
   def point_incrementable?(user)
     self.readable?(user) && !self.writer?(user.id)
   end
+
 private
   def generate_next_user_entry_no
     entry = BoardEntry.find(:first,

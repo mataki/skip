@@ -88,7 +88,7 @@ class MypageController < ApplicationController
 
   # mypage > blog
   def blog
-    redirect_to get_url_hash('blog', :archive => 'all')
+    redirect_to get_url_hash('blog', :archive => 'all', :sort_type => 'date')
   end
 
   # mypage > file
