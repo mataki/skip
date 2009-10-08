@@ -23,7 +23,7 @@ class BoardEntryComment < ActiveRecord::Base
   validates_presence_of :user_id
 
   def after_save
-    board_entry.reload.update_attribute :last_updated, Time.now
+    board_entry.reload.update_attribute :updated_on, Time.now
   end
 
   def comment_created_time

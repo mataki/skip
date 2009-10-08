@@ -53,7 +53,7 @@
         <%= entry_link_to(entry) %><span style="font-size: 10px;"><%= ' by '+ user_link_to(entry.user) unless entry.diary? -%></span>
       </div>
       <div style="text-align: right; font-size: 90%;">
-        <%= get_entry_infos entry %> - <%= _('Last Update: ')%><%=h entry.last_updated.strftime(_('%m/%d/%y %H:%M')) %>
+        <%= get_entry_infos entry %> - <%= _('Last Update: ')%><%=h entry.updated_on.strftime(_('%m/%d/%y %H:%M')) %>
       </div>
     </div>
   <% end -%>

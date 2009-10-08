@@ -62,6 +62,10 @@ class BoardEntry < ActiveRecord::Base
     { :order => "last_updated DESC,board_entries.id DESC" }
   }
 
+  named_scope :order_new_include_comment, proc {
+    { :order => "board_entries.updated_on DESC,board_entries.id DESC" }
+  }
+
   named_scope :order_access, proc {
     { :order => 'board_entry_points.access_count DESC' }
   }
@@ -72,7 +76,7 @@ class BoardEntry < ActiveRecord::Base
 
   named_scope :order_sort_type, proc { |sort_type|
     case sort_type
-    when "date" then self.order_new.proxy_options
+    when "date" then self.order_new_include_comment.proxy_options
     when "access" then self.order_access.proxy_options
     when "point" then self.order_point.proxy_options
     end
