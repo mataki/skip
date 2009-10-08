@@ -192,11 +192,10 @@ class MypageController < ApplicationController
     @antenna_entry.title = antenna_entry_title(@antenna_entry)
     if @antenna_entry.need_search?
       find_params = @antenna_entry.conditions
-      @entries_pages, @entries = paginate(:board_entry,
-                                          :per_page => 20,
-                                          :order => "last_updated DESC,board_entries.id DESC",
-                                          :conditions=> find_params[:conditions],
-                                          :include => find_params[:include] | [ :user, :state ])
+      @entries = BoardEntry.scoped(
+        :conditions=> find_params[:conditions],
+        :include => find_params[:include] | [ :user, :state ]
+      ).order_new.paginate(:page => params[:page], :per_page => 20)
       @user_unreadings = unread_entry_id_hash_with_user_reading(@entries.map {|entry| entry.id})
       @symbol2name_hash = BoardEntry.get_symbol2name_hash(@entries)
     end
@@ -678,10 +677,10 @@ class MypageController < ApplicationController
   # あなたへの連絡(公開, 未読/既読は関係なし、最近のもののみ)が設定されること
   def important_your_messages
     find_params = BoardEntry.make_conditions(login_user_symbols, {:recent_day => recent_day, :publication_type => "public", :category => "連絡"})
-    BoardEntry.find(:all,
-                    :conditions=> find_params[:conditions],
-                    :order=>"last_updated DESC,board_entries.id DESC",
-                    :include => find_params[:include] | [ :user, :state ])
+    BoardEntry.scoped(
+      :conditions=> find_params[:conditions],
+      :include => find_params[:include] | [ :user, :state ]
+    ).order_new.all
   end
 
   # TODO BoardEntryに移動する
@@ -694,7 +693,10 @@ class MypageController < ApplicationController
     { :id_name => 'message',
       :title_icon => "email",
       :title_name => _("Messages for you"),
-      :pages => BoardEntry.all(:conditions=> find_params[:conditions], :order =>"last_updated DESC,board_entries.id DESC", :include => find_params[:include] | [ :user, :state ]),
+      :pages => BoardEntry.scoped(
+        :conditions=> find_params[:conditions],
+        :include => find_params[:include] | [ :user, :state ]
+      ).order_new.all,
       :delete_categories => '[連絡]' }
   end
 
@@ -753,9 +755,8 @@ class MypageController < ApplicationController
     find_params[:conditions][0] << " and board_entries.title <> 'ユーザー登録しました！'"
     pages = BoardEntry.scoped(
       :conditions => find_params[:conditions],
-      :order=>"last_updated DESC, board_entries.id DESC",
       :include => find_params[:include] | [ :user, :state ]
-    ).paginate(:page => params[:page], :per_page => options[:per_page])
+    ).order_new.paginate(:page => params[:page], :per_page => options[:per_page])
 
     locals = {
       :id_name => 'recent_blogs',
@@ -779,9 +780,8 @@ class MypageController < ApplicationController
       find_params = BoardEntry.make_conditions(login_user_symbols, find_options)
       pages = BoardEntry.scoped(
         :conditions => find_params[:conditions],
-        :order=>"last_updated DESC, board_entries.id DESC",
         :include => find_params[:include] | [ :user, :state ]
-      ).paginate(:page => params[:page], :per_page => options[:per_page])
+      ).order_new.paginate(:page => params[:page], :per_page => options[:per_page])
     end
     locals = {
       :id_name => id_name,

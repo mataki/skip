@@ -82,6 +82,8 @@ class BoardEntry < ActiveRecord::Base
     end
   }
 
+  named_scope :limit, proc { |num| { :limit => num } }
+
   attr_reader :owner
   attr_accessor :send_mail
 
@@ -253,11 +255,10 @@ class BoardEntry < ActiveRecord::Base
   # 最新の一覧を取得（ブログでもフォーラムでも。オーナーさえ決まればOK。）
   def self.find_visible(limit, login_user_symbols, owner_symbol)
     find_params = self.make_conditions(login_user_symbols, {:symbol => owner_symbol})
-    return self.find(:all,
-                     :limit=>limit,
-                     :conditions => find_params[:conditions],
-                     :order=>"last_updated DESC,board_entries.id DESC",
-                     :include => find_params[:include] | [ :state, :board_entry_comments ])
+    self.scoped(
+      :conditions => find_params[:conditions],
+      :include => find_params[:include] | [ :state, :board_entry_comments ]
+    ).order_new.limit(limit)
   end
 
   def send_mail?

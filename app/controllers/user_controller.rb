@@ -207,11 +207,11 @@ private
   def setup_blog_left_box options
     find_params = BoardEntry.make_conditions(login_user_symbols, options)
     # 最近の投稿
-    @recent_entries = BoardEntry.find(:all,
-                                      :limit => 5,
-                                      :conditions => find_params[:conditions],
-                                      :include => find_params[:include],
-                                      :order => "last_updated DESC ,board_entries.id DESC")
+    @recent_entries = BoardEntry.scoped(
+      :conditions => find_params[:conditions],
+      :include => find_params[:include]
+    ).order_new.limit(5)
+
     # カテゴリ
     @categories = BoardEntry.get_category_words(find_params)
 

@@ -47,16 +47,16 @@ class SearchController < ApplicationController
       find_params[:conditions][0] << " ) "
     end
 
-    @pages, @board_entries = paginate(:board_entry,
-                                      :per_page => 8,
-                                      :order => "last_updated DESC",
-                                      :conditions => find_params[:conditions],
-                                      :include => find_params[:include] | [ :user, :state ])
-    unless @board_entries && @board_entries.size > 0
+    @entries = BoardEntry.scoped(
+      :conditions => find_params[:conditions],
+      :include => find_params[:include] | [ :user, :state ]
+    ).order_new.paginate(:page => params[:page], :per_page => 8)
+
+    if @entries.empty?
       flash.now[:notice] = _('No matching data found.')
     end
 
-    @symbol2name_hash = BoardEntry.get_symbol2name_hash @board_entries
+    @symbol2name_hash = BoardEntry.get_symbol2name_hash @entries
     @tags = BoardEntry.get_popular_tag_words
   end
 

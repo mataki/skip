@@ -258,9 +258,8 @@ describe MypageController, 'mypage > home 関連' do
       controller.stub!(:antenna_entry).and_return(@antenna_entry)
       controller.stub!(:antenna_entry_title)
       controller.stub!(:unread_entry_id_hash_with_user_reading)
-      @entries_pages = mock('entries_pages')
       @entries = [stub_model(BoardEntry)]
-      controller.stub!(:paginate).and_return([@entries_pages, @entries])
+      controller.stub!(:paginate).and_return(@entries)
     end
     it 'アンテナボックスに必要な情報が設定されること' do
       controller.should_receive(:setup_for_antenna_box)
@@ -285,15 +284,13 @@ describe MypageController, 'mypage > home 関連' do
         @include = ['include'] | [:user, :state]
         condition_params = {:conditions => @conditions, :include => @include}
         @antenna_entry.should_receive(:conditions).and_return(condition_params)
-        controller.should_receive(:paginate).with(:board_entry, :per_page => 20, :order => anything(),
-                                                  :conditions => condition_params[:conditions], :include => @include).and_return([@entries_pages, @entries])
+        BoardEntry.should_receive(:paginate).and_return(@entries)
         get :entries_by_antenna, :read => 'true'
-        assigns[:entries_pages].should == @entries_pages
         assigns[:entries].should == @entries
       end
       it '未読状態を保持するhashが設定されること(記事の既読/未読切り替えチェックボックスに使う)' do
         @entries = [stub_model(BoardEntry, :id => 99), stub_model(BoardEntry, :id => 999)]
-        controller.stub!(:paginate).and_return([@entries_pages, @entries])
+        BoardEntry.stub!(:paginate).and_return(@entries)
         @user_unreadings = mock('user_unreadings')
         controller.should_receive(:unread_entry_id_hash_with_user_reading).with([99, 999]).and_return(@user_unreadings)
         get :entries_by_antenna
@@ -302,6 +299,7 @@ describe MypageController, 'mypage > home 関連' do
       it '記事の所有者のシンボルと名称のhashが設定されること(記事所有者へのリンクに使う)' do
         @symbol2name_hash = mock('symbol2name_hash')
         BoardEntry.should_receive(:get_symbol2name_hash).with(@entries).and_return(@symbol2name_hash)
+        BoardEntry.stub!(:paginate).and_return(@entries)
         get :entries_by_antenna
         assigns[:symbol2name_hash].should == @symbol2name_hash
       end
@@ -311,7 +309,6 @@ describe MypageController, 'mypage > home 関連' do
         @antenna_entry.should_receive(:need_search?).and_return(false)
         get :entries_by_antenna
       end
-      it { assigns[:entries_pages].should == nil }
       it { assigns[:entries].should == nil }
       it { assigns[:user_unreadings].should == nil }
       it { assigns[:symbol2name_hash] == nil }
