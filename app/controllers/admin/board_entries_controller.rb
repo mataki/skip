@@ -15,4 +15,19 @@
 
 class Admin::BoardEntriesController < Admin::ApplicationController
   include Admin::AdminModule::AdminRootModule
+
+  # FIXME [#855][#907]Rails2.3.2のバグでcounter_cacheと:dependent => destoryを併用すると常にStaleObjectErrorとなる
+  # SKIPではBoardEntryとBoardEntryCommentの関係が該当する。Rails2.3.5でFixされたら以下を修正すること
+  def destroy
+    @board_entry = BoardEntry.find(params[:id])
+    @board_entry.board_entry_comments.destroy_all
+    @board_entry.reload
+    @board_entry.destroy
+
+    respond_to do |format|
+      flash[:notice] = _("%{model} was successfully deleted.") % {:model => 'board entry'}
+      format.html { redirect_to(index_url) }
+      format.xml  { head :ok }
+    end
+  end
 end
