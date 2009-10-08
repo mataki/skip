@@ -95,7 +95,7 @@ describe BoardEntriesHelper, '#write_place_name' do
       before do
         @owner = mock_model(Group, :name => 'グループ', :gid => SkipFaker.rand_char)
       end
-      it '「グループの掲示板」という文言が返却されること' do
+      it '「グループのフォーラム」という文言が返却されること' do
         helper.write_place_name(@owner).should == "BBS of #{h @owner.name}"
       end
     end
@@ -129,7 +129,7 @@ describe BoardEntriesHelper, '#write_place_url' do
       before do
         @owner = mock_model(Group, :name => 'グループ', :gid => SkipFaker.rand_char)
       end
-      it 'グループの掲示板へのがurlが返却されること' do
+      it 'グループのフォーラムへのがurlが返却されること' do
         helper.should_receive(:url_for).with(:controller => 'group', :action => 'bbs', :gid => @owner.gid)
         helper.write_place_url(@owner)
       end

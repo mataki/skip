@@ -250,7 +250,7 @@ class BoardEntry < ActiveRecord::Base
   end
 
 
-  # 最新の一覧を取得（ブログでも掲示板でも。オーナーさえ決まればOK。）
+  # 最新の一覧を取得（ブログでもフォーラムでも。オーナーさえ決まればOK。）
   def self.find_visible(limit, login_user_symbols, owner_symbol)
     find_params = self.make_conditions(login_user_symbols, {:symbol => owner_symbol})
     return self.find(:all,

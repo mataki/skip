@@ -362,7 +362,7 @@ msgstr "・・・上記に非公開を含めると・・・"
 
 #: app/views/rankings/statistics.html.erb:26
 msgid "... and BBS posts ..."
-msgstr "・・・さらに掲示板も含めると・・・"
+msgstr "・・・さらにフォーラムも含めると・・・"
 
 #: app/views/bookmarks/setup.html.erb:71
 msgid ""
@@ -634,12 +634,12 @@ msgstr "アンテナに追加"
 
 #: app/controllers/group_controller.rb:343
 msgid "Added %s as a member and created a BBS for messaging."
-msgstr "%sさんを参加者に追加し、連絡の掲示板を作成しました。"
+msgstr "%sさんを参加者に追加し、連絡のフォーラムを作成しました。"
 
 #: app/controllers/group_controller.rb:352
 msgid ""
 "Added members of %s as members of the group and created a BBS for messaging."
-msgstr "%sのメンバーを参加者に追加し、連絡の掲示板を作成しました。"
+msgstr "%sのメンバーを参加者に追加し、連絡のフォーラムを作成しました。"
 
 #: app/views/antenna/_select_antenna.html.erb:2
 msgid "Adding to antenna"
@@ -1471,7 +1471,7 @@ msgstr "ポイント評価のボタン名"
 
 #: app/models/admin/setting.rb:56
 msgid "Admin::Setting|Point button description"
-msgstr "掲示板やブログ等でのポイント評価のボタン名を変更できます。"
+msgstr "フォーラムやブログ等でのポイント評価のボタン名を変更できます。"
 
 #: app/models/admin/setting.rb:81
 msgid "Admin::Setting|Protocol"
@@ -2163,15 +2163,15 @@ msgstr "直近一ヶ月のアクセス数平均"
 
 #: app/controllers/group_layout_module.rb:6
 msgid "BBS"
-msgstr "掲示板"
+msgstr "フォーラム"
 
 #: app/views/search/entry_search.html.erb:12
 msgid "BBS entries of the group"
-msgstr "グループの掲示板"
+msgstr "グループのフォーラム"
 
 #: app/helpers/board_entries_helper.rb:52
 msgid "BBS of %s"
-msgstr "%sの掲示板"
+msgstr "%sのフォーラム"
 
 #: app/views/bookmark/_new.html.erb:67
 msgid "Back"
@@ -2208,7 +2208,7 @@ msgstr "ブログ"
 
 #: app/helpers/rankings_helper.rb:43
 msgid "Blog / BBS entries got most %s from others (public entries only)"
-msgstr "みんなから最も%sを貰ったブログ/掲示板です(公開範囲が「全公開」のみ)"
+msgstr "みんなから最も%sを貰ったブログ/フォーラムです(公開範囲が「全公開」のみ)"
 
 #: app/helpers/rankings_helper.rb:66
 msgid "Blog Entry Count"
@@ -2228,15 +2228,15 @@ msgstr "ブログ/BBS"
 
 #: app/helpers/admin/application_helper.rb:39
 msgid "Board Entries"
-msgstr "ブログ・掲示板"
+msgstr "ブログ・フォーラム"
 
 #: app/controllers/admin/admin_module.rb:74
 msgid "Board entries"
-msgstr "ブログ・掲示板"
+msgstr "ブログ・フォーラム"
 
 #: app/models/board_entry_comment.rb:-
 msgid "BoardEntryComment|Board entry"
-msgstr "ブログ・掲示板"
+msgstr "ブログ・フォーラム"
 
 #: app/models/board_entry_comment.rb:-
 msgid "BoardEntryComment|Contents"
@@ -2264,7 +2264,7 @@ msgstr "アクセス数"
 
 #: app/models/board_entry_point.rb:-
 msgid "BoardEntryPoint|Board entry"
-msgstr "ブログ・掲示板"
+msgstr "ブログ・フォーラム"
 
 #: app/models/board_entry_point.rb:-
 msgid "BoardEntryPoint|Created on"
@@ -2320,7 +2320,7 @@ msgstr "ブログ"
 
 #: app/models/board_entry.rb:69
 msgid "BoardEntry|Entry type|GROUP_BBS"
-msgstr "掲示板"
+msgstr "フォーラム"
 
 #: app/models/board_entry.rb:-
 msgid "BoardEntry|Ignore times"
@@ -2857,7 +2857,7 @@ msgstr "%{name}作成"
 
 #: app/views/entries/_entry_detail.html.erb:310
 msgid "Create a new bbs entry inheriting the privacy setting."
-msgstr "記事の公開範囲を引き継いだ掲示板として新しい記事を作成します。"
+msgstr "記事の公開範囲を引き継いだフォーラムとして新しい記事を作成します。"
 
 #: app/controllers/groups_controller.rb:44
 #: app/controllers/groups_controller.rb:52
@@ -2887,7 +2887,7 @@ msgid ""
 "Created an entry on the BBS about the removal of user. Edit the entry when "
 "needed."
 msgstr ""
-"退会者向けに掲示板にメッセージを作成しました。内容は必要に応じて変更してくだ"
+"退会者向けにフォーラムにメッセージを作成しました。内容は必要に応じて変更してくだ"
 "さい"
 
 #: app/controllers/edit_controller.rb:95
@@ -3301,7 +3301,7 @@ msgstr "過去にあなたがコメントを残した記事"
 
 #: app/views/mypage/_record_post.html.erb:33
 msgid "Entries you posted to your blog and group BBSs."
-msgstr "ブログやグループの掲示板であなたが投稿した記事の一覧です。"
+msgstr "ブログやグループのフォーラムであなたが投稿した記事の一覧です。"
 
 #: app/controllers/mypage_controller.rb:209
 msgid "Entry was successfully marked read."
@@ -3317,7 +3317,7 @@ msgstr "記事の更新に成功しました。"
 
 #: app/models/entry_access.rb:-
 msgid "EntryAccess|Board entry"
-msgstr "ブログ・掲示板"
+msgstr "ブログ・フォーラム"
 
 #: app/models/entry_access.rb:-
 msgid "EntryAccess|Updated on"
@@ -3329,7 +3329,7 @@ msgstr "アクセスした人"
 
 #: app/models/entry_editor.rb:-
 msgid "EntryEditor|Board entry"
-msgstr "ブログ・掲示板"
+msgstr "ブログ・フォーラム"
 
 #: app/models/entry_editor.rb:-
 msgid "EntryEditor|Symbol"
@@ -3337,7 +3337,7 @@ msgstr "シンボル"
 
 #: app/models/entry_publication.rb:-
 msgid "EntryPublication|Board entry"
-msgstr "ブログ・掲示板"
+msgstr "ブログ・フォーラム"
 
 #: app/models/entry_publication.rb:-
 msgid "EntryPublication|Symbol"
@@ -3345,7 +3345,7 @@ msgstr "シンボル"
 
 #: app/models/entry_tag.rb:-
 msgid "EntryTag|Board entry"
-msgstr "ブログ・掲示板"
+msgstr "ブログ・フォーラム"
 
 #: app/models/entry_tag.rb:-
 msgid "EntryTag|Created on"
@@ -3357,7 +3357,7 @@ msgstr "タグ"
 
 #: app/models/entry_trackback.rb:-
 msgid "EntryTrackback|Board entry"
-msgstr "ブログ・掲示板"
+msgstr "ブログ・フォーラム"
 
 #: app/models/entry_trackback.rb:-
 msgid "EntryTrackback|Tb entry"
@@ -4232,7 +4232,7 @@ msgid ""
 "List of blog / BBS entries made use of contact function to send email "
 "notifications from %s<br/>(Emails are sent periodically in a batch)"
 msgstr ""
-"連絡機能によって、%sからメールが送信されたブログや掲示板の記事の一覧です。"
+"連絡機能によって、%sからメールが送信されたブログやフォーラムの記事の一覧です。"
 "<br/>（メール送信は、即時でなく定期的に行われます）"
 
 #: app/controllers/mypage_controller.rb:970
@@ -4538,7 +4538,7 @@ msgstr ""
 
 #: app/helpers/rankings_helper.rb:39
 msgid "Most read blog / BBS entries (public entries only)"
-msgstr "みんなによく読まれたブログ/掲示板です(公開範囲が「全公開」のみ)"
+msgstr "みんなによく読まれたブログ/フォーラムです(公開範囲が「全公開」のみ)"
 
 #: app/helpers/application_helper.rb:352
 msgid "Move to groups joined ..."
@@ -5204,7 +5204,7 @@ msgstr "投稿件数（あなたが今までに投稿した記事の数）"
 
 #: app/controllers/mypage_controller.rb:968
 msgid "Posts in the groups joined"
-msgstr "参加中のグループの掲示板の書き込み"
+msgstr "参加中のグループのフォーラムの書き込み"
 
 #: app/views/admin/users/index.html.erb:25
 msgid "Prepare for activation"
@@ -5374,7 +5374,7 @@ msgstr "読書"
 
 #: app/controllers/feed_controller.rb:37
 msgid "Recent BBS posts (%{category)"
-msgstr "最新の掲示板の記事（%{category}）"
+msgstr "最新のフォーラムの記事（%{category}）"
 
 #: app/views/mypage/_recent_group_box.html.erb:3
 msgid "Recent Groups"
@@ -5639,7 +5639,7 @@ msgstr "1000 件以上の検索結果は表示しておりません "
 
 #: config/environment.rb:71
 msgid "Search entries."
-msgstr "ブログや掲示板の記事を探します"
+msgstr "ブログやフォーラムの記事を探します"
 
 #: app/controllers/bookmarks_controller.rb:36
 msgid "Search for Bookmarks"
@@ -7021,7 +7021,7 @@ msgstr "値"
 
 #: app/models/user_reading.rb:-
 msgid "UserReading|Board entry"
-msgstr "ブログ・掲示板"
+msgstr "ブログ・フォーラム"
 
 #: app/models/user_reading.rb:-
 msgid "UserReading|Checked on"
@@ -7101,7 +7101,7 @@ msgid ""
 "Users who ever posted blog entries.<br/>&nbsp;(Excluding BBS posts and auto-"
 "genarated messages. Public entries only)"
 msgstr ""
-"ブログを書いたことのある人<br/>　（掲示板除く・公開のみ・自動投稿除く）"
+"ブログを書いたことのある人<br/>　（フォーラム除く・公開のみ・自動投稿除く）"
 
 #: app/views/rankings/statistics.html.erb:28
 msgid "Users who have changed thier profile pitures"
@@ -7671,7 +7671,7 @@ msgstr "【閉じる】"
 
 #: app/views/entries/_entry_detail.html.erb:310
 msgid "[Compose a new bbs with this as topic]"
-msgstr "[この記事を「話題」にして、掲示板に新しい記事を投稿する]"
+msgstr "[この記事を「話題」にして、フォーラムに新しい記事を投稿する]"
 
 #: app/views/entries/_entry_detail.html.erb:312
 msgid "[Compose a new blog with this as topic]"
@@ -8005,13 +8005,13 @@ msgstr "現在のユーザ名"
 #: app/controllers/board_entries_controller.rb:74
 #: app/controllers/board_entries_controller.rb:94 app/models/board_entry.rb:-
 msgid "board entry"
-msgstr "ブログ・掲示板"
+msgstr "ブログ・フォーラム"
 
 #: app/controllers/board_entries_controller.rb:136
 #: app/models/board_entry_comment.rb:-
 #: app/views/admin/board_entries/show.html.erb:43
 msgid "board entry comment"
-msgstr "ブログ・掲示板コメント"
+msgstr "ブログ・フォーラムコメント"
 
 #: app/models/board_entry_point.rb:-
 msgid "board entry point"
