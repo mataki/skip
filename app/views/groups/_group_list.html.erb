@@ -1,3 +1,4 @@
+<% show_favorite ||= false -%>
 <% if pages and pages.item_count > 0 -%>
   <%= hidden_field_tag("authenticity_token", form_authenticity_token) %>
   <% if current_user.id == user_id && current_user.custom.always_show_shortcut -%>
@@ -29,7 +30,7 @@
       </tr>
     <% groups.each do |group| -%>
       <tr class="<%= cycle('line_0', 'line_1') %>">
-        <td><%= show_group_action(group, current_user.id == user_id) %><%= group_link_to group %></td>
+        <td><%= show_group_action(group, show_favorite) %><%= group_link_to group %></td>
         <td><%= icon_tag(group.category_icon_name.first) + h(group.category_icon_name.last) %></td>
         <td><%= participation_state(group, user_id) -%></td>
         <td><%= _("%s Required") % icon_tag('key') if group.protected? %></td>

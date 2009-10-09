@@ -28,7 +28,7 @@ describe Admin::SettingsController, 'GET /index' do
 
   describe 'tabパラメタの指定がある場合' do
     before do
-      get :index, :tab => 'literal'
+      get :index, :tab => 'mail'
     end
     it { response.should be_success }
   end

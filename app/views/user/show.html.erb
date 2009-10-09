@@ -12,7 +12,7 @@
   <div class="box message"><%= _('This user has already left.') %></div>
   <% end -%>
 
-  <div class="box relative100">
+  <div class="relative100">
     <h2 class="topix_title"><%= icon_tag('asterisk_orange') %><%= _('Profile') %></h2>
     <% if @user.id == @current_user.id -%>
     <div class="operation">
@@ -20,6 +20,7 @@
     </div>
     <% end -%>
 
+    <div class="topix_body">
     <h2 class="subtitle"><%= _('Account information') %></h2>
     <table class="normal user_info show">
     <% if user_name_mode?(:code) -%>
@@ -79,15 +80,18 @@
       </table>
       <% end -%>
     <% end -%>
+    </div>
   </div>
 
-  <%= render :partial => "postit_cloud",
-             :locals => {
-               :user => @user,
-               :tags => @tags
-             } %>
+  <% unless @tags.empty? -%>
+    <%= render :partial => "postit_cloud",
+               :locals => {
+                 :user => @user,
+                 :tags => @tags
+               } %>
+  <% end -%>
   <% unless @against_chains.empty? -%>
-  <div class="box relative100">
+  <div class="relative100">
     <div class="operation"><%= link_to _('[See all]'), :action => 'social', :menu => 'social_chain', :uid => @user.uid %></div>
     <h2 class="topix_title"><%= icon_tag('asterisk_orange') %><%= _('Introductions') %></h2>
     <div class="topix_body">

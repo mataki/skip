@@ -34,6 +34,7 @@ class UsersController < ApplicationController
   end
 
   # tab_menu
+  # TODO #924で画面からリンクをなくした。1.4時点で復活しない場合は削除する
   def chain_search
     @pages, chains = paginate(:chains,
                               :per_page => 5,
@@ -69,8 +70,7 @@ private
   def setup_layout
     @main_menu = @title = _('Users')
 
-    @tab_menu_source = [ {:label => _('Search users'), :options => {:action => 'index'}},
-                         {:label => _('Introductions'), :options => {:action => 'chain_search'}} ]
+    @tab_menu_source = [ {:label => _('Search users'), :options => {:action => 'index'}} ]
   end
 end
 

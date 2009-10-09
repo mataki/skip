@@ -17,9 +17,8 @@
 # 具体的には全体設定、文言設定、メール関連設定、フィード設定、その他設定の各タブの
 # 表示/更新を行う。
 class Admin::SettingsController < Admin::ApplicationController
-  TABS = %w(main literal mail feed security)
+  TABS = %w(main mail feed security)
   N_('Admin::SettingsController|main')
-  N_('Admin::SettingsController|literal')
   N_('Admin::SettingsController|mail')
   N_('Admin::SettingsController|feed')
   N_('Admin::SettingsController|security')
