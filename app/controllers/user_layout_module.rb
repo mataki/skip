@@ -4,10 +4,10 @@ module UserLayoutModule
     tab_menu_source = [
       {:label => _('Profile'), :options => {:controller => 'user', :action => 'show'}},
       {:label => _('Blog'), :options => {:controller => 'user', :action => 'blog', :archive => 'all', :sort_type => 'date'}},
-      {:label => _('Shared Files'), :options => {:controller => 'share_file', :action => 'list'}},
-      {:label => _('Socials'), :options => {:controller => 'user', :action => 'social'}},
-      {:label => _('Groups Joined'), :options => {:controller => 'user', :action => 'group'}},
-      {:label => _('Bookmarks'), :options => {:controller => 'bookmark', :action => 'list'}} ]
+      {:label => _('Shared Files'), :options => {:controller => 'share_file', :action => 'list'}} ]
+    tab_menu_source << {:label => _('Socials'), :options => {:controller => 'user', :action => 'social'}} unless user.against_chains.empty?
+    tab_menu_source << {:label => _('Groups Joined'), :options => {:controller => 'user', :action => 'group'}} unless user.groups.participating(user).empty?
+    tab_menu_source << {:label => _('Bookmarks'), :options => {:controller => 'bookmark', :action => 'list'}} unless user.bookmark_comments.empty?
 
     if user.id == current_user.id
       tab_menu_source.unshift({:label => _('Home'), :options => {:controller => 'mypage', :action => 'index'}, :selected_actions => %w(index entries entries_by_date entries_by_antenna)})
