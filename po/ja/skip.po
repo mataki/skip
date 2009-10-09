@@ -7076,7 +7076,7 @@ msgstr "招待したいユーザ／グループ"
 
 #: app/views/rankings/statistics.html.erb:23
 msgid "Users accessed within last 10 days"
-msgstr "10日間以内にアクセスしたことがある人"
+msgstr "アクセスしたことがある人(10日間以内)"
 
 #: app/helpers/rankings_helper.rb:45
 msgid "Users got most access to his / her entries and profile."
