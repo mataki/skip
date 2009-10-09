@@ -349,7 +349,7 @@ msgstr ""
 
 #: app/views/rankings/statistics.html.erb:26
 msgid "... and BBS posts ..."
-msgstr ""
+msgstr "... and forum posts ..."
 
 #: app/views/bookmarks/setup.html.erb:71
 msgid ""
@@ -597,12 +597,12 @@ msgstr ""
 
 #: app/controllers/group_controller.rb:343
 msgid "Added %s as a member and created a BBS for messaging."
-msgstr ""
+msgstr "Added %s as a member and created a forum for messaging."
 
 #: app/controllers/group_controller.rb:352
 msgid ""
 "Added members of %s as members of the group and created a BBS for messaging."
-msgstr ""
+msgstr "Added members of %s as members of the group and created a forum for messaging."
 
 #: app/views/antenna/_select_antenna.html.erb:2
 msgid "Adding to antenna"
@@ -1436,7 +1436,7 @@ msgstr "Name of Poin Button"
 
 #: app/models/admin/setting.rb:56
 msgid "Admin::Setting|Point button description"
-msgstr "You can change the name of point button for blogs and BBS."
+msgstr "You can change the name of point button for blogs and forums."
 
 #: app/models/admin/setting.rb:81
 msgid "Admin::Setting|Protocol"
@@ -2110,15 +2110,15 @@ msgstr ""
 
 #: app/controllers/group_layout_module.rb:6
 msgid "BBS"
-msgstr ""
+msgstr "Forums"
 
 #: app/views/search/entry_search.html.erb:12
 msgid "BBS entries of the group"
-msgstr ""
+msgstr "Forum entries of the group"
 
 #: app/helpers/board_entries_helper.rb:52
 msgid "BBS of %s"
-msgstr ""
+msgstr "Forums of %s"
 
 #: app/views/bookmark/_new.html.erb:67
 msgid "Back"
@@ -2155,7 +2155,7 @@ msgstr ""
 
 #: app/helpers/rankings_helper.rb:43
 msgid "Blog / BBS entries got most %s from others (public entries only)"
-msgstr ""
+msgstr "Blog / forum entries got most %s from others (public entries only)"
 
 #: app/helpers/rankings_helper.rb:66
 msgid "Blog Entry Count"
@@ -2171,7 +2171,7 @@ msgstr ""
 
 #: app/controllers/services_controller.rb:43
 msgid "Blogs / BBSs"
-msgstr ""
+msgstr "Blogs / Forums"
 
 #: app/helpers/admin/application_helper.rb:39
 msgid "Board Entries"
@@ -2267,7 +2267,7 @@ msgstr "Blog"
 
 #: app/models/board_entry.rb:69
 msgid "BoardEntry|Entry type|GROUP_BBS"
-msgstr "BBS"
+msgstr "Forum"
 
 #: app/models/board_entry.rb:-
 msgid "BoardEntry|Ignore times"
@@ -2799,6 +2799,8 @@ msgid ""
 "Created an entry on the BBS about the removal of user. Edit the entry when "
 "needed."
 msgstr ""
+"Created an entry on the forum about the removal of user. Edit the entry when "
+"needed."
 
 #: app/controllers/edit_controller.rb:95
 msgid "Created successfully."
@@ -3201,7 +3203,7 @@ msgstr ""
 
 #: app/views/mypage/_record_post.html.erb:33
 msgid "Entries you posted to your blog and group BBSs."
-msgstr ""
+msgstr "Entries you posted to your blog and group forums."
 
 #: app/controllers/mypage_controller.rb:209
 msgid "Entry was successfully marked read."
@@ -4116,6 +4118,8 @@ msgid ""
 "List of blog / BBS entries made use of contact function to send email "
 "notifications from %s<br/>(Emails are sent periodically in a batch)"
 msgstr ""
+"List of blog / forum entries made use of contact function to send email "
+"notifications from %s<br/>(Emails are sent periodically in a batch)"
 
 #: app/controllers/mypage_controller.rb:970
 msgid "List of unread entries"
@@ -4409,7 +4413,7 @@ msgstr ""
 
 #: app/helpers/rankings_helper.rb:39
 msgid "Most read blog / BBS entries (public entries only)"
-msgstr ""
+msgstr "Most read blog / forum entries (public entries only)"
 
 #: app/helpers/application_helper.rb:352
 msgid "Move to groups joined ..."
@@ -5233,7 +5237,7 @@ msgstr ""
 
 #: app/controllers/feed_controller.rb:37
 msgid "Recent BBS posts (%{category)"
-msgstr ""
+msgstr "Recent forum posts (%{category)"
 
 #: app/views/mypage/_recent_group_box.html.erb:3
 msgid "Recent Groups"
@@ -6921,6 +6925,8 @@ msgid ""
 "Users who ever posted blog entries.<br/>&nbsp;(Excluding BBS posts and auto-"
 "genarated messages. Public entries only)"
 msgstr ""
+"Users who ever posted blog entries.<br/>&nbsp;(Excluding forum posts and auto-"
+"genarated messages. Public entries only)"
 
 #: app/views/rankings/statistics.html.erb:28
 msgid "Users who have changed thier profile pitures"
