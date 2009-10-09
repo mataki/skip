@@ -83,11 +83,13 @@
     </div>
   </div>
 
-  <%= render :partial => "postit_cloud",
-             :locals => {
-               :user => @user,
-               :tags => @tags
-             } %>
+  <% unless @tags.empty? -%>
+    <%= render :partial => "postit_cloud",
+               :locals => {
+                 :user => @user,
+                 :tags => @tags
+               } %>
+  <% end -%>
   <% unless @against_chains.empty? -%>
   <div class="relative100">
     <div class="operation"><%= link_to _('[See all]'), :action => 'social', :menu => 'social_chain', :uid => @user.uid %></div>
