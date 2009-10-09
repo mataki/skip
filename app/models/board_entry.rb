@@ -84,6 +84,23 @@ class BoardEntry < ActiveRecord::Base
 
   named_scope :limit, proc { |num| { :limit => num } }
 
+  named_scope :except_auto_posted, proc {
+    # FIXME 自動投稿判別をタイトルでやるのは危うい。国際化のためにもよくない。
+    { :conditions => ['title NOT IN (?)', ['参加申し込みをしました！', 'ユーザー登録しました！']] }
+  }
+
+  named_scope :publication_type_equal, proc { |type|
+    { :conditions => ['publication_type = ?', type] }
+  }
+
+  named_scope :diary, proc {
+    { :conditions => ['entry_type = ?', BoardEntry::DIARY] }
+  }
+
+  named_scope :active_user, proc {
+    { :conditions => ['user_id IN (?)', User.active.map(&:id).uniq] }
+  }
+
   attr_reader :owner
   attr_accessor :send_mail
 

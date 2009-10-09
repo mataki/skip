@@ -15,4 +15,12 @@
 
 class UserAccess < ActiveRecord::Base
   belongs_to :user
+
+  named_scope :active_user, proc {
+    { :conditions => ['user_id IN (?)', User.active.map(&:id).uniq] }
+  }
+
+  named_scope :last_access_gt, proc {|time|
+    { :conditions => ['last_access > ?', time] }
+  }
 end
