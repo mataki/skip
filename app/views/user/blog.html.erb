@@ -21,8 +21,8 @@
                  :entry_accesses => @entry_accesses,
                  :total_count => @total_count,
                  :bookmark_comments_count => @bookmark_comments_count }) %>
-  <% else -%>
+  <% elsif @entries -%>
     <%= render(:partial => 'entries/entries_list',
-               :locals => { :pages => @pages, :entries => @entries, :year => @year, :month => @month }) -%>
+               :locals => {:entries => @entries, :year => @year, :month => @month }) -%>
   <% end -%>
 <% end -%>

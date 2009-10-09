@@ -38,7 +38,7 @@ div.topix_body .page_line, div.topix_body .item_line {
           <%= link_to _('[Show read entries]'), :antenna_id => @antenna_entry.key, :read => true %>
           <% end %>
         </span>
-        <%= page_link(@entries_pages) if @entries_pages %>
+        <%= will_paginate_link(@entries) %>
       </div>
     </div>
 
@@ -60,7 +60,7 @@ div.topix_body .page_line, div.topix_body .item_line {
                             :symbol2name_hash => @symbol2name_hash } %>
 
     <div style="text-align:right;">
-      <%= page_link(@entries_pages) if @entries_pages %>
+      <%= will_paginate_link(@entries) %>
     </div>
   </div><!-- contents_right -->
 

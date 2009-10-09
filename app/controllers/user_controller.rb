@@ -36,20 +36,11 @@ class UserController < ApplicationController
   def blog
     options = { :symbol => "uid:" + @user.uid }
     setup_blog_left_box options
-    order = "last_updated DESC , board_entries.id DESC"
 
     # 右側
     if params[:category] or params[:keyword] or params[:archive]
       options[:category] = params[:category]
       options[:keyword] = params[:keyword]
-
-      params[:sort_type] ||= "date"
-      case params[:sort_type]
-      when "access"
-        order = "board_entry_points.access_count DESC"
-      when "point"
-        order = "board_entry_points.point DESC"
-      end
 
       find_params = BoardEntry.make_conditions(login_user_symbols, options)
 
@@ -58,12 +49,12 @@ class UserController < ApplicationController
         find_params[:conditions] << @year << @month
       end
 
-      @pages, @entries = paginate(:board_entries,
-                                  :per_page => 20,
-                                  :order => order,
-                                  :conditions => find_params[:conditions],
-                                  :include => find_params[:include] | [ :user, :board_entry_comments, :state ])
-      unless @entries && @entries.size > 0
+      @entries = BoardEntry.scoped(
+        :conditions => find_params[:conditions],
+        :include => find_params[:include] | [ :user, :state ]
+      ).order_sort_type(params[:sort_type]).paginate(:page => params[:page], :per_page => 20)
+
+      if @entries.empty?
         flash.now[:notice] = _('No matching entries found.')
       end
     else
@@ -75,10 +66,10 @@ class UserController < ApplicationController
         options[:id] = entry_id
       end
       find_params = BoardEntry.make_conditions(login_user_symbols, options)
-      @entry = BoardEntry.find(:first,
-                               :order => order,
-                               :conditions => find_params[:conditions],
-                               :include => find_params[:include] | [ :user, :board_entry_comments, :state ])
+      @entry = BoardEntry.scoped(
+         :conditions => find_params[:conditions],
+         :include => find_params[:include] | [ :user, :board_entry_comments, :state ]
+      ).order_new.first
       if @entry
         @checked_on = UserReading.find_by_user_id_and_board_entry_id(current_user, @entry).try(:checked_on)
         @entry.accessed(current_user.id)
@@ -216,11 +207,11 @@ private
   def setup_blog_left_box options
     find_params = BoardEntry.make_conditions(login_user_symbols, options)
     # 最近の投稿
-    @recent_entries = BoardEntry.find(:all,
-                                      :limit => 5,
-                                      :conditions => find_params[:conditions],
-                                      :include => find_params[:include],
-                                      :order => "last_updated DESC ,board_entries.id DESC")
+    @recent_entries = BoardEntry.scoped(
+      :conditions => find_params[:conditions],
+      :include => find_params[:include]
+    ).order_new.limit(5)
+
     # カテゴリ
     @categories = BoardEntry.get_category_words(find_params)
 

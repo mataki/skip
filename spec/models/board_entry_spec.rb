@@ -153,7 +153,7 @@ EOF
 end
 
 describe BoardEntry, '.get_symbol2name_hash' do
-  describe 'あるグループの掲示板が存在する場合' do
+  describe 'あるグループのフォーラムが存在する場合' do
     before do
       @group = create_group(:gid => 'skip_group', :name => 'SKIPグループ')
       @user = create_user
@@ -210,7 +210,7 @@ describe BoardEntry, '#prepare_send_mail' do
       end.should change(Mail, :count).by(0)
     end
   end
-  describe '公開範囲が参加者のみの掲示板の場合' do
+  describe '公開範囲が参加者のみのフォーラムの場合' do
     before do
       @group = create_group(:gid => 'skip_group', :name => 'SKIPグループ') do |g|
         g.group_participations.build(:user_id => @alice.id, :owned => true)
@@ -268,7 +268,7 @@ describe BoardEntry, '#to_trackback_entries' do
 end
 
 describe BoardEntry, '#publication_users' do
-  describe 'あるグループの掲示板が存在する場合' do
+  describe 'あるグループのフォーラムが存在する場合' do
     before do
       # あるグループの管理者がアリス, 参加者がマイク
       @alice = create_user :user_options => {:name => 'アリス', :admin => true}, :user_uid_options => {:uid => 'alice'}

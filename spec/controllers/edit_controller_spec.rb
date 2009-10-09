@@ -116,7 +116,7 @@ describe EditController, "#create" do
           :board_entry => { :symbol => @user_symbol, :send_mail => "1" }
         }
       end
-      it "作成された掲示板にリダイレクトされる" do
+      it "作成されたフォーラムにリダイレクトされる" do
         response.should redirect_to(@entry.get_url_hash)
       end
       it "メールが送信が予約されること" do
@@ -134,7 +134,7 @@ describe EditController, "#create" do
           :board_entry => { :symbol => @user_symbol, :send_mail => "0" }
         }
       end
-      it "作成された掲示板にリダイレクトされる" do
+      it "作成されたフォーラムにリダイレクトされる" do
         response.should redirect_to(@entry.get_url_hash)
       end
       it "flashメッセージが設定されていること" do
@@ -172,7 +172,7 @@ describe EditController, "#analize_params" do
         @result.last.should == []
       end
     end
-    describe "掲示板の場合" do
+    describe "フォーラムの場合" do
       before do
         controller.stub!(:params).and_return(@params.merge(:entry_type => BoardEntry::GROUP_BBS))
         @result = controller.send(:analyze_params, @board_entry)
@@ -201,7 +201,7 @@ describe EditController, "#analize_params" do
         @result.last.should == []
       end
     end
-    describe "掲示板の場合" do
+    describe "フォーラムの場合" do
       before do
         controller.stub!(:params).and_return(@params.merge(:entry_type => BoardEntry::GROUP_BBS))
         @result = controller.send(:analyze_params, @board_entry)
@@ -230,7 +230,7 @@ describe EditController, "#analize_params" do
         @result.last.should == ["uid:100001", "uid:a_group_owned_user", "gin:hoge"]
       end
     end
-    describe "掲示板の場合" do
+    describe "フォーラムの場合" do
       before do
         controller.stub!(:params).and_return(@params.merge(:entry_type => BoardEntry::GROUP_BBS))
         @result = controller.send(:analyze_params, @board_entry)

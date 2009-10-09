@@ -62,7 +62,6 @@ class GroupController < ApplicationController
 
   # tab_menu
   def bbs
-    order = "last_updated DESC,board_entries.id DESC"
     options = { :symbol => @group.symbol }
 
     # 左側
@@ -73,11 +72,10 @@ class GroupController < ApplicationController
       options[:id] = entry_id
       find_params = BoardEntry.make_conditions(login_user_symbols, options)
 
-      @entry = BoardEntry.find(:first,
-                               :order => order,
-                               :conditions => find_params[:conditions],
-                               :include => find_params[:include] | [ :user, :board_entry_comments, :state ])
-
+      @entry = BoardEntry.scoped(
+        :conditions => find_params[:conditions],
+        :include => find_params[:include] | [ :user, :board_entry_comments, :state ]
+      ).order_new.first
       if @entry
         @checked_on = @entry.accessed(current_user.id).checked_on
         @prev_entry, @next_entry = @entry.get_around_entry(login_user_symbols)
@@ -95,14 +93,6 @@ class GroupController < ApplicationController
       options[:category] = params[:category]
       options[:keyword] = params[:keyword]
 
-      params[:sort_type] ||= "date"
-      case params[:sort_type]
-      when "access"
-        order = "board_entry_points.access_count DESC"
-      when "point"
-        order = "board_entry_points.point DESC"
-      end
-
       find_params = BoardEntry.make_conditions(login_user_symbols, options)
 
       if @user = params[:user]
@@ -110,13 +100,11 @@ class GroupController < ApplicationController
         find_params[:conditions] << @user
       end
 
-      @pages, @entries = paginate(:board_entries,
-                                  :per_page => 20,
-                                  :order => order,
-                                  :conditions => find_params[:conditions],
-                                  :include => find_params[:include] | [ :user, :board_entry_comments, :state ])
+      @entries = BoardEntry.scoped(
+        :conditions => find_params[:conditions],
+        :include => find_params[:include] | [ :user, :state ]
+      ).order_sort_type(params[:sort_type]).paginate(:page => params[:page], :per_page => 20)
     end
-
   end
 
   # tab_menu
@@ -414,11 +402,11 @@ private
   def setup_bbs_left_box options
     find_params = BoardEntry.make_conditions(login_user_symbols, options)
     # 最近の投稿
-    @recent_entries = BoardEntry.find(:all,
-                                      :limit => 5,
-                                      :conditions => find_params[:conditions],
-                                      :include => find_params[:include],
-                                      :order => "last_updated DESC,board_entries.id DESC")
+    @recent_entries = BoardEntry.scoped(
+      :conditions => find_params[:conditions],
+      :include => find_params[:include]
+    ).order_new.limit(5)
+
     # カテゴリ
     @categories = BoardEntry.get_category_words(find_params)
 

@@ -31,7 +31,7 @@ Given /^以下のブログを書く:$/ do |entries_table|
   end
 end
 
-Given /^以下の掲示板を書く:$/ do |entries_table|
+Given /^以下のフォーラムを書く:$/ do |entries_table|
   @entries ||= []
   entries_table.hashes.each do |hash|
     Given %!"#{hash[:user]}"でログインする!
