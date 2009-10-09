@@ -28,7 +28,7 @@
 <% unless entries.empty? %>
   <div class="navi" style="position: relative; _width: 100%">
     <div style="position: absolute; top:1px; left: 2px;">
-      <%= _('Method of sort: ') %>
+      <%= _('Sort by: ') %>
       <%= link_to_unless_current _("[Sort by modified date]"), params.merge({:sort_type => "date"}) do
           content_tag 'b', _('[Sort by modified date]')
         end %>
