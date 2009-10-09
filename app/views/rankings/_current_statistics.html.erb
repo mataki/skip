@@ -3,7 +3,7 @@
   <% item = SiteCount::STATISTICS_ITEMS[key.to_sym] -%>
 <div class="statistics_line">
   <div class="statistics_desc"><%= icon_tag item[:icon] %>&nbsp;&nbsp;<%=h _(item[:desc]) %></div>
-  <div class="statistics_value"><%=h site_count[key] %><%=h _(item[:unit]) %></div>
+  <div class="statistics_value" id=<%= "#{key}_value" %>><%=h site_count[key] %><%=h _(item[:unit]) %></div>
   <div class="statistics_menu">
     <%= link_to _("%{icon} Show history of %{time}") % {:icon => icon_tag('calendar_view_month'), :time => site_count.created_on.strftime(_('%m/%Y'))}, '#', :class => 'statistics_history_link', :id => key, :title => h(_(item[:desc])) %>
   </div>

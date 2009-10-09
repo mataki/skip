@@ -22,6 +22,10 @@ class BoardEntryComment < ActiveRecord::Base
   validates_presence_of :contents
   validates_presence_of :user_id
 
+  named_scope :active_user, proc {
+    { :conditions => ['user_id IN (?)', User.active.map(&:id).uniq] }
+  }
+
   def after_save
     board_entry.reload.update_attribute :updated_on, Time.now
   end

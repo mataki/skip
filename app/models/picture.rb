@@ -16,6 +16,10 @@
 class Picture < ActiveRecord::Base
   belongs_to :user
 
+  named_scope :active_user, proc {
+    { :conditions => ['user_id IN (?)', User.active.map(&:id).uniq] }
+  }
+
   attr_accessor :file
 
   N_('Picture|File')
