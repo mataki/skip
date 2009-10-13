@@ -7,7 +7,7 @@
   <h3><%= _('Instructions for importing from a CSV file.') %></h3>
   <p style="color:red;"><b><%= _('CSV file needs to be encoded in UTF-8.') %></b></p>
   <p style="color:red;"><b><%= _('New user records will be created when the first column of the CSV file does not match the login ID of any existing record, while matching records will be updated.') %></b></p>
-  <p style="color:red;"><b><%= _('Changes made to departments, passwords etc by users will be overwritten upon data update.') %></b></p>
+  <p style="color:red;"><b><%= _('Changes made to %s, passwords etc by users will be overwritten upon data update.') % s_('User|Section') %></b></p>
 
   <div class="upload_area">
     <% form_tag import_new_admin_user_path, :multipart => true, :id => 'import_form' do -%>

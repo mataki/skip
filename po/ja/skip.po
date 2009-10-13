@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-10-09 16:47+0900\n"
+"POT-Creation-Date: 2009-10-13 13:33+0900\n"
 "PO-Revision-Date: 2009-08-07 16:09+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -247,15 +247,6 @@ msgid_plural "%{wday}, %{date} - %{count} Entries"
 msgstr[0] "%{date}(%{wday}) - %{count}件"
 msgstr[1] "%{date}(%{wday}) - %{count}件"
 
-#: app/views/shared/_symbol_autocomplete_field.html.erb:10
-msgid ""
-"((Enter in \"uid:Nickname\" or \"gid:Group Name\" format when you want to "
-"specify directly. Partial match search is also available for name and "
-"department. e.g. Yamada, administration)"
-msgstr ""
-"(直接指定の際は、\"uid:ニックネーム\"、\"gid:グループ名\"のように入力してくだ"
-"さい。また漢字氏名、部署による部分検索も可能です。ex:山田、総務)"
-
 #: app/views/portal/account_registration.html.erb:14
 msgid "(4 or more characters)"
 msgstr "（4桁以上）"
@@ -268,6 +259,15 @@ msgstr "（全チェックなしは全てを対象とします）"
 msgid "(Caution!) Never upload files that may cause security issues."
 msgstr ""
 "（注意！）セキュリティ上の問題があるファイルは、アップロードしないで下さい。"
+
+#: app/views/shared/_symbol_autocomplete_field.html.erb:10
+msgid ""
+"(Enter in \"uid:Nickname\" or \"gid:Group Name\" format when you want to "
+"specify directly. Partial match search is also available for name and %s. e."
+"g. Yamada, administration)"
+msgstr ""
+"(直接指定の際は、\"uid:ニックネーム\"、\"gid:グループ名\"のように入力してくだ"
+"さい。また漢字氏名、%sによる部分検索も可能です。ex:山田、総務)"
 
 #: app/views/board_entries/_board_entry_point.html.erb:11
 msgid "(Got %{point} %{point_button})"
@@ -468,7 +468,7 @@ msgstr "ひとつのタグにつき30文字以上入力できません。"
 msgid "About This Site"
 msgstr "このサイトについて"
 
-#: app/views/user/_follow_chains_box.html.erb:2
+#: app/views/user/_follow_chains_box.html.erb:3
 msgid "About Users"
 msgstr "紹介したユーザ"
 
@@ -1856,7 +1856,7 @@ msgstr "就業状態"
 
 #: app/models/admin/user.rb:32 app/views/admin/users/import.html.erb:23
 msgid "Admin::User|Section"
-msgstr "部署"
+msgstr "所属"
 
 #: app/models/admin/user.rb:33
 msgid "Admin::User|Section description"
@@ -2665,11 +2665,11 @@ msgstr "変更しました。"
 
 #: app/views/admin/users/import.html.erb:10
 msgid ""
-"Changes made to departments, passwords etc by users will be overwritten upon "
-"data update."
+"Changes made to %s, passwords etc by users will be overwritten upon data "
+"update."
 msgstr ""
-"データが更新される場合、ユーザが部署やパスワード等を自分自身で変更している場"
-"合でも上書きされますのでご注意下さい。"
+"データが更新される場合、ユーザが%sやパスワード等を自分自身で変更している場合"
+"でも上書きされますのでご注意下さい。"
 
 #: app/views/admin/shared/_sortable_table.html.erb:20
 msgid "Check all/Uncheck all"
@@ -3744,7 +3744,7 @@ msgstr "グループ"
 #: app/controllers/mypage_controller.rb:493
 #: app/controllers/feed_controller.rb:115
 #: app/controllers/user_layout_module.rb:9
-#: app/views/user/_join_groups_box.html.erb:2
+#: app/views/user/_join_groups_box.html.erb:3
 msgid "Groups Joined"
 msgstr "グループ"
 
@@ -7223,9 +7223,11 @@ msgstr "認証再設定トークン有効期限"
 
 #: app/models/user.rb:- app/views/user/show.html.erb:49
 #: app/views/portal/_registration_form.html.erb:24
-#: app/views/users/_user.html.erb:40 app/views/users/index.html.erb:9
+#: app/views/shared/_symbol_autocomplete_field.html.erb:10
+#: app/views/admin/users/import.html.erb:10 app/views/users/_user.html.erb:40
+#: app/views/users/index.html.erb:9
 msgid "User|Section"
-msgstr "部署"
+msgstr "所属"
 
 #: app/models/user.rb:-
 msgid "User|Status"
@@ -7833,7 +7835,7 @@ msgid "[Search Users]"
 msgstr "[ユーザを探す]"
 
 #: app/views/user/_postit_cloud.html.erb:5
-#: app/views/user/_follow_chains_box.html.erb:10
+#: app/views/user/_follow_chains_box.html.erb:11
 #: app/views/user/show.html.erb:95
 #: app/views/collaboration_app/_feeds.html.erb:14
 msgid "[See all]"
@@ -7912,7 +7914,7 @@ msgstr "[ページ先頭]"
 msgid "[Top]"
 msgstr "[最初へ]"
 
-#: app/views/user/_join_groups_box.html.erb:11
+#: app/views/user/_join_groups_box.html.erb:12
 msgid "[Total %{count} hit...see all]"
 msgid_plural "[Total %{count} hits...see all]"
 msgstr[0] "[全 %{count} 件...全てを見る]"

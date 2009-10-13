@@ -7,7 +7,7 @@
   <p>
   <input type="text" id="publication_name" style="background-color: #f0f0ff; border: none; color: blue;" disabled="disabled">
   <input type="button" value="追加" id="btn_add_publication_symbol"><br/>
-  <p><%= _("((Enter in \"uid:Nickname\" or \"gid:Group Name\" format when you want to specify directly. Partial match search is also available for name and department. e.g. Yamada, administration)") %></p>
+  <p><%= _("(Enter in \"uid:Nickname\" or \"gid:Group Name\" format when you want to specify directly. Partial match search is also available for name and %s. e.g. Yamada, administration)") % s_('User|Section') %></p>
 </div>
 
 <% content_for :javascript_initializers do -%>
