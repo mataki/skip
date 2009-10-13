@@ -525,14 +525,13 @@ describe MypageController, 'mypage > manage(管理) 関連' do
       assigns[:menu].should == "manage_email"
       assigns[:user].should == @user
       AppliedEmail.find_by_id(assigns(:applied_email).id).should_not be_nil
-      ActionMailer::Base.deliveries.first.body.should match(/http:\/\/test\.host\/mypage\/update_email\/.*/m)
+      ActionMailer::Base.deliveries.size.should == 1
     end
   end
 
   describe MypageController, "POST #apply_ident_url" do
     before do
       @user = user_login
-      ActionMailer::Base.deliveries.clear
       SkipEmbedded::InitialSettings.stub!("[]").with('login_mode').and_return('rp')
       SkipEmbedded::InitialSettings.stub!("[]").with('fixed_op_url').and_return(nil)
       SkipEmbedded::InitialSettings.stub!("[]").with('password_edit_setting').and_return(true)

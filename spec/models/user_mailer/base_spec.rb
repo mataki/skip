@@ -13,12 +13,14 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-require File.dirname(__FILE__) + '/../spec_helper'
+require File.dirname(__FILE__) + '/../../spec_helper'
 
-describe UserMailer, "#smtp_settings" do
+describe UserMailer::Base, "#smtp_settings" do
   before(:all) do
     Admin::Setting.stub!(:mail_function_setting).and_return(true)
+    @before_method = ActionMailer::Base.delivery_method
     @before_errors = ActionMailer::Base.raise_delivery_errors
+    ActionMailer::Base.delivery_method = :smtp_failover_activerecord
     ActionMailer::Base.raise_delivery_errors = true
   end
   before do
@@ -32,7 +34,7 @@ describe UserMailer, "#smtp_settings" do
     @smtp.stub!(:start).and_yield(@smtp)
   end
   it "Net::SMTPメソッドでDBの内容を利用して送信すること" do
-    @smtp.should_receive(:start).with("domain", "user_name", "password", :login).and_yield(@smtp)
+    @smtp.should_receive(:start).with("domain", "user_name", "password", :login, nil).and_yield(@smtp)
     UserMailer::Smtp.deliver_sent_forgot_password("test@test.com", "password")
   end
   after(:all) do
