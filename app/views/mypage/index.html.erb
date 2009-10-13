@@ -22,7 +22,6 @@
     <% end -%>
     <%= render :partial => 'rss_feed_box' %>
     <%= render :partial => 'recent_group_box', :locals => {:recent_groups => @recent_groups} %>
-    <%= render :partial => 'recent_user_box', :locals => {:recent_users => @recent_users} %>
   </div>
 
   <%# ============================================================ -%>
@@ -92,6 +91,22 @@
         </div>
       <% end -%>
       </div>
+    <% end -%>
+
+    <%# ============================================================ -%>
+    <%#  main area recent users -%>
+    <%# ============================================================ -%>
+    <% if @recent_users.size > 0 -%>
+    <%= show_title_bar("user_suit", _("Recent Users")) %>
+    <div class="topix_body">
+      <% @recent_users.each do |user| -%>
+        <div class="topix_line">
+          <div class="title">
+            <%= h(user.section) %> - <%= user_link_to(user) %> <%= link_to('[' + _('Create introductions') + ']', {:controller => 'user', :action => 'new_chain' }) unless current_user.follow_chains.map(&:to_user_id).include? user.id %>
+          </div>
+        </div>
+      <% end -%>
+    </div>
     <% end -%>
   </div>
   <br style="clear: right;"/>

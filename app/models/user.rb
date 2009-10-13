@@ -57,6 +57,14 @@ class User < ActiveRecord::Base
   validates_format_of :email, :message =>_('requires proper format.'), :with => Authentication.email_regex
   validates_uniqueness_of :email, :case_sensitive => false
 
+  named_scope :recent, proc { |day_count|
+    { :conditions => ['created_on > ?', Time.now.ago(day_count.to_i.day)] }
+  }
+
+  named_scope :order_recent, proc { { :order => 'created_on DESC' } }
+
+  named_scope :limit, proc { |num| { :limit => num } }
+
   N_('User|Old password')
   N_('User|Password')
   N_('User|Password confirmation')
