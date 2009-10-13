@@ -2875,7 +2875,7 @@ msgstr "記事の公開範囲によらず全体公開のブログとして新し
 
 #: app/views/user/_action_box.html.erb:8
 msgid "Create introductions"
-msgstr "紹介文を作る"
+msgstr "みんなに紹介する"
 
 #: app/views/antenna/_select_antenna.html.erb:40
 msgid "Create new anntenna and add: "
@@ -5391,7 +5391,7 @@ msgstr "みんなからの質問!"
 
 #: app/views/mypage/_recent_user_box.html.erb:3
 msgid "Recent Users"
-msgstr "最近登録のユーザ"
+msgstr "新着ユーザ"
 
 #: app/views/group/show.html.erb:97
 msgid "Recent posts in the groups joined"
