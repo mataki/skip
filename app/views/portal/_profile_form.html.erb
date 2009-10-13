@@ -57,8 +57,10 @@
     var toggleAppendableSelect =  function(elem) {
         if ($j(elem).val() != "") {
             $j("select[name='"+elem.name+"']").attr("disabled", true);
+            elem.name = $j.data(elem, "real_name");
         } else {
             $j("select[name='"+elem.name+"']").attr("disabled", false);
+            elem.name = "_";
         };
     };
 
@@ -70,6 +72,7 @@
         toggleAppendableSelect(this);
     })
     .each(function(){
+        $j.data(this, "real_name", this.name);
         toggleAppendableSelect(this);
     });
 <% end -%>
