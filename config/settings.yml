@@ -42,7 +42,7 @@ contact_addr:
 help_url:
   format: url
   allow_blank: true
-  default: http://help.skippas.jp/                         # ヘルプのURL
+  default: http://help.skipaas.jp/                         # ヘルプのURL
 login_account:
   default: ログインID                                      # ログインアカウントの名称
 footer_first:                                              # フッターの１行目（ヘルプ・規約へのリンクなどを推奨）
