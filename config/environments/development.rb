@@ -14,3 +14,5 @@ config.action_view.debug_rjs                         = true
 # ActionController::Base.relative_url_root = (ENV["RELATIVE_URL_ROOT"] || "")
 
 config.logger = Logger.new(config.log_path, 10, 10.megabytes)
+
+config.action_mailer.delivery_method = :test

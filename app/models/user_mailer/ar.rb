@@ -14,7 +14,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class UserMailer::AR < UserMailer::Base
-  self.delivery_method = Admin::Setting.mail_function_setting ? :activerecord : :test
+  self.delivery_method = :activerecord unless self.delivery_method == :test
 
   def sent_contact(recipient, user_name, entry_url, entry)
     if recipient.include? ","

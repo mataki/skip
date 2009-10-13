@@ -17,3 +17,4 @@ config.action_controller.perform_caching             = true
 
 # ActionController::Base.relative_url_root = "/"
 
+config.action_mailer.delivery_method = :smtp_failover_activerecord

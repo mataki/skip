@@ -16,3 +16,5 @@ config.action_controller.perform_caching             = false
 config.action_controller.allow_forgery_protection = false
 
 config.logger = Logger.new(config.log_path, 10, 10.megabytes)
+
+config.action_mailer.delivery_method = :test

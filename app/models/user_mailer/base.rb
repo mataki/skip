@@ -14,7 +14,6 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class UserMailer::Base < ActionMailer::Base
-  self.delivery_method = Admin::Setting.mail_function_setting ? :smtp_failover_activerecord : :test
   helper :initial_settings
   helper :user_mailer
 
