@@ -1,3 +1,4 @@
+<% unless user.follow_chains.empty? -%>
 <div class="box_space">
   <div class="box_space_title"><%= icon_tag('user_suit') %><%= _('About Users') %></div>
   <div class="box_space_body">
@@ -9,3 +10,4 @@
   </div>
   <div class="box_space_bottom"><%= link_to _('[See all]'), :action => 'social', :menu => 'social_chain_against', :uid => user.uid %></div>
 </div><!-- box_space -->
+<% end -%>

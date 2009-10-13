@@ -1,3 +1,4 @@
+<% unless user.groups.participating(user).empty? -%>
 <div class="box_space" id="groups">
   <div class="box_space_title"><%= icon_tag('group') %><%= _('Groups Joined') %></div>
   <div class="box_space_body">
@@ -10,3 +11,4 @@
   </div>
   <div class="box_space_bottom"><%= link_to n_("[Total %{count} hit...see all]", "[Total %{count} hits...see all]",groups.count) % {:count => groups.count}, :action => 'group', :uid => user.uid %></div>
 </div><!-- box_space -->
+<% end -%>
