@@ -96,7 +96,7 @@ describe BoardEntriesHelper, '#write_place_name' do
         @owner = mock_model(Group, :name => 'グループ', :gid => SkipFaker.rand_char)
       end
       it '「グループのフォーラム」という文言が返却されること' do
-        helper.write_place_name(@owner).should == "BBS of #{h @owner.name}"
+        helper.write_place_name(@owner).should == "Forums of #{h @owner.name}"
       end
     end
     describe 'ownerの型が不明な場合' do
