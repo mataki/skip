@@ -45,6 +45,12 @@ class Group < ActiveRecord::Base
 
   named_scope :limit, proc { |num| { :limit => num } }
 
+  named_scope :recent, proc { |day_count|
+    { :conditions => ['created_on > ?', Time.now.ago(day_count.to_i.day)] }
+  }
+
+  named_scope :order_recent, proc { { :order => 'created_on DESC' } }
+
   alias initialize_old initialize
 
   def initialize(attributes = nil)

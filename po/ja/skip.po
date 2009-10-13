@@ -5377,7 +5377,7 @@ msgstr "最新のフォーラムの記事（%{category}）"
 
 #: app/views/mypage/_recent_group_box.html.erb:3
 msgid "Recent Groups"
-msgstr "最近のグループ"
+msgstr "新着グループ"
 
 #: app/controllers/mypage_controller.rb:746
 #: app/controllers/feed_controller.rb:71

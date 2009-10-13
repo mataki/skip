@@ -51,7 +51,7 @@ class MypageController < ApplicationController
     # ============================================================
     @year, @month, @day = parse_date
     @entry_count_hash = get_entry_count(@year, @month)
-    @recent_groups =  Group.active.all(:order=>"created_on DESC", :conditions=>["created_on > ?" ,Date.today-recent_day], :limit => 10)
+    @recent_groups =  Group.active.recent(recent_day).order_recent.limit(5).all
     @recent_users = User.recent(recent_day).order_recent.limit(5).all
 
     # ============================================================

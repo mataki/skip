@@ -21,7 +21,6 @@
     </div>
     <% end -%>
     <%= render :partial => 'rss_feed_box' %>
-    <%= render :partial => 'recent_group_box', :locals => {:recent_groups => @recent_groups} %>
   </div>
 
   <%# ============================================================ -%>
@@ -103,6 +102,22 @@
         <div class="topix_line">
           <div class="title">
             <%= h(user.section) %> - <%= user_link_to(user) %> <%= link_to('[' + _('Create introductions') + ']', {:controller => 'user', :action => 'new_chain' }) unless current_user.follow_chains.map(&:to_user_id).include? user.id %>
+          </div>
+        </div>
+      <% end -%>
+    </div>
+    <% end -%>
+
+    <%# ============================================================ -%>
+    <%#  main area recent groups -%>
+    <%# ============================================================ -%>
+    <% if @recent_groups.size > 0 -%>
+    <%= show_title_bar("group", _("Recent Groups")) %>
+    <div class="topix_body">
+      <% @recent_groups.each do |group| -%>
+        <div class="topix_line">
+          <div class="title">
+            <%= h(group.group_category.name) %> - <%= group_link_to(group) %>
           </div>
         </div>
       <% end -%>
