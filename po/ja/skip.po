@@ -6725,7 +6725,7 @@ msgstr "アップロード"
 
 #: app/views/group/show.html.erb:49 app/views/mypage/_action_box.html.erb:8
 msgid "Upload a file"
-msgstr "ファイルをアップする"
+msgstr "ファイルをアップ"
 
 #: app/models/quota_validation.rb:13
 msgid "Upload denied due to excess of assigned shared files disk capacity."
