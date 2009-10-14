@@ -17,6 +17,38 @@ Given /^ログインIDが"(.*)"でパスワードが"(.*)"のあるユーザを�
   @user = create_user(id,password)
 end
 
+Given /^"([^\"]*)"がユーザ登録する$/ do |user_id|
+  create_user(user_id, 'Password1')
+end
+
+Given /^"([^\"]*)"が退職する$/ do |user_id|
+  u = User.find_by_uid(user_id)
+  u.status = "RETIRED"
+  u.save
+end
+
+Given /^あるユーザはロックされている$/ do
+  @user.locked = true
+  @user.save
+end
+
+Given /^ログアウトする$/ do
+  visit logout_path
+end
+
+Given /^"(.*)"でログインする$/ do |user_name|
+  if @login_user
+    if @login_user.name != user_name
+      Given "ログアウトする"
+      @login_user = perform_login(user_name)
+    else
+      Given %!"マイページ"にアクセスする!
+    end
+  else
+    @login_user = perform_login(user_name)
+  end
+end
+
 def create_user(id, password)
   uid = UserUid.find_by_uid(id)
   uid.destroy if uid
@@ -29,7 +61,12 @@ def create_user(id, password)
   u
 end
 
-Given /^あるユーザはロックされている$/ do
-  @user.locked = true
-  @user.save
+def perform_login(user_name)
+  user = User.find_by_name(user_name)
+  Given %!"ログインページ"にアクセスする!
+  Given %!"#{"ログインID"}"に"#{user.email}"と入力する!
+  Given %!"#{"パスワード"}"に"#{"Password1"}"と入力する!
+  Given %!"#{"ログイン"}"ボタンをクリックする!
+  user
 end
+

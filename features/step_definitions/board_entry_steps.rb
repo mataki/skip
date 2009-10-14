@@ -25,6 +25,7 @@ Given /^以下のブログを書く:$/ do |entries_table|
     Given %!"タグ"に"#{hash[:tag]}"と入力する!
     Given %!"#{"editor_mode_hiki"}"を選択する!
     Given %!"#{"contents_hiki"}"に"#{"test"}"と入力する!
+    Given %!"#{hash[:publication_type]}"を選択する!  if hash[:publication_type]
     Given %!"#{"作成"}"ボタンをクリックする!
     entry = BoardEntry.last
     @entries << { :id => entry.id, :uid => entry.symbol.split(":").last }
