@@ -35,6 +35,19 @@ class ShareFile < ActiveRecord::Base
   validates_presence_of :user_id
   validates_uniqueness_of :file_name, :scope => :owner_symbol, :message =>_('File with the same name already uploaded.')
 
+  named_scope :owned, proc { |owner|
+    { :conditions => ['owner_symbol = ?', owner.symbol] }
+  }
+
+  # TODO 回帰テストを書く
+  named_scope :accessible, proc { |user|
+    condition = "publication_type = 'public'"
+    condition << " OR owner_symbol = :owner_symbol"
+    condition << " OR share_file_publications.symbol IN (:publication_symbols)"
+    { :conditions => [condition, { :owner_symbol => user.symbol, :publication_symbols => user.belong_symbols }],
+      :include => [:share_file_publications] }
+  }
+
   def after_initialize
     if self.publication_type.blank?
       self.publication_type =

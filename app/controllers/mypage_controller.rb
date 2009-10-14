@@ -486,9 +486,9 @@ class MypageController < ApplicationController
 
     @tab_menu_source = [ {:label => _('Home'), :options => {:action => 'index'}, :selected_actions => %w(index entries entries_by_date entries_by_antenna)},
                          {:label => _('Profile'), :options => {:action => 'profile'}},
-                         {:label => _('Blog'), :options => {:action => 'blog'}},
-                         {:label => _('Shared Files'), :options => {:action => 'share_file'}} ]
+                         {:label => _('Blog'), :options => {:action => 'blog'}} ]
 
+    @tab_menu_source << {:label => _('Shared Files'), :options => {:action => 'share_file'}} unless ShareFile.owned(current_user).empty?
     @tab_menu_source << {:label => _('Socials'), :options => {:action => 'social'}} unless current_user.against_chains.empty?
     @tab_menu_source << {:label => _('Groups Joined'), :options => {:action => 'group'}} unless current_user.groups.participating(current_user).empty?
     @tab_menu_source << {:label => _('Bookmarks'), :options => {:action => 'bookmark'}} unless current_user.bookmark_comments.empty?
