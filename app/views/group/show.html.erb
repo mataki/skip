@@ -43,14 +43,17 @@
   <div class="box_space_title"></div>
   <div class="box_space_body">
     <ul>
-      <% unless @participation -%>
+      <% if @participation -%>
+        <li><%= link_to(content_tag('span', _('New Posts')), {:controller => 'group', :action => 'new'}, :class => 'rounded') %></li>
+        <% url_hash = {:controller => '/share_file', :action => :new, :owner_symbol => h(@group.symbol), :owner_name => h(@group.name)} -%>
+        <li><%= link_to(content_tag('span', _('Upload a file')), url_hash, :title => _('Upload a file'), :class => 'rounded', :onclick => "sub_window_open('#{url_for(url_hash)}', 'subwindow', 550, 400); return false;") %></li>
+        <% unless @participation.owned? -%>
+          <li><%= link_to(content_tag('span', _('Leave the group')), {:action => 'leave'}, {:confirm => _('Are you sure leave the group?'), :method => :post, :class => "rounded"}) %></li>
+        <% end %>
+      <% else -%>
         <li><%= link_to(content_tag('span', _('Join this group')), {:action=>"new_participation"}, {:class => "nyroModal rounded"}) -%></li>
       <% end -%>
-      <li><%= link_to(content_tag('span', _('New Posts')), {:controller => 'group', :action => 'new'}, :class => 'rounded') if current_user.participating_group?(@group) %></li>
       <li><%= link_to(content_tag('span', _('Add to antenna')), {:controller => "antenna", :action => "select_antenna", :symbol => @group.symbol, :dummy => '.html'}, {:class => "nyroModal rounded"}) %></li>
-      <% if @participation && !@participation.owned? -%>
-        <li><%= link_to(content_tag('span', _('Leave the group')), {:action => 'leave'}, {:confirm => _('Are you sure leave the group?'), :method => :post, :class => "rounded"}) %></li>
-      <% end %>
     </ul>
   </div>
   </div><!-- box_space -->

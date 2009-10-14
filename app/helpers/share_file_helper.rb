@@ -19,16 +19,10 @@ module ShareFileHelper
     (share_file.owner_symbol.split(":").first == "uid") ? _("Owner Only") : _("Members Only")
   end
 
-  def generate_new_upload_menu owner_symbol, owner_name
-    url = url_for :controller =>"share_file", :action => "new", :owner_symbol => owner_symbol, :owner_name => owner_name
-    dummy_link_to _('New Upload'), :onclick => "#{open_sub_window_script url}"
-
-  end
-
   def generate_file_menu(share_file, owner_name = "")
     output = ""
     url = url_for :controller => "share_file", :action => "edit", :id => share_file.id, :owner_name => owner_name
-    output << dummy_link_to(_('[Edit]'), :onclick => "#{open_sub_window_script url}")
+    output << dummy_link_to(_('[Edit]'), :onclick => "sub_window_open('#{url}', 'subwindow', 550, 400)")
     output << link_to(_('[Delete]'), { :controller=>'share_file', :action=>'destroy', :id=>share_file.id }, :confirm => _('Are you sure to delete?'), :method => :post)
   end
 
@@ -37,10 +31,5 @@ module ShareFileHelper
     output << link_to(_('[Get download history in CSV]'), { :controller => "share_file", :action => "download_history_as_csv", :id => share_file.id }, :method => :post)
     output << "<a href=\"#\" id=\"clear_download_history_link_#{share_file.id}\" class=\"clear_download_history_link\">" + _('[Clear download history]') + "</a>"
     output
-  end
-
-private
-  def open_sub_window_script url
-    "sub_window = window.open('#{url}', 'subwindow', 'width=550,height=400,resizable=yes,scrollbars=yes');sub_window.focus();"
   end
 end

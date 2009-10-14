@@ -16,15 +16,6 @@
 <% content_for :contents_left do -%>
   <%= hidden_field_tag("authenticity_token", form_authenticity_token) %>
 
-  <% if @visitor_is_uploader -%>
-  <div class="box_space">
-    <div class="box_space_title"><%= _("Menu")%></div>
-    <div class="box_space_body">
-      <%= icon_tag 'disk' %> <%= generate_new_upload_menu @owner_symbol, @owner_name %>
-    </div>
-  </div><!-- box_space -->
-  <% end -%>
-
   <% form_tag({:action => 'list'}, {:id => :sharefile_search_form, :method => :get}) do %>
   <div class="box_space">
     <div class="box_space_title"><%= icon_tag 'find' %><%= _('Search')%></div>
