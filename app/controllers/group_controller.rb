@@ -368,7 +368,7 @@ private
   end
 
   def tab_menu_source
-    group_tab_menu_source @participation
+    group_tab_menu_source @group
   end
 
   def tab_menu_option

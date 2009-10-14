@@ -51,6 +51,10 @@ class Group < ActiveRecord::Base
 
   named_scope :order_recent, proc { { :order => 'created_on DESC' } }
 
+  named_scope :owned, proc { |user|
+    {:conditions => ["group_participations.user_id = ? AND group_participations.owned = 1", user.id], :include => :group_participations}
+  }
+
   alias initialize_old initialize
 
   def initialize(attributes = nil)
@@ -237,7 +241,7 @@ class Group < ActiveRecord::Base
   end
 
   def administrator?(user)
-    group_participations. find_by_user_id_and_waiting_and_owned(user.id, false, true) ? true : false
+    Group.owned(user).map(&:id).include?(self.id)
   end
 
   def self.synchronize_groups ago = nil

@@ -163,7 +163,7 @@ class ShareFileController < ApplicationController
     @participation = @owner_obj.group_participations.find_by_user_id(current_user.id) unless @owner_obj.is_a?(User)
     @main_menu = @owner_obj.is_a?(User) ? user_main_menu(@owner_obj) : _('Groups')
     @title = @owner_obj.is_a?(User) ? user_title(@owner_obj) : @owner_obj.name
-    @tab_menu_source = @owner_obj.is_a?(User) ? user_tab_menu_source(@owner_obj) : group_tab_menu_source(@participation)
+    @tab_menu_source = @owner_obj.is_a?(User) ? user_tab_menu_source(@owner_obj) : group_tab_menu_source(@owner_obj)
     @tab_menu_option = @owner_obj.is_a?(User) ? user_menu_option(@owner_obj) : { :gid => @owner_obj.gid }
 
     @owner_name = @owner_obj.name
