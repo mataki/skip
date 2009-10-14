@@ -406,7 +406,6 @@ describe ShareFileController, "GET #list" do
         assigns[:categories].should == @categories
         assigns[:pages].should == @pages
         assigns[:share_files].should == @share_files
-        assigns[:visitor_is_uploader].should == true
       end
       it { response.should render_template("list") }
     end
@@ -426,7 +425,6 @@ describe ShareFileController, "GET #list" do
         assigns[:categories].should == @categories
         assigns[:pages].should == @pages
         assigns[:share_files].should == @share_files
-        assigns[:visitor_is_uploader].should == false
       end
       it { response.should render_template("list") }
     end
@@ -437,7 +435,6 @@ describe ShareFileController, "GET #list" do
       controller.stub(:group_tab_menu_source).and_return(@mock_group_tab_menu_source = mock('mock_group_tab_menu_source'))
       Group.stub(:find_by_gid).with("a_group").and_return(@group = mock_model(Group, :symbol => 'group:a_group', :name => "対象グループ", :gid => "a_group"))
       @group.stub_chain(:group_participations, :find_by_user_id).and_return(@participation = mock('participation'))
-      @user.stub(:participating_group?).with(@group).and_return(@visitor_is_uploader = mock('visitor_is_uploader'))
       ShareFile.stub(:get_tags).with(@group.symbol).and_return(@categories = mock('categories'))
       get :list, :gid => "a_group"
     end
@@ -452,7 +449,6 @@ describe ShareFileController, "GET #list" do
       assigns[:pages].should == @pages
       assigns[:share_files].should == @share_files
       assigns[:participation].should == @participation
-      assigns[:visitor_is_uploader].should == @visitor_is_uploader
     end
     it { response.should render_template("list") }
   end
