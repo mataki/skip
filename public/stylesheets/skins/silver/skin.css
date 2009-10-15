@@ -6,7 +6,7 @@ div#main {
   background-image: url("./back.png"); /* image */
 }
 div#panel {
-  border: 1px solid #4a4a4a; /* color:1 */
+  border: 1px solid #9c9c9c; /* color:1 */
 }
 div#side ul {
   border-bottom: 1px solid #4a4a4a; /* color:1 */

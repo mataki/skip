@@ -1,5 +1,4 @@
 <% content_for :stylesheet do -%>
-  <%= skip_stylesheet_link_tag "themes/cupertino/ui.theme.css" %>
   <%= skip_stylesheet_link_tag "themes/cupertino/ui.tabs.css" %>
 <% end -%>
 
@@ -31,7 +30,7 @@
     <%#  main area top messages -%>
     <%# ============================================================ -%>
     <% if (@message_array.size > 0) or (@waiting_groups.size > 0) or (@system_messages.size > 0) -%>
-    <div class="top_info system_message">
+    <div class="top_info system_message ui-corner-all">
       <% @system_messages.each do |message| -%>
       <div class="item">
         <%= link_to(icon_tag(message[:icon]) + h(message[:text]), message[:option]) %>
@@ -51,7 +50,7 @@
     <% end -%>
 
     <% if (@important_your_messages.size > 0) %>
-    <div class="top_info important_message">
+    <div class="top_info important_message ui-corner-all">
       <% @important_your_messages.each do |entry| %>
         <div class="item"><%= entry_link_to(entry, {:view_text=>get_light_icon(entry) + h(entry.title)}) %></div>
       <% end %>
