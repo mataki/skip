@@ -1,11 +1,3 @@
-<div style="text-align: right; margin-bottom: 3px;  background-color: #f0e0d0; border: 1px solid silver; padding: 0 5px;">
-<% form_tag({ :controller => :bookmark, :action => :edit, :title => '' }, {:id => 'bookmark_form'}) do -%>
-  <%= label_tag("url", _('URL')) + "：" + text_field_tag("url", "", :size => 50) + submit_tag(_("Bookmark this"), :id => "add_bookmark_button") %>
-  <%= link_to _('[Handy usage of bookmarklet]'), :controller => "bookmarks", :action => "setup" %>
-  <%= hidden_field_tag "authenticity_token", form_authenticity_token %>
-<% end -%>
-</div>
-
 <div class="search_cond_space">
 <% form_tag({:action => 'index'}, :method => 'get') do -%>
   <table class="search_cond_box">

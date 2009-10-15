@@ -33,8 +33,7 @@ private
   def setup_layout
     @main_menu = @title = _('Bookmarks')
 
-    @tab_menu_source = [ {:label => _('Search for Bookmarks'), :options => {:action => 'index'}},
-                         {:label => _('Bookmarklet'), :options => {:action => 'setup'}} ]
+    @tab_menu_source = [ {:label => _('Search for Bookmarks'), :options => {:action => 'index'}} ]
   end
 
   def get_order_query(params_order)

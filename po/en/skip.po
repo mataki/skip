@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-10-15 12:24+0900\n"
+"POT-Creation-Date: 2009-10-15 14:06+0900\n"
 "PO-Revision-Date: 2009-06-29 13:31+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -351,77 +351,13 @@ msgstr ""
 msgid "... and BBS posts ..."
 msgstr "... and forum posts ..."
 
-#: app/views/bookmarks/setup.html.erb:71
-msgid ""
-"...Enable your browser toolbar by selecting [View]-[Toolbars]-[Bookmarks "
-"Toolbar] from your browser menu if it is not shown."
-msgstr ""
-
-#: app/views/bookmarks/setup.html.erb:54
-msgid ""
-"...Enable your browser toolbar by selecting [View]-[Toolbars]-[Navigation "
-"Toolbar] from your browser menu if it is not shown."
-msgstr ""
-
 #: app/controllers/admin/application_controller.rb:40
 msgid "0 file size detected."
-msgstr ""
-
-#: app/views/bookmarks/setup.html.erb:68
-msgid ""
-"1. Drag the link <b>&quot;Add as %s bookmark&quot;</b> above and drop on the "
-"browser toolbar."
-msgstr ""
-
-#: app/views/bookmarks/setup.html.erb:79
-msgid ""
-"1. Proceed to your favorite page and click &quot;Add as %s bookmark&quot; in "
-"the toolbar."
-msgstr ""
-
-#: app/views/bookmarks/setup.html.erb:49
-msgid ""
-"1. Right click on the link <b>&quot;Add as %s bookmark&quot;</b> above and "
-"select &quot;Add to Favorites&quot; in the menu."
-msgstr ""
-
-#: app/views/bookmarks/setup.html.erb:69
-msgid "2. &quot;Add as %s bookmark&quot; button will appear on the toolbar."
-msgstr ""
-
-#: app/views/bookmarks/setup.html.erb:50
-msgid ""
-"2. If a security warning pops up, select &quot;<b>Yes</b>&quot;. (This is a "
-"safe operation)"
-msgstr ""
-
-#: app/views/bookmarks/setup.html.erb:80
-msgid "2. It moves to the %s bookmark registration page."
-msgstr ""
-
-#: app/views/bookmarks/setup.html.erb:51
-msgid ""
-"3. Click &quot;<b>Folder</b> button in the &quot;Add to Favorites&quot; "
-"screen, select &quot;<b>Links</b>&quot; and click &quot;OK&quot;."
-msgstr ""
-
-#: app/views/bookmarks/setup.html.erb:81
-msgid "3. Fill in the necessary items and click &quot;OK&quot;."
 msgstr ""
 
 #: app/views/portal/_registration_form.html.erb:43
 msgid ""
 "4 or more letters required. You can use alphabets, numbers, \"-\" and \"_\"."
-msgstr ""
-
-#: app/views/bookmarks/setup.html.erb:52
-msgid "4. &quot;Add as %s Bookmark&quot; will appear on the toolbar."
-msgstr ""
-
-#: app/views/bookmarks/setup.html.erb:82
-msgid ""
-"4. Click &quot;OK&quot; when the message says the bookmark has been created. "
-"It returns to the starting page."
 msgstr ""
 
 #: app/views/user/_portrait_box.html.erb:8
@@ -583,7 +519,8 @@ msgstr ""
 msgid "Add an antenna"
 msgstr ""
 
-#: app/views/bookmarks/setup.html.erb:44 app/views/bookmarks/setup.html.erb:63
+#: app/views/bookmark/new_url.html.erb:22
+#: app/views/bookmark/new_url.html.erb:24
 msgid "Add as %s bookmark"
 msgstr ""
 
@@ -1882,7 +1819,7 @@ msgstr ""
 "required to login again (same if you do it with your own account)."
 
 #: app/controllers/services_controller.rb:42
-#: app/views/bookmarks/index.html.erb:23 app/views/groups/index.html.erb:14
+#: app/views/bookmarks/index.html.erb:15 app/views/groups/index.html.erb:14
 msgid "All"
 msgstr ""
 
@@ -2320,7 +2257,7 @@ msgid "Bookmark created."
 msgstr ""
 
 #: app/views/entries/_entry_detail.html.erb:223
-#: app/views/bookmarks/index.html.erb:3 app/views/bookmark/new.html.erb:2
+#: app/views/bookmark/new.html.erb:2
 msgid "Bookmark this"
 msgstr ""
 
@@ -2402,29 +2339,8 @@ msgid ""
 "(The title will be open to all users regardless of the permission of entry)"
 msgstr ""
 
-#: app/controllers/bookmarks_controller.rb:37
+#: app/views/bookmark/new_url.html.erb:20
 msgid "Bookmarklet"
-msgstr ""
-
-#: app/views/bookmarks/setup.html.erb:30
-msgid ""
-"Bookmarklet is a tool making use of bookmark (or favorites) function of your "
-"browser to help you with kinds of browser operations.<br/><br/>\n"
-"\n"
-"While site URLs are registered as usual bookmarks,  JavaScript program codes "
-"are registered as bookmarklets.<br/><br/>\n"
-"\n"
-"By clicking the bookmark while viewing a page, the bookmarklet is kicked and "
-"takes various actions according to the codes of the bookmarklet.<br/><br/>\n"
-"\n"
-"Here we introduce a bookmarklet to utilize the bookmark functions of this "
-"site.<br/>\n"
-"\n"
-"You will find it amazingly convenient once you registered it in your browser "
-"so don't miss it!<br/>\n"
-"\n"
-"(It requires under a minute to register it to your browser and you only need "
-"to do it once!)"
 msgstr ""
 
 #: app/helpers/admin/application_helper.rb:39
@@ -2966,7 +2882,7 @@ msgstr ""
 msgid "Display Format"
 msgstr ""
 
-#: app/views/user/group.html.erb:26 app/views/bookmarks/index.html.erb:17
+#: app/views/user/group.html.erb:26 app/views/bookmarks/index.html.erb:9
 #: app/views/share_file/list.html.erb:30
 #: app/views/search/share_file_search.html.erb:9
 #: app/views/users/index.html.erb:15
@@ -3145,6 +3061,10 @@ msgstr ""
 msgid "Enter %{name} in a valid date format."
 msgstr ""
 
+#: app/views/bookmark/new_url.html.erb:3
+msgid "Enter a URL bellow and click the Next button."
+msgstr ""
+
 #: app/models/user_profile_master.rb:255
 #: app/views/portal/_registration_form.html.erb:32
 msgid "Enter here if you cannot find the value in the options"
@@ -3177,7 +3097,7 @@ msgid "Entered email address %s has not been registered in the site."
 msgstr ""
 
 #: app/controllers/search_controller.rb:23
-#: app/views/bookmarks/index.html.erb:25 app/views/bookmark/list.html.erb:17
+#: app/views/bookmarks/index.html.erb:17 app/views/bookmark/list.html.erb:17
 #: config/environment.rb:69
 msgid "Entries"
 msgstr ""
@@ -3769,18 +3689,6 @@ msgstr ""
 msgid "Hometown"
 msgstr ""
 
-#: app/views/bookmarks/setup.html.erb:76
-msgid "How to use bookmarklet \"Bookmark in %s\""
-msgstr ""
-
-#: app/views/bookmarks/setup.html.erb:59
-msgid "How to use with Firefox"
-msgstr ""
-
-#: app/views/bookmarks/setup.html.erb:40
-msgid "How to use with Internet Explorer 6"
-msgstr ""
-
 #: app/views/admin/users/import.html.erb:30
 msgid "Human Resources"
 msgstr ""
@@ -3866,7 +3774,7 @@ msgstr ""
 msgid "Internal error(s) occured. Contact administrator."
 msgstr ""
 
-#: app/views/bookmarks/index.html.erb:26 app/views/bookmark/list.html.erb:18
+#: app/views/bookmarks/index.html.erb:18 app/views/bookmark/list.html.erb:18
 #: lib/skip_default_data.rb:59
 msgid "Internet"
 msgstr ""
@@ -4552,7 +4460,7 @@ msgstr ""
 msgid "News"
 msgstr ""
 
-#: app/views/bookmark/new_url.html.erb:11
+#: app/views/bookmark/new_url.html.erb:10
 msgid "Next"
 msgstr ""
 
@@ -5457,7 +5365,7 @@ msgstr ""
 
 #: app/views/entries/_search_box.html.erb:7
 #: app/views/entries/_search_box.html.erb:11 app/views/user/group.html.erb:34
-#: app/views/user/group.html.erb:37 app/views/bookmarks/index.html.erb:31
+#: app/views/user/group.html.erb:37 app/views/bookmarks/index.html.erb:23
 #: app/views/group/users.html.erb:17 app/views/groups/index.html.erb:36
 #: app/views/shared/_header.html.erb:30
 #: app/views/mypage/_record_post.html.erb:5
@@ -5474,7 +5382,7 @@ msgstr ""
 msgid "Search Conditions"
 msgstr ""
 
-#: app/views/bookmarks/index.html.erb:21
+#: app/views/bookmarks/index.html.erb:13
 #: app/views/search/entry_search.html.erb:9
 msgid "Search Range"
 msgstr ""
@@ -5899,10 +5807,6 @@ msgstr ""
 
 #: app/views/monta/monta.html.erb:3
 msgid "Slide Show: %s"
-msgstr ""
-
-#: app/views/bookmarks/setup.html.erb:84
-msgid "So you have the page bookmarked in %s."
 msgstr ""
 
 #: app/controllers/mypage_controller.rb:492
@@ -6335,12 +6239,8 @@ msgstr ""
 msgid "Timeout while loading rss."
 msgstr ""
 
-#: app/views/bookmarks/setup.html.erb:24
-msgid "Tips for using bookmarklet"
-msgstr ""
-
 #: app/views/board_entries/_form.html.erb:39
-#: app/views/bookmarks/index.html.erb:13
+#: app/views/bookmarks/index.html.erb:5
 #: app/views/mypage/_record_mail.html.erb:28
 #: app/views/mypage/_record_post.html.erb:45
 #: app/views/bookmark/new.html.erb:27 app/views/rankings/data.html.erb:10
@@ -6448,8 +6348,7 @@ msgstr ""
 msgid "Types"
 msgstr ""
 
-#: app/views/bookmarks/index.html.erb:3 app/views/bookmark/new_url.html.erb:7
-#: app/views/bookmark/new.html.erb:18
+#: app/views/bookmark/new_url.html.erb:9 app/views/bookmark/new.html.erb:18
 msgid "URL"
 msgstr ""
 
@@ -6463,7 +6362,7 @@ msgstr ""
 msgid "URL not bookmarked by anyone."
 msgstr ""
 
-#: app/views/bookmarks/index.html.erb:48
+#: app/views/bookmarks/index.html.erb:40
 msgid "URL to be bookmarked must start with \"http\"."
 msgstr ""
 
@@ -6876,7 +6775,7 @@ msgstr ""
 #: app/controllers/users_controller.rb:71
 #: app/controllers/services_controller.rb:45
 #: app/controllers/user_layout_module.rb:20
-#: app/views/bookmarks/index.html.erb:24 app/views/bookmark/list.html.erb:16
+#: app/views/bookmarks/index.html.erb:16 app/views/bookmark/list.html.erb:16
 #: config/environment.rb:81
 msgid "Users"
 msgstr ""
@@ -7132,10 +7031,6 @@ msgstr ""
 msgid "What is Antenna"
 msgstr ""
 
-#: app/views/bookmarks/setup.html.erb:28
-msgid "What is a bookmarklet?"
-msgstr ""
-
 #: app/views/share_file/_form.html.erb:24
 msgid "Where to Save"
 msgstr ""
@@ -7330,12 +7225,6 @@ msgstr ""
 msgid "You recieved a comment on your entry [?]!"
 msgstr ""
 
-#: app/views/bookmarks/setup.html.erb:85
-msgid ""
-"You will find your bookmarks when you click on \"My Bookmarks\" located in "
-"the right sidebar in %s."
-msgstr ""
-
 #: app/models/antenna.rb:132
 msgid "Your Groups"
 msgstr ""
@@ -7500,10 +7389,6 @@ msgstr ""
 
 #: app/models/share_file.rb:260 app/models/board_entry.rb:386
 msgid "[Group members only]"
-msgstr ""
-
-#: app/views/bookmarks/index.html.erb:4
-msgid "[Handy usage of bookmarklet]"
 msgstr ""
 
 #: app/helpers/application_helper.rb:43 app/helpers/application_helper.rb:56
@@ -7893,7 +7778,7 @@ msgstr ""
 msgid "incorrect."
 msgstr ""
 
-#: app/models/bookmark.rb:130
+#: app/models/bookmark.rb:122
 msgid "invalid url"
 msgstr ""
 
