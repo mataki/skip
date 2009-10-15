@@ -40,19 +40,6 @@ Feature: ブックマークの管理
     And     URLが"http://test.host/%27%3Cscript%3Ealert(1)%3C/script%3E%27"で文字列が"タイトル2"のリンクが存在すること
     And     "シングルクオート"と表示されていること
 
-  Scenario: ブックマーク一覧(全体)ページからブックマークを登録する
-    Given  "全体からのブックマーク検索画面"にアクセスする
-
-    When   "url"に"http://test.host/"と入力する
-    And    "ブックマークする"ボタンをクリックする
-    Then   "ブックマークコメント"と表示されること
-
-    When   "タイトル"に"Vim"と入力する
-    And    "タグ"に"ruby,rails"と入力する
-    And    "コメント"に"キーボード"と入力する
-    And    "保存"ボタンをクリックする
-    Then    "success"と表示されること
-
   Scenario: ブックマークの詳細画面を表示する
   Scenario: ブッマークの編集をする
   Scenario: ブックマークを削除する
