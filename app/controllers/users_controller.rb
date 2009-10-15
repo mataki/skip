@@ -69,8 +69,6 @@ class UsersController < ApplicationController
 private
   def setup_layout
     @main_menu = @title = _('Users')
-
-    @tab_menu_source = [ {:label => _('Search users'), :options => {:action => 'index'}} ]
   end
 end
 

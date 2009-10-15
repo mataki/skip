@@ -65,7 +65,5 @@ class GroupsController < ApplicationController
 private
   def setup_layout
     @main_menu = @title = _('Groups')
-
-    @tab_menu_source = [ {:label => _('Search for groups'), :options => {:action => 'index'}} ]
   end
 end

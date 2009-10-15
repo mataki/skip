@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-10-15 14:06+0900\n"
+"POT-Creation-Date: 2009-10-15 14:25+0900\n"
 "PO-Revision-Date: 2009-08-07 16:09+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -419,7 +419,7 @@ msgstr "アクセス数："
 msgid "Access Log"
 msgstr "アクセス履歴"
 
-#: app/controllers/search_controller.rb:110
+#: app/controllers/search_controller.rb:108
 msgid "Access denied by search node. Please contact system owner."
 msgstr ""
 "検索エンジンにアクセスできませんでした。システム管理者に連絡してください。"
@@ -3393,7 +3393,7 @@ msgid "Filename"
 msgstr "ファイル名"
 
 #: app/controllers/services_controller.rb:47
-#: app/controllers/search_controller.rb:65 app/views/share_file/new.html.erb:9
+#: app/controllers/search_controller.rb:64 app/views/share_file/new.html.erb:9
 #: app/views/share_file/edit.html.erb:9 config/environment.rb:75
 msgid "Files"
 msgstr "ファイル"
@@ -3450,7 +3450,7 @@ msgstr "金"
 msgid "From others"
 msgstr "みんなの情報"
 
-#: app/controllers/search_controller.rb:95
+#: app/controllers/search_controller.rb:93
 #: app/views/search/full_text_search.html.erb:14
 msgid "Full-text Search"
 msgstr "全文検索"
@@ -4592,7 +4592,7 @@ msgstr "該当するブックマークはありませんでした。"
 msgid "No matching bookmarks found."
 msgstr "該当するブックマークはありませんでした。"
 
-#: app/controllers/search_controller.rb:56
+#: app/controllers/search_controller.rb:55
 msgid "No matching data found."
 msgstr "該当するデータはありませんでした。"
 
@@ -4609,7 +4609,7 @@ msgstr "該当するグループはありませんでした。"
 msgid "No matching results found."
 msgstr "該当する検索結果がありませんでした。"
 
-#: app/controllers/search_controller.rb:86
+#: app/controllers/search_controller.rb:84
 #: app/controllers/share_file_controller.rb:185
 msgid "No matching shared files found."
 msgstr "該当する共有ファイルはありませんでした。"
@@ -5025,7 +5025,7 @@ msgstr "スポーツ"
 msgid "Please input OpenID URL."
 msgstr "OpenID URLを入力してください。"
 
-#: app/controllers/search_controller.rb:109
+#: app/controllers/search_controller.rb:107
 #: app/views/shared/_header.html.erb:1
 msgid "Please input search query."
 msgstr "検索したいキーワードを入力してください"
@@ -5515,22 +5515,6 @@ msgstr "1000 件以上の検索結果は表示しておりません "
 msgid "Search entries."
 msgstr "ブログやフォーラムの記事を探します"
 
-#: app/controllers/bookmarks_controller.rb:36
-msgid "Search for Bookmarks"
-msgstr "ブックマークを探す"
-
-#: app/controllers/search_controller.rb:24
-msgid "Search for Entries"
-msgstr "記事を探す"
-
-#: app/controllers/search_controller.rb:66
-msgid "Search for Files"
-msgstr "ファイルを探す"
-
-#: app/controllers/groups_controller.rb:69
-msgid "Search for groups"
-msgstr "グループを探す"
-
 #: app/views/search/full_text_search.html.erb:20
 msgid "Search from %s&nbsp;"
 msgstr "%sから検索&nbsp;"
@@ -5550,10 +5534,6 @@ msgstr "<b>%s</b> の検索結果"
 #: config/environment.rb:77
 msgid "Search share files."
 msgstr "ユーザやグループで共有しているファイルを探します"
-
-#: app/controllers/users_controller.rb:73
-msgid "Search users"
-msgstr "ユーザを探す"
 
 #: config/environment.rb:83
 msgid "Search users."
@@ -6301,7 +6281,7 @@ msgstr "現在紹介文はありません。"
 msgid "There are no pages you can see because of the publicity limits."
 msgstr "閲覧制限のため、あなたが見られるページはありませんでした。"
 
-#: app/controllers/search_controller.rb:88
+#: app/controllers/search_controller.rb:86
 msgid "There are no shared files uploaded."
 msgstr "現在共有されているファイルはありません。"
 
