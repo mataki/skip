@@ -4,6 +4,28 @@
 @import skip_embedded/skip_embedded.sass
 @import rounded_button.sass
 
+div#header
+  :border-bottom none
+
+div#global_links_wrapper
+  :border-bottom = !base_border
+  :padding-top 5px
+  :padding-bottom 5px
+  div#global_links
+    :margin-left 30px
+    a
+      :color #03c
+      :font
+        :size 16px
+        :weight bold
+      &:hover
+        :color #f60
+        :text-decoration none
+    span.home_link
+      :margin-right 90px
+    span.search_links
+      :margin-right 30px
+
 // jquery.ui.tabsでタブ折り返し時にliがulをはみ出してしまう対策
 // ------------------------------------------------------------
 ul.ui-tabs-nav

@@ -35,8 +35,10 @@
   <% end -%>
   <% end %>
 </div><!-- header -->
-<div id="global_links">
-  <%= global_links if current_user && current_user.active? %>
+<div id="global_links_wrapper">
+  <div id="global_links">
+    <%= global_links if current_user && current_user.active? %>
+  </div>
 </div>
 
 <% if current_user && current_user.custom.always_show_shortcut -%>
