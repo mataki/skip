@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-10-15 14:25+0900\n"
+"POT-Creation-Date: 2009-10-15 17:18+0900\n"
 "PO-Revision-Date: 2009-08-07 16:09+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2095,10 +2095,6 @@ msgstr "%sのフォーラム"
 msgid "Back"
 msgstr "戻る"
 
-#: config/environment.rb:65
-msgid "Back to mypage."
-msgstr "自分用のトップページに戻ります"
-
 #: app/views/admin/images/index.html.erb:15
 msgid "Background image of log in screen."
 msgstr "ログイン画面の背景画像"
@@ -2383,12 +2379,13 @@ msgstr ""
 msgid "Bookmarklet"
 msgstr "ブックマークレット"
 
+#: app/helpers/application_helper.rb:378
 #: app/helpers/admin/application_helper.rb:39
 #: app/controllers/mypage_controller.rb:494
 #: app/controllers/services_controller.rb:44
 #: app/controllers/user_layout_module.rb:11
 #: app/controllers/bookmark_controller.rb:112
-#: app/controllers/bookmarks_controller.rb:34 config/environment.rb:93
+#: app/controllers/bookmarks_controller.rb:34
 msgid "Bookmarks"
 msgstr "ブックマーク"
 
@@ -2429,7 +2426,7 @@ msgstr "CSVファイル"
 msgid "CSV file needs to be encoded in UTF-8."
 msgstr "CSVファイルの文字コードはUTF-8にしてアップロードするようにして下さい。"
 
-#: app/views/mypage/_manage_customize.html.erb:58
+#: app/views/mypage/_manage_customize.html.erb:52
 msgid "Calendar display of Mypage"
 msgstr "マイページでのカレンダーの表示"
 
@@ -2511,7 +2508,7 @@ msgstr "紹介された人"
 msgid "Chain|Updated on"
 msgstr "更新日時"
 
-#: app/views/mypage/_manage_customize.html.erb:70
+#: app/views/mypage/_manage_customize.html.erb:64
 msgid "Change"
 msgstr "変更"
 
@@ -2555,10 +2552,6 @@ msgstr ""
 #: app/views/admin/shared/_sortable_table.html.erb:20
 msgid "Check all/Uncheck all"
 msgstr "全てチェックする/全て解除する"
-
-#: app/views/mypage/_manage_customize.html.erb:27
-msgid "Classic (Right side gloval menu)"
-msgstr "クラシック(右側サイドメニュー)"
 
 #: app/views/mypage/welcome.html.erb:38
 msgid "Click here to change profile picutre ... "
@@ -2865,7 +2858,7 @@ msgstr "既定のメール"
 msgid "Default Privacy Settings"
 msgstr "既定の公開範囲"
 
-#: app/views/mypage/_manage_customize.html.erb:64
+#: app/views/mypage/_manage_customize.html.erb:58
 msgid "Default entry edit mode"
 msgstr "既定の記事編集方法"
 
@@ -3164,9 +3157,9 @@ msgstr "以下のフォームにOpenIDのURLを入力してください。"
 msgid "Entered email address %s has not been registered in the site."
 msgstr "入力された%sというメールアドレスは登録されていません。"
 
+#: app/helpers/application_helper.rb:374
 #: app/controllers/search_controller.rb:23
 #: app/views/bookmarks/index.html.erb:17 app/views/bookmark/list.html.erb:17
-#: config/environment.rb:69
 msgid "Entries"
 msgstr "記事"
 
@@ -3174,7 +3167,7 @@ msgstr "記事"
 msgid "Entries bookmarked by yourself"
 msgstr "あなたがブックマークした記事"
 
-#: app/views/mypage/_manage_customize.html.erb:52
+#: app/views/mypage/_manage_customize.html.erb:46
 msgid "Entries display format of Mypage"
 msgstr "マイページでの公開記事の表示方法"
 
@@ -3392,9 +3385,10 @@ msgstr "名が同一のファイルが既に登録されています"
 msgid "Filename"
 msgstr "ファイル名"
 
+#: app/helpers/application_helper.rb:375
 #: app/controllers/services_controller.rb:47
 #: app/controllers/search_controller.rb:64 app/views/share_file/new.html.erb:9
-#: app/views/share_file/edit.html.erb:9 config/environment.rb:75
+#: app/views/share_file/edit.html.erb:9
 msgid "Files"
 msgstr "ファイル"
 
@@ -3623,12 +3617,13 @@ msgstr "いいえ"
 msgid "GroupParticipation|Waiting|true"
 msgstr "はい"
 
+#: app/helpers/application_helper.rb:377
 #: app/helpers/admin/application_helper.rb:37
 #: app/controllers/groups_controller.rb:67
 #: app/controllers/services_controller.rb:46
 #: app/controllers/group_controller.rb:363
 #: app/controllers/share_file_controller.rb:164
-#: app/controllers/edit_controller.rb:275 config/environment.rb:87
+#: app/controllers/edit_controller.rb:275
 msgid "Groups"
 msgstr "グループ"
 
@@ -3721,7 +3716,7 @@ msgid ""
 "Here you can manage admin privilages and force users to leave the group."
 msgstr "この画面では、管理者の権限設定、強制退会が可能です。"
 
-#: app/views/mypage/_manage_customize.html.erb:49
+#: app/views/mypage/_manage_customize.html.erb:43
 msgid "Hide Shortcut"
 msgstr "ショートカットを表示しない"
 
@@ -3729,7 +3724,7 @@ msgstr "ショートカットを表示しない"
 msgid "Hide Time"
 msgstr "時刻は表示しない"
 
-#: app/views/mypage/_manage_customize.html.erb:61
+#: app/views/mypage/_manage_customize.html.erb:55
 msgid "Hide calendar"
 msgstr "カレンダーを表示しない"
 
@@ -3750,6 +3745,7 @@ msgstr "記事履歴"
 msgid "Hobbies"
 msgstr "趣味"
 
+#: app/helpers/application_helper.rb:371
 #: app/controllers/mypage_controller.rb:487
 #: app/controllers/user_layout_module.rb:14
 msgid "Home"
@@ -4445,7 +4441,7 @@ msgstr "マイブログ"
 
 #: app/controllers/mypage_controller.rb:485
 #: app/controllers/user_layout_module.rb:20
-#: app/controllers/user_layout_module.rb:24 config/environment.rb:63
+#: app/controllers/user_layout_module.rb:24
 msgid "My Page"
 msgstr "マイページ"
 
@@ -5198,7 +5194,8 @@ msgstr "人気ブログランキング(コメント）"
 msgid "Ranking of Popular Users"
 msgstr "人気ユーザランキング"
 
-#: app/controllers/rankings_controller.rb:156 config/environment.rb:99
+#: app/helpers/application_helper.rb:380
+#: app/controllers/rankings_controller.rb:156
 msgid "Rankings"
 msgstr "ランキング"
 
@@ -5322,8 +5319,8 @@ msgstr "ユーザ登録して%sの利用を開始する"
 msgid "Registered Users"
 msgstr "登録ユーザ数"
 
-#: app/views/layouts/layout.html.erb:63
-#: app/views/layouts/admin/application.html.erb:63
+#: app/views/layouts/layout.html.erb:62
+#: app/views/layouts/admin/application.html.erb:61
 msgid "Registered Users: %s users"
 msgstr "登録ユーザ数：%s人"
 
@@ -5439,7 +5436,7 @@ msgid "Revise"
 msgstr "修正"
 
 #: app/views/board_entries/_edit_contents.html.erb:10
-#: app/views/mypage/_manage_customize.html.erb:66
+#: app/views/mypage/_manage_customize.html.erb:60
 msgid "Rich Text"
 msgstr "リッチテキスト"
 
@@ -5503,25 +5500,17 @@ msgstr "検索範囲"
 msgid "Search Result Pages: "
 msgstr "検索結果ページ:"
 
-#: config/environment.rb:95
-msgid "Search bookmarks."
-msgstr "共有しているブックマーク(URL)を探します"
-
 #: app/views/search/_full_text_search.html.erb:19
 msgid "Search does not show more than 1000 search results."
 msgstr "1000 件以上の検索結果は表示しておりません "
-
-#: config/environment.rb:71
-msgid "Search entries."
-msgstr "ブログやフォーラムの記事を探します"
 
 #: app/views/search/full_text_search.html.erb:20
 msgid "Search from %s&nbsp;"
 msgstr "%sから検索&nbsp;"
 
-#: config/environment.rb:89
-msgid "Search groups."
-msgstr "他のユーザが作ったグループを探します"
+#: app/helpers/application_helper.rb:372
+msgid "Search from all"
+msgstr "全体から探す"
 
 #: app/views/search/full_text_search.html.erb:15
 msgid "Search in Internet"
@@ -5531,14 +5520,6 @@ msgstr "インターネット検索"
 msgid "Search result of <b>%s</b>"
 msgstr "<b>%s</b> の検索結果"
 
-#: config/environment.rb:77
-msgid "Search share files."
-msgstr "ユーザやグループで共有しているファイルを探します"
-
-#: config/environment.rb:83
-msgid "Search users."
-msgstr "利用中のユーザや紹介文を探します"
-
 #: app/views/admin/_search_box.html.erb:5
 msgid "Searching from %{target}"
 msgstr "%{target}から検索を行ないます"
@@ -5547,8 +5528,8 @@ msgstr "%{target}から検索を行ないます"
 msgid "Searching..."
 msgstr "検索しています…"
 
-#: app/views/layouts/layout.html.erb:67
-#: app/views/layouts/admin/application.html.erb:67
+#: app/views/layouts/layout.html.erb:66
+#: app/views/layouts/admin/application.html.erb:65
 msgid "See Statistics"
 msgstr "統計を見る"
 
@@ -5743,7 +5724,7 @@ msgstr "ファイル関連"
 msgid "Shopping"
 msgstr "ショッピング"
 
-#: app/views/mypage/_manage_customize.html.erb:46
+#: app/views/mypage/_manage_customize.html.erb:40
 msgid "Shortcut"
 msgstr "ショートカット"
 
@@ -5757,11 +5738,11 @@ msgstr "詳細"
 msgid "Show Option"
 msgstr "[オプションを表示]"
 
-#: app/views/mypage/_manage_customize.html.erb:48
+#: app/views/mypage/_manage_customize.html.erb:42
 msgid "Show Shortcut"
 msgstr "ショートカットを表示する"
 
-#: app/views/mypage/_manage_customize.html.erb:60
+#: app/views/mypage/_manage_customize.html.erb:54
 msgid "Show calendar"
 msgstr "カレンダーを表示する"
 
@@ -5769,7 +5750,7 @@ msgstr "カレンダーを表示する"
 msgid "Show current image"
 msgstr "現在の画像を表示"
 
-#: app/views/mypage/_manage_customize.html.erb:55
+#: app/views/mypage/_manage_customize.html.erb:49
 msgid "Show flat"
 msgstr "並べて表示"
 
@@ -5777,11 +5758,7 @@ msgstr "並べて表示"
 msgid "Show groups you have not joined only."
 msgstr "まだ参加していないグループのみ表示"
 
-#: config/environment.rb:101
-msgid "Show ranking and site infomation."
-msgstr "ランキング情報と統計情報を見ます"
-
-#: app/views/mypage/_manage_customize.html.erb:54
+#: app/views/mypage/_manage_customize.html.erb:48
 msgid "Show tabs"
 msgstr "タブで表示"
 
@@ -6001,10 +5978,6 @@ msgstr "指定の話題のリンクを削除しました"
 msgid "Specify Directly"
 msgstr "直接指定"
 
-#: app/views/mypage/_manage_customize.html.erb:26
-msgid "Standerd (Top gloval menu)"
-msgstr "スタンダード(上部グローバルメニュー)"
-
 #: app/views/groups/_favorite.html.erb:3 app/views/bookmark/_stared.html.erb:3
 msgid "Star"
 msgstr "スターを付ける"
@@ -6032,10 +6005,6 @@ msgstr "停止"
 #: lib/skip_default_data.rb:23
 msgid "Story"
 msgstr "ネタ"
-
-#: app/views/mypage/_manage_customize.html.erb:24
-msgid "Style"
-msgstr "スタイル"
 
 #: app/views/share_file/new.html.erb:30
 msgid "Submit"
@@ -6265,7 +6234,7 @@ msgstr ""
 msgid "The titles are shared among all users so be careful upon updating."
 msgstr "タイトルは全ユーザ共通です。修正の際はご注意ください。"
 
-#: app/views/mypage/_manage_customize.html.erb:30
+#: app/views/mypage/_manage_customize.html.erb:24
 msgid "Themes"
 msgstr "テーマ"
 
@@ -6383,8 +6352,8 @@ msgstr "利用開始待ち"
 msgid "Today's Access"
 msgstr "本日のアクセス数"
 
-#: app/views/layouts/layout.html.erb:64
-#: app/views/layouts/admin/application.html.erb:64
+#: app/views/layouts/layout.html.erb:63
+#: app/views/layouts/admin/application.html.erb:62
 msgid "Today's Access: %s access"
 msgstr "本日のアクセス数：%s人"
 
@@ -6392,11 +6361,11 @@ msgstr "本日のアクセス数：%s人"
 msgid "Today's Entries"
 msgstr "本日の記事数"
 
-#: app/views/layouts/layout.html.erb:66
+#: app/views/layouts/layout.html.erb:65
 msgid "Today's Entries: %s entries"
 msgstr "本日の記事数：%s件"
 
-#: app/views/layouts/admin/application.html.erb:66
+#: app/views/layouts/admin/application.html.erb:64
 msgid "Today's Posts: %s posts"
 msgstr "本日の記事数：%s件"
 
@@ -6425,8 +6394,8 @@ msgstr "全%{items}件（%{page}/%{pages}ページ）"
 msgid "Total Entries"
 msgstr "総記事件数"
 
-#: app/views/layouts/layout.html.erb:65
-#: app/views/layouts/admin/application.html.erb:65
+#: app/views/layouts/layout.html.erb:64
+#: app/views/layouts/admin/application.html.erb:63
 msgid "Total Entries: %s entries"
 msgstr "総記事件数：%s件"
 
@@ -6701,10 +6670,6 @@ msgid "UserCustom|Always show shortcut"
 msgstr ""
 
 #: app/models/user_custom.rb:-
-msgid "UserCustom|Classic"
-msgstr "クラシック"
-
-#: app/models/user_custom.rb:-
 msgid "UserCustom|Display calendar"
 msgstr ""
 
@@ -6900,12 +6865,12 @@ msgstr "タイプ"
 msgid "UserUid|User"
 msgstr "ユーザ"
 
+#: app/helpers/application_helper.rb:376
 #: app/helpers/admin/application_helper.rb:35
 #: app/controllers/users_controller.rb:71
 #: app/controllers/services_controller.rb:45
 #: app/controllers/user_layout_module.rb:20
 #: app/views/bookmarks/index.html.erb:16 app/views/bookmark/list.html.erb:16
-#: config/environment.rb:81
 msgid "Users"
 msgstr "ユーザ"
 
@@ -7170,7 +7135,7 @@ msgid "Where to Save"
 msgstr "保存場所"
 
 #: app/views/board_entries/_edit_contents.html.erb:11
-#: app/views/mypage/_manage_customize.html.erb:67
+#: app/views/mypage/_manage_customize.html.erb:61
 msgid "Wiki text"
 msgstr "Wikiテキスト"
 

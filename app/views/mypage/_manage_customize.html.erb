@@ -21,12 +21,6 @@
   <% form_for @user_custom, :url => {:action => 'update_customize'} do |f| -%>
     <%= error_messages_for :user_custom %>
 
-    <h2 class="subtitle"><%= _('Style') %></h2>
-    <div style="margin: 10px;">
-      <%= f.radio_button(:classic, false) %><%= f.label :classic_false, _('Standerd (Top gloval menu)') %><br/>
-      <%= f.radio_button(:classic, true) %><%= f.label :classic_true, _('Classic (Right side gloval menu)') %><br/>
-    </div>
-
     <h2 class="subtitle"><%= _('Themes')%></h2>
     <% skins_path = File.join(RAILS_ROOT, "public", "stylesheets", "skins")
      Dir.glob(File.join(skins_path, "*")).each do |skins_dir|

@@ -34,8 +34,10 @@
     $j('input#full_text_query').labeledTextField(<%= {:message => search_label}.to_json %>);
   <% end -%>
   <% end %>
-
 </div><!-- header -->
+<div id="global_links">
+  <%= global_links if current_user && current_user.active? %>
+</div>
 
 <% if current_user && current_user.custom.always_show_shortcut -%>
 <div id="global_shortcut">

@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-10-15 14:25+0900\n"
+"POT-Creation-Date: 2009-10-15 17:18+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1937,10 +1937,6 @@ msgstr ""
 msgid "Back"
 msgstr ""
 
-#: config/environment.rb:65
-msgid "Back to mypage."
-msgstr ""
-
 #: app/views/admin/images/index.html.erb:15
 msgid "Background image of log in screen."
 msgstr ""
@@ -2222,12 +2218,13 @@ msgstr ""
 msgid "Bookmarklet"
 msgstr ""
 
+#: app/helpers/application_helper.rb:378
 #: app/helpers/admin/application_helper.rb:39
 #: app/controllers/mypage_controller.rb:494
 #: app/controllers/services_controller.rb:44
 #: app/controllers/user_layout_module.rb:11
 #: app/controllers/bookmark_controller.rb:112
-#: app/controllers/bookmarks_controller.rb:34 config/environment.rb:93
+#: app/controllers/bookmarks_controller.rb:34
 msgid "Bookmarks"
 msgstr ""
 
@@ -2268,7 +2265,7 @@ msgstr ""
 msgid "CSV file needs to be encoded in UTF-8."
 msgstr ""
 
-#: app/views/mypage/_manage_customize.html.erb:58
+#: app/views/mypage/_manage_customize.html.erb:52
 msgid "Calendar display of Mypage"
 msgstr ""
 
@@ -2349,7 +2346,7 @@ msgstr ""
 msgid "Chain|Updated on"
 msgstr ""
 
-#: app/views/mypage/_manage_customize.html.erb:70
+#: app/views/mypage/_manage_customize.html.erb:64
 msgid "Change"
 msgstr ""
 
@@ -2390,10 +2387,6 @@ msgstr ""
 
 #: app/views/admin/shared/_sortable_table.html.erb:20
 msgid "Check all/Uncheck all"
-msgstr ""
-
-#: app/views/mypage/_manage_customize.html.erb:27
-msgid "Classic (Right side gloval menu)"
 msgstr ""
 
 #: app/views/mypage/welcome.html.erb:38
@@ -2687,7 +2680,7 @@ msgstr ""
 msgid "Default Privacy Settings"
 msgstr ""
 
-#: app/views/mypage/_manage_customize.html.erb:64
+#: app/views/mypage/_manage_customize.html.erb:58
 msgid "Default entry edit mode"
 msgstr ""
 
@@ -2973,9 +2966,9 @@ msgstr ""
 msgid "Entered email address %s has not been registered in the site."
 msgstr ""
 
+#: app/helpers/application_helper.rb:374
 #: app/controllers/search_controller.rb:23
 #: app/views/bookmarks/index.html.erb:17 app/views/bookmark/list.html.erb:17
-#: config/environment.rb:69
 msgid "Entries"
 msgstr ""
 
@@ -2983,7 +2976,7 @@ msgstr ""
 msgid "Entries bookmarked by yourself"
 msgstr ""
 
-#: app/views/mypage/_manage_customize.html.erb:52
+#: app/views/mypage/_manage_customize.html.erb:46
 msgid "Entries display format of Mypage"
 msgstr ""
 
@@ -3199,9 +3192,10 @@ msgstr ""
 msgid "Filename"
 msgstr ""
 
+#: app/helpers/application_helper.rb:375
 #: app/controllers/services_controller.rb:47
 #: app/controllers/search_controller.rb:64 app/views/share_file/new.html.erb:9
-#: app/views/share_file/edit.html.erb:9 config/environment.rb:75
+#: app/views/share_file/edit.html.erb:9
 msgid "Files"
 msgstr ""
 
@@ -3430,12 +3424,13 @@ msgstr ""
 msgid "GroupParticipation|Waiting|true"
 msgstr ""
 
+#: app/helpers/application_helper.rb:377
 #: app/helpers/admin/application_helper.rb:37
 #: app/controllers/groups_controller.rb:67
 #: app/controllers/services_controller.rb:46
 #: app/controllers/group_controller.rb:363
 #: app/controllers/share_file_controller.rb:164
-#: app/controllers/edit_controller.rb:275 config/environment.rb:87
+#: app/controllers/edit_controller.rb:275
 msgid "Groups"
 msgstr ""
 
@@ -3528,7 +3523,7 @@ msgid ""
 "Here you can manage admin privilages and force users to leave the group."
 msgstr ""
 
-#: app/views/mypage/_manage_customize.html.erb:49
+#: app/views/mypage/_manage_customize.html.erb:43
 msgid "Hide Shortcut"
 msgstr ""
 
@@ -3536,7 +3531,7 @@ msgstr ""
 msgid "Hide Time"
 msgstr ""
 
-#: app/views/mypage/_manage_customize.html.erb:61
+#: app/views/mypage/_manage_customize.html.erb:55
 msgid "Hide calendar"
 msgstr ""
 
@@ -3557,6 +3552,7 @@ msgstr ""
 msgid "Hobbies"
 msgstr ""
 
+#: app/helpers/application_helper.rb:371
 #: app/controllers/mypage_controller.rb:487
 #: app/controllers/user_layout_module.rb:14
 msgid "Home"
@@ -4228,7 +4224,7 @@ msgstr ""
 
 #: app/controllers/mypage_controller.rb:485
 #: app/controllers/user_layout_module.rb:20
-#: app/controllers/user_layout_module.rb:24 config/environment.rb:63
+#: app/controllers/user_layout_module.rb:24
 msgid "My Page"
 msgstr ""
 
@@ -4969,7 +4965,8 @@ msgstr ""
 msgid "Ranking of Popular Users"
 msgstr ""
 
-#: app/controllers/rankings_controller.rb:156 config/environment.rb:99
+#: app/helpers/application_helper.rb:380
+#: app/controllers/rankings_controller.rb:156
 msgid "Rankings"
 msgstr ""
 
@@ -5091,8 +5088,8 @@ msgstr ""
 msgid "Registered Users"
 msgstr ""
 
-#: app/views/layouts/layout.html.erb:63
-#: app/views/layouts/admin/application.html.erb:63
+#: app/views/layouts/layout.html.erb:62
+#: app/views/layouts/admin/application.html.erb:61
 msgid "Registered Users: %s users"
 msgstr ""
 
@@ -5202,7 +5199,7 @@ msgid "Revise"
 msgstr ""
 
 #: app/views/board_entries/_edit_contents.html.erb:10
-#: app/views/mypage/_manage_customize.html.erb:66
+#: app/views/mypage/_manage_customize.html.erb:60
 msgid "Rich Text"
 msgstr ""
 
@@ -5266,24 +5263,16 @@ msgstr ""
 msgid "Search Result Pages: "
 msgstr ""
 
-#: config/environment.rb:95
-msgid "Search bookmarks."
-msgstr ""
-
 #: app/views/search/_full_text_search.html.erb:19
 msgid "Search does not show more than 1000 search results."
-msgstr ""
-
-#: config/environment.rb:71
-msgid "Search entries."
 msgstr ""
 
 #: app/views/search/full_text_search.html.erb:20
 msgid "Search from %s&nbsp;"
 msgstr ""
 
-#: config/environment.rb:89
-msgid "Search groups."
+#: app/helpers/application_helper.rb:372
+msgid "Search from all"
 msgstr ""
 
 #: app/views/search/full_text_search.html.erb:15
@@ -5294,14 +5283,6 @@ msgstr ""
 msgid "Search result of <b>%s</b>"
 msgstr ""
 
-#: config/environment.rb:77
-msgid "Search share files."
-msgstr ""
-
-#: config/environment.rb:83
-msgid "Search users."
-msgstr ""
-
 #: app/views/admin/_search_box.html.erb:5
 msgid "Searching from %{target}"
 msgstr ""
@@ -5310,8 +5291,8 @@ msgstr ""
 msgid "Searching..."
 msgstr ""
 
-#: app/views/layouts/layout.html.erb:67
-#: app/views/layouts/admin/application.html.erb:67
+#: app/views/layouts/layout.html.erb:66
+#: app/views/layouts/admin/application.html.erb:65
 msgid "See Statistics"
 msgstr ""
 
@@ -5505,7 +5486,7 @@ msgstr ""
 msgid "Shopping"
 msgstr ""
 
-#: app/views/mypage/_manage_customize.html.erb:46
+#: app/views/mypage/_manage_customize.html.erb:40
 msgid "Shortcut"
 msgstr ""
 
@@ -5519,11 +5500,11 @@ msgstr ""
 msgid "Show Option"
 msgstr ""
 
-#: app/views/mypage/_manage_customize.html.erb:48
+#: app/views/mypage/_manage_customize.html.erb:42
 msgid "Show Shortcut"
 msgstr ""
 
-#: app/views/mypage/_manage_customize.html.erb:60
+#: app/views/mypage/_manage_customize.html.erb:54
 msgid "Show calendar"
 msgstr ""
 
@@ -5531,7 +5512,7 @@ msgstr ""
 msgid "Show current image"
 msgstr ""
 
-#: app/views/mypage/_manage_customize.html.erb:55
+#: app/views/mypage/_manage_customize.html.erb:49
 msgid "Show flat"
 msgstr ""
 
@@ -5539,11 +5520,7 @@ msgstr ""
 msgid "Show groups you have not joined only."
 msgstr ""
 
-#: config/environment.rb:101
-msgid "Show ranking and site infomation."
-msgstr ""
-
-#: app/views/mypage/_manage_customize.html.erb:54
+#: app/views/mypage/_manage_customize.html.erb:48
 msgid "Show tabs"
 msgstr ""
 
@@ -5752,10 +5729,6 @@ msgstr ""
 msgid "Specify Directly"
 msgstr ""
 
-#: app/views/mypage/_manage_customize.html.erb:26
-msgid "Standerd (Top gloval menu)"
-msgstr ""
-
 #: app/views/groups/_favorite.html.erb:3 app/views/bookmark/_stared.html.erb:3
 msgid "Star"
 msgstr ""
@@ -5782,10 +5755,6 @@ msgstr ""
 
 #: lib/skip_default_data.rb:23
 msgid "Story"
-msgstr ""
-
-#: app/views/mypage/_manage_customize.html.erb:24
-msgid "Style"
 msgstr ""
 
 #: app/views/share_file/new.html.erb:30
@@ -6003,7 +5972,7 @@ msgstr ""
 msgid "The titles are shared among all users so be careful upon updating."
 msgstr ""
 
-#: app/views/mypage/_manage_customize.html.erb:30
+#: app/views/mypage/_manage_customize.html.erb:24
 msgid "Themes"
 msgstr ""
 
@@ -6114,8 +6083,8 @@ msgstr ""
 msgid "Today's Access"
 msgstr ""
 
-#: app/views/layouts/layout.html.erb:64
-#: app/views/layouts/admin/application.html.erb:64
+#: app/views/layouts/layout.html.erb:63
+#: app/views/layouts/admin/application.html.erb:62
 msgid "Today's Access: %s access"
 msgstr ""
 
@@ -6123,11 +6092,11 @@ msgstr ""
 msgid "Today's Entries"
 msgstr ""
 
-#: app/views/layouts/layout.html.erb:66
+#: app/views/layouts/layout.html.erb:65
 msgid "Today's Entries: %s entries"
 msgstr ""
 
-#: app/views/layouts/admin/application.html.erb:66
+#: app/views/layouts/admin/application.html.erb:64
 msgid "Today's Posts: %s posts"
 msgstr ""
 
@@ -6156,8 +6125,8 @@ msgstr ""
 msgid "Total Entries"
 msgstr ""
 
-#: app/views/layouts/layout.html.erb:65
-#: app/views/layouts/admin/application.html.erb:65
+#: app/views/layouts/layout.html.erb:64
+#: app/views/layouts/admin/application.html.erb:63
 msgid "Total Entries: %s entries"
 msgstr ""
 
@@ -6427,10 +6396,6 @@ msgid "UserCustom|Always show shortcut"
 msgstr ""
 
 #: app/models/user_custom.rb:-
-msgid "UserCustom|Classic"
-msgstr ""
-
-#: app/models/user_custom.rb:-
 msgid "UserCustom|Display calendar"
 msgstr ""
 
@@ -6626,12 +6591,12 @@ msgstr ""
 msgid "UserUid|User"
 msgstr ""
 
+#: app/helpers/application_helper.rb:376
 #: app/helpers/admin/application_helper.rb:35
 #: app/controllers/users_controller.rb:71
 #: app/controllers/services_controller.rb:45
 #: app/controllers/user_layout_module.rb:20
 #: app/views/bookmarks/index.html.erb:16 app/views/bookmark/list.html.erb:16
-#: config/environment.rb:81
 msgid "Users"
 msgstr ""
 
@@ -6889,7 +6854,7 @@ msgid "Where to Save"
 msgstr ""
 
 #: app/views/board_entries/_edit_contents.html.erb:11
-#: app/views/mypage/_manage_customize.html.erb:67
+#: app/views/mypage/_manage_customize.html.erb:61
 msgid "Wiki text"
 msgstr ""
 

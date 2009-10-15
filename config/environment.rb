@@ -57,52 +57,6 @@ Rails::Initializer.run do |config|
   config.gem "maedana-ar_mailer", :lib => 'action_mailer/ar_mailer', :source => 'http://gemcutter.org'
 end
 
-menu_btns = [
-             { :img_name => "house",
-               :id => "btn_mypage",
-               :name => GetText.N_("My Page"),
-               :url => {:controller => '/mypage', :action => 'index'},
-               :desc => GetText.N_("Back to mypage.")},
-
-             { :img_name => "report",
-               :id => "btn_entries",
-               :name => GetText.N_("Entries"),
-               :url => {:controller => '/search', :action => 'entry_search' },
-               :desc => GetText.N_("Search entries.")},
-
-             { :img_name => "disk_multiple",
-               :id => "btn_share_files",
-               :name => GetText.N_("Files"),
-               :url => {:controller => '/search', :action => 'share_file_search' },
-               :desc => GetText.N_("Search share files.")},
-
-             { :img_name => "user_suit",
-               :id => "btn_users",
-               :name => GetText.N_("Users"),
-               :url => {:controller => '/users', :action => 'index'},
-               :desc => GetText.N_("Search users.")},
-
-             { :img_name => "group",
-               :id => "btn_groups",
-               :name => GetText.N_("Groups"),
-               :url => {:controller => '/groups', :action => 'index'},
-               :desc => GetText.N_("Search groups.")},
-
-             { :img_name => "tag_blue",
-               :id => "btn_bookmarks",
-               :name => GetText.N_("Bookmarks"),
-               :url => {:controller => '/bookmarks', :action => 'index'},
-               :desc => GetText.N_("Search bookmarks.")},
-
-             { :img_name => "chart_bar",
-               :id => "btn_rankings",
-               :name => GetText.N_("Rankings"),
-               :url => {:controller => '/rankings', :action => 'index'},
-               :desc => GetText.N_("Show ranking and site infomation.")}
-]
-
-MENU_BTNS = menu_btns
-
 # 共通メニュー
 common_menu_path = File.join(RAILS_ROOT, 'config', 'common_menus.yml')
 COMMON_MENUS = File.exist?(common_menu_path) ? YAML::load(File.open(File.join(RAILS_ROOT, 'config', 'common_menus.yml'))) : {}
