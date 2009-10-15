@@ -1,10 +1,9 @@
-<% messages ||= "" %>
 <% if @bookmark.is_type_user? -%>
 <%   @title = _('Bookmark this') -%>
 <%   desc = _('You can bookmark target users with tags and comments (They are viewable from the bookmark list)') %>
 <% else -%>
 <%   @title = _('Bookmark Comment') -%>
-<%   desc = _("You can put tags and comment on the bookmark.<br/>(It is recommended to bookmark users and entries in %s from the links within the respective pages.)") %  h(Admin::Setting.abbr_app_title)%>
+<%   desc = _("You can put tags and comment on the bookmark.<br/>(It is recommended to bookmark users and entries in %s from the links within the respective pages.)") % h(Admin::Setting.abbr_app_title) %>
 <% end -%>
 
 <div class="edit_form_space bookmark edit">
@@ -12,13 +11,15 @@
   <div class="update_form_wrapper">
     <div id="update_body"></div>
     <% form_tag({ :controller => :bookmark, :action => :update }, {:id => "update_form"}) do -%>
-      <%= hidden_field_tag 'layout', h(layout) -%>
-      <%= hidden_field 'bookmark', 'url', :value => @bookmark.escaped_url %>
+      <%= hidden_field_tag("authenticity_token", form_authenticity_token) %>
+      <%= hidden_field_tag("with_boomarklet", @bookmarklet) %>
       <table>
         <tr>
           <th><%= _('URL')%></th>
           <td>
-            <%= link_to truncate(@bookmark.escaped_url, :length => 60), @bookmark.escaped_url, :title => h(@bookmark.title), :target => '_blank' %><br/>
+            <%= hidden_field 'bookmark', 'url', :value => @bookmark.escaped_url %>
+            <%= link_to truncate(@bookmark.escaped_url, :length => 60), @bookmark.escaped_url, :title => h(@bookmark.title), :target => '_blank' %>
+            <br/>
             <span style="font-size: 10px; color: #555555;"><%= _('(Will open as a new window)')%></span>
           </td>
         </tr>
@@ -26,7 +27,7 @@
           <th><%= label :bookmark, :title, _('Title') %></th>
           <td>
             <span style="font-size: 15px; font-weight: bold;">
-            <% if @bookmark.is_type_internet? -%>
+            <% if @bookmark.new_record? || @bookmark.is_type_internet? -%>
               <%= text_field 'bookmark', 'title' -%>
               <span id="refresher"><%= icon_tag 'arrow_rotate_clockwise', :title => _("Reacquire the title") %></span>
               <span id="indicator" style="display:none;font-size:10px;"><%= skip_image_tag 'indicator.gif' %><%= _('Updating...')%></span>
@@ -75,9 +76,9 @@
 
 <% content_for :javascript_initializers do -%>
     var setupTagComplete = function() {
-        var userTags = new Array(<%= user_tags_array.map{|str| ("'#{str}'")}.join(',') %>);
-        var otherTags = new Array(<%= other_tags_array.map{|str| ("'#{str}'")}.join(',') %>);
-        var yourTags = new Array(<%= your_tags_array.map{|str| ("'#{str}'")}.join(',') %>);
+        var userTags = new Array(<%= @bookmark.user_tags.map{|str| ("'#{str}'")}.join(',') %>);
+        var otherTags = new Array(<%= @bookmark.other_tags.map{|str| ("'#{str}'")}.join(',') %>);
+        var yourTags = new Array(<%= @bookmark.your_tags(current_user).map{|str| ("'#{str}'")}.join(',') %>);
 
         $j('#user_tags_list').append(createTagsLink(userTags));
         $j('#other_tags_list').append(createTagsLink(otherTags));
@@ -89,20 +90,18 @@
     };
     setupTagComplete();
 
+    <% if @bookmarklet -%>
     // サブウィンドウ(ブックマークレット)でのブックマーク後の処理
     var complete = function() {
         alert('<%= _("Bookmark created.")%>');
         location.href = $j('#bookmark_url').val();
     };
-
-    $j.nyroModalSettings({
-        endShowContent: function(elts, settings) {
-            // ダイアログ(nyroModal)でのブックマーク後の処理
-            complete = function() {
-                location.reload();
-            };
-        }
-    });
+    <% else -%>
+    var complete = function() {
+        alert('<%= _("Bookmark created.")%>');
+        window.opener.location.reload();window.close();
+    };
+    <% end %>
 
     $j('#update_form')
     .submit(function(){
@@ -128,11 +127,11 @@
 
     $j('#refresher')
     .click(function() {
-        reloadTitle('<%= @bookmark.escaped_url %>', 'bookmark_title');
+        reloadTitle($j('#bookmark_url').val(), 'bookmark_title');
         return false;
     });
 
-    if ($j('#bookmark_title').val() == '') {
-        reloadTitle('<%= @bookmark.escaped_url %>', 'bookmark_title');
+    if ($j('#bookmark_url').val() == '') {
+        reloadTitle($j('#bookmark_url').val(), 'bookmark_title');
     }
 <% end -%>

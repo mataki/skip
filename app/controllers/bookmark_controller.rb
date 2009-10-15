@@ -18,41 +18,33 @@ class BookmarkController < ApplicationController
   include UserLayoutModule
   verify :method => :post, :only => [:update, :destroy, :ado_set_stared ], :redirect_to => { :action => :show }
 
-  before_filter :check_params, :only => [:new, :edit]
+  before_filter :check_params, :only => [:new, :new_without_bookmarklet]
   before_filter :load_user, :only => [:list]
 
   protect_from_forgery :except => [:new]
 
-  # ブックマークレット用
+  def new_url
+    render :layout => 'subwindow'
+  end
+
   def new
-    user_tags, other_tags, your_tags = prepare_bookmark params
-    @bookmarklet = true
-    render(:layout => 'subwindow', :partial => 'new',
-           :locals => {
-             :user_tags_array => user_tags,
-             :other_tags_array => other_tags,
-             :your_tags_array => your_tags,
-             :layout => "subwindow"
-           })
+    @bookmark = if url = params[:url]
+                  Bookmark.find_by_url Bookmark.unescaped_url(url)
+                end || Bookmark.new(:url => url, :title => SkipUtil.toutf8_without_ascii_encoding(params[:title]))
+    @bookmark_comment = unless @bookmark.new_record?
+                          @bookmark.bookmark_comments.find_by_user_id(current_user.id)
+                        end || BookmarkComment.new(:public => true)
+    render :new, :layout => 'subwindow'
   rescue Bookmark::InvalidMultiByteURIError => e
     flash[:error] = _('URL format invalid.')
     redirect_to root_url
   end
 
-  # ブックマーク更新画面の表示（存在しない場合は作成）
-  def edit
-    user_tags, other_tags, your_tags = prepare_bookmark params
-
-    render(:layout => 'dialog', :partial => 'new',
-           :locals => {
-             :user_tags_array => user_tags,
-             :other_tags_array => other_tags,
-             :your_tags_array => your_tags,
-             :layout => "dialog"
-           })
-  rescue Bookmark::InvalidMultiByteURIError => e
-    render :text => _('URL format invalid.')
+  def new_with_bookmarklet
+    @bookmarklet = true
+    new_without_bookmarklet
   end
+  alias_method_chain :new, :bookmarklet
 
   # ブックマークの更新（存在しない場合は作成）
   def update
@@ -88,7 +80,9 @@ class BookmarkController < ApplicationController
       end
     end
 
-    flash[:notice] = is_new_record ? _('Bookmark was successfully created.') : _('Bookmark was successfully updated.') if params[:layout] == "dialog"
+    unless params[:bookmarklet] == 'true'
+      flash[:notice] = is_new_record ? _('Bookmark was successfully created.') : _('Bookmark was successfully updated.')
+    end
     render :text => 'success'
   rescue ActiveRecord::RecordInvalid => ex
     messages = []
@@ -206,37 +200,5 @@ private
   def check_url_format? url
     # 社内用URLのチェックは、bookmarkと重複している。
     ((url =~ /^\/user\/.*/) || (url =~ /^\/page\/.*/) || url =~ /^https?:\/\/.*/) && !(url =~ /.*javascript:.*/)
-  end
-
-  def prepare_bookmark params
-    conditions = ["bookmark_comments.user_id = ? and bookmarks.url = ?"]
-    unescaped_url = Bookmark.unescaped_url params[:url]
-    conditions << session[:user_id] << unescaped_url
-    @bookmark_comment = BookmarkComment.find(:first,
-                                             :conditions => conditions,
-                                             :include => [:bookmark])
-    if @bookmark_comment
-      @bookmark = @bookmark_comment.bookmark
-    else
-      @bookmark_comment = BookmarkComment.new(:public => true)
-
-      unless @bookmark = Bookmark.find_by_url(unescaped_url)
-        @bookmark = Bookmark.new(:url => unescaped_url, :title => SkipUtil.toutf8_without_ascii_encoding(params[:title]))
-      end
-    end
-
-    user_tags = BookmarkComment.get_tagcloud_tags unescaped_url
-    user_tags.map! {|tag| tag.name }
-
-    other_tags = BookmarkComment.get_bookmark_tags @bookmark.is_type_user?
-    other_tags.map! {|tag| tag.name }
-    other_tags = other_tags - user_tags
-
-    your_tags = BookmarkComment.get_tags session[:user_id], 20
-    your_tags.map! {|tag| tag.name }
-    your_tags = your_tags - user_tags
-    your_tags = your_tags - other_tags
-
-    return user_tags, other_tags, your_tags
   end
 end

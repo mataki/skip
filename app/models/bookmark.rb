@@ -160,4 +160,16 @@ class Bookmark < ActiveRecord::Base
          :limit => limit,
          :order =>"bookmarks.updated_on DESC" )
   end
+
+  def user_tags
+    @user_tags ||= BookmarkComment.get_tagcloud_tags(self.url).map(&:name)
+  end
+
+  def other_tags
+    @other_tags ||= BookmarkComment.get_bookmark_tags(self.is_type_user?).map(&:name) - user_tags
+  end
+
+  def your_tags user
+    @your_tags ||= BookmarkComment.get_tags(user.id, 20).map(&:name) - (user_tags + other_tags)
+  end
 end

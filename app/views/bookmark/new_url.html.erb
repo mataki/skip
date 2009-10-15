@@ -1,0 +1,16 @@
+<div class="edit_form_space bookmark edit">
+  <div class="update_form_wrapper">
+    <div id="update_body"></div>
+    <% form_tag({ :controller => :bookmark, :action => :new_without_bookmarklet }) do -%>
+      <table>
+        <tr>
+          <th><%= _('URL')%></th>
+          <td><%= text_field_tag 'url', '', :size => 80 %></td>
+        </tr>
+        <tr>
+          <td colspan="2"><%= submit_tag _('Next') %></td>
+        </tr>
+      </table>
+    <% end -%>
+  </div>
+</div>
