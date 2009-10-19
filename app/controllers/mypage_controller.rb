@@ -128,7 +128,6 @@ class MypageController < ApplicationController
       @profiles = current_user.user_profile_values
     when "manage_password"
       redirect_to_with_deny_auth(:action => :manage) and return unless login_mode?(:password)
-      @user = User.new
     when "manage_email"
       @applied_email = AppliedEmail.find_by_user_id(session[:user_id]) || AppliedEmail.new
     when "manage_openid"
