@@ -310,29 +310,12 @@ module ApplicationHelper
     application_links = OauthProvider.enable.map do |p|
       link_to(h(p.setting.name), h(p.setting.root_url), :class => "underline_link")
     end
-    other_links = []
-    unless COMMON_MENUS.empty?
-      application_links << link_to( content_tag('u',_('more')) + content_tag('small', "▼"), '#', :id => 'other_link')
-      COMMON_MENUS[:menus].each do |menu|
-        if menu[:url]
-          other_links << link_to(h(menu[:title]), menu[:url], :target => '_blank')
-        else
-          other_links << content_tag(:p, h(menu[:title]))
-          menu[:links].each do |link|
-            other_links << link_to(h(link[:title]), link[:url], :target => '_blank')
-          end
-        end
-      end
-    end
     unless application_links.empty?
       application_links.unshift(link_to(Admin::Setting.abbr_app_title, root_url, :class => "underline_link"))
       application_link = content_tag :div, :id => 'collaboration_apps_link' do
         application_links.join('&nbsp')
       end
-      other_links_tag = content_tag :div, :id => 'other_links', :class => 'invisible' do
-        other_links.join('')
-      end
-      "#{application_link}#{other_links_tag}"
+      application_link
     end
   end
 

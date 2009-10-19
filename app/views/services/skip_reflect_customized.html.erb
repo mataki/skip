@@ -37,7 +37,7 @@
     jQuery('#footer').html('#{footer_link}');
     jQuery('#other_link')
     .toggle(function() {
-        jQuery('#other_links').css('left',jQuery(this).offset().left).show();
+        jQuery('#other_links').css('right',(jQuery(window).width() - jQuery(this).offset().left - jQuery(this).width())).show();
     }, function() {
         jQuery('#other_links').hide();
     });

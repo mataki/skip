@@ -12,11 +12,30 @@
         links << link_to(_("System Administration"), {:controller => "/admin", :action => "index"}, :title => _("Administration of the site."), :class => "underline_link") if current_user.admin?
         help_url = h(Admin::Setting.help_url)
         links << link_to(_('Help'), help_url, :target => "_blank", :class => "underline_link") unless help_url.blank?
+
+    other_links_tag = ""
+    unless COMMON_MENUS.empty?
+      other_links = []
+      links << link_to( content_tag('u',_('more')) + content_tag('small', "▼"), '#', :id => 'other_link')
+      COMMON_MENUS[:menus].each do |menu|
+        if menu[:url]
+          other_links << link_to(h(menu[:title]), menu[:url], :target => '_blank')
+        else
+          other_links << content_tag(:p, h(menu[:title]))
+          menu[:links].each do |link|
+            other_links << link_to(h(link[:title]), link[:url], :target => '_blank')
+          end
+        end
+      end
+      other_links_tag = content_tag :div, other_links.join(''), :id => 'other_links', :class => 'invisible'
+    end
+
         links << link_to(_("Sign out"), logout_url, :class => "underline_link")
       -%>
+
     <div id="menu">
       <%= links.join ' | ' %>
-      <br style="clear: left" />
+      <%= other_links_tag unless other_links_tag.blank? %>
     </div>
   <% end -%>
   </div>
