@@ -241,7 +241,7 @@ class Group < ActiveRecord::Base
   end
 
   def administrator?(user)
-    Group.owned(user).map(&:id).include?(self.id)
+    Group.owned(user).participating(user).map(&:id).include?(self.id)
   end
 
   def self.synchronize_groups ago = nil
