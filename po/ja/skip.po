@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-10-15 17:18+0900\n"
+"POT-Creation-Date: 2009-10-19 11:50+0900\n"
 "PO-Revision-Date: 2009-08-07 16:09+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -50,7 +50,7 @@ msgid "%B %d %Y"
 msgstr "%Y年%m月%d日"
 
 #: app/models/board_entry.rb:366 app/models/board_entry_comment.rb:34
-#: app/views/mypage/index.html.erb:89
+#: app/views/mypage/index.html.erb:88
 msgid "%B %d %Y %H:%M"
 msgstr "%Y年%m月%d日 %H:%M"
 
@@ -100,7 +100,7 @@ msgstr "%s 必要"
 msgid "%s has already joined / applied to join this group."
 msgstr "%sさんは既に参加済み/参加申請済みです。"
 
-#: app/views/mypage/index.html.erb:88
+#: app/views/mypage/index.html.erb:87
 msgid "%s users"
 msgstr "%d人"
 
@@ -2379,7 +2379,7 @@ msgstr ""
 msgid "Bookmarklet"
 msgstr "ブックマークレット"
 
-#: app/helpers/application_helper.rb:378
+#: app/helpers/application_helper.rb:377
 #: app/helpers/admin/application_helper.rb:39
 #: app/controllers/mypage_controller.rb:494
 #: app/controllers/services_controller.rb:44
@@ -2751,7 +2751,7 @@ msgid ""
 "Create an \"open to public\" blog entry disregarding the privacy setting."
 msgstr "記事の公開範囲によらず全体公開のブログとして新しい記事を作成します。"
 
-#: app/views/user/_action_box.html.erb:8 app/views/mypage/index.html.erb:104
+#: app/views/user/_action_box.html.erb:8 app/views/mypage/index.html.erb:103
 msgid "Create introductions"
 msgstr "みんなに紹介する"
 
@@ -3157,7 +3157,7 @@ msgstr "以下のフォームにOpenIDのURLを入力してください。"
 msgid "Entered email address %s has not been registered in the site."
 msgstr "入力された%sというメールアドレスは登録されていません。"
 
-#: app/helpers/application_helper.rb:374
+#: app/helpers/application_helper.rb:373
 #: app/controllers/search_controller.rb:23
 #: app/views/bookmarks/index.html.erb:17 app/views/bookmark/list.html.erb:17
 msgid "Entries"
@@ -3385,7 +3385,7 @@ msgstr "名が同一のファイルが既に登録されています"
 msgid "Filename"
 msgstr "ファイル名"
 
-#: app/helpers/application_helper.rb:375
+#: app/helpers/application_helper.rb:374
 #: app/controllers/services_controller.rb:47
 #: app/controllers/search_controller.rb:64 app/views/share_file/new.html.erb:9
 #: app/views/share_file/edit.html.erb:9
@@ -3617,7 +3617,7 @@ msgstr "いいえ"
 msgid "GroupParticipation|Waiting|true"
 msgstr "はい"
 
-#: app/helpers/application_helper.rb:377
+#: app/helpers/application_helper.rb:376
 #: app/helpers/admin/application_helper.rb:37
 #: app/controllers/groups_controller.rb:67
 #: app/controllers/services_controller.rb:46
@@ -4519,11 +4519,11 @@ msgstr "記事を書く"
 msgid "New bookmark in your profile!"
 msgstr "あなたのプロフィールにブックマークされました！"
 
-#: app/views/mypage/index.html.erb:82
+#: app/views/mypage/index.html.erb:81
 msgid "New bookmarks"
 msgstr "新着ブックマーク"
 
-#: app/views/mypage/index.html.erb:47
+#: app/views/mypage/index.html.erb:46
 msgid "New user is waiting for approval in %s"
 msgstr "[%s]に承認待ちのユーザがいます！"
 
@@ -5194,7 +5194,7 @@ msgstr "人気ブログランキング(コメント）"
 msgid "Ranking of Popular Users"
 msgstr "人気ユーザランキング"
 
-#: app/helpers/application_helper.rb:380
+#: app/helpers/application_helper.rb:379
 #: app/controllers/rankings_controller.rb:156
 msgid "Rankings"
 msgstr "ランキング"
@@ -5247,7 +5247,7 @@ msgstr "読書"
 msgid "Recent BBS posts (%{category)"
 msgstr "最新のフォーラムの記事（%{category}）"
 
-#: app/views/mypage/index.html.erb:115
+#: app/views/mypage/index.html.erb:114
 msgid "Recent Groups"
 msgstr "新着グループ"
 
@@ -5261,7 +5261,7 @@ msgstr "最近の人気記事"
 msgid "Recent Questions"
 msgstr "みんなからの質問!"
 
-#: app/views/mypage/index.html.erb:99
+#: app/views/mypage/index.html.erb:98
 msgid "Recent Users"
 msgstr "新着ユーザ"
 
@@ -5508,10 +5508,6 @@ msgstr "1000 件以上の検索結果は表示しておりません "
 msgid "Search from %s&nbsp;"
 msgstr "%sから検索&nbsp;"
 
-#: app/helpers/application_helper.rb:372
-msgid "Search from all"
-msgstr "全体から探す"
-
 #: app/views/search/full_text_search.html.erb:15
 msgid "Search in Internet"
 msgstr "インターネット検索"
@@ -5725,8 +5721,8 @@ msgid "Shopping"
 msgstr "ショッピング"
 
 #: app/views/mypage/_manage_customize.html.erb:40
-msgid "Shortcut"
-msgstr "ショートカット"
+msgid "Shortcut of group"
+msgstr "グループのショートカット"
 
 #: app/views/admin/board_entries/index.html.erb:33
 #: app/views/admin/bookmarks/index.html.erb:18
@@ -6865,7 +6861,7 @@ msgstr "タイプ"
 msgid "UserUid|User"
 msgstr "ユーザ"
 
-#: app/helpers/application_helper.rb:376
+#: app/helpers/application_helper.rb:375
 #: app/helpers/admin/application_helper.rb:35
 #: app/controllers/users_controller.rb:71
 #: app/controllers/services_controller.rb:45

@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-10-15 17:18+0900\n"
+"POT-Creation-Date: 2009-10-19 11:50+0900\n"
 "PO-Revision-Date: 2009-06-29 13:31+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -48,7 +48,7 @@ msgid "%B %d %Y"
 msgstr ""
 
 #: app/models/board_entry.rb:366 app/models/board_entry_comment.rb:34
-#: app/views/mypage/index.html.erb:89
+#: app/views/mypage/index.html.erb:88
 msgid "%B %d %Y %H:%M"
 msgstr ""
 
@@ -98,7 +98,7 @@ msgstr ""
 msgid "%s has already joined / applied to join this group."
 msgstr ""
 
-#: app/views/mypage/index.html.erb:88
+#: app/views/mypage/index.html.erb:87
 msgid "%s users"
 msgstr ""
 
@@ -2339,7 +2339,7 @@ msgstr ""
 msgid "Bookmarklet"
 msgstr ""
 
-#: app/helpers/application_helper.rb:378
+#: app/helpers/application_helper.rb:377
 #: app/helpers/admin/application_helper.rb:39
 #: app/controllers/mypage_controller.rb:494
 #: app/controllers/services_controller.rb:44
@@ -2696,7 +2696,7 @@ msgid ""
 "Create an \"open to public\" blog entry disregarding the privacy setting."
 msgstr ""
 
-#: app/views/user/_action_box.html.erb:8 app/views/mypage/index.html.erb:104
+#: app/views/user/_action_box.html.erb:8 app/views/mypage/index.html.erb:103
 msgid "Create introductions"
 msgstr ""
 
@@ -3089,7 +3089,7 @@ msgstr ""
 msgid "Entered email address %s has not been registered in the site."
 msgstr ""
 
-#: app/helpers/application_helper.rb:374
+#: app/helpers/application_helper.rb:373
 #: app/controllers/search_controller.rb:23
 #: app/views/bookmarks/index.html.erb:17 app/views/bookmark/list.html.erb:17
 msgid "Entries"
@@ -3315,7 +3315,7 @@ msgstr ""
 msgid "Filename"
 msgstr ""
 
-#: app/helpers/application_helper.rb:375
+#: app/helpers/application_helper.rb:374
 #: app/controllers/services_controller.rb:47
 #: app/controllers/search_controller.rb:64 app/views/share_file/new.html.erb:9
 #: app/views/share_file/edit.html.erb:9
@@ -3547,7 +3547,7 @@ msgstr ""
 msgid "GroupParticipation|Waiting|true"
 msgstr ""
 
-#: app/helpers/application_helper.rb:377
+#: app/helpers/application_helper.rb:376
 #: app/helpers/admin/application_helper.rb:37
 #: app/controllers/groups_controller.rb:67
 #: app/controllers/services_controller.rb:46
@@ -4427,11 +4427,11 @@ msgstr ""
 msgid "New bookmark in your profile!"
 msgstr ""
 
-#: app/views/mypage/index.html.erb:82
+#: app/views/mypage/index.html.erb:81
 msgid "New bookmarks"
 msgstr ""
 
-#: app/views/mypage/index.html.erb:47
+#: app/views/mypage/index.html.erb:46
 msgid "New user is waiting for approval in %s"
 msgstr ""
 
@@ -5090,7 +5090,7 @@ msgstr ""
 msgid "Ranking of Popular Users"
 msgstr ""
 
-#: app/helpers/application_helper.rb:380
+#: app/helpers/application_helper.rb:379
 #: app/controllers/rankings_controller.rb:156
 msgid "Rankings"
 msgstr ""
@@ -5143,7 +5143,7 @@ msgstr ""
 msgid "Recent BBS posts (%{category)"
 msgstr "Recent forum posts (%{category)"
 
-#: app/views/mypage/index.html.erb:115
+#: app/views/mypage/index.html.erb:114
 msgid "Recent Groups"
 msgstr ""
 
@@ -5157,7 +5157,7 @@ msgstr ""
 msgid "Recent Questions"
 msgstr ""
 
-#: app/views/mypage/index.html.erb:99
+#: app/views/mypage/index.html.erb:98
 msgid "Recent Users"
 msgstr ""
 
@@ -5396,10 +5396,6 @@ msgstr ""
 msgid "Search from %s&nbsp;"
 msgstr ""
 
-#: app/helpers/application_helper.rb:372
-msgid "Search from all"
-msgstr ""
-
 #: app/views/search/full_text_search.html.erb:15
 msgid "Search in Internet"
 msgstr ""
@@ -5612,7 +5608,7 @@ msgid "Shopping"
 msgstr ""
 
 #: app/views/mypage/_manage_customize.html.erb:40
-msgid "Shortcut"
+msgid "Shortcut of group"
 msgstr ""
 
 #: app/views/admin/board_entries/index.html.erb:33
@@ -6716,7 +6712,7 @@ msgstr ""
 msgid "UserUid|User"
 msgstr ""
 
-#: app/helpers/application_helper.rb:376
+#: app/helpers/application_helper.rb:375
 #: app/helpers/admin/application_helper.rb:35
 #: app/controllers/users_controller.rb:71
 #: app/controllers/services_controller.rb:45
