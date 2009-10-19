@@ -354,11 +354,11 @@ module ApplicationHelper
     links << content_tag(:span, link_to(icon_tag('house', :title => _('Home')) + _('Home'), root_url), :class => 'home_link')
     links << content_tag(:span, link_to(icon_tag('chart_bar', :title => _('Rankings')) + _('Rankings'), :controller => '/rankings', :action => 'index'), :class => 'ranking_link')
     search_links = []
-    search_links << link_to(icon_tag('report', :title => _('Entries')) + _('Entries'),  :controller => '/search', :action => 'entry_search')
-    search_links << link_to(icon_tag('disk_multiple', :title => _('Files')) + _('Files'),  :controller => '/search', :action => 'share_file_search')
+    search_links << link_to(icon_tag('report', :title => _('Entries')) + _('Entries'),  :controller => '/search', :action => 'entry_search') if BoardEntry.count > 0
+    search_links << link_to(icon_tag('disk_multiple', :title => _('Files')) + _('Files'),  :controller => '/search', :action => 'share_file_search') if ShareFile.count > 0
     search_links << link_to(icon_tag('user_suit', :title => _('Users')) + _('Users'),  :controller => '/users', :action => 'index')
-    search_links << link_to(icon_tag('group', :title => _('Groups')) + _('Groups'),  :controller => '/groups', :action => 'index')
-    search_links << link_to(icon_tag('tag_blue', :title => _('Bookmarks')) + _('Bookmarks'),  :controller => '/bookmarks', :action => 'index')
+    search_links << link_to(icon_tag('group', :title => _('Groups')) + _('Groups'),  :controller => '/groups', :action => 'index') if Group.count > 0
+    search_links << link_to(icon_tag('tag_blue', :title => _('Bookmarks')) + _('Bookmarks'),  :controller => '/bookmarks', :action => 'index') if Bookmark.count > 0
     links << content_tag(:span, search_links.join(' '), :class => 'search_links')
   end
 
