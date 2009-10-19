@@ -14,6 +14,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class UserCustom < ActiveRecord::Base
+  # TODO マイページのカレンダー表示機能を完全に無くすことが決まったらdisplay_calendarカラムを無くすmigrationを書く
   validates_presence_of :theme
   validates_presence_of :display_entries_format
   validates_inclusion_of :display_entries_format, :in => %w(tabs flat)
