@@ -369,6 +369,7 @@ module ApplicationHelper
   def global_links
     links = ''
     links << content_tag(:span, link_to(icon_tag('house', :title => _('Home')) + _('Home'), root_url), :class => 'home_link')
+    links << content_tag(:span, link_to(icon_tag('chart_bar', :title => _('Rankings')) + _('Rankings'), :controller => '/rankings', :action => 'index'), :class => 'ranking_link')
     search_links = []
     search_links << link_to(icon_tag('report', :title => _('Entries')) + _('Entries'),  :controller => '/search', :action => 'entry_search')
     search_links << link_to(icon_tag('disk_multiple', :title => _('Files')) + _('Files'),  :controller => '/search', :action => 'share_file_search')
@@ -376,7 +377,6 @@ module ApplicationHelper
     search_links << link_to(icon_tag('group', :title => _('Groups')) + _('Groups'),  :controller => '/groups', :action => 'index')
     search_links << link_to(icon_tag('tag_blue', :title => _('Bookmarks')) + _('Bookmarks'),  :controller => '/bookmarks', :action => 'index')
     links << content_tag(:span, search_links.join(' '), :class => 'search_links')
-    links << link_to(icon_tag('chart_bar', :title => _('Rankings')) + _('Rankings'), :controller => '/rankings', :action => 'index')
   end
 
 private
