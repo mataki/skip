@@ -13,15 +13,23 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-module UserMailerHelper
+require File.dirname(__FILE__) + '/../spec_helper'
 
-  def convert_plain entry
-    return '' if entry.blank?
-    contents = if entry.editor_mode == 'hiki'
-                 strip_tags(HikiDoc.new((entry.contents || ''), Regexp.new(SkipEmbedded::InitialSettings['not_blank_link_re'])).to_html)
-               else
-                 strip_tags entry.contents
-               end
-    contents.scan(/.{0,100}/).first
+describe UserMailerHelper, '#convert_plain' do
+  describe '100文字未満のタグが含まれない本文の場合' do
+    before do
+      @entry = create_board_entry :contents => 'テスト'
+    end
+    it '本文がそのまま取得出来ること' do
+      helper.convert_plain(@entry).should == "テスト"
+    end
+  end
+  describe '100文字を越えるタグが含まれない本文の場合' do
+    before do
+      @entry = create_board_entry :contents => 'あ'*101
+    end
+    it '本文が100文字で切断されていること' do
+      helper.convert_plain(@entry).should == 'あ'*100
+    end
   end
 end
