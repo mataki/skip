@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-10-19 11:50+0900\n"
+"POT-Creation-Date: 2009-10-19 14:29+0900\n"
 "PO-Revision-Date: 2009-10-19 13:39+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -540,8 +540,8 @@ msgstr "コメントの追加！"
 msgid "Add an antenna"
 msgstr "アンテナに追加"
 
+#: app/views/bookmark/new_url.html.erb:20
 #: app/views/bookmark/new_url.html.erb:22
-#: app/views/bookmark/new_url.html.erb:24
 msgid "Add as %s bookmark"
 msgstr "%sでブクマ"
 
@@ -2047,6 +2047,10 @@ msgstr "このユーザを強制退会させます。本当によろしいです
 msgid "Are you sure to send activation email to target user?"
 msgstr "対象ユーザに利用開始通知メールを送信しますが宜しいですか?"
 
+#: app/views/board_entries/_form.html.erb:175
+msgid "Are you sure to send email to all users?"
+msgstr "利用者全体にメールが送信されますが、宜しいですか?"
+
 #: app/views/admin/pictures/index.html.erb:29
 #: app/views/admin/board_entries/index.html.erb:34
 #: app/views/admin/share_files/index.html.erb:36
@@ -2375,7 +2379,7 @@ msgstr ""
 "非公開記事ーを全公開でブックマークしますがよろしいですか？\\n（閲覧権限の有無"
 "によらずタイトルが公開されます）"
 
-#: app/views/bookmark/new_url.html.erb:20
+#: app/views/bookmark/new_url.html.erb:18
 msgid "Bookmarklet"
 msgstr "ブックマークレット"
 
@@ -2732,13 +2736,13 @@ msgstr "%{name}作成"
 msgid "Create a new bbs entry inheriting the privacy setting."
 msgstr "記事の公開範囲を引き継いだフォーラムとして新しい記事を作成します。"
 
-#: app/views/mypage/_action_box.html.erb:11
+#: app/views/mypage/_action_box.html.erb:10
 msgid "Create a new bookmark"
 msgstr "ブックマークする"
 
 #: app/controllers/groups_controller.rb:44
 #: app/controllers/groups_controller.rb:52
-#: app/views/mypage/_action_box.html.erb:9
+#: app/views/mypage/_action_box.html.erb:11
 msgid "Create a new group"
 msgstr "グループを作る"
 

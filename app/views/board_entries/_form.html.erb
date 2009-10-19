@@ -170,6 +170,11 @@ div.input_line textarea {
                 }
             }
         }
+
+        if ($j('#publication_type_public:checked').size() > 0 && $j('#board_entry_send_mail:checked').size() > 0) {
+            if (!confirm('<%= _('Are you sure to send email to all users?') %>'))
+                return false;
+        }
     });
     var Trim = function(str){
         str = str.replace(/^[ 　]+/,"");
