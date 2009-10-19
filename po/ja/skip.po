@@ -2734,7 +2734,7 @@ msgstr "記事の公開範囲を引き継いだフォーラムとして新しい
 
 #: app/views/mypage/_action_box.html.erb:11
 msgid "Create a new bookmark"
-msgstr "ブックマークを作る"
+msgstr "ブックマークをする"
 
 #: app/controllers/groups_controller.rb:44
 #: app/controllers/groups_controller.rb:52
