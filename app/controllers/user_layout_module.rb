@@ -2,8 +2,8 @@ module UserLayoutModule
   def user_tab_menu_source user
     # TODO mypage#setup_layoutのtab_menu_source構築と重複が多い。DRYにしたい。
     tab_menu_source = [
-      {:label => _('Profile'), :options => {:controller => 'user', :action => 'show'}},
-      {:label => _('Blog'), :options => {:controller => 'user', :action => 'blog', :archive => 'all', :sort_type => 'date'}} ]
+      {:label => _('Profile'), :options => {:controller => 'user', :action => 'show'}} ]
+    tab_menu_source << {:label => _('Blog'), :options => {:controller => 'user', :action => 'blog', :archive => 'all', :sort_type => 'date'}} unless BoardEntry.owned(user).accessible(current_user).empty?
 
     tab_menu_source << {:label => _('Shared Files'), :options => {:controller => 'share_file', :action => 'list'}} unless ShareFile.owned(user).accessible(current_user).empty?
     tab_menu_source << {:label => _('Socials'), :options => {:controller => 'user', :action => 'social'}} unless user.against_chains.empty?
