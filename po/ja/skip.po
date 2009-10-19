@@ -2852,7 +2852,7 @@ msgstr "12月"
 
 #: app/views/group/_form.html.erb:56
 msgid "Default Email Settings"
-msgstr "既定のメール"
+msgstr "既定の告知方法"
 
 #: app/views/group/_form.html.erb:48
 msgid "Default Privacy Settings"
@@ -5572,7 +5572,7 @@ msgstr "送信する"
 
 #: app/views/group/_form.html.erb:57
 msgid "Send Emails"
-msgstr "メールを送信する"
+msgstr "投稿時にメールも送信する"
 
 #: app/views/admin/users/index.html.erb:58
 msgid "Send activation email to selected users"
