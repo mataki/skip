@@ -1,5 +1,4 @@
 <% content_for :contents_left do -%>
-  <%= render(:partial => 'user/portrait_box', :locals => { :user => @user }) %>
   <% unless @current_user.id == @user.id -%>
     <%= render(:partial => 'user/action_box', :locals => { :user => @user }) %>
   <% end -%>

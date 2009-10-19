@@ -27,7 +27,7 @@
     <div class="box_space_title"><%= _('Admin Menu')%></span></div>
     <div class="box_space_body">
     <ul>
-      <% get_manage_menu_items(@menu).each do |menu_item| %>
+      <% get_group_manage_menu_items(@menu).each do |menu_item| %>
       <li><%= menu_item -%></li>
       <% end %>
     </ul>

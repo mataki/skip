@@ -387,7 +387,6 @@ describe ShareFileController, "GET #list" do
   end
   describe "ユーザの共有ファイル一覧を表示している場合" do
     before do
-      controller.stub(:user_tab_menu_source).and_return(@mock_user_tab_menu_source = mock('user_tab_menu_source'))
       controller.stub(:paginate).and_return([@pages = mock('pages'), @share_files = mock('share_files', :size => 10)])
     end
     describe "自分の共有ファイルを表示している場合" do
@@ -399,7 +398,7 @@ describe ShareFileController, "GET #list" do
       it "set assigns" do
         assigns[:main_menu].should == "My Page"
         assigns[:title].should == "My Page"
-        assigns[:tab_menu_source].should == @mock_user_tab_menu_source
+        assigns[:user].should == @user
         assigns[:tab_menu_option].should == { :uid => @user.uid }
         assigns[:owner_name].should == @user.name
         assigns[:owner_symbol].should == @user.symbol
@@ -418,7 +417,7 @@ describe ShareFileController, "GET #list" do
       it "set assigns" do
         assigns[:main_menu].should == "Users"
         assigns[:title].should == "Mr./Ms. 対象ユーザ"
-        assigns[:tab_menu_source].should == @mock_user_tab_menu_source
+        assigns[:user].should == @target_user
         assigns[:tab_menu_option].should == { :uid => @target_user.uid }
         assigns[:owner_name].should == @target_user.name
         assigns[:owner_symbol].should == @target_user.symbol
@@ -432,7 +431,6 @@ describe ShareFileController, "GET #list" do
   describe "グループの共有ファイル一覧を表示している場合" do
     before do
       controller.stub(:paginate).and_return([@pages = mock('pages'), @share_files = mock('share_files', :size => 10)])
-      controller.stub(:group_tab_menu_source).and_return(@mock_group_tab_menu_source = mock('mock_group_tab_menu_source'))
       Group.stub(:find_by_gid).with("a_group").and_return(@group = mock_model(Group, :symbol => 'group:a_group', :name => "対象グループ", :gid => "a_group"))
       @group.stub_chain(:group_participations, :find_by_user_id).and_return(@participation = mock('participation'))
       ShareFile.stub(:get_tags).with(@group.symbol).and_return(@categories = mock('categories'))
@@ -441,7 +439,7 @@ describe ShareFileController, "GET #list" do
     it "set assigns" do
       assigns[:main_menu].should == 'Groups'
       assigns[:title].should == "対象グループ"
-      assigns[:tab_menu_source].should == @mock_group_tab_menu_source
+      assigns[:group].should == @group
       assigns[:tab_menu_option].should == { :gid => @group.gid }
       assigns[:owner_name].should == @group.name
       assigns[:owner_symbol].should == @group.symbol

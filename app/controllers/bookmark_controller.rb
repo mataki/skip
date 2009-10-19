@@ -15,7 +15,7 @@
 
 require 'uri'
 class BookmarkController < ApplicationController
-  include UserLayoutModule
+  include UserHelper
   verify :method => :post, :only => [:update, :destroy, :ado_set_stared ], :redirect_to => { :action => :show }
 
   before_filter :check_params, :only => [:new, :new_without_bookmarklet]
@@ -137,7 +137,6 @@ class BookmarkController < ApplicationController
   def list
     @main_menu = user_main_menu @user
     @title = user_title @user
-    @tab_menu_source = user_tab_menu_source @user
     @tab_menu_option = { :uid => @user.uid }
 
     find_params = {

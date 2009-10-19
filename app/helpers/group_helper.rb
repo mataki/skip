@@ -19,7 +19,7 @@ module GroupHelper
   include GroupsHelper
 
   # 管理メニューの生成
-  def get_manage_menu_items selected_menu
+  def get_group_manage_menu_items selected_menu
     @@menus = [{:name => _("Edit Group Information"), :menu => "manage_info" },
                {:name => _("Manage Members"),       :menu => "manage_participations"} ]
     @@menus << {:name => _("Approve Member"),     :menu => "manage_permit" } if @group.protected?
@@ -31,5 +31,15 @@ module GroupHelper
     options_hash = {}
     owners.each { |owner| options_hash.store(owner.name, owner.id) }
     options_hash
+  end
+
+  def group_tab_menu_source group
+    tab_menu_source = []
+    tab_menu_source << {:label => _('Summary'), :options => {:controller => 'group', :action => 'show'}}
+    tab_menu_source << {:label => _('Members List'), :options => {:controller => 'group', :action => 'users'}}
+    tab_menu_source << {:label => _('BBS'), :options => {:controller => 'group', :action => 'bbs', :sort_type => 'date'}}
+    tab_menu_source << {:label => _('Shared Files'), :options => {:controller => 'share_file', :action => "list"}} unless ShareFile.owned(group).accessible(current_user).empty?
+    tab_menu_source << {:label => _('Admin'), :options => {:controller => 'group', :action => 'manage'}} if group.administrator?(current_user)
+    tab_menu_source
   end
 end

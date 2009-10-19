@@ -15,7 +15,6 @@
 
 class RankingsController < ApplicationController
   before_filter :setup_layout
-  helper :calendar
 # TODO 外部からのランキング取り込み機能は一旦ペンディングなのでコメントアウト
 #  def update
 #    new_ranking = Ranking.new params[:ranking]

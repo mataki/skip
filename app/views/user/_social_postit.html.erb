@@ -1,5 +1,4 @@
 <% content_for :contents_left do -%>
-  <%= render(:partial => 'user/portrait_box', :locals => { :user => @user }) -%>
   <%= render :partial => "social_menu", :locals => { :selected_menu => @menu } %>
   <%= render :partial => "social_tags", :locals => { :tags => @tags, :user => @user  } %>
 <% end -%>

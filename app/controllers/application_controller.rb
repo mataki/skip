@@ -19,7 +19,11 @@ require 'tempfile'
 class ApplicationController < ActionController::Base
   include OpenidServerSystem
   include ExceptionNotifiable if SkipEmbedded::InitialSettings['exception_notifier']['enable']
+
+  helper :all
+
   layout 'layout'
+
   filter_parameter_logging :password
 
   protect_from_forgery

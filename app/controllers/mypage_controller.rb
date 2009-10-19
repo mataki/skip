@@ -20,8 +20,8 @@ require 'timeout'
 require 'rss'
 class MypageController < ApplicationController
   before_filter :setup_layout, :except => :manage
+  before_filter :load_user
   skip_before_filter :verify_authenticity_token, :only => :apply_ident_url
-  helper :calendar
 
   verify :method => :post, :only => [ :destroy_portrait, :save_portrait, :update_profile,
                                       :update_message_unsubscribes, :apply_password,
@@ -985,5 +985,9 @@ class MypageController < ApplicationController
       end
     end
     result
+  end
+
+  def load_user
+    @user = current_user
   end
 end

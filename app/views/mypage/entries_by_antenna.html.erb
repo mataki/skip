@@ -12,7 +12,6 @@ div.topix_body .page_line, div.topix_body .item_line {
 </style>
 <div id="contents_container">
   <div id="contents_left">
-    <%= render(:partial => 'user/portrait_box', :locals => { :current_user_info => @current_user_info }) %>
     <%= render :partial => 'antenna_box', :locals => { :system_antennas => @system_antennas, :my_antennas => @my_antennas } %>
   </div><!-- contents_left -->
 

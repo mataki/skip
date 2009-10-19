@@ -24,6 +24,10 @@ class GroupParticipation < ActiveRecord::Base
   N_('GroupParticipation|Favorite|true')
   N_('GroupParticipation|Favorite|false')
 
+  named_scope :active, proc {
+    { :conditions => { :waiting => false } }
+  }
+
   # memcache領域にグループの参加情報を載せているため
   # 追加・削除の際はmemcache領域を削除する。
   # このためGroupParticipationテーブルには、deleteメソッドなど

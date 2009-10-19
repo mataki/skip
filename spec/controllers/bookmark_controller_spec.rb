@@ -91,7 +91,6 @@ describe BookmarkController, "GET #list" do
   before do
     @user = user_login
     controller.stub(:paginate).and_return([@pages = mock('pages'), @bookmark_comments = mock('bookmark_comments', :size => 10)])
-    controller.stub(:user_tab_menu_source).and_return(@mock_tab_menu_source = mock('user_tab_menu_source'))
   end
   describe "自分のブックマーク一覧を表示した場合" do
     before do
@@ -102,7 +101,7 @@ describe BookmarkController, "GET #list" do
     it "set assigns" do
       assigns[:main_menu].should == "My Page"
       assigns[:title].should == "My Page"
-      assigns[:tab_menu_source].should == @mock_tab_menu_source
+      assigns[:user].should == @user
       assigns[:tab_menu_option].should == { :uid => @user.uid }
       assigns[:tags].should == @tags
       assigns[:pages].should == @pages
@@ -121,7 +120,7 @@ describe BookmarkController, "GET #list" do
     it "set assigns" do
       assigns[:main_menu].should == "Users"
       assigns[:title].should == "Mr./Ms. 対象ユーザ"
-      assigns[:tab_menu_source].should == @mock_tab_menu_source
+      assigns[:user].should == @target_user
       assigns[:tab_menu_option].should == { :uid => @target_user.uid }
       assigns[:tags].should == @tags
       assigns[:pages].should == @pages

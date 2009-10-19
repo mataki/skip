@@ -14,8 +14,6 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class GroupController < ApplicationController
-  include GroupLayoutModule
-  helper 'board_entries'
   before_filter :load_group_and_participation, :setup_layout
 
   before_filter :check_owned,
@@ -355,7 +353,6 @@ private
   def setup_layout
     @title = title
     @main_menu = main_menu
-    @tab_menu_source = tab_menu_source
     @tab_menu_option = tab_menu_option
   end
 
@@ -365,10 +362,6 @@ private
 
   def title
     @group.name if @group
-  end
-
-  def tab_menu_source
-    group_tab_menu_source @group
   end
 
   def tab_menu_option

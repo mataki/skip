@@ -14,8 +14,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class UserController < ApplicationController
-  include UserLayoutModule
-  helper 'board_entries', 'groups'
+  include UserHelper
 
   before_filter :load_user, :setup_layout
   after_filter :make_chain_message, :only => [ :create_chain, :update_chain ]
@@ -176,12 +175,7 @@ private
   def setup_layout
     @title = user_title @user
     @main_menu = user_main_menu @user
-    @tab_menu_source = tab_menu_source
     @tab_menu_option = tab_menu_option
-  end
-
-  def tab_menu_source
-    user_tab_menu_source @user
   end
 
   def tab_menu_option

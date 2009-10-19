@@ -37,6 +37,14 @@ body
 ul.no_style
   :list-style-type none
 
+ul.horizontal
+  li
+    :float left
+    :margin 5px
+
+.clear_left
+  :clear left
+
 // jquery.ui.tabsでタブ折り返し時にliがulをはみ出してしまう対策
 // ------------------------------------------------------------
 ul.ui-tabs-nav
@@ -572,6 +580,22 @@ div#add_antenna_area
 
 // ユーザ
 // ------------------------------------------------------------
+// ユーザの上部の情報表示
+div.panel_top
+  :position relative
+  :min-height 80px
+  .left
+    :margin 5px
+    :position absolute
+  .right
+    :position absolute
+    :bottom 0px
+    :left 80px
+  ul
+    :font-size 90%
+    :margin-left 25px
+
+// ------------------------------------------------------------
 // ユーザ一覧、グループ参加者一覧の一行毎
 div.user_box
   :position relative
@@ -595,6 +619,12 @@ table.user_box
       :text-align center
 
 // グループ
+// ------------------------------------------------------------
+// グループの上部の表示
+.no_style.horizontal
+  :margin-left 25px
+  :font-size 90%
+
 // ------------------------------------------------------------
 // グループ一覧の一行毎
 table.group_box

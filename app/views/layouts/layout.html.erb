@@ -16,10 +16,40 @@
 
   <div id="panel" class="ui-corner-all">
     <div style="_width: 98%;">
-      <h1 id="title"><%=h @title %></h1>
-      <% if @tab_menu_source -%>
-      <div id="tab_menu"><%= generate_tab_menu(@tab_menu_source) %></div>
-      <br style="clear: left;" />
+      <% if @user and !@user.new_record? and @user.active? %>
+        <div class="panel_top">
+          <div class="left">
+            <%= show_picture(@user, :width => 72, :height => 72) %>
+          </div>
+          <div class="right">
+            <h1 id="title"><%= h user_title @user %></h1>
+            <ul class="no_style horizontal">
+              <li><%= _('Last Access') %>: <%= @user.before_access %></li>
+              <li><%= _('Visits') %>: <%= link_to_if(@user == current_user, h(n_("%{count} visit", "%{count} visits", @user.info[:access_count]) % {:count => @user.info[:access_count]}), {:action => 'trace', :controller => "/mypage"}) -%></li>
+              <li><%= _('Subscribers') %>: <%=h(n_("%{count} user", "%{count} users", @user.info[:subscriber_count]) % {:count =>@user.info[:subscriber_count]}) -%></li>
+              <li><%= _('Posts') %>: <%=h(n_("%{count} entry", "%{count} entries", @user.info[:blog_count]) % {:count => @user.info[:blog_count]}) -%></li>
+              <li><%= _('Days since you registered') %>: <%=h(n_("%{count} day", "%{count} days", @user.info[:using_day]) % {:count => @user.info[:using_day]}) -%></li>
+              <br class="clear" />
+            </ul>
+            <div id="tab_menu"><%= generate_tab_menu(@tab_menu_source || user_tab_menu_source(@user)) %></div>
+          </div>
+        </div>
+      <% elsif @group and !@group.new_record?%>
+        <h1 id="title"><%=h @group.name %></h1>
+        <ul class="no_style horizontal">
+          <li><%= _('Category') %>: <%= h(@group.category_icon_name.last) %></li>
+          <li><%= _('Members') %>: <%=h(n_("%{count} user", "%{count} users", count = @group.group_participations.active.count) % {:count => count}) -%></li>
+          <li><%= _('Joining the group') %>: <%= @group.protected? ? _('Need approval of the Administrator.') : _("No approval needed to join this group.") %></li>
+          <br class="clear_left" />
+        </ul>
+        <div id="tab_menu"><%= generate_tab_menu(group_tab_menu_source(@group)) %></div>
+        <br class="clear_left" />
+      <% else %>
+        <h1 id="title"><%=h @title %></h1>
+        <% if @tab_menu_source -%>
+          <div id="tab_menu"><%= generate_tab_menu(@tab_menu_source) %></div>
+          <br style="clear: left;" />
+        <% end -%>
       <% end -%>
     </div>
 
