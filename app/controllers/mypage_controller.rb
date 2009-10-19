@@ -753,7 +753,6 @@ class MypageController < ApplicationController
   # 記事一覧を取得する（partial用のオプションを返す）
   def find_recent_blogs_as_locals options
     find_params = BoardEntry.make_conditions(login_user_symbols, {:entry_type=>'DIARY', :publication_type => 'public'})
-    find_params[:conditions][0] << " and board_entries.title <> 'ユーザー登録しました！'"
     pages = BoardEntry.scoped(
       :conditions => find_params[:conditions],
       :include => find_params[:include] | [ :user, :state ]

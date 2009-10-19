@@ -78,10 +78,6 @@ class PortalController < ApplicationController
 
       Antenna.create_initial!(@user)
 
-      message = render_to_string(:partial => 'entries_template/user_signup',
-                                 :locals => { :user => @user })
-      @user.create_initial_entry(message)
-
       UserAccess.create!(:user_id => @user.id, :last_access => Time.now, :access_count => 0)
       UserMailer::Smtp.deliver_sent_signup_confirm(@user.email, @user.code, root_url)
 

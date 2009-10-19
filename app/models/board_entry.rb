@@ -86,6 +86,7 @@ class BoardEntry < ActiveRecord::Base
 
   named_scope :except_auto_posted, proc {
     # FIXME 自動投稿判別をタイトルでやるのは危うい。国際化のためにもよくない。
+    # TODO 自動投稿自体を見直す予定なのでその際にここも見直す
     { :conditions => ['title NOT IN (?)', ['参加申し込みをしました！', 'ユーザー登録しました！']] }
   }
 

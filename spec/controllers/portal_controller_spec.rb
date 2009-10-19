@@ -77,7 +77,6 @@ describe PortalController, 'POST /apply' do
   before do
     @user = unused_user_login
     @user.stub!(:save!)
-    @user.stub!(:create_initial_entry)
     @profiles = (1..2).map{|i| stub_model(UserProfileValue, :save! => true)}
     @user.stub!(:find_or_initialize_profiles).and_return(@profiles)
     @antenna = stub_model(Antenna)

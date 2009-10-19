@@ -303,23 +303,6 @@ class User < ActiveRecord::Base
     user_uid ? user_uid.uid : nil
   end
 
-  # ユーザ登録時にブログを投稿する
-  def create_initial_entry message
-    entry_params = {}
-    entry_params[:title] =_("I have joined the site!")
-    entry_params[:message] = message
-    entry_params[:tags] = ""
-    entry_params[:user_symbol] = symbol
-    entry_params[:user_id] = id
-    entry_params[:entry_type] = BoardEntry::DIARY
-    entry_params[:owner_symbol] = symbol
-    entry_params[:publication_type] = 'public'
-    entry_params[:publication_symbols] = [Symbol::SYSTEM_ALL_USER]
-    entry_params[:editor_mode] = 'richtext'
-
-    BoardEntry.create_entry(entry_params)
-  end
-
   def retired?
     status == 'RETIRED'
   end
