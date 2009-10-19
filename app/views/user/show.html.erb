@@ -3,6 +3,7 @@
   <% unless @current_user.id == @user.id -%>
     <%= render(:partial => 'user/action_box', :locals => { :user => @user }) %>
   <% end -%>
+  <%= render(:partial => 'entries/recent_box', :locals => { :owner => @user }) -%>
   <%= render :partial => 'user/join_groups_box', :locals => { :user => @user } %>
   <%= render :partial => 'user/follow_chains_box', :locals => { :user => @user } %>
 <% end -%>

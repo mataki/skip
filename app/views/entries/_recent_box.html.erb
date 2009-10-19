@@ -1,8 +1,5 @@
-<%
-  # ブログ・フォーラムの左側のボックス（最近の投稿）
-  # :locals => { :recent_entries }
-  -%>
-
+<% recent_entries = BoardEntry.accessible(current_user).owned(owner).order_new.limit(5) %>
+<% unless recent_entries.empty? -%>
 <div class="box_space">
   <div class="box_space_title"><%= icon_tag 'page_copy' %><%= _('Last Entries')%></div>
   <div class="box_space_body" style="font-size: 10px;">
@@ -12,5 +9,12 @@
       <% end -%>
     </ul>
   </div>
-  <div class="box_space_bottom"><%= link_to _('Past List'), :archive => "all" %></div>
+  <div class="box_space_bottom">
+    <% if owner.is_a? User -%>
+      <%= link_to _('Past List'), :controller => 'user', :action => 'blog', :uid => owner.uid, :archive => "all", :sort_type => 'date' %>
+    <% elsif owner.is_a? Group -%>
+      <%= link_to _('Past List'), :controller => 'group', :action => 'bbs', :gid => owner.gid, :archive => "all", :sort_type => 'date' %>
+    <% end -%>
+  </div>
 </div><!-- box_space -->
+<% end -%>

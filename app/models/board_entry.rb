@@ -39,9 +39,9 @@ class BoardEntry < ActiveRecord::Base
   validates_presence_of :date
   validates_presence_of :user_id
 
-  named_scope :accessible, proc { |publication_symbols|
+  named_scope :accessible, proc { |user|
     { :conditions => ['entry_publications.symbol in (:publication_symbols)',
-      { :publication_symbols => publication_symbols << Symbol::SYSTEM_ALL_USER }],
+      { :publication_symbols => user.belong_symbols << Symbol::SYSTEM_ALL_USER }],
       :include => [:entry_publications] }
   }
 
@@ -99,6 +99,10 @@ class BoardEntry < ActiveRecord::Base
 
   named_scope :active_user, proc {
     { :conditions => ['user_id IN (?)', User.active.map(&:id).uniq] }
+  }
+
+  named_scope :owned, proc {|owner|
+    { :conditions => ['board_entries.symbol = ?', owner.symbol] }
   }
 
   attr_reader :owner
