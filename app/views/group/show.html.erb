@@ -39,10 +39,8 @@
     <div class="box_space_body"><%= show_group_status(@group, session[:user_id]) %></div>
   </div><!-- box_space -->
 
-  <div class="box_space">
-  <div class="box_space_title"></div>
-  <div class="box_space_body">
-    <ul>
+  <div>
+    <ul class="no_style">
       <% if @participation -%>
         <li><%= link_to(content_tag('span', _('New Posts')), {:controller => 'group', :action => 'new'}, :class => 'rounded') %></li>
         <% url_hash = {:controller => '/share_file', :action => :new, :owner_symbol => h(@group.symbol), :owner_name => h(@group.name)} -%>
@@ -56,7 +54,6 @@
       <li><%= link_to(content_tag('span', _('Add to antenna')), {:controller => "antenna", :action => "select_antenna", :symbol => @group.symbol, :dummy => '.html'}, {:class => "nyroModal rounded"}) %></li>
     </ul>
   </div>
-  </div><!-- box_space -->
 
   <div class="box_space">
     <div class="box_space_title"><%= icon_tag('user_suit') -%><%= _('Administrator')%></div>

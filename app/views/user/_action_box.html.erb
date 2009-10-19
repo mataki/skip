@@ -1,15 +1,12 @@
-<div class="box_space">
-  <div class="box_space_title"></div>
-  <div class="box_space_body">
-    <ul>
-      <% if current_user.follow_chains.map(&:to_user_id).include? user.id -%>
-        <li><%= link_to(content_tag('span', _('Edit introductions')), {:controller => 'user', :action => 'edit_chain' }, {:class => 'rounded'}) %></li>
-      <% else -%>
-        <li><%= link_to(content_tag('span', _('Create introductions')), {:controller => 'user', :action => 'new_chain' }, {:class => 'rounded'}) %></li>
-      <% end -%>
-      <li><%= link_to(content_tag('span', _('Add an antenna')), {:controller => "antenna", :action => "select_antenna", :symbol => user.symbol, :dummy => '.html'}, {:class => "nyroModal rounded"}) %></li>
-      <% new_bookmark_url_hash = {:controller => 'bookmark', :action => :new_without_bookmarklet, :url => user.get_postit_url, :title => user.name} -%>
-      <li><%= link_to(content_tag('span', _('Add a bookmark')), new_bookmark_url_hash, {:class => "rounded", :onclick => "sub_window_open('#{url_for(new_bookmark_url_hash)}'); return false;"}) %></li>
-    </ul>
-  </div>
+<div>
+  <ul class="no_style">
+    <% if current_user.follow_chains.map(&:to_user_id).include? user.id -%>
+      <li><%= link_to(content_tag('span', _('Edit introductions')), {:controller => 'user', :action => 'edit_chain' }, {:class => 'rounded'}) %></li>
+    <% else -%>
+      <li><%= link_to(content_tag('span', _('Create introductions')), {:controller => 'user', :action => 'new_chain' }, {:class => 'rounded'}) %></li>
+    <% end -%>
+    <li><%= link_to(content_tag('span', _('Add an antenna')), {:controller => "antenna", :action => "select_antenna", :symbol => user.symbol, :dummy => '.html'}, {:class => "nyroModal rounded"}) %></li>
+    <% new_bookmark_url_hash = {:controller => 'bookmark', :action => :new_without_bookmarklet, :url => user.get_postit_url, :title => user.name} -%>
+    <li><%= link_to(content_tag('span', _('Add a bookmark')), new_bookmark_url_hash, {:class => "rounded", :onclick => "sub_window_open('#{url_for(new_bookmark_url_hash)}'); return false;"}) %></li>
+  </ul>
 </div>
