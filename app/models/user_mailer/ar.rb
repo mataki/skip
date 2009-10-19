@@ -23,7 +23,7 @@ class UserMailer::AR < UserMailer::Base
       @recipients = recipient
     end
     @subject    = if Admin::Setting.contact_mail_contain_contents
-                    UserMailer::Base.base64("[#{Admin::Setting.abbr_app_title}] #{user_name}:#{entry.title}")
+                    UserMailer::Base.base64("[#{Admin::Setting.abbr_app_title}] #{user_name}: #{entry.title}")
                   else
                     UserMailer::Base.base64(_("[%{app_title}] You have a message from %{user}.") % {:app_title => Admin::Setting.abbr_app_title, :user => user_name})
                   end
