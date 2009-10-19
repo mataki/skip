@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
 "POT-Creation-Date: 2009-10-19 11:50+0900\n"
-"PO-Revision-Date: 2009-08-07 16:09+0900\n"
+"PO-Revision-Date: 2009-10-19 13:39+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2734,7 +2734,7 @@ msgstr "記事の公開範囲を引き継いだフォーラムとして新しい
 
 #: app/views/mypage/_action_box.html.erb:11
 msgid "Create a new bookmark"
-msgstr "ブックマークをする"
+msgstr "ブックマークする"
 
 #: app/controllers/groups_controller.rb:44
 #: app/controllers/groups_controller.rb:52
