@@ -111,7 +111,6 @@ class BookmarkController < ApplicationController
 
     @main_menu = _('Bookmarks')
     @title = _("Bookmark[%{title}]") % {:title => @bookmark.title}
-    @tab_menu_source = [ {:label => _('Bookmark Comment'), :options => {:action => 'show'}} ]
 
     # TODO: SQLを発行しなくても判断できるのでrubyで処理する様に
     comment =  BookmarkComment.find(:first,
