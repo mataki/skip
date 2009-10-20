@@ -2,10 +2,6 @@
 <% form_tag({:action => 'users'}, :method => 'get') do -%>
   <table class="search_cond_box">
     <tr>
-      <th><%= _('Search Conditions')%></th>
-      <td><%= radio_buttons(:condition, :include_manager, UserSearchCondition.include_manager_types) -%></td>
-    </tr>
-    <tr>
       <th><%= _('Sort by')%></th>
       <td><%= select :condition, :sort_type, UserSearchCondition.sort_types %></td>
     </tr>

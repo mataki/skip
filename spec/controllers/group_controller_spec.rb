@@ -117,7 +117,7 @@ describe GroupController, 'GET #users' do
         find_params = { :include => [:user_access, :picture, :user_uids, :group_participations],
           :order_by => "user_uids.uid",
           :per_page => 20,
-          :conditions => ["users.status in (?) AND user_uids.uid_type = ? AND group_participations.group_id = ? AND group_participations.waiting = false AND group_participations.owned = false", ["ACTIVE", "RETIRED"], "MASTER", @group.id]}
+          :conditions => ["users.status in (?) AND user_uids.uid_type = ? AND group_participations.group_id = ? AND group_participations.waiting = false", ["ACTIVE", "RETIRED"], "MASTER", @group.id]}
         controller.should_receive(:paginate).with(:user, find_params)
         get :users, @params
       end
