@@ -1,0 +1,53 @@
+ja-JP:
+  activerecord:
+    errors:
+      # The values :model, :attribute and :value are always available for interpolation
+      # The value :count is available when applicable. Can be used for pluralization.
+      messages:
+        inclusion: "は一覧にありません。"  #g
+        exclusion: "は予約されています。"  #g
+        invalid: "は不正な値です。"  #g
+        confirmation: "が一致しません。"  #g
+        accepted: "を受諾してください。"  #g
+        empty: "を入力してください。"  #g
+        blank: "を入力してください。"  #g
+        too_long: "は{{count}}文字以内で入力してください。"  #g
+        too_short: "は{{count}}文字以上で入力してください。"  #g
+        wrong_length: "は{{count}}文字で入力してください。"  #g
+        taken: "はすでに存在します。"  #g
+        not_a_number: "は数値で入力してください。"  #g
+        greater_than: "は{{count}}より大きい値にしてください。"  #g
+        greater_than_or_equal_to: "は{{count}}以上の値にしてください。"  #g
+        equal_to: "は{{count}}にしてください。"  #g
+        less_than: "は{{count}}より小さい値にしてください。"  #g
+        less_than_or_equal_to: "は{{count}}以下の値にしてください。"  #g
+        odd: "は奇数にしてください。"  #g
+        even: "は偶数にしてください。"  #g
+        # Append your own errors here or at the model/attributes scope.
+
+      # You can define own errors for models or model attributes.
+      # The values :model, :attribute and :value are always available for interpolation.
+      #
+      # For example,
+      #   models:
+      #     user:
+      #       blank: "This is a custom blank message for {{model}}: {{attribute}}"
+      #       attributes:
+      #         login:
+      #           blank: "This is a custom blank message for User login"
+      # Will define custom blank validation message for User model and 
+      # custom blank validation message for login attribute of User model.
+      #models:
+        
+    # Translate model names. Used in Model.human_name().
+    #models:
+      # For example,
+      #   user: "Dude"
+      # will translate User model name to "Dude"
+    
+    # Translate model attribute names. Used in Model.human_attribute_name(attribute).
+    #attributes:
+      # For example,
+      #   user:
+      #     login: "Handle"
+      # will translate User attribute "login" as "Handle"
