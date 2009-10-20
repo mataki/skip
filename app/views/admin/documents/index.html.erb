@@ -28,4 +28,16 @@
   <% end -%>
 <% end -%>
 
-<%= render :partial => '/admin/contents_left' %>
+<% content_for :contents_left do -%>
+<div class="box_space">
+  <div class="box_space_title"><%= _('Admin Menu')%></div>
+  <div class="box_space_body">
+    <ul>
+    <% Admin::DocumentsController::CONTENT_NAMES.each do |name| -%>
+      <%= generate_box_menu_link( s_("Admin::DocumentsController|#{name}"), admin_documents_path(name), request.url == admin_documents_url(name) ) %>
+    <% end -%>
+    </ul>
+  </div>
+  <div class="box_space_bottom"></div>
+</div><!-- box_space -->
+<% end -%>

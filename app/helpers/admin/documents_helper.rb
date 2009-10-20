@@ -14,12 +14,4 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 module Admin::DocumentsHelper
-  def generate_box_menu
-    output = ''
-    output << '<ul>'
-    Admin::DocumentsController::CONTENT_NAMES.each do |name|
-      output << generate_box_menu_link( s_("Admin::DocumentsController|#{name}"), admin_documents_path(name), request.url == admin_documents_url(name) )
-    end
-    output << '</ul>'
-  end
 end

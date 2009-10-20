@@ -29,20 +29,6 @@ module Admin::ApplicationHelper
     output << '</ul>'
   end
 
-  def generate_box_menu
-    output = ''
-    output << '<ul>'
-    output << generate_box_menu_link( _('Users'), admin_users_path, (request.url.include?(admin_users_url) || request.url == admin_root_url || request.url == admin_pictures_url))
-    output << generate_box_menu_link( _('Group Categories'), admin_group_categories_path, request.url.include?(admin_group_categories_url))
-    output << generate_box_menu_link( _('Groups'), admin_groups_path, request.url.include?(admin_groups_url))
-    output << generate_box_menu_link( _('Board Entries'), admin_board_entries_path, request.url.include?(admin_board_entries_url))
-    output << generate_box_menu_link( _('Bookmarks'), admin_bookmarks_path , request.url.include?(admin_bookmarks_url))
-    output << generate_box_menu_link( _('Shared Files'), admin_share_files_path, request.url.include?(admin_share_files_path))
-    output << generate_box_menu_link( _('Profile Categories'), admin_user_profile_master_categories_path, request.url.include?(admin_user_profile_master_categories_path))
-    output << generate_box_menu_link( _('Profile Items'), admin_user_profile_masters_path, request.url.include?(admin_user_profile_masters_path))
-    output << '</ul>'
-  end
-
   def generate_topics_str(topics)
     topics.map do |title, link|
       link_to_if link, h(title), link
