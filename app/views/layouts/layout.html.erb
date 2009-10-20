@@ -22,7 +22,7 @@
             <%= show_picture(@user, :width => 72, :height => 72) %>
           </div>
           <div class="right">
-            <h1 id="title"><%= h user_title @user %></h1>
+            <h1 id="title"><%= h user_title(@user) %></h1>
             <ul class="no_style horizontal">
               <li><%= _('Last Access') %>: <%= @user.before_access %></li>
               <li><%= _('Visits') %>: <%= link_to_if(@user == current_user, h(n_("%{count} visit", "%{count} visits", @user.info[:access_count]) % {:count => @user.info[:access_count]}), {:action => 'trace', :controller => "/mypage"}) -%></li>
