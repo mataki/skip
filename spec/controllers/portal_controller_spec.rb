@@ -208,6 +208,7 @@ describe PortalController, 'POST /apply' do
       it "適切なインスタンス変数が設定されていること" do
         post_apply
         assigns[:user].should_not be_nil
+        assigns[:user].status.should == 'UNUSED'
         assigns[:profiles].should_not be_nil
         assigns[:user_uid].should be_nil
       end
@@ -233,6 +234,7 @@ describe PortalController, 'POST /apply' do
       it "適切なインスタンス変数が設定されていること" do
         post_apply
         assigns[:user].should_not be_nil
+        assigns[:user].status.should == 'UNUSED'
         assigns[:profiles].should_not be_nil
         assigns[:user_uid].should_not be_nil
       end
