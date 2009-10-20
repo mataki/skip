@@ -762,22 +762,6 @@ describe User, '.grouped_sections' do
   it {User.grouped_sections.size.should == 2}
 end
 
-describe User, "#section" do
-  before do
-    @user = User.new
-    @attr = { :email => SkipFaker.email, :name => "名字 名前" }
-  end
-  describe "sectionがわたってきた場合" do
-    describe "全角のsectionの場合" do
-      it "半角に統一されて登録されること" do
-        @user.attributes = @attr.merge!(:section => "INＰUＴ_部署")
-        @user.save!
-        @user.section.should == "INPUT_部署"
-      end
-    end
-  end
-end
-
 describe User, "#find_or_initialize_profiles" do
   before do
     @user = new_user
