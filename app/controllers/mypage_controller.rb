@@ -19,7 +19,7 @@ require "resolv-replace"
 require 'timeout'
 require 'rss'
 class MypageController < ApplicationController
-  before_filter :setup_layout, :except => :manage
+  before_filter :setup_layout
   before_filter :load_user
   skip_before_filter :verify_authenticity_token, :only => :apply_ident_url
 
@@ -482,15 +482,6 @@ class MypageController < ApplicationController
 
   def setup_layout
     @main_menu = @title = _('My Page')
-
-    @tab_menu_source = [ {:label => _('Home'), :options => {:action => 'index'}, :selected_actions => %w(index entries entries_by_date entries_by_antenna)},
-                         {:label => _('Profile'), :options => {:action => 'profile'}} ]
-
-    @tab_menu_source << {:label => _('Blog'), :options => {:action => 'blog'}} unless BoardEntry.owned(current_user).empty?
-    @tab_menu_source << {:label => _('Shared Files'), :options => {:action => 'share_file'}} unless ShareFile.owned(current_user).empty?
-    @tab_menu_source << {:label => _('Socials'), :options => {:action => 'social'}} unless current_user.against_chains.empty?
-    @tab_menu_source << {:label => _('Groups Joined'), :options => {:action => 'group'}} unless current_user.groups.participating(current_user).empty?
-    @tab_menu_source << {:label => _('Bookmarks'), :options => {:action => 'bookmark'}} unless current_user.bookmark_comments.empty?
   end
 
   # アンテナボックス表示のための情報を設定する

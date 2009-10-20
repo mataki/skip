@@ -18,4 +18,4 @@ pkg/*
 *flymake.rb
 *#*#
 *.#*
-
+webrat-*.html

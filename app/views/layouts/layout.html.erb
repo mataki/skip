@@ -30,7 +30,7 @@
             <li><%= _('Days since you registered') %>: <%=h(n_("%{count} day", "%{count} days", @user.info[:using_day]) % {:count => @user.info[:using_day]}) -%></li>
           </ul>
           <br class="clear_left" />
-          <div id="tab_menu"><%= generate_tab_menu(@tab_menu_source || user_tab_menu_source(@user)) %></div>
+          <div id="tab_menu"><%= generate_tab_menu(user_tab_menu_source(@user)) %></div>
         </div>
       </div>
     <% elsif @group and !@group.new_record?%>
