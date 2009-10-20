@@ -24,7 +24,7 @@
           <h1 id="title"><%= h user_title(@user) %></h1>
           <ul class="no_style horizontal">
             <li><%= _('Last Access') %>: <%= @user.before_access %></li>
-            <li><%= _('Visits') %>: <%= link_to_if(@user == current_user, h(n_("%{count} visit", "%{count} visits", @user.info[:access_count]) % {:count => @user.info[:access_count]}), {:action => 'trace', :controller => "/mypage"}) -%></li>
+            <li><%= link_to_if @user == current_user, _('Visits') + ": " +h(n_("%{count} visit", "%{count} visits", @user.info[:access_count]) % {:count => @user.info[:access_count]}), {:action => 'trace', :controller => "/mypage"} -%></li>
             <li><%= _('Subscribers') %>: <%=h(n_("%{count} user", "%{count} users", @user.info[:subscriber_count]) % {:count =>@user.info[:subscriber_count]}) -%></li>
             <li><%= _('Posts') %>: <%=h(n_("%{count} entry", "%{count} entries", @user.info[:blog_count]) % {:count => @user.info[:blog_count]}) -%></li>
             <li><%= _('Days since you registered') %>: <%=h(n_("%{count} day", "%{count} days", @user.info[:using_day]) % {:count => @user.info[:using_day]}) -%></li>
