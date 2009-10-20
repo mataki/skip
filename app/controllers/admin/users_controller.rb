@@ -123,7 +123,7 @@ class Admin::UsersController < Admin::ApplicationController
 
   def import_confirmation
     @topics = [[_('Listing %{model}') % {:model => _('user')}, admin_users_path], _('New users from CSV')]
-    if request.get? || !valid_file?(params[:file], :content_types => ['text/csv', 'application/x-csv', 'application/vnd.ms-excel'])
+    if request.get? || !valid_file?(params[:file], :content_types => ['text/csv', 'application/x-csv', 'application/vnd.ms-excel', 'text/plain'])
       @users = []
       return render(:action => :import)
     end
@@ -141,7 +141,7 @@ class Admin::UsersController < Admin::ApplicationController
   def import
     @topics = [[_('Listing %{model}') % {:model => _('user')}, admin_users_path], _('New users from CSV')]
     @error_row_only = true
-    if request.get? || !valid_file?(params[:file], :content_types => ['text/csv', 'application/x-csv', 'application/vnd.ms-excel'])
+    if request.get? || !valid_file?(params[:file], :content_types => ['text/csv', 'application/x-csv', 'application/vnd.ms-excel', 'text/plain'])
       @users = []
       return
     end
