@@ -82,8 +82,9 @@ end
 def user_login
   session[:user_code] = '111111'
   session[:prepared] = true
-  u = stub_model(User, :symbol => 'uid:user', :admin => false, :name => '一般ユーザ', :crypted_password => '123456789', :code => "111111", :status => "ACTIVE")
+  u = stub_model(User, :symbol => 'uid:user', :admin => false, :name => '一般ユーザ', :crypted_password => '123456789', :code => "111111", :status => "ACTIVE", :created_on => 10.day.ago)
   u.stub!(:active?).and_return(true)
+  u.stub!(:user_access).and_return(stub_model(UserAccess, :access_count => 4, :last_access => 1.day.ago))
   if defined? controller
     controller.stub!(:current_user).and_return(u)
   else

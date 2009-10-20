@@ -50,7 +50,6 @@ describe "Antenna#get_search_conditions" do
 end
 
 describe "Antenna.find_with_counts" do
-  fixtures :users
   # antennaの条件などを作る部分はAntennaItemに持っていった方がよい
   before(:each) do
     @antenna_item = mock_model(AntennaItem)
@@ -59,6 +58,8 @@ describe "Antenna.find_with_counts" do
     @antenna.stub!(:antenna_items).and_return([@antenna_item])
     @antenna.stub!(:get_search_conditions)
 
+    @user = stub_model(User, :belong_symbols => nil)
+
     Antenna.should_receive(:find).and_return([@antenna])
 
     BoardEntry.should_receive(:make_conditions).and_return({:conditions => ['']})
@@ -66,7 +67,7 @@ describe "Antenna.find_with_counts" do
   end
 
   it "アンテナごとの未読記事の数を返す" do
-    antennas = Antenna.find_with_counts(@a_user)
+    antennas = Antenna.find_with_counts(@user)
     antennas.first.count.should == 4
   end
 end
