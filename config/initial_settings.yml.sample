@@ -206,6 +206,7 @@ test:
           links:
             - label: 新しいノートを作る
               url: http://localhost:4000/notes/new
+  default_locale: en
 
 cucumber:
   <<: *default
