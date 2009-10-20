@@ -38,7 +38,7 @@ default: &default
   # ================================================================================================
   host_and_port:                                                    # システムが動作するURLのホスト部分とポート番号（例：localhost:3000 or demo.openskip.org）
   protocol:                                                         # システムが動作する標準のプロトコル(例:http:// or https://)
-  default_locale: ja                                                # メール送信時の言語設定
+  default_locale: ja-JP                                                # メール送信時の言語設定
 
   # ================================================================================================
   # 共有ファイルのファイルサイズの制限に関する設定（単位：バイト）
@@ -183,7 +183,6 @@ default: &default
   initial_antenna:                                                   # 初期登録されるアンテナの名称(利用しない場合設定不要)
   antenna_default_group:                                             # 初期登録されるアンテナに追加するグループIDを配列で指定(利用しない場合設定不要)
   google_analytics:                                                  # Google Analyticsを利用したアクセス解析のための設定
-  default_locale: ja-JP                                              # 指定の無い場合に利用する言語の設定
   help_url: http://help.skipaas.jp/                                  # ヘルプのURL
 
 # 設定例
