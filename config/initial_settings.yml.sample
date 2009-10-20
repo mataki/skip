@@ -183,7 +183,8 @@ default: &default
   initial_antenna:                                                   # 初期登録されるアンテナの名称(利用しない場合設定不要)
   antenna_default_group:                                             # 初期登録されるアンテナに追加するグループIDを配列で指定(利用しない場合設定不要)
   google_analytics:                                                  # Google Analyticsを利用したアクセス解析のための設定
-  default_locale: ja-JP                                                 # 指定の無い場合に利用する言語の設定
+  default_locale: ja-JP                                              # 指定の無い場合に利用する言語の設定
+  help_url: http://help.skipaas.jp/                                  # ヘルプのURL
 
 # 設定例
 #  initial_antenna: SKIP

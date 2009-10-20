@@ -7,8 +7,8 @@
 <% end -%>
 </div>
 
-<% @revert_columns.concat(inform_columns = %w(contact_addr help_url)) -%>
-<h4><%=h _('Help & Support') %></h4>
+<% @revert_columns.concat(inform_columns = %w(contact_addr)) -%>
+<h4><%=h _('Support') %></h4>
 <div class="box tabular">
 <% inform_columns.each do |key| -%>
   <p><%= settings_label_with_text_field_tag key.to_sym %></p>
