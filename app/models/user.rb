@@ -13,8 +13,6 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-require 'jcode'
-
 class User < ActiveRecord::Base
   include Authentication
   include Authentication::ByCookieToken
@@ -111,10 +109,6 @@ class User < ActiveRecord::Base
       end
     end
     alias_method_chain :find, :retired_skip
-  end
-
-  def before_validation
-    self.section = self.section.tr('ａ-ｚＡ-Ｚ１-９','a-zA-Z1-9').upcase unless self.section.blank?
   end
 
   def validate
