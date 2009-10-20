@@ -1,32 +1,27 @@
-<div id="contents_container">
-  <div id="contents_left">
-    <%= render :partial => 'antenna_box', :locals => { :system_antennas => @system_antennas, :my_antennas => @my_antennas } %>
-  </div><!-- contents_left -->
+<% content_for :stylesheet do -%>
+<style type="text/css">
+  div#antenna_navi span.item {
+    border-right: 1px solid #555555;
+    padding-right: 3px;
+    margin-right: 7px;
+  }
+</style>
+<% end -%>
 
-  <div id="contents_right">
-    <style type="text/css">
-    div#antenna_navi span.item {
-      border-right: 1px solid #555555;
-      padding-right: 3px;
-      margin-right: 7px;
-    }
-    </style>
+<%= render :partial => 'contents_left_base' %>
 
-    <div style="text-align:right;">
-      <%= will_paginate_link(@entries) if @entries %>
-    </div>
+<% content_for :contents_right do -%>
+  <div style="text-align:right;">
+    <%= will_paginate_link(@entries) if @entries %>
+  </div>
 
-    <%= render :partial => "page_space",
-               :locals => { :id_name => @id_name,
-                            :title_name => @title_name,
-                            :pages => @entries,
-                            :symbol2name_hash => @symbol2name_hash } %>
+  <%= render :partial => "page_space",
+             :locals => { :id_name => @id_name,
+                          :title_name => @title_name,
+                          :pages => @entries,
+                          :symbol2name_hash => @symbol2name_hash } %>
 
-    <div style="text-align:right;">
-      <%= will_paginate_link(@entries) if @entries %>
-    </div>
-  </div><!-- contents_right -->
-
-  <div id="contents_bottom"></div><!-- contents_bottom -->
-</div><!-- contents_container -->
-
+  <div style="text-align:right;">
+    <%= will_paginate_link(@entries) if @entries %>
+  </div>
+<% end -%>

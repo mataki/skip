@@ -20,7 +20,6 @@ describe MypageController, 'GET #welcome' do
     user_login
   end
   it 'アンテナボックスに必要な情報が設定されること' do
-    controller.should_receive(:setup_for_antenna_box)
     get :welcome
   end
   it 'welcomeに遷移すること' do
@@ -36,13 +35,6 @@ describe MypageController, 'mypage > home 関連' do
       @current_user_info = {:using_day => 1}
       @current_user.stub!(:info).and_return(@current_user_info)
       controller.stub!(:recent_day).and_return(7)
-    end
-    # ============================================================
-    #  left side area
-    # ============================================================
-    it 'アンテナボックスに必要な情報が設定されること' do
-      controller.should_receive(:setup_for_antenna_box)
-      get :index
     end
     # ============================================================
     #  right side area
@@ -174,10 +166,6 @@ describe MypageController, 'mypage > home 関連' do
           controller.should_receive(:find_as_locals).and_return(locals)
           controller.should_receive(:valid_list_types).and_return(['questions'])
         end
-        it 'アンテナボックスに必要な情報が設定されること' do
-          controller.should_receive(:setup_for_antenna_box)
-          get :entries, :list_type => 'questions'
-        end
         it 'id_nameが設定されること' do
           get :entries, :list_type => 'questions'
           assigns[:id_name].should == @id_name
@@ -209,15 +197,10 @@ describe MypageController, 'mypage > home 関連' do
   describe MypageController, 'GET #entries_by_date' do
     before do
       user_login
-      controller.stub!(:setup_for_antenna_box)
       controller.stub!(:parse_date).and_return([2009, 1, 2])
       controller.stub!(:find_entries_at_specified_date)
       controller.stub!(:first_entry_day_after_specified_date)
       controller.stub!(:last_entry_day_before_specified_date)
-    end
-    it 'アンテナボックスに必要な情報が設定されること' do
-      controller.should_receive(:setup_for_antenna_box)
-      get :entries_by_date
     end
     it '日付情報が設定されること' do
       controller.should_receive(:parse_date).and_return([2009, 1, 2])
@@ -260,10 +243,6 @@ describe MypageController, 'mypage > home 関連' do
       controller.stub!(:unread_entry_id_hash_with_user_reading)
       @entries = [stub_model(BoardEntry)]
       controller.stub!(:paginate).and_return(@entries)
-    end
-    it 'アンテナボックスに必要な情報が設定されること' do
-      controller.should_receive(:setup_for_antenna_box)
-      get :entries_by_antenna
     end
     it '@antenna_entryが設定されること' do
       controller.should_receive(:antenna_entry).with(params[:antenna_id], params[:read]).and_return(@antenna_entry)
@@ -661,30 +640,6 @@ describe MypageController, "POST or PUT /update_customize" do
 end
 
 #privateメソッドのspec
-describe MypageController, '#setup_for_antenna_box' do
-  before do
-    @controller = MypageController.new
-    @controller.stub!(:find_system_antennas)
-    @controller.stub!(:find_antennas)
-    @controller.stub!(:current_user).and_return(stub_model(User))
-    @controller.stub!(:login_user_symbols)
-    @controller.stub!(:login_user_groups)
-    Antenna.stub!(:get_system_antennas)
-  end
-  it '@system_antennasが設定されること' do
-    mock_system_antennas = mock('system_antennas')
-    Antenna.should_receive(:get_system_antennas).and_return(mock_system_antennas)
-    @controller.send(:setup_for_antenna_box)
-    @controller.instance_eval{ @system_antennas.should == mock_system_antennas }
-  end
-  it '@my_antennasが設定されること' do
-    mock_my_antennas = mock('my_antennas')
-    @controller.should_receive(:find_antennas).and_return(mock_my_antennas)
-    @controller.send(:setup_for_antenna_box)
-    @controller.instance_eval{ @my_antennas.should == mock_my_antennas }
-  end
-end
-
 describe MypageController, '#parse_date' do
   before do
     @controller = MypageController.new

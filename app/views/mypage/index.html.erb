@@ -2,12 +2,7 @@
   <%= skip_stylesheet_link_tag "themes/cupertino/ui.tabs.css" %>
 <% end -%>
 
-<% content_for :contents_left do -%>
-  <%= render :partial => 'action_box' %>
-  <%= render :partial => 'antenna_box', :locals => { :system_antennas => @system_antennas, :my_antennas => @my_antennas } %>
-  <%= render :partial => 'user/join_groups_box', :locals => { :user => current_user } %>
-  <%= render :partial => 'collaboration_app/operation_boxes' %>
-<% end -%>
+<%= render :partial => 'contents_left_base' %>
 
 <% content_for :contents_right do -%>
   <%# ============================================================ -%>

@@ -1,6 +1,4 @@
-<% content_for :contents_left do -%>
-  <%= render :partial => 'antenna_box', :locals => { :system_antennas => @system_antennas, :my_antennas => @my_antennas } %>
-<% end -%>
+<%= render :partial => 'contents_left_base' %>
 
 <% content_for :contents_right do -%>
   <div class="desc">

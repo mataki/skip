@@ -30,22 +30,12 @@ class MypageController < ApplicationController
          :redirect_to => { :action => :index }
   verify :method => [:post, :put], :only => [ :update_customize], :redirect_to => { :action => :index }
 
-  # welcome画面を表示
-  def welcome
-    setup_for_antenna_box
-  end
-
   # ================================================================================
   #  tab menu actions
   # ================================================================================
 
   # mypage > home
   def index
-    # ============================================================
-    #  left side area
-    # ============================================================
-    setup_for_antenna_box
-
     # ============================================================
     #  right side area
     # ============================================================
@@ -113,7 +103,6 @@ class MypageController < ApplicationController
 
   # mypage > trace(足跡)
   def trace
-    setup_for_antenna_box
     @access_count = current_user.user_access.access_count
     @access_tracks = current_user.tracks
   end
@@ -165,7 +154,6 @@ class MypageController < ApplicationController
     unless valid_list_types.include?(params[:list_type])
       render_404 and return
     end
-    setup_for_antenna_box
     locals = find_as_locals(params[:list_type], {:per_page => 20})
     @id_name = locals[:id_name]
     @title_icon = locals[:title_icon]
@@ -176,7 +164,6 @@ class MypageController < ApplicationController
 
   # 指定日の投稿記事一覧画面を表示
   def entries_by_date
-    setup_for_antenna_box
     year, month, day = parse_date
     @selected_day = Date.new(year, month, day)
     @entries = find_entries_at_specified_date(@selected_day)
@@ -186,7 +173,6 @@ class MypageController < ApplicationController
 
   # アンテナ毎の記事一覧画面を表示
   def entries_by_antenna
-    setup_for_antenna_box
     @antenna_entry = antenna_entry(params[:antenna_id], params[:read])
     @antenna_entry.title = antenna_entry_title(@antenna_entry)
     if @antenna_entry.need_search?
@@ -484,14 +470,8 @@ class MypageController < ApplicationController
     @main_menu = @title = _('My Page')
   end
 
-  # アンテナボックス表示のための情報を設定する
-  def setup_for_antenna_box
-    @system_antennas = Antenna.get_system_antennas(current_user.id, login_user_symbols, login_user_groups)
-    @my_antennas = find_antennas
-  end
-
   def find_antennas
-    Antenna.find_with_counts current_user.id, login_user_symbols
+    Antenna.find_with_counts current_user
   end
 
   # 日付情報を解析して返す。

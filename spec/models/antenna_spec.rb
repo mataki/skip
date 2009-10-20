@@ -50,6 +50,7 @@ describe "Antenna#get_search_conditions" do
 end
 
 describe "Antenna.find_with_counts" do
+  fixtures :users
   # antennaの条件などを作る部分はAntennaItemに持っていった方がよい
   before(:each) do
     @antenna_item = mock_model(AntennaItem)
@@ -65,7 +66,7 @@ describe "Antenna.find_with_counts" do
   end
 
   it "アンテナごとの未読記事の数を返す" do
-    antennas = Antenna.find_with_counts(1, ['uid:a_user'])
+    antennas = Antenna.find_with_counts(@a_user)
     antennas.first.count.should == 4
   end
 end
@@ -90,26 +91,6 @@ describe "Antenna.find_with_included uid:a_userがアンテナに含まれてい
   it "引数にgid:a_groupを与えるとincludeがfalseになる" do
     antennas = Antenna.find_with_included 1, 'gid:a_group'
     antennas.first.included.should be_false
-  end
-end
-
-describe "Antenna.get_system_antennas" do
-  it "すべてのシステムアンテナをロードする" do
-    BoardEntry.stub!(:make_conditions).and_return({ :conditions => ['']})
-    BoardEntry.stub!(:count).and_return(1)
-    @bookmark = mock_model(Bookmark)
-    @bookmark.stub!(:url).and_return('/page/1')
-    Bookmark.stub!(:find).and_return([@bookmark])
-    @user_reading = mock_model(UserReading)
-    @user_reading.stub!(:board_entry_id).and_return(1)
-    UserReading.stub!(:find).and_return([@user_reading])
-
-    antennas = Antenna.get_system_antennas(1,['uid:a_user'],['gid:a_group'])
-    antenna_types = antennas.map{ |antenna| antenna.antenna_type }
-    antenna_types.should be_include('message')
-    antenna_types.should be_include('comment')
-    antenna_types.should be_include('bookmark')
-    antenna_types.should be_include('group')
   end
 end
 

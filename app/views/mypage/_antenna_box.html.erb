@@ -1,6 +1,7 @@
 <%
- system_antennas ||= []
- my_antennas ||= []
+  # TODO cacheする仕組みにしたい
+  system_antennas = Antenna.get_system_antennas(current_user)
+  my_antennas = Antenna.find_with_counts(current_user)
 -%>
 <div class="box_space" style="position: relative;">
   <div style="position: absolute; top: 4px; right: 4px;"><%= icon_tag 'help', :title => _('What is Antenna') + "|" + _('Antenna Description') %></div>
