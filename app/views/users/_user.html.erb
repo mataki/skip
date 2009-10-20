@@ -1,44 +1,14 @@
 <% top_option ||= nil -%>
 <% image_output = user_link_to_with_portrait(user) -%>
-<div class="user_box">
-  <table class="user_box">
-    <tr>
-      <% if top_option -%>
-      <td class="image" rowspan="4"><%= image_output %></td>
-      <td colspan="4"><%= top_option -%></td>
-    </tr>
-    <tr>
-      <% else -%>
-      <td class="image" rowspan="4"><%= image_output %></td>
-      <% end -%>
-      <% if user_name_mode?(:code) -%>
-      <th><%=h Admin::Setting.login_account -%></th>
-      <td><%=h user.code %></td>
-      <% else -%>
-      <td colspan="2"></td>
-      <% end -%>
-      <% if user_name_mode?(:name) -%>
-      <th><%= _('user name') %></th>
-      <td><%=h user.uid %></td>
-      <% else -%>
-      <td colspan="2"></td>
-      <% end -%>
-    </tr>
-    <tr>
-      <th><%=h s_("Admin::User|Name") %></th>
-      <td><%= user_link_to user %></td>
-      <% unless Admin::Setting.hide_email -%>
-      <th><%=h s_("User|Email") %></th>
-      <td><%=h user.email %></td>
-      <% else -%>
-      <td colspan="2"></td>
-      <% end -%>
-    </tr>
-    <tr>
-      <th><%= _('Last Access')%></th>
-      <td><%=h user.before_access %></td>
-      <th><%=h s_('User|Section') %></th>
-      <td><%=h user.section %></td>
-    </tr>
-  </table>
-</div>
+<ul class="user_box">
+  <li class="image" style="list-style: none; border-bottom: 1px dotted silver;">
+    <center><%= image_output %></center>
+    <% top_option if top_option -%>
+  </li>
+  <li style="list-style: none; border-bottom: 1px dotted silver"><center><%= user_link_to user %></center></li>
+  <li style="list-style: none; border-bottom: 1px dotted silver"><center><%=h user.section %></center></li>
+  <li style="list-style: none;"><center><%=h user.before_access %></center></li>
+</ul>
+
+
+

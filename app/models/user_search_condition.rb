@@ -91,14 +91,7 @@ class UserSearchCondition < SearchCondition
   end
 
   def value_of_per_page
-    per_page = 10
-    case @output_type
-    when "normal"
-      per_page = 5
-    when "list"
-      per_page = 20
-    end
-    per_page
+    20
   end
 
   def make_conditions

@@ -25,6 +25,7 @@ module UsersHelper
         render_params.merge!(:locals => {:top_option => user_state(user)}) if options[:output_group_participation]
         output << render(render_params)
       end
+      output << "<br clear='left'>"
     else
       columns = [ Admin::Setting.login_account, 'uid', 'name', 'email', 'section' ]
       columns.delete(Admin::Setting.login_account) unless user_name_mode?(:code)
