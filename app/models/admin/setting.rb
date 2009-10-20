@@ -22,6 +22,37 @@ class Admin::Setting < ActiveRecord::Base
   # ================================================================================================
   # 全体設定用
   # ================================================================================================
+  # 名称,名前
+  N_('Admin::Setting|Abbr app title')
+  N_('Admin::Setting|Abbr app title description')
+  N_('Admin::Setting|Login account')
+  N_('Admin::Setting|Login account description')
+  N_('Admin::Setting|Point button')
+  N_('Admin::Setting|Point button description')
+
+  # お問い合わせ,ヘルプ
+  N_('Admin::Setting|Contact addr')
+  N_('Admin::Setting|Contact addr description')
+  N_('Admin::Setting|Help url')
+  N_('Admin::Setting|Help url description')
+
+  # フッター
+  N_('Admin::Setting|Footer first')
+  N_('Admin::Setting|Footer first description')
+  N_('Admin::Setting|Footer second')
+  N_('Admin::Setting|Footer second description')
+
+  # メール関連の設定用
+  N_('Admin::Setting|Mail function setting')
+  N_('Admin::Setting|Mail function setting description')
+  N_('Admin::Setting|Contact mail contain contents')
+  N_('Admin::Setting|Contact mail contain contents description')
+  N_('Admin::Setting|Host and port')
+  N_('Admin::Setting|Host and port description')
+  N_('Admin::Setting|Protocol')
+  N_('Admin::Setting|Protocol description')
+
+  # その他
   N_('Admin::Setting|Stop new user')
   N_('Admin::Setting|Stop new user description')
   N_('Admin::Setting|Hide email')
@@ -32,54 +63,6 @@ class Admin::Setting < ActiveRecord::Base
   N_('Admin::Setting|Enable change picture description')
   N_('Admin::Setting|Access record limit')
   N_('Admin::Setting|Access record limit description')
-
-  # ================================================================================================
-  # 各種文言の設定用
-  # ================================================================================================
-  N_('Admin::Setting|Abbr app title')
-  N_('Admin::Setting|Abbr app title description')
-  N_('Admin::Setting|Contact addr')
-  N_('Admin::Setting|Contact addr description')
-  N_('Admin::Setting|Help url')
-  N_('Admin::Setting|Help url description')
-  N_('Admin::Setting|Initial anntena')
-  N_('Admin::Setting|Initial anntena description')
-  N_('Admin::Setting|Login account')
-  N_('Admin::Setting|Login account description')
-  N_('Admin::Setting|Footer first')
-  N_('Admin::Setting|Footer first description')
-  N_('Admin::Setting|Footer second')
-  N_('Admin::Setting|Footer second description')
-  N_('Admin::Setting|Footer image link url')
-  N_('Admin::Setting|Footer image link url description')
-  N_('Admin::Setting|Point button')
-  N_('Admin::Setting|Point button description')
-
-  # ================================================================================================
-  # メール関連の設定用
-  # ================================================================================================
-  N_('Admin::Setting|Mail function setting')
-  N_('Admin::Setting|Mail function setting description')
-  N_('Admin::Setting|Contact mail contain contents')
-  N_('Admin::Setting|Contact mail contain contents description')
-  N_('Admin::Setting|Smtp settings')
-  N_('Admin::Setting|Smtp settings description')
-  N_('Admin::Setting|Smtp settings password')
-  N_('Admin::Setting|Smtp settings password description')
-  N_('Admin::Setting|Smtp settings port')
-  N_('Admin::Setting|Smtp settings port description')
-  N_('Admin::Setting|Smtp settings user name')
-  N_('Admin::Setting|Smtp settings user name description')
-  N_('Admin::Setting|Smtp settings address')
-  N_('Admin::Setting|Smtp settings address description')
-  N_('Admin::Setting|Smtp settings domain')
-  N_('Admin::Setting|Smtp settings domain description')
-  N_('Admin::Setting|Smtp settings authentication')
-  N_('Admin::Setting|Smtp settings authentication description')
-  N_('Admin::Setting|Host and port')
-  N_('Admin::Setting|Host and port description')
-  N_('Admin::Setting|Protocol')
-  N_('Admin::Setting|Protocol description')
 
   # ================================================================================================
   # RSSフィードの設定用

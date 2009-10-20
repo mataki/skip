@@ -65,6 +65,16 @@ default: &default
   # メールに関する設定
   # ================================================================================================
   raise_delivery_errors: false                                       # メール送信に失敗した場合のエラー処理を行なうか
+  # 通常のメール関連機能のための設定
+  mail:
+    smtp_settings:
+      :address:    localhost
+      :port:       25
+      :domain:     localhost.localdomain
+      :user_name:
+      :password:
+      :authentication:
+      :tls:        false                                             # ruby 1.8.6以下でtlsを有効にする場合はtrueにする
   # システムにエラーが発生した場合にエラーメールを送信するための設定
   exception_notifier:
     enable: false                                                    # システムエラーをシステム運用担当者にメールするかどうか
@@ -77,6 +87,7 @@ default: &default
       :user_name:
       :password:
       :authentication:
+      :tls:        false                                             # ruby 1.8.6以下でtlsを有効にする場合はtrueにする
 
   # ================================================================================================
   # アカウントに関する設定

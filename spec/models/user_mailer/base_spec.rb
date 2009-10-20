@@ -24,16 +24,21 @@ describe UserMailer::Base, "#smtp_settings" do
     ActionMailer::Base.raise_delivery_errors = true
   end
   before do
-    Admin::Setting.stub!(:smtp_settings_domain).and_return("domain")
-    Admin::Setting.stub!(:smtp_settings_user_name).and_return("user_name")
-    Admin::Setting.stub!(:smtp_settings_password).and_return("password")
-    Admin::Setting.stub!(:smtp_settings_authentication).and_return(:login)
+    mail_settings = {'smtp_settings' => {
+      :domain => 'domain',
+      :user_name => 'user_name',
+      :password => 'password',
+      :authentication => :login
+    }}
+    SkipEmbedded::InitialSettings.stub!("[]").with('mail').and_return(mail_settings)
+    SkipEmbedded::InitialSettings.stub!("[]").with('protocol').and_return('protocol')
+    SkipEmbedded::InitialSettings.stub!("[]").with('host_and_port').and_return('host_and_port')
     @smtp = mock('smtp')
     @smtp.stub!(:sendmail)
     Net::SMTP.should_receive(:new).and_return(@smtp)
     @smtp.stub!(:start).and_yield(@smtp)
   end
-  it "Net::SMTPメソッドでDBの内容を利用して送信すること" do
+  it "Net::SMTPメソッドで設定の内容を利用して送信すること" do
     @smtp.should_receive(:start).with("domain", "user_name", "password", :login, nil).and_yield(@smtp)
     UserMailer::Smtp.deliver_sent_forgot_password("test@test.com", "password")
   end

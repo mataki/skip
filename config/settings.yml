@@ -65,20 +65,6 @@ mail_function_setting:    # メール関連項目の表示制御(メールアド
 contact_mail_contain_contents:
   format: boolean
   default: false
-smtp_settings_address:
-  default: localhost
-smtp_settings_port:
-  format: int
-  default: 25
-smtp_settings_domain:
-  default: localhost.localdomain
-smtp_settings_user_name:
-  default:
-smtp_settings_password:
-  default:
-smtp_settings_authentication:
-  format: symbol
-  default:
 host_and_port:
   default: localhost:3000
 protocol:

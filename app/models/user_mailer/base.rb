@@ -51,13 +51,7 @@ private
     ERB::Util.html_escape(Admin::Setting.abbr_app_title)
   end
 
-
   def smtp_settings
-    { :address => Admin::Setting.smtp_settings_address,
-      :port => Admin::Setting.smtp_settings_port,
-      :domain => Admin::Setting.smtp_settings_domain,
-      :user_name => Admin::Setting.smtp_settings_user_name.blank? ? nil : Admin::Setting.smtp_settings_user_name,
-      :password => Admin::Setting.smtp_settings_password.blank? ? nil : Admin::Setting.smtp_settings_password,
-      :authentication => Admin::Setting.smtp_settings_authentication.blank? ? nil : Admin::Setting.smtp_settings_authentication }
+    SkipEmbedded::InitialSettings['mail']['smtp_settings']
   end
 end
