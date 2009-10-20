@@ -125,13 +125,6 @@ div.errorExplanation
   :border 1px solid pink
   :display block
 
-
-// ショートカットの常時表示にショートカットを横に並べる
-// ------------------------------------------------------------
-div#global_shortcut
-  :border-bottom = !base_border
-  :text-align right
-
 // サイドカラムに配置するボックス
 // TODO box_spaceではなく、box.sideにしたい。
 // ------------------------------------------------------------
@@ -500,6 +493,11 @@ div#statusbar
   span
     :margin 0 3px
     :vertical-align middle
+
+div#header
+  div#search
+    select
+      :margin 3px 0 0
 
 // ============================================================
 // 3. 通常機能

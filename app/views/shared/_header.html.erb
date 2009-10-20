@@ -48,6 +48,9 @@
       <%= text_field_tag "full_text_query", search_label, :class => "labeled-field" %>
       <%= submit_tag _('Search') -%>
     <% end -%>
+    <% if current_user && current_user.custom.always_show_shortcut -%>
+      <%= shortcut_menus %>
+    <% end -%>
   </div>
   <% content_for :javascript_initializers do -%>
     $j('input#full_text_query').labeledTextField(<%= {:message => search_label}.to_json %>);
@@ -59,9 +62,3 @@
     <%= global_links if current_user && current_user.active? %>
   </div>
 </div>
-
-<% if current_user && current_user.custom.always_show_shortcut -%>
-<div id="global_shortcut">
-  <%= shortcut_menus %>
-</div>
-<% end -%>
