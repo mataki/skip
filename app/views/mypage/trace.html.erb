@@ -7,8 +7,6 @@
     <p><%= _("Showing total access count of all your pages and recent visitors (max. 30).<br/>\nOnly the newest access is shown in case a user has visited multiple times in a day.")%></p>
   </div>
 
-  <div class="access_count"><%= _('Access Count: ')%><%= h @access_count %></div>
-
   <ul class="access_tracks">
     <% @access_tracks.each do |track| -%>
       <li>
