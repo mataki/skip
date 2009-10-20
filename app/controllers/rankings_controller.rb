@@ -79,53 +79,6 @@ class RankingsController < ApplicationController
     end
   end
 
-  def statistics
-    @date = Date.today
-    if (params[:year] and params[:month] and params[:day])
-      @date = Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i)
-      @site_count = SiteCount.get_by_date(@date) || SiteCount.new
-    else
-      @site_count = SiteCount.find(:first, :order => "created_on desc") || SiteCount.new
-    end
-    flash[:notice] = _('Data not found.') if @site_count.new_record?
-    @item_count = get_site_count_hash_by_day @date
-  end
-
-  def load_calendar
-    render :partial => "shared/calendar",
-           :locals => { :sel_year => params[:year].to_i,
-                        :sel_month => params[:month].to_i,
-                        :sel_day => nil,
-                        :item_count => get_site_count_hash_by_day(Date.new(params[:year].to_i, params[:month].to_i)),
-                        :action => 'statistics'}
-  end
-
-  # ajax_action
-  def ado_current_statistics
-    date = Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i)
-    site_count = SiteCount.find(:first,
-                                :conditions => ["DATE_FORMAT(created_on, '%Y-%m-%d') = ?", date.strftime('%Y-%m-%d')]) || SiteCount.new #"
-    render :partial => "current_statistics", :locals => { :site_count => site_count }
-  end
-
-  # ajax_action
-  def ado_statistics_history
-    unless SiteCount::STATISTICS_KEYS.include? params[:category]
-      return head(:bad_request)
-    end
-    # parse出来ないケースで例外を起こして現在時刻を設定するため
-    date = Time.parse("#{params[:year]}/#{params[:month]}", 0) rescue Time.now
-    site_counts = SiteCount.all :conditions => ["DATE_FORMAT(created_on, '%Y-%m') = ?", date.strftime('%Y-%m')]
-    values = site_counts.map { |site_count| site_count[params[:category]] }
-    render :partial => 'monthly_history',
-           :locals => { :site_counts => site_counts,
-                        :category => params[:category],
-                        :date => date,
-                        :max_value => values.max,
-                        :min_value => values.min },
-           :layout => false
-  end
-
   def bookmark
     # parse出来ないケースで例外を起こして現在時刻を設定するため
     @target_date = Time.parse(params[:target_date], 0) rescue Time.now
@@ -156,18 +109,7 @@ class RankingsController < ApplicationController
 
     @tab_menu_source = [ {:label => _('Monthly Rankings'), :options => {:action => 'monthly'}},
                          {:label => _('Overall Rankings'), :options => {:action => 'all'}},
-                         {:label => _('Popular Bookmarks'), :options => {:action => 'bookmark'}},
-                         {:label => _('Site Information'), :options => {:action => 'statistics'}} ]
-  end
-
-  def get_site_count_hash_by_day date
-    site_counts = SiteCount.find(:all,
-                                 :conditions => ["DATE_FORMAT(created_on, '%Y-%m') = ?", date.strftime('%Y-%m')]) #"
-    result = {}
-    site_counts.each do |site_count|
-      result[site_count.created_on.day] = 1
-    end
-    return result
+                         {:label => _('Popular Bookmarks'), :options => {:action => 'bookmark'}} ]
   end
 
   def validate_time(year, month)

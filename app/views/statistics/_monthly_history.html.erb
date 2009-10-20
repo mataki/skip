@@ -39,7 +39,7 @@ $j(function() {
     // 各日時点の指標値を表示
     $j('.current_statistics_link')
     .click(function() {
-        var url = relative_url_root + '/rankings/ado_current_statistics';
+        var url = relative_url_root + '/statistics/ado_current_statistics';
         $j.ajax({
             url: url,
             data: { year: this.id.split('_')[3],

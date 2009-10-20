@@ -352,7 +352,10 @@ module ApplicationHelper
   def global_links
     links = ''
     links << content_tag(:span, link_to(icon_tag('house', :title => _('My Page')) + _('My Page'), root_url), :class => 'home_link')
-    links << content_tag(:span, link_to(icon_tag('chart_bar', :title => _('Rankings')) + _('Rankings'), :controller => '/rankings', :action => 'index'), :class => 'ranking_link')
+    other_links = []
+    other_links << link_to(icon_tag('chart_bar', :title => _('Rankings')) + _('Rankings'), :controller => '/rankings', :action => 'index')
+    other_links << link_to(icon_tag('chart_curve', :title => _('Site Information')) + _('Site Information'), :controller => '/statistics')
+    links << content_tag(:span, other_links, :class => 'other_links')
     search_links = []
     search_links << link_to(icon_tag('report', :title => _('Entries')) + _('Entries'),  :controller => '/search', :action => 'entry_search') if BoardEntry.count > 0
     search_links << link_to(icon_tag('disk_multiple', :title => _('Files')) + _('Files'),  :controller => '/search', :action => 'share_file_search') if ShareFile.count > 0
