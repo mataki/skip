@@ -211,6 +211,7 @@ test:
 cucumber:
   <<: *default
   delivery_method: test
+  default_locale: en
 
 production:
   <<: *default
