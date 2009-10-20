@@ -91,6 +91,7 @@ class PortalController < ApplicationController
     @error_msg.concat @user.errors.full_messages.reject{|msg| msg.include?("User uid") } unless @user.valid?
     @error_msg.concat @user_uid.errors.full_messages if @user_uid and @user_uid.errors
     @error_msg.concat SkipUtil.full_error_messages(@profiles)
+    @user.status = 'UNUSED'
 
     render :action => :registration
   end
