@@ -5,7 +5,6 @@ db/schema.rb
 log/*.log*
 public/custom/*.html
 public/custom/*
-public/javascripts/prototype.all.js
 public/javascripts/jquery.all.js
 public/javascripts/skip_embedded.js
 public/services/skip_reflect_customized.js
