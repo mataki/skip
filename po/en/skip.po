@@ -2689,13 +2689,13 @@ msgstr ""
 
 #: app/views/mypage/_action_box.html.erb:8
 msgid "Create a new bookmark"
-msgstr ""
+msgstr "Create a bookmark"
 
 #: app/controllers/groups_controller.rb:44
 #: app/controllers/groups_controller.rb:52
 #: app/views/mypage/_action_box.html.erb:9
 msgid "Create a new group"
-msgstr ""
+msgstr "Create a group"
 
 #: app/views/admin/users/first.html.erb:2
 msgid "Create administrative user"
