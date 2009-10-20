@@ -14,6 +14,8 @@
     <%= _('Now loading...') %><br/><%= image_tag 'indicator_bar.gif', :alt => _('Now loading...') %>
   </div>
 
+  <%= yield :contents_top %>
+
   <div id="panel" class="ui-corner-all" style="_width: 98%;">
     <% if @user and !@user.new_record? and @user.active? %>
       <div class="panel_top">

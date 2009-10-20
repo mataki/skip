@@ -2,6 +2,28 @@
   <%= skip_stylesheet_link_tag "themes/cupertino/ui.tabs.css" %>
 <% end -%>
 
+<% content_for :contents_top do -%>
+  <% if (@message_array.size > 0) or (@waiting_groups.size > 0) or (@system_messages.size > 0) -%>
+    <div class="top_info system_message ui-corner-all">
+      <% @system_messages.each do |message| -%>
+        <div class="item">
+          <%= link_to(icon_tag(message[:icon]) + h(message[:text]), message[:option]) %>
+        </div>
+      <% end -%>
+      <% @message_array.each do |message| -%>
+        <div class="item">
+          <%= link_to(icon_tag(Message::MESSAGE_TYPES[message[:message_type]][:icon_name]) + h(message[:message]), message[:link_url]) %>
+        </div>
+      <% end -%>
+      <% @waiting_groups.each do |group| -%>
+        <div class="item">
+          <%= item_link_to(group, {:view_text=>( icon_tag('group') + _('New user is waiting for approval in %s') % h(group.name) )}) %>
+        </div>
+      <% end -%>
+    </div>
+  <% end -%>
+<% end -%>
+
 <%= render :partial => 'contents_left_base' %>
 
 <% content_for :contents_right do -%>
@@ -19,25 +41,6 @@
     <%# ============================================================ -%>
     <%#  main area top messages -%>
     <%# ============================================================ -%>
-    <% if (@message_array.size > 0) or (@waiting_groups.size > 0) or (@system_messages.size > 0) -%>
-    <div class="top_info system_message ui-corner-all">
-      <% @system_messages.each do |message| -%>
-      <div class="item">
-        <%= link_to(icon_tag(message[:icon]) + h(message[:text]), message[:option]) %>
-      </div>
-      <% end -%>
-      <% @message_array.each do |message| -%>
-      <div class="item">
-        <%= link_to(icon_tag(Message::MESSAGE_TYPES[message[:message_type]][:icon_name]) + h(message[:message]), message[:link_url]) %>
-      </div>
-      <% end -%>
-      <% @waiting_groups.each do |group| -%>
-      <div class="item">
-        <%= item_link_to(group, {:view_text=>( icon_tag('group') + _('New user is waiting for approval in %s') % h(group.name) )}) %>
-      </div>
-      <% end -%>
-    </div>
-    <% end -%>
 
     <% if (@important_your_messages.size > 0) %>
     <div class="top_info important_message ui-corner-all">
