@@ -31,14 +31,6 @@ class SkipDefaultData
     base_category.user_profile_masters.create! :name => _('Contact Information'), :input_type => 'text_field', :sort_order => 10, :option_values => '', :description => ''
     base_category.user_profile_masters.create! :name => _('Self Introduction'),   :input_type => 'rich_text',  :sort_order => 20, :option_values => '', :description => _('Write about your current and past jobs, your interests and concerns.')
 
-    other_category = UserProfileMasterCategory.create! :name => _('Other Information'), :sort_order => 20, :description => _('(optional)')
-    other_category.user_profile_masters.create! :name => _('Sex'),           :input_type => 'radio',             :sort_order => 10, :option_values => sexes,           :description => ''
-    other_category.user_profile_masters.create! :name => _('Year Joined'),   :input_type => 'year_select',       :sort_order => 20, :option_values => '1960-',         :description => ''
-    other_category.user_profile_masters.create! :name => _('Date of Birth'), :input_type => 'datepicker',        :sort_order => 30, :option_values => '',              :description => ''
-    other_category.user_profile_masters.create! :name => _('Hometown'),      :input_type => 'prefecture_select', :sort_order => 40, :option_values => '',              :description => ''
-    other_category.user_profile_masters.create! :name => _('Alma Mater'),    :input_type => 'appendable_select', :sort_order => 50, :option_values => '',              :description => _('Approximate location (xx District) is just fine (for finding your neighbors).')
-    other_category.user_profile_masters.create! :name => _('Hobbies'),       :input_type => 'check_box',         :sort_order => 60, :option_values => default_hobbies, :description => ''
-    other_category.user_profile_masters.create! :name => _('Introduction'),  :input_type => 'rich_text',         :sort_order => 70, :option_values => '',              :description => _('Tell us a little about you in the day off, e.g. the details of your hobbies or how you spend your holidays.')
   end
 
   def self.load_html lang = nil
