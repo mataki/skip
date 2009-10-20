@@ -24,7 +24,7 @@ describe Picture, '#validate' do
     end
     it 'プロフィール画像が変更出来ないエラーが設定されること' do
       @picture.valid?
-      @picture.errors.full_messages.should == [' Picture could not be changed.']
+      @picture.errors.full_messages.should == ['Picture could not be changed.']
     end
     it '保存に失敗すること' do
       @picture.valid?.should be_false

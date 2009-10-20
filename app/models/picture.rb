@@ -37,8 +37,8 @@ class Picture < ActiveRecord::Base
   end
 
   def validate
-    errors.add("", _("Picture could not be changed.")) unless Admin::Setting.enable_change_picture
-    errors.add("", _("File size too large.")) if @filesize > 65535
+    errors.add_to_base(_("Picture could not be changed.")) unless Admin::Setting.enable_change_picture
+    errors.add_to_base(_("File size too large.")) if @filesize > 65535
   end
 
   def base_part_of(file_name)

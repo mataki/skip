@@ -51,4 +51,4 @@ Feature: 一般ユーザが自身のプロフィール画像を管理する
     When    "ファイル"としてファイル"spec/fixtures/data/too_large_profile.png"をContent-Type"image/png"として添付する
     And     "アップロード"ボタンをクリックする
 
-    Then    flashメッセージに" ファイルサイズが大きすぎます。"と表示されていること
+    Then    flashメッセージに"ファイルサイズが大きすぎます。"と表示されていること
