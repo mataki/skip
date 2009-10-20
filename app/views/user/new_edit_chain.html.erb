@@ -8,7 +8,6 @@
 
 <% content_for :contents_right do -%>
 <div class="desc"><%= _("Introduce %s to others!") % h(@user.name)%></div>
-<%= render(:partial => "users/user", :object => @user) %>
 <div class="edit_form_space richtext">
 <% form_tag :action => @submit_action, :uid => @user.uid do -%>
   <%= template_error_messages_for 'chain' %>

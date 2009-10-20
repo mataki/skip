@@ -1,7 +1,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="Content-Script-Type" content="text/javascript" />
 <%= favicon_include_tag %>
-<title><%= h title %> - <%= h Admin::Setting.abbr_app_title %></title>
+
+<title><%= h(title.blank? ? Admin::Setting.abbr_app_title : "#{title} - #{Admin::Setting.abbr_app_title}") %></title>
 
 <%= all_stylesheet_link_tag "style" %>
 <%= stylesheet_link_tag 'not_logged_in' unless logged_in? %>

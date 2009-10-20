@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-10-19 20:31+0900\n"
+"POT-Creation-Date: 2009-10-20 14:22+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,9 +38,8 @@ msgid ""
 "the system."
 msgstr ""
 
-#: app/models/board_entry.rb:369 app/views/bookmark/list.html.erb:54
-#: app/views/bookmark/show.html.erb:24
-#: app/views/mypage/entries_by_date.html.erb:14
+#: app/models/board_entry.rb:369 app/views/mypage/entries_by_date.html.erb:14
+#: app/views/bookmark/list.html.erb:54 app/views/bookmark/show.html.erb:24
 #: app/views/rankings/bookmark.html.erb:2
 #: app/views/rankings/bookmark.html.erb:4
 #: app/views/rankings/bookmark.html.erb:7
@@ -81,9 +80,9 @@ msgstr ""
 msgid "%m/%Y"
 msgstr ""
 
-#: app/views/rankings/_current_statistics.html.erb:1
-#: app/views/search/entry_search.html.erb:32
 #: app/views/share_file/_share_file_box.html.erb:30
+#: app/views/search/entry_search.html.erb:32
+#: app/views/rankings/_current_statistics.html.erb:1
 msgid "%m/%d/%Y %H:%M"
 msgstr ""
 
@@ -171,25 +170,25 @@ msgstr ""
 msgid "%{model} Show"
 msgstr ""
 
+#: app/controllers/admin/pictures_controller.rb:53
 #: app/controllers/admin/admin_module.rb:138
 #: app/controllers/admin/admin_module.rb:249
-#: app/controllers/admin/pictures_controller.rb:53
 msgid "%{model} was successfully created."
 msgstr ""
 
+#: app/controllers/admin/groups_controller.rb:24
+#: app/controllers/admin/user_profile_master_categories_controller.rb:28
 #: app/controllers/admin/admin_module.rb:173
 #: app/controllers/admin/admin_module.rb:287
 #: app/controllers/admin/board_entries_controller.rb:28
-#: app/controllers/admin/groups_controller.rb:24
-#: app/controllers/admin/user_profile_master_categories_controller.rb:28
 msgid "%{model} was successfully deleted."
 msgstr ""
 
+#: app/controllers/admin/openid_identifiers_controller.rb:35
+#: app/controllers/admin/pictures_controller.rb:82
 #: app/controllers/admin/admin_module.rb:157
 #: app/controllers/admin/admin_module.rb:271
 #: app/controllers/admin/oauth_providers_controller.rb:25
-#: app/controllers/admin/openid_identifiers_controller.rb:35
-#: app/controllers/admin/pictures_controller.rb:82
 #: app/controllers/admin/user_profiles_controller.rb:35
 msgid "%{model} was successfully updated."
 msgstr ""
@@ -229,8 +228,8 @@ msgstr[1] ""
 msgid "%{rslt} to %{type}."
 msgstr "%{type}%{rslt}。"
 
-#: app/controllers/admin/documents_controller.rb:98
 #: app/controllers/admin/images_controller.rb:148
+#: app/controllers/admin/documents_controller.rb:98
 msgid "%{target} was successfully saved."
 msgstr ""
 
@@ -303,10 +302,6 @@ msgstr ""
 
 #: app/views/bookmark/new.html.erb:23
 msgid "(Will open as a new window)"
-msgstr ""
-
-#: lib/skip_default_data.rb:34
-msgid "(optional)"
 msgstr ""
 
 #: app/views/group/_form.html.erb:7
@@ -431,8 +426,8 @@ msgid_plural "Accesses(%s)"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/views/portal/_registration_form.html.erb:7
 #: app/views/portal/account_registration.html.erb:10
+#: app/views/portal/_registration_form.html.erb:7
 msgid "Account Information"
 msgstr ""
 
@@ -490,9 +485,9 @@ msgstr ""
 msgid "Activation|Updated at"
 msgstr ""
 
-#: app/views/antenna/_select_antenna.html.erb:43
 #: app/views/mypage/_manage_antenna.html.erb:31
 #: app/views/mypage/_manage_antenna.html.erb:133
+#: app/views/antenna/_select_antenna.html.erb:43
 msgid "Add"
 msgstr ""
 
@@ -546,11 +541,12 @@ msgstr ""
 msgid "Admin"
 msgstr ""
 
-#: app/views/admin/_contents_left.html.erb:3
 #: app/views/group/_manage_info.html.erb:3
-#: app/views/group/_manage_participations.html.erb:27
 #: app/views/group/_manage_permit.html.erb:4
+#: app/views/group/_manage_participations.html.erb:27
 #: app/views/mypage/_manage_menu.html.erb:2
+#: app/views/admin/documents/index.html.erb:33
+#: app/views/admin/_data_menu_box.html.erb:3
 msgid "Admin Menu"
 msgstr ""
 
@@ -626,8 +622,8 @@ msgstr ""
 msgid "Admin::Bookmark|Url"
 msgstr ""
 
-#: app/controllers/admin/documents_controller.rb:110
 #: app/helpers/admin/application_helper.rb:24
+#: app/controllers/admin/documents_controller.rb:110
 msgid "Admin::DocumentsController"
 msgstr ""
 
@@ -963,8 +959,8 @@ msgstr ""
 msgid "Admin::OauthProvider"
 msgstr ""
 
-#: app/controllers/admin/oauth_providers_controller.rb:31
 #: app/helpers/admin/application_helper.rb:28
+#: app/controllers/admin/oauth_providers_controller.rb:31
 msgid "Admin::OauthProvidersController"
 msgstr ""
 
@@ -982,23 +978,23 @@ msgstr ""
 msgid "Admin::Picture|File"
 msgstr ""
 
-#: app/controllers/admin/settings_controller.rb:23
 #: app/helpers/admin/application_helper.rb:26
+#: app/controllers/admin/settings_controller.rb:23
 msgid "Admin::SettingsController|feed"
 msgstr ""
 
-#: app/controllers/admin/settings_controller.rb:22
 #: app/helpers/admin/application_helper.rb:25
+#: app/controllers/admin/settings_controller.rb:22
 msgid "Admin::SettingsController|mail"
 msgstr ""
 
-#: app/controllers/admin/settings_controller.rb:21
 #: app/helpers/admin/application_helper.rb:21
+#: app/controllers/admin/settings_controller.rb:21
 msgid "Admin::SettingsController|main"
 msgstr ""
 
-#: app/controllers/admin/settings_controller.rb:24
 #: app/helpers/admin/application_helper.rb:27
+#: app/controllers/admin/settings_controller.rb:24
 msgid "Admin::SettingsController|security"
 msgstr ""
 
@@ -1599,9 +1595,9 @@ msgstr ""
 msgid "Admin::User|Locked description"
 msgstr ""
 
-#: app/models/admin/user.rb:28 app/views/admin/users/import.html.erb:21
+#: app/models/admin/user.rb:28 app/views/user/show.html.erb:39
 #: app/views/portal/_registration_form.html.erb:16
-#: app/views/user/show.html.erb:39 app/views/users/_user.html.erb:28
+#: app/views/admin/users/import.html.erb:21 app/views/users/_user.html.erb:28
 msgid "Admin::User|Name"
 msgstr ""
 
@@ -1671,7 +1667,7 @@ msgid ""
 "contact {contact_link} in case of failure."
 msgstr ""
 
-#: app/helpers/groups_helper.rb:22 app/helpers/users_helper.rb:64
+#: app/helpers/users_helper.rb:64 app/helpers/groups_helper.rb:22
 #: app/views/group/_manage_participations.html.erb:47
 #: app/views/group/_manage_participations.html.erb:58
 #: app/views/group/show.html.erb:54
@@ -1684,13 +1680,13 @@ msgid ""
 "Log in with another admin account to do so."
 msgstr ""
 
-#: app/views/admin/users/change_uid.html.erb:6
 #: app/views/admin/users/create_uid.html.erb:6
+#: app/views/admin/users/change_uid.html.erb:6
 msgid "Admin|Create Change Uid|Caution"
 msgstr ""
 
-#: app/views/admin/users/change_uid.html.erb:7
 #: app/views/admin/users/create_uid.html.erb:7
+#: app/views/admin/users/change_uid.html.erb:7
 msgid "Admin|Create Change Uid|Caution Description"
 msgstr ""
 
@@ -1705,10 +1701,6 @@ msgstr ""
 
 #: app/views/edit/edit.html.erb:9
 msgid "All changes will be discarded. Are you sure to proceed?"
-msgstr ""
-
-#: lib/skip_default_data.rb:39
-msgid "Alma Mater"
 msgstr ""
 
 #: app/views/platform/forgot_openid.html.erb:3
@@ -1850,11 +1842,6 @@ msgstr ""
 msgid "Approve Member"
 msgstr ""
 
-#: lib/skip_default_data.rb:39
-msgid ""
-"Approximate location (xx District) is just fine (for finding your neighbors)."
-msgstr ""
-
 #: app/helpers/calendar_helper.rb:76
 msgid "April"
 msgstr ""
@@ -1868,13 +1855,13 @@ msgid "Are you sure leave the group?"
 msgstr ""
 
 #: app/helpers/share_file_helper.rb:26
-#: app/views/board_entries/_board_entry_comment.html.erb:15
-#: app/views/bookmark/list.html.erb:69 app/views/edit/edit.html.erb:16
 #: app/views/entries/_entry_detail.html.erb:306
+#: app/views/edit/edit.html.erb:16 app/views/pictures/new.html.erb:20
+#: app/views/board_entries/_board_entry_comment.html.erb:15
 #: app/views/group/_manage_info.html.erb:22
 #: app/views/mypage/_manage_antenna.html.erb:87
 #: app/views/mypage/_manage_antenna.html.erb:173
-#: app/views/pictures/new.html.erb:20 app/views/share_file/list.html.erb:72
+#: app/views/share_file/list.html.erb:72 app/views/bookmark/list.html.erb:69
 msgid "Are you sure to delete?"
 msgstr ""
 
@@ -1890,18 +1877,18 @@ msgstr ""
 msgid "Are you sure to send email to all users?"
 msgstr ""
 
-#: app/views/admin/board_entries/index.html.erb:34
-#: app/views/admin/bookmark_comments/index.html.erb:30
-#: app/views/admin/bookmarks/index.html.erb:19
-#: app/views/admin/group_categories/index.html.erb:29
-#: app/views/admin/group_participations/index.html.erb:30
-#: app/views/admin/groups/index.html.erb:33
-#: app/views/admin/openid_identifiers/index.html.erb:18
 #: app/views/admin/pictures/index.html.erb:29
+#: app/views/admin/board_entries/index.html.erb:34
 #: app/views/admin/share_files/index.html.erb:36
+#: app/views/admin/bookmarks/index.html.erb:19
+#: app/views/admin/groups/index.html.erb:33
+#: app/views/admin/bookmark_comments/index.html.erb:30
+#: app/views/admin/openid_identifiers/index.html.erb:18
+#: app/views/admin/group_participations/index.html.erb:30
+#: app/views/admin/group_categories/index.html.erb:29
 #: app/views/admin/user_profile_master_categories/index.html.erb:18
-#: app/views/admin/users/change_uid.html.erb:29
 #: app/views/admin/users/create_uid.html.erb:25
+#: app/views/admin/users/change_uid.html.erb:29
 #: app/views/admin/users/index.html.erb:53
 msgid "Are you sure?"
 msgstr ""
@@ -1958,7 +1945,7 @@ msgstr ""
 msgid "Belongs to: %s"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:490 app/helpers/user_helper.rb:58
+#: app/helpers/user_helper.rb:57 app/controllers/mypage_controller.rb:489
 msgid "Blog"
 msgstr ""
 
@@ -1974,7 +1961,7 @@ msgstr ""
 msgid "Blog Entry View"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:764
+#: app/controllers/mypage_controller.rb:763
 msgid "Blogs"
 msgstr ""
 
@@ -1982,7 +1969,7 @@ msgstr ""
 msgid "Blogs / BBSs"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:38
+#: app/views/admin/_data_menu_box.html.erb:9
 msgid "Board Entries"
 msgstr ""
 
@@ -2126,12 +2113,8 @@ msgstr ""
 msgid "Bookmark Comment"
 msgstr ""
 
-#: app/views/bookmark/new.html.erb:96 app/views/bookmark/new.html.erb:101
-msgid "Bookmark created."
-msgstr ""
-
-#: app/views/bookmark/new.html.erb:2
 #: app/views/entries/_entry_detail.html.erb:223
+#: app/views/bookmark/new.html.erb:2
 msgid "Bookmark this"
 msgstr ""
 
@@ -2207,7 +2190,7 @@ msgstr ""
 msgid "Bookmark[%{title}]"
 msgstr ""
 
-#: app/views/bookmark/new.html.erb:109
+#: app/views/bookmark/new.html.erb:107
 msgid ""
 "Bookmarking a closed entry with open permission. Are you sure to proceed? "
 "(The title will be open to all users regardless of the permission of entry)"
@@ -2217,12 +2200,12 @@ msgstr ""
 msgid "Bookmarklet"
 msgstr ""
 
+#: app/helpers/application_helper.rb:361 app/helpers/user_helper.rb:62
+#: app/controllers/mypage_controller.rb:493
+#: app/controllers/services_controller.rb:44
 #: app/controllers/bookmark_controller.rb:112
 #: app/controllers/bookmarks_controller.rb:34
-#: app/controllers/mypage_controller.rb:494
-#: app/controllers/services_controller.rb:44
-#: app/helpers/admin/application_helper.rb:39
-#: app/helpers/application_helper.rb:361 app/helpers/user_helper.rb:63
+#: app/views/admin/_data_menu_box.html.erb:10
 msgid "Bookmarks"
 msgstr ""
 
@@ -2291,15 +2274,15 @@ msgstr ""
 msgid "CalendarHelper|Wed"
 msgstr ""
 
-#: app/views/board_entries/_board_entry_comment.html.erb:32
 #: app/views/entries/_entry_detail.html.erb:625
-#: app/views/share_file/edit.html.erb:15 app/views/share_file/new.html.erb:31
+#: app/views/board_entries/_board_entry_comment.html.erb:32
+#: app/views/share_file/new.html.erb:31 app/views/share_file/edit.html.erb:15
 msgid "Cancel"
 msgstr ""
 
-#: app/views/group/_form.html.erb:17 app/views/groups/_group_list.html.erb:27
-#: app/views/groups/index.html.erb:11 app/views/layouts/layout.html.erb:40
-#: app/views/user/group.html.erb:4
+#: app/views/user/group.html.erb:4 app/views/group/_form.html.erb:17
+#: app/views/groups/_group_list.html.erb:27 app/views/groups/index.html.erb:11
+#: app/views/layouts/layout.html.erb:40
 msgid "Category"
 msgstr ""
 
@@ -2366,7 +2349,7 @@ msgstr ""
 msgid "Change uid"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:670
+#: app/controllers/mypage_controller.rb:669
 msgid "Change your profile picture!"
 msgstr ""
 
@@ -2433,11 +2416,11 @@ msgstr ""
 msgid "Closed"
 msgstr ""
 
-#: lib/skip_default_data.rb:59
+#: lib/skip_default_data.rb:51
 msgid "Comics"
 msgstr ""
 
-#: app/views/bookmark/new.html.erb:61 app/views/share_file/_form.html.erb:58
+#: app/views/share_file/_form.html.erb:58 app/views/bookmark/new.html.erb:61
 msgid "Comment"
 msgstr ""
 
@@ -2514,11 +2497,11 @@ msgid ""
 "page&quot;."
 msgstr ""
 
-#: lib/skip_default_data.rb:59
+#: lib/skip_default_data.rb:51
 msgid "Cooking"
 msgstr ""
 
-#: lib/skip_default_data.rb:59
+#: lib/skip_default_data.rb:51
 msgid "Cosmetics"
 msgstr ""
 
@@ -2528,16 +2511,16 @@ msgid ""
 "administrator."
 msgstr ""
 
-#: app/controllers/user_controller.rb:191
-#: app/views/admin/group_categories/new.html.erb:10
+#: app/controllers/user_controller.rb:191 app/views/edit/index.html.erb:6
+#: app/views/portal/account_registration.html.erb:26
+#: app/views/groups/new.html.erb:4
 #: app/views/admin/openid_identifiers/new.html.erb:17
+#: app/views/admin/group_categories/new.html.erb:10
 #: app/views/admin/user_profile_master_categories/new.html.erb:10
 #: app/views/admin/user_profile_masters/new.html.erb:10
 #: app/views/admin/users/create_uid.html.erb:16
 #: app/views/admin/users/first.html.erb:31
-#: app/views/admin/users/new.html.erb:12 app/views/edit/index.html.erb:6
-#: app/views/groups/new.html.erb:4
-#: app/views/portal/account_registration.html.erb:26
+#: app/views/admin/users/new.html.erb:12
 msgid "Create"
 msgstr ""
 
@@ -2570,7 +2553,7 @@ msgid ""
 "Create an \"open to public\" blog entry disregarding the privacy setting."
 msgstr ""
 
-#: app/views/mypage/index.html.erb:98 app/views/user/_action_box.html.erb:6
+#: app/views/user/_action_box.html.erb:6 app/views/mypage/index.html.erb:98
 msgid "Create introductions"
 msgstr ""
 
@@ -2588,13 +2571,14 @@ msgstr ""
 msgid "Created successfully."
 msgstr ""
 
-#: app/views/admin/group_categories/new.html.erb:10
+#: app/views/groups/new.html.erb:4
 #: app/views/admin/openid_identifiers/new.html.erb:17
+#: app/views/admin/group_categories/new.html.erb:10
 #: app/views/admin/user_profile_master_categories/new.html.erb:10
 #: app/views/admin/user_profile_masters/new.html.erb:10
 #: app/views/admin/users/create_uid.html.erb:26
 #: app/views/admin/users/first.html.erb:31
-#: app/views/admin/users/new.html.erb:12 app/views/groups/new.html.erb:4
+#: app/views/admin/users/new.html.erb:12
 msgid "Creating..."
 msgstr ""
 
@@ -2646,10 +2630,6 @@ msgstr ""
 msgid "Date Accessed"
 msgstr ""
 
-#: lib/skip_default_data.rb:37
-msgid "Date of Birth"
-msgstr ""
-
 #: app/views/mypage/_record_post.html.erb:42
 msgid "Datetime"
 msgstr ""
@@ -2678,9 +2658,9 @@ msgstr ""
 msgid "Default entry edit mode"
 msgstr ""
 
-#: app/views/antenna/_antenna_item.html.erb:2
 #: app/views/board_entries/_board_entry_comment.html.erb:15
 #: app/views/bookmark/list.html.erb:69 app/views/bookmark/show.html.erb:33
+#: app/views/antenna/_antenna_item.html.erb:2
 msgid "Delete"
 msgstr ""
 
@@ -2697,23 +2677,23 @@ msgstr ""
 msgid "Deletion completed."
 msgstr ""
 
+#: app/views/admin/pictures/index.html.erb:29
 #: app/views/admin/board_entries/index.html.erb:34
 #: app/views/admin/board_entry_comments/index.html.erb:26
-#: app/views/admin/bookmark_comments/index.html.erb:30
-#: app/views/admin/bookmarks/index.html.erb:19
-#: app/views/admin/group_categories/index.html.erb:29
-#: app/views/admin/group_participations/index.html.erb:30
-#: app/views/admin/groups/index.html.erb:33
-#: app/views/admin/openid_identifiers/index.html.erb:18
-#: app/views/admin/pictures/index.html.erb:29
 #: app/views/admin/share_files/index.html.erb:36
+#: app/views/admin/bookmarks/index.html.erb:19
+#: app/views/admin/groups/index.html.erb:33
+#: app/views/admin/bookmark_comments/index.html.erb:30
+#: app/views/admin/openid_identifiers/index.html.erb:18
+#: app/views/admin/group_participations/index.html.erb:30
+#: app/views/admin/group_categories/index.html.erb:29
 #: app/views/admin/user_profile_master_categories/index.html.erb:18
 #: app/views/admin/user_profile_masters/index.html.erb:28
 #: app/views/admin/users/index.html.erb:53
 msgid "Destroy"
 msgstr ""
 
-#: app/views/groups/index.html.erb:25 app/views/user/group.html.erb:21
+#: app/views/user/group.html.erb:21 app/views/groups/index.html.erb:25
 msgid "Detailed"
 msgstr ""
 
@@ -2742,13 +2722,13 @@ msgstr ""
 msgid "Disk Usage"
 msgstr ""
 
-#: app/views/groups/index.html.erb:23 app/views/user/group.html.erb:18
+#: app/views/user/group.html.erb:18 app/views/groups/index.html.erb:23
 msgid "Display Format"
 msgstr ""
 
-#: app/views/bookmarks/index.html.erb:9
+#: app/views/user/group.html.erb:26 app/views/bookmarks/index.html.erb:9
+#: app/views/share_file/list.html.erb:30
 #: app/views/search/share_file_search.html.erb:9
-#: app/views/share_file/list.html.erb:30 app/views/user/group.html.erb:26
 #: app/views/users/index.html.erb:15
 msgid "Display Order"
 msgstr ""
@@ -2777,26 +2757,25 @@ msgstr ""
 msgid "Downloads: %s"
 msgstr ""
 
-#: lib/skip_default_data.rb:59
+#: lib/skip_default_data.rb:51
 msgid "Drinking"
 msgstr ""
 
-#: lib/skip_default_data.rb:59
+#: lib/skip_default_data.rb:51
 msgid "Driving"
 msgstr ""
 
 #: app/controllers/edit_controller.rb:276
-#: app/views/admin/group_categories/index.html.erb:28
+#: app/views/entries/_entry_detail.html.erb:221
+#: app/views/board_entries/_board_entry_comment.html.erb:14
+#: app/views/user/show.html.erb:19 app/views/admin/pictures/index.html.erb:27
 #: app/views/admin/openid_identifiers/index.html.erb:17
-#: app/views/admin/pictures/index.html.erb:27
+#: app/views/admin/group_categories/index.html.erb:28
 #: app/views/admin/user_profile_master_categories/index.html.erb:17
 #: app/views/admin/user_profile_masters/index.html.erb:27
 #: app/views/admin/users/_form.html.erb:67
-#: app/views/admin/users/index.html.erb:52
-#: app/views/board_entries/_board_entry_comment.html.erb:14
-#: app/views/bookmark/list.html.erb:68 app/views/bookmark/show.html.erb:32
-#: app/views/entries/_entry_detail.html.erb:221
-#: app/views/user/show.html.erb:19
+#: app/views/admin/users/index.html.erb:52 app/views/bookmark/list.html.erb:68
+#: app/views/bookmark/show.html.erb:32
 msgid "Edit"
 msgstr ""
 
@@ -2824,24 +2803,24 @@ msgstr ""
 msgid "Editable"
 msgstr ""
 
-#: app/controllers/admin/admin_module.rb:126
-#: app/controllers/admin/admin_module.rb:153
-#: app/controllers/admin/admin_module.rb:235
-#: app/controllers/admin/admin_module.rb:267
 #: app/controllers/admin/openid_identifiers_controller.rb:25
 #: app/controllers/admin/openid_identifiers_controller.rb:26
 #: app/controllers/admin/openid_identifiers_controller.rb:40
 #: app/controllers/admin/openid_identifiers_controller.rb:41
 #: app/controllers/admin/pictures_controller.rb:66
 #: app/controllers/admin/pictures_controller.rb:78
-#: app/controllers/admin/user_profiles_controller.rb:21
-#: app/controllers/admin/user_profiles_controller.rb:22
-#: app/controllers/admin/user_profiles_controller.rb:40
-#: app/controllers/admin/user_profiles_controller.rb:41
 #: app/controllers/admin/users_controller.rb:51
 #: app/controllers/admin/users_controller.rb:75
 #: app/controllers/admin/users_controller.rb:161
 #: app/controllers/admin/users_controller.rb:186
+#: app/controllers/admin/admin_module.rb:126
+#: app/controllers/admin/admin_module.rb:153
+#: app/controllers/admin/admin_module.rb:235
+#: app/controllers/admin/admin_module.rb:267
+#: app/controllers/admin/user_profiles_controller.rb:21
+#: app/controllers/admin/user_profiles_controller.rb:22
+#: app/controllers/admin/user_profiles_controller.rb:40
+#: app/controllers/admin/user_profiles_controller.rb:41
 #: app/views/admin/users/edit.html.erb:19
 #: app/views/admin/users/edit.html.erb:20
 msgid "Editing %{model}"
@@ -2878,7 +2857,7 @@ msgstr[1] ""
 msgid "Email address is mandatory."
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:422
+#: app/controllers/mypage_controller.rb:421
 msgid "Email address was updated successfully."
 msgstr ""
 
@@ -2914,7 +2893,7 @@ msgstr ""
 msgid "End Monta"
 msgstr ""
 
-#: lib/skip_default_data.rb:59
+#: lib/skip_default_data.rb:51
 msgid "Enrichment Lessons"
 msgstr ""
 
@@ -2961,13 +2940,13 @@ msgstr ""
 msgid "Entered email address %s has not been registered in the site."
 msgstr ""
 
+#: app/helpers/application_helper.rb:357
 #: app/controllers/search_controller.rb:23
-#: app/helpers/application_helper.rb:357 app/views/bookmark/list.html.erb:17
-#: app/views/bookmarks/index.html.erb:17
+#: app/views/bookmarks/index.html.erb:17 app/views/bookmark/list.html.erb:17
 msgid "Entries"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:967
+#: app/controllers/mypage_controller.rb:966
 msgid "Entries bookmarked by yourself"
 msgstr ""
 
@@ -2983,7 +2962,7 @@ msgstr ""
 msgid "Entries talking about this entry:"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:966
+#: app/controllers/mypage_controller.rb:965
 msgid "Entries you have made comments"
 msgstr ""
 
@@ -2991,11 +2970,11 @@ msgstr ""
 msgid "Entries you posted to your blog and group BBSs."
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:208
+#: app/controllers/mypage_controller.rb:207
 msgid "Entry was successfully marked read."
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:208
+#: app/controllers/mypage_controller.rb:207
 msgid "Entry was successfully marked unread."
 msgstr ""
 
@@ -3075,7 +3054,7 @@ msgstr ""
 msgid "Failed to delete since there are still other users in the group."
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:252
+#: app/controllers/mypage_controller.rb:251
 msgid "Failed to load rss."
 msgstr ""
 
@@ -3083,7 +3062,7 @@ msgstr ""
 msgid "Failed to open the content."
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:408
+#: app/controllers/mypage_controller.rb:407
 msgid "Failed to process your request. Try resubmitting your request again."
 msgstr ""
 
@@ -3128,7 +3107,7 @@ msgid_plural "Failures:%{failure}]"
 msgstr[0] ""
 msgstr[1] ""
 
-#: lib/skip_default_data.rb:59
+#: lib/skip_default_data.rb:51
 msgid "Fashion"
 msgstr ""
 
@@ -3136,13 +3115,13 @@ msgstr ""
 msgid "February"
 msgstr ""
 
-#: lib/skip_default_data.rb:55
+#: lib/skip_default_data.rb:47
 msgid "Female"
 msgstr ""
 
 #: app/controllers/share_file_controller.rb:46
-#: app/views/share_file/new.html.erb:69
 #: app/views/share_file/new_ajax_upload.html.erb:27
+#: app/views/share_file/new.html.erb:69
 msgid "File"
 msgstr ""
 
@@ -3162,7 +3141,7 @@ msgstr ""
 msgid "File size exceeded the limit."
 msgstr ""
 
-#: app/models/admin/picture.rb:22 app/models/picture.rb:41
+#: app/models/picture.rb:41 app/models/admin/picture.rb:22
 msgid "File size too large."
 msgstr ""
 
@@ -3187,10 +3166,10 @@ msgstr ""
 msgid "Filename"
 msgstr ""
 
-#: app/controllers/search_controller.rb:64
+#: app/helpers/application_helper.rb:358
 #: app/controllers/services_controller.rb:47
-#: app/helpers/application_helper.rb:358 app/views/share_file/edit.html.erb:9
-#: app/views/share_file/new.html.erb:9
+#: app/controllers/search_controller.rb:64 app/views/share_file/new.html.erb:9
+#: app/views/share_file/edit.html.erb:9
 msgid "Files"
 msgstr ""
 
@@ -3255,11 +3234,11 @@ msgstr ""
 msgid "Functional Settings"
 msgstr ""
 
-#: lib/skip_default_data.rb:59
+#: lib/skip_default_data.rb:51
 msgid "Gamble"
 msgstr ""
 
-#: lib/skip_default_data.rb:59
+#: lib/skip_default_data.rb:51
 msgid "Games"
 msgstr ""
 
@@ -3267,11 +3246,11 @@ msgstr ""
 msgid "Get an account"
 msgstr ""
 
-#: lib/skip_default_data.rb:59
+#: lib/skip_default_data.rb:51
 msgid "Gourmet"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:36
+#: app/views/admin/_data_menu_box.html.erb:7
 msgid "Group Categories"
 msgstr ""
 
@@ -3419,19 +3398,19 @@ msgstr ""
 msgid "GroupParticipation|Waiting|true"
 msgstr ""
 
-#: app/controllers/edit_controller.rb:275
-#: app/controllers/group_controller.rb:360
+#: app/helpers/application_helper.rb:360
 #: app/controllers/groups_controller.rb:67
 #: app/controllers/services_controller.rb:46
+#: app/controllers/group_controller.rb:360
 #: app/controllers/share_file_controller.rb:163
-#: app/helpers/admin/application_helper.rb:37
-#: app/helpers/application_helper.rb:360
+#: app/controllers/edit_controller.rb:275
+#: app/views/admin/_data_menu_box.html.erb:8
 msgid "Groups"
 msgstr ""
 
+#: app/helpers/application_helper.rb:346 app/helpers/user_helper.rb:61
+#: app/controllers/mypage_controller.rb:492
 #: app/controllers/feed_controller.rb:114
-#: app/controllers/mypage_controller.rb:493
-#: app/helpers/application_helper.rb:346 app/helpers/user_helper.rb:62
 #: app/views/user/_join_groups_box.html.erb:3
 msgid "Groups Joined"
 msgstr ""
@@ -3488,11 +3467,11 @@ msgstr ""
 msgid "Hanako Yamada"
 msgstr ""
 
-#: app/models/user.rb:251
+#: app/models/user.rb:245
 msgid "Has not accessed for 3 or more months."
 msgstr ""
 
-#: app/models/user.rb:249
+#: app/models/user.rb:243
 msgid "Has not accessed for 6 or more months."
 msgstr ""
 
@@ -3534,17 +3513,9 @@ msgstr ""
 msgid "History of Entries"
 msgstr ""
 
-#: lib/skip_default_data.rb:40
-msgid "Hobbies"
-msgstr ""
-
-#: app/controllers/mypage_controller.rb:487
-#: app/helpers/application_helper.rb:354 app/helpers/user_helper.rb:66
+#: app/helpers/application_helper.rb:354 app/helpers/user_helper.rb:65
+#: app/controllers/mypage_controller.rb:486
 msgid "Home"
-msgstr ""
-
-#: lib/skip_default_data.rb:38
-msgid "Hometown"
 msgstr ""
 
 #: app/views/admin/users/import.html.erb:30
@@ -3627,17 +3598,13 @@ msgstr ""
 msgid "Internal error(s) occured. Contact administrator."
 msgstr ""
 
-#: app/views/bookmark/list.html.erb:18 app/views/bookmarks/index.html.erb:18
-#: lib/skip_default_data.rb:59
+#: app/views/bookmarks/index.html.erb:18 app/views/bookmark/list.html.erb:18
+#: lib/skip_default_data.rb:51
 msgid "Internet"
 msgstr ""
 
 #: app/views/user/new_edit_chain.html.erb:10
 msgid "Introduce %s to others!"
-msgstr ""
-
-#: lib/skip_default_data.rb:41
-msgid "Introduction"
 msgstr ""
 
 #: app/helpers/user_helper.rb:22
@@ -3660,7 +3627,7 @@ msgstr ""
 msgid "Introduction was updated successfully."
 msgstr ""
 
-#: app/views/user/new_edit_chain.html.erb:15
+#: app/views/user/new_edit_chain.html.erb:14
 msgid "Introduction: "
 msgstr ""
 
@@ -3668,7 +3635,7 @@ msgstr ""
 msgid "Introductions"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:457
+#: app/controllers/mypage_controller.rb:456
 msgid "Invalid OpenID URL format."
 msgstr ""
 
@@ -3688,9 +3655,9 @@ msgstr ""
 msgid "Invalid input format. Should be in uid:xxxxxx format."
 msgstr ""
 
-#: app/controllers/board_entries_controller.rb:26
 #: app/controllers/monta_controller.rb:22
 #: app/controllers/monta_controller.rb:33
+#: app/controllers/board_entries_controller.rb:26
 msgid "Invalid operation."
 msgstr ""
 
@@ -3704,8 +3671,8 @@ msgstr ""
 msgid "Invalid parameter(s) found."
 msgstr ""
 
-#: app/controllers/edit_controller.rb:295
 #: app/controllers/share_file_controller.rb:279
+#: app/controllers/edit_controller.rb:295
 msgid "Invalid parameter(s)."
 msgstr ""
 
@@ -3805,12 +3772,12 @@ msgstr ""
 msgid "June"
 msgstr ""
 
-#: lib/skip_default_data.rb:59
+#: lib/skip_default_data.rb:51
 msgid "Karaoke"
 msgstr ""
 
-#: app/views/search/entry_search.html.erb:5
 #: app/views/search/share_file_search.html.erb:5
+#: app/views/search/entry_search.html.erb:5
 msgid "Keywords"
 msgstr ""
 
@@ -3850,11 +3817,11 @@ msgstr ""
 msgid "Line"
 msgstr ""
 
-#: lib/skip_default_data.rb:59
+#: lib/skip_default_data.rb:51
 msgid "Linguistics"
 msgstr ""
 
-#: app/views/groups/index.html.erb:26 app/views/user/group.html.erb:20
+#: app/views/user/group.html.erb:20 app/views/groups/index.html.erb:26
 msgid "List"
 msgstr ""
 
@@ -3876,10 +3843,30 @@ msgid ""
 "notifications from %s<br/>(Emails are sent periodically in a batch)"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:970
+#: app/controllers/mypage_controller.rb:969
 msgid "List of unread entries"
 msgstr ""
 
+#: app/controllers/admin/openid_identifiers_controller.rb:24
+#: app/controllers/admin/openid_identifiers_controller.rb:39
+#: app/controllers/admin/pictures_controller.rb:26
+#: app/controllers/admin/pictures_controller.rb:27
+#: app/controllers/admin/pictures_controller.rb:37
+#: app/controllers/admin/pictures_controller.rb:38
+#: app/controllers/admin/pictures_controller.rb:48
+#: app/controllers/admin/pictures_controller.rb:49
+#: app/controllers/admin/pictures_controller.rb:64
+#: app/controllers/admin/pictures_controller.rb:65
+#: app/controllers/admin/pictures_controller.rb:76
+#: app/controllers/admin/pictures_controller.rb:77
+#: app/controllers/admin/users_controller.rb:29
+#: app/controllers/admin/users_controller.rb:41
+#: app/controllers/admin/users_controller.rb:50
+#: app/controllers/admin/users_controller.rb:74
+#: app/controllers/admin/users_controller.rb:125
+#: app/controllers/admin/users_controller.rb:142
+#: app/controllers/admin/users_controller.rb:160
+#: app/controllers/admin/users_controller.rb:185
 #: app/controllers/admin/admin_module.rb:86
 #: app/controllers/admin/admin_module.rb:98
 #: app/controllers/admin/admin_module.rb:112
@@ -3898,29 +3885,9 @@ msgstr ""
 #: app/controllers/admin/admin_module.rb:244
 #: app/controllers/admin/admin_module.rb:264
 #: app/controllers/admin/admin_module.rb:266
-#: app/controllers/admin/openid_identifiers_controller.rb:24
-#: app/controllers/admin/openid_identifiers_controller.rb:39
-#: app/controllers/admin/pictures_controller.rb:26
-#: app/controllers/admin/pictures_controller.rb:27
-#: app/controllers/admin/pictures_controller.rb:37
-#: app/controllers/admin/pictures_controller.rb:38
-#: app/controllers/admin/pictures_controller.rb:48
-#: app/controllers/admin/pictures_controller.rb:49
-#: app/controllers/admin/pictures_controller.rb:64
-#: app/controllers/admin/pictures_controller.rb:65
-#: app/controllers/admin/pictures_controller.rb:76
-#: app/controllers/admin/pictures_controller.rb:77
 #: app/controllers/admin/user_profile_masters_controller.rb:24
 #: app/controllers/admin/user_profiles_controller.rb:20
 #: app/controllers/admin/user_profiles_controller.rb:39
-#: app/controllers/admin/users_controller.rb:29
-#: app/controllers/admin/users_controller.rb:41
-#: app/controllers/admin/users_controller.rb:50
-#: app/controllers/admin/users_controller.rb:74
-#: app/controllers/admin/users_controller.rb:125
-#: app/controllers/admin/users_controller.rb:142
-#: app/controllers/admin/users_controller.rb:160
-#: app/controllers/admin/users_controller.rb:185
 #: app/views/admin/board_entries/show.html.erb:43
 #: app/views/admin/bookmarks/show.html.erb:19
 #: app/views/admin/groups/show.html.erb:35
@@ -3956,8 +3923,8 @@ msgstr ""
 msgid "Log in failed."
 msgstr ""
 
-#: app/views/platform/index.html.erb:46
 #: app/views/shared/_login_form.html.erb:87
+#: app/views/platform/index.html.erb:46
 msgid "Login"
 msgstr ""
 
@@ -4055,7 +4022,7 @@ msgid ""
 "if you are not sure what to use for it."
 msgstr ""
 
-#: lib/skip_default_data.rb:55
+#: lib/skip_default_data.rb:47
 msgid "Male"
 msgstr ""
 
@@ -4083,7 +4050,7 @@ msgstr ""
 msgid "May"
 msgstr ""
 
-#: app/helpers/groups_helper.rb:26 app/helpers/users_helper.rb:66
+#: app/helpers/users_helper.rb:66 app/helpers/groups_helper.rb:26
 msgid "Member"
 msgstr ""
 
@@ -4101,7 +4068,7 @@ msgstr ""
 msgid "Members Only"
 msgstr ""
 
-#: app/views/shared/_menu.html.erb:5 app/views/user/_social_menu.html.erb:2
+#: app/views/user/_social_menu.html.erb:2 app/views/shared/_menu.html.erb:5
 msgid "Menu"
 msgstr ""
 
@@ -4109,9 +4076,9 @@ msgstr ""
 msgid "Message: "
 msgstr ""
 
-#: app/controllers/feed_controller.rb:81
-#: app/controllers/mypage_controller.rb:696
-#: app/controllers/mypage_controller.rb:965 app/models/antenna.rb:94
+#: app/controllers/mypage_controller.rb:695
+#: app/controllers/mypage_controller.rb:964
+#: app/controllers/feed_controller.rb:81 app/models/antenna.rb:94
 msgid "Messages for you"
 msgstr ""
 
@@ -4173,7 +4140,7 @@ msgstr ""
 msgid "Move to groups joined ..."
 msgstr ""
 
-#: app/helpers/user_helper.rb:76
+#: app/helpers/user_helper.rb:75
 msgid "Mr./Ms. %s"
 msgstr ""
 
@@ -4182,11 +4149,11 @@ msgid "Mr./Ms. %s from other users' view"
 msgstr ""
 
 #: app/views/board_entries/_form.html.erb:28
-#: app/views/bookmark/new.html.erb:53 app/views/share_file/_form.html.erb:49
+#: app/views/share_file/_form.html.erb:49 app/views/bookmark/new.html.erb:53
 msgid "Multiple values can be given in foo,bar format"
 msgstr ""
 
-#: lib/skip_default_data.rb:59
+#: lib/skip_default_data.rb:51
 msgid "Music Appreciation"
 msgstr ""
 
@@ -4198,8 +4165,8 @@ msgstr ""
 msgid "My Blog"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:485 app/helpers/user_helper.rb:72
-#: app/helpers/user_helper.rb:76
+#: app/helpers/user_helper.rb:71 app/helpers/user_helper.rb:75
+#: app/controllers/mypage_controller.rb:484
 msgid "My Page"
 msgstr ""
 
@@ -4207,9 +4174,9 @@ msgstr ""
 msgid "My Page / %s"
 msgstr ""
 
-#: app/views/group/_manage_participations.html.erb:48
-#: app/views/group/_manage_permit.html.erb:31
 #: app/views/portal/account_registration.html.erb:17
+#: app/views/group/_manage_permit.html.erb:31
+#: app/views/group/_manage_participations.html.erb:48
 msgid "Name"
 msgstr ""
 
@@ -4229,16 +4196,16 @@ msgstr ""
 msgid "New"
 msgstr ""
 
-#: app/controllers/admin/admin_module.rb:113
-#: app/controllers/admin/admin_module.rb:134
-#: app/controllers/admin/admin_module.rb:220
-#: app/controllers/admin/admin_module.rb:245
 #: app/controllers/admin/pictures_controller.rb:39
 #: app/controllers/admin/pictures_controller.rb:50
 #: app/controllers/admin/users_controller.rb:29
 #: app/controllers/admin/users_controller.rb:41
-#: app/views/admin/group_categories/index.html.erb:36
+#: app/controllers/admin/admin_module.rb:113
+#: app/controllers/admin/admin_module.rb:134
+#: app/controllers/admin/admin_module.rb:220
+#: app/controllers/admin/admin_module.rb:245
 #: app/views/admin/openid_identifiers/index.html.erb:23
+#: app/views/admin/group_categories/index.html.erb:36
 #: app/views/admin/user_profile_master_categories/index.html.erb:25
 #: app/views/admin/user_profile_masters/index.html.erb:35
 #: app/views/admin/users/index.html.erb:63
@@ -4408,16 +4375,16 @@ msgstr ""
 msgid "November"
 msgstr ""
 
-#: app/views/admin/group_categories/edit.html.erb:11
-#: app/views/admin/openid_identifiers/edit.html.erb:16
 #: app/views/admin/user_profiles/edit.html.erb:13
+#: app/views/admin/openid_identifiers/edit.html.erb:16
+#: app/views/admin/group_categories/edit.html.erb:11
 #: app/views/admin/users/change_uid.html.erb:30
 #: app/views/admin/users/edit.html.erb:10
 msgid "Now Updating..."
 msgstr ""
 
-#: app/views/admin/pictures/edit.html.erb:10
 #: app/views/admin/pictures/new.html.erb:10
+#: app/views/admin/pictures/edit.html.erb:10
 msgid "Now Uploading..."
 msgstr ""
 
@@ -4483,8 +4450,8 @@ msgstr ""
 
 #: app/helpers/application_helper.rb:241
 #: app/views/board_entries/_form.html.erb:68 app/views/group/_form.html.erb:50
-#: app/views/share_file/_form.html.erb:34
 #: app/views/share_file/new_ajax_upload.html.erb:21
+#: app/views/share_file/_form.html.erb:34
 msgid "Open to All"
 msgstr ""
 
@@ -4492,7 +4459,7 @@ msgstr ""
 msgid "OpenID URL"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:445
+#: app/controllers/mypage_controller.rb:444
 msgid "OpenID URL was successfully set."
 msgstr ""
 
@@ -4515,43 +4482,43 @@ msgstr ""
 msgid "OpenID server not found. Please provide a correct OpenID URL."
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:452
+#: app/controllers/mypage_controller.rb:451
 msgid "OpenId process is cancelled or failed."
 msgstr ""
 
-#: app/models/activation.rb:-
+#: app/models/group.rb:-
 msgid "OpenIdAuthentication::Association|Assoc type"
 msgstr ""
 
-#: app/models/activation.rb:-
+#: app/models/group.rb:-
 msgid "OpenIdAuthentication::Association|Handle"
 msgstr ""
 
-#: app/models/activation.rb:-
+#: app/models/group.rb:-
 msgid "OpenIdAuthentication::Association|Issued"
 msgstr ""
 
-#: app/models/activation.rb:-
+#: app/models/group.rb:-
 msgid "OpenIdAuthentication::Association|Lifetime"
 msgstr ""
 
-#: app/models/activation.rb:-
+#: app/models/group.rb:-
 msgid "OpenIdAuthentication::Association|Secret"
 msgstr ""
 
-#: app/models/activation.rb:-
+#: app/models/group.rb:-
 msgid "OpenIdAuthentication::Association|Server url"
 msgstr ""
 
-#: app/models/activation.rb:-
+#: app/models/group.rb:-
 msgid "OpenIdAuthentication::Nonce|Salt"
 msgstr ""
 
-#: app/models/activation.rb:-
+#: app/models/group.rb:-
 msgid "OpenIdAuthentication::Nonce|Server url"
 msgstr ""
 
-#: app/models/activation.rb:-
+#: app/models/group.rb:-
 msgid "OpenIdAuthentication::Nonce|Timestamp"
 msgstr ""
 
@@ -4608,10 +4575,6 @@ msgid ""
 "the problem persists."
 msgstr ""
 
-#: lib/skip_default_data.rb:34
-msgid "Other Information"
-msgstr ""
-
 #: app/views/rankings/statistics.html.erb:31
 msgid "Other indices (FYI)"
 msgstr ""
@@ -4628,7 +4591,7 @@ msgstr ""
 msgid "Others"
 msgstr ""
 
-#: lib/skip_default_data.rb:59
+#: lib/skip_default_data.rb:51
 msgid "Outdoor"
 msgstr ""
 
@@ -4666,9 +4629,9 @@ msgstr ""
 msgid "Part of the users are already members of this group."
 msgstr ""
 
+#: app/views/shared/_login_form.html.erb:31
 #: app/views/mypage/_manage_password.html.erb:16
 #: app/views/platform/reset_password.html.erb:8
-#: app/views/shared/_login_form.html.erb:31
 msgid "Password"
 msgstr ""
 
@@ -4693,7 +4656,7 @@ msgstr ""
 msgid "Password was successfully reset."
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:388
+#: app/controllers/mypage_controller.rb:387
 msgid "Password was successfully updated."
 msgstr ""
 
@@ -4714,7 +4677,7 @@ msgstr ""
 msgid "Periodic password change"
 msgstr ""
 
-#: lib/skip_default_data.rb:59
+#: lib/skip_default_data.rb:51
 msgid "Pets"
 msgstr ""
 
@@ -4763,11 +4726,11 @@ msgstr ""
 msgid "Picture|User"
 msgstr ""
 
-#: lib/skip_default_data.rb:59
+#: lib/skip_default_data.rb:51
 msgid "Playing Sports"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:461
+#: app/controllers/mypage_controller.rb:460
 msgid "Please input OpenID URL."
 msgstr ""
 
@@ -4822,7 +4785,7 @@ msgstr ""
 msgid "Posts"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:968
+#: app/controllers/mypage_controller.rb:967
 msgid "Posts in the groups joined"
 msgstr ""
 
@@ -4862,16 +4825,16 @@ msgid_plural "Problems found in following items: "
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/controllers/mypage_controller.rb:488 app/helpers/user_helper.rb:57
+#: app/helpers/user_helper.rb:56 app/controllers/mypage_controller.rb:487
 #: app/views/user/show.html.erb:16
 msgid "Profile"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:41
+#: app/views/admin/_data_menu_box.html.erb:12
 msgid "Profile Categories"
 msgstr ""
 
-#: app/helpers/admin/application_helper.rb:42
+#: app/views/admin/_data_menu_box.html.erb:13
 msgid "Profile Items"
 msgstr ""
 
@@ -4942,8 +4905,8 @@ msgstr ""
 msgid "Ranking of Popular Users"
 msgstr ""
 
-#: app/controllers/rankings_controller.rb:155
 #: app/helpers/application_helper.rb:355
+#: app/controllers/rankings_controller.rb:155
 msgid "Rankings"
 msgstr ""
 
@@ -4987,7 +4950,7 @@ msgstr ""
 msgid "Reacquire the title"
 msgstr ""
 
-#: lib/skip_default_data.rb:59
+#: lib/skip_default_data.rb:51
 msgid "Reading"
 msgstr ""
 
@@ -4999,13 +4962,13 @@ msgstr ""
 msgid "Recent Groups"
 msgstr ""
 
+#: app/controllers/mypage_controller.rb:745
 #: app/controllers/feed_controller.rb:70
-#: app/controllers/mypage_controller.rb:746
 msgid "Recent Popular Entries (excluding questions)"
 msgstr ""
 
+#: app/controllers/mypage_controller.rb:723
 #: app/controllers/feed_controller.rb:21
-#: app/controllers/mypage_controller.rb:724
 msgid "Recent Questions"
 msgstr ""
 
@@ -5065,8 +5028,8 @@ msgstr ""
 msgid "Registered Users"
 msgstr ""
 
-#: app/views/layouts/admin/application.html.erb:61
 #: app/views/layouts/layout.html.erb:92
+#: app/views/layouts/admin/application.html.erb:61
 msgid "Registered Users: %s users"
 msgstr ""
 
@@ -5103,8 +5066,8 @@ msgstr ""
 msgid "Removed %{user} from [%{group}>]"
 msgstr ""
 
-#: app/views/board_entries/_board_entry_comment.html.erb:17
 #: app/views/entries/_entry_detail.html.erb:577
+#: app/views/board_entries/_board_entry_comment.html.erb:17
 msgid "Reply to this comment"
 msgstr ""
 
@@ -5192,37 +5155,38 @@ msgstr ""
 msgid "Sat"
 msgstr ""
 
-#: app/views/admin/documents/index.html.erb:10
-#: app/views/admin/settings/index.html.erb:9
-#: app/views/board_entries/_board_entry_comment.html.erb:31
-#: app/views/bookmark/new.html.erb:66
 #: app/views/entries/_entry_detail.html.erb:594
+#: app/views/board_entries/_board_entry_comment.html.erb:31
+#: app/views/portal/_registration_form.html.erb:68
 #: app/views/mypage/_manage_message.html.erb:19
 #: app/views/mypage/_manage_openid.html.erb:18
 #: app/views/mypage/_manage_password.html.erb:24
 #: app/views/platform/reset_password.html.erb:16
-#: app/views/portal/_registration_form.html.erb:68
+#: app/views/admin/settings/index.html.erb:9
+#: app/views/admin/documents/index.html.erb:10
+#: app/views/bookmark/new.html.erb:66
 msgid "Save"
 msgstr ""
 
-#: app/views/admin/documents/index.html.erb:10
-#: app/views/admin/oauth_providers/index.html.erb:18
-#: app/views/admin/settings/index.html.erb:9
 #: app/views/portal/_registration_form.html.erb:69
+#: app/views/admin/settings/index.html.erb:9
+#: app/views/admin/oauth_providers/index.html.erb:18
+#: app/views/admin/documents/index.html.erb:10
 msgid "Saving..."
 msgstr ""
 
-#: app/views/admin/_search_box.html.erb:4 app/views/bookmark/list.html.erb:3
-#: app/views/bookmark/list.html.erb:7 app/views/bookmarks/index.html.erb:23
 #: app/views/entries/_search_box.html.erb:7
-#: app/views/entries/_search_box.html.erb:11 app/views/group/users.html.erb:17
-#: app/views/groups/index.html.erb:36 app/views/mypage/_record_post.html.erb:5
+#: app/views/entries/_search_box.html.erb:11 app/views/user/group.html.erb:34
+#: app/views/user/group.html.erb:37 app/views/bookmarks/index.html.erb:23
+#: app/views/group/users.html.erb:17 app/views/groups/index.html.erb:36
+#: app/views/shared/_header.html.erb:49
+#: app/views/mypage/_record_post.html.erb:5
 #: app/views/mypage/_record_post.html.erb:11
-#: app/views/search/entry_search.html.erb:18
-#: app/views/search/share_file_search.html.erb:17
 #: app/views/share_file/list.html.erb:21 app/views/share_file/list.html.erb:24
-#: app/views/shared/_header.html.erb:49 app/views/user/group.html.erb:34
-#: app/views/user/group.html.erb:37 app/views/users/index.html.erb:25
+#: app/views/search/share_file_search.html.erb:17
+#: app/views/search/entry_search.html.erb:18
+#: app/views/admin/_search_box.html.erb:4 app/views/bookmark/list.html.erb:3
+#: app/views/bookmark/list.html.erb:7 app/views/users/index.html.erb:25
 msgid "Search"
 msgstr ""
 
@@ -5263,8 +5227,8 @@ msgstr ""
 msgid "Searching..."
 msgstr ""
 
-#: app/views/layouts/admin/application.html.erb:65
 #: app/views/layouts/layout.html.erb:96
+#: app/views/layouts/admin/application.html.erb:65
 msgid "See Statistics"
 msgstr ""
 
@@ -5359,10 +5323,6 @@ msgstr ""
 msgid "Settings were saved successfully."
 msgstr ""
 
-#: lib/skip_default_data.rb:35
-msgid "Sex"
-msgstr ""
-
 #: app/controllers/admin/admin_module.rb:75
 msgid "Share files"
 msgstr ""
@@ -5439,9 +5399,9 @@ msgstr ""
 msgid "ShareFile|User"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:491
-#: app/helpers/admin/application_helper.rb:40 app/helpers/group_helper.rb:41
-#: app/helpers/user_helper.rb:60
+#: app/helpers/group_helper.rb:41 app/helpers/user_helper.rb:59
+#: app/controllers/mypage_controller.rb:490
+#: app/views/admin/_data_menu_box.html.erb:11
 msgid "Shared Files"
 msgstr ""
 
@@ -5449,7 +5409,7 @@ msgstr ""
 msgid "Shared Files Settings"
 msgstr ""
 
-#: lib/skip_default_data.rb:59
+#: lib/skip_default_data.rb:51
 msgid "Shopping"
 msgstr ""
 
@@ -5592,7 +5552,7 @@ msgstr ""
 msgid "SiteCount|Writer at month"
 msgstr ""
 
-#: lib/skip_default_data.rb:59
+#: lib/skip_default_data.rb:51
 msgid "Sleeping"
 msgstr ""
 
@@ -5604,7 +5564,7 @@ msgstr ""
 msgid "Slide Show: %s"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:492 app/helpers/user_helper.rb:61
+#: app/helpers/user_helper.rb:60 app/controllers/mypage_controller.rb:491
 msgid "Socials"
 msgstr ""
 
@@ -5620,8 +5580,8 @@ msgstr ""
 msgid "Sort by Date Joined"
 msgstr ""
 
-#: app/views/search/share_file_search.html.erb:12
 #: app/views/share_file/list.html.erb:33
+#: app/views/search/share_file_search.html.erb:12
 msgid "Sort by File Names"
 msgstr ""
 
@@ -5637,8 +5597,8 @@ msgstr ""
 msgid "Sort by Registered Dates (Descending)"
 msgstr ""
 
-#: app/views/search/share_file_search.html.erb:11
 #: app/views/share_file/list.html.erb:32
+#: app/views/search/share_file_search.html.erb:11
 msgid "Sort by Upload Dates"
 msgstr ""
 
@@ -5674,7 +5634,7 @@ msgstr ""
 msgid "Specified page does not exist."
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:431
+#: app/controllers/mypage_controller.rb:430
 msgid "Specified page not found."
 msgstr ""
 
@@ -5691,7 +5651,7 @@ msgstr ""
 msgid "Specify Directly"
 msgstr ""
 
-#: app/views/bookmark/_stared.html.erb:3 app/views/groups/_favorite.html.erb:3
+#: app/views/groups/_favorite.html.erb:3 app/views/bookmark/_stared.html.erb:3
 msgid "Star"
 msgstr ""
 
@@ -5788,19 +5748,19 @@ msgstr ""
 msgid "System Tags (changes the behavior by applying): "
 msgstr ""
 
-#: lib/skip_default_data.rb:59
+#: lib/skip_default_data.rb:51
 msgid "TV"
 msgstr ""
 
-#: app/views/board_entries/_form.html.erb:25
-#: app/views/bookmark/list.html.erb:35 app/views/bookmark/new.html.erb:49
 #: app/views/entries/_categories_box.html.erb:7
+#: app/views/board_entries/_form.html.erb:25
+#: app/views/user/_social_tags.html.erb:2
 #: app/views/mypage/_record_post.html.erb:19
 #: app/views/mypage/_record_post.html.erb:44
-#: app/views/search/_tag_search.html.erb:3
-#: app/views/share_file/_form.html.erb:46
 #: app/views/share_file/list.html.erb:39
-#: app/views/user/_social_tags.html.erb:2
+#: app/views/share_file/_form.html.erb:46
+#: app/views/search/_tag_search.html.erb:3 app/views/bookmark/list.html.erb:35
+#: app/views/bookmark/new.html.erb:49
 msgid "Tags"
 msgstr ""
 
@@ -5847,12 +5807,6 @@ msgstr ""
 msgid "Taro Yamada"
 msgstr ""
 
-#: lib/skip_default_data.rb:41
-msgid ""
-"Tell us a little about you in the day off, e.g. the details of your hobbies "
-"or how you spend your holidays."
-msgstr ""
-
 #: app/views/services/skip_reflect_customized.html.erb:3
 msgid "Terms of Use"
 msgstr ""
@@ -5864,9 +5818,9 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
+#: app/views/user_mailer/smtp/sent_forgot_password.html.erb:4
 #: app/views/user_mailer/smtp/sent_apply_email_confirm.html.erb:4
 #: app/views/user_mailer/smtp/sent_forgot_openid.html.erb:4
-#: app/views/user_mailer/smtp/sent_forgot_password.html.erb:4
 msgid "The URL below will be expired 24 hours after this email has been sent."
 msgstr ""
 
@@ -5920,7 +5874,7 @@ msgstr ""
 msgid "The search targets are titles and comments"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:427
+#: app/controllers/mypage_controller.rb:426
 msgid ""
 "The specified email address has already been registered. Try resubmitting "
 "the request with another address."
@@ -6021,15 +5975,15 @@ msgstr ""
 msgid "Time Last Updated: "
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:247
+#: app/controllers/mypage_controller.rb:246
 msgid "Timeout while loading rss."
 msgstr ""
 
 #: app/views/board_entries/_form.html.erb:39
-#: app/views/bookmark/new.html.erb:27 app/views/bookmarks/index.html.erb:5
+#: app/views/bookmarks/index.html.erb:5
 #: app/views/mypage/_record_mail.html.erb:28
 #: app/views/mypage/_record_post.html.erb:45
-#: app/views/rankings/data.html.erb:10
+#: app/views/bookmark/new.html.erb:27 app/views/rankings/data.html.erb:10
 msgid "Title"
 msgstr ""
 
@@ -6045,8 +5999,8 @@ msgstr ""
 msgid "Today's Access"
 msgstr ""
 
-#: app/views/layouts/admin/application.html.erb:62
 #: app/views/layouts/layout.html.erb:93
+#: app/views/layouts/admin/application.html.erb:62
 msgid "Today's Access: %s access"
 msgstr ""
 
@@ -6087,8 +6041,8 @@ msgstr ""
 msgid "Total Entries"
 msgstr ""
 
-#: app/views/layouts/admin/application.html.erb:63
 #: app/views/layouts/layout.html.erb:94
+#: app/views/layouts/admin/application.html.erb:63
 msgid "Total Entries: %s entries"
 msgstr ""
 
@@ -6122,7 +6076,7 @@ msgstr ""
 msgid "Track|Visitor"
 msgstr ""
 
-#: lib/skip_default_data.rb:59
+#: lib/skip_default_data.rb:51
 msgid "Traveling"
 msgstr ""
 
@@ -6134,7 +6088,7 @@ msgstr ""
 msgid "Types"
 msgstr ""
 
-#: app/views/bookmark/new.html.erb:18 app/views/bookmark/new_url.html.erb:9
+#: app/views/bookmark/new_url.html.erb:9 app/views/bookmark/new.html.erb:18
 msgid "URL"
 msgstr ""
 
@@ -6158,9 +6112,9 @@ msgid ""
 "required."
 msgstr ""
 
+#: app/controllers/admin/images_controller.rb:154
 #: app/controllers/admin/documents_controller.rb:38
 #: app/controllers/admin/documents_controller.rb:104
-#: app/controllers/admin/images_controller.rb:154
 msgid "Unexpected error occured. Contact administrator."
 msgstr ""
 
@@ -6168,19 +6122,19 @@ msgstr ""
 msgid "Unjoined"
 msgstr ""
 
-#: app/views/bookmark/_stared.html.erb:2 app/views/groups/_favorite.html.erb:2
+#: app/views/groups/_favorite.html.erb:2 app/views/bookmark/_stared.html.erb:2
 msgid "Unstar"
 msgstr ""
 
-#: app/controllers/user_controller.rb:197
-#: app/views/admin/group_categories/edit.html.erb:11
+#: app/controllers/user_controller.rb:197 app/views/edit/edit.html.erb:11
+#: app/views/group/_manage_info.html.erb:19
+#: app/views/admin/user_profiles/edit.html.erb:13
 #: app/views/admin/openid_identifiers/edit.html.erb:16
+#: app/views/admin/group_categories/edit.html.erb:11
 #: app/views/admin/user_profile_master_categories/edit.html.erb:11
 #: app/views/admin/user_profile_masters/edit.html.erb:10
-#: app/views/admin/user_profiles/edit.html.erb:13
 #: app/views/admin/users/change_uid.html.erb:20
-#: app/views/admin/users/edit.html.erb:10 app/views/edit/edit.html.erb:11
-#: app/views/group/_manage_info.html.erb:19
+#: app/views/admin/users/edit.html.erb:10
 msgid "Update"
 msgstr ""
 
@@ -6204,11 +6158,11 @@ msgstr ""
 msgid "Updated %{count} records."
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:378
+#: app/controllers/mypage_controller.rb:377
 msgid "Updated notification email settings."
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:471
+#: app/controllers/mypage_controller.rb:470
 msgid "Updated successfully."
 msgstr ""
 
@@ -6221,17 +6175,19 @@ msgstr ""
 msgid "Updates from %{provider}"
 msgstr ""
 
+#: app/views/group/_manage_info.html.erb:19
 #: app/views/admin/user_profile_master_categories/edit.html.erb:11
 #: app/views/admin/user_profile_masters/edit.html.erb:10
-#: app/views/bookmark/new.html.erb:33 app/views/group/_manage_info.html.erb:19
+#: app/views/bookmark/new.html.erb:33
 msgid "Updating..."
 msgstr ""
 
-#: app/views/admin/images/_form.html.erb:4
-#: app/views/admin/pictures/edit.html.erb:10
-#: app/views/admin/pictures/new.html.erb:10
-#: app/views/admin/users/import.html.erb:16 app/views/pictures/new.html.erb:18
+#: app/views/pictures/new.html.erb:18
 #: app/views/share_file/new_ajax_upload.html.erb:37
+#: app/views/admin/pictures/new.html.erb:10
+#: app/views/admin/pictures/edit.html.erb:10
+#: app/views/admin/images/_form.html.erb:4
+#: app/views/admin/users/import.html.erb:16
 msgid "Upload"
 msgstr ""
 
@@ -6277,9 +6233,8 @@ msgstr ""
 msgid "User %{username} has already been registered."
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:53
-#: app/controllers/admin/users_controller.rb:71 app/helpers/user_helper.rb:87
-#: app/models/board_entry.rb:121
+#: app/helpers/user_helper.rb:86 app/controllers/admin/users_controller.rb:53
+#: app/controllers/admin/users_controller.rb:71 app/models/board_entry.rb:121
 msgid "User does not exist."
 msgstr ""
 
@@ -6288,7 +6243,7 @@ msgid ""
 "User has entered email address %s is not in use. Please start with the site."
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:357
+#: app/controllers/mypage_controller.rb:356
 msgid "User information was successfully updated."
 msgstr ""
 
@@ -6296,8 +6251,8 @@ msgstr ""
 msgid "User name not found."
 msgstr ""
 
-#: app/controllers/group_controller.rb:57
 #: app/controllers/users_controller.rb:32
+#: app/controllers/group_controller.rb:57
 msgid "User not found."
 msgstr ""
 
@@ -6388,19 +6343,11 @@ msgid "UserOauthAccess|App name"
 msgstr ""
 
 #: app/models/user_oauth_access.rb:-
-msgid "UserOauthAccess|Created at"
-msgstr ""
-
-#: app/models/user_oauth_access.rb:-
 msgid "UserOauthAccess|Secret"
 msgstr ""
 
 #: app/models/user_oauth_access.rb:-
 msgid "UserOauthAccess|Token"
-msgstr ""
-
-#: app/models/user_oauth_access.rb:-
-msgid "UserOauthAccess|Updated at"
 msgstr ""
 
 #: app/models/user_oauth_access.rb:-
@@ -6559,11 +6506,12 @@ msgstr ""
 msgid "UserUid|User"
 msgstr ""
 
-#: app/controllers/services_controller.rb:45
+#: app/helpers/application_helper.rb:359 app/helpers/user_helper.rb:71
 #: app/controllers/users_controller.rb:71
-#: app/helpers/admin/application_helper.rb:35
-#: app/helpers/application_helper.rb:359 app/helpers/user_helper.rb:72
-#: app/views/bookmark/list.html.erb:16 app/views/bookmarks/index.html.erb:16
+#: app/controllers/services_controller.rb:45
+#: app/views/bookmarks/index.html.erb:16
+#: app/views/admin/_data_menu_box.html.erb:6
+#: app/views/bookmark/list.html.erb:16
 msgid "Users"
 msgstr ""
 
@@ -6633,11 +6581,11 @@ msgstr ""
 msgid "User|Admin"
 msgstr ""
 
-#: app/models/user.rb:78
+#: app/models/user.rb:76
 msgid "User|Admin|false"
 msgstr ""
 
-#: app/models/user.rb:77
+#: app/models/user.rb:75
 msgid "User|Admin|true"
 msgstr ""
 
@@ -6653,18 +6601,18 @@ msgstr ""
 msgid "User|Crypted password"
 msgstr ""
 
-#: app/models/user.rb:81
+#: app/models/user.rb:79
 msgid "User|Disclosure|false"
 msgstr ""
 
-#: app/models/user.rb:80
+#: app/models/user.rb:78
 msgid "User|Disclosure|true"
 msgstr ""
 
-#: app/models/user.rb:- app/views/platform/_mail_form.html.erb:3
+#: app/models/user.rb:- app/views/user/show.html.erb:44
 #: app/views/portal/_registration_form.html.erb:20
-#: app/views/shared/_login_form.html.erb:24 app/views/user/show.html.erb:44
-#: app/views/users/_user.html.erb:31
+#: app/views/shared/_login_form.html.erb:24
+#: app/views/platform/_mail_form.html.erb:3 app/views/users/_user.html.erb:31
 msgid "User|Email"
 msgstr ""
 
@@ -6680,11 +6628,11 @@ msgstr ""
 msgid "User|Locked"
 msgstr ""
 
-#: app/models/user.rb:84
+#: app/models/user.rb:82
 msgid "User|Locked|false"
 msgstr ""
 
-#: app/models/user.rb:83
+#: app/models/user.rb:81
 msgid "User|Locked|true"
 msgstr ""
 
@@ -6692,15 +6640,15 @@ msgstr ""
 msgid "User|Name"
 msgstr ""
 
-#: app/models/user.rb:68
+#: app/models/user.rb:66
 msgid "User|Old password"
 msgstr ""
 
-#: app/models/user.rb:69
+#: app/models/user.rb:67
 msgid "User|Password"
 msgstr ""
 
-#: app/models/user.rb:70
+#: app/models/user.rb:68
 msgid "User|Password confirmation"
 msgstr ""
 
@@ -6724,10 +6672,10 @@ msgstr ""
 msgid "User|Reset auth token expires at"
 msgstr ""
 
-#: app/models/user.rb:- app/views/admin/users/import.html.erb:10
+#: app/models/user.rb:- app/views/user/show.html.erb:49
 #: app/views/portal/_registration_form.html.erb:24
 #: app/views/shared/_symbol_autocomplete_field.html.erb:10
-#: app/views/user/show.html.erb:49 app/views/users/_user.html.erb:40
+#: app/views/admin/users/import.html.erb:10 app/views/users/_user.html.erb:40
 #: app/views/users/index.html.erb:9
 msgid "User|Section"
 msgstr ""
@@ -6736,15 +6684,15 @@ msgstr ""
 msgid "User|Status"
 msgstr ""
 
-#: app/models/user.rb:72
+#: app/models/user.rb:70
 msgid "User|Status|ACTIVE"
 msgstr ""
 
-#: app/models/user.rb:73
+#: app/models/user.rb:71
 msgid "User|Status|RETIRED"
 msgstr ""
 
-#: app/models/user.rb:74 app/views/admin/users/_form.html.erb:25
+#: app/models/user.rb:72 app/views/admin/users/_form.html.erb:25
 #: app/views/admin/users/_form.html.erb:31
 msgid "User|Status|UNUSED"
 msgstr ""
@@ -6753,7 +6701,7 @@ msgstr ""
 msgid "User|Trial num"
 msgstr ""
 
-#: app/models/user.rb:86
+#: app/models/user.rb:84
 msgid "User|Uid"
 msgstr ""
 
@@ -6786,11 +6734,11 @@ msgstr ""
 msgid "Waiting to be Sent"
 msgstr ""
 
-#: lib/skip_default_data.rb:59
+#: lib/skip_default_data.rb:51
 msgid "Watching Movies"
 msgstr ""
 
-#: lib/skip_default_data.rb:59
+#: lib/skip_default_data.rb:51
 msgid "Watching Sports"
 msgstr ""
 
@@ -6808,7 +6756,7 @@ msgstr ""
 msgid "Welcome to [%s]!"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:664
+#: app/controllers/mypage_controller.rb:663
 msgid "Welcome! Read detailed help."
 msgstr ""
 
@@ -6825,27 +6773,27 @@ msgstr ""
 msgid "Wiki text"
 msgstr ""
 
-#: app/models/user.rb:255
+#: app/models/user.rb:249
 msgid "Within %d day"
 msgid_plural "Within %d days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/models/user.rb:257
+#: app/models/user.rb:251
 msgid "Within %d hour"
 msgid_plural "Within %d hours"
 msgstr[0] ""
 
-#: app/models/user.rb:259
+#: app/models/user.rb:253
 msgid "Within %d minute"
 msgid_plural "Within %d minutes"
 msgstr[0] ""
 
-#: app/models/user.rb:253
+#: app/models/user.rb:247
 msgid "Within 10 days and more"
 msgstr ""
 
-#: app/models/user.rb:261
+#: app/models/user.rb:255
 msgid "Within a minute"
 msgstr ""
 
@@ -6867,10 +6815,6 @@ msgstr ""
 
 #: lib/skip_default_data.rb:32
 msgid "Write about your current and past jobs, your interests and concerns."
-msgstr ""
-
-#: lib/skip_default_data.rb:36
-msgid "Year Joined"
 msgstr ""
 
 #: app/views/group/_form.html.erb:43
@@ -7038,7 +6982,7 @@ msgstr ""
 msgid "Your registration is complete."
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:406
+#: app/controllers/mypage_controller.rb:405
 msgid ""
 "Your request of changing email address accepted. Check your email to "
 "complete the process."
@@ -7102,8 +7046,8 @@ msgstr ""
 msgid "[Bottom]"
 msgstr ""
 
-#: app/views/bookmark/list.html.erb:31 app/views/bookmark/list.html.erb:44
-#: app/views/share_file/list.html.erb:47
+#: app/views/share_file/list.html.erb:47 app/views/bookmark/list.html.erb:31
+#: app/views/bookmark/list.html.erb:44
 msgid "[Cancel selection]"
 msgstr ""
 
@@ -7168,7 +7112,7 @@ msgstr ""
 msgid "[Get download history in CSV]"
 msgstr ""
 
-#: app/models/board_entry.rb:391 app/models/share_file.rb:260
+#: app/models/share_file.rb:260 app/models/board_entry.rb:391
 msgid "[Group members only]"
 msgstr ""
 
@@ -7212,19 +7156,19 @@ msgstr ""
 msgid "[New]"
 msgstr ""
 
-#: app/views/rankings/_monthly_history.html.erb:7
 #: app/views/shared/_calendar.html.erb:32
+#: app/views/rankings/_monthly_history.html.erb:7
 msgid "[Next month]"
 msgstr ""
 
 #: app/helpers/application_helper.rb:46 app/helpers/application_helper.rb:59
 #: app/views/mypage/_list_block.html.erb:39
-#: app/views/search/_page_navi.html.erb:20
 #: app/views/search/_result_info.html.erb:4
+#: app/views/search/_page_navi.html.erb:20
 msgid "[Next]"
 msgstr ""
 
-#: app/models/board_entry.rb:385 app/models/share_file.rb:254
+#: app/models/share_file.rb:254 app/models/board_entry.rb:385
 msgid "[Open to all]"
 msgstr ""
 
@@ -7232,7 +7176,7 @@ msgstr ""
 msgid "[Other users: %{count} users]"
 msgstr ""
 
-#: app/models/board_entry.rb:389 app/models/share_file.rb:258
+#: app/models/share_file.rb:258 app/models/board_entry.rb:389
 msgid "[Owner only]"
 msgstr ""
 
@@ -7244,8 +7188,8 @@ msgstr ""
 msgid "[Popular Blogs]"
 msgstr ""
 
-#: app/views/rankings/_monthly_history.html.erb:5
 #: app/views/shared/_calendar.html.erb:30
+#: app/views/rankings/_monthly_history.html.erb:5
 msgid "[Prev month]"
 msgstr ""
 
@@ -7293,10 +7237,10 @@ msgstr ""
 msgid "[Search Users]"
 msgstr ""
 
-#: app/helpers/mypage_helper.rb:22
-#: app/views/collaboration_app/_feeds.html.erb:14
+#: app/helpers/mypage_helper.rb:22 app/views/user/_postit_cloud.html.erb:5
 #: app/views/user/_follow_chains_box.html.erb:11
-#: app/views/user/_postit_cloud.html.erb:5 app/views/user/show.html.erb:95
+#: app/views/user/show.html.erb:95
+#: app/views/collaboration_app/_feeds.html.erb:14
 msgid "[See all]"
 msgstr ""
 
@@ -7392,7 +7336,7 @@ msgstr ""
 msgid "[Unread]"
 msgstr ""
 
-#: app/views/group/_manage_info.html.erb:22 app/views/pictures/new.html.erb:20
+#: app/views/pictures/new.html.erb:20 app/views/group/_manage_info.html.erb:22
 msgid "[[Delete]]"
 msgstr ""
 
@@ -7497,8 +7441,8 @@ msgstr ""
 msgid "chain"
 msgstr ""
 
-#: app/views/admin/groups/index.html.erb:18
 #: app/views/admin/oauth_providers/index.html.erb:9
+#: app/views/admin/groups/index.html.erb:18
 msgid "description"
 msgstr ""
 
@@ -7555,7 +7499,7 @@ msgstr ""
 msgid "has an invalid format."
 msgstr ""
 
-#: app/models/user.rb:224
+#: app/models/user.rb:218
 msgid "incorrect."
 msgstr ""
 
@@ -7563,7 +7507,7 @@ msgstr ""
 msgid "invalid url"
 msgstr ""
 
-#: app/models/user.rb:55 app/models/user_profile_master.rb:138
+#: app/models/user.rb:53 app/models/user_profile_master.rb:138
 msgid "is mandatory."
 msgstr ""
 
@@ -7604,7 +7548,7 @@ msgstr ""
 msgid "new_uid"
 msgstr ""
 
-#: app/models/user.rb:219
+#: app/models/user.rb:213
 msgid "not provided."
 msgstr ""
 
@@ -7612,11 +7556,11 @@ msgstr ""
 msgid "oauth provider"
 msgstr ""
 
-#: app/models/activation.rb:-
+#: app/models/group.rb:-
 msgid "open id authentication association"
 msgstr ""
 
-#: app/models/activation.rb:-
+#: app/models/group.rb:-
 msgid "open id authentication nonce"
 msgstr ""
 
@@ -7629,11 +7573,11 @@ msgstr ""
 msgid "openid identifier"
 msgstr ""
 
-#: app/models/activation.rb:-
+#: app/models/group.rb:-
 msgid "openidauthentication::association"
 msgstr ""
 
-#: app/models/activation.rb:-
+#: app/models/group.rb:-
 msgid "openidauthentication::nonce"
 msgstr ""
 
@@ -7656,9 +7600,9 @@ msgstr ""
 #: app/controllers/admin/pictures_controller.rb:77
 #: app/controllers/admin/pictures_controller.rb:78
 #: app/controllers/admin/pictures_controller.rb:82 app/models/picture.rb:-
+#: app/views/admin/users/index.html.erb:66
 #: app/views/admin/users/edit.html.erb:20
 #: app/views/admin/users/edit.html.erb:21
-#: app/views/admin/users/index.html.erb:66
 msgid "picture"
 msgstr ""
 
@@ -7674,8 +7618,8 @@ msgstr ""
 msgid "ranking"
 msgstr ""
 
-#: app/views/admin/user_profile_masters/index.html.erb:17
 #: app/views/portal/_profile_form.html.erb:14
+#: app/views/admin/user_profile_masters/index.html.erb:17
 msgid "required"
 msgstr ""
 
@@ -7683,7 +7627,7 @@ msgstr ""
 msgid "requires a valid regular expression."
 msgstr ""
 
-#: app/models/applied_email.rb:19 app/models/user.rb:57
+#: app/models/applied_email.rb:19 app/models/user.rb:55
 msgid "requires proper format."
 msgstr ""
 
@@ -7700,11 +7644,11 @@ msgstr ""
 msgid "setting"
 msgstr ""
 
-#: app/models/user.rb:122
+#: app/models/user.rb:116
 msgid "shall not be the same with login ID."
 msgstr ""
 
-#: app/models/user.rb:123
+#: app/models/user.rb:117
 msgid "shall not be the same with the previous one."
 msgstr ""
 
@@ -7753,8 +7697,6 @@ msgstr ""
 #: app/controllers/admin/pictures_controller.rb:48
 #: app/controllers/admin/pictures_controller.rb:64
 #: app/controllers/admin/pictures_controller.rb:76
-#: app/controllers/admin/user_profiles_controller.rb:20
-#: app/controllers/admin/user_profiles_controller.rb:39
 #: app/controllers/admin/users_controller.rb:29
 #: app/controllers/admin/users_controller.rb:41
 #: app/controllers/admin/users_controller.rb:50
@@ -7762,7 +7704,9 @@ msgstr ""
 #: app/controllers/admin/users_controller.rb:125
 #: app/controllers/admin/users_controller.rb:142
 #: app/controllers/admin/users_controller.rb:160
-#: app/controllers/admin/users_controller.rb:185 app/models/user.rb:-
+#: app/controllers/admin/users_controller.rb:185
+#: app/controllers/admin/user_profiles_controller.rb:20
+#: app/controllers/admin/user_profiles_controller.rb:39 app/models/user.rb:-
 #: app/views/admin/users/import.html.erb:74
 #: app/views/admin/users/index.html.erb:63
 msgid "user"
@@ -7780,15 +7724,15 @@ msgstr ""
 msgid "user message unsubscribe"
 msgstr ""
 
+#: app/helpers/initial_settings_helper.rb:43
 #: app/controllers/admin/users_controller.rb:187
-#: app/controllers/admin/users_controller.rb:195
-#: app/helpers/initial_settings_helper.rb:43 app/models/share_file.rb:285
-#: app/views/admin/users/change_uid.html.erb:29
+#: app/controllers/admin/users_controller.rb:195 app/models/share_file.rb:285
+#: app/views/user/show.html.erb:34
+#: app/views/portal/_registration_form.html.erb:37
 #: app/views/admin/users/create_uid.html.erb:12
 #: app/views/admin/users/create_uid.html.erb:25
-#: app/views/admin/users/edit.html.erb:17
-#: app/views/portal/_registration_form.html.erb:37
-#: app/views/user/show.html.erb:34 app/views/users/_user.html.erb:21
+#: app/views/admin/users/change_uid.html.erb:29
+#: app/views/admin/users/edit.html.erb:17 app/views/users/_user.html.erb:21
 msgid "user name"
 msgstr ""
 
