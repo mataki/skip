@@ -2,7 +2,7 @@
   <% if @create_button_show %>
   <div style="position: absolute; top: 5px; right: 10px;">
     <% new_bookmark_url_hash = {:controller => "bookmark", :action => "new_without_bookmarklet", :url => @bookmark.url, :title => @bookmark.title} -%>
-    <%= link_to(icon_tag('tag_blue_add', :title => _('Add a comment')) + _('Add a comment!'), new_bookmark_url_hash, {:onclick => "sub_window_open('#{url_for(new_bookmark_url_hash)}'); return false;" }) %>
+    <%= link_to(icon_tag('tag_blue_add', :title => _('Add a comment')) + _('Add a comment!'), new_bookmark_url_hash, {:onclick => "sub_window_open('#{url_for(new_bookmark_url_hash)}', 'subwindow', 550, 400); return false;" }) %>
   </div>
   <% end %>
   <div class="title"><%= link_to_bookmark_url @bookmark %></div>
@@ -29,7 +29,7 @@
         <%= hidden_field_tag("authenticity_token", form_authenticity_token) %>
         <%= icon_tag('key', :title => _('Private')) unless bookmark_comment.public %>
         <% new_bookmark_url_hash = {:controller => "bookmark", :action => "new_without_bookmarklet", :url => @bookmark.url, :title => @bookmark.title} -%>
-        <%= link_to(icon_tag('tag_blue_edit', :title => _('Edit')), new_bookmark_url_hash, {:onclick => "sub_window_open('#{url_for(new_bookmark_url_hash)}'); return false;" }) %>
+        <%= link_to(icon_tag('tag_blue_edit', :title => _('Edit')), new_bookmark_url_hash, {:onclick => "sub_window_open('#{url_for(new_bookmark_url_hash)}', 'subwindow', 550, 400); return false;" }) %>
         <%= link_to_function icon_tag('tag_blue_delete', :title => _('Delete')),"if (confirm('#{_('Are you sure to delete?')}')) { var f = document.createElement('form'); this.parentNode.appendChild(f); f.method = 'POST';f.action = '#{url_for(:controller =>'bookmark', :action =>'destroy', :uri => @bookmark.escaped_url, :comment_id => bookmark_comment.id)}'; var input = document.createElement('input'); input.type = 'hidden'; input.name = 'authenticity_token'; input.value = document.getElementById('authenticity_token').value; f.appendChild(input); f.submit();}",:href => url_for(:controller =>'bookmark', :action =>'destroy') %>
       <% end -%>
     </div>

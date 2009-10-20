@@ -220,7 +220,7 @@
         <%= _('Action:') %>
         <%= link_to(icon_tag('page_edit', :title => _('Edit')), :controller=> "edit", :action => "edit", :id => entry) if editable  %>
         <% new_bookmark_url_hash = {:controller => "bookmark", :action => "new_without_bookmarklet", :url => "/page/#{entry.id.to_s}", :title => entry.title} -%>
-        <%= link_to(icon_tag('tag_blue_add', :title => _('Bookmark this')), new_bookmark_url_hash, {:onclick => "sub_window_open('#{url_for(new_bookmark_url_hash)}'); return false;" }) %>
+        <%= link_to(icon_tag('tag_blue_add', :title => _('Bookmark this')), new_bookmark_url_hash, {:onclick => "sub_window_open('#{url_for(new_bookmark_url_hash)}', 'subwindow', 550, 400); return false;" }) %>
         <%= link_to(icon_tag('control_play_blue', :title => _('Slide Show')), {:controller => "monta", :action => "execute_monta", :id => entry}, :target=>"_blank") if entry.editor_mode == 'hiki' %>
         <%= link_to(icon_tag('zoom', :title => _('Maximize!')), {:controller=> "board_entries", :action => "large", :id => entry}, :target=>"_blank") %>
       </div>
