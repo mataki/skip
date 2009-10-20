@@ -1,19 +1,4 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Free Software Foundation, Inc.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
-msgid ""
-msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"PO-Revision-Date: 2009-10-19 20:41+0900\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
-"Content-Transfer-Encoding: 8bit\n"
-
-# SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
@@ -2689,13 +2674,13 @@ msgstr ""
 
 #: app/views/mypage/_action_box.html.erb:8
 msgid "Create a new bookmark"
-msgstr ""
+msgstr "Create a bookmark"
 
 #: app/controllers/groups_controller.rb:44
 #: app/controllers/groups_controller.rb:52
 #: app/views/mypage/_action_box.html.erb:9
 msgid "Create a new group"
-msgstr ""
+msgstr "Create a group"
 
 #: app/views/admin/users/first.html.erb:2
 msgid "Create administrative user"
