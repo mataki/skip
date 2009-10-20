@@ -19,7 +19,7 @@ describe UserSearchCondition do
   describe "パラメータが設定されていない場合" do
     it "初期値がロードされること" do
       conditions = UserSearchCondition.create_by_params :condition => {}
-      conditions.value_of_per_page.should == 5
+      conditions.value_of_per_page.should == 20
       conditions.make_conditions.should == ["users.status in (?)", ["ACTIVE", "RETIRED"]]
 
       conditions.value_of_order_by.should == "user_accesses.last_access DESC"
