@@ -59,6 +59,17 @@ class Admin::ApplicationController < ApplicationController
         return false
       end
     end
+
+    if uploaded_file.content_type == "text/plain"
+      uploaded_file.read.to_s.each_line do |line|
+        if line.split(",").size < 3
+          flash.now[:error] = _('Disallowed file type.')
+          return false
+        end
+      end
+      uploaded_file.rewind
+    end
+
     true
   end
 end

@@ -85,7 +85,7 @@ describe Admin::ApplicationController, '#valid_file?' do
       it { flash[:error].should be_nil }
     end
   end
-  describe 'ファイルのContent-typeをcsvファイルのみに制限をかける場合' do
+  describe 'ファイルのContent-typeをcsvファイル及びplaintextのみに制限をかける場合' do
     before do
       @content_types = ['text/csv', 'application/x-csv']
     end
@@ -96,6 +96,13 @@ describe Admin::ApplicationController, '#valid_file?' do
       end
       it { flash[:error].should_not be_nil }
     end
+    describe 'ファイルのContent-typeがtext/plainの場合' do
+      before do
+        file = mock_file(:content_type => 'text/plain')
+        controller.send(:valid_file?, file, :content_types => @content_types)
+      end
+      it { flash[:error].should be_true }
+    end
     describe 'ファイルのContent-typeがcsvの場合' do
       it "application/x-csvを渡した時、tureを返すこと" do
         controller.send(:valid_file?, mock_file(:content_type => 'application/x-csv'), :content_types => @content_types).should be_true
@@ -105,6 +112,16 @@ describe Admin::ApplicationController, '#valid_file?' do
       end
     end
   end
+
+  describe "text/plainでファイルフォーマットが間違っている場合" do
+    before do
+      file = mock_file(:content_type => 'text/plain')
+      file.stub!(:read).and_return("hogemoge")
+      controller.send(:valid_file?, file, :content_types => @content_types)
+    end
+    it { flash[:error].should_not be_nil }
+  end
+
   describe "拡張子の制限がjpgだった場合" do
     describe "拡張子がjpgのファイルがわたってきた場合" do
       it "trueを返すこと" do
