@@ -273,7 +273,7 @@ private
   def setup_layout board_entry
     board_entry.load_owner unless board_entry.owner
     @main_menu = board_entry.owner.is_a?(Group) ? _('Groups') : _('My Blog')
-    @title = _("%{action} %{write_place}") % {:action => (["edit", "update"].include?(action_name) ? _('Edit') : _('Write')), :write_place => write_place_name(board_entry.owner)}
+    @title = board_entry.owner.name
   end
 
   def analyze_params board_entry
