@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
 "POT-Creation-Date: 2009-10-20 14:22+0900\n"
-"PO-Revision-Date: 2009-10-19 20:40+0900\n"
+"PO-Revision-Date: 2009-10-20 14:45+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -514,7 +514,7 @@ msgstr "追加"
 
 #: app/views/mypage/_manage_antenna.html.erb:29
 msgid "Add Antenna"
-msgstr "アンテナの追加"
+msgstr "新着通知の追加"
 
 #: app/views/user/_action_box.html.erb:10
 msgid "Add a bookmark"
@@ -530,7 +530,7 @@ msgstr "コメントの追加！"
 
 #: app/views/user/_action_box.html.erb:8
 msgid "Add an antenna"
-msgstr "アンテナに追加"
+msgstr "新着時に通知"
 
 #: app/views/bookmark/new_url.html.erb:20
 #: app/views/bookmark/new_url.html.erb:22
@@ -543,7 +543,7 @@ msgstr "参加者に追加"
 
 #: app/views/group/show.html.erb:49
 msgid "Add to antenna"
-msgstr "アンテナに追加"
+msgstr "新着時に通知"
 
 #: app/controllers/group_controller.rb:329
 msgid "Added %s as a member and created a BBS for messaging."
@@ -556,7 +556,7 @@ msgstr "%sのメンバーを参加者に追加し、連絡のフォーラムを�
 
 #: app/views/antenna/_select_antenna.html.erb:2
 msgid "Adding to antenna"
-msgstr "アンテナへの追加"
+msgstr "新着時に通知"
 
 #: app/helpers/group_helper.rb:42
 msgid "Admin"
@@ -1234,12 +1234,11 @@ msgstr ""
 
 #: app/models/admin/setting.rb:45
 msgid "Admin::Setting|Initial anntena"
-msgstr "初期登録するアンテナ名"
+msgstr "初期登録する通知名"
 
 #: app/models/admin/setting.rb:46
 msgid "Admin::Setting|Initial anntena description"
-msgstr ""
-"ユーザ登録時に、アンテナを予め1つ登録しておけます。その名前を記述して下さい。"
+msgstr "ユーザ登録時に、通知を予め1つ登録しておけます。その名前を記述して下さい。"
 
 #: app/models/admin/setting.rb:47
 msgid "Admin::Setting|Login account"
@@ -1904,25 +1903,20 @@ msgstr ""
 
 #: app/views/mypage/_antenna_box.html.erb:6
 msgid "Antenna Description"
-msgstr ""
-"アンテナは、読んだ記事と読んでいない記事を自動的に判別してくれる便利な機能で"
-"す。<br/>自動的に新しい記事を収集してくれて、読んでない記事の数はアンテナ名の"
-"後ろの()の数字に入ります。<br/>また、あなたが書いたコメントにさらにコメントが"
-"ついたときなどは、「コメントの行方」アンテナが反応してくれます。<br/>くわしく"
-"はヘルプをご覧ください。"
+msgstr "新着通知は、読んだ記事と読んでいない記事を自動的に判別してくれる便利な機能です。<br/>自動的に新しい記事を収集してくれて、読んでない記事の数は新着通知名の後ろの()の数字に入ります。<br/>また、あなたが書いたコメントにさらにコメントがついたときなどは、「コメントの行方」の新着通知が反応してくれます。<br/>くわしくはヘルプをご覧ください。"
 
 #: app/views/mypage/_manage_antenna.html.erb:59
 msgid "Antenna name accepts 10 or less characters only."
-msgstr "アンテナ名は10文字以内で入力して下さい。"
+msgstr "新着通知名は10文字以内で入力して下さい。"
 
 #: app/controllers/antenna_controller.rb:56
 #: app/views/mypage/_manage_antenna.html.erb:55
 msgid "Antenna name is mandatory."
-msgstr "アンテナ名は必須です。"
+msgstr "新着通知名は必須です。"
 
 #: app/models/antenna_item.rb:-
 msgid "AntennaItem|Antenna"
-msgstr "アンテナ"
+msgstr "新着通知"
 
 #: app/models/antenna_item.rb:-
 msgid "AntennaItem|Value"
@@ -1930,15 +1924,15 @@ msgstr "値"
 
 #: app/models/antenna_item.rb:-
 msgid "AntennaItem|Value type"
-msgstr "アンテナ形式"
+msgstr "形式"
 
 #: app/views/mypage/_antenna_box.html.erb:8
 msgid "Antennas"
-msgstr "アンテナ"
+msgstr "新着通知"
 
 #: app/models/antenna.rb:-
 msgid "Antenna|Name"
-msgstr "アンテナ名"
+msgstr "名前"
 
 #: app/models/antenna.rb:-
 msgid "Antenna|Position"
@@ -2735,7 +2729,7 @@ msgstr "みんなに紹介する"
 
 #: app/views/antenna/_select_antenna.html.erb:40
 msgid "Create new anntenna and add: "
-msgstr "新しいアンテナを作成して追加："
+msgstr "新しい新着通知を作成して追加："
 
 #: app/controllers/group_controller.rb:244
 msgid ""
@@ -4244,7 +4238,7 @@ msgstr "男性"
 
 #: app/helpers/mypage_helper.rb:51
 msgid "Manage Antennas"
-msgstr "アンテナの整備"
+msgstr "新着通知の整備"
 
 #: app/helpers/group_helper.rb:24
 msgid "Manage Members"
@@ -5483,11 +5477,11 @@ msgstr "左のメニューから編集したいページを選択して下さい
 
 #: app/views/antenna/_select_antenna.html.erb:7
 msgid "Select the antenna to add."
-msgstr "追加するアンテナを選択してください"
+msgstr "追加する新着通知を選択してください"
 
 #: app/controllers/antenna_controller.rb:70
 msgid "Selected antenna invalid."
-msgstr "不正なアンテナが指定されました。"
+msgstr "不正な新着通知が指定されました。"
 
 #: app/controllers/mypage_controller.rb:123
 msgid "Self Admin"
@@ -5946,7 +5940,7 @@ msgstr "しました"
 
 #: app/views/antenna/_selected_antenna.html.erb:1
 msgid "Successfully added to antenna."
-msgstr "アンテナに登録できました"
+msgstr "新着通知に登録できました"
 
 #: app/controllers/admin/users_controller.rb:150
 msgid "Successfully added/updated users from CSV file."
@@ -6211,7 +6205,7 @@ msgstr "この方は既に退職されています"
 
 #: app/views/antenna/_select_antenna.html.erb:30
 msgid "This user has been added into antennas below: "
-msgstr "このユーザは以下のアンテナに既に登録済みです："
+msgstr "このユーザは以下の新着通知に既に登録済みです："
 
 #: app/views/admin/settings/_security.html.erb:17
 msgid ""
@@ -7042,7 +7036,7 @@ msgstr "ようこそ! まずはこちらをご覧ください。"
 
 #: app/views/mypage/_antenna_box.html.erb:6
 msgid "What is Antenna"
-msgstr "アンテナとは"
+msgstr "新着通知とは"
 
 #: app/views/share_file/_form.html.erb:24
 msgid "Where to Save"
@@ -7151,7 +7145,7 @@ msgstr "次回からのアクセスは、 %s より利用可能です。"
 
 #: app/views/antenna/_select_antenna.html.erb:6
 msgid "You can add this blog into your antenna."
-msgstr "このブログをアンテナに追加できます。"
+msgstr "このブログを新着通知に追加できます。"
 
 #: app/views/bookmark/new.html.erb:3
 msgid ""
@@ -7177,12 +7171,10 @@ msgid ""
 "You can also move the items between antennas it by dragging the %"
 "{report_user} in the condition area."
 msgstr ""
-"ここでは注目するブログなどのアンテナを整備することが可能です。<br/>\n"
-"アンテナの名称は、クリックすると編集することが可能です。<br/>\n"
-"アンテナの一覧%{transmit}は、上下にドラッグ＆ドロップすることで並び替えをする"
-"ことができます。<br/>\n"
-"また、条件部分の%{report_user}を掴んで、アンテナにドロップすれば、移動させる"
-"こともできます。</p>"
+"ここでは注目するブログなどの新着通知を整備することが可能です。<br/>\n"
+"新着通知の名称は、クリックすると編集することが可能です。<br/>\n"
+"新着通知の一覧%{transmit}は、上下にドラッグ＆ドロップすることで並び替えをすることができます。<br/>\n"
+"また、条件部分の%{report_user}を掴んで、新着通知にドロップすれば、移動させることもできます。</p>"
 
 #: app/views/mypage/_manage_message.html.erb:6
 msgid ""
@@ -7273,7 +7265,7 @@ msgstr "あなたのOpenID:"
 
 #: app/views/antenna/_select_antenna.html.erb:17
 msgid "Your antennas: "
-msgstr "あなたのアンテナ："
+msgstr "あなたの新着通知："
 
 #: app/views/mypage/welcome.html.erb:32
 msgid "Your information"
@@ -7430,7 +7422,7 @@ msgstr "[ヘルプ]"
 
 #: app/views/mypage/entries_by_antenna.html.erb:30
 msgid "[Hide antenna links]"
-msgstr "[アンテナ条件を隠す]"
+msgstr "[新着通知条件を隠す]"
 
 #: app/views/mypage/entries_by_antenna.html.erb:35
 msgid "[Hide read entries]"
@@ -7450,7 +7442,7 @@ msgstr "[リンク先が存在しません...%s>]"
 
 #: app/views/mypage/_antenna_box.html.erb:18
 msgid "[Manage antennas]"
-msgstr "[アンテナを整備する]"
+msgstr "[新着通知を整備する]"
 
 #: app/views/mypage/welcome.html.erb:34
 msgid "[Mypage]"
@@ -7566,7 +7558,7 @@ msgstr "[ページ内の記事を未読]"
 
 #: app/views/mypage/entries_by_antenna.html.erb:29
 msgid "[Show antenna links]"
-msgstr "[アンテナ条件を表示]"
+msgstr "[新着通知条件を表示]"
 
 #: app/views/mypage/entries_by_antenna.html.erb:37
 msgid "[Show read entries]"
@@ -7698,11 +7690,11 @@ msgstr "全体"
 
 #: app/models/antenna.rb:-
 msgid "antenna"
-msgstr "アンテナ"
+msgstr "新着通知"
 
 #: app/models/antenna_item.rb:-
 msgid "antenna item"
-msgstr "アンテナアイテム"
+msgstr "新着通知条件"
 
 #: app/models/applied_email.rb:-
 msgid "applied email"
