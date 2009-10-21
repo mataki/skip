@@ -1,14 +1,18 @@
-<% top_option ||= nil -%>
+<% group ||= nil %>
 <% image_output = user_link_to_with_portrait(user) -%>
 <ul class="user_box">
   <li class="image" style="list-style: none; border-bottom: 1px dotted silver;">
     <center><%= image_output %></center>
-    <% top_option if top_option -%>
   </li>
+  <% if group -%>
+    <li style="list-style: none; border-bottom: 1px dotted silver">
+    <center>
+      <%= group.administrator?(user) ? (icon_tag('star') + _("Administrator")) : (icon_tag('user') + _("Member")) %>
+    </center>
+    </li>
+  <% end -%>
   <li style="list-style: none; border-bottom: 1px dotted silver"><center><%= user_link_to user %></center></li>
-  <li style="list-style: none; border-bottom: 1px dotted silver"><center><%=h user.section %></center></li>
+  <li style="list-style: none; border-bottom: 1px dotted silver"><center><%= h user.section %></center></li>
   <li style="list-style: none;"><center><%=h user.before_access %></center></li>
 </ul>
-
-
 

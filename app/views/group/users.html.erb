@@ -5,10 +5,6 @@
       <th><%= _('Sort by')%></th>
       <td><%= select :condition, :sort_type, UserSearchCondition.sort_types %></td>
     </tr>
-    <tr>
-      <th><%= _('Output Format')%></th>
-      <td><%= radio_buttons :condition, :output_type, UserSearchCondition.output_types %></td>
-    </tr>
   </table>
   <div class="submit" style="text-align: right;"><%= submit_tag _('Search') %></div>
 <% end -%>
@@ -17,7 +13,10 @@
 <div class="search_result_space">
 <% if @pages and @pages.item_count > 0 -%>
   <div class="navi"><%= page_link(@pages) %></div>
-  <%= output_users_result @users, :output_normal => @condition.output_normal?, :output_group_participation => true %>
+  <% @users.each do |user| -%>
+    <%= render :partial => 'users/user', :locals => {:user => user, :group => @group} %>
+  <% end -%>
+  <div class="clear_left">
   <div class="navi"><%= page_link(@pages) %></div>
 <% end -%>
 </div>

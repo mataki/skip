@@ -21,7 +21,6 @@ class UserSearchCondition < SearchCondition
 
   attr_reader :include_manager
   attr_reader :sort_type
-  attr_reader :output_type
   attr_reader :not_include_retired
   attr_reader :with_group
 
@@ -41,11 +40,6 @@ class UserSearchCondition < SearchCondition
       options << [_('Sort by user name'), "2"] if user_name_mode?(:name)
       options
     end
-
-    def output_types
-      [ [_('Normal View'), 'normal'],
-        [_('List View'), 'list'] ]
-    end
   end
 
   def initialize
@@ -54,7 +48,6 @@ class UserSearchCondition < SearchCondition
 
     @include_manager = "0"
     @sort_type = "0"
-    @output_type = "normal"
     @not_include_retired = true
     @with_group = nil
   end
@@ -66,17 +59,12 @@ class UserSearchCondition < SearchCondition
 
     @include_manager = params[:include_manager] || "0"
     @sort_type = UserSearchCondition::VALID_SORT_TYPES.include?(params[:sort_type]) ?  params[:sort_type] : '0'
-    @output_type = params[:output_type] || "normal"
     @not_include_retired = params[:not_include_retired]
     @with_group = params[:with_group]
   end
 
   def include_manager?
     @include_manager == "1" ? true : false
-  end
-
-  def output_normal?
-    @output_type == "normal" ? true : false
   end
 
   def value_of_order_by
