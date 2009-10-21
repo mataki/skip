@@ -20,34 +20,31 @@ class UsersController < ApplicationController
   def index
     @condition = UserSearchCondition.create_by_params params
 
-    @pages, @users = paginate(:user,
-                              :per_page => @condition.value_of_per_page,
-                              :conditions => @condition.make_conditions,
-                              :order_by => @condition.value_of_order_by,
-                              :include => @condition.value_of_include)
+    @users = User.scoped(
+      :conditions => @condition.make_conditions,
+      :include => @condition.value_of_include,
+      :order => @condition.value_of_order_by
+    ).paginate(:page => params[:page], :per_page => @condition.value_of_per_page)
+
     # 検索条件や表示順の条件によって、user_uidsがMASTERかNICKNAMEのどちらかしたロードされない。
     # そのためviewで正しく描画するためにreloadしておく
     @users.each{|u| u.user_uids.reload}
-    unless @users && @users.size > 0
-      flash.now[:notice] = _('User not found.')
-    end
+    flash.now[:notice] = _('User not found.') if @users.empty?
   end
 
   # tab_menu
   # TODO #924で画面からリンクをなくした。1.4時点で復活しない場合は削除する
   def chain_search
-    @pages, chains = paginate(:chains,
-                              :per_page => 5,
-                              :order_by => "updated_on DESC")
+    @chains = Chain.order_new.paginate(:page => params[:page], :per_page => 5)
 
-    to_user_ids = chains.inject([]) {|result, chain| result << chain.to_user_id }
-    from_user_ids = chains.inject([]) {|result, chain| result << chain.from_user_id }
+    to_user_ids = @chains.inject([]) {|result, chain| result << chain.to_user_id }
+    from_user_ids = @chains.inject([]) {|result, chain| result << chain.from_user_id }
 
     against_chains = Chain.find(:all, :conditions =>["from_user_id in (?) and to_user_id in (?)", to_user_ids, from_user_ids]) if to_user_ids.size > 0
     against_chains ||= []
 
     @result = []
-    chains.each do |chain|
+    @chains.each do |chain|
       message = ""
        against_chains.each do |ag|
          if ag.to_user_id == chain.from_user_id and ag.from_user_id == chain.to_user_id

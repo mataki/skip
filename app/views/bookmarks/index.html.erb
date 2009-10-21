@@ -25,10 +25,10 @@
 </div>
 
 <div class="search_result_space" style="position: relative; width: 100%; margin-left: auto; margin-right: auto;">
-<% if @pages and @pages.item_count > 0 -%>
-  <div class="navi"><%= page_link @pages %></div>
+<% unless @bookmarks.empty? -%>
+  <div class="navi"><%= will_paginate_link @bookmarks %></div>
   <%= render :partial => "bookmarks", :object => @bookmarks %>
-  <div class="navi"><%= page_link @pages %></div>
+  <div class="navi"><%= will_paginate_link @bookmarks %></div>
 <% end -%>
 </div>
 

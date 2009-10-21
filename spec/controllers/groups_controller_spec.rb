@@ -22,9 +22,8 @@ describe GroupsController do
   describe "#index" do
     describe "グループが存在した場合" do
       before do
-        @pages = mock('pages')
-        @groups = mock('groups', :size => 1)
-        controller.should_receive(:paginate).and_return([@pages, @groups])
+        @groups = [stub_model(Group)]
+        Group.should_receive(:paginate).and_return(@groups)
         get :index
       end
 
@@ -36,9 +35,7 @@ describe GroupsController do
     end
     describe "グループが存在しなかった場合" do
       before do
-        @pages = mock('pages')
-        @groups = mock('groups', :size => 0)
-        controller.should_receive(:paginate).and_return([@pages, @groups])
+        Group.should_receive(:paginate).and_return([])
         stub_flash_now
         get :index
       end

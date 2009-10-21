@@ -387,7 +387,7 @@ describe ShareFileController, "GET #list" do
   end
   describe "ユーザの共有ファイル一覧を表示している場合" do
     before do
-      controller.stub(:paginate).and_return([@pages = mock('pages'), @share_files = mock('share_files', :size => 10)])
+      ShareFile.stub(:paginate).and_return(@share_files = [stub_model(ShareFile)])
     end
     describe "自分の共有ファイルを表示している場合" do
       before do
@@ -403,7 +403,6 @@ describe ShareFileController, "GET #list" do
         assigns[:owner_name].should == @user.name
         assigns[:owner_symbol].should == @user.symbol
         assigns[:categories].should == @categories
-        assigns[:pages].should == @pages
         assigns[:share_files].should == @share_files
       end
       it { response.should render_template("list") }
@@ -430,7 +429,7 @@ describe ShareFileController, "GET #list" do
   end
   describe "グループの共有ファイル一覧を表示している場合" do
     before do
-      controller.stub(:paginate).and_return([@pages = mock('pages'), @share_files = mock('share_files', :size => 10)])
+      ShareFile.stub(:paginate).and_return(@share_files = [stub_model(ShareFile)])
       Group.stub(:find_by_gid).with("a_group").and_return(@group = mock_model(Group, :symbol => 'group:a_group', :name => "対象グループ", :gid => "a_group"))
       @group.stub_chain(:group_participations, :find_by_user_id).and_return(@participation = mock('participation'))
       ShareFile.stub(:get_tags).with(@group.symbol).and_return(@categories = mock('categories'))
@@ -444,7 +443,6 @@ describe ShareFileController, "GET #list" do
       assigns[:owner_name].should == @group.name
       assigns[:owner_symbol].should == @group.symbol
       assigns[:categories].should == @categories
-      assigns[:pages].should == @pages
       assigns[:share_files].should == @share_files
       assigns[:participation].should == @participation
     end

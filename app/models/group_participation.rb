@@ -28,6 +28,10 @@ class GroupParticipation < ActiveRecord::Base
     { :conditions => { :waiting => false } }
   }
 
+  named_scope :waiting, proc {
+    { :conditions => { :waiting => true } }
+  }
+
   named_scope :except_owned, proc {
     { :conditions => { :owned => false } }
   }

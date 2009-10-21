@@ -21,12 +21,13 @@ class BookmarksController < ApplicationController
     params[:type] ||= "all"
     @tags = BookmarkComment.get_popular_tag_words()
 
-    @pages, @bookmarks = paginate(:bookmarks,
-                                  :per_page => 20,
-                                  :conditions => Bookmark.make_conditions(params),
-                                  :include => :bookmark_comments,
-                                  :order => get_order_query(params[:sort_type]) )
-    flash.now[:notice] = _('No matching bookmarks found') unless @bookmarks && @bookmarks.size > 0
+    @bookmarks = Bookmark.scoped(
+      :conditions => Bookmark.make_conditions(params),
+      :include => :bookmark_comments,
+      :order => get_order_query(params[:sort_type])
+    ).paginate(:page => params[:page], :per_page => 20)
+
+    flash.now[:notice] = _('No matching bookmarks found') if @bookmarks.empty?
   end
 
 private

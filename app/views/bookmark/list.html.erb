@@ -46,8 +46,8 @@
 <% end -%>
 
 <% content_for :contents_right do -%>
-  <% if @pages and @pages.item_count > 0 -%>
-  <div class="navi"><%= page_link @pages %></div>
+  <% unless @bookmark_comments.empty? -%>
+  <div class="navi"><%= will_paginate_link @bookmark_comments %></div>
     <% for comment in @bookmark_comments -%>
     <div class="bookmark_space" id="bookmark_comment_<%= comment.id %>">
       <div class="header">
@@ -71,7 +71,7 @@
       </div>
     </div>
     <% end -%>
-  <div class="navi"><%= page_link @pages %></div>
+  <div class="navi"><%= will_paginate_link @bookmark_comments %></div>
   <% end %>
 <% end -%>
 

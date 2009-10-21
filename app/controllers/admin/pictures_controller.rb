@@ -18,10 +18,9 @@ class Admin::PicturesController < Admin::ApplicationController
   include Admin::AdminModule::AdminUtil
   def index
     @query = params[:query]
-    @pages, @users = paginate(:users,
-                              :per_page => 100,
-                              :class_name => 'Admin::User',
-                              :conditions => [search_condition, { :lqs => SkipUtil.to_lqs(@query) }])
+    @users = Admin::User.scoped(
+      :conditions => [search_condition, { :lqs => SkipUtil.to_lqs(@query) }]
+    ).paginate(:page => params[:page], :per_page => 100)
 
     @topics = [[_('Listing %{model}') % {:model => _('user')}, admin_users_path],
                [_('Listing %{model}') % {:model => _('picture')}]]

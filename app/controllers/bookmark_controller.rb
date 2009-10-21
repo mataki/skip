@@ -152,12 +152,13 @@ class BookmarkController < ApplicationController
 
     #結果表示用
     conditions = BookmarkComment.make_conditions_for_comment(current_user.id, find_params)
-    @pages, @bookmark_comments = paginate(:bookmark_comments,
-                                          :per_page => 20,
-                                          :conditions => conditions,
-                                          :order =>'bookmark_comments.created_on DESC' ,
-                                          :include => :bookmark)
-    unless @bookmark_comments && @bookmark_comments.size > 0
+    @bookmark_comments = BookmarkComment.scoped(
+      :conditions => conditions,
+      :include => :bookmark,
+      :order =>'bookmark_comments.created_on DESC'
+    ).paginate(:page => params[:page], :per_page => 20)
+
+    if @bookmark_comments.empty?
       if params[:commit] || params[:category] || params[:type]
         flash.now[:notice] = _('No matching bookmarks found.')
       else

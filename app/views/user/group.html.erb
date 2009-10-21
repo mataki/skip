@@ -42,6 +42,5 @@
 
 <% content_for :contents_right do -%>
   <%= render :partial => 'groups/group_list',
-             :locals => { :pages => @pages, :groups => @groups,
-               :user_id => @user.id, :format_type => @format_type, :show_favorite => current_user == @user } -%>
+    :locals => { :groups => @groups, :user_id => @user.id, :format_type => @format_type, :show_favorite => current_user == @user } %>
 <% end -%>

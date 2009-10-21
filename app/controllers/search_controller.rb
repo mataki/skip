@@ -74,12 +74,13 @@ class SearchController < ApplicationController
     find_params = ShareFile.make_conditions(login_user_symbols, params_hash)
     order_by = (params[:sort_type] == "date" ? "date desc" : "file_name")
 
-    @pages, @share_files = paginate(:share_files,
-                                    :conditions => find_params[:conditions],
-                                    :include => find_params[:include],
-                                    :order => order_by,
-                                    :per_page => 10)
-    unless @share_files && @share_files.size > 0
+    @share_files = ShareFile.scoped(
+      :conditions => find_params[:conditions],
+      :include => find_params[:include],
+      :order => order_by
+    ).paginate(:page => params[:page], :per_page => 10)
+
+    if @share_files.empty?
       if params[:commit] || params[:category]
         flash.now[:notice] = _('No matching shared files found.')
       else

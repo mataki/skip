@@ -790,11 +790,10 @@ class MypageController < ApplicationController
 
   # TODO #924で画面からリンクをなくした。1.4時点で復活しない場合は削除する
   def set_data_for_record_mail
-    @pages, @mails = paginate(:mail,
-                              :per_page =>20,
-                              :select => "*, mails.updated_on as mail_updated_on",
-                              :conditions => ["mails.from_user_id = ?", session[:uid]],
-                              :order_by => "mails.id DESC")
+    @mails = Mail.scoped(
+      :conditions => ["mails.from_user_id = ?", current_user.uid],
+      :order => "mails.id DESC"
+    ).all(:select => "*, mails.updated_on as mail_updated_on").paginate(:page => params[:page], :per_page => 20)
 
     #タイトルのリンクができるかできないかを判定する材料を取得する(ヘルパーで使う)
     user_entry_no_list = @mails.map{ |mail| mail.user_entry_no }
@@ -806,7 +805,7 @@ class MypageController < ApplicationController
 
     #送信先のリンクができるかできないかを判定する材料を取得する(ヘルパーで使う)
     uid_list = gid_list = []
-    for mail in @mails
+    @mails.each do |mail|
       id = mail.symbol_id
       case mail.symbol_type
       when 'uid'
@@ -816,7 +815,7 @@ class MypageController < ApplicationController
       end
     end
 
-    @exist_item_by_symbol = Hash.new
+    @exist_item_by_symbol = {}
     if uid_list.size > 0
       users = User.find(:all, :conditions =>['user_uids.uid in (?)', uid_list], :include => [:user_uids])
       users.each{ |user|  @exist_item_by_symbol.store(user.symbol, user) }
@@ -837,13 +836,12 @@ class MypageController < ApplicationController
     options[:category] = params[:category]
     find_params = BoardEntry.make_conditions(login_user_symbols, options)
 
-    @pages, @board_entries = paginate(:board_entry,
-                                      :per_page => 20,
-                                      :order => "last_updated DESC,board_entries.id DESC",
-                                      :conditions => find_params[:conditions],
-                                      :include => find_params[:include])
+    @entries = BoardEntry.scoped(
+      :conditions => find_params[:conditions],
+      :include => find_params[:include]
+    ).order_new.paginate(:page => params[:page], :per_page => 20)
 
-    @symbol2name_hash = BoardEntry.get_symbol2name_hash @board_entries
+    @symbol2name_hash = BoardEntry.get_symbol2name_hash @entries
 
     find_params = BoardEntry.make_conditions(login_user_symbols, {:writer_id => login_user_id})
     @categories = BoardEntry.get_category_words(find_params)

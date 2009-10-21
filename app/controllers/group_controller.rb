@@ -48,14 +48,13 @@ class GroupController < ApplicationController
     params[:condition].merge!(:with_group => @group.id, :include_manager => '1')
     @condition = UserSearchCondition.create_by_params params
 
-    @pages, @users = paginate(:user,
-                              :per_page => @condition.value_of_per_page,
-                              :conditions => @condition.make_conditions,
-                              :order_by => @condition.value_of_order_by,
-                              :include => @condition.value_of_include)
-    unless @users && @users.size > 0
-      flash.now[:notice] = _('User not found.')
-    end
+    @users = User.scoped(
+      :conditions => @condition.make_conditions,
+      :include => @condition.value_of_include,
+      :order => @condition.value_of_order_by
+    ).paginate(:page => params[:page], :per_page => @condition.value_of_per_page)
+
+    flash.now[:notice] = _('User not found.') if @users.empty?
   end
 
   # tab_menu
@@ -129,14 +128,14 @@ class GroupController < ApplicationController
     when "manage_info"
       @group_categories = GroupCategory.all
     when "manage_participations"
-      @pages, @participations = paginate_participations(@group, false)
+      @participations = @group.group_participations.active.paginate(:page => params[:page], :per_page => 20)
     when "manage_permit"
       unless @group.protected?
         flash[:warn] = _("No approval needed to join this group.")
         redirect_to :action => :manage
         return
       end
-      @pages, @participations = paginate_participations(@group, true)
+      @participations = @group.group_participations.waiting.paginate(:page => params[:page], :per_page => 20)
     else
       render_404 and return
     end
@@ -383,13 +382,6 @@ private
       redirect_to :controller => 'mypage', :action => 'index'
       return false
     end
-  end
-
-  def paginate_participations group, waiting
-    return paginate(:group_participations,
-                    :per_page => 20,
-                    :conditions => ["group_participations.group_id = ? and group_participations.waiting = ?", group.id, waiting],
-                    :include => :user)
   end
 
   def setup_bbs_left_box options

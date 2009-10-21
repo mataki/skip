@@ -123,10 +123,13 @@ class UserController < ApplicationController
     @group_categories = GroupCategory.all
 
     options = Group.paginate_option(@user.id, params)
-    options[:per_page] = params[:format_type] == "list" ? 30 : 5
-    @pages, @groups = paginate(:group, options)
+    @groups = Group.scoped(
+      :conditions => options[:conditions],
+      :include => options[:include],
+      :order => options[:order]
+    ).paginate(:page => params[:page], :per_page => (params[:format_type] == "list" ? 30 : 5))
 
-    flash.now[:notice] = _('No matching groups found.') unless @groups && @groups.size > 0
+    flash.now[:notice] = _('No matching groups found.') if @groups.empty?
   end
 
   # tab_menu
@@ -225,18 +228,15 @@ private
       left_key, right_key = "from_user_id", "to_user_id"
     end
 
-    @pages, chains = paginate(:chains,
-                              :per_page => 5,
-                              :conditions => [left_key + " = ?", @user.id],
-                              :order_by => "updated_on DESC")
+    @chains = Chain.scoped(:conditions => [left_key + " = ?", @user.id]).order_new.paginate(:page => params[:page], :per_page => 5)
 
-    user_ids = chains.inject([]) {|result, chain| result << chain.send(right_key) }
+    user_ids = @chains.inject([]) {|result, chain| result << chain.send(right_key) }
     against_chains = Chain.find(:all, :conditions =>[left_key + " in (?) and " + right_key + " = ?", user_ids, @user.id]) if user_ids.size > 0
     against_chains ||= []
     messages = against_chains.inject({}) {|result, chain| result ||= {}; result[chain.send(left_key)] = chain.comment; result }
 
     @result = []
-    chains.each do |chain|
+    @chains.each do |chain|
       @result << { :from_user => chain.from_user,
         :from_message => chain.comment,
         :to_user => chain.to_user,
@@ -244,9 +244,7 @@ private
       }
     end
 
-    unless @pages && @pages.item_count > 0
-      flash.now[:notice] = _('There are no introductions.')
-    end
+    flash.now[:notice] = _('There are no introductions.') if @chains.empty?
   end
 
   def prepare_postit

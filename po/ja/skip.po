@@ -4408,7 +4408,7 @@ msgstr "次の日(%s)"
 
 #: app/helpers/edit_helper.rb:31
 msgid "Next page"
-msgstr "次のページ"
+msgstr "[次へ]"
 
 #: app/views/group/_form.html.erb:43
 msgid "No"

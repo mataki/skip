@@ -174,14 +174,13 @@ class ShareFileController < ApplicationController
     find_params = ShareFile.make_conditions(login_user_symbols, params_hash)
     order_by = (params[:sort_type] == "date" ? "date desc" : "file_name")
 
-    @pages, @share_files = paginate(:share_files,
-                                    :conditions => find_params[:conditions],
-                                    :include => find_params[:include],
-                                    :order => order_by,
-                                    :per_page => 10)
-    unless @share_files && @share_files.size > 0
-      flash.now[:notice] = _('No matching shared files found.')
-    end
+    @share_files = ShareFile.scoped(
+      :conditions => find_params[:conditions],
+      :include => find_params[:include],
+      :order => order_by
+    ).paginate(:page => params[:page], :per_page => 10)
+
+    flash.now[:notice] = _('No matching shared files found.') if @share_files.empty?
 
     respond_to do |format|
       format.html { render :layout => 'layout' }
@@ -189,11 +188,11 @@ class ShareFileController < ApplicationController
         render :json => {
           :pages => {
             :first => 1,
-            :previous => @pages.current.previous.to_i,
-            :next => @pages.current.next.to_i,
-            :last => @pages.last.to_i,
-            :current => @pages.current.number,
-            :item_count => @pages.item_count },
+            :previous => @share_files.previous_page,
+            :next => @share_files.next_page,
+            :last => @share_files.total_pages,
+            :current => @share_files.current_page,
+            :item_count => @share_files.total_entries },
           :share_files => @share_files.map{|s| share_file_to_json(s) }
         }
       }

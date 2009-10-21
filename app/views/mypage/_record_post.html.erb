@@ -33,7 +33,7 @@
     <p><%= _('Entries you posted to your blog and group BBSs.')%></p>
   </div>
 
-  <div class="navi"><%= page_link(@pages) %></div>
+  <div class="navi"><%= will_paginate_link(@entries) if @entries %></div>
 
   <div style="margin: 5px;">
     <table border="1" class="normal" style="width: 100%; _width: 98%;">
@@ -45,23 +45,23 @@
         <th width="35%"><%= _('Title')%></th>
       </tr>
       <% even_or_odd = 0 -%>
-      <% for board_entry in @board_entries -%>
+      <% @entries.each do |entry| -%>
         <% even_or_odd = 1 - even_or_odd -%>
       <tr>
-        <td class="line_<%= even_or_odd %>"> <%=h board_entry.user_entry_no %>  </td>
-        <td class="line_<%= even_or_odd %>"> <span style="font-size:10px"><%=h board_entry.diary_date %></span> </td>
-        <% visibility, visibility_color = board_entry.visibility -%>
-        <td class="line_<%= even_or_odd %>"> <%=h @symbol2name_hash[board_entry.symbol] %><br>
+        <td class="line_<%= even_or_odd %>"> <%=h entry.user_entry_no %>  </td>
+        <td class="line_<%= even_or_odd %>"> <span style="font-size:10px"><%=h entry.diary_date %></span> </td>
+        <% visibility, visibility_color = entry.visibility -%>
+        <td class="line_<%= even_or_odd %>"> <%=h @symbol2name_hash[entry.symbol] %><br>
           <span  style='background-color: <%=visibility_color%>;font-size:10px'><%=h visibility %></span>
         </td>
-        <td class="line_<%= even_or_odd %>"> <%=h board_entry.category %>  </td>
-        <td class="line_<%= even_or_odd %>"> <%= entry_link_to board_entry %>
-          <div style='font-size:10px;'><%= get_entry_infos board_entry %></div>
+        <td class="line_<%= even_or_odd %>"> <%=h entry.category %>  </td>
+        <td class="line_<%= even_or_odd %>"> <%= entry_link_to entry %>
+          <div style='font-size:10px;'><%= get_entry_infos entry %></div>
         </td>
       </tr>
       <% end -%>
     </table>
   </div>
 
-  <div class="navi"><%= page_link(@pages) -%></div>
+  <div class="navi"><%= will_paginate_link(@entries) if @entries %></div>
 <% end -%>

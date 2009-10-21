@@ -28,13 +28,13 @@ class GroupsController < ApplicationController
     @group_counts, @total_count = Group.count_by_category
     @group_categories = GroupCategory.all
 
-    options = Group.paginate_option(session[:user_id], params)
-    options[:per_page] = 30
-    @pages, @groups = paginate(:group, options)
+    options = Group.paginate_option(current_user.id, params)
+    @groups = Group.scoped(
+      :conditions => options[:conditions],
+      :include => options[:include]
+    ).paginate(:page => params[:page], :per_page => 30)
 
-    unless @groups && @groups.size > 0
-      flash.now[:notice] = _('No matching groups found.')
-    end
+    flash.now[:notice] = _('No matching groups found.') if @groups.empty?
   end
 
   # tab_menu

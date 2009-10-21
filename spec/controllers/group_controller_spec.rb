@@ -115,10 +115,9 @@ describe GroupController, 'GET #users' do
       before do
         @params[:condition].merge!(:output_type => 'normal')
         find_params = { :include => [:user_access, :picture, :user_uids, :group_participations],
-          :order_by => "user_uids.uid",
-          :per_page => 20,
+          :order => "user_uids.uid",
           :conditions => ["users.status in (?) AND user_uids.uid_type = ? AND group_participations.group_id = ? AND group_participations.waiting = false", ["ACTIVE", "RETIRED"], "MASTER", @group.id]}
-        controller.should_receive(:paginate).with(:user, find_params)
+        scope = User.should_receive(:scoped).with(find_params).and_return([stub_model(User)])
         get :users, @params
       end
       it {response.should be_success}

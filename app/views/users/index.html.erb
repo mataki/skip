@@ -23,12 +23,12 @@
 </div>
 
 <div class="search_result_space">
-<% if @pages and @pages.item_count > 0 -%>
-  <div class="navi"><%= page_link(@pages) %></div>
+<% unless @users.empty? -%>
+  <div class="navi"><%= will_paginate_link @users %></div>
   <% @users.each do |user| -%>
     <%= render :partial => 'users/user', :locals => {:user => user} %>
   <% end -%>
   <div class="clear_left">
-  <div class="navi"><%= page_link(@pages) %></div>
+  <div class="navi"><%= will_paginate_link @users %></div>
 <% end -%>
 </div>

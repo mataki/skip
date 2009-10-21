@@ -1,5 +1,5 @@
-<% if @pages && @pages.item_count > 0 -%>
-  <div class="navi"><%= page_link @pages %></div>
+<% unless @chains.empty? -%>
+  <div class="navi"><%= will_paginate_link @chains %></div>
   <% @result.each do |result| -%>
   <table class="chain_table">
     <tr>
@@ -22,5 +22,5 @@
     <% end -%>
   </table>
   <% end %>
-  <div class="navi"><%= page_link @pages %></div>
+  <div class="navi"><%= will_paginate_link @chains %></div>
 <% end -%>

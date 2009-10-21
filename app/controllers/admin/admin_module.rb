@@ -77,10 +77,10 @@ module Admin::AdminModule
 
     def index
       @query = params[:query]
-      @pages, objects = paginate(singularize_name.to_sym,
-                                 :per_page => 100,
-                                 :class_name => admin_model_class_name,
-                                 :conditions => [search_condition, { :lqs => SkipUtil.to_lqs(@query) }])
+      objects = admin_model_class.scoped(
+        :conditions => [search_condition, { :lqs => SkipUtil.to_lqs(@query) }]
+      ).paginate(:page => params[:page], :per_page => 100)
+
       set_pluralize_instance_val objects
 
       @topics = [_('Listing %{model}') % {:model => _(controller_name.gsub('_', ' ').capitalize)}]

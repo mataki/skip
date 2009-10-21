@@ -1,10 +1,10 @@
 <% show_favorite ||= false -%>
-<% if pages and pages.item_count > 0 -%>
+<% unless groups.empty? -%>
   <%= hidden_field_tag("authenticity_token", form_authenticity_token) %>
   <% if show_favorite && current_user.custom.always_show_shortcut -%>
   <div class="desc" style="margin-bottom:5px"><%= _("Only groups with %s icons will be shown in \"My Groups\" of the right-top shortcut menu.") % icon_tag('award_star_gold_2') %></div>
   <% end -%>
-  <div class="navi"><%= page_link pages %></div>
+  <div class="navi"><%= will_paginate_link @groups %></div>
   <% if format_type == "detail" -%>
     <% groups.each do |group| -%>
     <table class="group_box">
@@ -38,7 +38,7 @@
     <% end -%>
     </table>
   <% end -%>
-  <div class="navi"><%= page_link pages %></div>
+  <div class="navi"><%= will_paginate_link @groups %></div>
 <% end -%>
 
 <% content_for :javascript_initializers do -%>

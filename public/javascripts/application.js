@@ -233,7 +233,7 @@ $j(function(){
         var paginate = function(pages, labels){
             var paginate_actions = $j('<div class="paginate"></div>');
             paginate_actions.append($j('<span class="info"></span>').text(pages['current'] + '/' + pages['last'] + 'page'));
-            if(pages['previous'] != 0){
+            if(pages['previous'] != null){
                 paginate_actions.append(
                     $j('<span class="first_link link pointer"></span>').text(labels['first']).click(function() {
                         loadShareFiles(root.find("div.share_files"), config["share_files_url"], {page: pages['first']}, message["share_files"]);
@@ -245,7 +245,7 @@ $j(function(){
                     })
                 );
             }
-            if(pages['next'] != 0){
+            if(pages['next'] != null){
                 paginate_actions.append(
                     $j('<span class="next_link link pointer"></span>').text(labels['next']).click(function() {
                         loadShareFiles(root.find("div.share_files"), config["share_files_url"], {page: pages['next']}, message["share_files"]);
