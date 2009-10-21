@@ -602,10 +602,17 @@ table.user_box
       :text-align center
 
 ul.user_box
-  :border 1px solid silver
+  :border = !base_border
   :float left
   :margin 3px 8px 3px 8px
   :width 150px
+  :list-style none
+  li.image
+    :text-align center
+  li.data_row
+    :border-top = !base_dotted_border
+    :height 16px
+    :text-align center
 
 
 // グループ
