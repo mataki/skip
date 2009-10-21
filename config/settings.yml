@@ -38,7 +38,7 @@ access_record_limit:
 abbr_app_title:
   default: SKIP                                            # システムの名称
 contact_addr:
-  default: info@skipaas.jp
+  default: admin@example.com
 login_account:
   default: ログインID                                      # ログインアカウントの名称
 footer_first:                                              # フッターの１行目（ヘルプ・規約へのリンクなどを推奨）
