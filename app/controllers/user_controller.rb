@@ -118,7 +118,6 @@ class UserController < ApplicationController
     params[:group_category_id] ||= "all"
     params[:sort_type] ||= "date"
     params[:participation] = true
-    @format_type = params[:format_type] ||= "list"
     @group_counts, @total_count = Group.count_by_category(@user.id)
     @group_categories = GroupCategory.all
 
@@ -127,7 +126,7 @@ class UserController < ApplicationController
       :conditions => options[:conditions],
       :include => options[:include],
       :order => options[:order]
-    ).paginate(:page => params[:page], :per_page => (params[:format_type] == "list" ? 30 : 5))
+    ).paginate(:page => params[:page], :per_page => 50)
 
     flash.now[:notice] = _('No matching groups found.') if @groups.empty?
   end

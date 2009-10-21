@@ -32,7 +32,7 @@ class GroupsController < ApplicationController
     @groups = Group.scoped(
       :conditions => options[:conditions],
       :include => options[:include]
-    ).paginate(:page => params[:page], :per_page => 30)
+    ).paginate(:page => params[:page], :per_page => 50)
 
     flash.now[:notice] = _('No matching groups found.') if @groups.empty?
   end

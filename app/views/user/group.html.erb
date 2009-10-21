@@ -15,14 +15,6 @@
   </div><!-- box_space -->
 
   <div class="box_space">
-    <div class="box_space_title"><%= icon_tag 'table_lightning' %><%= _('Display Format') %></div>
-    <div class="box_space_body">
-      <%= radio_button_tag "format_type", "list",   params[:format_type] == "list",   :class => "format_radio"  %> <%= _('List')%><br/>
-      <%= radio_button_tag "format_type", "detail", params[:format_type] == "detail", :class => "format_radio"  %> <%= _('Detailed')%>
-     </div>
-  </div><!-- box_space -->
-
-  <div class="box_space">
     <div class="box_space_title"><%= icon_tag 'table_refresh' -%><%= _('Display Order') %></div>
     <div class="box_space_body">
       <%= radio_button_tag("sort_type", "date", params[:sort_type] == "date", :class => "sort_radio") -%> <%= _('Sort by Date Joined') %><br/>
@@ -42,5 +34,5 @@
 
 <% content_for :contents_right do -%>
   <%= render :partial => 'groups/group_list',
-    :locals => { :groups => @groups, :user_id => @user.id, :format_type => @format_type, :show_favorite => current_user == @user } %>
+    :locals => { :groups => @groups, :user_id => @user.id, :show_favorite => current_user == @user } %>
 <% end -%>

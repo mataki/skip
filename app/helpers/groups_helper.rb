@@ -30,16 +30,6 @@ module GroupsHelper
     end
   end
 
-  # グループの状態をまとめて表示（グループのサマリと検索詳細結果で利用）
-  def show_group_status(group, user_id)
-    output = "<p>#{icon_tag(group.category_icon_name.first) + h(group.category_icon_name.last)}<br/></p>"
-    output << "<p>#{participation_state(group, user_id)}<br/></p>"
-    output << "<p>"
-    output << (icon_tag('lock') + _('Need approval of the Administrator.')) if group.protected?
-    output << "<br/></p>"
-    output
-  end
-
   # グループに対してできるアクションを表示（グループ一覧で利用）
   def show_group_action(group, show_favorite = false)
     output = ""

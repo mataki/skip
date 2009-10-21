@@ -5,39 +5,22 @@
   <div class="desc" style="margin-bottom:5px"><%= _("Only groups with %s icons will be shown in \"My Groups\" of the right-top shortcut menu.") % icon_tag('award_star_gold_2') %></div>
   <% end -%>
   <div class="navi"><%= will_paginate_link @groups %></div>
-  <% if format_type == "detail" -%>
-    <% groups.each do |group| -%>
-    <table class="group_box">
-      <tr>
-        <th><%= group_link_to group %></th>
-        <td rowspan="3" class="desc"><div style="overflow: auto; height: 130px; width: 100%;"><%= render_richtext(group.description, group.symbol) %></div></td>
-      </tr>
-      <tr>
-        <td class="auth"><%= show_group_status(group, user_id) %></td>
-      </tr>
-      <tr>
-        <td class="since">since <%= group.created_on.strftime(_("%Y/%m/%d")) -%></td>
-      </tr>
-    </table>
-    <% end -%>
-  <% else -%>
-    <table class="group_list_box normal">
-      <tr>
-        <th width="50%"><%= _('Group Name')%></th>
-        <th><%= _('Category') %></th>
-        <th><%= _('Status') %></th>
-        <th><%= _('Approval') %></th>
-      </tr>
-    <% groups.each do |group| -%>
-      <tr class="<%= cycle('line_0', 'line_1') %>">
-        <td><%= show_group_action(group, show_favorite) %><%= group_link_to group %></td>
-        <td><%= icon_tag(group.category_icon_name.first) + h(group.category_icon_name.last) %></td>
-        <td><%= participation_state(group, user_id) -%></td>
-        <td><%= _("%s Required") % icon_tag('key') if group.protected? %></td>
-      </tr>
-    <% end -%>
-    </table>
+  <table class="group_list_box normal">
+    <tr>
+      <th width="50%"><%= _('Group Name')%></th>
+      <th><%= _('Category') %></th>
+      <th><%= _('Status') %></th>
+      <th><%= _('Approval') %></th>
+    </tr>
+  <% groups.each do |group| -%>
+    <tr class="<%= cycle('line_0', 'line_1') %>">
+      <td><%= show_group_action(group, show_favorite) %><%= group_link_to group %></td>
+      <td><%= icon_tag(group.category_icon_name.first) + h(group.category_icon_name.last) %></td>
+      <td><%= participation_state(group, user_id) -%></td>
+      <td><%= _("%s Required") % icon_tag('key') if group.protected? %></td>
+    </tr>
   <% end -%>
+  </table>
   <div class="navi"><%= will_paginate_link @groups %></div>
 <% end -%>
 
