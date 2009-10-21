@@ -40,6 +40,7 @@ class EditController < ApplicationController
     @board_entry.symbol = params[:symbol]
     @board_entry.title = params[:title]
     @board_entry.category = params[:category]
+    @board_entry.aim_type = params[:aim_type]
     if owner = BoardEntry.owner(params[:symbol]) and owner.is_a?(Group)
       @board_entry.send_mail = owner.default_send_mail
     end

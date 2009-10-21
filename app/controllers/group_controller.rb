@@ -104,13 +104,34 @@ class GroupController < ApplicationController
     end
   end
 
-  # tab_menu
   def new
     redirect_to_with_deny_auth and return unless login_user_groups.include? @group.symbol
 
     redirect_to(:controller => 'edit',
-                :action => '',
+                :action => 'index',
                 :entry_type => BoardEntry::GROUP_BBS,
+                :symbol => @group.symbol,
+                :publication_type => @group.default_publication_type)
+  end
+
+  def new_notice
+    redirect_to_with_deny_auth and return unless login_user_groups.include? @group.symbol
+
+    redirect_to(:controller => 'edit',
+                :action => 'index',
+                :entry_type => BoardEntry::GROUP_BBS,
+                :aim_type => 'notice',
+                :symbol => @group.symbol,
+                :publication_type => @group.default_publication_type)
+  end
+
+  def new_question
+    redirect_to_with_deny_auth and return unless login_user_groups.include? @group.symbol
+
+    redirect_to(:controller => 'edit',
+                :action => 'index',
+                :entry_type => BoardEntry::GROUP_BBS,
+                :aim_type => 'question',
                 :symbol => @group.symbol,
                 :publication_type => @group.default_publication_type)
   end

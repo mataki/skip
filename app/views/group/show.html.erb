@@ -38,6 +38,8 @@
     <ul class="no_style">
       <% if @participation -%>
         <li><%= link_to(content_tag('span', _('New Posts')), {:controller => 'group', :action => 'new'}, :class => 'rounded') %></li>
+        <li><%= link_to(content_tag('span', _('Write a notice')), {:controller => 'group', :action => 'new_notice'}, :title => _('Write a question'), :class => 'rounded') %></li>
+        <li><%= link_to(content_tag('span', _('Write a question')), {:controller => 'group', :action => 'new_question'}, :title => _('Write a question'), :class => 'rounded') %></li>
         <% url_hash = {:controller => '/share_file', :action => :new, :owner_symbol => h(@group.symbol), :owner_name => h(@group.name)} -%>
         <li><%= link_to(content_tag('span', _('Upload a file')), url_hash, :title => _('Upload a file'), :class => 'rounded', :onclick => "sub_window_open('#{url_for(url_hash)}', 'subwindow', 550, 400); return false;") %></li>
         <% unless @participation.owned? -%>
