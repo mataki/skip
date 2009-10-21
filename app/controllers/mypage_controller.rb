@@ -48,7 +48,7 @@ class MypageController < ApplicationController
     #  main area top messages
     # ============================================================
     current_user_info = current_user.info
-    @system_messages = system_messages(:show_welcome_message => current_user_info[:using_day] < 30)
+    @system_messages = system_messages
     @message_array = Message.get_message_array_by_user_id(current_user.id)
     @waiting_groups = Group.find_waitings(current_user.id)
     # あなたへの連絡（公開・未読/既読は関係なし・最近のもののみ）
@@ -627,14 +627,8 @@ class MypageController < ApplicationController
 
   # TODO helperに移動することを検討
   # mypage > home の システムメッセージの配列
-  def system_messages(options = {:show_welcome_message => false})
+  def system_messages
     system_messages = []
-    if options[:show_welcome_message]
-      system_messages << {
-        :text => _("Welcome! Read detailed help."), :icon => "information",
-        :option => {:controller => "mypage", :action => "welcome"}
-      }
-    end
     unless current_user.picture
       system_messages << {
         :text => _("Change your profile picture!"), :icon => "picture",

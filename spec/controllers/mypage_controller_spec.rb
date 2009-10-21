@@ -656,11 +656,8 @@ describe MypageController, '#system_messages' do
     @user = stub_model(User, :picture => nil)
     @controller.stub!(:current_user).and_return(@user)
   end
-  describe 'ようこそメッセージを表示する場合' do
-    it { @controller.send(:system_messages, {:show_welcome_message => true}).size.should == 2 }
-  end
   describe 'ようこそメッセージを表示しない場合' do
-    it { @controller.send(:system_messages, {:show_welcome_message => false}).size.should == 1 }
+    it { @controller.send(:system_messages).size.should == 1 }
   end
 end
 
