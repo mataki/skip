@@ -39,6 +39,9 @@ class BoardEntry < ActiveRecord::Base
   validates_presence_of :date
   validates_presence_of :user_id
 
+  AIM_TYPES = %w(entry question notice).freeze
+  validates_inclusion_of :aim_type, :in => AIM_TYPES
+
   named_scope :accessible, proc { |user|
     { :conditions => ['entry_publications.symbol in (:publication_symbols)',
       { :publication_symbols => user.belong_symbols << Symbol::SYSTEM_ALL_USER }],
@@ -111,6 +114,9 @@ class BoardEntry < ActiveRecord::Base
 
   N_('BoardEntry|Entry type|DIARY')
   N_('BoardEntry|Entry type|GROUP_BBS')
+  N_('BoardEntry|Aim type|entry')
+  N_('BoardEntry|Aim type|question')
+  N_('BoardEntry|Aim type|notice')
   DIARY = 'DIARY'
   GROUP_BBS = 'GROUP_BBS'
 

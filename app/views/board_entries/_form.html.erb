@@ -22,6 +22,13 @@ div.input_line textarea {
 <%= hidden_field 'board_entry', 'lock_version' %>
 
 <div class="input_line">
+  <div class="input_label"><%= label(:board_entry, :aim_type, _('Types')) %></div>
+  <% aim_types = BoardEntry::AIM_TYPES.map{|type| [s_("BoardEntry|Aim type|#{type}"), type]} -%>
+  <div class="input_value"><%= select :board_entry, :aim_type, options_for_select(aim_types, @board_entry.aim_type) %></div>
+  <div class="clear_left"></div>
+</div>
+
+<div class="input_line">
   <div class="input_label"><%= label(:board_entry, :category, _('Tags')) -%></div>
   <div class="input_value"><%= text_field 'board_entry', 'category', :size => '60', :value => @board_entry.comma_category %>
     <div id="category_box" style="display:none;">
