@@ -28,6 +28,10 @@ class GroupParticipation < ActiveRecord::Base
     { :conditions => { :waiting => false } }
   }
 
+  named_scope :except_owned, proc {
+    { :conditions => { :owned => false } }
+  }
+
   # memcache領域にグループの参加情報を載せているため
   # 追加・削除の際はmemcache領域を削除する。
   # このためGroupParticipationテーブルには、deleteメソッドなど
