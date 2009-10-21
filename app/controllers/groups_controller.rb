@@ -25,12 +25,11 @@ class GroupsController < ApplicationController
     params[:yet_participation] ||= false
     params[:group_category_id] ||= "all"
     params[:sort_type] ||= "date"
-    @format_type = params[:format_type] ||= "detail"
     @group_counts, @total_count = Group.count_by_category
     @group_categories = GroupCategory.all
 
     options = Group.paginate_option(session[:user_id], params)
-    options[:per_page] = params[:format_type] == "list" ? 30 : 5
+    options[:per_page] = 30
     @pages, @groups = paginate(:group, options)
 
     unless @groups && @groups.size > 0

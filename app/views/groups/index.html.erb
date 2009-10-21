@@ -19,13 +19,6 @@
         <% end %>
       </td>
     </tr>
-    <tr style="height:20px;">
-      <th><%= _('Display Format')%></th>
-      <td>
-        <%= radio_button_tag "format_type", "detail", params[:format_type] == "detail" %><%= _('Detailed')%>
-        <%= radio_button_tag "format_type", "list",   params[:format_type] == "list"  %><%= _('List')%>
-      </td>
-    </tr>
     <tr>
       <th><%= _('Join status') %></th>
       <td>
@@ -43,5 +36,5 @@
                :pages => @pages,
                :groups => @groups,
                :user_id => session[:user_id],
-               :format_type => @format_type } %>
+               :format_type => 'list' } %>
 </div><!-- search_result_space -->
