@@ -285,6 +285,11 @@
 <% entry.root_comments.each do |comment| -%>
   <%= render(:partial => "board_entries/board_entry_comment", :locals=>{:comment=>comment, :checked_on => checked_on }) %>
 <% end -%>
+<% if BoardEntry::HIDABLE_AIM_TYPES.include? entry.aim_type -%>
+  <% form_tag({:controller => 'board_entries', :action => 'toggle_hide', :id => entry.id}) do -%>
+    <%= submit_tag entry.hide ? _('Publish this entry') : _('Hide this entry') %>
+  <% end -%>
+<% end -%>
 </div>
 
 <div class="comment_input_space">

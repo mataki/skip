@@ -40,6 +40,7 @@ class BoardEntry < ActiveRecord::Base
   validates_presence_of :user_id
 
   AIM_TYPES = %w(entry question notice).freeze
+  HIDABLE_AIM_TYPES = %w(question notice).freeze
   validates_inclusion_of :aim_type, :in => AIM_TYPES
 
   named_scope :accessible, proc { |user|

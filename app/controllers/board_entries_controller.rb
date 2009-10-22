@@ -163,6 +163,17 @@ class BoardEntriesController < ApplicationController
                 :entry_id   => entry.id
   end
 
+  def toggle_hide
+    @board_entry = BoardEntry.accessible(current_user).find params[:id]
+    if BoardEntry::HIDABLE_AIM_TYPES.include? @board_entry.aim_type
+      @board_entry.hide = !@board_entry.hide
+      @board_entry.save
+    end
+    respond_to do |format|
+      format.html { redirect_to @board_entry.get_url_hash }
+    end
+  end
+
 private
   def make_comment_message
     return unless @board_entry
