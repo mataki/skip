@@ -37,7 +37,7 @@ class UserController < ApplicationController
     setup_blog_left_box options
 
     # 右側
-    if params[:category] or params[:keyword] or params[:archive]
+    if params[:category] or params[:keyword] or params[:archive] or params[:type]
       options[:category] = params[:category]
       options[:keyword] = params[:keyword]
 
@@ -51,7 +51,7 @@ class UserController < ApplicationController
       @entries = BoardEntry.scoped(
         :conditions => find_params[:conditions],
         :include => find_params[:include] | [ :user, :state ]
-      ).order_sort_type(params[:sort_type]).paginate(:page => params[:page], :per_page => 20)
+      ).order_sort_type(params[:sort_type]).aim_type(params[:type]).paginate(:page => params[:page], :per_page => 20)
 
       if @entries.empty?
         flash.now[:notice] = _('No matching entries found.')

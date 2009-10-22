@@ -445,3 +445,23 @@ describe BoardEntry, '#authorized_entries_except_given_user' do
   end
 end
 
+describe BoardEntry, ".aim_type" do
+  before do
+    BoardEntry.delete_all
+    params = { :title => "hoge", :contents => "hoge", :date => Date.today, :user_id => 1, :last_updated => Date.today }
+    @entries = BoardEntry::AIM_TYPES.map do |type|
+      BoardEntry.create!(params.merge(:aim_type => type))
+    end.index_by(&:aim_type)
+  end
+  it "1つで検索できること" do
+    result = BoardEntry.aim_type('entry').all
+    result.size.should == 1
+    result.should be_include(@entries['entry'])
+  end
+  it "2つの条件で検索できること" do
+    result = BoardEntry.aim_type('entry,question')
+    result.size.should == 2
+    result.should be_include(@entries['entry'])
+    result.should be_include(@entries['question'])
+  end
+end

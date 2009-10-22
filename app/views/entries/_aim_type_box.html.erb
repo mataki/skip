@@ -1,0 +1,16 @@
+<%
+ # ブログ・フォーラムの左側のボックス（種別）
+-%>
+
+<div class="box_space">
+  <div class="box_space_title"><%= icon_tag 'tag_blue' -%><%= s_('BoardEntry|Aim type') %></div>
+  <div class="box_space_body">
+    <ul style="list-style-position: inside; list-style-type: disc;">
+      <% for type in BoardEntry::AIM_TYPES -%>
+        <li><%= link_to(s_("BoardEntry|Aim type|#{type}"), :type => type) %></li>
+      <% end -%>
+    </ul>
+  </div>
+  <div class="box_space_bottom"></div>
+</div><!-- box_space -->
+

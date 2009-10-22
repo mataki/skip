@@ -13,9 +13,6 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-require "rexml/document"
-require "open-uri"
-
 class SearchController < ApplicationController
 
   # tab_menu
@@ -49,7 +46,7 @@ class SearchController < ApplicationController
     @entries = BoardEntry.scoped(
       :conditions => find_params[:conditions],
       :include => find_params[:include] | [ :user, :state ]
-    ).order_new.paginate(:page => params[:page], :per_page => 8)
+    ).order_new.aim_type(params[:type]).paginate(:page => params[:page], :per_page => 8)
 
     if @entries.empty?
       flash.now[:notice] = _('No matching data found.')

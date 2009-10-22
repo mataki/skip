@@ -334,7 +334,8 @@ describe MoveAttachmentImage do
       @replace_text = 'replace_text'
       contents = "foo#{@replace_text}"
       MoveAttachmentImage.stub!(:image_link_re).and_return(/#{@replace_text}/)
-      @board_entry_comment_foo = create_board_entry_comment(:contents => contents)
+      @board_entry = create_board_entry
+      @board_entry_comment_foo = create_board_entry_comment(:contents => contents, :board_entry => @board_entry)
       @board_entry_bar = stub_model(BoardEntry, :symbol => 'uid:bar')
       BoardEntry.stub!(:find_by_id).and_return(@board_entry_bar)
     end

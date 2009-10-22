@@ -78,6 +78,12 @@ class BoardEntry < ActiveRecord::Base
     { :order => 'board_entry_points.point DESC' }
   }
 
+  named_scope :aim_type, proc { |types|
+    types = types.split(',').map(&:strip) if types.is_a?(String)
+    types ||= %w(entry)
+    { :conditions => ['aim_type IN (?)', types] }
+  }
+
   named_scope :order_sort_type, proc { |sort_type|
     case sort_type
     when "date" then self.order_new_include_comment.proxy_options
