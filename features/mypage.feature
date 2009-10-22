@@ -26,7 +26,7 @@ Feature: マイページ
     Then I should see "Railsについて質問" within "div#questions"
     And I should not see "Railsについて質問" within "div#access_blogs"
     And I should see "Railsについて雑談" within "div#access_blogs"
-    And I should see "Railsについて質問" within "div#recent_blogs"
+    And I should not see "Railsについて質問" within "div#recent_blogs"
     And I should see "Railsについて雑談" within "div#recent_blogs"
 
   Scenario: お知らせを表示する
@@ -42,7 +42,7 @@ Feature: マイページ
     Then I should see "Railsについてお知らせ" within "div#message"
     And I should not see "Railsについてお知らせ" within "div#access_blogs"
     And I should see "Railsについて雑談" within "div#access_blogs"
-    And I should see "Railsについてお知らせ" within "div#recent_blogs"
+    And I should not see "Railsについてお知らせ" within "div#recent_blogs"
     And I should see "Railsについて雑談" within "div#recent_blogs"
     And I should see "あなたへのお知らせ(1)" within "div.box_space.antenna"
 

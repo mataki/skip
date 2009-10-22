@@ -666,7 +666,6 @@ class MypageController < ApplicationController
       :title_icon => "star",
       :title_name => _('Recent Popular Entries (excluding questions)'),
       :pages => pages,
-      :per_page => options[:per_page],
       :symbol2name_hash => BoardEntry.get_symbol2name_hash(pages)
     }
   end
@@ -677,7 +676,7 @@ class MypageController < ApplicationController
     pages = BoardEntry.scoped(
       :conditions => find_params[:conditions],
       :include => find_params[:include] | [ :user, :state ]
-    ).order_new.paginate(:page => params[:page], :per_page => options[:per_page])
+    ).timeline.order_new.paginate(:page => params[:page], :per_page => options[:per_page])
 
     locals = {
       :id_name => 'recent_blogs',
@@ -701,7 +700,7 @@ class MypageController < ApplicationController
       pages = BoardEntry.scoped(
         :conditions => find_params[:conditions],
         :include => find_params[:include] | [ :user, :state ]
-      ).order_new.paginate(:page => params[:page], :per_page => options[:per_page])
+      ).timeline.order_new.paginate(:page => params[:page], :per_page => options[:per_page])
     end
     locals = {
       :id_name => id_name,
