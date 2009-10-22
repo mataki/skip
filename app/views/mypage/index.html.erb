@@ -58,7 +58,6 @@
 
     <% unless @mail_your_messages[:pages].empty? -%>
       <%= show_title_bar(@mail_your_messages[:title_icon], @mail_your_messages[:title_name], {:controller => 'mypage', :action => "entries_by_antenna", :antenna_id => @mail_your_messages[:id_name]}) %>
-      <% debugger %>
       <%= render :partial => "list_block", :locals => @mail_your_messages %>
     <% end -%>
 
