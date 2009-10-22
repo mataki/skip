@@ -5,7 +5,7 @@ et1:
   created_on: <%= SkipFaker.today %>
 et2:
   board_entry: a_entry
-  tag: system_question_tag
+  tag: a_tag
   created_on: <%= SkipFaker.today %>
 et3:
   board_entry: a_trackback_entry

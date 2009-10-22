@@ -17,23 +17,12 @@ class Tag < ActiveRecord::Base
   has_many :board_entries, :through => :entry_tags
   has_many :entry_tags
 
-  NOTICE_TAG = '連絡'
-  PRIORITY_TAG = '重要'
-
   def tag
     "[#{name}]"
   end
 
   def self.get_standard_tags
     self.find_all_by_tag_type("STANDARD").map {|tag| tag.name }
-  end
-
-  def self.get_system_tags
-    self.find_all_by_tag_type("SYSTEM").map {|tag| tag.name }
-  end
-
-  def self.get_system_tag name
-    Tag.find(:first, :conditions => ["name = ? ", name])
   end
 
   # 文字列をタグの名前の配列に分解する

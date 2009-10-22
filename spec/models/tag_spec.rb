@@ -19,7 +19,6 @@ describe Tag do
   fixtures :tags, :board_entries, :share_files, :bookmark_comments
 
   # FIXME テスト汎用化。Fakerを使った形に出来ないか？
-  SYSTEM_TAG_NAMES = ["質問", "解決", "重要", "連絡"]
   STANDARD_TAG_NAMES = ["日記", "書評", "オフ", "ネタ", "ニュース"]
   def test_tag
     assert_not_nil @a_tag.tag
@@ -27,14 +26,6 @@ describe Tag do
 
   def test_get_standard_tags
     Tag.get_standard_tags.each{ |tagname| assert(STANDARD_TAG_NAMES.include?(tagname)) }
-  end
-
-  def test_get_system_tags
-    Tag.get_system_tags.each{ |tagname| assert(SYSTEM_TAG_NAMES.include?(tagname)) }
-  end
-
-  def test_get_system_tag
-    assert_equal '[連絡]', Tag.get_system_tag(Tag::NOTICE_TAG).tag
   end
 
   def test_split_tags

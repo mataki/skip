@@ -44,7 +44,11 @@ class BatchMakeUserReadings < BatchBase
       # あなたへの連絡
       user_ids += contact_ids entry
       # 更新を知らせるユーザ全員に未読レコードを生成
-      user_ids.uniq.each { |user_id| save_user_reading(user_id, entry) if viewable?(user_id, entry.entry_publications) }
+      user_ids.uniq.each do |user_id|
+        if entry.readable?(User.find_by_id(user_id))
+          save_user_reading(user_id, entry)
+        end
+      end
     end
   end
 
@@ -79,23 +83,10 @@ class BatchMakeUserReadings < BatchBase
     user_reading.read and user_reading.checked_on < last_updated_time and updater_id != antenna_user_id
   end
 
-  # todo viewableの高速化 => viable_symbolsとuserをキャッシュしておく
-  def self.viewable?(user_id, publications)
-    user = User.find(user_id)
-    viewable_symbols = ["sid:allusers", user.symbol]
-    viewable_symbols += user.group_symbols
-
-    for publication in publications
-      return true if viewable_symbols.include?(publication.symbol)
-    end
-
-    return false
-  end
-
-  # [連絡]タグが指定されている場合、連絡先のユーザのID一覧を返す
+  # お知らせ対象ユーザを取得
   def self.contact_ids entry
-    return [] unless entry.category.include?("[#{Tag::NOTICE_TAG}]")
-    entry.publication_users.map{ |user| user.id }
+    return [] unless BoardEntry::ANTENNA_AIM_TYPES.include?(entry.aim_type)
+    (entry.public? ?  User.active.all : entry.publication_users).map{ |user| user.id }
   end
 
   # 30分以内に記事自身かコメントに更新があった記事を全て取得

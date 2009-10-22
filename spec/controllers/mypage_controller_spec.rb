@@ -81,13 +81,7 @@ describe MypageController, 'mypage > home 関連' do
       get :index
       assigns[:waiting_groups].should == @waiting_groups
     end
-    it 'あなたへの連絡(公開, 未読/既読は関係なし、最近のもののみ)が設定されること' do
-      @important_your_messages = mock('important_your_messages')
-      controller.should_receive(:important_your_messages).and_return(@important_your_messages)
-      get :index
-      assigns[:important_your_messages].should == @important_your_messages
-    end
-    it 'あなたへの連絡(非公開, 未読のもののみ)が設定されること' do
+    it 'あなたへのお知らせ(未読のもののみ)が設定されること' do
       @mail_your_messages = mock('mail_your_messages')
       controller.should_receive(:mail_your_messages).and_return(@mail_your_messages)
       get :index
@@ -237,7 +231,7 @@ describe MypageController, 'mypage > home 関連' do
       @antenna_entry = stub(MypageController::AntennaEntry)
       @antenna_entry.stub!(:title=)
       @antenna_entry.stub!(:need_search?).and_return(false)
-      @antenna_entry.stub!(:conditions).and_return({:conditions => [['']], :include => []})
+      @antenna_entry.stub!(:scope).and_return(BoardEntry.scoped(:conditions => []))
       controller.stub!(:antenna_entry).and_return(@antenna_entry)
       controller.stub!(:antenna_entry_title)
       controller.stub!(:unread_entry_id_hash_with_user_reading)
@@ -259,10 +253,6 @@ describe MypageController, 'mypage > home 関連' do
         @antenna_entry.should_receive(:need_search?).and_return(true)
       end
       it '記事一覧が設定されること' do
-        @conditions = mock('conditions')
-        @include = ['include'] | [:user, :state]
-        condition_params = {:conditions => @conditions, :include => @include}
-        @antenna_entry.should_receive(:conditions).and_return(condition_params)
         BoardEntry.should_receive(:paginate).and_return(@entries)
         get :entries_by_antenna, :read => 'true'
         assigns[:entries].should == @entries

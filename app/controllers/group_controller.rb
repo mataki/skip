@@ -194,7 +194,7 @@ class GroupController < ApplicationController
         # また、「参加申し込み」タグは一部システム的な動作(著者毎の記事一覧から除外)を
         # 行っているため、国際化を踏まえた仕様を再検討しなければならない。
         entry_params[:tags] = '参加申し込み'
-        entry_params[:tags] << ",#{Tag::NOTICE_TAG}" if @group.protected?
+        entry_params[:aim_type] = 'notice' if @group.protected?
         entry_params[:user_symbol] = session[:user_symbol]
         entry_params[:user_id] = session[:user_id]
         entry_params[:entry_type] = BoardEntry::GROUP_BBS
@@ -247,11 +247,11 @@ class GroupController < ApplicationController
     user = group_participation.user
     group_participation.destroy
 
-    # BBSにuid直接指定[連絡]で新規投稿(自動で投稿されて保存される)
+    # BBSにuid直接指定のお知らせを新規投稿(自動で投稿されて保存される)
     entry_params = { }
     entry_params[:title] =_("Leave [%s]") % @group.name
     entry_params[:message] = _("Removed %{user} from [%{group}>]") % {:group => @group.symbol, :user => user.name}
-    entry_params[:tags] = "#{Tag::NOTICE_TAG}"
+    entry_params[:aim_type] = 'notice'
     entry_params[:user_symbol] = session[:user_symbol]
     entry_params[:user_id] = session[:user_id]
     entry_params[:entry_type] = BoardEntry::GROUP_BBS

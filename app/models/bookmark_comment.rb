@@ -64,16 +64,11 @@ class BookmarkComment < ActiveRecord::Base
 
   def self.get_tags_hash(login_user_id)
     tags = get_tag_words(["user_id = ?", login_user_id])
-
     tags_hash = {}
     tags_hash[:standard] = Tag.get_standard_tags
-    tags_hash[:system] = Tag.get_system_tags
-    tags_hash[:mine] = tags - (tags_hash[:standard] + tags_hash[:system])
-
-    tags_hash[:user] = get_tag_words()
-    tags_hash[:user] = tags_hash[:user] - (tags + tags_hash[:standard] + tags_hash[:system])
-
-    return tags_hash
+    tags_hash[:mine] = tags - tags_hash[:standard]
+    tags_hash[:user] = get_tag_words - (tags + tags_hash[:standard])
+    tags_hash
   end
 
   def self.get_popular_tag_words()

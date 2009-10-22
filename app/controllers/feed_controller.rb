@@ -14,6 +14,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 require 'rss'
+# FIXME 根本的に見直す必要がありそう
 class FeedController < ApplicationController
   #DRY
   def recent_questions

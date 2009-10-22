@@ -101,13 +101,11 @@ describe BookmarkComment do
       login_user_id = 1
       BookmarkComment.should_receive(:get_tag_words).with(["user_id = ?", login_user_id]).and_return(@tags[0..2])
       Tag.should_receive(:get_standard_tags).and_return([@tags[0]])
-      Tag.should_receive(:get_system_tags).and_return([@tags[1]])
       BookmarkComment.should_receive(:get_tag_words).and_return(@tags)
       @tags_hash = BookmarkComment.get_tags_hash login_user_id
     end
     it { @tags_hash[:standard].should == [@tags[0]] }
-    it { @tags_hash[:system].should == [@tags[1]] }
-    it { @tags_hash[:mine].should == [@tags[2]] }
+    it { @tags_hash[:mine].should == [@tags[1], @tags[2]] }
     it { @tags_hash[:user].should == [@tags[3]] }
   end
 

@@ -116,18 +116,15 @@ div.input_line textarea {
         var tags = new Array(<%= categories_hash[:mine].map{|str| ("'#{str}'")}.join(',') %>);
         var stdTags = new Array(<%= categories_hash[:standard].map{|str| ("'#{str}'")}.join(',') %>);
         var userTags = new Array(<%= categories_hash[:user].map{|str| ("'#{str}'")}.join(',') %>);
-        var sysTags = new Array(<%= categories_hash[:system].map{|str| ("'#{str}'")}.join(',') %>);
 
         $j('#tags_list').append(createTagsLink(tags));
         $j('#std_tags_list').append(createTagsLink(stdTags));
         $j('#user_tags_list').append(createTagsLink(userTags));
-        $j('#sys_tags_list').append(createTagsLink(sysTags));
 
         // タグ処理
         $j('#board_entry_category').jTagging($j('#tags_list'));
         $j('#board_entry_category').jTagging($j('#std_tags_list'));
         $j('#board_entry_category').jTagging($j('#user_tags_list'));
-        $j('#board_entry_category').jTagging($j('#sys_tags_list'));
     };
     setupTagComplete();
 
@@ -163,11 +160,6 @@ div.input_line textarea {
         }
 
         if ($j('#publication_type_protected:checked').size() > 0){
-            if ($j('#board_entry_category').val().match(new RegExp("連絡", "g")) == null) {
-                if (confirm('<%= _('The recipient(s) may not notice your message since it is missing a "連絡" tag. Are you sure to proceed?')%>') == false) {
-                    return false;
-                }
-            }
             if ($j('#publication_symbols_value').val() == ""){
                 if (confirm("<%= _('No user selected. Are you sure to make this open to all users?')%>") == true) {
                     $j('#publication_type_public').attr('checked',true);

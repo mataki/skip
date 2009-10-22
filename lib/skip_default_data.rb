@@ -19,7 +19,6 @@ class SkipDefaultData
 
   def self.load_db lang = nil
     # tags
-    %w(質問 解決 重要 連絡).each { |name| Tag.create! :name => name, :tag_type => "SYSTEM" }
     [_('Diary'), _('Book Review'), _('Off Time'), _('Story'), _('News')].each { |name| Tag.create! :name => name, :tag_type => "STANDARD" }
 
     # group_categories

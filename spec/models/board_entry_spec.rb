@@ -62,7 +62,6 @@ describe BoardEntry, "があるユーザのブログだったとき" do
   end
 
   it { @board_entry.permalink.should == "/page/#{@board_entry.id}" }
-  it { @board_entry.important?.should be_false }
   it { @board_entry.public?.should be_true}
   it { @board_entry.private?.should be_false }
   it { @board_entry.protected?.should be_false  }

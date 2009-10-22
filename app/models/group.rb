@@ -110,7 +110,7 @@ class Group < ActiveRecord::Base
     entry_params = { }
     entry_params[:title] =_("Invited to Group: %s") % self.name
     entry_params[:message] = _("You have been invited to join [%s>].") % self.symbol
-    entry_params[:tags] = "#{Tag::NOTICE_TAG}"
+    entry_params[:aim_type] = 'notice'
     entry_params[:user_id] = user_id
     entry_params[:user_symbol] = user_symbol
     entry_params[:entry_type] = BoardEntry::GROUP_BBS

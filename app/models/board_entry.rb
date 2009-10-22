@@ -40,7 +40,9 @@ class BoardEntry < ActiveRecord::Base
   validates_presence_of :user_id
 
   AIM_TYPES = %w(entry question notice).freeze
-  HIDABLE_AIM_TYPES = %w(question notice).freeze
+  ANTENNA_AIM_TYPES = %w(notice).freeze
+  HIDABLE_AIM_TYPES = %w(question).freeze
+  TIMLINE_AIM_TYPES = %w(entry).freeze
   validates_inclusion_of :aim_type, :in => AIM_TYPES
 
   named_scope :accessible, proc { |user|
@@ -60,6 +62,40 @@ class BoardEntry < ActiveRecord::Base
   named_scope :recent, proc { |day_count|
     return if day_count.blank?
     { :conditions => ['last_updated > :date', { :date => Time.now.ago(day_count.to_i.day) }] }
+  }
+
+  named_scope :except_auto_posted, proc {
+    # FIXME 自動投稿判別をタイトルでやるのは危うい。国際化のためにもよくない。
+    # TODO 自動投稿自体を見直す予定なのでその際にここも見直す
+    { :conditions => ['title NOT IN (?)', ['参加申し込みをしました！', 'ユーザー登録しました！']] }
+  }
+
+  named_scope :publication_type_equal, proc { |type|
+    { :conditions => ['publication_type = ?', type] }
+  }
+
+  named_scope :diary, proc {
+    { :conditions => ['entry_type = ?', BoardEntry::DIARY] }
+  }
+
+  named_scope :active_user, proc {
+    { :conditions => ['user_id IN (?)', User.active.map(&:id).uniq] }
+  }
+
+  named_scope :owned, proc {|owner|
+    { :conditions => ['board_entries.symbol = ?', owner.symbol] }
+  }
+
+  named_scope :question, proc { { :conditions => ['board_entries.aim_type = \'question\''] } }
+  named_scope :notice, proc { { :conditions => ['board_entries.aim_type = \'notice\''] } }
+  named_scope :timeline, proc { { :conditions => ['board_entries.aim_type = \'entry\''] } }
+  named_scope :visible, proc { { :conditions => ['board_entries.hide = ?', false] } }
+
+  named_scope :unread, proc { |user|
+    {
+      :conditions => ['user_readings.read = ? AND user_readings.user_id = ?', false, user.id],
+      :include => [:user_readings]
+    }
   }
 
   named_scope :order_new, proc {
@@ -93,28 +129,6 @@ class BoardEntry < ActiveRecord::Base
   }
 
   named_scope :limit, proc { |num| { :limit => num } }
-
-  named_scope :except_auto_posted, proc {
-    # FIXME 自動投稿判別をタイトルでやるのは危うい。国際化のためにもよくない。
-    # TODO 自動投稿自体を見直す予定なのでその際にここも見直す
-    { :conditions => ['title NOT IN (?)', ['参加申し込みをしました！', 'ユーザー登録しました！']] }
-  }
-
-  named_scope :publication_type_equal, proc { |type|
-    { :conditions => ['publication_type = ?', type] }
-  }
-
-  named_scope :diary, proc {
-    { :conditions => ['entry_type = ?', BoardEntry::DIARY] }
-  }
-
-  named_scope :active_user, proc {
-    { :conditions => ['user_id IN (?)', User.active.map(&:id).uniq] }
-  }
-
-  named_scope :owned, proc {|owner|
-    { :conditions => ['board_entries.symbol = ?', owner.symbol] }
-  }
 
   attr_reader :owner
   attr_accessor :send_mail
@@ -170,11 +184,6 @@ class BoardEntry < ActiveRecord::Base
   # ブログかどうか
   def diary?
     entry_type == DIARY
-  end
-
-  # 重要タグがついているもの
-  def important?
-    category.include?("[#{Tag::PRIORITY_TAG}]")
   end
 
   # 所属するグループの公開範囲により、記事の公開範囲を判定する
@@ -370,10 +379,9 @@ class BoardEntry < ActiveRecord::Base
     categories_hash = {}
 
     categories_hash[:standard] = Tag.get_standard_tags
-    categories_hash[:system] = Tag.get_system_tags
-    categories_hash[:mine] = categories - (categories_hash[:standard] + categories_hash[:system])
+    categories_hash[:mine] = categories - categories_hash[:standard]
     categories_hash[:user] = BoardEntry.get_category_words({:order=>"board_entries.last_updated DESC ", :limit=>10})
-    categories_hash[:user] = categories_hash[:user] - (categories + categories_hash[:standard] + categories_hash[:system])
+    categories_hash[:user] = categories_hash[:user] - (categories + categories_hash[:standard])
 
     categories_hash
   end
@@ -420,7 +428,7 @@ class BoardEntry < ActiveRecord::Base
   # 自動投稿
   def self.create_entry(params)
     params.assert_valid_keys [:title, :message, :tags, :user_symbol, :user_id, :entry_type, :owner_symbol,
-                               :publication_type, :publication_symbols, :non_auto, :date, :editor_mode]
+                               :publication_type, :publication_symbols, :non_auto, :date, :editor_mode, :aim_type]
 
     contents = ""
     contents << _("(This entry is generated automatically by the system)") unless params[:non_auto]
@@ -434,6 +442,7 @@ class BoardEntry < ActiveRecord::Base
       :title => params[:title],
       :contents => contents,
       :category => params[:tags],
+      :aim_type => params[:aim_type],
       :date => params[:date] || Time.now,
       :user_id => params[:user_id],
       :entry_type => params[:entry_type],

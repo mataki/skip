@@ -89,13 +89,9 @@ class Antenna < ActiveRecord::Base
   def self.get_system_antennas user
     antennas = []
 
-    find_params = BoardEntry.make_conditions(user.belong_symbols, {:category=>'連絡'})
-    find_params[:conditions][0] << " and user_readings.read = ? and user_readings.user_id = ?"
-    find_params[:conditions] << false << user.id
     antenna_message = Antenna.new(:name => _("Messages for you"), :user_id => user.id)
     antenna_message.antenna_type = "message"
-    antenna_message.count = BoardEntry.count(:conditions => find_params[:conditions],
-                                             :include => find_params[:include] | [:user_readings])
+    antenna_message.count = BoardEntry.accessible(user).notice.unread(user).count
     antennas << antenna_message
 
     # コメントの行方

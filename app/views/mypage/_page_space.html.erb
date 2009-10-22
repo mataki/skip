@@ -17,7 +17,7 @@
     <div class="page_title">
       <% categories = entry.category.scan(/\[[^\]]*\]/) -%>
       <% entry_search_links_by_category = categories.map{ |category| link_to h(category), {:controller => 'search', :action => :entry_search, :tag_words => Tag.comma_tags(h(category))}, :class => 'tag'} -%>
-      <%= get_light_icon(entry) + get_publication_type_icon(entry) + hide_long_tags(entry_search_links_by_category) + entry_link_to(entry, {}, {:title => entry_infos}) -%>
+      <%= get_publication_type_icon(entry) + hide_long_tags(entry_search_links_by_category) + entry_link_to(entry, {}, {:title => entry_infos}) -%>
       <span style="font-size:8px; vertical-align: bottom; color: #808080;"><%= entry_infos -%></span>
     </div>
     <div class="page_from"><%= symbol2name_hash ? symbol_link_to(entry.symbol, symbol2name_hash[entry.symbol]) : user_link_to(entry.user) %></div>

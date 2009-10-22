@@ -51,9 +51,7 @@ class MypageController < ApplicationController
     @system_messages = system_messages
     @message_array = Message.get_message_array_by_user_id(current_user.id)
     @waiting_groups = Group.find_waitings(current_user.id)
-    # あなたへの連絡（公開・未読/既読は関係なし・最近のもののみ）
-    @important_your_messages = important_your_messages
-    # あなたへの連絡（非公開・未読のもののみ）
+    # あなたへのお知らせ(未読のもののみ)
     @mail_your_messages = mail_your_messages
 
     # ============================================================
@@ -176,11 +174,7 @@ class MypageController < ApplicationController
     @antenna_entry = antenna_entry(params[:antenna_id], params[:read])
     @antenna_entry.title = antenna_entry_title(@antenna_entry)
     if @antenna_entry.need_search?
-      find_params = @antenna_entry.conditions
-      @entries = BoardEntry.scoped(
-        :conditions=> find_params[:conditions],
-        :include => find_params[:include] | [ :user, :state ]
-      ).order_new.paginate(:page => params[:page], :per_page => 20)
+      @entries = @antenna_entry.scope.order_new.paginate(:page => params[:page], :per_page => 20)
       @user_unreadings = unread_entry_id_hash_with_user_reading(@entries.map {|entry| entry.id})
       @symbol2name_hash = BoardEntry.get_symbol2name_hash(@entries)
     end
@@ -511,16 +505,10 @@ class MypageController < ApplicationController
       @current_user = current_user
     end
 
-    def conditions
-      find_params = {:conditions => [['']], :include => []}
-      find_params = BoardEntry.make_conditions(@current_user.belong_symbols, {})
-
-      unless @read
-        find_params[:conditions][0] << " and user_readings.read = ? and user_readings.user_id = ?"
-        find_params[:conditions] << false << @current_user.id
-        find_params[:include] << :user_readings
-      end
-      find_params
+    def scope
+      scope = BoardEntry.accessible(current_user)
+      scope = scope.unread(current_user) unless @read
+      scope
     end
 
     def need_search?
@@ -535,21 +523,16 @@ class MypageController < ApplicationController
       @read = read
     end
 
-    def conditions
-      find_params = {:conditions => [['']], :include => []}
-      case
-      when @key == 'message'  then find_params = conditions_for_entries_by_system_antenna_message
-      when @key == 'comment'  then find_params = conditions_for_entries_by_system_antenna_comment
-      when @key == 'bookmark' then find_params = conditions_for_entries_by_system_antenna_bookmark
-      when @key == 'group'    then find_params = conditions_for_entries_by_system_antenna_group
-      end
+    def scope
+      scope = case
+              when @key == 'message'  then BoardEntry.accessible(@current_user).notice
+              when @key == 'comment'  then scope_for_entries_by_system_antenna_comment
+              when @key == 'bookmark' then scope_for_entries_by_system_antenna_bookmark
+              when @key == 'group'    then scope_for_entries_by_system_antenna_group
+              end
 
-      unless @read
-        find_params[:conditions][0] << " and user_readings.read = ? and user_readings.user_id = ?"
-        find_params[:conditions] << false << @current_user.id
-        find_params[:include] << :user_readings
-      end
-      find_params
+      scope = scope.unread(@current_user) unless @read
+      scope
     end
 
     def need_search?
@@ -558,24 +541,17 @@ class MypageController < ApplicationController
 
     private
     # #TODO BoardEntryに移動する
-    # システムアンテナ[message]の記事を取得するための検索条件
-    def conditions_for_entries_by_system_antenna_message
-      BoardEntry.make_conditions @current_user.belong_symbols, { :category=>'連絡' }
-    end
-
-    # #TODO BoardEntryに移動する
     # システムアンテナ[comment]の記事を取得するための検索条件
-    def conditions_for_entries_by_system_antenna_comment
-      find_params = BoardEntry.make_conditions(@current_user.belong_symbols)
-      find_params[:conditions][0] << " and board_entry_comments.user_id = ?"
-      find_params[:conditions] << @current_user.id
-      find_params[:include] << :board_entry_comments
-      find_params
+    def scope_for_entries_by_system_antenna_comment
+      BoardEntry.accessible(@current_user).scoped(
+        :conditions => ['board_entry_comments.user_id = ?', @current_user.id],
+        :include  => [:board_entry_comments]
+      )
     end
 
     # #TODO BoardEntryに移動する
     # システムアンテナ[bookmark]の記事を取得するための検索条件
-    def conditions_for_entries_by_system_antenna_bookmark
+    def scope_for_entries_by_system_antenna_bookmark
       bookmarks = Bookmark.find(:all,
                                 :conditions => ["bookmark_comments.user_id = ? and bookmarks.url like '/page/%'", @current_user.id],
                                 :include => [:bookmark_comments])
@@ -584,16 +560,19 @@ class MypageController < ApplicationController
         ids << bookmark.url.gsub(/\/page\//, "")
       end
 
-      find_params = BoardEntry.make_conditions(@current_user.belong_symbols)
-      find_params[:conditions][0] << " and board_entries.id in (?)"
-      find_params[:conditions] << ids
-      find_params
+      BoardEntry.accessible(@current_user).scoped(
+        :conditions => ['board_entries.id IN (?)', ids]
+      )
     end
 
     # #TODO BoardEntryに移動する
     # システムアンテナ[group]の記事を取得するための検索条件
-    def conditions_for_entries_by_system_antenna_group
-      BoardEntry.make_conditions @current_user.belong_symbols, { :symbols => @current_user.group_symbols }
+    def scope_for_entries_by_system_antenna_group
+      find_params = BoardEntry.make_conditions @current_user.belong_symbols, { :symbols => @current_user.group_symbols }
+      BoardEntry.scoped(
+        :conditions=> find_params[:conditions],
+        :include => find_params[:include]
+      )
     end
   end
 
@@ -606,17 +585,15 @@ class MypageController < ApplicationController
       @title = @antenna.name
     end
 
-    def conditions
+    def scope
       symbols, keyword = @antenna.get_search_conditions
-      find_params = {:conditions => [['']], :include => []}
       find_params = BoardEntry.make_conditions(@current_user.belong_symbols, :symbols => symbols, :keyword => keyword)
-
-      unless @read
-        find_params[:conditions][0] << " and user_readings.read = ? and user_readings.user_id = ?"
-        find_params[:conditions] << false << @current_user.id
-        find_params[:include] << :user_readings
-      end
-      find_params
+      scope = BoardEntry.scoped(
+        :conditions=> find_params[:conditions],
+        :include => find_params[:include]
+      )
+      scope = scope.unread(@current_user) unless @read
+      scope
     end
 
     def need_search?
@@ -639,30 +616,13 @@ class MypageController < ApplicationController
   end
 
   # TODO BoardEntryに移動する
-  # あなたへの連絡(公開, 未読/既読は関係なし、最近のもののみ)が設定されること
-  def important_your_messages
-    find_params = BoardEntry.make_conditions(login_user_symbols, {:recent_day => recent_day, :publication_type => "public", :category => "連絡"})
-    BoardEntry.scoped(
-      :conditions=> find_params[:conditions],
-      :include => find_params[:include] | [ :user, :state ]
-    ).order_new.all
-  end
-
-  # TODO BoardEntryに移動する
-  # あなたへの連絡（非公開・未読のもののみ）
   def mail_your_messages
-    find_params = BoardEntry.make_conditions(login_user_symbols, {:category=>'連絡'})
-    find_params[:conditions][0] << " and publication_type in (?) and user_readings.read = ? and user_readings.user_id = ?"
-    find_params[:conditions] << %w(private protected) << false << current_user.id
-    find_params[:include] << :user_readings
-    { :id_name => 'message',
+    {
+      :id_name => 'message',
       :title_icon => "email",
       :title_name => _("Messages for you"),
-      :pages => BoardEntry.scoped(
-        :conditions=> find_params[:conditions],
-        :include => find_params[:include] | [ :user, :state ]
-      ).order_new.all,
-      :delete_categories => '[連絡]' }
+      :pages => BoardEntry.accessible(current_user).notice.unread(current_user).order_new.all
+    }
   end
 
   def find_as_locals target, options
@@ -679,8 +639,8 @@ class MypageController < ApplicationController
 
   # 質問記事一覧を取得する（partial用のオプションを返す）
   def find_questions_as_locals options
-    pages = BoardEntry.accessible(current_user).recent(options[:recent_day]).category_like('質問').
-      category_not_like('解決').order_new.paginate(:page => params[:page], :per_page => options[:per_page])
+    pages = BoardEntry.accessible(current_user).question.visible.
+      order_new.paginate(:page => params[:page], :per_page => options[:per_page])
 
     locals = {
       :id_name => 'questions',
@@ -688,21 +648,18 @@ class MypageController < ApplicationController
       :title_name => _('Recent Questions'),
       :pages => pages,
       :per_page => options[:per_page],
-      :recent_day => options[:recent_day],
-      :delete_categories => '[質問]'
+      :recent_day => options[:recent_day]
     }
   end
 
   # 最近の人気記事一覧を取得する（partial用のオプションを返す）
   def find_access_blogs_as_locals options
     find_params = BoardEntry.make_conditions(login_user_symbols, {:publication_type => 'public'})
-    find_params[:conditions][0] << " and board_entries.category not like ? and last_updated > ?"
-    find_params[:conditions] << '%[質問]%' << Date.today - recent_day
     pages = BoardEntry.scoped(
       :conditions => find_params[:conditions],
       :order => "board_entry_points.today_access_count DESC, board_entry_points.access_count DESC, board_entries.last_updated DESC, board_entries.id DESC",
       :include => find_params[:include] | [ :user, :state ]
-    ).paginate(:page => params[:page], :per_page => options[:per_page])
+    ).timeline.recent(recent_day).paginate(:page => params[:page], :per_page => options[:per_page])
 
     locals = {
       :id_name => 'access_blogs',

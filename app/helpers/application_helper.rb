@@ -214,11 +214,6 @@ module ApplicationHelper
     sanitize(content, :tags => allowed_tags, :attributes => allowed_attributes)
   end
 
-  # ホームのあなたへの連絡、みんなへの連絡の重要マークをつける
-  def get_light_icon(entry)
-    entry.important? ? icon_tag('lightbulb') : ''
-  end
-
   def get_publication_type_icon(entry)
     icon_name = ''
     view_name = ""

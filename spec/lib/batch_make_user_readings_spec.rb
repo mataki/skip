@@ -19,16 +19,6 @@ require File.dirname(__FILE__) + '/../../lib/batch_make_user_readings'
 describe BatchMakeUserReadings do
   fixtures :users, :board_entries, :groups, :user_uids
 
-  def test_viewable
-    # sid:allusersを公開範囲指定 => 見れる
-    entry_publications = [EntryPublication.new(:board_entry_id => @a_entry.id, :symbol => Symbol::SYSTEM_ALL_USER)]
-    assert BatchMakeUserReadings.viewable?(@a_user.id, entry_publications)
-
-    # uid:***を公開範囲指定 => 見れる
-    entry_publications = [EntryPublication.new(:board_entry_id => @a_entry.id, :symbol => @a_user.symbol)]
-    assert BatchMakeUserReadings.viewable?(@a_user.id, entry_publications)
-  end
-
   def test_get_updated_entries_and_save_user_readings
     # 登録済みの記事を一旦クリア
     BoardEntry.delete_all
@@ -102,23 +92,6 @@ describe BatchMakeUserReadings do
     BatchMakeUserReadings.save_user_reading @a_group_owned_user.id, updated_entries[1]
     assert_equal 2, UserReading.find(:all).size
 
-  end
-
-  def test_contact_ids
-    entry = BoardEntry.new(store_entry_params({ :user_id => @a_user.id,
-                                                :last_updated => Time.now,
-                                                :symbol => "uid:#{@a_user.symbol}",
-                                                :category => "[#{Tag::NOTICE_TAG}]"}))
-
-    # 単一ユーザに向けた連絡
-    entry.update_attributes(:publication_symbols_value => "uid:#{@a_user.symbol}")
-    contact_ids = BatchMakeUserReadings.contact_ids entry
-    assert_equal 1, contact_ids.size
-
-    # 複数ユーザに向けた連絡
-    entry.update_attributes(:publication_symbols_value => "uid:#{@a_user.symbol},uid:#{@a_group_owned_user.symbol}")
-    contact_ids = BatchMakeUserReadings.contact_ids entry
-    assert_equal 2, contact_ids.size
   end
 
 private

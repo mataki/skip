@@ -75,12 +75,6 @@ module SkipFaker
     convert_comma_tags(tags(options))
   end
 
-  # テスト用システムタグを生成
-  # タグをfixturesに書き込む場合は""で括らないとyamlのフロースタイルと見なされてしまうので注意
-  def self.system_tag
-    "[#{%w(質問 重要 連絡 解決).rand}]"
-  end
-
   # テスト用標準タグを作成
   # タグをfixturesに書き込む場合は""で括らないとyamlのフロースタイルと見なされてしまうので注意
   def self.standard_tag
