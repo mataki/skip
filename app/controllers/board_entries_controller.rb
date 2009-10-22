@@ -15,7 +15,7 @@
 
 class BoardEntriesController < ApplicationController
 
-  verify :method => :post, :only => [ :ado_create_comment, :ado_create_nest_comment, :ado_pointup, :destroy_comment, :ado_edit_comment ], 
+  verify :method => :post, :only => [ :ado_create_comment, :ado_create_nest_comment, :ado_pointup, :destroy_comment, :ado_edit_comment ],
          :redirect_to => { :action => :index }
 
   after_filter :make_comment_message, :only => [ :ado_create_comment, :ado_create_nest_comment ]
@@ -165,12 +165,20 @@ class BoardEntriesController < ApplicationController
 
   def toggle_hide
     @board_entry = BoardEntry.accessible(current_user).find params[:id]
-    if BoardEntry::HIDABLE_AIM_TYPES.include? @board_entry.aim_type
-      @board_entry.hide = !@board_entry.hide
-      @board_entry.save
-    end
-    respond_to do |format|
-      format.html { redirect_to @board_entry.get_url_hash }
+    if @board_entry.toggle_hide(params[:comment], current_user)
+      respond_to do |format|
+        format.html do
+          flash[:notice] = _("Entry was successfully %{operation}.") % { :operation => _("BoardEntry|Hide|#{@board_entry.hide}") }
+          redirect_to @board_entry.get_url_hash
+        end
+      end
+    else
+      respond_to do |format|
+        format.html do
+          flash[:notice] = _('Failed to update state.') + " : " + @board_entry.errors.full_messages.to_s
+          redirect_to @board_entry.get_url_hash
+        end
+      end
     end
   end
 

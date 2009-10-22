@@ -25,6 +25,7 @@ class BoardEntry < ActiveRecord::Base
   has_many :entry_trackbacks, :dependent => :destroy
   has_many :to_entry_trackbacks, :class_name => "EntryTrackback", :foreign_key => :tb_entry_id, :dependent => :destroy
   has_many :board_entry_comments, :dependent => :destroy
+  has_many :entry_hide_operations, :dependent => :destroy
   has_one  :state, :class_name => "BoardEntryPoint", :dependent => :destroy
   has_many :entry_accesses, :dependent => :destroy
   has_many :user_readings, :dependent => :destroy
@@ -138,6 +139,8 @@ class BoardEntry < ActiveRecord::Base
   N_('BoardEntry|Aim type|entry')
   N_('BoardEntry|Aim type|question')
   N_('BoardEntry|Aim type|notice')
+  N_('BoardEntry|Hide|true')
+  N_('BoardEntry|Hide|false')
   DIARY = 'DIARY'
   GROUP_BBS = 'GROUP_BBS'
 
@@ -682,6 +685,21 @@ class BoardEntry < ActiveRecord::Base
 
   def point_incrementable?(user)
     self.readable?(user) && !self.writer?(user.id)
+  end
+
+  def toggle_hide(comment, user)
+    unless BoardEntry::HIDABLE_AIM_TYPES.include? self.aim_type
+      self.errors.add_to_base(_("Invalid operation."))
+      return false
+    end
+    transaction do
+      self.toggle!(:hide)
+      self.entry_hide_operations.create!(:comment => comment, :user => user, :operation_type => self.hide.to_s)
+    end
+    true
+  rescue ActiveRecord::RecordInvalid => e
+    self.errors.add_to_base(e.errors.full_messages)
+    false
   end
 
 private
