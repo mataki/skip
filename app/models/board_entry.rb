@@ -122,7 +122,7 @@ class BoardEntry < ActiveRecord::Base
   GROUP_BBS = 'GROUP_BBS'
 
   def validate
-    symbol_type, symbol_id = Symbol::split_symbol self.symbol
+    symbol_type, symbol_id = SkipUtil.split_symbol self.symbol
     if self.entry_type == DIARY
       if symbol_type == "uid"
         errors.add_to_base(_("User does not exist.")) unless User.find_by_uid(symbol_id)
@@ -647,7 +647,7 @@ class BoardEntry < ActiveRecord::Base
   end
 
   def self.owner symbol
-    symbol_type, symbol_id = Symbol::split_symbol symbol
+    symbol_type, symbol_id = SkipUtil::split_symbol symbol
     if symbol_type == "uid"
       User.find_by_uid(symbol_id)
     elsif symbol_type == "gid"
