@@ -132,6 +132,7 @@ class GroupController < ApplicationController
                 :action => 'index',
                 :entry_type => BoardEntry::GROUP_BBS,
                 :aim_type => 'question',
+                :send_mail => !!params[:send_mail],
                 :symbol => @group.symbol,
                 :publication_type => @group.default_publication_type)
   end
