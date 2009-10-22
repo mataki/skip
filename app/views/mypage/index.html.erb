@@ -42,16 +42,19 @@
     <%#  main area top messages -%>
     <%# ============================================================ -%>
 
-    <% if @mail_your_messages[:pages].size > 0 %>
+    <% unless @mail_your_messages[:pages].empty? -%>
       <%= show_title_bar(@mail_your_messages[:title_icon], @mail_your_messages[:title_name], {:controller => 'mypage', :action => "entries_by_antenna", :antenna_id => @mail_your_messages[:id_name]}) %>
+      <% debugger %>
       <%= render :partial => "list_block", :locals => @mail_your_messages %>
-    <% end %>
+    <% end -%>
 
     <%# ============================================================ -%>
     <%#  main area entries -%>
     <%# ============================================================ -%>
+    <% unless @questions[:pages].empty? -%>
     <%= show_title_bar(@questions[:title_icon], @questions[:title_name], {:controller => 'mypage', :action => "entries", :list_type => @questions[:id_name]}) -%>
     <%= render :partial => "list_block", :locals => @questions %>
+    <% end -%>
 
     <%= render :partial => "publicated_entries_#{current_user.custom.display_entries_format}" %>
 

@@ -621,7 +621,7 @@ class MypageController < ApplicationController
       :id_name => 'message',
       :title_icon => "email",
       :title_name => _("Messages for you"),
-      :pages => BoardEntry.accessible(current_user).notice.unread(current_user).order_new.all
+      :pages => BoardEntry.accessible(current_user).notice.unread(current_user).order_new
     }
   end
 
