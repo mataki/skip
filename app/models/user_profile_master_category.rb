@@ -19,14 +19,7 @@ class UserProfileMasterCategory < ActiveRecord::Base
   validates_presence_of :name
   validates_presence_of :sort_order
 
-  class << self
-    def find_with_order_by_sort_order(*args)
-      with_scope(:find => { :order => "sort_order" } ) do
-        find_without_order_by_sort_order(*args)
-      end
-    end
-    alias_method_chain :find, :order_by_sort_order
-  end
+  default_scope :order => "sort_order"
 
   def deletable?
     unless self.user_profile_masters.empty?

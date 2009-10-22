@@ -36,14 +36,7 @@ class UserProfileMaster < ActiveRecord::Base
   validates_presence_of :sort_order
   validates_presence_of :user_profile_master_category_id
 
-  class << self
-    def find_with_order_by_sort_order(*args)
-      with_scope(:find => { :order => "user_profile_masters.sort_order" } ) do
-        find_without_order_by_sort_order(*args)
-      end
-    end
-    alias_method_chain :find, :order_by_sort_order
-  end
+  default_scope :order => "user_profile_masters.sort_order"
 
   def validate
     validates_presence_of_category

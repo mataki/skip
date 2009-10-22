@@ -69,7 +69,7 @@ module Admin::AdminModule
 
   module AdminRootModule
     include Admin::AdminModule::AdminUtil
-    
+
     GetText.N_('Group categories')
     GetText.N_('Board entries')
     GetText.N_('Share files')

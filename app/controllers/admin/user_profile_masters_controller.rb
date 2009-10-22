@@ -17,9 +17,9 @@ class Admin::UserProfileMastersController < Admin::ApplicationController
   include Admin::AdminModule::AdminRootModule
 
   def index
-    @user_profile_masters = Admin::UserProfileMaster.find_without_order_by_sort_order(:all,
-                                                                                     :include => :user_profile_master_category,
-                                                                                     :order => 'user_profile_master_categories.sort_order,user_profile_masters.sort_order')
+    @user_profile_masters = Admin::UserProfileMaster.all(:include => :user_profile_master_category,
+                                                         :order => 'user_profile_master_categories.sort_order,user_profile_masters.sort_order').paginate(:page => params[:page], :per_page => 100)
+
 
     @topics = [_('Listing %{model}') % {:model => _('user profile masters')}]
 
