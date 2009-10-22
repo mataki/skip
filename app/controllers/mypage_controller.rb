@@ -506,8 +506,8 @@ class MypageController < ApplicationController
     end
 
     def scope
-      scope = BoardEntry.accessible(current_user)
-      scope = scope.unread(current_user) unless @read
+      scope = BoardEntry.accessible(@current_user)
+      scope = scope.unread(@current_user) unless @read
       scope
     end
 
@@ -683,8 +683,7 @@ class MypageController < ApplicationController
       :id_name => 'recent_blogs',
       :title_icon => "user",
       :title_name => _('Blogs'),
-      :pages => pages,
-      :per_page => options[:per_page]
+      :pages => pages
     }
   end
 
