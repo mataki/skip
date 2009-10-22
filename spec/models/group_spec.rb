@@ -76,30 +76,6 @@ describe Group do
     end
   end
 
-  describe Group, "承認待ちのユーザがいるとき" do
-    before(:each) do
-      @group = Group.new
-      @group_participations = [GroupParticipation.new({ :waiting => true })]
-      @group.should_receive(:group_participations).and_return(stub('group_participations', :find => @group_participations))
-    end
-
-    it "has_waitingはtrueを返す" do
-      @group.has_waiting.should be_true
-    end
-  end
-
-  describe Group, "承認待ちのユーザがいないとき" do
-    before(:each) do
-      @group = Group.new
-      @group_participations = []
-      @group.should_receive(:group_participations).and_return(stub('group_participations', :find => @group_participations))
-    end
-
-    it "has_waiting false " do
-      @group.has_waiting.should be_false
-    end
-  end
-
   describe Group, "あるグループがあるとき" do
     fixtures :users
     before(:each) do

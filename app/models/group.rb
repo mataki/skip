@@ -119,13 +119,6 @@ class Group < ActiveRecord::Base
     return 'id:' + id.to_s + ', name:' + name.to_s
   end
 
-  def has_waiting
-    if group_participations.find(:all, :conditions =>["waiting = ?", true]).size > 0
-      return true
-    end
-    return false
-  end
-
   def create_entry_invite_group user_id, user_symbol, publication_symbols
     entry_params = { }
     entry_params[:title] =_("Invited to Group: %s") % self.name
