@@ -96,7 +96,7 @@ describe MypageController, 'mypage > home 関連' do
     end
     it '最近の人気記事が設定されること' do
       @access_blogs = {}
-      controller.should_receive(:find_access_blogs_as_locals).with(:per_page => 8).and_return(@access_blogs)
+      controller.should_receive(:find_access_blogs_as_locals).with(:per_page => 5).and_return(@access_blogs)
       get :index
       assigns[:access_blogs].should == @access_blogs
     end

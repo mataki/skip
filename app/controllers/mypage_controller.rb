@@ -58,7 +58,7 @@ class MypageController < ApplicationController
     #  main area entries
     # ============================================================
     @questions = find_questions_as_locals({:recent_day => recent_day, :per_page => 5})
-    @access_blogs = find_access_blogs_as_locals({:per_page => 8})
+    @access_blogs = find_access_blogs_as_locals({:per_page => 5})
     @recent_blogs = find_recent_blogs_as_locals({:per_page => 8})
     @recent_bbs = recent_bbs
 
@@ -664,7 +664,7 @@ class MypageController < ApplicationController
     locals = {
       :id_name => 'access_blogs',
       :title_icon => "star",
-      :title_name => _('Recent Popular Entries (excluding questions)'),
+      :title_name => _('Today\'s Popular Entries'),
       :pages => pages,
       :symbol2name_hash => BoardEntry.get_symbol2name_hash(pages)
     }

@@ -32,6 +32,20 @@
   <%# ============================================================ -%>
   <div id="mypage_right">
     <%= render :partial => 'rss_feed_box' %>
+
+    <% unless @access_blogs[:pages].empty? -%>
+      <div class="box_space" id="access_blog">
+        <div class="box_space_title"><%= h @access_blogs[:title_name] -%></div>
+        <div class="box_space_body">
+          <ul>
+            <% for entry in @access_blogs[:pages] -%>
+              <li><%= link_to h(entry.title), entry.get_url_hash %></li>
+            <% end -%>
+          </ul>
+        </div>
+        <div class="box_space_bottom"></div>
+      </div>
+    <% end -%>
   </div>
 
   <%# ============================================================ -%>
