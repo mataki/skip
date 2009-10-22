@@ -1,117 +1,151 @@
-# SKIP(Social Knowledge & Innovation Platform)
-# Copyright (C) 2008-2009 TIS Inc.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#  This program is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU General Public License for more details.
-#
-#  You should have received a copy of the GNU General Public License
-#  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+require File.expand_path(File.join(File.dirname(__FILE__), "..", "support", "paths"))
 
 # Commonly used webrat steps
 # http://github.com/brynary/webrat
 
-sel = %q|"([^"]*)"| #"
+visit = lambda{|page_name| Given "I am on #{page_name}" }
 
-def response_body_text(source = response.body)
-  Nokogiri::HTML(source).text
+Given(/^"([^\"]*)"ページを表示している$/, &visit)
+When(/^"([^\"]*)"ページを表示する$/, &visit)
+
+When /^"([^\"]*)"ボタンをクリックする$/ do |button|
+  When %Q(I press "#{button}")
 end
 
-When /^"(.*)"にアクセスする$/ do |page_name|
-  visit path_to(page_name)
+# When /^"([^\"]*)"リンクをクリックする$/ do |link|
+#   When %Q(I follow "#{link}")
+# end
+
+# Order is opposite from original (English) version
+When /^"([^\"]*)"の"([^\"]*)"リンクをクリックする$/ do |parent, link|
+  When %Q(I follow "#{link}" within "#{parent}")
 end
 
-When /^言語は"(.*)"$/ do |lang|
-  header("ACCEPT_LANGUAGE", lang)
+When /^"([^\"]*)"に"([^\"]*)"と入力する$/ do |field, value|
+  When %Q(I fill in "#{field}" with "#{value}")
 end
 
-When /^"(.*)"ボタンをクリックする$/ do |button|
-  click_button(button)
-end
-
-When(/^"([^"]*)"リンクを(.*)クリックする$/)do |link, method|
-  method = method.blank? ? :get : method.downcase.to_sym
-  click_link(link, :method => method)
-end
-
-When /^"(.*)"中の"(.*)"リンクをクリックする$/ do |selector, link|
-  click_link_within(selector, link)
-end
-
-When(/^テーブル#{sel}の"(\d+)"行目の#{sel}リンクをクリックする/) do |cls, nth, link|
-  selector = "table.#{cls} tbody tr:nth(#{nth})"
-  click_link_within(selector, link)
-end
-
-When /^再読み込みする$/ do
-  visit request.request_uri
-end
-
-When /^"(.*)"に"(.*)"と入力する$/ do |field, value|
-  fill_in(field, :with => value)
+# Use this to fill in an entire form with data from a table. Example:
+#
+#   When I fill in the following:
+#     | Account Number | 5002       |
+#     | Expiry date    | 2009-11-01 |
+#     | Note           | Nice guy   |
+#     | Wants Email?   |            |
+#
+# TODO: Add support for checkbox, select og option
+# based on naming conventions.
+#
+When /^以下の項目を入力する:$/ do |fields|
+  When %Q(I fill in the following:), fields
 end
 
 # opposite order from Engilsh one(original)
-When /^"(.*?)"から"(.*?)"を選択する$/ do |field, value|
-  select(value, :from => field)
+When /^"([^\"]*)"から"([^\"]*)"を選択する$/ do |field, value|
+  When %Q(I select "#{value}" from "#{field}")
 end
 
-When /^"(.*)"をチェックする$/ do |field|
-  check(field)
+# Use this step in conjunction with Rail's datetime_select helper. For example:
+# When I select "December 25, 2008 10:00" as the date and time
+# TODO 日本語が変だ
+When /^日時として"([^\"]*)"を選択する$/ do |time|
+  When %Q(I select "#{time}" as the date and time)
 end
 
-When /^"(.*)"のチェックを外す$/ do |field|
-  uncheck(field)
+# Use this step when using multiple datetime_select helpers on a page or
+# you want to specify which datetime to select. Given the following view:
+#   <%= f.label :preferred %><br />
+#   <%= f.datetime_select :preferred %>
+#   <%= f.label :alternative %><br />
+#   <%= f.datetime_select :alternative %>
+# The following steps would fill out the form:
+# When I select "November 23, 2004 11:20" as the "Preferred" date and time
+# And I select "November 25, 2004 10:30" as the "Alternative" date and time
+When /^"([^\"]*)"の日時として"([^\"]*)"を選択する$/ do |datetime_label, datetime|
+  When %Q(I select "#{datetime_label}" as the "#{datetime}" date and time)
 end
 
-When /^#{sel}を選択する$/ do |field|
-  choose(field)
+# Use this step in conjunction with Rail's time_select helper. For example:
+# When I select "2:20PM" as the time
+# Note: Rail's default time helper provides 24-hour time-- not 12 hour time. Webrat
+# will convert the 2:20PM to 14:20 and then select it.
+When /^時間として"([^\"]*)"を選択する$/ do |time|
+  When %Q(I select "#{time}" as the time)
+end
+
+# Use this step when using multiple time_select helpers on a page or you want to
+# specify the name of the time on the form.  For example:
+# When I select "7:30AM" as the "Gym" time
+When /^"([^\"]*)"の時間として"([^\"]*)"を選択する$/ do |time_label, time|
+  When %Q(I select "#{time_label}" as the "#{time}" time)
+end
+
+# Use this step in conjunction with Rail's date_select helper.  For example:
+# When I select "February 20, 1981" as the date
+When /^日付として"([^\"]*)"を選択する$/ do |date|
+  When %Q(I select "#{date}" as the date)
+end
+
+# Use this step when using multiple date_select helpers on one page or
+# you want to specify the name of the date on the form. For example:
+# When I select "April 26, 1982" as the "Date of Birth" date
+When /^"([^\"]*)"の日付として"([^\"]*)"を選択する$/ do |date_label, date|
+  When %Q(I select "#{datetime_label}" as the "#{date}" date)
+end
+
+When /^"([^\"]*)"をチェックする$/ do |field|
+  When %Q(I check "#{field}")
+end
+
+When /^"([^\"]*)"のチェックを外す$/ do |field|
+  When %Q(I uncheck "#{field}")
+end
+
+When /^"([^\"]*)"を選択する$/ do |field|
+  When %Q(I choose "#{field}")
 end
 
 # opposite order from Engilsh one(original)
-When /^"(.*)"としてファイル"(.*)"を添付する$/ do |field, path|
-  attach_file(field, path)
+When /^"([^\"]*)"としてファイル"([^\"]*)"を選択する$/ do |field, path|
+  When %Q(I attach the file at "#{path}" to "#{field}")
 end
 
-Then /^"(.*)"と表示されて?い?ること$/ do |text|
-  response_body_text.should =~ /#{Regexp.escape(text)}/m
+Then /^"([^\"]*)"と表示されていること$/ do |text|
+  Then %Q(I should see "#{text}")
 end
 
-Then /^"(.*)"と表示されていないこと$/ do |text|
-  response_body_text.should_not =~ /#{Regexp.escape(text)}/m
+Then /^\/([^\/]*)\/と表示されていること$/ do |regexp|
+  Then %Q(I should see /#{regexp}/)
 end
 
-Then /^"(.*)"がチェックされていること$/ do |label|
-  field_labeled(label).should be_checked
+Then /^"([^\"]*)"と表示されていないこと$/ do |text|
+  Then %Q(I should not see "#{text}")
 end
 
-Then /^"(.*)"がチェックされていないこと$/ do |label|
-  field_labeled(label).should_not be_checked
+Then /^\/([^\/]*)\/と表示されていないこと$/ do |regexp|
+  Then %Q(I should not see /#{regexp}/)
 end
 
-Then /^"(.*)"が選択されていること$/ do |label|
-  field_labeled(label).should be_checked
+Then /^入力項目"([^\"]*)"に"([^\"]*)"と表示されていること$/ do |field, value|
+  Then %Q(the "#{field}" field should contain "#{value}")
 end
 
-Then %r!デバッグのための?ページを確認する! do
-  save_and_open_page
+Then /^入力項目"([^\"]*)"に"([^\"]*)"と表示されていないこと$/ do |field, value|
+  Then %Q(the "#{field}" field should not contain "#{value}")
 end
 
-Then /^"(.*?)"がリンクになっていないこと$/ do |label|
-  Nokogiri::HTML(response.body).search("a").select{|a| a.text == label }.should be_empty
-  response_body_text.should =~ /#{Regexp.escape(label)}/m
+Then /^"([^\"]*)"がチェックされていること$/ do |label|
+  Then %Q(the "#{label}" checkbox should be checked)
 end
 
-When /^デバッガで止める$/ do
-  require "ruby-debug"
-  debugger
+Then /^"([^\"]*)"がチェックされていないこと$/ do |label|
+  Then %Q(the "#{label}" checkbox should not be checked)
 end
 
-When /^"([^\"]*)"としてファイル"([^\"]*)"をContent\-Type"([^\"]*)"として添付する$/ do |field, path, content_type|
-  attach_file(field, path, content_type)
+Then /^"([^\"]*)"ページを表示していること$/ do |page_name|
+  Then %Q(I should be on #{page_name})
+end
+
+Then /^ページを表示する$/ do
+  Then %Q(show me the page)
 end

@@ -27,7 +27,7 @@ Feature: グループの管理
     And   "参加者管理"リンクをクリックする
     And   "symbol"に"uid:100003"と入力する
     And   "参加者に追加"ボタンをクリックする
-    Then  flashメッセージに"a_group_owned_userさんを参加者に追加し、連絡のフォーラムを作成しました。"と表示されていること
+    Then  flashメッセージに"a_group_owned_userさんを参加者に追加し、お知らせのフォーラムを作成しました。"と表示されていること
     And   "a_group_owned_user"と表示されていること
 
     When  "symbol"に"uid:100003"と入力する
@@ -41,7 +41,7 @@ Feature: グループの管理
 
     When  "symbol"に"gid:a_protected_group1"と入力する
     And   "参加者に追加"ボタンをクリックする
-    Then  flashメッセージに"a_protected_group1のメンバーを参加者に追加し、連絡のフォーラムを作成しました。"と表示されていること
+    Then  flashメッセージに"a_protected_group1のメンバーを参加者に追加し、お知らせのフォーラムを作成しました。"と表示されていること
 
     When  "symbol"に"gid:not_exist_group"と入力する
     And   "参加者に追加"ボタンをクリックする
