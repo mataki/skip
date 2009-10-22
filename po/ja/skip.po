@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-10-22 15:29+0900\n"
-"PO-Revision-Date: 2009-10-22 15:44+0900\n"
+"POT-Creation-Date: 2009-10-22 18:07+0900\n"
+"PO-Revision-Date: 2009-10-22 18:13+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -51,7 +51,7 @@ msgid "%B %d %Y"
 msgstr "%Y年%m月%d日"
 
 #: app/models/board_entry.rb:395 app/models/board_entry_comment.rb:34
-#: app/views/mypage/index.html.erb:73
+#: app/views/mypage/index.html.erb:85
 msgid "%B %d %Y %H:%M"
 msgstr "%Y年%m月%d日 %H:%M"
 
@@ -93,11 +93,11 @@ msgstr "%y/%m/%d %H:%M"
 msgid "%s Required"
 msgstr "%s 必要"
 
-#: app/controllers/group_controller.rb:345
+#: app/controllers/group_controller.rb:346
 msgid "%s has already joined / applied to join this group."
 msgstr "%sさんは既に参加済み/参加申請済みです。"
 
-#: app/views/mypage/index.html.erb:72
+#: app/views/mypage/index.html.erb:84
 msgid "%s users"
 msgstr "%d人"
 
@@ -198,20 +198,20 @@ msgstr "%{year}年%{month}月 (%{count})"
 msgid "%{month}/%{year} Ranking"
 msgstr "%{year}年%{month}月のランキング"
 
-#: app/models/user_profile_master.rb:151
+#: app/models/user_profile_master.rb:144
 msgid "%{name} accepts numbers and hiphens(\"-\") only."
 msgstr "%{name} は数字かハイフンで入力してください"
 
-#: app/models/user_profile_master.rb:127 app/models/user_profile_master.rb:281
-#: app/models/user_profile_master.rb:308
+#: app/models/user_profile_master.rb:120 app/models/user_profile_master.rb:274
+#: app/models/user_profile_master.rb:301
 msgid "%{name} contains value not in selectable options."
 msgstr "%{name} は選択される値以外のものが設定されています"
 
 #: app/controllers/share_file_controller.rb:46
-#: app/models/user_profile_master.rb:122 app/models/user_profile_master.rb:126
-#: app/models/user_profile_master.rb:150 app/models/user_profile_master.rb:187
-#: app/models/user_profile_master.rb:275 app/models/user_profile_master.rb:305
-#: app/models/user_profile_master.rb:324 app/views/share_file/new.html.erb:69
+#: app/models/user_profile_master.rb:115 app/models/user_profile_master.rb:119
+#: app/models/user_profile_master.rb:143 app/models/user_profile_master.rb:180
+#: app/models/user_profile_master.rb:268 app/models/user_profile_master.rb:298
+#: app/models/user_profile_master.rb:317 app/views/share_file/new.html.erb:69
 msgid "%{name} is mandatory."
 msgstr "%{name} は必須です"
 
@@ -220,7 +220,7 @@ msgid "%{num} error occured."
 msgid_plural "%{num} errors occured."
 msgstr[0] "%{num}個のエラーが発生しました"
 
-#: app/controllers/group_controller.rb:295
+#: app/controllers/group_controller.rb:296
 msgid "%{rslt} to %{type}."
 msgstr "%{type}%{rslt}。"
 
@@ -538,11 +538,11 @@ msgstr "参加者に追加"
 msgid "Add to antenna"
 msgstr "新着時に通知"
 
-#: app/controllers/group_controller.rb:349
+#: app/controllers/group_controller.rb:350
 msgid "Added %s as a member and created a BBS for messaging."
 msgstr "%sさんを参加者に追加し、お知らせのフォーラムを作成しました。"
 
-#: app/controllers/group_controller.rb:358
+#: app/controllers/group_controller.rb:359
 msgid ""
 "Added members of %s as members of the group and created a BBS for messaging."
 msgstr "%sのメンバーを参加者に追加し、お知らせのフォーラムを作成しました。"
@@ -1710,7 +1710,7 @@ msgstr "ログインID"
 msgid "Administration of the site."
 msgstr "このシステムの設定や管理を行います"
 
-#: app/controllers/group_controller.rb:402
+#: app/controllers/group_controller.rb:403
 msgid "Administrative privillage required for the action."
 msgstr "その操作は管理者権限が必要です。"
 
@@ -2400,7 +2400,7 @@ msgid ""
 msgstr ""
 "対象のカテゴリはグループ作成時に初期選択される設定のため削除出来ません。"
 
-#: app/models/group.rb:86
+#: app/models/group.rb:106
 msgid "Category not selected or value invalid."
 msgstr "カテゴリが選択されていないか、不正な値です。"
 
@@ -2457,7 +2457,7 @@ msgstr "ユーザ名変更"
 msgid "Change your profile picture!"
 msgstr "プロフィール画像を変更しましょう！"
 
-#: app/controllers/group_controller.rb:234
+#: app/controllers/group_controller.rb:235
 msgid "Changed."
 msgstr "変更しました。"
 
@@ -2629,7 +2629,7 @@ msgstr ""
 "指定されたファイルの実体が存在しません。お手数ですが管理者にご連絡をお願いい"
 "たします。"
 
-#: app/controllers/user_controller.rb:193
+#: app/controllers/user_controller.rb:186
 #: app/views/admin/group_categories/new.html.erb:10
 #: app/views/admin/openid_identifiers/new.html.erb:17
 #: app/views/admin/user_profile_master_categories/new.html.erb:10
@@ -2656,8 +2656,8 @@ msgstr "記事の公開範囲を引き継いだフォーラムとして新しい
 msgid "Create a new bookmark"
 msgstr "ブックマークする"
 
-#: app/controllers/groups_controller.rb:43
-#: app/controllers/groups_controller.rb:51
+#: app/controllers/groups_controller.rb:39
+#: app/controllers/groups_controller.rb:47
 #: app/views/mypage/_action_box.html.erb:10
 msgid "Create a new group"
 msgstr "グループを作る"
@@ -2671,7 +2671,7 @@ msgid ""
 "Create an \"open to public\" blog entry disregarding the privacy setting."
 msgstr "記事の公開範囲によらず全体公開のブログとして新しい記事を作成します。"
 
-#: app/views/mypage/index.html.erb:88 app/views/user/_action_box.html.erb:6
+#: app/views/mypage/index.html.erb:100 app/views/user/_action_box.html.erb:6
 msgid "Create introductions"
 msgstr "みんなに紹介する"
 
@@ -2679,7 +2679,7 @@ msgstr "みんなに紹介する"
 msgid "Create new anntenna and add: "
 msgstr "新しい新着通知を作成して追加："
 
-#: app/controllers/group_controller.rb:264
+#: app/controllers/group_controller.rb:265
 msgid ""
 "Created an entry on the BBS about the removal of user. Edit the entry when "
 "needed."
@@ -3020,11 +3020,11 @@ msgstr "おしまい"
 msgid "Enrichment Lessons"
 msgstr "習いごと"
 
-#: app/models/user_profile_master.rb:190
+#: app/models/user_profile_master.rb:183
 msgid "Enter %{name} in 4-digit numbers."
 msgstr "%{name} は4桁の数値で入力して下さい"
 
-#: app/models/user_profile_master.rb:328
+#: app/models/user_profile_master.rb:321
 msgid "Enter %{name} in a valid date format."
 msgstr "%{name} は正しい日付形式で入力して下さい"
 
@@ -3035,7 +3035,7 @@ msgstr ""
 "とができます。また、そのURLを「公開」することで、他のユーザとも共有することが"
 "できます。まずは、下記にURLを入力して「次へ」をクリックしてください。"
 
-#: app/models/user_profile_master.rb:255
+#: app/models/user_profile_master.rb:248
 #: app/views/portal/_registration_form.html.erb:32
 msgid "Enter here if you cannot find the value in the options"
 msgstr "選択項目に無いものを設定する場合はこちらに入力してください"
@@ -3200,15 +3200,15 @@ msgstr "退職者を含めない"
 msgid "Explanation"
 msgstr "説明"
 
-#: app/controllers/group_controller.rb:295
+#: app/controllers/group_controller.rb:296
 msgid "Failed"
 msgstr "に失敗しました"
 
-#: app/controllers/group_controller.rb:236
+#: app/controllers/group_controller.rb:237
 msgid "Failed to change status."
 msgstr "権限変更に失敗しました。"
 
-#: app/controllers/group_controller.rb:315
+#: app/controllers/group_controller.rb:316
 msgid "Failed to delete since there are still other users in the group."
 msgstr "自分以外のユーザがまだ存在しています。削除できません。"
 
@@ -3438,15 +3438,15 @@ msgstr "グループカテゴリ"
 msgid "Group does not exist."
 msgstr "ご指定のグループは存在しません。"
 
-#: app/controllers/group_controller.rb:306
+#: app/controllers/group_controller.rb:307
 msgid "Group information was successfully updated."
 msgstr "グループ情報は正しく更新されました。"
 
-#: app/controllers/groups_controller.rb:57
+#: app/controllers/groups_controller.rb:53
 msgid "Group was created successfully."
 msgstr "グループが正しく作成されました。"
 
-#: app/controllers/group_controller.rb:319
+#: app/controllers/group_controller.rb:320
 msgid "Group was successfully deleted."
 msgstr "グループは削除されました。"
 
@@ -3486,7 +3486,7 @@ msgstr "表示名"
 msgid "GroupCategory|Updated at"
 msgstr "更新日時"
 
-#: app/controllers/group_controller.rb:275
+#: app/controllers/group_controller.rb:276
 msgid "GroupController|Approve"
 msgstr "認証"
 
@@ -3498,7 +3498,7 @@ msgstr ""
 msgid "GroupController|ApproveSuceeded"
 msgstr ""
 
-#: app/controllers/group_controller.rb:275
+#: app/controllers/group_controller.rb:276
 msgid "GroupController|Disapprove"
 msgstr "棄却"
 
@@ -3563,8 +3563,8 @@ msgid "GroupParticipation|Waiting|true"
 msgstr "はい"
 
 #: app/controllers/edit_controller.rb:276
-#: app/controllers/group_controller.rb:380
-#: app/controllers/groups_controller.rb:66
+#: app/controllers/group_controller.rb:381
+#: app/controllers/groups_controller.rb:62
 #: app/controllers/services_controller.rb:46
 #: app/controllers/share_file_controller.rb:163
 #: app/helpers/application_helper.rb:345
@@ -3783,15 +3783,15 @@ msgstr "他の人への紹介文"
 msgid "Introduction from other users"
 msgstr "他の人からの紹介文"
 
-#: app/controllers/user_controller.rb:152
+#: app/controllers/user_controller.rb:145
 msgid "Introduction was created successfully."
 msgstr "紹介文を作成しました"
 
-#: app/controllers/user_controller.rb:166
+#: app/controllers/user_controller.rb:159
 msgid "Introduction was deleted successfully."
 msgstr "紹介文を削除しました"
 
-#: app/controllers/user_controller.rb:169
+#: app/controllers/user_controller.rb:162
 msgid "Introduction was updated successfully."
 msgstr "紹介文を更新しました"
 
@@ -3807,7 +3807,7 @@ msgstr "紹介文"
 msgid "Invalid OpenID URL format."
 msgstr "不正な形式のOpenID URLです。"
 
-#: app/models/user_profile_master.rb:277
+#: app/models/user_profile_master.rb:270
 msgid "Invalid format for %{name}."
 msgstr "%{name} に不正な形式が設定されています"
 
@@ -3874,7 +3874,7 @@ msgstr "不正なセッションです。再度ログインし直して下さい
 msgid "Invalid user detected."
 msgstr "不正なユーザです。"
 
-#: app/models/group.rb:111
+#: app/models/group.rb:131
 msgid "Invited to Group: %s"
 msgstr "グループ：%sに招待しました"
 
@@ -3933,7 +3933,7 @@ msgstr "参加状況"
 msgid "Join this group"
 msgstr "グループに参加"
 
-#: app/controllers/group_controller.rb:180
+#: app/controllers/group_controller.rb:181
 msgid "Joined the group successfully."
 msgstr "グループに参加しました。"
 
@@ -3974,7 +3974,7 @@ msgstr "最終更新:"
 msgid "Last page"
 msgstr "[最後へ]"
 
-#: app/controllers/group_controller.rb:252
+#: app/controllers/group_controller.rb:253
 msgid "Leave [%s]"
 msgstr "【%s】退会処理"
 
@@ -4420,7 +4420,7 @@ msgstr "記事を書く"
 msgid "New bookmark in your profile!"
 msgstr "あなたのプロフィールにブックマークされました！"
 
-#: app/views/mypage/index.html.erb:66
+#: app/views/mypage/index.html.erb:78
 msgid "New bookmarks"
 msgstr "新着ブックマーク"
 
@@ -4468,8 +4468,8 @@ msgstr "[次へ]"
 msgid "No"
 msgstr "いいえ"
 
-#: app/controllers/group_controller.rb:155
-#: app/controllers/group_controller.rb:272
+#: app/controllers/group_controller.rb:156
+#: app/controllers/group_controller.rb:273
 #: app/views/layouts/layout.html.erb:43
 msgid "No approval needed to join this group."
 msgstr "参加に承認は不要です"
@@ -4498,8 +4498,8 @@ msgstr "該当するデータはありませんでした。"
 msgid "No matching entries found."
 msgstr "該当する投稿はありませんでした。"
 
-#: app/controllers/groups_controller.rb:37
-#: app/controllers/user_controller.rb:131
+#: app/controllers/groups_controller.rb:33
+#: app/controllers/user_controller.rb:124
 msgid "No matching groups found."
 msgstr "該当するグループはありませんでした。"
 
@@ -4803,7 +4803,7 @@ msgstr "下書き(自分だけに公開)"
 msgid "Parent comment could not be found. Try reloading the page."
 msgstr "親コメントが存在しません。再読み込みして下さい。"
 
-#: app/controllers/group_controller.rb:283
+#: app/controllers/group_controller.rb:284
 msgid "Part of the users are already members of this group."
 msgstr "このグループに参加済みのユーザが含まれています。"
 
@@ -5014,7 +5014,7 @@ msgstr "プロフィールカテゴリ"
 msgid "Profile Items"
 msgstr "プロフィール項目"
 
-#: app/models/user_profile_master_category.rb:33
+#: app/models/user_profile_master_category.rb:26
 msgid ""
 "Profile category could not be deleted due to profile items belonging to "
 "itself. Delete all profile items belonging to this profile category before "
@@ -5145,12 +5145,11 @@ msgstr "最新のフォーラムの記事（%{category}）"
 msgid "Recent Entries"
 msgstr "新着記事"
 
-#: app/views/mypage/index.html.erb:99
+#: app/views/mypage/index.html.erb:111
 msgid "Recent Groups"
 msgstr "新着グループ"
 
 #: app/controllers/feed_controller.rb:71
-#: app/controllers/mypage_controller.rb:667
 msgid "Recent Popular Entries (excluding questions)"
 msgstr "最近の人気記事"
 
@@ -5159,7 +5158,7 @@ msgstr "最近の人気記事"
 msgid "Recent Questions"
 msgstr "みんなからの質問!"
 
-#: app/views/mypage/index.html.erb:83
+#: app/views/mypage/index.html.erb:95
 msgid "Recent Users"
 msgstr "新着ユーザ"
 
@@ -5251,7 +5250,7 @@ msgstr "再読み込み"
 msgid "Remember to clean up the user data periodically"
 msgstr "ユーザのクリーニングは行ってますか?"
 
-#: app/controllers/group_controller.rb:253
+#: app/controllers/group_controller.rb:254
 msgid "Removed %{user} from [%{group}>]"
 msgstr "[%{group}>]から%{user}さんの退会処理を実行しました"
 
@@ -5260,7 +5259,7 @@ msgstr "[%{group}>]から%{user}さんの退会処理を実行しました"
 msgid "Reply to this comment"
 msgstr "このコメントに返信"
 
-#: app/controllers/group_controller.rb:177
+#: app/controllers/group_controller.rb:178
 msgid "Request sent. Please wait for the approval."
 msgstr "参加申し込みをしました。承認されるのをお待ちください。"
 
@@ -5272,7 +5271,7 @@ msgstr "参加申し込み"
 msgid "Request to Join the Group from %s"
 msgstr "参加申し込み from %s"
 
-#: app/controllers/group_controller.rb:188
+#: app/controllers/group_controller.rb:189
 msgid "Request to join the group has been sent out!"
 msgstr "参加申し込みをしました！"
 
@@ -5649,7 +5648,7 @@ msgstr ""
 "エラー行のみ表示しています。右端のアイコンをクリックするとエラーの詳細を確認"
 "出来ます。例にならって修正して下さい。"
 
-#: app/models/user_profile_master.rb:254
+#: app/models/user_profile_master.rb:247
 #: app/views/portal/_registration_form.html.erb:28
 msgid "Showing options from previously registered values"
 msgstr "既に登録されている値から選択項目を表示しています"
@@ -5822,7 +5821,7 @@ msgstr "ソート方法"
 msgid "Specified Directly:"
 msgstr "直接指定:"
 
-#: app/controllers/group_controller.rb:393
+#: app/controllers/group_controller.rb:394
 msgid "Specified group does not exist."
 msgstr "指定のグループは存在していません"
 
@@ -5891,7 +5890,7 @@ msgstr "購読者数"
 msgid "Subwindow"
 msgstr "サブウィンドウ"
 
-#: app/controllers/group_controller.rb:295
+#: app/controllers/group_controller.rb:296
 msgid "Succeeded"
 msgstr "しました"
 
@@ -5903,7 +5902,7 @@ msgstr "新着通知に登録できました"
 msgid "Successfully added/updated users from CSV file."
 msgstr "CSVファイルからのユーザ登録/更新に成功しました。"
 
-#: app/controllers/group_controller.rb:217
+#: app/controllers/group_controller.rb:218
 msgid "Successfully left the group."
 msgstr "退会しました。"
 
@@ -6100,7 +6099,7 @@ msgstr "テーマ"
 msgid "There are no entries posted."
 msgstr "現在投稿がありません。"
 
-#: app/controllers/user_controller.rb:246
+#: app/controllers/user_controller.rb:239
 msgid "There are no introductions."
 msgstr "現在紹介文はありません。"
 
@@ -6222,6 +6221,10 @@ msgstr "本日の記事数"
 #: app/views/layouts/layout.html.erb:95
 msgid "Today's Entries: %s entries"
 msgstr "本日の記事数：%s件"
+
+#: app/controllers/mypage_controller.rb:667
+msgid "Today's Popular Entries"
+msgstr "本日の人気記事"
 
 #: app/views/layouts/admin/application.html.erb:64
 msgid "Today's Posts: %s posts"
@@ -6345,7 +6348,7 @@ msgstr "未参加"
 msgid "Unstar"
 msgstr "スターをはずす"
 
-#: app/controllers/user_controller.rb:199
+#: app/controllers/user_controller.rb:192
 #: app/views/admin/group_categories/edit.html.erb:11
 #: app/views/admin/openid_identifiers/edit.html.erb:16
 #: app/views/admin/user_profile_master_categories/edit.html.erb:11
@@ -6746,7 +6749,7 @@ msgstr "ユーザ"
 msgid "Users"
 msgstr "ユーザ"
 
-#: app/controllers/group_controller.rb:360
+#: app/controllers/group_controller.rb:361
 msgid "Users / groups selection invalid."
 msgstr "ユーザ・グループの選択が正しくありません。"
 
@@ -7082,12 +7085,12 @@ msgstr ""
 "よって、登録頂いた情報は、当然ですが、本サービスの運営以外では利用いたしませ"
 "ん。<br/>"
 
-#: app/controllers/group_controller.rb:170
+#: app/controllers/group_controller.rb:171
 #: app/views/group/new_participation.html.erb:21
 msgid "You are already a member of the group."
 msgstr "既に参加しています。"
 
-#: app/controllers/group_controller.rb:219
+#: app/controllers/group_controller.rb:220
 msgid "You are not a member of the group."
 msgstr "そのグループには参加していません。"
 
@@ -7181,7 +7184,7 @@ msgstr "未使用のユーザ以外削除できません。"
 msgid "You had been retired."
 msgstr "あなたは退職済みです。"
 
-#: app/models/group.rb:112
+#: app/models/group.rb:132
 msgid "You have been invited to join [%s>]."
 msgstr "[%s>]にあなたを招待しました。"
 
@@ -7197,7 +7200,7 @@ msgstr "%{name}を作成します。"
 msgid "You have message(s) from %s"
 msgstr "%s さんから連絡が届いています。"
 
-#: app/controllers/user_controller.rb:266
+#: app/controllers/user_controller.rb:259
 msgid "You have no bookmarks currently."
 msgstr "現在ブックマークはありません。"
 
@@ -7603,7 +7606,7 @@ msgstr "は255文字以内で入力してください"
 msgid "accepts alphabet (a-z, A-Z) only."
 msgstr "はアルファベットで入力して下さい。"
 
-#: app/models/user_profile_master.rb:198
+#: app/models/user_profile_master.rb:191
 msgid "accepts numbers and hiphens(\"-\") only."
 msgstr "は数値と-(ハイフン)で入力して下さい。"
 
@@ -7707,7 +7710,7 @@ msgstr ""
 msgid "description"
 msgstr "説明"
 
-#: app/models/user_profile_master.rb:91
+#: app/models/user_profile_master.rb:84
 msgid "does not exist in profile categories."
 msgstr "プロフィールカテゴリに存在しない値です。"
 
@@ -7772,7 +7775,7 @@ msgstr "が間違っています。"
 msgid "invalid url"
 msgstr "不正なURLです"
 
-#: app/models/user.rb:53 app/models/user_profile_master.rb:138
+#: app/models/user.rb:53 app/models/user_profile_master.rb:131
 msgid "is mandatory."
 msgstr "は必須です"
 
@@ -7952,7 +7955,7 @@ msgstr "タグ"
 msgid "track"
 msgstr ""
 
-#: app/models/user_profile_master.rb:163
+#: app/models/user_profile_master.rb:156
 msgid "uncheck selected"
 msgstr "チェックを外す"
 
