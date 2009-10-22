@@ -22,17 +22,13 @@ class GroupsController < ApplicationController
   # tab_menu
   # グループの一覧表示
   def index
-    params[:yet_participation] ||= false
-    params[:group_category_id] ||= "all"
-    params[:sort_type] ||= "date"
     @group_counts, @total_count = Group.count_by_category
     @group_categories = GroupCategory.all
 
-    options = Group.paginate_option(current_user.id, params)
-    @groups = Group.scoped(
-      :conditions => options[:conditions],
-      :include => options[:include]
-    ).paginate(:page => params[:page], :per_page => 50)
+    scope = Group.active.partial_match_name_or_description(params[:keyword]).
+      categorized(params[:group_category_id]).order_by_type(params[:sort_type])
+    scope = scope.unjoin(current_user) if params[:yet_participation]
+    @groups = scope.paginate(:page => params[:page], :per_page => 50)
 
     flash.now[:notice] = _('No matching groups found.') if @groups.empty?
   end

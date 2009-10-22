@@ -114,19 +114,12 @@ class UserController < ApplicationController
 
   # tab_menu
   def group
-    params[:user_id] = @user.id
-    params[:group_category_id] ||= "all"
-    params[:sort_type] ||= "date"
-    params[:participation] = true
     @group_counts, @total_count = Group.count_by_category(@user.id)
     @group_categories = GroupCategory.all
 
-    options = Group.paginate_option(@user.id, params)
-    @groups = Group.scoped(
-      :conditions => options[:conditions],
-      :include => options[:include],
-      :order => options[:order]
-    ).paginate(:page => params[:page], :per_page => 50)
+    @groups = @user.groups.active.partial_match_name_or_description(params[:keyword]).
+      categorized(params[:group_category_id]).order_by_type(params[:sort_type]).
+      paginate(:page => params[:page], :per_page => 50)
 
     flash.now[:notice] = _('No matching groups found.') if @groups.empty?
   end

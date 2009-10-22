@@ -36,10 +36,23 @@ class Group < ActiveRecord::Base
     {:conditions => ["gid LIKE ? OR name LIKE ?", SkipUtil.to_lqs(word), SkipUtil.to_lqs(word)]}
   }
 
+  named_scope :partial_match_name_or_description, proc {|word|
+    return {} if word.blank?
+    {:conditions => ["name LIKE ? OR description LIKE ?", SkipUtil.to_lqs(word), SkipUtil.to_lqs(word)]}
+  }
+
+  named_scope :categorized, proc {|category_id|
+    return {} if category_id.blank? || category_id == 'all'
+    {:conditions => ['group_category_id = ?', category_id]}
+  }
+
   # TODO joinedにリネームする
   named_scope :participating, proc {|user|
     return {} unless user
-    {:conditions => ["group_participations.user_id = ? AND group_participations.waiting = 0", user.id], :include => :group_participations}
+    {
+      :conditions => ["group_participations.user_id = ? AND group_participations.waiting = 0", user.id], :include => :group_participations,
+      :include => [:group_participations]
+    }
   }
 
   named_scope :unjoin, proc {|user|
@@ -47,21 +60,28 @@ class Group < ActiveRecord::Base
     {:conditions => ["groups.id NOT IN (?)", Group.participating(user).map(&:id)]}
   }
 
-  named_scope :order_participate_recent, proc {
-    { :order => "group_participations.created_on DESC" }
+  named_scope :owned, proc { |user|
+    {:conditions => ["group_participations.user_id = ? AND group_participations.owned = 1", user.id], :include => :group_participations}
   }
-
-  named_scope :limit, proc { |num| { :limit => num } }
 
   named_scope :recent, proc { |day_count|
     { :conditions => ['created_on > ?', Time.now.ago(day_count.to_i.day)] }
   }
 
-  named_scope :order_recent, proc { { :order => 'created_on DESC' } }
-
-  named_scope :owned, proc { |user|
-    {:conditions => ["group_participations.user_id = ? AND group_participations.owned = 1", user.id], :include => :group_participations}
+  named_scope :order_participate_recent, proc {
+    { :order => "group_participations.created_on DESC" }
   }
+
+  named_scope :order_recent, proc { { :order => 'groups.created_on DESC' } }
+
+  named_scope :order_name, proc { { :order => 'groups.name' } }
+
+  named_scope :order_by_type, proc { |type|
+    type ||= 'date'
+    (type == 'name' ? order_name : order_recent).proxy_options
+  }
+
+  named_scope :limit, proc { |num| { :limit => num } }
 
   alias initialize_old initialize
 
@@ -205,47 +225,6 @@ class Group < ActiveRecord::Base
     options[:order] = params[:order] unless params[:order].nil?
 
     User.find(:all, options)
-  end
-
-  # paginateで使う検索条件を作成する
-  # TODO 回帰テストを書く
-  # TODO named_scope化してwill_paginateに対応させる
-  def self.paginate_option target_user_id, params = { :page => 1 }
-    conditions = [""]
-
-    if params[:keyword] and not params[:keyword].empty?
-      conditions[0] << "(groups.name like ? or groups.description like ?)"
-      conditions << SkipUtil.to_lqs(params[:keyword]) << SkipUtil.to_lqs(params[:keyword])
-    end
-
-    if params[:yet_participation]
-      conditions[0] << " and " unless conditions[0].empty?
-      conditions[0] << " NOT EXISTS (SELECT * FROM group_participations gp where groups.id = gp.group_id and gp.user_id = ?) "
-      conditions << target_user_id
-    elsif params[:participation]
-      conditions[0] << " and " unless conditions[0].empty?
-      conditions[0] << " group_participations.user_id in (?)"
-      conditions << target_user_id
-    end
-
-    if group_category_id = params[:group_category_id] and group_category_id != "all"
-      conditions[0] << " and " unless conditions[0].empty?
-      conditions[0] << "group_category_id = ?"
-      conditions << group_category_id
-    end
-
-    conditions[0] << " and " unless conditions[0].empty?
-    conditions[0] << "deleted_at IS NULL"
-
-    options = {}
-    if sort_type = params[:sort_type] and sort_type == "name"
-      options[:order] = "groups.name"
-    else
-      options[:order] = "group_participations.created_on DESC"
-    end
-    options[:conditions] = conditions unless conditions[0].empty?
-    options[:include] = :group_participations
-    options
   end
 
   def administrator?(user)
