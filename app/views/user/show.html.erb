@@ -8,10 +8,6 @@
 <% end -%>
 
 <% content_for :contents_right do -%>
-  <% if @user.retired? -%>
-  <div class="box message"><%= _('This user has already left.') %></div>
-  <% end -%>
-
   <div class="relative100">
     <h2 class="topix_title"><%= icon_tag('asterisk_orange') %><%= _('Profile') %></h2>
     <% if @user.id == @current_user.id -%>

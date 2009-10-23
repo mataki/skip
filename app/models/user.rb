@@ -402,7 +402,7 @@ class User < ActiveRecord::Base
 
   # プロフィールボックスに表示するユーザの情報
   def info
-    @info ||= { :access_count => self.user_access.access_count,
+    @info ||= { :access_count => self.user_access ? self.user_access.access_count : 0,
                 :subscriber_count => AntennaItem.count(
                   :conditions => ["antenna_items.value = ?", self.symbol],
                   :select => "distinct user_id",

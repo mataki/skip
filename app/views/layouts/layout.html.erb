@@ -17,7 +17,7 @@
   <%= yield :contents_top %>
 
   <div id="panel" class="ui-corner-all" style="_width: 98%;">
-    <% if @user and !@user.new_record? and @user.active? %>
+    <% if @user and !@user.new_record? and !@user.unused? -%>
       <div class="panel_top">
         <div class="left">
           <%= show_picture(@user, :width => 72, :height => 72) %>
@@ -25,7 +25,11 @@
         <div class="right">
           <h1 id="title"><%= h user_title(@user) %></h1>
           <ul class="no_style horizontal">
-            <li><%= _('Last Access') %>: <%= @user.before_access %></li>
+            <% if @user.retired? -%>
+              <li><b class="retired"><%= _('This user has already left.') %></b></li>
+            <% else -%>
+              <li><%= _('Last Access') %>: <%= @user.before_access %></li>
+            <% end -%>
             <li><%= link_to_if @user == current_user, _('Visits') + ": " +h(n_("%{count} visit", "%{count} visits", @user.info[:access_count]) % {:count => @user.info[:access_count]}), {:action => 'trace', :controller => "/mypage"} -%></li>
             <li><%= _('Subscribers') %>: <%=h(n_("%{count} user", "%{count} users", @user.info[:subscriber_count]) % {:count =>@user.info[:subscriber_count]}) -%></li>
             <li><%= _('Posts') %>: <%=h(n_("%{count} entry", "%{count} entries", @user.info[:blog_count]) % {:count => @user.info[:blog_count]}) -%></li>

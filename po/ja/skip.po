@@ -6149,7 +6149,7 @@ msgstr "このサイトでは、OpenID認証が許可されていません。"
 
 #: app/views/user/show.html.erb:12
 msgid "This user has already left."
-msgstr "この方は既に退職されています"
+msgstr "既に退職されています"
 
 #: app/views/antenna/_select_antenna.html.erb:30
 msgid "This user has been added into antennas below: "

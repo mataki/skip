@@ -1,3 +1,4 @@
+<% if user.active? -%>
 <div>
   <ul class="no_style">
     <% if current_user.follow_chains.map(&:to_user_id).include? user.id -%>
@@ -10,3 +11,4 @@
     <li><%= link_to(content_tag('span', _('Add a bookmark')), new_bookmark_url_hash, {:class => "rounded", :onclick => "sub_window_open('#{url_for(new_bookmark_url_hash)}', 'subwindow', 550, 400); return false;"}) %></li>
   </ul>
 </div>
+<% end -%>
