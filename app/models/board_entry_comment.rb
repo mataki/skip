@@ -26,6 +26,8 @@ class BoardEntryComment < ActiveRecord::Base
     { :conditions => ['user_id IN (?)', User.active.map(&:id).uniq] }
   }
 
+  named_scope :order_new, proc { { :order => 'board_entry_comments.updated_on DESC' } }
+
   def after_save
     board_entry.reload.update_attribute :updated_on, Time.now
   end
