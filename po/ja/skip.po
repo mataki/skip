@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-10-23 18:38+0900\n"
+"POT-Creation-Date: 2009-10-23 19:05+0900\n"
 "PO-Revision-Date: 2009-10-23 17:37+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -469,7 +469,7 @@ msgstr "処理の内容："
 msgid "Activate your account and start using"
 msgstr "利用開始確認メールです"
 
-#: app/views/admin/users/index.html.erb:78
+#: app/views/admin/users/index.html.erb:79
 msgid ""
 "Activation URL is to be issued. Send the URL shown by clicking the "
 "confirmation link in the next screen to the user."
@@ -660,8 +660,8 @@ msgstr "利用規約"
 msgid "Admin::DocumentsController|rules_description"
 msgstr ""
 "SKIPを利用する上で、各ユーザに守ってもらいたい事項に関する利用規約を記述しま"
-"す。<br/>システムでは、初回ログイン後に表示しています。また、フッターにリンクを表"
-"示しています。"
+"す。<br/>システムでは、初回ログイン後に表示しています。また、フッターにリンク"
+"を表示しています。"
 
 #: app/models/admin/group_category.rb:19
 msgid "Admin::GroupCategory|Code"
@@ -1934,7 +1934,7 @@ msgstr "本当に削除しますか?"
 msgid "Are you sure to force this user to leave the group?"
 msgstr "このユーザを強制退会させます。本当によろしいですか？"
 
-#: app/views/admin/users/index.html.erb:78
+#: app/views/admin/users/index.html.erb:79
 msgid "Are you sure to send activation email to target user?"
 msgstr "対象ユーザに利用開始通知メールを送信しますが宜しいですか?"
 
@@ -1944,7 +1944,7 @@ msgstr "利用者全体にメールが送信されますが、宜しいですか
 
 #: app/views/admin/group_categories/index.html.erb:29
 #: app/views/admin/users/change_uid.html.erb:29
-#: app/views/admin/users/index.html.erb:53
+#: app/views/admin/users/index.html.erb:54
 #: app/views/admin/users/create_uid.html.erb:25
 #: app/views/admin/groups/index.html.erb:33
 #: app/views/admin/openid_identifiers/index.html.erb:18
@@ -2570,7 +2570,7 @@ msgstr ""
 "      また、あなたのプロフィール画像を変更することや、このサイトのカラーテー"
 "マを変更することも可能です。"
 
-#: app/views/admin/users/index.html.erb:22
+#: app/views/admin/users/index.html.erb:23
 msgid "Confirm"
 msgstr "確認"
 
@@ -2793,7 +2793,7 @@ msgid "Deletion completed."
 msgstr "削除しました。"
 
 #: app/views/admin/group_categories/index.html.erb:29
-#: app/views/admin/users/index.html.erb:53
+#: app/views/admin/users/index.html.erb:54
 #: app/views/admin/groups/index.html.erb:33
 #: app/views/admin/openid_identifiers/index.html.erb:18
 #: app/views/admin/pictures/index.html.erb:29
@@ -2885,7 +2885,7 @@ msgstr "ドライブ"
 #: app/views/board_entries/_board_entry_comment.html.erb:14
 #: app/views/admin/group_categories/index.html.erb:28
 #: app/views/admin/users/_form.html.erb:67
-#: app/views/admin/users/index.html.erb:52
+#: app/views/admin/users/index.html.erb:53
 #: app/views/admin/openid_identifiers/index.html.erb:17
 #: app/views/admin/pictures/index.html.erb:27
 #: app/views/admin/user_profile_master_categories/index.html.erb:17
@@ -3872,7 +3872,7 @@ msgstr "不正なユーザです。"
 msgid "Invited to Group: %s"
 msgstr "グループ：%sに招待しました"
 
-#: app/views/admin/users/index.html.erb:58
+#: app/views/admin/users/index.html.erb:59
 msgid "Issue activation url for selected users"
 msgstr "選択したユーザを利用開始待ちにする"
 
@@ -4053,7 +4053,7 @@ msgstr "未読記事の一覧"
 #: app/controllers/admin/users_controller.rb:185
 #: app/controllers/admin/openid_identifiers_controller.rb:24
 #: app/controllers/admin/openid_identifiers_controller.rb:39
-#: app/views/admin/users/index.html.erb:66
+#: app/views/admin/users/index.html.erb:67
 #: app/views/admin/users/import.html.erb:74
 #: app/views/admin/groups/show.html.erb:35
 #: app/views/admin/board_entries/show.html.erb:43
@@ -4192,6 +4192,11 @@ msgid ""
 msgstr ""
 "よくわからない場合、メールアドレスのアカウント名（@の左側）と同じ値でかまいま"
 "せん。"
+
+#: app/views/admin/users/index.html.erb:1
+msgid "Makes of the new users and edit or confirm of the users profile."
+msgstr ""
+"新規ユーザの作成やユーザプロフィールの編集/確認などを行うことができます。"
 
 #: lib/skip_default_data.rb:46
 msgid "Male"
@@ -4375,7 +4380,7 @@ msgstr "新規"
 #: app/controllers/admin/users_controller.rb:29
 #: app/controllers/admin/users_controller.rb:41
 #: app/views/admin/group_categories/index.html.erb:36
-#: app/views/admin/users/index.html.erb:63
+#: app/views/admin/users/index.html.erb:64
 #: app/views/admin/openid_identifiers/index.html.erb:23
 #: app/views/admin/user_profile_master_categories/index.html.erb:25
 #: app/views/admin/user_profile_masters/index.html.erb:35
@@ -4437,7 +4442,7 @@ msgstr "現在、新規のユーザ登録の処理は停止させて頂いてお
 
 #: app/controllers/admin/users_controller.rb:125
 #: app/controllers/admin/users_controller.rb:142
-#: app/views/admin/users/index.html.erb:64
+#: app/views/admin/users/index.html.erb:65
 msgid "New users from CSV"
 msgstr "ユーザのCSVアップロード"
 
@@ -4537,7 +4542,7 @@ msgstr "指定なし"
 msgid "Notify"
 msgstr "通知する"
 
-#: app/views/admin/users/index.html.erb:25
+#: app/views/admin/users/index.html.erb:26
 msgid "Notify activation"
 msgstr "利用開始通知"
 
@@ -4961,7 +4966,7 @@ msgstr "投稿件数"
 msgid "Posts in the groups joined"
 msgstr "参加中のグループのフォーラムの書き込み"
 
-#: app/views/admin/users/index.html.erb:25
+#: app/views/admin/users/index.html.erb:26
 msgid "Prepare for activation"
 msgstr "利用開始待ちにする"
 
@@ -5450,7 +5455,7 @@ msgstr "送信する"
 msgid "Send Emails"
 msgstr "投稿時にメールも送信する"
 
-#: app/views/admin/users/index.html.erb:58
+#: app/views/admin/users/index.html.erb:59
 msgid "Send activation email to selected users"
 msgstr "選択したユーザに利用開始通知をする"
 
@@ -6219,7 +6224,7 @@ msgstr "タイトル"
 msgid "To"
 msgstr "送信先"
 
-#: app/views/admin/users/index.html.erb:23
+#: app/views/admin/users/index.html.erb:24
 msgid "To be activated"
 msgstr "利用開始待ち"
 
@@ -7664,7 +7669,7 @@ msgid ""
 "activation_code has not been issued. Refer to --help and specify --code."
 msgstr "activation_codeが未発行です。--helpを参照の上、codeを指定して下さい。"
 
-#: app/views/admin/users/index.html.erb:37
+#: app/views/admin/users/index.html.erb:38
 msgid "admin"
 msgstr "管理権限"
 
@@ -7802,7 +7807,7 @@ msgstr "不正なURLです"
 msgid "is mandatory."
 msgstr "は必須です"
 
-#: app/views/admin/users/index.html.erb:41
+#: app/views/admin/users/index.html.erb:42
 msgid "issued_atlast_authenticated_atpassword_expires_at"
 msgstr ""
 
@@ -7892,7 +7897,7 @@ msgstr ""
 #: app/controllers/admin/pictures_controller.rb:81 app/models/picture.rb:-
 #: app/views/admin/users/edit.html.erb:20
 #: app/views/admin/users/edit.html.erb:21
-#: app/views/admin/users/index.html.erb:66
+#: app/views/admin/users/index.html.erb:67
 msgid "picture"
 msgstr "プロフィール画像"
 
@@ -7997,7 +8002,7 @@ msgstr "チェックを外す"
 #: app/controllers/admin/users_controller.rb:142
 #: app/controllers/admin/users_controller.rb:160
 #: app/controllers/admin/users_controller.rb:185 app/models/user.rb:-
-#: app/views/admin/users/index.html.erb:63
+#: app/views/admin/users/index.html.erb:64
 #: app/views/admin/users/import.html.erb:74
 msgid "user"
 msgstr "ユーザ"

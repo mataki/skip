@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-10-23 18:38+0900\n"
+"POT-Creation-Date: 2009-10-23 19:05+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -450,7 +450,7 @@ msgstr ""
 msgid "Activate your account and start using"
 msgstr ""
 
-#: app/views/admin/users/index.html.erb:78
+#: app/views/admin/users/index.html.erb:79
 msgid ""
 "Activation URL is to be issued. Send the URL shown by clicking the "
 "confirmation link in the next screen to the user."
@@ -1777,7 +1777,7 @@ msgstr ""
 msgid "Are you sure to force this user to leave the group?"
 msgstr ""
 
-#: app/views/admin/users/index.html.erb:78
+#: app/views/admin/users/index.html.erb:79
 msgid "Are you sure to send activation email to target user?"
 msgstr ""
 
@@ -1787,7 +1787,7 @@ msgstr ""
 
 #: app/views/admin/group_categories/index.html.erb:29
 #: app/views/admin/users/change_uid.html.erb:29
-#: app/views/admin/users/index.html.erb:53
+#: app/views/admin/users/index.html.erb:54
 #: app/views/admin/users/create_uid.html.erb:25
 #: app/views/admin/groups/index.html.erb:33
 #: app/views/admin/openid_identifiers/index.html.erb:18
@@ -2397,7 +2397,7 @@ msgid ""
 "      You can also change your profile image and color theme of this site."
 msgstr ""
 
-#: app/views/admin/users/index.html.erb:22
+#: app/views/admin/users/index.html.erb:23
 msgid "Confirm"
 msgstr ""
 
@@ -2614,7 +2614,7 @@ msgid "Deletion completed."
 msgstr ""
 
 #: app/views/admin/group_categories/index.html.erb:29
-#: app/views/admin/users/index.html.erb:53
+#: app/views/admin/users/index.html.erb:54
 #: app/views/admin/groups/index.html.erb:33
 #: app/views/admin/openid_identifiers/index.html.erb:18
 #: app/views/admin/pictures/index.html.erb:29
@@ -2698,7 +2698,7 @@ msgstr ""
 #: app/views/board_entries/_board_entry_comment.html.erb:14
 #: app/views/admin/group_categories/index.html.erb:28
 #: app/views/admin/users/_form.html.erb:67
-#: app/views/admin/users/index.html.erb:52
+#: app/views/admin/users/index.html.erb:53
 #: app/views/admin/openid_identifiers/index.html.erb:17
 #: app/views/admin/pictures/index.html.erb:27
 #: app/views/admin/user_profile_master_categories/index.html.erb:17
@@ -3670,7 +3670,7 @@ msgstr ""
 msgid "Invited to Group: %s"
 msgstr ""
 
-#: app/views/admin/users/index.html.erb:58
+#: app/views/admin/users/index.html.erb:59
 msgid "Issue activation url for selected users"
 msgstr ""
 
@@ -3844,7 +3844,7 @@ msgstr ""
 #: app/controllers/admin/users_controller.rb:185
 #: app/controllers/admin/openid_identifiers_controller.rb:24
 #: app/controllers/admin/openid_identifiers_controller.rb:39
-#: app/views/admin/users/index.html.erb:66
+#: app/views/admin/users/index.html.erb:67
 #: app/views/admin/users/import.html.erb:74
 #: app/views/admin/groups/show.html.erb:35
 #: app/views/admin/board_entries/show.html.erb:43
@@ -3976,6 +3976,10 @@ msgstr ""
 msgid ""
 "Make it the same as the account name of your email address (left of \"@\") "
 "if you are not sure what to use for it."
+msgstr ""
+
+#: app/views/admin/users/index.html.erb:1
+msgid "Makes of the new users and edit or confirm of the users profile."
 msgstr ""
 
 #: lib/skip_default_data.rb:46
@@ -4159,7 +4163,7 @@ msgstr ""
 #: app/controllers/admin/users_controller.rb:29
 #: app/controllers/admin/users_controller.rb:41
 #: app/views/admin/group_categories/index.html.erb:36
-#: app/views/admin/users/index.html.erb:63
+#: app/views/admin/users/index.html.erb:64
 #: app/views/admin/openid_identifiers/index.html.erb:23
 #: app/views/admin/user_profile_master_categories/index.html.erb:25
 #: app/views/admin/user_profile_masters/index.html.erb:35
@@ -4219,7 +4223,7 @@ msgstr ""
 
 #: app/controllers/admin/users_controller.rb:125
 #: app/controllers/admin/users_controller.rb:142
-#: app/views/admin/users/index.html.erb:64
+#: app/views/admin/users/index.html.erb:65
 msgid "New users from CSV"
 msgstr ""
 
@@ -4317,7 +4321,7 @@ msgstr ""
 msgid "Notify"
 msgstr ""
 
-#: app/views/admin/users/index.html.erb:25
+#: app/views/admin/users/index.html.erb:26
 msgid "Notify activation"
 msgstr ""
 
@@ -4735,7 +4739,7 @@ msgstr ""
 msgid "Posts in the groups joined"
 msgstr ""
 
-#: app/views/admin/users/index.html.erb:25
+#: app/views/admin/users/index.html.erb:26
 msgid "Prepare for activation"
 msgstr ""
 
@@ -5214,7 +5218,7 @@ msgstr ""
 msgid "Send Emails"
 msgstr ""
 
-#: app/views/admin/users/index.html.erb:58
+#: app/views/admin/users/index.html.erb:59
 msgid "Send activation email to selected users"
 msgstr ""
 
@@ -5942,7 +5946,7 @@ msgstr ""
 msgid "To"
 msgstr ""
 
-#: app/views/admin/users/index.html.erb:23
+#: app/views/admin/users/index.html.erb:24
 msgid "To be activated"
 msgstr ""
 
@@ -7348,7 +7352,7 @@ msgid ""
 "activation_code has not been issued. Refer to --help and specify --code."
 msgstr ""
 
-#: app/views/admin/users/index.html.erb:37
+#: app/views/admin/users/index.html.erb:38
 msgid "admin"
 msgstr ""
 
@@ -7486,7 +7490,7 @@ msgstr ""
 msgid "is mandatory."
 msgstr ""
 
-#: app/views/admin/users/index.html.erb:41
+#: app/views/admin/users/index.html.erb:42
 msgid "issued_atlast_authenticated_atpassword_expires_at"
 msgstr ""
 
@@ -7577,7 +7581,7 @@ msgstr ""
 #: app/controllers/admin/pictures_controller.rb:81 app/models/picture.rb:-
 #: app/views/admin/users/edit.html.erb:20
 #: app/views/admin/users/edit.html.erb:21
-#: app/views/admin/users/index.html.erb:66
+#: app/views/admin/users/index.html.erb:67
 msgid "picture"
 msgstr ""
 
@@ -7682,7 +7686,7 @@ msgstr ""
 #: app/controllers/admin/users_controller.rb:142
 #: app/controllers/admin/users_controller.rb:160
 #: app/controllers/admin/users_controller.rb:185 app/models/user.rb:-
-#: app/views/admin/users/index.html.erb:63
+#: app/views/admin/users/index.html.erb:64
 #: app/views/admin/users/import.html.erb:74
 msgid "user"
 msgstr ""
