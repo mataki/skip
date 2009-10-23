@@ -47,8 +47,8 @@
 <div class="input_line">
   <div class="input_label"><%= _('Default Privacy Settings') %></div>
   <div class="input_value"><table><tr><td>
-    <%= radio_button('group', 'default_publication_type', 'public', :id => 'default_publication_type_public', :class => 'default_publication_type') %><%= label_tag('default_publication_type_public', _('Open to All')) %>
-    <%= radio_button('group', 'default_publication_type', 'private', :id => 'default_publication_type_private', :class => 'default_publication_type') %><%= label_tag('default_publication_type_private', _("Members Only")) %>
+    <%= radio_button(:group, :default_publication_type, 'public', :class => 'default_publication_type') %><%= label_tag('default_publication_type_public', _('Open to All')) %>
+    <%= radio_button(:group, :default_publication_type, 'private', :class => 'default_publication_type') %><%= label_tag('default_publication_type_private', _("Members Only")) %>
   </td></tr></table></div>
 </div>
 
