@@ -56,25 +56,27 @@
     <div class="box_space_title"><%= icon_tag('user_suit') -%><%= _('Administrator')%></div>
     <div class="box_space_body">
       <ul>
-      <% @admin_users.each do |user| %>
+      <% @owners.each do |user| %>
         <li><%= user_link_to user %></li>
-        <% end %>
+      <% end %>
       </ul>
     </div>
     <div class="box_space_bottom"></div>
   </div><!-- box_space -->
 
+  <% unless @except_owners.empty? %>
   <div class="box_space">
     <div class="box_space_title"><%= icon_tag('group') -%><%= _('Members')%></div>
     <div class="box_space_body">
       <ul>
-      <% @users.each do |user| %>
+      <% @except_owners.each do |user| %>
         <li><%= user_link_to user %></li>
       <% end %>
       </ul>
     </div>
     <div class="box_space_bottom"><%= link_to _("[...See all]"), :action => 'users' %></div>
   </div><!-- box_space -->
+  <% end -%>
 
   <%= render :partial => 'collaboration_app/operation_boxes' %>
 

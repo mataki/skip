@@ -40,6 +40,10 @@ class GroupParticipation < ActiveRecord::Base
     { :conditions => { :owned => true }, :include => [:user] }
   }
 
+  named_scope :order_new, proc {
+    { :order => "group_participations.updated_on DESC" }
+  }
+
   # memcache領域にグループの参加情報を載せているため
   # 追加・削除の際はmemcache領域を削除する。
   # このためGroupParticipationテーブルには、deleteメソッドなど

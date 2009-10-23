@@ -145,7 +145,7 @@ class Group < ActiveRecord::Base
   end
 
   def owners
-    group_participations.only_owned.map(&:user)
+    group_participations.active.only_owned.order_new.map(&:user)
   end
 
   # グループのカテゴリごとのgidの配列を返す(SQL発行あり)
@@ -184,40 +184,13 @@ class Group < ActiveRecord::Base
     [group_counts, total_count]
   end
 
-  # グループに所属しているユーザを取得する。
-  # :owned trueの場合、管理者のみ。falseの場合、管理者以外
-  # :waiting trueの場合、承認待ちユーザのみ。falseの場合承認済みユーザのみ。
-  # 引数なしの場合、グループに所属する全てのユーザ(承認待ちユーザも含む)
-  def participation_users params = {}
-    conditions_state = "group_participations.group_id = ? "
-    conditions_param = [self.id]
-
-    unless params[:waiting].nil?
-      conditions_state << "and group_participations.waiting = ? "
-      conditions_param << params[:waiting]
-    end
-
-    unless params[:owned].nil?
-      conditions_state << "and group_participations.owned = ? "
-      conditions_param << params[:owned]
-    end
-
-    options = {}
-    options[:conditions] = conditions_param.unshift(conditions_state)
-    options[:include] = "group_participations"
-    options[:limit] = params[:limit] unless params[:limit].nil?
-    options[:order] = params[:order] unless params[:order].nil?
-
-    User.find(:all, options)
-  end
-
   def administrator?(user)
     Group.owned(user).participating(user).map(&:id).include?(self.id)
   end
 
   def self.synchronize_groups ago = nil
     conditions = ago ? ['updated_on >= ?', Time.now.ago(ago.to_i.minute)] : []
-    Group.scoped(:conditions => conditions).all.map { |g| [g.gid, g.gid, g.name, g.participation_users(:waiting => false).map { |u| u.openid_identifier }, !!g.deleted_at] }
+    Group.scoped(:conditions => conditions).all.map { |g| [g.gid, g.gid, g.name, User.joined(g).map { |u| u.openid_identifier }, !!g.deleted_at] }
   end
 
   def self.favorites_per_category user

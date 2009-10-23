@@ -206,42 +206,6 @@ describe Group do
     end
   end
 
-  describe Group, "#participation_users" do
-    before(:each) do
-      @group = Group.new
-      @group.stub!(:id).and_return(1)
-      @user = mock_model(User)
-    end
-
-    describe "引数が何も与えられていない場合" do
-      before(:each) do
-        options = { :conditions => ['group_participations.group_id = ? ',1], :include => 'group_participations' }
-        User.should_receive(:find).with(:all, options).and_return([@user])
-      end
-      it "conditionsとincludeが設定されていること" do
-        @group.participation_users.should == [@user]
-      end
-    end
-
-    describe "waitingオプションがあった場合　conditionsに承認待ちを限定する条件があること" do
-      before(:each) do
-        options = { :conditions => ['group_participations.group_id = ? and group_participations.waiting = ? ',1,true],
-          :include => 'group_participations' }
-        User.should_receive(:find).with(:all, options).and_return([@user])
-      end
-      it { @group.participation_users({ :waiting => true }).should == [@user] }
-    end
-
-    describe "ownedオプションがあった場合" do
-      before(:each) do
-        options = { :conditions => ['group_participations.group_id = ? and group_participations.owned = ? ',1,true],
-          :include => 'group_participations' }
-        User.should_receive(:find).with(:all, options).and_return([@user])
-      end
-      it { @group.participation_users({ :owned => true }).should == [@user] }
-    end
-  end
-
   describe Group, '#administrator? ' do
     before do
       @user = stub_model(User, :id => 99)

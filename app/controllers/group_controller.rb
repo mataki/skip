@@ -32,13 +32,8 @@ class GroupController < ApplicationController
 
   # tab_menu
   def show
-    @admin_users = @group.participation_users :order => "group_participations.updated_on DESC",
-                                              :owned => true,
-                                              :waiting => false
-    @users = @group.participation_users :limit => 20,
-                                        :order => "group_participations.updated_on DESC",
-                                        :owned => false,
-                                        :waiting => false
+    @owners = User.owned(@group).order_joined.limit(20)
+    @except_owners = User.joined_except_owned(@group).order_joined.limit(20)
     @recent_messages = BoardEntry.find_visible(10, login_user_symbols, @group.symbol)
   end
 

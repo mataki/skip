@@ -63,6 +63,31 @@ class User < ActiveRecord::Base
 
   named_scope :limit, proc { |num| { :limit => num } }
 
+  named_scope :joined, proc { |group|
+    {
+      :conditions => ['group_participations.group_id = ? AND group_participations.waiting = false', group.id],
+      :include => [:group_participations]
+    }
+  }
+
+  named_scope :owned, proc { |group|
+    {
+      :conditions => ['group_participations.group_id = ? AND group_participations.waiting = false AND group_participations.owned = true', group.id],
+      :include => [:group_participations]
+    }
+  }
+
+  named_scope :joined_except_owned, proc { |group|
+    {
+      :conditions => ['group_participations.group_id = ? AND group_participations.waiting = false AND group_participations.owned = false', group.id],
+      :include => [:group_participations]
+    }
+  }
+
+  named_scope :order_joined, proc { |group| { :order => "group_participations.updated_on DESC" } }
+
+  named_scope :limit, proc { |num| { :limit => num } }
+
   N_('User|Old password')
   N_('User|Password')
   N_('User|Password confirmation')
