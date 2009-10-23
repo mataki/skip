@@ -102,7 +102,7 @@
       <% @recent_users.each do |user| -%>
         <div class="topix_line">
           <div class="title">
-            <%= user_link_to(user) %> (<%= h(user.section) %>) <%= link_to('[' + _('Create introductions') + ']', {:controller => 'user', :action => 'new_chain', :uid => h(user.uid) }) unless current_user.follow_chains.map(&:to_user_id).include? user.id %>
+            <%= user_link_to(user) %> (<%= h(user.section) %>) &lt;&lt; <%= link_to('[' + _('Create introductions') + ']', {:controller => 'user', :action => 'new_chain', :uid => h(user.uid) }) unless current_user.follow_chains.map(&:to_user_id).include? user.id %>
           </div>
         </div>
       <% end -%>
@@ -118,7 +118,7 @@
       <% @recent_groups.each do |group| -%>
         <div class="topix_line">
           <div class="title">
-            <%= h(group.group_category.name) %> - <%= group_link_to(group) %>
+            <%= h(group.group_category.name) %> - <%= group_link_to(group) %> - <%= truncate(strip_tags(group.description), 30) %>
           </div>
         </div>
       <% end -%>
