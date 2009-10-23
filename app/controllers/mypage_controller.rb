@@ -57,7 +57,7 @@ class MypageController < ApplicationController
     # ============================================================
     #  main area entries
     # ============================================================
-    @questions = find_questions_as_locals({:recent_day => recent_day, :per_page => 5})
+    @questions = find_questions_as_locals({:recent_day => recent_day})
     @access_blogs = find_access_blogs_as_locals({:per_page => 5})
     @recent_blogs = find_recent_blogs_as_locals({:per_page => 8})
     @recent_bbs = recent_bbs
@@ -640,7 +640,7 @@ class MypageController < ApplicationController
   # 質問記事一覧を取得する（partial用のオプションを返す）
   def find_questions_as_locals options
     pages = BoardEntry.accessible(current_user).question.visible.
-      order_new.paginate(:page => params[:page], :per_page => options[:per_page])
+      order_new
 
     locals = {
       :id_name => 'questions',
