@@ -1,26 +1,26 @@
-<div class="search_cond_space">
-<% form_tag({:action => 'share_file_search'}, {:method => 'get'}) do -%>
-  <table class="search_cond_box">
-    <tr>
-      <th><%= _('Keywords')%></th>
-      <td><%= text_field_tag('keyword', params[:keyword], :size => 60) %><%= _('(The search targets are titles and comments)')%></td>
-    </tr>
-    <tr>
-      <th><%= _('Display Order')%></th>
-      <td>
-        <%= radio_button_tag("sort_type", "date", params[:sort_type] == "date", :id=>"sort_type_date") -%> <%= _('Sort by Upload Dates')%>
-        <%= radio_button_tag("sort_type", "name", params[:sort_type] == "name", :id=>"sort_type_name") -%> <%= _('Sort by File Names')%>
-      </td>
-    </tr>
-    <%= render :partial => 'tag_search' %>
-  </table>
-  <div class="submit"><%= submit_tag _('Search') %></div>
-<% end -%>
+<div class="search_cond_space ui-corner-all">
+  <% form_tag({:action => 'share_file_search'}, {:method => 'get'}) do -%>
+    <table class="search_cond_box">
+      <tr>
+        <th><%= _('Keywords')%></th>
+        <td><%= text_field_tag('keyword', params[:keyword], :size => 60) %><%= _('(The search targets are titles and comments)')%></td>
+      </tr>
+      <tr>
+        <th><%= _('Display Order')%></th>
+        <td>
+      <%= radio_button_tag("sort_type", "date", params[:sort_type] == "date", :id=>"sort_type_date") -%> <%= _('Sort by Upload Dates')%>
+      <%= radio_button_tag("sort_type", "name", params[:sort_type] == "name", :id=>"sort_type_name") -%> <%= _('Sort by File Names')%>
+        </td>
+      </tr>
+      <%= render :partial => 'tag_search' %>
+    </table>
+    <div class="submit"><%= submit_tag _('Search') %></div>
+  <% end -%>
 </div>
 
 <div class="search_result_space">
 <% unless @share_files.empty? -%>
-  <div class="navi"><%= will_paginate_link @share_files%></div>
+  <div class="navi ui-corner-all"><%= will_paginate_link @share_files%></div>
   <div class="files_body" style="width:90%;margin-left:5%;">
     <% @share_files.each do |share_file| -%>
       <%= render :partial => 'share_file/share_file_box',
@@ -29,7 +29,7 @@
                              :visible_owner_link => true} %>
     <% end -%>
   </div><!-- files_body -->
-  <div class="navi"><%= will_paginate_link @share_files%></div>
+  <div class="navi ui-corner-all"><%= will_paginate_link @share_files%></div>
 <% end -%>
 </div>
 

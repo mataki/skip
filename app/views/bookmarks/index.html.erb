@@ -1,34 +1,34 @@
-<div class="search_cond_space">
-<% form_tag({:action => 'index'}, :method => 'get') do -%>
-  <table class="search_cond_box">
-    <tr>
-      <th><%= label_tag('title', _('Title')) %></th>
-      <td><%= text_field_tag('title', params[:title], :size => '60') %></td>
-    </tr>
-    <tr>
-      <th><%= label_tag("sort_type", _('Display Order')) %></th>
-      <td><%= selected_tag("sort_type", params[:sort_type], Bookmark::SORT_TYPES.map{|type| [_(type[0]), type[0]]}) %></td>
-    </tr>
-    <tr>
-      <th><%= _('Search Range') %></th>
-      <td>
-        <%= radio_button_tag('type', 'all', params[:type]=='all') + label_tag("type_all", _('All')) %>
-        <%= radio_button_tag('type', 'user', params[:type]=='user') + label_tag("type_user", _("Users")) %>
-        <%= radio_button_tag('type', 'page', params[:type]=='page') + label_tag("type_page", _('Entries')) %>
-        <%= radio_button_tag('type', 'internet', params[:type]=='internet') + label_tag("type_internet", _('Internet')) %>
-      </td>
-    </tr>
-    <%= render :partial => 'search/tag_search' %>
-  </table>
-  <div class="submit"><%= submit_tag _('Search') %></div>
-<% end -%>
+<div class="search_cond_space ui-corner-all">
+  <% form_tag({:action => 'index'}, :method => 'get') do -%>
+    <table class="search_cond_box">
+      <tr>
+        <th><%= label_tag('title', _('Title')) %></th>
+        <td><%= text_field_tag('title', params[:title], :size => '60') %></td>
+      </tr>
+      <tr>
+        <th><%= label_tag("sort_type", _('Display Order')) %></th>
+        <td><%= selected_tag("sort_type", params[:sort_type], Bookmark::SORT_TYPES.map{|type| [_(type[0]), type[0]]}) %></td>
+      </tr>
+      <tr>
+        <th><%= _('Search Range') %></th>
+        <td>
+          <%= radio_button_tag('type', 'all', params[:type]=='all') + label_tag("type_all", _('All')) %>
+          <%= radio_button_tag('type', 'user', params[:type]=='user') + label_tag("type_user", _("Users")) %>
+          <%= radio_button_tag('type', 'page', params[:type]=='page') + label_tag("type_page", _('Entries')) %>
+          <%= radio_button_tag('type', 'internet', params[:type]=='internet') + label_tag("type_internet", _('Internet')) %>
+        </td>
+      </tr>
+      <%= render :partial => 'search/tag_search' %>
+    </table>
+    <div class="submit"><%= submit_tag _('Search') %></div>
+  <% end -%>
 </div>
 
 <div class="search_result_space" style="position: relative; width: 100%; margin-left: auto; margin-right: auto;">
 <% unless @bookmarks.empty? -%>
-  <div class="navi"><%= will_paginate_link @bookmarks %></div>
+  <div class="navi ui-corner-all"><%= will_paginate_link @bookmarks %></div>
   <%= render :partial => "bookmarks", :object => @bookmarks %>
-  <div class="navi"><%= will_paginate_link @bookmarks %></div>
+  <div class="navi ui-corner-all"><%= will_paginate_link @bookmarks %></div>
 <% end -%>
 </div>
 

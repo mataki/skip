@@ -12,14 +12,14 @@
 <% end -%>
 <h2 class="subtitle"><%= _('Apply your profile') %></h2>
 <div id="main_navi" style="background-color: #ffffff; padding: 10px; margin-bottom: 10px;">
-  <div class="flow_box" <%= 'style="background-color: yellow"' if session[:entrance_next_action] == :confirm -%> ><%= _('See Terms of Use')%></div>
+  <div class="flow_box ui-corner-all" <%= 'style="background-color: yellow"' if session[:entrance_next_action] == :confirm -%> ><%= _('See Terms of Use')%></div>
   <div class="next_arrow"><%= icon_tag 'arrow_right' -%></div>
   <% if login_mode?(:free_rp) -%>
-  <div class="flow_box" <%= 'style="background-color: yellow"' if session[:entrance_next_action] == :account_registration -%> ><%= _('Get an account')%></div>
+  <div class="flow_box ui-corner-all" <%= 'style="background-color: yellow"' if session[:entrance_next_action] == :account_registration -%> ><%= _('Get an account')%></div>
   <div class="next_arrow"><%= icon_tag 'arrow_right' -%></div>
   <% end -%>
-  <div class="flow_box" <%= 'style="background-color: yellow"' if session[:entrance_next_action] == :registration -%> ><%= _('Register your profile')%></div>
+  <div class="flow_box ui-corner-all" <%= 'style="background-color: yellow"' if session[:entrance_next_action] == :registration -%> ><%= _('Register your profile')%></div>
   <div class="next_arrow"><%= icon_tag 'arrow_right' -%></div>
-  <div class="flow_box"><%= _('Start with the site!')%></div>
+  <div class="flow_box ui-corner-all"><%= _('Start with the site!')%></div>
   <div style="clear: both;"></div>
 </div>

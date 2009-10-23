@@ -52,7 +52,7 @@
 
 <% content_for :contents_right do -%>
   <% unless @share_files.empty? -%>
-    <div class="navi"><%= will_paginate_link @share_files %></div>
+    <div class="navi ui-corner-all"><%= will_paginate_link @share_files %></div>
     <div class="files_body">
       <% @share_files.each do |share_file| -%>
         <%= render :partial => 'share_file_box',
@@ -62,7 +62,7 @@
                                :visible_owner_link => false } %>
       <% end -%>
     </div><!-- files_body -->
-    <div class="navi"><%= will_paginate_link @share_files %></div>
+    <div class="navi ui-corner-all"><%= will_paginate_link @share_files %></div>
   <% end %>
 <% end -%>
 

@@ -3,7 +3,7 @@
 
 <div id="select_antenna_body">
 
-<div class="desc"><%= _('You can add this blog into your antenna.')%>
+<div class="desc ui-corner-all margin05em"><%= _('You can add this blog into your antenna.')%>
 <br/><%= _('Select the antenna to add.')%></div>
 
 <% unless messages.empty? %>
@@ -15,7 +15,7 @@
 <% already_include = false -%>
 <div style="margin: 3px;">
 <p style="font-size: 10px;"><%= _('Your antennas: ')%></p>
-<p style="border: 1px solid silver; background-color: #f0f0ff; margin: 0 5px; padding: 0 5px;">
+<p style="border: 1px solid silver; background-color: #f0f0ff; margin: 0 5px; padding: 0 5px; height: 1em;" class="ui-corner-all">
 <% antennas.each do |antenna| -%>
   <% if antenna.included -%>
     <% already_include = true -%>
@@ -28,14 +28,14 @@
 <% if already_include -%>
 <div style="margin: 3px;">
 <p style="font-size: 10px;"><%= _('This user has been added into antennas below: ')%></p>
-<p style="border: 1px solid silver; background-color: #f0f0ff; margin: 0 5px; padding: 0 5px;">
+<p style="border: 1px solid silver; background-color: #f0f0ff; margin: 0 5px; padding: 0 5px;" class="ui-corner-all">
 <% antennas.each do |antenna| -%>
   <%= h(antenna.name) + ' /' if antenna.included -%>
 <% end %></p>
 </div>
 <% end -%>
 
-<div style="border: 1px solid silver; background-color: #f0f0ff; margin: 8px; padding: 5px; padding-top: 0; ">
+<div style="border: 1px solid silver; background-color: #f0f0ff; margin: 8px; padding: 5px;" class="ui-corner-all">
   <% form_tag({ :controller => :antenna, :action => :add_antenna_and_symbol }, { :id => "add_antenna_and_symbol_form" }) do -%>
     <%= label :antenna, :name, _('Create new anntenna and add: ') %>
     <%= text_field :antenna, :name %>

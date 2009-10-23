@@ -6,7 +6,7 @@
         <%= text_field_tag('keyword', params[:keyword], :size=>'12') %>
         <%= submit_tag _('Search') %>
       <% end -%>
-      <div class="desc"><%= _('The search targets are titles and comments')%></div>
+      <div class="desc ui-corner-all"><%= _('The search targets are titles and comments')%></div>
     </div>
     <div class="box_space_bottom"></div>
   </div><!-- box_space -->
@@ -47,7 +47,7 @@
 
 <% content_for :contents_right do -%>
   <% unless @bookmark_comments.empty? -%>
-  <div class="navi"><%= will_paginate_link @bookmark_comments %></div>
+  <div class="navi ui-corner-all"><%= will_paginate_link @bookmark_comments %></div>
     <% for comment in @bookmark_comments -%>
     <div class="bookmark_space" id="bookmark_comment_<%= comment.id %>">
       <div class="header">
@@ -71,7 +71,7 @@
       </div>
     </div>
     <% end -%>
-  <div class="navi"><%= will_paginate_link @bookmark_comments %></div>
+  <div class="navi ui-corner-all"><%= will_paginate_link @bookmark_comments %></div>
   <% end %>
 <% end -%>
 

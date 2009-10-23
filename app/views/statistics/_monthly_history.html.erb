@@ -1,17 +1,17 @@
 <h2 class="topix_title"><%= icon_tag('asterisk_orange') -%><%= _("History of %s") % h(_(SiteCount::STATISTICS_ITEMS[category.to_sym][:desc])) -%></h2>
 
-<div class="monthly_statictics_box">
+<div class="monthly_statictics_box ui-corner-all">
 <div class="navigate_menu">
   <%= link_to _('[Prev month]'), '#', :class => 'change_month_link prev' %>
   <%= link_to _('[This month]'), '#', :class => 'change_month_link current' %>
   <%= link_to _('[Next month]'), '#', :class => 'change_month_link next' %>
 </div><!-- navigate_menu -->
 
-<div style="border:1px solid #aaa;background-color:gray;color:white;margin-top:3px;font-weight:bold;"><%= _("History of %s") % date.strftime(_('%b %Y')) %></div>
+<div class="ui-corner-top" style="border:1px solid #aaa;background-color:gray;color:white;margin-top:3px;font-weight:bold;"><%= _("History of %s") % date.strftime(_('%b %Y')) %></div>
 
 <% unless site_counts.empty? %>
 <% pixel_par_value = 100.0 / max_value %>
-<div class="monthly_statistics_inner_space">
+<div class="monthly_statistics_inner_space ui-corner-bottom">
 <% site_counts.each do |site_count| %>
   <% value = site_count[category] %>
   <% graph_color = max_value == value ? 'red' : 'silver' %>

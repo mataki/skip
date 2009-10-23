@@ -13,12 +13,12 @@
 <% end -%>
 
 <% content_for :contents_right do -%>
-<div class="edit_form_space">
+<div class="edit_form_space ui-corner-all">
   <% form_tag({:action => 'update'}, :id => 'group_form') do -%>
     <%= render :partial => "group/form" %>
     <%= submit_tag _('Update'), :disable_with => _('Updating...') %>
   <% end -%>
-  <div class="desc" style="margin-top: 10px; padding: 5px;">
+  <div class="desc ui-corner-all margin05em" style="padding: 5px;">
     <%= link_to(_("[[Delete]]"), {:action => 'destroy'}, :confirm => _('Are you sure to delete?'), :method => :post ) %>
   </div>
 </div>

@@ -15,9 +15,9 @@
 <% end -%>
 
 <% content_for :contents_right do -%>
-  <div class="desc"><p><%= _('You can customize the site environment.')%></p></div>
+  <div class="desc ui-corner-all margin05emver"><p><%= _('You can customize the site environment.')%></p></div>
 
-  <div class="edit_form_space">
+  <div class="edit_form_space ui-corner-all">
   <% form_for @user_custom, :url => {:action => 'update_customize'} do |f| -%>
     <%= error_messages_for :user_custom %>
 

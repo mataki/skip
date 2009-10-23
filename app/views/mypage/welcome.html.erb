@@ -19,11 +19,11 @@
 <%= render :partial => 'contents_left_base' %>
 
 <% content_for :contents_right do -%>
-  <div style="background-color: #fff0ff; padding: 5px; border: 1px dashed pink; margin-bottom: 10px;">
+  <div class="ui-corner-all" style="background-color: #fff0ff; padding: 5px; border: 1px dashed pink; margin-bottom: 10px;">
     <h3><%= _("Welcome to [%s]!") % h(Admin::Setting.abbr_app_title) %></h3>
   </div>
 
-  <div style="border: 1px dashed pink; padding: 5px; margin-bottom: 10px;">
+  <div class="ui-corner-all" style="border: 1px dashed pink; padding: 5px; margin-bottom: 10px;">
     <h3 style="color: blue; background-color: #f0f0ff; padding: 3px; border-left: 10px solid skyblue; border-bottom: 1px dashed skyblue;"><%= _('User registration completed.')%></h3>
     <div style="margin-left: 15px; margin-top: 5px;">
       <p class="welcome"><%= _("Completed registering your user information.<br/>\n      You can start writing entries right away since we have created your own blog.<br/>\n      You can also change your profile image and color theme of this site.")%></p>
@@ -52,7 +52,7 @@
     </div>
   </div>
 
-  <div style="border: 1px dashed pink; padding: 5px; margin-bottom: 10px;">
+  <div class="ui-corner-all" style="border: 1px dashed pink; padding: 5px; margin-bottom: 10px;">
     <div id="introduction"></div>
   </div>
 <% end -%>

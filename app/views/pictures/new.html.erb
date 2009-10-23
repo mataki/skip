@@ -3,11 +3,11 @@
 <% end -%>
 
 <% content_for :contents_right do -%>
-  <div class="desc">
+  <div class="desc ui-corner-all">
     <p><%= _("You can only upload 1 picture. The file size is limited to 64kb.<br/>\nYou can find something by <a href=\"http://www.google.com/search?q=%s\">searching \"Portrait Making\" in Google</a>\nif you don't have a suitable picture") % URI.encode(_('portrait making'))%></p>
   </div>
 
-  <div class="portrait" style="border: 1px solid silver; margin: 10px; text-align: center;">
+  <div class="portrait ui-corner-all" style="border: 1px solid silver; margin: 10px; text-align: center;">
   <%= show_picture(@user, :height => 150, :fit_image => false) -%>
   </div>
 

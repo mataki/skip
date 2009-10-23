@@ -3,10 +3,13 @@
 <% end -%>
 
 <% content_for :contents_right do -%>
-  <div class="desc"><%= _('You can manage your preference for email notifications.<br/>By checking the items, notification emails will be sent to your registered email address when new comments etc. are added to your profile and blog entries.')%></div>
-  <div class="edit_form_space">
+  <div class="desc ui-corner-all margin05emver">
+    <%= _('You can manage your preference for email notifications.<br/>By checking the items, notification emails will be sent to your registered email address when new comments etc. are added to your profile and blog entries.')%>
+  </div>
+
+  <div class="edit_form_space ui-corner-all">
   <% form_tag :action => 'update_message_unsubscribes' do -%>
-    <table class="normal margin10" border="1">
+    <table class="normal margin05emver" border="1">
       <tbody>
     <% Message::MESSAGE_TYPES.each do |message_type, message_hash| -%>
         <tr>
@@ -16,7 +19,7 @@
     <% end -%>
       </tbody>
     </table>
-    <%= submit_tag _('Save'), :class => "margin10" %>
+    <%= submit_tag _('Save') %>
   <% end -%>
   </div>
 <% end -%>

@@ -1,34 +1,23 @@
-<% content_for :stylesheet do -%>
-  <style type="text/css">
-  div.participation_input_space {
-    border: 1px dashed silver;
-    margin-top: 10px;
-    padding: 5px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  </style>
-<% end -%>
-
-<div class="desc">
+<div class="desc ui-corner-all margin05em">
   <p><%= _('Leave a message upon participation.')%></p>
   <p><%= _('It is recommended to provide the reason of application if an approval from the administrator is required to join the group.')%></p>
   <p><%= _('This message is viewable by group admin only. Write a separate entry to introduce yourself to other members!')%></p>
 </div>
 
 <% if @participation -%>
-<div style="color: red; font-weight:bold; font-size: 15px; text-align: center; margin-top: 10px;">
-  <p><%= _('You are already a member of the group.')%></p>
-  <input type="button" onclick="location.reload();" value="<%= _('Close')%>" />
-</div>
+  <div style="color: red; font-weight:bold; font-size: 15px; text-align: center; margin-top: 10px;">
+    <p><%= _('You are already a member of the group.')%></p>
+    <input type="button" onclick="location.reload();" value="<%= _('Close')%>" />
+  </div>
 <% else -%>
-<div class="participation_input_space">
-<% form_tag({:action => 'join'}) do -%>
-
-<p style="margin-bottom: 5px;"><%= _('Message: ')%><br/>
-  <%= text_area 'board_entry', 'contents', :rows =>10, :style=>"width: 98%;" %></p>
-<div style="text-align: center;"><%= submit_tag _("Request to Join Group") %></div>
-
-<% end %>
-</div>
+  <div class="participation_input_space ui-corner-all margin05em">
+    <% form_tag({:action => 'join'}) do -%>
+      <p style="margin-bottom: 5px;">
+        <%= _('Message: ')%>
+        <br/>
+        <%= text_area 'board_entry', 'contents', :rows =>10, :style=>"width: 98%;" %>
+      </p>
+      <div style="text-align: center;"><%= submit_tag _("Request to Join Group") %></div>
+    <% end %>
+  </div>
 <% end -%>

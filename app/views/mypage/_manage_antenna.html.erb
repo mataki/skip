@@ -16,15 +16,15 @@ ul#antennas_list li.dragenter {
 
 <% content_for :contents_right do -%>
 
-<div class="desc"><p><%= _("You can manage antennas for the blogs you follow etc.<br/>\nYou can edit the name of the antenna by clicking on it.<br/>\nThe list of antennas%{transmit} can be reordered by drag &amp; drop.<br/>\nYou can also move the items between antennas it by dragging the %{report_user} in the condition area.") % {:transmit => icon_tag('transmit'), :report_user => icon_tag('report_user')}%></p></div>
+<div class="desc ui-corner-all margin05emver"><p><%= _("You can manage antennas for the blogs you follow etc.<br/>\nYou can edit the name of the antenna by clicking on it.<br/>\nThe list of antennas%{transmit} can be reordered by drag &amp; drop.<br/>\nYou can also move the items between antennas it by dragging the %{report_user} in the condition area.") % {:transmit => icon_tag('transmit'), :report_user => icon_tag('report_user')}%></p></div>
 
-<div class="edit_form_space"><!-- 編集領域  -->
+<div class="edit_form_space ui-corner-all"><!-- 編集領域  -->
 
   <div id="antennas_list_container">
     <%= render :partial => 'antennas', :object => @antennas -%>
   </div>
 
-  <div id="add_antenna_area">
+  <div id="add_antenna_area" class="ui-corner-all">
     <% form_tag url_for(:controller => 'mypage', :action => 'add_antenna'), :id => 'add_antenna_form' do -%>
     <%= icon_tag 'transmit_add' %><label for="antenna_name"><%= _('Add Antenna')%></label>
     <%= text_field_tag 'antenna_name', '', :size => '20' %>

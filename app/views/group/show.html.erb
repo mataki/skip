@@ -85,16 +85,18 @@
 <% content_for :contents_right do -%>
   <div class="group_info_space">
     <h2 class="topix_title"><%= icon_tag('asterisk_orange') %><%= _('Explanation')%></h2>
-    <div class="group_info_space_desc">
+    <div class="group_info_space_desc ui-corner-all">
       <div class="group_info_space_desc_body"><%= render_richtext(@group.description, @group.symbol) -%></div>
     </div>
   </div><!-- group_info_space -->
 
-  <%= render :partial => "mypage/page_space",
-             :locals => {
-               :id_name => 'recent_messages',
-               :title_name => _('Recent Entries'),
-               :pages => @recent_messages } %>
+  <% unless @recent_messages.blank? %>
+    <%= render :partial => "mypage/page_space",
+               :locals => {
+                 :id_name => 'recent_messages',
+                 :title_name => _('Recent Entries'),
+                 :pages => @recent_messages } %>
+  <% end %>
 
   <%= render(:partial => 'collaboration_app/feeds') %>
 <% end -%>

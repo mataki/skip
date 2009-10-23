@@ -1,10 +1,10 @@
 <% show_favorite ||= false -%>
 <% unless groups.empty? -%>
   <%= hidden_field_tag("authenticity_token", form_authenticity_token) %>
-  <% if show_favorite && current_user.custom.always_show_shortcut -%>
-  <div class="desc" style="margin-bottom:5px"><%= _("Only groups with %s icons will be shown in \"My Groups\" of the right-top shortcut menu.") % icon_tag('award_star_gold_2') %></div>
+  <% if show_favorite -%>
+    <div class="desc ui-corner-all" style="margin-bottom:5px"><%= _("Only groups with %s icons will be shown in \"My Groups\" of the right-top shortcut menu.") % icon_tag('award_star_gold_2') %></div>
   <% end -%>
-  <div class="navi"><%= will_paginate_link @groups %></div>
+  <div class="navi ui-corner-all"><%= will_paginate_link @groups %></div>
   <table class="group_list_box normal">
     <tr>
       <th width="50%"><%= _('Group Name')%></th>
@@ -21,7 +21,7 @@
     </tr>
   <% end -%>
   </table>
-  <div class="navi"><%= will_paginate_link @groups %></div>
+  <div class="navi ui-corner-all"><%= will_paginate_link @groups %></div>
 <% end -%>
 
 <% content_for :javascript_initializers do -%>

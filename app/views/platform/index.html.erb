@@ -24,7 +24,7 @@
     top: 40px;
     _height: 180px;
     width: 300px;
-    padding: 2px;
+    padding: 4px;
     background-color: #f2f2ff;
     font-size: 12px;
     z-index: 20;
@@ -42,7 +42,7 @@
   </style>
 <% end -%>
 
-<div id="login" class="login-box">
+<div id="login" class="login-box ui-corner-all">
   <p><%= _('Login')%></p>
   <%= render :partial => 'shared/login_form' %>
 
@@ -51,7 +51,7 @@
   <div style="text-align: center; font-weight: bold; font-size: 14px;"><%= link_to _('Register your profile and start using %s') % Admin::Setting.abbr_app_title, activate_url %></div>
   <% end -%>
 </div>
-<div id="desc_before_login" class="desc"><%= skip_image_tag 'indicator.gif' %></div>
+<div id="desc_before_login" class="desc ui-corner-all"><%= skip_image_tag 'indicator.gif' %></div>
 
 <% content_for :javascript_initializers do -%>
     $j('#desc_before_login').load(relative_url_root + '/custom/about_this_site.html', function(text) {

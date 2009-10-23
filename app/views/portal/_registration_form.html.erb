@@ -39,7 +39,7 @@
     <td><%= text_field 'user_uid', 'uid', {:tabindex => (tabindex += 1)} %>
       <span id="uid_result" style="margin-left:3px;color:gray;font-size:10px"></span>
       <span id="indicator" style="display:none;"><%= skip_image_tag 'indicator.gif' %></span>
-      <div class="desc">
+      <div class="desc ui-corner-all margin05emver">
         <p><%= _("4 or more letters required. You can use alphabets, numbers, \"-\" and \"_\".")%></p>
         <p><%= _("\"User name\" is used to identify yourself in short in blog entries etc. by the system.")%></p>
         <p><%= _("It is the nature of the \"user name\" to be known by other users in the site, be careful to avoid using inproper values for it.")%></p>
@@ -66,7 +66,7 @@
 <%= render :partial => 'portal/profile_form', :locals => {:user => @user} %>
 
 <% submit_button_value = is_new ? _("Register User") : _("Save") %>
-<%= submit_tag submit_button_value, {:tabindex => (tabindex += 1), :id => 'submit_button', :disable_with => _("Saving...")} %>
+<%= submit_tag submit_button_value, {:tabindex => (tabindex += 1), :id => 'submit_button', :disable_with => _("Saving..."), :class=>"margin05em"} %>
 <% end %>
 </div>
 

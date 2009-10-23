@@ -3,12 +3,12 @@
 <% end -%>
 
 <% content_for :contents_right do -%>
-  <div class="desc">
+  <div class="desc ui-corner-all margin05emver">
     <p><%= _("An email will be sent to the address you have entered in order to confirm the existence.<br/>\nThe request will be completed by visiting the URL given in the email within 24 hours.")%></p>
   </div>
   <%= template_error_messages_for 'applied_email' %>
 
-  <div class="edit_form_space">
+  <div class="edit_form_space ui-corner-all">
   <%= content_tag(:p, _('Another request for changing email found. The former request will be discarded and we will proceed on the new email address.')) if @applied_email.id %>
   <% form_tag :action => 'apply_email' do -%>
     <table class="normal user_info">

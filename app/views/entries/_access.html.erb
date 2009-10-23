@@ -20,9 +20,13 @@
 <% if entry_accesses.size == 0 %>
     <%= _('This entry has not been accessed.')%>
 <% else %>
-<div class="desc" style="font-size: 10px;"><p><%=_("Showing total access count of this entry and recent visitors (max. 30).<br/>\nOnly the newest access is shown in case a user has visited multiple times in a day.")%></p></div>
+<div class="desc ui-corner-all" style="font-size: 10px;">
+  <p><%=_("Showing total access count of this entry and recent visitors (max. 30).<br/>\nOnly the newest access is shown in case a user has visited multiple times in a day.")%></p>
+</div>
 
-<div class="access_count"><%= _('Access Count: ')%><%= h total_count -%></div>
+<div class="access_count ui-corner-all">
+  <%= _('Access Count: ')%><%= h total_count -%>
+</div>
 
 <ul class="access_tracks">
   <% entry_accesses.each do |access| %>
