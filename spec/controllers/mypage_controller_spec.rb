@@ -97,7 +97,7 @@ describe MypageController, 'mypage > home 関連' do
     # メインエリア中央
     it 'みんなからの質問が設定されること' do
       @questions = {}
-      controller.should_receive(:find_questions_as_locals).with(:recent_day => 7, :per_page => 5).and_return(@questions)
+      controller.should_receive(:find_questions_as_locals).with(:recent_day => 7).and_return(@questions)
       get :index
       assigns[:questions].should == @questions
     end
