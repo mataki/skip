@@ -333,17 +333,17 @@ module ApplicationHelper
 
   def global_links
     links = ''
-    links << content_tag(:span, link_to(icon_tag('house', :title => _('My Page')) + _('My Page'), root_url), :class => 'home_link')
+    links << content_tag(:span, link_to_unless_current(icon_tag('house', :title => _('My Page')) + _('My Page'), root_url), :class => 'home_link')
     other_links = []
-    other_links << link_to(icon_tag('chart_bar', :title => _('Rankings')) + _('Rankings'), :controller => '/rankings', :action => 'index')
-    other_links << link_to(icon_tag('chart_curve', :title => _('Site Information')) + _('Site Information'), :controller => '/statistics')
+    other_links << link_to_unless((params[:controller] == "rankings" and params[:action] = "index"), icon_tag('chart_bar', :title => _('Rankings')) + _('Rankings'), :controller => '/rankings', :action => 'index')
+    other_links << link_to_unless_current(icon_tag('chart_curve', :title => _('Site Information')) + _('Site Information'), :controller => '/statistics')
     links << content_tag(:span, other_links, :class => 'other_links')
     search_links = []
-    search_links << link_to(icon_tag('report', :title => _('Entries')) + _('Entries'),  :controller => '/search', :action => 'entry_search') if BoardEntry.count > 0
-    search_links << link_to(icon_tag('disk_multiple', :title => _('Files')) + _('Files'),  :controller => '/search', :action => 'share_file_search') if ShareFile.count > 0
-    search_links << link_to(icon_tag('user_suit', :title => _('Users')) + _('Users'),  :controller => '/users', :action => 'index') if User.count > 1
-    search_links << link_to(icon_tag('group', :title => _('Groups')) + _('Groups'),  :controller => '/groups', :action => 'index') if Group.count > 0
-    search_links << link_to(icon_tag('tag_blue', :title => _('Bookmarks')) + _('Bookmarks'),  :controller => '/bookmarks', :action => 'index') if Bookmark.count > 0
+    search_links << link_to_unless_current(icon_tag('report', :title => _('Entries')) + _('Entries'),  :controller => '/search', :action => 'entry_search') if BoardEntry.count > 0
+    search_links << link_to_unless_current(icon_tag('disk_multiple', :title => _('Files')) + _('Files'),  :controller => '/search', :action => 'share_file_search') if ShareFile.count > 0
+    search_links << link_to_unless_current(icon_tag('user_suit', :title => _('Users')) + _('Users'),  :controller => '/users', :action => 'index') if User.count > 1
+    search_links << link_to_unless_current(icon_tag('group', :title => _('Groups')) + _('Groups'),  :controller => '/groups', :action => 'index') if Group.count > 0
+    search_links << link_to_unless_current(icon_tag('tag_blue', :title => _('Bookmarks')) + _('Bookmarks'),  :controller => '/bookmarks', :action => 'index') if Bookmark.count > 0
     links << content_tag(:span, search_links.join(' '), :class => 'search_links')
   end
 
