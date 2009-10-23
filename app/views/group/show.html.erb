@@ -34,7 +34,7 @@
 <% end -%>
 
 <% content_for :contents_left do -%>
-  <div>
+  <div class="action_buttons">
     <ul class="no_style">
       <% if @participation -%>
         <li><%= link_to(content_tag('span', _('New Posts')), {:controller => 'group', :action => 'new'}, :class => 'rounded') %></li>
