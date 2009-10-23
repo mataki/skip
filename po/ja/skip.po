@@ -47,10 +47,10 @@ msgstr ""
 #: app/views/rankings/bookmark.html.erb:4
 #: app/views/rankings/bookmark.html.erb:7
 #: app/views/rankings/bookmark.html.erb:10 app/views/bookmark/list.html.erb:54
-#: app/views/bookmark/show.html.erb:24
+#: app/views/bookmark/show.html.erb:24 app/views/mypage/index.html.erb:80
 #: app/views/mypage/entries_by_date.html.erb:11
 msgid "%B %d %Y"
-msgstr "%Y年%m月%d日"
+msgstr "%Y/%m/%d"
 
 #: app/models/board_entry.rb:395 app/models/board_entry_comment.rb:34
 #: app/views/mypage/index.html.erb:85
