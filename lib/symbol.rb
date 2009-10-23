@@ -24,6 +24,7 @@ class Symbol
     return symbol_type, symbol_id
   end
 
+  # TODO BoardEntry.ownerとかぶってる。こちらを無くしたい
   # symbolからオブジェクト(User,Groupのどれか)を取り出す
   def self.get_item_by_symbol symbol
     return nil if symbol.blank?

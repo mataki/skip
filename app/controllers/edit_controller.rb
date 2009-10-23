@@ -22,8 +22,9 @@ class EditController < ApplicationController
   # tab_menu
   def index
     params[:entry_type] = BoardEntry::DIARY if params[:entry_type].blank?
-    owner = Symbol.get_item_by_symbol params[:symbol]
-    params[:symbol] = owner ? owner.symbol : current_user.symbol
+    owner = BoardEntry.owner(params[:symbol])
+    owner ||= current_user
+    params[:symbol] = owner.symbol
 
     params[:publication_type] = "public" if params[:publication_type].blank?
     params[:publication_symbols_value] = "" if params[:publication_symbols_value].blank?
@@ -41,8 +42,12 @@ class EditController < ApplicationController
     @board_entry.title = params[:title]
     @board_entry.category = params[:category]
     @board_entry.aim_type = params[:aim_type]
-    if owner = BoardEntry.owner(params[:symbol]) and owner.is_a?(Group)
-      @board_entry.send_mail = owner.default_send_mail
+    if owner
+      if owner.is_a?(Group)
+        @board_entry.send_mail = SkipEmbedded::InitialSettings['mail']['default_send_mail_of_question'] || owner.default_send_mail
+      elsif owner.is_a?(User)
+        @board_entry.send_mail = SkipEmbedded::InitialSettings['mail']['default_send_mail_of_question']
+      end
     end
 
     setup_layout @board_entry

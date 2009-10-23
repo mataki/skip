@@ -664,7 +664,9 @@ class BoardEntry < ActiveRecord::Base
     Mail.delete( unsent_mails.collect{ |mail| mail.id }) unless unsent_mails.size == 0
   end
 
+  # TODO Symbol.get_item_by_symbolとかぶってる。こちらを生かしたい
   def self.owner symbol
+    return nil if symbol.blank?
     symbol_type, symbol_id = SkipUtil::split_symbol symbol
     if symbol_type == "uid"
       User.find_by_uid(symbol_id)
