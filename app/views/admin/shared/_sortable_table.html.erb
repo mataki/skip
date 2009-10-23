@@ -17,7 +17,9 @@
    use_ids ||= false
 %>
 
-<div class="navi"><%= will_paginate_link objects%></div>
+<% if objects.respond_to?(:previous_page) %>
+  <div class="navi"><%= will_paginate_link objects %></div>
+<% end %>
 <div id="table_columns">
   <h4><%= _('Set column visibility (Click to switch on / off))') %></h4>
 </div>
@@ -46,7 +48,9 @@
     <% end %>
   </tbody>
 </table>
-<div class="navi"><%= will_paginate_link objects%></div>
+<% if objects.respond_to?(:previous_page) %>
+  <div class="navi"><%= will_paginate_link objects %></div>
+<% end %>
 
 <% content_for :javascript_includes do -%>
 <%= skip_jquery_include_tag 'jquery.columnmanager' %>
