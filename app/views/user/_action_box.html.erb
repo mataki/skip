@@ -1,5 +1,5 @@
 <% if user.active? -%>
-<div>
+<div class="action_buttons ui-corner-all">
   <ul class="no_style">
     <% if current_user.follow_chains.map(&:to_user_id).include? user.id -%>
       <li><%= link_to(content_tag('span', _('Edit introductions')), {:controller => 'user', :action => 'edit_chain' }, {:class => 'rounded'}) %></li>
