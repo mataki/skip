@@ -36,7 +36,7 @@
     <table class="normal" style="width: 100%; text-align: left; margin: 10px 0; font-size: 10px; border: 1px solid gray;">
       <tr>
         <td rowspan="3" style="width: 90px; text-align: center;"><%= entry_link_to(entry, :view_text => show_picture(entry.user, :width => 90, :height => 60)) %></td>
-        <th><%= "["+_('Resolved')+"] - " if entry.hide %><%=h entry.diary_date %> - <%=h entry.category %></th>
+        <th><%=h entry.diary_date %> - <%=h entry.category %></th>
         <td style="text-align: right; width: 300px;"><%= _('Datetime Last Updated: ')%><%=h entry.last_updated.strftime(_('%m/%d/%Y %H:%M')) %></td>
       </tr>
       <tr>
