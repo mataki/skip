@@ -226,7 +226,9 @@
       </div>
     </div>
     <div class="information">
-      <div class="date"><%=h entry.diary_date %> <%= "by #{user_link_to(entry.user)}" %>
+      <div class="date">
+        <%= "[" + s_("BoardEntry|Aim type|#{entry.aim_type}") + "]" %>
+        <%=h entry.diary_date %> <%= "by #{user_link_to(entry.user)}" %>
         <span class="evaluation"><%= get_entry_infos(entry) -%></span>
       </div>
     </div>
