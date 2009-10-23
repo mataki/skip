@@ -95,7 +95,7 @@
     <%# ============================================================ -%>
     <%#  main area recent users -%>
     <%# ============================================================ -%>
-    <% if @recent_users.size > 0 -%>
+    <% unless @recent_users.empty? -%>
     <%= show_title_bar("user_suit", _("Recent Users")) %>
     <div class="topix_body">
       <% @recent_users.each do |user| -%>

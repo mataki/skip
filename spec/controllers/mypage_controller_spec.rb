@@ -35,6 +35,13 @@ describe MypageController, 'mypage > home 関連' do
       @current_user_info = {:using_day => 1}
       @current_user.stub!(:info).and_return(@current_user_info)
       controller.stub!(:recent_day).and_return(7)
+      controller.stub!(:get_entry_count)
+      Group.stub!(:has_waiting_for_approval)
+      controller.stub!(:mail_your_messages)
+      controller.stub!(:find_questions_as_locals)
+      controller.stub!(:find_access_blogs_as_locals)
+      controller.stub!(:find_recent_blogs_as_locals)
+      controller.stub!(:recent_bbs)
     end
     # ============================================================
     #  right side area
@@ -55,13 +62,13 @@ describe MypageController, 'mypage > home 関連' do
     end
     it '最近登録されたグループが設定されること' do
       @recent_groups = [stub_model(Group)]
-      Group.should_receive(:all).and_return(@recent_groups)
+      Group.stub_chain(:active, :recent, :order_recent, :limit => @recent_groups)
       get :index
       assigns[:recent_groups].should == @recent_groups
     end
     it '最近登録されたユーザが設定されること' do
       @recent_users = [stub_model(User)]
-      User.should_receive(:all).and_return(@recent_users)
+      User.stub_chain(:recent, :order_recent, :limit => @recent_users)
       get :index
       assigns[:recent_users].should == @recent_users
     end
