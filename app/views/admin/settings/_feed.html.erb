@@ -1,3 +1,4 @@
+<div class="box"><%= _('The setting change of the rss feeds are possible.') %></div>
 <% @revert_columns = %w(mypage_feed_default_limit mypage_feed_timeout) %>
 <div class="box tabular">
   <p><%= settings_label_with_select_tag :mypage_feed_default_limit, (1..5).to_a.map{ |i| i.to_s } %></p>
