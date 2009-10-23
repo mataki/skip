@@ -81,8 +81,8 @@
     <%# ============================================================ -%>
     <%#  main area bookmarks -%>
     <%# ============================================================ -%>
-    <% unless @bookmarks.empty? -%>
-      <%= show_title_bar("tag_blue", _("New bookmarks"), {:controller => 'bookmarks'}) %>
+    <%= show_title_bar("tag_blue", _("New bookmarks")) %>
+    <% if @bookmarks.size > 0 %>
       <div class="topix_body" id="bookmark_body">
       <% @bookmarks.each do |bookmark| -%>
         <div class="page_line">
