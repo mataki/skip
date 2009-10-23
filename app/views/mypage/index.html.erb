@@ -57,8 +57,10 @@
     <%# ============================================================ -%>
 
     <% unless @mail_your_messages[:pages].empty? -%>
-      <%= show_title_bar(@mail_your_messages[:title_icon], @mail_your_messages[:title_name], {:controller => 'mypage', :action => "entries_by_antenna", :antenna_id => @mail_your_messages[:id_name]}) %>
-      <%= render :partial => "list_block", :locals => @mail_your_messages %>
+      <div id="messages_box" class="ui-corner-all">
+        <h2><%= icon_tag(@mail_your_messages[:title_icon]) + h(@mail_your_messages[:title_name]) %></h2>
+        <%= render :partial => "list_block", :locals => @mail_your_messages.merge(:hide_entry_info => true) %>
+      </div>
     <% end -%>
 
     <%# ============================================================ -%>

@@ -2,6 +2,7 @@
 <% title_icon ||= "user_comment" -%>
 <% delete_categories ||= [] -%>
 <% recent_day ||= nil -%>
+<% hide_entry_info ||= false -%>
 
 <%= %(<div id="#{id_name}">) %>
 
@@ -17,7 +18,9 @@
   <div class="topix_line">
     <div class="title">
       <%= hide_long_tags(entry_search_links_by_category, 3) + entry_link_to(message, {}, {:title => h(message.title + entry_infos)}) %>
-      <span class="supplement"><%=h entry_infos %></span>
+      <% unless hide_entry_info %>
+        <span class="supplement"><%=h entry_infos %></span>
+      <% end %>
     </div>
     <div class="owner">
       <%= symbol2name_hash ? symbol_link_to(message.symbol, symbol2name_hash[message.symbol]) : user_link_to(message.user) %>
