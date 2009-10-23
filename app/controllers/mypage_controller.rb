@@ -65,7 +65,7 @@ class MypageController < ApplicationController
     # ============================================================
     #  main area bookmarks
     # ============================================================
-    @bookmarks = Bookmark.find_visible(5, recent_day)
+    @bookmarks = Bookmark.publicated.recent(10).limit(5)
   end
 
   # mypage > profile

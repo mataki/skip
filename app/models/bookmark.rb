@@ -29,6 +29,23 @@ class Bookmark < ActiveRecord::Base
   validates_presence_of :title
   validates_length_of :title, :maximum => 255
 
+  named_scope :recent, proc { |day_count|
+    return {} if day_count.blank?
+    { :conditions => ["bookmarks.updated_on > ?", Time.now.ago(day_count.to_i.day)] }
+  }
+
+  named_scope :publicated, proc {
+    {
+      :select => 'distinct bookmarks.*',
+      :conditions => ['bookmark_comments.public = ?', true],
+      :include => [:bookmark_comments]
+    }
+  }
+
+  named_scope :order_new, proc { { :order => "bookmarks.updated_on DESC" } }
+
+  named_scope :limit, proc { |num| { :limit => num } }
+
   SORT_TYPES = [
     [ N_("Sort by Registered Dates (Descending)"), "bookmarks.updated_on DESC" ],
     [ N_("Sort by Registered Dates (Ascending)"), "bookmarks.updated_on ASC" ],
@@ -150,15 +167,6 @@ class Bookmark < ActiveRecord::Base
     end
     tag_str =  tags.uniq.join('][')
     return tags.size > 0 ? "[#{tag_str}]" :""
-  end
-
-  def self.find_visible(limit = 5, recent_day = 10)
-    find(:all,
-         :select => 'distinct bookmarks.*',
-         :include => 'bookmark_comments',
-         :conditions => ["bookmarks.updated_on > ? AND bookmark_comments.public = ? ", Date.today - recent_day, true],
-         :limit => limit,
-         :order =>"bookmarks.updated_on DESC" )
   end
 
   def user_tags

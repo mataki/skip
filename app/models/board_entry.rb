@@ -61,7 +61,7 @@ class BoardEntry < ActiveRecord::Base
   }
 
   named_scope :recent, proc { |day_count|
-    return if day_count.blank?
+    return {} if day_count.blank?
     { :conditions => ['last_updated > :date', { :date => Time.now.ago(day_count.to_i.day) }] }
   }
 

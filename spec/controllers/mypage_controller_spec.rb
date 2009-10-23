@@ -114,7 +114,7 @@ describe MypageController, 'mypage > home 関連' do
     end
     it '最新のブックマークが設定されること' do
       @bookmarks = [stub_model(Bookmark)]
-      Bookmark.should_receive(:find_visible).with(5, 7).and_return(@bookmarks)
+      Bookmark.stub_chain(:publicated, :recent, :limit => @bookmarks)
       get :index
       assigns[:bookmarks].should == @bookmarks
     end
