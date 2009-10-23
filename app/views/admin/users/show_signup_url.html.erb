@@ -1,7 +1,7 @@
 <div class="onetime_url">
 <p><%= _('The URL for signing up as follows:') %></p>
 <p><%=h @signup_url %></p>
-<% unless Admin::Setting.mail_function_setting -%>
+<% unless SkipEmbedded::InitialSettings['mail']['show_mail_function'] -%>
 <p><%= _('Send the URL to the email address below.') %></p>
 <p><%=h @user.email %></p>
 <p><%= mail_to(@user.email, _('Send an email with your email software (Receipent and message body will be set automatically)'), :body => strip_tags(@mail_body).tosjis, :subject => _('Activation email message').tosjis, :encode => 'hex') %></p>

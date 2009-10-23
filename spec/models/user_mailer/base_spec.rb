@@ -17,7 +17,7 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe UserMailer::Base, "#smtp_settings" do
   before(:all) do
-    Admin::Setting.stub!(:mail_function_setting).and_return(true)
+    SkipEmbedded::InitialSettings.stub!("[]").with('mail').and_return({'show_mail_function' => true})
     @before_method = ActionMailer::Base.delivery_method
     @before_errors = ActionMailer::Base.raise_delivery_errors
     ActionMailer::Base.delivery_method = :smtp_failover_activerecord

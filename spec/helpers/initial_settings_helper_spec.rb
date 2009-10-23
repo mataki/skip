@@ -49,7 +49,7 @@ describe InitialSettingsHelper, '#enable_activate?' do
     before do
       SkipEmbedded::InitialSettings.stub!("[]").with('login_mode').and_return('password')
       Admin::Setting.stub!(:stop_new_user).and_return(false)
-      Admin::Setting.stub!(:mail_function_setting).and_return(true)
+      SkipEmbedded::InitialSettings.stub!("[]").with('mail').and_return({'show_mail_function' => true})
     end
     it { helper.enable_activate?.should be_true }
   end
@@ -75,7 +75,8 @@ describe InitialSettingsHelper, '#enable_activate?' do
   end
   describe 'メール機能無効の場合' do
     before do
-      Admin::Setting.stub!(:mail_function_setting).and_return(false)
+      SkipEmbedded::InitialSettings.stub!("[]").with('login_mode').and_return('password')
+      SkipEmbedded::InitialSettings.stub!("[]").with('mail').and_return({'show_mail_function' => false})
     end
     it { helper.enable_activate?.should be_false }
   end
@@ -108,7 +109,7 @@ describe InitialSettingsHelper, '#enable_forgot_password?' do
   describe 'パスワードモード かつ メール機能有効の場合' do
     before do
       SkipEmbedded::InitialSettings.stub!("[]").with('login_mode').and_return('password')
-      Admin::Setting.stub!(:mail_function_setting).and_return(true)
+      SkipEmbedded::InitialSettings.stub!("[]").with('mail').and_return({'show_mail_function' => true})
     end
     it { helper.enable_forgot_password?.should be_true }
   end
@@ -128,7 +129,8 @@ describe InitialSettingsHelper, '#enable_forgot_password?' do
   end
   describe 'メール機能無効の場合' do
     before do
-      Admin::Setting.stub!(:mail_function_setting).and_return(false)
+      SkipEmbedded::InitialSettings.stub!("[]").with('login_mode').and_return('password')
+      SkipEmbedded::InitialSettings.stub!("[]").with('mail').and_return({'show_mail_function' => false})
     end
     it { helper.enable_forgot_password?.should be_false }
   end
@@ -139,7 +141,7 @@ describe InitialSettingsHelper, '#enable_forgot_openid?' do
     before do
       SkipEmbedded::InitialSettings.stub!("[]").with('login_mode').and_return('rp')
       SkipEmbedded::InitialSettings.stub!("[]").with('fixed_op_url').and_return(nil)
-      Admin::Setting.stub!(:mail_function_setting).and_return(true)
+      SkipEmbedded::InitialSettings.stub!("[]").with('mail').and_return({'show_mail_function' => true})
     end
     it { helper.enable_forgot_openid?.should be_true }
   end
@@ -158,7 +160,8 @@ describe InitialSettingsHelper, '#enable_forgot_openid?' do
   end
   describe 'メール機能無効の場合' do
     before do
-      Admin::Setting.stub!(:mail_function_setting).and_return(false)
+      SkipEmbedded::InitialSettings.stub!("[]").with('login_mode').and_return('password')
+      SkipEmbedded::InitialSettings.stub!("[]").with('mail').and_return({'show_mail_function' => false})
     end
     it { helper.enable_forgot_openid?.should be_false }
   end

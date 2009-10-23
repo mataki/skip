@@ -23,10 +23,9 @@
 <% end -%>
 </div>
 
-<% @revert_columns = %w(mail_function_setting contact_mail_contain_contents host_and_port protocol) -%>
+<% @revert_columns = %w(contact_mail_contain_contents host_and_port protocol) -%>
 <h4><%= _('Email') %></h4>
 <div class="box tabular">
-  <p><%= settings_label_with_check_box_tag :mail_function_setting %></p>
   <p><%= settings_label_with_check_box_tag :contact_mail_contain_contents %></p>
   <p><%= settings_label_with_text_field_tag :host_and_port unless SkipEmbedded::InitialSettings['host_and_port']  %></p>
   <p><%= settings_label_with_text_field_tag :protocol unless SkipEmbedded::InitialSettings['protocol'] %></p>

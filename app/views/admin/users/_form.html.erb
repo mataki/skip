@@ -52,7 +52,7 @@
   <%= label Admin::User.name, :section %>
   <%= text_field :user, :section %>
 </p>
-<% if !Admin::Setting.mail_function_setting && @user.active? && login_mode?(:password) -%>
+<% if !SkipEmbedded::InitialSettings['mail']['show_mail_function'] && @user.active? && login_mode?(:password) -%>
 <p>
   <%= label Admin::User.name, :password %>
   : [<%= link_to(_('"Show URL for resetting'), issue_password_reset_code_admin_user_path(@user), :class => 'nyroModal') %>]

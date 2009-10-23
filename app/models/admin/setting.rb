@@ -43,8 +43,6 @@ class Admin::Setting < ActiveRecord::Base
   N_('Admin::Setting|Footer second description')
 
   # メール関連の設定用
-  N_('Admin::Setting|Mail function setting')
-  N_('Admin::Setting|Mail function setting description')
   N_('Admin::Setting|Contact mail contain contents')
   N_('Admin::Setting|Contact mail contain contents description')
   N_('Admin::Setting|Host and port')

@@ -22,7 +22,7 @@
             confirm_link = link_to( _('Confirm'), show_signup_url_admin_user_path(object), :class => 'nyroModal')
             _('To be activated') + "(#{confirm_link})"
           else
-            issue_link_str = Admin::Setting.mail_function_setting ? _('Notify activation') : _('Prepare for activation')
+            issue_link_str = SkipEmbedded::InitialSettings['mail']['show_mail_function'] ? _('Notify activation') : _('Prepare for activation')
             issue_link = link_to(issue_link_str, issue_activation_code_admin_user_path(object), :class => 'issue_activation_code_link')
             if login_mode?(:password)
               s_("User|Status|#{object.status}") + "(#{issue_link})"
@@ -55,7 +55,7 @@
     }
               }
   -%>
-  <%= submit_tag Admin::Setting.mail_function_setting ? _('Send activation email to selected users') : _('Issue activation url for selected users') %>
+  <%= submit_tag SkipEmbedded::InitialSettings['mail']['show_mail_function'] ? _('Send activation email to selected users') : _('Issue activation url for selected users') %>
   <% end -%>
 </div>
 <% footer_links = [] -%>
@@ -75,6 +75,6 @@
     };
     $j('.issue_activation_code_link')
     .click(function() {
-        return confirm('<%= Admin::Setting.mail_function_setting ? _('Are you sure to send activation email to target user?') : _('Activation URL is to be issued. Send the URL shown by clicking the confirmation link in the next screen to the user.') %>');
+        return confirm('<%= SkipEmbedded::InitialSettings['mail']['show_mail_function'] ? _('Are you sure to send activation email to target user?') : _('Activation URL is to be issued. Send the URL shown by clicking the confirmation link in the next screen to the user.') %>');
     });
 <% end -%>

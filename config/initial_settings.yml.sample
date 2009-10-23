@@ -64,10 +64,11 @@ default: &default
   # ================================================================================================
   # メールに関する設定
   # ================================================================================================
-  raise_delivery_errors: false                                       # メール送信に失敗した場合のエラー処理を行なうか
+  raise_delivery_errors: false                                      # メール送信に失敗した場合のエラー処理を行なうか
   # 通常のメール関連機能のための設定
   mail:
-    default_send_mail_of_question: false
+    show_mail_function: false                                       # メール関連項目の表示制御(メールアドレス変更、メール通知設定、メール送信履歴、(記事)連絡タグ)
+    default_send_mail_of_question: false                            # 質問記事のメール送信チェックボックスのデフォルト値
     smtp_settings:
       :address:    localhost
       :port:       25
@@ -75,7 +76,7 @@ default: &default
       :user_name:
       :password:
       :authentication:
-      :tls:        false                                             # ruby 1.8.6以下でtlsを有効にする場合はtrueにする
+      :tls:        false                                            # ruby 1.8.6以下でtlsを有効にする場合はtrueにする
   # システムにエラーが発生した場合にエラーメールを送信するための設定
   exception_notifier:
     enable: false                                                    # システムエラーをシステム運用担当者にメールするかどうか

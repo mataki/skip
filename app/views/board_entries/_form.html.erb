@@ -85,7 +85,7 @@ div.input_line textarea {
   <div style="clear: left"></div>
 </div>
 
-<% if Admin::Setting.mail_function_setting %>
+<% if SkipEmbedded::InitialSettings['mail']['show_mail_function'] %>
 <div class="input_line input_option invisible">
   <div class="input_label" style="height: 3em;"><%= _('Email')%></div>
   <div class="input_value">
