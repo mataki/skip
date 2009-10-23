@@ -298,9 +298,9 @@
 <div id="hide_action">
   <% if BoardEntry::HIDABLE_AIM_TYPES.include? entry.aim_type -%>
     <% form_tag({:controller => 'board_entries', :action => 'toggle_hide', :id => entry.id}) do -%>
-      <%= submit_tag entry.hide ? _('Publish this entry') : _('Hide this entry') %>
       <%= label_tag "comment", s_('EntryHideOperation|comment') %>
       <%= text_field_tag "comment" %>
+      <%= submit_tag entry.hide ? _('Publish this entry') : _('Hide this entry'), :id => 'toggle_hide_button', :disabled => true, :disable_with => _('Saving...') %>
     <% end -%>
     <ul>
       <% for operation in entry.entry_hide_operations -%>
@@ -682,6 +682,15 @@
       // 「記事を未読にする」チェックボックス押下時の処理
       $j('#read_state_check').click(function() {
           changeReadState(<%= entry.id %>, this.checked, authenticity_token);
+      });
+
+      // 「終了する」ボタンの活性制御
+      $j('form input#comment').keyup(function() {
+        if ($j(this).val() == '') {
+          $j('form input#toggle_hide_button').attr('disabled', 'disabled');
+        } else {
+          $j('form input#toggle_hide_button').attr('disabled', '');
+        }
       });
 
       var authenticity_token = function(){
