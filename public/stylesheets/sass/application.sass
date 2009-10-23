@@ -194,20 +194,28 @@ div.action_buttons
     :margin 0px 7px
 
 div.right_box
-  :margin 2px 0
+  :margin 0px 0px 10px 0px
+  :font-size 80%
   h2
     :background-color #0AC
     :color white
     :font-size 14px
-    :padding 2px
+    :padding 2px 6px
   ul
     :border 1px solid #0AC
     li
       :margin 6px 2px
-      :font-size 80%
       :border-bottom 1px dotted silver
-      span.left
-        :width 40px
+  table
+    :border 1px solid #0AC
+    tr
+      :border-bottom 1px dotted silver
+      :font-size 80%
+      td.left
+        :font-size 16px
+      td.right
+        .title
+          :font-size 12px
 // サイドカラムのカレンダーボックス
 // ------------------------------------------------------------
 table.calendar
@@ -575,8 +583,9 @@ div#mypage_right
 
 div#messages_box
   :border 1px solid #FFC000
-  :margin 5px 0
+  :margin 15px 0
   h2
+    :padding 3px 0
     :background-color #FFC000
     :font-size 14px
     :text-align center

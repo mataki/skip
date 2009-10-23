@@ -36,19 +36,19 @@
     <% unless @access_blogs[:pages].empty? -%>
       <div class="right_box" id="access_blogs">
         <h2 class="ui-corner-top"><%= h @access_blogs[:title_name] -%></h2>
-        <ul class="no_style ui-corner-bottom">
+        <table class="ui-corner-bottom">
           <% @access_blogs[:pages].each_with_index do |entry, i| %>
-            <li>
-              <div>
-                <span class="rank"><%= i+1 %>.</span>
-                <span class="name"><%= link_to show_picture(entry.user, :width=>24, :height => 24) + h(entry.user.name) %></span>
-              </div>
-              <div>
-                <span class="title"><%= link_to h(entry.title), entry.get_url_hash %></span>
-              </div>
-            </li>
+            <tr>
+              <td class="left" width="40px">
+                <div class="picture"><%= i+1 %>.<%= show_picture(entry.user, :width=>24, :height => 24) %></div>
+              </td>
+              <td class="right">
+                <div class="title"><%= link_to h(entry.title), entry.get_url_hash %></div>
+                <div class="name">by <%= link_to h(entry.user.name) %></div>
+              </td>
+            </tr>
           <% end -%>
-        </ul>
+        </table>
       </div>
     <% end -%>
   </div>
@@ -63,7 +63,9 @@
 
     <% unless @mail_your_messages[:pages].empty? -%>
       <div id="messages_box" class="ui-corner-all">
-        <h2 class="ui-corner-top"><%= icon_tag(@mail_your_messages[:title_icon]) + h(@mail_your_messages[:title_name]) %></h2>
+        <h2 class="ui-corner-top">
+          <%= icon_tag(@mail_your_messages[:title_icon]) + h(@mail_your_messages[:title_name]) %>
+        </h2>
         <%= render :partial => "list_block", :locals => @mail_your_messages.merge(:hide_entry_info => true) %>
       </div>
     <% end -%>
