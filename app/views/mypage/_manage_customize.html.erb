@@ -37,12 +37,6 @@
     <% end -%>
     <br style="clear: left;" />
 
-    <h2 class="subtitle"><%= _('Shortcut of group') %></h2>
-    <div style="margin: 10px;">
-    <%= f.radio_button(:always_show_shortcut, true) %><%= f.label :always_show_shortcut_true, _('Show Shortcut') %><br/>
-    <%= f.radio_button(:always_show_shortcut, false) %><%= f.label :always_show_shortcut_false, _('Hide Shortcut') %><br/>
-    </div>
-
     <h2 class="subtitle"><%= _('Entries display format of Mypage') %></h2>
     <div style="margin: 10px;">
       <%= f.radio_button(:display_entries_format, "tabs") %><%= f.label :display_entries_format_tabs, _('Show tabs') %><br/>

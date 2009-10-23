@@ -312,10 +312,7 @@ module ApplicationHelper
   end
 
   def shortcut_menus
-    menus =  []
-    option_tags = []
-    option_tags << content_tag(:option, _('Move to groups joined ...'), :value => url_for({:controller => '/mypage', :action => 'group'}))
-    option_tags << content_tag(:option, '----', :value => '----')
+    option_tags = [content_tag(:option, _('Move to groups joined ...'), :value => url_for({:controller => '/mypage', :action => 'group'}))]
 
     Group.favorites_per_category(current_user).each do |category|
       option_tags << content_tag(:option, "[#{h(category[:name])}]", :disabled => 'disabled', :style => 'color: gray')
@@ -324,11 +321,7 @@ module ApplicationHelper
       end
     end
 
-    option_tags << content_tag(:option, '----', :value => '----')
-    option_tags << content_tag(:option, _('Groups Joined'), :value => url_for({:controller => '/mypage', :action => 'group'}))
-
-    menus << "<select class=\"select_navi\">#{option_tags.join('')}</select>"
-    menus
+    "<select class=\"select_navi\">#{option_tags.join('')}</select>"
   end
 
   def global_links

@@ -50,7 +50,7 @@
       <%= text_field_tag "full_text_query", search_label, :class => "labeled-field" %>
       <%= submit_tag _('Search') -%>
     <% end -%>
-    <% if current_user && current_user.custom.always_show_shortcut -%>
+    <% if current_user && !current_user.groups.participating(current_user).empty? -%>
       <%= shortcut_menus %>
     <% end -%>
   </div>
