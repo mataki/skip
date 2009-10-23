@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-10-23 17:52+0900\n"
+"POT-Creation-Date: 2009-10-23 18:38+0900\n"
 "PO-Revision-Date: 2009-10-23 17:37+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -646,8 +646,11 @@ msgstr "このサイトについて"
 #: app/controllers/admin/documents_controller.rb:21
 msgid "Admin::DocumentsController|about_this_site_description"
 msgstr ""
-"このサイトの目的と概要を記述します。システムでは、フッターにリンクを表示して"
-"います。"
+"ユーザが登録して初めてSKIPにログインしたタイミングで表示されるページとなりま"
+"す。<br/>このページにて、本サイトの目的と概要や、SKIPを利用する上での重要な注"
+"意事項やルールを記載するようにしてください。<br/>組織内でのセキュリティポリ"
+"シーや、業務上での使用方法など、適宜必要だと考えられる事項を記載しましょう。"
+"<br/>尚、システムではフッターにリンクを表示しています。"
 
 #: app/controllers/admin/documents_controller.rb:22
 msgid "Admin::DocumentsController|rules"
@@ -656,8 +659,9 @@ msgstr "利用規約"
 #: app/controllers/admin/documents_controller.rb:23
 msgid "Admin::DocumentsController|rules_description"
 msgstr ""
-"このシステム用の利用規約を記述します。システムでは、初回ログイン後に表示して"
-"います。また、フッターにリンクを表示しています。"
+"SKIPを利用する上で、各ユーザに守ってもらいたい事項に関する利用規約を記述しま"
+"す。<br/>システムでは、初回ログイン後に表示しています。また、フッターにリンクを表"
+"示しています。"
 
 #: app/models/admin/group_category.rb:19
 msgid "Admin::GroupCategory|Code"
@@ -6062,30 +6066,30 @@ msgstr "タイトル、コメントが検索対象となります"
 #: app/views/admin/settings/_main.html.erb:1
 msgid "The setting change of the general system are possible."
 msgstr ""
-"SKIP内の各所にある文言やSKIPの基本的な振る舞いに関する設定です。<br />"
-"お問い合わせ先メールアドレスは、ユーザからの報告を受けつける窓口となりますので、<br />"
-"運営担当者の方々が受信可能なメールアドレス(メーリングリスト等)を入力してください。<br />"
-"その他は、必要に応じて変更してください。<br />"
+"SKIP内の各所にある文言やSKIPの基本的な振る舞いに関する設定です。<br />お問い"
+"合わせ先メールアドレスは、ユーザからの報告を受けつける窓口となりますので、"
+"<br />運営担当者の方々が受信可能なメールアドレス(メーリングリスト等)を入力し"
+"てください。<br />その他は、必要に応じて変更してください。<br />"
 
 #: app/views/admin/images/index.html.erb:1
 msgid "The setting change of the icons and the login images are possible."
 msgstr ""
-"ファビコンやログイン画面の背景画像に関する設定です。<br />"
-"必要に応じて変更してください。"
+"ファビコンやログイン画面の背景画像に関する設定です。<br />必要に応じて変更し"
+"てください。"
 
 #: app/views/admin/settings/_feed.html.erb:1
 msgid "The setting change of the rss feeds are possible."
 msgstr ""
-"マイページの右側に、この部分で設定されたRSSフィードが表示されます。<br />"
-"注目サイトの新着記事や新着ニュースの一覧をSKIPのマイページ上で表示させたい場合は、"
-"RSSフィードの設定を行ってください。"
+"マイページの右側に、この部分で設定されたRSSフィードが表示されます。<br />注目"
+"サイトの新着記事や新着ニュースの一覧をSKIPのマイページ上で表示させたい場合"
+"は、RSSフィードの設定を行ってください。"
 
 #: app/views/admin/settings/_security.html.erb:1
 msgid "The setting change of the securities are possible."
 msgstr ""
-"SKIPを安全にご利用いただくためのセキュリティに関する設定です。<br />"
-"初期状態では、推奨値が設定されています。<br />"
-"初期状態よりも緩和した設定にした場合、SKIPのセキュリティ強度が低下する可能性があります。<br />"
+"SKIPを安全にご利用いただくためのセキュリティに関する設定です。<br />初期状態"
+"では、推奨値が設定されています。<br />初期状態よりも緩和した設定にした場合、"
+"SKIPのセキュリティ強度が低下する可能性があります。<br />"
 
 #: app/controllers/mypage_controller.rb:406
 msgid ""
