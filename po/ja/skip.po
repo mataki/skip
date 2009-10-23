@@ -4476,7 +4476,7 @@ msgstr "いいえ"
 #: app/controllers/group_controller.rb:273
 #: app/views/layouts/layout.html.erb:43
 msgid "No approval needed to join this group."
-msgstr "参加に承認は不要です"
+msgstr "自由に参加することができます"
 
 #: app/controllers/bookmark_controller.rb:165
 msgid "No bookmarks have been registered."
