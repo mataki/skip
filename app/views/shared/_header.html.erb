@@ -11,7 +11,9 @@
         links << link_to(_("My Account"), {:controller => "/mypage", :action => :manage, :only_path => false}, :class => "underline_link")
         links << link_to(_("System Administration"), {:controller => "/admin", :action => "index"}, :title => _("Administration of the site."), :class => "underline_link") if current_user.admin?
         help_url = h(SkipEmbedded::InitialSettings['help_url'])
+        what_new_url = h(SkipEmbedded::InitialSettings['what_new_url'])
         links << link_to(_('Help'), help_url, :target => "_blank", :class => "underline_link") unless help_url.blank?
+        links << link_to(_('What New'), what_new_url, :target => "_blank", :class => "attention_underline_link") unless what_new_url.blank?
 
     other_links_tag = ""
     unless COMMON_MENUS.empty?
