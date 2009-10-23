@@ -87,13 +87,12 @@
     <%#  main area bookmarks -%>
     <%# ============================================================ -%>
     <% unless @bookmarks.empty? -%>
-      <%= show_title_bar("tag_blue", _("New bookmarks"), {:controller => 'bookmarks'}) %>
+      <%= show_title_bar("tag_blue", _("New bookmarks")) %>
       <div class="topix_body" id="bookmark_body">
       <% @bookmarks.each do |bookmark| -%>
         <div class="page_line">
-          <div class="page_title"><%= link_to_bookmark_url bookmark %></div>
-          <div class="page_from"><%= link_to( _('%s users') % bookmark.bookmark_comments_count.to_s, url_for_bookmark(bookmark)) %></div>
-          <div class="page_date"><%=h bookmark.updated_on.strftime(_("%B %d %Y %H:%M")) %></div>
+          <div class="page_title"><%= link_to_bookmark_url bookmark %> - <%= link_to( _('%s users') % bookmark.bookmark_comments_count.to_s, url_for_bookmark(bookmark)) %></div>
+          <div class="page_date"><%=h bookmark.updated_on.strftime(_("%B %d %Y")) %></div>
         </div>
       <% end -%>
       </div>
@@ -108,7 +107,7 @@
       <% @recent_users.each do |user| -%>
         <div class="topix_line">
           <div class="title">
-            <%= h(user.section) %> - <%= user_link_to(user) %> <%= link_to('[' + _('Create introductions') + ']', {:controller => 'user', :action => 'new_chain', :uid => h(user.uid) }) unless current_user.follow_chains.map(&:to_user_id).include? user.id %>
+            <%= user_link_to(user) %> (<%= h(user.section) %>) &lt;&lt; <%= link_to('[' + _('Create introductions') + ']', {:controller => 'user', :action => 'new_chain', :uid => h(user.uid) }) unless current_user.follow_chains.map(&:to_user_id).include? user.id %>
           </div>
         </div>
       <% end -%>
@@ -124,7 +123,7 @@
       <% @recent_groups.each do |group| -%>
         <div class="topix_line">
           <div class="title">
-            <%= h(group.group_category.name) %> - <%= group_link_to(group) %>
+            <%= h(group.group_category.name) %> - <%= group_link_to(group) %> - <%= truncate(strip_tags(group.description), 30) %>
           </div>
         </div>
       <% end -%>

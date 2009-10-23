@@ -187,6 +187,7 @@ default: &default
   google_analytics:                                                  # Google Analyticsを利用したアクセス解析のための設定
   help_url: http://help.skipaas.jp/                                  # ヘルプのURL
   default_theme: silver                                              # 既定のテーマ
+  what_new_url:                                                      # 新機能案内のURL
 
 # 設定例
 #  initial_antenna: SKIP
