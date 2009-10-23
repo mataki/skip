@@ -151,8 +151,8 @@ describe GroupController, "GET #show" do
   end
   it { response.should render_template("show") }
   it "適切なインスタンス変数が設定されていること" do
-    assigns[:admin_users].should_not be_nil
-    assigns[:users].should_not be_nil
+    assigns[:owners].should_not be_nil
+    assigns[:except_owners].should_not be_nil
     assigns[:recent_messages].should_not be_nil
   end
 end

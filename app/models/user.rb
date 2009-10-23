@@ -84,7 +84,7 @@ class User < ActiveRecord::Base
     }
   }
 
-  named_scope :order_joined, proc { |group| { :order => "group_participations.updated_on DESC" } }
+  named_scope :order_joined, proc { { :order => "group_participations.updated_on DESC" } }
 
   named_scope :limit, proc { |num| { :limit => num } }
 
