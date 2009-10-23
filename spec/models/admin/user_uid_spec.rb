@@ -124,9 +124,6 @@ describe Admin::UserUid, "#rename" do
     @message.link_url.should == "/user/#{@new_uid}"
     @sf.reload
     @sf.owner_symbol.should == @new_symbol
-    @mail.reload
-    @mail.from_user_id.should == @new_uid
-    @mail.to_address_symbol.should == @new_symbol
     @bookmark.reload
     @bookmark.url.should == "/user/#{@new_uid}"
   end
@@ -146,7 +143,6 @@ describe Admin::UserUid, "#rename" do
     @sf.accessed_user = @u
     @sf.save!
     @sf.share_file_publications.create!({:symbol => "uid:#{uid_str}"})
-    @mail = Mail.create!({:from_user_id => uid_str, :to_address_symbol => "uid:#{uid_str}", :user_entry_no => 1})
     @bookmark = Bookmark.create!({:url => "/user/#{uid_str}", :title => uid_str})
     @ai = AntennaItem.create!({:value => "uid:#{uid_str}", :antenna_id => 1})
 

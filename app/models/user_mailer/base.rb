@@ -17,6 +17,9 @@ class UserMailer::Base < ActionMailer::Base
   helper :initial_settings
   helper :user_mailer
 
+  default_url_options[:host] = Admin::Setting.host_and_port_by_initial_settings_default
+  default_url_options[:protocol] = Admin::Setting.protocol_by_initial_settings_default
+
 private
   def self.base64(text, charset="iso-2022-jp", convert=true)
     #Fixme: Japanese dependent
@@ -26,7 +29,7 @@ private
   end
 
   def site_url
-    root_url(:protocol => Admin::Setting.protocol_by_initial_settings_default, :host => Admin::Setting.host_and_port_by_initial_settings_default)
+    root_url
   end
 
   def contact_addr

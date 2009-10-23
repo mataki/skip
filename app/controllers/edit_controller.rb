@@ -95,7 +95,6 @@ class EditController < ApplicationController
       message, new_trackbacks = @board_entry.send_trackbacks(login_user_symbols, params[:trackbacks])
       make_trackback_message(new_trackbacks)
 
-      @board_entry.cancel_mail
       @board_entry.prepare_send_mail if @board_entry.send_mail?
 
       flash[:notice] = _('Created successfully.') + message
@@ -154,10 +153,6 @@ class EditController < ApplicationController
       params[:contents_richtext] = @board_entry.contents
     end
 
-    # まだ送信していないメールが存在する場合のみ、自動で送信チェックボックスをチェックする
-    login_user_symbol_type, login_user_symbol_id = Symbol.split_symbol(session[:user_symbol])
-    @board_entry.send_mail = "1" if Mail.find_by_from_user_id_and_user_entry_no_and_send_flag(login_user_symbol_id, @board_entry.user_entry_no, false)
-
     setup_layout @board_entry
   end
 
@@ -212,7 +207,6 @@ class EditController < ApplicationController
     message, new_trackbacks = @board_entry.send_trackbacks(login_user_symbols, params[:trackbacks])
     make_trackback_message(new_trackbacks)
 
-    @board_entry.cancel_mail
     @board_entry.prepare_send_mail if @board_entry.send_mail?
 
     flash[:notice] = _('Entry was successfully updated.') + message

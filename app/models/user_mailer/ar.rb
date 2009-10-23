@@ -14,9 +14,9 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class UserMailer::AR < UserMailer::Base
-  self.delivery_method = :activerecord unless self.delivery_method == :test
+  self.delivery_method = :activerecord
 
-  def sent_contact(recipient, user_name, entry_url, entry)
+  def sent_contact(recipient, user_name, entry)
     if recipient.include? ","
       @bcc        = recipient
     else
@@ -30,7 +30,7 @@ class UserMailer::AR < UserMailer::Base
     @from       = from
     @send_on    = Time.now
     @headers    = {}
-    @body       = {:name => user_name, :entry_url => entry_url, :entry => entry, :header => header, :footer => footer}
+    @body       = {:name => user_name, :entry => entry, :header => header, :footer => footer}
   end
 
   def sent_message(recipient, link_url, message ,message_manage_url)

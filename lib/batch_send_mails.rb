@@ -18,29 +18,7 @@ require File.expand_path(File.dirname(__FILE__) + "/batch_base")
 class BatchSendMails < BatchBase
   def self.execute options
     sender = self.new
-    sender.send_notice
     sender.send_message
-  end
-
-  def send_notice
-    Mail.find(:all, :conditions => "send_flag = false", :order => 'id asc', :limit => 30).each do |mail|
-      user = User.find(:first, :conditions => ["user_uids.uid = ?", mail.from_user_id], :include => ['user_uids'])
-      if user.retired? or !(to_address = retired_check_to_address(mail.to_address))
-        mail.update_attribute :send_flag, true
-        next
-      end
-      board_entry = BoardEntry.find(:first, :conditions => ["user_id = ? and user_entry_no = ?", user.id, mail.user_entry_no])
-      next unless board_entry
-      entry_url = url_for :controller => :board_entries, :action => :forward, :id => board_entry.id
-
-      begin
-        UserMailer::AR.deliver_sent_contact(to_address, user.name, entry_url, board_entry)
-        mail.update_attribute :send_flag, true
-      rescue => e
-        self.class.log_error "failed send mail [id]: #{e}"
-        e.backtrace.each { |line| self.class.log_error line }
-      end
-    end
   end
 
   def send_message
@@ -72,15 +50,6 @@ class BatchSendMails < BatchBase
         message.update_attribute :send_flag, true
       end
     end
-  end
-
-  def retired_check_to_address(to_address)
-    active_users = to_address.split(',').inject([]) do |result, email|
-      user = User.find_by_email(email)
-      result << email if user && !user.retired?
-      result
-    end.join(',')
-    active_users.blank? ? nil : active_users
   end
 end
 

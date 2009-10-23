@@ -8,7 +8,7 @@
 <% else -%>
   <%= _("Click the URL below to see the content of message.")%>
 <% end -%>
-  <%= @entry_url %>
+  <%= url_for(:controller => :board_entries, :action => :forward, :id => @entry.id) %>
   <%= _("*Jumps directly to the blog entry.") %>
 
 <%= @footer %>

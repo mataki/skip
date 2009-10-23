@@ -31,7 +31,6 @@ class BoardEntry < ActiveRecord::Base
   has_many :user_readings, :dependent => :destroy
 
   before_create :generate_next_user_entry_no
-  after_destroy :cancel_mail
 
   validates_presence_of :title
   validates_length_of   :title, :maximum => 100
@@ -523,6 +522,7 @@ class BoardEntry < ActiveRecord::Base
     state.point
   end
 
+  # TODO もはやprepareじゃない。sent_contact_mailsなどにリネームする
   def prepare_send_mail
     return if diary? && private?
 
@@ -530,14 +530,7 @@ class BoardEntry < ActiveRecord::Base
     users.each do |u|
       next if u.id == self.user_id
       owner = load_owner
-      Mail.create({
-        :from_user_id => user.uid,
-        :user_entry_no => user_entry_no,
-        :to_address => u.email,
-        :title => title,
-        :to_address_name => owner.name,
-        :to_address_symbol => owner.symbol
-      })
+      UserMailer::AR.deliver_sent_contact(u.email, u.name, self)
     end
   end
 
@@ -656,12 +649,6 @@ class BoardEntry < ActiveRecord::Base
 
   def comma_category
     Tag.comma_tags(self.category)
-  end
-
-  def cancel_mail
-    return unless errors.empty?
-    unsent_mails = Mail.find(:all, :conditions =>["from_user_id = ? and user_entry_no = ? and send_flag = false", user.uid, user_entry_no])
-    Mail.delete( unsent_mails.collect{ |mail| mail.id }) unless unsent_mails.size == 0
   end
 
   # TODO Symbol.get_item_by_symbolとかぶってる。こちらを生かしたい

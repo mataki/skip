@@ -100,7 +100,6 @@ describe EditController, "#create" do
       @entry = stub_model(BoardEntry, :entry_type => "DIARY")
       @entry.should_receive(:save).and_return(true)
       @entry.should_receive(:send_trackbacks).and_return(["", new_trackbacks])
-      @entry.should_receive(:cancel_mail)
 
       controller.should_receive(:validate_params).and_return(true)
       controller.should_receive(:analyze_params).and_return([["sid:allusers"], []])

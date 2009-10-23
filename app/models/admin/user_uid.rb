@@ -52,8 +52,6 @@ class Admin::UserUid < UserUid
     ActiveRecord::Base.connection.execute("update share_file_publications set symbol = 'uid:#{to}' where symbol = 'uid:#{from}'")
     ActiveRecord::Base.connection.execute("update share_files set owner_symbol = 'uid:#{to}' where owner_symbol = 'uid:#{from}'")
     ActiveRecord::Base.connection.execute("update share_files set publication_symbols_value = replace(publication_symbols_value, 'uid:#{from}', 'uid:#{to}') where publication_symbols_value like '%uid:#{from}%'")
-    ActiveRecord::Base.connection.execute("update mails set from_user_id = '#{to}' where from_user_id = '#{from}'")
-    ActiveRecord::Base.connection.execute("update mails set to_address_symbol = 'uid:#{to}' where to_address_symbol = 'uid:#{from}'")
     ActiveRecord::Base.connection.execute("update bookmarks set url = replace(url, '/user/#{from}', '/user/#{to}') where url = '/user/#{from}'")
     ActiveRecord::Base.connection.execute("update antenna_items set value = 'uid:#{to}' where value = 'uid:#{from}'")
   end

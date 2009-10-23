@@ -740,44 +740,6 @@ class MypageController < ApplicationController
   end
 
   # TODO #924で画面からリンクをなくした。1.4時点で復活しない場合は削除する
-  def set_data_for_record_mail
-    @mails = Mail.scoped(
-      :conditions => ["mails.from_user_id = ?", current_user.uid],
-      :order => "mails.id DESC"
-    ).all(:select => "*, mails.updated_on as mail_updated_on").paginate(:page => params[:page], :per_page => 20)
-
-    #タイトルのリンクができるかできないかを判定する材料を取得する(ヘルパーで使う)
-    user_entry_no_list = @mails.map{ |mail| mail.user_entry_no }
-    if user_entry_no_list.size > 0
-      board_entries = BoardEntry.find(:all, :conditions =>["user_id = ? and user_entry_no in (?)",  session[:user_id], user_entry_no_list])
-      @board_enries_by_user_entry_no = Hash.new
-      board_entries.each{ |board_entry| @board_enries_by_user_entry_no.store(board_entry.user_entry_no, board_entry) }
-    end
-
-    #送信先のリンクができるかできないかを判定する材料を取得する(ヘルパーで使う)
-    uid_list = gid_list = []
-    @mails.each do |mail|
-      id = mail.symbol_id
-      case mail.symbol_type
-      when 'uid'
-        uid_list << id
-      when 'gid'
-        gid_list << id
-      end
-    end
-
-    @exist_item_by_symbol = {}
-    if uid_list.size > 0
-      users = User.find(:all, :conditions =>['user_uids.uid in (?)', uid_list], :include => [:user_uids])
-      users.each{ |user|  @exist_item_by_symbol.store(user.symbol, user) }
-    end
-    if gid_list.size > 0
-      groups = Group.active.find(:all, :conditions =>['gid in (?)', gid_list])
-      groups.each{ |group|  @exist_item_by_symbol.store(group.symbol, group) }
-    end
-  end
-
-  # TODO #924で画面からリンクをなくした。1.4時点で復活しない場合は削除する
   def set_data_for_record_blog
     login_user_id = session[:user_id]
 

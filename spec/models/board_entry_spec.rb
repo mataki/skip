@@ -177,36 +177,35 @@ describe BoardEntry, '#prepare_send_mail' do
     @alice = create_user :user_options => {:name => 'アリス', :admin => true}, :user_uid_options => {:uid => 'alice'}
     @jack = create_user :user_options => {:name => 'ジャック', :admin => true}, :user_uid_options => {:uid => 'jack'}
     @nancy = create_user :user_options => {:name => 'ナンシー', :admin => true}, :user_uid_options => {:uid => 'nancy'}
-    Mail.delete_all
   end
   describe '公開範囲が全体公開の場合' do
     before do
       @entry = create_board_entry(:symbol => @alice.symbol, :publication_type => 'public', :user_id => @alice.id)
     end
-    it 'アクティブなユーザ全員分(自分以外)のMailが出来ていること' do
+    it 'アクティブなユーザ全員分(自分以外)のEmailが出来ていること' do
       lambda do
         @entry.prepare_send_mail
-      end.should change(Mail, :count).by(User.active.count - 1)
+      end.should change(Email, :count).by(User.active.count - 1)
     end
   end
   describe '公開範囲が直接指定の場合' do
     before do
       @entry = create_board_entry(:symbol => @alice.symbol, :publication_type => 'protected', :user_id => @alice.id, :publication_symbols_value => [@alice, @jack, @nancy].map(&:symbol).join(','))
     end
-    it '直接指定された全員分(自分以外)のMailが出来ていること' do
+    it '直接指定された全員分(自分以外)のEmailが出来ていること' do
       lambda do
         @entry.prepare_send_mail
-      end.should change(Mail, :count).by(2)
+      end.should change(Email, :count).by(2)
     end
   end
   describe '公開範囲が自分だけのブログの場合' do
     before do
       @entry = create_board_entry(:symbol => 'uid:alice', :publication_type => 'private', :user_id => @alice.id)
     end
-    it 'Mailが作られないこと' do
+    it 'Emailが作られないこと' do
       lambda do
         @entry.prepare_send_mail
-      end.should change(Mail, :count).by(0)
+      end.should change(Email, :count).by(0)
     end
   end
   describe '公開範囲が参加者のみのフォーラムの場合' do
@@ -218,19 +217,19 @@ describe BoardEntry, '#prepare_send_mail' do
       end
       @entry = create_board_entry(:symbol => @group.symbol, :publication_type => 'private', :user_id => @alice.id, :publication_symbols_value => @group.symbol)
     end
-    it '参加者全員分(自分以外)のMailが出来ていること' do
+    it '参加者全員分(自分以外)のEmailが出来ていること' do
       lambda do
         @entry.prepare_send_mail
-      end.should change(Mail, :count).by(2)
+      end.should change(Email, :count).by(2)
     end
     describe '記事を所有するグループが論理削除された場合' do
       before do
         @group.logical_destroy
       end
-      it 'Mailに送信予定のレコードが作成されないこと' do
+      it 'Emailに送信予定のレコードが作成されないこと' do
         lambda do
           @entry.prepare_send_mail
-        end.should_not change(Mail, :count)
+        end.should_not change(Email, :count)
       end
     end
   end
