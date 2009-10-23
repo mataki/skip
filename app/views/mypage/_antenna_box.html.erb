@@ -6,15 +6,17 @@
 <div class="box_space antenna" style="position: relative;">
   <div style="position: absolute; top: 4px; right: 4px;"><%= icon_tag 'help', :title => _('What is Antenna') + "|" + _('Antenna Description') %></div>
   <div class="box_space_title">
-  <%= icon_tag 'folder_feed' %><%= link_to(_("Antennas"), :action => 'entries_by_antenna') %>
+    <%= icon_tag 'transmit' %><%= link_to(_("Antennas"), :action => 'entries_by_antenna') %>
   </div>
-  <div class="box_space_body"><ul id="antennas_list">
-    <% system_antennas.each do |antenna| -%>
-    <li><%= icon_tag('transmit_blue') + link_to(h(antenna.name), :action => 'entries_by_antenna', :antenna_id => antenna.antenna_type) + "(#{h antenna.count})" %></li>
-    <% end -%>
-    <% my_antennas.each do |antenna| -%>
-    <li><%= icon_tag('transmit') + link_to(h(antenna.name), :action => 'entries_by_antenna', :antenna_id => antenna.id) + "(#{h antenna.count})" %></li>
-    <% end -%>
-  </ul></div>
+  <div class="box_space_body">
+    <ul id="antennas_list">
+      <% system_antennas.each do |antenna| -%>
+        <li><%= link_to(h(antenna.name), :action => 'entries_by_antenna', :antenna_id => antenna.antenna_type) + "(#{h antenna.count})" %></li>
+      <% end -%>
+      <% my_antennas.each do |antenna| -%>
+        <li><%= link_to(h(antenna.name), :action => 'entries_by_antenna', :antenna_id => antenna.id) + "(#{h antenna.count})" %></li>
+      <% end -%>
+    </ul>
+  </div>
   <div class="box_space_bottom"><%= link_to _('[Manage antennas]'), :action => 'manage', :menu => 'manage_antenna' %></div>
 </div>
