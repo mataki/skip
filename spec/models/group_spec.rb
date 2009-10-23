@@ -94,7 +94,7 @@ describe Group do
     end
   end
 
-  describe Group, "Group.find_waitings" do
+  describe Group, ".has_waiting_for_approval" do
     describe "あるユーザの管理しているグループに承認待ちのユーザがいる場合" do
       before do
         @alice = create_user :user_options => {:name => 'アリス', :admin => true}, :user_uid_options => {:uid => 'alice'}
@@ -103,31 +103,31 @@ describe Group do
         end
       end
       it '指定したユーザに対する承認待ちのグループが取得できること' do
-        Group.find_waitings(@alice.id).first.should == @group
+        Group.has_waiting_for_approval(@alice).first.should == @group
       end
       describe '承認待ちになっているグループが論理削除された場合' do
         before do
           @group.logical_destroy
         end
         it '対象のグループが取得できないこと' do
-          Group.find_waitings(@alice.id).should be_empty
+          Group.has_waiting_for_approval(@alice).should be_empty
         end
       end
     end
   end
 
-  describe Group, "#get_owners あるグループに管理者がいる場合" do
-    before(:each) do
-      @group = Group.new
-      @user = mock_model(User)
-      @group_participation = mock_model(GroupParticipation)
-      @group_participation.stub!(:user).and_return(@user)
-      @group_participation.stub!(:owned).and_return(true)
-    @group.should_receive(:group_participations).and_return([@group_participation])
+  describe Group, "#owners あるグループに管理者がいる場合" do
+    before do
+      @alice = create_user :user_options => {:name => 'アリス', :admin => true}, :user_uid_options => {:uid => 'alice'}
+      @jack = create_user :user_options => {:name => 'ジャック', :admin => true}, :user_uid_options => {:uid => 'jack'}
+      @group = create_group(:gid => 'skip_group', :name => 'SKIPグループ') do |g|
+        g.group_participations.build(:user_id => @alice.id, :owned => true)
+        g.group_participations.build(:user_id => @jack.id)
       end
+    end
 
     it "管理者ユーザが返る" do
-      @group.get_owners.should == [@user]
+      @group.owners.should == [@alice]
     end
   end
 

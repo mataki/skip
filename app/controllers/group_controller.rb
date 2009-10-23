@@ -184,7 +184,7 @@ class GroupController < ApplicationController
         message = params[:board_entry][:contents]
 
         #グループのownerのシンボル(複数と取ってきて、publication_symbolsに入れる)
-        owner_symbols = @group.get_owners.map { |user| user.symbol }
+        owner_symbols = @group.owners.map { |user| user.symbol }
         entry_params = { }
         entry_params[:title] = _("Request to join the group has been sent out!")
         entry_params[:message] = render_to_string(:partial => 'entries_template/group_join',

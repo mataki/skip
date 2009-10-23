@@ -15,7 +15,7 @@
   <% groups.each do |group| -%>
     <tr class="<%= cycle('line_0', 'line_1') %>">
       <td><%= show_group_action(group, show_favorite) %><%= group_link_to group %></td>
-      <td><%= icon_tag(group.category_icon_name.first) + h(group.category_icon_name.last) %></td>
+      <td><%= icon_tag(group.group_category.icon) + h(group.group_category.name) %></td>
       <td><%= participation_state(group, user_id) -%></td>
       <td><%= _("%s Required") % icon_tag('key') if group.protected? %></td>
     </tr>

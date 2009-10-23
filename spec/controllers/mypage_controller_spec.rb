@@ -77,7 +77,7 @@ describe MypageController, 'mypage > home 関連' do
     end
     it 'お知らせ, 承認待ちの一覧が設定されること' do
       @waiting_groups = [stub_model(Group)]
-      Group.should_receive(:find_waitings).with(@current_user.id).and_return(@waiting_groups)
+      Group.should_receive(:has_waiting_for_approval).with(@current_user).and_return(@waiting_groups)
       get :index
       assigns[:waiting_groups].should == @waiting_groups
     end

@@ -64,6 +64,13 @@ class Group < ActiveRecord::Base
     {:conditions => ["group_participations.user_id = ? AND group_participations.owned = 1", user.id], :include => :group_participations}
   }
 
+  named_scope :has_waiting_for_approval, proc {
+    {
+      :conditions => ["group_participations.waiting = 1"],
+      :include => [:group_participations]
+    }
+  }
+
   named_scope :recent, proc { |day_count|
     { :conditions => ['created_on > ?', Time.now.ago(day_count.to_i.day)] }
   }
@@ -133,28 +140,12 @@ class Group < ActiveRecord::Base
     BoardEntry.create_entry entry_params
   end
 
-  def category_icon_name
-    [group_category.icon, group_category.name]
+  def self.has_waiting_for_approval owner
+    Group.active.owned(owner) & Group.active.has_waiting_for_approval
   end
 
-  # TODO waitingという名前でnamed_scopeにする
-  def self.find_waitings(user_id)
-    sub_query = "select group_id from group_participations where waiting = 1"
-    participations = GroupParticipation.find(:all, :conditions =>["user_id = ? and owned = 1 and group_id in (#{sub_query})", user_id])
-    result = []
-    if participations.size > 0
-      group_ids =  participations.map {|participation| participation.group_id.to_s }
-      result = Group.active.find(:all, :conditions => ["id IN (?)", group_ids])
-    end
-    result
-  end
-
-  def get_owners
-    owners = []
-    group_participations.each do |participation|
-      owners << participation.user if participation.owned
-    end
-    return owners
+  def owners
+    group_participations.only_owned.map(&:user)
   end
 
   # グループのカテゴリごとのgidの配列を返す(SQL発行あり)

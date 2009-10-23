@@ -560,7 +560,7 @@ class BoardEntry < ActiveRecord::Base
       return true if login_user_id == user_id
       #  AND グループ管理者がマイユーザ
       group = Symbol.get_item_by_symbol(symbol)
-      return true if publicate?(login_user_symbols) && group.get_owners.any?{|user| user.id == login_user_id}
+      return true if publicate?(login_user_symbols) && group.owners.any?{|user| user.id == login_user_id}
     end
     return false
   end

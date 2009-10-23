@@ -38,7 +38,7 @@
     <% elsif @group and !@group.new_record?%>
       <h1 id="title"><%=h @group.name %></h1>
       <ul class="no_style horizontal">
-        <li><%= _('Category') %>: <%= h(@group.category_icon_name.last) %></li>
+        <li><%= _('Category') %>: <%= h(@group.group_category.name) %></li>
         <li><%= _('Members') %>: <%=h(n_("%{count} user", "%{count} users", count = @group.group_participations.active.count) % {:count => count}) -%></li>
         <li><%= _('Joining the group') %>: <%= @group.protected? ? _('Need approval of the Administrator.') : _("No approval needed to join this group.") %></li>
       </ul>

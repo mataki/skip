@@ -50,7 +50,7 @@ class MypageController < ApplicationController
     current_user_info = current_user.info
     @system_messages = system_messages
     @message_array = Message.get_message_array_by_user_id(current_user.id)
-    @waiting_groups = Group.find_waitings(current_user.id)
+    @waiting_groups = Group.has_waiting_for_approval(current_user)
     # あなたへのお知らせ(未読のもののみ)
     @mail_your_messages = mail_your_messages
 
@@ -664,7 +664,7 @@ class MypageController < ApplicationController
     locals = {
       :id_name => 'access_blogs',
       :title_icon => "star",
-      :title_name => _('Today\'s Popular Entries'),
+      :title_name => _('Recent Popular Entries (excluding questions)'),
       :pages => pages,
       :symbol2name_hash => BoardEntry.get_symbol2name_hash(pages)
     }
