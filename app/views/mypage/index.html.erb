@@ -34,16 +34,21 @@
     <%= render :partial => 'rss_feed_box' %>
 
     <% unless @access_blogs[:pages].empty? -%>
-      <div class="box_space" id="access_blogs">
-        <div class="box_space_title"><%= h @access_blogs[:title_name] -%></div>
-        <div class="box_space_body">
-          <ul>
-            <% for entry in @access_blogs[:pages] -%>
-              <li><%= link_to h(entry.title), entry.get_url_hash %></li>
-            <% end -%>
-          </ul>
-        </div>
-        <div class="box_space_bottom"></div>
+      <div class="right_box" id="access_blogs">
+        <h2 class="ui-corner-top"><%= h @access_blogs[:title_name] -%></h2>
+        <ul class="no_style ui-corner-bottom">
+          <% @access_blogs[:pages].each_with_index do |entry, i| %>
+            <li>
+              <div>
+                <span class="rank"><%= i+1 %>.</span>
+                <span class="name"><%= link_to show_picture(entry.user, :width=>24, :height => 24) + h(entry.user.name) %></span>
+              </div>
+              <div>
+                <span class="title"><%= link_to h(entry.title), entry.get_url_hash %></span>
+              </div>
+            </li>
+          <% end -%>
+        </ul>
       </div>
     <% end -%>
   </div>

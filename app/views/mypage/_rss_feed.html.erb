@@ -1,12 +1,11 @@
 <%# locals: feeds -%>
 <% feeds.each do |feed| %>
-  <div class="box_space_title"><%= h feed.channel.title -%></div>
-  <div class="box_space_body">
-    <ul>
+  <div class="right_box">
+    <h2 class="ui-corner-top"><%= h feed.channel.title -%></h2>
+    <ul class="no_style ui-corner-bottom">
       <% feed.items.each do |item| %>
         <li><%= link_to icon_tag("new") + " " + h(item.title), h(item.link), :target => "_blank" -%></li>
       <% end %>
     </ul>
   </div>
 <% end %>
-<div class="box_space_bottom"></div>

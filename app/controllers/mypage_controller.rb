@@ -659,14 +659,11 @@ class MypageController < ApplicationController
       :conditions => find_params[:conditions],
       :order => "board_entry_points.today_access_count DESC, board_entry_points.access_count DESC, board_entries.last_updated DESC, board_entries.id DESC",
       :include => find_params[:include] | [ :user, :state ]
-    ).timeline.recent(recent_day).paginate(:page => params[:page], :per_page => options[:per_page])
+    ).timeline.diary.recent(recent_day).limit(5)
 
     locals = {
-      :id_name => 'access_blogs',
-      :title_icon => "star",
-      :title_name => _('Recent Popular Entries (excluding questions)'),
+      :title_name => _('Today\'s Popular Blogs'),
       :pages => pages,
-      :symbol2name_hash => BoardEntry.get_symbol2name_hash(pages)
     }
   end
 
