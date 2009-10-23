@@ -1712,7 +1712,7 @@ msgstr "ユーザ名"
 msgid "Admin::User|User uids"
 msgstr "ログインID"
 
-#: app/views/shared/_header.html.erb:12
+#: app/views/shared/_header.html.erb:15
 msgid "Administration of the site."
 msgstr "このシステムの設定や管理を行います"
 
@@ -3646,7 +3646,7 @@ msgstr "約3ヶ月以上アクセスなし"
 msgid "Has not accessed for 6 or more months."
 msgstr "約半年以上アクセスなし"
 
-#: app/views/shared/_header.html.erb:15
+#: app/views/shared/_header.html.erb:16
 msgid "Help"
 msgstr "ヘルプ"
 
@@ -4337,7 +4337,7 @@ msgstr "foo,barの形で複数指定できます"
 msgid "Music Appreciation"
 msgstr "音楽鑑賞"
 
-#: app/views/shared/_header.html.erb:11
+#: app/views/shared/_header.html.erb:14
 msgid "My Account"
 msgstr "自分の管理"
 
@@ -5942,7 +5942,7 @@ msgid "Symbol|Type|user"
 msgstr "ユーザ"
 
 #: app/controllers/admin/application_controller.rb:28
-#: app/views/shared/_header.html.erb:12
+#: app/views/shared/_header.html.erb:15
 msgid "System Administration"
 msgstr "システムの管理"
 
@@ -7006,7 +7006,7 @@ msgstr "水"
 msgid "Welcome to [%s]!"
 msgstr "【%s】へようこそ！"
 
-#: app/views/shared/_header.html.erb:16
+#: app/views/shared/_header.html.erb:13
 msgid "What New"
 msgstr "新機能"
 
