@@ -124,7 +124,7 @@ class MypageController < ApplicationController
       @picture = current_user.picture || current_user.build_picture
       render :template => 'pictures/new', :layout => 'layout' and return
     when "manage_customize"
-      @user_custom = UserCustom.find_by_user_id(@user.id) || UserCustom.new
+      @user_custom = UserCustom.find_by_user_id(@user.id) || UserCustom.new(:theme => SkipEmbedded::InitialSettings['default_theme'])
     when "manage_antenna"
       @antennas = find_antennas
     when "manage_message"

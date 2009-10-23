@@ -20,6 +20,7 @@ class UserCustom < ActiveRecord::Base
   validates_inclusion_of :display_entries_format, :in => %w(tabs flat)
   validates_presence_of :editor_mode
   validates_inclusion_of :editor_mode, :in => %w(richtext hiki)
+  validates_inclusion_of :theme, :in => %w(blue green orange pink sakura silver snow tile)
 
   def to_s
     "user_id:" + user_id.to_s + ", theme:" + theme

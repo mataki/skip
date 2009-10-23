@@ -186,6 +186,7 @@ default: &default
   antenna_default_group:                                             # 初期登録されるアンテナに追加するグループIDを配列で指定(利用しない場合設定不要)
   google_analytics:                                                  # Google Analyticsを利用したアクセス解析のための設定
   help_url: http://help.skipaas.jp/                                  # ヘルプのURL
+  default_theme: silver                                              # 既定のテーマ
 
 # 設定例
 #  initial_antenna: SKIP
