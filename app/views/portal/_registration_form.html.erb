@@ -22,6 +22,7 @@
   </tr>
   <tr>
     <th><label for="user_section"><%=h s_('User|Section') %></label></th>
+  <% if Admin::Setting.enable_change_section -%>
     <td>
       <% if sections = User.grouped_sections -%>
       <p>
@@ -31,6 +32,10 @@
       <p>
       <%= text_field_tag("user[section]", (sections.include?(@user.section) ? '' : @user.section), :tabindex => (tabindex += 1), :class=> 'appendable_text') + _('Enter here if you cannot find the value in the options') %>
       </p>
+    </td>
+  <% else -%>
+    <td><%= h @user.section %></td>
+  <% end -%>
   </tr>
   <% if user_name_mode?(:name) -%>
   <tr>
@@ -45,6 +50,7 @@
         <p><%= _("It is the nature of the \"user name\" to be known by other users in the site, be careful to avoid using inproper values for it.")%></p>
         <p><%= _("Make it the same as the account name of your email address (left of \"@\") if you are not sure what to use for it.")%></p>
       </div>
+    </td>
   <% else -%>
     <td><%= h @user.uid %></td>
   <% end -%>

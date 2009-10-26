@@ -28,6 +28,9 @@ activation_lifetime:                                       # サインアップU
 enable_change_picture:
   format: boolean
   default: true
+enable_change_section:
+  format: boolean
+  default: true
 access_record_limit:
   format: int
   default: 30

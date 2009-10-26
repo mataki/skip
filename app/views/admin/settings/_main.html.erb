@@ -32,12 +32,13 @@
   <p><%= settings_label_with_text_field_tag :protocol unless SkipEmbedded::InitialSettings['protocol'] %></p>
 </div>
 
-<% @revert_columns.concat(%w(stop_new_user hide_email activation_lifetime enable_change_picture access_record_limit)) -%>
+<% @revert_columns.concat(%w(stop_new_user hide_email activation_lifetime enable_change_picture enable_change_section access_record_limit)) -%>
 <h4><%= _('Others') %></h4>
 <div class="box tabular">
   <p><%= settings_label_with_check_box_tag :stop_new_user %></p>
   <p><%= settings_label_with_check_box_tag :hide_email %></p>
   <p><%= settings_label_with_select_tag :activation_lifetime, (1..10).to_a.map{ |i| i.to_s } %></p>
   <p><%= settings_label_with_check_box_tag :enable_change_picture %></p>
+  <p><%= settings_label_with_check_box_tag :enable_change_section %></p>
   <p><%= settings_label_with_select_tag :access_record_limit , %w(10 30 50 100).to_a.map{ |i| i.to_s } %></p>
 </div>

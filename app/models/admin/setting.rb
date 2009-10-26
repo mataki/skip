@@ -59,6 +59,8 @@ class Admin::Setting < ActiveRecord::Base
   N_('Admin::Setting|Activation lifetime description')
   N_('Admin::Setting|Enable change picture')
   N_('Admin::Setting|Enable change picture description')
+  N_('Admin::Setting|Enable change section')
+  N_('Admin::Setting|Enable change section description')
   N_('Admin::Setting|Access record limit')
   N_('Admin::Setting|Access record limit description')
 
