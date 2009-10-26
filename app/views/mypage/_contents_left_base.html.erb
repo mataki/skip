@@ -1,6 +1,4 @@
-<% content_for :contents_left do -%>
-  <%= render :partial => 'action_box' %>
-  <%= render :partial => 'antenna_box' %>
-  <%= render :partial => 'user/join_groups_box', :locals => { :user => current_user } %>
-  <%= render :partial => 'collaboration_app/operation_boxes' %>
-<% end -%>
+<%= render :partial => 'action_box' %>
+<%= render :partial => 'antenna_box' %>
+<%= render :partial => 'user/join_groups_box', :locals => { :user => current_user } %>
+<%= render :partial => 'collaboration_app/operation_boxes' %>

@@ -16,7 +16,9 @@
   </style>
 <% end -%>
 
-<%= render :partial => 'contents_left_base' %>
+<% content_for :contents_left do -%>
+  <%= render :partial => 'contents_left_base' %>
+<% end -%>
 
 <% content_for :contents_right do -%>
   <div class="ui-corner-all" style="background-color: #fff0ff; padding: 5px; border: 1px dashed pink; margin-bottom: 10px;">

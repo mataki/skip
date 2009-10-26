@@ -27,7 +27,35 @@
   <% end -%>
 <% end -%>
 
-<%= render :partial => 'contents_left_base' %>
+<% content_for :contents_left do -%>
+  <%# ============================================================ -%>
+  <%# left side top messages -%>
+  <%# ============================================================ -%>
+
+  <% unless @mail_your_messages[:pages].empty? -%>
+    <div id="messages_box" class="ui-corner-all">
+      <h2 class="ui-corner-top">
+        <%= icon_tag(@mail_your_messages[:title_icon]) + h(@mail_your_messages[:title_name]) %>
+      </h2>
+      <ul class="no_style">
+        <% for entry in @mail_your_messages[:pages] %>
+          <li>
+            <div class="title">
+              <%= entry_link_to entry %>
+            </div>
+            <div class="info">
+              <%= entry.last_updated.strftime(_('%B %d %Y')) %>
+              -
+              <%= symbol_link_to(entry.symbol, truncate(@mail_your_messages[:symbol2name_hash][entry.symbol],:length => 12)) %>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end -%>
+
+  <%= render :partial => 'contents_left_base' %>
+<% end -%>
 
 <% content_for :contents_right do -%>
   <%# ============================================================ -%>
@@ -60,19 +88,6 @@
   <%#  main area -%>
   <%# ============================================================ -%>
   <div id="mypage_left">
-    <%# ============================================================ -%>
-    <%#  main area top messages -%>
-    <%# ============================================================ -%>
-
-    <% unless @mail_your_messages[:pages].empty? -%>
-      <div id="messages_box" class="ui-corner-all">
-        <h2 class="ui-corner-top">
-          <%= icon_tag(@mail_your_messages[:title_icon]) + h(@mail_your_messages[:title_name]) %>
-        </h2>
-        <%= render :partial => "list_block", :locals => @mail_your_messages.merge(:hide_entry_info => true) %>
-      </div>
-    <% end -%>
-
     <%# ============================================================ -%>
     <%#  main area entries -%>
     <%# ============================================================ -%>
