@@ -8,6 +8,8 @@
       <tr>
         <th><%= label_tag :condition_section, s_('User|Section') %></th>
         <td><%= select(:condition, :section, User.grouped_sections.insert(0, "")) %></td>
+      </tr>
+      <tr>
         <th><%= label_tag :condition_code, h(user_name_mode_label) %></th>
         <td><%= text_field :condition, :code, :size => 25 %></td>
       </tr>
