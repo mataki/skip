@@ -621,7 +621,8 @@ class MypageController < ApplicationController
       :id_name => 'message',
       :title_icon => "email",
       :title_name => _("Messages for you"),
-      :pages => BoardEntry.accessible(current_user).notice.unread(current_user).order_new
+      :pages => pages = BoardEntry.accessible(current_user).notice.unread(current_user).order_new,
+      :symbol2name_hash => BoardEntry.get_symbol2name_hash(pages)
     }
   end
 
@@ -646,7 +647,8 @@ class MypageController < ApplicationController
       :title_icon => "user_comment",
       :title_name => _('Recent Questions'),
       :pages => pages,
-      :recent_day => options[:recent_day]
+      :recent_day => options[:recent_day],
+      :symbol2name_hash => BoardEntry.get_symbol2name_hash(pages)
     }
   end
 
