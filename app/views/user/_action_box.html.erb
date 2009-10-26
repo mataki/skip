@@ -8,7 +8,9 @@
     <% end -%>
     <li><%= link_to(content_tag('span', _('Add an antenna')), {:controller => "antenna", :action => "select_antenna", :symbol => user.symbol, :dummy => '.html'}, {:class => "nyroModal rounded"}) %></li>
     <% new_bookmark_url_hash = {:controller => 'bookmark', :action => :new_without_bookmarklet, :url => user.get_postit_url, :title => user.name} -%>
-    <li><%= link_to(content_tag('span', _('Add a bookmark')), new_bookmark_url_hash, {:class => "rounded", :onclick => "sub_window_open('#{url_for(new_bookmark_url_hash)}', 'subwindow', 550, 400); return false;"}) %></li>
+    <% unless SkipEmbedded::InitialSettings['hide_bookmark_to_user'] -%>
+      <li><%= link_to(content_tag('span', _('Add a bookmark')), new_bookmark_url_hash, {:class => "rounded", :onclick => "sub_window_open('#{url_for(new_bookmark_url_hash)}', 'subwindow', 550, 400); return false;"}) %></li>
+    <% end -%>
   </ul>
 </div>
 <% end -%>
