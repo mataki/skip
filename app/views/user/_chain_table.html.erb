@@ -1,10 +1,10 @@
 <% unless @chains.empty? -%>
-  <div class="navi"><%= will_paginate_link @chains %></div>
+  <div class="navi ui-corner-all"><%= will_paginate_link @chains %></div>
   <% @result.each do |result| -%>
   <table class="chain_table">
     <tr>
-      <th rowspan="2" valign="top"><%= user_link_to_with_portrait(result[:from_user]) %><br/>
-       <%= user_link_to result[:from_user] %>
+      <th class="user_box ui-corner-all" rowspan="2" valign="top"><%= user_link_to_with_portrait(result[:from_user]) %><br/>
+        <%= user_link_to result[:from_user] %>
       </th>
       <td class="arrow"><%= icon_tag('resultset_next')  %></td>
       <td class="message"><%= render_richtext(result[:from_message]) %></td>
@@ -22,5 +22,5 @@
     <% end -%>
   </table>
   <% end %>
-  <div class="navi"><%= will_paginate_link @chains %></div>
+  <div class="navi ui-corner-all"><%= will_paginate_link @chains %></div>
 <% end -%>
