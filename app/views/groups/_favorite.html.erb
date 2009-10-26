@@ -1,4 +1,0 @@
-<%= hidden_field_tag("gid_#{participation.id}", gid) %>
-<% icon_name, icon_title = 'award_star_gold_2', _("Unstar") -%>
-<% icon_name, icon_title = 'award_star_silver_2', _("Star") unless participation.favorite -%>
-<a href="#" class='favorite_star' id="favorite_star_link_<%= participation.id %>" ><%= icon_tag(icon_name, :title => icon_title) -%></a>

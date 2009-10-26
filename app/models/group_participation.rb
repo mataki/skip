@@ -21,8 +21,6 @@ class GroupParticipation < ActiveRecord::Base
   N_('GroupParticipation|Waiting|false')
   N_('GroupParticipation|Owned|true')
   N_('GroupParticipation|Owned|false')
-  N_('GroupParticipation|Favorite|true')
-  N_('GroupParticipation|Favorite|false')
 
   named_scope :active, proc {
     { :conditions => { :waiting => false } }

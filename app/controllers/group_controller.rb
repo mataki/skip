@@ -23,7 +23,7 @@ class GroupController < ApplicationController
 
   verify :method => :post,
          :only => [ :join, :destroy, :leave, :update, :change_participation,
-                    :ado_set_favorite, :toggle_owned, :forced_leave_user, :append_user ],
+                    :toggle_owned, :forced_leave_user, :append_user ],
          :redirect_to => { :action => :show }
   N_('GroupController|ApproveSuceeded')
   N_('GroupController|ApproveFailed')
@@ -315,20 +315,6 @@ class GroupController < ApplicationController
       flash[:notice] = _('Group was successfully deleted.')
       redirect_to :controller => 'groups'
     end
-  end
-
-  # ajax action
-  # お気に入りのステータスを設定する
-  def ado_set_favorite
-    par_id = params[:group_participation_id]
-    favorite_flag = params[:favorite_flag]
-    participation = @group.group_participations.find(par_id)
-    if participation.user_id != session[:user_id]
-      render :nothing => true
-      return false
-    end
-    participation.update_attribute(:favorite, favorite_flag)
-    render :partial => "groups/favorite", :locals => { :gid => @group.gid, :participation => participation, :update_elem_id => params[:update_elem_id]}
   end
 
   # 参加者追加(管理者のみ)

@@ -318,10 +318,12 @@ module ApplicationHelper
   def shortcut_menus
     option_tags = [content_tag(:option, _('Move to groups joined ...'), :value => url_for({:controller => '/mypage', :action => 'group'}))]
 
-    Group.favorites_per_category(current_user).each do |category|
-      option_tags << content_tag(:option, "[#{h(category[:name])}]", :disabled => 'disabled', :style => 'color: gray')
-      category[:groups].each do |group|
-        option_tags << content_tag(:option, "&nbsp;#{h(group.name)}", :value => url_for({:controller => '/group', :gid => group.gid, :action => 'show'}))
+    GroupCategory.all.each do |category|
+      if groups = category.groups.participating(current_user).order_participate_recent and !groups.empty?
+        option_tags << content_tag(:option, "[#{h(category.name)}]", :disabled => 'disabled', :style => 'color: gray')
+        groups.each do |group|
+          option_tags << content_tag(:option, "&nbsp;#{h(group.name)}", :value => url_for({:controller => '/group', :gid => group.gid, :action => 'show'}))
+        end
       end
     end
 

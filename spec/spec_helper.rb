@@ -160,7 +160,7 @@ def create_group(options = {})
 end
 
 def create_group_participation(options = {})
-  group_participation = GroupParticipation.new({:user_id => 1, :group_id => 1, :waiting => 0, :owned => 0, :favorite => 0}.merge(options))
+  group_participation = GroupParticipation.new({:user_id => 1, :group_id => 1, :waiting => 0, :owned => 0}.merge(options))
   group_participation.save!
   group_participation
 end
