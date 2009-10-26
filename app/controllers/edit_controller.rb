@@ -46,7 +46,7 @@ class EditController < ApplicationController
       if owner.is_a?(Group)
         @board_entry.send_mail = SkipEmbedded::InitialSettings['mail']['default_send_mail_of_question'] || owner.default_send_mail
       elsif owner.is_a?(User)
-        @board_entry.send_mail = SkipEmbedded::InitialSettings['mail']['default_send_mail_of_question']
+        @board_entry.send_mail = @board_entry.is_question? and SkipEmbedded::InitialSettings['mail']['default_send_mail_of_question']
       end
     end
 

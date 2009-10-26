@@ -691,6 +691,19 @@ class BoardEntry < ActiveRecord::Base
     false
   end
 
+  AIM_TYPES.each do |type|
+    define_method("is_#{type.downcase}?") do
+      self.aim_type == type
+    end
+    define_method("be_#{type.downcase}") do
+      self.aim_type = type
+    end
+    define_method("be_#{type.downcase}!") do
+      self.aim_type = type
+      self.save!
+    end
+  end
+
 private
   def generate_next_user_entry_no
     entry = BoardEntry.find(:first,
