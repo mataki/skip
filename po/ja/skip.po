@@ -3917,7 +3917,7 @@ msgstr "参加状況"
 
 #: app/views/group/show.html.erb:49
 msgid "Join this group"
-msgstr "グループに参加"
+msgstr "参加条件"
 
 #: app/controllers/group_controller.rb:176
 msgid "Joined the group successfully."
@@ -3925,7 +3925,7 @@ msgstr "グループに参加しました。"
 
 #: app/views/group/_form.html.erb:40 app/views/layouts/layout.html.erb:47
 msgid "Joining the group"
-msgstr "グループに参加"
+msgstr "参加条件"
 
 #: app/helpers/calendar_helper.rb:77
 msgid "July"
@@ -4352,7 +4352,7 @@ msgstr "名称・名前"
 
 #: app/views/layouts/layout.html.erb:47
 msgid "Need approval of the Administrator."
-msgstr "参加には承認が必要"
+msgstr "管理者の承認が必要"
 
 #: app/views/admin/pictures/index.html.erb:28
 msgid "New"
@@ -4458,7 +4458,7 @@ msgstr "いいえ"
 #: app/controllers/group_controller.rb:268
 #: app/views/layouts/layout.html.erb:47
 msgid "No approval needed to join this group."
-msgstr "自由に参加することができます"
+msgstr "自由に参加できます"
 
 #: app/controllers/bookmark_controller.rb:165
 msgid "No bookmarks have been registered."
@@ -7781,7 +7781,7 @@ msgstr "メッセージ："
 
 #: app/views/shared/_header.html.erb:21
 msgid "more"
-msgstr "その他"
+msgstr "リンク"
 
 #: app/controllers/edit_controller.rb:323
 msgid "needs to be a valid date."
