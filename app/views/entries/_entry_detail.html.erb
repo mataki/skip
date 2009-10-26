@@ -196,6 +196,15 @@
   </style>
 <% end -%>
 
+<% if BoardEntry::HIDABLE_AIM_TYPES.include?(entry.aim_type) and !entry.hide %>
+  <div id="hide_message" class="ui-corner-all">
+    <p>
+      <%= _('Opened question, showed on mypage.') %>
+      <%= link_to(_('Click to change state'), {:anchor => "hide_action"}) %>
+    </p>
+  </div>
+<% end %>
+
 <div class="move_navi">
   <% if prev_entry -%>
   <span class="prev_entry">&lt;&nbsp;<%= entry_link_to(prev_entry, {:truncate => 20}) %></span>
@@ -297,24 +306,31 @@
   <% end -%>
 </div>
 
-<div id="hide_action">
-  <% if BoardEntry::HIDABLE_AIM_TYPES.include? entry.aim_type -%>
+<% if BoardEntry::HIDABLE_AIM_TYPES.include? entry.aim_type -%>
+  <div id="hide_action" class="ui-corner-all">
+    <p>
+      <%= _('Change state of this question to hide or show in mypage.') %>
+    </p>
     <% form_tag({:controller => 'board_entries', :action => 'toggle_hide', :id => entry.id}) do -%>
-      <%= label_tag "comment", s_('EntryHideOperation|comment') %>
-      <%= text_field_tag "comment" %>
-      <%= submit_tag entry.hide ? _('Publish this entry') : _('Hide this entry'), :id => 'toggle_hide_button', :disable_with => _('Saving...') %>
+      <p>
+        <%= label_tag "comment", s_('EntryHideOperation|Comment') %>
+        <%= text_field_tag "comment" %>
+      </p>
+      <p>
+        <%= submit_tag entry.hide ? _('Publish this entry') : _('Hide this entry'), :id => 'toggle_hide_button', :disable_with => _('Saving...') %>
+      </p>
     <% end -%>
     <ul>
       <% for operation in entry.entry_hide_operations -%>
-      <li>
-        <%= s_("BoardEntry|Hide|#{operation.operation_type}") + ": #{operation.comment} by #{operation.user.name}" %>
-      </li>
-    <% end -%>
+        <li>
+          <%= s_("BoardEntry|Hide|#{operation.operation_type}") + ": #{operation.comment} by #{user_link_to operation.user}" %>
+        </li>
+      <% end -%>
     </ul>
-  <% end -%>
-</div>
+  </div>
+<% end -%>
 
-<div class="trackback_space sent_trackback">
+<div class="trackback_space sent_trackback ui-corner-all">
 <% if tb_entries.size > 0 -%>
   <%= _('Entries talking about this entry:')%>
 <% end -%>
