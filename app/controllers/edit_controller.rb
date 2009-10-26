@@ -71,7 +71,7 @@ class EditController < ApplicationController
       return
     end
 
-    @board_entry.user_id  = session[:user_id]
+    @board_entry.user_id  = current_user.id
     @board_entry.last_updated = Time.now
     @board_entry.publication_type = params[:publication_type]
     @board_entry.publication_symbols_value = params[:publication_type]=='protected' ? params[:publication_symbols_value] : ""
@@ -91,6 +91,7 @@ class EditController < ApplicationController
       target_symbols.last.each do |target_symbol|
         @board_entry.entry_editors.create(:symbol => target_symbol)
       end
+      current_user.custom.update_attributes(:editor_mode => params[:editor_mode])
 
       message, new_trackbacks = @board_entry.send_trackbacks(login_user_symbols, params[:trackbacks])
       make_trackback_message(new_trackbacks)
@@ -99,7 +100,6 @@ class EditController < ApplicationController
 
       flash[:notice] = _('Created successfully.') + message
       redirect_to @board_entry.get_url_hash
-      return
     else
       setup_layout @board_entry
       render :action => 'index'
@@ -203,6 +203,7 @@ class EditController < ApplicationController
     target_symbols.last.each do |target_symbol|
       @board_entry.entry_editors.create(:symbol => target_symbol)
     end
+    current_user.custom.update_attributes(:editor_mode => params[:editor_mode])
 
     message, new_trackbacks = @board_entry.send_trackbacks(login_user_symbols, params[:trackbacks])
     make_trackback_message(new_trackbacks)
