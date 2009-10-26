@@ -326,12 +326,7 @@ module ApplicationHelper
         end
       end
     end
-    links = ''
-    other_links = []
-    other_links << content_tag(:span, link_to_unless((params[:controller] == "rankings" and params[:action] = "index"), _('Rankings'), :controller => '/rankings', :action => 'index'), :class => 'other_links')
-    other_links << content_tag(:span, link_to_unless_current( _('Site Information'), :controller => '/statistics'), :class => 'other_links')
-    links << other_links.join(' ')
-    "#{links} <select class=\"select_navi\">#{option_tags.join('')}</select>"
+    "<select class=\"select_navi\">#{option_tags.join('')}</select>"
   end
 
   def global_links
