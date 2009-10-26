@@ -16,7 +16,7 @@
   <% @users.each do |user| -%>
     <%= render :partial => 'users/user', :locals => {:user => user, :group => @group} %>
   <% end -%>
-  <div class="clear_left">
+  <div class="clear_left"></div>
   <div class="navi"><%= will_paginate_link @users %></div>
 <% end -%>
 </div>
