@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-10-26 19:05+0900\n"
+"POT-Creation-Date: 2009-10-26 20:05+0900\n"
 "PO-Revision-Date: 2009-10-26 13:16+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1753,7 +1753,6 @@ msgstr ""
 "た、変更したユーザは、再ログインが要求されます。（管理者ご自身の場合も例外で"
 "はありません）"
 
-#: app/controllers/mypage_controller.rb:694
 #: app/controllers/services_controller.rb:42
 #: app/views/bookmarks/index.html.erb:15
 msgid "All"
@@ -3073,7 +3072,7 @@ msgstr "入力された%sというメールアドレスは登録されていま�
 msgid "Entries"
 msgstr "記事"
 
-#: app/controllers/mypage_controller.rb:857
+#: app/controllers/mypage_controller.rb:858
 msgid "Entries bookmarked by yourself"
 msgstr "あなたがブックマークした記事"
 
@@ -3089,7 +3088,7 @@ msgstr "みんなからコメントが活発に付いたブログです(公開�
 msgid "Entries talking about this entry:"
 msgstr "この記事を話題にした記事："
 
-#: app/controllers/mypage_controller.rb:856
+#: app/controllers/mypage_controller.rb:857
 msgid "Entries you have made comments"
 msgstr "過去にあなたがコメントを残した記事"
 
@@ -3979,7 +3978,7 @@ msgstr "投稿者の一覧"
 msgid "List of applications works with SKIP"
 msgstr "連携アプリ一覧"
 
-#: app/controllers/mypage_controller.rb:860
+#: app/controllers/mypage_controller.rb:861
 msgid "List of unread entries"
 msgstr "未読記事の一覧"
 
@@ -4185,7 +4184,7 @@ msgid "Message: "
 msgstr "メッセージ："
 
 #: app/controllers/mypage_controller.rb:623
-#: app/controllers/mypage_controller.rb:855
+#: app/controllers/mypage_controller.rb:856
 #: app/controllers/feed_controller.rb:82 app/models/antenna.rb:92
 msgid "Messages for you"
 msgstr "あなたへのお知らせ"
@@ -4551,6 +4550,11 @@ msgstr "古い順に並べる"
 msgid "One or more characters other than spaces required."
 msgstr "空白以外で1文字以上入力してください。"
 
+#: app/views/mypage/_publicated_entries_tabs.html.erb:5
+#: app/views/mypage/_publicated_entries_tabs.html.erb:7
+msgid "Only %s"
+msgstr "%sのみ"
+
 #: app/helpers/application_helper.rb:223
 #: app/views/board_entries/_form.html.erb:74 app/views/group/_form.html.erb:50
 #: app/views/share_file/new_ajax_upload.html.erb:21
@@ -4888,7 +4892,7 @@ msgstr "直近一ヶ月に記事 ・コメントを記入"
 msgid "Posts"
 msgstr "投稿件数"
 
-#: app/controllers/mypage_controller.rb:858
+#: app/controllers/mypage_controller.rb:859
 msgid "Posts in the groups joined"
 msgstr "参加中のグループのフォーラムの書き込み"
 
@@ -5346,6 +5350,10 @@ msgstr "検索しています…"
 #: app/views/portal/_registration_sequence.html.erb:15
 msgid "See Terms of Use"
 msgstr "利用規約の確認"
+
+#: app/controllers/mypage_controller.rb:694
+msgid "See all"
+msgstr "すべて表示"
 
 #: app/views/mypage/welcome.html.erb:39
 msgid "See if your friend's already there..."

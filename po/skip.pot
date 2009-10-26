@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-10-26 19:05+0900\n"
+"POT-Creation-Date: 2009-10-26 20:05+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1604,7 +1604,6 @@ msgstr ""
 msgid "Admin|Create Change Uid|Caution Description"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:694
 #: app/controllers/services_controller.rb:42
 #: app/views/bookmarks/index.html.erb:15
 msgid "All"
@@ -2880,7 +2879,7 @@ msgstr ""
 msgid "Entries"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:857
+#: app/controllers/mypage_controller.rb:858
 msgid "Entries bookmarked by yourself"
 msgstr ""
 
@@ -2896,7 +2895,7 @@ msgstr ""
 msgid "Entries talking about this entry:"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:856
+#: app/controllers/mypage_controller.rb:857
 msgid "Entries you have made comments"
 msgstr ""
 
@@ -3769,7 +3768,7 @@ msgstr ""
 msgid "List of applications works with SKIP"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:860
+#: app/controllers/mypage_controller.rb:861
 msgid "List of unread entries"
 msgstr ""
 
@@ -3968,7 +3967,7 @@ msgid "Message: "
 msgstr ""
 
 #: app/controllers/mypage_controller.rb:623
-#: app/controllers/mypage_controller.rb:855
+#: app/controllers/mypage_controller.rb:856
 #: app/controllers/feed_controller.rb:82 app/models/antenna.rb:92
 msgid "Messages for you"
 msgstr ""
@@ -4329,6 +4328,11 @@ msgstr ""
 msgid "One or more characters other than spaces required."
 msgstr ""
 
+#: app/views/mypage/_publicated_entries_tabs.html.erb:5
+#: app/views/mypage/_publicated_entries_tabs.html.erb:7
+msgid "Only %s"
+msgstr ""
+
 #: app/helpers/application_helper.rb:223
 #: app/views/board_entries/_form.html.erb:74 app/views/group/_form.html.erb:50
 #: app/views/share_file/new_ajax_upload.html.erb:21
@@ -4662,7 +4666,7 @@ msgstr ""
 msgid "Posts"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:858
+#: app/controllers/mypage_controller.rb:859
 msgid "Posts in the groups joined"
 msgstr ""
 
@@ -5109,6 +5113,10 @@ msgstr ""
 
 #: app/views/portal/_registration_sequence.html.erb:15
 msgid "See Terms of Use"
+msgstr ""
+
+#: app/controllers/mypage_controller.rb:694
+msgid "See all"
 msgstr ""
 
 #: app/views/mypage/welcome.html.erb:39

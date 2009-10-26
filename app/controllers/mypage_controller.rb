@@ -691,9 +691,10 @@ class MypageController < ApplicationController
     pages = BoardEntry.accessible(current_user).timeline.order_new.paginate(:page => params[:page], :per_page => options[:per_page])
     locals = {
       :id_name => 'timelines',
-      :title_name => _('All'),
+      :title_name => _('See all'),
       :per_page => options[:per_page],
-      :pages => pages
+      :pages => pages,
+      :symbol2name_hash => BoardEntry.get_symbol2name_hash(pages)
     }
   end
 
