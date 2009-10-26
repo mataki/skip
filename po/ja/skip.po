@@ -3917,7 +3917,7 @@ msgstr "参加状況"
 
 #: app/views/group/show.html.erb:49
 msgid "Join this group"
-msgstr "参加条件"
+msgstr "参加する"
 
 #: app/controllers/group_controller.rb:176
 msgid "Joined the group successfully."

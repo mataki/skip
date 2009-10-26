@@ -48,7 +48,6 @@
       <% else -%>
         <li><%= link_to(content_tag('span', _('Join this group')), {:action=>"new_participation"}, {:class => "nyroModal rounded"}) -%></li>
       <% end -%>
-      <li><%= link_to(content_tag('span', _('Add to antenna')), {:controller => "antenna", :action => "select_antenna", :symbol => @group.symbol, :dummy => '.html'}, {:class => "nyroModal rounded"}) %></li>
     </ul>
   </div>
 
