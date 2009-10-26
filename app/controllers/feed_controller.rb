@@ -68,7 +68,7 @@ class FeedController < ApplicationController
   end
 
   def recent_popular_blogs
-    description = _("Recent Popular Entries (excluding questions)")
+    description = _("Recent Popular Blogs")
     find_params = BoardEntry.make_conditions(login_user_symbols, {:publication_type => 'public'})
     find_params[:conditions][0] << " and board_entries.category not like ?"
     find_params[:conditions] << '%[質問]%'

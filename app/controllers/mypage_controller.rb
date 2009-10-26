@@ -47,7 +47,6 @@ class MypageController < ApplicationController
     # ============================================================
     #  main area top messages
     # ============================================================
-    current_user_info = current_user.info
     @system_messages = system_messages
     @message_array = Message.get_message_array_by_user_id(current_user.id)
     @waiting_groups = Group.has_waiting_for_approval(current_user)
@@ -60,6 +59,7 @@ class MypageController < ApplicationController
     @questions = find_questions_as_locals({:recent_day => recent_day})
     @access_blogs = find_access_blogs_as_locals({:per_page => 5})
     @recent_blogs = find_recent_blogs_as_locals({:per_page => 8})
+    @timelines = find_timelines_as_locals({:per_page => 8}) if current_user.custom.display_entries_format == 'tabs'
     @recent_bbs = recent_bbs
 
     # ============================================================
@@ -632,6 +632,7 @@ class MypageController < ApplicationController
     when target == 'questions'             then find_questions_as_locals options
     when target == 'access_blogs'          then find_access_blogs_as_locals options
     when target == 'recent_blogs'          then find_recent_blogs_as_locals options
+    when target == 'timelines'             then find_timelines_as_locals options
     when group_categories.include?(target) then find_recent_bbs_as_locals target, options
 # TODO 例外出すなどの対応をしないとアプリケーションエラーになってしまう。
 #    else
@@ -647,6 +648,7 @@ class MypageController < ApplicationController
       :title_icon => "user_comment",
       :title_name => _('Recent Questions'),
       :pages => pages,
+      :per_page => options[:per_page],
       :recent_day => options[:recent_day],
       :symbol2name_hash => BoardEntry.get_symbol2name_hash(pages)
     }
@@ -663,7 +665,8 @@ class MypageController < ApplicationController
 
     locals = {
       :title_name => _('Recent Popular Blogs'),
-      :pages => pages,
+      :per_page => options[:per_page],
+      :pages => pages
     }
   end
 
@@ -679,6 +682,17 @@ class MypageController < ApplicationController
       :id_name => 'recent_blogs',
       :title_icon => "user",
       :title_name => _('Blogs'),
+      :per_page => options[:per_page],
+      :pages => pages
+    }
+  end
+
+  def find_timelines_as_locals options
+    pages = BoardEntry.accessible(current_user).timeline.order_new.paginate(:page => params[:page], :per_page => options[:per_page])
+    locals = {
+      :id_name => 'timelines',
+      :title_name => _('All'),
+      :per_page => options[:per_page],
       :pages => pages
     }
   end
@@ -703,6 +717,7 @@ class MypageController < ApplicationController
       :id_name => id_name,
       :title_icon => "group",
       :title_name => title,
+      :per_page => options[:per_page],
       :pages => pages,
       :symbol2name_hash => BoardEntry.get_symbol2name_hash(pages)
     }
