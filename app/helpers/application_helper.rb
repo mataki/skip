@@ -326,16 +326,18 @@ module ApplicationHelper
         end
       end
     end
-
-    "<select class=\"select_navi\">#{option_tags.join('')}</select>"
+    links = ''
+    other_links = []
+    other_links << content_tag(:span, link_to_unless((params[:controller] == "rankings" and params[:action] = "index"), _('Rankings'), :controller => '/rankings', :action => 'index'), :class => 'other_links')
+    other_links << content_tag(:span, link_to_unless_current( _('Site Information'), :controller => '/statistics'), :class => 'other_links')
+    links << other_links.join(' ')
+    "#{links} <select class=\"select_navi\">#{option_tags.join('')}</select>"
   end
 
   def global_links
     links = ''
     links << content_tag(:span, link_to_unless_current(icon_tag('house', :title => _('My Page')) + _('My Page'), root_url), :class => 'home_link')
     other_links = []
-    other_links << link_to_unless((params[:controller] == "rankings" and params[:action] = "index"), icon_tag('chart_bar', :title => _('Rankings')) + _('Rankings'), :controller => '/rankings', :action => 'index')
-    other_links << link_to_unless_current(icon_tag('chart_curve', :title => _('Site Information')) + _('Site Information'), :controller => '/statistics')
     links << content_tag(:span, other_links, :class => 'other_links')
     search_links = []
     search_links << link_to_unless_current(icon_tag('report', :title => _('Entries')) + _('Entries'),  :controller => '/search', :action => 'entry_search') if BoardEntry.count > 0
