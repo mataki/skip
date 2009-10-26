@@ -641,7 +641,7 @@ class MypageController < ApplicationController
 
   # 質問記事一覧を取得する（partial用のオプションを返す）
   def find_questions_as_locals options
-    pages = BoardEntry.accessible(current_user).question.visible.order_new.paginate(:page => params[:page], :per_page => options[:per_page])
+    pages = BoardEntry.accessible(current_user).question.visible.order_new
 
     locals = {
       :id_name => 'questions',
