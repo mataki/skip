@@ -656,12 +656,12 @@ class MypageController < ApplicationController
     find_params = BoardEntry.make_conditions(login_user_symbols, {:publication_type => 'public'})
     pages = BoardEntry.scoped(
       :conditions => find_params[:conditions],
-      :order => "board_entry_points.today_access_count DESC, board_entry_points.access_count DESC, board_entries.last_updated DESC, board_entries.id DESC",
+      :order => "board_entry_points.access_count DESC, board_entries.last_updated DESC, board_entries.id DESC",
       :include => find_params[:include] | [ :user, :state ]
     ).timeline.diary.recent(recent_day).limit(5)
 
     locals = {
-      :title_name => _('Today\'s Popular Blogs'),
+      :title_name => _('Recent Popular Blogs'),
       :pages => pages,
     }
   end
