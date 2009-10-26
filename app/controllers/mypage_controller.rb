@@ -639,14 +639,13 @@ class MypageController < ApplicationController
 
   # 質問記事一覧を取得する（partial用のオプションを返す）
   def find_questions_as_locals options
-    pages = BoardEntry.accessible(current_user).question.visible.order_new
+    pages = BoardEntry.accessible(current_user).question.visible.order_new.paginate(:page => params[:page], :per_page => options[:per_page])
 
     locals = {
       :id_name => 'questions',
       :title_icon => "user_comment",
       :title_name => _('Recent Questions'),
       :pages => pages,
-      :per_page => options[:per_page],
       :recent_day => options[:recent_day]
     }
   end
@@ -658,7 +657,7 @@ class MypageController < ApplicationController
       :conditions => find_params[:conditions],
       :order => "board_entry_points.access_count DESC, board_entries.last_updated DESC, board_entries.id DESC",
       :include => find_params[:include] | [ :user, :state ]
-    ).timeline.diary.recent(recent_day).limit(5)
+    ).timeline.diary.recent(recent_day).paginate(:page => params[:page], :per_page => options[:per_page])
 
     locals = {
       :title_name => _('Recent Popular Blogs'),
@@ -703,7 +702,6 @@ class MypageController < ApplicationController
       :title_icon => "group",
       :title_name => title,
       :pages => pages,
-      :per_page => options[:per_page],
       :symbol2name_hash => BoardEntry.get_symbol2name_hash(pages)
     }
   end
