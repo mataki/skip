@@ -1,8 +1,8 @@
 <%# locals: feeds -%>
 <% feeds.each do |feed| %>
-  <div class="right_box">
+  <div class="right_box ui-corner-all">
     <h2 class="ui-corner-top"><%= h feed.channel.title -%></h2>
-    <ul class="no_style ui-corner-bottom">
+    <ul class="no_style">
       <% feed.items.each do |item| %>
         <li><%= link_to icon_tag("new") + " " + h(item.title), h(item.link), :target => "_blank" -%></li>
       <% end %>
