@@ -195,6 +195,7 @@ default: &default
   what_new_url:                                                      # 新機能案内のURL
   hide_bookmark_to_user: false                                       # ユーザへのブックマーク機能の表示/非表示切り替え
   hide_header_logout_link: false                                     # ヘッダのログアウトリンクの表示/非表示切り替え
+  footer_image_link_tag:
 
   advertisements_url:                                                # 広告領域に表示するデータのJSON又はJSONPを返すURL
 

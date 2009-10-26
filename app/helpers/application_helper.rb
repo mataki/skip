@@ -307,7 +307,11 @@ module ApplicationHelper
         content_tag(:div, Admin::Setting.footer_first, :class => "first") +
           content_tag(:div, Admin::Setting.footer_second, :class => "second")
       end
-      s << content_tag(:div, ("powered_by"+link_to(image_tag(root_url + "custom/images/footer_logo.png"), h(Admin::Setting.footer_image_link_url))), :class => "powered_by")
+      if footer_image_link_tag = SkipEmbedded::InitialSettings['footer_image_link_tag']
+        s << content_tag(:div, footer_image_link_tag, :class => "powered_by")
+      else
+        s << content_tag(:div, ("powered_by"+link_to(image_tag(root_url + "custom/images/footer_logo.png"), h(Admin::Setting.footer_image_link_url))), :class => "powered_by")
+      end
     end
   end
 
