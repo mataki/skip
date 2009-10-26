@@ -1,10 +1,12 @@
 <% content_for :contents_left do -%>
-  <%= render(:partial => 'entries/search_box') -%>
-  <%= render(:partial => 'entries/recent_box', :locals => { :owner => @user }) -%>
-  <%= render(:partial => 'entries/archive_box', :locals => { :month_archives => @month_archives }) -%>
-  <%= render(:partial => 'entries/aim_type_box') %>
-  <%= render(:partial => 'entries/categories_box', :locals => { :categories => @categories }) -%>
-  <%= render(:partial => 'share_file/file_size_box', :locals => { :owner_symbol => @user.symbol }) %>
+  <% form_tag({}, {:method => 'get'}) do -%>
+    <%= render(:partial => 'entries/recent_box', :locals => { :owner => @user }) -%>
+    <%= render(:partial => 'entries/archive_box', :locals => { :month_archives => @month_archives }) -%>
+    <%= render(:partial => 'entries/categories_box', :locals => { :categories => @categories }) -%>
+    <%= render(:partial => 'entries/aim_type_box') %>
+    <%= render(:partial => 'entries/search_box') -%>
+    <%= render(:partial => 'share_file/file_size_box', :locals => { :owner_symbol => @user.symbol }) %>
+  <% end -%>
 <% end -%>
 
 <% content_for :contents_right do -%>
