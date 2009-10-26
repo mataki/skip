@@ -46,7 +46,7 @@
   <div class="banner"></div>
 
   <% if SkipEmbedded::InitialSettings['full_text_search_setting'] && current_user && current_user.active? %>
-  <div id="search">
+  <div id="search" class="ui-corner-all">
     <% form_tag({:controller => '/search', :action => 'full_text_search'},{:method => 'get'}) do -%>
       <%= text_field_tag "full_text_query", search_label, :class => "labeled-field" %>
       <%= submit_tag _('Search') -%>

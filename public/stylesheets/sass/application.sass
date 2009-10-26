@@ -197,6 +197,7 @@ div.right_box
     :background-color #0AC
     :color white
     :font-size 14px
+    :font-weight normal
     :padding 2px 6px
   ul
     li
@@ -524,7 +525,7 @@ div#contents_container
     :float left
     :width 150px
   div#contents_right
-    :margin-left 160px
+    :margin-left 165px
     :_width 100%
   div#contents_bottom
     :width 100%
@@ -543,9 +544,17 @@ div#statusbar
 
 div#header
   div#search
+    :background-color #E0E0FF
+    :padding 4px 4px
     select
       :margin 3px 0 0
-
+      :font-size 10px
+    input
+      :font-size 10px
+    span.other_links
+      :padding 0px 1px
+      :font-size 10px
+      :font-weight normal
 div#tab_menu
   :margin-left 20px
 
@@ -568,7 +577,7 @@ div.top_info
       :weight bold
 
 div#mypage_left
-  :margin-right 160px
+  :margin-right 165px
   // IEでカラム落ちが発生しないように以下を設定
   :_width 100%
 div#mypage_right
@@ -621,6 +630,7 @@ table.chain_table
     :width 120px
     :text-align center
     :border = !base_border
+    &.user_box div
   td
     &.message div
       :border = !base_border
