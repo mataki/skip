@@ -1,10 +1,7 @@
+<<<<<<< HEAD:app/views/search/entry_search.html.erb
 <div class="search_cond_space ui-corner-all">
   <% form_tag({:action => 'entry_search'}, {:method => 'get'}) do -%>
     <table class="search_cond_box">
-      <tr>
-        <th><%= _('Keywords')%></th>
-        <td><%= text_field_tag('keyword', params[:keyword], :size => 60) %><%= _('(The search targets are tags, titles and bodies)')%></td>
-      </tr>
       <tr>
         <th><%= _('Search Range')%></th>
         <td>
@@ -14,12 +11,16 @@
         </td>
       </tr>
       <tr>
-        <th><%= _('Type') %></th>
+        <th><%= _('Types') %></th>
         <td>
           <%= radio_button_tag('type', "entry", (params[:type] == "entry" or params[:type].blank?)) %><%= label_tag('type_entry', s_('BoardEntry|Aim type|entry')) %>
           <%= radio_button_tag('type', "question", params[:type] == "question") %><%= label_tag('type_question', s_('BoardEntry|Aim type|question')) %>
           <%= radio_button_tag('type', "notice", params[:type] == "notice") %><%= label_tag('type_notice', s_('BoardEntry|Aim type|notice')) %>
         </td>
+      </tr>
+      <tr>
+        <th><%= _('Keywords')%></th>
+        <td><%= text_field_tag('keyword', params[:keyword], :size => 60) %><%= _('(The search targets are tags, titles and bodies)')%></td>
       </tr>
       <%= render :partial => 'tag_search' %>
     </table>
