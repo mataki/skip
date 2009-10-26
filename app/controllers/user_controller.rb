@@ -114,7 +114,7 @@ class UserController < ApplicationController
 
   # tab_menu
   def group
-    @group_counts, @total_count = Group.count_by_category(@user.id)
+    @group_counts, @total_count = Group.count_by_category(@user)
     @group_categories = GroupCategory.all
 
     @groups = @user.groups.active.partial_match_name_or_description(params[:keyword]).

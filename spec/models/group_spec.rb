@@ -198,7 +198,7 @@ describe Group do
 
     describe 'ユーザを指定する場合' do
       it 'ユーザの所属するグループのカテゴリとそのカテゴリのグループ数及び全グループ数を返す' do
-        group_counts, total_count = Group.count_by_category(@alice.id)
+        group_counts, total_count = Group.count_by_category(@alice)
         group_counts[@dev_category.id].should == 1
         group_counts[@misc_category.id].should == 0
         total_count.should == 1

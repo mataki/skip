@@ -168,18 +168,13 @@ class Group < ActiveRecord::Base
   end
 
   # TODO named_scope化する
-  def self.count_by_category user_id = nil
-    conditions = user_id ? ['group_participations.user_id = ?', user_id] : []
-    groups = active.all(
-      :select => 'group_category_id, count(distinct(groups.id)) as count',
-      :group => 'groups.group_category_id',
-      :conditions => conditions,
-      :joins => [:group_participations])
+  def self.count_by_category user = nil
+    categories = GroupCategory.with_groups_count(user)
     group_counts = Hash.new(0)
     total_count = 0
-    groups.each do |group_count|
-      group_counts[group_count.group_category_id] = group_count.count.to_i
-      total_count += group_count.count.to_i
+    categories.each do |category|
+      group_counts[category.id] = category.count.to_i
+      total_count += category.count.to_i
     end
     [group_counts, total_count]
   end
