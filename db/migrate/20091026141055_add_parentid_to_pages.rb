@@ -1,6 +1,6 @@
 class AddParentidToPages < ActiveRecord::Migration
   def self.up
-    add_column :pages, :parent_id, :integer, :default=>0
+    add_column :pages, :parent_id, :integer, :default=>nil
   end
 
   def self.down

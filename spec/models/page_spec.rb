@@ -3,6 +3,8 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe Page do
   fixtures :pages
   before(:each) do
+    # TODO ymlか読み込むと0がはいるため
+    Page.all.each {|p| p.update_attributes(:parent_id=>nil) if p.parent_id==0 }
     @valid_attributes = {
       :last_modified_user_id => "1",
       :title => "value for display_name",
@@ -24,9 +26,14 @@ describe Page do
   end
 
   # 常に最上位のページは1つ
+  describe "#roots" do
+    subject { Page.roots }
+    its(:size) { should == 1 }
+  end
+
   describe "#root" do
     subject { Page.root }
-    its(:size) { should == 1 }
+    its(:parent_id) { should be_nil }
   end
 
   describe "#edit(content, user)" do
