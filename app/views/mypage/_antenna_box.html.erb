@@ -11,7 +11,8 @@
   <div class="box_space_body">
     <ul id="antennas_list">
       <% system_antennas.each do |antenna| -%>
-        <li><%= link_to(h(antenna.name), :action => 'entries_by_antenna', :antenna_id => antenna.antenna_type) + "(#{h antenna.count})" %></li>
+        <% count_as_s = antenna.count > 0 ? "(#{h antenna.count})" : '' -%>
+        <li><%= link_to(h(antenna.name), :action => 'entries_by_antenna', :antenna_id => antenna.antenna_type) + count_as_s %></li>
       <% end -%>
       <% my_antennas.each do |antenna| -%>
         <% count_as_s = antenna.count > 0 ? "(#{h antenna.count})" : '' -%>
