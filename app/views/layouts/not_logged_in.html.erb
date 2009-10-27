@@ -17,19 +17,24 @@
     </div><!-- contents_left -->
     <% end -%>
 
-    <% if @content_for_topic_path -%>
-    <div id="topic_path">
-      <%= yield :topic_path %>
-    </div><!-- topic_path -->
-    <% end %>
-
-    <%= yield %>
-
     <% if @content_for_contents_right -%>
     <div id="contents_right">
+      <% if @content_for_topic_path -%>
+      <div id="topic_path">
+        <%= yield :topic_path %>
+      </div><!-- topic_path -->
+      <% end %>
       <%= yield :contents_right %>
     </div><!-- contents_right -->
+    <% else -%>
+      <% if @content_for_topic_path -%>
+      <div id="topic_path">
+        <%= yield :topic_path %>
+      </div><!-- topic_path -->
+      <% end %>
     <% end -%>
+
+    <%= yield %>
 
     <% if @content_for_contents_bottom -%>
     <div id="contents_bottom">
