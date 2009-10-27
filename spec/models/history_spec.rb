@@ -4,7 +4,7 @@ describe History do
   fixtures :pages
   before(:each) do
     @valid_attributes = {
-      :page => pages(:root_page),
+      :page => pages(:our_page_1),
       :user_id => "1",
       :revision => "1",
       :content_id => "1"
@@ -12,7 +12,7 @@ describe History do
   end
 
   it "pageのtimestampを更新すること" do
-    @page = pages(:root_page)
+    @page = pages(:our_page_1)
     @page.edit("hoge", mock_model(User))
     @page.save!
     Time.should_receive(:now).at_least(:once).and_return(mock_t = Time.local(2007,12,31, 00, 00, 00))
@@ -34,7 +34,7 @@ describe History do
     end
 
     before do
-      @page = pages(:root_page)
+      @page = pages(:our_page_1)
       @history = create_history_with_content(@page, "hoge hoge hoge")
     end
 

@@ -31,6 +31,9 @@ class Page < ActiveRecord::Base
     end
   }
 
+  named_scope :root, proc{
+    { :conditions => ["#{quoted_table_name}.parent_id = 0"]}
+  }
 
   def content(revision=nil)
     if revision.nil?
