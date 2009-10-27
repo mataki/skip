@@ -4,6 +4,7 @@ class History < ActiveRecord::Base
   belongs_to :user
 
   validates_associated :content
+  validates_presence_of :user_id
   after_save :update_page_updated_at
 
   named_scope :heads, lambda{|*opts|

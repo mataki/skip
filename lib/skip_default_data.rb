@@ -3,11 +3,16 @@ class SkipDefaultData
   bindtextdomain("skip", { :path => File.join(RAILS_ROOT, "locale")})
 
   def self.data_is_empty?
-    Tag.count == 0 && Group.count == 0 && UserProfileMasterCategory.count == 0 && UserProfileMaster.count == 0
+    Tag.count == 0 && Group.count == 0 && UserProfileMasterCategory.count == 0 && UserProfileMaster.count == 0 && Page.count == 0
   end
 
   # FIXME #25 国際化におけるシステムタグの扱いについての検討が必要
   def self.load lang = nil
+    if Page.count == 0
+      load_page lang
+      return unless data_is_empty?
+    end
+
     raise 'Any data is already loaded' unless data_is_empty?
     lang = I18n.locale = lang.blank? ? default_language.to_sym : lang.to_sym
 
@@ -40,6 +45,16 @@ class SkipDefaultData
         open(RAILS_ROOT + "/public/custom/#{content_name.sub('default_', '')}.html", 'w') { |f| f.write(contents) }
       end
     end
+  end
+
+  def self.load_page lang=nil
+    p = Page.new(:title=>'トップページ')
+    content = <<-EOS
+Wikiのファーストページです。
+こちらから誰でも自由にページの作成や編集が可能です。
+    EOS
+    p.edit(content, User.new)
+    p.save
   end
 
   def self.sexes
