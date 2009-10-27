@@ -53,9 +53,7 @@
     <% end -%>
     <span class="other_links"><%= link_to( _('Rankings'), :controller => '/rankings', :action => 'index') %></span>
     <span class="other_links"><%= link_to( _('Site Information'), :controller => '/statistics') %></span>
-    <% if current_user && !current_user.groups.participating(current_user).empty? -%>
-      <%= shortcut_menus %>
-    <% end -%>
+    <%= shortcut_menus %>
   </div>
   <% content_for :javascript_initializers do -%>
     $j('input#full_text_query').labeledTextField(<%= {:message => search_label}.to_json %>);

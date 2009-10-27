@@ -316,13 +316,14 @@ module ApplicationHelper
   end
 
   def shortcut_menus
+    return if !current_user || current_user.groups.participating(current_user).empty?
     option_tags = [content_tag(:option, _('Move to groups joined ...'), :value => url_for({:controller => '/mypage', :action => 'group'}))]
 
     GroupCategory.all.each do |category|
       if groups = category.groups.participating(current_user).order_participate_recent and !groups.empty?
         option_tags << content_tag(:option, "[#{h(category.name)}]", :disabled => 'disabled', :style => 'color: gray')
         groups.each do |group|
-          option_tags << content_tag(:option, "&nbsp;#{truncate(h(group.name), 20)}", :value => url_for({:controller => '/group', :gid => group.gid, :action => 'show'}))
+          option_tags << content_tag(:option, "&nbsp;#{truncate(h(group.name), 15)}", :value => url_for({:controller => '/group', :gid => group.gid, :action => 'show'}))
         end
       end
     end
