@@ -5,12 +5,10 @@ class CreatePages < ActiveRecord::Migration
       t.string :title, :null=>false
       t.string :format_type, :limit => 16, :default=>'html', :null=>false
       t.datetime :deleted_at
-      t.integer :lock_version
-
+      t.integer :lock_version, :default =>0
       t.timestamps
     end
 
-    Page.create!(:title=>'トップページ')
   end
 
   def self.down
