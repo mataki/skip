@@ -65,7 +65,7 @@ class MypageController < ApplicationController
     # ============================================================
     #  main area bookmarks
     # ============================================================
-    @bookmarks = Bookmark.publicated.recent(10).limit(5)
+    @bookmarks = Bookmark.publicated.recent(10).order_new.limit(5)
   end
 
   # mypage > profile
