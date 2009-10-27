@@ -31,16 +31,3 @@
   <div class="navi ui-corner-all"><%= will_paginate_link @bookmarks %></div>
 <% end -%>
 </div>
-
-<% content_for :javascript_initializers do -%>
-    $j('#bookmark_form')
-    .submit(function(e) {
-        e.preventDefault();
-        if( !$j('#url').val().match(/^https?:\/\/.*/) ){
-            alert('<%= _('URL to be bookmarked must start with "http".')%>');
-            return false;
-        }
-        $j('#bookmark_form').nyroModalManual();
-        $j('#url').val('');
-    });
-<% end -%>
