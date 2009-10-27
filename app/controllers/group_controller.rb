@@ -376,7 +376,7 @@ private
       redirect_to :controller => 'mypage', :action => 'index'
       return false
     end
-    @participation = @group.group_participations.find_by_user_id(session[:user_id])
+    @participation = @group.group_participations.find_by_user_id(current_user.id)
   end
 
   def check_owned
