@@ -3,7 +3,7 @@ class SkipDefaultData
   bindtextdomain("skip", { :path => File.join(RAILS_ROOT, "locale")})
 
   def self.data_is_empty?
-    Tag.count == 0 && Group.count == 0 && UserProfileMasterCategory.count == 0 && UserProfileMaster.count == 0 && Page.count == 0
+    Tag.count == 0 && Group.count == 0 && UserProfileMasterCategory.count == 0 && UserProfileMaster.count == 0
   end
 
   # FIXME #25 国際化におけるシステムタグの扱いについての検討が必要
