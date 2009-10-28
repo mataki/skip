@@ -196,12 +196,14 @@
   </style>
 <% end -%>
 
-<% if BoardEntry::HIDABLE_AIM_TYPES.include?(entry.aim_type) and !entry.hide %>
+<% if BoardEntry::HIDABLE_AIM_TYPES.include?(entry.aim_type) -%>
   <div id="hide_message" class="ui-corner-all">
-    <p>
-      <%= _('Opened question, showed on mypage.') %>
-      <%= link_to(_('Click to change state'), "#hide_action") %>
-    </p>
+    <b class="caution"><%= _('If you finished, this question is hide from mypage of all users.') %></b>
+    <% form_tag({:controller => 'board_entries', :action => 'toggle_hide', :id => entry.id}) do -%>
+      <p>
+        <span class="iphone_style_checkbox"><%= check_box_tag 'toggle_hide', 'hide', !entry.hide %></span>
+      </p>
+    <% end -%>
   </div>
 <% end %>
 
@@ -308,22 +310,11 @@
 
 <% if BoardEntry::HIDABLE_AIM_TYPES.include? entry.aim_type -%>
   <div id="hide_action" class="ui-corner-all">
-    <p>
-      <%= _('Change state of this question to hide or show in mypage.') %>
-    </p>
-    <% form_tag({:controller => 'board_entries', :action => 'toggle_hide', :id => entry.id}) do -%>
-      <p>
-        <%= label_tag "comment", s_('EntryHideOperation|Comment') %>
-        <%= text_field_tag "comment" %>
-      </p>
-      <p>
-        <%= submit_tag entry.hide ? _('Publish this entry') : _('Hide this entry'), :id => 'toggle_hide_button', :disable_with => _('Saving...') %>
-      </p>
-    <% end -%>
+    <h3><%= _('History of %{show}/%{hide}') % {:show => s_("BoardEntry|Hide|true"), :hide => s_("BoardEntry|Hide|false")} %></h3>
     <ul>
       <% for operation in entry.entry_hide_operations -%>
         <li>
-          <%= s_("BoardEntry|Hide|#{operation.operation_type}") + ": #{operation.comment} by #{user_link_to operation.user}" %>
+          <%= _("%{user} %{operation} this question at %{time}") % {:user => user_link_to(operation.user), :operation => s_("BoardEntry|Hide|#{operation.operation_type}"), :time => operation.created_at.strftime(_('%B %d %Y %H:%M'))} %>
         </li>
       <% end -%>
     </ul>
@@ -697,24 +688,16 @@
       };
       setupComment(document);
 
-      var toggleHideButton = function() {
-        if ($j('form input#comment').val() == '') {
-          $j('form input#toggle_hide_button').attr('disabled', 'disabled');
-        } else {
-          $j('form input#toggle_hide_button').attr('disabled', '');
-        }
-      };
-
       // 「記事を未読にする」チェックボックス押下時の処理
       $j('#read_state_check').click(function() {
           changeReadState(<%= entry.id %>, this.checked, authenticity_token);
       });
 
-      // 「終了する」ボタンの活性制御
-      $j('form input#comment').keyup(function() {
-        toggleHideButton();
+      // チェックボックスをリッチに
+      var iphoneStyleCheckbox = $j('input#toggle_hide').iphoneStyle( { checkedLabel: '<%= _('Open') %>', uncheckedLabel: '<%= _('Finish') %>', resizeContainer: false, resizeHandle: false } );
+      iphoneStyleCheckbox.change(function(){
+        $j('div#hide_message form').submit();
       });
-      toggleHideButton();
 
       var authenticity_token = function(){
           return $j('input[name="authenticity_token"]').eq(0).val();

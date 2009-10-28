@@ -679,14 +679,14 @@ class BoardEntry < ActiveRecord::Base
     self.readable?(user) && !self.writer?(user.id)
   end
 
-  def toggle_hide(comment, user)
+  def toggle_hide(user)
     unless BoardEntry::HIDABLE_AIM_TYPES.include? self.aim_type
       self.errors.add_to_base(_("Invalid operation."))
       return false
     end
     transaction do
       self.toggle!(:hide)
-      self.entry_hide_operations.create!(:comment => comment, :user => user, :operation_type => self.hide.to_s)
+      self.entry_hide_operations.create!(:user => user, :operation_type => self.hide.to_s)
     end
     true
   rescue ActiveRecord::RecordInvalid => e

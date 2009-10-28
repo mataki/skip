@@ -165,7 +165,7 @@ class BoardEntriesController < ApplicationController
 
   def toggle_hide
     @board_entry = BoardEntry.accessible(current_user).find params[:id]
-    if @board_entry.toggle_hide(params[:comment], current_user)
+    if @board_entry.toggle_hide(current_user)
       respond_to do |format|
         format.html do
           flash[:notice] = _("Entry was successfully %{operation}.") % { :operation => _("BoardEntry|Hide|#{@board_entry.hide}") }
