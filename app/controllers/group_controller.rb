@@ -87,9 +87,9 @@ class GroupController < ApplicationController
 
       find_params = BoardEntry.make_conditions(login_user_symbols, options)
 
-      if @user = params[:user]
+      if user_id = params[:user]
         find_params[:conditions][0] << " and board_entries.user_id = ?"
-        find_params[:conditions] << @user
+        find_params[:conditions] << user_id
       end
 
       @entries = BoardEntry.scoped(
