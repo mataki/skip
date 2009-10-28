@@ -2,10 +2,6 @@ ActionController::Routing::Routes.draw do |map|
 
   map.root    :controller => 'mypage', :action => 'index'
 
-  map.images 'images/*path',
-              :controller => 'image',
-              :action     => 'show'
-
   map.resources :pictures
 
   map.share_file  ':controller_name/:symbol_id/files/:file_name',
