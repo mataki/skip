@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.3.0\n"
-"POT-Creation-Date: 2009-10-28 14:40+0900\n"
+"POT-Creation-Date: 2009-10-28 16:32+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41,7 +41,7 @@ msgstr ""
 #: app/models/board_entry.rb:395 app/views/bookmark/list.html.erb:54
 #: app/views/bookmark/show.html.erb:24
 #: app/views/mypage/entries_by_date.html.erb:13
-#: app/views/mypage/index.html.erb:47 app/views/mypage/index.html.erb:119
+#: app/views/mypage/index.html.erb:47 app/views/mypage/index.html.erb:123
 #: app/views/rankings/bookmark.html.erb:2
 #: app/views/rankings/bookmark.html.erb:4
 #: app/views/rankings/bookmark.html.erb:7
@@ -95,7 +95,7 @@ msgstr ""
 msgid "%s has already joined / applied to join this group."
 msgstr ""
 
-#: app/views/mypage/index.html.erb:118
+#: app/views/mypage/index.html.erb:122
 msgid "%s users"
 msgstr ""
 
@@ -1877,7 +1877,7 @@ msgstr ""
 msgid "Blog Entry View"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:684
+#: app/controllers/mypage_controller.rb:688
 msgid "Blogs"
 msgstr ""
 
@@ -2315,7 +2315,7 @@ msgstr ""
 msgid "Change uid"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:611
+#: app/controllers/mypage_controller.rb:615
 msgid "Change your profile picture!"
 msgstr ""
 
@@ -2897,7 +2897,7 @@ msgstr ""
 msgid "Entries"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:858
+#: app/controllers/mypage_controller.rb:862
 msgid "Entries bookmarked by yourself"
 msgstr ""
 
@@ -2913,7 +2913,7 @@ msgstr ""
 msgid "Entries talking about this entry:"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:857
+#: app/controllers/mypage_controller.rb:861
 msgid "Entries you have made comments"
 msgstr ""
 
@@ -3556,7 +3556,7 @@ msgstr ""
 msgid "Internet"
 msgstr ""
 
-#: app/views/mypage/index.html.erb:134 app/views/user/_action_box.html.erb:7
+#: app/views/mypage/index.html.erb:138 app/views/user/_action_box.html.erb:7
 msgid "Introduce"
 msgstr ""
 
@@ -3786,7 +3786,7 @@ msgstr ""
 msgid "List of applications works with SKIP"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:861
+#: app/controllers/mypage_controller.rb:865
 msgid "List of unread entries"
 msgstr ""
 
@@ -3985,8 +3985,8 @@ msgid "Message: "
 msgstr ""
 
 #: app/controllers/feed_controller.rb:82
-#: app/controllers/mypage_controller.rb:623
-#: app/controllers/mypage_controller.rb:856 app/models/antenna.rb:92
+#: app/controllers/mypage_controller.rb:627
+#: app/controllers/mypage_controller.rb:860 app/models/antenna.rb:92
 msgid "Messages for you"
 msgstr ""
 
@@ -4073,7 +4073,7 @@ msgstr ""
 msgid "My Blog"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:464
+#: app/controllers/mypage_controller.rb:468
 #: app/helpers/application_helper.rb:335 app/helpers/user_helper.rb:71
 #: app/helpers/user_helper.rb:75
 msgid "My Page"
@@ -4153,7 +4153,7 @@ msgstr ""
 msgid "New bookmark in your profile!"
 msgstr ""
 
-#: app/views/mypage/index.html.erb:114
+#: app/views/mypage/index.html.erb:118
 msgid "New bookmarks"
 msgstr ""
 
@@ -4347,8 +4347,8 @@ msgstr ""
 msgid "One or more characters other than spaces required."
 msgstr ""
 
-#: app/views/mypage/_publicated_entries_tabs.html.erb:5
-#: app/views/mypage/_publicated_entries_tabs.html.erb:7
+#: app/views/mypage/_publicated_entries_tabs.html.erb:6
+#: app/views/mypage/_publicated_entries_tabs.html.erb:8
 msgid "Only %s"
 msgstr ""
 
@@ -4689,7 +4689,7 @@ msgstr ""
 msgid "Posts"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:859
+#: app/controllers/mypage_controller.rb:863
 msgid "Posts in the groups joined"
 msgstr ""
 
@@ -4869,21 +4869,21 @@ msgstr ""
 msgid "Recent Entries"
 msgstr ""
 
-#: app/views/mypage/index.html.erb:145
+#: app/views/mypage/index.html.erb:149
 msgid "Recent Groups"
 msgstr ""
 
 #: app/controllers/feed_controller.rb:71
-#: app/controllers/mypage_controller.rb:667
+#: app/controllers/mypage_controller.rb:671
 msgid "Recent Popular Blogs"
 msgstr ""
 
 #: app/controllers/feed_controller.rb:22
-#: app/controllers/mypage_controller.rb:649
+#: app/controllers/mypage_controller.rb:653
 msgid "Recent Questions"
 msgstr ""
 
-#: app/views/mypage/index.html.erb:129
+#: app/views/mypage/index.html.erb:133
 msgid "Recent Users"
 msgstr ""
 
@@ -5137,7 +5137,7 @@ msgstr ""
 msgid "See Terms of Use"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:694
+#: app/controllers/mypage_controller.rb:698
 msgid "See all"
 msgstr ""
 
@@ -5539,6 +5539,10 @@ msgstr ""
 #: app/views/board_entries/_form.html.erb:77
 #: app/views/share_file/_form.html.erb:37
 msgid "Specify Directly"
+msgstr ""
+
+#: app/views/shared/_header.html.erb:70
+msgid "Sponsored link:"
 msgstr ""
 
 #: app/views/bookmark/_stared.html.erb:3

@@ -62,6 +62,10 @@
   <%#  right side area -%>
   <%# ============================================================ -%>
   <div id="mypage_right">
+    <% unless SkipEmbedded::InitialSettings['enable_ad_for_oss'] == "lovelyskip" -%>
+      <%= render "ad_for_oss" %>
+    <% end -%>
+
     <%= render :partial => 'rss_feed_box' %>
 
     <% unless @access_blogs[:pages].empty? -%>
