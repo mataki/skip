@@ -210,7 +210,7 @@ describe GroupCategory, ".with_groups_count" do
     end
     it "countが正しく取れること" do
       @gc_wgc[0].count.should == "0"
-      @gc_wgc[1].count.should == @groups1.count.to_s
+      @gc_wgc[1].count.should == @groups1.size.to_s
       @gc_wgc[2].count.should == "1"
     end
   end

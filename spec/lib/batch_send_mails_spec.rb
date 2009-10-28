@@ -73,7 +73,7 @@ describe BatchSendMails, '#send_message' do
         it 'メールが送信されること' do
           lambda do
             @sender.send_message
-          end.should change(ActionMailer::Base.deliveries, :size).to(1)
+          end.should change(Email, :count).to(1)
         end
       end
       describe 'ユーザが退職している場合' do
