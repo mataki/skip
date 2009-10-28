@@ -533,7 +533,7 @@ class BoardEntry < ActiveRecord::Base
     users.each do |u|
       next if u.id == self.user_id
       owner = load_owner
-      UserMailer::AR.deliver_sent_contact(u.email, u.name, self)
+      UserMailer::AR.deliver_sent_contact(u.email, self.user.name, self)
     end
   end
 
