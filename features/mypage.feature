@@ -39,7 +39,7 @@ Feature: マイページ
     When "a_group_owned_user"でログインする
     And "マイページ"にアクセスする
 
-    Then I should see "Railsについてお知らせ" within "div#message"
+    Then I should see "Railsについてお知らせ" within "div#messages_box"
     And I should not see "Railsについてお知らせ" within "div#access_blogs"
     And I should see "Railsについて雑談" within "div#access_blogs"
     And I should not see "Railsについてお知らせ" within "div#recent_blogs"
@@ -60,7 +60,7 @@ Feature: マイページ
     When "Railsについてお知らせ"リンクをクリックする
     And "マイページ"にアクセスする
 
-    Then I should see "あなたへのお知らせ(0)" within "div.box_space.antenna"
+    Then I should see "あなたへのお知らせ" within "div.box_space.antenna"
 
     When "あなたへのお知らせ"リンクをクリックする
 
