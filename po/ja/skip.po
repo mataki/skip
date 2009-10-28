@@ -2183,11 +2183,11 @@ msgstr ""
 
 #: app/models/board_entry.rb:145 app/views/entries/_entry_detail.html.erb:313
 msgid "BoardEntry|Hide|false"
-msgstr "公開"
+msgstr "終了"
 
 #: app/models/board_entry.rb:144 app/views/entries/_entry_detail.html.erb:313
 msgid "BoardEntry|Hide|true"
-msgstr "非公開"
+msgstr "質問中"
 
 #: app/models/board_entry.rb:-
 msgid "BoardEntry|Ignore times"

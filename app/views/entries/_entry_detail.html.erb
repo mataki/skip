@@ -198,10 +198,11 @@
 
 <% if BoardEntry::HIDABLE_AIM_TYPES.include?(entry.aim_type) -%>
   <div id="hide_message" class="ui-corner-all">
-    <b class="caution"><%= _('If you finished, this question is hide from mypage of all users.') %></b>
-    <% form_tag({:controller => 'board_entries', :action => 'toggle_hide', :id => entry.id}) do -%>
+    <% form_tag({:controller => 'board_entries', :action => 'toggle_hide'}) do -%>
+      <%= hidden_field_tag :id, entry.id %>
       <p>
         <span class="iphone_style_checkbox"><%= check_box_tag 'toggle_hide', 'hide', !entry.hide %></span>
+        <b class="caution"><%= _('If you finished, this question is hide from mypage of all users.') %></b>
       </p>
     <% end -%>
   </div>
@@ -696,7 +697,14 @@
       // チェックボックスをリッチに
       var iphoneStyleCheckbox = $j('input#toggle_hide').iphoneStyle( { checkedLabel: '<%= _('Open') %>', uncheckedLabel: '<%= _('Finish') %>', resizeContainer: false, resizeHandle: false } );
       iphoneStyleCheckbox.change(function(){
-        $j('div#hide_message form').submit();
+        $j.ajax({
+          type: 'POST',
+          url: relative_url_root + '/board_entries/toggle_hide',
+          data: $j('#hide_message form').serialize(),
+          success: function(msg) {
+              $j("#flash_message").trigger("notice", msg);
+          }
+        });
       });
 
       var authenticity_token = function(){
