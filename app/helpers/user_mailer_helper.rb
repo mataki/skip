@@ -22,6 +22,6 @@ module UserMailerHelper
                else
                  strip_tags entry.contents
                end
-    contents.scan(/.{0,100}/).first
+    contents.scan(/.{0,100}/m).first.gsub('&nbsp;',' ').gsub("&amp;", "&").gsub("&quot;",'"').gsub("&gt;", '>').gsub("&lt;", '<')
   end
 end

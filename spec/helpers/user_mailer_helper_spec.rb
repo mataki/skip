@@ -21,7 +21,7 @@ describe UserMailerHelper, '#convert_plain' do
       @entry = create_board_entry :contents => 'テスト'
     end
     it '本文がそのまま取得出来ること' do
-      helper.convert_plain(@entry).should == "テスト"
+      helper.convert_plain(@entry).should == "テスト\n"
     end
   end
   describe '100文字を越えるタグが含まれない本文の場合' do
@@ -30,6 +30,22 @@ describe UserMailerHelper, '#convert_plain' do
     end
     it '本文が100文字で切断されていること' do
       helper.convert_plain(@entry).should == 'あ'*100
+    end
+  end
+  describe '改行が含まれる本文の場合' do
+    before do
+      @entry = create_board_entry :contents => "<p>\r\n\r\n\tこれは本文です。\r\n\r\n\t</p>", :editor_mode => "richtext"
+    end
+    it "改行により本文が空にならないこと" do
+      helper.convert_plain(@entry).should == "\r\n\r\n\tこれは本文です。\r\n\r\n\t"
+    end
+  end
+  describe '&nbspが表示されないこと' do
+    before do
+      @entry = create_board_entry :contents => "<p>&nbsp;これは本文です。</p>", :editor_mode => "richtext"
+    end
+    it "改行により本文が空にならないこと" do
+      helper.convert_plain(@entry).should == " これは本文です。"
     end
   end
 end
