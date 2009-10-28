@@ -138,6 +138,9 @@ class BoardEntry < ActiveRecord::Base
   N_('BoardEntry|Aim type|entry')
   N_('BoardEntry|Aim type|question')
   N_('BoardEntry|Aim type|notice')
+  N_('BoardEntry|Aim type|Desc|entry')
+  N_('BoardEntry|Aim type|Desc|question')
+  N_('BoardEntry|Aim type|Desc|notice')
   N_('BoardEntry|Hide|true')
   N_('BoardEntry|Hide|false')
   DIARY = 'DIARY'

@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.3.0\n"
-"POT-Creation-Date: 2009-10-28 11:33+0900\n"
+"POT-Creation-Date: 2009-10-28 14:40+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,10 +38,10 @@ msgid ""
 "the system."
 msgstr ""
 
-#: app/models/board_entry.rb:392 app/views/bookmark/list.html.erb:54
+#: app/models/board_entry.rb:395 app/views/bookmark/list.html.erb:54
 #: app/views/bookmark/show.html.erb:24
 #: app/views/mypage/entries_by_date.html.erb:13
-#: app/views/mypage/index.html.erb:47 app/views/mypage/index.html.erb:117
+#: app/views/mypage/index.html.erb:47 app/views/mypage/index.html.erb:119
 #: app/views/rankings/bookmark.html.erb:2
 #: app/views/rankings/bookmark.html.erb:4
 #: app/views/rankings/bookmark.html.erb:7
@@ -49,7 +49,7 @@ msgstr ""
 msgid "%B %d %Y"
 msgstr ""
 
-#: app/models/board_entry.rb:394 app/models/board_entry_comment.rb:36
+#: app/models/board_entry.rb:397 app/models/board_entry_comment.rb:36
 msgid "%B %d %Y %H:%M"
 msgstr ""
 
@@ -95,7 +95,7 @@ msgstr ""
 msgid "%s has already joined / applied to join this group."
 msgstr ""
 
-#: app/views/mypage/index.html.erb:116
+#: app/views/mypage/index.html.erb:118
 msgid "%s users"
 msgstr ""
 
@@ -120,7 +120,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: app/views/bookmarks/_bookmarks.html.erb:11
-#: app/views/layouts/layout.html.erb:34 app/views/layouts/layout.html.erb:46
+#: app/views/layouts/layout.html.erb:34 app/views/layouts/layout.html.erb:47
 #: app/views/statistics/index.html.erb:36
 msgid "%{count} user"
 msgid_plural "%{count} users"
@@ -277,7 +277,7 @@ msgstr ""
 msgid "(The search targets are titles and comments)"
 msgstr ""
 
-#: app/models/board_entry.rb:436
+#: app/models/board_entry.rb:439
 msgid "(This entry is generated automatically by the system)"
 msgstr ""
 
@@ -285,7 +285,7 @@ msgstr ""
 msgid "(This screen is to avoid security risks ralated to direct downloading)"
 msgstr ""
 
-#: app/models/board_entry.rb:601
+#: app/models/board_entry.rb:604
 msgid "(Unknown topic entry found. However, this has been ignored)"
 msgstr ""
 
@@ -1945,6 +1945,18 @@ msgstr ""
 msgid "BoardEntry|Aim type"
 msgstr ""
 
+#: app/models/board_entry.rb:141
+msgid "BoardEntry|Aim type|Desc|entry"
+msgstr ""
+
+#: app/models/board_entry.rb:143
+msgid "BoardEntry|Aim type|Desc|notice"
+msgstr ""
+
+#: app/models/board_entry.rb:142
+msgid "BoardEntry|Aim type|Desc|question"
+msgstr ""
+
 #: app/models/board_entry.rb:138 app/views/entries/_aim_type_box.html.erb:9
 #: app/views/search/entry_search.html.erb:15
 msgid "BoardEntry|Aim type|entry"
@@ -2004,11 +2016,11 @@ msgstr ""
 msgid "BoardEntry|Hide"
 msgstr ""
 
-#: app/models/board_entry.rb:142
+#: app/models/board_entry.rb:145
 msgid "BoardEntry|Hide|false"
 msgstr ""
 
-#: app/models/board_entry.rb:141
+#: app/models/board_entry.rb:144
 msgid "BoardEntry|Hide|true"
 msgstr ""
 
@@ -2231,7 +2243,7 @@ msgid "Cancel"
 msgstr ""
 
 #: app/views/group/_form.html.erb:17 app/views/groups/_group_list.html.erb:7
-#: app/views/groups/index.html.erb:11 app/views/layouts/layout.html.erb:45
+#: app/views/groups/index.html.erb:11 app/views/layouts/layout.html.erb:46
 #: app/views/user/group.html.erb:4
 msgid "Category"
 msgstr ""
@@ -2469,7 +2481,7 @@ msgid ""
 "administrator."
 msgstr ""
 
-#: app/controllers/user_controller.rb:186
+#: app/controllers/user_controller.rb:185
 #: app/views/admin/group_categories/new.html.erb:10
 #: app/views/admin/openid_identifiers/new.html.erb:17
 #: app/views/admin/user_profile_master_categories/new.html.erb:10
@@ -3234,7 +3246,7 @@ msgstr ""
 msgid "Group categories"
 msgstr ""
 
-#: app/models/board_entry.rb:156
+#: app/models/board_entry.rb:159
 msgid "Group does not exist."
 msgstr ""
 
@@ -3544,7 +3556,7 @@ msgstr ""
 msgid "Internet"
 msgstr ""
 
-#: app/views/mypage/index.html.erb:132 app/views/user/_action_box.html.erb:7
+#: app/views/mypage/index.html.erb:134 app/views/user/_action_box.html.erb:7
 msgid "Introduce"
 msgstr ""
 
@@ -3560,15 +3572,15 @@ msgstr ""
 msgid "Introduction from other users"
 msgstr ""
 
-#: app/controllers/user_controller.rb:145
+#: app/controllers/user_controller.rb:144
 msgid "Introduction was created successfully."
 msgstr ""
 
-#: app/controllers/user_controller.rb:159
+#: app/controllers/user_controller.rb:158
 msgid "Introduction was deleted successfully."
 msgstr ""
 
-#: app/controllers/user_controller.rb:162
+#: app/controllers/user_controller.rb:161
 msgid "Introduction was updated successfully."
 msgstr ""
 
@@ -3592,7 +3604,7 @@ msgstr ""
 msgid "Invalid format. Please input like uid:xxxxx"
 msgstr ""
 
-#: app/models/board_entry.rb:158
+#: app/models/board_entry.rb:161
 msgid "Invalid group detected."
 msgstr ""
 
@@ -3602,7 +3614,7 @@ msgstr ""
 
 #: app/controllers/board_entries_controller.rb:26
 #: app/controllers/monta_controller.rb:22
-#: app/controllers/monta_controller.rb:33 app/models/board_entry.rb:681
+#: app/controllers/monta_controller.rb:33 app/models/board_entry.rb:684
 msgid "Invalid operation."
 msgstr ""
 
@@ -3643,7 +3655,7 @@ msgstr ""
 msgid "Invalid session. You need to log in again."
 msgstr ""
 
-#: app/models/board_entry.rb:152
+#: app/models/board_entry.rb:155
 msgid "Invalid user detected."
 msgstr ""
 
@@ -3705,7 +3717,7 @@ msgstr ""
 msgid "Joined the group successfully."
 msgstr ""
 
-#: app/views/group/_form.html.erb:40 app/views/layouts/layout.html.erb:47
+#: app/views/group/_form.html.erb:40 app/views/layouts/layout.html.erb:48
 msgid "Joining the group"
 msgstr ""
 
@@ -3954,7 +3966,7 @@ msgid "Member"
 msgstr ""
 
 #: app/helpers/group_helper.rb:39 app/views/group/show.html.erb:72
-#: app/views/layouts/layout.html.erb:46
+#: app/views/layouts/layout.html.erb:47
 msgid "Members"
 msgstr ""
 
@@ -4085,7 +4097,7 @@ msgstr ""
 msgid "Names"
 msgstr ""
 
-#: app/views/layouts/layout.html.erb:47
+#: app/views/layouts/layout.html.erb:48
 msgid "Need approval of the Administrator."
 msgstr ""
 
@@ -4141,7 +4153,7 @@ msgstr ""
 msgid "New bookmark in your profile!"
 msgstr ""
 
-#: app/views/mypage/index.html.erb:112
+#: app/views/mypage/index.html.erb:114
 msgid "New bookmarks"
 msgstr ""
 
@@ -4189,7 +4201,7 @@ msgstr ""
 
 #: app/controllers/group_controller.rb:151
 #: app/controllers/group_controller.rb:268
-#: app/views/layouts/layout.html.erb:47
+#: app/views/layouts/layout.html.erb:48
 msgid "No approval needed to join this group."
 msgstr ""
 
@@ -4218,7 +4230,7 @@ msgid "No matching entries found."
 msgstr ""
 
 #: app/controllers/groups_controller.rb:33
-#: app/controllers/user_controller.rb:124
+#: app/controllers/user_controller.rb:123
 msgid "No matching groups found."
 msgstr ""
 
@@ -4857,7 +4869,7 @@ msgstr ""
 msgid "Recent Entries"
 msgstr ""
 
-#: app/views/mypage/index.html.erb:143
+#: app/views/mypage/index.html.erb:145
 msgid "Recent Groups"
 msgstr ""
 
@@ -4871,7 +4883,7 @@ msgstr ""
 msgid "Recent Questions"
 msgstr ""
 
-#: app/views/mypage/index.html.erb:127
+#: app/views/mypage/index.html.erb:129
 msgid "Recent Users"
 msgstr ""
 
@@ -4923,8 +4935,8 @@ msgstr ""
 msgid "Registered Users"
 msgstr ""
 
-#: app/views/layouts/admin/application.html.erb:66
-#: app/views/layouts/layout.html.erb:96
+#: app/views/layouts/admin/application.html.erb:57
+#: app/views/layouts/layout.html.erb:97
 msgid "Registered Users: %s users"
 msgstr ""
 
@@ -5373,8 +5385,8 @@ msgid "Signup"
 msgstr ""
 
 #: app/controllers/statistics_controller.rb:67
-#: app/views/layouts/admin/application.html.erb:70
-#: app/views/layouts/layout.html.erb:100 app/views/shared/_header.html.erb:55
+#: app/views/layouts/admin/application.html.erb:61
+#: app/views/layouts/layout.html.erb:101 app/views/shared/_header.html.erb:55
 msgid "Site Information"
 msgstr ""
 
@@ -5777,11 +5789,11 @@ msgstr ""
 msgid "Themes"
 msgstr ""
 
-#: app/controllers/user_controller.rb:62 app/controllers/user_controller.rb:86
+#: app/controllers/user_controller.rb:62 app/controllers/user_controller.rb:85
 msgid "There are no entries posted."
 msgstr ""
 
-#: app/controllers/user_controller.rb:239
+#: app/controllers/user_controller.rb:238
 msgid "There are no introductions."
 msgstr ""
 
@@ -5879,8 +5891,8 @@ msgstr ""
 msgid "Today's Access"
 msgstr ""
 
-#: app/views/layouts/admin/application.html.erb:67
-#: app/views/layouts/layout.html.erb:97
+#: app/views/layouts/admin/application.html.erb:58
+#: app/views/layouts/layout.html.erb:98
 msgid "Today's Access: %s access"
 msgstr ""
 
@@ -5888,11 +5900,11 @@ msgstr ""
 msgid "Today's Entries"
 msgstr ""
 
-#: app/views/layouts/layout.html.erb:99
+#: app/views/layouts/layout.html.erb:100
 msgid "Today's Entries: %s entries"
 msgstr ""
 
-#: app/views/layouts/admin/application.html.erb:69
+#: app/views/layouts/admin/application.html.erb:60
 msgid "Today's Posts: %s posts"
 msgstr ""
 
@@ -5925,8 +5937,8 @@ msgstr ""
 msgid "Total Entries"
 msgstr ""
 
-#: app/views/layouts/admin/application.html.erb:68
-#: app/views/layouts/layout.html.erb:98
+#: app/views/layouts/admin/application.html.erb:59
+#: app/views/layouts/layout.html.erb:99
 msgid "Total Entries: %s entries"
 msgstr ""
 
@@ -6012,7 +6024,7 @@ msgstr ""
 msgid "Unstar"
 msgstr ""
 
-#: app/controllers/user_controller.rb:192
+#: app/controllers/user_controller.rb:191
 #: app/views/admin/group_categories/edit.html.erb:11
 #: app/views/admin/openid_identifiers/edit.html.erb:16
 #: app/views/admin/user_profile_master_categories/edit.html.erb:11
@@ -6119,7 +6131,7 @@ msgstr ""
 
 #: app/controllers/admin/users_controller.rb:53
 #: app/controllers/admin/users_controller.rb:71 app/helpers/user_helper.rb:86
-#: app/models/board_entry.rb:150
+#: app/models/board_entry.rb:153
 msgid "User does not exist."
 msgstr ""
 
@@ -6735,7 +6747,7 @@ msgstr ""
 msgid "You are not a member of the group."
 msgstr ""
 
-#: app/controllers/user_controller.rb:86
+#: app/controllers/user_controller.rb:85
 msgid "You are not allowed to see the page."
 msgstr ""
 
@@ -6823,7 +6835,7 @@ msgstr ""
 msgid "You have message(s) from %s"
 msgstr ""
 
-#: app/controllers/user_controller.rb:259
+#: app/controllers/user_controller.rb:258
 msgid "You have no bookmarks currently."
 msgstr ""
 
@@ -6997,7 +7009,7 @@ msgstr ""
 msgid "[Get download history in CSV]"
 msgstr ""
 
-#: app/models/board_entry.rb:414 app/models/share_file.rb:260
+#: app/models/board_entry.rb:417 app/models/share_file.rb:260
 msgid "[Group members only]"
 msgstr ""
 
@@ -7025,7 +7037,7 @@ msgstr ""
 msgid "[Last]"
 msgstr ""
 
-#: app/models/board_entry.rb:745
+#: app/models/board_entry.rb:748
 msgid "[Link does not exist...%s>]"
 msgstr ""
 
@@ -7053,7 +7065,7 @@ msgstr ""
 msgid "[Next]"
 msgstr ""
 
-#: app/models/board_entry.rb:408 app/models/share_file.rb:254
+#: app/models/board_entry.rb:411 app/models/share_file.rb:254
 msgid "[Open to all]"
 msgstr ""
 
@@ -7061,7 +7073,7 @@ msgstr ""
 msgid "[Other users: %{count} users]"
 msgstr ""
 
-#: app/models/board_entry.rb:412 app/models/share_file.rb:258
+#: app/models/board_entry.rb:415 app/models/share_file.rb:258
 msgid "[Owner only]"
 msgstr ""
 
