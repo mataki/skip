@@ -10,56 +10,47 @@
 <%= render :partial => "shared/flash_message" %>
 
 <div id="main">
-
-<div id="panel" class="ui-corner-all">
-  <div style="_width: 98%;">
+  <div id="panel" class="ui-corner-all">
     <h1 id="title"><%=h @title %></h1>
-    <%# if @tab_menu_source -%>
     <div id="tab_menu"><%= generate_admin_tab_menu %></div>
-    <br style="clear: left;" />
-    <%# end -%>
-  </div>
+    <div class="clear_left"></div>
 
-  <div id="tab_body" class="ui-corner-right">
-    <div id="contents_container">
+    <div id="tab_body" class="ui-corner-right">
+      <div id="contents_container">
+        <% if @content_for_contents_left -%>
+        <div id="contents_left">
+          <%= yield :contents_left %>
+        </div><!-- contents_left -->
+        <% end -%>
 
-      <% if @content_for_contents_left -%>
-      <div id="contents_left">
-        <%= yield :contents_left %>
-      </div><!-- contents_left -->
-      <% end -%>
+        <% if @content_for_contents_right -%>
+        <div id="contents_right">
+          <% if @content_for_topic_path -%>
+          <div id="topic_path">
+            <%= yield :topic_path %>
+          </div><!-- topic_path -->
+          <% end %>
+          <%= yield :contents_right %>
+        </div><!-- contents_right -->
+        <% else -%>
+          <% if @content_for_topic_path -%>
+          <div id="topic_path">
+            <%= yield :topic_path %>
+          </div><!-- topic_path -->
+          <% end %>
+        <% end -%>
 
-      <% if @content_for_contents_right -%>
-      <div id="contents_right">
-        <% if @content_for_topic_path -%>
-        <div id="topic_path">
-          <%= yield :topic_path %>
-        </div><!-- topic_path -->
-        <% end %>
-        <%= yield :contents_right %>
-      </div><!-- contents_right -->
-      <% else -%>
-        <% if @content_for_topic_path -%>
-        <div id="topic_path">
-          <%= yield :topic_path %>
-        </div><!-- topic_path -->
-        <% end %>
-      <% end -%>
+        <%= yield %>
 
-      <%= yield %>
-
-      <% if @content_for_contents_bottom -%>
-      <div id="contents_bottom">
-        <%= yield :contents_bottom %>
-      </div><!-- contents_bottom -->
-      <% end -%>
-
-    </div><!-- contents_container -->
-  </div><!-- tab_body -->
-</div><!-- panel -->
-
-<div style="clear: both;"><br/></div>
-
+        <% if @content_for_contents_bottom -%>
+        <div id="contents_bottom">
+          <%= yield :contents_bottom %>
+        </div><!-- contents_bottom -->
+        <% end -%>
+      </div><!-- contents_container -->
+    </div><!-- tab_body -->
+  </div><!-- panel -->
+  <div class="clear_left"></div>
 </div><!-- main -->
 
 <div id="statusbar">

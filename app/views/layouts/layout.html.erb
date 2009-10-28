@@ -16,7 +16,7 @@
 
   <%= yield :contents_top %>
 
-  <div id="panel" class="ui-corner-all" style="_width: 98%;">
+  <div id="panel" class="ui-corner-all">
     <% if @user and !@user.new_record? and !@user.unused? -%>
       <div class="panel_top">
         <div class="left">
@@ -88,7 +88,7 @@
     </div><!-- tab_body -->
   </div><!-- panel -->
 
-  <div style="clear: both;"><br/></div>
+  <div class="clear_left"></div>
 </div><!-- main -->
 
 <% if @site_count -%>
