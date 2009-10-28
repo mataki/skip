@@ -22,3 +22,8 @@ end
 When /^再読み込みする$/ do
   visit request.request_uri
 end
+
+When /^デバッガで止める$/ do
+  require 'ruby-debug'
+  debugger
+end

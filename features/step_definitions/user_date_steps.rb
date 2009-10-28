@@ -13,10 +13,6 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-Given /^メール機能を有効にする$/ do
-  SkipEmbedded::InitialSettings['mail']['show_mail_function'] = true
-end
-
 Given /^ログインIDが"(.*)"でパスワードが"(.*)"のあるユーザでログインする$/ do |id, password|
   @user = create_user(id, password)
   visit "/platform"
