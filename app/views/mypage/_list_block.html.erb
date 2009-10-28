@@ -17,7 +17,7 @@
   <% entry_search_links_by_category = categories.map{ |category| link_to h(category), {:controller => 'search', :action => :entry_search, :tag_words => Tag.comma_tags(h(category))}, :class => 'tag'} -%>
   <div class="topix_line">
     <div class="title">
-      <%= hide_long_tags(entry_search_links_by_category, 3) + entry_link_to(message, {}, {:title => h(message.title + entry_infos)}) %>
+      <%= entry_link_to(message, {}, {:title => h(message.title + entry_infos)}) + hide_long_tags(entry_search_links_by_category, 3) %>
       <% unless hide_entry_info %>
         <span class="supplement"><%=h entry_infos %></span>
       <% end %>
@@ -35,7 +35,7 @@
   <a class="first_link" id="<%= id_name -%>-first_link" href="#" ><%= _('[Top]')%></a>
   <a class="back_link" id="<%= id_name -%>-back_link" href="#" ><%= _('[Prev]')%></a>
   <% end -%>
-  <%= _("Total %{items} hits (Page %{page} / %{pages})") % {:items => h(pages.total_pages), :page => h(pages.current_page), :pages => h(pages.total_pages)} %>
+  <%= _("Total %{items} hits (Page %{page} / %{pages})") % {:items => h(pages.total_entries), :page => h(pages.current_page), :pages => h(pages.total_pages)} %>
   <% if pages.next_page -%>
     <%= hidden_field_tag 'page_last', pages.total_pages %>
     <%= hidden_field_tag 'page_next', pages.next_page %>

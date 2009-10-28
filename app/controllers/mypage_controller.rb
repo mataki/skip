@@ -58,8 +58,8 @@ class MypageController < ApplicationController
     # ============================================================
     @questions = find_questions_as_locals({:recent_day => recent_day})
     @access_blogs = find_access_blogs_as_locals({:per_page => 5})
-    @recent_blogs = find_recent_blogs_as_locals({:per_page => 8})
-    @timelines = find_timelines_as_locals({:per_page => 8}) if current_user.custom.display_entries_format == 'tabs'
+    @recent_blogs = find_recent_blogs_as_locals({:per_page => per_page})
+    @timelines = find_timelines_as_locals({:per_page => per_page}) if current_user.custom.display_entries_format == 'tabs'
     @recent_bbs = recent_bbs
 
     # ============================================================
@@ -460,6 +460,10 @@ class MypageController < ApplicationController
     10
   end
 
+  def per_page
+    current_user.custom.display_entries_format == 'tabs' ? 20 : 8
+  end
+
   def setup_layout
     @main_menu = @title = _('My Page')
   end
@@ -728,7 +732,7 @@ class MypageController < ApplicationController
     recent_bbs = []
     gid_by_category = Group.gid_by_category
     GroupCategory.all.each do |category|
-      options = { :group_symbols => gid_by_category[category.id], :per_page => 8 }
+      options = { :group_symbols => gid_by_category[category.id], :per_page => per_page }
       recent_bbs << find_recent_bbs_as_locals(category.code.downcase, options)
     end
     recent_bbs

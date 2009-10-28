@@ -71,8 +71,18 @@ div#tabs
   &.ui-widget-content
     :border none
     :background none
-  .ui-tabs-nav li a.small
-    :padding 0.5em 0.5em 0.5em 0.5em
+  .ui-tabs-nav
+    :border-top none
+    :border-left none
+    :border-right none
+    :width 100%
+    :padding 0
+    li
+      :font-size 12px
+      a.large
+        :padding 0.5em 1.5em 0.5em 1.5em
+      a.small
+        :padding 0.5em 0.5em 0.5em 0.5em
 
 // jqueryの画像拡大をする(zoomable)際にマウスオーバーで虫眼鏡を表示する
 // ------------------------------------------------------------

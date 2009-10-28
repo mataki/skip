@@ -1,7 +1,8 @@
-<%= show_title_bar("page_copy", _("Publicated Entries"), {:controller => 'search', :action => "entry_search"}) -%>
+<%= show_title_bar("page_copy", _("Publicated Entries")) %>
 <div id="tabs" class="invisible" style="margin: 0 0 10px 0;">
   <ul>
-    <li><a href="#<%= @timelines[:id_name] %>"><span><%=h @timelines[:title_name] %></span></a></li>
+    <li style="width: 50px; border: none;">&nbsp;</li>
+    <li><a href="#<%= @timelines[:id_name] %>" class="large"><span><%=h @timelines[:title_name] %></span></a></li>
     <li><a href="#<%= @recent_blogs[:id_name] %>" class="small"><span><%= h _('Only %s') % h(@recent_blogs[:title_name]) %></span></a></li>
     <% @recent_bbs.each do |bbs| -%>
       <li><a href="#<%= bbs[:id_name] %>" class="small"><span><%= h _('Only %s') % h(bbs[:title_name]) %></span></a></li>
