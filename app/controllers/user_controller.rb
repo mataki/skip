@@ -70,8 +70,7 @@ class UserController < ApplicationController
          :include => find_params[:include] | [ :user, :board_entry_comments, :state ]
       ).order_new.first
       if @entry
-        @checked_on = UserReading.find_by_user_id_and_board_entry_id(current_user, @entry).try(:checked_on)
-        @entry.accessed(current_user.id)
+        @checked_on = @entry.accessed(current_user.id).checked_on
         @prev_entry, @next_entry = @entry.get_around_entry(login_user_symbols)
         @editable = @entry.editable?(login_user_symbols, session[:user_id], session[:user_symbol], login_user_groups)
         @tb_entries = @entry.trackback_entries(current_user.id, login_user_symbols)
