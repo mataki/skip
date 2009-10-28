@@ -19,7 +19,8 @@ class Message < ActiveRecord::Base
     "COMMENT"   => { :name => N_("New Comment"), :message => N_("You recieved a comment on your entry [?]!"), :icon_name => 'comments'},
     "CHAIN"     => { :name => N_("New Introduction"), :message => N_("You received an introduction!"), :icon_name => 'user_comment'},
     "TRACKBACK" => { :name => N_("New Entry"), :message => N_("There is a new entry talking about your entry [?]!"), :icon_name => 'report_go'},
-    "POSTIT"    => { :name => N_("New Bookmark"), :message => N_("New bookmark in your profile!"), :icon_name => 'tag_blue'}
+    "POSTIT"    => { :name => N_("New Bookmark"), :message => N_("New bookmark in your profile!"), :icon_name => 'tag_blue'},
+    "QUESTION"  => { :name => N_("New Changeing state of Question"), :message => _('State of your question [?] is changed!'), :icon_name => 'tick' }
   }
 
   def self.save_message(message_type, user_id, link_url, title = nil)
