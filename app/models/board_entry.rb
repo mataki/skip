@@ -691,7 +691,7 @@ class BoardEntry < ActiveRecord::Base
         :host => Admin::Setting.host_and_port_by_initial_settings_default,
         :protocol => Admin::Setting.protocol_by_initial_settings_default
       }.merge(self.get_url_hash)
-      Message.save_message('QUESTION', self.user_id, url_for(url_options), self.title)
+      Message.save_message('QUESTION', self.user_id, url_for(url_options), self.title) unless user.id == self.user_id
     end
     true
   rescue ActiveRecord::RecordInvalid => e
