@@ -6,7 +6,6 @@ class SkipDefaultData
     Tag.count == 0 && Group.count == 0 && UserProfileMasterCategory.count == 0 && UserProfileMaster.count == 0
   end
 
-  # FIXME #25 国際化におけるシステムタグの扱いについての検討が必要
   def self.load lang = nil
     raise 'Any data is already loaded' unless data_is_empty?
     lang = I18n.locale = lang.blank? ? default_language.to_sym : lang.to_sym
@@ -34,7 +33,7 @@ class SkipDefaultData
 
   def self.load_html lang = nil
     %w(default_about_this_site default_rules).each do |content_name|
-      open(RAILS_ROOT + "/public/custom/lang/#{lang}/#{content_name}.html") do |source|
+      open(RAILS_ROOT + "/locale/#{lang}/html/#{content_name}.html") do |source|
         contents = source.read
         open(RAILS_ROOT + "/public/custom/#{content_name}.html", 'w') { |f| f.write(contents) }
         open(RAILS_ROOT + "/public/custom/#{content_name.sub('default_', '')}.html", 'w') { |f| f.write(contents) }
