@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-10-26 02:28+0900\n"
+"POT-Creation-Date: 2009-10-28 17:59+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1844,7 +1844,7 @@ msgstr ""
 msgid "Basic Info"
 msgstr ""
 
-#: lib/skip_default_data.rb:29
+#: lib/skip_default_data.rb:35
 msgid "Basic Information"
 msgstr ""
 
@@ -2044,7 +2044,7 @@ msgstr ""
 msgid "BoardEntry|User entry no"
 msgstr ""
 
-#: lib/skip_default_data.rb:22
+#: lib/skip_default_data.rb:28
 msgid "Book Review"
 msgstr ""
 
@@ -2172,7 +2172,7 @@ msgstr ""
 msgid "Bookmark|Url"
 msgstr ""
 
-#: lib/skip_default_data.rb:25
+#: lib/skip_default_data.rb:31
 msgid "Business"
 msgstr ""
 
@@ -2354,7 +2354,7 @@ msgstr ""
 msgid "Closed"
 msgstr ""
 
-#: lib/skip_default_data.rb:50
+#: lib/skip_default_data.rb:66
 msgid "Comics"
 msgstr ""
 
@@ -2413,7 +2413,7 @@ msgstr ""
 msgid "Contact Address: "
 msgstr ""
 
-#: lib/skip_default_data.rb:30
+#: lib/skip_default_data.rb:36
 msgid "Contact Information"
 msgstr ""
 
@@ -2425,7 +2425,7 @@ msgstr ""
 msgid "Content of CSV file"
 msgstr ""
 
-#: app/views/board_entries/_form.html.erb:51
+#: app/helpers/wiki_helper.rb:4 app/views/board_entries/_form.html.erb:51
 msgid "Contents"
 msgstr ""
 
@@ -2435,11 +2435,23 @@ msgid ""
 "page&quot;."
 msgstr ""
 
-#: lib/skip_default_data.rb:50
+#: app/models/content.rb:-
+msgid "Content|Created at"
+msgstr ""
+
+#: app/models/content.rb:-
+msgid "Content|Data"
+msgstr ""
+
+#: app/models/content.rb:-
+msgid "Content|Updated at"
+msgstr ""
+
+#: lib/skip_default_data.rb:66
 msgid "Cooking"
 msgstr ""
 
-#: lib/skip_default_data.rb:50
+#: lib/skip_default_data.rb:66
 msgid "Cosmetics"
 msgstr ""
 
@@ -2634,7 +2646,7 @@ msgstr ""
 msgid "Development"
 msgstr ""
 
-#: lib/skip_default_data.rb:22
+#: lib/skip_default_data.rb:28
 msgid "Diary"
 msgstr ""
 
@@ -2687,11 +2699,11 @@ msgstr ""
 msgid "Downloads: %s"
 msgstr ""
 
-#: lib/skip_default_data.rb:50
+#: lib/skip_default_data.rb:66
 msgid "Drinking"
 msgstr ""
 
-#: lib/skip_default_data.rb:50
+#: lib/skip_default_data.rb:66
 msgid "Driving"
 msgstr ""
 
@@ -2824,7 +2836,7 @@ msgstr ""
 msgid "End Monta"
 msgstr ""
 
-#: lib/skip_default_data.rb:50
+#: lib/skip_default_data.rb:66
 msgid "Enrichment Lessons"
 msgstr ""
 
@@ -3074,7 +3086,7 @@ msgid_plural "Failures:%{failure}]"
 msgstr[0] ""
 msgstr[1] ""
 
-#: lib/skip_default_data.rb:50
+#: lib/skip_default_data.rb:66
 msgid "Fashion"
 msgstr ""
 
@@ -3082,7 +3094,7 @@ msgstr ""
 msgid "February"
 msgstr ""
 
-#: lib/skip_default_data.rb:46
+#: lib/skip_default_data.rb:62
 msgid "Female"
 msgstr ""
 
@@ -3160,7 +3172,7 @@ msgstr ""
 msgid "Footer"
 msgstr ""
 
-#: lib/skip_default_data.rb:25
+#: lib/skip_default_data.rb:31
 msgid "For business usage such as project management etc."
 msgstr ""
 
@@ -3168,7 +3180,7 @@ msgstr ""
 msgid "For detailed help see "
 msgstr ""
 
-#: lib/skip_default_data.rb:26
+#: lib/skip_default_data.rb:32
 msgid "For off-time activeties."
 msgstr ""
 
@@ -3201,11 +3213,11 @@ msgstr ""
 msgid "Functional Settings"
 msgstr ""
 
-#: lib/skip_default_data.rb:50
+#: lib/skip_default_data.rb:66
 msgid "Gamble"
 msgstr ""
 
-#: lib/skip_default_data.rb:50
+#: lib/skip_default_data.rb:66
 msgid "Games"
 msgstr ""
 
@@ -3213,7 +3225,7 @@ msgstr ""
 msgid "Get an account"
 msgstr ""
 
-#: lib/skip_default_data.rb:50
+#: lib/skip_default_data.rb:66
 msgid "Gourmet"
 msgstr ""
 
@@ -3465,6 +3477,10 @@ msgstr ""
 msgid "Hiki Notation"
 msgstr ""
 
+#: app/helpers/wiki_helper.rb:5
+msgid "History"
+msgstr ""
+
 #: app/views/statistics/_monthly_history.html.erb:1
 #: app/views/statistics/_monthly_history.html.erb:10
 msgid "History of %s"
@@ -3472,6 +3488,34 @@ msgstr ""
 
 #: app/helpers/mypage_helper.rb:60
 msgid "History of Entries"
+msgstr ""
+
+#: app/models/history.rb:-
+msgid "History|Content"
+msgstr ""
+
+#: app/models/history.rb:-
+msgid "History|Created at"
+msgstr ""
+
+#: app/models/history.rb:-
+msgid "History|Description"
+msgstr ""
+
+#: app/models/history.rb:-
+msgid "History|Page"
+msgstr ""
+
+#: app/models/history.rb:-
+msgid "History|Revision"
+msgstr ""
+
+#: app/models/history.rb:-
+msgid "History|Updated at"
+msgstr ""
+
+#: app/models/history.rb:-
+msgid "History|User"
 msgstr ""
 
 #: app/helpers/user_helper.rb:65
@@ -3559,7 +3603,7 @@ msgid "Internal error(s) occured. Contact administrator."
 msgstr ""
 
 #: app/views/bookmark/list.html.erb:18 app/views/bookmarks/index.html.erb:18
-#: lib/skip_default_data.rb:50
+#: lib/skip_default_data.rb:66
 msgid "Internet"
 msgstr ""
 
@@ -3732,7 +3776,7 @@ msgstr ""
 msgid "June"
 msgstr ""
 
-#: lib/skip_default_data.rb:50
+#: lib/skip_default_data.rb:66
 msgid "Karaoke"
 msgstr ""
 
@@ -3777,7 +3821,7 @@ msgstr ""
 msgid "Line"
 msgstr ""
 
-#: lib/skip_default_data.rb:50
+#: lib/skip_default_data.rb:66
 msgid "Linguistics"
 msgstr ""
 
@@ -3932,7 +3976,7 @@ msgid ""
 "if you are not sure what to use for it."
 msgstr ""
 
-#: lib/skip_default_data.rb:46
+#: lib/skip_default_data.rb:62
 msgid "Male"
 msgstr ""
 
@@ -4060,7 +4104,7 @@ msgstr ""
 msgid "Multiple values can be given in foo,bar format"
 msgstr ""
 
-#: lib/skip_default_data.rb:50
+#: lib/skip_default_data.rb:66
 msgid "Music Appreciation"
 msgstr ""
 
@@ -4177,7 +4221,7 @@ msgstr ""
 msgid "New users from CSV"
 msgstr ""
 
-#: lib/skip_default_data.rb:22
+#: lib/skip_default_data.rb:28
 msgid "News"
 msgstr ""
 
@@ -4330,11 +4374,11 @@ msgstr ""
 msgid "October"
 msgstr ""
 
-#: lib/skip_default_data.rb:22
+#: lib/skip_default_data.rb:28
 msgid "Off Time"
 msgstr ""
 
-#: lib/skip_default_data.rb:26
+#: lib/skip_default_data.rb:32
 msgid "Off-time"
 msgstr ""
 
@@ -4495,7 +4539,7 @@ msgstr ""
 msgid "Others"
 msgstr ""
 
-#: lib/skip_default_data.rb:50
+#: lib/skip_default_data.rb:66
 msgid "Outdoor"
 msgstr ""
 
@@ -4519,6 +4563,38 @@ msgstr ""
 #: app/helpers/application_helper.rb:230 app/helpers/share_file_helper.rb:19
 #: app/views/board_entries/_form.html.erb:76
 msgid "Owner Only"
+msgstr ""
+
+#: app/models/page.rb:-
+msgid "Page|Created at"
+msgstr ""
+
+#: app/models/page.rb:-
+msgid "Page|Deleted at"
+msgstr ""
+
+#: app/models/page.rb:-
+msgid "Page|Format type"
+msgstr ""
+
+#: app/models/page.rb:-
+msgid "Page|Last modified user"
+msgstr ""
+
+#: app/models/page.rb:-
+msgid "Page|Lock version"
+msgstr ""
+
+#: app/models/page.rb:-
+msgid "Page|Parent"
+msgstr ""
+
+#: app/models/page.rb:-
+msgid "Page|Title"
+msgstr ""
+
+#: app/models/page.rb:-
+msgid "Page|Updated at"
 msgstr ""
 
 #: app/controllers/board_entries_controller.rb:61
@@ -4577,7 +4653,7 @@ msgstr ""
 msgid "Periodic password change"
 msgstr ""
 
-#: lib/skip_default_data.rb:50
+#: lib/skip_default_data.rb:66
 msgid "Pets"
 msgstr ""
 
@@ -4626,7 +4702,7 @@ msgstr ""
 msgid "Picture|User"
 msgstr ""
 
-#: lib/skip_default_data.rb:50
+#: lib/skip_default_data.rb:66
 msgid "Playing Sports"
 msgstr ""
 
@@ -4853,7 +4929,7 @@ msgstr ""
 msgid "Reacquire the title"
 msgstr ""
 
-#: lib/skip_default_data.rb:50
+#: lib/skip_default_data.rb:66
 msgid "Reading"
 msgstr ""
 
@@ -4931,7 +5007,7 @@ msgid "Registered Users"
 msgstr ""
 
 #: app/views/layouts/admin/application.html.erb:61
-#: app/views/layouts/layout.html.erb:96
+#: app/views/layouts/layout.html.erb:101
 msgid "Registered Users: %s users"
 msgstr ""
 
@@ -5082,8 +5158,9 @@ msgstr ""
 msgid "Saving..."
 msgstr ""
 
-#: app/views/admin/_search_box.html.erb:4 app/views/bookmark/list.html.erb:3
-#: app/views/bookmark/list.html.erb:7 app/views/bookmarks/index.html.erb:23
+#: app/helpers/wiki_helper.rb:6 app/views/admin/_search_box.html.erb:4
+#: app/views/bookmark/list.html.erb:3 app/views/bookmark/list.html.erb:7
+#: app/views/bookmarks/index.html.erb:23
 #: app/views/entries/_search_box.html.erb:7
 #: app/views/entries/_search_box.html.erb:11 app/views/group/users.html.erb:9
 #: app/views/groups/index.html.erb:29 app/views/mypage/_record_post.html.erb:5
@@ -5153,7 +5230,7 @@ msgstr ""
 msgid "Self Admin"
 msgstr ""
 
-#: lib/skip_default_data.rb:31
+#: lib/skip_default_data.rb:37
 msgid "Self Introduction"
 msgstr ""
 
@@ -5297,7 +5374,7 @@ msgstr ""
 msgid "Shared Files Settings"
 msgstr ""
 
-#: lib/skip_default_data.rb:50
+#: lib/skip_default_data.rb:66
 msgid "Shopping"
 msgstr ""
 
@@ -5379,7 +5456,7 @@ msgstr ""
 #: app/controllers/statistics_controller.rb:67
 #: app/helpers/application_helper.rb:332
 #: app/views/layouts/admin/application.html.erb:65
-#: app/views/layouts/layout.html.erb:100
+#: app/views/layouts/layout.html.erb:105
 msgid "Site Information"
 msgstr ""
 
@@ -5435,7 +5512,7 @@ msgstr ""
 msgid "SiteCount|Writer at month"
 msgstr ""
 
-#: lib/skip_default_data.rb:50
+#: lib/skip_default_data.rb:66
 msgid "Sleeping"
 msgstr ""
 
@@ -5558,7 +5635,7 @@ msgstr ""
 msgid "Stop"
 msgstr ""
 
-#: lib/skip_default_data.rb:22
+#: lib/skip_default_data.rb:28
 msgid "Story"
 msgstr ""
 
@@ -5628,7 +5705,7 @@ msgstr ""
 msgid "System Operation"
 msgstr ""
 
-#: lib/skip_default_data.rb:50
+#: lib/skip_default_data.rb:66
 msgid "TV"
 msgstr ""
 
@@ -5869,7 +5946,7 @@ msgid "Today's Access"
 msgstr ""
 
 #: app/views/layouts/admin/application.html.erb:62
-#: app/views/layouts/layout.html.erb:97
+#: app/views/layouts/layout.html.erb:102
 msgid "Today's Access: %s access"
 msgstr ""
 
@@ -5877,7 +5954,7 @@ msgstr ""
 msgid "Today's Entries"
 msgstr ""
 
-#: app/views/layouts/layout.html.erb:99
+#: app/views/layouts/layout.html.erb:104
 msgid "Today's Entries: %s entries"
 msgstr ""
 
@@ -5919,7 +5996,7 @@ msgid "Total Entries"
 msgstr ""
 
 #: app/views/layouts/admin/application.html.erb:63
-#: app/views/layouts/layout.html.erb:98
+#: app/views/layouts/layout.html.erb:103
 msgid "Total Entries: %s entries"
 msgstr ""
 
@@ -5953,7 +6030,7 @@ msgstr ""
 msgid "Track|Visitor"
 msgstr ""
 
-#: lib/skip_default_data.rb:50
+#: lib/skip_default_data.rb:66
 msgid "Traveling"
 msgstr ""
 
@@ -6185,10 +6262,6 @@ msgstr ""
 
 #: app/models/user_access.rb:-
 msgid "UserAccess|User"
-msgstr ""
-
-#: app/models/user_custom.rb:-
-msgid "UserCustom|Always show shortcut"
 msgstr ""
 
 #: app/models/user_custom.rb:-
@@ -6620,11 +6693,11 @@ msgstr ""
 msgid "Waiting to be Sent"
 msgstr ""
 
-#: lib/skip_default_data.rb:50
+#: lib/skip_default_data.rb:66
 msgid "Watching Movies"
 msgstr ""
 
-#: lib/skip_default_data.rb:50
+#: lib/skip_default_data.rb:66
 msgid "Watching Sports"
 msgstr ""
 
@@ -6705,7 +6778,7 @@ msgstr ""
 msgid "Write a question"
 msgstr ""
 
-#: lib/skip_default_data.rb:31
+#: lib/skip_default_data.rb:37
 msgid "Write about your current and past jobs, your interests and concerns."
 msgstr ""
 
@@ -7337,6 +7410,10 @@ msgstr ""
 msgid "chain"
 msgstr ""
 
+#: app/models/content.rb:-
+msgid "content"
+msgstr ""
+
 #: app/views/admin/groups/index.html.erb:18
 #: app/views/admin/oauth_providers/index.html.erb:9
 msgid "description"
@@ -7397,6 +7474,10 @@ msgstr ""
 
 #: app/models/openid_identifier.rb:25
 msgid "has an invalid format."
+msgstr ""
+
+#: app/models/history.rb:-
+msgid "history"
 msgstr ""
 
 #: app/models/user.rb:243
@@ -7482,6 +7563,10 @@ msgstr ""
 
 #: app/views/admin/share_files/index.html.erb:18
 msgid "owner_symbol"
+msgstr ""
+
+#: app/models/page.rb:-
+msgid "page"
 msgstr ""
 
 #: app/controllers/admin/pictures_controller.rb:26

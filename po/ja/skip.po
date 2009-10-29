@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-10-26 02:28+0900\n"
+"POT-Creation-Date: 2009-10-28 17:59+0900\n"
 "PO-Revision-Date: 2009-10-23 17:37+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1997,7 +1997,7 @@ msgstr "ログイン画面の背景画像"
 msgid "Basic Info"
 msgstr "基本情報"
 
-#: lib/skip_default_data.rb:29
+#: lib/skip_default_data.rb:35
 msgid "Basic Information"
 msgstr "基本情報"
 
@@ -2198,7 +2198,7 @@ msgstr "ユーザ"
 msgid "BoardEntry|User entry no"
 msgstr "ブログ数"
 
-#: lib/skip_default_data.rb:22
+#: lib/skip_default_data.rb:28
 msgid "Book Review"
 msgstr "書評"
 
@@ -2328,7 +2328,7 @@ msgstr "更新日時"
 msgid "Bookmark|Url"
 msgstr "URL"
 
-#: lib/skip_default_data.rb:25
+#: lib/skip_default_data.rb:31
 msgid "Business"
 msgstr "業務利用"
 
@@ -2519,7 +2519,7 @@ msgstr "閉じる"
 msgid "Closed"
 msgstr "非公開"
 
-#: lib/skip_default_data.rb:50
+#: lib/skip_default_data.rb:66
 msgid "Comics"
 msgstr "漫画"
 
@@ -2582,7 +2582,7 @@ msgstr "確認用パスワード"
 msgid "Contact Address: "
 msgstr "連絡先："
 
-#: lib/skip_default_data.rb:30
+#: lib/skip_default_data.rb:36
 msgid "Contact Information"
 msgstr "連絡先"
 
@@ -2594,7 +2594,7 @@ msgstr "対象のコンテンツが存在しません。"
 msgid "Content of CSV file"
 msgstr "CSVファイルの内容"
 
-#: app/views/board_entries/_form.html.erb:51
+#: app/helpers/wiki_helper.rb:4 app/views/board_entries/_form.html.erb:51
 msgid "Contents"
 msgstr "内容"
 
@@ -2604,11 +2604,23 @@ msgid ""
 "page&quot;."
 msgstr "ここで登録した内容は、マイページのホームで確認できます。"
 
-#: lib/skip_default_data.rb:50
+#: app/models/content.rb:-
+msgid "Content|Created at"
+msgstr ""
+
+#: app/models/content.rb:-
+msgid "Content|Data"
+msgstr ""
+
+#: app/models/content.rb:-
+msgid "Content|Updated at"
+msgstr ""
+
+#: lib/skip_default_data.rb:66
 msgid "Cooking"
 msgstr "料理"
 
-#: lib/skip_default_data.rb:50
+#: lib/skip_default_data.rb:66
 msgid "Cosmetics"
 msgstr "美容"
 
@@ -2809,7 +2821,7 @@ msgstr "削除"
 msgid "Development"
 msgstr "開発"
 
-#: lib/skip_default_data.rb:22
+#: lib/skip_default_data.rb:28
 msgid "Diary"
 msgstr "日記"
 
@@ -2870,11 +2882,11 @@ msgstr "ダウンロード履歴の削除に成功しました。"
 msgid "Downloads: %s"
 msgstr "ダウンロード数: %s"
 
-#: lib/skip_default_data.rb:50
+#: lib/skip_default_data.rb:66
 msgid "Drinking"
 msgstr "お酒"
 
-#: lib/skip_default_data.rb:50
+#: lib/skip_default_data.rb:66
 msgid "Driving"
 msgstr "ドライブ"
 
@@ -3007,7 +3019,7 @@ msgstr ""
 msgid "End Monta"
 msgstr "おしまい"
 
-#: lib/skip_default_data.rb:50
+#: lib/skip_default_data.rb:66
 msgid "Enrichment Lessons"
 msgstr "習いごと"
 
@@ -3262,7 +3274,7 @@ msgid "Failure:%{failure}]"
 msgid_plural "Failures:%{failure}]"
 msgstr[0] "失敗:%{failure}"
 
-#: lib/skip_default_data.rb:50
+#: lib/skip_default_data.rb:66
 msgid "Fashion"
 msgstr "ファッション"
 
@@ -3270,7 +3282,7 @@ msgstr "ファッション"
 msgid "February"
 msgstr "2月"
 
-#: lib/skip_default_data.rb:46
+#: lib/skip_default_data.rb:62
 msgid "Female"
 msgstr "女性"
 
@@ -3348,7 +3360,7 @@ msgstr "まずは既に投稿されたブログを読んでみましょう！ ..
 msgid "Footer"
 msgstr "フッター"
 
-#: lib/skip_default_data.rb:25
+#: lib/skip_default_data.rb:31
 msgid "For business usage such as project management etc."
 msgstr "プロジェクト内など、業務で利用する場合に選択して下さい。"
 
@@ -3356,7 +3368,7 @@ msgstr "プロジェクト内など、業務で利用する場合に選択して
 msgid "For detailed help see "
 msgstr "詳しい使い方はこちらをご覧ください ... "
 
-#: lib/skip_default_data.rb:26
+#: lib/skip_default_data.rb:32
 msgid "For off-time activeties."
 msgstr "趣味などざっくばらんな話題で利用する場合に選択してください。"
 
@@ -3389,11 +3401,11 @@ msgstr "全文検索"
 msgid "Functional Settings"
 msgstr "機能に関する設定"
 
-#: lib/skip_default_data.rb:50
+#: lib/skip_default_data.rb:66
 msgid "Gamble"
 msgstr "ギャンブル"
 
-#: lib/skip_default_data.rb:50
+#: lib/skip_default_data.rb:66
 msgid "Games"
 msgstr "ゲーム"
 
@@ -3401,7 +3413,7 @@ msgstr "ゲーム"
 msgid "Get an account"
 msgstr "アカウントの登録"
 
-#: lib/skip_default_data.rb:50
+#: lib/skip_default_data.rb:66
 msgid "Gourmet"
 msgstr "グルメ"
 
@@ -3653,6 +3665,10 @@ msgstr "終了する"
 msgid "Hiki Notation"
 msgstr "Hiki記法"
 
+#: app/helpers/wiki_helper.rb:5
+msgid "History"
+msgstr "履歴"
+
 #: app/views/statistics/_monthly_history.html.erb:1
 #: app/views/statistics/_monthly_history.html.erb:10
 msgid "History of %s"
@@ -3661,6 +3677,34 @@ msgstr "%sの推移"
 #: app/helpers/mypage_helper.rb:60
 msgid "History of Entries"
 msgstr "記事履歴"
+
+#: app/models/history.rb:-
+msgid "History|Content"
+msgstr ""
+
+#: app/models/history.rb:-
+msgid "History|Created at"
+msgstr ""
+
+#: app/models/history.rb:-
+msgid "History|Description"
+msgstr ""
+
+#: app/models/history.rb:-
+msgid "History|Page"
+msgstr ""
+
+#: app/models/history.rb:-
+msgid "History|Revision"
+msgstr ""
+
+#: app/models/history.rb:-
+msgid "History|Updated at"
+msgstr ""
+
+#: app/models/history.rb:-
+msgid "History|User"
+msgstr ""
 
 #: app/helpers/user_helper.rb:65
 msgid "Home"
@@ -3753,7 +3797,7 @@ msgid "Internal error(s) occured. Contact administrator."
 msgstr "想定外のエラーが発生しました。管理者にお問い合わせ下さい。"
 
 #: app/views/bookmark/list.html.erb:18 app/views/bookmarks/index.html.erb:18
-#: lib/skip_default_data.rb:50
+#: lib/skip_default_data.rb:66
 msgid "Internet"
 msgstr "インターネット"
 
@@ -3935,7 +3979,7 @@ msgstr "7月"
 msgid "June"
 msgstr "6月"
 
-#: lib/skip_default_data.rb:50
+#: lib/skip_default_data.rb:66
 msgid "Karaoke"
 msgstr "カラオケ"
 
@@ -3980,7 +4024,7 @@ msgstr "セッション制限"
 msgid "Line"
 msgstr "行"
 
-#: lib/skip_default_data.rb:50
+#: lib/skip_default_data.rb:66
 msgid "Linguistics"
 msgstr "語学"
 
@@ -4141,7 +4185,7 @@ msgstr ""
 "よくわからない場合、メールアドレスのアカウント名（@の左側）と同じ値でかまいま"
 "せん。"
 
-#: lib/skip_default_data.rb:46
+#: lib/skip_default_data.rb:62
 msgid "Male"
 msgstr "男性"
 
@@ -4270,7 +4314,7 @@ msgstr "他の人から見た%sさん"
 msgid "Multiple values can be given in foo,bar format"
 msgstr "foo,barの形で複数指定できます"
 
-#: lib/skip_default_data.rb:50
+#: lib/skip_default_data.rb:66
 msgid "Music Appreciation"
 msgstr "音楽鑑賞"
 
@@ -4389,7 +4433,7 @@ msgstr "現在、新規のユーザ登録の処理は停止させて頂いてお
 msgid "New users from CSV"
 msgstr "ユーザのCSVアップロード"
 
-#: lib/skip_default_data.rb:22
+#: lib/skip_default_data.rb:28
 msgid "News"
 msgstr "ニュース"
 
@@ -4544,11 +4588,11 @@ msgstr "更新日時"
 msgid "October"
 msgstr "10月"
 
-#: lib/skip_default_data.rb:22
+#: lib/skip_default_data.rb:28
 msgid "Off Time"
 msgstr "オフ"
 
-#: lib/skip_default_data.rb:26
+#: lib/skip_default_data.rb:32
 msgid "Off-time"
 msgstr "業務以外"
 
@@ -4713,7 +4757,7 @@ msgstr "[参加申込み]以外"
 msgid "Others"
 msgstr "その他"
 
-#: lib/skip_default_data.rb:50
+#: lib/skip_default_data.rb:66
 msgid "Outdoor"
 msgstr "アウトドア"
 
@@ -4740,6 +4784,38 @@ msgstr "activation_codeを上書きしました。初期管理者登録用URLは
 #: app/views/board_entries/_form.html.erb:76
 msgid "Owner Only"
 msgstr "下書き(自分だけに公開)"
+
+#: app/models/page.rb:-
+msgid "Page|Created at"
+msgstr ""
+
+#: app/models/page.rb:-
+msgid "Page|Deleted at"
+msgstr ""
+
+#: app/models/page.rb:-
+msgid "Page|Format type"
+msgstr ""
+
+#: app/models/page.rb:-
+msgid "Page|Last modified user"
+msgstr ""
+
+#: app/models/page.rb:-
+msgid "Page|Lock version"
+msgstr ""
+
+#: app/models/page.rb:-
+msgid "Page|Parent"
+msgstr ""
+
+#: app/models/page.rb:-
+msgid "Page|Title"
+msgstr ""
+
+#: app/models/page.rb:-
+msgid "Page|Updated at"
+msgstr ""
 
 #: app/controllers/board_entries_controller.rb:61
 msgid "Parent comment could not be found. Try reloading the page."
@@ -4797,7 +4873,7 @@ msgstr "期間"
 msgid "Periodic password change"
 msgstr "パスワード定期変更"
 
-#: lib/skip_default_data.rb:50
+#: lib/skip_default_data.rb:66
 msgid "Pets"
 msgstr "ペット"
 
@@ -4846,7 +4922,7 @@ msgstr "更新日時"
 msgid "Picture|User"
 msgstr "ユーザ"
 
-#: lib/skip_default_data.rb:50
+#: lib/skip_default_data.rb:66
 msgid "Playing Sports"
 msgstr "スポーツ"
 
@@ -5075,7 +5151,7 @@ msgstr "URL"
 msgid "Reacquire the title"
 msgstr "タイトルを再取得する"
 
-#: lib/skip_default_data.rb:50
+#: lib/skip_default_data.rb:66
 msgid "Reading"
 msgstr "読書"
 
@@ -5155,7 +5231,7 @@ msgid "Registered Users"
 msgstr "登録ユーザ数"
 
 #: app/views/layouts/admin/application.html.erb:61
-#: app/views/layouts/layout.html.erb:96
+#: app/views/layouts/layout.html.erb:101
 msgid "Registered Users: %s users"
 msgstr "登録ユーザ数：%s人"
 
@@ -5312,8 +5388,9 @@ msgstr "保存"
 msgid "Saving..."
 msgstr "保存しています…"
 
-#: app/views/admin/_search_box.html.erb:4 app/views/bookmark/list.html.erb:3
-#: app/views/bookmark/list.html.erb:7 app/views/bookmarks/index.html.erb:23
+#: app/helpers/wiki_helper.rb:6 app/views/admin/_search_box.html.erb:4
+#: app/views/bookmark/list.html.erb:3 app/views/bookmark/list.html.erb:7
+#: app/views/bookmarks/index.html.erb:23
 #: app/views/entries/_search_box.html.erb:7
 #: app/views/entries/_search_box.html.erb:11 app/views/group/users.html.erb:9
 #: app/views/groups/index.html.erb:29 app/views/mypage/_record_post.html.erb:5
@@ -5383,7 +5460,7 @@ msgstr "不正な新着通知が指定されました。"
 msgid "Self Admin"
 msgstr "自分の管理"
 
-#: lib/skip_default_data.rb:31
+#: lib/skip_default_data.rb:37
 msgid "Self Introduction"
 msgstr "自己紹介"
 
@@ -5528,7 +5605,7 @@ msgstr "ファイル"
 msgid "Shared Files Settings"
 msgstr "ファイル関連"
 
-#: lib/skip_default_data.rb:50
+#: lib/skip_default_data.rb:66
 msgid "Shopping"
 msgstr "ショッピング"
 
@@ -5621,7 +5698,7 @@ msgstr "ユーザ登録"
 #: app/controllers/statistics_controller.rb:67
 #: app/helpers/application_helper.rb:332
 #: app/views/layouts/admin/application.html.erb:65
-#: app/views/layouts/layout.html.erb:100
+#: app/views/layouts/layout.html.erb:105
 msgid "Site Information"
 msgstr "サイト情報"
 
@@ -5677,7 +5754,7 @@ msgstr ""
 msgid "SiteCount|Writer at month"
 msgstr ""
 
-#: lib/skip_default_data.rb:50
+#: lib/skip_default_data.rb:66
 msgid "Sleeping"
 msgstr "寝ること"
 
@@ -5800,7 +5877,7 @@ msgstr "状態"
 msgid "Stop"
 msgstr "停止"
 
-#: lib/skip_default_data.rb:22
+#: lib/skip_default_data.rb:28
 msgid "Story"
 msgstr "ネタ"
 
@@ -5870,7 +5947,7 @@ msgstr "システム情報"
 msgid "System Operation"
 msgstr "システム運用について"
 
-#: lib/skip_default_data.rb:50
+#: lib/skip_default_data.rb:66
 msgid "TV"
 msgstr "テレビ"
 
@@ -6128,7 +6205,7 @@ msgid "Today's Access"
 msgstr "本日のアクセス数"
 
 #: app/views/layouts/admin/application.html.erb:62
-#: app/views/layouts/layout.html.erb:97
+#: app/views/layouts/layout.html.erb:102
 msgid "Today's Access: %s access"
 msgstr "本日のアクセス数：%s人"
 
@@ -6136,7 +6213,7 @@ msgstr "本日のアクセス数：%s人"
 msgid "Today's Entries"
 msgstr "本日の記事数"
 
-#: app/views/layouts/layout.html.erb:99
+#: app/views/layouts/layout.html.erb:104
 msgid "Today's Entries: %s entries"
 msgstr "本日の記事数：%s件"
 
@@ -6178,7 +6255,7 @@ msgid "Total Entries"
 msgstr "総記事件数"
 
 #: app/views/layouts/admin/application.html.erb:63
-#: app/views/layouts/layout.html.erb:98
+#: app/views/layouts/layout.html.erb:103
 msgid "Total Entries: %s entries"
 msgstr "総記事件数：%s件"
 
@@ -6211,7 +6288,7 @@ msgstr "アクセスした人"
 msgid "Track|Visitor"
 msgstr "アクセスした人"
 
-#: lib/skip_default_data.rb:50
+#: lib/skip_default_data.rb:66
 msgid "Traveling"
 msgstr "旅行"
 
@@ -6450,10 +6527,6 @@ msgstr "更新日時"
 #: app/models/user_access.rb:-
 msgid "UserAccess|User"
 msgstr "ユーザ"
-
-#: app/models/user_custom.rb:-
-msgid "UserCustom|Always show shortcut"
-msgstr ""
 
 #: app/models/user_custom.rb:-
 msgid "UserCustom|Display calendar"
@@ -6889,11 +6962,11 @@ msgstr "現在承認待ちです"
 msgid "Waiting to be Sent"
 msgstr "送信待ち"
 
-#: lib/skip_default_data.rb:50
+#: lib/skip_default_data.rb:66
 msgid "Watching Movies"
 msgstr "映画鑑賞"
 
-#: lib/skip_default_data.rb:50
+#: lib/skip_default_data.rb:66
 msgid "Watching Sports"
 msgstr "スポーツ観戦"
 
@@ -6975,7 +7048,7 @@ msgstr "お知らせを書く"
 msgid "Write a question"
 msgstr "質問を書く"
 
-#: lib/skip_default_data.rb:31
+#: lib/skip_default_data.rb:37
 msgid "Write about your current and past jobs, your interests and concerns."
 msgstr ""
 "現在の業務や今までの仕事、興味や関心のある事柄などについて書いてください。"
@@ -7635,6 +7708,10 @@ msgstr "認証をキャンセルする"
 msgid "chain"
 msgstr ""
 
+#: app/models/content.rb:-
+msgid "content"
+msgstr ""
+
 #: app/views/admin/groups/index.html.erb:18
 #: app/views/admin/oauth_providers/index.html.erb:9
 msgid "description"
@@ -7696,6 +7773,10 @@ msgstr "グループ参加"
 #: app/models/openid_identifier.rb:25
 msgid "has an invalid format."
 msgstr "の形式が間違っています。"
+
+#: app/models/history.rb:-
+msgid "history"
+msgstr ""
 
 #: app/models/user.rb:243
 msgid "incorrect."
@@ -7780,6 +7861,10 @@ msgstr "管理者"
 
 #: app/views/admin/share_files/index.html.erb:18
 msgid "owner_symbol"
+msgstr ""
+
+#: app/models/page.rb:-
+msgid "page"
 msgstr ""
 
 #: app/controllers/admin/pictures_controller.rb:26

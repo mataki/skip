@@ -49,6 +49,11 @@
       <div class="clear_left"></div>
       <div id="tab_menu"><%= generate_tab_menu(group_tab_menu_source(@group)) %></div>
       <div class="clear_left"></div>
+    <% elsif @page %>
+      <h1 id="title"><%=h @page.title %></h1>
+      <div class="clear_left"></div>
+      <div id="tab_menu"><%= generate_tab_menu(wiki_tab_menu_source(@page)) %></div>
+      <div class="clear_left"></div>
     <% else %>
       <h1 id="title"><%=h @title %></h1>
       <% if @tab_menu_source -%>

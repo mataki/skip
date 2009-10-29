@@ -8,6 +8,7 @@ class SkipDefaultData
 
   # FIXME #25 国際化におけるシステムタグの扱いについての検討が必要
   def self.load lang = nil
+    # TODO 強引に追加してるためもっとシンプルにしたい。別に切り分けた方がよい??
     if Page.count == 0
       load_page lang
       return unless data_is_empty?

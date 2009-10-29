@@ -5,7 +5,6 @@ class Page < ActiveRecord::Base
 
   has_many :histories, :order => "histories.revision DESC"
   validates_associated :new_history, :if => :new_history, :on => :create
-  validates_presence_of :content, :on => :create
   validates_uniqueness_of :title
   validates_inclusion_of :format_type, :in => %w[hiki html]
 
@@ -33,7 +32,7 @@ class Page < ActiveRecord::Base
   }
 
   def root?
-    self.class.roots.include?(self)
+    self.class.roots.include?(self) || self.parent_id == 0
   end
 
   def content(revision=nil)
