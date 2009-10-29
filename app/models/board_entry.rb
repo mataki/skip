@@ -14,6 +14,15 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class BoardEntry < ActiveRecord::Base
+  # publication系 カラムの値 のサンプル
+  # |symbol     |entry_type|publication_type|publication_symbols_value|
+  # |uid:mat_aki|DIARY     |private         |""                       |
+  # |uid:mat_aki|DIARY     |public          |""                       |
+  # |uid:mat_aki|DIARY     |protected       |uid:maedana,gid:rails    |
+  # |gid:rails  |GROUP_BBS |private         |""                       |
+  # |gid:rails  |GROUP_BBS |public          |""                       |
+  # |gid:rails  |GROUP_BBS |protected       |uid:maedana,gid:rails    |
+
   include Publication
   include ActionController::UrlWriter
 
@@ -529,7 +538,7 @@ class BoardEntry < ActiveRecord::Base
   def prepare_send_mail
     return if diary? && private?
 
-    users = public? ?  User.active.all : publication_users
+    users = publication_users
     users.each do |u|
       next if u.id == self.user_id
       owner = load_owner
@@ -631,19 +640,34 @@ class BoardEntry < ActiveRecord::Base
   # この記事の公開対象ユーザ一覧を返す
   # 戻り値：Userオブジェクトの配列（重複なし）
   def publication_users
-    users = []
-    return users if self.publication_symbols_value.blank?
-    self.publication_symbols_value.split(',').each do |sym|
-      symbol_type, symbol_id = SkipUtil.split_symbol(sym)
-      case symbol_type
+    case self.publication_type
+    when "private"
+      owner = load_owner
+      if owner.is_a?(Group)
+        return owner.users
+      elsif owner.is_a?(User)
+        [owner]
+      else
+        []
+      end
+    when "protected"
+      users = []
+      self.publication_symbols_value.split(',').each do |sym|
+        symbol_type, symbol_id = SkipUtil.split_symbol(sym)
+        case symbol_type
         when "uid"
           users << User.find_by_uid(symbol_id)
         when "gid"
           group = Group.active.find_by_gid(symbol_id, :include => [:group_participations])
           users << group.group_participations.map { |part| part.user } if group
+        end
       end
+      return users.flatten.uniq.compact
+    when "public"
+      return User.active.all
+    else
+      return []
     end
-    users.flatten.uniq.compact
   end
 
   def root_comments

@@ -86,7 +86,7 @@ class BatchMakeUserReadings < BatchBase
   # お知らせ対象ユーザを取得
   def self.contact_ids entry
     return [] unless BoardEntry::ANTENNA_AIM_TYPES.include?(entry.aim_type)
-    (entry.public? ?  User.active.all : entry.publication_users).map{ |user| user.id }
+    entry.publication_users.map{ |user| user.id }
   end
 
   # 30分以内に記事自身かコメントに更新があった記事を全て取得
