@@ -34,7 +34,6 @@
   }
   div#board_entry .header .control {
     position: relative;
-    height: 2em;
     font-size: 0.8em;
     border-bottom: 1px solid silver;
     background-color: #e1e1e1;
@@ -48,14 +47,10 @@
   }
   div#board_entry .header .information {
     position: relative;
-    height: 2em;
     font-size: 0.8em;
     border-bottom: 1px solid silver;
   }
   div#board_entry .header .information .date {
-    position: absolute;
-    bottom: 1px;
-    left: 2px;
     font-size: 1.3em;
   }
   div#board_entry .header .information .date .evaluation {
@@ -195,21 +190,6 @@
   }
   </style>
 <% end -%>
-<% if BoardEntry::HIDABLE_AIM_TYPES.include?(entry.aim_type) -%>
-  <div id="hide_action" class="ui-corner-all">
-    <% form_tag({:controller => 'board_entries', :action => 'toggle_hide'}) do -%>
-      <%= hidden_field_tag :id, entry.id %>
-      <p>
-        <span class="iphone_style_checkbox"><%= check_box_tag 'toggle_hide', 'hide', !entry.hide %></span>
-        <b class="caution"><%= _('If you finished, this question is hide from mypage of all users.') %></b>
-      </p>
-      <span id="indicator" style="display:none;"><%= skip_image_tag 'indicator.gif' %></span>
-    <% end -%>
-    <%= render :partial => 'entry_hide_operations/list', :locals => {:entry_hide_operations => entry.entry_hide_operations.order_new} %>
-    <%= link_to _('Show all histories'), '#', :id => 'show_history' %>
-  </div>
-<% end -%>
-
 <div class="move_navi">
   <% if prev_entry -%>
   <span class="prev_entry">&lt;&nbsp;<%= entry_link_to(prev_entry, {:truncate => 20}) %></span>
@@ -223,6 +203,21 @@
 <div id="board_entry" class="ui-corner-all">
   <div class="header">
     <div class="control">
+      <% if BoardEntry::HIDABLE_AIM_TYPES.include?(entry.aim_type) -%>
+        <div id="hide_action" class="ui-corner-all">
+          <% form_tag({:controller => 'board_entries', :action => 'toggle_hide'}) do -%>
+            <%= hidden_field_tag :id, entry.id %>
+            <span class="iphone_style_checkbox"><%= check_box_tag 'toggle_hide', 'hide', !entry.hide %></span>
+            <!-- <b class="caution"><%= _('If you finished, this question is hide from mypage of all users.') %></b> -->
+          <% end -%>
+        </div>
+        <div id="hide_message">
+          <span id="indicator" style="display:none;"><%= skip_image_tag 'indicator.gif' %></span>
+          <%= render :partial => 'entry_hide_operations/list', :locals => {:entry_hide_operations => entry.entry_hide_operations.order_new} %>
+        </div>
+      <% else %>
+        <div style="height: 2em;"></div>
+      <% end -%>
       <div class="buttons" id="entry_buttons">
         <span id="permalink"><%= link_to "[page:#{entry.id}]", :controller=> "board_entries", :action => "forward", :id => entry.id -%></span>
         <%= _('Display: ') %>
@@ -686,7 +681,7 @@
       // チェックボックスをリッチに
       var iphoneStyleCheckbox = $j('input#toggle_hide').iphoneStyle( { checkedLabel: '<%= _('Open') %>', uncheckedLabel: '<%= _('Finish') %>', resizeContainer: false, resizeHandle: false } );
       iphoneStyleCheckbox.change(function(){
-        $j('#hide_action ul').hide();
+        $j('#hide_message ul').hide();
         $j('#indicator').show();
         $j.ajax({
           type: 'POST',
@@ -697,7 +692,9 @@
                 type: 'GET',
                 url: relative_url_root + '/entry_hide_operations?entry_id=<%= entry.id %>',
                 success: function(html) {
-                  $j('#hide_action ul').replaceWith(html);
+                  $j('#hide_message ul').replaceWith(html);
+                  $j('#hide_history').hide();
+                  $j('#show_history').show();
                 },
                 complete: function(request){
                   $j('#indicator').hide();
@@ -714,7 +711,15 @@
       <% if BoardEntry::HIDABLE_AIM_TYPES.include?(entry.aim_type) -%>
       // 質問の公開/非公開履歴を表示
       $j('#show_history').live('click', function() {
-        $j('ul li.history').slideDown();
+        $j('ul li.history').slideDown('fast');
+        $j(this).hide();
+        $j('#hide_history').show();
+        return false;
+      });
+      $j('#hide_history').live('click', function() {
+        $j('ul li.history').slideUp('fast');
+        $j(this).hide();
+        $j('#show_history').show();
         return false;
       });
       <% end -%>
