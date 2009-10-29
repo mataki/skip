@@ -166,9 +166,9 @@ class BoardEntriesController < ApplicationController
   def toggle_hide
     @board_entry = BoardEntry.accessible(current_user).find params[:id]
     if @board_entry.toggle_hide(current_user)
-      render :text => _("Entry was successfully %{operation}.") % { :operation => _("BoardEntry|Hide|#{!@board_entry.hide}") }
+      render :text => _("Entry was successfully %{operation}.") % { :operation => _("BoardEntry|Open|#{!@board_entry.hide}") }
     else
-      render :text => _('Failed to update state.') + " : " + @board_entry.errors.full_messages.to_s
+      render :text => _('Failed to update state.') + " : " + @board_entry.errors.full_messages.to_s, :status => :bad_request
     end
   end
 

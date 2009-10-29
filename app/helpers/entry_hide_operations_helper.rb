@@ -13,11 +13,5 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class EntryHideOperation < ActiveRecord::Base
-  belongs_to :user
-  belongs_to :board_entry
-
-  named_scope :order_new, proc {
-    { :order => "entry_hide_operations.created_at DESC" }
-  }
+module EntryHideOperationsHelper
 end

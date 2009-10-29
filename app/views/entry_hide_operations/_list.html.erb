@@ -1,0 +1,10 @@
+<% unless entry_hide_operations.empty? -%>
+  <ul>
+    <% entry_hide_operations.each_with_index do |operation, i| -%>
+      <% style_class = (i == 0) ? '' : 'history' -%>
+      <li class="<%= style_class %>">
+      <%= _("%{user} %{operation} this question at %{time}") % {:user => user_link_to(operation.user), :operation => s_("BoardEntry|Open|#{!(operation.operation_type == 'true')}"), :time => operation.created_at.strftime(_('%m/%d/%Y %H:%M'))} %>
+      </li>
+    <% end -%>
+  </ul>
+<% end -%>

@@ -13,11 +13,11 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class EntryHideOperation < ActiveRecord::Base
-  belongs_to :user
-  belongs_to :board_entry
-
-  named_scope :order_new, proc {
-    { :order => "entry_hide_operations.created_at DESC" }
-  }
+class EntryHideOperationsController < ApplicationController
+  def index
+    e = BoardEntry.accessible(current_user).find(params[:entry_id])
+    respond_to do |format|
+      format.html { render :partial => 'list', :locals => {:entry_hide_operations => e.entry_hide_operations.order_new} }
+    end
+  end
 end

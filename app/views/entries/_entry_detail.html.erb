@@ -195,18 +195,20 @@
   }
   </style>
 <% end -%>
-
 <% if BoardEntry::HIDABLE_AIM_TYPES.include?(entry.aim_type) -%>
-  <div id="hide_message" class="ui-corner-all">
+  <div id="hide_action" class="ui-corner-all">
     <% form_tag({:controller => 'board_entries', :action => 'toggle_hide'}) do -%>
       <%= hidden_field_tag :id, entry.id %>
       <p>
         <span class="iphone_style_checkbox"><%= check_box_tag 'toggle_hide', 'hide', !entry.hide %></span>
         <b class="caution"><%= _('If you finished, this question is hide from mypage of all users.') %></b>
       </p>
+      <span id="indicator" style="display:none;"><%= skip_image_tag 'indicator.gif' %></span>
     <% end -%>
+    <%= render :partial => 'entry_hide_operations/list', :locals => {:entry_hide_operations => entry.entry_hide_operations.order_new} %>
+    <%= link_to _('Show all histories'), '#', :id => 'show_history' %>
   </div>
-<% end %>
+<% end -%>
 
 <div class="move_navi">
   <% if prev_entry -%>
@@ -308,19 +310,6 @@
     <%= submit_tag _("Post") %>
   <% end -%>
 </div>
-
-<% if BoardEntry::HIDABLE_AIM_TYPES.include? entry.aim_type -%>
-  <div id="hide_action" class="ui-corner-all">
-    <h3><%= _('History of %{show}/%{hide}') % {:show => s_("BoardEntry|Hide|true"), :hide => s_("BoardEntry|Hide|false")} %></h3>
-    <ul>
-      <% for operation in entry.entry_hide_operations -%>
-        <li>
-          <%= _("%{user} %{operation} this question at %{time}") % {:user => user_link_to(operation.user), :operation => s_("BoardEntry|Hide|#{operation.operation_type}"), :time => operation.created_at.strftime(_('%B %d %Y %H:%M'))} %>
-        </li>
-      <% end -%>
-    </ul>
-  </div>
-<% end -%>
 
 <div class="trackback_space sent_trackback ui-corner-all">
 <% if tb_entries.size > 0 -%>
@@ -697,15 +686,38 @@
       // チェックボックスをリッチに
       var iphoneStyleCheckbox = $j('input#toggle_hide').iphoneStyle( { checkedLabel: '<%= _('Open') %>', uncheckedLabel: '<%= _('Finish') %>', resizeContainer: false, resizeHandle: false } );
       iphoneStyleCheckbox.change(function(){
+        $j('#hide_action ul').hide();
+        $j('#indicator').show();
         $j.ajax({
           type: 'POST',
           url: relative_url_root + '/board_entries/toggle_hide',
-          data: $j('#hide_message form').serialize(),
+          data: $j('#hide_action form').serialize(),
           success: function(msg) {
+              $j.ajax({
+                type: 'GET',
+                url: relative_url_root + '/entry_hide_operations?entry_id=<%= entry.id %>',
+                success: function(html) {
+                  $j('#hide_action ul').replaceWith(html);
+                },
+                complete: function(request){
+                  $j('#indicator').hide();
+                }
+              });
               $j("#flash_message").trigger("notice", msg);
+          },
+          error: function(event){
+              $j("#flash_message").trigger("error", msg);
           }
         });
       });
+
+      <% if BoardEntry::HIDABLE_AIM_TYPES.include?(entry.aim_type) -%>
+      // 質問の公開/非公開履歴を表示
+      $j('#show_history').live('click', function() {
+        $j('ul li.history').slideDown();
+        return false;
+      });
+      <% end -%>
 
       var authenticity_token = function(){
           return $j('input[name="authenticity_token"]').eq(0).val();

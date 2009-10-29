@@ -13,11 +13,14 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class EntryHideOperation < ActiveRecord::Base
-  belongs_to :user
-  belongs_to :board_entry
+require 'spec_helper'
 
-  named_scope :order_new, proc {
-    { :order => "entry_hide_operations.created_at DESC" }
-  }
+describe EntryHideOperationsHelper do
+
+  #Delete this example and add some real ones or delete this file
+  it "should be included in the object returned by #helper" do
+    included_modules = (class << helper; self; end).send :included_modules
+    included_modules.should include(EntryHideOperationsHelper)
+  end
+
 end
