@@ -60,7 +60,7 @@ describe BoardEntriesController, 'POST #ado_create_nest_comment' do
       response.code.should == '400'
     end
     it '対象の記事が存在しない旨のメッセージが設定されること' do
-      response.body.should == 'Target board entry inexistent.'
+      response.body.should == 'Target blog / forum inexistent.'
     end
   end
 end
@@ -118,7 +118,7 @@ describe BoardEntriesController, 'POST #ado_pointup' do
       post :ado_pointup
     end
     it '記事が見つからない旨のメッセージが設定されること' do
-      response.body.should == 'Target board entry inexistent.'
+      response.body.should == 'Target blog / forum inexistent.'
     end
     it '404のレスポンスコードが返ること' do
       response.code.should == '404'

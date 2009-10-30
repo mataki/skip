@@ -748,7 +748,7 @@ describe MypageController, '#antenna_entry_title' do
     end
     describe 'アンテナが指定されていない場合' do
       describe 'システムアンテナの場合' do
-        it { @controller.send(:antenna_entry_title, stub('entry_antenna', :antenna => nil, :key => 'message')).should == 'Messages for you' }
+        it { @controller.send(:antenna_entry_title, stub('entry_antenna', :antenna => nil, :key => 'message')).should == 'Notices for you' }
         it { @controller.send(:antenna_entry_title, stub('entry_antenna', :antenna => nil, :key => 'comment')).should == 'Entries you have made comments'}
         it { @controller.send(:antenna_entry_title, stub('entry_antenna', :antenna => nil, :key => 'bookmark')).should == 'Entries bookmarked by yourself' }
         it { @controller.send(:antenna_entry_title, stub('entry_antenna', :antenna => nil, :key => 'group')).should == 'Posts in the groups joined' }
