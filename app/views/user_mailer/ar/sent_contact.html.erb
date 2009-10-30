@@ -1,16 +1,17 @@
 <%= @header %>
 
 <%= _("You have message(s) from %s") % @name %>
-  [<%= @entry.title %>]
+
+    [<%= @entry.title %>]
 <% if Admin::Setting.contact_mail_contain_contents -%>
-  <%= convert_plain(@entry) %>
+<%= convert_plain(@entry) %>
 
 <%= _("Click the URL below to see all.")%>
 <% else -%>
 
 <%= _("Click the URL below to see the content of message.")%>
 <% end -%>
-  <%= url_for(:controller => :board_entries, :action => :forward, :id => @entry.id, :only_path => false) %>
-<%= _("*Jumps directly to the blog entry.") %>
+    <%= url_for(:controller => :board_entries, :action => :forward, :id => @entry.id, :only_path => false) %>
+    <%= _("*Jumps directly to the blog entry.") %>
 
 <%= @footer %>

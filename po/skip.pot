@@ -7,6 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.3.0\n"
+"POT-Creation-Date: 2009-10-29 11:47+0900\n"
 "POT-Creation-Date: 2009-10-30 15:59+0800\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
@@ -38,10 +39,9 @@ msgid ""
 "the system."
 msgstr ""
 
-#: app/models/board_entry.rb:395 app/views/bookmark/list.html.erb:54
-#: app/views/bookmark/show.html.erb:24
-#: app/views/mypage/entries_by_date.html.erb:13
+#: app/models/board_entry.rb:404 app/views/mypage/entries_by_date.html.erb:13
 #: app/views/mypage/index.html.erb:47 app/views/mypage/index.html.erb:123
+#: app/views/bookmark/list.html.erb:54 app/views/bookmark/show.html.erb:24
 #: app/views/rankings/bookmark.html.erb:2
 #: app/views/rankings/bookmark.html.erb:4
 #: app/views/rankings/bookmark.html.erb:7
@@ -49,7 +49,7 @@ msgstr ""
 msgid "%B %d %Y"
 msgstr ""
 
-#: app/models/board_entry.rb:397 app/models/board_entry_comment.rb:36
+#: app/models/board_entry.rb:406 app/models/board_entry_comment.rb:36
 msgid "%B %d %Y %H:%M"
 msgstr ""
 
@@ -287,7 +287,7 @@ msgstr ""
 msgid "(The search targets are titles and comments)"
 msgstr ""
 
-#: app/models/board_entry.rb:439
+#: app/models/board_entry.rb:448
 msgid "(This entry is generated automatically by the system)"
 msgstr ""
 
@@ -295,7 +295,7 @@ msgstr ""
 msgid "(This screen is to avoid security risks ralated to direct downloading)"
 msgstr ""
 
-#: app/models/board_entry.rb:604
+#: app/models/board_entry.rb:613
 msgid "(Unknown topic entry found. However, this has been ignored)"
 msgstr ""
 
@@ -327,7 +327,7 @@ msgid ""
 "issues (e.g. javascripts)."
 msgstr ""
 
-#: app/views/user_mailer/ar/sent_contact.html.erb:14
+#: app/views/user_mailer/ar/sent_contact.html.erb:15
 msgid "*Jumps directly to the blog entry."
 msgstr ""
 
@@ -1923,41 +1923,36 @@ msgstr ""
 msgid "BoardEntry|Aim type"
 msgstr ""
 
-#: app/models/board_entry.rb:141
+#: app/models/board_entry.rb:150
 msgid "BoardEntry|Aim type|Desc|entry"
 msgstr ""
 
-#: app/models/board_entry.rb:143
+#: app/models/board_entry.rb:152
 msgid "BoardEntry|Aim type|Desc|notice"
 msgstr ""
 
-#: app/models/board_entry.rb:142
+#: app/models/board_entry.rb:151
 msgid "BoardEntry|Aim type|Desc|question"
 msgstr ""
 
-#: app/models/board_entry.rb:138 app/views/entries/_aim_type_box.html.erb:9
+#: app/models/board_entry.rb:147 app/views/entries/_aim_type_box.html.erb:9
 #: app/views/search/entry_search.html.erb:15
 msgid "BoardEntry|Aim type|entry"
 msgid_plural "entries"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/views/entries/_aim_type_box.html.erb:11
+#: app/models/board_entry.rb:149 app/views/entries/_aim_type_box.html.erb:11
 #: app/views/search/entry_search.html.erb:17
 msgid "BoardEntry|Aim type|notice"
 msgid_plural "notices"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/models/board_entry.rb:140
-msgid "BoardEntry|Aim type|notices"
-msgid_plural "notices"
-msgstr[0] ""
-msgstr[1] ""
-
-#: app/views/entries/_aim_type_box.html.erb:10
+#: app/models/board_entry.rb:148 app/views/entries/_aim_type_box.html.erb:10
 #: app/views/search/entry_search.html.erb:16
 msgid "BoardEntry|Aim type|question"
+msgstr ""
 msgid_plural "questions"
 msgstr[0] ""
 msgstr[1] ""
@@ -2000,11 +1995,11 @@ msgstr ""
 msgid "BoardEntry|Entry type"
 msgstr ""
 
-#: app/models/board_entry.rb:136
+#: app/models/board_entry.rb:145
 msgid "BoardEntry|Entry type|DIARY"
 msgstr ""
 
-#: app/models/board_entry.rb:137
+#: app/models/board_entry.rb:146
 msgid "BoardEntry|Entry type|GROUP_BBS"
 msgstr ""
 
@@ -2024,11 +2019,11 @@ msgstr ""
 msgid "BoardEntry|Lock version"
 msgstr ""
 
-#: app/models/board_entry.rb:145 app/views/entries/_entry_detail.html.erb:687
+#: app/models/board_entry.rb:154
 msgid "BoardEntry|Open|false"
 msgstr ""
 
-#: app/models/board_entry.rb:144
+#: app/models/board_entry.rb:153
 msgid "BoardEntry|Open|true"
 msgstr ""
 
@@ -2258,7 +2253,7 @@ msgid ""
 "group creation."
 msgstr ""
 
-#: app/models/group.rb:113
+#: app/models/group.rb:114
 msgid "Category not selected or value invalid."
 msgstr ""
 
@@ -2344,11 +2339,11 @@ msgid ""
 "  %s"
 msgstr ""
 
-#: app/views/user_mailer/ar/sent_contact.html.erb:8
+#: app/views/user_mailer/ar/sent_contact.html.erb:9
 msgid "Click the URL below to see all."
 msgstr ""
 
-#: app/views/user_mailer/ar/sent_contact.html.erb:11
+#: app/views/user_mailer/ar/sent_contact.html.erb:12
 msgid "Click the URL below to see the content of message."
 msgstr ""
 
@@ -3246,7 +3241,7 @@ msgstr ""
 msgid "Group categories"
 msgstr ""
 
-#: app/models/board_entry.rb:159
+#: app/models/board_entry.rb:168
 msgid "Group does not exist."
 msgstr ""
 
@@ -3413,11 +3408,11 @@ msgstr ""
 msgid "Group|Protected"
 msgstr ""
 
-#: app/models/group.rb:29
+#: app/models/group.rb:30
 msgid "Group|Protected|false"
 msgstr ""
 
-#: app/models/group.rb:28
+#: app/models/group.rb:29
 msgid "Group|Protected|true"
 msgstr ""
 
@@ -3476,6 +3471,10 @@ msgstr ""
 
 #: app/views/board_entries/_form.html.erb:60
 msgid "Hide Time"
+msgstr ""
+
+#: app/views/entries/_entry_detail.html.erb:222
+msgid "Hide histories"
 msgstr ""
 
 #: app/views/services/skip_reflect_customized.html.erb:2
@@ -3628,7 +3627,7 @@ msgstr ""
 msgid "Invalid format. Please input like uid:xxxxx"
 msgstr ""
 
-#: app/models/board_entry.rb:161
+#: app/models/board_entry.rb:170
 msgid "Invalid group detected."
 msgstr ""
 
@@ -3636,9 +3635,10 @@ msgstr ""
 msgid "Invalid input format. Should be in uid:xxxxxx format."
 msgstr ""
 
-#: app/controllers/board_entries_controller.rb:26
 #: app/controllers/monta_controller.rb:22
-#: app/controllers/monta_controller.rb:33 app/models/board_entry.rb:684
+#: app/controllers/monta_controller.rb:33
+#: app/controllers/board_entries_controller.rb:26
+#: app/models/board_entry.rb:708
 msgid "Invalid operation."
 msgstr ""
 
@@ -3652,8 +3652,8 @@ msgstr ""
 msgid "Invalid parameter(s) found."
 msgstr ""
 
-#: app/controllers/edit_controller.rb:296
 #: app/controllers/share_file_controller.rb:278
+#: app/controllers/edit_controller.rb:296
 msgid "Invalid parameter(s)."
 msgstr ""
 
@@ -3679,11 +3679,11 @@ msgstr ""
 msgid "Invalid session. You need to log in again."
 msgstr ""
 
-#: app/models/board_entry.rb:155
+#: app/models/board_entry.rb:164
 msgid "Invalid user detected."
 msgstr ""
 
-#: app/models/group.rb:131
+#: app/models/group.rb:132
 msgid "Invited to Group: %s"
 msgstr ""
 
@@ -5338,7 +5338,7 @@ msgstr ""
 msgid "Show Option"
 msgstr ""
 
-#: app/views/entries/_entry_detail.html.erb:209
+#: app/views/entries/_entry_detail.html.erb:221
 msgid "Show all histories"
 msgstr ""
 
@@ -6167,9 +6167,8 @@ msgstr ""
 msgid "User %{username} has already been registered."
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:53
-#: app/controllers/admin/users_controller.rb:71 app/helpers/user_helper.rb:86
-#: app/models/board_entry.rb:153
+#: app/helpers/user_helper.rb:86 app/controllers/admin/users_controller.rb:53
+#: app/controllers/admin/users_controller.rb:71 app/models/board_entry.rb:162
 msgid "User does not exist."
 msgstr ""
 
@@ -6870,7 +6869,7 @@ msgstr ""
 msgid "You had been retired."
 msgstr ""
 
-#: app/models/group.rb:132
+#: app/models/group.rb:133
 msgid "You have been invited to join [%s>]."
 msgstr ""
 
@@ -6956,10 +6955,6 @@ msgstr ""
 msgid "[%s] User registration completed"
 msgstr ""
 
-#: app/models/user_mailer/ar.rb:28
-msgid "[%{app_title}] You have a message from %{user}."
-msgstr ""
-
 #: app/views/group/show.html.erb:80
 msgid "[...See all]"
 msgstr ""
@@ -6986,7 +6981,7 @@ msgid_plural "[Bookmarked by: %d members]"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/views/entries/_entry_detail.html.erb:220
+#: app/views/entries/_entry_detail.html.erb:204
 msgid "[Bottom of page]"
 msgstr ""
 
@@ -7052,7 +7047,7 @@ msgstr ""
 msgid "[Get download history in CSV]"
 msgstr ""
 
-#: app/models/board_entry.rb:417 app/models/share_file.rb:260
+#: app/models/share_file.rb:260 app/models/board_entry.rb:426
 msgid "[Group members only]"
 msgstr ""
 
@@ -7080,7 +7075,7 @@ msgstr ""
 msgid "[Last]"
 msgstr ""
 
-#: app/models/board_entry.rb:753
+#: app/models/board_entry.rb:777
 msgid "[Link does not exist...%s>]"
 msgstr ""
 
@@ -7108,7 +7103,7 @@ msgstr ""
 msgid "[Next]"
 msgstr ""
 
-#: app/models/board_entry.rb:411 app/models/share_file.rb:254
+#: app/models/share_file.rb:254 app/models/board_entry.rb:420
 msgid "[Open to all]"
 msgstr ""
 
@@ -7116,7 +7111,7 @@ msgstr ""
 msgid "[Other users: %{count} users]"
 msgstr ""
 
-#: app/models/board_entry.rb:415 app/models/share_file.rb:258
+#: app/models/share_file.rb:258 app/models/board_entry.rb:424
 msgid "[Owner only]"
 msgstr ""
 
@@ -7297,7 +7292,7 @@ msgstr ""
 msgid "accepts numbers and hiphens(\"-\") only."
 msgstr ""
 
-#: app/models/group.rb:25
+#: app/models/group.rb:26
 msgid "accepts numbers, alphabets, hiphens(\"-\") and underscores(\"_\")."
 msgstr ""
 

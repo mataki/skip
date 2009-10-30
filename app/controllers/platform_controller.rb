@@ -21,7 +21,9 @@ class PlatformController < ApplicationController
 
   before_filter :require_not_login, :except => [:logout]
 
-  verify :method => :post, :only => %w(login), :redirect_to => {:action => :index}
+  # OpenIDのSSOの際にリダイレクトしているため、GETを許可する必要がある
+  # 直接OpenIDの処理を行なうようにすれば、POSTのみでもOKになる
+  verify :method => :post, :only => %w(login), :redirect_to => {:action => :index} if SkipEmbedded::InitialSettings["login_mode"] != "rp"
 
   def index
     response.headers['X-XRDS-Location'] = server_url(:format => :xrds, :protocol => scheme)

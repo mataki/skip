@@ -7,6 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.3.0\n"
+"POT-Creation-Date: 2009-10-29 11:47+0900\n"
 "POT-Creation-Date: 2009-10-30 15:59+0800\n"
 "PO-Revision-Date: 2009-10-28 20:01+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
@@ -40,10 +41,9 @@ msgstr ""
 "この「ユーザ名」はシステムの中で、あなたのことをブログの記事中などで簡易的に"
 "指定する際に使います。"
 
-#: app/models/board_entry.rb:395 app/views/bookmark/list.html.erb:54
-#: app/views/bookmark/show.html.erb:24
-#: app/views/mypage/entries_by_date.html.erb:13
+#: app/models/board_entry.rb:404 app/views/mypage/entries_by_date.html.erb:13
 #: app/views/mypage/index.html.erb:47 app/views/mypage/index.html.erb:123
+#: app/views/bookmark/list.html.erb:54 app/views/bookmark/show.html.erb:24
 #: app/views/rankings/bookmark.html.erb:2
 #: app/views/rankings/bookmark.html.erb:4
 #: app/views/rankings/bookmark.html.erb:7
@@ -51,7 +51,7 @@ msgstr ""
 msgid "%B %d %Y"
 msgstr "%Y/%m/%d"
 
-#: app/models/board_entry.rb:397 app/models/board_entry_comment.rb:36
+#: app/models/board_entry.rb:406 app/models/board_entry_comment.rb:36
 msgid "%B %d %Y %H:%M"
 msgstr "%Y年%m月%d日 %H:%M"
 
@@ -292,7 +292,7 @@ msgstr "（タグ、タイトル、本文が検索対象となります）"
 msgid "(The search targets are titles and comments)"
 msgstr "（タイトル、コメントが検索対象となります）"
 
-#: app/models/board_entry.rb:439
+#: app/models/board_entry.rb:448
 msgid "(This entry is generated automatically by the system)"
 msgstr "(この投稿はシステムにより自動的に用意されました)"
 
@@ -302,7 +302,7 @@ msgstr ""
 "（この画面は、直ダウンロードによるセキュリティ上の懸念を解消するために表示し"
 "ています）"
 
-#: app/models/board_entry.rb:604
+#: app/models/board_entry.rb:613
 msgid "(Unknown topic entry found. However, this has been ignored)"
 msgstr "（話題元の記事が不明でしたが無視しました）"
 
@@ -342,7 +342,7 @@ msgstr ""
 "※説明文は、HTML形式で記述して下さい。セキュリティ上問題の有るコード"
 "(javascriptなど)は、利用しないで下さい。"
 
-#: app/views/user_mailer/ar/sent_contact.html.erb:14
+#: app/views/user_mailer/ar/sent_contact.html.erb:15
 msgid "*Jumps directly to the blog entry."
 msgstr "※ブログに直接遷移します。"
 
@@ -2079,50 +2079,39 @@ msgstr "更新日時"
 msgid "BoardEntry|Aim type"
 msgstr "種類"
 
-#: app/models/board_entry.rb:141
+#: app/models/board_entry.rb:150
 msgid "BoardEntry|Aim type|Desc|entry"
 msgstr "記事 (マイページの「新着記事」に表示されます)"
 
-#: app/models/board_entry.rb:143
+#: app/models/board_entry.rb:152
 msgid "BoardEntry|Aim type|Desc|notice"
 msgstr "お知らせ (マイページの「あなたへのお知らせ」に表示されます)"
 
-#: app/models/board_entry.rb:142
+#: app/models/board_entry.rb:151
 msgid "BoardEntry|Aim type|Desc|question"
 msgstr "質問 (マイページの「みんなからの質問」に表示されます)"
 
-#: app/models/board_entry.rb:138 app/views/entries/_aim_type_box.html.erb:9
+#: app/models/board_entry.rb:147 app/views/entries/_aim_type_box.html.erb:9
 #: app/views/search/entry_search.html.erb:15
 msgid "BoardEntry|Aim type|entry"
 msgid_plural "entries"
 msgstr[0] "記事"
 msgstr[1] "記事"
 
-#: app/views/entries/_aim_type_box.html.erb:11
+#: app/models/board_entry.rb:149 app/views/entries/_aim_type_box.html.erb:11
 #: app/views/search/entry_search.html.erb:17
 msgid "BoardEntry|Aim type|notice"
 msgid_plural "notices"
 msgstr[0] "お知らせ"
 msgstr[1] "お知らせ"
 
-#: app/models/board_entry.rb:140
-msgid "BoardEntry|Aim type|notices"
-msgid_plural "notices"
-msgstr[0] ""
-msgstr[1] ""
-
-#: app/views/entries/_aim_type_box.html.erb:10
+#: app/models/board_entry.rb:148 app/views/entries/_aim_type_box.html.erb:10
 #: app/views/search/entry_search.html.erb:16
 msgid "BoardEntry|Aim type|question"
+msgstr "質問"
 msgid_plural "questions"
 msgstr[0] "質問"
 msgstr[1] "質問"
-
-#: app/models/board_entry.rb:139
-msgid "BoardEntry|Aim type|questions"
-msgid_plural "questions"
-msgstr[0] ""
-msgstr[1] ""
 
 #: app/models/board_entry.rb:-
 msgid "BoardEntry|Board entry comments count"
@@ -2156,11 +2145,11 @@ msgstr "話題にした記事の数"
 msgid "BoardEntry|Entry type"
 msgstr "種別"
 
-#: app/models/board_entry.rb:136
+#: app/models/board_entry.rb:145
 msgid "BoardEntry|Entry type|DIARY"
 msgstr "ブログ"
 
-#: app/models/board_entry.rb:137
+#: app/models/board_entry.rb:146
 msgid "BoardEntry|Entry type|GROUP_BBS"
 msgstr "フォーラム"
 
@@ -2179,12 +2168,11 @@ msgstr "最終更新日時"
 #: app/models/board_entry.rb:-
 msgid "BoardEntry|Lock version"
 msgstr "ロックバージョン"
-
 #: app/models/board_entry.rb:145 app/views/entries/_entry_detail.html.erb:687
 msgid "BoardEntry|Open|false"
 msgstr "終了"
 
-#: app/models/board_entry.rb:144
+#: app/models/board_entry.rb:153
 msgid "BoardEntry|Open|true"
 msgstr "質問中"
 
@@ -2417,7 +2405,7 @@ msgid ""
 msgstr ""
 "対象のカテゴリはグループ作成時に初期選択される設定のため削除出来ません。"
 
-#: app/models/group.rb:113
+#: app/models/group.rb:114
 msgid "Category not selected or value invalid."
 msgstr "カテゴリが選択されていないか、不正な値です。"
 
@@ -2508,11 +2496,11 @@ msgstr ""
 "\n"
 "　%s"
 
-#: app/views/user_mailer/ar/sent_contact.html.erb:8
+#: app/views/user_mailer/ar/sent_contact.html.erb:9
 msgid "Click the URL below to see all."
 msgstr "お知らせの内容を全て見るには、以下のURLをクリックしてください。"
 
-#: app/views/user_mailer/ar/sent_contact.html.erb:11
+#: app/views/user_mailer/ar/sent_contact.html.erb:12
 msgid "Click the URL below to see the content of message."
 msgstr "お知らせの内容を確認するには、以下のURLをクリックしてください。"
 
@@ -3433,7 +3421,7 @@ msgstr "グループ名・説明文"
 msgid "Group categories"
 msgstr "グループカテゴリ"
 
-#: app/models/board_entry.rb:159
+#: app/models/board_entry.rb:168
 msgid "Group does not exist."
 msgstr "ご指定のグループは存在しません。"
 
@@ -3600,11 +3588,11 @@ msgstr "名前"
 msgid "Group|Protected"
 msgstr "参加承認"
 
-#: app/models/group.rb:29
+#: app/models/group.rb:30
 msgid "Group|Protected|false"
 msgstr "不要"
 
-#: app/models/group.rb:28
+#: app/models/group.rb:29
 msgid "Group|Protected|true"
 msgstr "必要"
 
@@ -3676,6 +3664,10 @@ msgstr ""
 #: app/views/board_entries/_form.html.erb:60
 msgid "Hide Time"
 msgstr "時刻は表示しない"
+
+#: app/views/entries/_entry_detail.html.erb:222
+msgid "Hide histories"
+msgstr "履歴を隠す"
 
 #: app/views/services/skip_reflect_customized.html.erb:2
 msgid "Hiki Notation"
@@ -3833,7 +3825,7 @@ msgstr "%{name} に不正な形式が設定されています"
 msgid "Invalid format. Please input like uid:xxxxx"
 msgstr "フォーマットが不正です。uid:xxxxxxのような形で入力してください。"
 
-#: app/models/board_entry.rb:161
+#: app/models/board_entry.rb:170
 msgid "Invalid group detected."
 msgstr "不正なグループです。"
 
@@ -3841,9 +3833,10 @@ msgstr "不正なグループです。"
 msgid "Invalid input format. Should be in uid:xxxxxx format."
 msgstr "フォーマットが不正です。uid:xxxxxxのような形で入力してください。"
 
-#: app/controllers/board_entries_controller.rb:26
 #: app/controllers/monta_controller.rb:22
-#: app/controllers/monta_controller.rb:33 app/models/board_entry.rb:684
+#: app/controllers/monta_controller.rb:33
+#: app/controllers/board_entries_controller.rb:26
+#: app/models/board_entry.rb:708
 msgid "Invalid operation."
 msgstr "不正な操作です"
 
@@ -3888,11 +3881,11 @@ msgstr "不正なリクエストです。"
 msgid "Invalid session. You need to log in again."
 msgstr "不正なセッションです。再度ログインし直して下さい。"
 
-#: app/models/board_entry.rb:155
+#: app/models/board_entry.rb:164
 msgid "Invalid user detected."
 msgstr "不正なユーザです。"
 
-#: app/models/group.rb:131
+#: app/models/group.rb:132
 msgid "Invited to Group: %s"
 msgstr "グループ：%sに招待しました"
 
@@ -5578,7 +5571,7 @@ msgstr "詳細"
 msgid "Show Option"
 msgstr "[オプションを表示]"
 
-#: app/views/entries/_entry_detail.html.erb:209
+#: app/views/entries/_entry_detail.html.erb:221
 msgid "Show all histories"
 msgstr "履歴を全て表示"
 
@@ -6442,9 +6435,8 @@ msgstr "ユーザ"
 msgid "User %{username} has already been registered."
 msgstr "既に%{username}が登録されています。"
 
-#: app/controllers/admin/users_controller.rb:53
-#: app/controllers/admin/users_controller.rb:71 app/helpers/user_helper.rb:86
-#: app/models/board_entry.rb:153
+#: app/helpers/user_helper.rb:86 app/controllers/admin/users_controller.rb:53
+#: app/controllers/admin/users_controller.rb:71 app/models/board_entry.rb:162
 msgid "User does not exist."
 msgstr "ご指定のユーザは存在しません。"
 
@@ -7184,7 +7176,7 @@ msgstr "未使用のユーザ以外削除できません。"
 msgid "You had been retired."
 msgstr "あなたは退職済みです。"
 
-#: app/models/group.rb:132
+#: app/models/group.rb:133
 msgid "You have been invited to join [%s>]."
 msgstr "[%s>]にあなたを招待しました。"
 
@@ -7270,10 +7262,6 @@ msgstr "[%s] パスワード再設定のメールです"
 msgid "[%s] User registration completed"
 msgstr "[%s] ユーザ登録が完了しました"
 
-#: app/models/user_mailer/ar.rb:28
-msgid "[%{app_title}] You have a message from %{user}."
-msgstr "[%{app_title}] %{user}さんから連絡がきています"
-
 #: app/views/group/show.html.erb:80
 msgid "[...See all]"
 msgstr "[...全てを見る]"
@@ -7299,7 +7287,7 @@ msgid "[Bookmarked by: %d member]"
 msgid_plural "[Bookmarked by: %d members]"
 msgstr[0] "[被ブクマ:%d人]"
 
-#: app/views/entries/_entry_detail.html.erb:220
+#: app/views/entries/_entry_detail.html.erb:204
 msgid "[Bottom of page]"
 msgstr "[ページ末尾]"
 
@@ -7365,7 +7353,7 @@ msgstr "[強制退会させる]"
 msgid "[Get download history in CSV]"
 msgstr "[ダウンロード履歴をCSVで取得]"
 
-#: app/models/board_entry.rb:417 app/models/share_file.rb:260
+#: app/models/share_file.rb:260 app/models/board_entry.rb:426
 msgid "[Group members only]"
 msgstr "[参加者のみ]"
 
@@ -7393,7 +7381,7 @@ msgstr "【本文の書き方に関するヒント】"
 msgid "[Last]"
 msgstr "[最後へ]"
 
-#: app/models/board_entry.rb:753
+#: app/models/board_entry.rb:777
 msgid "[Link does not exist...%s>]"
 msgstr "[リンク先が存在しません...%s>]"
 
@@ -7421,7 +7409,7 @@ msgstr "[次月]"
 msgid "[Next]"
 msgstr "[次へ]"
 
-#: app/models/board_entry.rb:411 app/models/share_file.rb:254
+#: app/models/share_file.rb:254 app/models/board_entry.rb:420
 msgid "[Open to all]"
 msgstr "[全体に公開]"
 
@@ -7429,7 +7417,7 @@ msgstr "[全体に公開]"
 msgid "[Other users: %{count} users]"
 msgstr "[他のユーザ:%{count}人]"
 
-#: app/models/board_entry.rb:415 app/models/share_file.rb:258
+#: app/models/share_file.rb:258 app/models/board_entry.rb:424
 msgid "[Owner only]"
 msgstr "[自分だけ]"
 
@@ -7607,7 +7595,7 @@ msgstr "はアルファベットで入力して下さい。"
 msgid "accepts numbers and hiphens(\"-\") only."
 msgstr "は数値と-(ハイフン)で入力して下さい。"
 
-#: app/models/group.rb:25
+#: app/models/group.rb:26
 msgid "accepts numbers, alphabets, hiphens(\"-\") and underscores(\"_\")."
 msgstr ""
 "は数字orアルファベットor記号(ハイフン「-」 アンダーバー「_」)で入力してくださ"
@@ -8054,6 +8042,9 @@ msgstr ""
 "|チェックするとその属性を更新することができます。CSVの例を参考にCSVファイルを"
 "作成してください。<br/>新規登録のユーザは、名前・パスワード・メールアドレスは"
 "必須になります。"
+
+#~ msgid "[%{app_title}] You have a message from %{user}."
+#~ msgstr "[%{app_title}] %{user}さんから連絡がきています"
 
 #~ msgid "Finish"
 #~ msgstr "終了"
