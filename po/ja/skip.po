@@ -355,7 +355,7 @@ msgid "... What if including limited entries ..."
 msgstr "・・・上記に非公開を含めると・・・"
 
 #: app/views/statistics/index.html.erb:26
-msgid "... and BBS posts ..."
+msgid "... and forum posts ..."
 msgstr "・・・さらにフォーラムも含めると・・・"
 
 #: app/controllers/admin/application_controller.rb:40
@@ -510,7 +510,7 @@ msgid "Add"
 msgstr "追加"
 
 #: app/views/mypage/_manage_antenna.html.erb:29
-msgid "Add Antenna"
+msgid "Add Subscription"
 msgstr "新着通知の追加"
 
 #: app/views/user/_action_box.html.erb:12
@@ -526,7 +526,7 @@ msgid "Add a comment!"
 msgstr "コメントの追加！"
 
 #: app/views/user/_action_box.html.erb:9
-msgid "Add an antenna"
+msgid "Notify new posts"
 msgstr "新着時に通知"
 
 #: app/views/bookmark/new_url.html.erb:20
@@ -539,16 +539,16 @@ msgid "Add as Member"
 msgstr "参加者に追加"
 
 #: app/controllers/group_controller.rb:331
-msgid "Added %s as a member and created a BBS for messaging."
+msgid "Added %s as a member and created a forum for messaging."
 msgstr "%sさんを参加者に追加し、お知らせのフォーラムを作成しました。"
 
 #: app/controllers/group_controller.rb:340
 msgid ""
-"Added members of %s as members of the group and created a BBS for messaging."
+"Added members of %s as members of the group and created a forum for messaging."
 msgstr "%sのメンバーを参加者に追加し、お知らせのフォーラムを作成しました。"
 
 #: app/views/antenna/_select_antenna.html.erb:2
-msgid "Adding to antenna"
+msgid "Adding subscription"
 msgstr "新着時に通知"
 
 #: app/helpers/group_helper.rb:42
@@ -1825,7 +1825,7 @@ msgstr ""
 "す。"
 
 #: app/views/mypage/_antenna_box.html.erb:7
-msgid "Antenna Description"
+msgid "Subscription Description"
 msgstr ""
 "新着通知は、読んだ記事と読んでいない記事を自動的に判別してくれる便利な機能で"
 "す。<br/>自動的に新しい記事を収集してくれて、読んでない記事の数は新着通知名の"
@@ -1834,12 +1834,12 @@ msgstr ""
 "くはヘルプをご覧ください。"
 
 #: app/views/mypage/_manage_antenna.html.erb:59
-msgid "Antenna name accepts 10 or less characters only."
+msgid "Subscription name accepts 10 or less characters only."
 msgstr "新着通知名は10文字以内で入力して下さい。"
 
 #: app/controllers/antenna_controller.rb:56
 #: app/views/mypage/_manage_antenna.html.erb:55
-msgid "Antenna name is mandatory."
+msgid "Subscription name is mandatory."
 msgstr "新着通知名は必須です。"
 
 #: app/models/antenna_item.rb:-
@@ -1855,7 +1855,7 @@ msgid "AntennaItem|Value type"
 msgstr "形式"
 
 #: app/views/mypage/_antenna_box.html.erb:9
-msgid "Antennas"
+msgid "Subscriptions"
 msgstr "新着通知"
 
 #: app/models/antenna.rb:-
@@ -1990,15 +1990,15 @@ msgid "Average access during the recent month"
 msgstr "直近一ヶ月のアクセス数平均"
 
 #: app/helpers/group_helper.rb:40
-msgid "BBS"
+msgid "Forums"
 msgstr "フォーラム"
 
 #: app/views/search/entry_search.html.erb:8
-msgid "BBS entries of the group"
+msgid "Forum entries of the group"
 msgstr "グループのフォーラム"
 
 #: app/helpers/board_entries_helper.rb:52
-msgid "BBS of %s"
+msgid "Forums of %s"
 msgstr "%sのフォーラム"
 
 #: app/views/bookmark/new.html.erb:68
@@ -2030,7 +2030,7 @@ msgid "Blog"
 msgstr "ブログ"
 
 #: app/helpers/rankings_helper.rb:43
-msgid "Blog / BBS entries got most %s from others (public entries only)"
+msgid "Blog / forum entries got most %s from others (public entries only)"
 msgstr ""
 "みんなから最も%sを貰ったブログ/フォーラムです(公開範囲が「全公開」のみ)"
 
@@ -2047,7 +2047,7 @@ msgid "Blogs"
 msgstr "ブログ"
 
 #: app/controllers/services_controller.rb:43
-msgid "Blogs / BBSs"
+msgid "Blogs / Forums"
 msgstr "ブログ/BBS"
 
 #: app/views/admin/_data_menu_box.html.erb:9
@@ -2238,7 +2238,7 @@ msgid "Bookmark Comment"
 msgstr "ブックマークコメント"
 
 #: app/views/mypage/_action_box.html.erb:9
-msgid "Bookmark URL"
+msgid "Bookmark a URL"
 msgstr "ブックマークする"
 
 #: app/views/entries/_entry_detail.html.erb:236
@@ -2675,7 +2675,7 @@ msgid "Create %{name}"
 msgstr "%{name}作成"
 
 #: app/views/entries/_entry_detail.html.erb:326
-msgid "Create a new bbs entry inheriting the privacy setting."
+msgid "Create a new forum entry inheriting the privacy setting."
 msgstr "記事の公開範囲を引き継いだフォーラムとして新しい記事を作成します。"
 
 #: app/controllers/groups_controller.rb:39
@@ -2694,12 +2694,12 @@ msgid ""
 msgstr "記事の公開範囲によらず全体公開のブログとして新しい記事を作成します。"
 
 #: app/views/antenna/_select_antenna.html.erb:40
-msgid "Create new anntenna and add: "
+msgid "Create new subscription and add: "
 msgstr "新しい新着通知を作成して追加："
 
 #: app/controllers/group_controller.rb:260
 msgid ""
-"Created an entry on the BBS about the removal of user. Edit the entry when "
+"Created an entry on the forum about the removal of user. Edit the entry when "
 "needed."
 msgstr ""
 "退会者向けにフォーラムにメッセージを作成しました。内容は必要に応じて変更して"
@@ -2777,7 +2777,7 @@ msgid "Datetime Last Updated: "
 msgstr "最終更新日時:"
 
 #: app/views/layouts/layout.html.erb:36
-msgid "Days since you registered"
+msgid "Days since registered"
 msgstr "利用日数"
 
 #: app/helpers/calendar_helper.rb:78
@@ -2785,7 +2785,7 @@ msgid "December"
 msgstr "12月"
 
 #: app/views/group/_form.html.erb:56
-msgid "Default Email Settings"
+msgid "Default Notification Method"
 msgstr "既定の告知方法"
 
 #: app/views/group/_form.html.erb:48
@@ -3043,7 +3043,7 @@ msgid "Enter %{name} in a valid date format."
 msgstr "%{name} は正しい日付形式で入力して下さい"
 
 #: app/views/bookmark/new_url.html.erb:3
-msgid "Enter a URL bellow and click the Next button."
+msgid "You can save an URL you are interested in with a comment to a bookmark. You can also share it with other users by publishing it. Enter a URL below and click the \"Next\" button to start with."
 msgstr ""
 "ブックマークは、気になったインターネットのURLを、コメント付きで保存しておくこ"
 "とができます。また、そのURLを「公開」することで、他のユーザとも共有することが"
@@ -3111,7 +3111,7 @@ msgid "Entries you posted to your blog and group BBSs."
 msgstr "ブログやグループのフォーラムであなたが投稿した記事の一覧です。"
 
 #: app/controllers/board_entries_controller.rb:169
-msgid "Entry was successfully %{operation}."
+msgid "Entry was successfully set to %{operation}."
 msgstr "記事を%{operation}にしました。"
 
 #: app/controllers/mypage_controller.rb:187
@@ -3260,7 +3260,7 @@ msgstr ""
 "わせ下さい。"
 
 #: app/controllers/board_entries_controller.rb:171
-msgid "Failed to update state."
+msgid "Failed to update status."
 msgstr "更新に失敗しました。"
 
 #: app/controllers/share_file_controller.rb:84
@@ -3666,7 +3666,7 @@ msgid "Human Resources"
 msgstr "人事"
 
 #: app/views/entries/_entry_detail.html.erb:204
-msgid "If you finished, this question is hide from mypage of all users."
+msgid "This question will be hidden from all users' My Page after you set it to \"Closed\"."
 msgstr "質問を終了すると全ユーザのマイページから表示されなくなります。"
 
 #: app/views/board_entries/_form.html.erb:152
@@ -4146,7 +4146,7 @@ msgstr ""
 "せん。"
 
 #: app/views/admin/users/index.html.erb:1
-msgid "Makes of the new users and edit or confirm of the users profile."
+msgid "You can create new user and edit / view existing user profiles."
 msgstr ""
 "新規ユーザの作成やユーザプロフィールの編集/確認などを行なうことができます。"
 
@@ -4204,7 +4204,7 @@ msgstr "メッセージ："
 #: app/controllers/mypage_controller.rb:627
 #: app/controllers/mypage_controller.rb:860
 #: app/controllers/feed_controller.rb:82 app/models/antenna.rb:92
-msgid "Messages for you"
+msgid "Notices for you"
 msgstr "あなたへのお知らせ"
 
 #: app/models/message.rb:-
@@ -4259,7 +4259,7 @@ msgstr ""
 "%sの月間ランキングです。 ( 対象期間：月初〜昨日まで。日次で更新しています）"
 
 #: app/helpers/rankings_helper.rb:39
-msgid "Most read blog / BBS entries (public entries only)"
+msgid "Most read blog / forum entries (public entries only)"
 msgstr "みんなによく読まれたブログ/フォーラムです(公開範囲が「全公開」のみ)"
 
 #: app/helpers/application_helper.rb:320
@@ -4343,7 +4343,7 @@ msgid "New Bookmark"
 msgstr "新着ブックマーク"
 
 #: app/models/message.rb:23
-msgid "New Changeing state of Question"
+msgid "New Change of Question Status"
 msgstr "新着質問の状態の更新"
 
 #: app/models/message.rb:19
@@ -4359,7 +4359,7 @@ msgid "New Entries on Top"
 msgstr "新しい順に並べる"
 
 #: app/models/message.rb:21
-msgid "New Entry"
+msgid "New Trackback"
 msgstr "新着話題記事"
 
 #: app/models/message.rb:20
@@ -4574,7 +4574,7 @@ msgstr "空白以外で1文字以上入力してください。"
 
 #: app/views/mypage/_publicated_entries_tabs.html.erb:6
 #: app/views/mypage/_publicated_entries_tabs.html.erb:8
-msgid "Only %s"
+msgid "%s Only"
 msgstr "%sのみ"
 
 #: app/views/entries/_entry_detail.html.erb:686
@@ -4988,7 +4988,8 @@ msgid "Public"
 msgstr "公開"
 
 #: app/views/mypage/_publicated_entries_tabs.html.erb:1
-msgid "Publicated Entries"
+#: app/views/group/show.html.erb:99
+msgid "Recent Entries"
 msgstr "新着記事"
 
 #: app/models/admin/share_file.rb:34
@@ -5089,12 +5090,8 @@ msgid "Reading"
 msgstr "読書"
 
 #: app/controllers/feed_controller.rb:37
-msgid "Recent BBS posts (%{category)"
+msgid "Recent forum posts (%{category)"
 msgstr "最新のフォーラムの記事（%{category}）"
-
-#: app/views/group/show.html.erb:99
-msgid "Recent Entries"
-msgstr "新着記事"
 
 #: app/views/mypage/index.html.erb:149
 msgid "Recent Groups"
@@ -5385,11 +5382,11 @@ msgid "Select a page to edit from the menu on left."
 msgstr "左のメニューから編集したいページを選択して下さい。"
 
 #: app/views/antenna/_select_antenna.html.erb:7
-msgid "Select the antenna to add."
+msgid "Select the subscription to add."
 msgstr "追加する新着通知を選択してください"
 
 #: app/controllers/antenna_controller.rb:70
-msgid "Selected antenna invalid."
+msgid "Selected subscription invalid."
 msgstr "不正な新着通知が指定されました。"
 
 #: app/controllers/mypage_controller.rb:110
@@ -5845,7 +5842,7 @@ msgid "Succeeded"
 msgstr "しました"
 
 #: app/views/antenna/_selected_antenna.html.erb:1
-msgid "Successfully added to antenna."
+msgid "Successfully added subscription."
 msgstr "新着通知に登録できました"
 
 #: app/controllers/admin/users_controller.rb:150
@@ -6022,7 +6019,7 @@ msgid "The search targets are titles and comments"
 msgstr "タイトル、コメントが検索対象となります"
 
 #: app/views/admin/settings/_main.html.erb:1
-msgid "The setting change of the general system are possible."
+msgid "Here you can set wordings and basic behaivior of SKIP.<br />Contact email address is where you accept user reports<br />so enter a email address that reaches system administrators (e.g. mailing list).<br />Modify other settings as necessary.<br />"
 msgstr ""
 "SKIP内の各所にある文言やSKIPの基本的な振る舞いに関する設定です。<br />お問い"
 "合わせ先メールアドレスは、ユーザからの報告を受けつける窓口となりますので、"
@@ -6030,20 +6027,22 @@ msgstr ""
 "てください。<br />その他は、必要に応じて変更してください。<br />"
 
 #: app/views/admin/images/index.html.erb:1
-msgid "The setting change of the icons and the login images are possible."
+msgid "Here you can set the favicon and background image of the login screen.<br />Modify as necessary."
 msgstr ""
 "ファビコンやログイン画面の背景画像に関する設定です。<br />必要に応じて変更し"
 "てください"
 
 #: app/views/admin/settings/_feed.html.erb:1
-msgid "The setting change of the rss feeds are possible."
+msgid ""
+"Here you can set RSS feeds to be shown on the right of My Page.<br />Set this when you wish to have new entries or news from specific sites shown on SKIP My Page."
 msgstr ""
 "マイページの右側に、この部分で設定されたRSSフィードが表示されます。<br />注目"
 "サイトの新着記事や新着ニュースの一覧をSKIPのマイページ上で表示させたい場合"
 "は、RSSフィードの設定を行ってください。"
 
 #: app/views/admin/settings/_security.html.erb:1
-msgid "The setting change of the securities are possible."
+msgid ""
+"Here you can set security options to make using SKIP safer.<br />They are set to recommended settings by default.<br />It may compromise the security level of SKIP if you moderate from default settings."
 msgstr ""
 "SKIPを安全にご利用いただくためのセキュリティに関する設定です。<br />初期状態"
 "では、推奨値が設定されています。<br />初期状態よりも緩和した設定にした場合、"
@@ -6127,7 +6126,7 @@ msgid "This user has already left."
 msgstr "既に退職されています"
 
 #: app/views/antenna/_select_antenna.html.erb:30
-msgid "This user has been added into antennas below: "
+msgid "This user has been added into subscriptioins below: "
 msgstr "このユーザは以下の新着通知に既に登録済みです："
 
 #: app/views/admin/settings/_security.html.erb:18
@@ -6744,7 +6743,7 @@ msgstr "最もブログを投稿したユーザです(公開範囲に関わら�
 
 #: app/views/statistics/index.html.erb:24
 msgid ""
-"Users who ever posted blog entries.<br/>&nbsp;(Excluding BBS posts and auto-"
+"Users who ever posted blog entries.<br/>&nbsp;(Excluding forum posts and auto-"
 "genarated messages. Public entries only)"
 msgstr ""
 "ブログを書いたことのある人<br/>　（フォーラム除く・公開のみ・自動投稿除く）"
@@ -6758,7 +6757,7 @@ msgid "Users wrote their comments"
 msgstr "コメントを書いたことのある人"
 
 #: app/views/search/entry_search.html.erb:7
-msgid "Users' Diaries"
+msgid "Users' Blogs"
 msgstr "ユーザのブログ"
 
 #: app/models/user.rb:-
@@ -6950,11 +6949,11 @@ msgid "Welcome to [%s]!"
 msgstr "【%s】へようこそ！"
 
 #: app/views/shared/_header.html.erb:13
-msgid "What New"
+msgid "What's New"
 msgstr "新機能"
 
 #: app/views/mypage/_antenna_box.html.erb:7
-msgid "What is Antenna"
+msgid "What is Subscription"
 msgstr "新着通知とは"
 
 #: app/views/share_file/_form.html.erb:24
@@ -7062,7 +7061,7 @@ msgid "You can access this site from %s next time."
 msgstr "次回からのアクセスは、 %s より利用可能です。"
 
 #: app/views/antenna/_select_antenna.html.erb:6
-msgid "You can add this blog into your antenna."
+msgid "You can add this blog into your subscription."
 msgstr "このブログを新着通知に追加できます。"
 
 #: app/views/bookmark/new.html.erb:3
@@ -7083,9 +7082,9 @@ msgstr "メッセージメールが不要な場合はこちらで設定が出来
 
 #: app/views/mypage/_manage_antenna.html.erb:19
 msgid ""
-"You can manage antennas for the blogs you follow etc.<br/>\n"
-"You can edit the name of the antenna by clicking on it.<br/>\n"
-"The list of antennas%{transmit} can be reordered by drag &amp; drop.<br/>\n"
+"You can manage subscriptions / notifications for the blogs you follow etc.\n"
+"You can edit the name of the subscription by clicking on it.<br/>\n"
+"The list of subscriptions%{transmit} can be reordered by drag &amp; drop.<br/>\n"
 "You can also move the items between antennas it by dragging the %"
 "{report_user} in the condition area."
 msgstr ""
@@ -7184,7 +7183,7 @@ msgid "Your OpenID:"
 msgstr "あなたのOpenID:"
 
 #: app/views/antenna/_select_antenna.html.erb:17
-msgid "Your antennas: "
+msgid "Your subscriptions: "
 msgstr "あなたの新着通知："
 
 #: app/views/mypage/welcome.html.erb:32
@@ -7296,11 +7295,11 @@ msgid "[Close]"
 msgstr "【閉じる】"
 
 #: app/views/entries/_entry_detail.html.erb:326
-msgid "[Compose a new bbs with this as topic]"
+msgid "[Write a new forum entry with this as topic]"
 msgstr "[この記事を「話題」にして、フォーラムに新しい記事を投稿する]"
 
 #: app/views/entries/_entry_detail.html.erb:328
-msgid "[Compose a new blog with this as topic]"
+msgid "[Write a new blog entry with this as topic]"
 msgstr "[この記事を「話題」にして、新しいブログを書く]"
 
 #: app/views/admin/settings/_feed.html.erb:9
@@ -7331,7 +7330,7 @@ msgstr "[ダウンロード履歴をCSVで取得]"
 #: app/models/share_file.rb:260 app/models/board_entry.rb:417
 msgid "[Group members only]"
 msgstr "[参加者のみ]"
-
+	
 #: app/helpers/application_helper.rb:43
 msgid "[Head]"
 msgstr "[最初へ]"
@@ -7341,7 +7340,7 @@ msgid "[Help]"
 msgstr "[ヘルプ]"
 
 #: app/views/mypage/entries_by_antenna.html.erb:32
-msgid "[Hide antenna links]"
+msgid "[Hide subscription links]"
 msgstr "[新着通知条件を隠す]"
 
 #: app/views/mypage/entries_by_antenna.html.erb:37
@@ -7361,7 +7360,7 @@ msgid "[Link does not exist...%s>]"
 msgstr "[リンク先が存在しません...%s>]"
 
 #: app/views/mypage/_antenna_box.html.erb:23
-msgid "[Manage antennas]"
+msgid "[Manage subscriptions]"
 msgstr "[新着通知を整備する]"
 
 #: app/views/mypage/welcome.html.erb:34
@@ -7469,7 +7468,7 @@ msgid "[Set entries in the page as unread]"
 msgstr "[ページ内の記事を未読]"
 
 #: app/views/mypage/entries_by_antenna.html.erb:31
-msgid "[Show antenna links]"
+msgid "[Show subscription links]"
 msgstr "[新着通知条件を表示]"
 
 #: app/views/mypage/entries_by_antenna.html.erb:39
@@ -7605,11 +7604,11 @@ msgid "all"
 msgstr "全体"
 
 #: app/models/antenna.rb:-
-msgid "antenna"
+msgid "subscription"
 msgstr "新着通知"
 
 #: app/models/antenna_item.rb:-
-msgid "antenna item"
+msgid "subscription item"
 msgstr "新着通知条件"
 
 #: app/models/applied_email.rb:-
@@ -7743,7 +7742,7 @@ msgid "message"
 msgstr "メッセージ："
 
 #: app/views/shared/_header.html.erb:21
-msgid "more"
+msgid "Links"
 msgstr "リンク"
 
 #: app/controllers/edit_controller.rb:318

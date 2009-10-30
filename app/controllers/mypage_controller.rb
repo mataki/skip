@@ -624,7 +624,7 @@ class MypageController < ApplicationController
     {
       :id_name => 'message',
       :title_icon => "email",
-      :title_name => _("Messages for you"),
+      :title_name => _("Notices for you"),
       :pages => pages = BoardEntry.accessible(current_user).notice.unread(current_user).order_new,
       :symbol2name_hash => BoardEntry.get_symbol2name_hash(pages)
     }
@@ -857,7 +857,7 @@ class MypageController < ApplicationController
     else
       key = antenna_entry.key
       case
-      when key == 'message'  then _("Messages for you")
+      when key == 'message'  then _("Notices for you")
       when key == 'comment'  then _("Entries you have made comments")
       when key == 'bookmark' then _("Entries bookmarked by yourself")
       when key == 'group'    then _("Posts in the groups joined")

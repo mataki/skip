@@ -53,7 +53,7 @@ class AntennaController < ApplicationController
         @antenna.errors.each_full {  |msg| messages <<  msg }
       end
     else
-      messages = _("Antenna name is mandatory.")
+      messages = _("Subscription name is mandatory.")
     end
 
     unless messages.empty?
@@ -67,7 +67,7 @@ class AntennaController < ApplicationController
 
   def ado_add_antenna_item
     unless login_user_antenna?(params[:antenna_id])
-      render :text => _('Selected antenna invalid.'), :status => :bad_request and return
+      render :text => _('Selected subscription invalid.'), :status => :bad_request and return
     end
     unless item = Symbol.get_item_by_symbol(params[:symbol])
       render :text => _('Specified owner inexistent.'), :status => :bad_request and return

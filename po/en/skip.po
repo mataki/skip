@@ -341,8 +341,8 @@ msgid "... What if including limited entries ..."
 msgstr ""
 
 #: app/views/statistics/index.html.erb:26
-msgid "... and BBS posts ..."
-msgstr "... and forum posts ..."
+msgid "... and forum posts ..."
+msgstr ""
 
 #: app/controllers/admin/application_controller.rb:40
 msgid "0 file size detected."
@@ -489,7 +489,7 @@ msgid "Add"
 msgstr ""
 
 #: app/views/mypage/_manage_antenna.html.erb:29
-msgid "Add Antenna"
+msgid "Add Subscription"
 msgstr ""
 
 #: app/views/user/_action_box.html.erb:12
@@ -505,7 +505,7 @@ msgid "Add a comment!"
 msgstr ""
 
 #: app/views/user/_action_box.html.erb:9
-msgid "Add an antenna"
+msgid "Notify new posts"
 msgstr ""
 
 #: app/views/bookmark/new_url.html.erb:20
@@ -518,18 +518,16 @@ msgid "Add as Member"
 msgstr ""
 
 #: app/controllers/group_controller.rb:331
-msgid "Added %s as a member and created a BBS for messaging."
-msgstr "Added %s as a member and created a forum for messaging."
+msgid "Added %s as a member and created a forum for messaging."
+msgstr ""
 
 #: app/controllers/group_controller.rb:340
 msgid ""
-"Added members of %s as members of the group and created a BBS for messaging."
+"Added members of %s as members of the group and created a forum for messaging."
 msgstr ""
-"Added members of %s as members of the group and created a forum for "
-"messaging."
 
 #: app/views/antenna/_select_antenna.html.erb:2
-msgid "Adding to antenna"
+msgid "Adding subscription"
 msgstr ""
 
 #: app/helpers/group_helper.rb:42
@@ -629,8 +627,8 @@ msgstr "About this site"
 #: app/controllers/admin/documents_controller.rb:21
 msgid "Admin::DocumentsController|about_this_site_description"
 msgstr ""
-"Write about the purpose and outline of the site. It is linked from the "
-"footer by default."
+"This is the page that users see when the login to SKIP for the first time.<br />"
+"Write about the purpose and outline of the site and important rules of using SKIP.<br />Also write about the security policy and how to make use of the site in terms of businiess.<br />It is linked from the footer in the system."
 
 #: app/controllers/admin/documents_controller.rb:22
 msgid "Admin::DocumentsController|rules"
@@ -639,7 +637,7 @@ msgstr "Terms of Use"
 #: app/controllers/admin/documents_controller.rb:23
 msgid "Admin::DocumentsController|rules_description"
 msgstr ""
-"Write the terms of use here. It is shown right after the first login and "
+"Write the terms of use here to make sure everyone understands the rule of using SKIP. It is shown right after the first login and "
 "linked from the header by default."
 
 #: app/models/admin/group_category.rb:19
@@ -1090,11 +1088,11 @@ msgstr ""
 
 #: app/models/admin/setting.rb:62
 msgid "Admin::Setting|Enable change section"
-msgstr ""
+msgstr "Enable Changing Section by Users"
 
 #: app/models/admin/setting.rb:63
 msgid "Admin::Setting|Enable change section description"
-msgstr ""
+msgstr "Check to allow users to change their own sections. Users are not able to set their own sections by themselves when unchecked. Uncheck if you want to forcibly set user sections by administrators."
 
 #: app/models/admin/setting.rb:105
 msgid "Admin::Setting|Enable login keyphrase"
@@ -1785,21 +1783,22 @@ msgid ""
 msgstr ""
 
 #: app/views/mypage/_antenna_box.html.erb:7
-msgid "Antenna Description"
+msgid "Subscription Description"
 msgstr ""
+"Subscription is a handy function that determins which entries you have already read and which you haven't.<br/>It will automatically collect new postings and shows a number of new posts in the parenthesis follow ing the name of subscription.<br/>&quot;Trace Comment&quot; notifies you when there are new comments made on comments you made before.<br/>See online help for more details."
 
 #: app/views/mypage/_manage_antenna.html.erb:59
-msgid "Antenna name accepts 10 or less characters only."
+msgid "Subscription name accepts 10 or less characters only."
 msgstr ""
 
 #: app/controllers/antenna_controller.rb:56
 #: app/views/mypage/_manage_antenna.html.erb:55
-msgid "Antenna name is mandatory."
+msgid "Subscription name is mandatory."
 msgstr ""
 
 #: app/models/antenna_item.rb:-
 msgid "AntennaItem|Antenna"
-msgstr ""
+msgstr "Subscription"
 
 #: app/models/antenna_item.rb:-
 msgid "AntennaItem|Value"
@@ -1810,7 +1809,7 @@ msgid "AntennaItem|Value type"
 msgstr ""
 
 #: app/views/mypage/_antenna_box.html.erb:9
-msgid "Antennas"
+msgid "Subscriptions"
 msgstr ""
 
 #: app/models/antenna.rb:-
@@ -1945,16 +1944,16 @@ msgid "Average access during the recent month"
 msgstr ""
 
 #: app/helpers/group_helper.rb:40
-msgid "BBS"
-msgstr "Forums"
+msgid "Forums"
+msgstr ""
 
 #: app/views/search/entry_search.html.erb:8
-msgid "BBS entries of the group"
-msgstr "Forum entries of the group"
+msgid "Forum entries of the group"
+msgstr ""
 
 #: app/helpers/board_entries_helper.rb:52
-msgid "BBS of %s"
-msgstr "Forums of %s"
+msgid "Forums of %s"
+msgstr ""
 
 #: app/views/bookmark/new.html.erb:68
 msgid "Back"
@@ -1985,8 +1984,8 @@ msgid "Blog"
 msgstr ""
 
 #: app/helpers/rankings_helper.rb:43
-msgid "Blog / BBS entries got most %s from others (public entries only)"
-msgstr "Blog / forum entries got most %s from others (public entries only)"
+msgid "Blog / forum entries got most %s from others (public entries only)"
+msgstr ""
 
 #: app/helpers/rankings_helper.rb:66
 msgid "Blog Entry Count"
@@ -2001,8 +2000,8 @@ msgid "Blogs"
 msgstr ""
 
 #: app/controllers/services_controller.rb:43
-msgid "Blogs / BBSs"
-msgstr "Blogs / Forums"
+msgid "Blogs / Forums"
+msgstr ""
 
 #: app/views/admin/_data_menu_box.html.erb:9
 msgid "Board Entries"
@@ -2062,34 +2061,37 @@ msgstr ""
 
 #: app/models/board_entry.rb:- app/views/entries/_aim_type_box.html.erb:6
 msgid "BoardEntry|Aim type"
-msgstr ""
+msgstr "Purpose"
 
 #: app/models/board_entry.rb:141
 msgid "BoardEntry|Aim type|Desc|entry"
-msgstr ""
+msgstr "Entries (Shown in "Recent Entries" in My Page)"
 
 #: app/models/board_entry.rb:143
 msgid "BoardEntry|Aim type|Desc|notice"
-msgstr ""
+msgstr "Notices (Shown in "Notices for you" in My Page)"
 
 #: app/models/board_entry.rb:142
 msgid "BoardEntry|Aim type|Desc|question"
-msgstr ""
+msgstr "Questions (Shown in "Recent Questions" in My Page)"
 
 #: app/models/board_entry.rb:138 app/views/entries/_aim_type_box.html.erb:9
 #: app/views/search/entry_search.html.erb:15
 msgid "BoardEntry|Aim type|entry"
-msgstr ""
+msgstr[0] "Entry"
+msgstr[1] "Entries"
 
 #: app/models/board_entry.rb:140 app/views/entries/_aim_type_box.html.erb:11
 #: app/views/search/entry_search.html.erb:17
 msgid "BoardEntry|Aim type|notice"
-msgstr ""
+msgstr[0] "Notice"
+msgstr[1] "Notices"
 
 #: app/models/board_entry.rb:139 app/views/entries/_aim_type_box.html.erb:10
 #: app/views/search/entry_search.html.erb:16
 msgid "BoardEntry|Aim type|question"
-msgstr ""
+msgstr[0] "Question"
+msgstr[1] "Questions"
 
 #: app/models/board_entry.rb:-
 msgid "BoardEntry|Board entry comments count"
@@ -2149,11 +2151,11 @@ msgstr ""
 
 #: app/models/board_entry.rb:145
 msgid "BoardEntry|Open|false"
-msgstr ""
+msgstr "Closed"
 
 #: app/models/board_entry.rb:144
 msgid "BoardEntry|Open|true"
-msgstr ""
+msgstr "Open"
 
 #: app/models/board_entry.rb:-
 msgid "BoardEntry|Publication symbols value"
@@ -2192,8 +2194,8 @@ msgid "Bookmark Comment"
 msgstr ""
 
 #: app/views/mypage/_action_box.html.erb:9
-msgid "Bookmark URL"
-msgstr ""
+msgid "Bookmark a URL"
+msgstr "
 
 #: app/views/entries/_entry_detail.html.erb:236
 #: app/views/bookmark/new.html.erb:2
@@ -2612,7 +2614,7 @@ msgid "Create %{name}"
 msgstr ""
 
 #: app/views/entries/_entry_detail.html.erb:326
-msgid "Create a new bbs entry inheriting the privacy setting."
+msgid "Create a new forum entry inheriting the privacy setting."
 msgstr ""
 
 #: app/controllers/groups_controller.rb:39
@@ -2631,16 +2633,14 @@ msgid ""
 msgstr ""
 
 #: app/views/antenna/_select_antenna.html.erb:40
-msgid "Create new anntenna and add: "
+msgid "Create new subscription and add: "
 msgstr ""
 
 #: app/controllers/group_controller.rb:260
 msgid ""
-"Created an entry on the BBS about the removal of user. Edit the entry when "
-"needed."
-msgstr ""
 "Created an entry on the forum about the removal of user. Edit the entry when "
 "needed."
+msgstr ""
 
 #: app/controllers/edit_controller.rb:101
 msgid "Created successfully."
@@ -2714,7 +2714,7 @@ msgid "Datetime Last Updated: "
 msgstr ""
 
 #: app/views/layouts/layout.html.erb:36
-msgid "Days since you registered"
+msgid "Days since registered"
 msgstr ""
 
 #: app/helpers/calendar_helper.rb:78
@@ -2722,7 +2722,7 @@ msgid "December"
 msgstr ""
 
 #: app/views/group/_form.html.erb:56
-msgid "Default Email Settings"
+msgid "Default Notification Method"
 msgstr ""
 
 #: app/views/group/_form.html.erb:48
@@ -2970,7 +2970,7 @@ msgid "Enter %{name} in a valid date format."
 msgstr ""
 
 #: app/views/bookmark/new_url.html.erb:3
-msgid "Enter a URL bellow and click the Next button."
+msgid "You can save an URL you are interested in with a comment to a bookmark. You can also share it with other users by publishing it. Enter a URL below and click the \"Next\" button to start with."
 msgstr ""
 
 #: app/models/user_profile_master.rb:248
@@ -3035,7 +3035,7 @@ msgid "Entries you posted to your blog and group BBSs."
 msgstr "Entries you posted to your blog and group forums."
 
 #: app/controllers/board_entries_controller.rb:169
-msgid "Entry was successfully %{operation}."
+msgid "Entry was successfully set to %{operation}."
 msgstr ""
 
 #: app/controllers/mypage_controller.rb:187
@@ -3096,7 +3096,7 @@ msgstr ""
 
 #: app/models/entry_publication.rb:-
 msgid "EntryPublication|Board entry"
-msgstr ""
+msgstr "Blog / Forum"
 
 #: app/models/entry_publication.rb:-
 msgid "EntryPublication|Symbol"
@@ -3104,7 +3104,7 @@ msgstr ""
 
 #: app/models/entry_tag.rb:-
 msgid "EntryTag|Board entry"
-msgstr ""
+msgstr "Blog / Forum"
 
 #: app/models/entry_tag.rb:-
 msgid "EntryTag|Created on"
@@ -3116,7 +3116,7 @@ msgstr ""
 
 #: app/models/entry_trackback.rb:-
 msgid "EntryTrackback|Board entry"
-msgstr ""
+msgstr "Blog / Forum"
 
 #: app/models/entry_trackback.rb:-
 msgid "EntryTrackback|Tb entry"
@@ -3180,7 +3180,7 @@ msgid "Failed to save the image. Try again or contact administrator."
 msgstr ""
 
 #: app/controllers/board_entries_controller.rb:171
-msgid "Failed to update state."
+msgid "Failed to update status."
 msgstr ""
 
 #: app/controllers/share_file_controller.rb:84
@@ -3588,7 +3588,7 @@ msgid "Human Resources"
 msgstr ""
 
 #: app/views/entries/_entry_detail.html.erb:204
-msgid "If you finished, this question is hide from mypage of all users."
+msgid "This question will be hidden from all users' My Page after you set it to \"Closed\"."
 msgstr ""
 
 #: app/views/board_entries/_form.html.erb:152
@@ -4047,7 +4047,7 @@ msgid ""
 msgstr ""
 
 #: app/views/admin/users/index.html.erb:1
-msgid "Makes of the new users and edit or confirm of the users profile."
+msgid "You can create new user and edit / view existing user profiles."
 msgstr ""
 
 #: lib/skip_default_data.rb:45
@@ -4104,7 +4104,7 @@ msgstr ""
 #: app/controllers/mypage_controller.rb:627
 #: app/controllers/mypage_controller.rb:860
 #: app/controllers/feed_controller.rb:82 app/models/antenna.rb:92
-msgid "Messages for you"
+msgid "Notices for you"
 msgstr ""
 
 #: app/models/message.rb:-
@@ -4158,8 +4158,8 @@ msgid ""
 msgstr ""
 
 #: app/helpers/rankings_helper.rb:39
-msgid "Most read blog / BBS entries (public entries only)"
-msgstr "Most read blog / forum entries (public entries only)"
+msgid "Most read blog / forum entries (public entries only)"
+msgstr ""
 
 #: app/helpers/application_helper.rb:320
 msgid "Move to groups joined ..."
@@ -4242,7 +4242,7 @@ msgid "New Bookmark"
 msgstr ""
 
 #: app/models/message.rb:23
-msgid "New Changeing state of Question"
+msgid "New Change of Question Status"
 msgstr ""
 
 #: app/models/message.rb:19
@@ -4258,7 +4258,7 @@ msgid "New Entries on Top"
 msgstr ""
 
 #: app/models/message.rb:21
-msgid "New Entry"
+msgid "New Trackback"
 msgstr ""
 
 #: app/models/message.rb:20
@@ -4469,7 +4469,7 @@ msgstr ""
 
 #: app/views/mypage/_publicated_entries_tabs.html.erb:6
 #: app/views/mypage/_publicated_entries_tabs.html.erb:8
-msgid "Only %s"
+msgid "%s Only"
 msgstr ""
 
 #: app/views/entries/_entry_detail.html.erb:686
@@ -4877,7 +4877,8 @@ msgid "Public"
 msgstr ""
 
 #: app/views/mypage/_publicated_entries_tabs.html.erb:1
-msgid "Publicated Entries"
+#: app/views/group/show.html.erb:99
+msgid "Recent Entries"
 msgstr ""
 
 #: app/models/admin/share_file.rb:34
@@ -4978,11 +4979,7 @@ msgid "Reading"
 msgstr ""
 
 #: app/controllers/feed_controller.rb:37
-msgid "Recent BBS posts (%{category)"
-msgstr "Recent forum posts (%{category)"
-
-#: app/views/group/show.html.erb:99
-msgid "Recent Entries"
+msgid "Recent forum posts (%{category)"
 msgstr ""
 
 #: app/views/mypage/index.html.erb:149
@@ -5266,11 +5263,11 @@ msgid "Select a page to edit from the menu on left."
 msgstr ""
 
 #: app/views/antenna/_select_antenna.html.erb:7
-msgid "Select the antenna to add."
+msgid "Select the subscription to add."
 msgstr ""
 
 #: app/controllers/antenna_controller.rb:70
-msgid "Selected antenna invalid."
+msgid "Selected subscription invalid."
 msgstr ""
 
 #: app/controllers/mypage_controller.rb:110
@@ -5714,7 +5711,7 @@ msgid "Succeeded"
 msgstr ""
 
 #: app/views/antenna/_selected_antenna.html.erb:1
-msgid "Successfully added to antenna."
+msgid "Successfully added subscription."
 msgstr ""
 
 #: app/controllers/admin/users_controller.rb:150
@@ -5884,20 +5881,26 @@ msgid "The search targets are titles and comments"
 msgstr ""
 
 #: app/views/admin/settings/_main.html.erb:1
-msgid "The setting change of the general system are possible."
+msgid ""
+"Here you can set wordings and basic behaivior of SKIP.<br />Contact email address is where you accept user reports<br />so enter a email address that reaches system administrators (e.g. mailing list).<br />Modify other settings as necessary.<br />"
 msgstr ""
 
 #: app/views/admin/images/index.html.erb:1
-msgid "The setting change of the icons and the login images are possible."
+msgid "Here you can set the favicon and background image of the login screen.<br />Modify as necessary."
 msgstr ""
 
 #: app/views/admin/settings/_feed.html.erb:1
-msgid "The setting change of the rss feeds are possible."
+msgid ""
+"Here you can set RSS feeds to be shown on the right of My Page.<br />Set this when you wish to have new entries or news from specific sites shown on SKIP My Page."
 msgstr ""
 
 #: app/views/admin/settings/_security.html.erb:1
-msgid "The setting change of the securities are possible."
+msgid ""
+"Here you can set security options to make using SKIP safer.<br />They are set to recommended settings by default.<br />It may compromise the security level of SKIP if you moderate from default settings."
 msgstr ""
+"SKIPを安全にご利用いただくためのセキュリティに関する設定です。<br />初期状態"
+"では、推奨値が設定されています。<br />初期状態よりも緩和した設定にした場合、"
+"SKIPのセキュリティ強度が低下する可能性があります。"
 
 #: app/controllers/mypage_controller.rb:406
 msgid ""
@@ -5972,7 +5975,7 @@ msgid "This user has already left."
 msgstr ""
 
 #: app/views/antenna/_select_antenna.html.erb:30
-msgid "This user has been added into antennas below: "
+msgid "This user has been added into subscriptioins below: "
 msgstr ""
 
 #: app/views/admin/settings/_security.html.erb:18
@@ -6502,7 +6505,7 @@ msgstr ""
 
 #: app/models/user_reading.rb:-
 msgid "UserReading|Board entry"
-msgstr ""
+msgstr "Blog / Forum"
 
 #: app/models/user_reading.rb:-
 msgid "UserReading|Checked on"
@@ -6575,11 +6578,9 @@ msgstr ""
 
 #: app/views/statistics/index.html.erb:24
 msgid ""
-"Users who ever posted blog entries.<br/>&nbsp;(Excluding BBS posts and auto-"
+"Users who ever posted blog entries.<br/>&nbsp;(Excluding forum posts and auto-"
 "genarated messages. Public entries only)"
 msgstr ""
-"Users who ever posted blog entries.<br/>&nbsp;(Excluding forum posts and "
-"auto-genarated messages. Public entries only)"
 
 #: app/views/statistics/index.html.erb:28
 msgid "Users who have changed thier profile pitures"
@@ -6590,7 +6591,7 @@ msgid "Users wrote their comments"
 msgstr ""
 
 #: app/views/search/entry_search.html.erb:7
-msgid "Users' Diaries"
+msgid "Users' Blogs"
 msgstr ""
 
 #: app/models/user.rb:-
@@ -6780,11 +6781,11 @@ msgid "Welcome to [%s]!"
 msgstr ""
 
 #: app/views/shared/_header.html.erb:13
-msgid "What New"
+msgid "What's New"
 msgstr ""
 
 #: app/views/mypage/_antenna_box.html.erb:7
-msgid "What is Antenna"
+msgid "What is Subscription"
 msgstr ""
 
 #: app/views/share_file/_form.html.erb:24
@@ -6885,7 +6886,7 @@ msgid "You can access this site from %s next time."
 msgstr ""
 
 #: app/views/antenna/_select_antenna.html.erb:6
-msgid "You can add this blog into your antenna."
+msgid "You can add this blog into your subscription."
 msgstr ""
 
 #: app/views/bookmark/new.html.erb:3
@@ -6904,12 +6905,18 @@ msgstr ""
 
 #: app/views/mypage/_manage_antenna.html.erb:19
 msgid ""
-"You can manage antennas for the blogs you follow etc.<br/>\n"
-"You can edit the name of the antenna by clicking on it.<br/>\n"
-"The list of antennas%{transmit} can be reordered by drag &amp; drop.<br/>\n"
+"You can manage subscriptions / notifications for the blogs you follow etc.\n"
+"You can edit the name of the subscription by clicking on it.<br/>\n"
+"The list of subscriptions%{transmit} can be reordered by drag &amp; drop.<br/>\n"
 "You can also move the items between antennas it by dragging the %"
 "{report_user} in the condition area."
 msgstr ""
+"ここでは注目するブログなどの新着通知を整備することが可能です。<br/>\n"
+"新着通知の名称は、クリックすると編集することが可能です。<br/>\n"
+"新着通知の一覧%{transmit}は、上下にドラッグ＆ドロップすることで並び替えをする"
+"ことができます。<br/>\n"
+"また、条件部分の%{report_user}を掴んで、新着通知にドロップすれば、移動させる"
+"こともできます。</p>"
 
 #: app/views/mypage/_manage_message.html.erb:7
 msgid ""
@@ -6989,7 +6996,7 @@ msgid "Your OpenID:"
 msgstr ""
 
 #: app/views/antenna/_select_antenna.html.erb:17
-msgid "Your antennas: "
+msgid "Your subscriptions: "
 msgstr ""
 
 #: app/views/mypage/welcome.html.erb:32
@@ -7102,11 +7109,11 @@ msgid "[Close]"
 msgstr ""
 
 #: app/views/entries/_entry_detail.html.erb:326
-msgid "[Compose a new bbs with this as topic]"
+msgid "[Write a new forum entry with this as topic]"
 msgstr ""
 
 #: app/views/entries/_entry_detail.html.erb:328
-msgid "[Compose a new blog with this as topic]"
+msgid "[Write a new blog entry with this as topic]"
 msgstr ""
 
 #: app/views/admin/settings/_feed.html.erb:9
@@ -7147,7 +7154,7 @@ msgid "[Help]"
 msgstr ""
 
 #: app/views/mypage/entries_by_antenna.html.erb:32
-msgid "[Hide antenna links]"
+msgid "[Hide subscription links]"
 msgstr ""
 
 #: app/views/mypage/entries_by_antenna.html.erb:37
@@ -7167,7 +7174,7 @@ msgid "[Link does not exist...%s>]"
 msgstr ""
 
 #: app/views/mypage/_antenna_box.html.erb:23
-msgid "[Manage antennas]"
+msgid "[Manage subscriptions]"
 msgstr ""
 
 #: app/views/mypage/welcome.html.erb:34
@@ -7276,7 +7283,7 @@ msgid "[Set entries in the page as unread]"
 msgstr ""
 
 #: app/views/mypage/entries_by_antenna.html.erb:31
-msgid "[Show antenna links]"
+msgid "[Show subscription links]"
 msgstr ""
 
 #: app/views/mypage/entries_by_antenna.html.erb:39
@@ -7408,11 +7415,11 @@ msgid "all"
 msgstr ""
 
 #: app/models/antenna.rb:-
-msgid "antenna"
+msgid "subscription"
 msgstr ""
 
 #: app/models/antenna_item.rb:-
-msgid "antenna item"
+msgid "subscription item"
 msgstr ""
 
 #: app/models/applied_email.rb:-
@@ -7427,17 +7434,17 @@ msgstr ""
 #: app/controllers/board_entries_controller.rb:74
 #: app/controllers/board_entries_controller.rb:94 app/models/board_entry.rb:-
 msgid "board entry"
-msgstr ""
+msgstr "blog / forum"
 
 #: app/controllers/board_entries_controller.rb:136
 #: app/models/board_entry_comment.rb:-
 #: app/views/admin/board_entries/show.html.erb:43
 msgid "board entry comment"
-msgstr ""
+msgstr "blog / forum comment"
 
 #: app/models/board_entry_point.rb:-
 msgid "board entry point"
-msgstr ""
+msgstr "point"
 
 #: app/models/bookmark.rb:-
 msgid "bookmark"
@@ -7546,7 +7553,7 @@ msgid "message"
 msgstr ""
 
 #: app/views/shared/_header.html.erb:21
-msgid "more"
+msgid "Links"
 msgstr ""
 
 #: app/controllers/edit_controller.rb:318

@@ -89,7 +89,7 @@ class Antenna < ActiveRecord::Base
   def self.get_system_antennas user
     antennas = []
 
-    antenna_message = Antenna.new(:name => _("Messages for you"), :user_id => user.id)
+    antenna_message = Antenna.new(:name => _("Notices for you"), :user_id => user.id)
     antenna_message.antenna_type = "message"
     antenna_message.count = BoardEntry.accessible(user).notice.unread(user).count
     antennas << antenna_message

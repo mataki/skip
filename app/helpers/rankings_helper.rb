@@ -36,11 +36,11 @@ module RankingsHelper
   def ranking_caption contents_type
     case contents_type
     when :entry_access
-      _("Most read blog / BBS entries (public entries only)")
+      _("Most read blog / forum entries (public entries only)")
     when :entry_comment
       _("Entries most commented (public entries only)")
     when :entry_he
-      _("Blog / BBS entries got most %s from others (public entries only)") % h(_(Admin::Setting.point_button))
+      _("Blog / forum entries got most %s from others (public entries only)") % h(_(Admin::Setting.point_button))
     when :user_access
       _("Users got most access to his / her entries and profile.")
     when :user_entry

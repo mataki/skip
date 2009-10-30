@@ -4,9 +4,9 @@
   my_antennas = Antenna.find_with_counts(current_user)
 -%>
 <div class="box_space antenna" style="position: relative;">
-  <div style="position: absolute; top: 4px; right: 4px;"><%= icon_tag 'help', :title => _('What is Antenna') + "|" + _('Antenna Description') %></div>
+  <div style="position: absolute; top: 4px; right: 4px;"><%= icon_tag 'help', :title => _('What is Subscription') + "|" + _('Subscription Description') %></div>
   <div class="box_space_title">
-    <%= icon_tag 'transmit' %><%= link_to(_("Antennas"), :action => 'entries_by_antenna') %>
+    <%= icon_tag 'transmit' %><%= link_to(_("Subscription"), :action => 'entries_by_antenna') %>
   </div>
   <div class="box_space_body">
     <ul id="antennas_list">
@@ -20,5 +20,5 @@
       <% end -%>
     </ul>
   </div>
-  <div class="box_space_bottom"><%= link_to _('[Manage antennas]'), :action => 'manage', :menu => 'manage_antenna' %></div>
+  <div class="box_space_bottom"><%= link_to _('[Manage subscriptions]'), :action => 'manage', :menu => 'manage_antenna' %></div>
 </div>

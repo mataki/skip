@@ -257,7 +257,7 @@ class GroupController < ApplicationController
     entry_params[:publication_symbols] << user.symbol
     entry = BoardEntry.create_entry(entry_params)
 
-    flash[:notice] = _("Created an entry on the BBS about the removal of user. Edit the entry when needed.")
+    flash[:notice] = _("Created an entry on the forum about the removal of user. Edit the entry when needed.")
     redirect_to :action => 'bbs', :entry_id => entry.id
   end
 
@@ -328,7 +328,7 @@ class GroupController < ApplicationController
       else
         @group.group_participations.build(:user_id => user.id, :owned => false)
         @group.save
-        flash[:notice] = _("Added %s as a member and created a BBS for messaging.") % user.name
+        flash[:notice] = _("Added %s as a member and created a forum for messaging.") % user.name
       end
     when (symbol_type == 'gid' and group = Group.active.find_by_gid(symbol_id, :include => :group_participations))
       group.group_participations.each do |participation|
@@ -337,7 +337,7 @@ class GroupController < ApplicationController
         end
       end
       @group.save
-      flash[:notice] = _("Added members of %s as members of the group and created a BBS for messaging.") % group.name
+      flash[:notice] = _("Added members of %s as members of the group and created a forum for messaging.") % group.name
     else
       flash[:warn] = _("Users / groups selection invalid.")
     end
