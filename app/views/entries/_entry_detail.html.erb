@@ -208,7 +208,7 @@
           <% form_tag({:controller => 'board_entries', :action => 'toggle_hide'}) do -%>
             <%= hidden_field_tag :id, entry.id %>
             <span class="iphone_style_checkbox"><%= check_box_tag 'toggle_hide', 'hide', !entry.hide %></span>
-            <!-- <b class="caution"><%= h_("This question will be hidden from all users' My Page after you set it to \"Closed\".") %></b> -->
+            <!-- <b class="caution"><%= h _("This question will be hidden from all users' My Page after you set it to \"Closed\".") %></b> -->
           <% end -%>
         </div>
         <div id="hide_message">
