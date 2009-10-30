@@ -3,9 +3,9 @@
   <ul>
     <li style="width: 50px; border: none;">&nbsp;</li>
     <li><a href="#<%= @timelines[:id_name] %>" class="large"><span><%=h @timelines[:title_name] %></span></a></li>
-    <li><a href="#<%= @recent_blogs[:id_name] %>" class="small"><span><%= h _('Only %s') % h(@recent_blogs[:title_name]) %></span></a></li>
+    <li><a href="#<%= @recent_blogs[:id_name] %>" class="small"><span><%= h _('%s Only') % h(@recent_blogs[:title_name]) %></span></a></li>
     <% @recent_bbs.each do |bbs| -%>
-      <li><a href="#<%= bbs[:id_name] %>" class="small"><span><%= h _('Only %s') % h(bbs[:title_name]) %></span></a></li>
+      <li><a href="#<%= bbs[:id_name] %>" class="small"><span><%= h _('%s Only') % h(bbs[:title_name]) %></span></a></li>
     <% end -%>
   </ul>
   <div id="<%= @timelines[:id_name] %>">
