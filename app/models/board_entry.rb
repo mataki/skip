@@ -135,9 +135,9 @@ class BoardEntry < ActiveRecord::Base
 
   N_('BoardEntry|Entry type|DIARY')
   N_('BoardEntry|Entry type|GROUP_BBS')
-  sn_('BoardEntry|Aim type|entry', 'entries', 1)
-  sn_('BoardEntry|Aim type|question', 'question', 1)
-  sn_('BoardEntry|Aim type|notice', 'notice', 1)
+  ns_('BoardEntry|Aim type|entry', 'entries', 1)
+  ns_('BoardEntry|Aim type|questions', 'questions', 1)
+  ns_('BoardEntry|Aim type|notices', 'notices', 1)
   N_('BoardEntry|Aim type|Desc|entry')
   N_('BoardEntry|Aim type|Desc|question')
   N_('BoardEntry|Aim type|Desc|notice')
