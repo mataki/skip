@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-10-28 17:59+0900\n"
+"POT-Creation-Date: 2009-11-01 14:40+0900\n"
 "PO-Revision-Date: 2009-10-23 17:37+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1953,7 +1953,7 @@ msgstr "利用者全体にメールが送信されますが、宜しいですか
 #: app/views/admin/user_profile_master_categories/index.html.erb:18
 #: app/views/admin/users/change_uid.html.erb:29
 #: app/views/admin/users/create_uid.html.erb:25
-#: app/views/admin/users/index.html.erb:53
+#: app/views/admin/users/index.html.erb:53 app/views/wiki/show.html.erb:38
 msgid "Are you sure?"
 msgstr "本当に宜しいですか？"
 
@@ -2640,8 +2640,9 @@ msgstr ""
 #: app/views/admin/users/create_uid.html.erb:16
 #: app/views/admin/users/first.html.erb:31
 #: app/views/admin/users/new.html.erb:12 app/views/edit/index.html.erb:6
-#: app/views/groups/new.html.erb:4
+#: app/views/groups/new.html.erb:4 app/views/histories/new.html.erb:17
 #: app/views/portal/account_registration.html.erb:30
+#: app/views/wiki/show.html.erb:12
 msgid "Create"
 msgstr "作成"
 
@@ -2701,6 +2702,7 @@ msgstr "正しく作成されました。"
 #: app/views/admin/users/create_uid.html.erb:26
 #: app/views/admin/users/first.html.erb:31
 #: app/views/admin/users/new.html.erb:12 app/views/groups/new.html.erb:4
+#: app/views/histories/new.html.erb:17 app/views/wiki/show.html.erb:12
 msgid "Creating..."
 msgstr "作成しています…"
 
@@ -3657,6 +3659,10 @@ msgstr "この画面では、管理者の権限設定、強制退会が可能で
 msgid "Hide Time"
 msgstr "時刻は表示しない"
 
+#: app/views/histories/new.html.erb:62
+msgid "Hide preview"
+msgstr ""
+
 #: app/views/entries/_entry_detail.html.erb:305
 msgid "Hide this entry"
 msgstr "終了する"
@@ -3665,7 +3671,8 @@ msgstr "終了する"
 msgid "Hiki Notation"
 msgstr "Hiki記法"
 
-#: app/helpers/wiki_helper.rb:5
+#: app/helpers/wiki_helper.rb:5 app/views/histories/new.html.erb:51
+#: app/views/histories/new.html.erb:65
 msgid "History"
 msgstr "履歴"
 
@@ -4028,6 +4035,11 @@ msgstr "行"
 msgid "Linguistics"
 msgstr "語学"
 
+#: app/views/histories/_link_palette.html.erb:2
+#: app/views/histories/new.html.erb:49 app/views/histories/new.html.erb:64
+msgid "Link Palette"
+msgstr "[画像やリンクを挿入]"
+
 #: app/views/entries/_user_archive_box.html.erb:7
 msgid "List of Authors"
 msgstr "投稿者の一覧"
@@ -4269,6 +4281,10 @@ msgstr "ユーザ"
 #: app/views/edit/edit.html.erb:12
 msgid "Minor update"
 msgstr "ちょっとした更新"
+
+#: app/views/histories/new.html.erb:73
+msgid "Modified, not need to save."
+msgstr "未保存の編集があります。更新ボタンをおして保存してください。"
 
 #: app/views/mypage/welcome.html.erb:34
 msgid "Modify the registered profile from here ... "
@@ -5631,6 +5647,10 @@ msgstr "並べて表示"
 msgid "Show groups you have not joined only."
 msgstr "まだ参加していないグループのみ表示"
 
+#: app/views/histories/new.html.erb:63
+msgid "Show preview"
+msgstr ""
+
 #: app/views/mypage/_manage_customize.html.erb:42
 msgid "Show tabs"
 msgstr "タブで表示"
@@ -6191,8 +6211,9 @@ msgstr "RSSのロード時にタイムアウトしました。"
 
 #: app/views/board_entries/_form.html.erb:45
 #: app/views/bookmark/new.html.erb:27 app/views/bookmarks/index.html.erb:5
+#: app/views/histories/new.html.erb:14
 #: app/views/mypage/_record_post.html.erb:45
-#: app/views/rankings/data.html.erb:10
+#: app/views/rankings/data.html.erb:10 app/views/wiki/show.html.erb:9
 msgid "Title"
 msgstr "タイトル"
 
@@ -6354,6 +6375,10 @@ msgstr "スターをはずす"
 #: app/views/group/_manage_info.html.erb:19
 msgid "Update"
 msgstr "更新"
+
+#: app/views/histories/new.html.erb:74
+msgid "Update %{entity}"
+msgstr "%{entity}を更新"
 
 #: app/views/admin/users/import.html.erb:18
 msgid "Update attributes below:"
@@ -7597,6 +7622,14 @@ msgstr "[未読]"
 msgid "[[Delete]]"
 msgstr "[[削除]]"
 
+#: app/views/wiki/show.html.erb:38
+msgid "[削除する]"
+msgstr ""
+
+#: app/views/wiki/show.html.erb:37
+msgid "[編集する]"
+msgstr ""
+
 #: app/views/entries/_entry_detail.html.erb:230
 msgid "]"
 msgstr ""
@@ -7643,6 +7676,10 @@ msgstr ""
 msgid ""
 "activation_code has not been issued. Refer to --help and specify --code."
 msgstr "activation_codeが未発行です。--helpを参照の上、codeを指定して下さい。"
+
+#: app/views/histories/new.html.erb:8
+msgid "add page"
+msgstr "ページを追加する"
 
 #: app/views/admin/users/index.html.erb:37
 msgid "admin"
@@ -7708,6 +7745,10 @@ msgstr "認証をキャンセルする"
 msgid "chain"
 msgstr ""
 
+#: app/views/histories/_link_palette.html.erb:3
+msgid "close"
+msgstr ""
+
 #: app/models/content.rb:-
 msgid "content"
 msgstr ""
@@ -7720,6 +7761,10 @@ msgstr "説明"
 #: app/models/user_profile_master.rb:84
 msgid "does not exist in profile categories."
 msgstr "プロフィールカテゴリに存在しない値です。"
+
+#: app/views/histories/new.html.erb:42
+msgid "edit content"
+msgstr "ページの編集"
 
 #: app/models/email.rb:-
 msgid "email"
@@ -7863,9 +7908,13 @@ msgstr "管理者"
 msgid "owner_symbol"
 msgstr ""
 
-#: app/models/page.rb:-
+#: app/models/page.rb:- app/views/histories/new.html.erb:74
 msgid "page"
-msgstr ""
+msgstr "ページ"
+
+#: app/views/histories/new.html.erb:23
+msgid "parent page"
+msgstr "リンク元ページ"
 
 #: app/controllers/admin/pictures_controller.rb:26
 #: app/controllers/admin/pictures_controller.rb:37
@@ -7895,6 +7944,10 @@ msgstr "似顔絵作成"
 #: app/models/ranking.rb:-
 msgid "ranking"
 msgstr "ランキング"
+
+#: app/views/histories/new.html.erb:29
+msgid "relational pages"
+msgstr "関連ページ"
 
 #: app/views/admin/user_profile_masters/index.html.erb:17
 #: app/views/portal/_profile_form.html.erb:14
@@ -7945,6 +7998,10 @@ msgstr ""
 #: app/models/share_file_tag.rb:-
 msgid "share file tag"
 msgstr ""
+
+#: app/views/histories/new.html.erb:75
+msgid "show page"
+msgstr "ページを表示"
 
 #: app/models/site_count.rb:-
 msgid "site count"
@@ -8076,6 +8133,18 @@ msgstr ""
 "|チェックするとその属性を更新することができます。CSVの例を参考にCSVファイルを"
 "作成してください。<br/>新規登録のユーザは、名前・パスワード・メールアドレスは"
 "必須になります。"
+
+#: app/views/wiki/show.html.erb:3
+msgid "ページを追加する"
+msgstr ""
+
+#: app/views/wiki/show.html.erb:18
+msgid "リンク元ページ"
+msgstr ""
+
+#: app/views/wiki/show.html.erb:24
+msgid "関連ページ"
+msgstr ""
 
 #~ msgid "%Y/%m/%d"
 #~ msgstr "%Y/%m/%d"

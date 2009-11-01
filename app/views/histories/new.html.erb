@@ -1,0 +1,79 @@
+<% content_for :header do %>
+  <%= javascript_include_tag 'linkPalette' %>
+  <%= javascript_include_tag 'skipembedded/ckeditor/ckeditor.js' %>
+<% end -%>
+
+<% content_for :contents_left do %>
+  <div class="box_space">
+    <div class="box_space_title"><%= _('add page')%></span></div>
+    <div class="box_space_body">
+      <div class="input_line">
+        <% # TODO tmp_title使わなくてももっと直感的にできないか %>
+        <% tmp_title =@page.title; @page.title="" %>
+        <% form_tag({:action=>'create'}) do %>
+          <div class="input_label"><%= label :page, :title, _('Title') %></div>
+          <div class="input_value"><%= text_field 'page', 'title', :size=>15 %></div>
+          <%= hidden_field_tag :parent_id, @page.id %>
+          <%= submit_tag _('Create'), :disable_with => _('Creating...') %>
+        <% end -%>
+        <% @page.title = tmp_title %>
+      </div>
+    </div>
+    <% if !@page.root? %>
+      <div class="box_space_title"><%= _('parent page')%></span></div>
+      <div class="box_space_body">
+        <%= link_to(@page.root.title, wiki_path(@page.root.title)) %>
+      </div>
+    <% end -%>
+    <% if @page.children.size > 0 %>
+      <div class="box_space_title"><%= _('relational pages')%></span></div>
+      <div class="box_space_body">
+        <% @page.children.each do |page| %>
+          <%= link_to(page.title, wiki_path(page.title)) %><br/>
+        <% end %>
+      </div>
+    <% end -%>
+    <div class="box_space_bottom"></div>
+  </div>
+<% end -%>
+
+<% content_for :contents_right do -%>
+  <div class="current-title">
+    <span><%= _('edit content') %></span>
+    <div id="linkPalette" style="display: none;">
+      <%= render :partial => "histories/link_palette" %>
+    </div>
+    <% form_for(:history, @history, :url=>wiki_histories_path(@page.title)) do |f| %>
+      <% if @page.format_type == "html" %>
+        <div class="page-menu">
+          <span class="operation trigger" style="font-size: 12px"><%= _("Link Palette") %></span>
+          <ul class="float">
+            <li><%= link_to(_("History"), wiki_histories_path(@page.title)) %></li>
+          </ul>
+        </div>
+      <% end -%>
+
+      <div class="content">
+        <div class="preview">
+          <% if @page.format_type == "hiki" %>
+            <ul class="float">
+              <li class="hide" style="font-size:12px"><%= link_to(_("Hide preview"), '#', :class=>'operation')%></li>
+              <li class="show" style="font-size:12px"><%= link_to(_("Show preview"), '#', :class=>'operation')%></li>
+              <span class="operation trigger" style="font-size:12px"><%= _("Link Palette")%></span>
+              <span class="page-menu"><%= link_to(_("History"), wiki_histories_path(@page.title)) %></span>
+            </ul>
+          <% end -%>
+        </div>
+        <%= text_area_tag("history[content]", @page.content, :id=>"history_content", :size=>"100x20") %>
+      </div>
+
+      <div class="submit">
+        <span class="notice" style="display:none"><%= _("Modified, not need to save.")%></span>
+        <%= submit_tag(_("Update %{entity}") % {:entity => _("page")})%>
+        <%= link_to(h(_("show page")), wiki_path(@page.title), :class => "back") %>
+      </div>
+      <div class="clear"></div>
+    <% end -%>
+  </div>
+<% end -%>
+

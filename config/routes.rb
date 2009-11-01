@@ -113,9 +113,15 @@ ActionController::Routing::Routes.draw do |map|
     server.cancel 'server/cancel', :action => 'cancel'
   end
 
+  map.resources :wiki, :expect=>[:new] do |page|
+    page.resources :histories
+  end
+
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
 
   map.web_parts 'services/:action.js', :controller => 'services'
+
+
 
 end

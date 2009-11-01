@@ -18,7 +18,7 @@ module NavigationHelpers
       '/admin/'
 
     when /Wikiトップページ/
-      url_for(:controller=>'wiki', :action=>'show', :id=>'トップページ')
+      wiki_path('トップページ')
 
     when /プロフィール画像一覧/
       admin_pictures_path

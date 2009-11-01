@@ -3,25 +3,28 @@
     <div class="box_space_title"><%= _('ページを追加する')%></span></div>
     <div class="box_space_body">
       <div class="input_line">
+        <% # TODO tmp_title使わなくてももっと直感的にできないか %>
+        <% tmp_title =@page.title; @page.title="" %>
         <% form_tag({:action=>'create'}) do %>
           <div class="input_label"><%= label :page, :title, _('Title') %></div>
           <div class="input_value"><%= text_field 'page', 'title', :size=>15 %></div>
           <%= hidden_field_tag :parent_id, @page.id %>
           <%= submit_tag _('Create'), :disable_with => _('Creating...') %>
         <% end -%>
+        <% @page.title = tmp_title %>
       </div>
     </div>
     <% if !@page.root? %>
       <div class="box_space_title"><%= _('リンク元ページ')%></span></div>
       <div class="box_space_body">
-        <%= link_to(@page.root.title, {:controller=>'wiki',:action=>'show',:id=>@page.root.title}) %>
+        <%= link_to(@page.root.title, wiki_path(@page.root.title)) %>
       </div>
     <% end -%>
     <% if @page.children.size > 0 %>
       <div class="box_space_title"><%= _('関連ページ')%></span></div>
       <div class="box_space_body">
         <% @page.children.each do |page| %>
-          <%= link_to(page.title, {:controller=>'wiki',:action=>'show',:id=>page.title}) %><br/>
+          <%= link_to(page.title, wiki_path(page.title)) %><br/>
         <% end %>
       </div>
     <% end -%>
@@ -31,5 +34,6 @@
 
 <% content_for :contents_right do -%>
   <%= @page.content %>
-  <%= link_to(_('[このページを削除する]'), {:action=>:destroy}, :confirm=>_('Are you sure?'), :method => :delete) unless @page.root? %>
+  <%= link_to(_('[編集する]'), new_wiki_history_path(@page.title)) %>
+  <%= link_to(_('[削除する]'), {:action=>:destroy}, :confirm=>_('Are you sure?'), :method => :delete) unless @page.root? %>
 <% end -%>

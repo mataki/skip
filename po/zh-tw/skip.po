@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.1.0\n"
-"POT-Creation-Date: 2009-10-28 17:59+0900\n"
+"POT-Creation-Date: 2009-11-01 14:40+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1800,7 +1800,7 @@ msgstr ""
 #: app/views/admin/user_profile_master_categories/index.html.erb:18
 #: app/views/admin/users/change_uid.html.erb:29
 #: app/views/admin/users/create_uid.html.erb:25
-#: app/views/admin/users/index.html.erb:53
+#: app/views/admin/users/index.html.erb:53 app/views/wiki/show.html.erb:38
 msgid "Are you sure?"
 msgstr ""
 
@@ -2469,8 +2469,9 @@ msgstr ""
 #: app/views/admin/users/create_uid.html.erb:16
 #: app/views/admin/users/first.html.erb:31
 #: app/views/admin/users/new.html.erb:12 app/views/edit/index.html.erb:6
-#: app/views/groups/new.html.erb:4
+#: app/views/groups/new.html.erb:4 app/views/histories/new.html.erb:17
 #: app/views/portal/account_registration.html.erb:30
+#: app/views/wiki/show.html.erb:12
 msgid "Create"
 msgstr ""
 
@@ -2528,6 +2529,7 @@ msgstr ""
 #: app/views/admin/users/create_uid.html.erb:26
 #: app/views/admin/users/first.html.erb:31
 #: app/views/admin/users/new.html.erb:12 app/views/groups/new.html.erb:4
+#: app/views/histories/new.html.erb:17 app/views/wiki/show.html.erb:12
 msgid "Creating..."
 msgstr ""
 
@@ -3469,6 +3471,10 @@ msgstr ""
 msgid "Hide Time"
 msgstr ""
 
+#: app/views/histories/new.html.erb:62
+msgid "Hide preview"
+msgstr ""
+
 #: app/views/entries/_entry_detail.html.erb:305
 msgid "Hide this entry"
 msgstr ""
@@ -3477,7 +3483,8 @@ msgstr ""
 msgid "Hiki Notation"
 msgstr ""
 
-#: app/helpers/wiki_helper.rb:5
+#: app/helpers/wiki_helper.rb:5 app/views/histories/new.html.erb:51
+#: app/views/histories/new.html.erb:65
 msgid "History"
 msgstr ""
 
@@ -3825,6 +3832,11 @@ msgstr ""
 msgid "Linguistics"
 msgstr ""
 
+#: app/views/histories/_link_palette.html.erb:2
+#: app/views/histories/new.html.erb:49 app/views/histories/new.html.erb:64
+msgid "Link Palette"
+msgstr ""
+
 #: app/views/entries/_user_archive_box.html.erb:7
 msgid "List of Authors"
 msgstr ""
@@ -4059,6 +4071,10 @@ msgstr ""
 
 #: app/views/edit/edit.html.erb:12
 msgid "Minor update"
+msgstr ""
+
+#: app/views/histories/new.html.erb:73
+msgid "Modified, not need to save."
 msgstr ""
 
 #: app/views/mypage/welcome.html.erb:34
@@ -5400,6 +5416,10 @@ msgstr ""
 msgid "Show groups you have not joined only."
 msgstr ""
 
+#: app/views/histories/new.html.erb:63
+msgid "Show preview"
+msgstr ""
+
 #: app/views/mypage/_manage_customize.html.erb:42
 msgid "Show tabs"
 msgstr ""
@@ -5932,8 +5952,9 @@ msgstr ""
 
 #: app/views/board_entries/_form.html.erb:45
 #: app/views/bookmark/new.html.erb:27 app/views/bookmarks/index.html.erb:5
+#: app/views/histories/new.html.erb:14
 #: app/views/mypage/_record_post.html.erb:45
-#: app/views/rankings/data.html.erb:10
+#: app/views/rankings/data.html.erb:10 app/views/wiki/show.html.erb:9
 msgid "Title"
 msgstr ""
 
@@ -6095,6 +6116,10 @@ msgstr ""
 #: app/views/admin/users/edit.html.erb:10 app/views/edit/edit.html.erb:11
 #: app/views/group/_manage_info.html.erb:19
 msgid "Update"
+msgstr ""
+
+#: app/views/histories/new.html.erb:74
+msgid "Update %{entity}"
 msgstr ""
 
 #: app/views/admin/users/import.html.erb:18
@@ -7305,6 +7330,14 @@ msgstr ""
 msgid "[[Delete]]"
 msgstr ""
 
+#: app/views/wiki/show.html.erb:38
+msgid "[削除する]"
+msgstr ""
+
+#: app/views/wiki/show.html.erb:37
+msgid "[編集する]"
+msgstr ""
+
 #: app/views/entries/_entry_detail.html.erb:230
 msgid "]"
 msgstr ""
@@ -7344,6 +7377,10 @@ msgstr ""
 #: lib/create_new_admin_url.rb:44
 msgid ""
 "activation_code has not been issued. Refer to --help and specify --code."
+msgstr ""
+
+#: app/views/histories/new.html.erb:8
+msgid "add page"
 msgstr ""
 
 #: app/views/admin/users/index.html.erb:37
@@ -7410,6 +7447,10 @@ msgstr ""
 msgid "chain"
 msgstr ""
 
+#: app/views/histories/_link_palette.html.erb:3
+msgid "close"
+msgstr ""
+
 #: app/models/content.rb:-
 msgid "content"
 msgstr ""
@@ -7421,6 +7462,10 @@ msgstr ""
 
 #: app/models/user_profile_master.rb:84
 msgid "does not exist in profile categories."
+msgstr ""
+
+#: app/views/histories/new.html.erb:42
+msgid "edit content"
 msgstr ""
 
 #: app/models/email.rb:-
@@ -7565,8 +7610,12 @@ msgstr ""
 msgid "owner_symbol"
 msgstr ""
 
-#: app/models/page.rb:-
+#: app/models/page.rb:- app/views/histories/new.html.erb:74
 msgid "page"
+msgstr ""
+
+#: app/views/histories/new.html.erb:23
+msgid "parent page"
 msgstr ""
 
 #: app/controllers/admin/pictures_controller.rb:26
@@ -7596,6 +7645,10 @@ msgstr ""
 
 #: app/models/ranking.rb:-
 msgid "ranking"
+msgstr ""
+
+#: app/views/histories/new.html.erb:29
+msgid "relational pages"
 msgstr ""
 
 #: app/views/admin/user_profile_masters/index.html.erb:17
@@ -7646,6 +7699,10 @@ msgstr ""
 
 #: app/models/share_file_tag.rb:-
 msgid "share file tag"
+msgstr ""
+
+#: app/views/histories/new.html.erb:75
+msgid "show page"
 msgstr ""
 
 #: app/models/site_count.rb:-
@@ -7771,6 +7828,18 @@ msgid ""
 "|You can update certain attribute(s) by checking the checkboxes. See the "
 "sample to create CSV file.<br/>Name, password and email address are "
 "mandatory items for new users."
+msgstr ""
+
+#: app/views/wiki/show.html.erb:3
+msgid "ページを追加する"
+msgstr ""
+
+#: app/views/wiki/show.html.erb:18
+msgid "リンク元ページ"
+msgstr ""
+
+#: app/views/wiki/show.html.erb:24
+msgid "関連ページ"
 msgstr ""
 
 #, fuzzy
