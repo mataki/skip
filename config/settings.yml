@@ -41,6 +41,7 @@ access_record_limit:
 abbr_app_title:
   default: SKIP                                            # システムの名称
 contact_addr:
+  format: email
   default: admin@example.com
 login_account:
   default: ログインID                                      # ログインアカウントの名称

@@ -134,6 +134,8 @@ class Admin::Setting < ActiveRecord::Base
 
   validates_presence_of :value, :if => Proc.new{ |setting| setting.class.password_strength == 'custom' && setting.name == 'custom_password_strength_regex' || setting.name == 'custom_password_strength_validation_message' }
 
+  validates_format_of :value, :with => Authentication.email_regex, :if => Proc.new { |setting| @@available_settings[setting.name]['format'] == 'email' }
+
   # Hash used to cache setting values
   @cached_settings = {}
   @cached_cleared_on = Time.now
