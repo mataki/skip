@@ -5,7 +5,7 @@
 <% content_for :contents_right do -%>
 <div class="box">
   <% form_for(@picture, :url => admin_user_picture_path(@user), :html => {:multipart => true}) do |f| -%>
-    <%= render :partial => f %>
+    <%= render f %>
     <p>
       <%= f.submit _('Upload'), :disable_with => _('Now Uploading...') %>
     </p>
