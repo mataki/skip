@@ -48,7 +48,8 @@ class ShareFile < ActiveRecord::Base
       :include => [:share_file_publications] }
   }
 
-  def after_initialize
+  def initialize(attr ={})
+    super(attr)
     if self.publication_type.blank?
       self.publication_type =
         if user_owner?
