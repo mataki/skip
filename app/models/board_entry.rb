@@ -456,7 +456,7 @@ class BoardEntry < ActiveRecord::Base
       :title => params[:title],
       :contents => contents,
       :category => params[:tags],
-      :aim_type => params[:aim_type],
+      :aim_type => params[:aim_type] || 'entry',
       :date => params[:date] || Time.now,
       :user_id => params[:user_id],
       :entry_type => params[:entry_type],
