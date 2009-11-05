@@ -62,6 +62,7 @@ module Admin::AdminModule
     end
 
     def search_condition
+      return unless admin_model_class.respond_to?(:search_columns)
       columns = admin_model_class.search_columns
       columns.map{ |column| " #{column} like :lqs" }.join(' or ')
     end
@@ -77,9 +78,9 @@ module Admin::AdminModule
 
     def index
       @query = params[:query]
-      objects = admin_model_class.scoped(
-        :conditions => [search_condition, { :lqs => SkipUtil.to_lqs(@query) }]
-      ).paginate(:page => params[:page], :per_page => 100)
+      objects = admin_model_class
+      objects = objects.scoped(:conditions => [search_condition, { :lqs => SkipUtil.to_lqs(@query) }]) if search_condition
+      objects = objects.paginate(:page => params[:page], :per_page => 100)
 
       set_pluralize_instance_val objects
 

@@ -19,7 +19,8 @@ module Admin::ApplicationHelper
     output = ''
     output << '<ul>'
     output << generate_tab_link( s_('Admin::SettingsController|main'), admin_settings_path(:tab => :main), request.url == admin_settings_url(:tab => :main) || request.url == admin_root_url)
-    output << generate_tab_link( _('Data management'), admin_users_path, (!(request.url.include?(admin_settings_url) || request.url.include?(admin_documents_url) || request.url.include?(admin_images_url)) and !(request.url == admin_root_url)) )
+    output << generate_tab_link( _('Master data management'), admin_group_categories_path, master_data_management_urls.any? { |url| request.url.include? url } )
+    output << generate_tab_link( _('Data management'), admin_users_path, data_management_urls.any? { |url| request.url.include? url } )
     output << generate_tab_link( _('Admin::ImagesController'), admin_images_path, request.url.include?(admin_images_url) )
     output << generate_tab_link( _('Admin::DocumentsController'), admin_documents_path, request.url.include?(admin_documents_url) )
     output << generate_tab_link( s_('Admin::SettingsController|feed'), admin_settings_path(:tab => :feed), request.url == admin_settings_url(:tab => :feed) )
@@ -46,6 +47,24 @@ module Admin::ApplicationHelper
   def generate_tab_link(name, path, selected = false, html_options = nil)
     html_option = {:class => 'selected'} if selected
     "<li>#{link_to('<span>' + name + '</span>', path, html_option)}</li>"
+  end
+
+  def data_management_urls
+    ary = []
+    ary << admin_users_url
+    ary << admin_groups_url
+    ary << admin_board_entries_url
+    ary << admin_bookmarks_url
+    ary << admin_share_files_url
+    ary
+  end
+
+  def master_data_management_urls
+    ary = []
+    ary << admin_group_categories_url
+    ary << admin_user_profile_master_categories_url
+    ary << admin_user_profile_masters_url
+    ary
   end
 end
 
