@@ -151,7 +151,6 @@ end
 
 describe ApplicationHelper, '#link_to_bookmark_url' do
   before do
-    helper.stub!(:relative_url_root).and_return('')
     @bookmark = stub_model(Bookmark)
   end
   describe '対象のブックマークが記事の場合' do
@@ -160,6 +159,18 @@ describe ApplicationHelper, '#link_to_bookmark_url' do
     end
     it '記事へのリンクとなること' do
       helper.send(:link_to_bookmark_url, @bookmark).include?('report_link').should be_true
+      helper.send(:link_to_bookmark_url, @bookmark).should have_tag("a[href=/page/99]")
+    end
+    describe 'relative_url_rootが設定されている場合' do
+      before do
+        ActionController::Base.relative_url_root = "/skip"
+      end
+      it 'relative_urlを考慮した記事へのリンクとなること' do
+        helper.send(:link_to_bookmark_url, @bookmark).should have_tag("a[href=/skip/page/99]")
+      end
+      after do
+        ActionController::Base.relative_url_root = nil
+      end
     end
   end
   describe '対象のブックマークがユーザの場合' do
@@ -168,6 +179,18 @@ describe ApplicationHelper, '#link_to_bookmark_url' do
     end
     it 'ユーザへのリンクとなること' do
       helper.send(:link_to_bookmark_url, @bookmark).include?('user').should be_true
+      helper.send(:link_to_bookmark_url, @bookmark).should have_tag("a[href=/user/99]")
+    end
+    describe 'relative_url_rootが設定されている場合' do
+      before do
+        ActionController::Base.relative_url_root = "/skip"
+      end
+      it 'relative_urlを考慮したユーザへのリンクとなること' do
+        helper.send(:link_to_bookmark_url, @bookmark).should have_tag("a[href=/skip/user/99]")
+      end
+      after do
+        ActionController::Base.relative_url_root = nil
+      end
     end
   end
   describe '対象のブックマークがwwwの場合' do
