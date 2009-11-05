@@ -17,7 +17,7 @@ require 'jcode'
 require 'open-uri'
 require "resolv-replace"
 require 'timeout'
-require 'rss'
+require 'feed-normalizer'
 class MypageController < ApplicationController
   before_filter :setup_layout
   before_filter :load_user
@@ -212,16 +212,7 @@ class MypageController < ApplicationController
   # ajax_action
   # 右側サイドバーのRSSフィードを読み込む
   def load_rss_feed
-    feeds = []
-    Admin::Setting.mypage_feed_settings.each do |setting|
-      feed = nil
-      timeout(Admin::Setting.mypage_feed_timeout.to_i) do
-        feed = open(setting[:url], :proxy => SkipEmbedded::InitialSettings['proxy_url']){ |f| RSS::Parser.parse(f.read) }
-      end
-      feed = unify_feed_form(feed, setting[:title], setting[:limit])
-      feeds << feed if feed
-    end
-    render :partial => "rss_feed", :locals => { :feeds => feeds }
+    render :partial => "rss_feed", :locals => { :feeds => unifed_feeds }
   rescue Timeout::Error
     render :text => _("Timeout while loading rss.")
     return false
@@ -747,16 +738,21 @@ class MypageController < ApplicationController
     }.to_json
   end
 
-  def unify_feed_form feed, title = nil, limit = nil
-    feed = feed.to_rss("2.0") if !feed.is_a?(RSS::Rss) and feed.is_a?(RSS::Atom::Feed)
-
-    feed.channel.title = title if title
-    limit = (limit || Admin::Setting.mypage_feed_default_limit)
-    feed.items.slice!(limit..-1) if feed.items.size > limit
-    feed
-  rescue NameError => e
-    logger.error "[Error] Atom conversion failed due to outdated ruby libraries."
-    return nil
+  def unifed_feeds
+    returning [] do |feeds|
+      Admin::Setting.mypage_feed_settings.each do |setting|
+        feed = nil
+        timeout(Admin::Setting.mypage_feed_timeout.to_i) do
+          feed = open(setting[:url], :proxy => SkipEmbedded::InitialSettings['proxy_url']) do |f|
+            FeedNormalizer::FeedNormalizer.parse(f.read)
+          end
+        end
+        feed.title = setting[:title] if setting[:title]
+        limit = (setting[:limit] || Admin::Setting.mypage_feed_default_limit)
+        feed.items.slice!(limit..-1) if feed.items.size > limit
+        feeds << feed
+      end
+    end
   end
 
   # TODO #924で画面からリンクをなくした。1.4時点で復活しない場合は削除する
