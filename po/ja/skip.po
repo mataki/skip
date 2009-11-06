@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.3.0\n"
-"POT-Creation-Date: 2009-11-06 09:41+0900\n"
+"POT-Creation-Date: 2009-11-06 13:52+0900\n"
 "PO-Revision-Date: 2009-10-28 20:01+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -363,7 +363,7 @@ msgstr "・・・上記に非公開を含めると・・・"
 msgid "... and forum posts ..."
 msgstr "・・・さらにフォーラムも含めると・・・"
 
-#: app/controllers/admin/application_controller.rb:40
+#: app/controllers/admin/application_controller.rb:48
 msgid "0 file size detected."
 msgstr "ファイルサイズが0です。"
 
@@ -451,10 +451,6 @@ msgstr[0] "アクセス(%s)"
 #: app/views/portal/_registration_form.html.erb:7
 msgid "Account Information"
 msgstr "アカウント情報"
-
-#: app/controllers/admin/settings_controller.rb:111
-msgid "Account Settings"
-msgstr "アカウント関連"
 
 #: app/views/user/show.html.erb:20
 msgid "Account information"
@@ -1976,10 +1972,6 @@ msgstr "戻る"
 msgid "Background image of log in screen."
 msgstr "ログイン画面の背景画像"
 
-#: app/views/admin/settings/index.html.erb:17
-msgid "Basic Info"
-msgstr "基本情報"
-
 #: lib/skip_default_data.rb:28
 msgid "Basic Information"
 msgstr "基本情報"
@@ -2712,7 +2704,7 @@ msgstr "変更前メールアドレス"
 msgid "Current Password"
 msgstr "現在のパスワード"
 
-#: app/controllers/admin/settings_controller.rb:101
+#: app/views/layouts/admin/application.html.erb:17
 msgid "Current disk usage"
 msgstr "現在の利用容量"
 
@@ -2821,17 +2813,12 @@ msgstr "開発"
 msgid "Diary"
 msgstr "日記"
 
-#: app/controllers/admin/settings_controller.rb:113
-#: app/controllers/admin/settings_controller.rb:122
-msgid "Disable"
-msgstr "利用しない"
-
-#: app/controllers/admin/application_controller.rb:51
+#: app/controllers/admin/application_controller.rb:59
 msgid "Disallowed file extension."
 msgstr "指定された拡張子のファイルはアップロード出来ません。"
 
-#: app/controllers/admin/application_controller.rb:58
 #: app/controllers/admin/application_controller.rb:66
+#: app/controllers/admin/application_controller.rb:74
 msgid "Disallowed file type."
 msgstr "指定された形式のファイルはアップロード出来ません。"
 
@@ -3211,7 +3198,9 @@ msgstr "処理に失敗しました。もう一度申請してください。"
 #: app/controllers/platform_controller.rb:291
 msgid ""
 "Failed to register user. Contact administrator %{contact_addr}.<br/>%{msg}"
-msgstr "ユーザ登録に失敗しました。ユーザ登録に必要となる情報に不備があるため、管理者(%{contact_addr})に連絡し、ユーザ登録を実施してもらってください。<br/> %{msg}"
+msgstr ""
+"ユーザ登録に失敗しました。ユーザ登録に必要となる情報に不備があるため、管理者"
+"(%{contact_addr})に連絡し、ユーザ登録を実施してもらってください。<br/> %{msg}"
 
 #: app/controllers/platform_controller.rb:93
 msgid "Failed to reset password."
@@ -3282,13 +3271,17 @@ msgstr "ファイルのダウンロード"
 msgid "File name is mandatory."
 msgstr "ファイル名を入力してください。"
 
-#: app/controllers/admin/application_controller.rb:35
+#: app/controllers/admin/application_controller.rb:43
 msgid "File not specified."
 msgstr "ファイルを指定して下さい。"
 
-#: app/controllers/admin/application_controller.rb:45
+#: app/controllers/admin/application_controller.rb:53
 msgid "File size exceeded the limit."
 msgstr "ファイルサイズが上限を超えています。"
+
+#: app/views/layouts/admin/application.html.erb:19
+msgid "File size is over soon"
+msgstr "もうすぐファイルシステムのサイズ上限に達します"
 
 #: app/models/picture.rb:41
 msgid "File size too large."
@@ -3386,10 +3379,6 @@ msgstr "みんなの情報"
 #: app/views/search/full_text_search.html.erb:14
 msgid "Full-text Search"
 msgstr "全文検索"
-
-#: app/controllers/admin/settings_controller.rb:119
-msgid "Functional Settings"
-msgstr "機能に関する設定"
 
 #: lib/skip_default_data.rb:49
 msgid "Gamble"
@@ -4514,10 +4503,6 @@ msgstr "存在しないもしくはサイズ０のファイルはアップロー
 msgid "Not Accept"
 msgstr "同意しない"
 
-#: app/controllers/admin/settings_controller.rb:127
-msgid "Not Specified"
-msgstr "指定なし"
-
 #: app/controllers/mypage_controller.rb:618
 #: app/controllers/mypage_controller.rb:856
 #: app/controllers/feed_controller.rb:82 app/models/antenna.rb:92
@@ -5191,7 +5176,7 @@ msgstr "ユーザ登録して%sの利用を開始する"
 msgid "Registered Users"
 msgstr "登録ユーザ数"
 
-#: app/views/layouts/admin/application.html.erb:57
+#: app/views/layouts/admin/application.html.erb:66
 #: app/views/layouts/layout.html.erb:97
 msgid "Registered Users: %s users"
 msgstr "登録ユーザ数：%s人"
@@ -5315,7 +5300,7 @@ msgstr "修正"
 msgid "Rich Text"
 msgstr "リッチテキスト"
 
-#: app/views/admin/settings/index.html.erb:20
+#: app/views/layouts/admin/application.html.erb:16
 msgid "SKIP version"
 msgstr "SKIPのバージョン"
 
@@ -5480,7 +5465,7 @@ msgstr "ログインが必要です。ログインし直して下さい。"
 msgid "Set column visibility (Click to switch on / off))"
 msgstr "列の表示制御(クリックで表示/非表示を切り替えます。)"
 
-#: app/controllers/admin/settings_controller.rb:61
+#: app/controllers/admin/settings_controller.rb:57
 msgid "Settings were saved successfully."
 msgstr "保存しました。"
 
@@ -5565,10 +5550,6 @@ msgstr "ユーザ"
 msgid "Shared Files"
 msgstr "ファイル"
 
-#: app/controllers/admin/settings_controller.rb:100
-msgid "Shared Files Settings"
-msgstr "ファイル関連"
-
 #: lib/skip_default_data.rb:49
 msgid "Shopping"
 msgstr "ショッピング"
@@ -5624,12 +5605,6 @@ msgstr ""
 msgid "Showing options from previously registered values"
 msgstr "既に登録されている値から選択項目を表示しています"
 
-#: app/controllers/admin/settings_controller.rb:102
-msgid ""
-"Showing the total capacity permitted for shared files versus current disk "
-"usage of shared files."
-msgstr "システム全体の最大許可容量に対して現在使用中のファイルの容量です。"
-
 #: app/views/mypage/trace.html.erb:7
 msgid ""
 "Showing total access count of all your pages and recent visitors (max. 30)."
@@ -5664,7 +5639,7 @@ msgid "Signup"
 msgstr "ユーザ登録"
 
 #: app/controllers/statistics_controller.rb:67
-#: app/views/layouts/admin/application.html.erb:61
+#: app/views/layouts/admin/application.html.erb:70
 #: app/views/layouts/layout.html.erb:101 app/views/shared/_header.html.erb:55
 msgid "Site Information"
 msgstr "サイト情報"
@@ -5936,14 +5911,6 @@ msgstr "ユーザ"
 msgid "System Administration"
 msgstr "システムの管理"
 
-#: app/views/admin/settings/index.html.erb:16
-msgid "System Info"
-msgstr "システム情報"
-
-#: app/controllers/admin/settings_controller.rb:126
-msgid "System Operation"
-msgstr "システム運用について"
-
 #: lib/skip_default_data.rb:49
 msgid "TV"
 msgstr "テレビ"
@@ -6208,7 +6175,7 @@ msgstr "利用開始待ち"
 msgid "Today's Access"
 msgstr "本日のアクセス数"
 
-#: app/views/layouts/admin/application.html.erb:58
+#: app/views/layouts/admin/application.html.erb:67
 #: app/views/layouts/layout.html.erb:98
 msgid "Today's Access: %s access"
 msgstr "本日のアクセス数：%s人"
@@ -6221,7 +6188,7 @@ msgstr "本日の記事数"
 msgid "Today's Entries: %s entries"
 msgstr "本日の記事数：%s件"
 
-#: app/views/layouts/admin/application.html.erb:60
+#: app/views/layouts/admin/application.html.erb:69
 msgid "Today's Posts: %s posts"
 msgstr "本日の記事数：%s件"
 
@@ -6254,7 +6221,7 @@ msgstr "全%{items}件（%{page}/%{pages}ページ）"
 msgid "Total Entries"
 msgstr "総記事件数"
 
-#: app/views/layouts/admin/application.html.erb:59
+#: app/views/layouts/admin/application.html.erb:68
 #: app/views/layouts/layout.html.erb:99
 msgid "Total Entries: %s entries"
 msgstr "総記事件数：%s件"
@@ -8058,5 +8025,34 @@ msgstr ""
 "作成してください。<br/>新規登録のユーザは、名前・パスワード・メールアドレスは"
 "必須になります。"
 
+#~ msgid "Account Settings"
+#~ msgstr "アカウント関連"
+
+#~ msgid "Basic Info"
+#~ msgstr "基本情報"
+
+#~ msgid "Disable"
+#~ msgstr "利用しない"
+
 #~ msgid "Failed to register user. Contact administrator.<br/>%{msg}"
 #~ msgstr "ユーザ登録に失敗しました。管理者に連絡してください。<br/>%{msg}"
+
+#~ msgid "Functional Settings"
+#~ msgstr "機能に関する設定"
+
+#~ msgid "Not Specified"
+#~ msgstr "指定なし"
+
+#~ msgid "Shared Files Settings"
+#~ msgstr "ファイル関連"
+
+#~ msgid ""
+#~ "Showing the total capacity permitted for shared files versus current disk "
+#~ "usage of shared files."
+#~ msgstr "システム全体の最大許可容量に対して現在使用中のファイルの容量です。"
+
+#~ msgid "System Info"
+#~ msgstr "システム情報"
+
+#~ msgid "System Operation"
+#~ msgstr "システム運用について"
