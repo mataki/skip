@@ -62,9 +62,11 @@
 <% unless login_mode?(:password) -%>
 <p>
   <%= label Admin::OpenidIdentifier.name, :url %>
-  <% if @user.openid_identifiers and @user.openid_identifiers.first %>
+  <% if @user.openid_identifiers and @user.openid_identifiers.first and @user.openid_identifiers.first.url != "" %>
   :<%=h @user.openid_identifiers.first.url %>
   [<%= link_to(_('Edit'), edit_admin_user_openid_identifier_path(@user, @user.openid_identifiers.first)) %>]
+  <% else %>
+    <%= text_field :openid_identifier, :url %>
   <% end -%>
 </p>
 <% end -%>
