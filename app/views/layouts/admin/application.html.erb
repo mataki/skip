@@ -12,6 +12,15 @@
 <div id="main">
   <div id="panel" class="ui-corner-all">
     <h1 id="title"><%=h @title %></h1>
+    <ul class="no_style horizontal">
+      <li><%= _('SKIP version') %> : <%= h SKIP_VERSION %></li>
+      <li><%= _("Current disk usage") %> : <%= @system_summary %> (MB) 
+        <% if @warning_size %>
+          <b class="caution"><%= _('File size is over soon')%></b>
+        <% end %>
+      </li>
+    </ul>
+
     <div id="tab_menu"><%= generate_admin_tab_menu %></div>
     <div class="clear_left"></div>
 

@@ -26,7 +26,15 @@ class Admin::ApplicationController < ApplicationController
 
   def setup_layout
     @title = @main_menu = _("System Administration")
+    @system_summary, @warning_size = system_summary
   end
+
+  def system_summary
+    file_size = "#{QuotaValidation::FileSizeCounter.per_system/1.megabyte}"
+    max_system_size = "#{SkipEmbedded::InitialSettings['max_share_file_size_of_system']/1.megabyte}"
+    return file_size + " / " + max_system_size, (file_size.to_f / max_system_size.to_f) > 0.80
+  end
+
 
   protected
   def valid_file?(uploaded_file, options = {})
