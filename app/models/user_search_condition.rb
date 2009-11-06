@@ -79,7 +79,7 @@ class UserSearchCondition < SearchCondition
   end
 
   def value_of_per_page
-    20
+    40
   end
 
   def make_conditions
