@@ -32,10 +32,6 @@ class Admin::SettingsController < Admin::ApplicationController
     if params[:tab].blank? or !TABS.include?(params[:tab])
       redirect_to admin_settings_path(:tab => :main)
     end
-
-    if params[:tab] == 'main'
-      @system_infos = system_infos
-    end
   end
 
   def update_all
@@ -93,46 +89,4 @@ class Admin::SettingsController < Admin::ApplicationController
     false
   end
 
-  # TODO system_infoというpertialにする
-  def system_infos
-    system_infos = []
-    system_infos << {
-      :name => _("Shared Files Settings"),
-      :settings => [{ :label => _("Current disk usage"),
-                      :help => _("Showing the total capacity permitted for shared files versus current disk usage of shared files."),
-                      :value => "#{QuotaValidation::FileSizeCounter.per_system/1.megabyte} / #{SkipEmbedded::InitialSettings['max_share_file_size_of_system']/1.megabyte} (MB)"
-                    },
-                    setting_of('max_share_file_size_of_system', "#{SkipEmbedded::InitialSettings['max_share_file_size_of_system'].to_i/1.megabyte}(MB)"),
-                    setting_of('max_share_file_size_per_owner', "#{SkipEmbedded::InitialSettings['max_share_file_size_per_owner'].to_i/1.megabyte}(MB)"),
-                    setting_of('max_share_file_size', "#{SkipEmbedded::InitialSettings['max_share_file_size'].to_i/1.megabyte}(MB)")
-                   ]
-    }
-    system_infos << {
-      :name => _("Account Settings"),
-      :settings => [setting_of('login_mode'),
-                    login_mode?(:fixed_rp) ? setting_of('fixed_op_url', SkipEmbedded::InitialSettings['fixed_op_url'] || _("Disable")) : nil,
-                    setting_of('usercode_dips_setting'),
-                    setting_of('password_edit_setting')
-                   ]
-    }
-    system_infos << {
-      :name => _("Functional Settings"),
-      :settings => [setting_of('ssl_setting'),
-                    setting_of('full_text_search_setting'),
-                    setting_of('proxy_url', SkipEmbedded::InitialSettings['proxy_url'] || _("Disable"))
-                   ]
-    }
-    system_infos << {
-      :name => _("System Operation"),
-      :settings => [setting_of('administrator_addr', SkipEmbedded::InitialSettings['administrator_addr'] || _("Not Specified"))]
-    }
-  end
-
-  # システム情報の表示項目を返す
-  def setting_of key, value=nil
-    { :label => s_("#{Admin::InitialSetting.name}|#{key.humanize}"),
-      :help => s_("#{Admin::InitialSetting.name}|#{key.humanize} description"),
-      :value => value ? value : s_("#{Admin::InitialSetting.name}|#{key.humanize}|#{SkipEmbedded::InitialSettings[key]}")
-    }
-  end
 end

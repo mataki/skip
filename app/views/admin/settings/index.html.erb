@@ -11,30 +11,6 @@
 <% end -%>
 </div>
 
-<% if params[:tab] == 'main' -%>
-<div class="content">
-  <h3 class="topics"><%= _('System Info') %></h3>
-  <h4><%= _('Basic Info') %></h4>
-  <div class="box tabular">
-    <p class="initial_setting">
-    <label><%= _('SKIP version') %></label> : <%= h SKIP_VERSION %>
-    </p>
-  </div>
-  <% @system_infos.each do |category| -%>
-  <h4><%=h category[:name] %></h4>
-  <div class="box tabular">
-    <% category[:settings].each do |settings| -%>
-    <% next unless settings %>
-    <p class="initial_setting">
-      <label><%=h settings[:label] %></label>
-      <%= help_icon_tag(:content => settings[:help]) -%> : <%=h settings[:value] -%>
-    </p>
-    <% end -%>
-  </div>
-  <% end -%>
-</div>
-<% end -%>
-
 <% content_for :javascript_initializers do -%>
     var revertToDefault = function(target_id, value) {
         var targetObj = $j('#' + target_id);
