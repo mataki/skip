@@ -124,8 +124,8 @@ class BoardEntry < ActiveRecord::Base
   }
 
   named_scope :aim_type, proc { |types|
+    return {} if types.blank?
     types = types.split(',').map(&:strip) if types.is_a?(String)
-    types ||= %w(entry)
     { :conditions => ['aim_type IN (?)', types] }
   }
 
