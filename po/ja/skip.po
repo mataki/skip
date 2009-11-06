@@ -3281,7 +3281,7 @@ msgstr "ファイルサイズが上限を超えています。"
 
 #: app/views/layouts/admin/application.html.erb:19
 msgid "File size is over soon"
-msgstr "もうすぐファイルシステムのサイズ上限に達します"
+msgstr "もうすぐ利用可能容量が上限に達します。"
 
 #: app/models/picture.rb:41
 msgid "File size too large."
