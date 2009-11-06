@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.3.0\n"
-"POT-Creation-Date: 2009-11-06 13:52+0900\n"
+"POT-Creation-Date: 2009-11-06 17:18+0900\n"
 "PO-Revision-Date: 2009-06-29 13:31+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -212,7 +212,7 @@ msgstr ""
 #: app/models/user_profile_master.rb:115 app/models/user_profile_master.rb:119
 #: app/models/user_profile_master.rb:143 app/models/user_profile_master.rb:180
 #: app/models/user_profile_master.rb:268 app/models/user_profile_master.rb:298
-#: app/models/user_profile_master.rb:317 app/views/share_file/new.html.erb:69
+#: app/models/user_profile_master.rb:317 app/views/share_file/new.html.erb:70
 msgid "%{name} is mandatory."
 msgstr ""
 
@@ -349,7 +349,7 @@ msgstr ""
 msgid "... and forum posts ..."
 msgstr ""
 
-#: app/controllers/admin/application_controller.rb:48
+#: app/controllers/admin/application_controller.rb:40
 msgid "0 file size detected."
 msgstr ""
 
@@ -1921,6 +1921,10 @@ msgstr ""
 msgid "Authentication failed."
 msgstr ""
 
+#: app/views/share_file/new.html.erb:12
+msgid "Available upload file size is %s."
+msgstr ""
+
 #: app/helpers/edit_helper.rb:26
 msgid "Avalilable share files"
 msgstr ""
@@ -2340,7 +2344,7 @@ msgstr "T"
 msgid "CalendarHelper|Wed"
 msgstr "W"
 
-#: app/views/share_file/edit.html.erb:15 app/views/share_file/new.html.erb:31
+#: app/views/share_file/edit.html.erb:15 app/views/share_file/new.html.erb:32
 #: app/views/board_entries/_board_entry_comment.html.erb:32
 #: app/views/entries/_entry_detail.html.erb:636
 msgid "Cancel"
@@ -2649,7 +2653,7 @@ msgstr ""
 msgid "Current Password"
 msgstr ""
 
-#: app/views/layouts/admin/application.html.erb:17
+#: app/views/layouts/admin/application.html.erb:19
 msgid "Current disk usage"
 msgstr ""
 
@@ -2756,12 +2760,12 @@ msgstr ""
 msgid "Diary"
 msgstr ""
 
-#: app/controllers/admin/application_controller.rb:59
+#: app/controllers/admin/application_controller.rb:51
 msgid "Disallowed file extension."
 msgstr ""
 
+#: app/controllers/admin/application_controller.rb:58
 #: app/controllers/admin/application_controller.rb:66
-#: app/controllers/admin/application_controller.rb:74
 msgid "Disallowed file type."
 msgstr ""
 
@@ -3164,7 +3168,7 @@ msgstr ""
 msgid "Failed to upload file(s)."
 msgstr ""
 
-#: app/views/share_file/new.html.erb:17
+#: app/views/share_file/new.html.erb:18
 msgid "Failed to upload the following file."
 msgid_plural "Failed to upload the following files."
 msgstr[0] ""
@@ -3190,7 +3194,7 @@ msgstr ""
 
 #: app/controllers/share_file_controller.rb:46
 #: app/views/share_file/new_ajax_upload.html.erb:27
-#: app/views/share_file/new.html.erb:69
+#: app/views/share_file/new.html.erb:70
 msgid "File"
 msgstr ""
 
@@ -3202,15 +3206,15 @@ msgstr ""
 msgid "File name is mandatory."
 msgstr ""
 
-#: app/controllers/admin/application_controller.rb:43
+#: app/controllers/admin/application_controller.rb:35
 msgid "File not specified."
 msgstr ""
 
-#: app/controllers/admin/application_controller.rb:53
+#: app/controllers/admin/application_controller.rb:45
 msgid "File size exceeded the limit."
 msgstr ""
 
-#: app/views/layouts/admin/application.html.erb:19
+#: app/views/layouts/admin/application.html.erb:21
 msgid "File size is over soon"
 msgstr ""
 
@@ -5064,7 +5068,7 @@ msgstr ""
 msgid "Registered Users"
 msgstr ""
 
-#: app/views/layouts/admin/application.html.erb:66
+#: app/views/layouts/admin/application.html.erb:69
 #: app/views/layouts/layout.html.erb:97
 msgid "Registered Users: %s users"
 msgstr ""
@@ -5182,7 +5186,7 @@ msgstr ""
 msgid "Rich Text"
 msgstr ""
 
-#: app/views/layouts/admin/application.html.erb:16
+#: app/views/layouts/admin/application.html.erb:18
 msgid "SKIP version"
 msgstr ""
 
@@ -5509,7 +5513,7 @@ msgid "Signup"
 msgstr ""
 
 #: app/controllers/statistics_controller.rb:67
-#: app/views/layouts/admin/application.html.erb:70
+#: app/views/layouts/admin/application.html.erb:73
 #: app/views/layouts/layout.html.erb:101 app/views/shared/_header.html.erb:55
 msgid "Site Information"
 msgstr ""
@@ -5701,7 +5705,7 @@ msgstr ""
 msgid "Story"
 msgstr ""
 
-#: app/views/share_file/new.html.erb:30
+#: app/views/share_file/new.html.erb:31
 msgid "Submit"
 msgstr ""
 
@@ -6029,7 +6033,7 @@ msgstr ""
 msgid "Today's Access"
 msgstr ""
 
-#: app/views/layouts/admin/application.html.erb:67
+#: app/views/layouts/admin/application.html.erb:70
 #: app/views/layouts/layout.html.erb:98
 msgid "Today's Access: %s access"
 msgstr ""
@@ -6042,7 +6046,7 @@ msgstr ""
 msgid "Today's Entries: %s entries"
 msgstr ""
 
-#: app/views/layouts/admin/application.html.erb:69
+#: app/views/layouts/admin/application.html.erb:72
 msgid "Today's Posts: %s posts"
 msgstr ""
 
@@ -6075,7 +6079,7 @@ msgstr ""
 msgid "Total Entries"
 msgstr ""
 
-#: app/views/layouts/admin/application.html.erb:68
+#: app/views/layouts/admin/application.html.erb:71
 #: app/views/layouts/layout.html.erb:99
 msgid "Total Entries: %s entries"
 msgstr ""
@@ -7069,7 +7073,7 @@ msgstr ""
 msgid "[Add item]"
 msgstr ""
 
-#: app/views/share_file/new.html.erb:13
+#: app/views/share_file/new.html.erb:14
 msgid "[Add more files]"
 msgstr ""
 

@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.3.0\n"
-"POT-Creation-Date: 2009-11-06 13:52+0900\n"
+"POT-Creation-Date: 2009-11-06 17:18+0900\n"
 "PO-Revision-Date: 2009-10-28 20:01+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -216,7 +216,7 @@ msgstr "%{name} は選択される値以外のものが設定されています"
 #: app/models/user_profile_master.rb:115 app/models/user_profile_master.rb:119
 #: app/models/user_profile_master.rb:143 app/models/user_profile_master.rb:180
 #: app/models/user_profile_master.rb:268 app/models/user_profile_master.rb:298
-#: app/models/user_profile_master.rb:317 app/views/share_file/new.html.erb:69
+#: app/models/user_profile_master.rb:317 app/views/share_file/new.html.erb:70
 msgid "%{name} is mandatory."
 msgstr "%{name} は必須です"
 
@@ -363,7 +363,7 @@ msgstr "・・・上記に非公開を含めると・・・"
 msgid "... and forum posts ..."
 msgstr "・・・さらにフォーラムも含めると・・・"
 
-#: app/controllers/admin/application_controller.rb:48
+#: app/controllers/admin/application_controller.rb:40
 msgid "0 file size detected."
 msgstr "ファイルサイズが0です。"
 
@@ -1956,6 +1956,10 @@ msgstr "8月"
 msgid "Authentication failed."
 msgstr "認証に失敗しました。"
 
+#: app/views/share_file/new.html.erb:12
+msgid "Available upload file size is %s."
+msgstr "アップロード可能最大容量は %s(MB)です。"
+
 #: app/helpers/edit_helper.rb:26
 msgid "Avalilable share files"
 msgstr "利用可能な共有ファイル"
@@ -2378,7 +2382,7 @@ msgstr "火"
 msgid "CalendarHelper|Wed"
 msgstr "水"
 
-#: app/views/share_file/edit.html.erb:15 app/views/share_file/new.html.erb:31
+#: app/views/share_file/edit.html.erb:15 app/views/share_file/new.html.erb:32
 #: app/views/board_entries/_board_entry_comment.html.erb:32
 #: app/views/entries/_entry_detail.html.erb:636
 msgid "Cancel"
@@ -2704,7 +2708,7 @@ msgstr "変更前メールアドレス"
 msgid "Current Password"
 msgstr "現在のパスワード"
 
-#: app/views/layouts/admin/application.html.erb:17
+#: app/views/layouts/admin/application.html.erb:19
 msgid "Current disk usage"
 msgstr "現在の利用容量"
 
@@ -2813,12 +2817,12 @@ msgstr "開発"
 msgid "Diary"
 msgstr "日記"
 
-#: app/controllers/admin/application_controller.rb:59
+#: app/controllers/admin/application_controller.rb:51
 msgid "Disallowed file extension."
 msgstr "指定された拡張子のファイルはアップロード出来ません。"
 
+#: app/controllers/admin/application_controller.rb:58
 #: app/controllers/admin/application_controller.rb:66
-#: app/controllers/admin/application_controller.rb:74
 msgid "Disallowed file type."
 msgstr "指定された形式のファイルはアップロード出来ません。"
 
@@ -3235,7 +3239,7 @@ msgstr "更新に失敗しました。"
 msgid "Failed to upload file(s)."
 msgstr "ファイルのアップロードに失敗しました。<br/>"
 
-#: app/views/share_file/new.html.erb:17
+#: app/views/share_file/new.html.erb:18
 msgid "Failed to upload the following file."
 msgid_plural "Failed to upload the following files."
 msgstr[0] "以下のファイルの登録に失敗しました。"
@@ -3259,7 +3263,7 @@ msgstr "女性"
 
 #: app/controllers/share_file_controller.rb:46
 #: app/views/share_file/new_ajax_upload.html.erb:27
-#: app/views/share_file/new.html.erb:69
+#: app/views/share_file/new.html.erb:70
 msgid "File"
 msgstr "ファイル"
 
@@ -3271,15 +3275,15 @@ msgstr "ファイルのダウンロード"
 msgid "File name is mandatory."
 msgstr "ファイル名を入力してください。"
 
-#: app/controllers/admin/application_controller.rb:43
+#: app/controllers/admin/application_controller.rb:35
 msgid "File not specified."
 msgstr "ファイルを指定して下さい。"
 
-#: app/controllers/admin/application_controller.rb:53
+#: app/controllers/admin/application_controller.rb:45
 msgid "File size exceeded the limit."
 msgstr "ファイルサイズが上限を超えています。"
 
-#: app/views/layouts/admin/application.html.erb:19
+#: app/views/layouts/admin/application.html.erb:21
 msgid "File size is over soon"
 msgstr "もうすぐ利用可能容量が上限に達します。"
 
@@ -5176,7 +5180,7 @@ msgstr "ユーザ登録して%sの利用を開始する"
 msgid "Registered Users"
 msgstr "登録ユーザ数"
 
-#: app/views/layouts/admin/application.html.erb:66
+#: app/views/layouts/admin/application.html.erb:69
 #: app/views/layouts/layout.html.erb:97
 msgid "Registered Users: %s users"
 msgstr "登録ユーザ数：%s人"
@@ -5300,7 +5304,7 @@ msgstr "修正"
 msgid "Rich Text"
 msgstr "リッチテキスト"
 
-#: app/views/layouts/admin/application.html.erb:16
+#: app/views/layouts/admin/application.html.erb:18
 msgid "SKIP version"
 msgstr "SKIPのバージョン"
 
@@ -5639,7 +5643,7 @@ msgid "Signup"
 msgstr "ユーザ登録"
 
 #: app/controllers/statistics_controller.rb:67
-#: app/views/layouts/admin/application.html.erb:70
+#: app/views/layouts/admin/application.html.erb:73
 #: app/views/layouts/layout.html.erb:101 app/views/shared/_header.html.erb:55
 msgid "Site Information"
 msgstr "サイト情報"
@@ -5831,7 +5835,7 @@ msgstr "停止"
 msgid "Story"
 msgstr "ネタ"
 
-#: app/views/share_file/new.html.erb:30
+#: app/views/share_file/new.html.erb:31
 msgid "Submit"
 msgstr "登録"
 
@@ -6175,7 +6179,7 @@ msgstr "利用開始待ち"
 msgid "Today's Access"
 msgstr "本日のアクセス数"
 
-#: app/views/layouts/admin/application.html.erb:67
+#: app/views/layouts/admin/application.html.erb:70
 #: app/views/layouts/layout.html.erb:98
 msgid "Today's Access: %s access"
 msgstr "本日のアクセス数：%s人"
@@ -6188,7 +6192,7 @@ msgstr "本日の記事数"
 msgid "Today's Entries: %s entries"
 msgstr "本日の記事数：%s件"
 
-#: app/views/layouts/admin/application.html.erb:69
+#: app/views/layouts/admin/application.html.erb:72
 msgid "Today's Posts: %s posts"
 msgstr "本日の記事数：%s件"
 
@@ -6221,7 +6225,7 @@ msgstr "全%{items}件（%{page}/%{pages}ページ）"
 msgid "Total Entries"
 msgstr "総記事件数"
 
-#: app/views/layouts/admin/application.html.erb:68
+#: app/views/layouts/admin/application.html.erb:71
 #: app/views/layouts/layout.html.erb:99
 msgid "Total Entries: %s entries"
 msgstr "総記事件数：%s件"
@@ -7256,7 +7260,7 @@ msgstr "[フィード欄を追加する]"
 msgid "[Add item]"
 msgstr "[アイテムの追加]"
 
-#: app/views/share_file/new.html.erb:13
+#: app/views/share_file/new.html.erb:14
 msgid "[Add more files]"
 msgstr "[更にファイルを追加]"
 
@@ -8024,6 +8028,20 @@ msgstr ""
 "|チェックするとその属性を更新することができます。CSVの例を参考にCSVファイルを"
 "作成してください。<br/>新規登録のユーザは、名前・パスワード・メールアドレスは"
 "必須になります。"
+
+#~ msgid ""
+#~ "(Caution!) Never upload files that may cause security issues. Available "
+#~ "upload file size is %s."
+#~ msgstr ""
+#~ "（注意！）セキュリティ上の問題があるファイルは、アップロードしないで下さ"
+#~ "い。アップロード可能最大容量は %s(MB)です。"
+
+#~ msgid ""
+#~ "(Caution!) Never upload files that may cause security issues. Available "
+#~ "upload file size is %{size}"
+#~ msgstr ""
+#~ "（注意！）セキュリティ上の問題があるファイルは、アップロードしないで下さ"
+#~ "い。アップロード可能容量は%{size}(MB)です。"
 
 #~ msgid "Account Settings"
 #~ msgstr "アカウント関連"
