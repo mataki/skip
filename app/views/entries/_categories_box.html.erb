@@ -8,7 +8,7 @@
   <div class="box_space_body">
   <ul>
   <% categories.each do |category| -%>
-    <% text = link_to(h('[' + category + ']'), :category=>category) %>
+    <% text = link_to(h('[' + category + ']'), :category=>category, :sort_type=>h(params[:sort_type])) %>
     <li><%= (params[:category] == category) ? ('<b>' + text + '</b>') : text -%></li>
   <% end -%>
   </ul>
