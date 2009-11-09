@@ -21,7 +21,7 @@ describe UserMailerHelper, '#convert_plain' do
       @entry = create_board_entry :contents => 'テスト'
     end
     it '本文がそのまま取得出来ること' do
-      helper.convert_plain(@entry).should == "#{space}テスト\n#{space}\n"
+      helper.convert_plain(@entry).should == "#{space}テスト"
     end
   end
   describe '100文字を越えるタグが含まれない本文の場合' do
@@ -34,10 +34,10 @@ describe UserMailerHelper, '#convert_plain' do
   end
   describe '改行が含まれる本文の場合' do
     before do
-      @entry = create_board_entry :contents => "\r\n\r\n\tこれは本文です。\r\n\r\n\t", :editor_mode => "richtext"
+      @entry = create_board_entry :contents => "\r\n\r\n\tこれは本文です。\r\n本文2行目です。\r\n\r\n\t", :editor_mode => "richtext"
     end
     it "改行により本文が空にならないこと" do
-      helper.convert_plain(@entry).should == "#{space}\r\n#{space}\r\n#{space}これは本文です。\r\n#{space}\r\n"
+      helper.convert_plain(@entry).should == "#{space}これは本文です。\r\n#{space}本文2行目です。"
     end
   end
   describe '&nbspが表示されないこと' do
@@ -46,14 +46,6 @@ describe UserMailerHelper, '#convert_plain' do
     end
     it "改行により本文が空にならないこと" do
       helper.convert_plain(@entry).should == "#{space} これは本文です。"
-    end
-  end
-  describe 'pタグやbrタグが含まれる場合' do
-    before do
-      @entry = create_board_entry :contents => "<p>1行目です。<br />2行目です。<br>3行目です。</p>", :editor_mode => "richtext"
-    end
-    it 'pタグやbrが改行に変換されていること' do
-      helper.convert_plain(@entry).should == "#{space}1行目です。\n#{space}2行目です。\n#{space}3行目です。\n"
     end
   end
   # 各行の先頭に開けられるspace
