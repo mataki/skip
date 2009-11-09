@@ -17,9 +17,9 @@ Feature: マイページ
 
   Scenario: 質問を表示する
     Given 以下のブログを書く:
-      |user  |title            |aim_type  |contents     |
-      |a_user|Railsについて質問|質問      |わかりません |
-      |a_user|Railsについて雑談|記事      |色々話そう   |
+      |user  |title            |aim_type                                              |contents     |
+      |a_user|Railsについて質問|質問 (マイページの「みんなからの質問」に表示されます) |わかりません |
+      |a_user|Railsについて雑談|記事 (マイページの「新着記事」に表示されます)         |色々話そう   |
 
     When "マイページ"にアクセスする
 
@@ -31,9 +31,9 @@ Feature: マイページ
 
   Scenario: お知らせを表示する
     Given 以下のブログを書く:
-      |user  |title                 |aim_type  |contents        |
-      |a_user|Railsについてお知らせ |お知らせ  |リリースします  |
-      |a_user|Railsについて雑談     |記事      |色々話そう      |
+      |user  |title                 |aim_type                                                     |contents        |
+      |a_user|Railsについてお知らせ |お知らせ (マイページの「あなたへのお知らせ」に表示されます)  |リリースします  |
+      |a_user|Railsについて雑談     |記事 (マイページの「新着記事」に表示されます)                |色々話そう      |
     And 新着通知を作成バッチを実行する
 
     When "a_group_owned_user"でログインする

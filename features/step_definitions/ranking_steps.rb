@@ -1,6 +1,6 @@
 Given /^"(.*)"ユーザのプロフィールページに"(.*)"回アクセスする$/ do |user, num|
   num.to_i.times do
-    Given %!"#{user}のプロフィールページ"にアクセスする!
+    Given %!"#{user}ユーザのプロフィールページ"にアクセスする!
   end
 end
 

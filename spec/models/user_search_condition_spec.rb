@@ -19,7 +19,7 @@ describe UserSearchCondition do
   describe "パラメータが設定されていない場合" do
     it "初期値がロードされること" do
       conditions = UserSearchCondition.create_by_params :condition => {}
-      conditions.value_of_per_page.should == 20
+      conditions.value_of_per_page.should == 40
       conditions.make_conditions.should == ["users.status in (?)", ["ACTIVE", "RETIRED"]]
 
       conditions.value_of_order_by.should == "user_accesses.last_access DESC"
@@ -75,7 +75,7 @@ describe UserSearchCondition do
   describe "出力形式が一覧の場合" do
     it "per_pageが設定されていること" do
       conditions = UserSearchCondition.create_by_params :condition => { :output_type => "list" }
-      conditions.value_of_per_page.should == 20
+      conditions.value_of_per_page.should == 40
     end
   end
   describe "退職者を含める場合" do

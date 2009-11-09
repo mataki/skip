@@ -34,9 +34,9 @@
     <% end -%>
       <span class="item">
         <% if params[:read] -%>
-        <%= link_to _('[Hide read entries]'), :antenna_id => @antenna_entry.key, :read => false %>
+        <%= link_to _('[Hide read entries]'), :target_type => @antenna_entry.key, :read => false %>
         <% else %>
-        <%= link_to _('[Show read entries]'), :antenna_id => @antenna_entry.key, :read => true %>
+        <%= link_to _('[Show read entries]'), :target_type => @antenna_entry.key, :read => true %>
         <% end %>
       </span>
       <%= will_paginate_link(@entries) %>
