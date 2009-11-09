@@ -1,9 +1,0 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-a_symbol_antenna:
-  user: a_user
-  name: symbol_antenna
-  position: 1
-a_keyword_antenna:
-  user: a_user
-  name: keyword_antenna
-  position: 2

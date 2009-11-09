@@ -4,6 +4,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :pictures
 
+  map.resources :notices
+
   map.share_file  ':controller_name/:symbol_id/files/:file_name',
                   :controller => 'share_file',
                   :action => 'download',

@@ -76,8 +76,6 @@ class PortalController < ApplicationController
       @user.status = 'ACTIVE'
       @user.save!
 
-      Antenna.create_initial!(@user)
-
       UserAccess.create!(:user_id => @user.id, :last_access => Time.now, :access_count => 0)
       UserMailer::Smtp.deliver_sent_signup_confirm(@user.email, @user.code, root_url)
 

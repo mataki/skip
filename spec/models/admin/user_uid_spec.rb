@@ -144,7 +144,6 @@ describe Admin::UserUid, "#rename" do
     @sf.save!
     @sf.share_file_publications.create!({:symbol => "uid:#{uid_str}"})
     @bookmark = Bookmark.create!({:url => "/user/#{uid_str}", :title => uid_str})
-    @ai = AntennaItem.create!({:value => "uid:#{uid_str}", :antenna_id => 1})
 
     @u.user_uids.should_not be_empty
     @b.entry_editors.should_not be_empty

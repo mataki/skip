@@ -79,9 +79,6 @@ describe PortalController, 'POST /apply' do
     @user.stub!(:save!)
     @profiles = (1..2).map{|i| stub_model(UserProfileValue, :save! => true)}
     @user.stub!(:find_or_initialize_profiles).and_return(@profiles)
-    @antenna = stub_model(Antenna)
-    @antenna.stub!(:save!)
-    Antenna.stub!(:create_initial!).and_return(@antenna)
     UserAccess.stub!(:create!)
     UserMailer::Smtp.stub!(:deliver_sent_signup_confirm)
     @user.stub!(:activate!)

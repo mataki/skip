@@ -48,7 +48,6 @@ module MypageHelper
     @@menus << {:name => _("Change OpenID URL"), :menu => "manage_openid" } if login_mode?(:free_rp)
     @@menus << {:name => _("Change Profile Picture"), :menu => "manage_portrait" } if Admin::Setting.enable_change_picture
     @@menus << {:name => _("Customize"), :menu => "manage_customize" }
-    @@menus << {:name => _("Manage Antennas"), :menu => "manage_antenna" }
     @@menus << {:name => _("Email Notification"), :menu => "manage_message" } if SkipEmbedded::InitialSettings['mail']['show_mail_function']
     get_menu_items @@menus, selected_menu, "manage"
   end

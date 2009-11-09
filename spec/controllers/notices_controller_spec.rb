@@ -13,12 +13,13 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-require File.dirname(__FILE__) + '/../spec_helper'
+require 'spec_helper'
 
-describe AntennaItem do
-  before(:each) do
-    @antenna_item = AntennaItem.new
+describe NoticesController do
+
+  #Delete this example and add some real ones
+  it "should use NoticesController" do
+    controller.should be_an_instance_of(NoticesController)
   end
 
-  it { @antenna_item.should be_valid }
 end

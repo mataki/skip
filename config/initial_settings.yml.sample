@@ -188,13 +188,6 @@ default: &default
   proxy_url:                                                         # プロキシサーバのURL(例:http://proxy.com:8080/)
   ssl_setting: false                                                 # SSLログインを利用するかどうかの設定
   not_blank_link_re: https?:\/\/dev(.openskip.org)?\/.*              # ブログ内のリンクで新しいウインドウを開かないでリンクをするURLの正規表現
-  initial_antenna:                                                   # 初期登録されるアンテナの名称(利用しない場合設定不要)
-# 設定例
-#  initial_antenna: SKIP
-#  antenna_default_group:
-#    - skip_development
-#    - skip_operation
-  antenna_default_group:                                             # 初期登録されるアンテナに追加するグループIDを配列で指定(利用しない場合設定不要)
   google_analytics:                                                  # Google Analyticsを利用したアクセス解析のための設定
   help_url: http://help.skipaas.jp/                                  # ヘルプのURL
   default_theme: silver                                              # 既定のテーマ
