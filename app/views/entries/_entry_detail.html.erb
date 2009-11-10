@@ -237,11 +237,12 @@
     <div class="information">
       <div class="date">
         <%= "[" + s_("BoardEntry|Aim type|#{entry.aim_type}") + "]" %>
-        <%=h entry.diary_date %> <%= "by #{user_link_to(entry.user)}" %>
+        <%=h entry.diary_date %> <%= "by #{user_link_to(entry.user)}" %> - 
+        <% visibility, visibility_color = entry.visibility -%><span title=<%= visibility %> style='background-color: <%=visibility_color%>;'>[<%= translate_publication_type(entry) %>]</span>
         <span class="evaluation"><%= get_entry_infos(entry) -%></span>
       </div>
     </div>
-    <h1><%= check_box_tag 'read_state_check', 'true', checked_on, :title => _('Mark read') %><%= get_publication_type_icon(entry) -%> <%=h entry.category %> <%=h entry.title %></h1>
+    <h1><%= check_box_tag 'read_state_check', 'true', checked_on, :title => _('Mark read') %> <%=h entry.category %> <%=h entry.title %></h1>
     <% unless to_tb_entries.empty? -%>
     <div class="trackback_space send_trackback">
       <%= _('Topic Entry: ')%>
