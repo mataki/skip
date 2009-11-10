@@ -504,6 +504,13 @@ class MypageController < ApplicationController
   # mypage > home の システムメッセージの配列
   def system_messages
     system_messages = []
+    if system_notice = SkipEmbedded::InitialSettings['system_notice'] and !system_notice['title'].blank?
+      system_messages << {
+        :text => system_notice['title'],
+        :icon => "information",
+        :option => system_notice['url']
+      }
+    end
     unless current_user.picture
       system_messages << {
         :text => _("Change your profile picture!"), :icon => "picture",

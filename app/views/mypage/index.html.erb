@@ -5,9 +5,6 @@
 <% content_for :contents_top do -%>
   <% if (@message_array.size > 0) or (@waiting_groups.size > 0) or (@system_messages.size > 0) -%>
     <div class="top_info system_message ui-corner-all">
-      <% if system_notice = SkipEmbedded::InitialSettings['system_notice'] and !system_notice['title'].blank? -%>
-        <div class="item"><%= link_to(icon_tag('information') + h(system_notice['title']), system_notice['url']) %></div>
-      <% end -%>
       <% @system_messages.each do |message| -%>
         <div class="item">
           <%= link_to(icon_tag(message[:icon]) + h(message[:text]), message[:option]) %>
