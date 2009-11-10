@@ -16,7 +16,7 @@
     <% if !@page.root? %>
       <div class="box_space_title"><%= _('リンク元ページ')%></span></div>
       <div class="box_space_body">
-        <%= link_to(@page.root.title, wiki_path(@page.root.title)) %>
+        <%= link_to(@page.parent.title, wiki_path(@page.parent.title)) %>
       </div>
     <% end -%>
     <% if @page.children.size > 0 %>
