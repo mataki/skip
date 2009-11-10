@@ -9,10 +9,6 @@
 
 <% content_for :contents_left do -%>
   <div class="current-title">
-    <span><%= _('edit content') %></span>
-    <div id="linkPalette" style="display: none;">
-      <%= render :partial => "histories/link_palette" %>
-    </div>
     <% form_for(:history, @history, :url=>wiki_histories_path(@page.title)) do |f| %>
       <div class="content">
         <div class="preview">
