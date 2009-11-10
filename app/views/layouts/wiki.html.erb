@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+<head>
+  <%= render :partial => 'shared/common_header', :locals => {:title => @title } %>
+</head>
+
+<body>
+<%= render :partial => "shared/header" %>
+<%= render :partial=>"shared/flash_message" %>
+
+<div id="main">
+  <div id="loading" style="margin: 15px; height: 4000px;">
+    <%= _('Now loading...') %><br/><%= image_tag 'indicator_bar.gif', :alt => _('Now loading...') %>
+  </div>
+
+  <%= yield :contents_top %>
+
+  <div id="panel" class="ui-corner-all" style="_width: 98%;">
+    <% if @user and !@user.new_record? and !@user.unused? -%>
+      <div class="panel_top">
+        <div class="left">
+          <%= show_picture(@user, :width => 72, :height => 72) %>
+        </div>
+        <div class="right">
+          <h1 id="title"><%= h user_title(@user) %></h1>
+          <ul class="no_style horizontal">
+            <% if @user.retired? -%>
+              <li><b class="retired"><%= _('This user has already left.') %></b></li>
+            <% else -%>
+              <li><%= _('Last Access') %>: <%= @user.before_access %></li>
+            <% end -%>
+            <li><%= link_to_if @user == current_user, _('Visits') + ": " +h(n_("%{count} visit", "%{count} visits", @user.info[:access_count]) % {:count => @user.info[:access_count]}), {:action => 'trace', :controller => "/mypage"} -%></li>
+            <li><%= _('Subscribers') %>: <%=h(n_("%{count} user", "%{count} users", @user.info[:subscriber_count]) % {:count =>@user.info[:subscriber_count]}) -%></li>
+            <li><%= _('Posts') %>: <%=h(n_("%{count} entry", "%{count} entries", @user.info[:blog_count]) % {:count => @user.info[:blog_count]}) -%></li>
+            <li><%= _('Days since you registered') %>: <%=h(n_("%{count} day", "%{count} days", @user.info[:using_day]) % {:count => @user.info[:using_day]}) -%></li>
+          </ul>
+          <br class="clear_left" />
+          <div id="tab_menu"><%= generate_tab_menu(user_tab_menu_source(@user)) %></div>
+        </div>
+      </div>
+    <% elsif @group and !@group.new_record?%>
+      <h1 id="title"><%=h @group.name %></h1>
+      <ul class="no_style horizontal">
+        <li><%= _('Category') %>: <%= h(@group.group_category.name) %></li>
+        <li><%= _('Members') %>: <%=h(n_("%{count} user", "%{count} users", count = @group.group_participations.active.count) % {:count => count}) -%></li>
+        <li><%= _('Joining the group') %>: <%= @group.protected? ? _('Need approval of the Administrator.') : _("No approval needed to join this group.") %></li>
+      </ul>
+      <div class="clear_left"></div>
+      <div id="tab_menu"><%= generate_tab_menu(group_tab_menu_source(@group)) %></div>
+      <div class="clear_left"></div>
+    <% elsif @page %>
+      <h1 id="title"><%=h @page.title %></h1>
+      <div class="clear_left"></div>
+      <div id="tab_menu"><%= generate_tab_menu(wiki_tab_menu_source(@page)) %></div>
+      <div class="clear_left"></div>
+    <% else %>
+      <h1 id="title"><%=h @title %></h1>
+      <% if @tab_menu_source -%>
+        <div id="tab_menu"><%= generate_tab_menu(@tab_menu_source) %></div>
+        <br class="clear_left" />
+      <% end -%>
+    <% end -%>
+
+    <div id="tab_body" class="ui-corner-right">
+     <div id="contents_container" style="min-height: 300px;">
+        <div id="wiki_contents_right">
+          <%= yield :contents_right %>
+        </div><!-- contents_right -->
+
+
+        <div id="wiki_contents_left">
+          <%= yield :contents_left %>
+        </div><!-- contents_left -->
+
+        <% if @content_for_topic_path -%>
+        <div id="topic_path">
+          <%= yield :topic_path %>
+        </div><!-- topic_path -->
+        <% end %>
+
+
+        <div id="contents_bottom">
+        <% if @content_for_contents_bottom -%>
+          <%= yield :contents_bottom %>
+        <% end -%>
+        </div><!-- contents_bottom -->
+      </div><!-- contents_container -->
+    </div><!-- tab_body -->
+  </div><!-- panel -->
+
+  <div style="clear: both;"><br/></div>
+</div><!-- main -->
+
+<% if @site_count -%>
+<div id="statusbar">
+  <span><%= icon_tag 'table'              -%> <%= _("Registered Users: %s users") % h(@site_count.total_user_count)%></span>
+  <span><%= icon_tag 'table_lightning'    -%> <%= _("Today's Access: %s access") % h(@site_count.today_user_count)%></span>
+  <span><%= icon_tag 'database'           -%> <%= _("Total Entries: %s entries") % h(@site_count.total_blog_count) %></span>
+  <span><%= icon_tag 'database_lightning' -%> <%= _("Today's Entries: %s entries") % h(@site_count.today_blog_count) %></span>
+  <span><%= icon_tag 'chart_curve'        -%> <%= link_to(_("Site Information"), :controller => "/statistics") -%></span>
+</div>
+<% end -%>
+
+<%= render :partial => "shared/footer" -%>
+
+</body>
+<%= all_javascript_include_tag 'jquery' %>
+<% javascript_tag do -%>
+$j = jQuery.noConflict();
+var relative_url_root = '<%= relative_url_root %>';
+<% end -%>
+<%= javascript_include_tag 'application' %>
+<%= skip_javascript_include_tag 'skip_util' %>
+<%= skip_reflect_customized_javascript_include_tag %>
+<%= javascript_include_tag :skip_embedded, :cache => "skip_embedded" %>
+<%= skip_jquery_include_tag 'jquery.tablesorter' %>
+<%= skip_javascript_include_tag 'ufo' %>
+<%= yield :javascript_includes %>
+
+<% javascript_tag do -%>
+$j(function(){
+    $j('#loading').hide();
+
+    $j.fn.nyroModal.settings.processHandler = function(settings) {
+        $j.nyroModalSettings({
+            minWidth: 10, minHeight: 10
+        });
+    };
+
+    $j('.zoomable').zoomable();
+
+    // 管理画面用
+    $j('table.sortable').tablesorter();
+
+    <%= yield :javascript_initializers %>
+});
+<% end -%>
+
+<%= google_analytics_tag %>
+</html>

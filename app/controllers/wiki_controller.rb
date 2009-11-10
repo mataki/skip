@@ -1,5 +1,5 @@
 class WikiController < ApplicationController
-
+  layout "wiki"
   def show
     @page = Page.find_by_title(params[:id])
   end
