@@ -1,4 +1,5 @@
 class HistoriesController < ApplicationController
+  layout 'wiki'
   def new
     @page = Page.find_by_title(params[:wiki_id])
   end

@@ -3,7 +3,7 @@
 <% end -%>
 
 <% content_for :contents_left do -%>
-  <%= @page.content %>
+  <%= render_richtext @page.content %>
   <%= link_to(_('[編集する]'), new_wiki_history_path(@page.title)) %>
 <% end -%>
 
