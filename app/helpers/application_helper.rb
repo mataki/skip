@@ -214,6 +214,17 @@ module ApplicationHelper
     sanitize(content, :tags => allowed_tags, :attributes => allowed_attributes)
   end
 
+  def translate_publication_type(entry)
+    case entry.publication_type
+    when 'public'
+      _("Open to All")
+    when 'protected'
+      _("Specified Directly:")
+    when 'private'
+      entry.diary? ? _("Owner Only") : _("Members Only")
+   end
+  end
+
   def get_publication_type_icon(entry)
     icon_name = ''
     view_name = ""
