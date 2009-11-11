@@ -19,22 +19,15 @@ module UserHelper
   # メニューの生成
   def get_social_menu_items selected_menu
     @@menus = [{:name => _("Introduction from other users"),     :menu => "social_chain" },
-               {:name => _("Introduction for other users"),   :menu => "social_chain_against" },
-               {:name => _("Impression of other users"),       :menu => "social_postit" },
-              ]
+               {:name => _("Introduction for other users"),   :menu => "social_chain_against" }]
     get_menu_items @@menus, selected_menu, "social"
   end
 
-  def social_tag_cloud tags, uid
+  def social_tag_cloud user, tags = nil
     output = ""
+    tags ||= ChainTag.tags_used_to(user).all(:select => '*, count(tags.id) as count')
     tag_cloud tags do |name, count, css_class|
-      if params[:selected_tag] == name
-        output << '<span style="background-color: yellow;">'
-        output << link_to(name, {:action => :social, :uid => uid, :menu => 'social_postit'}, :class => css_class)
-        output << '</span>'
-      else
-        output << link_to(name, {:action => :social, :uid => uid, :menu => 'social_postit', :selected_tag => name}, :class => css_class)
-      end
+      output << link_to(name, users_path(:tag_words => name), :class => css_class)
       output << "<span style='color: silver; font-size: 10px;'>(#{count})</span> "
     end
     output
@@ -80,7 +73,7 @@ module UserHelper
   end
 
   def load_user
-    if @user = User.find_by_uid(params[:uid])
+    if @user = current_target_user
       @user.mark_track current_user.id if @user.id != current_user.id
     else
       flash[:warn] = _('User does not exist.')

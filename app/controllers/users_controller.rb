@@ -24,12 +24,14 @@ class UsersController < ApplicationController
       :conditions => @condition.make_conditions,
       :include => @condition.value_of_include,
       :order => @condition.value_of_order_by
-    ).paginate(:page => params[:page], :per_page => @condition.value_of_per_page)
+    ).tagged(params[:tag_words], params[:tag_select]).paginate(:page => params[:page], :per_page => @condition.value_of_per_page)
 
     # 検索条件や表示順の条件によって、user_uidsがMASTERかNICKNAMEのどちらかしたロードされない。
     # そのためviewで正しく描画するためにreloadしておく
     @users.each{|u| u.user_uids.reload}
     flash.now[:notice] = _('User not found.') if @users.empty?
+    @tags = ChainTag.popular_tag_names
+    params[:tag_select] ||= "AND"
   end
 
   # tab_menu

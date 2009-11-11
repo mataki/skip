@@ -42,7 +42,7 @@ class ApplicationController < ActionController::Base
 
   init_gettext "skip" if defined? GetText
 
-  helper_method :scheme, :endpoint_url, :identifier, :checkid_request, :extract_login_from_identifier, :logged_in?, :current_user
+  helper_method :scheme, :endpoint_url, :identifier, :checkid_request, :extract_login_from_identifier, :logged_in?, :current_user, :current_target_user
 protected
   include InitialSettingsHelper
   # アプリケーションで利用するセッションの準備をする
@@ -123,6 +123,10 @@ protected
     session[:user_code] = user ? user.code : nil
     setup_custom_cookies
     @current_user = user || nil
+  end
+
+  def current_target_user
+    @current_target_user ||= User.find_by_uid(params[:uid] || params[:user_id])
   end
 
   #記事へのパーミッションをチェック

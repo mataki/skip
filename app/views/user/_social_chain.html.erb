@@ -1,6 +1,6 @@
 <% content_for :contents_left do -%>
   <%= render :partial => "social_menu", :locals => { :selected_menu => @menu } %>
-  <%= render :partial => "social_tags", :locals => { :tags => @tags, :user => @user  } %>
+  <%= render :partial => "followed_chain_tags_box", :locals => { :user => @user  } %>
 <% end -%>
 
 <% content_for :contents_right do -%>

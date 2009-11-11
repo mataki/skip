@@ -173,26 +173,6 @@ describe ApplicationHelper, '#link_to_bookmark_url' do
       end
     end
   end
-  describe '対象のブックマークがユーザの場合' do
-    before do
-      @bookmark.url = '/user/99'
-    end
-    it 'ユーザへのリンクとなること' do
-      helper.send(:link_to_bookmark_url, @bookmark).include?('user').should be_true
-      helper.send(:link_to_bookmark_url, @bookmark).should have_tag("a[href=/user/99]")
-    end
-    describe 'relative_url_rootが設定されている場合' do
-      before do
-        ActionController::Base.relative_url_root = "/skip"
-      end
-      it 'relative_urlを考慮したユーザへのリンクとなること' do
-        helper.send(:link_to_bookmark_url, @bookmark).should have_tag("a[href=/skip/user/99]")
-      end
-      after do
-        ActionController::Base.relative_url_root = nil
-      end
-    end
-  end
   describe '対象のブックマークがwwwの場合' do
     before do
       @bookmark.url = 'http://localhost'

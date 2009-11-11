@@ -17,18 +17,11 @@ class UserController < ApplicationController
   include UserHelper
 
   before_filter :load_user, :setup_layout
-  after_filter :make_chain_message, :only => [ :create_chain, :update_chain ]
-
-  verify :method => :post, :only => [ :create_chain, :update_chain ],
-         :redirect_to => { :action => :index }
 
   # tab_menu
   def show
     # 紹介してくれた人一覧
     @against_chains = @user.against_chains.order_new.limit(5)
-
-    # 他の人からみた・・・
-    @tags = BookmarkComment.get_tagcloud_tags @user.get_postit_url
   end
 
   # tab_menu
@@ -92,9 +85,6 @@ class UserController < ApplicationController
     @menu = params[:menu] || "social_chain"
     partial_name = @menu
 
-    # contents_left -> social_tags
-    @tags = BookmarkComment.get_tagcloud_tags @user.get_postit_url
-
     # contens_right
     case @menu
     when "social_chain"
@@ -102,8 +92,6 @@ class UserController < ApplicationController
     when "social_chain_against"
       prepare_chain true
       partial_name = "social_chain"
-    when "social_postit"
-      prepare_postit
     else
       render_404 and return
     end
@@ -123,48 +111,6 @@ class UserController < ApplicationController
     flash.now[:notice] = _('No matching groups found.') if @groups.empty?
   end
 
-  # tab_menu
-  def new_chain
-    @chain = Chain.new
-    show_new_chain
-  end
-
-  # tab_menu
-  def edit_chain
-    @chain = Chain.find_by_from_user_id_and_to_user_id(session[:user_id], @user.id)
-    show_edit_chain
-  end
-
-  # post_action
-  def create_chain
-    @chain = Chain.new( :from_user_id => session[:user_id],
-                        :to_user_id => @user.id,
-                        :comment => params[:chain][:comment])
-    if @chain.save
-      flash[:notice] = _('Introduction was created successfully.')
-      redirect_to_index
-    else
-      show_new_chain
-    end
-  end
-
-  # post_action
-  def update_chain
-    @chain = Chain.find_by_from_user_id_and_to_user_id(session[:user_id], @user.id)
-
-    if params[:chain][:comment].empty?
-      @chain.destroy
-      @chain = nil
-      flash[:notice] = _('Introduction was deleted successfully.')
-      redirect_to_index
-    elsif @chain.update_attributes(params[:chain])
-      flash[:notice] = _('Introduction was updated successfully.')
-      redirect_to_index
-    else
-      show_edit_chain
-    end
-  end
-
 private
   def setup_layout
     @title = user_title @user
@@ -180,18 +126,6 @@ private
     redirect_to :action => 'show', :uid => @user.uid
   end
 
-  def show_new_chain
-    @submit_action = 'create_chain'
-    @submit_name = _('Create')
-    render :action=>'new_edit_chain'
-  end
-
-  def show_edit_chain
-    @submit_action = 'update_chain'
-    @submit_name = _('Update')
-    render :action=>'new_edit_chain'
-  end
-
   def setup_blog_left_box options
     find_params = BoardEntry.make_conditions(login_user_symbols, options)
     # カテゴリ
@@ -204,12 +138,6 @@ private
                                       :group => "year, month",
                                       :order => "year desc, month desc",
                                       :joins => "LEFT OUTER JOIN entry_publications ON entry_publications.board_entry_id = board_entries.id")
-  end
-
-  def make_chain_message
-    return unless @chain
-    link_url = url_for(:controller => 'user', :uid => @user.uid, :action => 'social', :menu => 'social_chain')
-    Message.save_message("CHAIN", @user.id, link_url)
   end
 
   def prepare_chain against = false
@@ -237,26 +165,4 @@ private
 
     flash.now[:notice] = _('There are no introductions.') if @chains.empty?
   end
-
-  def prepare_postit
-    join_state =  "left join bookmark_comment_tags on bookmark_comments.id = bookmark_comment_tags.bookmark_comment_id "
-    join_state << "left join tags on tags.id = bookmark_comment_tags.tag_id "
-
-    conditions = []
-    conditions[0] = "bookmarks.url = ? "
-    conditions << @user.get_postit_url
-    if params[:selected_tag]
-      conditions[0] << " and tags.name = ?"
-      conditions << params[:selected_tag]
-    end
-    @postits = BookmarkComment.find(:all,
-                                    :conditions => conditions,
-                                    :order => "bookmark_comments.updated_on DESC",
-                                    :joins => join_state,
-                                    :include => [ :bookmark, :user ])
-    unless @postits && @postits.size > 0
-      flash.now[:notice] = _('You have no bookmarks currently.')
-    end
-  end
-
 end

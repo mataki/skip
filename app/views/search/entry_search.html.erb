@@ -21,7 +21,7 @@
         <th><%= _('Keywords')%></th>
         <td><%= text_field_tag('keyword', params[:keyword], :size => 60) %><%= _('(The search targets are tags, titles and bodies)')%></td>
       </tr>
-      <%= render :partial => 'tag_search' %>
+      <%= render :partial => 'tag_search', :locals => {:tags => @tags} %>
     </table>
     <div class="submit"><%= submit_tag _('Search') %></div>
   <% end -%>

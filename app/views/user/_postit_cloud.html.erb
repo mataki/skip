@@ -1,9 +1,0 @@
-<%# locals : user, tags -%>
-
-<div class="profile_information_space" style="margin-bottom: 10px; position: relative; width: 100%;">
-  <div style="position: absolute; top: 5px; right: 10px;">
-    <%= link_to(_('[See all]'), {:uid => @user.uid, :action => "social", :menu => "social_postit"}) %>
-  </div>
-  <h2 class="topix_title"><%= icon_tag('asterisk_orange') %><%=h _("Mr./Ms. %s from other users' view") % user.name%></h2>
-  <div class="topix_body" style="margin-top: 5px; width: 100%"><%= social_tag_cloud tags, user.uid -%></div>
-</div>

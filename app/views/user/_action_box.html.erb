@@ -1,19 +1,15 @@
 <% if user.active? -%>
 <div class="action_buttons ui-corner-all">
   <ul class="no_style">
-    <% if current_user.follow_chains.map(&:to_user_id).include? user.id -%>
-      <li><%= link_to(content_tag('span', _('Edit introductions')), {:controller => 'user', :action => 'edit_chain' }, {:class => 'rounded'}) %></li>
+    <% if chain = current_user.follow_chains.find_by_to_user_id(user.id) -%>
+      <li><%= link_to(content_tag('span', _('Edit introductions')), edit_user_chain_path(user, chain), {:class => 'rounded'}) %></li>
     <% else -%>
-      <li><%= link_to(content_tag('span', _('Introduce')), {:controller => 'user', :action => 'new_chain' }, {:class => 'rounded'}) %></li>
+      <li><%= link_to(content_tag('span', _('Introduce')), new_user_chain_path(user), {:class => 'rounded'}) %></li>
     <% end -%>
     <% if notice = current_user.notices.find_by_target_id_and_target_type(user.id, user.class.name) -%>
       <li><%= link_to(content_tag('span', _('Stop a notification')), notice_path(notice.id, :uid => user.uid), {:class => "rounded", :method => :delete, :confirm => _('Are you sure?')}) %></li>
     <% else -%>
       <li><%= link_to(content_tag('span', _('Notify new posts')), notices_path(:uid => user.uid), {:class => "rounded", :method => :post}) %></li>
-    <% end -%>
-    <% new_bookmark_url_hash = {:controller => 'bookmark', :action => :new_without_bookmarklet, :url => user.get_postit_url, :title => user.name} -%>
-    <% unless SkipEmbedded::InitialSettings['hide_bookmark_to_user'] -%>
-      <li><%= link_to(content_tag('span', _('Add a bookmark')), new_bookmark_url_hash, {:class => "rounded", :onclick => "sub_window_open('#{url_for(new_bookmark_url_hash)}', 'subwindow', 550, 400); return false;"}) %></li>
     <% end -%>
   </ul>
 </div>

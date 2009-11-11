@@ -256,6 +256,7 @@ module ApplicationHelper
   end
 
   # タグクラウドを生成する
+  # TODO 単なるTagの配列じゃ駄目で、(:select 'count(tags.id) as count')などとしておかないといけない。呼び出し元で気をつけて配列を作らないといけない部分が微妙。なんとかしたい。
   def tag_cloud(tags, classes = %w(tag1 tag2 tag3 tag4 tag5 tag6))
     max, min = 0, 0
     tags.each do |tag|
@@ -378,8 +379,6 @@ private
 
     if bookmark.is_type_page?
       link_to "#{icon_tag('report_link')} #{h title}", "#{relative_url_root}#{bookmark.escaped_url}", :title => title
-    elsif bookmark.is_type_user?
-      link_to "#{icon_tag('user')} #{h title}", "#{relative_url_root}#{bookmark.escaped_url}", :title => title
     else
       link_to "#{icon_tag('world_link')} #{h truncate(title, :length => 115)}", bookmark.escaped_url, :title => title, :target => "_blank"
     end

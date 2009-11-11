@@ -6,12 +6,12 @@
     </td>
   </tr>
   <tr><td colspan="2"><div id="tag_list"></div></td></tr>
-  <tr><td colspan="2"><div style="font-size: 10px;"><%= n_("*Showing %s popular tag.", "*Showing %s popular tags.", @tags.size) % h(@tags.size) %></div></td></tr>
+  <tr><td colspan="2"><div style="font-size: 10px;"><%= n_("*Showing %s popular tag.", "*Showing %s popular tags.", tags.size) % h(tags.size) %></div></td></tr>
 
 <% content_for :javascript_initializers do -%>
       $j('#tag_words').jTagging(
           $j('#tag_list').append(
-              createTagsLink(new Array(<%= @tags.map{|tag| ("'#{tag}'")}.join(',') %>))
+              createTagsLink(new Array(<%= tags.map{|tag| ("'#{h tag}'")}.join(',') %>))
           )
       );
 <% end -%>

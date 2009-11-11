@@ -13,7 +13,6 @@
         <th><%= _('Search Range') %></th>
         <td>
           <%= radio_button_tag('type', 'all', params[:type]=='all') + label_tag("type_all", _('All')) %>
-          <%= radio_button_tag('type', 'user', params[:type]=='user') + label_tag("type_user", _("Users")) %>
           <%= radio_button_tag('type', 'page', params[:type]=='page') + label_tag("type_page", _('Entries')) %>
           <%= radio_button_tag('type', 'internet', params[:type]=='internet') + label_tag("type_internet", _('Internet')) %>
         </td>

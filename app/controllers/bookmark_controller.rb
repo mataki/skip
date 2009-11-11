@@ -64,20 +64,12 @@ class BookmarkController < ApplicationController
     @bookmark_comment = @bookmark.bookmark_comments.find(:first, :conditions => ["bookmark_comments.user_id = ?", session[:user_id]]) || @bookmark.bookmark_comments.build
     @bookmark_comment.attributes = params[:bookmark_comment]
     @bookmark_comment.user_id ||= session[:user_id]
-    @bookmark_comment.public ||= true if @bookmark.is_type_user?
 
     is_new_record = @bookmark.new_record?
     Bookmark.transaction do
       # 親が存在しない場合は、親保存時に子も保存される。既存の親の場合は親を保存しても子が保存されないので子のみ保存
       @bookmark_comment.save! unless is_new_record
       @bookmark.save!
-      if @bookmark.is_type_user?
-        uid = @bookmark.url.slice(/^\/user\/(.*)/, 1)
-        user = User.find_by_uid(uid)
-        link_url = url_for(:controller => 'user', :uid => uid,
-                           :action => 'social', :menu => 'social_postit')
-        Message.save_message("POSTIT", user.id, link_url)
-      end
     end
 
     unless params[:bookmarklet] == 'true'

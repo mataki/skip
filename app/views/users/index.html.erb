@@ -16,9 +16,12 @@
       <tr>
         <th><%= label_tag :condition_sort_type, _('Display Order') %></th>
         <td><%= select :condition, :sort_type, UserSearchCondition.sort_types %></td>
+      </tr>
+      <tr>
         <th><%= _('Retired Users')%></th>
         <td><%= check_box_tag 'condition[not_include_retired]',1,@condition.not_include_retired, :id => 'condition_not_include_retired' %><%= label_tag :condition_not_include_retired, _('Excluding retired users')%></td>
       </tr>
+      <%= render :partial => 'search/tag_search', :locals => {:tags => @tags} %>
     </table>
     <div class="submit"><%= submit_tag _('Search') %></div>
   <% end -%>

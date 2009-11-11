@@ -109,12 +109,8 @@ class Bookmark < ActiveRecord::Base
     self.url.index("/page/") == 0
   end
 
-  def is_type_user?
-    self.url.index("/user/") == 0
-  end
-
   def is_type_internet?
-    !(is_type_page?) and !(is_type_user?)
+    !(is_type_page?)
   end
 
   def escaped_url
@@ -174,7 +170,7 @@ class Bookmark < ActiveRecord::Base
   end
 
   def other_tags
-    @other_tags ||= BookmarkComment.get_bookmark_tags(self.is_type_user?).map(&:name) - user_tags
+    @other_tags ||= BookmarkComment.get_bookmark_tags.map(&:name) - user_tags
   end
 
   def your_tags user

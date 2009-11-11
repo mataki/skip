@@ -5,6 +5,7 @@
   <%= render(:partial => 'entries/recent_box', :locals => { :owner => @user }) -%>
   <%= render :partial => 'user/join_groups_box', :locals => { :user => @user } %>
   <%= render :partial => 'user/follow_chains_box', :locals => { :user => @user } %>
+  <%= render :partial => "user/followed_chain_tags_box", :locals => { :user => @user  } %>
 <% end -%>
 
 <% content_for :contents_right do -%>
@@ -79,13 +80,6 @@
     </div>
   </div>
 
-  <% unless @tags.empty? -%>
-    <%= render :partial => "postit_cloud",
-               :locals => {
-                 :user => @user,
-                 :tags => @tags
-               } %>
-  <% end -%>
   <% unless @against_chains.empty? -%>
   <div class="relative100">
     <div class="operation"><%= link_to _('[See all]'), :action => 'social', :menu => 'social_chain', :uid => @user.uid %></div>

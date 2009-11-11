@@ -16,6 +16,34 @@
 class Tag < ActiveRecord::Base
   has_many :board_entries, :through => :entry_tags
   has_many :entry_tags
+  has_many :chains, :through => :chain_tags
+  has_many :chain_tags
+
+  named_scope :follow_chains_by, proc { |user|
+    { :conditions => ['chains.from_user_id = ?', user.id], :joins => [:chains], :group => 'tags.id' }
+  }
+
+  named_scope :against_chains_by, proc { |user|
+    { :conditions => ['chains.to_user_id = ?', user.id], :joins => [:chains], :group => 'tags.id' }
+  }
+
+  named_scope :except_follow_chains_by, proc { |user|
+    { :conditions => ['chains.from_user_id != ?', user.id], :joins => [:chains], :group => 'tags.id' }
+  }
+
+  named_scope :on_chains, proc {
+    { :joins => [:chains] }
+  }
+
+  named_scope :order_popular, proc {
+    { :group => 'tags.id', :order => 'count(tags.id) DESC' }
+  }
+
+  named_scope :order_new, proc {
+    { :order => 'updated_at DESC' }
+  }
+
+  named_scope :limit, proc { |num| { :limit => num } }
 
   def tag
     "[#{name}]"
@@ -55,6 +83,7 @@ class Tag < ActiveRecord::Base
     return errors
   end
 
+  # TODO DB内のタグ文字列を全てカンマ区切りで持つようにして消したい
   def self.create_by_string tags_as_string, middle_records
     middle_records.clear
     split_tags(tags_as_string).each do |tag_name|
@@ -63,10 +92,21 @@ class Tag < ActiveRecord::Base
     end
   end
 
+  # TODO DB内のタグ文字列を全てカンマ区切りで持つようにしてこれを使うようにしたい
+  def self.create_by_comma_tags comma_tags, middle_records
+    middle_records.clear
+    comma_tags.split(',').each do |tag_name|
+      tag = find_by_name(tag_name) || create(:name => tag_name)
+      middle_records.create(:tag_id => tag.id)
+    end
+  end
+
+  # TODO DB内のタグ文字列を全てカンマ区切りで持つようにして消したい
   def self.comma_tags tags_as_string
     tags_as_string ? tags_as_string.gsub("][", ",").gsub("[", "").gsub("]", "") : ""
   end
 
+  # TODO DB内のタグ文字列を全てカンマ区切りで持つようにして消したい
   def self.square_brackets_tags tags_as_string
     tags_as_string ? tags_as_string.split(',').map{|t| "[#{t.strip.gsub("[", "").gsub("]", "").gsub("[]", "")}]"}.join('') : ''
   end

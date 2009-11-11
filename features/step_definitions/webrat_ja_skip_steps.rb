@@ -2,7 +2,7 @@ Then /^"([^\"]*)"と表示されること$/ do |text|
   Then %Q(I should see "#{text}")
 end
 
-When /^"([^\"]*)"リンクを(.*)クリックする$/ do |link, method|
+When /^"([^\"]*)"リンクを"([^\"]*)"クリックする$/ do |link, method|
   method = method.blank? ? :get : method.downcase.to_sym
   click_link(link, :method => method)
 end

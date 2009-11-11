@@ -132,7 +132,10 @@
       <% @recent_users.each do |user| -%>
         <div class="topix_line">
           <div class="title">
-            <%= user_link_to(user) %> (<%= h(user.section) %>) <%= "&lt;&lt;" + link_to('[' + _('Introduce') + ']', {:controller => 'user', :action => 'new_chain', :uid => h(user.uid) }) unless current_user.follow_chains.map(&:to_user_id).include? user.id %>
+            <%= user_link_to(user) %> (<%= h(user.section) %>)
+            <% unless chain = current_user.follow_chains.find_by_to_user_id(user.id) -%>
+              <%= "&lt;&lt;" + link_to('[' + _('Introduce') + ']', new_user_chain_path(user)) %>
+            <% end -%>
           </div>
         </div>
       <% end -%>
