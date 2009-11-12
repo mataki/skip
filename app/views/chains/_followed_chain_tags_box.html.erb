@@ -4,7 +4,7 @@
   <div class="box_space_title"><%= icon_tag 'tag_blue' %><%= _('Tags') %></div>
   <div class="box_space_body tag_cloud">
   <% tag_cloud tags do |name, count, css_class| -%>
-    <%= link_to(name, users_path(:tag_words => name), :class => css_class) %>
+    <%= link_to(h(name), users_path(:tag_words => name), :class => css_class) %>
     <span class="count">(<%= h count %>)</span>
   <% end -%>
   </div>
