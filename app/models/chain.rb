@@ -1,6 +1,6 @@
 # SKIP(Social Knowledge & Innovation Platform)
 # Copyright (C) 2008-2009 TIS Inc.
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -9,7 +9,7 @@
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-# 
+#
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -17,7 +17,7 @@ class Chain < ActiveRecord::Base
   belongs_to :from_user, :class_name => "User", :foreign_key => "from_user_id"
   belongs_to :to_user,   :class_name => "User", :foreign_key => "to_user_id"
   has_many :chain_tags, :dependent => :destroy
-  has_many :tag_strings, :source => :tag,  :through => :chain_tags
+  has_many :tags, :through => :chain_tags
 
   validates_presence_of :comment
 
@@ -26,10 +26,10 @@ class Chain < ActiveRecord::Base
   named_scope :limit, proc { |num| { :limit => num } }
 
   def validate
-    Tag.validate_tags(tags).each{ |error| errors.add(:tags, error) }
+    Tag.validate_tags(tags_as_s).each{ |error| errors.add(:tags_as_s, error) }
   end
 
   def after_save
-    Tag.create_by_comma_tags self.tags, chain_tags
+    Tag.create_by_comma_tags self.tags_as_s, chain_tags
   end
 end

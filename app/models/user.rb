@@ -92,7 +92,7 @@ class User < ActiveRecord::Base
     condition_params = []
     words = tag_words.split(',')
     words.each do |word|
-      condition_str << (word == words.last ? ' chains.tags like ?' : " chains.tags like ? #{tag_select}")
+      condition_str << (word == words.last ? ' chains.tags_as_s like ?' : " chains.tags_as_s like ? #{tag_select}")
       condition_params << SkipUtil.to_like_query_string(word)
     end
     { :conditions => [condition_str, condition_params].flatten, :include => :against_chains }

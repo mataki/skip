@@ -21,7 +21,7 @@ class ConvertBookmarkOfUserFromBookmarksToChains < ActiveRecord::Migration
                 chain = to_user.against_chains.build :from_user => from_user, :comment => "<p>#{bookmark_comment.comment}</p>"
                 result << "create successful"
               end
-              chain.tags = bookmark_comment.bookmark_comment_tags.map{|t|t.tag.name}.join(',')
+              chain.tags_as_s = bookmark_comment.bookmark_comment_tags.map{|t|t.tag.name}.join(',')
               chain.save!
               puts "#{result} :chain_id => #{chain.id} by :bookmark_id => #{bookmark.id}"
             end
