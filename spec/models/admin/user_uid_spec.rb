@@ -124,8 +124,6 @@ describe Admin::UserUid, "#rename" do
     @message.link_url.should == "/user/#{@new_uid}"
     @sf.reload
     @sf.owner_symbol.should == @new_symbol
-    @bookmark.reload
-    @bookmark.url.should == "/user/#{@new_uid}"
   end
 
   def create_items_expect_change
@@ -143,7 +141,6 @@ describe Admin::UserUid, "#rename" do
     @sf.accessed_user = @u
     @sf.save!
     @sf.share_file_publications.create!({:symbol => "uid:#{uid_str}"})
-    @bookmark = Bookmark.create!({:url => "/user/#{uid_str}", :title => uid_str})
 
     @u.user_uids.should_not be_empty
     @b.entry_editors.should_not be_empty
