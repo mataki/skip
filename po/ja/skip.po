@@ -2394,7 +2394,7 @@ msgstr ""
 
 #: app/models/chain.rb:-
 msgid "Chain|Comment"
-msgstr "紹介した人"
+msgstr "紹介文"
 
 #: app/models/chain.rb:-
 msgid "Chain|Created on"
