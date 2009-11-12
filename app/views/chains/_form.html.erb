@@ -4,7 +4,7 @@
   <% end -%>
   <%= render :partial => 'user/join_groups_box', :locals => { :user => current_target_user } %>
   <%= render :partial => 'user/follow_chains_box', :locals => { :user => current_target_user } %>
-  <%= render :partial => "user/followed_chain_tags_box", :locals => { :user => current_target_user } %>
+  <%= render :partial => "chains/followed_chain_tags_box" %>
 <% end -%>
 
 <%= template_error_messages_for :chain %>

@@ -23,16 +23,6 @@ module UserHelper
     get_menu_items @@menus, selected_menu, "social"
   end
 
-  def social_tag_cloud user, tags = nil
-    output = ""
-    tags ||= ChainTag.tags_used_to(user).all(:select => '*, count(tags.id) as count')
-    tag_cloud tags do |name, count, css_class|
-      output << link_to(name, users_path(:tag_words => name), :class => css_class)
-      output << "<span style='color: silver; font-size: 10px;'>(#{count})</span> "
-    end
-    output
-  end
-
   def profile_show_tag input_type_processer, user_profile_value
     if input_type_processer.class == UserProfileMaster::RichTextProcesser
       value_str = user_profile_value ? user_profile_value.value : ""
