@@ -40,6 +40,6 @@
   <p><%= settings_label_with_select_tag :activation_lifetime, (1..10).to_a.map{ |i| i.to_s } %></p>
   <p><%= settings_label_with_check_box_tag :enable_change_picture %></p>
   <p><%= settings_label_with_check_box_tag :enable_change_section %></p>
-  <p><%= settings_label_with_select_tag :access_record_limit , %w(10 30 50 100).to_a.map{ |i| i.to_s } %></p>
-  <p><%= settings_label_with_select_tag :entry_showed_tab_limit_per_page, %w(10 20 30 50 100).to_a.map{ |i| i.to_s } %></p>
+  <p><%= settings_label_with_select_tag :access_record_limit , %w(5 10 20 30 50 100).to_a.map{ |i| i.to_s } %></p>
+  <p><%= settings_label_with_select_tag :entry_showed_tab_limit_per_page, %w(5 10 20 30 50 100).to_a.map{ |i| i.to_s } %></p>
 </div>
