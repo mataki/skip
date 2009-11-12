@@ -451,5 +451,22 @@ $j(function(){
         }
         return true;
     };
+
+    $j.extend({
+      getUrlVars: function(url_or_href){
+        var vars = [], hash;
+        var hashes = url_or_href.slice(url_or_href.indexOf('?') + 1).split('&');
+        for(var i = 0; i < hashes.length; i++)
+        {
+          hash = hashes[i].split('=');
+          vars.push(hash[0]);
+          vars[hash[0]] = hash[1];
+        }
+        return vars;
+      },
+      getUrlVar: function(url_or_href, name){
+        return $j.getUrlVars(url_or_href)[name];
+      }
+    });
 });
 

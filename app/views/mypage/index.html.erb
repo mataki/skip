@@ -170,73 +170,18 @@
     $j('#tabs').tabs({ cookie:{ expires:30 } });
     $j('#tabs').show();
 
-    var loadEntries = function(data){
-        var id_name = data['target'];
-        $j.ajax({
-            url: '<%= url_for(:controller => 'mypage', :action => 'load_entries') -%>',
-            data: data,
-            success: function(html) {
-                $j('#' + id_name).html(html).appendClickForToggleTag();
-                $j('#' + id_name + '_body').highlight();
-            },
-            complete: function(request) {
-                unbindEentyPageChange();
-                setupEntryPageChange();
-            }
-        });
-    };
+    $j('.pagination a').live('click', function() {
+      var url = $j(this).attr('href');
+      var target = $j.getUrlVar(url, 'target');
+      $j.ajax({
+          url: url,
+          success: function(html) {
+              $j('#' + target).html(html).appendClickForToggleTag();
+              $j('#' + target + '_body').highlight();
+          }
+      });
+      return false;
+    });
 
-    var unbindEentyPageChange = function(){
-        $j('.first_link').unbind('click');
-        $j('.back_link').unbind('click');
-        $j('.next_link').unbind('click');
-        $j('.last_link').unbind('click');
-    };
-
-    var setupEntryPageChange = function(){
-        // 最初へ,前へ,次へ,最後へリンククリック時のajaxアクション
-        $j('.first_link')
-        .click(function() {
-            var id_name = this.id.split('-')[0];
-            loadEntries(requestData(1, id_name));
-            return false;
-        });
-
-        $j('.back_link')
-        .click(function() {
-            var id_name = this.id.split('-')[0];
-            var base_id = '#' + id_name + '_body';
-            var page = $j('#page_back', base_id).val();
-            loadEntries(requestData(page, id_name));
-            return false;
-        });
-
-        $j('.next_link')
-        .click(function() {
-            var id_name = this.id.split('-')[0];
-            var base_id = '#' + id_name + '_body';
-            var page = $j('#page_next', base_id).val();
-            loadEntries(requestData(page, id_name));
-            return false;
-        });
-
-        $j('.last_link')
-        .click(function() {
-            var id_name = this.id.split('-')[0];
-            var base_id = '#' + id_name + '_body';
-            var page = $j('#page_last', base_id).val();
-            loadEntries(requestData(page, id_name));
-            return false;
-        });
-    };
-    setupEntryPageChange();
-
-    var requestData = function(page, id_name){
-        var base_id = '#' + id_name + '_body';
-        var per_page = $j('#per_page', base_id).val();
-        var recent_day = $j('#recent_day', base_id).val();
-        return { page : page, page_name : 'list_block', target : id_name, per_page : per_page, recent_day : recent_day };
-    };
-
-    setupLoadCalendar("<%= url_for(:action => 'load_calendar') %>");
+    // setupLoadCalendar("<%= url_for(:action => 'load_calendar') %>");
 <% end -%>
