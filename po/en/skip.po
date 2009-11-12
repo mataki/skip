@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.3.0\n"
-"POT-Creation-Date: 2009-11-11 17:06+0900\n"
+"POT-Creation-Date: 2009-11-12 09:34+0900\n"
 "PO-Revision-Date: 2009-06-29 13:31+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1683,7 +1683,7 @@ msgstr ""
 #: app/helpers/groups_helper.rb:22
 #: app/views/group/_manage_participations.html.erb:47
 #: app/views/group/_manage_participations.html.erb:58
-#: app/views/group/show.html.erb:59 app/views/users/_user.html.erb:6
+#: app/views/group/show.html.erb:40 app/views/users/_user.html.erb:6
 msgid "Administrator"
 msgstr ""
 
@@ -1826,7 +1826,7 @@ msgstr ""
 msgid "Are you sure destroing with nest comments?"
 msgstr ""
 
-#: app/views/group/show.html.erb:51
+#: app/views/group/_action_box.html.erb:20
 msgid "Are you sure leave the group?"
 msgstr ""
 
@@ -1852,6 +1852,7 @@ msgid "Are you sure to send email to all users?"
 msgstr ""
 
 #: app/views/chains/edit.html.erb:8 app/views/user/_action_box.html.erb:10
+#: app/views/group/_action_box.html.erb:15
 #: app/views/admin/pictures/index.html.erb:29
 #: app/views/admin/board_entries/index.html.erb:34
 #: app/views/admin/share_files/index.html.erb:36
@@ -2357,8 +2358,8 @@ msgid "Chain|From user"
 msgstr ""
 
 #: app/models/chain.rb:-
-msgid "Chain|Tags"
-msgstr ""
+msgid "Chain|Tags as s"
+msgstr "Tags"
 
 #: app/models/chain.rb:-
 msgid "Chain|To user"
@@ -3666,7 +3667,7 @@ msgstr ""
 msgid "Introduction was updated successfully."
 msgstr ""
 
-#: app/views/chains/_form.html.erb:11
+#: app/views/chains/_form.html.erb:12
 msgid "Introduction: "
 msgstr ""
 
@@ -3792,7 +3793,7 @@ msgstr ""
 msgid "Join status"
 msgstr ""
 
-#: app/views/group/show.html.erb:40
+#: app/views/group/_action_box.html.erb:4
 msgid "Join this group"
 msgstr ""
 
@@ -3845,7 +3846,7 @@ msgstr ""
 msgid "Leave a message upon participation."
 msgstr ""
 
-#: app/views/group/show.html.erb:51
+#: app/views/group/_action_box.html.erb:20
 msgid "Leave the group"
 msgstr ""
 
@@ -4048,7 +4049,7 @@ msgstr ""
 msgid "Member"
 msgstr ""
 
-#: app/helpers/group_helper.rb:39 app/views/group/show.html.erb:72
+#: app/helpers/group_helper.rb:39 app/views/group/show.html.erb:53
 #: app/views/layouts/layout.html.erb:49
 msgid "Members"
 msgstr ""
@@ -4129,7 +4130,7 @@ msgstr ""
 msgid "Mr./Ms. %s"
 msgstr ""
 
-#: app/views/chains/_form.html.erb:18
+#: app/views/chains/_form.html.erb:19
 #: app/views/board_entries/_form.html.erb:35
 #: app/views/share_file/_form.html.erb:49 app/views/bookmark/new.html.erb:45
 msgid "Multiple values can be given in foo,bar format"
@@ -4219,7 +4220,7 @@ msgstr ""
 msgid "New Introduction"
 msgstr ""
 
-#: app/views/group/show.html.erb:45
+#: app/views/group/_action_box.html.erb:9
 msgid "New Posts"
 msgstr ""
 
@@ -4377,6 +4378,7 @@ msgid "Notify activation"
 msgstr ""
 
 #: app/views/user/_action_box.html.erb:12
+#: app/views/group/_action_box.html.erb:17
 msgid "Notify new posts"
 msgstr ""
 
@@ -4569,7 +4571,7 @@ msgstr ""
 msgid "Operation inexecutable."
 msgstr ""
 
-#: app/controllers/application_controller.rb:158
+#: app/controllers/application_controller.rb:166
 #: app/controllers/board_entries_controller.rb:89
 #: app/controllers/board_entries_controller.rb:139
 #: app/controllers/share_file_controller.rb:256
@@ -4953,7 +4955,7 @@ msgstr ""
 msgid "Reading"
 msgstr ""
 
-#: app/views/group/show.html.erb:99
+#: app/views/group/show.html.erb:80
 #: app/views/mypage/_publicated_entries_tabs.html.erb:1
 msgid "Recent Entries"
 msgstr ""
@@ -5292,8 +5294,8 @@ msgstr ""
 msgid "September"
 msgstr ""
 
-#: app/controllers/application_controller.rb:144
-#: app/controllers/application_controller.rb:312
+#: app/controllers/application_controller.rb:152
+#: app/controllers/application_controller.rb:320
 msgid "Session expired. You need to log in again."
 msgstr ""
 
@@ -5649,6 +5651,7 @@ msgid "Stop"
 msgstr ""
 
 #: app/views/user/_action_box.html.erb:10
+#: app/views/group/_action_box.html.erb:15
 msgid "Stop a notification"
 msgstr ""
 
@@ -5740,11 +5743,11 @@ msgstr ""
 msgid "Tags"
 msgstr ""
 
-#: app/views/chains/_form.html.erb:19 app/views/bookmark/new.html.erb:46
+#: app/views/chains/_form.html.erb:20 app/views/bookmark/new.html.erb:46
 msgid "Tags marked by others: "
 msgstr ""
 
-#: app/views/chains/_form.html.erb:21 app/views/bookmark/new.html.erb:48
+#: app/views/chains/_form.html.erb:22 app/views/bookmark/new.html.erb:48
 msgid "Tags you used before (top 20): "
 msgstr ""
 
@@ -5991,7 +5994,7 @@ msgstr ""
 msgid "Top"
 msgstr ""
 
-#: app/views/chains/_form.html.erb:20 app/views/bookmark/new.html.erb:47
+#: app/views/chains/_form.html.erb:21 app/views/bookmark/new.html.erb:47
 msgid "Top 10 tags: "
 msgstr ""
 
@@ -6164,7 +6167,8 @@ msgstr ""
 msgid "Upload"
 msgstr ""
 
-#: app/views/group/show.html.erb:49 app/views/mypage/_action_box.html.erb:7
+#: app/views/group/_action_box.html.erb:13
+#: app/views/mypage/_action_box.html.erb:7
 msgid "Upload a file"
 msgstr ""
 
@@ -6766,11 +6770,13 @@ msgstr ""
 msgid "Write a comment"
 msgstr ""
 
-#: app/views/group/show.html.erb:46 app/views/mypage/_action_box.html.erb:4
+#: app/views/group/_action_box.html.erb:10
+#: app/views/mypage/_action_box.html.erb:4
 msgid "Write a notice"
 msgstr ""
 
-#: app/views/group/show.html.erb:47 app/views/mypage/_action_box.html.erb:5
+#: app/views/group/_action_box.html.erb:11
+#: app/views/mypage/_action_box.html.erb:5
 msgid "Write a question"
 msgstr ""
 
@@ -6953,7 +6959,7 @@ msgstr ""
 msgid "[%s] User registration completed"
 msgstr ""
 
-#: app/views/group/show.html.erb:80
+#: app/views/group/show.html.erb:61
 msgid "[...See all]"
 msgstr ""
 

@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.3.0\n"
-"POT-Creation-Date: 2009-11-11 17:06+0900\n"
+"POT-Creation-Date: 2009-11-12 09:34+0900\n"
 "PO-Revision-Date: 2009-10-28 20:01+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1709,7 +1709,7 @@ msgstr ""
 #: app/helpers/groups_helper.rb:22
 #: app/views/group/_manage_participations.html.erb:47
 #: app/views/group/_manage_participations.html.erb:58
-#: app/views/group/show.html.erb:59 app/views/users/_user.html.erb:6
+#: app/views/group/show.html.erb:40 app/views/users/_user.html.erb:6
 msgid "Administrator"
 msgstr "管理者"
 
@@ -1861,7 +1861,7 @@ msgstr "4月"
 msgid "Are you sure destroing with nest comments?"
 msgstr "関連するコメントも一緒に削除されますが、よろしいですか？"
 
-#: app/views/group/show.html.erb:51
+#: app/views/group/_action_box.html.erb:20
 msgid "Are you sure leave the group?"
 msgstr "グループを退会しますがよろしいですか?"
 
@@ -1887,6 +1887,7 @@ msgid "Are you sure to send email to all users?"
 msgstr "利用者全体にメールが送信されますが、宜しいですか?"
 
 #: app/views/chains/edit.html.erb:8 app/views/user/_action_box.html.erb:10
+#: app/views/group/_action_box.html.erb:15
 #: app/views/admin/pictures/index.html.erb:29
 #: app/views/admin/board_entries/index.html.erb:34
 #: app/views/admin/share_files/index.html.erb:36
@@ -2396,8 +2397,8 @@ msgid "Chain|From user"
 msgstr "紹介した人"
 
 #: app/models/chain.rb:-
-msgid "Chain|Tags"
-msgstr ""
+msgid "Chain|Tags as s"
+msgstr "タグ"
 
 #: app/models/chain.rb:-
 msgid "Chain|To user"
@@ -3750,7 +3751,7 @@ msgstr "紹介文を削除しました"
 msgid "Introduction was updated successfully."
 msgstr "紹介文を更新しました"
 
-#: app/views/chains/_form.html.erb:11
+#: app/views/chains/_form.html.erb:12
 msgid "Introduction: "
 msgstr "紹介文："
 
@@ -3885,7 +3886,7 @@ msgstr "鈴木 次郎"
 msgid "Join status"
 msgstr "参加状況"
 
-#: app/views/group/show.html.erb:40
+#: app/views/group/_action_box.html.erb:4
 msgid "Join this group"
 msgstr "参加する"
 
@@ -3938,7 +3939,7 @@ msgstr "【%s】退会処理"
 msgid "Leave a message upon participation."
 msgstr "参加に向けてメッセージを入力してください。"
 
-#: app/views/group/show.html.erb:51
+#: app/views/group/_action_box.html.erb:20
 msgid "Leave the group"
 msgstr "退会する"
 
@@ -4147,7 +4148,7 @@ msgstr "5月"
 msgid "Member"
 msgstr "参加者"
 
-#: app/helpers/group_helper.rb:39 app/views/group/show.html.erb:72
+#: app/helpers/group_helper.rb:39 app/views/group/show.html.erb:53
 #: app/views/layouts/layout.html.erb:49
 msgid "Members"
 msgstr "参加者"
@@ -4229,7 +4230,7 @@ msgstr "参加グループへ移動 ..."
 msgid "Mr./Ms. %s"
 msgstr "%s さん"
 
-#: app/views/chains/_form.html.erb:18
+#: app/views/chains/_form.html.erb:19
 #: app/views/board_entries/_form.html.erb:35
 #: app/views/share_file/_form.html.erb:49 app/views/bookmark/new.html.erb:45
 msgid "Multiple values can be given in foo,bar format"
@@ -4319,7 +4320,7 @@ msgstr "新しい順に並べる"
 msgid "New Introduction"
 msgstr "新着紹介文"
 
-#: app/views/group/show.html.erb:45
+#: app/views/group/_action_box.html.erb:9
 msgid "New Posts"
 msgstr "記事を書く"
 
@@ -4481,6 +4482,7 @@ msgid "Notify activation"
 msgstr "利用開始通知"
 
 #: app/views/user/_action_box.html.erb:12
+#: app/views/group/_action_box.html.erb:17
 msgid "Notify new posts"
 msgstr "新着時に通知"
 
@@ -4673,7 +4675,7 @@ msgstr "キャンセルされました。もう一度認証してください。
 msgid "Operation inexecutable."
 msgstr "ご指定の操作は実行できません。"
 
-#: app/controllers/application_controller.rb:158
+#: app/controllers/application_controller.rb:166
 #: app/controllers/board_entries_controller.rb:89
 #: app/controllers/board_entries_controller.rb:139
 #: app/controllers/share_file_controller.rb:256
@@ -5063,7 +5065,7 @@ msgstr "タイトルを再取得する"
 msgid "Reading"
 msgstr "読書"
 
-#: app/views/group/show.html.erb:99
+#: app/views/group/show.html.erb:80
 #: app/views/mypage/_publicated_entries_tabs.html.erb:1
 msgid "Recent Entries"
 msgstr "新着記事"
@@ -5411,8 +5413,8 @@ msgstr ""
 msgid "September"
 msgstr "9月"
 
-#: app/controllers/application_controller.rb:144
-#: app/controllers/application_controller.rb:312
+#: app/controllers/application_controller.rb:152
+#: app/controllers/application_controller.rb:320
 msgid "Session expired. You need to log in again."
 msgstr "ログインが必要です。ログインし直して下さい。"
 
@@ -5779,6 +5781,7 @@ msgid "Stop"
 msgstr "停止"
 
 #: app/views/user/_action_box.html.erb:10
+#: app/views/group/_action_box.html.erb:15
 msgid "Stop a notification"
 msgstr "新着通知を止める"
 
@@ -5869,11 +5872,11 @@ msgstr "テレビ"
 msgid "Tags"
 msgstr "タグ"
 
-#: app/views/chains/_form.html.erb:19 app/views/bookmark/new.html.erb:46
+#: app/views/chains/_form.html.erb:20 app/views/bookmark/new.html.erb:46
 msgid "Tags marked by others: "
 msgstr "みんながつけたタグ："
 
-#: app/views/chains/_form.html.erb:21 app/views/bookmark/new.html.erb:48
+#: app/views/chains/_form.html.erb:22 app/views/bookmark/new.html.erb:48
 msgid "Tags you used before (top 20): "
 msgstr "あなたが使ったタグ（よく使う20件）："
 
@@ -6137,7 +6140,7 @@ msgstr "やりすぎ！"
 msgid "Top"
 msgstr "トップ"
 
-#: app/views/chains/_form.html.erb:20 app/views/bookmark/new.html.erb:47
+#: app/views/chains/_form.html.erb:21 app/views/bookmark/new.html.erb:47
 msgid "Top 10 tags: "
 msgstr "みんながよく使うタグ（人気の10件）："
 
@@ -6309,7 +6312,8 @@ msgstr "更新中..."
 msgid "Upload"
 msgstr "アップロード"
 
-#: app/views/group/show.html.erb:49 app/views/mypage/_action_box.html.erb:7
+#: app/views/group/_action_box.html.erb:13
+#: app/views/mypage/_action_box.html.erb:7
 msgid "Upload a file"
 msgstr "ファイルをアップ"
 
@@ -6922,11 +6926,13 @@ msgstr "ブログを書く"
 msgid "Write a comment"
 msgstr "コメントを書く"
 
-#: app/views/group/show.html.erb:46 app/views/mypage/_action_box.html.erb:4
+#: app/views/group/_action_box.html.erb:10
+#: app/views/mypage/_action_box.html.erb:4
 msgid "Write a notice"
 msgstr "お知らせを書く"
 
-#: app/views/group/show.html.erb:47 app/views/mypage/_action_box.html.erb:5
+#: app/views/group/_action_box.html.erb:11
+#: app/views/mypage/_action_box.html.erb:5
 msgid "Write a question"
 msgstr "質問を書く"
 
@@ -7131,7 +7137,7 @@ msgstr "[%s] パスワード再設定のメールです"
 msgid "[%s] User registration completed"
 msgstr "[%s] ユーザ登録が完了しました"
 
-#: app/views/group/show.html.erb:80
+#: app/views/group/show.html.erb:61
 msgid "[...See all]"
 msgstr "[...全てを見る]"
 
