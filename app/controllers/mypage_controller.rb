@@ -29,6 +29,8 @@ class MypageController < ApplicationController
          :redirect_to => { :action => :index }
   verify :method => [:post, :put], :only => [ :update_customize], :redirect_to => { :action => :index }
 
+  helper_method :recent_day
+
   # ================================================================================
   #  tab menu actions
   # ================================================================================
@@ -56,7 +58,7 @@ class MypageController < ApplicationController
     #  main area entries
     # ============================================================
     @questions = find_questions_as_locals({:recent_day => recent_day})
-    @access_blogs = find_access_blogs_as_locals({:per_page => 5})
+    @access_blogs = find_access_blogs_as_locals({:per_page => 10})
     @recent_blogs = find_recent_blogs_as_locals({:per_page => per_page})
     @timelines = find_timelines_as_locals({:per_page => per_page}) if current_user.custom.display_entries_format == 'tabs'
     @recent_bbs = recent_bbs
@@ -355,12 +357,12 @@ class MypageController < ApplicationController
     end
   end
 
-  private
   # [最近]を表す日数
   def recent_day
     10
   end
 
+  private
   def per_page
     current_user.custom.display_entries_format == 'tabs' ? 20 : 8
   end

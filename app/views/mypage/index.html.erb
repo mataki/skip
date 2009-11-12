@@ -67,7 +67,12 @@
 
     <% unless @access_blogs[:pages].empty? -%>
       <div class="right_box ui-corner-all" id="access_blogs">
-        <h2 class="ui-corner-top"><%= h @access_blogs[:title_name] -%></h2>
+        <h2 class="ui-corner-top">
+          <%= h(@access_blogs[:title_name]) %><br />
+          <span class="desc">
+            (<%= Time.now.ago(recent_day.day).strftime(_('%B %d %Y')) %> - <%= Time.now.strftime(_('%B %d %Y')) %>)
+          </span>
+        </h2>
         <div class="list">
           <table>
             <% @access_blogs[:pages].each_with_index do |entry, i| %>
@@ -76,7 +81,7 @@
                   <div class="picture"><%= i+1 %>.<%= show_picture(entry.user, :width=>24, :height => 24) %></div>
                 </td>
                 <td class="right" width="108px">
-                  <div class="title"><%= link_to h(entry.title), entry.get_url_hash %></div>
+                  <div class="title"><%= link_to h(entry.title), entry.get_url_hash %>(<%= h entry.state.access_count %>)</div>
                   <div class="name">by <%= user_link_to entry.user %></div>
                 </td>
               </tr>
