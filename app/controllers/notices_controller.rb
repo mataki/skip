@@ -15,8 +15,6 @@
 
 class NoticesController < ApplicationController
 
-  verify :method => :post, :only => %w(create)
-
   def create
     target = current_target_user || current_target_group
     if target

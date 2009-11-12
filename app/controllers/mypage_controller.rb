@@ -23,10 +23,9 @@ class MypageController < ApplicationController
   before_filter :load_user
   skip_before_filter :verify_authenticity_token, :only => :apply_ident_url
 
-  verify :method => :post, :only => [ :destroy_portrait, :save_portrait, :update_profile,
-                                      :update_message_unsubscribes, :apply_password,
-                                      :change_read_state, :apply_email],
-         :redirect_to => { :action => :index }
+  verify :method => :post,
+    :only => [ :update_profile, :update_message_unsubscribes, :apply_password, :change_read_state, :apply_email],
+    :redirect_to => { :action => :index }
   verify :method => [:post, :put], :only => [ :update_customize], :redirect_to => { :action => :index }
 
   helper_method :recent_day
