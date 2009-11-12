@@ -17,7 +17,7 @@
           <%= radio_button_tag('type', 'internet', params[:type]=='internet') + label_tag("type_internet", _('Internet')) %>
         </td>
       </tr>
-      <%= render :partial => 'search/tag_search' %>
+      <%= render :partial => 'search/tag_search', :locals => {:tags => @tags} %>
     </table>
     <div class="submit"><%= submit_tag _('Search') %></div>
   <% end -%>
