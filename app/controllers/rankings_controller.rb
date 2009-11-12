@@ -61,6 +61,7 @@ class RankingsController < ApplicationController
   end
 
   def all
+    @dates = Ranking.extracted_dates
   end
 
   def monthly
@@ -107,8 +108,7 @@ class RankingsController < ApplicationController
   def setup_layout
     @main_menu = @title = _('Rankings')
 
-    @tab_menu_source = [ {:label => _('Monthly Rankings'), :options => {:action => 'monthly'}},
-                         {:label => _('Overall Rankings'), :options => {:action => 'all'}},
+    @tab_menu_source = [ {:label => _('Monthly Rankings')},
                          {:label => _('Popular Bookmarks'), :options => {:action => 'bookmark'}} ]
   end
 

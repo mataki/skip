@@ -1,15 +1,10 @@
+<% content_for :contents_left do -%> 
+  <%= render :partial => 'month_list' %>
+<% end -%>
+
+<% content_for :contents_right do -%>
 <div class="box message ui-corner-all">
   <%=h _("Monthly ranking of %s (Since the first day of current month up to yesterday. Updated daily)") % Admin::Setting.abbr_app_title %>
-</div>
-<div class="search_cond_space ui-corner-all">
-  <table class="search_cond_box">
-    <tr>
-      <th><%= _('Period')%></th>
-      <td>
-        <%= select_tag 'date_list', ranking_navi_for_month(@dates, @year, @month), :class => 'select_navi' -%>
-      </td>
-    </tr>
-  </table>
 </div>
 <h2 id="ranking_title" class="subtitle"><%= icon_tag 'chart_bar' %><%=h _("%{month}/%{year} Ranking") % {:year => @year, :month => @month}%></h2>
 <%= render :partial => 'list' %>
@@ -23,4 +18,5 @@
             getRanking(contents_types[i], year, month);
     };
     loadRanking();
+  <% end -%>
 <% end -%>
