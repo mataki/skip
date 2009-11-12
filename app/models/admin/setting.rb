@@ -63,6 +63,8 @@ class Admin::Setting < ActiveRecord::Base
   N_('Admin::Setting|Enable change section description')
   N_('Admin::Setting|Access record limit')
   N_('Admin::Setting|Access record limit description')
+  N_('Admin::Setting|Entry showed tab limit per page')
+  N_('Admin::Setting|Entry showed tab limit per page description')
 
   # ================================================================================================
   # RSSフィードの設定用

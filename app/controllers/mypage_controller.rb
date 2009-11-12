@@ -364,7 +364,7 @@ class MypageController < ApplicationController
 
   private
   def per_page
-    current_user.custom.display_entries_format == 'tabs' ? 20 : 8
+    current_user.custom.display_entries_format == 'tabs' ? Admin::Setting.entry_showed_tab_limit_per_page : 8
   end
 
   def setup_layout
