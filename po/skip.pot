@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.3.0\n"
-"POT-Creation-Date: 2009-11-12 09:34+0900\n"
+"POT-Creation-Date: 2009-11-12 11:31+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,9 +35,9 @@ msgid ""
 msgstr ""
 
 #: app/models/board_entry.rb:404 app/views/mypage/entries_by_date.html.erb:13
-#: app/views/mypage/index.html.erb:44 app/views/mypage/index.html.erb:120
-#: app/views/bookmark/list.html.erb:53 app/views/bookmark/show.html.erb:24
-#: app/views/rankings/bookmark.html.erb:2
+#: app/views/mypage/index.html.erb:44 app/views/mypage/index.html.erb:73
+#: app/views/mypage/index.html.erb:125 app/views/bookmark/list.html.erb:53
+#: app/views/bookmark/show.html.erb:24 app/views/rankings/bookmark.html.erb:2
 #: app/views/rankings/bookmark.html.erb:4
 #: app/views/rankings/bookmark.html.erb:7
 #: app/views/rankings/bookmark.html.erb:10
@@ -96,7 +96,7 @@ msgstr ""
 msgid "%s has already joined / applied to join this group."
 msgstr ""
 
-#: app/views/mypage/index.html.erb:119
+#: app/views/mypage/index.html.erb:124
 msgid "%s users"
 msgstr ""
 
@@ -1011,19 +1011,19 @@ msgstr ""
 msgid "Admin::Setting|Created at"
 msgstr ""
 
-#: app/models/admin/setting.rb:101
+#: app/models/admin/setting.rb:103
 msgid "Admin::Setting|Custom password strength regex"
 msgstr ""
 
-#: app/models/admin/setting.rb:102
+#: app/models/admin/setting.rb:104
 msgid "Admin::Setting|Custom password strength regex description"
 msgstr ""
 
-#: app/models/admin/setting.rb:103
+#: app/models/admin/setting.rb:105
 msgid "Admin::Setting|Custom password strength validation message"
 msgstr ""
 
-#: app/models/admin/setting.rb:104
+#: app/models/admin/setting.rb:106
 msgid "Admin::Setting|Custom password strength validation message description"
 msgstr ""
 
@@ -1043,44 +1043,52 @@ msgstr ""
 msgid "Admin::Setting|Enable change section description"
 msgstr ""
 
-#: app/models/admin/setting.rb:105
+#: app/models/admin/setting.rb:107
 msgid "Admin::Setting|Enable login keyphrase"
 msgstr ""
 
-#: app/models/admin/setting.rb:106
+#: app/models/admin/setting.rb:108
 msgid "Admin::Setting|Enable login keyphrase description"
 msgstr ""
 
-#: app/models/admin/setting.rb:88
+#: app/models/admin/setting.rb:90
 msgid "Admin::Setting|Enable password periodic change"
 msgstr ""
 
-#: app/models/admin/setting.rb:89
+#: app/models/admin/setting.rb:91
 msgid "Admin::Setting|Enable password periodic change description"
 msgstr ""
 
-#: app/models/admin/setting.rb:113
+#: app/models/admin/setting.rb:115
 msgid "Admin::Setting|Enable single session"
 msgstr ""
 
-#: app/models/admin/setting.rb:114
+#: app/models/admin/setting.rb:116
 msgid "Admin::Setting|Enable single session description"
 msgstr ""
 
-#: app/models/admin/setting.rb:109
+#: app/models/admin/setting.rb:111
 msgid "Admin::Setting|Enable user cleaning notification"
 msgstr ""
 
-#: app/models/admin/setting.rb:110
+#: app/models/admin/setting.rb:112
 msgid "Admin::Setting|Enable user cleaning notification description"
 msgstr ""
 
-#: app/models/admin/setting.rb:84
+#: app/models/admin/setting.rb:86
 msgid "Admin::Setting|Enable user lock"
 msgstr ""
 
-#: app/models/admin/setting.rb:85
+#: app/models/admin/setting.rb:87
 msgid "Admin::Setting|Enable user lock description"
+msgstr ""
+
+#: app/models/admin/setting.rb:66
+msgid "Admin::Setting|Entry showed tab limit per page"
+msgstr ""
+
+#: app/models/admin/setting.rb:67
+msgid "Admin::Setting|Entry showed tab limit per page description"
 msgstr ""
 
 #: app/models/admin/setting.rb:40
@@ -1131,51 +1139,51 @@ msgstr ""
 msgid "Admin::Setting|Login account description"
 msgstr ""
 
-#: app/models/admin/setting.rb:107 app/views/shared/_login_form.html.erb:39
+#: app/models/admin/setting.rb:109 app/views/shared/_login_form.html.erb:39
 msgid "Admin::Setting|Login keyphrase"
 msgstr ""
 
-#: app/models/admin/setting.rb:108
+#: app/models/admin/setting.rb:110
 msgid "Admin::Setting|Login keyphrase description"
 msgstr ""
 
-#: app/models/admin/setting.rb:70
+#: app/models/admin/setting.rb:72
 msgid "Admin::Setting|Mypage feed default limit"
 msgstr ""
 
-#: app/models/admin/setting.rb:71
+#: app/models/admin/setting.rb:73
 msgid "Admin::Setting|Mypage feed default limit description"
 msgstr ""
 
-#: app/models/admin/setting.rb:74
+#: app/models/admin/setting.rb:76
 msgid "Admin::Setting|Mypage feed settings"
 msgstr ""
 
-#: app/models/admin/setting.rb:75
+#: app/models/admin/setting.rb:77
 msgid "Admin::Setting|Mypage feed settings description"
 msgstr ""
 
-#: app/models/admin/setting.rb:78
+#: app/models/admin/setting.rb:80
 msgid "Admin::Setting|Mypage feed settings title"
 msgstr ""
 
-#: app/models/admin/setting.rb:79
+#: app/models/admin/setting.rb:81
 msgid "Admin::Setting|Mypage feed settings title description"
 msgstr ""
 
-#: app/models/admin/setting.rb:76
+#: app/models/admin/setting.rb:78
 msgid "Admin::Setting|Mypage feed settings url"
 msgstr ""
 
-#: app/models/admin/setting.rb:77
+#: app/models/admin/setting.rb:79
 msgid "Admin::Setting|Mypage feed settings url description"
 msgstr ""
 
-#: app/models/admin/setting.rb:72
+#: app/models/admin/setting.rb:74
 msgid "Admin::Setting|Mypage feed timeout"
 msgstr ""
 
-#: app/models/admin/setting.rb:73
+#: app/models/admin/setting.rb:75
 msgid "Admin::Setting|Mypage feed timeout description"
 msgstr ""
 
@@ -1183,51 +1191,51 @@ msgstr ""
 msgid "Admin::Setting|Name"
 msgstr ""
 
-#: app/models/admin/setting.rb:90
+#: app/models/admin/setting.rb:92
 msgid "Admin::Setting|Password change interval"
 msgstr ""
 
-#: app/models/admin/setting.rb:91
+#: app/models/admin/setting.rb:93
 msgid "Admin::Setting|Password change interval description"
 msgstr ""
 
-#: app/models/admin/setting.rb:92
+#: app/models/admin/setting.rb:94
 msgid "Admin::Setting|Password strength"
 msgstr ""
 
-#: app/models/admin/setting.rb:93
+#: app/models/admin/setting.rb:95
 msgid "Admin::Setting|Password strength description"
 msgstr ""
 
-#: app/models/admin/setting.rb:258
+#: app/models/admin/setting.rb:260
 msgid "Admin::Setting|Password strength|Validation message "
 msgstr ""
 
-#: app/models/admin/setting.rb:95
+#: app/models/admin/setting.rb:97
 msgid "Admin::Setting|Password strength|Validation message high"
 msgstr ""
 
-#: app/models/admin/setting.rb:99
+#: app/models/admin/setting.rb:101
 msgid "Admin::Setting|Password strength|Validation message low"
 msgstr ""
 
-#: app/models/admin/setting.rb:97 app/models/admin/setting.rb:261
+#: app/models/admin/setting.rb:99 app/models/admin/setting.rb:263
 msgid "Admin::Setting|Password strength|Validation message middle"
 msgstr ""
 
-#: app/models/admin/setting.rb:100
+#: app/models/admin/setting.rb:102
 msgid "Admin::Setting|Password strength|custom"
 msgstr ""
 
-#: app/models/admin/setting.rb:94
+#: app/models/admin/setting.rb:96
 msgid "Admin::Setting|Password strength|high"
 msgstr ""
 
-#: app/models/admin/setting.rb:98
+#: app/models/admin/setting.rb:100
 msgid "Admin::Setting|Password strength|low"
 msgstr ""
 
-#: app/models/admin/setting.rb:96
+#: app/models/admin/setting.rb:98
 msgid "Admin::Setting|Password strength|middle"
 msgstr ""
 
@@ -1259,19 +1267,19 @@ msgstr ""
 msgid "Admin::Setting|Updated at"
 msgstr ""
 
-#: app/models/admin/setting.rb:111
+#: app/models/admin/setting.rb:113
 msgid "Admin::Setting|User cleaning notification interval"
 msgstr ""
 
-#: app/models/admin/setting.rb:112
+#: app/models/admin/setting.rb:114
 msgid "Admin::Setting|User cleaning notification interval description"
 msgstr ""
 
-#: app/models/admin/setting.rb:86
+#: app/models/admin/setting.rb:88
 msgid "Admin::Setting|User lock trial limit"
 msgstr ""
 
-#: app/models/admin/setting.rb:87
+#: app/models/admin/setting.rb:89
 msgid "Admin::Setting|User lock trial limit description"
 msgstr ""
 
@@ -1805,7 +1813,7 @@ msgstr ""
 msgid "Blog Entry View"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:589
+#: app/controllers/mypage_controller.rb:591
 msgid "Blogs"
 msgstr ""
 
@@ -2274,7 +2282,7 @@ msgstr ""
 msgid "Change uid"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:516
+#: app/controllers/mypage_controller.rb:518
 msgid "Change your profile picture!"
 msgstr ""
 
@@ -2740,7 +2748,7 @@ msgstr[1] ""
 msgid "Email address is mandatory."
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:302
+#: app/controllers/mypage_controller.rb:304
 msgid "Email address was updated successfully."
 msgstr ""
 
@@ -2825,7 +2833,7 @@ msgstr ""
 msgid "Entries"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:759
+#: app/controllers/mypage_controller.rb:761
 msgid "Entries bookmarked by yourself"
 msgstr ""
 
@@ -2841,7 +2849,7 @@ msgstr ""
 msgid "Entries talking about this entry:"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:758
+#: app/controllers/mypage_controller.rb:760
 msgid "Entries you have made comments"
 msgstr ""
 
@@ -2849,11 +2857,11 @@ msgstr ""
 msgid "Entries you posted to your blog and group BBSs."
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:184
+#: app/controllers/mypage_controller.rb:186
 msgid "Entry was successfully marked read."
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:184
+#: app/controllers/mypage_controller.rb:186
 msgid "Entry was successfully marked unread."
 msgstr ""
 
@@ -2957,7 +2965,7 @@ msgstr ""
 msgid "Failed to delete since there are still other users in the group."
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:219
+#: app/controllers/mypage_controller.rb:221
 msgid "Failed to load rss."
 msgstr ""
 
@@ -2965,7 +2973,7 @@ msgstr ""
 msgid "Failed to open the content."
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:288
+#: app/controllers/mypage_controller.rb:290
 msgid "Failed to process your request. Try resubmitting your request again."
 msgstr ""
 
@@ -3516,7 +3524,7 @@ msgstr ""
 msgid "Internet"
 msgstr ""
 
-#: app/views/user/_action_box.html.erb:7 app/views/mypage/index.html.erb:137
+#: app/views/user/_action_box.html.erb:7 app/views/mypage/index.html.erb:142
 msgid "Introduce"
 msgstr ""
 
@@ -3552,7 +3560,7 @@ msgstr ""
 msgid "Introductions"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:337
+#: app/controllers/mypage_controller.rb:339
 msgid "Invalid OpenID URL format."
 msgstr ""
 
@@ -3751,7 +3759,7 @@ msgstr ""
 msgid "List of applications works with SKIP"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:762
+#: app/controllers/mypage_controller.rb:764
 msgid "List of unread entries"
 msgstr ""
 
@@ -4026,7 +4034,7 @@ msgid "My Blog"
 msgstr ""
 
 #: app/helpers/application_helper.rb:347 app/helpers/user_helper.rb:64
-#: app/helpers/user_helper.rb:68 app/controllers/mypage_controller.rb:369
+#: app/helpers/user_helper.rb:68 app/controllers/mypage_controller.rb:371
 msgid "My Page"
 msgstr ""
 
@@ -4109,7 +4117,7 @@ msgstr ""
 msgid "New bookmark in your profile!"
 msgstr ""
 
-#: app/views/mypage/index.html.erb:115
+#: app/views/mypage/index.html.erb:120
 msgid "New bookmarks"
 msgstr ""
 
@@ -4220,8 +4228,8 @@ msgstr ""
 msgid "Not Accept"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:528
-#: app/controllers/mypage_controller.rb:757
+#: app/controllers/mypage_controller.rb:530
+#: app/controllers/mypage_controller.rb:759
 #: app/controllers/feed_controller.rb:82 app/models/notice.rb:29
 msgid "Notices for you"
 msgstr ""
@@ -4345,7 +4353,7 @@ msgstr ""
 msgid "OpenID URL"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:325
+#: app/controllers/mypage_controller.rb:327
 msgid "OpenID URL was successfully set."
 msgstr ""
 
@@ -4368,7 +4376,7 @@ msgstr ""
 msgid "OpenID server not found. Please provide a correct OpenID URL."
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:332
+#: app/controllers/mypage_controller.rb:334
 msgid "OpenId process is cancelled or failed."
 msgstr ""
 
@@ -4539,7 +4547,7 @@ msgstr ""
 msgid "Password was successfully reset."
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:268
+#: app/controllers/mypage_controller.rb:270
 msgid "Password was successfully updated."
 msgstr ""
 
@@ -4613,7 +4621,7 @@ msgstr ""
 msgid "Playing Sports"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:341
+#: app/controllers/mypage_controller.rb:343
 msgid "Please input OpenID URL."
 msgstr ""
 
@@ -4668,7 +4676,7 @@ msgstr ""
 msgid "Posts"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:760
+#: app/controllers/mypage_controller.rb:762
 msgid "Posts in the groups joined"
 msgstr ""
 
@@ -4837,21 +4845,21 @@ msgstr ""
 msgid "Recent Entries"
 msgstr ""
 
-#: app/views/mypage/index.html.erb:149
+#: app/views/mypage/index.html.erb:154
 msgid "Recent Groups"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:572
+#: app/controllers/mypage_controller.rb:574
 #: app/controllers/feed_controller.rb:71
 msgid "Recent Popular Blogs"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:554
+#: app/controllers/mypage_controller.rb:556
 #: app/controllers/feed_controller.rb:22
 msgid "Recent Questions"
 msgstr ""
 
-#: app/views/mypage/index.html.erb:130
+#: app/views/mypage/index.html.erb:135
 msgid "Recent Users"
 msgstr ""
 
@@ -5109,7 +5117,7 @@ msgstr ""
 msgid "See Terms of Use"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:599
+#: app/controllers/mypage_controller.rb:601
 msgid "See all"
 msgstr ""
 
@@ -5121,7 +5129,7 @@ msgstr ""
 msgid "Select a page to edit from the menu on left."
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:109
+#: app/controllers/mypage_controller.rb:111
 msgid "Self Admin"
 msgstr ""
 
@@ -5478,7 +5486,7 @@ msgstr ""
 msgid "Specified page does not exist."
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:311
+#: app/controllers/mypage_controller.rb:313
 msgid "Specified page not found."
 msgstr ""
 
@@ -5718,7 +5726,7 @@ msgstr ""
 msgid "The search targets are titles and comments"
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:307
+#: app/controllers/mypage_controller.rb:309
 msgid ""
 "The specified email address has already been registered. Try resubmitting "
 "the request with another address."
@@ -5821,7 +5829,7 @@ msgstr ""
 msgid "Time Last Updated: "
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:214
+#: app/controllers/mypage_controller.rb:216
 msgid "Timeout while loading rss."
 msgstr ""
 
@@ -6005,11 +6013,11 @@ msgstr ""
 msgid "Updated %{count} records."
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:258
+#: app/controllers/mypage_controller.rb:260
 msgid "Updated notification email settings."
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:351
+#: app/controllers/mypage_controller.rb:353
 msgid "Updated successfully."
 msgstr ""
 
@@ -6087,7 +6095,7 @@ msgid ""
 "User has entered email address %s is not in use. Please start with the site."
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:237
+#: app/controllers/mypage_controller.rb:239
 msgid "User information was successfully updated."
 msgstr ""
 
@@ -6804,7 +6812,7 @@ msgstr ""
 msgid "Your registration is complete."
 msgstr ""
 
-#: app/controllers/mypage_controller.rb:286
+#: app/controllers/mypage_controller.rb:288
 msgid ""
 "Your request of changing email address accepted. Check your email to "
 "complete the process."
@@ -7412,7 +7420,7 @@ msgstr ""
 msgid "required"
 msgstr ""
 
-#: app/models/admin/setting.rb:149
+#: app/models/admin/setting.rb:151
 msgid "requires a valid regular expression."
 msgstr ""
 
