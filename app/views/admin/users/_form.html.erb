@@ -4,7 +4,6 @@
   <%= label Admin::UserUid.name, :uid, Admin::Setting.login_account %>
   <% if @user.new_record? -%>
   <%= text_field :user_uid, :uid %>
-  <%= help_icon_tag :content => _('Enter your %{login_account}.') % {:login_account => Admin::Setting.login_account} %>
   <% else -%>
   :<%= h @user.code %>
   <% end -%>
