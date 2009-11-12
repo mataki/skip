@@ -108,7 +108,7 @@ class RankingsController < ApplicationController
   def setup_layout
     @main_menu = @title = _('Rankings')
 
-    @tab_menu_source = [ {:label => _('Monthly Rankings')},
+    @tab_menu_source = [ {:label => _('Monthly Rankings'), :options => {:action => 'monthly'}},
                          {:label => _('Popular Bookmarks'), :options => {:action => 'bookmark'}} ]
   end
 
