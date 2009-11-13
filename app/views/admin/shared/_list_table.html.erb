@@ -1,0 +1,64 @@
+<%#
+   :link_elem_size
+     右側のオブジェクトごとのリンクの数を設定できる
+   :link_elem_proc
+     右側のオブジェクトごとのリンクを生成するための処理ブロックをわたす
+     ブロックからは、オブジェクトが渡される
+   :disp_columns_proc
+     オブジェクトのカラムを表示するための処理ブロックをわたす
+     ブロックからは、オブジェクトとカラムが渡される
+%>
+<% disp_columns_proc ||= lambda do |object,column|
+     data = object.send(column.to_sym)
+     data = data[/.{1,100}/] if data.is_a?(String)
+     data
+   end
+   hide_columns ||= []
+   use_ids ||= false
+%>
+
+<% if objects.respond_to?(:previous_page) %>
+  <div class="navi ui-corner-all"><%= will_paginate_link objects %></div>
+<% end %>
+<table class="normal sortable">
+  <thead>
+    <tr>
+      <% columns.each do |column| -%>
+      <th><%=h s_("#{class_name}|#{column.humanize}") %></th>
+      <% end -%>
+      <% link_elem_size.times do %>
+      <td class="link" />
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% for object in objects %>
+    <tr class="<%= cycle('line_1', 'line_0') %>">
+      <% columns.each do |column| -%>
+      <td><%=sanitize(disp_columns_proc.call(object, column).to_s) %></td>
+      <% end %>
+      <%= link_elem_proc.call object %>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<% if objects.respond_to?(:previous_page) %>
+  <div class="navi ui-corner-all"><%= will_paginate_link objects %></div>
+<% end %>
+
+<% content_for :javascript_includes do -%>
+<%= skip_jquery_include_tag 'jquery.columnmanager' %>
+<% end -%>
+
+<% content_for :javascript_initializers do -%>
+    <% link_indexes = ((columns.size + 1)..(columns.size + 1 + link_elem_size)).to_a.join(',') %>
+    <% hide_columns_indexes = hide_columns.map { |col| columns.index(col) + 1 }.join(',') %>
+    $j('table.normal').columnManager({listTargetID: 'table_columns', onClass: 'visible', offClass: 'invisible', hideInList:[<%= link_indexes %>], colsHidden: [<%= hide_columns_indexes %>]});
+    $j('#check_all_link').toggle(function() {
+        $j('.multicheck').attr('checked', 'checked');
+        return false;
+    }, function() {
+        $j('.multicheck').attr('checked', '');
+        return false;
+    });
+<% end -%>

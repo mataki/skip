@@ -1,13 +1,8 @@
-
-<%= render :partial => '/admin/master_data_menu_box' %>
-<% content_for :topic_path do -%>
-<%= render :partial => '/admin/shared/topic_path' %>
-<% end -%>
-<% content_for :contents_right do -%>
+<h3 class="topics"><%= _('Group Categories') %></h3>
 <div class="box tabular">
-  <%= render :partial => '/admin/search_box', :locals => { :class_name => 'Admin::GroupCategory' } %>
   <p><%= _('Delete all the groups under the group category before you delete it.') %></p>
-  <%= render :partial => '/admin/shared/sortable_table',
+  <%= link_to _('New %{model}') % {:model => _('group category')}, new_admin_group_category_path %>
+  <%= render :partial => '/admin/shared/list_table',
              :locals => {
                :columns => %w[code name icon description initial_selected],
                :disp_columns_proc => lambda do |object, column|
@@ -32,6 +27,3 @@
              }
   -%>
 </div>
-<br />
-<%= link_to _('New %{model}') % {:model => _('group category')}, new_admin_group_category_path %> |
-<% end -%>

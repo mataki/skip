@@ -1,10 +1,7 @@
-<%= render :partial => '/admin/master_data_menu_box' %>
-<% content_for :topic_path do -%>
-<%= render :partial => '/admin/shared/topic_path' %>
-<% end -%>
-<% content_for :contents_right do -%>
+<h3 class="topics"><%= _('Profile Items') %></h3>
 <div class="box tabular">
-  <%= render :partial => '/admin/shared/sortable_table',
+  <%= link_to_if UserProfileMasterCategory.count > 0, _('New %{model}') % {:model => _('user profile master')}, new_admin_user_profile_master_path %>
+  <%= render :partial => '/admin/shared/list_table',
              :locals => {
                :columns => %w[user_profile_master_category_id name input_type required description option_values sort_order],
                :disp_columns_proc => lambda do |object,column|
@@ -31,6 +28,3 @@
              }
   -%>
 </div>
-<br />
-<%= link_to_if UserProfileMasterCategory.count > 0, _('New %{model}') % {:model => _('user profile master')}, new_admin_user_profile_master_path %> |
-<% end -%>

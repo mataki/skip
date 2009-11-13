@@ -1,12 +1,9 @@
-<%= render :partial => '/admin/master_data_menu_box' %>
-<% content_for :topic_path do -%>
-<%= render :partial => '/admin/shared/topic_path' %>
-<% end -%>
-<% content_for :contents_right do -%>
+<h3 class="topics"><%= _('Profile Categories') %></h3>
 <div class="box tabular">
   <%= render :partial => '/admin/search_box', :locals => { :class_name => 'Admin::UserProfileMasterCategory' } %>
   <p><%= _('Related profile items will also be deleted when you delete this profile category. Are you sure to proceed?') %></p>
-  <%= render :partial => '/admin/shared/sortable_table',
+  <%= link_to _('New %{model}') % {:model => _('user profile master category')}, new_admin_user_profile_master_category_path %>
+  <%= render :partial => '/admin/shared/list_table',
              :locals => {
                :columns => %w[name description sort_order],
                :objects => @user_profile_master_categories,
@@ -21,6 +18,3 @@
              }
   -%>
 </div>
-<br />
-<%= link_to _('New %{model}') % {:model => _('user profile master category')}, new_admin_user_profile_master_category_path %> |
-<% end -%>
