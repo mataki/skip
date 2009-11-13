@@ -16,6 +16,10 @@
 class Admin::GroupCategoriesController < Admin::ApplicationController
   include Admin::AdminModule::AdminRootModule
 
+  def index
+    redirect_to admin_masters_path
+  end
+
   def show
     flash.keep
     redirect_to admin_group_categories_path

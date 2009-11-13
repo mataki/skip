@@ -3314,11 +3314,11 @@ msgstr "本メールに関するお問い合わせはこちらへ"
 
 #: app/views/shared/_login_form.html.erb:90
 msgid "Forgot or Reset your OpenID? Click here."
-msgstr "OpenIDを忘れた or リセットしたい方はこちら"
+msgstr "OpenIDを忘れましたか?"
 
 #: app/views/shared/_login_form.html.erb:32
 msgid "Forgot your password? Click here."
-msgstr "パスワードを忘れた or リセットしたい方はこちら"
+msgstr "パスワードを忘れましたか?"
 
 #: app/views/search/entry_search.html.erb:8
 msgid "Forum entries of the group"
@@ -4079,7 +4079,7 @@ msgstr "ログインが必要です"
 
 #: app/views/shared/_login_form.html.erb:46
 msgid "Login automatically from next time"
-msgstr "次回から自動的にログイン"
+msgstr "ログインしたままにする"
 
 #: app/views/admin/settings/_security.html.erb:27
 msgid "Login keyphrase"

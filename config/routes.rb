@@ -92,6 +92,7 @@ ActionController::Routing::Routes.draw do |map|
     admin_map.resources :groups, :only => [:index, :show, :destroy] do |group|
       group.resources :group_participations, :only => [:index, :destroy]
     end
+    admin_map.resources :masters, :only => [:index]
     admin_map.resources :group_categories
     admin_map.resources :user_profile_master_categories
     admin_map.resources :user_profile_masters

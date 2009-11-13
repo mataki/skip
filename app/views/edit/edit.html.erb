@@ -1,7 +1,7 @@
 
 <%= render :partial => 'board_entries/preview_window' %>
 
-<% form_tag({:action => 'update', :id=>@board_entry}, :multipart => true, :id=>'board_entry_form') do -%>
+<% form_tag({:action => 'update', :id => @board_entry}, :multipart => true, :id=>'board_entry_form') do -%>
   <%= render :partial => 'board_entries/form' %>
   <% if @conflicted %>
   <div class="desc ui-corner-all"><%= _("*Click on &quot;Reset&quot; to reset the edit or &quot;Update&quot; to overwrite other's edit.")%></div>
@@ -9,8 +9,9 @@
   <%= button_to_function(_("Reset"), "if(confirm('" + _('All changes will be discarded. Are you sure to proceed?') + "')){window.location.href='#{edit_url}' }") %>
   <% end %>
   <%= submit_tag _("Update"), :id => 'submit_button' %>
-  <%= check_box_tag("non_update", "true") %><%= _('Minor update')%><br/>
-<% end %>
+  <%= check_box_tag("non_update", "true") %><%= _('Minor update')%>
+  <%= send_mail_check_box_tag %>
+<% end -%>
 
 <div class="desc ui-corner-all" style="margin-top: 10px;">
   <%= link_to(_("[Delete]"), {:action => "destroy", :id => @board_entry}, :confirm => _("Are you sure to delete?"), :method => :post)%>

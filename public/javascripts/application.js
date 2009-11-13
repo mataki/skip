@@ -440,18 +440,6 @@ $j(function(){
         minute_obj[0].value = currentMinute;
     };
 
-    /*
-     * ログイン画面のクッキー保存と読み込み（2週間）
-     */
-    saveLoginData = function(){
-        exp_days = 14;
-        saveCookie('login_save', $j('#login_save').attr('checked').toString(), exp_days);
-        if($j('#ssl_enable_radio')[0] != undefined){
-            saveCookie('ssl_enable', $j('#ssl_enable_radio').attr('checked').toString(), exp_days);
-        }
-        return true;
-    };
-
     $j.extend({
       getUrlVars: function(url_or_href){
         var vars = [], hash;

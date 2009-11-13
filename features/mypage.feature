@@ -23,7 +23,7 @@ Feature: マイページ
 
     When "マイページ"にアクセスする
 
-    Then I should see "Railsについて質問" within "div#questions"
+    Then I should see "Railsについて質問" within "div#questions_wrapper"
     And I should not see "Railsについて質問" within "div#access_blogs"
     And I should see "Railsについて雑談" within "div#access_blogs"
     And I should not see "Railsについて質問" within "div#recent_blogs"

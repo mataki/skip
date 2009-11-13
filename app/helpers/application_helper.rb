@@ -109,23 +109,16 @@ module ApplicationHelper
     link_to output_text, { :controller => 'group', :action => 'show', :gid => group.gid }, options
   end
 
-  # ユーザかグループのページへのリンク
-  def item_link_to item, options = {}
-    output_text = ""
-    output_text << image_tag(option[:image_name]) if options[:image_name]
-    output_text << (options[:view_text] || h(item[:name]))
-
-    url = { :controller => item.class.name.downcase,
-            :action => 'show',
-            item.class.symbol_type => item.symbol_id }
-
-    link_to output_text, url, { :title => h(item[:name]) }
-  end
-
-  def symbol_link_to symbol, name = nil
+  def symbol_link_to symbol, name = nil, options = {}
     symbol_type, symbol_id = SkipUtil.split_symbol symbol
     name ||= "[#{symbol}]"
-    link_to(h(name), {:controller => @@CONTROLLER_HASH[symbol_type], :action => "show", symbol_type => symbol_id}, :title => name)
+    link = link_to(h(name), {:controller => @@CONTROLLER_HASH[symbol_type], :action => "show", symbol_type => symbol_id}, :title => name)
+    if options[:with_prefix]
+      prefix = (symbol_type == 'uid') ? 'by' : 'on'
+      "#{prefix} #{link}"
+    else
+      link
+    end
   end
 
   def image_link_tag title, image_name, options={}

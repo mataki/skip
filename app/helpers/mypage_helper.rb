@@ -24,21 +24,6 @@ module MypageHelper
     end
   end
 
-  # 送信先の加工
-  def get_link_to_name(mail, item)
-    item ? item_link_to(item) : h(mail.to_address_name)
-  end
-
-  # タイトルの加工
-  def get_link_to_title(mail, board_entry)
-    board_entry ? entry_link_to(board_entry,{:truncate => 25 }) :  h(mail.title)
-  end
-
-  # 送信日の加工
-  def get_send_date(mail)
-    mail.send_flag ?  Time.parse(mail.mail_updated_on).strftime(_("%c")) : _("Waiting to be Sent")
-  end
-
   # 管理メニューの生成
   def get_manage_menu_items selected_menu
     @@menus = []

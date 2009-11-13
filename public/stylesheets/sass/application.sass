@@ -58,6 +58,8 @@ b.caution
 .margin05emver
   :margin-top 0.5em
   :margin-bottom 0.5em
+.margin25pxbtm
+  :margin-bottom 25px
 
 select.select_navi
   :width 180px
@@ -607,6 +609,94 @@ div#tab_menu
 // 3. 通常機能
 // ============================================================
 
+// ログイン
+// ------------------------------------------------------------
+div#platform_main_wrapper
+  :_text-align center
+  div#platform_main
+    :margin 0 auto
+    :position relative
+    :width 940px
+    div.col_left
+      :float left
+      :width 536px
+    div.col_right
+      :float right
+      :width 396px
+      div.login-box
+        :padding 4px
+        :background-color #f2f2ff
+        :font-size 12px
+        p
+          :line-height 130%
+          :padding 2px
+          :color #444
+          :background #ddf
+          :border-bottom 1px solid #AAAAAF
+          :font
+            :size 14px
+            :weight bold
+    div#desc_before_login
+      :padding 3px
+      :background-color #f2f2ff
+      :overflow auto
+      :height 300px
+  div#platform_main.require_login
+    :background #fafafa
+    :border-bottom = !base_border
+    :padding 10px
+    div#require_login_wrapper
+      :width 100%
+      :border = !base_border
+      :padding 1px
+      :background #fff
+      h2
+        :padding 4px
+        :background #ddffdd
+      p.require_desc
+        :background #eeffee
+        :border 1px dashed #ffc000
+        :margin 10px 0
+div#require_login_container_wrapper
+  :width 100%
+  :_text-align center
+  div#require_login_container
+    :border = !base_border
+    :width 600px
+    :padding 2px
+    :background #f0f0ff
+    :margin 0 auto
+div#login_container
+  :position absolute
+  :right 10px
+  :top 25px
+  :width 460px
+  :background #F2F2FF
+  :padding 4px
+div#login_container, div#require_login_container
+  table
+    :float right
+    tr
+      :vertical-align top
+    td
+      :border none
+      :padding 0 0 0 12px
+    td.input_field
+      input
+        :width 162px
+        :border 1px solid #937999
+    td.label_field
+      :_width 182px
+      :text-align right
+      :vertical-align middle
+      input
+        :vertical-align middle
+      label
+        :vertical-align middle
+#login_form
+  #openid_url
+    :background #FFFFFF url(/images/openid_login_bg.gif) no-repeat scroll 0pt 50%
+
 // マイページ
 // ------------------------------------------------------------
 div.top_info
@@ -662,6 +752,18 @@ div#questions_wrapper
     :text-align center
   .topix_line
     :border none
+  table
+    :width 98%
+    td.title
+      :padding 2px 5px
+      a.tag
+        :color #8080FF
+        :font-size = !small_font_size
+      span.supplement
+        :font-size 8px
+        :vertical-align bottom
+        :color #808080
+      
 
 // マイページ > ソーシャル
 // ------------------------------------------------------------
@@ -1074,11 +1176,7 @@ table.ranking_square
     :width 15px
     :font-size 12px
     :text-align center
-  td.link_text
-    :padding 3px 0 3px 0
-    :font-size 12px
-    :width 350px
-  td.user_name
+  td.column_title
     :padding 3px 0 3px 0
     :font-size 12px
     :width 100px

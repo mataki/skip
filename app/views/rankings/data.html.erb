@@ -19,9 +19,9 @@
     <tr>
       <td class="rank"><%= i + 1 %>
     <% if include_title -%>
-      <td class="user_name"><%= link_to h(ranking.title), h(ranking.url) %> - (<%= link_to h(ranking.author), h(ranking.author_url) %>)</td>
+      <td class="column_title"><%= link_to h(ranking.title), h(ranking.url), :class => 'ranking_title' %> - (<%= link_to h(ranking.author), h(ranking.author_url), :class => 'ranking_author' %>)</td>
     <% else -%>
-      <td class="user_name"><%= link_to h(ranking.author), h(ranking.author_url) %></td>
+      <td class="column_title"><%= link_to h(ranking.author), h(ranking.author_url), :class => 'ranking_author' %></td>
     <% end -%>
       <td class="point"><%= h ranking.amount %></td>
     </tr>
