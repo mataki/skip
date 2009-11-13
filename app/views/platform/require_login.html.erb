@@ -1,23 +1,14 @@
-<% content_for :stylesheet do -%>
-  <style type="text/css">
-  #login {
-    border:1px solid red;
-    margin: 10px;
-    width: 300px;
-    padding: 2px;
-    border: 1px solid silver;
-    background-color: #f0f0ff;
-    font-size: 12px;
-  }
-  </style>
-<% end -%>
-
-<center style="background-color: #fafafa; border-bottom: 1px solid silver; padding: 10px;">
-  <div style="width: 50%; border: 1px solid silver; padding: 1px; background-color: white;">
-    <div style="margin: 0 0 0 0; padding: 4px; text-align: left; font-size: 18px; font-weight: bold; background-color:#DDFFDD;"><%= _('Login Required')%></div>
-    <div style="margin: 5px 0px 10px 0px; padding: 3px 10px 3px 10px; background-color: #EEFFEE; border: #FFC000 1px dashed;">
-      <p><%= _("Login to %s required for further operations. Login from below.") % h(Admin::Setting.abbr_app_title)%></p>
+<div id="platform_main_wrapper">
+  <div id="platform_main" class="require_login">
+    <div id="require_login_wrapper">
+    <h2><%= _('Login Required')%></h2>
+    <p class="require_desc">
+      <%= _("Login to %s required for further operations. Login from below.") % h(Admin::Setting.abbr_app_title)%>
+    </p>
+    <div id="require_login_container_wrapper">
+      <div id="require_login_container">
+        <%= render :partial => 'shared/login_form' %></div>
+      </div>
     </div>
-    <div id="login"><%= render :partial => 'shared/login_form' %></div>
   </div>
-</center>
+</div>

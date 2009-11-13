@@ -1,61 +1,31 @@
 <% content_for :stylesheet do -%>
   <style type="text/css">
   div#main {
-    position: relative;
     background-image: url('<%= relative_url_root %>/custom/images/<%= @img_name %>');
-    _width: 100%;
     height: 330px;
-  }
-  .desc {
-    position: absolute;
-    left: 0px;
-    bottom: 0px;
-    border-bottom: solid 1px silver;
-    background-color: white;
-    padding: 5px;
-
-    overflow: auto;
-    height: 130px;
-    width: 700px;
-  }
-  .login-box {
-    position: absolute;
-    right: 10px;
-    top: 40px;
-    _height: 180px;
-    width: 300px;
-    padding: 4px;
-    background-color: #f2f2ff;
-    font-size: 12px;
-    z-index: 20;
-  }
-  .login-box p {
-    line-height: 130%;
-    padding: 2px;
-    background-color: #ddddff;
-    border-bottom: 1px solid #AAAAAF;
-    font-size: 14px;
-    font-weight: bold;
-    color: #444444;
-    text-align: center;
   }
   </style>
 <% end -%>
 
-<div id="login" class="login-box ui-corner-all">
-  <p><%= _('Login')%></p>
-  <%= render :partial => 'shared/login_form' %>
-
-  <% if enable_activate? -%>
-  <p><%= _('Signup') %></p>
-  <div style="text-align: center; font-weight: bold; font-size: 14px;"><%= link_to _('Register your profile and start using %s') % Admin::Setting.abbr_app_title, activate_url %></div>
-  <% end -%>
+<div id="platform_main_wrapper">
+  <div id="platform_main">
+    <div class="col_left">
+      <div id="desc_before_login" class="ui-corner-all"><%= skip_image_tag 'indicator.gif' %></div>
+    </div>
+    <div class="col_right">
+      <% if enable_activate? -%>
+      <div class="login-box ui-corner-all">
+        <p><%= _('Signup') %></p>
+        <div style="text-align: center; font-weight: bold; font-size: 14px;"><%= link_to _('Register your profile and start using %s') % Admin::Setting.abbr_app_title, activate_url %></div>
+      </div>
+      <% end -%>
+    </div>
+  </div>
 </div>
-<div id="desc_before_login" class="desc ui-corner-all"><%= skip_image_tag 'indicator.gif' %></div>
 
 <% content_for :javascript_initializers do -%>
     $j('#desc_before_login').load(relative_url_root + '/custom/about_this_site.html', function(text) {
       if (text == "") { $j('#desc_before_login').hide(); }
     });
-    $j('.desc, .login-box').fadeTo('slow',0.8);
+    $j('#desc_before_login, .login-box').fadeTo('slow',0.8);
 <% end -%>
