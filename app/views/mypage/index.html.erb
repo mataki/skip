@@ -17,7 +17,7 @@
       <% end -%>
       <% @waiting_groups.each do |group| -%>
         <div class="item">
-          <%= item_link_to(group, {:view_text=>( icon_tag('group') + _('New user is waiting for approval in %s') % h(group.name) )}) %>
+          <%= group_link_to(group, {:view_text=>( icon_tag('group') + _('New user is waiting for approval in %s') % h(group.name) )}) %>
         </div>
       <% end -%>
     </div>
@@ -113,7 +113,7 @@
               <% entry_search_links_by_category = categories.map{ |category| link_to h(category), {:controller => 'search', :action => :entry_search, :tag_words => Tag.comma_tags(h(category))}, :class => 'tag'} -%>
               <td class="title">
                 <%= entry_link_to(question, {}, {:title => h(question.title + entry_infos)}) + hide_long_tags(entry_search_links_by_category, 3) %> <span class="supplement"><%=h entry_infos %></span>
-                <%= item_link_to BoardEntry.owner(question.symbol), :with_prefix => true %>
+                <%= symbol_link_to question.symbol, @questions[:symbol2name_hash][question.symbol], :with_prefix => true %>
               </td>
             </tr>
             <% end -%>
