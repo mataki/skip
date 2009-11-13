@@ -81,7 +81,7 @@
                   <div class="picture"><%= i+1 %>.<%= show_picture(entry.user, :width=>24, :height => 24) %></div>
                 </td>
                 <td class="right" width="108px">
-                  <div class="title"><%= link_to h(entry.title), entry.get_url_hash %>(<%= h entry.state.access_count %>)</div>
+                  <div class="title"><%= link_to h(entry.title), entry.get_url_hash %><span class="small_text">(<%= h entry.state.access_count %>)</span></div>
                   <div class="name">by <%= user_link_to entry.user %></div>
                 </td>
               </tr>
