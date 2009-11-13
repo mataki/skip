@@ -108,6 +108,14 @@ class Tag < ActiveRecord::Base
 
   # TODO DB内のタグ文字列を全てカンマ区切りで持つようにして消したい
   def self.square_brackets_tags tags_as_string
-    tags_as_string ? tags_as_string.split(',').map{|t| "[#{t.strip.gsub("[", "").gsub("]", "").gsub("[]", "")}]"}.join('') : ''
+    if tags_as_string
+      if tags_as_string =~ /^\[.*\]$/
+        tags_as_string
+      else
+        tags_as_string.split(',').map{|t| "[#{t.strip.gsub("[", "").gsub("]", "").gsub("[]", "")}]"}.join('')
+      end
+    else
+      ''
+    end
   end
 end
