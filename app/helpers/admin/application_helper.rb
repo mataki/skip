@@ -69,13 +69,6 @@ module Admin::ApplicationHelper
     ary
   end
 
-  def master_data_management_urls
-    ary = []
-    ary << admin_group_categories_url
-    ary << admin_user_profile_master_categories_url
-    ary << admin_user_profile_masters_url
-    ary
-  end
 end
 
 module ActionView
