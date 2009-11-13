@@ -114,6 +114,7 @@
               <td class="title">
                 <%= entry_link_to(question, {}, {:title => h(question.title + entry_infos)}) + hide_long_tags(entry_search_links_by_category, 3) %> <span class="supplement"><%=h entry_infos %></span>
                 <%= symbol_link_to question.symbol, @questions[:symbol2name_hash][question.symbol], :with_prefix => true %>
+                <%= '(' + _('Owner Only') + ')' if question.diary? && question.private? %>
               </td>
             </tr>
             <% end -%>
