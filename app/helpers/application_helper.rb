@@ -119,7 +119,13 @@ module ApplicationHelper
             :action => 'show',
             item.class.symbol_type => item.symbol_id }
 
-    link_to output_text, url, { :title => h(item[:name]) }
+    link = link_to(output_text, url, :title => h(item[:name]))
+    if options[:with_prefix]
+      prefix = item.is_a?(User) ? 'by' : 'on'
+      "#{prefix} #{link}"
+    else
+      link
+    end
   end
 
   def symbol_link_to symbol, name = nil
