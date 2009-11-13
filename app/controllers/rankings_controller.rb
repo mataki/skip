@@ -108,8 +108,9 @@ class RankingsController < ApplicationController
   def setup_layout
     @main_menu = @title = _('Rankings')
 
-    @tab_menu_source = [ {:label => _('Monthly Rankings'), :options => {:action => 'monthly'}},
-                         {:label => _('Popular Bookmarks'), :options => {:action => 'bookmark'}} ]
+# 一旦、非表示にし、機能は残しておく
+#    @tab_menu_source = [ {:label => _('Monthly Rankings'), :options => {:action => 'monthly'}},
+#                         {:label => _('Popular Bookmarks'), :options => {:action => 'bookmark'}} ]
   end
 
   def validate_time(year, month)
