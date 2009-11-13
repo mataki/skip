@@ -1,8 +1,6 @@
-<%= render :partial => '/admin/master_data_menu_box' %>
 <% content_for :topic_path do -%>
 <%= render :partial => '/admin/shared/topic_path' %>
 <% end -%>
-<% content_for :contents_right do -%>
 
 <div class="box tabular">
   <% form_for(@user_profile_master_category) do |f| %>
@@ -12,5 +10,3 @@
   </p>
   <% end %>
 </div>
-
-<% end -%>

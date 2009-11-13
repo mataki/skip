@@ -16,6 +16,10 @@
 class Admin::UserProfileMasterCategoriesController < Admin::ApplicationController
   include Admin::AdminModule::AdminRootModule
 
+  def index
+    redirect_to admin_masters_path
+  end
+
   def show
     flash.keep
     redirect_to admin_user_profile_master_categories_path
