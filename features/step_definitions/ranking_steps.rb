@@ -5,7 +5,7 @@ Given /^"(.*)"ユーザのプロフィールページに"(.*)"回アクセスす
 end
 
 Given /^ランキングの"(.*)"位が"(.*)"のユーザであること$/ do |rank,uid|
-  Nokogiri::HTML(response.body).search("table.ranking_square tbody tr:nth(#{rank}) td.user_name").text.should == uid
+  Nokogiri::HTML(response.body).search("table.ranking_square tbody tr:nth(#{rank}) td.column_title a.ranking_author").text.should == uid
 end
 
 Given /^"(.*)"回再読み込みする$/ do |num|
@@ -19,7 +19,7 @@ Given /^ランキングの"(.*)"位の数が"(.*)"であること$/ do |rank,num
 end
 
 Given /^ランキングの"(.*)"位が"(.*)"つめのブログであること$/ do |rank,num|
-  Nokogiri::HTML(response.body).search("table.ranking_square tbody tr:nth(#{rank}) td.link_text a").text.should == "test#{num}"
+  Nokogiri::HTML(response.body).search("table.ranking_square tbody tr:nth(#{rank}) td.column_title a.ranking_title").text.should == "test#{num}"
 end
 
 Given /^"(.*)"ランキングの"(.*)"分を表示する$/ do |category, date|
