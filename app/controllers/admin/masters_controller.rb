@@ -15,8 +15,8 @@
 
 class Admin::MastersController < Admin::ApplicationController
   def index
-    @group_categories = Admin::GroupCategory.find(:all)
-    @user_profile_master_categories = Admin::UserProfileMasterCategory.find(:all)
-    @user_profile_masters = Admin::UserProfileMaster.find(:all)
+    @group_categories = Admin::GroupCategory.all
+    @user_profile_master_categories = Admin::UserProfileMasterCategory.all
+    @user_profile_masters = Admin::UserProfileMaster.all
   end
 end

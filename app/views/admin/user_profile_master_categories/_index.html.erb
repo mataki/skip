@@ -1,6 +1,5 @@
 <h3 class="topics"><%= _('Profile Categories') %></h3>
 <div class="box tabular">
-  <%= render :partial => '/admin/search_box', :locals => { :class_name => 'Admin::UserProfileMasterCategory' } %>
   <p><%= _('Related profile items will also be deleted when you delete this profile category. Are you sure to proceed?') %></p>
   <%= link_to _('New %{model}') % {:model => _('user profile master category')}, new_admin_user_profile_master_category_path %>
   <%= render :partial => '/admin/shared/list_table',
