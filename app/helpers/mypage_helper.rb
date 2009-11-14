@@ -24,21 +24,6 @@ module MypageHelper
     end
   end
 
-  # 送信先の加工
-  def get_link_to_name(mail, item)
-    item ? item_link_to(item) : h(mail.to_address_name)
-  end
-
-  # タイトルの加工
-  def get_link_to_title(mail, board_entry)
-    board_entry ? entry_link_to(board_entry,{:truncate => 25 }) :  h(mail.title)
-  end
-
-  # 送信日の加工
-  def get_send_date(mail)
-    mail.send_flag ?  Time.parse(mail.mail_updated_on).strftime(_("%c")) : _("Waiting to be Sent")
-  end
-
   # 管理メニューの生成
   def get_manage_menu_items selected_menu
     @@menus = []
@@ -48,7 +33,6 @@ module MypageHelper
     @@menus << {:name => _("Change OpenID URL"), :menu => "manage_openid" } if login_mode?(:free_rp)
     @@menus << {:name => _("Change Profile Picture"), :menu => "manage_portrait" } if Admin::Setting.enable_change_picture
     @@menus << {:name => _("Customize"), :menu => "manage_customize" }
-    @@menus << {:name => _("Manage Antennas"), :menu => "manage_antenna" }
     @@menus << {:name => _("Email Notification"), :menu => "manage_message" } if SkipEmbedded::InitialSettings['mail']['show_mail_function']
     get_menu_items @@menus, selected_menu, "manage"
   end

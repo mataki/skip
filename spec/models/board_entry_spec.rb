@@ -275,19 +275,47 @@ describe BoardEntry, '#publication_users' do
         g.group_participations.build(:user_id => @alice.id, :owned => true)
         g.group_participations.build(:user_id => @mike.id, :owned => false)
       end
-      # アリスのブログで、そのグループ及びマイクが直接指定されている
-      @entry = create_board_entry(:symbol => 'uid:alice', :publication_type => 'protected', :user_id => @alice.id, :publication_symbols_value => [@group, @mike].map(&:symbol).join(','))
     end
-    it '公開されているユーザの配列が返ること' do
-      @entry.publication_users.should == [@alice, @mike]
-    end
-    describe '記事を所有するグループが論理削除された場合' do
+    describe "アリスのブログで、そのグループ及びマイクが直接指定されている" do
       before do
-        @group.logical_destroy
+        @entry = create_board_entry(:symbol => 'uid:alice', :publication_type => 'protected', :user_id => @alice.id, :publication_symbols_value => [@group, @mike].map(&:symbol).join(','))
       end
       it '公開されているユーザの配列が返ること' do
-        @entry.publication_users.should == [@mike]
+        @entry.publication_users.should == [@alice, @mike]
       end
+      describe '記事を所有するグループが論理削除された場合' do
+        before do
+          @group.logical_destroy
+        end
+        it '公開されているユーザの配列が返ること' do
+          @entry.publication_users.should == [@mike]
+        end
+      end
+    end
+
+    it "アリスのブログをprivateにしている場合、公開されているユーザの配列が返ること" do
+      @entry = create_board_entry(:symbol => 'uid:alice', :publication_type => 'private', :user_id => @alice.id, :publication_symbols_value => "")
+      @entry.publication_users.should == [@alice]
+    end
+
+    it "アリスのブログをpublicにしている場合、アクティブな全ユーザの配列が返ること" do
+      @entry = create_board_entry(:symbol => 'uid:alice', :publication_type => 'public', :user_id => @alice.id, :publication_symbols_value => "")
+      @entry.publication_users.size.should == User.active.all.size
+    end
+
+    it 'SKIPグループの直接指定されている記事の場合、公開されているユーザの配列が返ること' do
+      @entry = create_board_entry(:symbol => 'gid:skip_group', :publication_type => 'protected', :user_id => @alice.id, :publication_symbols_value => [@group, @mike].map(&:symbol).join(','))
+      @entry.publication_users.should == [@alice, @mike]
+    end
+
+    it 'SKIPグループに private で公開されている記事の場合、公開されているユーザの配列が返ること' do
+      @entry = create_board_entry(:symbol => 'gid:skip_group', :publication_type => 'private', :user_id => @alice.id, :publication_symbols_value => "")
+      @entry.publication_users.should == [@alice, @mike]
+    end
+
+    it "SKIPグループで public に公開されている記事の場合、アクティブな全ユーザの配列a返ること" do
+      @entry = create_board_entry(:symbol => 'gid:skip_group', :publication_type => 'public', :user_id => @alice.id, :publication_symbols_value => "")
+      @entry.publication_users.size.should == User.active.all.size
     end
   end
 end

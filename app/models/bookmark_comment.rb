@@ -86,6 +86,7 @@ class BookmarkComment < ActiveRecord::Base
   end
 
   # 他の人からみた・・・のタグクラウド用タグ一覧を返す
+  # TODO まだ数ヶ所残ってるが無くせそうな気がするので見直したい
   def self.get_tagcloud_tags postit_url
     join_state =  "inner join bookmark_comment_tags on bookmark_comment_tags.tag_id = tags.id "
     join_state << "inner join bookmark_comments on bookmark_comments.id = bookmark_comment_tags.bookmark_comment_id "
@@ -99,16 +100,13 @@ class BookmarkComment < ActiveRecord::Base
              :joins => join_state)
   end
 
-  def self.get_bookmark_tags is_type_user
+  def self.get_bookmark_tags
     join_state =  "inner join bookmark_comment_tags on bookmark_comment_tags.tag_id = tags.id "
     join_state << "inner join bookmark_comments on bookmark_comments.id = bookmark_comment_tags.bookmark_comment_id "
     join_state << "inner join bookmarks on bookmarks.id = bookmark_comments.bookmark_id "
 
-    conditions = is_type_user ? "bookmarks.url like '/user/%'" : nil
-
     Tag.find(:all,
              :select => "tags.name, count(tags.id) as count",
-             :conditions => conditions,
              :order => "count DESC",
              :group => "bookmark_comment_tags.tag_id",
              :limit => 10,

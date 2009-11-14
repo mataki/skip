@@ -440,16 +440,21 @@ $j(function(){
         minute_obj[0].value = currentMinute;
     };
 
-    /*
-     * ログイン画面のクッキー保存と読み込み（2週間）
-     */
-    saveLoginData = function(){
-        exp_days = 14;
-        saveCookie('login_save', $j('#login_save').attr('checked').toString(), exp_days);
-        if($j('#ssl_enable_radio')[0] != undefined){
-            saveCookie('ssl_enable', $j('#ssl_enable_radio').attr('checked').toString(), exp_days);
+    $j.extend({
+      getUrlVars: function(url_or_href){
+        var vars = [], hash;
+        var hashes = url_or_href.slice(url_or_href.indexOf('?') + 1).split('&');
+        for(var i = 0; i < hashes.length; i++)
+        {
+          hash = hashes[i].split('=');
+          vars.push(hash[0]);
+          vars[hash[0]] = hash[1];
         }
-        return true;
-    };
+        return vars;
+      },
+      getUrlVar: function(url_or_href, name){
+        return $j.getUrlVars(url_or_href)[name];
+      }
+    });
 });
 

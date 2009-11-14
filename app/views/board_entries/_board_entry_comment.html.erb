@@ -3,7 +3,7 @@
 <% nest_limit = 5 -%>
 <% comment_class = "board_entry_comment level#{level}" -%>
 
-<div class="<%= comment_class %>" id="comment_<%= comment.id %>_<%= level %>">
+<div class="<%= comment_class %> ui-corner-all" id="comment_<%= comment.id %>_<%= level %>">
   <div class="header">
     <span class="<%= comment_title_class @current_user, comment, checked_on %>">
       <%= user_link_to(comment.user) %>

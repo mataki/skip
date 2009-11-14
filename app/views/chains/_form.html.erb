@@ -1,0 +1,42 @@
+<% content_for :contents_left do -%>
+  <% unless current_user.id == current_target_user.id -%>
+    <%= render(:partial => 'user/action_box', :locals => { :user => current_target_user }) %>
+  <% end -%>
+  <%= render :partial => 'user/join_groups_box', :locals => { :user => current_target_user } %>
+  <%= render :partial => 'user/follow_chains_box', :locals => { :user => current_target_user } %>
+  <%= render :partial => "chains/followed_chain_tags_box" %>
+<% end -%>
+
+<%= template_error_messages_for :chain %>
+<p>
+<%= form.label :comment, _('Introduction: ') %>
+<%= form.text_area :comment %>
+</p>
+<p>
+<%= form.label :tags_as_s %>
+<%= form.text_field :tags_as_s %>
+<div id="category_box">
+  <div id="candidates_list"><p><%= _('Multiple values can be given in foo,bar format')%></p></div>
+  <div style="font-size:8pt; font-weight:bold;"><%= _('Tags marked by others: ')%></div><div id="user_tags_list" style="margin-bottom:5px;"></div>
+  <div style="font-size:8pt; font-weight:bold;"><%= _('Top 10 tags: ')%></div><div id="other_tags_list" style="margin-bottom:5px;"></div>
+  <div style="font-size:8pt; font-weight:bold;"><%= _('Tags you used before (top 20): ')%></div><div id="your_tags_list" style="margin-bottom:5px;"></div>
+</div>
+</p>
+<%= ckeditor 'chain_comment' %>
+
+<% content_for :javascript_initializers do -%>
+    var setupTagComplete = function() {
+        var userTags = <%= ChainTag.tags_used_to(current_target_user, current_user).map{|t| h t.name }.to_json %>;
+        var otherTags = <%= ChainTag.popular_tags_used_by_except(current_user).map{|t| h t.name }.to_json %>;
+        var yourTags = <%= ChainTag.popular_tags_used_by_only(current_user).map{|t| h t.name }.to_json %>;
+
+        $j('#user_tags_list').append(createTagsLink(userTags));
+        $j('#other_tags_list').append(createTagsLink(otherTags));
+        $j('#your_tags_list').append(createTagsLink(yourTags));
+
+        $j('#chain_tags').jTagging($j('#user_tags_list'));
+        $j('#chain_tags').jTagging($j('#other_tags_list'));
+        $j('#chain_tags').jTagging($j('#your_tags_list'));
+    };
+    setupTagComplete();
+<% end -%>

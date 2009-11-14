@@ -4,7 +4,7 @@
     var defaults = {
       placeholder: "data:image/gif;base64,R0lGODlhAQABAID/AMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAEBMgA7"
     };
-    
+
     this.each(function(){
       var $el = $(this);
 
@@ -17,7 +17,6 @@
 
       var img = new Image();
       img.onerror = function() {
-        alert("error");
       };
       img.onload = function() {
         // Check if the loaded image is wide or tall

@@ -6,7 +6,6 @@ class SkipDefaultData
     Tag.count == 0 && Group.count == 0 && UserProfileMasterCategory.count == 0 && UserProfileMaster.count == 0
   end
 
-  # FIXME #25 国際化におけるシステムタグの扱いについての検討が必要
   def self.load lang = nil
     # TODO 強引に追加してるためもっとシンプルにしたい。別に切り分けた方がよい??
     if Page.count == 0
@@ -40,7 +39,7 @@ class SkipDefaultData
 
   def self.load_html lang = nil
     %w(default_about_this_site default_rules).each do |content_name|
-      open(RAILS_ROOT + "/public/custom/lang/#{lang}/#{content_name}.html") do |source|
+      open(RAILS_ROOT + "/locale/#{lang}/html/#{content_name}.html") do |source|
         contents = source.read
         open(RAILS_ROOT + "/public/custom/#{content_name}.html", 'w') { |f| f.write(contents) }
         open(RAILS_ROOT + "/public/custom/#{content_name.sub('default_', '')}.html", 'w') { |f| f.write(contents) }

@@ -8,12 +8,6 @@ module QuotaValidation
     end
   end
 
-  def valid_max_size_per_owner_of_file(file, owner_symbol)
-    if (FileSizeCounter.per_owner(owner_symbol) + file.size) > SkipEmbedded::InitialSettings['max_share_file_size_per_owner'].to_i
-      errors.add_to_base _("Upload denied due to excess of assigned shared files disk capacity.")
-    end
-  end
-
   def valid_max_size_of_system_of_file(file)
     if (FileSizeCounter.per_system + file.size) > SkipEmbedded::InitialSettings['max_share_file_size_of_system'].to_i
       errors.add_to_base _("Upload denied due to excess of system wide shared files disk capacity.")

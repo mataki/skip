@@ -19,25 +19,8 @@ module UserHelper
   # メニューの生成
   def get_social_menu_items selected_menu
     @@menus = [{:name => _("Introduction from other users"),     :menu => "social_chain" },
-               {:name => _("Introduction for other users"),   :menu => "social_chain_against" },
-               {:name => _("Impression of other users"),       :menu => "social_postit" },
-              ]
+               {:name => _("Introduction for other users"),   :menu => "social_chain_against" }]
     get_menu_items @@menus, selected_menu, "social"
-  end
-
-  def social_tag_cloud tags, uid
-    output = ""
-    tag_cloud tags do |name, count, css_class|
-      if params[:selected_tag] == name
-        output << '<span style="background-color: yellow;">'
-        output << link_to(name, {:action => :social, :uid => uid, :menu => 'social_postit'}, :class => css_class)
-        output << '</span>'
-      else
-        output << link_to(name, {:action => :social, :uid => uid, :menu => 'social_postit', :selected_tag => name}, :class => css_class)
-      end
-      output << "<span style='color: silver; font-size: 10px;'>(#{count})</span> "
-    end
-    output
   end
 
   def profile_show_tag input_type_processer, user_profile_value
@@ -55,7 +38,7 @@ module UserHelper
     # TODO mypage#setup_layoutのtab_menu_source構築と重複が多い。DRYにしたい。
     tab_menu_source = [ {:label => _('Profile'), :options => {:controller => 'user', :action => 'show', :uid => user.uid}} ]
 
-    tab_menu_source << {:label => _('Blog'), :options => {:controller => 'user', :action => 'blog', :uid => user.uid, :archive => 'all', :sort_type => 'date'}} unless BoardEntry.owned(user).accessible(current_user).empty?
+    tab_menu_source << {:label => _('Blog'), :options => {:controller => 'user', :action => 'blog', :uid => user.uid, :archive => 'all', :sort_type => 'date', :type => 'entry'}} unless BoardEntry.owned(user).accessible(current_user).empty?
     tab_menu_source << {:label => _('Shared Files'), :options => {:controller => 'share_file', :action => 'list', :uid => user.uid}} unless ShareFile.owned(user).accessible(current_user).empty?
     tab_menu_source << {:label => _('Socials'), :options => {:controller => 'user', :action => 'social', :uid => user.uid}} unless user.against_chains.empty?
     tab_menu_source << {:label => _('Groups Joined'), :options => {:controller => 'user', :action => 'group', :uid => user.uid}} unless user.groups.participating(user).empty?
@@ -80,7 +63,7 @@ module UserHelper
   end
 
   def load_user
-    if @user = User.find_by_uid(params[:uid])
+    if @user = current_target_user
       @user.mark_track current_user.id if @user.id != current_user.id
     else
       flash[:warn] = _('User does not exist.')

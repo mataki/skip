@@ -194,3 +194,44 @@ describe GroupCategory, '#groups' do
     end
   end
 end
+
+describe GroupCategory, ".with_groups_count" do
+  before do
+    @gc = (1..2).map{|i| icon = GroupCategory::ICONS.rand;GroupCategory.create!(:name => "name#{i}", :code => SkipFaker.rand_alpha, :icon => icon) }
+    @gc[0].groups << @groups1 = (1..4).map{ |i| create_group(:gid => "group1#{i}") }
+    @gc[1].groups << @groups2 = create_group(:gid => "group2")
+  end
+  describe "userの条件がない場合" do
+    before do
+      @gc_wgc = GroupCategory.with_groups_count(nil).all
+    end
+    it "group_categoryが全件が取れること" do
+      @gc_wgc.size.should == GroupCategory.count
+    end
+    it "countが正しく取れること" do
+      @gc_wgc[0].count.should == "0"
+      @gc_wgc[1].count.should == @groups1.size.to_s
+      @gc_wgc[2].count.should == "1"
+    end
+  end
+  describe "userの条件がある場合" do
+    before do
+      @user = create_user
+      GroupParticipation.create!(:group => @groups2, :user => @user)
+      GroupParticipation.create!(:group => @groups1[0], :user => @user)
+      @gc_wgc = GroupCategory.with_groups_count(@user).all
+    end
+    it "GroupCategoryが取れること" do
+      @gc_wgc.size.should == 2
+    end
+    # 本当は、これでCategory全件と、所属件数を纏めて全てとりたかったんだけどだめだった。
+#     it "group_categoryが全件が取れること" do
+#       @gc_wgc.size.should == GroupCategory.count
+#     end
+#     it "countが正しく取れること" do
+#       @gc_wgc[0].count.should == "0"
+#       @gc_wgc[1].count.should == "1"
+#       @gc_wgc[2].count.should == "1"
+#     end
+  end
+end

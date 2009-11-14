@@ -23,10 +23,7 @@ class Admin::UserProfileMastersController < Admin::ApplicationController
 
     @topics = [_('Listing %{model}') % {:model => _('user profile masters')}]
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => objects }
-    end
+    redirect_to admin_masters_path
   end
 
   def show

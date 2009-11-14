@@ -1,3 +1,8 @@
+<% content_for :contents_left do -%>
+  <%= render :partial => 'month_list' %>
+<% end -%>
+
+<% content_for :contents_right do -%>
 <div class="box message ui-corner-all">
   <%=h _("Overall ranking of %s (Since the opening of the site up to yesterday. Updated daily)") % Admin::Setting.abbr_app_title %>
 </div>
@@ -11,4 +16,5 @@
             getRanking(contents_types[i]);
     };
     loadRanking();
+  <% end -%>
 <% end -%>

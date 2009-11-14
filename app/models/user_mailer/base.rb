@@ -41,8 +41,9 @@ private
   end
 
   def header
-    _('*This email is automatically delivered from the system. Please do not reply.') + "\n\n" +
-    _('This email is a contact from %{sender}') % {:sender => sender}
+    _('*This email is automatically delivered from the system. Please do not reply.') + "\n" +
+    _('This email is a contact from %{sender}') % {:sender => sender} + "\n" +
+    ("-" * 66)
   end
 
   def footer

@@ -10,57 +10,83 @@
         help_url = h(SkipEmbedded::InitialSettings['help_url'])
         what_new_url = h(SkipEmbedded::InitialSettings['what_new_url'])
         links << content_tag('b', user_name_mode?(:code) ? h(current_user.code) : h(current_user.uid))
-        links << link_to(_('What New'), what_new_url, :target => "_blank", :class => "attention_underline_link") unless what_new_url.blank?
+        links << link_to(_("What's New"), what_new_url, :target => "_blank", :class => "attention_underline_link") unless what_new_url.blank?
         links << link_to(_("My Account"), {:controller => "/mypage", :action => :manage, :only_path => false}, :class => "underline_link")
         links << link_to(_("System Administration"), {:controller => "/admin", :action => "index"}, :title => _("Administration of the site."), :class => "underline_link") if current_user.admin?
         links << link_to(_('Help'), help_url, :target => "_blank", :class => "underline_link") unless help_url.blank?
 
-    other_links_tag = ""
-    unless COMMON_MENUS.empty?
-      other_links = []
-      links << link_to( content_tag('u',_('more')) + content_tag('small', "▼"), '#', :id => 'other_link')
-      COMMON_MENUS[:menus].each do |menu|
-        if menu[:url]
-          other_links << link_to(h(menu[:title]), menu[:url], :target => '_blank')
-        else
-          other_links << content_tag(:p, h(menu[:title]))
-          menu[:links].each do |link|
-            other_links << link_to(h(link[:title]), link[:url], :target => '_blank')
+        other_links_tag = ""
+        unless COMMON_MENUS.empty?
+          other_links = []
+          links << link_to( content_tag('u',_('Links')) + content_tag('small', "▼"), '#', :id => 'other_link')
+          COMMON_MENUS[:menus].each do |menu|
+            if menu[:url]
+              other_links << link_to(h(menu[:title]), menu[:url], :target => '_blank')
+            else
+              other_links << content_tag(:p, h(menu[:title]))
+              menu[:links].each do |link|
+                other_links << link_to(h(link[:title]), link[:url], :target => '_blank')
+              end
+            end
           end
+          other_links_tag = content_tag :div, other_links.join(''), :id => 'other_links', :class => 'invisible'
         end
-      end
-      other_links_tag = content_tag :div, other_links.join(''), :id => 'other_links', :class => 'invisible'
-    end
 
-        links << link_to(_("Sign out"), logout_url, :class => "underline_link")
+        links << link_to(_("Sign out"), logout_url, :class => "underline_link") unless SkipEmbedded::InitialSettings['hide_header_logout_link']
+
       -%>
 
-    <div id="menu">
-      <%= links.join ' | ' %>
-      <%= other_links_tag unless other_links_tag.blank? %>
-    </div>
-  <% end -%>
+      <div id="menu">
+        <%= links.join ' | ' %>
+        <%= other_links_tag unless other_links_tag.blank? %>
+      </div>
+    <% end -%>
   </div>
   <%= header_logo_link %>
   <div class="banner"></div>
 
-  <% if SkipEmbedded::InitialSettings['full_text_search_setting'] && current_user && current_user.active? %>
-  <div id="search">
-    <% form_tag({:controller => '/search', :action => 'full_text_search'},{:method => 'get'}) do -%>
-      <%= text_field_tag "full_text_query", search_label, :class => "labeled-field" %>
-      <%= submit_tag _('Search') -%>
+  <% if current_user -%>
+    <% if SkipEmbedded::InitialSettings['full_text_search_setting'] && current_user.active? -%>
+      <div id="search" class="ui-corner-all">
+        <% form_tag({:controller => '/search', :action => 'full_text_search'},{:method => 'get'}) do -%>
+          <%= text_field_tag "full_text_query", search_label, :class => "labeled-field" %>
+          <%= submit_tag _('Search') -%>
+        <% end -%>
+        <span class="other_links"><%= link_to( _('Rankings'), :controller => '/rankings', :action => 'index') %></span>
+        <span class="other_links"><%= link_to( _('Site Information'), :controller => '/statistics') %></span>
+        <%= shortcut_menus %>
+      </div>
+      <% content_for :javascript_initializers do -%>
+        $j('input#full_text_query').labeledTextField(<%= {:message => search_label}.to_json %>);
+      <% end -%>
     <% end -%>
-    <% if current_user && !current_user.groups.participating(current_user).empty? -%>
-      <%= shortcut_menus %>
+  <% else -%>
+    <% unless request.url.include? url_for(:controller => 'platform', :action => 'require_login') -%>
+    <div id="login_container" class="ui-corner-all">
+      <%= render :partial => 'shared/login_form' %>
+    </div>
     <% end -%>
-  </div>
-  <% content_for :javascript_initializers do -%>
-    $j('input#full_text_query').labeledTextField(<%= {:message => search_label}.to_json %>);
   <% end -%>
-  <% end %>
 </div><!-- header -->
 <div id="global_links_wrapper">
   <div id="global_links">
     <%= global_links if current_user && current_user.active? %>
   </div>
+  <% unless SkipEmbedded::InitialSettings['enable_ad_for_oss'] == "lovelyskip" -%>
+    <div style="margin-top: 0.5em; padding-top: 0.5em; border-top: 1px solid silver;">
+      <div style="margin-left: 30px; text-valign:middle;">
+        <%= _('Sponsored link:') %>
+        <script type="text/javascript"><!--
+                                           google_ad_client = "pub-5332257656838193";
+                                           /* 728x15, 作成済み 09/10/28 */
+                                           google_ad_slot = "6484737204";
+                                           google_ad_width = 728;
+                                           google_ad_height = 15;
+                                           //-->
+        </script>
+        <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+        </script>
+      </div>
+    </div>
+  <% end -%>
 </div>

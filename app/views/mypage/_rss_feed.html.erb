@@ -1,10 +1,11 @@
 <%# locals: feeds -%>
 <% feeds.each do |feed| %>
-  <div class="right_box">
-    <h2 class="ui-corner-top"><%= h feed.channel.title -%></h2>
-    <ul class="no_style ui-corner-bottom">
+  <div class="right_box ui-corner-all">
+    <h2 class="ui-corner-top"><%= h feed.title -%></h2>
+    <ul class="no_style">
       <% feed.items.each do |item| %>
-        <li><%= link_to icon_tag("new") + " " + h(item.title), h(item.link), :target => "_blank" -%></li>
+        <% title = (Time.now.ago(5.day) < item.date_published) ? "#{icon_tag('new')} #{h(item.title)}" : h(item.title) -%>
+        <li><%= link_to title.toutf8, h(item.id), :target => "_blank" -%></li>
       <% end %>
     </ul>
   </div>

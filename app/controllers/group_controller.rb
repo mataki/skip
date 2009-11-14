@@ -23,7 +23,7 @@ class GroupController < ApplicationController
 
   verify :method => :post,
          :only => [ :join, :destroy, :leave, :update, :change_participation,
-                    :ado_set_favorite, :toggle_owned, :forced_leave_user, :append_user ],
+                    :toggle_owned, :forced_leave_user, :append_user ],
          :redirect_to => { :action => :show }
   N_('GroupController|ApproveSuceeded')
   N_('GroupController|ApproveFailed')
@@ -87,9 +87,9 @@ class GroupController < ApplicationController
 
       find_params = BoardEntry.make_conditions(login_user_symbols, options)
 
-      if @user = params[:user]
+      if user_id = params[:user_id]
         find_params[:conditions][0] << " and board_entries.user_id = ?"
-        find_params[:conditions] << @user
+        find_params[:conditions] << user_id
       end
 
       @entries = BoardEntry.scoped(
@@ -257,7 +257,7 @@ class GroupController < ApplicationController
     entry_params[:publication_symbols] << user.symbol
     entry = BoardEntry.create_entry(entry_params)
 
-    flash[:notice] = _("Created an entry on the BBS about the removal of user. Edit the entry when needed.")
+    flash[:notice] = _("Created an entry on the forum about the removal of user. Edit the entry when needed.")
     redirect_to :action => 'bbs', :entry_id => entry.id
   end
 
@@ -317,20 +317,6 @@ class GroupController < ApplicationController
     end
   end
 
-  # ajax action
-  # お気に入りのステータスを設定する
-  def ado_set_favorite
-    par_id = params[:group_participation_id]
-    favorite_flag = params[:favorite_flag]
-    participation = @group.group_participations.find(par_id)
-    if participation.user_id != session[:user_id]
-      render :nothing => true
-      return false
-    end
-    participation.update_attribute(:favorite, favorite_flag)
-    render :partial => "groups/favorite", :locals => { :gid => @group.gid, :participation => participation, :update_elem_id => params[:update_elem_id]}
-  end
-
   # 参加者追加(管理者のみ)
   def append_user
     # 参加制約は追加しない。制約は制約管理で。
@@ -342,7 +328,7 @@ class GroupController < ApplicationController
       else
         @group.group_participations.build(:user_id => user.id, :owned => false)
         @group.save
-        flash[:notice] = _("Added %s as a member and created a BBS for messaging.") % user.name
+        flash[:notice] = _("Added %s as a member and created a forum for messaging.") % user.name
       end
     when (symbol_type == 'gid' and group = Group.active.find_by_gid(symbol_id, :include => :group_participations))
       group.group_participations.each do |participation|
@@ -351,7 +337,7 @@ class GroupController < ApplicationController
         end
       end
       @group.save
-      flash[:notice] = _("Added members of %s as members of the group and created a BBS for messaging.") % group.name
+      flash[:notice] = _("Added members of %s as members of the group and created a forum for messaging.") % group.name
     else
       flash[:warn] = _("Users / groups selection invalid.")
     end
@@ -385,12 +371,12 @@ private
   end
 
   def load_group_and_participation
-    unless @group = Group.active.find_by_gid(params[:gid])
+    unless @group = current_target_group
       flash[:warn] = _("Specified group does not exist.")
       redirect_to :controller => 'mypage', :action => 'index'
       return false
     end
-    @participation = @group.group_participations.find_by_user_id(session[:user_id])
+    @participation = current_participation
   end
 
   def check_owned

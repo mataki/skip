@@ -14,6 +14,15 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class BoardEntry < ActiveRecord::Base
+  # publication系 カラムの値 のサンプル
+  # |symbol     |entry_type|publication_type|publication_symbols_value|
+  # |uid:mat_aki|DIARY     |private         |""                       |
+  # |uid:mat_aki|DIARY     |public          |""                       |
+  # |uid:mat_aki|DIARY     |protected       |uid:maedana,gid:rails    |
+  # |gid:rails  |GROUP_BBS |private         |""                       |
+  # |gid:rails  |GROUP_BBS |public          |""                       |
+  # |gid:rails  |GROUP_BBS |protected       |uid:maedana,gid:rails    |
+
   include Publication
   include ActionController::UrlWriter
 
@@ -115,8 +124,8 @@ class BoardEntry < ActiveRecord::Base
   }
 
   named_scope :aim_type, proc { |types|
+    return {} if types.blank?
     types = types.split(',').map(&:strip) if types.is_a?(String)
-    types ||= %w(entry)
     { :conditions => ['aim_type IN (?)', types] }
   }
 
@@ -135,11 +144,14 @@ class BoardEntry < ActiveRecord::Base
 
   N_('BoardEntry|Entry type|DIARY')
   N_('BoardEntry|Entry type|GROUP_BBS')
-  N_('BoardEntry|Aim type|entry')
-  N_('BoardEntry|Aim type|question')
-  N_('BoardEntry|Aim type|notice')
-  N_('BoardEntry|Hide|true')
-  N_('BoardEntry|Hide|false')
+  ns_('BoardEntry|Aim type|entry', 'entries', 1)
+  ns_('BoardEntry|Aim type|question', 'questions', 1)
+  ns_('BoardEntry|Aim type|notices', 'notices', 1)
+  N_('BoardEntry|Aim type|Desc|entry')
+  N_('BoardEntry|Aim type|Desc|question')
+  N_('BoardEntry|Aim type|Desc|notice')
+  N_('BoardEntry|Open|true')
+  N_('BoardEntry|Open|false')
   DIARY = 'DIARY'
   GROUP_BBS = 'GROUP_BBS'
 
@@ -444,7 +456,7 @@ class BoardEntry < ActiveRecord::Base
       :title => params[:title],
       :contents => contents,
       :category => params[:tags],
-      :aim_type => params[:aim_type],
+      :aim_type => params[:aim_type] || 'entry',
       :date => params[:date] || Time.now,
       :user_id => params[:user_id],
       :entry_type => params[:entry_type],
@@ -526,11 +538,11 @@ class BoardEntry < ActiveRecord::Base
   def prepare_send_mail
     return if diary? && private?
 
-    users = public? ?  User.active.all : publication_users
+    users = publication_users
     users.each do |u|
       next if u.id == self.user_id
       owner = load_owner
-      UserMailer::AR.deliver_sent_contact(u.email, u.name, self)
+      UserMailer::AR.deliver_sent_contact(u.email, owner, self)
     end
   end
 
@@ -628,19 +640,34 @@ class BoardEntry < ActiveRecord::Base
   # この記事の公開対象ユーザ一覧を返す
   # 戻り値：Userオブジェクトの配列（重複なし）
   def publication_users
-    users = []
-    return users if self.publication_symbols_value.blank?
-    self.publication_symbols_value.split(',').each do |sym|
-      symbol_type, symbol_id = SkipUtil.split_symbol(sym)
-      case symbol_type
+    case self.publication_type
+    when "private"
+      owner = load_owner
+      if owner.is_a?(Group)
+        return owner.users
+      elsif owner.is_a?(User)
+        [owner]
+      else
+        []
+      end
+    when "protected"
+      users = []
+      self.publication_symbols_value.split(',').each do |sym|
+        symbol_type, symbol_id = SkipUtil.split_symbol(sym)
+        case symbol_type
         when "uid"
           users << User.find_by_uid(symbol_id)
         when "gid"
           group = Group.active.find_by_gid(symbol_id, :include => [:group_participations])
           users << group.group_participations.map { |part| part.user } if group
+        end
       end
+      return users.flatten.uniq.compact
+    when "public"
+      return User.active.all
+    else
+      return []
     end
-    users.flatten.uniq.compact
   end
 
   def root_comments
@@ -676,19 +703,37 @@ class BoardEntry < ActiveRecord::Base
     self.readable?(user) && !self.writer?(user.id)
   end
 
-  def toggle_hide(comment, user)
+  def toggle_hide(user)
     unless BoardEntry::HIDABLE_AIM_TYPES.include? self.aim_type
       self.errors.add_to_base(_("Invalid operation."))
       return false
     end
     transaction do
       self.toggle!(:hide)
-      self.entry_hide_operations.create!(:comment => comment, :user => user, :operation_type => self.hide.to_s)
+      self.entry_hide_operations.create!(:user => user, :operation_type => self.hide.to_s)
+      url_options = {
+        :host => Admin::Setting.host_and_port_by_initial_settings_default,
+        :protocol => Admin::Setting.protocol_by_initial_settings_default
+      }.merge(self.get_url_hash)
+      Message.save_message('QUESTION', self.user_id, url_for(url_options), self.title) unless user.id == self.user_id
     end
     true
   rescue ActiveRecord::RecordInvalid => e
     self.errors.add_to_base(e.errors.full_messages)
     false
+  end
+
+  AIM_TYPES.each do |type|
+    define_method("is_#{type.downcase}?") do
+      self.aim_type == type
+    end
+    define_method("be_#{type.downcase}") do
+      self.aim_type = type
+    end
+    define_method("be_#{type.downcase}!") do
+      self.aim_type = type
+      self.save!
+    end
   end
 
 private

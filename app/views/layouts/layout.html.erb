@@ -16,7 +16,7 @@
 
   <%= yield :contents_top %>
 
-  <div id="panel" class="ui-corner-all" style="_width: 98%;">
+  <div id="panel" class="ui-corner-all">
     <% if @user and !@user.new_record? and !@user.unused? -%>
       <div class="panel_top">
         <div class="left">
@@ -28,16 +28,19 @@
             <% if @user.retired? -%>
               <li><b class="retired"><%= _('This user has already left.') %></b></li>
             <% else -%>
-              <li><%= _('Last Access') %>: <%= @user.before_access %></li>
+              <% if @user != @current_user -%>
+                <li><%= _('Last Access') %>: <%= h @user.before_access %></li>
+              <% end -%>
             <% end -%>
             <li><%= link_to_if @user == current_user, _('Visits') + ": " +h(n_("%{count} visit", "%{count} visits", @user.info[:access_count]) % {:count => @user.info[:access_count]}), {:action => 'trace', :controller => "/mypage"} -%></li>
             <li><%= _('Subscribers') %>: <%=h(n_("%{count} user", "%{count} users", @user.info[:subscriber_count]) % {:count =>@user.info[:subscriber_count]}) -%></li>
             <li><%= _('Posts') %>: <%=h(n_("%{count} entry", "%{count} entries", @user.info[:blog_count]) % {:count => @user.info[:blog_count]}) -%></li>
-            <li><%= _('Days since you registered') %>: <%=h(n_("%{count} day", "%{count} days", @user.info[:using_day]) % {:count => @user.info[:using_day]}) -%></li>
+            <li><%= _('Days since registered') %>: <%=h(n_("%{count} day", "%{count} days", @user.info[:using_day]) % {:count => @user.info[:using_day]}) -%></li>
           </ul>
           <br class="clear_left" />
-          <div id="tab_menu"><%= generate_tab_menu(user_tab_menu_source(@user)) %></div>
         </div>
+        <div id="tab_menu"><%= generate_tab_menu(user_tab_menu_source(@user)) %></div>
+        <br class="clear_left" />
       </div>
     <% elsif @group and !@group.new_record?%>
       <h1 id="title"><%=h @group.name %></h1>
@@ -88,7 +91,7 @@
     </div><!-- tab_body -->
   </div><!-- panel -->
 
-  <div style="clear: both;"><br/></div>
+  <div class="clear_left"></div>
 </div><!-- main -->
 
 <% if @site_count -%>

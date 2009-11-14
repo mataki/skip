@@ -39,6 +39,7 @@ class User < ActiveRecord::Base
 
   has_many :follow_chains, :class_name => 'Chain', :foreign_key => 'from_user_id'
   has_many :against_chains, :class_name => 'Chain', :foreign_key => 'to_user_id'
+  has_many :notices
 
   validates_presence_of :name
   validates_length_of :name, :maximum => 60
@@ -82,6 +83,19 @@ class User < ActiveRecord::Base
       :conditions => ['group_participations.group_id = ? AND group_participations.waiting = false AND group_participations.owned = false', group.id],
       :include => [:group_participations]
     }
+  }
+
+  named_scope :tagged, proc { |tag_words, tag_select|
+    return {} unless tag_words
+    tag_select = 'AND' unless tag_select == 'OR'
+    condition_str = ''
+    condition_params = []
+    words = tag_words.split(',')
+    words.each do |word|
+      condition_str << (word == words.last ? ' chains.tags_as_s like ?' : " chains.tags_as_s like ? #{tag_select}")
+      condition_params << SkipUtil.to_like_query_string(word)
+    end
+    { :conditions => [condition_str, condition_params].flatten, :include => :against_chains }
   }
 
   named_scope :order_joined, proc { { :order => "group_participations.updated_on DESC" } }
@@ -428,10 +442,7 @@ class User < ActiveRecord::Base
   # プロフィールボックスに表示するユーザの情報
   def info
     @info ||= { :access_count => self.user_access ? self.user_access.access_count : 0,
-                :subscriber_count => AntennaItem.count(
-                  :conditions => ["antenna_items.value = ?", self.symbol],
-                  :select => "distinct user_id",
-                  :joins => "left outer join antennas on antenna_id = antennas.id"),
+                :subscriber_count => Notice.subscribed(self).count,
                 :blog_count => BoardEntry.count(:conditions => ["user_id = ? and entry_type = ?", self.id, "DIARY"]),
                 :using_day => ((Time.now - self.created_on) / (60*60*24)).to_i + 1 }
   end
@@ -486,6 +497,10 @@ class User < ActiveRecord::Base
   def participating_group? group
     raise ArgumentError, 'group_or_gid is invalid' unless group.is_a?(Group)
     self.group_symbols.include? group.symbol
+  end
+
+  def to_param
+    uid
   end
 
 protected

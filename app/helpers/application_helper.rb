@@ -109,23 +109,16 @@ module ApplicationHelper
     link_to output_text, { :controller => 'group', :action => 'show', :gid => group.gid }, options
   end
 
-  # ユーザかグループのページへのリンク
-  def item_link_to item, options = {}
-    output_text = ""
-    output_text << image_tag(option[:image_name]) if options[:image_name]
-    output_text << (options[:view_text] || h(item[:name]))
-
-    url = { :controller => item.class.name.downcase,
-            :action => 'show',
-            item.class.symbol_type => item.symbol_id }
-
-    link_to output_text, url, { :title => h(item[:name]) }
-  end
-
-  def symbol_link_to symbol, name = nil
+  def symbol_link_to symbol, name = nil, options = {}
     symbol_type, symbol_id = SkipUtil.split_symbol symbol
     name ||= "[#{symbol}]"
-    link_to(h(name), {:controller => @@CONTROLLER_HASH[symbol_type], :action => "show", symbol_type => symbol_id}, :title => name)
+    link = link_to(h(name), {:controller => @@CONTROLLER_HASH[symbol_type], :action => "show", symbol_type => symbol_id}, :title => name)
+    if options[:with_prefix]
+      prefix = (symbol_type == 'uid') ? 'by' : 'on'
+      "#{prefix} #{link}"
+    else
+      link
+    end
   end
 
   def image_link_tag title, image_name, options={}
@@ -200,7 +193,7 @@ module ApplicationHelper
   # リッチテキストの表示
   def render_richtext(text, owner_symbol = nil)
     content = parse_permalink(text, owner_symbol)
-    "<div class='rich_style'>#{sanitize_and_unescape_for_richtext(content)}</div>"
+    "<div class='rich_style ui-corner-all'>#{sanitize_and_unescape_for_richtext(content)}</div>"
   end
 
   def render_richtext_with_border(text, owner_symbol = nil)
@@ -209,14 +202,25 @@ module ApplicationHelper
   end
 
   def sanitize_and_unescape_for_richtext(content)
-    content.gsub!(/(?:<|&lt;)!--.*?--(?:>|&gt;)/, '') unless content.blank?
+    content.gsub!(/(?:<|&lt;)!--.*?--(?:>|&gt;)/m, '') unless content.blank?
     sanitize_style_with_whitelist(BoardEntry.unescape_href(content))
   end
 
   def sanitize_style_with_whitelist(content)
     allowed_tags = HTML::WhiteListSanitizer.allowed_tags.dup << "table" << "tbody" << "tr" << "th" << "td" << "caption" << "strike" << "u"
-    allowed_attributes = HTML::WhiteListSanitizer.allowed_attributes.dup << "style" << "cellspacing" << "cellpadding" << "border" << "align" << "summary"
+    allowed_attributes = HTML::WhiteListSanitizer.allowed_attributes.dup << "style" << "cellspacing" << "cellpadding" << "border" << "align" << "summary" << "target"
     sanitize(content, :tags => allowed_tags, :attributes => allowed_attributes)
+  end
+
+  def translate_publication_type(entry)
+    case entry.publication_type
+    when 'public'
+      _("Open to All")
+    when 'protected'
+      _("Specified Directly:")
+    when 'private'
+      entry.diary? ? _("Owner Only") : _("Members Only")
+   end
   end
 
   def get_publication_type_icon(entry)
@@ -261,6 +265,7 @@ module ApplicationHelper
   end
 
   # タグクラウドを生成する
+  # TODO 単なるTagの配列じゃ駄目で、(:select 'count(tags.id) as count')などとしておかないといけない。呼び出し元で気をつけて配列を作らないといけない部分が微妙。なんとかしたい。
   def tag_cloud(tags, classes = %w(tag1 tag2 tag3 tag4 tag5 tag6))
     max, min = 0, 0
     tags.each do |tag|
@@ -312,20 +317,26 @@ module ApplicationHelper
         content_tag(:div, Admin::Setting.footer_first, :class => "first") +
           content_tag(:div, Admin::Setting.footer_second, :class => "second")
       end
-      s << content_tag(:div, ("powered_by"+link_to(image_tag(root_url + "custom/images/footer_logo.png"), h(Admin::Setting.footer_image_link_url))), :class => "powered_by")
+      if footer_image_link_tag = SkipEmbedded::InitialSettings['footer_image_link_tag']
+        s << content_tag(:div, footer_image_link_tag, :class => "powered_by")
+      else
+        s << content_tag(:div, ("powered_by"+link_to(image_tag(root_url + "custom/images/footer_logo.png"), h(Admin::Setting.footer_image_link_url))), :class => "powered_by")
+      end
     end
   end
 
   def shortcut_menus
+    return if !current_user || current_user.groups.participating(current_user).empty?
     option_tags = [content_tag(:option, _('Move to groups joined ...'), :value => url_for({:controller => '/mypage', :action => 'group'}))]
 
-    Group.favorites_per_category(current_user).each do |category|
-      option_tags << content_tag(:option, "[#{h(category[:name])}]", :disabled => 'disabled', :style => 'color: gray')
-      category[:groups].each do |group|
-        option_tags << content_tag(:option, "&nbsp;#{h(group.name)}", :value => url_for({:controller => '/group', :gid => group.gid, :action => 'show'}))
+    GroupCategory.all.each do |category|
+      if groups = category.groups.participating(current_user).order_participate_recent and !groups.empty?
+        option_tags << content_tag(:option, "[#{h(category.name)}]", :disabled => 'disabled', :style => 'color: gray')
+        groups.each do |group|
+          option_tags << content_tag(:option, "&nbsp;#{truncate(h(group.name), 15)}", :value => url_for({:controller => '/group', :gid => group.gid, :action => 'show'}))
+        end
       end
     end
-
     "<select class=\"select_navi\">#{option_tags.join('')}</select>"
   end
 
@@ -333,8 +344,6 @@ module ApplicationHelper
     links = ''
     links << content_tag(:span, link_to_unless_current(icon_tag('house', :title => _('My Page')) + _('My Page'), root_url), :class => 'home_link')
     other_links = []
-    other_links << link_to_unless((params[:controller] == "rankings" and params[:action] = "index"), icon_tag('chart_bar', :title => _('Rankings')) + _('Rankings'), :controller => '/rankings', :action => 'index')
-    other_links << link_to_unless_current(icon_tag('chart_curve', :title => _('Site Information')) + _('Site Information'), :controller => '/statistics')
     links << content_tag(:span, other_links, :class => 'other_links')
     search_links = []
     search_links << link_to_unless_current(icon_tag('report', :title => _('Entries')) + _('Entries'),  :controller => '/search', :action => 'entry_search') if BoardEntry.count > 0
@@ -376,15 +385,10 @@ private
   end
 
   def link_to_bookmark_url(bookmark, title = nil)
-    url = bookmark.url
     title ||= bookmark.title
 
     if bookmark.is_type_page?
-      url =  relative_url_root + url
-      link_to "#{icon_tag('report_link')} #{h title}", bookmark.escaped_url, :title => title
-    elsif bookmark.is_type_user?
-      url =  relative_url_root + url
-      link_to "#{icon_tag('user')} #{h title}", bookmark.escaped_url, :title => title
+      link_to "#{icon_tag('report_link')} #{h title}", "#{relative_url_root}#{bookmark.escaped_url}", :title => title
     else
       link_to "#{icon_tag('world_link')} #{h truncate(title, :length => 115)}", bookmark.escaped_url, :title => title, :target => "_blank"
     end

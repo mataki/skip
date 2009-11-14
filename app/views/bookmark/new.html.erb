@@ -1,13 +1,7 @@
-<% if @bookmark.is_type_user? -%>
-<%   @title = _('Bookmark this') -%>
-<%   desc = _('You can bookmark target users with tags and comments (They are viewable from the bookmark list)') %>
-<% else -%>
-<%   @title = _('Bookmark Comment') -%>
-<%   desc = _("You can put tags and comment on the bookmark.<br/>(It is recommended to bookmark users and entries in %s from the links within the respective pages.)") % h(Admin::Setting.abbr_app_title) %>
-<% end -%>
+<% @title = _('Bookmark Comment') -%>
 
 <div class="edit_form_space bookmark edit">
-  <div class="desc ui-corner-all"><%= desc -%></div>
+  <div class="desc ui-corner-all"><%= _("You can put tags and comment on the bookmark.<br/>(It is recommended to bookmark users and entries in %s from the links within the respective pages.)") % h(Admin::Setting.abbr_app_title) %></div>
   <div class="update_form_wrapper">
     <div id="update_body"></div>
     <% form_tag({ :controller => :bookmark, :action => :update }, {:id => "update_form"}) do -%>
@@ -39,12 +33,10 @@
             </span>
           </td>
         </tr>
-        <% unless @bookmark.is_type_user? -%>
         <tr>
           <th><%= _('Public')%></th>
           <td><%= radio_buttons('bookmark_comment', 'public', BookmarkComment.public_types ) -%></td>
         </tr>
-        <% end -%>
         <tr>
           <th><%= label(:bookmark_comment, :tags, _('Tags')) %></th>
           <td>

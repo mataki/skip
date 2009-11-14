@@ -1,0 +1,15 @@
+<table cellspacing="0" cellpadding="0">
+  <tbody>
+    <tr>
+      <td class="label_field">
+        <%= _('Click the button below to login.') %>
+      </td>
+    </tr>
+    <tr>
+      <td><%= submit_tag _("Login") %></td>
+      <td>
+        <%= hidden_field_tag "openid_url", h(SkipEmbedded::InitialSettings['fixed_op_url']) %>
+      </td>
+    </tr>
+  </tbody>
+</table>

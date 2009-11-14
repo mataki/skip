@@ -1,0 +1,39 @@
+<%#
+   :link_elem_size
+     右側のオブジェクトごとのリンクの数を設定できる
+   :link_elem_proc
+     右側のオブジェクトごとのリンクを生成するための処理ブロックをわたす
+     ブロックからは、オブジェクトが渡される
+   :disp_columns_proc
+     オブジェクトのカラムを表示するための処理ブロックをわたす
+     ブロックからは、オブジェクトとカラムが渡される
+%>
+<% disp_columns_proc ||= lambda do |object,column|
+     data = object.send(column.to_sym)
+     data = data[/.{1,100}/] if data.is_a?(String)
+     data
+   end
+%>
+
+<table class="normal sortable">
+  <thead>
+    <tr>
+      <% columns.each do |column| -%>
+      <th><%=h s_("#{class_name}|#{column.humanize}") %></th>
+      <% end -%>
+      <% link_elem_size.times do %>
+        <td class="link" />
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% for object in objects %>
+    <tr class="<%= cycle('line_1', 'line_0') %>">
+      <% columns.each do |column| -%>
+      <td><%=sanitize(disp_columns_proc.call(object, column).to_s) %></td>
+      <% end %>
+      <%= link_elem_proc.call object %>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

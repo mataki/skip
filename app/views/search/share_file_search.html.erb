@@ -12,7 +12,7 @@
       <%= radio_button_tag("sort_type", "name", params[:sort_type] == "name", :id=>"sort_type_name") -%> <%= _('Sort by File Names')%>
         </td>
       </tr>
-      <%= render :partial => 'tag_search' %>
+      <%= render :partial => 'tag_search', :locals => {:tags => @tags} %>
     </table>
     <div class="submit"><%= submit_tag _('Search') %></div>
   <% end -%>

@@ -25,4 +25,9 @@ class UserCustom < ActiveRecord::Base
   def to_s
     "user_id:" + user_id.to_s + ", theme:" + theme
   end
+
+  def initialize(attr = {})
+    super(attr)
+    self.theme = SkipEmbedded::InitialSettings['default_theme'] || "silver"
+  end
 end

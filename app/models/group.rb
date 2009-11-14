@@ -17,6 +17,7 @@ class Group < ActiveRecord::Base
   include SkipEmbedded::LogicalDestroyable
 
   has_many :group_participations, :dependent => :destroy
+  has_many :users, :through => :group_participations, :conditions => ['group_participations.waiting = ?', false]
   belongs_to :group_category
 
   validates_presence_of :name, :description, :gid
@@ -168,18 +169,13 @@ class Group < ActiveRecord::Base
   end
 
   # TODO named_scope化する
-  def self.count_by_category user_id = nil
-    conditions = user_id ? ['group_participations.user_id = ?', user_id] : []
-    groups = active.all(
-      :select => 'group_category_id, count(distinct(groups.id)) as count',
-      :group => 'groups.group_category_id',
-      :conditions => conditions,
-      :joins => [:group_participations])
+  def self.count_by_category user = nil
+    categories = GroupCategory.with_groups_count(user)
     group_counts = Hash.new(0)
     total_count = 0
-    groups.each do |group_count|
-      group_counts[group_count.group_category_id] = group_count.count.to_i
-      total_count += group_count.count.to_i
+    categories.each do |category|
+      group_counts[category.id] = category.count.to_i
+      total_count += category.count.to_i
     end
     [group_counts, total_count]
   end
@@ -191,17 +187,5 @@ class Group < ActiveRecord::Base
   def self.synchronize_groups ago = nil
     conditions = ago ? ['updated_on >= ?', Time.now.ago(ago.to_i.minute)] : []
     Group.scoped(:conditions => conditions).all.map { |g| [g.gid, g.gid, g.name, User.joined(g).map { |u| u.openid_identifier }, !!g.deleted_at] }
-  end
-
-  def self.favorites_per_category user
-    favorite_groups = []
-    GroupCategory.find(:all).each do |category|
-      groups = Group.active.all(
-        :conditions => ["group_category_id = ? and group_participations.user_id = ? and group_participations.favorite = true", category.id, user.id],
-        :order => "group_participations.created_on DESC",
-        :include => :group_participations)
-      favorite_groups << {:name => category.name, :groups => groups} if groups.size > 0
-    end
-    favorite_groups
   end
 end

@@ -8,7 +8,8 @@
   <div class="input_line">
     <div class="input_label"><%= _('Files')%></div>
     <div style="float:left;">
-      <%= _('(Caution!) Never upload files that may cause security issues.')%>
+      <%= _('(Caution!) Never upload files that may cause security issues.') %>
+      <%= _("Available upload file size is %s.") % "#{SkipEmbedded::InitialSettings['max_share_file_size'].to_i/1.megabyte}" %>
       <div id="multiple_file"></div>
       <div><a href="#" id="add_file_tag_link"><%= _('[Add more files]')%></a></div>
       <div id="hidden_file_area" style="display:none;"></div>

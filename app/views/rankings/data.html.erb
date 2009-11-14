@@ -8,8 +8,9 @@
       <th></th>
     <% if include_title -%>
       <th><%= _('Title')%></th>
-    <% end -%>
+    <% else -%>
       <th><%= _('User')%></th>
+    <% end -%>
       <th class="point"><%= ranking_amount_name params[:content_type].to_sym %></th>
     </tr>
   </thead>
@@ -18,9 +19,10 @@
     <tr>
       <td class="rank"><%= i + 1 %>
     <% if include_title -%>
-       <td class="link_text"><%= link_to h(ranking.title), h(ranking.url) %></td>
+      <td class="column_title"><%= link_to h(ranking.title), h(ranking.url), :class => 'ranking_title' %> - (<%= link_to h(ranking.author), h(ranking.author_url), :class => 'ranking_author' %>)</td>
+    <% else -%>
+      <td class="column_title"><%= link_to h(ranking.author), h(ranking.author_url), :class => 'ranking_author' %></td>
     <% end -%>
-      <td class="user_name"><%= link_to h(ranking.author), h(ranking.author_url) %></td>
       <td class="point"><%= h ranking.amount %></td>
     </tr>
 <% end -%>

@@ -18,10 +18,6 @@ class Admin::Picture < Picture
 
   N_('Admin::Picture|File')
 
-  def validate
-    errors.add("", _("File size too large.")) if @filesize > 65535
-  end
-
   def self.search_columns
     %w(name)
   end

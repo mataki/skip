@@ -49,7 +49,7 @@ module BoardEntriesHelper
   def write_place_name owner
     if owner
       return _("%s's Blog") % ERB::Util.html_escape(owner.name) if owner.class == User
-      return _("BBS of %s") % ERB::Util.html_escape(owner.name) if owner.class == Group
+      return _("Forums of %s") % ERB::Util.html_escape(owner.name) if owner.class == Group
     end
     ''
   end

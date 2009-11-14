@@ -2,26 +2,26 @@
   <% form_tag({:action => 'entry_search'}, {:method => 'get'}) do -%>
     <table class="search_cond_box">
       <tr>
-        <th><%= _('Keywords')%></th>
-        <td><%= text_field_tag('keyword', params[:keyword], :size => 60) %><%= _('(The search targets are tags, titles and bodies)')%></td>
-      </tr>
-      <tr>
         <th><%= _('Search Range')%></th>
         <td>
-          <%= check_box_tag('user', "1", params[:user]) -%><%= label_tag("user", _("Users' Diaries")) %>
-          <%= check_box_tag('group', "1", params[:group]) -%><%= label_tag('group', _('BBS entries of the group')) %>
+          <%= check_box_tag('user', "1", params[:user]) -%><%= label_tag("user", _("Users' Blogs")) %>
+          <%= check_box_tag('group', "1", params[:group]) -%><%= label_tag('group', _('Forum entries of the group')) %>
           <%= _('(Both will be searched if none checked)')%>
         </td>
       </tr>
       <tr>
-        <th><%= _('Type') %></th>
+        <th><%= _('Types') %></th>
         <td>
-          <%= radio_button_tag('type', "entry", (params[:type] == "entry" or params[:type].blank?)) %><%= label_tag('type_entry', s_('BoardEntry|Aim type|entry')) %>
-          <%= radio_button_tag('type', "question", params[:type] == "question") %><%= label_tag('type_question', s_('BoardEntry|Aim type|question')) %>
-          <%= radio_button_tag('type', "notice", params[:type] == "notice") %><%= label_tag('type_notice', s_('BoardEntry|Aim type|notice')) %>
+          <%= radio_button_tag('type', "entry", (params[:type] == "entry" or params[:type].blank?)) %><%= label_tag('type_entry', ns_('BoardEntry|Aim type|entry', 'entries', 2)) %>
+          <%= radio_button_tag('type', "question", params[:type] == "question") %><%= label_tag('type_question', ns_('BoardEntry|Aim type|question', 'questions', 2)) %>
+          <%= radio_button_tag('type', "notice", params[:type] == "notice") %><%= label_tag('type_notice', ns_('BoardEntry|Aim type|notice', 'notices', 2)) %>
         </td>
       </tr>
-      <%= render :partial => 'tag_search' %>
+      <tr>
+        <th><%= _('Keywords')%></th>
+        <td><%= text_field_tag('keyword', params[:keyword], :size => 60) %><%= _('(The search targets are tags, titles and bodies)')%></td>
+      </tr>
+      <%= render :partial => 'tag_search', :locals => {:tags => @tags} %>
     </table>
     <div class="submit"><%= submit_tag _('Search') %></div>
   <% end -%>

@@ -21,7 +21,9 @@ class PlatformController < ApplicationController
 
   before_filter :require_not_login, :except => [:logout]
 
-  verify :method => :post, :only => %w(login), :redirect_to => {:action => :index}
+  # OpenIDのSSOの際にリダイレクトしているため、GETを許可する必要がある
+  # 直接OpenIDの処理を行なうようにすれば、POSTのみでもOKになる
+  verify :method => :post, :only => %w(login), :redirect_to => {:action => :index} if SkipEmbedded::InitialSettings["login_mode"] != "rp"
 
   def index
     response.headers['X-XRDS-Location'] = server_url(:format => :xrds, :protocol => scheme)
@@ -286,7 +288,7 @@ class PlatformController < ApplicationController
 
   def set_error_message_from_user_and_redirect(user)
     logger.error('[FIXED OP ERROR] User cannot create because #{user.errors.full_messages}')
-    set_error_message_and_redirect _("Failed to register user. Contact administrator.<br/>%{msg}")%{:msg => user.errors.full_messages}
+    set_error_message_and_redirect _("Failed to register user. Contact administrator %{contact_addr}.<br/>%{msg}")%{:contact_addr => Admin::Setting.contact_addr, :msg => user.errors.full_messages}
   end
 
   def set_error_message_not_create_new_user_and_redirect

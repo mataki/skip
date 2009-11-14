@@ -34,7 +34,6 @@
   }
   div#board_entry .header .control {
     position: relative;
-    height: 2em;
     font-size: 0.8em;
     border-bottom: 1px solid silver;
     background-color: #e1e1e1;
@@ -48,14 +47,10 @@
   }
   div#board_entry .header .information {
     position: relative;
-    height: 2em;
     font-size: 0.8em;
     border-bottom: 1px solid silver;
   }
   div#board_entry .header .information .date {
-    position: absolute;
-    bottom: 1px;
-    left: 2px;
     font-size: 1.3em;
   }
   div#board_entry .header .information .date .evaluation {
@@ -195,7 +190,6 @@
   }
   </style>
 <% end -%>
-
 <div class="move_navi">
   <% if prev_entry -%>
   <span class="prev_entry">&lt;&nbsp;<%= entry_link_to(prev_entry, {:truncate => 20}) %></span>
@@ -206,9 +200,24 @@
   <a id="page_top" href="#page_bottom"><%= _('[Bottom of page]')%></a>
 </div>
 
-<div id="board_entry">
+<div id="board_entry" class="ui-corner-all">
   <div class="header">
     <div class="control">
+      <% if BoardEntry::HIDABLE_AIM_TYPES.include?(entry.aim_type) -%>
+        <div id="hide_action" class="ui-corner-all">
+          <% form_tag({:controller => 'board_entries', :action => 'toggle_hide'}) do -%>
+            <%= hidden_field_tag :id, entry.id %>
+            <span class="iphone_style_checkbox"><%= check_box_tag 'toggle_hide', 'hide', !entry.hide %></span>
+            <!-- <b class="caution"><%= h _("This question will be hidden from all users' My Page after you set it to \"Closed\".") %></b> -->
+          <% end -%>
+        </div>
+        <div id="hide_message">
+          <span id="indicator" style="display:none;"><%= skip_image_tag 'indicator.gif' %></span>
+          <%= render :partial => 'entry_hide_operations/list', :locals => {:entry_hide_operations => entry.entry_hide_operations.order_new} %>
+        </div>
+      <% else %>
+        <div style="height: 2em;"></div>
+      <% end -%>
       <div class="buttons" id="entry_buttons">
         <span id="permalink"><%= link_to "[page:#{entry.id}]", :controller=> "board_entries", :action => "forward", :id => entry.id -%></span>
         <%= _('Display: ') %>
@@ -228,11 +237,12 @@
     <div class="information">
       <div class="date">
         <%= "[" + s_("BoardEntry|Aim type|#{entry.aim_type}") + "]" %>
-        <%=h entry.diary_date %> <%= "by #{user_link_to(entry.user)}" %>
+        <%=h entry.diary_date %> <%= "by #{user_link_to(entry.user)}" %> - 
+        <% visibility, visibility_color = entry.visibility -%><span title=<%= visibility %> style='background-color: <%=visibility_color%>;'>[<%= translate_publication_type(entry) %>]</span>
         <span class="evaluation"><%= get_entry_infos(entry) -%></span>
       </div>
     </div>
-    <h1><%= check_box_tag 'read_state_check', 'true', checked_on, :title => _('Mark read') %><%= get_publication_type_icon(entry) -%> <%=h entry.category %> <%=h entry.title %></h1>
+    <h1><%= check_box_tag 'read_state_check', 'true', checked_on, :title => _('Mark read') %> <%=h entry.category %> <%=h entry.title %></h1>
     <% unless to_tb_entries.empty? -%>
     <div class="trackback_space send_trackback">
       <%= _('Topic Entry: ')%>
@@ -297,24 +307,7 @@
   <% end -%>
 </div>
 
-<div id="hide_action">
-  <% if BoardEntry::HIDABLE_AIM_TYPES.include? entry.aim_type -%>
-    <% form_tag({:controller => 'board_entries', :action => 'toggle_hide', :id => entry.id}) do -%>
-      <%= label_tag "comment", s_('EntryHideOperation|comment') %>
-      <%= text_field_tag "comment" %>
-      <%= submit_tag entry.hide ? _('Publish this entry') : _('Hide this entry'), :id => 'toggle_hide_button', :disable_with => _('Saving...') %>
-    <% end -%>
-    <ul>
-      <% for operation in entry.entry_hide_operations -%>
-      <li>
-        <%= s_("BoardEntry|Hide|#{operation.operation_type}") + ": #{operation.comment} by #{operation.user.name}" %>
-      </li>
-    <% end -%>
-    </ul>
-  <% end -%>
-</div>
-
-<div class="trackback_space sent_trackback">
+<div class="trackback_space sent_trackback ui-corner-all">
 <% if tb_entries.size > 0 -%>
   <%= _('Entries talking about this entry:')%>
 <% end -%>
@@ -327,9 +320,9 @@
 <% end -%>
   </ul>
   <% if current_user.group_symbols.include? entry.symbol -%>
-    <p><%= link_to _("[Compose a new bbs with this as topic]"), :controller => "edit", :trackbacks => entry.id, :title => "RE: " + entry.title, :category => entry.category, :publication_type => entry.publication_type, :entry_type => entry.entry_type, :symbol => entry.symbol, :publication_symbols_value => entry.publication_symbols_value %><%= help_icon_tag :content => _('Create a new bbs entry inheriting the privacy setting.') %></p>
+    <p><%= link_to _("[Write a new forum entry with this as topic]"), :controller => "edit", :trackbacks => entry.id, :title => "RE: " + entry.title, :category => entry.category, :publication_type => entry.publication_type, :entry_type => entry.entry_type, :symbol => entry.symbol, :publication_symbols_value => entry.publication_symbols_value %><%= help_icon_tag :content => _('Create a new forum entry inheriting the privacy setting.') %></p>
   <% end -%>
-  <p><%= link_to _("[Compose a new blog with this as topic]"), :controller => "edit", :trackbacks => entry.id, :title => "RE: " + entry.title, :category => entry.category %><%= help_icon_tag :content => _("Create an \"open to public\" blog entry disregarding the privacy setting.") %></p>
+  <p><%= link_to _("[Write a new blog entry with this as topic]"), :controller => "edit", :trackbacks => entry.id, :title => "RE: " + entry.title, :category => entry.category %><%= help_icon_tag :content => _("Create an \"open to public\" blog entry disregarding the privacy setting.") %></p>
 </div>
 
 <div class="move_navi">
@@ -681,24 +674,56 @@
       };
       setupComment(document);
 
-      var toggleHideButton = function() {
-        if ($j('form input#comment').val() == '') {
-          $j('form input#toggle_hide_button').attr('disabled', 'disabled');
-        } else {
-          $j('form input#toggle_hide_button').attr('disabled', '');
-        }
-      };
-
       // 「記事を未読にする」チェックボックス押下時の処理
       $j('#read_state_check').click(function() {
           changeReadState(<%= entry.id %>, this.checked, authenticity_token);
       });
 
-      // 「終了する」ボタンの活性制御
-      $j('form input#comment').keyup(function() {
-        toggleHideButton();
+      // チェックボックスをリッチに
+      var iphoneStyleCheckbox = $j('input#toggle_hide').iphoneStyle( { checkedLabel: '<%= _('Open') %>', uncheckedLabel: '<%= s_('BoardEntry|Open|false') %>', resizeContainer: false, resizeHandle: false } );
+      iphoneStyleCheckbox.change(function(){
+        $j('#hide_message ul').hide();
+        $j('#indicator').show();
+        $j.ajax({
+          type: 'POST',
+          url: relative_url_root + '/board_entries/toggle_hide',
+          data: $j('#hide_action form').serialize(),
+          success: function(msg) {
+              $j.ajax({
+                type: 'GET',
+                url: relative_url_root + '/entry_hide_operations?entry_id=<%= entry.id %>',
+                success: function(html) {
+                  $j('#hide_message ul').replaceWith(html);
+                  $j('#hide_history').hide();
+                  $j('#show_history').show();
+                },
+                complete: function(request){
+                  $j('#indicator').hide();
+                }
+              });
+              $j("#flash_message").trigger("notice", msg);
+          },
+          error: function(event){
+              $j("#flash_message").trigger("error", msg);
+          }
+        });
       });
-      toggleHideButton();
+
+      <% if BoardEntry::HIDABLE_AIM_TYPES.include?(entry.aim_type) -%>
+      // 質問の公開/非公開履歴を表示
+      $j('#show_history').live('click', function() {
+        $j('ul li.history').slideDown('fast');
+        $j(this).hide();
+        $j('#hide_history').show();
+        return false;
+      });
+      $j('#hide_history').live('click', function() {
+        $j('ul li.history').slideUp('fast');
+        $j(this).hide();
+        $j('#show_history').show();
+        return false;
+      });
+      <% end -%>
 
       var authenticity_token = function(){
           return $j('input[name="authenticity_token"]').eq(0).val();

@@ -1,3 +1,4 @@
+<% if class_name.constantize.respond_to?(:search_columns) -%>
 <div class="search_box">
   <% form_tag({:action => :index}, {:method => :get}) do -%>
   <%= text_field_tag :query, @query %>
@@ -5,3 +6,4 @@
   <span style="margin-left: 10px;"><%= _("Searching from %{target}") % {:target => class_name.constantize.search_columns.map{|column| s_("#{class_name}|#{column.humanize}")}.join(', ')} %></span>
   <% end -%>
 </div>
+<% end -%>

@@ -17,7 +17,7 @@
   <% entry_search_links_by_category = categories.map{ |category| link_to h(category), {:controller => 'search', :action => :entry_search, :tag_words => Tag.comma_tags(h(category))}, :class => 'tag'} -%>
   <div class="topix_line">
     <div class="title">
-      <%= hide_long_tags(entry_search_links_by_category, 3) + entry_link_to(message, {}, {:title => h(message.title + entry_infos)}) %>
+      <%= entry_link_to(message, {}, {:title => h(message.title + entry_infos)}) + hide_long_tags(entry_search_links_by_category, 3) %>
       <% unless hide_entry_info %>
         <span class="supplement"><%=h entry_infos %></span>
       <% end %>
@@ -28,20 +28,9 @@
   </div>
 <% end -%>
 
-<% if !pages.empty? and pages.respond_to?(:previous_page) -%>
-<div style="text-align: right;"><span style="background-color: #fcffc5; padding: 0 2px 0 5px; font-size: 10px;">
-  <% if pages.previous_page -%>
-    <%= hidden_field_tag 'page_back', pages.previous_page %>
-  <a class="first_link" id="<%= id_name -%>-first_link" href="#" ><%= _('[Top]')%></a>
-  <a class="back_link" id="<%= id_name -%>-back_link" href="#" ><%= _('[Prev]')%></a>
-  <% end -%>
-  <%= _("Total %{items} hits (Page %{page} / %{pages})") % {:items => h(pages.total_pages), :page => h(pages.current_page), :pages => h(pages.total_pages)} %>
-  <% if pages.next_page -%>
-    <%= hidden_field_tag 'page_last', pages.total_pages %>
-    <%= hidden_field_tag 'page_next', pages.next_page %>
-  <a class="next_link" id="<%= id_name -%>-next_link" href="#" ><%= _('[Next]')%></a>
-  <a class="last_link" id="<%= id_name -%>-last_link" href="#" ><%= _('[Bottom]')%></a>
-  <% end -%>
+<% if pages.respond_to?(:total_pages) and pages.total_pages > 1 -%>
+<div style="text-align: right;"><span class="pagination ajax" style="background-color: #fcffc5; padding: 0 2px 0 5px; font-size: 10px;">
+  <%= will_paginate pages, :params => {:action => 'load_entries', :page_name => 'list_block', :per_page => per_page, :target => id_name }, :next_label => _('Next'), :previous_label => _('Prev'), :class => 'pagination ajax', :container => false %>
 </span></div>
 <% end -%>
 

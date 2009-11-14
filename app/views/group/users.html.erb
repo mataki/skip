@@ -6,7 +6,7 @@
       <td><%= select :condition, :sort_type, UserSearchCondition.sort_types %></td>
     </tr>
   </table>
-  <div class="submit" style="text-align: right;"><%= submit_tag _('Search') %></div>
+  <div class="submit"><%= submit_tag _('Search'), :disable_with => _('Searching...') %></div>
 <% end -%>
 </div>
 
@@ -16,7 +16,7 @@
   <% @users.each do |user| -%>
     <%= render :partial => 'users/user', :locals => {:user => user, :group => @group} %>
   <% end -%>
-  <div class="clear_left">
+  <div class="clear_left"></div>
   <div class="navi"><%= will_paginate_link @users %></div>
 <% end -%>
 </div>

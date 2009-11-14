@@ -7,7 +7,7 @@
 <div class="box tabular">
   <%= render :partial => '/admin/shared/sortable_table',
              :locals => {
-               :columns => %w[user waiting owned favorite],
+               :columns => %w[user waiting owned],
                :disp_columns_proc => lambda do |object,column|
       case column
       when "user"
@@ -16,8 +16,6 @@
         _("GroupParticipation|Waiting|#{object.waiting}")
       when "owned"
         _("GroupParticipation|Owned|#{object.owned}")
-      when "favorite"
-        _("GroupParticipation|Favorite|#{object.favorite}")
       else
         object.send(column.to_sym)
       end

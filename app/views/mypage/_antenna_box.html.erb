@@ -1,22 +1,25 @@
-<%
-  # TODO cacheする仕組みにしたい
-  system_antennas = Antenna.get_system_antennas(current_user)
-  my_antennas = Antenna.find_with_counts(current_user)
--%>
 <div class="box_space antenna" style="position: relative;">
-  <div style="position: absolute; top: 4px; right: 4px;"><%= icon_tag 'help', :title => _('What is Antenna') + "|" + _('Antenna Description') %></div>
+  <div style="position: absolute; top: 4px; right: 4px;"><%= icon_tag 'help', :title => _('What is Subscription') + "|" + _('Subscription Description') %></div>
   <div class="box_space_title">
-    <%= icon_tag 'transmit' %><%= link_to(_("Antennas"), :action => 'entries_by_antenna') %>
+    <%= icon_tag 'transmit' %><%= link_to(_("Subscriptions"), :action => 'entries_by_antenna') %>
   </div>
   <div class="box_space_body">
-    <ul id="antennas_list">
-      <% system_antennas.each do |antenna| -%>
-        <li><%= link_to(h(antenna.name), :action => 'entries_by_antenna', :antenna_id => antenna.antenna_type) + "(#{h antenna.count})" %></li>
-      <% end -%>
-      <% my_antennas.each do |antenna| -%>
-        <li><%= link_to(h(antenna.name), :action => 'entries_by_antenna', :antenna_id => antenna.id) + "(#{h antenna.count})" %></li>
+    <ul class="notices system">
+      <% Notice.systems(current_user).each do |notice| -%>
+        <% count_as_s = notice[:count] > 0 ? "(#{h notice[:count]})" : '' -%>
+        <li><%= link_to(h(notice[:name]), :action => 'entries_by_antenna', :target_type => notice[:type]) + count_as_s %></li>
       <% end -%>
     </ul>
+      <% notices_group_by_type = current_user.notices.group_by(&:target_type) -%>
+      <% notices_group_by_type.keys.each do |key| -%>
+        <% if sorted_notices = notices_group_by_type[key].sort_by{|n| n.unread_count(current_user)}.reverse.delete_if{|n| n.unread_count(current_user) == 0 } and !sorted_notices.empty? -%>
+          <% content_tag(:ul, :class => 'notices by_type') do -%>
+            <% sorted_notices.each do |notice| -%>
+              <% count_as_s = "(#{notice.unread_count(current_user).to_s})" -%>
+              <li><%= link_to(h(notice.target.name), :action => 'entries_by_antenna', :target_type => notice.target.class.name.downcase, :target_id => notice.target.id) + count_as_s %></li>
+            <% end -%>
+          <% end -%>
+        <% end -%>
+      <% end -%>
   </div>
-  <div class="box_space_bottom"><%= link_to _('[Manage antennas]'), :action => 'manage', :menu => 'manage_antenna' %></div>
 </div>

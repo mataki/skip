@@ -135,5 +135,8 @@ describe Tag, 'square_brackets_tags' do
   it 'nilの時は空文字となること' do
     Tag.square_brackets_tags(nil).should == ''
   end
+  it '既に変換済みの場合は同じ文字列になること' do
+    Tag.square_brackets_tags('[foo][bar]').should == '[foo][bar]'
+  end
 end
 

@@ -1,14 +1,24 @@
 <%= @header %>
 
 <%= _("You have message(s) from %s") % @name %>
-  [<%= @entry.title %>]
-<% if Admin::Setting.contact_mail_contain_contents -%>
-  <%= convert_plain(@entry) %>
-  <%= _("Click the URL below to see all.")%>
-<% else -%>
-  <%= _("Click the URL below to see the content of message.")%>
+
+<% if @owner.is_a?(Group) -%>
+    <%= @owner.name %>
 <% end -%>
-  <%= url_for(:controller => :board_entries, :action => :forward, :id => @entry.id) %>
-  <%= _("*Jumps directly to the blog entry.") %>
+    <%= @entry.title %>
+<% if Admin::Setting.contact_mail_contain_contents -%>
+
+<%= convert_plain(@entry) %>
+
+<%= _("Click the URL below to see all.")%>
+
+    <%= url_for(:controller => :board_entries, :action => :forward, :id => @entry.id, :only_path => false) %>
+<% else -%>
+
+<%= _("Click the URL below to see the content of message.")%>
+
+    <%= url_for(:controller => :board_entries, :action => :forward, :id => @entry.id, :only_path => false) %>
+    <%= _("*Jumps directly to the blog entry.") %>
+<% end -%>
 
 <%= @footer %>

@@ -49,6 +49,15 @@ module EditHelper
     }
   end
 
+  def send_mail_check_box_tag
+    if SkipEmbedded::InitialSettings['mail']['show_mail_function']
+      result = ''
+      result << check_box(:board_entry, :send_mail)
+      result << label(:board_entry, :send_mail, _('Send email to accessible members'))
+      result << _('(Will not be sent when the entry is limited to owner only)')
+    end
+  end
+
   private
   def share_files_url symbol
     symbol_type, symbol_id = Symbol.split_symbol symbol

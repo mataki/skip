@@ -1,8 +1,6 @@
-<%= render :partial => '/admin/data_menu_box' %>
 <% content_for :topic_path do -%>
 <%= render :partial => '/admin/shared/topic_path' %>
 <% end -%>
-<% content_for :contents_right do -%>
 <div class="box tabular">
 <% form_for(@group_category) do |f| %>
 <%= render :partial => f %>
@@ -11,4 +9,3 @@
   </p>
 <% end %>
 </div>
-<% end -%>

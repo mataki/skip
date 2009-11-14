@@ -8,20 +8,21 @@
 </style>
 <% end -%>
 
-<%= render :partial => 'contents_left_base' %>
+<% content_for :contents_left do -%>
+  <%= render :partial => 'contents_left_base' %>
+<% end -%>
 
 <% content_for :contents_right do -%>
-  <div style="text-align:right;">
-    <%= will_paginate_link(@entries) if @entries %>
-  </div>
-
+  <% if @entries and @entries.respond_to?(:previous_page) %>
+    <div class="navi ui-corner-all"><%= will_paginate_link(@entries) %></div>
+  <% end %>
   <%= render :partial => "page_space",
              :locals => { :id_name => @id_name,
                           :title_name => @title_name,
                           :pages => @entries,
                           :symbol2name_hash => @symbol2name_hash } %>
 
-  <div style="text-align:right;">
-    <%= will_paginate_link(@entries) if @entries %>
-  </div>
+  <% if @entries and @entries.respond_to?(:previous_page) %>
+    <div class="navi ui-corner-all"><%= will_paginate_link(@entries) %></div>
+  <% end %>
 <% end -%>

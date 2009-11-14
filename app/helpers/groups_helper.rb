@@ -29,15 +29,4 @@ module GroupsHelper
       icon_tag('group_error') + _('Unjoined')
     end
   end
-
-  # グループに対してできるアクションを表示（グループ一覧で利用）
-  def show_group_action(group, show_favorite = false)
-    output = ""
-    if show_favorite
-      participation = group.group_participations.first
-      elem_id = "group_participation_#{participation.id}"
-      output << "<span id='#{elem_id}'>#{render :partial => "groups/favorite", :locals => { :gid => group.gid, :participation => participation }}</span>"
-    end
-    output
-  end
 end

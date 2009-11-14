@@ -1,0 +1,30 @@
+<h3 class="topics"><%= _('Profile Items') %></h3>
+<div class="box tabular">
+  <%= link_to_if UserProfileMasterCategory.count > 0, _('New %{model}') % {:model => _('user profile master')}, new_admin_user_profile_master_path %>
+  <%= render :partial => '/admin/shared/list_table',
+             :locals => {
+               :columns => %w[user_profile_master_category_id name input_type required description option_values sort_order],
+               :disp_columns_proc => lambda do |object,column|
+      case column
+      when "user_profile_master_category_id"
+        h object.user_profile_master_category.name
+      when "input_type"
+        _("UserProfileMaster|Input type|#{object.input_type}")
+      when "required"
+        _("UserProfileMaster|Required|#{object.required}")
+      else
+        object.send(column.to_sym)
+      end
+    end,
+               :objects => @user_profile_masters,
+               :class_name => 'Admin::UserProfileMaster',
+               :link_elem_size => 2,
+               :link_elem_proc => lambda { |object|
+      result = ""
+      result << content_tag(:td, link_to(_("Edit"), edit_admin_user_profile_master_path(object)) )
+      result << content_tag(:td, link_to(_("Destroy"), object, {:confirm => _('Related user input will also be deleted when you delete this profile item. Are you sure to proceed?'), :method => :delete}) )
+      result
+    }
+             }
+  -%>
+</div>

@@ -17,38 +17,77 @@
       <% end -%>
       <% @waiting_groups.each do |group| -%>
         <div class="item">
-          <%= item_link_to(group, {:view_text=>( icon_tag('group') + _('New user is waiting for approval in %s') % h(group.name) )}) %>
+          <%= group_link_to(group, {:view_text=>( icon_tag('group') + _('New user is waiting for approval in %s') % h(group.name) )}) %>
         </div>
       <% end -%>
     </div>
   <% end -%>
 <% end -%>
 
-<%= render :partial => 'contents_left_base' %>
+<% content_for :contents_left do -%>
+  <%# ============================================================ -%>
+  <%# left side top messages -%>
+  <%# ============================================================ -%>
+
+  <% unless @mail_your_messages[:pages].empty? -%>
+    <div id="messages_box" class="ui-corner-all">
+      <h2 class="ui-corner-top">
+        <%= icon_tag(@mail_your_messages[:title_icon]) + h(@mail_your_messages[:title_name]) %>
+      </h2>
+      <ul class="no_style">
+        <% for entry in @mail_your_messages[:pages] %>
+          <li>
+            <div class="title">
+              <%= entry_link_to entry %>
+            </div>
+            <div class="info">
+              <%= entry.last_updated.strftime(_('%B %d %Y')) %>
+              -
+              <%= symbol_link_to(entry.symbol, truncate(@mail_your_messages[:symbol2name_hash][entry.symbol],:length => 12)) %>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end -%>
+
+  <%= render :partial => 'contents_left_base' %>
+<% end -%>
 
 <% content_for :contents_right do -%>
   <%# ============================================================ -%>
   <%#  right side area -%>
   <%# ============================================================ -%>
   <div id="mypage_right">
+    <% unless SkipEmbedded::InitialSettings['enable_ad_for_oss'] == "lovelyskip" -%>
+      <%= render "ad_for_oss" %>
+    <% end -%>
+
     <%= render :partial => 'rss_feed_box' %>
 
     <% unless @access_blogs[:pages].empty? -%>
-      <div class="right_box" id="access_blogs">
-        <h2 class="ui-corner-top"><%= h @access_blogs[:title_name] -%></h2>
-        <table class="ui-corner-bottom">
-          <% @access_blogs[:pages].each_with_index do |entry, i| %>
-            <tr>
-              <td class="left" width="40px">
-                <div class="picture"><%= i+1 %>.<%= show_picture(entry.user, :width=>24, :height => 24) %></div>
-              </td>
-              <td class="right">
-                <div class="title"><%= link_to h(entry.title), entry.get_url_hash %></div>
-                <div class="name">by <%= link_to h(entry.user.name) %></div>
-              </td>
-            </tr>
-          <% end -%>
-        </table>
+      <div class="right_box ui-corner-all" id="access_blogs">
+        <h2 class="ui-corner-top">
+          <%= h(@access_blogs[:title_name]) %><br />
+          <span class="desc">
+            (<%= Time.now.ago(recent_day.day).strftime(_('%B %d %Y')) %> - <%= Time.now.strftime(_('%B %d %Y')) %>)
+          </span>
+        </h2>
+        <div class="list">
+          <table>
+            <% @access_blogs[:pages].each_with_index do |entry, i| %>
+              <tr>
+                <td class="left" width="40px">
+                  <div class="picture"><%= i+1 %>.<%= show_picture(entry.user, :width=>24, :height => 24) %></div>
+                </td>
+                <td class="right" width="108px">
+                  <div class="title"><%= link_to h(entry.title), entry.get_url_hash %><span class="small_text">(<%= h entry.state.access_count %>)</span></div>
+                  <div class="name">by <%= user_link_to entry.user %></div>
+                </td>
+              </tr>
+            <% end -%>
+          </table>
+        </div>
       </div>
     <% end -%>
   </div>
@@ -58,25 +97,31 @@
   <%# ============================================================ -%>
   <div id="mypage_left">
     <%# ============================================================ -%>
-    <%#  main area top messages -%>
-    <%# ============================================================ -%>
-
-    <% unless @mail_your_messages[:pages].empty? -%>
-      <div id="messages_box" class="ui-corner-all">
-        <h2 class="ui-corner-top">
-          <%= icon_tag(@mail_your_messages[:title_icon]) + h(@mail_your_messages[:title_name]) %>
-        </h2>
-        <%= render :partial => "list_block", :locals => @mail_your_messages.merge(:hide_entry_info => true) %>
-      </div>
-    <% end -%>
-
-    <%# ============================================================ -%>
     <%#  main area entries -%>
     <%# ============================================================ -%>
-    <% unless @questions[:pages].empty? -%>
-    <%= show_title_bar(@questions[:title_icon], @questions[:title_name], {:controller => 'mypage', :action => "entries", :list_type => @questions[:id_name]}) -%>
-    <%= render :partial => "list_block", :locals => @questions %>
-    <% end -%>
+    <div class="ui-corner-all" id="questions_wrapper">
+      <h2 class="ui-corner-top"><%= icon_tag(@questions[:title_icon]) + link_to(h(@questions[:title_name]), :controller => "/search", :action => 'entry_search', :type => 'question') %></h2>
+      <% if @questions[:pages].empty? -%>
+        <div class="margin05em"><%= _('No matching questions.') %></div>
+      <% else -%>
+        <table>
+          <tbody>
+            <% @questions[:pages].each do |question| -%>
+            <tr>
+              <% entry_infos = get_entry_infos(question) -%>
+              <% categories = question.category.scan(/\[[^\]]*\]/) -%>
+              <% entry_search_links_by_category = categories.map{ |category| link_to h(category), {:controller => 'search', :action => :entry_search, :tag_words => Tag.comma_tags(h(category))}, :class => 'tag'} -%>
+              <td class="title">
+                <%= entry_link_to(question, {}, {:title => h(question.title + entry_infos)}) + hide_long_tags(entry_search_links_by_category, 3) %> <span class="supplement"><%=h entry_infos %></span>
+                <%= symbol_link_to question.symbol, @questions[:symbol2name_hash][question.symbol], :with_prefix => true %>
+                <%= '(' + _('Owner Only') + ')' if question.diary? && question.private? %>
+              </td>
+            </tr>
+            <% end -%>
+          </tbody>
+        </table>
+      <% end -%>
+    </div>
 
     <%= render :partial => "publicated_entries_#{current_user.custom.display_entries_format}" %>
 
@@ -109,7 +154,10 @@
       <% @recent_users.each do |user| -%>
         <div class="topix_line">
           <div class="title">
-            <%= user_link_to(user) %> (<%= h(user.section) %>) &lt;&lt; <%= link_to('[' + _('Create introductions') + ']', {:controller => 'user', :action => 'new_chain', :uid => h(user.uid) }) unless current_user.follow_chains.map(&:to_user_id).include? user.id %>
+            <%= user_link_to(user) %> (<%= h(user.section) %>)
+            <% unless chain = current_user.follow_chains.find_by_to_user_id(user.id) -%>
+              <%= "&lt;&lt;" + link_to('[' + _('Introduce') + ']', new_user_chain_path(user)) %>
+            <% end -%>
           </div>
         </div>
       <% end -%>
@@ -139,73 +187,18 @@
     $j('#tabs').tabs({ cookie:{ expires:30 } });
     $j('#tabs').show();
 
-    var loadEntries = function(data){
-        var id_name = data['target'];
-        $j.ajax({
-            url: '<%= url_for(:controller => 'mypage', :action => 'load_entries') -%>',
-            data: data,
-            success: function(html) {
-                $j('#' + id_name).html(html).appendClickForToggleTag();
-                $j('#' + id_name + '_body').highlight();
-            },
-            complete: function(request) {
-                unbindEentyPageChange();
-                setupEntryPageChange();
-            }
-        });
-    };
+    $j('.pagination a').live('click', function() {
+      var url = $j(this).attr('href');
+      var target = $j.getUrlVar(url, 'target');
+      $j.ajax({
+          url: url,
+          success: function(html) {
+              $j('#' + target).html(html).appendClickForToggleTag();
+              $j('#' + target + '_body').highlight();
+          }
+      });
+      return false;
+    });
 
-    var unbindEentyPageChange = function(){
-        $j('.first_link').unbind('click');
-        $j('.back_link').unbind('click');
-        $j('.next_link').unbind('click');
-        $j('.last_link').unbind('click');
-    };
-
-    var setupEntryPageChange = function(){
-        // 最初へ,前へ,次へ,最後へリンククリック時のajaxアクション
-        $j('.first_link')
-        .click(function() {
-            var id_name = this.id.split('-')[0];
-            loadEntries(requestData(1, id_name));
-            return false;
-        });
-
-        $j('.back_link')
-        .click(function() {
-            var id_name = this.id.split('-')[0];
-            var base_id = '#' + id_name + '_body';
-            var page = $j('#page_back', base_id).val();
-            loadEntries(requestData(page, id_name));
-            return false;
-        });
-
-        $j('.next_link')
-        .click(function() {
-            var id_name = this.id.split('-')[0];
-            var base_id = '#' + id_name + '_body';
-            var page = $j('#page_next', base_id).val();
-            loadEntries(requestData(page, id_name));
-            return false;
-        });
-
-        $j('.last_link')
-        .click(function() {
-            var id_name = this.id.split('-')[0];
-            var base_id = '#' + id_name + '_body';
-            var page = $j('#page_last', base_id).val();
-            loadEntries(requestData(page, id_name));
-            return false;
-        });
-    };
-    setupEntryPageChange();
-
-    var requestData = function(page, id_name){
-        var base_id = '#' + id_name + '_body';
-        var per_page = $j('#per_page', base_id).val();
-        var recent_day = $j('#recent_day', base_id).val();
-        return { page : page, page_name : 'list_block', target : id_name, per_page : per_page, recent_day : recent_day };
-    };
-
-    setupLoadCalendar("<%= url_for(:action => 'load_calendar') %>");
+    // setupLoadCalendar("<%= url_for(:action => 'load_calendar') %>");
 <% end -%>

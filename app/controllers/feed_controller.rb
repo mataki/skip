@@ -34,7 +34,7 @@ class FeedController < ApplicationController
       render_404 and return
     end
 
-    description = _("Recent BBS posts (%{category)") % {:category =>ERB::Util.h(category.name)}
+    description = _("Recent forum posts (%{category)") % {:category =>ERB::Util.h(category.name)}
     find_options = {:exclude_entry_type=>'DIARY', :publication_type => 'public', :recent_day=> 10}
     find_options[:symbols] = Group.gid_by_category[category.id]
     items = []
@@ -68,7 +68,7 @@ class FeedController < ApplicationController
   end
 
   def recent_popular_blogs
-    description = _("Recent Popular Entries (excluding questions)")
+    description = _("Recent Popular Blogs")
     find_params = BoardEntry.make_conditions(login_user_symbols, {:publication_type => 'public'})
     find_params[:conditions][0] << " and board_entries.category not like ?"
     find_params[:conditions] << '%[質問]%'
@@ -79,7 +79,7 @@ class FeedController < ApplicationController
   end
 
   def message_for_you
-    description = _("Messages for you")
+    description = _("Notices for you")
     find_params = BoardEntry.make_conditions login_user_symbols, { :category=>'連絡' }
     user_reading_condition find_params
     rss_feed "message_for_you", description, board_entry_item_array(find_params)
@@ -116,21 +116,6 @@ class FeedController < ApplicationController
     find_params = BoardEntry.make_conditions login_user_symbols, { :symbols => login_user_groups }
     user_reading_condition find_params
     rss_feed "participate_group_bbs", description, board_entry_item_array(find_params)
-  end
-
-  def user_antenna
-    antenna = Antenna.find(params[:id])
-
-    # 権限チェック
-    unless antenna.user_id == session[:user_id]
-      render :nothing => true
-      return false
-    end
-
-    symbols, keyword = antenna.get_search_conditions
-    find_params = BoardEntry.make_conditions(login_user_symbols, :symbols => symbols, :keyword => keyword)
-    user_reading_condition find_params
-    rss_feed "user_antenna", antenna.name, board_entry_item_array(find_params)
   end
 
 private

@@ -17,11 +17,13 @@ module UserMailerHelper
 
   def convert_plain entry
     return '' if entry.blank?
-    contents = if entry.editor_mode == 'hiki'
-                 strip_tags(HikiDoc.new((entry.contents || ''), Regexp.new(SkipEmbedded::InitialSettings['not_blank_link_re'])).to_html)
-               else
-                 strip_tags entry.contents
-               end
-    contents.scan(/.{0,100}/).first
+    html = if entry.editor_mode == 'hiki'
+             HikiDoc.new((entry.contents || ''), Regexp.new(SkipEmbedded::InitialSettings['not_blank_link_re'])).to_html
+           else
+             entry.contents
+           end
+    plain = strip_tags(html).strip.gsub(/\t/) { '' }
+    plain = plain.scan(/.{0,100}/m).first.gsub('&nbsp;',' ').gsub("&amp;", "&").gsub("&quot;",'"').gsub("&gt;", '>').gsub("&lt;", '<')
+    plain.gsub(/^(.*)/) { "    #{$1}" }
   end
 end

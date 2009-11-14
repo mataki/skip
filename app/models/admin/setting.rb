@@ -59,8 +59,12 @@ class Admin::Setting < ActiveRecord::Base
   N_('Admin::Setting|Activation lifetime description')
   N_('Admin::Setting|Enable change picture')
   N_('Admin::Setting|Enable change picture description')
+  N_('Admin::Setting|Enable change section')
+  N_('Admin::Setting|Enable change section description')
   N_('Admin::Setting|Access record limit')
   N_('Admin::Setting|Access record limit description')
+  N_('Admin::Setting|Entry showed tab limit per page')
+  N_('Admin::Setting|Entry showed tab limit per page description')
 
   # ================================================================================================
   # RSSフィードの設定用
@@ -131,6 +135,8 @@ class Admin::Setting < ActiveRecord::Base
                       :if => Proc.new { |setting| @@available_settings[setting.name]['format'] == 'url' && @@available_settings[setting.name]['allow_blank'].nil? }
 
   validates_presence_of :value, :if => Proc.new{ |setting| setting.class.password_strength == 'custom' && setting.name == 'custom_password_strength_regex' || setting.name == 'custom_password_strength_validation_message' }
+
+  validates_format_of :value, :with => Authentication.email_regex, :if => Proc.new { |setting| @@available_settings[setting.name]['format'] == 'email' }
 
   # Hash used to cache setting values
   @cached_settings = {}
