@@ -44,9 +44,9 @@ class EditController < ApplicationController
     @board_entry.aim_type = params[:aim_type]
     if owner
       if owner.is_a?(Group)
-        @board_entry.send_mail = (@board_entry.is_question? and SkipEmbedded::InitialSettings['mail']['default_send_mail_of_question']) || owner.default_send_mail
+        @board_entry.send_mail = (@board_entry.is_question? && SkipEmbedded::InitialSettings['mail']['default_send_mail_of_question']) || owner.default_send_mail
       elsif owner.is_a?(User)
-        @board_entry.send_mail = @board_entry.is_question? and SkipEmbedded::InitialSettings['mail']['default_send_mail_of_question']
+        @board_entry.send_mail = @board_entry.is_question? && SkipEmbedded::InitialSettings['mail']['default_send_mail_of_question']
       end
     end
 
