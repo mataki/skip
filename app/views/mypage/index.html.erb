@@ -162,12 +162,13 @@
     <div class="topix_body">
       <% @recent_users.each do |user| -%>
         <div class="topix_line">
-          <div class="title">
-            <%= user_link_to(user) %> (<%= h(user.section) %>)
+          <div class="page_title">
+            <%= user_link_to(user) %>&nbsp;<span class="small">(<%= h(user.section) %>)</span>
             <% unless chain = current_user.follow_chains.find_by_to_user_id(user.id) -%>
-              <%= "&lt;&lt;" + link_to('[' + _('Introduce') + ']', new_user_chain_path(user)) %>
+              &nbsp;<%= link_to('[' + _('Introduce') + ']', new_user_chain_path(user)) %>
             <% end -%>
           </div>
+          <div class="page_date"><%=h user.created_on.strftime(_("%B %d %Y")) %></div>
         </div>
       <% end -%>
     </div>
@@ -181,9 +182,10 @@
     <div class="topix_body">
       <% @recent_groups.each do |group| -%>
         <div class="topix_line">
-          <div class="title">
-            <%= h(group.group_category.name) %> - <%= group_link_to(group) %> - <%= truncate(strip_tags(group.description), 30) %>
+          <div class="page_title">
+            <%= get_group_icon(group.group_category, :margin => true) %><%= group_link_to(group) %>&nbsp;<span class="small">(<%= truncate(strip_tags(group.description), 30) %>)</span>
           </div>
+          <div class="page_date"><%=h group.created_on.strftime(_("%B %d %Y")) %></div>
         </div>
       <% end -%>
     </div>
