@@ -44,7 +44,6 @@ Feature: マイページ
     And I should see "Railsについて雑談" within "div#access_blogs"
     And I should not see "Railsについてお知らせ" within "div#recent_blogs"
     And I should see "Railsについて雑談" within "div#recent_blogs"
-    And I should see "あなたへのお知らせ(1)" within "div.box_space.antenna"
 
     When "新着通知"リンクをクリックする
 
@@ -59,8 +58,6 @@ Feature: マイページ
 
     When "Railsについてお知らせ"リンクをクリックする
     And "マイページ"にアクセスする
-
-    Then I should see "あなたへのお知らせ" within "div.box_space.antenna"
 
     When "あなたへのお知らせ"リンクをクリックする
 
