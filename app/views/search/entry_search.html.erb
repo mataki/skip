@@ -29,7 +29,7 @@
 
 <div class="search_result_space">
 <% unless @entries.empty? -%>
-  <div class="navi ui-corner-all"><%= will_paginate_link(@entries) %></div>
+  <%= i18n_will_paginate_with_container_wrapper @entries %>
   <div style="text-align: center;">
   <% @entries.each do |entry| -%>
     <% visibility, visibility_color = entry.visibility -%>
@@ -49,6 +49,6 @@
     </table>
   <% end -%>
   </div>
-  <div class="navi ui-corner-all"><%= will_paginate_link(@entries) %></div>
+  <%= i18n_will_paginate_with_container_wrapper @entries %>
 <% end -%>
 </div>

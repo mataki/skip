@@ -39,7 +39,7 @@
 <% content_for :contents_right do -%>
   <div class="desc ui-corner-all margin05emver"><%= _('Here you can manage admin privilages and force users to leave the group.')%></div>
   <%= hidden_field_tag "authenticity_token", form_authenticity_token %>
-  <div class="navi ui-corner-all"><%= will_paginate_link @participations %></div>
+  <%= i18n_will_paginate_with_container_wrapper @participations %>
 
   <div style="margin: 10px auto 10px auto; width: 100%; text-align: center;">
     <table border="1" class="normal" style="width: 80%; margin: auto;">
@@ -74,7 +74,7 @@
     <% end %>
     </table>
   </div>
-  <div class="navi ui-corner-all"><%= will_paginate_link @participations %></div>
+  <%= i18n_will_paginate_with_container_wrapper @participations %>
   <% form_tag({:action => 'append_user'}, :id=>'group_form') do -%>
     <div class="input_line ui-corner-all">
       <div class="input_value">

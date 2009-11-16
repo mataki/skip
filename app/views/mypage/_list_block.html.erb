@@ -29,8 +29,8 @@
 <% end -%>
 
 <% if pages.respond_to?(:total_pages) and pages.total_pages > 1 -%>
-<div style="text-align: right;"><span class="pagination ajax" style="background-color: #fcffc5; padding: 0 2px 0 5px; font-size: 10px;">
-  <%= will_paginate pages, :params => {:action => 'load_entries', :page_name => 'list_block', :per_page => per_page, :target => id_name }, :next_label => _('Next'), :previous_label => _('Prev'), :class => 'pagination ajax', :container => false %>
+<div style="text-align: left;"><span class="pagination ajax" style="background-color: #fcffc5; padding: 0 2px 0 5px; font-size: 10px;">
+  <%= will_paginate pages, :params => {:action => 'load_entries', :page_name => 'list_block', :per_page => per_page, :target => id_name }, :next_label => _('Next'), :previous_label => _('Prev'), :container => false %>
 </span></div>
 <% end -%>
 
