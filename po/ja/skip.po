@@ -539,7 +539,7 @@ msgstr "管理"
 #: app/views/admin/_data_menu_box.html.erb:3
 #: app/views/admin/_master_data_menu_box.html.erb:3
 msgid "Admin Menu"
-msgstr "管理メニュー"
+msgstr "管理対象"
 
 #: app/models/admin/board_entry_comment.rb:17
 msgid "Admin::BoardEntryComment|Contents"
@@ -1985,7 +1985,7 @@ msgstr "ブログ/BBS"
 
 #: app/views/admin/_data_menu_box.html.erb:8
 msgid "Board Entries"
-msgstr "ブログ・フォーラム"
+msgstr "記事"
 
 #: app/controllers/admin/admin_module.rb:75
 msgid "Board entries"
