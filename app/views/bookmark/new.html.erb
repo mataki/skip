@@ -22,7 +22,7 @@
           <td>
             <span style="font-size: 15px; font-weight: bold;">
             <% if @bookmark.new_record? || @bookmark.is_type_internet? -%>
-              <%= text_field 'bookmark', 'title' -%>
+              <%= text_field 'bookmark', 'title', :size => 50 -%>
               <span id="refresher"><%= icon_tag 'arrow_rotate_clockwise', :title => _("Reacquire the title") %></span>
               <span id="indicator" style="display:none;font-size:10px;"><%= skip_image_tag 'indicator.gif' %><%= _('Updating...')%></span>
               <br/><span style="font-size: 10px; color: green;"><%= _('The titles are shared among all users so be careful upon updating.')%></span>
