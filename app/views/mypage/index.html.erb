@@ -143,7 +143,7 @@
     <%#  main area bookmarks -%>
     <%# ============================================================ -%>
     <% unless @bookmarks.empty? -%>
-      <%= show_title_bar("tag_blue", _("New bookmarks")) %>
+      <%= show_title_bar("tag_blue", _("New bookmarks"), url_for(:controller => "bookmarks", :action => "index")) %>
       <div class="topix_body" id="bookmark_body">
       <% @bookmarks.each do |bookmark| -%>
         <div class="page_line">
@@ -158,7 +158,7 @@
     <%#  main area recent users -%>
     <%# ============================================================ -%>
     <% unless @recent_users.empty? -%>
-    <%= show_title_bar("user_suit", _("Recent Users")) %>
+    <%= show_title_bar("user_suit", _("Recent Users"), url_for(:controller => "users", :action => "index") ) %>
     <div class="topix_body">
       <% @recent_users.each do |user| -%>
         <div class="topix_line">
@@ -177,7 +177,7 @@
     <%#  main area recent groups -%>
     <%# ============================================================ -%>
     <% if @recent_groups.size > 0 -%>
-    <%= show_title_bar("group", _("Recent Groups")) %>
+    <%= show_title_bar("group", _("Recent Groups"), url_for(:controller => "groups", :action => "index")) %>
     <div class="topix_body">
       <% @recent_groups.each do |group| -%>
         <div class="topix_line">
