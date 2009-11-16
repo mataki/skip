@@ -36,7 +36,7 @@ module ApplicationHelper
   end
 
   def i18n_will_paginate pages, options = {}
-    will_paginate pages, {:next_label => _('Next'), :previous_label => _('Prev')}.merge(options)
+    will_paginate pages, {:next_label => _('Next »'), :previous_label => _('« Previous')}.merge(options)
   end
 
   def i18n_will_paginate_with_container_wrapper pages, options = {}
