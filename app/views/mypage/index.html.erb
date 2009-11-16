@@ -32,7 +32,7 @@
   <% unless @mail_your_messages[:pages].empty? -%>
     <div id="messages_box" class="ui-corner-all">
       <h2 class="ui-corner-top">
-        <%= icon_tag(@mail_your_messages[:title_icon]) + h(@mail_your_messages[:title_name]) %>
+        <%= icon_tag(@mail_your_messages[:title_icon]) + link_to(h(@mail_your_messages[:title_name]), :controller => "/mypage", :action => "entries_by_antenna", :target => "message") %>
       </h2>
       <ul class="no_style">
         <% for entry in @mail_your_messages[:pages] %>
@@ -48,6 +48,15 @@
           </li>
         <% end %>
       </ul>
+    </div>
+  <% else -%>
+    <div id="messages_box_no_items" class="ui-corner-all">
+      <h2 class="ui-corner-top">
+        <%= icon_tag(@mail_your_messages[:title_icon]) + link_to(h(@mail_your_messages[:title_name]), :controller => "/mypage", :action => "entries_by_antenna", :target => "message") %>
+      </h2>
+      <div>
+        <%= _('No messages for you') %>
+      </div>
     </div>
   <% end -%>
 
