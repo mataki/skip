@@ -1,3 +1,4 @@
+<table><td>
 <% form_tag admin_images_update_path(:target => target_name), :multipart => true, :style => 'display: inline' do -%>
   <label for="<%= target_name %>"><%= title %></label>
   <%= file_field_tag target_name, :size => 40 %>
@@ -6,3 +7,4 @@
 <%= help_icon_tag :content => description %> |
 <%= link_to _('Show current image'), image_path(target_path), :popup => true %> |
 <%= link_to _('Revert to default image'), admin_images_revert_path(:target => target_name), :method => :post, :confirm => _('Current image will be overwritten.  Are you sure to continue?') %>
+</td></table>
