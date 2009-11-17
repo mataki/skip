@@ -11,17 +11,25 @@ describe History do
     }
   end
 
-  it "pageのtimestampを更新すること" do
-    @page = pages(:our_page_1)
-    @page.edit("hoge", mock_model(User))
-    @page.save!
-    Time.should_receive(:now).at_least(:once).and_return(mock_t = Time.local(2007,12,31, 00, 00, 00))
-    History.create!(@valid_attributes) do |h|
-      h.page.reload
-      h.content = Content.new(:data => "hogehoge")
+  describe "save" do
+    before do
+      @page = pages(:our_page_1)
+      @page.edit("hoge", mock_model(User))
+      @page.save!
+      Time.should_receive(:now).at_least(:once).and_return(@mock_t = Time.local(2007,12,31, 00, 00, 00))
+      History.create!(@valid_attributes) do |h|
+        h.page.reload
+        h.content = Content.new(:data => "hogehoge")
+      end
     end
 
-    @page.reload.updated_at.should == mock_t
+    it "pageのtimestampを更新すること" do
+      @page.reload.updated_at.should == @mock_t
+    end
+
+    it "pageの最終更新者IDが変更されていること" do
+      lambda{ @page.reload }.should change(@page, :last_modified_user_id)
+    end
   end
 
   describe ".find_all_by_head_content" do

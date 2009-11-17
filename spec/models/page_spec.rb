@@ -138,4 +138,19 @@ describe Page do
     end
   end
 
+  describe "has_history?" do
+    before do
+      @initial_page = Page.new(@valid_attributes.merge({:last_modified_user_id=>0}))
+      @page = Page.new(@valid_attributes)
+    end
+
+    it "最終更新者がいないページはfalseがかえること" do
+      @initial_page.has_history?.should be_false
+    end
+
+    it "それ以外はtrueがかえること" do
+      @page.has_history?.should be_true
+    end
+  end
+
 end
