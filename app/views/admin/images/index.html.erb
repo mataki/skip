@@ -6,22 +6,30 @@
 <div class="box tabular">
   <h4><%= _('Logo image') %></h4>
   <p><%= _('%{extension} formats are accepted. Maximum file size is %{size}Kbytes.') % {:extension => Admin::ImagesController::LogoImage.extension, :size => Admin::ImagesController::LogoImage.max_size / 1.kilobyte} %></p>
+  <table>
   <% Admin::ImagesController::LogoImage::IMAGE_NAMES.each do |target_name| -%>
+    <tr>
     <%= render :partial => 'form',
                :locals => { :target_name => target_name,
                             :target_path => "/custom/images/#{target_name}.png",
                             :title => s_("Admin::ImagesController|#{target_name}"),
                             :description => s_("Admin::ImagesController|#{target_name}_description") } %>
+    </tr>                    
   <% end -%>
+  </table>
   <h4><%= _('Background image of log in screen.') %></h4>
   <p><%= _('%{extension} formats are accepted. Maximum file size is %{size}Kbytes.') % {:extension => Admin::ImagesController::BackGroundImage.extension, :size => Admin::ImagesController::BackGroundImage.max_size / 1.kilobyte} %></p>
-  <% Admin::ImagesController::BackGroundImage::IMAGE_NAMES.each_with_index do |target_name, index| -%>
+  <table>
+    <% Admin::ImagesController::BackGroundImage::IMAGE_NAMES.each_with_index do |target_name, index| -%>
+    <tr>
     <%= render :partial => 'form',
                :locals => { :target_name => target_name,
                             :target_path => "/custom/images/titles/#{target_name}.jpg",
                             :title => s_("Admin::ImagesController|background") + (index + 1).to_s,
                             :description => s_("Admin::ImagesController|background_description") } %>
-  <% end -%>
+    </tr>
+    <% end -%>
+  </table>
   <h4><%= _('favicon image') %></h4>
   <p><%= _('%{extension} formats are accepted. Maximum file size is %{size}Kbytes.') % {:extension => Admin::ImagesController::FaviconImage.extension, :size => Admin::ImagesController::FaviconImage.max_size / 1.kilobyte} %></p>
   <% target_name = Admin::ImagesController::FaviconImage::IMAGE_NAMES[0] -%>
