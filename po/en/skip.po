@@ -3522,9 +3522,6 @@ msgid ""
 "set to recommended settings by default.<br />It may compromise the security "
 "level of SKIP if you moderate from default settings."
 msgstr ""
-"SKIPを安全にご利用いただくためのセキュリティに関する設定です。<br />初期状態"
-"では、推奨値が設定されています。<br />初期状態よりも緩和した設定にした場合、"
-"SKIPのセキュリティ強度が低下する可能性があります。"
 
 #: app/views/admin/images/index.html.erb:1
 msgid ""
