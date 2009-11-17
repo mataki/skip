@@ -20,6 +20,8 @@
     <h1 id="title"><%=h @page.title %></h1>
     <% if @user %>
       <ul class="no_style horizontal"><li>Last-modified: <%= @page.updated_at.strftime("%Y/%m/%d %H:%M:%S") %> by <%= @user.name %></li></ul>
+    <% else %>
+      <ul class="no_style horizontal"><li>Last-modified: <%= @page.updated_at.strftime("%Y/%m/%d %H:%M:%S") %></li></ul>
     <% end -%>
     <div class="clear_left"></div>
     <div id="tab_menu"><%= generate_tab_menu(wiki_tab_menu_source(@page)) %></div>
