@@ -1,10 +1,9 @@
-<div class="box"><%= _('You can create new user and edit / view existing user profiles.') %></div>
 <%= render :partial => '/admin/data_menu_box' %>
 <% content_for :topic_path do -%>
 <%= render :partial => '/admin/shared/topic_path' %>
 <% end -%>
 <% content_for :contents_right do -%>
-  
+  <div class="box"><%= _('You can create new user and edit / view existing user profiles.') %></div>
 <div class="box tabular">
   <%= render :partial => '/admin/search_box', :locals => { :class_name => 'Admin::User' } %>
   <% form_tag issue_activation_codes_admin_users_path do -%>

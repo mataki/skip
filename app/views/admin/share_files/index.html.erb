@@ -4,7 +4,7 @@
 <% end -%>
 <% content_for :contents_right do -%>
 
-
+<div class="box"><%= _('You can confirm uploaded files detail.') %></div>
 <div class="box tabular">
   <%= render :partial => '/admin/search_box', :locals => { :class_name => 'Admin::ShareFile' } %>
   <%= render :partial => '/admin/shared/sortable_table',
