@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.3.0\n"
-"POT-Creation-Date: 2009-11-17 15:04+0900\n"
+"POT-Creation-Date: 2009-11-17 16:51+0900\n"
 "PO-Revision-Date: 2009-06-29 13:31+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -89,7 +89,7 @@ msgstr ""
 msgid "%s Required"
 msgstr ""
 
-#: app/controllers/group_controller.rb:301
+#: app/controllers/group_controller.rb:321
 msgid "%s has already joined / applied to join this group."
 msgstr ""
 
@@ -215,10 +215,6 @@ msgid_plural "%{num} errors occured."
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/controllers/group_controller.rb:263
-msgid "%{rslt} to %{type}."
-msgstr "%{type}%{rslt}。"
-
 #: app/controllers/admin/images_controller.rb:148
 #: app/controllers/admin/documents_controller.rb:98
 msgid "%{target} was successfully saved."
@@ -230,7 +226,7 @@ msgid_plural "%{title_val} Comments:(%{comment_count_val})"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/controllers/group_controller.rb:199
+#: app/controllers/group_controller.rb:196
 msgid "%{user_name} leaved your group %{group_name}."
 msgstr ""
 
@@ -493,11 +489,11 @@ msgstr ""
 msgid "Add as Member"
 msgstr ""
 
-#: app/controllers/group_controller.rb:306
+#: app/controllers/group_controller.rb:326
 msgid "Added %s as a member."
 msgstr ""
 
-#: app/controllers/group_controller.rb:316
+#: app/controllers/group_controller.rb:336
 msgid "Added members of %s as members of the group"
 msgstr ""
 
@@ -1673,7 +1669,7 @@ msgstr "Login ID"
 msgid "Administration of the site."
 msgstr ""
 
-#: app/controllers/group_controller.rb:360
+#: app/controllers/group_controller.rb:380
 msgid "Administrative privillage required for the action."
 msgstr ""
 
@@ -1811,6 +1807,10 @@ msgstr ""
 
 #: app/views/group/_form.html.erb:42
 msgid "Approval from owner required?"
+msgstr ""
+
+#: app/models/message.rb:28
+msgid "Approval of join"
 msgstr ""
 
 #: app/views/group/_manage_permit.html.erb:19
@@ -2405,7 +2405,7 @@ msgstr ""
 msgid "Change your profile picture!"
 msgstr ""
 
-#: app/controllers/group_controller.rb:215
+#: app/controllers/group_controller.rb:212
 msgid "Changed."
 msgstr ""
 
@@ -2724,6 +2724,10 @@ msgstr ""
 #: app/controllers/admin/application_controller.rb:58
 #: app/controllers/admin/application_controller.rb:66
 msgid "Disallowed file type."
+msgstr ""
+
+#: app/models/message.rb:29
+msgid "Disapprove of join"
 msgstr ""
 
 #: app/views/user/group.html.erb:19 app/views/bookmarks/index.html.erb:9
@@ -3057,15 +3061,15 @@ msgstr ""
 msgid "Excluding retired users"
 msgstr ""
 
-#: app/controllers/group_controller.rb:263
-msgid "Failed"
-msgstr "に失敗しました"
+#: app/controllers/group_controller.rb:277
+msgid "Failed to Approve."
+msgstr ""
 
-#: app/controllers/group_controller.rb:217
+#: app/controllers/group_controller.rb:214
 msgid "Failed to change status."
 msgstr ""
 
-#: app/controllers/group_controller.rb:283
+#: app/controllers/group_controller.rb:303
 msgid "Failed to delete since there are still other users in the group."
 msgstr ""
 
@@ -3233,7 +3237,7 @@ msgstr ""
 msgid "Forced leave"
 msgstr ""
 
-#: app/controllers/group_controller.rb:322
+#: app/controllers/group_controller.rb:342
 msgid "Forced to join the group [%s]."
 msgstr ""
 
@@ -3307,7 +3311,7 @@ msgstr "Group Categories"
 msgid "Group does not exist."
 msgstr ""
 
-#: app/controllers/group_controller.rb:274
+#: app/controllers/group_controller.rb:294
 msgid "Group information was successfully updated."
 msgstr ""
 
@@ -3315,7 +3319,7 @@ msgstr ""
 msgid "Group was created successfully."
 msgstr ""
 
-#: app/controllers/group_controller.rb:287
+#: app/controllers/group_controller.rb:307
 msgid "Group was successfully deleted."
 msgstr ""
 
@@ -3353,30 +3357,6 @@ msgstr ""
 
 #: app/models/group_category.rb:-
 msgid "GroupCategory|Updated at"
-msgstr ""
-
-#: app/controllers/group_controller.rb:243
-msgid "GroupController|Approve"
-msgstr ""
-
-#: app/controllers/group_controller.rb:29
-msgid "GroupController|ApproveFailed"
-msgstr ""
-
-#: app/controllers/group_controller.rb:28
-msgid "GroupController|ApproveSuceeded"
-msgstr ""
-
-#: app/controllers/group_controller.rb:243
-msgid "GroupController|Disapprove"
-msgstr ""
-
-#: app/controllers/group_controller.rb:30
-msgid "GroupController|DisapproveSuceeded"
-msgstr ""
-
-#: app/controllers/group_controller.rb:31
-msgid "GroupController|DispproveFailed"
 msgstr ""
 
 #: app/models/group_participation.rb:-
@@ -3422,7 +3402,7 @@ msgstr ""
 #: app/helpers/application_helper.rb:346
 #: app/controllers/groups_controller.rb:62
 #: app/controllers/services_controller.rb:46
-#: app/controllers/group_controller.rb:338
+#: app/controllers/group_controller.rb:358
 #: app/controllers/share_file_controller.rb:163
 #: app/controllers/edit_controller.rb:276
 #: app/views/admin/_data_menu_box.html.erb:7
@@ -3789,7 +3769,7 @@ msgstr ""
 msgid "Join this group"
 msgstr ""
 
-#: app/controllers/group_controller.rb:181
+#: app/controllers/group_controller.rb:178
 msgid "Joined the group successfully."
 msgstr ""
 
@@ -4196,11 +4176,11 @@ msgstr ""
 msgid "New bookmarks"
 msgstr ""
 
-#: app/controllers/group_controller.rb:174
+#: app/controllers/group_controller.rb:170
 msgid "New user is waiting for approval in %s."
 msgstr ""
 
-#: app/controllers/group_controller.rb:179
+#: app/controllers/group_controller.rb:176
 msgid "New user joined your group [%s]."
 msgstr ""
 
@@ -4246,8 +4226,8 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: app/controllers/group_controller.rb:146
-#: app/controllers/group_controller.rb:240
+#: app/controllers/group_controller.rb:142
+#: app/controllers/group_controller.rb:238
 #: app/views/layouts/layout.html.erb:50
 msgid "No approval needed to join this group."
 msgstr ""
@@ -4603,7 +4583,7 @@ msgstr "Draft (Owner Only)"
 msgid "Parent comment could not be found. Try reloading the page."
 msgstr ""
 
-#: app/controllers/group_controller.rb:251
+#: app/controllers/group_controller.rb:254
 msgid "Part of the users are already members of this group."
 msgstr ""
 
@@ -5030,7 +5010,7 @@ msgstr ""
 msgid "Remember to clean up the user data periodically"
 msgstr ""
 
-#: app/controllers/group_controller.rb:232
+#: app/controllers/group_controller.rb:229
 msgid "Removed %s from members of the group."
 msgstr ""
 
@@ -5039,7 +5019,7 @@ msgstr ""
 msgid "Reply to this comment"
 msgstr ""
 
-#: app/controllers/group_controller.rb:172
+#: app/controllers/group_controller.rb:167
 msgid "Request sent. Please wait for the approval."
 msgstr ""
 
@@ -5547,7 +5527,7 @@ msgstr ""
 msgid "Specified Directly:"
 msgstr ""
 
-#: app/controllers/group_controller.rb:351
+#: app/controllers/group_controller.rb:371
 msgid "Specified group does not exist."
 msgstr ""
 
@@ -5639,15 +5619,19 @@ msgstr ""
 msgid "Subwindow"
 msgstr ""
 
-#: app/controllers/group_controller.rb:263
-msgid "Succeeded"
+#: app/controllers/group_controller.rb:274
+msgid "Succeeded to Approve."
+msgstr ""
+
+#: app/controllers/group_controller.rb:285
+msgid "Succeeded to Disapprove."
 msgstr ""
 
 #: app/controllers/admin/users_controller.rb:159
 msgid "Successfully added/updated users from CSV file."
 msgstr ""
 
-#: app/controllers/group_controller.rb:201
+#: app/controllers/group_controller.rb:198
 msgid "Successfully left the group."
 msgstr ""
 
@@ -6168,7 +6152,7 @@ msgid "User name not found."
 msgstr ""
 
 #: app/controllers/users_controller.rb:32
-#: app/controllers/group_controller.rb:52
+#: app/controllers/group_controller.rb:48
 msgid "User not found."
 msgstr ""
 
@@ -6425,7 +6409,7 @@ msgstr ""
 msgid "Users"
 msgstr ""
 
-#: app/controllers/group_controller.rb:318
+#: app/controllers/group_controller.rb:338
 msgid "Users / groups selection invalid."
 msgstr ""
 
@@ -6747,11 +6731,11 @@ msgid ""
 "for any purpose other than running this service.<br/>"
 msgstr ""
 
-#: app/controllers/group_controller.rb:161
+#: app/controllers/group_controller.rb:157
 msgid "You are already a member of the group."
 msgstr ""
 
-#: app/controllers/group_controller.rb:191
+#: app/controllers/group_controller.rb:188
 msgid "You are not a member of the group."
 msgstr ""
 
@@ -6831,7 +6815,7 @@ msgstr ""
 msgid "You cannot delete user who is not unused."
 msgstr ""
 
-#: app/controllers/group_controller.rb:230
+#: app/controllers/group_controller.rb:227
 msgid "You forced to leave the group [%s]."
 msgstr ""
 
@@ -6861,6 +6845,14 @@ msgstr ""
 
 #: app/controllers/board_entries_controller.rb:180
 msgid "You recieved a comment on your entry [%s]!"
+msgstr ""
+
+#: app/controllers/group_controller.rb:272
+msgid "You were approved join of the group %s."
+msgstr ""
+
+#: app/controllers/group_controller.rb:283
+msgid "You were disapproved join of the group %s."
 msgstr ""
 
 #: app/models/notice.rb:63
