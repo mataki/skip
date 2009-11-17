@@ -18,8 +18,8 @@
 
   <div id="panel" class="ui-corner-all" style="_width: 98%;">
     <h1 id="title"><%=h @page.title %></h1>
-    <% unless @page.root? %>
-      <ul class="no_style horizontal"><li><%= generate_wiki_topics_str(@page) %></li></ul>
+    <% if @user %>
+      <ul class="no_style horizontal"><li>Last-modified: <%= @page.updated_at.strftime("%Y/%m/%d %H:%M:%S") %> by <%= @user.name %></li></ul>
     <% end -%>
     <div class="clear_left"></div>
     <div id="tab_menu"><%= generate_tab_menu(wiki_tab_menu_source(@page)) %></div>

@@ -25,8 +25,6 @@ Feature: Wikiの管理
     And     "Wiki"リンクをクリックする
 
     Then    "トップページ"と表示されていること
-    Then    ページのタブメニューが表示されていること
-
 
   Scenario: Wikiのナビゲーションのテストをする
     Given   "マイページ"にアクセスする
@@ -83,5 +81,6 @@ Feature: Wikiの管理
     And     "作成"ボタンをクリックする
     And     "次のページ"リンクをクリックする
 
-    Then    "トップページ > 次のページ"と表示されること
+    Then    "Last-modified:"と表示されること
+    Then    "a_user"と表示されること
 

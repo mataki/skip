@@ -33,6 +33,8 @@ SQL
   private
   def update_page_updated_at
     page.touch
+    page.last_modified_user_id = self.user.id
+    page.save
   end
 
 end

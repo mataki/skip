@@ -35,6 +35,10 @@ class Page < ActiveRecord::Base
     self.class.roots.include?(self) || self.parent_id == 0
   end
 
+  def has_history?
+    !(self.last_modified_user_id == 0)
+  end
+
   def content(revision=nil)
     if revision.nil?
       (history = @new_history || head) ? history.content.data : ""
