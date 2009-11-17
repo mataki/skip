@@ -16,6 +16,45 @@
 # ==================================================================================================
 # 全体設定
 # ==================================================================================================
+
+# 名称 名前
+# --------------------------------------------------------------------------------------------------
+abbr_app_title:
+  default: SKIP                                            # システムの名称
+login_account:
+  default: ログインID                                      # ログインアカウントの名称
+point_button:
+  default: GoodJob                                         # 記事へのポイント評価の名称（へぇ～などに変更できます）
+
+# お問い合わせ
+# --------------------------------------------------------------------------------------------------
+contact_addr:
+  format: email
+  default: admin@example.com
+
+# フッター
+# --------------------------------------------------------------------------------------------------
+footer_first:                                              # フッターの１行目（ヘルプ・規約へのリンクなどを推奨）
+  default: >-
+    <b><a onclick="open_site(); return false;" href="#">このサイトについて</a> - <a onclick="open_rule(); return false;" href="#">利用規約</a></b>
+footer_second:
+  default: お問い合わせはこちら | Since 2008 SKIP          # フッターの２列目（提供元への連絡先などを推奨）
+footer_image_link_url:
+  format: url
+  default: http://www.openskip.org/                        # フッター右側に表示する画像のリンクURL
+
+# メール
+# --------------------------------------------------------------------------------------------------
+contact_mail_contain_contents:
+  format: boolean
+  default: false
+host_and_port:
+  default: localhost:3000
+protocol:
+  default: http://
+
+# その他
+# --------------------------------------------------------------------------------------------------
 stop_new_user:
   format: boolean
   default: false
@@ -34,38 +73,9 @@ enable_change_section:
 access_record_limit:
   format: int
   default: 30
-
-# ==================================================================================================
-# 各種文言の設定
-# ==================================================================================================
-abbr_app_title:
-  default: SKIP                                            # システムの名称
-contact_addr:
-  format: email
-  default: admin@example.com
-login_account:
-  default: ログインID                                      # ログインアカウントの名称
-footer_first:                                              # フッターの１行目（ヘルプ・規約へのリンクなどを推奨）
-  default: >-
-    <b><a onclick="open_site(); return false;" href="#">このサイトについて</a> - <a onclick="open_rule(); return false;" href="#">利用規約</a></b>
-footer_second:
-  default: お問い合わせはこちら | Since 2008 SKIP          # フッターの２列目（提供元への連絡先などを推奨）
-footer_image_link_url:
-  format: url
-  default: http://www.openskip.org/                        # フッター右側に表示する画像のリンクURL
-point_button:
-  default: GoodJob                                         # 記事へのポイント評価の名称（へぇ～などに変更できます）
-
-# ==================================================================================================
-# メール関連の設定
-# ==================================================================================================
-contact_mail_contain_contents:
-  format: boolean
-  default: false
-host_and_port:
-  default: localhost:3000
-protocol:
-  default: http://
+entry_showed_tab_limit_per_page:
+  format: int
+  default: 20
 
 # ==================================================================================================
 # RSSフィードの設定

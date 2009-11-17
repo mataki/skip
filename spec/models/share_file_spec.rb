@@ -123,7 +123,6 @@ describe ShareFile, '#validate_on_create' do
       @share_file.should_receive(:valid_presence_of_file).and_return(false)
       @share_file.should_not_receive(:valid_extension_of_file)
       @share_file.should_not_receive(:valid_size_of_file)
-      @share_file.should_not_receive(:valid_max_size_per_owner_of_file)
       @share_file.should_not_receive(:valid_max_size_of_system_of_file)
       @share_file.validate_on_create
     end
@@ -134,7 +133,6 @@ describe ShareFile, '#validate_on_create' do
       @share_file.should_receive(:valid_extension_of_file)
       @share_file.should_receive(:valid_content_type_of_file)
       @share_file.should_receive(:valid_size_of_file)
-      @share_file.should_receive(:valid_max_size_per_owner_of_file)
       @share_file.should_receive(:valid_max_size_of_system_of_file)
       @share_file.validate_on_create
     end

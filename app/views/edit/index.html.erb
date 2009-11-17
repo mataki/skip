@@ -1,7 +1,8 @@
 
 <%= render :partial => 'board_entries/preview_window' %>
 
-<% form_tag({:action => 'create'}, :multipart => true, :id=>'board_entry_form') do -%>
+<% form_tag({:action => 'create'}, :multipart => true, :id => 'board_entry_form') do -%>
   <%= render :partial => 'board_entries/form' %>
   <%= submit_tag _("Create") , :id => 'submit_button' %>
-<% end %>
+  <%= send_mail_check_box_tag %>
+<% end -%>

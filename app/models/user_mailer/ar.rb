@@ -31,7 +31,7 @@ class UserMailer::AR < UserMailer::Base
     @from       = from
     @send_on    = Time.now
     @headers    = {}
-    @body       = {:name => user_name, :entry => entry, :header => header, :footer => footer}
+    @body       = {:name => user_name, :entry => entry, :header => header, :footer => footer, :owner => owner}
   end
 
   def sent_message(recipient, link_url, message ,message_manage_url)

@@ -102,4 +102,11 @@ module RankingsHelper
     options_for_select(container, monthly_path(:year => select_year, :month => select_month.to_s.rjust(2,'0')))
   end
 
+  def ranking_list_of_month(dates)
+    dates.map do |date|
+      year, month = date.split("-")
+      [date, monthly_path(:year => year, :month => month)]
+    end
+  end
+
 end

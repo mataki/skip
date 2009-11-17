@@ -1,0 +1,13 @@
+<% content_for :contents_left do -%>
+<div class="box_space">
+  <div class="box_space_title"><%= _('Admin Menu')%></div>
+  <div class="box_space_body">
+    <ul>
+    <%= generate_box_menu_link( _('Group Categories'), admin_group_categories_path, request.url.include?(admin_group_categories_url)) %>
+    <%= generate_box_menu_link( _('Profile Categories'), admin_user_profile_master_categories_path, request.url.include?(admin_user_profile_master_categories_path)) %>
+    <%= generate_box_menu_link( _('Profile Items'), admin_user_profile_masters_path, request.url.include?(admin_user_profile_masters_path)) %>
+    </ul>
+  </div>
+  <div class="box_space_bottom"></div>
+</div><!-- box_space -->
+<% end -%>

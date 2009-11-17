@@ -55,6 +55,7 @@ Rails::Initializer.run do |config|
   config.gem 'openskip-skip_embedded', :lib => 'skip_embedded', :version => '>=0.9.17', :source => 'http://gems.github.com'
   config.gem 'mislav-will_paginate', :lib => 'will_paginate', :version=> '>=2.3.6', :source => 'http://gems.github.com/'
   config.gem "maedana-ar_mailer", :lib => 'action_mailer/ar_mailer', :source => 'http://gemcutter.org'
+  config.gem "feed-normalizer"
 end
 
 # 共通メニュー

@@ -1,0 +1,19 @@
+<h3 class="topics"><%= _('Profile Categories') %></h3>
+<div class="box tabular">
+  <p><%= _('Related profile items will also be deleted when you delete this profile category. Are you sure to proceed?') %></p>
+  <%= link_to _('New %{model}') % {:model => _('user profile master category')}, new_admin_user_profile_master_category_path %>
+  <%= render :partial => '/admin/shared/list_table',
+             :locals => {
+               :columns => %w[name description sort_order],
+               :objects => @user_profile_master_categories,
+               :class_name => 'Admin::UserProfileMasterCategory',
+               :link_elem_size => 2,
+               :link_elem_proc => lambda { |object|
+      result = ""
+      result << content_tag(:td, link_to(_("Edit"), edit_admin_user_profile_master_category_path(object)) )
+      result << content_tag(:td, link_to(_("Destroy"), object, {:confirm => _('Are you sure?'), :method => :delete}) )
+      result
+    }
+             }
+  -%>
+</div>

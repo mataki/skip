@@ -4,7 +4,6 @@
   <%= label Admin::UserUid.name, :uid, Admin::Setting.login_account %>
   <% if @user.new_record? -%>
   <%= text_field :user_uid, :uid %>
-  <%= help_icon_tag :content => _('Enter your %{login_account}.') % {:login_account => Admin::Setting.login_account} %>
   <% else -%>
   :<%= h @user.code %>
   <% end -%>
@@ -62,9 +61,11 @@
 <% unless login_mode?(:password) -%>
 <p>
   <%= label Admin::OpenidIdentifier.name, :url %>
-  <% if @user.openid_identifiers and @user.openid_identifiers.first %>
-  :<%=h @user.openid_identifiers.first.url %>
+  <% if @user.openid_identifiers and @user.openid_identifiers.first and !@user.openid_identifiers.first.url.blank? %>
+  :<%= h @user.openid_identifiers.first.url %>
   [<%= link_to(_('Edit'), edit_admin_user_openid_identifier_path(@user, @user.openid_identifiers.first)) %>]
+  <% else %>
+    <%= text_field :openid_identifier, :url %>
   <% end -%>
 </p>
 <% end -%>

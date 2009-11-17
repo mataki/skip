@@ -18,7 +18,7 @@
   </div>
   <div id="contents_hiki_space" style="display: none;">
     <%= link_to_hiki_help %> <a href="#" id="hiki_preview_link"><%= _('[See preview]')%></a>
-    <%= text_area_tag 'contents_hiki', h(params[:contents_hiki]), :cols => 90, :rows => 20 %>
+    <%= text_area_tag 'contents_hiki', params[:contents_hiki], :cols => 90, :rows => 20 %>
   </div>
 
 <% ckeditor 'contents_richtext', 'toolbar' => "Entry" %>

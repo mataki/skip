@@ -124,8 +124,8 @@ class BoardEntry < ActiveRecord::Base
   }
 
   named_scope :aim_type, proc { |types|
+    return {} if types.blank?
     types = types.split(',').map(&:strip) if types.is_a?(String)
-    types ||= %w(entry)
     { :conditions => ['aim_type IN (?)', types] }
   }
 
@@ -145,8 +145,8 @@ class BoardEntry < ActiveRecord::Base
   N_('BoardEntry|Entry type|DIARY')
   N_('BoardEntry|Entry type|GROUP_BBS')
   ns_('BoardEntry|Aim type|entry', 'entries', 1)
-  ns_('BoardEntry|Aim type|questions', 'questions', 1)
-  ns_('BoardEntry|Aim type|notice', 'notices', 1)
+  ns_('BoardEntry|Aim type|question', 'questions', 1)
+  ns_('BoardEntry|Aim type|notices', 'notices', 1)
   N_('BoardEntry|Aim type|Desc|entry')
   N_('BoardEntry|Aim type|Desc|question')
   N_('BoardEntry|Aim type|Desc|notice')
@@ -456,7 +456,7 @@ class BoardEntry < ActiveRecord::Base
       :title => params[:title],
       :contents => contents,
       :category => params[:tags],
-      :aim_type => params[:aim_type],
+      :aim_type => params[:aim_type] || 'entry',
       :date => params[:date] || Time.now,
       :user_id => params[:user_id],
       :entry_type => params[:entry_type],

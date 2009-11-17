@@ -22,11 +22,10 @@ class BatchMakeUserReadings < BatchBase
       symbol_type,symbol_id = SkipUtil.split_symbol(entry.symbol)
       user_ids = [] # この記事が更新されたことを通知するuserのid一覧
 
-      # アンテナに基づく更新
-      antenna_items = AntennaItem.find(:all,
-                                       :conditions => ["value_type = ? and value = ?", "symbol", entry.symbol],
-                                       :include => :antenna)
-      antenna_items.each{ |antenna_item| user_ids << antenna_item.antenna.user_id }
+      # 新着通知に基づく更新
+      if owner = entry.load_owner
+        Notice.subscribed(owner).each { |notice| user_ids << notice.user_id }
+      end
 
       # 全グループに基づく更新
       if symbol_type == "gid"
@@ -86,6 +85,7 @@ class BatchMakeUserReadings < BatchBase
   # お知らせ対象ユーザを取得
   def self.contact_ids entry
     return [] unless BoardEntry::ANTENNA_AIM_TYPES.include?(entry.aim_type)
+    return [] unless entry.last_updated > 30.minutes.ago
     entry.publication_users.map{ |user| user.id }
   end
 

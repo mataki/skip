@@ -1,0 +1,9 @@
+<% content_for :contents_right do -%>
+<div class="desc ui-corner-all margin05emver"><%= _("Introduce %s to others!") % h(current_target_user.name)%></div>
+<div class="edit_form_space ui-corner-all richtext">
+<% form_for [current_target_user, @chain] do |f| -%>
+  <%= render f %>
+  <%= submit_tag _('Create') %>
+<% end %>
+</div>
+<% end -%>

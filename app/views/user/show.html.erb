@@ -1,16 +1,17 @@
 <% content_for :contents_left do -%>
-  <% unless @current_user == @user -%>
-    <%= render(:partial => 'user/action_box', :locals => { :user => @user }) %>
+  <% unless current_user == current_target_user -%>
+    <%= render(:partial => 'user/action_box', :locals => { :user => current_target_user }) %>
   <% end -%>
-  <%= render(:partial => 'entries/recent_box', :locals => { :owner => @user }) -%>
-  <%= render :partial => 'user/join_groups_box', :locals => { :user => @user } %>
-  <%= render :partial => 'user/follow_chains_box', :locals => { :user => @user } %>
+  <%= render(:partial => 'entries/recent_box', :locals => { :owner => current_target_user }) -%>
+  <%= render :partial => 'user/join_groups_box', :locals => { :user => current_target_user } %>
+  <%= render :partial => 'user/follow_chains_box', :locals => { :user => current_target_user } %>
+  <%= render :partial => "chains/followed_chain_tags_box" %>
 <% end -%>
 
 <% content_for :contents_right do -%>
   <div class="relative100">
     <h2 class="topix_title"><%= icon_tag('asterisk_orange') %><%= _('Profile') %></h2>
-    <% if @user.id == @current_user.id -%>
+    <% if current_target_user.id == current_user.id -%>
     <div class="operation">
       <%= link_to icon_tag('vcard_edit', :title=>_('Edit')) + _('[Edit]'), :controller => 'mypage', :action => 'manage', :menu => 'manage_profile' %>
     </div>
@@ -22,46 +23,46 @@
     <% if user_name_mode?(:code) -%>
       <tr>
         <th><%=h Admin::Setting.login_account -%></th>
-        <td><%=h @user.code -%></td>
+        <td><%=h current_target_user.code -%></td>
       </tr>
     <% end %>
     <% if user_name_mode?(:name) -%>
       <tr>
         <th><%=h _('user name') -%></th>
-        <td><%=h @user.uid -%></td>
+        <td><%=h current_target_user.uid -%></td>
       </tr>
     <% end %>
       <tr>
         <th><%=h s_("Admin::User|Name") %></th>
-        <td><%=h @user.name -%></td>
+        <td><%=h current_target_user.name -%></td>
       </tr>
     <% unless Admin::Setting.hide_email -%>
       <tr>
         <th><%=h s_('User|Email') %></th>
-        <td><a href="mailto:<%=h @user.email -%>"><%=h @user.email -%></a></td>
+        <td><a href="mailto:<%=h current_target_user.email -%>"><%=h current_target_user.email -%></a></td>
       </tr>
     <% end -%>
       <tr>
         <th><%=h s_('User|Section') %></th>
-        <td><%=h @user.section -%></td>
+        <td><%=h current_target_user.section -%></td>
       </tr>
-    <% if @current_user.id == @user.id -%>
+    <% if current_user.id == current_target_user.id -%>
       <tr>
         <th><%=h s_('User|Issued at') %></th>
-        <td><%=h @user.issued_at.blank? ? '' : @user.issued_at.strftime("%Y/%m/%d %H:%M:%S") %></td>
+        <td><%=h current_target_user.issued_at.blank? ? '' : current_target_user.issued_at.strftime("%Y/%m/%d %H:%M:%S") %></td>
       </tr>
       <tr>
         <th><%=h s_('User|Last authenticated at') %></th>
-        <td><%=h @user.last_authenticated_at.blank? ? '' : @user.last_authenticated_at.strftime("%Y/%m/%d %H:%M:%S") %></td>
+        <td><%=h current_target_user.last_authenticated_at.blank? ? '' : current_target_user.last_authenticated_at.strftime("%Y/%m/%d %H:%M:%S") %></td>
       </tr>
       <tr>
         <th><%=h s_('User|Password expires at') %></th>
-        <td><%=h @user.password_expires_at.blank? ? '' : @user.password_expires_at.strftime("%Y/%m/%d %H:%M:%S") %></td>
+        <td><%=h current_target_user.password_expires_at.blank? ? '' : current_target_user.password_expires_at.strftime("%Y/%m/%d %H:%M:%S") %></td>
       </tr>
     <% end -%>
     </table>
 
-    <% profiles = @user.user_profile_values
+    <% profiles = current_target_user.user_profile_values
        profile_hash = profiles.index_by(&:user_profile_master_id)
        UserProfileMasterCategory.all.each do |category| -%>
       <% unless category.user_profile_masters.empty? -%>
@@ -79,29 +80,27 @@
     </div>
   </div>
 
-  <% unless @tags.empty? -%>
-    <%= render :partial => "postit_cloud",
-               :locals => {
-                 :user => @user,
-                 :tags => @tags
-               } %>
-  <% end -%>
   <% unless @against_chains.empty? -%>
   <div class="relative100">
-    <div class="operation"><%= link_to _('[See all]'), :action => 'social', :menu => 'social_chain', :uid => @user.uid %></div>
+    <div class="operation"><%= link_to _('[See all]'), :action => 'social', :menu => 'social_chain', :uid => current_target_user.uid %></div>
     <h2 class="topix_title"><%= icon_tag('asterisk_orange') %><%= _('Introductions') %></h2>
     <div class="topix_body">
-    <table class="normal user_chain">
-    <% @against_chains.each do |chain| -%>
-      <tr>
-        <th>
-          <%= user_link_to_with_portrait(chain.from_user, :width => 60, :height => 40) %><br/>
-          <%= user_link_to(chain.from_user) %>
-        </th>
-        <td><%= render_richtext(chain.comment) %></td>
-      </tr>
-    <% end -%>
-    </table>
+      <table class="normal user_chain ui-corner-all">
+      <% @against_chains.each do |chain| -%>
+        <tr>
+          <th rowspan="2">
+            <%= user_link_to_with_portrait(chain.from_user, :width => 60, :height => 40) %><br/>
+            <%= user_link_to(chain.from_user) %>
+          </th>
+          <td class="tags">
+            <%= chain.tags.map{ |t| h(t.name) }.join(',') %>
+          </td>
+        </tr>
+        <tr>
+          <td><%= render_richtext(chain.comment) %></td>
+        </tr>
+      <% end -%>
+      </table>
     </div>
   </div>
   <% end -%>

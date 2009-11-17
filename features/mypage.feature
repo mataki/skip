@@ -17,13 +17,13 @@ Feature: マイページ
 
   Scenario: 質問を表示する
     Given 以下のブログを書く:
-      |user  |title            |aim_type  |contents     |
-      |a_user|Railsについて質問|質問      |わかりません |
-      |a_user|Railsについて雑談|記事      |色々話そう   |
+      |user  |title            |aim_type                                              |contents     |
+      |a_user|Railsについて質問|質問 (マイページの「みんなからの質問」に表示されます) |わかりません |
+      |a_user|Railsについて雑談|記事 (マイページの「新着記事」に表示されます)         |色々話そう   |
 
     When "マイページ"にアクセスする
 
-    Then I should see "Railsについて質問" within "div#questions"
+    Then I should see "Railsについて質問" within "div#questions_wrapper"
     And I should not see "Railsについて質問" within "div#access_blogs"
     And I should see "Railsについて雑談" within "div#access_blogs"
     And I should not see "Railsについて質問" within "div#recent_blogs"
@@ -31,9 +31,9 @@ Feature: マイページ
 
   Scenario: お知らせを表示する
     Given 以下のブログを書く:
-      |user  |title                 |aim_type  |contents        |
-      |a_user|Railsについてお知らせ |お知らせ  |リリースします  |
-      |a_user|Railsについて雑談     |記事      |色々話そう      |
+      |user  |title                 |aim_type                                                     |contents        |
+      |a_user|Railsについてお知らせ |お知らせ (マイページの「あなたへのお知らせ」に表示されます)  |リリースします  |
+      |a_user|Railsについて雑談     |記事 (マイページの「新着記事」に表示されます)                |色々話そう      |
     And 新着通知を作成バッチを実行する
 
     When "a_group_owned_user"でログインする
@@ -44,7 +44,6 @@ Feature: マイページ
     And I should see "Railsについて雑談" within "div#access_blogs"
     And I should not see "Railsについてお知らせ" within "div#recent_blogs"
     And I should see "Railsについて雑談" within "div#recent_blogs"
-    And I should see "あなたへのお知らせ(1)" within "div.box_space.antenna"
 
     When "新着通知"リンクをクリックする
 
@@ -59,8 +58,6 @@ Feature: マイページ
 
     When "Railsについてお知らせ"リンクをクリックする
     And "マイページ"にアクセスする
-
-    Then I should see "あなたへのお知らせ" within "div.box_space.antenna"
 
     When "あなたへのお知らせ"リンクをクリックする
 

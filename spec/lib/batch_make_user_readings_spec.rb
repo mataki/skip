@@ -117,3 +117,31 @@ private
     return entry_template
   end
 end
+
+describe BatchMakeUserReadings do
+  describe "お知らせの新着通知" do
+    before do
+      @create_user = create_user(:user_uid_options => {})
+      @notice_user = create_user(:user_uid_options => { :uid => "54321" })
+    end
+
+    subject { UserReading.find_by_user_id_and_board_entry_id(@notice_user.id, @entry.id) }
+
+    it "閲覧可能な記事を作成したとき、未読に登録されること" do
+      @entry = create_board_entry(:user => @create_user, :aim_type => BoardEntry::ANTENNA_AIM_TYPES.rand, :last_updated => Time.now)
+      BatchMakeUserReadings.execution
+      should_not be_nil
+    end
+    it "閲覧できない記事を作成したとき、未読に登録されないこと" do
+      @entry = create_board_entry(:user => @create_user, :aim_type => BoardEntry::ANTENNA_AIM_TYPES.rand, :publication_type => "private", :last_updated => Time.now)
+      BatchMakeUserReadings.execution
+      should be_nil
+    end
+    it "コメントを追加したとき、未読に登録されないこと" do
+      @entry = create_board_entry(:user => @create_user, :aim_type => BoardEntry::ANTENNA_AIM_TYPES.rand, :last_updated => 2.hour.ago)
+      create_board_entry_comment(:board_entry_id => @entry.id, :user_id => @create_user.id)
+      BatchMakeUserReadings.execution
+      should be_nil
+    end
+  end
+end

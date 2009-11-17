@@ -17,18 +17,18 @@ require 'jcode'
 require 'open-uri'
 require "resolv-replace"
 require 'timeout'
-require 'rss'
+require 'feed-normalizer'
 class MypageController < ApplicationController
   before_filter :setup_layout
   before_filter :load_user
   skip_before_filter :verify_authenticity_token, :only => :apply_ident_url
 
-  verify :method => :post, :only => [ :destroy_portrait, :save_portrait, :update_profile,
-                                      :update_message_unsubscribes, :apply_password,
-                                      :add_antenna, :delete_antenna, :delete_antenna_item, :move_antenna_item,
-                                      :change_read_state, :apply_email, :set_antenna_name, :sort_antenna],
-         :redirect_to => { :action => :index }
+  verify :method => :post,
+    :only => [ :update_profile, :update_message_unsubscribes, :apply_password, :change_read_state, :apply_email],
+    :redirect_to => { :action => :index }
   verify :method => [:post, :put], :only => [ :update_customize], :redirect_to => { :action => :index }
+
+  helper_method :recent_day
 
   # ================================================================================
   #  tab menu actions
@@ -57,7 +57,7 @@ class MypageController < ApplicationController
     #  main area entries
     # ============================================================
     @questions = find_questions_as_locals({:recent_day => recent_day})
-    @access_blogs = find_access_blogs_as_locals({:per_page => 5})
+    @access_blogs = find_access_blogs_as_locals({:per_page => 10})
     @recent_blogs = find_recent_blogs_as_locals({:per_page => per_page})
     @timelines = find_timelines_as_locals({:per_page => per_page}) if current_user.custom.display_entries_format == 'tabs'
     @recent_bbs = recent_bbs
@@ -125,8 +125,6 @@ class MypageController < ApplicationController
       render :template => 'pictures/new', :layout => 'layout' and return
     when "manage_customize"
       @user_custom = UserCustom.find_by_user_id(@user.id) || UserCustom.new
-    when "manage_antenna"
-      @antennas = find_antennas
     when "manage_message"
       @unsubscribes = UserMessageUnsubscribe.get_unscribe_array(session[:user_id])
     # TODO #924で画面からリンクをなくした。1.4時点で復活しない場合は削除する
@@ -171,7 +169,7 @@ class MypageController < ApplicationController
 
   # アンテナ毎の記事一覧画面を表示
   def entries_by_antenna
-    @antenna_entry = antenna_entry(params[:antenna_id], params[:read])
+    @antenna_entry = antenna_entry(params[:target_type], params[:target_id], params[:read])
     @antenna_entry.title = antenna_entry_title(@antenna_entry)
     if @antenna_entry.need_search?
       @entries = @antenna_entry.scope.order_new.paginate(:page => params[:page], :per_page => 20)
@@ -212,16 +210,7 @@ class MypageController < ApplicationController
   # ajax_action
   # 右側サイドバーのRSSフィードを読み込む
   def load_rss_feed
-    feeds = []
-    Admin::Setting.mypage_feed_settings.each do |setting|
-      feed = nil
-      timeout(Admin::Setting.mypage_feed_timeout.to_i) do
-        feed = open(setting[:url], :proxy => SkipEmbedded::InitialSettings['proxy_url']){ |f| RSS::Parser.parse(f.read) }
-      end
-      feed = unify_feed_form(feed, setting[:title], setting[:limit])
-      feeds << feed if feed
-    end
-    render :partial => "rss_feed", :locals => { :feeds => feeds }
+    render :partial => "rss_feed", :locals => { :feeds => unifed_feeds }
   rescue Timeout::Error
     render :text => _("Timeout while loading rss.")
     return false
@@ -230,93 +219,6 @@ class MypageController < ApplicationController
     e.backtrace.each { |line| logger.error line}
     render :text => _("Failed to load rss.")
     return false
-  end
-
-  # ================================================================================
-  #  アンテナの整備関連
-  # ================================================================================
-
-  def set_antenna_name
-    id = params[:element_id] ? params[:element_id].split('_')[3] : nil
-
-    antenna = Antenna.find(id)
-    unless antenna.user_id == session[:user_id]
-      render :text => ""
-      return false
-    end
-    antenna.name = params[:value]
-    if antenna.save
-      # Inplaceエディタ内で直接ここで返した文字列を表示するためにHTMLエスケープする
-      render :text => ERB::Util.html_escape(antenna.name)
-    else
-      render :text => antenna.errors.full_messages.first, :status => 500
-    end
-  end
-
-  def add_antenna
-    Antenna.create(:user_id => session[:user_id], :name => params[:antenna_name])
-    render :partial => 'antennas', :object => find_antennas
-  end
-
-  def delete_antenna
-    antenna = Antenna.find(params[:antenna_id])
-    unless antenna.user_id == session[:user_id]
-      render :text => ""
-      return false
-    end
-    antenna.destroy
-    render :partial => 'antennas', :object => find_antennas
-  end
-
-  def delete_antenna_item
-    item = AntennaItem.find(params[:antenna_item_id])
-    unless item.antenna.user_id == session[:user_id]
-      render :text => ""
-      return false
-    end
-    item.destroy
-    render :partial => 'antennas', :object => find_antennas
-  end
-
-  def move_antenna_item
-    antenna_item = AntennaItem.find(params[:antenna_item_id])
-    antenna_item.antenna_id = params[:antenna_id]
-    if antenna_item.save
-      render :partial => 'antennas', :object => find_antennas
-    else
-      render :text => antenna_item.errors.full_messages, :status => :bad_request
-    end
-  end
-
-  def sort_antenna
-    antennas = Antenna.find(:all,
-                            :conditions => ["user_id = ?", session[:user_id]],
-                            :order => "position")
-    target_pos = Integer(params[:target_pos])
-
-    antennas.each_with_index do |antenna, index|
-      if antenna.id.to_s == params[:source_antenna_id]
-        if target_pos > antenna.position
-          antennas.insert(target_pos, antenna)
-          antennas.delete_at(index)
-        else
-          antennas.delete_at(index)
-          antennas.insert(target_pos-1, antenna)
-        end
-        break
-      end
-    end
-    antennas.each_with_index do |antenna, index|
-      if antenna && (antenna.position != (index + 1))
-        antenna.position = index + 1;
-        antenna.save
-      end
-    end
-    render :partial => 'antennas', :object => find_antennas
-  end
-
-  def antenna_list
-    render :text => current_user_antennas_as_json
   end
 
   # ================================================================================
@@ -454,22 +356,18 @@ class MypageController < ApplicationController
     end
   end
 
-  private
   # [最近]を表す日数
   def recent_day
     10
   end
 
+  private
   def per_page
-    current_user.custom.display_entries_format == 'tabs' ? 20 : 8
+    current_user.custom.display_entries_format == 'tabs' ? Admin::Setting.entry_showed_tab_limit_per_page : 8
   end
 
   def setup_layout
     @main_menu = @title = _('My Page')
-  end
-
-  def find_antennas
-    Antenna.find_with_counts current_user
   end
 
   # 日付情報を解析して返す。
@@ -483,13 +381,16 @@ class MypageController < ApplicationController
     return year, month, day
   end
 
-  def antenna_entry(key, read = true)
+  def antenna_entry(key, target_id = nil, read = true)
     unless key.blank?
-      begin
-        key = Integer(key)
-        UserAntennaEntry.new(current_user, key, read)
-      rescue ArgumentError
-        if %w(message comment bookmark group).include?(key)
+      if target_id
+        if %w(user group).include?(key)
+          UserAntennaEntry.new(current_user, key, target_id, read)
+        else
+          raise ActiveRecord::RecordNotFound
+        end
+      else
+        if %w(message comment bookmark joined_group).include?(key)
           SystemAntennaEntry.new(current_user, key, read)
         else
           raise ActiveRecord::RecordNotFound
@@ -532,7 +433,7 @@ class MypageController < ApplicationController
               when @key == 'message'  then BoardEntry.accessible(@current_user).notice
               when @key == 'comment'  then scope_for_entries_by_system_antenna_comment
               when @key == 'bookmark' then scope_for_entries_by_system_antenna_bookmark
-              when @key == 'group'    then scope_for_entries_by_system_antenna_group
+              when @key == 'joined_group'    then scope_for_entries_by_system_antenna_group
               end
 
       scope = scope.unread(@current_user) unless @read
@@ -581,28 +482,22 @@ class MypageController < ApplicationController
   end
 
   class UserAntennaEntry < AntennaEntry
-    def initialize(current_user, key, read = true)
+    def initialize(current_user, type, id, read = true)
       @current_user = current_user
-      @key = key
+      @type = type
       @read = read
-      @antenna = Antenna.find(@key)
-      @title = @antenna.name
+      @owner = type.humanize.constantize.find id
+      @title = @owner.name
     end
 
     def scope
-      symbols, keyword = @antenna.get_search_conditions
-      find_params = BoardEntry.make_conditions(@current_user.belong_symbols, :symbols => symbols, :keyword => keyword)
-      scope = BoardEntry.scoped(
-        :conditions=> find_params[:conditions],
-        :include => find_params[:include]
-      )
+      scope = BoardEntry.accessible(@current_user).owned(@owner)
       scope = scope.unread(@current_user) unless @read
       scope
     end
 
     def need_search?
-      @antenna_items = @antenna.antenna_items
-      @antenna_items && @antenna_items.size > 0
+      true
     end
   end
 
@@ -610,6 +505,13 @@ class MypageController < ApplicationController
   # mypage > home の システムメッセージの配列
   def system_messages
     system_messages = []
+    if system_notice = SkipEmbedded::InitialSettings['system_notice'] and !system_notice['title'].blank?
+      system_messages << {
+        :text => system_notice['title'],
+        :icon => "information",
+        :option => system_notice['url']
+      }
+    end
     unless current_user.picture
       system_messages << {
         :text => _("Change your profile picture!"), :icon => "picture",
@@ -738,25 +640,21 @@ class MypageController < ApplicationController
     recent_bbs
   end
 
-  def current_user_antennas_as_json
-    antennas = Antenna.all(:conditions => ["user_id = ?" , current_user.id])
-    result = {
-      :antenna_list => antennas.map do |antenna|
-        { :name => antenna.name, :url => url_for(:controller => :feed, :action => :user_antenna, :id => antenna.id) }
+  def unifed_feeds
+    returning [] do |feeds|
+      Admin::Setting.mypage_feed_settings.each do |setting|
+        feed = nil
+        timeout(Admin::Setting.mypage_feed_timeout.to_i) do
+          feed = open(setting[:url], :proxy => SkipEmbedded::InitialSettings['proxy_url']) do |f|
+            FeedNormalizer::FeedNormalizer.parse(f.read)
+          end
+        end
+        feed.title = setting[:title] if setting[:title]
+        limit = (setting[:limit] || Admin::Setting.mypage_feed_default_limit)
+        feed.items.slice!(limit..-1) if feed.items.size > limit
+        feeds << feed
       end
-    }.to_json
-  end
-
-  def unify_feed_form feed, title = nil, limit = nil
-    feed = feed.to_rss("2.0") if !feed.is_a?(RSS::Rss) and feed.is_a?(RSS::Atom::Feed)
-
-    feed.channel.title = title if title
-    limit = (limit || Admin::Setting.mypage_feed_default_limit)
-    feed.items.slice!(limit..-1) if feed.items.size > limit
-    feed
-  rescue NameError => e
-    logger.error "[Error] Atom conversion failed due to outdated ruby libraries."
-    return nil
+    end
   end
 
   # TODO #924で画面からリンクをなくした。1.4時点で復活しない場合は削除する
@@ -860,7 +758,7 @@ class MypageController < ApplicationController
       when key == 'message'  then _("Notices for you")
       when key == 'comment'  then _("Entries you have made comments")
       when key == 'bookmark' then _("Entries bookmarked by yourself")
-      when key == 'group'    then _("Posts in the groups joined")
+      when key == 'joined_group'    then _("Posts in the groups joined")
       else
         _('List of unread entries')
       end

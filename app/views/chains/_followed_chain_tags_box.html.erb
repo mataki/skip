@@ -1,0 +1,13 @@
+<% user ||= current_target_user -%>
+<% if tags = ChainTag.tags_used_to(user).all(:select => '*, count(tags.id) as count') and !tags.empty? -%>
+<div class="box_space">
+  <div class="box_space_title"><%= icon_tag 'tag_blue' %><%= _('Tags') %></div>
+  <div class="box_space_body tag_cloud">
+  <% tag_cloud tags do |name, count, css_class| -%>
+    <%= link_to(h(name), users_path(:tag_words => name), :class => css_class) %>
+    <span class="count">(<%= h count %>)</span>
+  <% end -%>
+  </div>
+  <div class="box_space_bottom"></div>
+</div><!-- box_space -->
+<% end -%>

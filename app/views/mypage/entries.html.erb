@@ -13,16 +13,12 @@
 <% end -%>
 
 <% content_for :contents_right do -%>
-  <% if @entries and @entries.respond_to?(:previous_page) %>
-    <div class="navi ui-corner-all"><%= will_paginate_link(@entries) %></div>
-  <% end %>
+  <%= i18n_will_paginate_with_container_wrapper @entries %>
   <%= render :partial => "page_space",
              :locals => { :id_name => @id_name,
                           :title_name => @title_name,
                           :pages => @entries,
                           :symbol2name_hash => @symbol2name_hash } %>
 
-  <% if @entries and @entries.respond_to?(:previous_page) %>
-    <div class="navi ui-corner-all"><%= will_paginate_link(@entries) %></div>
-  <% end %>
+  <%= i18n_will_paginate_with_container_wrapper @entries %>
 <% end -%>

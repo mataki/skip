@@ -1,6 +1,6 @@
 <% unless groups.empty? -%>
   <%= hidden_field_tag("authenticity_token", form_authenticity_token) %>
-  <div class="navi ui-corner-all"><%= will_paginate_link @groups %></div>
+  <%= i18n_will_paginate_with_container_wrapper @groups %>
   <table class="group_list_box normal">
     <tr>
       <th width="50%"><%= _('Group Name')%></th>
@@ -17,5 +17,5 @@
     </tr>
   <% end -%>
   </table>
-  <div class="navi ui-corner-all"><%= will_paginate_link @groups %></div>
+  <%= i18n_will_paginate_with_container_wrapper @groups %>
 <% end -%>

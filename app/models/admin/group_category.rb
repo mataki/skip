@@ -27,10 +27,6 @@ class Admin::GroupCategory < GroupCategory
   N_('Admin::GroupCategory|Initial selected')
   N_('Admin::GroupCategory|Initial selected description')
 
-  def self.search_columns
-    %w(code name icon description)
-  end
-
   def topic_title
     name
   end

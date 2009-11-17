@@ -28,7 +28,9 @@
             <% if @user.retired? -%>
               <li><b class="retired"><%= _('This user has already left.') %></b></li>
             <% else -%>
-              <li><%= _('Last Access') %>: <%= h @user.before_access %></li>
+              <% if @user != @current_user -%>
+                <li><%= _('Last Access') %>: <%= h @user.before_access %></li>
+              <% end -%>
             <% end -%>
             <li><%= link_to_if @user == current_user, _('Visits') + ": " +h(n_("%{count} visit", "%{count} visits", @user.info[:access_count]) % {:count => @user.info[:access_count]}), {:action => 'trace', :controller => "/mypage"} -%></li>
             <li><%= _('Subscribers') %>: <%=h(n_("%{count} user", "%{count} users", @user.info[:subscriber_count]) % {:count =>@user.info[:subscriber_count]}) -%></li>

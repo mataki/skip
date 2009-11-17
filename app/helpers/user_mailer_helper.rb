@@ -22,7 +22,7 @@ module UserMailerHelper
            else
              entry.contents
            end
-    plain = strip_tags(html.gsub(/(?:<br\s*\/?>|<\/p>)/) { "\n" }).gsub(/\t/) { '' }
+    plain = strip_tags(html).strip.gsub(/\t/) { '' }
     plain = plain.scan(/.{0,100}/m).first.gsub('&nbsp;',' ').gsub("&amp;", "&").gsub("&quot;",'"').gsub("&gt;", '>').gsub("&lt;", '<')
     plain.gsub(/^(.*)/) { "    #{$1}" }
   end

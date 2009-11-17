@@ -124,6 +124,10 @@ class Admin::User < User
     enable_forgot_password? ? update_all('locked = 1, auth_session_token = NULL, remember_token = NULL, remember_token_expires_at = NULL', ['status = ?', 'ACTIVE']) : 0
   end
 
+  def to_param
+    id.to_s
+  end
+
   private
   # ログインIDは必須でそれ以外は、optionsにパラメータのあるものを
   # それぞれ正しいHashに設定する

@@ -35,17 +35,16 @@ module ApplicationHelper
     content_tag :ul, output
   end
 
-  # 指定の件数を超えた場合のページ遷移のナビゲージョンリンクを生成する
-  # will_paginate用
-  def will_paginate_link pages
-    option = params.clone
-    output = ""
-    output << link_to(_('[Head]'), option.update({:page => 1})) if pages.previous_page
-    output << link_to(_('[Prev]'), option.update({:page => pages.previous_page})) if pages.previous_page
-    output << _("Total %{items} hits (Page %{page} / %{pages})") % {:items => pages.total_entries, :page => pages.current_page, :pages => pages.total_pages}
-    output << link_to(_('[Next]'), option.update({:page => pages.next_page})) if pages.next_page
-    output << link_to(_('[Last]'), option.update({:page => pages.total_pages})) if pages.next_page
-    output
+  def i18n_will_paginate pages, options = {}
+    will_paginate pages, {:next_label => _('Next »'), :previous_label => _('« Previous')}.merge(options)
+  end
+
+  def i18n_will_paginate_with_container_wrapper pages, options = {}
+    if pages && pages.total_pages > 1
+      content_tag :div, :class => 'navi ui-corner-all' do
+        i18n_will_paginate(pages, options)
+      end
+    end
   end
 
   # 複数のラジオボタンで値を選択するHTMLを生成する
@@ -109,23 +108,16 @@ module ApplicationHelper
     link_to output_text, { :controller => 'group', :action => 'show', :gid => group.gid }, options
   end
 
-  # ユーザかグループのページへのリンク
-  def item_link_to item, options = {}
-    output_text = ""
-    output_text << image_tag(option[:image_name]) if options[:image_name]
-    output_text << (options[:view_text] || h(item[:name]))
-
-    url = { :controller => item.class.name.downcase,
-            :action => 'show',
-            item.class.symbol_type => item.symbol_id }
-
-    link_to output_text, url, { :title => h(item[:name]) }
-  end
-
-  def symbol_link_to symbol, name = nil
+  def symbol_link_to symbol, name = nil, options = {}
     symbol_type, symbol_id = SkipUtil.split_symbol symbol
     name ||= "[#{symbol}]"
-    link_to(h(name), {:controller => @@CONTROLLER_HASH[symbol_type], :action => "show", symbol_type => symbol_id}, :title => name)
+    link = link_to(h(name), {:controller => @@CONTROLLER_HASH[symbol_type], :action => "show", symbol_type => symbol_id}, :title => name)
+    if options[:with_prefix]
+      prefix = (symbol_type == 'uid') ? 'by' : 'on'
+      "#{prefix} #{link}"
+    else
+      link
+    end
   end
 
   def image_link_tag title, image_name, options={}
@@ -210,8 +202,19 @@ module ApplicationHelper
 
   def sanitize_style_with_whitelist(content)
     allowed_tags = HTML::WhiteListSanitizer.allowed_tags.dup << "table" << "tbody" << "tr" << "th" << "td" << "caption" << "strike" << "u"
-    allowed_attributes = HTML::WhiteListSanitizer.allowed_attributes.dup << "style" << "cellspacing" << "cellpadding" << "border" << "align" << "summary"
+    allowed_attributes = HTML::WhiteListSanitizer.allowed_attributes.dup << "style" << "cellspacing" << "cellpadding" << "border" << "align" << "summary" << "target"
     sanitize(content, :tags => allowed_tags, :attributes => allowed_attributes)
+  end
+
+  def translate_publication_type(entry)
+    case entry.publication_type
+    when 'public'
+      _("Open to All")
+    when 'protected'
+      _("Specified Directly:")
+    when 'private'
+      entry.diary? ? _("Owner Only") : _("Members Only")
+   end
   end
 
   def get_publication_type_icon(entry)
@@ -256,6 +259,7 @@ module ApplicationHelper
   end
 
   # タグクラウドを生成する
+  # TODO 単なるTagの配列じゃ駄目で、(:select 'count(tags.id) as count')などとしておかないといけない。呼び出し元で気をつけて配列を作らないといけない部分が微妙。なんとかしたい。
   def tag_cloud(tags, classes = %w(tag1 tag2 tag3 tag4 tag5 tag6))
     max, min = 0, 0
     tags.each do |tag|
@@ -374,15 +378,10 @@ private
   end
 
   def link_to_bookmark_url(bookmark, title = nil)
-    url = bookmark.url
     title ||= bookmark.title
 
     if bookmark.is_type_page?
-      url =  relative_url_root + url
-      link_to "#{icon_tag('report_link')} #{h title}", bookmark.escaped_url, :title => title
-    elsif bookmark.is_type_user?
-      url =  relative_url_root + url
-      link_to "#{icon_tag('user')} #{h title}", bookmark.escaped_url, :title => title
+      link_to "#{icon_tag('report_link')} #{h title}", "#{relative_url_root}#{bookmark.escaped_url}", :title => title
     else
       link_to "#{icon_tag('world_link')} #{h truncate(title, :length => 115)}", bookmark.escaped_url, :title => title, :target => "_blank"
     end

@@ -63,7 +63,9 @@
 <% if login_mode?(:password) -%>
 <% footer_links << link_to(_('New %{model}') % {:model => _('user')}, new_admin_user_path) %>
 <% footer_links << link_to(_('New users from CSV'), import_new_admin_user_path) %>
-<% end -%>
+<% elsif login_mode?(:fixed_rp) %>
+<% footer_links << link_to(_('New %{model}') % {:model => _('user')}, new_admin_user_path) %>
+<% end %>
 <% footer_links << link_to(_('Listing %{model}') % {:model => _('picture')}, admin_pictures_path) %>
 <%= footer_links.join(' | ') %>
 <% end -%>

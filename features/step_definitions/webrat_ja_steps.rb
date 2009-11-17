@@ -12,9 +12,9 @@ When /^"([^\"]*)"ボタンをクリックする$/ do |button|
   When %Q(I press "#{button}")
 end
 
-# When /^"([^\"]*)"リンクをクリックする$/ do |link|
-#   When %Q(I follow "#{link}")
-# end
+When /^"([^\"]*)"リンクをクリックする$/ do |link|
+ When %Q(I follow "#{link}")
+end
 
 # Order is opposite from original (English) version
 When /^"([^\"]*)"の"([^\"]*)"リンクをクリックする$/ do |parent, link|

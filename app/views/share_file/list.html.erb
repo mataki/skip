@@ -47,12 +47,11 @@
     <div style="font-size:10px;text-align:right;"><a href="#" id="search_cancel"><%=_("[Cancel selection]")%></a></div>
   </div><!-- box_space -->
 
-  <%= render(:partial => 'share_file/file_size_box', :locals => { :owner_symbol => @owner_symbol }) %>
 <% end -%>
 
 <% content_for :contents_right do -%>
   <% unless @share_files.empty? -%>
-    <div class="navi ui-corner-all"><%= will_paginate_link @share_files %></div>
+    <%= i18n_will_paginate_with_container_wrapper @share_files %>
     <div class="files_body">
       <% @share_files.each do |share_file| -%>
         <%= render :partial => 'share_file_box',
@@ -62,7 +61,7 @@
                                :visible_owner_link => false } %>
       <% end -%>
     </div><!-- files_body -->
-    <div class="navi ui-corner-all"><%= will_paginate_link @share_files %></div>
+    <%= i18n_will_paginate_with_container_wrapper @share_files %>
   <% end %>
 <% end -%>
 

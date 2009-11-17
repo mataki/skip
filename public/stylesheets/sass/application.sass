@@ -58,9 +58,11 @@ b.caution
 .margin05emver
   :margin-top 0.5em
   :margin-bottom 0.5em
+.margin25pxbtm
+  :margin-bottom 25px
 
 select.select_navi
-  :width 150px
+  :width 180px
 
 // jquery.ui.tabsでタブ折り返し時にliがulをはみ出してしまう対策
 // ------------------------------------------------------------
@@ -224,6 +226,8 @@ div.right_box
     :font-size 14px
     :font-weight normal
     :padding 2px 6px
+    span.desc
+      :font-size = !x_small_font_size
   ul
     li
       :margin 6px 2px
@@ -329,12 +333,12 @@ div.topix_body
     :margin-right 5px
   .page_title
     :float left
-    :white-space nowrap
-    :overflow hidden
     :text-overflow ellipsis
-    :width 65%
-    span.ss_sprite 
+    :_width 80%
+    span.ss_sprite
       :vertical-align bottom
+    .small
+      :font-size 80%
   .page_from
     :float left
     :white-space nowrap
@@ -388,6 +392,11 @@ div.topix_body
   :font-size = !base_font_size + 12px
 .tag6
   :font-size = !base_font_size + 15px
+.tag_cloud
+  .count
+    :font
+      :size = !small_font_size
+    :color silver
 
 // 検索条件部(共通)
 div.search_cond_space
@@ -539,6 +548,13 @@ table.user_chain
   th
     :width 80px
     :text-align center
+    img
+      :width 48px
+      :height 48px
+  td.tags
+    :font
+      :weight bold
+    :color green
 
 // ============================================================
 // 2. 共通の構造
@@ -595,6 +611,95 @@ div#tab_menu
 // 3. 通常機能
 // ============================================================
 
+// ログイン
+// ------------------------------------------------------------
+div#platform_main_wrapper
+  :_text-align center
+  div#platform_main
+    :margin 0 auto
+    :position relative
+    :width 940px
+    div.col_left
+      :float left
+      :width 536px
+    div.col_right
+      :float right
+      :width 396px
+      div.login-box
+        :padding 4px
+        :background-color #f2f2ff
+        :font-size 12px
+        p
+          :line-height 130%
+          :padding 2px
+          :color #444
+          :background #ddf
+          :border-bottom 1px solid #AAAAAF
+          :font
+            :size 14px
+            :weight bold
+    div#desc_before_login
+      :padding 3px
+      :background-color #f2f2ff
+      :overflow auto
+      :height 300px
+  div#platform_main.require_login
+    :background #fafafa
+    :border-bottom = !base_border
+    :padding 10px
+    div#require_login_wrapper
+      :width 100%
+      :border = !base_border
+      :padding 1px
+      :background #fff
+      :text-align left
+      h2
+        :padding 4px
+        :background #ddffdd
+      p.require_desc
+        :background #eeffee
+        :border 1px dashed #ffc000
+        :margin 10px 0
+div#require_login_container_wrapper
+  :width 100%
+  :_text-align center
+  div#require_login_container
+    :border = !base_border
+    :width 600px
+    :padding 2px
+    :background #f0f0ff
+    :margin 0 auto 10px auto
+div#login_container
+  :position absolute
+  :right 10px
+  :top 25px
+  :width 460px
+  :background #F2F2FF
+  :padding 4px
+div#login_container, div#require_login_container
+  table
+    :margin 0 auto
+    tr
+      :vertical-align top
+    td
+      :border none
+      :padding 0 0 0 12px
+    td.input_field
+      input
+        :width 162px
+        :border 1px solid #937999
+    td.label_field
+      :_width 182px
+      :text-align right
+      :vertical-align middle
+      input
+        :vertical-align middle
+      label
+        :vertical-align middle
+#login_form
+  #openid_url
+    :background #FFFFFF url(/images/openid_login_bg.gif) no-repeat scroll 0pt 50%
+
 // マイページ
 // ------------------------------------------------------------
 div.top_info
@@ -638,6 +743,16 @@ div#messages_box
       .info
         :font-size 80%
         :text-align right
+div#messages_box_no_items
+  :border 1px solid #DDA000
+  :margin 0 0 10px 0
+  h2
+    :padding 3px 0
+    :background-color #DDA000
+    :font-size 12px
+    :text-align center
+  div
+    :text-align center
 
 div#questions_wrapper
   :border 1px solid #E0E0FF
@@ -650,6 +765,18 @@ div#questions_wrapper
     :text-align center
   .topix_line
     :border none
+  table
+    :width 98%
+    td.title
+      :padding 2px 5px
+      a.tag
+        :color #8080FF
+        :font-size = !small_font_size
+      span.supplement
+        :font-size 8px
+        :vertical-align bottom
+        :color #808080
+
 
 // マイページ > ソーシャル
 // ------------------------------------------------------------
@@ -663,7 +790,6 @@ table.chain_table
     :width 120px
     :text-align center
     :border = !base_border
-    &.user_box div
   td
     &.message div
       :border = !base_border
@@ -681,15 +807,10 @@ ul.access_tracks
   li
     :border-bottom = !base_dotted_border
 
-// マイページ > 管理 > アンテナの整備
+// マイページ > アンテナボックス
 // ------------------------------------------------------------
-div#antennas_list_container
-  :margin 10px 10px 5px 10px
-
-div#add_antenna_area
-  :margin 0 10px 10px 10px
-  :border = !base_border
-  :background-color #f0f0ff
+ul.notices.by_type
+  :border-top = !base_border
 
 // ユーザ
 // ------------------------------------------------------------
@@ -708,6 +829,12 @@ div.panel_top
     :position absolute
     :bottom 0px
     :left 80px
+div.panel_admin_top
+  :position relative
+  :height 70px
+  .left
+    :margin 10px
+    :position absolute
 
 // ------------------------------------------------------------
 // ユーザ一覧、グループ参加者一覧の一行毎
@@ -739,6 +866,7 @@ ul.user_box
   :width 150px
   :list-style none
   :overflow hidden
+  :white-space nowrap
   li.image
     :text-align center
   li.data_row
@@ -1060,11 +1188,7 @@ table.ranking_square
     :width 15px
     :font-size 12px
     :text-align center
-  td.link_text
-    :padding 3px 0 3px 0
-    :font-size 12px
-    :width 350px
-  td.user_name
+  td.column_title
     :padding 3px 0 3px 0
     :font-size 12px
     :width 100px

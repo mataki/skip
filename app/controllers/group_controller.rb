@@ -87,7 +87,7 @@ class GroupController < ApplicationController
 
       find_params = BoardEntry.make_conditions(login_user_symbols, options)
 
-      if user_id = params[:user]
+      if user_id = params[:user_id]
         find_params[:conditions][0] << " and board_entries.user_id = ?"
         find_params[:conditions] << user_id
       end
@@ -371,12 +371,12 @@ private
   end
 
   def load_group_and_participation
-    unless @group = Group.active.find_by_gid(params[:gid])
+    unless @group = current_target_group
       flash[:warn] = _("Specified group does not exist.")
       redirect_to :controller => 'mypage', :action => 'index'
       return false
     end
-    @participation = @group.group_participations.find_by_user_id(current_user.id)
+    @participation = current_participation
   end
 
   def check_owned

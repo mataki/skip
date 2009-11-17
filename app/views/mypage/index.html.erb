@@ -5,9 +5,6 @@
 <% content_for :contents_top do -%>
   <% if (@message_array.size > 0) or (@waiting_groups.size > 0) or (@system_messages.size > 0) -%>
     <div class="top_info system_message ui-corner-all">
-      <% if system_notice = SkipEmbedded::InitialSettings['system_notice'] and !system_notice['title'].blank? -%>
-        <div class="item"><%= link_to(icon_tag('information') + h(system_notice['title']), system_notice['url']) %></div>
-      <% end -%>
       <% @system_messages.each do |message| -%>
         <div class="item">
           <%= link_to(icon_tag(message[:icon]) + h(message[:text]), message[:option]) %>
@@ -20,7 +17,7 @@
       <% end -%>
       <% @waiting_groups.each do |group| -%>
         <div class="item">
-          <%= item_link_to(group, {:view_text=>( icon_tag('group') + _('New user is waiting for approval in %s') % h(group.name) )}) %>
+          <%= group_link_to(group, {:view_text=>( icon_tag('group') + _('New user is waiting for approval in %s') % h(group.name) )}) %>
         </div>
       <% end -%>
     </div>
@@ -35,7 +32,7 @@
   <% unless @mail_your_messages[:pages].empty? -%>
     <div id="messages_box" class="ui-corner-all">
       <h2 class="ui-corner-top">
-        <%= icon_tag(@mail_your_messages[:title_icon]) + h(@mail_your_messages[:title_name]) %>
+        <%= icon_tag(@mail_your_messages[:title_icon]) + link_to(h(@mail_your_messages[:title_name]), :controller => "/mypage", :action => "entries_by_antenna", :target_type => "message") %>
       </h2>
       <ul class="no_style">
         <% for entry in @mail_your_messages[:pages] %>
@@ -51,6 +48,15 @@
           </li>
         <% end %>
       </ul>
+    </div>
+  <% else -%>
+    <div id="messages_box_no_items" class="ui-corner-all">
+      <h2 class="ui-corner-top">
+        <%= icon_tag(@mail_your_messages[:title_icon]) + link_to(h(@mail_your_messages[:title_name]), :controller => "/mypage", :action => "entries_by_antenna", :target_type => "message") %>
+      </h2>
+      <div>
+        <%= _('No messages for you') %>
+      </div>
     </div>
   <% end -%>
 
@@ -70,7 +76,12 @@
 
     <% unless @access_blogs[:pages].empty? -%>
       <div class="right_box ui-corner-all" id="access_blogs">
-        <h2 class="ui-corner-top"><%= h @access_blogs[:title_name] -%></h2>
+        <h2 class="ui-corner-top">
+          <%= h(@access_blogs[:title_name]) %><br />
+          <span class="desc">
+            (<%= Time.now.ago(recent_day.day).strftime(_('%B %d %Y')) %> - <%= Time.now.strftime(_('%B %d %Y')) %>)
+          </span>
+        </h2>
         <div class="list">
           <table>
             <% @access_blogs[:pages].each_with_index do |entry, i| %>
@@ -79,7 +90,7 @@
                   <div class="picture"><%= i+1 %>.<%= show_picture(entry.user, :width=>24, :height => 24) %></div>
                 </td>
                 <td class="right" width="108px">
-                  <div class="title"><%= link_to h(entry.title), entry.get_url_hash %></div>
+                  <div class="title"><%= link_to h(entry.title), entry.get_url_hash %><span class="small_text">(<%= h entry.state.access_count %>)</span></div>
                   <div class="name">by <%= user_link_to entry.user %></div>
                 </td>
               </tr>
@@ -97,12 +108,29 @@
     <%# ============================================================ -%>
     <%#  main area entries -%>
     <%# ============================================================ -%>
-    <% unless @questions[:pages].empty? -%>
-      <div class="ui-corner-all" id="questions_wrapper">
-        <h2 class="ui-corner-top"><%= icon_tag(@questions[:title_icon]) + link_to(h(@questions[:title_name]), :controller => "/search", :action => 'entry_search', :type => 'question') %></h2>
-        <%= render :partial => "list_block", :locals => @questions %>
-      </div>
-    <% end -%>
+    <div class="ui-corner-all" id="questions_wrapper">
+      <h2 class="ui-corner-top"><%= icon_tag(@questions[:title_icon]) + link_to(h(@questions[:title_name]), :controller => "/search", :action => 'entry_search', :type => 'question') %></h2>
+      <% if @questions[:pages].empty? -%>
+        <div class="margin05em"><%= _('No matching questions.') %></div>
+      <% else -%>
+        <table>
+          <tbody>
+            <% @questions[:pages].each do |question| -%>
+            <tr>
+              <% entry_infos = get_entry_infos(question) -%>
+              <% categories = question.category.scan(/\[[^\]]*\]/) -%>
+              <% entry_search_links_by_category = categories.map{ |category| link_to h(category), {:controller => 'search', :action => :entry_search, :tag_words => Tag.comma_tags(h(category))}, :class => 'tag'} -%>
+              <td class="title">
+                <%= entry_link_to(question, {}, {:title => h(question.title + entry_infos)}) + hide_long_tags(entry_search_links_by_category, 3) %> <span class="supplement"><%=h entry_infos %></span>
+                <%= symbol_link_to question.symbol, @questions[:symbol2name_hash][question.symbol], :with_prefix => true %>
+                <%= '(' + _('Owner Only') + ')' if question.diary? && question.private? %>
+              </td>
+            </tr>
+            <% end -%>
+          </tbody>
+        </table>
+      <% end -%>
+    </div>
 
     <%= render :partial => "publicated_entries_#{current_user.custom.display_entries_format}" %>
 
@@ -115,7 +143,7 @@
     <%#  main area bookmarks -%>
     <%# ============================================================ -%>
     <% unless @bookmarks.empty? -%>
-      <%= show_title_bar("tag_blue", _("New bookmarks")) %>
+      <%= show_title_bar("tag_blue", _("New bookmarks"), url_for(:controller => "bookmarks", :action => "index")) %>
       <div class="topix_body" id="bookmark_body">
       <% @bookmarks.each do |bookmark| -%>
         <div class="page_line">
@@ -130,13 +158,17 @@
     <%#  main area recent users -%>
     <%# ============================================================ -%>
     <% unless @recent_users.empty? -%>
-    <%= show_title_bar("user_suit", _("Recent Users")) %>
+    <%= show_title_bar("user_suit", _("Recent Users"), url_for(:controller => "users", :action => "index") ) %>
     <div class="topix_body">
       <% @recent_users.each do |user| -%>
         <div class="topix_line">
-          <div class="title">
-            <%= user_link_to(user) %> (<%= h(user.section) %>) <%= "&lt;&lt;" + link_to('[' + _('Introduce') + ']', {:controller => 'user', :action => 'new_chain', :uid => h(user.uid) }) unless current_user.follow_chains.map(&:to_user_id).include? user.id %>
+          <div class="page_title">
+            <%= user_link_to(user) %>&nbsp;<span class="small">(<%= h(user.section) %>)</span>
+            <% unless chain = current_user.follow_chains.find_by_to_user_id(user.id) -%>
+              &nbsp;<%= link_to('[' + _('Introduce') + ']', new_user_chain_path(user)) %>
+            <% end -%>
           </div>
+          <div class="page_date"><%=h user.created_on.strftime(_("%B %d %Y")) %></div>
         </div>
       <% end -%>
     </div>
@@ -146,13 +178,14 @@
     <%#  main area recent groups -%>
     <%# ============================================================ -%>
     <% if @recent_groups.size > 0 -%>
-    <%= show_title_bar("group", _("Recent Groups")) %>
+    <%= show_title_bar("group", _("Recent Groups"), url_for(:controller => "groups", :action => "index")) %>
     <div class="topix_body">
       <% @recent_groups.each do |group| -%>
         <div class="topix_line">
-          <div class="title">
-            <%= h(group.group_category.name) %> - <%= group_link_to(group) %> - <%= truncate(strip_tags(group.description), 30) %>
+          <div class="page_title">
+            <%= get_group_icon(group.group_category, :margin => true) %><%= group_link_to(group) %>&nbsp;<span class="small">(<%= truncate(strip_tags(group.description), 30) %>)</span>
           </div>
+          <div class="page_date"><%=h group.created_on.strftime(_("%B %d %Y")) %></div>
         </div>
       <% end -%>
     </div>
@@ -165,73 +198,18 @@
     $j('#tabs').tabs({ cookie:{ expires:30 } });
     $j('#tabs').show();
 
-    var loadEntries = function(data){
-        var id_name = data['target'];
-        $j.ajax({
-            url: '<%= url_for(:controller => 'mypage', :action => 'load_entries') -%>',
-            data: data,
-            success: function(html) {
-                $j('#' + id_name).html(html).appendClickForToggleTag();
-                $j('#' + id_name + '_body').highlight();
-            },
-            complete: function(request) {
-                unbindEentyPageChange();
-                setupEntryPageChange();
-            }
-        });
-    };
+    $j('.pagination a').live('click', function() {
+      var url = $j(this).attr('href');
+      var target = $j.getUrlVar(url, 'target');
+      $j.ajax({
+          url: url,
+          success: function(html) {
+              $j('#' + target).html(html).appendClickForToggleTag();
+              $j('#' + target + '_body').highlight();
+          }
+      });
+      return false;
+    });
 
-    var unbindEentyPageChange = function(){
-        $j('.first_link').unbind('click');
-        $j('.back_link').unbind('click');
-        $j('.next_link').unbind('click');
-        $j('.last_link').unbind('click');
-    };
-
-    var setupEntryPageChange = function(){
-        // 最初へ,前へ,次へ,最後へリンククリック時のajaxアクション
-        $j('.first_link')
-        .click(function() {
-            var id_name = this.id.split('-')[0];
-            loadEntries(requestData(1, id_name));
-            return false;
-        });
-
-        $j('.back_link')
-        .click(function() {
-            var id_name = this.id.split('-')[0];
-            var base_id = '#' + id_name + '_body';
-            var page = $j('#page_back', base_id).val();
-            loadEntries(requestData(page, id_name));
-            return false;
-        });
-
-        $j('.next_link')
-        .click(function() {
-            var id_name = this.id.split('-')[0];
-            var base_id = '#' + id_name + '_body';
-            var page = $j('#page_next', base_id).val();
-            loadEntries(requestData(page, id_name));
-            return false;
-        });
-
-        $j('.last_link')
-        .click(function() {
-            var id_name = this.id.split('-')[0];
-            var base_id = '#' + id_name + '_body';
-            var page = $j('#page_last', base_id).val();
-            loadEntries(requestData(page, id_name));
-            return false;
-        });
-    };
-    setupEntryPageChange();
-
-    var requestData = function(page, id_name){
-        var base_id = '#' + id_name + '_body';
-        var per_page = $j('#per_page', base_id).val();
-        var recent_day = $j('#recent_day', base_id).val();
-        return { page : page, page_name : 'list_block', target : id_name, per_page : per_page, recent_day : recent_day };
-    };
-
-    setupLoadCalendar("<%= url_for(:action => 'load_calendar') %>");
+    // setupLoadCalendar("<%= url_for(:action => 'load_calendar') %>");
 <% end -%>

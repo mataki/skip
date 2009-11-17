@@ -22,10 +22,6 @@ class Admin::UserProfileMasterCategory < UserProfileMasterCategory
   N_('Admin::UserProfileMasterCategory|Description')
   N_('Admin::UserProfileMasterCategory|Description description')
 
-  def self.search_columns
-    %w(name description)
-  end
-
   def topic_title
     name
   end

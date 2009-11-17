@@ -28,18 +28,6 @@ describe QuotaValidation do
     end
   end
 
-  describe "#valid_max_size_per_owner_of_file" do
-    describe "ファイルサイズがオーナーの最大許可容量を超えている場合" do
-      it "エラーが追加されること" do
-        @muf.stub!(:size).and_return(101)
-        owner_symbol = "git:hoge"
-        QuotaValidation::FileSizeCounter.should_receive(:per_owner).with(owner_symbol).and_return(SkipEmbedded::InitialSettings['max_share_file_size_per_owner'].to_i - 100)
-        @vf.errors.should_receive(:add_to_base).with("Upload denied due to excess of assigned shared files disk capacity.")
-        @vf.valid_max_size_per_owner_of_file(@muf, owner_symbol)
-      end
-    end
-  end
-
   describe "#valid_max_size_of_system_of_file" do
     describe "ファイルサイズがオーナーの最大許可容量を超えている場合" do
       it "エラーが追加されること" do

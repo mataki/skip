@@ -2,7 +2,15 @@ ActionController::Routing::Routes.draw do |map|
 
   map.root    :controller => 'mypage', :action => 'index'
 
+  # TODO users配下に移す
   map.resources :pictures
+
+  # TODO users配下に移す
+  map.resources :notices
+
+  map.resources :users , :only => [:index] do |user|
+    user.resources :chains
+  end
 
   map.share_file  ':controller_name/:symbol_id/files/:file_name',
                   :controller => 'share_file',
@@ -84,6 +92,7 @@ ActionController::Routing::Routes.draw do |map|
     admin_map.resources :groups, :only => [:index, :show, :destroy] do |group|
       group.resources :group_participations, :only => [:index, :destroy]
     end
+    admin_map.resources :masters, :only => [:index]
     admin_map.resources :group_categories
     admin_map.resources :user_profile_master_categories
     admin_map.resources :user_profile_masters

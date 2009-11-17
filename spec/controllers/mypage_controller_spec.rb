@@ -103,7 +103,7 @@ describe MypageController, 'mypage > home 関連' do
     end
     it '最近の人気記事が設定されること' do
       @access_blogs = {}
-      controller.should_receive(:find_access_blogs_as_locals).with(:per_page => 5).and_return(@access_blogs)
+      controller.should_receive(:find_access_blogs_as_locals).with(:per_page => 10).and_return(@access_blogs)
       get :index
       assigns[:access_blogs].should == @access_blogs
     end
@@ -246,7 +246,7 @@ describe MypageController, 'mypage > home 関連' do
       controller.stub!(:paginate).and_return(@entries)
     end
     it '@antenna_entryが設定されること' do
-      controller.should_receive(:antenna_entry).with(params[:antenna_id], params[:read]).and_return(@antenna_entry)
+      controller.should_receive(:antenna_entry).with(params[:target_type], params[:target_id], params[:read]).and_return(@antenna_entry)
       get :entries_by_antenna
       assigns[:antenna_entry].should == @antenna_entry
     end
@@ -306,7 +306,7 @@ describe MypageController, 'mypage > home 関連' do
         MypageController::AntennaEntry.should_receive(:new).with(@user, true).and_return(@antenna_entry)
       end
       it 'AntennaEntryのインスタンスが返ること' do
-        @controller.send(:antenna_entry, nil, true).should == @antenna_entry
+        @controller.send(:antenna_entry, nil, nil, true).should == @antenna_entry
       end
     end
     describe '第一引数が空の場合' do
@@ -315,17 +315,17 @@ describe MypageController, 'mypage > home 関連' do
         MypageController::AntennaEntry.should_receive(:new).with(@user, true).and_return(@antenna_entry)
       end
       it 'AntennaEntryのインスタンスが返ること' do
-        @controller.send(:antenna_entry, '', true).should == @antenna_entry
+        @controller.send(:antenna_entry, '', 1, true).should == @antenna_entry
       end
     end
     describe '第一引数が数値に解釈できる文字列の場合' do
       before do
         @antenna_entry = stub('antenna_entry')
-        @key = '1'
-        MypageController::UserAntennaEntry.should_receive(:new).with(@user, @key.to_i, true).and_return(@antenna_entry)
+        @key = 'user'
+        MypageController::UserAntennaEntry.should_receive(:new).with(@user, @key, 1, true).and_return(@antenna_entry)
       end
       it 'UserAntennaEntryのインスタンスが返ること' do
-        @controller.send(:antenna_entry, @key, true).should == @antenna_entry
+        @controller.send(:antenna_entry, @key, 1, true).should == @antenna_entry
       end
     end
     describe '第一引数が数値に解釈できない文字列の場合' do
@@ -338,7 +338,7 @@ describe MypageController, 'mypage > home 関連' do
           MypageController::SystemAntennaEntry.should_receive(:new).with(@user, @key, true).and_return(@antenna_entry)
         end
         it 'SystemAntennaEntryのインスタンスが返ること' do
-          @controller.send(:antenna_entry, @key, true).should == @antenna_entry
+          @controller.send(:antenna_entry, @key, nil, true).should == @antenna_entry
         end
       end
       describe 'システムアンテナとして無効な文字列の場合' do
@@ -573,18 +573,6 @@ describe MypageController, 'mypage > manage(管理) 関連' do
   end
 end
 
-describe MypageController, 'アンテナの整備関連' do
-  describe MypageController, "GET #antenna_list" do
-    before do
-      user_login
-      @result_text = 'result_text'
-      controller.should_receive(:current_user_antennas_as_json).and_return(@result_text)
-      get :antenna_list
-    end
-    it { response.should include_text(@result_text) }
-  end
-end
-
 describe MypageController, "POST or PUT /update_customize" do
   before do
     @user = user_login
@@ -654,76 +642,7 @@ describe MypageController, '#system_messages' do
     @controller.stub!(:current_user).and_return(@user)
   end
   describe 'ようこそメッセージを表示しない場合' do
-    it { @controller.send(:system_messages).size.should == 1 }
-  end
-end
-
-describe MypageController, "#unify_feed_form" do
-  before do
-    @channel = mock('channel')
-    @items = (1..5).map{|i| mock("item#{i}") }
-    @feed = mock('feed', :channel => @channel, :items => @items)
-
-    @title = "title"
-    @limit = 1
-  end
-
-  # 1.8.6系で実行できないためAtomを利用できるバージョンでのみテストする
-  if defined?(RSS::Atom::Feed)
-    describe "feedがRSS:Rssの場合" do
-      before do
-        @channel.stub!(:title=)
-        @feed.stub!(:is_a?).with(RSS::Rss).and_return(true)
-      end
-      it "titleが設定されること" do
-        @channel.should_receive(:title=).with(@title)
-        controller.send(:unify_feed_form, @feed, @title)
-      end
-      it "limit以下のアイテム数になること" do
-        feed = controller.send(:unify_feed_form, @feed, @title, @limit)
-        feed.items.size.should == @limit
-      end
-      it "is_a?(RSS::Atom::Feed)が呼ばれないこと" do
-        @feed.should_not_receive(:is_a?).with(RSS::Atom::Feed)
-        controller.send(:unify_feed_form, @feed, @title)
-      end
-    end
-    describe "feedがRSS::Atomの場合" do
-      describe "Atomが利用できるライブラリのバージョンの場合" do
-        before do
-          @channel.stub!(:title=)
-
-          @feed.stub!(:is_a?).with(RSS::Rss).and_return(false)
-          @feed.stub!(:is_a?).with(RSS::Atom::Feed).and_return(true)
-          @feed.stub!(:to_rss).with("2.0").and_return(@feed)
-        end
-        it "AtomからRss2.0に変換されること" do
-          @feed.should_receive(:to_rss).with("2.0").and_return(@feed)
-          controller.send(:unify_feed_form, @feed)
-        end
-        it "titleが設定されること" do
-          @channel.should_receive(:title=).with(@title)
-          controller.send(:unify_feed_form, @feed, @title, @limit)
-        end
-        it "limit以下のアイテム数になること" do
-          feed = controller.send(:unify_feed_form, @feed, @title, @limit)
-          feed.items.size.should == @limit
-        end
-      end
-    end
-    describe "Atomが利用できないライブラリのバージョンでAtomを読み込んだ場合" do
-      before do
-        @feed.stub!(:is_a?).with(RSS::Rss).and_return(false)
-        @feed.stub!(:is_a?).with(RSS::Atom::Feed).and_raise(NameError.new("uninitialized constant RSS::Atom", "RSS::Atom::Feed"))
-      end
-      it "ログにエラーが表示されること" do
-        controller.logger.should_receive(:error).with("[Error] Atom conversion failed due to outdated ruby libraries.")
-        controller.send(:unify_feed_form, @feed)
-      end
-      it "nilが返されること" do
-        controller.send(:unify_feed_form, @feed).should be_nil
-      end
-    end
+    it { @controller.send(:system_messages).size.should == 2 }
   end
 end
 
@@ -740,23 +659,15 @@ describe MypageController, '#antenna_entry_title' do
     @controller = MypageController.new
   end
   describe '引数が正しい場合' do
-    describe 'アンテナが指定されている場合' do
-      before do
-        @antenna_entry = stub('antenna_entry', :antenna => stub_model(Antenna, :name => 'skip_antenna'))
-      end
-      it { @controller.send(:antenna_entry_title, @antenna_entry).should == 'skip_antenna' }
+    describe 'システムアンテナの場合' do
+      it { @controller.send(:antenna_entry_title, stub('entry_antenna', :antenna => nil, :key => 'message')).should == 'Notices for you' }
+      it { @controller.send(:antenna_entry_title, stub('entry_antenna', :antenna => nil, :key => 'comment')).should == 'Entries you have made comments'}
+      it { @controller.send(:antenna_entry_title, stub('entry_antenna', :antenna => nil, :key => 'bookmark')).should == 'Entries bookmarked by yourself' }
+      it { @controller.send(:antenna_entry_title, stub('entry_antenna', :antenna => nil, :key => 'group')).should == 'List of unread entries' }
     end
-    describe 'アンテナが指定されていない場合' do
-      describe 'システムアンテナの場合' do
-        it { @controller.send(:antenna_entry_title, stub('entry_antenna', :antenna => nil, :key => 'message')).should == 'Notices for you' }
-        it { @controller.send(:antenna_entry_title, stub('entry_antenna', :antenna => nil, :key => 'comment')).should == 'Entries you have made comments'}
-        it { @controller.send(:antenna_entry_title, stub('entry_antenna', :antenna => nil, :key => 'bookmark')).should == 'Entries bookmarked by yourself' }
-        it { @controller.send(:antenna_entry_title, stub('entry_antenna', :antenna => nil, :key => 'group')).should == 'Posts in the groups joined' }
-      end
-      describe 'システムアンテナではない場合' do
-        it { @controller.send(:antenna_entry_title, stub('entry_antenna', :antenna => nil, :key => nil)).should == 'List of unread entries' }
-        it { @controller.send(:antenna_entry_title, stub('entry_antenna', :antenna => nil, :key => 'invalid')).should == 'List of unread entries' }
-      end
+    describe 'システムアンテナではない場合' do
+      it { @controller.send(:antenna_entry_title, stub('entry_antenna', :antenna => nil, :key => nil)).should == 'List of unread entries' }
+      it { @controller.send(:antenna_entry_title, stub('entry_antenna', :antenna => nil, :key => 'invalid')).should == 'List of unread entries' }
     end
   end
 end

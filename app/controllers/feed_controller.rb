@@ -118,21 +118,6 @@ class FeedController < ApplicationController
     rss_feed "participate_group_bbs", description, board_entry_item_array(find_params)
   end
 
-  def user_antenna
-    antenna = Antenna.find(params[:id])
-
-    # 権限チェック
-    unless antenna.user_id == session[:user_id]
-      render :nothing => true
-      return false
-    end
-
-    symbols, keyword = antenna.get_search_conditions
-    find_params = BoardEntry.make_conditions(login_user_symbols, :symbols => symbols, :keyword => keyword)
-    user_reading_condition find_params
-    rss_feed "user_antenna", antenna.name, board_entry_item_array(find_params)
-  end
-
 private
   def rss_feed action_name, description,item_arry
     server_addr = root_url

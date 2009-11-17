@@ -85,19 +85,6 @@ describe Bookmark, "ブックマークのタイプチェックメソッド" do
     end
   end
 
-  describe "is_type_user?" do
-    describe "ユーザのブックマークの場合" do
-      before do
-        @bookmark.url = "/user/hoge"
-      end
-      it { @bookmark.should be_is_type_user }
-    end
-
-    describe "ユーザ以外のブックマークの場合" do
-      it { @bookmark.should_not be_is_type_user }
-    end
-  end
-
   describe "is_type_internet?" do
     describe "インターネットのURLをブックマークしている場合" do
       it { @bookmark.should be_is_type_internet }

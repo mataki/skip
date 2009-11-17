@@ -1,9 +1,0 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-a_symbol_antenna_item:
-  antenna: a_symbol_antenna
-  value_type: symbol
-  value: uid:a_user
-a_keyword_antenna_item:
-  antenna: a_keyword_antenna
-  value_type: keyword
-  value: java 
