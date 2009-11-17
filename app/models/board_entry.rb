@@ -73,12 +73,6 @@ class BoardEntry < ActiveRecord::Base
     { :conditions => ['last_updated > :date', { :date => Time.now.ago(day_count.to_i.day) }] }
   }
 
-  named_scope :except_auto_posted, proc {
-    # FIXME 自動投稿判別をタイトルでやるのは危うい。国際化のためにもよくない。
-    # TODO 自動投稿自体を見直す予定なのでその際にここも見直す
-    { :conditions => ['title NOT IN (?)', ['参加申し込みをしました！', 'ユーザー登録しました！']] }
-  }
-
   named_scope :publication_type_equal, proc { |type|
     { :conditions => ['publication_type = ?', type] }
   }
@@ -435,47 +429,6 @@ class BoardEntry < ActiveRecord::Base
     return text, color
   end
 
-
-  LINE_FEED = "\r\n\r\n"
-  HR_STRING = LINE_FEED + "----" + LINE_FEED
-
-  # 自動投稿
-  def self.create_entry(params)
-    params.assert_valid_keys [:title, :message, :tags, :user_symbol, :user_id, :entry_type, :owner_symbol,
-                               :publication_type, :publication_symbols, :non_auto, :date, :editor_mode, :aim_type]
-
-    contents = ""
-    contents << _("(This entry is generated automatically by the system)") unless params[:non_auto]
-    contents << LINE_FEED
-    contents << params[:message]
-
-    publication_symbols = []
-    publication_symbols = params[:publication_symbols] - [params[:user_symbol]] if params[:publication_type] == 'protected'
-
-    entry = BoardEntry.new(
-      :title => params[:title],
-      :contents => contents,
-      :category => params[:tags],
-      :aim_type => params[:aim_type] || 'entry',
-      :date => params[:date] || Time.now,
-      :user_id => params[:user_id],
-      :entry_type => params[:entry_type],
-      :last_updated => Time.now,
-      :editor_mode => params[:editor_mode] || 'hiki',
-      :symbol => params[:owner_symbol],
-      :publication_type => params[:publication_type],
-      :publication_symbols_value => publication_symbols.join(",")
-    )
-    params[:publication_symbols].each do |symbol|
-      entry.entry_publications.build(:symbol => symbol)
-    end
-
-    # FIXME エラー処理をする。save! にしてバッチ側で処理すべき
-    entry.save
-    entry.prepare_send_mail
-    return entry
-  end
-
   def self.get_symbol2name_hash entries
     user_symbol_ids = group_symbol_ids = []
     entries.each do |entry|
@@ -715,7 +668,7 @@ class BoardEntry < ActiveRecord::Base
         :host => Admin::Setting.host_and_port_by_initial_settings_default,
         :protocol => Admin::Setting.protocol_by_initial_settings_default
       }.merge(self.get_url_hash)
-      Message.save_message('QUESTION', self.user_id, url_for(url_options), self.title) unless user.id == self.user_id
+      Message.save_message('QUESTION', self.user_id, url_for(url_options), _('State of your question [%s] is changed!') % ERB::Util.h(self.title)) unless user.id == self.user_id
     end
     true
   rescue ActiveRecord::RecordInvalid => e

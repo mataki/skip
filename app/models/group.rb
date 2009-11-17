@@ -127,20 +127,6 @@ class Group < ActiveRecord::Base
     return 'id:' + id.to_s + ', name:' + name.to_s
   end
 
-  def create_entry_invite_group user_id, user_symbol, publication_symbols
-    entry_params = { }
-    entry_params[:title] =_("Invited to Group: %s") % self.name
-    entry_params[:message] = _("You have been invited to join [%s>].") % self.symbol
-    entry_params[:aim_type] = 'notice'
-    entry_params[:user_id] = user_id
-    entry_params[:user_symbol] = user_symbol
-    entry_params[:entry_type] = BoardEntry::GROUP_BBS
-    entry_params[:owner_symbol] = self.symbol
-    entry_params[:publication_type] = 'protected'
-    entry_params[:publication_symbols] = publication_symbols
-    BoardEntry.create_entry entry_params
-  end
-
   def self.has_waiting_for_approval owner
     Group.active.owned(owner) & Group.active.has_waiting_for_approval
   end

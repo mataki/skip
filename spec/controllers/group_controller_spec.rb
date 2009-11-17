@@ -65,10 +65,11 @@ describe GroupController, "POST #leave" do
 
     @group_participation = stub_model(GroupParticipation)
 
-    @group_participations = mock('group_participations')
+    @group_participations = [stub_model(GroupParticipation)]
 
     @group = stub_model(Group)
     @group.stub!(:group_participations).and_return(@group_participations)
+    @group_participations.stub!(:only_owned).and_return([])
 
     Group.stub!(:find_by_gid).and_return(@group)
   end

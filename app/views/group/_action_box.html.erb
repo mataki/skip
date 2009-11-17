@@ -1,7 +1,7 @@
 <div class="action_buttons ui-corner-all">
   <ul class="no_style">
     <% unless current_participation -%>
-      <li><%= link_to(content_tag('span', _('Join this group')), {:action=>"new_participation"}, {:class => "nyroModal rounded"}) -%></li>
+      <li><%= link_to(content_tag('span', _('Join this group')), {:controller => 'group', :action => "join"}, {:class => "rounded", :method => :post}) -%></li>
     <% else -%>
       <% if current_participation.waiting? -%>
         <%= participation_state current_target_group, current_user.id %>

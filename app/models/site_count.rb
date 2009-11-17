@@ -65,9 +65,9 @@ class SiteCount < ActiveRecord::Base
       :writer_at_month =>  calc_writer_at_month(now),
       :user_access_at_month => calc_user_access_at_month(now),
       :active_users => UserAccess.active_user.last_access_gt(now.beginning_of_day.ago(10.day)).count,
-      :write_users_all => BoardEntry.active_user.except_auto_posted.publication_type_equal('public').diary.count(:distinct => true, :select => 'user_id'),
-      :write_users_with_pvt => BoardEntry.active_user.except_auto_posted.diary.count(:distinct => true, :select => 'user_id'),
-      :write_users_with_bbs => BoardEntry.active_user.except_auto_posted.count(:distinct => true, :select => 'user_id'),
+      :write_users_all => BoardEntry.active_user.publication_type_equal('public').diary.count(:distinct => true, :select => 'user_id'),
+      :write_users_with_pvt => BoardEntry.active_user.diary.count(:distinct => true, :select => 'user_id'),
+      :write_users_with_bbs => BoardEntry.active_user.count(:distinct => true, :select => 'user_id'),
       :comment_users => BoardEntryComment.active_user.count(:distinct => true, :select => 'user_id'),
       :portrait_users => Picture.active_user.count
     )
@@ -75,9 +75,8 @@ class SiteCount < ActiveRecord::Base
 
   private
   # ここ一ヶ月以内にコメントか記事を投稿したユーザー数
-  # 自動投稿の記事は除く（タイトルで除外している）
   def self.calc_writer_at_month time_now
-    user_ids = BoardEntry.active_user.except_auto_posted.scoped(:conditions => ["created_on BETWEEN ? and ?", time_now.last_month, time_now]).map(&:user_id)
+    user_ids = BoardEntry.active_user.scoped(:conditions => ["created_on BETWEEN ? and ?", time_now.last_month, time_now]).map(&:user_id)
     user_ids << BoardEntryComment.active_user.scoped(:conditions => ["created_on BETWEEN ? and ?", time_now.last_month, time_now]).map(&:user_id)
     user_ids.flatten.uniq.size
   end

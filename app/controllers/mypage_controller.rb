@@ -49,7 +49,6 @@ class MypageController < ApplicationController
     # ============================================================
     @system_messages = system_messages
     @message_array = Message.get_message_array_by_user_id(current_user.id)
-    @waiting_groups = Group.has_waiting_for_approval(current_user)
     # あなたへのお知らせ(未読のもののみ)
     @mail_your_messages = mail_your_messages
 

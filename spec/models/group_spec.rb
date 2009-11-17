@@ -76,24 +76,6 @@ describe Group do
     end
   end
 
-  describe Group, "あるグループがあるとき" do
-    fixtures :users
-    before(:each) do
-      @group = Group.new({ :name => 'hoge', :gid => 'hoge', :description => 'hoge', :protected => '1',
-                         :created_on => Time.now, :updated_on => Time.now })
-      @link_group = mock_model(Group)
-      @link_group.stub!(:name).and_return('foo')
-      @link_group.stub!(:symbol).and_return('foo')
-      Group.should_receive(:find_by_gid).twice.and_return(@link_group)
-    end
-
-    it "イベント招待メールが投稿できる" do
-      lambda {
-        @group.create_entry_invite_group(users(:a_user).id, 'hoge', ['uid:hoge'])
-      }.should change(BoardEntry, :count).by(1)
-    end
-  end
-
   describe Group, ".has_waiting_for_approval" do
     describe "あるユーザの管理しているグループに承認待ちのユーザがいる場合" do
       before do

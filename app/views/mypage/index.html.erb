@@ -3,7 +3,7 @@
 <% end -%>
 
 <% content_for :contents_top do -%>
-  <% if (@message_array.size > 0) or (@waiting_groups.size > 0) or (@system_messages.size > 0) -%>
+  <% if @message_array.size > 0 or @system_messages.size > 0 -%>
     <div class="top_info system_message ui-corner-all">
       <% @system_messages.each do |message| -%>
         <div class="item">
@@ -12,12 +12,9 @@
       <% end -%>
       <% @message_array.each do |message| -%>
         <div class="item">
-          <%= link_to(icon_tag(Message::MESSAGE_TYPES[message[:message_type]][:icon_name]) + h(message[:message]), message[:link_url]) %>
-        </div>
-      <% end -%>
-      <% @waiting_groups.each do |group| -%>
-        <div class="item">
-          <%= group_link_to(group, {:view_text=>( icon_tag('group') + _('New user is waiting for approval in %s') % h(group.name) )}) %>
+          <% if message_type = Message::MESSAGE_TYPES[message[:message_type]] -%>
+            <%= link_to(icon_tag(message_type[:icon_name]) + h(message[:message]), message[:link_url]) %>
+          <% end -%>
         </div>
       <% end -%>
     </div>

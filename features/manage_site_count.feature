@@ -40,16 +40,14 @@ Feature: サイト情報
     And 統計データを取得する
     Then "active_users"が"-1"変化すること
 
-  Scenario: [ブログを書いたことがある人](フォーラム除く、公開のみ、自動投稿除く)を確認出来る
+  Scenario: [ブログを書いたことがある人](フォーラム除く、公開のみ)を確認出来る
     Given 現在の統計データを退避する
     When "alice"がユーザ登録する
-    And "ryuki"がユーザ登録する
     And "kota"がユーザ登録する
     And "maya"がユーザ登録する
     And 以下のブログを書く:
       |user  |title                   |tag |contents|publication_type|
       |alice |雑談スレ                |雑談|ほげほげ|全体に公開      |
-      |ryuki |ユーザー登録しました！  |雑談|ほげほげ|全体に公開      |
       |kota  |雑談スレ                |雑談|ほげほげ|下書き(自分だけに公開)|
     And 以下のフォーラムを書く:
       |user  |group       |title            |tag |contents|publication_type|

@@ -87,7 +87,7 @@ class ChainsController < ApplicationController
   def make_chain_message
     return unless @chain
     link_url = url_for(:controller => 'user', :uid => current_target_user.uid, :action => 'social', :menu => 'social_chain')
-    Message.save_message("CHAIN", current_target_user.id, link_url)
+    Message.save_message("CHAIN", current_target_user.id, link_url, _("You received an introduction!"))
   end
 
   def current_chain
