@@ -167,14 +167,15 @@ class GroupController < ApplicationController
 
     GroupParticipation.transaction do
       participation.save!
-      groups_url = url_for(:controller => 'group', :action => 'users', :gid => @group.gid)
       if participation.waiting?
         flash[:notice] = _('Request sent. Please wait for the approval.')
+        group_manage_participations_url = url_for(:controller => 'group', :action => 'manage', :gid => @group.gid, :menu => 'manage_participations')
         @group.group_participations.only_owned.each do |owner_participation|
-          Message.save_message('APPROVAL', owner_participation.user_id, groups_url, _("New user is waiting for approval in %s.") % @group.name)
+          Message.save_message('APPROVAL', owner_participation.user_id, group_manage_participations_url, _("New user is waiting for approval in %s.") % @group.name)
         end
       else
         login_user_groups << @group.symbol # TODO この行必要?
+        groups_url = url_for(:controller => 'group', :action => 'users', :gid => @group.gid)
         @group.group_participations.only_owned.each do |owner_participation|
           Message.save_message('JOIN', owner_participation.user_id, groups_url, _("New user joined your group [%s].") % @group.name)
         end
