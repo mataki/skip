@@ -4,7 +4,7 @@
 
 <% content_for :contents_left do -%>
   <% blank_message = "このページはまだ編集されていません。ご自由に編集してください!" %>
-  <%= render_richtext_with_border (@page.content.blank? ? blank_message : @page.content) %>
+  <%= render_richtext(@page.content.blank? ? blank_message : @page.content) %>
   <span style="float: right;"><%= link_to(_('[編集する]'), new_wiki_history_path(@page.title)) %></span>
 <% end -%>
 

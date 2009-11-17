@@ -195,11 +195,6 @@ module ApplicationHelper
     "<div class='rich_style ui-corner-all'>#{sanitize_and_unescape_for_richtext(content)}</div>"
   end
 
-  def render_richtext_with_border(text, owner_symbol = nil)
-    content = parse_permalink(text, owner_symbol)
-    "<div class='rich_style' style='border: 1px solid silver; padding: 10px;'>#{sanitize_and_unescape_for_richtext(content)}</div>"
-  end
-
   def sanitize_and_unescape_for_richtext(content)
     content.gsub!(/(?:<|&lt;)!--.*?--(?:>|&gt;)/m, '') unless content.blank?
     sanitize_style_with_whitelist(BoardEntry.unescape_href(content))
