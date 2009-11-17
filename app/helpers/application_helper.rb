@@ -35,17 +35,16 @@ module ApplicationHelper
     content_tag :ul, output
   end
 
-  # 指定の件数を超えた場合のページ遷移のナビゲージョンリンクを生成する
-  # will_paginate用
-  def will_paginate_link pages
-    option = params.clone
-    output = ""
-    output << link_to(_('[Head]'), option.update({:page => 1})) if pages.previous_page
-    output << link_to(_('[Prev]'), option.update({:page => pages.previous_page})) if pages.previous_page
-    output << _("Total %{items} hits (Page %{page} / %{pages})") % {:items => pages.total_entries, :page => pages.current_page, :pages => pages.total_pages}
-    output << link_to(_('[Next]'), option.update({:page => pages.next_page})) if pages.next_page
-    output << link_to(_('[Last]'), option.update({:page => pages.total_pages})) if pages.next_page
-    output
+  def i18n_will_paginate pages, options = {}
+    will_paginate pages, {:next_label => _('Next »'), :previous_label => _('« Previous')}.merge(options)
+  end
+
+  def i18n_will_paginate_with_container_wrapper pages, options = {}
+    if pages && pages.total_pages > 1
+      content_tag :div, :class => 'navi ui-corner-all' do
+        i18n_will_paginate(pages, options)
+      end
+    end
   end
 
   # 複数のラジオボタンで値を選択するHTMLを生成する

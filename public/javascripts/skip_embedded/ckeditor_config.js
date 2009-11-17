@@ -48,4 +48,7 @@ CKEDITOR.editorConfig = function( config )
         'Trebuchet MS/Trebuchet MS, Helvetica, sans-serif;',
         'Verdana/Verdana, Geneva, sans-serif'
     ].join('');
+
+    config.shiftEnterMode = CKEDITOR.ENTER_BR;
+    config.enterMode = CKEDITOR.ENTER_BR;
 };

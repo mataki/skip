@@ -25,8 +25,8 @@
 
 <div class="search_result_space" style="position: relative; width: 100%; margin-left: auto; margin-right: auto;">
 <% unless @bookmarks.empty? -%>
-  <div class="navi ui-corner-all"><%= will_paginate_link @bookmarks %></div>
+  <%= i18n_will_paginate_with_container_wrapper @bookmarks %>
   <%= render :partial => "bookmarks", :object => @bookmarks %>
-  <div class="navi ui-corner-all"><%= will_paginate_link @bookmarks %></div>
+  <%= i18n_will_paginate_with_container_wrapper @bookmarks %>
 <% end -%>
 </div>

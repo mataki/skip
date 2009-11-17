@@ -18,9 +18,7 @@ module MypageHelper
   # タイトルバーの表示
   def show_title_bar(icon, label, all_url = nil)
     content_tag(:div, :style => "position: relative; _width: 100%;") do
-      title_tag = content_tag(:h2, :class => 'topix_title'){ icon_tag(icon) + h(label) }
-      all_link_tag = content_tag(:div, :style => "position: absolute; top: 5px; right: 10px; font-size: 14px;") { link_to(_('[See all]'), all_url) }
-      all_url ? "#{title_tag}#{all_link_tag}" : title_tag
+      title_tag = content_tag(:h2, :class => 'topix_title'){ icon_tag(icon) + link_to_unless(all_url.blank?, h(label), all_url) }
     end
   end
 

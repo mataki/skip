@@ -73,6 +73,7 @@ class PortalController < ApplicationController
       end
 
       @profiles.each{|profile| profile.save!}
+      @user.created_on = Time.now
       @user.status = 'ACTIVE'
       @user.save!
 

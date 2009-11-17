@@ -20,7 +20,7 @@
 
 <div class="search_result_space">
 <% unless @share_files.empty? -%>
-  <div class="navi ui-corner-all"><%= will_paginate_link @share_files%></div>
+  <%= i18n_will_paginate_with_container_wrapper @share_files %>
   <div class="files_body" style="width:90%;margin-left:5%;">
     <% @share_files.each do |share_file| -%>
       <%= render :partial => 'share_file/share_file_box',
@@ -29,7 +29,7 @@
                              :visible_owner_link => true} %>
     <% end -%>
   </div><!-- files_body -->
-  <div class="navi ui-corner-all"><%= will_paginate_link @share_files%></div>
+  <%= i18n_will_paginate_with_container_wrapper @share_files %>
 <% end -%>
 </div>
 

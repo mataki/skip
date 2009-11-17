@@ -18,7 +18,7 @@
 %>
 
 <% if objects.respond_to?(:previous_page) %>
-  <div class="navi ui-corner-all"><%= will_paginate_link objects %></div>
+  <%= i18n_will_paginate_with_container_wrapper objects %>
 <% end %>
 <div id="table_columns">
   <h4><%= _('Set column visibility (Click to switch on / off))') %></h4>
@@ -49,7 +49,7 @@
   </tbody>
 </table>
 <% if objects.respond_to?(:previous_page) %>
-  <div class="navi ui-corner-all"><%= will_paginate_link objects %></div>
+  <%= i18n_will_paginate_with_container_wrapper objects %>
 <% end %>
 
 <% content_for :javascript_includes do -%>

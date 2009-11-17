@@ -32,7 +32,7 @@
   <% unless @mail_your_messages[:pages].empty? -%>
     <div id="messages_box" class="ui-corner-all">
       <h2 class="ui-corner-top">
-        <%= icon_tag(@mail_your_messages[:title_icon]) + h(@mail_your_messages[:title_name]) %>
+        <%= icon_tag(@mail_your_messages[:title_icon]) + link_to(h(@mail_your_messages[:title_name]), :controller => "/mypage", :action => "entries_by_antenna", :target_type => "message") %>
       </h2>
       <ul class="no_style">
         <% for entry in @mail_your_messages[:pages] %>
@@ -48,6 +48,15 @@
           </li>
         <% end %>
       </ul>
+    </div>
+  <% else -%>
+    <div id="messages_box_no_items" class="ui-corner-all">
+      <h2 class="ui-corner-top">
+        <%= icon_tag(@mail_your_messages[:title_icon]) + link_to(h(@mail_your_messages[:title_name]), :controller => "/mypage", :action => "entries_by_antenna", :target_type => "message") %>
+      </h2>
+      <div>
+        <%= _('No messages for you') %>
+      </div>
     </div>
   <% end -%>
 
@@ -134,7 +143,7 @@
     <%#  main area bookmarks -%>
     <%# ============================================================ -%>
     <% unless @bookmarks.empty? -%>
-      <%= show_title_bar("tag_blue", _("New bookmarks")) %>
+      <%= show_title_bar("tag_blue", _("New bookmarks"), url_for(:controller => "bookmarks", :action => "index")) %>
       <div class="topix_body" id="bookmark_body">
       <% @bookmarks.each do |bookmark| -%>
         <div class="page_line">
@@ -149,16 +158,17 @@
     <%#  main area recent users -%>
     <%# ============================================================ -%>
     <% unless @recent_users.empty? -%>
-    <%= show_title_bar("user_suit", _("Recent Users")) %>
+    <%= show_title_bar("user_suit", _("Recent Users"), url_for(:controller => "users", :action => "index") ) %>
     <div class="topix_body">
       <% @recent_users.each do |user| -%>
         <div class="topix_line">
-          <div class="title">
-            <%= user_link_to(user) %> (<%= h(user.section) %>)
+          <div class="page_title">
+            <%= user_link_to(user) %>&nbsp;<span class="small">(<%= h(user.section) %>)</span>
             <% unless chain = current_user.follow_chains.find_by_to_user_id(user.id) -%>
-              <%= "&lt;&lt;" + link_to('[' + _('Introduce') + ']', new_user_chain_path(user)) %>
+              &nbsp;<%= link_to('[' + _('Introduce') + ']', new_user_chain_path(user)) %>
             <% end -%>
           </div>
+          <div class="page_date"><%=h user.created_on.strftime(_("%B %d %Y")) %></div>
         </div>
       <% end -%>
     </div>
@@ -168,13 +178,14 @@
     <%#  main area recent groups -%>
     <%# ============================================================ -%>
     <% if @recent_groups.size > 0 -%>
-    <%= show_title_bar("group", _("Recent Groups")) %>
+    <%= show_title_bar("group", _("Recent Groups"), url_for(:controller => "groups", :action => "index")) %>
     <div class="topix_body">
       <% @recent_groups.each do |group| -%>
         <div class="topix_line">
-          <div class="title">
-            <%= h(group.group_category.name) %> - <%= group_link_to(group) %> - <%= truncate(strip_tags(group.description), 30) %>
+          <div class="page_title">
+            <%= get_group_icon(group.group_category, :margin => true) %><%= group_link_to(group) %>&nbsp;<span class="small">(<%= truncate(strip_tags(group.description), 30) %>)</span>
           </div>
+          <div class="page_date"><%=h group.created_on.strftime(_("%B %d %Y")) %></div>
         </div>
       <% end -%>
     </div>

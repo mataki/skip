@@ -1,5 +1,5 @@
 <% unless @chains.empty? -%>
-  <div class="navi ui-corner-all"><%= will_paginate_link @chains %></div>
+  <%= i18n_will_paginate_with_container_wrapper @chains %>
   <% @result.each do |result| -%>
   <table class="chain_table">
     <tr>
@@ -22,5 +22,5 @@
     <% end -%>
   </table>
   <% end %>
-  <div class="navi ui-corner-all"><%= will_paginate_link @chains %></div>
+  <%= i18n_will_paginate_with_container_wrapper @chains %>
 <% end -%>

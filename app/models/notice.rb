@@ -26,8 +26,6 @@ class Notice < ActiveRecord::Base
   def self.systems user
     antennas = []
 
-    antennas << { :name => _("Notices for you"), :user_id => user.id, :type => 'message', :count => BoardEntry.accessible(user).notice.unread(user).count }
-
     # コメントの行方
     find_params = BoardEntry.make_conditions(user.belong_symbols)
     find_params[:conditions][0] << " and user_readings.read = ? and user_readings.user_id = ?"

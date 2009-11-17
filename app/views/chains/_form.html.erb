@@ -34,9 +34,9 @@
         $j('#other_tags_list').append(createTagsLink(otherTags));
         $j('#your_tags_list').append(createTagsLink(yourTags));
 
-        $j('#chain_tags').jTagging($j('#user_tags_list'));
-        $j('#chain_tags').jTagging($j('#other_tags_list'));
-        $j('#chain_tags').jTagging($j('#your_tags_list'));
+        $j('#chain_tags_as_s').jTagging($j('#user_tags_list'));
+        $j('#chain_tags_as_s').jTagging($j('#other_tags_list'));
+        $j('#chain_tags_as_s').jTagging($j('#your_tags_list'));
     };
     setupTagComplete();
 <% end -%>

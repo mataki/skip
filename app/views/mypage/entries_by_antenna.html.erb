@@ -39,7 +39,7 @@
         <%= link_to _('[Show read entries]'), :target_type => @antenna_entry.key, :read => true %>
         <% end %>
       </span>
-      <%= will_paginate_link(@entries) %>
+      <%= i18n_will_paginate @entries, :container => false %>
     </div>
   </div>
 
@@ -61,7 +61,7 @@
                           :symbol2name_hash => @symbol2name_hash } %>
 
   <div style="text-align:right;">
-    <%= will_paginate_link(@entries) %>
+    <%= i18n_will_paginate @entries %>
   </div>
 <% end -%>
 

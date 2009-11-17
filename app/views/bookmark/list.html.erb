@@ -46,7 +46,7 @@
 
 <% content_for :contents_right do -%>
   <% unless @bookmark_comments.empty? -%>
-  <div class="navi ui-corner-all"><%= will_paginate_link @bookmark_comments %></div>
+  <%= i18n_will_paginate_with_container_wrapper @bookmarks %>
     <% for comment in @bookmark_comments -%>
     <div class="bookmark_space" id="bookmark_comment_<%= comment.id %>">
       <div class="header">
@@ -70,7 +70,7 @@
       </div>
     </div>
     <% end -%>
-  <div class="navi ui-corner-all"><%= will_paginate_link @bookmark_comments %></div>
+  <%= i18n_will_paginate_with_container_wrapper @bookmarks %>
   <% end %>
 <% end -%>
 

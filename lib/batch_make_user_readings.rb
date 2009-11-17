@@ -85,6 +85,7 @@ class BatchMakeUserReadings < BatchBase
   # お知らせ対象ユーザを取得
   def self.contact_ids entry
     return [] unless BoardEntry::ANTENNA_AIM_TYPES.include?(entry.aim_type)
+    return [] unless entry.last_updated > 30.minutes.ago
     entry.publication_users.map{ |user| user.id }
   end
 

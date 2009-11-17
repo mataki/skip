@@ -335,8 +335,10 @@ div.topix_body
     :float left
     :text-overflow ellipsis
     :_width 80%
-    span.ss_sprite 
+    span.ss_sprite
       :vertical-align bottom
+    .small
+      :font-size 80%
   .page_from
     :float left
     :white-space nowrap
@@ -656,6 +658,7 @@ div#platform_main_wrapper
       :border = !base_border
       :padding 1px
       :background #fff
+      :text-align left
       h2
         :padding 4px
         :background #ddffdd
@@ -671,7 +674,7 @@ div#require_login_container_wrapper
     :width 600px
     :padding 2px
     :background #f0f0ff
-    :margin 0 auto
+    :margin 0 auto 10px auto
 div#login_container
   :position absolute
   :right 10px
@@ -681,7 +684,7 @@ div#login_container
   :padding 4px
 div#login_container, div#require_login_container
   table
-    :float right
+    :margin 0 auto
     tr
       :vertical-align top
     td
@@ -746,6 +749,16 @@ div#messages_box
       .info
         :font-size 80%
         :text-align right
+div#messages_box_no_items
+  :border 1px solid #DDA000
+  :margin 0 0 10px 0
+  h2
+    :padding 3px 0
+    :background-color #DDA000
+    :font-size 12px
+    :text-align center
+  div
+    :text-align center
 
 div#questions_wrapper
   :border 1px solid #E0E0FF
@@ -769,7 +782,7 @@ div#questions_wrapper
         :font-size 8px
         :vertical-align bottom
         :color #808080
-      
+
 
 // マイページ > ソーシャル
 // ------------------------------------------------------------
@@ -783,7 +796,6 @@ table.chain_table
     :width 120px
     :text-align center
     :border = !base_border
-    &.user_box div
   td
     &.message div
       :border = !base_border
