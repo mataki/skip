@@ -16,15 +16,17 @@
 class Message < ActiveRecord::Base
 
   MESSAGE_TYPES = {
-    "COMMENT"      => { :name => N_("New Comment"), :icon_name => 'comments'},
-    "CHAIN"        => { :name => N_("New Introduction"), :icon_name => 'user_comment'},
-    "TRACKBACK"    => { :name => N_("New Trackback"), :icon_name => 'report_go'},
-    "QUESTION"     => { :name => N_("New Change of Question Status"), :icon_name => 'tick' },
-    "JOIN"         => { :name => N_("Join"), :icon_name => "group_add"},
-    "FORCED_JOIN"  => { :name => N_("Forced join"), :icon_name => "group_add"},
-    "APPROVAL"     => { :name => N_("Approval"), :icon_name => "group_add"},
-    "LEAVE"        => { :name => N_("Leave"), :icon_name => "group_delete"},
-    "FORCED_LEAVE" => { :name => N_("Forced leave"), :icon_name => "group_delete"}
+    "COMMENT"             => { :name => N_("New Comment"), :icon_name => 'comments'},
+    "CHAIN"               => { :name => N_("New Introduction"), :icon_name => 'user_comment'},
+    "TRACKBACK"           => { :name => N_("New Trackback"), :icon_name => 'report_go'},
+    "QUESTION"            => { :name => N_("New Change of Question Status"), :icon_name => 'tick' },
+    "JOIN"                => { :name => N_("Join"), :icon_name => "group_add"},
+    "FORCED_JOIN"         => { :name => N_("Forced join"), :icon_name => "group_add"},
+    "APPROVAL"            => { :name => N_("Approval"), :icon_name => "group_add"},
+    "LEAVE"               => { :name => N_("Leave"), :icon_name => "group_delete"},
+    "FORCED_LEAVE"        => { :name => N_("Forced leave"), :icon_name => "group_delete"},
+    "APPROVAL_OF_JOIN"    => { :name => N_("Approval of join"), :icon_name => "group_add"},
+    "DISAPPROVAL_OF_JOIN" => { :name => N_("Disapprove of join"), :icon_name => "group_delete"}
   }
 
   # FIXME: 保存時にメッセージを国際化しているので、登録した人の言語でメッセージが登録され、実際に見るひとの言語でないものの可能性がある

@@ -25,10 +25,6 @@ class GroupController < ApplicationController
          :only => [ :join, :destroy, :leave, :update, :change_participation,
                     :toggle_owned, :forced_leave_user, :append_user ],
          :redirect_to => { :action => :show }
-  N_('GroupController|ApproveSuceeded')
-  N_('GroupController|ApproveFailed')
-  N_('GroupController|DisapproveSuceeded')
-  N_('GroupController|DispproveFailed')
 
   # tab_menu
   def show
@@ -236,34 +232,57 @@ class GroupController < ApplicationController
 
   # post_action
   # 参加の許可か棄却
+  # TODO 参加許可、参加棄却は別のactionにしたい。
   def change_participation
     unless @group.protected?
       flash[:warn] = _("No approval needed to join this group.")
       redirect_to :action => :show
+      return
     end
-    type_name = params[:submit_type] == 'permit' ? s_('GroupController|Approve') : s_('GroupController|Disapprove') #"許可" : "棄却"
 
-    if states = params[:participation_state]
-      states.each do |participation_id, state|
-        if state == 'true'
-          participation = GroupParticipation.find(participation_id)
-          if participation.group_id == @participation.group_id &&
-            !participation.waiting
-            flash[:warn] = _("Part of the users are already members of this group.")
-            redirect_to :action => 'manage', :menu => 'manage_permit'
-            return false
-          end
-          result = nil
-          if params[:submit_type] == 'permit'
+    participation_ids = if states = params[:participation_state]
+                          participation_ids = states.map { |participation_id, state| participation_id.to_i if state == 'true' }.compact
+                        end || []
+    # 処理対象がない
+    if participation_ids.empty?
+      redirect_to :action => 'manage', :menu => 'manage_permit'
+      return
+    end
+
+    # 処理対象に既に参加状態になっているものがある
+    if participation_ids.any? {|participation_id| @group.group_participations.active.map(&:id).include? participation_id }
+      flash[:warn] = _("Part of the users are already members of this group.")
+      redirect_to :action => 'manage', :menu => 'manage_permit'
+      return
+    end
+
+    target_participations = @group.group_participations.waiting.map do |participation|
+      participation if participation_ids.include?(participation.id)
+    end.compact
+
+    if params[:submit_type] == 'permit'
+      begin
+        GroupParticipation.transaction do
+          target_participations.each do |participation|
             participation.waiting = false
-            result = participation.save
-          else
-            result = participation.destroy
+            participation.save!
           end
-
-          flash[:notice] = _("%{rslt} to %{type}.") % {:type => type_name, :rslt => result ? _('Succeeded') : _('Failed')}
+          groups_url = url_for(:controller => 'group', :gid => @group.gid)
+          target_participations.each do |participation|
+            Message.save_message('APPROVAL_OF_JOIN', participation.user.id, groups_url, _("You were approved join of the group %s.") % @group.name)
+          end
+          flash[:notice] = _("Succeeded to Approve.")
         end
+      rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => e
+        flash[:notice] = _("Failed to Approve.")
       end
+    else
+      groups_url = url_for(:controller => 'group', :gid => @group.gid)
+      target_participations.each do |participation|
+        participation.destroy
+        Message.save_message('DISAPPROVAL_OF_JOIN', participation.user.id, groups_url, _("You were disapproved join of the group %s.") % @group.name)
+      end
+      flash[:notice] = _("Succeeded to Disapprove.")
     end
     redirect_to :action => 'manage', :menu => 'manage_permit'
   end
