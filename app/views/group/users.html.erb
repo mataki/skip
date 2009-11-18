@@ -1,22 +1,10 @@
-<div class="search_cond_space">
-<% form_tag({:action => 'users'}, :method => 'get') do -%>
-  <table class="search_cond_box">
-    <tr>
-      <th><%= _('Sort by')%></th>
-      <td><%= select :condition, :sort_type, UserSearchCondition.sort_types %></td>
-    </tr>
-  </table>
-  <div class="submit"><%= submit_tag _('Search'), :disable_with => _('Searching...') %></div>
-<% end -%>
-</div>
-
 <div class="search_result_space">
-<% unless @users.empty? -%>
-  <%= i18n_will_paginate_with_container_wrapper @users %>
-  <% @users.each do |user| -%>
-    <%= render :partial => 'users/user', :locals => {:user => user, :group => @group} %>
+  <% unless @users.empty? -%>
+    <%= i18n_will_paginate_with_container_wrapper @users %>
+    <% @users.each do |user| -%>
+      <%= render :partial => 'users/user', :locals => {:user => user, :group => @group} %>
+    <% end -%>
+    <div class="clear_left"></div>
+    <%= i18n_will_paginate_with_container_wrapper @users %>
   <% end -%>
-  <div class="clear_left"></div>
-  <%= i18n_will_paginate_with_container_wrapper @users %>
-<% end -%>
 </div>

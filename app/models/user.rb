@@ -20,6 +20,8 @@ class User < ActiveRecord::Base
 
   attr_accessor :old_password, :password
   attr_protected :admin, :status
+  cattr_reader :per_page
+  @@per_page = 40
 
   has_many :group_participations, :dependent => :destroy
   has_one :picture, :dependent => :destroy

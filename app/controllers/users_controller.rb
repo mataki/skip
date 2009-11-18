@@ -20,7 +20,7 @@ class UsersController < ApplicationController
   def index
     @search = User.tagged(params[:tag_words], params[:tag_select]).search(params[:search])
     @search.exclude_retired ||= "1"
-    @users = @search.paginate(:page => params[:page], :per_page => 40)
+    @users = @search.paginate(:page => params[:page])
 
     # 検索条件や表示順の条件によって、user_uidsがMASTERかNICKNAMEのどちらかしたロードされない。
     # そのためviewで正しく描画するためにreloadしておく

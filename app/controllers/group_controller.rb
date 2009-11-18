@@ -35,15 +35,7 @@ class GroupController < ApplicationController
 
   # tab_menu
   def users
-    params[:condition] = {} unless params[:condition]
-    params[:condition].merge!(:with_group => @group.id, :include_manager => '1')
-    @condition = UserSearchCondition.create_by_params params
-
-    @users = User.scoped(
-      :conditions => @condition.make_conditions,
-      :include => @condition.value_of_include,
-      :order => @condition.value_of_order_by
-    ).paginate(:page => params[:page], :per_page => @condition.value_of_per_page)
+    @users = @group.users.paginate(:page => params[:page])
 
     flash.now[:notice] = _('User not found.') if @users.empty?
   end
