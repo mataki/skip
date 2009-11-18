@@ -59,45 +59,6 @@ describe GroupController, "POST #destroy" do
   end
 end
 
-describe GroupController, 'GET #users' do
-  before do
-    user_login
-    create_stub_group
-    @params = {:condition => {:include_manager => '0'}}
-  end
-  describe '出力順がログインID順の場合' do
-    before do
-      @params[:condition].merge!(:sort_type => '1')
-    end
-    describe '出力形式が通常の場合' do
-      before do
-        @params[:condition].merge!(:output_type => 'normal')
-        find_params = { :include => [:user_access, :picture, :user_uids, :group_participations],
-          :order => "user_uids.uid",
-          :conditions => ["users.status in (?) AND user_uids.uid_type = ? AND group_participations.group_id = ? AND group_participations.waiting = false", ["ACTIVE", "RETIRED"], "MASTER", @group.id]}
-        scope = User.should_receive(:scoped).with(find_params).and_return([stub_model(User)])
-        get :users, @params
-      end
-      it {response.should be_success}
-    end
-    describe '出力形式が一覧の場合' do
-      before do
-        @params[:condition].merge!(:output_type => 'list')
-        get :users, @params
-      end
-      it {response.should be_success}
-    end
-  end
-  def create_stub_group
-    @group = stub_model(Group, :name => 'とあるグループ')
-    @participation = stub_model(GroupParticipation)
-    participations = []
-    participations.stub!(:find_by_user_id).and_return(@participation)
-    @group.stub!(:group_participations).and_return(participations)
-    Group.stub!(:find_by_gid).and_return(@group)
-  end
-end
-
 describe GroupController, "GET #show" do
   before do
     user_login
