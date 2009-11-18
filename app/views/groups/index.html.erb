@@ -18,15 +18,15 @@
           <% end %>
         </td>
       </tr>
-      <tr>
-        <th><%= _('Join status') %></th>
-        <td>
-          <%= check_box_tag 'yet_participation', 'true', params[:yet_participation] %>
-          <%= label_tag 'yet_participation', _('Show groups you have not joined only.') %>
-        </td>
-      </tr>
     </table>
-    <div class="submit"><%= submit_tag _('Search') %></div>
+    <div class="submit">
+      <%= submit_tag _('Search') %>
+      <span class="margin05em">
+        <%= hidden_field_tag 'yet_participation', "false", :id => "hidden_yet_participation" %>
+        <%= check_box_tag 'yet_participation', 'true', params[:yet_participation] == 'true' %>
+        <%= label_tag 'yet_participation', _('Show groups you have not joined only.') %>
+      </span>
+    </div>
   <% end -%>
 </div><!-- search_cond_space -->
 

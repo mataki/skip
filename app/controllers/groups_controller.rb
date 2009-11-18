@@ -24,10 +24,11 @@ class GroupsController < ApplicationController
   def index
     @group_counts, @total_count = Group.count_by_category
     @group_categories = GroupCategory.all
+    params[:yet_participation] ||= "true"
 
     scope = Group.active.partial_match_name_or_description(params[:keyword]).
       categorized(params[:group_category_id]).order_by_type(params[:sort_type])
-    scope = scope.unjoin(current_user) if params[:yet_participation]
+    scope = scope.unjoin(current_user) if params[:yet_participation] == 'true'
     @groups = scope.paginate(:page => params[:page], :per_page => 50)
 
     flash.now[:notice] = _('No matching groups found.') if @groups.empty?
