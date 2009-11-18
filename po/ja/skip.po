@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.3.0\n"
-"POT-Creation-Date: 2009-11-17 16:51+0900\n"
+"POT-Creation-Date: 2009-11-18 12:35+0900\n"
 "PO-Revision-Date: 2009-11-16 18:20+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -91,7 +91,12 @@ msgstr "%sのみ"
 msgid "%s Required"
 msgstr "%s 必要"
 
-#: app/controllers/group_controller.rb:321
+#: app/controllers/group_controller.rb:223
+#: app/controllers/group_controller.rb:255
+msgid "%s are not a member of the group."
+msgstr "%sさんはそのグループには参加していません。"
+
+#: app/models/group.rb:183
 msgid "%s has already joined / applied to join this group."
 msgstr "%sさんは既に参加済み/参加申請済みです。"
 
@@ -228,7 +233,7 @@ msgid "%{title_val} Comment:(%{comment_count_val})"
 msgid_plural "%{title_val} Comments:(%{comment_count_val})"
 msgstr[0] "%{title_val}　コメント数:(%{comment_count_val})"
 
-#: app/controllers/group_controller.rb:196
+#: app/controllers/group_controller.rb:219
 msgid "%{user_name} leaved your group %{group_name}."
 msgstr "%{user_name}さんが[%{group_name}]から退会しました。"
 
@@ -510,11 +515,11 @@ msgstr "%sでブクマ"
 msgid "Add as Member"
 msgstr "参加者に追加"
 
-#: app/controllers/group_controller.rb:326
+#: app/controllers/group_controller.rb:188
 msgid "Added %s as a member."
 msgstr "%sさんを参加者に追加しました。"
 
-#: app/controllers/group_controller.rb:336
+#: app/controllers/group_controller.rb:201
 msgid "Added members of %s as members of the group"
 msgstr "%sの参加者をこのグループの参加者に追加しました。"
 
@@ -1695,7 +1700,7 @@ msgstr "ログインID"
 msgid "Administration of the site."
 msgstr "このシステムの設定や管理を行います"
 
-#: app/controllers/group_controller.rb:380
+#: app/controllers/group_controller.rb:370
 msgid "Administrative privillage required for the action."
 msgstr "その操作は管理者権限が必要です。"
 
@@ -1896,7 +1901,7 @@ msgid "Are you sure to send email to all users?"
 msgstr "利用者全体にメールが送信されますが、宜しいですか?"
 
 #: app/views/chains/edit.html.erb:8 app/views/user/_action_box.html.erb:10
-#: app/views/group/_action_box.html.erb:15
+#: app/views/group/_action_box.html.erb:6
 #: app/views/admin/pictures/index.html.erb:29
 #: app/views/admin/board_entries/index.html.erb:35
 #: app/views/admin/share_files/index.html.erb:36
@@ -2443,7 +2448,7 @@ msgstr "ユーザ名変更"
 msgid "Change your profile picture!"
 msgstr "プロフィール画像を変更しましょう！"
 
-#: app/controllers/group_controller.rb:212
+#: app/controllers/group_controller.rb:239
 msgid "Changed."
 msgstr "変更しました。"
 
@@ -3123,15 +3128,15 @@ msgstr "更新日時"
 msgid "Excluding retired users"
 msgstr "退職者を含めない"
 
-#: app/controllers/group_controller.rb:277
+#: app/controllers/group_controller.rb:305
 msgid "Failed to Approve."
 msgstr "承認に失敗しました。"
 
-#: app/controllers/group_controller.rb:214
+#: app/controllers/group_controller.rb:241
 msgid "Failed to change status."
 msgstr "権限変更に失敗しました。"
 
-#: app/controllers/group_controller.rb:303
+#: app/controllers/group_controller.rb:331
 msgid "Failed to delete since there are still other users in the group."
 msgstr "自分以外のユーザがまだ存在しています。削除できません。"
 
@@ -3303,7 +3308,8 @@ msgstr "グループへの強制参加"
 msgid "Forced leave"
 msgstr "グループからの強制退会"
 
-#: app/controllers/group_controller.rb:342
+#: app/controllers/group_controller.rb:187
+#: app/controllers/group_controller.rb:199
 msgid "Forced to join the group [%s]."
 msgstr "[%s]に強制参加しました。"
 
@@ -3377,7 +3383,7 @@ msgstr "グループカテゴリ"
 msgid "Group does not exist."
 msgstr "ご指定のグループは存在しません。"
 
-#: app/controllers/group_controller.rb:294
+#: app/controllers/group_controller.rb:322
 msgid "Group information was successfully updated."
 msgstr "グループ情報は正しく更新されました。"
 
@@ -3385,7 +3391,7 @@ msgstr "グループ情報は正しく更新されました。"
 msgid "Group was created successfully."
 msgstr "グループが正しく作成されました。"
 
-#: app/controllers/group_controller.rb:307
+#: app/controllers/group_controller.rb:335
 msgid "Group was successfully deleted."
 msgstr "グループは削除されました。"
 
@@ -3468,7 +3474,7 @@ msgstr "はい"
 #: app/helpers/application_helper.rb:346
 #: app/controllers/groups_controller.rb:62
 #: app/controllers/services_controller.rb:46
-#: app/controllers/group_controller.rb:358
+#: app/controllers/group_controller.rb:348
 #: app/controllers/share_file_controller.rb:163
 #: app/controllers/edit_controller.rb:276
 #: app/views/admin/_data_menu_box.html.erb:7
@@ -3861,7 +3867,11 @@ msgstr "参加状況"
 msgid "Join this group"
 msgstr "参加する"
 
-#: app/controllers/group_controller.rb:178
+#: app/models/group.rb:204
+msgid "Joined the group failed."
+msgstr ""
+
+#: app/controllers/group_controller.rb:169
 msgid "Joined the group successfully."
 msgstr "グループに参加しました。"
 
@@ -4263,7 +4273,7 @@ msgstr "新しい順に並べる"
 msgid "New Introduction"
 msgstr "新着紹介文"
 
-#: app/views/group/_action_box.html.erb:9
+#: app/views/group/_action_box.html.erb:14
 msgid "New Posts"
 msgstr "記事を書く"
 
@@ -4275,11 +4285,11 @@ msgstr "新着話題記事"
 msgid "New bookmarks"
 msgstr "新着ブックマーク"
 
-#: app/controllers/group_controller.rb:170
+#: app/controllers/group_controller.rb:161
 msgid "New user is waiting for approval in %s."
 msgstr "[%s]に承認待ちのユーザがいます!"
 
-#: app/controllers/group_controller.rb:176
+#: app/controllers/group_controller.rb:167
 msgid "New user joined your group [%s]."
 msgstr "[%s]に新しい参加者がいます!"
 
@@ -4328,7 +4338,7 @@ msgid "No"
 msgstr "いいえ"
 
 #: app/controllers/group_controller.rb:142
-#: app/controllers/group_controller.rb:238
+#: app/controllers/group_controller.rb:266
 #: app/views/layouts/layout.html.erb:50
 msgid "No approval needed to join this group."
 msgstr "自由に参加できます"
@@ -4437,7 +4447,7 @@ msgid "Notify activation"
 msgstr "利用開始通知"
 
 #: app/views/user/_action_box.html.erb:12
-#: app/views/group/_action_box.html.erb:17
+#: app/views/group/_action_box.html.erb:8
 msgid "Notify new posts"
 msgstr "新着時に通知"
 
@@ -4690,7 +4700,7 @@ msgstr "下書き(自分だけに公開)"
 msgid "Parent comment could not be found. Try reloading the page."
 msgstr "親コメントが存在しません。再読み込みして下さい。"
 
-#: app/controllers/group_controller.rb:254
+#: app/controllers/group_controller.rb:282
 msgid "Part of the users are already members of this group."
 msgstr "このグループに参加済みのユーザが含まれています。"
 
@@ -5125,7 +5135,7 @@ msgstr "再読み込み"
 msgid "Remember to clean up the user data periodically"
 msgstr "ユーザのクリーニングは行ってますか?"
 
-#: app/controllers/group_controller.rb:229
+#: app/controllers/group_controller.rb:253
 msgid "Removed %s from members of the group."
 msgstr "%sさんをこのグループの参加者から削除しました。"
 
@@ -5134,7 +5144,7 @@ msgstr "%sさんをこのグループの参加者から削除しました。"
 msgid "Reply to this comment"
 msgstr "このコメントに返信"
 
-#: app/controllers/group_controller.rb:167
+#: app/controllers/group_controller.rb:163
 msgid "Request sent. Please wait for the approval."
 msgstr "参加申し込みをしました。承認されるのをお待ちください。"
 
@@ -5656,7 +5666,7 @@ msgstr "ソート方法"
 msgid "Specified Directly:"
 msgstr "直接指定:"
 
-#: app/controllers/group_controller.rb:371
+#: app/controllers/group_controller.rb:361
 msgid "Specified group does not exist."
 msgstr "指定のグループは存在していません"
 
@@ -5714,7 +5724,7 @@ msgid "Stop"
 msgstr "停止"
 
 #: app/views/user/_action_box.html.erb:10
-#: app/views/group/_action_box.html.erb:15
+#: app/views/group/_action_box.html.erb:6
 msgid "Stop a notification"
 msgstr "新着通知を止める"
 
@@ -5747,11 +5757,11 @@ msgstr "新着通知"
 msgid "Subwindow"
 msgstr "サブウィンドウ"
 
-#: app/controllers/group_controller.rb:274
+#: app/controllers/group_controller.rb:302
 msgid "Succeeded to Approve."
 msgstr "承認に成功しました。"
 
-#: app/controllers/group_controller.rb:285
+#: app/controllers/group_controller.rb:313
 msgid "Succeeded to Disapprove."
 msgstr "棄却に成功しました。"
 
@@ -5759,7 +5769,7 @@ msgstr "棄却に成功しました。"
 msgid "Successfully added/updated users from CSV file."
 msgstr "CSVファイルからのユーザ登録/更新に成功しました。"
 
-#: app/controllers/group_controller.rb:198
+#: app/controllers/group_controller.rb:221
 msgid "Successfully left the group."
 msgstr "退会しました。"
 
@@ -6236,7 +6246,7 @@ msgstr "更新中..."
 msgid "Upload"
 msgstr "アップロード"
 
-#: app/views/group/_action_box.html.erb:13
+#: app/views/group/_action_box.html.erb:18
 #: app/views/mypage/_action_box.html.erb:7
 msgid "Upload a file"
 msgstr "ファイルをアップ"
@@ -6556,7 +6566,7 @@ msgstr "ユーザ"
 msgid "Users"
 msgstr "ユーザ"
 
-#: app/controllers/group_controller.rb:338
+#: app/controllers/group_controller.rb:207
 msgid "Users / groups selection invalid."
 msgstr "ユーザ・グループの選択が正しくありません。"
 
@@ -6845,12 +6855,12 @@ msgstr "ブログを書く"
 msgid "Write a comment"
 msgstr "コメントを書く"
 
-#: app/views/group/_action_box.html.erb:10
+#: app/views/group/_action_box.html.erb:15
 #: app/views/mypage/_action_box.html.erb:4
 msgid "Write a notice"
 msgstr "お知らせを書く"
 
-#: app/views/group/_action_box.html.erb:11
+#: app/views/group/_action_box.html.erb:16
 #: app/views/mypage/_action_box.html.erb:5
 msgid "Write a question"
 msgstr "質問を書く"
@@ -6890,14 +6900,6 @@ msgstr ""
 "（例えば、同じ大学出身だと知らなかった人でも親しみがわきますよね？）<br/>\n"
 "よって、登録頂いた情報は、当然ですが、本サービスの運営以外では利用いたしませ"
 "ん。<br/>"
-
-#: app/controllers/group_controller.rb:157
-msgid "You are already a member of the group."
-msgstr "既に参加しています。"
-
-#: app/controllers/group_controller.rb:188
-msgid "You are not a member of the group."
-msgstr "そのグループには参加していません。"
 
 #: app/controllers/user_controller.rb:78
 msgid "You are not allowed to see the page."
@@ -6989,7 +6991,7 @@ msgstr ""
 msgid "You cannot delete user who is not unused."
 msgstr "未使用のユーザ以外削除できません。"
 
-#: app/controllers/group_controller.rb:227
+#: app/controllers/group_controller.rb:252
 msgid "You forced to leave the group [%s]."
 msgstr "[%s]を強制退会しました。"
 
@@ -7021,17 +7023,13 @@ msgstr "あなたの紹介文が追加されました！"
 msgid "You recieved a comment on your entry [%s]!"
 msgstr "あなたの記事[%s]に新着コメントがあります！"
 
-#: app/controllers/group_controller.rb:272
+#: app/controllers/group_controller.rb:300
 msgid "You were approved join of the group %s."
 msgstr "[%s]への参加が承認されました。"
 
-#: app/controllers/group_controller.rb:283
+#: app/controllers/group_controller.rb:311
 msgid "You were disapproved join of the group %s."
 msgstr "[%s]への参加が棄却されました。"
-
-#: app/models/notice.rb:63
-msgid "Your Groups"
-msgstr "参加グループ"
 
 #: app/views/user_mailer/smtp/sent_signup_confirm.html.erb:4
 msgid "Your Login ID is %s."
@@ -7822,3 +7820,12 @@ msgstr ""
 #: app/helpers/application_helper.rb:39
 msgid "« Previous"
 msgstr "« 前"
+
+#~ msgid "You are already a member of the group."
+#~ msgstr "既に参加しています。"
+
+#~ msgid "You are not a member of the group."
+#~ msgstr "そのグループには参加していません。"
+
+#~ msgid "Your Groups"
+#~ msgstr "参加グループ"
