@@ -174,4 +174,57 @@ class Group < ActiveRecord::Base
     conditions = ago ? ['updated_on >= ?', Time.now.ago(ago.to_i.minute)] : []
     Group.scoped(:conditions => conditions).all.map { |g| [g.gid, g.gid, g.name, User.joined(g).map { |u| u.openid_identifier }, !!g.deleted_at] }
   end
+
+  # TODO 回帰テスト書きたい
+  def join user_or_users
+    Group.transaction do
+      [user_or_users].flatten.each do |target_user|
+        if self.group_participations.find_by_user_id target_user.id
+          self.errors.add_to_base _("%s has already joined / applied to join this group.") % target_user.name
+          if block_given?
+            yield false, []
+          else
+            false
+          end
+        end
+      end
+      participations = []
+      [user_or_users].flatten.each do |target_user|
+        participation = self.group_participations.create!(:user => target_user, :waiting => self.protected?)
+        target_user.notices.create!(:target => self) unless target_user.notices.find_by_target_id(self.id)
+        participations << participation
+      end
+      if block_given?
+        yield true, participations
+      else
+        true
+      end
+    end
+  rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => e
+    self.errors.add_to_base _('Joined the group failed.')
+    false
+  end
+
+  # TODO 回帰テスト書きたい
+  def leave user
+    Group.transaction do
+      if participation = self.group_participations.find_by_user_id(user.id)
+        participation.destroy
+        if notice = user.notices.find_by_target_id(self.id)
+          notice.destroy
+        end
+        if block_given?
+          yield true
+        else
+          true
+        end
+      else
+        if block_given?
+          yield false
+        else
+          false
+        end
+      end
+    end
+  end
 end

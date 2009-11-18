@@ -52,7 +52,6 @@ Feature: グループの管理
     # 承認画面に遷移
     Then "この画面では、管理者の権限設定、強制退会が可能です。"と表示されていること
 
-
   Scenario: ユーザとして参加中のグループから退会することが出来る
     Given 以下のグループを作成する:
       |owner    |gid        |name         |waiting  |
@@ -126,3 +125,36 @@ Feature: グループの管理
     When "a_user"でログインする
 
     Then "[VimGroup]を強制退会しました。"と表示されていること
+
+  Scenario: グループ未参加時のアクション表示
+    Given 以下のグループを作成する:
+      |owner    |gid        |name         |waiting  |
+      |alice    |vim_group  |VimGroup     |false    |
+
+    When "a_user"でログインする
+    And "vim_groupグループのトップページ"にアクセスする
+
+    Then "参加する"と表示されていること
+    And "新着時に通知"と表示されていること
+    And "記事を書く"と表示されていないこと
+    And "お知らせを書く"と表示されていないこと
+    And "質問を書く"と表示されていないこと
+    And "ファイルをアップ"と表示されていないこと
+    And "退会する"と表示されていないこと
+
+  Scenario: グループ参加時のアクション表示
+    Given 以下のグループを作成する:
+      |owner    |gid        |name         |waiting  |
+      |alice    |vim_group  |VimGroup     |false    |
+    And "a_user"が"vim_group"グループに参加する
+
+    When "a_user"でログインする
+    And "vim_groupグループのトップページ"にアクセスする
+
+    Then "参加する"と表示されていないこと
+    And "新着時に通知"と表示されていないこと
+    And "記事を書く"と表示されていること
+    And "お知らせを書く"と表示されていること
+    And "質問を書く"と表示されていること
+    And "ファイルをアップ"と表示されていること
+    And "退会する"と表示されていること

@@ -153,50 +153,93 @@ class GroupController < ApplicationController
   # post_action
   # 参加申込み
   def join
-    if @participation
-      flash[:notice] = _('You are already a member of the group.')
-      redirect_to :action => 'show'
-      return
-    end
-    participation = GroupParticipation.new(:user_id => current_user.id, :group_id => @group.id)
-    participation.waiting = true if @group.protected?
-
-    GroupParticipation.transaction do
-      participation.save!
-      if participation.waiting?
-        flash[:notice] = _('Request sent. Please wait for the approval.')
-        group_manage_participations_url = url_for(:controller => 'group', :action => 'manage', :gid => @group.gid, :menu => 'manage_participations')
-        @group.group_participations.only_owned.each do |owner_participation|
-          Message.save_message('APPROVAL', owner_participation.user_id, group_manage_participations_url, _("New user is waiting for approval in %s.") % @group.name)
+    @group.join current_user do |result, participations|
+      if result
+        if participations.first.waiting?
+          group_manage_participations_url = url_for(:controller => 'group', :action => 'manage', :gid => @group.gid, :menu => 'manage_participations')
+          @group.group_participations.only_owned.each do |owner_participation|
+            Message.save_message('APPROVAL', owner_participation.user_id, group_manage_participations_url, _("New user is waiting for approval in %s.") % @group.name)
+          end
+          flash[:notice] = _('Request sent. Please wait for the approval.')
+        else
+          groups_url = url_for(:controller => 'group', :action => 'users', :gid => @group.gid)
+          @group.group_participations.only_owned.each do |owner_participation|
+            Message.save_message('JOIN', owner_participation.user_id, groups_url, _("New user joined your group [%s].") % @group.name)
+          end
+          flash[:notice] = _('Joined the group successfully.')
         end
       else
-        login_user_groups << @group.symbol # TODO この行必要?
-        groups_url = url_for(:controller => 'group', :action => 'users', :gid => @group.gid)
-        @group.group_participations.only_owned.each do |owner_participation|
-          Message.save_message('JOIN', owner_participation.user_id, groups_url, _("New user joined your group [%s].") % @group.name)
-        end
-        flash[:notice] = _('Joined the group successfully.')
+        flash[:error] = @group.errors.full_messages
       end
+      redirect_to :action => 'show'
     end
-    redirect_to :action => 'show'
+  end
+
+  # 参加者追加(管理者のみ)
+  def append_user
+    # FIXME 管理者のみに制御出来ていない
+    symbol_type, symbol_id = Symbol.split_symbol params[:symbol]
+    case
+    when (symbol_type == 'uid' and user = User.find_by_uid(symbol_id))
+      @group.join user do |result, participations|
+        if result
+          groups_url = url_for(:controller => 'group', :action => 'users', :gid => @group.gid)
+          Message.save_message('FORCED_JOIN', user.id,  groups_url, _("Forced to join the group [%s].") % @group.name)
+          flash[:notice] = _("Added %s as a member.") % user.name
+        else
+          flash[:error] = @group.errors.full_messages
+        end
+      end
+    when (symbol_type == 'gid' and group = Group.active.find_by_gid(symbol_id, :include => :group_participations))
+      users = group.group_participations.map(&:user)
+      @group.join users do |result, participations|
+        if result
+          groups_url = url_for(:controller => 'group', :action => 'users', :gid => @group.gid)
+          users.each do |user|
+            Message.save_message('FORCED_JOIN', user.id,  groups_url, _("Forced to join the group [%s].") % @group.name)
+          end
+          flash[:notice] = _("Added members of %s as members of the group") % group.name
+        else
+          flash[:error] = @group.errors.full_messages
+        end
+      end
+    else
+      flash[:warn] = _("Users / groups selection invalid.")
+    end
+    redirect_to :action => 'manage', :menu => 'manage_participations'
   end
 
   # post_action
   # 退会
   def leave
-    unless @participation
-      flash[:notice] = _('You are not a member of the group.')
-      redirect_to :action => 'show'
-      return
+    @group.leave @participation.user do |result|
+      if result
+        user_url = url_for(:controller => 'user', :action => 'show', :uid => current_user.uid)
+        @group.group_participations.only_owned.each do |owner_participation|
+          Message.save_message('LEAVE', owner_participation.user_id, user_url, _("%{user_name} leaved your group %{group_name}.") % {:user_name => current_user.name, :group_name => @group.name})
+        end
+        flash[:notice] = _('Successfully left the group.')
+      else
+        flash[:notice] = _('%s are not a member of the group.') % 'You'
+      end
     end
-    @participation.destroy
-    login_user_groups.delete(@group.symbol) # TODO この行必要?
-    user_url = url_for(:controller => 'user', :action => 'show', :uid => current_user.uid)
-    @group.group_participations.only_owned.each do |owner_participation|
-      Message.save_message('LEAVE', owner_participation.user_id, user_url, _("%{user_name} leaved your group %{group_name}.") % {:user_name => current_user.name, :group_name => @group.name})
-    end
-    flash[:notice] = _('Successfully left the group.')
     redirect_to :action => 'show'
+  end
+
+  # 管理者による強制退会処理
+  def forced_leave_user
+    # FIXME 管理者のみに制御出来ていない
+    group_participation = GroupParticipation.find(params[:participation_id])
+    @group.leave group_participation.user do |result|
+      if result
+        groups_url = url_for(:controller => 'group', :action => 'users', :gid => @group.gid)
+        Message.save_message('FORCED_LEAVE', group_participation.user.id, groups_url, _("You forced to leave the group [%s].") % @group.name)
+        flash[:notice] = _("Removed %s from members of the group.") % group_participation.user.name
+      else
+        flash[:notice] = _('%s are not a member of the group.') % group_participation.user.name
+      end
+    end
+    redirect_to :action => 'manage', :menu => 'manage_participations'
   end
 
   # post_action ... では無いので後に修正が必要
@@ -213,20 +256,6 @@ class GroupController < ApplicationController
     else
       flash[:warn] = _('Failed to change status.')
     end
-    redirect_to :action => 'manage', :menu => 'manage_participations'
-  end
-
-  # 管理者による強制退会処理
-  def forced_leave_user
-    group_participation = GroupParticipation.find(params[:participation_id])
-
-    redirect_to_with_deny_auth and return unless group_participation.group_id == @participation.group_id
-
-    group_participation.destroy
-    groups_url = url_for(:controller => 'group', :action => 'users', :gid => @group.gid)
-    Message.save_message('FORCED_LEAVE', group_participation.user.id, groups_url, _("You forced to leave the group [%s].") % @group.name)
-
-    flash[:notice] = _("Removed %s from members of the group.") % group_participation.user.name
     redirect_to :action => 'manage', :menu => 'manage_participations'
   end
 
@@ -266,6 +295,7 @@ class GroupController < ApplicationController
           target_participations.each do |participation|
             participation.waiting = false
             participation.save!
+            participation.user.notices.create!(:target => @group) unless participation.user.notices.find_by_target_id(@group.id)
           end
           groups_url = url_for(:controller => 'group', :gid => @group.gid)
           target_participations.each do |participation|
@@ -308,44 +338,6 @@ class GroupController < ApplicationController
       redirect_to :controller => 'groups'
     end
   end
-
-  # 参加者追加(管理者のみ)
-  def append_user
-    # 参加制約は追加しない。制約は制約管理で。
-    symbol_type, symbol_id = Symbol.split_symbol params[:symbol]
-    forced_join_users = []
-    GroupParticipation.transaction do
-      case
-      when (symbol_type == 'uid' and user = User.find_by_uid(symbol_id))
-        if @group.group_participations.find_by_user_id(user.id)
-          flash[:notice] = _("%s has already joined / applied to join this group.") % user.name
-        else
-          @group.group_participations.build(:user_id => user.id, :owned => false)
-          forced_join_users << user
-          @group.save!
-          flash[:notice] = _("Added %s as a member.") % user.name
-        end
-      when (symbol_type == 'gid' and group = Group.active.find_by_gid(symbol_id, :include => :group_participations))
-        group.group_participations.each do |participation|
-          unless @group.group_participations.find_by_user_id(participation.user_id)
-            @group.group_participations.build(:user_id => participation.user_id, :owned => false)
-            forced_join_users << participation.user
-          end
-        end
-        @group.save!
-        flash[:notice] = _("Added members of %s as members of the group") % group.name
-      else
-        flash[:warn] = _("Users / groups selection invalid.")
-      end
-      groups_url = url_for(:controller => 'group', :action => 'users', :gid => @group.gid)
-      forced_join_users.each do |user|
-        Message.save_message('FORCED_JOIN', user.id,  groups_url, _("Forced to join the group [%s].") % @group.name)
-      end
-    end
-
-    redirect_to :action => 'manage', :menu => 'manage_participations'
-  end
-
 
 private
   def setup_layout

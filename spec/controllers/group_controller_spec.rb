@@ -59,49 +59,6 @@ describe GroupController, "POST #destroy" do
   end
 end
 
-describe GroupController, "POST #leave" do
-  before do
-    user_login
-
-    @group_participation = stub_model(GroupParticipation)
-
-    @group_participations = [stub_model(GroupParticipation)]
-
-    @group = stub_model(Group)
-    @group.stub!(:group_participations).and_return(@group_participations)
-    @group_participations.stub!(:only_owned).and_return([])
-
-    Group.stub!(:find_by_gid).and_return(@group)
-  end
-  describe "参加している場合" do
-    before do
-      @group_participation.should_receive(:destroy).and_return(@group_participation)
-      @group_participations.stub!(:find_by_user_id).and_return(@group_participation)
-
-      login_user_groups = mock('login_user_groups')
-      login_user_groups.should_receive(:delete)
-      controller.should_receive(:login_user_groups).and_return(login_user_groups)
-
-      post :leave
-    end
-    it { response.should redirect_to(:action => :show) }
-    it "flashにメッセージが登録されていること" do
-      flash[:notice].should == 'Successfully left the group.'
-    end
-  end
-  describe "参加していない場合" do
-    before do
-      @group_participations.stub!(:find_by_user_id).and_return(nil)
-
-      post :leave
-    end
-    it { response.should redirect_to(:action => :show) }
-    it "flashにメッセージが登録されていること" do
-      flash[:notice].should == 'You are not a member of the group.'
-    end
-  end
-end
-
 describe GroupController, 'GET #users' do
   before do
     user_login

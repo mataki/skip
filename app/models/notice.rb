@@ -52,16 +52,6 @@ class Notice < ActiveRecord::Base
       antennas << {:name => _("Track of Bookmarks"), :user_id => user.id, :type => 'bookmark', :count => bookmark_count }
     end
 
-    if user.group_symbols.size > 0
-      find_params = BoardEntry.make_conditions user.belong_symbols, { :symbols => user.group_symbols}
-      find_params[:conditions][0] << " and user_readings.read = ? and user_readings.user_id = ?"
-      find_params[:conditions] << false << user.id
-      group_count = BoardEntry.count(
-        :conditions => find_params[:conditions],
-        :include => find_params[:include] | [:user_readings]
-      )
-      antennas << {:name => _("Your Groups"), :user_id => user.id, :type => 'joined_group', :count => group_count }
-    end
     antennas
   end
 

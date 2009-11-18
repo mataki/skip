@@ -37,7 +37,11 @@ Given /^以下のフォーラムを書く:$/ do |entries_table|
   @entries ||= []
   entries_table.hashes.each do |hash|
     Given %!"#{hash[:user]}"でログインする!
-    Given %!"#{hash[:user]}"で"#{hash[:group]}"というグループを作成する!
+    unless Group.find_by_gid(hash[:group])
+      Given %!"#{hash[:user]}"で"#{hash[:group]}"というグループを作成する!
+    else
+       Given %!"#{hash[:group]}グループのトップページ"にアクセスする!
+    end
     Given %!"記事を書く"リンクをクリックする!
     Given %!"#{"board_entry[title]"}"に"#{hash[:title]}"と入力する!
     Given %!"タグ"に"#{hash[:tag]}"と入力する!

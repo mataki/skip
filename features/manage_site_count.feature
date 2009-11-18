@@ -42,7 +42,7 @@ Feature: サイト情報
 
   Scenario: [ブログを書いたことがある人](フォーラム除く、公開のみ)を確認出来る
     Given 現在の統計データを退避する
-    When "alice"がユーザ登録する
+    And "alice"がユーザ登録する
     And "kota"がユーザ登録する
     And "maya"がユーザ登録する
     And 以下のブログを書く:

@@ -68,3 +68,18 @@ Feature: マイページ
 
     Then I should see "Railsについてお知らせ"
     And I should not see "Railsについて雑談"
+
+  Scenario: 新着の表示
+    Given 以下のグループを作成する:
+      |owner    |gid        |name         |waiting  |
+      |alice    |vim_group  |VimGroup     |false    |
+    And "a_user"が"vim_group"グループに参加する
+    And 以下のフォーラムを書く:
+      |user  |group       |title            |tag |contents|publication_type|
+      |alice |vim_group   |雑談スレ         |雑談|ほげほげ|全体に公開      |
+    And 新着通知を作成バッチを実行する
+
+    When "a_user"でログインする
+
+    Then I should see "VimGroup(1)" within "div.antenna"
+
