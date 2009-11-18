@@ -85,6 +85,11 @@ class User < ActiveRecord::Base
     }
   }
 
+  named_scope :name_or_code_like, proc { |word|
+    { :conditions => ["user_uids.uid like :word OR users.name like :word", { :word => SkipUtil.to_like_query_string(word) }],
+      :include => :user_uids }
+  }
+
   named_scope :tagged, proc { |tag_words, tag_select|
     return {} unless tag_words
     tag_select = 'AND' unless tag_select == 'OR'
@@ -98,9 +103,25 @@ class User < ActiveRecord::Base
     { :conditions => [condition_str, condition_params].flatten, :include => :against_chains }
   }
 
+  named_scope :exclude_retired, proc { |flg|
+    target = ["ACTIVE"]
+    target << "RETIRED" unless flg == "1"
+    status_in(target).proxy_options
+  }
+
   named_scope :order_joined, proc { { :order => "group_participations.updated_on DESC" } }
 
   named_scope :limit, proc { |num| { :limit => num } }
+
+  named_scope :admin, :conditions => {:admin => true}
+  named_scope :active, :conditions => {:status => 'ACTIVE'}
+  named_scope :partial_match_uid, proc {|word|
+    {:conditions => ["users.id in (?)", UserUid.partial_match_uid(word).map{|uu| uu.user_id}], :include => [:user_uids]}
+  }
+  named_scope :partial_match_uid_or_name, proc {|word|
+    {:conditions => ["users.id in (?) OR name LIKE ?", UserUid.partial_match_uid(word).map{|uu| uu.user_id}, SkipUtil.to_lqs(word)], :include => [:user_uids]}
+  }
+  named_scope :with_basic_associations, :include => [:user_uids, :user_custom]
 
   N_('User|Old password')
   N_('User|Password')
@@ -123,16 +144,6 @@ class User < ActiveRecord::Base
   N_('User|Uid')
 
   ACTIVATION_LIFETIME = 5
-
-  named_scope :admin, :conditions => {:admin => true}
-  named_scope :active, :conditions => {:status => 'ACTIVE'}
-  named_scope :partial_match_uid, proc {|word|
-    {:conditions => ["users.id in (?)", UserUid.partial_match_uid(word).map{|uu| uu.user_id}], :include => [:user_uids]}
-  }
-  named_scope :partial_match_uid_or_name, proc {|word|
-    {:conditions => ["users.id in (?) OR name LIKE ?", UserUid.partial_match_uid(word).map{|uu| uu.user_id}, SkipUtil.to_lqs(word)], :include => [:user_uids]}
-  }
-  named_scope :with_basic_associations, :include => [:user_uids, :user_custom]
 
   def to_s
     return 'uid:' + uid.to_s + ', name:' + name.to_s

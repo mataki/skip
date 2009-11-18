@@ -18,13 +18,9 @@ class UsersController < ApplicationController
 
   # tab_menu
   def index
-    @condition = UserSearchCondition.create_by_params params
-
-    @users = User.scoped(
-      :conditions => @condition.make_conditions,
-      :include => @condition.value_of_include,
-      :order => @condition.value_of_order_by
-    ).tagged(params[:tag_words], params[:tag_select]).paginate(:page => params[:page], :per_page => @condition.value_of_per_page)
+    @search = User.tagged(params[:tag_words], params[:tag_select]).search(params[:search])
+    @search.exclude_retired ||= "1"
+    @users = @search.paginate(:page => params[:page], :per_page => 40)
 
     # 検索条件や表示順の条件によって、user_uidsがMASTERかNICKNAMEのどちらかしたロードされない。
     # そのためviewで正しく描画するためにreloadしておく
