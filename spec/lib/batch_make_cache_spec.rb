@@ -27,7 +27,8 @@ describe BatchMakeCache, "#create_meta" do
     @result = bmc.create_meta(params)
   end
   it "link_urlが正しく設定されること" do
-    @result.should be_include("link_url: #{Admin::Setting.protocol_by_initial_settings_default}#{Admin::Setting.host_and_port_by_initial_settings_default}/user/hoge")
+    @result.should be_include("link_url: #{SkipEmbedded::InitialSettings['protocol']}#{SkipEmbedded::InitialSettings['host_and_port']}/user/hoge")
+
   end
 end
 

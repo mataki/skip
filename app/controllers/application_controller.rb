@@ -285,7 +285,7 @@ protected
   end
 
   def scheme
-    Admin::Setting.protocol_by_initial_settings_default
+    SkipEmbedded::InitialSettings['protocol']
   end
 
   def endpoint_url

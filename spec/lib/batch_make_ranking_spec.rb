@@ -285,13 +285,13 @@ describe BatchMakeRanking do
 
   describe BatchMakeRanking, "#user_url" do
     it "URLが正しく返されること" do
-      @maker.send(:user_url, "hoge").should == "#{Admin::Setting.protocol_by_initial_settings_default}#{Admin::Setting.host_and_port_by_initial_settings_default}/user/hoge"
+      @maker.send(:user_url, "hoge").should == "#{SkipEmbedded::InitialSettings['protocol']}#{SkipEmbedded::InitialSettings['host_and_port']}/user/hoge"
     end
   end
 
   describe BatchMakeRanking, "#page_url" do
     it "URLが正しく返されること" do
-      @maker.send(:page_url, 1).should == "#{Admin::Setting.protocol_by_initial_settings_default}#{Admin::Setting.host_and_port_by_initial_settings_default}/page/1"
+      @maker.send(:page_url, 1).should == "#{SkipEmbedded::InitialSettings['protocol']}#{SkipEmbedded::InitialSettings['host_and_port']}/page/1"
     end
   end
 

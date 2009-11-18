@@ -874,8 +874,8 @@ end
 
 describe User, "#belong_symbols_with_collaboration_apps" do
   before do
-    Admin::Setting.stub!(:host_and_port_by_initial_settings_default).and_return("test.host")
-    Admin::Setting.stub!(:protocol_by_initial_settings_default).and_return("http://")
+    SkipEmbedded::InitialSettings.stub!("[]").with('host_and_port').and_return('test.host')
+    SkipEmbedded::InitialSettings.stub!("[]").with('protocol').and_return('http://')
     @user = stub_model(User, :belong_symbols => ["uid:a_user", "gid:a_group"], :code => "a_user")
   end
   describe "SkipEmbedded::InitialSettingsが設定されている場合" do
@@ -926,8 +926,8 @@ end
 
 describe User, "#openid_identifier" do
   before do
-    Admin::Setting.stub!(:host_and_port_by_initial_settings_default).and_return("test.host")
-    Admin::Setting.stub!(:protocol_by_initial_settings_default).and_return("http://")
+    SkipEmbedded::InitialSettings.stub!("[]").with('host_and_port').and_return('test.host')
+    SkipEmbedded::InitialSettings.stub!("[]").with('protocol').and_return('http://')
     @user = stub_model(User, :code => "a_user")
   end
   it "OPとして発行する OpenID identifier を返すこと" do
@@ -1054,8 +1054,8 @@ describe User, '.synchronize_users' do
   describe '二人の利用中のユーザと一人の退職ユーザと一人の未使用ユーザが存在する場合' do
     before do
       User.delete_all
-      Admin::Setting.stub!(:protocol_by_initial_settings_default).and_return('http://')
-      Admin::Setting.stub!(:host_and_port_by_initial_settings_default).and_return('localhost:3000')
+      SkipEmbedded::InitialSettings['host_and_port'] = 'localhost:3000'
+      SkipEmbedded::InitialSettings['protocol'] = 'http://'
       @bob = create_user :user_options => {:name => 'ボブ', :admin => false}, :user_uid_options => {:uid => 'boob'}
       @alice = create_user :user_options => {:name => 'アリス', :admin => true}, :user_uid_options => {:uid => 'alice'}
       @carol = create_user :user_options => {:name => 'キャロル', :admin => false}, :user_uid_options => {:uid => 'carol'}, :status => 'RETIRED'

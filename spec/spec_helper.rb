@@ -241,5 +241,15 @@ def stub_flash_now
   controller.instance_eval{flash.stub!(:sweep)}
 end
 
+module SkipEmbedded
+  class InitialSettings
+    # テストの時のみ値の入れ替えを可能にしたいので。
+    def self.[]=(key, val)
+      instance.instance_variable_set(:@config, instance.instance_variable_get(:@config).dup)
+      instance.instance_variable_get(:@config)[key] = val
+    end
+  end
+end
+
 ######skip関連のテストで必要
 class ApplicationController;skip_before_filter :sso; end

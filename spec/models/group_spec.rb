@@ -239,8 +239,8 @@ describe Group do
     describe '2つの同期対象グループが存在する場合' do
       before do
         Group.delete_all
-        Admin::Setting.stub!(:protocol_by_initial_settings_default).and_return('http://')
-        Admin::Setting.stub!(:host_and_port_by_initial_settings_default).and_return('localhost:3000')
+        SkipEmbedded::InitialSettings['host_and_port'] = 'localhost:3000'
+        SkipEmbedded::InitialSettings['protocol'] = 'http://'
         bob = create_user :user_options => {:name => 'ボブ', :admin => false}, :user_uid_options => {:uid => 'boob'}
         alice = create_user :user_options => {:name => 'アリス', :admin => true}, :user_uid_options => {:uid => 'alice'}
         tom = create_user :user_options => {:name => 'トム', :admin => true}, :user_uid_options => {:uid => 'toom'}

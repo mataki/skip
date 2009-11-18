@@ -665,8 +665,8 @@ class BoardEntry < ActiveRecord::Base
       self.toggle!(:hide)
       self.entry_hide_operations.create!(:user => user, :operation_type => self.hide.to_s)
       url_options = {
-        :host => Admin::Setting.host_and_port_by_initial_settings_default,
-        :protocol => Admin::Setting.protocol_by_initial_settings_default
+        :host => SkipEmbedded::InitialSettings['host_and_port'],
+        :protocol => SkipEmbedded::InitialSettings['protocol']
       }.merge(self.get_url_hash)
       Message.save_message('QUESTION', self.user_id, url_for(url_options), _('State of your question [%s] is changed!') % ERB::Util.h(self.title)) unless user.id == self.user_id
     end

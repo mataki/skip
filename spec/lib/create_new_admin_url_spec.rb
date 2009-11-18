@@ -96,8 +96,8 @@ end
 
 describe CreateNewAdminUrl, '#show_new_admin_url' do
   include ActionController::UrlWriter
-  default_url_options[:host] = Admin::Setting.host_and_port_by_initial_settings_default
-  default_url_options[:protocol] = Admin::Setting.protocol_by_initial_settings_default
+  default_url_options[:host] = SkipEmbedded::InitialSettings['host_and_port']
+  default_url_options[:protocol] = SkipEmbedded::InitialSettings['protocol']
 
   before do
     @create_new_admin_url = CreateNewAdminUrl.new

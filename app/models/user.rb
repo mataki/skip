@@ -461,7 +461,7 @@ class User < ActiveRecord::Base
   end
 
   def openid_identifier
-    identity_url(:user => self.code, :protocol => Admin::Setting.protocol_by_initial_settings_default, :host => Admin::Setting.host_and_port_by_initial_settings_default)
+    identity_url(:user => self.code, :protocol => SkipEmbedded::InitialSettings['protocol'], :host => SkipEmbedded::InitialSettings['host_and_port'])
   end
 
   def to_s_log message
