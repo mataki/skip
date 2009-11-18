@@ -471,7 +471,7 @@ describe MypageController, 'mypage > manage(管理) 関連' do
 
   describe MypageController, "POST #apply_password" do
     before do
-      SkipEmbedded::InitialSettings.stub!("[]").with('login_mode').and_return('password')
+      SkipEmbedded::InitialSettings['login_mode'] = "password"
 
       @user = user_login
       @user.should_receive(:change_password)
@@ -501,9 +501,9 @@ describe MypageController, 'mypage > manage(管理) 関連' do
   describe MypageController, "POST #apply_ident_url" do
     before do
       @user = user_login
-      SkipEmbedded::InitialSettings.stub!("[]").with('login_mode').and_return('rp')
-      SkipEmbedded::InitialSettings.stub!("[]").with('fixed_op_url').and_return(nil)
-      SkipEmbedded::InitialSettings.stub!("[]").with('password_edit_setting').and_return(true)
+      SkipEmbedded::InitialSettings['login_mode'] = "rp"
+      SkipEmbedded::InitialSettings['fixed_op_url'] = nil
+      SkipEmbedded::InitialSettings['password_edit_setting'] = true
       @openid_url = "http://id.example.com/a_user"
     end
     describe '認証を開始した場合' do

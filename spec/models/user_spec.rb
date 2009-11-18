@@ -231,8 +231,8 @@ end
 
 describe User, "#before_save" do
   before do
-    SkipEmbedded::InitialSettings.stub!("[]").with('login_mode').and_return('password')
-    SkipEmbedded::InitialSettings.stub!("[]").with('sha1_digest_key').and_return("digest_key")
+    SkipEmbedded::InitialSettings['login_mode'] = 'password'
+    SkipEmbedded::InitialSettings['sha1_digest_key'] = "digest_key"
   end
   describe '新規の場合' do
     before do
@@ -436,8 +436,8 @@ end
 
 describe User, '#change_password' do
   before do
-    SkipEmbedded::InitialSettings.stub!("[]").with('login_mode').and_return('password')
-    SkipEmbedded::InitialSettings.stub!("[]").with('sha1_digest_key').and_return("digest_key")
+    SkipEmbedded::InitialSettings['login_mode'] = 'password'
+    SkipEmbedded::InitialSettings['sha1_digest_key'] = 'digest_key'
     @user = create_user(:user_options => {:password => 'Password1'})
     @old_password = 'Password1'
     @new_password = 'Hogehoge1'
@@ -874,13 +874,15 @@ end
 
 describe User, "#belong_symbols_with_collaboration_apps" do
   before do
-    SkipEmbedded::InitialSettings.stub!("[]").with('host_and_port').and_return('test.host')
-    SkipEmbedded::InitialSettings.stub!("[]").with('protocol').and_return('http://')
+    SkipEmbedded::InitialSettings['host_and_port'] = 'test.host'
+    SkipEmbedded::InitialSettings['protocol'] = 'http://'
     @user = stub_model(User, :belong_symbols => ["uid:a_user", "gid:a_group"], :code => "a_user")
   end
   describe "SkipEmbedded::InitialSettingsが設定されている場合" do
     before do
-      SkipEmbedded::InitialSettings.stub!("[]").with("belong_info_apps").and_return({ 'app' => { "url" => "http://localhost:3100/notes.js", "ca_file" => "hoge/fuga" } })
+      SkipEmbedded::InitialSettings["belong_info_apps"] = {
+        'app' => { "url" => "http://localhost:3100/notes.js", "ca_file" => "hoge/fuga" }
+      }
     end
     describe "情報が返ってくる場合" do
       before do
@@ -914,7 +916,7 @@ describe User, "#belong_symbols_with_collaboration_apps" do
   end
   describe "SkipEmbedded::InitialSettingsが設定されていない場合" do
     before do
-      SkipEmbedded::InitialSettings.stub!("[]").with("belong_info_apps").and_return(nil)
+      SkipEmbedded::InitialSettings["belong_info_apps"] = {}
     end
     it "SKIP内の所属情報を返すこと" do
       ["uid:a_user", "gid:a_group", Symbol::SYSTEM_ALL_USER, "public"].each do |symbol|
@@ -926,8 +928,8 @@ end
 
 describe User, "#openid_identifier" do
   before do
-    SkipEmbedded::InitialSettings.stub!("[]").with('host_and_port').and_return('test.host')
-    SkipEmbedded::InitialSettings.stub!("[]").with('protocol').and_return('http://')
+    SkipEmbedded::InitialSettings['host_and_port'] = 'test.host'
+    SkipEmbedded::InitialSettings['protocol'] = 'http://'
     @user = stub_model(User, :code => "a_user")
   end
   it "OPとして発行する OpenID identifier を返すこと" do
@@ -1182,7 +1184,7 @@ describe User, 'password_required?' do
   end
   describe 'パスワードモードの場合' do
     before do
-      SkipEmbedded::InitialSettings.stub!('[]').with('login_mode').and_return('password')
+      SkipEmbedded::InitialSettings['login_mode'] = 'password'
     end
     describe 'パスワードが空の場合' do
       before do
@@ -1229,7 +1231,7 @@ describe User, 'password_required?' do
   end
   describe 'パスワードモード以外の場合' do
     before do
-      SkipEmbedded::InitialSettings.stub!('[]').with('login_mode').and_return('rp')
+      SkipEmbedded::InitialSettings['login_mode'] = 'rp'
     end
     it '必要ではない(false)と判定されること' do
       @user.send(:password_required?).should be_false

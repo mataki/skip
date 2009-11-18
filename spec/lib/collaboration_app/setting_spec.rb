@@ -18,7 +18,7 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 describe CollaborationApp::Setting , '#operations' do
   describe 'operationsのみ設定されている場合' do
     before do
-      SkipEmbedded::InitialSettings.stub!('[]').with('collaboration_apps').and_return({'wiki' => {'operations' => nil}})
+      SkipEmbedded::InitialSettings['collaboration_apps'] = {'wiki' => {'operations' => nil}}
     end
     it '空配列が返ること' do
       CollaborationApp::Setting.new('wiki').operations.should be_empty

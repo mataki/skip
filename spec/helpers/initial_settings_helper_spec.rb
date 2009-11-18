@@ -18,8 +18,8 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe InitialSettingsHelper, "#login_mode?" do
   describe "固定RPモードの場合" do
     before do
-      SkipEmbedded::InitialSettings.stub!("[]").with('login_mode').and_return('rp')
-      SkipEmbedded::InitialSettings.stub!("[]").with('fixed_op_url').and_return('http://op.openskip.org/')
+      SkipEmbedded::InitialSettings['login_mode'] = 'rp'
+      SkipEmbedded::InitialSettings['fixed_op_url'] = 'http://op.openskip.org/'
     end
     it { helper.login_mode?(:password).should be_false }
     it { helper.login_mode?(:free_rp).should be_false }
@@ -27,8 +27,8 @@ describe InitialSettingsHelper, "#login_mode?" do
   end
   describe "フリーRPモードの場合" do
     before do
-      SkipEmbedded::InitialSettings.stub!("[]").with('login_mode').and_return('rp')
-      SkipEmbedded::InitialSettings.stub!("[]").with('fixed_op_url').and_return(nil)
+      SkipEmbedded::InitialSettings['login_mode'] = 'rp'
+      SkipEmbedded::InitialSettings['fixed_op_url'] = nil
     end
     it { helper.login_mode?(:password).should be_false }
     it { helper.login_mode?(:free_rp).should be_true }
@@ -36,7 +36,7 @@ describe InitialSettingsHelper, "#login_mode?" do
   end
   describe "パスワードモードの場合" do
     before do
-      SkipEmbedded::InitialSettings.stub!("[]").with('login_mode').and_return('password')
+      SkipEmbedded::InitialSettings['login_mode'] = 'password'
     end
     it { helper.login_mode?(:password).should be_true }
     it { helper.login_mode?(:free_rp).should be_false }
@@ -47,23 +47,22 @@ end
 describe InitialSettingsHelper, '#enable_activate?' do
   describe 'パスワードモード かつ ユーザ登録可 かつ メール機能有効の場合' do
     before do
-      SkipEmbedded::InitialSettings.stub!("[]").with('login_mode').and_return('password')
-      Admin::Setting.stub!(:stop_new_user).and_return(false)
-      SkipEmbedded::InitialSettings.stub!("[]").with('mail').and_return({'show_mail_function' => true})
+      SkipEmbedded::InitialSettings['login_mode'] = 'password'
+      SkipEmbedded::InitialSettings['mail'] = {'show_mail_function' => true}
     end
     it { helper.enable_activate?.should be_true }
   end
   describe '固定RPモードの場合' do
     before do
-      SkipEmbedded::InitialSettings.stub!("[]").with('login_mode').and_return('rp')
-      SkipEmbedded::InitialSettings.stub!("[]").with('fixed_op_url').and_return('http://op.openskip.org/')
+      SkipEmbedded::InitialSettings['login_mode'] = 'rp'
+      SkipEmbedded::InitialSettings['fixed_op_url'] = 'http://op.openskip.org/'
     end
     it { helper.enable_activate?.should be_false }
   end
   describe 'フリーRPモードの場合' do
     before do
-      SkipEmbedded::InitialSettings.stub!("[]").with('login_mode').and_return('rp')
-      SkipEmbedded::InitialSettings.stub!("[]").with('fixed_op_url').and_return(nil)
+      SkipEmbedded::InitialSettings['login_mode'] = 'rp'
+      SkipEmbedded::InitialSettings['fixed_op_url'] = nil
     end
     it { helper.enable_activate?.should be_false }
   end
@@ -75,8 +74,8 @@ describe InitialSettingsHelper, '#enable_activate?' do
   end
   describe 'メール機能無効の場合' do
     before do
-      SkipEmbedded::InitialSettings.stub!("[]").with('login_mode').and_return('password')
-      SkipEmbedded::InitialSettings.stub!("[]").with('mail').and_return({'show_mail_function' => false})
+      SkipEmbedded::InitialSettings['login_mode'] = 'password'
+      SkipEmbedded::InitialSettings['mail'] = {'show_mail_function' => false}
     end
     it { helper.enable_activate?.should be_false }
   end
@@ -85,21 +84,21 @@ end
 describe InitialSettingsHelper, '#enable_signup?' do
   describe 'パスワードモードの場合' do
     before do
-      SkipEmbedded::InitialSettings.stub!("[]").with('login_mode').and_return('password')
+      SkipEmbedded::InitialSettings['login_mode'] = 'password'
     end
     it { helper.enable_signup?.should be_true }
   end
   describe '固定RPモードの場合' do
     before do
-      SkipEmbedded::InitialSettings.stub!("[]").with('login_mode').and_return('rp')
-      SkipEmbedded::InitialSettings.stub!("[]").with('fixed_op_url').and_return('http://op.openskip.org/')
+      SkipEmbedded::InitialSettings['login_mode'] = 'rp'
+      SkipEmbedded::InitialSettings['fixed_op_url'] = 'http://op.openskip.org/'
     end
     it { helper.enable_signup?.should be_false }
   end
   describe 'フリーRPモードの場合' do
     before do
-      SkipEmbedded::InitialSettings.stub!("[]").with('login_mode').and_return('rp')
-      SkipEmbedded::InitialSettings.stub!("[]").with('fixed_op_url').and_return(nil)
+      SkipEmbedded::InitialSettings['login_mode'] = 'rp'
+      SkipEmbedded::InitialSettings['fixed_op_url'] = nil
     end
     it { helper.enable_signup?.should be_false }
   end
@@ -108,29 +107,29 @@ end
 describe InitialSettingsHelper, '#enable_forgot_password?' do
   describe 'パスワードモード かつ メール機能有効の場合' do
     before do
-      SkipEmbedded::InitialSettings.stub!("[]").with('login_mode').and_return('password')
-      SkipEmbedded::InitialSettings.stub!("[]").with('mail').and_return({'show_mail_function' => true})
+      SkipEmbedded::InitialSettings['login_mode'] = 'password'
+      SkipEmbedded::InitialSettings['mail'] = {'show_mail_function' => true}
     end
     it { helper.enable_forgot_password?.should be_true }
   end
   describe '固定RPモードの場合' do
     before do
-      SkipEmbedded::InitialSettings.stub!("[]").with('login_mode').and_return('rp')
-      SkipEmbedded::InitialSettings.stub!("[]").with('fixed_op_url').and_return('http://op.openskip.org/')
+      SkipEmbedded::InitialSettings['login_mode'] = 'rp'
+      SkipEmbedded::InitialSettings['fixed_op_url'] = 'http://op.openskip.org/'
     end
     it { helper.enable_forgot_password?.should be_false }
   end
   describe 'フリーRPモードの場合' do
     before do
-      SkipEmbedded::InitialSettings.stub!("[]").with('login_mode').and_return('rp')
-      SkipEmbedded::InitialSettings.stub!("[]").with('fixed_op_url').and_return(nil)
+      SkipEmbedded::InitialSettings['login_mode'] = 'rp'
+      SkipEmbedded::InitialSettings['fixed_op_url'] = nil
     end
     it { helper.enable_forgot_password?.should be_false }
   end
   describe 'メール機能無効の場合' do
     before do
-      SkipEmbedded::InitialSettings.stub!("[]").with('login_mode').and_return('password')
-      SkipEmbedded::InitialSettings.stub!("[]").with('mail').and_return({'show_mail_function' => false})
+      SkipEmbedded::InitialSettings['login_mode'] = 'password'
+      SkipEmbedded::InitialSettings['mail'] = {'show_mail_function' => false}
     end
     it { helper.enable_forgot_password?.should be_false }
   end
@@ -139,29 +138,29 @@ end
 describe InitialSettingsHelper, '#enable_forgot_openid?' do
   describe 'フリーRPモードの場合 かつ メール機能有効の場合' do
     before do
-      SkipEmbedded::InitialSettings.stub!("[]").with('login_mode').and_return('rp')
-      SkipEmbedded::InitialSettings.stub!("[]").with('fixed_op_url').and_return(nil)
-      SkipEmbedded::InitialSettings.stub!("[]").with('mail').and_return({'show_mail_function' => true})
+      SkipEmbedded::InitialSettings['login_mode'] = 'rp'
+      SkipEmbedded::InitialSettings['fixed_op_url'] = nil
+      SkipEmbedded::InitialSettings['mail'] = {'show_mail_function' => true}
     end
     it { helper.enable_forgot_openid?.should be_true }
   end
   describe 'パスワードモードの場合' do
     before do
-      SkipEmbedded::InitialSettings.stub!("[]").with('login_mode').and_return('password')
+      SkipEmbedded::InitialSettings['login_mode'] = 'password'
     end
     it { helper.enable_forgot_openid?.should be_false }
   end
   describe '固定RPモードの場合' do
     before do
-      SkipEmbedded::InitialSettings.stub!("[]").with('login_mode').and_return('rp')
-      SkipEmbedded::InitialSettings.stub!("[]").with('fixed_op_url').and_return('http://op.openskip.org/')
+      SkipEmbedded::InitialSettings['login_mode'] = 'rp'
+      SkipEmbedded::InitialSettings['fixed_op_url'] = 'http://op.openskip.org/'
     end
     it { helper.enable_forgot_openid?.should be_false }
   end
   describe 'メール機能無効の場合' do
     before do
-      SkipEmbedded::InitialSettings.stub!("[]").with('login_mode').and_return('password')
-      SkipEmbedded::InitialSettings.stub!("[]").with('mail').and_return({'show_mail_function' => false})
+      SkipEmbedded::InitialSettings['login_mode'] = 'password'
+      SkipEmbedded::InitialSettings['mail'] = {'show_mail_function' => false}
     end
     it { helper.enable_forgot_openid?.should be_false }
   end
