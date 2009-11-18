@@ -22,7 +22,6 @@ class Message < ActiveRecord::Base
     "QUESTION"            => { :name => N_("New Change of Question Status"), :icon_name => 'tick' },
     "JOIN"                => { :name => N_("Join"), :icon_name => "group_add"},
     "FORCED_JOIN"         => { :name => N_("Forced join"), :icon_name => "group_add"},
-    "APPROVAL"            => { :name => N_("Approval"), :icon_name => "group_add"},
     "LEAVE"               => { :name => N_("Leave"), :icon_name => "group_delete"},
     "FORCED_LEAVE"        => { :name => N_("Forced leave"), :icon_name => "group_delete"},
     "APPROVAL_OF_JOIN"    => { :name => N_("Approval of join"), :icon_name => "group_add"},

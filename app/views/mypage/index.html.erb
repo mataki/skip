@@ -17,6 +17,13 @@
           <% end -%>
         </div>
       <% end -%>
+      <% Group.owned(current_user).each do |group| -%>
+        <% unless group.group_participations.waiting.empty? -%>
+          <div class="item">
+            <%= link_to(icon_tag('group_add') + _("New user is waiting for approval in %s.") % group.name, {:controller => 'group', :action => 'manage', :gid => group.gid, :menu => 'manage_permit'}) %>
+          </div>
+        <% end -%>
+      <% end -%>
     </div>
   <% end -%>
 <% end -%>

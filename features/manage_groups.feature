@@ -73,36 +73,38 @@ Feature: グループの管理
   Scenario: グループ管理者としてユーザを強制参加させることが出来る
     Given 以下のグループを作成する:
       |owner    |gid        |name         |waiting  |
-      |a_user   |rails      |Rails        |false    |
+      |alice    |rails      |Rails        |false    |
+      |kenji    |vim_group  |VimGroup     |false    |
+    And "johji"がユーザ登録する
 
-    When "a_user"でログインする
+    When "alice"でログインする
     And "railsグループのトップページ"にアクセスする
     And "管理"リンクをクリックする
     And "参加者管理"リンクをクリックする
-    And "symbol"に"uid:100003"と入力する
+    And "symbol"に"uid:johji"と入力する
     And "参加者に追加"ボタンをクリックする
-    Then flashメッセージに"a_group_owned_userさんを参加者に追加しました。"と表示されていること
-    And "a_group_owned_user"と表示されていること
+    Then flashメッセージに"johjiさんを参加者に追加しました。"と表示されていること
+    And "johji"と表示されていること
 
-    When "a_group_owned_user"でログインする
-    And "[Rails]に強制参加しました。"と表示されていること
+    When "johji"でログインする
+    Then "[Rails]に参加することになりました。"と表示されていること
 
-    When "a_user"でログインする
+    When "alice"でログインする
     And "railsグループのトップページ"にアクセスする
     And "管理"リンクをクリックする
     And "参加者管理"リンクをクリックする
-    And "symbol"に"uid:100003"と入力する
+    And "symbol"に"uid:johji"と入力する
     And "参加者に追加"ボタンをクリックする
-    Then flashメッセージに"a_group_owned_userさんは既に参加済み/参加申請済みです。"と表示されていること
+    Then flashメッセージに"johjiさんは既に参加済み/参加申請済みです。"と表示されていること
 
     When "symbol"に"uid:not_exist_user"と入力する
     And "参加者に追加"ボタンをクリックする
 
     Then flashメッセージに"ユーザ・グループの選択が正しくありません。"と表示されていること
 
-    When "symbol"に"gid:a_protected_group1"と入力する
+    When "symbol"に"gid:vim_group"と入力する
     And "参加者に追加"ボタンをクリックする
-    Then flashメッセージに"a_protected_group1の参加者をこのグループの参加者に追加しました。"と表示されていること
+    Then flashメッセージに"VimGroupの参加者をこのグループの参加者に追加しました。"と表示されていること
 
     When "symbol"に"gid:not_exist_group"と入力する
     And "参加者に追加"ボタンをクリックする

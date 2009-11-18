@@ -3311,7 +3311,7 @@ msgstr "グループからの強制退会"
 #: app/controllers/group_controller.rb:187
 #: app/controllers/group_controller.rb:199
 msgid "Forced to join the group [%s]."
-msgstr "[%s]に強制参加しました。"
+msgstr "[%s]に参加することになりました。"
 
 #: app/views/shared/_password_login_form.html.erb:39
 msgid "Forgot your password? Click here."
