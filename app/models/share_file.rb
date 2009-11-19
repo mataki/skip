@@ -217,7 +217,7 @@ class ShareFile < ActiveRecord::Base
     # カテゴリ
     if category = options[:category] and category != ''
       conditions_state << " and share_files.category like ?"
-      conditions_param << '%[' + category + ']%'
+      conditions_param << '%' + category + '%'
     end
 
     #タグ

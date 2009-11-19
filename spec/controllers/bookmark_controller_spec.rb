@@ -95,7 +95,6 @@ describe BookmarkController, "GET #list" do
   describe "自分のブックマーク一覧を表示した場合" do
     before do
       User.stub(:find_by_uid).with("a_user").and_return(@user)
-      BookmarkComment.stub(:get_tags).with(@user.id).and_return(@tags = mock('tags'))
       get :list, :uid => "a_user"
     end
     it "set assigns" do
@@ -103,7 +102,6 @@ describe BookmarkController, "GET #list" do
       assigns[:title].should == "My Page"
       assigns[:user].should == @user
       assigns[:tab_menu_option].should == { :uid => @user.uid }
-      assigns[:tags].should == @tags
       assigns[:bookmark_comments].should == @bookmark_comments
     end
 
@@ -113,7 +111,6 @@ describe BookmarkController, "GET #list" do
   describe "他人のブックマーク一覧を表示した場合" do
     before do
       User.stub(:find_by_uid).with("b_user").and_return(@target_user = mock_model(User, :name => "対象ユーザ", :uid => "b_user", :mark_track => true))
-      BookmarkComment.stub(:get_tags).with(@target_user.id).and_return(@tags = mock('tags'))
       get :list, :uid => "b_user"
     end
     it "set assigns" do
@@ -121,7 +118,6 @@ describe BookmarkController, "GET #list" do
       assigns[:title].should == "Mr./Ms. 対象ユーザ"
       assigns[:user].should == @target_user
       assigns[:tab_menu_option].should == { :uid => @target_user.uid }
-      assigns[:tags].should == @tags
       assigns[:bookmark_comments].should == @bookmark_comments
     end
 

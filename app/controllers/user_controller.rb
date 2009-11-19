@@ -128,8 +128,6 @@ private
 
   def setup_blog_left_box options
     find_params = BoardEntry.make_conditions(login_user_symbols, options)
-    # カテゴリ
-    @categories = BoardEntry.get_category_words(find_params)
 
     # 月毎のアーカイブ
     @month_archives = BoardEntry.find(:all,

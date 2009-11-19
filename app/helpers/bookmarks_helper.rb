@@ -15,4 +15,15 @@
 
 module BookmarksHelper
 
+  def bookmark_comment_tag_search_links_tag comma_tags, options = {}
+    return '' if comma_tags.blank?
+    tag_links = comma_tags.split(',').map do |tag|
+      link_to h(tag), {:controller => 'bookmarks', :tag_words => h(tag)}, :class => 'tag'
+    end
+    if max = options[:max] and max > 0
+      toggle_links(tag_links, max)
+    else
+      tag_links.join('&nbsp;')
+    end
+  end
 end

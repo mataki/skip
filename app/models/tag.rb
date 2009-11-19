@@ -18,6 +18,10 @@ class Tag < ActiveRecord::Base
   has_many :entry_tags
   has_many :chains, :through => :chain_tags
   has_many :chain_tags
+  has_many :share_files, :through => :share_file_tags
+  has_many :share_file_tags
+  has_many :bookmark_comments, :through => :bookmark_comment_tags
+  has_many :bookmark_comment_tags
 
   named_scope :follow_chains_by, proc { |user|
     { :conditions => ['chains.from_user_id = ?', user.id], :joins => [:chains], :group => 'tags.id' }
@@ -33,6 +37,22 @@ class Tag < ActiveRecord::Base
 
   named_scope :on_chains, proc {
     { :joins => [:chains] }
+  }
+
+  named_scope :entries_owned_by, proc { |owner|
+    { :conditions => ['board_entries.symbol = ?', owner.symbol], :joins => [:board_entries], :group => 'tags.id' }
+  }
+
+  named_scope :share_files_owned_by, proc { |owner|
+    { :conditions => ['share_files.owner_symbol = ?', owner.symbol], :joins => [:share_files], :group => 'tags.id' }
+  }
+
+  named_scope :bookmark_comments_by, proc { |user|
+    { :conditions => ['bookmark_comments.user_id = ?', user.id], :joins => [:bookmark_comments], :group => 'tags.id' }
+  }
+
+  named_scope :commented_to, proc { |bookmark|
+    { :conditions => ['bookmark_comments.id IN (?)', bookmark.bookmark_comments.map(&:id)], :joins => [:bookmark_comments], :group => 'tags.id'}
   }
 
   named_scope :order_popular, proc {

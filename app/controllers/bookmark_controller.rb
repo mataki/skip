@@ -139,9 +139,6 @@ class BookmarkController < ApplicationController
       :type => params[:type]
     }
 
-    #タグ検索用
-    @tags = BookmarkComment.get_tags @user.id
-
     #結果表示用
     conditions = BookmarkComment.make_conditions_for_comment(current_user.id, find_params)
     @bookmark_comments = BookmarkComment.scoped(

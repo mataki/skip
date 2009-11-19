@@ -82,19 +82,13 @@ module BoardEntriesHelper
   # :maxを指定すると指定サイズを超えるタグを隠す。開閉するためにはapplication.jsを読み込んでおかなければならない。
   def entry_tag_search_links_tag comma_tags, options = {}
     return '' if comma_tags.blank?
-    tags = comma_tags.split(',')
-    show_tags_html = tags.slice!(0..(options[:max] ? (options[:max] - 1) : -1)).map do |tag|
+    tag_links = comma_tags.split(',').map do |tag|
       link_to h(tag), {:controller => 'search', :action => 'entry_search', :tag_words => h(tag)}, :class => 'tag'
-    end.join('&nbsp;')
-    hide_tags_html =
-      if tags.size > 0
-        str = link_to(icon_tag('bullet_toggle_plus'), '#', :class => 'tag_open')
-        str << content_tag(:span, :class => 'invisible') do
-          tags.map do |tag|
-            link_to h(tag), {:controller => 'search', :action => 'entry_search', :tag_words => h(tag)}, :class => 'tag'
-          end.join('&nbsp;') + link_to(icon_tag('bullet_toggle_minus'), '#', :class => 'tag_close')
-        end
-      end || ''
-    show_tags_html + '&nbsp;' + hide_tags_html
+    end
+    if max = options[:max] and max > 0
+      toggle_links(tag_links, max)
+    else
+      tag_links.join('&nbsp;')
+    end
   end
 end

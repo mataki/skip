@@ -264,12 +264,12 @@ class BoardEntry < ActiveRecord::Base
     # カテゴリ
     if category = options[:category] and category != ''
       conditions_state << " and board_entries.category like ?"
-      conditions_param << '%[' + category + ']%'
+      conditions_param << '%' + category + '%'
     end
     if categories = options[:categories] and !categories.empty?
       categories.each do |category|
         conditions_state << " and board_entries.category like ?"
-        conditions_param << '%[' + category + ']%'
+        conditions_param << '%' + category + '%'
       end
     end
 

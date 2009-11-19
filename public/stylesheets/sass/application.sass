@@ -54,6 +54,9 @@ a.tag
   :color #8080FF
   &:visited
     :color #8080FF
+span.tag
+  :background #6665cb
+  :color #fff
 
 .clear_left
   :clear left
@@ -378,17 +381,17 @@ div.topix_body
 
 // タグクラウド
 // ------------------------------------------------------------
-.tag1
+a.tag1, span.tag1
   :font-size = !base_font_size
-.tag2
+a.tag2, span.tag2
   :font-size = !base_font_size + 3px
-.tag3
+a.tag3, span.tag3
   :font-size = !base_font_size + 6px
-.tag4
+a.tag4, span.tag4
   :font-size = !base_font_size + 9px
-.tag5
+a.tag5, span.tag5
   :font-size = !base_font_size + 12px
-.tag6
+a.tag6, span.tag6
   :font-size = !base_font_size + 15px
 .tag_cloud
   .count
@@ -549,10 +552,6 @@ table.user_chain
     img
       :width 48px
       :height 48px
-  td.tags
-    :font
-      :weight bold
-    :color green
 
 // ============================================================
 // 2. 共通の構造
@@ -1010,8 +1009,6 @@ div.bookmark_space
   div.description
     :font-size 12px
     :text-align right
-    span.tags
-      :color blue
 
 // 新規,編集
 div.edit_form_space.bookmark.edit

@@ -7,10 +7,10 @@
   <% end %>
   <div class="title"><%= link_to_bookmark_url @bookmark %></div>
   <%= _('[Tags]')%>
-  <div style="margin: 5px 10px; background-color: #fff0f0; padding: 5px;">
+  <div class="tag_cloud">
   <% tag_cloud @tags do |name, count, css_class| -%>
-    <%= link_to name, {:controller => "bookmarks", :action => "index", :tag_words => name}, :class => css_class -%>
-    <span style='color: silver; font-size: 10px;'>(<%= h count -%>)</span>
+    <%= link_to name, {:controller => "bookmarks", :action => "index", :tag_words => name}, :class => "tag #{css_class}" -%>
+    <span class="count">(<%= h count -%>)</span>
   <% end -%>
   </div>
   <div style="overflow: hidden;"><%= _('[URL]&nbsp;')%><%= link_to_bookmark_url @bookmark, @bookmark.escaped_url %><br/>
@@ -23,7 +23,7 @@
     <div class="comment_space" <%= " style='background-color: lightyellow;'" if bookmark_comment.user.id == @current_user.id %>>
       <span style='font-size:10px;'><%= bookmark_comment.updated_on.strftime(_('%B %d %Y')) if bookmark_comment.updated_on %></span>
       <span><%= user_link_to bookmark_comment.user, :image_on => true %></span>
-      <span style='font-size:10px; color: blue;'><%=h bookmark_comment.tags %></span>
+      <%= bookmark_comment_tag_search_links_tag bookmark_comment.tags %>
       <span><%=h bookmark_comment.comment %></span>
       <% if bookmark_comment.user.id == @current_user.id -%>
         <%= hidden_field_tag("authenticity_token", form_authenticity_token) %>

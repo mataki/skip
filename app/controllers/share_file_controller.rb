@@ -166,7 +166,6 @@ class ShareFileController < ApplicationController
 
     @owner_name = @owner_obj.name
     @owner_symbol = @owner_obj.symbol
-    @categories = ShareFile.get_tags @owner_obj.symbol
 
     params[:sort_type] ||= "date"
     params_hash = { :owner_symbol => @owner_symbol, :category => params[:category],

@@ -366,8 +366,6 @@ private
 
   def setup_bbs_left_box options
     find_params = BoardEntry.make_conditions(login_user_symbols, options)
-    # カテゴリ
-    @categories = BoardEntry.get_category_words(find_params)
 
     # 人毎のアーカイブ
     select_state = "count(distinct board_entries.id) as count, users.name as user_name, users.id as user_id"

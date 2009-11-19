@@ -13,16 +13,16 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-module ChainsHelper
-  def chain_tag_search_links_tag comma_tags, options = {}
-    return '' if comma_tags.blank?
-    tag_links = comma_tags.split(',').map do |tag|
-      link_to h(tag), users_path(:tag_words => h(tag)), :class => "tag"
-    end
-    if max = options[:max] and max > 0
-      toggle_links(tag_links, max)
-    else
-      tag_links.join('&nbsp;')
-    end
+module TagsHelper
+  def toggle_links links, show_max = 3
+    show_links_as_s = links.slice!(0..show_max - 1).join('&nbsp;')
+    hide_links_as_s =
+      if links.size > 0
+        str = link_to(icon_tag('bullet_toggle_plus'), '#', :class => 'tag_open')
+        str << content_tag(:span, :class => 'invisible') do
+          links.join('&nbsp;') + link_to(icon_tag('bullet_toggle_minus'), '#', :class => 'tag_close')
+        end
+      end || ''
+    show_links_as_s + '&nbsp;' + hide_links_as_s
   end
 end

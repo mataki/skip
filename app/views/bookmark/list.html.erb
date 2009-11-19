@@ -30,18 +30,7 @@
     <div class="box_space_bottom"><%= link_to _("[Cancel selection]"), {:controller => 'user', :action=>'bookmark', :user_id => params[:user_id]} %></div>
   </div><!-- box_space -->
 
-  <div class="box_space">
-    <div class="box_space_title"><%= icon_tag 'tag_blue' %><%= _('Tags')%></div>
-    <div class="box_space_body">
-      <% tag_cloud @tags do |name, count, css_class| %>
-      <% if params[:category] == name -%><span style="background-color: yellow;"><% end -%>
-        <%= link_to name, {:controller => 'user', :action=>'bookmark', :category=>name, :user_id => params[:user_id]}, :class => css_class %>
-        <% if params[:category] == name -%></span><% end -%>
-      <span class="category_count">(<%= count %>)</span>
-      <% end %>
-    </div>
-    <div class="box_space_bottom"><%= link_to _("[Cancel selection]"), {:controller => 'user', :action=>'bookmark', :user_id => params[:user_id]} %></div>
-  </div><!-- box_space -->
+  <%= render :partial => 'tag_cloud_box' %>
 <% end -%>
 
 <% content_for :contents_right do -%>
@@ -59,9 +48,10 @@
         <span id="<%= elem_id %>"><%= render :partial => "stared", :locals => {:bookmark_comment => comment} %></span>
         <% end -%>
         <%= link_to_bookmark_url comment.bookmark %>
+        <%= bookmark_comment_tag_search_links_tag comment.tags, :max => 3 %>
       </div>
       <div class="description">
-        <span class="tags"><%=h comment.tags %></span><%=h comment.comment %>
+        <%=h comment.comment %>
         <% if @current_user.id == comment.user_id %>
           <% new_bookmark_url_hash = {:controller => "bookmark", :action => "new_without_bookmarklet", :url => comment.bookmark.escaped_url, :title => h(comment.bookmark.title)} -%>
           <%= link_to(icon_tag('tag_blue_edit', :title => _('Edit')), new_bookmark_url_hash, {:onclick => "sub_window_open('#{url_for(new_bookmark_url_hash)}', 'subwindow', 550, 400); return false;"}) %>

@@ -142,7 +142,7 @@ private
 
     if options[:category]  && !for_tag
      condition_state << " and tags like ?"
-      condition_param << "%[#{options[:category]}]%"
+      condition_param << "%#{options[:category]}%"
     end
 
     if options[:type] && !for_tag

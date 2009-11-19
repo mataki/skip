@@ -32,4 +32,16 @@ module ShareFileHelper
     output << "<a href=\"#\" id=\"clear_download_history_link_#{share_file.id}\" class=\"clear_download_history_link\">" + _('[Clear download history]') + "</a>"
     output
   end
+
+  def share_file_search_links_tag comma_tags, options = {}
+    return '' if comma_tags.blank?
+    tag_links = comma_tags.split(',').map do |tag|
+      link_to h(tag), {:controller => 'search', :action => 'share_file_search', :tag_words => h(tag)}, :class => 'tag'
+    end
+    if max = options[:max] and max > 0
+      toggle_links(tag_links, max)
+    else
+      tag_links.join('&nbsp;')
+    end
+  end
 end
