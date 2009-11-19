@@ -83,7 +83,7 @@ ActionController::Routing::Routes.draw do |map|
     admin_map.resources :bookmarks, :only => [:index, :show, :destroy] do |bookmark|
       bookmark.resources :bookmark_comments, :only => [:index, :destroy]
     end
-    admin_map.resources :users, :new => [:import, :import_confirmation, :first], :member => [:change_uid, :create_uid, :show_signup_url, :issue_activation_code, :issue_password_reset_code], :collection => [:lock_actives, :issue_activation_codes] do |user|
+    admin_map.resources :users, :new => [:import, :import_confirmation, :first], :member => [:change_uid, :create_uid, :issue_activation_code, :issue_password_reset_code], :collection => [:lock_actives, :issue_activation_codes] do |user|
       user.resources :openid_identifiers, :only => [:edit, :update, :destroy]
       user.resource :user_profile
       user.resource :picture

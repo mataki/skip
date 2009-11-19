@@ -70,11 +70,6 @@
 <% end -%>
 
 <% content_for :javascript_initializers do -%>
-    $j.fn.nyroModal.settings.processHandler = function(settings) {
-        $j.nyroModalSettings({
-            minWidth: 10, minHeight: 10
-        });
-    };
     $j('.issue_activation_code_link')
     .click(function() {
         return confirm('<%= SkipEmbedded::InitialSettings['mail']['show_mail_function'] ? _('Are you sure to send activation email to target user?') : _('Activation URL is to be issued. Send the URL shown by clicking the confirmation link in the next screen to the user.') %>');

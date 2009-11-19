@@ -213,13 +213,6 @@ class Admin::UsersController < Admin::ApplicationController
     end
   end
 
-  def show_signup_url
-    @user = Admin::User.find(params[:id])
-    @signup_url = signup_url(@user.activation_token)
-    @mail_body = render_to_string(:template => "user_mailer/smtp/sent_activate", :layout => false)
-    render :layout => false
-  end
-
   def issue_activation_code
     do_issue_activation_codes([params[:id]])
     redirect_to admin_users_path

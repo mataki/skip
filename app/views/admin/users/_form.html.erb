@@ -54,9 +54,11 @@
 <% if !SkipEmbedded::InitialSettings['mail']['show_mail_function'] && @user.active? && login_mode?(:password) -%>
 <p>
   <%= label Admin::User.name, :password %>
-  : [<%= link_to(_('"Show URL for resetting'), issue_password_reset_code_admin_user_path(@user), :class => 'nyroModal') %>]
+  : [<%= link_to _('"Show URL for resetting'), issue_password_reset_code_admin_user_path(@user), :id => 'issue_password_reset_code_link' %>]
   <%= help_icon_tag :content => _('This will show the URL for resetting the password. Send the URL shown by clicking the link to the user by email.') %>
 </p>
+<div id="show_password_reset_code">
+</div>
 <% end -%>
 <% unless login_mode?(:password) -%>
 <p>
@@ -68,4 +70,16 @@
     <%= text_field :openid_identifier, :url %>
   <% end -%>
 </p>
+<% end -%>
+
+<% content_for :javascript_initializers do -%>
+  $j('#issue_password_reset_code_link').click(function(){
+    $j.ajax({
+      url: $j(this).attr('href'),
+      success: function(text){
+        $j('#show_password_reset_code').html(text);
+      }
+    });
+    return false;
+  });
 <% end -%>

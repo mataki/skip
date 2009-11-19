@@ -125,18 +125,13 @@ module ApplicationHelper
   end
 
   def show_picture(user, options = {})
-    options = {:border => '0', :name => 'picture', :alt => h(user.name), :popup => false, :fit_image => true}.merge(options)
+    options = {:border => '0', :name => 'picture', :alt => h(user.name), :fit_image => true}.merge(options)
     options.merge!(:class => 'fit_image') if options.delete(:fit_image)
     if user.retired?
       file_name = 'retired.png'
     elsif picture = user.picture
       unless picture.new_record?
         file_name = url_for(:controller => '/pictures', :action => 'picture', :id => picture.id, :format => :png)
-        if options.delete(:popup)
-          pop_name = url_for(:controller => '/pictures', :action => 'picture', :id => picture.id.to_s)
-          options[:title] = _("Click to see in original size.")
-          return link_to(image_tag(file_name, options), file_name, :class => 'nyroModal zoomable')
-        end
       else
         file_name = 'default_picture.png'
       end
