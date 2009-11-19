@@ -82,8 +82,6 @@ $j = jQuery.noConflict();
 var relative_url_root = '<%= relative_url_root %>';
 <% end -%>
 <%= javascript_include_tag 'application' %>
-<%= skip_javascript_include_tag 'skip_util' %>
-<%= skip_reflect_customized_javascript_include_tag %>
 <%= javascript_include_tag :skip_embedded, :cache => "skip_embedded" %>
 <%= skip_jquery_include_tag 'jquery.tablesorter' %>
 <%= yield :javascript_includes %>

@@ -375,10 +375,12 @@ div.topix_body
     :text-overflow ellipsis
     :width 50%
   // リスト表示中の記事へのリンク
-  a.entry, .owner a, .pagination a
+  a.entry, .owner a
     +default_link
     &:visited
       +link_visited_text
+  .pagination a
+    +default_link
   // DRYじゃないが、マイページでタブモードにするとui-widget-content aのほうが強くなってしまうのでさらに上書き
   a.tag
     :font-size = !small_font_size
