@@ -199,7 +199,9 @@
 <% end -%>
 
 <% content_for :javascript_initializers do -%>
-    $j('#tabs').tabs({ cookie:{ expires:30 } });
+    $j('#tabs').tabs({
+      cookie: { expires:30 },
+    });
     $j('#tabs').show();
 
     $j('.pagination a').live('click', function() {
@@ -210,10 +212,26 @@
           success: function(html) {
               $j('#' + target).html(html).appendClickForToggleTag();
               $j('#' + target + '_body').highlight();
+              $j.cookie('ui-tabs-current-url', url, { expires: 30 });
           }
       });
       return false;
     });
+
+    <% if current_user.custom.display_entries_format == 'tabs' -%>
+    var url = $j.cookie('ui-tabs-current-url');
+    if (url != null) {
+        var target = $j.getUrlVar(url, 'target');
+        $j('#' + target).hide();
+        $j.ajax({
+            url: url,
+            success: function(html) {
+                $j('#' + target).html(html).show().appendClickForToggleTag();
+                $j('#' + target + '_body').highlight();
+            }
+        });
+    }
+    <% end -%>
 
     // setupLoadCalendar("<%= url_for(:action => 'load_calendar') %>");
 <% end -%>
