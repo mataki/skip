@@ -19,8 +19,6 @@ class BookmarkComment < ActiveRecord::Base
   has_many :bookmark_comment_tags, :dependent => :destroy
   has_many :tag_strings, :source => :tag,  :through => :bookmark_comment_tags
 
-  before_save :square_brackets_tags
-
   N_('BookmarkComment|Public|true')
   N_('BookmarkComment|Public|false')
   N_('BookmarkComment|Stared|true')
@@ -35,7 +33,7 @@ class BookmarkComment < ActiveRecord::Base
   end
 
   def after_save
-    Tag.create_by_string tags, bookmark_comment_tags
+    Tag.create_by_comma_tags tags, bookmark_comment_tags
   end
 
   def self.make_conditions_for_tag(login_user_id, options={})
@@ -127,10 +125,6 @@ class BookmarkComment < ActiveRecord::Base
              :joins => join_state)
   end
 
-  def comma_tags
-    Tag.comma_tags(self.tags)
-  end
-
 private
   def self.make_conditions_tag_or_comment(login_user_id, for_tag, options={ })
     condition_state = "user_id = ? "
@@ -161,9 +155,5 @@ private
     end
 
     return condition_param.unshift(condition_state)
-  end
-
-  def square_brackets_tags
-    self.tags = Tag.square_brackets_tags(self.tags)
   end
 end

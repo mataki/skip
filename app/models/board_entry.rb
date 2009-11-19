@@ -169,12 +169,11 @@ class BoardEntry < ActiveRecord::Base
   end
 
   def before_save
-    square_brackets_tags
     parse_symbol_link
   end
 
   def after_save
-    Tag.create_by_string category, entry_tags
+    Tag.create_by_comma_tags category, entry_tags
   end
 
   def after_create
@@ -627,10 +626,6 @@ class BoardEntry < ActiveRecord::Base
     board_entry_comments.find(:all, :conditions => ["parent_id is NULL"], :order => "created_on")
   end
 
-  def comma_category
-    Tag.comma_tags(self.category)
-  end
-
   # TODO Symbol.get_item_by_symbolとかぶってる。こちらを生かしたい
   def self.owner symbol
     return nil if symbol.blank?
@@ -748,10 +743,6 @@ private
       text = text.gsub(symbol_link.strip, replace_str)
     end
     return text
-  end
-
-  def square_brackets_tags
-    self.category = Tag.square_brackets_tags(self.category)
   end
 
   # 記事が指定されたユーザの記事の場合、指定されたidに一致する記事を全て返す。

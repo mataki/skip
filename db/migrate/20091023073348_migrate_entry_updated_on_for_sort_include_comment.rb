@@ -4,7 +4,6 @@ class MigrateEntryUpdatedOnForSortIncludeComment < ActiveRecord::Migration
     BoardEntry.all.each do |entry|
       if last_comment = entry.board_entry_comments.order_new.first
         if entry.updated_on < last_comment.updated_on
-          entry.category = Tag.comma_tags(entry.category)
           entry.updated_on = last_comment.updated_on
           entry.save
           puts "updated entry:#{entry.id}"
@@ -21,5 +20,8 @@ class MigrateEntryUpdatedOnForSortIncludeComment < ActiveRecord::Migration
 
   def self.down
     raise IrreversibleMigration
+  end
+
+  class ::BoardEntry < ActiveRecord::Base
   end
 end

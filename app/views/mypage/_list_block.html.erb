@@ -1,6 +1,5 @@
 <% symbol2name_hash ||= nil -%>
 <% title_icon ||= "user_comment" -%>
-<% delete_categories ||= [] -%>
 <% recent_day ||= nil -%>
 <% hide_entry_info ||= false -%>
 
@@ -12,12 +11,10 @@
 
 <% pages.each do |message| -%>
   <% entry_infos = get_entry_infos(message) -%>
-  <% categories = message.category.scan(/\[[^\]]*\]/) -%>
-  <% delete_categories.each {|categ| categories.delete(categ) } -%>
-  <% entry_search_links_by_category = categories.map{ |category| link_to h(category), {:controller => 'search', :action => :entry_search, :tag_words => Tag.comma_tags(h(category))}, :class => 'tag'} -%>
   <div class="topix_line">
     <div class="title">
-      <%= entry_link_to(message, {}, {:title => h(message.title + entry_infos)}) + hide_long_tags(entry_search_links_by_category, 3) %>
+      <%= entry_link_to(message, {}, {:title => h(message.title + entry_infos)}) %>
+      <%= entry_tag_search_links_tag(message.category, :max => 3) %>
       <% unless hide_entry_info %>
         <span class="supplement"><%=h entry_infos %></span>
       <% end %>

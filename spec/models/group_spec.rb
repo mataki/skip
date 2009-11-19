@@ -137,7 +137,7 @@ describe Group do
       @share_file = share_files(:a_share_file)
       @board_entry.symbol = @group.symbol
       @board_entry.entry_type = BoardEntry::GROUP_BBS
-      @board_entry.category = @board_entry.comma_category
+      @board_entry.category = ''
       @board_entry.save!
       @board_entry.board_entry_comments.create! :contents => 'contents', :user => create_user
 

@@ -40,7 +40,7 @@
         <tr>
           <th><%= label(:bookmark_comment, :tags, _('Tags')) %></th>
           <td>
-            <%= text_field 'bookmark_comment', 'tags', :size => '50', :value => @bookmark_comment.comma_tags %>
+            <%= text_field 'bookmark_comment', 'tags', :size => '50', :value => @bookmark_comment.tags %>
             <div id="category_box">
               <div id="candidates_list"><p><%= _('Multiple values can be given in foo,bar format')%></p></div>
               <div style="font-size:8pt; font-weight:bold;"><%= _('Tags marked by others: ')%></div><div id="user_tags_list" style="margin-bottom:5px;"></div>

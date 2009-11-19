@@ -49,6 +49,12 @@ b.retired
 b.caution
   :color red
 
+a.tag
+  :font-size = !small_font_size
+  :color #8080FF
+  &:visited
+    :color #8080FF
+
 .clear_left
   :clear left
 
@@ -364,19 +370,11 @@ div.topix_body
     :overflow hidden
     :text-overflow ellipsis
     :width 50%
-  a
-    :color #0080DD
   // リスト表示中の記事へのリンク
   a.entry
     +default_link
     &:visited
       +link_visited_text
-  // リスト表示中のタグへのリンク
-  a.tag
-    :font-size = !small_font_size
-    :color #8080FF
-    &:visited
-      :color #8080FF
 
 // タグクラウド
 // ------------------------------------------------------------
@@ -769,9 +767,6 @@ div#questions_wrapper
     :width 98%
     td.title
       :padding 2px 5px
-      a.tag
-        :color #8080FF
-        :font-size = !small_font_size
       span.supplement
         :font-size 8px
         :vertical-align bottom

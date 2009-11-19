@@ -62,7 +62,6 @@ class ShareFile < ActiveRecord::Base
   end
 
   def before_save
-    square_brackets_tags
     self.publication_symbols_value = '' unless self.protected?
   end
 
@@ -81,7 +80,7 @@ class ShareFile < ActiveRecord::Base
   end
 
   def after_save
-    Tag.create_by_string category, share_file_tags
+    Tag.create_by_comma_tags category, share_file_tags
   end
 
   def after_destroy
@@ -292,10 +291,6 @@ class ShareFile < ActiveRecord::Base
     return buf, (file_name.gsub(/\./, '_') + '_history.csv')
   end
 
-  def comma_category
-    Tag.comma_tags(self.category)
-  end
-
   def upload_file src_file
     open(full_path, "w+b") { |f| f.write(src_file.read) }
   end
@@ -430,10 +425,6 @@ class ShareFile < ActiveRecord::Base
   end
 
 private
-  def square_brackets_tags
-    self.category = Tag.square_brackets_tags(self.category)
-  end
-
   def uncheck_extention?
     image_extention?
   end

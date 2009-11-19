@@ -171,6 +171,7 @@ def create_board_entry options = {}
                                :date => Date.today,
                                :user_id => 1,
                                :last_updated => Date.today,
+                               :category => '',
                                :publication_type => 'public'}.merge(options))
   yield board_entry if block_given?
   board_entry.save!

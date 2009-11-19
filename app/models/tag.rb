@@ -83,39 +83,14 @@ class Tag < ActiveRecord::Base
     return errors
   end
 
-  # TODO DB内のタグ文字列を全てカンマ区切りで持つようにして消したい
-  def self.create_by_string tags_as_string, middle_records
-    middle_records.clear
-    split_tags(tags_as_string).each do |tag_name|
-      tag = find_by_name(tag_name) || create(:name => tag_name)
-      middle_records.create(:tag_id => tag.id)
-    end
-  end
-
   # TODO DB内のタグ文字列を全てカンマ区切りで持つようにしてこれを使うようにしたい
   def self.create_by_comma_tags comma_tags, middle_records
-    middle_records.clear
-    comma_tags.split(',').each do |tag_name|
-      tag = find_by_name(tag_name) || create(:name => tag_name)
-      middle_records.create(:tag_id => tag.id)
-    end
-  end
-
-  # TODO DB内のタグ文字列を全てカンマ区切りで持つようにして消したい
-  def self.comma_tags tags_as_string
-    tags_as_string ? tags_as_string.gsub("][", ",").gsub("[", "").gsub("]", "") : ""
-  end
-
-  # TODO DB内のタグ文字列を全てカンマ区切りで持つようにして消したい
-  def self.square_brackets_tags tags_as_string
-    if tags_as_string
-      if tags_as_string =~ /^\[.*\]$/
-        tags_as_string
-      else
-        tags_as_string.split(',').map{|t| "[#{t.strip.gsub("[", "").gsub("]", "").gsub("[]", "")}]"}.join('')
+    unless comma_tags.blank?
+      middle_records.clear
+      comma_tags.split(',').each do |tag_name|
+        tag = find_by_name(tag_name) || create(:name => tag_name)
+        middle_records.create(:tag_id => tag.id)
       end
-    else
-      ''
     end
   end
 end

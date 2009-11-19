@@ -33,24 +33,6 @@ describe Tag do
     assert "[hoge]]", Tag.split_tags("hoge]")
     assert "[]", Tag.split_tags("")
   end
-
-  def test_create_by_string
-    @a_entry.category = ''
-    Tag.create_by_string @a_entry.category, @a_entry.entry_tags
-    assert_equal @a_entry.entry_tags.size, 0
-
-    @a_entry.category = SkipFaker.tags :qt => 2
-    Tag.create_by_string @a_entry.category, @a_entry.entry_tags
-    assert_equal @a_entry.entry_tags.size, 2
-
-    @a_share_file.category = SkipFaker.tags :qt => 3
-    Tag.create_by_string @a_share_file.category, @a_share_file.share_file_tags
-    assert_equal @a_share_file.share_file_tags.size, 3
-
-    @a_bookmark_comment.tags = SkipFaker.tags :qt => 4
-    Tag.create_by_string @a_bookmark_comment.tags, @a_bookmark_comment.bookmark_comment_tags
-    assert_equal @a_bookmark_comment.bookmark_comment_tags.size, 4
-  end
 end
 
 describe Tag, 'validate_tags' do
@@ -106,37 +88,3 @@ describe Tag, 'validate_tags' do
     array.join(',')
   end
 end
-
-describe Tag, 'square_brackets_tags' do
-  it '文字列前方の空白文字列が取り除かれること' do
-    Tag.square_brackets_tags(' foo,bar').should == '[foo][bar]'
-  end
-  it '文字列後方の空白文字列が取り除かれること' do
-    Tag.square_brackets_tags('foo,bar ').should == '[foo][bar]'
-  end
-  it 'カンマ前方の空白文字列が取り除かれること' do
-    Tag.square_brackets_tags('foo ,bar').should == '[foo][bar]'
-  end
-  it 'カンマ後方の空白文字列が取り除かれること' do
-    Tag.square_brackets_tags('foo, bar').should == '[foo][bar]'
-  end
-  it 'タグ文字列中の空白文字列は取り除かれないこと' do
-    Tag.square_brackets_tags('f oo,bar').should == '[f oo][bar]'
-  end
-  it 'タグ文字列中の[は取り除かれること' do
-    Tag.square_brackets_tags('f[oo,bar').should == '[foo][bar]'
-  end
-  it 'タグ文字列中の]は取り除かれること' do
-    Tag.square_brackets_tags('f]oo,bar').should == '[foo][bar]'
-  end
-  it 'タグ文字列中の[]は取り除かれること' do
-    Tag.square_brackets_tags('f[]oo,bar').should == '[foo][bar]'
-  end
-  it 'nilの時は空文字となること' do
-    Tag.square_brackets_tags(nil).should == ''
-  end
-  it '既に変換済みの場合は同じ文字列になること' do
-    Tag.square_brackets_tags('[foo][bar]').should == '[foo][bar]'
-  end
-end
-

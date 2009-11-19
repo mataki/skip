@@ -49,7 +49,7 @@ describe BoardEntry, "に正しい値が設定されている場合" do
     end
 
     it "保存する際にTagが保存される" do
-      Tag.should_receive(:create_by_string)
+      Tag.should_receive(:create_by_comma_tags)
       @board_entry.save
     end
   end
