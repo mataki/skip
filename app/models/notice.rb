@@ -36,7 +36,7 @@ class Notice < ActiveRecord::Base
       :conditions => find_params[:conditions],
       :include => find_params[:include] | [:user_readings, :board_entry_comments]
     )
-    antennas << { :name => _("Trace Comments"), :user_id => user.id, :type => 'comment', :count => comment_count }
+    antennas << { :name => _("Trace Comments"), :user_id => user.id, :type => 'comment', :count => comment_count, :icon => 'comment' }
 
     # ブクマの行方 /page/% をブクマしている人のみに表示する
     if (bookmarks = Bookmark.find(:all,
@@ -49,7 +49,7 @@ class Notice < ActiveRecord::Base
 
       bookmark_count = 0
       bookmarks.each { |bookmark| bookmark_count+=1 if urls.include?(bookmark.url) } if urls.size > 0
-      antennas << {:name => _("Track of Bookmarks"), :user_id => user.id, :type => 'bookmark', :count => bookmark_count }
+      antennas << {:name => _("Track of Bookmarks"), :user_id => user.id, :type => 'bookmark', :count => bookmark_count, :icon => 'tag_blue' }
     end
 
     antennas
