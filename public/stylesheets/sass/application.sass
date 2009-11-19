@@ -54,6 +54,7 @@ a.tag
   :color #8080FF
   &:visited
     :color #8080FF
+
 span.tag
   :background #6665cb
   :color #fff
@@ -374,10 +375,16 @@ div.topix_body
     :text-overflow ellipsis
     :width 50%
   // リスト表示中の記事へのリンク
-  a.entry
+  a.entry, .owner a, .pagination a
     +default_link
     &:visited
       +link_visited_text
+  // DRYじゃないが、マイページでタブモードにするとui-widget-content aのほうが強くなってしまうのでさらに上書き
+  a.tag
+    :font-size = !small_font_size
+    :color #8080FF
+    &:visited
+      :color #8080FF
 
 // タグクラウド
 // ------------------------------------------------------------
@@ -980,10 +987,6 @@ div.bookmark_line
     :font-size 10px
     :font-weight bold
     :background-color #ffe0e0
-  div.tags
-    :margin 3px 0 3px 15px
-    :font-size 10px
-    :color green
 
 // 一覧(ユーザ毎)
 div.bookmark_space

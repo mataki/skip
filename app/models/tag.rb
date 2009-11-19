@@ -103,7 +103,6 @@ class Tag < ActiveRecord::Base
     return errors
   end
 
-  # TODO DB内のタグ文字列を全てカンマ区切りで持つようにしてこれを使うようにしたい
   def self.create_by_comma_tags comma_tags, middle_records
     unless comma_tags.blank?
       middle_records.clear
