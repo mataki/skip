@@ -46,7 +46,7 @@ class SearchController < ApplicationController
     @entries = BoardEntry.scoped(
       :conditions => find_params[:conditions],
       :include => find_params[:include] | [ :user, :state ]
-    ).order_new.aim_type(params[:type]).paginate(:page => params[:page], :per_page => 8)
+    ).order_new.aim_type(params[:type]).paginate(:page => params[:page], :per_page => 25)
 
     if @entries.empty?
       flash.now[:notice] = _('No matching data found.')
