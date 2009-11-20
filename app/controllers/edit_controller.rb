@@ -78,7 +78,7 @@ class EditController < ApplicationController
 
     # 権限チェック
     unless (session[:user_symbol] == params[:board_entry][:symbol]) ||
-      login_user_groups.include?(params[:board_entry][:symbol])
+      current_user.group_symbols.include?(params[:board_entry][:symbol])
 
       redirect_to_with_deny_auth and return
     end
@@ -93,7 +93,7 @@ class EditController < ApplicationController
       end
       current_user.custom.update_attributes(:editor_mode => params[:editor_mode])
 
-      message, new_trackbacks = @board_entry.send_trackbacks(login_user_symbols, params[:trackbacks])
+      message, new_trackbacks = @board_entry.send_trackbacks(current_user.belong_symbols, params[:trackbacks])
       make_trackback_message(new_trackbacks)
 
       @board_entry.prepare_send_mail if @board_entry.send_mail?
@@ -205,7 +205,7 @@ class EditController < ApplicationController
     end
     current_user.custom.update_attributes(:editor_mode => params[:editor_mode])
 
-    message, new_trackbacks = @board_entry.send_trackbacks(login_user_symbols, params[:trackbacks])
+    message, new_trackbacks = @board_entry.send_trackbacks(current_user.belong_symbols, params[:trackbacks])
     make_trackback_message(new_trackbacks)
 
     @board_entry.prepare_send_mail if @board_entry.send_mail?
@@ -329,7 +329,7 @@ private
   end
 
   def authorize_to_edit_board_entry? entry
-    entry.editable?(login_user_symbols, session[:user_id], session[:user_symbol], login_user_groups)
+    entry.editable?(current_user.belong_symbols, session[:user_id], session[:user_symbol], current_user.group_symbols)
   end
 
   def get_entry entry_id

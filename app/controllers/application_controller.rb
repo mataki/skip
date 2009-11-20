@@ -99,17 +99,6 @@ protected
     }
   end
 
-  # ログイン中のユーザのシンボル＋そのユーザの所属するグループのSymbolの配列を返す
-  # sid:all_userは含めていない
-  def login_user_symbols
-    @login_user_symbols ||= current_user.belong_symbols
-  end
-
-  # ログイン中のユーザの所属するグループのSymbolの配列
-  def login_user_groups
-    @login_user_groups ||= current_user.group_symbols
-  end
-
   def logged_in?
     !!current_user
   end
@@ -139,7 +128,7 @@ protected
 
   #記事へのパーミッションをチェック
   def check_entry_permission
-    find_params = BoardEntry.make_conditions(login_user_symbols, {:id=>params[:id]})
+    find_params = BoardEntry.make_conditions(current_user.belong_symbols, {:id=>params[:id]})
     unless entry = BoardEntry.find(:first, :conditions => find_params[:conditions], :include => find_params[:include])
       return false
     end

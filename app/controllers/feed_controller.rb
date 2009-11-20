@@ -18,12 +18,12 @@ require 'rss'
 class FeedController < ApplicationController
   #DRY
   def recent_questions
-    find_params = BoardEntry.make_conditions(login_user_symbols, {:recent_day=> 10, :category=>'質問'})
+    find_params = BoardEntry.make_conditions(current_user.belong_symbols, {:recent_day=> 10, :category=>'質問'})
     rss_feed "recent_questions", _("Recent Questions"), board_entry_item_array(find_params)
   end
 
   def recent_blogs
-    find_params = BoardEntry.make_conditions(login_user_symbols, {:entry_type=>'DIARY', :recent_day=> 10, :publication_type => 'public'})
+    find_params = BoardEntry.make_conditions(current_user.belong_symbols, {:entry_type=>'DIARY', :recent_day=> 10, :publication_type => 'public'})
     rss_feed "recent_blogs", _("Recently Posted Entries"), board_entry_item_array(find_params)
   end
 
@@ -39,7 +39,7 @@ class FeedController < ApplicationController
     find_options[:symbols] = Group.gid_by_category[category.id]
     items = []
     if find_options[:symbols].size > 0
-      find_params = BoardEntry.make_conditions(login_user_symbols, find_options)
+      find_params = BoardEntry.make_conditions(current_user.belong_symbols, find_options)
       items = board_entry_item_array(find_params)
     end
     rss_feed params[:category], description, items
@@ -69,7 +69,7 @@ class FeedController < ApplicationController
 
   def recent_popular_blogs
     description = _("Recent Popular Blogs")
-    find_params = BoardEntry.make_conditions(login_user_symbols, {:publication_type => 'public'})
+    find_params = BoardEntry.make_conditions(current_user.belong_symbols, {:publication_type => 'public'})
     find_params[:conditions][0] << " and board_entries.category not like ?"
     find_params[:conditions] << '%[質問]%'
     find_params[:conditions][0] << " and last_updated > ?"
@@ -80,14 +80,14 @@ class FeedController < ApplicationController
 
   def message_for_you
     description = _("Notices for you")
-    find_params = BoardEntry.make_conditions login_user_symbols, { :category=>'連絡' }
+    find_params = BoardEntry.make_conditions current_user.belong_symbols, { :category=>'連絡' }
     user_reading_condition find_params
     rss_feed "message_for_you", description, board_entry_item_array(find_params)
   end
 
   def your_commented_blogs
     description = _("Trace Comments")
-    find_params = BoardEntry.make_conditions(login_user_symbols)
+    find_params = BoardEntry.make_conditions(current_user.belong_symbols)
     user_id = session[:user_id]
     find_params[:conditions][0] << "and board_entry_comments.user_id = ? and user_readings.read = ? and user_readings.user_id = ?"
     find_params[:conditions] << user_id << false << user_id
@@ -104,7 +104,7 @@ class FeedController < ApplicationController
     bookmarks.each do |bookmark|
       ids << bookmark.url.gsub(/\/page\//, "")
     end
-    find_params = BoardEntry.make_conditions(login_user_symbols)
+    find_params = BoardEntry.make_conditions(current_user.belong_symbols)
     find_params[:conditions][0] << " and board_entries.id in (?) and user_readings.read = ? and user_readings.user_id = ?"
     find_params[:conditions] << ids << false << session[:user_id]
     find_params[:include] << :user_readings
@@ -113,7 +113,7 @@ class FeedController < ApplicationController
 
   def participate_group_bbs
     description = _("Groups Joined")
-    find_params = BoardEntry.make_conditions login_user_symbols, { :symbols => login_user_groups }
+    find_params = BoardEntry.make_conditions current_user.belong_symbols, { :symbols => current_user.group_symbols }
     user_reading_condition find_params
     rss_feed "participate_group_bbs", description, board_entry_item_array(find_params)
   end

@@ -37,7 +37,7 @@ class BoardEntriesController < ApplicationController
     end
 
     # TODO 権限のあるBoardEntryを取得するnamed_scopeに置き換える
-    find_params = BoardEntry.make_conditions(login_user_symbols, {:id => params[:id]})
+    find_params = BoardEntry.make_conditions(current_user.belong_symbols, {:id => params[:id]})
     unless @board_entry = BoardEntry.find(:first,
                                           :conditions => find_params[:conditions],
                                           :include => find_params[:include] | [ :user, :board_entry_comments, :state ])
@@ -67,7 +67,7 @@ class BoardEntriesController < ApplicationController
 
     # TODO 権限のあるBoardEntryを取得するnamed_scopeに置き換える
     @board_entry = parent_comment.board_entry
-    find_params = BoardEntry.make_conditions(login_user_symbols, {:id => @board_entry.id})
+    find_params = BoardEntry.make_conditions(current_user.belong_symbols, {:id => @board_entry.id})
     unless @board_entry = BoardEntry.find(:first,
                                           :conditions => find_params[:conditions],
                                           :include => find_params[:include] | [ :user, :board_entry_comments, :state ])
@@ -102,14 +102,14 @@ class BoardEntriesController < ApplicationController
     authorize = false
     authorize = true if session[:user_symbol] == board_entry.symbol
 
-    if login_user_groups.include?(board_entry.symbol)
-      if login_user_groups.include?(board_entry.user_id)
+    if current_user.group_symbols.include?(board_entry.symbol)
+      if current_user.group_symbols.include?(board_entry.user_id)
         authorize = true
-      elsif board_entry.publicate?(login_user_symbols)
+      elsif board_entry.publicate?(current_user.belong_symbols)
         authorize = true
       end
     else
-      if session[:user_id] == @board_entry_comment.user_id && board_entry.publicate?(login_user_symbols)
+      if session[:user_id] == @board_entry_comment.user_id && board_entry.publicate?(current_user.belong_symbols)
         authorize = true
       end
     end

@@ -34,7 +34,7 @@ class UserController < ApplicationController
       options[:category] = params[:category]
       options[:keyword] = params[:keyword]
 
-      find_params = BoardEntry.make_conditions(login_user_symbols, options)
+      find_params = BoardEntry.make_conditions(current_user.belong_symbols, options)
 
       unless (@year = ERB::Util.html_escape(params[:year])).blank? or (@month = ERB::Util.html_escape(params[:month])).blank?
         find_params[:conditions][0] << " and YEAR(date) = ? and MONTH(date) = ?"
@@ -57,17 +57,17 @@ class UserController < ApplicationController
         end
         options[:id] = entry_id
       end
-      find_params = BoardEntry.make_conditions(login_user_symbols, options)
+      find_params = BoardEntry.make_conditions(current_user.belong_symbols, options)
       @entry = BoardEntry.scoped(
          :conditions => find_params[:conditions],
          :include => find_params[:include] | [ :user, :board_entry_comments, :state ]
       ).order_new.first
       if @entry
         @checked_on = @entry.accessed(current_user.id).checked_on
-        @prev_entry, @next_entry = @entry.get_around_entry(login_user_symbols)
-        @editable = @entry.editable?(login_user_symbols, session[:user_id], session[:user_symbol], login_user_groups)
-        @tb_entries = @entry.trackback_entries(current_user.id, login_user_symbols)
-        @to_tb_entries = @entry.to_trackback_entries(current_user.id, login_user_symbols)
+        @prev_entry, @next_entry = @entry.get_around_entry(current_user.belong_symbols)
+        @editable = @entry.editable?(current_user.belong_symbols, session[:user_id], session[:user_symbol], current_user.group_symbols)
+        @tb_entries = @entry.trackback_entries(current_user.id, current_user.belong_symbols)
+        @to_tb_entries = @entry.to_trackback_entries(current_user.id, current_user.belong_symbols)
         @title += " - " + @entry.title
 
         @entry_accesses =  EntryAccess.find_by_entry_id @entry.id
@@ -127,7 +127,7 @@ private
   end
 
   def setup_blog_left_box options
-    find_params = BoardEntry.make_conditions(login_user_symbols, options)
+    find_params = BoardEntry.make_conditions(current_user.belong_symbols, options)
 
     # 月毎のアーカイブ
     @month_archives = BoardEntry.find(:all,

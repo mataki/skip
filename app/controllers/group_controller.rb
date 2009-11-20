@@ -30,7 +30,7 @@ class GroupController < ApplicationController
   def show
     @owners = User.owned(@group).order_joined.limit(20)
     @except_owners = User.joined_except_owned(@group).order_joined.limit(20)
-    @recent_messages = BoardEntry.find_visible(10, login_user_symbols, @group.symbol)
+    @recent_messages = BoardEntry.find_visible(10, current_user.belong_symbols, @group.symbol)
   end
 
   # tab_menu
@@ -50,7 +50,7 @@ class GroupController < ApplicationController
     # 右側
     if entry_id = params[:entry_id]
       options[:id] = entry_id
-      find_params = BoardEntry.make_conditions(login_user_symbols, options)
+      find_params = BoardEntry.make_conditions(current_user.belong_symbols, options)
 
       @entry = BoardEntry.scoped(
         :conditions => find_params[:conditions],
@@ -58,10 +58,10 @@ class GroupController < ApplicationController
       ).order_new.first
       if @entry
         @checked_on = @entry.accessed(current_user.id).checked_on
-        @prev_entry, @next_entry = @entry.get_around_entry(login_user_symbols)
-        @editable = @entry.editable?(login_user_symbols, session[:user_id], session[:user_symbol], login_user_groups)
-        @tb_entries = @entry.trackback_entries(current_user.id, login_user_symbols)
-        @to_tb_entries = @entry.to_trackback_entries(current_user.id, login_user_symbols)
+        @prev_entry, @next_entry = @entry.get_around_entry(current_user.belong_symbols)
+        @editable = @entry.editable?(current_user.belong_symbols, session[:user_id], session[:user_symbol], current_user.group_symbols)
+        @tb_entries = @entry.trackback_entries(current_user.id, current_user.belong_symbols)
+        @to_tb_entries = @entry.to_trackback_entries(current_user.id, current_user.belong_symbols)
         @title += " - " + @entry.title
 
         @entry_accesses =  EntryAccess.find_by_entry_id @entry.id
@@ -73,7 +73,7 @@ class GroupController < ApplicationController
       options[:category] = params[:category]
       options[:keyword] = params[:keyword]
 
-      find_params = BoardEntry.make_conditions(login_user_symbols, options)
+      find_params = BoardEntry.make_conditions(current_user.belong_symbols, options)
 
       if user_id = params[:user_id]
         find_params[:conditions][0] << " and board_entries.user_id = ?"
@@ -88,7 +88,7 @@ class GroupController < ApplicationController
   end
 
   def new
-    redirect_to_with_deny_auth and return unless login_user_groups.include? @group.symbol
+    redirect_to_with_deny_auth and return unless current_user.group_symbols.include? @group.symbol
 
     redirect_to(:controller => 'edit',
                 :action => 'index',
@@ -98,7 +98,7 @@ class GroupController < ApplicationController
   end
 
   def new_notice
-    redirect_to_with_deny_auth and return unless login_user_groups.include? @group.symbol
+    redirect_to_with_deny_auth and return unless current_user.group_symbols.include? @group.symbol
 
     redirect_to(:controller => 'edit',
                 :action => 'index',
@@ -109,7 +109,7 @@ class GroupController < ApplicationController
   end
 
   def new_question
-    redirect_to_with_deny_auth and return unless login_user_groups.include? @group.symbol
+    redirect_to_with_deny_auth and return unless current_user.group_symbols.include? @group.symbol
 
     redirect_to(:controller => 'edit',
                 :action => 'index',
@@ -365,7 +365,7 @@ private
   end
 
   def setup_bbs_left_box options
-    find_params = BoardEntry.make_conditions(login_user_symbols, options)
+    find_params = BoardEntry.make_conditions(current_user.belong_symbols, options)
 
     # 人毎のアーカイブ
     select_state = "count(distinct board_entries.id) as count, users.name as user_name, users.id as user_id"

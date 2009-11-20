@@ -20,7 +20,7 @@ class SearchController < ApplicationController
     @main_menu = @title = _('Entries')
 
     params[:tag_select] ||= "AND"
-    find_params = BoardEntry.make_conditions(login_user_symbols, {:keyword =>params[:keyword],
+    find_params = BoardEntry.make_conditions(current_user.belong_symbols, {:keyword =>params[:keyword],
                                                :tag_words => params[:tag_words],
                                                :tag_select => params[:tag_select]})
 
@@ -68,7 +68,7 @@ class SearchController < ApplicationController
                     :keyword => params[:keyword],
                     :tag_words => params[:tag_words],
                     :tag_select => params[:tag_select] }
-    find_params = ShareFile.make_conditions(login_user_symbols, params_hash)
+    find_params = ShareFile.make_conditions(current_user.belong_symbols, params_hash)
     order_by = (params[:sort_type] == "date" ? "date desc" : "file_name")
 
     @share_files = ShareFile.scoped(

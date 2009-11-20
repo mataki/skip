@@ -561,7 +561,7 @@ class MypageController < ApplicationController
 
   # 最近の人気記事一覧を取得する（partial用のオプションを返す）
   def find_access_blogs_as_locals options
-    find_params = BoardEntry.make_conditions(login_user_symbols, {:publication_type => 'public'})
+    find_params = BoardEntry.make_conditions(current_user.belong_symbols, {:publication_type => 'public'})
     pages = BoardEntry.scoped(
       :conditions => find_params[:conditions],
       :order => "board_entry_points.access_count DESC, board_entries.last_updated DESC, board_entries.id DESC",
@@ -577,7 +577,7 @@ class MypageController < ApplicationController
 
   # 記事一覧を取得する（partial用のオプションを返す）
   def find_recent_blogs_as_locals options
-    find_params = BoardEntry.make_conditions(login_user_symbols, {:entry_type=>'DIARY', :publication_type => 'public'})
+    find_params = BoardEntry.make_conditions(current_user.belong_symbols, {:entry_type=>'DIARY', :publication_type => 'public'})
     pages = BoardEntry.scoped(
       :conditions => find_params[:conditions],
       :include => find_params[:include] | [ :user, :state ]
@@ -613,7 +613,7 @@ class MypageController < ApplicationController
     find_options = {:exclude_entry_type=>'DIARY'}
     find_options[:symbols] = options[:group_symbols] || Group.gid_by_category[category.id]
     if find_options[:symbols].size > 0
-      find_params = BoardEntry.make_conditions(login_user_symbols, find_options)
+      find_params = BoardEntry.make_conditions(current_user.belong_symbols, find_options)
       pages = BoardEntry.scoped(
         :conditions => find_params[:conditions],
         :include => find_params[:include] | [ :user, :state ]
@@ -664,7 +664,7 @@ class MypageController < ApplicationController
     options[:writer_id] = login_user_id
     options[:keyword] = params[:keyword]
     options[:category] = params[:category]
-    find_params = BoardEntry.make_conditions(login_user_symbols, options)
+    find_params = BoardEntry.make_conditions(current_user.belong_symbols, options)
 
     @entries = BoardEntry.scoped(
       :conditions => find_params[:conditions],
@@ -673,7 +673,7 @@ class MypageController < ApplicationController
 
     @symbol2name_hash = BoardEntry.get_symbol2name_hash @entries
 
-    find_params = BoardEntry.make_conditions(login_user_symbols, {:writer_id => login_user_id})
+    find_params = BoardEntry.make_conditions(current_user.belong_symbols, {:writer_id => login_user_id})
     @categories = BoardEntry.get_category_words(find_params)
   end
 
@@ -685,7 +685,7 @@ class MypageController < ApplicationController
   # 月の中で記事が含まれている日付と記事数のハッシュと、
   # 引数は、指定の年と月
   def get_entry_count year, month
-    find_params = BoardEntry.make_conditions(login_user_symbols, {:entry_type=>'DIARY'})
+    find_params = BoardEntry.make_conditions(current_user.belong_symbols, {:entry_type=>'DIARY'})
     find_params[:conditions][0] << " and YEAR(date) = ? and MONTH(date) = ?"
     find_params[:conditions] << year << month
 
@@ -709,7 +709,7 @@ class MypageController < ApplicationController
   # TODO BoardEntryに移動する
   # 指定日の記事一覧を取得する
   def find_entries_at_specified_date(selected_day)
-    find_params = BoardEntry.make_conditions(login_user_symbols, {:entry_type=>'DIARY'})
+    find_params = BoardEntry.make_conditions(current_user.belong_symbols, {:entry_type=>'DIARY'})
     find_params[:conditions][0] << " and DATE(date) = ?"
     find_params[:conditions] << selected_day
     BoardEntry.find(:all, :conditions=> find_params[:conditions], :order=>"date ASC",
@@ -719,7 +719,7 @@ class MypageController < ApplicationController
   # TODO BoardEntryに移動する
   # 指定日以降で最初に記事が存在する日
   def first_entry_day_after_specified_date(selected_day)
-    find_params = BoardEntry.make_conditions(login_user_symbols, {:entry_type=>'DIARY'})
+    find_params = BoardEntry.make_conditions(current_user.belong_symbols, {:entry_type=>'DIARY'})
     find_params[:conditions][0] << " and DATE(date) > ?"
     find_params[:conditions] << selected_day
     next_day = BoardEntry.find(:first, :select => "date, DATE(date) as count_date, count(board_entries.id) as count",
@@ -734,7 +734,7 @@ class MypageController < ApplicationController
   # TODO BoardEntryに移動する
   # 指定日以前で最後に記事が存在する日
   def last_entry_day_before_specified_date(selected_day)
-    find_params = BoardEntry.make_conditions(login_user_symbols, {:entry_type=>'DIARY'})
+    find_params = BoardEntry.make_conditions(current_user.belong_symbols, {:entry_type=>'DIARY'})
     find_params[:conditions][0] << " and DATE(date) < ?"
     find_params[:conditions] << selected_day
     prev_day = BoardEntry.find(:first, :select => "date, DATE(date) as count_date, count(board_entries.id) as count",
