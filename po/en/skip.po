@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.3.0\n"
-"POT-Creation-Date: 2009-11-20 10:57+0900\n"
+"POT-Creation-Date: 2009-11-20 15:06+0900\n"
 "PO-Revision-Date: 2009-06-29 13:31+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -74,10 +74,6 @@ msgstr ""
 #: app/views/search/entry_search.html.erb:40
 #: app/views/entry_hide_operations/_list.html.erb:6
 msgid "%m/%d/%Y %H:%M"
-msgstr ""
-
-#: app/views/entries/_entries_list.html.erb:56
-msgid "%m/%d/%y %H:%M"
 msgstr ""
 
 #: app/views/mypage/_publicated_entries_tabs.html.erb:6
@@ -416,7 +412,7 @@ msgstr ""
 msgid "Access the URL below to complete the registration process."
 msgstr ""
 
-#: app/helpers/application_helper.rb:239
+#: app/helpers/application_helper.rb:244
 msgid "Access(%s)"
 msgid_plural "Accesses(%s)"
 msgstr[0] ""
@@ -2230,7 +2226,7 @@ msgstr ""
 msgid "Bookmarklet"
 msgstr ""
 
-#: app/helpers/application_helper.rb:342 app/helpers/user_helper.rb:45
+#: app/helpers/application_helper.rb:347 app/helpers/user_helper.rb:45
 #: app/controllers/services_controller.rb:44
 #: app/controllers/bookmark_controller.rb:104
 #: app/controllers/bookmarks_controller.rb:35
@@ -2485,7 +2481,7 @@ msgstr ""
 msgid "Comment was successfully deleted."
 msgstr ""
 
-#: app/helpers/application_helper.rb:236
+#: app/helpers/application_helper.rb:241
 msgid "Comment(%s)"
 msgid_plural "Comments(%s)"
 msgstr[0] ""
@@ -2502,6 +2498,10 @@ msgid ""
 "      You can start writing entries right away since we have created your "
 "own blog.<br/>\n"
 "      You can also change your profile image and color theme of this site."
+msgstr ""
+
+#: app/views/admin/users/index.html.erb:23
+msgid "Confirm"
 msgstr ""
 
 #: app/views/mypage/_manage_password.html.erb:22
@@ -2923,8 +2923,10 @@ msgstr ""
 msgid "Entered email address %s has not been registered in the site."
 msgstr ""
 
-#: app/helpers/application_helper.rb:338
+#: app/helpers/application_helper.rb:343
 #: app/controllers/search_controller.rb:20
+#: app/views/entries/_topix_entries_with_sortable_pagination.html.erb:1
+#: app/views/entries/_topix_entries.html.erb:1 app/views/user/blog.html.erb:26
 #: app/views/bookmarks/index.html.erb:16 app/views/bookmark/list.html.erb:16
 msgid "Entries"
 msgstr ""
@@ -3182,7 +3184,7 @@ msgstr ""
 msgid "Filename"
 msgstr ""
 
-#: app/helpers/application_helper.rb:339
+#: app/helpers/application_helper.rb:344
 #: app/controllers/services_controller.rb:47
 #: app/controllers/search_controller.rb:61 app/views/share_file/new.html.erb:9
 #: app/views/share_file/edit.html.erb:9
@@ -3380,7 +3382,7 @@ msgstr ""
 msgid "GroupParticipation|Waiting|true"
 msgstr ""
 
-#: app/helpers/application_helper.rb:341
+#: app/helpers/application_helper.rb:346
 #: app/controllers/groups_controller.rb:63
 #: app/controllers/services_controller.rb:46
 #: app/controllers/group_controller.rb:339
@@ -3775,10 +3777,6 @@ msgstr ""
 msgid "Last Entries"
 msgstr ""
 
-#: app/views/entries/_entries_list.html.erb:56
-msgid "Last Update: "
-msgstr ""
-
 #: app/helpers/edit_helper.rb:32
 msgid "Last page"
 msgstr ""
@@ -3975,7 +3973,7 @@ msgstr ""
 msgid "Members"
 msgstr ""
 
-#: app/helpers/application_helper.rb:211 app/helpers/application_helper.rb:228
+#: app/helpers/application_helper.rb:216 app/helpers/application_helper.rb:233
 #: app/helpers/share_file_helper.rb:19
 #: app/views/board_entries/_form.html.erb:76 app/views/group/_form.html.erb:51
 msgid "Members Only"
@@ -4039,7 +4037,7 @@ msgstr ""
 msgid "Most read blog / forum entries (public entries only)"
 msgstr ""
 
-#: app/helpers/application_helper.rb:319
+#: app/helpers/application_helper.rb:324
 msgid "Move to groups joined ..."
 msgstr ""
 
@@ -4065,7 +4063,7 @@ msgstr ""
 msgid "My Blog"
 msgstr ""
 
-#: app/helpers/application_helper.rb:334 app/helpers/user_helper.rb:54
+#: app/helpers/application_helper.rb:339 app/helpers/user_helper.rb:54
 #: app/helpers/user_helper.rb:58 app/controllers/mypage_controller.rb:369
 msgid "My Page"
 msgstr ""
@@ -4163,7 +4161,7 @@ msgid "Next"
 msgstr ""
 
 #: app/views/mypage/entries_by_date.html.erb:8
-#: app/views/mypage/entries_by_date.html.erb:18
+#: app/views/mypage/entries_by_date.html.erb:20
 msgid "Next Day (%s)"
 msgstr ""
 
@@ -4402,7 +4400,7 @@ msgstr ""
 msgid "Open"
 msgstr ""
 
-#: app/helpers/application_helper.rb:207 app/helpers/application_helper.rb:221
+#: app/helpers/application_helper.rb:212 app/helpers/application_helper.rb:226
 #: app/views/board_entries/_form.html.erb:74 app/views/group/_form.html.erb:50
 #: app/views/share_file/new_ajax_upload.html.erb:21
 #: app/views/share_file/_form.html.erb:34
@@ -4561,7 +4559,7 @@ msgid ""
 "administrative user is %s."
 msgstr ""
 
-#: app/helpers/application_helper.rb:211 app/helpers/application_helper.rb:228
+#: app/helpers/application_helper.rb:216 app/helpers/application_helper.rb:233
 #: app/helpers/share_file_helper.rb:19
 #: app/views/board_entries/_form.html.erb:76
 #: app/views/mypage/index.html.erb:130
@@ -4737,7 +4735,7 @@ msgid "Prev"
 msgstr ""
 
 #: app/views/mypage/entries_by_date.html.erb:7
-#: app/views/mypage/entries_by_date.html.erb:17
+#: app/views/mypage/entries_by_date.html.erb:19
 msgid "Prev Day (%s)"
 msgstr ""
 
@@ -4890,7 +4888,7 @@ msgstr ""
 msgid "Reading"
 msgstr ""
 
-#: app/views/group/show.html.erb:80
+#: app/views/group/show.html.erb:79
 #: app/views/mypage/_publicated_entries_tabs.html.erb:1
 msgid "Recent Entries"
 msgstr ""
@@ -5029,7 +5027,7 @@ msgstr ""
 msgid "Resetting OpenID URL"
 msgstr ""
 
-#: app/views/entries/_entries_list.html.erb:50
+#: app/views/entries/_topix_entries.html.erb:37
 msgid "Resolved"
 msgstr ""
 
@@ -5480,11 +5478,11 @@ msgstr ""
 msgid "Sort by number of users"
 msgstr ""
 
-#: app/views/entries/_entries_list.html.erb:31
+#: app/views/entries/_topix_entries_with_sortable_pagination.html.erb:6
 msgid "Sort by: "
 msgstr ""
 
-#: app/helpers/application_helper.rb:209 app/helpers/application_helper.rb:225
+#: app/helpers/application_helper.rb:214 app/helpers/application_helper.rb:230
 msgid "Specified Directly:"
 msgstr ""
 
@@ -5903,7 +5901,7 @@ msgstr ""
 msgid "Track of Bookmarks"
 msgstr ""
 
-#: app/helpers/application_helper.rb:238
+#: app/helpers/application_helper.rb:243
 msgid "Trackback(%s)"
 msgid_plural "Trackbacks(%s)"
 msgstr[0] ""
@@ -6350,7 +6348,7 @@ msgstr ""
 msgid "UserUid|User"
 msgstr ""
 
-#: app/helpers/application_helper.rb:340 app/helpers/user_helper.rb:54
+#: app/helpers/application_helper.rb:345 app/helpers/user_helper.rb:54
 #: app/controllers/users_controller.rb:66
 #: app/controllers/services_controller.rb:45
 #: app/views/admin/_data_menu_box.html.erb:6
@@ -6849,7 +6847,7 @@ msgstr ""
 msgid "[Add more files]"
 msgstr ""
 
-#: app/views/entries/_entries_list.html.erb:25
+#: app/views/user/blog.html.erb:26
 msgid "[Archive of %{month}/%{year}]"
 msgstr ""
 
@@ -6922,19 +6920,15 @@ msgstr ""
 msgid "[Help]"
 msgstr ""
 
-#: app/views/mypage/entries_by_antenna.html.erb:37
+#: app/views/mypage/entries_by_antenna.html.erb:16
 msgid "[Hide read entries]"
-msgstr ""
-
-#: app/views/mypage/entries_by_antenna.html.erb:32
-msgid "[Hide subscription links]"
 msgstr ""
 
 #: app/helpers/skip_helper.rb:67
 msgid "[Hints on writing entries]"
 msgstr ""
 
-#: app/models/board_entry.rb:725
+#: app/models/board_entry.rb:735
 msgid "[Link does not exist...%s>]"
 msgstr ""
 
@@ -7026,15 +7020,15 @@ msgstr ""
 msgid "[Set current time]"
 msgstr ""
 
-#: app/views/mypage/entries_by_antenna.html.erb:25
+#: app/views/mypage/entries_by_antenna.html.erb:10
 msgid "[Set entries in the page as read]"
 msgstr ""
 
-#: app/views/mypage/entries_by_antenna.html.erb:26
+#: app/views/mypage/entries_by_antenna.html.erb:11
 msgid "[Set entries in the page as unread]"
 msgstr ""
 
-#: app/views/mypage/entries_by_antenna.html.erb:39
+#: app/views/mypage/entries_by_antenna.html.erb:18
 msgid "[Show read entries]"
 msgstr ""
 
@@ -7042,22 +7036,18 @@ msgstr ""
 msgid "[Show source]"
 msgstr ""
 
-#: app/views/mypage/entries_by_antenna.html.erb:31
-msgid "[Show subscription links]"
-msgstr ""
-
-#: app/views/entries/_entries_list.html.erb:38
-#: app/views/entries/_entries_list.html.erb:39
+#: app/views/entries/_topix_entries_with_sortable_pagination.html.erb:13
+#: app/views/entries/_topix_entries_with_sortable_pagination.html.erb:14
 msgid "[Sort by %s]"
 msgstr ""
 
-#: app/views/entries/_entries_list.html.erb:35
-#: app/views/entries/_entries_list.html.erb:36
+#: app/views/entries/_topix_entries_with_sortable_pagination.html.erb:10
+#: app/views/entries/_topix_entries_with_sortable_pagination.html.erb:11
 msgid "[Sort by access count]"
 msgstr ""
 
-#: app/views/entries/_entries_list.html.erb:32
-#: app/views/entries/_entries_list.html.erb:33
+#: app/views/entries/_topix_entries_with_sortable_pagination.html.erb:7
+#: app/views/entries/_topix_entries_with_sortable_pagination.html.erb:8
 msgid "[Sort by modified date]"
 msgstr ""
 
