@@ -649,7 +649,6 @@ div#tab_menu
 // ログイン
 // ------------------------------------------------------------
 div#platform_main_wrapper
-  :_text-align center
   div#platform_main
     :float right
     :width 460px
@@ -673,14 +672,20 @@ div#platform_main_wrapper
       :background-color #f2f2ff
       :overflow auto
       :height 250px
-  div#platform_main.require_login
+div#platform_main_wrapper.require_login
+  :_text-align center
+  :margin 0 auto
+  div#platform_main
+    :float none
+    :width 500px
+    :margin 0 auto
     :background #fafafa
     :border-bottom = !base_border
     :padding 10px
     div#require_login_wrapper
       :width 100%
       :border = !base_border
-      :padding 1px
+      :padding 10px
       :background #fff
       :text-align left
       h2
@@ -695,7 +700,6 @@ div#require_login_container_wrapper
   :_text-align center
   div#require_login_container
     :border = !base_border
-    :width 600px
     :padding 2px
     :background #f0f0ff
     :margin 0 auto 10px auto
