@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.3.0\n"
-"POT-Creation-Date: 2009-11-20 15:06+0900\n"
+"POT-Creation-Date: 2009-11-20 18:31+0900\n"
 "PO-Revision-Date: 2009-06-29 13:31+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -34,7 +34,7 @@ msgid ""
 "the system."
 msgstr ""
 
-#: app/models/board_entry.rb:397 app/views/mypage/entries_by_date.html.erb:13
+#: app/models/board_entry.rb:399 app/views/mypage/entries_by_date.html.erb:13
 #: app/views/mypage/index.html.erb:48 app/views/mypage/index.html.erb:86
 #: app/views/mypage/index.html.erb:155 app/views/mypage/index.html.erb:175
 #: app/views/mypage/index.html.erb:192 app/views/bookmark/list.html.erb:42
@@ -45,7 +45,7 @@ msgstr ""
 msgid "%B %d %Y"
 msgstr ""
 
-#: app/models/board_entry.rb:399 app/models/board_entry_comment.rb:36
+#: app/models/board_entry.rb:401 app/models/board_entry_comment.rb:36
 msgid "%B %d %Y %H:%M"
 msgstr ""
 
@@ -71,7 +71,6 @@ msgstr ""
 
 #: app/views/statistics/_current_statistics.html.erb:1
 #: app/views/share_file/_share_file_box.html.erb:30
-#: app/views/search/entry_search.html.erb:40
 #: app/views/entry_hide_operations/_list.html.erb:6
 msgid "%m/%d/%Y %H:%M"
 msgstr ""
@@ -85,8 +84,8 @@ msgstr ""
 msgid "%s Required"
 msgstr ""
 
-#: app/controllers/group_controller.rb:212
-#: app/controllers/group_controller.rb:228
+#: app/controllers/group_controller.rb:215
+#: app/controllers/group_controller.rb:231
 msgid "%s are not a member of the group."
 msgstr ""
 
@@ -119,7 +118,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: app/views/statistics/index.html.erb:36
-#: app/views/bookmarks/_bookmarks.html.erb:11
+#: app/views/bookmarks/_topix_bookmarks.html.erb:16
 #: app/views/layouts/layout.html.erb:36 app/views/layouts/layout.html.erb:49
 msgid "%{count} user"
 msgid_plural "%{count} users"
@@ -227,7 +226,7 @@ msgid_plural "%{title_val} Comments:(%{comment_count_val})"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/controllers/group_controller.rb:208
+#: app/controllers/group_controller.rb:211
 msgid "%{user_name} leaved your group %{group_name}."
 msgstr ""
 
@@ -284,7 +283,7 @@ msgstr ""
 msgid "(This screen is to avoid security risks ralated to direct downloading)"
 msgstr ""
 
-#: app/models/board_entry.rb:565
+#: app/models/board_entry.rb:574
 msgid "(Unknown topic entry found. However, this has been ignored)"
 msgstr ""
 
@@ -412,7 +411,7 @@ msgstr ""
 msgid "Access the URL below to complete the registration process."
 msgstr ""
 
-#: app/helpers/application_helper.rb:244
+#: app/helpers/application_helper.rb:245
 msgid "Access(%s)"
 msgid_plural "Accesses(%s)"
 msgstr[0] ""
@@ -486,11 +485,11 @@ msgstr ""
 msgid "Add as Member"
 msgstr ""
 
-#: app/controllers/group_controller.rb:177
+#: app/controllers/group_controller.rb:180
 msgid "Added %s as a member."
 msgstr ""
 
-#: app/controllers/group_controller.rb:190
+#: app/controllers/group_controller.rb:193
 msgid "Added members of %s as members of the group"
 msgstr ""
 
@@ -1666,7 +1665,7 @@ msgstr "Login ID"
 msgid "Administration of the site."
 msgstr ""
 
-#: app/controllers/group_controller.rb:361
+#: app/controllers/group_controller.rb:364
 msgid "Administrative privillage required for the action."
 msgstr ""
 
@@ -2226,10 +2225,11 @@ msgstr ""
 msgid "Bookmarklet"
 msgstr ""
 
-#: app/helpers/application_helper.rb:347 app/helpers/user_helper.rb:45
+#: app/helpers/application_helper.rb:348 app/helpers/user_helper.rb:45
 #: app/controllers/services_controller.rb:44
 #: app/controllers/bookmark_controller.rb:104
 #: app/controllers/bookmarks_controller.rb:35
+#: app/views/bookmarks/_topix_bookmarks.html.erb:1
 #: app/views/admin/_data_menu_box.html.erb:9
 msgid "Bookmarks"
 msgstr ""
@@ -2398,7 +2398,7 @@ msgstr ""
 msgid "Change your profile picture!"
 msgstr ""
 
-#: app/controllers/group_controller.rb:244
+#: app/controllers/group_controller.rb:247
 msgid "Changed."
 msgstr ""
 
@@ -2481,7 +2481,7 @@ msgstr ""
 msgid "Comment was successfully deleted."
 msgstr ""
 
-#: app/helpers/application_helper.rb:241
+#: app/helpers/application_helper.rb:242
 msgid "Comment(%s)"
 msgid_plural "Comments(%s)"
 msgstr[0] ""
@@ -2640,16 +2640,12 @@ msgstr ""
 msgid "Date"
 msgstr ""
 
-#: app/models/share_file.rb:284
+#: app/models/share_file.rb:298
 msgid "Date Accessed"
 msgstr ""
 
 #: app/views/mypage/_record_post.html.erb:42
 msgid "Datetime"
-msgstr ""
-
-#: app/views/search/entry_search.html.erb:40
-msgid "Datetime Last Updated: "
 msgstr ""
 
 #: app/views/layouts/layout.html.erb:38
@@ -2745,6 +2741,7 @@ msgstr ""
 msgid "Download history was successfully deleted."
 msgstr ""
 
+#: app/views/share_file/_topix_share_files.html.erb:35
 #: app/views/share_file/_share_file_box.html.erb:26
 msgid "Downloads: %s"
 msgstr ""
@@ -2923,7 +2920,7 @@ msgstr ""
 msgid "Entered email address %s has not been registered in the site."
 msgstr ""
 
-#: app/helpers/application_helper.rb:343
+#: app/helpers/application_helper.rb:344
 #: app/controllers/search_controller.rb:20
 #: app/views/entries/_topix_entries_with_sortable_pagination.html.erb:1
 #: app/views/entries/_topix_entries.html.erb:1 app/views/user/blog.html.erb:26
@@ -3051,15 +3048,15 @@ msgstr ""
 msgid "Excluding retired users"
 msgstr ""
 
-#: app/controllers/group_controller.rb:296
+#: app/controllers/group_controller.rb:299
 msgid "Failed to Approve."
 msgstr ""
 
-#: app/controllers/group_controller.rb:246
+#: app/controllers/group_controller.rb:249
 msgid "Failed to change status."
 msgstr ""
 
-#: app/controllers/group_controller.rb:322
+#: app/controllers/group_controller.rb:325
 msgid "Failed to delete since there are still other users in the group."
 msgstr ""
 
@@ -3163,6 +3160,7 @@ msgstr ""
 msgid "File size too large."
 msgstr ""
 
+#: app/views/share_file/_topix_share_files.html.erb:36
 #: app/views/share_file/_share_file_box.html.erb:27
 msgid "File size: %s"
 msgstr ""
@@ -3184,7 +3182,7 @@ msgstr ""
 msgid "Filename"
 msgstr ""
 
-#: app/helpers/application_helper.rb:344
+#: app/helpers/application_helper.rb:345
 #: app/controllers/services_controller.rb:47
 #: app/controllers/search_controller.rb:61 app/views/share_file/new.html.erb:9
 #: app/views/share_file/edit.html.erb:9
@@ -3219,8 +3217,8 @@ msgstr ""
 msgid "For questions regarding this email, please contact:"
 msgstr ""
 
-#: app/controllers/group_controller.rb:176
-#: app/controllers/group_controller.rb:188
+#: app/controllers/group_controller.rb:179
+#: app/controllers/group_controller.rb:191
 msgid "Forced to join the group [%s]."
 msgstr ""
 
@@ -3294,7 +3292,7 @@ msgstr "Group Categories"
 msgid "Group does not exist."
 msgstr ""
 
-#: app/controllers/group_controller.rb:313
+#: app/controllers/group_controller.rb:316
 msgid "Group information was successfully updated."
 msgstr ""
 
@@ -3302,7 +3300,7 @@ msgstr ""
 msgid "Group was created successfully."
 msgstr ""
 
-#: app/controllers/group_controller.rb:326
+#: app/controllers/group_controller.rb:329
 msgid "Group was successfully deleted."
 msgstr ""
 
@@ -3382,10 +3380,10 @@ msgstr ""
 msgid "GroupParticipation|Waiting|true"
 msgstr ""
 
-#: app/helpers/application_helper.rb:346
+#: app/helpers/application_helper.rb:347
 #: app/controllers/groups_controller.rb:63
 #: app/controllers/services_controller.rb:46
-#: app/controllers/group_controller.rb:339
+#: app/controllers/group_controller.rb:342
 #: app/controllers/share_file_controller.rb:163
 #: app/controllers/edit_controller.rb:276
 #: app/views/admin/_data_menu_box.html.erb:7
@@ -3655,7 +3653,7 @@ msgstr ""
 #: app/controllers/monta_controller.rb:22
 #: app/controllers/monta_controller.rb:33
 #: app/controllers/board_entries_controller.rb:26
-#: app/models/board_entry.rb:656
+#: app/models/board_entry.rb:669
 msgid "Invalid operation."
 msgstr ""
 
@@ -3744,7 +3742,7 @@ msgstr ""
 msgid "Joined the group failed."
 msgstr ""
 
-#: app/controllers/group_controller.rb:158
+#: app/controllers/group_controller.rb:161
 msgid "Joined the group successfully."
 msgstr ""
 
@@ -3973,7 +3971,7 @@ msgstr ""
 msgid "Members"
 msgstr ""
 
-#: app/helpers/application_helper.rb:216 app/helpers/application_helper.rb:233
+#: app/helpers/application_helper.rb:216 app/helpers/application_helper.rb:234
 #: app/helpers/share_file_helper.rb:19
 #: app/views/board_entries/_form.html.erb:76 app/views/group/_form.html.erb:51
 msgid "Members Only"
@@ -4037,7 +4035,7 @@ msgstr ""
 msgid "Most read blog / forum entries (public entries only)"
 msgstr ""
 
-#: app/helpers/application_helper.rb:324
+#: app/helpers/application_helper.rb:325
 msgid "Move to groups joined ..."
 msgstr ""
 
@@ -4063,7 +4061,7 @@ msgstr ""
 msgid "My Blog"
 msgstr ""
 
-#: app/helpers/application_helper.rb:339 app/helpers/user_helper.rb:54
+#: app/helpers/application_helper.rb:340 app/helpers/user_helper.rb:54
 #: app/helpers/user_helper.rb:58 app/controllers/mypage_controller.rb:369
 msgid "My Page"
 msgstr ""
@@ -4131,7 +4129,7 @@ msgstr ""
 msgid "New user is waiting for approval in %s."
 msgstr ""
 
-#: app/controllers/group_controller.rb:156
+#: app/controllers/group_controller.rb:159
 msgid "New user joined your group [%s]."
 msgstr ""
 
@@ -4177,8 +4175,8 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: app/controllers/group_controller.rb:134
-#: app/controllers/group_controller.rb:256
+#: app/controllers/group_controller.rb:137
+#: app/controllers/group_controller.rb:259
 #: app/views/layouts/layout.html.erb:50
 msgid "No approval needed to join this group."
 msgstr ""
@@ -4187,7 +4185,7 @@ msgstr ""
 msgid "No bookmarks have been registered."
 msgstr ""
 
-#: app/controllers/rankings_controller.rb:103
+#: app/controllers/rankings_controller.rb:105
 msgid "No matched bookmark."
 msgstr ""
 
@@ -4400,7 +4398,7 @@ msgstr ""
 msgid "Open"
 msgstr ""
 
-#: app/helpers/application_helper.rb:212 app/helpers/application_helper.rb:226
+#: app/helpers/application_helper.rb:212 app/helpers/application_helper.rb:227
 #: app/views/board_entries/_form.html.erb:74 app/views/group/_form.html.erb:50
 #: app/views/share_file/new_ajax_upload.html.erb:21
 #: app/views/share_file/_form.html.erb:34
@@ -4559,7 +4557,7 @@ msgid ""
 "administrative user is %s."
 msgstr ""
 
-#: app/helpers/application_helper.rb:216 app/helpers/application_helper.rb:233
+#: app/helpers/application_helper.rb:216 app/helpers/application_helper.rb:234
 #: app/helpers/share_file_helper.rb:19
 #: app/views/board_entries/_form.html.erb:76
 #: app/views/mypage/index.html.erb:130
@@ -4570,7 +4568,7 @@ msgstr "Draft (Owner Only)"
 msgid "Parent comment could not be found. Try reloading the page."
 msgstr ""
 
-#: app/controllers/group_controller.rb:272
+#: app/controllers/group_controller.rb:275
 msgid "Part of the users are already members of this group."
 msgstr ""
 
@@ -4689,9 +4687,12 @@ msgid "Popular Tags: "
 msgstr ""
 
 #: app/views/rankings/bookmark.html.erb:2
+msgid "Popular bookmakrs in %s"
+msgstr ""
+
 #: app/views/rankings/bookmark.html.erb:7
 #: app/views/rankings/bookmark.html.erb:10
-msgid "Popular postings in %s―"
+msgid "Popular postings in %s"
 msgstr ""
 
 #: app/models/popular_bookmark.rb:-
@@ -4839,7 +4840,7 @@ msgstr ""
 msgid "Ranking of Popular Users"
 msgstr ""
 
-#: app/controllers/rankings_controller.rb:109
+#: app/controllers/rankings_controller.rb:111
 #: app/views/shared/_header.html.erb:56
 msgid "Rankings"
 msgstr ""
@@ -4997,7 +4998,7 @@ msgstr ""
 msgid "Remember to clean up the user data periodically"
 msgstr ""
 
-#: app/controllers/group_controller.rb:226
+#: app/controllers/group_controller.rb:229
 msgid "Removed %s from members of the group."
 msgstr ""
 
@@ -5006,7 +5007,7 @@ msgstr ""
 msgid "Reply to this comment"
 msgstr ""
 
-#: app/controllers/group_controller.rb:152
+#: app/controllers/group_controller.rb:155
 msgid "Request sent. Please wait for the approval."
 msgstr ""
 
@@ -5132,6 +5133,12 @@ msgstr ""
 msgid "Search in Internet"
 msgstr ""
 
+#: app/views/bookmarks/index.html.erb:27
+#: app/views/search/share_file_search.html.erb:22
+#: app/views/search/entry_search.html.erb:31
+msgid "Search result"
+msgstr ""
+
 #: app/views/search/_result_info.html.erb:2
 msgid "Search result of <b>%s</b>"
 msgstr ""
@@ -5214,6 +5221,10 @@ msgstr ""
 
 #: app/controllers/admin/settings_controller.rb:57
 msgid "Settings were saved successfully."
+msgstr ""
+
+#: app/views/share_file/_topix_share_files.html.erb:1
+msgid "Share Files"
 msgstr ""
 
 #: app/controllers/admin/admin_module.rb:76
@@ -5482,11 +5493,11 @@ msgstr ""
 msgid "Sort by: "
 msgstr ""
 
-#: app/helpers/application_helper.rb:214 app/helpers/application_helper.rb:230
+#: app/helpers/application_helper.rb:214 app/helpers/application_helper.rb:231
 msgid "Specified Directly:"
 msgstr ""
 
-#: app/controllers/group_controller.rb:352
+#: app/controllers/group_controller.rb:355
 msgid "Specified group does not exist."
 msgstr ""
 
@@ -5531,7 +5542,7 @@ msgstr ""
 msgid "Start with the site!"
 msgstr ""
 
-#: app/models/board_entry.rb:666
+#: app/models/board_entry.rb:679
 msgid "State of your question [%s] is changed!"
 msgstr ""
 
@@ -5568,11 +5579,11 @@ msgstr ""
 msgid "Subwindow"
 msgstr ""
 
-#: app/controllers/group_controller.rb:293
+#: app/controllers/group_controller.rb:296
 msgid "Succeeded to Approve."
 msgstr ""
 
-#: app/controllers/group_controller.rb:304
+#: app/controllers/group_controller.rb:307
 msgid "Succeeded to Disapprove."
 msgstr ""
 
@@ -5580,7 +5591,7 @@ msgstr ""
 msgid "Successfully added/updated users from CSV file."
 msgstr ""
 
-#: app/controllers/group_controller.rb:210
+#: app/controllers/group_controller.rb:213
 msgid "Successfully left the group."
 msgstr ""
 
@@ -5901,7 +5912,7 @@ msgstr ""
 msgid "Track of Bookmarks"
 msgstr ""
 
-#: app/helpers/application_helper.rb:243
+#: app/helpers/application_helper.rb:244
 msgid "Trackback(%s)"
 msgid_plural "Trackbacks(%s)"
 msgstr[0] ""
@@ -6348,14 +6359,14 @@ msgstr ""
 msgid "UserUid|User"
 msgstr ""
 
-#: app/helpers/application_helper.rb:345 app/helpers/user_helper.rb:54
+#: app/helpers/application_helper.rb:346 app/helpers/user_helper.rb:54
 #: app/controllers/users_controller.rb:66
 #: app/controllers/services_controller.rb:45
 #: app/views/admin/_data_menu_box.html.erb:6
 msgid "Users"
 msgstr ""
 
-#: app/controllers/group_controller.rb:196
+#: app/controllers/group_controller.rb:199
 msgid "Users / groups selection invalid."
 msgstr ""
 
@@ -6749,7 +6760,7 @@ msgstr ""
 msgid "You cannot delete user who is not unused."
 msgstr ""
 
-#: app/controllers/group_controller.rb:225
+#: app/controllers/group_controller.rb:228
 msgid "You forced to leave the group [%s]."
 msgstr ""
 
@@ -6781,11 +6792,11 @@ msgstr ""
 msgid "You recieved a comment on your entry [%s]!"
 msgstr ""
 
-#: app/controllers/group_controller.rb:291
+#: app/controllers/group_controller.rb:294
 msgid "You were approved join of the group %s."
 msgstr ""
 
-#: app/controllers/group_controller.rb:302
+#: app/controllers/group_controller.rb:305
 msgid "You were disapproved join of the group %s."
 msgstr ""
 
@@ -6912,7 +6923,7 @@ msgstr ""
 msgid "[Get download history in CSV]"
 msgstr ""
 
-#: app/models/share_file.rb:259 app/models/board_entry.rb:419
+#: app/models/share_file.rb:273 app/models/board_entry.rb:422
 msgid "[Group members only]"
 msgstr ""
 
@@ -6928,7 +6939,7 @@ msgstr ""
 msgid "[Hints on writing entries]"
 msgstr ""
 
-#: app/models/board_entry.rb:735
+#: app/models/board_entry.rb:750
 msgid "[Link does not exist...%s>]"
 msgstr ""
 
@@ -6950,7 +6961,7 @@ msgstr "[Next]"
 msgid "[Next]"
 msgstr ""
 
-#: app/models/share_file.rb:253 app/models/board_entry.rb:413
+#: app/models/share_file.rb:267 app/models/board_entry.rb:416
 msgid "[Open to all]"
 msgstr ""
 
@@ -6958,7 +6969,7 @@ msgstr ""
 msgid "[Other users: %{count} users]"
 msgstr ""
 
-#: app/models/share_file.rb:257 app/models/board_entry.rb:417
+#: app/models/share_file.rb:271 app/models/board_entry.rb:420
 msgid "[Owner only]"
 msgstr ""
 
@@ -7373,7 +7384,7 @@ msgstr ""
 msgid "picture"
 msgstr ""
 
-#: app/models/popular_bookmark.rb:-
+#: app/models/popular_bookmark.rb:- app/views/rankings/bookmark.html.erb:14
 msgid "popular bookmark"
 msgstr ""
 
@@ -7494,7 +7505,7 @@ msgstr ""
 
 #: app/helpers/initial_settings_helper.rb:43
 #: app/controllers/admin/users_controller.rb:196
-#: app/controllers/admin/users_controller.rb:204 app/models/share_file.rb:284
+#: app/controllers/admin/users_controller.rb:204 app/models/share_file.rb:298
 #: app/views/user/show.html.erb:31
 #: app/views/portal/_registration_form.html.erb:42
 #: app/views/admin/users/create_uid.html.erb:12
