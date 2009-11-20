@@ -203,7 +203,7 @@ class MypageController < ApplicationController
   def load_entries
     option = { :per_page => params[:per_page].to_i }
     option[:recent_day] = params[:recent_day].to_i if params[:recent_day]
-    render :partial => (params[:page_name] ||= "page_space"), :locals => find_as_locals(params[:target], option)
+    render :partial => params[:page_name], :locals => find_as_locals(params[:target], option)
   end
 
   # ajax_action

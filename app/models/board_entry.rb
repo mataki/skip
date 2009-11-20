@@ -684,6 +684,16 @@ class BoardEntry < ActiveRecord::Base
     end
   end
 
+  def owner_is_user?
+    symbol_type, symbol_id = SkipUtil.split_symbol self.symbol
+    symbol_type == 'uid'
+  end
+
+  def owner_is_group?
+    symbol_type, symbol_id = SkipUtil.split_symbol self.symbol
+    symbol_type == 'gid'
+  end
+
 private
   def generate_next_user_entry_no
     entry = BoardEntry.find(:first,

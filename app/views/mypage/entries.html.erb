@@ -14,11 +14,12 @@
 
 <% content_for :contents_right do -%>
   <%= i18n_will_paginate_with_container_wrapper @entries %>
-  <%= render :partial => "page_space",
-             :locals => { :id_name => @id_name,
-                          :title_name => @title_name,
-                          :pages => @entries,
-                          :symbol2name_hash => @symbol2name_hash } %>
-
+  <%= render :partial => "entries/topix_entries",
+    :locals => {
+      :title => @title_name,
+      :entries => @entries,
+      :symbol2name_hash => @symbol2name_hash
+    }
+  %>
   <%= i18n_will_paginate_with_container_wrapper @entries %>
 <% end -%>

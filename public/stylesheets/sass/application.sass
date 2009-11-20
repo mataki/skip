@@ -93,6 +93,8 @@ table
     :width 150px
   col.col160
     :width 160px
+  col.col300
+    :width 300px
 
 // jquery.ui.tabsでタブ折り返し時にliがulをはみ出してしまう対策
 // ------------------------------------------------------------
@@ -800,6 +802,19 @@ div#questions_wrapper
         :vertical-align bottom
         :color #808080
 
+// マイページ > 新着通知(一覧)
+// ------------------------------------------------------------
+div#antenna_navi
+  :padding-right 3px
+  :margin-right 7px
+  :text-align right
+  :padding 0 0 12px 0
+  div.operation_left
+    :text-align left
+    :float left
+  div.operation_right
+    :overflow hidden
+    :float right
 
 // マイページ > ソーシャル
 // ------------------------------------------------------------
@@ -1008,6 +1023,51 @@ div#hide_message
       :list-style-type none
     li.history
       :display none
+
+// 記事一覧(topix_entries)
+// ------------------------------------------------------------
+div.topix_entries_wrapper
+  :margin 10px 0
+  h2.title
+    :border-top = !base_border
+    :padding 4px 0px 2px 7px
+    :background-color #f3f3ff
+    :background-image url(./../images/skip/gradient.png)
+    :font
+      :size 14px
+      :weight bold
+    :color #003399
+    :vertical-align bottom
+    :margin-left 0
+    :margin-bottom 5px
+  table.topix_entries
+    :table-layout fixed
+    :width 100%
+    tr
+      :height 20px
+      :border-bottom = !base_dotted_border
+      td
+        :height 20px
+        :border-bottom = !base_dotted_border
+        // tdに指定してもie6で有効にならない。
+        span.nowrap
+          :white-space nowrap
+      td.read_state
+        :text-align center
+      td.publication_state
+        :text-align center
+      td.owner
+        :text-align left
+        :overflow hidden
+      td.title
+        :text-align left
+        :overflow hidden
+      td.date
+        :text-align right
+      span.infos
+        :font-size 8px
+        :vertical-align bottom
+        :color #808080
 
 // ブックマーク
 // ------------------------------------------------------------

@@ -91,7 +91,12 @@ module ApplicationHelper
     output_text << icon_tag('user_suit') if options[:image_on]
     output_text << title = h(user.name)
 
-    link_to output_text, {:controller => 'user', :action => 'show', :uid => user.uid}, {:title => title}
+    link = link_to(output_text, {:controller => 'user', :action => 'show', :uid => user.uid}, {:title => title})
+    if options[:with_prefix]
+      "by #{link}"
+    else
+      link
+    end
   end
 
   def user_link_to_with_portrait user, options = {}

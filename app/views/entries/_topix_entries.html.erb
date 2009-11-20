@@ -1,0 +1,57 @@
+<% title ||= _('Entries') %>
+<% entries ||= [] -%>
+<% user_unreadings ||= [] -%>
+<% symbol2name_hash ||= nil -%>
+<% with_checkable_read ||= false -%>
+
+<div class="topix_entries_wrapper">
+  <h2 class="title"><%= icon_tag('asterisk_orange') %><%= h title %></h2>
+  <% unless entries.empty? -%>
+    <table class="topix_entries">
+      <% if with_checkable_read -%>
+        <col class="col25"></col>
+      <% end -%>
+      <col class="col25"></col>
+      <% if symbol2name_hash -%>
+        <col class="col150"></col>
+        <col class="col25"></col>
+      <% end -%>
+      <col></col>
+      <col class="col150"></col>
+      <tbody>
+        <% entries.each do |entry| -%>
+          <% entry_infos = get_entry_infos(entry) -%>
+          <tr>
+            <% if with_checkable_read -%>
+            <td class="read_state"><%= check_box_tag("message_#{entry.id}", "true", !user_unreadings[entry.id], {:class => "read_state_checkbox"}) %></td>
+            <% end -%>
+            <td class="publication_state"><%= get_publication_type_icon(entry) %></td>
+            <% if symbol2name_hash -%>
+            <td class="owner"><span class="nowrap">
+              <%= symbol_link_to(entry.symbol, symbol2name_hash[entry.symbol]) %>
+            </span></td>
+            <td></td>
+            <% end -%>
+            <td class="title"><span class="nowrap">
+              <%= entry_link_to(entry, {}, {:title => entry_infos}) %>
+              <%= user_link_to(entry.user, :with_prefix => true) if entry.owner_is_group? %>
+              <%= entry_tag_search_links_tag(entry.category, :max => 3) %>
+              <span class="infos"><%= entry_infos -%></span>
+            </span></td>
+            <td class="date"><%=h entry.date.strftime("%m/%d %H:%M") %></td>
+          </tr>
+        <% end -%>
+      </tbody>
+    </table>
+  <% end %>
+</div>
+<% if with_checkable_read -%>
+  <% content_for :javascript_initializers do -%>
+  // チェックボックスをクリックすると既読未読が変更される
+  $j('.read_state_checkbox')
+  .click( function(){
+      entryId = this.id.split('_')[1];
+      changeReadState(entryId, this.checked, $j('input[name=authenticity_token]').val());
+  });
+  <% end -%>
+<% end -%>
