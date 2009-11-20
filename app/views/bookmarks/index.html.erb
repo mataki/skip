@@ -23,10 +23,6 @@
   <% end -%>
 </div>
 
-<div class="search_result_space" style="position: relative; width: 100%; margin-left: auto; margin-right: auto;">
-<% unless @bookmarks.empty? -%>
-  <%= i18n_will_paginate_with_container_wrapper @bookmarks %>
-  <%= render :partial => "bookmarks", :object => @bookmarks %>
-  <%= i18n_will_paginate_with_container_wrapper @bookmarks %>
-<% end -%>
-</div>
+<%= i18n_will_paginate_with_container_wrapper @bookmarks %>
+<%= render :partial => "topix_bookmarks", :locals => { :bookmarks => @bookmarks, :title => _('Search result') } %>
+<%= i18n_will_paginate_with_container_wrapper @bookmarks %>

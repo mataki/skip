@@ -1,5 +1,5 @@
 <div class="search_cond_space ui-corner-all">
-  <div class="title ui-corner-all"><u><%=h _("Popular postings in %s―") % @target_date.strftime(_('%B %d %Y')) %></u>
+  <div class="title ui-corner-all"><u><%=h _("Popular bookmakrs in %s") % @target_date.strftime(_('%B %d %Y')) %></u>
     <span style="color: darkgray; font-size: 10px; font-weight: normal;"><%= _('Time Last Updated: ')%><%=h @last_updated %></span></div>
   <div style="margin-left: 15px;"><%=h _("Bookmarks that got most comments during a week between %{from} and %{to}:") % {:from => @target_date.ago(6.day).strftime(_('%B %d %Y')), :to => @target_date.strftime(_('%B %d %Y'))} %></div>
   <div style="text-align: right;">
@@ -11,6 +11,4 @@
   </div>
 </div>
 
-<div class="search_result_space" style="position: relative; width: 100%; margin-left: auto; margin-right: auto;">
-  <%= render :partial => "bookmarks/bookmarks", :object => @bookmarks %>
-</div>
+<%= render :partial => "bookmarks/topix_bookmarks", :locals => { :bookmarks => @bookmarks, :title => _('popular bookmark') } %>

@@ -1025,9 +1025,9 @@ div#hide_message
     li.history
       :display none
 
-// 一覧(記事、共有ファイル)
+// 一覧(記事、共有ファイル, ブックマーク)
 // ------------------------------------------------------------
-div.topix_entries_wrapper, div.topix_share_files_wrapper
+div.topix_entries_wrapper, div.topix_share_files_wrapper, div.topix_bookmarks_wrapper
   :margin 10px 0
   h2.title
     :border-top = !base_border
@@ -1041,7 +1041,7 @@ div.topix_entries_wrapper, div.topix_share_files_wrapper
     :vertical-align bottom
     :margin-left 0
     :margin-bottom 5px
-  table.topix_entries, table.topix_share_files
+  table.topix_entries, table.topix_share_files, table.topix_bookmarks
     :table-layout fixed
     :width 100%
     tr
@@ -1053,8 +1053,6 @@ div.topix_entries_wrapper, div.topix_share_files_wrapper
         // tdに指定してもie6で有効にならない。
         span.nowrap
           :white-space nowrap
-      td.read_state
-        :text-align center
       td.publication_state
         :text-align center
       td.owner
@@ -1063,15 +1061,30 @@ div.topix_entries_wrapper, div.topix_share_files_wrapper
       td.title
         :text-align left
         :overflow hidden
-        span.question_state
-          :color green
-          :font-size = !small_font_size
       td.date
         :text-align right
       span.infos
         :font-size 8px
         :vertical-align bottom
         :color #808080
+
+  table.topix_entries
+    tr
+      td.read_state
+        :text-align center
+      td.title
+        span.question_state
+          :color green
+          :font-size = !small_font_size
+
+  table.topix_bookmarks
+    tr
+      td.title
+        span.count
+          :background #ffe0e0
+          :font
+            :size = !small_font_size
+            :weight bold
 
 // ブックマーク
 // ------------------------------------------------------------
