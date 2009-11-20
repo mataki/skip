@@ -74,6 +74,26 @@ span.tag
 select.select_navi
   :width 180px
 
+table
+  col.col10
+    :width 10px
+  col.col25
+    :width 25px
+  col.col50
+    :width 50px
+  col.col75
+    :width 75px
+  col.col100
+    :width 100px
+  col.col125
+    :width 125px
+  col.col140
+    :width 140px
+  col.col150
+    :width 150px
+  col.col160
+    :width 160px
+
 // jquery.ui.tabsでタブ折り返し時にliがulをはみ出してしまう対策
 // ------------------------------------------------------------
 ul.ui-tabs-nav
@@ -812,8 +832,21 @@ ul.access_tracks
 
 // マイページ > アンテナボックス
 // ------------------------------------------------------------
-ul.notices.by_type
+ul.notices.by_typemanage_message
   :border-top = !base_border
+
+// 自分の管理
+table.manage_message
+  tr.even
+    :background-color #f8f8ff
+  tr.odd
+    :background-color #fff
+  th
+    :background-color #f0f0ff
+  th, td
+    :border = !base_border
+    :padding 1px 4px
+    :height 20px
 
 // ユーザ
 // ------------------------------------------------------------
