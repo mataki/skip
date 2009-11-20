@@ -24,6 +24,6 @@
         :total_count => @total_count,
         :bookmark_comments_count => @bookmark_comments_count }) %>
   <% elsif @entries -%>
-    <%= render(:partial => 'entries/entries_list', :locals => { :entries => @entries }) %>
+    <%= render :partial => "entries/topix_entries_with_sortable_pagination", :locals => { :entries => @entries } %>
   <% end -%>
 <% end -%>
