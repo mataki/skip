@@ -52,7 +52,7 @@ class ShareFile < ActiveRecord::Base
     super(attr)
     if self.publication_type.blank?
       self.publication_type =
-        if user_owner?
+        if owner_is_user?
           'public'
         else
           owner ? owner.default_publication_type : 'private'
@@ -91,41 +91,55 @@ class ShareFile < ActiveRecord::Base
     e.backtrace.each { |message| logger.error message }
   end
 
+  # TODO owner_symbol_typeのみにしてなくしたい, BoardEntryと統合したい
   def symbol_type
     owner_symbol.split(':').first
   end
 
+  # TODO owner_symbol_idのみにしてなくしたい, BoardEntryと統合したい
+  def symbol_id
+    owner_symbol.split(':')[1]
+  end
+
+  # TODO BoardEntryと統合したい
   def owner_symbol_type
     { 'uid' => 'user', 'gid' => 'group' }[symbol_type]
   end
 
+  # TODO BoardEntryと統合したい
   def owner_symbol_id
     owner_symbol.split(':').last
   end
 
+  # TODO BoardEntryと統合したい
   def owner_symbol_name
     owner = Symbol.get_item_by_symbol(self.owner_symbol)
     owner ? owner.name : ''
   end
 
+  # TODO BoardEntryと統合したい
   def owner_id
     self.class.owner_id owner_symbol
   end
 
+  # TODO BoardEntryと統合したい
   def self.owner_id owner_symbol
     owner(owner_symbol).id
   end
 
+  # TODO BoardEntryと統合したい
   def owner
     self.class.owner owner_symbol
   end
 
+  # TODO BoardEntryと統合したい
   def self.owner owner_symbol
     symbol_type = owner_symbol.split(":").first
     symbol_id = owner_symbol.split(":").last
     owner = (symbol_type == User.symbol_type.to_s) ? User.find_by_uid(symbol_id) : Group.active.find_by_gid(symbol_id)
   end
 
+  # TODO BoardEntryと統合したい
   # 所属するグループの公開範囲により、共有ファイルの公開範囲を判定する
   def owner_is_public?
     Symbol.public_symbol_obj? owner_symbol
@@ -360,6 +374,16 @@ class ShareFile < ActiveRecord::Base
     user ? owner_instance(self, user).updatable? : false
   end
 
+  # TODO BoardEntryと共通化したい
+  def owner_is_user?
+    self.symbol_type == User.symbol_type.to_s
+  end
+
+  # TODO BoardEntryと共通化したい
+  def owner_is_group?
+    self.symbol_type == Group.symbol_type.to_s
+  end
+
   class Owner
     def initialize(share_file, user)
       @share_file = share_file
@@ -434,20 +458,12 @@ private
   end
 
   def owner_instance(share_file, user)
-    if user_owner?
+    if owner_is_user?
       UserOwner.new(share_file, user)
-    elsif group_owner?
+    elsif owner_is_group?
       GroupOwner.new(share_file, user)
     else
       Owner.new(share_file, user)
     end
-  end
-
-  def user_owner?
-    self.symbol_type == User.symbol_type.to_s
-  end
-
-  def group_owner?
-    self.symbol_type == Group.symbol_type.to_s
   end
 end

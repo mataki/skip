@@ -18,20 +18,9 @@
   <% end -%>
 </div>
 
-<div class="search_result_space">
-<% unless @share_files.empty? -%>
-  <%= i18n_will_paginate_with_container_wrapper @share_files %>
-  <div class="files_body" style="width:90%;margin-left:5%;">
-    <% @share_files.each do |share_file| -%>
-      <%= render :partial => 'share_file/share_file_box',
-                 :locals => {:share_file => share_file,
-                             :visible_menu => false,
-                             :visible_owner_link => true} %>
-    <% end -%>
-  </div><!-- files_body -->
-  <%= i18n_will_paginate_with_container_wrapper @share_files %>
-<% end -%>
-</div>
+<%= i18n_will_paginate_with_container_wrapper @share_files %>
+<%= render :partial => "share_file/topix_share_files", :locals => { :share_files => @share_files, :title => _('Search result'), :symbol2name_hash => BoardEntry.get_symbol2name_hash(@share_files) } %>
+<%= i18n_will_paginate_with_container_wrapper @share_files %>
 
 <% content_for :javascript_initializers do -%>
     setupShareFileDownloadLink();

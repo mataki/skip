@@ -75,7 +75,7 @@ class SearchController < ApplicationController
       :conditions => find_params[:conditions],
       :include => find_params[:include],
       :order => order_by
-    ).paginate(:page => params[:page], :per_page => 10)
+    ).paginate(:page => params[:page], :per_page => 25)
 
     if @share_files.empty?
       if params[:commit] || params[:category]

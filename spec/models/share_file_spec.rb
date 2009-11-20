@@ -760,13 +760,13 @@ describe ShareFile::GroupOwner do
 end
 
 # privateメソッドのspec
-describe ShareFile, '#user_owner?' do
+describe ShareFile, '#owner_is_user?' do
   describe '所有者がユーザの場合' do
     before do
       @share_file = ShareFile.new(:owner_symbol => 'uid:owner')
     end
     it 'trueを返すこと' do
-      @share_file.send(:user_owner?).should be_true
+      @share_file.send(:owner_is_user?).should be_true
     end
   end
   describe '所有者がユーザ以外の場合' do
@@ -774,18 +774,18 @@ describe ShareFile, '#user_owner?' do
       @share_file = ShareFile.new(:owner_symbol => 'zid:owner')
     end
     it 'falseを返すこと' do
-      @share_file.send(:user_owner?).should be_false
+      @share_file.send(:owner_is_user?).should be_false
     end
   end
 end
 
-describe ShareFile, '#group_owner?' do
+describe ShareFile, '#owner_is_group?' do
   describe '所有者がグループの場合' do
     before do
       @share_file = ShareFile.new(:owner_symbol => 'gid:owner')
     end
     it 'trueを返すこと' do
-      @share_file.send(:group_owner?).should be_true
+      @share_file.send(:owner_is_group?).should be_true
     end
   end
   describe '所有者がグループ以外の場合' do
@@ -793,7 +793,7 @@ describe ShareFile, '#group_owner?' do
       @share_file = ShareFile.new(:owner_symbol => 'zid:owner')
     end
     it 'falseを返すこと' do
-      @share_file.send(:group_owner?).should be_false
+      @share_file.send(:owner_is_group?).should be_false
     end
   end
 end

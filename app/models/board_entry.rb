@@ -302,8 +302,8 @@ class BoardEntry < ActiveRecord::Base
     return {:conditions => conditions_param.unshift(conditions_state), :include => [:entry_publications] }
   end
 
-
   # 最新の一覧を取得（ブログでもフォーラムでも。オーナーさえ決まればOK。）
+  # TODO named_scopeにしたい
   def self.find_visible(limit, login_user_symbols, owner_symbol)
     find_params = self.make_conditions(login_user_symbols, {:symbol => owner_symbol})
     self.scoped(
@@ -334,6 +334,7 @@ class BoardEntry < ActiveRecord::Base
     return prev_entry, next_entry
   end
 
+  # TODO Tagのnamed_scopeにしてなくしたい
   def self.get_category_words(options={})
     options[:include] ||= []
     options[:select] = "id"
@@ -366,6 +367,7 @@ class BoardEntry < ActiveRecord::Base
 #  end
 
 
+  # TODO Tagのnamed_scopeにしてなくしたい
   def self.get_popular_tag_words()
     options = { :select => 'tags.name',
                 :joins => 'JOIN tags ON entry_tags.tag_id = tags.id',
@@ -407,6 +409,7 @@ class BoardEntry < ActiveRecord::Base
     end
   end
 
+  # TODO ShareFileと統合したい
   def visibility
     text = color = ""
     if public?
@@ -428,6 +431,7 @@ class BoardEntry < ActiveRecord::Base
     return text, color
   end
 
+  # TODO ShareFileのリストを渡しても使える、ユーティリティクラスに移したい。
   def self.get_symbol2name_hash entries
     user_symbol_ids = group_symbol_ids = []
     entries.each do |entry|
@@ -454,6 +458,7 @@ class BoardEntry < ActiveRecord::Base
   end
 
   # 記事へのリンクのURLを生成して返す
+  # TODO なくしたい。viewかhelperのみでなんとかしたい。
   def get_url_hash
     url = { :entry_id => id }
     case entry_type
@@ -469,14 +474,17 @@ class BoardEntry < ActiveRecord::Base
     url
   end
 
+  # TODO ShareFileと統合したい。owner_symbol_typeにしたい
   def symbol_type
     symbol.split(':')[0]
   end
 
+  # TODO ShareFileと統合したい。owner_symbol_idにしたい
   def symbol_id
     symbol.split(':')[1]
   end
 
+  # TODO ShareFileと統合したい。owner_symbol_nameにしたい
   def symbol_name
     owner = Symbol.get_item_by_symbol(self.symbol)
     owner ? owner.name : ''
@@ -526,6 +534,7 @@ class BoardEntry < ActiveRecord::Base
     entry_publications.any? {|publication| login_user_symbols.include?(publication.symbol) || "sid:allusers" == publication.symbol}
   end
 
+  # TODO editable?とどちらかにしたい。
   def edit? login_user_symbols
     entry_editors.any? {|editor| login_user_symbols.include? editor.symbol }
   end
@@ -578,12 +587,14 @@ class BoardEntry < ActiveRecord::Base
   end
 
   # 話題にしてくれた記事一覧を返す
+  # TODO named_scopeにしたい
   def trackback_entries(login_user_id, login_user_symbols)
     ids =  self.entry_trackbacks.map {|trackback| trackback.tb_entry_id }
     authorized_entries_except_given_user(login_user_id, login_user_symbols, ids)
   end
 
   # 話題元の記事一覧を返す
+  # TODO named_scopeにしたい
   def to_trackback_entries(login_user_id, login_user_symbols)
     ids =  self.to_entry_trackbacks.map {|trackback| trackback.board_entry_id }
     authorized_entries_except_given_user(login_user_id, login_user_symbols, ids)
@@ -627,6 +638,7 @@ class BoardEntry < ActiveRecord::Base
   end
 
   # TODO Symbol.get_item_by_symbolとかぶってる。こちらを生かしたい
+  # TODO ShareFileと統合したい
   def self.owner symbol
     return nil if symbol.blank?
     symbol_type, symbol_id = SkipUtil::split_symbol symbol
@@ -639,6 +651,7 @@ class BoardEntry < ActiveRecord::Base
     end
   end
 
+  # TODO ShareFileと統合したい, ownerにしたい
   def load_owner
     @owner = self.class.owner self.symbol
   end
@@ -684,11 +697,13 @@ class BoardEntry < ActiveRecord::Base
     end
   end
 
+  # TODO ShareFileと統合したい
   def owner_is_user?
     symbol_type, symbol_id = SkipUtil.split_symbol self.symbol
     symbol_type == 'uid'
   end
 
+  # TODO ShareFileと統合したい
   def owner_is_group?
     symbol_type, symbol_id = SkipUtil.split_symbol self.symbol
     symbol_type == 'gid'

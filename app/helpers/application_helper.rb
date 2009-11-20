@@ -217,20 +217,21 @@ module ApplicationHelper
    end
   end
 
-  def get_publication_type_icon(entry)
+  # TODO Publicationクラス辺りに移したい
+  def get_publication_type_icon(entry_or_share_file)
     icon_name = ''
     view_name = ""
-    case entry.publication_type
+    case entry_or_share_file.publication_type
     when 'public'
       icon_name = 'page_red'
       view_name = _("Open to All")
     when 'protected'
-      visibility, visibility_color = entry.visibility
+      visibility, visibility_color = entry_or_share_file.visibility
       icon_name = 'page_link'
       view_name = _("Specified Directly:") + visibility
     when 'private'
       icon_name = 'page_key'
-      view_name = entry.diary? ? _("Owner Only") : _("Members Only")
+      view_name = entry_or_share_file.owner_is_user? ? _("Owner Only") : _("Members Only")
    end
     icon_tag(icon_name, :title => view_name)
   end

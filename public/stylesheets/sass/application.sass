@@ -1025,9 +1025,9 @@ div#hide_message
     li.history
       :display none
 
-// 記事一覧(topix_entries)
+// 一覧(記事、共有ファイル)
 // ------------------------------------------------------------
-div.topix_entries_wrapper
+div.topix_entries_wrapper, div.topix_share_files_wrapper
   :margin 10px 0
   h2.title
     :border-top = !base_border
@@ -1041,7 +1041,7 @@ div.topix_entries_wrapper
     :vertical-align bottom
     :margin-left 0
     :margin-bottom 5px
-  table.topix_entries
+  table.topix_entries, table.topix_share_files
     :table-layout fixed
     :width 100%
     tr

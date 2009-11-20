@@ -1,0 +1,45 @@
+<% title ||= _('Share Files') %>
+<% share_files ||= [] -%>
+<% symbol2name_hash ||= nil -%>
+
+<div class="topix_share_files_wrapper">
+  <h2 class="title"><%= icon_tag('asterisk_orange') %><%= h title %></h2>
+  <% unless share_files.empty? -%>
+    <table class="topix_share_files">
+      <col class="col25"></col>
+      <% if symbol2name_hash -%>
+        <col class="col150"></col>
+        <col class="col25"></col>
+      <% end -%>
+      <col></col>
+      <col class="col150"></col>
+      <tbody>
+        <% share_files.each do |share_file| -%>
+          <tr>
+            <td class="publication_state"><%= get_publication_type_icon(share_file) %></td>
+            <% if symbol2name_hash -%>
+            <td class="owner"><span class="nowrap">
+              <%= symbol_link_to(share_file.owner_symbol, symbol2name_hash[share_file.owner_symbol]) %>
+            </span></td>
+            <td></td>
+            <% end -%>
+            <td class="title"><span class="nowrap">
+              <%= file_link_to(share_file, { :truncate => 40 }, :id => "share_file_download_link_#{share_file.id}", :class => "share_file_download_link") %>
+              <% form_tag file_link_url(share_file), :id => "share_file_download_form_#{share_file.id}", :class => 'invisible' do -%>
+                <%= hidden_field_tag 'authenticity_token', form_authenticity_token %>
+              <% end -%>
+              <%= user_link_to(share_file.user, :with_prefix => true) if share_file.owner_is_group? %>
+              <%= share_file_search_links_tag share_file.category, :max => 3 %>
+              <span style="margin-left:10px"><%= h share_file.description %></span>
+              <span class="infos">
+                <%= _('Downloads: %s') % content_tag('span', h(share_file.total_count), :id => "download_count_#{share_file.id}") %>
+                <%= _('File size: %s') % share_file.file_size_with_unit %>
+              </span>
+            </span></td>
+            <td class="date"><%= h share_file.date.strftime("%m/%d %H:%M") %></td>
+          </tr>
+        <% end -%>
+      </tbody>
+    </table>
+  <% end %>
+</div>
