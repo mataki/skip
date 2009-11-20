@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.3.0\n"
-"POT-Creation-Date: 2009-11-20 18:31+0900\n"
+"POT-Creation-Date: 2009-11-20 18:58+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -80,7 +80,7 @@ msgstr ""
 msgid "%s Only"
 msgstr ""
 
-#: app/views/groups/_group_list.html.erb:16
+#: app/views/groups/_group_list.html.erb:19
 msgid "%s Required"
 msgstr ""
 
@@ -2812,6 +2812,10 @@ msgstr ""
 msgid "Entries bookmarked by yourself"
 msgstr ""
 
+#: app/views/groups/_group_list.html.erb:11
+msgid "Entries count"
+msgstr ""
+
 #: app/views/mypage/_manage_customize.html.erb:40
 msgid "Entries display format of Mypage"
 msgstr ""
@@ -3855,6 +3859,10 @@ msgstr ""
 #: app/helpers/share_file_helper.rb:19
 #: app/views/board_entries/_form.html.erb:76 app/views/group/_form.html.erb:51
 msgid "Members Only"
+msgstr ""
+
+#: app/views/groups/_group_list.html.erb:10
+msgid "Members count"
 msgstr ""
 
 #: app/views/user/_social_menu.html.erb:2 app/views/shared/_menu.html.erb:5
@@ -5612,6 +5620,10 @@ msgstr[1] ""
 
 #: app/controllers/bookmark_controller.rb:182
 msgid "The URL is invalid."
+msgstr ""
+
+#: app/views/groups/_group_list.html.erb:12
+msgid "The entry's Last updated date"
 msgstr ""
 
 #: app/views/mypage/_record_post.html.erb:13

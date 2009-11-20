@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.3.0\n"
-"POT-Creation-Date: 2009-11-20 18:31+0900\n"
+"POT-Creation-Date: 2009-11-20 18:58+0900\n"
 "PO-Revision-Date: 2009-11-16 18:20+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -82,7 +82,7 @@ msgstr "%Y/%m/%d %H:%M"
 msgid "%s Only"
 msgstr "%sのみ"
 
-#: app/views/groups/_group_list.html.erb:16
+#: app/views/groups/_group_list.html.erb:19
 msgid "%s Required"
 msgstr "%s 必要"
 
@@ -2994,6 +2994,10 @@ msgstr "記事"
 msgid "Entries bookmarked by yourself"
 msgstr "あなたがブックマークした記事"
 
+#: app/views/groups/_group_list.html.erb:11
+msgid "Entries count"
+msgstr "記事数"
+
 #: app/views/mypage/_manage_customize.html.erb:40
 msgid "Entries display format of Mypage"
 msgstr "マイページでの公開記事の表示方法"
@@ -4074,6 +4078,10 @@ msgstr "参加者"
 #: app/views/board_entries/_form.html.erb:76 app/views/group/_form.html.erb:51
 msgid "Members Only"
 msgstr "参加者のみ"
+
+#: app/views/groups/_group_list.html.erb:10
+msgid "Members count"
+msgstr "参加者数"
 
 #: app/views/user/_social_menu.html.erb:2 app/views/shared/_menu.html.erb:5
 msgid "Menu"
@@ -5869,6 +5877,10 @@ msgstr[0] "利用開始URLを発行しました。確認のリンクからユー
 #: app/controllers/bookmark_controller.rb:182
 msgid "The URL is invalid."
 msgstr "そのURLは有効ではありません。"
+
+#: app/views/groups/_group_list.html.erb:12
+msgid "The entry's Last updated date"
+msgstr "記事の最終更新日"
 
 #: app/views/mypage/_record_post.html.erb:13
 msgid "The search targets are tags, titles and bodies"
