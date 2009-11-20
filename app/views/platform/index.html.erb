@@ -9,10 +9,7 @@
 
 <div id="platform_main_wrapper">
   <div id="platform_main">
-    <div class="col_left">
-      <div id="desc_before_login" class="ui-corner-all"><%= skip_image_tag 'indicator.gif' %></div>
-    </div>
-    <div class="col_right">
+    <div class="col">
       <% if enable_activate? -%>
       <div class="login-box ui-corner-all">
         <p><%= _('Signup') %></p>
@@ -20,6 +17,10 @@
       </div>
       <% end -%>
     </div>
+    <div class="col">
+      <div id="desc_before_login" class="ui-corner-all"><%= skip_image_tag 'indicator.gif' %></div>
+    </div>
+    <div class="clear_both"></div>
   </div>
 </div>
 
