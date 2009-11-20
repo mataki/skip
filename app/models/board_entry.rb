@@ -302,16 +302,6 @@ class BoardEntry < ActiveRecord::Base
     return {:conditions => conditions_param.unshift(conditions_state), :include => [:entry_publications] }
   end
 
-  # 最新の一覧を取得（ブログでもフォーラムでも。オーナーさえ決まればOK。）
-  # TODO named_scopeにしたい
-  def self.find_visible(limit, login_user_symbols, owner_symbol)
-    find_params = self.make_conditions(login_user_symbols, {:symbol => owner_symbol})
-    self.scoped(
-      :conditions => find_params[:conditions],
-      :include => find_params[:include] | [ :state, :board_entry_comments ]
-    ).order_new.limit(limit)
-  end
-
   def send_mail?
     true if send_mail == "1"
   end

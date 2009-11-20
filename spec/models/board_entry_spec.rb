@@ -74,7 +74,6 @@ describe BoardEntry, "があるユーザのブログだったとき" do
 end
 
 # TODO: BoardEntry.make_conditionsのテスト
-# TODO: BoardEntry.find_visibleのテスト
 
 describe "BoardEntry.get_category_words 複数のタグが見つかったとき" do
   before(:each) do
