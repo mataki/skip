@@ -20,7 +20,7 @@
         if object.unused?
           if !object.activation_token.nil? and object.within_time_limit_of_activation_token?
             signup_url = signup_url(object.activation_token)
-            _('To be activated') + "(#{link_to _('Confirm'), (h signup_url)})"
+            _('To be activated') + "(" + link_to(_('Confirm'), h(signup_url)) + ")"
           else
             issue_link_str = SkipEmbedded::InitialSettings['mail']['show_mail_function'] ? _('Notify activation') : _('Prepare for activation')
             issue_link = link_to(issue_link_str, issue_activation_code_admin_user_path(object), :class => 'issue_activation_code_link')
