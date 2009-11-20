@@ -779,7 +779,12 @@ class MypageController < ApplicationController
     result
   end
 
+  # TODO mypageのcontroller及びviewで@userを使うのをやめてcurrent_target_userにしてなくしたい。
   def load_user
     @user = current_user
+  end
+
+  def current_target_user
+    current_user
   end
 end

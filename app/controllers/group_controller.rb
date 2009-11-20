@@ -92,6 +92,7 @@ class GroupController < ApplicationController
 
     redirect_to(:controller => 'edit',
                 :action => 'index',
+                :gid => @group.gid,
                 :entry_type => BoardEntry::GROUP_BBS,
                 :symbol => @group.symbol,
                 :publication_type => @group.default_publication_type)
@@ -102,6 +103,7 @@ class GroupController < ApplicationController
 
     redirect_to(:controller => 'edit',
                 :action => 'index',
+                :gid => @group.gid,
                 :entry_type => BoardEntry::GROUP_BBS,
                 :aim_type => 'notice',
                 :symbol => @group.symbol,
@@ -113,6 +115,7 @@ class GroupController < ApplicationController
 
     redirect_to(:controller => 'edit',
                 :action => 'index',
+                :gid => @group.gid,
                 :entry_type => BoardEntry::GROUP_BBS,
                 :aim_type => 'question',
                 :send_mail => !!params[:send_mail],
