@@ -1159,17 +1159,17 @@ div.edit_form_space.bookmark.edit
           :text-align center
 
 // 表示
-div.bookmark.show
-  :border-bottom = !base_border
-  :padding-bottom 5px
-  :margin-bottom 10px
-  :position relative
-  div.title
-    :font
-      :size 16px
-      :weight bold
-    :background-color #f0f0ff
-    :padding 2px
+table#bookmark_comments
+  :width 100%
+  tr
+    :border-bottom = !base_border
+    &.self
+      :background-color lightyellow
+    td.owner
+      :text-align left
+      :overflow hidden
+    td.date
+      :text-align right
 
 // 共有ファイル
 // ------------------------------------------------------------
