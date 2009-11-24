@@ -2116,7 +2116,7 @@ msgstr ""
 
 #: app/models/board_entry.rb:-
 msgid "BoardEntry|Last updated"
-msgstr "最終更新日時"
+msgstr "最終更新日"
 
 #: app/models/board_entry.rb:-
 msgid "BoardEntry|Lock version"
