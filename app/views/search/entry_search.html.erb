@@ -28,5 +28,5 @@
 </div>
 
 <%= i18n_will_paginate_with_container_wrapper @entries %>
-<%= render :partial => "entries/topix_entries", :locals => { :entries => @entries, :title => _('Search result') } %>
+<%= render :partial => "entries/topix_entries", :locals => { :entries => @entries, :title => _('Search result'), :symbol2name_hash => @symbol2name_hash } %>
 <%= i18n_will_paginate_with_container_wrapper @entries %>
