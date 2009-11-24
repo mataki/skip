@@ -16,17 +16,6 @@
   </div><!-- box_space -->
 
   <div class="box_space">
-    <div class="box_space_title"><%= icon_tag 'table_refresh' -%><%= _('Display Order') %></div>
-    <div class="box_space_body">
-      <%= radio_button_tag("sort_type", "date", (params[:sort_type] == "date" or params[:sort_type].blank?), :class => "sort_radio") -%>
-      <%= label_tag "sort_type_date", _('Sort by Date Joined') %>
-      <br/>
-      <%= radio_button_tag("sort_type", "name", params[:sort_type] == "name", :class => "sort_radio") -%>
-      <%= label_tag "sort_type_name", _('Sort by Group Name') %>
-    </div>
-  </div><!-- box_space -->
-
-  <div class="box_space">
     <div class="box_space_title"><%= icon_tag 'find' -%><%= _('Search') %></div>
     <div class="box_space_body">
     <%= text_field_tag('keyword', params[:keyword], :size=>'10') %>
@@ -37,5 +26,7 @@
 <% end -%>
 
 <% content_for :contents_right do -%>
-  <%= render :partial => 'groups/group_list', :locals => { :groups => @groups, :user_id => @user.id } %>
+  <div class="search_result_space">
+    <%= render :partial => 'groups/group_list', :locals => { :groups => @groups, :user_id => @user.id } %>
+  </div>
 <% end -%>

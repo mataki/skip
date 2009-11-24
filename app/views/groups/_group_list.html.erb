@@ -2,27 +2,31 @@
   <%= hidden_field_tag("authenticity_token", form_authenticity_token) %>
   <%= i18n_will_paginate_with_container_wrapper @groups %>
   <table class="group_list_box normal">
-    <tr>
-      <th width="50%"><%= _('Group Name')%></th>
-      <th><%= _('Category') %></th>
-      <th><%= _('Status') %></th>
-      <th><%= _('Approval') %></th>
-      <th><%= _('Members count') %></th>
-      <th><%= _('Entries count') %></th>
-      <th><%= _("The entry's Last updated date") %></th>
-    </tr>
-  <% groups.each do |group| -%>
-    <tr class="<%= cycle('line_0', 'line_1') %>">
-      <td><%= group_link_to group %></td>
-      <td><%= icon_tag(group.group_category.icon) + h(group.group_category.name) %></td>
-      <td><%= participation_state(group, user_id) -%></td>
-      <td><%= _("%s Required") % icon_tag('key') if group.protected? %></td>
-      <td><%= group.group_participations.active.count %></td>
-      <% entries = BoardEntry.owned(group) %>
-      <td><%= entries.count %></td>
-      <td><%= entries.last.last_updated.strftime("%Y/%m/%d") unless entries.empty? %></td>
-    </tr>
-  <% end -%>
+    <col></col>
+    <col class="col75">
+    <col class="col75">
+    <col class="col75">
+    <col class="col125">
+    <tbody>
+      <tr>
+        <th><%= _('Group Name')%></th>
+        <th><%= _('Status') %></th>
+        <th><%= _('Approval') %></th>
+        <th><%= _('Members count') %></th>
+        <th><%= _('Entries count') %>(<%= s_("BoardEntry|Last updated") %>)</th>
+      </tr>
+      <% groups.each do |group| -%>
+        <tr class="<%= cycle('line_0', 'line_1') %>">
+          <% category_name = h(group.group_category.name) -%>
+          <td class="name"><span class="nowrap"><%= icon_tag(group.group_category.icon, :alt => category_name, :title => category_name) %><%= group_link_to group %></span></td>
+          <td class="state"><span class="nowrap"><%= participation_state(group, user_id) -%></span></td>
+          <td class="approval"><span class="nowrap"><%= _("%s Required") % icon_tag('key') if group.protected? %></span></td>
+          <td class="count"><%= group.group_participations.active.count %></td>
+          <% entries = BoardEntry.owned(group) %>
+          <td><%= entries.count %>&nbsp;<%= "(#{entries.last.last_updated.strftime("%Y/%m/%d")})" unless entries.empty? %></td>
+        </tr>
+      <% end -%>
+    </tbody>
   </table>
   <%= i18n_will_paginate_with_container_wrapper @groups %>
 <% end -%>

@@ -27,7 +27,7 @@ class GroupsController < ApplicationController
     params[:yet_participation] ||= "true"
 
     scope = Group.active.partial_match_name_or_description(params[:keyword]).
-      categorized(params[:group_category_id]).order_by_type(params[:sort_type])
+      categorized(params[:group_category_id]).order_recent
     scope = scope.unjoin(current_user) if params[:yet_participation] == 'true'
     @groups = scope.paginate(:page => params[:page], :per_page => 50)
 

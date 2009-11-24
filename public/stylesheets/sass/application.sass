@@ -101,6 +101,10 @@ table
     :width 160px
   col.col300
     :width 300px
+  td, th
+    // tdに指定してもie6で有効にならない。
+    span.nowrap
+      :white-space nowrap
 
 // jquery.ui.tabsでタブ折り返し時にliがulをはみ出してしまう対策
 // ------------------------------------------------------------
@@ -971,17 +975,19 @@ table.group_box
       :text-align right
 
 table.group_list_box
-  :margin 5px 10px
-  :width 95%
-  :border-collapse collapse
+  :table-layout fixed
+  :width 100%
   :border = !base_border
-  th
-    :text-align left
-    :background-color #f0f0ff
-    :padding-left 5px
-    :border = !base_border
-  td
-    :padding 0px 5px
+  tr
+    th, td
+      :border = !base_border
+    th
+      :text-align left
+      :background-color #f0f0ff
+    td.name
+      :overflow hidden
+    td.state
+      :overflow hidden
 
 // 記事
 // ------------------------------------------------------------
@@ -1059,9 +1065,6 @@ div.topix_entries_wrapper, div.topix_share_files_wrapper, div.topix_bookmarks_wr
       td
         :height 24px
         :border-bottom = !base_dotted_border
-        // tdに指定してもie6で有効にならない。
-        span.nowrap
-          :white-space nowrap
       td.publication_state
         :text-align center
       td.owner

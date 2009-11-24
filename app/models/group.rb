@@ -82,13 +82,6 @@ class Group < ActiveRecord::Base
 
   named_scope :order_recent, proc { { :order => 'groups.created_on DESC' } }
 
-  named_scope :order_name, proc { { :order => 'groups.name' } }
-
-  named_scope :order_by_type, proc { |type|
-    type ||= 'date'
-    (type == 'name' ? order_name : order_recent).proxy_options
-  }
-
   named_scope :limit, proc { |num| { :limit => num } }
 
   alias initialize_old initialize

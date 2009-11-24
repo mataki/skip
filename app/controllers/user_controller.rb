@@ -105,8 +105,7 @@ class UserController < ApplicationController
     @group_categories = GroupCategory.all
 
     @groups = @user.groups.active.partial_match_name_or_description(params[:keyword]).
-      categorized(params[:group_category_id]).order_by_type(params[:sort_type]).
-      paginate(:page => params[:page], :per_page => 50)
+      categorized(params[:group_category_id]).order_recent.paginate(:page => params[:page], :per_page => 50)
 
     flash.now[:notice] = _('No matching groups found.') if @groups.empty?
   end
