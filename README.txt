@@ -42,6 +42,8 @@ SKIPを動かすにあたり以下の環境で検証を行っています。
     $ sudo gem install openskip-skip_embedded --version 0.9.19
     $ sudo gem install mislav-will_paginate --version 2.3.6
     $ sudo gem install mysql gettext_rails gettext_activerecord fastercsv json locale_rails maedana-ar_mailer ruby-openid
+    $ sudo gem install feed-normalizer --version 1.5.1
+    $ sudo gem install searchlogic --version 2.3.6
 
 2. SKIPのファイル解凍（tarファイルをダウンロードした場合のみ）
 --------------------------------------------------------------------------------
@@ -106,8 +108,8 @@ SKIPを起動した直後は利用可能ユーザが存在していません。
 --------------------------------------------------------------------------------
  - システムの管理 -> データ管理 -> ユーザ にアクセスする
  - 一覧のステータス列の[利用開始待ちにする]というリンクをクリックする
- - 一覧のステータス列ので[利用開始待ち]の右側にある[確認]というリンクをクリックする
- - 画面の指示に従って表示されたサインアップのためのURLをユーザに連絡する
+ - 一覧のステータス列ので[利用開始待ち]の右側にある[確認]というリンクを右クリックしURLをコピーする
+ - コピーしたサインアップのためのURLをユーザに連絡する
  - ※詳しくはSKIP利用マニュアルを参照して下さい。
 
 
