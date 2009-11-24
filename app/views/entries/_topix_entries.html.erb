@@ -49,10 +49,33 @@
 <% if with_checkable_read -%>
   <% content_for :javascript_initializers do -%>
   // チェックボックスをクリックすると既読未読が変更される
-  $j('.read_state_checkbox')
-  .click( function(){
+  $j('.read_state_checkbox').live('click', function(){
+    entryId = this.id.split('_')[1];
+    changeReadState(entryId, this.checked, $j('input[name=authenticity_token]').val());
+  });
+
+  <%# 呼び出し元で#check_all_linkというdom要素があれば動作 -%>
+  <%# FIXME Issue:811 1リクエストで未読既読の変更が出来るようにする -%>
+  // チェックされていない記事をすべて既読にする
+  $j('#check_all_link').live('click', function(){
+    $j('.topix_entries :checkbox').each(function(){
+      if(!this.checked){
+        entryId = this.id.split('_')[1];
+        changeReadState(entryId, true, $j('input[name=authenticity_token]').val());
+        this.checked = true;
+      }
+    });
+  });
+
+  <%# 呼び出し元で#uncheck_all_linkというdom要素があれば動作 -%>
+  <%# FIXME Issue:811 1リクエストで未読既読の変更が出来るようにする -%>
+  // チェックされている記事をすべて未読にする
+  $j('#uncheck_all_link').live('click', function(){
+    $j('.topix_entries :checked').each(function(){
       entryId = this.id.split('_')[1];
-      changeReadState(entryId, this.checked, $j('input[name=authenticity_token]').val());
+      changeReadState(entryId, false, $j('input[name=authenticity_token]').val());
+      this.checked = false;
+    });
   });
   <% end -%>
 <% end -%>
