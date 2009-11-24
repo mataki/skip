@@ -46,8 +46,13 @@
       <h1 id="title"><%=h current_target_group.name %></h1>
       <ul class="no_style horizontal">
         <li><%= _('Category') %>: <%= h(current_target_group.group_category.name) %></li>
-        <li><%= _('Members') %>: <%=h(n_("%{count} user", "%{count} users", count = current_target_group.group_participations.active.count) % {:count => count}) -%></li>
         <li><%= _('Joining the group') %>: <%= current_target_group.protected? ? _('Need approval of the Administrator.') : _("No approval needed to join this group.") %></li>
+        <li><%= _('Members count') %>: <%= h(n_("%{count} user", "%{count} users", count = current_target_group.group_participations.active.count) % {:count => count}) -%></li>
+        <% entries = BoardEntry.owned(current_target_group) -%>
+        <li><%= _('Entries count') %>: <%= n_('%{count} entry', '%{count} entries') % {:count => entries.count} %></li>
+        <% unless entries.empty? -%>
+          <li><%= _("The entry's Last updated date") %>: <%= entries.last.last_updated.strftime('%Y/%m/%d') %>
+        <% end -%>
       </ul>
       <div class="clear_left"></div>
       <div id="tab_menu"><%= generate_tab_menu(group_tab_menu_source(current_target_group)) %></div>
