@@ -1,5 +1,5 @@
 ================================================================================
-=  SKIP version 1.3.0                              http://www.openskip.org/    =
+=  SKIP version 1.4.0                              http://www.openskip.org/    =
 ================================================================================
 
 SKIPのダウンロードありがとうございます。
@@ -26,7 +26,31 @@ SKIPを動かすにあたり以下の環境で検証を行っています。
 
 
 ================================================================================
-* SKIP セットアップ
+* SKIP バージョンアップ（version 1.3 -> version 1.4）
+================================================================================
+下記内容に従い旧バージョンから新バージョンにバージョンアップすることで、
+SKIPを動かすことができます。
+
+1. gemsのインストール
+--------------------------------------------------------------------------------
+    $ sudo gem install feed-normalizer --version 1.5.1
+    $ sudo gem install searchlogic --version 2.3.6
+
+2. 設定ファイルの準備・編集（initial_settings.yml, database.yml, common_menus.yml）
+--------------------------------------------------------------------------------
+    $ cp config/initial_settings.yml.sample config/initial_settings.yml
+    $ cp config/database.yml.sample config/database.yml
+    $ cp config/common_menus.yml.sample config/common_menus.yml
+  （config/initial_settings.yml, config/database.yml, config/common_menus.ymlを適切に編集してください）
+
+3. データベースの更新（mysqlが起動済みであること）
+--------------------------------------------------------------------------------
+    $ RAILS_ENV=production rake db:migrate
+
+
+
+================================================================================
+* SKIP セットアップ（新規構築）
 ================================================================================
 下記内容に従いセットアップすることで、SKIPを動かすことができます。
 前提条件は以下のようになります。
@@ -42,6 +66,8 @@ SKIPを動かすにあたり以下の環境で検証を行っています。
     $ sudo gem install openskip-skip_embedded --version 0.9.19
     $ sudo gem install mislav-will_paginate --version 2.3.6
     $ sudo gem install mysql gettext_rails gettext_activerecord fastercsv json locale_rails maedana-ar_mailer ruby-openid
+    $ sudo gem install feed-normalizer --version 1.5.1
+    $ sudo gem install searchlogic --version 2.3.6
 
 2. SKIPのファイル解凍（tarファイルをダウンロードした場合のみ）
 --------------------------------------------------------------------------------
@@ -106,8 +132,8 @@ SKIPを起動した直後は利用可能ユーザが存在していません。
 --------------------------------------------------------------------------------
  - システムの管理 -> データ管理 -> ユーザ にアクセスする
  - 一覧のステータス列の[利用開始待ちにする]というリンクをクリックする
- - 一覧のステータス列ので[利用開始待ち]の右側にある[確認]というリンクをクリックする
- - 画面の指示に従って表示されたサインアップのためのURLをユーザに連絡する
+ - 一覧のステータス列ので[利用開始待ち]の右側にある[確認]というリンクを右クリックしURLをコピーする
+ - コピーしたサインアップのためのURLをユーザに連絡する
  - ※詳しくはSKIP利用マニュアルを参照して下さい。
 
 
