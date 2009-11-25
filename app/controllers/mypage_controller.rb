@@ -201,7 +201,7 @@ class MypageController < ApplicationController
   # [公開された記事]のページ切り替えを行う。
   # param[:target]で指定した内容をページ単位表示する
   def load_entries
-    option = { :per_page => params[:per_page].to_i }
+    option = { :per_page => per_page }
     option[:recent_day] = params[:recent_day].to_i if params[:recent_day]
     render :partial => params[:page_name], :locals => find_as_locals(params[:target], option)
   end
