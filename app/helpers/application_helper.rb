@@ -378,13 +378,15 @@ private
     return text
   end
 
-  def link_to_bookmark_url(bookmark, title = nil)
-    title ||= bookmark.title
+  def link_to_bookmark_url(bookmark, options = {})
+    title = options[:title] || bookmark.title
 
     if bookmark.is_type_page?
-      link_to("#{icon_tag('user')} #{h title}", "#{relative_url_root}#{bookmark.escaped_url}", :title => title)
+      prefix = options[:text_prefix] ? "[Entry]" : icon_tag('user')
+      link_to("#{prefix} #{h title}", "#{relative_url_root}#{bookmark.escaped_url}", :title => title)
     else
-      link_to "#{icon_tag('world')} #{h truncate(title, :length => 115)}", bookmark.escaped_url, :title => title, :target => "_blank"
+      prefix = options[:text_prefix] ? "[Internet]" : icon_tag('world')
+      link_to "#{prefix} #{h truncate(title, :length => 115)}", bookmark.escaped_url, :title => title, :target => "_blank"
     end
   end
 
