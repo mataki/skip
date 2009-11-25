@@ -26,9 +26,9 @@
 <% end -%>
 <% content_for :contents_right do -%>
   <table id="bookmark_comments">
-    <col class="col150">
-    <col class="">
-    <col class="col150">
+    <col class="col150"></col>
+    <col class=""></col>
+    <col class="col150"></col>
     <% @bookmark.bookmark_comments.reverse.each do |bookmark_comment| -%>
       <tr class="<%= (bookmark_comment.user_id == current_user.id) ? "self" : "" %>">
         <% if bookmark_comment.user_id == @current_user.id || bookmark_comment.public == true -%>
