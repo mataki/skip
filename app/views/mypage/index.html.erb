@@ -117,22 +117,7 @@
       <% if @questions[:pages].empty? -%>
         <div class="margin05em"><%= _('No matching questions.') %></div>
       <% else -%>
-        <table>
-          <tbody>
-            <% @questions[:pages].each do |question| -%>
-            <tr>
-              <% entry_infos = get_entry_infos(question) -%>
-              <td class="title">
-                <%= entry_link_to(question, {}, {:title => h(question.title + entry_infos)}) %>
-                <%= entry_tag_search_links_tag(question.category) %>
-                <span class="supplement"><%=h entry_infos %></span>
-                <%= symbol_link_to question.symbol, @questions[:symbol2name_hash][question.symbol], :with_prefix => true %>
-                <%= '(' + _('Owner Only') + ')' if question.diary? && question.private? %>
-              </td>
-            </tr>
-            <% end -%>
-          </tbody>
-        </table>
+        <%= render :partial => "entries/topix_entries", :locals => { :entries => @questions[:pages], :symbol2name_hash => @questions[:symbol2name_hash] } %>
       <% end -%>
     </div>
 

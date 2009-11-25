@@ -9,27 +9,15 @@
   <%= hidden_field_tag 'per_page', per_page if defined? per_page %>
   <%= hidden_field_tag 'recent_day', recent_day %>
 
-<% pages.each do |message| -%>
-  <% entry_infos = get_entry_infos(message) -%>
-  <div class="topix_line">
-    <div class="title">
-      <%= entry_link_to(message, {}, {:title => h(message.title + entry_infos)}) %>
-      <%= entry_tag_search_links_tag(message.category, :max => 3) %>
-      <% unless hide_entry_info %>
-        <span class="supplement"><%=h entry_infos %></span>
-      <% end %>
-    </div>
-    <div class="owner">
-      <%= symbol2name_hash ? symbol_link_to(message.symbol, symbol2name_hash[message.symbol]) : user_link_to(message.user) %>
-    </div>
-  </div>
-<% end -%>
+  <%= render :partial => "entries/topix_entries", :locals => { :entries => pages, :symbol2name_hash => symbol2name_hash } %>
 
-<% if pages.respond_to?(:total_pages) and pages.total_pages > 1 -%>
-<div style="text-align: left;"><span class="pagination ajax" style="background-color: #fcffc5; padding: 0 2px 0 5px; font-size: 10px;">
-  <%= i18n_will_paginate pages, :params => {:action => 'load_entries', :page_name => 'list_block', :per_page => per_page, :target => id_name }, :container => false %>
-</span></div>
-<% end -%>
+  <% if pages.respond_to?(:total_pages) and pages.total_pages > 1 -%>
+    <div style="text-align: left;">
+      <span class="pagination ajax" style="background-color: #fcffc5; padding: 0 2px 0 5px; font-size: 10px;">
+        <%= i18n_will_paginate pages, :params => {:action => 'load_entries', :page_name => 'list_block', :per_page => per_page, :target => id_name }, :container => false %>
+      </span>
+    </div>
+  <% end -%>
 
 </div><!-- topix_body -->
 

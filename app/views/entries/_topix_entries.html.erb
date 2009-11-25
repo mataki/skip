@@ -1,11 +1,13 @@
-<% title ||= _('Entries') %>
+<% title ||= "" %>
 <% entries ||= [] -%>
 <% user_unreadings ||= [] -%>
 <% symbol2name_hash ||= nil -%>
 <% with_checkable_read ||= false -%>
 
 <div class="topix_entries_wrapper">
-  <h2 class="title"><%= icon_tag('asterisk_orange') %><%= h title %></h2>
+  <% unless title.blank? -%>
+    <h2 class="title"><%= icon_tag('asterisk_orange') %><%= h title %></h2>
+  <% end -%>
   <% unless entries.empty? -%>
     <table class="topix_entries">
       <% if with_checkable_read -%>
