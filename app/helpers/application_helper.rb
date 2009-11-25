@@ -211,7 +211,7 @@ module ApplicationHelper
     when 'public'
       _("Open to All")
     when 'protected'
-      _("Specified Directly:")
+      _("Specify Directly")
     when 'private'
       entry.diary? ? _("Owner Only") : _("Members Only")
    end
@@ -228,7 +228,7 @@ module ApplicationHelper
     when 'protected'
       visibility, visibility_color = entry_or_share_file.visibility
       icon_name = 'page_link'
-      view_name = _("Specified Directly:") + visibility
+      view_name = _("Specify Directly") + visibility
     when 'private'
       icon_name = 'page_key'
       view_name = entry_or_share_file.owner_is_user? ? _("Owner Only") : _("Members Only")
