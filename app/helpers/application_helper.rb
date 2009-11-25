@@ -230,7 +230,7 @@ module ApplicationHelper
       icon_name = 'page_link'
       view_name = _("Specify Directly") + visibility
     when 'private'
-      icon_name = 'page_key'
+      icon_name = entry_or_share_file.owner_is_user? ? 'pencil' : 'page_key'
       view_name = entry_or_share_file.owner_is_user? ? _("Owner Only") : _("Members Only")
    end
     icon_tag(icon_name, :title => view_name)
