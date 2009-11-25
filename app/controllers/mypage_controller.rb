@@ -593,7 +593,7 @@ class MypageController < ApplicationController
   end
 
   def find_timelines_as_locals options
-    pages = BoardEntry.accessible(current_user).timeline.order_new.paginate(:page => params[:page], :per_page => options[:per_page])
+    pages = BoardEntry.accessible(current_user).timeline.order_new.scoped(:include => :state).paginate(:page => params[:page], :per_page => options[:per_page])
     locals = {
       :id_name => 'timelines',
       :title_name => _('See all'),
