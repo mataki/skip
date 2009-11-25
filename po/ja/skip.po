@@ -3235,7 +3235,7 @@ msgstr[0] "ファイルのアップロードに成功しました。"
 
 #: app/models/share_file.rb:36
 msgid "File with the same name already uploaded."
-msgstr "名が同一のファイルが既に登録されています"
+msgstr "が同一のファイルが既に登録されています"
 
 #: app/helpers/edit_helper.rb:28
 msgid "Filename"
@@ -7750,28 +7750,3 @@ msgstr ""
 #: app/helpers/application_helper.rb:39
 msgid "« Previous"
 msgstr "« 前"
-
-#~ msgid "(Including private members)"
-#~ msgstr "(非公開の人数含む)"
-
-#~ msgid "Add a comment!"
-#~ msgstr "コメントの追加！"
-
-#~ msgid "Bookmark[%{title}]"
-#~ msgstr "ブックマーク[%{title}]"
-
-#~ msgid "Sort by Date Joined"
-#~ msgstr "参加日順"
-
-#~ msgid "Sort by Group Name"
-#~ msgstr "グループ名順"
-
-#~ msgid "[Registered user]&nbsp;%s"
-#~ msgid_plural "[Registered users]&nbsp;%s"
-#~ msgstr[0] "[登録ユーザ]　%s人"
-
-#~ msgid "[Tags]"
-#~ msgstr "[タグ]"
-
-#~ msgid "[URL]&nbsp;"
-#~ msgstr "[URL]　"
