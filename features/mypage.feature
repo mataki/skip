@@ -69,7 +69,42 @@ Feature: マイページ
     Then I should see "Railsについてお知らせ"
     And I should not see "Railsについて雑談"
 
-  Scenario: 新着の表示
+  Scenario: 新着通知(コメントの行方)の表示
+    Given 以下のブログを書く:
+      | user   | title        | aim_type |
+      | alice  | 初めての記事 | 記事 (マイページの「新着記事」に表示されます)           |
+
+    When "alice"でコメントを"1"回書く
+    And "a_user"でコメントを"1"回書く
+    And 新着通知を作成バッチを実行する
+    And "alice"でログインする
+
+    Then I should see "コメントの行方(1)" within "div.antenna"
+
+  Scenario: 新着通知(ブクマの行方)の表示
+    Given 以下のブログを書く:
+      | user   | title        | aim_type |
+      | alice  | 初めての記事 | 記事 (マイページの「新着記事」に表示されます)           |
+    And "alice"で"1"つめのブログをブックマークする
+    And "janet"で"1"つめのブログをブックマークする
+    And 新着通知を作成バッチを実行する
+
+    When "alice"でログインする
+
+    Then I should see "ブクマの行方(1)" within "div.antenna"
+
+  Scenario: 新着通知(ユーザ)の表示
+    Given "a_user"で"alice"を新着通知に追加する
+    And 以下のブログを書く:
+      | user   | title        | aim_type |
+      | alice  | 初めての記事 | 記事 (マイページの「新着記事」に表示されます)           |
+    And 新着通知を作成バッチを実行する
+
+    When "a_user"でログインする
+
+    Then I should see "alice(1)" within "div.antenna"
+
+  Scenario: 新着通知(グループ)の表示
     Given 以下のグループを作成する:
       |owner    |gid        |name         |waiting  |
       |alice    |vim_group  |VimGroup     |false    |
@@ -82,4 +117,3 @@ Feature: マイページ
     When "a_user"でログインする
 
     Then I should see "VimGroup(1)" within "div.antenna"
-

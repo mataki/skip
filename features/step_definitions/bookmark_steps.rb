@@ -19,6 +19,9 @@ end
 
 Given /^以下のブックマークのリストを登録している:$/ do |bookmarks_table|
   bookmarks_table.hashes.each do |hash|
+    uid = hash[:user] || 'a_user'
+    Given %!"#{uid}"がユーザ登録する!  unless User.find_by_uid(uid)
+    Given %!"#{uid}"でログインする!
     Given %!URLが"#{hash[:url]}"タイトルが"#{hash[:title]}"コメントが"#{hash[:comment]}"のブックマークを登録する!
   end
 end
