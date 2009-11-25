@@ -147,18 +147,6 @@ class Group < ActiveRecord::Base
     ShareFile.destroy_all(["owner_symbol = ?", self.symbol])
   end
 
-  # TODO named_scope化する
-  def self.count_by_category user = nil
-    categories = GroupCategory.with_groups_count(user)
-    group_counts = Hash.new(0)
-    total_count = 0
-    categories.each do |category|
-      group_counts[category.id] = category.count.to_i
-      total_count += category.count.to_i
-    end
-    [group_counts, total_count]
-  end
-
   def administrator?(user)
     Group.owned(user).participating(user).map(&:id).include?(self.id)
   end

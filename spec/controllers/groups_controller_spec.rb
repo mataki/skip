@@ -28,8 +28,6 @@ describe GroupsController do
       end
 
       it { response.should be_success }
-      it { assigns[:group_counts].should == Group.count_by_category.first }
-      it { assigns[:total_count].should == Group.count_by_category.last}
       it { assigns[:pages].should == @pages }
       it { assigns[:groups].should == @groups }
     end

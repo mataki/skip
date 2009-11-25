@@ -22,7 +22,6 @@ class GroupsController < ApplicationController
   # tab_menu
   # グループの一覧表示
   def index
-    @group_counts, @total_count = Group.count_by_category
     @group_categories = GroupCategory.all
     params[:yet_participation] ||= "true"
 

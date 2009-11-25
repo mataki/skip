@@ -152,42 +152,6 @@ describe Group do
     it { lambda { @group.logical_destroy }.should change(BoardEntryComment, :count).by(-1) }
   end
 
-  describe Group, "count_by_category" do
-    before do
-      @alice = create_user :user_options => {:name => 'アリス', :admin => true}, :user_uid_options => {:uid => 'alice'}
-      @dev_category = create_group_category :code => 'dev'
-      @vim_group = create_group :gid => 'vim_group', :group_category_id => @dev_category.id do |g|
-        g.group_participations.build(:user_id => @alice.id, :owned => true)
-      end
-      @tom = create_user :user_options => {:name => 'トム', :admin => true}, :user_uid_options => {:uid => 'toom'}
-      @emacs_group = create_group :gid => 'emacs_group', :group_category_id => @dev_category.id do |g|
-        g.group_participations.build(:user_id => @tom.id, :owned => true)
-      end
-      @misc_category = create_group_category :code => 'misc'
-      @move_group = create_group :gid => 'move_group', :group_category_id => @misc_category.id do |g|
-        g.group_participations.build(:user_id => @tom.id, :owned => true)
-      end
-    end
-
-    describe 'ユーザを指定しない場合' do
-      it "グループのカテゴリとそのカテゴリのグループ数および全グループ数を返す" do
-        group_counts, total_count = Group.count_by_category
-        group_counts[@dev_category.id].should == 2
-        group_counts[@misc_category.id].should == 1
-        total_count.should == 3
-      end
-    end
-
-    describe 'ユーザを指定する場合' do
-      it 'ユーザの所属するグループのカテゴリとそのカテゴリのグループ数及び全グループ数を返す' do
-        group_counts, total_count = Group.count_by_category(@alice)
-        group_counts[@dev_category.id].should == 1
-        group_counts[@misc_category.id].should == 0
-        total_count.should == 1
-      end
-    end
-  end
-
   describe Group, '#administrator? ' do
     before do
       @user = stub_model(User, :id => 99)
