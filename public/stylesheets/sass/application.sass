@@ -652,8 +652,11 @@ div#tab_menu
 // ------------------------------------------------------------
 div#platform_main_wrapper
   div#platform_main
+    &.without_keyphrase
+      :width 460px
+    &.with_keyphrase
+      :width 620px
     :float right
-    :width 460px
     div.col
       :margin-bottom 10px
       div.login-box
@@ -679,10 +682,8 @@ div#platform_main_wrapper.require_login
   :margin 0 auto
   div#platform_main
     :float none
-    :width 500px
     :margin 0 auto
     :background #fafafa
-    :border-bottom = !base_border
     :padding 10px
     div#require_login_wrapper
       :width 100%
@@ -697,6 +698,7 @@ div#platform_main_wrapper.require_login
         :background #eeffee
         :border 1px dashed #ffc000
         :margin 10px 0
+        :padding 5px
 div#require_login_container_wrapper
   :width 100%
   :_text-align center
@@ -709,9 +711,12 @@ div#login_container
   :position absolute
   :right 10px
   :top 22px
-  :width 460px
   :background #e0e0ff
-  :padding 4px
+  :padding 4px 0
+  &.without_keyphrase
+    :width 460px
+  &.with_keyphrase
+    :width 620px
 div#login_container, div#require_login_container
   table
     :font-size = !small_font_size

@@ -63,7 +63,7 @@
     <% end -%>
   <% else -%>
     <% unless request.url.include? url_for(:controller => 'platform', :action => 'require_login') -%>
-    <div id="login_container" class="ui-corner-all">
+    <div id="login_container" class="<%= Admin::Setting.enable_login_keyphrase ? 'with_keyphrase' : "without_keyphrase" %> ui-corner-all">
       <%= render :partial => 'shared/login_form' %>
     </div>
     <% end -%>

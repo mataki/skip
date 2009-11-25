@@ -8,7 +8,7 @@
 <% end -%>
 
 <div id="platform_main_wrapper">
-  <div id="platform_main">
+  <div id="platform_main" class="<%= Admin::Setting.enable_login_keyphrase ? 'with_keyphrase' : "without_keyphrase" %>">
     <div class="col">
       <% if enable_activate? -%>
       <div class="login-box ui-corner-all">
