@@ -3,13 +3,13 @@
   <%= i18n_will_paginate_with_container_wrapper @groups %>
   <table class="group_list_box normal">
     <col></col>
-    <col class="col75">
-    <col class="col75">
-    <col class="col75">
-    <col class="col125">
+    <col class="col75"></col>
+    <col class="col75"></col>
+    <col class="col75"></col>
+    <col class="col125"></col>
     <tbody>
       <tr>
-        <th><%= _('Group Name')%></th>
+        <th><%= _('Group Name') %></th>
         <th><%= _('Status') %></th>
         <th><%= _('Approval') %></th>
         <th><%= _('Members count') %></th>
@@ -23,7 +23,7 @@
           <td class="approval"><span class="nowrap"><%= _("%s Required") % icon_tag('key') if group.protected? %></span></td>
           <td class="count"><%= group.group_participations.active.count %></td>
           <% entries = BoardEntry.owned(group) %>
-          <td><%= entries.count %>&nbsp;<%= "(#{entries.last.last_updated.strftime("%Y/%m/%d")})" unless entries.empty? %></td>
+          <td><%= entries.count %>&nbsp;<%= "(#{entries.last.last_updated.strftime(_('%B %d %Y'))})" unless entries.empty? %></td>
         </tr>
       <% end -%>
     </tbody>

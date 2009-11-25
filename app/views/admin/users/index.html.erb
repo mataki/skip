@@ -39,7 +39,7 @@
         s_("User|Locked|#{object.locked}")
       when "issued_at", "last_authenticated_at", "password_expires_at"
         time = object.send(column.to_sym)
-        time.blank? ? '' : time.strftime("%Y/%m/%d %H:%M:%S")
+        time.blank? ? '' : time.strftime(_('%m/%d/%Y %H:%M'))
       else
         object.send(column.to_sym)
       end
