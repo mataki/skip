@@ -11,15 +11,15 @@
   <% unless entries.empty? -%>
     <table class="topix_entries">
       <% if with_checkable_read -%>
-        <col class="col25"></col>
+        <col class="col25" />
       <% end -%>
-      <col class="col25"></col>
+      <col class="col25" />
       <% if symbol2name_hash -%>
-        <col class="col150"></col>
-        <col class="col25"></col>
+        <col class="col150" />
+        <col class="col25" />
       <% end -%>
-      <col></col>
-      <col class="col150"></col>
+      <col />
+      <col class="col150" />
       <tbody>
         <% entries.each do |entry| -%>
           <% entry_infos = get_entry_infos(entry) -%>

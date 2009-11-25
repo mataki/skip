@@ -1,9 +1,9 @@
 <% include_title = show_title_col?(params[:content_type].to_sym) %>
 <% unless @rankings.empty? -%>
 <table class="ranking_square">
-  <col class="col25"></col>
-  <col></col>
-  <col class="col100"></col>
+  <col class="col25" />
+  <col />
+  <col class="col100" />
   <thead>
     <tr>
       <th class="title" colspan="3"><%= icon_tag('star') %><%= ranking_title params[:content_type].to_sym %></th>

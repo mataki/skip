@@ -339,7 +339,8 @@ h2.topix_title
   :margin-bottom 5px
 
 div.topix_body
-  :margin 0px 5px 10px 5px
+  :margin-bottom 15px
+  :width 100%
   .topix_line
     :border-bottom = !base_dotted_border
     :margin 3px 0 1px 0
@@ -404,7 +405,7 @@ div.topix_body
     :text-overflow ellipsis
     :width 50%
   // リスト表示中の記事へのリンク
-  a.entry, .owner a
+  a
     +default_link
     &:visited
       +link_visited_text
@@ -797,6 +798,7 @@ div#questions_wrapper
   :border 1px solid #E0E0FF
   :margin 10px 0px
   :font-size 12px
+  :width 100%
   h2
     :padding 3px 0
     :background-color #E0E0FF

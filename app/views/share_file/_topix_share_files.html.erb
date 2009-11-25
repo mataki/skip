@@ -6,13 +6,13 @@
   <h2 class="title"><%= icon_tag('asterisk_orange') %><%= h title %></h2>
   <% unless share_files.empty? -%>
     <table class="topix_share_files">
-      <col class="col25"></col>
+      <col class="col25" />
       <% if symbol2name_hash -%>
-        <col class="col150"></col>
-        <col class="col25"></col>
+        <col class="col150" />
+        <col class="col25" />
       <% end -%>
-      <col></col>
-      <col class="col150"></col>
+      <col />
+      <col class="col150" />
       <tbody>
         <% share_files.each do |share_file| -%>
           <tr>
