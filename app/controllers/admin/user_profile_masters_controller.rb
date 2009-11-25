@@ -20,8 +20,7 @@ class Admin::UserProfileMastersController < Admin::ApplicationController
     @user_profile_masters = Admin::UserProfileMaster.all(:include => :user_profile_master_category,
                                                          :order => 'user_profile_master_categories.sort_order,user_profile_masters.sort_order').paginate(:page => params[:page], :per_page => 100)
 
-
-    @topics = [_('Listing %{model}') % {:model => _('user profile masters')}]
+    @topics = [_('Listing %{model}') % {:model => _('user profile master')}]
 
     redirect_to admin_masters_path
   end
