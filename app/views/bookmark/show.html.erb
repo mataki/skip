@@ -9,20 +9,22 @@
       </ul>
     </div>
   <% end -%>
-  <div class="box_space">
-    <div class="box_space_title"><%= icon_tag 'tag_blue' -%><%= _('Tags')%></div>
-    <div class="box_space_body tag_cloud">
-      <% tag_cloud @tags do |name, count, css_class| -%>
-        <%=
-           link_to_unless_current h(name), {:category => h(name), :sort_type => 'date'}, :class => "tag #{css_class}" do
-             content_tag :span, h(name), :class => "tag #{css_class}"
-           end
-           %>
-        <span class="count">(<%= h count %>)</span>
-      <% end -%>
-    </div>
-    <div class="box_space_bottom"></div>
-  </div><!-- box_space -->
+  <% unless @tags.blank? -%>
+    <div class="box_space">
+      <div class="box_space_title"><%= icon_tag 'tag_blue' -%><%= _('Tags')%></div>
+      <div class="box_space_body tag_cloud">
+        <% tag_cloud @tags do |name, count, css_class| -%>
+          <%=
+             link_to_unless_current h(name), {:category => h(name), :sort_type => 'date'}, :class => "tag #{css_class}" do
+               content_tag :span, h(name), :class => "tag #{css_class}"
+             end
+             %>
+          <span class="count">(<%= h count %>)</span>
+        <% end -%>
+      </div>
+      <div class="box_space_bottom"></div>
+    </div><!-- box_space -->
+  <% end -%>
 <% end -%>
 <% content_for :contents_right do -%>
   <table id="bookmark_comments">
