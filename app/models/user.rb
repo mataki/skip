@@ -125,6 +125,10 @@ class User < ActiveRecord::Base
   }
   named_scope :with_basic_associations, :include => [:user_uids, :user_custom]
 
+  named_scope :order_last_accessed, proc {
+    { :order => 'user_accesses.last_access DESC', :include => [:user_access] }
+  }
+
   N_('User|Old password')
   N_('User|Password')
   N_('User|Password confirmation')

@@ -18,7 +18,7 @@ class UsersController < ApplicationController
 
   # tab_menu
   def index
-    @search = User.tagged(params[:tag_words], params[:tag_select]).search(params[:search])
+    @search = User.tagged(params[:tag_words], params[:tag_select]).order_last_accessed.search(params[:search])
     @search.exclude_retired ||= "1"
     @users = @search.paginate(:page => params[:page])
 
