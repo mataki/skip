@@ -1,7 +1,7 @@
 <% title ||= _('Entries') %>
 <% entries ||= [] -%>
 
-<div class="navi ui-corner-all" style="position: relative; _width: 100%; height: 14px;">
+<div class="navi ui-corner-all" style="position: relative; _width: 100%; height: 20px;">
   <div style="position: absolute; top:2px; left: 4px;">
     <%= _('Sort by: ') %>
     <%= link_to_unless_current _("[Sort by modified date]"), params.merge({:sort_type => "date"}) do
