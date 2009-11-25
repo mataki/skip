@@ -61,7 +61,10 @@ class GroupController < ApplicationController
         :include => find_params[:include] | [ :user, :board_entry_comments, :state ]
       ).order_new.first
       if @entry
-        @checked_on = @entry.accessed(current_user.id).checked_on
+        @checked_on = if reading = @entry.user_readings.find_by_user_id(current_user.id)
+                        reading.checked_on
+                      end
+        @entry.accessed(current_user.id)
         @prev_entry, @next_entry = @entry.get_around_entry(current_user.belong_symbols)
         @editable = @entry.editable?(current_user.belong_symbols, session[:user_id], session[:user_symbol], current_user.group_symbols)
         @tb_entries = @entry.trackback_entries(current_user.id, current_user.belong_symbols)

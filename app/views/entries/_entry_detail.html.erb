@@ -242,7 +242,7 @@
         <span class="evaluation"><%= get_entry_infos(entry) -%></span>
       </div>
     </div>
-    <h1><%= check_box_tag 'read_state_check', 'true', checked_on, :title => _('Mark read') %> <%=h entry.title %> <%= entry_tag_search_links_tag(entry.category) %></h1>
+    <h1><%= check_box_tag 'read_state_check', 'true', true, :title => _('Mark read') %> <%=h entry.title %> <%= entry_tag_search_links_tag(entry.category) %></h1>
     <% unless to_tb_entries.empty? -%>
     <div class="trackback_space send_trackback">
       <%= _('Topic Entry: ')%>

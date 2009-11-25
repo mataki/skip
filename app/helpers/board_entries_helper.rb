@@ -74,7 +74,7 @@ module BoardEntriesHelper
   def icon_with_information current_user, comment, checked_on
     text = ''
     text << _('[New]') if Time.now - comment.created_on < 24.hour
-    text << _('[Unread]') if current_user.id != comment.user_id && (checked_on && checked_on <= comment.updated_on)
+    text << _('[Unread]') if current_user.id != comment.user_id && (checked_on.blank? || checked_on <= comment.updated_on)
     icon_type = Time.now - comment.created_on < 12.hour ? :emoticon_happy : :emoticon_smile
     text.blank? ? "" : "#{icon_tag icon_type}#{text}"
   end
