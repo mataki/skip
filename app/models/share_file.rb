@@ -50,6 +50,7 @@ class ShareFile < ActiveRecord::Base
 
   def initialize(attr ={})
     super(attr)
+    self.owner_symbol ||= ''
     if self.publication_type.blank?
       self.publication_type =
         if owner_is_user?
