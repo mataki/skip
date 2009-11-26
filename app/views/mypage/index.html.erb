@@ -3,26 +3,10 @@
 <% end -%>
 
 <% content_for :contents_top do -%>
-  <% if @message_array.size > 0 or @system_messages.size > 0 -%>
+  <% unless system_message_links.empty? -%>
     <div class="top_info system_message ui-corner-all">
-      <% @system_messages.each do |message| -%>
-        <div class="item">
-          <%= link_to(icon_tag(message[:icon]) + h(message[:text]), message[:option]) %>
-        </div>
-      <% end -%>
-      <% @message_array.each do |message| -%>
-        <div class="item">
-          <% if message_type = Message::MESSAGE_TYPES[message[:message_type]] -%>
-            <%= link_to(icon_tag(message_type[:icon_name]) + h(message[:message]), message[:link_url]) %>
-          <% end -%>
-        </div>
-      <% end -%>
-      <% Group.owned(current_user).each do |group| -%>
-        <% unless group.group_participations.waiting.empty? -%>
-          <div class="item">
-            <%= link_to(icon_tag('group_add') + _("New user is waiting for approval in %s.") % group.name, {:controller => 'group', :action => 'manage', :gid => group.gid, :menu => 'manage_permit'}) %>
-          </div>
-        <% end -%>
+      <% system_message_links.each do |system_message_link| -%>
+        <div class="item"><%= system_message_link %></div>
       <% end -%>
     </div>
   <% end -%>

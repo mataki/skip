@@ -75,12 +75,6 @@ describe MypageController, 'mypage > home 関連' do
     # ============================================================
     #  main area top
     # ============================================================
-    it 'システムからの連絡が設定されること' do
-      @system_messages = mock('system_messages')
-      controller.should_receive(:system_messages).and_return(@system_messages)
-      get :index
-      assigns[:system_messages].should == @system_messages
-    end
     it 'あなたへのお知らせ(未読のもののみ)が設定されること' do
       @mail_your_messages = mock('mail_your_messages')
       controller.should_receive(:mail_your_messages).and_return(@mail_your_messages)
@@ -625,17 +619,6 @@ describe MypageController, '#parse_date' do
   end
   it 'year, month, dayが返却されること' do
     @controller.send(:parse_date).should == [2009, 1, 2]
-  end
-end
-
-describe MypageController, '#system_messages' do
-  before do
-    @controller = MypageController.new
-    @user = stub_model(User, :picture => nil)
-    @controller.stub!(:current_user).and_return(@user)
-  end
-  describe 'ようこそメッセージを表示しない場合' do
-    it { @controller.send(:system_messages).size.should == 2 }
   end
 end
 

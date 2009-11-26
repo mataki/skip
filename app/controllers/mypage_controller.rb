@@ -47,8 +47,6 @@ class MypageController < ApplicationController
     # ============================================================
     #  main area top messages
     # ============================================================
-    @system_messages = system_messages
-    @message_array = Message.get_message_array_by_user_id(current_user.id)
     # あなたへのお知らせ(未読のもののみ)
     @mail_your_messages = mail_your_messages
 
@@ -499,26 +497,6 @@ class MypageController < ApplicationController
     def need_search?
       true
     end
-  end
-
-  # TODO helperに移動することを検討
-  # mypage > home の システムメッセージの配列
-  def system_messages
-    system_messages = []
-    if system_notice = SkipEmbedded::InitialSettings['system_notice'] and !system_notice['title'].blank?
-      system_messages << {
-        :text => system_notice['title'],
-        :icon => "information",
-        :option => system_notice['url']
-      }
-    end
-    unless current_user.picture
-      system_messages << {
-        :text => _("Change your profile picture!"), :icon => "picture",
-        :option => {:controller => "mypage", :action => "manage", :menu => "manage_portrait"}
-      }
-    end
-    system_messages
   end
 
   # TODO BoardEntryに移動する
