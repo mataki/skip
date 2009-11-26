@@ -203,6 +203,7 @@ class MypageController < ApplicationController
   def load_entries
     option = { :per_page => per_page }
     option[:recent_day] = params[:recent_day].to_i if params[:recent_day]
+    save_current_page_to_cookie
     render :partial => params[:page_name], :locals => find_as_locals(params[:target], option)
   end
 
@@ -578,13 +579,14 @@ class MypageController < ApplicationController
   # 記事一覧を取得する（partial用のオプションを返す）
   def find_recent_blogs_as_locals options
     find_params = BoardEntry.make_conditions(current_user.belong_symbols, {:entry_type=>'DIARY', :publication_type => 'public'})
+    id_name = 'recent_blogs'
     pages = BoardEntry.scoped(
       :conditions => find_params[:conditions],
       :include => find_params[:include] | [ :user, :state ]
-    ).timeline.order_new.paginate(:page => params[:page], :per_page => options[:per_page])
+    ).timeline.order_new.paginate(:page => target_page(id_name), :per_page => options[:per_page])
 
     locals = {
-      :id_name => 'recent_blogs',
+      :id_name => id_name,
       :title_icon => "user",
       :title_name => _('Blogs'),
       :per_page => options[:per_page],
@@ -593,9 +595,10 @@ class MypageController < ApplicationController
   end
 
   def find_timelines_as_locals options
-    pages = BoardEntry.accessible(current_user).timeline.order_new.scoped(:include => :state).paginate(:page => params[:page], :per_page => options[:per_page])
+    id_name = 'timelines'
+    pages = BoardEntry.accessible(current_user).timeline.order_new.scoped(:include => :state).paginate(:page => target_page(id_name), :per_page => options[:per_page])
     locals = {
-      :id_name => 'timelines',
+      :id_name => id_name,
       :title_name => _('See all'),
       :per_page => options[:per_page],
       :pages => pages,
@@ -617,7 +620,7 @@ class MypageController < ApplicationController
       pages = BoardEntry.scoped(
         :conditions => find_params[:conditions],
         :include => find_params[:include] | [ :user, :state ]
-      ).timeline.order_new.paginate(:page => params[:page], :per_page => options[:per_page])
+      ).timeline.order_new.paginate(:page => target_page(id_name), :per_page => '2')
     end
     locals = {
       :id_name => id_name,
@@ -786,5 +789,33 @@ class MypageController < ApplicationController
 
   def current_target_user
     current_user
+  end
+
+  def target_page target = nil
+    if target
+      if target_key2current_pages = cookies['target_key2current_pages']
+        params[:page] || JSON.parse(target_key2current_pages)[target] || 1
+      else
+        params[:page]
+      end
+    else
+      params[:page]
+    end
+  end
+
+  def save_current_page_to_cookie
+    if params[:target] && params[:page]
+      target_key2current_pages =
+        begin
+          JSON.parse(cookies[:target_key2current_pages])
+        rescue => e
+          {}
+        end
+      target_key2current_pages[params[:target]] = params[:page]
+      cookies[:target_key2current_pages] = { :value => target_key2current_pages.to_json, :expires => 30.days.from_now }
+      true
+    else
+      false
+    end
   end
 end
