@@ -284,14 +284,22 @@ describe BatchMakeRanking do
   end
 
   describe BatchMakeRanking, "#user_url" do
+    before do
+      BatchBase::default_url_options[:protocol] = 'http://'
+      BatchBase::default_url_options[:host] = 'example.com:80'
+    end
     it "URLが正しく返されること" do
-      @maker.send(:user_url, "hoge").should == "#{SkipEmbedded::InitialSettings['protocol']}#{SkipEmbedded::InitialSettings['host_and_port']}/user/hoge"
+      @maker.send(:user_url, "hoge").should == "http://example.com:80/user/hoge"
     end
   end
 
   describe BatchMakeRanking, "#page_url" do
+    before do
+      BatchBase::default_url_options[:protocol] = 'http://'
+      BatchBase::default_url_options[:host] = 'example.com:80'
+    end
     it "URLが正しく返されること" do
-      @maker.send(:page_url, 1).should == "#{SkipEmbedded::InitialSettings['protocol']}#{SkipEmbedded::InitialSettings['host_and_port']}/page/1"
+      @maker.send(:page_url, 1).should == "http://example.com:80/page/1"
     end
   end
 
