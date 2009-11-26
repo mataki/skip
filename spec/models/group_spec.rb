@@ -28,6 +28,25 @@ describe Group do
     end
   end
 
+  describe Group, "承認が必要なグループが不要にが変更されたとき" do
+    before do
+      @group = create_group(:protected => true)
+      @user = create_user
+      @participation = @group.group_participations.create!(:user=>@user, :waiting => true)
+      @group.reload; @user.reload
+    end
+    it "正しい状態であること" do
+      @group.users.should == []
+      @group.group_participations.waiting.should be_include(@participation)
+      @user.group_participations.waiting.should be_include(@participation)
+      @group.users.should_not be_include(@user)
+    end
+    it "承認待ちのユーザは全て参加済みになっていること" do
+      @group.update_attributes!(:protected => false)
+      @group.users.should be_include(@user)
+    end
+  end
+
   describe Group, 'validation' do
     before do
       @group = valid_group

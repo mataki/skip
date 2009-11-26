@@ -147,6 +147,12 @@ class Group < ActiveRecord::Base
     ShareFile.destroy_all(["owner_symbol = ?", self.symbol])
   end
 
+  def after_save
+    if protected_was == true and protected == false
+      self.group_participations.waiting.each{ |p| p.update_attributes(:waiting => false)}
+    end
+  end
+
   def administrator?(user)
     Group.owned(user).participating(user).map(&:id).include?(self.id)
   end
