@@ -4,12 +4,12 @@
 
 <title><%= h(title.blank? ? Admin::Setting.abbr_app_title : "#{title} - #{Admin::Setting.abbr_app_title}") %></title>
 
-<%= all_stylesheet_link_tag "style" %>
-<%= stylesheet_link_tag 'not_logged_in' unless logged_in? %>
-<%= stylesheet_link_tag :skip_embedded_sprites %>
 <%= stylesheet_link_tag("skins/#{current_user.custom.theme}/skin.css") if logged_in? %>
 <%= skip_stylesheet_link_tag 'jquery.autocomplete.css' %>
 <%= skip_stylesheet_link_tag "jquery.cluetip.css" %>
 <%= skip_stylesheet_link_tag "themes/cupertino/ui.theme.css" %>
 <%= skip_stylesheet_link_tag "jquery.iphone-style-checkboxes.css" %>
+<%= stylesheet_link_tag :skip_embedded_sprites %>
+<%= stylesheet_link_tag 'not_logged_in' unless logged_in? %>
+<%= all_stylesheet_link_tag "style" %>
 <%= yield :stylesheet %>
