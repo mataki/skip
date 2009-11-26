@@ -41,7 +41,7 @@
               <%= entry_tag_search_links_tag(entry.category, :max => 3) %>
               <span class="infos"><%= entry_infos -%></span>
             </span></td>
-            <td class="date"><%=h entry.date.strftime("%m/%d %H:%M") %></td>
+            <td class="date"><%=h entry.date.strftime(_("%B %d %Y")) %></td>
           </tr>
         <% end -%>
       </tbody>

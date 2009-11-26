@@ -36,7 +36,7 @@
                 <%= _('File size: %s') % share_file.file_size_with_unit %>
               </span>
             </span></td>
-            <td class="date"><%= h share_file.date.strftime("%m/%d %H:%M") %></td>
+            <td class="date"><%= h share_file.date.strftime(_("%B %d %Y")) %></td>
           </tr>
         <% end -%>
       </tbody>

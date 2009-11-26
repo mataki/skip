@@ -100,7 +100,7 @@ class RankingsController < ApplicationController
           end
         end
       end
-      @last_updated = popular_bookmarks.first.created_on.strftime("%Y/%m/%d %H:%M")
+      @last_updated = popular_bookmarks.first.created_on.strftime(_("%B %d %Y"))
     else
       flash.now[:notice] = _('No matched bookmark.')
     end

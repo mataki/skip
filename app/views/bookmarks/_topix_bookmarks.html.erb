@@ -18,7 +18,7 @@
               <%# TODO bookmarkを取得するタイミングで一緒にタグも取得するようにしたいなぁ %>
               <%= bookmark_comment_tag_search_links_tag(Tag.commented_to(bookmark).all.map(&:name).join(','), :max => 3) %>
             </span></td>
-            <td class="date"><%=h bookmark.created_on.strftime("%m/%d %H:%M") %></td>
+            <td class="date"><%=h bookmark.created_on.strftime(_("%B %d %Y")) %></td>
           </tr>
         <% end -%>
       </tbody>
