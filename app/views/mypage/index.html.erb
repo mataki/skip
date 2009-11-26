@@ -172,7 +172,7 @@
       <% @recent_groups.each do |group| -%>
         <div class="topix_line">
           <div class="page_title">
-            <%= get_group_icon(group.group_category, :margin => true) %><%= group_link_to(group) %>&nbsp;<span class="small">(<%= truncate(strip_tags(group.description), 30) %>)</span>
+            <%= get_group_icon(group.group_category, :margin => true) %><%= group_link_to(group) %>&nbsp;<span class="small_text">(<%= truncate(strip_tags(group.description), 30) %>)</span>
           </div>
           <div class="page_date"><%=h group.created_on.strftime(_("%B %d %Y")) %></div>
         </div>
