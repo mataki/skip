@@ -5,22 +5,19 @@
     <col />
     <col class="col75" />
     <col class="col75" />
-    <col class="col75" />
     <col class="col125" />
     <tbody>
       <tr>
         <th><%= _('Group Name') %></th>
         <th><%= _('Status') %></th>
-        <th><%= _('Approval') %></th>
         <th><%= _('Members count') %></th>
         <th><%= _('Entries count') %>(<%= s_("BoardEntry|Last updated") %>)</th>
       </tr>
       <% groups.each do |group| -%>
         <tr class="<%= cycle('line_0', 'line_1') %>">
           <% category_name = h(group.group_category.name) -%>
-          <td class="name"><span class="nowrap"><%= icon_tag(group.group_category.icon, :alt => category_name, :title => category_name) %><%= group_link_to group %></span></td>
+          <td class="name"><span class="nowrap"><%= icon_tag(group.group_category.icon, :alt => category_name, :title => category_name) %><%= group_link_to group %><%= icon_tag('key', :alt => _('Need approval of the Administrator.'), :title => _('Need approval of the Administrator.')) if group.protected? %></span></td>
           <td class="state"><span class="nowrap"><%= participation_state(group, user_id) -%></span></td>
-          <td class="approval"><span class="nowrap"><%= _("%s Required") % icon_tag('key') if group.protected? %></span></td>
           <td class="count"><%= group.group_participations.active.count %></td>
           <% entries = BoardEntry.owned(group) %>
           <td><%= entries.count %>&nbsp;<%= "(#{entries.last.last_updated.strftime(_('%B %d %Y'))})" unless entries.empty? %></td>
