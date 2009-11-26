@@ -26,7 +26,9 @@ module GroupsHelper
         icon_tag('group') + _('Member')
       end
     else
-      icon_tag('group_error') + _('Unjoined')
+      if options[:blank_unjoined].blank?
+        icon_tag('group_error') + _('Unjoined')
+      end
     end
   end
 end
