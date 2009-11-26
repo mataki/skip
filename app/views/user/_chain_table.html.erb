@@ -7,7 +7,7 @@
         <%= user_link_to result[:from_user] %>
       </th>
       <td class="arrow"><%= icon_tag('resultset_next')  %></td>
-      <td class="message"><%= render_richtext(result[:from_message]) %></td>
+      <td class="message"><%= chain_tag_search_links_tag result[:from_tags_as_s] %><%= render_richtext(result[:from_message]) %></td>
       <td class="arrow"></td>
       <th rowspan="2" valign="bottom"><%= user_link_to_with_portrait(result[:to_user]) %><br/>
         <%= user_link_to result[:to_user] %>
@@ -16,7 +16,7 @@
     <% unless result[:counter_message].blank? -%>
     <tr>
       <td class="arrow"></td>
-      <td class="message"><%= render_richtext(result[:counter_message]) %></td>
+      <td class="message"><%= chain_tag_search_links_tag result[:to_tags_as_s] %><%= render_richtext(result[:counter_message]) %></td>
       <td class="arrow"><%= icon_tag('resultset_previous') unless result[:counter_message].empty? %></td>
     </tr>
     <% end -%>

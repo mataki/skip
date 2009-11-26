@@ -152,13 +152,17 @@ private
     against_chains = Chain.find(:all, :conditions =>[left_key + " in (?) and " + right_key + " = ?", user_ids, @user.id]) if user_ids.size > 0
     against_chains ||= []
     messages = against_chains.inject({}) {|result, chain| result ||= {}; result[chain.send(left_key)] = chain.comment; result }
+    tags = against_chains.inject({}) {|result, chain| result ||= {}; result[chain.send(left_key)] = chain.tags_as_s; result }
 
     @result = []
     @chains.each do |chain|
-      @result << { :from_user => chain.from_user,
+      @result << {
+        :from_user => chain.from_user,
         :from_message => chain.comment,
+        :from_tags_as_s => chain.tags_as_s,
         :to_user => chain.to_user,
-        :counter_message => messages[chain.send(right_key)] || ""
+        :counter_message => messages[chain.send(right_key)] || "",
+        :to_tags_as_s => tags[chain.send(right_key)] || ""
       }
     end
 
