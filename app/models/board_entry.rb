@@ -435,7 +435,9 @@ class BoardEntry < ActiveRecord::Base
     symbol2name_hash = {}
     if user_symbol_ids.size > 0
       UserUid.find(:all, :conditions =>["uid IN (?)", user_symbol_ids], :include => :user).each do |user_uid|
-        symbol2name_hash[user_uid.user.symbol] = user_uid.user.name
+        if user_uid.user
+          symbol2name_hash[user_uid.user.symbol] = user_uid.user.name
+        end
       end
     end
     if group_symbol_ids.size > 0
