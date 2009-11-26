@@ -37,7 +37,9 @@
             <td class="title">
               <%= entry_link_to(entry, {}, {:title => entry_infos}) %>
               <%= content_tag :span, "["+_('Resolved')+"]", :class => 'question_state' if entry.hide %>
-              <%= user_link_to(entry.user, :with_prefix => true) if entry.owner_is_group? %>
+              <% if entry.owner_is_group? -%>
+                <span class="small_text"><%= user_link_to(entry.user, :with_prefix => true) %></span>
+              <% end -%>
               <%= entry_tag_search_links_tag(entry.category, :max => 3) %>
               <span class="infos"><%= entry_infos -%></span>
             </td>
