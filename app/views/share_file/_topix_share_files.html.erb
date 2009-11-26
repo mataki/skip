@@ -23,7 +23,7 @@
             </span></td>
             <td></td>
             <% end -%>
-            <td class="title"><span class="nowrap">
+            <td class="title">
               <%= file_link_to(share_file, { :truncate => 40 }, :id => "share_file_download_link_#{share_file.id}", :class => "share_file_download_link") %>
               <% form_tag file_link_url(share_file), :id => "share_file_download_form_#{share_file.id}", :class => 'invisible' do -%>
                 <%= hidden_field_tag 'authenticity_token', form_authenticity_token %>
@@ -35,7 +35,7 @@
                 <%= _('Downloads: %s') % content_tag('span', h(share_file.total_count), :id => "download_count_#{share_file.id}") %>
                 <%= _('File size: %s') % share_file.file_size_with_unit %>
               </span>
-            </span></td>
+            </td>
             <td class="date"><%= h share_file.date.strftime(_("%B %d %Y")) %></td>
           </tr>
         <% end -%>

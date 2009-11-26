@@ -10,14 +10,14 @@
       <tbody>
         <% bookmarks.each do |bookmark| -%>
           <tr>
-            <td class="title"><span class="nowrap">
+            <td class="title">
               <%= link_to_bookmark_url bookmark %>
               <%= icon_tag('new') if (Date.today - bookmark.created_on.to_date) < 10 %>
               <span class="count"><%= link_to(n_("%{count} user", "%{count} users", bookmark.bookmark_comments_count) % {:count => bookmark.bookmark_comments_count}, url_for_bookmark(bookmark)) %></span>
               <%#= user_link_to(bookmark.user, :with_prefix => true) %>
               <%# TODO bookmarkを取得するタイミングで一緒にタグも取得するようにしたいなぁ %>
               <%= bookmark_comment_tag_search_links_tag(Tag.commented_to(bookmark).all.map(&:name).join(','), :max => 3) %>
-            </span></td>
+            </td>
             <td class="date"><%=h bookmark.created_on.strftime(_("%B %d %Y")) %></td>
           </tr>
         <% end -%>
