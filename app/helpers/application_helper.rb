@@ -382,10 +382,10 @@ private
     title = options[:title] || bookmark.title
 
     if bookmark.is_type_page?
-      prefix = options[:text_prefix] ? "[" + _('Entry') + "]" : icon_tag('user')
+      prefix = options[:without_icon] ? "" : icon_tag('user')
       link_to("#{prefix} #{h title}", "#{relative_url_root}#{bookmark.escaped_url}", :title => title)
     else
-      prefix = options[:text_prefix] ? "["+_('Internet')+"]" : icon_tag('world')
+      prefix = options[:without_icon] ? "" : icon_tag('world')
       link_to "#{prefix} #{h truncate(title, :length => 115)}", bookmark.escaped_url, :title => title, :target => "_blank"
     end
   end
