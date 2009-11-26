@@ -186,7 +186,7 @@ describe ApplicationHelper, '#link_to_bookmark_url' do
       @bookmark.url = 'http://localhost'
     end
     it '指定されたタイトルになること' do
-      helper.send(:link_to_bookmark_url, @bookmark, 'skip_user_group').include?('skip_user_group').should be_true
+      helper.send(:link_to_bookmark_url, @bookmark, {:title => 'skip_user_group'}).include?('skip_user_group').should be_true
     end
   end
   describe 'titleが指定されていない場合' do

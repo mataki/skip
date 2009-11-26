@@ -28,7 +28,6 @@ describe BatchMakeCache, "#create_meta" do
   end
   it "link_urlが正しく設定されること" do
     @result.should be_include("link_url: #{SkipEmbedded::InitialSettings['protocol']}#{SkipEmbedded::InitialSettings['host_and_port']}/user/hoge")
-
   end
 end
 

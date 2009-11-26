@@ -80,9 +80,7 @@ describe BookmarkController, "GET #show" do
     it "正しいインスタンス変数が設定されていること" do
       assigns[:bookmark].should_not be_nil
       assigns[:main_menu].should_not be_nil
-      assigns[:title].should_not be_nil
       assigns[:tags].should_not be_nil
-      assigns[:create_button_show].should_not be_nil
     end
   end
 end
