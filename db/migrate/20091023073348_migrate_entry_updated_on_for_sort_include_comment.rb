@@ -23,5 +23,6 @@ class MigrateEntryUpdatedOnForSortIncludeComment < ActiveRecord::Migration
   end
 
   class ::BoardEntry < ActiveRecord::Base
+    has_many :board_entry_comments, :dependent => :destroy
   end
 end
