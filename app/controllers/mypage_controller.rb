@@ -620,7 +620,7 @@ class MypageController < ApplicationController
       pages = BoardEntry.scoped(
         :conditions => find_params[:conditions],
         :include => find_params[:include] | [ :user, :state ]
-      ).timeline.order_new.paginate(:page => target_page(id_name), :per_page => '2')
+      ).timeline.order_new.paginate(:page => target_page(id_name), :per_page => options[:per_page])
     end
     locals = {
       :id_name => id_name,
