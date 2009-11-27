@@ -509,37 +509,57 @@ describe User, ".create_with_identity_url" do
 end
 
 describe User, ".auth" do
-  before do
-    @valid_password = 'valid_password'
-  end
+  subject { User.auth('code_or_email', "valid_password") }
+
   describe "指定したログインID又はメールアドレスに対応するユーザが存在する場合" do
     before do
       @user = create_user
-      @user.stub!(:crypted_password).and_return(User.encrypt(@valid_password))
+      @user.stub!(:crypted_password).and_return(User.encrypt("valid_password"))
       User.stub!(:find_by_code_or_email_with_key_phrase).and_return(@user)
     end
     describe "未使用ユーザの場合" do
       before do
         @user.stub!(:unused?).and_return(true)
-        User.should_receive(:find_by_code_or_email_with_key_phrase).and_return(@user)
       end
-      it { User.auth('code_or_email', @valid_password).should be_nil }
+      it { should == "Log in failed." }
     end
     describe "使用中ユーザの場合" do
       before do
         @user.stub!(:unused?).and_return(false)
-        User.should_receive(:find_by_code_or_email_with_key_phrase).and_return(@user)
+        User.stub(:auth_successed).and_return(@user)
+        User.stub(:auth_failed)
       end
+
       describe "パスワードが正しい場合" do
         it '認証成功処理が行われること' do
           User.should_receive(:auth_successed).with(@user)
-          User.auth('code_or_email', @valid_password)
+          User.auth('code_or_email', "valid_password")
+        end
+        it "ユーザが返ること" do
+          should == @user
         end
       end
       describe "パスワードは正しくない場合" do
         it '認証失敗処理が行われること' do
           User.should_receive(:auth_failed).with(@user)
           User.auth('code_or_email', 'invalid_password')
+        end
+        it "エラーメッセージが返ること" do
+          User.auth('code_or_email', 'invalid_password').should == "Log in failed."
+        end
+      end
+      describe "パスワードの有効期限が切れている場合" do
+        before do
+          @user.stub!(:within_time_limit_of_password?).and_return(false)
+        end
+        it "エラーメッセージが返ること" do
+          should == "Password is expired. Please reset password."
+        end
+      end
+      describe "アカウントがロックされている場合" do
+        it "エラーメッセージが返ること" do
+          @user.stub!(:locked?).and_return(true)
+          should == "This account is locked. Please reset password."
         end
       end
     end
@@ -548,7 +568,7 @@ describe User, ".auth" do
     before do
       User.should_receive(:find_by_code_or_email_with_key_phrase).and_return(nil)
     end
-    it { User.auth('code_or_email', @valid_password).should be_nil }
+    it { should == "Log in failed." }
   end
 end
 

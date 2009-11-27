@@ -205,12 +205,19 @@ class User < ActiveRecord::Base
   end
 
   def self.auth(code_or_email, password, key_phrase = nil)
-    return nil unless user = find_by_code_or_email_with_key_phrase(code_or_email, key_phrase)
-    return nil if user.unused?
+    return _("Log in failed.") unless user = find_by_code_or_email_with_key_phrase(code_or_email, key_phrase)
+    return _("Log in failed.") if user.unused?
     if user.crypted_password == encrypt(password)
-      auth_successed(user)
+      if user.locked?
+        _("This account is locked. Please reset password.")
+      elsif !user.within_time_limit_of_password?
+        _("Password is expired. Please reset password.")
+      else
+        auth_successed(user)
+      end
     else
       auth_failed(user)
+      _("Log in failed.")
     end
   end
 
