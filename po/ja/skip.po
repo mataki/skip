@@ -1121,7 +1121,7 @@ msgstr "クリーニング依頼メールを送る"
 #: app/models/admin/setting.rb:112
 msgid "Admin::Setting|Enable user cleaning notification description"
 msgstr ""
-"チェックすると定期的にユーザのクリーニング(ユーザの退職処理等)を促すメールを"
+"チェックすると定期的にユーザのクリーニング(ユーザの無効化処理等)を促すメールを"
 "システム運用担当者に送信します。"
 
 #: app/models/admin/setting.rb:86
@@ -2774,7 +2774,7 @@ msgid ""
 msgstr ""
 "ユーザの定期的なクリーニングは行っていますか?\n"
 "\n"
-"退職済みのユーザの退職処理\n"
+"退職などで無効となったユーザの無効化処理\n"
 "ユーザの氏名の変更\n"
 "ユーザへの管理者権限の付与/除去\n"
 "ユーザのメールアドレスの変更\n"
@@ -3096,7 +3096,7 @@ msgstr "更新日時"
 
 #: app/views/users/index.html.erb:19
 msgid "Excluding retired users"
-msgstr "退職者を含めない"
+msgstr "利用中のユーザのみ（退職者などを含めない）"
 
 #: app/controllers/group_controller.rb:306
 msgid "Failed to Approve."
@@ -6693,7 +6693,7 @@ msgstr "使用中"
 
 #: app/models/user.rb:137
 msgid "User|Status|RETIRED"
-msgstr "退職"
+msgstr "無効（退職者含む）"
 
 #: app/models/user.rb:138 app/views/admin/users/_form.html.erb:24
 #: app/views/admin/users/_form.html.erb:30
@@ -6942,7 +6942,7 @@ msgstr "[%s]を強制退会しました。"
 
 #: app/controllers/platform_controller.rb:51
 msgid "You had been retired."
-msgstr "あなたは退職済みです。"
+msgstr "あなたのアカウントは無効です。"
 
 #: app/views/admin/users/change_uid.html.erb:29
 msgid "You have chosen to change %{name}."

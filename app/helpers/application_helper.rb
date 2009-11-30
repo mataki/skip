@@ -132,9 +132,7 @@ module ApplicationHelper
   def show_picture(user, options = {})
     options = {:border => '0', :name => 'picture', :alt => h(user.name), :fit_image => true}.merge(options)
     options.merge!(:class => 'fit_image') if options.delete(:fit_image)
-    if user.retired?
-      file_name = 'retired.png'
-    elsif picture = user.picture
+    if picture = user.picture
       unless picture.new_record?
         file_name = url_for(:controller => '/pictures', :action => 'picture', :id => picture.id, :format => :png)
       else
