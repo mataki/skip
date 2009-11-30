@@ -4109,7 +4109,7 @@ msgstr "月"
 
 #: app/views/rankings/_month_list.html.erb:2
 msgid "Monthly"
-msgstr "月別"
+msgstr "期間"
 
 #: app/views/entries/_archive_box.html.erb:7
 msgid "Monthly List"
