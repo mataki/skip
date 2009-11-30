@@ -96,7 +96,7 @@ class EditController < ApplicationController
       message, new_trackbacks = @board_entry.send_trackbacks(current_user.belong_symbols, params[:trackbacks])
       make_trackback_message(new_trackbacks)
 
-      @board_entry.prepare_send_mail if @board_entry.send_mail?
+      @board_entry.send_contact_mails
 
       flash[:notice] = _('Created successfully.') + message
       redirect_to @board_entry.get_url_hash
@@ -208,7 +208,7 @@ class EditController < ApplicationController
     message, new_trackbacks = @board_entry.send_trackbacks(current_user.belong_symbols, params[:trackbacks])
     make_trackback_message(new_trackbacks)
 
-    @board_entry.prepare_send_mail if @board_entry.send_mail?
+    @board_entry.send_contact_mails
 
     flash[:notice] = _('Entry was successfully updated.') + message
     redirect_to @board_entry.get_url_hash

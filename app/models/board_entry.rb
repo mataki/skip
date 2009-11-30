@@ -302,10 +302,6 @@ class BoardEntry < ActiveRecord::Base
     return {:conditions => conditions_param.unshift(conditions_state), :include => [:entry_publications] }
   end
 
-  def send_mail?
-    true if send_mail == "1"
-  end
-
   def get_around_entry(login_user_symbols)
     order_value = BoardEntry.find(:first, :select => 'last_updated+id as order_value', :conditions=>["id = ?", id]).order_value
     prev_entry = next_entry = nil
@@ -487,8 +483,10 @@ class BoardEntry < ActiveRecord::Base
   end
 
   # TODO もはやprepareじゃない。sent_contact_mailsなどにリネームする
-  def prepare_send_mail
+  def send_contact_mails
+    return unless self.send_mail?
     return if diary? && private?
+    return if !SkipEmbedded::InitialSettings['mail']['enable_send_email_to_all_users'] && public?
 
     users = publication_users
     users.each do |u|
@@ -496,6 +494,10 @@ class BoardEntry < ActiveRecord::Base
       owner = load_owner
       UserMailer::AR.deliver_sent_contact(u.email, owner, self)
     end
+  end
+
+  def send_mail?
+    true if send_mail == "1"
   end
 
   # この記事の作成者かどうか判断する

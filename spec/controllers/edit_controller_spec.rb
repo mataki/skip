@@ -106,41 +106,16 @@ describe EditController, "#create" do
       controller.should_receive(:make_trackback_message).with(new_trackbacks)
 
       BoardEntry.stub!(:new).and_return(@entry)
-    end
-    describe "メールを送る場合" do
-      before do
-        @entry.should_receive(:send_mail?).and_return(true)
-        @entry.should_receive(:prepare_send_mail)
-        post :create, {
-          :board_entry => { :symbol => @user_symbol, :send_mail => "1" }
-        }
-      end
-      it "作成されたフォーラムにリダイレクトされる" do
-        response.should redirect_to(@entry.get_url_hash)
-      end
-      it "メールが送信が予約されること" do
-      end
-      it "flashメッセージが設定されていること" do
-        flash[:notice].should == 'Created successfully.'
-      end
-    end
 
-    describe "メールを送らない場合" do
-      before do
-        @entry.should_not_receive(:prepare_send_mail)
-        @entry.should_receive(:send_mail?).and_return(false)
-        post :create, {
-          :board_entry => { :symbol => @user_symbol, :send_mail => "0" }
-        }
-      end
-      it "作成されたフォーラムにリダイレクトされる" do
-        response.should redirect_to(@entry.get_url_hash)
-      end
-      it "flashメッセージが設定されていること" do
-        flash[:notice].should == 'Created successfully.'
-      end
-      it "メール送信が予約されないこと" do
-      end
+      @entry.should_receive(:send_contact_mails)
+    end
+    it "作成されたフォーラムにリダイレクトされる" do
+      post :create, { :board_entry => { :symbol => @user_symbol } }
+      response.should redirect_to(@entry.get_url_hash)
+    end
+    it "flashメッセージが設定されていること" do
+      post :create, { :board_entry => { :symbol => @user_symbol } }
+      flash[:notice].should == 'Created successfully.'
     end
   end
 end

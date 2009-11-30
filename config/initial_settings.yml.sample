@@ -68,6 +68,7 @@ default: &default
   mail:
     show_mail_function: true                                        # メール関連項目の表示制御(メールアドレス変更、メール通知設定、メール送信履歴、(記事)連絡タグ)
     default_send_mail_of_question: false                            # 質問記事のメール送信チェックボックスのデフォルト値
+    enable_send_email_to_all_users: true                            # 全体へのメール送信機能を有効にするかどうか
     smtp_settings:
       :address:    localhost
       :port:       25
