@@ -23,6 +23,23 @@ class Sanitize
       end
     end
 
+    whitelist_iframe = lambda do |env|
+      node = env[:node]
+      name = node.name.to_s.downcase
+
+      return nil unless name == 'iframe'
+
+      url = node['src']
+
+      whitelist_iframe_urls = SkipEmbedded::InitialSettings['whitelist_iframe_urls'] || []
+
+      if url && whitelist_iframe_urls.any? { |whitelist_iframe_url| url.index(whitelist_iframe_url) == 0 }
+        return {
+          :whitelist_nodes => [node, node.parent] + node.parent.children.to_a
+        }
+      end
+    end
+
     SKIP = {
       :elements => ["a", "abbr", "acronym", "address", "b", "big", "blockquote", "br", "caption", "cite", "code", "dd", "del", "dfn", "div", "dt", "em", "h1", "h2", "h3", "h4", "h5", "h6", "hr", "i", "img", "ins", "kbd", "li", "ol", "p", "pre", "samp", "small", "span", "strike", "strong", "sub", "sup", "table", "tbody", "td", "th", "tr", "tt", "u", "ul", "var"],
       :attributes => {
@@ -34,7 +51,7 @@ class Sanitize
         'img' => {'src' => ['http', 'https', :relative]},
         'q' => {'cite' => ['http', 'https', :relative]}
       },
-      :transformers => [whitelist_object_or_embed]
+      :transformers => [whitelist_object_or_embed, whitelist_iframe]
     }
   end
 end
