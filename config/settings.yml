@@ -49,6 +49,18 @@ contact_mail_contain_contents:
   format: boolean
   default: false
 
+# ブログへの埋め込みタグ
+# --------------------------------------------------------------------------------------------------
+youtube:
+  format: boolean
+  default: false
+slideshare:
+  format: boolean
+  default: false
+googlemap:
+  format: boolean
+  default: false
+
 # その他
 # --------------------------------------------------------------------------------------------------
 stop_new_user:

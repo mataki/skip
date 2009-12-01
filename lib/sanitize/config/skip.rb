@@ -6,6 +6,8 @@ class Sanitize
 
       return nil unless name == 'param' || name == 'embed'
       return nil unless node.parent.name.to_s.downcase == 'object'
+      whitelist_object_urls = SkipEmbedded::InitialSettings['whitelist_object_urls']
+      return nil unless whitelist_object_urls
 
       if name == 'param'
         return nil unless movie_node = node.parent.search('param[@name="movie"]')[0]
@@ -14,9 +16,11 @@ class Sanitize
         url = node['src']
       end
 
-      whitelist_object_urls = SkipEmbedded::InitialSettings['whitelist_object_urls'] || []
+      whitelist_urls = whitelist_object_urls.keys.map do |key|
+        Admin::Setting[key] ? whitelist_object_urls[key] : []
+      end.flatten
 
-      if url && whitelist_object_urls.any? { |whitelist_object_url| url.index(whitelist_object_url) == 0 }
+      if url && whitelist_urls.any? { |whitelist_url| url.index(whitelist_url) == 0 }
         return {
           :whitelist_nodes => [node, node.parent] + node.parent.children.to_a
         }
@@ -28,14 +32,18 @@ class Sanitize
       name = node.name.to_s.downcase
 
       return nil unless name == 'iframe'
+      whitelist_iframe_urls = SkipEmbedded::InitialSettings['whitelist_iframe_urls']
+      return nil unless whitelist_iframe_urls
 
       url = node['src']
 
-      whitelist_iframe_urls = SkipEmbedded::InitialSettings['whitelist_iframe_urls'] || []
+      whitelist_urls = whitelist_iframe_urls.keys.map do |key|
+        Admin::Setting[key] ? whitelist_iframe_urls[key] : []
+      end.flatten
 
-      if url && whitelist_iframe_urls.any? { |whitelist_iframe_url| url.index(whitelist_iframe_url) == 0 }
+      if url && whitelist_urls.any? { |whitelist_url| url.index(whitelist_url) == 0 }
         return {
-          :whitelist_nodes => [node, node.parent] + node.parent.children.to_a
+          :whitelist_nodes => [node] + node.children.to_a
         }
       end
     end

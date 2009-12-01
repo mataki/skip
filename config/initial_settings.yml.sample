@@ -155,13 +155,16 @@ default: &default
   # ================================================================================================
   # object/embed
   whitelist_object_urls:
-    - http://www.youtube.com/
-    - http://static.slidesharecdn.com/
+    youtube:
+      - http://www.youtube.com/
+    slideshare:
+      - http://static.slidesharecdn.com/
 
   # iframe
   whitelist_iframe_urls:
-    - http://maps.google.co.jp/
-    - http://maps.google.com/
+    googlemap:
+      - http://maps.google.co.jp/
+      - http://maps.google.com/
 
   # ================================================================================================
   # 連携アプリに関する設定
