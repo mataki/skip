@@ -567,8 +567,9 @@ class MypageController < ApplicationController
       :id_name => id_name,
       :title_icon => "user",
       :title_name => _('Blogs'),
+      :pages => pages,
       :per_page => options[:per_page],
-      :pages => pages
+      :symbol2name_hash => BoardEntry.get_symbol2name_hash(pages)
     }
   end
 
