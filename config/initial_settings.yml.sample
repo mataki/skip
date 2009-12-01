@@ -197,6 +197,7 @@ default: &default
   default_theme: silver                                              # 既定のテーマ
   hide_header_logout_link: false                                     # ヘッダのログアウトリンクの表示/非表示切り替え
   footer_image_link_tag:
+  publicize_feeds_without_login: false                               # 公開feedの取得可否(許可するとログイン認証なしでfeedが取得出来る)
 
   advertisements_url:                                                # 広告領域に表示するデータのJSON又はJSONPを返すURL
 

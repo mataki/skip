@@ -68,13 +68,16 @@ class BoardEntry < ActiveRecord::Base
     { :conditions => ['category not like :category', { :category => "%[#{category}]%" }] }
   }
 
+  named_scope :group_category_eq, proc { |category_code|
+    category = GroupCategory.find_by_code(category_code)
+    return {} unless category
+    group_symbols = Group.active.categorized(category.id).all.map(&:symbol)
+    { :conditions => ['board_entries.symbol IN (?)', group_symbols] }
+  }
+
   named_scope :recent, proc { |day_count|
     return {} if day_count.blank?
     { :conditions => ['last_updated > :date', { :date => Time.now.ago(day_count.to_i.day) }] }
-  }
-
-  named_scope :publication_type_equal, proc { |type|
-    { :conditions => ['publication_type = ?', type] }
   }
 
   named_scope :diary, proc {
@@ -110,11 +113,11 @@ class BoardEntry < ActiveRecord::Base
   }
 
   named_scope :order_access, proc {
-    { :order => 'board_entry_points.access_count DESC' }
+    { :order => 'board_entry_points.access_count DESC', :include => [:state] }
   }
 
   named_scope :order_point, proc {
-    { :order => 'board_entry_points.point DESC' }
+    { :order => 'board_entry_points.point DESC', :include => [:state] }
   }
 
   named_scope :aim_type, proc { |types|

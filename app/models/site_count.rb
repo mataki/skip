@@ -65,7 +65,7 @@ class SiteCount < ActiveRecord::Base
       :writer_at_month =>  calc_writer_at_month(now),
       :user_access_at_month => calc_user_access_at_month(now),
       :active_users => UserAccess.active_user.last_access_gt(now.beginning_of_day.ago(10.day)).count,
-      :write_users_all => BoardEntry.active_user.publication_type_equal('public').diary.count(:distinct => true, :select => 'user_id'),
+      :write_users_all => BoardEntry.active_user.publication_type_eq('public').diary.count(:distinct => true, :select => 'user_id'),
       :write_users_with_pvt => BoardEntry.active_user.diary.count(:distinct => true, :select => 'user_id'),
       :write_users_with_bbs => BoardEntry.active_user.count(:distinct => true, :select => 'user_id'),
       :comment_users => BoardEntryComment.active_user.count(:distinct => true, :select => 'user_id'),

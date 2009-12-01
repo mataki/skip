@@ -8,7 +8,7 @@ ActionController::Routing::Routes.draw do |map|
   # TODO users配下に移す
   map.resources :notices
 
-  map.resources :users , :only => [:index] do |user|
+  map.resources :users, :only => [:index] do |user|
     user.resources :chains
   end
 
@@ -109,6 +109,11 @@ ActionController::Routing::Routes.draw do |map|
     admin_map.images_revert 'images/:target/revert', :controller => 'images', :action => 'revert'
 
     admin_map.resources :oauth_providers, :member => {:toggle_status => :post}
+  end
+
+  map.namespace "feed" do |feed_map|
+    feed_map.resources :board_entries, :only => %w(index), :collection => {:questions => :get, :timelines => :get, :popular_blogs => :get}
+    feed_map.resources :bookmarks, :only => %w(index)
   end
 
   map.with_options :controller => 'server' do |server|
