@@ -119,7 +119,7 @@ protected
   end
 
   def current_target_group
-    @current_target_group ||= Group.active.find_by_gid(params[:gid])
+    @current_target_group ||= Group.active.find_by_gid(params[:gid] || params[:group_id])
   end
 
   def current_participation

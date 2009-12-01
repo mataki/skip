@@ -215,4 +215,8 @@ class Group < ActiveRecord::Base
       end
     end
   end
+
+  def to_param
+    gid
+  end
 end
