@@ -8,7 +8,7 @@
           <div class="input_label"><%= label :page, :title, _('Title') %></div>
           <div class="input_value"><%= text_field 'page', 'title', :size=>15 %></div>
           <%= hidden_field_tag :parent_id, @page.id %>
-          <%= submit_tag _('Create'), :disable_with => _('Creating...') %>
+          <%= submit_tag _('作成'), :disable_with => _('作成中...') %>
         <% end -%>
         <% @page.title = tmp_title %>
       </div>

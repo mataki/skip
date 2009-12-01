@@ -6,6 +6,7 @@ class Page < ActiveRecord::Base
   has_many :histories, :order => "histories.revision DESC"
   validates_associated :new_history, :if => :new_history, :on => :create
   validates_uniqueness_of :title
+  validates_presence_of :title
   validates_inclusion_of :format_type, :in => %w[hiki html]
 
   after_save :reset_history_caches
