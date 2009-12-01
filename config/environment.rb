@@ -57,6 +57,7 @@ Rails::Initializer.run do |config|
   config.gem "maedana-ar_mailer", :lib => 'action_mailer/ar_mailer', :source => 'http://gemcutter.org'
   config.gem "feed-normalizer"
   config.gem "searchlogic"
+  config.gem "sanitize", :version => '>=1.2.0.dev.20091104'
 end
 
 # 共通メニュー
