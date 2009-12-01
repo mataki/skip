@@ -23,11 +23,11 @@ module RankingsHelper
     when :entry_he
      _("Ranking of Popular Blogs (%s)") % h(_(Admin::Setting.point_button))
     when :user_access
-      _("Ranking of Popular Users")
+      _("Ranking of Popular Users (Access)")
     when :user_entry
-      _("Ranking of Blog Entries Posted")
+      _("Ranking of Popular Users (Blog Entries Posted)")
     when :commentator
-      _("Ranking of Comments Posted")
+      _("Ranking of Popular Users (Comments Posted)")
     else
       ""
     end
