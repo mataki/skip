@@ -33,8 +33,6 @@ class Admin::Setting < ActiveRecord::Base
   # お問い合わせ,ヘルプ
   N_('Admin::Setting|Contact addr')
   N_('Admin::Setting|Contact addr description')
-  N_('Admin::Setting|Help url')
-  N_('Admin::Setting|Help url description')
 
   # フッター
   N_('Admin::Setting|Footer first')
@@ -45,10 +43,11 @@ class Admin::Setting < ActiveRecord::Base
   # メール関連の設定用
   N_('Admin::Setting|Contact mail contain contents')
   N_('Admin::Setting|Contact mail contain contents description')
-  N_('Admin::Setting|Host and port')
-  N_('Admin::Setting|Host and port description')
-  N_('Admin::Setting|Protocol')
-  N_('Admin::Setting|Protocol description')
+
+  # 埋め込みタグ
+  N_('Admin::Setting|Youtube description')
+  N_('Admin::Setting|Slideshare description')
+  N_('Admin::Setting|Googlemap description')
 
   # その他
   N_('Admin::Setting|Stop new user')
