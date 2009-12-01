@@ -87,7 +87,6 @@ $j = jQuery.noConflict();
 var relative_url_root = '<%= relative_url_root %>';
 <% end -%>
 <%= javascript_include_tag 'application' %>
-<%= skip_javascript_include_tag 'skip_util' %>
 <%= skip_reflect_customized_javascript_include_tag %>
 <%= javascript_include_tag :skip_embedded, :cache => "skip_embedded" %>
 <%= skip_jquery_include_tag 'jquery.tablesorter' %>
@@ -97,12 +96,6 @@ var relative_url_root = '<%= relative_url_root %>';
 <% javascript_tag do -%>
 $j(function(){
     $j('#loading').hide();
-
-    $j.fn.nyroModal.settings.processHandler = function(settings) {
-        $j.nyroModalSettings({
-            minWidth: 10, minHeight: 10
-        });
-    };
 
     $j('.zoomable').zoomable();
 
