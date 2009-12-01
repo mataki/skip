@@ -17,7 +17,18 @@
   <%= yield :contents_top %>
 
   <div id="panel" class="ui-corner-all" style="_width: 98%;">
-    <h1 id="title"><%=h @page.title %></h1>
+    <h1 id="title">
+      <span id="title-block" style="cursor:pointer; padding: 3px;">
+        <%=h @page.title %>
+      </span>
+      <span id= "edit_form" style="display:none;">
+        <%  form_tag( {:action => :update}, {:method => "put"} ) do %>
+          <%= text_field 'page', 'title' %>
+          <%= submit_tag("更新") %>
+          <span id="reset_form" style="cursor:pointer; font-size: 12px;">取消</span>
+        <% end %>
+      </span>
+    </h1>
     <% if @user %>
       <ul class="no_style horizontal"><li>Last-modified: <%= @page.updated_at.strftime("%Y/%m/%d %H:%M:%S") %> by <%= @user.name %></li></ul>
     <% else %>
@@ -97,6 +108,23 @@ $j(function(){
 
     // 管理画面用
     $j('table.sortable').tablesorter();
+
+    $j('#title-block').click(function() {
+      $j('#title-block').css('border','');
+      $j(this).hide();
+      $j('#edit_form').show();
+    });
+
+    $j('#title-block').hover(function() {
+      $j(this).css('border','ridge 1px silver')
+    }, function(){
+       $j(this).css('border','');
+    });
+
+    $j('#reset_form').click(function() {
+      $j('#edit_form').hide();
+      $j('#title-block').show();
+    });
 
     <%= yield :javascript_initializers %>
 });

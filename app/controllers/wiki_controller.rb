@@ -5,6 +5,14 @@ class WikiController < ApplicationController
     @user = User.find(@page.last_modified_user_id) if @page.has_history?
   end
 
+  def update
+    if page = Page.find_by_title(params[:id])
+      page.update_attributes(params[:page])
+      flash[:notice] = "'#{page.title}'に変更されました"
+    end
+    redirect_to :action => :show , :id => page.title
+  end
+
   def create
     page = Page.new(params[:page])
     page.last_modified_user_id = current_user.id
