@@ -1,8 +1,8 @@
-<div id="platform_main_wrapper">
-  <div id="platform_main" class="require_login">
+<div id="platform_main_wrapper" class="require_login">
+  <div id="platform_main" class="<%= Admin::Setting.enable_login_keyphrase ? 'with_keyphrase' : "without_keyphrase" %>">
     <div id="require_login_wrapper">
     <h2><%= _('Login Required')%></h2>
-    <p class="require_desc">
+    <p class="require_desc ui-corner-all">
       <%= _("Login to %s required for further operations. Login from below.") % h(Admin::Setting.abbr_app_title)%>
     </p>
     <div id="require_login_container_wrapper">

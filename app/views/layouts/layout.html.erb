@@ -17,40 +17,53 @@
   <%= yield :contents_top %>
 
   <div id="panel" class="ui-corner-all">
-    <% if @user and !@user.new_record? and !@user.unused? -%>
+    <% if current_target_user and !current_target_user.new_record? and !current_target_user.unused? -%>
       <div class="panel_top">
         <div class="left">
-          <%= show_picture(@user, :width => 72, :height => 72) %>
+          <%= show_picture(current_target_user, :width => 72, :height => 72) %>
         </div>
         <div class="right">
-          <h1 id="title"><%= h user_title(@user) %></h1>
+          <h1 id="title"><%= h user_title(current_target_user) %></h1>
           <ul class="no_style horizontal">
-            <% if @user.retired? -%>
+            <% if current_target_user.retired? -%>
               <li><b class="retired"><%= _('This user has already left.') %></b></li>
             <% else -%>
-              <% if @user != @current_user -%>
-                <li><%= _('Last Access') %>: <%= h @user.before_access %></li>
+              <% if current_target_user != @current_user -%>
+                <li><%= _('Last Access') %>: <%= h current_target_user.before_access %></li>
               <% end -%>
             <% end -%>
-            <li><%= link_to_if @user == current_user, _('Visits') + ": " +h(n_("%{count} visit", "%{count} visits", @user.info[:access_count]) % {:count => @user.info[:access_count]}), {:action => 'trace', :controller => "/mypage"} -%></li>
-            <li><%= _('Subscribers') %>: <%=h(n_("%{count} user", "%{count} users", @user.info[:subscriber_count]) % {:count =>@user.info[:subscriber_count]}) -%></li>
-            <li><%= _('Posts') %>: <%=h(n_("%{count} entry", "%{count} entries", @user.info[:blog_count]) % {:count => @user.info[:blog_count]}) -%></li>
-            <li><%= _('Days since registered') %>: <%=h(n_("%{count} day", "%{count} days", @user.info[:using_day]) % {:count => @user.info[:using_day]}) -%></li>
+            <li><%= link_to_if current_target_user == current_user, _('Visits') + ": " +h(n_("%{count} visit", "%{count} visits", current_target_user.info[:access_count]) % {:count => current_target_user.info[:access_count]}), {:action => 'trace', :controller => "/mypage"} -%></li>
+            <li><%= _('Subscribers') %>: <%=h(n_("%{count} user", "%{count} users", current_target_user.info[:subscriber_count]) % {:count =>current_target_user.info[:subscriber_count]}) -%></li>
+            <li><%= _('Posts') %>: <%=h(n_("%{count} entry", "%{count} entries", current_target_user.info[:blog_count]) % {:count => current_target_user.info[:blog_count]}) -%></li>
+            <li><%= _('Days since registered') %>: <%=h(n_("%{count} day", "%{count} days", current_target_user.info[:using_day]) % {:count => current_target_user.info[:using_day]}) -%></li>
           </ul>
           <br class="clear_left" />
         </div>
-        <div id="tab_menu"><%= generate_tab_menu(user_tab_menu_source(@user)) %></div>
+        <div id="tab_menu"><%= generate_tab_menu(user_tab_menu_source(current_target_user)) %></div>
         <br class="clear_left" />
       </div>
-    <% elsif @group and !@group.new_record?%>
-      <h1 id="title"><%=h @group.name %></h1>
+    <% elsif current_target_group and !current_target_group.new_record? %>
+      <h1 id="title"><%=h current_target_group.name %></h1>
       <ul class="no_style horizontal">
-        <li><%= _('Category') %>: <%= h(@group.group_category.name) %></li>
-        <li><%= _('Members') %>: <%=h(n_("%{count} user", "%{count} users", count = @group.group_participations.active.count) % {:count => count}) -%></li>
-        <li><%= _('Joining the group') %>: <%= @group.protected? ? _('Need approval of the Administrator.') : _("No approval needed to join this group.") %></li>
+        <li><%= _('Category') %>: <%= h(current_target_group.group_category.name) %></li>
+        <li><%= _('Joining the group') %>: <%= current_target_group.protected? ? _('Need approval of the Administrator.') : _("No approval needed to join this group.") %></li>
+        <li><%= _('Members count') %>: <%= h(n_("%{count} user", "%{count} users", count = current_target_group.group_participations.active.count) % {:count => count}) -%></li>
+        <% entries = BoardEntry.owned(current_target_group) -%>
+        <li><%= _('Entries count') %>: <%= n_('%{count} entry', '%{count} entries') % {:count => entries.count} %></li>
+        <% unless entries.empty? -%>
+          <li><%= _("The entry's Last updated date") %>: <%= entries.last.last_updated.strftime('%Y/%m/%d') %>
+        <% end -%>
       </ul>
       <div class="clear_left"></div>
-      <div id="tab_menu"><%= generate_tab_menu(group_tab_menu_source(@group)) %></div>
+      <div id="tab_menu"><%= generate_tab_menu(group_tab_menu_source(current_target_group)) %></div>
+      <div class="clear_left"></div>
+    <% elsif @bookmark %>
+      <h1 id="title"><%=h @bookmark.title %></h1>
+      <ul class="no_style horizontal">
+        <li><%= @bookmark.is_type_page? ? Admin::Setting.abbr_app_title : _('Internet') %></li>
+        <li><%= n_("Registered user:&nbsp;%s", "Registered users:&nbsp;%s", @bookmark.bookmark_comments_count) % h(@bookmark.bookmark_comments_count) %></li>
+        <li><%= _('URL') %>: <%= link_to_bookmark_url @bookmark, :title => @bookmark.escaped_url, :without_icon => true %></li>
+      </ul>
       <div class="clear_left"></div>
     <% else %>
       <h1 id="title"><%=h @title %></h1>
@@ -113,7 +126,6 @@ $j = jQuery.noConflict();
 var relative_url_root = '<%= relative_url_root %>';
 <% end -%>
 <%= javascript_include_tag 'application' %>
-<%= skip_javascript_include_tag 'skip_util' %>
 <%= skip_reflect_customized_javascript_include_tag %>
 <%= javascript_include_tag :skip_embedded, :cache => "skip_embedded" %>
 <%= skip_jquery_include_tag 'jquery.tablesorter' %>
@@ -123,12 +135,6 @@ var relative_url_root = '<%= relative_url_root %>';
 <% javascript_tag do -%>
 $j(function(){
     $j('#loading').hide();
-
-    $j.fn.nyroModal.settings.processHandler = function(settings) {
-        $j.nyroModalSettings({
-            minWidth: 10, minHeight: 10
-        });
-    };
 
     $j('.zoomable').zoomable();
 

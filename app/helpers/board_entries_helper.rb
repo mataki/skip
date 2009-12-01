@@ -74,8 +74,21 @@ module BoardEntriesHelper
   def icon_with_information current_user, comment, checked_on
     text = ''
     text << _('[New]') if Time.now - comment.created_on < 24.hour
-    text << _('[Unread]') if current_user.id != comment.user_id && (checked_on && checked_on <= comment.updated_on)
+    text << _('[Unread]') if current_user.id != comment.user_id && (checked_on.blank? || checked_on <= comment.updated_on)
     icon_type = Time.now - comment.created_on < 12.hour ? :emoticon_happy : :emoticon_smile
     text.blank? ? "" : "#{icon_tag icon_type}#{text}"
+  end
+
+  # :maxを指定すると指定サイズを超えるタグを隠す。開閉するためにはapplication.jsを読み込んでおかなければならない。
+  def entry_tag_search_links_tag comma_tags, options = {}
+    return '' if comma_tags.blank?
+    tag_links = comma_tags.split(',').map do |tag|
+      link_to h(tag), {:controller => 'search', :action => 'entry_search', :tag_words => h(tag)}, :class => 'tag'
+    end
+    if max = options[:max] and max > 0
+      toggle_links(tag_links, max)
+    else
+      tag_links.join('&nbsp;')
+    end
   end
 end

@@ -43,4 +43,31 @@ module MypageHelper
 
     get_menu_items @@record_menus, selected_menu, "manage"
   end
+
+  def system_message_links
+    return @system_message_links if @system_message_links
+    system_message_links = []
+
+    if system_notice = SkipEmbedded::InitialSettings['system_notice'] and !system_notice['title'].blank?
+      system_message_links << link_to(icon_tag('information') + h(system_notice['title']), system_notice['url'])
+    end
+
+    unless current_user.picture
+      system_message_links << link_to(icon_tag('picture') + _("Change your profile picture!"), {:controller => "mypage", :action => "manage", :menu => "manage_portrait"})
+    end
+
+    message_array = Message.get_message_array_by_user_id(current_user.id)
+    message_array.each do |message|
+      if message_type = Message::MESSAGE_TYPES[message[:message_type]]
+        system_message_links << link_to(icon_tag(message_type[:icon_name]) + h(message[:message]), message[:link_url])
+      end
+    end
+
+    Group.owned(current_user).each do |group|
+      unless group.group_participations.waiting.empty?
+        system_message_links << link_to(icon_tag('group_add') + _("New user is waiting for approval in %s.") % group.name, {:controller => 'group', :action => 'manage', :gid => group.gid, :menu => 'manage_permit'})
+      end
+    end
+    @system_message_links = system_message_links
+  end
 end

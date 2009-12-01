@@ -166,12 +166,11 @@ class ShareFileController < ApplicationController
 
     @owner_name = @owner_obj.name
     @owner_symbol = @owner_obj.symbol
-    @categories = ShareFile.get_tags @owner_obj.symbol
 
     params[:sort_type] ||= "date"
     params_hash = { :owner_symbol => @owner_symbol, :category => params[:category],
                     :keyword => params[:keyword], :without_public => params[:without_public] }
-    find_params = ShareFile.make_conditions(login_user_symbols, params_hash)
+    find_params = ShareFile.make_conditions(current_user.belong_symbols, params_hash)
     order_by = (params[:sort_type] == "date" ? "date desc" : "file_name")
 
     @share_files = ShareFile.scoped(

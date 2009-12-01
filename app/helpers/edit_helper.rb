@@ -55,6 +55,7 @@ module EditHelper
       result << check_box(:board_entry, :send_mail)
       result << label(:board_entry, :send_mail, _('Send email to accessible members'))
       result << _('(Will not be sent when the entry is limited to owner only)')
+      content_tag :span, result, :class => 'send_mail_field'
     end
   end
 

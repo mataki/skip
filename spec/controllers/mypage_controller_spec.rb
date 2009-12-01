@@ -36,7 +36,6 @@ describe MypageController, 'mypage > home 関連' do
       @current_user.stub!(:info).and_return(@current_user_info)
       controller.stub!(:recent_day).and_return(7)
       controller.stub!(:get_entry_count)
-      Group.stub!(:has_waiting_for_approval)
       controller.stub!(:mail_your_messages)
       controller.stub!(:find_questions_as_locals)
       controller.stub!(:find_access_blogs_as_locals)
@@ -76,18 +75,6 @@ describe MypageController, 'mypage > home 関連' do
     # ============================================================
     #  main area top
     # ============================================================
-    it 'システムからの連絡が設定されること' do
-      @system_messages = mock('system_messages')
-      controller.should_receive(:system_messages).and_return(@system_messages)
-      get :index
-      assigns[:system_messages].should == @system_messages
-    end
-    it 'お知らせ, 承認待ちの一覧が設定されること' do
-      @waiting_groups = [stub_model(Group)]
-      Group.should_receive(:has_waiting_for_approval).with(@current_user).and_return(@waiting_groups)
-      get :index
-      assigns[:waiting_groups].should == @waiting_groups
-    end
     it 'あなたへのお知らせ(未読のもののみ)が設定されること' do
       @mail_your_messages = mock('mail_your_messages')
       controller.should_receive(:mail_your_messages).and_return(@mail_your_messages)
@@ -478,7 +465,7 @@ describe MypageController, 'mypage > manage(管理) 関連' do
 
   describe MypageController, "POST #apply_password" do
     before do
-      SkipEmbedded::InitialSettings.stub!("[]").with('login_mode').and_return('password')
+      SkipEmbedded::InitialSettings['login_mode'] = "password"
 
       @user = user_login
       @user.should_receive(:change_password)
@@ -508,9 +495,9 @@ describe MypageController, 'mypage > manage(管理) 関連' do
   describe MypageController, "POST #apply_ident_url" do
     before do
       @user = user_login
-      SkipEmbedded::InitialSettings.stub!("[]").with('login_mode').and_return('rp')
-      SkipEmbedded::InitialSettings.stub!("[]").with('fixed_op_url').and_return(nil)
-      SkipEmbedded::InitialSettings.stub!("[]").with('password_edit_setting').and_return(true)
+      SkipEmbedded::InitialSettings['login_mode'] = "rp"
+      SkipEmbedded::InitialSettings['fixed_op_url'] = nil
+      SkipEmbedded::InitialSettings['password_edit_setting'] = true
       @openid_url = "http://id.example.com/a_user"
     end
     describe '認証を開始した場合' do
@@ -632,17 +619,6 @@ describe MypageController, '#parse_date' do
   end
   it 'year, month, dayが返却されること' do
     @controller.send(:parse_date).should == [2009, 1, 2]
-  end
-end
-
-describe MypageController, '#system_messages' do
-  before do
-    @controller = MypageController.new
-    @user = stub_model(User, :picture => nil)
-    @controller.stub!(:current_user).and_return(@user)
-  end
-  describe 'ようこそメッセージを表示しない場合' do
-    it { @controller.send(:system_messages).size.should == 2 }
   end
 end
 

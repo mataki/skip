@@ -155,9 +155,24 @@ describe BoardEntriesHelper, "#icon_with_information" do
       @comment = stub_model(BoardEntryComment, :created_on => 10.hour.ago, :updated_on => 8.hour.ago, :id => 1)
       helper.stub!(:icon_tag).with(:emoticon_happy)
     end
-    describe "未読の場合" do
+    describe "未読の場合(過去にチェック済み)" do
       before do
         @checked_on = 10.hour.ago
+      end
+      it "emoticon_happyのアイコンを含むこと" do
+        helper.should_receive(:icon_tag).with(:emoticon_happy)
+        helper.icon_with_information(@user, @comment, @checked_on)
+      end
+      it "未読が含まれること" do
+        helper.icon_with_information(@user, @comment, @checked_on).should be_include("[Unread]")
+      end
+      it "新着が含まれること" do
+        helper.icon_with_information(@user, @comment, @checked_on).should be_include("[New]")
+      end
+    end
+    describe "未読の場合(記事を参照したことがない)" do
+      before do
+        @checked_on = nil
       end
       it "emoticon_happyのアイコンを含むこと" do
         helper.should_receive(:icon_tag).with(:emoticon_happy)

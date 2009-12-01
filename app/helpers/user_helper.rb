@@ -35,7 +35,6 @@ module UserHelper
   end
 
   def user_tab_menu_source user
-    # TODO mypage#setup_layoutのtab_menu_source構築と重複が多い。DRYにしたい。
     tab_menu_source = [ {:label => _('Profile'), :options => {:controller => 'user', :action => 'show', :uid => user.uid}} ]
 
     tab_menu_source << {:label => _('Blog'), :options => {:controller => 'user', :action => 'blog', :uid => user.uid, :archive => 'all', :sort_type => 'date', :type => 'entry'}} unless BoardEntry.owned(user).accessible(current_user).empty?

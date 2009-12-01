@@ -17,8 +17,8 @@ class UserMailer::Base < ActionMailer::Base
   helper :initial_settings
   helper :user_mailer
 
-  default_url_options[:host] = Admin::Setting.host_and_port_by_initial_settings_default
-  default_url_options[:protocol] = Admin::Setting.protocol_by_initial_settings_default
+  default_url_options[:host] = SkipEmbedded::InitialSettings['host_and_port']
+  default_url_options[:protocol] = SkipEmbedded::InitialSettings['protocol']
 
 private
   def self.base64(text, charset="iso-2022-jp", convert=true)

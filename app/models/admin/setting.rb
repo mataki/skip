@@ -222,14 +222,6 @@ class Admin::Setting < ActiveRecord::Base
     end
   end
 
-  def self.host_and_port_by_initial_settings_default
-    SkipEmbedded::InitialSettings['host_and_port'] || self.host_and_port
-  end
-
-  def self.protocol_by_initial_settings_default
-    SkipEmbedded::InitialSettings['protocol'] || self.protocol
-  end
-
   def self.password_strength_regex
     lower = 'a-z'
     lower_negative_lookahead = "(?!^[^#{lower}]*$)"

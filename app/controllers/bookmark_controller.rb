@@ -92,28 +92,17 @@ class BookmarkController < ApplicationController
     render :text => _('URL format invalid.'), :status => :bad_request
   end
 
-  # tab_menu
   def show
     uri = params[:uri] ? Bookmark.unescaped_url(params[:uri]) : ""
-    unless @bookmark = Bookmark.find_by_url(uri, :include => :bookmark_comments )
+    unless @bookmark = Bookmark.find_by_url(uri, :include => :bookmark_comments)
       flash[:warn] = _("URL not bookmarked by anyone.")
       redirect_to :controller => 'mypage', :action => 'index'
-      return
+    else
+      @main_menu = _('Bookmarks')
+      @tags = BookmarkComment.get_tagcloud_tags @bookmark.url
     end
-
-    @main_menu = _('Bookmarks')
-    @title = _("Bookmark[%{title}]") % {:title => @bookmark.title}
-
-    # TODO: SQLを発行しなくても判断できるのでrubyで処理する様に
-    comment =  BookmarkComment.find(:first,
-                                    :conditions => ["bookmark_id = ? and user_id = ?", @bookmark.id, session[:user_id]])
-
-    @tags = BookmarkComment.get_tagcloud_tags @bookmark.url
-
-    @create_button_show =  comment ? false : true
   end
 
-  # ブックマークコメントの削除
   def destroy
     comment = BookmarkComment.find(params[:comment_id])
 
@@ -138,9 +127,6 @@ class BookmarkController < ApplicationController
       :category => params[:category],
       :type => params[:type]
     }
-
-    #タグ検索用
-    @tags = BookmarkComment.get_tags @user.id
 
     #結果表示用
     conditions = BookmarkComment.make_conditions_for_comment(current_user.id, find_params)
@@ -169,15 +155,6 @@ class BookmarkController < ApplicationController
     bookmark_comment.update_attribute(:stared, params[:stared])
     render :partial => "bookmark/stared", :locals => {:bookmark_comment => bookmark_comment}
   end
-
-  def bookmark_count
-    @bookmark = Bookmark.find(:all,
-                              :select => "bookmark_comments_count",
-                              :conditions => ["url = ?", params[:uri]])
-    count = @bookmark[0] ? @bookmark[0].bookmark_comments_count : 0
-    render :text => count.to_s
-  end
-
 
 private
   def check_params

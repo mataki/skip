@@ -35,17 +35,7 @@
   </div><!-- box_space -->
   <% end %>
 
-  <div class="box_space">
-    <div class="box_space_title"><%= icon_tag 'tag_blue' -%><%= _('Tags')%></div>
-    <div class="box_space_body">
-    <% for category in @categories %>
-      <%= %(<b><span id="selected_tag">) if params[:category] == category -%>
-      <a href="#" class="search_by_tag"><%=h "[#{category}]" %></a><br/>
-      <%= %(</span></b>) if params[:category] == category -%>
-    <% end %>
-    </div>
-    <div style="font-size:10px;text-align:right;"><a href="#" id="search_cancel"><%=_("[Cancel selection]")%></a></div>
-  </div><!-- box_space -->
+  <%= render :partial => 'tag_cloud_box' %>
 
 <% end -%>
 

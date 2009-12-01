@@ -82,13 +82,6 @@ class Group < ActiveRecord::Base
 
   named_scope :order_recent, proc { { :order => 'groups.created_on DESC' } }
 
-  named_scope :order_name, proc { { :order => 'groups.name' } }
-
-  named_scope :order_by_type, proc { |type|
-    type ||= 'date'
-    (type == 'name' ? order_name : order_recent).proxy_options
-  }
-
   named_scope :limit, proc { |num| { :limit => num } }
 
   alias initialize_old initialize
@@ -127,20 +120,6 @@ class Group < ActiveRecord::Base
     return 'id:' + id.to_s + ', name:' + name.to_s
   end
 
-  def create_entry_invite_group user_id, user_symbol, publication_symbols
-    entry_params = { }
-    entry_params[:title] =_("Invited to Group: %s") % self.name
-    entry_params[:message] = _("You have been invited to join [%s>].") % self.symbol
-    entry_params[:aim_type] = 'notice'
-    entry_params[:user_id] = user_id
-    entry_params[:user_symbol] = user_symbol
-    entry_params[:entry_type] = BoardEntry::GROUP_BBS
-    entry_params[:owner_symbol] = self.symbol
-    entry_params[:publication_type] = 'protected'
-    entry_params[:publication_symbols] = publication_symbols
-    BoardEntry.create_entry entry_params
-  end
-
   def self.has_waiting_for_approval owner
     Group.active.owned(owner) & Group.active.has_waiting_for_approval
   end
@@ -168,16 +147,10 @@ class Group < ActiveRecord::Base
     ShareFile.destroy_all(["owner_symbol = ?", self.symbol])
   end
 
-  # TODO named_scope化する
-  def self.count_by_category user = nil
-    categories = GroupCategory.with_groups_count(user)
-    group_counts = Hash.new(0)
-    total_count = 0
-    categories.each do |category|
-      group_counts[category.id] = category.count.to_i
-      total_count += category.count.to_i
+  def after_save
+    if protected_was == true and protected == false
+      self.group_participations.waiting.each{ |p| p.update_attributes(:waiting => false)}
     end
-    [group_counts, total_count]
   end
 
   def administrator?(user)
@@ -187,5 +160,63 @@ class Group < ActiveRecord::Base
   def self.synchronize_groups ago = nil
     conditions = ago ? ['updated_on >= ?', Time.now.ago(ago.to_i.minute)] : []
     Group.scoped(:conditions => conditions).all.map { |g| [g.gid, g.gid, g.name, User.joined(g).map { |u| u.openid_identifier }, !!g.deleted_at] }
+  end
+
+  # TODO 回帰テスト書きたい
+  def join user_or_users, options = {}
+    Group.transaction do
+      [user_or_users].flatten.each do |target_user|
+        if self.group_participations.find_by_user_id target_user.id
+          self.errors.add_to_base _("%s has already joined / applied to join this group.") % target_user.name
+          if block_given?
+            yield false, []
+            return
+          else
+            return false
+          end
+        end
+      end
+      participations = []
+      [user_or_users].flatten.each do |target_user|
+        participation = self.group_participations.create!(:user => target_user, :waiting => (!options[:force] &&self.protected?))
+        target_user.notices.create!(:target => self) unless target_user.notices.find_by_target_id(self.id)
+        participations << participation
+      end
+      if block_given?
+        yield true, participations
+      else
+        true
+      end
+    end
+  rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => e
+    self.errors.add_to_base _('Joined the group failed.')
+    false
+  end
+
+  # TODO 回帰テスト書きたい
+  def leave user
+    Group.transaction do
+      if participation = self.group_participations.find_by_user_id(user.id)
+        participation.destroy
+        if notice = user.notices.find_by_target_id(self.id)
+          notice.destroy
+        end
+        if block_given?
+          yield true
+        else
+          true
+        end
+      else
+        if block_given?
+          yield false
+        else
+          false
+        end
+      end
+    end
+  end
+
+  def to_param
+    gid
   end
 end

@@ -30,99 +30,30 @@ describe PlatformController, "#login(パスワードでのログイン)" do
   end
   describe "認証に成功する場合" do
     before do
-      request.env['HTTP_REFERER'] = @back = "http://test.host/previous/page"
       User.should_receive(:auth).with(@code, @password, anything()).and_return(@user)
       controller.stub!(:handle_remember_cookie!)
     end
-    describe 'ロックされている場合' do
-      before do
-        @user.should_receive(:locked?).and_return(true)
-      end
-      it '前のページにリダイレクトされること' do
-        login
-        response.should redirect_to(:back)
-      end
-      it 'エラーメッセージが設定されること' do
-        login
-        flash[:error].should_not be_nil
-      end
-      it 'ログインに失敗した旨のログ出力が行われること' do
-        @user.should_receive(:to_s_log).with('[Login failed with password]')
-        login
-      end
+    it "ルートに戻ること" do
+      login
+      response.should redirect_to root_url
     end
-    describe 'ロックされていない場合' do
-      before do
-        @user.should_receive(:locked?).and_return(false)
-      end
-      describe 'パスワードの有効期限切れの場合' do
-        before do
-          @user.should_receive(:within_time_limit_of_password?).and_return(false)
-        end
-        it '前のページにリダイレクトされること' do
-          login
-          response.should redirect_to(:back)
-        end
-        it 'エラーメッセージが設定されること' do
-          login
-          flash[:error].should_not be_nil
-        end
-        it 'ログインに失敗した旨のログ出力が行われること' do
-          @user.should_receive(:to_s_log).with('[Login failed with password]')
-          login
-        end
-      end
-      describe 'パスワードが有効期限内の場合' do
-        before do
-          @user.should_receive(:within_time_limit_of_password?).and_return(true)
-        end
-        it 'root_urlにリダイレクトされること' do
-          login
-          response.should redirect_to(root_url)
-        end
-        it 'current_userが設定されること' do
-          login
-          controller.send(:current_user).should == @user
-        end
-        it "session[:request_token]の値が保持されていること" do
-          login
-          session[:request_token].should == "request_token"
-        end
-        it 'ログインに成功した旨のログ出力が行われること' do
-          @user.should_receive(:to_s_log).with('[Login successful with password]')
-          login
-        end
-        describe '「次回から自動的にログイン」にチェックがついている場合' do
-          it 'handle_remember_cookie!(true)が呼ばれること' do
-            controller.should_receive(:handle_remember_cookie!).with(true)
-            login(true)
-          end
-        end
-        describe '「次回から自動的にログイン」にチェックがついていない場合' do
-          it 'handle_remember_cookie!(false)が呼ばれること' do
-            controller.should_receive(:handle_remember_cookie!).with(false)
-            login
-          end
-        end
-      end
+    it "ユーザがセッションに保存されていること" do
+      login
+      assigns[:current_user].should == @user
     end
   end
   describe "認証に失敗した場合" do
     before do
       request.env['HTTP_REFERER'] = @back = "http://test.host/previous/page"
-      User.should_receive(:auth).and_return(nil)
+      User.should_receive(:auth).and_return("Error message")
     end
-    it '前のページにリダイレクトされること' do
+    it "エラーメッセージがflashに登録されていること" do
       login
-      response.should redirect_to(:back)
+      flash[:error].should == "Error message"
     end
-    it 'エラーメッセージが設定されること' do
+    it "リファラーに戻ること" do
       login
-      flash[:error].should_not be_nil
-    end
-    it 'ログインに失敗した旨のログ出力が行われること' do
-      User.should_receive(:to_s_log).with('[Login failed with password]', @code)
-      login
+      response.should redirect_to @back
     end
   end
   def login login_save = false
@@ -247,8 +178,8 @@ describe PlatformController, "#logout" do
   end
   describe "固定OP利用RPモードの場合" do
     before do
-      SkipEmbedded::InitialSettings.stub!("[]").with('login_mode').and_return("rp")
-      SkipEmbedded::InitialSettings.stub!("[]").with('fixed_op_url').and_return('http://skipop.url/')
+      SkipEmbedded::InitialSettings['login_mode'] = "rp"
+      SkipEmbedded::InitialSettings['fixed_op_url'] = 'http://skipop.url/'
     end
     it 'セッションとクッキーがクリアされること' do
       controller.should_receive(:logout_killing_session!)
@@ -261,7 +192,7 @@ describe PlatformController, "#logout" do
   end
   describe "その他のモードの場合" do
     before do
-      SkipEmbedded::InitialSettings.stub!("[]").with('login_mode').and_return('password')
+      SkipEmbedded::InitialSettings['login_mode'] = "password"
     end
     describe "通常のログアウト" do
       before do
@@ -610,8 +541,8 @@ describe PlatformController, "#create_user_from" do
 
   describe "専用OPモードの場合" do
     before do
-      SkipEmbedded::InitialSettings.stub!("[]").with('login_mode').and_return('rp')
-      SkipEmbedded::InitialSettings.stub!("[]").with('fixed_op_url').and_return('http://skipop.url/')
+      SkipEmbedded::InitialSettings['login_mode'] = "rp"
+      SkipEmbedded::InitialSettings['fixed_op_url'] = "http://skipop.url/"
     end
     describe "identity_urlが適切な場合" do
       before do
@@ -652,8 +583,8 @@ describe PlatformController, "#create_user_from" do
   end
   describe "フリーOPモードの場合" do
     before do
-      SkipEmbedded::InitialSettings.stub!("[]").with('login_mode').and_return('rp')
-      SkipEmbedded::InitialSettings.stub!("[]").with('fixed_op_url').and_return(nil)
+      SkipEmbedded::InitialSettings['login_mode'] = "rp"
+      SkipEmbedded::InitialSettings['fixed_op_url'] = nil
 
       @session = {}
       @session.stub!(:[]=).with(:identity_url, @identity_url)
@@ -673,7 +604,7 @@ describe PlatformController, "#create_user_from" do
   end
   describe "OP専用モードでない場合" do
     before do
-      SkipEmbedded::InitialSettings.stub!("[]").with('login_mode').and_return('password')
+      SkipEmbedded::InitialSettings['login_mode'] = "password"
     end
     it "ログイン画面に遷移して、エラーメッセージを表示すること" do
       controller.should_receive(:set_error_message_not_create_new_user_and_redirect)
@@ -693,11 +624,11 @@ describe PlatformController, "#create_user_params" do
       "http://axschema.org/namePerson" => ["ほげ ふが"],
       "http://axschema.org/contact/email" => ["hoge@hoge.host"]
     }
-    SkipEmbedded::InitialSettings.stub!("[]").with('ax_fetchrequest').and_return({
+    SkipEmbedded::InitialSettings['ax_fetchrequest'] = {
       :name => "http://axschema.org/namePerson",
       :email => "http://axschema.org/contact/email",
       :code => "http://axschema.org/namePerson/friendly"
-    })
+    }
   end
   it "正しく整形されたもんが返却されること" do
     controller.send(:create_user_params, @registration).should == {:email=>"hoge@hoge.host", :name=>"ほげ ふが", :code=>"opuser"}

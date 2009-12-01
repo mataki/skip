@@ -20,8 +20,8 @@ require File.expand_path(File.dirname(__FILE__) + "/symbol")
 
 class BatchBase
   include ActionController::UrlWriter
-  default_url_options[:host] = Admin::Setting.host_and_port_by_initial_settings_default
-  default_url_options[:protocol] = Admin::Setting.protocol_by_initial_settings_default
+  default_url_options[:host] = SkipEmbedded::InitialSettings['host_and_port']
+  default_url_options[:protocol] = SkipEmbedded::InitialSettings['protocol']
 
   @@logger = Logger.new(SkipEmbedded::InitialSettings['batch_log_path'])
 

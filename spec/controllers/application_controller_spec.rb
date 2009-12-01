@@ -18,8 +18,8 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe ApplicationController, "#sso" do
   describe "固定OP利用設定の場合" do
     before do
-      SkipEmbedded::InitialSettings.stub!("[]").with('login_mode').and_return("rp")
-      SkipEmbedded::InitialSettings.stub!("[]").with('fixed_op_url').and_return('http://localhost.com/')
+      SkipEmbedded::InitialSettings['login_mode'] = 'rp'
+      SkipEmbedded::InitialSettings['fixed_op_url'] = 'http://localhost.com/'
     end
     describe "未ログイン時" do
       before do

@@ -34,7 +34,7 @@ class UserController < ApplicationController
       options[:category] = params[:category]
       options[:keyword] = params[:keyword]
 
-      find_params = BoardEntry.make_conditions(login_user_symbols, options)
+      find_params = BoardEntry.make_conditions(current_user.belong_symbols, options)
 
       unless (@year = ERB::Util.html_escape(params[:year])).blank? or (@month = ERB::Util.html_escape(params[:month])).blank?
         find_params[:conditions][0] << " and YEAR(date) = ? and MONTH(date) = ?"
@@ -57,17 +57,20 @@ class UserController < ApplicationController
         end
         options[:id] = entry_id
       end
-      find_params = BoardEntry.make_conditions(login_user_symbols, options)
+      find_params = BoardEntry.make_conditions(current_user.belong_symbols, options)
       @entry = BoardEntry.scoped(
          :conditions => find_params[:conditions],
          :include => find_params[:include] | [ :user, :board_entry_comments, :state ]
       ).order_new.first
       if @entry
-        @checked_on = @entry.accessed(current_user.id).checked_on
-        @prev_entry, @next_entry = @entry.get_around_entry(login_user_symbols)
-        @editable = @entry.editable?(login_user_symbols, session[:user_id], session[:user_symbol], login_user_groups)
-        @tb_entries = @entry.trackback_entries(current_user.id, login_user_symbols)
-        @to_tb_entries = @entry.to_trackback_entries(current_user.id, login_user_symbols)
+        @checked_on = if reading = @entry.user_readings.find_by_user_id(current_user.id)
+                        reading.checked_on
+                      end
+        @entry.accessed(current_user.id)
+        @prev_entry, @next_entry = @entry.get_around_entry(current_user.belong_symbols)
+        @editable = @entry.editable?(current_user.belong_symbols, session[:user_id], session[:user_symbol], current_user.group_symbols)
+        @tb_entries = @entry.trackback_entries(current_user.id, current_user.belong_symbols)
+        @to_tb_entries = @entry.to_trackback_entries(current_user.id, current_user.belong_symbols)
         @title += " - " + @entry.title
 
         @entry_accesses =  EntryAccess.find_by_entry_id @entry.id
@@ -101,12 +104,10 @@ class UserController < ApplicationController
 
   # tab_menu
   def group
-    @group_counts, @total_count = Group.count_by_category(@user)
     @group_categories = GroupCategory.all
 
     @groups = @user.groups.active.partial_match_name_or_description(params[:keyword]).
-      categorized(params[:group_category_id]).order_by_type(params[:sort_type]).
-      paginate(:page => params[:page], :per_page => 50)
+      categorized(params[:group_category_id]).order_recent.paginate(:page => params[:page], :per_page => 50)
 
     flash.now[:notice] = _('No matching groups found.') if @groups.empty?
   end
@@ -127,9 +128,7 @@ private
   end
 
   def setup_blog_left_box options
-    find_params = BoardEntry.make_conditions(login_user_symbols, options)
-    # カテゴリ
-    @categories = BoardEntry.get_category_words(find_params)
+    find_params = BoardEntry.make_conditions(current_user.belong_symbols, options)
 
     # 月毎のアーカイブ
     @month_archives = BoardEntry.find(:all,
@@ -153,13 +152,17 @@ private
     against_chains = Chain.find(:all, :conditions =>[left_key + " in (?) and " + right_key + " = ?", user_ids, @user.id]) if user_ids.size > 0
     against_chains ||= []
     messages = against_chains.inject({}) {|result, chain| result ||= {}; result[chain.send(left_key)] = chain.comment; result }
+    tags = against_chains.inject({}) {|result, chain| result ||= {}; result[chain.send(left_key)] = chain.tags_as_s; result }
 
     @result = []
     @chains.each do |chain|
-      @result << { :from_user => chain.from_user,
+      @result << {
+        :from_user => chain.from_user,
         :from_message => chain.comment,
+        :from_tags_as_s => chain.tags_as_s,
         :to_user => chain.to_user,
-        :counter_message => messages[chain.send(right_key)] || ""
+        :counter_message => messages[chain.send(right_key)] || "",
+        :to_tags_as_s => tags[chain.send(right_key)] || ""
       }
     end
 

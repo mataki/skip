@@ -83,16 +83,16 @@ describe PortalController, 'POST /apply' do
     UserMailer::Smtp.stub!(:deliver_sent_signup_confirm)
     @user.stub!(:activate!)
     @user.stub!(:within_time_limit_of_activation_token?)
-    SkipEmbedded::InitialSettings.stub!("[]").with('username_use_setting').and_return(false)
-    SkipEmbedded::InitialSettings.stub!("[]").with('user_code_format_regex').and_return("/a/")
-    SkipEmbedded::InitialSettings.stub!("[]").with('login_mode').and_return("password")
-    SkipEmbedded::InitialSettings.stub!("[]").with('sha1_digest_key').and_return("digest_key")
+    SkipEmbedded::InitialSettings['username_use_setting'] = false
+    SkipEmbedded::InitialSettings['user_code_format_regex'] = '/a/'
+    SkipEmbedded::InitialSettings['login_mode'] = 'password'
+    SkipEmbedded::InitialSettings['sha1_digest_key'] = 'digest_key'
   end
 
   describe '正常に終了する場合' do
     describe 'ユーザ名利用設定がoffの場合' do
       before do
-        SkipEmbedded::InitialSettings.stub!("[]").with('username_use_setting').and_return(false)
+        SkipEmbedded::InitialSettings['username_use_setting'] = false
       end
       it 'UserUidが保存されないこと' do
         @user_uid = stub_model(UserUid)
@@ -117,7 +117,7 @@ describe PortalController, 'POST /apply' do
     end
     describe 'ユーザ名利用設定がonの場合' do
       before do
-        SkipEmbedded::InitialSettings.stub!("[]").with('username_use_setting').and_return(true)
+        SkipEmbedded::InitialSettings['username_use_setting'] = true
       end
       it 'UserUidが保存されること' do
         @user_uid = stub_model(UserUid)
@@ -192,11 +192,11 @@ describe PortalController, 'POST /apply' do
     before do
       @user.stub!(:save!).and_raise(mock_record_invalid)
       controller.stub!(:current_user).and_return(@user)
-      SkipEmbedded::InitialSettings.stub!("[]").with('user_code_format_regex').and_return("/a/")
+      SkipEmbedded::InitialSettings['user_code_format_regex'] = '/a/'
     end
     describe 'ユーザ名利用設定がoffの場合' do
       before do
-        SkipEmbedded::InitialSettings.stub!("[]").with('username_use_setting').and_return(false)
+        SkipEmbedded::InitialSettings['username_use_setting'] = false
       end
       it '登録ページに遷移すること' do
         post_apply
@@ -222,7 +222,7 @@ describe PortalController, 'POST /apply' do
     end
     describe 'ユーザ名利用設定がonの場合' do
       before do
-        SkipEmbedded::InitialSettings.stub!("[]").with('username_use_setting').and_return(true)
+        SkipEmbedded::InitialSettings['username_use_setting'] = true
       end
       it '登録ページに遷移すること' do
         post_apply
@@ -254,8 +254,8 @@ end
 
 describe PortalController, "#registration" do
   before do
-    SkipEmbedded::InitialSettings.stub!("[]").with('login_mode').and_return('rp')
-    SkipEmbedded::InitialSettings.stub!("[]").with('fixed_op_url').and_return(nil)
+    SkipEmbedded::InitialSettings['login_mode'] = 'rp'
+    SkipEmbedded::InitialSettings['fixed_op_url'] = nil
   end
   describe "session[:identity_url]が空の場合" do
     before do

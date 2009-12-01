@@ -91,7 +91,12 @@ module ApplicationHelper
     output_text << icon_tag('user_suit') if options[:image_on]
     output_text << title = h(user.name)
 
-    link_to output_text, {:controller => 'user', :action => 'show', :uid => user.uid}, {:title => title}
+    link = link_to(output_text, {:controller => 'user', :action => 'show', :uid => user.uid}, {:title => title})
+    if options[:with_prefix]
+      "by #{link}"
+    else
+      link
+    end
   end
 
   def user_link_to_with_portrait user, options = {}
@@ -125,18 +130,11 @@ module ApplicationHelper
   end
 
   def show_picture(user, options = {})
-    options = {:border => '0', :name => 'picture', :alt => h(user.name), :popup => false, :fit_image => true}.merge(options)
+    options = {:border => '0', :name => 'picture', :alt => h(user.name), :fit_image => true}.merge(options)
     options.merge!(:class => 'fit_image') if options.delete(:fit_image)
-    if user.retired?
-      file_name = 'retired.png'
-    elsif picture = user.picture
+    if picture = user.picture
       unless picture.new_record?
         file_name = url_for(:controller => '/pictures', :action => 'picture', :id => picture.id, :format => :png)
-        if options.delete(:popup)
-          pop_name = url_for(:controller => '/pictures', :action => 'picture', :id => picture.id.to_s)
-          options[:title] = _("Click to see in original size.")
-          return link_to(image_tag(file_name, options), file_name, :class => 'nyroModal zoomable')
-        end
       else
         file_name = 'default_picture.png'
       end
@@ -201,9 +199,7 @@ module ApplicationHelper
   end
 
   def sanitize_style_with_whitelist(content)
-    allowed_tags = HTML::WhiteListSanitizer.allowed_tags.dup << "table" << "tbody" << "tr" << "th" << "td" << "caption" << "strike" << "u"
-    allowed_attributes = HTML::WhiteListSanitizer.allowed_attributes.dup << "style" << "cellspacing" << "cellpadding" << "border" << "align" << "summary" << "target"
-    sanitize(content, :tags => allowed_tags, :attributes => allowed_attributes)
+    Sanitize.clean(content || '', Sanitize::Config::SKIP)
   end
 
   def translate_publication_type(entry)
@@ -211,26 +207,27 @@ module ApplicationHelper
     when 'public'
       _("Open to All")
     when 'protected'
-      _("Specified Directly:")
+      _("Specify Directly")
     when 'private'
       entry.diary? ? _("Owner Only") : _("Members Only")
    end
   end
 
-  def get_publication_type_icon(entry)
+  # TODO Publicationクラス辺りに移したい
+  def get_publication_type_icon(entry_or_share_file)
     icon_name = ''
     view_name = ""
-    case entry.publication_type
+    case entry_or_share_file.publication_type
     when 'public'
       icon_name = 'page_red'
       view_name = _("Open to All")
     when 'protected'
-      visibility, visibility_color = entry.visibility
+      visibility, visibility_color = entry_or_share_file.visibility
       icon_name = 'page_link'
-      view_name = _("Specified Directly:") + visibility
+      view_name = _("Specify Directly") + visibility
     when 'private'
-      icon_name = 'page_key'
-      view_name = entry.diary? ? _("Owner Only") : _("Members Only")
+      icon_name = entry_or_share_file.owner_is_user? ? 'pencil' : 'page_key'
+      view_name = entry_or_share_file.owner_is_user? ? _("Owner Only") : _("Members Only")
    end
     icon_tag(icon_name, :title => view_name)
   end
@@ -378,13 +375,15 @@ private
     return text
   end
 
-  def link_to_bookmark_url(bookmark, title = nil)
-    title ||= bookmark.title
+  def link_to_bookmark_url(bookmark, options = {})
+    title = options[:title] || bookmark.title
 
     if bookmark.is_type_page?
-      link_to "#{icon_tag('report_link')} #{h title}", "#{relative_url_root}#{bookmark.escaped_url}", :title => title
+      prefix = options[:without_icon] ? "" : icon_tag('user')
+      link_to("#{prefix} #{h title}", "#{relative_url_root}#{bookmark.escaped_url}", :title => title)
     else
-      link_to "#{icon_tag('world_link')} #{h truncate(title, :length => 115)}", bookmark.escaped_url, :title => title, :target => "_blank"
+      prefix = options[:without_icon] ? "" : icon_tag('world')
+      link_to "#{prefix} #{h truncate(title, :length => 115)}", bookmark.escaped_url, :title => title, :target => "_blank"
     end
   end
 
@@ -398,18 +397,5 @@ private
       output << ">#{choice.first}</option>"
      end
    return  output << "</select>"
-  end
-
-  # javascriptで長いタグを収納する application.jsを読み込む必要あり
-  # visible_size で 初期表示のタグの個数を指定できる。
-  def hide_long_tags(categories, visible_size = 1)
-    output = "<span>#{categories.slice!(0..visible_size-1)}"
-    if categories.size > 0
-      output << "<a href='#' class='tag_open'>#{icon_tag 'bullet_toggle_plus'}</a>"
-      output << "<span style='display: none;'>#{categories}"
-      output << "<a href='#' class='tag_close'>#{icon_tag 'bullet_toggle_minus'}</a>"
-      output << "</span>"
-    end
-    output << "</span>"
   end
 end

@@ -49,8 +49,24 @@ b.retired
 b.caution
   :color red
 
+a.tag
+  :font-size = !small_font_size
+  :color #8080FF
+  &:visited
+    :color #8080FF
+
+span.tag
+  :background #6665cb
+  :color #fff
+
 .clear_left
   :clear left
+
+.clear_right
+  :clear right
+
+.clear_both
+  :clear both
 
 .margin05em
   :margin 0.5em
@@ -64,11 +80,39 @@ b.caution
 select.select_navi
   :width 180px
 
+table
+  col.col10
+    :width 10px
+  col.col25
+    :width 25px
+  col.col50
+    :width 50px
+  col.col75
+    :width 75px
+  col.col100
+    :width 100px
+  col.col125
+    :width 125px
+  col.col140
+    :width 140px
+  col.col150
+    :width 150px
+  col.col160
+    :width 160px
+  col.col300
+    :width 300px
+  td, th
+    // tdに指定してもie6で有効にならない。
+    span.nowrap
+      :white-space nowrap
+
 // jquery.ui.tabsでタブ折り返し時にliがulをはみ出してしまう対策
 // ------------------------------------------------------------
 ul.ui-tabs-nav
   :height 100%
   +clearfix
+.ui-widget
+  :font-family inherit
 
 div#tabs
   .ui-tabs-panel
@@ -295,12 +339,14 @@ h2.topix_title
   :vertical-align bottom
   :margin-left 0
   :margin-bottom 5px
+
 div.topix_body
-  :margin 0px 5px 10px 5px
+  :margin-bottom 15px
+  :width 100%
   .topix_line
     :border-bottom = !base_dotted_border
     :margin 3px 0 1px 0
-    :height 16px
+    :height 20px
     :position relative
     .title
       :width 80%
@@ -335,10 +381,6 @@ div.topix_body
     :float left
     :text-overflow ellipsis
     :_width 80%
-    span.ss_sprite
-      :vertical-align bottom
-    .small
-      :font-size 80%
   .page_from
     :float left
     :white-space nowrap
@@ -364,14 +406,14 @@ div.topix_body
     :overflow hidden
     :text-overflow ellipsis
     :width 50%
-  a
-    :color #0080DD
   // リスト表示中の記事へのリンク
-  a.entry
+  a
     +default_link
     &:visited
       +link_visited_text
-  // リスト表示中のタグへのリンク
+  .pagination a
+    +default_link
+  // DRYじゃないが、マイページでタブモードにするとui-widget-content aのほうが強くなってしまうのでさらに上書き
   a.tag
     :font-size = !small_font_size
     :color #8080FF
@@ -380,17 +422,17 @@ div.topix_body
 
 // タグクラウド
 // ------------------------------------------------------------
-.tag1
+a.tag1, span.tag1
   :font-size = !base_font_size
-.tag2
+a.tag2, span.tag2
   :font-size = !base_font_size + 3px
-.tag3
+a.tag3, span.tag3
   :font-size = !base_font_size + 6px
-.tag4
+a.tag4, span.tag4
   :font-size = !base_font_size + 9px
-.tag5
+a.tag5, span.tag5
   :font-size = !base_font_size + 12px
-.tag6
+a.tag6, span.tag6
   :font-size = !base_font_size + 15px
 .tag_cloud
   .count
@@ -403,6 +445,7 @@ div.search_cond_space
   :border = !base_dashed_border
   :padding 5px
   :_width 100%
+  :margin-bottom 10px
   div.title
     :background-color #f0f0ff
     :padding 4px
@@ -551,10 +594,6 @@ table.user_chain
     img
       :width 48px
       :height 48px
-  td.tags
-    :font
-      :weight bold
-    :color green
 
 // ============================================================
 // 2. 共通の構造
@@ -620,17 +659,14 @@ div#tab_menu
 // ログイン
 // ------------------------------------------------------------
 div#platform_main_wrapper
-  :_text-align center
   div#platform_main
-    :margin 0 auto
-    :position relative
-    :width 940px
-    div.col_left
-      :float left
-      :width 536px
-    div.col_right
-      :float right
-      :width 396px
+    &.without_keyphrase
+      :width 460px
+    &.with_keyphrase
+      :width 620px
+    :float right
+    div.col
+      :margin-bottom 10px
       div.login-box
         :padding 4px
         :background-color #f2f2ff
@@ -648,15 +684,19 @@ div#platform_main_wrapper
       :padding 3px
       :background-color #f2f2ff
       :overflow auto
-      :height 300px
-  div#platform_main.require_login
+      :height 250px
+div#platform_main_wrapper.require_login
+  :_text-align center
+  :margin 0 auto
+  div#platform_main
+    :float none
+    :margin 0 auto
     :background #fafafa
-    :border-bottom = !base_border
     :padding 10px
     div#require_login_wrapper
       :width 100%
       :border = !base_border
-      :padding 1px
+      :padding 10px
       :background #fff
       :text-align left
       h2
@@ -666,28 +706,33 @@ div#platform_main_wrapper
         :background #eeffee
         :border 1px dashed #ffc000
         :margin 10px 0
+        :padding 5px
 div#require_login_container_wrapper
   :width 100%
   :_text-align center
   div#require_login_container
     :border = !base_border
-    :width 600px
     :padding 2px
     :background #f0f0ff
     :margin 0 auto 10px auto
 div#login_container
   :position absolute
   :right 10px
-  :top 25px
-  :width 460px
-  :background #F2F2FF
-  :padding 4px
+  :top 22px
+  :background #e0e0ff
+  :padding 4px 0
+  &.without_keyphrase
+    :width 460px
+  &.with_keyphrase
+    :width 620px
 div#login_container, div#require_login_container
   table
+    :font-size = !small_font_size
     :margin 0 auto
     tr
       :vertical-align top
     td
+      :vertical-align middle
       :border none
       :padding 0 0 0 12px
     td.input_field
@@ -696,12 +741,14 @@ div#login_container, div#require_login_container
         :border 1px solid #937999
     td.label_field
       :_width 182px
-      :text-align right
-      :vertical-align middle
+      :text-align left
       input
         :vertical-align middle
       label
         :vertical-align middle
+    td.submit
+      input
+        :font-size = !small_font_size
 #login_form
   #openid_url
     :background #FFFFFF url(/images/openid_login_bg.gif) no-repeat scroll 0pt 50%
@@ -764,25 +811,28 @@ div#questions_wrapper
   :border 1px solid #E0E0FF
   :margin 10px 0px
   :font-size 12px
+  :_width 100%
   h2
     :padding 3px 0
     :background-color #E0E0FF
     :font-size 14px
     :text-align center
-  .topix_line
-    :border none
   table
-    :width 98%
-    td.title
-      :padding 2px 5px
-      a.tag
-        :color #8080FF
-        :font-size = !small_font_size
-      span.supplement
-        :font-size 8px
-        :vertical-align bottom
-        :color #808080
+    :width 100%
 
+// マイページ > 新着通知(一覧)
+// ------------------------------------------------------------
+div#antenna_navi
+  :padding-right 3px
+  :margin-right 7px
+  :text-align right
+  :padding 0 0 12px 0
+  div.operation_left
+    :text-align left
+    :float left
+  div.operation_right
+    :overflow hidden
+    :float right
 
 // マイページ > ソーシャル
 // ------------------------------------------------------------
@@ -797,8 +847,9 @@ table.chain_table
     :text-align center
     :border = !base_border
   td
-    &.message div
+    &.message div.introduction
       :border = !base_border
+      :margin 10px 0px
       :overflow hidden
       :padding 5px
       :word-break break-all
@@ -815,8 +866,21 @@ ul.access_tracks
 
 // マイページ > アンテナボックス
 // ------------------------------------------------------------
-ul.notices.by_type
+ul.notices.by_typemanage_message
   :border-top = !base_border
+
+// 自分の管理
+table.manage_message
+  tr.even
+    :background-color #f8f8ff
+  tr.odd
+    :background-color #fff
+  th
+    :background-color #f0f0ff
+  th, td
+    :border = !base_border
+    :padding 1px 4px
+    :height 20px
 
 // ユーザ
 // ------------------------------------------------------------
@@ -916,17 +980,20 @@ table.group_box
       :text-align right
 
 table.group_list_box
-  :margin 5px 10px
-  :width 95%
-  :border-collapse collapse
+  :table-layout fixed
+  :margin 10px 0
+  :width 100%
   :border = !base_border
-  th
-    :text-align left
-    :background-color #f0f0ff
-    :padding-left 5px
-    :border = !base_border
-  td
-    :padding 0px 5px
+  tr
+    th, td
+      :border = !base_border
+    th
+      :text-align left
+      :background-color #f0f0ff
+    td.name
+      :overflow hidden
+    td.state
+      :overflow hidden
 
 // 記事
 // ------------------------------------------------------------
@@ -979,6 +1046,64 @@ div#hide_message
     li.history
       :display none
 
+// 一覧(記事、共有ファイル, ブックマーク)
+// ------------------------------------------------------------
+div.topix_entries_wrapper, div.topix_share_files_wrapper, div.topix_bookmarks_wrapper
+  :margin 10px 0
+  :color #555
+  h2.title
+    :border-top = !base_border
+    :padding 4px 0px 2px 7px
+    :background-color #f3f3ff
+    :background-image url(./../images/skip/gradient.png)
+    :font
+      :size 14px
+      :weight bold
+    :color #003399
+    :vertical-align bottom
+    :margin-left 0
+    :margin-bottom 5px
+  table.topix_entries, table.topix_share_files, table.topix_bookmarks
+    :table-layout fixed
+    :width 100%
+    tr
+      :border-bottom = !base_dotted_border
+      td
+        :padding 5px 0px 3px 0px
+        :border-bottom = !base_dotted_border
+      td.publication_state
+        :text-align center
+      td.owner
+        :text-align left
+        :overflow hidden
+      td.title
+        :text-align left
+      td.date
+        :text-align right
+        :font-size = !small_font_size
+      span.infos
+        :font-size 8px
+        :vertical-align bottom
+        :color #808080
+
+  table.topix_entries
+    tr
+      td.read_state
+        :text-align center
+      td.title
+        span.question_state
+          :color green
+          :font-size = !small_font_size
+
+  table.topix_bookmarks
+    tr
+      td.title
+        span.count
+          :background #ffe0e0
+          :font
+            :size = !small_font_size
+            :weight bold
+
 // ブックマーク
 // ------------------------------------------------------------
 // 一覧(全体)
@@ -992,10 +1117,6 @@ div.bookmark_line
     :font-size 10px
     :font-weight bold
     :background-color #ffe0e0
-  div.tags
-    :margin 3px 0 3px 15px
-    :font-size 10px
-    :color green
 
 // 一覧(ユーザ毎)
 div.bookmark_space
@@ -1021,8 +1142,7 @@ div.bookmark_space
   div.description
     :font-size 12px
     :text-align right
-    span.tags
-      :color blue
+    :height 16px
 
 // 新規,編集
 div.edit_form_space.bookmark.edit
@@ -1045,17 +1165,17 @@ div.edit_form_space.bookmark.edit
           :text-align center
 
 // 表示
-div.bookmark.show
-  :border-bottom = !base_border
-  :padding-bottom 5px
-  :margin-bottom 10px
-  :position relative
-  div.title
-    :font
-      :size 16px
-      :weight bold
-    :background-color #f0f0ff
-    :padding 2px
+table#bookmark_comments
+  :width 100%
+  tr
+    :border-bottom = !base_border
+    &.self
+      :background-color lightyellow
+    td.owner
+      :text-align left
+      :overflow hidden
+    td.date
+      :text-align right
 
 // 共有ファイル
 // ------------------------------------------------------------
@@ -1159,50 +1279,39 @@ h1#ranking_title
   :margin-left 5px
   :vertical-align middle
 
-table.ranking_square
-  :padding 0px 0px 0px 0px
+div.ranking_wrapper
   :margin 0 0 10px 0
-  :background-color #f0f0ff
-  :border #C6C7C6 1px solid
-  :font-size 12px
-  :table-layout auto
-  :width 600px
-  .title
-    :margin 1px
-    :padding 5px
+  table.ranking_square
+    :text-align left
+    :table-layout fixed
+    :width 100%
     :background-color #f0f0ff
-    :border #C6C7C6 1px solid
-    :font-size 14px
-    :font-weight bold
-    :color #77778C
-    :text-align center
-  table
-    :text-align left
-    :font-size 12px
-  tr
-    :background-color #ffffff
-  th
-    :padding 3px 0 3px 0
-    :font-size 12px
-    :background-color #f8f8ff
-    :text-align left
-
-    &.point
-      :text-align center
-  td.rank
-    :padding 3px
-    :width 15px
-    :font-size 12px
-    :text-align center
-  td.column_title
-    :padding 3px 0 3px 0
-    :font-size 12px
-    :width 100px
-  td.point
-    :padding 3px 0 3px 0
-    :font-size 12px
-    :text-align center
-    :width 100px
+    :border = !base_border
+    tr
+      :background-color #ffffff
+      th, td
+        :padding 3px
+      th
+        :font-size 12px
+        :background-color #f8f8ff
+        :text-align left
+        &.point
+          :text-align center
+      th.title
+        :padding 5px
+        :background-color #f0f0ff
+        :font-size 14px
+        :font-weight bold
+        :color #77778C
+        :text-align center
+      td.caption
+        :overflow hidden
+      td.rank
+        :text-align center
+      td.column_title
+        :overflow hidden
+      td.point
+        :text-align center
 
 div.ranking_menu
   :margin-bottom 20px
@@ -1371,9 +1480,9 @@ div#table_columns
 
 // ワンタイムURL確認ダイアログ
 div.onetime_url
-  :font
-    :weight bold
-    :size 16px
+  :border = !base_border
+  :margin-left 200px
+  :width 300px
   p
     :padding 10px
 

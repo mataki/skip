@@ -1,37 +1,56 @@
-<div class="bookmark show">
-  <% if @create_button_show %>
-  <div style="position: absolute; top: 5px; right: 10px;">
-    <% new_bookmark_url_hash = {:controller => "bookmark", :action => "new_without_bookmarklet", :url => @bookmark.url, :title => @bookmark.title} -%>
-    <%= link_to(icon_tag('tag_blue_add', :title => _('Add a comment')) + _('Add a comment!'), new_bookmark_url_hash, {:onclick => "sub_window_open('#{url_for(new_bookmark_url_hash)}', 'subwindow', 550, 400); return false;" }) %>
-  </div>
-  <% end %>
-  <div class="title"><%= link_to_bookmark_url @bookmark %></div>
-  <%= _('[Tags]')%>
-  <div style="margin: 5px 10px; background-color: #fff0f0; padding: 5px;">
-  <% tag_cloud @tags do |name, count, css_class| -%>
-    <%= link_to name, {:controller => "bookmarks", :action => "index", :tag_words => name}, :class => css_class -%>
-    <span style='color: silver; font-size: 10px;'>(<%= h count -%>)</span>
-  <% end -%>
-  </div>
-  <div style="overflow: hidden;"><%= _('[URL]&nbsp;')%><%= link_to_bookmark_url @bookmark, @bookmark.escaped_url %><br/>
-   <%= n_("[Registered user]&nbsp;%s", "[Registered users]&nbsp;%s", @bookmark.bookmark_comments_count) % h(@bookmark.bookmark_comments_count)%><span style="font-size: 10px;"><%= _('(Including private members)')%></span></div>
-</div>
-
-<% @bookmark.bookmark_comments.reverse! -%>
-<% @bookmark.bookmark_comments.each do |bookmark_comment| -%>
-  <% if bookmark_comment.user_id == @current_user.id || bookmark_comment.public == true -%>
-    <div class="comment_space" <%= " style='background-color: lightyellow;'" if bookmark_comment.user.id == @current_user.id %>>
-      <span style='font-size:10px;'><%= bookmark_comment.updated_on.strftime(_('%B %d %Y')) if bookmark_comment.updated_on %></span>
-      <span><%= user_link_to bookmark_comment.user, :image_on => true %></span>
-      <span style='font-size:10px; color: blue;'><%=h bookmark_comment.tags %></span>
-      <span><%=h bookmark_comment.comment %></span>
-      <% if bookmark_comment.user.id == @current_user.id -%>
-        <%= hidden_field_tag("authenticity_token", form_authenticity_token) %>
-        <%= icon_tag('key', :title => _('Private')) unless bookmark_comment.public %>
-        <% new_bookmark_url_hash = {:controller => "bookmark", :action => "new_without_bookmarklet", :url => @bookmark.url, :title => @bookmark.title} -%>
-        <%= link_to(icon_tag('tag_blue_edit', :title => _('Edit')), new_bookmark_url_hash, {:onclick => "sub_window_open('#{url_for(new_bookmark_url_hash)}', 'subwindow', 550, 400); return false;" }) %>
-        <%= link_to_function icon_tag('tag_blue_delete', :title => _('Delete')),"if (confirm('#{_('Are you sure to delete?')}')) { var f = document.createElement('form'); this.parentNode.appendChild(f); f.method = 'POST';f.action = '#{url_for(:controller =>'bookmark', :action =>'destroy', :uri => @bookmark.escaped_url, :comment_id => bookmark_comment.id)}'; var input = document.createElement('input'); input.type = 'hidden'; input.name = 'authenticity_token'; input.value = document.getElementById('authenticity_token').value; f.appendChild(input); f.submit();}",:href => url_for(:controller =>'bookmark', :action =>'destroy') %>
-      <% end -%>
+<% content_for :contents_left do -%>
+  <% if @bookmark.bookmark_comments.all?{|bc| bc.user_id != current_user.id } -%>
+    <div class="action_buttons ui-corner-all">
+      <ul class="no_style">
+        <li>
+          <% new_bookmark_url_hash = {:controller => "bookmark", :action => "new_without_bookmarklet", :url => @bookmark.url, :title => @bookmark.title} -%>
+          <%= link_to(content_tag(:span, _('Add a comment')), new_bookmark_url_hash, {:class => "rounded", :onclick => "sub_window_open('#{url_for(new_bookmark_url_hash)}', 'subwindow', 550, 400); return false;" }) %>
+        </li>
+      </ul>
     </div>
   <% end -%>
+  <% unless @tags.blank? -%>
+    <div class="box_space">
+      <div class="box_space_title"><%= icon_tag 'tag_blue' -%><%= _('Tags')%></div>
+      <div class="box_space_body tag_cloud">
+        <% tag_cloud @tags do |name, count, css_class| -%>
+          <%=
+             link_to_unless_current h(name), {:category => h(name), :sort_type => 'date'}, :class => "tag #{css_class}" do
+               content_tag :span, h(name), :class => "tag #{css_class}"
+             end
+             %>
+          <span class="count">(<%= h count %>)</span>
+        <% end -%>
+      </div>
+      <div class="box_space_bottom"></div>
+    </div><!-- box_space -->
+  <% end -%>
+<% end -%>
+<% content_for :contents_right do -%>
+  <table id="bookmark_comments">
+    <col class="col125" />
+    <col class="" />
+     <col class="col75" />
+    <% @bookmark.bookmark_comments.reverse.each do |bookmark_comment| -%>
+      <tr class="<%= (bookmark_comment.user_id == current_user.id) ? "self" : "" %>">
+        <% if bookmark_comment.user_id == @current_user.id || bookmark_comment.public == true -%>
+          <td class="owner"><%= user_link_to bookmark_comment.user, :image_on => true %></td>
+          <td>
+            <%= bookmark_comment_tag_search_links_tag bookmark_comment.tags %>
+            &nbsp;
+            <%=h bookmark_comment.comment %>
+            <% if bookmark_comment.user.id == @current_user.id -%>
+              &nbsp;
+              <%= hidden_field_tag("authenticity_token", form_authenticity_token) %>
+              <%= icon_tag('key', :title => _('Private')) unless bookmark_comment.public %>
+              <% new_bookmark_url_hash = {:controller => "bookmark", :action => "new_without_bookmarklet", :url => @bookmark.url, :title => @bookmark.title} -%>
+              <%= link_to(icon_tag('tag_blue_edit', :title => _('Edit')), new_bookmark_url_hash, {:onclick => "sub_window_open('#{url_for(new_bookmark_url_hash)}', 'subwindow', 550, 400); return false;" }) %>
+              <%= link_to_function icon_tag('tag_blue_delete', :title => _('Delete')),"if (confirm('#{_('Are you sure to delete?')}')) { var f = document.createElement('form'); this.parentNode.appendChild(f); f.method = 'POST';f.action = '#{url_for(:controller =>'bookmark', :action =>'destroy', :uri => @bookmark.escaped_url, :comment_id => bookmark_comment.id)}'; var input = document.createElement('input'); input.type = 'hidden'; input.name = 'authenticity_token'; input.value = document.getElementById('authenticity_token').value; f.appendChild(input); f.submit();}",:href => url_for(:controller =>'bookmark', :action =>'destroy') %>
+            <% end -%>
+          </td>
+          <td class="date"><%= bookmark_comment.updated_on.strftime(_('%B %d %Y')) if bookmark_comment.updated_on %></td>
+        <% end -%>
+      </tr>
+    <% end -%>
+  </table>
 <% end -%>

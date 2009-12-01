@@ -158,7 +158,7 @@ describe ApplicationHelper, '#link_to_bookmark_url' do
       @bookmark.url = '/page/99'
     end
     it '記事へのリンクとなること' do
-      helper.send(:link_to_bookmark_url, @bookmark).include?('report_link').should be_true
+      helper.send(:link_to_bookmark_url, @bookmark).include?('user').should be_true
       helper.send(:link_to_bookmark_url, @bookmark).should have_tag("a[href=/page/99]")
     end
     describe 'relative_url_rootが設定されている場合' do
@@ -178,7 +178,7 @@ describe ApplicationHelper, '#link_to_bookmark_url' do
       @bookmark.url = 'http://localhost'
     end
     it 'wwwへのリンクとなること' do
-      helper.send(:link_to_bookmark_url, @bookmark).include?('world_link').should be_true
+      helper.send(:link_to_bookmark_url, @bookmark).include?('world').should be_true
     end
   end
   describe 'titleが指定されている場合' do
@@ -186,7 +186,7 @@ describe ApplicationHelper, '#link_to_bookmark_url' do
       @bookmark.url = 'http://localhost'
     end
     it '指定されたタイトルになること' do
-      helper.send(:link_to_bookmark_url, @bookmark, 'skip_user_group').include?('skip_user_group').should be_true
+      helper.send(:link_to_bookmark_url, @bookmark, {:title => 'skip_user_group'}).include?('skip_user_group').should be_true
     end
   end
   describe 'titleが指定されていない場合' do

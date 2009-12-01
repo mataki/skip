@@ -157,7 +157,6 @@ class MoveAttachmentImage
       file_name = $4
       if replaced_text = replaced_text(matched_entry.symbol, file_name)
         entry.contents_will_change!
-        entry.category = entry.comma_category
         replaced_text
       end
     end
@@ -249,7 +248,6 @@ class MoveAttachmentImage
       return unless(image_attached_entry = image_attached_entry(image_file_name))
       image_attached_entry.contents.gsub!(/#{orign_file_name}/) do |matched|
         image_attached_entry.contents_will_change!
-        image_attached_entry.category = image_attached_entry.comma_category
         new_file_name
       end
       if image_attached_entry.changed? and !image_attached_entry.save

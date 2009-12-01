@@ -27,7 +27,7 @@ describe BookmarkComment do
 
   describe "#after_save" do
     it "保存するとき、タグが一緒に保存される" do
-      Tag.should_receive(:create_by_string)
+      Tag.should_receive(:create_by_comma_tags)
       # TODO 下のように初期値がないとMysqlのインサートエラーが起こる
       bc = BookmarkComment.new :public => true ,:bookmark_id => 1, :user_id => 1, :comment => ""
       bc.save
@@ -128,24 +128,4 @@ describe BookmarkComment do
   end
 
   # TODO .get_tagcloud_tags, .get_bookmark_tags, .get_tags
-
-  describe "#comma_tags" do
-    it "Tag.commma_tagを呼び出すこと" do
-      tags = "[hoge][fuga]"
-      bookmark_comment_tag = BookmarkComment.new :tags => tags
-      Tag.should_receive(:comma_tags).with(tags)
-      bookmark_comment_tag.comma_tags
-    end
-  end
-
-  # TODO .make_conditions_tag_or_comment
-
-  describe "#square_brackets_tags" do
-    it "Tag.square_brackets_tagsを呼び出すこと" do
-      tags = "hoge,fuga"
-      bookmark_comment_tag = BookmarkComment.new :tags => tags
-      Tag.should_receive(:square_brackets_tags).with(tags)
-      bookmark_comment_tag.send(:square_brackets_tags)
-    end
-  end
 end

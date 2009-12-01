@@ -1,8 +1,8 @@
 <div class="action_buttons ui-corner-all">
   <ul class="no_style">
-    <li><%= link_to(content_tag('span', _('Write a blog entry')) , {:controller => '/edit', :action => :index}, :title => _('Write a blog entry'), :class => 'rounded') %></li>
-    <li><%= link_to(content_tag('span', _('Write a notice')), {:controller => '/edit', :action => :index, :aim_type => 'notice'}, :title => _('Write a notice'), :class => 'rounded') %></li>
-    <li><%= link_to(content_tag('span', _('Write a question')), {:controller => '/edit', :action => :index, :aim_type => 'question'}, :title => _('Write a question'), :class => 'rounded') %></li>
+    <li><%= link_to(content_tag('span', _('Write a blog entry')) , {:controller => '/edit', :action => :index, :uid => current_user.uid}, :title => _('Write a blog entry'), :class => 'rounded') %></li>
+    <li><%= link_to(content_tag('span', _('Write a notice')), {:controller => '/edit', :action => :index, :aim_type => 'notice', :uid => current_user.uid}, :title => _('Write a notice'), :class => 'rounded') %></li>
+    <li><%= link_to(content_tag('span', _('Write a question')), {:controller => '/edit', :action => :index, :aim_type => 'question', :uid => current_user.uid}, :title => _('Write a question'), :class => 'rounded') %></li>
     <% new_share_file_url_hash = {:controller => '/share_file', :action => :new, :owner_symbol => h(current_user.symbol), :owner_name => h(current_user.name)} -%>
     <li><%= link_to(content_tag('span', _('Upload a file')), new_share_file_url_hash, :title => _('Upload a file'), :class => 'rounded', :onclick => "sub_window_open('#{url_for(new_share_file_url_hash)}', 'subwindow', 550, 400); return false;") %></li>
     <% new_bookmark_url_hash = {:controller => '/bookmark', :action => :new_url} -%>

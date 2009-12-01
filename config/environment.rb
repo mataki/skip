@@ -6,7 +6,7 @@ ENV['RAILS_ENV'] ||= 'production'
 
 RAILS_GEM_VERSION = '2.3.4' unless defined? RAILS_GEM_VERSION
 
-SKIP_VERSION = '1.3.0'
+SKIP_VERSION = '1.4.0'
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
@@ -56,6 +56,8 @@ Rails::Initializer.run do |config|
   config.gem 'mislav-will_paginate', :lib => 'will_paginate', :version=> '>=2.3.6', :source => 'http://gems.github.com/'
   config.gem "maedana-ar_mailer", :lib => 'action_mailer/ar_mailer', :source => 'http://gemcutter.org'
   config.gem "feed-normalizer"
+  config.gem "searchlogic"
+  config.gem "sanitize", :version => '>=1.2.0.dev.20091104'
 end
 
 # 共通メニュー

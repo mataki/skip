@@ -17,7 +17,7 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe UserMailer::Base, "#smtp_settings" do
   before(:all) do
-    SkipEmbedded::InitialSettings.stub!("[]").with('mail').and_return({'show_mail_function' => true})
+    SkipEmbedded::InitialSettings['mail'] = {'show_mail_function' => true}
     @before_method = ActionMailer::Base.delivery_method
     @before_errors = ActionMailer::Base.raise_delivery_errors
     ActionMailer::Base.delivery_method = :smtp_failover_activerecord
@@ -30,9 +30,7 @@ describe UserMailer::Base, "#smtp_settings" do
       :password => 'password',
       :authentication => :login
     }}
-    SkipEmbedded::InitialSettings.stub!("[]").with('mail').and_return(mail_settings)
-    SkipEmbedded::InitialSettings.stub!("[]").with('protocol').and_return('protocol')
-    SkipEmbedded::InitialSettings.stub!("[]").with('host_and_port').and_return('host_and_port')
+    SkipEmbedded::InitialSettings['mail'] = mail_settings
     @smtp = mock('smtp')
     @smtp.stub!(:sendmail)
     Net::SMTP.should_receive(:new).and_return(@smtp)

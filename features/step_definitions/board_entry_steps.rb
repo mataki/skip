@@ -19,7 +19,9 @@ end
 Given /^以下のブログを書く:$/ do |entries_table|
   @entries ||= []
   entries_table.hashes.each do |hash|
-    Given %!"#{hash[:user]||"a_user"}"でログインする!
+    uid = hash[:user] || 'a_user'
+    Given %!"#{uid}"がユーザ登録する!  unless User.find_by_uid(uid)
+    Given %!"#{uid}"でログインする!
     Given %!"ブログを書く"リンクをクリックする!
     Given %!"タイトル"に"#{hash[:title]||"blog_title"}"と入力する!
     Given %!"タグ"に"#{hash[:tag]}"と入力する!
@@ -37,7 +39,11 @@ Given /^以下のフォーラムを書く:$/ do |entries_table|
   @entries ||= []
   entries_table.hashes.each do |hash|
     Given %!"#{hash[:user]}"でログインする!
-    Given %!"#{hash[:user]}"で"#{hash[:group]}"というグループを作成する!
+    unless Group.find_by_gid(hash[:group])
+      Given %!"#{hash[:user]}"で"#{hash[:group]}"というグループを作成する!
+    else
+       Given %!"#{hash[:group]}グループのトップページ"にアクセスする!
+    end
     Given %!"記事を書く"リンクをクリックする!
     Given %!"#{"board_entry[title]"}"に"#{hash[:title]}"と入力する!
     Given %!"タグ"に"#{hash[:tag]}"と入力する!
@@ -88,4 +94,13 @@ Given /^"(.*)"つめのブログに"(.*)"回コメントを書く$/ do |num,time
   (1..times_num.to_i).each do
     visit(url_for(:controller => :board_entries, :action => :ado_create_comment,:id => entry[:id], :board_entry_comment => { :contents => "test" }), :post)
   end
+end
+
+Given /^"(.*)"で"(.*)"つめのブログをブックマークする$/ do |user, num|
+  pending
+#  entry = @entries[num.to_i - 1]
+#  debugger
+#  Given %!"#{user}"がユーザ登録する!  unless User.find_by_uid(user)
+#  Given %!"#{user}"でログインする!
+#  Given %!URLが"/page/#{entry.id}"タイトルが"タイトル"コメントが"コメント"のブックマークを登録する!
 end

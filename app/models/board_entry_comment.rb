@@ -26,7 +26,15 @@ class BoardEntryComment < ActiveRecord::Base
     { :conditions => ['user_id IN (?)', User.active.map(&:id).uniq] }
   }
 
+  named_scope :roots, proc {
+    { :conditions => ['board_entry_comments.parent_id is NULL'] }
+  }
+
   named_scope :order_new, proc { { :order => 'board_entry_comments.updated_on DESC' } }
+
+  named_scope :order_old, proc {
+    { :order => 'updated_on' }
+  }
 
   def after_save
     board_entry.reload.update_attribute :updated_on, Time.now

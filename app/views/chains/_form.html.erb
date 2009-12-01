@@ -4,7 +4,7 @@
   <% end -%>
   <%= render :partial => 'user/join_groups_box', :locals => { :user => current_target_user } %>
   <%= render :partial => 'user/follow_chains_box', :locals => { :user => current_target_user } %>
-  <%= render :partial => "chains/followed_chain_tags_box" %>
+  <%= render :partial => "chains/tag_cloud_box" %>
 <% end -%>
 
 <%= template_error_messages_for :chain %>
@@ -14,7 +14,7 @@
 </p>
 <p>
 <%= form.label :tags_as_s %>
-<%= form.text_field :tags_as_s %>
+<%= form.text_field :tags_as_s, :size => 50 %>
 <div id="category_box">
   <div id="candidates_list"><p><%= _('Multiple values can be given in foo,bar format')%></p></div>
   <div style="font-size:8pt; font-weight:bold;"><%= _('Tags marked by others: ')%></div><div id="user_tags_list" style="margin-bottom:5px;"></div>

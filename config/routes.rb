@@ -8,7 +8,7 @@ ActionController::Routing::Routes.draw do |map|
   # TODO users配下に移す
   map.resources :notices
 
-  map.resources :users , :only => [:index] do |user|
+  map.resources :users, :only => [:index] do |user|
     user.resources :chains
   end
 
@@ -83,7 +83,7 @@ ActionController::Routing::Routes.draw do |map|
     admin_map.resources :bookmarks, :only => [:index, :show, :destroy] do |bookmark|
       bookmark.resources :bookmark_comments, :only => [:index, :destroy]
     end
-    admin_map.resources :users, :new => [:import, :import_confirmation, :first], :member => [:change_uid, :create_uid, :show_signup_url, :issue_activation_code, :issue_password_reset_code], :collection => [:lock_actives, :issue_activation_codes] do |user|
+    admin_map.resources :users, :new => [:import, :import_confirmation, :first], :member => [:change_uid, :create_uid, :issue_activation_code, :issue_password_reset_code], :collection => [:lock_actives, :issue_activation_codes] do |user|
       user.resources :openid_identifiers, :only => [:edit, :update, :destroy]
       user.resource :user_profile
       user.resource :picture
@@ -109,6 +109,11 @@ ActionController::Routing::Routes.draw do |map|
     admin_map.images_revert 'images/:target/revert', :controller => 'images', :action => 'revert'
 
     admin_map.resources :oauth_providers, :member => {:toggle_status => :post}
+  end
+
+  map.namespace "feed" do |feed_map|
+    feed_map.resources :board_entries, :only => %w(index), :collection => {:questions => :get, :timelines => :get, :popular_blogs => :get}
+    feed_map.resources :bookmarks, :only => %w(index)
   end
 
   map.with_options :controller => 'server' do |server|

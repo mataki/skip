@@ -29,7 +29,7 @@ module CollaborationApp
           client = nil
           OauthProvider.new(:app_name => name) do |provider|
             setting = provider.setting
-            client = SkipEmbedded::RpService::Client.register!(name, setting.root_url, :url => "#{Admin::Setting.protocol_by_initial_settings_default}#{Admin::Setting.host_and_port_by_initial_settings_default}")
+            client = SkipEmbedded::RpService::Client.register!(name, setting.root_url, :url => "#{SkipEmbedded::InitialSettings['protocol']}#{SkipEmbedded::InitialSettings['host_and_port']}")
             provider.token = client.key
             provider.secret = client.secret
           end.save!

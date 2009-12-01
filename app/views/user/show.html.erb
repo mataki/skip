@@ -5,7 +5,7 @@
   <%= render(:partial => 'entries/recent_box', :locals => { :owner => current_target_user }) -%>
   <%= render :partial => 'user/join_groups_box', :locals => { :user => current_target_user } %>
   <%= render :partial => 'user/follow_chains_box', :locals => { :user => current_target_user } %>
-  <%= render :partial => "chains/followed_chain_tags_box" %>
+  <%= render :partial => "chains/tag_cloud_box" %>
 <% end -%>
 
 <% content_for :contents_right do -%>
@@ -82,8 +82,7 @@
 
   <% unless @against_chains.empty? -%>
   <div class="relative100">
-    <div class="operation"><%= link_to _('[See all]'), :action => 'social', :menu => 'social_chain', :uid => current_target_user.uid %></div>
-    <h2 class="topix_title"><%= icon_tag('asterisk_orange') %><%= _('Introductions') %></h2>
+    <h2 class="topix_title"><%= icon_tag('asterisk_orange') %><%= link_to _('Introductions'), :action => 'social', :menu => 'social_chain', :uid => current_target_user.uid %></h2>
     <div class="topix_body">
       <table class="normal user_chain ui-corner-all">
       <% @against_chains.each do |chain| -%>
@@ -92,8 +91,8 @@
             <%= user_link_to_with_portrait(chain.from_user, :width => 60, :height => 40) %><br/>
             <%= user_link_to(chain.from_user) %>
           </th>
-          <td class="tags">
-            <%= chain.tags.map{ |t| h(t.name) }.join(',') %>
+          <td>
+            <%= chain_tag_search_links_tag chain.tags_as_s %>
           </td>
         </tr>
         <tr>

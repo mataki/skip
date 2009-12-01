@@ -47,9 +47,6 @@ class MypageController < ApplicationController
     # ============================================================
     #  main area top messages
     # ============================================================
-    @system_messages = system_messages
-    @message_array = Message.get_message_array_by_user_id(current_user.id)
-    @waiting_groups = Group.has_waiting_for_approval(current_user)
     # あなたへのお知らせ(未読のもののみ)
     @mail_your_messages = mail_your_messages
 
@@ -202,9 +199,10 @@ class MypageController < ApplicationController
   # [公開された記事]のページ切り替えを行う。
   # param[:target]で指定した内容をページ単位表示する
   def load_entries
-    option = { :per_page => params[:per_page].to_i }
+    option = { :per_page => per_page }
     option[:recent_day] = params[:recent_day].to_i if params[:recent_day]
-    render :partial => (params[:page_name] ||= "page_space"), :locals => find_as_locals(params[:target], option)
+    save_current_page_to_cookie
+    render :partial => params[:page_name], :locals => find_as_locals(params[:target], option)
   end
 
   # ajax_action
@@ -501,26 +499,6 @@ class MypageController < ApplicationController
     end
   end
 
-  # TODO helperに移動することを検討
-  # mypage > home の システムメッセージの配列
-  def system_messages
-    system_messages = []
-    if system_notice = SkipEmbedded::InitialSettings['system_notice'] and !system_notice['title'].blank?
-      system_messages << {
-        :text => system_notice['title'],
-        :icon => "information",
-        :option => system_notice['url']
-      }
-    end
-    unless current_user.picture
-      system_messages << {
-        :text => _("Change your profile picture!"), :icon => "picture",
-        :option => {:controller => "mypage", :action => "manage", :menu => "manage_portrait"}
-      }
-    end
-    system_messages
-  end
-
   # TODO BoardEntryに移動する
   def mail_your_messages
     {
@@ -562,7 +540,7 @@ class MypageController < ApplicationController
 
   # 最近の人気記事一覧を取得する（partial用のオプションを返す）
   def find_access_blogs_as_locals options
-    find_params = BoardEntry.make_conditions(login_user_symbols, {:publication_type => 'public'})
+    find_params = BoardEntry.make_conditions(current_user.belong_symbols, {:publication_type => 'public'})
     pages = BoardEntry.scoped(
       :conditions => find_params[:conditions],
       :order => "board_entry_points.access_count DESC, board_entries.last_updated DESC, board_entries.id DESC",
@@ -578,14 +556,15 @@ class MypageController < ApplicationController
 
   # 記事一覧を取得する（partial用のオプションを返す）
   def find_recent_blogs_as_locals options
-    find_params = BoardEntry.make_conditions(login_user_symbols, {:entry_type=>'DIARY', :publication_type => 'public'})
+    find_params = BoardEntry.make_conditions(current_user.belong_symbols, {:entry_type=>'DIARY', :publication_type => 'public'})
+    id_name = 'recent_blogs'
     pages = BoardEntry.scoped(
       :conditions => find_params[:conditions],
       :include => find_params[:include] | [ :user, :state ]
-    ).timeline.order_new.paginate(:page => params[:page], :per_page => options[:per_page])
+    ).timeline.order_new.paginate(:page => target_page(id_name), :per_page => options[:per_page])
 
     locals = {
-      :id_name => 'recent_blogs',
+      :id_name => id_name,
       :title_icon => "user",
       :title_name => _('Blogs'),
       :per_page => options[:per_page],
@@ -594,9 +573,10 @@ class MypageController < ApplicationController
   end
 
   def find_timelines_as_locals options
-    pages = BoardEntry.accessible(current_user).timeline.order_new.paginate(:page => params[:page], :per_page => options[:per_page])
+    id_name = 'timelines'
+    pages = BoardEntry.accessible(current_user).timeline.order_new.scoped(:include => :state).paginate(:page => target_page(id_name), :per_page => options[:per_page])
     locals = {
-      :id_name => 'timelines',
+      :id_name => id_name,
       :title_name => _('See all'),
       :per_page => options[:per_page],
       :pages => pages,
@@ -614,11 +594,11 @@ class MypageController < ApplicationController
     find_options = {:exclude_entry_type=>'DIARY'}
     find_options[:symbols] = options[:group_symbols] || Group.gid_by_category[category.id]
     if find_options[:symbols].size > 0
-      find_params = BoardEntry.make_conditions(login_user_symbols, find_options)
+      find_params = BoardEntry.make_conditions(current_user.belong_symbols, find_options)
       pages = BoardEntry.scoped(
         :conditions => find_params[:conditions],
         :include => find_params[:include] | [ :user, :state ]
-      ).timeline.order_new.paginate(:page => params[:page], :per_page => options[:per_page])
+      ).timeline.order_new.paginate(:page => target_page(id_name), :per_page => options[:per_page])
     end
     locals = {
       :id_name => id_name,
@@ -665,7 +645,7 @@ class MypageController < ApplicationController
     options[:writer_id] = login_user_id
     options[:keyword] = params[:keyword]
     options[:category] = params[:category]
-    find_params = BoardEntry.make_conditions(login_user_symbols, options)
+    find_params = BoardEntry.make_conditions(current_user.belong_symbols, options)
 
     @entries = BoardEntry.scoped(
       :conditions => find_params[:conditions],
@@ -674,7 +654,7 @@ class MypageController < ApplicationController
 
     @symbol2name_hash = BoardEntry.get_symbol2name_hash @entries
 
-    find_params = BoardEntry.make_conditions(login_user_symbols, {:writer_id => login_user_id})
+    find_params = BoardEntry.make_conditions(current_user.belong_symbols, {:writer_id => login_user_id})
     @categories = BoardEntry.get_category_words(find_params)
   end
 
@@ -686,7 +666,7 @@ class MypageController < ApplicationController
   # 月の中で記事が含まれている日付と記事数のハッシュと、
   # 引数は、指定の年と月
   def get_entry_count year, month
-    find_params = BoardEntry.make_conditions(login_user_symbols, {:entry_type=>'DIARY'})
+    find_params = BoardEntry.make_conditions(current_user.belong_symbols, {:entry_type=>'DIARY'})
     find_params[:conditions][0] << " and YEAR(date) = ? and MONTH(date) = ?"
     find_params[:conditions] << year << month
 
@@ -710,7 +690,7 @@ class MypageController < ApplicationController
   # TODO BoardEntryに移動する
   # 指定日の記事一覧を取得する
   def find_entries_at_specified_date(selected_day)
-    find_params = BoardEntry.make_conditions(login_user_symbols, {:entry_type=>'DIARY'})
+    find_params = BoardEntry.make_conditions(current_user.belong_symbols, {:entry_type=>'DIARY'})
     find_params[:conditions][0] << " and DATE(date) = ?"
     find_params[:conditions] << selected_day
     BoardEntry.find(:all, :conditions=> find_params[:conditions], :order=>"date ASC",
@@ -720,7 +700,7 @@ class MypageController < ApplicationController
   # TODO BoardEntryに移動する
   # 指定日以降で最初に記事が存在する日
   def first_entry_day_after_specified_date(selected_day)
-    find_params = BoardEntry.make_conditions(login_user_symbols, {:entry_type=>'DIARY'})
+    find_params = BoardEntry.make_conditions(current_user.belong_symbols, {:entry_type=>'DIARY'})
     find_params[:conditions][0] << " and DATE(date) > ?"
     find_params[:conditions] << selected_day
     next_day = BoardEntry.find(:first, :select => "date, DATE(date) as count_date, count(board_entries.id) as count",
@@ -735,7 +715,7 @@ class MypageController < ApplicationController
   # TODO BoardEntryに移動する
   # 指定日以前で最後に記事が存在する日
   def last_entry_day_before_specified_date(selected_day)
-    find_params = BoardEntry.make_conditions(login_user_symbols, {:entry_type=>'DIARY'})
+    find_params = BoardEntry.make_conditions(current_user.belong_symbols, {:entry_type=>'DIARY'})
     find_params[:conditions][0] << " and DATE(date) < ?"
     find_params[:conditions] << selected_day
     prev_day = BoardEntry.find(:first, :select => "date, DATE(date) as count_date, count(board_entries.id) as count",
@@ -780,7 +760,40 @@ class MypageController < ApplicationController
     result
   end
 
+  # TODO mypageのcontroller及びviewで@userを使うのをやめてcurrent_target_userにしてなくしたい。
   def load_user
     @user = current_user
+  end
+
+  def current_target_user
+    current_user
+  end
+
+  def target_page target = nil
+    if target
+      if target_key2current_pages = cookies['target_key2current_pages']
+        params[:page] || JSON.parse(target_key2current_pages)[target] || 1
+      else
+        params[:page]
+      end
+    else
+      params[:page]
+    end
+  end
+
+  def save_current_page_to_cookie
+    if params[:target] && params[:page]
+      target_key2current_pages =
+        begin
+          JSON.parse(cookies[:target_key2current_pages])
+        rescue => e
+          {}
+        end
+      target_key2current_pages[params[:target]] = params[:page]
+      cookies[:target_key2current_pages] = { :value => target_key2current_pages.to_json, :expires => 30.days.from_now }
+      true
+    else
+      false
+    end
   end
 end

@@ -99,17 +99,6 @@ protected
     }
   end
 
-  # ログイン中のユーザのシンボル＋そのユーザの所属するグループのSymbolの配列を返す
-  # sid:all_userは含めていない
-  def login_user_symbols
-    @login_user_symbols ||= current_user.belong_symbols
-  end
-
-  # ログイン中のユーザの所属するグループのSymbolの配列
-  def login_user_groups
-    @login_user_groups ||= current_user.group_symbols
-  end
-
   def logged_in?
     !!current_user
   end
@@ -130,7 +119,7 @@ protected
   end
 
   def current_target_group
-    @current_target_group ||= Group.active.find_by_gid(params[:gid])
+    @current_target_group ||= Group.active.find_by_gid(params[:gid] || params[:group_id])
   end
 
   def current_participation
@@ -139,7 +128,7 @@ protected
 
   #記事へのパーミッションをチェック
   def check_entry_permission
-    find_params = BoardEntry.make_conditions(login_user_symbols, {:id=>params[:id]})
+    find_params = BoardEntry.make_conditions(current_user.belong_symbols, {:id=>params[:id]})
     unless entry = BoardEntry.find(:first, :conditions => find_params[:conditions], :include => find_params[:include])
       return false
     end
@@ -147,7 +136,7 @@ protected
   end
 
   def login_required
-    if current_user.nil?
+    unless logged_in?
       if request.env['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest'
         render :text => _('Session expired. You need to log in again.'), :status => :bad_request
       else
@@ -157,9 +146,10 @@ protected
           redirect_to :controller => '/platform', :action => :require_login, :return_to => URI.decode(request.url)
         end
       end
-      return false
+      false
+    else
+      true
     end
-    true
   end
 
   def redirect_to_with_deny_auth(url = { :controller => :mypage, :action => :index })
@@ -285,7 +275,7 @@ protected
   end
 
   def scheme
-    Admin::Setting.protocol_by_initial_settings_default
+    SkipEmbedded::InitialSettings['protocol']
   end
 
   def endpoint_url

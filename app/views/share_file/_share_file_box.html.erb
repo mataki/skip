@@ -28,7 +28,7 @@
   </div>
   <div class="share_file_line" style="margin-top:13px;">
     <%=h share_file.date.strftime(_('%m/%d/%Y %H:%M')) %> -
-    <span style='background-color: <%=visibility_color%>;'> <%= visibility %></span> - <%= h share_file.category %>
+    <span style='background-color: <%=visibility_color%>;'> <%= visibility %></span> - <%= share_file_search_links_tag share_file.category %>
   </div>
 
   <div style="margin:3px 0 <%= visible_menu ? 15 : 3 -%>px 3px;">

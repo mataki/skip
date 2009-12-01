@@ -5,7 +5,7 @@
     <ul class="no_style">
       <% feed.items.each do |item| %>
         <% title = (Time.now.ago(5.day) < item.date_published) ? "#{icon_tag('new')} #{h(item.title)}" : h(item.title) -%>
-        <li><%= link_to title.toutf8, h(item.id), :target => "_blank" -%></li>
+        <li><%= link_to title.toutf8, URI.escape(item.url), :target => "_blank" -%></li>
       <% end %>
     </ul>
   </div>

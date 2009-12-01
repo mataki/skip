@@ -68,19 +68,16 @@ class BoardEntry < ActiveRecord::Base
     { :conditions => ['category not like :category', { :category => "%[#{category}]%" }] }
   }
 
+  named_scope :group_category_eq, proc { |category_code|
+    category = GroupCategory.find_by_code(category_code)
+    return {} unless category
+    group_symbols = Group.active.categorized(category.id).all.map(&:symbol)
+    { :conditions => ['board_entries.symbol IN (?)', group_symbols] }
+  }
+
   named_scope :recent, proc { |day_count|
     return {} if day_count.blank?
     { :conditions => ['last_updated > :date', { :date => Time.now.ago(day_count.to_i.day) }] }
-  }
-
-  named_scope :except_auto_posted, proc {
-    # FIXME 自動投稿判別をタイトルでやるのは危うい。国際化のためにもよくない。
-    # TODO 自動投稿自体を見直す予定なのでその際にここも見直す
-    { :conditions => ['title NOT IN (?)', ['参加申し込みをしました！', 'ユーザー登録しました！']] }
-  }
-
-  named_scope :publication_type_equal, proc { |type|
-    { :conditions => ['publication_type = ?', type] }
   }
 
   named_scope :diary, proc {
@@ -116,11 +113,11 @@ class BoardEntry < ActiveRecord::Base
   }
 
   named_scope :order_access, proc {
-    { :order => 'board_entry_points.access_count DESC' }
+    { :order => 'board_entry_points.access_count DESC', :include => [:state] }
   }
 
   named_scope :order_point, proc {
-    { :order => 'board_entry_points.point DESC' }
+    { :order => 'board_entry_points.point DESC', :include => [:state] }
   }
 
   named_scope :aim_type, proc { |types|
@@ -175,12 +172,11 @@ class BoardEntry < ActiveRecord::Base
   end
 
   def before_save
-    square_brackets_tags
     parse_symbol_link
   end
 
   def after_save
-    Tag.create_by_string category, entry_tags
+    Tag.create_by_comma_tags category, entry_tags
   end
 
   def after_create
@@ -271,12 +267,12 @@ class BoardEntry < ActiveRecord::Base
     # カテゴリ
     if category = options[:category] and category != ''
       conditions_state << " and board_entries.category like ?"
-      conditions_param << '%[' + category + ']%'
+      conditions_param << '%' + category + '%'
     end
     if categories = options[:categories] and !categories.empty?
       categories.each do |category|
         conditions_state << " and board_entries.category like ?"
-        conditions_param << '%[' + category + ']%'
+        conditions_param << '%' + category + '%'
       end
     end
 
@@ -309,20 +305,6 @@ class BoardEntry < ActiveRecord::Base
     return {:conditions => conditions_param.unshift(conditions_state), :include => [:entry_publications] }
   end
 
-
-  # 最新の一覧を取得（ブログでもフォーラムでも。オーナーさえ決まればOK。）
-  def self.find_visible(limit, login_user_symbols, owner_symbol)
-    find_params = self.make_conditions(login_user_symbols, {:symbol => owner_symbol})
-    self.scoped(
-      :conditions => find_params[:conditions],
-      :include => find_params[:include] | [ :state, :board_entry_comments ]
-    ).order_new.limit(limit)
-  end
-
-  def send_mail?
-    true if send_mail == "1"
-  end
-
   def get_around_entry(login_user_symbols)
     order_value = BoardEntry.find(:first, :select => 'last_updated+id as order_value', :conditions=>["id = ?", id]).order_value
     prev_entry = next_entry = nil
@@ -341,6 +323,7 @@ class BoardEntry < ActiveRecord::Base
     return prev_entry, next_entry
   end
 
+  # TODO Tagのnamed_scopeにしてなくしたい
   def self.get_category_words(options={})
     options[:include] ||= []
     options[:select] = "id"
@@ -373,6 +356,7 @@ class BoardEntry < ActiveRecord::Base
 #  end
 
 
+  # TODO Tagのnamed_scopeにしてなくしたい
   def self.get_popular_tag_words()
     options = { :select => 'tags.name',
                 :joins => 'JOIN tags ON entry_tags.tag_id = tags.id',
@@ -414,6 +398,7 @@ class BoardEntry < ActiveRecord::Base
     end
   end
 
+  # TODO ShareFileと統合したい
   def visibility
     text = color = ""
     if public?
@@ -435,47 +420,7 @@ class BoardEntry < ActiveRecord::Base
     return text, color
   end
 
-
-  LINE_FEED = "\r\n\r\n"
-  HR_STRING = LINE_FEED + "----" + LINE_FEED
-
-  # 自動投稿
-  def self.create_entry(params)
-    params.assert_valid_keys [:title, :message, :tags, :user_symbol, :user_id, :entry_type, :owner_symbol,
-                               :publication_type, :publication_symbols, :non_auto, :date, :editor_mode, :aim_type]
-
-    contents = ""
-    contents << _("(This entry is generated automatically by the system)") unless params[:non_auto]
-    contents << LINE_FEED
-    contents << params[:message]
-
-    publication_symbols = []
-    publication_symbols = params[:publication_symbols] - [params[:user_symbol]] if params[:publication_type] == 'protected'
-
-    entry = BoardEntry.new(
-      :title => params[:title],
-      :contents => contents,
-      :category => params[:tags],
-      :aim_type => params[:aim_type] || 'entry',
-      :date => params[:date] || Time.now,
-      :user_id => params[:user_id],
-      :entry_type => params[:entry_type],
-      :last_updated => Time.now,
-      :editor_mode => params[:editor_mode] || 'hiki',
-      :symbol => params[:owner_symbol],
-      :publication_type => params[:publication_type],
-      :publication_symbols_value => publication_symbols.join(",")
-    )
-    params[:publication_symbols].each do |symbol|
-      entry.entry_publications.build(:symbol => symbol)
-    end
-
-    # FIXME エラー処理をする。save! にしてバッチ側で処理すべき
-    entry.save
-    entry.prepare_send_mail
-    return entry
-  end
-
+  # TODO ShareFileのリストを渡しても使える、ユーティリティクラスに移したい。
   def self.get_symbol2name_hash entries
     user_symbol_ids = group_symbol_ids = []
     entries.each do |entry|
@@ -489,7 +434,9 @@ class BoardEntry < ActiveRecord::Base
     symbol2name_hash = {}
     if user_symbol_ids.size > 0
       UserUid.find(:all, :conditions =>["uid IN (?)", user_symbol_ids], :include => :user).each do |user_uid|
-        symbol2name_hash[user_uid.user.symbol] = user_uid.user.name
+        if user_uid.user
+          symbol2name_hash[user_uid.user.symbol] = user_uid.user.name
+        end
       end
     end
     if group_symbol_ids.size > 0
@@ -502,6 +449,7 @@ class BoardEntry < ActiveRecord::Base
   end
 
   # 記事へのリンクのURLを生成して返す
+  # TODO なくしたい。viewかhelperのみでなんとかしたい。
   def get_url_hash
     url = { :entry_id => id }
     case entry_type
@@ -517,14 +465,17 @@ class BoardEntry < ActiveRecord::Base
     url
   end
 
+  # TODO ShareFileと統合したい。owner_symbol_typeにしたい
   def symbol_type
     symbol.split(':')[0]
   end
 
+  # TODO ShareFileと統合したい。owner_symbol_idにしたい
   def symbol_id
     symbol.split(':')[1]
   end
 
+  # TODO ShareFileと統合したい。owner_symbol_nameにしたい
   def symbol_name
     owner = Symbol.get_item_by_symbol(self.symbol)
     owner ? owner.name : ''
@@ -535,8 +486,10 @@ class BoardEntry < ActiveRecord::Base
   end
 
   # TODO もはやprepareじゃない。sent_contact_mailsなどにリネームする
-  def prepare_send_mail
+  def send_contact_mails
+    return unless self.send_mail?
     return if diary? && private?
+    return if !SkipEmbedded::InitialSettings['mail']['enable_send_email_to_all_users'] && public?
 
     users = publication_users
     users.each do |u|
@@ -544,6 +497,10 @@ class BoardEntry < ActiveRecord::Base
       owner = load_owner
       UserMailer::AR.deliver_sent_contact(u.email, owner, self)
     end
+  end
+
+  def send_mail?
+    true if send_mail == "1"
   end
 
   # この記事の作成者かどうか判断する
@@ -574,6 +531,7 @@ class BoardEntry < ActiveRecord::Base
     entry_publications.any? {|publication| login_user_symbols.include?(publication.symbol) || "sid:allusers" == publication.symbol}
   end
 
+  # TODO editable?とどちらかにしたい。
   def edit? login_user_symbols
     entry_editors.any? {|editor| login_user_symbols.include? editor.symbol }
   end
@@ -626,12 +584,14 @@ class BoardEntry < ActiveRecord::Base
   end
 
   # 話題にしてくれた記事一覧を返す
+  # TODO named_scopeにしたい
   def trackback_entries(login_user_id, login_user_symbols)
     ids =  self.entry_trackbacks.map {|trackback| trackback.tb_entry_id }
     authorized_entries_except_given_user(login_user_id, login_user_symbols, ids)
   end
 
   # 話題元の記事一覧を返す
+  # TODO named_scopeにしたい
   def to_trackback_entries(login_user_id, login_user_symbols)
     ids =  self.to_entry_trackbacks.map {|trackback| trackback.board_entry_id }
     authorized_entries_except_given_user(login_user_id, login_user_symbols, ids)
@@ -674,11 +634,8 @@ class BoardEntry < ActiveRecord::Base
     board_entry_comments.find(:all, :conditions => ["parent_id is NULL"], :order => "created_on")
   end
 
-  def comma_category
-    Tag.comma_tags(self.category)
-  end
-
   # TODO Symbol.get_item_by_symbolとかぶってる。こちらを生かしたい
+  # TODO ShareFileと統合したい
   def self.owner symbol
     return nil if symbol.blank?
     symbol_type, symbol_id = SkipUtil::split_symbol symbol
@@ -691,6 +648,7 @@ class BoardEntry < ActiveRecord::Base
     end
   end
 
+  # TODO ShareFileと統合したい, ownerにしたい
   def load_owner
     @owner = self.class.owner self.symbol
   end
@@ -712,10 +670,10 @@ class BoardEntry < ActiveRecord::Base
       self.toggle!(:hide)
       self.entry_hide_operations.create!(:user => user, :operation_type => self.hide.to_s)
       url_options = {
-        :host => Admin::Setting.host_and_port_by_initial_settings_default,
-        :protocol => Admin::Setting.protocol_by_initial_settings_default
+        :host => SkipEmbedded::InitialSettings['host_and_port'],
+        :protocol => SkipEmbedded::InitialSettings['protocol']
       }.merge(self.get_url_hash)
-      Message.save_message('QUESTION', self.user_id, url_for(url_options), self.title) unless user.id == self.user_id
+      Message.save_message('QUESTION', self.user_id, url_for(url_options), _('State of your question [%s] is changed!') % ERB::Util.h(self.title)) unless user.id == self.user_id
     end
     true
   rescue ActiveRecord::RecordInvalid => e
@@ -734,6 +692,18 @@ class BoardEntry < ActiveRecord::Base
       self.aim_type = type
       self.save!
     end
+  end
+
+  # TODO ShareFileと統合したい
+  def owner_is_user?
+    symbol_type, symbol_id = SkipUtil.split_symbol self.symbol
+    symbol_type == 'uid'
+  end
+
+  # TODO ShareFileと統合したい
+  def owner_is_group?
+    symbol_type, symbol_id = SkipUtil.split_symbol self.symbol
+    symbol_type == 'gid'
   end
 
 private
@@ -795,10 +765,6 @@ private
       text = text.gsub(symbol_link.strip, replace_str)
     end
     return text
-  end
-
-  def square_brackets_tags
-    self.category = Tag.square_brackets_tags(self.category)
   end
 
   # 記事が指定されたユーザの記事の場合、指定されたidに一致する記事を全て返す。

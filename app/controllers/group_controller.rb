@@ -25,29 +25,21 @@ class GroupController < ApplicationController
          :only => [ :join, :destroy, :leave, :update, :change_participation,
                     :toggle_owned, :forced_leave_user, :append_user ],
          :redirect_to => { :action => :show }
-  N_('GroupController|ApproveSuceeded')
-  N_('GroupController|ApproveFailed')
-  N_('GroupController|DisapproveSuceeded')
-  N_('GroupController|DispproveFailed')
 
   # tab_menu
   def show
     @owners = User.owned(@group).order_joined.limit(20)
     @except_owners = User.joined_except_owned(@group).order_joined.limit(20)
-    @recent_messages = BoardEntry.find_visible(10, login_user_symbols, @group.symbol)
+    find_params = BoardEntry.make_conditions(current_user.belong_symbols, :symbol => @group.symbol)
+    @recent_messages = BoardEntry.scoped(
+        :conditions => find_params[:conditions],
+        :include => find_params[:include] | [ :user, :state ]
+      ).order_sort_type("date").aim_type("entry").all(:limit => 10)
   end
 
   # tab_menu
   def users
-    params[:condition] = {} unless params[:condition]
-    params[:condition].merge!(:with_group => @group.id, :include_manager => '1')
-    @condition = UserSearchCondition.create_by_params params
-
-    @users = User.scoped(
-      :conditions => @condition.make_conditions,
-      :include => @condition.value_of_include,
-      :order => @condition.value_of_order_by
-    ).paginate(:page => params[:page], :per_page => @condition.value_of_per_page)
+    @users = @group.users.paginate(:page => params[:page])
 
     flash.now[:notice] = _('User not found.') if @users.empty?
   end
@@ -62,18 +54,21 @@ class GroupController < ApplicationController
     # 右側
     if entry_id = params[:entry_id]
       options[:id] = entry_id
-      find_params = BoardEntry.make_conditions(login_user_symbols, options)
+      find_params = BoardEntry.make_conditions(current_user.belong_symbols, options)
 
       @entry = BoardEntry.scoped(
         :conditions => find_params[:conditions],
         :include => find_params[:include] | [ :user, :board_entry_comments, :state ]
       ).order_new.first
       if @entry
-        @checked_on = @entry.accessed(current_user.id).checked_on
-        @prev_entry, @next_entry = @entry.get_around_entry(login_user_symbols)
-        @editable = @entry.editable?(login_user_symbols, session[:user_id], session[:user_symbol], login_user_groups)
-        @tb_entries = @entry.trackback_entries(current_user.id, login_user_symbols)
-        @to_tb_entries = @entry.to_trackback_entries(current_user.id, login_user_symbols)
+        @checked_on = if reading = @entry.user_readings.find_by_user_id(current_user.id)
+                        reading.checked_on
+                      end
+        @entry.accessed(current_user.id)
+        @prev_entry, @next_entry = @entry.get_around_entry(current_user.belong_symbols)
+        @editable = @entry.editable?(current_user.belong_symbols, session[:user_id], session[:user_symbol], current_user.group_symbols)
+        @tb_entries = @entry.trackback_entries(current_user.id, current_user.belong_symbols)
+        @to_tb_entries = @entry.to_trackback_entries(current_user.id, current_user.belong_symbols)
         @title += " - " + @entry.title
 
         @entry_accesses =  EntryAccess.find_by_entry_id @entry.id
@@ -85,7 +80,7 @@ class GroupController < ApplicationController
       options[:category] = params[:category]
       options[:keyword] = params[:keyword]
 
-      find_params = BoardEntry.make_conditions(login_user_symbols, options)
+      find_params = BoardEntry.make_conditions(current_user.belong_symbols, options)
 
       if user_id = params[:user_id]
         find_params[:conditions][0] << " and board_entries.user_id = ?"
@@ -100,20 +95,22 @@ class GroupController < ApplicationController
   end
 
   def new
-    redirect_to_with_deny_auth and return unless login_user_groups.include? @group.symbol
+    redirect_to_with_deny_auth and return unless current_user.group_symbols.include? @group.symbol
 
     redirect_to(:controller => 'edit',
                 :action => 'index',
+                :gid => @group.gid,
                 :entry_type => BoardEntry::GROUP_BBS,
                 :symbol => @group.symbol,
                 :publication_type => @group.default_publication_type)
   end
 
   def new_notice
-    redirect_to_with_deny_auth and return unless login_user_groups.include? @group.symbol
+    redirect_to_with_deny_auth and return unless current_user.group_symbols.include? @group.symbol
 
     redirect_to(:controller => 'edit',
                 :action => 'index',
+                :gid => @group.gid,
                 :entry_type => BoardEntry::GROUP_BBS,
                 :aim_type => 'notice',
                 :symbol => @group.symbol,
@@ -121,20 +118,16 @@ class GroupController < ApplicationController
   end
 
   def new_question
-    redirect_to_with_deny_auth and return unless login_user_groups.include? @group.symbol
+    redirect_to_with_deny_auth and return unless current_user.group_symbols.include? @group.symbol
 
     redirect_to(:controller => 'edit',
                 :action => 'index',
+                :gid => @group.gid,
                 :entry_type => BoardEntry::GROUP_BBS,
                 :aim_type => 'question',
                 :send_mail => !!params[:send_mail],
                 :symbol => @group.symbol,
                 :publication_type => @group.default_publication_type)
-  end
-
-  # tab_menu
-  def new_participation
-    render :layout => 'dialog'
   end
 
   # tab_menu
@@ -162,59 +155,90 @@ class GroupController < ApplicationController
   # post_action
   # 参加申込み
   def join
-    if @participation
-      flash[:notice] = _('You are already a member of the group.')
-    else
-      participation = GroupParticipation.new(:user_id => session[:user_id], :group_id => @group.id)
-      participation.waiting = true if @group.protected?
-
-      if participation.save
-        if participation.waiting?
+    @group.join current_user do |result, participations|
+      if result
+        if participations.first.waiting?
+          group_manage_participations_url = url_for(:controller => 'group', :action => 'manage', :gid => @group.gid, :menu => 'manage_permit')
           flash[:notice] = _('Request sent. Please wait for the approval.')
         else
-          login_user_groups << @group.symbol
+          groups_url = url_for(:controller => 'group', :action => 'users', :gid => @group.gid)
+          @group.group_participations.only_owned.each do |owner_participation|
+            Message.save_message('JOIN', owner_participation.user_id, groups_url, _("New user joined your group [%s].") % @group.name)
+          end
           flash[:notice] = _('Joined the group successfully.')
         end
-
-        message = params[:board_entry][:contents]
-
-        #グループのownerのシンボル(複数と取ってきて、publication_symbolsに入れる)
-        owner_symbols = @group.owners.map { |user| user.symbol }
-        entry_params = { }
-        entry_params[:title] = _("Request to join the group has been sent out!")
-        entry_params[:message] = render_to_string(:partial => 'entries_template/group_join',
-                                                  :locals => { :user_name => current_user.name,
-                                                               :message => message })
-        # TODO 国際化を踏まえた仕様の再検討を行う
-        # _('Request to Join Group')としたいが、タグのvalidateでspaceを許可していないためエラーになる。
-        # また、「参加申し込み」タグは一部システム的な動作(著者毎の記事一覧から除外)を
-        # 行っているため、国際化を踏まえた仕様を再検討しなければならない。
-        entry_params[:tags] = '参加申し込み'
-        entry_params[:aim_type] = 'notice' if @group.protected?
-        entry_params[:user_symbol] = session[:user_symbol]
-        entry_params[:user_id] = session[:user_id]
-        entry_params[:entry_type] = BoardEntry::GROUP_BBS
-        entry_params[:owner_symbol] = @group.symbol
-        entry_params[:publication_type] = 'protected'
-        entry_params[:publication_symbols] = owner_symbols + [session[:user_symbol]]
-
-        board_entry =  BoardEntry.create_entry(entry_params)
+      else
+        flash[:error] = @group.errors.full_messages
       end
+      redirect_to :action => 'show'
     end
-    redirect_to :action => 'show'
+  end
+
+  # 参加者追加(管理者のみ)
+  def append_user
+    # FIXME 管理者のみに制御出来ていない
+    symbol_type, symbol_id = Symbol.split_symbol params[:symbol]
+    case
+    when (symbol_type == 'uid' and user = User.find_by_uid(symbol_id))
+      @group.join user, :force => true do |result, participations|
+        if result
+          group_url = url_for(:controller => 'group', :action => 'show', :gid => @group.gid)
+          Message.save_message('FORCED_JOIN', user.id,  group_url, _("Forced to join the group [%s].") % @group.name)
+          flash[:notice] = _("Added %s as a member.") % user.name
+        else
+          flash[:error] = @group.errors.full_messages
+        end
+      end
+    when (symbol_type == 'gid' and group = Group.active.find_by_gid(symbol_id, :include => :group_participations))
+      users = group.group_participations.map(&:user)
+      @group.join users, :force => true do |result, participations|
+        if result
+          group_url = url_for(:controller => 'group', :action => 'show', :gid => @group.gid)
+          users.each do |user|
+            Message.save_message('FORCED_JOIN', user.id,  group_url, _("Forced to join the group [%s].") % @group.name)
+          end
+          flash[:notice] = _("Added members of %s as members of the group") % group.name
+        else
+          flash[:error] = @group.errors.full_messages
+        end
+      end
+    else
+      flash[:warn] = _("Users / groups selection invalid.")
+    end
+    redirect_to :action => 'manage', :menu => 'manage_participations'
   end
 
   # post_action
   # 退会
   def leave
-    if @participation
-      @participation.destroy
-      login_user_groups.delete(@group.symbol)
-      flash[:notice] = _('Successfully left the group.')
-    else
-      flash[:notice] = _('You are not a member of the group.')
+    @group.leave @participation.user do |result|
+      if result
+        user_url = url_for(:controller => 'user', :action => 'show', :uid => current_user.uid)
+        @group.group_participations.only_owned.each do |owner_participation|
+          Message.save_message('LEAVE', owner_participation.user_id, user_url, _("%{user_name} leaved your group %{group_name}.") % {:user_name => current_user.name, :group_name => @group.name})
+        end
+        flash[:notice] = _('Successfully left the group.')
+      else
+        flash[:notice] = _('%s are not a member of the group.') % 'You'
+      end
     end
     redirect_to :action => 'show'
+  end
+
+  # 管理者による強制退会処理
+  def forced_leave_user
+    # FIXME 管理者のみに制御出来ていない
+    group_participation = GroupParticipation.find(params[:participation_id])
+    @group.leave group_participation.user do |result|
+      if result
+        groups_url = url_for(:controller => 'group', :action => 'users', :gid => @group.gid)
+        Message.save_message('FORCED_LEAVE', group_participation.user.id, groups_url, _("You forced to leave the group [%s].") % @group.name)
+        flash[:notice] = _("Removed %s from members of the group.") % group_participation.user.name
+      else
+        flash[:notice] = _('%s are not a member of the group.') % group_participation.user.name
+      end
+    end
+    redirect_to :action => 'manage', :menu => 'manage_participations'
   end
 
   # post_action ... では無いので後に修正が必要
@@ -234,63 +258,60 @@ class GroupController < ApplicationController
     redirect_to :action => 'manage', :menu => 'manage_participations'
   end
 
-  # 管理者による強制退会処理
-  def forced_leave_user
-    group_participation = GroupParticipation.find(params[:participation_id])
-
-    redirect_to_with_deny_auth and return unless group_participation.group_id == @participation.group_id
-
-    user = group_participation.user
-    group_participation.destroy
-
-    # BBSにuid直接指定のお知らせを新規投稿(自動で投稿されて保存される)
-    entry_params = { }
-    entry_params[:title] =_("Leave [%s]") % @group.name
-    entry_params[:message] = _("Removed %{user} from [%{group}>]") % {:group => @group.symbol, :user => user.name}
-    entry_params[:aim_type] = 'notice'
-    entry_params[:user_symbol] = session[:user_symbol]
-    entry_params[:user_id] = session[:user_id]
-    entry_params[:entry_type] = BoardEntry::GROUP_BBS
-    entry_params[:owner_symbol] = @group.symbol
-    entry_params[:publication_type] = 'protected'
-    entry_params[:publication_symbols] = [session[:user_symbol]]
-    entry_params[:publication_symbols] << user.symbol
-    entry = BoardEntry.create_entry(entry_params)
-
-    flash[:notice] = _("Created an entry on the forum about the removal of user. Edit the entry when needed.")
-    redirect_to :action => 'bbs', :entry_id => entry.id
-  end
-
   # post_action
   # 参加の許可か棄却
+  # TODO 参加許可、参加棄却は別のactionにしたい。
   def change_participation
     unless @group.protected?
       flash[:warn] = _("No approval needed to join this group.")
       redirect_to :action => :show
+      return
     end
-    type_name = params[:submit_type] == 'permit' ? s_('GroupController|Approve') : s_('GroupController|Disapprove') #"許可" : "棄却"
 
-    if states = params[:participation_state]
-      states.each do |participation_id, state|
-        if state == 'true'
-          participation = GroupParticipation.find(participation_id)
-          if participation.group_id == @participation.group_id &&
-            !participation.waiting
-            flash[:warn] = _("Part of the users are already members of this group.")
-            redirect_to :action => 'manage', :menu => 'manage_permit'
-            return false
-          end
-          result = nil
-          if params[:submit_type] == 'permit'
+    participation_ids = if states = params[:participation_state]
+                          participation_ids = states.map { |participation_id, state| participation_id.to_i if state == 'true' }.compact
+                        end || []
+    # 処理対象がない
+    if participation_ids.empty?
+      redirect_to :action => 'manage', :menu => 'manage_permit'
+      return
+    end
+
+    # 処理対象に既に参加状態になっているものがある
+    if participation_ids.any? {|participation_id| @group.group_participations.active.map(&:id).include? participation_id }
+      flash[:warn] = _("Part of the users are already members of this group.")
+      redirect_to :action => 'manage', :menu => 'manage_permit'
+      return
+    end
+
+    target_participations = @group.group_participations.waiting.map do |participation|
+      participation if participation_ids.include?(participation.id)
+    end.compact
+
+    if params[:submit_type] == 'permit'
+      begin
+        GroupParticipation.transaction do
+          target_participations.each do |participation|
             participation.waiting = false
-            result = participation.save
-          else
-            result = participation.destroy
+            participation.save!
+            participation.user.notices.create!(:target => @group) unless participation.user.notices.find_by_target_id(@group.id)
           end
-
-          flash[:notice] = _("%{rslt} to %{type}.") % {:type => type_name, :rslt => result ? _('Succeeded') : _('Failed')} #'しました' : 'に失敗しました。'
+          groups_url = url_for(:controller => 'group', :action => 'show', :gid => @group.gid)
+          target_participations.each do |participation|
+            Message.save_message('APPROVAL_OF_JOIN', participation.user.id, groups_url, _("You were approved join of the group %s.") % @group.name)
+          end
+          flash[:notice] = _("Succeeded to Approve.")
         end
+      rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => e
+        flash[:notice] = _("Failed to Approve.")
       end
+    else
+      groups_url = url_for(:controller => 'group', :action => 'show', :gid => @group.gid)
+      target_participations.each do |participation|
+        participation.destroy
+        Message.save_message('DISAPPROVAL_OF_JOIN', participation.user.id, groups_url, _("You were disapproved join of the group %s.") % @group.name)
+      end
+      flash[:notice] = _("Succeeded to Disapprove.")
     end
     redirect_to :action => 'manage', :menu => 'manage_permit'
   end
@@ -316,40 +337,6 @@ class GroupController < ApplicationController
       redirect_to :controller => 'groups'
     end
   end
-
-  # 参加者追加(管理者のみ)
-  def append_user
-    # 参加制約は追加しない。制約は制約管理で。
-    symbol_type, symbol_id = Symbol.split_symbol params[:symbol]
-    case
-    when (symbol_type == 'uid' and user = User.find_by_uid(symbol_id))
-      if @group.group_participations.find_by_user_id(user.id)
-        flash[:notice] = _("%s has already joined / applied to join this group.") % user.name
-      else
-        @group.group_participations.build(:user_id => user.id, :owned => false)
-        @group.save
-        flash[:notice] = _("Added %s as a member and created a forum for messaging.") % user.name
-      end
-    when (symbol_type == 'gid' and group = Group.active.find_by_gid(symbol_id, :include => :group_participations))
-      group.group_participations.each do |participation|
-        unless @group.group_participations.find_by_user_id(participation.user_id)
-          @group.group_participations.build(:user_id => participation.user_id, :owned => false)
-        end
-      end
-      @group.save
-      flash[:notice] = _("Added members of %s as members of the group and created a forum for messaging.") % group.name
-    else
-      flash[:warn] = _("Users / groups selection invalid.")
-    end
-
-    # BBSにsymbol直接指定[連絡]で新規投稿(自動で投稿されて保存される)
-    @group.create_entry_invite_group(session[:user_id],
-                                     session[:user_symbol],
-                                     [params[:symbol], session[:user_symbol]])
-
-    redirect_to :action => 'manage', :menu => 'manage_participations'
-  end
-
 
 private
   def setup_layout
@@ -388,15 +375,12 @@ private
   end
 
   def setup_bbs_left_box options
-    find_params = BoardEntry.make_conditions(login_user_symbols, options)
-    # カテゴリ
-    @categories = BoardEntry.get_category_words(find_params)
+    find_params = BoardEntry.make_conditions(current_user.belong_symbols, options)
 
     # 人毎のアーカイブ
     select_state = "count(distinct board_entries.id) as count, users.name as user_name, users.id as user_id"
     joins_state = "LEFT OUTER JOIN entry_publications ON entry_publications.board_entry_id = board_entries.id"
     joins_state << " LEFT OUTER JOIN users ON users.id = board_entries.user_id"
-    find_params[:conditions].first << " and category not like '%[参加申し込み]%'"
     @user_archives = BoardEntry.find(:all,
                                      :select => select_state,
                                      :conditions=> find_params[:conditions],

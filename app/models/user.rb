@@ -20,6 +20,8 @@ class User < ActiveRecord::Base
 
   attr_accessor :old_password, :password
   attr_protected :admin, :status
+  cattr_reader :per_page
+  @@per_page = 40
 
   has_many :group_participations, :dependent => :destroy
   has_one :picture, :dependent => :destroy
@@ -85,6 +87,11 @@ class User < ActiveRecord::Base
     }
   }
 
+  named_scope :name_or_code_like, proc { |word|
+    { :conditions => ["user_uids.uid like :word OR users.name like :word", { :word => SkipUtil.to_like_query_string(word) }],
+      :include => :user_uids }
+  }
+
   named_scope :tagged, proc { |tag_words, tag_select|
     return {} unless tag_words
     tag_select = 'AND' unless tag_select == 'OR'
@@ -98,9 +105,29 @@ class User < ActiveRecord::Base
     { :conditions => [condition_str, condition_params].flatten, :include => :against_chains }
   }
 
+  named_scope :exclude_retired, proc { |flg|
+    target = ["ACTIVE"]
+    target << "RETIRED" unless flg == "1"
+    status_in(target).proxy_options
+  }
+
   named_scope :order_joined, proc { { :order => "group_participations.updated_on DESC" } }
 
   named_scope :limit, proc { |num| { :limit => num } }
+
+  named_scope :admin, :conditions => {:admin => true}
+  named_scope :active, :conditions => {:status => 'ACTIVE'}
+  named_scope :partial_match_uid, proc {|word|
+    {:conditions => ["users.id in (?)", UserUid.partial_match_uid(word).map{|uu| uu.user_id}], :include => [:user_uids]}
+  }
+  named_scope :partial_match_uid_or_name, proc {|word|
+    {:conditions => ["users.id in (?) OR name LIKE ?", UserUid.partial_match_uid(word).map{|uu| uu.user_id}, SkipUtil.to_lqs(word)], :include => [:user_uids]}
+  }
+  named_scope :with_basic_associations, :include => [:user_uids, :user_custom]
+
+  named_scope :order_last_accessed, proc {
+    { :order => 'user_accesses.last_access DESC', :include => [:user_access] }
+  }
 
   N_('User|Old password')
   N_('User|Password')
@@ -123,16 +150,6 @@ class User < ActiveRecord::Base
   N_('User|Uid')
 
   ACTIVATION_LIFETIME = 5
-
-  named_scope :admin, :conditions => {:admin => true}
-  named_scope :active, :conditions => {:status => 'ACTIVE'}
-  named_scope :partial_match_uid, proc {|word|
-    {:conditions => ["users.id in (?)", UserUid.partial_match_uid(word).map{|uu| uu.user_id}], :include => [:user_uids]}
-  }
-  named_scope :partial_match_uid_or_name, proc {|word|
-    {:conditions => ["users.id in (?) OR name LIKE ?", UserUid.partial_match_uid(word).map{|uu| uu.user_id}, SkipUtil.to_lqs(word)], :include => [:user_uids]}
-  }
-  named_scope :with_basic_associations, :include => [:user_uids, :user_custom]
 
   def to_s
     return 'uid:' + uid.to_s + ', name:' + name.to_s
@@ -188,12 +205,19 @@ class User < ActiveRecord::Base
   end
 
   def self.auth(code_or_email, password, key_phrase = nil)
-    return nil unless user = find_by_code_or_email_with_key_phrase(code_or_email, key_phrase)
-    return nil if user.unused?
+    return _("Log in failed.") unless user = find_by_code_or_email_with_key_phrase(code_or_email, key_phrase)
+    return _("Log in failed.") if user.unused?
     if user.crypted_password == encrypt(password)
-      auth_successed(user)
+      if user.locked?
+        _("This account is locked. Please reset password.")
+      elsif !user.within_time_limit_of_password?
+        _("Password is expired. Please reset password.")
+      else
+        auth_successed(user)
+      end
     else
       auth_failed(user)
+      _("Log in failed.")
     end
   end
 
@@ -448,7 +472,7 @@ class User < ActiveRecord::Base
   end
 
   def openid_identifier
-    identity_url(:user => self.code, :protocol => Admin::Setting.protocol_by_initial_settings_default, :host => Admin::Setting.host_and_port_by_initial_settings_default)
+    identity_url(:user => self.code, :protocol => SkipEmbedded::InitialSettings['protocol'], :host => SkipEmbedded::InitialSettings['host_and_port'])
   end
 
   def to_s_log message

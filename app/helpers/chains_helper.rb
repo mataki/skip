@@ -14,4 +14,15 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 module ChainsHelper
+  def chain_tag_search_links_tag comma_tags, options = {}
+    return '' if comma_tags.blank?
+    tag_links = comma_tags.split(',').map do |tag|
+      link_to h(tag), users_path(:tag_words => h(tag)), :class => "tag"
+    end
+    if max = options[:max] and max > 0
+      toggle_links(tag_links, max)
+    else
+      tag_links.join('&nbsp;')
+    end
+  end
 end

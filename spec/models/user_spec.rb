@@ -231,8 +231,8 @@ end
 
 describe User, "#before_save" do
   before do
-    SkipEmbedded::InitialSettings.stub!("[]").with('login_mode').and_return('password')
-    SkipEmbedded::InitialSettings.stub!("[]").with('sha1_digest_key').and_return("digest_key")
+    SkipEmbedded::InitialSettings['login_mode'] = 'password'
+    SkipEmbedded::InitialSettings['sha1_digest_key'] = "digest_key"
   end
   describe '新規の場合' do
     before do
@@ -436,8 +436,8 @@ end
 
 describe User, '#change_password' do
   before do
-    SkipEmbedded::InitialSettings.stub!("[]").with('login_mode').and_return('password')
-    SkipEmbedded::InitialSettings.stub!("[]").with('sha1_digest_key').and_return("digest_key")
+    SkipEmbedded::InitialSettings['login_mode'] = 'password'
+    SkipEmbedded::InitialSettings['sha1_digest_key'] = 'digest_key'
     @user = create_user(:user_options => {:password => 'Password1'})
     @old_password = 'Password1'
     @new_password = 'Hogehoge1'
@@ -509,37 +509,57 @@ describe User, ".create_with_identity_url" do
 end
 
 describe User, ".auth" do
-  before do
-    @valid_password = 'valid_password'
-  end
+  subject { User.auth('code_or_email', "valid_password") }
+
   describe "指定したログインID又はメールアドレスに対応するユーザが存在する場合" do
     before do
       @user = create_user
-      @user.stub!(:crypted_password).and_return(User.encrypt(@valid_password))
+      @user.stub!(:crypted_password).and_return(User.encrypt("valid_password"))
       User.stub!(:find_by_code_or_email_with_key_phrase).and_return(@user)
     end
     describe "未使用ユーザの場合" do
       before do
         @user.stub!(:unused?).and_return(true)
-        User.should_receive(:find_by_code_or_email_with_key_phrase).and_return(@user)
       end
-      it { User.auth('code_or_email', @valid_password).should be_nil }
+      it { should == "Log in failed." }
     end
     describe "使用中ユーザの場合" do
       before do
         @user.stub!(:unused?).and_return(false)
-        User.should_receive(:find_by_code_or_email_with_key_phrase).and_return(@user)
+        User.stub(:auth_successed).and_return(@user)
+        User.stub(:auth_failed)
       end
+
       describe "パスワードが正しい場合" do
         it '認証成功処理が行われること' do
           User.should_receive(:auth_successed).with(@user)
-          User.auth('code_or_email', @valid_password)
+          User.auth('code_or_email', "valid_password")
+        end
+        it "ユーザが返ること" do
+          should == @user
         end
       end
       describe "パスワードは正しくない場合" do
         it '認証失敗処理が行われること' do
           User.should_receive(:auth_failed).with(@user)
           User.auth('code_or_email', 'invalid_password')
+        end
+        it "エラーメッセージが返ること" do
+          User.auth('code_or_email', 'invalid_password').should == "Log in failed."
+        end
+      end
+      describe "パスワードの有効期限が切れている場合" do
+        before do
+          @user.stub!(:within_time_limit_of_password?).and_return(false)
+        end
+        it "エラーメッセージが返ること" do
+          should == "Password is expired. Please reset password."
+        end
+      end
+      describe "アカウントがロックされている場合" do
+        it "エラーメッセージが返ること" do
+          @user.stub!(:locked?).and_return(true)
+          should == "This account is locked. Please reset password."
         end
       end
     end
@@ -548,7 +568,7 @@ describe User, ".auth" do
     before do
       User.should_receive(:find_by_code_or_email_with_key_phrase).and_return(nil)
     end
-    it { User.auth('code_or_email', @valid_password).should be_nil }
+    it { should == "Log in failed." }
   end
 end
 
@@ -874,13 +894,15 @@ end
 
 describe User, "#belong_symbols_with_collaboration_apps" do
   before do
-    Admin::Setting.stub!(:host_and_port_by_initial_settings_default).and_return("test.host")
-    Admin::Setting.stub!(:protocol_by_initial_settings_default).and_return("http://")
+    SkipEmbedded::InitialSettings['host_and_port'] = 'test.host'
+    SkipEmbedded::InitialSettings['protocol'] = 'http://'
     @user = stub_model(User, :belong_symbols => ["uid:a_user", "gid:a_group"], :code => "a_user")
   end
   describe "SkipEmbedded::InitialSettingsが設定されている場合" do
     before do
-      SkipEmbedded::InitialSettings.stub!("[]").with("belong_info_apps").and_return({ 'app' => { "url" => "http://localhost:3100/notes.js", "ca_file" => "hoge/fuga" } })
+      SkipEmbedded::InitialSettings["belong_info_apps"] = {
+        'app' => { "url" => "http://localhost:3100/notes.js", "ca_file" => "hoge/fuga" }
+      }
     end
     describe "情報が返ってくる場合" do
       before do
@@ -914,7 +936,7 @@ describe User, "#belong_symbols_with_collaboration_apps" do
   end
   describe "SkipEmbedded::InitialSettingsが設定されていない場合" do
     before do
-      SkipEmbedded::InitialSettings.stub!("[]").with("belong_info_apps").and_return(nil)
+      SkipEmbedded::InitialSettings["belong_info_apps"] = {}
     end
     it "SKIP内の所属情報を返すこと" do
       ["uid:a_user", "gid:a_group", Symbol::SYSTEM_ALL_USER, "public"].each do |symbol|
@@ -926,8 +948,8 @@ end
 
 describe User, "#openid_identifier" do
   before do
-    Admin::Setting.stub!(:host_and_port_by_initial_settings_default).and_return("test.host")
-    Admin::Setting.stub!(:protocol_by_initial_settings_default).and_return("http://")
+    SkipEmbedded::InitialSettings['host_and_port'] = 'test.host'
+    SkipEmbedded::InitialSettings['protocol'] = 'http://'
     @user = stub_model(User, :code => "a_user")
   end
   it "OPとして発行する OpenID identifier を返すこと" do
@@ -1054,8 +1076,8 @@ describe User, '.synchronize_users' do
   describe '二人の利用中のユーザと一人の退職ユーザと一人の未使用ユーザが存在する場合' do
     before do
       User.delete_all
-      Admin::Setting.stub!(:protocol_by_initial_settings_default).and_return('http://')
-      Admin::Setting.stub!(:host_and_port_by_initial_settings_default).and_return('localhost:3000')
+      SkipEmbedded::InitialSettings['host_and_port'] = 'localhost:3000'
+      SkipEmbedded::InitialSettings['protocol'] = 'http://'
       @bob = create_user :user_options => {:name => 'ボブ', :admin => false}, :user_uid_options => {:uid => 'boob'}
       @alice = create_user :user_options => {:name => 'アリス', :admin => true}, :user_uid_options => {:uid => 'alice'}
       @carol = create_user :user_options => {:name => 'キャロル', :admin => false}, :user_uid_options => {:uid => 'carol'}, :status => 'RETIRED'
@@ -1182,7 +1204,7 @@ describe User, 'password_required?' do
   end
   describe 'パスワードモードの場合' do
     before do
-      SkipEmbedded::InitialSettings.stub!('[]').with('login_mode').and_return('password')
+      SkipEmbedded::InitialSettings['login_mode'] = 'password'
     end
     describe 'パスワードが空の場合' do
       before do
@@ -1229,7 +1251,7 @@ describe User, 'password_required?' do
   end
   describe 'パスワードモード以外の場合' do
     before do
-      SkipEmbedded::InitialSettings.stub!('[]').with('login_mode').and_return('rp')
+      SkipEmbedded::InitialSettings['login_mode'] = 'rp'
     end
     it '必要ではない(false)と判定されること' do
       @user.send(:password_required?).should be_false

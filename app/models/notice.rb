@@ -36,7 +36,7 @@ class Notice < ActiveRecord::Base
       :conditions => find_params[:conditions],
       :include => find_params[:include] | [:user_readings, :board_entry_comments]
     )
-    antennas << { :name => _("Trace Comments"), :user_id => user.id, :type => 'comment', :count => comment_count }
+    antennas << { :name => _("Trace Comments"), :user_id => user.id, :type => 'comment', :count => comment_count, :icon => 'comment' }
 
     # ブクマの行方 /page/% をブクマしている人のみに表示する
     if (bookmarks = Bookmark.find(:all,
@@ -49,19 +49,9 @@ class Notice < ActiveRecord::Base
 
       bookmark_count = 0
       bookmarks.each { |bookmark| bookmark_count+=1 if urls.include?(bookmark.url) } if urls.size > 0
-      antennas << {:name => _("Track of Bookmarks"), :user_id => user.id, :type => 'bookmark', :count => bookmark_count }
+      antennas << {:name => _("Track of Bookmarks"), :user_id => user.id, :type => 'bookmark', :count => bookmark_count, :icon => 'tag_blue' }
     end
 
-    if user.group_symbols.size > 0
-      find_params = BoardEntry.make_conditions user.belong_symbols, { :symbols => user.group_symbols}
-      find_params[:conditions][0] << " and user_readings.read = ? and user_readings.user_id = ?"
-      find_params[:conditions] << false << user.id
-      group_count = BoardEntry.count(
-        :conditions => find_params[:conditions],
-        :include => find_params[:include] | [:user_readings]
-      )
-      antennas << {:name => _("Your Groups"), :user_id => user.id, :type => 'joined_group', :count => group_count }
-    end
     antennas
   end
 

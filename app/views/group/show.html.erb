@@ -74,11 +74,12 @@
   </div><!-- group_info_space -->
 
   <% unless @recent_messages.blank? %>
-    <%= render :partial => "mypage/page_space",
-               :locals => {
-                 :id_name => 'recent_messages',
-                 :title_name => _('Recent Entries'),
-                 :pages => @recent_messages } %>
+    <%= render :partial => "entries/topix_entries",
+      :locals => {
+        :title => _('Recent Entries'),
+        :entries => @recent_messages
+      }
+    %>
   <% end %>
 
   <%= render(:partial => 'collaboration_app/feeds') %>

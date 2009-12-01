@@ -1,0 +1,17 @@
+<% owner ||= (current_target_user || current_target_group) %>
+<% if tags = Tag.share_files_owned_by(owner).all(:select => '*, count(tags.id) as count') and !tags.empty? -%>
+<div class="box_space">
+  <div class="box_space_title"><%= icon_tag 'tag_blue' -%><%= _('Tags')%></div>
+  <div class="box_space_body tag_cloud">
+  <% tag_cloud tags do |name, count, css_class| -%>
+    <%=
+        link_to_unless_current h(name), {:category => h(name)}, :class => "tag #{css_class}" do
+          content_tag :span, h(name), :class => "tag #{css_class}"
+        end
+    %>
+    <span class="count">(<%= h count %>)</span>
+  <% end -%>
+  </div>
+  <div class="box_space_bottom"><a href="#" id="search_cancel"><%=_("[Cancel selection]")%></a></div>
+</div><!-- box_space -->
+<% end -%>

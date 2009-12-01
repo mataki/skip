@@ -47,7 +47,7 @@ describe SkipHelper, '#skip_jquery_path' do
     end
     describe '通常のjqueryプラグインの場合' do
       it 'minifiedされたjquery pluginへのパスが返却されること' do
-        helper.skip_jquery_path('nyroModal').should == '/javascripts/skip/jquery/plugins/minified/nyroModal.min.js'
+        helper.skip_jquery_path('foo').should == '/javascripts/skip/jquery/plugins/minified/foo.min.js'
       end
     end
   end
@@ -72,7 +72,7 @@ describe SkipHelper, '#skip_jquery_path' do
     end
     describe '通常のjqueryプラグインの場合' do
       it 'jquery pluginへのパスが返却されること' do
-        helper.skip_jquery_path('nyroModal').should == '/javascripts/skip/jquery/plugins/nyroModal.js'
+        helper.skip_jquery_path('foo').should == '/javascripts/skip/jquery/plugins/foo.js'
       end
     end
   end

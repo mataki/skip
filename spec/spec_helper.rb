@@ -171,6 +171,7 @@ def create_board_entry options = {}
                                :date => Date.today,
                                :user_id => 1,
                                :last_updated => Date.today,
+                               :category => '',
                                :publication_type => 'public'}.merge(options))
   yield board_entry if block_given?
   board_entry.save!
@@ -239,6 +240,16 @@ end
 # https://rspec.lighthouseapp.com/projects/5645/tickets/98-11834-fake-controller-flash-object
 def stub_flash_now
   controller.instance_eval{flash.stub!(:sweep)}
+end
+
+module SkipEmbedded
+  class InitialSettings
+    # テストの時のみ値の入れ替えを可能にしたいので。
+    def self.[]=(key, val)
+      instance.instance_variable_set(:@config, instance.instance_variable_get(:@config).dup)
+      instance.instance_variable_get(:@config)[key] = val
+    end
+  end
 end
 
 ######skip関連のテストで必要

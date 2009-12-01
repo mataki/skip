@@ -1,5 +1,4 @@
-<div class="box_space antenna" style="position: relative;">
-  <div style="position: absolute; top: 4px; right: 4px;"><%= icon_tag 'help', :title => _('What is Subscription') + "|" + _('Subscription Description') %></div>
+<div class="box_space antenna">
   <div class="box_space_title">
     <%= icon_tag 'transmit' %><%= link_to(_("Subscriptions"), :action => 'entries_by_antenna') %>
   </div>
@@ -7,19 +6,20 @@
     <ul class="notices system">
       <% Notice.systems(current_user).each do |notice| -%>
         <% count_as_s = notice[:count] > 0 ? "(#{h notice[:count]})" : '' -%>
-        <li><%= link_to(h(notice[:name]), :action => 'entries_by_antenna', :target_type => notice[:type]) + count_as_s %></li>
+        <li><%= link_to(icon_tag(notice[:icon]) +  h(notice[:name]), :action => 'entries_by_antenna', :target_type => notice[:type]) + count_as_s %></li>
       <% end -%>
     </ul>
-      <% notices_group_by_type = current_user.notices.group_by(&:target_type) -%>
-      <% notices_group_by_type.keys.each do |key| -%>
-        <% if sorted_notices = notices_group_by_type[key].sort_by{|n| n.unread_count(current_user)}.reverse.delete_if{|n| n.unread_count(current_user) == 0 } and !sorted_notices.empty? -%>
-          <% content_tag(:ul, :class => 'notices by_type') do -%>
-            <% sorted_notices.each do |notice| -%>
-              <% count_as_s = "(#{notice.unread_count(current_user).to_s})" -%>
-              <li><%= link_to(h(notice.target.name), :action => 'entries_by_antenna', :target_type => notice.target.class.name.downcase, :target_id => notice.target.id) + count_as_s %></li>
-            <% end -%>
+    <% notices_group_by_type = current_user.notices.group_by(&:target_type) -%>
+    <% notices_group_by_type.keys.each do |key| -%>
+      <% if sorted_notices = notices_group_by_type[key].sort_by{|n| n.unread_count(current_user)}.reverse.delete_if{|n| n.unread_count(current_user) == 0 } and !sorted_notices.empty? -%>
+        <% content_tag(:ul, :class => 'notices by_type') do -%>
+          <% sorted_notices.each do |notice| -%>
+            <% count_as_s = "(#{notice.unread_count(current_user).to_s})" -%>
+            <% icon_name = notice.target.is_a?(User) ? 'user_suit' : 'group' -%>
+            <li><%= link_to(icon_tag(icon_name) + truncate(h(notice.target.name), :length => 12), :action => 'entries_by_antenna', :target_type => notice.target.class.name.downcase, :target_id => notice.target.id) + count_as_s %></li>
           <% end -%>
         <% end -%>
       <% end -%>
+    <% end -%>
   </div>
 </div>

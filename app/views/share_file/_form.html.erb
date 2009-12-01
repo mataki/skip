@@ -44,7 +44,7 @@ table {
 
 <div class="input_line">
   <div class="input_label"><%= _('Tags')%></div>
-  <div class="input_value"><%= text_field 'share_file', 'category', :size => '60', :value => @share_file.comma_category %>
+  <div class="input_value"><%= text_field 'share_file', 'category', :size => '60', :value => @share_file.category %>
     <div id="category_box" style="display:none;">
       <div id="candidates_list"><p><%= _('Multiple values can be given in foo,bar format')%></p></div>
       <div style="font-size:10pt; font-weight:bold;"><%= _('Tags: ')%></div><div id="tags_list" style="margin-bottom:5px;"></div>

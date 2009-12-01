@@ -84,12 +84,14 @@ class RankingsController < ApplicationController
     # parse出来ないケースで例外を起こして現在時刻を設定するため
     @target_date = Time.parse(params[:target_date], 0) rescue Time.now
 
-    popular_bookmarks = PopularBookmark.find(:all,
-                                             :conditions => ["date = ?", @target_date],
-                                             :order =>'count DESC' ,
-                                             :include => [:bookmark])
+    popular_bookmarks = PopularBookmark.scoped(
+      :conditions => ["date = ?", @target_date],
+      :order =>'count DESC' ,
+      :include => [:bookmark]
+    ).all
+
     @bookmarks = []
-    if popular_bookmarks && popular_bookmarks.size > 0
+    unless popular_bookmarks.empty?
       popular_bookmarks.each do |popular_bookmark|
         popular_bookmark.bookmark.bookmark_comments.each do |comment|
           if comment.public
@@ -98,7 +100,7 @@ class RankingsController < ApplicationController
           end
         end
       end
-      @last_updated = popular_bookmarks.first.created_on.strftime("%Y/%m/%d %H:%M")
+      @last_updated = popular_bookmarks.first.created_on.strftime(_("%B %d %Y"))
     else
       flash.now[:notice] = _('No matched bookmark.')
     end

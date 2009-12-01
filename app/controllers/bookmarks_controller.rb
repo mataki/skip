@@ -25,7 +25,7 @@ class BookmarksController < ApplicationController
       :conditions => Bookmark.make_conditions(params),
       :include => :bookmark_comments,
       :order => get_order_query(params[:sort_type])
-    ).paginate(:page => params[:page], :per_page => 20)
+    ).paginate(:page => params[:page], :per_page => 25)
 
     flash.now[:notice] = _('No matching bookmarks found') if @bookmarks.empty?
   end

@@ -9,14 +9,21 @@
 
   <div class="edit_form_space ui-corner-all">
   <% form_tag :action => 'update_message_unsubscribes' do -%>
-    <table class="normal margin05emver" border="1">
+    <table class="manage_message">
+      <col class="col25" />
+      <col />
       <tbody>
-    <% Message::MESSAGE_TYPES.each do |message_type, message_hash| -%>
         <tr>
-          <th width="200px"><%= h _(message_hash[:name]) %></th>
-          <td><%= label_tag("message_type[#{message_type}]", _('Notify')) %><%= check_box_tag("message_type[#{message_type}]", "ON", !@unsubscribes.include?(message_type)) %></td>
+          <th>&nbsp;</th>
+          <th><%= _('description') %></th>
         </tr>
-    <% end -%>
+        <% Message::MESSAGE_TYPE_KEYS.each do |message_type| -%>
+          <% message_hash = Message::MESSAGE_TYPES[message_type] -%>
+          <tr class=<%= cycle 'even', 'odd' %>>
+            <td><%= check_box_tag("message_type[#{message_type}]", "ON", !@unsubscribes.include?(message_type)) %></td>
+            <td><%= label_tag("message_type[#{message_type}]", h(_(message_hash[:name]))) %></td>
+          </tr>
+        <% end -%>
       </tbody>
     </table>
     <%= submit_tag _('Save') %>

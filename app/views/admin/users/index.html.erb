@@ -1,10 +1,9 @@
-<div class="box"><%= _('You can create new user and edit / view existing user profiles.') %></div>
 <%= render :partial => '/admin/data_menu_box' %>
 <% content_for :topic_path do -%>
 <%= render :partial => '/admin/shared/topic_path' %>
 <% end -%>
 <% content_for :contents_right do -%>
-
+  <div class="box"><%= _('You can create new user and edit / view existing user profiles.') %></div>
 <div class="box tabular">
   <%= render :partial => '/admin/search_box', :locals => { :class_name => 'Admin::User' } %>
   <% form_tag issue_activation_codes_admin_users_path do -%>
@@ -20,8 +19,8 @@
       when "status"
         if object.unused?
           if !object.activation_token.nil? and object.within_time_limit_of_activation_token?
-            confirm_link = link_to( _('Confirm'), show_signup_url_admin_user_path(object), :class => 'nyroModal')
-            _('To be activated') + "(#{confirm_link})"
+            signup_url = signup_url(object.activation_token)
+            _('To be activated') + "(" + link_to(_('Confirm'), h(signup_url)) + ")"
           else
             issue_link_str = SkipEmbedded::InitialSettings['mail']['show_mail_function'] ? _('Notify activation') : _('Prepare for activation')
             issue_link = link_to(issue_link_str, issue_activation_code_admin_user_path(object), :class => 'issue_activation_code_link')
@@ -40,7 +39,7 @@
         s_("User|Locked|#{object.locked}")
       when "issued_at", "last_authenticated_at", "password_expires_at"
         time = object.send(column.to_sym)
-        time.blank? ? '' : time.strftime("%Y/%m/%d %H:%M:%S")
+        time.blank? ? '' : time.strftime(_('%m/%d/%Y %H:%M'))
       else
         object.send(column.to_sym)
       end
@@ -71,11 +70,6 @@
 <% end -%>
 
 <% content_for :javascript_initializers do -%>
-    $j.fn.nyroModal.settings.processHandler = function(settings) {
-        $j.nyroModalSettings({
-            minWidth: 10, minHeight: 10
-        });
-    };
     $j('.issue_activation_code_link')
     .click(function() {
         return confirm('<%= SkipEmbedded::InitialSettings['mail']['show_mail_function'] ? _('Are you sure to send activation email to target user?') : _('Activation URL is to be issued. Send the URL shown by clicking the confirmation link in the next screen to the user.') %>');

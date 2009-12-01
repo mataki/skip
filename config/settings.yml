@@ -48,10 +48,6 @@ footer_image_link_url:
 contact_mail_contain_contents:
   format: boolean
   default: false
-host_and_port:
-  default: localhost:3000
-protocol:
-  default: http://
 
 # その他
 # --------------------------------------------------------------------------------------------------

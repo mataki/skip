@@ -38,6 +38,9 @@ module NavigationHelpers
     when /(.*)ランキングの総合ページ/
       url_for(:controller => "rankings", :action => "data", :content_type => $1, :year => "", :month => "")
 
+    when /^(.*)グループのトップページ$/
+      url_for(:controller => "/group", :action => "show", :gid => $1)
+
     # Add more mappings here.
     # Here is a more fancy example:
     #

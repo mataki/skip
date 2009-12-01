@@ -3,22 +3,10 @@
 <% end -%>
 
 <% content_for :contents_top do -%>
-  <% if (@message_array.size > 0) or (@waiting_groups.size > 0) or (@system_messages.size > 0) -%>
+  <% unless system_message_links.empty? -%>
     <div class="top_info system_message ui-corner-all">
-      <% @system_messages.each do |message| -%>
-        <div class="item">
-          <%= link_to(icon_tag(message[:icon]) + h(message[:text]), message[:option]) %>
-        </div>
-      <% end -%>
-      <% @message_array.each do |message| -%>
-        <div class="item">
-          <%= link_to(icon_tag(Message::MESSAGE_TYPES[message[:message_type]][:icon_name]) + h(message[:message]), message[:link_url]) %>
-        </div>
-      <% end -%>
-      <% @waiting_groups.each do |group| -%>
-        <div class="item">
-          <%= group_link_to(group, {:view_text=>( icon_tag('group') + _('New user is waiting for approval in %s') % h(group.name) )}) %>
-        </div>
+      <% system_message_links.each do |system_message_link| -%>
+        <div class="item"><%= system_message_link %></div>
       <% end -%>
     </div>
   <% end -%>
@@ -52,7 +40,7 @@
   <% else -%>
     <div id="messages_box_no_items" class="ui-corner-all">
       <h2 class="ui-corner-top">
-        <%= icon_tag(@mail_your_messages[:title_icon]) + link_to(h(@mail_your_messages[:title_name]), :controller => "/mypage", :action => "entries_by_antenna", :target_type => "message") %>
+        <%= icon_tag(@mail_your_messages[:title_icon]) + link_to(h(@mail_your_messages[:title_name]), :controller => "/mypage", :action => "entries_by_antenna", :target_type => "message", :read => true) %>
       </h2>
       <div>
         <%= _('No messages for you') %>
@@ -113,22 +101,7 @@
       <% if @questions[:pages].empty? -%>
         <div class="margin05em"><%= _('No matching questions.') %></div>
       <% else -%>
-        <table>
-          <tbody>
-            <% @questions[:pages].each do |question| -%>
-            <tr>
-              <% entry_infos = get_entry_infos(question) -%>
-              <% categories = question.category.scan(/\[[^\]]*\]/) -%>
-              <% entry_search_links_by_category = categories.map{ |category| link_to h(category), {:controller => 'search', :action => :entry_search, :tag_words => Tag.comma_tags(h(category))}, :class => 'tag'} -%>
-              <td class="title">
-                <%= entry_link_to(question, {}, {:title => h(question.title + entry_infos)}) + hide_long_tags(entry_search_links_by_category, 3) %> <span class="supplement"><%=h entry_infos %></span>
-                <%= symbol_link_to question.symbol, @questions[:symbol2name_hash][question.symbol], :with_prefix => true %>
-                <%= '(' + _('Owner Only') + ')' if question.diary? && question.private? %>
-              </td>
-            </tr>
-            <% end -%>
-          </tbody>
-        </table>
+        <%= render :partial => "entries/topix_entries", :locals => { :entries => @questions[:pages], :symbol2name_hash => @questions[:symbol2name_hash] } %>
       <% end -%>
     </div>
 
@@ -183,7 +156,7 @@
       <% @recent_groups.each do |group| -%>
         <div class="topix_line">
           <div class="page_title">
-            <%= get_group_icon(group.group_category, :margin => true) %><%= group_link_to(group) %>&nbsp;<span class="small">(<%= truncate(strip_tags(group.description), 30) %>)</span>
+            <%= get_group_icon(group.group_category, :margin => true) %><%= group_link_to(group) %>&nbsp;<span class="small_text">(<%= truncate(strip_tags(group.description), 30) %>)</span>
           </div>
           <div class="page_date"><%=h group.created_on.strftime(_("%B %d %Y")) %></div>
         </div>
@@ -195,7 +168,9 @@
 <% end -%>
 
 <% content_for :javascript_initializers do -%>
-    $j('#tabs').tabs({ cookie:{ expires:30 } });
+    $j('#tabs').tabs({
+      cookie: { expires:30 }
+    });
     $j('#tabs').show();
 
     $j('.pagination a').live('click', function() {

@@ -23,20 +23,7 @@ module SkipHelper
 
   # （javascripts/skip以下に格納されている）JavaScriptを参照する
   def skip_javascript_include_tag source
-    return skip_util_javascript_include_tag if source.include? 'skip_util'
     javascript_include_tag("/javascripts/skip/#{source}")
-  end
-
-  # （javascripts/skip/skip_util.js）を参照する
-  def skip_util_javascript_include_tag
-    <<-EOS
-<script language="JavaScript" type="text/javascript">
-<!--
-var platform_url_root = '#{root_url.chop}';
-//-->
-</script>
-#{javascript_include_tag('/javascripts/skip/skip_util')}
-    EOS
   end
 
   def skip_reflect_customized_javascript_include_tag

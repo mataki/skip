@@ -28,6 +28,25 @@ describe Group do
     end
   end
 
+  describe Group, "承認が必要なグループが不要にが変更されたとき" do
+    before do
+      @group = create_group(:protected => true)
+      @user = create_user
+      @participation = @group.group_participations.create!(:user=>@user, :waiting => true)
+      @group.reload; @user.reload
+    end
+    it "正しい状態であること" do
+      @group.users.should == []
+      @group.group_participations.waiting.should be_include(@participation)
+      @user.group_participations.waiting.should be_include(@participation)
+      @group.users.should_not be_include(@user)
+    end
+    it "承認待ちのユーザは全て参加済みになっていること" do
+      @group.update_attributes!(:protected => false)
+      @group.users.should be_include(@user)
+    end
+  end
+
   describe Group, 'validation' do
     before do
       @group = valid_group
@@ -73,24 +92,6 @@ describe Group do
     it 'default_publication_typeに、publicとprivate以外を指定するとエラーになること' do
       @group.default_publication_type = 'foo'
       @group.valid?.should be_false
-    end
-  end
-
-  describe Group, "あるグループがあるとき" do
-    fixtures :users
-    before(:each) do
-      @group = Group.new({ :name => 'hoge', :gid => 'hoge', :description => 'hoge', :protected => '1',
-                         :created_on => Time.now, :updated_on => Time.now })
-      @link_group = mock_model(Group)
-      @link_group.stub!(:name).and_return('foo')
-      @link_group.stub!(:symbol).and_return('foo')
-      Group.should_receive(:find_by_gid).twice.and_return(@link_group)
-    end
-
-    it "イベント招待メールが投稿できる" do
-      lambda {
-        @group.create_entry_invite_group(users(:a_user).id, 'hoge', ['uid:hoge'])
-      }.should change(BoardEntry, :count).by(1)
     end
   end
 
@@ -155,7 +156,7 @@ describe Group do
       @share_file = share_files(:a_share_file)
       @board_entry.symbol = @group.symbol
       @board_entry.entry_type = BoardEntry::GROUP_BBS
-      @board_entry.category = @board_entry.comma_category
+      @board_entry.category = ''
       @board_entry.save!
       @board_entry.board_entry_comments.create! :contents => 'contents', :user => create_user
 
@@ -168,42 +169,6 @@ describe Group do
     it { lambda { @group.logical_destroy }.should change(BoardEntry, :count).by(-1) }
     it { lambda { @group.logical_destroy }.should change(ShareFile, :count).by(-1) }
     it { lambda { @group.logical_destroy }.should change(BoardEntryComment, :count).by(-1) }
-  end
-
-  describe Group, "count_by_category" do
-    before do
-      @alice = create_user :user_options => {:name => 'アリス', :admin => true}, :user_uid_options => {:uid => 'alice'}
-      @dev_category = create_group_category :code => 'dev'
-      @vim_group = create_group :gid => 'vim_group', :group_category_id => @dev_category.id do |g|
-        g.group_participations.build(:user_id => @alice.id, :owned => true)
-      end
-      @tom = create_user :user_options => {:name => 'トム', :admin => true}, :user_uid_options => {:uid => 'toom'}
-      @emacs_group = create_group :gid => 'emacs_group', :group_category_id => @dev_category.id do |g|
-        g.group_participations.build(:user_id => @tom.id, :owned => true)
-      end
-      @misc_category = create_group_category :code => 'misc'
-      @move_group = create_group :gid => 'move_group', :group_category_id => @misc_category.id do |g|
-        g.group_participations.build(:user_id => @tom.id, :owned => true)
-      end
-    end
-
-    describe 'ユーザを指定しない場合' do
-      it "グループのカテゴリとそのカテゴリのグループ数および全グループ数を返す" do
-        group_counts, total_count = Group.count_by_category
-        group_counts[@dev_category.id].should == 2
-        group_counts[@misc_category.id].should == 1
-        total_count.should == 3
-      end
-    end
-
-    describe 'ユーザを指定する場合' do
-      it 'ユーザの所属するグループのカテゴリとそのカテゴリのグループ数及び全グループ数を返す' do
-        group_counts, total_count = Group.count_by_category(@alice)
-        group_counts[@dev_category.id].should == 1
-        group_counts[@misc_category.id].should == 0
-        total_count.should == 1
-      end
-    end
   end
 
   describe Group, '#administrator? ' do
@@ -257,8 +222,8 @@ describe Group do
     describe '2つの同期対象グループが存在する場合' do
       before do
         Group.delete_all
-        Admin::Setting.stub!(:protocol_by_initial_settings_default).and_return('http://')
-        Admin::Setting.stub!(:host_and_port_by_initial_settings_default).and_return('localhost:3000')
+        SkipEmbedded::InitialSettings['host_and_port'] = 'localhost:3000'
+        SkipEmbedded::InitialSettings['protocol'] = 'http://'
         bob = create_user :user_options => {:name => 'ボブ', :admin => false}, :user_uid_options => {:uid => 'boob'}
         alice = create_user :user_options => {:name => 'アリス', :admin => true}, :user_uid_options => {:uid => 'alice'}
         tom = create_user :user_options => {:name => 'トム', :admin => true}, :user_uid_options => {:uid => 'toom'}

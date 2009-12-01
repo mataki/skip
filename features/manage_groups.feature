@@ -18,31 +18,145 @@ Feature: グループの管理
 
     Then    flashメッセージに"グループが正しく作成されました。"と表示されていること
 
-  Scenario: ユーザとしてグループの新規作成に失敗する
+  Scenario: ユーザとして承認が不要なグループに参加することが出来る
+    Given 以下のグループを作成する:
+      |owner    |gid        |name         |waiting  |
+      |alice    |vim_group  |VimGroup     |false    |
 
-  Scenario: グループ管理者は、参加者を追加することができる
-    Given "a_user"で"rails"というグループを作成する
+    When "a_user"でログインする
+    And "vim_groupグループのトップページ"にアクセスする
+    And "参加する"リンクをクリックする
 
-    When  "管理"リンクをクリックする
-    And   "参加者管理"リンクをクリックする
-    And   "symbol"に"uid:100003"と入力する
-    And   "参加者に追加"ボタンをクリックする
-    Then  flashメッセージに"a_group_owned_userさんを参加者に追加し、お知らせのフォーラムを作成しました。"と表示されていること
-    And   "a_group_owned_user"と表示されていること
+    Then flashメッセージに"グループに参加しました。"と表示されていること
 
-    When  "symbol"に"uid:100003"と入力する
-    And   "参加者に追加"ボタンをクリックする
-    Then  flashメッセージに"a_group_owned_userさんは既に参加済み/参加申請済みです。"と表示されていること
+    When "alice"でログインする
+    And "[VimGroup]に新しい参加者がいます!"と表示されていること
 
-    When  "symbol"に"uid:not_exist_user"と入力する
-    And   "参加者に追加"ボタンをクリックする
+  Scenario: ユーザとして承認が必要なグループに参加することが出来る
+    Given 以下のグループを作成する:
+      |owner    |gid        |name         |waiting  |
+      |alice    |vim_group  |VimGroup     |true     |
 
-    Then  flashメッセージに"ユーザ・グループの選択が正しくありません。"と表示されていること
+    When "a_user"でログインする
+    And "vim_groupグループのトップページ"にアクセスする
+    And "参加する"リンクをクリックする
 
-    When  "symbol"に"gid:a_protected_group1"と入力する
-    And   "参加者に追加"ボタンをクリックする
-    Then  flashメッセージに"a_protected_group1のメンバーを参加者に追加し、お知らせのフォーラムを作成しました。"と表示されていること
+    Then flashメッセージに"参加申し込みをしました。承認されるのをお待ちください。"と表示されていること
 
-    When  "symbol"に"gid:not_exist_group"と入力する
-    And   "参加者に追加"ボタンをクリックする
-    Then  flashメッセージに"ユーザ・グループの選択が正しくありません。"と表示されていること
+    When "alice"でログインする
+
+    Then "[VimGroup]に承認待ちのユーザがいます!"と表示されていること
+
+    When "[VimGroup]に承認待ちのユーザがいます!"リンクをクリックする
+
+    # 承認画面に遷移
+    Then "参加許可"と表示されていること
+
+  Scenario: ユーザとして参加中のグループから退会することが出来る
+    Given 以下のグループを作成する:
+      |owner    |gid        |name         |waiting  |
+      |alice    |vim_group  |VimGroup     |false    |
+    And "a_user"が"vim_group"グループに参加する
+
+    When "a_user"でログインする
+    And "vim_groupグループのトップページ"にアクセスする
+    And "退会する"リンクをクリックする
+
+    Then flashメッセージに"退会しました。"と表示されていること
+
+    When "alice"でログインする
+    And "a_userさんが[VimGroup]から退会しました。"と表示されていること
+
+  Scenario: グループ管理者として参加申請中のユーザを承認することが出来る
+  Scenario: グループ管理者として参加申請中のユーザを棄却することが出来る
+
+  Scenario: グループ管理者としてユーザを強制参加させることが出来る
+    Given 以下のグループを作成する:
+      |owner    |gid        |name         |waiting  |
+      |alice    |rails      |Rails        |false    |
+      |kenji    |vim_group  |VimGroup     |false    |
+    And "johji"がユーザ登録する
+
+    When "alice"でログインする
+    And "railsグループのトップページ"にアクセスする
+    And "管理"リンクをクリックする
+    And "参加者管理"リンクをクリックする
+    And "symbol"に"uid:johji"と入力する
+    And "参加者に追加"ボタンをクリックする
+    Then flashメッセージに"johjiさんを参加者に追加しました。"と表示されていること
+    And "johji"と表示されていること
+
+    When "johji"でログインする
+    Then "[Rails]に参加することになりました。"と表示されていること
+
+    When "alice"でログインする
+    And "railsグループのトップページ"にアクセスする
+    And "管理"リンクをクリックする
+    And "参加者管理"リンクをクリックする
+    And "symbol"に"uid:johji"と入力する
+    And "参加者に追加"ボタンをクリックする
+    Then flashメッセージに"johjiさんは既に参加済み/参加申請済みです。"と表示されていること
+
+    When "symbol"に"uid:not_exist_user"と入力する
+    And "参加者に追加"ボタンをクリックする
+
+    Then flashメッセージに"ユーザ・グループの選択が正しくありません。"と表示されていること
+
+    When "symbol"に"gid:vim_group"と入力する
+    And "参加者に追加"ボタンをクリックする
+    Then flashメッセージに"VimGroupの参加者をこのグループの参加者に追加しました。"と表示されていること
+
+    When "symbol"に"gid:not_exist_group"と入力する
+    And "参加者に追加"ボタンをクリックする
+    Then flashメッセージに"ユーザ・グループの選択が正しくありません。"と表示されていること
+
+  Scenario: グループ管理者としてユーザを強制退会させることが出来る
+    Given 以下のグループを作成する:
+      |owner    |gid        |name         |waiting  |
+      |alice    |vim_group  |VimGroup     |false    |
+    And "a_user"が"vim_group"グループに参加する
+
+    When "alice"でログインする
+    And "vim_groupグループのトップページ"にアクセスする
+    And "管理"リンクをクリックする
+    And "参加者管理"リンクをクリックする
+    And "[強制退会させる]"リンクをクリックする
+
+    Then flashメッセージに"a_userさんをこのグループの参加者から削除しました。"と表示されていること
+
+    When "a_user"でログインする
+
+    Then "[VimGroup]を強制退会しました。"と表示されていること
+
+  Scenario: グループ未参加時のアクション表示
+    Given 以下のグループを作成する:
+      |owner    |gid        |name         |waiting  |
+      |alice    |vim_group  |VimGroup     |false    |
+
+    When "a_user"でログインする
+    And "vim_groupグループのトップページ"にアクセスする
+
+    Then "参加する"と表示されていること
+    And "新着時に通知"と表示されていること
+    And "記事を書く"と表示されていないこと
+    And "お知らせを書く"と表示されていないこと
+    And "質問を書く"と表示されていないこと
+    And "ファイルをアップ"と表示されていないこと
+    And "退会する"と表示されていないこと
+
+  Scenario: グループ参加時のアクション表示
+    Given 以下のグループを作成する:
+      |owner    |gid        |name         |waiting  |
+      |alice    |vim_group  |VimGroup     |false    |
+    And "a_user"が"vim_group"グループに参加する
+
+    When "a_user"でログインする
+    And "vim_groupグループのトップページ"にアクセスする
+
+    Then "参加する"と表示されていないこと
+    And "新着時に通知"と表示されていないこと
+    And "記事を書く"と表示されていること
+    And "お知らせを書く"と表示されていること
+    And "質問を書く"と表示されていること
+    And "ファイルをアップ"と表示されていること
+    And "退会する"と表示されていること
