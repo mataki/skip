@@ -10,6 +10,7 @@
 
 <%= convert_plain(@entry) %>
 
+
 <%= _("Click the URL below to see all.")%>
 
     <%= url_for(:controller => :board_entries, :action => :forward, :id => @entry.id, :only_path => false) %>
