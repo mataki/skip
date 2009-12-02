@@ -34,6 +34,6 @@ module GroupsHelper
 
   # エントリ数、エントリ最終更新日時より活性状況を判定
   def upsurge_frequency entries
-    (entries.count > 50 and ((Time.now.ago(7) - entries.last.last_updated))) unless entries.empty?
+    (entries.count > 50) && (Time.now.ago(7.day) < entries.last.last_updated) unless entries.empty?
   end
 end
