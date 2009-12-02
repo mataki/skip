@@ -527,6 +527,11 @@ class User < ActiveRecord::Base
     uid
   end
 
+  def reset_simple_login_token!
+    self.simple_login_token = self.class.make_token
+    self.save!
+  end
+
 protected
   # TODO: self.make_conditionsメソッドは使ってなさそう確認して消す
   @@search_cond_keys = [:name, :section, :email]
