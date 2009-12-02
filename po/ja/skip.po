@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.4.0\n"
-"POT-Creation-Date: 2009-12-02 14:37+0900\n"
+"POT-Creation-Date: 2009-12-02 17:59+0900\n"
 "PO-Revision-Date: 2009-11-27 16:12+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -79,7 +79,7 @@ msgstr "%Y/%m"
 #: app/views/share_file/_share_file_box.html.erb:30
 #: app/views/statistics/_current_statistics.html.erb:1
 #: app/views/entry_hide_operations/_list.html.erb:6
-#: app/views/admin/users/index.html.erb:42
+#: app/views/admin/users/index.html.erb:37
 msgid "%m/%d/%Y %H:%M"
 msgstr "%Y/%m/%d %H:%M"
 
@@ -438,7 +438,7 @@ msgstr "アカウント情報"
 msgid "Account information"
 msgstr "アカウント情報"
 
-#: app/views/admin/users/import.html.erb:29
+#: app/views/admin/users/import.html.erb:28
 msgid "Accounting"
 msgstr "経理"
 
@@ -458,7 +458,7 @@ msgstr "処理の内容："
 msgid "Activate your account and start using"
 msgstr "利用開始確認メールです"
 
-#: app/views/admin/users/index.html.erb:75
+#: app/views/admin/users/index.html.erb:69
 msgid ""
 "Activation URL is to be issued. Send the URL shown by clicking the "
 "confirmation link in the next screen to the user."
@@ -593,7 +593,7 @@ msgstr "タイトル"
 msgid "Admin::Bookmark|Url"
 msgstr "URL"
 
-#: app/helpers/admin/application_helper.rb:25
+#: app/helpers/admin/application_helper.rb:26
 #: app/controllers/admin/documents_controller.rb:110
 msgid "Admin::DocumentsController"
 msgstr "説明文設定"
@@ -702,7 +702,7 @@ msgstr "グループ名"
 msgid "Admin::Group|Protected"
 msgstr "参加承認"
 
-#: app/helpers/admin/application_helper.rb:24
+#: app/helpers/admin/application_helper.rb:25
 msgid "Admin::ImagesController"
 msgstr "画像設定"
 
@@ -951,7 +951,7 @@ msgstr "利用する"
 msgid "Admin::OauthProvider"
 msgstr "連携アプリ"
 
-#: app/helpers/admin/application_helper.rb:28
+#: app/helpers/admin/application_helper.rb:29
 #: app/controllers/admin/oauth_providers_controller.rb:31
 msgid "Admin::OauthProvidersController"
 msgstr "連携アプリ設定"
@@ -970,7 +970,7 @@ msgstr "OpenID URL"
 msgid "Admin::Picture|File"
 msgstr "ファイル"
 
-#: app/helpers/admin/application_helper.rb:26
+#: app/helpers/admin/application_helper.rb:27
 #: app/controllers/admin/settings_controller.rb:23
 msgid "Admin::SettingsController|feed"
 msgstr "RSSフィード設定"
@@ -984,7 +984,7 @@ msgstr "メール関連設定"
 msgid "Admin::SettingsController|main"
 msgstr "全体設定"
 
-#: app/helpers/admin/application_helper.rb:27
+#: app/helpers/admin/application_helper.rb:28
 #: app/controllers/admin/settings_controller.rb:24
 msgid "Admin::SettingsController|security"
 msgstr "セキュリティ設定"
@@ -1585,7 +1585,7 @@ msgstr "ログインID"
 msgid "Admin::User|Code description"
 msgstr "ログインIDを入力して下さい。"
 
-#: app/models/admin/user.rb:30 app/views/admin/users/import.html.erb:22
+#: app/models/admin/user.rb:30 app/views/admin/users/import.html.erb:21
 msgid "Admin::User|Email"
 msgstr "メールアドレス"
 
@@ -1613,7 +1613,7 @@ msgstr ""
 "行うことでログイン出来るようになります。"
 
 #: app/models/admin/user.rb:28 app/views/portal/_registration_form.html.erb:16
-#: app/views/user/show.html.erb:36 app/views/admin/users/import.html.erb:21
+#: app/views/user/show.html.erb:36 app/views/admin/users/import.html.erb:20
 msgid "Admin::User|Name"
 msgstr "名前"
 
@@ -1645,7 +1645,7 @@ msgstr "ファイル名"
 msgid "Admin::User|Retired"
 msgstr "就業状態"
 
-#: app/models/admin/user.rb:32 app/views/admin/users/import.html.erb:23
+#: app/models/admin/user.rb:32 app/views/admin/users/import.html.erb:22
 msgid "Admin::User|Section"
 msgstr "所属"
 
@@ -1784,7 +1784,7 @@ msgstr ""
 "既にメールアドレスの変更を申請済みです。記入したメールアドレスで再申請しま"
 "す。"
 
-#: app/views/admin/users/import.html.erb:17
+#: app/views/admin/users/import.html.erb:16
 msgid "Append unregistered users only"
 msgstr "未登録のユーザのみを追加登録する"
 
@@ -1856,7 +1856,7 @@ msgstr "本当に削除しますか?"
 msgid "Are you sure to force this user to leave the group?"
 msgstr "このユーザを強制退会させます。本当によろしいですか？"
 
-#: app/views/admin/users/index.html.erb:75
+#: app/views/admin/users/index.html.erb:69
 msgid "Are you sure to send activation email to target user?"
 msgstr "対象ユーザに利用開始通知メールを送信しますが宜しいですか?"
 
@@ -1868,11 +1868,11 @@ msgstr "利用者全体にメールが送信されますが、宜しいですか
 #: app/views/user/_action_box.html.erb:10
 #: app/views/admin/group_categories/_index.html.erb:24
 #: app/views/admin/users/change_uid.html.erb:29
-#: app/views/admin/users/index.html.erb:53
+#: app/views/admin/users/index.html.erb:48
 #: app/views/admin/users/create_uid.html.erb:25
 #: app/views/admin/groups/index.html.erb:33
 #: app/views/admin/openid_identifiers/index.html.erb:18
-#: app/views/admin/pictures/index.html.erb:29
+#: app/views/admin/pictures/index.html.erb:28
 #: app/views/admin/board_entries/index.html.erb:35
 #: app/views/admin/share_files/index.html.erb:36
 #: app/views/admin/user_profile_master_categories/_index.html.erb:14
@@ -1947,7 +1947,7 @@ msgstr "ブログ"
 msgid "Blogs / Forums"
 msgstr "ブログ/BBS"
 
-#: app/views/admin/_data_menu_box.html.erb:8
+#: app/views/admin/_data_menu_box.html.erb:7
 msgid "Board Entries"
 msgstr "記事"
 
@@ -2239,7 +2239,7 @@ msgstr "ブックマークレット"
 #: app/controllers/services_controller.rb:44
 #: app/controllers/bookmarks_controller.rb:35
 #: app/controllers/bookmark_controller.rb:101
-#: app/views/admin/_data_menu_box.html.erb:9
+#: app/views/admin/_data_menu_box.html.erb:8
 #: app/views/bookmarks/_topix_bookmarks.html.erb:1
 msgid "Bookmarks"
 msgstr "ブックマーク"
@@ -2273,11 +2273,11 @@ msgstr "URL"
 msgid "Business"
 msgstr "業務利用"
 
-#: app/views/admin/users/import.html.erb:14
+#: app/views/admin/users/import.html.erb:13
 msgid "CSV file"
 msgstr "CSVファイル"
 
-#: app/views/admin/users/import.html.erb:8
+#: app/views/admin/users/import.html.erb:7
 msgid "CSV file needs to be encoded in UTF-8."
 msgstr "CSVファイルの文字コードはUTF-8にしてアップロードするようにして下さい。"
 
@@ -2400,7 +2400,7 @@ msgid "Change Profile Picture"
 msgstr "プロフィール画像変更"
 
 #: app/controllers/admin/users_controller.rb:171
-#: app/views/admin/users/edit.html.erb:16
+#: app/views/admin/users/edit.html.erb:14
 msgid "Change uid"
 msgstr "ユーザ名変更"
 
@@ -2412,7 +2412,7 @@ msgstr "プロフィール画像を変更しましょう！"
 msgid "Changed."
 msgstr "変更しました。"
 
-#: app/views/admin/users/import.html.erb:10
+#: app/views/admin/users/import.html.erb:9
 msgid ""
 "Changes made to %s, passwords etc by users will be overwritten upon data "
 "update."
@@ -2454,7 +2454,7 @@ msgstr "お知らせの内容を確認するには、以下のURLをクリック
 msgid "Click the button below to login."
 msgstr "下のボタンを押して、ログインしてください。"
 
-#: app/views/admin/users/import.html.erb:35
+#: app/views/admin/users/import.html.erb:34
 msgid ""
 "Click the icon on the right edge of each row containing error(s) to show the "
 "detail. Follow the example to fix."
@@ -2522,7 +2522,7 @@ msgstr ""
 "      また、あなたのプロフィール画像を変更することや、このサイトのカラーテー"
 "マを変更することも可能です。"
 
-#: app/views/admin/users/index.html.erb:23
+#: app/views/admin/users/index.html.erb:18
 msgid "Confirm"
 msgstr "確認"
 
@@ -2543,7 +2543,7 @@ msgstr "連絡先"
 msgid "Content not found."
 msgstr "対象のコンテンツが存在しません。"
 
-#: app/views/admin/users/import.html.erb:34
+#: app/views/admin/users/import.html.erb:33
 msgid "Content of CSV file"
 msgstr "CSVファイルの内容"
 
@@ -2576,7 +2576,7 @@ msgstr ""
 #: app/views/admin/group_categories/new.html.erb:8
 #: app/views/admin/users/first.html.erb:31
 #: app/views/admin/users/create_uid.html.erb:16
-#: app/views/admin/users/new.html.erb:12
+#: app/views/admin/users/new.html.erb:9
 #: app/views/admin/openid_identifiers/new.html.erb:17
 #: app/views/admin/user_profile_master_categories/new.html.erb:8
 #: app/views/admin/user_profile_masters/new.html.erb:8
@@ -2585,8 +2585,8 @@ msgid "Create"
 msgstr "作成"
 
 #: app/controllers/admin/users_controller.rb:196
-#: app/views/admin/users/edit.html.erb:17
-#: app/views/admin/users/edit.html.erb:21
+#: app/views/admin/users/edit.html.erb:15
+#: app/views/admin/users/edit.html.erb:19
 msgid "Create %{name}"
 msgstr "%{name}作成"
 
@@ -2617,7 +2617,7 @@ msgstr "正しく作成されました。"
 #: app/views/admin/group_categories/new.html.erb:8
 #: app/views/admin/users/first.html.erb:31
 #: app/views/admin/users/create_uid.html.erb:26
-#: app/views/admin/users/new.html.erb:12
+#: app/views/admin/users/new.html.erb:9
 #: app/views/admin/openid_identifiers/new.html.erb:17
 #: app/views/admin/user_profile_master_categories/new.html.erb:8
 #: app/views/admin/user_profile_masters/new.html.erb:8
@@ -2652,7 +2652,7 @@ msgstr "画面デザインの変更"
 msgid "Customize the document template to fit your usage.<br />"
 msgstr "用途に合わせて、説明文の雛形を修正して下さい。<br />"
 
-#: app/helpers/admin/application_helper.rb:23
+#: app/helpers/admin/application_helper.rb:24
 msgid "Data management"
 msgstr "データ管理"
 
@@ -2713,10 +2713,10 @@ msgid "Deletion completed."
 msgstr "削除しました。"
 
 #: app/views/admin/group_categories/_index.html.erb:24
-#: app/views/admin/users/index.html.erb:53
+#: app/views/admin/users/index.html.erb:48
 #: app/views/admin/groups/index.html.erb:33
 #: app/views/admin/openid_identifiers/index.html.erb:18
-#: app/views/admin/pictures/index.html.erb:29
+#: app/views/admin/pictures/index.html.erb:28
 #: app/views/admin/board_entries/index.html.erb:35
 #: app/views/admin/share_files/index.html.erb:36
 #: app/views/admin/board_entry_comments/index.html.erb:26
@@ -2728,7 +2728,7 @@ msgstr "削除しました。"
 msgid "Destroy"
 msgstr "削除"
 
-#: app/views/admin/users/import.html.erb:31
+#: app/views/admin/users/import.html.erb:30
 msgid "Development"
 msgstr "開発"
 
@@ -2796,9 +2796,9 @@ msgstr "ドライブ"
 #: app/views/board_entries/_board_entry_comment.html.erb:14
 #: app/views/admin/group_categories/_index.html.erb:23
 #: app/views/admin/users/_form.html.erb:68
-#: app/views/admin/users/index.html.erb:52
+#: app/views/admin/users/index.html.erb:47
 #: app/views/admin/openid_identifiers/index.html.erb:17
-#: app/views/admin/pictures/index.html.erb:27
+#: app/views/admin/pictures/index.html.erb:26
 #: app/views/admin/user_profile_master_categories/_index.html.erb:13
 #: app/views/admin/user_profile_masters/_index.html.erb:24
 #: app/views/entries/_entry_detail.html.erb:230
@@ -2848,8 +2848,8 @@ msgstr "編集可"
 #: app/controllers/admin/openid_identifiers_controller.rb:26
 #: app/controllers/admin/openid_identifiers_controller.rb:40
 #: app/controllers/admin/openid_identifiers_controller.rb:41
-#: app/views/admin/users/edit.html.erb:19
-#: app/views/admin/users/edit.html.erb:20
+#: app/views/admin/users/edit.html.erb:17
+#: app/views/admin/users/edit.html.erb:18
 msgid "Editing %{model}"
 msgstr "%{model}の更新"
 
@@ -3442,7 +3442,7 @@ msgstr "はい"
 #: app/controllers/share_file_controller.rb:163
 #: app/controllers/groups_controller.rb:62
 #: app/controllers/edit_controller.rb:276
-#: app/views/admin/_data_menu_box.html.erb:7
+#: app/views/admin/_data_menu_box.html.erb:6
 msgid "Groups"
 msgstr "グループ"
 
@@ -3498,7 +3498,7 @@ msgstr "必要"
 msgid "Group|Updated on"
 msgstr "更新日時"
 
-#: app/views/admin/users/import.html.erb:30
+#: app/views/admin/users/import.html.erb:29
 msgid "Hanako Yamada"
 msgstr "山田 花子"
 
@@ -3584,7 +3584,7 @@ msgstr "記事履歴"
 msgid "Home"
 msgstr "ホーム"
 
-#: app/views/admin/users/import.html.erb:30
+#: app/views/admin/users/import.html.erb:29
 msgid "Human Resources"
 msgstr "人事"
 
@@ -3600,7 +3600,7 @@ msgstr ""
 msgid "Illegal value(s) found in CSV file."
 msgstr "CSVファイルに不正な値が含まれています。"
 
-#: app/views/admin/users/import.html.erb:15
+#: app/views/admin/users/import.html.erb:14
 msgid "Import confirmation"
 msgstr "アップロード(確認)"
 
@@ -3655,7 +3655,7 @@ msgstr "リンクを挿入する"
 msgid "Insert share file as image or link"
 msgstr "画像やファイルのリンクを挿入"
 
-#: app/views/admin/users/import.html.erb:7
+#: app/views/admin/users/import.html.erb:6
 msgid "Instructions for importing from a CSV file."
 msgstr "CSVファイルでインポートする際の注意"
 
@@ -3783,7 +3783,7 @@ msgstr "不正なセッションです。再度ログインし直して下さい
 msgid "Invalid user detected."
 msgstr "不正なユーザです。"
 
-#: app/views/admin/users/index.html.erb:58
+#: app/views/admin/users/index.html.erb:53
 msgid "Issue activation url for selected users"
 msgstr "選択したユーザを利用開始待ちにする"
 
@@ -3819,7 +3819,7 @@ msgstr ""
 msgid "January"
 msgstr "1月"
 
-#: app/views/admin/users/import.html.erb:31
+#: app/views/admin/users/import.html.erb:30
 msgid "Jiro Suzuki"
 msgstr "鈴木 次郎"
 
@@ -3876,7 +3876,7 @@ msgstr "退会する"
 msgid "Limit to single session"
 msgstr "セッション制限"
 
-#: app/views/admin/users/import.html.erb:39
+#: app/views/admin/users/import.html.erb:38
 msgid "Line"
 msgstr "行"
 
@@ -3941,8 +3941,8 @@ msgstr "未読記事の一覧"
 #: app/controllers/admin/users_controller.rb:194
 #: app/controllers/admin/openid_identifiers_controller.rb:24
 #: app/controllers/admin/openid_identifiers_controller.rb:39
-#: app/views/admin/users/index.html.erb:68
-#: app/views/admin/users/import.html.erb:74
+#: app/views/admin/users/index.html.erb:63
+#: app/views/admin/users/import.html.erb:73
 #: app/views/admin/groups/show.html.erb:35
 #: app/views/admin/board_entries/show.html.erb:43
 #: app/views/admin/bookmarks/show.html.erb:19
@@ -4186,7 +4186,7 @@ msgstr "名称・名前"
 msgid "Need approval of the Administrator."
 msgstr "管理者の承認が必要"
 
-#: app/views/admin/pictures/index.html.erb:28
+#: app/views/admin/pictures/index.html.erb:27
 msgid "New"
 msgstr "新規"
 
@@ -4199,8 +4199,8 @@ msgstr "新規"
 #: app/controllers/admin/users_controller.rb:29
 #: app/controllers/admin/users_controller.rb:50
 #: app/views/admin/group_categories/_index.html.erb:4
-#: app/views/admin/users/index.html.erb:63
-#: app/views/admin/users/index.html.erb:66
+#: app/views/admin/users/index.html.erb:58
+#: app/views/admin/users/index.html.erb:61
 #: app/views/admin/openid_identifiers/index.html.erb:23
 #: app/views/admin/user_profile_master_categories/_index.html.erb:4
 #: app/views/admin/user_profile_masters/_index.html.erb:3
@@ -4232,7 +4232,7 @@ msgstr "[%s]に承認待ちのユーザがいます!"
 msgid "New user joined your group [%s]."
 msgstr "[%s]に新しい参加者がいます!"
 
-#: app/views/admin/users/import.html.erb:9
+#: app/views/admin/users/import.html.erb:8
 msgid ""
 "New user records will be created when the first column of the CSV file does "
 "not match the login ID of any existing record, while matching records will "
@@ -4247,7 +4247,7 @@ msgstr "現在、新規のユーザ登録の処理は停止させて頂いてお
 
 #: app/controllers/admin/users_controller.rb:134
 #: app/controllers/admin/users_controller.rb:151
-#: app/views/admin/users/index.html.erb:64
+#: app/views/admin/users/index.html.erb:59
 msgid "New users from CSV"
 msgstr "ユーザのCSVアップロード"
 
@@ -4376,7 +4376,7 @@ msgstr ""
 msgid "Notice|User"
 msgstr ""
 
-#: app/views/admin/users/index.html.erb:25
+#: app/views/admin/users/index.html.erb:20
 msgid "Notify activation"
 msgstr "利用開始通知"
 
@@ -4431,14 +4431,14 @@ msgstr "11月"
 
 #: app/views/admin/group_categories/edit.html.erb:9
 #: app/views/admin/users/change_uid.html.erb:30
-#: app/views/admin/users/edit.html.erb:10
+#: app/views/admin/users/edit.html.erb:8
 #: app/views/admin/openid_identifiers/edit.html.erb:16
-#: app/views/admin/user_profiles/edit.html.erb:13
+#: app/views/admin/user_profiles/edit.html.erb:10
 msgid "Now Updating..."
 msgstr "更新しています…"
 
 #: app/views/admin/pictures/edit.html.erb:10
-#: app/views/admin/pictures/new.html.erb:10
+#: app/views/admin/pictures/new.html.erb:9
 msgid "Now Uploading..."
 msgstr "アップロードしています…"
 
@@ -4831,7 +4831,7 @@ msgstr "投稿件数"
 msgid "Posts in the groups joined"
 msgstr "参加中のグループのフォーラムの書き込み"
 
-#: app/views/admin/users/index.html.erb:25
+#: app/views/admin/users/index.html.erb:20
 msgid "Prepare for activation"
 msgstr "利用開始待ちにする"
 
@@ -5185,7 +5185,7 @@ msgstr "リッチテキスト"
 msgid "SKIP version"
 msgstr "SKIPのバージョン"
 
-#: app/views/admin/users/import.html.erb:27
+#: app/views/admin/users/import.html.erb:26
 msgid "Sample CSV file format"
 msgstr "正しいCSVファイルの例"
 
@@ -5301,7 +5301,7 @@ msgstr "送信する"
 msgid "Send Emails"
 msgstr "投稿時にメールも送信する"
 
-#: app/views/admin/users/index.html.erb:58
+#: app/views/admin/users/index.html.erb:53
 msgid "Send activation email to selected users"
 msgstr "選択したユーザに利用開始通知をする"
 
@@ -5422,7 +5422,7 @@ msgid "ShareFile|User"
 msgstr "ユーザ"
 
 #: app/helpers/group_helper.rb:41 app/helpers/user_helper.rb:41
-#: app/views/admin/_data_menu_box.html.erb:10
+#: app/views/admin/_data_menu_box.html.erb:9
 msgid "Shared Files"
 msgstr "ファイル"
 
@@ -5468,7 +5468,7 @@ msgstr "約<b>%{max}</b>件中 <b>%{start}</b> - <b>%{end}</b> 件目"
 msgid "Showing data for the period starting from %s on the screen top."
 msgstr "%sのデータを画面上部に表示します。"
 
-#: app/views/admin/users/import.html.erb:35
+#: app/views/admin/users/import.html.erb:34
 msgid ""
 "Showing lines containing error(s) only. Click the icon on the right edge of "
 "each row containing error(s) to show the detail. Follow the example to fix."
@@ -5799,7 +5799,7 @@ msgstr "対象の%{target}が存在しませんでした。"
 msgid "Target not found."
 msgstr "対象が見つかりません。"
 
-#: app/views/admin/users/import.html.erb:29
+#: app/views/admin/users/import.html.erb:28
 msgid "Taro Yamada"
 msgstr "山田 太郎"
 
@@ -5988,7 +5988,7 @@ msgstr "RSSのロード時にタイムアウトしました。"
 msgid "Title"
 msgstr "タイトル"
 
-#: app/views/admin/users/index.html.erb:23
+#: app/views/admin/users/index.html.erb:18
 msgid "To be activated"
 msgstr "利用開始待ち"
 
@@ -6127,16 +6127,16 @@ msgstr "スターをはずす"
 #: app/views/group/_manage_info.html.erb:19
 #: app/views/admin/group_categories/edit.html.erb:9
 #: app/views/admin/users/change_uid.html.erb:20
-#: app/views/admin/users/edit.html.erb:10
+#: app/views/admin/users/edit.html.erb:8
 #: app/views/admin/openid_identifiers/edit.html.erb:16
 #: app/views/admin/user_profile_master_categories/edit.html.erb:9
 #: app/views/admin/user_profile_masters/edit.html.erb:8
-#: app/views/admin/user_profiles/edit.html.erb:13
+#: app/views/admin/user_profiles/edit.html.erb:10
 #: app/views/chains/edit.html.erb:6 app/views/edit/edit.html.erb:11
 msgid "Update"
 msgstr "更新"
 
-#: app/views/admin/users/import.html.erb:18
+#: app/views/admin/users/import.html.erb:17
 msgid "Update attributes below:"
 msgstr "以下の属性を更新する"
 
@@ -6181,10 +6181,10 @@ msgid "Updating..."
 msgstr "更新中..."
 
 #: app/views/share_file/new_ajax_upload.html.erb:37
-#: app/views/pictures/new.html.erb:18 app/views/admin/users/import.html.erb:16
+#: app/views/pictures/new.html.erb:18 app/views/admin/users/import.html.erb:15
 #: app/views/admin/images/_form.html.erb:4
 #: app/views/admin/pictures/edit.html.erb:10
-#: app/views/admin/pictures/new.html.erb:10
+#: app/views/admin/pictures/new.html.erb:9
 msgid "Upload"
 msgstr "アップロード"
 
@@ -6207,8 +6207,8 @@ msgstr "ファイルをアップロード"
 msgid "Uploaded by: %s"
 msgstr "登録者：%s"
 
-#: app/views/admin/users/import.html.erb:16
-#: app/views/admin/users/import.html.erb:82
+#: app/views/admin/users/import.html.erb:15
+#: app/views/admin/users/import.html.erb:80
 #: app/views/admin/images/_form.html.erb:4
 msgid "Uploading..."
 msgstr "アップロードしています…"
@@ -6240,6 +6240,10 @@ msgstr ""
 #: app/controllers/mypage_controller.rb:236
 msgid "User information was successfully updated."
 msgstr "ユーザ情報の更新に成功しました。"
+
+#: app/helpers/admin/application_helper.rb:23
+msgid "User management"
+msgstr "ユーザ管理"
 
 #: app/controllers/admin/users_controller.rb:187
 msgid "User name not found."
@@ -6508,7 +6512,6 @@ msgstr "ユーザ"
 #: app/helpers/application_helper.rb:342 app/helpers/user_helper.rb:53
 #: app/controllers/services_controller.rb:45
 #: app/controllers/users_controller.rb:66
-#: app/views/admin/_data_menu_box.html.erb:6
 msgid "Users"
 msgstr "ユーザ"
 
@@ -6674,7 +6677,7 @@ msgstr "認証再設定トークン有効期限"
 
 #: app/models/user.rb:- app/views/portal/_registration_form.html.erb:24
 #: app/views/users/index.html.erb:10 app/views/user/show.html.erb:46
-#: app/views/admin/users/import.html.erb:10
+#: app/views/admin/users/import.html.erb:9
 #: app/views/shared/_symbol_autocomplete_field.html.erb:10
 msgid "User|Section"
 msgstr "所属"
@@ -6870,7 +6873,7 @@ msgstr "グループの詳細確認や参加者確認などを行うことがで
 msgid "You can confirm uploaded files detail."
 msgstr "アップロードされたファイルの詳細確認などを行うことができます。"
 
-#: app/views/admin/users/index.html.erb:6
+#: app/views/admin/users/index.html.erb:1
 msgid "You can create new user and edit / view existing user profiles."
 msgstr ""
 "新規ユーザの作成やユーザプロフィールの編集/確認などを行なうことができます。"
@@ -7319,7 +7322,7 @@ msgid ""
 "activation_code has not been issued. Refer to --help and specify --code."
 msgstr "activation_codeが未発行です。--helpを参照の上、codeを指定して下さい。"
 
-#: app/views/admin/users/index.html.erb:37
+#: app/views/admin/users/index.html.erb:32
 msgid "admin"
 msgstr "管理権限"
 
@@ -7454,7 +7457,7 @@ msgstr "不正なURLです"
 msgid "is mandatory."
 msgstr "は必須です"
 
-#: app/views/admin/users/index.html.erb:41
+#: app/views/admin/users/index.html.erb:36
 msgid "issued_atlast_authenticated_atpassword_expires_at"
 msgstr ""
 
@@ -7538,9 +7541,9 @@ msgstr ""
 #: app/controllers/admin/pictures_controller.rb:76
 #: app/controllers/admin/pictures_controller.rb:77
 #: app/controllers/admin/pictures_controller.rb:81 app/models/picture.rb:-
-#: app/views/admin/users/edit.html.erb:20
-#: app/views/admin/users/edit.html.erb:21
-#: app/views/admin/users/index.html.erb:68
+#: app/views/admin/users/edit.html.erb:18
+#: app/views/admin/users/edit.html.erb:19
+#: app/views/admin/users/index.html.erb:63
 msgid "picture"
 msgstr "プロフィール画像"
 
@@ -7645,9 +7648,9 @@ msgstr "チェックを外す"
 #: app/controllers/admin/users_controller.rb:151
 #: app/controllers/admin/users_controller.rb:169
 #: app/controllers/admin/users_controller.rb:194 app/models/user.rb:-
-#: app/views/admin/users/index.html.erb:63
-#: app/views/admin/users/index.html.erb:66
-#: app/views/admin/users/import.html.erb:74
+#: app/views/admin/users/index.html.erb:58
+#: app/views/admin/users/index.html.erb:61
+#: app/views/admin/users/import.html.erb:73
 msgid "user"
 msgstr "ユーザ"
 
@@ -7669,7 +7672,7 @@ msgstr ""
 #: app/views/portal/_registration_form.html.erb:42
 #: app/views/user/show.html.erb:31
 #: app/views/admin/users/change_uid.html.erb:29
-#: app/views/admin/users/edit.html.erb:17
+#: app/views/admin/users/edit.html.erb:15
 #: app/views/admin/users/create_uid.html.erb:12
 #: app/views/admin/users/create_uid.html.erb:25
 msgid "user name"
@@ -7682,7 +7685,7 @@ msgstr ""
 #: app/controllers/admin/user_profiles_controller.rb:22
 #: app/controllers/admin/user_profiles_controller.rb:35
 #: app/controllers/admin/user_profiles_controller.rb:41
-#: app/views/admin/users/edit.html.erb:19
+#: app/views/admin/users/edit.html.erb:17
 msgid "user profile"
 msgstr "プロフィール"
 
@@ -7715,7 +7718,7 @@ msgstr "ユーザID"
 msgid "users"
 msgstr "人"
 
-#: app/views/admin/users/import.html.erb:17
+#: app/views/admin/users/import.html.erb:16
 msgid ""
 "|You can ignore existing users and append unregistered users only by "
 "checking the checkbox.<br/>Uncheck and set attributes below if you want to "
@@ -7725,7 +7728,7 @@ msgstr ""
 "す。<br/>既存のユーザの情報を一括変更したい場合は、チェックボックスを外して以"
 "下の更新したい属性を設定してください。"
 
-#: app/views/admin/users/import.html.erb:18
+#: app/views/admin/users/import.html.erb:17
 msgid ""
 "|You can update certain attribute(s) by checking the checkboxes. See the "
 "sample to create CSV file.<br/>Name, password and email address are "
