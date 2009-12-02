@@ -20,7 +20,8 @@ module Admin::ApplicationHelper
     output << '<ul>'
     output << generate_tab_link( s_('Admin::SettingsController|main'), admin_settings_path(:tab => :main), request.url == admin_settings_url(:tab => :main) || request.url == admin_root_url)
     output << generate_tab_link( _('Master data management'), admin_masters_path, request.url.include?(admin_masters_url) )
-    output << generate_tab_link( _('Data management'), admin_users_path, data_management_urls.any? { |url| request.url.include? url } )
+    output << generate_tab_link( _('User management'), admin_users_path, request.url.include?(admin_users_url) )
+    output << generate_tab_link( _('Data management'), admin_groups_path, data_management_urls.any? { |url| request.url.include? url } )
     output << generate_tab_link( _('Admin::ImagesController'), admin_images_path, request.url.include?(admin_images_url) )
     output << generate_tab_link( _('Admin::DocumentsController'), admin_documents_path, request.url.include?(admin_documents_url) )
     output << generate_tab_link( s_('Admin::SettingsController|feed'), admin_settings_path(:tab => :feed), request.url == admin_settings_url(:tab => :feed) )
@@ -61,7 +62,6 @@ module Admin::ApplicationHelper
 
   def data_management_urls
     ary = []
-    ary << admin_users_url
     ary << admin_groups_url
     ary << admin_board_entries_url
     ary << admin_bookmarks_url
