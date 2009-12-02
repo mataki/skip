@@ -52,5 +52,9 @@ module Admin::SettingsHelper
       end
     end
   end
+
+  def enable_any_embed?
+    Admin::Setting.youtube || Admin::Setting.slideshare || Admin::Setting.googlemap
+  end
 end
 

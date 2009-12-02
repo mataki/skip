@@ -11,6 +11,7 @@
     <%= radio_button_tag("editor_mode", "richtext", params[:editor_mode] == "richtext", :id=>"editor_mode_richtext") + label_tag("editor_mode_richtext", _('Rich Text')) %>
     <%= radio_button_tag("editor_mode", "hiki", params[:editor_mode] == "hiki", :id=>"editor_mode_hiki") + label_tag("editor_mode_hiki", _('Wiki text')) -%>
     <span class="share_file_uploader trigger pointer link"><span class="ss_sprite ss_attach">&nbsp;</span><%= _('Insert file in text body') %></span>
+    <% if enable_any_embed? -%>
     <span id="embed_trigger" class="pointer link"><%= _('Insert embed tag') %></span>
     <div id="embed_dialog", title="<%= _('Insert embed tag') %>">
       <form>
@@ -21,9 +22,18 @@
           <tr>
             <td><%= text_area_tag 'embed_html', nil, :rows => 5, :cols => 30 %></td>
           </tr>
+          <tr>
+            <td>
+              <%= _('Corresponding sites') %>
+              <%= image_tag('http://www.youtube.com/favicon.ico', :title => 'youtube', :alt => 'youtube') if Admin::Setting.youtube%>
+              <%= image_tag('http://www.slideshare.net/favicon.ico', :title => 'slideshare', :alt => 'slideshare') if Admin::Setting.slideshare %>
+              <%= image_tag('http://maps.google.com/favicon.ico', :title => 'google maps', :alt => 'google maps') if Admin::Setting.googlemap%>
+            </td>
+          </tr>
         </table>
       </form>
     </div>
+    <% end -%>
   </div>
 
   <div id="share_file_uploader"></div>
@@ -74,6 +84,8 @@
 
     $j('div#share_file_uploader').shareFileUploader(<%= share_file_uploader_opt(@board_entry).to_json %>);
 
+    <% if enable_any_embed? -%>
+    // 埋め込みタグの挿入
     $j('div#embed_dialog').dialog({
       bgiframe: true,
       autoOpen: false,
@@ -106,5 +118,6 @@
     }).mouseup(function(){
       $j(this).removeClass("ui-state-active");
     });
+    <% end -%>
 
 <% end -%>
