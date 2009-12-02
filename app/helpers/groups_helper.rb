@@ -31,4 +31,11 @@ module GroupsHelper
       end
     end
   end
+
+  # エントリ数、エントリ最終更新日時より活性状況を判定
+  def upsurge_frequency entries, options={}
+    unless entries.empty?
+      return (entries.count > 50 and ((Time.now - entries.last.last_updated).divmod(24*60*60)[0] < 7)) ? true : false
+    end
+  end
 end
