@@ -115,7 +115,7 @@ class Admin::Setting < ActiveRecord::Base
   N_('Admin::Setting|Enable single session description')
 
   cattr_accessor :available_settings
-  @@available_settings = YAML::load(File.open("#{RAILS_ROOT}/config/settings.yml"))
+  @@available_settings = YAML::load(File.open("#{File.dirname(__FILE__)}/../../../config/settings.yml"))
 
   SMTP_AUTHENTICATIONS = %w(plain login cram_md5).freeze
   PASSWORD_STRENGTH_VALUES = %w(low middle high custom).freeze
