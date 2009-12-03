@@ -2444,11 +2444,11 @@ msgstr ""
 
 #: app/views/user_mailer/ar/sent_contact.html.erb:14
 msgid "Click the URL below to see all."
-msgstr "お知らせの内容を全て見るには、以下のURLをクリックしてください。"
+msgstr "内容を全て見るには、以下のURLをクリックしてください。"
 
 #: app/views/user_mailer/ar/sent_contact.html.erb:19
 msgid "Click the URL below to see the content of message."
-msgstr "お知らせの内容を確認するには、以下のURLをクリックしてください。"
+msgstr "内容を確認するには、以下のURLをクリックしてください。"
 
 #: app/views/shared/_fixed_rp_login_form.html.erb:5
 msgid "Click the button below to login."
