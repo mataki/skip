@@ -1,11 +1,25 @@
 <div class="box"><%= _('You can create new user and edit / view existing user profiles.') %></div>
+
+<% menu_links = [] -%>
+<% if login_mode?(:password) -%>
+<% menu_links << link_to(_('New %{model}') % {:model => _('user')}, new_admin_user_path) -%>
+<% menu_links << link_to(_('New users from CSV'), import_new_admin_user_path) -%>
+<% elsif login_mode?(:fixed_rp) -%>
+<% menu_links << link_to(_('New %{model}') % {:model => _('user')}, new_admin_user_path) -%>
+<% end -%>
+<% menu_links << link_to(_('Listing %{model}') % {:model => _('picture')}, admin_pictures_path) -%>
+<p><%= menu_links.join(' | ') %></p>
+
 <div class="box tabular">
+  <% columns = %w(code uid name email section status admin locked issued_at last_authenticated_at password_expires_at) -%>
+  <% columns.delete_if{|a| a=="uid"} unless SkipEmbedded::InitialSettings['username_use_setting'] %>
+
   <%= render :partial => '/admin/search_box', :locals => { :class_name => 'Admin::User' } %>
   <% form_tag issue_activation_codes_admin_users_path do -%>
   <%= render :partial => '/admin/shared/sortable_table',
              :locals => {
                :use_ids => true,
-               :columns => %w(code uid name email section status admin locked issued_at last_authenticated_at password_expires_at),
+               :columns => columns,
                :hide_columns => %w(locked issued_at last_authenticated_at password_expires_at),
                :disp_columns_proc => lambda do |object,column|
       case column
@@ -53,15 +67,6 @@
   <%= submit_tag SkipEmbedded::InitialSettings['mail']['show_mail_function'] ? _('Send activation email to selected users') : _('Issue activation url for selected users') %>
   <% end -%>
 </div>
-<% footer_links = [] -%>
-<% if login_mode?(:password) -%>
-<% footer_links << link_to(_('New %{model}') % {:model => _('user')}, new_admin_user_path) %>
-<% footer_links << link_to(_('New users from CSV'), import_new_admin_user_path) %>
-<% elsif login_mode?(:fixed_rp) %>
-<% footer_links << link_to(_('New %{model}') % {:model => _('user')}, new_admin_user_path) %>
-<% end %>
-<% footer_links << link_to(_('Listing %{model}') % {:model => _('picture')}, admin_pictures_path) %>
-<%= footer_links.join(' | ') %>
 
 <% content_for :javascript_initializers do -%>
     $j('.issue_activation_code_link')
