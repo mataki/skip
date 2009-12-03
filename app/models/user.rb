@@ -529,6 +529,7 @@ class User < ActiveRecord::Base
 
   def reset_simple_login_token!
     self.simple_login_token = self.class.make_token
+    self.simple_login_token_expires_at = Time.now.since(1.month)
     self.save!
   end
 
