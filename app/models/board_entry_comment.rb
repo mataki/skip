@@ -36,6 +36,9 @@ class BoardEntryComment < ActiveRecord::Base
     { :order => 'updated_on' }
   }
 
+  cattr_reader :limit_level
+  @@limit_level = 4
+
   def after_save
     board_entry.reload.update_attribute :updated_on, Time.now
   end
@@ -53,5 +56,10 @@ class BoardEntryComment < ActiveRecord::Base
                                   :conditions => find_params[:conditions],
                                   :include => find_params[:include])
     !!(board_entry && self.user_id == user.id)
+  end
+
+  # TODO viewのネストレベル絡みのロジックはこれを使いたい
+  def level
+    @level ||= ancestors.size + 1
   end
 end
