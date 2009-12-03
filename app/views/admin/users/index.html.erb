@@ -11,10 +11,8 @@
 <p><%= menu_links.join(' | ') %></p>
 
 <div class="box tabular">
-  <% columns = "code uid name email section status admin locked issued_at last_authenticated_at password_expires_at".split.to_a -%>
-  <% unless SkipEmbedded::InitialSettings['username_use_setting'] -%>
-    <% columns -= ["uid"] -%>
-  <% end -%>
+  <% columns = %w(code uid name email section status admin locked issued_at last_authenticated_at password_expires_at) -%>
+  <% columns.delete_if{|a| a=="uid"} unless SkipEmbedded::InitialSettings['username_use_setting'] %>
 
   <%= render :partial => '/admin/search_box', :locals => { :class_name => 'Admin::User' } %>
   <% form_tag issue_activation_codes_admin_users_path do -%>
