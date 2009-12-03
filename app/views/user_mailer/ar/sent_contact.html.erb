@@ -1,7 +1,4 @@
 <%= @header %>
-
-<%= _("You have message(s) from %s") % @name %>
-
 <% if @owner.is_a?(Group) -%>
     <%= @owner.name %>
 <% end -%>
