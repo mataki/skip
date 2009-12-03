@@ -104,6 +104,13 @@ class BoardEntry < ActiveRecord::Base
     }
   }
 
+  named_scope :read, proc { |user|
+    {
+      :conditions => ['user_readings.read = ? AND user_readings.user_id = ?', true, user.id],
+      :include => [:user_readings]
+    }
+  }
+
   named_scope :order_new, proc {
     { :order => "last_updated DESC,board_entries.id DESC" }
   }
