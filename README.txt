@@ -68,6 +68,7 @@ SKIPを動かすことができます。
     $ sudo gem install mysql gettext_rails gettext_activerecord fastercsv json locale_rails maedana-ar_mailer ruby-openid
     $ sudo gem install feed-normalizer --version 1.5.1
     $ sudo gem install searchlogic --version 2.3.6
+    $ sudo gem install sanitize --version 1.2.0.dev.20091104
 
 2. SKIPのファイル解凍（tarファイルをダウンロードした場合のみ）
 --------------------------------------------------------------------------------
