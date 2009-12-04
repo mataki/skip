@@ -191,8 +191,8 @@ class GroupController < ApplicationController
       participations = @group.join users, :force => true
 
       group_url = url_for(:controller => 'group', :action => 'show', :gid => @group.gid)
-      participations.each do |user|
-        Message.save_message('FORCED_JOIN', user.id,  group_url, _("Forced to join the group [%s].") % @group.name)
+      participations.each do |participation|
+        Message.save_message('FORCED_JOIN', participation.user.id,  group_url, _("Forced to join the group [%s].") % @group.name)
       end
 
       flash[:notice] = _("Added members of %s as members of the group") % group.name unless participations.empty?
