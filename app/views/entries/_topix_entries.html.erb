@@ -14,6 +14,7 @@
         <col class="col25" />
       <% end -%>
       <col class="col25" />
+      <col class="col25" />
       <col />
       <col class="col75" />
       <tbody>
@@ -23,6 +24,13 @@
             <% if with_checkable_read -%>
             <td class="read_state"><%= check_box_tag("message_#{entry.id}", "true", !user_unreadings[entry.id], {:class => "read_state_checkbox"}) %></td>
             <% end -%>
+            <td class="entry_icon">
+            <% if entry.owner_is_group? -%>
+              <%= icon_tag(Group.get_category_icon(entry.symbol_id)) %>
+            <% else -%>
+              <%= icon_tag("user_suit") %>
+            <% end -%>
+            </td>
             <td class="publication_state"><%= get_publication_type_icon(entry) %></td>
             <td class="title">
               <%= entry_link_to(entry, {}, {:title => entry_infos}) %>
