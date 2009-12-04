@@ -58,7 +58,9 @@ class Group < ActiveRecord::Base
 
   named_scope :unjoin, proc {|user|
     return {} unless user
-    {:conditions => ["groups.id NOT IN (?)", Group.participating(user).map(&:id)]}
+    join_group_ids = Group.participating(user).map(&:id)
+    return {} if join_group_ids.blank?
+    {:conditions => ["groups.id NOT IN (?)", join_group_ids]}
   }
 
   named_scope :owned, proc { |user|
