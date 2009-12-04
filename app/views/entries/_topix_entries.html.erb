@@ -20,7 +20,7 @@
       <tbody>
         <% entries.each do |entry| -%>
           <% entry_infos = get_entry_infos(entry) -%>
-          <tr>
+          <tr style="background-color: <%= detect_entry_gb_color entry -%>;">
             <% if with_checkable_read -%>
             <td class="read_state"><%= check_box_tag("message_#{entry.id}", "true", !user_unreadings[entry.id], {:class => "read_state_checkbox"}) %></td>
             <% end -%>
