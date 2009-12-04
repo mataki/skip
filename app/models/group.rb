@@ -165,28 +165,19 @@ class Group < ActiveRecord::Base
   # TODO 回帰テスト書きたい
   def join user_or_users, options = {}
     Group.transaction do
-      [user_or_users].flatten.each do |target_user|
-        if self.group_participations.find_by_user_id target_user.id
-          self.errors.add_to_base _("%s has already joined / applied to join this group.") % target_user.name
-          if block_given?
-            yield false, []
-            return
-          else
-            return false
-          end
+      [user_or_users].flatten.map do |target_user|
+        participation = self.group_participations.find_or_initialize_by_user_id(target_user.id) do |participation|
+          participation.waiting = (!options[:force] && self.protected?)
         end
-      end
-      participations = []
-      [user_or_users].flatten.each do |target_user|
-        participation = self.group_participations.create!(:user => target_user, :waiting => (!options[:force] &&self.protected?))
-        target_user.notices.create!(:target => self) unless target_user.notices.find_by_target_id(self.id)
-        participations << participation
-      end
-      if block_given?
-        yield true, participations
-      else
-        true
-      end
+        if participation.new_record?
+          participation.save!
+          target_user.notices.create!(:target => self) unless target_user.notices.find_by_target_id(self.id)
+          participation
+        else
+          self.errors.add_to_base _("%s has already joined / applied to join this group.") % target_user.name
+          nil
+        end
+      end.compact
     end
   rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => e
     self.errors.add_to_base _('Joined the group failed.')

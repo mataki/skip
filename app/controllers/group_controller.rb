@@ -155,23 +155,21 @@ class GroupController < ApplicationController
   # post_action
   # 参加申込み
   def join
-    @group.join current_user do |result, participations|
-      if result
-        if participations.first.waiting?
-          group_manage_participations_url = url_for(:controller => 'group', :action => 'manage', :gid => @group.gid, :menu => 'manage_permit')
-          flash[:notice] = _('Request sent. Please wait for the approval.')
-        else
-          groups_url = url_for(:controller => 'group', :action => 'users', :gid => @group.gid)
-          @group.group_participations.only_owned.each do |owner_participation|
-            Message.save_message('JOIN', owner_participation.user_id, groups_url, _("New user joined your group [%s].") % @group.name)
-          end
-          flash[:notice] = _('Joined the group successfully.')
-        end
+    participations = @group.join current_user
+    unless participations.empty?
+      if participations.first.waiting?
+        flash[:notice] = _('Request sent. Please wait for the approval.')
       else
-        flash[:error] = @group.errors.full_messages
+        groups_url = url_for(:controller => 'group', :action => 'users', :gid => @group.gid)
+        @group.group_participations.only_owned.each do |owner_participation|
+          Message.save_message('JOIN', owner_participation.user_id, groups_url, _("New user joined your group [%s].") % @group.name)
+        end
+        flash[:notice] = _('Joined the group successfully.')
       end
-      redirect_to :action => 'show'
+    else
+      flash[:error] = @group.errors.full_messages
     end
+    redirect_to :action => 'show'
   end
 
   # 参加者追加(管理者のみ)
@@ -180,28 +178,25 @@ class GroupController < ApplicationController
     symbol_type, symbol_id = Symbol.split_symbol params[:symbol]
     case
     when (symbol_type == 'uid' and user = User.find_by_uid(symbol_id))
-      @group.join user, :force => true do |result, participations|
-        if result
-          group_url = url_for(:controller => 'group', :action => 'show', :gid => @group.gid)
-          Message.save_message('FORCED_JOIN', user.id,  group_url, _("Forced to join the group [%s].") % @group.name)
-          flash[:notice] = _("Added %s as a member.") % user.name
-        else
-          flash[:error] = @group.errors.full_messages
-        end
+      participations = @group.join user, :force => true
+      if participations.size > 0
+        group_url = url_for(:controller => 'group', :action => 'show', :gid => @group.gid)
+        Message.save_message('FORCED_JOIN', user.id,  group_url, _("Forced to join the group [%s].") % @group.name)
+        flash[:notice] = _("Added %s as a member.") % user.name
+      else
+        flash[:error] = @group.errors.full_messages
       end
     when (symbol_type == 'gid' and group = Group.active.find_by_gid(symbol_id, :include => :group_participations))
-      users = group.group_participations.map(&:user)
-      @group.join users, :force => true do |result, participations|
-        if result
-          group_url = url_for(:controller => 'group', :action => 'show', :gid => @group.gid)
-          users.each do |user|
-            Message.save_message('FORCED_JOIN', user.id,  group_url, _("Forced to join the group [%s].") % @group.name)
-          end
-          flash[:notice] = _("Added members of %s as members of the group") % group.name
-        else
-          flash[:error] = @group.errors.full_messages
-        end
+      users = group.group_participations.active.map(&:user)
+      participations = @group.join users, :force => true
+
+      group_url = url_for(:controller => 'group', :action => 'show', :gid => @group.gid)
+      participations.each do |user|
+        Message.save_message('FORCED_JOIN', user.id,  group_url, _("Forced to join the group [%s].") % @group.name)
       end
+
+      flash[:notice] = _("Added members of %s as members of the group") % group.name unless participations.empty?
+      flash[:error] = @group.errors.full_messages.join("\t") unless @group.errors.empty?
     else
       flash[:warn] = _("Users / groups selection invalid.")
     end

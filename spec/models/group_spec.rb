@@ -274,6 +274,71 @@ describe Group do
     end
   end
 
+  describe "#join" do
+    before do
+      @group = create_group
+      @user = create_user
+    end
+    describe "未参加のユーザのみだった場合" do
+      before do
+        @group.join @user
+      end
+      it "参加されること" do
+        @group.reload.users.should be_include(@user)
+      end
+    end
+    describe "参加中のユーザだった場合" do
+      before do
+        @group.join @user
+      end
+      it "falseが返ること" do
+        @group.join(@user).should == []
+      end
+    end
+    describe "承認が必要なグループの場合" do
+      before do
+        @group.update_attribute(:protected, true)
+      end
+      it "オプションなしでは、参加待ちになること" do
+        @group.join @user
+        p = GroupParticipation.find_by_group_id_and_user_id(@group.id, @user.id)
+        p.waiting.should be_true
+      end
+      it "強制参加オプションの場合" do
+        @group.join @user, :force => true
+        p = GroupParticipation.find_by_group_id_and_user_id(@group.id, @user.id)
+        p.waiting.should be_false
+      end
+    end
+    describe "参加済みのユーザの場合" do
+      before do
+        @group.join @user
+      end
+      it "オプションなしでは、失敗すること" do
+        @group.join(@user).should == []
+      end
+      describe "複数ユーザが渡される場合" do
+        describe "未参加のユーザと一緒に渡された場合" do
+          before do
+            @new_user = create_user
+          end
+          it "未参加のユーザが追加されること" do
+            @group.join([@user,@new_user])
+            GroupParticipation.find_by_group_id_and_user_id(@group.id, @new_user.id).should_not be_nil
+          end
+          it "参加済みのユーザは、追加登録されないこと" do
+            @group.join([@user,@new_user])
+            GroupParticipation.find_all_by_group_id_and_user_id(@group.id, @user.id).count.should == 1
+          end
+          it "エラーが設定されていること" do
+            @group.join([@user,@new_user])
+            @group.errors.should_not be_empty
+          end
+        end
+      end
+    end
+  end
+
   def valid_group
     group = Group.new({
       :name => 'name',
