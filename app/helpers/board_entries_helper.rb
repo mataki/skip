@@ -88,7 +88,7 @@ module BoardEntriesHelper
     if max = options[:max] and max > 0
       toggle_links(tag_links, max)
     else
-      tag_links.join('&nbsp;')
+      tag_links.join(',&nbsp;')
     end
   end
 end

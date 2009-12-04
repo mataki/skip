@@ -15,12 +15,12 @@
 
 module TagsHelper
   def toggle_links links, show_max = 3
-    show_links_as_s = links.slice!(0..show_max - 1).join('&nbsp;')
+    show_links_as_s = links.slice!(0..show_max - 1).join(',&nbsp;')
     hide_links_as_s =
       if links.size > 0
         str = link_to(icon_tag('bullet_toggle_plus'), '#', :class => 'tag_open')
         str << content_tag(:span, :class => 'invisible') do
-          links.join('&nbsp;') + link_to(icon_tag('bullet_toggle_minus'), '#', :class => 'tag_close')
+          links.join(',&nbsp;') + link_to(icon_tag('bullet_toggle_minus'), '#', :class => 'tag_close')
         end
       end || ''
     show_links_as_s + '&nbsp;' + hide_links_as_s
