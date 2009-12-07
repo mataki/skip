@@ -897,6 +897,10 @@ div.pictures
     li.image
       :text-align center
       :padding 5px
+    li.data_row
+      :border-top = !base_dotted_border
+      :text-align center
+      :height 22px
     li.operation
       :border-top = !base_dotted_border
       :text-align center
@@ -1508,6 +1512,8 @@ table.sortable
   tbody tr td
     :white-space nowrap
     :overflow hidden
+  tbody td.add_new_picture
+    :width 5em
 
 // jquery.columnmanager用
 div#table_columns

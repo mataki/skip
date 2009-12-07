@@ -7,7 +7,6 @@
 <% elsif login_mode?(:fixed_rp) -%>
 <% menu_links << link_to(_('New %{model}') % {:model => _('user')}, new_admin_user_path) -%>
 <% end -%>
-<% menu_links << link_to(_('Listing %{model}') % {:model => _('picture')}, admin_pictures_path) -%>
 <p><%= menu_links.join(' | ') %></p>
 
 <div class="box tabular">
@@ -55,10 +54,11 @@
     end,
                :objects => @users,
                :class_name => 'Admin::User',
-               :link_elem_size => 2,
+               :link_elem_size => 3,
                :link_elem_proc => lambda { |object|
       result = ""
       result << content_tag(:td, link_to(_("Edit"), edit_admin_user_path(object)) )
+      result << content_tag(:td, link_to(_('Create %{name}') % {:name => _('picture')}, new_admin_user_pictures_path(object)), :class => 'add_new_picture')
       result << content_tag(:td, link_to(_("Destroy"), object, {:confirm => _('Are you sure?'), :method => :delete}) ) if object.unused?
       result
     }

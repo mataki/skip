@@ -7,6 +7,7 @@
     <%= generate_box_menu_link( _('Board Entries'), admin_board_entries_path, request.url.include?(admin_board_entries_url)) %>
     <%= generate_box_menu_link( _('Bookmarks'), admin_bookmarks_path , request.url.include?(admin_bookmarks_url)) %>
     <%= generate_box_menu_link( _('Shared Files'), admin_share_files_path, request.url.include?(admin_share_files_path)) %>
+    <%= generate_box_menu_link( _('Listing %{model}') % {:model => _('picture')}, admin_pictures_path, request.url.include?(admin_pictures_path)) %>
     </ul>
   </div>
   <div class="box_space_bottom"></div>

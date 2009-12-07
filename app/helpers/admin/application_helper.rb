@@ -66,6 +66,7 @@ module Admin::ApplicationHelper
     ary << admin_board_entries_url
     ary << admin_bookmarks_url
     ary << admin_share_files_url
+    ary << admin_pictures_url
     ary
   end
 

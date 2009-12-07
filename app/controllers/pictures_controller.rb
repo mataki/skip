@@ -22,7 +22,7 @@ class PicturesController < ApplicationController
   def create
     pictures = current_user.pictures
     picture = pictures.build(params[:picture])
-    picture.active = true  if pictures.size == 1
+    picture.active = true if pictures.size == 1
     respond_to do |format|
       if picture.save
         flash[:notice] = _("Picture was updated successfully.")
