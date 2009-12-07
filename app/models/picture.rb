@@ -43,6 +43,7 @@ class Picture < ActiveRecord::Base
   def validate
     errors.add_to_base(_("Picture could not be changed.")) unless Admin::Setting.enable_change_picture
     errors.add_to_base(_("File size too large.")) if @filesize > 65535
+    errors.add_to_base(_("You can only upload 10 pictures.")) if user.pictures.size >= 10
   end
 
   def base_part_of(file_name)

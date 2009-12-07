@@ -20,7 +20,9 @@ class PicturesController < ApplicationController
   end
 
   def create
-    picture = current_user.pictures.build(params[:picture])
+    pictures = current_user.pictures
+    picture = pictures.build(params[:picture])
+    picture.active = true  if pictures.size == 1
     respond_to do |format|
       if picture.save
         flash[:notice] = _("Picture was updated successfully.")
@@ -32,16 +34,6 @@ class PicturesController < ApplicationController
   end
 
   def update
-#    picture = current_user.picture
-#    picture.attributes = params[:picture]
-#    respond_to do |format|
-#      if picture.save
-#        flash[:notice] = _("Picture was updated successfully.")
-#      else
-#        flash[:warn] = picture.errors.full_messages
-#      end
-#      format.html { redirect_to url_for(:controller => 'mypage', :action => 'manage', :menu => 'manage_portrait') }
-#    end
     picture = current_user.pictures.find(params[:id])
     picture.activate!
     respond_to do |format|
@@ -53,7 +45,7 @@ class PicturesController < ApplicationController
   end
 
   def destroy
-    picture = current_user.picture
+    picture = current_user.pictures.find(params[:id])
     respond_to do |format|
       unless picture
         flash[:warn] = _('Picture could not be deleted since it does not found.')
