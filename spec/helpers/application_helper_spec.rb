@@ -120,7 +120,7 @@ describe ApplicationHelper, "#get_entry_infos" do
     entry.stub(:point).and_return(1)
     entry.stub(:entry_trackbacks_count).and_return(1)
     entry.stub_chain(:state, :access_count).and_return(1)
-    helper.get_entry_infos(entry).should == "[Comment(1)-GoodJob(1)-Trackback(1)-Access(1)]"
+    helper.get_entry_infos(entry).should == "Comment(1)-GoodJob(1)-Trackback(1)-Access(1)"
   end
 end
 
