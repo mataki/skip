@@ -20,17 +20,11 @@
       <tbody>
         <% entries.each do |entry| -%>
           <% entry_infos = get_entry_infos(entry, :hide_bracket => true) -%>
-          <tr class="<%= detect_entry_gb_color entry -%>">
+          <tr class="<%= detect_entry_gb_class entry -%>">
             <% if with_checkable_read -%>
             <td class="read_state"><%= check_box_tag("message_#{entry.id}", "true", !user_unreadings[entry.id], {:class => "read_state_checkbox"}) %></td>
             <% end -%>
-            <td class="entry_icon">
-            <% if entry.owner_is_group? -%>
-              <%= icon_tag(Group.get_category_icon(entry.symbol_id), :title => get_group_entry_outline(entry)) %>
-            <% else -%>
-              <%= icon_tag('user_suit', :title => _('Blog')) %>
-            <% end -%>
-            </td>
+            <td class="entry_icon"><%= entry_icon entry %></td>
             <td class="publication_state"><%= get_publication_type_icon(entry) %></td>
             <td class="entry_outline">
               <%= entry_link_to(entry, {}, {:title => entry_infos}) %>
