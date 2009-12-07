@@ -100,9 +100,9 @@ module BoardEntriesHelper
         entry.symbol_name
       end
 
-      icon_tag(Group.get_category_icon(entry.symbol_id), :title => title) 
+      icon_tag(Group.get_category_icon(entry.symbol_id), :title => title)
     else
-      icon_tag('user_suit', :title => _('Blog')) 
+      icon_tag('user_suit', :title => _('Blog'))
     end
   end
 
