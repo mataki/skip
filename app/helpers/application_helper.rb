@@ -243,7 +243,9 @@ module ApplicationHelper
   end
 
   def detect_entry_gb_color entry
-    if entry.entry_type == 'DIARY'
+    if entry.publication_type == 'protected'
+      '#eeeeee'
+    elsif entry.entry_type == 'DIARY'
       case
       when  entry.publication_type == 'public'
         return '#ffffff'
@@ -257,8 +259,6 @@ module ApplicationHelper
       when entry.publication_type == 'public'
         '#eeeeff'
       end
-    else
-        '#eeeeee'
     end
   end
 
