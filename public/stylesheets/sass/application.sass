@@ -55,6 +55,9 @@ a.tag
   &:visited
     :color #8080FF
 
+span.tags
+  :color #8080FF
+
 span.tag
   :background #6665cb
   :color #fff
@@ -813,6 +816,9 @@ div#questions_wrapper
   table
     :width 100%
 
+span.current
+  :font-size 14px
+
 // マイページ > 新着通知(一覧)
 // ------------------------------------------------------------
 div#antenna_navi
@@ -1074,12 +1080,14 @@ div.topix_entries_wrapper, div.topix_share_files_wrapper, div.topix_bookmarks_wr
       td
         :padding 5px 0px 3px 0px
         :border-bottom = !base_dotted_border
+      td.entry_icon
+        :text-align center
       td.publication_state
         :text-align center
       td.owner
         :text-align left
         :overflow hidden
-      td.title
+      td.entry_outline
         :text-align left
       td.date
         :text-align right
@@ -1090,17 +1098,27 @@ div.topix_entries_wrapper, div.topix_share_files_wrapper, div.topix_bookmarks_wr
         :color #808080
 
   table.topix_entries
+    tr.all_protected
+      :background-color #eeeeee
+    tr.blog_public
+      :background-color #ffffff
+    tr.blog_private
+      :background-color #ffeeee
+    tr.forum_public
+      :background-color #eeeeff
+    tr.forum_private
+      :background-color #eeffee
     tr
       td.read_state
         :text-align center
-      td.title
+      td.entry_outline
         span.question_state
           :color green
           :font-size = !small_font_size
 
   table.topix_bookmarks
     tr
-      td.title
+      td.entry_outline
         span.count
           :background #ffe0e0
           :font

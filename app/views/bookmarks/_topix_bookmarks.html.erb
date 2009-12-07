@@ -10,7 +10,7 @@
       <tbody>
         <% bookmarks.each do |bookmark| -%>
           <tr>
-            <td class="title">
+            <td class="entry_outline">
               <%= link_to_bookmark_url bookmark %>
               <%= icon_tag('new') if (Date.today - bookmark.created_on.to_date) < 10 %>
               <span class="count"><%= link_to(n_("%{count} user", "%{count} users", bookmark.bookmark_comments_count) % {:count => bookmark.bookmark_comments_count}, url_for_bookmark(bookmark)) %></span>
