@@ -26,7 +26,7 @@
             <% end -%>
             <td class="entry_icon">
             <% if entry.owner_is_group? -%>
-              <%= icon_tag(Group.get_category_icon(entry.symbol_id), :title => get_group_entry_outline(entry)) %>
+              <%= icon_tag(detect_forum_icon(entry), :title => get_group_entry_outline(entry)) %>
             <% else -%>
               <%= icon_tag('user_suit', :title => _('Blog')) %>
             <% end -%>
