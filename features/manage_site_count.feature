@@ -40,6 +40,7 @@ Feature: サイト情報
     And 統計データを取得する
     Then "active_users"が"-1"変化すること
 
+  @now
   Scenario: [ブログを書いたことがある人](フォーラム除く、公開のみ)を確認出来る
     Given 現在の統計データを退避する
     And "alice"がユーザ登録する
@@ -48,7 +49,7 @@ Feature: サイト情報
     And 以下のブログを書く:
       |user  |title                   |tag |contents|publication_type|
       |alice |雑談スレ                |雑談|ほげほげ|全体に公開      |
-      |kota  |雑談スレ                |雑談|ほげほげ|下書き(自分だけに公開)|
+      |kota  |雑談スレ                |雑談|ほげほげ|下書き|
     And 以下のフォーラムを書く:
       |user  |group       |title            |tag |contents|publication_type|
       |maya  |vim_group   |雑談スレ         |雑談|ほげほげ|全体に公開      |

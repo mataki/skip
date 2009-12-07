@@ -29,11 +29,13 @@ Feature: マイページ
     And I should not see "Railsについて質問" within "div#recent_blogs"
     And I should see "Railsについて雑談" within "div#recent_blogs"
 
+  @now
   Scenario: お知らせを表示する
     Given 以下のブログを書く:
-      |user  |title                 |aim_type                                                     |contents        |
-      |a_user|Railsについてお知らせ |お知らせ (マイページの「あなたへのお知らせ」に表示されます)  |リリースします  |
-      |a_user|Railsについて雑談     |記事 (マイページの「新着記事」に表示されます)                |色々話そう      |
+      |user  |title                   |aim_type                                                     |contents        |
+      |a_user|Railsについてお知らせ   |お知らせ (マイページの「あなたへのお知らせ」に表示されます)  |リリースします  |
+      |a_user|jQueryについてお知らせ  |お知らせ (マイページの「あなたへのお知らせ」に表示されます)  |リリースします  |
+      |a_user|Railsについて雑談       |記事 (マイページの「新着記事」に表示されます)                |色々話そう      |
     And 新着通知を作成バッチを実行する
 
     When "a_group_owned_user"でログインする
