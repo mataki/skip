@@ -242,26 +242,6 @@ module ApplicationHelper
     output.size > 0 ? "[#{output.join('-')}]" : ""
   end
 
-  def detect_entry_gb_color entry
-    if entry.publication_type == 'protected'
-      '#eeeeee'
-    elsif entry.entry_type == 'DIARY'
-      case
-      when  entry.publication_type == 'public'
-        return '#ffffff'
-      when entry.publication_type == 'private'
-        return '#ffeeee'
-      end
-    elsif entry.entry_type == 'GROUP_BBS'
-      case
-      when entry.publication_type == 'private'
-        '#eeffee'
-      when entry.publication_type == 'public'
-        '#eeeeff'
-      end
-    end
-  end
-
   def get_menu_items menus, selected_menu, action
     menu_items = []
     menus.each do |menu|

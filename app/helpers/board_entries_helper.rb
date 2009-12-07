@@ -91,4 +91,28 @@ module BoardEntriesHelper
       tag_links.join(',&nbsp;')
     end
   end
+
+  def get_group_entry_outline entry
+    if entry.category?
+      entry.symbol_name + " : " + entry.category
+    else
+      entry.symbol_name
+    end
+  end
+
+  def detect_entry_gb_color entry
+    if entry.protected?
+      'all_protected'
+    elsif entry.entry_type == 'DIARY'
+      case
+      when entry.public? then 'blog_public'
+      when entry.private? then 'blog_private'
+      end
+    elsif entry.entry_type == 'GROUP_BBS'
+      case
+      when entry.public? then 'forum_public'
+      when entry.private? then 'forum_private'
+      end
+    end
+  end
 end
