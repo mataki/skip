@@ -100,10 +100,6 @@ module BoardEntriesHelper
     end
   end
 
-  def detect_forum_icon entry
-    entry.public? ? 'page' : Group.get_category_icon(entry.symbol_id)
-  end
-
   def detect_entry_gb_color entry
     if entry.protected?
       'all_protected'
