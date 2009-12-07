@@ -19,7 +19,7 @@
       <col class="col75" />
       <tbody>
         <% entries.each do |entry| -%>
-          <% entry_infos = get_entry_infos(entry, :hide_bracket => true) -%>
+          <% entry_infos = get_entry_infos(entry) -%>
           <tr class="<%= detect_entry_gb_class entry -%>">
             <% if with_checkable_read -%>
             <td class="read_state"><%= check_box_tag("message_#{entry.id}", "true", !user_unreadings[entry.id], {:class => "read_state_checkbox"}) %></td>
@@ -39,7 +39,7 @@
                 <span class="small_text infos"><%= user_link_to(entry.user, :with_prefix => true) %></span>
               <% end -%>
               <br/>
-              <span class="margin30px_infos"><%= entry_infos -%></span>
+              <span class="infos margin30px"><%= entry_infos -%></span>
             </td>
             <td class="date"><%=h entry.date.strftime(_("%B %d %Y")) %></td>
           </tr>
