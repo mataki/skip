@@ -40,7 +40,6 @@ Feature: サイト情報
     And 統計データを取得する
     Then "active_users"が"-1"変化すること
 
-  @now
   Scenario: [ブログを書いたことがある人](フォーラム除く、公開のみ)を確認出来る
     Given 現在の統計データを退避する
     And "alice"がユーザ登録する

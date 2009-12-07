@@ -29,7 +29,6 @@ Feature: マイページ
     And I should not see "Railsについて質問" within "div#recent_blogs"
     And I should see "Railsについて雑談" within "div#recent_blogs"
 
-  @now
   Scenario: お知らせを表示する
     Given 以下のブログを書く:
       |user  |title                   |aim_type                                                     |contents        |

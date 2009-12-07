@@ -5,7 +5,6 @@ Feature: 管理者がプロフィール画像を管理する
     Given   言語は"ja-JP"
     And     "a_user"でログインする
 
-  @now
   Scenario: プロフィール画像一覧を初期表示する
     Given   "マイページ"にアクセスする
     And     "システムの管理"リンクをクリックする
