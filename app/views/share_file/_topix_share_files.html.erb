@@ -29,7 +29,7 @@
                 <%= hidden_field_tag 'authenticity_token', form_authenticity_token %>
               <% end -%>
               <%= user_link_to(share_file.user, :with_prefix => true) if share_file.owner_is_group? %>
-              <%= share_file_search_links_tag share_file.category, :max => 3 %>
+              <span class="tags"><%= share_file_search_links_tag share_file.category, :max => 3 %></span>
               <span style="margin-left:10px"><%= h share_file.description %></span>
               <span class="infos">
                 <%= _('Downloads: %s') % content_tag('span', h(share_file.total_count), :id => "download_count_#{share_file.id}") %>
