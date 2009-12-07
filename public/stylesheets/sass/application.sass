@@ -881,6 +881,30 @@ table.manage_message
     :padding 1px 4px
     :height 20px
 
+// 自分の管理 > プロフィール画像の変更
+div.pictures
+  :border = !base_border
+  :margin 10px 0
+  :width 100%
+  ul.picture
+    :border = !base_border
+    :float left
+    :margin 3px 8px 3px 8px
+    :width 150px
+    :list-style none
+    :overflow hidden
+    :white-space nowrap
+    li.image
+      :text-align center
+      :padding 5px
+    li.operation
+      :border-top = !base_dotted_border
+      :text-align center
+      :height 22px
+      form input
+        :padding 0
+
+
 // ユーザ
 // ------------------------------------------------------------
 // ユーザの上部の情報表示

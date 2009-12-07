@@ -20,6 +20,10 @@ class Picture < ActiveRecord::Base
     { :conditions => ['user_id IN (?)', User.active.map(&:id).uniq] }
   }
 
+  named_scope :current, proc {
+    { :conditions => ['active = ?', true] }
+  }
+
   attr_accessor :file
 
   N_('Picture|File')
@@ -44,5 +48,14 @@ class Picture < ActiveRecord::Base
   def base_part_of(file_name)
     name = File.basename(file_name)
     name.gsub(/[^\w._-]/, '')
+  end
+
+  def activate!
+    ActiveRecord::Base.transaction do
+      user.pictures.current.each do |picture|
+        picture.update_attributes!(:active => false)
+      end
+      self.update_attributes!(:active => true)
+    end
   end
 end

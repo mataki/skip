@@ -14,13 +14,13 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class PicturesController < ApplicationController
-  def picture
+  def show
     @picture = Picture.find(params[:id])
     send_data(@picture.data, :filename => @picture.name, :type => @picture.content_type, :disposition => "inline")
   end
 
   def create
-    picture = current_user.build_picture(params[:picture])
+    picture = current_user.pictures.build(params[:picture])
     respond_to do |format|
       if picture.save
         flash[:notice] = _("Picture was updated successfully.")
@@ -32,15 +32,23 @@ class PicturesController < ApplicationController
   end
 
   def update
-    picture = current_user.picture
-    picture.attributes = params[:picture]
+#    picture = current_user.picture
+#    picture.attributes = params[:picture]
+#    respond_to do |format|
+#      if picture.save
+#        flash[:notice] = _("Picture was updated successfully.")
+#      else
+#        flash[:warn] = picture.errors.full_messages
+#      end
+#      format.html { redirect_to url_for(:controller => 'mypage', :action => 'manage', :menu => 'manage_portrait') }
+#    end
+    picture = current_user.pictures.find(params[:id])
+    picture.activate!
     respond_to do |format|
-      if picture.save
+      format.html do
         flash[:notice] = _("Picture was updated successfully.")
-      else
-        flash[:warn] = picture.errors.full_messages
+        redirect_to url_for(:controller => 'mypage', :action => 'manage', :menu => 'manage_portrait')
       end
-      format.html { redirect_to url_for(:controller => 'mypage', :action => 'manage', :menu => 'manage_portrait') }
     end
   end
 

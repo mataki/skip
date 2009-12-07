@@ -7,21 +7,41 @@
     <p><%= _("You can only upload 1 picture. The file size is limited to 64kb.<br/>\nYou can find something by <a href=\"http://www.google.com/search?q=%s\">searching \"Portrait Making\" in Google</a>\nif you don't have a suitable picture") % URI.encode(_('portrait making'))%></p>
   </div>
 
-  <div class="portrait ui-corner-all" style="border: 1px solid silver; margin: 10px; text-align: center;">
-  <%= show_picture(@user, :height => 150, :fit_image => false) -%>
+  <% if pictures = current_user.pictures and !pictures.empty? -%>
+  <div class="pictures ui-corner-all">
+    <% pictures.each do |picture| -%>
+    <ul class="picture ui-corner-all">
+      <li class="image">
+        <%= image_tag user_picture_path(current_user, picture, :format => :png), :height => 90, :class => 'fit_image' %>
+      </li>
+      <li class="operation">
+        <% if picture.active? -%>
+          <%= _('Selected') %>
+        <% else -%>
+          <% form_for([current_user, picture], :html => {:method => :put}) do |f| -%>
+            <%= f.submit _('Select') %>
+          <% end -%>
+        <% end -%>
+      </li>
+      <li class="operation">
+        <%= link_to _('Delete'), user_picture_path(current_user, picture), :method => :delete, :confirm => _('Are you sure?') %>
+      </li>
+    </ul>
+    <% end -%>
+    <div class="clear_left"></div>
   </div>
+  <% end -%>
 
-  <% form_for(@picture, :html => {:multipart => true}) do |f| -%>
+  <% form_for([current_user, current_user.pictures.build], :html => {:multipart => true}) do |f| -%>
     <%= error_messages_for :picture %>
     <%= f.label :file %>
     <%= f.file_field :file %>
     <%= submit_tag _("Upload") %>
   <% end -%>
-  <%= link_to(_("[[Delete]]"), @picture, :confirm => _('Are you sure to delete?'), :method => :delete) unless @picture.new_record? %>
 <% end -%>
 
 <% content_for :javascript_initializers do -%>
-    $j("form")
+    $j("form#new_picture")
     .submit(function(){
         if($j("#picture_file").val() == ""){
             alert('<%= _("File name is mandatory.")%>');

@@ -3,13 +3,11 @@ ActionController::Routing::Routes.draw do |map|
   map.root    :controller => 'mypage', :action => 'index'
 
   # TODO users配下に移す
-  map.resources :pictures
-
-  # TODO users配下に移す
   map.resources :notices
 
   map.resources :users, :only => [:index] do |user|
     user.resources :chains
+    user.resources :pictures
   end
 
   map.share_file  ':controller_name/:symbol_id/files/:file_name',
