@@ -23,7 +23,7 @@ describe PicturesController, '#destroy' do
   describe 'プロフィール画像が設定されている場合' do
     before do
       @picture = stub_model(Picture)
-      @current_user.should_receive(:picture).and_return(@picture)
+      @current_user.stub_chain(:pictures, :find).and_return(@picture)
     end
     describe 'プロフィール画像の変更が許可されている場合' do
       before do
@@ -59,7 +59,7 @@ describe PicturesController, '#destroy' do
   end
   describe 'プロフィール画像が設定されていない場合' do
     before do
-      @current_user.should_receive(:picture).and_return(nil)
+      @current_user.stub_chain(:pictures, :find).and_return(nil)
     end
     it '「プロフィール画像が存在しないため、削除できませんでした。」というメッセージが設定されること' do
       delete :destroy

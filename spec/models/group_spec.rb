@@ -328,7 +328,7 @@ describe Group do
           end
           it "参加済みのユーザは、追加登録されないこと" do
             @group.join([@user,@new_user])
-            GroupParticipation.find_all_by_group_id_and_user_id(@group.id, @user.id).count.should == 1
+            GroupParticipation.find_all_by_group_id_and_user_id(@group.id, @user.id).size.should == 1
           end
           it "エラーが設定されていること" do
             @group.join([@user,@new_user])

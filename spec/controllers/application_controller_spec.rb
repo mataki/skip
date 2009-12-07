@@ -122,8 +122,6 @@ describe ApplicationController, "#current_user=" do
   end
   describe "nilがわたってきた場合" do
     it "sessionにnilが設定されること" do
-      @session.should_receive(:[]=).with(:auth_session_token, nil)
-      @session.should_receive(:[]=).with(:user_code, nil)
       controller.send(:current_user=, nil)
     end
   end
