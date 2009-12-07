@@ -1951,7 +1951,7 @@ msgstr "記事"
 
 #: app/controllers/admin/admin_module.rb:75
 msgid "Board entries"
-msgstr "ブログ・フォーラム"
+msgstr "記事"
 
 #: app/models/board_entry_comment.rb:-
 msgid "BoardEntryComment|Board entry"
@@ -3000,7 +3000,7 @@ msgstr "過去にあなたがコメントを残した記事"
 
 #: app/views/mypage/_record_post.html.erb:33
 msgid "Entries you posted to your blog and group BBSs."
-msgstr "ブログやグループのフォーラムであなたが投稿した記事の一覧です。"
+msgstr "あなたが投稿した記事の一覧です。"
 
 #: app/controllers/mypage_controller.rb:182
 msgid "Entry was successfully marked read."
@@ -7356,13 +7356,13 @@ msgstr "現在のユーザ名"
 #: app/controllers/board_entries_controller.rb:74
 #: app/controllers/board_entries_controller.rb:94 app/models/board_entry.rb:-
 msgid "board entry"
-msgstr "ブログ・フォーラム"
+msgstr "記事"
 
 #: app/controllers/board_entries_controller.rb:136
 #: app/models/board_entry_comment.rb:-
 #: app/views/admin/board_entries/show.html.erb:43
 msgid "board entry comment"
-msgstr "ブログ・フォーラムコメント"
+msgstr "記事コメント"
 
 #: app/models/board_entry_point.rb:-
 msgid "board entry point"
