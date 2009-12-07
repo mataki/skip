@@ -19,18 +19,12 @@
       <col class="col75" />
       <tbody>
         <% entries.each do |entry| -%>
-          <% entry_infos = get_entry_infos(entry) -%>
-          <tr class="<%= detect_entry_gb_color entry -%>">
+          <% entry_infos = get_entry_infos(entry, :hide_bracket => true) -%>
+          <tr class="<%= detect_entry_gb_class entry -%>">
             <% if with_checkable_read -%>
             <td class="read_state"><%= check_box_tag("message_#{entry.id}", "true", !user_unreadings[entry.id], {:class => "read_state_checkbox"}) %></td>
             <% end -%>
-            <td class="entry_icon">
-            <% if entry.owner_is_group? -%>
-              <%= icon_tag(detect_forum_icon(entry), :title => get_group_entry_outline(entry)) %>
-            <% else -%>
-              <%= icon_tag('user_suit', :title => _('Blog')) %>
-            <% end -%>
-            </td>
+            <td class="entry_icon"><%= entry_icon entry %></td>
             <td class="publication_state"><%= get_publication_type_icon(entry) %></td>
             <td class="entry_outline">
               <%= entry_link_to(entry, {}, {:title => entry_infos}) %>
@@ -44,7 +38,8 @@
               <% if entry.owner_is_group? -%>
                 <span class="small_text infos"><%= user_link_to(entry.user, :with_prefix => true) %></span>
               <% end -%>
-              <span class="infos"><%= entry_infos -%></span>
+              <br/>
+              <span class="margin30px_infos"><%= entry_infos -%></span>
             </td>
             <td class="date"><%=h entry.date.strftime(_("%B %d %Y")) %></td>
           </tr>

@@ -220,7 +220,7 @@ module ApplicationHelper
     view_name = ""
     case entry_or_share_file.publication_type
     when 'public'
-      icon_name = 'page_red'
+      icon_name = entry_or_share_file.owner_is_user? ? 'page_red' : 'page'
       view_name = _("Open to All")
     when 'protected'
       visibility, visibility_color = entry_or_share_file.visibility
@@ -234,13 +234,17 @@ module ApplicationHelper
   end
 
   # [コメント(n)-ポイント(n)-話題(n)-アクセス(n)]の表示
-  def get_entry_infos entry
+  def get_entry_infos(entry, options = {:hide_bracket => false})
     output = []
     output << n_("Comment(%s)", "Comments(%s)", entry.board_entry_comments_count) % h(entry.board_entry_comments_count.to_s) if entry.board_entry_comments_count > 0
     output << "#{h Admin::Setting.point_button}(#{h entry.point.to_s})" if entry.point > 0
     output << n_("Trackback(%s)", "Trackbacks(%s)", entry.entry_trackbacks_count) % h(entry.entry_trackbacks_count.to_s) if entry.entry_trackbacks_count > 0
     output << n_("Access(%s)", "Accesses(%s)", entry.state.access_count) % h(entry.state.access_count.to_s) if entry.state.access_count > 0
-    output.size > 0 ? "[#{output.join('-')}]" : ""
+    if options[:hide_bracket]
+      output.size > 0 ? "#{output.join('-')}" : ""
+    else
+      output.size > 0 ? "[#{output.join('-')}]" : ""
+    end
   end
 
   def get_menu_items menus, selected_menu, action
