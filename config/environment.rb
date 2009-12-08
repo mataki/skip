@@ -49,9 +49,11 @@ Rails::Initializer.run do |config|
   # See Rails::Configuration for more options
   config.gem "fastercsv"
   config.gem "json", :lib => "json/add/rails"
-  config.gem 'gettext_rails'
-  config.gem 'gettext_activerecord'
-  config.gem 'locale_rails'
+  config.gem 'locale'
+  config.gem 'locale_rails', :version => '2.0.4'
+  config.gem 'gettext'
+  config.gem 'gettext_activerecord', :version => '2.0.4'
+  config.gem 'gettext_rails', :version => '2.0.4'
   config.gem 'openskip-skip_embedded', :lib => 'skip_embedded', :version => '>=0.9.17', :source => 'http://gems.github.com'
   config.gem 'mislav-will_paginate', :lib => 'will_paginate', :version=> '>=2.3.6', :source => 'http://gems.github.com/'
   config.gem "maedana-ar_mailer", :lib => 'action_mailer/ar_mailer', :source => 'http://gemcutter.org'

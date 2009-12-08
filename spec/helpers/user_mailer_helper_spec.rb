@@ -16,7 +16,7 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe UserMailerHelper, '#convert_plain' do
-  describe '100文字未満のタグが含まれない本文の場合' do
+  describe '200文字未満のタグが含まれない本文の場合' do
     before do
       @entry = create_board_entry :contents => 'テスト'
     end
@@ -24,12 +24,12 @@ describe UserMailerHelper, '#convert_plain' do
       helper.convert_plain(@entry).should == "#{space}テスト"
     end
   end
-  describe '100文字を越えるタグが含まれない本文の場合' do
+  describe '200文字を越えるタグが含まれない本文の場合' do
     before do
-      @entry = create_board_entry :contents => 'あ'*101
+      @entry = create_board_entry :contents => 'あ'*201
     end
-    it '本文が100文字で切断されていること' do
-      helper.convert_plain(@entry).should == "#{space}#{'あ'*100}"
+    it '本文が200文字で切断されていること' do
+      helper.convert_plain(@entry).should == "#{space}#{'あ'*200}"
     end
   end
   describe '改行が含まれる本文の場合' do

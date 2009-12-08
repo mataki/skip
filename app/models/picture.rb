@@ -20,6 +20,10 @@ class Picture < ActiveRecord::Base
     { :conditions => ['user_id IN (?)', User.active.map(&:id).uniq] }
   }
 
+  named_scope :current, proc {
+    { :conditions => ['active = ?', true] }
+  }
+
   attr_accessor :file
 
   N_('Picture|File')
@@ -39,10 +43,20 @@ class Picture < ActiveRecord::Base
   def validate
     errors.add_to_base(_("Picture could not be changed.")) unless Admin::Setting.enable_change_picture
     errors.add_to_base(_("File size too large.")) if @filesize > 65535
+    errors.add_to_base(_("You can only upload 10 pictures.")) if user && user.pictures.size >= 10
   end
 
   def base_part_of(file_name)
     name = File.basename(file_name)
     name.gsub(/[^\w._-]/, '')
+  end
+
+  def activate!
+    ActiveRecord::Base.transaction do
+      user.pictures.current.each do |picture|
+        picture.update_attributes!(:active => false)
+      end
+      self.update_attributes!(:active => true)
+    end
   end
 end

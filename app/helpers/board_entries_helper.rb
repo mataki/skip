@@ -88,7 +88,37 @@ module BoardEntriesHelper
     if max = options[:max] and max > 0
       toggle_links(tag_links, max)
     else
-      tag_links.join('&nbsp;')
+      tag_links.join(',&nbsp;')
+    end
+  end
+
+  def entry_icon entry
+    if entry.owner_is_group?
+      title = if entry.category?
+        entry.symbol_name + " : " + entry.category
+      else
+        entry.symbol_name
+      end
+
+      icon_tag(Group.get_category_icon(entry.symbol_id), :title => title)
+    else
+      icon_tag('user_suit', :title => _('Blog'))
+    end
+  end
+
+  def detect_entry_gb_class entry
+    if entry.protected?
+      'all_protected'
+    elsif entry.entry_type == 'DIARY'
+      case
+      when entry.public? then 'blog_public'
+      when entry.private? then 'blog_private'
+      end
+    elsif entry.entry_type == 'GROUP_BBS'
+      case
+      when entry.public? then 'forum_public'
+      when entry.private? then 'forum_private'
+      end
     end
   end
 end

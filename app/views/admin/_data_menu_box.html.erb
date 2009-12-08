@@ -3,11 +3,11 @@
   <div class="box_space_title"><%= _('Admin Menu')%></div>
   <div class="box_space_body">
     <ul>
-    <%= generate_box_menu_link( _('Users'), admin_users_path, (request.url.include?(admin_users_url) || request.url == admin_root_url || request.url == admin_pictures_url)) %>
     <%= generate_box_menu_link( _('Groups'), admin_groups_path, request.url.include?(admin_groups_url)) %>
     <%= generate_box_menu_link( _('Board Entries'), admin_board_entries_path, request.url.include?(admin_board_entries_url)) %>
     <%= generate_box_menu_link( _('Bookmarks'), admin_bookmarks_path , request.url.include?(admin_bookmarks_url)) %>
     <%= generate_box_menu_link( _('Shared Files'), admin_share_files_path, request.url.include?(admin_share_files_path)) %>
+    <%= generate_box_menu_link( _('Listing %{model}') % {:model => _('picture')}, admin_pictures_path, request.url.include?(admin_pictures_path)) %>
     </ul>
   </div>
   <div class="box_space_bottom"></div>

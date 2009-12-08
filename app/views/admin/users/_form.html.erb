@@ -8,7 +8,7 @@
   :<%= h @user.code %>
   <% end -%>
 </p>
-<% unless @user.new_record? -%>
+<% if SkipEmbedded::InitialSettings['username_use_setting'] and !@user.new_record? -%>
 <p>
   <%= label Admin::User.name, :uid %>
   :<%= h @user.uid %>

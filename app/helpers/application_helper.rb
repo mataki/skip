@@ -132,15 +132,16 @@ module ApplicationHelper
   def show_picture(user, options = {})
     options = {:border => '0', :name => 'picture', :alt => h(user.name), :fit_image => true}.merge(options)
     options.merge!(:class => 'fit_image') if options.delete(:fit_image)
-    if picture = user.picture
-      unless picture.new_record?
-        file_name = url_for(:controller => '/pictures', :action => 'picture', :id => picture.id, :format => :png)
+    file_name =
+      if picture = user.picture
+        unless picture.new_record?
+          user_picture_path(user, picture, :format => :png)
+        else
+          'default_picture.png'
+        end
       else
-        file_name = 'default_picture.png'
+        'default_picture.png'
       end
-    else
-      file_name = 'default_picture.png'
-    end
     image_tag(file_name, options)
   end
 
@@ -219,7 +220,7 @@ module ApplicationHelper
     view_name = ""
     case entry_or_share_file.publication_type
     when 'public'
-      icon_name = 'page_red'
+      icon_name = entry_or_share_file.owner_is_user? ? 'page_red' : 'page'
       view_name = _("Open to All")
     when 'protected'
       visibility, visibility_color = entry_or_share_file.visibility
@@ -239,7 +240,7 @@ module ApplicationHelper
     output << "#{h Admin::Setting.point_button}(#{h entry.point.to_s})" if entry.point > 0
     output << n_("Trackback(%s)", "Trackbacks(%s)", entry.entry_trackbacks_count) % h(entry.entry_trackbacks_count.to_s) if entry.entry_trackbacks_count > 0
     output << n_("Access(%s)", "Accesses(%s)", entry.state.access_count) % h(entry.state.access_count.to_s) if entry.state.access_count > 0
-    output.size > 0 ? "[#{output.join('-')}]" : ""
+    output.size > 0 ? "#{output.join('-')}" : ""
   end
 
   def get_menu_items menus, selected_menu, action
@@ -324,7 +325,7 @@ module ApplicationHelper
       if groups = category.groups.participating(current_user).order_participate_recent and !groups.empty?
         option_tags << content_tag(:option, "[#{h(category.name)}]", :disabled => 'disabled', :style => 'color: gray')
         groups.each do |group|
-          option_tags << content_tag(:option, "&nbsp;#{truncate(h(group.name), 15)}", :value => url_for({:controller => '/group', :gid => group.gid, :action => 'show'}))
+          option_tags << content_tag(:option, "&nbsp;#{truncate(h(group.name), :length => 15)}", :value => url_for({:controller => '/group', :gid => group.gid, :action => 'show'}))
         end
       end
     end
@@ -342,7 +343,7 @@ module ApplicationHelper
     search_links << link_to_unless_current(icon_tag('user_suit', :title => _('Users')) + _('Users'),  :controller => '/users', :action => 'index') if User.count > 1
     search_links << link_to_unless_current(icon_tag('group', :title => _('Groups')) + _('Groups'),  :controller => '/groups', :action => 'index') if Group.count > 0
     search_links << link_to_unless_current(icon_tag('tag_blue', :title => _('Bookmarks')) + _('Bookmarks'),  :controller => '/bookmarks', :action => 'index') if Bookmark.count > 0
-    search_links << link_to(icon_tag('page_white_paint', :title => _('Wiki')) + _('Wiki'), wiki_path((Page.root || Page.first({:conditions=>["parent_id = ?",0]}).title)))
+    search_links << link_to(icon_tag('page_white_paint', :title => _('Wiki')) + _('Wiki'), wiki_path((Page.root || Page.first({:conditions=>["parent_id = ?",0]})).title))
     links << content_tag(:span, search_links.join(' '), :class => 'search_links')
   end
 

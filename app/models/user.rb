@@ -24,7 +24,8 @@ class User < ActiveRecord::Base
   @@per_page = 40
 
   has_many :group_participations, :dependent => :destroy
-  has_one :picture, :dependent => :destroy
+  has_one :picture, :conditions => ['pictures.active = ?', true], :dependent => :destroy
+  has_many :pictures, :dependent => :destroy
   has_many :user_profile_values, :dependent => :destroy
   has_many :tracks, :order => "updated_on DESC", :dependent => :destroy
   has_one  :user_access, :class_name => "UserAccess", :dependent => :destroy
@@ -525,6 +526,12 @@ class User < ActiveRecord::Base
 
   def to_param
     uid
+  end
+
+  def reset_simple_login_token!
+    self.simple_login_token = self.class.make_token
+    self.simple_login_token_expires_at = Time.now.since(1.month)
+    self.save!
   end
 
 protected

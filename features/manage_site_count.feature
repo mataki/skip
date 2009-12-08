@@ -48,7 +48,7 @@ Feature: サイト情報
     And 以下のブログを書く:
       |user  |title                   |tag |contents|publication_type|
       |alice |雑談スレ                |雑談|ほげほげ|全体に公開      |
-      |kota  |雑談スレ                |雑談|ほげほげ|下書き(自分だけに公開)|
+      |kota  |雑談スレ                |雑談|ほげほげ|下書き|
     And 以下のフォーラムを書く:
       |user  |group       |title            |tag |contents|publication_type|
       |maya  |vim_group   |雑談スレ         |雑談|ほげほげ|全体に公開      |

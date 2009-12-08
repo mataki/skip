@@ -1,9 +1,27 @@
-<% %w(entry_access entry_comment entry_he user_access user_entry commentator).each do |contents_type| %>
+<div class="ranking_layout">
+<h2 class="topix_title"><%= icon_tag('star') %><%= _('Ranking of Popular Blogs') %></h2>
+
+<div class="ranking_aggregate">
+<% %w(entry_access entry_comment entry_he).each do |contents_type| %>
   <div id="<%= contents_type %>" class="ranking_wrapper">
   <span class="indicator"><%= skip_image_tag 'indicator.gif' %></span>
   </div>
 <% end %>
+<div class="clear_both"></div>
+<p><%= _('Public entries only') %></p>
+</div>
+<div class="clear_both"></div>
 
+<h2 class="topix_title"><%= icon_tag('star') %><%= _('Ranking of Popular Users') %></h2>
+<div class="ranking_aggregate">
+<% %w(user_access user_entry commentator).each do |contents_type| %>
+  <div id="<%= contents_type %>" class="ranking_wrapper">
+  <span class="indicator"><%= skip_image_tag 'indicator.gif' %></span>
+  </div>
+<% end %>
+</div>
+
+</div>
 <% content_for :javascript_initializers do -%>
     getRanking = function(contents_type, year, month){
         var url = relative_url_root + '/ranking_data/' + contents_type;

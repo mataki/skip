@@ -41,6 +41,9 @@ module NavigationHelpers
     when /^(.*)グループのトップページ$/
       url_for(:controller => "/group", :action => "show", :gid => $1)
 
+    when /管理画面のユーザ一覧/
+      admin_users_path
+
     # Add more mappings here.
     # Here is a more fancy example:
     #

@@ -1,11 +1,8 @@
-<%= render :partial => '/admin/data_menu_box' %>
 <% content_for :topic_path do -%>
 <%= render :partial => '/admin/shared/topic_path' %>
 <% end -%>
-<% content_for :contents_right do -%>
 
 <%= render(:partial => "system/error_messages_for", :locals => { :messages => @error_msg }) if @error_msg %>
-
 <div class="box">
   <% form_tag({:action => :update}, {:method => :put}) do %>
   <%= render :partial => "portal/profile_form" %>
@@ -14,4 +11,3 @@
   </p>
   <% end %>
 </div>
-<% end -%>

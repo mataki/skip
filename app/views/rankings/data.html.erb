@@ -3,22 +3,13 @@
 <table class="ranking_square">
   <col class="col25" />
   <col />
-  <col class="col100" />
+  <col class="col50" />
   <thead>
     <tr>
-      <th class="title" colspan="3"><%= icon_tag('star') %><%= ranking_title params[:content_type].to_sym %></th>
+      <th class="title" colspan="3"><%= ranking_title params[:content_type].to_sym %></th>
     </tr>
     <tr>
-      <td class="caption" colspan="3"><span class="nowrap"><%= ranking_caption params[:content_type].to_sym -%></span></td>
-    </tr>
-    <tr>
-      <th></th>
-      <% if include_title -%>
-        <th><%= _('Title')%></th>
-      <% else -%>
-        <th><%= _('User')%></th>
-      <% end -%>
-      <th class="point"><%= ranking_amount_name params[:content_type].to_sym %></th>
+      <td class="caption" colspan="3"><%= ranking_caption params[:content_type].to_sym -%></td>
     </tr>
   </thead>
   <tbody>
@@ -26,7 +17,7 @@
     <tr>
       <td class="rank"><%= i + 1 %>
     <% if include_title -%>
-      <td class="column_title"><span class="nowrap"><%= link_to h(ranking.title), h(ranking.url), :class => 'ranking_title' %> - (<%= link_to h(ranking.author), h(ranking.author_url), :class => 'ranking_author' %>)</span></td>
+      <td class="column_title"><%= link_to h(ranking.title), h(ranking.url), :class => 'ranking_title' %> - (<%= link_to h(ranking.author), h(ranking.author_url), :class => 'ranking_author' %>)</td>
     <% else -%>
       <td class="column_title"><%= link_to h(ranking.author), h(ranking.author_url), :class => 'ranking_author' %></td>
     <% end -%>

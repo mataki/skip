@@ -41,14 +41,13 @@ private
   end
 
   def header
-    _('*This email is automatically delivered from the system. Please do not reply.') + "\n" +
-    _('This email is a contact from %{sender}') % {:sender => sender} + "\n" +
-    ("-" * 66)
   end
 
   def footer
+    noreply_description = _('*This email is automatically delivered from the system. Please do not reply.')
     contact_description = _('For questions regarding this email, please contact:') % {:sender => sender}
-    "----\n*#{contact_description}\n#{contact_addr}\n\n*#{sender}\n#{site_url}"
+    "----\n#{noreply_description}\n\n" +
+    "*#{contact_description}\n#{contact_addr}\n\n*#{sender}\n#{site_url}"
   end
 
   def sender

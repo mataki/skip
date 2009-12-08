@@ -1,8 +1,7 @@
-<%= render :partial => '/admin/data_menu_box' %>
 <% content_for :topic_path do -%>
 <%= render :partial => '/admin/shared/topic_path' %>
 <% end -%>
-<% content_for :contents_right do -%>
+
 <div class="box">
   <h3><%= _('Instructions for importing from a CSV file.') %></h3>
   <p style="color:red;"><b><%= _('CSV file needs to be encoded in UTF-8.') %></b></p>
@@ -71,8 +70,6 @@
   </table>
   <% end -%>
 </div>
-  <%= link_to _('Listing %{model}') % {:model => _('user')}, admin_users_path %>
-<% end -%>
 
 <% content_for :javascript_initializers do -%>
     $j('#import_confirmation_button')

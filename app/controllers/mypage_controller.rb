@@ -346,7 +346,7 @@ class MypageController < ApplicationController
   def update_customize
     @user_custom = current_user.custom
     if @user_custom.update_attributes(params[:user_custom])
-      setup_custom_cookies
+      setup_custom_cookies(@user_custom)
       flash[:notice] = _('Updated successfully.')
       redirect_to :action => 'manage', :menu => 'manage_customize'
     else
@@ -567,8 +567,9 @@ class MypageController < ApplicationController
       :id_name => id_name,
       :title_icon => "user",
       :title_name => _('Blogs'),
+      :pages => pages,
       :per_page => options[:per_page],
-      :pages => pages
+      :symbol2name_hash => BoardEntry.get_symbol2name_hash(pages)
     }
   end
 

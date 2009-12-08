@@ -18,23 +18,24 @@ class Admin::PicturesController < Admin::ApplicationController
   include Admin::AdminModule::AdminUtil
   def index
     @query = params[:query]
-    @users = Admin::User.scoped(
-      :conditions => [search_condition, { :lqs => SkipUtil.to_lqs(@query) }]
-    ).paginate(:page => params[:page], :per_page => 100)
+    @pictures = Admin::Picture.all.paginate(:page => params[:page], :per_page => 40)
 
-    @topics = [[_('Listing %{model}') % {:model => _('user')}, admin_users_path],
-               [_('Listing %{model}') % {:model => _('picture')}]]
+    @topics = [[_('Listing %{model}') % {:model => _('picture')}]]
 
     respond_to do |format|
       format.html # index.html.erb
     end
   end
 
+  def show
+    @picture = Admin::Picture.find(params[:id])
+    send_data(@picture.data, :filename => @picture.name, :type => @picture.content_type, :disposition => "inline")
+  end
+
   def new
     @user = Admin::User.find(params[:user_id])
-    @picture = @user.build_picture
+    @picture = @user.pictures.build
     @topics = [[_('Listing %{model}') % {:model => _('user')}, admin_users_path],
-               [_('Listing %{model}') % {:model => _('picture')}, admin_pictures_path],
                [_('New %{model}') % {:model => _('picture')}]]
     respond_to do |format|
       format.html # new.html.erb
@@ -43,9 +44,9 @@ class Admin::PicturesController < Admin::ApplicationController
 
   def create
     @user = Admin::User.find(params[:user_id])
-    @picture = @user.build_picture(params[:admin_picture])
+    @picture = @user.pictures.build(params[:picture])
+    @picture.active = true if @user.pictures.size == 1
     @topics = [[_('Listing %{model}') % {:model => _('user')}, admin_users_path],
-               [_('Listing %{model}') % {:model => _('picture')}, admin_pictures_path],
                [_('New %{model}') % {:model => _('picture')}]]
     respond_to do |format|
       if @picture.save
@@ -53,35 +54,6 @@ class Admin::PicturesController < Admin::ApplicationController
         format.html { redirect_to(admin_pictures_path) }
       else
         format.html { render :action => "new" }
-      end
-    end
-  end
-
-  def edit
-    @user = Admin::User.find(params[:user_id])
-    @picture = @user.picture
-    @topics = [[_('Listing %{model}') % {:model => _('user')}, admin_users_path],
-               [_('Listing %{model}') % {:model => _('picture')}, admin_pictures_path],
-               [_('Editing %{model}') % {:model => _('picture')}]]
-    respond_to do |format|
-      format.html # edit.html.erb
-    end
-  end
-
-  def update
-    @user = Admin::User.find(params[:user_id])
-    @picture = @user.picture
-    @picture.attributes = params[:admin_picture]
-    @topics = [[_('Listing %{model}') % {:model => _('user')}, admin_users_path],
-               [_('Listing %{model}') % {:model => _('picture')}, admin_pictures_path],
-               [_('Editing %{model}') % {:model => _('picture')}]]
-
-    respond_to do |format|
-      if @picture.save
-        flash[:notice] = _("%{model} was successfully updated.") % {:model => _('picture')}
-        format.html { redirect_to(admin_pictures_path) }
-      else
-        format.html { render :action => "edit" }
       end
     end
   end

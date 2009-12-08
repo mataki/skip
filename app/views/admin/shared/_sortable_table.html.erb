@@ -26,7 +26,7 @@
 <table class="normal sortable">
   <thead>
     <tr>
-    <% if !!use_ids -%><td style="width:24px;"><%= link_to icon_tag('tick'), '#', :id => 'check_all_link', :title => _('Check all/Uncheck all') %></td><% end -%>
+    <% if !!use_ids -%><th style="width:24px;"><%= link_to icon_tag('tick'), '#', :id => 'check_all_link', :title => _('Check all/Uncheck all') %></th><% end -%>
       <% columns.each do |column| -%>
       <th><%=h s_("#{class_name}|#{column.humanize}") %></th>
       <% end -%>

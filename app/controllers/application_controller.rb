@@ -92,9 +92,9 @@ protected
     end
   end
 
-  def setup_custom_cookies
+  def setup_custom_cookies(custom)
     cookies[:editor_mode] = {
-      :value => current_user.custom.editor_mode,
+      :value => custom.editor_mode,
       :expires => 1.month.from_now
     }
   end
@@ -108,10 +108,14 @@ protected
   end
 
   def current_user=(user)
-    session[:auth_session_token] = user ? user.update_auth_session_token! : nil
-    session[:user_code] = user ? user.code : nil
-    setup_custom_cookies
-    @current_user = user || nil
+    if user
+      session[:auth_session_token] = user.update_auth_session_token!
+      session[:user_code] = user.code
+      setup_custom_cookies(user.custom)
+      @current_user = user
+    else
+      @current_user = nil
+    end
   end
 
   def current_target_user

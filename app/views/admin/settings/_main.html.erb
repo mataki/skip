@@ -30,6 +30,14 @@
   <p><%= settings_label_with_check_box_tag :contact_mail_contain_contents %></p>
 </div>
 
+<% @revert_columns = %w(youtube slideshare googlemap) -%>
+<h4><%= _('Embeds') %></h4>
+<div class="box tabular">
+  <p><%= settings_label_with_check_box_tag :youtube %></p>
+  <p><%= settings_label_with_check_box_tag :slideshare %></p>
+  <p><%= settings_label_with_check_box_tag :googlemap %></p>
+</div>
+
 <% @revert_columns.concat(%w(stop_new_user hide_email activation_lifetime enable_change_picture enable_change_section access_record_limit entry_showed_tab_limit_per_page)) -%>
 <h4><%= _('Others') %></h4>
 <div class="box tabular">

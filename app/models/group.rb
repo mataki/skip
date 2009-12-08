@@ -58,7 +58,9 @@ class Group < ActiveRecord::Base
 
   named_scope :unjoin, proc {|user|
     return {} unless user
-    {:conditions => ["groups.id NOT IN (?)", Group.participating(user).map(&:id)]}
+    join_group_ids = Group.participating(user).map(&:id)
+    return {} if join_group_ids.blank?
+    {:conditions => ["groups.id NOT IN (?)", join_group_ids]}
   }
 
   named_scope :owned, proc { |user|
@@ -128,6 +130,10 @@ class Group < ActiveRecord::Base
     group_participations.active.only_owned.order_new.map(&:user)
   end
 
+  def self.get_category_icon gid
+    Group.find_by_gid(gid).group_category.icon
+  end
+
   # グループのカテゴリごとのgidの配列を返す(SQL発行あり)
   #   { "BIZ" => ["gid:swat","gid:qms"], "LIFE" => [] ... }
   def self.gid_by_category
@@ -165,28 +171,19 @@ class Group < ActiveRecord::Base
   # TODO 回帰テスト書きたい
   def join user_or_users, options = {}
     Group.transaction do
-      [user_or_users].flatten.each do |target_user|
-        if self.group_participations.find_by_user_id target_user.id
-          self.errors.add_to_base _("%s has already joined / applied to join this group.") % target_user.name
-          if block_given?
-            yield false, []
-            return
-          else
-            return false
-          end
+      [user_or_users].flatten.map do |target_user|
+        participation = self.group_participations.find_or_initialize_by_user_id(target_user.id) do |participation|
+          participation.waiting = (!options[:force] && self.protected?)
         end
-      end
-      participations = []
-      [user_or_users].flatten.each do |target_user|
-        participation = self.group_participations.create!(:user => target_user, :waiting => (!options[:force] &&self.protected?))
-        target_user.notices.create!(:target => self) unless target_user.notices.find_by_target_id(self.id)
-        participations << participation
-      end
-      if block_given?
-        yield true, participations
-      else
-        true
-      end
+        if participation.new_record?
+          participation.save!
+          target_user.notices.create!(:target => self) unless target_user.notices.find_by_target_id(self.id)
+          participation
+        else
+          self.errors.add_to_base _("%s has already joined / applied to join this group.") % target_user.name
+          nil
+        end
+      end.compact
     end
   rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => e
     self.errors.add_to_base _('Joined the group failed.')

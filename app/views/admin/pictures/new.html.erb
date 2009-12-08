@@ -1,14 +1,12 @@
-<%= render :partial => '/admin/data_menu_box' %>
 <% content_for :topic_path do -%>
 <%= render :partial => '/admin/shared/topic_path' %>
 <% end -%>
-<% content_for :contents_right do -%>
+
 <div class="box">
-  <% form_for(@picture, :url => admin_user_picture_path(@user), :html => {:multipart => true}) do |f| -%>
+  <% form_for([@user, @picture], :html => {:multipart => true}) do |f| -%>
     <%= render f %>
     <p>
       <%= f.submit _('Upload'), :disable_with => _('Now Uploading...') %>
     </p>
   <% end -%>
 </div>
-<% end -%>

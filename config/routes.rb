@@ -3,13 +3,11 @@ ActionController::Routing::Routes.draw do |map|
   map.root    :controller => 'mypage', :action => 'index'
 
   # TODO users配下に移す
-  map.resources :pictures
-
-  # TODO users配下に移す
   map.resources :notices
 
   map.resources :users, :only => [:index] do |user|
     user.resources :chains
+    user.resources :pictures
   end
 
   map.share_file  ':controller_name/:symbol_id/files/:file_name',
@@ -86,9 +84,9 @@ ActionController::Routing::Routes.draw do |map|
     admin_map.resources :users, :new => [:import, :import_confirmation, :first], :member => [:change_uid, :create_uid, :issue_activation_code, :issue_password_reset_code], :collection => [:lock_actives, :issue_activation_codes] do |user|
       user.resources :openid_identifiers, :only => [:edit, :update, :destroy]
       user.resource :user_profile
-      user.resource :picture
+      user.resource :pictures, :only => %w(new create)
     end
-    admin_map.resources :pictures
+    admin_map.resources :pictures, :only => %w(index show destroy)
     admin_map.resources :groups, :only => [:index, :show, :destroy] do |group|
       group.resources :group_participations, :only => [:index, :destroy]
     end

@@ -10,9 +10,6 @@
 <%= render :partial=>"shared/flash_message" %>
 
 <div id="main">
-  <div id="loading" style="margin: 15px; height: 4000px;">
-    <%= _('Now loading...') %><br/><%= image_tag 'indicator_bar.gif', :alt => _('Now loading...') %>
-  </div>
 
   <%= yield :contents_top %>
 
@@ -134,8 +131,6 @@ var relative_url_root = '<%= relative_url_root %>';
 
 <% javascript_tag do -%>
 $j(function(){
-    $j('#loading').hide();
-
     $j('.zoomable').zoomable();
 
     // 管理画面用
