@@ -94,8 +94,9 @@ module BoardEntriesHelper
 
   def entry_icon entry
     if entry.owner_is_group?
-      category = Group.active.find_by_gid(entry.symbol_id).group_category
-      category.blank?  ? "" : icon_tag(category.icon, :title => (entry.symbol_name + " : " + category.name))
+      group = Group.active.find_by_gid(entry.symbol_id)
+      category = group ? group.group_category : nil
+      category.blank? ? "" : icon_tag(category.icon, :title => (entry.symbol_name + " : " + category.name))
     else
       icon_tag('user_suit', :title => _('Blog'))
     end
