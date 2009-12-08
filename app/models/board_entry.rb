@@ -611,7 +611,7 @@ class BoardEntry < ActiveRecord::Base
     when "private"
       owner = load_owner
       if owner.is_a?(Group)
-        return owner.users
+        owner.users.active
       elsif owner.is_a?(User)
         [owner]
       else
@@ -623,17 +623,17 @@ class BoardEntry < ActiveRecord::Base
         symbol_type, symbol_id = SkipUtil.split_symbol(sym)
         case symbol_type
         when "uid"
-          users << User.find_by_uid(symbol_id)
+          users << User.active.find_by_uid(symbol_id)
         when "gid"
           group = Group.active.find_by_gid(symbol_id, :include => [:group_participations])
-          users << group.group_participations.map { |part| part.user } if group
+          users << group.group_participations.map { |part| part.user if part.user.active? } if group
         end
       end
-      return users.flatten.uniq.compact
+      users.flatten.uniq.compact
     when "public"
-      return User.active.all
+      User.active.all
     else
-      return []
+      []
     end
   end
 

@@ -299,12 +299,14 @@ end
 describe BoardEntry, '#publication_users' do
   describe 'あるグループのフォーラムが存在する場合' do
     before do
-      # あるグループの管理者がアリス, 参加者がマイク
+      # あるグループの管理者がアリス, 参加者がマイク, デイブ(退職者)
       @alice = create_user :user_options => {:name => 'アリス', :admin => true}, :user_uid_options => {:uid => 'alice'}
       @mike = create_user :user_options => {:name => 'マイク', :admin => true}, :user_uid_options => {:uid => 'mike'}
+      @dave = create_user :user_options => {:name => 'デイブ', :admin => true}, :user_uid_options => {:uid => 'dave'}, :status => 'RETIRED'
       @group = create_group(:gid => 'skip_group', :name => 'SKIPグループ') do |g|
         g.group_participations.build(:user_id => @alice.id, :owned => true)
         g.group_participations.build(:user_id => @mike.id, :owned => false)
+        g.group_participations.build(:user_id => @dave.id, :owned => false)
       end
     end
     describe "アリスのブログで、そのグループ及びマイクが直接指定されている" do
