@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.4.0\n"
-"POT-Creation-Date: 2009-12-08 11:19+0900\n"
+"POT-Creation-Date: 2009-12-08 11:47+0900\n"
 "PO-Revision-Date: 2009-11-27 16:12+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -167,7 +167,7 @@ msgstr "%{icon} %{time}の推移を表示"
 msgid "%{model} Show"
 msgstr "%{model}の詳細"
 
-#: app/controllers/admin/pictures_controller.rb:53
+#: app/controllers/admin/pictures_controller.rb:52
 #: app/controllers/admin/admin_module.rb:139
 #: app/controllers/admin/admin_module.rb:250
 msgid "%{model} was successfully created."
@@ -3202,7 +3202,7 @@ msgstr "ファイルサイズが上限を超えています。"
 msgid "File size is over soon"
 msgstr "もうすぐ利用可能容量が上限に達します。"
 
-#: app/models/picture.rb:48
+#: app/models/picture.rb:52
 msgid "File size too large."
 msgstr "ファイルサイズが大きすぎます。"
 
@@ -3889,9 +3889,9 @@ msgstr "未読記事の一覧"
 
 #: app/controllers/admin/openid_identifiers_controller.rb:24
 #: app/controllers/admin/openid_identifiers_controller.rb:39
-#: app/controllers/admin/pictures_controller.rb:23
-#: app/controllers/admin/pictures_controller.rb:38
-#: app/controllers/admin/pictures_controller.rb:49
+#: app/controllers/admin/pictures_controller.rb:22
+#: app/controllers/admin/pictures_controller.rb:37
+#: app/controllers/admin/pictures_controller.rb:48
 #: app/controllers/admin/users_controller.rb:29
 #: app/controllers/admin/users_controller.rb:50
 #: app/controllers/admin/users_controller.rb:59
@@ -3924,7 +3924,6 @@ msgstr "未読記事の一覧"
 #: app/views/admin/board_entries/show.html.erb:43
 #: app/views/admin/bookmarks/show.html.erb:19
 #: app/views/admin/groups/show.html.erb:35
-#: app/views/admin/_data_menu_box.html.erb:10
 msgid "Listing %{model}"
 msgstr "%{model}一覧"
 
@@ -4165,8 +4164,8 @@ msgstr "名称・名前"
 msgid "Need approval of the Administrator."
 msgstr "管理者の承認が必要"
 
-#: app/controllers/admin/pictures_controller.rb:39
-#: app/controllers/admin/pictures_controller.rb:50
+#: app/controllers/admin/pictures_controller.rb:38
+#: app/controllers/admin/pictures_controller.rb:49
 #: app/controllers/admin/users_controller.rb:29
 #: app/controllers/admin/users_controller.rb:50
 #: app/controllers/admin/admin_module.rb:114
@@ -4694,7 +4693,7 @@ msgstr "パスワード定期変更"
 msgid "Pets"
 msgstr "ペット"
 
-#: app/controllers/pictures_controller.rb:57 app/models/picture.rb:47
+#: app/controllers/pictures_controller.rb:57 app/models/picture.rb:51
 msgid "Picture could not be changed."
 msgstr "画像の変更は許可されていません。"
 
@@ -4710,6 +4709,10 @@ msgstr "画像を削除しました"
 #: app/controllers/pictures_controller.rb:41
 msgid "Picture was updated successfully."
 msgstr "画像を変更しました"
+
+#: app/views/admin/_data_menu_box.html.erb:10
+msgid "Pictures"
+msgstr "プロフィール画像"
 
 #: app/models/picture.rb:-
 msgid "Picture|Active"
@@ -4727,7 +4730,7 @@ msgstr "作成日時"
 msgid "Picture|Data"
 msgstr "データ"
 
-#: app/models/picture.rb:32
+#: app/models/picture.rb:36
 msgid "Picture|File"
 msgstr "ファイル"
 
@@ -6197,7 +6200,7 @@ msgstr "登録者：%s"
 msgid "Uploading..."
 msgstr "アップロードしています…"
 
-#: app/models/picture.rb:34
+#: app/models/picture.rb:38
 msgid "Uploads are limited to pictures only."
 msgstr "アップロードできるのは画像のみです"
 
@@ -6885,7 +6888,7 @@ msgstr ""
 "たのプロフィールやブログに新しくコメントなどが追加された時に、登録されている"
 "メールアドレスにお知らせメールを送信します。"
 
-#: app/models/picture.rb:49 app/views/pictures/new.html.erb:7
+#: app/models/picture.rb:53 app/views/pictures/new.html.erb:7
 msgid "You can only upload %s pictures."
 msgstr "プロフィール画像は%s枚までしかアップロード出来ません。"
 
@@ -7506,11 +7509,10 @@ msgstr "管理者"
 msgid "owner_symbol"
 msgstr ""
 
-#: app/controllers/admin/pictures_controller.rb:23
-#: app/controllers/admin/pictures_controller.rb:39
-#: app/controllers/admin/pictures_controller.rb:50
-#: app/controllers/admin/pictures_controller.rb:53 app/models/picture.rb:-
-#: app/views/admin/_data_menu_box.html.erb:10
+#: app/controllers/admin/pictures_controller.rb:22
+#: app/controllers/admin/pictures_controller.rb:38
+#: app/controllers/admin/pictures_controller.rb:49
+#: app/controllers/admin/pictures_controller.rb:52 app/models/picture.rb:-
 #: app/views/admin/users/index.html.erb:61
 msgid "picture"
 msgstr "プロフィール画像"
@@ -7597,8 +7599,8 @@ msgstr ""
 msgid "uncheck selected"
 msgstr "チェックを外す"
 
-#: app/controllers/admin/pictures_controller.rb:38
-#: app/controllers/admin/pictures_controller.rb:49
+#: app/controllers/admin/pictures_controller.rb:37
+#: app/controllers/admin/pictures_controller.rb:48
 #: app/controllers/admin/users_controller.rb:29
 #: app/controllers/admin/users_controller.rb:50
 #: app/controllers/admin/users_controller.rb:59

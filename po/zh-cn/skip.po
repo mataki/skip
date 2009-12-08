@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.4.0\n"
-"POT-Creation-Date: 2009-12-08 11:19+0900\n"
+"POT-Creation-Date: 2009-12-08 11:47+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -163,7 +163,7 @@ msgstr ""
 msgid "%{model} Show"
 msgstr ""
 
-#: app/controllers/admin/pictures_controller.rb:53
+#: app/controllers/admin/pictures_controller.rb:52
 #: app/controllers/admin/admin_module.rb:139
 #: app/controllers/admin/admin_module.rb:250
 msgid "%{model} was successfully created."
@@ -3014,7 +3014,7 @@ msgstr ""
 msgid "File size is over soon"
 msgstr ""
 
-#: app/models/picture.rb:48
+#: app/models/picture.rb:52
 msgid "File size too large."
 msgstr ""
 
@@ -3675,9 +3675,9 @@ msgstr ""
 
 #: app/controllers/admin/openid_identifiers_controller.rb:24
 #: app/controllers/admin/openid_identifiers_controller.rb:39
-#: app/controllers/admin/pictures_controller.rb:23
-#: app/controllers/admin/pictures_controller.rb:38
-#: app/controllers/admin/pictures_controller.rb:49
+#: app/controllers/admin/pictures_controller.rb:22
+#: app/controllers/admin/pictures_controller.rb:37
+#: app/controllers/admin/pictures_controller.rb:48
 #: app/controllers/admin/users_controller.rb:29
 #: app/controllers/admin/users_controller.rb:50
 #: app/controllers/admin/users_controller.rb:59
@@ -3710,7 +3710,6 @@ msgstr ""
 #: app/views/admin/board_entries/show.html.erb:43
 #: app/views/admin/bookmarks/show.html.erb:19
 #: app/views/admin/groups/show.html.erb:35
-#: app/views/admin/_data_menu_box.html.erb:10
 msgid "Listing %{model}"
 msgstr ""
 
@@ -3944,8 +3943,8 @@ msgstr ""
 msgid "Need approval of the Administrator."
 msgstr ""
 
-#: app/controllers/admin/pictures_controller.rb:39
-#: app/controllers/admin/pictures_controller.rb:50
+#: app/controllers/admin/pictures_controller.rb:38
+#: app/controllers/admin/pictures_controller.rb:49
 #: app/controllers/admin/users_controller.rb:29
 #: app/controllers/admin/users_controller.rb:50
 #: app/controllers/admin/admin_module.rb:114
@@ -4465,7 +4464,7 @@ msgstr ""
 msgid "Pets"
 msgstr ""
 
-#: app/controllers/pictures_controller.rb:57 app/models/picture.rb:47
+#: app/controllers/pictures_controller.rb:57 app/models/picture.rb:51
 msgid "Picture could not be changed."
 msgstr ""
 
@@ -4480,6 +4479,10 @@ msgstr ""
 #: app/controllers/pictures_controller.rb:28
 #: app/controllers/pictures_controller.rb:41
 msgid "Picture was updated successfully."
+msgstr ""
+
+#: app/views/admin/_data_menu_box.html.erb:10
+msgid "Pictures"
 msgstr ""
 
 #: app/models/picture.rb:-
@@ -4498,7 +4501,7 @@ msgstr ""
 msgid "Picture|Data"
 msgstr ""
 
-#: app/models/picture.rb:32
+#: app/models/picture.rb:36
 msgid "Picture|File"
 msgstr ""
 
@@ -5930,7 +5933,7 @@ msgstr ""
 msgid "Uploading..."
 msgstr ""
 
-#: app/models/picture.rb:34
+#: app/models/picture.rb:38
 msgid "Uploads are limited to pictures only."
 msgstr ""
 
@@ -6598,7 +6601,7 @@ msgid ""
 "when new comments etc. are added to your profile and blog entries."
 msgstr ""
 
-#: app/models/picture.rb:49 app/views/pictures/new.html.erb:7
+#: app/models/picture.rb:53 app/views/pictures/new.html.erb:7
 msgid "You can only upload %s pictures."
 msgstr ""
 
@@ -7211,11 +7214,10 @@ msgstr ""
 msgid "owner_symbol"
 msgstr ""
 
-#: app/controllers/admin/pictures_controller.rb:23
-#: app/controllers/admin/pictures_controller.rb:39
-#: app/controllers/admin/pictures_controller.rb:50
-#: app/controllers/admin/pictures_controller.rb:53 app/models/picture.rb:-
-#: app/views/admin/_data_menu_box.html.erb:10
+#: app/controllers/admin/pictures_controller.rb:22
+#: app/controllers/admin/pictures_controller.rb:38
+#: app/controllers/admin/pictures_controller.rb:49
+#: app/controllers/admin/pictures_controller.rb:52 app/models/picture.rb:-
 #: app/views/admin/users/index.html.erb:61
 msgid "picture"
 msgstr ""
@@ -7302,8 +7304,8 @@ msgstr ""
 msgid "uncheck selected"
 msgstr ""
 
-#: app/controllers/admin/pictures_controller.rb:38
-#: app/controllers/admin/pictures_controller.rb:49
+#: app/controllers/admin/pictures_controller.rb:37
+#: app/controllers/admin/pictures_controller.rb:48
 #: app/controllers/admin/users_controller.rb:29
 #: app/controllers/admin/users_controller.rb:50
 #: app/controllers/admin/users_controller.rb:59

@@ -1,24 +1,27 @@
+<%= render :partial => '/admin/data_menu_box' %>
 <% content_for :topic_path do -%>
 <%= render :partial => '/admin/shared/topic_path' %>
 <% end -%>
 
-<% unless @pictures.empty? -%>
-<%= i18n_will_paginate_with_container_wrapper @pictures %>
-<div class="pictures ui-corner-all">
-  <% @pictures.each do |picture| -%>
-  <ul class="picture ui-corner-all <%= 'selected' if picture.active? %>">
-    <li class="image">
-      <%= image_tag admin_picture_path(picture, :format => :png), :height => 90, :class => 'fit_image' %>
-    </li>
-    <li class="data_row">
-      <%= picture.user ? h(picture.user.name) : '' %>
-    </li>
-    <li class="operation">
-      <%= link_to _('Delete'), admin_picture_path(picture), :method => :delete, :confirm => _('Are you sure?') %>
-    </li>
-  </ul>
+<% content_for :contents_right do -%>
+  <% unless @pictures.empty? -%>
+  <%= i18n_will_paginate_with_container_wrapper @pictures %>
+  <div class="pictures ui-corner-all">
+    <% @pictures.each do |picture| -%>
+    <ul class="picture ui-corner-all <%= 'selected' if picture.active? %>">
+      <li class="image">
+        <%= image_tag admin_picture_path(picture, :format => :png), :height => 90, :class => 'fit_image' %>
+      </li>
+      <li class="data_row">
+        <%= picture.user ? h(picture.user.name) : '' %>
+      </li>
+      <li class="operation">
+        <%= link_to _('Delete'), admin_picture_path(picture), :method => :delete, :confirm => _('Are you sure?') %>
+      </li>
+    </ul>
+    <% end -%>
+    <div class="clear_left"></div>
+  </div>
+  <%= i18n_will_paginate_with_container_wrapper @pictures %>
   <% end -%>
-  <div class="clear_left"></div>
-</div>
-<%= i18n_will_paginate_with_container_wrapper @pictures %>
 <% end -%>
