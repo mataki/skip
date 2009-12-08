@@ -4,7 +4,7 @@
 
 <% content_for :contents_right do -%>
   <div class="desc ui-corner-all">
-    <p><%= _("The file size is limited to 64kb.<br/>\nYou can find something by <a href=\"http://www.google.com/search?q=%s\">searching \"Portrait Making\" in Google</a>\nif you don't have a suitable picture") % URI.encode(_('portrait making'))%></p>
+    <p><%= _('You can only upload %s pictures.') % Picture.max_files_size_per_user %><%= _("The file size is limited to %s kb.") % (Picture.max_file_size/1.kilobyte) %></p>
   </div>
 
   <% if pictures = current_user.pictures and !pictures.empty? -%>
