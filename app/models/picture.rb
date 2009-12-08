@@ -24,6 +24,10 @@ class Picture < ActiveRecord::Base
     { :conditions => ['active = ?', true] }
   }
 
+  named_scope :order_user_name, proc {
+    { :order => 'users.name ASC', :include => :user }
+  }
+
   attr_accessor :file
   cattr_reader :max_file_size, :max_files_size_per_user
   @@max_file_size = 200.kilobyte

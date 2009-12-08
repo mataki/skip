@@ -10,7 +10,7 @@
   <% if pictures = current_user.pictures and !pictures.empty? -%>
   <div class="pictures ui-corner-all">
     <% pictures.each do |picture| -%>
-    <ul class="picture ui-corner-all">
+      <ul class="picture ui-corner-all <%= 'selected' if picture.active? %>">
       <li class="image">
         <%= image_tag user_picture_path(current_user, picture, :format => :png), :height => 90, :class => 'fit_image' %>
       </li>

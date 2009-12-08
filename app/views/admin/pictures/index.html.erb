@@ -6,7 +6,7 @@
 <%= i18n_will_paginate_with_container_wrapper @pictures %>
 <div class="pictures ui-corner-all">
   <% @pictures.each do |picture| -%>
-  <ul class="picture ui-corner-all">
+  <ul class="picture ui-corner-all <%= 'selected' if picture.active? %>">
     <li class="image">
       <%= image_tag admin_picture_path(picture, :format => :png), :height => 90, :class => 'fit_image' %>
     </li>

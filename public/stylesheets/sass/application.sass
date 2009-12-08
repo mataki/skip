@@ -897,6 +897,9 @@ div.pictures
     li.image
       :text-align center
       :padding 5px
+      img
+        :height 72px
+        :width 72px
     li.data_row
       :border-top = !base_dotted_border
       :text-align center
@@ -907,6 +910,8 @@ div.pictures
       :height 22px
       form input
         :padding 0
+    &.selected
+      :background #fff5ee
 
 
 // ユーザ
