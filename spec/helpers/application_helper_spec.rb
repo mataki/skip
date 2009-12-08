@@ -112,7 +112,7 @@ describe ApplicationHelper, "#get_entry_infos" do
     entry.stub(:point).and_return(0)
     entry.stub(:entry_trackbacks_count).and_return(0)
     entry.stub_chain(:state, :access_count).and_return(0)
-    helper.get_entry_infos(entry).should == ""
+    helper.get_entry_infos(entry).should == '&nbsp'
   end
   it "全ての要素が1の場合、-で連結されること" do
     entry = mock_model(BoardEntry)
