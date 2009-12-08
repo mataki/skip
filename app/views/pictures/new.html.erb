@@ -7,30 +7,7 @@
     <p><%= _('You can only upload %s pictures.') % Picture.max_files_size_per_user %><%= _("The file size is limited to %s kb.") % (Picture.max_file_size/1.kilobyte) %></p>
   </div>
 
-  <% if pictures = current_user.pictures and !pictures.empty? -%>
-  <div class="pictures ui-corner-all">
-    <% pictures.each do |picture| -%>
-      <ul class="picture ui-corner-all <%= 'selected' if picture.active? %>">
-      <li class="image">
-        <%= image_tag user_picture_path(current_user, picture, :format => :png), :height => 90, :class => 'fit_image' %>
-      </li>
-      <li class="operation">
-        <% if picture.active? -%>
-          <%= _('Selected') %>
-        <% else -%>
-          <% form_for([current_user, picture], :html => {:method => :put}) do |f| -%>
-            <%= f.submit _('Select') %>
-          <% end -%>
-        <% end -%>
-      </li>
-      <li class="operation">
-        <%= link_to _('Delete'), user_picture_path(current_user, picture), :method => :delete, :confirm => _('Are you sure?') %>
-      </li>
-    </ul>
-    <% end -%>
-    <div class="clear_left"></div>
-  </div>
-  <% end -%>
+  <%= render :partial => 'pictures/pictures', :locals => {:user => current_user, :with_action => true} %>
 
   <% form_for([current_user, current_user.pictures.build], :html => {:multipart => true}) do |f| -%>
     <%= error_messages_for :picture %>
