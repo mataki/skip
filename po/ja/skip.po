@@ -4311,7 +4311,7 @@ msgstr "該当するグループはありませんでした。"
 
 #: app/views/mypage/index.html.erb:102
 msgid "No matching questions."
-msgstr "みんなからの質問はありません。"
+msgstr "みんなからの質問はありません"
 
 #: app/views/search/_full_text_search.html.erb:23
 msgid "No matching results found."
