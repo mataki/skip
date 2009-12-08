@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.4.0\n"
-"POT-Creation-Date: 2009-12-08 11:47+0900\n"
+"POT-Creation-Date: 2009-12-08 13:13+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1704,7 +1704,7 @@ msgstr ""
 #: app/views/chains/edit.html.erb:8 app/views/pictures/new.html.erb:27
 #: app/views/user/_action_box.html.erb:10
 #: app/views/group/_action_box.html.erb:6
-#: app/views/admin/pictures/index.html.erb:17
+#: app/views/admin/pictures/index.html.erb:19
 #: app/views/admin/board_entries/index.html.erb:35
 #: app/views/admin/share_files/index.html.erb:36
 #: app/views/admin/bookmarks/index.html.erb:19
@@ -2408,7 +2408,6 @@ msgid "Create"
 msgstr ""
 
 #: app/controllers/admin/users_controller.rb:196
-#: app/views/admin/users/index.html.erb:61
 #: app/views/admin/users/edit.html.erb:15
 msgid "Create %{name}"
 msgstr ""
@@ -2517,7 +2516,7 @@ msgstr ""
 
 #: app/views/pictures/new.html.erb:27
 #: app/views/board_entries/_board_entry_comment.html.erb:14
-#: app/views/admin/pictures/index.html.erb:17
+#: app/views/admin/pictures/index.html.erb:19
 #: app/views/bookmark/list.html.erb:58 app/views/bookmark/show.html.erb:48
 msgid "Delete"
 msgstr ""
@@ -3382,6 +3381,10 @@ msgstr ""
 
 #: app/controllers/admin/users_controller.rb:164
 msgid "Illegal value(s) found in CSV file."
+msgstr ""
+
+#: app/views/admin/users/index.html.erb:61
+msgid "Image"
 msgstr ""
 
 #: app/views/admin/users/import.html.erb:14
@@ -7218,7 +7221,6 @@ msgstr ""
 #: app/controllers/admin/pictures_controller.rb:38
 #: app/controllers/admin/pictures_controller.rb:49
 #: app/controllers/admin/pictures_controller.rb:52 app/models/picture.rb:-
-#: app/views/admin/users/index.html.erb:61
 msgid "picture"
 msgstr ""
 
