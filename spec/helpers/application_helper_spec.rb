@@ -106,13 +106,13 @@ describe ApplicationHelper, '#user_link_to_with_portrait' do
 end
 
 describe ApplicationHelper, "#get_entry_infos" do
-  it "要素が一つもないときは、空文字になること" do
+  it "要素が一つもないときは、空白になること" do
     entry = mock_model(BoardEntry)
     entry.stub(:board_entry_comments_count).and_return(0)
     entry.stub(:point).and_return(0)
     entry.stub(:entry_trackbacks_count).and_return(0)
     entry.stub_chain(:state, :access_count).and_return(0)
-    helper.get_entry_infos(entry).should == '&nbsp'
+    helper.get_entry_infos(entry).should == '&nbsp;'
   end
   it "全ての要素が1の場合、-で連結されること" do
     entry = mock_model(BoardEntry)
