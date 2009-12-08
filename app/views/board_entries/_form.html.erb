@@ -184,13 +184,21 @@ div.input_line textarea {
     changePublicationType();
 
     <% unless SkipEmbedded::InitialSettings['mail']['enable_send_email_to_all_users'] -%>
-    // メール送信ボックスの表示制御
+    // メール送信チェックボックスの表示制御
     var toggleSendMail = function() {
+    <% if @board_entry.diary? -%>
+      if ($j('#publication_type_protected:checked').length > 0) {
+        $j('span.send_mail_field').show();
+      } else {
+        $j('span.send_mail_field').hide();
+      }
+    <% else -%>
       if ($j('#publication_type_public:checked').length > 0) {
         $j('span.send_mail_field').hide();
       } else {
         $j('span.send_mail_field').show();
       }
+    <% end -%>
     };
     toggleSendMail();
     <% end -%>
