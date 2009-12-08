@@ -19,7 +19,7 @@
         <tr class="<%= cycle('line_0', 'line_1') %>">
           <% category_name = h(group.group_category.name) -%>
           <% entries = BoardEntry.owned(group) %>
-          <td class="date"><span class="nowrap"><%= entries.last.last_updated.strftime(_('%B %d %Y')) unless entries.empty? %><br><%= content_tag("b", _('Active'), :class => "remarkable") if upsurge_frequency(entries) %></span></td>
+          <td class="date"><span class="nowrap"><%= entries.last.last_updated.strftime(_('%B %d %Y')) unless entries.empty? %><br /><%= content_tag("b", _('Active'), :class => "remarkable") if upsurge_frequency(entries) %></span></td>
           <td class="count"><%= entries.empty? ? "0" : entries.count %></td>
           <td class="count"><span class="nowrap"><%= group.group_participations.active.count %></span></td>
           <td class="name"><span class="nowrap"><%= icon_tag(group.group_category.icon, :alt => category_name, :title => category_name) %><%= group_link_to group %><%= icon_tag('key', :alt => _('Need approval of the Administrator.'), :title => _('Need approval of the Administrator.')) if group.protected? %></span></td>
