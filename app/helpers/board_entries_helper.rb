@@ -94,13 +94,9 @@ module BoardEntriesHelper
 
   def entry_icon entry
     if entry.owner_is_group?
-      title = if entry.category?
-        entry.symbol_name + " : " + entry.category
-      else
-        entry.symbol_name
-      end
-
-      icon_tag(Group.get_category_icon(entry.symbol_id), :title => title)
+      category = Group.gid2group_category(entry.symbol_id)
+      title = entry.symbol_name + " : " + category.name
+      icon_tag(category.icon, :title => title)
     else
       icon_tag('user_suit', :title => _('Blog'))
     end
