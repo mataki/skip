@@ -19,10 +19,11 @@
   <div id="panel" class="ui-corner-all" style="_width: 98%;">
     <h1 id="title">
       <span id="title-block" style="padding: 3px;">
-        <%=h @page.title %>
+        <%=h @current_page.title %>
         <span id="title-change" style="cursor:pointer; font-size: 10px; color: #0000FF; font-weight: normal;">[ページ名を編集する]</span>
       </span>
       <span id= "edit_form" style="display:none;">
+        <% @page = @current_page %>
         <%  form_tag( {:action => :update}, {:method => "put"} ) do %>
           <%= text_field 'page', 'title' %>
           <%= submit_tag("更新") %>
@@ -31,12 +32,12 @@
       </span>
     </h1>
     <% if @user %>
-      <ul class="no_style horizontal"><li>Last-modified: <%= @page.updated_at.strftime("%Y/%m/%d %H:%M:%S") %> by <%= @user.name %></li></ul>
+      <ul class="no_style horizontal"><li>Last-modified: <%= @current_page.updated_at.strftime("%Y/%m/%d %H:%M:%S") %> by <%= @user.name %></li></ul>
     <% else %>
-      <ul class="no_style horizontal"><li>Last-modified: <%= @page.updated_at.strftime("%Y/%m/%d %H:%M:%S") %></li></ul>
+      <ul class="no_style horizontal"><li>Last-modified: <%= @current_page.updated_at.strftime("%Y/%m/%d %H:%M:%S") %></li></ul>
     <% end -%>
     <div class="clear_left"></div>
-    <div id="tab_menu"><%= generate_tab_menu(wiki_tab_menu_source(@page)) %></div>
+    <div id="tab_menu"><%= generate_tab_menu(wiki_tab_menu_source(@current_page)) %></div>
     <div class="clear_left"></div>
 
     <div id="tab_body" class="ui-corner-right">

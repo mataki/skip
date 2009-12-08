@@ -1,8 +1,8 @@
 class WikiController < ApplicationController
   layout "wiki"
   def show
-    @page = Page.find_by_title(params[:id])
-    @user = User.find(@page.last_modified_user_id) if @page.has_history?
+    @current_page = Page.find_by_title(params[:id])
+    @user = User.find(@current_page.last_modified_user_id) if @current_page.has_history?
   end
 
   def update

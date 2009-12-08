@@ -2,27 +2,24 @@
   <div class="box_space_title"><%= _('ページを追加する')%></span></div>
     <div class="box_space_body">
       <div class="input_line">
-        <% # TODO tmp_title使わなくてももっと直感的にできないか %>
-        <% tmp_title =@page.title; @page.title="" %>
         <% form_tag({:action=>'create'}) do %>
           <div class="input_label"><%= label :page, :title, _('Title') %></div>
           <div class="input_value"><%= text_field 'page', 'title', :size=>15 %></div>
-          <%= hidden_field_tag :parent_id, @page.id %>
+          <%= hidden_field_tag :parent_id, @current_page.id %>
           <%= submit_tag _('作成'), :disable_with => _('作成中...') %>
         <% end -%>
-        <% @page.title = tmp_title %>
       </div>
     </div>
-    <% if !@page.root? %>
+    <% if !@current_page.root? %>
       <div class="box_space_title"><%= _('リンク元ページ')%></span></div>
       <div class="box_space_body">
-        <%= link_to(@page.parent.title, wiki_path(@page.parent.title)) %>
+        <%= link_to(@current_page.parent.title, wiki_path(@current_page.parent.title)) %>
       </div>
     <% end -%>
-    <% if @page.children.size > 0 %>
+    <% if @current_page.children.size > 0 %>
       <div class="box_space_title"><%= _('関連ページ')%></span></div>
       <div class="box_space_body">
-        <% @page.children.each do |page| %>
+        <% @current_page.children.each do |page| %>
           <%= link_to(page.title, wiki_path(page.title)) %><br/>
         <% end %>
       </div>
