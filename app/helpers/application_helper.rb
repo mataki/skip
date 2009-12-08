@@ -240,7 +240,7 @@ module ApplicationHelper
     output << "#{h Admin::Setting.point_button}(#{h entry.point.to_s})" if entry.point > 0
     output << n_("Trackback(%s)", "Trackbacks(%s)", entry.entry_trackbacks_count) % h(entry.entry_trackbacks_count.to_s) if entry.entry_trackbacks_count > 0
     output << n_("Access(%s)", "Accesses(%s)", entry.state.access_count) % h(entry.state.access_count.to_s) if entry.state.access_count > 0
-    output.size > 0 ? "#{output.join('-')}" : " "
+    output.size > 0 ? "#{output.join('-')}" : '&nbsp'
   end
 
   def get_menu_items menus, selected_menu, action
