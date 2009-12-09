@@ -220,14 +220,14 @@ module ApplicationHelper
     view_name = ""
     case entry_or_share_file.publication_type
     when 'public'
-      icon_name = entry_or_share_file.owner_is_user? ? 'page_red' : 'page'
+      icon_name = entry_or_share_file.owner_is_user? ? 'user_suit' : 'group'
       view_name = _("Open to All")
     when 'protected'
       visibility, visibility_color = entry_or_share_file.visibility
-      icon_name = 'page_link'
+      icon_name = 'link'
       view_name = _("Specify Directly") + visibility
     when 'private'
-      icon_name = entry_or_share_file.owner_is_user? ? 'pencil' : 'page_key'
+      icon_name = entry_or_share_file.owner_is_user? ? 'pencil' : 'key'
       view_name = entry_or_share_file.owner_is_user? ? _("Owner Only") : _("Members Only")
    end
     icon_tag(icon_name, :title => view_name)

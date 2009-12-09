@@ -92,16 +92,6 @@ module BoardEntriesHelper
     end
   end
 
-  def entry_icon entry
-    if entry.owner_is_group?
-      group = Group.active.find_by_gid(entry.symbol_id)
-      category = group ? group.group_category : nil
-      category.blank? ? "" : icon_tag(category.icon, :title => (entry.symbol_name + " : " + category.name))
-    else
-      icon_tag('user_suit', :title => _('Blog'))
-    end
-  end
-
   def detect_entry_gb_class entry
     if entry.protected?
       'all_protected'

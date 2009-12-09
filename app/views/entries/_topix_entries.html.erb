@@ -14,7 +14,6 @@
         <col class="col25" />
       <% end -%>
       <col class="col25" />
-      <!--<col class="col25" />-->
       <col />
       <col class="col75" />
       <tbody>
@@ -24,9 +23,7 @@
             <% if with_checkable_read -%>
             <td class="read_state"><%= check_box_tag("message_#{entry.id}", "true", !user_unreadings[entry.id], {:class => "read_state_checkbox"}) %></td>
             <% end -%>
-            <td class="entry_icon"><%= entry_icon entry %><br /><%= get_publication_type_icon(entry) %></td>
-            <!-- TODO:デザイン検討後、削除するかどうか決定する -->
-            <!--<td class="publication_state"><%#= get_publication_type_icon(entry) %></td>-->
+            <td class="publication_state"><%= get_publication_type_icon(entry) %></td>
             <td class="entry_outline">
               <%= entry_link_to(entry, {}, {:title => entry_infos}) %>
               <%= content_tag :span, "["+_('Resolved')+"]", :class => 'question_state' if entry.hide %>
