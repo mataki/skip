@@ -135,7 +135,8 @@ module ApplicationHelper
     file_name =
       if picture = user.picture
         unless picture.new_record?
-          user_picture_path(user, picture, :format => :png)
+          # プロフィール更新時にキャッシュさせないために更新時間をURLに含めている
+          user_picture_path(user, picture, :format => :png) + "?#{picture.updated_on.to_i.to_s}"
         else
           'default_picture.png'
         end
