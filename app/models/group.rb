@@ -130,10 +130,6 @@ class Group < ActiveRecord::Base
     group_participations.active.only_owned.order_new.map(&:user)
   end
 
-  def self.get_category_icon gid
-    Group.find_by_gid(gid).group_category.icon
-  end
-
   # グループのカテゴリごとのgidの配列を返す(SQL発行あり)
   #   { "BIZ" => ["gid:swat","gid:qms"], "LIFE" => [] ... }
   def self.gid_by_category

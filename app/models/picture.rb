@@ -24,7 +24,14 @@ class Picture < ActiveRecord::Base
     { :conditions => ['active = ?', true] }
   }
 
+  named_scope :order_user_name, proc {
+    { :order => 'users.name ASC', :include => :user }
+  }
+
   attr_accessor :file
+  cattr_reader :max_file_size, :max_files_size_per_user
+  @@max_file_size = 200.kilobyte
+  @@max_files_size_per_user = 10
 
   N_('Picture|File')
 
@@ -42,8 +49,8 @@ class Picture < ActiveRecord::Base
 
   def validate
     errors.add_to_base(_("Picture could not be changed.")) unless Admin::Setting.enable_change_picture
-    errors.add_to_base(_("File size too large.")) if @filesize > 65535
-    errors.add_to_base(_("You can only upload 10 pictures.")) if user && user.pictures.size >= 10
+    errors.add_to_base(_("File size too large.")) if @filesize > @@max_file_size
+    errors.add_to_base(_("You can only upload %s pictures.") % @@max_files_sizse_per_user) if user && user.pictures.size >= @@max_files_size_per_user
   end
 
   def base_part_of(file_name)

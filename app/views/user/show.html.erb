@@ -78,6 +78,9 @@
       <% end -%>
     <% end -%>
     </div>
+
+    <%= render :partial => 'pictures/pictures', :locals => {:user => current_target_user} %>
+
   </div>
 
   <% unless @against_chains.empty? -%>

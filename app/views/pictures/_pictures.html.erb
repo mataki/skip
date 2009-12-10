@@ -1,0 +1,29 @@
+<% with_action ||= false -%>
+<% user ||= current_user -%>
+
+<% if pictures = user.pictures and !pictures.empty? -%>
+<div class="pictures ui-corner-all">
+  <% pictures.each do |picture| -%>
+    <ul class="picture ui-corner-all <%= 'selected' if picture.active? %>">
+    <li class="image">
+      <%= image_tag user_picture_path(user, picture, :format => :png), :height => 90, :class => 'fit_image' %>
+    </li>
+    <% if with_action && user == user -%>
+      <li class="operation">
+        <% if picture.active? -%>
+          <%= _('Selected') %>
+        <% else -%>
+          <% form_for([user, picture], :html => {:method => :put}) do |f| -%>
+            <%= f.submit _('Select') %>
+          <% end -%>
+        <% end -%>
+      </li>
+      <li class="operation">
+        <%= link_to _('Delete'), user_picture_path(user, picture), :method => :delete, :confirm => _('Are you sure?') %>
+      </li>
+    <% end -%>
+  </ul>
+  <% end -%>
+  <div class="clear_left"></div>
+</div>
+<% end -%>

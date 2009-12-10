@@ -5,6 +5,7 @@ target_content = "(この投稿はシステムにより自動的に用意され�
 target_title << "に招待しました"                # Ex: グループ：テストグループ00に招待しました
 target_title << "】退会処理"                    # Ex: 【テストグループ00】退会処理
 target_title << "参加申し込みをしました！"      # Ex: 参加申し込みをしました！
+target_title << "ユーザー登録しました！"        # Ex: ユーザー登録しました！
 
 BoardEntry.all.each do |e|
   target_title.each do |tt|
@@ -14,8 +15,8 @@ BoardEntry.all.each do |e|
         #puts s.read unless s.read
         s.destroy unless s.read
       end
-      delete_entry_ids << e.id
-      puts e.title
+      delete_entry_ids << (e.id.to_s + " : " + e.title)
+      puts (e.id.to_s + " : " + e.title)
       e.destroy
     end
   end
@@ -23,7 +24,7 @@ end
 
 open("tmp/delete_auto_create_entries_log.txt", "w") do |file|
   file.write "board_entries.id\n"
-  delete_entry_ids.each do |id|
-    file.write "#{id}\n"
+  delete_entry_ids.each do |info|
+    file.write "#{info}\n"
   end
 end

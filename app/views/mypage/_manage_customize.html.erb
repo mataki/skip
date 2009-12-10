@@ -36,13 +36,7 @@
     </div>
     <% end -%>
     <br style="clear: left;" />
-
-    <h2 class="subtitle"><%= _('Entries display format of Mypage') %></h2>
-    <div style="margin: 10px;">
-      <%= f.radio_button(:display_entries_format, "tabs") %><%= f.label :display_entries_format_tabs, _('Show tabs') %><br/>
-      <%= f.radio_button(:display_entries_format, "flat") %><%= f.label :display_entries_format_flat, _('Show flat') %><br/>
-    </div>
-
+    <br/>
     <%= submit_tag _("Change") %>
   <% end -%>
   </div>

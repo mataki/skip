@@ -17,8 +17,7 @@ class Admin::PicturesController < Admin::ApplicationController
   include Admin::AdminModule::AdminRootModule
   include Admin::AdminModule::AdminUtil
   def index
-    @query = params[:query]
-    @pictures = Admin::Picture.all.paginate(:page => params[:page], :per_page => 40)
+    @pictures = Admin::Picture.order_user_name.paginate(:page => params[:page], :per_page => 40)
 
     @topics = [[_('Listing %{model}') % {:model => _('picture')}]]
 

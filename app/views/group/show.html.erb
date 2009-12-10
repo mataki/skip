@@ -77,7 +77,8 @@
     <%= render :partial => "entries/topix_entries",
       :locals => {
         :title => _('Recent Entries'),
-        :entries => @recent_messages
+        :entries => @recent_messages,
+        :last_updated_desc => true,
       }
     %>
   <% end %>

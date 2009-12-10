@@ -364,7 +364,7 @@ class ShareFile < ActiveRecord::Base
   end
 
   def image_extention?
-    CONTENT_TYPE_IMAGES.keys.any?{ |extension| extension.to_s.downcase == File.extname(file_name).sub(/\A\./,'').downcase }
+    CONTENT_TYPE_IMAGES.keys.any?{ |extension| extension.to_s.downcase == extname }
   end
 
   def readable?(user = @accessed_user)
@@ -383,6 +383,10 @@ class ShareFile < ActiveRecord::Base
   # TODO BoardEntryと共通化したい
   def owner_is_group?
     self.symbol_type == Group.symbol_type.to_s
+  end
+
+  def extname
+    File.extname(file_name).sub(/\A\./,'').downcase
   end
 
   class Owner
@@ -451,11 +455,13 @@ class ShareFile < ActiveRecord::Base
 
 private
   def uncheck_extention?
-    image_extention?
+    uncheck_extentions = CONTENT_TYPE_IMAGES.keys << :swf << :flv
+    uncheck_extentions.any?{ |extension| extension.to_s.downcase == extname }
   end
 
   def uncheck_content_type?
-    CONTENT_TYPE_IMAGES.values.any?{ |content_types| content_types.split(',').include?(self.content_type) }
+    uncheck_content_types = CONTENT_TYPE_IMAGES.values << 'application/x-shockwave-flash' << 'video/x-flv'
+    uncheck_content_types.any?{ |content_types| content_types.split(',').include?(self.content_type) }
   end
 
   def owner_instance(share_file, user)

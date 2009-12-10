@@ -99,10 +99,22 @@
     <div class="ui-corner-all" id="questions_wrapper">
       <h2 class="ui-corner-top"><%= icon_tag(@questions[:title_icon]) + link_to(h(@questions[:title_name]), :controller => "/search", :action => 'entry_search', :type => 'question') %></h2>
       <% if @questions[:pages].empty? -%>
-        <div class="margin05em"><%= _('No matching questions.') %></div>
+        <div><%= _('No matching questions.') %></div>
       <% else -%>
         <%= render :partial => "entries/topix_entries", :locals => { :entries => @questions[:pages], :symbol2name_hash => @questions[:symbol2name_hash] } %>
       <% end -%>
+    </div>
+
+    <div class="ui-corner-all" id="custom_display_wrapper">
+      <h2 class="ui-corner-top">
+        <% if current_user.custom.display_entries_format == "tabs" %>
+          <%= icon_tag("tab") %><%= _('display tabs') %>
+          <%= icon_tag("application_tile_vertical") + link_to(_('display flat'), {:action => 'update_customize', :user_custom => {"display_entries_format" => "flat"}, :go_to_root => "true"}, :method => :post) %>
+        <% else %>
+          <%= icon_tag("tab") + link_to(_('display tabs'), {:action => 'update_customize', :user_custom => {"display_entries_format" => "tabs"}, :go_to_root => "true"}, :method => :post) %>
+          <%= icon_tag("application_tile_vertical") %><%= _('display flat') %>
+        <% end %>
+      </h2>
     </div>
 
     <%= render :partial => "publicated_entries_#{current_user.custom.display_entries_format}" %>

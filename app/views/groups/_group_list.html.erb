@@ -4,23 +4,23 @@
   <table class="group_list_box normal">
     <col />
     <col class="col75" />
-    <col class="col160" />
+    <col class="col100" />
     <col class="col75" />
     <tbody>
       <tr>
-        <th><%= _('Group Name') %></th>
-        <th><%= _('Members count') %></th>
-        <th><%= _('Entries count') %>(<%= s_("BoardEntry|Last updated") %>)</th>
+      <th><%= _('Group Name') + " - " + _('Members count')%></th>
+        <th class="count"><%= _('Entries count') %></th>
+        <th><%= _("BoardEntry|Last updated") %></th>
         <th><%= _('Status') %></th>
       </tr>
       <% groups.each do |group| -%>
         <tr class="<%= cycle('line_0', 'line_1') %>">
           <% category_name = h(group.group_category.name) -%>
-          <td class="name"><span class="nowrap"><%= icon_tag(group.group_category.icon, :alt => category_name, :title => category_name) %><%= group_link_to group %><%= icon_tag('key', :alt => _('Need approval of the Administrator.'), :title => _('Need approval of the Administrator.')) if group.protected? %></span></td>
-          <td class="count"><%= group.group_participations.active.count %></td>
           <% entries = BoardEntry.owned(group) %>
-          <td><%= entries.count %>&nbsp;<%= "(#{entries.last.last_updated.strftime(_('%B %d %Y'))})" unless entries.empty? %>
-          <%= content_tag("b", _('Active'), :class => "remarkable") if upsurge_frequency(entries) %></td>
+
+          <td class="name"><span class="nowrap"><%= icon_tag(group.group_category.icon, :alt => category_name, :title => category_name) %><%= group_link_to group %><%= icon_tag('key', :alt => _('Need approval of the Administrator.'), :title => _('Need approval of the Administrator.')) if group.protected? %></span> - <span class="small_text"><%= group.group_participations.active.count %>人</span></td>
+          <td class="count"><%= entries.empty? ? "0" : entries.count %></td>
+          <td class="date"><span class="nowrap"><%= entries.last.last_updated.strftime(_('%B %d %Y')) unless entries.empty? %><br /><%= content_tag("b", _('Active'), :class => "remarkable") if upsurge_frequency(entries) %></span></td>
           <td class="state"><span class="nowrap"><%= participation_state(group, user_id, :blank_unjoined => true) -%></span></td>
         </tr>
       <% end -%>

@@ -892,13 +892,24 @@ div#questions_wrapper
   :font-size 12px
   :_width 100%
   h2
-    :padding 3px 0
+    :padding 1px 0
     :background-color #E0E0FF
     :font-size 14px
     :text-align center
   table
     :width 100%
-
+  div
+    :text-align center
+div#custom_display_wrapper
+  :border 1px solid #E0E0FF
+  :margin 10px 0px
+  :font-size 12px
+  :_width 100%
+  h2
+    :padding 0 10px 0 0
+    :background-color #E0E0FF
+    :font-size 12px
+    :text-align right
 span.current
   :font-size 14px
 
@@ -980,6 +991,9 @@ div.pictures
     li.image
       :text-align center
       :padding 5px
+      img
+        :height 72px
+        :width 72px
     li.data_row
       :border-top = !base_dotted_border
       :text-align center
@@ -990,6 +1004,8 @@ div.pictures
       :height 22px
       form input
         :padding 0
+    &.selected
+      :background #fff5ee
 
 
 // ユーザ
@@ -1100,24 +1116,82 @@ table.group_list_box
     th
       :text-align left
       :background-color #f0f0ff
+      &.count
+        :text-align center
     td.name
       :overflow hidden
     td.state
       :overflow hidden
+    td.count
+      :overflow hidden
+      :text-align center
 
 // 記事
 // ------------------------------------------------------------
-span.share_file_uploader.trigger
+span.share_file_trigger
   :font-size 14px
   :margin-left 1em
 
-span#embed_trigger
-  :font-size 14px
-  :margin-left 1em
-div#embed_dialog
+div#share_file_dialog
+  :width 100%
+  :display none
+  table
+    :width 95%
+    :margin 0 auto
+    :border-collapse collapse
+    tr, th, td
+      :border = !base_border
+    th, td
+      :text-align center
+    td.thumbnail
+      :width 200px
+      :height 80px
+    td.insert
+      :width 6em
+  div.paginate
+    :text-align right
+    span.info
+      :margin-right 5px
+    span.first_link, span.previous_link, span.next_link, span.last_link
+      :font-size = !small_font_size
+  span.insert_link, span.operation
+    :display block
+    :font-size = !small_font_size
+
+div#share_file_new
+  iframe
+    :border 0
+    :width 100%
+    :height 100%
+    :overflow hidden
+  div.target
+    :width 0
+    :height 0
+    iframe
+      :width 0
+      :height 0
+  ul.messages
+    :margin 5px 0
+    :font-size = !small_font_size
+    li
+      :list-style-type none
+    li.notice
+      :border-color limegreen
+      :background-color palegreen
+    li.error
+      :border-color red
+      :background-color pink
+
+div#embed_tag
   :width 100%
   table
-    :width 100%
+    :width 95%
+    tr, th, td
+      :border none
+    th, td
+      :text-align left
+    td.operation
+      :text-align left
     textarea
       :width 100%
 
@@ -1189,7 +1263,6 @@ div.topix_entries_wrapper, div.topix_share_files_wrapper, div.topix_bookmarks_wr
     tr
       :border-bottom = !base_dotted_border
       td
-        :padding 5px 0px 3px 0px
         :border-bottom = !base_dotted_border
       td.entry_icon
         :text-align center
@@ -1207,8 +1280,6 @@ div.topix_entries_wrapper, div.topix_share_files_wrapper, div.topix_bookmarks_wr
         :font-size 8px
         :vertical-align bottom
         :color #808080
-      span.margin30px
-        :margin-left 30px
 
   table.topix_entries
     tr.all_protected
@@ -1218,7 +1289,7 @@ div.topix_entries_wrapper, div.topix_share_files_wrapper, div.topix_bookmarks_wr
     tr.blog_private
       :background-color #ffeeee
     tr.forum_public
-      :background-color #eeeeff
+      :background-color #ffffff
     tr.forum_private
       :background-color #eeffee
     tr

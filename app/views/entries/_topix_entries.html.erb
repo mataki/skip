@@ -1,5 +1,7 @@
 <% title ||= "" %>
 <% entries ||= [] -%>
+<% last_updated_desc ||= false -%>
+<% width_date = last_updated_desc ? "125" : "75" -%>
 <% user_unreadings ||= [] -%>
 <% symbol2name_hash ||= nil -%>
 <% with_checkable_read ||= false -%>
@@ -14,9 +16,8 @@
         <col class="col25" />
       <% end -%>
       <col class="col25" />
-      <col class="col25" />
       <col />
-      <col class="col75" />
+      <col class="col<%= width_date -%>" />
       <tbody>
         <% entries.each do |entry| -%>
           <% entry_infos = get_entry_infos(entry) -%>
@@ -24,7 +25,6 @@
             <% if with_checkable_read -%>
             <td class="read_state"><%= check_box_tag("message_#{entry.id}", "true", !user_unreadings[entry.id], {:class => "read_state_checkbox"}) %></td>
             <% end -%>
-            <td class="entry_icon"><%= entry_icon entry %></td>
             <td class="publication_state"><%= get_publication_type_icon(entry) %></td>
             <td class="entry_outline">
               <%= entry_link_to(entry, {}, {:title => entry_infos}) %>
@@ -38,10 +38,16 @@
               <% if entry.owner_is_group? -%>
                 <span class="small_text infos"><%= user_link_to(entry.user, :with_prefix => true) %></span>
               <% end -%>
-              <br/>
-              <span class="infos margin30px"><%= entry_infos -%></span>
+              <br />
+              <span class="infos"><%= entry_infos -%></span>
             </td>
-            <td class="date"><%=h entry.date.strftime(_("%B %d %Y")) %></td>
+            <td class="date">
+              <% if last_updated_desc -%>
+                <%= _("Last comment:") unless entry.board_entry_comments_count.zero? -%><%=h entry.updated_on.strftime(_("%B %d %Y")) %>
+              <% else -%>
+                <%=h entry.date.strftime(_("%B %d %Y")) %>
+              <% end -%>
+            </td>
           </tr>
         <% end -%>
       </tbody>

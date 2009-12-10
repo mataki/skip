@@ -135,7 +135,8 @@ module ApplicationHelper
     file_name =
       if picture = user.picture
         unless picture.new_record?
-          user_picture_path(user, picture, :format => :png)
+          # プロフィール更新時にキャッシュさせないために更新時間をURLに含めている
+          user_picture_path(user, picture, :format => :png) + "?#{picture.updated_on.to_i.to_s}"
         else
           'default_picture.png'
         end
@@ -150,9 +151,9 @@ module ApplicationHelper
     if entry.editor_mode == 'hiki'
       output_contents = hiki_parse(entry.contents, entry.symbol)
       image_url_proc = proc { |file_name|
-        file_link_url :owner_symbol => entry.symbol, :file_name => file_name
+        file_link_url({:owner_symbol => entry.symbol, :file_name => file_name}, :inline => true)
       }
-      output_contents = SkipUtil.images_parse(output_contents, image_url_proc)
+      output_contents = parse_hiki_embed_syntax(output_contents, image_url_proc)
       output = "<div class='hiki_style'>#{output_contents}</div>"
     elsif entry.editor_mode == 'richtext'
       output = render_richtext(entry.contents, entry.symbol)
@@ -173,12 +174,13 @@ module ApplicationHelper
     link_to h(file_name), url, html_options
   end
 
-  def file_link_url share_file
+  def file_link_url share_file, options = {}
     share_file = ShareFile.new share_file if share_file.is_a? Hash
     symbol_type, symbol_id = SkipUtil.split_symbol share_file.owner_symbol
     url_params = {:controller_name => share_file.owner_symbol_type,
                   :symbol_id => symbol_id,
                   :file_name => share_file.file_name}
+    url_params.merge!(:inline => true) if options[:inline]
     url = share_file_url(url_params)
     url
   end
@@ -217,19 +219,26 @@ module ApplicationHelper
   # TODO Publicationクラス辺りに移したい
   def get_publication_type_icon(entry_or_share_file)
     icon_name = ''
-    view_name = ""
+    view_name = ''
+
     case entry_or_share_file.publication_type
     when 'public'
-      icon_name = entry_or_share_file.owner_is_user? ? 'page_red' : 'page'
+      if entry_or_share_file.owner_is_group? and entry_or_share_file.public?
+        group = Group.active.find_by_gid(entry_or_share_file.symbol_id)
+        category = group ? group.group_category : nil
+        icon_name = category.blank? ? "group" : category.icon
+      else
+        icon_name = 'user_suit'
+      end
       view_name = _("Open to All")
     when 'protected'
       visibility, visibility_color = entry_or_share_file.visibility
-      icon_name = 'page_link'
+      icon_name = 'link'
       view_name = _("Specify Directly") + visibility
     when 'private'
-      icon_name = entry_or_share_file.owner_is_user? ? 'pencil' : 'page_key'
+      icon_name = entry_or_share_file.owner_is_user? ? 'pencil' : 'key'
       view_name = entry_or_share_file.owner_is_user? ? _("Owner Only") : _("Members Only")
-   end
+    end
     icon_tag(icon_name, :title => view_name)
   end
 
@@ -240,7 +249,7 @@ module ApplicationHelper
     output << "#{h Admin::Setting.point_button}(#{h entry.point.to_s})" if entry.point > 0
     output << n_("Trackback(%s)", "Trackbacks(%s)", entry.entry_trackbacks_count) % h(entry.entry_trackbacks_count.to_s) if entry.entry_trackbacks_count > 0
     output << n_("Access(%s)", "Accesses(%s)", entry.state.access_count) % h(entry.state.access_count.to_s) if entry.state.access_count > 0
-    output.size > 0 ? "#{output.join('-')}" : ""
+    output.size > 0 ? "#{output.join('-')}" : '&nbsp;'
   end
 
   def get_menu_items menus, selected_menu, action
