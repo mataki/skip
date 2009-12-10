@@ -14,42 +14,6 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 module EditHelper
-  def share_file_uploader_opt board_entry
-    {
-      :share_files_url => share_files_url(board_entry.symbol),
-      :image_extensions => ShareFile::CONTENT_TYPE_IMAGES.keys,
-      :message => {
-        :title => _('Insert share file as image or link'),
-        :close => _('Close'),
-        :reload => _('Reload'),
-        :share_files => {
-          :title => _('Avalilable share files'),
-          :thumbnail => _('Thumbnail'),
-          :display_name => _('Filename'),
-          :first => _('First page'),
-          :previous => _('Previous page'),
-          :next => _('Next page'),
-          :last => _('Last page')
-        },
-        :insert_link_label =>  _('Insert link'),
-        :insert_image_link_label => _('Insert image'),
-        :insert_embed_link_label => _('Insert embed'),
-        :upload_share_file => _('Upload share file')
-      },
-      :uploader => {
-        :target => IframeUploader::UPLOAD_KEY,
-        :src => {
-          :form => url_for(:controller => 'share_file', :action => 'new', :owner_symbol => board_entry.symbol, :ajax_upload => 1, :escape => false),
-          # HTTPS環境で、IE6を利用するとtargetが空だとHTTPへのアクセスと判断してアラートが表示されるため
-          # http://support.microsoft.com/kb/261188/ja
-          :target => '/blank.html'
-        },
-        :callback => nil,
-        :trigger => 'submit'
-      }
-    }
-  end
-
   def send_mail_check_box_tag
     if SkipEmbedded::InitialSettings['mail']['show_mail_function']
       result = ''
