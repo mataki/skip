@@ -216,7 +216,7 @@ default: &default
   publicize_feeds_without_login: false                               # 公開feedの取得可否(許可するとログイン認証なしでfeedが取得出来る)
 
   advertisements_url:                                                # 広告領域に表示するデータのJSON又はJSONPを返すURL
-
+  iskip: false                                                       # SKIPaaS専用ポータルサイトの利用
 
 ####################################################################################################
 # 以下設定不要
