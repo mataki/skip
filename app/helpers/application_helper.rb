@@ -219,10 +219,17 @@ module ApplicationHelper
   # TODO Publicationクラス辺りに移したい
   def get_publication_type_icon(entry_or_share_file)
     icon_name = ''
-    view_name = ""
+    view_name = ''
+
     case entry_or_share_file.publication_type
     when 'public'
-      icon_name = entry_or_share_file.owner_is_user? ? 'user_suit' : 'group'
+      if entry_or_share_file.owner_is_group? and entry_or_share_file.public?
+        group = Group.active.find_by_gid(entry_or_share_file.symbol_id)
+        category = group ? group.group_category : nil
+        icon_name = category.blank? ? "group" : category.icon
+      else
+        icon_name = 'user_suit'
+      end
       view_name = _("Open to All")
     when 'protected'
       visibility, visibility_color = entry_or_share_file.visibility
@@ -231,7 +238,7 @@ module ApplicationHelper
     when 'private'
       icon_name = entry_or_share_file.owner_is_user? ? 'pencil' : 'key'
       view_name = entry_or_share_file.owner_is_user? ? _("Owner Only") : _("Members Only")
-   end
+    end
     icon_tag(icon_name, :title => view_name)
   end
 

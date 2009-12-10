@@ -16,5 +16,5 @@
   </div>
   <%= i18n_will_paginate entries %>
 </div>
-<%= render :partial => "entries/topix_entries", :locals => { :title => title, :entries => entries } %>
+<%= render :partial => "entries/topix_entries", :locals => { :title => title, :entries => entries, :last_updated_desc => true } %>
 <%= i18n_will_paginate_with_container_wrapper entries %>
