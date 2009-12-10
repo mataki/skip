@@ -44,7 +44,7 @@ class ShareFileController < ApplicationController
   def create
     @error_messages = []
     unless params[:file]
-      ajax_upload? ? render(:text => _("%{name} is mandatory.") % { :name => _('File')}, :layout => false) : render_window_close
+      ajax_upload? ? render(:text => {:status => '400', :messages => [_("%{name} is mandatory.") % { :name => _('File') }]}.to_json) : render_window_close
       return
     end
     @share_file = ShareFile.new(params[:share_file])
@@ -78,8 +78,9 @@ class ShareFileController < ApplicationController
     end
 
     if @error_messages.size == 0
-      flash[:notice] = n_('File was successfully uploaded.', 'Files were successfully uploaded.', params[:file].size)
-      ajax_upload? ? render(:text => '') : render_window_close
+      notice_message = n_('File was successfully uploaded.', 'Files were successfully uploaded.', params[:file].size)
+      flash[:notice] = notice_message
+      ajax_upload? ? render(:text => {:status => '200', :messages => [notice_message]}.to_json) : render_window_close
     else
       messages = []
       messages << _("Failed to upload file(s).")
@@ -91,7 +92,7 @@ class ShareFileController < ApplicationController
       @share_file.errors.clear
       @owner_name = params[:owner_name]
       @categories_hash = ShareFile.get_tags_hash(@share_file.owner_symbol)
-      ajax_upload? ? render(:text => @error_messages.first) : render(:action => "new")
+      ajax_upload? ? render(:text => {:status => '400', :messages => @error_messages}.to_json) : render(:action => "new")
     end
   end
 

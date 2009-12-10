@@ -111,8 +111,12 @@
     var loadNewShareFileForm = function() {
       var submitCallback;
       $j('#share_file_new').html('');
+      var indicator = $j('<span><%= skip_image_tag 'indicator.gif' %></span>');
+      indicator.appendTo($j('#share_file_new')).show();
       var src = '<%= url_for(:controller => 'share_file', :action => 'new', :owner_symbol => @board_entry.symbol, :ajax_upload => 1, :escape => false) %>'; 
       $j('#share_file_new').append(
+        $j('<ul></ul>').addClass('messages')
+      ).append(
         $j("<iframe></iframe>").attr("src", src).load(function(){
           var form = $j(this.contentWindow.document).find("form");
           form.submit(function() {
@@ -123,19 +127,40 @@
             file.focus();
             submitCallback = function(){
               form.get(0).reset();
-              loadShareFiles({});
             };
             return false;
           });
+          indicator.remove();
         })
-      ).append(
+      );
+      var targetIFrame = $j("<iframe></iframe>").attr({src: '/blank.html', name: '<%= IframeUploader::UPLOAD_KEY %>'})
+                         .one("load", function(){ $j(this).load(afterLoadCallback); });
+      $j('#share_file_new').append(
         // HTTPS環境で、IE6を利用するとtargetが空だとHTTPへのアクセスと判断してアラートが表示されるため
         // http://support.microsoft.com/kb/261188/ja
-        $j("<iframe></iframe>").attr({src: '/blank.html', name: '<%= IframeUploader::UPLOAD_KEY %>'})
-        .one("load", function(){ $j(this).load(afterLoadCallback); })
+        $j("<div></div>").addClass('target').append(targetIFrame)
       );
+
+      // IE6対策
+      targetIFrame.get(0).contentWindow.name = '<%= IframeUploader::UPLOAD_KEY %>';
+
       var afterLoadCallback = function(){
         if(submitCallback){submitCallback.call();}
+        var doc = targetIFrame.get(0).contentDocument ? targetIFrame.get(0).contentDocument : targetIFrame.get(0).contentWindow.document;
+        var response = doc.body.innerHTML;
+        var json = eval('(' + response + ')');
+        var status = json['status'];
+        $j('ul.messages').html('');
+        if ( status == '200' ) {
+          $j.each(json['messages'], function(i, msg){
+            $j('ul.messages').append($j('<li></li>').addClass('notice').text(msg));
+          });
+          loadShareFiles({});
+        } else {
+          $j.each(json['messages'], function(i, msg){
+            $j('ul.messages').append($j('<li></li>').addClass('error').text(msg));
+          });
+        }
       };
     };
 
@@ -164,7 +189,7 @@
           paginate(data['pages'])
         );
         $j('img.fit_image').fitimage({ placeholder: relative_url_root + '/images/skip/jquery/fitimage/spacer.gif' });
-        indicator.hide();
+        indicator.remove();
       });
     };
 
