@@ -33,6 +33,7 @@ module EditHelper
         },
         :insert_link_label =>  _('Insert link'),
         :insert_image_link_label => _('Insert image'),
+        :insert_embed_link_label => _('Insert embed'),
         :upload_share_file => _('Upload share file')
       },
       :uploader => {

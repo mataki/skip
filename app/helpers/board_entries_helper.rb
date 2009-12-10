@@ -107,4 +107,45 @@ module BoardEntriesHelper
       end
     end
   end
+
+  def parse_hiki_embed_syntax view_str, proc
+    regex_type = /\{\{.+?\}\}/ # {{***}}とマッチする正規表現
+    width = 0
+    height = 0
+    image_name = ""
+
+    while image_tag = view_str.match(regex_type)
+      image_size = [0,0] # デフォルトサイズ
+
+      # カンマ２つでサイズが指定してある場合
+      if  image_tag.to_s.scan(",").size == 2
+        params = image_tag.to_s[2..-3].split(",")
+        image_name = params[0]
+        width, height = [params[1].to_i, params[2].to_i]
+      else
+        image_name = image_tag.to_s[2..-3]
+      end
+      image_name.strip!
+
+      #イメージのURLを生成できるブロックを呼び出す
+      image_url = proc.call(image_name)
+      image_link =
+        if File.extname(image_name).sub(/\A\./,'').downcase == "flv"
+          flv_tag image_url
+        elsif File.extname(image_name).sub(/\A\./,'').downcase == "swf"
+          width = 240 if width == 0
+          height = (width * 0.75) if height == 0
+          swf_tag image_url, :width => width, :height => height
+        else
+          html_options = {:class => 'zoomable'}
+          html_options[:width] = width if width > 0
+          html_options[:height] = height if height > 0
+          link_to image_tag(image_url), image_url, html_options
+        end
+
+      view_str = view_str.sub(regex_type, image_link)
+    end
+    return view_str
+  end
+
 end

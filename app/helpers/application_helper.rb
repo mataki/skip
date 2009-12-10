@@ -151,9 +151,9 @@ module ApplicationHelper
     if entry.editor_mode == 'hiki'
       output_contents = hiki_parse(entry.contents, entry.symbol)
       image_url_proc = proc { |file_name|
-        file_link_url :owner_symbol => entry.symbol, :file_name => file_name
+        file_link_url({:owner_symbol => entry.symbol, :file_name => file_name}, :inline => true)
       }
-      output_contents = SkipUtil.images_parse(output_contents, image_url_proc)
+      output_contents = parse_hiki_embed_syntax(output_contents, image_url_proc)
       output = "<div class='hiki_style'>#{output_contents}</div>"
     elsif entry.editor_mode == 'richtext'
       output = render_richtext(entry.contents, entry.symbol)
@@ -174,12 +174,13 @@ module ApplicationHelper
     link_to h(file_name), url, html_options
   end
 
-  def file_link_url share_file
+  def file_link_url share_file, options = {}
     share_file = ShareFile.new share_file if share_file.is_a? Hash
     symbol_type, symbol_id = SkipUtil.split_symbol share_file.owner_symbol
     url_params = {:controller_name => share_file.owner_symbol_type,
                   :symbol_id => symbol_id,
                   :file_name => share_file.file_name}
+    url_params.merge!(:inline => true) if options[:inline]
     url = share_file_url(url_params)
     url
   end

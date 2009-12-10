@@ -16,6 +16,7 @@
 class ShareFileController < ApplicationController
   include IframeUploader
   include UserHelper
+  include EmbedHelper
   layout 'subwindow'
 
   verify :method => :post, :only => [ :create, :update, :destroy, :download_history_as_csv, :clear_download_history ],
@@ -220,9 +221,9 @@ class ShareFileController < ApplicationController
       end
 
       share_file.create_history current_user.id
-      send_file(share_file.full_path, :filename => nkf_file_name(file_name), :type => share_file.content_type || Types::ContentType::DEFAULT_CONTENT_TYPE, :stream => false, :disposition => 'attachment')
+      # TODO inlineパラメタの有無でdisposition切り替えは微妙か? アクション分ける? 拡張子やContentTypeで自動判別する? 検討する。
+      send_file(share_file.full_path, :filename => nkf_file_name(file_name), :type => share_file.content_type || Types::ContentType::DEFAULT_CONTENT_TYPE, :stream => false, :disposition => params[:inline] ? 'inline' : 'attachment')
     else
-      # FIXME i18n
       @main_menu = @title = _('File Download')
       render :action => 'confirm_download', :layout => 'layout'
     end
@@ -294,7 +295,18 @@ private
         :controller_name => share_file.owner_symbol_type,
         :symbol_id => share_file.owner_symbol_id,
         :file_name => share_file.file_name)
-      json[:file_type] = share_file.image_extention? ? 'image' : ''
+      json[:file_type] = share_file.image_extention? ? 'image' : share_file.extname
+      json[:insert_tag] =
+        if share_file.image_extention?
+          # TODO 後で
+        elsif share_file.extname == 'flv'
+          flv_tag json[:src] + '?inline=true'
+        elsif share_file.extname == 'swf'
+          swf_tag json[:src] + '?inline=true'
+        else
+          # TODO 後で
+        end
     end
   end
+
 end

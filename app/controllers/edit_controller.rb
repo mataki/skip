@@ -303,13 +303,13 @@ private
   def validate_params params, entry
     # 公開範囲のタイプ
     unless %w(public private protected).include? params[:publication_type]
-      entry.errors.add nil, _("Invalid privacy setting.")
+      entry.errors.add_to_base _("Invalid privacy setting.")
     end
     # 公開範囲の値
     if params[:publication_type] == "protected" && params[:publication_symbols_value]
       unless params[:publication_symbols_value].empty?
         unless /\A[\s]*((u|g|e)id:[^,]*,)*[\s]*(u|g|e)id[^,]*\Z/ =~ params[:publication_symbols_value]
-          entry.errors.add nil, _("Invalid privacy setting.")
+          entry.errors.add_to_base _("Invalid privacy setting.")
         end
       end
     end

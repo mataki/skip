@@ -190,6 +190,18 @@ $j(function(){
             });
         };
 
+        var insertEmbedLink = function(data){
+            return $j("<span></span>").text(message["insert_embed_link_label"]).addClass("insert_link link pointer").click(function(){
+                if($j('#editor_mode_richtext:checked').length > 0){
+                    var html = data['insert_tag'];
+                    CKEDITOR.instances.contents_richtext.insertHtml(html);
+                } else if($j('#editor_mode_hiki:checked').length > 0) {
+                    var filename = data['file_name'];
+                    insertToHikiEditor('\n{{' + filename + '}}');
+                }
+            });
+        };
+
         var insertThumbnail = function(data){
             var filename = data['file_name'];
             var extension = filename.toLowerCase().split('.')[1];
@@ -226,6 +238,8 @@ $j(function(){
             insertTd.append(insertLink(data));
             if(data['file_type'] == 'image')
                 insertTd.append(insertImageLink(data));
+            if(data['file_type'] == 'flv' || data['file_type'] == 'swf')
+                insertTd.append(insertEmbedLink(data));
             tr.append(insertTd);
             return tr;
         };

@@ -19,6 +19,8 @@ class Sanitize
       whitelist_urls = whitelist_object_urls.keys.map do |key|
         Admin::Setting[key] ? whitelist_object_urls[key] : []
       end.flatten
+      # SKIPにアップロードされたflashはsanitizeせずに表示させるため
+      whitelist_urls << "#{SkipEmbedded::InitialSettings[:protocol]}#{SkipEmbedded::InitialSettings[:host_and_port]}"
 
       if url && whitelist_urls.any? { |whitelist_url| url.index(whitelist_url) == 0 }
         return {
