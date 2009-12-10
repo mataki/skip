@@ -17,7 +17,7 @@
     <tbody>
       <% @histories.each do |history| %>
         <tr class="<%= cycle("odd", "even")%>">
-          <td class="revision"><%= link_to(h(_("rev.#{history.revision}を表示"))) %></td>
+          <td class="revision"><%= link_to(h(_("リビジョン#{history.revision}を表示")), wiki_history_path(@current_page.title, history)) %></td>
           <td><%= history.user.name %></td>
           <td class="timestamp"><%= history.updated_at.strftime("%Y-%m-%d %H:%M") %></td>
           <td><%= link_to_next_diff(@histories, history) %></td>

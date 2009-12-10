@@ -27,6 +27,16 @@ module HistoriesHelper
     css ? sym : sym[0,1].upcase
   end
 
+  def explain_history(history)
+    hist = {
+      :rev =>  content_tag("span", @history.revision, :class => "val"),
+      :user=>  content_tag("span", @history.user.name, :class => "val"),
+      :date => content_tag("span", @history.updated_at.strftime("%Y/%m/%d %H:%M"), :class => "val"),
+    }
+
+    sanitize( _("リビジョン#{hist[:rev]}を表示しています。  (#{hist[:user]}さんが#{hist[:date]}に更新しました。)") % hist)
+  end
+
   def decode_nbsp(string)
     nbsp = [0xA0].pack("U")
     return nbsp if string.blank?

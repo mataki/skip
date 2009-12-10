@@ -86,6 +86,7 @@ Feature: Wikiの管理
     Then    "Last-modified:"と表示されること
     Then    "a_user"と表示されること
 
+  @now
   Scenario: 履歴の管理
     Given   "Wikiトップページ"にアクセスする
 
@@ -100,7 +101,7 @@ Feature: Wikiの管理
     And     "history_content"に"テストページを更新します"と入力する
     And     "ページを更新"ボタンをクリックする
     And     "[編集する]"リンクをクリックする
-    And     "history_content"に"ページ"と入力する
+    And     "history_content"に"pochi"と入力する
     And     "ページを更新"ボタンをクリックする
     And     "履歴"リンクをクリックする
 
@@ -109,6 +110,12 @@ Feature: Wikiの管理
 
     And     "次"リンクをクリックする
     Then    "変更点"と表示されていること
+
+    When    "Wikiトップページ"にアクセスする
+    And     "履歴"リンクをクリックする
+    And     "rev.1を表示"リンクをクリックする
+
+    Then    "pochi"と表示されていないこと
 
 
 
