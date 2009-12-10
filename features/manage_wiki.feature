@@ -77,16 +77,17 @@ Feature: Wikiの管理
     Then    flashメッセージに"ページが更新されました"と表示されていること
     Then    "テストページを更新します"と表示されていること
 
+  # TODO SKIP開発チームに聞く(タイトルに値が入らない)
   Scenario: 更新情報の表示を確認する
     Given   "Wikiトップページ"にアクセスする
     And     "タイトル"に"次のページ"と入力する
+    And     デバッグのため
     And     "作成"ボタンをクリックする
     And     "次のページ"リンクをクリックする
 
     Then    "Last-modified:"と表示されること
     Then    "a_user"と表示されること
 
-  @now
   Scenario: 履歴の管理
     Given   "Wikiトップページ"にアクセスする
 
@@ -113,7 +114,7 @@ Feature: Wikiの管理
 
     When    "Wikiトップページ"にアクセスする
     And     "履歴"リンクをクリックする
-    And     "rev.1を表示"リンクをクリックする
+    And     "リビジョン1を表示"リンクをクリックする
 
     Then    "pochi"と表示されていないこと
 
