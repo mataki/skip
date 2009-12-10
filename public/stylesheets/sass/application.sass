@@ -1045,7 +1045,7 @@ table.group_list_box
 
 // 記事
 // ------------------------------------------------------------
-span.share_file_uploader.trigger
+span.share_file_trigger
   :font-size 14px
   :margin-left 1em
 
@@ -1062,6 +1062,7 @@ div#share_file_dialog
       :text-align center
     td.thumbnail
       :width 200px
+      :height 80px
     td.insert
       :width 6em
   div.paginate
@@ -1074,7 +1075,7 @@ div#share_file_dialog
     :display block
     :font-size = !small_font_size
 
-div#share_file_upload_dialog
+div#share_file_new
   iframe
     :border 0
     :width 100%
@@ -1087,16 +1088,19 @@ div#share_file_upload_dialog
       :width 0
       :height 0
 
-span#embed_trigger
-  :font-size 14px
-  :margin-left 1em
-div#embed_dialog
+div#embed_tag
   :width 100%
-  :display none
   table
-    :width 100%
+    :width 95%
+    tr, th, td
+      :border none
+    th, td
+      :text-align left
+    td.operation
+      :text-align left
     textarea
       :width 100%
+      :height 70%
 
 .iphone_style_checkbox .iPhoneCheckContainer
   :width 130px

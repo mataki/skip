@@ -5,42 +5,52 @@
   }
   </style>
   <%= skip_stylesheet_link_tag "themes/cupertino/ui.dialog.css" %>
+  <%= skip_stylesheet_link_tag "themes/cupertino/ui.tabs.css" %>
 <% end -%>
 
   <div class="input_value" style="height: 2em;">
     <%= radio_button_tag("editor_mode", "richtext", params[:editor_mode] == "richtext", :id=>"editor_mode_richtext") + label_tag("editor_mode_richtext", _('Rich Text')) %>
     <%= radio_button_tag("editor_mode", "hiki", params[:editor_mode] == "hiki", :id=>"editor_mode_hiki") + label_tag("editor_mode_hiki", _('Wiki text')) -%>
     <span id="share_file_trigger" class="pointer link"><span class="ss_sprite ss_attach">&nbsp;</span><%= _('Insert file or embed in text body') %></span>
-    <% if enable_any_embed? -%>
-    <span id="embed_trigger" class="pointer link"><%= _('Insert embed tag') %></span>
-    <% end -%>
   </div>
 
-  <div id="share_file_dialog" title="<%= _('Insert file or embed in text body') %>"></div>
-  <div id="share_file_upload_dialog" title="<%= _('Upload file') %>"></div>
-  <% if enable_any_embed? -%>
-    <div id="embed_dialog" title="<%= _('Insert embed tag') %>">
-      <form>
-        <table>
-          <tr>
-            <th><%= label_tag 'embed_html', _('Embed') %></th>
-          </tr>
-          <tr>
-            <td><%= text_area_tag 'embed_html', nil, :rows => 5, :cols => 30 %></td>
-          </tr>
-          <tr>
-            <td>
-              <%= _('Corresponding sites') %>
-              <%= image_tag('http://www.youtube.com/favicon.ico', :title => 'youtube', :alt => 'youtube') if Admin::Setting.youtube%>
-              <%= image_tag('http://www.slideshare.net/favicon.ico', :title => 'slideshare', :alt => 'slideshare') if Admin::Setting.slideshare %>
-              <%= image_tag('http://maps.google.com/favicon.ico', :title => 'google maps', :alt => 'google maps') if Admin::Setting.googlemap%>
-            </td>
-          </tr>
-        </table>
-      </form>
+  <div id="share_file_dialog" title="<%= _('Insert file or embed in text body') %>">
+    <div id="tabs" class="invisible">
+      <ul>
+        <li><a href="#share_file_list"><%= _('Insert file or embed in text body') %></a></li>
+        <li><a href="#share_file_new"><%= _('Upload new file') %></a></li>
+        <% if enable_any_embed? -%>
+          <li><a href="#embed_tag"><%= _('Insert embed tag') %></a></li>
+        <% end -%>
+      </ul>
+      <div id="share_file_list"></div>
+      <div id="share_file_new"></div>
+      <% if enable_any_embed? -%>
+        <div id="embed_tag">
+          <form>
+            <table>
+              <tr>
+                <th>
+                  <%= label_tag 'embed_html', _('Corresponding sites') %>
+                  <%= image_tag('http://www.youtube.com/favicon.ico', :title => 'youtube', :alt => 'youtube') if Admin::Setting.youtube%>
+                  <%= image_tag('http://www.slideshare.net/favicon.ico', :title => 'slideshare', :alt => 'slideshare') if Admin::Setting.slideshare %>
+                  <%= image_tag('http://maps.google.com/favicon.ico', :title => 'google maps', :alt => 'google maps') if Admin::Setting.googlemap%>
+                </th>
+              </tr>
+              <tr>
+                <td><%= text_area_tag 'embed_html', nil, :rows => 10, :cols => 30 %></td>
+              </tr>
+              <tr>
+                <td class="operation">
+                  <button id="insert_embed_tag" type="button" class="ui-state-default ui-corner-all"><%= _("Insert embed") %></button>
+                </td>
+              </tr>
+            </table>
+          </form>
+        </div>
+      <% end -%>
     </div>
-  <% end -%>
-
+  </div>
   <div id="contents_richtext_space" class="richtext" style="display: none;">
     <%= text_area_tag 'contents_richtext', sanitize_and_unescape_for_richtext(params[:contents_richtext]), :cols => 90, :rows => 20 %>
   </div>
@@ -91,55 +101,48 @@
       autoOpen: false,
       width: 500,
       height: 350,
-      buttons: {
-        '<%= _('New ShareFile') %>': function() {
-          $j('div#share_file_upload_dialog').dialog('open');
-        }
-      },
       open: function() {
         loadShareFiles({});
+        loadNewShareFileForm();
+        $j('#tabs').tabs().show();
       }
     })
 
-    $j('div#share_file_upload_dialog').dialog({
-      bgiframe: true,
-      autoOpen: false,
-      width: 500,
-      height: 200,
-      open: function() {
-        var submitCallback;
-        $j(this).html('');
-        var src = '<%= url_for(:controller => 'share_file', :action => 'new', :owner_symbol => @board_entry.symbol, :ajax_upload => 1, :escape => false) %>'; 
-        $j(this).append(
-          $j("<iframe></iframe>").attr("src", src).load(function(){
-            var form = $j(this.contentWindow.document).find("form");
-            form.submit(function() {
-              var indicator = form.find("td.indicator img").show();
-              form.get(0).submit();
-              indicator.hide();
-              var file = form.find("input[type=file]");
-              file.focus();
-              submitCallback = function(){
-                form.get(0).reset();
-                loadShareFiles({});
-              };
-              return false;
-            });
-          })
-        ).append(
-          // HTTPS環境で、IE6を利用するとtargetが空だとHTTPへのアクセスと判断してアラートが表示されるため
-          // http://support.microsoft.com/kb/261188/ja
-          $j("<iframe></iframe>").attr({src: '/blank.html', name: '<%= IframeUploader::UPLOAD_KEY %>'})
-          .one("load", function(){ $j(this).load(afterLoadCallback); })
-        );
-        var afterLoadCallback = function(){
-          if(submitCallback){submitCallback.call();}
-        };
-      }
-    });
+    var loadNewShareFileForm = function() {
+      var submitCallback;
+      $j('#share_file_new').html('');
+      var src = '<%= url_for(:controller => 'share_file', :action => 'new', :owner_symbol => @board_entry.symbol, :ajax_upload => 1, :escape => false) %>'; 
+      $j('#share_file_new').append(
+        $j("<iframe></iframe>").attr("src", src).load(function(){
+          var form = $j(this.contentWindow.document).find("form");
+          form.submit(function() {
+            var indicator = form.find("td.indicator img").show();
+            form.get(0).submit();
+            indicator.hide();
+            var file = form.find("input[type=file]");
+            file.focus();
+            submitCallback = function(){
+              form.get(0).reset();
+              loadShareFiles({});
+            };
+            return false;
+          });
+        })
+      ).append(
+        // HTTPS環境で、IE6を利用するとtargetが空だとHTTPへのアクセスと判断してアラートが表示されるため
+        // http://support.microsoft.com/kb/261188/ja
+        $j("<iframe></iframe>").attr({src: '/blank.html', name: '<%= IframeUploader::UPLOAD_KEY %>'})
+        .one("load", function(){ $j(this).load(afterLoadCallback); })
+      );
+      var afterLoadCallback = function(){
+        if(submitCallback){submitCallback.call();}
+      };
+    };
 
     var loadShareFiles = function(requestData) {
-      $j('div#share_file_dialog').html('');
+      $j('div#share_file_list').html('');
+      var indicator = $j('<span><%= skip_image_tag 'indicator.gif' %></span>');
+      indicator.appendTo('div#share_file_list').show();
       var url = '<%= share_files_url(@board_entry.symbol) %>';
       $j.getJSON(url, requestData, function(data, stat) {
         var share_files = data['share_files'];
@@ -150,7 +153,7 @@
         $j.each(share_files, function(_num_, share_file){
           tbody.append(shareFileToTableRow(share_file));
         });
-        $j('div#share_file_dialog').append(
+        $j('div#share_file_list').append(
           paginate(data['pages'])
         ).append(
           $j("<table></table>")
@@ -160,6 +163,8 @@
         ).append(
           paginate(data['pages'])
         );
+        $j('img.fit_image').fitimage({ placeholder: relative_url_root + '/images/skip/jquery/fitimage/spacer.gif' });
+        indicator.hide();
       });
     };
 
@@ -235,7 +240,7 @@
         var src = data['src'];
         if(src){
           var img = $j("<img></img>").attr("src", src).attr("alt", filename).addClass('pointer');
-          return img.clone().attr("width", 200).click(function(){
+          return img.clone().attr({'height': '72', 'width': '72'}).addClass('fit_image').click(function(){
             if($j('#editor_mode_richtext:checked').length > 0){
               insertToRichEditor(img);
             } else if($j('#editor_mode_hiki:checked').length > 0) {
@@ -297,37 +302,9 @@
 
     <% if enable_any_embed? -%>
     // 埋め込みタグの挿入
-    $j('div#embed_dialog').dialog({
-      bgiframe: true,
-      autoOpen: false,
-      buttons: {
-        '<%= _("Insert embed") %>': function() {
-          CKEDITOR.instances.contents_richtext.insertHtml($j('#embed_html').val());
-          $j(this).dialog('close');
-          $j('#embed_html').val('');
-        }
-      },
-      open: function() {
-        $j('#embed_html').focus();
-      },
-      close: function() {
-        $j('#embed_html').val('');
-      }
-    });
-
-    $j('#embed_trigger').click(function() {
-        $j('div#embed_dialog').dialog('open');
-    }).hover(
-      function(){
-        $j(this).addClass("ui-state-hover");
-      },
-      function(){
-        $j(this).removeClass("ui-state-hover");
-      }
-    ).mousedown(function(){
-      $j(this).addClass("ui-state-active");
-    }).mouseup(function(){
-      $j(this).removeClass("ui-state-active");
+    $j('#insert_embed_tag').click(function(){
+      CKEDITOR.instances.contents_richtext.insertHtml($j('#embed_html').val());
+      $j('#embed_html').val('');
     });
     <% end -%>
 
