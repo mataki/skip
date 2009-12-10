@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.4.0\n"
-"POT-Creation-Date: 2009-12-10 16:22+0900\n"
+"POT-Creation-Date: 2009-12-10 18:25+0900\n"
 "PO-Revision-Date: 2009-06-29 13:31+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2496,7 +2496,7 @@ msgstr ""
 msgid "Cosmetics"
 msgstr ""
 
-#: app/controllers/share_file_controller.rb:219
+#: app/controllers/share_file_controller.rb:220
 msgid ""
 "Could not find the entity of the specified file. Contact system "
 "administrator."
@@ -2695,7 +2695,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: app/controllers/share_file_controller.rb:261
+#: app/controllers/share_file_controller.rb:262
 msgid "Download history was successfully deleted."
 msgstr ""
 
@@ -3059,7 +3059,7 @@ msgstr ""
 msgid "Failed to update status."
 msgstr ""
 
-#: app/controllers/share_file_controller.rb:85
+#: app/controllers/share_file_controller.rb:86
 msgid "Failed to upload file(s)."
 msgstr ""
 
@@ -3069,7 +3069,7 @@ msgid_plural "Failed to upload the following files."
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/controllers/share_file_controller.rb:87
+#: app/controllers/share_file_controller.rb:88
 msgid "Failure:%{failure}]"
 msgid_plural "Failures:%{failure}]"
 msgstr[0] ""
@@ -3093,7 +3093,7 @@ msgstr ""
 msgid "File"
 msgstr ""
 
-#: app/controllers/share_file_controller.rb:227
+#: app/controllers/share_file_controller.rb:228
 msgid "File Download"
 msgstr ""
 
@@ -3122,7 +3122,7 @@ msgstr ""
 msgid "File size: %s"
 msgstr ""
 
-#: app/controllers/share_file_controller.rb:150
+#: app/controllers/share_file_controller.rb:151
 msgid "File was successfully deleted."
 msgstr ""
 
@@ -3146,7 +3146,7 @@ msgstr ""
 msgid "Files larger than %sMBytes are not permitted."
 msgstr ""
 
-#: app/views/board_entries/_edit_contents.html.erb:263
+#: app/views/board_entries/_edit_contents.html.erb:288
 msgid "First page"
 msgstr ""
 
@@ -3337,7 +3337,7 @@ msgstr ""
 #: app/controllers/groups_controller.rb:62
 #: app/controllers/services_controller.rb:46
 #: app/controllers/group_controller.rb:344
-#: app/controllers/share_file_controller.rb:164
+#: app/controllers/share_file_controller.rb:165
 #: app/controllers/edit_controller.rb:276
 #: app/views/admin/_data_menu_box.html.erb:6
 msgid "Groups"
@@ -3513,25 +3513,28 @@ msgstr ""
 
 #: app/views/board_entries/_edit_contents.html.erb:23
 #: app/views/board_entries/_edit_contents.html.erb:45
-#: app/views/board_entries/_edit_contents.html.erb:225
+#: app/views/board_entries/_edit_contents.html.erb:250
 msgid "Insert embed"
+msgstr ""
+
+#: app/views/board_entries/_edit_contents.html.erb:20
+msgid "Insert file in text body"
 msgstr ""
 
 #: app/views/board_entries/_edit_contents.html.erb:14
 #: app/views/board_entries/_edit_contents.html.erb:17
-#: app/views/board_entries/_edit_contents.html.erb:20
 msgid "Insert file or embed in text body"
 msgstr ""
 
-#: app/views/board_entries/_edit_contents.html.erb:214
+#: app/views/board_entries/_edit_contents.html.erb:239
 msgid "Insert image"
 msgstr ""
 
-#: app/views/board_entries/_edit_contents.html.erb:202
+#: app/views/board_entries/_edit_contents.html.erb:227
 msgid "Insert link"
 msgstr ""
 
-#: app/views/board_entries/_edit_contents.html.erb:160
+#: app/views/board_entries/_edit_contents.html.erb:185
 msgid "Insert share file as image or link"
 msgstr ""
 
@@ -3627,7 +3630,7 @@ msgstr ""
 msgid "Invalid parameter(s) found."
 msgstr ""
 
-#: app/controllers/share_file_controller.rb:278
+#: app/controllers/share_file_controller.rb:279
 #: app/controllers/edit_controller.rb:296
 msgid "Invalid parameter(s)."
 msgstr ""
@@ -3739,7 +3742,7 @@ msgstr ""
 msgid "Last comment:"
 msgstr ""
 
-#: app/views/board_entries/_edit_contents.html.erb:280
+#: app/views/board_entries/_edit_contents.html.erb:305
 msgid "Last page"
 msgstr ""
 
@@ -4118,7 +4121,7 @@ msgid "Next Day (%s)"
 msgstr ""
 
 #: app/helpers/application_helper.rb:39
-#: app/views/board_entries/_edit_contents.html.erb:275
+#: app/views/board_entries/_edit_contents.html.erb:300
 msgid "Next »"
 msgstr ""
 
@@ -4170,7 +4173,7 @@ msgid "No matching results found."
 msgstr ""
 
 #: app/controllers/search_controller.rb:82
-#: app/controllers/share_file_controller.rb:183
+#: app/controllers/share_file_controller.rb:184
 msgid "No matching shared files found."
 msgstr ""
 
@@ -4460,7 +4463,7 @@ msgstr ""
 #: app/controllers/application_controller.rb:160
 #: app/controllers/board_entries_controller.rb:89
 #: app/controllers/board_entries_controller.rb:139
-#: app/controllers/share_file_controller.rb:256
+#: app/controllers/share_file_controller.rb:257
 msgid "Operation unauthorized."
 msgstr ""
 
@@ -5442,7 +5445,7 @@ msgstr ""
 msgid "Specified page not found."
 msgstr ""
 
-#: app/controllers/share_file_controller.rb:159
+#: app/controllers/share_file_controller.rb:160
 msgid "Specified share file owner does not exist."
 msgstr ""
 
@@ -5773,7 +5776,7 @@ msgstr ""
 msgid "Thu"
 msgstr ""
 
-#: app/views/board_entries/_edit_contents.html.erb:173
+#: app/views/board_entries/_edit_contents.html.erb:198
 msgid "Thumbnail"
 msgstr ""
 
@@ -5970,7 +5973,7 @@ msgid "Updated successfully."
 msgstr ""
 
 #: app/controllers/admin/users_controller.rb:77
-#: app/controllers/share_file_controller.rb:131
+#: app/controllers/share_file_controller.rb:132
 msgid "Updated."
 msgstr ""
 
@@ -6989,7 +6992,7 @@ msgstr ""
 msgid "[Sort by modified date]"
 msgstr ""
 
-#: app/controllers/share_file_controller.rb:86
+#: app/controllers/share_file_controller.rb:87
 msgid "[Success:%{success} "
 msgid_plural "[Successes:%{success} "
 msgstr[0] ""
@@ -7479,6 +7482,6 @@ msgid ""
 msgstr ""
 
 #: app/helpers/application_helper.rb:39
-#: app/views/board_entries/_edit_contents.html.erb:268
+#: app/views/board_entries/_edit_contents.html.erb:293
 msgid "« Previous"
 msgstr ""

@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.4.0\n"
-"POT-Creation-Date: 2009-12-10 16:22+0900\n"
+"POT-Creation-Date: 2009-12-10 18:25+0900\n"
 "PO-Revision-Date: 2009-11-27 16:12+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2554,7 +2554,7 @@ msgstr "対応サイト"
 msgid "Cosmetics"
 msgstr "美容"
 
-#: app/controllers/share_file_controller.rb:219
+#: app/controllers/share_file_controller.rb:220
 msgid ""
 "Could not find the entity of the specified file. Contact system "
 "administrator."
@@ -2765,7 +2765,7 @@ msgstr ""
 "\n"
 "などが正しく設定されているかどうか定期的に確認して下さい。"
 
-#: app/controllers/share_file_controller.rb:261
+#: app/controllers/share_file_controller.rb:262
 msgid "Download history was successfully deleted."
 msgstr "ダウンロード履歴の削除に成功しました。"
 
@@ -3135,7 +3135,7 @@ msgstr ""
 msgid "Failed to update status."
 msgstr "更新に失敗しました。"
 
-#: app/controllers/share_file_controller.rb:85
+#: app/controllers/share_file_controller.rb:86
 msgid "Failed to upload file(s)."
 msgstr "ファイルのアップロードに失敗しました。"
 
@@ -3144,7 +3144,7 @@ msgid "Failed to upload the following file."
 msgid_plural "Failed to upload the following files."
 msgstr[0] "以下のファイルの登録に失敗しました。"
 
-#: app/controllers/share_file_controller.rb:87
+#: app/controllers/share_file_controller.rb:88
 msgid "Failure:%{failure}]"
 msgid_plural "Failures:%{failure}]"
 msgstr[0] "失敗:%{failure}]"
@@ -3167,7 +3167,7 @@ msgstr "女性"
 msgid "File"
 msgstr "ファイル"
 
-#: app/controllers/share_file_controller.rb:227
+#: app/controllers/share_file_controller.rb:228
 msgid "File Download"
 msgstr "ファイルのダウンロード"
 
@@ -3196,7 +3196,7 @@ msgstr "ファイルサイズが大きすぎます。"
 msgid "File size: %s"
 msgstr "ファイルサイズ: %s"
 
-#: app/controllers/share_file_controller.rb:150
+#: app/controllers/share_file_controller.rb:151
 msgid "File was successfully deleted."
 msgstr "ファイルの削除に成功しました。"
 
@@ -3220,7 +3220,7 @@ msgstr "ファイル"
 msgid "Files larger than %sMBytes are not permitted."
 msgstr "%sMバイト以上のファイルはアップロードできません。"
 
-#: app/views/board_entries/_edit_contents.html.erb:263
+#: app/views/board_entries/_edit_contents.html.erb:288
 msgid "First page"
 msgstr "[最初へ]"
 
@@ -3411,7 +3411,7 @@ msgstr "はい"
 #: app/controllers/groups_controller.rb:62
 #: app/controllers/services_controller.rb:46
 #: app/controllers/group_controller.rb:344
-#: app/controllers/share_file_controller.rb:164
+#: app/controllers/share_file_controller.rb:165
 #: app/controllers/edit_controller.rb:276
 #: app/views/admin/_data_menu_box.html.erb:6
 msgid "Groups"
@@ -3603,25 +3603,28 @@ msgstr "お問い合わせ"
 
 #: app/views/board_entries/_edit_contents.html.erb:23
 #: app/views/board_entries/_edit_contents.html.erb:45
-#: app/views/board_entries/_edit_contents.html.erb:225
+#: app/views/board_entries/_edit_contents.html.erb:250
 msgid "Insert embed"
 msgstr "埋め込みを挿入"
 
+#: app/views/board_entries/_edit_contents.html.erb:20
+msgid "Insert file in text body"
+msgstr "ファイルを本文に挿入"
+
 #: app/views/board_entries/_edit_contents.html.erb:14
 #: app/views/board_entries/_edit_contents.html.erb:17
-#: app/views/board_entries/_edit_contents.html.erb:20
 msgid "Insert file or embed in text body"
 msgstr "ファイルや埋め込みタグを本文に挿入"
 
-#: app/views/board_entries/_edit_contents.html.erb:214
+#: app/views/board_entries/_edit_contents.html.erb:239
 msgid "Insert image"
 msgstr "画像を挿入する"
 
-#: app/views/board_entries/_edit_contents.html.erb:202
+#: app/views/board_entries/_edit_contents.html.erb:227
 msgid "Insert link"
 msgstr "リンクを挿入する"
 
-#: app/views/board_entries/_edit_contents.html.erb:160
+#: app/views/board_entries/_edit_contents.html.erb:185
 msgid "Insert share file as image or link"
 msgstr "画像やファイルのリンクを挿入"
 
@@ -3719,7 +3722,7 @@ msgstr "不正なパラメタです。"
 msgid "Invalid parameter(s) found."
 msgstr "不正なパラメータがあります"
 
-#: app/controllers/share_file_controller.rb:278
+#: app/controllers/share_file_controller.rb:279
 #: app/controllers/edit_controller.rb:296
 msgid "Invalid parameter(s)."
 msgstr "パラメータが不正です"
@@ -3839,7 +3842,7 @@ msgstr "最近の投稿"
 msgid "Last comment:"
 msgstr "最終コメント："
 
-#: app/views/board_entries/_edit_contents.html.erb:280
+#: app/views/board_entries/_edit_contents.html.erb:305
 msgid "Last page"
 msgstr "[最後へ]"
 
@@ -4227,7 +4230,7 @@ msgid "Next Day (%s)"
 msgstr "次の日(%s)"
 
 #: app/helpers/application_helper.rb:39
-#: app/views/board_entries/_edit_contents.html.erb:275
+#: app/views/board_entries/_edit_contents.html.erb:300
 msgid "Next »"
 msgstr "次 »"
 
@@ -4279,7 +4282,7 @@ msgid "No matching results found."
 msgstr "該当する検索結果がありませんでした。"
 
 #: app/controllers/search_controller.rb:82
-#: app/controllers/share_file_controller.rb:183
+#: app/controllers/share_file_controller.rb:184
 msgid "No matching shared files found."
 msgstr "該当する共有ファイルはありませんでした。"
 
@@ -4571,7 +4574,7 @@ msgstr "ご指定の操作は実行できません。"
 #: app/controllers/application_controller.rb:160
 #: app/controllers/board_entries_controller.rb:89
 #: app/controllers/board_entries_controller.rb:139
-#: app/controllers/share_file_controller.rb:256
+#: app/controllers/share_file_controller.rb:257
 msgid "Operation unauthorized."
 msgstr "この操作は、許可されていません。"
 
@@ -5578,7 +5581,7 @@ msgstr "指定のページは存在していません。"
 msgid "Specified page not found."
 msgstr "指定されたページは存在しません。"
 
-#: app/controllers/share_file_controller.rb:159
+#: app/controllers/share_file_controller.rb:160
 msgid "Specified share file owner does not exist."
 msgstr "指定のページは存在していません。"
 
@@ -5925,7 +5928,7 @@ msgstr ""
 msgid "Thu"
 msgstr "木"
 
-#: app/views/board_entries/_edit_contents.html.erb:173
+#: app/views/board_entries/_edit_contents.html.erb:198
 msgid "Thumbnail"
 msgstr "サムネイル"
 
@@ -6121,7 +6124,7 @@ msgid "Updated successfully."
 msgstr "正しく更新されました。"
 
 #: app/controllers/admin/users_controller.rb:77
-#: app/controllers/share_file_controller.rb:131
+#: app/controllers/share_file_controller.rb:132
 msgid "Updated."
 msgstr "更新しました。"
 
@@ -7166,7 +7169,7 @@ msgstr "[アクセス順]"
 msgid "[Sort by modified date]"
 msgstr "[更新順]"
 
-#: app/controllers/share_file_controller.rb:86
+#: app/controllers/share_file_controller.rb:87
 msgid "[Success:%{success} "
 msgid_plural "[Successes:%{success} "
 msgstr[0] "[成功:%{success} "
@@ -7666,6 +7669,6 @@ msgstr ""
 "必須になります。"
 
 #: app/helpers/application_helper.rb:39
-#: app/views/board_entries/_edit_contents.html.erb:268
+#: app/views/board_entries/_edit_contents.html.erb:293
 msgid "« Previous"
 msgstr "« 前"
