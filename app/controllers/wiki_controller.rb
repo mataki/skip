@@ -6,7 +6,7 @@ class WikiController < ApplicationController
   end
 
   def update
-    if page = Page.find_by_title(params[:id])
+    if page = Page.find_by_title(params[:id]) and !page.deleted?
       page.update_attributes(params[:page])
       flash[:notice] = "'#{page.title}'に変更されました"
     end
@@ -29,6 +29,25 @@ class WikiController < ApplicationController
     end
 
     redirect_to :back
+  end
+
+  def recovery
+    @current_page = Page.find_by_title(params[:id])
+    if @current_page.recover
+      flash[:notice] = _("復旧が完了しました")
+      redirect_to(wiki_path(@current_page.title))
+    end
+  end
+
+  def destroy
+    @current_page = Page.find_by_title(params[:id])
+    if !@current_page.root? and @current_page.logical_destroy
+      flash[:notice] = _("削除が完了しました")
+    else
+      flash[:warn] = _("削除に失敗しました")
+    end
+
+    redirect_to(wiki_path(@current_page.title))
   end
 
 end

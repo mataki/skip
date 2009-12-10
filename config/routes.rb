@@ -2,6 +2,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.root    :controller => 'mypage', :action => 'index'
 
+
   # TODO users配下に移す
   map.resources :notices
 
@@ -121,7 +122,7 @@ ActionController::Routing::Routes.draw do |map|
     server.cancel 'server/cancel', :action => 'cancel'
   end
 
-  map.resources :wiki, :expect=>[:new] do |page|
+  map.resources :wiki, :member => {:recovery => :post}, :expect=>[:new] do |page|
     page.resources :histories, :collection=>{:diff=>:get}
   end
 
@@ -129,7 +130,4 @@ ActionController::Routing::Routes.draw do |map|
   map.connect ':controller/:action/:id.:format'
 
   map.web_parts 'services/:action.js', :controller => 'services'
-
-
-
 end

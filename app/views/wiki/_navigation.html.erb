@@ -13,14 +13,14 @@
     <% if !@current_page.root? %>
       <div class="box_space_title"><%= _('リンク元ページ')%></span></div>
       <div class="box_space_body">
-        <%= link_to(@current_page.parent.title, wiki_path(@current_page.parent.title)) %>
+        <%= link_to(@current_page.parent.title, wiki_path(@current_page.parent.title), :class=> @current_page.parent.initialize_or_deleted? ? "recover" : "normal") %>
       </div>
     <% end -%>
     <% if @current_page.children.size > 0 %>
       <div class="box_space_title"><%= _('関連ページ')%></span></div>
       <div class="box_space_body">
         <% @current_page.children.each do |page| %>
-          <%= link_to(page.title, wiki_path(page.title)) %><br/>
+          <%= link_to(page.title, wiki_path(page.title), :class=> page.initialize_or_deleted? ? "recover" : "normal") %><br/>
         <% end %>
       </div>
     <% end -%>

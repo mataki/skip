@@ -77,6 +77,10 @@ class Page < ActiveRecord::Base
                     to_content.data.split(CRLF)).map(&:to_a)
   end
 
+  def initialize_or_deleted?
+    self.revision == 0 or self.deleted?
+  end
+
 
   private
   def reset_history_caches

@@ -3,8 +3,15 @@
 <% end -%>
 
 <% content_for :contents_left do -%>
-  <% blank_message = "このページはまだ編集されていません。ご自由に編集してください!" %>
-  <%= render_richtext(@current_page.content.blank? ? blank_message : @current_page.content) %>
-  <span style="float: right;"><%= link_to(_('[編集する]'), new_wiki_history_path(@current_page.title)) %></span>
+
+  <% if !@current_page.deleted? and !@current_page.content.blank? %>
+    <%= render_richtext(@current_page.content) %>
+  <% else %>
+    <% message = @current_page.deleted? ? _("このページは現在削除されています。復旧される場合は[復旧する]リンクを選択ください。") : _("このページはまだ編集されていません。ご自由に編集してください!") %>
+    <div align="center" style="font: bold; color: red; font-size: 14px; "><%= message %></div>
+  <% end %>
+  <span style="float: right;"><%= link_to(_('[削除する]'), wiki_path(@current_page.title), :method=>:delete,:confirm=>_('Are you sure?')) if !@current_page.root? and !@current_page.deleted? %></span>
+  <span style="float: right;"><%= link_to(_('[編集する]'), new_wiki_history_path(@current_page.title)) unless @current_page.deleted? %></span>
+  <span style="float: right;"><%= link_to(_('[復旧する]'), recovery_wiki_path(@current_page.title), :method=>:post) if @current_page.deleted? %></span>
 <% end -%>
 
