@@ -13,7 +13,7 @@
         iskip_url = "http://portal.skipaas.jp/infoscoop/openid_consumer_redirect.jsp?org=#{h(SkipEmbedded::InitialSettings['host_and_port'])}&amp;user=#{h(current_user.code)}"
 
         links << content_tag('b', user_name_mode?(:code) ? h(current_user.code) : h(current_user.uid))
-        links << link_to("iSKIP", iskip_url) if h(SkipEmbedded::InitialSettings['iskip'])
+        links << link_to("iSKIP", iskip_url) if SkipEmbedded::InitialSettings['iskip']
         links << link_to(what_new_message, what_new_url, :target => "_blank", :class => "attention_underline_link") unless what_new_url.blank?
         links << link_to(_("My Account"), {:controller => "/mypage", :action => :manage, :only_path => false}, :class => "underline_link")
         links << link_to(_("System Administration"), {:controller => "/admin", :action => "index"}, :title => _("Administration of the site."), :class => "underline_link") if current_user.admin?
