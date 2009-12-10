@@ -4,6 +4,9 @@
 @import skip_embedded/skip_embedded.sass
 @import rounded_button.sass
 
+!almost_fullwidth = 98%
+!small_font_size = 10px
+
 div#header
   :border-bottom none
   div#global_top
@@ -617,6 +620,7 @@ div#contents_container
   div#contents_right
     :margin-left 165px
     :_width 100%
+  // wiki CSS
   div#wiki_contents_right
     :float right
     :width 150px
@@ -626,6 +630,77 @@ div#contents_container
   div#contents_bottom
     :width 100%
     :clear left
+
+// Wiki CSS
+table.skipwiki
+  :border-collapse collapse
+  :margin 5px 0
+  tr
+    th, td
+      :padding 5px 10px
+      :font-size = !small_font_size
+    th
+      :font-weight bold
+      :background-color #DDEEFF
+      :border-top 3px solid white
+      :text-align  center
+      :color gray
+
+    th.timestamp, td.timestamp
+      :font-size 10px
+      :text-align center
+      :width 10em
+
+    span.trigger
+      :margin-left 10px
+
+
+table.diff
+  :border 1px solidxo gray
+  :border-collapse collapse
+  :width = !almost_fullwidth
+
+  tr.removed
+    :background #FFBBBB
+  tr.modified
+    :background #BBFFBB
+  tr.added
+    :background #99FF99
+
+  tr
+    td
+      :border 1px solid #CCCCCC
+
+    th
+      :background #DDDDDD
+      :border-bottom 1px solid gray
+
+    th.symbol, td.symbol, th.num, td.num
+      :font-family monospace
+      :font-size = !small_font_size
+
+    th.symbol, td.symbol
+      :width 1em
+      :text-align center
+
+    th.num, td.num
+      :width 20px
+
+    th.num
+      :text-align center
+
+    td.num
+      :text-align right
+      :vertical-align top
+      :padding 2px
+      :color #555
+      :border-right 1px solid #ccc
+      :border-bottom 1px solid #ddd
+
+    td.text
+      :width 350px
+      :font-size 12px
+
 
 div#statusbar
   :border

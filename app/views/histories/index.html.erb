@@ -1,0 +1,31 @@
+<% content_for :contents_right do -%>
+  <%= render :partial => 'wiki/navigation' %>
+<% end -%>
+
+<% content_for :contents_left do -%>
+  <h2 class="topix_title"><%= icon_tag('asterisk_orange') %><%= _('編集履歴') %></h2>
+  <table class="normal user_info show">
+    <thead>
+      <tr>
+        <th class="revision"></th>
+        <th class="user"><%= _('ユーザ識別子')%></th>
+        <th class="updated_at"><%= _('更新日時')%></th>
+        <th class="diff"><%= _('次との差分')%></th>
+        <th class="diff"><%= _('前との差分')%></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @histories.each do |history| %>
+        <tr class="<%= cycle("odd", "even")%>">
+          <td class="revision"><%= link_to(h(_("rev.#{history.revision}を表示"))) %></td>
+          <td><%= history.user.name %></td>
+          <td class="timestamp"><%= history.updated_at.strftime("%Y-%m-%d %H:%M") %></td>
+          <td><%= link_to_next_diff(@histories, history) %></td>
+          <td><%= link_to_previous_diff(@histories, history) %></td>
+        </tr>
+      <% end -%>
+    </tbody>
+  </table>
+<% end -%>
+
+

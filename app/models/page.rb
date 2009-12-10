@@ -1,5 +1,8 @@
 class Page < ActiveRecord::Base
+  include SkipEmbedded::LogicalDestroyable
   acts_as_tree
+
+  CRLF = /\r?\n/
 
   attr_reader :new_history
 
@@ -63,6 +66,17 @@ class Page < ActiveRecord::Base
   def revision
     new_record? ? 0 :(@revision ||= load_revision)
   end
+
+  def diff(from, to)
+    revs = [from, to].map(&:to_i)
+    hs = histories.find(:all, :conditions => ["histories.revision IN (?)", revs],
+                              :include => :content)
+    from_content, to_content = revs.map{|r| hs.detect{|h| h.revision == r }.content }
+
+    Diff::LCS.sdiff(from_content.data.split(CRLF),
+                    to_content.data.split(CRLF)).map(&:to_a)
+  end
+
 
   private
   def reset_history_caches

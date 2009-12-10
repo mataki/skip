@@ -9,26 +9,26 @@
 
 <% content_for :contents_left do -%>
   <div class="current-title">
-    <% form_for(:history, @history, :url=>wiki_histories_path(@page.title)) do |f| %>
+    <% form_for(:history, @history, :url=>wiki_histories_path(@current_page.title)) do |f| %>
       <div class="content">
         <div class="preview">
-          <% if @page.format_type == "hiki" %>
+          <% if @current_page.format_type == "hiki" %>
             <ul class="float">
               <li class="hide" style="font-size:12px"><%= link_to(_("Hide preview"), '#', :class=>'operation')%></li>
               <li class="show" style="font-size:12px"><%= link_to(_("Show preview"), '#', :class=>'operation')%></li>
               <span class="operation trigger" style="font-size:12px"><%= _("Link Palette")%></span>
-              <span class="page-menu"><%= link_to(_("History"), wiki_histories_path(@page.title)) %></span>
+              <span class="page-menu"><%= link_to(_("History"), wiki_histories_path(@current_page.title)) %></span>
             </ul>
           <% end -%>
         </div>
-        <%= text_area_tag("history[content]", sanitize_and_unescape_for_richtext(@page.content), :id=>"history_content", :cols => 90, :rows => 20) %>
+        <%= text_area_tag("history[content]", sanitize_and_unescape_for_richtext(@current_page.content), :id=>"history_content", :cols => 90, :rows => 20) %>
         <% ckeditor "history[content]", 'toolbar' => "Entry" %>
       </div>
 
       <div class="submit">
         <span class="notice" style="display:none"><%= _("Modified, not need to save.")%></span>
         <%= submit_tag(_("ページを更新する"))%>
-        <%= link_to(h(_("show page")), wiki_path(@page.title), :class => "back") %>
+        <%= link_to(h(_("show page")), wiki_path(@current_page.title), :class => "back") %>
       </div>
       <div class="clear"></div>
     <% end -%>

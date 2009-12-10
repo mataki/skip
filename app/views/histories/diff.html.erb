@@ -1,0 +1,62 @@
+<% content_for :contents_right do %>
+  <%= render :partial => 'wiki/navigation' %>
+<% end %>
+
+<% content_for :contents_left do %>
+  <% treat_as_current = wiki_histories_path(@current_page.title) %>
+  <h2 class="topix_title"><%= icon_tag('asterisk_orange') %><%= "rev.#{params[:from]}からrev.#{params[:to]}への変更点" %></h2>
+
+  <% if @current_page.format_type == "html" %>
+    <div class="controll">
+      <%= radio_button_tag("history_display", "contents") %>
+      <%= label_tag("history_display_contents", _("中身を表示")) %>
+
+      <%=radio_button_tag("history_display", "diff", :checked=>true) %>
+      <%=label_tag("history_display_diff", _("差分を表示")) %>
+
+      <span><%= link_to(_('[履歴一覧に戻る]'), treat_as_current) %></span>
+    </div>
+
+    <div class="hitory-contents" style="display:none">
+      <div class="from"><%= render_page_content(@current_page, params[:from]) %></div>
+      <div class="to"><%= render_page_content(@current_page, params[:to]) %></div>
+      </clear>
+    </div>
+
+    <% content_for :javascript_initializers do -%>
+      ($j.ready(function(){
+        $(".controll input:radio").click( function(){
+          if($(".controll input:radio:checked").val() == "diff"){
+            $("div.history-contents").hide().nextAll(".diff").fadeIn("fast");
+          }else{
+            $("div.history-contents").fadeIn("fast").nextAll(".diff").hide();
+          }
+        });
+        return true;
+      }))
+    <% end -%>
+  <% end %>
+
+  <div class="diff" style="overflow:auto">
+    <table class="skipwiki diff">
+      <tr>
+        <th class="symbol"></th>
+        <th class="num"><%= "r#{params[:from]}" %></th>
+        <th class="num"><%= "r#{params[:to]}" %></th>
+
+        <th><%= _("リビジョン#{params[:from]}の内容") %></th>
+        <th><%= _("リビジョン#{params[:to]}の内容") %></th>
+      </tr>
+
+      <% @diffs.each do |symbol, (old_n,old_s), (new_n,new_s)| -%>
+        <tr class=<%= diff_symbol(symbol) %>>
+          <td class="symbol"><%= diff_symbol(symbol, false) %></td>
+          <td class="num"><%= old_n if old_s %></td>
+          <td class="num"><%= new_n if new_s %></td>
+          <td class="text"><%= decode_nbsp(old_s) %></td>
+          <td class="text"><%= decode_nbsp(new_s) %></td>
+        </tr>
+      <% end -%>
+    </table>
+  </div>
+<% end %>

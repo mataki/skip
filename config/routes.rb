@@ -122,7 +122,7 @@ ActionController::Routing::Routes.draw do |map|
   end
 
   map.resources :wiki, :expect=>[:new] do |page|
-    page.resources :histories
+    page.resources :histories, :collection=>{:diff=>:get}
   end
 
   map.connect ':controller/:action/:id'

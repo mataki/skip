@@ -60,6 +60,7 @@ Rails::Initializer.run do |config|
   config.gem "feed-normalizer"
   config.gem "searchlogic"
   config.gem "sanitize", :version => '>=1.2.0.dev.20091104'
+  config.gem 'diff-lcs', :lib => 'diff/lcs'
 end
 
 # 共通メニュー

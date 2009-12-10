@@ -1,7 +1,18 @@
 class HistoriesController < ApplicationController
   layout 'wiki'
+
+  def index
+    @current_page = Page.find_by_title(params[:wiki_id])
+    @histories = @current_page.histories
+  end
+
   def new
-    @page = Page.find_by_title(params[:wiki_id])
+    @current_page = Page.find_by_title(params[:wiki_id])
+  end
+
+  def diff
+    @current_page = Page.find_by_title(params[:wiki_id], :include => :histories)
+    @diffs = @current_page.diff(params[:from], params[:to])
   end
 
   def create
