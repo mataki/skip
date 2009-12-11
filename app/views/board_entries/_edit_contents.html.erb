@@ -14,43 +14,6 @@
     <span id="share_file_trigger" class="pointer link"><span class="ss_sprite ss_attach">&nbsp;</span><%= _('Insert file or embed in text body') %></span>
   </div>
 
-  <div id="share_file_dialog" title="<%= _('Insert file or embed in text body') %>">
-    <div id="tabs" class="invisible">
-      <ul>
-        <li><a href="#share_file_list"><%= _('Insert file in text body') %></a></li>
-        <li><a href="#share_file_new"><%= _('Upload a file') %></a></li>
-        <% if enable_any_embed? -%>
-          <li><a href="#embed_tag"><%= _('Insert embed') %></a></li>
-        <% end -%>
-      </ul>
-      <div id="share_file_list"></div>
-      <div id="share_file_new"></div>
-      <% if enable_any_embed? -%>
-        <div id="embed_tag">
-          <form>
-            <table>
-              <tr>
-                <th>
-                  <%= label_tag 'embed_html', _('Corresponding sites') %>
-                  <%= image_tag('http://www.youtube.com/favicon.ico', :title => 'youtube', :alt => 'youtube') if Admin::Setting.youtube%>
-                  <%= image_tag('http://www.slideshare.net/favicon.ico', :title => 'slideshare', :alt => 'slideshare') if Admin::Setting.slideshare %>
-                  <%= image_tag('http://maps.google.com/favicon.ico', :title => 'google maps', :alt => 'google maps') if Admin::Setting.googlemap%>
-                </th>
-              </tr>
-              <tr>
-                <td><%= text_area_tag 'embed_html', nil, :rows => 10, :cols => 30 %></td>
-              </tr>
-              <tr>
-                <td class="operation">
-                  <button id="insert_embed_tag" type="button" class="ui-state-default ui-corner-all"><%= _("Insert embed") %></button>
-                </td>
-              </tr>
-            </table>
-          </form>
-        </div>
-      <% end -%>
-    </div>
-  </div>
   <div id="contents_richtext_space" class="richtext" style="display: none;">
     <%= text_area_tag 'contents_richtext', sanitize_and_unescape_for_richtext(params[:contents_richtext]), :cols => 90, :rows => 20 %>
   </div>
