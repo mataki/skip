@@ -160,6 +160,9 @@ div.input_line textarea {
             if (!confirm('<%= _('Are you sure to send email to all users?') %>'))
                 return false;
         }
+
+        // 作成or更新によるページ遷移は警告しない
+        $j(window).unbind('beforeunload');
     });
     var Trim = function(str){
         str = str.replace(/^[ 　]+/,"");
@@ -236,4 +239,8 @@ div.input_line textarea {
 
     if(isShowOptions())
         $j('#show_option_link').click();
+
+    $j(window).bind('beforeunload', function(e){
+      return e.originalEvent.returnValue = '';
+    });
 <% end -%>
