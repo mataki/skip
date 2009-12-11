@@ -641,10 +641,6 @@ class BoardEntry < ActiveRecord::Base
     board_entry_comments.find(:all, :conditions => ["parent_id is NULL"], :order => "created_on")
   end
 
-  def last_comment
-    board_entry_comments.find(:last, :conditions => ["parent_id is NULL"], :order => "created_on")
-  end
-
   # TODO Symbol.get_item_by_symbolとかぶってる。こちらを生かしたい
   # TODO ShareFileと統合したい
   def self.owner symbol

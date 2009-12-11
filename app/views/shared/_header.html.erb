@@ -10,7 +10,7 @@
         help_url = h(SkipEmbedded::InitialSettings['help_url'])
         what_new_message = h(SkipEmbedded::InitialSettings['what_new']['message'] || _("What's New"))
         what_new_url = h(SkipEmbedded::InitialSettings['what_new']['url'])
-        iskip_url = "http://portal.skipaas.jp/infoscoop/openid_consumer_redirect.jsp?org=#{h(SkipEmbedded::InitialSettings['host_and_port'])}&amp;user=#{h(current_user.code)}"
+        iskip_url = "http://portal.skipaas.jp/infoscoop/openid_consumer_redirect.jsp?org=#{SkipEmbedded::InitialSettings['host_and_port']}&amp;user=#{current_user.code}"
 
         links << content_tag('b', user_name_mode?(:code) ? h(current_user.code) : h(current_user.uid))
         links << link_to("iSKIP", iskip_url) if SkipEmbedded::InitialSettings['iskip']
