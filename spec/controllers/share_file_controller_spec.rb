@@ -76,7 +76,7 @@ describe ShareFileController, "POST #create" do
     describe "ajax_uploadの場合" do
       it "エラー内容が表示されること" do
         post :create, :ajax_upload => "1"
-        response.body.should == "File is mandatory."
+        response.body.should == "{\"messages\":[\"File is mandatory.\"],\"status\":\"400\"}"
       end
     end
   end
