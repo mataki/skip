@@ -1,4 +1,5 @@
 <% with_action ||= false -%>
+<% clickable ||= false -%>
 <% user ||= current_user -%>
 
 <% if pictures = user.pictures and !pictures.empty? -%>
@@ -6,7 +7,12 @@
   <% pictures.each do |picture| -%>
     <ul class="picture ui-corner-all <%= 'selected' if picture.active? %>">
     <li class="image">
-      <%= image_tag user_picture_path(user, picture, :format => :png), :height => 90, :class => 'fit_image' %>
+      <% img = image_tag user_picture_path(user, picture, :format => :png), :height => 90, :class => 'fit_image' -%>
+      <% if clickable -%>
+        <%= link_to img, user_picture_path(user, picture, :format => :png), :target => '_blank' %>
+      <% else -%>
+        <%= img %>
+      <% end -%>
     </li>
     <% if with_action && user == user -%>
       <li class="operation">
