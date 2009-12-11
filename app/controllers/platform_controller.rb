@@ -313,7 +313,11 @@ class PlatformController < ApplicationController
       key = params[:login] ? params[:login][:key] : ""
       logger.info("[Login failed with password] login_key[#{key}] by #{result}")
       flash[:error] = result
-      redirect_to(request.env['HTTP_REFERER'] ? :back : login_url)
+      if result == _("Password is expired. Please reset password.")
+        redirect_to forgot_password_url
+      else
+        redirect_to(request.env['HTTP_REFERER'] ? :back : login_url)
+      end
     end
   end
 

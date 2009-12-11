@@ -41,6 +41,9 @@ module MypageHelper
 
     if system_notice = SkipEmbedded::InitialSettings['system_notice'] and !system_notice['title'].blank?
       system_message_links << link_to(icon_tag('information') + h(system_notice['title']), system_notice['url'])
+      if Admin::Setting.enable_password_periodic_change && current_user.password_expires_at.ago(2.week) < Time.now
+        system_message_links << link_to(icon_tag('bullet_error') + _('The password expiration date (%s) approaches') % current_user.password_expires_at.ago(1.day).strftime(_('%B %d %Y')), url_for(:controller => 'mypage', :action => 'manage', :menu => 'manage_password'))
+      end
     end
 
     unless current_user.picture
