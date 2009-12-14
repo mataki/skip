@@ -241,6 +241,6 @@ div.input_line textarea {
         $j('#show_option_link').click();
 
     $j(window).bind('beforeunload', function(e){
-      return e.originalEvent.returnValue = '';
+      return e.originalEvent.returnValue = '<%= _('All changes will be discarded. Are you sure to proceed?') %>';
     });
 <% end -%>
