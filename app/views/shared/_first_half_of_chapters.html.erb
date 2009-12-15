@@ -1,0 +1,6 @@
+<% if !page.deleted? and !page.content.blank? %>
+  <% page.chapters[0...num].each do |chapter| %>
+    <%= render_richtext(chapter.data) %>
+    <%= render :partial => "shared/chapter_menu", :locals => {:page => page, :chapter => chapter} %>
+  <% end %>
+<% end %>

@@ -1,0 +1,9 @@
+<div style="margin-bottom: 50px;">
+  <% if !page.deleted? and !page.content.blank? %>
+    <% page.chapters[num..page.chapters.size].each do |chapter| %>
+      <%= render_richtext(chapter.data) %>
+      <span style="float: right;"><%= link_to(_('[セクションを追加する]'), new_wiki_chapter_path(page.title)) unless page.deleted? %></span>
+      <span style="float: right;"><%= link_to(_('[編集する]'), edit_wiki_chapter_path(page.title, chapter.id)) unless page.deleted? %></span>
+    <% end %>
+  <% end %>
+</div>

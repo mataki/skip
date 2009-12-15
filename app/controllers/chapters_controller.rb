@@ -1,19 +1,34 @@
+require "ruby-debug"
+
 class ChaptersController < ApplicationController
   layout 'wiki'
   before_filter :secret_checker
 
   def new
     @current_page = Page.find_by_title(params[:wiki_id])
+    @chapter = Chapter.new
+  end
+
+  def insert
+    @current_page = Page.find_by_title(params[:wiki_id])
+    num = 0
+    @current_page.chapters.each do |chapter|
+      break if chapter.id == params[:id].to_i
+      num += 1
+    end
+    @before_num, @after_num = num+1, num+1
   end
 
   def edit
     @current_page = Page.find_by_title(params[:wiki_id])
     @chapter = Chapter.find(params[:id])
-    @num = 0
+    num = 0
     @current_page.chapters.each do |chapter|
       break if chapter.id == @chapter.id
-      @num += 1
+      num += 1
     end
+
+    @before_num, @after_num = num, num+1
   end
 
   def update
@@ -69,7 +84,8 @@ class ChaptersController < ApplicationController
     content = Content.new
 
     @page.chapters.each do |chapter|
-      content.chapters.build(:data=>chapter.data) unless chapter.id == chapter_id
+      order = 1
+      content.chapters.build({:data=>chapter.data, :order => order+=1}) unless chapter.id == chapter_id
     end
 
     @history = @page.edit(content, current_user)

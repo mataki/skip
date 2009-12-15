@@ -7,34 +7,11 @@
   <h2 class="topix_title"><%= icon_tag('asterisk_orange') %><%= "rev.#{params[:from]}からrev.#{params[:to]}への変更点" %></h2>
 
   <% if @current_page.format_type == "html" %>
-    <div class="controll">
-      <%= radio_button_tag("history_display", "contents") %>
-      <%= label_tag("history_display_contents", _("中身を表示")) %>
-
-      <%=radio_button_tag("history_display", "diff", :checked=>true) %>
-      <%=label_tag("history_display_diff", _("差分を表示")) %>
-
-      <span><%= link_to(_('[履歴一覧に戻る]'), treat_as_current) %></span>
-    </div>
-
     <div class="hitory-contents" style="display:none">
       <div class="from"><%= render_page_content(@current_page, params[:from]) %></div>
       <div class="to"><%= render_page_content(@current_page, params[:to]) %></div>
       </clear>
     </div>
-
-    <% content_for :javascript_initializers do -%>
-      ($j.ready(function(){
-        $(".controll input:radio").click( function(){
-          if($(".controll input:radio:checked").val() == "diff"){
-            $("div.history-contents").hide().nextAll(".diff").fadeIn("fast");
-          }else{
-            $("div.history-contents").fadeIn("fast").nextAll(".diff").hide();
-          }
-        });
-        return true;
-      }))
-    <% end -%>
   <% end %>
 
   <div class="diff" style="overflow:auto">
@@ -58,5 +35,9 @@
         </tr>
       <% end -%>
     </table>
+  </div>
+
+  <div class="controll">
+    <span><%= link_to(_('[履歴一覧に戻る]'), treat_as_current) %></span>
   </div>
 <% end %>

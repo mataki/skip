@@ -1,7 +1,7 @@
 <div class="page-menu" style="margin-bottom: 50px;">
-  <span style="float: left;"><%= link_to(_('[セクションを追加する]'), new_wiki_chapter_path(page.title)) unless page.deleted? %></span>
+  <span style="float: left;"><%= link_to(_('[追加する]'), insert_wiki_chapter_path(page.title, chapter)) unless page.deleted? %></span>
   <% if page.chapters.size > 1 %>
-    <span style="float: left;"><%= link_to(_('[セクションを削除する]'), wiki_chapter_path(page.title, chapter.id), :confirm => _("Are you sure?"), :method => :delete) unless page.deleted? %></span>
+    <span style="float: left;"><%= link_to(_('[削除する]'), wiki_chapter_path(page.title, chapter.id), :confirm => _("Are you sure?"), :method => :delete) unless page.deleted? %></span>
   <% end %>
   <span style="float: left;"><%= link_to(_('[編集する]'), edit_wiki_chapter_path(page.title, chapter.id)) unless page.deleted? %></span>
 </div>
