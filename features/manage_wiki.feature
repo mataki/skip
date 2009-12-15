@@ -71,7 +71,7 @@ Feature: Wikiの管理
     Given   "Wikiトップページ"にアクセスする
 
     And     "[編集する]"リンクをクリックする
-    And     "history_content"に"テストページを更新します"と入力する
+    And     "chapter_content"に"テストページを更新します"と入力する
     And     "ページを更新"ボタンをクリックする
 
     Then    flashメッセージに"ページが更新されました"と表示されていること
@@ -98,10 +98,10 @@ Feature: Wikiの管理
 
     When    "Wikiトップページ"にアクセスする
     And     "[編集する]"リンクをクリックする
-    And     "history_content"に"テストページを更新します"と入力する
+    And     "chapter_content"に"テストページを更新します"と入力する
     And     "ページを更新"ボタンをクリックする
     And     "[編集する]"リンクをクリックする
-    And     "history_content"に"hogehoge"と入力する
+    And     "chapter_content"に"hogehoge"と入力する
     And     "ページを更新"ボタンをクリックする
     And     "履歴"リンクをクリックする
 
@@ -141,7 +141,7 @@ Feature: Wikiの管理
     Given   "Wikiトップページ"にアクセスする
 
     And     "[編集する]"リンクをクリックする
-    And     "history_content"に"テストページを更新します"と入力する
+    And     "chapter_content"に"テストページを更新します"と入力する
     And     "ページを更新"ボタンをクリックする
     And    "[セクションを追加する]"リンクをクリックする
 

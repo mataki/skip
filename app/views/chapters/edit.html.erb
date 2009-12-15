@@ -1,0 +1,57 @@
+<% content_for :header do %>
+  <%= javascript_include_tag 'linkPalette' %>
+  <%= javascript_include_tag 'skipembedded/ckeditor/ckeditor.js' %>
+<% end -%>
+
+<% content_for :contents_right do %>
+  <%= render :partial => 'wiki/navigation' %>
+<% end -%>
+
+<% content_for :contents_left do -%>
+  <% if !@current_page.deleted? and !@current_page.content.blank? %>
+    <% @current_page.chapters[0...@num].each do |chapter| %>
+      <%= render_richtext(chapter.data) %>
+      <span style="float: right;"><%= link_to(_('[セクションを追加する]'), new_wiki_chapter_path(@current_page.title)) unless @current_page.deleted? %></span>
+      <span style="float: right;"><%= link_to(_('[編集する]'), edit_wiki_chapter_path(@current_page.title, chapter.id)) unless @current_page.deleted? %></span>
+    <% end %>
+  <% end %>
+
+  <div class="current-title" style="margin-top: 50px;">
+    <% form_for(:chapter, @chapter, :url=>wiki_chapter_path(@current_page.title), :html => {:method => :put}) do |f| %>
+      <div class="content">
+        <div class="preview">
+          <% if @current_page.format_type == "hiki" %>
+            <ul class="float">
+              <li class="hide" style="font-size:12px"><%= link_to(_("Hide preview"), '#', :class=>'operation')%></li>
+              <li class="show" style="font-size:12px"><%= link_to(_("Show preview"), '#', :class=>'operation')%></li>
+              <span class="operation trigger" style="font-size:12px"><%= _("Link Palette")%></span>
+              <span class="page-menu"><%= link_to(_("History"), wiki_histories_path(@current_page.title)) %></span>
+            </ul>
+          <% end -%>
+        </div>
+
+        <%= text_area_tag("chapter[content]", sanitize_and_unescape_for_richtext(@chapter.data), :id=>"chapter_content", :cols => 90, :rows => 20) %>
+        <% ckeditor "chapter[content]", 'toolbar' => "Entry" %>
+      </div>
+
+      <div class="submit">
+        <span class="notice" style="display:none"><%= _("Modified, not need to save.")%></span>
+        <%= submit_tag(_("ページを更新する"))%>
+        <%= link_to(h(_("ページを表示する")), wiki_path(@current_page.title), :class => "back") %>
+      </div>
+      <div class="clear"></div>
+    <% end -%>
+  </div>
+
+  <div style="margin-bottom: 50px;">
+    <% if !@current_page.deleted? and !@current_page.content.blank? %>
+      <% @current_page.chapters[(@num+1)..@current_page.chapters.size].each do |chapter| %>
+        <%= render_richtext(chapter.data) %>
+        <span style="float: right;"><%= link_to(_('[セクションを追加する]'), new_wiki_chapter_path(@current_page.title)) unless @current_page.deleted? %></span>
+        <span style="float: right;"><%= link_to(_('[編集する]'), edit_wiki_chapter_path(@current_page.title, chapter.id)) unless @current_page.deleted? %></span>
+      <% end %>
+    <% end %>
+  </div>
+
+<% end -%>
+
