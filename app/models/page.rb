@@ -51,6 +51,10 @@ class Page < ActiveRecord::Base
     end
   end
 
+  def chapters
+    head ? head.content.chapters : nil
+  end
+
   def head
     histories.first
   end
@@ -58,7 +62,7 @@ class Page < ActiveRecord::Base
   def edit(content, user)
     return if content == self.content
     self.updated_at = Time.now.utc
-    @new_history = histories.build(:content => Content.new(:data=>content),
+    @new_history = histories.build(:content => content,
                                    :user => user,
                                    :revision => revision.succ)
   end

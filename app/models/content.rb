@@ -1,3 +1,7 @@
 class Content < ActiveRecord::Base
-  validates_presence_of :data
+  has_many :chapters, :dependent => :destroy
+
+  def data
+    self.chapters.all.collect {|c| c.data }.to_s
+  end
 end
