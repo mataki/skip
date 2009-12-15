@@ -307,6 +307,12 @@ protected
     openid_url.gsub(identifier(''), '')
   end
 
+  def secret_checker
+    unless SkipEmbedded::InitialSettings['wiki']['use']
+      redirect_to root_url
+    end
+  end
+
   private
   def sso
     if login_mode?(:fixed_rp) and !logged_in?

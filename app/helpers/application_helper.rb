@@ -352,7 +352,9 @@ module ApplicationHelper
     search_links << link_to_unless_current(icon_tag('user_suit', :title => _('Users')) + _('Users'),  :controller => '/users', :action => 'index') if User.count > 1
     search_links << link_to_unless_current(icon_tag('group', :title => _('Groups')) + _('Groups'),  :controller => '/groups', :action => 'index') if Group.count > 0
     search_links << link_to_unless_current(icon_tag('tag_blue', :title => _('Bookmarks')) + _('Bookmarks'),  :controller => '/bookmarks', :action => 'index') if Bookmark.count > 0
-    search_links << link_to(icon_tag('page_white_paint', :title => _('Wiki')) + _('Wiki'), wiki_path((Page.root || Page.first({:conditions=>["parent_id = ?",0]})).title))
+    if SkipEmbedded::InitialSettings['wiki']['use']
+      search_links << link_to(icon_tag('page_white_paint', :title => _('Wiki')) + _('Wiki'), wiki_path((Page.root || Page.first({:conditions=>["parent_id = ?",0]})).title))
+    end
     links << content_tag(:span, search_links.join(' '), :class => 'search_links')
   end
 

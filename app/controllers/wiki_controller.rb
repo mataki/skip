@@ -1,5 +1,7 @@
 class WikiController < ApplicationController
   layout "wiki"
+  before_filter :secret_checker
+
   def show
     @current_page = Page.find_by_title(params[:id])
     @user = User.find(@current_page.last_modified_user_id) if @current_page.has_history?
@@ -8,7 +10,7 @@ class WikiController < ApplicationController
   def update
     if page = Page.find_by_title(params[:id]) and !page.deleted?
       page.update_attributes(params[:page])
-      flash[:notice] = "'#{page.title}'に変更されました"
+      flash[:notice] = _("'#{page.title}'に変更されました")
     end
     redirect_to :action => :show , :id => page.title
   end
