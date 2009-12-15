@@ -22,12 +22,12 @@ describe ApplicationHelper, "#show_contents" do
                           :symbol => "uid:hoge", :user_id => 1)
       @output_contents = "output_contents {{question.gif,240,}} output_contents"
       helper.stub!(:hiki_parse).and_return(@output_contents)
+      helper.stub!(:parse_hiki_embed_syntax).and_return(@output_contents)
 
       @result = helper.show_contents(@entry)
     end
     it { @result.should have_tag("div.hiki_style") }
     it { @result.should be_include('output_contents') }
-    it { @result.should be_include("/user/hoge/files/question.gif") }
   end
 end
 

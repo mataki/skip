@@ -12,6 +12,7 @@
   <%= check_box_tag("non_update", "true") %><%= _('Minor update')%>
   <%= send_mail_check_box_tag %>
 <% end -%>
+<%= render :partial => 'board_entries/embed_dialog', :locals => {:board_entry => @board_entry} %>
 
 <div class="desc ui-corner-all" style="margin-top: 10px;">
   <%= link_to(_("[Delete]"), {:action => "destroy", :id => @board_entry}, :confirm => _("Are you sure to delete?"), :method => :post)%>

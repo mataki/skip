@@ -433,7 +433,7 @@ class MypageController < ApplicationController
     def scope
       scope = case
               when @key == 'message'  then BoardEntry.accessible(@current_user).notice
-              when @key == 'comment'  then scope_for_entries_by_system_antenna_comment
+              when @key == 'comment'  then BoardEntry.accessible(@current_user).commented(@current_user)
               when @key == 'bookmark' then scope_for_entries_by_system_antenna_bookmark
               when @key == 'joined_group'    then scope_for_entries_by_system_antenna_group
               end
@@ -447,15 +447,6 @@ class MypageController < ApplicationController
     end
 
     private
-    # #TODO BoardEntryに移動する
-    # システムアンテナ[comment]の記事を取得するための検索条件
-    def scope_for_entries_by_system_antenna_comment
-      BoardEntry.accessible(@current_user).scoped(
-        :conditions => ['board_entry_comments.user_id = ?', @current_user.id],
-        :include  => [:board_entry_comments]
-      )
-    end
-
     # #TODO BoardEntryに移動する
     # システムアンテナ[bookmark]の記事を取得するための検索条件
     def scope_for_entries_by_system_antenna_bookmark
@@ -776,7 +767,7 @@ class MypageController < ApplicationController
 
   def target_page target = nil
     if target
-      if target_key2current_pages = cookies['target_key2current_pages']
+      if target_key2current_pages = cookies[:target_key2current_pages]
         params[:page] || JSON.parse(target_key2current_pages)[target] || 1
       else
         params[:page]

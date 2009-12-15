@@ -1,0 +1,275 @@
+<div id="share_file_dialog" title="<%= _('Insert file or embed in text body') %>">
+  <div id="tabs" class="invisible">
+    <ul>
+      <li><a href="#share_file_list"><%= _('Insert file in text body') %></a></li>
+      <li><a href="#share_file_new"><%= _('Upload a file') %></a></li>
+      <% if enable_any_embed? -%>
+        <li><a href="#embed_tag"><%= _('Insert embed') %></a></li>
+      <% end -%>
+    </ul>
+    <div id="share_file_list"></div>
+    <div id="share_file_new"></div>
+    <% if enable_any_embed? -%>
+      <div id="embed_tag">
+        <form>
+          <table>
+            <tr>
+              <th>
+                <%= label_tag 'embed_html', _('Corresponding sites') %>
+                <%= image_tag('http://www.youtube.com/favicon.ico', :title => 'youtube', :alt => 'youtube') if Admin::Setting.youtube%>
+                <%= image_tag('http://www.slideshare.net/favicon.ico', :title => 'slideshare', :alt => 'slideshare') if Admin::Setting.slideshare %>
+                <%= image_tag('http://maps.google.com/favicon.ico', :title => 'google maps', :alt => 'google maps') if Admin::Setting.googlemap%>
+              </th>
+            </tr>
+            <tr>
+              <td><%= text_area_tag 'embed_html', nil, :rows => 10, :cols => 30 %></td>
+            </tr>
+            <tr>
+              <td class="operation">
+                <button id="insert_embed_tag" type="button" class="ui-state-default ui-corner-all"><%= _("Insert embed") %></button>
+              </td>
+            </tr>
+          </table>
+        </form>
+      </div>
+    <% end -%>
+  </div>
+</div>
+
+<% content_for :javascript_initializers do -%>
+  $j('div#share_file_dialog').dialog({
+    bgiframe: true,
+    autoOpen: false,
+    width: 500,
+    height: 350,
+    open: function() {
+      loadShareFiles({});
+      loadNewShareFileForm();
+      $j('#tabs').tabs().show();
+    }
+  })
+
+  var loadNewShareFileForm = function() {
+    var submitCallback;
+    $j('#share_file_new').html('');
+    var indicator = $j('<span><%= skip_image_tag 'indicator.gif' %></span>');
+    indicator.appendTo($j('#share_file_new')).show();
+    var src = '<%= url_for(:controller => 'share_file', :action => 'new', :owner_symbol => board_entry.symbol, :ajax_upload => 1, :escape => false) %>'; 
+    $j('#share_file_new').append(
+      $j('<ul></ul>').addClass('messages')
+    ).append(
+      $j("<iframe></iframe>").attr("src", src).load(function(){
+        var form = $j(this.contentWindow.document).find("form");
+        form.submit(function() {
+          var indicator = form.find("td.indicator img").show();
+          form.get(0).submit();
+          indicator.hide();
+          var file = form.find("input[type=file]");
+          file.focus();
+          submitCallback = function(){
+            form.get(0).reset();
+          };
+          return false;
+        });
+        indicator.remove();
+      })
+    );
+    var targetIFrame = $j("<iframe></iframe>").attr({src: '/blank.html', name: '<%= IframeUploader::UPLOAD_KEY %>'})
+                       .one("load", function(){ $j(this).load(afterLoadCallback); });
+    $j('#share_file_new').append(
+      // HTTPS環境で、IE6を利用するとtargetが空だとHTTPへのアクセスと判断してアラートが表示されるため
+      // http://support.microsoft.com/kb/261188/ja
+      $j("<div></div>").addClass('target').append(targetIFrame)
+    );
+
+    // IE6対策
+    targetIFrame.get(0).contentWindow.name = '<%= IframeUploader::UPLOAD_KEY %>';
+
+    var afterLoadCallback = function(){
+      if(submitCallback){submitCallback.call();}
+      var doc = targetIFrame.get(0).contentDocument ? targetIFrame.get(0).contentDocument : targetIFrame.get(0).contentWindow.document;
+      var response = doc.body.innerHTML;
+      var json = eval('(' + response + ')');
+      var status = json['status'];
+      $j('ul.messages').html('');
+      if ( status == '200' ) {
+        $j.each(json['messages'], function(i, msg){
+          $j('ul.messages').append($j('<li></li>').addClass('notice').text(msg));
+        });
+        loadShareFiles({});
+      } else {
+        $j.each(json['messages'], function(i, msg){
+          $j('ul.messages').append($j('<li></li>').addClass('error').text(msg));
+        });
+      }
+    };
+  };
+
+  var loadShareFiles = function(requestData) {
+    $j('div#share_file_list').html('');
+    var indicator = $j('<span><%= skip_image_tag 'indicator.gif' %></span>');
+    indicator.appendTo('div#share_file_list').show();
+    var url = '<%= share_files_url(board_entry.symbol) %>';
+    $j.getJSON(url, requestData, function(data, stat) {
+      var share_files = data['share_files'];
+      if(share_files.length == 0) return;
+      var thead = $j('<thead></thead>');
+      thead.append(shareFileToTableHeader());
+      var tbody = $j("<tbody></tbody>");
+      $j.each(share_files, function(_num_, share_file){
+        tbody.append(shareFileToTableRow(share_file));
+      });
+      $j('div#share_file_list').append(
+        paginate(data['pages'])
+      ).append(
+        $j("<table></table>")
+        .append(thead)
+        .append(tbody)
+      ).append(
+        paginate(data['pages'])
+      );
+      $j('img.fit_image').fitimage({ placeholder: relative_url_root + '/images/skip/jquery/fitimage/spacer.gif' });
+      indicator.remove();
+    });
+  };
+
+  var shareFileToTableHeader = function() {
+    var tr = $j('<tr></tr>');
+    tr.append($j('<th></th>').text('<%= _('Thumbnail') %>'));
+    tr.append($j('<th></th>'));
+    return tr;
+  };
+
+  var shareFileToTableRow = function(data){
+    var tr = $j("<tr></tr>");
+    tr.append($j("<td class='thumbnail'></td>").append(insertThumbnail(data)));
+    var insertTd = $j("<td class='insert'></td>");
+    insertTd.append(insertLink(data));
+    if(data['file_type'] == 'image')
+      insertTd.append(insertImageLink(data));
+    if(data['file_type'] == 'flv' || data['file_type'] == 'swf')
+      insertTd.append(insertEmbedLink(data));
+    tr.append(insertTd);
+    return tr;
+  };
+
+  var insertToRichEditor = function(elem){
+    CKEDITOR.instances.contents_richtext.insertHtml(elem.wrap('<span></span>').parent().html());
+  };
+
+  var insertToHikiEditor = function(text){
+    $j("#contents_hiki").val($j("#contents_hiki").val() + text);
+  };
+
+  var insertLink = function(data){
+    var filename = data['file_name'];
+    var src = data['src'];
+    return $j("<span></span>").text('<%= _('Insert link') %>').addClass("insert_link link pointer").click(function(){
+      if($j('#editor_mode_richtext:checked').length > 0){
+        insertToRichEditor($j("<a></a>").text(filename).attr("href", src));
+      } else if($j('#editor_mode_hiki:checked').length > 0) {
+        insertToHikiEditor('\n[file:' + filename + ']');
+      }
+    });
+  };
+
+  var insertImageLink = function(data){
+    var filename = data['file_name'];
+    var src = data['src'];
+    return $j("<span></span>").text('<%= _('Insert image') %>').addClass("insert_link link pointer").click(function(){
+      if($j('#editor_mode_richtext:checked').length > 0){
+        var img = $j("<img></img>").attr("src", src).attr("alt", filename).addClass('pointer');
+        insertToRichEditor(img);
+      } else if($j('#editor_mode_hiki:checked').length > 0) {
+        insertToHikiEditor('\n{{' + filename + ',240,}}');
+      }
+    });
+  };
+
+  var insertEmbedLink = function(data){
+    return $j("<span></span>").text('<%= _('Insert embed') %>').addClass("insert_link link pointer").click(function(){
+      if($j('#editor_mode_richtext:checked').length > 0){
+        var html = data['insert_tag'];
+        CKEDITOR.instances.contents_richtext.insertHtml(html);
+      } else if($j('#editor_mode_hiki:checked').length > 0) {
+        var filename = data['file_name'];
+        insertToHikiEditor('\n{{' + filename + '}}');
+      }
+    });
+  };
+
+  var insertThumbnail = function(data){
+    var filename = data['file_name'];
+    var extension = filename.toLowerCase().split('.')[1];
+    if($j.inArray(extension, <%= ShareFile::CONTENT_TYPE_IMAGES.keys.to_json %>) >= 0) {
+      var src = data['src'];
+      if(src){
+        var img = $j("<img></img>").attr("src", src).attr("alt", filename).addClass('pointer');
+        return img.clone().attr({'height': '72', 'width': '72'}).addClass('fit_image').click(function(){
+          if($j('#editor_mode_richtext:checked').length > 0){
+            insertToRichEditor(img);
+          } else if($j('#editor_mode_hiki:checked').length > 0) {
+            insertToHikiEditor('\n{{' + filename + ',240,}}');
+          }
+        });
+      }else{
+        return $j("<span></span>").text(filename.substr(0,32));
+      }
+    } else {
+      return $j("<span></span>").text(filename.substr(0,32));
+    }
+  };
+
+  var paginate = function(pages){
+    var paginate_actions = $j('<div class="paginate"></div>');
+    paginate_actions.append($j('<span class="info"></span>').text(pages['current'] + '/' + pages['last'] + 'page'));
+    if(pages['previous'] != null){
+      paginate_actions.append(
+        $j('<span class="first_link link pointer"></span>').text('<%= _('First page') %>').click(function() {
+          loadShareFiles({page: pages['first']});
+        })
+      );
+      paginate_actions.append(
+        $j('<span class="previous_link link pointer"></span>').text('<%= _('« Previous') %>').click(function() {
+          loadShareFiles({page: pages['previous']});
+        })
+      );
+    }
+    if(pages['next'] != null){
+      paginate_actions.append(
+        $j('<span class="next_link link pointer"></span>').text('<%= _('Next »') %>').click(function() {
+          loadShareFiles({page: pages['next']});
+        })
+      );
+      paginate_actions.append(
+        $j('<span class="last_link link pointer"></span>').text('<%= _('Last page') %>').click(function() {
+          loadShareFiles({page: pages['last']});
+        })
+      );
+    }
+    return paginate_actions;
+  };
+
+  $j('#share_file_trigger').click(function() {
+      $j('div#share_file_dialog').dialog('open');
+  }).hover(
+    function(){
+      $j(this).addClass("ui-state-hover");
+    },
+    function(){
+      $j(this).removeClass("ui-state-hover");
+    }
+  ).mousedown(function(){
+    $j(this).addClass("ui-state-active");
+  }).mouseup(function(){
+    $j(this).removeClass("ui-state-active");
+  });
+
+  <% if enable_any_embed? -%>
+  // 埋め込みタグの挿入
+  $j('#insert_embed_tag').click(function(){
+    CKEDITOR.instances.contents_richtext.insertHtml($j('#embed_html').val());
+    $j('#embed_html').val('');
+  });
+  <% end -%>
+<% end -%>

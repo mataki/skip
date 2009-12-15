@@ -33,6 +33,7 @@ describe Admin::UsersController, 'POST /create' do
     @user.stub!(:save!)
     @user_uid = stub_model(Admin::UserUid)
     Admin::User.stub!(:make_new_user).and_return([@user, @user_uid])
+    SkipEmbedded::InitialSettings['login_mode'] = 'password'
   end
   describe 'ユーザの登録に成功する場合' do
     it 'Admin::Userが作成されること' do

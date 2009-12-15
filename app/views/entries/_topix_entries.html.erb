@@ -1,7 +1,7 @@
 <% title ||= "" %>
 <% entries ||= [] -%>
 <% last_updated_desc ||= false -%>
-<% width_date = last_updated_desc ? "125" : "75" -%>
+<% width_date = last_updated_desc ? "200" : "75" -%>
 <% user_unreadings ||= [] -%>
 <% symbol2name_hash ||= nil -%>
 <% with_checkable_read ||= false -%>
@@ -43,7 +43,7 @@
             </td>
             <td class="date">
               <% if last_updated_desc -%>
-                <%= _("Last comment:") unless entry.board_entry_comments_count.zero? -%><%=h entry.updated_on.strftime(_("%B %d %Y")) %>
+                <%= _("Last comment (%s) :") % entry.board_entry_comments.order_new.first.user.name unless entry.board_entry_comments_count.zero? -%><%=h entry.updated_on.strftime(_("%B %d %Y")) %>
               <% else -%>
                 <%=h entry.date.strftime(_("%B %d %Y")) %>
               <% end -%>

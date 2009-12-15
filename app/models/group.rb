@@ -84,6 +84,14 @@ class Group < ActiveRecord::Base
 
   named_scope :order_recent, proc { { :order => 'groups.created_on DESC' } }
 
+  named_scope :order_active, proc {
+    {
+      :joins => "LEFT OUTER JOIN board_entries ON board_entries.symbol = CONCAT('gid:', groups.gid)",
+      :group => 'groups.id',
+      :order => 'MAX(board_entries.updated_on) DESC'
+    }
+  }
+
   named_scope :limit, proc { |num| { :limit => num } }
 
   alias initialize_old initialize

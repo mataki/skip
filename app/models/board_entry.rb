@@ -104,6 +104,13 @@ class BoardEntry < ActiveRecord::Base
     }
   }
 
+  named_scope :commented, proc { |user|
+    {
+      :conditions => ['board_entry_comments.user_id = ?', user.id],
+      :include => [:board_entry_comments]
+    }
+  }
+
   named_scope :read, proc { |user|
     {
       :conditions => ['user_readings.read = ? AND user_readings.user_id = ?', true, user.id],

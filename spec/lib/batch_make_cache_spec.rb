@@ -25,9 +25,11 @@ describe BatchMakeCache, "#create_meta" do
       :icon_type => "icon"
     }
     @result = bmc.create_meta(params)
+    SkipEmbedded::InitialSettings['protocol'] = 'http://'
+    SkipEmbedded::InitialSettings['host_and_port'] = 'localhost:3000'
   end
   it "link_urlが正しく設定されること" do
-    @result.should be_include("link_url: #{SkipEmbedded::InitialSettings['protocol']}#{SkipEmbedded::InitialSettings['host_and_port']}/user/hoge")
+    @result.should == ("link_url: http://localhost:3000/user/hoge")
   end
 end
 

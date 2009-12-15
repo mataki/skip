@@ -222,6 +222,7 @@ class PlatformController < ApplicationController
                                 :required => SkipEmbedded::InitialSettings["ax_fetchrequest"].values.flatten) do |result, identity_url, registration|
         if result.successful?
           logger.info("[Login successful with OpenId] \"OpenId\" => #{identity_url}")
+          remove_current_page_from_cookie
           unless identifier = OpenidIdentifier.find_by_url(identity_url)
             create_user_from(identity_url, registration)
           else
@@ -305,13 +306,22 @@ class PlatformController < ApplicationController
     if params[:login] and (result = User.auth(params[:login][:key], params[:login][:password], params[:login][:keyphrase])).is_a?(User)
       self.current_user = result
       logger.info(current_user.to_s_log('[Login successful with password]'))
+      remove_current_page_from_cookie
       handle_remember_cookie!(params[:login_save] == 'true')
       redirect_to_return_to_or_root
     else
       key = params[:login] ? params[:login][:key] : ""
       logger.info("[Login failed with password] login_key[#{key}] by #{result}")
       flash[:error] = result
-      redirect_to(request.env['HTTP_REFERER'] ? :back : login_url)
+      if result == _("Password is expired. Please reset password.")
+        redirect_to forgot_password_url
+      else
+        redirect_to(request.env['HTTP_REFERER'] ? :back : login_url)
+      end
     end
+  end
+
+  def remove_current_page_from_cookie
+    cookies.delete :target_key2current_pages
   end
 end

@@ -232,6 +232,8 @@
         <%= link_to(icon_tag('tag_blue_add', :title => _('Bookmark this')), new_bookmark_url_hash, {:onclick => "sub_window_open('#{url_for(new_bookmark_url_hash)}', 'subwindow', 550, 400); return false;" }) %>
         <%= link_to(icon_tag('control_play_blue', :title => _('Slide Show')), {:controller => "monta", :action => "execute_monta", :id => entry}, :target=>"_blank") if entry.editor_mode == 'hiki' %>
         <%= link_to(icon_tag('zoom', :title => _('Maximize!')), {:controller=> "board_entries", :action => "large", :id => entry}, :target=>"_blank") %>
+        <%= _('Read/Unread:') %>
+        <%= check_box_tag 'read_state_check', 'true', true, :title => _('Mark read') %>
       </div>
     </div>
     <div class="information">
@@ -242,7 +244,7 @@
         <span class="evaluation"><%= get_entry_infos(entry) -%></span>
       </div>
     </div>
-    <h1><%= check_box_tag 'read_state_check', 'true', true, :title => _('Mark read') %> <%=h entry.title %> <span class="tags"><%= entry_tag_search_links_tag(entry.category) %></span></h1>
+    <h1><%=h entry.title %> <span class="tags"><%= entry_tag_search_links_tag(entry.category) %></span></h1>
     <% unless to_tb_entries.empty? -%>
     <div class="trackback_space send_trackback">
       <%= _('Topic Entry: ')%>

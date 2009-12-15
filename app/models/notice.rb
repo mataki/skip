@@ -22,23 +22,11 @@ class Notice < ActiveRecord::Base
     { :conditions => ['target_id = ? AND target_type = ?', owner.id, owner.class.name] }
   }
 
-  # TODO 複雑過ぎるのでもっと簡単にして回帰テストを書きたい
-  def self.systems user
-    antennas = []
+  def self.trace_comments_count user
+    comment_count = BoardEntry.accessible(user).commented(user).unread(user).count
+  end
 
-    # コメントの行方
-    find_params = BoardEntry.make_conditions(user.belong_symbols)
-    find_params[:conditions][0] << " and user_readings.read = ? and user_readings.user_id = ?"
-    find_params[:conditions] << false << user.id
-    find_params[:conditions][0] << " and board_entry_comments.user_id = ?"
-    find_params[:conditions] << user.id
-    comment_count = BoardEntry.count(
-      :conditions => find_params[:conditions],
-      :include => find_params[:include] | [:user_readings, :board_entry_comments]
-    )
-    antennas << { :name => _("Trace Comments"), :user_id => user.id, :type => 'comment', :count => comment_count, :icon => 'comment' }
-
-    # ブクマの行方 /page/% をブクマしている人のみに表示する
+  def self.track_of_bookmarks_count user
     if (bookmarks = Bookmark.find(:all,
                                   :conditions => ["bookmark_comments.user_id = ? and url like '/page/%'", user.id],
                                   :include => [:bookmark_comments])).size > 0
@@ -49,10 +37,8 @@ class Notice < ActiveRecord::Base
 
       bookmark_count = 0
       bookmarks.each { |bookmark| bookmark_count+=1 if urls.include?(bookmark.url) } if urls.size > 0
-      antennas << {:name => _("Track of Bookmarks"), :user_id => user.id, :type => 'bookmark', :count => bookmark_count, :icon => 'tag_blue' }
+      bookmark_count
     end
-
-    antennas
   end
 
   def unread_count user
