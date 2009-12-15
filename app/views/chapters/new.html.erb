@@ -11,10 +11,7 @@
   <% if !@current_page.deleted? and !@current_page.content.blank? %>
     <% @current_page.chapters.each do |chapter| %>
       <%= render_richtext(chapter.data) %>
-      <div class="page-menu" style="margin-bottom: 50px;">
-        <span style="float: left;"><%= link_to(_('[セクションを追加する]'), new_wiki_chapter_path(@current_page.title)) unless @current_page.deleted? %></span>
-        <span style="float: left;"><%= link_to(_('[編集する]'), edit_wiki_chapter_path(@current_page.title, chapter.id)) unless @current_page.deleted? %></span>
-      </div>
+      <%= render :partial => "shared/chapter_menu", :locals => {:page => @current_page, :chapter => chapter} %>
     <% end %>
   <% end %>
 

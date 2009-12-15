@@ -54,7 +54,7 @@ class ChaptersController < ApplicationController
     content.chapters.build(:data => params[:chapter][:content])
     @history = @page.edit(content, current_user)
     if @history.save!
-      flash[:notice] = "ページが更新されました"
+      flash[:notice] = _("ページが更新されました")
       redirect_to wiki_path(@page.title)
     else
       errors = [@history, @history.content].map{|m| m.errors.full_messages }.flatten
@@ -62,4 +62,22 @@ class ChaptersController < ApplicationController
     end
   end
 
+  def destroy
+    @page = Page.find_by_title(params[:wiki_id])
+    chapter_id = params[:id].to_i
+    content = Content.new
+
+    @page.chapters.each do |chapter|
+      content.chapters.build(:data=>chapter.data) unless chapter.id == chapter_id
+    end
+
+    @history = @page.edit(content, current_user)
+    if @history.save!
+      flash[:notice] = _("セクションを削除しました")
+      redirect_to wiki_path(@page.title)
+    else
+      errors = [@history, @history.content].map{|m| m.errors.full_messages }.flatten
+      redirect_to :back
+    end
+  end
 end
