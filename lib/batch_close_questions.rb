@@ -23,7 +23,7 @@ class BatchCloseQuestions < BatchBase
     checkpoint = Date.today - check_days_ago
 
     BoardEntry.update_all('hide = 1', 
-                          ["board_entries.aim_type = 'question' AND board_entries.updated_on < ? AND board_entries.hide = 0", checkpoint])
+                          ["board_entries.aim_type = 'question' AND board_entries.created_on < ? AND board_entries.hide = 0", checkpoint])
   end
 end
 
