@@ -18,6 +18,17 @@ require File.expand_path(File.dirname(__FILE__) + "/batch_base")
 class BatchMakeUserReadings < BatchBase
 
   def self.execute options
+
+    # お知らせ
+    BoardEntry.recent(30.minutes).notice.each do |entry|
+      entry.publication_users.map{ |user| user.id }.each do |user_id|
+        if entry.readable?(User.find_by_id(user_id))
+          save_user_reading(user_id, entry)
+        end
+      end
+    end
+
+    # お知らせ以外
     get_updated_entries.each do |entry|
       symbol_type,symbol_id = SkipUtil.split_symbol(entry.symbol)
       user_ids = [] # この記事が更新されたことを通知するuserのid一覧
@@ -40,8 +51,6 @@ class BatchMakeUserReadings < BatchBase
       user_ids += BoardEntryComment.find(:all, :conditions => ["board_entry_id = ?", entry.id]).map{ |comment| comment.user_id }
       # ブックマークした記事の行く末
       user_ids += BookmarkComment.find(:all, :conditions => ["bookmarks.url = ?", entry.permalink], :include => [:bookmark]).map{ |comment| comment.user_id }
-      # あなたへの連絡
-      user_ids += contact_ids entry
       # 更新を知らせるユーザ全員に未読レコードを生成
       user_ids.uniq.each do |user_id|
         if entry.readable?(User.find_by_id(user_id))
@@ -68,7 +77,9 @@ class BatchMakeUserReadings < BatchBase
 
     user_reading = UserReading.find_by_user_id_and_board_entry_id(antenna_user_id, entry.id)
     if user_reading
-      user_reading.update_attributes({:read => false, :checked_on => nil}) if updatable?(user_reading, last_updated_time, updater_id, antenna_user_id)
+      update_params = {:read => false, :checked_on => nil, :notice_type => nil}
+      update_params.merge!(:notice_type => 'notice') if entry.is_notice?
+      user_reading.update_attributes(update_params) if updatable?(user_reading, last_updated_time, updater_id, antenna_user_id)
     else
       UserReading.create(:user_id => antenna_user_id, :board_entry_id => entry.id) if updater_id != antenna_user_id
     end
@@ -82,25 +93,10 @@ class BatchMakeUserReadings < BatchBase
     user_reading.read and user_reading.checked_on < last_updated_time and updater_id != antenna_user_id
   end
 
-  # お知らせ対象ユーザを取得
-  def self.contact_ids entry
-    return [] unless BoardEntry::ANTENNA_AIM_TYPES.include?(entry.aim_type)
-    return [] unless entry.last_updated > 30.minutes.ago
-    entry.publication_users.map{ |user| user.id }
-  end
-
-  # 30分以内に記事自身かコメントに更新があった記事を全て取得
+  # 30分以内に記事自身かコメントに更新があったお知らせ以外の記事を全て取得
   def self.get_updated_entries
-    conditions_state =  "(last_updated BETWEEN subtime(now(), '00:30:00') AND now())"
-    conditions_state << " OR "
-    conditions_state << "(board_entry_comments.updated_on BETWEEN subtime(now(), '00:30:00') AND now())"
-
-    BoardEntry.find(:all,
-                    :conditions => conditions_state,
-                    :select => "board_entries.id, symbol, board_entry_comments.user_id",
-                    :include => [:board_entry_comments, :entry_publications])
+    BoardEntry.recent_with_comments(30.minutes).aim_type_does_not_equal('notice')
   end
-
 end
 
 BatchMakeUserReadings.execution

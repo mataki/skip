@@ -500,7 +500,7 @@ class MypageController < ApplicationController
       :id_name => 'message',
       :title_icon => "email",
       :title_name => _("Notices for you"),
-      :pages => pages = BoardEntry.accessible(current_user).notice.unread(current_user).order_new,
+      :pages => pages = BoardEntry.accessible(current_user).notice.unread_only_notice(current_user).order_new,
       :symbol2name_hash => BoardEntry.get_symbol2name_hash(pages)
     }
   end
@@ -540,7 +540,7 @@ class MypageController < ApplicationController
       :conditions => find_params[:conditions],
       :order => "board_entry_points.access_count DESC, board_entries.last_updated DESC, board_entries.id DESC",
       :include => find_params[:include] | [ :user, :state ]
-    ).timeline.diary.recent(recent_day).paginate(:page => params[:page], :per_page => options[:per_page])
+    ).timeline.diary.recent(recent_day.day).paginate(:page => params[:page], :per_page => options[:per_page])
 
     locals = {
       :title_name => _('Recent Popular Blogs'),
