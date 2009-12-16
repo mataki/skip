@@ -155,36 +155,38 @@ class ShareFileController < ApplicationController
 
   def list
     # TODO: インスタンス変数の数を減らす
-    @owner_obj = (@user = User.find_by_uid(params[:uid])) || (@group = Group.active.find_by_gid(params[:gid]))
-    if @owner_obj.nil?
+    owner = current_target_user || current_target_group
+    unless owner
       flash[:warn] = _("Specified share file owner does not exist.")
       redirect_to root_url
       return
     end
-    @participation = @owner_obj.group_participations.find_by_user_id(current_user.id) unless @owner_obj.is_a?(User)
-    @main_menu = @owner_obj.is_a?(User) ? user_main_menu(@owner_obj) : _('Groups')
-    @title = @owner_obj.is_a?(User) ? user_title(@owner_obj) : @owner_obj.name
-    @tab_menu_option = @owner_obj.is_a?(User) ? user_menu_option(@owner_obj) : { :gid => @owner_obj.gid }
 
-    @owner_name = @owner_obj.name
-    @owner_symbol = @owner_obj.symbol
-
-    params[:sort_type] ||= "date"
-    params_hash = { :owner_symbol => @owner_symbol, :category => params[:category],
-                    :keyword => params[:keyword], :without_public => params[:without_public] }
-    find_params = ShareFile.make_conditions(current_user.belong_symbols, params_hash)
-    order_by = (params[:sort_type] == "date" ? "date desc" : "file_name")
-
-    @share_files = ShareFile.scoped(
-      :conditions => find_params[:conditions],
-      :include => find_params[:include],
-      :order => order_by
-    ).paginate(:page => params[:page], :per_page => 10)
-
-    flash.now[:notice] = _('No matching shared files found.') if @share_files.empty?
+    @search = ShareFile.accessible(current_user).owned(owner)
+    @search =
+      if params[:sort_type] == "file_name"
+        @search.descend_by_file_name.search(params[:search])
+      else
+        @search.ascend_by_date.search(params[:search])
+      end
+    @share_files = @search.paginate(:page => params[:page], :per_page => 10)
 
     respond_to do |format|
-      format.html { render :layout => 'layout' }
+      format.html do
+        if owner.is_a? User
+          @main_menu = user_main_menu(owner)
+          @title = user_title(owner)
+          @tab_menu_option = user_menu_option(owner)
+        elsif owner.is_a? Group
+          @main_menu = _('Groups')
+          @title = owner.name
+          @tab_menu_option = { :gid => owner.gid }
+        end
+        @owner_name = owner.name
+        params[:sort_type] ||= "date"
+        flash.now[:notice] = _('No matching shared files found.') if @share_files.empty?
+        render :layout => 'layout'
+      end
       format.js {
         render :json => {
           :pages => {

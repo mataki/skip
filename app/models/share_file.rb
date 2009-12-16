@@ -48,6 +48,19 @@ class ShareFile < ActiveRecord::Base
       :include => [:share_file_publications] }
   }
 
+  named_scope :tagged, proc { |tag_words, tag_select|
+    return {} unless tag_words
+    tag_select = 'AND' unless tag_select == 'OR'
+    condition_str = ''
+    condition_params = []
+    words = tag_words.split(',')
+    words.each do |word|
+      condition_str << (word == words.last ? ' share_files.category like ?' : " share_files.category like ? #{tag_select}")
+      condition_params << SkipUtil.to_like_query_string(word)
+    end
+    { :conditions => [condition_str, condition_params].flatten }
+  }
+
   def initialize(attr ={})
     super(attr)
     self.owner_symbol ||= ''
