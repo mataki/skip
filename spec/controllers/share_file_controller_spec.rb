@@ -399,10 +399,8 @@ describe ShareFileController, "GET #list" do
       it "set assigns" do
         assigns[:main_menu].should == "My Page"
         assigns[:title].should == "My Page"
-        assigns[:user].should == @user
         assigns[:tab_menu_option].should == { :uid => @user.uid }
         assigns[:owner_name].should == @user.name
-        assigns[:owner_symbol].should == @user.symbol
         assigns[:share_files].should == @share_files
       end
       it { response.should render_template("list") }
@@ -415,11 +413,8 @@ describe ShareFileController, "GET #list" do
       it "set assigns" do
         assigns[:main_menu].should == "Users"
         assigns[:title].should == "Mr./Ms. 対象ユーザ"
-        assigns[:user].should == @target_user
         assigns[:tab_menu_option].should == { :uid => @target_user.uid }
         assigns[:owner_name].should == @target_user.name
-        assigns[:owner_symbol].should == @target_user.symbol
-        assigns[:pages].should == @pages
         assigns[:share_files].should == @share_files
       end
       it { response.should render_template("list") }
@@ -435,12 +430,9 @@ describe ShareFileController, "GET #list" do
     it "set assigns" do
       assigns[:main_menu].should == 'Groups'
       assigns[:title].should == "対象グループ"
-      assigns[:group].should == @group
       assigns[:tab_menu_option].should == { :gid => @group.gid }
       assigns[:owner_name].should == @group.name
-      assigns[:owner_symbol].should == @group.symbol
       assigns[:share_files].should == @share_files
-      assigns[:participation].should == @participation
     end
     it { response.should render_template("list") }
   end
