@@ -43,9 +43,10 @@
             </td>
             <td class="date">
               <% if last_updated_desc -%>
-                <%= _("Last comment (%s) :") % entry.board_entry_comments.order_new.first.user.name unless entry.board_entry_comments_count.zero? -%><%=h entry.updated_on.strftime(_("%B %d %Y")) %>
+                <%# TODO controllerの1SQLで取得できるようにしたい %>
+                <%= _("Last comment (%s) :") % entry.board_entry_comments.order_new.first.user.name unless entry.board_entry_comments_count.zero? %><%= h entry.updated_on.strftime(_("%B %d %Y")) %>
               <% else -%>
-                <%=h entry.date.strftime(_("%B %d %Y")) %>
+                <%= h entry.updated_on.strftime(_("%B %d %Y")) %>
               <% end -%>
             </td>
           </tr>
