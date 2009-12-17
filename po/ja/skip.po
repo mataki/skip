@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.4.0\n"
-"POT-Creation-Date: 2009-12-17 10:15+0900\n"
+"POT-Creation-Date: 2009-12-17 11:43+0900\n"
 "PO-Revision-Date: 2009-11-27 16:12+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1752,7 +1752,7 @@ msgid ""
 msgstr ""
 "以下で指定されたメールアドレスにパスワードリセットのためのURLを送信します。"
 
-#: app/controllers/admin/users_controller.rb:275
+#: app/controllers/admin/users_controller.rb:280
 #: app/controllers/platform_controller.rb:121
 msgid "An email containing the URL for signup will be sent to %{email}."
 msgid_plural ""
@@ -1875,6 +1875,7 @@ msgstr "利用者全体にメールが送信されますが、宜しいですか
 #: app/views/user/_action_box.html.erb:10
 #: app/views/group/_action_box.html.erb:6
 #: app/views/admin/pictures/index.html.erb:19
+#: app/views/admin/settings/_security.html.erb:12
 #: app/views/admin/board_entries/index.html.erb:35
 #: app/views/admin/share_files/index.html.erb:36
 #: app/views/admin/bookmarks/index.html.erb:19
@@ -2863,7 +2864,7 @@ msgstr "メール通知設定"
 msgid "Email address %s has been registered in the site"
 msgstr "指定された%sというメールアドレスは既に利用登録済みです。"
 
-#: app/controllers/admin/users_controller.rb:282
+#: app/controllers/admin/users_controller.rb:287
 msgid "Email address %{email} has been registered in the site"
 msgid_plural "%{num} emails have been registered in the site"
 msgstr[0] "指定された%{email}というメールアドレスは既に利用登録済みです。"
@@ -3482,11 +3483,11 @@ msgstr "更新日時"
 msgid "Hanako Yamada"
 msgstr "山田 花子"
 
-#: app/models/user.rb:323
+#: app/models/user.rb:314
 msgid "Has not accessed for 3 or more months."
 msgstr "約3ヶ月以上アクセスなし"
 
-#: app/models/user.rb:321
+#: app/models/user.rb:312
 msgid "Has not accessed for 6 or more months."
 msgstr "約半年以上アクセスなし"
 
@@ -3859,7 +3860,7 @@ msgstr "[最後へ]"
 msgid "Leave the group"
 msgstr "退会する"
 
-#: app/views/admin/settings/_security.html.erb:37
+#: app/views/admin/settings/_security.html.erb:40
 msgid "Limit to single session"
 msgstr "セッション制限"
 
@@ -3939,7 +3940,7 @@ msgstr "所在"
 msgid "Lock accounts by unsuccessful log in attempts"
 msgstr "ログイン失敗によるロック"
 
-#: app/views/admin/settings/_security.html.erb:19
+#: app/views/admin/settings/_security.html.erb:22
 msgid ""
 "Lock all current user accounts. Users will be asked to reset their passwords "
 "next time they log in. Use this when you want all users to reset their "
@@ -3980,7 +3981,7 @@ msgid "Login automatically from next time"
 msgstr "ログインしたままにする"
 
 #: app/views/shared/_password_login_form.html.erb:18
-#: app/views/admin/settings/_security.html.erb:27
+#: app/views/admin/settings/_security.html.erb:30
 msgid "Login keyphrase"
 msgstr "ログインキーフレーズ"
 
@@ -4663,7 +4664,7 @@ msgstr "パスワードが有効期限切れです。パスワード再設定を
 msgid "Password resetting code cannot be issued for unactivated users."
 msgstr "未使用ユーザのパスワード再設定コードは発行できません。"
 
-#: app/views/admin/settings/_security.html.erb:13
+#: app/views/admin/settings/_security.html.erb:16
 msgid "Password strength"
 msgstr "パスワード強度"
 
@@ -4861,7 +4862,7 @@ msgstr ""
 "来ません。このカテゴリに登録されているプロフィール項目を全て削除した後実行し"
 "てください。"
 
-#: app/views/admin/settings/_security.html.erb:32
+#: app/views/admin/settings/_security.html.erb:35
 msgid "Prompt for user data cleaning by email"
 msgstr "クリーニング依頼メール"
 
@@ -5826,7 +5827,7 @@ msgstr "パスワードリセットのためのURLの有効期限が過ぎてい
 msgid "The URL for resetting your password as follows:"
 msgstr "パスワードを再設定するためのURLは以下の通りです。"
 
-#: app/controllers/admin/users_controller.rb:277
+#: app/controllers/admin/users_controller.rb:282
 msgid "The URL for signup issued. Please contact a use from comfirm link"
 msgid_plural ""
 "The URLs for signup issued. Please contact some users from comfirm link"
@@ -5923,7 +5924,7 @@ msgstr "このサイトでは、OpenID認証が許可されていません。"
 msgid "This user has already left."
 msgstr "このIDは使われていません"
 
-#: app/views/admin/settings/_security.html.erb:18
+#: app/views/admin/settings/_security.html.erb:21
 msgid ""
 "This will lock all user accounts including yourself. All logged in users "
 "will be forced to log out and passwords need to be reset to log in again. "
@@ -6130,6 +6131,7 @@ msgid "Update on the same entry from other users detected. Reset the edit?"
 msgstr "他の人によって同じ投稿に更新がかかっています。編集をやり直しますか？"
 
 #: app/controllers/admin/users_controller.rb:243
+#: app/controllers/admin/users_controller.rb:248
 msgid "Updated %{count} records."
 msgstr "%{count}件更新しました。"
 
@@ -6751,26 +6753,26 @@ msgstr "保存場所"
 msgid "Wiki text"
 msgstr "Wikiテキスト"
 
-#: app/models/user.rb:327
+#: app/models/user.rb:318
 msgid "Within %d day"
 msgid_plural "Within %d days"
 msgstr[0] "%d 日以内"
 
-#: app/models/user.rb:329
+#: app/models/user.rb:320
 msgid "Within %d hour"
 msgid_plural "Within %d hours"
 msgstr[0] "%d 時間以内"
 
-#: app/models/user.rb:331
+#: app/models/user.rb:322
 msgid "Within %d minute"
 msgid_plural "Within %d minutes"
 msgstr[0] "%d 分以内"
 
-#: app/models/user.rb:325
+#: app/models/user.rb:316
 msgid "Within 10 days and more"
 msgstr "10日以上"
 
-#: app/models/user.rb:333
+#: app/models/user.rb:324
 msgid "Within a minute"
 msgstr "1分以内"
 
@@ -7134,9 +7136,13 @@ msgstr "[プレビュー]"
 msgid "[Profile]"
 msgstr "[プロフィール]"
 
-#: app/views/admin/settings/_security.html.erb:18
+#: app/views/admin/settings/_security.html.erb:21
 msgid "[Request all users to reset their passwords]"
 msgstr "[全ユーザにパスワード再設定を求める]"
+
+#: app/views/admin/settings/_security.html.erb:12
+msgid "[Reset the password expiration period for all users]"
+msgstr "[全ユーザのパスワード有効期限をリセットする]"
 
 #: app/views/mypage/welcome.html.erb:42
 msgid "[Search Groups]"
@@ -7415,7 +7421,7 @@ msgstr "グループ参加"
 msgid "has an invalid format."
 msgstr "の形式が間違っています。"
 
-#: app/models/user.rb:296
+#: app/models/user.rb:287
 msgid "incorrect."
 msgstr "が間違っています。"
 
@@ -7455,7 +7461,7 @@ msgstr "は%sと異なる形式で入力してください"
 msgid "new_uid"
 msgstr "新しく設定するユーザ名"
 
-#: app/models/user.rb:291
+#: app/models/user.rb:282
 msgid "not provided."
 msgstr "が入力されていません。"
 

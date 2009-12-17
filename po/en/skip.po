@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.4.0\n"
-"POT-Creation-Date: 2009-12-17 10:15+0900\n"
+"POT-Creation-Date: 2009-12-17 11:43+0900\n"
 "PO-Revision-Date: 2009-06-29 13:31+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1710,7 +1710,7 @@ msgid ""
 "following email address."
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:275
+#: app/controllers/admin/users_controller.rb:280
 #: app/controllers/platform_controller.rb:121
 msgid "An email containing the URL for signup will be sent to %{email}."
 msgid_plural ""
@@ -1829,6 +1829,7 @@ msgstr ""
 #: app/views/user/_action_box.html.erb:10
 #: app/views/group/_action_box.html.erb:6
 #: app/views/admin/pictures/index.html.erb:19
+#: app/views/admin/settings/_security.html.erb:12
 #: app/views/admin/board_entries/index.html.erb:35
 #: app/views/admin/share_files/index.html.erb:36
 #: app/views/admin/bookmarks/index.html.erb:19
@@ -2793,7 +2794,7 @@ msgstr ""
 msgid "Email address %s has been registered in the site"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:282
+#: app/controllers/admin/users_controller.rb:287
 msgid "Email address %{email} has been registered in the site"
 msgid_plural "%{num} emails have been registered in the site"
 msgstr[0] ""
@@ -3408,11 +3409,11 @@ msgstr ""
 msgid "Hanako Yamada"
 msgstr ""
 
-#: app/models/user.rb:323
+#: app/models/user.rb:314
 msgid "Has not accessed for 3 or more months."
 msgstr ""
 
-#: app/models/user.rb:321
+#: app/models/user.rb:312
 msgid "Has not accessed for 6 or more months."
 msgstr ""
 
@@ -3759,7 +3760,7 @@ msgstr ""
 msgid "Leave the group"
 msgstr ""
 
-#: app/views/admin/settings/_security.html.erb:37
+#: app/views/admin/settings/_security.html.erb:40
 msgid "Limit to single session"
 msgstr ""
 
@@ -3839,7 +3840,7 @@ msgstr ""
 msgid "Lock accounts by unsuccessful log in attempts"
 msgstr ""
 
-#: app/views/admin/settings/_security.html.erb:19
+#: app/views/admin/settings/_security.html.erb:22
 msgid ""
 "Lock all current user accounts. Users will be asked to reset their passwords "
 "next time they log in. Use this when you want all users to reset their "
@@ -3877,7 +3878,7 @@ msgid "Login automatically from next time"
 msgstr ""
 
 #: app/views/shared/_password_login_form.html.erb:18
-#: app/views/admin/settings/_security.html.erb:27
+#: app/views/admin/settings/_security.html.erb:30
 msgid "Login keyphrase"
 msgstr ""
 
@@ -4548,7 +4549,7 @@ msgstr ""
 msgid "Password resetting code cannot be issued for unactivated users."
 msgstr ""
 
-#: app/views/admin/settings/_security.html.erb:13
+#: app/views/admin/settings/_security.html.erb:16
 msgid "Password strength"
 msgstr ""
 
@@ -4744,7 +4745,7 @@ msgid ""
 "you delete it."
 msgstr ""
 
-#: app/views/admin/settings/_security.html.erb:32
+#: app/views/admin/settings/_security.html.erb:35
 msgid "Prompt for user data cleaning by email"
 msgstr ""
 
@@ -5682,7 +5683,7 @@ msgstr ""
 msgid "The URL for resetting your password as follows:"
 msgstr ""
 
-#: app/controllers/admin/users_controller.rb:277
+#: app/controllers/admin/users_controller.rb:282
 msgid "The URL for signup issued. Please contact a use from comfirm link"
 msgid_plural ""
 "The URLs for signup issued. Please contact some users from comfirm link"
@@ -5777,7 +5778,7 @@ msgstr ""
 msgid "This user has already left."
 msgstr ""
 
-#: app/views/admin/settings/_security.html.erb:18
+#: app/views/admin/settings/_security.html.erb:21
 msgid ""
 "This will lock all user accounts including yourself. All logged in users "
 "will be forced to log out and passwords need to be reset to log in again. "
@@ -5980,6 +5981,7 @@ msgid "Update on the same entry from other users detected. Reset the edit?"
 msgstr ""
 
 #: app/controllers/admin/users_controller.rb:243
+#: app/controllers/admin/users_controller.rb:248
 msgid "Updated %{count} records."
 msgstr ""
 
@@ -6590,27 +6592,27 @@ msgstr ""
 msgid "Wiki text"
 msgstr ""
 
-#: app/models/user.rb:327
+#: app/models/user.rb:318
 msgid "Within %d day"
 msgid_plural "Within %d days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/models/user.rb:329
+#: app/models/user.rb:320
 msgid "Within %d hour"
 msgid_plural "Within %d hours"
 msgstr[0] ""
 
-#: app/models/user.rb:331
+#: app/models/user.rb:322
 msgid "Within %d minute"
 msgid_plural "Within %d minutes"
 msgstr[0] ""
 
-#: app/models/user.rb:325
+#: app/models/user.rb:316
 msgid "Within 10 days and more"
 msgstr ""
 
-#: app/models/user.rb:333
+#: app/models/user.rb:324
 msgid "Within a minute"
 msgstr ""
 
@@ -6958,8 +6960,12 @@ msgstr ""
 msgid "[Profile]"
 msgstr ""
 
-#: app/views/admin/settings/_security.html.erb:18
+#: app/views/admin/settings/_security.html.erb:21
 msgid "[Request all users to reset their passwords]"
+msgstr ""
+
+#: app/views/admin/settings/_security.html.erb:12
+msgid "[Reset the password expiration period for all users]"
 msgstr ""
 
 #: app/views/mypage/welcome.html.erb:42
@@ -7235,7 +7241,7 @@ msgstr ""
 msgid "has an invalid format."
 msgstr ""
 
-#: app/models/user.rb:296
+#: app/models/user.rb:287
 msgid "incorrect."
 msgstr ""
 
@@ -7275,7 +7281,7 @@ msgstr ""
 msgid "new_uid"
 msgstr ""
 
-#: app/models/user.rb:291
+#: app/models/user.rb:282
 msgid "not provided."
 msgstr ""
 
