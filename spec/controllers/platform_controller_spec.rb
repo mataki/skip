@@ -30,7 +30,7 @@ describe PlatformController, "#login(パスワードでのログイン)" do
   end
   describe "認証に成功する場合" do
     before do
-      User.should_receive(:auth).with(@code, @password, anything()).and_return(@user)
+      User.should_receive(:auth).with(@code, @password, anything()).and_yield(true, @user)
       controller.stub!(:handle_remember_cookie!)
     end
     it "ルートに戻ること" do
@@ -45,11 +45,11 @@ describe PlatformController, "#login(パスワードでのログイン)" do
   describe "認証に失敗した場合" do
     before do
       request.env['HTTP_REFERER'] = @back = "http://test.host/previous/page"
-      User.should_receive(:auth).and_return("Error message")
+      User.should_receive(:auth).and_yield(false, nil)
     end
     it "エラーメッセージがflashに登録されていること" do
       login
-      flash[:error].should == "Error message"
+      flash[:error].should == "Log in failed."
     end
     it "リファラーに戻ること" do
       login

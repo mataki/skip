@@ -509,7 +509,7 @@ describe User, ".create_with_identity_url" do
 end
 
 describe User, ".auth" do
-  subject { User.auth('code_or_email', "valid_password") }
+  subject { User.auth('code_or_email', "valid_password") { |result, user| @result = result; @authed_user = user } }
 
   describe "指定したログインID又はメールアドレスに対応するユーザが存在する場合" do
     before do
@@ -521,7 +521,7 @@ describe User, ".auth" do
       before do
         @user.stub!(:unused?).and_return(true)
       end
-      it { should == "Log in failed." }
+      it { should be_false }
     end
     describe "使用中ユーザの場合" do
       before do
@@ -536,7 +536,8 @@ describe User, ".auth" do
           User.auth('code_or_email', "valid_password")
         end
         it "ユーザが返ること" do
-          should == @user
+          should be_true
+          @authed_user.should == @user
         end
       end
       describe "パスワードは正しくない場合" do
@@ -545,7 +546,7 @@ describe User, ".auth" do
           User.auth('code_or_email', 'invalid_password')
         end
         it "エラーメッセージが返ること" do
-          User.auth('code_or_email', 'invalid_password').should == "Log in failed."
+          User.auth('code_or_email', 'invalid_password').should be_false
         end
       end
       describe "パスワードの有効期限が切れている場合" do
@@ -553,22 +554,26 @@ describe User, ".auth" do
           @user.stub!(:within_time_limit_of_password?).and_return(false)
         end
         it "エラーメッセージが返ること" do
-          should == "Password is expired. Please reset password."
+          should be_false
+          @authed_user.should == @user
         end
       end
       describe "アカウントがロックされている場合" do
-        it "エラーメッセージが返ること" do
+        before do
           @user.stub!(:locked?).and_return(true)
-          should == "This account is locked. Please reset password."
+        end
+        it "エラーメッセージが返ること" do
+          should be_false
+          @authed_user.should == @user
         end
       end
     end
   end
   describe "指定したログインID又はメールアドレスに対応するユーザが存在しない場合" do
     before do
-      User.should_receive(:find_by_code_or_email_with_key_phrase).and_return(nil)
+      User.should_receive(:find_by_code_or_email_with_key_phrase).at_least(:once).and_return(nil)
     end
-    it { should == "Log in failed." }
+    it { should be_false }
   end
 end
 
