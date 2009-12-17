@@ -1221,12 +1221,18 @@ div.topix_entries_wrapper, div.topix_share_files_wrapper, div.topix_bookmarks_wr
 
   table.topix_bookmarks
     tr
-      td.entry_outline
+      td.bookmark_outline
+        :text-align left
         span.count
           :background #ffe0e0
           :font
             :size = !small_font_size
             :weight bold
+        span.bookmark_comment
+          :margin-left 24px
+          :font-size 8px
+          :vertical-align bottom
+          :color #808080
 
 // ブックマーク
 // ------------------------------------------------------------
