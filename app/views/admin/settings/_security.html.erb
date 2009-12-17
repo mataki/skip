@@ -7,7 +7,10 @@
 </div>
 <h3><%= _('Periodic password change') %></h3>
 <div class="box tabular">
-  <p><%= settings_label_with_check_box_tag :enable_password_periodic_change %></p>
+  <p>
+    <%= settings_label_with_check_box_tag :enable_password_periodic_change %>
+    <%= link_to(_('[Reset the password expiration period for all users]'), reset_all_password_expiration_periods_admin_users_path, :id => 'reset_passwords', :confirm => _('Are you sure?'), :method => :post) %>
+  </p>
   <p><%= settings_label_with_text_field_tag :password_change_interval %></p>
 </div>
 <h3><%= _('Password strength') %></h3>
@@ -55,6 +58,11 @@
     };
     var togglePasswordChangeInterval = function() {
         toggleByCheckbox('setting_enable_password_periodic_change');
+        if ( $j('#setting_enable_password_periodic_change').is(':checked') ) {
+            $j('#reset_passwords').show();
+        } else {
+            $j('#reset_passwords').hide();
+        }
     };
     var toggleCustomPasswordStrength = function() {
         if($j('#setting_password_strength').val() == 'custom') {

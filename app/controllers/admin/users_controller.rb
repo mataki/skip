@@ -16,7 +16,7 @@
 class Admin::UsersController < Admin::ApplicationController
   include Admin::AdminModule::AdminRootModule
 
-  verify :method => :post, :only => ['lock_actives']
+  verify :method => :post, :only => %w(lock_actives reset_all_password_expiration_periods)
 
   skip_before_filter :sso, :only => [:first]
   skip_before_filter :login_required, :only => [:first]
@@ -241,6 +241,11 @@ class Admin::UsersController < Admin::ApplicationController
 
   def lock_actives
     flash[:notice] = _('Updated %{count} records.')%{:count => Admin::User.lock_actives}
+    redirect_to admin_settings_path(:tab => :security)
+  end
+
+  def reset_all_password_expiration_periods
+    flash[:notice] = _('Updated %{count} records.')%{:count => Admin::User.reset_all_password_expiration_periods}
     redirect_to admin_settings_path(:tab => :security)
   end
 
