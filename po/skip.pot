@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.4.0\n"
-"POT-Creation-Date: 2009-12-14 09:49+0900\n"
+"POT-Creation-Date: 2009-12-17 10:15+0900\n"
 "PO-Revision-Date: 2008-08-11 17:41+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,7 +35,7 @@ msgid ""
 msgstr ""
 
 #: app/helpers/mypage_helper.rb:47 app/controllers/rankings_controller.rb:103
-#: app/models/board_entry.rb:402 app/views/entries/_topix_entries.html.erb:46
+#: app/models/board_entry.rb:417 app/views/entries/_topix_entries.html.erb:46
 #: app/views/entries/_topix_entries.html.erb:48
 #: app/views/bookmarks/_topix_bookmarks.html.erb:21
 #: app/views/groups/_group_list.html.erb:23
@@ -52,7 +52,7 @@ msgstr ""
 msgid "%B %d %Y"
 msgstr ""
 
-#: app/models/board_entry.rb:404 app/models/board_entry_comment.rb:47
+#: app/models/board_entry.rb:419 app/models/board_entry_comment.rb:47
 msgid "%B %d %Y %H:%M"
 msgstr ""
 
@@ -95,6 +95,10 @@ msgstr ""
 
 #: app/models/group.rb:187
 msgid "%s has already joined / applied to join this group."
+msgstr ""
+
+#: app/controllers/platform_controller.rb:317
+msgid "%s is locked. Please reset password."
 msgstr ""
 
 #: app/views/mypage/index.html.erb:135
@@ -276,7 +280,7 @@ msgstr ""
 msgid "(This screen is to avoid security risks ralated to direct downloading)"
 msgstr ""
 
-#: app/models/board_entry.rb:585
+#: app/models/board_entry.rb:600
 msgid "(Unknown topic entry found. However, this has been ignored)"
 msgstr ""
 
@@ -374,7 +378,7 @@ msgstr ""
 msgid "Access Log"
 msgstr ""
 
-#: app/controllers/search_controller.rb:106
+#: app/controllers/search_controller.rb:95
 msgid "Access denied by search node. Please contact system owner."
 msgstr ""
 
@@ -1846,19 +1850,19 @@ msgstr ""
 msgid "BoardEntry|Aim type"
 msgstr ""
 
-#: app/models/board_entry.rb:161
+#: app/models/board_entry.rb:176
 msgid "BoardEntry|Aim type|Desc|entry"
 msgstr ""
 
-#: app/models/board_entry.rb:163
+#: app/models/board_entry.rb:178
 msgid "BoardEntry|Aim type|Desc|notice"
 msgstr ""
 
-#: app/models/board_entry.rb:162
+#: app/models/board_entry.rb:177
 msgid "BoardEntry|Aim type|Desc|question"
 msgstr ""
 
-#: app/models/board_entry.rb:158 app/views/entries/_aim_type_box.html.erb:9
+#: app/models/board_entry.rb:173 app/views/entries/_aim_type_box.html.erb:9
 #: app/views/search/entry_search.html.erb:15
 msgid "BoardEntry|Aim type|entry"
 msgid_plural "entries"
@@ -1872,13 +1876,13 @@ msgid_plural "notices"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/models/board_entry.rb:160
+#: app/models/board_entry.rb:175
 msgid "BoardEntry|Aim type|notices"
 msgid_plural "notices"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/models/board_entry.rb:159 app/views/entries/_aim_type_box.html.erb:10
+#: app/models/board_entry.rb:174 app/views/entries/_aim_type_box.html.erb:10
 #: app/views/search/entry_search.html.erb:16
 msgid "BoardEntry|Aim type|question"
 msgid_plural "questions"
@@ -1917,11 +1921,11 @@ msgstr ""
 msgid "BoardEntry|Entry type"
 msgstr ""
 
-#: app/models/board_entry.rb:156
+#: app/models/board_entry.rb:171
 msgid "BoardEntry|Entry type|DIARY"
 msgstr ""
 
-#: app/models/board_entry.rb:157
+#: app/models/board_entry.rb:172
 msgid "BoardEntry|Entry type|GROUP_BBS"
 msgstr ""
 
@@ -1941,11 +1945,11 @@ msgstr ""
 msgid "BoardEntry|Lock version"
 msgstr ""
 
-#: app/models/board_entry.rb:165 app/views/entries/_entry_detail.html.erb:685
+#: app/models/board_entry.rb:180 app/views/entries/_entry_detail.html.erb:685
 msgid "BoardEntry|Open|false"
 msgstr ""
 
-#: app/models/board_entry.rb:164
+#: app/models/board_entry.rb:179
 msgid "BoardEntry|Open|true"
 msgstr ""
 
@@ -2386,7 +2390,7 @@ msgstr ""
 msgid "Cosmetics"
 msgstr ""
 
-#: app/controllers/share_file_controller.rb:220
+#: app/controllers/share_file_controller.rb:222
 msgid ""
 "Could not find the entity of the specified file. Contact system "
 "administrator."
@@ -2488,7 +2492,7 @@ msgstr ""
 msgid "Date"
 msgstr ""
 
-#: app/models/share_file.rb:299
+#: app/models/share_file.rb:312
 msgid "Date Accessed"
 msgstr ""
 
@@ -2585,7 +2589,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: app/controllers/share_file_controller.rb:262
+#: app/controllers/share_file_controller.rb:264
 msgid "Download history was successfully deleted."
 msgstr ""
 
@@ -2983,7 +2987,7 @@ msgstr ""
 msgid "File"
 msgstr ""
 
-#: app/controllers/share_file_controller.rb:228
+#: app/controllers/share_file_controller.rb:230
 msgid "File Download"
 msgstr ""
 
@@ -3027,7 +3031,7 @@ msgstr ""
 
 #: app/helpers/application_helper.rb:351
 #: app/controllers/services_controller.rb:47
-#: app/controllers/search_controller.rb:61 app/views/share_file/new.html.erb:9
+#: app/controllers/search_controller.rb:72 app/views/share_file/new.html.erb:9
 #: app/views/share_file/edit.html.erb:9
 msgid "Files"
 msgstr ""
@@ -3090,7 +3094,7 @@ msgstr ""
 msgid "From others"
 msgstr ""
 
-#: app/controllers/search_controller.rb:91
+#: app/controllers/search_controller.rb:80
 #: app/views/search/full_text_search.html.erb:14
 msgid "Full-text Search"
 msgstr ""
@@ -3132,7 +3136,7 @@ msgstr ""
 msgid "Group categories"
 msgstr ""
 
-#: app/models/board_entry.rb:179
+#: app/models/board_entry.rb:194
 msgid "Group does not exist."
 msgstr ""
 
@@ -3228,7 +3232,7 @@ msgstr ""
 #: app/controllers/groups_controller.rb:62
 #: app/controllers/services_controller.rb:46
 #: app/controllers/group_controller.rb:344
-#: app/controllers/share_file_controller.rb:165
+#: app/controllers/share_file_controller.rb:181
 #: app/controllers/edit_controller.rb:276
 #: app/views/admin/_data_menu_box.html.erb:6
 msgid "Groups"
@@ -3290,11 +3294,11 @@ msgstr ""
 msgid "Hanako Yamada"
 msgstr ""
 
-#: app/models/user.rb:309
+#: app/models/user.rb:323
 msgid "Has not accessed for 3 or more months."
 msgstr ""
 
-#: app/models/user.rb:307
+#: app/models/user.rb:321
 msgid "Has not accessed for 6 or more months."
 msgstr ""
 
@@ -3495,7 +3499,7 @@ msgstr ""
 msgid "Invalid format. Please input like uid:xxxxx"
 msgstr ""
 
-#: app/models/board_entry.rb:181
+#: app/models/board_entry.rb:196
 msgid "Invalid group detected."
 msgstr ""
 
@@ -3506,7 +3510,7 @@ msgstr ""
 #: app/controllers/monta_controller.rb:22
 #: app/controllers/monta_controller.rb:33
 #: app/controllers/board_entries_controller.rb:26
-#: app/models/board_entry.rb:680
+#: app/models/board_entry.rb:695
 msgid "Invalid operation."
 msgstr ""
 
@@ -3520,7 +3524,7 @@ msgstr ""
 msgid "Invalid parameter(s) found."
 msgstr ""
 
-#: app/controllers/share_file_controller.rb:279
+#: app/controllers/share_file_controller.rb:281
 #: app/controllers/edit_controller.rb:296
 msgid "Invalid parameter(s)."
 msgstr ""
@@ -3547,7 +3551,7 @@ msgstr ""
 msgid "Invalid session. You need to log in again."
 msgstr ""
 
-#: app/models/board_entry.rb:175
+#: app/models/board_entry.rb:190
 msgid "Invalid user detected."
 msgstr ""
 
@@ -3732,7 +3736,8 @@ msgstr ""
 msgid "Log in again."
 msgstr ""
 
-#: app/models/user.rb:209 app/models/user.rb:210 app/models/user.rb:221
+#: app/controllers/platform_controller.rb:324
+#: app/controllers/platform_controller.rb:335
 msgid "Log in failed."
 msgstr ""
 
@@ -4064,8 +4069,8 @@ msgstr ""
 msgid "No matching results found."
 msgstr ""
 
-#: app/controllers/search_controller.rb:82
-#: app/controllers/share_file_controller.rb:184
+#: app/controllers/search_controller.rb:75
+#: app/controllers/share_file_controller.rb:187
 msgid "No matching shared files found."
 msgstr ""
 
@@ -4348,14 +4353,14 @@ msgstr ""
 msgid "Operation cancelled. Please confirm to authenticate with the server."
 msgstr ""
 
-#: app/models/share_file.rb:71
+#: app/models/share_file.rb:84
 msgid "Operation inexecutable."
 msgstr ""
 
 #: app/controllers/application_controller.rb:160
 #: app/controllers/board_entries_controller.rb:89
 #: app/controllers/board_entries_controller.rb:139
-#: app/controllers/share_file_controller.rb:257
+#: app/controllers/share_file_controller.rb:259
 msgid "Operation unauthorized."
 msgstr ""
 
@@ -4418,10 +4423,10 @@ msgid "Password"
 msgstr ""
 
 #: app/views/platform/forgot_password.html.erb:2
-msgid "Password Reminder"
+msgid "Password Reset"
 msgstr ""
 
-#: app/controllers/platform_controller.rb:316 app/models/user.rb:215
+#: app/controllers/platform_controller.rb:320
 msgid "Password is expired. Please reset password."
 msgstr ""
 
@@ -4519,8 +4524,7 @@ msgstr ""
 msgid "Please input OpenID URL."
 msgstr ""
 
-#: app/controllers/search_controller.rb:105
-#: app/views/shared/_header.html.erb:1
+#: app/controllers/search_controller.rb:94 app/views/shared/_header.html.erb:1
 msgid "Please input search query."
 msgstr ""
 
@@ -5124,6 +5128,10 @@ msgid "ShareFile|Content type"
 msgstr ""
 
 #: app/models/share_file.rb:-
+msgid "ShareFile|Created at"
+msgstr ""
+
+#: app/models/share_file.rb:-
 msgid "ShareFile|Date"
 msgstr ""
 
@@ -5149,6 +5157,10 @@ msgstr ""
 
 #: app/models/share_file.rb:-
 msgid "ShareFile|Total count"
+msgstr ""
+
+#: app/models/share_file.rb:-
+msgid "ShareFile|Updated at"
 msgstr ""
 
 #: app/models/share_file.rb:-
@@ -5375,7 +5387,7 @@ msgstr ""
 msgid "Start with the site!"
 msgstr ""
 
-#: app/models/board_entry.rb:690
+#: app/models/board_entry.rb:705
 msgid "State of your question [%s] is changed!"
 msgstr ""
 
@@ -5617,20 +5629,12 @@ msgstr ""
 msgid "There are no pages you can see because of the publicity limits."
 msgstr ""
 
-#: app/controllers/search_controller.rb:84
-msgid "There are no shared files uploaded."
-msgstr ""
-
 #: app/controllers/edit_controller.rb:327
 msgid "There is a new entry talking about your entry [%s]!"
 msgstr ""
 
 #: app/controllers/bookmark_controller.rb:55
 msgid "This URL cannot be bookmarked."
-msgstr ""
-
-#: app/models/user.rb:213
-msgid "This account is locked. Please reset password."
 msgstr ""
 
 #: app/controllers/board_entries_controller.rb:123
@@ -5930,7 +5934,7 @@ msgid "User %{username} has already been registered."
 msgstr ""
 
 #: app/helpers/user_helper.rb:68 app/controllers/admin/users_controller.rb:62
-#: app/controllers/admin/users_controller.rb:80 app/models/board_entry.rb:173
+#: app/controllers/admin/users_controller.rb:80 app/models/board_entry.rb:188
 msgid "User does not exist."
 msgstr ""
 
@@ -6180,6 +6184,10 @@ msgstr ""
 
 #: app/models/user_reading.rb:-
 msgid "UserReading|Checked on"
+msgstr ""
+
+#: app/models/user_reading.rb:-
+msgid "UserReading|Notice type"
 msgstr ""
 
 #: app/models/user_reading.rb:-
@@ -6468,27 +6476,27 @@ msgstr ""
 msgid "Wiki text"
 msgstr ""
 
-#: app/models/user.rb:313
+#: app/models/user.rb:327
 msgid "Within %d day"
 msgid_plural "Within %d days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/models/user.rb:315
+#: app/models/user.rb:329
 msgid "Within %d hour"
 msgid_plural "Within %d hours"
 msgstr[0] ""
 
-#: app/models/user.rb:317
+#: app/models/user.rb:331
 msgid "Within %d minute"
 msgid_plural "Within %d minutes"
 msgstr[0] ""
 
-#: app/models/user.rb:311
+#: app/models/user.rb:325
 msgid "Within 10 days and more"
 msgstr ""
 
-#: app/models/user.rb:319
+#: app/models/user.rb:333
 msgid "Within a minute"
 msgstr ""
 
@@ -6769,7 +6777,7 @@ msgstr ""
 msgid "[Get download history in CSV]"
 msgstr ""
 
-#: app/models/share_file.rb:274 app/models/board_entry.rb:425
+#: app/models/share_file.rb:287 app/models/board_entry.rb:440
 msgid "[Group members only]"
 msgstr ""
 
@@ -6785,7 +6793,7 @@ msgstr ""
 msgid "[Hints on writing entries]"
 msgstr ""
 
-#: app/models/board_entry.rb:761
+#: app/models/board_entry.rb:776
 msgid "[Link does not exist...%s>]"
 msgstr ""
 
@@ -6807,7 +6815,7 @@ msgstr ""
 msgid "[Next]"
 msgstr ""
 
-#: app/models/share_file.rb:268 app/models/board_entry.rb:419
+#: app/models/share_file.rb:281 app/models/board_entry.rb:434
 msgid "[Open to all]"
 msgstr ""
 
@@ -6815,7 +6823,7 @@ msgstr ""
 msgid "[Other users: %{count} users]"
 msgstr ""
 
-#: app/models/share_file.rb:272 app/models/board_entry.rb:423
+#: app/models/share_file.rb:285 app/models/board_entry.rb:438
 msgid "[Owner only]"
 msgstr ""
 
@@ -7113,7 +7121,7 @@ msgstr ""
 msgid "has an invalid format."
 msgstr ""
 
-#: app/models/user.rb:282
+#: app/models/user.rb:296
 msgid "incorrect."
 msgstr ""
 
@@ -7153,7 +7161,7 @@ msgstr ""
 msgid "new_uid"
 msgstr ""
 
-#: app/models/user.rb:277
+#: app/models/user.rb:291
 msgid "not provided."
 msgstr ""
 
@@ -7318,7 +7326,7 @@ msgstr ""
 
 #: app/helpers/initial_settings_helper.rb:43
 #: app/controllers/admin/users_controller.rb:196
-#: app/controllers/admin/users_controller.rb:204 app/models/share_file.rb:299
+#: app/controllers/admin/users_controller.rb:204 app/models/share_file.rb:312
 #: app/views/user/show.html.erb:31
 #: app/views/portal/_registration_form.html.erb:42
 #: app/views/admin/users/create_uid.html.erb:12

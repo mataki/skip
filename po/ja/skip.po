@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.4.0\n"
-"POT-Creation-Date: 2009-12-14 09:49+0900\n"
+"POT-Creation-Date: 2009-12-17 10:15+0900\n"
 "PO-Revision-Date: 2009-11-27 16:12+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,7 +37,7 @@ msgstr ""
 "指定する際に使います。"
 
 #: app/helpers/mypage_helper.rb:47 app/controllers/rankings_controller.rb:103
-#: app/models/board_entry.rb:402 app/views/entries/_topix_entries.html.erb:46
+#: app/models/board_entry.rb:417 app/views/entries/_topix_entries.html.erb:46
 #: app/views/entries/_topix_entries.html.erb:48
 #: app/views/bookmarks/_topix_bookmarks.html.erb:21
 #: app/views/groups/_group_list.html.erb:23
@@ -54,7 +54,7 @@ msgstr ""
 msgid "%B %d %Y"
 msgstr "%Y/%m/%d"
 
-#: app/models/board_entry.rb:404 app/models/board_entry_comment.rb:47
+#: app/models/board_entry.rb:419 app/models/board_entry_comment.rb:47
 msgid "%B %d %Y %H:%M"
 msgstr "%Y年%m月%d日 %H:%M"
 
@@ -98,6 +98,10 @@ msgstr "%sさんはそのグループには参加していません。"
 #: app/models/group.rb:187
 msgid "%s has already joined / applied to join this group."
 msgstr "%sさんは既に参加済み/参加申請済みです。"
+
+#: app/controllers/platform_controller.rb:317
+msgid "%s is locked. Please reset password."
+msgstr "%sがロックされています。パスワード再設定を行って下さい。"
 
 #: app/views/mypage/index.html.erb:135
 msgid "%s users"
@@ -284,7 +288,7 @@ msgstr ""
 "（この画面は、直ダウンロードによるセキュリティ上の懸念を解消するために表示し"
 "ています）"
 
-#: app/models/board_entry.rb:585
+#: app/models/board_entry.rb:600
 msgid "(Unknown topic entry found. However, this has been ignored)"
 msgstr "（話題元の記事が不明でしたが無視しました）"
 
@@ -392,7 +396,7 @@ msgstr "アクセス数："
 msgid "Access Log"
 msgstr "アクセス履歴"
 
-#: app/controllers/search_controller.rb:106
+#: app/controllers/search_controller.rb:95
 msgid "Access denied by search node. Please contact system owner."
 msgstr ""
 "検索エンジンにアクセスできませんでした。システム管理者に連絡してください。"
@@ -2006,19 +2010,19 @@ msgstr "更新日時"
 msgid "BoardEntry|Aim type"
 msgstr "種類"
 
-#: app/models/board_entry.rb:161
+#: app/models/board_entry.rb:176
 msgid "BoardEntry|Aim type|Desc|entry"
 msgstr "記事 (マイページの「新着記事」に表示されます)"
 
-#: app/models/board_entry.rb:163
+#: app/models/board_entry.rb:178
 msgid "BoardEntry|Aim type|Desc|notice"
 msgstr "お知らせ (マイページの「あなたへのお知らせ」に表示されます)"
 
-#: app/models/board_entry.rb:162
+#: app/models/board_entry.rb:177
 msgid "BoardEntry|Aim type|Desc|question"
 msgstr "質問 (マイページの「みんなからの質問」に表示されます)"
 
-#: app/models/board_entry.rb:158 app/views/entries/_aim_type_box.html.erb:9
+#: app/models/board_entry.rb:173 app/views/entries/_aim_type_box.html.erb:9
 #: app/views/search/entry_search.html.erb:15
 msgid "BoardEntry|Aim type|entry"
 msgid_plural "entries"
@@ -2030,13 +2034,13 @@ msgid "BoardEntry|Aim type|notice"
 msgid_plural "notices"
 msgstr[0] "お知らせ"
 
-#: app/models/board_entry.rb:160
+#: app/models/board_entry.rb:175
 msgid "BoardEntry|Aim type|notices"
 msgid_plural "notices"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/models/board_entry.rb:159 app/views/entries/_aim_type_box.html.erb:10
+#: app/models/board_entry.rb:174 app/views/entries/_aim_type_box.html.erb:10
 #: app/views/search/entry_search.html.erb:16
 msgid "BoardEntry|Aim type|question"
 msgid_plural "questions"
@@ -2074,11 +2078,11 @@ msgstr "話題にした記事の数"
 msgid "BoardEntry|Entry type"
 msgstr "種別"
 
-#: app/models/board_entry.rb:156
+#: app/models/board_entry.rb:171
 msgid "BoardEntry|Entry type|DIARY"
 msgstr "ブログ"
 
-#: app/models/board_entry.rb:157
+#: app/models/board_entry.rb:172
 msgid "BoardEntry|Entry type|GROUP_BBS"
 msgstr "フォーラム"
 
@@ -2098,11 +2102,11 @@ msgstr "最終更新日"
 msgid "BoardEntry|Lock version"
 msgstr "ロックバージョン"
 
-#: app/models/board_entry.rb:165 app/views/entries/_entry_detail.html.erb:685
+#: app/models/board_entry.rb:180 app/views/entries/_entry_detail.html.erb:685
 msgid "BoardEntry|Open|false"
 msgstr "終了"
 
-#: app/models/board_entry.rb:164
+#: app/models/board_entry.rb:179
 msgid "BoardEntry|Open|true"
 msgstr "質問中"
 
@@ -2558,7 +2562,7 @@ msgstr "対応サイト"
 msgid "Cosmetics"
 msgstr "美容"
 
-#: app/controllers/share_file_controller.rb:220
+#: app/controllers/share_file_controller.rb:222
 msgid ""
 "Could not find the entity of the specified file. Contact system "
 "administrator."
@@ -2662,7 +2666,7 @@ msgstr "この月のデータはありません。"
 msgid "Date"
 msgstr "日付"
 
-#: app/models/share_file.rb:299
+#: app/models/share_file.rb:312
 msgid "Date Accessed"
 msgstr "アクセス日時"
 
@@ -2769,7 +2773,7 @@ msgstr ""
 "\n"
 "などが正しく設定されているかどうか定期的に確認して下さい。"
 
-#: app/controllers/share_file_controller.rb:262
+#: app/controllers/share_file_controller.rb:264
 msgid "Download history was successfully deleted."
 msgstr "ダウンロード履歴の削除に成功しました。"
 
@@ -3171,7 +3175,7 @@ msgstr "女性"
 msgid "File"
 msgstr "ファイル"
 
-#: app/controllers/share_file_controller.rb:228
+#: app/controllers/share_file_controller.rb:230
 msgid "File Download"
 msgstr "ファイルのダウンロード"
 
@@ -3215,7 +3219,7 @@ msgstr "が同一のファイルが既に登録されています"
 
 #: app/helpers/application_helper.rb:351
 #: app/controllers/services_controller.rb:47
-#: app/controllers/search_controller.rb:61 app/views/share_file/new.html.erb:9
+#: app/controllers/search_controller.rb:72 app/views/share_file/new.html.erb:9
 #: app/views/share_file/edit.html.erb:9
 msgid "Files"
 msgstr "ファイル"
@@ -3278,7 +3282,7 @@ msgstr "金"
 msgid "From others"
 msgstr "みんなの情報"
 
-#: app/controllers/search_controller.rb:91
+#: app/controllers/search_controller.rb:80
 #: app/views/search/full_text_search.html.erb:14
 msgid "Full-text Search"
 msgstr "全文検索"
@@ -3320,7 +3324,7 @@ msgstr "グループ名・説明文"
 msgid "Group categories"
 msgstr "グループカテゴリ"
 
-#: app/models/board_entry.rb:179
+#: app/models/board_entry.rb:194
 msgid "Group does not exist."
 msgstr "ご指定のグループは存在しません。"
 
@@ -3416,7 +3420,7 @@ msgstr "はい"
 #: app/controllers/groups_controller.rb:62
 #: app/controllers/services_controller.rb:46
 #: app/controllers/group_controller.rb:344
-#: app/controllers/share_file_controller.rb:165
+#: app/controllers/share_file_controller.rb:181
 #: app/controllers/edit_controller.rb:276
 #: app/views/admin/_data_menu_box.html.erb:6
 msgid "Groups"
@@ -3478,11 +3482,11 @@ msgstr "更新日時"
 msgid "Hanako Yamada"
 msgstr "山田 花子"
 
-#: app/models/user.rb:309
+#: app/models/user.rb:323
 msgid "Has not accessed for 3 or more months."
 msgstr "約3ヶ月以上アクセスなし"
 
-#: app/models/user.rb:307
+#: app/models/user.rb:321
 msgid "Has not accessed for 6 or more months."
 msgstr "約半年以上アクセスなし"
 
@@ -3701,7 +3705,7 @@ msgstr "%{name} に不正な形式が設定されています"
 msgid "Invalid format. Please input like uid:xxxxx"
 msgstr "フォーマットが不正です。uid:xxxxxxのような形で入力してください。"
 
-#: app/models/board_entry.rb:181
+#: app/models/board_entry.rb:196
 msgid "Invalid group detected."
 msgstr "不正なグループです。"
 
@@ -3712,7 +3716,7 @@ msgstr "フォーマットが不正です。uid:xxxxxxのような形で入力�
 #: app/controllers/monta_controller.rb:22
 #: app/controllers/monta_controller.rb:33
 #: app/controllers/board_entries_controller.rb:26
-#: app/models/board_entry.rb:680
+#: app/models/board_entry.rb:695
 msgid "Invalid operation."
 msgstr "不正な操作です"
 
@@ -3726,7 +3730,7 @@ msgstr "不正なパラメタです。"
 msgid "Invalid parameter(s) found."
 msgstr "不正なパラメータがあります"
 
-#: app/controllers/share_file_controller.rb:279
+#: app/controllers/share_file_controller.rb:281
 #: app/controllers/edit_controller.rb:296
 msgid "Invalid parameter(s)."
 msgstr "パラメータが不正です"
@@ -3757,7 +3761,7 @@ msgstr "不正なリクエストです。"
 msgid "Invalid session. You need to log in again."
 msgstr "不正なセッションです。再度ログインし直して下さい。"
 
-#: app/models/board_entry.rb:175
+#: app/models/board_entry.rb:190
 msgid "Invalid user detected."
 msgstr "不正なユーザです。"
 
@@ -3949,7 +3953,8 @@ msgstr ""
 msgid "Log in again."
 msgstr "ログインし直して下さい。"
 
-#: app/models/user.rb:209 app/models/user.rb:210 app/models/user.rb:221
+#: app/controllers/platform_controller.rb:324
+#: app/controllers/platform_controller.rb:335
 msgid "Log in failed."
 msgstr "ログインに失敗しました。"
 
@@ -4287,8 +4292,8 @@ msgstr "みんなからの質問はありません"
 msgid "No matching results found."
 msgstr "該当する検索結果がありませんでした。"
 
-#: app/controllers/search_controller.rb:82
-#: app/controllers/share_file_controller.rb:184
+#: app/controllers/search_controller.rb:75
+#: app/controllers/share_file_controller.rb:187
 msgid "No matching shared files found."
 msgstr "該当する共有ファイルはありませんでした。"
 
@@ -4573,14 +4578,14 @@ msgstr "ユーザ"
 msgid "Operation cancelled. Please confirm to authenticate with the server."
 msgstr "キャンセルされました。もう一度認証してください。"
 
-#: app/models/share_file.rb:71
+#: app/models/share_file.rb:84
 msgid "Operation inexecutable."
 msgstr "ご指定の操作は実行できません。"
 
 #: app/controllers/application_controller.rb:160
 #: app/controllers/board_entries_controller.rb:89
 #: app/controllers/board_entries_controller.rb:139
-#: app/controllers/share_file_controller.rb:257
+#: app/controllers/share_file_controller.rb:259
 msgid "Operation unauthorized."
 msgstr "この操作は、許可されていません。"
 
@@ -4647,12 +4652,12 @@ msgid "Password"
 msgstr "パスワード"
 
 #: app/views/platform/forgot_password.html.erb:2
-msgid "Password Reminder"
-msgstr "パスワードリマインダー"
+msgid "Password Reset"
+msgstr "パスワード再設定"
 
-#: app/controllers/platform_controller.rb:316 app/models/user.rb:215
+#: app/controllers/platform_controller.rb:320
 msgid "Password is expired. Please reset password."
-msgstr "パスワードが有効期限切れです。再設定を行なってください。"
+msgstr "パスワードが有効期限切れです。パスワード再設定を行なってください。"
 
 #: app/controllers/admin/users_controller.rb:237
 msgid "Password resetting code cannot be issued for unactivated users."
@@ -4748,8 +4753,7 @@ msgstr "スポーツ"
 msgid "Please input OpenID URL."
 msgstr "OpenID URLを入力してください。"
 
-#: app/controllers/search_controller.rb:105
-#: app/views/shared/_header.html.erb:1
+#: app/controllers/search_controller.rb:94 app/views/shared/_header.html.erb:1
 msgid "Please input search query."
 msgstr "検索したいキーワードを入力してください"
 
@@ -5363,6 +5367,10 @@ msgid "ShareFile|Content type"
 msgstr "コンテントタイプ"
 
 #: app/models/share_file.rb:-
+msgid "ShareFile|Created at"
+msgstr ""
+
+#: app/models/share_file.rb:-
 msgid "ShareFile|Date"
 msgstr "日時"
 
@@ -5389,6 +5397,10 @@ msgstr "公開範囲"
 #: app/models/share_file.rb:-
 msgid "ShareFile|Total count"
 msgstr "ダウンロード数"
+
+#: app/models/share_file.rb:-
+msgid "ShareFile|Updated at"
+msgstr ""
 
 #: app/models/share_file.rb:-
 msgid "ShareFile|User"
@@ -5625,7 +5637,7 @@ msgstr "開始する"
 msgid "Start with the site!"
 msgstr "利用開始！"
 
-#: app/models/board_entry.rb:690
+#: app/models/board_entry.rb:705
 msgid "State of your question [%s] is changed!"
 msgstr "あなたの質問 [%s] の公開状態が変更されました。"
 
@@ -5877,10 +5889,6 @@ msgstr "現在紹介文はありません。"
 msgid "There are no pages you can see because of the publicity limits."
 msgstr "閲覧制限のため、あなたが見られるページはありませんでした。"
 
-#: app/controllers/search_controller.rb:84
-msgid "There are no shared files uploaded."
-msgstr "現在共有されているファイルはありません。"
-
 #: app/controllers/edit_controller.rb:327
 msgid "There is a new entry talking about your entry [%s]!"
 msgstr "あなたの記事を話題にした新着記事[%s]があります！"
@@ -5888,11 +5896,6 @@ msgstr "あなたの記事を話題にした新着記事[%s]があります！"
 #: app/controllers/bookmark_controller.rb:55
 msgid "This URL cannot be bookmarked."
 msgstr "このURLは、ブックマークできません。"
-
-#: app/models/user.rb:213
-msgid "This account is locked. Please reset password."
-msgstr ""
-"このアカウントはロックされています。パスワード再設定を行なってください。"
 
 #: app/controllers/board_entries_controller.rb:123
 msgid "This comment cannot be deleted since it has been commented."
@@ -6197,7 +6200,7 @@ msgid "User %{username} has already been registered."
 msgstr "既に%{username}が登録されています。"
 
 #: app/helpers/user_helper.rb:68 app/controllers/admin/users_controller.rb:62
-#: app/controllers/admin/users_controller.rb:80 app/models/board_entry.rb:173
+#: app/controllers/admin/users_controller.rb:80 app/models/board_entry.rb:188
 msgid "User does not exist."
 msgstr "ご指定のユーザは存在しません。"
 
@@ -6451,6 +6454,10 @@ msgstr "ブログ・フォーラム"
 #: app/models/user_reading.rb:-
 msgid "UserReading|Checked on"
 msgstr "確認日時"
+
+#: app/models/user_reading.rb:-
+msgid "UserReading|Notice type"
+msgstr ""
 
 #: app/models/user_reading.rb:-
 msgid "UserReading|Read"
@@ -6744,26 +6751,26 @@ msgstr "保存場所"
 msgid "Wiki text"
 msgstr "Wikiテキスト"
 
-#: app/models/user.rb:313
+#: app/models/user.rb:327
 msgid "Within %d day"
 msgid_plural "Within %d days"
 msgstr[0] "%d 日以内"
 
-#: app/models/user.rb:315
+#: app/models/user.rb:329
 msgid "Within %d hour"
 msgid_plural "Within %d hours"
 msgstr[0] "%d 時間以内"
 
-#: app/models/user.rb:317
+#: app/models/user.rb:331
 msgid "Within %d minute"
 msgid_plural "Within %d minutes"
 msgstr[0] "%d 分以内"
 
-#: app/models/user.rb:311
+#: app/models/user.rb:325
 msgid "Within 10 days and more"
 msgstr "10日以上"
 
-#: app/models/user.rb:319
+#: app/models/user.rb:333
 msgid "Within a minute"
 msgstr "1分以内"
 
@@ -7060,7 +7067,7 @@ msgstr "[強制退会させる]"
 msgid "[Get download history in CSV]"
 msgstr "[ダウンロード履歴をCSVで取得]"
 
-#: app/models/share_file.rb:274 app/models/board_entry.rb:425
+#: app/models/share_file.rb:287 app/models/board_entry.rb:440
 msgid "[Group members only]"
 msgstr "[参加者のみ]"
 
@@ -7076,7 +7083,7 @@ msgstr "[既に読んだ記事を隠す]"
 msgid "[Hints on writing entries]"
 msgstr "【本文の書き方に関するヒント】"
 
-#: app/models/board_entry.rb:761
+#: app/models/board_entry.rb:776
 msgid "[Link does not exist...%s>]"
 msgstr "[リンク先が存在しません...%s>]"
 
@@ -7098,7 +7105,7 @@ msgstr "[次月]"
 msgid "[Next]"
 msgstr "[次へ]"
 
-#: app/models/share_file.rb:268 app/models/board_entry.rb:419
+#: app/models/share_file.rb:281 app/models/board_entry.rb:434
 msgid "[Open to all]"
 msgstr "[全体に公開]"
 
@@ -7106,7 +7113,7 @@ msgstr "[全体に公開]"
 msgid "[Other users: %{count} users]"
 msgstr "[他のユーザ:%{count}人]"
 
-#: app/models/share_file.rb:272 app/models/board_entry.rb:423
+#: app/models/share_file.rb:285 app/models/board_entry.rb:438
 msgid "[Owner only]"
 msgstr "[自分だけ]"
 
@@ -7408,7 +7415,7 @@ msgstr "グループ参加"
 msgid "has an invalid format."
 msgstr "の形式が間違っています。"
 
-#: app/models/user.rb:282
+#: app/models/user.rb:296
 msgid "incorrect."
 msgstr "が間違っています。"
 
@@ -7448,7 +7455,7 @@ msgstr "は%sと異なる形式で入力してください"
 msgid "new_uid"
 msgstr "新しく設定するユーザ名"
 
-#: app/models/user.rb:277
+#: app/models/user.rb:291
 msgid "not provided."
 msgstr "が入力されていません。"
 
@@ -7613,7 +7620,7 @@ msgstr ""
 
 #: app/helpers/initial_settings_helper.rb:43
 #: app/controllers/admin/users_controller.rb:196
-#: app/controllers/admin/users_controller.rb:204 app/models/share_file.rb:299
+#: app/controllers/admin/users_controller.rb:204 app/models/share_file.rb:312
 #: app/views/user/show.html.erb:31
 #: app/views/portal/_registration_form.html.erb:42
 #: app/views/admin/users/create_uid.html.erb:12
