@@ -11,21 +11,18 @@
 
 <div id="main">
   <div id="panel" class="ui-corner-all">
-    <div class="panel_admin_top">
-      <div class="left">
-        <h1 id="title"><%=h @title %></h1>
-        <ul class="no_style horizontal">
-          <li><%= _('SKIP version') %> : <%= h SKIP_VERSION %></li>
-          <li><%= _("Current disk usage") %> : <%= h system_summary %> (MB)
-          <% if warning_size %>
-            <b class="remarkable"><%= _('File size is over soon')%></b>
-          <% end %>
-          </li>
-        </ul>
-      </div>
-      <div id="tab_menu"><%= generate_admin_tab_menu %></div>
-      <br class="clear_left" />
-    </div>
+    <h1 id="title"><%=h @title %></h1>
+    <ul class="no_style horizontal">
+      <li><%= _('SKIP version') %> : <%= h SKIP_VERSION %></li>
+      <li><%= _("Current disk usage") %> : <%= h system_summary %> (MB)
+      <% if warning_size %>
+        <b class="remarkable"><%= _('File size is over soon')%></b>
+      <% end %>
+      </li>
+    </ul>
+    <br class="clear_left" />
+    <div id="tab_menu"><%= generate_admin_tab_menu %></div>
+    <br class="clear_left" />
 
     <div id="tab_body" class="ui-corner-right">
       <div id="contents_container">
