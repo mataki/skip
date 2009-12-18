@@ -13,6 +13,7 @@
       </div>
 
       <%= text_area_tag("chapter[content]", sanitize_and_unescape_for_richtext(defined?(chapter) ? chapter.data : ""), :id=>"chapter_content", :cols => 90, :rows => 20) %>
+      <%= hidden_field_tag :position_id, insert_num if defined?(insert_num) %>
       <% ckeditor "chapter[content]", 'toolbar' => "Entry" %>
     </div>
 

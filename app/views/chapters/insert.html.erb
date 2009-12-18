@@ -9,6 +9,6 @@
 
 <% content_for :contents_left do -%>
   <%= render :partial => "shared/first_half_of_chapters", :locals => {:page=>@current_page, :num=>@before_num} %>
-  <%= render :partial => "shared/page_content", :locals => {:page=>@current_page, :url=>wiki_chapters_path(@current_page.title), :option=>{}} %>
+  <%= render :partial => "shared/page_content", :locals => {:page=>@current_page, :url=>wiki_chapters_path(@current_page.title), :option=>{}, :insert_num => @before_num+1} %>
   <%= render :partial => "shared/latter_half_of_chapters", :locals => {:page=>@current_page, :num=>@before_num} %>
 <% end -%>

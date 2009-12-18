@@ -1,5 +1,4 @@
 require "ruby-debug"
-
 class ChaptersController < ApplicationController
   layout 'wiki'
   before_filter :secret_checker
@@ -16,7 +15,7 @@ class ChaptersController < ApplicationController
       break if chapter.id == params[:id].to_i
       num += 1
     end
-    @before_num, @after_num = num+1, num+1
+    @before_num = @after_num = num+1
   end
 
   def edit
@@ -62,12 +61,15 @@ class ChaptersController < ApplicationController
     @page = Page.find_by_title(params[:wiki_id])
     content = Content.new
     chapters = @page.chapters
+
     if chapters
       chapters.each do |chapter|
         content.chapters.build(:data=>chapter.data) unless chapter.data.nil?
       end
     end
-    content.chapters.build(:data => params[:chapter][:content])
+    new_chapter = content.chapters.build(:data => params[:chapter][:content])
+    new_chapter.insert_at(params[:position_id]) if params[:position_id]
+
     @history = @page.edit(content, current_user)
     if @history.save!
       flash[:notice] = _("ページが更新されました")
