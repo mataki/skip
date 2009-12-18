@@ -2,6 +2,9 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Page do
   fixtures :pages
+  fixtures :contents
+  fixtures :chapters
+
   before(:each) do
     # TODO ymlか読み込むと0がはいるため
     Page.all.each {|p| p.update_attributes(:parent_id=>nil) if p.parent_id==0 }
@@ -34,7 +37,7 @@ describe Page do
   describe "#edit(content, user)" do
     before do
       @page = Page.new(@valid_attributes)
-      @page.edit("hogehogehoge", mock_model(User))
+      @page.edit(contents(:two), mock_model(User))
     end
 
     it "Historyが作成されること" do
@@ -62,7 +65,7 @@ describe Page do
 
       it "Historyを追加しないこと" do
         lambda{
-          @page.edit("hogehogehoge", mock_model(User))
+          @page.edit(contents(:four), mock_model(User))
           @page.save!
         }.should_not change(History,:count)
       end
@@ -72,7 +75,7 @@ describe Page do
       before do
         @page.save!
         @page.reload
-        @page.edit("edit to revision 2", mock_model(User))
+        @page.edit(contents(:three), mock_model(User))
         @page.save!
       end
 
@@ -100,43 +103,6 @@ describe Page do
     end
   end
 
-  describe ".fulltext('keyword')" do
-    before do
-      History.should_receive(:find_all_by_head_content).
-        with('keyword').
-        and_return( [@history = mock_model(History, :page_id => "10")] )
-    end
-
-    it ".options.should == {:conditions => ['pages.id IN (?)', @history.page_id]}" do
-      Page.fulltext("keyword").proxy_options.should ==
-        {:conditions => ["#{Page.quoted_table_name}.id IN (?)", [@history.page_id]]}
-    end
-  end
-
-  describe ".admin_fulltext('keyword')" do
-    before do
-      History.should_receive(:find_all_by_head_content).
-        with('keyword').
-        and_return( [@history = mock_model(History, :page_id => "10")] )
-    end
-
-    it ".options.should == {:conditions => ['pages.id IN (?)', @history.page_id]}" do
-      Page.admin_fulltext("keyword").proxy_options.should ==
-        {:conditions => ["#{Page.quoted_table_name}.id IN (?) OR #{Page.quoted_table_name}.display_name LIKE ?", [@history.page_id], '%keyword%']}
-    end
-  end
-
-  describe "fulltext()で実際に検索する場合" do
-    before do
-      @page = Page.new(@valid_attributes)
-      @page.edit("the keyword", mock_model(User))
-      @page.save!
-    end
-
-    it "結果は[@page]であること" do
-      Page.fulltext("keyword").should == [@page]
-    end
-  end
 
   describe "has_history?" do
     before do

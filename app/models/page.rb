@@ -60,7 +60,7 @@ class Page < ActiveRecord::Base
   end
 
   def edit(content, user)
-    return if content == self.content
+    return if content.data == self.content
     self.updated_at = Time.now.utc
     @new_history = histories.build(:content => content,
                                    :user => user,

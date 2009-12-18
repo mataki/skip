@@ -13,6 +13,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+require "ruby-debug"
 require 'jcode'
 require 'open-uri'
 require "resolv-replace"
@@ -767,7 +768,8 @@ class MypageController < ApplicationController
 
   def target_page target = nil
     if target
-      if target_key2current_pages = cookies[:target_key2current_pages]
+      target_key2current_pages = cookies[:target_key2current_pages]
+      if target_key2current_pages and !target_key2current_pages.blank?
         params[:page] || JSON.parse(target_key2current_pages)[target] || 1
       else
         params[:page]

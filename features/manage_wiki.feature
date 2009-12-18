@@ -67,11 +67,13 @@ Feature: Wikiの管理
     Then    ペンディング"うまくうごかないため"
     Then    flashメッセージに"Titleはすでに存在します"と表示されていること
 
+  @now
   Scenario: ページの編集を行う
     Given   "Wikiトップページ"にアクセスする
 
     And     "[編集する]"リンクをクリックする
     And     "chapter_content"に"テストページを更新します"と入力する
+    And     デバッグのため
     And     "ページを更新"ボタンをクリックする
 
     Then    flashメッセージに"ページが更新されました"と表示されていること
@@ -136,7 +138,7 @@ Feature: Wikiの管理
     And     "[編集する]"と表示されていること
     And     "[削除する]"と表示されていること
 
-  @now
+
   Scenario: Chapterを追加する
     Given   "Wikiトップページ"にアクセスする
 
