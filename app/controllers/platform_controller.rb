@@ -303,21 +303,37 @@ class PlatformController < ApplicationController
 
   def login_with_password
     logout_killing_session!([:request_token])
-    if params[:login] and (result = User.auth(params[:login][:key], params[:login][:password], params[:login][:keyphrase])).is_a?(User)
-      self.current_user = result
-      logger.info(current_user.to_s_log('[Login successful with password]'))
-      remove_current_page_from_cookie
-      handle_remember_cookie!(params[:login_save] == 'true')
-      redirect_to_return_to_or_root
-    else
-      key = params[:login] ? params[:login][:key] : ""
-      logger.info("[Login failed with password] login_key[#{key}] by #{result}")
-      flash[:error] = result
-      if result == _("Password is expired. Please reset password.")
-        redirect_to forgot_password_url
-      else
-        redirect_to(request.env['HTTP_REFERER'] ? :back : login_url)
+    if params[:login]
+      User.auth(params[:login][:key], params[:login][:password], params[:login][:keyphrase]) do |result, user|
+        if result
+          self.current_user = user
+          logger.info(current_user.to_s_log('[Login successful with password]'))
+          remove_current_page_from_cookie
+          handle_remember_cookie!(params[:login_save] == 'true')
+          redirect_to_return_to_or_root
+        else
+          if user
+            if user.locked?
+              reason = _("%s is locked. Please reset password.") % Admin::Setting.login_account
+              redirect_to_url = forgot_password_url
+            elsif !user.within_time_limit_of_password?
+              reason = _("Password is expired. Please reset password.")
+              redirect_to_url = forgot_password_url
+            end
+          else
+            reason = _("Log in failed.")
+            redirect_to_url = (request.env['HTTP_REFERER'] ? :back : login_url)
+          end
+          key = params[:login] ? params[:login][:key] : ""
+          logger.info("[Login failed with password] login_key[#{key}] by #{reason}")
+          flash[:error] = reason
+          redirect_to redirect_to_url
+        end
       end
+    else
+      logger.info("[Login failed with password] by bad_request")
+      flash[:error] = _("Log in failed.")
+      redirect_to (request.env['HTTP_REFERER'] ? :back : login_url)
     end
   end
 

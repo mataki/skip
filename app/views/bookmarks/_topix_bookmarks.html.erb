@@ -1,8 +1,11 @@
-<% title ||= _('Bookmarks') %>
+<% title ||= '' %>
 <% bookmarks ||= [] -%>
+<% with_last_comment ||= false %>
 
 <div class="topix_bookmarks_wrapper">
-  <h2 class="title"><%= icon_tag('asterisk_orange') %><%= h title %></h2>
+  <% unless title.blank? -%>
+    <h2 class="title"><%= icon_tag('asterisk_orange') %><%= h title %></h2>
+  <% end -%>
   <% unless bookmarks.empty? -%>
     <table class="topix_bookmarks">
       <col />
@@ -10,13 +13,19 @@
       <tbody>
         <% bookmarks.each do |bookmark| -%>
           <tr>
-            <td class="entry_outline">
+            <td class="bookmark_outline">
               <%= link_to_bookmark_url bookmark %>
               <%= icon_tag('new') if (Date.today - bookmark.created_on.to_date) < 10 %>
               <span class="count"><%= link_to(n_("%{count} user", "%{count} users", bookmark.bookmark_comments_count) % {:count => bookmark.bookmark_comments_count}, url_for_bookmark(bookmark)) %></span>
               <%#= user_link_to(bookmark.user, :with_prefix => true) %>
               <%# TODO bookmarkを取得するタイミングで一緒にタグも取得するようにしたいなぁ %>
               <%= bookmark_comment_tag_search_links_tag(Tag.commented_to(bookmark).all.map(&:name).join(','), :max => 3) %>
+              <br />
+              <% if with_last_comment && bookmark_comment = bookmark.bookmark_comments.last -%>
+                <span class="bookmark_comment">
+                  <%= h bookmark_comment.comment %> <%= user_link_to(bookmark_comment.user, :with_prefix => true) %>
+                </span>
+              <% end -%>
             </td>
             <td class="date"><%=h bookmark.created_on.strftime(_("%B %d %Y")) %></td>
           </tr>

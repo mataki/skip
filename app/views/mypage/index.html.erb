@@ -75,7 +75,7 @@
             <% @access_blogs[:pages].each_with_index do |entry, i| %>
               <tr>
                 <td class="left" width="40px">
-                  <div class="picture"><%= i+1 %>.<%= show_picture(entry.user, :width=>24, :height => 24) %></div>
+                  <div class="picture"><%= i+1 %>.<%= show_picture(entry.user, :width => 24, :height => 24) %></div>
                 </td>
                 <td class="right" width="138px">
                   <div class="title"><%= link_to h(entry.title), entry.get_url_hash %><span class="small_text">(<%= h entry.state.access_count %>)</span></div>
@@ -130,12 +130,7 @@
     <% unless @bookmarks.empty? -%>
       <%= show_title_bar("tag_blue", _("New bookmarks"), url_for(:controller => "bookmarks", :action => "index")) %>
       <div class="topix_body" id="bookmark_body">
-      <% @bookmarks.each do |bookmark| -%>
-        <div class="page_line">
-          <div class="page_title"><%= link_to_bookmark_url bookmark %> - <%= link_to( _('%s users') % bookmark.bookmark_comments_count.to_s, url_for_bookmark(bookmark)) %></div>
-          <div class="page_date"><%=h bookmark.updated_on.strftime(_("%B %d %Y")) %></div>
-        </div>
-      <% end -%>
+        <%= render :partial => 'bookmarks/topix_bookmarks', :locals => { :bookmarks => @bookmarks, :with_last_comment => true } %>
       </div>
     <% end -%>
 

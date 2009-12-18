@@ -206,20 +206,25 @@ class User < ActiveRecord::Base
   end
 
   def self.auth(code_or_email, password, key_phrase = nil)
-    return _("Log in failed.") unless user = find_by_code_or_email_with_key_phrase(code_or_email, key_phrase)
-    return _("Log in failed.") if user.unused?
-    if user.crypted_password == encrypt(password)
-      if user.locked?
-        _("This account is locked. Please reset password.")
-      elsif !user.within_time_limit_of_password?
-        _("Password is expired. Please reset password.")
-      else
-        auth_successed(user)
-      end
+    unless user = find_by_code_or_email_with_key_phrase(code_or_email, key_phrase)
+      result, result_user = false, nil
     else
-      auth_failed(user)
-      _("Log in failed.")
+      if user.unused?
+        result, result_user = false, nil
+      else
+        if user.crypted_password == encrypt(password)
+          if user.locked? || !user.within_time_limit_of_password?
+            result, result_user = false, user
+          else
+            result, result_user = true, auth_successed(user)
+          end
+        else
+          result, result_user = false, auth_failed(user)
+        end
+      end
     end
+    yield(result, result_user) if block_given?
+    result
   end
 
   # Viewで使う所属一覧（セレクトボタン用）

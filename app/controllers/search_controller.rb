@@ -58,32 +58,21 @@ class SearchController < ApplicationController
 
   # tab_menu
   def share_file_search
-    @main_menu = @title = _('Files')
-
-    @tags = ShareFile.get_popular_tag_words
-
+    @search = ShareFile.accessible(current_user).tagged(params[:tag_words], params[:tag_select])
+    @search =
+      if params[:sort_type] == "file_name"
+        @search.descend_by_file_name.search(params[:search])
+      else
+        @search.ascend_by_date.search(params[:search])
+      end
+    @share_files = @search.paginate(:page => params[:page], :per_page => 25)
     params[:tag_select] ||= "AND"
     params[:sort_type] ||= "date"
-    params_hash = { :category => params[:category],
-                    :keyword => params[:keyword],
-                    :tag_words => params[:tag_words],
-                    :tag_select => params[:tag_select] }
-    find_params = ShareFile.make_conditions(current_user.belong_symbols, params_hash)
-    order_by = (params[:sort_type] == "date" ? "date desc" : "file_name")
 
-    @share_files = ShareFile.scoped(
-      :conditions => find_params[:conditions],
-      :include => find_params[:include],
-      :order => order_by
-    ).paginate(:page => params[:page], :per_page => 25)
+    @main_menu = @title = _('Files')
+    @tags = ShareFile.get_popular_tag_words
 
-    if @share_files.empty?
-      if params[:commit] || params[:category]
-        flash.now[:notice] = _('No matching shared files found.')
-      else
-        flash.now[:notice] = _('There are no shared files uploaded.')
-      end
-    end
+    flash.now[:notice] = _('No matching shared files found.') if @share_files.empty?
   end
 
   #全文検索

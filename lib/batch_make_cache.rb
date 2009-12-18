@@ -115,10 +115,9 @@ class BatchMakeCache < BatchBase
   end
 
   def make_caches_share_file(contents_type, cache_path, border_time)
-    share_files = ShareFile.find(:all, :conditions => ["date > ?", border_time])
+    share_files = ShareFile.find(:all, :conditions => ["date <= ? AND updated_at > ?", border_time, border_time])
     share_files.each do |file|
       publication_symbols = file.share_file_publications.map{ |pf| pf.symbol }
-      publication_symbols << file.owner_symbol unless publication_symbols == ['sid:allusers']
       meta = create_meta(:contents_type => contents_type,
                          :publication_symbols => publication_symbols.join(','),
                          :link_url => "/#{file.owner_symbol_type}/#{file.owner_symbol_id}/files/#{file.file_name}",

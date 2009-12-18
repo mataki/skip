@@ -100,7 +100,7 @@ module ApplicationHelper
   end
 
   def user_link_to_with_portrait user, options = {}
-    options = {:width => 120, :height => 80}.merge(options)
+    options = {:width => 80, :height => 80}.merge(options)
     link_to show_picture(user, options), {:controller => '/user', :action => 'show', :uid => user.uid}, {:title => h(user.name)}
   end
 

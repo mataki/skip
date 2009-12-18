@@ -29,7 +29,8 @@ describe BatchMakeCache, "#create_meta" do
     SkipEmbedded::InitialSettings['host_and_port'] = 'localhost:3000'
   end
   it "link_urlが正しく設定されること" do
-    @result.should == ("link_url: http://localhost:3000/user/hoge")
+    yaml = YAML.parse(@result)
+    yaml[:link_url].value.should == "http://localhost:3000/user/hoge"
   end
 end
 

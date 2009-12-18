@@ -75,9 +75,17 @@ class BoardEntry < ActiveRecord::Base
     { :conditions => ['board_entries.symbol IN (?)', group_symbols] }
   }
 
-  named_scope :recent, proc { |day_count|
-    return {} if day_count.blank?
-    { :conditions => ['last_updated > :date', { :date => Time.now.ago(day_count.to_i.day) }] }
+  named_scope :recent, proc { |milliseconds|
+    return {} if milliseconds.blank?
+    { :conditions => ['last_updated > :date', { :date => Time.now.ago(milliseconds) }] }
+  }
+
+  named_scope :recent_with_comments, proc { |milliseconds|
+    return {} if milliseconds.blank?
+    {
+      :conditions => ['last_updated > :date OR board_entry_comments.updated_on > :date', { :date => Time.now.ago(milliseconds) }],
+      :include => :board_entry_comments
+    }
   }
 
   named_scope :diary, proc {
@@ -100,6 +108,13 @@ class BoardEntry < ActiveRecord::Base
   named_scope :unread, proc { |user|
     {
       :conditions => ['user_readings.read = ? AND user_readings.user_id = ?', false, user.id],
+      :include => [:user_readings]
+    }
+  }
+
+  named_scope :unread_only_notice, proc { |user|
+    {
+      :conditions => ['user_readings.read = ? AND user_readings.user_id = ? AND user_readings.notice_type = "notice"', false, user.id],
       :include => [:user_readings]
     }
   }
