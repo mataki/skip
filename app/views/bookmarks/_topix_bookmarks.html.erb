@@ -1,6 +1,5 @@
 <% title ||= '' %>
 <% bookmarks ||= [] -%>
-<% with_last_comment ||= false %>
 
 <div class="topix_bookmarks_wrapper">
   <% unless title.blank? -%>
@@ -21,7 +20,7 @@
               <%# TODO bookmarkを取得するタイミングで一緒にタグも取得するようにしたいなぁ %>
               <%= bookmark_comment_tag_search_links_tag(Tag.commented_to(bookmark).all.map(&:name).join(','), :max => 3) %>
               <br />
-              <% if with_last_comment && bookmark_comment = bookmark.bookmark_comments.last -%>
+              <% if bookmark_comment = bookmark.bookmark_comments.last -%>
                 <span class="bookmark_comment">
                   <%= h bookmark_comment.comment %> <%= user_link_to(bookmark_comment.user, :with_prefix => true) %>
                 </span>

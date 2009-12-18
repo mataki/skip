@@ -130,7 +130,7 @@
     <% unless @bookmarks.empty? -%>
       <%= show_title_bar("tag_blue", _("New bookmarks"), url_for(:controller => "bookmarks", :action => "index")) %>
       <div class="topix_body" id="bookmark_body">
-        <%= render :partial => 'bookmarks/topix_bookmarks', :locals => { :bookmarks => @bookmarks, :with_last_comment => true } %>
+        <%= render :partial => 'bookmarks/topix_bookmarks', :locals => { :bookmarks => @bookmarks } %>
       </div>
     <% end -%>
 
