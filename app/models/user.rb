@@ -34,7 +34,6 @@ class User < ActiveRecord::Base
   has_many :groups, :through => :group_participations, :conditions => 'groups.deleted_at IS NULL'
 
   has_many :bookmark_comments, :dependent => :destroy
-  has_many :antennas, :dependent => :destroy
   has_many :user_uids, :dependent => :destroy
 
   has_many :openid_identifiers
