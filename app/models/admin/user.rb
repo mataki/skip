@@ -125,7 +125,7 @@ class Admin::User < User
   end
 
   def self.reset_all_password_expiration_periods
-    update_all("password_expires_at = '#{Admin::Setting.password_change_interval.day.since.to_formatted_s(:db)}'")
+    update_all("password_expires_at = '#{Admin::Setting.password_change_interval.day.since.to_formatted_s(:db)}'", ['status = ?', 'ACTIVE'])
   end
 
   def to_param
