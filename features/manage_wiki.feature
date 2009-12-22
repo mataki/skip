@@ -67,7 +67,6 @@ Feature: Wikiの管理
     Then    ペンディング"うまくうごかないため"
     Then    flashメッセージに"Titleはすでに存在します"と表示されていること
 
-  @now
   Scenario: ページの編集を行う
     Given   "Wikiトップページ"にアクセスする
 
@@ -79,9 +78,11 @@ Feature: Wikiの管理
     Then    "テストページを更新するします"と表示されていること
 
   # TODO SKIP開発チームに聞く(タイトルに値が入らない)
+  @focus
   Scenario: 更新情報の表示を確認する
     Given   "Wikiトップページ"にアクセスする
-    And     "タイトル"に"次のページ"と入力する
+    And     デバッグのため
+    And     "hoge"に"次のページ"と入力する
     And     "作成"ボタンをクリックする
     And     "次のページ"リンクをクリックする
 
@@ -103,6 +104,7 @@ Feature: Wikiの管理
     And     "ページを更新する"ボタンをクリックする
     And     "[編集する]"リンクをクリックする
     And     "chapter_content"に"hogehoge"と入力する
+    And     デバッグのため
     And     "ページを更新する"ボタンをクリックする
     And     "履歴"リンクをクリックする
 
@@ -137,15 +139,12 @@ Feature: Wikiの管理
     And     "[編集する]"と表示されていること
     And     "[削除する]"と表示されていること
 
-  @focus
   Scenario: Chapterを追加する
     Given   "Wikiトップページ"にアクセスする
-
     And     "[編集する]"リンクをクリックする
     And     "chapter_content"に"テストページを更新するします"と入力する
-    And     デバッグのため
     And     "ページを更新する"ボタンをクリックする
-    And    "[セクションを追加する]"リンクをクリックする
+    And    "[追加する]"リンクをクリックする
 
     And     "chapter_content"に"ほげほげ"と入力する
     And     "ページを更新する"ボタンをクリックする

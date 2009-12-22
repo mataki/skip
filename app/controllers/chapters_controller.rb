@@ -27,15 +27,13 @@ class ChaptersController < ApplicationController
     current_chapter = Chapter.find(params[:id])
 
     chapters = @page.chapters
-    if chapters
-      chapters.each do |chapter|
-        data = if current_chapter.position == chapter.position
-                 new_chapter.data
-               else
-                 chapter.data
-               end
-        content.chapters.build(:data=>data) unless data.nil?
-      end
+    chapters.each do |chapter|
+      data = if current_chapter.position == chapter.position
+               new_chapter.data
+             else
+               chapter.data
+             end
+      content.chapters.build(:data=>data) unless data.nil?
     end
 
     @history = @page.edit(content, current_user)
@@ -57,9 +55,10 @@ class ChaptersController < ApplicationController
       chapters.each {|chapter| content.chapters.build(:data=>chapter.data) unless chapter.data.nil? }
     end
     new_chapter = content.chapters.build(:data => params[:chapter][:content])
-    new_chapter.insert_at(params[:position_id])
+    new_chapter.insert_at(params[:position_id]) if params[:position_id]
 
     @history = @page.edit(content, current_user)
+
     if @history.save!
       flash[:notice] = _("ページが更新されました")
       redirect_to wiki_path(@page.title)
@@ -73,7 +72,6 @@ class ChaptersController < ApplicationController
     @page = Page.find_by_title(params[:wiki_id])
     chapter_id = params[:id].to_i
     content = Content.new
-
     @page.chapters.each {|chapter| content.chapters.build({:data=>chapter.data}) unless chapter.id == chapter_id }
 
     @history = @page.edit(content, current_user)
