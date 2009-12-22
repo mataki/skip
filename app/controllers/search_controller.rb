@@ -63,7 +63,7 @@ class SearchController < ApplicationController
       if params[:sort_type] == "file_name"
         @search.descend_by_file_name.search(params[:search])
       else
-        @search.ascend_by_date.search(params[:search])
+        @search.descend_by_date.search(params[:search])
       end
     @share_files = @search.paginate(:page => params[:page], :per_page => 25)
     params[:tag_select] ||= "AND"
