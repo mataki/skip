@@ -16,9 +16,11 @@
             <tr>
               <th>
                 <%= label_tag 'embed_html', _('Corresponding sites') %>
-                <%= image_tag('http://www.youtube.com/favicon.ico', :title => 'youtube', :alt => 'youtube') if Admin::Setting.youtube%>
-                <%= image_tag('http://www.slideshare.net/favicon.ico', :title => 'slideshare', :alt => 'slideshare') if Admin::Setting.slideshare %>
-                <%= image_tag('http://maps.google.com/favicon.ico', :title => 'google maps', :alt => 'google maps') if Admin::Setting.googlemap%>
+                <span class="small_text">
+                  <%= 'YouTube ' if Admin::Setting.youtube %>
+                  <%= 'SlideShare ' if Admin::Setting.slideshare %>
+                  <%= 'Google Maps ' if Admin::Setting.googlemap%>
+                </span>
               </th>
             </tr>
             <tr>
