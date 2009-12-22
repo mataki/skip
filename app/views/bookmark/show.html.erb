@@ -38,7 +38,7 @@
           <td>
             <%= bookmark_comment_tag_search_links_tag bookmark_comment.tags %>
             &nbsp;
-            <%=h bookmark_comment.comment %>
+            <span class="small_text"><%=h bookmark_comment.comment %></span>
             <% if bookmark_comment.user.id == @current_user.id -%>
               &nbsp;
               <%= hidden_field_tag("authenticity_token", form_authenticity_token) %>

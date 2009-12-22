@@ -30,7 +30,7 @@
               <% end -%>
               <%= user_link_to(share_file.user, :with_prefix => true) if share_file.owner_is_group? %>
               <span class="tags"><%= share_file_search_links_tag share_file.category, :max => 3 %></span>
-              <span style="margin-left:10px"><%= h share_file.description %></span>
+              <span class="small_text" style="margin-left:10px"><%= h share_file.description %></span>
               <span class="infos">
                 <%= _('Downloads: %s') % content_tag('span', h(share_file.total_count), :id => "download_count_#{share_file.id}") %>
                 <%= _('File size: %s') % share_file.file_size_with_unit %>
