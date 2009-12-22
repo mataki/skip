@@ -7,13 +7,15 @@
   <% end -%>
   <% unless bookmarks.empty? -%>
     <table class="topix_bookmarks">
+      <col class="col25" />
       <col />
       <col class="col75" />
       <tbody>
         <% bookmarks.each do |bookmark| -%>
           <tr>
+            <td class="bookmark_type"><%= bookmark_type_icon(bookmark) %></td>
             <td class="bookmark_outline">
-              <%= link_to_bookmark_url bookmark %>
+              <%= link_to_bookmark_url(bookmark, :without_icon => true) %>
               <%= icon_tag('new') if (Date.today - bookmark.created_on.to_date) < 10 %>
               <span class="count"><%= link_to(n_("%{count} user", "%{count} users", bookmark.bookmark_comments_count) % {:count => bookmark.bookmark_comments_count}, url_for_bookmark(bookmark)) %></span>
               <%#= user_link_to(bookmark.user, :with_prefix => true) %>
@@ -21,7 +23,7 @@
               <%= bookmark_comment_tag_search_links_tag(Tag.commented_to(bookmark).all.map(&:name).join(','), :max => 3) %>
               <br />
               <% if bookmark_comment = bookmark.bookmark_comments.last -%>
-                <span class="bookmark_comment">
+                <span class="infos">
                   <%= h bookmark_comment.comment %> <%= user_link_to(bookmark_comment.user, :with_prefix => true) %>
                 </span>
               <% end -%>
