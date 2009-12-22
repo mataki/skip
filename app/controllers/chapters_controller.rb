@@ -1,4 +1,3 @@
-require "ruby-debug"
 class ChaptersController < ApplicationController
   layout 'wiki'
   before_filter :secret_checker
@@ -10,46 +9,38 @@ class ChaptersController < ApplicationController
 
   def insert
     @current_page = Page.find_by_title(params[:wiki_id])
-    num = 0
-    @current_page.chapters.each do |chapter|
-      break if chapter.id == params[:id].to_i
-      num += 1
-    end
-    @before_num = @after_num = num+1
+    @chapter = Chapter.find(params[:id])
+    @before_num = @after_num = @chapter.position
   end
 
   def edit
     @current_page = Page.find_by_title(params[:wiki_id])
     @chapter = Chapter.find(params[:id])
-    num = 0
-    @current_page.chapters.each do |chapter|
-      break if chapter.id == @chapter.id
-      num += 1
-    end
-
-    @before_num, @after_num = num, num+1
+    num = @chapter.position
+    @before_num, @after_num = num-1, num
   end
 
   def update
     @page = Page.find_by_title(params[:wiki_id])
     content = Content.new
-    new_chapter = Chapter.new
-    new_chapter.data = params[:chapter][:content]
+    new_chapter = Chapter.new(:data=>params[:chapter][:content])
+    current_chapter = Chapter.find(params[:id])
 
     chapters = @page.chapters
     if chapters
       chapters.each do |chapter|
-        unless chapter.id == params[:id].to_i
-          content.chapters.build(:data=>chapter.data) unless chapter.data.nil?
-        else
-          content.chapters.build(:data=>new_chapter.data) unless chapter.data.nil?
-        end
+        data = if current_chapter.position == chapter.position
+                 new_chapter.data
+               else
+                 chapter.data
+               end
+        content.chapters.build(:data=>data) unless data.nil?
       end
     end
 
     @history = @page.edit(content, current_user)
     if @history.save!
-      flash[:notice] = "ページが更新されました"
+      flash[:notice] = _("ページが更新されました")
       redirect_to wiki_path(@page.title)
     else
       errors = [@history, @history.content].map{|m| m.errors.full_messages }.flatten
@@ -63,12 +54,10 @@ class ChaptersController < ApplicationController
     chapters = @page.chapters
 
     if chapters
-      chapters.each do |chapter|
-        content.chapters.build(:data=>chapter.data) unless chapter.data.nil?
-      end
+      chapters.each {|chapter| content.chapters.build(:data=>chapter.data) unless chapter.data.nil? }
     end
     new_chapter = content.chapters.build(:data => params[:chapter][:content])
-    new_chapter.insert_at(params[:position_id]) if params[:position_id]
+    new_chapter.insert_at(params[:position_id])
 
     @history = @page.edit(content, current_user)
     if @history.save!
@@ -85,10 +74,7 @@ class ChaptersController < ApplicationController
     chapter_id = params[:id].to_i
     content = Content.new
 
-    @page.chapters.each do |chapter|
-      order = 1
-      content.chapters.build({:data=>chapter.data, :order => order+=1}) unless chapter.id == chapter_id
-    end
+    @page.chapters.each {|chapter| content.chapters.build({:data=>chapter.data}) unless chapter.id == chapter_id }
 
     @history = @page.edit(content, current_user)
     if @history.save!
