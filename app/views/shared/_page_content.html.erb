@@ -1,4 +1,4 @@
-<div class="current-title" style="margin-top: 50px;">
+<div class="current-title">
   <% form_for(:chapter, defined?(chapter) ? chapter : @chapter, :url=>url, :html=>option) do |f| %>
     <div class="content">
       <div class="preview">
@@ -12,6 +12,7 @@
         <% end -%>
       </div>
 
+      <span id="share_file_trigger" class="pointer link"><span class="ss_sprite ss_attach">&nbsp;</span><%= _('Insert file or embed in text body') %></span>
       <%= text_area_tag("chapter[content]", sanitize_and_unescape_for_richtext(defined?(chapter) ? chapter.data : ""), :id=>"chapter_content", :cols => 90, :rows => 20) %>
       <%= hidden_field_tag :position_id, insert_num if defined?(insert_num) %>
       <% ckeditor "chapter[content]", 'toolbar' => "Entry" %>

@@ -3,4 +3,5 @@ class Chapter < ActiveRecord::Base
   acts_as_list :scope => :content
 
   validates_presence_of :data
+  has_many :attachments
 end
