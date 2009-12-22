@@ -12,3 +12,13 @@ class RemoveDataFromContent < ActiveRecord::Migration
     add_column :contents, :data, :binary, :limit=>20.megabytes
   end
 end
+
+class Content < ActiveRecord::Base
+  has_many :chapters, :dependent => :destroy
+end
+
+class Chapter < ActiveRecord::Base
+  belongs_to :content
+
+  validates_presence_of :data
+end
