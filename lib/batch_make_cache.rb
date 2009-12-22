@@ -135,7 +135,7 @@ class BatchMakeCache < BatchBase
   def make_caches_share_file(contents_type, cache_path)
     conditions =
       if @border_time.is_a?(Time)
-        ["date <= ? AND updated_at > ?", @border_time, @border_time]
+        ["date <= ? AND updated_at > ?", Time.now, @border_time]
       else
         []
       end
