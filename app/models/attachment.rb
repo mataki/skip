@@ -2,8 +2,6 @@ class Attachment < ActiveRecord::Base
   include ::QuotaValidation
   include ::SkipEmbedded::ValidationsFile
 
-  belongs_to :attachment
-
   QUOTA_EACH = QuotaValidation.lookup_setting(self,:each)
 
   has_attachment :storage => :db_file,

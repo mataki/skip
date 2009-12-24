@@ -1,8 +1,3 @@
-<% content_for :header do %>
-  <%= javascript_include_tag 'linkPalette' %>
-  <%= javascript_include_tag 'skipembedded/ckeditor/ckeditor.js' %>
-<% end -%>
-
 <% content_for :contents_right do %>
   <%= render :partial => 'wiki/navigation' %>
 <% end -%>
@@ -11,5 +6,6 @@
   <%= render :partial => "shared/first_half_of_chapters", :locals => {:page=>@current_page, :num=>@before_num} %>
   <%= render :partial => "shared/page_content", :locals => {:page=>@current_page, :chapter=>@chapter, :url => wiki_chapter_path(@current_page.title, @chapter), :option => {:method=>:put} }  %>
   <%= render :partial => "shared/latter_half_of_chapters", :locals => {:page=>@current_page, :num=>@after_num} %>
+  <%= render :partial => "chapters/embed_dialog" %>
 <% end -%>
 

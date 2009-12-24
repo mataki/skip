@@ -1,5 +1,10 @@
+<% content_for :stylesheet do -%>
+  <%= skip_stylesheet_link_tag "themes/cupertino/ui.dialog.css" %>
+  <%= skip_stylesheet_link_tag "themes/cupertino/ui.tabs.css" %>
+<% end -%>
+
 <div class="current-title">
-  <% form_for(:chapter, defined?(chapter) ? chapter : @chapter, :url=>url, :html=>option) do |f| %>
+  <% form_for(:chapter, (defined?(chapter) ? chapter : @chapter), :url=>url, :html=>option) do |f| %>
     <div class="content">
       <div class="preview">
         <% if page.format_type == "hiki" %>
@@ -26,3 +31,77 @@
     <div class="clear"></div>
   <% end -%>
 </div>
+
+<% content_for :javascript_initializers do %>
+  $j('div#share_file_dialog').dialog({
+    bgiframe: true,
+    autoOpen: false,
+    width: 500,
+    height: 350,
+    open: function() {
+      loadNewShareFileForm();
+      $j('#tabs').tabs().show();
+    }
+  })
+
+  var loadNewShareFileForm = function(){
+    var submitCallback;
+    $j('#share_file_new').html('');
+    var indicator = $j('<span><%= skip_image_tag 'indicator.gif' %></span>');
+    indicator.appendTo($j('#share_file_new')).show();
+    var src = '<%= url_for(:controller => 'attachments', :action => 'new', :wiki_id => page.title, :id =>  (defined?(chapter) ? chapter : @chapter).id,:ajax_upload => 1, :escape => false) %>';
+    $j('#share_file_new').append(
+      $j('<ul></ul>').addClass('messages')
+    ).append(
+      $j("<iframe></iframe>").attr("src", src).load(function(){
+        var form = $j(this.contentWindow.document).find("form");
+        form.submit(function() {
+          var indicator = form.find("td.indicator img").show();
+          form.get(0).submit();
+          indicator.hide();
+          var file = form.find("input[type=file]");
+          file.focus();
+          submitCallback = function(){
+            form.get(0).reset();
+          };
+          return false;
+        });
+        indicator.remove();
+      })
+    );
+    var targetIFrame = $j("<iframe></iframe>").attr({src: '/blank.html', name: '<%= IframeUploader::UPLOAD_KEY %>'})
+                       .one("load", function(){ $j(this).load(afterLoadCallback); });
+    $j('#share_file_new').append(
+      // HTTPS環境で、IE6を利用するとtargetが空だとHTTPへのアクセスと判断してアラートが表示されるため
+      // http://support.microsoft.com/kb/261188/ja
+      $j("<div></div>").addClass('target').append(targetIFrame)
+    );
+
+    // IE6対策
+    targetIFrame.get(0).contentWindow.name = '<%= IframeUploader::UPLOAD_KEY %>';
+
+    var afterLoadCallback = function(){
+      if(submitCallback){submitCallback.call();}
+      var doc = targetIFrame.get(0).contentDocument ? targetIFrame.get(0).contentDocument : targetIFrame.get(0).contentWindow.document;
+      var response = doc.body.innerHTML;
+      var json = eval('(' + response + ')');
+      var status = json['status'];
+      $j('ul.messages').html('');
+      if ( status == '200' ) {
+        $j.each(json['messages'], function(i, msg){
+          $j('ul.messages').append($j('<li></li>').addClass('notice').text(msg));
+        });
+        loadShareFiles({});
+      } else {
+        $j.each(json['messages'], function(i, msg){
+          $j('ul.messages').append($j('<li></li>').addClass('error').text(msg));
+        });
+      }
+    };
+  }
+
+  $j('#share_file_trigger').click(function(){
+    $j('div#share_file_dialog').dialog('open');
+  });
+
+<% end %>
