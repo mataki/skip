@@ -26,15 +26,16 @@ SKIPを動かすにあたり以下の環境で検証を行っています。
 
 
 ================================================================================
-* SKIP バージョンアップ（version 1.3 -> version 1.4）
+* SKIP バージョンアップ（version 1.4 -> version 1.5）
 ================================================================================
 下記内容に従い旧バージョンから新バージョンにバージョンアップすることで、
 SKIPを動かすことができます。
 
 1. gemsのインストール
 --------------------------------------------------------------------------------
-    $ sudo gem install feed-normalizer --version 1.5.1
-    $ sudo gem install searchlogic --version 2.3.6
+    $ sudo gem install nokogiri --version 1.4.0
+    $ sudo gem install gemcutter
+    $ sudo gem install sanitize --pre
 
 2. 設定ファイルの準備・編集（initial_settings.yml, database.yml, common_menus.yml）
 --------------------------------------------------------------------------------
@@ -55,7 +56,7 @@ SKIPを動かすことができます。
 下記内容に従いセットアップすることで、SKIPを動かすことができます。
 前提条件は以下のようになります。
 
- - Ruby(1.8.6 or 1.8.7), RubyGems(1.3.1以上), MySQL(5.0系)がインストール済み。
+ - Ruby(1.8.6 or 1.8.7), RubyGems(1.3.5以上), MySQL(5.0系)がインストール済み。
  - 公式ページもしくはgithubから最新版SKIPをダウンロード済み。
 
 1. gemsのインストール
@@ -69,6 +70,8 @@ SKIPを動かすことができます。
     $ sudo gem install feed-normalizer --version 1.5.1
     $ sudo gem install searchlogic --version 2.3.6
     $ sudo gem install sanitize --version 1.2.0.dev.20091104
+    $ sudo gem install nokogiri --version 1.4.0
+    $ sudo gem install sanitize --pre
 
 2. SKIPのファイル解凍（tarファイルをダウンロードした場合のみ）
 --------------------------------------------------------------------------------
