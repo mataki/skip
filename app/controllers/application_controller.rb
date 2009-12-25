@@ -60,7 +60,7 @@ protected
     logger.info(user.to_s_log('[Log for inspection]'))
 
     unless controller_name == 'pictures' && action_name == 'picture'
-      UserAccess.update_all("last_access = CURRENT_TIMESTAMP", ["user_id = ? ", user.id ])
+      UserAccess.update_all(["last_access = ? ", Time.now ], ["user_id = ? ", user.id ])
       @site_count = SiteCount.find(:first, :order => "created_on desc") || SiteCount.new
     end
 
