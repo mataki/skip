@@ -325,4 +325,8 @@ protected
     end
     true
   end
+
+  def msie?(version = 6)
+    !!(request.env["HTTP_USER_AGENT"]["MSIE #{version}"])
+  end
 end

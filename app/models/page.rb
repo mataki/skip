@@ -7,6 +7,7 @@ class Page < ActiveRecord::Base
   attr_reader :new_history
 
   has_many :histories, :order => "histories.revision DESC"
+  has_many :attachments
   validates_associated :new_history, :if => :new_history, :on => :create
   validates_uniqueness_of :title
   validates_presence_of :title

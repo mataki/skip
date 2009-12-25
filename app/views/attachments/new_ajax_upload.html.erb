@@ -1,5 +1,5 @@
 <% html_options = {:multipart => true, :id => 'attachment_form', :target => IframeUploader::UPLOAD_KEY} -%>
-<% url = url_for({:action => 'create'}.merge(params.slice(IframeUploader::UPLOAD_KEY))) -%>
+<% url = url_for({:action => 'create', :wiki_id=>@page.title}.merge(params.slice(IframeUploader::UPLOAD_KEY))) -%>
 <% form_tag(url, html_options) do -%>
   <style type="text/css">
   form#share_file_form table.upload_form label, form#share_file_form table.upload_form input {

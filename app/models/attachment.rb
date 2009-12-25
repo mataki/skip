@@ -18,6 +18,7 @@ class Attachment < ActiveRecord::Base
     "のシステム全体における保存領域の利用容量が最大値を越えてしまうためアップロードできません。"
 
   belongs_to :user
+  belongs_to :page
 
   validates_presence_of :display_name
   validates_as_attachment

@@ -7,6 +7,7 @@ class CreateAttachments < ActiveRecord::Migration
       t.integer :size, :null => false, :default => 0
       t.integer :user_id, :null => false
       t.integer :db_file_id
+      t.integer :page_id
 
       t.timestamps
     end

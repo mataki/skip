@@ -1,11 +1,38 @@
 class AttachmentsController < ApplicationController
   include IframeUploader
+  layout 'subwindow', :only => %w[index]
+
+  def index
+    @attachments = Page.find_by_title(params[:wiki_id]).attachments.paginate(:page => params[:page], :per_page => 10)
+    respond_to do |format|
+      format.js {
+        render :json => {
+          :pages => {
+            :first => 1,
+            :previous => @attachments.previous_page,
+            :next => @attachments.next_page,
+            :last => @attachments.total_pages,
+            :current => @attachments.current_page,
+            :item_count => @attachments.size },
+        :attachments => @attachments.map{|a| {:attachment=>attachment_to_json(a)} }
+        }
+      }
+    end
+  end
 
   def new
-    chapter = Chapter.find(params[:id])
-    @attachment = chapter.attachments.build(:user_id=>current_user.id)
+    @page = Page.find_by_title(params[:wiki_id])
+    @attachment = @page.attachments.build(:user_id=>current_user.id)
 
-    ajax_upload?  ? render(:template=>"attachments/new_ajax_upload", :layout=>false) : render(:text => "hoge")
+    render(:template=>"attachments/new_ajax_upload", :layout=>false)
+  end
+
+  def show
+    @attachment = Attachment.find(params[:id])
+    opts = {:filename => @attachment.display_name, :type => @attachment.content_type }
+    opts[:filename] = URI.encode(@attachment.display_name) if msie?
+
+    send_data(@attachment.send(:current_data), opts)
   end
 
   def create
@@ -14,7 +41,8 @@ class AttachmentsController < ApplicationController
       ajax_upload? ? render(:text => {:status => 400, :messages => [_("%{name} is mandatory.") % { :name => _('File') }]}.to_json) : render_window_close
       return
     end
-    @attachment = Attachment.new(params[:attachment].merge({:user_id=>current_user.id}))
+    page = Page.find_by_title(params[:wiki_id])
+    @attachment = page.attachments.build(params[:attachment].merge({:user_id=>current_user.id}))
     if @attachment.save
       notice_message = n_('File was successfully uploaded.', 'Files were successfully uploaded.', params[:attachment].size)
       flash[:notice] = notice_message
@@ -26,6 +54,20 @@ class AttachmentsController < ApplicationController
      else
         render :action => "new"
      end
+    end
+  end
+
+  private
+  def attachment_to_json(atmt)
+    returning(atmt.attributes.slice("content_type", "filename", "display_name")) do |json|
+      json[:path] = attachment_path(atmt)
+      json[:inline] = attachment_path(atmt, :position=>"inline") if atmt.image?
+      # TODO I18n::MissingTranslationData (translation missing: ja, number, human, storage_units, format):
+#      json[:size] = number_to_human_size(atmt.size)
+      json[:size] = atmt.size
+
+      json[:updated_at] = atmt.updated_at.strftime("%Y/%m/%d %H:%M")
+      json[:created_at] = atmt.created_at.strftime("%Y/%m/%d %H:%M")
     end
   end
 end
