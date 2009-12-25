@@ -2,6 +2,8 @@ class AttachmentsController < ApplicationController
   include IframeUploader
   layout 'subwindow', :only => %w[index]
 
+  before_filter :secret_checker
+
   def index
     @attachments = Page.find_by_title(params[:wiki_id]).attachments.paginate(:page => params[:page], :per_page => 10)
     respond_to do |format|

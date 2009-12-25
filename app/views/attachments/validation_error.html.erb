@@ -1,0 +1,7 @@
+<div id="error-explanation">
+  <ul>
+    <% @attachment.error.full_messages.each do |m| -%>
+      <li><%= m %></li>
+    <% end -%>
+  </ul>
+</div>

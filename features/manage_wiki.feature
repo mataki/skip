@@ -60,11 +60,10 @@ Feature: Wikiの管理
 
   Scenario: 存在しているページ名を追加しようとするとエラーが発生する
     Given   "Wikiトップページ"にアクセスする
-    And     "タイトル"に"セカンドページ"と入力する
+    And     "pagename"に"セカンドページ"と入力する
     And     "作成"ボタンをクリックする
 
-    Then    ペンディング"うまくうごかないため"
-    Then    flashメッセージに"Titleはすでに存在します"と表示されていること
+    Then    flashメッセージに"Titleはすでに存在します。"と表示されていること
 
   Scenario: ページの編集を行う
     Given   "Wikiトップページ"にアクセスする
@@ -149,6 +148,6 @@ Feature: Wikiの管理
     Then    "テストページを更新するします"と表示されていること
 
   Scenario: ファイルを添付する
-    Given   "Wikiトップページ"にアクセスする
+    Given   ペンディング"Ajaxなので手動でテストする"
 
 
