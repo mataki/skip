@@ -124,9 +124,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :wiki, :member => {:recovery => :post}, :expect=>[:new] do |page|
     page.resources :histories, :collection=>{:diff=>:get}
-    page.resources :chapters, :member => {:insert => :get} do |chapter|
-      chapter.resources :attachments
-    end
+    page.resources :chapters, :member => {:insert => :get}
+    page.resources :attachments
   end
 
   map.resources :attachments
