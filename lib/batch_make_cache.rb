@@ -18,16 +18,22 @@ require 'fileutils'
 
 class BatchMakeCache < BatchBase
   include ERB::Util
+  @border_time = :none
 
+  def initialize interval = nil
+    if interval && interval.is_a?(Integer)
+      @border_time = interval.ago
+    end
+  end
   # make_cachesから始まる名前のメソッドを次々と実行
   def self.execute options
     cache_path = get_cache_path
 
-    maker = self.new()
+    maker = self.new(options[:time])
     maker.public_methods.each do |method|
       if method.index("make_caches_") == 0
         contents_type = method.gsub("make_caches_", "")
-        maker.send(method, contents_type, cache_path, options[:time])
+        maker.send(method, contents_type, cache_path)
       end
     end
     File.symlink( SkipEmbedded::InitialSettings['share_file_path'],"#{cache_path}/share_file" ) unless FileTest.symlink?("#{cache_path}/share_file")
@@ -42,8 +48,8 @@ class BatchMakeCache < BatchBase
   end
 
   # entry用
-  def make_caches_entry(contents_type, cache_path, border_time)
-    entries = load_not_cached_entries(border_time)
+  def make_caches_entry(contents_type, cache_path)
+    entries = load_not_cached_entries
     entries.each do |entry|
       contents = create_contents(:title => entry.title,
                                  :body_lines => entry_body_lines(entry) )
@@ -60,8 +66,8 @@ class BatchMakeCache < BatchBase
   end
 
   # ブックマーク用
-  def make_caches_bookmark(contents_type, cache_path, border_time)
-    bookmarks = load_not_cached_bookmarks(border_time)
+  def make_caches_bookmark(contents_type, cache_path)
+    bookmarks = load_not_cached_bookmarks
     bookmarks.each do |bookmark|
       contents = create_contents(:title => bookmark.title,
                                  :body_lines => bookmark_body_lines(bookmark))
@@ -81,8 +87,14 @@ class BatchMakeCache < BatchBase
   end
 
   # groupのサマリ用
-  def make_caches_group(contents_type, cache_path, border_time)
-    groups = Group.active.find(:all, :conditions => ["updated_on > ?", border_time])
+  def make_caches_group(contents_type, cache_path)
+    conditions =
+      if @border_time.is_a?(Time)
+        ["updated_on > ?", @border_time]
+      else
+        []
+      end
+    groups = Group.active.find(:all, :conditions => conditions)
     groups.each do |group|
       contents = create_contents(:title => group.name,
                                  :body_lines => [group.description])
@@ -98,8 +110,14 @@ class BatchMakeCache < BatchBase
   end
 
   # userのプロフィール用
-  def make_caches_user(contents_type, cache_path, border_time)
-    users = User.find(:all, :include => ['user_profile_values'], :conditions => ["updated_on > ?", border_time])
+  def make_caches_user(contents_type, cache_path)
+    conditions =
+      if @border_time.is_a?(Time)
+        ["updated_on > ?", @border_time]
+      else
+        []
+      end
+    users = User.find(:all, :include => ['user_profile_values'], :conditions => conditions)
     users.each do |user|
       contents = create_contents(:title => user.name,
                                  :body_lines => user_body_lines(user))
@@ -114,8 +132,14 @@ class BatchMakeCache < BatchBase
     end
   end
 
-  def make_caches_share_file(contents_type, cache_path, border_time)
-    share_files = ShareFile.find(:all, :conditions => ["date <= ? AND updated_at > ?", border_time, border_time])
+  def make_caches_share_file(contents_type, cache_path)
+    conditions =
+      if @border_time.is_a?(Time)
+        ["date <= ? AND updated_at > ?", Time.now, @border_time]
+      else
+        []
+      end
+    share_files = ShareFile.find(:all, :conditions => conditions)
     share_files.each do |file|
       publication_symbols = file.share_file_publications.map{ |pf| pf.symbol }
       meta = create_meta(:contents_type => contents_type,
@@ -173,10 +197,15 @@ class BatchMakeCache < BatchBase
   end
 
   private
-  def load_not_cached_entries(border_time)
+  def load_not_cached_entries
     # 全部includeした状態でwhere句をつけると、コメントが複数ついていてひとつだけ15分前の場合、
     # その最新のコメントだけがincludeされた状態のentryオブジェクトになるので、ここではentry_idだけ取り出してwhere条件にする方法にした
-    conditions = ["updated_on > ?", border_time]
+    conditions =
+      if @border_time.is_a?(Time)
+        ["updated_on > ?", @border_time]
+      else
+        []
+      end
     new_ids = BoardEntry.find(:all, :select => "id", :conditions => conditions).map{|entry| entry.id}
     new_ids += BoardEntryComment.find(:all, :select => "board_entry_id", :conditions => conditions).map{|comment| comment.board_entry_id}
     new_ids += EntryTrackback.find(:all, :select => "board_entry_id", :conditions => conditions).map{|trackback| trackback.board_entry_id}
@@ -204,9 +233,15 @@ class BatchMakeCache < BatchBase
     body_lines
   end
 
-  def load_not_cached_bookmarks(border_time)
+  def load_not_cached_bookmarks
+    conditions =
+      if @border_time.is_a?(Time)
+        ["updated_on > ?", @border_time]
+      else
+        []
+      end
     new_ids = BookmarkComment.find(:all, :select => "bookmark_id",
-                                   :conditions => ["updated_on > ?", border_time]).map{|comment| comment.bookmark_id}
+                                   :conditions => conditions).map{|comment| comment.bookmark_id}
     return [] if new_ids.empty?
     Bookmark.find(:all, :include => [{:bookmark_comments => :user}], :conditions =>["bookmarks.id in (?)", new_ids.uniq])
   end
@@ -257,12 +292,12 @@ end
 # -all すべてのキャッシュを再作成
 # 実行例 ruby batch_make_cache.rb -all
 # 時間を指定しなければ15分前以降に更新されたもののキャッシュを生成する
-time = 15.minutes.ago
+time = 15.minutes
 ARGV.each do |arg|
   if arg.index("-time=")
-    time = eval(arg.split('=').last).minutes.ago if arg.split('=').size > 1
+    time = eval(arg.split('=').last).minutes if arg.split('=').size > 1
   end
 end
-time = 100.years.ago if ARGV.include?("-all")
+time = nil if ARGV.include?("-all")
 
 BatchMakeCache.execution({ :time => time }) unless RAILS_ENV == 'test'

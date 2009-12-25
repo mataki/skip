@@ -26,4 +26,10 @@ module BookmarksHelper
       tag_links.join('&nbsp;')
     end
   end
+
+  def bookmark_type_icon bookmark
+    unless bookmark.blank?
+      bookmark.is_type_page? ? icon_tag('user') : icon_tag('world')
+    end
+  end
 end

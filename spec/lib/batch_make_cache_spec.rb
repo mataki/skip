@@ -36,7 +36,7 @@ end
 
 describe BatchMakeCache, "#make_caches_bookmark" do
   before do
-    @bmc = BatchMakeCache.new
+    @bmc = BatchMakeCache.new(1.hour)
     @bmc.stub!(:create_contents)
     @bmc.stub!(:create_meta)
     @bmc.stub!(:output_file)
@@ -54,15 +54,15 @@ describe BatchMakeCache, "#make_caches_bookmark" do
     end
     it "ファイルが出力されること" do
       @bmc.should_receive(:output_file)
-      @bmc.make_caches_bookmark("bookmark", "cache/path", 1.hour.ago)
+      @bmc.make_caches_bookmark("bookmark", "cache/path")
     end
     it "コンテンツの内容に作者が存在していること" do
       @bmc.should_receive(:create_contents).with(:body_lines => ["title", "url", 10.minutes.ago.strftime("%Y年%m月%d日"), "creater", "tags,category", ""], :title => "title")
-      @bmc.make_caches_bookmark("bookmark", "cache/path", 1.hour.ago)
+      @bmc.make_caches_bookmark("bookmark", "cache/path")
     end
     it "公開範囲が公開(sid:allusers)で設定されていること" do
       @bmc.should_receive(:create_meta).with(:contents_type => "bookmark", :publication_symbols => "sid:allusers,uid:creater", :link_url => "/bookmark/show/url", :icon_type => "tag_blue", :title => "title")
-      @bmc.make_caches_bookmark("bookmark", "cache/path", 1.hour.ago)
+      @bmc.make_caches_bookmark("bookmark", "cache/path")
     end
   end
 
@@ -80,15 +80,15 @@ describe BatchMakeCache, "#make_caches_bookmark" do
     end
     it "ファイルが出力されること" do
       @bmc.should_receive(:output_file)
-      @bmc.make_caches_bookmark("bookmark", "cache/path", 1.hour.ago)
+      @bmc.make_caches_bookmark("bookmark", "cache/path")
     end
     it "コンテンツの内容に公開している作者のみが存在していること" do
       @bmc.should_receive(:create_contents).with(:title => "title", :body_lines => ["title", "url", 10.minutes.ago.strftime("%Y年%m月%d日"), "creater1", "tags,category", ""])
-      @bmc.make_caches_bookmark("bookmark", "cache/path", 1.hour.ago)
+      @bmc.make_caches_bookmark("bookmark", "cache/path")
     end
     it "公開範囲が公開(sid:allusers)で設定されていること" do
       @bmc.should_receive(:create_meta).with(:contents_type => "bookmark", :publication_symbols => "sid:allusers,uid:creater1,uid:creater2", :link_url => "/bookmark/show/url", :icon_type => "tag_blue", :title => "title")
-      @bmc.make_caches_bookmark("bookmark", "cache/path", 1.hour.ago)
+      @bmc.make_caches_bookmark("bookmark", "cache/path")
     end
   end
 
@@ -105,15 +105,15 @@ describe BatchMakeCache, "#make_caches_bookmark" do
     end
     it "ファイルが出力されること" do
       @bmc.should_receive(:output_file)
-      @bmc.make_caches_bookmark("bookmark", "cache/path", 1.hour.ago)
+      @bmc.make_caches_bookmark("bookmark", "cache/path")
     end
     it "コンテンツの内容にコメントの内容が設定されないこと" do
       @bmc.should_receive(:create_contents).with(:title => "title", :body_lines => ["title", "url"])
-      @bmc.make_caches_bookmark("bookmark", "cache/path", 1.hour.ago)
+      @bmc.make_caches_bookmark("bookmark", "cache/path")
     end
     it "公開範囲が公開(sid:allusers)に設定されていないこと" do
       @bmc.should_receive(:create_meta).with(:contents_type => "bookmark", :publication_symbols => "uid:creater", :link_url => "/bookmark/show/url", :icon_type => "tag_blue", :title => "title")
-      @bmc.make_caches_bookmark("bookmark", "cache/path", 1.hour.ago)
+      @bmc.make_caches_bookmark("bookmark", "cache/path")
     end
   end
 end
@@ -137,7 +137,7 @@ describe BatchMakeCache, '#make_caches_user' do
       contents_type = 'contents_type'
       cache_path = 'cache_path'
       @bmc.should_receive(:output_file).with(cache_path, contents_type, @user.id, contents, meta)
-      @bmc.make_caches_user(contents_type, cache_path, 'border_time')
+      @bmc.make_caches_user(contents_type, cache_path)
     end
   end
   describe 'ユーザが見つからない場合' do
@@ -146,7 +146,7 @@ describe BatchMakeCache, '#make_caches_user' do
     end
     it 'ファイルが出力されないこと' do
       @bmc.should_not_receive(:output_file)
-      @bmc.make_caches_user('contents_type', 'cache_path', 'border_time')
+      @bmc.make_caches_user('contents_type', 'cache_path')
     end
   end
 end
@@ -184,20 +184,20 @@ end
 
 describe BatchMakeCache, "#load_not_cached_entries" do
   before do
-    @border_time = 15.minutes.ago
-    @bmc = BatchMakeCache.new
+    @interval = 15.minutes
+    @bmc = BatchMakeCache.new(@interval)
   end
   describe "１件見つかる場合" do
     before do
       @entry = mock_model(BoardEntry)
-      BoardEntry.should_receive(:find).with(:all, :select => "id", :conditions => ["updated_on > ?", @border_time]).and_return([@entry])
+      BoardEntry.should_receive(:find).with(:all, :select => "id", :conditions => ["updated_on > ?", @interval.ago]).and_return([@entry])
       BoardEntryComment.stub!(:find).and_return([])
       EntryTrackback.stub!(:find).and_return([])
       BoardEntry.should_receive(:find).with(:all, :include => [:user, {:board_entry_comments => :user}, {:entry_trackbacks => {:tb_entry => :user}}],
                                    :conditions =>["board_entries.id in (?)", [@entry.id]]).and_return([@entry])
     end
     it "記事が１件返ること" do
-      @bmc.send(:load_not_cached_entries, @border_time).should == [@entry]
+      @bmc.send(:load_not_cached_entries).should == [@entry]
     end
   end
   describe "見つからない場合" do
@@ -207,7 +207,7 @@ describe BatchMakeCache, "#load_not_cached_entries" do
       EntryTrackback.stub!(:find).and_return([])
     end
     it "空の配列が返ること" do
-      @bmc.send(:load_not_cached_entries, @border_time).should == []
+      @bmc.send(:load_not_cached_entries).should == []
     end
   end
 end

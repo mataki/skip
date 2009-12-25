@@ -15,7 +15,7 @@
       <div class="box_space_body tag_cloud">
         <% tag_cloud @tags do |name, count, css_class| -%>
           <%=
-             link_to_unless_current h(name), {:category => h(name), :sort_type => 'date'}, :class => "tag #{css_class}" do
+             link_to_unless_current h(name), {:controller => 'bookmarks', :tag_words => h(name)}, :class => "tag #{css_class}" do
                content_tag :span, h(name), :class => "tag #{css_class}"
              end
              %>
@@ -38,7 +38,7 @@
           <td>
             <%= bookmark_comment_tag_search_links_tag bookmark_comment.tags %>
             &nbsp;
-            <%=h bookmark_comment.comment %>
+            <span class="small_text"><%=h bookmark_comment.comment %></span>
             <% if bookmark_comment.user.id == @current_user.id -%>
               &nbsp;
               <%= hidden_field_tag("authenticity_token", form_authenticity_token) %>

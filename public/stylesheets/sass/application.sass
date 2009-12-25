@@ -1027,16 +1027,6 @@ div.panel_top
     :position absolute
     :bottom 0px
     :left 80px
-div.panel_admin_top
-  :position relative
-  :height 90px
-  .left
-    :margin 10px
-    :position absolute
-  #tab_menu
-    :position absolute
-    :bottom 0px
-    :left 80px
 
 // ------------------------------------------------------------
 // ユーザ一覧、グループ参加者一覧の一行毎
@@ -1308,6 +1298,8 @@ div.topix_entries_wrapper, div.topix_share_files_wrapper, div.topix_bookmarks_wr
 
   table.topix_bookmarks
     tr
+      td.bookmark_type
+        :text-align center
       td.bookmark_outline
         :text-align left
         span.count
@@ -1480,13 +1472,6 @@ div#share_file_uploader.enabled
     :margin 3px
     :background-color pink
 
-// TODO assistant/calendar.rbもろとも使われてない可能性が高いので調査して削除する
-//table.calendar_table
-//  :font-size 12px
-//  :width 150px
-//  th
-//    :background-color #EEEEEE
-
 // ランキング > 月次ランキング/総合ランキング
 // ------------------------------------------------------------
 h1#ranking_title
@@ -1497,15 +1482,15 @@ h1#ranking_title
   :vertical-align middle
 div.ranking_aggregate
   :margin 0 0 10px 0
-  :width 900px
+  :width 100%
   :float left
   p
     :margin-bottom 20px
 
 div.ranking_wrapper
-  :margin 10px 10px 10px 0
+  :margin 10px 1% 10px 0
   :float left
-  :width 290px
+  :width 31%
   table.ranking_square
     :text-align left
     :table-layout fixed
