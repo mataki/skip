@@ -39,7 +39,7 @@
     width: 500,
     height: 350,
     open: function() {
-      loadShareFiles();
+      loadShareFiles({});
       loadNewShareFileForm();
       $j('#tabs').tabs().show();
     }
@@ -108,7 +108,13 @@
     var url = '<%= attachments_url(:id => (defined?(chapter) ? chapter : @chapter).id, :wiki_id => page.title,:format => :js) %>';
     $j.getJSON(url, requestData, function(data, stat) {
       var attachments = data['attachments'];
-      if(attachments.length == 0) return;
+      if(attachments.length == 0){
+        var message  = $j('ul.messages').append($j('<li></li>').addClass('error').text("このページにはまだファイルは登録されていません"));
+        indicator.remove();
+        message.appendTo('div#share_file_list').show();
+        return;
+      };
+
       var thead = $j('<thead></thead>');
       thead.append(shareFileToTableHeader());
       var tbody = $j("<tbody></tbody>");
@@ -158,9 +164,9 @@
       var src = data['inline'];
       if(src){
         var img = $j("<img></img>").attr("src", src).attr("alt", filename).addClass('pointer');
-        return img.clone().attr({'height': '72', 'width': '72'}).addClass('fit_image').click(function(){
+        return img.clone().attr("style", "height: 72px; width: 72px;").click(function(){
           insertToRichEditor(img.clone());
-        });
+        }).show();
       }else{
         return $j("<span></span>").text(filename.substr(0,32));
       }
