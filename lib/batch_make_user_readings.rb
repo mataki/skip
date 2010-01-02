@@ -81,7 +81,9 @@ class BatchMakeUserReadings < BatchBase
       update_params.merge!(:notice_type => 'notice') if entry.is_notice?
       user_reading.update_attributes(update_params) if updatable?(user_reading, last_updated_time, updater_id, antenna_user_id)
     else
-      UserReading.create(:user_id => antenna_user_id, :board_entry_id => entry.id) if updater_id != antenna_user_id
+      create_params = {:user_id => antenna_user_id, :board_entry_id => entry.id, :notice_type => nil}
+      create_params.merge!(:notice_type => 'notice') if entry.is_notice?
+      UserReading.create(create_params) if updater_id != antenna_user_id
     end
   end
 
