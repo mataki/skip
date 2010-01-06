@@ -28,7 +28,8 @@ class GroupsController < ApplicationController
     scope = Group.active.partial_match_name_or_description(params[:keyword]).
       categorized(params[:group_category_id]).order_active
     scope = scope.unjoin(current_user) if params[:yet_participation] == 'true'
-    @groups = scope.paginate(:page => params[:page], :per_page => 50)
+    # paginteの検索条件にgroup byが含まれる場合、countでgroup by が考慮されないので
+    @groups = scope.paginate(:count => {:select => 'distinct(groups.id)'}, :page => params[:page], :per_page => 50)
 
     flash.now[:notice] = _('No matching groups found.') if @groups.empty?
   end
