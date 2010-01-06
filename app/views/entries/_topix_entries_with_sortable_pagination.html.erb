@@ -13,6 +13,12 @@
     <%= link_to_unless_current [_("[Sort by %s]") % Admin::Setting.point_button], params.merge({:sort_type => "point"}) do
         content_tag 'b', _("[Sort by %s]") % Admin::Setting.point_button
       end %>
+    <%= "&nbsp;&nbsp;" %>
+    <%= _('Type: ') %>
+    <%= link_to_unless_current _("[entry]"), :action => "bbs",:type => "entry" %>
+    <%= link_to_unless_current _("[question]"), :action => "bbs",:type => "question" %>
+    <%= link_to_unless_current _("[notice]"), :action => "bbs",:type => "notice" %>
+    <%= link_to_unless_current _("[all]"), :action => "bbs", :type => "" %>
   </div>
   <%= i18n_will_paginate entries %>
 </div>
