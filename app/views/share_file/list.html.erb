@@ -25,14 +25,6 @@
         <%= f.check_box :publication_type_does_not_equal, {}, 'public' %> <%= f.label :publication_type_does_not_equal, _('Other than "open to public"')%>
       </div>
     </div><!-- box_space -->
-
-    <div class="box_space">
-      <div class="box_space_title"><%= icon_tag 'table_refresh' -%><%= _("Display Order")%></div>
-      <div class="box_space_body">
-        <%= radio_button_tag("sort_type", "date", params[:sort_type] == "date", :id => "sort_type_date") %> <%= label_tag 'sort_type_date', _("Sort by Upload Dates")%> <br/>
-        <%= radio_button_tag("sort_type", "file_name", params[:sort_type] == "file_name", :id => "sort_type_file_name") %><%= label_tag 'sort_type_file_name', _('Sort by File Names') %>
-      </div>
-    </div><!-- box_space -->
   <% end %>
 
   <%= render :partial => 'tag_cloud_box' %>
@@ -41,6 +33,13 @@
 
 <% content_for :contents_right do -%>
   <% unless @share_files.empty? -%>
+    <div class="navi ui-corner-all" style="position: relative; _width: 100%; height: 20px;">
+      <div style="position: absolute; top:2px; left: 4px;">
+        <%= _('Sort by: ') %>
+        <%= link_to_unless_current _("[Sort by Upload Dates]"), params.merge({:sort_type => "date", :id => "sort_type_date"}) do content_tag 'b', _('[Sort by Upload Dates]') end %>
+        <%= link_to_unless_current _("[Sort by File Names]"), params.merge({:sort_type => "file_name", :id => "sort_type_file_name"}) do content_tag 'b', _('[Sort by File Names]') end %>
+      </div>
+    </div>
     <%= i18n_will_paginate_with_container_wrapper @share_files %>
     <div class="files_body">
       <% @share_files.each do |share_file| -%>
