@@ -118,3 +118,15 @@ Feature: マイページ
     When "a_user"でログインする
 
     Then I should see "VimGroup(1)" within "div.antenna"
+
+  Scenario: タブ表示/並べて表示を切り替える
+    Given   "a_user"でログインする
+
+    When     "タブで表示"リンクをクリックする
+
+    Then    "新着記事"と表示されていること
+
+    When    "並べて表示"リンクをクリックする
+
+    Then    "新着記事"と表示されていないこと
+

@@ -778,10 +778,11 @@ class MypageController < ApplicationController
 
   def target_page target = nil
     if target
-      if target_key2current_pages = cookies[:target_key2current_pages]
-        params[:page] || JSON.parse(target_key2current_pages)[target] || 1
-      else
+      target_key2current_pages = cookies[:target_key2current_pages]
+      if target_key2current_pages.blank?
         params[:page]
+      else
+        params[:page] || JSON.parse(target_key2current_pages)[target] || 1
       end
     else
       params[:page]
