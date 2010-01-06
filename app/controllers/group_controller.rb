@@ -34,7 +34,7 @@ class GroupController < ApplicationController
     @recent_messages = BoardEntry.scoped(
         :conditions => find_params[:conditions],
         :include => find_params[:include] | [ :user, :state ]
-      ).order_sort_type("date").aim_type("entry").all(:limit => 10)
+      ).order_sort_type("date").all(:limit => 10)
   end
 
   # tab_menu
