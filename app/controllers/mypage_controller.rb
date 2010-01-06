@@ -170,7 +170,7 @@ class MypageController < ApplicationController
     @antenna_entry.title = antenna_entry_title(@antenna_entry)
     if @antenna_entry.need_search?
       @entries = @antenna_entry.scope.order_new.paginate(:page => params[:page], :per_page => 20)
-      @user_unreadings = unread_entry_id_hash_with_user_reading(@entries.map {|entry| entry.id})
+      @user_unreadings = unread_entry_id_hash_with_user_reading(@entries.map {|entry| entry.id}, params[:target_type])
       @symbol2name_hash = BoardEntry.get_symbol2name_hash(@entries)
     end
   end
@@ -438,7 +438,13 @@ class MypageController < ApplicationController
               when @key == 'joined_group'    then scope_for_entries_by_system_antenna_group
               end
 
-      scope = scope.unread(@current_user) unless @read
+      unless @read
+        if @key == 'message'
+          scope = scope.unread_only_notice(@current_user)
+        else
+          scope = scope.unread(@current_user)
+        end
+      end
       scope
     end
 
@@ -742,16 +748,21 @@ class MypageController < ApplicationController
   end
 
   # TODO UserReadingに移動する
+  # TODO SystemAntennaEntry等の記事取得の際に一緒に取得するようなロジックに出来ないか?
+  #   => target_typeの判定ロジックが複数箇所に現れるのをなくしたい
   # 指定した記事idのをキーとした未読状態のUserReadingのハッシュを取得
-  def unread_entry_id_hash_with_user_reading(entry_ids)
+  def unread_entry_id_hash_with_user_reading(entry_ids, target_type)
     result = {}
     if entry_ids && entry_ids.size > 0
-      user_readings_conditions = ["user_id = ? and board_entry_id in (?)"]
-      user_readings_conditions << current_user.id << entry_ids
+      user_readings_conditions =
+        # readがmysqlの予約語なのでバッククォートで括らないとエラー
+        if target_type == 'message'
+          ["user_id = ? AND board_entry_id in (?) AND `read` = ? AND notice_type = ?", current_user.id, entry_ids, false, 'notice']
+        else
+          ["user_id = ? AND board_entry_id in (?) AND `read` = ?", current_user.id, entry_ids, false]
+        end
       user_readings = UserReading.find(:all, :conditions => user_readings_conditions)
-      user_readings.each do |user_reading|
-        result[user_reading.board_entry_id] = user_reading unless user_reading.read
-      end
+      user_readings.map { |user_reading| result[user_reading.board_entry_id] = user_reading }
     end
     result
   end
