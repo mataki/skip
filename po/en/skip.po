@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.5.0\n"
-"POT-Creation-Date: 2010-01-06 18:22+0900\n"
+"POT-Creation-Date: 2010-01-06 19:39+0900\n"
 "PO-Revision-Date: 2009-06-29 13:31+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1798,7 +1798,7 @@ msgstr ""
 msgid "Are you sure leave the group?"
 msgstr ""
 
-#: app/helpers/share_file_helper.rb:26 app/views/share_file/list.html.erb:61
+#: app/helpers/share_file_helper.rb:26 app/views/share_file/list.html.erb:68
 #: app/views/group/_manage_info.html.erb:22
 #: app/views/board_entries/_board_entry_comment.html.erb:14
 #: app/views/entries/_entry_detail.html.erb:320
@@ -5446,6 +5446,7 @@ msgstr ""
 msgid "Sort by number of users"
 msgstr ""
 
+#: app/views/share_file/list.html.erb:46
 #: app/views/entries/_topix_entries_with_sortable_pagination.html.erb:6
 msgid "Sort by: "
 msgstr ""
@@ -7013,6 +7014,14 @@ msgstr ""
 #: app/views/entries/_topix_entries_with_sortable_pagination.html.erb:13
 #: app/views/entries/_topix_entries_with_sortable_pagination.html.erb:14
 msgid "[Sort by %s]"
+msgstr ""
+
+#: app/views/share_file/list.html.erb:48
+msgid "[Sort by File Names]"
+msgstr ""
+
+#: app/views/share_file/list.html.erb:47
+msgid "[Sort by Upload Dates]"
 msgstr ""
 
 #: app/views/entries/_topix_entries_with_sortable_pagination.html.erb:10
