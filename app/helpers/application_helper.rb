@@ -203,6 +203,10 @@ module ApplicationHelper
 
   def sanitize_style_with_whitelist(content)
     Sanitize.clean(content || '', Sanitize::Config::SKIP)
+  rescue => e
+    logger.error e
+    e.backtrace.each { |line| logger.error line}
+    _('Illegal format in this content. Input valid format.')
   end
 
   def translate_publication_type(entry)
