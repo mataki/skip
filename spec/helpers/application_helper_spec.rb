@@ -88,8 +88,8 @@ describe ApplicationHelper, '#user_link_to_with_portrait' do
     @mock_picture = mock('picture')
   end
   describe 'width, heightの指定がない場合' do
-    it 'width 120, height 80 のポートレイト画像付きユーザリンクが生成されること' do
-      helper.should_receive(:show_picture).with(@user, :width => 120, :height => 80).and_return(@mock_picture)
+    it 'width 80, height 80 のポートレイト画像付きユーザリンクが生成されること' do
+      helper.should_receive(:show_picture).with(@user, :width => 80, :height => 80).and_return(@mock_picture)
       helper.should_receive(:link_to).with(@mock_picture, @url_params, anything())
       helper.user_link_to_with_portrait(@user)
     end
