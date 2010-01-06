@@ -203,10 +203,14 @@ module ApplicationHelper
 
   def sanitize_style_with_whitelist(content)
     Sanitize.clean(content || '', Sanitize::Config::SKIP)
+    # FIXME name_space付きのタグの解析で起こるエラー対応の暫定対応(Office系のソフトからrichtextに貼り付けた際などに発生)
+    # 根本対応は別途行ったほうがいい。
   rescue => e
     logger.error e
     e.backtrace.each { |line| logger.error line}
-    _('Illegal format in this content. Input valid format.')
+    allowed_tags = HTML::WhiteListSanitizer.allowed_tags.dup << "table" << "tbody" << "tr" << "th" << "td" << "caption" << "strike" << "u"
+    allowed_attributes = HTML::WhiteListSanitizer.allowed_attributes.dup << "style" << "cellspacing" << "cellpadding" << "border" << "align" << "summary" << "target"
+    sanitize(content, :tags => allowed_tags, :attributes => allowed_attributes)
   end
 
   def translate_publication_type(entry)
