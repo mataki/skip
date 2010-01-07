@@ -3,7 +3,7 @@
     <%= render(:partial => 'entries/search_box') %>
     <%= render(:partial => 'entries/tag_cloud_box') %>
     <%= render(:partial => 'entries/user_archive_box', :locals => { :user_archives => @user_archives }) %>
-    <%= render(:partial => 'entries/recent_box', :locals => { :owner => @group }) %>
+    <%= render(:partial => 'entries/recent_box', :locals => { :owner => @group }) if @entry %>
   <% end -%>
 <% end -%>
 
