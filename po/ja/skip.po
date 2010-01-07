@@ -5584,7 +5584,7 @@ msgstr "ユーザ数順"
 #: app/views/share_file/list.html.erb:46
 #: app/views/entries/_topix_entries_with_sortable_pagination.html.erb:6
 msgid "Sort by: "
-msgstr "ソート方法"
+msgstr "並び順:"
 
 #: app/controllers/group_controller.rb:357
 msgid "Specified group does not exist."
