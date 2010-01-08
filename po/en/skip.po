@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.5.0\n"
-"POT-Creation-Date: 2010-01-06 19:39+0900\n"
+"POT-Creation-Date: 2010-01-08 11:33+0900\n"
 "PO-Revision-Date: 2009-06-29 13:31+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1738,6 +1738,10 @@ msgid ""
 "discarded and we will proceed on the new email address."
 msgstr ""
 
+#: app/views/users/index.html.erb:16
+msgid "Any"
+msgstr ""
+
 #: app/views/admin/users/import.html.erb:16
 msgid "Append unregistered users only"
 msgstr ""
@@ -1798,7 +1802,7 @@ msgstr ""
 msgid "Are you sure leave the group?"
 msgstr ""
 
-#: app/helpers/share_file_helper.rb:26 app/views/share_file/list.html.erb:68
+#: app/helpers/share_file_helper.rb:26 app/views/share_file/list.html.erb:60
 #: app/views/group/_manage_info.html.erb:22
 #: app/views/board_entries/_board_entry_comment.html.erb:14
 #: app/views/entries/_entry_detail.html.erb:320
@@ -2526,8 +2530,8 @@ msgstr ""
 msgid "Create a new forum entry inheriting the privacy setting."
 msgstr ""
 
-#: app/controllers/groups_controller.rb:39
-#: app/controllers/groups_controller.rb:47
+#: app/controllers/groups_controller.rb:40
+#: app/controllers/groups_controller.rb:48
 #: app/views/mypage/_action_box.html.erb:10
 msgid "Create a new group"
 msgstr "Create a group"
@@ -2676,7 +2680,6 @@ msgstr ""
 msgid "Disallowed file type."
 msgstr ""
 
-#: app/views/share_file/list.html.erb:30
 #: app/views/search/share_file_search.html.erb:9
 #: app/views/bookmarks/index.html.erb:9
 msgid "Display Order"
@@ -2880,7 +2883,7 @@ msgstr ""
 
 #: app/helpers/application_helper.rb:357
 #: app/controllers/feed/board_entries_controller.rb:12
-#: app/controllers/search_controller.rb:20 app/views/user/blog.html.erb:26
+#: app/controllers/search_controller.rb:20 app/views/user/blog.html.erb:25
 #: app/views/entries/_topix_entries_with_sortable_pagination.html.erb:1
 #: app/views/bookmark/list.html.erb:16 app/views/bookmarks/index.html.erb:16
 msgid "Entries"
@@ -3003,7 +3006,7 @@ msgstr ""
 msgid "EntryTrackback|Updated on"
 msgstr ""
 
-#: app/views/users/index.html.erb:19
+#: app/views/users/index.html.erb:27
 msgid "Excluding retired users"
 msgstr ""
 
@@ -3252,7 +3255,7 @@ msgstr ""
 msgid "Group information was successfully updated."
 msgstr ""
 
-#: app/controllers/groups_controller.rb:53
+#: app/controllers/groups_controller.rb:54
 msgid "Group was created successfully."
 msgstr ""
 
@@ -3340,7 +3343,7 @@ msgstr ""
 #: app/controllers/services_controller.rb:46
 #: app/controllers/group_controller.rb:344
 #: app/controllers/share_file_controller.rb:181
-#: app/controllers/groups_controller.rb:62
+#: app/controllers/groups_controller.rb:63
 #: app/controllers/edit_controller.rb:276
 #: app/views/admin/_data_menu_box.html.erb:6
 msgid "Groups"
@@ -3402,11 +3405,11 @@ msgstr ""
 msgid "Hanako Yamada"
 msgstr ""
 
-#: app/models/user.rb:313
+#: app/models/user.rb:326
 msgid "Has not accessed for 3 or more months."
 msgstr ""
 
-#: app/models/user.rb:311
+#: app/models/user.rb:324
 msgid "Has not accessed for 6 or more months."
 msgstr ""
 
@@ -4163,7 +4166,7 @@ msgstr ""
 msgid "No matching entries found."
 msgstr ""
 
-#: app/controllers/groups_controller.rb:33
+#: app/controllers/groups_controller.rb:34
 #: app/controllers/user_controller.rb:112
 msgid "No matching groups found."
 msgstr ""
@@ -5053,7 +5056,7 @@ msgstr ""
 msgid "Saving..."
 msgstr ""
 
-#: app/views/users/index.html.erb:16 app/views/groups/index.html.erb:23
+#: app/views/users/index.html.erb:24 app/views/groups/index.html.erb:23
 #: app/views/share_file/list.html.erb:21 app/views/share_file/list.html.erb:24
 #: app/views/user/group.html.erb:19 app/views/user/group.html.erb:22
 #: app/views/admin/_search_box.html.erb:5
@@ -5424,7 +5427,6 @@ msgstr ""
 msgid "Socials"
 msgstr ""
 
-#: app/views/share_file/list.html.erb:33
 #: app/views/search/share_file_search.html.erb:12
 msgid "Sort by File Names"
 msgstr ""
@@ -5437,7 +5439,6 @@ msgstr ""
 msgid "Sort by Registered Dates (Descending)"
 msgstr ""
 
-#: app/views/share_file/list.html.erb:32
 #: app/views/search/share_file_search.html.erb:11
 msgid "Sort by Upload Dates"
 msgstr ""
@@ -5446,7 +5447,7 @@ msgstr ""
 msgid "Sort by number of users"
 msgstr ""
 
-#: app/views/share_file/list.html.erb:46
+#: app/views/share_file/list.html.erb:38
 #: app/views/entries/_topix_entries_with_sortable_pagination.html.erb:6
 msgid "Sort by: "
 msgstr ""
@@ -6404,11 +6405,11 @@ msgstr ""
 msgid "User|Admin"
 msgstr ""
 
-#: app/models/user.rb:142
+#: app/models/user.rb:155
 msgid "User|Admin|false"
 msgstr ""
 
-#: app/models/user.rb:141
+#: app/models/user.rb:154
 msgid "User|Admin|true"
 msgstr ""
 
@@ -6424,11 +6425,11 @@ msgstr ""
 msgid "User|Crypted password"
 msgstr ""
 
-#: app/models/user.rb:145
+#: app/models/user.rb:158
 msgid "User|Disclosure|false"
 msgstr ""
 
-#: app/models/user.rb:144
+#: app/models/user.rb:157
 msgid "User|Disclosure|true"
 msgstr ""
 
@@ -6454,11 +6455,11 @@ msgstr ""
 msgid "User|Locked"
 msgstr ""
 
-#: app/models/user.rb:148
+#: app/models/user.rb:161
 msgid "User|Locked|false"
 msgstr ""
 
-#: app/models/user.rb:147
+#: app/models/user.rb:160
 msgid "User|Locked|true"
 msgstr ""
 
@@ -6466,20 +6467,24 @@ msgstr ""
 msgid "User|Name"
 msgstr ""
 
-#: app/models/user.rb:132
+#: app/models/user.rb:145
 msgid "User|Old password"
 msgstr ""
 
-#: app/models/user.rb:133
+#: app/models/user.rb:146
 msgid "User|Password"
 msgstr ""
 
-#: app/models/user.rb:134
+#: app/models/user.rb:147
 msgid "User|Password confirmation"
 msgstr ""
 
 #: app/models/user.rb:- app/views/user/show.html.erb:59
 msgid "User|Password expires at"
+msgstr ""
+
+#: app/views/users/index.html.erb:14
+msgid "User|Profile"
 msgstr ""
 
 #: app/models/user.rb:-
@@ -6517,15 +6522,15 @@ msgstr ""
 msgid "User|Status"
 msgstr ""
 
-#: app/models/user.rb:136
+#: app/models/user.rb:149
 msgid "User|Status|ACTIVE"
 msgstr "Active"
 
-#: app/models/user.rb:137
+#: app/models/user.rb:150
 msgid "User|Status|RETIRED"
 msgstr "Retired"
 
-#: app/models/user.rb:138 app/views/admin/users/_form.html.erb:24
+#: app/models/user.rb:151 app/views/admin/users/_form.html.erb:24
 #: app/views/admin/users/_form.html.erb:30
 msgid "User|Status|UNUSED"
 msgstr "Unused"
@@ -6534,7 +6539,7 @@ msgstr "Unused"
 msgid "User|Trial num"
 msgstr ""
 
-#: app/models/user.rb:150
+#: app/models/user.rb:163
 msgid "User|Uid"
 msgstr ""
 
@@ -6597,27 +6602,27 @@ msgstr ""
 msgid "Wiki text"
 msgstr ""
 
-#: app/models/user.rb:317
+#: app/models/user.rb:330
 msgid "Within %d day"
 msgid_plural "Within %d days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/models/user.rb:319
+#: app/models/user.rb:332
 msgid "Within %d hour"
 msgid_plural "Within %d hours"
 msgstr[0] ""
 
-#: app/models/user.rb:321
+#: app/models/user.rb:334
 msgid "Within %d minute"
 msgid_plural "Within %d minutes"
 msgstr[0] ""
 
-#: app/models/user.rb:315
+#: app/models/user.rb:328
 msgid "Within 10 days and more"
 msgstr ""
 
-#: app/models/user.rb:323
+#: app/models/user.rb:336
 msgid "Within a minute"
 msgstr ""
 
@@ -6833,7 +6838,7 @@ msgstr ""
 msgid "[Add more files]"
 msgstr ""
 
-#: app/views/user/blog.html.erb:26
+#: app/views/user/blog.html.erb:25
 msgid "[Archive of %{month}/%{year}]"
 msgstr ""
 
@@ -7016,11 +7021,11 @@ msgstr ""
 msgid "[Sort by %s]"
 msgstr ""
 
-#: app/views/share_file/list.html.erb:48
+#: app/views/share_file/list.html.erb:40
 msgid "[Sort by File Names]"
 msgstr ""
 
-#: app/views/share_file/list.html.erb:47
+#: app/views/share_file/list.html.erb:39
 msgid "[Sort by Upload Dates]"
 msgstr ""
 
@@ -7082,19 +7087,19 @@ msgstr ""
 msgid "[[Delete]]"
 msgstr ""
 
-#: app/views/entries/_topix_entries_with_sortable_pagination.html.erb:21
+#: app/views/entries/_topix_entries_with_sortable_pagination.html.erb:18
 msgid "[all]"
 msgstr ""
 
-#: app/views/entries/_topix_entries_with_sortable_pagination.html.erb:18
+#: app/views/entries/_topix_entries_with_sortable_pagination.html.erb:19
 msgid "[entry]"
 msgstr ""
 
-#: app/views/entries/_topix_entries_with_sortable_pagination.html.erb:20
+#: app/views/entries/_topix_entries_with_sortable_pagination.html.erb:21
 msgid "[notice]"
 msgstr ""
 
-#: app/views/entries/_topix_entries_with_sortable_pagination.html.erb:19
+#: app/views/entries/_topix_entries_with_sortable_pagination.html.erb:20
 msgid "[question]"
 msgstr ""
 
@@ -7270,7 +7275,11 @@ msgstr ""
 msgid "has an invalid format."
 msgstr ""
 
-#: app/models/user.rb:286
+#: app/views/users/index.html.erb:17
+msgid "include following characters"
+msgstr ""
+
+#: app/models/user.rb:299
 msgid "incorrect."
 msgstr ""
 
@@ -7310,7 +7319,7 @@ msgstr ""
 msgid "new_uid"
 msgstr ""
 
-#: app/models/user.rb:281
+#: app/models/user.rb:294
 msgid "not provided."
 msgstr ""
 
@@ -7396,11 +7405,11 @@ msgstr ""
 msgid "setting"
 msgstr ""
 
-#: app/models/user.rb:172
+#: app/models/user.rb:185
 msgid "shall not be the same with login ID."
 msgstr ""
 
-#: app/models/user.rb:173
+#: app/models/user.rb:186
 msgid "shall not be the same with the previous one."
 msgstr ""
 
