@@ -84,6 +84,9 @@ access_record_limit:
 entry_showed_tab_limit_per_page:
   format: int
   default: 20
+close_question_limit:
+  format: int
+  default: 30
 
 # ==================================================================================================
 # RSSフィードの設定
