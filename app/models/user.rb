@@ -93,10 +93,10 @@ class User < ActiveRecord::Base
   }
 
   named_scope :profile_like, proc { |profile_master_id, profile_value|
-    return {} unless profile_value and profile_value != ''
+    return {} if profile_value.blank?
     condition_str = ''
     condition_params = []
-    if profile_master_id.to_s != "0" # Anyが選択された場合
+    unless profile_master_id.to_s == "0" # Anyが選択された場合
       condition_str << 'user_profile_master_id = ? AND '
       condition_params << profile_master_id
     end
@@ -106,7 +106,7 @@ class User < ActiveRecord::Base
   }
 
   named_scope :tagged, proc { |tag_words, tag_select|
-    return {} unless tag_words
+    return {} if tag_words.blank?
     tag_select = 'AND' unless tag_select == 'OR'
     condition_str = ''
     condition_params = []

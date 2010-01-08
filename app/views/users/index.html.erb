@@ -11,10 +11,10 @@
         <td><%= f.select :section_like, User.grouped_sections, :include_blank => true %></td>
       </tr>
       <tr>
-        <th><%= s_('Profile') %></th>
+        <th><%= label_tag 'profile_master_id', _('Profile') %></th>
         <td>
           <%= select_tag 'profile_master_id', options_for_select((UserProfileMaster.all.collect {|m| [m.name, m.id]}.unshift [_('Any'), 0]), :selected => params[:profile_master_id].to_i) %>
-          <%= _('include following characters') %>
+          <%= label_tag 'profile_value', _('include following characters') %>
           <%= text_field_tag 'profile_value', params[:profile_value], :size => '30' %>
         </td>
       </tr>
