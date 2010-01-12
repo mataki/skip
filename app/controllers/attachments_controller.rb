@@ -67,10 +67,10 @@ class AttachmentsController < ApplicationController
     else
       logger.warn(@attachment.errors.full_messages)
       if ajax_upload?
-        render :template => "attachments/validation_error"
-     else
+        render(:text => {:status => '403', :messages => @attachment.errors.full_messages}.to_json)
+      else
         render :action => "new"
-     end
+      end
     end
   end
 
