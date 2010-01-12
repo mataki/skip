@@ -64,6 +64,7 @@ class Admin::Setting < ActiveRecord::Base
   N_('Admin::Setting|Access record limit description')
   N_('Admin::Setting|Entry showed tab limit per page')
   N_('Admin::Setting|Entry showed tab limit per page description')
+  N_('Admin::Setting|Close question limit description')
 
   # ================================================================================================
   # RSSフィードの設定用

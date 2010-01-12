@@ -28,7 +28,6 @@ class BatchCloseQuestions < BatchBase
 end
 
 # 本日よりnum日以前に投稿された質問文を強制的にクローズする(updated_onを参照する)
-# 0 が指定されている場合は、クローズ処理は行わない
 check_days_ago = Admin::Setting.close_question_limit.to_s || "30"
 if check_days_ago.index(/[0-9]+/)
   BatchCloseQuestions.execution({ :check_days_ago => check_days_ago }) unless RAILS_ENV == 'test'
