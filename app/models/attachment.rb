@@ -17,20 +17,18 @@ class Attachment < ActiveRecord::Base
   include ::QuotaValidation
   include ::SkipEmbedded::ValidationsFile
 
-  QUOTA_EACH = QuotaValidation.lookup_setting(self,:each) || 10.megabytes
+  QUOTA_EACH =  SkipEmbedded::InitialSettings['max_share_file_size'].to_i || 10.megabytes
 
-  has_attachment :storage => :db_file,
-                 :size => 1..(QuotaValidation.lookup_setting(self, :each)||10.megabytes),
+  has_attachment :storage => :file_system,
+                 :size => 1..QUOTA_EACH,
                  :processor => :none
 
-  attr_accessible :uploaded_data, :user_id, :db_file_id
+  attr_accessible :uploaded_data, :user_id
 
   attachment_options.delete(:size) # エラーメッセージカスタマイズのため、自分でバリデーションをかける
 
   validates_inclusion_of :size, :in => 1..QUOTA_EACH, :message =>
-    "#{QUOTA_EACH.to_i/1.megabyte}Mバイト以上のファイルはアップロードできません。"
-  validates_quota_of :size, :system, :message =>
-    "のシステム全体における保存領域の利用容量が最大値を越えてしまうためアップロードできません。"
+    "#{QUOTA_EACH/1.megabyte}Mバイト以上のファイルはアップロードできません。"
 
   belongs_to :user
   belongs_to :page
@@ -43,12 +41,23 @@ class Attachment < ActiveRecord::Base
     self.display_name = new_name
   end
 
+  # Override
+  def full_filename(thumbnail=nil)
+    File.join(RAILS_ROOT, SkipEmbedded::InitialSettings['share_file_path'], Attachment.table_name, *partitioned_path(thumbnail_name_for(thumbnail)))
+  end
+
+  # Override
+  def base_path
+    @base_path = File.join(RAILS_ROOT, SkipEmbedded::InitialSettings['share_file_path'])
+  end
+
   private
   def validate_on_create
     adapter = ValidationsFileAdapter.new(self)
 
     valid_extension_of_file(adapter)
     valid_content_type_of_file(adapter)
+    valid_max_size_of_system_of_file self.size
   end
 
 end
