@@ -1,3 +1,5 @@
+# If you should run cucumber test, you have to config for config/initial_settings.yml.([:wiki][:use]->true)
+
 Feature: Wikiの管理
   ユーザは、Wikiに対して自由に作成や編集ができる
 

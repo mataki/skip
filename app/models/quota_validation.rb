@@ -21,7 +21,11 @@ module QuotaValidation
 
 
   def lookup_setting(klass, key)
-    SkipEmbedded::InitialSettings['wiki']['quota'][klass.name.underscore][key.to_s]
+    if SkipEmbedded::InitialSettings['wiki'] and SkipEmbedded::InitialSettings['wiki']['quota']
+      SkipEmbedded::InitialSettings['wiki']['quota'][klass.name.underscore][key.to_s]
+    else
+      nil
+    end
   end
   module_function :lookup_setting
 end

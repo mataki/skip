@@ -17,10 +17,10 @@ class Attachment < ActiveRecord::Base
   include ::QuotaValidation
   include ::SkipEmbedded::ValidationsFile
 
-  QUOTA_EACH = QuotaValidation.lookup_setting(self,:each)
+  QUOTA_EACH = QuotaValidation.lookup_setting(self,:each) || 10.megabytes
 
   has_attachment :storage => :db_file,
-                 :size => 1..QuotaValidation.lookup_setting(self, :each),
+                 :size => 1..(QuotaValidation.lookup_setting(self, :each)||10.megabytes),
                  :processor => :none
 
   attr_accessible :uploaded_data, :user_id, :db_file_id

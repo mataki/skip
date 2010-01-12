@@ -308,7 +308,7 @@ protected
   end
 
   def secret_checker
-    unless SkipEmbedded::InitialSettings['wiki']['use']
+    if !SkipEmbedded::InitialSettings['wiki'] or !SkipEmbedded::InitialSettings['wiki']['use']
       redirect_to root_url
     end
   end
