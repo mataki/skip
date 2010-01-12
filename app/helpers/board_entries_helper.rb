@@ -118,7 +118,7 @@ module BoardEntriesHelper
       image_size = [0,0] # デフォルトサイズ
 
       # カンマ２つでサイズが指定してある場合
-      if  image_tag.to_s.scan(",").size == 2
+      if image_tag.to_s.scan(",").size == 2
         params = image_tag.to_s[2..-3].split(",")
         image_name = params[0]
         width, height = [params[1].to_i, params[2].to_i]
@@ -137,10 +137,10 @@ module BoardEntriesHelper
           height = (width * 0.75) if height == 0
           swf_tag image_url, :width => width, :height => height
         else
-          html_options = {:class => 'zoomable'}
-          html_options[:width] = width if width > 0
-          html_options[:height] = height if height > 0
-          link_to image_tag(image_url), image_url, html_options
+          img_options = {}
+          img_options[:width] = width if width > 0
+          img_options[:height] = height if height > 0
+          link_to image_tag(image_url, img_options), image_url, :class => 'zoomable'
         end
 
       view_str = view_str.sub(regex_type, image_link)

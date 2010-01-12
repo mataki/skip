@@ -92,8 +92,21 @@ class User < ActiveRecord::Base
       :include => :user_uids }
   }
 
+  named_scope :profile_like, proc { |profile_master_id, profile_value|
+    return {} if profile_value.blank?
+    condition_str = ''
+    condition_params = []
+    unless profile_master_id.to_s == "0" # Anyが選択された場合
+      condition_str << 'user_profile_master_id = ? AND '
+      condition_params << profile_master_id
+    end
+    condition_str << 'user_profile_values.value like ? '
+    condition_params << SkipUtil.to_like_query_string(profile_value)
+    { :conditions => [condition_str, condition_params].flatten, :include => :user_profile_values }
+  }
+
   named_scope :tagged, proc { |tag_words, tag_select|
-    return {} unless tag_words
+    return {} if tag_words.blank?
     tag_select = 'AND' unless tag_select == 'OR'
     condition_str = ''
     condition_params = []

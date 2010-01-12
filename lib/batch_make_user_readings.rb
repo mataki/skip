@@ -63,6 +63,7 @@ class BatchMakeUserReadings < BatchBase
   # user_readingに関して更新と新規作成を行う。<br/>
   # 更新処理はupdatable?に該当する場合のみ実施。<br/>
   # 新規作成処理は、最終更新者とアンテナ登録者が異なる場合のみ実施。
+  # FIXME モデルに持っていってリファクタしたい。ajaxの未読既読切り替え処理とDRYにする
   def self.save_user_reading antenna_user_id, entry
     last_comment = entry.board_entry_comments.sort{ |a,b| a.updated_on <=> b.updated_on }.last
     if last_comment && last_comment.updated_on > entry.last_updated
@@ -81,7 +82,9 @@ class BatchMakeUserReadings < BatchBase
       update_params.merge!(:notice_type => 'notice') if entry.is_notice?
       user_reading.update_attributes(update_params) if updatable?(user_reading, last_updated_time, updater_id, antenna_user_id)
     else
-      UserReading.create(:user_id => antenna_user_id, :board_entry_id => entry.id) if updater_id != antenna_user_id
+      create_params = {:user_id => antenna_user_id, :board_entry_id => entry.id, :notice_type => nil}
+      create_params.merge!(:notice_type => 'notice') if entry.is_notice?
+      UserReading.create(create_params) if updater_id != antenna_user_id
     end
   end
 
