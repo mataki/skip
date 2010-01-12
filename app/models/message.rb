@@ -13,6 +13,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# FIXME 1.7で削除する。migrateによるデータ移行を行わないので。
 class Message < ActiveRecord::Base
 
   MESSAGE_TYPE_KEYS = %w(COMMENT TRACKBACK CHAIN QUESTION JOIN LEAVE APPROVAL_OF_JOIN DISAPPROVAL_OF_JOIN FORCED_JOIN FORCED_LEAVE)

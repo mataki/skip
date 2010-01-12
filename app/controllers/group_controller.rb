@@ -21,6 +21,8 @@ class GroupController < ApplicationController
                            :update, :destroy, :toggle_owned,
                            :forced_leave_user, :change_participation, :append_user ]
 
+  after_filter :remove_system_message, :only => %w(show users bbs)
+
   verify :method => :post,
          :only => [ :join, :destroy, :leave, :update, :change_participation,
                     :toggle_owned, :forced_leave_user, :append_user ],
@@ -160,9 +162,8 @@ class GroupController < ApplicationController
       if participations.first.waiting?
         flash[:notice] = _('Request sent. Please wait for the approval.')
       else
-        groups_url = url_for(:controller => 'group', :action => 'users', :gid => @group.gid)
         @group.group_participations.only_owned.each do |owner_participation|
-          Message.save_message('JOIN', owner_participation.user_id, groups_url, _("New user joined your group [%s].") % @group.name)
+          SystemMessage.create_message :message_type => 'JOIN', :user_id => owner_participation.user_id, :message_hash => {:group_id => @group.id}
         end
         flash[:notice] = _('Joined the group successfully.')
       end
@@ -180,8 +181,7 @@ class GroupController < ApplicationController
     when (symbol_type == 'uid' and user = User.find_by_uid(symbol_id))
       participations = @group.join user, :force => true
       if participations.size > 0
-        group_url = url_for(:controller => 'group', :action => 'show', :gid => @group.gid)
-        Message.save_message('FORCED_JOIN', user.id,  group_url, _("Forced to join the group [%s].") % @group.name)
+        SystemMessage.create_message :message_type => 'FORCED_JOIN', :user_id => user.id, :message_hash => {:group_id => @group.id} 
         flash[:notice] = _("Added %s as a member.") % user.name
       else
         flash[:error] = @group.errors.full_messages
@@ -190,9 +190,8 @@ class GroupController < ApplicationController
       users = group.group_participations.active.map(&:user)
       participations = @group.join users, :force => true
 
-      group_url = url_for(:controller => 'group', :action => 'show', :gid => @group.gid)
       participations.each do |participation|
-        Message.save_message('FORCED_JOIN', participation.user.id,  group_url, _("Forced to join the group [%s].") % @group.name)
+        SystemMessage.create_message :message_type => 'FORCED_JOIN', :user_id => participation.user.id, :message_hash => {:group_id => @group.id} 
       end
 
       flash[:notice] = _("Added members of %s as members of the group") % group.name unless participations.empty?
@@ -208,9 +207,8 @@ class GroupController < ApplicationController
   def leave
     @group.leave @participation.user do |result|
       if result
-        user_url = url_for(:controller => 'user', :action => 'show', :uid => current_user.uid)
         @group.group_participations.only_owned.each do |owner_participation|
-          Message.save_message('LEAVE', owner_participation.user_id, user_url, _("%{user_name} leaved your group %{group_name}.") % {:user_name => current_user.name, :group_name => @group.name})
+          SystemMessage.create_message :message_type => 'LEAVE', :user_id => owner_participation.user_id, :message_hash => {:user_id => current_user.id, :group_id => @group.id}
         end
         flash[:notice] = _('Successfully left the group.')
       else
@@ -226,8 +224,7 @@ class GroupController < ApplicationController
     group_participation = GroupParticipation.find(params[:participation_id])
     @group.leave group_participation.user do |result|
       if result
-        groups_url = url_for(:controller => 'group', :action => 'users', :gid => @group.gid)
-        Message.save_message('FORCED_LEAVE', group_participation.user.id, groups_url, _("You forced to leave the group [%s].") % @group.name)
+        SystemMessage.create_message :message_type => 'FORCED_LEAVE', :user_id => group_participation.user.id, :message_hash => {:group_id => @group.id}
         flash[:notice] = _("Removed %s from members of the group.") % group_participation.user.name
       else
         flash[:notice] = _('%s are not a member of the group.') % group_participation.user.name
@@ -291,9 +288,8 @@ class GroupController < ApplicationController
             participation.save!
             participation.user.notices.create!(:target => @group) unless participation.user.notices.find_by_target_id(@group.id)
           end
-          groups_url = url_for(:controller => 'group', :action => 'show', :gid => @group.gid)
           target_participations.each do |participation|
-            Message.save_message('APPROVAL_OF_JOIN', participation.user.id, groups_url, _("You were approved join of the group %s.") % @group.name)
+            SystemMessage.create_message :message_type => 'APPROVAL_OF_JOIN', :user_id => participation.user.id, :message_hash => {:group_id => @group.id}
           end
           flash[:notice] = _("Succeeded to Approve.")
         end
@@ -301,10 +297,9 @@ class GroupController < ApplicationController
         flash[:notice] = _("Failed to Approve.")
       end
     else
-      groups_url = url_for(:controller => 'group', :action => 'show', :gid => @group.gid)
       target_participations.each do |participation|
         participation.destroy
-        Message.save_message('DISAPPROVAL_OF_JOIN', participation.user.id, groups_url, _("You were disapproved join of the group %s.") % @group.name)
+        SystemMessage.create_message :message_type => 'DISAPPROVAL_OF_JOIN', :user_id => participation.user.id, :message_hash => {:group_id => @group.id}
       end
       flash[:notice] = _("Succeeded to Disapprove.")
     end

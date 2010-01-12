@@ -16,38 +16,39 @@
 require File.expand_path(File.dirname(__FILE__) + "/batch_base")
 
 class BatchSendMails < BatchBase
+  include SystemMessagesHelper
   def self.execute options
     sender = self.new
     sender.send_message
   end
 
   def send_message
-    Message.find(:all,
-                 :select =>'messages.*, user_message_unsubscribes.id as user_message_unsubscribe_id',
-                 :conditions => "send_flag = false",
-                 :order => 'messages.id asc',
-                 :limit => 10,
-                 :joins => 'LEFT JOIN user_message_unsubscribes USING(user_id,message_type)').each do |message|
-      if message.user_message_unsubscribe_id.nil?
-        user = User.find(:first, :conditions => ["id = ?", message.user_id])
+    SystemMessage.unsents.limit(10).ascend_by_id.all(:select => 'system_messages.*, user_message_unsubscribes.id as user_message_unsubscribe_id').each do |system_message|
+      if system_message.user_message_unsubscribe_id.nil?
+        user = system_message.user
         if user.retired?
-          message.update_attribute :send_flag, true
+          system_message.update_attribute :send_flag, true
           next
         end
-        #TODO 後日、message.link_urlをそのままセットする形にする。
-        # http://dev.openskip.org/redmine/issues/show/516 の修正に伴う後方互換のため1.1時点では従来通りの挙動を残してある。
-        link_url = message.link_url =~ /^https?.*/ ? message.link_url : root_url.chop + message.link_url
+
+        system_message_data = system_message_data(system_message, user)
+        unless system_message_data
+          system_message.update_attribute :send_flag, true
+          next
+        end
+
+        link_url = system_message_data[:url]
         message_manage_url = url_for :controller => "/mypage", :action => "manage", :menu => :manage_message
 
         begin
-          UserMailer::AR.deliver_sent_message(user.email, link_url, message.message, message_manage_url)
-          message.update_attribute :send_flag, true
+          UserMailer::AR.deliver_sent_message(user.email, link_url, system_message_data[:message], message_manage_url)
+          system_message.update_attribute :send_flag, true
         rescue => e
           self.class.log_error "failed send message [id]: #{e}"
           e.backtrace.each { |line| self.class.log_error line }
         end
       else
-        message.update_attribute :send_flag, true
+        system_message.update_attribute :send_flag, true
       end
     end
   end

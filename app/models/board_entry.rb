@@ -698,11 +698,7 @@ class BoardEntry < ActiveRecord::Base
     transaction do
       self.toggle!(:hide)
       self.entry_hide_operations.create!(:user => user, :operation_type => self.hide.to_s)
-      url_options = {
-        :host => SkipEmbedded::InitialSettings['host_and_port'],
-        :protocol => SkipEmbedded::InitialSettings['protocol']
-      }.merge(self.get_url_hash)
-      Message.save_message('QUESTION', self.user_id, url_for(url_options), _('State of your question [%s] is changed!') % ERB::Util.h(self.title)) unless user.id == self.user_id
+      SystemMessage.create_message :message_type => 'QUESTION', :user_id => self.user_id, :message_hash => {:board_entry_id => self.id} unless user.id == self.user_id
     end
     true
   rescue ActiveRecord::RecordInvalid => e

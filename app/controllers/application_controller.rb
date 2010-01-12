@@ -37,7 +37,7 @@ class ApplicationController < ActionController::Base
   end
 
   before_filter :sso, :login_required, :prepare_session
-  # FIXME: 全体に発行する必要はない。Messageが削除されるアクションのみに制限すべき。
+  # FIXME 1.7で削除する。migrateによるデータ移行を行わないので。
   after_filter  :remove_message
 
   init_gettext "skip" if defined? GetText
@@ -89,6 +89,12 @@ protected
       if message.link_url == request.request_uri or message.link_url == request.url
         message.destroy
       end
+    end
+  end
+
+  def remove_system_message
+    if params[:system_message_id] && sm = current_user.system_messages.find_by_id(params[:system_message_id])
+      sm.destroy
     end
   end
 

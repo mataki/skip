@@ -255,7 +255,7 @@ describe MypageController, 'mypage > home 関連' do
         @entries = [stub_model(BoardEntry, :id => 99), stub_model(BoardEntry, :id => 999)]
         BoardEntry.stub!(:paginate).and_return(@entries)
         @user_unreadings = mock('user_unreadings')
-        controller.should_receive(:unread_entry_id_hash_with_user_reading).with([99, 999]).and_return(@user_unreadings)
+        controller.should_receive(:unread_entry_id_hash_with_user_reading).with([99, 999], anything()).and_return(@user_unreadings)
         get :entries_by_antenna
         assigns[:user_unreadings].should == @user_unreadings
       end
@@ -655,12 +655,12 @@ describe MypageController, '#unread_entry_id_hash_with_user_reading' do
   end
   describe '指定された記事idがnilの場合' do
     it '空ハッシュが返ること' do
-      @controller.send(:unread_entry_id_hash_with_user_reading, nil).should == {}
+      @controller.send(:unread_entry_id_hash_with_user_reading, nil, anything()).should == {}
     end
   end
   describe '指定された記事idの配列サイズが0の場合' do
     it '空ハッシュが返ること' do
-      @controller.send(:unread_entry_id_hash_with_user_reading, []).should == {}
+      @controller.send(:unread_entry_id_hash_with_user_reading, [], anything()).should == {}
     end
   end
   describe '指定された記事idの配列サイズが1以上の場合' do
@@ -668,12 +668,12 @@ describe MypageController, '#unread_entry_id_hash_with_user_reading' do
       before do
         @read_user_reading = stub_model(UserReading, :board_entry_id => 77, :read => true)
         @unread_user_reading = stub_model(UserReading, :board_entry_id => 777, :read => false)
-        @user_readings = [@read_user_reading, @unread_user_reading]
+        @user_readings = [@unread_user_reading]
         UserReading.should_receive(:find).and_return(@user_readings)
       end
       it '記事のidをキーとして未読のUserReadingのハッシュが返ること' do
         @expected = { 777 => @unread_user_reading }
-        @controller.send(:unread_entry_id_hash_with_user_reading, [77, 777]).should == @expected
+        @controller.send(:unread_entry_id_hash_with_user_reading, [77, 777], anything()).should == @expected
       end
     end
     describe '対象のUserReadingが存在しない場合' do
@@ -681,7 +681,7 @@ describe MypageController, '#unread_entry_id_hash_with_user_reading' do
         UserReading.should_receive(:find).and_return([])
       end
       it '空ハッシュが返ること' do
-        @controller.send(:unread_entry_id_hash_with_user_reading, [77, 777]).should == {}
+        @controller.send(:unread_entry_id_hash_with_user_reading, [77, 777], anything()).should == {}
       end
     end
   end

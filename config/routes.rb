@@ -9,6 +9,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :users, :only => [:index] do |user|
     user.resources :chains
     user.resources :pictures
+    user.resources :system_messages, :only => [:destroy]
   end
 
   map.share_file  ':controller_name/:symbol_id/files/:file_name',

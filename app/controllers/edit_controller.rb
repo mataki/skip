@@ -323,8 +323,8 @@ private
   def make_trackback_message(new_trackbacks)
     new_trackbacks.each do |trackback|
       next if trackback.board_entry.user_id == session[:user_id]
-      link_url = url_for(trackback.tb_entry.get_url_hash)
-      Message.save_message("TRACKBACK", trackback.board_entry.user_id, link_url, _("There is a new entry talking about your entry [%s]!") % trackback.tb_entry.title)
+      board_entry = trackback.board_entry
+      SystemMessage.create_message :message_type => 'TRACKBACK', :user_id => board_entry.user_id, :message_hash => {:board_entry_id => board_entry.id}
     end
   end
 
