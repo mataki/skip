@@ -18,3 +18,6 @@ config.action_controller.allow_forgery_protection = false
 config.logger = Logger.new(config.log_path, 1, 10.megabytes)
 
 config.action_mailer.delivery_method = :test
+
+config.gem 'rspec',       :version => '>= 1.3.0', :lib => false unless File.directory?(File.join(Rails.root, 'vendor/plugins/rspec'))
+config.gem 'rspec-rails', :version => '>= 1.3.1', :lib => false unless File.directory?(File.join(Rails.root, 'vendor/plugins/rspec-rails'))
