@@ -556,6 +556,11 @@ class BoardEntry < ActiveRecord::Base
     return false
   end
 
+  # FIXME:editable?へのマージと、edit?の廃止
+  def will_editable?(login_user)
+    editable?(login_user.belong_symbols, login_user.id, login_user.symbol, login_user.group_symbols)
+  end
+
   def publicate? login_user_symbols
     entry_publications.any? {|publication| login_user_symbols.include?(publication.symbol) || "sid:allusers" == publication.symbol}
   end
