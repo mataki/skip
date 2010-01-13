@@ -17,16 +17,10 @@ class SystemMessagesController < ApplicationController
 
   def destroy
     system_message = current_user.system_messages.find_by_id params[:id]
+    system_message.destroy if system_message
     respond_to do |format|
-      if system_message
-        system_message.destroy
-      end
-      format.html do
-        redirect_to root_url
-      end
-      format.js do
-        head :ok
-      end
+      format.html { redirect_to root_url }
+      format.js  { head :ok }
     end
   end
 end
