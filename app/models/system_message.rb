@@ -29,8 +29,7 @@ class SystemMessage < ActiveRecord::Base
   named_scope :limit, proc { |num| { :limit => num } }
 
   def self.create_message attributes
-    # TODO 既に対象のメッセージが作られている場合作られないようにする仕様を入れる。そもそも必要?
-    create attributes
+    create(attributes) unless SystemMessage.user_id_eq(attributes[:user_id]).message_type_eq(attributes[:message_type]).map(&:message_hash).any? { |message_hash| message_hash == attributes[:message_hash] }
   end
 
   def self.description message_type
