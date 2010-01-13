@@ -30,7 +30,7 @@
     <% for object in objects %>
     <tr class="<%= cycle('line_1', 'line_0') %>">
       <% columns.each do |column| -%>
-      <td><%= truncate(sanitize(disp_columns_proc.call(object, column).to_s), 80) %></td>
+      <td><%= truncate(sanitize_style_with_whitelist(disp_columns_proc.call(object, column).to_s), 80) %></td>
       <% end %>
       <%= link_elem_proc.call object %>
     </tr>

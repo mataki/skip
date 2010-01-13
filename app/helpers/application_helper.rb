@@ -79,7 +79,7 @@ module ApplicationHelper
     else
       title = board_entry.title
     end
-    output_text << (sanitize(options[:view_text]) || h(title))
+    output_text << (sanitize_style_with_whitelist(options[:view_text]) || h(title))
 
     html_options[:title] ||= board_entry.title
     link_to output_text, board_entry.get_url_hash, {:class => 'entry'}.merge(html_options)
