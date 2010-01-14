@@ -240,7 +240,7 @@ class EditController < ApplicationController
     flash[:notice] = _('Deletion complete.')
     # そのユーザのブログ一覧画面に遷移する
     # TODO: この部分をメソッド化した方がいいかも(by mat_aki)
-    redirect_to @board_entry.get_url_hash.delete_if{|key,val| key == :entry_id}
+    redirect_to owner_entries_path(@board_entry)
   rescue ActiveRecord::StaleObjectError => e
     flash[:warn] = _("Update on the same entry from other users detected. Please try again.")
     setup_layout @board_entry

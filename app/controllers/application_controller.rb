@@ -42,7 +42,7 @@ class ApplicationController < ActionController::Base
 
   init_gettext "skip" if defined? GetText
 
-  helper_method :scheme, :endpoint_url, :identifier, :checkid_request, :extract_login_from_identifier, :logged_in?, :current_user, :current_target_user, :current_target_group, :current_participation
+  helper_method :scheme, :endpoint_url, :identifier, :checkid_request, :extract_login_from_identifier, :logged_in?, :current_user, :current_target_user, :current_target_group, :current_participation, :owner_entries_path
 protected
   include InitialSettingsHelper
   # アプリケーションで利用するセッションの準備をする
@@ -134,6 +134,15 @@ protected
 
   def current_participation
     @current_participation ||= current_target_group.group_participations.find_by_user_id(current_user.id) if current_target_group
+  end
+
+  def owner_entries_path entry
+    owner = entry.load_owner
+    if entry.owner_is_user?
+      url_for :controller => 'user', :action => 'blog', :uid => owner.uid, :archive => 'all', :sort_type => 'date', :type => 'entry'
+    else
+      url_for :controller => 'group', :action => 'bbs', :gid => owner.gid, :sort_type => 'date', :type => ''
+    end
   end
 
   #記事へのパーミッションをチェック
