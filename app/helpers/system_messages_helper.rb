@@ -45,10 +45,8 @@ module SystemMessagesHelper
       end
     end
 
-    Group.owned(current_user).each do |group|
-      unless group.group_participations.waiting.empty?
-        system_message_links << link_to(icon_tag('group_add') + _("New user is waiting for approval in %s.") % group.name, {:controller => 'group', :action => 'manage', :gid => group.gid, :menu => 'manage_permit'})
-      end
+    Group.active.has_waiting_for_approval.id_equals(Group.active.owned(current_user).map(&:id)).each do |group|
+      system_message_links << link_to(icon_tag('group_add') + _("New user is waiting for approval in %s.") % group.name, {:controller => 'group', :action => 'manage', :gid => group.gid, :menu => 'manage_permit'})
     end
     @system_message_links = system_message_links
   end

@@ -16,3 +16,20 @@ config.action_view.debug_rjs                         = true
 config.logger = Logger.new(config.log_path, 1, 10.megabytes)
 
 config.action_mailer.delivery_method = :test
+
+config.gem "josevalim-rails-footnotes",  :lib => "rails-footnotes", :source => "http://gems.github.com"
+config.gem 'bullet', :source => 'http://gemcutter.org'
+config.after_initialize do
+  Bullet.enable = true
+#  Bullet.alert = true
+  Bullet.bullet_logger = true
+  Bullet.console = true
+#  Bullet.rails_logger = true
+  Bullet.disable_browser_cache = true
+  begin
+    require 'ruby-growl'
+    Bullet.growl = true
+  rescue MissingSourceFile
+  end
+end
+

@@ -526,7 +526,7 @@ class MypageController < ApplicationController
 
   # 質問記事一覧を取得する（partial用のオプションを返す）
   def find_questions_as_locals options
-    pages = BoardEntry.accessible(current_user).question.visible.order_new
+    pages = BoardEntry.accessible(current_user).question.visible.order_new.scoped(:include => [:state, :user])
 
     locals = {
       :id_name => 'questions',
@@ -576,7 +576,7 @@ class MypageController < ApplicationController
 
   def find_timelines_as_locals options
     id_name = 'timelines'
-    pages = BoardEntry.accessible(current_user).timeline.order_new.scoped(:include => :state).paginate(:page => target_page(id_name), :per_page => options[:per_page])
+    pages = BoardEntry.accessible(current_user).timeline.order_new.scoped(:include => [:state, :user]).paginate(:page => target_page(id_name), :per_page => options[:per_page])
     locals = {
       :id_name => id_name,
       :title_name => _('See all'),

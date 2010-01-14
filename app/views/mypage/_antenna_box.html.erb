@@ -7,7 +7,7 @@
       <li><%= link_to(icon_tag('comment') +  _('Trace Comments'), :action => 'entries_by_antenna', :target_type => 'comment') + "(#{Notice.trace_comments_count(current_user)})" %></li>
       <li><%= link_to(icon_tag('tag_blue') +  _('Track of Bookmarks'), :action => 'entries_by_antenna', :target_type => 'bookmark') + "(#{Notice.track_of_bookmarks_count(current_user)})" %></li>
     </ul>
-    <% notices_group_by_type = current_user.notices.group_by(&:target_type) -%>
+    <% notices_group_by_type = current_user.notices.all(:include => :target).group_by(&:target_type) -%>
     <% notices_group_by_type.keys.each do |key| -%>
       <% if sorted_notices = notices_group_by_type[key].sort_by{|n| n.unread_count(current_user)}.reverse.delete_if{|n| n.unread_count(current_user) == 0 } and !sorted_notices.empty? -%>
         <% content_tag(:ul, :class => 'notices by_type') do -%>

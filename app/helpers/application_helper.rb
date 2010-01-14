@@ -329,10 +329,10 @@ module ApplicationHelper
     return if !current_user || current_user.groups.participating(current_user).empty?
     option_tags = [content_tag(:option, _('Move to groups joined ...'), :value => url_for({:controller => '/mypage', :action => 'group'}))]
 
-    GroupCategory.all.each do |category|
-      if groups = category.groups.participating(current_user).order_participate_recent and !groups.empty?
+    if groups = Group.active.participating(current_user).order_participate_recent.all(:include => :group_category) and !groups.empty?
+      groups.group_by(&:group_category).each do |category, groups_by_category|
         option_tags << content_tag(:option, "[#{h(category.name)}]", :disabled => 'disabled', :style => 'color: gray')
-        groups.each do |group|
+        groups_by_category.each do |group|
           option_tags << content_tag(:option, "&nbsp;#{truncate(h(group.name), :length => 15)}", :value => url_for({:controller => '/group', :gid => group.gid, :action => 'show'}))
         end
       end

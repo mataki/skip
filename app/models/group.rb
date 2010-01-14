@@ -51,7 +51,7 @@ class Group < ActiveRecord::Base
   named_scope :participating, proc {|user|
     return {} unless user
     {
-      :conditions => ["group_participations.user_id = ? AND group_participations.waiting = 0", user.id], :include => :group_participations,
+      :conditions => ["group_participations.user_id = ? AND group_participations.waiting = 0", user.id],
       :include => [:group_participations]
     }
   }
