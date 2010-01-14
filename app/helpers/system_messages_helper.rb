@@ -32,7 +32,9 @@ module SystemMessagesHelper
 
     current_user.system_messages.each do |sm|
       system_message_data = system_message_data(sm)
-      system_message_links << link_to(icon_tag(system_message_data[:icon]) + system_message_data[:message], system_message_data[:url]) + "(#{link_to 'x', user_system_message_path(current_user, sm), :class => 'delete_system_message'})" unless system_message_data.blank?
+      # TODO 1.7でxボタンを有効にする
+      # system_message_links << link_to(icon_tag(system_message_data[:icon]) + system_message_data[:message], system_message_data[:url]) + "(#{link_to 'x', user_system_message_path(current_user, sm), :class => 'delete_system_message'})" unless system_message_data.blank?
+      system_message_links << link_to(icon_tag(system_message_data[:icon]) + system_message_data[:message], system_message_data[:url]) unless system_message_data.blank?
     end
 
     # FIXME 1.7で削除する。migrateによるデータ移行を行わないので。
