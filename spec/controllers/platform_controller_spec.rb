@@ -1,5 +1,5 @@
 # SKIP(Social Knowledge & Innovation Platform)
-# Copyright (C) 2008-2009 TIS Inc.
+# Copyright (C) 2008-2010 TIS Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ describe PlatformController, "#login(パスワードでのログイン)" do
     end
     it "ルートに戻ること" do
       login
-      response.should redirect_to root_url
+      response.should redirect_to(root_url)
     end
     it "ユーザがセッションに保存されていること" do
       login
@@ -53,7 +53,7 @@ describe PlatformController, "#login(パスワードでのログイン)" do
     end
     it "リファラーに戻ること" do
       login
-      response.should redirect_to @back
+      response.should redirect_to(@back)
     end
   end
   def login login_save = false

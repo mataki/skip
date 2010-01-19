@@ -1,5 +1,5 @@
 # SKIP(Social Knowledge & Innovation Platform)
-# Copyright (C) 2008-2009 TIS Inc.
+# Copyright (C) 2008-2010 TIS Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -41,7 +41,8 @@ class User < ActiveRecord::Base
 
   has_many :follow_chains, :class_name => 'Chain', :foreign_key => 'from_user_id'
   has_many :against_chains, :class_name => 'Chain', :foreign_key => 'to_user_id'
-  has_many :notices
+  has_many :notices, :dependent => :destroy
+  has_many :system_messages, :dependent => :destroy
 
   validates_presence_of :name
   validates_length_of :name, :maximum => 60

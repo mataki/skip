@@ -1,5 +1,5 @@
 # SKIP(Social Knowledge & Innovation Platform)
-# Copyright (C) 2008-2009 TIS Inc.
+# Copyright (C) 2008-2010 TIS Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -37,12 +37,12 @@ class ApplicationController < ActionController::Base
   end
 
   before_filter :sso, :login_required, :prepare_session
-  # FIXME: 全体に発行する必要はない。Messageが削除されるアクションのみに制限すべき。
+  # FIXME 1.7で削除する。migrateによるデータ移行を行わないので。
   after_filter  :remove_message
 
   init_gettext "skip" if defined? GetText
 
-  helper_method :scheme, :endpoint_url, :identifier, :checkid_request, :extract_login_from_identifier, :logged_in?, :current_user, :current_target_user, :current_target_group, :current_participation
+  helper_method :scheme, :endpoint_url, :identifier, :checkid_request, :extract_login_from_identifier, :logged_in?, :current_user, :current_target_user, :current_target_group, :current_participation, :owner_entries_path
 protected
   include InitialSettingsHelper
   # アプリケーションで利用するセッションの準備をする
@@ -92,6 +92,12 @@ protected
     end
   end
 
+  def remove_system_message
+    if params[:system_message_id] && sm = current_user.system_messages.find_by_id(params[:system_message_id])
+      sm.destroy
+    end
+  end
+
   def setup_custom_cookies(custom)
     cookies[:editor_mode] = {
       :value => custom.editor_mode,
@@ -128,6 +134,15 @@ protected
 
   def current_participation
     @current_participation ||= current_target_group.group_participations.find_by_user_id(current_user.id) if current_target_group
+  end
+
+  def owner_entries_path entry
+    owner = entry.load_owner
+    if entry.owner_is_user?
+      url_for :controller => 'user', :action => 'blog', :uid => owner.uid, :archive => 'all', :sort_type => 'date', :type => 'entry'
+    else
+      url_for :controller => 'group', :action => 'bbs', :gid => owner.gid, :sort_type => 'date', :type => ''
+    end
   end
 
   #記事へのパーミッションをチェック

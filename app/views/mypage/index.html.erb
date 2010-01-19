@@ -193,5 +193,18 @@
       return false;
     });
 
+//    $j('.delete_system_message').click(function() {
+//      var clicked_obj = $j(this);
+//      $j.ajax({
+//        type: 'POST',
+//        url: clicked_obj.attr('href') + '.js',
+//        data: { _method : 'delete', authenticity_token : '<%= form_authenticity_token %>' },
+//        success: function() {
+//          clicked_obj.closest('div.item').hide();
+//        }
+//      });
+//      return false;
+//    });
+
     // setupLoadCalendar("<%= url_for(:action => 'load_calendar') %>");
 <% end -%>

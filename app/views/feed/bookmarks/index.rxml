@@ -1,0 +1,21 @@
+xml.instruct! :xml, :version => "1.0", :encoding => "UTF-8"
+xml.rss('version' => '2.0') do
+  xml.channel do
+    xml.title "#{h(@title)} - #{h(Admin::Setting.abbr_app_title)} "
+    xml.link(request.url)
+    xml.language GetText.locale.to_s
+    xml.ttl "40"
+    xml.pubDate(@bookmarks.first.created_on.strftime("%a, %d %b %Y %H:%M:%S %Z"))
+    @bookmarks.each do |post|
+      xml.item do
+        xml.title(h(post.title))
+        xml.link(post.escaped_url)
+        bookmark_comment = post.bookmark_comments.last
+        xml.description(h(bookmark_comment.comment), :type => 'html')
+        xml.guid(post.escaped_url)
+        xml.pubDate(post.bookmark_comments.last.updated_on)
+        xml.author h(bookmark_comment.user.name)
+      end
+    end
+  end
+end

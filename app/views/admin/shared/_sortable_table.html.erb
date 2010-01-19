@@ -41,7 +41,7 @@
       <% # TODO use_idsを使う箇所がusersしかないので表示条件をハードコードしてあるが、他の画面で使うようになったら汎用化する -%>
       <% if !!use_ids -%><td><%= check_box_tag 'ids[]', object.id, false, :class => 'multicheck' if object.unused? %></td><% end -%>
       <% columns.each do |column| -%>
-      <td><%=sanitize(disp_columns_proc.call(object, column).to_s) %></td>
+      <td><%= sanitize_style_with_whitelist(disp_columns_proc.call(object, column).to_s) %></td>
       <% end %>
       <%= link_elem_proc.call object %>
     </tr>

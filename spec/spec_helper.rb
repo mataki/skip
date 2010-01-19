@@ -1,28 +1,16 @@
-# SKIP(Social Knowledge & Innovation Platform)
-# Copyright (C) 2008-2009 TIS Inc.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#  This program is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU General Public License for more details.
-#
-#  You should have received a copy of the GNU General Public License
-#  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 # This file is copied to ~/spec when you run 'ruby script/generate rspec'
 # from the project root directory.
 ENV["RAILS_ENV"] = 'test'
-require File.dirname(__FILE__) + "/../config/environment" unless defined?(RAILS_ROOT)
+require File.expand_path(File.join(File.dirname(__FILE__),'..','config','environment'))
 require 'spec/autorun'
 require 'spec/rails'
 
+# Uncomment the next line to use webrat's matchers
+#require 'webrat/integrations/rspec-rails'
+
 # Requires supporting files with custom matchers and macros, etc,
 # in ./support/ and its subdirectories.
-Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
+Dir[File.expand_path(File.join(File.dirname(__FILE__),'support','**','*.rb'))].each {|f| require f}
 
 Spec::Runner.configure do |config|
   # If you're not using ActiveRecord you should remove these
@@ -53,7 +41,7 @@ Spec::Runner.configure do |config|
   #
   # == Mock Framework
   #
-  # RSpec uses it's own mocking framework by default. If you prefer to
+  # RSpec uses its own mocking framework by default. If you prefer to
   # use mocha, flexmock or RR, uncomment the appropriate line:
   #
   # config.mock_with :mocha

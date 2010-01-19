@@ -17,11 +17,10 @@
           <th>&nbsp;</th>
           <th><%= _('description') %></th>
         </tr>
-        <% Message::MESSAGE_TYPE_KEYS.each do |message_type| -%>
-          <% message_hash = Message::MESSAGE_TYPES[message_type] -%>
+        <% SystemMessage::MESSAGE_TYPES.each do |message_type| -%>
           <tr class=<%= cycle 'even', 'odd' %>>
             <td><%= check_box_tag("message_type[#{message_type}]", "ON", !@unsubscribes.include?(message_type)) %></td>
-            <td><%= label_tag("message_type[#{message_type}]", h(_(message_hash[:name]))) %></td>
+            <td><%= label_tag("message_type[#{message_type}]", h(_(SystemMessage.description(message_type)))) %></td>
           </tr>
         <% end -%>
       </tbody>

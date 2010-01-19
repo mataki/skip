@@ -1,5 +1,5 @@
 # SKIP(Social Knowledge & Innovation Platform)
-# Copyright (C) 2008-2009 TIS Inc.
+# Copyright (C) 2008-2010 TIS Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -176,8 +176,7 @@ private
   def make_comment_message
     return unless @board_entry
     unless @board_entry.writer?(session[:user_id])
-      link_url = url_for(@board_entry.get_url_hash)
-      Message.save_message("COMMENT", @board_entry.user_id, link_url, _("You recieved a comment on your entry [%s]!") % @board_entry.title)
+      SystemMessage.create_message :message_type => 'COMMENT', :user_id => @board_entry.user.id, :message_hash => {:board_entry_id => @board_entry.id}
     end
   end
 

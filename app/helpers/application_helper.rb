@@ -1,5 +1,5 @@
 # SKIP(Social Knowledge & Innovation Platform)
-# Copyright (C) 2008-2009 TIS Inc.
+# Copyright (C) 2008-2010 TIS Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -79,7 +79,7 @@ module ApplicationHelper
     else
       title = board_entry.title
     end
-    output_text << (sanitize(options[:view_text]) || h(title))
+    output_text << (options[:view_text] ? sanitize_style_with_whitelist(options[:view_text]) : h(title))
 
     html_options[:title] ||= board_entry.title
     link_to output_text, board_entry.get_url_hash, {:class => 'entry'}.merge(html_options)
@@ -203,14 +203,6 @@ module ApplicationHelper
 
   def sanitize_style_with_whitelist(content)
     Sanitize.clean(content || '', Sanitize::Config::SKIP)
-    # FIXME name_space付きのタグの解析で起こるエラー対応の暫定対応(Office系のソフトからrichtextに貼り付けた際などに発生)
-    # 根本対応は別途行ったほうがいい。
-  rescue => e
-    logger.error e
-    e.backtrace.each { |line| logger.error line}
-    allowed_tags = HTML::WhiteListSanitizer.allowed_tags.dup << "table" << "tbody" << "tr" << "th" << "td" << "caption" << "strike" << "u"
-    allowed_attributes = HTML::WhiteListSanitizer.allowed_attributes.dup << "style" << "cellspacing" << "cellpadding" << "border" << "align" << "summary" << "target"
-    sanitize(content, :tags => allowed_tags, :attributes => allowed_attributes)
   end
 
   def translate_publication_type(entry)
@@ -337,10 +329,10 @@ module ApplicationHelper
     return if !current_user || current_user.groups.participating(current_user).empty?
     option_tags = [content_tag(:option, _('Move to groups joined ...'), :value => url_for({:controller => '/mypage', :action => 'group'}))]
 
-    GroupCategory.all.each do |category|
-      if groups = category.groups.participating(current_user).order_participate_recent and !groups.empty?
+    if groups = Group.active.participating(current_user).order_participate_recent.all(:include => :group_category) and !groups.empty?
+      groups.group_by(&:group_category).each do |category, groups_by_category|
         option_tags << content_tag(:option, "[#{h(category.name)}]", :disabled => 'disabled', :style => 'color: gray')
-        groups.each do |group|
+        groups_by_category.each do |group|
           option_tags << content_tag(:option, "&nbsp;#{truncate(h(group.name), :length => 15)}", :value => url_for({:controller => '/group', :gid => group.gid, :action => 'show'}))
         end
       end

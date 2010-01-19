@@ -1,5 +1,5 @@
 # SKIP(Social Knowledge & Innovation Platform)
-# Copyright (C) 2008-2009 TIS Inc.
+# Copyright (C) 2008-2010 TIS Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,6 +17,7 @@ class UserController < ApplicationController
   include UserHelper
 
   before_filter :load_user, :setup_layout
+  after_filter :remove_system_message, :only => %w(show blog social)
 
   # tab_menu
   def show

@@ -1,5 +1,5 @@
 # SKIP(Social Knowledge & Innovation Platform)
-# Copyright (C) 2008-2009 TIS Inc.
+# Copyright (C) 2008-2010 TIS Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -51,7 +51,7 @@ class Group < ActiveRecord::Base
   named_scope :participating, proc {|user|
     return {} unless user
     {
-      :conditions => ["group_participations.user_id = ? AND group_participations.waiting = 0", user.id], :include => :group_participations,
+      :conditions => ["group_participations.user_id = ? AND group_participations.waiting = 0", user.id],
       :include => [:group_participations]
     }
   }

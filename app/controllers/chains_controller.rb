@@ -1,5 +1,5 @@
 # SKIP(Social Knowledge & Innovation Platform)
-# Copyright (C) 2008-2009 TIS Inc.
+# Copyright (C) 2008-2010 TIS Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -86,8 +86,7 @@ class ChainsController < ApplicationController
 
   def make_chain_message
     return unless @chain
-    link_url = url_for(:controller => 'user', :uid => current_target_user.uid, :action => 'social', :menu => 'social_chain')
-    Message.save_message("CHAIN", current_target_user.id, link_url, _("You received an introduction!"))
+    SystemMessage.create_message :message_type => 'CHAIN', :user_id => current_target_user.id, :message_hash => {:user_id => current_target_user.id}
   end
 
   def current_chain

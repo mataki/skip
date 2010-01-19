@@ -4,7 +4,7 @@
 # (Use only when you can't set environment variables through your web/app server)
 ENV['RAILS_ENV'] ||= 'production'
 
-RAILS_GEM_VERSION = '2.3.4' unless defined? RAILS_GEM_VERSION
+RAILS_GEM_VERSION = '2.3.5' unless defined? RAILS_GEM_VERSION
 
 SKIP_VERSION = '1.5.0'
 
@@ -59,6 +59,7 @@ Rails::Initializer.run do |config|
   config.gem "maedana-ar_mailer", :lib => 'action_mailer/ar_mailer', :source => 'http://gemcutter.org'
   config.gem "feed-normalizer"
   config.gem "searchlogic"
+  config.gem "nokogiri", :version => '>=1.4.1'
   config.gem "sanitize", :version => '>=1.2.0.dev.20091104'
   config.gem 'diff-lcs', :lib => 'diff/lcs'
 end

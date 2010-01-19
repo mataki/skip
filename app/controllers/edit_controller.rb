@@ -1,5 +1,5 @@
 # SKIP(Social Knowledge & Innovation Platform)
-# Copyright (C) 2008-2009 TIS Inc.
+# Copyright (C) 2008-2010 TIS Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -240,7 +240,7 @@ class EditController < ApplicationController
     flash[:notice] = _('Deletion complete.')
     # そのユーザのブログ一覧画面に遷移する
     # TODO: この部分をメソッド化した方がいいかも(by mat_aki)
-    redirect_to @board_entry.get_url_hash.delete_if{|key,val| key == :entry_id}
+    redirect_to owner_entries_path(@board_entry)
   rescue ActiveRecord::StaleObjectError => e
     flash[:warn] = _("Update on the same entry from other users detected. Please try again.")
     setup_layout @board_entry
@@ -323,8 +323,8 @@ private
   def make_trackback_message(new_trackbacks)
     new_trackbacks.each do |trackback|
       next if trackback.board_entry.user_id == session[:user_id]
-      link_url = url_for(trackback.tb_entry.get_url_hash)
-      Message.save_message("TRACKBACK", trackback.board_entry.user_id, link_url, _("There is a new entry talking about your entry [%s]!") % trackback.tb_entry.title)
+      board_entry = trackback.board_entry
+      SystemMessage.create_message :message_type => 'TRACKBACK', :user_id => board_entry.user_id, :message_hash => {:board_entry_id => board_entry.id}
     end
   end
 

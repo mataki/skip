@@ -1,5 +1,5 @@
 # SKIP(Social Knowledge & Innovation Platform)
-# Copyright (C) 2008-2009 TIS Inc.
+# Copyright (C) 2008-2010 TIS Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -42,18 +42,11 @@ class GroupParticipation < ActiveRecord::Base
     { :order => "group_participations.updated_on DESC" }
   }
 
-  # memcache領域にグループの参加情報を載せているため
-  # 追加・削除の際はmemcache領域を削除する。
-  # このためGroupParticipationテーブルには、deleteメソッドなど
-  # after_xxx がかからないメソッドは使わないように。
   def after_save
-# 他のアプリケーションの所属情報を利用する方法は再度検討する為、一旦コメントアウト
-#    MemcacheUtil.clear(user.code, :skip) unless SkipEmbedded::InitialSettings['belong_info_apps'].blank?
     group.update_attribute(:updated_on, Time.now) if group && !waiting?
   end
 
   def after_destroy
-#    MemcacheUtil.clear(user.code, :skip) unless SkipEmbedded::InitialSettings['belong_info_apps'].blank?
     group.update_attribute(:updated_on, Time.now) if group
   end
 

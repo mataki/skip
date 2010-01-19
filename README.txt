@@ -63,14 +63,13 @@ SKIPを動かすことができます。
 --------------------------------------------------------------------------------
     $ sudo gem sources -a http://gems.github.com/
     $ sudo gem sources -a http://gemcutter.org/
-    $ sudo gem install rails --version 2.3.4
+    $ sudo gem install rails --version 2.3.5
     $ sudo gem install openskip-skip_embedded --version 0.9.19
     $ sudo gem install mislav-will_paginate --version 2.3.6
     $ sudo gem install mysql gettext_rails gettext_activerecord fastercsv json locale_rails maedana-ar_mailer ruby-openid
     $ sudo gem install feed-normalizer --version 1.5.1
     $ sudo gem install searchlogic --version 2.3.6
-    $ sudo gem install sanitize --version 1.2.0.dev.20091104
-    $ sudo gem install nokogiri --version 1.4.0
+    $ sudo gem install nokogiri --version 1.4.1
     $ sudo gem install sanitize --pre
 
 2. SKIPのファイル解凍（tarファイルをダウンロードした場合のみ）
