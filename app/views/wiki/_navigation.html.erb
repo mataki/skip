@@ -6,7 +6,7 @@
           <div class="input_label"><%= label :page, :title, _('Title') %></div>
           <div class="input_value"><%= text_field 'page', 'title', :size=>15, :id=>"pagename" %></div>
           <%= hidden_field_tag :parent_id, @current_page.id %>
-          <%= submit_tag _('作成'), :disable_with => _('作成中...') %>
+          <%= submit_tag _('Create'), :disable_with => _('作成中...') %>
         <% end -%>
       </div>
     </div>
