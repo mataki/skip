@@ -24,6 +24,14 @@
         <% end %>
       </div>
     <% end -%>
+    <% if @current_page.attachments.size > 0 %>
+      <div class="box_space_title"><%= _('添付ファイル一覧')%></span></div>
+      <div class="box_space_body">
+        <% @current_page.attachments.each do |attachment| %>
+          <%= link_to(attachment.filename, attachment_path(attachment), :class=> "normal") %><br/>
+        <% end %>
+      </div>
+    <% end -%>
   <div class="box_space_bottom"></div>
 </div>
 
