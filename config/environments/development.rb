@@ -11,7 +11,7 @@ config.action_controller.consider_all_requests_local = true
 config.action_controller.perform_caching             = false
 config.action_view.debug_rjs                         = true
 
-ActionController::Base.relative_url_root = (ENV["RELATIVE_URL_ROOT"] || "/skip")
+# ActionController::Base.relative_url_root = (ENV["RELATIVE_URL_ROOT"] || "")
 
 config.logger = Logger.new(config.log_path, 1, 10.megabytes)
 
