@@ -67,59 +67,6 @@ describe EditController do
   end
 end
 
-describe EditController, "#destroy" do
-  before do
-    user_login
-
-    controller.stub!(:authorize_to_edit_board_entry?).and_return(true)
-
-    @board_entry = stub_model(BoardEntry, :id => 2, :user_id => 2, :entry_type => "DIARY", :symbol => 'uid:skip')
-    @board_entry.should_receive(:destroy).and_return(@board_entry)
-    BoardEntry.stub(:find).and_return(@board_entry)
-
-    @url = @board_entry.get_url_hash.delete_if{|key,val| key == :entry_id}
-
-    post :destroy, :id => "1"
-  end
-  it { response.should redirect_to(@url) }
-  it "flashメッセージが設定されていること" do
-    flash[:notice].should == 'Deletion complete.'
-  end
-end
-
-describe EditController, "#create" do
-  before do
-    user_login
-    @user_symbol = "uid:hoge"
-    session[:user_symbol] = @user_symbol
-  end
-  describe "正しく作成される場合" do
-    before do
-      new_trackbacks = mock('new_trackbacks')
-
-      @entry = stub_model(BoardEntry, :entry_type => "DIARY")
-      @entry.should_receive(:save).and_return(true)
-      @entry.should_receive(:send_trackbacks).and_return(["", new_trackbacks])
-
-      controller.should_receive(:validate_params).and_return(true)
-      controller.should_receive(:analyze_params).and_return([["sid:allusers"], []])
-      controller.should_receive(:make_trackback_message).with(new_trackbacks)
-
-      BoardEntry.stub!(:new).and_return(@entry)
-
-      @entry.should_receive(:send_contact_mails)
-    end
-    it "作成されたフォーラムにリダイレクトされる" do
-      post :create, { :board_entry => { :symbol => @user_symbol } }
-      response.should redirect_to(@entry.get_url_hash)
-    end
-    it "flashメッセージが設定されていること" do
-      post :create, { :board_entry => { :symbol => @user_symbol } }
-      flash[:notice].should == 'Created successfully.'
-    end
-  end
-end
-
 describe EditController, "#analize_params" do
   before do
     @params = {

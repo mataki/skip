@@ -96,18 +96,18 @@ end
 
 describe CreateNewAdminUrl, '#show_new_admin_url' do
   include ActionController::UrlWriter
-  default_url_options[:host] = SkipEmbedded::InitialSettings['host_and_port']
-  default_url_options[:protocol] = SkipEmbedded::InitialSettings['protocol']
+  default_url_options[:host] = 'localhost:3000'
+  default_url_options[:protocol] = 'http'
 
   before do
     @create_new_admin_url = CreateNewAdminUrl.new
   end
   it '指定されたホストのアカウント作成処理へcodeパラメタ付きでアクセスするためのurlが返ってくること' do
     code = '123456789'
-    @create_new_admin_url.show_new_admin_url(code).should == first_new_admin_user_url(:code => code)
+    @create_new_admin_url.show_new_admin_url(code).should == 'http://localhost:3000/admin/users/new/first?code=' + code
   end
   it 'URIエンコードされていること' do
     code = '12345&hoge=123%456'
-    @create_new_admin_url.show_new_admin_url(code).should == first_new_admin_user_url + '?code=' + CGI.escape(code)
+    @create_new_admin_url.show_new_admin_url(code).should == 'http://localhost:3000/admin/users/new/first' + '?code=' + CGI.escape(code)
   end
 end
