@@ -3,21 +3,21 @@
 <% end -%>
 
 <% content_for :contents_left do -%>
-  <h2 class="topix_title"><%= icon_tag('asterisk_orange') %><%= _('編集履歴') %></h2>
+  <h2 class="topix_title"><%= icon_tag('asterisk_orange') %><%= _('History of edit') %></h2>
   <table class="normal user_info show">
     <thead>
       <tr>
         <th class="revision"></th>
         <th class="user"><%= _('UserUid|Uid')%></th>
-        <th class="updated_at"><%= _('更新日時')%></th>
-        <th class="diff"><%= _('次との差分')%></th>
-        <th class="diff"><%= _('前との差分')%></th>
+        <th class="updated_at"><%= _('Update time')%></th>
+        <th class="diff"><%= _('Next diff')%></th>
+        <th class="diff"><%= _('Before diff')%></th>
       </tr>
     </thead>
     <tbody>
       <% @histories.each do |history| %>
         <tr class="<%= cycle("odd", "even")%>">
-          <td class="revision"><%= link_to(h(_("リビジョン#{history.revision}を表示")), wiki_history_path(@current_page.title, history)) %></td>
+          <td class="revision"><%= link_to(h(_("Display rev.%{revision}") % {:revision => history.revision}), wiki_history_path(@current_page.title, history)) %></td>
           <td><%= history.user.name %></td>
           <td class="timestamp"><%= history.updated_at.strftime("%Y-%m-%d %H:%M") %></td>
           <td><%= link_to_next_diff(@histories, history) %></td>

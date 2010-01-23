@@ -20,14 +20,14 @@
     <h1 id="title">
       <span id="title-block" style="padding: 3px;">
         <%=h @current_page.title %>
-        <span id="title-change" style="cursor:pointer; font-size: 10px; color: #0000FF; font-weight: normal;">[ページ名を編集する]</span>
+        <span id="title-change" style="cursor:pointer; font-size: 10px; color: #0000FF; font-weight: normal;"><%= _('[Edit page title]')%></span>
       </span>
       <span id= "edit_form" style="display:none;">
         <% @page = @current_page %>
         <%  form_tag( {:action => :update}, {:method => "put"} ) do %>
           <%= text_field 'page', 'title' %>
-          <%= submit_tag("更新") %>
-          <span id="reset_form" style="cursor:pointer; font-size: 10px; color: #0000FF; font-weight: normal;">[取消]</span>
+          <%= submit_tag(_("Update")) %>
+          <span id="reset_form" style="cursor:pointer; font-size: 10px; color: #0000FF; font-weight: normal;"><%= _("[Cancel]") %></span>
         <% end %>
       </span>
     </h1>

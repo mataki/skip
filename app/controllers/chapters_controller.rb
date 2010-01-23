@@ -53,7 +53,8 @@ class ChaptersController < ApplicationController
 
     @history = @page.edit(content, current_user)
     if @history.save!
-      flash[:notice] = _("ページが更新されました")
+      # KuroText
+      flash[:notice] = _("Successfully update '%{page}'.") % {:page => @page.title}
       redirect_to wiki_path(@page.title)
     else
       errors = [@history, @history.content].map{|m| m.errors.full_messages }.flatten
@@ -75,7 +76,8 @@ class ChaptersController < ApplicationController
     @history = @page.edit(content, current_user)
 
     if @history.save!
-      flash[:notice] = _("ページが更新されました")
+      # KuroText
+      flash[:notice] = _("Successfully update '%{page}'.") % {:page => @page.title}
       redirect_to wiki_path(@page.title)
     else
       errors = [@history, @history.content].map{|m| m.errors.full_messages }.flatten
@@ -91,7 +93,8 @@ class ChaptersController < ApplicationController
 
     @history = @page.edit(content, current_user)
     if @history.save!
-      flash[:notice] = _("セクションを削除しました")
+      # KuroText
+      flash[:notice] = _("Successfully delete chapter.")
       redirect_to wiki_path(@page.title)
     else
       errors = [@history, @history.content].map{|m| m.errors.full_messages }.flatten

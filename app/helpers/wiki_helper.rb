@@ -1,8 +1,10 @@
 module WikiHelper
   def wiki_tab_menu_source page
     tab_menu_source = []
-    tab_menu_source << {:label => _('内容'), :options => wiki_path(page.title)}
-    tab_menu_source << {:label => _('履歴'), :options => wiki_histories_path(page.title)}
+    # KuroText
+    tab_menu_source << {:label => _("Content"), :options => wiki_path(page.title)}
+    # KuroText
+    tab_menu_source << {:label => _("History"), :options => wiki_histories_path(page.title)}
     tab_menu_source
   end
 

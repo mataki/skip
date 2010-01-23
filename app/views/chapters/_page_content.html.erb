@@ -25,8 +25,8 @@
 
     <div class="submit">
       <span class="notice" style="display:none"><%= _("Modified, not need to save.")%></span>
-      <%= submit_tag(_("ページを更新する"))%>
-      <%= link_to(h(_("ページを表示する")), wiki_path(page.title), :class => "back") %>
+      <%= submit_tag(_("Update page"))%>
+      <%= link_to(h(_("Display page")), wiki_path(page.title), :class => "back") %>
     </div>
     <div class="clear"></div>
   <% end -%>

@@ -34,7 +34,7 @@ module HistoriesHelper
       :date => content_tag("span", @history.updated_at.strftime("%Y/%m/%d %H:%M"), :class => "val"),
     }
 
-    sanitize_style_with_whitelist( _("リビジョン#{hist[:rev]}を表示しています。  (#{hist[:user]}さんが#{hist[:date]}に更新しました。)") % hist)
+    sanitize_style_with_whitelist( _("Showing revision %{rev}, edited by %{user} on %{date}.") % hist)
   end
 
   def decode_nbsp(string)

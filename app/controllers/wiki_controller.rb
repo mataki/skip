@@ -25,7 +25,8 @@ class WikiController < ApplicationController
   def update
     if page = Page.find_by_title(params[:id]) and !page.deleted?
       page.update_attributes(params[:page])
-      flash[:notice] = _("'#{page.title}'に変更されました")
+      # KuroText
+      flash[:notice] = _("Successfully update '%{page}'.") % {:page => page.title}
     end
     redirect_to :action => :show , :id => page.title
   end
@@ -40,7 +41,8 @@ class WikiController < ApplicationController
         parent_page.children << page
         parent_page.save
       end
-      flash[:notice] = "'#{page.title}'が作成されました"
+      # KuroText
+      flash[:notice] = _("Successfully create '%{page}'.") % {:page => page.title}
     else
       flash[:error] = page.errors.full_messages
     end
@@ -51,7 +53,8 @@ class WikiController < ApplicationController
   def recovery
     @current_page = Page.find_by_title(params[:id])
     if @current_page.recover
-      flash[:notice] = _("復旧が完了しました")
+      # KuroText
+      flash[:notice] = _("Successfully restore '%{page}'.") % {:page => @current_page.title}
       redirect_to(wiki_path(@current_page.title))
     end
   end
@@ -59,9 +62,11 @@ class WikiController < ApplicationController
   def destroy
     @current_page = Page.find_by_title(params[:id])
     if !@current_page.root? and @current_page.logical_destroy
-      flash[:notice] = _("削除が完了しました")
+      # KuroText
+      flash[:notice] = _("Successfully delete '%{page}'.") % {:page => @current_page.title}
     else
-      flash[:warn] = _("削除に失敗しました")
+      # KuroText
+      flash[:warn] = _("Failure delete '%{page}'.") % {:page=>@current_page.title}
     end
 
     redirect_to(wiki_path(@current_page.title))

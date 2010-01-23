@@ -4,7 +4,7 @@
 
 <% content_for :contents_left do %>
   <% treat_as_current = wiki_histories_path(@current_page.title) %>
-  <h2 class="topix_title"><%= icon_tag('asterisk_orange') %><%= "rev.#{params[:from]}からrev.#{params[:to]}への変更点" %></h2>
+  <h2 class="topix_title"><%= icon_tag('asterisk_orange') %><%= _("Display change part from rev.%{:from} to rev.%{:to}") % {:from => params[:from], :to => params[:to]} %></h2>
 
   <% if @current_page.format_type == "html" %>
     <div class="hitory-contents" style="display:none">
@@ -21,8 +21,8 @@
         <th class="num"><%= "r#{params[:from]}" %></th>
         <th class="num"><%= "r#{params[:to]}" %></th>
 
-        <th><%= _("リビジョン#{params[:from]}の内容") %></th>
-        <th><%= _("リビジョン#{params[:to]}の内容") %></th>
+        <th><%= _("Content of rev.%{from}") % {:from => params[:from]} %></th>
+        <th><%= _("Content of rev.%{to}") % {:from => params[:to]} %></th>
       </tr>
 
       <% @diffs.each do |symbol, (old_n,old_s), (new_n,new_s)| -%>
@@ -38,6 +38,6 @@
   </div>
 
   <div class="controll">
-    <span><%= link_to(_('[履歴一覧に戻る]'), treat_as_current) %></span>
+    <span><%= link_to(_('[Back to the histories list]'), treat_as_current) %></span>
   </div>
 <% end %>
