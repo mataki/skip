@@ -22,7 +22,8 @@ class SystemMessage < ActiveRecord::Base
   named_scope :unsents, proc {
     {
       :conditions => ['send_flag = ?', false],
-      :joins => 'LEFT JOIN user_message_unsubscribes USING(user_id, message_type)'
+      :joins => 'LEFT JOIN user_message_unsubscribes USING(user_id, message_type)',
+      :readonly => false
     }
   }
 

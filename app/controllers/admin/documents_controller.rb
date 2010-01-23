@@ -95,7 +95,7 @@ EOF
       return redirect_to(admin_documents_path)
     end
     yield
-    flash[:notice] = _('%{target} was successfully saved.' % {:target => s_("Admin::DocumentsController|#{params[:target]}")})
+    flash[:notice] = _('%{target} was successfully saved.') % {:target => s_("Admin::DocumentsController|#{params[:target]}")}
     redirect_to admin_documents_path(:target => params[:target])
   rescue Errno::EACCES => e
     flash.now[:error] = _('Failed to save the content.  Try again or contact administrator.')

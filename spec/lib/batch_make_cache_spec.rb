@@ -176,42 +176,6 @@ describe BatchMakeCache, '#user_body_lines' do
   end
 end
 
-describe BatchMakeCache, "#make_caches_entry" do
-  before do
-
-  end
-end
-
-describe BatchMakeCache, "#load_not_cached_entries" do
-  before do
-    @interval = 15.minutes
-    @bmc = BatchMakeCache.new(@interval)
-  end
-  describe "１件見つかる場合" do
-    before do
-      @entry = mock_model(BoardEntry)
-      BoardEntry.should_receive(:find).with(:all, :select => "id", :conditions => ["updated_on > ?", @interval.ago]).and_return([@entry])
-      BoardEntryComment.stub!(:find).and_return([])
-      EntryTrackback.stub!(:find).and_return([])
-      BoardEntry.should_receive(:find).with(:all, :include => [:user, {:board_entry_comments => :user}, {:entry_trackbacks => {:tb_entry => :user}}],
-                                   :conditions =>["board_entries.id in (?)", [@entry.id]]).and_return([@entry])
-    end
-    it "記事が１件返ること" do
-      @bmc.send(:load_not_cached_entries).should == [@entry]
-    end
-  end
-  describe "見つからない場合" do
-    before do
-      BoardEntry.should_receive(:find).once.and_return([])
-      BoardEntryComment.stub!(:find).and_return([])
-      EntryTrackback.stub!(:find).and_return([])
-    end
-    it "空の配列が返ること" do
-      @bmc.send(:load_not_cached_entries).should == []
-    end
-  end
-end
-
 describe BatchMakeCache, "#entry_body_lines" do
   before do
     @tb_entry_user = stub_model(User, :name => "trackback name")
