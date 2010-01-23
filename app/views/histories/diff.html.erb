@@ -4,7 +4,7 @@
 
 <% content_for :contents_left do %>
   <% treat_as_current = wiki_histories_path(@current_page.title) %>
-  <h2 class="topix_title"><%= icon_tag('asterisk_orange') %><%= _("Display change part from rev.%{:from} to rev.%{:to}") % {:from => params[:from], :to => params[:to]} %></h2>
+  <h2 class="topix_title"><%= icon_tag('asterisk_orange') %><%= _("Display change part from rev.%{from} to rev.%{to}") % {:from => params[:from], :to => params[:to]} %></h2>
 
   <% if @current_page.format_type == "html" %>
     <div class="hitory-contents" style="display:none">
