@@ -6,5 +6,5 @@
   <h2 class="topix_title"><%= icon_tag('asterisk_orange') %><%= explain_history(@history)  %></h2>
 
   <div class="rendered"><%= render_page_content(@current_page, @history.revision) %></div>
-  <%= link_to(_("[Back to the hisories list]"), wiki_histories_path(@current_page.title)) %>
+  <%= link_to(_("[Back to the histories list]"), wiki_histories_path(@current_page.title)) %>
 <% end -%>
