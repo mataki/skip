@@ -51,8 +51,12 @@
     open: function() {
       loadShareFiles({});
       loadNewShareFileForm();
-      $j('#tabs').tabs('select', 0);
       $j('#tabs').tabs().show();
+    },
+    close: function() {
+      $j('div#share_file_list').html('');
+      $j('div#share_file_new').html('');
+      $j('#tabs').tabs('select', 0);
     }
   })
 
@@ -88,7 +92,6 @@
       // http://support.microsoft.com/kb/261188/ja
       $j("<div></div>").addClass('target').append(targetIFrame)
     );
-
     // IE6対策
     targetIFrame.get(0).contentWindow.name = '<%= IframeUploader::UPLOAD_KEY %>';
 
