@@ -118,7 +118,11 @@
     var url = '<%= share_files_url(board_entry.symbol) %>';
     $j.getJSON(url, requestData, function(data, stat) {
       var share_files = data['share_files'];
-      if(share_files.length == 0) return;
+      if(share_files.length == 0){
+      $j('div#share_file_list').append('<%= _('Target %{target} inexistent.') % {:target => _('Share files')} %>');
+        indicator.remove();
+        return;
+      }
       var thead = $j('<thead></thead>');
       thead.append(shareFileToTableHeader());
       var tbody = $j("<tbody></tbody>");
