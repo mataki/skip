@@ -284,7 +284,12 @@ private
   end
 
   def render_window_close
-    render :text => "<script type='text/javascript'>window.opener.location.reload();window.close();</script>"
+    need_reload = params[:reload] == 'false' ? false : true
+    if need_reload
+      render :text => "<script type='text/javascript'>window.opener.location.reload();window.close();</script>"
+    else
+      render :text => "<script type='text/javascript'>window.close();</script>"
+    end
   end
 
   def nkf_file_name(file_name)

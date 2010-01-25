@@ -2,13 +2,17 @@
   <div id="tabs" class="invisible">
     <ul>
       <li><a href="#share_file_list"><%= _('Insert file in text body') %></a></li>
-      <li><a href="#share_file_new"><%= _('Upload a file') %></a></li>
+      <li><a href="#share_file_new_wrapper"><%= _('Upload a file') %></a></li>
       <% if enable_any_embed? -%>
         <li><a href="#embed_tag"><%= _('Insert embed') %></a></li>
       <% end -%>
     </ul>
     <div id="share_file_list"></div>
-    <div id="share_file_new"></div>
+    <div id="share_file_new_wrapper">
+      <div id="share_file_new"></div>
+      <% url_hash = {:controller => '/share_file', :action => :new, :owner_symbol => h(board_entry.symbol), :owner_name => h(board_entry.symbol_name), :reload => 'false'} -%>
+      <div><%= link_to(_('Upload a file(Specify Directly)'), url_hash, :title => _('Upload a file(Specify Directly)'), :class => 'link', :onclick => "sub_window_open('#{url_for(url_hash)}', 'subwindow', 550, 400); $j('div#share_file_dialog').dialog('close'); return false;") %></div>
+    </div>
     <% if enable_any_embed? -%>
       <div id="embed_tag">
         <form>
@@ -55,7 +59,7 @@
     var submitCallback;
     $j('#share_file_new').html('');
     var indicator = $j('<span><%= skip_image_tag 'indicator.gif' %></span>');
-    indicator.appendTo($j('#share_file_new')).show();
+    indicator.appendTo($j('#share_file_new_wrapper')).show();
     var src = '<%= url_for(:controller => 'share_file', :action => 'new', :owner_symbol => board_entry.symbol, :ajax_upload => 1, :escape => false) %>'; 
     $j('#share_file_new').append(
       $j('<ul></ul>').addClass('messages')
