@@ -191,7 +191,11 @@ class EditController < ApplicationController
     end
 
     # ちょっとした更新でなければ、last_updatedを更新する
-    update_params[:last_updated] = Time.now unless params[:non_update]
+    if params[:non_update]
+      BoardEntry.record_timestamps = false
+    else
+      update_params[:last_updated] = Time.now
+    end
 
     @board_entry.update_attributes!(update_params)
     @board_entry.entry_publications.clear
@@ -221,6 +225,8 @@ class EditController < ApplicationController
     flash.now[:warn] = _("Update on the same entry from other users detected. Reset the edit?")
     setup_layout @board_entry
     render :action => 'edit'
+  ensure
+    BoardEntry.record_timestamps = true
   end
 
   # post_action
