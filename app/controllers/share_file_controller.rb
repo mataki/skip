@@ -299,11 +299,14 @@ private
 
   def share_file_to_json(share_file)
     returning(share_file.attributes) do |json|
-      json[:src] = share_file_url(
-        :controller_name => share_file.owner_symbol_type,
-        :symbol_id => share_file.owner_symbol_id,
-        :file_name => share_file.file_name)
-      json[:file_type] = share_file.image_extention? ? 'image' : share_file.extname
+      src = share_file_url(:controller_name => share_file.owner_symbol_type, :symbol_id => share_file.owner_symbol_id, :file_name => share_file.file_name)
+      if share_file.image_extention?
+        json[:src] = "#{src}?#{share_file.updated_at.to_i.to_s}"
+        json[:file_type] = 'image'
+      else
+        json[:src] = src
+        json[:file_type] = share_file.extname
+      end
       json[:insert_tag] =
         if share_file.image_extention?
           # TODO 後で
