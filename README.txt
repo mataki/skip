@@ -1,5 +1,5 @@
 ================================================================================
-=  SKIP version 1.5.0                              http://www.openskip.org/    =
+=  SKIP version 1.6.0                              http://www.openskip.org/    =
 ================================================================================
 
 SKIPのダウンロードありがとうございます。
@@ -22,20 +22,19 @@ SKIPを動かすにあたり以下の環境で検証を行っています。
  - OS    : Linux (kernel 2.6系)
  - DB    : MySQL 5.0系
  - Ruby  : 1.8.6, 1.8.7
- - Rails : 2.3.4
+ - Rails : 2.3.5
 
 
 ================================================================================
-* SKIP バージョンアップ（version 1.4 -> version 1.5）
+* SKIP バージョンアップ（version 1.5 -> version 1.6）
 ================================================================================
 下記内容に従い旧バージョンから新バージョンにバージョンアップすることで、
 SKIPを動かすことができます。
 
 1. gemsのインストール
 --------------------------------------------------------------------------------
-    $ sudo gem install nokogiri --version 1.4.0
-    $ sudo gem install gemcutter
-    $ sudo gem install sanitize --pre
+    $ sudo gem install rails --version 2.3.5
+    $ sudo gem install diff-lcs --version 1.1.2
 
 2. 設定ファイルの準備・編集（initial_settings.yml, database.yml, common_menus.yml）
 --------------------------------------------------------------------------------
@@ -66,11 +65,15 @@ SKIPを動かすことができます。
     $ sudo gem install rails --version 2.3.5
     $ sudo gem install openskip-skip_embedded --version 0.9.19
     $ sudo gem install mislav-will_paginate --version 2.3.6
-    $ sudo gem install mysql gettext_rails gettext_activerecord fastercsv json locale_rails maedana-ar_mailer ruby-openid
+    $ sudo gem install mysql fastercsv json maedana-ar_mailer ruby-openid
+    $ sudo gem install gettext_rails --version 2.0.4
+    $ sudo gem install gettext_activerecord --version 2.0.4
+    $ sudo gem install locale_rails --version 2.0.4
     $ sudo gem install feed-normalizer --version 1.5.1
     $ sudo gem install searchlogic --version 2.3.6
     $ sudo gem install nokogiri --version 1.4.1
     $ sudo gem install sanitize --pre
+    $ sudo gem install diff-lcs --version 1.1.2
 
 2. SKIPのファイル解凍（tarファイルをダウンロードした場合のみ）
 --------------------------------------------------------------------------------
@@ -155,7 +158,7 @@ SKIPでは、以下のバッチ処理を行っています。必要に応じてc
  - batch_send_cleaning_notification.rb ・・・ユーザのクリーニング通知
  - batch_make_cache.rb                 ・・・全文検索用キャッシュ生成
  - batch_delete_cache.rb               ・・・全文検索用キャッシュの不要データ削除
-
+ - batch_close_questions.rb            ・・・質問掲載の強制クローズ
 
 ================================================================================
 * ユニットテスト
