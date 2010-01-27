@@ -1,14 +1,13 @@
-<% unless user.groups.participating(user).empty? -%>
+<% if groups = user.groups.participating(user).order_participate_recent and !groups.empty? -%>
 <div class="box_space" id="groups">
   <div class="box_space_title"><%= icon_tag('group') %><%= _('Groups Joined') %></div>
   <div class="box_space_body">
   <ul>
-  <% groups = user.groups.participating(user).order_participate_recent -%>
-  <% groups.limit(10).each do |group| -%>
+  <% groups[0..9].each do |group| -%>
     <li><%= icon_tag('bullet_blue') + group_link_to(group, :view_text => truncate(h(group.name), :length => 12), :title => group.name) %></li>
   <% end -%>
   </ul>
   </div>
-  <div class="box_space_bottom"><%= link_to n_("[Total %{count} hit...see all]", "[Total %{count} hits...see all]",groups.count) % {:count => groups.count}, :action => 'group', :uid => user.uid %></div>
+  <div class="box_space_bottom"><%= link_to n_("[Total %{count} hit...see all]", "[Total %{count} hits...see all]",groups.size) % {:count => groups.size}, :action => 'group', :uid => user.uid %></div>
 </div><!-- box_space -->
 <% end -%>
