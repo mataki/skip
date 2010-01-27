@@ -36,17 +36,7 @@ module SystemMessagesHelper
 
     current_user.system_messages.each do |sm|
       system_message_data = system_message_data(sm)
-      # TODO 1.7でxボタンを有効にする
-      # system_message_links << link_to(icon_tag(system_message_data[:icon]) + system_message_data[:message], system_message_data[:url]) + "(#{link_to 'x', user_system_message_path(current_user, sm), :class => 'delete_system_message'})" unless system_message_data.blank?
-      system_message_links << link_to(icon_tag(system_message_data[:icon]) + system_message_data[:message], system_message_data[:url]) unless system_message_data.blank?
-    end
-
-    # FIXME 1.7で削除する。migrateによるデータ移行を行わないので。
-    message_array = Message.get_message_array_by_user_id(current_user.id)
-    message_array.each do |message|
-      if message_type = Message::MESSAGE_TYPES[message[:message_type]]
-        system_message_links << link_to(icon_tag(message_type[:icon_name]) + h(message[:message]), message[:link_url])
-      end
+      system_message_links << link_to(icon_tag(system_message_data[:icon]) + system_message_data[:message], system_message_data[:url]) + "(#{link_to 'x', user_system_message_path(current_user, sm), :class => 'delete_system_message'})" unless system_message_data.blank?
     end
 
     Group.active.has_waiting_for_approval.id_equals(Group.active.owned(current_user).map(&:id)).each do |group|

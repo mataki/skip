@@ -246,10 +246,10 @@ class MypageController < ApplicationController
   # post_action
   # メール通知設定
   # 画面表示とテーブルレコードが逆なので注意
-  # Message::MESSAGE_TYPESにあるけど、params["message_type"]にないときにcreate
+  # SystemMessage::MESSAGE_TYPESにあるけど、params["message_type"]にないときにcreate
   def update_message_unsubscribes
     UserMessageUnsubscribe.delete_all(["user_id = ?", session[:user_id]])
-    Message::MESSAGE_TYPES.keys.each do |message_type|
+    SystemMessage::MESSAGE_TYPES.each do |message_type|
       unless  params["message_type"] && params["message_type"][message_type]
         UserMessageUnsubscribe.create(:user_id => session[:user_id], :message_type => message_type )
       end
