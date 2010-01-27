@@ -13,6 +13,7 @@ vendor/rails
 vendor/plugins/haml
 coverage
 tmp/*
+temp/*
 pkg/*
 *flymake.rb
 *#*#
