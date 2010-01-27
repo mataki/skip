@@ -116,6 +116,7 @@
   };
 
   var loadShareFiles = function(requestData) {
+    $j('#tabs').tabs('select', 0);
     $j('div#share_file_list').html('');
     var indicator = $j('<span><%= skip_image_tag 'indicator.gif' %></span>');
     indicator.appendTo('div#share_file_list').show();
