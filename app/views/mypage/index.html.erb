@@ -193,6 +193,12 @@
       return false;
     });
 
+    <% if enable_enquete? -%>
+    $j('#enquete_link').live('click', function() {
+      $j.cookie('<%= enquete_cookie_key %>', 'true');
+    })
+    <% end -%>
+
 //    $j('.delete_system_message').click(function() {
 //      var clicked_obj = $j(this);
 //      $j.ajax({

@@ -22,6 +22,10 @@ module SystemMessagesHelper
       system_message_links << link_to(icon_tag('information') + h(system_notice['title']), system_notice['url'])
     end
 
+    if enable_enquete?
+      system_message_links << link_to(icon_tag('information') + 'SKIPのご利用ありがとうございます。品質向上のためのアンケートを実施しています。この機会に皆様の声をぜひお聞かせください。ご協力お願いします。 ', 'https://spreadsheets.google.com/viewform?formkey=dHprYkFZODlOYnVlRVo5OS1sYzhYWlE6MA', :id => 'enquete_link')
+    end
+
     if Admin::Setting.enable_password_periodic_change && !current_user.password_expires_at.blank? && current_user.password_expires_at.ago(2.week) < Time.now
       system_message_links << link_to(icon_tag('bullet_error') + _('The password expiration date (%s) approaches') % current_user.password_expires_at.ago(1.day).strftime(_('%B %d %Y')), url_for(:controller => 'mypage', :action => 'manage', :menu => 'manage_password'))
     end
@@ -132,5 +136,13 @@ module SystemMessagesHelper
     # FIXME 不要データの削除は表示タイミングでやるべきではないかも
     message.destroy
     nil
+  end
+
+  def enquete_cookie_key
+    "clicked_enquete_#{SKIP_VERSION}"
+  end
+
+  def enable_enquete?
+    GetText.locale.to_s == 'ja' && !(SkipEmbedded::InitialSettings['enable_enquete_for_oss'] == "lovelyskip" || cookies[enquete_cookie_key] == 'true')
   end
 end
