@@ -120,8 +120,6 @@ describe Admin::UserUid, "#rename" do
     @b.contents.should be_include(@new_symbol)
     @b.entry_editors.first.symbol.should == @new_symbol
     @b.entry_publications.first.symbol.should == @new_symbol
-    @message.reload
-    @message.link_url.should == "/user/#{@new_uid}"
     @sf.reload
     @sf.owner_symbol.should == @new_symbol
   end
@@ -135,7 +133,6 @@ describe Admin::UserUid, "#rename" do
     @b = BoardEntry.create!({:title => uid_str, :contents => uid_str, :date => Date.today, :entry_type => 'DIARY', :symbol => "uid:#{uid_str}", :publication_symbols_value => "uid:#{uid_str}", :contents => "geafdsaf uid:#{uid_str} fdsaf", :user_id => @u, :last_updated => Date.today})
     @b.entry_editors.create!({:symbol => "uid:#{uid_str}"})
     @b.entry_publications.create!({:symbol => "uid:#{uid_str}"})
-    @message = Message.create!({:link_url => "/user/#{uid_str}", :user_id => @u})
     file = mock_uploaed_file
     @sf = ShareFile.new({:file => file, :file_name => uid_str, :owner_symbol => "uid:#{uid_str}", :publication_symbols_value => "uid:#{uid_str}", :date => Date.today, :user_id => @u, :description => uid_str})
     @sf.accessed_user = @u

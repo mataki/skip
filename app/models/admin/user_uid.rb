@@ -48,7 +48,6 @@ class Admin::UserUid < UserUid
     ActiveRecord::Base.connection.execute("update entry_editors set symbol = 'uid:#{to}' where symbol = 'uid:#{from}'")
     ActiveRecord::Base.connection.execute("update entry_publications set symbol = 'uid:#{to}' where symbol = 'uid:#{from}'")
     ActiveRecord::Base.connection.execute("update groups set description = replace(description, 'uid:#{from}', 'uid:#{to}') where description like '%uid:#{from}%'")
-    ActiveRecord::Base.connection.execute("update messages set link_url = replace(link_url, '/user/#{from}', '/user/#{to}') where link_url like '/user/#{from}%'")
     ActiveRecord::Base.connection.execute("update share_file_publications set symbol = 'uid:#{to}' where symbol = 'uid:#{from}'")
     ActiveRecord::Base.connection.execute("update share_files set owner_symbol = 'uid:#{to}' where owner_symbol = 'uid:#{from}'")
     ActiveRecord::Base.connection.execute("update share_files set publication_symbols_value = replace(publication_symbols_value, 'uid:#{from}', 'uid:#{to}') where publication_symbols_value like '%uid:#{from}%'")
