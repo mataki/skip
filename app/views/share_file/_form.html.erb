@@ -1,6 +1,6 @@
 <%= hidden_field_tag 'owner_name', h(owner_name) %>
 <%= hidden_field 'share_file', 'owner_symbol' %>
-<%= hidden_field_tag 'reload', !params[:reload] == 'false' %>
+<%= hidden_field_tag 'reload', !(params[:reload] == 'false') %>
 
 <% content_for :stylesheet do -%>
 <style type="text/css">
