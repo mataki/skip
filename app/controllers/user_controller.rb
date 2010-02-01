@@ -105,8 +105,6 @@ class UserController < ApplicationController
 
   # tab_menu
   def group
-    @group_categories = GroupCategory.all
-
     @groups = @user.groups.active.partial_match_name_or_description(params[:keyword]).
       categorized(params[:group_category_id]).order_recent.paginate(:page => params[:page], :per_page => 50)
 

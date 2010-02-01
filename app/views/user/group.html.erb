@@ -7,7 +7,7 @@
       <%= radio_button_tag "group_category_id", "all",  (params[:group_category_id] == "all" or params[:group_category_id].blank?), :class => "category_radio"  %>
       <%= label_tag "group_category_id_all", icon_tag("asterisk_orange", :margin => true) + _("All (%{num})") % {:num => Group.active.participating(current_target_user).count} %>
       <br />
-      <% GroupCategory.with_groups_count(current_target_user).each do |category| -%>
+      <% GroupCategory.with_groups_count(current_target_user).ascend_by_sort_order.each do |category| -%>
         <%= radio_button_tag "group_category_id", category.id, params[:group_category_id] == category.id.to_s, :class => "category_radio" %>
         <%= label_tag "group_category_id_#{category.id}", "#{get_group_icon(category, :margin => true)}#{h(category.name)}(#{category.count})" %>
         <br/>

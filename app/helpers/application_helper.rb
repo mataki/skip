@@ -330,7 +330,7 @@ module ApplicationHelper
     option_tags = [content_tag(:option, _('Move to groups joined ...'), :value => url_for({:controller => '/mypage', :action => 'group'}))]
 
     if groups = Group.active.participating(current_user).order_participate_recent.all(:include => :group_category) and !groups.empty?
-      groups.group_by(&:group_category).each do |category, groups_by_category|
+      groups.group_by(&:group_category).sort_by{|c, g| c.sort_order}.each do |category, groups_by_category|
         option_tags << content_tag(:option, "[#{h(category.name)}]", :disabled => 'disabled', :style => 'color: gray')
         groups_by_category.each do |group|
           option_tags << content_tag(:option, "&nbsp;#{truncate(h(group.name), :length => 15)}", :value => url_for({:controller => '/group', :gid => group.gid, :action => 'show'}))

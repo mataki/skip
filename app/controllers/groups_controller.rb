@@ -22,7 +22,6 @@ class GroupsController < ApplicationController
   # tab_menu
   # グループの一覧表示
   def index
-    @group_categories = GroupCategory.all
     params[:yet_participation] ||= "true"
 
     scope = Group.active.partial_match_name_or_description(params[:keyword]).
