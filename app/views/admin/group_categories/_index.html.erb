@@ -4,7 +4,7 @@
   <%= link_to _('New %{model}') % {:model => _('group category')}, new_admin_group_category_path %>
   <%= render :partial => '/admin/shared/list_table',
              :locals => {
-               :columns => %w[code name icon description initial_selected],
+               :columns => %w[code name icon description sort_order initial_selected],
                :disp_columns_proc => lambda do |object, column|
       case column
       when 'icon'

@@ -24,6 +24,8 @@ class Admin::GroupCategory < GroupCategory
   N_('Admin::GroupCategory|Icon description')
   N_('Admin::GroupCategory|Description')
   N_('Admin::GroupCategory|Description description')
+  N_('Admin::GroupCategory|Sort order')
+  N_('Admin::GroupCategory|Sort order description')
   N_('Admin::GroupCategory|Initial selected')
   N_('Admin::GroupCategory|Initial selected description')
 
