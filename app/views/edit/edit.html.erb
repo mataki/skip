@@ -15,5 +15,20 @@
 <%= render :partial => 'board_entries/embed_dialog', :locals => {:board_entry => @board_entry} %>
 
 <div class="desc ui-corner-all" style="margin-top: 10px;">
-  <%= link_to(_("[Delete]"), {:action => "destroy", :id => @board_entry}, :confirm => _("Are you sure to delete?"), :method => :post)%>
+  <% form_tag({:action => 'destroy', :id => @board_entry}, :onclick => 'return confirmDestroy(event)') do -%>
+    <%= submit_tag _('Delete') %>
+  <% end -%>
 </div>
+
+<% content_for :javascript_initializers do -%>
+  <%# beforeunloadイベントをキャンセルするため、railsのconfirmを使わず独自実装 %>
+  <%# jQueryのclickイベントで設定するとbeforeunloadの方が先に呼ばれてしまい、うまくいかないのでonclickを利用 %>
+  confirmDestroy = function(e) {
+    if (confirm('<%= _("Are you sure to delete?")%>')) {
+      $j(window).unbind('beforeunload');
+      return true;
+    } else {
+      return false;
+    }
+  }
+<% end -%>
