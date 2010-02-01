@@ -119,10 +119,14 @@ class User < ActiveRecord::Base
     { :conditions => [condition_str, condition_params].flatten, :include => :against_chains }
   }
 
-  named_scope :exclude_retired, proc { |flg|
-    target = ["ACTIVE"]
-    target << "RETIRED" unless flg == "1"
-    status_in(target).proxy_options
+  named_scope :exclude_retired, proc { |exclude_retired|
+    target =
+      if exclude_retired == '1'
+        %w(ACTIVE)
+      else
+        %w(ACTIVE RETIRED)
+      end
+    status_is(target).proxy_options
   }
 
   named_scope :order_joined, proc { { :order => "group_participations.updated_on DESC" } }
