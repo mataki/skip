@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.6.0\n"
-"POT-Creation-Date: 2010-02-01 16:55+0900\n"
+"POT-Creation-Date: 2010-02-02 10:32+0900\n"
 "PO-Revision-Date: 2009-11-27 16:12+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -187,6 +187,7 @@ msgstr "%{model}を削除しました。"
 #: app/controllers/admin/admin_module.rb:158
 #: app/controllers/admin/admin_module.rb:272
 #: app/controllers/admin/oauth_providers_controller.rb:25
+#: app/controllers/admin/board_entries_controller.rb:39
 #: app/controllers/admin/user_profiles_controller.rb:35
 msgid "%{model} was successfully updated."
 msgstr "%{model}の更新に成功しました。"
@@ -671,8 +672,8 @@ msgstr "並び順"
 #: app/models/admin/group_category.rb:28
 msgid "Admin::GroupCategory|Sort order description"
 msgstr ""
-"このグループカテゴリの並び順を入力して下さい。値が小さいほど上に表示され"
-"るグループカテゴリとなります。"
+"このグループカテゴリの並び順を入力して下さい。値が小さいほど上に表示されるグ"
+"ループカテゴリとなります。"
 
 #: app/models/admin/group_participation.rb:20
 msgid "Admin::GroupParticipation|Favorite"
@@ -1903,6 +1904,7 @@ msgstr "利用者全体にメールが送信されますが、宜しいですか
 #: app/views/admin/pictures/index.html.erb:19
 #: app/views/admin/settings/_security.html.erb:12
 #: app/views/admin/board_entries/index.html.erb:35
+#: app/views/admin/board_entries/index.html.erb:36
 #: app/views/admin/share_files/index.html.erb:36
 #: app/views/admin/bookmarks/index.html.erb:19
 #: app/views/admin/groups/index.html.erb:33
@@ -2468,6 +2470,10 @@ msgstr "パスワード変更"
 msgid "Change Profile Picture"
 msgstr "プロフィール画像変更"
 
+#: app/views/admin/board_entries/index.html.erb:36
+msgid "Change private"
+msgstr "非公開"
+
 #: app/controllers/admin/users_controller.rb:171
 #: app/views/admin/users/edit.html.erb:14
 msgid "Change uid"
@@ -2698,8 +2704,8 @@ msgstr "%{name}作成"
 msgid "Create a new forum entry inheriting the privacy setting."
 msgstr "記事の公開範囲を引き継いだフォーラムとして新しい記事を作成します。"
 
-#: app/controllers/groups_controller.rb:40
-#: app/controllers/groups_controller.rb:48
+#: app/controllers/groups_controller.rb:39
+#: app/controllers/groups_controller.rb:47
 #: app/views/mypage/_action_box.html.erb:10
 msgid "Create a new group"
 msgstr "グループを作る"
@@ -3456,7 +3462,7 @@ msgstr "ご指定のグループは存在しません。"
 msgid "Group information was successfully updated."
 msgstr "グループ情報は正しく更新されました。"
 
-#: app/controllers/groups_controller.rb:54
+#: app/controllers/groups_controller.rb:53
 msgid "Group was created successfully."
 msgstr "グループが正しく作成されました。"
 
@@ -3545,7 +3551,7 @@ msgid "GroupParticipation|Waiting|true"
 msgstr "はい"
 
 #: app/helpers/application_helper.rb:352
-#: app/controllers/groups_controller.rb:63
+#: app/controllers/groups_controller.rb:62
 #: app/controllers/services_controller.rb:46
 #: app/controllers/group_controller.rb:339
 #: app/controllers/share_file_controller.rb:181
@@ -4439,8 +4445,8 @@ msgstr "該当するデータはありませんでした。"
 msgid "No matching entries found."
 msgstr "該当する投稿はありませんでした。"
 
-#: app/controllers/groups_controller.rb:34
-#: app/controllers/user_controller.rb:113
+#: app/controllers/groups_controller.rb:33
+#: app/controllers/user_controller.rb:111
 msgid "No matching groups found."
 msgstr "該当するグループはありませんでした。"
 
@@ -6146,7 +6152,7 @@ msgstr "テーマ"
 msgid "There are no entries posted."
 msgstr "現在投稿がありません。"
 
-#: app/controllers/user_controller.rb:170
+#: app/controllers/user_controller.rb:168
 msgid "There are no introductions."
 msgstr "現在紹介文はありません。"
 
@@ -6517,7 +6523,7 @@ msgstr "ユーザ管理"
 msgid "User name not found."
 msgstr "ユーザ名が見つかりませんでした。"
 
-#: app/controllers/users_controller.rb:27
+#: app/controllers/users_controller.rb:28
 #: app/controllers/group_controller.rb:46
 msgid "User not found."
 msgstr "該当するユーザは存在しませんでした。"
@@ -6783,7 +6789,7 @@ msgid "UserUid|User"
 msgstr "ユーザ"
 
 #: app/helpers/application_helper.rb:351 app/helpers/user_helper.rb:53
-#: app/controllers/users_controller.rb:65
+#: app/controllers/users_controller.rb:66
 #: app/controllers/services_controller.rb:45
 msgid "Users"
 msgstr "ユーザ"
@@ -7403,7 +7409,7 @@ msgstr "[既に読んだ記事を隠す]"
 msgid "[Hints on writing entries]"
 msgstr "【本文の書き方に関するヒント】"
 
-#: app/models/board_entry.rb:777
+#: app/models/board_entry.rb:787
 msgid "[Link does not exist...%s>]"
 msgstr "[リンク先が存在しません...%s>]"
 
@@ -7664,6 +7670,8 @@ msgstr ""
 msgid "before_uid"
 msgstr "現在のユーザ名"
 
+#: app/controllers/admin/board_entries_controller.rb:28
+#: app/controllers/admin/board_entries_controller.rb:39
 #: app/controllers/board_entries_controller.rb:44
 #: app/controllers/board_entries_controller.rb:74
 #: app/controllers/board_entries_controller.rb:94 app/models/board_entry.rb:-

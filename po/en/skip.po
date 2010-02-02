@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: skip 1.6.0\n"
-"POT-Creation-Date: 2010-02-01 16:55+0900\n"
+"POT-Creation-Date: 2010-02-02 10:32+0900\n"
 "PO-Revision-Date: 2009-06-29 13:31+0900\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -183,6 +183,7 @@ msgstr ""
 #: app/controllers/admin/admin_module.rb:158
 #: app/controllers/admin/admin_module.rb:272
 #: app/controllers/admin/oauth_providers_controller.rb:25
+#: app/controllers/admin/board_entries_controller.rb:39
 #: app/controllers/admin/user_profiles_controller.rb:35
 msgid "%{model} was successfully updated."
 msgstr ""
@@ -650,8 +651,8 @@ msgstr "Display order"
 #: app/models/admin/group_category.rb:28
 msgid "Admin::GroupCategory|Sort order description"
 msgstr ""
-"Provide the display order of this group category. The smallest will be "
-"shown on top."
+"Provide the display order of this group category. The smallest will be shown "
+"on top."
 
 #: app/models/admin/group_participation.rb:20
 msgid "Admin::GroupParticipation|Favorite"
@@ -1855,6 +1856,7 @@ msgstr ""
 #: app/views/admin/pictures/index.html.erb:19
 #: app/views/admin/settings/_security.html.erb:12
 #: app/views/admin/board_entries/index.html.erb:35
+#: app/views/admin/board_entries/index.html.erb:36
 #: app/views/admin/share_files/index.html.erb:36
 #: app/views/admin/bookmarks/index.html.erb:19
 #: app/views/admin/groups/index.html.erb:33
@@ -2420,6 +2422,10 @@ msgstr ""
 msgid "Change Profile Picture"
 msgstr ""
 
+#: app/views/admin/board_entries/index.html.erb:36
+msgid "Change private"
+msgstr ""
+
 #: app/controllers/admin/users_controller.rb:171
 #: app/views/admin/users/edit.html.erb:14
 msgid "Change uid"
@@ -2636,8 +2642,8 @@ msgstr ""
 msgid "Create a new forum entry inheriting the privacy setting."
 msgstr ""
 
-#: app/controllers/groups_controller.rb:40
-#: app/controllers/groups_controller.rb:48
+#: app/controllers/groups_controller.rb:39
+#: app/controllers/groups_controller.rb:47
 #: app/views/mypage/_action_box.html.erb:10
 msgid "Create a new group"
 msgstr "Create a group"
@@ -3380,7 +3386,7 @@ msgstr ""
 msgid "Group information was successfully updated."
 msgstr ""
 
-#: app/controllers/groups_controller.rb:54
+#: app/controllers/groups_controller.rb:53
 msgid "Group was created successfully."
 msgstr ""
 
@@ -3469,7 +3475,7 @@ msgid "GroupParticipation|Waiting|true"
 msgstr ""
 
 #: app/helpers/application_helper.rb:352
-#: app/controllers/groups_controller.rb:63
+#: app/controllers/groups_controller.rb:62
 #: app/controllers/services_controller.rb:46
 #: app/controllers/group_controller.rb:339
 #: app/controllers/share_file_controller.rb:181
@@ -4328,8 +4334,8 @@ msgstr ""
 msgid "No matching entries found."
 msgstr ""
 
-#: app/controllers/groups_controller.rb:34
-#: app/controllers/user_controller.rb:113
+#: app/controllers/groups_controller.rb:33
+#: app/controllers/user_controller.rb:111
 msgid "No matching groups found."
 msgstr ""
 
@@ -5998,7 +6004,7 @@ msgstr ""
 msgid "There are no entries posted."
 msgstr ""
 
-#: app/controllers/user_controller.rb:170
+#: app/controllers/user_controller.rb:168
 msgid "There are no introductions."
 msgstr ""
 
@@ -6359,7 +6365,7 @@ msgstr ""
 msgid "User name not found."
 msgstr ""
 
-#: app/controllers/users_controller.rb:27
+#: app/controllers/users_controller.rb:28
 #: app/controllers/group_controller.rb:46
 msgid "User not found."
 msgstr ""
@@ -6624,7 +6630,7 @@ msgid "UserUid|User"
 msgstr ""
 
 #: app/helpers/application_helper.rb:351 app/helpers/user_helper.rb:53
-#: app/controllers/users_controller.rb:65
+#: app/controllers/users_controller.rb:66
 #: app/controllers/services_controller.rb:45
 msgid "Users"
 msgstr ""
@@ -7223,7 +7229,7 @@ msgstr ""
 msgid "[Hints on writing entries]"
 msgstr ""
 
-#: app/models/board_entry.rb:777
+#: app/models/board_entry.rb:787
 msgid "[Link does not exist...%s>]"
 msgstr ""
 
@@ -7480,6 +7486,8 @@ msgstr ""
 msgid "before_uid"
 msgstr ""
 
+#: app/controllers/admin/board_entries_controller.rb:28
+#: app/controllers/admin/board_entries_controller.rb:39
 #: app/controllers/board_entries_controller.rb:44
 #: app/controllers/board_entries_controller.rb:74
 #: app/controllers/board_entries_controller.rb:94 app/models/board_entry.rb:-
