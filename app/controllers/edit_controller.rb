@@ -93,12 +93,11 @@ class EditController < ApplicationController
       end
       current_user.custom.update_attributes(:editor_mode => params[:editor_mode])
 
-      message, new_trackbacks = @board_entry.send_trackbacks(current_user.belong_symbols, params[:trackbacks])
-      make_trackback_message(new_trackbacks)
+      @board_entry.send_trackbacks!(current_user, params[:trackbacks])
 
       @board_entry.send_contact_mails
 
-      flash[:notice] = _('Created successfully.') + message
+      flash[:notice] = _('Created successfully.')
       redirect_to @board_entry.get_url_hash
     else
       setup_layout @board_entry
@@ -209,12 +208,11 @@ class EditController < ApplicationController
     end
     current_user.custom.update_attributes(:editor_mode => params[:editor_mode])
 
-    message, new_trackbacks = @board_entry.send_trackbacks(current_user.belong_symbols, params[:trackbacks])
-    make_trackback_message(new_trackbacks)
+    @board_entry.send_trackbacks!(current_user, params[:trackbacks])
 
     @board_entry.send_contact_mails
 
-    flash[:notice] = _('Entry was successfully updated.') + message
+    flash[:notice] = _('Entry was successfully updated.')
     redirect_to @board_entry.get_url_hash
   rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => e
     setup_layout @board_entry
@@ -324,14 +322,6 @@ private
       entry.errors.add(:date, _("needs to be a valid date."))
     end
     entry.errors.empty?
-  end
-
-  def make_trackback_message(new_trackbacks)
-    new_trackbacks.each do |trackback|
-      next if trackback.board_entry.user_id == session[:user_id]
-      board_entry = trackback.board_entry
-      SystemMessage.create_message :message_type => 'TRACKBACK', :user_id => board_entry.user_id, :message_hash => {:board_entry_id => board_entry.id}
-    end
   end
 
   def authorize_to_edit_board_entry? entry

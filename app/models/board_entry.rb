@@ -590,31 +590,21 @@ class BoardEntry < ActiveRecord::Base
     UserReading.create_or_update(login_user_id, self.id)
   end
 
-  # 話題の信号を送りつける
-  def send_trackbacks(login_user_symbols, trackback_target_str)
-    message = ""
-    new_trackbacks = []
-    ids = trackback_target_str.split(/,/).map {|tb| tb.strip }
-    if ids.length > 0
-      options = { :ids => ids }
-      find_params = BoardEntry.make_conditions(login_user_symbols, options)
-      entries = BoardEntry.find(:all,
-                                :conditions => find_params[:conditions],
-                                :include => find_params[:include])
-      if entries.length != ids.length
-        message = _("(Unknown topic entry found. However, this has been ignored)")
-      end
+  def send_trackbacks!(user, comma_tb_ids)
+    tb_entries = BoardEntry.accessible(user).id_is(comma_tb_ids.split(',').map(&:strip))
+    current_tb_entries = to_entry_trackbacks.map(&:board_entry)
+    # 登録済みのトラバが今回未送信(=> 削除する)
+    to_entry_trackbacks.each do |entry_trackback|
+      entry_trackback.destroy if (current_tb_entries - tb_entries).include?(entry_trackback.board_entry)
+    end
 
-      entries.each do |entry|
-        entry_trackbacks = EntryTrackback.find_all_by_board_entry_id_and_tb_entry_id(entry.id, self.id)
-        if entry_trackbacks.length > 0
-          entry_trackbacks.each {|tb| tb.save }
-        else
-          new_trackbacks << entry.entry_trackbacks.create({ :tb_entry_id => self.id })
-        end
+    # 未登録のトラバ(=> 作成する)
+    (tb_entries - current_tb_entries).each do |entry|
+      to_entry_trackbacks.create!(:board_entry_id => entry.id)
+      unless entry.user_id == user.id
+        SystemMessage.create_message :message_type => 'TRACKBACK', :user_id => entry.user_id, :message_hash => {:board_entry_id => entry.id}
       end
     end
-    return message, new_trackbacks
   end
 
   # 話題にしてくれた記事一覧を返す

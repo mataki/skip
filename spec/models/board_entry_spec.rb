@@ -266,6 +266,35 @@ describe BoardEntry, '#send_contact_mails' do
   end
 end
 
+describe BoardEntry, '#send_trackbacks!' do
+  before do
+    @sato = create_user(:user_options => {:name => 'Sato'}, :user_uid_options => {:uid => 'sato'})
+    @board_entry = create_board_entry
+    @trackback_entry_1 = create_board_entry
+    @trackback_entry_2 = create_board_entry
+  end
+  describe '2つの記事のidを話題の記事として指定する場合' do
+    it '2件のentry_trackbacksが作成されること' do
+      lambda do
+        @board_entry.send_trackbacks!(@sato, [@trackback_entry_1, @trackback_entry_2].map(&:id).join(','))
+      end.should change(EntryTrackback, :count).by(2)
+    end
+  end
+  describe '2件のentry_trackbacksが作成済みの場合' do
+    before do
+      @board_entry.to_entry_trackbacks.create(:board_entry_id => @trackback_entry_1.id)
+      @board_entry.to_entry_trackbacks.create(:board_entry_id => @trackback_entry_2.id)
+    end
+    describe '1つの記事のidを話題の記事として指定する場合' do
+      it '1件のentry_trackbacksが削除されること' do
+        lambda do
+          @board_entry.send_trackbacks!(@sato, @trackback_entry_1.id.to_s)
+        end.should change(EntryTrackback, :count).by(-1)
+      end
+    end
+  end
+end
+
 describe BoardEntry, '#trackback_entries' do
   before do
     @entry = stub_model(BoardEntry)
