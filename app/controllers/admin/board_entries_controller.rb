@@ -25,9 +25,19 @@ class Admin::BoardEntriesController < Admin::ApplicationController
     @board_entry.destroy
 
     respond_to do |format|
-      flash[:notice] = _("%{model} was successfully deleted.") % {:model => 'board entry'}
+      flash[:notice] = _("%{model} was successfully deleted.") % {:model => _('board entry')}
       format.html { redirect_to(index_url) }
       format.xml  { head :ok }
+    end
+  end
+
+  def close
+    @board_entry = BoardEntry.find(params[:id])
+    @board_entry.be_close!
+
+    respond_to do |format|
+      flash[:notice] = _("%{model} was successfully updated.") % {:model => _('board entry')}
+      format.html { redirect_to(index_url) }
     end
   end
 end

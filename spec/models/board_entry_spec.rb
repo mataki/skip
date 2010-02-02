@@ -524,3 +524,52 @@ describe BoardEntry, ".aim_type" do
     result.should be_include(@entries['question'])
   end
 end
+
+describe BoardEntry, '#be_close!' do
+  subject do
+    creater = create_user(:user_options => {:name => 'Sato'}, :user_uid_options => {:uid => 'sato'})
+    @board_entry = create_board_entry(:publication_type => 'protected', :entry_type => @entry_type, :symbol => @owner_symbol, :user_id => creater.id)
+    @board_entry.entry_publications.create!(:symbol => 'uid:symbol')
+    @board_entry.entry_editors.create!(:symbol => 'uid:symbol')
+    @board_entry.be_close!
+    @board_entry.reload
+    @board_entry
+  end
+
+  describe 'ブログの場合' do
+    before do
+      @entry_type = 'DIARY'
+      @owner_symbol = 'uid:sato'
+    end
+    it '公開範囲がprivateになること' do
+      subject.publication_type.should == 'private'
+    end
+
+    it '関連するentry_publicationsが削除されること' do
+      subject.entry_publications.should be_empty
+    end
+
+    it '関連するentry_editorsが削除されること' do
+      subject.entry_editors.should be_empty
+    end
+  end
+
+  describe 'フォーラムの場合' do
+    before do
+      @entry_type = 'GROUP_BBS'
+      group = create_group(:gid => 'skip_group', :name => 'SKIPグループ')
+      @owner_symbol = 'gid:skip_group'
+    end
+    it '公開範囲が変化しないこと' do
+      subject.publication_type.should == 'protected'
+    end
+
+    it '関連するentry_publicationsが削除されないこと' do
+      subject.entry_publications.should_not be_empty
+    end
+
+    it '関連するentry_editorsが削除されないこと' do
+      subject.entry_editors.should_not be_empty
+    end
+  end
+end

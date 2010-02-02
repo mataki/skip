@@ -736,6 +736,16 @@ class BoardEntry < ActiveRecord::Base
     symbol_type == 'gid'
   end
 
+  def be_close!
+    return false unless diary?
+    self.publication_type = 'private'
+    self.publication_symbols_value = ''
+    self.save!
+    self.entry_publications.clear
+    self.entry_editors.clear
+    true
+  end
+
 private
   def generate_next_user_entry_no
     entry = BoardEntry.find(:first,

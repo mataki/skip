@@ -78,7 +78,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.namespace "admin" do |admin_map|
     admin_map.root :controller => 'settings', :action => 'index', :tab => 'main'
-    admin_map.resources :board_entries, :only => [:index, :show, :destroy] do |board_entry|
+    admin_map.resources :board_entries, :only => [:index, :show, :destroy], :member => {:close => :put} do |board_entry|
       board_entry.resources :board_entry_comments, :only => [:index, :destroy]
     end
     admin_map.resources :share_files, :only => [:index, :destroy], :member => [:download]

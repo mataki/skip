@@ -14,5 +14,5 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class EntryEditor < ActiveRecord::Base
-    belongs_to :board_entry
+  belongs_to :board_entry
 end
