@@ -124,11 +124,6 @@ class MypageController < ApplicationController
       @user_custom = UserCustom.find_by_user_id(@user.id) || UserCustom.new
     when "manage_message"
       @unsubscribes = UserMessageUnsubscribe.get_unscribe_array(session[:user_id])
-    # TODO #924で画面からリンクをなくした。1.4時点で復活しない場合は削除する
-    when "record_mail"
-      set_data_for_record_mail
-    when "record_post"
-      set_data_for_record_blog
     else
       render_404 and return
     end
@@ -624,27 +619,6 @@ class MypageController < ApplicationController
         feeds << feed
       end
     end
-  end
-
-  # TODO #924で画面からリンクをなくした。1.4時点で復活しない場合は削除する
-  def set_data_for_record_blog
-    login_user_id = session[:user_id]
-
-    options = {}
-    options[:writer_id] = login_user_id
-    options[:keyword] = params[:keyword]
-    options[:category] = params[:category]
-    find_params = BoardEntry.make_conditions(current_user.belong_symbols, options)
-
-    @entries = BoardEntry.scoped(
-      :conditions => find_params[:conditions],
-      :include => find_params[:include]
-    ).order_new.paginate(:page => params[:page], :per_page => 20)
-
-    @symbol2name_hash = BoardEntry.get_symbol2name_hash @entries
-
-    find_params = BoardEntry.make_conditions(current_user.belong_symbols, {:writer_id => login_user_id})
-    @categories = BoardEntry.get_category_words(find_params)
   end
 
   def get_url_hash action, options = {}
