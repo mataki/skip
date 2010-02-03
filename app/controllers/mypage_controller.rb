@@ -328,14 +328,8 @@ class MypageController < ApplicationController
     if @user_custom.update_attributes(params[:user_custom])
       setup_custom_cookies(@user_custom)
       flash[:notice] = _('Updated successfully.')
-      unless params[:go_to_root] == "true"
-        redirect_to :action => 'manage', :menu => 'manage_customize'
-      else
-        redirect_to root_path
-      end
-    else
-      render :partial => 'manage_customize', :layout => "layout"
     end
+    redirect_to root_path
   end
 
   # [最近]を表す日数
