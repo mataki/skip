@@ -15,7 +15,7 @@
 
 class HistoriesController < ApplicationController
   layout 'wiki'
-  before_filter :secret_checker
+  before_filter :require_wiki_enabled
 
   def index
     @current_page = Page.find_by_title(params[:wiki_id])

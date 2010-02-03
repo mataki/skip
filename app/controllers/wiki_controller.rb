@@ -15,7 +15,7 @@
 
 class WikiController < ApplicationController
   layout "wiki"
-  before_filter :secret_checker
+  before_filter :require_wiki_enabled
 
   def show
     @current_page = Page.find_by_title(params[:id])

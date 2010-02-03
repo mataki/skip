@@ -308,7 +308,7 @@ protected
     openid_url.gsub(identifier(''), '')
   end
 
-  def secret_checker
+  def require_wiki_enabled
     if !SkipEmbedded::InitialSettings['wiki'] or !SkipEmbedded::InitialSettings['wiki']['use']
       redirect_to root_url
     end
