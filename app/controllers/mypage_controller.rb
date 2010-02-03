@@ -120,8 +120,6 @@ class MypageController < ApplicationController
     when "manage_portrait"
       @picture = current_user.picture || current_user.build_picture
       render :template => 'pictures/new', :layout => 'layout' and return
-    when "manage_customize"
-      @user_custom = UserCustom.find_by_user_id(@user.id) || UserCustom.new
     when "manage_message"
       @unsubscribes = UserMessageUnsubscribe.get_unscribe_array(session[:user_id])
     else
