@@ -19,3 +19,4 @@ pkg/*
 *#*#
 *.#*
 webrat-*.html
+rerun.txt
