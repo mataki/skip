@@ -55,10 +55,12 @@
         <th><%=h s_('User|Last authenticated at') %></th>
         <td><%=h current_target_user.last_authenticated_at.blank? ? '' : current_target_user.last_authenticated_at.strftime("%Y/%m/%d %H:%M:%S") %></td>
       </tr>
+      <% if Admin::Setting.enable_password_periodic_change && !current_user.password_expires_at.blank? -%>
       <tr>
         <th><%=h s_('User|Password expires at') %></th>
         <td><%=h current_target_user.password_expires_at.blank? ? '' : current_target_user.password_expires_at.strftime("%Y/%m/%d %H:%M:%S") %></td>
       </tr>
+      <% end -%>
     <% end -%>
     </table>
 
