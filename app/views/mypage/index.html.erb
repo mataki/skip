@@ -106,7 +106,7 @@
     </div>
 
     <div class="ui-corner-all" id="custom_display_wrapper">
-      <h2 class="ui-corner-top">
+      <h2>
         <% if current_user.custom.display_entries_format == "tabs" %>
           <%= icon_tag("tab") %><%= _('display tabs') %>
           <%= icon_tag("application_tile_vertical") + link_to(_('display flat'), {:action => 'update_customize', :user_custom => {"display_entries_format" => "flat"}, :go_to_root => "true"}, :method => :post) %>
