@@ -27,6 +27,7 @@ class Notice < ActiveRecord::Base
   end
 
   def self.track_of_bookmarks_count user
+    bookmark_count = 0
     if (bookmarks = Bookmark.find(:all,
                                   :conditions => ["bookmark_comments.user_id = ? and url like '/page/%'", user.id],
                                   :include => [:bookmark_comments])).size > 0
@@ -35,10 +36,9 @@ class Notice < ActiveRecord::Base
                               :conditions => ["user_readings.read = ? and user_id = ?", false, user.id])
       urls.map! {|item| '/page/'+item.board_entry_id.to_s }
 
-      bookmark_count = 0
       bookmarks.each { |bookmark| bookmark_count+=1 if urls.include?(bookmark.url) } if urls.size > 0
-      bookmark_count
     end
+    bookmark_count
   end
 
   def unread_count user
