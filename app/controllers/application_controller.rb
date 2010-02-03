@@ -40,7 +40,7 @@ class ApplicationController < ActionController::Base
 
   init_gettext "skip" if defined? GetText
 
-  helper_method :scheme, :endpoint_url, :identifier, :checkid_request, :extract_login_from_identifier, :logged_in?, :current_user, :current_target_user, :current_target_group, :current_participation, :owner_entries_path, :bookmark_enabled?
+  helper_method :scheme, :endpoint_url, :identifier, :checkid_request, :extract_login_from_identifier, :logged_in?, :current_user, :current_target_user, :current_target_group, :current_participation, :owner_entries_path, :bookmark_enabled?, :notice_entry_enabled?
 protected
   include InitialSettingsHelper
   # アプリケーションで利用するセッションの準備をする
@@ -314,6 +314,10 @@ protected
 
   def require_bookmark_enabled
     redirect_to root_url unless bookmark_enabled?
+  end
+
+  def notice_entry_enabled?
+    SkipEmbedded::InitialSettings['notice_entry'] && SkipEmbedded::InitialSettings['notice_entry']['enable']
   end
 
   def require_wiki_enabled

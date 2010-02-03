@@ -714,6 +714,14 @@ class BoardEntry < ActiveRecord::Base
     end
   end
 
+  def self.enable_aim_types
+    if SkipEmbedded::InitialSettings['notice_entry'] && SkipEmbedded::InitialSettings['notice_entry']['enable']
+      AIM_TYPES
+    else
+      AIM_TYPES - ['notice']
+    end
+  end
+
   # TODO ShareFileと統合したい
   def owner_is_user?
     symbol_type, symbol_id = SkipUtil.split_symbol self.symbol

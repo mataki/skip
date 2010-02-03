@@ -23,7 +23,7 @@ div.input_line textarea {
 
 <div class="input_line">
   <div class="input_label"><%= label(:board_entry, :aim_type, _('Types')) %></div>
-  <% aim_types = BoardEntry::AIM_TYPES.map{|type| [s_("BoardEntry|Aim type|Desc|#{type}"), type]} -%>
+  <% aim_types = BoardEntry.enable_aim_types.map{|type| [s_("BoardEntry|Aim type|Desc|#{type}"), type]} -%>
   <div class="input_value"><%= select :board_entry, :aim_type, options_for_select(aim_types, @board_entry.aim_type) %></div>
   <div class="clear_left"></div>
 </div>
