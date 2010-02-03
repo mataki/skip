@@ -18,6 +18,7 @@ class BookmarkController < ApplicationController
   include UserHelper
   verify :method => :post, :only => [:update, :destroy, :ado_set_stared ], :redirect_to => { :action => :show }
 
+  before_filter :require_bookmark_enabled
   before_filter :check_params, :only => [:new, :new_without_bookmarklet]
   before_filter :load_user, :only => [:list]
 

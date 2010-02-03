@@ -14,6 +14,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class BookmarksController < ApplicationController
+  before_filter :require_bookmark_enabled
   before_filter :setup_layout
 
   def index

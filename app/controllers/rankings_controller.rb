@@ -14,6 +14,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class RankingsController < ApplicationController
+  before_filter :require_bookmark_enabled, :only => %w(bookmark)
   before_filter :setup_layout
 # TODO 外部からのランキング取り込み機能は一旦ペンディングなのでコメントアウト
 #  def update
