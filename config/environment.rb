@@ -47,20 +47,20 @@ Rails::Initializer.run do |config|
   # config.active_record.schema_format = :ruby
 
   # See Rails::Configuration for more options
-  config.gem "fastercsv", :version => '>=1.5.0'
-  config.gem "json", :lib => "json/add/rails", :version => '>=1.2.0'
+  config.gem 'openskip-skip_embedded', :lib => 'skip_embedded', :version => '0.9.19', :source => 'http://gems.github.com'
+  config.gem 'will_paginate', :lib => 'will_paginate', :version=> '2.3.12', :source => 'http://gemcutter.org'
+  config.gem "fastercsv", :version => '1.5.1'
+  config.gem "json", :lib => "json/add/rails", :version => '1.2.0'
+  config.gem "maedana-ar_mailer", :lib => 'action_mailer/ar_mailer', :source => 'http://gemcutter.org'
   config.gem 'locale', :version => '2.0.4'
   config.gem 'locale_rails', :version => '2.0.4'
   config.gem 'gettext', :version => '2.0.4'
   config.gem 'gettext_activerecord', :version => '2.0.4'
   config.gem 'gettext_rails', :version => '2.0.4'
-  config.gem 'openskip-skip_embedded', :lib => 'skip_embedded', :version => '>=0.9.19', :source => 'http://gems.github.com'
-  config.gem 'mislav-will_paginate', :lib => 'will_paginate', :version=> '>=2.3.6', :source => 'http://gems.github.com/'
-  config.gem "maedana-ar_mailer", :lib => 'action_mailer/ar_mailer', :source => 'http://gemcutter.org'
-  config.gem "feed-normalizer", :version => '1.5.1'
-  config.gem "searchlogic", :version => '2.4.1'
-  config.gem "nokogiri", :version => '>=1.4.1'
-  config.gem "sanitize", :version => '>=1.2.0.dev.20091104'
+  config.gem "feed-normalizer", :version => '1.5.2'
+  config.gem "searchlogic", :version => '2.4.7'
+  config.gem "nokogiri", :version => '1.4.1'
+  config.gem "sanitize", :version => '1.2.0'
   config.gem 'diff-lcs', :lib => 'diff/lcs', :version => '1.1.2'
 end
 
