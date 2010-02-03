@@ -19,7 +19,7 @@ class UsersController < ApplicationController
   # tab_menu
   def index
     @search = User.tagged(params[:tag_words], params[:tag_select]).profile_like(params[:profile_master_id], params[:profile_value]).order_last_accessed.search(params[:search])
-    @search.exclude_retired ||= 1
+    @search.exclude_retired ||= '1'
     @users = @search.paginate_without_retired_skip(:all, {:page => params[:page]})
 
     # 検索条件や表示順の条件によって、user_uidsがMASTERかNICKNAMEのどちらかしたロードされない。
