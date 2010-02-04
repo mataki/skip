@@ -33,8 +33,4 @@ module MypageHelper
     @@menus << {:name => _("Email Notification"), :menu => "manage_message" } if SkipEmbedded::InitialSettings['mail']['show_mail_function']
     get_menu_items @@menus, selected_menu, "manage"
   end
-
-  def skin_themes
-    %w(silver sakura pink green snow tile orange blue)
-  end
 end

@@ -357,6 +357,11 @@ module ApplicationHelper
     links << content_tag(:span, search_links.join(' '), :class => 'search_links')
   end
 
+  def skin_themes
+    %w(tile blue green silver snow sakura pink orange)
+  end
+
+
 private
   def relative_url_root
     ActionController::Base.relative_url_root || ''

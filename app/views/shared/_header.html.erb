@@ -72,6 +72,12 @@
 <div id="global_links_wrapper">
   <div id="global_links">
     <%= global_links if current_user && current_user.active? %>
+    <span class="other_links">
+      <% skin_themes.each do |skin| -%>
+        <%= link_to(image_tag("../stylesheets/skins/#{skin}/color.png", :size => "15x15", :title => "#{skin}"), {:action => 'update_customize', :user_custom => {"theme" => skin}}, :method => :post) %>
+      <% end -%>
+    </span>&nbsp;
+
   </div>
   <% unless SkipEmbedded::InitialSettings['enable_ad_for_oss'] == "lovelyskip" -%>
     <div style="margin-top: 0.5em; padding-top: 0.5em; border-top: 1px solid silver;">

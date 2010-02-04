@@ -37,16 +37,6 @@
           <br class="clear_left" />
         </div>
 
-        <% if current_target_user == current_user -%>
-          <div class="skin_theme">
-            <% skin_themes.each do |skin| -%>
-              <span>
-                <%= link_to(image_tag("../stylesheets/skins/#{skin}/back.png", :size => "20x20", :title => "#{skin}"), {:action => 'update_customize', :user_custom => {"theme" => skin}}, :method => :post) %>
-              </span>&nbsp;
-            <% end -%>
-          </div>
-        <% end -%>
-
         <div id="tab_menu"><%= generate_tab_menu(user_tab_menu_source(current_target_user)) %></div>
         <br class="clear_left" />
       </div>
