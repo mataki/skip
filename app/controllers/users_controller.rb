@@ -18,13 +18,13 @@ class UsersController < ApplicationController
 
   # tab_menu
   def index
-    @search = User.tagged(params[:tag_words], params[:tag_select]).profile_like(params[:profile_master_id], params[:profile_value]).order_last_accessed.search(params[:search])
+    @search = User.tagged(params[:tag_words], params[:tag_select]).profile_like(params[:profile_master_id], params[:profile_value]).descend_by_user_access_last_access.search(params[:search])
     @search.exclude_retired ||= '1'
-    @users = @search.paginate_without_retired_skip(:all, {:page => params[:page]})
+    user_ids = @search.paginate_without_retired_skip(:all, {:include => %w(user_access), :page => params[:page]}).map(&:id)
+    # 上記のみでは検索条件や表示順の条件によって、user_uidsがMASTERかNICKNAMEのどちらかしたロードされない。
+    # そのためviewで正しく描画するためにidのみ条件にして取得し直す
+    @users = User.id_is(user_ids).descend_by_user_access_last_access.paginate_without_retired_skip(:all, {:include => %w(user_access user_uids picture), :page => params[:page]})
 
-    # 検索条件や表示順の条件によって、user_uidsがMASTERかNICKNAMEのどちらかしたロードされない。
-    # そのためviewで正しく描画するためにreloadしておく
-    @users.each{|u| u.user_uids.reload}
     flash.now[:notice] = _('User not found.') if @users.empty?
     @tags = ChainTag.popular_tag_names
     params[:tag_select] ||= "AND"
