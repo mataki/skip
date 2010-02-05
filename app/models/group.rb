@@ -16,6 +16,7 @@
 class Group < ActiveRecord::Base
   include SkipEmbedded::LogicalDestroyable
 
+  belongs_to :tenant
   has_many :group_participations, :dependent => :destroy
   has_many :users, :through => :group_participations, :conditions => ['group_participations.waiting = ?', false]
   belongs_to :group_category

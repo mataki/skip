@@ -13,7 +13,7 @@
       <% if enable_activate? -%>
       <div class="login-box ui-corner-all">
         <p><%= _('Signup') %></p>
-        <div style="text-align: center; font-weight: bold; font-size: 14px;"><%= link_to _('Register your profile and start using %s') % Admin::Setting.abbr_app_title, activate_url %></div>
+        <div style="text-align: center; font-weight: bold; font-size: 14px;"><%= link_to _('Register your profile and start using %s') % Admin::Setting.abbr_app_title, activate_tenant_platform_url(current_tenant) %></div>
       </div>
       <% end -%>
     </div>

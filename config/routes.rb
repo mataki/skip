@@ -1,10 +1,17 @@
 ActionController::Routing::Routes.draw do |map|
 
-#  map.root    :controller => 'mypage', :action => 'index'
-
   map.resources :tenants, :only => [] do |tenant|
-    tenant.resource :mypage, :only => %w(show)
-    tenant.resource :platform, :only => %(show), :member => {:login => :post, :logout => :any}
+    tenant.root :controller => 'mypage', :action => 'index'
+    tenant.resource :mypage, :only => []
+    tenant.resource :platform, :only => %(show),
+      :member => {
+        :login => :post,
+        :logout => :any,
+        :activate => :any,
+        :forgot_password => :any,
+        :reset_password => :any,
+        :signup => :any
+      }
   end
 
 #  # TODO users配下に移す

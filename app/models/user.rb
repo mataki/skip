@@ -23,6 +23,8 @@ class User < ActiveRecord::Base
   cattr_reader :per_page
   @@per_page = 40
 
+  belongs_to :tenant
+
   has_many :group_participations, :dependent => :destroy
   has_one :picture, :conditions => ['pictures.active = ?', true], :dependent => :destroy
   has_many :pictures, :dependent => :destroy
@@ -223,8 +225,8 @@ class User < ActiveRecord::Base
     user_oauth_accesses.delete_all if retired?
   end
 
-  def self.auth(code_or_email, password, key_phrase = nil)
-    unless user = find_by_code_or_email_with_key_phrase(code_or_email, key_phrase)
+  def self.auth(tenant, code_or_email, password, key_phrase = nil)
+    unless user = tenant.users.find_by_code_or_email_with_key_phrase(code_or_email, key_phrase)
       result, result_user = false, nil
     else
       if user.unused?

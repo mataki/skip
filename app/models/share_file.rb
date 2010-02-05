@@ -23,6 +23,7 @@ class ShareFile < ActiveRecord::Base
   attr_accessor :file
   attr_writer :accessed_user
 
+  belongs_to :tenant
   belongs_to :user
   has_many :tags, :through => :share_file_tags
   has_many :share_file_tags, :dependent => :destroy

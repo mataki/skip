@@ -26,6 +26,7 @@ class BoardEntry < ActiveRecord::Base
   include Publication
   include ActionController::UrlWriter
 
+  belongs_to :tenant
   belongs_to :user
   has_many :tags, :through => :entry_tags
   has_many :entry_tags, :dependent => :destroy

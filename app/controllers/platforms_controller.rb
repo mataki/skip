@@ -13,7 +13,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class PlatformController < ApplicationController
+class PlatformsController < ApplicationController
   layout 'not_logged_in'
   skip_before_filter :sso, :login_required, :prepare_session
   skip_before_filter :verify_authenticity_token, :only => :reset_openid
@@ -23,12 +23,16 @@ class PlatformController < ApplicationController
 
   # OpenIDのSSOの際にリダイレクトしているため、GETを許可する必要がある
   # 直接OpenIDの処理を行なうようにすれば、POSTのみでもOKになる
-  verify :method => :post, :only => %w(login), :redirect_to => {:action => :index} if SkipEmbedded::InitialSettings["login_mode"] != "rp"
+  verify :method => :post, :only => %w(login), :redirect_to => {:action => :show} if SkipEmbedded::InitialSettings["login_mode"] != "rp"
 
-  def index
-    response.headers['X-XRDS-Location'] = server_url(:format => :xrds, :protocol => scheme)
+  def show
+    # TODO OpenID絡みの部分。後で消すか修正する
+    # response.headers['X-XRDS-Location'] = server_url(:format => :xrds, :protocol => scheme)
     img_files = Dir.glob(File.join(RAILS_ROOT, "public", "custom", "images", "titles", "background*.{jpg,png,jpeg}"))
     @img_name = File.join("titles", File.basename(img_files[rand(img_files.size)]))
+    respond_to do |format|
+      format.html { render 'index' }
+    end
   end
 
   def require_login
@@ -266,7 +270,7 @@ class PlatformController < ApplicationController
 
   def redirect_to_return_to_or_root(return_to = params[:return_to])
     return_to = return_to ? URI.encode(return_to) : nil
-    redirect_to (return_to and !return_to.empty?) ? return_to : root_url
+    redirect_to (return_to and !return_to.empty?) ? return_to : tenant_root_url(current_tenant)
   end
 
   def create_user_params(fetched)
@@ -305,7 +309,7 @@ class PlatformController < ApplicationController
   def login_with_password
     logout_killing_session!([:request_token])
     if params[:login]
-      User.auth(params[:login][:key], params[:login][:password], params[:login][:keyphrase]) do |result, user|
+      User.auth(current_tenant, params[:login][:key], params[:login][:password], params[:login][:keyphrase]) do |result, user|
         if result
           self.current_user = user
           logger.info(current_user.to_s_log('[Login successful with password]'))
