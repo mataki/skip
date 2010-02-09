@@ -163,6 +163,7 @@ class ShareFileController < ApplicationController
     end
 
     @search = ShareFile.accessible(current_user).owned(owner)
+    @search = @search.tagged(params[:category], "AND") if params[:category]
     @search =
       if params[:sort_type] == "file_name"
         @search.descend_by_file_name.search(params[:search])
