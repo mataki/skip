@@ -35,7 +35,6 @@ describe MypageController, 'mypage > home 関連' do
       @current_user_info = {:using_day => 1}
       @current_user.stub!(:info).and_return(@current_user_info)
       controller.stub!(:recent_day).and_return(7)
-      controller.stub!(:get_entry_count)
       controller.stub!(:mail_your_messages)
       controller.stub!(:find_questions_as_locals)
       controller.stub!(:find_access_blogs_as_locals)
@@ -51,13 +50,6 @@ describe MypageController, 'mypage > home 関連' do
       assigns[:year].should == 2009
       assigns[:month].should == 1
       assigns[:day].should == 2
-    end
-    it '指定月の記事が存在する日をキー、記事数を値としたハッシュが設定されること' do
-      controller.should_receive(:parse_date).and_return([2009, 1, 2])
-      @entry_count_hash = {}
-      controller.should_receive(:get_entry_count).with(2009, 1).and_return(@entry_count_hash)
-      get :index
-      assigns[:entry_count_hash].should == @entry_count_hash
     end
     it '最近登録されたグループが設定されること' do
       @recent_groups = [stub_model(Group)]

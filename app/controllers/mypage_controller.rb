@@ -40,7 +40,6 @@ class MypageController < ApplicationController
     #  right side area
     # ============================================================
     @year, @month, @day = parse_date
-    @entry_count_hash = get_entry_count(@year, @month)
     @recent_groups =  Group.active.recent(recent_day).order_recent.limit(5)
     @recent_users = User.recent(recent_day).order_recent.limit(5) - [current_user]
 
@@ -616,26 +615,6 @@ class MypageController < ApplicationController
   def get_url_hash action, options = {}
     login_user_symbol_type, login_user_symbol_id = Symbol.split_symbol(session[:user_symbol])
     { :controller => 'user', :action => action, :uid => login_user_symbol_id }.merge options
-  end
-
-  # 月の中で記事が含まれている日付と記事数のハッシュと、
-  # 引数は、指定の年と月
-  def get_entry_count year, month
-    find_params = BoardEntry.make_conditions(current_user.belong_symbols, {:entry_type=>'DIARY'})
-    find_params[:conditions][0] << " and YEAR(date) = ? and MONTH(date) = ?"
-    find_params[:conditions] << year << month
-
-    entry_count = {}
-    entry_days = BoardEntry.find(:all,
-                                 :select => "DAY(date) as date_, count(board_entries.id) as count",
-                                 :order => "date_ ASC",
-                                 :group => "date_",
-                                 :conditions=> find_params[:conditions],
-                                 :joins => "LEFT OUTER JOIN entry_publications ON entry_publications.board_entry_id = board_entries.id")
-    entry_days.each do |item|
-      entry_count[item.date_.to_i] = item.count
-    end
-    return entry_count
   end
 
   def valid_list_types
