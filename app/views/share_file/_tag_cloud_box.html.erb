@@ -5,13 +5,15 @@
   <div class="box_space_body tag_cloud">
   <% tag_cloud tags do |name, count, css_class| -%>
     <%=
-        link_to_unless_current h(name), {:category => h(name)}, :class => "tag #{css_class}" do
+        link_to_unless_current h(name), params.merge({:category => h(name)}), :class => "tag #{css_class}" do
           content_tag :span, h(name), :class => "tag #{css_class}"
         end
     %>
     <span class="count">(<%= h count %>)</span>
   <% end -%>
   </div>
-  <div class="box_space_bottom"><a href="#" id="search_cancel"><%=_("[Cancel selection]")%></a></div>
+  <div class="box_space_bottom">
+    <%= link_to _("[Cancel selection]"), :controller => 'share_file', :action => 'list', :uid => current_target_user.uid, :sort_type => 'date' %>
+  </div>
 </div><!-- box_space -->
 <% end -%>
