@@ -14,7 +14,6 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class RankingsController < ApplicationController
-  before_filter :require_bookmark_enabled, :only => %w(bookmark)
   before_filter :setup_layout
 # TODO 外部からのランキング取り込み機能は一旦ペンディングなのでコメントアウト
 #  def update
@@ -81,39 +80,9 @@ class RankingsController < ApplicationController
     end
   end
 
-  def bookmark
-    # parse出来ないケースで例外を起こして現在時刻を設定するため
-    @target_date = Time.parse(params[:target_date], 0) rescue Time.now
-
-    popular_bookmarks = PopularBookmark.scoped(
-      :conditions => ["date = ?", @target_date],
-      :order =>'count DESC' ,
-      :include => [:bookmark]
-    ).all
-
-    @bookmarks = []
-    unless popular_bookmarks.empty?
-      popular_bookmarks.each do |popular_bookmark|
-        popular_bookmark.bookmark.bookmark_comments.each do |comment|
-          if comment.public
-            @bookmarks << popular_bookmark.bookmark
-            break
-          end
-        end
-      end
-      @last_updated = popular_bookmarks.first.created_on.strftime(_("%B %d %Y"))
-    else
-      flash.now[:notice] = _('No matched bookmark.')
-    end
-  end
-
   private
   def setup_layout
     @main_menu = @title = _('Rankings')
-
-# 一旦、非表示にし、機能は残しておく
-#    @tab_menu_source = [ {:label => _('Monthly Rankings'), :options => {:action => 'monthly'}},
-#                         {:label => _('Popular Bookmarks'), :options => {:action => 'bookmark'}} ]
   end
 
   def validate_time(year, month)

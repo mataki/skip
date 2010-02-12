@@ -26,21 +26,6 @@ class Notice < ActiveRecord::Base
     comment_count = BoardEntry.accessible(user).commented(user).unread(user).count
   end
 
-  def self.track_of_bookmarks_count user
-    bookmark_count = 0
-    if (bookmarks = Bookmark.find(:all,
-                                  :conditions => ["bookmark_comments.user_id = ? and url like '/page/%'", user.id],
-                                  :include => [:bookmark_comments])).size > 0
-      urls = UserReading.find(:all,
-                              :select => "board_entry_id",
-                              :conditions => ["user_readings.read = ? and user_id = ?", false, user.id])
-      urls.map! {|item| '/page/'+item.board_entry_id.to_s }
-
-      bookmarks.each { |bookmark| bookmark_count+=1 if urls.include?(bookmark.url) } if urls.size > 0
-    end
-    bookmark_count
-  end
-
   def unread_count user
     @unread_count ||= BoardEntry.accessible(user).owned(target).unread(user).count
   end

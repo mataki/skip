@@ -2,7 +2,7 @@
  # ブログ・フォーラムの詳細表示（１記事指定）
  # :locals => { :entry, :prev_entry, :next_entry, :tb_entries, :to_tb_entries, :editable,
  #              :checked_on,
- #              :entry_accesses, :total_count, :bookmark_comments_count }
+ #              :entry_accesses, :total_count }
 -%>
 
 <% content_for :stylesheet do -%>
@@ -228,10 +228,6 @@
         <a href="#" id="source_style_button"><%= icon_tag('page_white_code', :title => _('View Source')) %></a>
         <%= _('Action:') %>
         <%= link_to(icon_tag('page_edit', :title => _('Edit')), :controller=> "edit", :action => "edit", :id => entry) if editable  %>
-        <% if bookmark_enabled? -%>
-          <% new_bookmark_url_hash = {:controller => "bookmark", :action => "new_without_bookmarklet", :url => "/page/#{entry.id.to_s}", :title => entry.title} -%>
-          <%= link_to(icon_tag('tag_blue_add', :title => _('Bookmark this')), new_bookmark_url_hash, {:onclick => "sub_window_open('#{url_for(new_bookmark_url_hash)}', 'subwindow', 550, 400); return false;" }) %>
-        <% end -%>
         <%= link_to(icon_tag('control_play_blue', :title => _('Slide Show')), {:controller => "monta", :action => "execute_monta", :id => entry}, :target=>"_blank") if entry.editor_mode == 'hiki' %>
         <%= link_to(icon_tag('zoom', :title => _('Maximize!')), {:controller=> "board_entries", :action => "large", :id => entry}, :target=>"_blank") %>
         <%= _('Read/Unread:') %>
@@ -279,9 +275,6 @@
 </div>
 <div id="board_entry_control">
   <span class="evaluation">
-    <% if bookmark_comments_count > 0 -%>
-      <%= link_to(n_("[Bookmarked by: %d member]", "[Bookmarked by: %d members]", bookmark_comments_count) % bookmark_comments_count,{:controller =>'bookmark', :action=>'show', :uri => "/page/" + entry.id.to_s}) %>
-    <% end -%>
     <span id="board_entry_point">
     <%= render(:partial => 'board_entries/board_entry_point', :locals => { :entry => entry }) %>
     </span>

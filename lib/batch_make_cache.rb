@@ -65,27 +65,6 @@ class BatchMakeCache < BatchBase
     end
   end
 
-  # ブックマーク用
-  def make_caches_bookmark(contents_type, cache_path)
-    bookmarks = load_not_cached_bookmarks
-    bookmarks.each do |bookmark|
-      contents = create_contents(:title => bookmark.title,
-                                 :body_lines => bookmark_body_lines(bookmark))
-
-      meta = create_meta(:contents_type => contents_type,
-                         :publication_symbols => bookmark_publication_symbols(bookmark).join(','),
-                         :link_url => "/bookmark/show/#{convert_bookmark_url(bookmark.url)}",
-                         :title => bookmark.title,
-                         :icon_type => 'tag_blue')
-
-      output_file(cache_path, contents_type, bookmark.id, contents, meta)
-    end
-  end
-
-  def convert_bookmark_url url
-    URI.encode( url, Regexp.new("[^#{URI::PATTERN::ALNUM}]") )
-  end
-
   # groupのサマリ用
   def make_caches_group(contents_type, cache_path)
     conditions =
@@ -229,41 +208,6 @@ class BatchMakeCache < BatchBase
     entry.entry_trackbacks.each do |trackback|
       body_lines << h(trackback.tb_entry.user.name)
       body_lines << trackback.tb_entry.title
-    end
-    body_lines
-  end
-
-  def load_not_cached_bookmarks
-    conditions =
-      if @border_time.is_a?(Time)
-        ["updated_on > ?", @border_time]
-      else
-        []
-      end
-    new_ids = BookmarkComment.find(:all, :select => "bookmark_id",
-                                   :conditions => conditions).map{|comment| comment.bookmark_id}
-    return [] if new_ids.empty?
-    Bookmark.find(:all, :include => [{:bookmark_comments => :user}], :conditions =>["bookmarks.id in (?)", new_ids.uniq])
-  end
-
-  def bookmark_publication_symbols(bookmark)
-    publication_symbols = bookmark.bookmark_comments.all?{|comment| !comment.public} ? [] : ["sid:allusers"]
-    bookmark.bookmark_comments.each do|comment|
-      publication_symbols << "uid:#{h(comment.user.uid)}"
-    end
-    publication_symbols
-  end
-
-  def bookmark_body_lines(bookmark)
-    body_lines = []
-    body_lines << h(bookmark.title)
-    body_lines << bookmark.url
-    bookmark.bookmark_comments.each do|comment|
-      next unless comment.public
-      body_lines << h(comment.updated_on.strftime("%Y年%m月%d日"))
-      body_lines << h(comment.user.name)
-      body_lines << h(comment.tags)
-      body_lines << h(comment.comment)
     end
     body_lines
   end

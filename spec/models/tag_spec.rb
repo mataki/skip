@@ -16,7 +16,7 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Tag do
-  fixtures :tags, :board_entries, :share_files, :bookmark_comments
+  fixtures :tags, :board_entries, :share_files
 
   # FIXME テスト汎用化。Fakerを使った形に出来ないか？
   STANDARD_TAG_NAMES = ["日記", "書評", "オフ", "ネタ", "ニュース"]

@@ -312,14 +312,6 @@ protected
     openid_url.gsub(identifier(''), '')
   end
 
-  def bookmark_enabled?
-    SkipEmbedded::InitialSettings['bookmark'] && SkipEmbedded::InitialSettings['bookmark']['enable']
-  end
-
-  def require_bookmark_enabled
-    redirect_to root_url unless bookmark_enabled?
-  end
-
   def notice_entry_enabled?
     SkipEmbedded::InitialSettings['notice_entry'] && SkipEmbedded::InitialSettings['notice_entry']['enable']
   end

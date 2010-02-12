@@ -283,12 +283,8 @@ module ApplicationHelper
     icon_tag(category.icon, options)
   end
 
-  def url_for_bookmark bookmark
-    url_for :controller => 'bookmark', :action => 'show', :uri => bookmark.escaped_url
-  end
-
   def header_logo_link(url = url_for(:controller => '/mypage', :action => 'index'))
-    "<div id=\"logo\">" + link_to(image_tag("#{root_url}custom/images/header_logo.png", :alt => h(Admin::Setting.abbr_app_title), :height => "45"), url) + "</div>"
+    "<div id=\"logo\">" + link_to(image_tag("#{tenant_root_url(current_tenant)}custom/images/header_logo.png", :alt => h(Admin::Setting.abbr_app_title), :height => "45"), url) + "</div>"
   end
 
   def favicon_include_tag
@@ -302,7 +298,7 @@ module ApplicationHelper
       link_to(h(p.setting.name), h(p.setting.root_url), :class => "underline_link")
     end
     unless application_links.empty?
-      application_links.unshift(link_to(Admin::Setting.abbr_app_title, root_url, :class => "underline_link"))
+      application_links.unshift(link_to(Admin::Setting.abbr_app_title, tenant_root_url(current_tenant), :class => "underline_link"))
       application_link = content_tag :div, :id => 'collaboration_apps_link' do
         application_links.join('&nbsp')
       end
@@ -319,7 +315,7 @@ module ApplicationHelper
       if footer_image_link_tag = SkipEmbedded::InitialSettings['footer_image_link_tag']
         s << content_tag(:div, footer_image_link_tag, :class => "powered_by")
       else
-        s << content_tag(:div, ("powered_by"+link_to(image_tag("#{root_url}custom/images/footer_logo.png"), h(Admin::Setting.footer_image_link_url))), :class => "powered_by")
+        s << content_tag(:div, ("powered_by"+link_to(image_tag("#{tenant_root_url(current_tenant)}custom/images/footer_logo.png"), h(Admin::Setting.footer_image_link_url))), :class => "powered_by")
       end
     end
   end
@@ -370,18 +366,6 @@ private
     split_mark =  "&gt;"
     procs.each { |value| text = BoardEntry.replace_symbol_link(text, value.first, value.last, split_mark) }
     return text
-  end
-
-  def link_to_bookmark_url(bookmark, options = {})
-    title = options[:title] || bookmark.title
-
-    if bookmark.is_type_page?
-      prefix = options[:without_icon] ? "" : icon_tag('user')
-      link_to("#{prefix} #{h title}", "#{relative_url_root}#{bookmark.escaped_url}", :title => title)
-    else
-      prefix = options[:without_icon] ? "" : icon_tag('world')
-      link_to "#{prefix} #{h truncate(title, :length => 115)}", bookmark.escaped_url, :title => title, :target => "_blank"
-    end
   end
 
   # 検索条件に使うプルダウン表示用

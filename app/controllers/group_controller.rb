@@ -75,8 +75,6 @@ class GroupController < ApplicationController
 
         @entry_accesses =  EntryAccess.find_by_entry_id @entry.id
         @total_count = @entry.state.access_count
-        bookmark = Bookmark.find(:first, :conditions =>["url = ?", "/page/"+@entry.id.to_s])
-        @bookmark_comments_count = bookmark ? bookmark.bookmark_comments_count : 0
       end
     else
       options[:category] = params[:category]

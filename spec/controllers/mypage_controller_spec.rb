@@ -98,12 +98,6 @@ describe MypageController, 'mypage > home 関連' do
       get :index
       assigns[:recent_bbs].should == @recent_bbs
     end
-    it '最新のブックマークが設定されること' do
-      @bookmarks = [stub_model(Bookmark)]
-      Bookmark.stub_chain(:publicated, :recent, :order_new, :limit => @bookmarks)
-      get :index
-      assigns[:bookmarks].should == @bookmarks
-    end
   end
 
   describe MypageController, 'GET #entries' do
@@ -630,7 +624,6 @@ describe MypageController, '#antenna_entry_title' do
     describe 'システムアンテナの場合' do
       it { @controller.send(:antenna_entry_title, stub('entry_antenna', :antenna => nil, :key => 'message')).should == 'Notices for you' }
       it { @controller.send(:antenna_entry_title, stub('entry_antenna', :antenna => nil, :key => 'comment')).should == 'Entries you have made comments'}
-      it { @controller.send(:antenna_entry_title, stub('entry_antenna', :antenna => nil, :key => 'bookmark')).should == 'Entries bookmarked by yourself' }
       it { @controller.send(:antenna_entry_title, stub('entry_antenna', :antenna => nil, :key => 'group')).should == 'List of unread entries' }
     end
     describe 'システムアンテナではない場合' do

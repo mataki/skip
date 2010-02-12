@@ -19,8 +19,7 @@
                  :checked_on => @checked_on,
                  :editable => @editable,
                  :entry_accesses => @entry_accesses,
-                 :total_count => @total_count,
-                 :bookmark_comments_count => @bookmark_comments_count }) %>
+                 :total_count => @total_count }) %>
   <% elsif @entries -%>
     <% title = (@year && @month) ?  _("[Archive of %{month}/%{year}]") % {:year => h(@year), :month => h(@month)} : _('Entries') -%>
     <%= render :partial => "entries/topix_entries_with_sortable_pagination", :locals => { :title => title, :entries => @entries } %>

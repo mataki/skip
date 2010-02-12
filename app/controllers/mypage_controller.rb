@@ -65,10 +65,6 @@ class MypageController < ApplicationController
     @timelines = find_timelines_as_locals({:per_page => per_page}) if current_user.custom.display_entries_format == 'tabs'
     @recent_bbs = recent_bbs
 
-    # ============================================================
-    #  main area bookmarks
-    # ============================================================
-    @bookmarks = Bookmark.publicated.recent(10).order_new.limit(5)
   end
 
   # mypage > profile
@@ -95,11 +91,6 @@ class MypageController < ApplicationController
   # mypage > group
   def group
     redirect_to get_url_hash('group')
-  end
-
-  # mypage > bookmark
-  def bookmark
-    redirect_to get_url_hash('bookmark')
   end
 
   # mypage > trace(足跡)
@@ -372,7 +363,7 @@ class MypageController < ApplicationController
           raise ActiveRecord::RecordNotFound
         end
       else
-        if %w(message comment bookmark joined_group).include?(key)
+        if %w(message comment joined_group).include?(key)
           SystemAntennaEntry.new(current_user, key, read)
         else
           raise ActiveRecord::RecordNotFound
@@ -414,7 +405,6 @@ class MypageController < ApplicationController
       scope = case
               when @key == 'message'  then BoardEntry.accessible(@current_user).notice
               when @key == 'comment'  then BoardEntry.accessible(@current_user).commented(@current_user)
-              when @key == 'bookmark' then scope_for_entries_by_system_antenna_bookmark
               when @key == 'joined_group'    then scope_for_entries_by_system_antenna_group
               end
 
@@ -433,22 +423,6 @@ class MypageController < ApplicationController
     end
 
     private
-    # #TODO BoardEntryに移動する
-    # システムアンテナ[bookmark]の記事を取得するための検索条件
-    def scope_for_entries_by_system_antenna_bookmark
-      bookmarks = Bookmark.find(:all,
-                                :conditions => ["bookmark_comments.user_id = ? and bookmarks.url like '/page/%'", @current_user.id],
-                                :include => [:bookmark_comments])
-      ids = []
-      bookmarks.each do |bookmark|
-        ids << bookmark.url.gsub(/\/page\//, "")
-      end
-
-      BoardEntry.accessible(@current_user).scoped(
-        :conditions => ['board_entries.id IN (?)', ids]
-      )
-    end
-
     # #TODO BoardEntryに移動する
     # システムアンテナ[group]の記事を取得するための検索条件
     def scope_for_entries_by_system_antenna_group
@@ -678,7 +652,6 @@ class MypageController < ApplicationController
       case
       when key == 'message'  then _("Notices for you")
       when key == 'comment'  then _("Entries you have made comments")
-      when key == 'bookmark' then _("Entries bookmarked by yourself")
       when key == 'joined_group'    then _("Posts in the groups joined")
       else
         _('List of unread entries')
