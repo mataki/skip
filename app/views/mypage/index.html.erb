@@ -17,37 +17,6 @@
   <%# left side top messages -%>
   <%# ============================================================ -%>
 
-  <% unless @mail_your_messages[:pages].empty? -%>
-    <div id="messages_box" class="ui-corner-all">
-      <h2 class="ui-corner-top">
-        <%= icon_tag(@mail_your_messages[:title_icon]) + link_to(h(@mail_your_messages[:title_name]), :controller => "/mypage", :action => "entries_by_antenna", :target_type => "message") %>
-      </h2>
-      <ul class="no_style">
-        <% for entry in @mail_your_messages[:pages] %>
-          <li>
-            <div class="title">
-              <%= entry_link_to entry %>
-            </div>
-            <div class="info">
-              <%= entry.last_updated.strftime(_('%B %d %Y')) %>
-              -
-              <%= symbol_link_to(entry.symbol, truncate(@mail_your_messages[:symbol2name_hash][entry.symbol],:length => 12)) %>
-            </div>
-          </li>
-        <% end %>
-      </ul>
-    </div>
-  <% else -%>
-    <div id="messages_box_no_items" class="ui-corner-all">
-      <h2 class="ui-corner-top">
-        <%= icon_tag(@mail_your_messages[:title_icon]) + link_to(h(@mail_your_messages[:title_name]), :controller => "/mypage", :action => "entries_by_antenna", :target_type => "message", :read => true) %>
-      </h2>
-      <div>
-        <%= _('No messages for you') %>
-      </div>
-    </div>
-  <% end -%>
-
   <%= render :partial => 'contents_left_base' %>
 <% end -%>
 

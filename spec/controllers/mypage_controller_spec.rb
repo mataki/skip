@@ -67,12 +67,6 @@ describe MypageController, 'mypage > home 関連' do
     # ============================================================
     #  main area top
     # ============================================================
-    it 'あなたへのお知らせ(未読のもののみ)が設定されること' do
-      @mail_your_messages = mock('mail_your_messages')
-      controller.should_receive(:mail_your_messages).and_return(@mail_your_messages)
-      get :index
-      assigns[:mail_your_messages].should == @mail_your_messages
-    end
     # メインエリア中央
     it 'みんなからの質問が設定されること' do
       @questions = {}

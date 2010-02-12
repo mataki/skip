@@ -44,12 +44,6 @@ class MypageController < ApplicationController
     @recent_users = User.recent(recent_day).order_recent.limit(5) - [current_user]
 
     # ============================================================
-    #  main area top messages
-    # ============================================================
-    # あなたへのお知らせ(未読のもののみ)
-    @mail_your_messages = mail_your_messages
-
-    # ============================================================
     #  main area entries
     # ============================================================
     @questions = find_questions_as_locals({:recent_day => recent_day})
@@ -452,17 +446,6 @@ class MypageController < ApplicationController
     def need_search?
       true
     end
-  end
-
-  # TODO BoardEntryに移動する
-  def mail_your_messages
-    {
-      :id_name => 'message',
-      :title_icon => "email",
-      :title_name => _("Notices for you"),
-      :pages => pages = BoardEntry.from_recents.accessible(current_user).notice.unread_only_notice(current_user).order_new,
-      :symbol2name_hash => BoardEntry.get_symbol2name_hash(pages)
-    }
   end
 
   def find_as_locals target, options
