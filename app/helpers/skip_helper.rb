@@ -63,7 +63,7 @@ module SkipHelper
   end
 
   def link_to_hiki_help
-    sub_window_script = get_subwindow_script "#{root_url}hiki.html", 500, 600
+    sub_window_script = get_subwindow_script "#{tenant_root_url(tenant_root_url)}hiki.html", 500, 600
     link_to _('[Hints on writing entries]'), "javascript:void(0)", :onclick => "#{sub_window_script}"
   end
 
