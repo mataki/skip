@@ -1,9 +1,0 @@
-<div class="box_space">
-  <div class="box_space_title"><%= _('Monthly') %></div>
-  <div class="box_space_body">
-    <%= link_to_unless_current _('All Term'), :action => 'all' %><br>
-    <% ranking_list_of_month(@dates).each do |date| -%>
-      <%= link_to_unless_current date[0], date[1] %><br>
-    <% end -%>
-  </div>
-</div><!-- box_space -->
