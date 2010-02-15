@@ -101,16 +101,12 @@
 </div>
 
 <% content_for :javascript_initializers do -%>
-  function mainmenu(){
-    $j(" #nav ul ").css({display: "none"}); // Opera Fix
-    $j(" #nav li").hover(
-        function(){
-        $j(this).find('ul:first').css({visibility:"visible",display:"none"}).show(400);
-        },function(){
-        $j(this).find('ul:first').css({visibility:"hidden"});
-        });
-  }
-  $j(function() {
-    mainmenu();
-  });
+  $j(" #nav ul ").css({display: "none"}); // Opera Fix
+  $j(" #nav li").hover(
+    function(){
+      $j(this).find('ul:first').css({visibility:"visible",display:"none"}).show(400);
+    },function(){
+      $j(this).find('ul:first').css({visibility:"hidden"});
+    }
+  );
 <% end -%>
