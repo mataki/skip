@@ -1,5 +1,5 @@
 xml.instruct! :xml, :version => "1.0", :encoding => "UTF-8"
-xml.rss('version' => '2.0') do
+xml.rss('version' => '2.0', 'xmlns' => 'http://www.w3.org/2005/Atom') do
   xml.channel do
     xml.title "#{h(@title)} - #{h(Admin::Setting.abbr_app_title)} "
     xml.link(request.url)
@@ -14,7 +14,7 @@ xml.rss('version' => '2.0') do
         xml.description(show_contents(post))
         xml.guid(url_for(:controller => '/board_entries', :action => 'forward', :id => post.id, :only_path => false))
         xml.pubDate(post.last_updated.rfc822)
-        xml.author h(post.user.email)
+        xml.author h("#{post.user.email} (#{post.user.name})")
       end
     end
   end
