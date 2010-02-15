@@ -70,17 +70,17 @@
   <% end -%>
 </div><!-- header -->
 <div id="global_links_wrapper">
-  <div id="global_links">
-    <%= global_links if current_user && current_user.active? %>
-    <span class="other_links">
-    <% if current_user && current_user.active? -%>
-      <% skin_themes.each do |skin| -%>
-        <%= link_to(image_tag("../stylesheets/skins/#{skin}/color.png", :size => "15x15", :title => "#{skin}"), {:action => 'update_customize', :user_custom => {"theme" => skin}}, :method => :post) %>
-      <% end -%>
-    <% end -%>
-    </span>&nbsp;
+  <% if current_user && current_user.active? -%>
+    <div id="global_links">
+      <%= render :partial => 'shared/global_navigation' %>
+      <span class="other_links">
+        <% skin_themes.each do |skin| -%>
+          <%= link_to(image_tag("../stylesheets/skins/#{skin}/color.png", :size => "15x15", :title => "#{skin}"), {:action => 'update_customize', :user_custom => {"theme" => skin}}, :method => :post) %>
+        <% end -%>
+      </span>&nbsp;
+    </div>
+  <% end -%>
 
-  </div>
   <% unless SkipEmbedded::InitialSettings['enable_ad_for_oss'] == "lovelyskip" -%>
     <div style="margin-top: 0.5em; padding-top: 0.5em; border-top: 1px solid silver;">
       <div style="margin-left: 30px; text-valign:middle;">
@@ -99,3 +99,18 @@
     </div>
   <% end -%>
 </div>
+
+<% content_for :javascript_initializers do -%>
+  function mainmenu(){
+    $j(" #nav ul ").css({display: "none"}); // Opera Fix
+    $j(" #nav li").hover(
+        function(){
+        $j(this).find('ul:first').css({visibility:"visible",display:"none"}).show(400);
+        },function(){
+        $j(this).find('ul:first').css({visibility:"hidden"});
+        });
+  }
+  $j(function() {
+    mainmenu();
+  });
+<% end -%>
