@@ -3,17 +3,18 @@ xml.rss('version' => '2.0') do
   xml.channel do
     xml.title "#{h(@title)} - #{h(Admin::Setting.abbr_app_title)} "
     xml.link(request.url)
-    xml.language GetText.locale.to_s
+    xml.description(h(@title))
+    xml.language GetText.locale.language
     xml.ttl "40"
-    xml.pubDate(@entries.first.created_on.strftime("%a, %d %b %Y %H:%M:%S %Z"))
+    xml.pubDate(@entries.first.created_on.rfc822)
     @entries.each do |post|
       xml.item do
         xml.title(h(post.title))
         xml.link(url_for(:controller => '/board_entries', :action => 'forward', :id => post.id, :only_path => false))
-        xml.description(show_contents(post), :type => 'html')
+        xml.description(show_contents(post))
         xml.guid(url_for(:controller => '/board_entries', :action => 'forward', :id => post.id, :only_path => false))
-        xml.pubDate(post.last_updated)
-        xml.author h(post.user.name)
+        xml.pubDate(post.last_updated.rfc822)
+        xml.author h(post.user.email)
       end
     end
   end
