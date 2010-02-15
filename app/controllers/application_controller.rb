@@ -71,8 +71,6 @@ protected
 
     session[:prepared] = true
     session[:user_id] = user.id
-    session[:user_symbol] = user.symbol
-    session[:uid] = user.uid
     session[:load_time] = Time.now
 
     return true
@@ -102,7 +100,6 @@ protected
   def current_user=(user)
     if user
       session[:auth_session_token] = user.update_auth_session_token!
-      session[:user_code] = user.code
       setup_custom_cookies(user.custom)
       @current_user = user
     else
@@ -111,7 +108,7 @@ protected
   end
 
   def current_target_user
-    @current_target_user ||= User.find_by_uid(params[:uid] || params[:user_id])
+    @current_target_user ||= User.find_by_id(params[:id] || params[:user_id])
   end
 
   def current_target_group

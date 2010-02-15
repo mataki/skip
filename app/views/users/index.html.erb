@@ -3,10 +3,6 @@
   <% form_for @search do |f| %>
     <table class="search_cond_box">
       <tr>
-        <th><%= f.label :name_or_code_like, s_("User|Name") + "/" + h(user_name_mode_label)%></th>
-        <td><%= f.text_field :name_or_code_like %></td>
-      </tr>
-      <tr>
         <th><%= f.label :section_like, s_('User|Section') %></th>
         <td><%= f.select :section_like, User.grouped_sections, :include_blank => true %></td>
       </tr>

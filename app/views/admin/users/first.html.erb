@@ -4,10 +4,6 @@
     <%= error_messages_for :user %>
     <table>
       <tr>
-        <th><%= label Admin::UserUid.name, :uid, h(Admin::Setting.login_account) %></th>
-        <td><%= text_field :user_uid, :uid %></td>
-      </tr>
-      <tr>
         <th><%= label Admin::User.name, :email %></th>
         <td><%= text_field :user, :email %></td>
       </tr>

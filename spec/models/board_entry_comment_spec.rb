@@ -40,9 +40,9 @@ end
 
 describe BoardEntryComment, '#editable?' do
   before do
-    @bob = create_user :user_options => {:name => 'ボブ', :admin => true}, :user_uid_options => {:uid => 'boob'}
+    @bob = create_user :user_options => {:name => 'ボブ', :admin => true}
     @bob_s_comment = BoardEntryComment.create({:board_entry_id => 1, :user_id => @bob.id, :contents => 'contents', :board_entry_id => create_board_entry.id})
-    @alice = create_user :user_options => {:name => 'アリス', :admin => true}, :user_uid_options => {:uid => 'alice'}
+    @alice = create_user :user_options => {:name => 'アリス', :admin => true}
   end
   describe 'コメントの所属する記事の閲覧権限がある場合' do
     before do

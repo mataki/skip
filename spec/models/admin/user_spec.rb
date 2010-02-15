@@ -18,46 +18,41 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe Admin::User, '.make_users' do
   before do
     @user = mock_model(Admin::User)
-    @user_uid = mock_model(Admin::UserUid)
     FasterCSV.should_receive(:parse).and_return([['hoge']])
     Admin::User.stub!(:make_user_hash_from_csv_line).and_return({},{},{})
-    Admin::User.should_receive(:make_user).and_return([@user, @user_uid])
+    Admin::User.should_receive(:make_user).and_return(@user)
   end
-  it { Admin::User.send(:make_users, mock('uplocaded_file'), mock('options')).should == ([[@user, @user_uid]]) }
+  it { Admin::User.send(:make_users, mock('uplocaded_file'), mock('options')).should == ([@user]) }
 end
 
 describe Admin::User, '.make_user' do
   describe '既存のレコードがある場合' do
     describe "既存のユーザを更新する場合" do
       before do
-        user_uid_hash = {:uid => SkipFaker.rand_num(6)}
-        user = create_user :user_options => {:section => 'プログラマ', :email => SkipFaker.email}, :user_uid_options => user_uid_hash
+        user = create_user :user_options => {:section => 'プログラマ', :email => SkipFaker.email}
         @user_hash = user.attributes
-        @user_uid_hash = user.user_uids.find_by_uid_type('MASTER')
       end
       it 'make_user_by_uidが呼ばれること' do
         Admin::User.should_receive(:make_user_by_uid)
-        @user, @user_uid = Admin::User.make_user({:user => @user_hash, :user_uid => @user_uid_hash}, false, false)
+        @user = Admin::User.make_user({:user => @user_hash}, false, false)
       end
     end
     describe "既存のレコードを更新しない場合" do
       before do
         user_hash = {:section => 'プログラマ', :email => SkipFaker.email}
-        user_uid_hash = {:uid => SkipFaker.rand_num(6)}
-        user = create_user :user_options => user_hash, :user_uid_options => user_uid_hash
+        user = create_user :user_options => user_hash
         @user_hash = user.attributes
-        @user_uid_hash = user.user_uids.find_by_uid_type('MASTER')
       end
       it 'make_user_by_uidが属性なしで呼ばれること' do
-        Admin::User.should_receive(:make_user_by_uid).with({:user => {}, :user_uid => {:uid => @user_uid_hash[:uid]}}, false)
-        @use, @user_uid = Admin::User.make_user({:user => @user_hash, :user_uid => @user_uid_hash}, false, true)
+        Admin::User.should_receive(:make_user_by_uid).with({:user => {}}, false)
+        @use = Admin::User.make_user({:user => @user_hash}, false, true)
       end
     end
   end
   describe '既存のレコードがない場合' do
     it 'make_new_userが呼ばれること' do
       Admin::User.should_receive(:make_new_user)
-      @user, @user_uid = Admin::User.make_user({:user => {}, :user_uid => {:uid => 'skipuser'}})
+      @user = Admin::User.make_user({:user => {}})
     end
   end
 end
@@ -70,11 +65,10 @@ describe Admin::User, '.make_new_user' do
     @fullname = "山田 太郎"
     @job_title = "経理"
     @user_hash = {:name => @fullname, :password => @password, :password_confirmation => @password, :section => @job_title, :email => @email}
-    @user_uid_hash = {:uid => @uid}
   end
   describe '管理者を作成する場合' do
     before do
-      @user, @user_uid = Admin::User.make_new_user({:user => @user_hash, :user_uid => @user_uid_hash}, true)
+      @user, @user_uid = Admin::User.make_new_user({:user => @user_hash}, true)
     end
     it '新規レコードであること' do
       @user.new_record?.should be_true
@@ -100,14 +94,10 @@ describe Admin::User, '.make_new_user' do
     it 'emailが設定されていること' do
       @user.email.should == @email
     end
-    it { @user.user_uids.include?(@user_uid).should be_true }
-    it 'uidが設定されていること' do
-      @user_uid.uid.should == @uid
-    end
   end
   describe '一般ユーザを作成する場合' do
     before do
-      @user, @user_uid = Admin::User.make_user({:user => @user_hash, :user_uid => @user_uid_hash})
+      @user = Admin::User.make_user({:user => @user_hash})
     end
     it '管理者でないこと' do
       @user.admin.should be_false
@@ -126,9 +116,8 @@ describe Admin::User, '.make_user_by_uid' do
       @fullname = "山田 太郎"
       @job_title = "経理"
       @user_hash = {:name => @fullname, :password => @password, :password_confirmation => @password, :section => @job_title, :email => @email}
-      @user_uid_hash = {:uid => SkipFaker.rand_num(6)}
-      user = create_user :user_options => @user_hash, :user_uid_options => @user_uid_hash
-      @user, @user_uid = Admin::User.make_user_by_uid({:user => @user_hash, :user_uid => @user_uid_hash})
+      user = create_user :user_options => @user_hash
+      @user = Admin::User.make_user_by_uid({:user => @user_hash})
     end
     it '新規レコードではないこと' do
       @user.new_record?.should_not be_true

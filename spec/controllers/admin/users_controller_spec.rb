@@ -21,7 +21,6 @@ describe Admin::UsersController, 'GET /new' do
     get :new
   end
   it {assigns[:user].should_not be_nil}
-  it {assigns[:user_uid].should_not be_nil}
   it {assigns[:topics].should_not be_nil}
   it {response.should be_success}
 end
@@ -31,14 +30,13 @@ describe Admin::UsersController, 'POST /create' do
     admin_login
     @user = stub_model(Admin::User)
     @user.stub!(:save!)
-    @user_uid = stub_model(Admin::UserUid)
-    Admin::User.stub!(:make_new_user).and_return([@user, @user_uid])
+    Admin::User.stub!(:make_new_user).and_return(@user)
     SkipEmbedded::InitialSettings['login_mode'] = 'password'
   end
   describe 'ユーザの登録に成功する場合' do
     it 'Admin::Userが作成されること' do
       @user.should_receive(:save!)
-      Admin::User.should_receive(:make_new_user).and_return([@user, @user_uid])
+      Admin::User.should_receive(:make_new_user).and_return(@user)
       post :create
     end
     it {post :create; flash[:notice].should_not be_nil}
@@ -59,12 +57,9 @@ describe Admin::UsersController, 'GET /edit' do
     admin_login
     @user = stub_model(Admin::User)
     Admin::User.stub!(:find).and_return(@user)
-    @user_uid = stub_model(Admin::UserUid)
-    @user.stub!(:master_user_uid).and_return(@user_uid)
     get :edit
   end
   it {assigns[:user].should_not be_nil}
-  it {assigns[:user_uid].should_not be_nil}
   it {assigns[:topics].should_not be_nil}
   it {response.should be_success}
 end
@@ -187,7 +182,6 @@ describe Admin::UsersController, 'GET /first' do
     end
     it {response.should be_success}
     it {assigns[:user].should_not be_nil}
-    it {assigns[:user_uid].should_not be_nil}
   end
 end
 
@@ -196,20 +190,19 @@ describe Admin::UsersController, 'POST /first' do
     before do
       controller.stub!(:valid_activation_code?).and_return(true)
       @user = stub_model(Admin::User)
-      @user_uid = stub_model(Admin::UserUid)
       @activation = stub_model(Activation)
       @user.stub!(:user_access=)
-      Admin::User.stub!(:make_user).and_return([@user, @user_uid])
+      Admin::User.stub!(:make_user).and_return(@user)
     end
     describe '管理者ユーザの登録に成功する場合' do
       # ユーザが作成されること
       before do
         @user.should_receive(:user_access=)
         @user.should_receive(:save!)
-        Admin::User.should_receive(:make_user).and_return([@user, @user_uid])
+        Admin::User.should_receive(:make_user).and_return(@user)
         @activation.should_receive(:update_attributes).with({:code => nil})
         Activation.should_receive(:find_by_code).and_return(@activation)
-        post :first, {:user => {"name"=>"管理者", "password_confirmation"=>"[FILTERED]", "password"=>"[FILTERED]", "email"=>"admin@skip.org", "section"=>"管理部"}, :user_uid => {:uid => 'admin'}}
+        post :first, {:user => {"name"=>"管理者", "password_confirmation"=>"[FILTERED]", "password"=>"[FILTERED]", "email"=>"admin@skip.org", "section"=>"管理部"} }
       end
       it {flash[:notice].should_not be_nil}
       it {response.should be_redirect}
@@ -217,7 +210,7 @@ describe Admin::UsersController, 'POST /first' do
     describe '管理者ユーザの登録に失敗する場合' do
       before do
         @user.should_receive(:save!).and_raise(mock_record_invalid)
-        post :first, :user_uid => {}
+        post :first
       end
       it {response.should be_success}
       it {response.should render_template('first')}
@@ -297,18 +290,15 @@ describe Admin::UsersController, 'POST /import' do
   describe '正常なファイルの場合' do
     before do
       @new_user = stub_model(Admin::User)
-      @new_user_uid = stub_model(Admin::UserUid)
       @edit_user = stub_model(Admin::User)
-      @edit_user_uid = stub_model(Admin::UserUid)
       controller.stub!(:import!)
-      @edit_user_uid.stub!(:save!)
       controller.should_receive(:valid_file?).and_return(true)
     end
     describe '1件が新規、1件が既存レコードの場合' do
       before do
         @new_user.stub!(:new_record?).and_return(true)
         @edit_user.stub!(:new_record?).and_return(false)
-        Admin::User.should_receive(:make_users).and_return([[@new_user, @new_user_uid], [@edit_user, @edit_user_uid]])
+        Admin::User.should_receive(:make_users).and_return([@new_user, @edit_user])
       end
       it '新規レコードはUserのみ、既存レコードはUser, UserUidの各々で保存されること' do
         controller.should_receive(:import!)
@@ -321,110 +311,10 @@ describe Admin::UsersController, 'POST /import' do
     describe 'invalidなレコードが含まれる場合' do
       before do
         controller.should_receive(:import!).and_raise(mock_record_invalid)
-        Admin::User.should_receive(:make_users).and_return([@new_user, @new_user_uid])
+        Admin::User.should_receive(:make_users).and_return(@new_user)
         post :import
       end
       it { response.should render_template('import') }
-    end
-  end
-end
-
-describe Admin::UsersController, "POST #change_uid" do
-  before do
-    admin_login
-
-    @user_uid = stub_model(Admin::UserUid)
-
-    @user_uids = mock('user_uids')
-    @user_uids.stub!(:find).and_return(@user_uid)
-
-    @user = stub_model(Admin::User)
-    @user.status = 'ACTIVE'
-    @user.stub!(:user_uids).and_return(@user_uids)
-
-    Admin::User.should_receive(:find).and_return(@user)
-  end
-  describe "保存に成功する時" do
-    before do
-      @user_uid.should_receive(:save).and_return(true)
-
-      post_change_uid
-    end
-    it { response.should be_redirect }
-    it { flash[:notice].should_not be_nil }
-  end
-  describe "保存に失敗する時" do
-    before do
-      @user_uid.should_receive(:save).and_return(false)
-
-      post_change_uid
-    end
-    it { response.should render_template('admin/users/change_uid') }
-    it { assigns[:user].should == @user }
-  end
-  describe "ユーザ名が見つからない時" do
-    before do
-      @user_uids.should_receive(:find).and_return(nil)
-
-      post_change_uid
-    end
-    it { response.should redirect_to(admin_users_path) }
-  end
-
-  def post_change_uid
-    post :change_uid, :id => 1, :user_uid => { :uid => 'hoge' }
-  end
-end
-
-describe Admin::UsersController, "POST #create_uid" do
-  before do
-    admin_login
-
-    @user = stub_model(Admin::User)
-    @user.status = 'ACTIVE'
-    Admin::User.stub!(:find).with("1").and_return(@user)
-
-    @user_uid = stub_model(Admin::UserUid)
-    @user_uids = mock('user_uids')
-    @user.stub!(:user_uids).and_return(@user_uids)
-  end
-  describe "ユーザ名が登録されていない場合" do
-    before do
-      @user_uids.stub!(:find).and_return(nil)
-      @user_uids.stub!(:build).with({ "uid" => 'hoge', "uid_type" => UserUid::UID_TYPE[:username]}).and_return(@user_uid)
-    end
-    describe "作成に成功する場合" do
-      before do
-        @user_uid.should_receive(:save).and_return(true)
-
-        post :create_uid, :id => 1, :user_uid => { :uid => 'hoge' }
-      end
-      it { response.should be_redirect }
-      it "flashにメッセージが登録されていること" do
-        flash[:notice].should == "User was successfully registered."
-      end
-    end
-    describe "バリデーションエラーの場合" do
-      before do
-        @user_uid.should_receive(:save).and_return(false)
-
-        post :create_uid, :id => 1, :user_uid => { :uid => 'hoge' }
-      end
-      it { response.should render_template('create_uid') }
-      it "@user_uidが設定されていること" do
-        assigns[:user_uid].should == @user_uid
-      end
-    end
-  end
-  describe "もう既にユーザ名が登録されていた場合" do
-    before do
-      @user_uids.stub!(:find).and_return(@user_uid)
-
-      post :create_uid, :id => 1, :user_uid => { :uid => 'hoge' }
-    end
-    it { response.should redirect_to(admin_user_path(@user)) }
-    it "flashにメッセージが登録されていること" do
-      flash[:error].should == "User user name has already been registered."
     end
   end
 end

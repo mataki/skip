@@ -16,7 +16,7 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe SiteCount do
-  fixtures :users, :board_entries, :board_entry_comments, :site_counts, :user_uids
+  fixtures :users, :board_entries, :board_entry_comments, :site_counts
 
   # TODO RSpec化してSiteCountのテストクラスへ移動したら削除する
   # 一ヶ月以内に記事を書いたユーザ

@@ -10,8 +10,7 @@
 <p><%= menu_links.join(' | ') %></p>
 
 <div class="box tabular">
-  <% columns = %w(code uid name email section status admin locked issued_at last_authenticated_at password_expires_at) -%>
-  <% columns.delete_if{|a| a=="uid"} unless SkipEmbedded::InitialSettings['username_use_setting'] %>
+  <% columns = %w(name email section status admin locked issued_at last_authenticated_at password_expires_at) -%>
 
   <%= render :partial => '/admin/search_box', :locals => { :class_name => 'Admin::User' } %>
   <% form_tag issue_activation_codes_admin_users_path do -%>
@@ -22,8 +21,6 @@
                :hide_columns => %w(locked issued_at last_authenticated_at password_expires_at),
                :disp_columns_proc => lambda do |object,column|
       case column
-      when "uid"
-        h(object.username)
       when "status"
         if object.unused?
           if !object.activation_token.nil? and object.within_time_limit_of_activation_token?

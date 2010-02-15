@@ -135,7 +135,7 @@ module ApplicationHelper
     file_name =
       if picture = user.picture
         unless picture.new_record?
-          tenant_user_picture_path(current_tenant, user, picture, :format => :png)
+          tenant_user_pictures_path(current_tenant, user, picture, :format => :png)
         else
           'default_picture.png'
         end

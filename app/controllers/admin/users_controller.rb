@@ -25,7 +25,6 @@ class Admin::UsersController < Admin::ApplicationController
 
   def new
     @user = Admin::User.new
-    @user_uid = Admin::UserUid.new
     @topics = [[_('Listing %{model}') % {:model => _('user')}, admin_users_path], _('New %{model}') % {:model => _('user')}]
   end
 
@@ -34,12 +33,11 @@ class Admin::UsersController < Admin::ApplicationController
       Admin::User.transaction do
         if login_mode?(:fixed_rp)
           @user = User.create_with_identity_url(params[:openid_identifier][:url],
-                                                { :code => params[:user_uid][:uid],
                                                   :name => params[:user][:name],
                                                   :email => params[:user][:email] })
           @user.save!
         else
-          @user, @user_uid = Admin::User.make_new_user({:user => params[:user], :user_uid => params[:user_uid]})
+          @user = Admin::User.make_new_user({:user => params[:user]})
           @user.save!
         end
       end
@@ -54,7 +52,6 @@ class Admin::UsersController < Admin::ApplicationController
 
   def edit
     @user = Admin::User.find(params[:id])
-    @user_uid = @user.master_user_uid
 
     @topics = [[_('Listing %{model}') % {:model => _('user')}, admin_users_path],
                _('Editing %{model}') % {:model => @user.topic_title }]
@@ -100,12 +97,11 @@ class Admin::UsersController < Admin::ApplicationController
     if valid_activation_code? params[:code]
       if request.get?
         @user = Admin::User.new
-        @user_uid = Admin::UserUid.new
         render :layout => 'not_logged_in'
       else
         begin
           Admin::User.transaction do
-            @user, @user_uid = Admin::User.make_user({:user => params[:user], :user_uid => params[:user_uid]}, true)
+            @user = Admin::User.make_user({:user => params[:user]}, true)
             @user.user_access = UserAccess.new :last_access => Time.now, :access_count => 0
             @user.save!
             if activation = Activation.find_by_code(params[:code])
@@ -142,7 +138,7 @@ class Admin::UsersController < Admin::ApplicationController
     render :action => :import
   rescue ActiveRecord::RecordInvalid,
          ActiveRecord::RecordNotSaved => e
-    @users.each {|user, user_uid| user.valid?}
+    @users.each {|user| user.valid?}
     flash.now[:notice] = _('Verified content of CSV file.')
     render :action => :import
   end
@@ -160,57 +156,8 @@ class Admin::UsersController < Admin::ApplicationController
     redirect_to admin_users_path
   rescue ActiveRecord::RecordInvalid,
          ActiveRecord::RecordNotSaved => e
-    @users.each {|user, user_uid| user.valid?}
+    @users.each {|user| user.valid?}
     flash.now[:error] = _('Illegal value(s) found in CSV file.')
-  end
-
-  def change_uid
-    @user = Admin::User.find(params[:id])
-    @topics = [[_('Listing %{model}') % {:model => _('user')}, admin_users_path],
-               [_('Editing %{model}') % {:model => @user.topic_title}, edit_admin_user_path(@user)],
-               _('Change uid')]
-
-    if request.get? or not @user.active?
-      @user_uid = Admin::UserUid.new
-      return
-    end
-
-    if uid = @user.user_uids.find(:first, :conditions => ['uid_type = ?', UserUid::UID_TYPE[:username]])
-      uid.uid = params[:user_uid] ? params[:user_uid][:uid] : ''
-      if uid.save
-        flash[:notice] = _("Update complete.")
-        redirect_to :action => "edit"
-      else
-        @user_uid = uid
-      end
-    else
-      flash[:notice] = _("User name not found.")
-      redirect_to admin_users_path
-    end
-  end
-
-  def create_uid
-    @user = Admin::User.find(params[:id])
-    @topics = [[_('Listing %{model}') % {:model => _('user')}, admin_users_path],
-               [_('Editing %{model}') % {:model => @user.topic_title}, edit_admin_user_path(@user)],
-               _('Create %{name}') % { :name => _('user name')}]
-
-    if request.get? or not @user.active?
-      @user_uid = Admin::UserUid.new
-      return
-    end
-
-    if @user.user_uids.find(:first, :conditions => ['uid_type = ?', UserUid::UID_TYPE[:username]])
-      flash[:error] = _("User %{username} has already been registered.") % {:username => _('user name')}
-      redirect_to(@user)
-      return
-    end
-
-    @user_uid = @user.user_uids.build(params[:user_uid].merge!(:uid_type => UserUid::UID_TYPE[:username]))
-    if @user_uid.save
-      flash[:notice] = _('User was successfully registered.')
-      redirect_to :action => "edit"
-    end
   end
 
   def issue_activation_code
@@ -258,11 +205,8 @@ class Admin::UsersController < Admin::ApplicationController
 
   def import!(users, rollback = true)
     Admin::User.transaction do
-      users.each do |user, user_uid|
+      users.each do |user|
         user.save!
-        unless user.new_record?
-          user_uid.save!
-        end
       end
       raise ActiveRecord::Rollback if rollback
     end

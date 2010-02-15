@@ -14,7 +14,6 @@ class MargeAccountsToUsers < ActiveRecord::Migration
                           })
           user.crypted_password = account.crypted_password
           user.status = 'UNUSED'
-          user.user_uids << UserUid.new({ :uid => account.code, :uid_type => 'MASTER' })
           user.save!
         else
           user.status = user.retired ? 'RETIRED' : 'ACTIVE'
@@ -53,4 +52,7 @@ end
 
 class Account < ActiveRecord::Base
   has_many :openid_identifiers
+end
+
+class UserUid < ActiveRecord::Base
 end

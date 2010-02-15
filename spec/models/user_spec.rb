@@ -35,7 +35,7 @@ describe User, '#groups' do
 end
 
 describe User," is a_user" do
-  fixtures :users, :user_accesses, :user_uids
+  fixtures :users, :user_accesses
   before(:each) do
     @user = users(:a_user)
   end
@@ -780,9 +780,9 @@ end
 describe User, '.grouped_sections' do
   before do
     User.delete_all
-    create_user :user_options => {:email => SkipFaker.email, :section => 'Programmer'}, :user_uid_options => {:uid => SkipFaker.rand_num(6)}
-    create_user :user_options => {:email => SkipFaker.email, :section => 'Programmer'}, :user_uid_options => {:uid => SkipFaker.rand_num(6)}
-    create_user :user_options => {:email => SkipFaker.email, :section => 'Tester'}, :user_uid_options => {:uid => SkipFaker.rand_num(6)}
+    create_user :user_options => {:email => SkipFaker.email, :section => 'Programmer'}
+    create_user :user_options => {:email => SkipFaker.email, :section => 'Programmer'}
+    create_user :user_options => {:email => SkipFaker.email, :section => 'Tester'}
   end
   it {User.grouped_sections.size.should == 2}
 end
@@ -1083,10 +1083,10 @@ describe User, '.synchronize_users' do
       User.delete_all
       SkipEmbedded::InitialSettings['host_and_port'] = 'localhost:3000'
       SkipEmbedded::InitialSettings['protocol'] = 'http://'
-      @bob = create_user :user_options => {:name => 'ボブ', :admin => false}, :user_uid_options => {:uid => 'boob'}
-      @alice = create_user :user_options => {:name => 'アリス', :admin => true}, :user_uid_options => {:uid => 'alice'}
-      @carol = create_user :user_options => {:name => 'キャロル', :admin => false}, :user_uid_options => {:uid => 'carol'}, :status => 'RETIRED'
-      @michael = create_user :user_options => { :name => "マイケル", :admin => false }, :user_uid_options => { :uid => 'michael' }, :status => "UNUSED"
+      @bob = create_user :user_options => {:name => 'ボブ', :admin => false}
+      @alice = create_user :user_options => {:name => 'アリス', :admin => true}
+      @carol = create_user :user_options => {:name => 'キャロル', :admin => false}, :status => 'RETIRED'
+      @michael = create_user :user_options => { :name => "マイケル", :admin => false }, :status => "UNUSED"
       @users = User.synchronize_users
       @bob_attr, @alice_attr, @carol_attr, @michael_attr = @users
     end

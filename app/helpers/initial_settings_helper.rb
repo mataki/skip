@@ -27,23 +27,6 @@ module InitialSettingsHelper
     end
   end
 
-  def user_name_mode?(mode)
-    case mode
-    when :name
-      return SkipEmbedded::InitialSettings['username_use_setting']
-    when :code
-      return SkipEmbedded::InitialSettings['usercode_dips_setting']
-    end
-    false
-  end
-
-  def user_name_mode_label
-    label = []
-    label << Admin::Setting.login_account if user_name_mode?(:code)
-    label << _('user name') if user_name_mode?(:name)
-    label.join("/")
-  end
-
   def enable_activate?
     login_mode?(:password) && !Admin::Setting.stop_new_user && SkipEmbedded::InitialSettings['mail']['show_mail_function']
   end

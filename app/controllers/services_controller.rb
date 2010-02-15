@@ -26,12 +26,12 @@ class ServicesController < ActionController::Base
   # ユーザに関連する情報を取得する
   def user_info
     result = {}
-    if user = User.find_by_uid(params[:user_code])
+    if user = User.find_id(params[:user_id])
       group_hash = {}
       user.group_participations.find(:all, :conditions => ["waiting = ?", false]).each do |p|
         group_hash[p.group.gid] = p.group.name
       end
-      result = { :user_uid => user.uid, :group_symbols => group_hash }
+      result = { :group_symbols => group_hash }
     else
       result = { :error => _("No user information registered in %s." ) % Admin::Setting.abbr_app_title}
     end

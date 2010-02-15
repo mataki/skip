@@ -5,18 +5,9 @@
 </div>
 <div>
 <% form_for(@user, :url => { :controller => :portal, :action => :registration }) do |f| -%>
-<% @uid = @user.user_uids.first %>
 <%= render(:partial => "system/error_messages_for", :locals => { :messages => @error_msgs }) if @error_msgs %>
 <h2 class="subtitle"><%= _('Account Information')%></h2>
 <table class="normal user_info">
-  <tr>
-    <th width="100px"><label for="user_code"><%= _('Login ID')%></label></th>
-    <td>
-      <%= text_field_tag 'user[code]', @uid ? @uid.uid : "", :id => 'user_code' %><%= _('(4 or more characters)')%>
-      <span id="uid_result" style="margin-left:3px;color:gray;font-size:10px"></span><span id="indicator" style="display:none;"><%= skip_image_tag 'indicator.gif' %></span>
-      <div class="desc ui-corner-all margin05emver"><%= _('Numbers, alphabets, hiphens(&quot;-&quot;) and underscores(&quot;_&quot;) are accepted.')%></div>
-    </td>
-  </tr>
   <tr>
     <th width="100px"><label for="user_name"><%= _('Name')%></label></th>
     <td><%= text_field_tag 'user[name]', @user.name, :id => 'user_name' %></td>

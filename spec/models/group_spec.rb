@@ -98,7 +98,7 @@ describe Group do
   describe Group, ".has_waiting_for_approval" do
     describe "あるユーザの管理しているグループに承認待ちのユーザがいる場合" do
       before do
-        @alice = create_user :user_options => {:name => 'アリス', :admin => true}, :user_uid_options => {:uid => 'alice'}
+        @alice = create_user :user_options => {:name => 'アリス', :admin => true}
         @group = create_group(:gid => 'skip_group', :name => 'SKIPグループ') do |g|
           g.group_participations.build(:user_id => @alice.id, :owned => true, :waiting => true)
         end
@@ -119,8 +119,8 @@ describe Group do
 
   describe Group, "#owners あるグループに管理者がいる場合" do
     before do
-      @alice = create_user :user_options => {:name => 'アリス', :admin => true}, :user_uid_options => {:uid => 'alice'}
-      @jack = create_user :user_options => {:name => 'ジャック', :admin => true}, :user_uid_options => {:uid => 'jack'}
+      @alice = create_user :user_options => {:name => 'アリス', :admin => true}
+      @jack = create_user :user_options => {:name => 'ジャック', :admin => true}
       @group = create_group(:gid => 'skip_group', :name => 'SKIPグループ') do |g|
         g.group_participations.build(:user_id => @alice.id, :owned => true)
         g.group_participations.build(:user_id => @jack.id)
@@ -224,9 +224,9 @@ describe Group do
         Group.delete_all
         SkipEmbedded::InitialSettings['host_and_port'] = 'localhost:3000'
         SkipEmbedded::InitialSettings['protocol'] = 'http://'
-        bob = create_user :user_options => {:name => 'ボブ', :admin => false}, :user_uid_options => {:uid => 'boob'}
-        alice = create_user :user_options => {:name => 'アリス', :admin => true}, :user_uid_options => {:uid => 'alice'}
-        tom = create_user :user_options => {:name => 'トム', :admin => true}, :user_uid_options => {:uid => 'toom'}
+        bob = create_user :user_options => {:name => 'ボブ', :admin => false}
+        alice = create_user :user_options => {:name => 'アリス', :admin => true}
+        tom = create_user :user_options => {:name => 'トム', :admin => true}
         group_category_id = create_group_category(:code => 'study').id
         # Vim勉強会には@bob, @aliceが参加していて、@tomは参加待ち
         @vim_group = create_group :name => 'Vim勉強会', :gid => 'vim_study', :group_category_id => group_category_id do |g|

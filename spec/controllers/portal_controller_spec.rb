@@ -47,8 +47,6 @@ describe PortalController, 'GET /index' do
       it "正しいインスタンス変数が設定されていること" do
         assigns[:user].should == @user
         assigns[:profiles].should == @profiles
-        assigns[:user_uid].should_not be_nil
-        assigns[:user_uid].uid.should == "skip"
       end
     end
     describe '未登録のログインユーザが存在しない(正しくsignup出来ていない or セッション切れ)場合' do
@@ -94,14 +92,6 @@ describe PortalController, 'POST /apply' do
       before do
         SkipEmbedded::InitialSettings['username_use_setting'] = false
       end
-      it 'UserUidが保存されないこと' do
-        @user_uid = stub_model(UserUid)
-        @user_uid.should_not_receive(:save!)
-        @user_uids = mock('user_uids', :build => @user_uid)
-        @user.stub!(:user_uids).and_return(@user_uids)
-        @user.should_receive(:code).and_return("111111")
-        post_apply
-      end
       it 'Userが保存されること' do
         verify_save_user
       end
@@ -118,14 +108,6 @@ describe PortalController, 'POST /apply' do
     describe 'ユーザ名利用設定がonの場合' do
       before do
         SkipEmbedded::InitialSettings['username_use_setting'] = true
-      end
-      it 'UserUidが保存されること' do
-        @user_uid = stub_model(UserUid)
-        @user_uid.should_receive(:save!)
-        @user_uids = mock('user_uids', :build => @user_uid)
-        @user.should_receive(:user_uids).and_return(@user_uids)
-        @user.should_receive(:code).and_return("111111")
-        post_apply
       end
       it 'Userが保存されること' do
         verify_save_user
@@ -207,7 +189,6 @@ describe PortalController, 'POST /apply' do
         assigns[:user].should_not be_nil
         assigns[:user].status.should == 'UNUSED'
         assigns[:profiles].should_not be_nil
-        assigns[:user_uid].should be_nil
       end
       it "２つのプロフィールにエラーが設定されている場合、２つのバリデーションエラーが設定されること" do
         errors = mock('errors', :full_messages => ["バリデーションエラーです"])
@@ -233,7 +214,6 @@ describe PortalController, 'POST /apply' do
         assigns[:user].should_not be_nil
         assigns[:user].status.should == 'UNUSED'
         assigns[:profiles].should_not be_nil
-        assigns[:user_uid].should_not be_nil
       end
     end
   end
@@ -248,7 +228,7 @@ describe PortalController, 'POST /apply' do
   end
 
   def post_apply
-    post :apply, {"user"=>{:password => "password", :password_confirmation => "password_confirmation", "email"=>"example@skip.org", "section"=>"開発"}, "profile_value"=>{"1"=>"ほげ", "2"=>"ふが"}, "user_uid"=>{"uid"=>"hogehoge"} }
+    post :apply, {"user"=>{:password => "password", :password_confirmation => "password_confirmation", "email"=>"example@skip.org", "section"=>"開発"}, "profile_value"=>{"1"=>"ほげ", "2"=>"ふが"} }
   end
 end
 
@@ -273,9 +253,7 @@ describe PortalController, "#registration" do
       @code = 'hoge'
       @params = { "code" => @code, "email" => 'email@openskip.org', "name" => 'SKIP君'}
 
-      @user_uid = stub_model(UserUid)
       @user = stub_model(User, :code => @code)
-      @user.stub!(:user_uids).and_return([@user_uid])
       User.should_receive(:create_with_identity_url).with(@openid_url, @params).and_return(@user)
     end
     describe "保存が成功する場合" do

@@ -37,7 +37,7 @@ end
 
 describe GroupParticipation, '#after_save' do
   before do
-    @bob = create_user :user_options => {:name => 'ボブ', :admin => false}, :user_uid_options => {:uid => 'boob'}
+    @bob = create_user :user_options => {:name => 'ボブ', :admin => false}
     Group.record_timestamps = false
     @vim_group = create_group :name => 'Vim勉強会', :gid => 'vim_study', :updated_on => Time.now.yesterday, :created_on => Time.now.yesterday
     Group.record_timestamps = true
@@ -62,7 +62,7 @@ end
 
 describe GroupParticipation, '#after_destroy' do
   before do
-    bob = create_user :user_options => {:name => 'ボブ', :admin => false}, :user_uid_options => {:uid => 'boob'}
+    bob = create_user :user_options => {:name => 'ボブ', :admin => false}
     Group.record_timestamps = false
     @vim_group = create_group :name => 'Vim勉強会', :gid => 'vim_study' do |g|
       @group_participation = g.group_participations.build(:user_id => bob.id, :owned => true)

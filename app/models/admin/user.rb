@@ -15,7 +15,6 @@
 
 class Admin::User < User
   require 'fastercsv'
-  has_many :user_uids, :dependent => :destroy, :class_name => 'Admin::UserUid'
   has_many :openid_identifiers, :dependent => :destroy, :class_name => 'Admin::OpenidIdentifier'
   has_many :user_profile_values, :dependent => :destroy, :class_name => 'Admin::UserProfileValue'
   has_one :picture, :dependent => :destroy, :class_name => 'Admin::Picture'
@@ -70,21 +69,19 @@ class Admin::User < User
     users = []
     parsed_csv = FasterCSV.parse uploaded_file
     parsed_csv.each do |line|
-      user_hash, user_uid_hash = make_user_hash_from_csv_line(line, options)
-      user = make_user({:user => user_hash, :user_uid => user_uid_hash}, false, create_only)
+      user_hash = make_user_hash_from_csv_line(line, options)
+      user = make_user({:user => user_hash}, false, create_only)
       users << user if user
     end
     users
   end
 
   def self.make_new_user(params, admin = false)
-    check_params_keys(params, [:user, :user_uid])
+    check_params_keys(params, [:user])
     user = Admin::User.new(params[:user])
     user.admin = admin
     user.status = admin ? 'ACTIVE' : 'UNUSED'
-    user_uid = Admin::UserUid.new(params[:user_uid].merge(:uid_type => 'MASTER'))
-    user.user_uids << user_uid
-    [user, user_uid]
+    user
   end
 
   def self.make_user_by_id(params, admin = false)
@@ -99,25 +96,15 @@ class Admin::User < User
   end
 
   def self.make_user_by_uid(params, admin = false)
-    check_params_keys(params, [:user, :user_uid])
-    user = Admin::User.find_by_code(params[:user_uid][:uid])
+    check_params_keys(params, [:user])
+    user = Admin::User.find_by_email(params[:user][:email])
     user.attributes = params[:user]
-    user_uid = user.user_uids.find_by_uid_type('MASTER')
-    [user, user_uid]
+    user
   end
 
   def self.make_user(params, admin = false, create_only = false)
-    user = Admin::User.find_by_code(params[:user_uid][:uid])
-    if user
-      params = {:user => {}, :user_uid => {:uid => params[:user_uid][:uid]}} if create_only
-      make_user_by_uid(params, admin)
-    else
-      make_new_user(params, admin)
-    end
-  end
-
-  def master_user_uid
-    user_uids.find_by_uid_type('MASTER')
+    user = Admin::User.find_by_email(params[:user][:email])
+    make_new_user(params, admin)
   end
 
   def self.lock_actives
@@ -147,16 +134,13 @@ class Admin::User < User
       end
     end
 
-    user_uid_hash = {}
-    user_uid_hash.merge!(:uid => line_hash[:login_id])
-
     user_hash = {}
     user_hash.merge!(:name => line_hash[:name]) if line_hash[:name]
     user_hash.merge!(:email => line_hash[:email]) if line_hash[:email]
     user_hash.merge!(:section => line_hash[:section]) if line_hash[:section]
 
 
-    [user_hash, user_uid_hash]
+    user_hash
   end
 
   def self.check_params_keys(params, keys)

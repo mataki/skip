@@ -93,10 +93,6 @@ def create_user options = {}
   user = User.new({ :name => 'ほげ ほげ', :password => 'Password1', :password_confirmation => 'Password1', :reset_auth_token => nil, :email => SkipFaker.email, :section => 'Programmer'}.merge(options[:user_options]))
   user.status = options[:status] || 'ACTIVE'
   user.admin = options[:user_options][:admin] || false
-  if options[:user_uid_options]
-    user_uid = UserUid.new({ :uid => '123456', :uid_type => 'MASTER' }.merge(options[:user_uid_options]))
-    user.user_uids << user_uid
-  end
   user.save!
   yield user if block_given?
   user

@@ -44,21 +44,18 @@
       </tr>
     </thead>
     <tbody>
-      <% @users.each_with_index do |array, line| -%>
-        <% @user, @user_uid = array -%>
-        <% unless (@error_row_only &&  @user.errors.empty?) -%>
+      <% @users.each_with_index do |user, line| -%>
+        <% unless (@error_row_only &&  user.errors.empty?) -%>
         <tr class="<%= cycle('line_1', 'line_0') %>">
           <td><%=h line+1 %></td>
-          <td><%=h @user_uid.uid %></td>
-          <td><%=h @user.name %></td>
-          <td><%=h @user.email %></td>
-          <td><%=h @user.section %></td>
+          <td><%=h user.name %></td>
+          <td><%=h user.email %></td>
+          <td><%=h user.section %></td>
           <td>
-        <% unless @user.errors.empty? -%>
+        <% unless user.errors.empty? -%>
           <%
             error_msg = []
-            error_msg.concat @user.errors.full_messages.reject{|msg| msg.include?("User uid") }
-            error_msg.concat @user_uid.errors.full_messages
+            error_msg.concat user.errors.full_messages.reject{|msg| msg.include?("User uid") }
           %>
           <%= help_icon_tag :content => "|#{error_msg.join('|')}" %>
         <% end -%>

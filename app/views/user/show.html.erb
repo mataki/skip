@@ -20,18 +20,6 @@
     <div class="topix_body">
     <h2 class="subtitle"><%= _('Account information') %></h2>
     <table class="normal user_info show">
-    <% if user_name_mode?(:code) -%>
-      <tr>
-        <th><%=h Admin::Setting.login_account -%></th>
-        <td><%=h current_target_user.code -%></td>
-      </tr>
-    <% end %>
-    <% if user_name_mode?(:name) -%>
-      <tr>
-        <th><%=h _('user name') -%></th>
-        <td><%=h current_target_user.uid -%></td>
-      </tr>
-    <% end %>
       <tr>
         <th><%=h s_("Admin::User|Name") %></th>
         <td><%=h current_target_user.name -%></td>

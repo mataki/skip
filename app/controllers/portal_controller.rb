@@ -39,7 +39,6 @@ class PortalController < ApplicationController
       end
       @user = current_user
       @profiles = @user.user_profile_values
-      @user_uid = (UserUid.new({ :uid => @user.email.split('@').first }))
     end
     render :action => session[:entrance_next_action]
   end
@@ -67,11 +66,6 @@ class PortalController < ApplicationController
     @profiles = @user.find_or_initialize_profiles(params[:profile_value])
 
     User.transaction do
-      if SkipEmbedded::InitialSettings['username_use_setting']
-        @user_uid = @user.user_uids.build(params[:user_uid].update(:uid_type => UserUid::UID_TYPE[:username]))
-        @user_uid.save!
-      end
-
       @profiles.each{|profile| profile.save!}
       @user.created_on = Time.now
       @user.status = 'ACTIVE'
@@ -88,21 +82,10 @@ class PortalController < ApplicationController
   rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => e
     @error_msg = []
     @error_msg.concat @user.errors.full_messages.reject{|msg| msg.include?("User uid") } unless @user.valid?
-    @error_msg.concat @user_uid.errors.full_messages if @user_uid and @user_uid.errors
     @error_msg.concat SkipUtil.full_error_messages(@profiles)
     @user.status = 'UNUSED'
 
     render :action => :registration
-  end
-
-  # ajax_action
-  # 入力されているuidがユニークか否かをチェックする
-  def ado_check_uid
-    unless error_message = UserUid.validation_error_message(params[:uid])
-      render :text => _('Usable.'), :status => :ok
-    else
-      render :text => error_message, :status => :bad_request
-    end
   end
 
   def registration
@@ -119,7 +102,6 @@ class PortalController < ApplicationController
       else
         @error_msgs = []
         @error_msgs.concat @user.errors.full_messages.reject{|msg| msg.include?("User uid") } unless @user.valid?
-        @error_msgs.concat @user.user_uids.first.errors.full_messages unless @user.user_uids.first.errors.empty?
         render :action => :account_registration
       end
     end

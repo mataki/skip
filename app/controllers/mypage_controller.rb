@@ -136,7 +136,6 @@ class MypageController < ApplicationController
     @title_icon = locals[:title_icon]
     @title_name = locals[:title_name]
     @entries = locals[:pages]
-    @symbol2name_hash = locals[:symbol2name_hash]
   end
 
   # 指定日の投稿記事一覧画面を表示
@@ -155,7 +154,6 @@ class MypageController < ApplicationController
     if @antenna_entry.need_search?
       @entries = @antenna_entry.scope.order_new.paginate(:page => params[:page], :per_page => 20)
       @user_unreadings = unread_entry_id_hash_with_user_reading(@entries.map {|entry| entry.id}, params[:target_type])
-      @symbol2name_hash = BoardEntry.get_symbol2name_hash(@entries)
     end
   end
 
@@ -471,8 +469,7 @@ class MypageController < ApplicationController
       :title_name => _('Recent Questions'),
       :pages => pages,
       :per_page => options[:per_page],
-      :recent_day => options[:recent_day],
-      :symbol2name_hash => BoardEntry.get_symbol2name_hash(pages)
+      :recent_day => options[:recent_day]
     }
   end
 
@@ -506,8 +503,7 @@ class MypageController < ApplicationController
       :title_icon => "user",
       :title_name => _('Blogs'),
       :pages => pages,
-      :per_page => options[:per_page],
-      :symbol2name_hash => BoardEntry.get_symbol2name_hash(pages)
+      :per_page => options[:per_page]
     }
   end
 
@@ -518,8 +514,7 @@ class MypageController < ApplicationController
       :id_name => id_name,
       :title_name => _('See all'),
       :per_page => options[:per_page],
-      :pages => pages,
-      :symbol2name_hash => BoardEntry.get_symbol2name_hash(pages)
+      :pages => pages
     }
   end
 
@@ -544,8 +539,7 @@ class MypageController < ApplicationController
       :title_icon => "group",
       :title_name => title,
       :per_page => options[:per_page],
-      :pages => pages,
-      :symbol2name_hash => BoardEntry.get_symbol2name_hash(pages)
+      :pages => pages
     }
   end
 

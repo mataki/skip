@@ -16,7 +16,7 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe EditController do
-  fixtures :users, :groups, :board_entries, :user_uids
+  fixtures :users, :groups, :board_entries
   before(:each) do
     @user = users(:a_user)
     @a_protected_group = groups(:a_protected_group1)

@@ -35,8 +35,6 @@ class User < ActiveRecord::Base
 
   has_many :groups, :through => :group_participations, :conditions => 'groups.deleted_at IS NULL'
 
-  has_many :user_uids, :dependent => :destroy
-
   has_many :openid_identifiers
   has_many :user_oauth_accesses
 
@@ -90,11 +88,6 @@ class User < ActiveRecord::Base
     }
   }
 
-  named_scope :name_or_code_like, proc { |word|
-    { :conditions => ["user_uids.uid like :word OR users.name like :word", { :word => SkipUtil.to_like_query_string(word) }],
-      :include => :user_uids }
-  }
-
   named_scope :profile_like, proc { |profile_master_id, profile_value|
     return {} if profile_value.blank?
     condition_str = ''
@@ -137,13 +130,7 @@ class User < ActiveRecord::Base
 
   named_scope :admin, :conditions => {:admin => true}
   named_scope :active, :conditions => {:status => 'ACTIVE'}
-  named_scope :partial_match_uid, proc {|word|
-    {:conditions => ["users.id in (?)", UserUid.partial_match_uid(word).map{|uu| uu.user_id}], :include => [:user_uids]}
-  }
-  named_scope :partial_match_uid_or_name, proc {|word|
-    {:conditions => ["users.id in (?) OR name LIKE ?", UserUid.partial_match_uid(word).map{|uu| uu.user_id}, SkipUtil.to_lqs(word)], :include => [:user_uids]}
-  }
-  named_scope :with_basic_associations, :include => [:user_uids, :user_custom]
+  named_scope :with_basic_associations, :include => [:user_custom]
 
   named_scope :order_last_accessed, proc {
     { :order => 'user_accesses.last_access DESC', :include => [:user_access] }
@@ -260,7 +247,6 @@ class User < ActiveRecord::Base
     code = params.delete(:code)
     password = encrypt(params[:code])
     user = new(params.slice(:name, :email).merge(:password => password, :password_confirmation => password))
-    user.user_uids << UserUid.new(:uid => code, :uid_type => 'MASTER')
     user.openid_identifiers << OpenidIdentifier.new(:url => identity_url)
     user.status = 'UNUSED'
     user
@@ -273,10 +259,9 @@ class User < ActiveRecord::Base
   end
 
   # 未登録ユーザも含めて検索する際に利用する
+  # TODO codeを廃止してemailのみにした。使用箇所を無くした上で後で消したい
   def self.find_by_code(code)
-    find_without_retired_skip(:first,
-                              :include => :user_uids,
-                              :conditions => ["user_uids.uid = ? and user_uids.uid_type = ?", code, 'MASTER'])
+    self.find_by_email(code)
   end
 
   def self.find_by_auth_session_token(token)
@@ -285,14 +270,7 @@ class User < ActiveRecord::Base
 
   def self.find_by_activation_token(token)
     find_without_retired_skip(:first,
-                              :include => :user_uids,
                               :conditions => { :activation_token => token })
-  end
-
-  # 登録済みユーザのユーザID(ログインID,ユーザ名)をもとにユーザを検索する
-  def self.find_by_uid(code)
-    user = find(:first, :conditions => ['user_uids.uid = ?', code], :include => :user_uids)
-    user ? user.reload : user
   end
 
   def change_password(params = {})
@@ -312,7 +290,18 @@ class User < ActiveRecord::Base
   end
 
   def symbol
-    self.class.symbol_type.to_s + ":" + symbol_id
+    id
+    #self.class.symbol_type.to_s + ":" + symbol_id
+  end
+
+  # TODO 使っている箇所潰してなくす
+  def uid
+    id
+  end
+
+  # TODO 使っている箇所潰してなくす
+  def code
+    id
   end
 
   def before_access
@@ -369,20 +358,6 @@ class User < ActiveRecord::Base
 
   def self.select_columns
     return column_names.dup.map! {|item| "users." + item}.join(',')
-  end
-
-  def uid
-    username || code
-  end
-
-  def username
-    user_uid = user_uids.detect { |u| u.uid_type == UserUid::UID_TYPE[:username] }
-    user_uid ? user_uid.uid : nil
-  end
-
-  def code
-    user_uid = user_uids.detect { |u| u.uid_type == UserUid::UID_TYPE[:master] }
-    user_uid ? user_uid.uid : nil
   end
 
   def retired?
@@ -475,7 +450,7 @@ class User < ActiveRecord::Base
 
   # ユーザが所属するシンボル(本人 + 本人の所属するグループ)のシンボルを配列で返す
   def belong_symbols
-    @belong_symbols ||= [self.symbol] + self.group_symbols
+    @belong_symbols ||= self.group_symbols
   end
 
   def belong_symbols_with_collaboration_apps
@@ -501,14 +476,14 @@ class User < ActiveRecord::Base
   end
 
   def to_s_log message
-    self.class.to_s_log message, self.uid, self.id
+    self.class.to_s_log message, self.email, self.id
   end
 
-  def self.to_s_log message, uid, user_id = nil
+  def self.to_s_log message, email, user_id = nil
     if user_id
-      "#{message}: {\"user_id\" => \"#{user_id}\", \"uid\" => \"#{uid}\"}"
+      "#{message}: {\"user_id\" => \"#{user_id}\", \"email\" => \"#{email}\"}"
     else
-      "#{message}: {\"uid\" => \"#{uid}\"}"
+      "#{message}: {\"email\" => \"#{email}\"}"
     end
   end
 
@@ -526,7 +501,7 @@ class User < ActiveRecord::Base
 
   def self.synchronize_users ago = nil
     conditions = ago ? ['updated_on >= ?', Time.now.ago(ago.to_i.minute)] : []
-    User.scoped(:conditions => conditions, :include => :user_uids).find_without_retired_skip(:all).map { |u| [u.openid_identifier, u.uid, u.name, u.admin, u.retired?] }
+    User.scoped(:conditions => conditions).find_without_retired_skip(:all).map { |u| [u.openid_identifier, u.uid, u.name, u.admin, u.retired?] }
   end
 
   def self.find_by_openid_identifier openid_identifier
@@ -546,10 +521,6 @@ class User < ActiveRecord::Base
   def participating_group? group
     raise ArgumentError, 'group_or_gid is invalid' unless group.is_a?(Group)
     self.group_symbols.include? group.symbol
-  end
-
-  def to_param
-    uid
   end
 
   def reset_simple_login_token!
@@ -593,7 +564,7 @@ private
   end
 
   def self.find_by_code_or_email(code_or_email)
-    find_by_code(code_or_email) || find_by_email(code_or_email)
+    find_by_email(code_or_email)
   end
 
   def self.find_by_code_or_email_with_key_phrase(code_or_email, key_phrase)

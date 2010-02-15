@@ -17,7 +17,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 require File.dirname(__FILE__) + '/../../lib/batch_make_user_readings'
 
 describe BatchMakeUserReadings do
-  fixtures :users, :board_entries, :groups, :user_uids
+  fixtures :users, :board_entries, :groups
 
   def test_get_updated_entries_and_save_user_readings
     # 登録済みの記事を一旦クリア
@@ -121,8 +121,8 @@ end
 describe BatchMakeUserReadings do
   describe "お知らせの新着通知" do
     before do
-      @create_user = create_user(:user_uid_options => {})
-      @notice_user = create_user(:user_uid_options => { :uid => "54321" })
+      @create_user = create_user
+      @notice_user = create_user
     end
 
     subject { UserReading.find_by_user_id_and_board_entry_id(@notice_user.id, @entry.id) }

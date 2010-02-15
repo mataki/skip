@@ -6,12 +6,6 @@
 
 <h2 class="subtitle"><%= _('Account Information')%></h2>
 <table class="normal user_info">
-  <% if user_name_mode?(:code) -%>
-  <tr>
-    <th><label for="user_code"><%= h Admin::Setting.login_account -%></label></th>
-    <td><%=h @user.code %></td>
-  </tr>
-  <% end -%>
   <tr>
     <th><label for="user_name"><%=h s_('Admin::User|Name') %></label></th>
     <td><%=h @user.name %></td>
@@ -37,27 +31,7 @@
     <td><%= h @user.section %></td>
   <% end -%>
   </tr>
-  <% if user_name_mode?(:name) -%>
-  <tr>
-    <th><label for="user_uid_uid"><%= _('user name') %></label></th>
-  <% if is_new -%>
-    <td><%= text_field 'user_uid', 'uid', {:tabindex => (tabindex += 1)} %>
-      <span id="uid_result" style="margin-left:3px;color:gray;font-size:10px"></span>
-      <span id="indicator" style="display:none;"><%= skip_image_tag 'indicator.gif' %></span>
-      <div class="desc ui-corner-all margin05emver">
-        <p><%= _("4 or more letters required. You can use alphabets, numbers, \"-\" and \"_\".")%></p>
-        <p><%= _("\"User name\" is used to identify yourself in short in blog entries etc. by the system.")%></p>
-        <p><%= _("It is the nature of the \"user name\" to be known by other users in the site, be careful to avoid using inproper values for it.")%></p>
-        <p><%= _("Make it the same as the account name of your email address (left of \"@\") if you are not sure what to use for it.")%></p>
-      </div>
-    </td>
-  <% else -%>
-    <td><%= h @user.uid %></td>
-  <% end -%>
-  </tr>
-  <% end -%>
 <% if @user.within_time_limit_of_activation_token? -%>
-  <%= hidden_field_tag :code, @user.activation_token %>
   <tr>
     <th><label for="user_password"><%= s_('Admin::User|Password') %></label></th>
     <td><%= password_field 'user', 'password', {:tabindex => (tabindex +=1)} %></td>
@@ -75,25 +49,3 @@
 <%= submit_tag submit_button_value, {:tabindex => (tabindex += 1), :id => 'submit_button', :disable_with => _("Saving..."), :class=>"margin05em"} %>
 <% end %>
 </div>
-
-<% content_for :javascript_initializers do -%>
-    $j('#user_uid_uid')
-    .keyup(function() {
-        $j.ajax({
-            url: '<%= url_for(:controller => 'portal', :action => 'ado_check_uid') %>',
-            data: { uid : $j(this).val() },
-            success: function(text) {
-                $j('#uid_result').html(text).css({ color: '#555555' });
-            },
-            error: function(request) {
-                $j('#uid_result').html(request.responseText).css({ color: 'red' });
-            },
-            complete: function(request) {
-                $j('#indicator').css({ display:'none' });
-            }
-        });
-    })
-    .ajaxStart(function() {
-        $j('#indicator').css({ display:'inline' });
-    });
-<% end -%>

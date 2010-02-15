@@ -1,20 +1,6 @@
 <%= error_messages_for :user %>
 
 <p>
-  <%= label Admin::UserUid.name, :uid, Admin::Setting.login_account %>
-  <% if @user.new_record? -%>
-  <%= text_field :user_uid, :uid %>
-  <% else -%>
-  :<%= h @user.code %>
-  <% end -%>
-</p>
-<% if SkipEmbedded::InitialSettings['username_use_setting'] and !@user.new_record? -%>
-<p>
-  <%= label Admin::User.name, :uid %>
-  :<%= h @user.uid %>
-</p>
-<% end -%>
-<p>
   <%= label Admin::User.name, :name %>
   :<%= text_field :user, :name %>
 </p>

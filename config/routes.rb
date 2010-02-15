@@ -12,6 +12,18 @@ ActionController::Routing::Routes.draw do |map|
         :reset_password => :any,
         :signup => :any
       }
+    tenant.resources :users do |user|
+      user.resources :board_entries
+      user.resources :share_files
+      user.resource :user_profile
+      user.resource :pictures, :only => %w(new create)
+    end
+    tenant.resources :groups do |group|
+      group.resources :board_entries
+      group.resources :share_files
+    end
+    tenant.resources :share_files, :only => %w(index show)
+    tenant.resources :board_entries, :only => %w(index show)
   end
 
 #  # TODO users配下に移す

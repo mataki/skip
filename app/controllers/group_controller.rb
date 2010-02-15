@@ -176,14 +176,6 @@ class GroupController < ApplicationController
     # FIXME 管理者のみに制御出来ていない
     symbol_type, symbol_id = Symbol.split_symbol params[:symbol]
     case
-    when (symbol_type == 'uid' and user = User.find_by_uid(symbol_id))
-      participations = @group.join user, :force => true
-      if participations.size > 0
-        SystemMessage.create_message :message_type => 'FORCED_JOIN', :user_id => user.id, :message_hash => {:group_id => @group.id} 
-        flash[:notice] = _("Added %s as a member.") % user.name
-      else
-        flash[:error] = @group.errors.full_messages
-      end
     when (symbol_type == 'gid' and group = Group.active.find_by_gid(symbol_id, :include => :group_participations))
       users = group.group_participations.active.map(&:user)
       participations = @group.join users, :force => true

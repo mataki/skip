@@ -185,9 +185,9 @@ describe BoardEntry, '#send_contact_mails' do
   end
   describe 'メールを送信する場合' do
     before do
-      @alice = create_user :user_options => {:name => 'アリス', :admin => true}, :user_uid_options => {:uid => 'alice'}
-      @jack = create_user :user_options => {:name => 'ジャック', :admin => true}, :user_uid_options => {:uid => 'jack'}
-      @nancy = create_user :user_options => {:name => 'ナンシー', :admin => true}, :user_uid_options => {:uid => 'nancy'}
+      @alice = create_user :user_options => {:name => 'アリス', :admin => true}
+      @jack = create_user :user_options => {:name => 'ジャック', :admin => true}
+      @nancy = create_user :user_options => {:name => 'ナンシー', :admin => true}
     end
     describe '公開範囲が全体公開の場合' do
       before do
@@ -268,7 +268,7 @@ end
 
 describe BoardEntry, '#send_trackbacks!' do
   before do
-    @sato = create_user(:user_options => {:name => 'Sato'}, :user_uid_options => {:uid => 'sato'})
+    @sato = create_user(:user_options => {:name => 'Sato'})
     @board_entry = create_board_entry
     @trackback_entry_1 = create_board_entry
     @trackback_entry_2 = create_board_entry
@@ -329,9 +329,9 @@ describe BoardEntry, '#publication_users' do
   describe 'あるグループのフォーラムが存在する場合' do
     before do
       # あるグループの管理者がアリス, 参加者がマイク, デイブ(退職者)
-      @alice = create_user :user_options => {:name => 'アリス', :admin => true}, :user_uid_options => {:uid => 'alice'}
-      @mike = create_user :user_options => {:name => 'マイク', :admin => true}, :user_uid_options => {:uid => 'mike'}
-      @dave = create_user :user_options => {:name => 'デイブ', :admin => true}, :user_uid_options => {:uid => 'dave'}, :status => 'RETIRED'
+      @alice = create_user :user_options => {:name => 'アリス', :admin => true}
+      @mike = create_user :user_options => {:name => 'マイク', :admin => true}
+      @dave = create_user :user_options => {:name => 'デイブ', :admin => true}, :status => 'RETIRED'
       @group = create_group(:gid => 'skip_group', :name => 'SKIPグループ') do |g|
         g.group_participations.build(:user_id => @alice.id, :owned => true)
         g.group_participations.build(:user_id => @mike.id, :owned => false)
@@ -510,13 +510,13 @@ end
 describe BoardEntry, '#authorized_entries_except_given_user' do
   before do
     # satoはsuzukiの記事の閲覧権限がない
-    @sato = create_user(:user_options => {:name => 'Sato'}, :user_uid_options => {:uid => 'sato'})
+    @sato = create_user(:user_options => {:name => 'Sato'})
     @sato_symbols = ["uid:#{@sato.uid}"]
     # yamadaはsuzukiの記事の閲覧権限がある
-    @yamada = create_user(:user_options => {:name => 'Yamada'}, :user_uid_options => {:uid => 'yamada'})
+    @yamada = create_user(:user_options => {:name => 'Yamada'})
     @yamada_symbols = ["uid:#{@yamada.uid}"]
     @yamada_entry = create_board_entry(:user_id => @yamada.id)
-    @suzuki = create_user(:user_options => {:name => 'Suzuki'}, :user_uid_options => {:uid => 'suzuki'})
+    @suzuki = create_user(:user_options => {:name => 'Suzuki'})
     @suzuki_entry = create_board_entry(:user_id => @suzuki.id, :publication_type => 'private')
     create_entry_publications(:board_entry_id => @suzuki_entry.id, :symbol => "uid:#{@suzuki.uid}")
     @entry_ids = [@yamada_entry.id, @suzuki_entry.id]
