@@ -16,8 +16,11 @@
 class GroupsController < ApplicationController
   before_filter :setup_layout, :except => %w(new create)
 
-  verify :method => :post, :only => [ :create ],
-          :redirect_to => { :action => :index }
+  before_filter :load_group_and_participation, :only => %w(show update destroy manage)
+
+  before_filter :check_owned, :only => [ :manage, :update, :destroy ]
+
+  after_filter :remove_system_message, :only => %w(show)
 
   # tab_menu
   # グループの一覧表示
@@ -34,31 +37,99 @@ class GroupsController < ApplicationController
   end
 
   # tab_menu
+  def show
+    @owners = User.owned(current_target_group).order_joined.limit(20)
+    @except_owners = User.joined_except_owned(current_target_group).order_joined.limit(20)
+    find_params = BoardEntry.make_conditions(current_user.belong_symbols, :symbol => current_target_group.symbol)
+    @recent_messages = BoardEntry.scoped(
+        :conditions => find_params[:conditions],
+        :include => find_params[:include] | [ :user, :state ]
+      ).order_sort_type("date").all(:limit => 10)
+  end
+
+  # tab_menu
   # グループの新規作成画面の表示
   def new
     @main_menu = @title = _('Create a new group')
-    @group = Group.new(:default_publication_type => 'public')
-    @group_categories = GroupCategory.all
+    @group = current_tenant.groups.build(:default_publication_type => 'public')
   end
 
   # post_action
   # グループの新規作成の処理
   def create
     @main_menu = @title = _('Create a new group')
-    @group = Group.new(params[:group])
-    @group_categories = GroupCategory.all
-    @group.group_participations.build(:user_id => session[:user_id], :owned => true)
+    @group = current_tenant.groups.build(params[:group])
+    @group.group_participations.build(:user_id => current_user.id, :owned => true)
 
     if @group.save
       flash[:notice] = _('Group was created successfully.')
-      redirect_to :controller => 'group', :action => 'show', :gid => @group.gid
+      redirect_to [current_tenant, @group]
     else
       render :action => 'new'
     end
   end
 
+  def update
+    if @group.update_attributes(params[:group])
+      flash[:notice] = _('Group information was successfully updated.')
+      redirect_to [current_tenant, @group]
+    else
+      render :action => 'manage'
+    end
+  end
+
+  def destroy
+    if @group.group_participations.size > 1
+      flash[:warn] = _('Failed to delete since there are still other users in the group.')
+      redirect_to [current_tenant, @group]
+    else
+      @group.logical_destroy
+      flash[:notice] = _('Group was successfully deleted.')
+      redirect_to tenant_groups_url(current_tenant)
+    end
+  end
+
+  # tab_menu
+  def manage
+    @menu = params[:menu] || "manage_info"
+
+    case @menu
+    when "manage_info"
+      @group_categories = GroupCategory.all
+    when "manage_participations"
+      @participations = @group.group_participations.active.paginate(:page => params[:page], :per_page => 20)
+    when "manage_permit"
+      unless @group.protected?
+        flash[:warn] = _("No approval needed to join this group.")
+        redirect_to :action => :manage
+        return
+      end
+      @participations = @group.group_participations.waiting.paginate(:page => params[:page], :per_page => 20)
+    else
+      render_404 and return
+    end
+    render :partial => @menu, :layout => "layout"
+  end
+
 private
   def setup_layout
     @main_menu = @title = _('Groups')
+  end
+
+  def load_group_and_participation
+    unless @group = current_target_group
+      flash[:warn] = _("Specified group does not exist.")
+      redirect_to root_url
+      return false
+    end
+    @participation = current_participation
+  end
+
+  def check_owned
+    unless @participation and @participation.owned?
+      flash[:warn] = _('Administrative privillage required for the action.')
+      redirect_to root_url
+      return false
+    end
   end
 end

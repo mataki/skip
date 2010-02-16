@@ -40,7 +40,7 @@ class ApplicationController < ActionController::Base
 
   init_gettext "skip" if defined? GetText
 
-  helper_method :scheme, :endpoint_url, :identifier, :checkid_request, :extract_login_from_identifier, :logged_in?, :current_user, :current_target_user, :current_target_group, :current_participation, :owner_entries_path, :bookmark_enabled?, :notice_entry_enabled?, :event_enabled?, :current_tenant
+  helper_method :scheme, :endpoint_url, :identifier, :checkid_request, :extract_login_from_identifier, :logged_in?, :current_user, :current_target_user, :current_target_group, :current_participation, :owner_entries_path, :notice_entry_enabled?, :current_tenant, :root_url
 protected
   include InitialSettingsHelper
   # アプリケーションで利用するセッションの準備をする
@@ -108,11 +108,12 @@ protected
   end
 
   def current_target_user
-    @current_target_user ||= User.find_by_id(params[:id] || params[:user_id])
+    @current_target_user ||= User.find_by_id(params[:controller] == 'users' ? params[:id] : params[:user_id])
+
   end
 
   def current_target_group
-    @current_target_group ||= Group.active.find_by_gid(params[:gid] || params[:group_id])
+    @current_target_group ||= Group.active.find_by_id(params[:controller] == 'groups' ? params[:id] : params[:group_id])
   end
 
   def current_participation
@@ -120,7 +121,7 @@ protected
   end
 
   def current_tenant
-    @current_tenant ||= Tenant.find(params[:id] || params[:tenant_id])
+    @current_tenant ||= Tenant.find(params[:tenant_id])
   end
 
   def owner_entries_path entry
@@ -321,6 +322,10 @@ protected
     if !SkipEmbedded::InitialSettings['wiki'] or !SkipEmbedded::InitialSettings['wiki']['use']
       redirect_to root_url
     end
+  end
+
+  def root_url
+    tenant_root_url(current_tenant)
   end
 
   private

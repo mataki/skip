@@ -1,16 +1,16 @@
 <%= template_error_messages_for 'group' %>
 <% if @group && @group.new_record? -%>
   <div class="input_line">
-    <div class="input_label"><%= label :group, :gid, _('Group ID') %></div>
-    <div class="input_value"><%= text_field 'group', 'gid', :size => 40 %></div>
+    <div class="input_label"><%= form.label :gid, _('Group ID') %></div>
+    <div class="input_value"><%= form.text_field :gid, :size => 40 %></div>
     <div class="param_desc" style="font-size:10px; color:gray;">
     <%= _("*A group ID consists of 4 or more letters of alphabets, numbers, \"-\" and \"_\".<br>\n  *Group ID is used in many situations e.g. URLs to identify the group so choose a understandable one.")%>
     </div>
   </div>
 <% end -%>
 <div class="input_line">
-  <div class="input_label"><%= label :group, :name, _('Name of Group') %></div>
-  <div class="input_value"><%= text_field 'group', 'name', :size => 40 %></div>
+  <div class="input_label"><%= form.label :name, _('Name of Group') %></div>
+  <div class="input_value"><%= form.text_field :name, :size => 40 %></div>
 </div>
 
 <div class="input_line">
@@ -18,11 +18,11 @@
   <div class="input_value">
     <table style="margin-left:3px;border:0;">
     <tr><th width="100px"></th><th></th></tr>
-<% @group_categories.each do |category| -%>
+<% GroupCategory.all.each do |category| -%>
     <tr>
       <td>
-        <%= radio_button "group", "group_category_id", category.id, :class => "category_radio_button" %>
-        <%= label :group, "group_category_id_#{category.id}", "#{get_group_icon(category, :margin => true)}#{content_tag(:b, h(category.name))}" %>
+        <%= form.radio_button :group_category_id, category.id, :class => "category_radio_button" %>
+        <%= form.label "group_category_id_#{category.id}", "#{get_group_icon(category, :margin => true)}#{content_tag(:b, h(category.name))}" %>
       </td>
       <td><%= h category.description %></td>
     </tr>
@@ -32,29 +32,29 @@
 </div>
 
 <div class="input_line">
-  <div class="input_label"><%= label :group, :description, s_('Group|Description') %></div>
-  <div class="input_value richtext" style="clear: left;"><%= text_area :group, :description, :class => 'invisible' %></div>
+  <div class="input_label"><%= form.label :description, s_('Group|Description') %></div>
+  <div class="input_value richtext" style="clear: left;"><%= form.text_area :description, :class => 'invisible' %></div>
 </div>
 
 <div class="input_line">
   <div class="input_label"><%= _('Joining the group') %></div>
   <div class="input_value">
-    <%= label :group, :protected, _('Approval from owner required?') %>
-    <%= select :group, :protected, { _("No") => false, _("Yes") => true } %>
+    <%= form.label :protected, _('Approval from owner required?') %>
+    <%= form.select :protected, { _("No") => false, _("Yes") => true } %>
   </div>
 </div>
 
 <div class="input_line">
   <div class="input_label"><%= _('Default Privacy Settings') %></div>
   <div class="input_value"><table><tr><td>
-    <%= radio_button(:group, :default_publication_type, 'public', :class => 'default_publication_type') %><%= label_tag('group_default_publication_type_public', _('Open to All')) %>
-    <%= radio_button(:group, :default_publication_type, 'private', :class => 'default_publication_type') %><%= label_tag('group_default_publication_type_private', _("Members Only")) %>
+    <%= form.radio_button(:default_publication_type, 'public', :class => 'default_publication_type') %><%= form.label(:default_publication_type_public, _('Open to All')) %>
+    <%= form.radio_button(:default_publication_type, 'private', :class => 'default_publication_type') %><%= form.label(:default_publication_type_private, _("Members Only")) %>
   </td></tr></table></div>
 </div>
 
 <div class="input_line">
   <div class="input_label"><%= _('Default Notification Method') %></div>
-  <%= check_box('group', 'default_send_mail', :id => 'default_send_mail_send') %><%= label_tag('default_send_mail_send', _('Send Emails')) %>
+  <%= form.check_box(:default_send_mail) %><%= form.label('default_send_mail', _('Send Emails')) %>
   <div class="input_value"><table><tr><td>
   </td></tr></table></div>
 </div>

@@ -36,4 +36,28 @@ module GroupsHelper
   def upsurge_frequency entries
     (entries.count > 50) && (Time.now.ago(7.day) < entries.last.last_updated) unless entries.empty?
   end
+
+  def get_group_manage_menu_items selected_menu
+    @@menus = [{:name => _("Edit Group Information"), :menu => "manage_info" },
+               {:name => _("Manage Members"),       :menu => "manage_participations"} ]
+    @@menus << {:name => _("Approve Member"),     :menu => "manage_permit" } if @group.protected?
+
+    get_menu_items @@menus, selected_menu, "manage"
+  end
+
+  def get_select_user_options owners
+    options_hash = {}
+    owners.each { |owner| options_hash.store(owner.name, owner.id) }
+    options_hash
+  end
+
+  def group_tab_menu_source group
+    tab_menu_source = []
+    tab_menu_source << {:label => _('Top'), :options => tenant_group_url(current_tenant, current_target_group)}
+    tab_menu_source << {:label => _('Members'), :options => {:controller => 'group', :action => 'users', :gid => group.gid}} unless group.group_participations.active.except_owned.empty?
+    tab_menu_source << {:label => _('Forums'), :options => {:controller => 'group', :action => 'bbs', :gid => group.gid, :sort_type => 'date', :type => ''}} unless BoardEntry.owned(group).accessible(current_user).empty?
+    tab_menu_source << {:label => _('Shared Files'), :options => {:controller => 'share_file', :action => "list", :gid => group.gid}} unless ShareFile.owned(group).accessible(current_user).empty?
+    tab_menu_source << {:label => _('Admin'), :options => manage_tenant_group_url(current_tenant, current_target_group)} if group.administrator?(current_user)
+    tab_menu_source
+  end
 end

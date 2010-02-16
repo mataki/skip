@@ -1,5 +1,4 @@
 ActionController::Routing::Routes.draw do |map|
-
   map.resources :tenants, :only => [] do |tenant|
     tenant.root :controller => 'mypage', :action => 'index'
     tenant.resource :mypage, :only => []
@@ -18,7 +17,7 @@ ActionController::Routing::Routes.draw do |map|
       user.resource :user_profile
       user.resource :pictures, :only => %w(new create)
     end
-    tenant.resources :groups do |group|
+    tenant.resources :groups, :member => {:manage => :get} do |group|
       group.resources :board_entries
       group.resources :share_files
     end

@@ -29,17 +29,6 @@ class GroupController < ApplicationController
          :redirect_to => { :action => :show }
 
   # tab_menu
-  def show
-    @owners = User.owned(@group).order_joined.limit(20)
-    @except_owners = User.joined_except_owned(@group).order_joined.limit(20)
-    find_params = BoardEntry.make_conditions(current_user.belong_symbols, :symbol => @group.symbol)
-    @recent_messages = BoardEntry.scoped(
-        :conditions => find_params[:conditions],
-        :include => find_params[:include] | [ :user, :state ]
-      ).order_sort_type("date").all(:limit => 10)
-  end
-
-  # tab_menu
   def users
     @users = @group.users.paginate(:page => params[:page])
 
@@ -128,28 +117,6 @@ class GroupController < ApplicationController
                 :send_mail => !!params[:send_mail],
                 :symbol => @group.symbol,
                 :publication_type => @group.default_publication_type)
-  end
-
-  # tab_menu
-  def manage
-    @menu = params[:menu] || "manage_info"
-
-    case @menu
-    when "manage_info"
-      @group_categories = GroupCategory.all
-    when "manage_participations"
-      @participations = @group.group_participations.active.paginate(:page => params[:page], :per_page => 20)
-    when "manage_permit"
-      unless @group.protected?
-        flash[:warn] = _("No approval needed to join this group.")
-        redirect_to :action => :manage
-        return
-      end
-      @participations = @group.group_participations.waiting.paginate(:page => params[:page], :per_page => 20)
-    else
-      render_404 and return
-    end
-    render :partial => @menu, :layout => "layout"
   end
 
   # post_action
@@ -294,28 +261,6 @@ class GroupController < ApplicationController
       flash[:notice] = _("Succeeded to Disapprove.")
     end
     redirect_to :action => 'manage', :menu => 'manage_permit'
-  end
-
-  # post_action
-  # 更新
-  def update
-    if @group.update_attributes(params[:group])
-      flash.now[:notice] = _('Group information was successfully updated.')
-    end
-    manage
-  end
-
-  # post_action
-  # 削除
-  def destroy
-    if @group.group_participations.size > 1
-      flash[:warn] = _('Failed to delete since there are still other users in the group.')
-      redirect_to :action => 'show'
-    else
-      @group.logical_destroy
-      flash[:notice] = _('Group was successfully deleted.')
-      redirect_to :controller => 'groups'
-    end
   end
 
 private
