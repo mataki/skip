@@ -5,15 +5,15 @@
   <li><%= link_to_unless_current(icon_tag('user_suit', :title => _('Users')) + _('Users'), :controller => '/users', :action => 'index') %></li>
   <li><%= link_to(icon_tag('group', :title => _('Create New Group')) + _('Groups'), '#') %>
     <ul>
-      <li><%= link_to_unless_current(_('List of Groups'), :controller => '/groups', :action => 'index') %></li>
-      <li><%= link_to_unless_current(_('Create New Group'), :controller => '/groups', :action => 'new') %></li>
+      <li><%= link_to(_('List of Groups'), :controller => '/groups', :action => 'index') %></li>
+      <li><%= link_to(_('Create New Group'), :controller => '/groups', :action => 'new') %></li>
     </ul>
   </li>
   <li><%= link_to(icon_tag('plugin_add', :title => _('Others')) + _('Others'), '#') %>
     <ul>
-      <li><%= link_to_unless_current(icon_tag('tag_blue', :title => _('Bookmarks')) + _('Bookmarks'), :controller => '/bookmarks', :action => 'index') %></li>
+      <li><%= link_to(icon_tag('tag_blue', :title => _('Bookmarks')) + _('Bookmarks'), :controller => '/bookmarks', :action => 'index') %></li>
       <% if SkipEmbedded::InitialSettings['wiki'] and SkipEmbedded::InitialSettings['wiki']['use'] -%>
-        <li><%= link_to_unless_current(icon_tag('page_white_paint', :title => _('Wiki')) + _('Wiki'), wiki_path((Page.root || Page.first({:conditions=>["parent_id = ?",0]})).title)) %></li>
+        <li><%= link_to(icon_tag('page_white_paint', :title => _('Wiki')) + _('Wiki'), wiki_path((Page.root || Page.first({:conditions=>["parent_id = ?",0]})).title)) %></li>
       <% end -%>
     </ul>
   </li>
