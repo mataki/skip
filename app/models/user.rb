@@ -43,6 +43,7 @@ class User < ActiveRecord::Base
   has_many :against_chains, :class_name => 'Chain', :foreign_key => 'to_user_id'
   has_many :notices, :dependent => :destroy
   has_many :system_messages, :dependent => :destroy
+  has_many :invitations, :dependent => :destroy
 
   validates_presence_of :name
   validates_length_of :name, :maximum => 60

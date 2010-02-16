@@ -1,0 +1,25 @@
+<% content_for :contents_right do -%>
+  <div class="edit_form_space ui-corner-all">
+    <h2 class="subtitle"><%= _('Inviate a user')%></h2>
+    <% form_for [current_user, @invitation] do |f| -%>
+      <%= error_messages_for :invitation %>
+      <table class="normal invitation">
+        <col class="col25" />
+        <col class="col100" />
+          <tr>
+            <th><%= f.label :email %></th>
+            <td><%= f.text_field :email, :size => 60 %></td>
+          </tr>
+          <tr>
+            <th><%= f.label :subject %></th>
+            <td><%= f.text_field :subject, :size => 60 %></td>
+          </tr>
+          <tr>
+            <th><%= f.label :body %></th>
+            <td><%= f.text_area :body, :size => '60x20' %></td>
+          </tr>
+      </table>
+      <%= f.submit _('Send'), :disable_with => _('Sending...') %>
+    <% end -%>
+  </div>
+<% end -%>

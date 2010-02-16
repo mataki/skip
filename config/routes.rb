@@ -11,6 +11,7 @@ ActionController::Routing::Routes.draw do |map|
       user.resources :chains
       user.resources :pictures
       user.resources :system_messages, :only => [:destroy]
+      user.resources :invitations, :only => [:new, :create]
     end
   end
 

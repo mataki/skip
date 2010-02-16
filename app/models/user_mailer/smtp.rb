@@ -67,4 +67,13 @@ class UserMailer::Smtp < UserMailer::Base
     @headers    = {}
     @body       = {:header => header, :footer => footer}
   end
+
+  def sent_invitation(invitation)
+    @recipients = invitation.email
+    @subject    = UserMailer::Base.base64("[#{Admin::Setting.abbr_app_title}] " + invitation.subject)
+    @from       = from
+    @send_on    = Time.now
+    @headers    = {}
+    @body       = invitation.body
+  end
 end
