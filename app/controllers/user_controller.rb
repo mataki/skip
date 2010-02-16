@@ -106,7 +106,7 @@ class UserController < ApplicationController
   # tab_menu
   def group
     @groups = @user.groups.active.partial_match_name_or_description(params[:keyword]).
-      categorized(params[:group_category_id]).order_recent.paginate(:page => params[:page], :per_page => 50)
+      categorized(params[:group_category_id]).order_active.paginate(:page => params[:page], :per_page => 50)
 
     flash.now[:notice] = _('No matching groups found.') if @groups.empty?
   end
