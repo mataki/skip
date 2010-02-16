@@ -39,6 +39,48 @@ div#global_links_wrapper
     span.other_links
       :float right
 
+    ul#nav
+      :list-style none
+      :list-style-position outside
+      :position relative
+      :line-height 1.5em
+      :font
+        :size 14px
+      :z-index 1
+      a
+        :display block
+        :padding 0 5px
+        :background-color #fff
+        :text-decoration none
+      li.home_link
+        :margin-right 50px
+        :float left
+      li
+        :position relative
+        :list-style none
+        :margin-right 10px
+        :float left
+        ul
+          :z-index 1
+          a
+            :width 10em
+            :height auto
+            :float left
+          ul
+            :left 10em
+      ul
+        :position absolute
+        :display none
+        :width 10em
+        ul
+          :top auto
+      li:hover ul
+        :display none
+        :z-index 1
+      li:hover li
+        :display block
+        :z-index 1
+
 ul.no_style
   :list-style-type none
 

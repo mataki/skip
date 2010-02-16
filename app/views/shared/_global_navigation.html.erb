@@ -1,20 +1,5 @@
-<%# TODO:OKならsassに移す -%>
-<style type="text/css">
-  #nav, #nav ul { margin:0; padding:0; list-style:none; list-style-position:outside; position:relative; line-height:1.5em; overflow:hiddne; font-size:14px; z-index:1; }
-  #nav a { display:block; padding:0 5px; color:#000; text-decoration:none; background-color:#fff; z-index:1;}
-  #nav ahover { background-color:#fff; color:#333; z-index:1; }
-  #nav li { margin-right:10px; padding:0; list-style:none; float:left; position:relative; z-index:1;}
-  #nav li.home_list { margin-right:50px; padding:0; list-style:none; float:left; position:relative; z-index:1;}
-  #nav ul { position:absolute; display:none; width:10em; z-index:1; }
-  #nav li ul a { width:10em; height:auto; float:left; z-index:1; }
-  #nav ul ul { top:auto; z-index:1;}
-  #nav li ul ul { left:10em; z-index:1; }
-  #nav li:hover ul ul, #nav li:hover ul ul ul, #nav li:hover ul ul ul ul { display:none; z-index:1;}
-  #nav li:hover ul, #nav li li:hover ul, #nav li li li:hover ul, #nav li li li li:hover ul{ display:block; z-index:1; }
-</style>
-
 <ul id="nav">
-  <li class="home_list"><%= link_to_unless_current(icon_tag('house', :title => _('My Page')) + _('My Page'), root_url) %></li>
+  <li class="home_link"><%= link_to_unless_current(icon_tag('house', :title => _('My Page')) + _('My Page'), root_url) %></li>
   <li><%= link_to_unless_current(icon_tag('report', :title => _('Entries')) + _('Entries'), :controller => '/search', :action => 'entry_search') %></li>
   <li><%= link_to_unless_current(icon_tag('disk_multiple', :title => _('Files')) + _('Files'), :controller => '/search', :action => 'share_file_search') %></li>
   <li><%= link_to_unless_current(icon_tag('user_suit', :title => _('Users')) + _('Users'), :controller => '/users', :action => 'index') %></li>
