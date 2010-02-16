@@ -212,7 +212,7 @@ default: &default
     enable: false
 
   invitation:
-    enalbe: false
+    enable: false
 
   # ================================================================================================
   # その他
