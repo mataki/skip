@@ -4,7 +4,7 @@
   <li><%= link_to_unless_current(icon_tag('disk_multiple', :title => _('Files')) + _('Files'), :controller => '/search', :action => 'share_file_search') %></li>
   <li><%= link_to_unless_current(icon_tag('user_suit', :title => _('Users')) + _('Users'), :controller => '/users', :action => 'index') %></li>
   <li><%= link_to_unless_current(icon_tag('group', :title => _('Groups')) + _('Groups'), :controller => '/groups', :action => 'index') %></li>
-  <li><%= link_to(icon_tag('plugin_add', :title => _('Others')) + _('Others') + '▼', '#') %>
+  <li><%= link_to(icon_tag('plugin_add', :title => _('Others')) + _('Others') + icon_tag('bullet_arrow_down'), '#') %>
     <ul>
       <li><%= link_to(icon_tag('tag_blue', :title => _('Bookmarks')) + _('Bookmarks'), :controller => '/bookmarks', :action => 'index') %></li>
       <% if SkipEmbedded::InitialSettings['wiki'] and SkipEmbedded::InitialSettings['wiki']['use'] -%>
