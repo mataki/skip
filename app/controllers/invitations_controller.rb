@@ -2,7 +2,7 @@ class InvitationsController < ApplicationController
   def new
     @invitation = current_user.invitations.build
     @invitation.subject = _('Invitation from %s') % Admin::Setting.abbr_app_title
-    @invitation.body = 'test'
+    @invitation.body = File.read("#{RAILS_ROOT}/public/custom/default_invitation_body.txt")
     respond_to do |format|
       format.html
     end
