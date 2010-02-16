@@ -568,9 +568,9 @@ describe MypageController, "POST or PUT /update_customize" do
       post :update_customize, {:user_custom => @user_custom_attr}
     end
 
-    it "カスタマイズ画面にリダイレクトすること" do
+    it "ホーム画面にリダイレクトすること" do
       post :update_customize, {:user_custom => @user_custom_attr}
-      response.should redirect_to(:action => "manage", :menu => "manage_customize")
+      response.should redirect_to(root_path)
     end
 
     it "setup_cookiesが呼ばれること" do
@@ -592,9 +592,9 @@ describe MypageController, "POST or PUT /update_customize" do
         put :update_customize, {:user_custom => @user_custom_attr}
       end.should_not change(UserCustom, :count)
     end
-    it "カスタマイズ画面にリダイレクトすること" do
+    it "ホーム画面にリダイレクトすること" do
       put :update_customize, {:user_custom => @user_custom_attr}
-      response.should redirect_to(:action => "manage", :menu => "manage_customize")
+      response.should redirect_to(root_path)
     end
     it "setup_cookiesが呼ばれること" do
       controller.should_receive(:setup_custom_cookies).and_return(true)
