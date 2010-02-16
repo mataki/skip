@@ -1,36 +1,48 @@
-<div class="search_cond_space ui-corner-all">
-  <% form_tag({:action => 'index'}, :method => 'get') do -%>
-    <table class="search_cond_box">
-      <tr>
-        <th><%= _('Group Name / Explanation')%></th>
-        <td>
-          <%= text_field_tag 'keyword' , params[:keyword], :size => 50 %><br/>
-        </td>
-      </tr>
-      <tr style="height:20px;">
-        <th><%= _('Category')%></th>
-        <td>
-          <%= radio_button_tag "group_category_id", "all", (params[:group_category_id] == "all" or params[:group_category_id].blank?) -%>
-          <%= label_tag "group_category_id_all", icon_tag("asterisk_orange", :margin => true) + _("All (%{num})") % {:num => Group.active.count} %>
-          <% GroupCategory.with_groups_count.ascend_by_sort_order.each do |category| -%>
-            <%= radio_button_tag "group_category_id", category.id, params[:group_category_id] == category.id.to_s -%>
-            <%= label_tag "group_category_id_#{category.id}", "#{get_group_icon(category, :margin => true)}#{h(category.name)}(#{category.count})" %>
-          <% end -%>
-        </td>
-      </tr>
-    </table>
-    <div class="submit">
-      <%= submit_tag _('Search') %>
-      <span class="margin05em">
-        <%= hidden_field_tag 'yet_participation', "false", :id => "hidden_yet_participation" %>
-        <%= check_box_tag 'yet_participation', 'true', params[:yet_participation] == 'true' %>
-        <%= label_tag 'yet_participation', _('Show groups you have not joined only.') %>
-      </span>
-    </div>
-  <% end -%>
-</div><!-- search_cond_space -->
+<% content_for :contents_left do -%>
+  <div class="action_buttons ui-corner-all">
+    <ul class="no_style">
+      <li><%= link_to(content_tag('span', _('Create New Group')), {:controller => 'groups', :action => 'new'}, :class => 'rounded', :title => _('New Posts')) %></li>
+    </ul>
+  </div>
+<% end -%>
 
-<div class="search_result_space">
-  <%= render :partial => 'groups/group_list',
-    :locals => { :groups => @groups, :user_id => current_user.id } %>
-</div><!-- search_result_space -->
+<% content_for :contents_right do -%>
+  <div class="search_cond_space ui-corner-all">
+    <% form_tag({:action => 'index'}, :method => 'get') do -%>
+      <table class="search_cond_box">
+        <tr>
+          <th><%= _('Group Name / Explanation')%></th>
+          <td>
+            <%= text_field_tag 'keyword' , params[:keyword], :size => 50 %><br/>
+          </td>
+        </tr>
+        <tr style="height:20px;">
+          <th><%= _('Category')%></th>
+          <td>
+            <%= radio_button_tag "group_category_id", "all", (params[:group_category_id] == "all" or params[:group_category_id].blank?) -%>
+            <%= label_tag "group_category_id_all", icon_tag("asterisk_orange", :margin => true) + _("All (%{num})") % {:num => Group.active.count} %>
+            <% GroupCategory.with_groups_count.ascend_by_sort_order.each do |category| -%>
+              <%= radio_button_tag "group_category_id", category.id, params[:group_category_id] == category.id.to_s -%>
+              <%= label_tag "group_category_id_#{category.id}", "#{get_group_icon(category, :margin => true)}#{h(category.name)}(#{category.count})" %>
+            <% end -%>
+          </td>
+        </tr>
+      </table>
+      <div class="submit">
+        <%= submit_tag _('Search') %>
+        <span class="margin05em">
+          <%= hidden_field_tag 'yet_participation', "false", :id => "hidden_yet_participation" %>
+          <%= check_box_tag 'yet_participation', 'true', params[:yet_participation] == 'true' %>
+          <%= label_tag 'yet_participation', _('Show groups you have not joined only.') %>
+        </span>
+      </div>
+    <% end -%>
+  </div><!-- search_cond_space -->
+
+  <div class="search_result_space">
+    <%= render :partial => 'groups/group_list',
+      :locals => { :groups => @groups, :user_id => current_user.id }
+    %>
+  </div><!-- search_result_space -->
+<% end -%>
+
