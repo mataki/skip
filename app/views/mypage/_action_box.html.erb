@@ -11,6 +11,5 @@
       <% new_bookmark_url_hash = {:controller => '/bookmark', :action => :new_url} -%>
       <li><%= link_to(content_tag('span', _('Bookmark a URL')), new_bookmark_url_hash, :title => _('Bookmark URL'), :class => 'rounded', :onclick => "sub_window_open('#{url_for(new_bookmark_url_hash)}', 'subwindow', 550, 400); return false;" ) %></li>
     <% end -%>
-    <li><%= link_to(content_tag('span', _('Create a new group')), {:controller => '/groups', :action => :new}, :title => _('Create a new group'), :class => 'rounded' ) %></li>
   </ul>
 </div>
