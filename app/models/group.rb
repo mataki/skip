@@ -17,9 +17,10 @@ class Group < ActiveRecord::Base
   include SkipEmbedded::LogicalDestroyable
 
   belongs_to :tenant
+  belongs_to :group_category
   has_many :group_participations, :dependent => :destroy
   has_many :users, :through => :group_participations, :conditions => ['group_participations.waiting = ?', false]
-  belongs_to :group_category
+  has_many :owner_entries, :class_name => 'BoardEntry', :as => :owner
 
   validates_presence_of :name, :description, :gid, :tenant_id
   validates_uniqueness_of :gid, :case_sensitive => false
