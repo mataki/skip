@@ -127,7 +127,7 @@
     <%# ============================================================ -%>
     <%#  main area bookmarks -%>
     <%# ============================================================ -%>
-    <% unless @bookmarks.empty? -%>
+    <% if bookmark_enabled? and !@bookmarks.empty? -%>
       <%= show_title_bar("tag_blue", _("New bookmarks"), url_for(:controller => "bookmarks", :action => "index")) %>
       <div class="topix_body" id="bookmark_body">
         <%= render :partial => 'bookmarks/topix_bookmarks', :locals => { :bookmarks => @bookmarks } %>
