@@ -21,11 +21,12 @@ class UserMailer::Base < ActionMailer::Base
   default_url_options[:protocol] = SkipEmbedded::InitialSettings['protocol']
 
 private
-  def self.base64(text, charset="iso-2022-jp", convert=true)
-    #Fixme: Japanese dependent
-    text = NKF.nkf('-j -m0 --cp932', text) if convert and charset == "iso-2022-jp"
-    text = [text].pack('m').delete("\r\n")
-    return "=?#{charset}?B?#{text}?="
+  def self.base64(text)
+    if GetText.locale.language == 'ja'
+      NKF.nkf("-WMm0 --oc=ISO-2022-JP-1", text)
+    else
+      text
+    end
   end
 
   def site_url
