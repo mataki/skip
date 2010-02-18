@@ -289,6 +289,7 @@ class PlatformController < ApplicationController
 
   def set_error_message_from_user_and_redirect(user)
     logger.error("[FIXED OP ERROR] User cannot create because #{user.errors.full_messages}")
+    logger.error("[DETAIL USER INFO] #{user.attributes}")
     set_error_message_and_redirect _("Failed to register user. Contact administrator %{contact_addr}.<br/>%{msg}")%{:contact_addr => Admin::Setting.contact_addr, :msg => user.errors.full_messages}
   end
 
