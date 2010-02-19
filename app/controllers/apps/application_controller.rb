@@ -18,7 +18,7 @@ class Apps::ApplicationController < ApplicationController
   protected
   def proxy_request_to_simple_apps
     client = HTTPClient.new
-    apps_url = "http://localhost:4000#{request.path}"
+    apps_url = "#{SkipEmbedded::InitialSettings['simple_apps']['url']}#{request.path}"
     common_headers = {'CsrfToken' => form_authenticity_token, 'SkipUserId' => current_user.id}
     res =
       if request.get?

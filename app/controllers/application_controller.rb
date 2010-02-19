@@ -40,7 +40,7 @@ class ApplicationController < ActionController::Base
 
   init_gettext "skip" if defined? GetText
 
-  helper_method :scheme, :endpoint_url, :identifier, :checkid_request, :extract_login_from_identifier, :logged_in?, :current_user, :current_target_user, :current_target_group, :current_participation, :owner_entries_path, :bookmark_enabled?, :notice_entry_enabled?
+  helper_method :scheme, :endpoint_url, :identifier, :checkid_request, :extract_login_from_identifier, :logged_in?, :current_user, :current_target_user, :current_target_group, :current_participation, :owner_entries_path, :bookmark_enabled?, :notice_entry_enabled?, :event_enabled?
 protected
   include InitialSettingsHelper
   # アプリケーションで利用するセッションの準備をする
@@ -318,6 +318,10 @@ protected
 
   def notice_entry_enabled?
     SkipEmbedded::InitialSettings['notice_entry'] && SkipEmbedded::InitialSettings['notice_entry']['enable']
+  end
+
+  def event_enabled?
+    SkipEmbedded::InitialSettings['simple_apps'] && SkipEmbedded::InitialSettings['simple_apps']['event'] && SkipEmbedded::InitialSettings['simple_apps']['event']['enable']
   end
 
   def require_wiki_enabled
