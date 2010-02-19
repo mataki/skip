@@ -340,28 +340,9 @@ module ApplicationHelper
     "<select class=\"select_navi\">#{option_tags.join('')}</select>"
   end
 
-  def global_links
-    links = ''
-    links << content_tag(:span, link_to_unless_current(icon_tag('house', :title => _('My Page')) + _('My Page'), root_url), :class => 'home_link')
-    other_links = []
-    links << content_tag(:span, other_links, :class => 'other_links')
-    search_links = []
-    search_links << link_to_unless_current(icon_tag('report', :title => _('Entries')) + _('Entries'),  :controller => '/search', :action => 'entry_search') if BoardEntry.count > 0
-    search_links << link_to_unless_current(icon_tag('disk_multiple', :title => _('Files')) + _('Files'),  :controller => '/search', :action => 'share_file_search') if ShareFile.count > 0
-    search_links << link_to_unless_current(icon_tag('user_suit', :title => _('Users')) + _('Users'),  :controller => '/users', :action => 'index') if User.count > 1
-    search_links << link_to_unless_current(icon_tag('group', :title => _('Groups')) + _('Groups'),  :controller => '/groups', :action => 'index') if Group.count > 0
-    search_links << link_to_unless_current(icon_tag('flag_blue', :title => _('Events')) + _('Events'),  events_path)
-    search_links << link_to_unless_current(icon_tag('tag_blue', :title => _('Bookmarks')) + _('Bookmarks'),  :controller => '/bookmarks', :action => 'index') if bookmark_enabled? && Bookmark.count > 0
-    if SkipEmbedded::InitialSettings['wiki'] and SkipEmbedded::InitialSettings['wiki']['use']
-      search_links << link_to(icon_tag('page_white_paint', :title => _('Wiki')) + _('Wiki'), wiki_path((Page.root || Page.first({:conditions=>["parent_id = ?",0]})).title))
-    end
-    links << content_tag(:span, search_links.join(' '), :class => 'search_links')
-  end
-
   def skin_themes
     %w(tile blue green silver snow sakura pink orange)
   end
-
 
 private
   def relative_url_root
