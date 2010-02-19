@@ -76,7 +76,7 @@
       <%= render :partial => 'shared/global_navigation' %>
       <span class="other_links">
         <% skin_themes.each do |skin| -%>
-          <%= link_to(image_tag("../stylesheets/skins/#{skin}/color.png", :size => "15x15", :title => "#{skin}"), {:action => 'update_customize', :user_custom => {"theme" => skin}}, :method => :post) %>
+          <%= link_to(image_tag("../stylesheets/skins/#{skin}/color.png", :size => "15x15", :title => "#{skin}"), {:controller => '/mypage', :action => 'update_customize', :user_custom => {"theme" => skin}}, :method => :post) %>
         <% end -%>
       </span>&nbsp;
     </div>
