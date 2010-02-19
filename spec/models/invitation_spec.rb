@@ -3,7 +3,8 @@ require 'spec_helper'
 describe Invitation do
   before(:each) do
     @valid_attributes = {
-      
+      :email => 'email@email.com',
+      :body => 'body'
     }
   end
 
