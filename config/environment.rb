@@ -62,6 +62,7 @@ Rails::Initializer.run do |config|
   config.gem "nokogiri", :version => '1.4.1'
   config.gem "sanitize", :version => '1.2.0'
   config.gem 'diff-lcs', :lib => 'diff/lcs', :version => '1.1.2'
+  config.gem 'httpclient', :lib => 'httpclient', :version => '2.1.5.2'
 end
 
 # 共通メニュー

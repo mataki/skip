@@ -7,10 +7,12 @@
 
 <body>
 <%= render :partial => "shared/header" %>
-<%= render :partial=>"shared/flash_message" %>
+<%= render :partial => "shared/flash_message" %>
 
+<% if params[:controller].split('/').first == "apps" -%>
+  <%= yield %>
+<% else -%>
 <div id="main">
-
   <%= yield :contents_top %>
 
   <div id="panel" class="ui-corner-all">
@@ -104,6 +106,8 @@
 
   <div class="clear_left"></div>
 </div><!-- main -->
+<% end -%>
+
 
 <% if @site_count -%>
 <div id="statusbar">
@@ -124,6 +128,9 @@ $j = jQuery.noConflict();
 var relative_url_root = '<%= relative_url_root %>';
 <% end -%>
 <%= javascript_include_tag 'application' %>
+<% if params[:controller].split('/').first == "apps" -%>
+  <%= simple_apps_application_javascript_include_tag %>
+<% end -%>
 <%= skip_reflect_customized_javascript_include_tag %>
 <%= javascript_include_tag :skip_embedded, :cache => "skip_embedded" %>
 <%= skip_jquery_include_tag 'jquery.tablesorter' %>

@@ -10,8 +10,9 @@
         <li><%= link_to(icon_tag('tag_blue', :title => _('Bookmarks')) + _('Bookmarks'), :controller => '/bookmarks', :action => 'index') %></li>
       <% end -%>
       <% if SkipEmbedded::InitialSettings['wiki'] and SkipEmbedded::InitialSettings['wiki']['use'] -%>
-        <li><%= link_to(icon_tag('page_white_paint', :title => _('Wiki')) + _('Wiki'), wiki_path((Page.root || Page.first({:conditions=>["parent_id = ?",0]})).title)) %></li>
+      <li><%= link_to(icon_tag('page_white_paint', :title => _('Wiki')) + _('Wiki'), wiki_path((Page.root || Page.first({:conditions=>["parent_id = ?",0]})).title)) %></li>
       <% end -%>
+      <li><%= link_to(icon_tag('flag_blue', :title => _('Events')) + _('Events'), apps_events_path) %></li>
     </ul>
   </li>
 </ul>
