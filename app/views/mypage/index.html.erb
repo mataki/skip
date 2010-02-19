@@ -62,30 +62,32 @@
 
     <%= render :partial => 'rss_feed_box' %>
 
-    <% unless @access_blogs[:pages].empty? -%>
-      <div class="right_box ui-corner-all" id="access_blogs">
-        <h2 class="ui-corner-top">
-          <%= h(@access_blogs[:title_name]) %><br />
-          <span class="desc">
-            (<%= Time.now.ago(recent_day.day).strftime(_('%B %d %Y')) %> - <%= Time.now.strftime(_('%B %d %Y')) %>)
-          </span>
-        </h2>
-        <div class="list">
-          <table>
-            <% @access_blogs[:pages].each_with_index do |entry, i| %>
-              <tr>
-                <td class="left" width="40px">
-                  <div class="picture"><%= i+1 %>.<%= show_picture(entry.user, :width => 24, :height => 24) %></div>
-                </td>
-                <td class="right" width="138px">
-                  <div class="title"><%= link_to h(entry.title), entry.get_url_hash %><span class="small_text">(<%= h entry.state.access_count %>)</span></div>
-                  <div class="name">by <%= user_link_to entry.user %></div>
-                </td>
-              </tr>
-            <% end -%>
-          </table>
+    <% cache @access_blogs_cache_key do %>
+      <% unless @access_blogs[:pages].empty? -%>
+        <div class="right_box ui-corner-all" id="access_blogs">
+          <h2 class="ui-corner-top">
+            <%= h(@access_blogs[:title_name]) %><br />
+            <span class="desc">
+              (<%= Time.now.ago(recent_day.day).strftime(_('%B %d %Y')) %> - <%= Time.now.strftime(_('%B %d %Y')) %>)
+            </span>
+          </h2>
+          <div class="list">
+            <table>
+              <% @access_blogs[:pages].each_with_index do |entry, i| %>
+                <tr>
+                  <td class="left" width="40px">
+                    <div class="picture"><%= i+1 %>.<%= show_picture(entry.user, :width => 24, :height => 24) %></div>
+                  </td>
+                  <td class="right" width="138px">
+                    <div class="title"><%= link_to h(entry.title), entry.get_url_hash %><span class="small_text">(<%= h entry.state.access_count %>)</span></div>
+                    <div class="name">by <%= user_link_to entry.user %></div>
+                  </td>
+                </tr>
+              <% end -%>
+            </table>
+          </div>
         </div>
-      </div>
+      <% end -%>
     <% end -%>
   </div>
 
@@ -106,12 +108,12 @@
     </div>
 
     <div class="ui-corner-all" id="custom_display_wrapper">
-      <h2>
+      <h2 class="ui-corner-top">
         <% if current_user.custom.display_entries_format == "tabs" %>
           <%= icon_tag("tab") %><%= _('display tabs') %>
-          <%= icon_tag("application_tile_vertical") + link_to(_('display flat'), {:action => 'update_customize', :user_custom => {"display_entries_format" => "flat"}}, :method => :post) %>
+          <%= icon_tag("application_tile_vertical") + link_to(_('display flat'), {:action => 'update_customize', :user_custom => {"display_entries_format" => "flat"}, :go_to_root => "true"}, :method => :post) %>
         <% else %>
-          <%= icon_tag("tab") + link_to(_('display tabs'), {:action => 'update_customize', :user_custom => {"display_entries_format" => "tabs"}}, :method => :post) %>
+          <%= icon_tag("tab") + link_to(_('display tabs'), {:action => 'update_customize', :user_custom => {"display_entries_format" => "tabs"}, :go_to_root => "true"}, :method => :post) %>
           <%= icon_tag("application_tile_vertical") %><%= _('display flat') %>
         <% end %>
       </h2>

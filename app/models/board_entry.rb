@@ -133,6 +133,11 @@ class BoardEntry < ActiveRecord::Base
     }
   }
 
+  named_scope :from_recents, proc {
+    num = 5000
+    { :from => "(SELECT * FROM board_entries ORDER BY board_entries.last_updated DESC LIMIT #{num}) AS board_entries" }
+  }
+
   named_scope :order_new, proc {
     { :order => "last_updated DESC,board_entries.id DESC" }
   }
