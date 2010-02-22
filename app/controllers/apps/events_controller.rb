@@ -14,9 +14,17 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Apps::EventsController < Apps::ApplicationController
+
+  before_filter :require_event_enabled
+
   %w(index new create show edit update attend absent recent).each do |method_name|
     define_method method_name do
       proxy_request_to_simple_apps
     end
+  end
+
+private
+  def require_event_enabled
+    render_404 unless event_enabled?
   end
 end
