@@ -134,7 +134,7 @@ class BoardEntry < ActiveRecord::Base
   }
 
   named_scope :from_recents, proc {
-    num = 5000
+    num = SkipEmbedded::InitialSettings['mypage_entry_search_limit'] || 1000
     { :from => "(SELECT * FROM board_entries ORDER BY board_entries.last_updated DESC LIMIT #{num}) AS board_entries" }
   }
 
