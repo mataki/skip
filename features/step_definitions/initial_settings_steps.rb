@@ -17,6 +17,14 @@ Given /^メール機能を有効にする$/ do
   SkipEmbedded::InitialSettings['mail']['show_mail_function'] = true
 end
 
+Given /^お知らせ機能を有効にする$/ do
+  SkipEmbedded::InitialSettings['notice_entry']['enable'] = true
+end
+
+Given /^Wiki機能を有効にする$/ do
+  SkipEmbedded::InitialSettings['wiki']['use'] = true
+end
+
 Given /^質問の告知方法の既定値をメール送信にする機能を"([^\"]*)"にする$/ do |str|
   if str == '有効'
     SkipEmbedded::InitialSettings['mail']['default_send_mail_of_question'] = true

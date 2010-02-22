@@ -30,7 +30,8 @@ Feature: マイページ
     And I should see "Railsについて雑談" within "div#recent_blogs"
 
   Scenario: お知らせを表示する
-    Given 以下のブログを書く:
+    Given お知らせ機能を有効にする
+    And 以下のブログを書く:
       |user  |title                   |aim_type                                                     |contents        |
       |a_user|Railsについてお知らせ   |お知らせ (マイページの「あなたへのお知らせ」に表示されます)  |リリースします  |
       |a_user|jQueryについてお知らせ  |お知らせ (マイページの「あなたへのお知らせ」に表示されます)  |リリースします  |

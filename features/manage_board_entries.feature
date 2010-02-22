@@ -4,7 +4,6 @@ Feature: 記事の管理
   Background:
     Given   言語は"ja-JP"
 
-  @now
   Scenario: ユーザとしてログインIDで直接指定された記事を表示できる
     Given   "a_group_owned_user"で"uid:100001"を直接指定したブログを書く
     When    "a_user"で"1"つめのブログにアクセスする

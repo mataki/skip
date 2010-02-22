@@ -7,6 +7,7 @@ Feature: Wikiの管理
   Background:
     Given   言語は"ja-JP"
     And     "a_user"でログインする
+    And     Wiki機能を有効にする
 
   Scenario: Wikiへアクセスする
     Given   "マイページ"にアクセスする

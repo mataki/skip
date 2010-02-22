@@ -17,6 +17,9 @@ module NavigationHelpers
     when /管理ページ/
       '/admin/'
 
+    when /グローバルのグループ一覧ページ/
+      '/groups/'
+
     when /Wikiトップページ/
       wiki_path('トップページ')
 
