@@ -1,5 +1,5 @@
 ================================================================================
-=  SKIP version 1.6.0                              http://www.openskip.org/    =
+=  SKIP version 1.7.0                              http://www.openskip.org/    =
 ================================================================================
 
 SKIPのダウンロードありがとうございます。
@@ -76,6 +76,7 @@ SKIPを動かすことができます。
     $ sudo gem install nokogiri --version 1.4.1
     $ sudo gem install sanitize --version 1.2.0
     $ sudo gem install diff-lcs --version 1.1.2
+    $ sudo gem install httpclient --version 2.1.5.2
 
 2. SKIPのファイル解凍（tarファイルをダウンロードした場合のみ）
 --------------------------------------------------------------------------------
