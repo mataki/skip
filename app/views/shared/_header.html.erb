@@ -74,12 +74,13 @@
   <% if current_user && current_user.active? -%>
     <div id="global_links">
       <%= render :partial => 'shared/global_navigation' %>
-      <span class="other_links">
-        <% skin_themes.each do |skin| -%>
-          <%= link_to(image_tag("../stylesheets/skins/#{skin}/color.png", :size => "15x15", :title => "#{skin}"), {:controller => '/mypage', :action => 'update_customize', :user_custom => {"theme" => skin}}, :method => :post) %>
-        <% end -%>
-      </span>&nbsp;
     </div>
+    <div id="customize_design">
+      <% skin_themes.each do |skin| -%>
+        <%= link_to(image_tag("../stylesheets/skins/#{skin}/color.png", :size => "15x15", :title => "#{skin}"), {:controller => '/mypage', :action => 'update_customize', :user_custom => {"theme" => skin}}, :method => :post) %>
+      <% end -%>
+    </div>
+    <div class="clear_both"></div>
   <% end -%>
 
   <% unless SkipEmbedded::InitialSettings['enable_ad_for_oss'] == "lovelyskip" -%>

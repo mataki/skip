@@ -20,6 +20,7 @@ div#global_links_wrapper
   :border-bottom = !base_border
   :padding-top 5px
   :padding-bottom 5px
+  :position relative
   div#global_links
     :margin 0px 20px
     :font
@@ -30,15 +31,6 @@ div#global_links_wrapper
       &:hover
         :color #f60
         :text-decoration none
-    span.home_link
-      :float left
-    span.search_links
-      :margin-left 40px
-      a
-        :margin 0px 6px
-    span.other_links
-      :float right
-
     ul#nav
       :list-style none
       :list-style-position outside
@@ -80,6 +72,11 @@ div#global_links_wrapper
       li:hover li
         :display block
         :z-index 1
+  div#customize_design
+    :position absolute
+    :right 10px
+    :top 5px
+    :padding-bottom 2px
 
 ul.no_style
   :list-style-type none
