@@ -6,11 +6,7 @@
   <li><%= link_to_unless_current(icon_tag('group', :title => _('Groups')) + _('Groups'), :controller => '/groups', :action => 'index') if Group.count > 0 %></li>
   <li><%= link_to_unless_current(icon_tag('tag_blue', :title => _('Bookmarks')) + _('Bookmarks'), :controller => '/bookmarks', :action => 'index') if bookmark_enabled? %></li>
   <% if event_enabled? -%>
-  <li><%= link_to(icon_tag('plugin_add', :title => _('Others')) + _('Others') + icon_tag('bullet_arrow_down'), '#') %>
-    <ul>
-      <li><%= link_to(icon_tag('flag_blue', :title => _('Events')) + _('Events'), apps_events_path) %></li>
-    </ul>
-  </li>
+  <li><%= link_to(icon_tag('flag_blue', :title => _('Events')) + _('Events'), apps_events_path) %></li>
   <% end -%>
   <% if SkipEmbedded::InitialSettings['wiki'] and SkipEmbedded::InitialSettings['wiki']['use'] -%>
   <li><%= link_to(icon_tag('page_white_paint', :title => _('Wiki')) + _('Wiki'), wiki_path((Page.root || Page.first({:conditions=>["parent_id = ?",0]})).title)) %></li>
