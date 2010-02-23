@@ -40,7 +40,7 @@ class ApplicationController < ActionController::Base
 
   init_gettext "skip" if defined? GetText
 
-  helper_method :scheme, :endpoint_url, :identifier, :checkid_request, :extract_login_from_identifier, :logged_in?, :current_user, :current_target_user, :current_target_group, :current_participation, :owner_entries_path, :notice_entry_enabled?, :current_tenant, :root_url
+  helper_method :scheme, :endpoint_url, :identifier, :checkid_request, :extract_login_from_identifier, :logged_in?, :current_user, :current_target_user, :current_target_group, :current_participation, :owner_entries_path, :notice_entry_enabled?, :event_enabled?, :current_tenant, :root_url
 protected
   include InitialSettingsHelper
   # アプリケーションで利用するセッションの準備をする
