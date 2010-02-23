@@ -3196,7 +3196,7 @@ msgstr "更新日時"
 
 #: app/views/shared/_global_navigation.html.erb:11
 msgid "Events"
-msgstr ""
+msgstr "イベント"
 
 #: app/views/users/index.html.erb:27
 msgid "Excluding retired users"

@@ -1,28 +1,39 @@
-<div class="search_cond_space ui-corner-all">
-  <% form_tag({:action => 'index'}, :method => 'get') do -%>
-    <table class="search_cond_box">
-      <tr>
-        <th><%= label_tag('title', _('Title')) %></th>
-        <td><%= text_field_tag('title', params[:title], :size => '60') %></td>
-      </tr>
-      <tr>
-        <th><%= label_tag("sort_type", _('Display Order')) %></th>
-        <td><%= selected_tag("sort_type", params[:sort_type], Bookmark::SORT_TYPES.map{|type| [_(type[0]), type[0]]}) %></td>
-      </tr>
-      <tr>
-        <th><%= _('Search Range') %></th>
-        <td>
-          <%= radio_button_tag('type', 'all', params[:type]=='all') + label_tag("type_all", _('All')) %>
-          <%= radio_button_tag('type', 'page', params[:type]=='page') + label_tag("type_page", _('Entries')) %>
-          <%= radio_button_tag('type', 'internet', params[:type]=='internet') + label_tag("type_internet", _('Internet')) %>
-        </td>
-      </tr>
-      <%= render :partial => 'search/tag_search', :locals => {:tags => @tags} %>
-    </table>
-    <div class="submit"><%= submit_tag _('Search') %></div>
-  <% end -%>
-</div>
+<% content_for :contents_left do -%>
+  <div class="action_buttons ui-corner-all">
+    <ul class="no_style">
+      <% new_bookmark_url_hash = {:controller => '/bookmark', :action => :new_url} -%>
+        <li><%= link_to(content_tag('span', _('Bookmark a URL')), new_bookmark_url_hash, :title => _('Bookmark URL'), :class => 'rounded', :onclick => "sub_window_open('#{url_for(new_bookmark_url_hash)}', 'subwindow', 550, 400); return false;" ) %></li>
+    </ul>
+  </div>
+<% end -%>
 
-<%= i18n_will_paginate_with_container_wrapper @bookmarks %>
-<%= render :partial => "topix_bookmarks", :locals => { :bookmarks => @bookmarks, :title => _('Search result') } %>
-<%= i18n_will_paginate_with_container_wrapper @bookmarks %>
+<% content_for :contents_right do -%>
+  <div class="search_cond_space ui-corner-all">
+    <% form_tag({:action => 'index'}, :method => 'get') do -%>
+      <table class="search_cond_box">
+        <tr>
+          <th><%= label_tag('title', _('Title')) %></th>
+          <td><%= text_field_tag('title', params[:title], :size => '60') %></td>
+        </tr>
+        <tr>
+          <th><%= label_tag("sort_type", _('Display Order')) %></th>
+          <td><%= selected_tag("sort_type", params[:sort_type], Bookmark::SORT_TYPES.map{|type| [_(type[0]), type[0]]}) %></td>
+        </tr>
+        <tr>
+          <th><%= _('Search Range') %></th>
+          <td>
+            <%= radio_button_tag('type', 'all', params[:type]=='all') + label_tag("type_all", _('All')) %>
+            <%= radio_button_tag('type', 'page', params[:type]=='page') + label_tag("type_page", _('Entries')) %>
+            <%= radio_button_tag('type', 'internet', params[:type]=='internet') + label_tag("type_internet", _('Internet')) %>
+          </td>
+        </tr>
+        <%= render :partial => 'search/tag_search', :locals => {:tags => @tags} %>
+      </table>
+      <div class="submit"><%= submit_tag _('Search') %></div>
+    <% end -%>
+  </div>
+
+  <%= i18n_will_paginate_with_container_wrapper @bookmarks %>
+  <%= render :partial => "topix_bookmarks", :locals => { :bookmarks => @bookmarks, :title => _('Search result') } %>
+  <%= i18n_will_paginate_with_container_wrapper @bookmarks %>
+<% end -%>

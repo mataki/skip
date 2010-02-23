@@ -7,9 +7,5 @@
     <li><%= link_to(content_tag('span', _('Write a question')), {:controller => '/edit', :action => :index, :aim_type => 'question', :uid => current_user.uid}, :title => _('Write a question'), :class => 'rounded') %></li>
     <% new_share_file_url_hash = {:controller => '/share_file', :action => :new, :owner_symbol => h(current_user.symbol), :owner_name => h(current_user.name)} -%>
     <li><%= link_to(content_tag('span', _('Upload a file')), new_share_file_url_hash, :title => _('Upload a file'), :class => 'rounded', :onclick => "sub_window_open('#{url_for(new_share_file_url_hash)}', 'subwindow', 550, 400); return false;") %></li>
-    <% if bookmark_enabled? -%>
-      <% new_bookmark_url_hash = {:controller => '/bookmark', :action => :new_url} -%>
-      <li><%= link_to(content_tag('span', _('Bookmark a URL')), new_bookmark_url_hash, :title => _('Bookmark URL'), :class => 'rounded', :onclick => "sub_window_open('#{url_for(new_bookmark_url_hash)}', 'subwindow', 550, 400); return false;" ) %></li>
-    <% end -%>
   </ul>
 </div>
