@@ -24,10 +24,9 @@ class Apps::ApplicationController < ApplicationController
       if request.get?
         client.get(apps_url, request.query_parameters, common_headers)
       else
-        if request.env['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest'
-          if method = request.request_parameters['_method']
-            common_headers.merge!({'X-Http-Method-Override', method})
-          end
+        if method = request.request_parameters['_method']
+          # putかdeleteに限定すべきか?
+          common_headers.merge!({'X-Http-Method-Override', method})
         end
         client.post(apps_url, request.request_parameters.to_json, common_headers.merge!({'Content-Type' => 'application/json'}))
       end
