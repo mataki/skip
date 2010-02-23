@@ -69,7 +69,7 @@ class SiteCount < ActiveRecord::Base
       :write_users_with_pvt => BoardEntry.active_user.diary.count(:distinct => true, :select => 'user_id'),
       :write_users_with_bbs => BoardEntry.active_user.count(:distinct => true, :select => 'user_id'),
       :comment_users => BoardEntryComment.active_user.count(:distinct => true, :select => 'user_id'),
-      :portrait_users => Picture.active_user.count
+      :portrait_users => Picture.active_user.count(:distinct => true, :select => 'user_id')
     )
   end
 
