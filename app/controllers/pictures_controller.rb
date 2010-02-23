@@ -16,7 +16,9 @@
 class PicturesController < ApplicationController
   def show
     @picture = Picture.find(params[:id])
-    send_data(@picture.data, :filename => @picture.name, :type => @picture.content_type, :disposition => "inline")
+    if stale?(:etag => @picture, :last_modified => @picture.updated_on)
+      send_data(@picture.data, :filename => @picture.name, :type => @picture.content_type, :disposition => "inline")
+    end
   end
 
   def create
