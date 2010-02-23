@@ -48,7 +48,7 @@ class Apps::ApplicationController < ApplicationController
       end
     else
       respond_to do |format|
-        format.html { render :text => res.content, :layout => true }
+        format.html { render :text => res.content, :layout => false }
         format.js { render :text => res.content, :layout => false }
       end
     end
