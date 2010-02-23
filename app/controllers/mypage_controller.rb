@@ -54,7 +54,11 @@ class MypageController < ApplicationController
     # ============================================================
     @questions = find_questions_as_locals({:recent_day => recent_day})
     @access_blogs_cache_key = "access_blog_#{Time.now.strftime('%Y%m%d%H')}"
+    # access_blogの取得は複数tableのカラムを伴うソートをするため非常に重くなる
+    # mysqlの実行計画ではUsing temporaryになる最悪のパターン
+    # 毎回取得する必要性は低いため1時間に1度フラグメントキャッシュを用いてキャッシュしておくことにする
     unless read_fragment(@access_blogs_cache_key)
+      expire_fragment_without_locale("access_blog_#{Time.now.ago(1.hour).strftime('%Y%m%d%H')}") # 古いcacheの除去
       @access_blogs = find_access_blogs_as_locals({:per_page => 10})
     end
     @recent_blogs = find_recent_blogs_as_locals({:per_page => per_page})
