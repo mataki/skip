@@ -20,7 +20,7 @@
 <div class="share_file_space">
   <div style="position: absolute; top:0; right: 1px;">
     <% if visible_owner_link -%>
-    <%= _("Belongs to: %s") % symbol_link_to(share_file.owner_symbol) if visible_owner_link %>
+    <%= _("Belongs to: %s") % owner_link_to(share_file.owner) if visible_owner_link %>
     <% end -%>
     <%= _("Uploaded by: %s") % user_link_to(share_file.user)%>
     <%= _('Downloads: %s') % content_tag('span', h(share_file.total_count), :id => "download_count_#{share_file.id}") %>

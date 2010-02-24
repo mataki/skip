@@ -59,9 +59,11 @@ class BoardEntry < ActiveRecord::Base
   validates_inclusion_of :publication_type, :in => %w(private public)
 
   named_scope :accessible, proc { |user|
-    { :conditions => ['entry_publications.symbol in (:publication_symbols)',
-      { :publication_symbols => user.belong_symbols << Symbol::SYSTEM_ALL_USER }],
-      :include => [:entry_publications] }
+    if joined_group_ids = Group.active.participating(user).map(&:id) and !joined_group_ids.empty?
+      { :conditions => ['publication_type = "public" OR owner_id IN (?)', joined_group_ids] }
+    else
+      { :conditions => ['publication_type = "public"'] }
+    end
   }
 
   named_scope :category_like, proc { |category|
@@ -135,6 +137,31 @@ class BoardEntry < ActiveRecord::Base
       :conditions => ['user_readings.read = ? AND user_readings.user_id = ?', true, user.id],
       :include => [:user_readings]
     }
+  }
+
+  named_scope :tagged, proc { |tag_words, tag_select|
+    return {} if tag_words.blank?
+    tag_select = 'AND' unless tag_select == 'OR'
+    condition_str = ''
+    condition_params = []
+    words = tag_words.split(',')
+    words.each do |word|
+      condition_str << (word == words.last ? ' entries.category like ?' : " entries.category like ? #{tag_select}")
+      condition_params << SkipUtil.to_like_query_string(word)
+    end
+    { :conditions => [condition_str, condition_params].flatten }
+  }
+
+  alias_scope :selected_owner_type, proc { |owner_type|
+    if owner_type == 'User' || owner_type == 'Group'
+      owner_type_is(owner_type)
+    else
+      scoped({})
+    end
+  }
+
+  alias_scope :owner_type_is_group, proc { |owner_type_is_group|
+    owner_type_is_group == '1' ? owner_type_is('Group') : scoped({})
   }
 
   named_scope :from_recents, proc {
@@ -378,20 +405,20 @@ class BoardEntry < ActiveRecord::Base
 #    return prev_entry, next_entry
 #  end
 #
-#  # TODO Tagのnamed_scopeにしてなくしたい
-#  def self.get_popular_tag_words()
-#    options = { :select => 'tags.name',
-#                :joins => 'JOIN tags ON entry_tags.tag_id = tags.id',
-#                :group => 'entry_tags.tag_id',
-#                :order => 'count(entry_tags.tag_id) DESC'}
-#
-#    entry_tags = EntryTag.find(:all, options)
-#    tags = []
-#    entry_tags.each do |tag|
-#      tags << tag.name
-#    end
-#    return tags.uniq.first(40)
-#  end
+  # TODO Tagのnamed_scopeにしてなくしたい
+  def self.get_popular_tag_words()
+    options = { :select => 'tags.name',
+                :joins => 'JOIN tags ON entry_tags.tag_id = tags.id',
+                :group => 'entry_tags.tag_id',
+                :order => 'count(entry_tags.tag_id) DESC'}
+
+    entry_tags = EntryTag.find(:all, options)
+    tags = []
+    entry_tags.each do |tag|
+      tags << tag.name
+    end
+    return tags.uniq.first(40)
+  end
 
   def categories_hash user
     accessible_entry_ids = BoardEntry.accessible(user).descend_by_last_updated.map(&:id)
@@ -715,17 +742,15 @@ class BoardEntry < ActiveRecord::Base
     end
   end
 
-#  # TODO ShareFileと統合したい
-#  def owner_is_user?
-#    symbol_type, symbol_id = SkipUtil.split_symbol self.symbol
-#    symbol_type == 'uid'
-#  end
-#
-#  # TODO ShareFileと統合したい
-#  def owner_is_group?
-#    symbol_type, symbol_id = SkipUtil.split_symbol self.symbol
-#    symbol_type == 'gid'
-#  end
+  # TODO ShareFileと統合したい
+  def owner_is_user?
+    owner.is_a?(User)
+  end
+
+  # TODO ShareFileと統合したい
+  def owner_is_group?
+    owner.is_a?(Group)
+  end
 
   def be_close!
     return false unless diary?

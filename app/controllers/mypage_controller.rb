@@ -126,7 +126,7 @@ class MypageController < ApplicationController
   # 公開されている記事一覧画面を表示
   def entries
     unless params[:list_type]
-      redirect_to :controller => 'search', :action => 'entry_search' and return
+      redirect_to tenant_board_entries_path(current_tenant) and return
     end
     unless valid_list_types.include?(params[:list_type])
       render_404 and return

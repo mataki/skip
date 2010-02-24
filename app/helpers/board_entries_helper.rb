@@ -83,7 +83,7 @@ module BoardEntriesHelper
   def entry_tag_search_links_tag comma_tags, options = {}
     return '' if comma_tags.blank?
     tag_links = comma_tags.split(',').map do |tag|
-      link_to h(tag), {:controller => 'search', :action => 'entry_search', :tag_words => h(tag)}, :class => 'tag'
+      link_to h(tag), tenant_board_entries_path(current_tenant, :tag_words => h(tag)), :class => 'tag'
     end
     if max = options[:max] and max > 0
       toggle_links(tag_links, max)

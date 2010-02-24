@@ -113,12 +113,11 @@ module ApplicationHelper
     link_to output_text, { :controller => 'group', :action => 'show', :gid => group.gid }, options
   end
 
-  def symbol_link_to symbol, name = nil, options = {}
-    symbol_type, symbol_id = SkipUtil.split_symbol symbol
-    name ||= "[#{symbol}]"
-    link = link_to(h(name), {:controller => @@CONTROLLER_HASH[symbol_type], :action => "show", symbol_type => symbol_id}, :title => name)
+  def owner_link_to owner, name = nil, options = {}
+    name ||= "[#{owner.name}]"
+    link = link_to(h(name), [current_tenant, owner], :title => name)
     if options[:with_prefix]
-      prefix = (symbol_type == 'uid') ? 'by' : 'on'
+      prefix = owner.is_a?(User) ? 'by' : 'on'
       "#{prefix} #{link}"
     else
       link

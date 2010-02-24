@@ -16,47 +16,6 @@
 class SearchController < ApplicationController
 
   # tab_menu
-  def entry_search
-    @main_menu = @title = _('Entries')
-
-    params[:tag_select] ||= "AND"
-    find_params = BoardEntry.make_conditions(current_user.belong_symbols, {:keyword =>params[:keyword],
-                                               :tag_words => params[:tag_words],
-                                               :tag_select => params[:tag_select]})
-
-    if params[:user] or params[:group]
-      find_params[:conditions][0] << " and ("
-    end
-
-    additional_state = ""
-    if params[:user]
-      additional_state << "board_entries.entry_type = 'DIARY'"
-    end
-    if params[:group]
-      additional_state << " or " unless additional_state.empty?
-      additional_state << "board_entries.entry_type = 'GROUP_BBS'"
-    end
-
-    find_params[:conditions][0] << additional_state
-
-    if params[:user] or params[:group]
-      find_params[:conditions][0] << " ) "
-    end
-
-    @entries = BoardEntry.scoped(
-      :conditions => find_params[:conditions],
-      :include => find_params[:include] | [ :user, :state ]
-    ).order_new.aim_type(params[:type] || 'entry').paginate(:page => params[:page], :per_page => 25)
-
-    if @entries.empty?
-      flash.now[:notice] = _('No matching data found.')
-    end
-
-    @symbol2name_hash = BoardEntry.get_symbol2name_hash @entries
-    @tags = BoardEntry.get_popular_tag_words
-  end
-
-  # tab_menu
   def share_file_search
     @search = ShareFile.accessible(current_user).tagged(params[:tag_words], params[:tag_select])
     @search =

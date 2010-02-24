@@ -19,7 +19,7 @@
             <td class="publication_state"><%= get_publication_type_icon(share_file) %></td>
             <% if symbol2name_hash -%>
             <td class="owner"><span class="nowrap">
-              <%= symbol_link_to(share_file.owner_symbol, symbol2name_hash[share_file.owner_symbol]) %>
+              <%= owner_link_to(share_file.owner) %>
             </span></td>
             <td></td>
             <% end -%>

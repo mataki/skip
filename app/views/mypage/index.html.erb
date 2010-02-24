@@ -68,11 +68,11 @@
     <%#  main area entries -%>
     <%# ============================================================ -%>
     <div class="ui-corner-all" id="questions_wrapper">
-      <h2 class="ui-corner-top"><%= icon_tag(@questions[:title_icon]) + link_to(h(@questions[:title_name]), :controller => "/search", :action => 'entry_search', :type => 'question') %></h2>
+      <h2 class="ui-corner-top"><%= icon_tag(@questions[:title_icon]) + link_to(h(@questions[:title_name]), tenant_board_entries_path(current_tenant), :type => 'question') %></h2>
       <% if @questions[:pages].empty? -%>
         <div><%= _('No matching questions.') %></div>
       <% else -%>
-        <%= render :partial => "entries/topix_entries", :locals => { :entries => @questions[:pages], :symbol2name_hash => @questions[:symbol2name_hash] } %>
+        <%= render :partial => "entries/topix_entries", :locals => { :entries => @questions[:pages], :show_owner_link => true } %>
       <% end -%>
     </div>
 

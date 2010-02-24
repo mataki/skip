@@ -24,6 +24,23 @@ class BoardEntriesController < ApplicationController
   after_filter :make_comment_message, :only => [ :ado_create_comment, :ado_create_nest_comment ]
 
   def index
+    @main_menu = @title = _('Entries')
+    params[:tag_select] ||= "AND"
+
+    # FIXME ownerの指定がある/なしで場合分けが必要
+    @search = current_tenant.board_entries.accessible(current_user).tagged(params[:tag_words], params[:tag_select]).search(params[:search])
+
+    @entries = @search.paginate(:page => params[:page], :per_page => 25)
+
+    respond_to do |format|
+      format.html do
+        @tags = BoardEntry.get_popular_tag_words
+        if @entries.empty?
+          flash.now[:notice] = _('No matching data found.')
+        end
+        render
+      end
+    end
   end
 
   def show
