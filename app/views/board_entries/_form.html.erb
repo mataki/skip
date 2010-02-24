@@ -3,6 +3,9 @@
 table {
   table-layout: auto;
 }
+table.input_table textarea {
+  width: 100%;
+}
 div.input_line {
   border-bottom: 1px dotted silver;
   margin-bottom: 2px;
@@ -12,25 +15,25 @@ div.input_line textarea {
   width: 98%;
 }
 </style>
+<%= skip_stylesheet_link_tag "themes/cupertino/ui.dialog.css" %>
+<%= skip_stylesheet_link_tag "themes/cupertino/ui.tabs.css" %>
 <% end -%>
 
 <%= template_error_messages_for 'board_entry' %>
 
-<%= hidden_field_tag 'entry_type', h(params[:entry_type]) %>
-<%= hidden_field 'board_entry', 'entry_type' %>
-<%= hidden_field 'board_entry', 'symbol' %>
-<%= hidden_field 'board_entry', 'lock_version' %>
+<%= form.hidden_field :entry_type %>
+<%= form.hidden_field :lock_version %>
 
 <div class="input_line">
-  <div class="input_label"><%= label(:board_entry, :aim_type, _('Types')) %></div>
+  <div class="input_label"><%= form.label :aim_type, _('Types') %></div>
   <% aim_types = BoardEntry.enable_aim_types.map{|type| [s_("BoardEntry|Aim type|Desc|#{type}"), type]} -%>
-  <div class="input_value"><%= select :board_entry, :aim_type, options_for_select(aim_types, @board_entry.aim_type) %></div>
+  <div class="input_value"><%= form.select :aim_type, options_for_select(aim_types, form.object.aim_type) %></div>
   <div class="clear_left"></div>
 </div>
 
 <div class="input_line">
-  <div class="input_label"><%= label(:board_entry, :category, _('Tags')) -%></div>
-  <div class="input_value"><%= text_field 'board_entry', 'category', :size => '60', :value => @board_entry.category %>
+  <div class="input_label"><%= form.label(:category, _('Tags')) -%></div>
+  <div class="input_value"><%= form.text_field :category, :size => '60' %>
     <div id="category_box" style="display:none;">
       <div id="candidates_list"><p><%= _('Multiple values can be given in foo,bar format')%></p></div>
       <div style="font-size:10pt; font-weight:bold;"><%= _('Your tags: ')%></div><div id="tags_list" style="margin-bottom:5px;"></div>
@@ -42,22 +45,35 @@ div.input_line textarea {
 </div>
 
 <div class="input_line">
-  <div class="input_label"><%= label(:board_entry, :title, _('Title')) -%></div>
-  <div class="input_value"><%= text_field 'board_entry', 'title', :size =>60 %></div>
+  <div class="input_label"><%= form.label :title %></div>
+  <div class="input_value"><%= form.text_field :title, :size => 60 %></div>
   <div style="clear: left"></div>
 </div>
 
 <div class="input_line">
-  <div class="input_label"><%= label_tag 'contents_hiki', _('Contents') %></div>
-  <%= render :partial => "board_entries/edit_contents" %>
+  <div class="input_label"><%= form.label :contents %></div>
+  <div class="input_value" style="height: 2em;">
+    <%= form.radio_button(:editor_mode, "richtext") + label_tag("editor_mode_richtext", _('Rich Text')) %>
+    <%= form.radio_button(:editor_mode, "hiki") + label_tag("editor_mode_hiki", _('Wiki text')) %>
+    <span id="share_file_trigger" class="pointer link"><span class="ss_sprite ss_attach">&nbsp;</span><%= _('Insert file or embed in text body') %></span>
+  </div>
+
+  <div id="contents_richtext_space" class="richtext" style="display: none;">
+    <% form.object.contents_richtext = sanitize_and_unescape_for_richtext(form.object.contents_richtext) -%>
+    <%= form.text_area :contents_richtext, :cols => 90, :rows => 20 %>
+  </div>
+  <div id="contents_hiki_space" style="display: none;">
+    <%= link_to_hiki_help %> <a href="#" id="hiki_preview_link"><%= _('[See preview]')%></a>
+    <%= form.text_area :contents_hiki, :cols => 90, :rows => 20 %>
+  </div>
 </div>
 
 <div class="input_line input_option invisible">
   <div class="input_label" style="height: 30px;"><%= _('Date')%></div>
   <div class="input_value">
-    <p><%= datetime_select 'board_entry', 'date', :use_month_numbers => true -%></p>
+    <p><%= form.datetime_select :date, :use_month_numbers => true -%></p>
     <p><a href="#" onclick="setCurrentDatetime('board_entry', 'date');return false;"><%= _('[Set current time]')%></a>
-      <%= check_box 'board_entry', 'ignore_times' -%><%= label(:board_entry, :ignore_times, _('Hide Time')) %></p>
+      <%= form.check_box :ignore_times %><%= form.label :ignore_times, _('Hide Time') %></p>
   </div>
   <div style="clear: left"></div>
 </div>
@@ -69,17 +85,11 @@ div.input_line textarea {
 <div class="input_line input_option invisible">
   <div class="input_label" style="height: 3em;" id="input_label_publication"><%= _('Privacy Settings')%></div>
   <div class="input_value" id="input_value_publication"><table><tr><td>
-    <% display_type = (@board_entry.owner_is_public? ? "" : "none") %>
+    <% display_type = (form.object.owner_is_public? ? "" : "none") %>
     <span style="display:<%= display_type %>">
-      <%= radio_button_tag("publication_type", "public", params[:publication_type] == "public", :id=>"publication_type_public") -%><%= label_tag("publication_type_public", _('Open to All')) %>
+      <%= form.radio_button :publication_type, "public" %><%= form.label :publication_type_public, _('Open to All') %>
     </span>
-    <%= radio_button_tag("publication_type", "private", params[:publication_type] == "private", :id=>"publication_type_private") -%><%= label_tag("publication_type_private", @board_entry.diary? ? _("Owner Only") : _("Members Only")) %>
-    <%= radio_button_tag("publication_type", "protected", params[:publication_type] == "protected", :id=>"publication_type_protected") %><%= label_tag("publication_type_protected", _('Specify Directly')) %>
-
-    <div id="editor_symbols_space" style="display: none; margin-top: 5px;">
-      <%= check_box_tag 'editor_symbol', @board_entry.symbol, params[:editor_symbol] %><%= label_tag :editor_symbol, _('Edit by Members Allowed') %>
-    </div>
-    <%= render :partial => "shared/symbol_autocomplete_field", :locals => {:publication_symbols_value => params[:publication_symbols_value], :editor_symbols_value => params[:editor_symbols_value], :edit_checkbox => true } %>
+    <%= form.radio_button :publication_type, "private" %><%= form.label :publication_type_private, form.object.diary? ? _("Owner Only") : _("Members Only") %>
     </td></tr></table>
   </div>
   <div style="clear: left"></div>
@@ -96,151 +106,111 @@ div.input_line textarea {
   <div style="clear: left"></div>
 </div>
 
+<% ckeditor 'board_entry_contents_richtext', 'toolbar' => "Entry" %>
 <% content_for :javascript_initializers do -%>
-  <% categories_hash = @board_entry.categories_hash(current_user) -%>
-    var setupTagComplete = function() {
-        var tags = new Array(<%= categories_hash[:mine].map{|str| ("'#{str}'")}.join(',') %>);
-        var stdTags = new Array(<%= categories_hash[:standard].map{|str| ("'#{str}'")}.join(',') %>);
-        var userTags = new Array(<%= categories_hash[:user].map{|str| ("'#{str}'")}.join(',') %>);
+  <% categories_hash = form.object.categories_hash(current_user) -%>
+  var setupTagComplete = function() {
+      var tags = new Array(<%= categories_hash[:mine].map{|str| ("'#{str}'")}.join(',') %>);
+      var stdTags = new Array(<%= categories_hash[:standard].map{|str| ("'#{str}'")}.join(',') %>);
+      var userTags = new Array(<%= categories_hash[:user].map{|str| ("'#{str}'")}.join(',') %>);
 
-        $j('#tags_list').append(createTagsLink(tags));
-        $j('#std_tags_list').append(createTagsLink(stdTags));
-        $j('#user_tags_list').append(createTagsLink(userTags));
+      $j('#tags_list').append(createTagsLink(tags));
+      $j('#std_tags_list').append(createTagsLink(stdTags));
+      $j('#user_tags_list').append(createTagsLink(userTags));
 
-        // タグ処理
-        $j('#board_entry_category').jTagging($j('#tags_list'));
-        $j('#board_entry_category').jTagging($j('#std_tags_list'));
-        $j('#board_entry_category').jTagging($j('#user_tags_list'));
-    };
-    setupTagComplete();
+      // タグ処理
+      $j('#board_entry_category').jTagging($j('#tags_list'));
+      $j('#board_entry_category').jTagging($j('#std_tags_list'));
+      $j('#board_entry_category').jTagging($j('#user_tags_list'));
+  };
+  setupTagComplete();
 
-    // 入力フォームのチェック
-    $j('#board_entry_form')
-    .submit(function (){
-        if ($j('#publication_type_public:checked').size() > 0){
-            $j('#publication_symbols_value').val("");
-            $j('#editor_symbols_value').val("");
-        }
-
-        var no_tb_array = new Array();
-        var tb_array = $j('#trackbacks').val().split(',');
-
-        var contents_value;
-        if ($j('#editor_mode_richtext:checked').size() > 0) {
-            contents_value = $j('#contents_richtext').val();
-        } else {
-            contents_value = $j('#contents_hiki').val();
-        }
-
-        for(i=0; i < tb_array.length; i++){
-            var tb = Trim(tb_array[i]);
-            if(tb != ""){
-                if (isNaN(tb)){
-                    alert('<%= _('Illegal format in "Topic entry". List the page IDs and separate each other by commas.')%>');
-                    return false;
-                }
-                if (contents_value.match(new RegExp("page:" + tb + ".*]")) == null) {
-                    no_tb_array.push(tb);
-                }
-            }
-        }
-
-        if ($j('#publication_type_protected:checked').size() > 0){
-            if ($j('#publication_symbols_value').val() == ""){
-                if (confirm("<%= _('No user selected. Are you sure to make this open to all users?')%>") == true) {
-                    $j('#publication_type_public').attr('checked',true);
-                    changePublicationType();
-                } else {
-                    return false;
-                }
-            }
-        }
-
-        if ($j('#publication_type_public:checked').size() > 0 && $j('#board_entry_send_mail:checked').size() > 0) {
-            if (!confirm('<%= _('Are you sure to send email to all users?') %>'))
-                return false;
-        }
-
-        // 作成or更新によるページ遷移は警告しない
-        $j(window).unbind('beforeunload');
-    });
-    var Trim = function(str){
-        str = str.replace(/^[ 　]+/,"");
-        str = str.replace(/[ 　]+$/,"");
-        return(str);
+  <% unless SkipEmbedded::InitialSettings['mail']['enable_send_email_to_all_users'] -%>
+  // メール送信チェックボックスの表示制御
+  var toggleSendMail = function() {
+  <% if form.object.diary? -%>
+    $j('span.send_mail_field').hide();
+  <% else -%>
+    if ($j('#board_entry_publiation_type_public:checked').length > 0) {
+      $j('span.send_mail_field').hide();
+    } else {
+      $j('span.send_mail_field').show();
     }
+  <% end -%>
+  };
+  toggleSendMail();
+  <% end -%>
 
-    // 公開範囲のチェックボックス
-    var show_editable = <%= @board_entry.diary? ? "false" : "true" -%>;
-    var changePublicationType = function() {
-        if ($j('#publication_type_protected:checked').length > 0) {
-            $j('#editor_symbols_space').hide();
-            $j('#publication_symbols_space').show();
-            $j('#publication_symbol').focus();
-        } else {
-            $j('#publication_symbols_space').hide();
-            if (show_editable) {
-                $j('#editor_symbols_space').show();
-            }
-        }
-    };
-    changePublicationType();
-
+  $j('#board_entry_publiation_type_public, #board_entry_publiation_type_private').live('click', function(){
     <% unless SkipEmbedded::InitialSettings['mail']['enable_send_email_to_all_users'] -%>
-    // メール送信チェックボックスの表示制御
-    var toggleSendMail = function() {
-    <% if @board_entry.diary? -%>
-      if ($j('#publication_type_protected:checked').length > 0) {
-        $j('span.send_mail_field').show();
-      } else {
-        $j('span.send_mail_field').hide();
-      }
-    <% else -%>
-      if ($j('#publication_type_public:checked').length > 0) {
-        $j('span.send_mail_field').hide();
-      } else {
-        $j('span.send_mail_field').show();
-      }
+      toggleSendMail();
     <% end -%>
-    };
-    toggleSendMail();
-    <% end -%>
+  });
 
-    $j('#publication_type_public, #publication_type_protected, #publication_type_private').live('click', function(){
-      <% unless SkipEmbedded::InitialSettings['mail']['enable_send_email_to_all_users'] -%>
-        toggleSendMail();
-      <% end -%>
-        changePublicationType();
-    });
+  // タグsuggestのスライド表示
+  $j('#board_entry_category')
+  .focus(function(){
+      showCategoryBox();
+  });
+  $j('#board_entry_title, #contents_hiki, #contents_richtext')
+  .focus(function(){
+      hideCategoryBox();
+  });
 
-    // タグsuggestのスライド表示
-    $j('#board_entry_category')
-    .focus(function(){
-        showCategoryBox();
-    });
-    $j('#board_entry_title, #contents_hiki, #contents_richtext')
-    .focus(function(){
-        hideCategoryBox();
-    });
-    changeEditorMode();
+  var changeEditorMode = function(){
+      $j('#contents_hiki_space, #contents_richtext_space, .hiki_support').hide();
 
-    // オプション入力項目の表示制御
-    $j('#show_option_link')
-    .click(function() {
-        $j('div.input_option').show();
-        $j('#show_option').hide();
-        return false;
-    });
+      if($j('#board_entry_editor_mode_richtext:checked').length > 0){
+          $j('#contents_richtext_space').show();
+          $j('#contents_richtext').focus();
+      } else if($j('#board_entry_editor_mode_hiki:checked').length > 0) {
+          $j('#contents_hiki_space, .hiki_support').show();
+          $j('#contents_hiki').focus();
+      }
+  }
 
-    var isShowOptions = function() {
-        var isNewRecord = <%= !!(@board_entry.new_record?) %>;
-        return !isNewRecord || $j('#trackbacks').val() != '';
-    };
+  changeEditorMode();
 
-    if(isShowOptions())
-        $j('#show_option_link').click();
+  // オプション入力項目の表示制御
+  $j('#show_option_link')
+  .click(function() {
+      $j('div.input_option').show();
+      $j('#show_option').hide();
+      return false;
+  });
 
-    $j(window).bind('beforeunload', function(e){
-      return e.originalEvent.returnValue = '<%= _('All changes will be discarded if you navigate away from this page.') %>';
-    });
+  var isShowOptions = function() {
+      var isNewRecord = <%= !!(form.object.new_record?) %>;
+      return !isNewRecord || $j('#trackbacks').val() != '';
+  };
+
+  if(isShowOptions())
+      $j('#show_option_link').click();
+
+  $j(window).bind('beforeunload', function(e){
+    return e.originalEvent.returnValue = '<%= _('All changes will be discarded if you navigate away from this page.') %>';
+  });
+
+  $j('#board_entry_editor_mode_hiki, #board_entry_editor_mode_richtext')
+  .click(function(){
+      changeEditorMode();
+  });
+
+  // プレビュー表示用ボタン
+  var url = '<%= url_for({ :action => "ado_preview", :id => form.object}) -%>';
+  $j("#hiki_preview_link")
+  .click(function(){
+      $j.ajax({
+          type: 'POST',
+          url: url,
+          data: $j('#board_entry_form').serialize(),
+          success: function(msg) {
+              $j('#preview').html(msg);
+              $j('#preview-win')
+              .css('width',600)
+              .fadeIn();
+          }
+      });
+      return false;
+  });
 <% end -%>

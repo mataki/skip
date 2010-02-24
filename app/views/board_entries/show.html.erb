@@ -1,0 +1,14 @@
+<% content_for :contents_left do -%>
+  <% form_tag({}, {:method => 'get'}) do -%>
+    <%= render(:partial => 'search_box') %>
+    <%= render(:partial => 'tag_cloud_box') %>
+    <% if current_target_owner.is_a?(Group) -%>
+      <%= render :partial => 'user_archive_box' %>
+    <% end -%>
+    <%= render(:partial => 'recent_box', :locals => { :owner => @group }) if @entry %>
+  <% end -%>
+<% end -%>
+
+<% content_for :contents_right do -%>
+  <%= render :partial => 'entry_detail' %>
+<% end -%>

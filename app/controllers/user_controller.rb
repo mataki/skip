@@ -26,63 +26,6 @@ class UserController < ApplicationController
   end
 
   # tab_menu
-  def blog
-    options = { :symbol => "uid:" + @user.uid }
-    setup_blog_left_box options
-
-    # 右側
-    if params[:category] or params[:keyword] or params[:archive] or params[:type]
-      options[:category] = params[:category]
-      options[:keyword] = params[:keyword]
-
-      find_params = BoardEntry.make_conditions(current_user.belong_symbols, options)
-
-      unless (@year = ERB::Util.html_escape(params[:year])).blank? or (@month = ERB::Util.html_escape(params[:month])).blank?
-        find_params[:conditions][0] << " and YEAR(date) = ? and MONTH(date) = ?"
-        find_params[:conditions] << @year << @month
-      end
-
-      @entries = BoardEntry.scoped(
-        :conditions => find_params[:conditions],
-        :include => find_params[:include] | [ :user, :state ]
-      ).order_sort_type(params[:sort_type]).aim_type(params[:type]).paginate(:page => params[:page], :per_page => 20)
-
-      if @entries.empty?
-        flash.now[:notice] = _('No matching entries found.')
-      end
-    else
-      if entry_id = params[:entry_id]
-        unless entry = BoardEntry.find_by_id(entry_id)
-          flash.now[:notice] = _('There are no entries posted.')
-          return
-        end
-        options[:id] = entry_id
-      end
-      find_params = BoardEntry.make_conditions(current_user.belong_symbols, options)
-      @entry = BoardEntry.scoped(
-         :conditions => find_params[:conditions],
-         :include => find_params[:include] | [ :user, :board_entry_comments, :state ]
-      ).order_new.first
-      if @entry
-        @checked_on = if reading = @entry.user_readings.find_by_user_id(current_user.id)
-                        reading.checked_on
-                      end
-        @entry.accessed(current_user.id)
-        @prev_entry, @next_entry = @entry.get_around_entry(current_user.belong_symbols)
-        @editable = @entry.editable?(current_user.belong_symbols, session[:user_id], session[:user_symbol], current_user.group_symbols)
-        @tb_entries = @entry.trackback_entries(current_user.id, current_user.belong_symbols)
-        @to_tb_entries = @entry.to_trackback_entries(current_user.id, current_user.belong_symbols)
-        @title += " - " + @entry.title
-
-        @entry_accesses =  EntryAccess.find_by_entry_id @entry.id
-        @total_count = @entry.state.access_count
-      else
-        flash.now[:notice] = options[:id] ? _('You are not allowed to see the page.') : _('There are no entries posted.')
-      end
-    end
-  end
-
-  # tab_menu
   def social
     @menu = params[:menu] || "social_chain"
     partial_name = @menu

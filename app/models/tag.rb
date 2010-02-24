@@ -38,7 +38,11 @@ class Tag < ActiveRecord::Base
   }
 
   named_scope :entries_owned_by, proc { |owner|
-    { :conditions => ['board_entries.symbol = ?', owner.symbol], :joins => [:board_entries], :group => 'tags.id' }
+    { :conditions => ['board_entries.owner_id = ?', owner.id], :joins => [:board_entries], :group => 'tags.id' }
+  }
+
+  named_scope :uniq_by_entry_ids, proc { |entry_ids|
+    { :conditions => ['entry_tags.board_entry_id IN (?)', entry_ids], :joins => [:entry_tags], :group => 'tags.name' }
   }
 
   named_scope :share_files_owned_by, proc { |owner|

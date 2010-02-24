@@ -18,7 +18,71 @@ class BoardEntriesController < ApplicationController
   verify :method => :post, :only => [ :ado_create_comment, :ado_create_nest_comment, :ado_pointup, :destroy_comment, :ado_edit_comment, :toggle_hide  ],
          :redirect_to => { :action => :index, :controller => "/mypage" }
 
+  before_filter :owner_required, :only => [:show, :edit, :update, :destroy]
+  before_filter :required_full_accessible, :only => [:edit, :update, :destroy]
+  before_filter :required_accessible, :only => [:show]
   after_filter :make_comment_message, :only => [ :ado_create_comment, :ado_create_nest_comment ]
+
+  def index
+  end
+
+  def show
+  end
+
+  def new
+    @board_entry = current_target_owner.owner_entries.build(params[:board_entry])
+    required_full_accessible(@board_entry) do
+      @board_entry.entry_type = @board_entry.owner.is_a?(User) ? BoardEntry::DIARY : BoardEntry::GROUP_BBS
+      @board_entry.publication_type ||= 'public'
+      @board_entry.editor_mode ||= current_user.custom.editor_mode
+      if @board_entry.owner.is_a?(Group)
+        @board_entry.send_mail = (@board_entry.is_question? && SkipEmbedded::InitialSettings['mail']['default_send_mail_of_question']) || owner.default_send_mail
+      elsif @board_entry.owner.is_a?(User)
+        @board_entry.send_mail = @board_entry.is_question? && SkipEmbedded::InitialSettings['mail']['default_send_mail_of_question']
+      end
+
+      setup_layout @board_entry
+
+      respond_to do |format|
+        format.html
+      end
+    end
+  end
+
+  def edit
+  end
+
+  def create
+    @board_entry = current_target_owner.owner_entries.build(params[:board_entry])
+    required_full_accessible(@board_entry) do
+      @board_entry.contents = @board_entry.hiki? ? @board_entry.contents_hiki : @board_entry.contents_richtext
+      @board_entry.user = current_user
+      @board_entry.tenant = current_tenant
+      @board_entry.last_updated = Time.now
+      BoardEntry.transaction do
+        @board_entry.save!
+        current_user.custom.update_attributes!(:editor_mode => @board_entry.editor_mode)
+        @board_entry.send_trackbacks!(current_user, params[:trackbacks])
+        @board_entry.send_contact_mails
+        respond_to do |format|
+          format.html do
+            flash[:notice] = _('Created successfully.')
+            redirect_to [current_tenant, current_target_owner, @board_entry]
+          end
+        end
+      end
+    end
+  rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => e
+    respond_to do |format|
+      format.html { render :action => :new }
+    end
+  end
+
+  def update
+  end
+
+  def destroy
+  end
 
   # 巨大化表示
   def large
@@ -180,4 +244,30 @@ private
     end
   end
 
+  def setup_layout board_entry
+    @main_menu = board_entry.owner.is_a?(Group) ? _('Groups') : _('My Blog')
+    @title = board_entry.owner.name
+  end
+
+  def current_target_entry
+    @board_entry ||= BoardEntry.find(params[:id])
+  end
+
+  def required_full_accessible board_entry = current_target_entry
+    if result = board_entry.full_accessible?(current_user)
+      yield if block_given?
+    else
+      redirect_to_with_deny_auth
+    end
+    result
+  end
+
+  def required_accessible board_entry = current_target_entry
+    if result = board_entry.accessible?(current_user)
+      yield if block_given?
+    else
+      redirect_to_with_deny_auth
+    end
+    result
+  end
 end

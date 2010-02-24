@@ -19,4 +19,9 @@ class EntryTrackback < ActiveRecord::Base
 
   validates_presence_of :board_entry_id
   validates_presence_of :tb_entry_id
+
+  # FIXME 後で実装
+  named_scope :accessible, proc { |user|
+    {}
+  }
 end

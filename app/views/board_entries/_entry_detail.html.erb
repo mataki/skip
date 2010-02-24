@@ -3,6 +3,17 @@
  # :locals => { :entry, :prev_entry, :next_entry, :tb_entries, :to_tb_entries, :editable,
  #              :checked_on,
  #              :entry_accesses, :total_count }
+  entry = @board_entry
+  # FIXME 対象記事の次記事、前記事を正しく取得する
+  prev_entry = entry
+  next_entry = entry
+  tb_entries = BoardEntry.accessible(current_user).id_is(entry.entry_trackbacks.map(&:tb_entry_id))
+  to_tb_entries = BoardEntry.accessible(current_user).id_is(entry.to_entry_trackbacks.map(&:board_entry_id))
+  checked_on = if reading = entry.user_readings.find_by_user_id(current_user.id)
+                 reading.checked_on
+               end
+  entry_accesses =  EntryAccess.find_by_entry_id entry.id
+  total_count = entry.state.access_count
 -%>
 
 <% content_for :stylesheet do -%>
@@ -221,13 +232,13 @@
       <div class="buttons" id="entry_buttons">
         <span id="permalink"><%= link_to "[page:#{entry.id}]", :controller=> "board_entries", :action => "forward", :id => entry.id -%></span>
         <%= _('Display: ') %>
-        <% if editable -%>
+        <% if entry.full_accessible?(current_user) -%>
           <a href="#" id="access_style_button"><%= icon_tag('group', :title => _("Access Log")) %></a>
         <% end -%>
         <a href="#" id="default_style_button"><%= icon_tag('page_white_text', :title => _('Blog Entry View')) %></a>
         <a href="#" id="source_style_button"><%= icon_tag('page_white_code', :title => _('View Source')) %></a>
         <%= _('Action:') %>
-        <%= link_to(icon_tag('page_edit', :title => _('Edit')), :controller=> "edit", :action => "edit", :id => entry) if editable  %>
+        <%= link_to(icon_tag('page_edit', :title => _('Edit')), :controller=> "edit", :action => "edit", :id => entry) if entry.full_accessible?(current_user)  %>
         <%= link_to(icon_tag('control_play_blue', :title => _('Slide Show')), {:controller => "monta", :action => "execute_monta", :id => entry}, :target=>"_blank") if entry.editor_mode == 'hiki' %>
         <%= link_to(icon_tag('zoom', :title => _('Maximize!')), {:controller=> "board_entries", :action => "large", :id => entry}, :target=>"_blank") %>
         <%= _('Read/Unread:') %>
@@ -266,7 +277,7 @@
         <div class="header"><%= _('[Show source]')%></div><pre><%=h entry.contents.gsub("<br />", "<br/>\r\n") %></pre>
       </div>
       <div id="access_style_area" class="invisible">
-      <% if editable %>
+      <% if entry.full_accessible?(current_user) %>
         <%= render :partial => "entries/access", :locals => {:entry_accesses => entry_accesses, :total_count => total_count} -%>
       <% end %>
       </div>
@@ -316,7 +327,7 @@
     </li>
 <% end -%>
   </ul>
-  <% if current_user.group_symbols.include? entry.symbol -%>
+  <% if current_target_owner.is_a?(Group) && current_user.participationg_group?(current_target_owner) -%>
     <p><%= link_to _("[Write a new forum entry with this as topic]"), :controller => "edit", :trackbacks => entry.id, :title => "RE: " + entry.title, :category => entry.category, :publication_type => entry.publication_type, :entry_type => entry.entry_type, :symbol => entry.symbol, :publication_symbols_value => entry.publication_symbols_value %><%= help_icon_tag :content => _('Create a new forum entry inheriting the privacy setting.') %></p>
   <% end -%>
   <p><%= link_to _("[Write a new blog entry with this as topic]"), :controller => "edit", :trackbacks => entry.id, :title => "RE: " + entry.title, :category => entry.category %><%= help_icon_tag :content => _("Create an \"open to public\" blog entry disregarding the privacy setting.") %></p>

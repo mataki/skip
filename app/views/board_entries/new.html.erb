@@ -1,0 +1,7 @@
+<%= render :partial => 'board_entries/preview_window' %>
+
+<% form_for [current_tenant, current_target_owner, @board_entry], :id => 'board_entry_form' do |f| -%>
+  <%= render f %>
+  <%= submit_tag _("Create") , :id => 'submit_button' %>
+  <%= send_mail_check_box_tag %>
+<% end -%>

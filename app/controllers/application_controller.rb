@@ -40,7 +40,7 @@ class ApplicationController < ActionController::Base
 
   init_gettext "skip" if defined? GetText
 
-  helper_method :scheme, :endpoint_url, :identifier, :checkid_request, :extract_login_from_identifier, :logged_in?, :current_user, :current_target_user, :current_target_group, :current_participation, :owner_entries_path, :notice_entry_enabled?, :event_enabled?, :current_tenant, :root_url
+  helper_method :scheme, :endpoint_url, :identifier, :checkid_request, :extract_login_from_identifier, :logged_in?, :current_user, :current_target_user, :current_target_group, :current_target_owner, :current_participation, :owner_entries_path, :notice_entry_enabled?, :event_enabled?, :current_tenant, :root_url
 protected
   include InitialSettingsHelper
   # アプリケーションで利用するセッションの準備をする
@@ -114,6 +114,17 @@ protected
 
   def current_target_group
     @current_target_group ||= Group.active.find_by_id(params[:controller] == 'groups' ? params[:id] : params[:group_id])
+  end
+
+  def current_target_owner
+    @current_target_owner ||= (current_target_user || current_target_group)
+  end
+
+  def owner_required
+    unless current_target_owner
+      render_404
+      return false
+    end
   end
 
   def current_participation

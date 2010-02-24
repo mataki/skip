@@ -145,23 +145,24 @@ module ApplicationHelper
     image_tag(file_name, options)
   end
 
+  # FIXME リンク先のコメントアウト部分の書き換え
   def show_contents entry
     output = ""
     if entry.editor_mode == 'hiki'
-      output_contents = hiki_parse(entry.contents, entry.symbol)
+      output_contents = hiki_parse(entry.contents, entry.owner_id)
       image_url_proc = proc { |file_name|
-        file_link_url({:owner_symbol => entry.symbol, :file_name => file_name}, :inline => true)
+        file_link_url({:owner_symbol => entry.owner_id, :file_name => file_name}, :inline => true)
       }
       output_contents = parse_hiki_embed_syntax(output_contents, image_url_proc)
       output = "<div class='hiki_style'>#{output_contents}</div>"
     elsif entry.editor_mode == 'richtext'
-      output = render_richtext(entry.contents, entry.symbol)
+      output = render_richtext(entry.contents, entry.owner_id)
     else
       output_contents = CGI::escapeHTML(entry.contents)
       output_contents.gsub!(/((https?|ftp):\/\/[0-9a-zA-Z,;:~&=@_'%?+\-\/\$.!*()]+)/){|url|
         "<a href=\"#{url}\" target=\"_blank\">#{url}<\/a>"
       }
-      output = "<pre>#{parse_permalink(output_contents, entry.symbol)}</pre>"
+      output = "<pre>#{parse_permalink(output_contents, entry.owner_id)}</pre>"
     end
     output
   end
@@ -245,7 +246,7 @@ module ApplicationHelper
   def get_entry_infos entry
     output = []
     output << n_("Comment(%s)", "Comments(%s)", entry.board_entry_comments_count) % h(entry.board_entry_comments_count.to_s) if entry.board_entry_comments_count > 0
-    output << "#{h Admin::Setting.point_button}(#{h entry.point.to_s})" if entry.point > 0
+    output << "#{h Admin::Setting.point_button}(#{h entry.state.point.to_s})" if entry.state.point > 0
     output << n_("Trackback(%s)", "Trackbacks(%s)", entry.entry_trackbacks_count) % h(entry.entry_trackbacks_count.to_s) if entry.entry_trackbacks_count > 0
     output << n_("Access(%s)", "Accesses(%s)", entry.state.access_count) % h(entry.state.access_count.to_s) if entry.state.access_count > 0
     output.size > 0 ? "#{output.join('-')}" : '&nbsp;'

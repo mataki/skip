@@ -41,20 +41,22 @@ class BoardEntry < ActiveRecord::Base
   has_many :entry_accesses, :dependent => :destroy
   has_many :user_readings, :dependent => :destroy
 
-  before_create :generate_next_user_entry_no
-
   validates_presence_of :title
-  validates_length_of   :title, :maximum => 100
-
   validates_presence_of :contents
   validates_presence_of :date
-  validates_presence_of :user_id
+  validates_presence_of :user
+  validates_presence_of :tenant
+  validates_presence_of :owner
+  validates_presence_of :last_updated
+
+  validates_length_of   :title, :maximum => 100
 
   AIM_TYPES = %w(entry question notice).freeze
   ANTENNA_AIM_TYPES = %w(notice).freeze
   HIDABLE_AIM_TYPES = %w(question).freeze
   TIMLINE_AIM_TYPES = %w(entry).freeze
   validates_inclusion_of :aim_type, :in => AIM_TYPES
+  validates_inclusion_of :publication_type, :in => %w(private public)
 
   named_scope :accessible, proc { |user|
     { :conditions => ['entry_publications.symbol in (:publication_symbols)',
@@ -172,7 +174,7 @@ class BoardEntry < ActiveRecord::Base
 
   named_scope :limit, proc { |num| { :limit => num } }
 
-  attr_accessor :send_mail
+  attr_accessor :send_mail, :contents_hiki, :contents_richtext
 
   N_('BoardEntry|Entry type|DIARY')
   N_('BoardEntry|Entry type|GROUP_BBS')
@@ -206,8 +208,12 @@ class BoardEntry < ActiveRecord::Base
     Tag.validate_tags(category).each{ |error| errors.add(:category, error) }
   end
 
-  def before_save
-    parse_symbol_link
+#  def before_save
+#    parse_symbol_link
+#  end
+
+  def before_create
+    generate_next_user_entry_no
   end
 
   def after_save
@@ -218,22 +224,36 @@ class BoardEntry < ActiveRecord::Base
     BoardEntryPoint.create(:board_entry_id=>id)
   end
 
+  # FIXME 後で実装
+  def full_accessible? target_user = self.user
+    true
+  end
+
+  # FIXME 後で実装
+  def accessible? target_user = self.user
+    true
+  end
+
   def self.unescape_href text
     text.gsub(/<a[^>]*href=[\'\"](.*?)[\'\"]>/){ CGI.unescapeHTML($&) } if text
   end
 
-  def permalink
-    '/page/' + id.to_s
-  end
+#  def permalink
+#    '/page/' + id.to_s
+#  end
 
   # ブログかどうか
   def diary?
     entry_type == DIARY
   end
 
+  def hiki?
+    editor_mode == 'hiki'
+  end
+
   # 所属するグループの公開範囲により、記事の公開範囲を判定する
   def owner_is_public?
-    Symbol.public_symbol_obj? symbol
+    !(owner.is_a?(Group) && owner.protected?)
   end
 
   # 検索条件の生成
@@ -340,80 +360,47 @@ class BoardEntry < ActiveRecord::Base
     return {:conditions => conditions_param.unshift(conditions_state), :include => [:entry_publications] }
   end
 
-  def get_around_entry(login_user_symbols)
-    order_value = BoardEntry.find(:first, :select => 'last_updated+id as order_value', :conditions=>["id = ?", id]).order_value
-    prev_entry = next_entry = nil
-    find_params = BoardEntry.make_conditions(login_user_symbols, {:symbol=>symbol})
-    find_params[:conditions] << order_value
-
-    conditions_state = find_params[:conditions][0].dup
-
-    find_params[:conditions][0] << " and (last_updated+board_entries.id)< ?"
-    prev_entry = BoardEntry.find(:first, :conditions => find_params[:conditions], :include => find_params[:include], :order=>"last_updated+board_entries.id desc")
-
-    find_params[:conditions][0] = conditions_state
-    find_params[:conditions][0] << " and (last_updated+board_entries.id) > ?"
-    next_entry = BoardEntry.find(:first, :conditions => find_params[:conditions], :include => find_params[:include], :order=>"last_updated+board_entries.id asc")
-
-    return prev_entry, next_entry
-  end
-
-  # TODO Tagのnamed_scopeにしてなくしたい
-  def self.get_category_words(options={})
-    options[:include] ||= []
-    options[:select] = "id"
-
-    # todo サブクエリ化 下にコメントアウトしてある方法でできる。が、現在の件数ではこちらの方が早い
-    entry_ids = BoardEntry.find(:all, options).map{ |entry| entry.id }
-
-    if entry_ids.size > 0
-      Tag.find(:all,
-               :select => "name",
-               :conditions => ["entry_tags.board_entry_id in (?)", entry_ids],
-               :joins => 'JOIN entry_tags ON tags.id = entry_tags.tag_id').map{ |tag| tag.name }.uniq.sort
-    else
-      return []
-    end
-  end
-
-#  def self.get_category_words(options={})
-#    options[:include] ||= []
-#    options[:include] = options[:include] | [:entry_tags, :tags]
+#  def get_around_entry(user)
+#    order_value = BoardEntry.find(:first, :select => 'last_updated+id as order_value', :conditions=>["id = ?", id]).order_value
+#    prev_entry = next_entry = nil
+#    find_params = BoardEntry.make_conditions(user.belong_symbols, {:symbol => symbol})
+#    find_params[:conditions] << order_value
 #
-#    board_entries = BoardEntry.find(:all, options)
-#    categories = []
-#    board_entries.each do |entry|
-#      entry.tags.each do |tag|
-#        categories << tag.name
-#      end
+#    conditions_state = find_params[:conditions][0].dup
+#
+#    find_params[:conditions][0] << " and (last_updated+board_entries.id)< ?"
+#    prev_entry = BoardEntry.find(:first, :conditions => find_params[:conditions], :include => find_params[:include], :order=>"last_updated+board_entries.id desc")
+#
+#    find_params[:conditions][0] = conditions_state
+#    find_params[:conditions][0] << " and (last_updated+board_entries.id) > ?"
+#    next_entry = BoardEntry.find(:first, :conditions => find_params[:conditions], :include => find_params[:include], :order=>"last_updated+board_entries.id asc")
+#
+#    return prev_entry, next_entry
+#  end
+#
+#  # TODO Tagのnamed_scopeにしてなくしたい
+#  def self.get_popular_tag_words()
+#    options = { :select => 'tags.name',
+#                :joins => 'JOIN tags ON entry_tags.tag_id = tags.id',
+#                :group => 'entry_tags.tag_id',
+#                :order => 'count(entry_tags.tag_id) DESC'}
+#
+#    entry_tags = EntryTag.find(:all, options)
+#    tags = []
+#    entry_tags.each do |tag|
+#      tags << tag.name
 #    end
-#    categories.uniq.sort
+#    return tags.uniq.first(40)
 #  end
 
-
-  # TODO Tagのnamed_scopeにしてなくしたい
-  def self.get_popular_tag_words()
-    options = { :select => 'tags.name',
-                :joins => 'JOIN tags ON entry_tags.tag_id = tags.id',
-                :group => 'entry_tags.tag_id',
-                :order => 'count(entry_tags.tag_id) DESC'}
-
-    entry_tags = EntryTag.find(:all, options)
-    tags = []
-    entry_tags.each do |tag|
-      tags << tag.name
-    end
-    return tags.uniq.first(40)
-  end
-
   def categories_hash user
-    find_params = BoardEntry.make_conditions(user.belong_symbols, {:symbol => self.symbol})
-    categories = BoardEntry.get_category_words(find_params)
+    accessible_entry_ids = BoardEntry.accessible(user).descend_by_last_updated.map(&:id)
+    categories = Tag.uniq_by_entry_ids(accessible_entry_ids).ascend_by_name
     categories_hash = {}
 
     categories_hash[:standard] = Tag.get_standard_tags
     categories_hash[:mine] = categories - categories_hash[:standard]
-    categories_hash[:user] = BoardEntry.get_category_words({:order=>"board_entries.last_updated DESC ", :limit=>10})
+    categories_hash[:user] = Tag.uniq_by_entry_ids(accessible_entry_ids[0..9]).ascend_by_name
     categories_hash[:user] = categories_hash[:user] - (categories + categories_hash[:standard])
 
     categories_hash
@@ -427,12 +414,12 @@ class BoardEntry < ActiveRecord::Base
     date.strftime(format)
   end
 
-  def diary_author
-    unless diary?
-      "by " + user.name if user
-    end
-  end
-
+#  def diary_author
+#    unless diary?
+#      "by " + user.name if user
+#    end
+#  end
+#
   # TODO ShareFileと統合したい
   def visibility
     text = color = ""
@@ -500,25 +487,25 @@ class BoardEntry < ActiveRecord::Base
     url
   end
 
-  # TODO ShareFileと統合したい。owner_symbol_typeにしたい
-  def symbol_type
-    symbol.split(':')[0]
-  end
+#  # TODO ShareFileと統合したい。owner_symbol_typeにしたい
+#  def symbol_type
+#    symbol.split(':')[0]
+#  end
+#
+#  # TODO ShareFileと統合したい。owner_symbol_idにしたい
+#  def symbol_id
+#    symbol.split(':')[1]
+#  end
+#
+#  # TODO ShareFileと統合したい。owner_symbol_nameにしたい
+#  def symbol_name
+#    owner = Symbol.get_item_by_symbol(self.symbol)
+#    owner ? owner.name : ''
+#  end
 
-  # TODO ShareFileと統合したい。owner_symbol_idにしたい
-  def symbol_id
-    symbol.split(':')[1]
-  end
-
-  # TODO ShareFileと統合したい。owner_symbol_nameにしたい
-  def symbol_name
-    owner = Symbol.get_item_by_symbol(self.symbol)
-    owner ? owner.name : ''
-  end
-
-  def point
-    state.point
-  end
+#  def point
+#    state.point
+#  end
 
   # TODO もはやprepareじゃない。sent_contact_mailsなどにリネームする
   def send_contact_mails
@@ -543,38 +530,38 @@ class BoardEntry < ActiveRecord::Base
     user_id == login_user_id
   end
 
-  # 権限チェック
-  # この記事が編集可能かどうかを判断する
-  def editable?(login_user_symbols, login_user_id, login_user_symbol, login_user_groups)
-    # 所有者がマイユーザ
-    return true if login_user_symbol == symbol
+#  # 権限チェック
+#  # この記事が編集可能かどうかを判断する
+#  def editable?(login_user_symbols, login_user_id, login_user_symbol, login_user_groups)
+#    # 所有者がマイユーザ
+#    return true if login_user_symbol == symbol
+#
+#    #  マイユーザ/マイグループが公開範囲指定対象で、編集可能
+#    return true if publicate?(login_user_symbols) && edit?(login_user_symbols)
+#
+#    # 所有者がマイグループ AND 作成者がマイユーザ
+#    if login_user_groups.include?(symbol)
+#      return true if login_user_id == user_id
+#      #  AND グループ管理者がマイユーザ
+#      group = Symbol.get_item_by_symbol(symbol)
+#      return true if publicate?(login_user_symbols) && group.owners.any?{|user| user.id == login_user_id}
+#    end
+#    return false
+#  end
+#
+#  # FIXME:editable?へのマージと、edit?の廃止
+#  def will_editable?(login_user)
+#    editable?(login_user.belong_symbols, login_user.id, login_user.symbol, login_user.group_symbols)
+#  end
 
-    #  マイユーザ/マイグループが公開範囲指定対象で、編集可能
-    return true if publicate?(login_user_symbols) && edit?(login_user_symbols)
-
-    # 所有者がマイグループ AND 作成者がマイユーザ
-    if login_user_groups.include?(symbol)
-      return true if login_user_id == user_id
-      #  AND グループ管理者がマイユーザ
-      group = Symbol.get_item_by_symbol(symbol)
-      return true if publicate?(login_user_symbols) && group.owners.any?{|user| user.id == login_user_id}
-    end
-    return false
-  end
-
-  # FIXME:editable?へのマージと、edit?の廃止
-  def will_editable?(login_user)
-    editable?(login_user.belong_symbols, login_user.id, login_user.symbol, login_user.group_symbols)
-  end
-
-  def publicate? login_user_symbols
-    entry_publications.any? {|publication| login_user_symbols.include?(publication.symbol) || "sid:allusers" == publication.symbol}
-  end
-
-  # TODO editable?とどちらかにしたい。
-  def edit? login_user_symbols
-    entry_editors.any? {|editor| login_user_symbols.include? editor.symbol }
-  end
+#  def publicate? login_user_symbols
+#    entry_publications.any? {|publication| login_user_symbols.include?(publication.symbol) || "sid:allusers" == publication.symbol}
+#  end
+#
+#  # TODO editable?とどちらかにしたい。
+#  def edit? login_user_symbols
+#    entry_editors.any? {|editor| login_user_symbols.include? editor.symbol }
+#  end
 
   # アクセスしたことを示す（アクセス履歴）
   def accessed(login_user_id)
@@ -613,82 +600,82 @@ class BoardEntry < ActiveRecord::Base
     end
   end
 
-  # 話題にしてくれた記事一覧を返す
-  # TODO named_scopeにしたい
-  def trackback_entries(login_user_id, login_user_symbols)
-    ids =  self.entry_trackbacks.map {|trackback| trackback.tb_entry_id }
-    authorized_entries_except_given_user(login_user_id, login_user_symbols, ids)
-  end
+#  # 話題にしてくれた記事一覧を返す
+#  # TODO named_scopeにしたい
+#  def trackback_entries(user)
+#    ids =  self.entry_trackbacks.map {|trackback| trackback.tb_entry_id }
+#    authorized_entries_except_given_user(user.id, user.belong_symbols, ids)
+#  end
+#
+#  # 話題元の記事一覧を返す
+#  # TODO named_scopeにしたい
+#  def to_trackback_entries(user)
+#    ids =  self.to_entry_trackbacks.map {|trackback| trackback.board_entry_id }
+#    authorized_entries_except_given_user(user.id, user.belong_symbols, ids)
+#  end
 
-  # 話題元の記事一覧を返す
-  # TODO named_scopeにしたい
-  def to_trackback_entries(login_user_id, login_user_symbols)
-    ids =  self.to_entry_trackbacks.map {|trackback| trackback.board_entry_id }
-    authorized_entries_except_given_user(login_user_id, login_user_symbols, ids)
-  end
-
-  # この記事の公開対象ユーザ一覧を返す
-  # 戻り値：Userオブジェクトの配列（重複なし）
-  def publication_users
-    case self.publication_type
-    when "private"
-      owner = load_owner
-      if owner.is_a?(Group)
-        owner.users.active
-      elsif owner.is_a?(User)
-        [owner]
-      else
-        []
-      end
-    when "protected"
-      users = []
-      self.publication_symbols_value.split(',').each do |sym|
-        symbol_type, symbol_id = SkipUtil.split_symbol(sym)
-        case symbol_type
-        when "uid"
-          users << User.active.find_by_uid(symbol_id)
-        when "gid"
-          group = Group.active.find_by_gid(symbol_id, :include => [:group_participations])
-          users << group.group_participations.map { |part| part.user if part.user.active? } if group
-        end
-      end
-      users.flatten.uniq.compact
-    when "public"
-      User.active.all
-    else
-      []
-    end
-  end
+#  # この記事の公開対象ユーザ一覧を返す
+#  # 戻り値：Userオブジェクトの配列（重複なし）
+#  def publication_users
+#    case self.publication_type
+#    when "private"
+#      owner = load_owner
+#      if owner.is_a?(Group)
+#        owner.users.active
+#      elsif owner.is_a?(User)
+#        [owner]
+#      else
+#        []
+#      end
+#    when "protected"
+#      users = []
+#      self.publication_symbols_value.split(',').each do |sym|
+#        symbol_type, symbol_id = SkipUtil.split_symbol(sym)
+#        case symbol_type
+#        when "uid"
+#          users << User.active.find_by_uid(symbol_id)
+#        when "gid"
+#          group = Group.active.find_by_gid(symbol_id, :include => [:group_participations])
+#          users << group.group_participations.map { |part| part.user if part.user.active? } if group
+#        end
+#      end
+#      users.flatten.uniq.compact
+#    when "public"
+#      User.active.all
+#    else
+#      []
+#    end
+#  end
 
   def root_comments
     board_entry_comments.find(:all, :conditions => ["parent_id is NULL"], :order => "created_on")
   end
+#
+#  # TODO Symbol.get_item_by_symbolとかぶってる。こちらを生かしたい
+#  # TODO ShareFileと統合したい
+#  def self.owner symbol
+#    return nil if symbol.blank?
+#    symbol_type, symbol_id = SkipUtil::split_symbol symbol
+#    if symbol_type == "uid"
+#      User.find_by_uid(symbol_id)
+#    elsif symbol_type == "gid"
+#      Group.active.find_by_gid(symbol_id)
+#    else
+#      nil
+#    end
+#  end
+#
+#  # TODO ShareFileと統合したい, ownerにしたい
+#  def load_owner
+#    @owner = self.class.owner self.symbol
+#  end
 
-  # TODO Symbol.get_item_by_symbolとかぶってる。こちらを生かしたい
-  # TODO ShareFileと統合したい
-  def self.owner symbol
-    return nil if symbol.blank?
-    symbol_type, symbol_id = SkipUtil::split_symbol symbol
-    if symbol_type == "uid"
-      User.find_by_uid(symbol_id)
-    elsif symbol_type == "gid"
-      Group.active.find_by_gid(symbol_id)
-    else
-      nil
-    end
-  end
-
-  # TODO ShareFileと統合したい, ownerにしたい
-  def load_owner
-    @owner = self.class.owner self.symbol
-  end
-
-  def readable?(user)
-    user.symbol == self.symbol || (user.group_symbols.include?(self.symbol) || self.publicate?(user.belong_symbols))
-  end
-
+#  def readable?(user)
+#    user.symbol == self.symbol || (user.group_symbols.include?(self.symbol) || self.publicate?(user.belong_symbols))
+#  end
+#
   def point_incrementable?(user)
-    self.readable?(user) && !self.writer?(user.id)
+    self.accessible?(user) && !self.writer?(user.id)
   end
 
   def toggle_hide(user)
@@ -728,17 +715,17 @@ class BoardEntry < ActiveRecord::Base
     end
   end
 
-  # TODO ShareFileと統合したい
-  def owner_is_user?
-    symbol_type, symbol_id = SkipUtil.split_symbol self.symbol
-    symbol_type == 'uid'
-  end
-
-  # TODO ShareFileと統合したい
-  def owner_is_group?
-    symbol_type, symbol_id = SkipUtil.split_symbol self.symbol
-    symbol_type == 'gid'
-  end
+#  # TODO ShareFileと統合したい
+#  def owner_is_user?
+#    symbol_type, symbol_id = SkipUtil.split_symbol self.symbol
+#    symbol_type == 'uid'
+#  end
+#
+#  # TODO ShareFileと統合したい
+#  def owner_is_group?
+#    symbol_type, symbol_id = SkipUtil.split_symbol self.symbol
+#    symbol_type == 'gid'
+#  end
 
   def be_close!
     return false unless diary?
@@ -758,40 +745,40 @@ private
     self.user_entry_no = entry.max_user_entry_no.to_i + 1
   end
 
-  # symbol_link([uid:fujiwara>])を参照先のデータに基づいて変換する
-  def parse_symbol_link
-    # ---- closure ----
-    user_proc = proc { |symbol, link_str|
-      transfer_symbol_link(symbol, link_str, proc {|symbol_id| (user =  User.find_by_uid(symbol_id)) ? user.name : nil })
-    }
-    group_proc = proc { |symbol, link_str|
-      transfer_symbol_link(symbol, link_str, proc {|symbol_id| (group = Group.active.find_by_gid(symbol_id)) ? group.name : nil })
-    }
-    page_proc = proc { |symbol, link_str|
-      transfer_symbol_link(symbol, link_str, proc {|symbol_id| (entry = BoardEntry.find_by_id(symbol_id)) ? entry.title : nil })
-    }
-    file_proc = proc {|symbol, link_str|
-      transfer_symbol_link(symbol, link_str, proc {|symbol_id|
-        (file = ShareFile.find_by_file_name_and_owner_symbol(symbol_id, self.symbol)) ? file.file_name : nil
-      })
-    }
-    # -----------------
-    procs = [["uid", user_proc], ["gid", group_proc], ["page", page_proc], ["file", file_proc]]
-
-    split_mark = self.editor_mode == "hiki" ? ">" : "&gt;"
-    procs.each { |value| self.contents = BoardEntry.replace_symbol_link(self.contents, value.first, value.last, split_mark) }
-  end
-
-  def transfer_symbol_link symbol, link_str, link_str_proc
-      if link_str.size > 0
-        link_str == symbol ? "[#{symbol}]" : "[#{symbol}>#{link_str}]"
-      else
-        symbol_type, symbol_id = SkipUtil.split_symbol symbol
-        link_str = link_str_proc.call(symbol_id)
-        link_str ? "[#{symbol}>#{link_str}]" : _("[Link does not exist...%s>]") % symbol
-      end
-  end
-
+#  # symbol_link([uid:fujiwara>])を参照先のデータに基づいて変換する
+#  def parse_symbol_link
+#    # ---- closure ----
+#    user_proc = proc { |symbol, link_str|
+#      transfer_symbol_link(symbol, link_str, proc {|symbol_id| (user =  User.find_by_uid(symbol_id)) ? user.name : nil })
+#    }
+#    group_proc = proc { |symbol, link_str|
+#      transfer_symbol_link(symbol, link_str, proc {|symbol_id| (group = Group.active.find_by_gid(symbol_id)) ? group.name : nil })
+#    }
+#    page_proc = proc { |symbol, link_str|
+#      transfer_symbol_link(symbol, link_str, proc {|symbol_id| (entry = BoardEntry.find_by_id(symbol_id)) ? entry.title : nil })
+#    }
+#    file_proc = proc {|symbol, link_str|
+#      transfer_symbol_link(symbol, link_str, proc {|symbol_id|
+#        (file = ShareFile.find_by_file_name_and_owner_symbol(symbol_id, self.symbol)) ? file.file_name : nil
+#      })
+#    }
+#    # -----------------
+#    procs = [["uid", user_proc], ["gid", group_proc], ["page", page_proc], ["file", file_proc]]
+#
+#    split_mark = self.editor_mode == "hiki" ? ">" : "&gt;"
+#    procs.each { |value| self.contents = BoardEntry.replace_symbol_link(self.contents, value.first, value.last, split_mark) }
+#  end
+#
+#  def transfer_symbol_link symbol, link_str, link_str_proc
+#      if link_str.size > 0
+#        link_str == symbol ? "[#{symbol}]" : "[#{symbol}>#{link_str}]"
+#      else
+#        symbol_type, symbol_id = SkipUtil.split_symbol symbol
+#        link_str = link_str_proc.call(symbol_id)
+#        link_str ? "[#{symbol}>#{link_str}]" : _("[Link does not exist...%s>]") % symbol
+#      end
+#  end
+#
   # 第一引数textに含まれるsymbol_linkを置換する（[uid:fujiwara>namae]）
   # ２つ目の引数で、対象とするsymbolのtype（uid,gid...）を指定
   # ３つ目の引数で、置換する文字列を生成する関数を指定
@@ -810,27 +797,27 @@ private
     end
     return text
   end
-
-  # 記事が指定されたユーザの記事の場合、指定されたidに一致する記事を全て返す。
-  # 記事が指定されたユーザの記事ではない場合、指定されたidに一致する記事のうち、権限のある記事一覧を返す
-  def authorized_entries_except_given_user(user_id, user_symbols, ids)
-    entries = []
-    if ids && ids.length > 0
-      find_params = {}
-      if user_id == self.user_id
-        find_params[:conditions] = ["board_entries.id in (?)", ids]
-        find_params[:include] = []
-      else
-        find_params = BoardEntry.make_conditions(user_symbols, { :ids => ids })
-      end
-      entries = BoardEntry.find(:all,
-                                :conditions => find_params[:conditions],
-                                :order => "date DESC",
-                                :include => find_params[:include] | [:user])
-      entries.each do |entry|
-        entry.load_owner
-      end
-    end
-    entries
-  end
+#
+#  # 記事が指定されたユーザの記事の場合、指定されたidに一致する記事を全て返す。
+#  # 記事が指定されたユーザの記事ではない場合、指定されたidに一致する記事のうち、権限のある記事一覧を返す
+#  def authorized_entries_except_given_user(user_id, user_symbols, ids)
+#    entries = []
+#    if ids && ids.length > 0
+#      find_params = {}
+#      if user_id == self.user_id
+#        find_params[:conditions] = ["board_entries.id in (?)", ids]
+#        find_params[:include] = []
+#      else
+#        find_params = BoardEntry.make_conditions(user_symbols, { :ids => ids })
+#      end
+#      entries = BoardEntry.find(:all,
+#                                :conditions => find_params[:conditions],
+#                                :order => "date DESC",
+#                                :include => find_params[:include] | [:user])
+#      entries.each do |entry|
+#        entry.load_owner
+#      end
+#    end
+#    entries
+#  end
 end

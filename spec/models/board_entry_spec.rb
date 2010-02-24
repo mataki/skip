@@ -75,25 +75,6 @@ end
 
 # TODO: BoardEntry.make_conditionsのテスト
 
-describe "BoardEntry.get_category_words 複数のタグが見つかったとき" do
-  before(:each) do
-    @board_entry = mock_model(BoardEntry)
-    @board_entry.stub!(:id).and_return(1)
-    BoardEntry.should_receive(:find).and_return([@board_entry])
-    @tag1 = mock_model(Tag)
-    @tag2 = mock_model(Tag)
-    @tag3 = mock_model(Tag)
-    @tag1.stub!(:name).and_return('z')
-    @tag2.stub!(:name).and_return('a')
-    @tag3.stub!(:name).and_return('z')
-    Tag.should_receive(:find).and_return([@tag1,@tag2,@tag3])
-  end
-
-  it "タグの名前をユニークにして並べ替えて返す" do
-    BoardEntry.get_category_words.should == ['a','z']
-  end
-end
-
 describe "BoardEntry.get_popular_tag_words で複数タグが見つかったとき" do
   before(:each) do
     @tag1 = mock_model(EntryTag)
