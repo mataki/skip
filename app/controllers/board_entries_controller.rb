@@ -145,6 +145,13 @@ class BoardEntriesController < ApplicationController
     end
   end
 
+  def ado_preview
+    board_entry = BoardEntry.new(params[:board_entry])
+    board_entry.user = current_user
+    board_entry.contents = board_entry.contents_hiki
+    render :partial=>'board_entries/board_entry_box', :locals=>{:board_entry => board_entry}
+  end
+
   # 巨大化表示
   def large
     unless @entry = check_entry_permission

@@ -82,7 +82,7 @@ module ApplicationHelper
     output_text << (options[:view_text] ? sanitize_style_with_whitelist(options[:view_text]) : h(title))
 
     html_options[:title] ||= board_entry.title
-    link_to output_text, board_entry.get_url_hash, {:class => 'entry'}.merge(html_options)
+    link_to output_text, [current_tenant, board_entry.owner, board_entry], {:class => 'entry'}.merge(html_options)
   end
 
   # ユーザのページへのリンク

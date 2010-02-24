@@ -197,13 +197,13 @@ div.input_line textarea {
   });
 
   // プレビュー表示用ボタン
-  var url = '<%= url_for({ :action => "ado_preview", :id => form.object}) -%>';
+  var url = '<%= ado_preview_tenant_board_entries_path(current_tenant, :format => :js) %>';
   $j("#hiki_preview_link")
   .click(function(){
       $j.ajax({
           type: 'POST',
           url: url,
-          data: $j('#board_entry_form').serialize(),
+          data: $j('#hiki_preview_link').closest('form').serialize(),
           success: function(msg) {
               $j('#preview').html(msg);
               $j('#preview-win')

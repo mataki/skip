@@ -22,7 +22,7 @@ ActionController::Routing::Routes.draw do |map|
       group.resources :share_files
     end
     tenant.resources :share_files, :only => %w(index show)
-    tenant.resources :board_entries, :only => %w(index show)
+    tenant.resources :board_entries, :only => %w(index show), :collection => {:ado_preview => :any}
   end
 
 #  # TODO users配下に移す

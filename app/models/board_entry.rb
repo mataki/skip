@@ -414,12 +414,12 @@ class BoardEntry < ActiveRecord::Base
     date.strftime(format)
   end
 
-#  def diary_author
-#    unless diary?
-#      "by " + user.name if user
-#    end
-#  end
-#
+  def diary_author
+    unless diary?
+      "by " + user.name if user
+    end
+  end
+
   # TODO ShareFileと統合したい
   def visibility
     text = color = ""
