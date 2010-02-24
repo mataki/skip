@@ -50,6 +50,17 @@ class BoardEntriesController < ApplicationController
   end
 
   def edit
+    entry_trackbacks = EntryTrackback.find_all_by_tb_entry_id(current_target_entry.id)
+    params[:trackbacks] = entry_trackbacks.map{|trackback| trackback.board_entry_id }.join(',')
+    if current_target_entry.hiki?
+      current_target_entry.contents_hiki = current_target_entry.contents
+    else
+      current_target_entry.contents_richtext = current_target_entry.contents
+    end
+    setup_layout current_target_entry
+    respond_to do |format|
+      format.html
+    end
   end
 
   def create
@@ -79,9 +90,59 @@ class BoardEntriesController < ApplicationController
   end
 
   def update
+    @board_entry.attributes = params[:board_entry]
+    @board_entry.contents = @board_entry.hiki? ? @board_entry.contents_hiki : @board_entry.contents_richtext
+    #編集の競合をチェック
+    @conflicted = false
+
+    # ちょっとした更新でなければ、last_updatedを更新する
+    if params[:non_update]
+      BoardEntry.record_timestamps = false
+    else
+      @board_entry.last_updated = Time.now
+    end
+    BoardEntry.transaction do
+      @board_entry.save!
+      current_user.custom.update_attributes!(:editor_mode => @board_entry.editor_mode)
+      @board_entry.send_trackbacks!(current_user, params[:trackbacks])
+      @board_entry.send_contact_mails
+      respond_to do |format|
+        format.html do
+          flash[:notice] = _('Entry was successfully updated.')
+          redirect_to [current_tenant, current_target_owner, @board_entry]
+        end
+      end
+    end
+  rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => e
+    respond_to do |format|
+      format.html { render :action => :edit }
+    end
+  rescue ActiveRecord::StaleObjectError => e
+    @conflicted = true
+    @board_entry.lock_version = @board_entry.lock_version_was
+    flash.now[:warn] = _("Update on the same entry from other users detected. Reset the edit?")
+    respond_to do |format|
+      format.html { render :action => :edit }
+    end
+  ensure
+    BoardEntry.record_timestamps = true
   end
 
   def destroy
+    @board_entry.destroy
+    respond_to do |format|
+      format.html do
+        flash[:notice] = _('Deletion complete.')
+        redirect_to [current_tenant, current_target_owner, :board_entries]
+      end
+    end
+  rescue ActiveRecord::StaleObjectError => e
+    flash[:warn] = _("Update on the same entry from other users detected. Please try again.")
+    respond_to do |format|
+      format.html do
+        redirect_to [current_tenant, current_target_owner, @board_entry]
+      end
+    end
   end
 
   # 巨大化表示
