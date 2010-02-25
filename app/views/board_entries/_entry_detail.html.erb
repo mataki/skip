@@ -278,7 +278,7 @@
       </div>
       <div id="access_style_area" class="invisible">
       <% if entry.full_accessible?(current_user) %>
-        <%= render :partial => "entries/access", :locals => {:entry_accesses => entry_accesses, :total_count => total_count} -%>
+        <%= render :partial => "access", :locals => {:entry_accesses => entry_accesses, :total_count => total_count} -%>
       <% end %>
       </div>
     </div>
