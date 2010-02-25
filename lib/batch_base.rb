@@ -14,9 +14,6 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
-# ruby lib/batch_make_ranking.rb で実行すると利用しているSymbolクラスがRubyのSymbolクラスになってしまい
-# 定数が定義されていないエラーになってしまう。そもそもSymbolというクラス名が良くない。。。
-require File.expand_path(File.dirname(__FILE__) + "/symbol")
 
 class BatchBase
   include ActionController::UrlWriter
