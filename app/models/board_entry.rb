@@ -31,7 +31,6 @@ class BoardEntry < ActiveRecord::Base
   belongs_to :owner, :polymorphic => true
   has_many :tags, :through => :entry_tags
   has_many :entry_tags, :dependent => :destroy
-  has_many :entry_editors, :dependent => :destroy
   has_many :entry_trackbacks, :dependent => :destroy
   has_many :to_entry_trackbacks, :class_name => "EntryTrackback", :foreign_key => :tb_entry_id, :dependent => :destroy
   has_many :board_entry_comments, :dependent => :destroy
@@ -757,7 +756,6 @@ class BoardEntry < ActiveRecord::Base
     self.publication_type = 'private'
     self.publication_symbols_value = ''
     self.save!
-    self.entry_editors.clear
     true
   end
 
