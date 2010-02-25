@@ -1,33 +1,12 @@
-<div class="search_cond_space ui-corner-all">
-  <% form_for @search do |f| %>
-    <table class="search_cond_box">
-      <tr>
-        <th><%= f.label :file_name_like_or_description_like, _('Keywords') %></th>
-        <td><%= f.text_field :file_name_like_or_description_like, :size => 60 %><%= _('(The search targets are titles and comments)')%></td>
-      </tr>
-      <tr>
-        <th><%= _('Display Order') %></th>
-        <td>
-          <%= radio_button_tag("sort_type", "date", params[:sort_type] == "date", :id => "sort_type_date") %><%= label_tag 'sort_type_date', _('Sort by Upload Dates') %>
-          <%= radio_button_tag("sort_type", "file_name", params[:sort_type] == "file_name", :id => "sort_type_file_name") %><%= label_tag 'sort_type_file_name', _('Sort by File Names') %>
-        </td>
-      </tr>
-      <%= render :partial => 'search/tag_search', :locals => {:tags => @tags} %>
-      <tr>
-        <td><%= f.submit _('Search') %></td>
-      </tr>
-    </table>
+<% if current_target_owner -%>
+  <% content_for :contents_left do -%>
+    <%= render :partial => 'tag_cloud_box' %>
   <% end -%>
-</div>
 
-<div class="search_result_space">
-<% unless @share_files.empty? -%>
-  <%= i18n_will_paginate_with_container_wrapper @share_files %>
-  <%= render :partial => "share_files/topix_share_files", :locals => { :share_files => @share_files, :title => _('Search result'), :show_owner_link => true } %>
-  <%= i18n_will_paginate_with_container_wrapper @share_files %>
+  <% content_for :contents_right do -%>
+    <%= render :partial => 'index' %>
+  <% end -%>
+<% else -%>
+  <%= render :partial => 'index' %>
 <% end -%>
-</div>
 
-<% content_for :javascript_initializers do -%>
-    setupShareFileDownloadLink();
-<% end -%>

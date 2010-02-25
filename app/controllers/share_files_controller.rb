@@ -28,11 +28,16 @@ class ShareFilesController < ApplicationController
     params[:sort_type] ||= "date"
 
     @search = ShareFile.accessible(current_user).tagged(params[:tag_words], params[:tag_select])
+    search_params = params[:search] || {}
+    if current_target_owner
+      search_params[:owner_type] = current_target_owner.class.name
+      search_params[:owner_id] = current_target_owner.id
+    end
     @search =
       if params[:sort_type] == "file_name"
-        @search.descend_by_file_name.search(params[:search])
+        @search.descend_by_file_name.search(search_params)
       else
-        @search.descend_by_date.search(params[:search])
+        @search.descend_by_date.search(search_params)
       end
     @share_files = @search.paginate(:page => params[:page], :per_page => 25)
 

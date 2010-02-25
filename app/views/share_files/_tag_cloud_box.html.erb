@@ -1,11 +1,10 @@
-<% owner ||= (current_target_user || current_target_group) %>
-<% if tags = Tag.share_files_owned_by(owner).all(:select => '*, count(tags.id) as count') and !tags.empty? -%>
+<% if tags = Tag.share_files_owned_by(current_target_owner).all(:select => '*, count(tags.id) as count') and !tags.empty? -%>
 <div class="box_space">
   <div class="box_space_title"><%= icon_tag 'tag_blue' -%><%= _('Tags')%></div>
   <div class="box_space_body tag_cloud">
   <% tag_cloud tags do |name, count, css_class| -%>
     <%=
-        link_to_unless_current h(name), params.merge({:category => h(name)}), :class => "tag #{css_class}" do
+        link_to_unless_current h(name), params.merge({:tag_words => h(name)}), :class => "tag #{css_class}" do
           content_tag :span, h(name), :class => "tag #{css_class}"
         end
     %>
@@ -13,7 +12,7 @@
   <% end -%>
   </div>
   <div class="box_space_bottom">
-    <%= link_to _("[Cancel selection]"), :controller => 'share_file', :action => 'list', :uid => current_target_user.uid, :sort_type => 'date' %>
+    <%= link_to _("[Cancel selection]"), polymorphic_path([current_tenant, current_target_owner, :share_files], :sort_type => params[:sort_type]) %>
   </div>
 </div><!-- box_space -->
 <% end -%>

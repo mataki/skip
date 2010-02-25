@@ -46,7 +46,7 @@ class Tag < ActiveRecord::Base
   }
 
   named_scope :share_files_owned_by, proc { |owner|
-    { :conditions => ['share_files.owner_symbol = ?', owner.symbol], :joins => [:share_files], :group => 'tags.id' }
+    { :conditions => ['share_files.owner_id = ?', owner.id], :joins => [:share_files], :group => 'tags.id' }
   }
 
   named_scope :order_popular, proc {
