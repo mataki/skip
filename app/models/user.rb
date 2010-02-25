@@ -532,27 +532,6 @@ class User < ActiveRecord::Base
     self.save!
   end
 
-protected
-  # TODO: self.make_conditionsメソッドは使ってなさそう確認して消す
-  @@search_cond_keys = [:name, :section, :email]
-
-  def self.make_conditions(options={})
-    options.assert_valid_keys @@search_cond_keys
-
-    conditions_state = ""
-    conditions_param = []
-
-    @@search_cond_keys.each do |key|
-      value = options[key] || ""
-      if conditions_state != ""
-        conditions_state << " and "
-      end
-      conditions_state << table_name + "." + key.to_s + " like ?"
-      conditions_param << SkipUtil.to_like_query_string(value)
-    end
-    return conditions_param.unshift(conditions_state)
-  end
-
 private
   def password_required?
     if SkipEmbedded::InitialSettings['login_mode'] == 'password'

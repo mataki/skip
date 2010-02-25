@@ -48,15 +48,15 @@ class BoardEntryComment < ActiveRecord::Base
     created_on.strftime(format)
   end
 
-  def editable? user
-    return false unless user
-    # TODO 権限のあるBoardEntryを取得するnamed_scopeに置き換える
-    find_params = BoardEntry.make_conditions(user.belong_symbols, {:id => self.board_entry_id})
-    board_entry = BoardEntry.find(:first,
-                                  :conditions => find_params[:conditions],
-                                  :include => find_params[:include])
-    !!(board_entry && self.user_id == user.id)
-  end
+#  def editable? user
+#    return false unless user
+#    # TODO 権限のあるBoardEntryを取得するnamed_scopeに置き換える
+#    find_params = BoardEntry.make_conditions(user.belong_symbols, {:id => self.board_entry_id})
+#    board_entry = BoardEntry.find(:first,
+#                                  :conditions => find_params[:conditions],
+#                                  :include => find_params[:include])
+#    !!(board_entry && self.user_id == user.id)
+#  end
 
   # TODO viewのネストレベル絡みのロジックはこれを使いたい
   def level
