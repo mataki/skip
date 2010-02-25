@@ -9,7 +9,7 @@
   <%= hidden_field_tag 'per_page', per_page if defined? per_page %>
   <%= hidden_field_tag 'recent_day', recent_day %>
 
-  <%= render :partial => "entries/topix_entries", :locals => { :entries => pages, :show_owner_link => true } %>
+  <%= render :partial => "board_entries/topix_entries", :locals => { :entries => pages, :show_owner_link => true } %>
 
   <% if pages.respond_to?(:total_pages) and pages.total_pages > 1 -%>
     <div style="text-align: left;">

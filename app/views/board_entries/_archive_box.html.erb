@@ -1,14 +1,20 @@
 <%
- # ブログ・フォーラムの左側のボックス（月ごとのアーカイブ）
- # :locals => { :month_archives }
+  # FIXME 要リファクタ
+  month_archives =
+    BoardEntry.accessible(current_user).find(
+      :all,
+      :select => "YEAR(date) as year, MONTH(date) as month, count(distinct board_entries.id) as count",
+      :group => "year, month",
+      :order => "year desc, month desc")
 -%>
 
 <div class="box_space">
   <div class="box_space_title"><%= icon_tag 'page_white_zip' -%><%= _('Monthly List')%></div>
   <div class="box_space_body" style="font-size: 10px;">
   <ul style="list-style-position: inside; list-style-type: disc;">
-  <% @month_archives.each do |archive| -%>
+  <% month_archives.each do |archive| -%>
     <% link_text =  _("%{month}/%{year} (%{count})") % {:year => archive.year, :month => archive.month, :count => archive.count} -%>
+    <%# FIXME ある年月に投稿されたものに絞り込めるようにしないといけない %>
     <li><%= link_to link_text, :archive => "all", :year => archive.year, :month => archive.month -%></li>
   <% end -%>
   </ul>

@@ -8,7 +8,7 @@
   <td align="right"><%= link_to _("Next Day (%s)") % @next_day.strftime('%Y/%m/%d'), :year => @next_day.year, :month => @next_day.month, :day => @next_day.day if @next_day -%></td>
   </tr></table>
 
-  <%= render :partial => "entries/topix_entries",
+  <%= render :partial => "board_entries/topix_entries",
     :locals => {
       :title => n_("%{wday}, %{date} - %{count} Entry", "%{wday}, %{date} - %{count} Entries", @entries.size) % {:date => @selected_day.strftime(_("%B %d %Y")), :wday => _(SkipUtil::WDAYS[@selected_day.wday]), :count => @entries.size},
       :entries => @entries

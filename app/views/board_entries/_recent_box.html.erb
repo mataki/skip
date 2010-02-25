@@ -10,11 +10,7 @@
     </ul>
   </div>
   <div class="box_space_bottom">
-    <% if owner.is_a? User -%>
-      <%= link_to _('Past List'), :controller => 'user', :action => 'blog', :uid => owner.uid, :archive => "all", :sort_type => 'date' %>
-    <% elsif owner.is_a? Group -%>
-      <%= link_to _('Past List'), :controller => 'group', :action => 'bbs', :gid => owner.gid, :archive => "all", :sort_type => 'date' %>
-    <% end -%>
+    <%= link_to _('Past List'), polymorphic_path([current_tenant, current_target_owner, :board_entries], :sort_type => 'date') %>
   </div>
 </div><!-- box_space -->
 <% end -%>

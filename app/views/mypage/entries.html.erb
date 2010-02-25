@@ -14,7 +14,7 @@
 
 <% content_for :contents_right do -%>
   <%= i18n_will_paginate_with_container_wrapper @entries %>
-  <%= render :partial => "entries/topix_entries",
+  <%= render :partial => "board_entries/topix_entries",
     :locals => {
       :title => @title_name,
       :entries => @entries,

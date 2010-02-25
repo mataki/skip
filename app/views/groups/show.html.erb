@@ -74,7 +74,7 @@
   </div><!-- group_info_space -->
 
   <% unless @recent_messages.blank? %>
-    <%= render :partial => "entries/topix_entries",
+    <%= render :partial => "board_entries/topix_entries",
       :locals => {
         :title => _('Recent Entries'),
         :entries => @recent_messages,

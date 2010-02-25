@@ -27,8 +27,12 @@ class BoardEntriesController < ApplicationController
     @main_menu = @title = _('Entries')
     params[:tag_select] ||= "AND"
 
-    # FIXME ownerの指定がある/なしで場合分けが必要
-    @search = current_tenant.board_entries.accessible(current_user).tagged(params[:tag_words], params[:tag_select]).search(params[:search])
+    search_params = params[:search] || {}
+    if current_target_owner
+      search_params[:owner_type] = current_target_owner.class.name
+      search_params[:owner_id] = current_target_owner.id
+    end
+    @search = BoardEntry.accessible(current_user).tagged(params[:tag_words], params[:tag_select]).search(search_params)
 
     @entries = @search.paginate(:page => params[:page], :per_page => 25)
 

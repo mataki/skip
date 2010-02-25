@@ -1,13 +1,13 @@
 <%
   # FIXME 要リファクタ
   select_state = "count(distinct board_entries.id) as count, users.name as user_name, users.id as user_id"
-  joins_state = "LEFT OUTER JOIN entry_publications ON entry_publications.board_entry_id = board_entries.id"
-  joins_state << " LEFT OUTER JOIN users ON users.id = board_entries.user_id"
-  user_archives = BoardEntry.accessible(current_user).find(:all,
-                                                           :select => select_state,
-                                                           :group => "user_id",
-                                                           :order => "count desc",
-                                                           :joins => joins_state)
+  joins_state << "LEFT OUTER JOIN users ON users.id = board_entries.user_id"
+  user_archives = BoardEntry.accessible(current_user).find(
+    :all,
+    :select => select_state,
+    :group => "user_id",
+    :order => "count desc",
+    :joins => joins_state)
 -%>
 
 <div class="box_space">

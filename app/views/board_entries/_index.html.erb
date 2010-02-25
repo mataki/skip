@@ -1,0 +1,46 @@
+<div class="search_cond_space ui-corner-all">
+  <% form_for @search do |f| %>
+    <table class="search_cond_box">
+      <tr>
+        <th><%= _('Search Range')%></th>
+        <td>
+          <%= f.radio_button :selected_owner_type, 'All' %><%= f.label :selected_owner_type_all, _('All') %>
+          <%= f.radio_button :selected_owner_type, 'User' %><%= f.label :selected_owner_type_user, _("Users' Blogs") %>
+          <%= f.radio_button :selected_owner_type, 'Group' %><%= f.label :selected_owner_type_group, _('Forum entries of the group') %>
+        </td>
+      </tr>
+      <tr>
+        <th><%= _('Types') %></th>
+        <td>
+          <%= f.radio_button :aim_type, 'entry' %><%= f.label :aim_type_entry, ns_('BoardEntry|Aim type|entry', 'entries', 2) %>
+          <%= f.radio_button :aim_type, "question" %><%= f.label :aim_type_question, ns_('BoardEntry|Aim type|question', 'questions', 2) %>
+          <%= f.radio_button :aim_type, "notice" %><%= f.label :aim_type_notice, ns_('BoardEntry|Aim type|notice', 'notices', 2) %>
+        </td>
+      </tr>
+      <tr>
+        <th><%= _('Keywords')%></th>
+        <td><%= f.text_field :title_like_or_contents_like_or_category_like, :size => 60 %><%= _('(The search targets are tags, titles and bodies)')%></td>
+      </tr>
+      <tr>
+        <th><%= _('Display Order') %></th>
+        <td>
+          <%= f.radio_button :order_sort_type, "date" %><%= f.label :order_sort_type_date, _('[Sort by %s]') % s_('BoardEntry|Last updated') %>
+          <%= f.radio_button :order_sort_type, "access" %><%= f.label :order_sort_type_access, _('[Sort by %s]') % _('Access Count') %>
+          <%= f.radio_button :order_sort_type, "point" %><%= f.label :order_sort_type_point, _('[Sort by %s]') % Admin::Setting.point_button %>
+        </td>
+      </tr>
+      <%= render :partial => 'search/tag_search', :locals => {:tags => @tags} %>
+      <tr>
+        <td><%= f.submit _('Search') %></td>
+      </tr>
+    </table>
+  <% end -%>
+</div>
+
+<div class="search_result_space">
+<% unless @entries.empty? -%>
+  <%= i18n_will_paginate_with_container_wrapper @entries %>
+  <%= render :partial => "topix_entries", :locals => { :entries => @entries, :title => _('Search result'), :show_owner_link => true } %>
+  <%= i18n_will_paginate_with_container_wrapper @entries %>
+<% end -%>
+</div>

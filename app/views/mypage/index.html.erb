@@ -72,7 +72,7 @@
       <% if @questions[:pages].empty? -%>
         <div><%= _('No matching questions.') %></div>
       <% else -%>
-        <%= render :partial => "entries/topix_entries", :locals => { :entries => @questions[:pages], :show_owner_link => true } %>
+        <%= render :partial => "board_entries/topix_entries", :locals => { :entries => @questions[:pages], :show_owner_link => true } %>
       <% end -%>
     </div>
 
