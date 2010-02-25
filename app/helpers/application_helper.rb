@@ -339,8 +339,9 @@ private
     ActionController::Base.relative_url_root || ''
   end
 
-#  # TODO 仕組みが複雑すぎる。BoardEntry.replace_symbol_linkと合わせてシンプルな作りにしたい。
-#  def parse_permalink text, owner_symbol = nil
+  # TODO 仕組みが複雑すぎる。BoardEntry.replace_symbol_linkと合わせてシンプルな作りにしたい。
+  # FIXME owner_symbolに依存しない仕組みに改修が必要
+  def parse_permalink text, owner_symbol = nil
 #    return '' unless text
 #    # closure
 #    default_proc = proc { |symbol, link_str|
@@ -360,8 +361,8 @@ private
 #
 #    split_mark =  "&gt;"
 #    procs.each { |value| text = BoardEntry.replace_symbol_link(text, value.first, value.last, split_mark) }
-#    return text
-#  end
+    text
+  end
 
   # 検索条件に使うプルダウン表示用
   def selected_tag (name, selected_value, choices, options={})
