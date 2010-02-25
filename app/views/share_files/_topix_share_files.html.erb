@@ -32,6 +32,14 @@
                 <%= _('Downloads: %s') % content_tag('span', h(share_file.total_count), :id => "download_count_#{share_file.id}") %>
                 <%= _('File size: %s') % share_file.file_size_with_unit %>
               </span>
+              <% if current_target_owner && share_file.full_accessible?(current_user) -%>
+                <span class="operations">
+                  <%= link_to _('[Edit]'), edit_polymorphic_path([current_tenant, share_file.owner, share_file]) %>
+                  <%= link_to _('[Delete]'), [current_tenant, share_file.owner, share_file], :method => :delete, :confirm => _('Are you sure to delete?') %>
+                  <%= link_to _('[Get download history in CSV]'), polymorphic_path([current_tenant, share_file.owner, share_file], :action => :download_history_as_csv) %>
+                  <%= link_to _('[Clear download history]'), polymorphic_path([current_tenant, share_file.owner, share_file], :action => :clear_download_history), :method => :delete, :confirm => _('Are you sure to delete?') %>
+                </span>
+              <% end %>
             </td>
             <td class="date"><%= h share_file.date.strftime(_("%B %d %Y")) %></td>
           </tr>

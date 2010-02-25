@@ -55,27 +55,6 @@
 <% end -%>
 
 <% content_for :javascript_initializers do -%>
-      $j('.clear_download_history_link')
-      .click(function(){
-          if (confirm('<%= _("Are you sure to delete?")%>')) {
-              var shareFileId = this.id.split('_')[4];
-              var clearDownloadUrl = "<%= url_for(:controller => 'share_file', :action => 'clear_download_history') %>/";
-              $j.ajax({
-                  type: "POST",
-                  data: { id: shareFileId, authenticity_token: $j('input[name=authenticity_token]').val() },
-                  url: clearDownloadUrl,
-                  success: function(text){
-                      $j("#flash_message").trigger("notice", text);
-                  },
-                  error: function(request){
-                      alert(request.responseText);
-                  }
-
-              });
-          }
-          return false;
-      });
-
       $j('.search_by_tag')
       .click(function(){
           var hidden_tag = $j(document.createElement('input'))

@@ -18,11 +18,8 @@ class ShareFilesController < ApplicationController
   include UserHelper
   include EmbedHelper
 
-  verify :method => :post, :only => [ :create, :update, :destroy, :download_history_as_csv, :clear_download_history ],
-         :redirect_to => { :action => :index }
-
   before_filter :owner_required, :only => [:show, :edit, :update, :destroy]
-  before_filter :required_full_accessible, :only => [:edit, :update, :destroy]
+  before_filter :required_full_accessible, :only => [:edit, :update, :destroy, :download_history_as_csv, :clear_download_history]
   before_filter :required_accessible, :only => [:show]
 
   def index
@@ -66,7 +63,8 @@ class ShareFilesController < ApplicationController
       flash[:warn] = _('Could not find the entity of the specified file. Contact system administrator.')
       respond_to do |format|
         format.html do
-          return redirect_to [current_tenant, current_target_owner, :share_files]
+          redirect_to [current_tenant, current_target_owner, :share_files]
+          return
         end
       end
     end
@@ -99,7 +97,6 @@ class ShareFilesController < ApplicationController
   # post action
   def create
     @share_file = current_target_owner.owner_share_files.build(params[:share_file])
-    debugger
 
     required_full_accessible(@share_file) do
 #      # TODO modelに持っていけないか?(validate_on_createあたり)
@@ -136,111 +133,85 @@ class ShareFilesController < ApplicationController
   end
 
   def edit
-    begin
-      @share_file = ShareFile.find(params[:id])
-    rescue ActiveRecord::RecordNotFound => ex
-      render_window_close
-      return
-    end
-
-    unless @share_file.updatable?(current_user)
-      render_window_close
-      return
-    end
-
-    @error_messages = []
-    @owner_name = params[:owner_name]
-    @categories_hash = ShareFile.get_tags_hash(@share_file.owner_symbol)
   end
 
-  # post action
   def update
-    @share_file = ShareFile.find(params[:file_id])
-    update_params = params[:share_file]
-    update_params[:publication_symbols_value] = params[:publication_symbols_value]
-    @share_file.accessed_user = current_user
-
-    if @share_file.update_attributes(update_params)
-      # TODO #814のチケットを処理するタイミングで下記5行は無くす
-      @share_file.share_file_publications.clear
-      target_symbols = analyze_param_publication_type @share_file
-      target_symbols.each do |target_symbol|
-        @share_file.share_file_publications.create(:symbol => target_symbol)
+    if @share_file.update_attributes(params[:share_file])
+      respond_to do |format|
+        format.html do
+          flash[:notice] = _('Updated.')
+          redirect_to [current_tenant, current_target_owner, :share_files]
+        end
       end
-
-      flash[:notice] = _('Updated.')
-      render_window_close
     else
-      @owner_name = params[:owner_name]
-      @categories_hash = ShareFile.get_tags_hash(@share_file.owner_symbol)
-      render :action => :edit
-    end
-  end
-
-  # post action
-  def destroy
-    share_file = ShareFile.find(params[:id])
-
-    unless share_file.updatable?(current_user)
-      redirect_to_with_deny_auth
-      return
-    end
-
-    share_file.destroy
-    flash[:notice] = _("File was successfully deleted.")
-
-    redirect_to :controller => share_file.owner_symbol_type, :action => share_file.owner_symbol_id, :id => 'share_file'
-  end
-
-  def list
-    # TODO: インスタンス変数の数を減らす
-    owner = current_target_user || current_target_group
-    unless owner
-      flash[:warn] = _("Specified share file owner does not exist.")
-      redirect_to root_url
-      return
-    end
-
-    @search = ShareFile.accessible(current_user).owned(owner)
-    @search = @search.tagged(params[:category], "AND") if params[:category]
-    @search =
-      if params[:sort_type] == "file_name"
-        @search.descend_by_file_name.search(params[:search])
-      else
-        @search.descend_by_date.search(params[:search])
+      respond_to do |format|
+        format.html do
+          render :action => :edit
+        end
       end
-    @share_files = @search.paginate(:page => params[:page], :per_page => 10)
+    end
+  end
 
+  def destroy
+    @share_file.destroy
     respond_to do |format|
       format.html do
-        if owner.is_a? User
-          @main_menu = user_main_menu(owner)
-          @title = user_title(owner)
-          @tab_menu_option = user_menu_option(owner)
-        elsif owner.is_a? Group
-          @main_menu = _('Groups')
-          @title = owner.name
-          @tab_menu_option = { :gid => owner.gid }
-        end
-        @owner_name = owner.name
-        params[:sort_type] ||= "date"
-        flash.now[:notice] = _('No matching shared files found.') if @share_files.empty?
-        render :layout => 'layout'
+        flash[:notice] = _("File was successfully deleted.")
+        redirect_to [current_tenant, current_target_owner, :share_files]
       end
-      format.js {
-        render :json => {
-          :pages => {
-            :first => 1,
-            :previous => @share_files.previous_page,
-            :next => @share_files.next_page,
-            :last => @share_files.total_pages,
-            :current => @share_files.current_page,
-            :item_count => @share_files.total_entries },
-          :share_files => @share_files.map{|s| share_file_to_json(s) }
-        }
-      }
     end
   end
+
+  # TODO 以下はindexに統合して消す
+#  def list
+#    # TODO: インスタンス変数の数を減らす
+#    owner = current_target_user || current_target_group
+#    unless owner
+#      flash[:warn] = _("Specified share file owner does not exist.")
+#      redirect_to root_url
+#      return
+#    end
+#
+#    @search = ShareFile.accessible(current_user).owned(owner)
+#    @search = @search.tagged(params[:category], "AND") if params[:category]
+#    @search =
+#      if params[:sort_type] == "file_name"
+#        @search.descend_by_file_name.search(params[:search])
+#      else
+#        @search.descend_by_date.search(params[:search])
+#      end
+#    @share_files = @search.paginate(:page => params[:page], :per_page => 10)
+#
+#    respond_to do |format|
+#      format.html do
+#        if owner.is_a? User
+#          @main_menu = user_main_menu(owner)
+#          @title = user_title(owner)
+#          @tab_menu_option = user_menu_option(owner)
+#        elsif owner.is_a? Group
+#          @main_menu = _('Groups')
+#          @title = owner.name
+#          @tab_menu_option = { :gid => owner.gid }
+#        end
+#        @owner_name = owner.name
+#        params[:sort_type] ||= "date"
+#        flash.now[:notice] = _('No matching shared files found.') if @share_files.empty?
+#        render :layout => 'layout'
+#      end
+#      format.js {
+#        render :json => {
+#          :pages => {
+#            :first => 1,
+#            :previous => @share_files.previous_page,
+#            :next => @share_files.next_page,
+#            :last => @share_files.total_pages,
+#            :current => @share_files.current_page,
+#            :item_count => @share_files.total_entries },
+#          :share_files => @share_files.map{|s| share_file_to_json(s) }
+#        }
+#      }
+#    end
+#  end
 
 #  def download
 #    symbol_type_hash = { 'user'  => 'uid',
@@ -278,30 +249,19 @@ class ShareFilesController < ApplicationController
   end
 
   def download_history_as_csv
-    share_file = ShareFile.find(params[:id])
-
-    unless share_file.updatable?(current_user)
-      redirect_to_with_deny_auth
-      return
-    end
-
-    csv_text, file_name = share_file.get_accesses_as_csv
+    csv_text, file_name = @share_file.get_accesses_as_csv
     send_data(csv_text, :filename => nkf_file_name(file_name), :type => 'application/x-csv', :disposition => 'attachment')
   end
 
-  # ajax action
   def clear_download_history
-    unless share_file = ShareFile.find(:first, :conditions => ["id = ?", params[:id]])
-      return false
+    # FIXME share_file#total_countが0になってない
+    @share_file.share_file_accesses.delete_all
+    respond_to do |format|
+      format.html do
+        flash[:notice] = _('Download history was successfully deleted.')
+        redirect_to [current_tenant, current_target_owner, :share_files]
+      end
     end
-
-    unless share_file.updatable?(current_user)
-      render :text => _('Operation unauthorized.'), :status => :forbidden
-      return
-    end
-
-    share_file.share_file_accesses.clear
-    render :text => _('Download history was successfully deleted.')
   end
 
 private

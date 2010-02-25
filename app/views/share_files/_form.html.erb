@@ -22,7 +22,7 @@ table {
 
 <div class="input_line">
   <div class="input_label"><%= form.label :file, _('File') %></div>
-  <div class="input_value"><%= form.file_field :file, :size => 60 %></div>
+  <div class="input_value"><%= form.object.new_record? ? form.file_field(:file, :size => 60) : h(form.object.file_name) %></div>
   <div style="clear: left"></div>
 </div>
 

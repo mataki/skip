@@ -13,13 +13,13 @@ ActionController::Routing::Routes.draw do |map|
       }
     tenant.resources :users do |user|
       user.resources :board_entries
-      user.resources :share_files
+      user.resources :share_files, :member => {:download_history_as_csv => :get, :clear_download_history => :delete}
       user.resource :user_profile
       user.resource :pictures, :only => %w(new create)
     end
     tenant.resources :groups, :member => {:manage => :get} do |group|
       group.resources :board_entries
-      group.resources :share_files
+      group.resources :share_files, :member => {:download_history_as_csv => :get, :clear_download_history => :delete}
     end
     tenant.resources :share_files, :only => %w(index show)
     tenant.resources :board_entries, :only => %w(index show), :collection => {:ado_preview => :any}

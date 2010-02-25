@@ -334,23 +334,23 @@ class ShareFile < ActiveRecord::Base
                            :user_id => login_user_id)
   end
 
-#  def get_accesses_as_csv
-#    share_file_accesses = ShareFileAccess.find(:all,
-#                                               :order => "created_at DESC",
-#                                               :conditions => ["share_file_id = ?", id],
-#                                               :include => :user)
-#    buf = ""
-#    CSV::Writer.generate(buf) do |csv|
-#      header = [_("Date Accessed"), Admin::Setting.login_account, _('user name')]
-#      header.map! {|col| NKF.nkf('-sZ', col) }
-#      csv << header
-#      share_file_accesses.each do |access|
-#        csv << [access.created_at.strftime("%Y/%m/%d %H:%M"), access.user.code, NKF.nkf('-sZ', access.user.name)]
-#      end
-#    end
-#    return buf, (file_name.gsub(/\./, '_') + '_history.csv')
-#  end
-#
+  def get_accesses_as_csv
+    share_file_accesses = ShareFileAccess.find(:all,
+                                               :order => "created_at DESC",
+                                               :conditions => ["share_file_id = ?", id],
+                                               :include => :user)
+    buf = ""
+    CSV::Writer.generate(buf) do |csv|
+      header = [_("Date Accessed"), Admin::Setting.login_account, _('user name')]
+      header.map! {|col| NKF.nkf('-sZ', col) }
+      csv << header
+      share_file_accesses.each do |access|
+        csv << [access.created_at.strftime("%Y/%m/%d %H:%M"), access.user.email, NKF.nkf('-sZ', access.user.name)]
+      end
+    end
+    return buf, (file_name.gsub(/\./, '_') + '_history.csv')
+  end
+
   def upload_file src_file = self.file
     open(full_path, "w+b") { |f| f.write(src_file.read) }
   end
