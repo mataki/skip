@@ -388,7 +388,7 @@ class MypageController < ApplicationController
       scope = case
               when @key == 'message'  then BoardEntry.accessible(@current_user).notice
               when @key == 'comment'  then BoardEntry.accessible(@current_user).commented(@current_user)
-              when @key == 'joined_group'    then scope_for_entries_by_system_antenna_group
+              when @key == 'joined_group'    then Group.active.participating(@current_user).owner_entries.accessible(@current_user)
               end
 
       unless @read
@@ -403,17 +403,6 @@ class MypageController < ApplicationController
 
     def need_search?
       !(@key == 'group' && @current_user.group_symbols.size == 0)
-    end
-
-    private
-    # #TODO BoardEntryに移動する
-    # システムアンテナ[group]の記事を取得するための検索条件
-    def scope_for_entries_by_system_antenna_group
-      find_params = BoardEntry.make_conditions @current_user.belong_symbols, { :symbols => @current_user.group_symbols }
-      BoardEntry.scoped(
-        :conditions=> find_params[:conditions],
-        :include => find_params[:include]
-      )
     end
   end
 
@@ -466,11 +455,9 @@ class MypageController < ApplicationController
 
   # 最近の人気記事一覧を取得する（partial用のオプションを返す）
   def find_access_blogs_as_locals options
-    find_params = BoardEntry.make_conditions(current_user.belong_symbols, {:publication_type => 'public'})
-    pages = BoardEntry.scoped(
-      :conditions => find_params[:conditions],
+    pages = BoardEntry.accessible(current_user).scoped(
       :order => "board_entry_points.access_count DESC, board_entries.last_updated DESC, board_entries.id DESC",
-      :include => find_params[:include] | [ :user, :state ]
+      :include => [ :user, :state ]
     ).timeline.diary.recent(recent_day.day).paginate(:page => params[:page], :per_page => options[:per_page])
 
     locals = {
@@ -482,12 +469,8 @@ class MypageController < ApplicationController
 
   # 記事一覧を取得する（partial用のオプションを返す）
   def find_recent_blogs_as_locals options
-    find_params = BoardEntry.make_conditions(current_user.belong_symbols, {:entry_type=>'DIARY', :publication_type => 'public'})
     id_name = 'recent_blogs'
-    pages = BoardEntry.scoped(
-      :conditions => find_params[:conditions],
-      :include => find_params[:include] | [ :user, :state ]
-    ).from_recents.timeline.order_new.paginate(:page => target_page(id_name), :per_page => options[:per_page])
+    pages = BoardEntry.from_recents.accessible(current_user).entry_type_is(BoardEntry::DIARY).timeline.scoped(:include => [ :user, :state ]).order_new.paginate(:page => target_page(id_name), :per_page => options[:per_page])
 
     locals = {
       :id_name => id_name,
@@ -512,23 +495,12 @@ class MypageController < ApplicationController
   # BBS記事一覧を取得するメソッドを動的に生成(partial用のオプションを返す)
   def find_recent_bbs_as_locals code, options = {}
     category = GroupCategory.find_by_code(code)
-    title   = category.name
-    id_name = category.code.downcase
-    pages = []
+    pages = BoardEntry.from_recents.accessible(current_user).entry_type_is(BoardEntry::GROUP_BBS).timeline.scoped(:include => [ :user, :state ]).order_new.paginate(:page => target_page(id_name), :per_page => options[:per_page])
 
-    find_options = {:exclude_entry_type=>'DIARY'}
-    find_options[:symbols] = options[:group_symbols] || Group.gid_by_category[category.id]
-    if find_options[:symbols].size > 0
-      find_params = BoardEntry.make_conditions(current_user.belong_symbols, find_options)
-      pages = BoardEntry.scoped(
-        :conditions => find_params[:conditions],
-        :include => find_params[:include] | [ :user, :state ]
-      ).from_recents.timeline.order_new.paginate(:page => target_page(id_name), :per_page => options[:per_page])
-    end
     locals = {
-      :id_name => id_name,
+      :id_name => category.code.downcase,
       :title_icon => "group",
-      :title_name => title,
+      :title_name => category.name,
       :per_page => options[:per_page],
       :pages => pages
     }
@@ -568,16 +540,6 @@ class MypageController < ApplicationController
 
   def valid_list_types
     %w(questions access_blogs recent_blogs) | GroupCategory.all.map{ |gc| gc.code.downcase }
-  end
-
-  # TODO BoardEntryに移動する
-  # 指定日の記事一覧を取得する
-  def find_entries_at_specified_date(selected_day)
-    find_params = BoardEntry.make_conditions(current_user.belong_symbols, {:entry_type=>'DIARY'})
-    find_params[:conditions][0] << " and DATE(date) = ?"
-    find_params[:conditions] << selected_day
-    BoardEntry.find(:all, :conditions=> find_params[:conditions], :order=>"date ASC",
-                          :include => find_params[:include] | [ :user, :state ])
   end
 
   # TODO helperへ移動する

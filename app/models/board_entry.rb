@@ -51,9 +51,9 @@ class BoardEntry < ActiveRecord::Base
   # TODO 回帰テストを書く
   named_scope :accessible, proc { |user|
     if joined_group_ids = Group.active.participating(user).map(&:id) and !joined_group_ids.empty?
-      { :conditions => ['tenant_id = ? AND publication_type = "public" OR owner_id IN (?)', user.tenant_id, joined_group_ids] }
+      { :conditions => ['board_entries.tenant_id = ? AND publication_type = "public" OR owner_id IN (?)', user.tenant_id, joined_group_ids] }
     else
-      { :conditions => ['tenant_id = ? AND publication_type = "public"', user.tenant_id] }
+      { :conditions => ['board_entries.tenant_id = ? AND publication_type = "public"', user.tenant_id] }
     end
   }
 
