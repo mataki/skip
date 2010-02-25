@@ -27,7 +27,6 @@ class ShareFile < ActiveRecord::Base
   belongs_to :owner, :polymorphic => true
   has_many :tags, :through => :share_file_tags
   has_many :share_file_tags, :dependent => :destroy
-  has_many :share_file_publications, :dependent => :destroy
   has_many :share_file_accesses, :dependent => :destroy
 
   validates_length_of   :description, :maximum => 100
