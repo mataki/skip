@@ -18,14 +18,12 @@ class GroupController < ApplicationController
 
   before_filter :check_owned,
                 :only => [ :manage, :managers, :permit,
-                           :update, :destroy, :toggle_owned,
-                           :forced_leave_user, :change_participation, :append_user ]
+                           :update, :destroy, :change_participation ]
 
   after_filter :remove_system_message, :only => %w(show users bbs)
 
   verify :method => :post,
-         :only => [ :join, :destroy, :leave, :update, :change_participation,
-                    :toggle_owned, :forced_leave_user, :append_user ],
+         :only => [ :join, :destroy, :leave, :update, :change_participation ],
          :redirect_to => { :action => :show }
 
   # tab_menu
@@ -90,26 +88,26 @@ class GroupController < ApplicationController
     redirect_to :action => 'show'
   end
 
-  # 参加者追加(管理者のみ)
-  def append_user
-    # FIXME 管理者のみに制御出来ていない
-    symbol_type, symbol_id = Symbol.split_symbol params[:symbol]
-    case
-    when (symbol_type == 'gid' and group = Group.active.find_by_gid(symbol_id, :include => :group_participations))
-      users = group.group_participations.active.map(&:user)
-      participations = @group.join users, :force => true
-
-      participations.each do |participation|
-        SystemMessage.create_message :message_type => 'FORCED_JOIN', :user_id => participation.user.id, :message_hash => {:group_id => @group.id} 
-      end
-
-      flash[:notice] = _("Added members of %s as members of the group") % group.name unless participations.empty?
-      flash[:error] = @group.errors.full_messages.join("\t") unless @group.errors.empty?
-    else
-      flash[:warn] = _("Users / groups selection invalid.")
-    end
-    redirect_to :action => 'manage', :menu => 'manage_participations'
-  end
+#  # 参加者追加(管理者のみ)
+#  def append_user
+#    # FIXME 管理者のみに制御出来ていない
+#    symbol_type, symbol_id = Symbol.split_symbol params[:symbol]
+#    case
+#    when (symbol_type == 'gid' and group = Group.active.find_by_gid(symbol_id, :include => :group_participations))
+#      users = group.group_participations.active.map(&:user)
+#      participations = @group.join users, :force => true
+#
+#      participations.each do |participation|
+#        SystemMessage.create_message :message_type => 'FORCED_JOIN', :user_id => participation.user.id, :message_hash => {:group_id => @group.id} 
+#      end
+#
+#      flash[:notice] = _("Added members of %s as members of the group") % group.name unless participations.empty?
+#      flash[:error] = @group.errors.full_messages.join("\t") unless @group.errors.empty?
+#    else
+#      flash[:warn] = _("Users / groups selection invalid.")
+#    end
+#    redirect_to :action => 'manage', :menu => 'manage_participations'
+#  end
 
   # post_action
   # 退会
@@ -127,37 +125,37 @@ class GroupController < ApplicationController
     redirect_to :action => 'show'
   end
 
-  # 管理者による強制退会処理
-  def forced_leave_user
-    # FIXME 管理者のみに制御出来ていない
-    group_participation = GroupParticipation.find(params[:participation_id])
-    @group.leave group_participation.user do |result|
-      if result
-        SystemMessage.create_message :message_type => 'FORCED_LEAVE', :user_id => group_participation.user.id, :message_hash => {:group_id => @group.id}
-        flash[:notice] = _("Removed %s from members of the group.") % group_participation.user.name
-      else
-        flash[:notice] = _('%s are not a member of the group.') % group_participation.user.name
-      end
-    end
-    redirect_to :action => 'manage', :menu => 'manage_participations'
-  end
+#  # 管理者による強制退会処理
+#  def forced_leave_user
+#    # FIXME 管理者のみに制御出来ていない
+#    group_participation = GroupParticipation.find(params[:participation_id])
+#    @group.leave group_participation.user do |result|
+#      if result
+#        SystemMessage.create_message :message_type => 'FORCED_LEAVE', :user_id => group_participation.user.id, :message_hash => {:group_id => @group.id}
+#        flash[:notice] = _("Removed %s from members of the group.") % group_participation.user.name
+#      else
+#        flash[:notice] = _('%s are not a member of the group.') % group_participation.user.name
+#      end
+#    end
+#    redirect_to :action => 'manage', :menu => 'manage_participations'
+#  end
 
-  # post_action ... では無いので後に修正が必要
-  # 管理者変更
-  def toggle_owned
-    group_participation = GroupParticipation.find(params[:participation_id])
-
-    redirect_to_with_deny_auth and return unless group_participation.user_id != session[:user_id]
-
-    group_participation.owned = !group_participation.owned?
-
-    if group_participation.save
-      flash[:notice] = _('Changed.')
-    else
-      flash[:warn] = _('Failed to change status.')
-    end
-    redirect_to :action => 'manage', :menu => 'manage_participations'
-  end
+#  # post_action ... では無いので後に修正が必要
+#  # 管理者変更
+#  def toggle_owned
+#    group_participation = GroupParticipation.find(params[:participation_id])
+#
+#    redirect_to_with_deny_auth and return unless group_participation.user_id != session[:user_id]
+#
+#    group_participation.owned = !group_participation.owned?
+#
+#    if group_participation.save
+#      flash[:notice] = _('Changed.')
+#    else
+#      flash[:warn] = _('Failed to change status.')
+#    end
+#    redirect_to :action => 'manage', :menu => 'manage_participations'
+#  end
 
   # post_action
   # 参加の許可か棄却

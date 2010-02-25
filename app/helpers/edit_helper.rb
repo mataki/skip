@@ -22,11 +22,4 @@ module EditHelper
       content_tag :span, result, :class => 'send_mail_field'
     end
   end
-
-  private
-  def share_files_url symbol
-    symbol_type, symbol_id = Symbol.split_symbol symbol
-    raise ArgumentError, 'Symbol type is invalid.' unless %w(uid gid).include?(symbol_type)
-    url_for :controller => 'share_file', :action => 'list', symbol_type.to_sym => symbol_id, :format => 'js'
-  end
 end

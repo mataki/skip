@@ -96,8 +96,6 @@ class GroupsController < ApplicationController
     case @menu
     when "manage_info"
       @group_categories = GroupCategory.all
-    when "manage_participations"
-      @participations = @group.group_participations.active.paginate(:page => params[:page], :per_page => 20)
     when "manage_permit"
       unless @group.protected?
         flash[:warn] = _("No approval needed to join this group.")

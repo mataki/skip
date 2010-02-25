@@ -38,8 +38,7 @@ module GroupsHelper
   end
 
   def get_group_manage_menu_items selected_menu
-    @@menus = [{:name => _("Edit Group Information"), :menu => "manage_info" },
-               {:name => _("Manage Members"),       :menu => "manage_participations"} ]
+    @@menus = [{:name => _("Edit Group Information"), :menu => "manage_info" }]
     @@menus << {:name => _("Approve Member"),     :menu => "manage_permit" } if @group.protected?
 
     get_menu_items @@menus, selected_menu, "manage"

@@ -561,10 +561,10 @@ class MypageController < ApplicationController
     end
   end
 
-  def get_url_hash action, options = {}
-    login_user_symbol_type, login_user_symbol_id = Symbol.split_symbol(session[:user_symbol])
-    { :controller => 'user', :action => action, :uid => login_user_symbol_id }.merge options
-  end
+#  def get_url_hash action, options = {}
+#    login_user_symbol_type, login_user_symbol_id = Symbol.split_symbol(session[:user_symbol])
+#    { :controller => 'user', :action => action, :uid => login_user_symbol_id }.merge options
+#  end
 
   def valid_list_types
     %w(questions access_blogs recent_blogs) | GroupCategory.all.map{ |gc| gc.code.downcase }

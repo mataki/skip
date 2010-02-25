@@ -284,109 +284,109 @@ class BoardEntry < ActiveRecord::Base
     editor_mode == 'hiki'
   end
 
-  # 検索条件の生成
-  def self.make_conditions(login_user_symbols, options={})
-    options.assert_valid_keys [:entry_type, :keyword, :id, :category, :categories, :recent_day, :symbol, :writer_id, :tag_words, :tag_select, :ids, :symbols, :exclude_entry_type, :publication_type]
-
-    conditions_param = []
-
-    # 公開条件（必須）
-    conditions_state = "(entry_publications.symbol in (?))"
-    conditions_param << login_user_symbols + [Symbol::SYSTEM_ALL_USER] # 全公開も見れる
-
-    # 種別
-    if entry_type = options[:entry_type]
-      conditions_state << " and board_entries.entry_type= ? "
-      conditions_param << entry_type
-    end
-
-    # 除外種別
-    if entry_type = options[:exclude_entry_type]
-      conditions_state << " and board_entries.entry_type <> ? "
-      conditions_param << entry_type
-    end
-
-    # 公開範囲
-    if publication_type = options[:publication_type]
-      conditions_state << " and board_entries.publication_type= ? "
-      conditions_param << publication_type
-    end
-
-    # 所有者条件
-    # todo options[:symbol]を廃止し、:symbolsに統合（修正量が多いため9/21時点では見送り）
-    options[:symbols] ||= []
-    options[:symbols] = options[:symbols] | [options[:symbol]] if options[:symbol]
-    if (symbols = options[:symbols]).size > 0
-      conditions_state << " and board_entries.symbol in (?) "
-      conditions_param << symbols
-    end
-
-    # 書いた人
-    if writer_id = options[:writer_id]
-      conditions_state << " and board_entries.user_id = ? "
-      conditions_param << writer_id
-    end
-
-    # キーワード条件
-    if keyword = options[:keyword] and !keyword.empty?
-      conditions_state << " and (board_entries.title like ? or board_entries.contents like ? or board_entries.category like ?)"
-      conditions_param << SkipUtil.to_like_query_string(keyword)
-      conditions_param << SkipUtil.to_like_query_string(keyword)
-      conditions_param << SkipUtil.to_like_query_string(keyword)
-    end
-
-    # id条件（一意）
-    if id = options[:id]
-      conditions_state << " and board_entries.id = ?"
-      conditions_param << id
-    end
-
-    # id条件（複数）
-    if ids = options[:ids]
-      conditions_state << " and board_entries.id in (?)"
-      conditions_param << ids
-    end
-
-    # カテゴリ
-    if category = options[:category] and category != ''
-      conditions_state << " and board_entries.category like ?"
-      conditions_param << '%' + category + '%'
-    end
-    if categories = options[:categories] and !categories.empty?
-      categories.each do |category|
-        conditions_state << " and board_entries.category like ?"
-        conditions_param << '%' + category + '%'
-      end
-    end
-
-    #タグ
-    if options[:tag_words] && options[:tag_select]
-      words = options[:tag_words].split(',');
-      if options[:tag_select] == "AND"
-        words.each do |word|
-          conditions_state << " and board_entries.category like ?"
-          conditions_param << SkipUtil.to_like_query_string(word)
-        end
-      else
-        words.each do |word|
-          conditions_state << " and (" if word == words.first
-          conditions_state << " board_entries.category like ? OR" if word != words.last
-          conditions_state << " board_entries.category like ?)" if word == words.last
-          conditions_param << SkipUtil.to_like_query_string(word)
-        end
-      end
-    end
-
-
-    # 最近の何日間条件
-    if recent_day = options[:recent_day]
-      conditions_state << " and last_updated >  ?"
-#      conditions_state << " and board_entries.id >  ?"
-      conditions_param << Date.today-recent_day
-    end
-
-    return {:conditions => conditions_param.unshift(conditions_state), :include => [:entry_publications] }
-  end
+#  # 検索条件の生成
+#  def self.make_conditions(login_user_symbols, options={})
+#    options.assert_valid_keys [:entry_type, :keyword, :id, :category, :categories, :recent_day, :symbol, :writer_id, :tag_words, :tag_select, :ids, :symbols, :exclude_entry_type, :publication_type]
+#
+#    conditions_param = []
+#
+#    # 公開条件（必須）
+#    conditions_state = "(entry_publications.symbol in (?))"
+#    conditions_param << login_user_symbols + [Symbol::SYSTEM_ALL_USER] # 全公開も見れる
+#
+#    # 種別
+#    if entry_type = options[:entry_type]
+#      conditions_state << " and board_entries.entry_type= ? "
+#      conditions_param << entry_type
+#    end
+#
+#    # 除外種別
+#    if entry_type = options[:exclude_entry_type]
+#      conditions_state << " and board_entries.entry_type <> ? "
+#      conditions_param << entry_type
+#    end
+#
+#    # 公開範囲
+#    if publication_type = options[:publication_type]
+#      conditions_state << " and board_entries.publication_type= ? "
+#      conditions_param << publication_type
+#    end
+#
+#    # 所有者条件
+#    # todo options[:symbol]を廃止し、:symbolsに統合（修正量が多いため9/21時点では見送り）
+#    options[:symbols] ||= []
+#    options[:symbols] = options[:symbols] | [options[:symbol]] if options[:symbol]
+#    if (symbols = options[:symbols]).size > 0
+#      conditions_state << " and board_entries.symbol in (?) "
+#      conditions_param << symbols
+#    end
+#
+#    # 書いた人
+#    if writer_id = options[:writer_id]
+#      conditions_state << " and board_entries.user_id = ? "
+#      conditions_param << writer_id
+#    end
+#
+#    # キーワード条件
+#    if keyword = options[:keyword] and !keyword.empty?
+#      conditions_state << " and (board_entries.title like ? or board_entries.contents like ? or board_entries.category like ?)"
+#      conditions_param << SkipUtil.to_like_query_string(keyword)
+#      conditions_param << SkipUtil.to_like_query_string(keyword)
+#      conditions_param << SkipUtil.to_like_query_string(keyword)
+#    end
+#
+#    # id条件（一意）
+#    if id = options[:id]
+#      conditions_state << " and board_entries.id = ?"
+#      conditions_param << id
+#    end
+#
+#    # id条件（複数）
+#    if ids = options[:ids]
+#      conditions_state << " and board_entries.id in (?)"
+#      conditions_param << ids
+#    end
+#
+#    # カテゴリ
+#    if category = options[:category] and category != ''
+#      conditions_state << " and board_entries.category like ?"
+#      conditions_param << '%' + category + '%'
+#    end
+#    if categories = options[:categories] and !categories.empty?
+#      categories.each do |category|
+#        conditions_state << " and board_entries.category like ?"
+#        conditions_param << '%' + category + '%'
+#      end
+#    end
+#
+#    #タグ
+#    if options[:tag_words] && options[:tag_select]
+#      words = options[:tag_words].split(',');
+#      if options[:tag_select] == "AND"
+#        words.each do |word|
+#          conditions_state << " and board_entries.category like ?"
+#          conditions_param << SkipUtil.to_like_query_string(word)
+#        end
+#      else
+#        words.each do |word|
+#          conditions_state << " and (" if word == words.first
+#          conditions_state << " board_entries.category like ? OR" if word != words.last
+#          conditions_state << " board_entries.category like ?)" if word == words.last
+#          conditions_param << SkipUtil.to_like_query_string(word)
+#        end
+#      end
+#    end
+#
+#
+#    # 最近の何日間条件
+#    if recent_day = options[:recent_day]
+#      conditions_state << " and last_updated >  ?"
+##      conditions_state << " and board_entries.id >  ?"
+#      conditions_param << Date.today-recent_day
+#    end
+#
+#    return {:conditions => conditions_param.unshift(conditions_state), :include => [:entry_publications] }
+#  end
 
 #  def get_around_entry(user)
 #    order_value = BoardEntry.find(:first, :select => 'last_updated+id as order_value', :conditions=>["id = ?", id]).order_value

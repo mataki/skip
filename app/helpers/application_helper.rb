@@ -339,29 +339,29 @@ private
     ActionController::Base.relative_url_root || ''
   end
 
-  # TODO 仕組みが複雑すぎる。BoardEntry.replace_symbol_linkと合わせてシンプルな作りにしたい。
-  def parse_permalink text, owner_symbol = nil
-    return '' unless text
-    # closure
-    default_proc = proc { |symbol, link_str|
-                          symbol_type, symbol_id = SkipUtil.split_symbol symbol
-                          url = url_for("#{relative_url_root}/#{@@CONTROLLER_HASH[symbol_type]}/#{symbol_id.strip}/")
-                          link_to(link_str, url) }
-    # closure
-    file_proc = proc {|file_symbol, link_str|
-                      symbol_type, symbol_id = SkipUtil.split_symbol owner_symbol
-                      f_symbol_type, file_name = SkipUtil.split_symbol file_symbol
-                      file_name.gsub!(/\r\n|\r|\n/, '')
-                      url = share_file_url :controller_name => @@CONTROLLER_HASH[symbol_type], :symbol_id => symbol_id, :file_name => file_name.strip, :authenticity_token => form_authenticity_token
-                      link_to(link_str, url) }
-
-    procs = [["uid", default_proc], ["gid", default_proc], ["page", default_proc]]
-    procs << ["file",file_proc] if owner_symbol
-
-    split_mark =  "&gt;"
-    procs.each { |value| text = BoardEntry.replace_symbol_link(text, value.first, value.last, split_mark) }
-    return text
-  end
+#  # TODO 仕組みが複雑すぎる。BoardEntry.replace_symbol_linkと合わせてシンプルな作りにしたい。
+#  def parse_permalink text, owner_symbol = nil
+#    return '' unless text
+#    # closure
+#    default_proc = proc { |symbol, link_str|
+#                          symbol_type, symbol_id = SkipUtil.split_symbol symbol
+#                          url = url_for("#{relative_url_root}/#{@@CONTROLLER_HASH[symbol_type]}/#{symbol_id.strip}/")
+#                          link_to(link_str, url) }
+#    # closure
+#    file_proc = proc {|file_symbol, link_str|
+#                      symbol_type, symbol_id = SkipUtil.split_symbol owner_symbol
+#                      f_symbol_type, file_name = SkipUtil.split_symbol file_symbol
+#                      file_name.gsub!(/\r\n|\r|\n/, '')
+#                      url = share_file_url :controller_name => @@CONTROLLER_HASH[symbol_type], :symbol_id => symbol_id, :file_name => file_name.strip, :authenticity_token => form_authenticity_token
+#                      link_to(link_str, url) }
+#
+#    procs = [["uid", default_proc], ["gid", default_proc], ["page", default_proc]]
+#    procs << ["file",file_proc] if owner_symbol
+#
+#    split_mark =  "&gt;"
+#    procs.each { |value| text = BoardEntry.replace_symbol_link(text, value.first, value.last, split_mark) }
+#    return text
+#  end
 
   # 検索条件に使うプルダウン表示用
   def selected_tag (name, selected_value, choices, options={})

@@ -25,12 +25,12 @@ class SkipUtil
   
   WDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
 
-  def self.split_symbol symbol
-    symbol_type = symbol.split(":").first
-    symbol_id   = symbol.split(":").last
-    return symbol_type, symbol_id
-  end
-
+#  def self.split_symbol symbol
+#    symbol_type = symbol.split(":").first
+#    symbol_id   = symbol.split(":").last
+#    return symbol_type, symbol_id
+#  end
+#
   def self.to_like_query_string string
     '%' + string.to_s + '%'
   end
@@ -48,10 +48,10 @@ class SkipUtil
     array.map {|col| NKF.nkf('-sZ', col) }
   end
 
-  def self.full_error_messages array
-    array.is_a?(Array) ? array.map{ |item| item.errors.full_messages unless item.valid? }.flatten.compact : []
-  end
-
+#  def self.full_error_messages array
+#    array.is_a?(Array) ? array.map{ |item| item.errors.full_messages unless item.valid? }.flatten.compact : []
+#  end
+#
   def self.toutf8_without_ascii_encoding string
     if string
       Kconv.guess(string) == Kconv::ASCII ? string : string.toutf8
