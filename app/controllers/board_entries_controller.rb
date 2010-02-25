@@ -20,7 +20,7 @@ class BoardEntriesController < ApplicationController
 
   before_filter :owner_required, :only => [:show, :edit, :update, :destroy]
   before_filter :required_full_accessible, :only => [:edit, :update, :destroy]
-  before_filter :required_accessible, :only => [:show]
+  before_filter :required_accessible, :only => [:show, :large]
   after_filter :make_comment_message, :only => [ :ado_create_comment, :ado_create_nest_comment ]
 
   def index
@@ -175,12 +175,7 @@ class BoardEntriesController < ApplicationController
 
   # 巨大化表示
   def large
-    unless @entry = check_entry_permission
-      render :text => _("Invalid operation.")
-      return false
-    end
-
-    render :layout=>false
+    render :layout => false
   end
 
   # ルートコメントの作成

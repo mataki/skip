@@ -143,15 +143,6 @@ protected
     end
   end
 
-  #記事へのパーミッションをチェック
-  def check_entry_permission
-    find_params = BoardEntry.make_conditions(current_user.belong_symbols, {:id=>params[:id]})
-    unless entry = BoardEntry.find(:first, :conditions => find_params[:conditions], :include => find_params[:include])
-      return false
-    end
-    entry
-  end
-
   def login_required
     unless logged_in?
       if request.env['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest'
