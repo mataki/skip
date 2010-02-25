@@ -43,7 +43,7 @@ module UserHelper
     tab_menu_source << {:label => _('Groups Joined'), :options => {:controller => 'user', :action => 'group', :uid => user.uid}} unless user.groups.participating(user).empty?
 
     if user.id == current_user.id
-      tab_menu_source.unshift({:label => _('Home'), :options => {:controller => 'mypage', :action => 'index'}, :selected_actions => %w(index entries entries_by_date entries_by_antenna)})
+      tab_menu_source.unshift({:label => _('Home'), :options => {:controller => 'mypage', :action => 'index'}, :selected_actions => %w(index entries entries_by_antenna)})
     end
     tab_menu_source
   end

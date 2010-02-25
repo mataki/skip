@@ -67,18 +67,6 @@ private
     redirect_to :action => 'show', :uid => @user.uid
   end
 
-  def setup_blog_left_box options
-    find_params = BoardEntry.make_conditions(current_user.belong_symbols, options)
-
-    # 月毎のアーカイブ
-    @month_archives = BoardEntry.find(:all,
-                                      :select => "YEAR(date) as year, MONTH(date) as month, count(distinct board_entries.id) as count",
-                                      :conditions=> find_params[:conditions],
-                                      :group => "year, month",
-                                      :order => "year desc, month desc",
-                                      :joins => "LEFT OUTER JOIN entry_publications ON entry_publications.board_entry_id = board_entries.id")
-  end
-
   def prepare_chain against = false
     unless against
       left_key, right_key = "to_user_id", "from_user_id"

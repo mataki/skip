@@ -162,43 +162,6 @@ describe MypageController, 'mypage > home 関連' do
     end
   end
 
-  describe MypageController, 'GET #entries_by_date' do
-    before do
-      user_login
-      controller.stub!(:parse_date).and_return([2009, 1, 2])
-      controller.stub!(:find_entries_at_specified_date)
-      controller.stub!(:first_entry_day_after_specified_date)
-      controller.stub!(:last_entry_day_before_specified_date)
-    end
-    it '日付情報が設定されること' do
-      controller.should_receive(:parse_date).and_return([2009, 1, 2])
-      get :entries_by_date
-      assigns[:selected_day].should == Date.new(2009, 1, 2)
-    end
-    it '指定日の記事一覧が設定されること' do
-      entries = mock([stub_model(BoardEntry)])
-      controller.should_receive(:find_entries_at_specified_date).and_return(entries)
-      get :entries_by_date
-      assigns[:entries].should == entries
-    end
-    it '指定日移行で最初に記事が存在する日が設定されること' do
-      next_day = mock('next_day')
-      controller.should_receive(:first_entry_day_after_specified_date).and_return(next_day)
-      get :entries_by_date
-      assigns[:next_day].should == next_day
-    end
-    it '指定日以前で最後に記事が存在する日が設定されること' do
-      prev_day = mock('prev_day')
-      controller.should_receive(:last_entry_day_before_specified_date).and_return(prev_day)
-      get :entries_by_date
-      assigns[:prev_day].should == prev_day
-    end
-    it 'entries_by_dateに遷移すること' do
-      get :entries_by_date
-      response.should render_template('entries_by_date')
-    end
-  end
-
   describe MypageController, 'GET #entries_by_antenna' do
     before do
       user_login

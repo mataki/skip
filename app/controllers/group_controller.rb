@@ -251,19 +251,4 @@ private
     end
   end
 
-  def setup_bbs_left_box options
-    find_params = BoardEntry.make_conditions(current_user.belong_symbols, options)
-
-    # 人毎のアーカイブ
-    select_state = "count(distinct board_entries.id) as count, users.name as user_name, users.id as user_id"
-    joins_state = "LEFT OUTER JOIN entry_publications ON entry_publications.board_entry_id = board_entries.id"
-    joins_state << " LEFT OUTER JOIN users ON users.id = board_entries.user_id"
-    @user_archives = BoardEntry.find(:all,
-                                     :select => select_state,
-                                     :conditions=> find_params[:conditions],
-                                     :group => "user_id",
-                                     :order => "count desc",
-                                     :joins => joins_state)
-  end
-
 end

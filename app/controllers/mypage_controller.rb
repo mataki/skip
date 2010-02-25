@@ -138,15 +138,6 @@ class MypageController < ApplicationController
     @entries = locals[:pages]
   end
 
-  # 指定日の投稿記事一覧画面を表示
-  def entries_by_date
-    year, month, day = parse_date
-    @selected_day = Date.new(year, month, day)
-    @entries = find_entries_at_specified_date(@selected_day)
-    @next_day = first_entry_day_after_specified_date(@selected_day)
-    @prev_day = last_entry_day_before_specified_date(@selected_day)
-  end
-
   # アンテナ毎の記事一覧画面を表示
   def entries_by_antenna
     @antenna_entry = antenna_entry(params[:target_type], params[:target_id], params[:read])
@@ -587,36 +578,6 @@ class MypageController < ApplicationController
     find_params[:conditions] << selected_day
     BoardEntry.find(:all, :conditions=> find_params[:conditions], :order=>"date ASC",
                           :include => find_params[:include] | [ :user, :state ])
-  end
-
-  # TODO BoardEntryに移動する
-  # 指定日以降で最初に記事が存在する日
-  def first_entry_day_after_specified_date(selected_day)
-    find_params = BoardEntry.make_conditions(current_user.belong_symbols, {:entry_type=>'DIARY'})
-    find_params[:conditions][0] << " and DATE(date) > ?"
-    find_params[:conditions] << selected_day
-    next_day = BoardEntry.find(:first, :select => "date, DATE(date) as count_date, count(board_entries.id) as count",
-                               :conditions=> find_params[:conditions],
-                               :group => "count_date",
-                               :order => "date ASC",
-                               :limit => 1,
-                               :joins => "LEFT OUTER JOIN entry_publications ON entry_publications.board_entry_id = board_entries.id")
-    next_day ? next_day.date : nil
-  end
-
-  # TODO BoardEntryに移動する
-  # 指定日以前で最後に記事が存在する日
-  def last_entry_day_before_specified_date(selected_day)
-    find_params = BoardEntry.make_conditions(current_user.belong_symbols, {:entry_type=>'DIARY'})
-    find_params[:conditions][0] << " and DATE(date) < ?"
-    find_params[:conditions] << selected_day
-    prev_day = BoardEntry.find(:first, :select => "date, DATE(date) as count_date, count(board_entries.id) as count",
-                               :conditions=> find_params[:conditions],
-                               :group => "count_date",
-                               :order => "date DESC",
-                               :limit => 1,
-                               :joins => "LEFT OUTER JOIN entry_publications ON entry_publications.board_entry_id = board_entries.id")
-    prev_day ? prev_day.date : nil
   end
 
   # TODO helperへ移動する
