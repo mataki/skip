@@ -20,7 +20,6 @@ a_entry:
   editor_mode: hiki
   lock_version: 0
   publication_type: public
-  publication_symbols_value:
   entry_trackbacks_count: 1
 
 a_trackback_entry:
@@ -41,7 +40,6 @@ a_trackback_entry:
   editor_mode: hiki
   lock_version: 0
   publication_type: public
-  publication_symbols_value:
   entry_trackbacks_count: 0
 
 a_private_entry:
@@ -62,5 +60,4 @@ a_private_entry:
   editor_mode: hiki
   lock_version: 0
   publication_type: private
-  publication_symbols_value:
   entry_trackbacks_count: 0

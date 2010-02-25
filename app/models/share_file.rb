@@ -68,10 +68,6 @@ class ShareFile < ActiveRecord::Base
     self.publication_type = 'public' if self.publication_type.blank?
   end
 
-#  def before_save
-#    self.publication_symbols_value = '' unless self.protected?
-#  end
-
   def before_validation_on_create
     if self.file.is_a?(ActionController::UploadedFile)
       self.file_name = file.original_filename

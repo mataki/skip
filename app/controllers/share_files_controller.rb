@@ -270,33 +270,6 @@ class ShareFilesController < ApplicationController
   end
 
 private
-  # TODO #814のチケットを処理するタイミングで下記メソッドは無くす
-  def analyze_param_publication_type share_file
-    target_symbols = []
-    case  share_file.publication_type
-    when "public"
-      target_symbols << "sid:allusers"
-    when "private"
-      target_symbols << share_file.owner_symbol
-      target_symbols << session[:user_symbol]
-    when "protected"
-      target_symbols = share_file.publication_symbols_value.split(/,/).map {|symbol| symbol.strip }
-      target_symbols << session[:user_symbol]
-    else
-      raise _("Invalid parameter(s).")
-    end
-    target_symbols
-  end
-
-  def render_window_close
-    need_reload = params[:reload] == 'false' ? false : true
-    if need_reload
-      render :text => "<script type='text/javascript'>window.opener.location.reload();window.close();</script>"
-    else
-      render :text => "<script type='text/javascript'>window.close();</script>"
-    end
-  end
-
   def nkf_file_name(file_name)
     agent = request.headers['HTTP_USER_AGENT']
     (agent.include?("MSIE") and not agent.include?("Opera")) ? NKF.nkf('-Ws', file_name) : file_name

@@ -14,14 +14,6 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class BoardEntry < ActiveRecord::Base
-  # publication系 カラムの値 のサンプル
-  # |symbol     |entry_type|publication_type|publication_symbols_value|
-  # |uid:mat_aki|DIARY     |private         |""                       |
-  # |uid:mat_aki|DIARY     |public          |""                       |
-  # |uid:mat_aki|DIARY     |protected       |uid:maedana,gid:rails    |
-  # |gid:rails  |GROUP_BBS |private         |""                       |
-  # |gid:rails  |GROUP_BBS |public          |""                       |
-  # |gid:rails  |GROUP_BBS |protected       |uid:maedana,gid:rails    |
 
   include Publication
   include ActionController::UrlWriter
@@ -457,26 +449,26 @@ class BoardEntry < ActiveRecord::Base
   end
 
   # TODO ShareFileと統合したい
-  def visibility
-    text = color = ""
-    if public?
-      text = _("[Open to all]")
-      color = "yellow"
-    elsif private?
-      if diary?
-        text = _("[Owner only]")
-      else
-        text = _("[Group members only]")
-      end
-      color = "#FFDD75"
-    end
-
-    if text == ""
-      text = "[#{publication_symbols_value}]"
-      color = "#FFCD35"
-    end
-    return text, color
-  end
+#  def visibility
+#    text = color = ""
+#    if public?
+#      text = _("[Open to all]")
+#      color = "yellow"
+#    elsif private?
+#      if diary?
+#        text = _("[Owner only]")
+#      else
+#        text = _("[Group members only]")
+#      end
+#      color = "#FFDD75"
+#    end
+#
+#    if text == ""
+#      text = "[#{publication_symbols_value}]"
+#      color = "#FFCD35"
+#    end
+#    return text, color
+#  end
 
   # TODO ShareFileのリストを渡しても使える、ユーティリティクラスに移したい。
   def self.get_symbol2name_hash entries
@@ -754,7 +746,6 @@ class BoardEntry < ActiveRecord::Base
   def be_close!
     return false unless diary?
     self.publication_type = 'private'
-    self.publication_symbols_value = ''
     self.save!
     true
   end
