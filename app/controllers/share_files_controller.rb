@@ -13,86 +13,125 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class ShareFileController < ApplicationController
+class ShareFilesController < ApplicationController
   include IframeUploader
   include UserHelper
   include EmbedHelper
-  layout 'subwindow'
 
   verify :method => :post, :only => [ :create, :update, :destroy, :download_history_as_csv, :clear_download_history ],
          :redirect_to => { :action => :index }
 
+  before_filter :owner_required, :only => [:show, :edit, :update, :destroy]
+  before_filter :required_full_accessible, :only => [:edit, :update, :destroy]
+  before_filter :required_accessible, :only => [:show]
+
+  def index
+    @main_menu = @title = _('Files')
+    params[:tag_select] ||= "AND"
+    params[:sort_type] ||= "date"
+
+    @search = ShareFile.accessible(current_user).tagged(params[:tag_words], params[:tag_select])
+    @search =
+      if params[:sort_type] == "file_name"
+        @search.descend_by_file_name.search(params[:search])
+      else
+        @search.descend_by_date.search(params[:search])
+      end
+    @share_files = @search.paginate(:page => params[:page], :per_page => 25)
+
+    respond_to do |format|
+      format.html do
+        @tags = ShareFile.get_popular_tag_words
+        if @share_files.empty?
+          flash.now[:notice] = _('No matching data found.')
+        end
+        render
+      end
+    end
+  end
+
+  def show
+    unless downloadable?(params[:authenticity_token], current_target_share_file)
+      respond_to do |format|
+        format.html do
+          @main_menu = @title = _('File Download')
+          render :action => 'confirm_download'
+          return
+        end
+      end
+    end
+
+    # TODO current_target_share_fileに統合してもいいかもしれない。
+    unless File.exist?(current_target_share_file.full_path)
+      flash[:warn] = _('Could not find the entity of the specified file. Contact system administrator.')
+      respond_to do |format|
+        format.html do
+          return redirect_to [current_tenant, current_target_owner, :share_files]
+        end
+      end
+    end
+
+    current_target_share_file.create_history current_user.id
+    respond_to do |format|
+      format.html do
+        # TODO inlineパラメタの有無でdisposition切り替えは微妙か? アクション分ける? 拡張子やContentTypeで自動判別する? 検討する。
+        send_file(
+          current_target_share_file.full_path, 
+          :filename => nkf_file_name(current_target_share_file.file_name),
+          :type => current_target_share_file.content_type || Types::ContentType::DEFAULT_CONTENT_TYPE,
+          :stream => false,
+          :disposition => params[:inline] ? 'inline' : 'attachment')
+      end
+    end
+  end
+
   def new
-    owner = Symbol.get_item_by_symbol params[:owner_symbol]
-    unless owner
-      render_404 and return
+    @share_file = current_target_owner.owner_share_files.build(params[:share_file])
+    required_full_accessible(@share_file) do
+      respond_to do |format|
+        format.html do
+          ajax_upload? ? render(:template => 'share_files/new_ajax_upload', :layout => false) : render
+        end
+      end
     end
-    @share_file = ShareFile.new(:user_id => current_user.id, :owner_symbol => owner.symbol)
-
-    unless @share_file.updatable?(current_user)
-      ajax_upload? ? render(:template => 'share_file/new_ajax_upload', :layout => false) : render_window_close
-      return
-    end
-
-    @error_messages = []
-    @owner_name = owner.name
-    @categories_hash = ShareFile.get_tags_hash(@share_file.owner_symbol)
-    ajax_upload? ? render(:template => 'share_file/new_ajax_upload', :layout => false) : render
   end
 
   # post action
   def create
-    @error_messages = []
-    unless params[:file]
-      ajax_upload? ? render(:text => {:status => '400', :messages => [_("%{name} is mandatory.") % { :name => _('File') }]}.to_json) : render_window_close
-      return
-    end
-    @share_file = ShareFile.new(params[:share_file])
-    @share_file.user_id = current_user.id
-    @share_file.publication_symbols_value = params[:publication_symbols_value]
+    @share_file = current_target_owner.owner_share_files.build(params[:share_file])
+    debugger
 
-    params[:file].each do |key, file|
-      share_file = @share_file.clone
-      if file.is_a?(ActionController::UploadedFile)
-        share_file.file_name = file.original_filename
-        share_file.content_type = file.content_type || Types::ContentType::DEFAULT_CONTENT_TYPE
-      end
-      share_file.file = file
-      share_file.accessed_user = current_user
-
-      if share_file.save
-        # TODO #814のチケットを処理するタイミングで下記4行は無くす
-        target_symbols = analyze_param_publication_type share_file
-        target_symbols.each do |target_symbol|
-          share_file.share_file_publications.create(:symbol => target_symbol)
+    required_full_accessible(@share_file) do
+#      # TODO modelに持っていけないか?(validate_on_createあたり)
+#      unless @share_file.file
+#        respond_to do |format|
+#          format.html do
+#            ajax_upload? ? render(:text => {:status => '400', :messages => [_("%{name} is mandatory.") % { :name => _('File') }]}.to_json) : render :action => :new
+#            return
+#          end
+#        end
+#      end
+      @share_file.user = current_user
+      @share_file.tenant = current_tenant
+      ShareFile.transaction do
+        @share_file.save!
+        respond_to do |format|
+          format.html do
+            flash[:notice] = _('File was successfully uploaded.')
+            if ajax_upload?
+              render(:text => {:status => '200', :messages => [notice_message]}.to_json)
+            else
+              redirect_to [current_tenant, current_target_owner, :share_files]
+            end
+          end
         end
-        share_file.upload_file file
-      else
-        error_message = share_file.file_name
-
-        unless share_file.errors.empty?
-          error_message << " ... #{share_file.errors.full_messages.join(",")}"
-        end
-        @error_messages << error_message
       end
     end
-
-    if @error_messages.size == 0
-      notice_message = n_('File was successfully uploaded.', 'Files were successfully uploaded.', params[:file].size)
-      flash[:notice] = notice_message
-      ajax_upload? ? render(:text => {:status => '200', :messages => [notice_message]}.to_json) : render_window_close
-    else
-      messages = []
-      messages << _("Failed to upload file(s).")
-      messages << n_("[Success:%{success} ", "[Successes:%{success} ", params[:file].size - @error_messages.size) % {:success => params[:file].size - @error_messages.size}
-      messages << n_("Failure:%{failure}]", "Failures:%{failure}]", @error_messages.size) % {:failure => @error_messages.size}
-      flash.now[:warn] = messages.join('')
-
-      @reload_parent_window = (params[:file].size - @error_messages.size > 0)
-      @share_file.errors.clear
-      @owner_name = params[:owner_name]
-      @categories_hash = ShareFile.get_tags_hash(@share_file.owner_symbol)
-      ajax_upload? ? render(:text => {:status => '400', :messages => @error_messages}.to_json) : render(:action => "new")
+  rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => e
+    respond_to do |format|
+      format.html do
+        ajax_upload? ? render(:text => {:status => '400', :messages => @error_messages}.to_json) : render(:action => "new")
+      end
     end
   end
 
@@ -203,35 +242,35 @@ class ShareFileController < ApplicationController
     end
   end
 
-  def download
-    symbol_type_hash = { 'user'  => 'uid',
-                         'group' => 'gid' }
-    file_name =  params[:file_name]
-    owner_symbol = "#{symbol_type_hash[params[:controller_name]]}:#{params[:symbol_id]}"
-
-    unless share_file = ShareFile.find_by_file_name_and_owner_symbol(file_name, owner_symbol)
-      raise ActiveRecord::RecordNotFound
-    end
-
-    unless share_file.readable?(current_user)
-      redirect_to_with_deny_auth
-      return
-    end
-
-    if downloadable?(params[:authenticity_token], share_file)
-      unless File.exist?(share_file.full_path)
-        flash[:warn] = _('Could not find the entity of the specified file. Contact system administrator.')
-        return redirect_to(:controller => 'mypage', :action => "index")
-      end
-
-      share_file.create_history current_user.id
-      # TODO inlineパラメタの有無でdisposition切り替えは微妙か? アクション分ける? 拡張子やContentTypeで自動判別する? 検討する。
-      send_file(share_file.full_path, :filename => nkf_file_name(file_name), :type => share_file.content_type || Types::ContentType::DEFAULT_CONTENT_TYPE, :stream => false, :disposition => params[:inline] ? 'inline' : 'attachment')
-    else
-      @main_menu = @title = _('File Download')
-      render :action => 'confirm_download', :layout => 'layout'
-    end
-  end
+#  def download
+#    symbol_type_hash = { 'user'  => 'uid',
+#                         'group' => 'gid' }
+#    file_name =  params[:file_name]
+#    owner_symbol = "#{symbol_type_hash[params[:controller_name]]}:#{params[:symbol_id]}"
+#
+#    unless share_file = ShareFile.find_by_file_name_and_owner_symbol(file_name, owner_symbol)
+#      raise ActiveRecord::RecordNotFound
+#    end
+#
+#    unless share_file.readable?(current_user)
+#      redirect_to_with_deny_auth
+#      return
+#    end
+#
+#    if downloadable?(params[:authenticity_token], share_file)
+#      unless File.exist?(share_file.full_path)
+#        flash[:warn] = _('Could not find the entity of the specified file. Contact system administrator.')
+#        return redirect_to(:controller => 'mypage', :action => "index")
+#      end
+#
+#      share_file.create_history current_user.id
+#      # TODO inlineパラメタの有無でdisposition切り替えは微妙か? アクション分ける? 拡張子やContentTypeで自動判別する? 検討する。
+#      send_file(share_file.full_path, :filename => nkf_file_name(file_name), :type => share_file.content_type || Types::ContentType::DEFAULT_CONTENT_TYPE, :stream => false, :disposition => params[:inline] ? 'inline' : 'attachment')
+#    else
+#      @main_menu = @title = _('File Download')
+#      render :action => 'confirm_download', :layout => 'layout'
+#    end
+#  end
 
   def downloadable?(authenticity_token, share_file)
     return true if share_file.uncheck_authenticity?
@@ -321,4 +360,25 @@ private
     end
   end
 
+  def current_target_share_file
+    @share_file ||= ShareFile.find(params[:id])
+  end
+
+  def required_full_accessible share_file = current_target_share_file
+    if result = share_file.full_accessible?(current_user)
+      yield if block_given?
+    else
+      redirect_to_with_deny_auth
+    end
+    result
+  end
+
+  def required_accessible share_file = current_target_share_file
+    if result = share_file.accessible?(current_user)
+      yield if block_given?
+    else
+      redirect_to_with_deny_auth
+    end
+    result
+  end
 end

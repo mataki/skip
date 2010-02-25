@@ -15,7 +15,7 @@
 
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe ShareFileController, 'GET #new' do
+describe ShareFilesController, 'GET #new' do
   before do
     @user = user_login
     ShareFile.stub!(:get_tags_hash)
@@ -47,7 +47,7 @@ describe ShareFileController, 'GET #new' do
   end
 end
 
-describe ShareFileController, 'GET #create' do
+describe ShareFilesController, 'GET #create' do
   before do
     user_login
   end
@@ -57,7 +57,7 @@ describe ShareFileController, 'GET #create' do
   end
 end
 
-describe ShareFileController, "POST #create" do
+describe ShareFilesController, "POST #create" do
   before do
     @current_user = user_login
     @share_file = stub_model(ShareFile)
@@ -234,7 +234,7 @@ describe ShareFileController, "POST #create" do
   end
 end
 
-describe ShareFileController, 'GET #edit' do
+describe ShareFilesController, 'GET #edit' do
   before do
     @user = user_login
     ShareFile.stub!(:get_tags_hash)
@@ -276,7 +276,7 @@ describe ShareFileController, 'GET #edit' do
   end
 end
 
-describe ShareFileController, 'GET #update' do
+describe ShareFilesController, 'GET #update' do
   before do
     user_login
   end
@@ -286,7 +286,7 @@ describe ShareFileController, 'GET #update' do
   end
 end
 
-describe ShareFileController, 'POST #update' do
+describe ShareFilesController, 'POST #update' do
   before do
     @current_user = user_login
   end
@@ -335,7 +335,7 @@ describe ShareFileController, 'POST #update' do
   end
 end
 
-describe ShareFileController, 'GET #destroy' do
+describe ShareFilesController, 'GET #destroy' do
   before do
     user_login
   end
@@ -345,7 +345,7 @@ describe ShareFileController, 'GET #destroy' do
   end
 end
 
-describe ShareFileController, "POST #destroy" do
+describe ShareFilesController, "POST #destroy" do
   before do
     @user = user_login
   end
@@ -383,7 +383,7 @@ describe ShareFileController, "POST #destroy" do
   end
 end
 
-describe ShareFileController, "GET #list" do
+describe ShareFilesController, "GET #list" do
   before do
     @user = user_login
   end
@@ -452,7 +452,7 @@ describe ShareFileController, "GET #list" do
 end
 
 
-describe ShareFileController, "GET #download" do
+describe ShareFilesController, "GET #download" do
   before do
     @user = user_login
   end
@@ -526,7 +526,7 @@ describe ShareFileController, "GET #download" do
   end
 end
 
-describe ShareFileController, '#downloadable?' do
+describe ShareFilesController, '#downloadable?' do
   before do
     controller.stub!(:form_authenticity_token)
   end
@@ -559,7 +559,7 @@ describe ShareFileController, '#downloadable?' do
   end
 end
 
-describe ShareFileController, 'GET #download_history_as_csv' do
+describe ShareFilesController, 'GET #download_history_as_csv' do
   before do
     user_login
   end
@@ -569,7 +569,7 @@ describe ShareFileController, 'GET #download_history_as_csv' do
   end
 end
 
-describe ShareFileController, 'POST #download_history_as_csv' do
+describe ShareFilesController, 'POST #download_history_as_csv' do
   before do
     @user = user_login
   end
@@ -603,7 +603,7 @@ describe ShareFileController, 'POST #download_history_as_csv' do
   end
 end
 
-describe ShareFileController, 'GET #clear_download_history' do
+describe ShareFilesController, 'GET #clear_download_history' do
   before do
     user_login
   end
@@ -613,7 +613,7 @@ describe ShareFileController, 'GET #clear_download_history' do
   end
 end
 
-describe ShareFileController, 'POST #clear_download_history' do
+describe ShareFilesController, 'POST #clear_download_history' do
   before do
     @user = user_login
   end
@@ -665,7 +665,7 @@ describe ShareFileController, 'POST #clear_download_history' do
   end
 end
 
-describe ShareFileController, ".nkf_file_name" do
+describe ShareFilesController, ".nkf_file_name" do
   before do
     @file_name = "ファイル名"
   end

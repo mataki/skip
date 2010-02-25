@@ -169,19 +169,14 @@ module ApplicationHelper
   # ファイルダウンロードへのリンク
   def file_link_to share_file, options = {}, html_options = {}
     file_name = options[:truncate] ? truncate(share_file.file_name, options[:truncate]) : share_file.file_name
-    url = file_link_url(share_file)
-    link_to h(file_name), url, html_options
+    link_to h(file_name), [current_tenant, share_file.owner, share_file], html_options
   end
 
   def file_link_url share_file, options = {}
     share_file = ShareFile.new share_file if share_file.is_a? Hash
-    symbol_type, symbol_id = SkipUtil.split_symbol share_file.owner_symbol
-    url_params = {:controller_name => share_file.owner_symbol_type,
-                  :symbol_id => symbol_id,
-                  :file_name => share_file.file_name}
-    url_params.merge!(:inline => true) if options[:inline]
-    url = share_file_url(url_params)
-    url
+    url_options = {}
+    url_options[:inline => true] if options[:inline]
+    polymorphic_url [current_tenant, share_file.owner, share_file], url_options
   end
 
   def hiki_parse text, owner_symbol = nil

@@ -1,0 +1,10 @@
+<div class="desc ui-corner-all">
+<p><%= _('You are about to download a file that was uploaded to this site.')%><br/>
+<%= _('Click to start downloading if you find the file appropriate.')%><br/></p>
+</div>
+
+<div class="input_line" style="text-align: center; margin: 10px; font-size: 30px;">
+  <div class="input_value"><%= link_to h(@share_file.file_name), polymorphic_url([current_tenant, current_target_owner, @share_file], :authenticity_token => form_authenticity_token) %></div>
+</div>
+
+<div style="text-align: right;"><%= _('(This screen is to avoid security risks ralated to direct downloading)')%></div>

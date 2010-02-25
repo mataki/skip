@@ -21,6 +21,7 @@ class Group < ActiveRecord::Base
   has_many :group_participations, :dependent => :destroy
   has_many :users, :through => :group_participations, :conditions => ['group_participations.waiting = ?', false]
   has_many :owner_entries, :class_name => 'BoardEntry', :as => :owner
+  has_many :owner_share_files, :class_name => 'ShareFile', :as => :owner
 
   validates_presence_of :name, :description, :gid, :tenant_id
   validates_uniqueness_of :gid, :case_sensitive => false

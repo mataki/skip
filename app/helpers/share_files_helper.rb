@@ -13,11 +13,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-module ShareFileHelper
-
-  def show_private_value share_file
-    (share_file.owner_symbol.split(":").first == "uid") ? _("Owner Only") : _("Members Only")
-  end
+module ShareFilesHelper
 
   def generate_file_menu(share_file, owner_name = "")
     output = ""

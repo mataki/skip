@@ -1,0 +1,79 @@
+<% content_for :stylesheet do -%>
+<style type="text/css">
+table {
+  table-layout: auto;
+}
+</style>
+<% end -%>
+
+<%= template_error_messages_for 'share_file' %>
+
+<div class="input_line">
+  <div class="input_label"><%= form.label :category, _('Tags') %></div>
+  <div class="input_value"><%= form.text_field :category, :size => '60' %>
+    <div id="category_box" style="display:none;">
+      <div id="candidates_list"><p><%= _('Multiple values can be given in foo,bar format')%></p></div>
+      <div style="font-size:10pt; font-weight:bold;"><%= _('Tags: ')%></div><div id="tags_list" style="margin-bottom:5px;"></div>
+      <div style="font-size:10pt; font-weight:bold;"><%= _('Popular Tags: ')%></div><div id="user_tags_list" style="margin-bottom:5px;"></div>
+    </div>
+  </div>
+  <div style="clear: left"></div>
+</div>
+
+<div class="input_line">
+  <div class="input_label"><%= form.label :file, _('File') %></div>
+  <div class="input_value"><%= form.file_field :file, :size => 60 %></div>
+  <div style="clear: left"></div>
+</div>
+
+<div class="input_line">
+  <div class="input_label" style="height: 30px;"><%= _('Publish Date')%></div>
+  <div class="input_value">
+    <p><%= form.datetime_select :date, :use_month_numbers => true -%></p>
+    <p><a href="#" onclick="setCurrentDatetime('share_file', 'date');return false;"><%= _('[Set current time]')%></a>
+  </div>
+  <div style="clear: left"></div>
+</div>
+
+<div class="input_line">
+  <div class="input_label" style="height: 30px;" id="input_label_publication"><%= _('Privacy Settings')%></div>
+  <div class="input_value" id="input_value_publication"><table><tr><td>
+    <% display_type = (form.object.owner_is_public? ? "" : "none") %>
+    <span style="display:<%= display_type %>">
+      <%= form.radio_button :publication_type, "public" %><%= form.label :publication_type_public, _('Open to All') %>
+    </span>
+    <%= form.radio_button :publication_type, "private" %><%= form.label :publication_type_private, form.object.is_a?(User) ? _("Owner Only") : _("Members Only") %>
+    </td></tr></table>
+  </div>
+  <div style="clear: left"></div>
+</div>
+
+<div class="input_line">
+  <div class="input_label"><%= form.label :description, _('Comment') %></div>
+  <div class="input_value"><%= form.text_field :description, :size => 60 %></div>
+  <div style="clear: left"></div>
+</div>
+
+<% content_for :javascript_initializers do -%>
+  <% categories_hash = form.object.categories_hash(current_user) -%>
+  $j('#share_file_category').focus(function() {
+      showCategoryBox();
+  });
+
+  $j('#share_file_description').focus(function() {
+      hideCategoryBox();
+  });
+
+  var setupTagComplete = function() {
+      var tags = new Array(<%= categories_hash[:mine].map{|str| ("'#{str}'")}.join(',') %>);
+      var userTags = new Array(<%= categories_hash[:user].map{|str| ("'#{str}'")}.join(',') %>);
+
+      $j('#tags_list').append(createTagsLink(tags));
+      $j('#user_tags_list').append(createTagsLink(userTags));
+
+      // タグ処理
+      $j('#share_file_category').jTagging($j('#tags_list'));
+      $j('#share_file_category').jTagging($j('#user_tags_list'));
+  };
+  setupTagComplete();
+<% end -%>

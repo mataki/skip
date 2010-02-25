@@ -261,6 +261,21 @@ class BoardEntry < ActiveRecord::Base
     true
   end
 
+  # 所属するグループの公開範囲により、記事の公開範囲を判定する
+  def owner_is_public?
+    !(owner.is_a?(Group) && owner.protected?)
+  end
+
+  # TODO ShareFileと統合したい
+  def owner_is_user?
+    owner.is_a?(User)
+  end
+
+  # TODO ShareFileと統合したい
+  def owner_is_group?
+    owner.is_a?(Group)
+  end
+
   def self.unescape_href text
     text.gsub(/<a[^>]*href=[\'\"](.*?)[\'\"]>/){ CGI.unescapeHTML($&) } if text
   end
@@ -276,11 +291,6 @@ class BoardEntry < ActiveRecord::Base
 
   def hiki?
     editor_mode == 'hiki'
-  end
-
-  # 所属するグループの公開範囲により、記事の公開範囲を判定する
-  def owner_is_public?
-    !(owner.is_a?(Group) && owner.protected?)
   end
 
   # 検索条件の生成
@@ -740,16 +750,6 @@ class BoardEntry < ActiveRecord::Base
     else
       AIM_TYPES - ['notice']
     end
-  end
-
-  # TODO ShareFileと統合したい
-  def owner_is_user?
-    owner.is_a?(User)
-  end
-
-  # TODO ShareFileと統合したい
-  def owner_is_group?
-    owner.is_a?(Group)
   end
 
   def be_close!
