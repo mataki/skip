@@ -1,6 +1,6 @@
 <div class="content">
   <h3><%= _('Create administrative user') %></h3>
-  <% form_tag(first_new_admin_user_url(:code => params[:code])) do -%>
+  <% form_tag polymorphic_path([:admin, current_tenant, :user], :action => 'first_new', :code => params[:code]) do -%>
     <%= error_messages_for :user %>
     <table>
       <tr>

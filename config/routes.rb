@@ -25,6 +25,43 @@ ActionController::Routing::Routes.draw do |map|
     tenant.resources :board_entries, :only => %w(index show), :collection => {:ado_preview => :any}
   end
 
+  map.namespace "admin" do |admin_map|
+    admin_map.resources :tenants, :only => [] do |tenant|
+      tenant.root :controller => 'settings', :action => 'index', :tab => 'main'
+      tenant.resources :board_entries, :only => [:index, :show, :destroy], :member => {:close => :put} do |board_entry|
+        board_entry.resources :board_entry_comments, :only => [:index, :destroy]
+      end
+      tenant.resources :share_files, :only => [:index, :destroy], :member => [:download]
+  #      tenant.resources :bookmarks, :only => [:index, :show, :destroy] do |bookmark|
+  #        bookmark.resources :bookmark_comments, :only => [:index, :destroy]
+  #      end
+      tenant.resources :users, :new => [:import, :import_confirmation, :first], :member => [:change_uid, :create_uid, :issue_activation_code, :issue_password_reset_code], :collection => [:lock_actives, :reset_all_password_expiration_periods, :issue_activation_codes] do |user|
+  #        user.resources :openid_identifiers, :only => [:edit, :update, :destroy]
+        user.resource :user_profile
+        user.resource :pictures, :only => %w(new create)
+      end
+      tenant.resources :pictures, :only => %w(index show destroy)
+      tenant.resources :groups, :only => [:index, :show, :destroy] do |group|
+        group.resources :group_participations, :only => [:index, :destroy]
+      end
+      tenant.resources :masters, :only => [:index]
+      tenant.resources :group_categories
+      tenant.resources :user_profile_master_categories
+      tenant.resources :user_profile_masters
+      tenant.settings_update_all 'settings/:tab/update_all', :controller => 'settings', :action => 'update_all'
+      tenant.settings_ado_feed_item 'settings/ado_feed_item', :controller => 'settings', :action => 'ado_feed_item'
+      tenant.settings 'settings/:tab', :controller => 'settings', :action => 'index', :defaults => { :tab => '' }
+
+      tenant.documents 'documents/:target', :controller => 'documents', :action => 'index', :defaults => { :target => '' }
+      tenant.documents_update 'documents/:target/update', :controller => 'documents', :action => 'update'
+      tenant.documents_revert 'documents/:target/revert', :controller => 'documents', :action => 'revert'
+
+      tenant.images 'images', :controller => 'images', :action => 'index'
+      tenant.images_update 'images/:target/update', :controller => 'images', :action => 'update'
+      tenant.images_revert 'images/:target/revert', :controller => 'images', :action => 'revert'
+    end
+  end
+
 #  # TODO users配下に移す
 #  map.resources :notices
 #

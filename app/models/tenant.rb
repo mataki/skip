@@ -4,4 +4,5 @@ class Tenant < ActiveRecord::Base
   has_many :share_files, :dependent => :destroy
   has_many :groups, :dependent => :destroy
   has_many :group_categories, :dependent => :destroy
+  has_one :activation, :dependent => :destroy
 end

@@ -34,7 +34,7 @@ class Admin::UsersController < Admin::ApplicationController
         if login_mode?(:fixed_rp)
           @user = User.create_with_identity_url(params[:openid_identifier][:url],
                                                   :name => params[:user][:name],
-                                                  :email => params[:user][:email] })
+                                                  :email => params[:user][:email])
           @user.save!
         else
           @user = Admin::User.make_new_user({:user => params[:user]})
@@ -94,34 +94,23 @@ class Admin::UsersController < Admin::ApplicationController
   end
 
   def first
-    if valid_activation_code? params[:code]
+    required_activation_code do
       if request.get?
         @user = Admin::User.new
         render :layout => 'not_logged_in'
       else
         begin
           Admin::User.transaction do
-            @user = Admin::User.make_user({:user => params[:user]}, true)
+            @user = Admin::User.make_user({:user => params[:user].merge(:tenant_id => current_tenant.id)}, true)
             @user.user_access = UserAccess.new :last_access => Time.now, :access_count => 0
             @user.save!
-            if activation = Activation.find_by_code(params[:code])
-              activation.update_attributes(:code => nil)
-            end
+            current_activation.update_attributes(:code => nil)
           end
           flash[:notice] = _('Registered.') + _('Log in again.')
-          redirect_to :controller => "/platform", :action => :index
+          redirect_to [current_tenant, :platform]
         rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => e
           render :layout => 'not_logged_in'
         end
-      end
-    else
-      contact_link = "<a href=\"mailto:#{SkipEmbedded::InitialSettings['administrator_addr']}\" target=\"_blank\">" + _('Inquiries') + '</a>'
-      if User.find_by_admin(true)
-        flash[:error] = _('Administrative user has already been registered. Log in with the account or contact {contact_link} in case of failure.') % {:contact_link => contact_link}
-        redirect_to :controller => "/platform", :action => :index
-      else
-        flash.now[:error] = _('Operation unauthorized. Verify the URL and retry. Contact %{contact_link} if the problem persists.') % {:contact_link => contact_link}
-        render :text => '', :status => :forbidden, :layout => 'not_logged_in'
       end
     end
   end
@@ -197,10 +186,24 @@ class Admin::UsersController < Admin::ApplicationController
   end
 
   private
-  def valid_activation_code? code
-    return false unless code
-    return true if Activation.find_by_code(code)
-    false
+  def required_activation_code
+    if result = params[:code] && current_activation
+      yield if block_given?
+    else
+      contact_link = "<a href=\"mailto:#{SkipEmbedded::InitialSettings['administrator_addr']}\" target=\"_blank\">" + _('Inquiries') + '</a>'
+      if User.find_by_admin(true)
+        flash[:error] = _('Administrative user has already been registered. Log in with the account or contact {contact_link} in case of failure.') % {:contact_link => contact_link}
+        redirect_to :controller => "/platform", :action => :index
+      else
+        flash.now[:error] = _('Operation unauthorized. Verify the URL and retry. Contact %{contact_link} if the problem persists.') % {:contact_link => contact_link}
+        render :text => '', :status => :forbidden, :layout => 'not_logged_in'
+      end
+    end
+    result
+  end
+
+  def current_activation
+    @activation ||= Activation.find_by_code(params[:code])
   end
 
   def import!(users, rollback = true)
