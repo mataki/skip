@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  before_filter :sso, :login_required, :prepare_session
+  before_filter :sso, :login_required, :prepare_session, :valid_tenant_required
 
   init_gettext "skip" if defined? GetText
 
@@ -157,6 +157,12 @@ protected
       false
     else
       true
+    end
+  end
+
+  def valid_tenant_required
+    unless current_user.tenant == current_tenant
+      redirect_to root_url
     end
   end
 
@@ -326,7 +332,11 @@ protected
   end
 
   def root_url
-    tenant_root_url(current_tenant)
+    if logged_in?
+      tenant_root_url(current_user.tenant)
+    else
+      tenant_root_url(current_tenant)
+    end
   end
 
   private

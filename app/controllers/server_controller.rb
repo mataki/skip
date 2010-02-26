@@ -20,7 +20,7 @@ class ServerController < ApplicationController
   # Error handling
   rescue_from OpenID::Server::ProtocolError, :with => :render_openid_error
   # Actions other than index require a logged in user
-  skip_before_filter :sso, :login_required, :prepare_session, :only => [:index, :cancel]
+  skip_before_filter :sso, :login_required, :prepare_session, :valid_tenant_required, :only => [:index, :cancel]
   skip_after_filter :remove_message
   before_filter :ensure_valid_checkid_request, :except => [:index, :cancel]
   after_filter :clear_checkid_request, :only => [:cancel]

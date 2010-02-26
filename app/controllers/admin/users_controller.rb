@@ -22,6 +22,7 @@ class Admin::UsersController < Admin::ApplicationController
   skip_before_filter :login_required, :only => [:first]
   skip_before_filter :prepare_session, :only => [:first]
   skip_before_filter :require_admin, :only => [:first]
+  skip_before_filter :valid_tenant_required, :only => [:first]
 
   def new
     @user = Admin::User.new

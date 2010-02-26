@@ -15,7 +15,7 @@
 
 class PlatformsController < ApplicationController
   layout 'not_logged_in'
-  skip_before_filter :sso, :login_required, :prepare_session
+  skip_before_filter :sso, :login_required, :prepare_session, :valid_tenant_required
   skip_before_filter :verify_authenticity_token, :only => :reset_openid
   skip_after_filter  :remove_message
 

@@ -21,6 +21,7 @@ class PortalController < ApplicationController
   skip_after_filter  :remove_message
   skip_before_filter :sso, :only => [:index, :agreement, :registration]
   skip_before_filter :login_required, :only => [:index, :agreement, :registration]
+  skip_before_filter :valid_tenant_required, :only => [:index, :agreement, :registration]
   before_filter :registerable_filter
 
   # ユーザ登録の画面表示（ウィザード形式のためsessionの中により表示先切替）
