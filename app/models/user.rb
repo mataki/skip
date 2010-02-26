@@ -402,10 +402,10 @@ class User < ActiveRecord::Base
     self.activation_token_expires_at = Time.now.since(self.class.activation_lifetime.day)
   end
 
-  def self.issue_activation_codes user_ids
+  def self.issue_activation_codes tenant, user_ids
     unused_users = []
     active_users = []
-    users = User.scoped(:conditions => ['id in (?)', user_ids]).find_without_retired_skip(:all)
+    users = tenant.users.scoped(:conditions => ['id in (?)', user_ids]).find_without_retired_skip(:all)
     users.each do |u|
       if u.unused?
         u.activation_token = make_token

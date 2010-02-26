@@ -3,7 +3,7 @@
 <%= render :partial => '/admin/shared/topic_path' %>
 <% end -%>
 <% help_msg = _('Reverting all values with initial settings. Settings are not saved unless "Save" button being clicked.') -%>
-<% form_tag(admin_settings_update_all_path(:tab => params[:tab])) do -%>
+<% form_tag(admin_tenant_settings_update_all_path(current_tenant, :tab => params[:tab])) do -%>
   <%= render :partial => 'system/error_messages_for', :locals => {:messages => @error_messages} if @error_messages %>
 <%= render :partial => params[:tab] %>
 <%= submit_tag _('Save'), :disable_with => _('Saving...') %>

@@ -16,7 +16,7 @@
         links << link_to(what_new_message, what_new_url, :target => "_blank", :class => "attention_underline_link") unless what_new_url.blank?
         links << link_to(_('Invite a user'), new_user_invitation_url(current_user), :title => _('Invite a user')) if SkipEmbedded::InitialSettings['invitation'] && SkipEmbedded::InitialSettings['invitation']['enable']
         links << link_to(_("My Account"), {:controller => "/mypage", :action => :manage, :only_path => false}, :class => "underline_link")
-        links << link_to(_("System Administration"), {:controller => "/admin", :action => "index"}, :title => _("Administration of the site."), :class => "underline_link") if current_user.admin?
+        links << link_to(_("System Administration"), admin_tenant_root_path(current_tenant), :title => _("Administration of the site."), :class => "underline_link") if current_user.admin?
         links << link_to(_('Help'), help_url, :target => "_blank", :class => "underline_link") unless help_url.blank?
 
         other_links_tag = ""

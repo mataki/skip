@@ -3,7 +3,7 @@
 <% end -%>
 
 <div class="box tabular">
-<% form_tag(admin_users_path) do %>
+<% form_tag(admin_tenant_users_path(current_tenant)) do %>
 <%= render :partial => 'form' %>
   <p>
     <%= submit_tag _('Create'), :disable_with => _('Creating...') %>

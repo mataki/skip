@@ -2,10 +2,10 @@
 
 <% menu_links = [] -%>
 <% if login_mode?(:password) -%>
-<% menu_links << link_to(_('New %{model}') % {:model => _('user')}, new_admin_user_path) -%>
-<% menu_links << link_to(_('New users from CSV'), import_new_admin_user_path) -%>
+<% menu_links << link_to(_('New %{model}') % {:model => _('user')}, new_admin_tenant_user_path(current_tenant)) -%>
+<% menu_links << link_to(_('New users from CSV'), import_new_admin_tenant_user_path(current_tenant)) -%>
 <% elsif login_mode?(:fixed_rp) -%>
-<% menu_links << link_to(_('New %{model}') % {:model => _('user')}, new_admin_user_path) -%>
+<% menu_links << link_to(_('New %{model}') % {:model => _('user')}, new_admin_tenant_user_path(current_tenant)) -%>
 <% end -%>
 <p><%= menu_links.join(' | ') %></p>
 
@@ -13,7 +13,7 @@
   <% columns = %w(name email section status admin locked issued_at last_authenticated_at password_expires_at) -%>
 
   <%= render :partial => '/admin/search_box', :locals => { :class_name => 'Admin::User' } %>
-  <% form_tag issue_activation_codes_admin_users_path do -%>
+  <% form_tag issue_activation_codes_admin_tenant_users_path(current_tenant) do -%>
   <%= render :partial => '/admin/shared/sortable_table',
              :locals => {
                :use_ids => true,
@@ -24,11 +24,11 @@
       when "status"
         if object.unused?
           if !object.activation_token.nil? and object.within_time_limit_of_activation_token?
-            signup_url = signup_url(object.activation_token)
+            signup_url = signup_tenant_platform_url(current_tenant, :code => object.activation_token)
             _('To be activated') + "(" + link_to(_('Confirm'), h(signup_url)) + ")"
           else
             issue_link_str = SkipEmbedded::InitialSettings['mail']['show_mail_function'] ? _('Notify activation') : _('Prepare for activation')
-            issue_link = link_to(issue_link_str, issue_activation_code_admin_user_path(object), :class => 'issue_activation_code_link')
+            issue_link = link_to(issue_link_str, issue_activation_code_admin_tenant_user_path(current_tenant, object), :class => 'issue_activation_code_link')
             if login_mode?(:password)
               s_("User|Status|#{object.status}") + "(#{issue_link})"
             else
@@ -54,9 +54,9 @@
                :link_elem_size => 3,
                :link_elem_proc => lambda { |object|
       result = ""
-      result << content_tag(:td, link_to(_("Edit"), edit_admin_user_path(object)) )
-      result << content_tag(:td, link_to(_('Image'), new_admin_user_pictures_path(object)), :class => 'add_new_picture')
-      result << content_tag(:td, link_to(_("Destroy"), object, {:confirm => _('Are you sure?'), :method => :delete}) ) if object.unused?
+      result << content_tag(:td, link_to(_("Edit"), edit_admin_tenant_user_path(current_tenant, object)) )
+      result << content_tag(:td, link_to(_('Image'), new_admin_tenant_user_pictures_path(current_tenant, object)), :class => 'add_new_picture')
+      result << content_tag(:td, link_to(_("Destroy"), admin_tenant_user_path(current_tenant, object), {:confirm => _('Are you sure?'), :method => :delete}) ) if object.unused?
       result
     }
               }

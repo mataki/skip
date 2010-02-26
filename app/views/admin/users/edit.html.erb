@@ -3,7 +3,7 @@
 <% end -%>
 
 <div class="box tabular">
-  <% form_for(@user) do |f| %>
+  <% form_for(@user, :url => admin_tenant_user_path(current_tenant, @user)) do |f| %>
   <%= render :partial => f %>
   <p><%= f.submit _('Update'), :disable_with => _('Now Updating...') %></p>
   <% end %>

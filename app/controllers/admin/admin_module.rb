@@ -39,7 +39,7 @@ module Admin::AdminModule
 
     # admin_users_url
     def index_url
-      eval(admin_params_name.pluralize+"_url")
+      polymorphic_url [:admin, current_tenant, controller_name]
     end
 
     # "user" "board entry"
@@ -79,7 +79,7 @@ module Admin::AdminModule
     def index
       @query = params[:query]
       objects = admin_model_class
-      objects = objects.scoped(:conditions => [search_condition, { :lqs => SkipUtil.to_lqs(@query) }]) if search_condition
+      objects = objects.tenant_id_is(current_tenant.id).scoped(:conditions => [search_condition, { :lqs => SkipUtil.to_lqs(@query) }]) if search_condition
       objects = objects.paginate(:page => params[:page], :per_page => 100)
 
       set_pluralize_instance_val objects
@@ -93,7 +93,7 @@ module Admin::AdminModule
     end
 
     def show
-      object = admin_model_class.find(params[:id])
+      object = admin_model_class.tenant_id_is(current_tenant.id).find(params[:id])
       set_singularize_instance_val object
 
       @topics = [[_('Listing %{model}') % {:model => _(controller_name.gsub('_', ' ').capitalize)}, index_url],
@@ -106,7 +106,6 @@ module Admin::AdminModule
     end
 
     def new
-      # @board_entry = Admin::BoardEntry.new
       object = admin_model_class.new
       set_singularize_instance_val object
 
@@ -120,7 +119,7 @@ module Admin::AdminModule
     end
 
     def edit
-      object = admin_model_class.find(params[:id])
+      object = admin_model_class.tenant_id_is(current_tenant.id).find(params[:id])
       set_singularize_instance_val object
 
       @topics = [[_('Listing %{model}') % {:model => _(controller_name.gsub('_', ' ').capitalize)}, index_url],
@@ -129,6 +128,7 @@ module Admin::AdminModule
 
     def create
       object = admin_model_class.new(params[admin_params_sym])
+      object.tenant = current_tenant
       set_singularize_instance_val object
 
       @topics = [[_('Listing %{model}') % {:model => _(controller_name.gsub('_', ' ').capitalize)}, index_url],
@@ -147,7 +147,7 @@ module Admin::AdminModule
     end
 
     def update
-      object = admin_model_class.find(params[:id])
+      object = admin_model_class.tenant_id_is(current_tenant.id).find(params[:id])
       set_singularize_instance_val object
 
       @topics = [[_('Listing %{model}') % {:model => _(controller_name.gsub('_', ' ').capitalize)}, index_url],
@@ -166,7 +166,7 @@ module Admin::AdminModule
     end
 
     def destroy
-      object = admin_model_class.find(params[:id])
+      object = admin_model_class.tenant_id_is(current_tenant.id).find(params[:id])
       object.destroy
       set_singularize_instance_val object
 

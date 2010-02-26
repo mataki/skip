@@ -30,7 +30,8 @@ private
   end
 
   def site_url
-    root_url
+    #root_url
+    default_url_options[:protocol] + default_url_options[:host]
   end
 
   def contact_addr

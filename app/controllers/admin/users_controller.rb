@@ -26,7 +26,7 @@ class Admin::UsersController < Admin::ApplicationController
 
   def new
     @user = Admin::User.new
-    @topics = [[_('Listing %{model}') % {:model => _('user')}, admin_users_path], _('New %{model}') % {:model => _('user')}]
+    @topics = [[_('Listing %{model}') % {:model => _('user')}, admin_tenant_users_path(current_tenant)], _('New %{model}') % {:model => _('user')}]
   end
 
   def create
@@ -39,26 +39,27 @@ class Admin::UsersController < Admin::ApplicationController
           @user.save!
         else
           @user = Admin::User.make_new_user({:user => params[:user]})
+          @user.tenant = current_tenant
           @user.save!
         end
       end
 
       flash[:notice] = _('Registered.')
-      redirect_to admin_users_path
+      redirect_to admin_tenant_users_path(current_tenant)
     rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => e
-      @topics = [[_('Listing %{model}') % {:model => _('user')}, admin_users_path], _('New %{model}') % {:model => _('user')}]
+      @topics = [[_('Listing %{model}') % {:model => _('user')}, admin_tenant_users_path(current_tenant)], _('New %{model}') % {:model => _('user')}]
       render :action => 'new'
     end
   end
 
   def edit
-    @user = Admin::User.find(params[:id])
+    @user = Admin::User.tenant_id_is(current_tenant.id).find(params[:id])
 
-    @topics = [[_('Listing %{model}') % {:model => _('user')}, admin_users_path],
+    @topics = [[_('Listing %{model}') % {:model => _('user')}, admin_tenant_users_path(current_tenant)],
                _('Editing %{model}') % {:model => @user.topic_title }]
   rescue ActiveRecord::RecordNotFound => e
     flash[:notice] = _('User does not exist.')
-    redirect_to admin_users_path
+    redirect_to admin_tenant_users_path(current_tenant)
   end
 
   def update
@@ -76,22 +77,22 @@ class Admin::UsersController < Admin::ApplicationController
     redirect_to :action => "edit"
   rescue ActiveRecord::RecordNotFound => e
     flash[:notice] = _('User does not exist.')
-    redirect_to admin_users_path
+    redirect_to admin_tenant_users_path(current_tenant)
   rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => e
-    @topics = [[_('Listing %{model}') % {:model => _('user')}, admin_users_path],
+    @topics = [[_('Listing %{model}') % {:model => _('user')}, admin_tenant_users_path(current_tenant)],
                _('Editing %{model}') % {:model => @user.topic_title }]
     render :action => 'edit'
   end
 
   def destroy
-    @user = Admin::User.find(params[:id])
+    @user = Admin::User.tenant_id_is(current_tenant.id).find(params[:id])
     if @user.unused?
       @user.destroy
       flash[:notice] = _('User was successfuly deleted.')
     else
       flash[:notice] = _("You cannot delete user who is not unused.")
     end
-    redirect_to admin_users_path
+    redirect_to admin_tenant_users_path(current_tenant)
   end
 
   def first
@@ -152,7 +153,7 @@ class Admin::UsersController < Admin::ApplicationController
 
   def issue_activation_code
     do_issue_activation_codes([params[:id]])
-    redirect_to admin_users_path
+    redirect_to admin_tenant_users_path(current_tenant)
   end
 
   def issue_activation_codes
@@ -161,7 +162,7 @@ class Admin::UsersController < Admin::ApplicationController
   end
 
   def issue_password_reset_code
-    @user = Admin::User.find(params[:id])
+    @user = Admin::User.tenant_id_is(current_tenant.id).find(params[:id])
     if @user.active?
       if @user.reset_auth_token.nil? || !@user.within_time_limit_of_reset_auth_token?
         @user.issue_reset_auth_token
@@ -192,7 +193,7 @@ class Admin::UsersController < Admin::ApplicationController
       yield if block_given?
     else
       contact_link = "<a href=\"mailto:#{SkipEmbedded::InitialSettings['administrator_addr']}\" target=\"_blank\">" + _('Inquiries') + '</a>'
-      if User.find_by_admin(true)
+      if User.tenant_id_is(current_tenant.id).find_by_admin(true)
         flash[:error] = _('Administrative user has already been registered. Log in with the account or contact {contact_link} in case of failure.') % {:contact_link => contact_link}
         redirect_to :controller => "/platform", :action => :index
       else
@@ -217,9 +218,9 @@ class Admin::UsersController < Admin::ApplicationController
   end
 
   def do_issue_activation_codes user_ids
-    User.issue_activation_codes(user_ids) do |unused_users, active_users|
+    User.issue_activation_codes(current_tenant, user_ids) do |unused_users, active_users|
       unused_users.each do |unused_user|
-        UserMailer::Smtp.deliver_sent_activate(unused_user.email, signup_url(unused_user.activation_token))
+        UserMailer::Smtp.deliver_sent_activate(unused_user.email, signup_tenant_platform_url(current_tenant, :code => unused_user.activation_token))
       end
       unless unused_users.empty?
         email = unused_users.map(&:email).join(',')

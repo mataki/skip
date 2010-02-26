@@ -2,30 +2,30 @@
 
 <p>
   <%= label Admin::User.name, :name %>
-  :<%= text_field :user, :name %>
+  <%= text_field :user, :name %>
 </p>
 <p>
   <%= label Admin::User.name, :status %>
   <% if @user.new_record? -%>
-  :<%= s_('User|Status|UNUSED') %>
+  <%= s_('User|Status|UNUSED') %>
   <% else -%>
   <% unless @user.unused? -%>
-  :<%= select :user, :status, Admin::User.status_select.delete_if{|select| select.last == 'UNUSED'} %>
+  <%= select :user, :status, Admin::User.status_select.delete_if{|select| select.last == 'UNUSED'} %>
   <%= help_icon Admin::User.name, :status %>
   <% else -%>
-  :<%= s_('User|Status|UNUSED') %>
+  <%= s_('User|Status|UNUSED') %>
   <% end -%>
   <% end %>
 </p>
 <% unless @user.new_record? -%>
 <p>
   <%= label Admin::User.name, :admin %>
-  :<%= check_box :user, :admin %>
+  <%= check_box :user, :admin %>
   <%= help_icon Admin::User.name, :admin %>
 </p>
 <p>
   <%= label Admin::User.name, :locked %>
-  :<%= check_box :user, :locked %>
+  <%= check_box :user, :locked %>
   <%= help_icon Admin::User.name, :locked %>
 </p>
 <% end -%>
