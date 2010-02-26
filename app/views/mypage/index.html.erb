@@ -106,7 +106,7 @@
           <div class="page_title">
             <%= user_link_to(user) %>&nbsp;<span class="small_text">(<%= h(user.section) %>)
             <% unless chain = current_user.follow_chains.find_by_to_user_id(user.id) -%>
-              &nbsp;<%= link_to('[' + _('Introduce') + ']', new_user_chain_path(user)) %>
+              &nbsp;<%= link_to('[' + _('Introduce') + ']', new_polymorphic_path([current_tenant, current_user, chain])) %>
             <% end -%></span>
           </div>
           <div class="page_date"><%=h user.created_on.strftime(_("%B %d %Y")) %></div>

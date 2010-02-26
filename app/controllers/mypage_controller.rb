@@ -495,10 +495,11 @@ class MypageController < ApplicationController
   # BBS記事一覧を取得するメソッドを動的に生成(partial用のオプションを返す)
   def find_recent_bbs_as_locals code, options = {}
     category = GroupCategory.find_by_code(code)
+    id_name = category.code.downcase
     pages = BoardEntry.from_recents.accessible(current_user).entry_type_is(BoardEntry::GROUP_BBS).timeline.scoped(:include => [ :user, :state ]).order_new.paginate(:page => target_page(id_name), :per_page => options[:per_page])
 
     locals = {
-      :id_name => category.code.downcase,
+      :id_name => id_name,
       :title_icon => "group",
       :title_name => category.name,
       :per_page => options[:per_page],
