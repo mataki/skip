@@ -55,7 +55,7 @@ class PlatformsController < ApplicationController
     notice = notice + "<br>" + _('You had been retired.') unless params[:message].blank?
     flash[:notice] = notice
 
-    redirect_to login_mode?(:fixed_rp) ? "#{SkipEmbedded::InitialSettings['fixed_op_url']}logout" : {:action => "index"}
+    redirect_to login_mode?(:fixed_rp) ? "#{SkipEmbedded::InitialSettings['fixed_op_url']}logout" : tenant_platform_url(current_tenant)
   end
 
   def forgot_password
@@ -135,19 +135,19 @@ class PlatformsController < ApplicationController
   def signup
     unless enable_signup?
       flash[:error] = _('%{function} currently unavailable.') % {:function => _('User registration')}
-      return redirect_to(:controller => '/platform')
+      return redirect_to tenant_platform_url(current_tenant)
     end
     if @user = User.find_by_activation_token(params[:code])
       if @user.within_time_limit_of_activation_token?
         self.current_user = @user
-        return redirect_to(:controller => :portal)
+        redirect_to new_tenant_user_url(current_tenant)
       else
         flash[:error] = _("The URL for registration has already expired.")
-        redirect_to :controller => '/platform'
+        redirect_to tenant_platform_url(current_tenant)
       end
     else
       flash[:error] = _("Invalid registration URL. Try again or contact system administrator.")
-      redirect_to :controller => '/platform'
+      redirect_to tenant_platform_url(current_tenant)
     end
   end
 
