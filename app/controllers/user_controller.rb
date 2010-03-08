@@ -17,13 +17,7 @@ class UserController < ApplicationController
   include UserHelper
 
   before_filter :load_user, :setup_layout
-  after_filter :remove_system_message, :only => %w(show blog social)
-
-  # tab_menu
-  def show
-    # 紹介してくれた人一覧
-    @against_chains = @user.against_chains.order_new.limit(5)
-  end
+  after_filter :remove_system_message, :only => %w(social)
 
   # tab_menu
   def social
@@ -61,10 +55,6 @@ private
 
   def tab_menu_option
     { :uid => @user.uid }
-  end
-
-  def redirect_to_index
-    redirect_to :action => 'show', :uid => @user.uid
   end
 
   def prepare_chain against = false

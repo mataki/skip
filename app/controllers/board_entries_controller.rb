@@ -22,6 +22,7 @@ class BoardEntriesController < ApplicationController
   before_filter :required_full_accessible, :only => [:edit, :update, :destroy]
   before_filter :required_accessible, :only => [:show, :large]
   after_filter :make_comment_message, :only => [ :ado_create_comment, :ado_create_nest_comment ]
+  after_filter :remove_system_message, :only => %w(show)
 
   def index
     @main_menu = @title = _('Entries')

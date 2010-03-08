@@ -15,6 +15,7 @@
 
 class UsersController < ApplicationController
   before_filter :setup_layout
+  after_filter :remove_system_message, :only => %w(show)
 
   # tab_menu
   def index
@@ -28,6 +29,17 @@ class UsersController < ApplicationController
     flash.now[:notice] = _('User not found.') if @users.empty?
     @tags = ChainTag.popular_tag_names
     params[:tag_select] ||= "AND"
+  end
+
+  def show
+    # 紹介してくれた人一覧
+    @against_chains = current_target_user.against_chains.order_new.limit(5)
+  end
+
+  def new
+  end
+
+  def create
   end
 
 private
