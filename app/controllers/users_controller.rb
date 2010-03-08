@@ -14,7 +14,10 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class UsersController < ApplicationController
-  before_filter :setup_layout
+  skip_before_filter :prepare_session, :only => %w(agreement new)
+  skip_before_filter :sso, :only => %w(agreement new)
+  skip_before_filter :login_required, :only => %w(agreement new)
+  before_filter :registerable_filter, :only => %w(agreement new create)
   after_filter :remove_system_message, :only => %w(show)
 
   # tab_menu
@@ -29,6 +32,7 @@ class UsersController < ApplicationController
     flash.now[:notice] = _('User not found.') if @users.empty?
     @tags = ChainTag.popular_tag_names
     params[:tag_select] ||= "AND"
+    @main_menu = @title = _('Users')
   end
 
   def show
@@ -42,9 +46,29 @@ class UsersController < ApplicationController
   def create
   end
 
-private
-  def setup_layout
-    @main_menu = @title = _('Users')
+  def agreement
+    session[:agreement] = if login_mode?(:free_rp) and !session[:identity_url].blank?
+                                       :agree_with_free_rp
+                                     else
+                                       :agree
+                                     end
+    redirect_to :action => :new
+  end
+
+  private
+  def registerable_filter
+    if current_user and !current_user.unused?
+      redirect_to root_url
+      return false
+    end
+
+    if Admin::Setting.stop_new_user
+      @deny_message = _("New user registration is suspended for now.")
+    end
+    if @deny_message
+      render :action => :deny_register
+      return false
+    end
   end
 end
 

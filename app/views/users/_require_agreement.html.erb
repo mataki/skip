@@ -1,9 +1,8 @@
-<%= render :partial => 'registration_sequence' %>
 <div id="rules" style="overflow: auto; height: 250px; width: 100%; border-top: 1px solid silver; border-bottom: 1px solid silver; background-color: #fdfdf5;"></div>
 
 <div style="text-align: center; margin: 10px;">
-  <%= button_to _('Accept the terms above'), {:action => :agreement}, :method => :get %>
-  <%= button_to _('Not Accept'), logout_path, :method => :get %>
+  <%= button_to _('Accept the terms above'), agreement_new_tenant_user_path(current_tenant), :method => :get %>
+  <%= button_to _('Not Accept'), logout_tenant_platform_path(current_tenant), :method => :get %>
 </div>
 
 <% content_for :javascript_initializers do -%>

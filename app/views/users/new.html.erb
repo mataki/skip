@@ -1,0 +1,9 @@
+<%= render :partial => 'registration_sequence' %>
+<% if session[:agreement] == :agree_with_free_rp -%>
+  <%= render :partial => 'new_with_free_rp' %>
+<% elsif session[:agreement] == :agree -%>
+  <%= render :partial => 'new' %>
+<% else -%>
+  <%= render :partial => 'require_agreement' %>
+<% end -%>
+
