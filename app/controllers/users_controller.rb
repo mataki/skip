@@ -30,37 +30,6 @@ class UsersController < ApplicationController
     params[:tag_select] ||= "AND"
   end
 
-  # tab_menu
-  # TODO #924で画面からリンクをなくした。1.4時点で復活しない場合は削除する
-  def chain_search
-    @chains = Chain.order_new.paginate(:page => params[:page], :per_page => 5)
-
-    to_user_ids = @chains.inject([]) {|result, chain| result << chain.to_user_id }
-    from_user_ids = @chains.inject([]) {|result, chain| result << chain.from_user_id }
-
-    against_chains = Chain.find(:all, :conditions =>["from_user_id in (?) and to_user_id in (?)", to_user_ids, from_user_ids]) if to_user_ids.size > 0
-    against_chains ||= []
-
-    @result = []
-    @chains.each do |chain|
-      message = ""
-       against_chains.each do |ag|
-         if ag.to_user_id == chain.from_user_id and ag.from_user_id == chain.to_user_id
-           message = ag.comment
-         end
-       end
-
-      @result << {
-        :from_user => chain.from_user,
-        :from_message => chain.comment,
-        :to_user => chain.to_user,
-        :counter_message => message
-      }
-    end
-
-    render :partial => 'user/chain_table', :layout => "layout"
-  end
-
 private
   def setup_layout
     @main_menu = @title = _('Users')
