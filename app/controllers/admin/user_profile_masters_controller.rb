@@ -17,16 +17,17 @@ class Admin::UserProfileMastersController < Admin::ApplicationController
   include Admin::AdminModule::AdminRootModule
 
   def index
-    @user_profile_masters = Admin::UserProfileMaster.all(:include => :user_profile_master_category,
-                                                         :order => 'user_profile_master_categories.sort_order,user_profile_masters.sort_order').paginate(:page => params[:page], :per_page => 100)
+    @user_profile_masters = current_tenant.user_profile_masters.all(
+      :include => :user_profile_master_category,
+      :order => 'user_profile_master_categories.sort_order,user_profile_masters.sort_order').paginate(:page => params[:page], :per_page => 100)
 
     @topics = [_('Listing %{model}') % {:model => _('user profile master')}]
 
-    redirect_to admin_masters_path
+    redirect_to admin_tenant_masters_url(current_tenant)
   end
 
   def show
     flash.keep
-    redirect_to admin_user_profile_masters_path
+    redirect_to admin_tenant_user_profile_masters_url(current_tenant)
   end
 end

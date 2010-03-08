@@ -6,4 +6,5 @@ class Tenant < ActiveRecord::Base
   has_many :group_categories, :dependent => :destroy
   has_one :activation, :dependent => :destroy
   has_many :user_profile_master_categories
+  has_many :user_profile_masters
 end

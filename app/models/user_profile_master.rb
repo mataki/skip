@@ -28,8 +28,9 @@ class UserProfileMaster < ActiveRecord::Base
   N_('UserProfileMaster|Required|true')
   N_('UserProfileMaster|Required|false')
 
-  has_many :user_profile_values, :dependent => :destroy
+  belongs_to :tenant
   belongs_to :user_profile_master_category
+  has_many :user_profile_values, :dependent => :destroy
 
   validates_presence_of :name
   validates_presence_of :input_type
