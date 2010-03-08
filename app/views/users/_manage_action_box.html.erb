@@ -9,6 +9,9 @@
     <% if SkipEmbedded::InitialSettings['password_edit_setting'] and login_mode?(:password) -%>
       <li><%= link_to_unless_current _('Change Password'), edit_tenant_user_password_path(current_tenant, current_user) %></li>
     <% end -%>
+    <% if SkipEmbedded::InitialSettings['mail']['show_mail_function'] -%>
+      <li><%= link_to_unless_current _('Change Email Address'), new_tenant_user_applied_email_path(current_tenant, current_user) %></li>
+    <% end -%>
   </ul>
   </div>
   <div class="box_space_bottom"></div>

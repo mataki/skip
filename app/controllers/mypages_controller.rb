@@ -24,7 +24,7 @@ class MypagesController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => :apply_ident_url
 
   verify :method => :post,
-    :only => [ :update_message_unsubscribes, :change_read_state, :apply_email],
+    :only => [ :update_message_unsubscribes, :change_read_state],
     :redirect_to => { :action => :index }
   verify :method => [:post, :put], :only => [ :update_customize], :redirect_to => { :action => :index }
 
@@ -196,46 +196,6 @@ class MypagesController < ApplicationController
     end
     flash[:notice] = _('Updated notification email settings.')
     redirect_to :action => 'manage', :menu => 'manage_message'
-  end
-
-  def apply_email
-    if @applied_email = AppliedEmail.find_by_user_id(session[:user_id])
-      @applied_email.email = params[:applied_email][:email]
-    else
-      @applied_email = AppliedEmail.new(params[:applied_email])
-      @applied_email.user_id = session[:user_id]
-    end
-
-    if @applied_email.save
-      UserMailer::Smtp.deliver_sent_apply_email_confirm(@applied_email.email, "#{root_url}mypages/update_email/#{@applied_email.onetime_code}/")
-      flash.now[:notice] = _("Your request of changing email address accepted. Check your email to complete the process.")
-    else
-      flash.now[:warn] = _("Failed to process your request. Try resubmitting your request again.")
-    end
-    @menu = 'manage_email'
-    @user = current_user
-    render :partial => 'manage_email', :layout => "layout"
-  end
-
-  def update_email
-    if @applied_email = AppliedEmail.find_by_user_id_and_onetime_code(session[:user_id], params[:id])
-      @user = current_user
-      old_email = @user.email
-      @user.email = @applied_email.email
-      if @user.save
-        @applied_email.destroy
-        flash[:notice] = _("Email address was updated successfully.")
-        redirect_to :action => 'profile'
-      else
-        @user.email = old_email
-        @menu = 'manage_email'
-        flash[:notice] = _("The specified email address has already been registered. Try resubmitting the request with another address.")
-        render :partial => 'manage_email', :layout => "layout"
-      end
-    else
-      flash[:notice] = _('Specified page not found.')
-      redirect_to :action => 'index'
-    end
   end
 
   def apply_ident_url

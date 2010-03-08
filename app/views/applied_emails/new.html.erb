@@ -1,5 +1,5 @@
 <% content_for :contents_left do -%>
-  <%= render :partial => "manage_menu", :locals => { :selected_menu => @menu } %>
+  <%= render :partial => "users/manage_action_box" %>
 <% end -%>
 
 <% content_for :contents_right do -%>
@@ -10,18 +10,18 @@
 
   <div class="edit_form_space ui-corner-all">
   <%= content_tag(:p, _('Another request for changing email found. The former request will be discarded and we will proceed on the new email address.')) if @applied_email.id %>
-  <% form_tag :action => 'apply_email' do -%>
+  <% form_for @applied_email, :url => tenant_user_applied_email_path(current_tenant, current_user) do |f| -%>
     <table class="normal user_info">
       <tr>
         <th width="100px"><label for="page_title"><%= _('Current Email Address')%></label></th>
-        <td style="padding:5px;"><%=h @user.email %></td>
+        <td style="padding:5px;"><%=h current_user.email %></td>
       </tr>
       <tr>
-        <th><label for="page_title"><%= _('New Email Address')%></label></th>
-        <td style="padding:5px;"><%= text_field 'applied_email', 'email' %></td>
+        <th><label for="page_title"><%= f.label :email, _('New Email Address')%></label></th>
+        <td style="padding:5px;"><%= f.text_field :email %></td>
       </tr>
     </table>
-    <%= submit_tag _("Apply") %>
+    <%= f.submit _("Apply"), :disable_with => _('Saving...') %>
   <% end -%>
   </div>
 <% end -%>
