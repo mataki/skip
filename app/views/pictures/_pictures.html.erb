@@ -7,9 +7,9 @@
   <% pictures.each do |picture| -%>
     <ul class="picture ui-corner-all <%= 'selected' if picture.active? %>">
     <li class="image">
-      <% img = image_tag user_picture_path(user, picture, :format => :png), :height => 90, :class => 'fit_image' -%>
+      <% img = image_tag tenant_user_picture_path(current_tenant, user, picture, :format => :png), :height => 90, :class => 'fit_image' -%>
       <% if clickable -%>
-        <%= link_to img, user_picture_path(user, picture, :format => :png), :target => '_blank' %>
+        <%= link_to img, tenant_user_picture_path(current_tenant, user, picture, :format => :png), :target => '_blank' %>
       <% else -%>
         <%= img %>
       <% end -%>
@@ -19,13 +19,13 @@
         <% if picture.active? -%>
           <%= _('Selected') %>
         <% else -%>
-          <% form_for([user, picture], :html => {:method => :put}) do |f| -%>
+          <% form_for([current_tenant, user, picture], :html => {:method => :put}) do |f| -%>
             <%= f.submit _('Select') %>
           <% end -%>
         <% end -%>
       </li>
       <li class="operation">
-        <%= link_to _('Delete'), user_picture_path(user, picture), :method => :delete, :confirm => _('Are you sure?') %>
+        <%= link_to _('Delete'), tenant_user_picture_path(current_tenant, user, picture), :method => :delete, :confirm => _('Are you sure?') %>
       </li>
     <% end -%>
   </ul>

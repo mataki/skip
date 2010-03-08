@@ -31,7 +31,7 @@ class PicturesController < ApplicationController
       else
         flash[:warn] = picture.errors.full_messages
       end
-      format.html { redirect_to url_for(:controller => 'mypage', :action => 'manage', :menu => 'manage_portrait') }
+      format.html { redirect_to new_tenant_user_picture_url(current_tenant, current_user) }
     end
   end
 
@@ -41,7 +41,7 @@ class PicturesController < ApplicationController
     respond_to do |format|
       format.html do
         flash[:notice] = _("Picture was updated successfully.")
-        redirect_to url_for(:controller => 'mypage', :action => 'manage', :menu => 'manage_portrait')
+        redirect_to new_tenant_user_picture_url(current_tenant, current_user)
       end
     end
   end
@@ -59,7 +59,7 @@ class PicturesController < ApplicationController
           flash[:warn] = _("Picture could not be changed.")
         end
       end
-      format.html { redirect_to url_for(:controller => 'mypage', :action => 'manage', :menu => 'manage_portrait') }
+      format.html { redirect_to new_tenant_user_picture_url(current_tenant, current_user) }
     end
   end
 end

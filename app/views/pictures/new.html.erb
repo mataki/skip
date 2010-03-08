@@ -1,5 +1,5 @@
 <% content_for :contents_left do -%>
-  <%= render :partial => "mypage/manage_menu", :locals => { :selected_menu => @menu } %>
+  <%= render :partial => "users/manage_action_box" %>
 <% end -%>
 
 <% content_for :contents_right do -%>
@@ -9,7 +9,7 @@
 
   <%= render :partial => 'pictures/pictures', :locals => {:user => current_user, :with_action => true} %>
 
-  <% form_for([current_user, current_user.pictures.build], :html => {:multipart => true}) do |f| -%>
+  <% form_for([current_tenant, current_user, current_user.pictures.build], :html => {:multipart => true}) do |f| -%>
     <%= error_messages_for :picture %>
     <%= f.label :file %>
     <%= f.file_field :file %>

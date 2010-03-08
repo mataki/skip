@@ -15,9 +15,8 @@ ActionController::Routing::Routes.draw do |map|
       user.with_options :requirements => { :user_id => /[a-zA-Z0-9\-_\.]+/ } do |user|
         user.resources :board_entries
         user.resources :share_files, :member => {:download_history_as_csv => :get, :clear_download_history => :delete}
-        user.resource :pictures, :only => %w(new create)
+        user.resources :pictures, :only => %w(show new create update destroy)
         user.resources :chains
-        user.resources :pictures
         user.resources :system_messages, :only => [:destroy]
         user.resources :notices
       end

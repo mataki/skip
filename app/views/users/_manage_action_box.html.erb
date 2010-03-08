@@ -1,0 +1,10 @@
+<div class="box_space">
+  <div class="box_space_title"><%= _('Admin Menu')%></div>
+  <div class="box_space_body">
+  <ul>
+    <li><%= link_to_unless_current _('Edit Profile'), edit_tenant_user_path(current_tenant, current_user) %></li>
+    <li><%= link_to_unless_current _('Change Profile Picture'), new_tenant_user_picture_path(current_tenant, current_user) %></li>
+  </ul>
+  </div>
+  <div class="box_space_bottom"></div>
+</div><!-- box_space -->
