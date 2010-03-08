@@ -24,7 +24,7 @@ class MypagesController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => :apply_ident_url
 
   verify :method => :post,
-    :only => [ :update_message_unsubscribes, :apply_password, :change_read_state, :apply_email],
+    :only => [ :update_message_unsubscribes, :change_read_state, :apply_email],
     :redirect_to => { :action => :index }
   verify :method => [:post, :put], :only => [ :update_customize], :redirect_to => { :action => :index }
 
@@ -196,20 +196,6 @@ class MypagesController < ApplicationController
     end
     flash[:notice] = _('Updated notification email settings.')
     redirect_to :action => 'manage', :menu => 'manage_message'
-  end
-
-  def apply_password
-    redirect_to_with_deny_auth(:action => :manage) and return unless login_mode?(:password)
-
-    @user = current_user
-    @user.change_password(params[:user])
-    if @user.errors.empty?
-      flash[:notice] = _('Password was successfully updated.')
-      redirect_to :action => :manage, :menu => :manage_password
-    else
-      @menu = 'manage_password'
-      render :partial => 'manage_password', :layout => 'layout'
-    end
   end
 
   def apply_email

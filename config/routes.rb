@@ -16,6 +16,7 @@ ActionController::Routing::Routes.draw do |map|
         user.resources :board_entries
         user.resources :share_files, :member => {:download_history_as_csv => :get, :clear_download_history => :delete}
         user.resources :pictures, :only => %w(show new create update destroy)
+        user.resource :password, :only => %w(edit update)
         user.resources :chains
         user.resources :system_messages, :only => [:destroy]
         user.resources :notices

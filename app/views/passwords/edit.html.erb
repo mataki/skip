@@ -1,5 +1,5 @@
 <% content_for :contents_left do -%>
-  <%= render :partial => "manage_menu", :locals => { :selected_menu => @menu } %>
+  <%= render :partial => "users/manage_action_box" %>
 <% end -%>
 
 <% content_for :contents_right do -%>
@@ -8,7 +8,7 @@
   <%= template_error_messages_for 'user' %>
 
   <div class="edit_form_space ui-corner-all">
-  <% form_for :user, @user, {:url => {:action => :apply_password}} do |f| -%>
+  <% form_for @user, {:url => tenant_user_password_path(current_tenant, current_user)} do |f| -%>
     <table class="normal user_info">
       <tr>
         <th width="100px"><%= f.label :old_password, _('Current Password') %></th>
@@ -23,7 +23,7 @@
         <td style="padding:5px;"><%= f.password_field :password_confirmation %></td>
       </tr>
     </table>
-    <%= submit_tag _('Save') %>
+    <%= submit_tag _('Save'), :disable_with => _('Saving...') %>
   <% end -%>
   </div>
 <% end -%>
