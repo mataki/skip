@@ -137,7 +137,7 @@ module Admin::AdminModule
       respond_to do |format|
         if object.save
           flash[:notice] = _("%{model} was successfully created.") % {:model => _(singularize_name.gsub('_', ' '))}
-          format.html { redirect_to(object) }
+          format.html { redirect_to(send("admin_tenant_#{singularize_name}_url", current_tenant, object)) }
           format.xml  { render :xml => object, :status => :created, :location => object }
         else
           format.html { render :action => "new" }
@@ -156,7 +156,7 @@ module Admin::AdminModule
       respond_to do |format|
         if object.update_attributes(params[admin_params_sym])
           flash[:notice] = _("%{model} was successfully updated.") % {:model => _(singularize_name.gsub('_', ' '))}
-          format.html { redirect_to(object) }
+          format.html { redirect_to(send("admin_tenant_#{singularize_name}_url", current_tenant, object)) }
           format.xml  { head :ok }
         else
           format.html { render :action => "edit" }

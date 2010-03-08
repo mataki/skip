@@ -14,6 +14,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class UserProfileMasterCategory < ActiveRecord::Base
+  belongs_to :tenant
   has_many :user_profile_masters
 
   validates_presence_of :name

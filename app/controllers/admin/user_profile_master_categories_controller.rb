@@ -17,16 +17,16 @@ class Admin::UserProfileMasterCategoriesController < Admin::ApplicationControlle
   include Admin::AdminModule::AdminRootModule
 
   def index
-    redirect_to admin_masters_path
+    redirect_to admin_tenant_masters_path(current_tenant)
   end
 
   def show
     flash.keep
-    redirect_to admin_user_profile_master_categories_path
+    redirect_to admin_tenant_user_profile_master_categories_path(current_tenant)
   end
 
   def destroy
-    user_profile_master_category = Admin::UserProfileMasterCategory.find(params[:id])
+    user_profile_master_category = current_tenant.user_profile_master_categories.find(params[:id])
     if user_profile_master_category.deletable?
       user_profile_master_category.destroy
       flash[:notice] = _("%{model} was successfully deleted.") % {:model => _('user profile master category')}
@@ -35,7 +35,7 @@ class Admin::UserProfileMasterCategoriesController < Admin::ApplicationControlle
       flash[:error] = message unless message.blank?
     end
     respond_to do |format|
-      format.html { redirect_to(admin_user_profile_master_categories_path) }
+      format.html { redirect_to(admin_tenant_user_profile_master_categories_path(current_tenant)) }
       format.xml { head :ok }
     end
   end
