@@ -15,7 +15,7 @@
 
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe MypageController, 'GET #welcome' do
+describe MypagesController, 'GET #welcome' do
   before do
     user_login
   end
@@ -28,8 +28,8 @@ describe MypageController, 'GET #welcome' do
   end
 end
 
-describe MypageController, 'mypage > home 関連' do
-  describe MypageController, 'GET #index' do
+describe MypagesController, 'mypage > home 関連' do
+  describe MypagesController, 'GET #index' do
     before do
       @current_user = user_login
       @current_user_info = {:using_day => 1}
@@ -94,7 +94,7 @@ describe MypageController, 'mypage > home 関連' do
     end
   end
 
-  describe MypageController, 'GET #entries' do
+  describe MypagesController, 'GET #entries' do
     before do
       user_login
     end
@@ -162,10 +162,10 @@ describe MypageController, 'mypage > home 関連' do
     end
   end
 
-  describe MypageController, 'GET #entries_by_antenna' do
+  describe MypagesController, 'GET #entries_by_antenna' do
     before do
       user_login
-      @antenna_entry = stub(MypageController::AntennaEntry)
+      @antenna_entry = stub(MypagesController::AntennaEntry)
       @antenna_entry.stub!(:title=)
       @antenna_entry.stub!(:need_search?).and_return(false)
       @antenna_entry.stub!(:scope).and_return(BoardEntry.scoped(:conditions => []))
@@ -224,16 +224,16 @@ describe MypageController, 'mypage > home 関連' do
       response.should render_template('entries_by_antenna')
     end
   end
-  describe MypageController, '#antenna_entry' do
+  describe MypagesController, '#antenna_entry' do
     before do
-      @controller = MypageController.new
+      @controller = MypagesController.new
       @user = stub_model(User)
       @controller.stub!(:current_user).and_return(@user)
     end
     describe '第一引数がnilの場合' do
       before do
         @antenna_entry = stub('antenna_entry')
-        MypageController::AntennaEntry.should_receive(:new).with(@user, true).and_return(@antenna_entry)
+        MypagesController::AntennaEntry.should_receive(:new).with(@user, true).and_return(@antenna_entry)
       end
       it 'AntennaEntryのインスタンスが返ること' do
         @controller.send(:antenna_entry, nil, nil, true).should == @antenna_entry
@@ -242,7 +242,7 @@ describe MypageController, 'mypage > home 関連' do
     describe '第一引数が空の場合' do
       before do
         @antenna_entry = stub('antenna_entry')
-        MypageController::AntennaEntry.should_receive(:new).with(@user, true).and_return(@antenna_entry)
+        MypagesController::AntennaEntry.should_receive(:new).with(@user, true).and_return(@antenna_entry)
       end
       it 'AntennaEntryのインスタンスが返ること' do
         @controller.send(:antenna_entry, '', 1, true).should == @antenna_entry
@@ -252,7 +252,7 @@ describe MypageController, 'mypage > home 関連' do
       before do
         @antenna_entry = stub('antenna_entry')
         @key = 'user'
-        MypageController::UserAntennaEntry.should_receive(:new).with(@user, @key, 1, true).and_return(@antenna_entry)
+        MypagesController::UserAntennaEntry.should_receive(:new).with(@user, @key, 1, true).and_return(@antenna_entry)
       end
       it 'UserAntennaEntryのインスタンスが返ること' do
         @controller.send(:antenna_entry, @key, 1, true).should == @antenna_entry
@@ -265,7 +265,7 @@ describe MypageController, 'mypage > home 関連' do
       describe 'システムアンテナとして有効な文字列の場合' do
         before do
           @key = 'message'
-          MypageController::SystemAntennaEntry.should_receive(:new).with(@user, @key, true).and_return(@antenna_entry)
+          MypagesController::SystemAntennaEntry.should_receive(:new).with(@user, @key, true).and_return(@antenna_entry)
         end
         it 'SystemAntennaEntryのインスタンスが返ること' do
           @controller.send(:antenna_entry, @key, nil, true).should == @antenna_entry
@@ -281,10 +281,10 @@ describe MypageController, 'mypage > home 関連' do
     end
   end
 
-  describe MypageController::AntennaEntry do
+  describe MypagesController::AntennaEntry do
     before do
       @current_user = stub_model(User)
-      @antenna_entry = MypageController::AntennaEntry.new(@current_user)
+      @antenna_entry = MypagesController::AntennaEntry.new(@current_user)
     end
     describe '#initialize' do
       it 'keyがnilであること' do
@@ -296,15 +296,15 @@ describe MypageController, 'mypage > home 関連' do
     end
   end
 
-  describe MypageController::SystemAntennaEntry do
+  describe MypagesController::SystemAntennaEntry do
     before do
       @current_user = stub_model(User)
-      @antenna_entry = MypageController::SystemAntennaEntry.new(@current_user, 'message')
+      @antenna_entry = MypagesController::SystemAntennaEntry.new(@current_user, 'message')
     end
     describe '#need_search?' do
       describe 'keyがgroupの場合' do
         before do
-          @antenna_entry = MypageController::SystemAntennaEntry.new(@current_user, 'group')
+          @antenna_entry = MypagesController::SystemAntennaEntry.new(@current_user, 'group')
         end
         describe '指定ユーザがグループに所属している場合' do
           before do
@@ -325,7 +325,7 @@ describe MypageController, 'mypage > home 関連' do
       end
       describe 'keyがgroup以外の場合' do
         before do
-          @antenna_entry = MypageController::SystemAntennaEntry.new(@current_user, 'message')
+          @antenna_entry = MypagesController::SystemAntennaEntry.new(@current_user, 'message')
         end
         it 'trueが返ること' do
           @antenna_entry.need_search?.should be_true
@@ -335,8 +335,8 @@ describe MypageController, 'mypage > home 関連' do
   end
 end
 
-describe MypageController, 'mypage > manage(管理) 関連' do
-  describe MypageController, 'POST #update_profile' do
+describe MypagesController, 'mypage > manage(管理) 関連' do
+  describe MypagesController, 'POST #update_profile' do
     before do
       @user = user_login
       @profiles = (1..2).map{|i| stub_model(UserProfileValue, :save! => true, :valid? => true)}
@@ -406,7 +406,7 @@ describe MypageController, 'mypage > manage(管理) 関連' do
     end
   end
 
-  describe MypageController, "POST #apply_password" do
+  describe MypagesController, "POST #apply_password" do
     before do
       SkipEmbedded::InitialSettings['login_mode'] = "password"
 
@@ -419,7 +419,7 @@ describe MypageController, 'mypage > manage(管理) 関連' do
     it { response.should redirect_to(:action => :manage, :menu => :manage_password) }
   end
 
-  describe MypageController, "POST #apply_email" do
+  describe MypagesController, "POST #apply_email" do
     before do
       @user = user_login
       ActionMailer::Base.deliveries.clear
@@ -435,7 +435,7 @@ describe MypageController, 'mypage > manage(管理) 関連' do
     end
   end
 
-  describe MypageController, "POST #apply_ident_url" do
+  describe MypagesController, "POST #apply_ident_url" do
     before do
       @user = user_login
       SkipEmbedded::InitialSettings['login_mode'] = "rp"
@@ -503,7 +503,7 @@ describe MypageController, 'mypage > manage(管理) 関連' do
   end
 end
 
-describe MypageController, "POST or PUT /update_customize" do
+describe MypagesController, "POST or PUT /update_customize" do
   before do
     @user = user_login
     @user_custom_attr = {'theme' => "green", 'classic' => true, 'editor_mode' => "hiki"}
@@ -555,9 +555,9 @@ describe MypageController, "POST or PUT /update_customize" do
 end
 
 #privateメソッドのspec
-describe MypageController, '#parse_date' do
+describe MypagesController, '#parse_date' do
   before do
-    @controller = MypageController.new
+    @controller = MypagesController.new
     @controller.stub!(:params).and_return({:year => '2009', :month => '1', :day => '2'})
   end
   it 'year, month, dayが返却されること' do
@@ -565,17 +565,17 @@ describe MypageController, '#parse_date' do
   end
 end
 
-describe MypageController, '#valid_list_types' do
+describe MypagesController, '#valid_list_types' do
   before do
-    @controller = MypageController.new
+    @controller = MypagesController.new
     GroupCategory.should_receive(:all).and_return([stub_model(GroupCategory, :code => 'category')])
   end
   it { @controller.send(:valid_list_types).should == %w(questions access_blogs recent_blogs category) }
 end
 
-describe MypageController, '#antenna_entry_title' do
+describe MypagesController, '#antenna_entry_title' do
   before do
-    @controller = MypageController.new
+    @controller = MypagesController.new
   end
   describe '引数が正しい場合' do
     describe 'システムアンテナの場合' do
@@ -590,9 +590,9 @@ describe MypageController, '#antenna_entry_title' do
   end
 end
 
-describe MypageController, '#unread_entry_id_hash_with_user_reading' do
+describe MypagesController, '#unread_entry_id_hash_with_user_reading' do
   before do
-    @controller = MypageController.new
+    @controller = MypagesController.new
     @controller.stub!(:current_user).and_return(stub_model(User))
   end
   describe '指定された記事idがnilの場合' do

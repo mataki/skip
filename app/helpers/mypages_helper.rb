@@ -13,7 +13,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-module MypageHelper
+module MypagesHelper
 
   # タイトルバーの表示
   def show_title_bar(icon, label, all_url = nil)

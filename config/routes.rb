@@ -1,6 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :tenants, :only => [] do |tenant|
-    tenant.root :controller => 'mypage', :action => 'index'
+    tenant.root :controller => :mypages, :action => :index
     tenant.resource :mypage, :only => [], :collection => {:welcome => :get}
     tenant.resource :platform, :only => %(show),
       :member => {

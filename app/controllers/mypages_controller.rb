@@ -18,7 +18,7 @@ require 'open-uri'
 require "resolv-replace"
 require 'timeout'
 require 'feed-normalizer'
-class MypageController < ApplicationController
+class MypagesController < ApplicationController
   before_filter :setup_layout
   before_filter :load_user
   skip_before_filter :verify_authenticity_token, :only => :apply_ident_url
@@ -241,7 +241,7 @@ class MypageController < ApplicationController
     end
 
     if @applied_email.save
-      UserMailer::Smtp.deliver_sent_apply_email_confirm(@applied_email.email, "#{root_url}mypage/update_email/#{@applied_email.onetime_code}/")
+      UserMailer::Smtp.deliver_sent_apply_email_confirm(@applied_email.email, "#{root_url}mypages/update_email/#{@applied_email.onetime_code}/")
       flash.now[:notice] = _("Your request of changing email address accepted. Check your email to complete the process.")
     else
       flash.now[:warn] = _("Failed to process your request. Try resubmitting your request again.")
