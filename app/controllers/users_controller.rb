@@ -13,11 +13,13 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# FIXME new, edit, updateに本人かどうかのチェックがいる
+# FIXME new, update, agreementにrequired_loginに相当するチェックがいる
 class UsersController < ApplicationController
-  skip_before_filter :prepare_session, :only => %w(agreement new)
-  skip_before_filter :sso, :only => %w(agreement new)
-  skip_before_filter :login_required, :only => %w(agreement new)
-  before_filter :registerable_filter, :only => %w(agreement new create)
+  skip_before_filter :prepare_session, :only => %w(agreement new update_active)
+  skip_before_filter :sso, :only => %w(agreement new update_active)
+  skip_before_filter :login_required, :only => %w(agreement new update_active)
+  before_filter :registerable_filter, :only => %w(agreement new update_active)
   after_filter :remove_system_message, :only => %w(show)
 
   # tab_menu
@@ -41,9 +43,52 @@ class UsersController < ApplicationController
   end
 
   def new
+    unless current_user
+      flash[:error] = _('Unable to continue with the user registration process. A fresh start is required.')
+      redirect_to tenant_platform_url(current_tenant)
+      return
+    end
+    @user = current_user
+    respond_to do |format|
+      format.html
+    end
   end
 
-  def create
+  def edit
+  end
+
+  def update_active
+    @user = current_user
+      @user.attributes = params[:user]
+      if @user.within_time_limit_of_activation_token?
+        @user.crypted_password = nil
+        @user.password = params[:user][:password]
+        @user.password_confirmation = params[:user][:password_confirmation]
+      end
+
+      @profiles = @user.find_or_initialize_profiles(params[:profile_value])
+
+      User.transaction do
+        @profiles.each{|profile| profile.save!}
+        @user.created_on = Time.now
+        @user.status = 'ACTIVE'
+        @user.save!
+
+        UserAccess.create!(:user_id => @user.id, :last_access => Time.now, :access_count => 0)
+        UserMailer::Smtp.deliver_sent_signup_confirm(@user.email, @user.code, root_url)
+
+        @user.activate!
+
+        session[:agreement] = nil
+        redirect_to welcome_tenant_mypage_url(current_tenant)
+      end
+  rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => e
+    @error_msg = []
+    @error_msg.concat @user.errors.full_messages.reject{|msg| msg.include?("User uid") } unless @user.valid?
+    @error_msg.concat SkipUtil.full_error_messages(@profiles)
+    @user.status = 'UNUSED'
+
+    render :action => :new
   end
 
   def agreement

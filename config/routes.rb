@@ -1,7 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :tenants, :only => [] do |tenant|
     tenant.root :controller => 'mypage', :action => 'index'
-    tenant.resource :mypage, :only => []
+    tenant.resource :mypage, :only => [], :collection => {:welcome => :get}
     tenant.resource :platform, :only => %(show),
       :member => {
         :login => :post,
@@ -11,7 +11,7 @@ ActionController::Routing::Routes.draw do |map|
         :reset_password => :any,
         :signup => :any
       }
-    tenant.resources :users, :new => {:agreement => :get} do |user|
+    tenant.resources :users, :new => {:agreement => :get}, :member => {:update_active => :put} do |user|
       user.with_options :requirements => { :user_id => /[a-zA-Z0-9\-_\.]+/ } do |user|
         user.resources :board_entries
         user.resources :share_files, :member => {:download_history_as_csv => :get, :clear_download_history => :delete}

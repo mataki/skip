@@ -1,0 +1,44 @@
+<% tabindex ||= 0 %>
+
+<%= render(:partial => "system/error_messages_for", :locals => { :messages => @error_msg }) if @error_msg %>
+
+<h2 class="subtitle"><%= _('Account Information')%></h2>
+<table class="normal user_info">
+  <tr>
+    <th><%= form.label :name %></th>
+    <td><%=h form.object.name %></td>
+  </tr>
+  <tr>
+    <th><%= form.label :email %></th>
+    <td><%=h form.object.email %><span style="margin-left: 20px;"><%= link_to _("[Change]"), :action=> 'manage', :menu => 'manage_email' if form.object.active? && SkipEmbedded::InitialSettings['mail']['show_mail_function'] %></span></td>
+  </tr>
+  <tr>
+    <th><%= form.label :section %></th>
+  <% if Admin::Setting.enable_change_section -%>
+    <td>
+      <% if sections = current_tenant.users.grouped_sections -%>
+      <p>
+      <%= form.select(:section, sections, {}, {:tabindex => (tabindex += 1)}) + _('Showing options from previously registered values') %>
+      </p>
+      <% end -%>
+      <p>
+      <%= form.text_field(:section, :value => (sections.include?(form.object.section) ? '' : form.object.section), :tabindex => (tabindex += 1), :class=> 'appendable_text') + _('Enter here if you cannot find the value in the options') %>
+      </p>
+    </td>
+  <% else -%>
+    <td><%= h form.object.section %></td>
+  <% end -%>
+  </tr>
+<% if form.object.within_time_limit_of_activation_token? -%>
+  <tr>
+    <th><%= form.label :password %></th>
+    <td><%= form.password_field :password, {:tabindex => (tabindex +=1)} %></td>
+  </tr>
+  <tr>
+    <th><%= form.label :password_confirmation %></label></th>
+    <td><%= form.password_field :password_confirmation, {:tabindex => (tabindex +=1)} %></td>
+  </tr>
+<% end -%>
+</table>
+
+<%= render :partial => 'profile_form', :locals => {:user => form.object} %>

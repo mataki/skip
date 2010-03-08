@@ -15,79 +15,14 @@
 
 # プロフィール情報を登録するためのアクションをまとめたクラス
 class PortalController < ApplicationController
-  verify :method => :post, :only => [ :apply, :registration ], :redirect_to => { :action => :index }
+  verify :method => :post, :only => [:registration ], :redirect_to => { :action => :index }
 
   skip_before_filter :prepare_session
   skip_after_filter  :remove_message
-  skip_before_filter :sso, :only => [:index, :agreement, :registration]
-  skip_before_filter :login_required, :only => [:index, :agreement, :registration]
-  skip_before_filter :valid_tenant_required, :only => [:index, :agreement, :registration]
+  skip_before_filter :sso, :only => [:registration]
+  skip_before_filter :login_required, :only => [:registration]
+  skip_before_filter :valid_tenant_required, :only => [:registration]
   before_filter :registerable_filter
-
-  # ユーザ登録の画面表示（ウィザード形式のためsessionの中により表示先切替）
-  def index
-    case session[:entrance_next_action] ||= :confirm
-    when :confirm
-      # N/A
-    when :account_registration
-      @user = User.new
-      session[:entrance_next_action] = :account_registration
-    when :registration
-      unless current_user
-        flash[:error] = _('Unable to continue with the user registration process. A fresh start is required.')
-        redirect_to :controller => '/platform', :action => :index
-        return
-      end
-      @user = current_user
-      @profiles = @user.user_profile_values
-    end
-    render :action => session[:entrance_next_action]
-  end
-
-  # 利用規約の確認に同意した際に呼ばれる
-  def agreement
-    session[:entrance_next_action] = if login_mode?(:free_rp) and !session[:identity_url].blank?
-                                       :account_registration
-                                     else
-                                       :registration
-                                     end
-    redirect_to :action => :index
-  end
-
-  #ユーザ登録処理
-  def apply
-    @user = current_user
-    @user.attributes = params[:user]
-    if @user.within_time_limit_of_activation_token?
-      @user.crypted_password = nil
-      @user.password = params[:user][:password]
-      @user.password_confirmation = params[:user][:password_confirmation]
-    end
-
-    @profiles = @user.find_or_initialize_profiles(params[:profile_value])
-
-    User.transaction do
-      @profiles.each{|profile| profile.save!}
-      @user.created_on = Time.now
-      @user.status = 'ACTIVE'
-      @user.save!
-
-      UserAccess.create!(:user_id => @user.id, :last_access => Time.now, :access_count => 0)
-      UserMailer::Smtp.deliver_sent_signup_confirm(@user.email, @user.code, root_url)
-
-      @user.activate!
-
-      session[:entrance_next_action] = nil
-      redirect_to :controller => 'mypage', :action => 'welcome'
-    end
-  rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => e
-    @error_msg = []
-    @error_msg.concat @user.errors.full_messages.reject{|msg| msg.include?("User uid") } unless @user.valid?
-    @error_msg.concat SkipUtil.full_error_messages(@profiles)
-    @user.status = 'UNUSED'
-
-    render :action => :registration
-  end
 
   def registration
     if session[:identity_url].blank?
