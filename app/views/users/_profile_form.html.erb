@@ -1,4 +1,4 @@
-<% profile_hash = user.user_profile_values.index_by(&:user_profile_master_id) %>
+<% profile_hash = @profiles.index_by(&:user_profile_master_id) %>
 <% UserProfileMasterCategory.all.each do |category| -%>
   <% unless category.user_profile_masters.empty? -%>
   <h2 class="subtitle"><%= h category.name %><span class="description"><%= h category.description %></span></h2>

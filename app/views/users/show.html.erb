@@ -13,7 +13,7 @@
     <h2 class="topix_title"><%= icon_tag('asterisk_orange') %><%= _('Profile') %></h2>
     <% if current_target_user.id == current_user.id -%>
     <div class="operation">
-      <%= link_to icon_tag('vcard_edit', :title=>_('Edit')) + _('[Edit]'), :controller => 'mypage', :action => 'manage', :menu => 'manage_profile' %>
+      <%= link_to icon_tag('vcard_edit', :title=>_('Edit')) + _('[Edit]'), edit_tenant_user_path(current_tenant, current_user) %>
     </div>
     <% end -%>
 

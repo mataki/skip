@@ -55,8 +55,32 @@ class UsersController < ApplicationController
   end
 
   def edit
+    @title = _("Self Admin")
+    @user = current_user
+    @profiles = current_user.user_profile_values
   end
 
+  # プロフィール更新
+  def update
+    @user = current_user
+    @user.attributes = params[:user]
+    @profiles = @user.find_or_initialize_profiles(params[:profile_value])
+
+    User.transaction do
+      @user.save!
+      @profiles.each{|profile| profile.save!}
+    end
+    flash[:notice] = _('User information was successfully updated.')
+    redirect_to [current_tenant, @user]
+  rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => e
+    @error_msg = []
+    @error_msg.concat @user.errors.full_messages unless @user.valid?
+    @error_msg.concat SkipUtil.full_error_messages(@profiles)
+
+    render :action => :edit
+  end
+
+  # 利用開始登録
   def update_active
     @user = current_user
       @user.attributes = params[:user]

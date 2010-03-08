@@ -24,7 +24,7 @@ class MypagesController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => :apply_ident_url
 
   verify :method => :post,
-    :only => [ :update_profile, :update_message_unsubscribes, :apply_password, :change_read_state, :apply_email],
+    :only => [ :update_message_unsubscribes, :apply_password, :change_read_state, :apply_email],
     :redirect_to => { :action => :index }
   verify :method => [:post, :put], :only => [ :update_customize], :redirect_to => { :action => :index }
 
@@ -100,7 +100,7 @@ class MypagesController < ApplicationController
     @menu = params[:menu] || "manage_profile"
     case @menu
     when "manage_profile"
-      @profiles = current_user.user_profile_values
+      redirect_to edit_tenant_user_path(current_tenant, current_user)
     when "manage_password"
       redirect_to_with_deny_auth(:action => :manage) and return unless login_mode?(:password)
     when "manage_email"
@@ -182,26 +182,6 @@ class MypagesController < ApplicationController
   # ================================================================================
   #  mypage > manage(管理) 関連
   # ================================================================================
-
-  # post_action
-  def update_profile
-    @user = current_user
-    @user.attributes = params[:user]
-    @profiles = @user.find_or_initialize_profiles(params[:profile_value])
-
-    User.transaction do
-      @user.save!
-      @profiles.each{|profile| profile.save!}
-    end
-    flash[:notice] = _('User information was successfully updated.')
-    redirect_to :action => 'profile'
-  rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => e
-    @error_msg = []
-    @error_msg.concat @user.errors.full_messages unless @user.valid?
-    @error_msg.concat SkipUtil.full_error_messages(@profiles)
-
-    render :partial => 'manage_profile', :layout => "layout"
-  end
 
   # post_action
   # メール通知設定
