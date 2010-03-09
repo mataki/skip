@@ -1,0 +1,25 @@
+<div class="action_buttons ui-corner-all">
+  <ul class="no_style">
+  <% if current_user == current_target_user -%>
+    <li><%= link_to(content_tag('span', _('Write a blog entry')) , new_polymorphic_path([current_tenant, current_user, :board_entry]), :title => _('Write a blog entry'), :class => 'rounded') %></li>
+    <% if notice_entry_enabled? -%>
+      <li><%= link_to(content_tag('span', _('Write a notice')), new_polymorphic_path([current_tenant, current_user, :board_entry], :board_entry => {:aim_type => 'notice'}), :title => _('Write a notice'), :class => 'rounded') %></li>
+    <% end -%>
+    <li><%= link_to(content_tag('span', _('Write a question')), new_polymorphic_path([current_tenant, current_user, :board_entry], :board_entry => {:aim_type => 'question'}), :title => _('Write a question'), :class => 'rounded') %></li>
+    <li><%= link_to(content_tag('span', _('Upload a file')), new_polymorphic_path([current_tenant, current_user, :share_file]), :title => _('Upload a file'), :class => 'rounded') %></li>
+  <% else -%>
+    <% if current_target_user.active? -%>
+      <% if chain = current_user.follow_chains.find_by_to_user_id(current_target_user.id) -%>
+        <li><%= link_to(content_tag('span', _('Edit introductions')), edit_polymorphic_path([current_tenant, current_target_user, chain]), {:class => 'rounded'}) %></li>
+      <% else -%>
+        <li><%= link_to(content_tag('span', _('Introduce')), new_polymorphic_path([current_tenant, current_target_user, :chain]), {:class => 'rounded'}) %></li>
+      <% end -%>
+      <% if notice = current_user.notices.find_by_target_id_and_target_type(current_target_user.id, current_target_user.class.name) -%>
+        <li><%= link_to(content_tag('span', _('Stop a notification')), [current_tenant, current_target_user, notice], {:class => "rounded", :method => :delete, :confirm => _('Are you sure?')}) %></li>
+      <% else -%>
+        <li><%= link_to(content_tag('span', _('Notify new posts')), [current_tenant, current_target_user, :notices], {:class => "rounded", :method => :post}) %></li>
+      <% end -%>
+    <% end -%>
+  <% end -%>
+  </ul>
+</div>

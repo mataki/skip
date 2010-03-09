@@ -1,6 +1,6 @@
 <% content_for :contents_left do -%>
   <% unless current_user.id == current_target_user.id -%>
-    <%= render(:partial => 'user/action_box', :locals => { :user => current_target_user }) %>
+    <%= render(:partial => 'users/action_box', :locals => { :user => current_target_user }) %>
   <% end -%>
   <%= render :partial => 'user/join_groups_box', :locals => { :user => current_target_user } %>
   <%= render :partial => 'user/follow_chains_box', :locals => { :user => current_target_user } %>
