@@ -4,7 +4,7 @@
   <% end -%>
   <%= render(:partial => 'board_entries/recent_box', :locals => { :owner => current_target_user }) -%>
   <%= render :partial => 'user/join_groups_box', :locals => { :user => current_target_user } %>
-  <%= render :partial => 'user/follow_chains_box', :locals => { :user => current_target_user } %>
+  <%= render :partial => 'chains/follow_chains_box', :locals => { :user => current_target_user } %>
   <%= render :partial => "chains/tag_cloud_box" %>
 <% end -%>
 

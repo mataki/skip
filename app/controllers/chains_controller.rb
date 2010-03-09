@@ -16,8 +16,20 @@
 class ChainsController < ApplicationController
   include UserHelper
 
-  before_filter :load_user, :setup_layout
+  before_filter :setup_layout
   after_filter :make_chain_message, :only => [:create, :update]
+  after_filter :remove_system_message, :only => %w(index against)
+
+  def index
+    prepare_chain
+  end
+
+  # TODO searchlogicベースにしてagainstはなくしたい
+  # TODO prepare_chainはなくしたい
+  def against
+    prepare_chain true
+    render :index
+  end
 
   def new
     @chain = current_user.follow_chains.build
@@ -41,7 +53,7 @@ class ChainsController < ApplicationController
       if @chain.save
         format.html do
           flash[:notice] = _('Introduction was created successfully.')
-          redirect_to current_target_user_url
+          redirect_to tenant_user_url(current_tenant, current_target_user)
         end
       else
         format.html do
@@ -58,7 +70,7 @@ class ChainsController < ApplicationController
       if @chain.update_attributes(params[:chain])
         format.html do
           flash[:notice] = _('Introduction was updated successfully.')
-          redirect_to current_target_user_url
+          redirect_to tenant_user_url(current_tenant, current_target_user)
         end
       else
         format.html { render :edit }
@@ -72,7 +84,7 @@ class ChainsController < ApplicationController
     respond_to do |format|
       format.html do
         flash[:notice] = _('Introduction was deleted successfully.')
-        redirect_to current_target_user_url
+        redirect_to tenant_user_url(current_tenant, current_target_user)
       end
     end
   end
@@ -95,8 +107,33 @@ class ChainsController < ApplicationController
     @chain
   end
 
-  # TODO usersを完全にmap_resouceベースにしたら標準のメソッドを利用するように変更する
-  def current_target_user_url
-    { :controller => 'user', :action => 'show', :uid => current_target_user.uid }
+  def prepare_chain against = false
+    unless against
+      left_key, right_key = "to_user_id", "from_user_id"
+    else
+      left_key, right_key = "from_user_id", "to_user_id"
+    end
+
+    @chains = Chain.scoped(:conditions => [left_key + " = ?", current_target_user.id]).order_new.paginate(:page => params[:page], :per_page => 5)
+
+    user_ids = @chains.inject([]) {|result, chain| result << chain.send(right_key) }
+    against_chains = Chain.find(:all, :conditions =>[left_key + " in (?) and " + right_key + " = ?", user_ids, current_target_user.id]) if user_ids.size > 0
+    against_chains ||= []
+    messages = against_chains.inject({}) {|result, chain| result ||= {}; result[chain.send(left_key)] = chain.comment; result }
+    tags = against_chains.inject({}) {|result, chain| result ||= {}; result[chain.send(left_key)] = chain.tags_as_s; result }
+
+    @result = []
+    @chains.each do |chain|
+      @result << {
+        :from_user => chain.from_user,
+        :from_message => chain.comment,
+        :from_tags_as_s => chain.tags_as_s,
+        :to_user => chain.to_user,
+        :counter_message => messages[chain.send(right_key)] || "",
+        :to_tags_as_s => tags[chain.send(right_key)] || ""
+      }
+    end
+
+    flash.now[:notice] = _('There are no introductions.') if @chains.empty?
   end
 end

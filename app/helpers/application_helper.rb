@@ -85,25 +85,6 @@ module ApplicationHelper
     link_to output_text, [current_tenant, board_entry.owner, board_entry], {:class => 'entry'}.merge(html_options)
   end
 
-  # ユーザのページへのリンク
-  def user_link_to user, options = {}
-    output_text = ""
-    output_text << icon_tag('user_suit') if options[:image_on]
-    output_text << title = h(user.name)
-
-    link = link_to(output_text, {:controller => 'user', :action => 'show', :uid => user.uid}, {:title => title})
-    if options[:with_prefix]
-      "by #{link}"
-    else
-      link
-    end
-  end
-
-  def user_link_to_with_portrait user, options = {}
-    options = {:width => 80, :height => 80}.merge(options)
-    link_to show_picture(user, options), {:controller => '/user', :action => 'show', :uid => user.uid}, {:title => h(user.name)}
-  end
-
   # グループのページへのリンク
   def group_link_to group, options = {}
     output_text = ""

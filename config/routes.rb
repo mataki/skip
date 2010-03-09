@@ -21,7 +21,7 @@ ActionController::Routing::Routes.draw do |map|
         user.resource :id, :only => %w(show edit create update)
         user.resource :message_unsubscribe, :only => %w(edit update)
         user.resource :customize, :only => %w(update)
-        user.resources :chains
+        user.resources :chains, :collection => {:against => :get}
         user.resources :system_messages, :only => [:destroy]
         user.resources :notices
         # ユーザの参加グループ一覧のため

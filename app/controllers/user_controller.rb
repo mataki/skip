@@ -17,26 +17,6 @@ class UserController < ApplicationController
   include UserHelper
 
   before_filter :load_user, :setup_layout
-  after_filter :remove_system_message, :only => %w(social)
-
-  # tab_menu
-  def social
-    @menu = params[:menu] || "social_chain"
-    partial_name = @menu
-
-    # contens_right
-    case @menu
-    when "social_chain"
-      prepare_chain
-    when "social_chain_against"
-      prepare_chain true
-      partial_name = "social_chain"
-    else
-      render_404 and return
-    end
-
-    render :partial => partial_name, :layout => "layout"
-  end
 
   # tab_menu
   def group
@@ -55,35 +35,5 @@ private
 
   def tab_menu_option
     { :uid => @user.uid }
-  end
-
-  def prepare_chain against = false
-    unless against
-      left_key, right_key = "to_user_id", "from_user_id"
-    else
-      left_key, right_key = "from_user_id", "to_user_id"
-    end
-
-    @chains = Chain.scoped(:conditions => [left_key + " = ?", @user.id]).order_new.paginate(:page => params[:page], :per_page => 5)
-
-    user_ids = @chains.inject([]) {|result, chain| result << chain.send(right_key) }
-    against_chains = Chain.find(:all, :conditions =>[left_key + " in (?) and " + right_key + " = ?", user_ids, @user.id]) if user_ids.size > 0
-    against_chains ||= []
-    messages = against_chains.inject({}) {|result, chain| result ||= {}; result[chain.send(left_key)] = chain.comment; result }
-    tags = against_chains.inject({}) {|result, chain| result ||= {}; result[chain.send(left_key)] = chain.tags_as_s; result }
-
-    @result = []
-    @chains.each do |chain|
-      @result << {
-        :from_user => chain.from_user,
-        :from_message => chain.comment,
-        :from_tags_as_s => chain.tags_as_s,
-        :to_user => chain.to_user,
-        :counter_message => messages[chain.send(right_key)] || "",
-        :to_tags_as_s => tags[chain.send(right_key)] || ""
-      }
-    end
-
-    flash.now[:notice] = _('There are no introductions.') if @chains.empty?
   end
 end

@@ -1,0 +1,10 @@
+<div class="box_space">
+  <div class="box_space_title"><%= _('Menu')%></span></div>
+  <div class="box_space_body">
+  <ul>
+    <li><%= link_to_unless_current _('Introduction from other users'), [current_tenant, current_target_user, :chains] %></li>
+    <li><%= link_to_unless_current _('Introduction for other users'), polymorphic_path([current_tenant, current_target_user, :chains], :action => :against) %></li>
+  </ul>
+  </div>
+  <div class="box_space_bottom"></div>
+</div><!-- box_space -->
