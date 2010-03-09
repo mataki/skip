@@ -15,25 +15,6 @@
 
 class SearchController < ApplicationController
 
-  # tab_menu
-  def share_file_search
-    @search = ShareFile.accessible(current_user).tagged(params[:tag_words], params[:tag_select])
-    @search =
-      if params[:sort_type] == "file_name"
-        @search.descend_by_file_name.search(params[:search])
-      else
-        @search.descend_by_date.search(params[:search])
-      end
-    @share_files = @search.paginate(:page => params[:page], :per_page => 25)
-    params[:tag_select] ||= "AND"
-    params[:sort_type] ||= "date"
-
-    @main_menu = @title = _('Files')
-    @tags = ShareFile.get_popular_tag_words
-
-    flash.now[:notice] = _('No matching shared files found.') if @share_files.empty?
-  end
-
   #全文検索
   def full_text_search
     @main_menu = @title = _('Full-text Search')
