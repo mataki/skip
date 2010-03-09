@@ -34,20 +34,6 @@ module UserHelper
     end
   end
 
-  def user_tab_menu_source user
-    tab_menu_source = [ {:label => _('Profile'), :options => {:controller => 'user', :action => 'show', :uid => user.uid}} ]
-
-    tab_menu_source << {:label => _('Blog'), :options => {:controller => 'user', :action => 'blog', :uid => user.uid, :archive => 'all', :sort_type => 'date', :type => 'entry'}} unless BoardEntry.owned(user).accessible(current_user).empty?
-    tab_menu_source << {:label => _('Shared Files'), :options => {:controller => 'share_file', :action => 'list', :uid => user.uid, :sort_type => 'date'}} unless current_target_user.owner_share_files.accessible(current_user).empty?
-    tab_menu_source << {:label => _('Socials'), :options => {:controller => 'user', :action => 'social', :uid => user.uid}} unless user.against_chains.empty?
-    tab_menu_source << {:label => _('Groups Joined'), :options => {:controller => 'user', :action => 'group', :uid => user.uid}} unless user.groups.participating(user).empty?
-
-    if user.id == current_user.id
-      tab_menu_source.unshift({:label => _('Home'), :options => {:controller => 'mypage', :action => 'index'}, :selected_actions => %w(index entries entries_by_antenna)})
-    end
-    tab_menu_source
-  end
-
   def user_main_menu user
     user.id == current_user.id ? _('My Page') : _('Users')
   end

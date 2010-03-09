@@ -1,0 +1,19 @@
+<ul>
+  <% # 記事、共有ファイル、紹介文、グループの存在チェックは厳密にやると重いので簡易チェックにしてある %>
+  <% if current_target_user == current_user -%>
+    <li><%= link_to content_tag(:span, _('Home')), root_url %></li>
+  <% end -%>
+  <li><%= link_to content_tag(:span, _('Profile')), [current_tenant, current_target_user] %></li>
+  <% if BoardEntry.first -%>
+    <li><%= link_to content_tag(:span, _('Blog')), [current_tenant, current_target_user, :board_entries] %></li>
+  <% end -%>
+  <% if ShareFile.first -%>
+    <li><%= link_to content_tag(:span, _('Shared Files')), [current_tenant, current_target_user, :share_files] %></li>
+  <% end -%>
+  <% if current_target_user.against_chains.first -%>
+    <li><%= link_to content_tag(:span, _('Socials')), [current_tenant, current_target_user, :chains] %></li>
+  <% end -%>
+  <% if Group.first -%>
+    <li><%= link_to content_tag(:span, _('Groups Joined')), [current_tenant, current_target_user, :groups] %></li>
+  <% end -%>
+</ul>

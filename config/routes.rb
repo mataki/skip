@@ -24,6 +24,8 @@ ActionController::Routing::Routes.draw do |map|
         user.resources :chains
         user.resources :system_messages, :only => [:destroy]
         user.resources :notices
+        # ユーザの参加グループ一覧のため
+        user.resources :groups, :only => %w(index)
       end
     end
     tenant.resources :groups, :member => {:manage => :get} do |group|

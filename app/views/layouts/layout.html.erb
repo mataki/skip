@@ -39,7 +39,7 @@
           <br class="clear_left" />
         </div>
 
-        <div id="tab_menu"><%= generate_tab_menu(user_tab_menu_source(current_target_user)) %></div>
+        <div id="tab_menu"><%= render :partial => 'users/tab_menu' %></div>
         <br class="clear_left" />
       </div>
     <% elsif current_target_group and !current_target_group.new_record? %>
