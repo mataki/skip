@@ -21,16 +21,4 @@ module MypagesHelper
       title_tag = content_tag(:h2, :class => 'topix_title'){ icon_tag(icon) + link_to_unless(all_url.blank?, h(label), all_url) }
     end
   end
-
-  # 管理メニューの生成
-  def get_manage_menu_items selected_menu
-    @@menus = []
-    @@menus << {:name => _("Edit Profile"), :menu => "manage_profile" }
-    @@menus << {:name => _("Change Profile Picture"), :menu => "manage_portrait" } if Admin::Setting.enable_change_picture
-    @@menus << {:name => _("Change Password"), :menu => "manage_password" } if SkipEmbedded::InitialSettings['password_edit_setting'] and login_mode?(:password)
-    @@menus << {:name => _("Change Email Address"), :menu => "manage_email" } if SkipEmbedded::InitialSettings['mail']['show_mail_function']
-    @@menus << {:name => _("Change OpenID URL"), :menu => "manage_openid" } if login_mode?(:free_rp)
-    @@menus << {:name => _("Email Notification"), :menu => "manage_message" } if SkipEmbedded::InitialSettings['mail']['show_mail_function']
-    get_menu_items @@menus, selected_menu, "manage"
-  end
 end

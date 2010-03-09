@@ -22,9 +22,7 @@ class MypagesController < ApplicationController
   before_filter :setup_layout
   before_filter :load_user
 
-  verify :method => :post,
-    :only => [ :update_message_unsubscribes, :change_read_state],
-    :redirect_to => { :action => :index }
+  verify :method => :post, :only => [ :change_read_state], :redirect_to => { :action => :index }
   verify :method => [:post, :put], :only => [ :update_customize], :redirect_to => { :action => :index }
 
   helper_method :recent_day
@@ -92,32 +90,6 @@ class MypagesController < ApplicationController
     @access_tracks = current_user.tracks
   end
 
-  # mypage > manage(管理)
-  def manage
-    @title = _("Self Admin")
-    @user = current_user
-    @menu = params[:menu] || "manage_profile"
-    case @menu
-    when "manage_profile"
-      redirect_to edit_tenant_user_path(current_tenant, current_user)
-    when "manage_password"
-      redirect_to_with_deny_auth(:action => :manage) and return unless login_mode?(:password)
-    when "manage_email"
-      @applied_email = AppliedEmail.find_by_user_id(session[:user_id]) || AppliedEmail.new
-    when "manage_openid"
-      redirect_to_with_deny_auth(:action => :manage) and return unless login_mode?(:free_rp)
-      @openid_identifier = @user.openid_identifiers.first || OpenidIdentifier.new
-    when "manage_portrait"
-      @picture = current_user.picture || current_user.build_picture
-      render :template => 'pictures/new', :layout => 'layout' and return
-    when "manage_message"
-      @unsubscribes = UserMessageUnsubscribe.get_unscribe_array(session[:user_id])
-    else
-      render_404 and return
-    end
-    render :partial => @menu, :layout => "layout"
-  end
-
   # ================================================================================
   #  mypage > home 関連
   # ================================================================================
@@ -181,21 +153,6 @@ class MypagesController < ApplicationController
   # ================================================================================
   #  mypage > manage(管理) 関連
   # ================================================================================
-
-  # post_action
-  # メール通知設定
-  # 画面表示とテーブルレコードが逆なので注意
-  # SystemMessage::MESSAGE_TYPESにあるけど、params["message_type"]にないときにcreate
-  def update_message_unsubscribes
-    UserMessageUnsubscribe.delete_all(["user_id = ?", session[:user_id]])
-    SystemMessage::MESSAGE_TYPES.each do |message_type|
-      unless  params["message_type"] && params["message_type"][message_type]
-        UserMessageUnsubscribe.create(:user_id => session[:user_id], :message_type => message_type )
-      end
-    end
-    flash[:notice] = _('Updated notification email settings.')
-    redirect_to :action => 'manage', :menu => 'manage_message'
-  end
 
   # POST or PUT action
   def update_customize
