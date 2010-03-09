@@ -15,25 +15,33 @@
 
 class GroupsController < ApplicationController
   before_filter :setup_layout, :except => %w(new create)
-
   before_filter :load_group_and_participation, :only => %w(show update destroy manage)
-
   before_filter :check_owned, :only => [ :manage, :update, :destroy ]
-
   after_filter :remove_system_message, :only => %w(show)
 
   # tab_menu
   # グループの一覧表示
   def index
-    params[:yet_participation] ||= "true"
-
-    scope = Group.active.partial_match_name_or_description(params[:keyword]).
-      categorized(params[:group_category_id]).order_active
-    scope = scope.unjoin(current_user) if params[:yet_participation] == 'true'
+    search_params = params[:search] || {}
+    @search =
+      if current_target_user
+        current_target_user.groups.active.order_active
+      else
+        if search_params[:unjoin]
+          search_params[:unjoin] = search_params[:unjoin] == 'false' ?  nil : current_user.id
+        end
+        Group.active.order_active
+      end
+    @search = @search.search(search_params)
     # paginteの検索条件にgroup byが含まれる場合、countでgroup by が考慮されないので
-    @groups = scope.paginate(:count => {:select => 'distinct(groups.id)'}, :page => params[:page], :per_page => 50)
-
+    @groups = @search.paginate(:count => {:select => 'distinct(groups.id)'}, :page => params[:page], :per_page => 50)
     flash.now[:notice] = _('No matching groups found.') if @groups.empty?
+    respond_to do |format|
+      format.html do
+        flash.now[:notice] = _('No matching groups found.') if @groups.empty?
+        render
+      end
+    end
   end
 
   # tab_menu

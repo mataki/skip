@@ -31,7 +31,7 @@
       </tr>
       <%= render :partial => 'search/tag_search', :locals => {:tags => @tags} %>
       <tr>
-        <td><%= f.submit _('Search') %></td>
+        <td><%= f.submit _('Search'), :disable_with => _('Searching...') %></td>
       </tr>
     </table>
   <% end -%>

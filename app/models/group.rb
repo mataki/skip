@@ -61,7 +61,12 @@ class Group < ActiveRecord::Base
 
   named_scope :unjoin, proc {|user|
     return {} unless user
-    join_group_ids = Group.participating(user).map(&:id)
+    join_group_ids =
+      if user.is_a?(User)
+        Group.participating(user).map(&:id)
+      elsif user.is_a?(Integer)
+        Group.participating(User.find(user)).map(&:id)
+      end
     return {} if join_group_ids.blank?
     {:conditions => ["groups.id NOT IN (?)", join_group_ids]}
   }
@@ -89,9 +94,7 @@ class Group < ActiveRecord::Base
 
   named_scope :order_active, proc {
     {
-      :joins => "LEFT OUTER JOIN board_entries ON board_entries.symbol = CONCAT('gid:', groups.gid)",
-      :group => 'groups.id',
-      :order => 'MAX(board_entries.updated_on) DESC'
+      :include => :owner_entries, :group => 'groups.id', :order => 'MAX(board_entries.updated_on) DESC'
     }
   }
 

@@ -2,7 +2,7 @@
   <% unless current_user.id == current_target_user.id -%>
     <%= render(:partial => 'users/action_box', :locals => { :user => current_target_user }) %>
   <% end -%>
-  <%= render :partial => 'user/join_groups_box', :locals => { :user => current_target_user } %>
+  <%= render :partial => 'users/join_groups_box', :locals => { :user => current_target_user } %>
   <%= render :partial => 'chains/follow_chains_box', :locals => { :user => current_target_user } %>
   <%= render :partial => "chains/tag_cloud_box" %>
 <% end -%>

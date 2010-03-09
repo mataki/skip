@@ -1,0 +1,36 @@
+<div class="search_cond_space ui-corner-all">
+  <% form_for @search do |f| -%>
+    <table class="search_cond_box">
+      <tr>
+        <th><%= f.label :name_like_or_description_like, _('Group Name / Explanation')%></th>
+        <td><%= f.text_field :name_like_or_description_like , :size => 60 %></td>
+      </tr>
+      <tr>
+        <th><%= f.label :group_category_id, _('Category') %></th>
+        <td>
+          <%= f.radio_button :group_category_id, :all %>
+          <%= f.label :group_category_id_all, icon_tag("asterisk_orange", :margin => true) + _("All (%{num})") % {:num => Group.active.count} %>
+          <% current_tenant.group_categories.with_groups_count.each do |category| -%>
+            <%= f.radio_button :group_category_id, category.id %>
+            <%= f.label "group_category_id_#{category.id}", "#{get_group_icon(category, :margin => true)}#{h(category.name)}(#{category.count})" %>
+          <% end -%>
+        </td>
+      </tr>
+    </table>
+    <div class="submit">
+      <%= f.submit _('Search'), :disable_with => _('Searching...') %>
+      <% unless current_target_user -%>
+        <span class="margin05em">
+          <%= f.check_box :unjoin, {}, current_user.id, false %>
+          <%= f.label :unjoin, _('Show groups you have not joined only.') %>
+        </span>
+      <% end -%>
+    </div>
+  <% end -%>
+</div><!-- search_cond_space -->
+
+<div class="search_result_space">
+  <%= render :partial => 'groups/group_list',
+    :locals => { :groups => @groups, :user_id => current_user.id }
+  %>
+</div><!-- search_result_space -->
