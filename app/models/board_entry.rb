@@ -252,6 +252,10 @@ class BoardEntry < ActiveRecord::Base
     true
   end
 
+  def accessible_without_writer? target_user = self.user
+    !self.writer?(target_user) && self.accessible?(target_user)
+  end
+
   # 所属するグループの公開範囲により、記事の公開範囲を判定する
   def owner_is_public?
     !(owner.is_a?(Group) && owner.protected?)
@@ -598,10 +602,6 @@ class BoardEntry < ActiveRecord::Base
 #    user.symbol == self.symbol || (user.group_symbols.include?(self.symbol) || self.publicate?(user.belong_symbols))
 #  end
 #
-  def point_incrementable?(user)
-    self.accessible?(user) && !self.writer?(user.id)
-  end
-
   def toggle_hide(user)
     unless BoardEntry::HIDABLE_AIM_TYPES.include? self.aim_type
       self.errors.add_to_base(_("Invalid operation."))

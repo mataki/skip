@@ -16,7 +16,7 @@
 class BoardEntriesController < ApplicationController
   include AccessibleBoardEntry
 
-  verify :method => :post, :only => [ :ado_create_comment, :ado_create_nest_comment, :ado_pointup, :destroy_comment, :ado_edit_comment, :toggle_hide  ],
+  verify :method => :post, :only => [ :ado_create_comment, :ado_create_nest_comment, :destroy_comment, :ado_edit_comment, :toggle_hide  ],
          :redirect_to => { :action => :index, :controller => "/mypage" }
 
   before_filter :owner_required, :only => [:show, :edit, :update, :destroy]
@@ -231,17 +231,6 @@ class BoardEntriesController < ApplicationController
       render(:text => _('Failed to save the data.'), :status => :bad_request) and return
     end
     render :partial => "board_entry_comment", :locals => { :comment => parent_comment.children.last, :level => params[:level].to_i }
-  end
-
-  def ado_pointup
-    board_entry = BoardEntry.find(params[:id])
-    unless board_entry.point_incrementable?(current_user)
-      render :text => _('Operation unauthorized.'), :status => :forbidden and return
-    end
-    board_entry.state.increment!(:point)
-    render :text => "#{board_entry.point} #{ERB::Util.html_escape(Admin::Setting.point_button)}"
-  rescue ActiveRecord::RecordNotFound => ex
-    render :text => _('Target %{target} inexistent.')%{:target => _('board entry')}, :status => :not_found and return
   end
 
   def destroy_comment

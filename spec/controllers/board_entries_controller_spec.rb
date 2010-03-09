@@ -76,7 +76,7 @@ describe BoardEntriesController, 'POST #ado_pointup' do
     end
     describe 'インクリメント可能な場合' do
       before do
-        @board_entry.should_receive(:point_incrementable?).with(@user).and_return(true)
+        @board_entry.should_receive(:accessible_without_writer?).with(@user).and_return(true)
         @state = stub_model(BoardEntryPoint)
         @state.stub!(:increment!)
         @board_entry.stub!(:state).and_return(@state)

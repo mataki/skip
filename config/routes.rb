@@ -14,6 +14,7 @@ ActionController::Routing::Routes.draw do |map|
     tenant.resources :users, :new => {:agreement => :get}, :member => {:update_active => :put} do |user|
       user.resources :board_entries do |board_entry|
         board_entry.resources :entry_trackbacks, :only => %w(destroy)
+        board_entry.resource :board_entry_point, :only => [], :member => {:pointup => :put}
       end
       user.resources :share_files, :member => {:download_history_as_csv => :get, :clear_download_history => :delete}
       user.resources :pictures, :only => %w(show new create update destroy)
@@ -31,6 +32,7 @@ ActionController::Routing::Routes.draw do |map|
     tenant.resources :groups, :member => {:manage => :get} do |group|
       group.resources :board_entries do |board_entry|
         board_entry.resources :entry_trackbacks, :only => %w(destroy)
+        board_entry.resource :board_entry_point, :only => [], :member => {:pointup => :put}
       end
       group.resources :share_files, :member => {:download_history_as_csv => :get, :clear_download_history => :delete}
     end

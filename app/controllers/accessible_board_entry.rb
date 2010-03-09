@@ -7,7 +7,10 @@ module AccessibleBoardEntry
     if result = board_entry.full_accessible?(current_user)
       yield if block_given?
     else
-      redirect_to_with_deny_auth
+      respond_to do |format|
+        format.html { redirect_to_with_deny_auth }
+        format.js { render :text => _('Operation unauthorized.'), :status => :forbidden }
+      end
     end
     result
   end
@@ -16,7 +19,22 @@ module AccessibleBoardEntry
     if result = board_entry.accessible?(current_user)
       yield if block_given?
     else
-      redirect_to_with_deny_auth
+      respond_to do |format|
+        format.html { redirect_to_with_deny_auth }
+        format.js { render :text => _('Operation unauthorized.'), :status => :forbidden }
+      end
+    end
+    result
+  end
+
+  def required_accessible_without_writer board_entry = current_target_entry
+    if result = board_entry.accessible_without_writer?(current_user)
+      yield if block_given?
+    else
+      respond_to do |format|
+        format.html { redirect_to_with_deny_auth }
+        format.js { render :text => _('Operation unauthorized.'), :status => :forbidden }
+      end
     end
     result
   end

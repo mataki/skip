@@ -1,0 +1,34 @@
+<%
+ # ポイントボタンのパーツ
+ # :locals => { :entry }
+-%>
+
+<% entry_point = entry.state -%>
+<% if entry.accessible_without_writer?(current_user) -%>
+  <% form_for entry_point, :url => polymorphic_path([current_tenant, current_target_owner, entry, :board_entry_point], :action => :pointup, :format => :js), :html => {:method => :put, :id => :entry_point_form} do  |f| -%>
+    <%= f.submit "#{entry_point.point} #{h Admin::Setting.point_button}" %>
+  <% end -%>
+<% else -%>
+  <%= _("(Got %{point} %{point_button})") % {:point => entry_point.point , :point_button => h(Admin::Setting.point_button)}%>
+<% end -%>
+
+<% content_for :javascript_initializers do -%>
+  //  ポイントボタン押下時の動作 board_entry_point 内の動作
+  var entry_point = 0;
+  $j('#entry_point_form').submit(function(){
+      if (entry_point > 4){
+          alert('<%= _("Too many points!")%>');
+          return false;
+      }
+      $j.ajax({
+          type: 'POST',
+          url: $j(this).attr('action'),
+          data: $j(this).serialize(),
+          success: function(text){
+              $j('#entry_point_form :input[type="submit"]').val(text);
+              entry_point = ++entry_point;
+          }
+      });
+      return false;
+  });
+<% end -%>

@@ -284,7 +284,7 @@
 <div id="board_entry_control">
   <span class="evaluation">
     <span id="board_entry_point">
-    <%= render(:partial => 'board_entries/board_entry_point', :locals => { :entry => entry }) %>
+    <%= render(:partial => 'board_entry_points/pointup', :locals => { :entry => entry }) %>
     </span>
   </span>
 </div>
@@ -493,29 +493,6 @@
           }
           return false;
       };
-
-      //  ポイントボタン押下時の動作 board_entry_point 内の動作
-      var entry_point = 0;
-      var appendEntryPointClick = function(){
-          $j('#entry_point_form')
-          .submit(function() {
-              if (entry_point > 4){
-                  alert('<%= _("Too many points!")%>');
-                  return false;
-              }
-              $j.ajax({
-                  type: 'POST',
-                  url: $j(this).attr('action'),
-                  data: $j(this).serialize(),
-                  success: function(text){
-                      $j('#entry_point_form :input[type="submit"]').val(text);
-                      entry_point = ++entry_point;
-                  }
-              });
-              return false;
-          });
-      };
-      appendEntryPointClick();
 
       // 編集ボタン押下時の処理
       var setupCommentEditLink = function(target) {

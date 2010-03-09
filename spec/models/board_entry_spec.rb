@@ -452,7 +452,7 @@ describe BoardEntry, '#readable?' do
   end
 end
 
-describe BoardEntry, '#point_incrementable?' do
+describe BoardEntry, '#accessible_without_writer?' do
   before do
     @board_entry = stub_model(BoardEntry)
     @user = stub_model(User)
@@ -466,7 +466,7 @@ describe BoardEntry, '#point_incrementable?' do
         @board_entry.should_receive(:writer?).with(@user.id).and_return(false)
       end
       it 'trueが返却されること' do
-        @board_entry.point_incrementable?(@user).should be_true
+        @board_entry.accessible_without_writer?(@user).should be_true
       end
     end
     describe '指定されたユーザが記事の作者の場合' do
@@ -474,7 +474,7 @@ describe BoardEntry, '#point_incrementable?' do
         @board_entry.should_receive(:writer?).with(@user.id).and_return(true)
       end
       it 'falseが返却されること' do
-        @board_entry.point_incrementable?(@user).should be_false
+        @board_entry.accessible_without_writer?(@user).should be_false
       end
     end
   end
@@ -483,7 +483,7 @@ describe BoardEntry, '#point_incrementable?' do
       @board_entry.should_receive(:readable?).with(@user).and_return(false)
     end
     it 'falseが返却されること' do
-      @board_entry.point_incrementable?(@user).should be_false
+      @board_entry.accessible_without_writer?(@user).should be_false
     end
   end
 end
