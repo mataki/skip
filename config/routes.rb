@@ -20,6 +20,7 @@ ActionController::Routing::Routes.draw do |map|
         user.resource :applied_email, :only => %w(new create update), :member => {:complete => :get}
         user.resource :id, :only => %w(show edit create update)
         user.resource :message_unsubscribe, :only => %w(edit update)
+        user.resource :customize, :only => %w(update)
         user.resources :chains
         user.resources :system_messages, :only => [:destroy]
         user.resources :notices

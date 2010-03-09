@@ -23,7 +23,6 @@ class MypagesController < ApplicationController
   before_filter :load_user
 
   verify :method => :post, :only => [ :change_read_state], :redirect_to => { :action => :index }
-  verify :method => [:post, :put], :only => [ :update_customize], :redirect_to => { :action => :index }
 
   helper_method :recent_day
 
@@ -148,20 +147,6 @@ class MypagesController < ApplicationController
     e.backtrace.each { |line| logger.error line}
     render :text => _("Failed to load rss.")
     return false
-  end
-
-  # ================================================================================
-  #  mypage > manage(管理) 関連
-  # ================================================================================
-
-  # POST or PUT action
-  def update_customize
-    @user_custom = current_user.custom
-    if @user_custom.update_attributes(params[:user_custom])
-      setup_custom_cookies(@user_custom)
-      flash[:notice] = _('Updated successfully.')
-    end
-    redirect_to root_path
   end
 
   # [最近]を表す日数
