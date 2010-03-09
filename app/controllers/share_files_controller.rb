@@ -15,7 +15,7 @@
 
 class ShareFilesController < ApplicationController
   include IframeUploader
-  include UserHelper
+  include UsersHelper
   include EmbedHelper
 
   before_filter :owner_required, :only => [:show, :edit, :update, :destroy]

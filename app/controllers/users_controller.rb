@@ -20,6 +20,7 @@ class UsersController < ApplicationController
   skip_before_filter :sso, :only => %w(agreement new update_active)
   skip_before_filter :login_required, :only => %w(agreement new update_active)
   before_filter :registerable_filter, :only => %w(agreement new update_active)
+  after_filter :mark_track, :only => %w(show)
   after_filter :remove_system_message, :only => %w(show)
 
   # tab_menu
@@ -138,6 +139,10 @@ class UsersController < ApplicationController
       render :action => :deny_register
       return false
     end
+  end
+
+  def mark_track
+    current_target_user.mark_track(current_user.id) if current_target_user.id != current_user.id
   end
 end
 

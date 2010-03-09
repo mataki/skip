@@ -14,7 +14,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class ChainsController < ApplicationController
-  include UserHelper
+  include UsersHelper
 
   before_filter :setup_layout
   after_filter :make_chain_message, :only => [:create, :update]

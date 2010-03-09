@@ -32,4 +32,23 @@ module UsersHelper
     options = {:width => 80, :height => 80}.merge(options)
     link_to show_picture(user, options), {:controller => '/user', :action => 'show', :uid => user.uid}, {:title => h(user.name)}
   end
+
+  def profile_show_tag input_type_processer, user_profile_value
+    if input_type_processer.class == UserProfileMaster::RichTextProcesser
+      value_str = user_profile_value ? user_profile_value.value : ""
+      symbol = user_profile_value ? user_profile_value.user.symbol : nil
+      content_tag(:div, render_richtext(value_str, symbol), :class => "input_value rich_value")
+    else
+      value_str = user_profile_value ? user_profile_value.value : ""
+      content_tag(:div, h(value_str), :class => "input_value") + content_tag(:div, nil, :class => "input_bottom")
+    end
+  end
+
+  def user_main_menu user
+    user.id == current_user.id ? _('My Page') : _('Users')
+  end
+
+  def user_title user
+    user.id == current_user.id ? _('My Page') : _("Mr./Ms. %s") % user.name
+  end
 end
