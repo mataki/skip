@@ -18,6 +18,7 @@ ActionController::Routing::Routes.draw do |map|
         user.resources :pictures, :only => %w(show new create update destroy)
         user.resource :password, :only => %w(edit update)
         user.resource :applied_email, :only => %w(new create update), :member => {:complete => :get}
+        user.resource :id, :only => %w(show edit create update)
         user.resources :chains
         user.resources :system_messages, :only => [:destroy]
         user.resources :notices

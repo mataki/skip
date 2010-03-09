@@ -21,7 +21,6 @@ require 'feed-normalizer'
 class MypagesController < ApplicationController
   before_filter :setup_layout
   before_filter :load_user
-  skip_before_filter :verify_authenticity_token, :only => :apply_ident_url
 
   verify :method => :post,
     :only => [ :update_message_unsubscribes, :change_read_state],
@@ -196,36 +195,6 @@ class MypagesController < ApplicationController
     end
     flash[:notice] = _('Updated notification email settings.')
     redirect_to :action => 'manage', :menu => 'manage_message'
-  end
-
-  def apply_ident_url
-    redirect_to_with_deny_auth(:action => :manage) and return unless login_mode?(:free_rp)
-    @openid_identifier = current_user.openid_identifiers.first || current_user.openid_identifiers.build
-    if using_open_id?
-      begin
-        authenticate_with_open_id do |result, identity_url|
-          if result.successful?
-            @openid_identifier.url = identity_url
-            if @openid_identifier.save
-              flash[:notice] = _('OpenID URL was successfully set.')
-              redirect_to :action => :manage, :menu => :manage_openid
-              return
-            else
-              render :partial => 'manage_openid', :layout => 'layout'
-            end
-          else
-            flash.now[:error] = _("OpenId process is cancelled or failed.")
-            render :partial => 'manage_openid', :layout => 'layout'
-          end
-        end
-      rescue OpenIdAuthentication::InvalidOpenId
-        flash.now[:error] = _("Invalid OpenID URL format.")
-        render :partial => 'manage_openid', :layout => 'layout'
-      end
-    else
-      flash.now[:error] = _("Please input OpenID URL.")
-      render :partial => 'manage_openid', :layout => 'layout'
-    end
   end
 
   # POST or PUT action

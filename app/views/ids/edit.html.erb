@@ -1,5 +1,5 @@
 <% content_for :contents_left do -%>
-  <%= render :partial => "manage_menu", :locals => { :selected_menu => @menu } %>
+  <%= render :partial => "users/manage_action_box" %>
 <% end -%>
 
 <% content_for :contents_right do -%>
@@ -8,14 +8,14 @@
   <%= error_messages_for 'openid_identifier' %>
 
   <div class="edit_form_space ui-corner-all">
-    <% form_for :openid_identifier, @openid_identifier, {:url => {:action => :apply_ident_url}} do |f| -%>
+    <% form_for @openid_identifier, :url => tenant_user_id_path(current_tenant, current_user) do |f| -%>
     <table class="normal user_info">
       <tr>
         <th width="100px"><%= f.label :url, _("OpenID URL") %></th>
         <td style="padding:5px;"><%= f.text_field :url, :name => "openid_url" %></td>
       </tr>
     </table>
-    <%= submit_tag _('Save') %>
+    <%= f.submit _('Save'), :disable_with => _('Saving...') %>
     <% end -%>
   </div>
 <% end -%>

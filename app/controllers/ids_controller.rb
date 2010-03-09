@@ -14,18 +14,64 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class IdsController < ApplicationController
-  layout false
-  skip_before_filter :sso, :login_required, :prepare_session, :valid_tenant_required
+  skip_before_filter :sso, :only => %w(show)
+  skip_before_filter :login_required, :only => %w(show)
+  skip_before_filter :prepare_session, :only => %w(show)
+  skip_before_filter :valid_tenant_required, :only => %w(show)
+  skip_before_filter :verify_authenticity_token, :only => %w(create update)
+  before_filter :free_rp_mode_required, :only => %w(edit create update)
 
   def show
-    @user = User.find_by_code(params[:user])
-    raise ActiveRecord::RecordNotFound if @user.nil?
+    @user = current_tenant.users.find(params[:user_id])
 
     respond_to do |format|
       format.html do
-        response.headers['X-XRDS-Location'] = formatted_identity_url(:user => @user.code, :format => :xrds, :protocol => scheme)
+        response.headers['X-XRDS-Location'] = tenant_user_id(current_tenant, @user, :format => :xrds, :protocol => scheme)
+        render :layout => false
       end
       format.xrds
+    end
+  end
+
+  def edit
+    @openid_identifier = current_user.openid_identifiers.first || OpenidIdentifier.new
+  end
+
+  def create
+    @openid_identifier = current_user.openid_identifiers.first || current_user.openid_identifiers.build
+    if using_open_id?
+      begin
+        authenticate_with_open_id do |result, identity_url|
+          if result.successful?
+            @openid_identifier.url = identity_url
+            if @openid_identifier.save
+              flash[:notice] = _('OpenID URL was successfully set.')
+              redirect_to tenant_user_id_url(current_tenant, current_user)
+              return
+            else
+              render :edit
+            end
+          else
+            flash.now[:error] = _("OpenId process is cancelled or failed.")
+            render :edit
+          end
+        end
+      rescue OpenIdAuthentication::InvalidOpenId
+        flash.now[:error] = _("Invalid OpenID URL format.")
+        render :edit
+      end
+    else
+      flash.now[:error] = _("Please input OpenID URL.")
+      render :edit
+    end
+  end
+
+  alias :update :create
+
+  private
+  def free_rp_mode_required
+    unless login_mode?(:free_rp)
+      redirect_to_with_deny_auth edit_tenant_user_path(current_tenant, current_user)
     end
   end
 end
