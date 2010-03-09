@@ -16,7 +16,6 @@
 class IdsController < ApplicationController
   layout false
   skip_before_filter :sso, :login_required, :prepare_session, :valid_tenant_required
-  skip_after_filter  :remove_message
 
   def show
     @user = User.find_by_code(params[:user])

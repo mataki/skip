@@ -18,7 +18,6 @@ class PortalController < ApplicationController
   verify :method => :post, :only => [:registration ], :redirect_to => { :action => :index }
 
   skip_before_filter :prepare_session
-  skip_after_filter  :remove_message
   skip_before_filter :sso, :only => [:registration]
   skip_before_filter :login_required, :only => [:registration]
   skip_before_filter :valid_tenant_required, :only => [:registration]
