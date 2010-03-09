@@ -1,5 +1,5 @@
 <% content_for :contents_left do -%>
-  <%= render :partial => "manage_menu", :locals => { :selected_menu => @menu } %>
+  <%= render :partial => "users/manage_action_box" %>
 <% end -%>
 
 <% content_for :contents_right do -%>
@@ -8,7 +8,7 @@
   </div>
 
   <div class="edit_form_space ui-corner-all">
-  <% form_tag :action => 'update_message_unsubscribes' do -%>
+  <% form_for @user, :url => tenant_user_message_unsubscribe_path(current_tenant, current_user) do |f| -%>
     <table class="manage_message">
       <col class="col25" />
       <col />
@@ -25,7 +25,7 @@
         <% end -%>
       </tbody>
     </table>
-    <%= submit_tag _('Save') %>
+    <%= f.submit _('Save'), :disable_with => _('Saving...') %>
   <% end -%>
   </div>
 <% end -%>

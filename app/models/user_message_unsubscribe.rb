@@ -14,8 +14,5 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class UserMessageUnsubscribe < ActiveRecord::Base
-
-  def self.get_unscribe_array(user_id)
-    find_all_by_user_id(user_id).map{ |unsubscribe| unsubscribe.message_type }
-  end
+  belongs_to :user
 end
