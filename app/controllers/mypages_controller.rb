@@ -57,32 +57,6 @@ class MypagesController < ApplicationController
 
   end
 
-  # mypage > profile
-  def profile
-    flash.keep(:notice)
-    redirect_to get_url_hash('show')
-  end
-
-  # mypage > blog
-  def blog
-    redirect_to get_url_hash('blog', :archive => 'all', :sort_type => 'date')
-  end
-
-  # mypage > file
-  def share_file
-    redirect_to get_url_hash('share_file')
-  end
-
-  # mypage > social
-  def social
-    redirect_to get_url_hash('social')
-  end
-
-  # mypage > group
-  def group
-    redirect_to get_url_hash('group')
-  end
-
   # mypage > trace(足跡)
   def trace
     @access_count = current_user.user_access.access_count
