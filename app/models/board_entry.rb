@@ -345,26 +345,26 @@ class BoardEntry < ActiveRecord::Base
   end
 
   # TODO ShareFileと統合したい
-#  def visibility
-#    text = color = ""
-#    if public?
-#      text = _("[Open to all]")
-#      color = "yellow"
-#    elsif private?
-#      if diary?
-#        text = _("[Owner only]")
-#      else
-#        text = _("[Group members only]")
-#      end
-#      color = "#FFDD75"
-#    end
-#
-#    if text == ""
-#      text = "[#{publication_symbols_value}]"
-#      color = "#FFCD35"
-#    end
-#    return text, color
-#  end
+  def visibility
+    text = color = ""
+    if public?
+      text = _("[Open to all]")
+      color = "yellow"
+    elsif private?
+      if diary?
+        text = _("[Owner only]")
+      else
+        text = _("[Group members only]")
+      end
+      color = "#FFDD75"
+    end
+
+    if text == ""
+      text = "[#{publication_symbols_value}]"
+      color = "#FFCD35"
+    end
+    return text, color
+  end
 
   # TODO ShareFileのリストを渡しても使える、ユーティリティクラスに移したい。
   def self.get_symbol2name_hash entries

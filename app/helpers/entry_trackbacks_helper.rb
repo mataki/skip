@@ -1,0 +1,2 @@
+module EntryTrackbacksHelper
+end

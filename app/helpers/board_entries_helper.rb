@@ -148,4 +148,12 @@ module BoardEntriesHelper
     return view_str
   end
 
+  def send_mail_check_box_tag
+    if SkipEmbedded::InitialSettings['mail']['show_mail_function']
+      result = ''
+      result << check_box(:board_entry, :send_mail)
+      result << label(:board_entry, :send_mail, _('Send email to accessible members'))
+      content_tag :span, result, :class => 'send_mail_field'
+    end
+  end
 end

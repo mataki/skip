@@ -7,7 +7,6 @@
   # FIXME 対象記事の次記事、前記事を正しく取得する
   prev_entry = entry
   next_entry = entry
-  tb_entries = BoardEntry.accessible(current_user).id_is(entry.entry_trackbacks.map(&:tb_entry_id))
   to_tb_entries = BoardEntry.accessible(current_user).id_is(entry.to_entry_trackbacks.map(&:board_entry_id))
   checked_on = if reading = entry.user_readings.find_by_user_id(current_user.id)
                  reading.checked_on
@@ -257,7 +256,6 @@
     <div class="trackback_space send_trackback">
       <%= _('Topic Entry: ')%>
       <ul class="entries">
-    <% symbol2name_hash = BoardEntry.get_symbol2name_hash to_tb_entries -%>
     <% to_tb_entries.each do |to_tb_entry|  -%>
         <li>
         <%= entry_link_to to_tb_entry %> - <%= user_link_to to_tb_entry.user %>(<%= link_to_write_place to_tb_entry.owner %>)
@@ -315,22 +313,23 @@
 </div>
 
 <div class="trackback_space sent_trackback ui-corner-all">
-<% if tb_entries.size > 0 -%>
+<% if entry.entry_trackbacks.size > 0 -%>
   <%= _('Entries talking about this entry:')%>
 <% end -%>
   <ul class="entries">
-<% tb_entries.each do |tb_entry|  -%>
+<% entry.entry_trackbacks.each do |trackback|  -%>
+  <% tb_entry = trackback.board_entry -%>
     <li>
-    <%= entry_link_to tb_entry %> - <%= user_link_to tb_entry.user %>（<%= link_to_write_place tb_entry.owner%>）
-      <- <%= link_to _(" [Delete]"), {:controller => "edit", :action => "delete_trackback", :id => entry.id, :tb_entry_id => tb_entry.id}, {:confirm => _("Are you sure to delete?"),  :method => :post} if session[:user_id] == entry.user_id %>
+    <%= entry_link_to tb_entry %> - <%= user_link_to tb_entry.user %>（<%= link_to_write_place tb_entry.owner %>）
+    <- <%= link_to _(" [Delete]"), [current_tenant, current_target_owner, entry, trackback], {:confirm => _("Are you sure to delete?"),  :method => :delete} if current_user.id == entry.user_id %>
     </li>
 <% end -%>
   </ul>
   <%# FIXME トラバ時に正しくデータを引き継げるようにする %>
   <% if current_target_owner.is_a?(Group) && current_user.participationg_group?(current_target_owner) -%>
-    <p><%= link_to _("[Write a new forum entry with this as topic]"), new_polymophic_path([current_tenant, current_target_owner, :board_entries]) %><%= help_icon_tag :content => _('Create a new forum entry inheriting the privacy setting.') %></p>
+    <p><%= link_to _("[Write a new forum entry with this as topic]"), new_polymorphic_path([current_tenant, current_target_owner, :board_entry], :trackbacks => entry.id, :board_entry => {:title => "RE: #{h entry.title}", :category => h(entry.category)}) %><%= help_icon_tag :content => _('Create a new forum entry inheriting the privacy setting.') %></p>
   <% end -%>
-  <p><%= link_to _("[Write a new blog entry with this as topic]"), new_polymophic_path([current_tenant, current_user, :board_entries]) %><%= help_icon_tag :content => _("Create an \"open to public\" blog entry disregarding the privacy setting.") %></p>
+  <p><%= link_to _("[Write a new blog entry with this as topic]"), new_polymorphic_path([current_tenant, current_user, :board_entry], :trackbacks => entry.id, :board_entry => {:title => "RE: #{h entry.title}", :category => h(entry.category)}) %><%= help_icon_tag :content => _("Create an \"open to public\" blog entry disregarding the privacy setting.") %></p>
 </div>
 
 <div class="move_navi">
