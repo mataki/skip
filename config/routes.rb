@@ -12,21 +12,20 @@ ActionController::Routing::Routes.draw do |map|
         :signup => :any
       }
     tenant.resources :users, :new => {:agreement => :get}, :member => {:update_active => :put} do |user|
-      user.with_options :requirements => { :user_id => /[a-zA-Z0-9\-_\.]+/ } do |user|
-        user.resources :board_entries
-        user.resources :share_files, :member => {:download_history_as_csv => :get, :clear_download_history => :delete}
-        user.resources :pictures, :only => %w(show new create update destroy)
-        user.resource :password, :only => %w(edit update)
-        user.resource :applied_email, :only => %w(new create update), :member => {:complete => :get}
-        user.resource :id, :only => %w(show edit create update)
-        user.resource :message_unsubscribe, :only => %w(edit update)
-        user.resource :customize, :only => %w(update)
-        user.resources :chains, :collection => {:against => :get}
-        user.resources :system_messages, :only => [:destroy]
-        user.resources :notices
-        # ユーザの参加グループ一覧のため
-        user.resources :groups, :only => %w(index)
+      user.resources :board_entries do |board_entry|
       end
+      user.resources :share_files, :member => {:download_history_as_csv => :get, :clear_download_history => :delete}
+      user.resources :pictures, :only => %w(show new create update destroy)
+      user.resource :password, :only => %w(edit update)
+      user.resource :applied_email, :only => %w(new create update), :member => {:complete => :get}
+      user.resource :id, :only => %w(show edit create update)
+      user.resource :message_unsubscribe, :only => %w(edit update)
+      user.resource :customize, :only => %w(update)
+      user.resources :chains, :collection => {:against => :get}
+      user.resources :system_messages, :only => [:destroy]
+      user.resources :notices
+      # ユーザの参加グループ一覧のため
+      user.resources :groups, :only => %w(index)
     end
     tenant.resources :groups, :member => {:manage => :get} do |group|
       group.resources :board_entries
@@ -73,50 +72,6 @@ ActionController::Routing::Routes.draw do |map|
     end
   end
 
-#  # TODO users配下に移す
-#  map.resources :notices
-#
-#  map.with_options(:controller => "platform") do |platform|
-#    platform.login "platform", :action => "index"
-#    platform.perform_login 'login', :action => 'login'
-#    platform.logout 'logout', :action => 'logout'
-#    platform.forgot_password 'platform/forgot_password', :action => 'forgot_password'
-#    platform.reset_password 'platform/reset_password/:code', :action => 'reset_password'
-#    platform.activate 'platform/activate', :action => 'activate'
-#    platform.signup 'platform/signup/:code', :action => 'signup'
-#    platform.forgot_openid 'platform/forgot_openid', :action => 'forgot_openid'
-#    platform.reset_openid 'platform/reset_openid/:code', :action => 'reset_openid'
-#  end
-#
-#  map.monthly 'rankings/monthly/:year/:month',
-#              :controller => 'rankings',
-#              :action => 'monthly',
-#              :year => /\d{4}/,
-#              :month => /\d{1,2}/,
-#              :conditions => { :method => :get },
-#              :defaults => { :year => '', :month => '' }
-#
-#  map.ranking_data 'ranking_data/:content_type/:year/:month',
-#              :controller => 'rankings',
-#              :action => 'data',
-#              :year => /\d{4}/,
-#              :month => /\d{1,2}/,
-#              :conditions => { :method => :get },
-#              :defaults => { :year => '', :month => '' }
-#
-#  map.namespace "feed" do |feed_map|
-#    feed_map.resources :board_entries, :only => %w(index), :collection => {:questions => :get, :timelines => :get, :popular_blogs => :get}
-#    feed_map.resources :bookmarks, :only => %w(index)
-#  end
-#
-#  map.with_options :controller => 'server' do |server|
-#    server.formatted_server 'server.:format', :action => 'index'
-#    server.server 'server', :action => 'index'
-#    server.proceed 'server/proceed', :action => 'proceed'
-#    server.cancel 'server/cancel', :action => 'cancel'
-#  end
-#
-
   map.namespace "apps" do |app|
     app.resources :events, :member => {:attend => :post, :absent => :post}, :collection => { :recent => :get }, :except => [:destroy] do |event|
       event.resources :attendees, :only => [:update]
@@ -126,6 +81,4 @@ ActionController::Routing::Routes.draw do |map|
 
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
-
-#  map.web_parts 'services/:action.js', :controller => 'services'
 end
