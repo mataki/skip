@@ -1,7 +1,7 @@
 class BoardEntryCommentsController < ApplicationController
   include AccessibleBoardEntry
   before_filter :required_accessible_entry, :only => %w(create)
-  before_filter :required_full_accessible_comment, :only => %w(update)
+  before_filter :required_full_accessible_comment, :only => %w(update destroy)
   after_filter :make_comment_message, :only => %w(create)
 
   def create
@@ -26,6 +26,22 @@ class BoardEntryCommentsController < ApplicationController
   end
 
   def destroy
+    unless @board_entry_comment.children.size == 0
+      respond_to do |format|
+        format.html do
+          flash[:warn] = _("This comment cannot be deleted since it has been commented.")
+          redirect_to [current_tenant, current_target_owner, current_target_entry]
+          return
+        end
+      end
+    end
+    @board_entry_comment.destroy
+    respond_to do |format|
+      format.html do
+        flash[:notice] = _("Comment was successfully deleted.")
+        redirect_to [current_tenant, current_target_owner, current_target_entry]
+      end
+    end
   end
 
   private

@@ -210,40 +210,6 @@ class BoardEntriesController < ApplicationController
     render :partial => "board_entry_comment", :locals => { :comment => parent_comment.children.last, :level => params[:level].to_i }
   end
 
-  def destroy_comment
-    @board_entry_comment = BoardEntryComment.find(params[:id])
-    board_entry = @board_entry_comment.board_entry
-
-    # 権限チェック
-    authorize = false
-    authorize = true if session[:user_symbol] == board_entry.symbol
-
-    if current_user.group_symbols.include?(board_entry.symbol)
-      if current_user.group_symbols.include?(board_entry.user_id)
-        authorize = true
-      elsif board_entry.publicate?(current_user.belong_symbols)
-        authorize = true
-      end
-    else
-      if session[:user_id] == @board_entry_comment.user_id && board_entry.publicate?(current_user.belong_symbols)
-        authorize = true
-      end
-    end
-
-    redirect_to_with_deny_auth and return unless authorize
-
-    if @board_entry_comment.children.size == 0
-      @board_entry_comment.destroy
-      flash[:notice] = _("Comment was successfully deleted.")
-    else
-      flash[:warn] = _("This comment cannot be deleted since it has been commented.")
-    end
-    redirect_to :action => "forward", :id => @board_entry_comment.board_entry.id
-  rescue ActiveRecord::RecordNotFound => ex
-    flash[:warn] = _("Comment seems have already deleted.")
-    redirect_to :controller => "mypage", :action => "index"
-  end
-
   def forward
     begin
       entry = BoardEntry.find(params[:id])
