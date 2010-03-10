@@ -1,6 +1,0 @@
-<%# TODO ado_previewのためだけに存在していて、命名が紛らわしい。preview_contentsとかにリネームすべき。-%>
-<div class="board_entry">
-  <div class="date"><%=h board_entry.diary_date %> <%=h board_entry.diary_author %></div>
-  <div class="header"><h1 style="font-size:15px;"><%=h board_entry.category %> <%=h board_entry.title %></h1></div>
-  <div class="contents" style="overflow-y: visible; overflow: hidden; width: 98%;"><%= show_contents board_entry -%></div>
-</div>

@@ -170,14 +170,16 @@ class BoardEntriesController < ApplicationController
     end
   end
 
-  def ado_preview
-    board_entry = BoardEntry.new(params[:board_entry])
-    board_entry.user = current_user
-    board_entry.contents = board_entry.contents_hiki
-    render :partial=>'board_entries/board_entry_box', :locals=>{:board_entry => board_entry}
+  def preview
+    @board_entry = BoardEntry.new(params[:board_entry])
+    @board_entry.user = current_user
+    @board_entry.contents = @board_entry.contents_hiki
+
+    respond_to do |format|
+      format.html { render :layout => false }
+    end
   end
 
-  # 印刷表示
   def print
     respond_to do |format|
       format.html { render :layout => false }

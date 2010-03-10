@@ -12,7 +12,7 @@ ActionController::Routing::Routes.draw do |map|
         :signup => :any
       }
     tenant.resources :users, :new => {:agreement => :get}, :member => {:update_active => :put} do |user|
-      user.resources :board_entries, :member => {:print => :get} do |board_entry|
+      user.resources :board_entries, :member => {:print => :get}, :collection => {:preview => :post} do |board_entry|
         board_entry.resources :entry_trackbacks, :only => %w(destroy)
         board_entry.resource :board_entry_point, :only => [], :member => {:pointup => :put}
         board_entry.resources :board_entry_comments, :only => %w(create edit update destroy)
@@ -31,7 +31,7 @@ ActionController::Routing::Routes.draw do |map|
       user.resources :groups, :only => %w(index)
     end
     tenant.resources :groups, :member => {:manage => :get} do |group|
-      group.resources :board_entries, :member => {:print => :get} do |board_entry|
+      group.resources :board_entries, :member => {:print => :get}, :collection => {:preview => :post} do |board_entry|
         board_entry.resources :entry_trackbacks, :only => %w(destroy)
         board_entry.resource :board_entry_point, :only => [], :member => {:pointup => :put}
         board_entry.resources :board_entry_comments, :only => %w(create edit update destroy)
@@ -39,7 +39,7 @@ ActionController::Routing::Routes.draw do |map|
       group.resources :share_files, :member => {:download_history_as_csv => :get, :clear_download_history => :delete}
     end
     tenant.resources :share_files, :only => %w(index show)
-    tenant.resources :board_entries, :only => %w(index show), :collection => {:ado_preview => :any}
+    tenant.resources :board_entries, :only => %w(index show)
   end
 
   map.namespace "admin" do |admin_map|

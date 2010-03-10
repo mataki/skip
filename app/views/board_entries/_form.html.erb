@@ -197,13 +197,17 @@ div.input_line textarea {
   });
 
   // プレビュー表示用ボタン
-  var url = '<%= ado_preview_tenant_board_entries_path(current_tenant, :format => :js) %>';
+  var url = '<%= polymorphic_url([current_tenant, current_target_owner, :board_entries], :action => :preview) %>';
   $j("#hiki_preview_link")
   .click(function(){
+      jsonData = $j.grep($j('#hiki_preview_link').closest('form').serializeArray(), function(v, i){
+          // PUTリクエストしないように削除
+          return (v['name'] != '_method');
+      });
       $j.ajax({
           type: 'POST',
           url: url,
-          data: $j('#hiki_preview_link').closest('form').serialize(),
+          data: jsonData,
           success: function(msg) {
               $j('#preview').html(msg);
               $j('#preview-win')
