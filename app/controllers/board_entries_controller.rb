@@ -19,7 +19,7 @@ class BoardEntriesController < ApplicationController
   verify :method => :post, :only => [ :toggle_hide  ],
          :redirect_to => { :action => :index, :controller => "/mypage" }
 
-  before_filter :owner_required, :only => %w(show edit update destroy)
+  before_filter :owner_required, :only => %w(edit update destroy)
   before_filter :required_full_accessible_entry, :only => %w(edit update destroy)
   before_filter :required_accessible_entry, :only => %w(show print)
   after_filter :remove_system_message, :only => %w(show)
@@ -49,6 +49,9 @@ class BoardEntriesController < ApplicationController
   end
 
   def show
+    unless current_target_owner
+      @current_target_owner = current_target_entry.owner
+    end
   end
 
   def new
