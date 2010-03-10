@@ -1,4 +1,4 @@
-<% level ||= 1 -%>
+<% level ||= (params[:level] ? params[:level].to_i : 1) -%>
 <% checked_on ||= nil -%>
 <% comment_class = "board_entry_comment level#{level}" -%>
 

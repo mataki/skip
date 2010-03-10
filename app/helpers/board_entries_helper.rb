@@ -19,7 +19,7 @@ module BoardEntriesHelper
   def render_nest_comment comment, level, checked_on
     result = ""
     comment.children.each do |child_comment|
-      result << render(:partial => "board_entries/board_entry_comment", :locals => { :comment => child_comment, :level => level, :checked_on => checked_on })
+      result << render(:partial => "board_entry_comments/board_entry_comment", :locals => { :comment => child_comment, :level => level, :checked_on => checked_on })
     end
     result
   end

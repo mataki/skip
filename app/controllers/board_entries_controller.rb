@@ -16,13 +16,12 @@
 class BoardEntriesController < ApplicationController
   include AccessibleBoardEntry
 
-  verify :method => :post, :only => [ :ado_create_nest_comment, :destroy_comment, :toggle_hide  ],
+  verify :method => :post, :only => [ :toggle_hide  ],
          :redirect_to => { :action => :index, :controller => "/mypage" }
 
   before_filter :owner_required, :only => [:show, :edit, :update, :destroy]
   before_filter :required_full_accessible_entry, :only => [:edit, :update, :destroy]
   before_filter :required_accessible_entry, :only => [:show, :large]
-  after_filter :make_comment_message, :only => [ :ado_create_nest_comment ]
   after_filter :remove_system_message, :only => %w(show)
 
   def index
@@ -180,36 +179,6 @@ class BoardEntriesController < ApplicationController
     render :layout => false
   end
 
-  # ネストコメントの作成
-  def ado_create_nest_comment
-    begin
-      parent_comment = BoardEntryComment.find(params[:id])
-    rescue ActiveRecord::RecordNotFound => ex
-      render(:text => _('Parent comment could not be found. Try reloading the page.'), :status => :not_found) and return
-    end
-
-    if params[:contents].blank?
-      render(:text => _('Comment body is mandatory.'), :status => :bad_request) and return
-    end
-
-    # TODO 権限のあるBoardEntryを取得するnamed_scopeに置き換える
-    @board_entry = parent_comment.board_entry
-    find_params = BoardEntry.make_conditions(current_user.belong_symbols, {:id => @board_entry.id})
-    unless @board_entry = BoardEntry.find(:first,
-                                          :conditions => find_params[:conditions],
-                                          :include => find_params[:include] | [ :user, :board_entry_comments, :state ])
-      render(:text => _('Target %{target} inexistent.')%{:target => _('board entry')}, :status => :bad_request) and return
-    end
-
-    comment = parent_comment.children.create(:board_entry_id => parent_comment.board_entry_id,
-                                             :contents => params["contents"],
-                                             :user_id => session[:user_id])
-    unless comment.errors.empty?
-      render(:text => _('Failed to save the data.'), :status => :bad_request) and return
-    end
-    render :partial => "board_entry_comment", :locals => { :comment => parent_comment.children.last, :level => params[:level].to_i }
-  end
-
   def forward
     begin
       entry = BoardEntry.find(params[:id])
@@ -240,13 +209,6 @@ class BoardEntriesController < ApplicationController
   end
 
 private
-  def make_comment_message
-    return unless @board_entry
-    unless @board_entry.writer?(session[:user_id])
-      SystemMessage.create_message :message_type => 'COMMENT', :user_id => @board_entry.user.id, :message_hash => {:board_entry_id => @board_entry.id}
-    end
-  end
-
   def setup_layout board_entry
     @main_menu = board_entry.owner.is_a?(Group) ? _('Groups') : _('My Blog')
     @title = board_entry.owner.name

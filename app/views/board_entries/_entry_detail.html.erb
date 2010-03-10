@@ -571,8 +571,11 @@
               // コメント入力用テキストエリアを作成
               var divText = function() {
                   var div = $j(document.createElement('div'));
+                  $j(document.createElement('input'))
+                  .attr({type: 'hidden', name: 'board_entry_comment[parent_id]', value: commentId})
+                  .appendTo(div);
                   $j(document.createElement('textarea'))
-                  .attr({rows:5, name:'contents'})
+                  .attr({rows:5, name:'board_entry_comment[contents]'})
                   .css('width', '90%')
                   .appendTo(div);
                   return div
@@ -589,7 +592,7 @@
                       }
                       $j.ajax({
                           type:'POST',
-                          url:'<%= url_for(:controller => 'board_entries', :action => 'ado_create_nest_comment') -%>/' + commentId,
+                          url:'<%= polymorphic_path([current_tenant, current_target_owner, entry, :board_entry_comments]) %>',
                           data:jform.serialize(),
                           success:function(html) {
                               jhtml = $j(html)
