@@ -43,6 +43,11 @@ class BoardEntryComment < ActiveRecord::Base
     board_entry.reload.update_attribute :updated_on, Time.now
   end
 
+  # FIXME 後で実装
+  def full_accessible? target_user = self.user
+    true
+  end
+
   def comment_created_time
     format = _("%B %d %Y %H:%M")
     created_on.strftime(format)

@@ -10,8 +10,8 @@
       <%= icon_with_information(@current_user, comment, checked_on) %>
     </span>
     <span class="buttons">
-      <%= dummy_link_to(icon_tag('comment_edit', { :alt => _("Edit"), :title => _("Edit") }), :id => "comment_edit_link_#{comment.id}", :class => "comment_edit_link") if writer?(comment, session[:user_id]) %>
-      <%= link_to(icon_tag('comment_delete', { :alt => _("Delete"), :title => _("Delete") }), {:controller => "board_entries", :action => "destroy_comment", :id => comment.id}, :confirm => _('Are you sure to delete?'), :method => :post) if (comment_writer?(comment, session[:user_id]) && comment.children.size == 0) %>
+      <%= dummy_link_to(icon_tag('comment_edit', { :alt => _("Edit"), :title => _("Edit") }), :id => "comment_edit_link_#{comment.id}", :class => "comment_edit_link") if comment.full_accessible?(current_user) %>
+      <%= link_to(icon_tag('comment_delete', { :alt => _("Delete"), :title => _("Delete") }), [current_tenant, current_target_owner, comment.board_entry, comment], :id => comment.id, :confirm => _('Are you sure to delete?'), :method => :delete) if (comment.full_accessible?(current_user) && comment.children.size == 0) %>
       <% if level <= BoardEntryComment.limit_level -%>
       <span class="link_nest_comment" id='link_nest_comment_<%= comment.id %>'><%= dummy_link_to(icon_tag("comment_add", { :alt => _("Reply to this comment"), :title => _("Reply to this comment")}), :id => "comment_nest_link_#{comment.id}_#{level}", :class => "comment_nest_link") %></span>
       <% end -%>
@@ -19,15 +19,14 @@
   </div><!-- header -->
 
   <div id='comment_contents_<%= comment.id %>' >
-    <%= render(:partial => 'board_entries/comment_contents', :locals => { :comment => comment }) %>
+    <%= render(:partial => 'board_entry_comments/comment_contents', :locals => { :comment => comment }) %>
   </div>
 
   <div class='comment_input_space invisible' id='comment_area_<%= comment.id %>'>
-    <% form_tag({:controller => 'board_entries', :action => 'ado_edit_comment', :id => comment.id}, {:id => "comment_input_form_#{comment.id}", :class => "comment_input_form"}) do -%>
-    <% @comment = BoardEntryComment.new(:contents => comment.contents) -%>
-      <label for="comment_contents"><%= _('Edit Comment')%></label>
-      <%= text_area 'comment', 'contents', :cols => 90, :rows =>5 %>
-      <%= submit_tag _('Save') %>
+    <% form_for [current_tenant, current_target_owner, comment.board_entry, comment], :html => { :mehtod => :put, :id => "comment_input_form_#{comment.id}", :class => "comment_input_form"} do |f| -%>
+      <%= f.label :contents, _('Edit Comment') %>
+      <%= f.text_area :contents, :cols => 90, :rows => 5 %>
+      <%= f.submit _('Save') %>
       <input id="comment_cancel_button_<%= comment.id %>" class="comment_cancel_button" type="button" value="<%= _('Cancel')%>"/>
     <% end -%>
   </div><!-- comment_input_space -->

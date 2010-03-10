@@ -16,7 +16,7 @@
 class BoardEntriesController < ApplicationController
   include AccessibleBoardEntry
 
-  verify :method => :post, :only => [ :ado_create_nest_comment, :destroy_comment, :ado_edit_comment, :toggle_hide  ],
+  verify :method => :post, :only => [ :ado_create_nest_comment, :destroy_comment, :toggle_hide  ],
          :redirect_to => { :action => :index, :controller => "/mypage" }
 
   before_filter :owner_required, :only => [:show, :edit, :update, :destroy]
@@ -242,21 +242,6 @@ class BoardEntriesController < ApplicationController
   rescue ActiveRecord::RecordNotFound => ex
     flash[:warn] = _("Comment seems have already deleted.")
     redirect_to :controller => "mypage", :action => "index"
-  end
-
-  # ajax_action
-  def ado_edit_comment
-    begin
-      comment = BoardEntryComment.find(params[:id])
-    rescue ActiveRecord::RecordNotFound => ex
-      render(:text => _('Target %{target} inexistent.')%{:target => _('board entry comment')}, :status => :bad_request) and return
-    end
-    unless comment.editable? current_user
-      render(:text => _('Operation unauthorized.'), :status => :bad_request) and return
-    end
-
-    comment.update_attribute :contents, params[:comment][:contents]
-    render :partial => "comment_contents", :locals =>{ :comment => comment }
   end
 
   def forward

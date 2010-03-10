@@ -1,7 +1,7 @@
 class BoardEntryCommentsController < ApplicationController
   include AccessibleBoardEntry
   before_filter :required_accessible_entry, :only => %w(create)
-  before_filter :required_full_accessible_comment, :only => %w(edit update)
+  before_filter :required_full_accessible_comment, :only => %w(update)
   after_filter :make_comment_message, :only => %w(create)
 
   def create
@@ -18,10 +18,11 @@ class BoardEntryCommentsController < ApplicationController
     end
   end
 
-  def edit
-  end
-
   def update
+    @board_entry_comment.update_attribute :contents, params[:board_entry_comment][:contents]
+    respond_to do |format|
+      format.js { render :partial => "comment_contents", :locals =>{ :comment => @board_entry_comment } }
+    end
   end
 
   def destroy
