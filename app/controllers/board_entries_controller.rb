@@ -16,12 +16,9 @@
 class BoardEntriesController < ApplicationController
   include AccessibleBoardEntry
 
-  verify :method => :post, :only => [ :toggle_hide  ],
-         :redirect_to => { :action => :index, :controller => "/mypage" }
-
   before_filter :owner_required, :only => %w(edit update destroy)
   before_filter :required_full_accessible_entry, :only => %w(edit update destroy)
-  before_filter :required_accessible_entry, :only => %w(show print)
+  before_filter :required_accessible_entry, :only => %w(show print toggle_hide)
   after_filter :remove_system_message, :only => %w(show)
 
   def index
@@ -187,7 +184,6 @@ class BoardEntriesController < ApplicationController
   end
 
   def toggle_hide
-    @board_entry = BoardEntry.accessible(current_user).find params[:id]
     if @board_entry.toggle_hide(current_user)
       render :text => _("Entry was successfully set to %{operation}.") % { :operation => _("BoardEntry|Open|#{!@board_entry.hide}") }
     else

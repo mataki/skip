@@ -215,8 +215,7 @@
     <div class="control">
       <% if BoardEntry::HIDABLE_AIM_TYPES.include?(entry.aim_type) -%>
         <div id="hide_action" class="ui-corner-all">
-          <% form_tag({:controller => 'board_entries', :action => 'toggle_hide'}) do -%>
-            <%= hidden_field_tag :id, entry.id %>
+          <% form_for entry, :url => polymorphic_path([current_tenant, current_target_owner, entry], :action => :toggle_hide) do |f| -%>
             <span class="iphone_style_checkbox"><%= check_box_tag 'toggle_hide', 'hide', !entry.hide %></span>
             <!-- <b class="remarkable"><%= h _("This question will be hidden from all users' My Page after you set it to \"Closed\".") %></b> -->
           <% end -%>
@@ -667,12 +666,12 @@
         $j('#indicator').show();
         $j.ajax({
           type: 'POST',
-          url: relative_url_root + '/board_entries/toggle_hide',
+          url: $j('#hide_action form').attr('action'),
           data: $j('#hide_action form').serialize(),
           success: function(msg) {
               $j.ajax({
                 type: 'GET',
-                url: relative_url_root + '/entry_hide_operations?entry_id=<%= entry.id %>',
+                url: '<%= polymorphic_url([current_tenant, current_target_owner, entry, :entry_hide_operations]) %>',
                 success: function(html) {
                   $j('#hide_message ul').replaceWith(html);
                   $j('#hide_history').hide();
@@ -684,7 +683,7 @@
               });
               $j("#flash_message").trigger("notice", msg);
           },
-          error: function(event){
+          error: function(msg){
               $j("#flash_message").trigger("error", msg);
           }
         });

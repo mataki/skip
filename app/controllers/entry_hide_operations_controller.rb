@@ -14,10 +14,12 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class EntryHideOperationsController < ApplicationController
+  include AccessibleBoardEntry
+  before_filter :required_accessible_entry, :only => %w(index)
+
   def index
-    e = BoardEntry.accessible(current_user).find(params[:entry_id])
     respond_to do |format|
-      format.html { render :partial => 'list', :locals => {:entry_hide_operations => e.entry_hide_operations.order_new} }
+      format.html { render :partial => 'list', :locals => {:entry_hide_operations => @board_entry.entry_hide_operations.order_new} }
     end
   end
 end
