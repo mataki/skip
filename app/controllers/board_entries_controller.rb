@@ -179,26 +179,6 @@ class BoardEntriesController < ApplicationController
     render :layout => false
   end
 
-  def forward
-    begin
-      entry = BoardEntry.find(params[:id])
-    rescue ActiveRecord::RecordNotFound => ex
-      flash[:warn] = _("Specified page does not exist.")
-      redirect_to :controller => 'mypage', :action => ''
-      return false
-    end
-
-    forward_hash = { 'uid' => { :controller => 'user',  :id =>"blog" },
-                     'gid' => { :controller => 'group', :id =>'bbs'  } }
-
-    flash.keep(:notice)
-    flash.keep(:warn)
-    redirect_to :controller => forward_hash[entry.symbol_type][:controller],
-                :action     => entry.symbol_id,
-                :id         => forward_hash[entry.symbol_type][:id],
-                :entry_id   => entry.id
-  end
-
   def toggle_hide
     @board_entry = BoardEntry.accessible(current_user).find params[:id]
     if @board_entry.toggle_hide(current_user)

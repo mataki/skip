@@ -229,7 +229,7 @@
         <div style="height: 2em;"></div>
       <% end -%>
       <div class="buttons" id="entry_buttons">
-        <span id="permalink"><%= link_to "[page:#{entry.id}]", :controller=> "board_entries", :action => "forward", :id => entry.id -%></span>
+        <span id="permalink"><%= link_to "[page:#{entry.id}]", [current_tenant, current_target_owner, entry] %></span>
         <%= _('Display: ') %>
         <% if entry.full_accessible?(current_user) -%>
           <a href="#" id="access_style_button"><%= icon_tag('group', :title => _("Access Log")) %></a>

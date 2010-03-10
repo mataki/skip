@@ -9,12 +9,12 @@
 
 <%= _("Click the URL below to see all.")%>
 
-    <%= url_for(:controller => :board_entries, :action => :forward, :id => @entry.id, :only_path => false) %>
+    <%= polymorphic_url [@owner.tenant, @owner, @entry] %>
 <% else -%>
 
 <%= _("Click the URL below to see the content of message.")%>
 
-    <%= url_for(:controller => :board_entries, :action => :forward, :id => @entry.id, :only_path => false) %>
+    <%= polymorphic_url [@owner.tenant, @owner, @entry] %>
     <%= _("*Jumps directly to the blog entry.") %>
 <% end -%>
 
