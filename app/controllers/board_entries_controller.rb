@@ -19,9 +19,9 @@ class BoardEntriesController < ApplicationController
   verify :method => :post, :only => [ :toggle_hide  ],
          :redirect_to => { :action => :index, :controller => "/mypage" }
 
-  before_filter :owner_required, :only => [:show, :edit, :update, :destroy]
-  before_filter :required_full_accessible_entry, :only => [:edit, :update, :destroy]
-  before_filter :required_accessible_entry, :only => [:show, :large]
+  before_filter :owner_required, :only => %w(show edit update destroy)
+  before_filter :required_full_accessible_entry, :only => %w(edit update destroy)
+  before_filter :required_accessible_entry, :only => %w(show print)
   after_filter :remove_system_message, :only => %w(show)
 
   def index
@@ -174,9 +174,11 @@ class BoardEntriesController < ApplicationController
     render :partial=>'board_entries/board_entry_box', :locals=>{:board_entry => board_entry}
   end
 
-  # 巨大化表示
-  def large
-    render :layout => false
+  # 印刷表示
+  def print
+    respond_to do |format|
+      format.html { render :layout => false }
+    end
   end
 
   def toggle_hide

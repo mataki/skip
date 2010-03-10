@@ -1,6 +1,6 @@
 <html>
 <head>
-  <title><%= h @entry.title %></title>
+  <title><%= h @board_entry.title %></title>
   <%= skip_stylesheet_link_tag 'style' %>
   <%= stylesheet_link_tag 'style' %>
 <style type="text/css">
@@ -22,10 +22,10 @@ body {
 <body>
 <input type="button" onClick="javascript:window.print();" value="<%= _('Print')%>">
 
-<p><%=h @entry.diary_date %> <%=h @entry.diary_author -%></p>
-<h1 style="border-bottom: 1px solid black"><%=h @entry.category %> <%=h @entry.title %></h1>
+<p><%=h @board_entry.diary_date %> <%=h @board_entry.diary_author -%></p>
+<h1 style="border-bottom: 1px solid black"><%=h @board_entry.category %> <%=h @board_entry.title %></h1>
 
-<div class="contents"><div class="contents_body"><%= show_contents @entry %></div></div>
+<div class="contents"><div class="contents_body"><%= show_contents @board_entry %></div></div>
 
 </body>
 </html>
