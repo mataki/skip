@@ -3,7 +3,7 @@ module AccessibleBoardEntry
     @board_entry ||= BoardEntry.find(params[:board_entry_id] || params[:id])
   end
 
-  def required_full_accessible board_entry = current_target_entry
+  def required_full_accessible_entry board_entry = current_target_entry
     if result = board_entry.full_accessible?(current_user)
       yield if block_given?
     else
@@ -15,7 +15,7 @@ module AccessibleBoardEntry
     result
   end
 
-  def required_accessible board_entry = current_target_entry
+  def required_accessible_entry board_entry = current_target_entry
     if result = board_entry.accessible?(current_user)
       yield if block_given?
     else
@@ -27,7 +27,7 @@ module AccessibleBoardEntry
     result
   end
 
-  def required_accessible_without_writer board_entry = current_target_entry
+  def required_accessible_entry_without_writer board_entry = current_target_entry
     if result = board_entry.accessible_without_writer?(current_user)
       yield if block_given?
     else

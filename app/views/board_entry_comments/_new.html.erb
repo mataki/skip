@@ -1,0 +1,7 @@
+<div class="comment_input_space">
+  <% form_for [current_tenant, current_target_owner, entry, entry.board_entry_comments.build], :html => { :id => 'new_comment_form' } do |f| -%>
+    <%= f.label :contents, _('Write a comment') %>
+    <%= f.text_area :contents, :cols => 40, :rows => 5 %><br />
+    <%= f.submit _("Post") %>
+  <% end -%>
+</div>

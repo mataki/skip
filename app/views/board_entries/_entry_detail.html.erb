@@ -300,17 +300,11 @@
     </span>
   </div>
 <% entry.root_comments.each do |comment| -%>
-  <%= render(:partial => "board_entries/board_entry_comment", :locals=>{:comment=>comment, :checked_on => checked_on }) %>
+  <%= render(:partial => "board_entry_comments/board_entry_comment", :locals=>{:comment => comment, :checked_on => checked_on }) %>
 <% end -%>
 </div>
 
-<div class="comment_input_space">
-  <% form_tag({:controller => 'board_entries', :action => 'ado_create_comment', :id => entry.id}, {:id => "new_comment_form"}) do -%>
-    <%= label "board_entry_comment", "contents", _('Write a comment') %>
-    <%= text_area 'board_entry_comment', 'contents', :cols => 40, :rows => 5 %><br/>
-    <%= submit_tag _("Post") %>
-  <% end -%>
-</div>
+<%= render :partial => 'board_entry_comments/new', :locals => {:entry => entry} %>
 
 <div class="trackback_space sent_trackback ui-corner-all">
 <% if entry.entry_trackbacks.size > 0 -%>
@@ -340,7 +334,7 @@
       // 書き込みボタン押下時
       $j('#new_comment_form')
       .submit(function() {
-          if(isEmpty($j('#board_entry_comment_contents').val())) {
+          if(isEmpty($j(this).find('textarea').val())) {
               return false;
           }
           $j.ajax({

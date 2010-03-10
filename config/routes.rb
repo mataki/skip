@@ -15,6 +15,7 @@ ActionController::Routing::Routes.draw do |map|
       user.resources :board_entries do |board_entry|
         board_entry.resources :entry_trackbacks, :only => %w(destroy)
         board_entry.resource :board_entry_point, :only => [], :member => {:pointup => :put}
+        board_entry.resources :board_entry_comments, :only => %w(create edit update destroy)
       end
       user.resources :share_files, :member => {:download_history_as_csv => :get, :clear_download_history => :delete}
       user.resources :pictures, :only => %w(show new create update destroy)
@@ -33,6 +34,7 @@ ActionController::Routing::Routes.draw do |map|
       group.resources :board_entries do |board_entry|
         board_entry.resources :entry_trackbacks, :only => %w(destroy)
         board_entry.resource :board_entry_point, :only => [], :member => {:pointup => :put}
+        board_entry.resources :board_entry_comments, :only => %w(create edit update destroy)
       end
       group.resources :share_files, :member => {:download_history_as_csv => :get, :clear_download_history => :delete}
     end

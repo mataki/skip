@@ -1,6 +1,6 @@
 class EntryTrackbacksController < ApplicationController
   include AccessibleBoardEntry
-  before_filter :required_full_accessible, :only => [:destroy]
+  before_filter :required_full_accessible_entry, :only => [:destroy]
 
   def destroy
     @board_entry.entry_trackbacks.find(params[:id]).destroy

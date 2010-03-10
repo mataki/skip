@@ -1,7 +1,7 @@
 class BoardEntryPointsController < ApplicationController
   include AccessibleBoardEntry
   layout false
-  before_filter :required_accessible_without_writer, :only => %w(pointup)
+  before_filter :required_accessible_entry_without_writer, :only => %w(pointup)
 
   def pointup
     @board_entry.state.increment!(:point)

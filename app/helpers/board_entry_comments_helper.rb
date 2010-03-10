@@ -1,0 +1,2 @@
+module BoardEntryCommentsHelper
+end

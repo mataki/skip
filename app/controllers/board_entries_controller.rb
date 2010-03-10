@@ -16,13 +16,13 @@
 class BoardEntriesController < ApplicationController
   include AccessibleBoardEntry
 
-  verify :method => :post, :only => [ :ado_create_comment, :ado_create_nest_comment, :destroy_comment, :ado_edit_comment, :toggle_hide  ],
+  verify :method => :post, :only => [ :ado_create_nest_comment, :destroy_comment, :ado_edit_comment, :toggle_hide  ],
          :redirect_to => { :action => :index, :controller => "/mypage" }
 
   before_filter :owner_required, :only => [:show, :edit, :update, :destroy]
-  before_filter :required_full_accessible, :only => [:edit, :update, :destroy]
-  before_filter :required_accessible, :only => [:show, :large]
-  after_filter :make_comment_message, :only => [ :ado_create_comment, :ado_create_nest_comment ]
+  before_filter :required_full_accessible_entry, :only => [:edit, :update, :destroy]
+  before_filter :required_accessible_entry, :only => [:show, :large]
+  after_filter :make_comment_message, :only => [ :ado_create_nest_comment ]
   after_filter :remove_system_message, :only => %w(show)
 
   def index
@@ -54,7 +54,7 @@ class BoardEntriesController < ApplicationController
 
   def new
     @board_entry = current_target_owner.owner_entries.build(params[:board_entry])
-    required_full_accessible(@board_entry) do
+    required_full_accessible_entry(@board_entry) do
       @board_entry.entry_type = @board_entry.owner.is_a?(User) ? BoardEntry::DIARY : BoardEntry::GROUP_BBS
       @board_entry.publication_type ||= 'public'
       @board_entry.editor_mode ||= current_user.custom.editor_mode
@@ -88,7 +88,7 @@ class BoardEntriesController < ApplicationController
 
   def create
     @board_entry = current_target_owner.owner_entries.build(params[:board_entry])
-    required_full_accessible(@board_entry) do
+    required_full_accessible_entry(@board_entry) do
       @board_entry.contents = @board_entry.hiki? ? @board_entry.contents_hiki : @board_entry.contents_richtext
       @board_entry.user = current_user
       @board_entry.tenant = current_tenant
@@ -178,29 +178,6 @@ class BoardEntriesController < ApplicationController
   # 巨大化表示
   def large
     render :layout => false
-  end
-
-  # ルートコメントの作成
-  def ado_create_comment
-    if params[:board_entry_comment] == nil or params[:board_entry_comment][:contents] == ""
-      render(:text => _('Invalid parameter(s) detected.'), :status => :bad_request) and return
-    end
-
-    # TODO 権限のあるBoardEntryを取得するnamed_scopeに置き換える
-    find_params = BoardEntry.make_conditions(current_user.belong_symbols, {:id => params[:id]})
-    unless @board_entry = BoardEntry.find(:first,
-                                          :conditions => find_params[:conditions],
-                                          :include => find_params[:include] | [ :user, :board_entry_comments, :state ])
-      render(:text => _('Target %{target} inexistent.')%{:target => _('board entry')}, :status => :bad_request) and return
-    end
-
-    params[:board_entry_comment][:user_id] = session[:user_id]
-    comment = @board_entry.board_entry_comments.create(params[:board_entry_comment])
-    unless comment.errors.empty?
-      render(:text => _('Failed to save the data.'), :status => :bad_request) and return
-    end
-
-    render :partial => "board_entry_comment", :locals => { :comment => comment }
   end
 
   # ネストコメントの作成
