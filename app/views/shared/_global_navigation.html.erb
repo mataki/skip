@@ -1,9 +1,9 @@
 <ul id="nav">
   <li class="home_link"><%= link_to_unless_current(icon_tag('house', :title => _('My Page')) + _('My Page'), root_url) %></li>
-  <li><%= link_to_unless_current(icon_tag('report', :title => _('Entries')) + _('Entries'), tenant_board_entries_path(current_tenant)) if BoardEntry.count > 0 %></li>
-  <li><%= link_to_unless_current(icon_tag('disk_multiple', :title => _('Files')) + _('Files'), :controller => '/search', :action => 'share_file_search') if ShareFile.count > 0 %></li>
-  <li><%= link_to_unless_current(icon_tag('user_suit', :title => _('Users')) + _('Users'), :controller => '/users', :action => 'index') if User.count > 1 %></li>
-  <li><%= link_to_unless_current(icon_tag('group', :title => _('Groups')) + _('Groups'), :controller => '/groups', :action => 'index') if Group.count > 0 %></li>
+  <li><%= link_to_unless_current(icon_tag('report', :title => _('Entries')) + _('Entries'), [current_tenant, :board_entries]) if BoardEntry.count > 0 %></li>
+  <li><%= link_to_unless_current(icon_tag('disk_multiple', :title => _('Files')) + _('Files'), [current_tenant, :share_files]) if ShareFile.count > 0 %></li>
+  <li><%= link_to_unless_current(icon_tag('user_suit', :title => _('Users')) + _('Users'), [current_tenant, :users]) if User.count > 1 %></li>
+  <li><%= link_to_unless_current(icon_tag('group', :title => _('Groups')) + _('Groups'), [current_tenant, :groups]) if Group.count > 0 %></li>
   <% if event_enabled? -%>
   <li><%= link_to(icon_tag('flag_blue', :title => _('Events')) + _('Events'), apps_events_path) %></li>
   <% end -%>

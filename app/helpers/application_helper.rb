@@ -231,3 +231,16 @@ private
    return  output << "</select>"
   end
 end
+
+module ActionView
+  module Helpers #:nodoc:
+    module UrlHelper
+      def link_to_unless_current_tab(name, options = {}, html_options = {}, &block)
+        link_to_unless current_page?(options), name, options, html_options do
+          cls = html_options[:class] ? html_options[:class] << ' selected' : 'selected'
+          link_to name, options, html_options.merge(:class => cls)
+        end
+      end
+    end
+  end
+end
