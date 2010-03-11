@@ -158,8 +158,8 @@ module ApplicationHelper
     end
   end
 
-  def header_logo_link(url = url_for(:controller => '/mypage', :action => 'index'))
-    "<div id=\"logo\">" + link_to(image_tag("#{tenant_root_url(current_tenant)}custom/images/header_logo.png", :alt => h(Admin::Setting.abbr_app_title), :height => "45"), url) + "</div>"
+  def header_logo_link(url = root_url)
+    "<div id=\"logo\">" + link_to(image_tag("/custom/images/header_logo.png", :alt => h(Admin::Setting.abbr_app_title), :height => "45"), url) + "</div>"
   end
 
   def favicon_include_tag
@@ -190,7 +190,7 @@ module ApplicationHelper
       if footer_image_link_tag = SkipEmbedded::InitialSettings['footer_image_link_tag']
         s << content_tag(:div, footer_image_link_tag, :class => "powered_by")
       else
-        s << content_tag(:div, ("powered_by"+link_to(image_tag("#{tenant_root_url(current_tenant)}custom/images/footer_logo.png"), h(Admin::Setting.footer_image_link_url))), :class => "powered_by")
+        s << content_tag(:div, ("powered_by"+link_to(image_tag("/custom/images/footer_logo.png"), h(Admin::Setting.footer_image_link_url))), :class => "powered_by")
       end
     end
   end
