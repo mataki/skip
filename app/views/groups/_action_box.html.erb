@@ -3,19 +3,20 @@
     <% unless current_participation -%>
       <li><%= link_to(content_tag('span', _('Join this group')), {:controller => 'group', :action => "join"}, {:class => "rounded", :method => :post}) -%></li>
       <% if notice = current_user.notices.find_by_target_id_and_target_type(current_target_group.id, current_target_group.class.name) -%>
-        <li><%= link_to(content_tag('span', _('Stop a notification')), notice_path(notice.id, :gid => current_target_group.gid), {:class => "rounded", :method => :delete, :confirm => _('Are you sure?')}) %></li>
+        <li><%= link_to(content_tag('span', _('Stop a notification')), [current_tenant, current_target_group, notice], {:class => "rounded", :method => :delete, :confirm => _('Are you sure?')}) %></li>
       <% else -%>
-        <li><%= link_to(content_tag('span', _('Notify new posts')), notices_path(:gid => current_target_group.gid), {:class => "rounded", :method => :post}) %></li>
+        <li><%= link_to(content_tag('span', _('Notify new posts')), [current_tenant, current_target_group, notice], {:class => "rounded", :method => :post}) %></li>
       <% end -%>
     <% else -%>
       <% if current_participation.waiting? -%>
         <%= participation_state current_target_group, current_user.id %>
       <% else -%>
-        <li><%= link_to(content_tag('span', _('New Posts')), {:controller => 'group', :action => 'new'}, :class => 'rounded', :title => _('New Posts')) %></li>
-        <li><%= link_to(content_tag('span', _('Write a notice')), {:controller => 'group', :action => 'new_notice'}, :title => _('Write a notice'), :class => 'rounded') %></li>
-        <li><%= link_to(content_tag('span', _('Write a question')), {:controller => 'group', :action => 'new_question'}, :title => _('Write a question'), :class => 'rounded') %></li>
-        <% url_hash = {:controller => '/share_file', :action => :new, :owner_symbol => h(current_target_group.symbol), :owner_name => h(current_target_group.name)} -%>
-        <li><%= link_to(content_tag('span', _('Upload a file')), url_hash, :title => _('Upload a file'), :class => 'rounded', :onclick => "sub_window_open('#{url_for(url_hash)}', 'subwindow', 550, 400); return false;") %></li>
+        <li><%= link_to(content_tag('span', _('New Posts')), new_polymorphic_path([current_tenant, current_target_group, :board_entry]), :class => 'rounded', :title => _('New Posts')) %></li>
+        <% if notice_entry_enabled? -%>
+          <li><%= link_to(content_tag('span', _('Write a notice')), new_polymorphic_path([current_tenant, current_target_group, :board_entry], :board_entry => {:aim_type => 'notice'}), :title => _('Write a notice'), :class => 'rounded') %></li>
+        <% end -%>
+        <li><%= link_to(content_tag('span', _('Write a question')), new_polymorphic_path([current_tenant, current_target_group, :board_entry], :board_entry => {:aim_type => 'question'}), :title => _('Write a question'), :class => 'rounded') %></li>
+        <li><%= link_to(content_tag('span', _('Upload a file')), new_polymorphic_path([current_tenant, current_target_group, :share_file]), :title => _('Upload a file'), :class => 'rounded') %></li>
         <% unless current_participation.owned? -%>
           <li><%= link_to(content_tag('span', _('Leave the group')), {:action => 'leave'}, {:confirm => _('Are you sure leave the group?'), :method => :post, :class => "rounded"}) %></li>
         <% end -%>

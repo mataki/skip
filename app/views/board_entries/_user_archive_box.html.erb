@@ -1,7 +1,7 @@
 <%
   # FIXME 要リファクタ
   select_state = "count(distinct board_entries.id) as count, users.name as user_name, users.id as user_id"
-  joins_state << "LEFT OUTER JOIN users ON users.id = board_entries.user_id"
+  joins_state = "LEFT OUTER JOIN users ON users.id = board_entries.user_id"
   user_archives = BoardEntry.accessible(current_user).find(
     :all,
     :select => select_state,

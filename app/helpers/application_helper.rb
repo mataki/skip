@@ -113,7 +113,7 @@ module ApplicationHelper
     case entry_or_share_file.publication_type
     when 'public'
       if entry_or_share_file.owner_is_group? and entry_or_share_file.public?
-        group = Group.active.find_by_gid(entry_or_share_file.symbol_id)
+        group = Group.active.find_by_gid(entry_or_share_file.owner.gid)
         category = group ? group.group_category : nil
         icon_name = category.blank? ? "group" : category.icon
       else

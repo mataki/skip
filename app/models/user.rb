@@ -294,7 +294,7 @@ class User < ActiveRecord::Base
   end
 
   def joined? target_group
-    GroupParticipation.joind?(self, target_group)
+    GroupParticipation.joined?(self, target_group)
   end
 
   def owned? target_group

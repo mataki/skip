@@ -48,7 +48,7 @@ class GroupsController < ApplicationController
   def show
     @owners = User.owned(current_target_group).order_joined.limit(20)
     @except_owners = User.joined_except_owned(current_target_group).order_joined.limit(20)
-    @recent_messages = BoardEntry.accessible(current_user).scoped(:include => [ :user, :state ]).order_sort_type("date").all(:limit => 10)
+    @recent_messages = BoardEntry.owned(current_target_group).accessible(current_user).scoped(:include => [ :user, :state ]).order_sort_type("date").all(:limit => 10)
   end
 
   # tab_menu

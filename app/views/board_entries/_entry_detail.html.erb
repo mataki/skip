@@ -314,7 +314,7 @@
 <% end -%>
   </ul>
   <%# FIXME トラバ時に正しくデータを引き継げるようにする %>
-  <% if current_target_owner.is_a?(Group) && current_user.participationg_group?(current_target_owner) -%>
+  <% if current_target_owner.is_a?(Group) && current_user.joined?(current_target_owner) -%>
     <p><%= link_to _("[Write a new forum entry with this as topic]"), new_polymorphic_path([current_tenant, current_target_owner, :board_entry], :trackbacks => entry.id, :board_entry => {:title => "RE: #{h entry.title}", :category => h(entry.category)}) %><%= help_icon_tag :content => _('Create a new forum entry inheriting the privacy setting.') %></p>
   <% end -%>
   <p><%= link_to _("[Write a new blog entry with this as topic]"), new_polymorphic_path([current_tenant, current_user, :board_entry], :trackbacks => entry.id, :board_entry => {:title => "RE: #{h entry.title}", :category => h(entry.category)}) %><%= help_icon_tag :content => _("Create an \"open to public\" blog entry disregarding the privacy setting.") %></p>

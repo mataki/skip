@@ -94,7 +94,7 @@ class BoardEntry < ActiveRecord::Base
   }
 
   named_scope :owned, proc {|owner|
-    { :conditions => ['board_entries.owner_id = ?', owner.id] }
+    { :conditions => ['board_entries.owner_id = ? AND board_entries.owner_type = ?', owner.id, owner.class.name] }
   }
 
   named_scope :question, proc { { :conditions => ['board_entries.aim_type = \'question\''] } }
