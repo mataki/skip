@@ -53,6 +53,7 @@ class BoardEntriesController < ApplicationController
 
   def new
     @board_entry = current_target_owner.owner_entries.build(params[:board_entry])
+    @board_entry.user = current_user
     required_full_accessible_entry(@board_entry) do
       @board_entry.entry_type = @board_entry.owner.is_a?(User) ? BoardEntry::DIARY : BoardEntry::GROUP_BBS
       @board_entry.publication_type ||= 'public'
@@ -87,9 +88,9 @@ class BoardEntriesController < ApplicationController
 
   def create
     @board_entry = current_target_owner.owner_entries.build(params[:board_entry])
+    @board_entry.user = current_user
     required_full_accessible_entry(@board_entry) do
       @board_entry.contents = @board_entry.hiki? ? @board_entry.contents_hiki : @board_entry.contents_richtext
-      @board_entry.user = current_user
       @board_entry.tenant = current_tenant
       @board_entry.last_updated = Time.now
       BoardEntry.transaction do

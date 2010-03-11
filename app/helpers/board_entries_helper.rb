@@ -25,7 +25,7 @@ module BoardEntriesHelper
   end
 
   def link_to_write_place owner
-    return unless onwer
+    return unless owner
     name = write_place_name(owner)
     unless name.blank?
       link_to name, [current_tenant, owner, :board_entries]

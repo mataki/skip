@@ -166,7 +166,7 @@ protected
     end
   end
 
-  def redirect_to_with_deny_auth(url = { :controller => :mypage, :action => :index })
+  def redirect_to_with_deny_auth(url = root_url)
     flash[:warn] = _('Operation unauthorized.')
     redirect_to url
   end
