@@ -20,7 +20,7 @@ module UsersHelper
     output_text << icon_tag('user_suit') if options[:image_on]
     output_text << title = h(user.name)
 
-    link = link_to(output_text, {:controller => 'user', :action => 'show', :uid => user.uid}, {:title => title})
+    link = link_to(output_text, [current_tenant, user], {:title => title})
     if options[:with_prefix]
       "by #{link}"
     else
@@ -30,7 +30,7 @@ module UsersHelper
 
   def user_link_to_with_portrait user, options = {}
     options = {:width => 80, :height => 80}.merge(options)
-    link_to show_picture(user, options), {:controller => '/user', :action => 'show', :uid => user.uid}, {:title => h(user.name)}
+    link_to show_picture(user, options), [current_tenant, user], {:title => h(user.name)}
   end
 
   def profile_show_tag input_type_processer, user_profile_value

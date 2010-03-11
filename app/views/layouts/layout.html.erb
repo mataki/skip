@@ -31,7 +31,7 @@
                 <li><%= _('Last Access') %>: <%= h current_target_user.before_access %></li>
               <% end -%>
             <% end -%>
-            <li><%= link_to_if current_target_user == current_user, _('Visits') + ": " +h(n_("%{count} visit", "%{count} visits", current_target_user.info[:access_count]) % {:count => current_target_user.info[:access_count]}), {:action => 'trace', :controller => "/mypage"} -%></li>
+            <li><%= link_to_if current_target_user == current_user, _('Visits') + ": " +h(n_("%{count} visit", "%{count} visits", current_target_user.info[:access_count]) % {:count => current_target_user.info[:access_count]}), polymorphic_url([current_tenant, :mypage], :action => :trace) %></li>
             <li><%= _('Subscribers') %>: <%=h(n_("%{count} user", "%{count} users", current_target_user.info[:subscriber_count]) % {:count =>current_target_user.info[:subscriber_count]}) -%></li>
             <li><%= _('Posts') %>: <%=h(n_("%{count} entry", "%{count} entries", current_target_user.info[:blog_count]) % {:count => current_target_user.info[:blog_count]}) -%></li>
             <li><%= _('Days since registered') %>: <%=h(n_("%{count} day", "%{count} days", current_target_user.info[:using_day]) % {:count => current_target_user.info[:using_day]}) -%></li>
