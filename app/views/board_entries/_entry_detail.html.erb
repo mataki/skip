@@ -1,12 +1,7 @@
 <%
  # ブログ・フォーラムの詳細表示（１記事指定）
- # :locals => { :entry, :prev_entry, :next_entry, :tb_entries, :to_tb_entries, :editable,
- #              :checked_on,
- #              :entry_accesses, :total_count }
+ # :locals => { :entry, :to_tb_entries, :checked_on, :entry_accesses, :total_count }
   entry = @board_entry
-  # FIXME 対象記事の次記事、前記事を正しく取得する
-  prev_entry = entry
-  next_entry = entry
   to_tb_entries = BoardEntry.accessible(current_user).id_is(entry.to_entry_trackbacks.map(&:board_entry_id))
   checked_on = if reading = entry.user_readings.find_by_user_id(current_user.id)
                  reading.checked_on
@@ -201,10 +196,10 @@
   </style>
 <% end -%>
 <div class="move_navi">
-  <% if prev_entry -%>
+  <% if prev_entry = entry.prev_accessible(current_user) -%>
   <span class="prev_entry">&lt;&nbsp;<%= entry_link_to(prev_entry, {:truncate => 20}) %></span>
   <% end -%>
-  <% if next_entry -%>
+  <% if next_entry = entry.next_accessible(current_user) -%>
   <span class="next_entry"><%= entry_link_to(next_entry, {:truncate => 20}) %>&nbsp;&gt;</span>
   <% end -%>
   <a id="page_top" href="#page_bottom"><%= _('[Bottom of page]')%></a>

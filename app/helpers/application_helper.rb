@@ -68,23 +68,6 @@ module ApplicationHelper
     output << "</span>"
   end
 
-  # ページへのリンク
-  # TODO: リファクタ プロックをわたせるようにしてview_textオプションを無くした方がよいと思う mat_aki
-  def entry_link_to board_entry, options = {}, html_options = {}
-    output_text = ""
-    output_text << icon_tag('page') if options[:image_on]
-
-    if limit = options[:truncate]
-      title = truncate(board_entry.title, :length => limit)
-    else
-      title = board_entry.title
-    end
-    output_text << (options[:view_text] ? sanitize_style_with_whitelist(options[:view_text]) : h(title))
-
-    html_options[:title] ||= board_entry.title
-    link_to output_text, [current_tenant, board_entry.owner, board_entry], {:class => 'entry'}.merge(html_options)
-  end
-
   # グループのページへのリンク
   def group_link_to group, options = {}
     output_text = ""

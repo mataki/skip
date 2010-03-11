@@ -161,7 +161,11 @@ class BoardEntry < ActiveRecord::Base
   }
 
   named_scope :order_new, proc {
-    { :order => "last_updated DESC,board_entries.id DESC" }
+    { :order => "last_updated DESC, board_entries.id DESC" }
+  }
+
+  named_scope :order_old, proc {
+    { :order => "last_updated ASC, board_entries.id ASC" }
   }
 
   named_scope :order_new_include_comment, proc {
@@ -312,24 +316,14 @@ class BoardEntry < ActiveRecord::Base
     editor_mode == 'hiki'
   end
 
-#  def get_around_entry(user)
-#    order_value = BoardEntry.find(:first, :select => 'last_updated+id as order_value', :conditions=>["id = ?", id]).order_value
-#    prev_entry = next_entry = nil
-#    find_params = BoardEntry.make_conditions(user.belong_symbols, {:symbol => symbol})
-#    find_params[:conditions] << order_value
-#
-#    conditions_state = find_params[:conditions][0].dup
-#
-#    find_params[:conditions][0] << " and (last_updated+board_entries.id)< ?"
-#    prev_entry = BoardEntry.find(:first, :conditions => find_params[:conditions], :include => find_params[:include], :order=>"last_updated+board_entries.id desc")
-#
-#    find_params[:conditions][0] = conditions_state
-#    find_params[:conditions][0] << " and (last_updated+board_entries.id) > ?"
-#    next_entry = BoardEntry.find(:first, :conditions => find_params[:conditions], :include => find_params[:include], :order=>"last_updated+board_entries.id asc")
-#
-#    return prev_entry, next_entry
-#  end
-#
+  def prev_accessible target_user
+    BoardEntry.accessible(target_user).last_updated_lt(self.last_updated).id_lt(self.id).order_new.first
+  end
+
+  def next_accessible target_user
+    BoardEntry.accessible(target_user).last_updated_gt(self.last_updated).id_gt(self.id).order_old.first
+  end
+
   # TODO Tagのnamed_scopeにしてなくしたい
   def self.get_popular_tag_words()
     options = { :select => 'tags.name',
