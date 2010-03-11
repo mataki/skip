@@ -55,14 +55,10 @@
         <% end -%>
       </ul>
       <div class="clear_left"></div>
-      <div id="tab_menu"><%= generate_tab_menu(group_tab_menu_source(current_target_group)) %></div>
+      <div id="tab_menu"><%= render :partial => 'groups/tab_menu' %></div>
       <div class="clear_left"></div>
     <% else %>
       <h1 id="title"><%=h @title %></h1>
-      <% if @tab_menu_source -%>
-        <div id="tab_menu"><%= generate_tab_menu(@tab_menu_source) %></div>
-        <br class="clear_left" />
-      <% end -%>
     <% end -%>
 
     <div id="tab_body" class="ui-corner-right">

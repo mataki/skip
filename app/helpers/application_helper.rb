@@ -19,18 +19,6 @@ module ApplicationHelper
   include SkipHelper
   include HelpIconHelper
 
-  # レイアウトのタブメニューを生成する
-  def generate_tab_menu(tab_menu_sources)
-    output = ''
-    tab_menu_sources.each do |source|
-      html_options = (source[:html_options] || {}).dup
-      html_options.merge!(:class => 'selected') if current_page?(source[:options])
-      title = content_tag(:span, source[:label])
-      output << content_tag(:li, link_to(title, source[:options], html_options))
-    end
-    content_tag :ul, output
-  end
-
   def i18n_will_paginate pages, options = {}
     will_paginate pages, {:next_label => _('Next »'), :previous_label => _('« Previous')}.merge(options)
   end

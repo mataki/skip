@@ -1,13 +1,11 @@
 <% if current_target_owner -%>
   <% content_for :contents_left do -%>
     <%= render(:partial => 'tag_cloud_box') %>
-    <%= render(:partial => 'recent_box', :locals => { :owner => current_target_user }) -%>
+    <%= render(:partial => 'recent_box', :locals => { :owner => current_target_owner }) -%>
     <% if current_target_owner.is_a?(User) -%>
       <%= render(:partial => 'archive_box', :locals => { :month_archives => @month_archives }) -%>
     <% end -%>
-    <% if current_target_owner.is_a?(Group) -%>
-      <%= render(:partial => 'user_archive_box', :locals => { :user_archives => @user_archives }) %>
-    <% end -%>
+    <%= render(:partial => 'user_archive_box') %>
   <% end -%>
 
   <% content_for :contents_right do -%>

@@ -15,35 +15,6 @@
 
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe ApplicationHelper, '#generate_tab_menu' do
-  before do
-    @action = 'action'
-    @label = 'label'
-  end
-  describe '現在のページを表示している場合' do
-    before do
-      helper.stub!(:current_page?).and_return(true)
-      expected_link_tag = '<a href="/controller/action" class="selected"><span>label</span></a>'
-      @expected_html = content_tag(:ul, content_tag(:li, expected_link_tag))
-    end
-    it 'aタグのclassにselectedが含まれていること' do
-      tab_menu_sources = [{:label => @label, :options => {:controller => 'controller', :action => @action}}]
-      helper.generate_tab_menu(tab_menu_sources).should == @expected_html
-    end
-  end
-  describe '現在のページを表示している場合' do
-    before do
-      helper.stub!(:current_page?).and_return(false)
-      expected_link_tag = '<a href="/controller/action"><span>label</span></a>'
-      @expected_html = content_tag(:ul, content_tag(:li, expected_link_tag))
-    end
-    it 'aタグのclassにselectedが含まれていること' do
-      tab_menu_sources = [{:label => @label, :options => {:controller => 'controller', :action => @action}}]
-      helper.generate_tab_menu(tab_menu_sources).should == @expected_html
-    end
-  end
-end
-
 describe ApplicationHelper, '#user_link_to_with_portrait' do
   before do
     @user = stub_model(User, :uid => 'uid:skipkuma', :name => 'skipkuma')

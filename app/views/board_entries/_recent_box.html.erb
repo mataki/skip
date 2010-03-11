@@ -1,4 +1,4 @@
-<% recent_entries = BoardEntry.accessible(current_user).owned(owner).order_new.limit(5) %>
+<% recent_entries = owner.owner_entries.accessible(current_user).order_new.limit(5) %>
 <% unless recent_entries.empty? -%>
 <div class="box_space">
   <div class="box_space_title"><%= icon_tag 'page_copy' %><%= _('Last Entries')%></div>
@@ -10,7 +10,7 @@
     </ul>
   </div>
   <div class="box_space_bottom">
-    <%= link_to _('Past List'), polymorphic_path([current_tenant, current_target_owner, :board_entries], :sort_type => 'date') %>
+    <%= link_to _('Past List'), polymorphic_path([current_tenant, owner, :board_entries], :sort_type => 'date') %>
   </div>
 </div><!-- box_space -->
 <% end -%>
