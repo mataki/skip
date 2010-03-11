@@ -26,4 +26,18 @@ module ShareFilesHelper
       tag_links.join('&nbsp;')
     end
   end
+
+  # ファイルダウンロードへのリンク
+  def file_link_to share_file, options = {}, html_options = {}
+    file_name = options[:truncate] ? truncate(share_file.file_name, options[:truncate]) : share_file.file_name
+    link_to h(file_name), [current_tenant, share_file.owner, share_file], html_options
+  end
+
+  def file_link_url share_file, options = {}
+    share_file = ShareFile.new share_file if share_file.is_a? Hash
+    url_options = {}
+    url_options[:inline => true] if options[:inline]
+    polymorphic_url [current_tenant, share_file.owner, share_file], url_options
+  end
+
 end

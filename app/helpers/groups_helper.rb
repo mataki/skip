@@ -59,4 +59,18 @@ module GroupsHelper
     tab_menu_source << {:label => _('Admin'), :options => manage_tenant_group_url(current_tenant, current_target_group)} if group.owned?(current_user)
     tab_menu_source
   end
+
+  # グループのページへのリンク
+  def group_link_to group, options = {}
+    output_text = ""
+    output_text << icon_tag('group.png') if options[:image_on]
+    output_text << (options[:view_text] || h(group.name))
+
+    link_to output_text, { :controller => 'group', :action => 'show', :gid => group.gid }, options
+  end
+
+  def get_group_icon(category, options = {:margin => false})
+    options[:alt] = category.code
+    icon_tag(category.icon, options)
+  end
 end

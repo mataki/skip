@@ -96,46 +96,6 @@ module BoardEntriesHelper
     end
   end
 
-  def parse_hiki_embed_syntax view_str, proc
-    regex_type = /\{\{.+?\}\}/ # {{***}}とマッチする正規表現
-    width = 0
-    height = 0
-    image_name = ""
-
-    while image_tag = view_str.match(regex_type)
-      image_size = [0,0] # デフォルトサイズ
-
-      # カンマ２つでサイズが指定してある場合
-      if image_tag.to_s.scan(",").size == 2
-        params = image_tag.to_s[2..-3].split(",")
-        image_name = params[0]
-        width, height = [params[1].to_i, params[2].to_i]
-      else
-        image_name = image_tag.to_s[2..-3]
-      end
-      image_name.strip!
-
-      #イメージのURLを生成できるブロックを呼び出す
-      image_url = proc.call(image_name)
-      image_link =
-        if File.extname(image_name).sub(/\A\./,'').downcase == "flv"
-          flv_tag image_url
-        elsif File.extname(image_name).sub(/\A\./,'').downcase == "swf"
-          width = 240 if width == 0
-          height = (width * 0.75) if height == 0
-          swf_tag image_url, :width => width, :height => height
-        else
-          img_options = {}
-          img_options[:width] = width if width > 0
-          img_options[:height] = height if height > 0
-          link_to image_tag(image_url, img_options), image_url, :class => 'zoomable'
-        end
-
-      view_str = view_str.sub(regex_type, image_link)
-    end
-    return view_str
-  end
-
   def send_mail_check_box_tag
     if SkipEmbedded::InitialSettings['mail']['show_mail_function']
       result = ''
@@ -162,4 +122,35 @@ module BoardEntriesHelper
     link_to output_text, [current_tenant, board_entry.owner, board_entry], {:class => 'entry'}.merge(html_options)
   end
 
+  # FIXME リンク先のコメントアウト部分の書き換え
+  def show_contents entry
+    output = ""
+    if entry.editor_mode == 'hiki'
+      output_contents = hiki_parse(entry.contents, entry.owner)
+      image_url_proc = proc { |file_name|
+        file_link_url({:owner_symbol => entry.owner_id, :file_name => file_name}, :inline => true)
+      }
+      output_contents = parse_hiki_embed_syntax(output_contents, image_url_proc)
+      output = "<div class='hiki_style'>#{output_contents}</div>"
+    elsif entry.editor_mode == 'richtext'
+      output = render_richtext(entry.contents, entry.owner_id)
+    else
+      output_contents = CGI::escapeHTML(entry.contents)
+      output_contents.gsub!(/((https?|ftp):\/\/[0-9a-zA-Z,;:~&=@_'%?+\-\/\$.!*()]+)/){|url|
+        "<a href=\"#{url}\" target=\"_blank\">#{url}<\/a>"
+      }
+      output = "<pre>#{parse_permalink(output_contents, entry.owner)}</pre>"
+    end
+    output
+  end
+
+  # [コメント(n)-ポイント(n)-話題(n)-アクセス(n)]の表示
+  def get_entry_infos entry
+    output = []
+    output << n_("Comment(%s)", "Comments(%s)", entry.board_entry_comments_count) % h(entry.board_entry_comments_count.to_s) if entry.board_entry_comments_count > 0
+    output << "#{h Admin::Setting.point_button}(#{h entry.state.point.to_s})" if entry.state.point > 0
+    output << n_("Trackback(%s)", "Trackbacks(%s)", entry.entry_trackbacks_count) % h(entry.entry_trackbacks_count.to_s) if entry.entry_trackbacks_count > 0
+    output << n_("Access(%s)", "Accesses(%s)", entry.state.access_count) % h(entry.state.access_count.to_s) if entry.state.access_count > 0
+    output.size > 0 ? "#{output.join('-')}" : '&nbsp;'
+  end
 end

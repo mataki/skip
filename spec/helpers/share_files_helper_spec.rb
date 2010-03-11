@@ -15,3 +15,24 @@
 
 require File.dirname(__FILE__) + '/../spec_helper'
 
+describe ShareFilesHelper, '#file_link_url' do
+  describe '第一引数がShareFileのインスタンスの場合' do
+    before do
+      @share_file = stub_model(ShareFile, :owner_symbol => 'uid:foo', :file_name => 'bar.jpg')
+    end
+    it 'share_file_urlが正しいパラメタで呼ばれること' do
+      helper.should_receive(:share_file_url).with(:controller_name => 'user', :symbol_id => 'foo', :file_name => 'bar.jpg')
+      helper.file_link_url(@share_file)
+    end
+  end
+  describe '第一引数がHashの場合' do
+    before do
+      @share_file_hash = {:owner_symbol => 'uid:foo', :file_name => 'bar.jpg'}
+    end
+    it 'share_file_urlが正しいパラメタで呼ばれること' do
+      helper.should_receive(:share_file_url).with(:controller_name => 'user', :symbol_id => 'foo', :file_name => 'bar.jpg')
+      helper.file_link_url(@share_file_hash)
+    end
+  end
+end
+

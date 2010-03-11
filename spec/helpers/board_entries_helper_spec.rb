@@ -237,3 +237,20 @@ describe BoardEntriesHelper, "#icon_with_information" do
     end
   end
 end
+
+describe BoardEntriesHelper, "#show_contents" do
+  describe "hikiモードの時" do
+    before do
+      @entry = stub_model(BoardEntry, :editor_mode => 'hiki', :contents => "hogehoge",
+                          :symbol => "uid:hoge", :user_id => 1)
+      @output_contents = "output_contents {{question.gif,240,}} output_contents"
+      helper.stub!(:hiki_parse).and_return(@output_contents)
+      helper.stub!(:parse_hiki_embed_syntax).and_return(@output_contents)
+
+      @result = helper.show_contents(@entry)
+    end
+    it { @result.should have_tag("div.hiki_style") }
+    it { @result.should be_include('output_contents') }
+  end
+end
+

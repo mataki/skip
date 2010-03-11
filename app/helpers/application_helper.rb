@@ -19,10 +19,6 @@ module ApplicationHelper
   include SkipHelper
   include HelpIconHelper
 
-  @@CONTROLLER_HASH = { 'uid'  => 'user',
-                        'gid'  => 'group',
-                        'page' => 'page'}
-
   # レイアウトのタブメニューを生成する
   def generate_tab_menu(tab_menu_sources)
     output = ''
@@ -68,15 +64,6 @@ module ApplicationHelper
     output << "</span>"
   end
 
-  # グループのページへのリンク
-  def group_link_to group, options = {}
-    output_text = ""
-    output_text << icon_tag('group.png') if options[:image_on]
-    output_text << (options[:view_text] || h(group.name))
-
-    link_to output_text, { :controller => 'group', :action => 'show', :gid => group.gid }, options
-  end
-
   def owner_link_to owner, name = nil, options = {}
     name ||= "[#{owner.name}]"
     link = link_to(h(name), [current_tenant, owner], :title => name)
@@ -90,62 +77,6 @@ module ApplicationHelper
 
   def image_link_tag title, image_name, options={}
     link_to image_tag(image_name, :alt => title) + title, options
-  end
-
-  def show_picture(user, options = {})
-    options = {:border => '0', :name => 'picture', :alt => h(user.name), :fit_image => true}.merge(options)
-    options.merge!(:class => 'fit_image') if options.delete(:fit_image)
-    file_name =
-      if picture = user.picture
-        unless picture.new_record?
-          tenant_user_picture_path(current_tenant, user, picture, :format => :png)
-        else
-          'default_picture.png'
-        end
-      else
-        'default_picture.png'
-      end
-    image_tag(file_name, options)
-  end
-
-  # FIXME リンク先のコメントアウト部分の書き換え
-  def show_contents entry
-    output = ""
-    if entry.editor_mode == 'hiki'
-      output_contents = hiki_parse(entry.contents, entry.owner)
-      image_url_proc = proc { |file_name|
-        file_link_url({:owner_symbol => entry.owner_id, :file_name => file_name}, :inline => true)
-      }
-      output_contents = parse_hiki_embed_syntax(output_contents, image_url_proc)
-      output = "<div class='hiki_style'>#{output_contents}</div>"
-    elsif entry.editor_mode == 'richtext'
-      output = render_richtext(entry.contents, entry.owner_id)
-    else
-      output_contents = CGI::escapeHTML(entry.contents)
-      output_contents.gsub!(/((https?|ftp):\/\/[0-9a-zA-Z,;:~&=@_'%?+\-\/\$.!*()]+)/){|url|
-        "<a href=\"#{url}\" target=\"_blank\">#{url}<\/a>"
-      }
-      output = "<pre>#{parse_permalink(output_contents, entry.owner)}</pre>"
-    end
-    output
-  end
-
-  # ファイルダウンロードへのリンク
-  def file_link_to share_file, options = {}, html_options = {}
-    file_name = options[:truncate] ? truncate(share_file.file_name, options[:truncate]) : share_file.file_name
-    link_to h(file_name), [current_tenant, share_file.owner, share_file], html_options
-  end
-
-  def file_link_url share_file, options = {}
-    share_file = ShareFile.new share_file if share_file.is_a? Hash
-    url_options = {}
-    url_options[:inline => true] if options[:inline]
-    polymorphic_url [current_tenant, share_file.owner, share_file], url_options
-  end
-
-  def hiki_parse text, owner = nil
-    text = HikiDoc.new((text || ''), Regexp.new(SkipEmbedded::InitialSettings['not_blank_link_re'])).to_html
-    parse_permalink(text, owner)
   end
 
   # リッチテキストの表示
@@ -200,16 +131,6 @@ module ApplicationHelper
     icon_tag(icon_name, :title => view_name)
   end
 
-  # [コメント(n)-ポイント(n)-話題(n)-アクセス(n)]の表示
-  def get_entry_infos entry
-    output = []
-    output << n_("Comment(%s)", "Comments(%s)", entry.board_entry_comments_count) % h(entry.board_entry_comments_count.to_s) if entry.board_entry_comments_count > 0
-    output << "#{h Admin::Setting.point_button}(#{h entry.state.point.to_s})" if entry.state.point > 0
-    output << n_("Trackback(%s)", "Trackbacks(%s)", entry.entry_trackbacks_count) % h(entry.entry_trackbacks_count.to_s) if entry.entry_trackbacks_count > 0
-    output << n_("Access(%s)", "Accesses(%s)", entry.state.access_count) % h(entry.state.access_count.to_s) if entry.state.access_count > 0
-    output.size > 0 ? "#{output.join('-')}" : '&nbsp;'
-  end
-
   def get_menu_items menus, selected_menu, action
     menu_items = []
     menus.each do |menu|
@@ -235,11 +156,6 @@ module ApplicationHelper
     tags.each do |tag|
       yield tag.name, tag.count, classes[(tag.count.to_i - min) / divisor]
     end
-  end
-
-  def get_group_icon(category, options = {:margin => false})
-    options[:alt] = category.code
-    icon_tag(category.icon, options)
   end
 
   def header_logo_link(url = url_for(:controller => '/mypage', :action => 'index'))
