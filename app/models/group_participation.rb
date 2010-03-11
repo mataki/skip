@@ -17,11 +17,6 @@ class GroupParticipation < ActiveRecord::Base
   belongs_to :user
   belongs_to :group, :conditions => 'groups.deleted_at IS NULL'
 
-  N_('GroupParticipation|Waiting|true')
-  N_('GroupParticipation|Waiting|false')
-  N_('GroupParticipation|Owned|true')
-  N_('GroupParticipation|Owned|false')
-
   named_scope :active, proc {
     { :conditions => { :waiting => false } }
   }
@@ -41,6 +36,11 @@ class GroupParticipation < ActiveRecord::Base
   named_scope :order_new, proc {
     { :order => "group_participations.updated_on DESC" }
   }
+
+  N_('GroupParticipation|Waiting|true')
+  N_('GroupParticipation|Waiting|false')
+  N_('GroupParticipation|Owned|true')
+  N_('GroupParticipation|Owned|false')
 
   def after_save
     group.update_attribute(:updated_on, Time.now) if group && !waiting?
