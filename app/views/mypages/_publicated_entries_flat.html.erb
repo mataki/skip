@@ -1,12 +1,12 @@
 <% unless @recent_blogs[:pages].empty? -%>
-  <%= show_title_bar("page_copy", @recent_blogs[:title_name], {:controller => 'mypage', :action => "entries", :list_type => @recent_blogs[:id_name]}) -%>
+  <%= show_title_bar("page_copy", @recent_blogs[:title_name], polymorphic_path([current_tenant, :mypage], :action => :entries, :list_type => @recent_blogs[:id_name])) -%>
   <div id="<%= @recent_blogs[:id_name] %>">
     <%= render :partial => "list_block", :locals => @recent_blogs %>
   </div>
 <% end -%>
 <% @recent_bbs.each do |bbs| -%>
   <% unless bbs[:pages].empty? -%>
-  <%= show_title_bar("page_copy", bbs[:title_name], {:controller => 'mypage', :action => "entries", :list_type => bbs[:id_name]}) -%>
+  <%= show_title_bar("page_copy", bbs[:title_name], polymorphic_path([current_tenant, :mypage], :action => "entries", :list_type => bbs[:id_name])) -%>
   <div id="<%= bbs[:id_name] %>">
     <%= render :partial => "list_block", :locals => bbs %>
   </div>

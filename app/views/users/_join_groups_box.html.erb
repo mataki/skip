@@ -8,6 +8,6 @@
   <% end -%>
   </ul>
   </div>
-  <div class="box_space_bottom"><%= link_to n_("[Total %{count} hit...see all]", "[Total %{count} hits...see all]",groups.size) % {:count => groups.size}, :action => 'group' %></div>
+  <div class="box_space_bottom"><%= link_to n_("[Total %{count} hit...see all]", "[Total %{count} hits...see all]",groups.size) % {:count => groups.size}, [current_tenant, user, :groups] %></div>
 </div><!-- box_space -->
 <% end -%>

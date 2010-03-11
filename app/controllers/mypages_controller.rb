@@ -69,11 +69,9 @@ class MypagesController < ApplicationController
 
   # 公開されている記事一覧画面を表示
   def entries
-    unless params[:list_type]
-      redirect_to tenant_board_entries_path(current_tenant) and return
-    end
     unless valid_list_types.include?(params[:list_type])
-      render_404 and return
+      redirect_to [current_tenant, :board_entries]
+      return
     end
     locals = find_as_locals(params[:list_type], {:per_page => 20})
     @id_name = locals[:id_name]

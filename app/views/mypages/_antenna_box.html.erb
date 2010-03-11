@@ -1,10 +1,10 @@
 <div class="box_space antenna">
   <div class="box_space_title">
-    <%= icon_tag 'transmit' %><%= link_to(_("Subscriptions"), :action => 'entries_by_antenna') %>
+    <%= icon_tag 'transmit' %><%= link_to(_("Subscriptions"), polymorphic_path([current_tenant, :mypage], :action => 'entries_by_antenna')) %>
   </div>
   <div class="box_space_body">
     <ul class="notices system">
-      <li><%= link_to(icon_tag('comment') +  _('Trace Comments'), :action => 'entries_by_antenna', :target_type => 'comment') + "(#{Notice.trace_comments_count(current_user)})" %></li>
+      <li><%= link_to(icon_tag('comment') +  _('Trace Comments'), polymorphic_path([current_tenant, :mypage], :action => 'entries_by_antenna', :target_type => 'comment')) + "(#{Notice.trace_comments_count(current_user)})" %></li>
     </ul>
     <% notices_group_by_type = current_user.notices.all(:include => :target).group_by(&:target_type) -%>
     <% notices_group_by_type.keys.each do |key| -%>
@@ -13,7 +13,7 @@
           <% sorted_notices.each do |notice| -%>
             <% count_as_s = "(#{notice.unread_count(current_user).to_s})" -%>
             <% icon_name = notice.target.is_a?(User) ? 'user_suit' : 'group' -%>
-            <li><%= link_to(icon_tag(icon_name) + truncate(h(notice.target.name), :length => 12), :action => 'entries_by_antenna', :target_type => notice.target.class.name.downcase, :target_id => notice.target.id) + count_as_s %></li>
+            <li><%= link_to(icon_tag(icon_name) + truncate(h(notice.target.name), :length => 12), polymorphic_path([current_tenant, :mypage], :action => 'entries_by_antenna', :target_type => notice.target.class.name.downcase, :target_id => notice.target.id) + count_as_s) %></li>
           <% end -%>
         <% end -%>
       <% end -%>
