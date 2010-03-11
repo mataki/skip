@@ -593,10 +593,6 @@ class BoardEntry < ActiveRecord::Base
 #    @owner = self.class.owner self.symbol
 #  end
 
-#  def readable?(user)
-#    user.symbol == self.symbol || (user.group_symbols.include?(self.symbol) || self.publicate?(user.belong_symbols))
-#  end
-#
   def toggle_hide(user)
     unless BoardEntry::HIDABLE_AIM_TYPES.include? self.aim_type
       self.errors.add_to_base(_("Invalid operation."))

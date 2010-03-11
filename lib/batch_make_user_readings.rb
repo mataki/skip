@@ -22,7 +22,7 @@ class BatchMakeUserReadings < BatchBase
     # お知らせ
     BoardEntry.recent(30.minutes).notice.each do |entry|
       entry.publication_users.map{ |user| user.id }.each do |user_id|
-        if entry.readable?(User.find_by_id(user_id))
+        if entry.accessible?(User.find_by_id(user_id))
           save_user_reading(user_id, entry)
         end
       end
@@ -53,7 +53,7 @@ class BatchMakeUserReadings < BatchBase
       user_ids += BookmarkComment.find(:all, :conditions => ["bookmarks.url = ?", entry.permalink], :include => [:bookmark]).map{ |comment| comment.user_id }
       # 更新を知らせるユーザ全員に未読レコードを生成
       user_ids.uniq.each do |user_id|
-        if entry.readable?(User.find_by_id(user_id))
+        if entry.accessible?(User.find_by_id(user_id))
           save_user_reading(user_id, entry)
         end
       end

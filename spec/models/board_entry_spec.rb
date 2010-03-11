@@ -373,55 +373,6 @@ end
 describe BoardEntry, '#load_owner' do
 end
 
-describe BoardEntry, '#readable?' do
-  before do
-    @user = stub_model(User, :symbol => 'uid:notowner')
-    @board_entry = stub_model(BoardEntry)
-  end
-  describe 'ログインユーザの記事の場合' do
-    before do
-      @user.should_receive(:symbol).and_return('uid:owner')
-      @board_entry.should_receive(:symbol).and_return('uid:owner')
-    end
-    it 'trueが返ること' do
-      @board_entry.readable?(@user).should be_true
-    end
-  end
-  describe 'ログインユーザの記事ではない場合' do
-    describe 'ログインユーザ所属グループの記事の場合' do
-      before do
-        @user.should_receive(:group_symbols).and_return(['gid:skip_dev'])
-        @board_entry.should_receive(:symbol).at_least(:once).and_return('gid:skip_dev')
-      end
-      it 'trueが返ること' do
-        @board_entry.readable?(@user).should be_true
-      end
-    end
-    describe 'ログインユーザ所属グループの記事ではない場合' do
-      before do
-        @user.should_receive(:group_symbols).at_least(:once).and_return(['gid:skip_dev'])
-        @board_entry.should_receive(:symbol).at_least(:once).and_return('uid:owner')
-      end
-      describe 'ログインユーザに公開されている記事の場合' do
-        before do
-          @board_entry.should_receive(:publicate?).and_return(true)
-        end
-        it 'trueが返ること' do
-          @board_entry.readable?(@user).should be_true
-        end
-      end
-      describe 'ログインユーザに公開されていない記事の場合' do
-        before do
-          @board_entry.should_receive(:publicate?).and_return(false)
-        end
-        it 'falseが返ること' do
-          @board_entry.readable?(@user).should be_false
-        end
-      end
-    end
-  end
-end
-
 describe BoardEntry, '#accessible_without_writer?' do
   before do
     @board_entry = stub_model(BoardEntry)

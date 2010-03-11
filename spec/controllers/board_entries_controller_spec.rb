@@ -65,67 +65,6 @@ describe BoardEntriesController, 'POST #ado_create_nest_comment' do
   end
 end
 
-describe BoardEntriesController, 'POST #ado_pointup' do
-  before do
-    @user = user_login
-  end
-  describe '指定した記事が見つかる場合' do
-    before do
-      @board_entry = stub_model(BoardEntry)
-      BoardEntry.should_receive(:find).and_return(@board_entry)
-    end
-    describe 'インクリメント可能な場合' do
-      before do
-        @board_entry.should_receive(:accessible_without_writer?).with(@user).and_return(true)
-        @state = stub_model(BoardEntryPoint)
-        @state.stub!(:increment!)
-        @board_entry.stub!(:state).and_return(@state)
-      end
-      describe '指定した記事の作成者ではない場合' do
-        before do
-        end
-        it 'ポイントがインクリメントされること' do
-          @state.should_receive(:increment!)
-          @board_entry.stub!(:state).and_return(@state)
-          post :ado_pointup
-        end
-        it 'GoodJobボタンに表示するメッセージが設定されること' do
-          post :ado_pointup
-          response.body.should == '0 GoodJob'
-        end
-        it '200のレスポンスコードが返ること' do
-          post :ado_pointup
-          response.code.should == '200'
-        end
-      end
-    end
-    describe 'インクリメント不可能な場合' do
-      before do
-        @board_entry.should_receive(:readable?).with(@user).and_return(false)
-        post :ado_pointup
-      end
-      it '権限がない旨のメッセージが設定されること' do
-        response.body.should == 'Operation unauthorized.'
-      end
-      it '403のレスポンスコードが返ること' do
-        response.code.should == '403'
-      end
-    end
-  end
-  describe '指定した記事が見つからない場合' do
-    before do
-      BoardEntry.should_receive(:find).and_raise(ActiveRecord::RecordNotFound)
-      post :ado_pointup
-    end
-    it '記事が見つからない旨のメッセージが設定されること' do
-      response.body.should == 'Target blog / forum inexistent.'
-    end
-    it '404のレスポンスコードが返ること' do
-      response.code.should == '404'
-    end
-  end
-end
-
 describe BoardEntriesController, "GET #destroy_comment" do
   before do
     user_login
