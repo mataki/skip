@@ -663,25 +663,6 @@ private
     self.user_entry_no = entry.max_user_entry_no.to_i + 1
   end
 
-  # 第一引数textに含まれるsymbol_linkを置換する（[uid:fujiwara>namae]）
-  # ２つ目の引数で、対象とするsymbolのtype（uid,gid...）を指定
-  # ３つ目の引数で、置換する文字列を生成する関数を指定
-  # ４つ目の引数で、symbol_link内の表示文字列指定との区切り文字を指定（'>' or '&gt;'）
-  def self.replace_symbol_link text, symbol_type, replace_str_proc, split_mark
-    symbol_links = text.scan(/\[#{symbol_type}:[^\]]*?\]/)
-    symbol_links.each do |symbol_link|
-      symbol_id = symbol_link.strip.split(":", 1).last.chop # fujiwara>namae 第2引数で分割数を指定（>以降の:対応）
-      link_str = symbol_link.strip[1..-2]                   # uid:fujiwara>namae
-      if symbol_id.scan(split_mark).length > 0 # > によってタイトルが指定されているか
-        link_str = symbol_id.match(split_mark).post_match # [uid:fujiwara>namae] の namae
-        symbol_id = symbol_id.match(split_mark).pre_match # [uid:fujiwara>namae] の uid:fujiwara
-      end
-      replace_str = replace_str_proc.call(symbol_link.strip[1..-2].split(split_mark).first, link_str) # [uid:fujiwara>namae]のうちuid:fujwiaraのみを引数に
-      text = text.gsub(symbol_link.strip, replace_str)
-    end
-    return text
-  end
-#
 #  # 記事が指定されたユーザの記事の場合、指定されたidに一致する記事を全て返す。
 #  # 記事が指定されたユーザの記事ではない場合、指定されたidに一致する記事のうち、権限のある記事一覧を返す
 #  def authorized_entries_except_given_user(user_id, user_symbols, ids)

@@ -112,7 +112,7 @@ module ApplicationHelper
   def show_contents entry
     output = ""
     if entry.editor_mode == 'hiki'
-      output_contents = hiki_parse(entry.contents, entry.owner_id)
+      output_contents = hiki_parse(entry.contents, entry.owner)
       image_url_proc = proc { |file_name|
         file_link_url({:owner_symbol => entry.owner_id, :file_name => file_name}, :inline => true)
       }
@@ -125,7 +125,7 @@ module ApplicationHelper
       output_contents.gsub!(/((https?|ftp):\/\/[0-9a-zA-Z,;:~&=@_'%?+\-\/\$.!*()]+)/){|url|
         "<a href=\"#{url}\" target=\"_blank\">#{url}<\/a>"
       }
-      output = "<pre>#{parse_permalink(output_contents, entry.owner_id)}</pre>"
+      output = "<pre>#{parse_permalink(output_contents, entry.owner)}</pre>"
     end
     output
   end
@@ -143,14 +143,14 @@ module ApplicationHelper
     polymorphic_url [current_tenant, share_file.owner, share_file], url_options
   end
 
-  def hiki_parse text, owner_symbol = nil
+  def hiki_parse text, owner = nil
     text = HikiDoc.new((text || ''), Regexp.new(SkipEmbedded::InitialSettings['not_blank_link_re'])).to_html
-    parse_permalink(text, owner_symbol)
+    parse_permalink(text, owner)
   end
 
   # リッチテキストの表示
-  def render_richtext(text, owner_symbol = nil)
-    content = parse_permalink(text, owner_symbol)
+  def render_richtext(text, owner = nil)
+    content = parse_permalink(text, owner)
     "<div class='rich_style ui-corner-all'>#{sanitize_and_unescape_for_richtext(content)}</div>"
   end
 
@@ -301,31 +301,6 @@ module ApplicationHelper
 private
   def relative_url_root
     ActionController::Base.relative_url_root || ''
-  end
-
-  # TODO 仕組みが複雑すぎる。BoardEntry.replace_symbol_linkと合わせてシンプルな作りにしたい。
-  # FIXME owner_symbolに依存しない仕組みに改修が必要
-  def parse_permalink text, owner_symbol = nil
-#    return '' unless text
-#    # closure
-#    default_proc = proc { |symbol, link_str|
-#                          symbol_type, symbol_id = SkipUtil.split_symbol symbol
-#                          url = url_for("#{relative_url_root}/#{@@CONTROLLER_HASH[symbol_type]}/#{symbol_id.strip}/")
-#                          link_to(link_str, url) }
-#    # closure
-#    file_proc = proc {|file_symbol, link_str|
-#                      symbol_type, symbol_id = SkipUtil.split_symbol owner_symbol
-#                      f_symbol_type, file_name = SkipUtil.split_symbol file_symbol
-#                      file_name.gsub!(/\r\n|\r|\n/, '')
-#                      url = share_file_url :controller_name => @@CONTROLLER_HASH[symbol_type], :symbol_id => symbol_id, :file_name => file_name.strip, :authenticity_token => form_authenticity_token
-#                      link_to(link_str, url) }
-#
-#    procs = [["uid", default_proc], ["gid", default_proc], ["page", default_proc]]
-#    procs << ["file",file_proc] if owner_symbol
-#
-#    split_mark =  "&gt;"
-#    procs.each { |value| text = BoardEntry.replace_symbol_link(text, value.first, value.last, split_mark) }
-    text
   end
 
   # 検索条件に使うプルダウン表示用
