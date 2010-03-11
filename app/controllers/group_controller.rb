@@ -33,42 +33,6 @@ class GroupController < ApplicationController
     flash.now[:notice] = _('User not found.') if @users.empty?
   end
 
-  def new
-    redirect_to_with_deny_auth and return unless current_user.group_symbols.include? @group.symbol
-
-    redirect_to(:controller => 'edit',
-                :action => 'index',
-                :gid => @group.gid,
-                :entry_type => BoardEntry::GROUP_BBS,
-                :symbol => @group.symbol,
-                :publication_type => @group.default_publication_type)
-  end
-
-  def new_notice
-    redirect_to_with_deny_auth and return unless current_user.group_symbols.include? @group.symbol
-
-    redirect_to(:controller => 'edit',
-                :action => 'index',
-                :gid => @group.gid,
-                :entry_type => BoardEntry::GROUP_BBS,
-                :aim_type => 'notice',
-                :symbol => @group.symbol,
-                :publication_type => @group.default_publication_type)
-  end
-
-  def new_question
-    redirect_to_with_deny_auth and return unless current_user.group_symbols.include? @group.symbol
-
-    redirect_to(:controller => 'edit',
-                :action => 'index',
-                :gid => @group.gid,
-                :entry_type => BoardEntry::GROUP_BBS,
-                :aim_type => 'question',
-                :send_mail => !!params[:send_mail],
-                :symbol => @group.symbol,
-                :publication_type => @group.default_publication_type)
-  end
-
   # post_action
   # 参加申込み
   def join
@@ -217,7 +181,6 @@ private
   def setup_layout
     @title = title
     @main_menu = main_menu
-    @tab_menu_option = tab_menu_option
   end
 
   def main_menu

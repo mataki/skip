@@ -93,7 +93,6 @@ class ChainsController < ApplicationController
   def setup_layout
     @title = user_title current_target_user
     @main_menu = user_main_menu current_target_user
-    @tab_menu_option = { :uid => current_target_user.uid }
   end
 
   def make_chain_message
