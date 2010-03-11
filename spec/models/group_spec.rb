@@ -218,62 +218,6 @@ describe Group do
     end
   end
 
-  describe Group, '#synchronize_groups' do
-    describe '2つの同期対象グループが存在する場合' do
-      before do
-        Group.delete_all
-        SkipEmbedded::InitialSettings['host_and_port'] = 'localhost:3000'
-        SkipEmbedded::InitialSettings['protocol'] = 'http://'
-        bob = create_user :user_options => {:name => 'ボブ', :admin => false}
-        alice = create_user :user_options => {:name => 'アリス', :admin => true}
-        tom = create_user :user_options => {:name => 'トム', :admin => true}
-        group_category_id = create_group_category(:code => 'study').id
-        # Vim勉強会には@bob, @aliceが参加していて、@tomは参加待ち
-        @vim_group = create_group :name => 'Vim勉強会', :gid => 'vim_study', :group_category_id => group_category_id do |g|
-          g.group_participations.build(:user_id => bob.id, :owned => true)
-          g.group_participations.build(:user_id => alice.id, :owned => false)
-          g.group_participations.build(:user_id => tom.id, :waiting => true)
-        end
-        # Emacs勉強会には@bobのみ参加している
-        @emacs_group = create_group :name => 'Emacs勉強会', :gid => 'emacs_study', :group_category_id => group_category_id, :deleted_at => Time.now do |g|
-          g.group_participations.build(:user_id => bob.id, :owned => true)
-        end
-
-        @groups = Group.synchronize_groups
-        @vim_group_attr, @emacs_group_attr = @groups
-      end
-      it '二件のグループ同期情報を取得できること' do
-        @groups.size.should == 2
-      end
-      it 'Vim勉強会の情報が正しく設定されていること' do
-        @vim_group_attr.should == ['vim_study', 'vim_study', 'Vim勉強会', %w[boob alice].map{|u| "http://localhost:3000/id/#{u}" }, false]
-      end
-      it 'Emacs勉強会の情報が正しく設定されていること' do
-        @emacs_group_attr.should == ['emacs_study', 'emacs_study', 'Emacs勉強会', ["http://localhost:3000/id/boob"], true]
-      end
-
-      describe 'Vim勉強会のグループが4分59秒前に更新、Emacs勉強会のグループが5分前に更新されており、5分以内に更新があったグループのみ取得する場合' do
-        before do
-          Time.stub!(:now).and_return(Time.local(2009, 6, 2, 0, 0, 0))
-          Group.record_timestamps = false
-          @vim_group.update_attribute(:updated_on, Time.local(2009, 6, 1, 23, 54, 59))
-          @emacs_group.update_attribute(:updated_on, Time.local(2009, 6, 1, 23, 55, 0))
-          @groups = Group.synchronize_groups 5
-          @emacs_group_attr = @groups.first
-        end
-        it '1件のグループ同期情報を取得できること' do
-          @groups.size.should == 1
-        end
-        it 'Emacs勉強会の情報が正しく設定されていること' do
-          @emacs_group_attr.should == ['emacs_study', 'emacs_study', 'Emacs勉強会', ["http://localhost:3000/id/boob"], true]
-        end
-        after do
-          Group.record_timestamps = true
-        end
-      end
-    end
-  end
-
   describe "#join" do
     before do
       @group = create_group

@@ -29,9 +29,6 @@ class Group < ActiveRecord::Base
   validates_format_of :gid, :message => _("accepts numbers, alphabets, hiphens(\"-\") and underscores(\"_\")."), :with => /^[a-zA-Z0-9\-_]*$/
   validates_inclusion_of :default_publication_type, :in => ['public', 'private']
 
-  N_('Group|Protected|true')
-  N_('Group|Protected|false')
-
   named_scope :partial_match_gid, proc {|word|
     {:conditions => ["gid LIKE ?", SkipUtil.to_lqs(word)]}
   }
@@ -100,6 +97,9 @@ class Group < ActiveRecord::Base
 
   named_scope :limit, proc { |num| { :limit => num } }
 
+  N_('Group|Protected|true')
+  N_('Group|Protected|false')
+
   alias initialize_old initialize
 
   def initialize(attributes = nil)
@@ -112,44 +112,10 @@ class Group < ActiveRecord::Base
     initialize_old(attributes)
   end
 
-  class << self
-    def symbol_type
-      :gid
+  def after_save
+    if protected_was == true and protected == false
+      self.group_participations.waiting.each{ |p| p.update_attributes(:waiting => false)}
     end
-  end
-
-  def validate
-    unless GroupCategory.find_by_id(self.group_category_id)
-      errors.add(:group_category_id, _('Category not selected or value invalid.'))
-    end
-  end
-
-  def symbol_id
-    gid
-  end
-
-  def symbol
-    self.class.symbol_type.to_s + ":" + symbol_id
-  end
-
-  def to_s
-    return 'id:' + id.to_s + ', name:' + name.to_s
-  end
-
-  def self.has_waiting_for_approval owner
-    Group.active.owned(owner) & Group.active.has_waiting_for_approval
-  end
-
-  def owners
-    group_participations.active.only_owned.order_new.map(&:user)
-  end
-
-  # グループのカテゴリごとのgidの配列を返す(SQL発行あり)
-  #   { "BIZ" => ["gid:swat","gid:qms"], "LIFE" => [] ... }
-  def self.gid_by_category
-    group_by_category = Hash.new{|h, key| h[key] = []}
-    active(:select => "group_category_id, gid").each{ |group| group_by_category[group.group_category_id] << "gid:#{group.gid}" }
-    group_by_category
   end
 
   # グループに関連する情報の削除
@@ -163,19 +129,30 @@ class Group < ActiveRecord::Base
     ShareFile.destroy_all(["owner_symbol = ?", self.symbol])
   end
 
-  def after_save
-    if protected_was == true and protected == false
-      self.group_participations.waiting.each{ |p| p.update_attributes(:waiting => false)}
+  def validate
+    unless GroupCategory.find_by_id(self.group_category_id)
+      errors.add(:group_category_id, _('Category not selected or value invalid.'))
     end
+  end
+
+  def self.has_waiting_for_approval owner
+    Group.active.owned(owner) & Group.active.has_waiting_for_approval
+  end
+
+  # グループのカテゴリごとのgidの配列を返す(SQL発行あり)
+  #   { "BIZ" => ["gid:swat","gid:qms"], "LIFE" => [] ... }
+  def self.gid_by_category
+    group_by_category = Hash.new{|h, key| h[key] = []}
+    active(:select => "group_category_id, gid").each{ |group| group_by_category[group.group_category_id] << "gid:#{group.gid}" }
+    group_by_category
+  end
+
+  def owners
+    group_participations.active.only_owned.order_new.map(&:user)
   end
 
   def administrator?(user)
     Group.owned(user).participating(user).map(&:id).include?(self.id)
-  end
-
-  def self.synchronize_groups ago = nil
-    conditions = ago ? ['updated_on >= ?', Time.now.ago(ago.to_i.minute)] : []
-    Group.scoped(:conditions => conditions).all.map { |g| [g.gid, g.gid, g.name, User.joined(g).map { |u| u.openid_identifier }, !!g.deleted_at] }
   end
 
   # TODO 回帰テスト書きたい
@@ -222,4 +199,9 @@ class Group < ActiveRecord::Base
       end
     end
   end
+
+  def to_s
+    return 'id:' + id.to_s + ', name:' + name.to_s
+  end
+
 end
