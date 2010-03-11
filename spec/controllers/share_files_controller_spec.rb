@@ -20,14 +20,14 @@ describe ShareFilesController, 'GET #new' do
     @user = user_login
     ShareFile.stub!(:get_tags_hash)
     @share_file = stub_model(ShareFile)
-    @share_file.stub!(:updatable?).and_return(true)
+    @share_file.stub!(:full_accessible?).and_return(true)
     ShareFile.stub!(:new).and_return(@share_file)
   end
 
   describe '作成権限がある場合' do
     before do
       Symbol.should_receive(:get_item_by_symbol).and_return(stub_model(User, :symbol => 'uid:foo'))
-      @share_file.should_receive(:updatable?).with(@user).and_return(true)
+      @share_file.should_receive(:full_accessible?).with(@user).and_return(true)
     end
     it '作成画面に遷移すること' do
       get :new, :owner_symbol => 'uid:owner'
@@ -38,7 +38,7 @@ describe ShareFilesController, 'GET #new' do
   describe '作成権限がない場合' do
     before do
       Symbol.should_receive(:get_item_by_symbol).and_return(stub_model(User, :symbol => 'uid:foo'))
-      @share_file.should_receive(:updatable?).with(@user).and_return(false)
+      @share_file.should_receive(:full_accessible?).with(@user).and_return(false)
     end
     it '作成画面が閉じられること' do
       controller.should_receive(:render_window_close)
@@ -247,7 +247,7 @@ describe ShareFilesController, 'GET #edit' do
     end
     describe '更新権限がある場合' do
       before do
-        @share_file.should_receive(:updatable?).with(@user).and_return(true)
+        @share_file.should_receive(:full_accessible?).with(@user).and_return(true)
       end
       it '編集画面に遷移すること' do
         get :edit
@@ -256,7 +256,7 @@ describe ShareFilesController, 'GET #edit' do
     end
     describe '更新権限がない場合' do
       before do
-        @share_file.should_receive(:updatable?).with(@user).and_return(false)
+        @share_file.should_receive(:full_accessible?).with(@user).and_return(false)
       end
       it '編集画面が閉じられること' do
         controller.should_receive(:render_window_close)
@@ -363,7 +363,7 @@ describe ShareFilesController, "POST #destroy" do
     before do
       @share_file = stub_model(ShareFile)
       ShareFile.stub!(:find).with("1").and_return(@share_file)
-      @share_file.should_receive(:updatable?).with(@user).and_return(false)
+      @share_file.should_receive(:full_accessible?).with(@user).and_return(false)
     end
     it '権限チェックエラーとなること' do
       controller.should_receive(:redirect_to_with_deny_auth)
@@ -374,7 +374,7 @@ describe ShareFilesController, "POST #destroy" do
     before do
       @share_file = stub_model(ShareFile, :owner_symbol_type => "group", :owner_symbol_id => "hoge")
       ShareFile.stub!(:find).with("1").and_return(@share_file)
-      @share_file.should_receive(:updatable?).with(@user).and_return(true)
+      @share_file.should_receive(:full_accessible?).with(@user).and_return(true)
       @share_file.should_receive(:destroy).and_return(@share_file)
       post :destroy, :id => 1
     end
@@ -451,81 +451,6 @@ describe ShareFilesController, "GET #list" do
   end
 end
 
-
-describe ShareFilesController, "GET #download" do
-  before do
-    @user = user_login
-  end
-  describe '対象のShareFileが存在する場合' do
-    before do
-      @share_file = stub_model(ShareFile)
-      @full_path = 'example.png'
-      @share_file.stub!(:full_path).and_return(@full_path)
-      ShareFile.should_receive(:find_by_file_name_and_owner_symbol).and_return(@share_file)
-    end
-    describe '参照権限がある場合' do
-      before do
-        @share_file.should_receive(:readable?).with(@user).and_return(true)
-      end
-      describe 'ダウンロードを許可するファイルの場合' do
-        before do
-          controller.should_receive(:downloadable?).and_return(true)
-        end
-        describe '対象となる実体ファイルが存在する場合' do
-          before do
-            @share_file.stub!(:create_history)
-            @controller.stub!(:nkf_file_name)
-            @controller.stub!(:send_file)
-            File.should_receive(:exist?).with(@full_path).and_return(true)
-          end
-          it '履歴が作成されること' do
-            @share_file.should_receive(:create_history).with(@user.id)
-            get :download
-          end
-          it 'ファイルがダウンロードされること' do
-            @controller.should_receive(:send_file).with(@share_file.full_path, anything())
-            get :download
-          end
-        end
-        describe '対象となる実体ファイルが存在しない場合' do
-          before do
-            File.should_receive(:exist?).with(@full_path).and_return(false)
-            get :download
-          end
-          it { flash[:warn].should_not be_nil }
-          it { response.should be_redirect }
-        end
-      end
-      describe 'ダウンロードを許可しないファイルの場合' do
-        before do
-          controller.should_receive(:downloadable?).and_return(false)
-          get :download
-        end
-        it { response.should render_template('confirm_download') }
-      end
-    end
-    describe '参照権限がない場合' do
-      before do
-        @share_file.should_receive(:readable?).with(@user).and_return(false)
-      end
-      it '権限チェックエラーとなること' do
-        controller.should_receive(:redirect_to_with_deny_auth)
-        get :download
-      end
-    end
-  end
-  describe '対象のShareFileが存在しない場合' do
-    before do
-      ShareFile.should_receive(:find_by_file_name_and_owner_symbol).and_return(nil)
-    end
-    it 'RecordNotFoundがraiseされること' do
-      lambda do
-        get :download
-      end.should raise_error(ActiveRecord::RecordNotFound)
-    end
-  end
-end
-
 describe ShareFilesController, '#downloadable?' do
   before do
     controller.stub!(:form_authenticity_token)
@@ -582,7 +507,7 @@ describe ShareFilesController, 'POST #download_history_as_csv' do
     end
     describe '権限のあるファイルの場合' do
       before do
-        @share_file.should_receive(:updatable?).with(@user).and_return(true)
+        @share_file.should_receive(:full_accessible?).with(@user).and_return(true)
       end
       it 'csvファイルがdownloadされること' do
         controller.stub!(:nkf_file_name)
@@ -592,7 +517,7 @@ describe ShareFilesController, 'POST #download_history_as_csv' do
     end
     describe '権限のないファイルの場合' do
       before do
-        @share_file.should_receive(:updatable?).with(@user).and_return(false)
+        @share_file.should_receive(:full_accessible?).with(@user).and_return(false)
       end
       it '権限チェックエラーとなること' do
         controller.should_not_receive(:send_data)
@@ -627,7 +552,7 @@ describe ShareFilesController, 'POST #clear_download_history' do
     end
     describe '更新権限がある場合' do
       before do
-        @share_file.should_receive(:updatable?).with(@user).and_return(true)
+        @share_file.should_receive(:full_accessible?).with(@user).and_return(true)
       end
       it 'ダウンロード履歴がクリアされること' do
         @share_file_accesses.should_receive(:clear)
@@ -644,7 +569,7 @@ describe ShareFilesController, 'POST #clear_download_history' do
     end
     describe '更新権限がない場合' do
       before do
-        @share_file.should_receive(:updatable?).with(@user).and_return(false)
+        @share_file.should_receive(:full_accessible?).with(@user).and_return(false)
       end
       it 'ダウンロード履歴がクリアされないこと' do
         @share_file_accesses.should_not_receive(:clear)

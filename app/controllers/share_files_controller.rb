@@ -218,36 +218,6 @@ class ShareFilesController < ApplicationController
 #    end
 #  end
 
-#  def download
-#    symbol_type_hash = { 'user'  => 'uid',
-#                         'group' => 'gid' }
-#    file_name =  params[:file_name]
-#    owner_symbol = "#{symbol_type_hash[params[:controller_name]]}:#{params[:symbol_id]}"
-#
-#    unless share_file = ShareFile.find_by_file_name_and_owner_symbol(file_name, owner_symbol)
-#      raise ActiveRecord::RecordNotFound
-#    end
-#
-#    unless share_file.readable?(current_user)
-#      redirect_to_with_deny_auth
-#      return
-#    end
-#
-#    if downloadable?(params[:authenticity_token], share_file)
-#      unless File.exist?(share_file.full_path)
-#        flash[:warn] = _('Could not find the entity of the specified file. Contact system administrator.')
-#        return redirect_to(:controller => 'mypage', :action => "index")
-#      end
-#
-#      share_file.create_history current_user.id
-#      # TODO inlineパラメタの有無でdisposition切り替えは微妙か? アクション分ける? 拡張子やContentTypeで自動判別する? 検討する。
-#      send_file(share_file.full_path, :filename => nkf_file_name(file_name), :type => share_file.content_type || Types::ContentType::DEFAULT_CONTENT_TYPE, :stream => false, :disposition => params[:inline] ? 'inline' : 'attachment')
-#    else
-#      @main_menu = @title = _('File Download')
-#      render :action => 'confirm_download', :layout => 'layout'
-#    end
-#  end
-
   def downloadable?(authenticity_token, share_file)
     return true if share_file.uncheck_authenticity?
     authenticity_token == form_authenticity_token ? true : false

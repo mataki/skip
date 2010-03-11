@@ -77,7 +77,7 @@ class ShareFile < ActiveRecord::Base
 
   def validate
     Tag.validate_tags(category).each{ |error| errors.add(:category, error) }
-  #  errors.add_to_base _('Operation inexecutable.') unless updatable?
+    # errors.add_to_base _('Operation inexecutable.') unless full_accessible?
   end
 
   def validate_on_create
@@ -359,83 +359,11 @@ class ShareFile < ActiveRecord::Base
 #    CONTENT_TYPE_IMAGES.keys.any?{ |extension| extension.to_s.downcase == extname }
 #  end
 #
-#  def readable?(user = @accessed_user)
-#    user ? owner_instance(self, user).readable? : false
-#  end
-#
-#  def updatable?(user = @accessed_user)
-#    user ? owner_instance(self, user).updatable? : false
-#  end
-#
   def extname
     File.extname(file_name).sub(/\A\./,'').downcase
   end
 
-#  class Owner
-#    def initialize(share_file, user)
-#      @share_file = share_file
-#      @user = user
-#    end
-#
-#    def readable?
-#      false
-#    end
-#
-#    def updatable?
-#      false
-#    end
-#  end
-#
-#  class UserOwner < Owner
-#    def readable?
-#      @user.symbol == @share_file.owner_symbol ? true : publication_range?
-#    end
-#
-#    def publication_range?
-#      if @share_file.protected?
-#        group_symbols = @user.group_symbols
-#        return @share_file.publication_symbols_value.split(',').any?{|symbol| @user.symbol == symbol || group_symbols.include?(symbol) }
-#      end
-#      @share_file.public?
-#    end
-#
-#    def updatable?
-#      @user.symbol == @share_file.owner_symbol
-#    end
-#  end
-#
-#  class GroupOwner < Owner
-#    def readable?
-#      if group = Group.active.find_by_gid(@share_file.owner_symbol_id)
-#        participating = @user.participating_group?(group)
-#        if participating && (group.administrator?(@user) || @user.id == @share_file.user_id)
-#          true
-#        else
-#          publication_range?(participating)
-#        end
-#      else
-#        false
-#      end
-#    end
-#
-#    def publication_range?(participating = true)
-#      if @share_file.protected?
-#        group_symbols = @user.group_symbols
-#        return @share_file.publication_symbols_value.split(',').any?{|symbol| @user.symbol == symbol || group_symbols.include?(symbol) }
-#      end
-#      @share_file.public? || participating
-#    end
-#
-#    def updatable?
-#      if group = Group.active.find_by_gid(@share_file.owner_symbol_id)
-#        @user.participating_group?(group) && (group.administrator?(@user) || @user.id == @share_file.user_id)
-#      else
-#        false
-#      end
-#    end
-#  end
-
-private
+  private
   def uncheck_extention?
     uncheck_extentions = CONTENT_TYPE_IMAGES.keys << :swf << :flv
     uncheck_extentions.any?{ |extension| extension.to_s.downcase == extname }
@@ -445,14 +373,4 @@ private
     uncheck_content_types = CONTENT_TYPE_IMAGES.values << 'application/x-shockwave-flash' << 'video/x-flv'
     uncheck_content_types.any?{ |content_types| content_types.split(',').include?(self.content_type) }
   end
-#
-#  def owner_instance(share_file, user)
-#    if owner_is_user?
-#      UserOwner.new(share_file, user)
-#    elsif owner_is_group?
-#      GroupOwner.new(share_file, user)
-#    else
-#      Owner.new(share_file, user)
-#    end
-#  end
 end
