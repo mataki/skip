@@ -107,16 +107,29 @@ protected
   end
 
   def current_target_user
-    @current_target_user ||= User.find_by_id(params[:controller] == 'users' ? params[:id] : params[:user_id])
-
+    @current_target_user ||= User.find_by_tenant_id_and_id(current_tenant, (params[:controller] == 'users' ? params[:id] : params[:user_id]))
   end
 
   def current_target_group
-    @current_target_group ||= Group.active.find_by_id(params[:controller] == 'groups' ? params[:id] : params[:group_id])
+    @current_target_group ||= Group.active.find_by_tenant_id_and_id(current_tenant, (params[:controller] == 'groups' ? params[:id] : params[:group_id]))
   end
 
   def current_target_owner
     @current_target_owner ||= (current_target_user || current_target_group)
+  end
+
+  def target_user_required
+    unless current_target_user
+      render_404
+      return false
+    end
+  end
+
+  def target_group_required
+    unless current_target_group
+      render_404
+      return false
+    end
   end
 
   def owner_required

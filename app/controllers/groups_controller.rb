@@ -19,8 +19,6 @@ class GroupsController < ApplicationController
   before_filter :check_owned, :only => [ :manage, :update, :destroy ]
   after_filter :remove_system_message, :only => %w(show)
 
-  # tab_menu
-  # グループの一覧表示
   def index
     search_params = params[:search] || {}
     @search =
@@ -44,22 +42,17 @@ class GroupsController < ApplicationController
     end
   end
 
-  # tab_menu
   def show
     @owners = User.owned(current_target_group).order_joined.limit(20)
     @except_owners = User.joined_except_owned(current_target_group).order_joined.limit(20)
     @recent_messages = BoardEntry.owned(current_target_group).accessible(current_user).scoped(:include => [ :user, :state ]).order_sort_type("date").all(:limit => 10)
   end
 
-  # tab_menu
-  # グループの新規作成画面の表示
   def new
     @main_menu = @title = _('Create a new group')
     @group = current_tenant.groups.build(:default_publication_type => 'public')
   end
 
-  # post_action
-  # グループの新規作成の処理
   def create
     @main_menu = @title = _('Create a new group')
     @group = current_tenant.groups.build(params[:group])
@@ -93,7 +86,6 @@ class GroupsController < ApplicationController
     end
   end
 
-  # tab_menu
   def manage
     @menu = params[:menu] || "manage_info"
 

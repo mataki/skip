@@ -14,8 +14,10 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class PicturesController < ApplicationController
+  before_filter :target_user_required, :only => %w(show)
+
   def show
-    @picture = Picture.find(params[:id])
+    @picture = current_target_user.pictures.find(params[:id])
     if stale?(:etag => @picture, :last_modified => @picture.updated_on)
       send_data(@picture.data, :filename => @picture.name, :type => @picture.content_type, :disposition => "inline")
     end

@@ -19,6 +19,7 @@ class UsersController < ApplicationController
   skip_before_filter :prepare_session, :only => %w(agreement new update_active)
   skip_before_filter :sso, :only => %w(agreement new update_active)
   skip_before_filter :login_required, :only => %w(agreement new update_active)
+  before_filter :target_user_required, :only => %w(show edit update update_active)
   before_filter :registerable_filter, :only => %w(agreement new update_active)
   after_filter :mark_track, :only => %w(show)
   after_filter :remove_system_message, :only => %w(show)
