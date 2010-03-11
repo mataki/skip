@@ -21,13 +21,7 @@ class NoticesController < ApplicationController
       current_user.notices.create :target => target
       respond_to do |format|
         format.html do
-          if current_target_user
-            redirect_to url_for(:controller => 'user', :action => 'show', :uid => current_target_user.uid)
-          elsif current_target_group
-            redirect_to url_for(:controller => 'group', :action => 'show', :gid => current_target_group.gid)
-          else
-            redirect_to root_url
-          end
+          redirect_to [current_tenant, target]
         end
       end
     else
@@ -36,18 +30,17 @@ class NoticesController < ApplicationController
   end
 
   def destroy
-    notice = current_user.notices.find params[:id]
-    notice.destroy
-    respond_to do |format|
-      format.html do
-        if current_target_user
-          redirect_to url_for(:controller => 'user', :action => 'show', :uid => current_target_user.uid)
-        elsif current_target_group
-          redirect_to url_for(:controller => 'group', :action => 'show', :gid => current_target_group.gid)
-        else
-          redirect_to root_url
+    target = current_target_user || current_target_group
+    if target
+      notice = current_user.notices.find params[:id]
+      notice.destroy
+      respond_to do |format|
+        format.html do
+          redirect_to [current_tenant, target]
         end
       end
+    else
+      render_404
     end
   end
 end
