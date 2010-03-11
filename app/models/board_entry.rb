@@ -230,10 +230,6 @@ class BoardEntry < ActiveRecord::Base
     Tag.validate_tags(category).each{ |error| errors.add(:category, error) }
   end
 
-#  def before_save
-#    parse_symbol_link
-#  end
-
   def before_create
     generate_next_user_entry_no
   end
@@ -667,40 +663,6 @@ private
     self.user_entry_no = entry.max_user_entry_no.to_i + 1
   end
 
-#  # symbol_link([uid:fujiwara>])を参照先のデータに基づいて変換する
-#  def parse_symbol_link
-#    # ---- closure ----
-#    user_proc = proc { |symbol, link_str|
-#      transfer_symbol_link(symbol, link_str, proc {|symbol_id| (user =  User.find_by_uid(symbol_id)) ? user.name : nil })
-#    }
-#    group_proc = proc { |symbol, link_str|
-#      transfer_symbol_link(symbol, link_str, proc {|symbol_id| (group = Group.active.find_by_gid(symbol_id)) ? group.name : nil })
-#    }
-#    page_proc = proc { |symbol, link_str|
-#      transfer_symbol_link(symbol, link_str, proc {|symbol_id| (entry = BoardEntry.find_by_id(symbol_id)) ? entry.title : nil })
-#    }
-#    file_proc = proc {|symbol, link_str|
-#      transfer_symbol_link(symbol, link_str, proc {|symbol_id|
-#        (file = ShareFile.find_by_file_name_and_owner_symbol(symbol_id, self.symbol)) ? file.file_name : nil
-#      })
-#    }
-#    # -----------------
-#    procs = [["uid", user_proc], ["gid", group_proc], ["page", page_proc], ["file", file_proc]]
-#
-#    split_mark = self.editor_mode == "hiki" ? ">" : "&gt;"
-#    procs.each { |value| self.contents = BoardEntry.replace_symbol_link(self.contents, value.first, value.last, split_mark) }
-#  end
-#
-#  def transfer_symbol_link symbol, link_str, link_str_proc
-#      if link_str.size > 0
-#        link_str == symbol ? "[#{symbol}]" : "[#{symbol}>#{link_str}]"
-#      else
-#        symbol_type, symbol_id = SkipUtil.split_symbol symbol
-#        link_str = link_str_proc.call(symbol_id)
-#        link_str ? "[#{symbol}>#{link_str}]" : _("[Link does not exist...%s>]") % symbol
-#      end
-#  end
-#
   # 第一引数textに含まれるsymbol_linkを置換する（[uid:fujiwara>namae]）
   # ２つ目の引数で、対象とするsymbolのtype（uid,gid...）を指定
   # ３つ目の引数で、置換する文字列を生成する関数を指定
