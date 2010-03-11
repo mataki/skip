@@ -80,9 +80,9 @@
       <h2 class="ui-corner-top">
         <% if current_user.custom.display_entries_format == "tabs" %>
           <%= icon_tag("tab") %><%= _('display tabs') %>
-          <%= icon_tag("application_tile_vertical") + link_to(_('display flat'), {:action => 'update_customize', :user_custom => {"display_entries_format" => "flat"}, :go_to_root => "true"}, :method => :post) %>
+          <%= icon_tag("application_tile_vertical") + link_to(_('display flat'), polymorphic_path([current_tenant, current_user, :customize], :user_custom => {"display_entries_format" => "flat"}), :method => :put) %>
         <% else %>
-          <%= icon_tag("tab") + link_to(_('display tabs'), {:action => 'update_customize', :user_custom => {"display_entries_format" => "tabs"}, :go_to_root => "true"}, :method => :post) %>
+          <%= icon_tag("tab") + link_to(_('display tabs'), polymorphic_path([current_tenant, current_user, :customize], :user_custom => {"display_entries_format" => "tabs"}), :method => :put) %>
           <%= icon_tag("application_tile_vertical") %><%= _('display flat') %>
         <% end %>
       </h2>
