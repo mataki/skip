@@ -537,20 +537,6 @@ class BoardEntry < ActiveRecord::Base
     end
   end
 
-#  # 話題にしてくれた記事一覧を返す
-#  # TODO named_scopeにしたい
-#  def trackback_entries(user)
-#    ids =  self.entry_trackbacks.map {|trackback| trackback.tb_entry_id }
-#    authorized_entries_except_given_user(user.id, user.belong_symbols, ids)
-#  end
-#
-#  # 話題元の記事一覧を返す
-#  # TODO named_scopeにしたい
-#  def to_trackback_entries(user)
-#    ids =  self.to_entry_trackbacks.map {|trackback| trackback.board_entry_id }
-#    authorized_entries_except_given_user(user.id, user.belong_symbols, ids)
-#  end
-
 #  # この記事の公開対象ユーザ一覧を返す
 #  # 戻り値：Userオブジェクトの配列（重複なし）
 #  def publication_users
@@ -662,27 +648,4 @@ private
                             :conditions =>['user_id = ?', self.user_id])
     self.user_entry_no = entry.max_user_entry_no.to_i + 1
   end
-
-#  # 記事が指定されたユーザの記事の場合、指定されたidに一致する記事を全て返す。
-#  # 記事が指定されたユーザの記事ではない場合、指定されたidに一致する記事のうち、権限のある記事一覧を返す
-#  def authorized_entries_except_given_user(user_id, user_symbols, ids)
-#    entries = []
-#    if ids && ids.length > 0
-#      find_params = {}
-#      if user_id == self.user_id
-#        find_params[:conditions] = ["board_entries.id in (?)", ids]
-#        find_params[:include] = []
-#      else
-#        find_params = BoardEntry.make_conditions(user_symbols, { :ids => ids })
-#      end
-#      entries = BoardEntry.find(:all,
-#                                :conditions => find_params[:conditions],
-#                                :order => "date DESC",
-#                                :include => find_params[:include] | [:user])
-#      entries.each do |entry|
-#        entry.load_owner
-#      end
-#    end
-#    entries
-#  end
 end
