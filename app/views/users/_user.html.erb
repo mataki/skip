@@ -3,7 +3,7 @@
   <li class="image"><%= user_link_to_with_portrait(user)%></li>
   <% if group -%>
     <li class="data_row">
-      <%= group.administrator?(user) ? (icon_tag('star') + _("Administrator")) : (icon_tag('user') + _("Member")) %>
+      <%= group.owned?(user) ? (icon_tag('star') + _("Administrator")) : (icon_tag('user') + _("Member")) %>
     </li>
   <% end -%>
   <li class="data_row"><%= user_link_to user %></li>

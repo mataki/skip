@@ -242,20 +242,44 @@ class BoardEntry < ActiveRecord::Base
     BoardEntryPoint.create(:board_entry_id=>id)
   end
 
-  # FIXME 後で実装
+  # TODO 回帰テストを書く
+  # TODO ShareFileと統合したい
   def full_accessible? target_user = self.user
-    true
+    case
+    when self.owner_is_user? then self.writer?(target_user)
+    when self.owner_is_group? then owner.owned?(target_user) || (owner.joined?(target_user) && self.writer?(target_user))
+    else
+      false
+    end
   end
 
-  # FIXME 後で実装
+  # TODO 回帰テストを書く
+  # TODO ShareFileと統合したい
   def accessible? target_user = self.user
-    true
+    case
+    when self.owner_is_user? then self.public? || self.writer(target_user)
+    when self.owner_is_group? then self.public? || owner.joind?(target_user)
+    else
+      false
+    end
   end
 
+  # TODO ShareFileと統合したい
   def accessible_without_writer? target_user = self.user
     !self.writer?(target_user) && self.accessible?(target_user)
   end
 
+  # TODO ShareFileと統合したい
+  def writer? target_user_or_target_user_id
+    case
+    when target_user_or_target_user_id.is_a?(User) then user_id == target_user_or_target_user_id.id
+    when target_user_or_target_user_id.is_a?(Integer) then user_id == target_user_or_target_user_id
+    else
+      false
+    end
+  end
+
+  # TODO ShareFileと統合したい
   # 所属するグループの公開範囲により、記事の公開範囲を判定する
   def owner_is_public?
     !(owner.is_a?(Group) && owner.protected?)
@@ -451,11 +475,6 @@ class BoardEntry < ActiveRecord::Base
 
   def send_mail?
     true if send_mail == "1"
-  end
-
-  # この記事の作成者かどうか判断する
-  def writer?(login_user_id)
-    user_id == login_user_id
   end
 
 #  # 権限チェック

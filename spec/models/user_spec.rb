@@ -1077,58 +1077,6 @@ describe User, '#within_time_limit_of_password?' do
   end
 end
 
-describe User, '#participating_groups?' do
-  before do
-    @user = stub_model(User, :id => 99)
-    @group = create_group
-  end
-  describe '指定したユーザがグループ参加者(参加済み)の場合' do
-    before do
-      group_participation = create_group_participation(:user_id => @user.id, :group_id => @group.id)
-    end
-    it 'trueが返ること' do
-      @user.participating_group?(@group).should be_true
-    end
-  end
-  describe '指定したユーザがグループ参加者(参加待ち)の場合' do
-    before do
-      group_participation = create_group_participation(:user_id => @user.id, :group_id => @group.id, :waiting => true)
-    end
-    it 'falseが返ること' do
-      @user.participating_group?(@group).should be_false
-    end
-  end
-  describe '指定したユーザがグループ管理者(参加済み)の場合' do
-    before do
-      group_participation = create_group_participation(:user_id => @user.id, :group_id => @group.id, :waiting => false, :owned => true)
-    end
-    it 'trueが返ること' do
-      @user.participating_group?(@group).should be_true
-    end
-  end
-  describe '指定したユーザがグループ管理者(参加待ち)の場合' do
-    before do
-      group_participation = create_group_participation(:user_id => @user.id, :group_id => @group.id, :waiting => true, :owned => true)
-    end
-    it 'falseが返ること' do
-      @user.participating_group?(@group).should be_false
-    end
-  end
-  describe '指定したユーザがグループ未参加者の場合' do
-    before do
-      group_participation = create_group_participation(:user_id => @user.id + 1, :group_id => @group.id)
-    end
-    it 'falseが返ること' do
-      @user.participating_group?(@group).should be_false
-    end
-  end
-  describe 'Group以外の場合' do
-    it 'ArgumentErrorとなること' do
-      lambda { @user.participating_group?(nil) }.should raise_error(ArgumentError)
-    end
-  end
-end
-
 describe User, 'password_required?' do
   before do
     @user = new_user

@@ -43,9 +43,25 @@ class BoardEntryComment < ActiveRecord::Base
     board_entry.reload.update_attribute :updated_on, Time.now
   end
 
-  # FIXME 後で実装
+  # TODO 回帰テストを書く
   def full_accessible? target_user = self.user
-    true
+    if board_entry.accessible?(target_user)
+      case
+      when board_entry.owner_is_user? then self.writer?(target_user)
+      when board_entry.owner_is_group? then board_entry.owner.owned?(target_user) || (board_entry.owner.joined?(target_user) && self.writer?(target_user))
+      end
+    else
+      false
+    end
+  end
+
+  def writer? target_user_or_target_user_id
+    case
+    when target_user_or_target_user_id.is_a?(User) then user_id == target_user_or_target_user_id.id
+    when target_user_or_target_user_id.is_a?(Integer) then user_id == target_user_or_target_user_id
+    else
+      false
+    end
   end
 
   def comment_created_time

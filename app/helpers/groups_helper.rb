@@ -56,7 +56,7 @@ module GroupsHelper
     tab_menu_source << {:label => _('Members'), :options => {:controller => 'group', :action => 'users', :gid => group.gid}} unless group.group_participations.active.except_owned.empty?
     tab_menu_source << {:label => _('Forums'), :options => {:controller => 'group', :action => 'bbs', :gid => group.gid, :sort_type => 'date', :type => ''}} unless BoardEntry.owned(group).accessible(current_user).empty?
     tab_menu_source << {:label => _('Shared Files'), :options => {:controller => 'share_file', :action => "list", :gid => group.gid}} unless current_target_group.owner_share_files.accessible(current_user).empty?
-    tab_menu_source << {:label => _('Admin'), :options => manage_tenant_group_url(current_tenant, current_target_group)} if group.administrator?(current_user)
+    tab_menu_source << {:label => _('Admin'), :options => manage_tenant_group_url(current_tenant, current_target_group)} if group.owned?(current_user)
     tab_menu_source
   end
 end

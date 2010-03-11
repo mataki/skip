@@ -147,6 +147,14 @@ class Group < ActiveRecord::Base
     group_by_category
   end
 
+  def joined? target_user
+    GroupParticipation.joined?(target_user, self)
+  end
+
+  def owned? target_user
+    GroupParticipation.owned?(target_user, self)
+  end
+
   def owners
     group_participations.active.only_owned.order_new.map(&:user)
   end

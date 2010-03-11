@@ -171,53 +171,6 @@ describe Group do
     it { lambda { @group.logical_destroy }.should change(BoardEntryComment, :count).by(-1) }
   end
 
-  describe Group, '#administrator? ' do
-    before do
-      @user = stub_model(User, :id => 99)
-      @group = create_group
-    end
-    describe '指定したユーザがグループ参加者(参加済み)の場合' do
-      before do
-        group_participation = create_group_participation(:user_id => @user.id, :group_id => @group.id)
-      end
-      it 'falseが返ること' do
-        @group.administrator?(@user).should be_false
-      end
-    end
-    describe '指定したユーザがグループ参加者(参加待ち)の場合' do
-      before do
-        group_participation = create_group_participation(:user_id => @user.id, :group_id => @group.id, :waiting => true)
-      end
-      it 'falseが返ること' do
-        @group.administrator?(@user).should be_false
-      end
-    end
-    describe '指定したユーザがグループ管理者(参加済み)の場合' do
-      before do
-        group_participation = create_group_participation(:user_id => @user.id, :group_id => @group.id, :waiting => false, :owned => true)
-      end
-      it 'trueが返ること' do
-        @group.administrator?(@user).should be_true
-      end
-    end
-    describe '指定したユーザがグループ管理者(参加待ち)の場合' do
-      before do
-        group_participation = create_group_participation(:user_id => @user.id, :group_id => @group.id, :waiting => true, :owned => true)
-      end
-      it 'falseが返ること' do
-        @group.administrator?(@user).should be_false
-      end
-    end
-    describe '指定したユーザがグループ未参加者の場合' do
-      before do
-        group_participation = create_group_participation(:user_id => @user.id + 1, :group_id => @group.id)
-      end
-      it 'falseが返ること' do
-        @group.administrator?(@user).should be_false
-      end
-    end
-  end
-
   describe "#join" do
     before do
       @group = create_group

@@ -24,18 +24,6 @@ module BoardEntriesHelper
     result
   end
 
-  # 記事を書いた人かどうか
-  # TODO BoardEntry#writer?と重複してる。無くしたい
-  def writer? comment, user_id
-    user_id == comment.user_id
-  end
-
-  # 記事を書いた人及びコメントを書いた人かどうか
-  # TODO BoardEntryComment#writer?となるようにしたい。
-  def comment_writer? comment, user_id
-    writer?(comment, user_id) || (comment.board_entry.user_id == user_id)
-  end
-
   def link_to_write_place owner
     name = write_place_name(owner)
     unless name.blank?

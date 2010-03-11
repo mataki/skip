@@ -50,6 +50,16 @@ class GroupParticipation < ActiveRecord::Base
     group.update_attribute(:updated_on, Time.now) if group
   end
 
+  # TODO 回帰テストを書く
+  def self.joined?(target_user, target_group)
+    !!find_by_user_id_and_group_id_and_waiting(target_user, target_group, false)
+  end
+
+  # TODO 回帰テストを書く
+  def self.owned?(target_user, target_group)
+    !!find_by_user_id_and_group_id_and_waiting_and_owned(target_user, target_group, false, true)
+  end
+
   def to_s
     return '[id:' + id.to_s + ', user_id:' + user_id.to_s + ', group_id:' + group_id.to_s + ']'
   end

@@ -105,14 +105,41 @@ class ShareFile < ActiveRecord::Base
     e.backtrace.each { |message| logger.error message }
   end
 
-  # FIXME 後で実装
+  # TODO 回帰テストを書く
+  # TODO BoardEntryと統合したい
   def full_accessible? target_user = self.user
-    true
+    case
+    when self.owner_is_user? then self.writer?(target_user)
+    when self.owner_is_group? then owner.owned?(target_user) || (owner.joined?(target_user) && self.writer?(target_user))
+    else
+      false
+    end
   end
 
-  # FIXME 後で実装
+  # TODO 回帰テストを書く
+  # TODO BoardEntryと統合したい
   def accessible? target_user = self.user
-    true
+    case
+    when self.owner_is_user? then self.public? || self.writer(target_user)
+    when self.owner_is_group? then self.public? || owner.joind?(target_user)
+    else
+      false
+    end
+  end
+
+  # TODO BoardEntryと統合したい
+  def accessible_without_writer? target_user = self.user
+    !self.writer?(target_user) && self.accessible?(target_user)
+  end
+
+  # TODO BoardEntryと統合したい
+  def writer? target_user_or_target_user_id
+    case
+    when target_user_or_target_user_id.is_a?(User) then user_id == target_user_or_target_user_id.id
+    when target_user_or_target_user_id.is_a?(Integer) then user_id == target_user_or_target_user_id
+    else
+      false
+    end
   end
 
   # TODO BoardEntryと統合したい
@@ -121,12 +148,12 @@ class ShareFile < ActiveRecord::Base
     !(owner.is_a?(Group) && owner.protected?)
   end
 
-  # TODO ShareFileと統合したい
+  # TODO BoardEntryと統合したい
   def owner_is_user?
     owner.is_a?(User)
   end
 
-  # TODO ShareFileと統合したい
+  # TODO BoardEntryと統合したい
   def owner_is_group?
     owner.is_a?(Group)
   end

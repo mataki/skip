@@ -293,6 +293,14 @@ class User < ActiveRecord::Base
     User.find_by_uid uid
   end
 
+  def joined? target_group
+    GroupParticipation.joind?(self, target_group)
+  end
+
+  def owned? target_group
+    GroupParticipation.owned?(self, target_group)
+  end
+
   def change_password(params = {})
     if params[:old_password] and crypted_password == encrypt(params[:old_password])
       if params[:password].blank?
@@ -440,11 +448,6 @@ class User < ActiveRecord::Base
 
   def default_publication_type
     'public'
-  end
-
-  def participating_group? group
-    raise ArgumentError, 'group_or_gid is invalid' unless group.is_a?(Group)
-    self.group_symbols.include? group.symbol
   end
 
   def reset_simple_login_token!
