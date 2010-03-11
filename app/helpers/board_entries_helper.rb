@@ -25,9 +25,10 @@ module BoardEntriesHelper
   end
 
   def link_to_write_place owner
+    return unless onwer
     name = write_place_name(owner)
     unless name.blank?
-      link_to name, write_place_url(owner)
+      link_to name, [current_tenant, owner, :board_entries]
     else
       ''
     end
@@ -40,13 +41,6 @@ module BoardEntriesHelper
       return _("Forums of %s") % ERB::Util.html_escape(owner.name) if owner.class == Group
     end
     ''
-  end
-
-  def write_place_url owner
-    if owner
-      return url_for(:controller => 'user', :action => 'blog', :uid => owner.uid, :archive => 'all') if owner.class == User
-      return url_for(:controller => 'group', :action => 'bbs', :gid => owner.gid) if owner.class == Group
-    end
   end
 
   def comment_title_class current_user, comment, checked_on

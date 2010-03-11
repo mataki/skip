@@ -74,41 +74,6 @@ describe BoardEntriesHelper, '#write_place_name' do
   end
 end
 
-describe BoardEntriesHelper, '#write_place_url' do
-  describe '引数のownerがnilの場合' do
-    it { helper.write_place_url(nil) == '' }
-  end
-  describe '引数のownerがnil以外の場合' do
-    describe 'ownerの型がUserの場合' do
-      before do
-        @owner = mock_model(User, :name => 'ユーザ', :uid => SkipFaker.rand_char)
-      end
-      it 'ユーザのブログへのurlが返却されること' do
-        helper.should_receive(:url_for).with(:controller => 'user', :action => 'blog', :uid => @owner.uid, :archive => 'all')
-        helper.write_place_url(@owner)
-      end
-    end
-    describe 'ownerの型がGroupの場合' do
-      before do
-        @owner = mock_model(Group, :name => 'グループ', :gid => SkipFaker.rand_char)
-      end
-      it 'グループのフォーラムへのがurlが返却されること' do
-        helper.should_receive(:url_for).with(:controller => 'group', :action => 'bbs', :gid => @owner.gid)
-        helper.write_place_url(@owner)
-      end
-    end
-    describe 'ownerの型が不明な場合' do
-      # 通常のフローではありえないはず。
-      before do
-        @owner = mock('')
-      end
-      it 'nilが返却されること' do
-        helper.write_place_url(@owner).should be_nil
-      end
-    end
-  end
-end
-
 describe BoardEntriesHelper, "#icon_with_information" do
   before do
     @user = mock('User',:id => 1)
