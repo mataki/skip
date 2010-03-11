@@ -191,10 +191,6 @@ private
     @group.name if @group
   end
 
-  def tab_menu_option
-    { :gid => @group.gid }
-  end
-
   def load_group_and_participation
     unless @group = current_target_group
       flash[:warn] = _("Specified group does not exist.")

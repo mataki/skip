@@ -399,7 +399,6 @@ describe ShareFilesController, "GET #list" do
       it "set assigns" do
         assigns[:main_menu].should == "My Page"
         assigns[:title].should == "My Page"
-        assigns[:tab_menu_option].should == { :uid => @user.uid }
         assigns[:owner_name].should == @user.name
         assigns[:share_files].should == @share_files
       end
@@ -413,7 +412,6 @@ describe ShareFilesController, "GET #list" do
       it "set assigns" do
         assigns[:main_menu].should == "Users"
         assigns[:title].should == "Mr./Ms. 対象ユーザ"
-        assigns[:tab_menu_option].should == { :uid => @target_user.uid }
         assigns[:owner_name].should == @target_user.name
         assigns[:share_files].should == @share_files
       end
@@ -430,7 +428,6 @@ describe ShareFilesController, "GET #list" do
     it "set assigns" do
       assigns[:main_menu].should == 'Groups'
       assigns[:title].should == "対象グループ"
-      assigns[:tab_menu_option].should == { :gid => @group.gid }
       assigns[:owner_name].should == @group.name
       assigns[:share_files].should == @share_files
     end
