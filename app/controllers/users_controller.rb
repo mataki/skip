@@ -30,7 +30,7 @@ class UsersController < ApplicationController
     user_ids = @search.paginate_without_retired_skip(:all, {:include => %w(user_access), :page => params[:page]}).map(&:id)
     # 上記のみでは検索条件や表示順の条件によって、user_uidsがMASTERかNICKNAMEのどちらかしたロードされない。
     # そのためviewで正しく描画するためにidのみ条件にして取得し直す
-    @users = User.id_is(user_ids).descend_by_user_access_last_access.paginate_without_retired_skip(:all, {:include => %w(user_access user_uids picture), :page => params[:page]})
+    @users = User.id_is(user_ids).descend_by_user_access_last_access.paginate_without_retired_skip(:all, {:include => %w(user_access picture), :page => params[:page]})
 
     flash.now[:notice] = _('User not found.') if @users.empty?
     @tags = ChainTag.popular_tag_names
