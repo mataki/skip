@@ -18,11 +18,6 @@ class User < ActiveRecord::Base
   include Authentication::ByCookieToken
   include ActionController::UrlWriter
 
-  attr_accessor :old_password, :password
-  attr_protected :admin, :status
-  cattr_reader :per_page
-  @@per_page = 40
-
   belongs_to :tenant
 
   has_many :group_participations, :dependent => :destroy
@@ -140,6 +135,12 @@ class User < ActiveRecord::Base
     { :order => 'user_accesses.last_access DESC', :include => [:user_access] }
   }
 
+  attr_accessor :old_password, :password
+  attr_protected :admin, :status
+  cattr_reader :per_page
+  @@per_page = 40
+
+
   N_('User|Old password')
   N_('User|Password')
   N_('User|Password confirmation')
@@ -161,30 +162,6 @@ class User < ActiveRecord::Base
   N_('User|Uid')
 
   ACTIVATION_LIFETIME = 5
-
-  def to_s
-    return 'uid:' + uid.to_s + ', name:' + name.to_s
-  end
-
-  class << self
-    def symbol_type
-      :uid
-    end
-    def find_with_retired_skip(*args)
-      with_scope(:find => { :conditions => { :status => ['ACTIVE', 'RETIRED']} }) do
-        find_without_retired_skip(*args)
-      end
-    end
-    alias_method_chain :find, :retired_skip
-  end
-
-  def validate
-    if password_required?
-      errors.add(:password, _('shall not be the same with login ID.')) if self.uid == self.password
-      errors.add(:password, _('shall not be the same with the previous one.')) if self.crypted_password_was == encrypt(self.password)
-      errors.add(:password, Admin::Setting.password_strength_validation_error_message) unless Admin::Setting.password_strength_regex.match(self.password)
-    end
-  end
 
   def before_save
     if password_required?
@@ -213,6 +190,23 @@ class User < ActiveRecord::Base
     self.old_password = nil
 
     user_oauth_accesses.delete_all if retired?
+  end
+
+  def validate
+    if password_required?
+      errors.add(:password, _('shall not be the same with login ID.')) if self.uid == self.password
+      errors.add(:password, _('shall not be the same with the previous one.')) if self.crypted_password_was == encrypt(self.password)
+      errors.add(:password, Admin::Setting.password_strength_validation_error_message) unless Admin::Setting.password_strength_regex.match(self.password)
+    end
+  end
+
+  class << self
+    def find_with_retired_skip(*args)
+      with_scope(:find => { :conditions => { :status => ['ACTIVE', 'RETIRED']} }) do
+        find_without_retired_skip(*args)
+      end
+    end
+    alias_method_chain :find, :retired_skip
   end
 
   def self.auth(tenant, code_or_email, password, key_phrase = nil)
@@ -262,12 +256,6 @@ class User < ActiveRecord::Base
     user
   end
 
-  # 未登録ユーザも含めて検索する際に利用する
-  # TODO codeを廃止してemailのみにした。使用箇所を無くした上で後で消したい
-  def self.find_by_code(code)
-    self.find_by_email(code)
-  end
-
   def self.find_by_auth_session_token(token)
     with_basic_associations.find_without_retired_skip(:first, :conditions => { :auth_session_token => token })
   end
@@ -275,6 +263,34 @@ class User < ActiveRecord::Base
   def self.find_by_activation_token(token)
     find_without_retired_skip(:first,
                               :conditions => { :activation_token => token })
+  end
+
+  def self.issue_activation_codes tenant, user_ids
+    unused_users = []
+    active_users = []
+    users = tenant.users.scoped(:conditions => ['id in (?)', user_ids]).find_without_retired_skip(:all)
+    users.each do |u|
+      if u.unused?
+        u.activation_token = make_token
+        u.activation_token_expires_at = Time.now.since(activation_lifetime.day)
+        u.save_without_validation!
+        unused_users << u
+      elsif u.active?
+        active_users << u
+      end
+    end
+    yield unused_users, active_users if block_given?
+    [unused_users, active_users]
+  end
+
+  def self.activation_lifetime
+    Admin::Setting.activation_lifetime
+  end
+
+  def self.find_by_openid_identifier openid_identifier
+    return nil if openid_identifier.blank?
+    uid = openid_identifier.split('/').last
+    User.find_by_uid uid
   end
 
   def change_password(params = {})
@@ -287,25 +303,6 @@ class User < ActiveRecord::Base
     else
       errors.add(:old_password, _("incorrect."))
     end
-  end
-
-  def symbol_id
-    uid
-  end
-
-  def symbol
-    id
-    #self.class.symbol_type.to_s + ":" + symbol_id
-  end
-
-  # TODO 使っている箇所潰してなくす
-  def uid
-    id
-  end
-
-  # TODO 使っている箇所潰してなくす
-  def code
-    id
   end
 
   def before_access
@@ -352,18 +349,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  def as_json
-    return "{ 'symbol': '#{symbol}', 'name': '#{name}' }"
-  end
-
-  def get_postit_url
-    "/user/" + self.uid
-  end
-
-  def self.select_columns
-    return column_names.dup.map! {|item| "users." + item}.join(',')
-  end
-
   def retired?
     status == 'RETIRED'
   end
@@ -374,6 +359,10 @@ class User < ActiveRecord::Base
 
   def unused?
     status == 'UNUSED'
+  end
+
+  def locked?
+    self.locked
   end
 
   def delete_auth_tokens!
@@ -403,32 +392,10 @@ class User < ActiveRecord::Base
     self.activation_token_expires_at = Time.now.since(self.class.activation_lifetime.day)
   end
 
-  def self.issue_activation_codes tenant, user_ids
-    unused_users = []
-    active_users = []
-    users = tenant.users.scoped(:conditions => ['id in (?)', user_ids]).find_without_retired_skip(:all)
-    users.each do |u|
-      if u.unused?
-        u.activation_token = make_token
-        u.activation_token_expires_at = Time.now.since(activation_lifetime.day)
-        u.save_without_validation!
-        unused_users << u
-      elsif u.active?
-        active_users << u
-      end
-    end
-    yield unused_users, active_users if block_given?
-    [unused_users, active_users]
-  end
-
   def activate!
     self.activation_token = nil
     self.activation_token_expires_at = nil
     self.save_without_validation!
-  end
-
-  def self.activation_lifetime
-    Admin::Setting.activation_lifetime
   end
 
   def within_time_limit_of_activation_token?
@@ -447,26 +414,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  # ユーザが所属するグループのシンボルを配列で返す
-  def group_symbols
-    @group_symbols ||= Group.active.participating(self).map(&:symbol)
-  end
-
-  # ユーザが所属するシンボル(本人 + 本人の所属するグループ)のシンボルを配列で返す
-  def belong_symbols
-    @belong_symbols ||= self.group_symbols
-  end
-
-  def belong_symbols_with_collaboration_apps
-    symbols = ['sid:allusers'] + belong_symbols
-    (SkipEmbedded::InitialSettings['belong_info_apps'] || {}).each do |app_name, setting|
-      join_info = SkipEmbedded::WebServiceUtil.open_service_with_url(setting["url"], { :user => self.openid_identifier }, setting["ca_file"])
-      symbols += join_info.map{|item| item["publication_symbols"]} if join_info
-    end
-    # TODO: 外のアプリの全公開のコンテンツは、"public"とする。今後、Symbol::SYSTEM_ALL_USERを単に、"public"に変更する。
-    symbols << "public"
-  end
-
   # プロフィールボックスに表示するユーザの情報
   def info
     @info ||= { :access_count => self.user_access ? self.user_access.access_count : 0,
@@ -479,39 +426,12 @@ class User < ActiveRecord::Base
     identity_url(:user => self.code, :protocol => SkipEmbedded::InitialSettings['protocol'], :host => SkipEmbedded::InitialSettings['host_and_port'])
   end
 
-  def to_s_log message
-    self.class.to_s_log message, self.email, self.id
-  end
-
-  def self.to_s_log message, email, user_id = nil
-    if user_id
-      "#{message}: {\"user_id\" => \"#{user_id}\", \"email\" => \"#{email}\"}"
-    else
-      "#{message}: {\"email\" => \"#{email}\"}"
-    end
-  end
-
-  def locked?
-    self.locked
-  end
-
   def within_time_limit_of_password?
     if Admin::Setting.enable_password_periodic_change
       self.password_expires_at && Time.now <= self.password_expires_at
     else
       true
     end
-  end
-
-  def self.synchronize_users ago = nil
-    conditions = ago ? ['updated_on >= ?', Time.now.ago(ago.to_i.minute)] : []
-    User.scoped(:conditions => conditions).find_without_retired_skip(:all).map { |u| [u.openid_identifier, u.uid, u.name, u.admin, u.retired?] }
-  end
-
-  def self.find_by_openid_identifier openid_identifier
-    return nil if openid_identifier.blank?
-    uid = openid_identifier.split('/').last
-    User.find_by_uid uid
   end
 
   def custom
@@ -531,6 +451,65 @@ class User < ActiveRecord::Base
     self.simple_login_token = self.class.make_token
     self.simple_login_token_expires_at = Time.now.since(1.month)
     self.save!
+  end
+
+  def to_s
+    return 'uid:' + uid.to_s + ', name:' + name.to_s
+  end
+
+  def as_json
+    return "{ 'symbol': '#{symbol}', 'name': '#{name}' }"
+  end
+
+  def to_s_log message
+    self.class.to_s_log message, self.email, self.id
+  end
+
+  def self.to_s_log message, email, user_id = nil
+    if user_id
+      "#{message}: {\"user_id\" => \"#{user_id}\", \"email\" => \"#{email}\"}"
+    else
+      "#{message}: {\"email\" => \"#{email}\"}"
+    end
+  end
+
+  # TODO 使っている箇所潰してなくす
+  def uid
+    id
+  end
+
+  # TODO 使っている箇所潰してなくす
+  def code
+    id
+  end
+
+  # 未登録ユーザも含めて検索する際に利用する
+  # TODO codeを廃止してemailのみにした。使用箇所を無くした上で後で消したい
+  def self.find_by_code(code)
+    self.find_by_email(code)
+  end
+
+  # ユーザが所属するグループのシンボルを配列で返す
+  # TODO 使用箇所を潰した上で廃止
+  def group_symbols
+    @group_symbols ||= Group.active.participating(self).map(&:symbol)
+  end
+
+  # ユーザが所属するシンボル(本人 + 本人の所属するグループ)のシンボルを配列で返す
+  # TODO 使用箇所を潰した上で廃止
+  def belong_symbols
+    @belong_symbols ||= self.group_symbols
+  end
+
+  # TODO 使用箇所を潰した上で廃止
+  def belong_symbols_with_collaboration_apps
+    symbols = ['sid:allusers'] + belong_symbols
+    (SkipEmbedded::InitialSettings['belong_info_apps'] || {}).each do |app_name, setting|
+      join_info = SkipEmbedded::WebServiceUtil.open_service_with_url(setting["url"], { :user => self.openid_identifier }, setting["ca_file"])
+      symbols += join_info.map{|item| item["publication_symbols"]} if join_info
+    end
+    # TODO: 外のアプリの全公開のコンテンツは、"public"とする。今後、Symbol::SYSTEM_ALL_USERを単に、"public"に変更する。
+    symbols << "public"
   end
 
 private
