@@ -15,9 +15,9 @@
 
 class GroupsController < ApplicationController
   before_filter :setup_layout, :except => %w(new create)
-  before_filter :load_group_and_participation, :only => %w(show update destroy manage)
-  before_filter :check_owned, :only => [ :manage, :update, :destroy ]
-  after_filter :remove_system_message, :only => %w(show)
+  before_filter :target_group_required => %w(show update destroy manage join leave)
+  before_filter :group_owned_required, :only => %w(manage update destroy)
+  after_filter :remove_system_message, :only => %w(show members)
 
   def index
     search_params = params[:search] || {}
@@ -43,6 +43,7 @@ class GroupsController < ApplicationController
   end
 
   def show
+    @group = current_target_group
     @owners = User.owned(current_target_group).order_joined.limit(20)
     @except_owners = User.joined_except_owned(current_target_group).order_joined.limit(20)
     @recent_messages = BoardEntry.owned(current_target_group).accessible(current_user).scoped(:include => [ :user, :state ]).order_sort_type("date").all(:limit => 10)
@@ -67,6 +68,7 @@ class GroupsController < ApplicationController
   end
 
   def update
+    @group = current_target_group
     if @group.update_attributes(params[:group])
       flash[:notice] = _('Group information was successfully updated.')
       redirect_to [current_tenant, @group]
@@ -76,6 +78,7 @@ class GroupsController < ApplicationController
   end
 
   def destroy
+    @group = current_target_group
     if @group.group_participations.size > 1
       flash[:warn] = _('Failed to delete since there are still other users in the group.')
       redirect_to [current_tenant, @group]
@@ -87,6 +90,7 @@ class GroupsController < ApplicationController
   end
 
   def manage
+    @group = current_target_group
     @menu = params[:menu] || "manage_info"
 
     case @menu
@@ -105,22 +109,52 @@ class GroupsController < ApplicationController
     render :partial => @menu, :layout => "layout"
   end
 
+  def join
+    @group = current_target_group
+    participations = @group.join current_user
+    unless participations.empty?
+      if participations.first.waiting?
+        flash[:notice] = _('Request sent. Please wait for the approval.')
+      else
+        @group.group_participations.only_owned.each do |owner_participation|
+          SystemMessage.create_message :message_type => 'JOIN', :user_id => owner_participation.user_id, :message_hash => {:group_id => @group.id}
+        end
+        flash[:notice] = _('Joined the group successfully.')
+      end
+    else
+      flash[:error] = @group.errors.full_messages
+    end
+    redirect_to [current_tenant, @group]
+  end
+
+  def leave
+    @group = current_target_group
+    @group.leave current_user do |result|
+      if result
+        @group.group_participations.only_owned.each do |owner_participation|
+          SystemMessage.create_message :message_type => 'LEAVE', :user_id => owner_participation.user_id, :message_hash => {:user_id => current_user.id, :group_id => @group.id}
+        end
+        flash[:notice] = _('Successfully left the group.')
+      else
+        flash[:notice] = _('%s are not a member of the group.') % 'You'
+      end
+    end
+    redirect_to [current_tenant, @group]
+  end
+
+  def members
+    @users = current_target_group.users.paginate(:page => params[:page])
+
+    flash.now[:notice] = _('User not found.') if @users.empty?
+  end
+
 private
   def setup_layout
     @main_menu = @title = _('Groups')
   end
 
-  def load_group_and_participation
-    unless @group = current_target_group
-      flash[:warn] = _("Specified group does not exist.")
-      redirect_to root_url
-      return false
-    end
-    @participation = current_participation
-  end
-
-  def check_owned
-    unless @participation and @participation.owned?
+  def group_owned_required
+    unless !(current_target_group && current_target_group.owned?(current_user))
       flash[:warn] = _('Administrative privillage required for the action.')
       redirect_to root_url
       return false

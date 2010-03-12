@@ -1,7 +1,7 @@
 <ul>
   <li><%= link_to_unless_current_tab content_tag(:span, _('Top')), [current_tenant, current_target_group] %></li>
   <% if current_target_group.group_participations.active.except_owned.first -%>
-    <li><%= link_to_unless_current_tab content_tag(:span, _('Members')), [current_tenant, current_target_group, :users] %></li>
+    <li><%= link_to_unless_current_tab content_tag(:span, _('Members')), polymorphic_path([current_tenant, current_target_group], :action => :members) %></li>
   <% end -%>
   <% if current_target_group.owner_entries.first -%>
     <li><%= link_to_unless_current_tab content_tag(:span, _('Forums')), [current_tenant, current_target_group, :board_entries] %></li>

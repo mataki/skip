@@ -39,7 +39,7 @@ ActionController::Routing::Routes.draw do |map|
       # ユーザの参加グループ一覧のため
       user.resources :groups, :only => %w(index)
     end
-    tenant.resources :groups, :member => {:manage => :get} do |group|
+    tenant.resources :groups, :member => {:manage => :get, :join => :post, :leave => :post, :members => :get} do |group|
       group.resources :board_entries, :member => {:print => :get, :toggle_hide => :put}, :collection => {:preview => :post} do |board_entry|
         board_entry.resources :entry_trackbacks, :only => %w(destroy)
         board_entry.resource :board_entry_point, :only => [], :member => {:pointup => :put}

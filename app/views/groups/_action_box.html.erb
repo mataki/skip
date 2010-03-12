@@ -1,7 +1,7 @@
 <div class="action_buttons ui-corner-all">
   <ul class="no_style">
     <% unless current_participation -%>
-      <li><%= link_to(content_tag('span', _('Join this group')), {:controller => 'group', :action => "join"}, {:class => "rounded", :method => :post}) -%></li>
+      <li><%= link_to(content_tag('span', _('Join this group')), polymorphic_path([current_tenant, current_target_group], :action => :join), {:class => "rounded", :method => :post}) -%></li>
       <% if notice = current_user.notices.find_by_target_id_and_target_type(current_target_group.id, current_target_group.class.name) -%>
         <li><%= link_to(content_tag('span', _('Stop a notification')), [current_tenant, current_target_group, notice], {:class => "rounded", :method => :delete, :confirm => _('Are you sure?')}) %></li>
       <% else -%>
@@ -18,7 +18,7 @@
         <li><%= link_to(content_tag('span', _('Write a question')), new_polymorphic_path([current_tenant, current_target_group, :board_entry], :board_entry => {:aim_type => 'question'}), :title => _('Write a question'), :class => 'rounded') %></li>
         <li><%= link_to(content_tag('span', _('Upload a file')), new_polymorphic_path([current_tenant, current_target_group, :share_file]), :title => _('Upload a file'), :class => 'rounded') %></li>
         <% unless current_participation.owned? -%>
-          <li><%= link_to(content_tag('span', _('Leave the group')), {:action => 'leave'}, {:confirm => _('Are you sure leave the group?'), :method => :post, :class => "rounded"}) %></li>
+          <li><%= link_to(content_tag('span', _('Leave the group')), polymorphic_path([current_tenant, current_target_group], :action => :leave), {:confirm => _('Are you sure leave the group?'), :method => :post, :class => "rounded"}) %></li>
         <% end -%>
       <% end -%>
     <% end -%>

@@ -14,43 +14,12 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class GroupController < ApplicationController
-  before_filter :load_group_and_participation, :setup_layout
+  before_filter :setup_layout
 
   before_filter :check_owned,
-                :only => [ :manage, :managers, :permit,
-                           :update, :destroy, :change_participation ]
+                :only => [ :permit, :change_participation ]
 
-  after_filter :remove_system_message, :only => %w(show users bbs)
-
-  verify :method => :post,
-         :only => [ :join, :destroy, :leave, :update, :change_participation ],
-         :redirect_to => { :action => :show }
-
-  # tab_menu
-  def users
-    @users = @group.users.paginate(:page => params[:page])
-
-    flash.now[:notice] = _('User not found.') if @users.empty?
-  end
-
-  # post_action
-  # 参加申込み
-  def join
-    participations = @group.join current_user
-    unless participations.empty?
-      if participations.first.waiting?
-        flash[:notice] = _('Request sent. Please wait for the approval.')
-      else
-        @group.group_participations.only_owned.each do |owner_participation|
-          SystemMessage.create_message :message_type => 'JOIN', :user_id => owner_participation.user_id, :message_hash => {:group_id => @group.id}
-        end
-        flash[:notice] = _('Joined the group successfully.')
-      end
-    else
-      flash[:error] = @group.errors.full_messages
-    end
-    redirect_to :action => 'show'
-  end
+  verify :method => :post, :only => [ :change_participation ], :redirect_to => { :action => :show }
 
 #  # 参加者追加(管理者のみ)
 #  def append_user
@@ -72,22 +41,6 @@ class GroupController < ApplicationController
 #    end
 #    redirect_to :action => 'manage', :menu => 'manage_participations'
 #  end
-
-  # post_action
-  # 退会
-  def leave
-    @group.leave @participation.user do |result|
-      if result
-        @group.group_participations.only_owned.each do |owner_participation|
-          SystemMessage.create_message :message_type => 'LEAVE', :user_id => owner_participation.user_id, :message_hash => {:user_id => current_user.id, :group_id => @group.id}
-        end
-        flash[:notice] = _('Successfully left the group.')
-      else
-        flash[:notice] = _('%s are not a member of the group.') % 'You'
-      end
-    end
-    redirect_to :action => 'show'
-  end
 
 #  # 管理者による強制退会処理
 #  def forced_leave_user
@@ -189,15 +142,6 @@ private
 
   def title
     @group.name if @group
-  end
-
-  def load_group_and_participation
-    unless @group = current_target_group
-      flash[:warn] = _("Specified group does not exist.")
-      redirect_to :controller => 'mypage', :action => 'index'
-      return false
-    end
-    @participation = current_participation
   end
 
   def check_owned
