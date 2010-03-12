@@ -39,7 +39,7 @@ class ApplicationController < ActionController::Base
 
   init_gettext "skip" if defined? GetText
 
-  helper_method :scheme, :endpoint_url, :identifier, :checkid_request, :extract_login_from_identifier, :logged_in?, :current_user, :current_target_user, :current_target_group, :current_target_owner, :current_participation, :owner_entries_path, :notice_entry_enabled?, :event_enabled?, :current_tenant, :root_url
+  helper_method :scheme, :endpoint_url, :identifier, :checkid_request, :extract_login_from_identifier, :logged_in?, :current_user, :current_target_user, :current_target_group, :current_target_owner, :current_participation, :notice_entry_enabled?, :event_enabled?, :current_tenant, :root_url
 protected
   include InitialSettingsHelper
   # アプリケーションで利用するセッションの準備をする
@@ -147,24 +147,15 @@ protected
     @current_tenant ||= Tenant.find(params[:tenant_id])
   end
 
-  def owner_entries_path entry
-    owner = entry.load_owner
-    if entry.owner_is_user?
-      url_for :controller => 'user', :action => 'blog', :uid => owner.uid, :archive => 'all', :sort_type => 'date', :type => 'entry'
-    else
-      url_for :controller => 'group', :action => 'bbs', :gid => owner.gid, :sort_type => 'date', :type => ''
-    end
-  end
-
   def login_required
     unless logged_in?
       if request.env['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest'
         render :text => _('Session expired. You need to log in again.'), :status => :bad_request
       else
         if request.url == root_url
-          redirect_to :controller => '/platform', :action => :index
+          redirect_to [current_tenant, :platform]
         else
-          redirect_to :controller => '/platform', :action => :require_login, :return_to => URI.decode(request.url)
+          redirect_to polymorphic_url([current_tenant, :platform], :action => :require_login, :return_to => URI.decode(request.url))
         end
       end
       false

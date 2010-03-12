@@ -16,7 +16,8 @@ ActionController::Routing::Routes.draw do |map|
         :activate => :any,
         :forgot_password => :any,
         :reset_password => :any,
-        :signup => :any
+        :signup => :any,
+        :require_login => :get
       }
     tenant.resources :users, :new => {:agreement => :get}, :member => {:update_active => :put} do |user|
       user.resources :board_entries, :member => {:print => :get, :toggle_hide => :put}, :collection => {:preview => :post} do |board_entry|
