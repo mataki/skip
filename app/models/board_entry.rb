@@ -379,23 +379,6 @@ class BoardEntry < ActiveRecord::Base
     [text, color]
   end
 
-  # 記事へのリンクのURLを生成して返す
-  # TODO なくしたい。viewかhelperのみでなんとかしたい。
-  def get_url_hash
-    url = { :entry_id => id }
-    case entry_type
-    when "DIARY"
-      url[:controller] = "user"
-      url[:action] = "blog"
-      url[:uid] = symbol_id
-    when "GROUP_BBS"
-      url[:controller] = "group"
-      url[:action] = "bbs"
-      url[:gid] = symbol_id
-    end
-    url
-  end
-
 #  # TODO ShareFileと統合したい。owner_symbol_typeにしたい
 #  def symbol_type
 #    symbol.split(':')[0]
