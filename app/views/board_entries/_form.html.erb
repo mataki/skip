@@ -108,7 +108,7 @@ div.input_line textarea {
 
 <% ckeditor 'board_entry_contents_richtext', 'toolbar' => "Entry" %>
 <% content_for :javascript_initializers do -%>
-  <% categories_hash = form.object.categories_hash(current_user) -%>
+  <% categories_hash = BoardEntry.categories_hash(current_user) -%>
   var setupTagComplete = function() {
       var tags = new Array(<%= categories_hash[:mine].map{|str| ("'#{str}'")}.join(',') %>);
       var stdTags = new Array(<%= categories_hash[:standard].map{|str| ("'#{str}'")}.join(',') %>);

@@ -13,8 +13,8 @@ table {
   <div class="input_value"><%= form.text_field :category, :size => '60' %>
     <div id="category_box" style="display:none;">
       <div id="candidates_list"><p><%= _('Multiple values can be given in foo,bar format')%></p></div>
-      <div style="font-size:10pt; font-weight:bold;"><%= _('Tags: ')%></div><div id="tags_list" style="margin-bottom:5px;"></div>
-      <div style="font-size:10pt; font-weight:bold;"><%= _('Popular Tags: ')%></div><div id="user_tags_list" style="margin-bottom:5px;"></div>
+      <div style="font-size:10pt; font-weight:bold;"><%= _('Your tags: ')%></div><div id="tags_list" style="margin-bottom:5px;"></div>
+      <div style="font-size:10pt; font-weight:bold;"><%= _('Recent tags of other users: ')%></div><div id="user_tags_list" style="margin-bottom:5px;"></div>
     </div>
   </div>
   <div style="clear: left"></div>
@@ -55,7 +55,7 @@ table {
 </div>
 
 <% content_for :javascript_initializers do -%>
-  <% categories_hash = form.object.categories_hash(current_user) -%>
+  <% categories_hash = ShareFile.categories_hash(current_user) -%>
   $j('#share_file_category').focus(function() {
       showCategoryBox();
   });

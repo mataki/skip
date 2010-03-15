@@ -90,6 +90,7 @@ class ShareFilesController < ApplicationController
 
   def new
     @share_file = current_target_owner.owner_share_files.build(params[:share_file])
+    @share_file.user = current_user
     required_full_accessible(@share_file) do
       respond_to do |format|
         format.html do
@@ -102,19 +103,10 @@ class ShareFilesController < ApplicationController
   # post action
   def create
     @share_file = current_target_owner.owner_share_files.build(params[:share_file])
+    @share_file.tenant = current_tenant
+    @share_file.user = current_user
 
     required_full_accessible(@share_file) do
-#      # TODO modelに持っていけないか?(validate_on_createあたり)
-#      unless @share_file.file
-#        respond_to do |format|
-#          format.html do
-#            ajax_upload? ? render(:text => {:status => '400', :messages => [_("%{name} is mandatory.") % { :name => _('File') }]}.to_json) : render :action => :new
-#            return
-#          end
-#        end
-#      end
-      @share_file.user = current_user
-      @share_file.tenant = current_tenant
       ShareFile.transaction do
         @share_file.save!
         respond_to do |format|

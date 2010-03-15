@@ -45,6 +45,10 @@ class Tag < ActiveRecord::Base
     { :conditions => ['entry_tags.board_entry_id IN (?)', entry_ids], :joins => [:entry_tags], :group => 'tags.name' }
   }
 
+  named_scope :uniq_by_share_file_ids, proc { |share_file_ids|
+    { :conditions => ['share_file_tags.share_file_id IN (?)', share_file_ids], :joins => [:share_file_tags], :group => 'tags.name' }
+  }
+
   named_scope :share_files_owned_by, proc { |owner|
     { :conditions => ['share_files.owner_id = ?', owner.id], :joins => [:share_files], :group => 'tags.id' }
   }

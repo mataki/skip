@@ -207,42 +207,19 @@ class ShareFile < ActiveRecord::Base
 #  end
 #
 #
-#  # 共有ファイル一覧のタグ用
-#  def self.get_tags(owner_symbol)
-#    ShareFileTag.find(:all,
-#                      :include => [ :share_file, :tag ] ,
-#                      :conditions => ["share_files.owner_symbol = ?", owner_symbol]).map{ |tag| tag.tag.name }.uniq
-#  end
-#
-   # FIXME 後で実装
-   def categories_hash user
-     { :mine => [], :user => [], :popular => [] }
-   end
+  def self.categories_hash user
+    accessible_share_files = ShareFile.accessible(user).descend_by_updated_at
+    accessible_share_file_ids = accessible_share_files.map(&:id)
+    user_wrote_share_file_ids = accessible_share_files.select {|s| s.user_id == user.id}.map(&:id)
 
-#  def self.get_tags_hash(owner_symbol = nil)
-#    # TODO:サブクエリを使うようにしないとアクセス数とデータ数が多くなる
-#
-#    options = { :conditions => ["owner_symbol = ?", owner_symbol]} if owner_symbol
-#    share_files = ShareFile.find(:all, options).map {|share_file| share_file.id}
-#
-#    owner_tag_names = []
-#    popular_tag_names = []
-#    if share_files.size > 0
-#      options = { :select => 'tags.name',
-#                  :joins => 'JOIN tags ON share_file_tags.tag_id = tags.id',
-#                  :group => 'share_file_tags.tag_id',
-#                  :order => 'count(share_file_tags.tag_id) DESC',
-#                  :conditions => ["share_file_tags.share_file_id in (?)", share_files]}
-#
-#      owner_tag_names = ShareFileTag.find(:all, options).map {|tag| tag.name }
-#
-#      options[:conditions] = ["share_file_tags.share_file_id not in (?)", share_files]
-#      popular_tag_names = owner_symbol ? ShareFileTag.find(:all, options).map {|tag| tag.name } : owner_tag_names # ownerが指定されてないなら同一となる
-#
-#    end
-#    { :mine => owner_tag_names, :user => (popular_tag_names-owner_tag_names).first(10), :popular => popular_tag_names.first(10) }
-#  end
-#
+    user_wrote_tags = Tag.uniq_by_share_file_ids(user_wrote_share_file_ids).ascend_by_name.map(&:name)
+    recent_user_accessible_tags = Tag.uniq_by_share_file_ids(accessible_share_file_ids[0..9]).ascend_by_name.map(&:name)
+    categories_hash = {}
+    categories_hash[:mine] = user_wrote_tags
+    categories_hash[:user] = recent_user_accessible_tags - user_wrote_tags
+    categories_hash
+  end
+
   # TODO Tagのnamed_scopeにしてなくしたい
   def self.get_popular_tag_words()
     options = { :select => 'tags.name',

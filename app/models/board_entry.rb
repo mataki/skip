@@ -335,16 +335,19 @@ class BoardEntry < ActiveRecord::Base
     return tags.uniq.first(40)
   end
 
-  def categories_hash user
-    accessible_entry_ids = BoardEntry.accessible(user).descend_by_last_updated.map(&:id)
-    categories = Tag.uniq_by_entry_ids(accessible_entry_ids).ascend_by_name
+  def self.categories_hash user
+    accessible_entries = BoardEntry.accessible(user).descend_by_last_updated
+    accessible_entry_ids = accessible_entries.map(&:id)
+    user_wrote_entry_ids = accessible_entries.select {|e| e.user_id == user.id}.map(&:id)
+
+    user_wrote_tags = Tag.uniq_by_entry_ids(user_wrote_entry_ids).ascend_by_name.map(&:name)
+    recent_user_accessible_tags = Tag.uniq_by_entry_ids(accessible_entry_ids[0..9]).ascend_by_name.map(&:name)
+    standard_tags = Tag.get_standard_tags
+
     categories_hash = {}
-
-    categories_hash[:standard] = Tag.get_standard_tags
-    categories_hash[:mine] = categories - categories_hash[:standard]
-    categories_hash[:user] = Tag.uniq_by_entry_ids(accessible_entry_ids[0..9]).ascend_by_name
-    categories_hash[:user] = categories_hash[:user] - (categories + categories_hash[:standard])
-
+    categories_hash[:standard] = standard_tags
+    categories_hash[:mine] = user_wrote_tags - standard_tags
+    categories_hash[:user] = recent_user_accessible_tags - (user_wrote_tags + standard_tags)
     categories_hash
   end
 
