@@ -1,6 +1,5 @@
 <% content_for :contents_left do -%>
   <% form_tag({}, {:method => 'get'}) do -%>
-    <%= render(:partial => 'search_box') %>
     <%= render(:partial => 'tag_cloud_box') %>
     <%= render :partial => 'user_archive_box' %>
     <%= render(:partial => 'recent_box', :locals => { :owner => @group }) if @entry %>
