@@ -73,7 +73,7 @@ class PlatformsController < ApplicationController
         @user.save_without_validation!
         UserMailer::Smtp.deliver_sent_forgot_password(email, reset_password_url(@user.reset_auth_token))
         flash[:notice] = _("An email contains the URL for resetting the password has been sent to %s.") % email
-        redirect_to :controller => '/platform'
+        redirect_to [current_tenant, :platform]
       else
         flash.now[:error] = _('User has entered email address %s is not in use. Please start with the site.') % email
       end
@@ -91,24 +91,24 @@ class PlatformsController < ApplicationController
         @user.password_confirmation = params[:user][:password_confirmation]
         if @user.save
           flash[:notice] = _("Password was successfully reset.")
-          redirect_to :controller => '/platform'
+          redirect_to [current_tenant, :platform]
         else
           flash.now[:error] = _("Failed to reset password.")
         end
       else
         flash[:error] = _("The URL for resetting password has already expired.")
-        redirect_to :controller => '/platform'
+        redirect_to [current_tenant, :platform]
       end
     else
       flash[:error] = _("Invalid password reset URL. Try again or contact system administrator.")
-      redirect_to :controller => '/platform'
+      redirect_to [current_tenant, :platform]
     end
   end
 
   def activate
     unless enable_activate?
       flash[:error] = _('%{function} currently unavailable.') % {:function => _('Activation email')}
-      return redirect_to(:controller => '/platform')
+      return redirect_to [current_tenant, :platform]
     end
     return unless request.post?
     email = params[:email]
@@ -122,7 +122,7 @@ class PlatformsController < ApplicationController
         @user.save_without_validation!
         UserMailer::Smtp.deliver_sent_activate(email, signup_url(@user.activation_token))
         flash[:notice] = _("An email containing the URL for signup will be sent to %{email}.") % {:email => email}
-        redirect_to :controller => '/platform'
+        redirect_to [current_tenant, :platform]
       else
         flash.now[:error] =_("Email address %s has been registered in the site") % email
       end
@@ -166,7 +166,7 @@ class PlatformsController < ApplicationController
         user.save_without_validation!
         UserMailer::Smtp.deliver_sent_forgot_openid(email, reset_openid_url(user.reset_auth_token))
         flash[:notice] = _("Sent an email containing the URL for resettig OpenID URL to %{email}.") % {:email => email}
-        redirect_to :controller => "/platform"
+        redirect_to [current_tenant, :platform]
       else
         flash.now[:error] = _('User with email address %{email} has not activated the account. The account has to be activated first.') % {:email => email}
       end
@@ -187,7 +187,7 @@ class PlatformsController < ApplicationController
                 if @identifier.save
                   user.determination_reset_auth_token
                   flash[:notice] = _("%{function} completed.")%{:function => _('Resetting OpenID URL')} + _("Enter the previously set URL to log in.")
-                  redirect_to :action => :index
+                  redirect_to [current_tenant, :platform]
                 end
               else
                 flash.now[:error] = _("OpenID processing aborted due to user cancellation or system errors.")
@@ -199,11 +199,11 @@ class PlatformsController < ApplicationController
         end
       else
         flash[:error] = _("The URL for %{function} has expired.")%{:function => _('resetting OpenID URL')}
-        redirect_to :controller => '/platform'
+        redirect_to [current_tenant, :platform]
       end
     else
       flash[:error] = _("The URL for %{function} invalid. Try again or contact system administrator.")%{:function => _('resetting OpenID URL')}
-      redirect_to :controller => '/platform'
+      redirect_to [current_tenant, :platform]
     end
   end
 
@@ -213,7 +213,7 @@ class PlatformsController < ApplicationController
       unless current_user.unused?
         redirect_to_return_to_or_root
       else
-        redirect_to :controller => :portal, :action => :index
+        redirect_to new_polymorphic_url([current_tenant, :user])
       end
     end
   end
@@ -243,7 +243,7 @@ class PlatformsController < ApplicationController
     rescue OpenIdAuthentication::InvalidOpenId
       logger.info("[Login failed with OpenId] \"OpenId is invalid\"")
       flash[:error] = _("OpenID format invalid.")
-      redirect_to :action => :index
+      redirect_to [current_tenant, :platform]
     end
   end
 
@@ -254,14 +254,14 @@ class PlatformsController < ApplicationController
         reset_session
         self.current_user = user
 
-        redirect_to :controller => :portal
+        redirect_to new_polymorphic_url([current_tenant, :user])
       else
         set_error_message_from_user_and_redirect(user)
       end
     elsif login_mode?(:free_rp)
       session[:identity_url] = identity_url
 
-      redirect_to :controller => :portal, :action => :index
+      redirect_to new_polymorphic_url([current_tenant, :user])
     else
       set_error_message_not_create_new_user_and_redirect
     end
@@ -277,6 +277,7 @@ class PlatformsController < ApplicationController
       SkipEmbedded::InitialSettings["ax_fetchrequest"].each do |k, vs|
         fetched.each{|fk, (fv,_)| res[k] = fv if !fv.blank? && vs == fk }
       end
+      res[:tenant_id] = current_tenant.id
     end
   end
 
@@ -302,7 +303,7 @@ class PlatformsController < ApplicationController
 
   def set_error_message_and_redirect(message)
     flash[:error] = message
-    redirect_to({:action => :index})
+    redirect_to [current_tenant, :platform]
   end
 
   def login_with_password
@@ -337,7 +338,7 @@ class PlatformsController < ApplicationController
     else
       logger.info("[Login failed with password] by bad_request")
       flash[:error] = _("Log in failed.")
-      redirect_to (request.env['HTTP_REFERER'] ? :back : login_url)
+      redirect_to (request.env['HTTP_REFERER'] ? :back : polymorphic_url([current_tenant, :platform], :action => :login))
     end
   end
 
