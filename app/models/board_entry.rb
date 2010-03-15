@@ -257,7 +257,7 @@ class BoardEntry < ActiveRecord::Base
   # TODO ShareFileと統合したい
   def accessible? target_user = self.user
     case
-    when self.owner_is_user? then self.public? || self.writer(target_user)
+    when self.owner_is_user? then self.public? || self.writer?(target_user)
     when self.owner_is_group? then self.public? || owner.joind?(target_user)
     else
       false
@@ -376,40 +376,7 @@ class BoardEntry < ActiveRecord::Base
       end
       color = "#FFDD75"
     end
-
-    if text == ""
-      text = "[#{publication_symbols_value}]"
-      color = "#FFCD35"
-    end
-    return text, color
-  end
-
-  # TODO ShareFileのリストを渡しても使える、ユーティリティクラスに移したい。
-  def self.get_symbol2name_hash entries
-    user_symbol_ids = group_symbol_ids = []
-    entries.each do |entry|
-      case entry.symbol_type
-      when "uid"
-        user_symbol_ids << entry.symbol_id
-      when "gid"
-        group_symbol_ids << entry.symbol_id
-      end
-    end
-    symbol2name_hash = {}
-    if user_symbol_ids.size > 0
-      UserUid.find(:all, :conditions =>["uid IN (?)", user_symbol_ids], :include => :user).each do |user_uid|
-        if user_uid.user
-          symbol2name_hash[user_uid.user.symbol] = user_uid.user.name
-        end
-      end
-    end
-    if group_symbol_ids.size > 0
-      Group.active.find(:all, :conditions =>["gid IN (?)", group_symbol_ids]).each do |item|
-        symbol2name_hash[item.symbol] = item.name
-      end
-    end
-
-    symbol2name_hash
+    [text, color]
   end
 
   # 記事へのリンクのURLを生成して返す

@@ -6,8 +6,6 @@
   checked_on = if reading = entry.user_readings.find_by_user_id(current_user.id)
                  reading.checked_on
                end
-  entry_accesses =  EntryAccess.find_by_entry_id entry.id
-  total_count = entry.state.access_count
 -%>
 
 <% content_for :stylesheet do -%>
@@ -269,7 +267,7 @@
       </div>
       <div id="access_style_area" class="invisible">
       <% if entry.full_accessible?(current_user) %>
-        <%= render :partial => "access", :locals => {:entry_accesses => entry_accesses, :total_count => total_count} -%>
+        <%= render :partial => "access", :locals => {:entry => entry} %>
       <% end %>
       </div>
     </div>

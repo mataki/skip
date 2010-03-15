@@ -17,6 +17,7 @@
   </style>
 <% end -%>
 
+<% entry_accesses = entry.entry_accesses -%>
 <% if entry_accesses.size == 0 %>
     <%= _('This entry has not been accessed.')%>
 <% else %>
@@ -25,7 +26,7 @@
 </div>
 
 <div class="access_count ui-corner-all">
-  <%= _('Access Count: ')%><%= h total_count -%>
+  <%= _('Access Count: ')%><%= h entry.state.access_count -%>
 </div>
 
 <ul class="access_tracks">

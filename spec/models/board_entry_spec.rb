@@ -131,27 +131,6 @@ EOF
   end
 end
 
-describe BoardEntry, '.get_symbol2name_hash' do
-  describe 'あるグループのフォーラムが存在する場合' do
-    before do
-      @group = create_group(:gid => 'skip_group', :name => 'SKIPグループ')
-      @user = create_user
-      @entry = create_board_entry(:symbol => 'gid:skip_group', :user_id => @user.id)
-    end
-    it '対象記事を所有するグループのgidをキー、名前を値とするハッシュが取得できること' do
-      BoardEntry.get_symbol2name_hash([@entry]).should == {'gid:skip_group' => 'SKIPグループ'}
-    end
-    describe '記事を所有するグループが論理削除された場合' do
-      before do
-        @group.logical_destroy
-      end
-      it '空ハッシュが取得できること' do
-        BoardEntry.get_symbol2name_hash([@entry]).should == {}
-      end
-    end
-  end
-end
-
 describe BoardEntry, '#send_contact_mails' do
   describe 'メールを送信しない場合' do
     before do

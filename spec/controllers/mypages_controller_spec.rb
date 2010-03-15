@@ -204,7 +204,6 @@ describe MypagesController, 'mypage > home 関連' do
       end
       it '記事の所有者のシンボルと名称のhashが設定されること(記事所有者へのリンクに使う)' do
         @symbol2name_hash = mock('symbol2name_hash')
-        BoardEntry.should_receive(:get_symbol2name_hash).with(@entries).and_return(@symbol2name_hash)
         BoardEntry.stub!(:paginate).and_return(@entries)
         get :entries_by_antenna
         assigns[:symbol2name_hash].should == @symbol2name_hash
