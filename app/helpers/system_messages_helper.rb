@@ -27,20 +27,20 @@ module SystemMessagesHelper
     end
 
     if Admin::Setting.enable_password_periodic_change && !current_user.password_expires_at.blank? && current_user.password_expires_at.ago(2.week) < Time.now
-      system_message_links << link_to(icon_tag('bullet_error') + _('The password expiration date (%s) approaches') % current_user.password_expires_at.ago(1.day).strftime(_('%B %d %Y')), url_for(:controller => 'mypage', :action => 'manage', :menu => 'manage_password'))
+      system_message_links << link_to(icon_tag('bullet_error') + _('The password expiration date (%s) approaches') % current_user.password_expires_at.ago(1.day).strftime(_('%B %d %Y')), edit_tenant_user_password_path(current_tenant, current_user))
     end
 
     unless current_user.picture
-      system_message_links << link_to(icon_tag('picture') + _("Change your profile picture!"), {:controller => "mypage", :action => "manage", :menu => "manage_portrait"})
+      system_message_links << link_to(icon_tag('picture') + _("Change your profile picture!"), new_tenant_user_picture_path(current_tenant, current_user))
     end
 
     current_user.system_messages.each do |sm|
       system_message_data = system_message_data(sm)
-      system_message_links << link_to(icon_tag(system_message_data[:icon]) + system_message_data[:message], system_message_data[:url]) + "(#{link_to 'x', user_system_message_path(current_user, sm), :class => 'delete_system_message'})" unless system_message_data.blank?
+      system_message_links << link_to(icon_tag(system_message_data[:icon]) + system_message_data[:message], system_message_data[:url]) + "(#{link_to 'x', [current_tenant, current_user, sm], :class => 'delete_system_message'})" unless system_message_data.blank?
     end
 
     Group.active.has_waiting_for_approval.id_equals(Group.active.owned(current_user).map(&:id)).each do |group|
-      system_message_links << link_to(icon_tag('group_add') + _("New user is waiting for approval in %s.") % group.name, {:controller => 'group', :action => 'manage', :gid => group.gid, :menu => 'manage_permit'})
+      system_message_links << link_to(icon_tag('group_add') + _("New user is waiting for approval in %s.") % group.name, polymorphic_path([current_tenant, group], :action => :manage))
     end
     @system_message_links = system_message_links
   end
@@ -53,35 +53,35 @@ module SystemMessagesHelper
         {
           :message => _("You recieved a comment on your entry [%s]!") % board_entry.title,
           :icon => 'comments',
-          :url => url_for(board_entry.get_url_hash.merge!(:system_message_id => message.id))
+          :url => polymorphic_url([current_tenant, board_entry], :system_message_id => message.id)
         }
       when 'TRACKBACK'
         board_entry = BoardEntry.accessible(target_user).find(message.message_hash[:board_entry_id])
         {
           :message => _("There is a new entry talking about your entry [%s]!") % board_entry.title,
           :icon => 'report_go',
-          :url => url_for(board_entry.get_url_hash.merge!(:system_message_id => message.id))
+          :url => polymorphic_url([current_tenant, board_entry], :system_message_id => message.id)
         }
       when 'CHAIN'
         user = User.find(message.message_hash[:user_id])
         {
           :message => _("You received an introduction!"),
           :icon => 'user_comment',
-          :url => url_for({:controller => 'user', :uid => user.uid, :action => 'social', :menu => 'social_chain', :system_message_id => message.id})
+          :url => polymorphic_url([current_tenant, user, :chains], :system_message_id => message.id)
         }
       when 'QUESTION'
         board_entry = BoardEntry.accessible(target_user).question.find(message.message_hash[:board_entry_id])
         {
           :message => _('State of your question [%s] is changed!') % board_entry.title,
           :icon => 'tick',
-          :url => url_for(board_entry.get_url_hash.merge!(:system_message_id => message.id))
+          :url => polymorphic_url([current_tenant, board_entry], :system_message_id => message.id)
         }
       when 'JOIN'
         group = Group.active.find(message.message_hash[:group_id])
         {
           :message => _("New user joined your group [%s].") % group.name,
           :icon => 'group_add',
-          :url => url_for({:controller => 'group', :action => 'users', :gid => group.gid, :system_message_id => message.id})
+          :url => polymorphic_url([current_tenant, group], :system_message_id => message.id)
         }
       when 'LEAVE'
         group = Group.active.find(message.message_hash[:group_id])
@@ -89,35 +89,35 @@ module SystemMessagesHelper
         {
           :message => _("%{user_name} leaved your group %{group_name}.") % {:user_name => user.name, :group_name => group.name},
           :icon => 'group_delete',
-          :url => url_for({:controller => 'user', :action => 'show', :uid => user.uid, :system_message_id => message.id})
+          :url => polymorphic_url([current_tenant, user], :system_message_id => message.id)
         }
       when 'APPROVAL_OF_JOIN'
         group = Group.active.find(message.message_hash[:group_id])
         {
           :message => _("You were approved join of the group %s.") % group.name,
           :icon => 'group_add',
-          :url => url_for({:controller => 'group', :action => 'show', :gid => group.gid, :system_message_id => message.id})
+          :url => polymorphic_url([current_tenant, group], :system_message_id => message.id)
         }
       when 'DISAPPROVAL_OF_JOIN'
         group = Group.active.find(message.message_hash[:group_id])
         {
           :message => _("You were disapproved join of the group %s.") % group.name,
           :icon => 'group_delete',
-          :url => url_for({:controller => 'group', :action => 'show', :gid => group.gid, :system_message_id => message.id})
+          :url => polymorphic_url([current_tenant, group], :system_message_id => message.id)
         }
       when 'FORCED_JOIN'
         group = Group.active.find(message.message_hash[:group_id])
         {
           :message => _("Forced to join the group [%s].") % group.name,
           :icon => 'group_add',
-          :url => url_for({:controller => 'group', :action => 'show', :gid => group.gid, :system_message_id => message.id})
+          :url => polymorphic_url([current_tenant, group], :system_message_id => message.id)
         }
       when 'FORCED_LEAVE'
         group = Group.active.find(message.message_hash[:group_id])
         {
           :message => _("You forced to leave the group [%s].") % group.name,
           :icon => 'group_delete',
-          :url => url_for({:controller => 'group', :action => 'show', :gid => group.gid, :system_message_id => message.id})
+          :url => polymorphic_url([current_tenant, group], :system_message_id => message.id)
         }
       else
         nil

@@ -15,7 +15,7 @@
 
 class GroupsController < ApplicationController
   before_filter :setup_layout, :except => %w(new create)
-  before_filter :target_group_required => %w(show update destroy manage join leave)
+  before_filter :target_group_required => %w(show update destroy manage)
   before_filter :group_owned_required, :only => %w(manage update destroy)
   after_filter :remove_system_message, :only => %w(show members)
 
@@ -109,39 +109,6 @@ class GroupsController < ApplicationController
     render :partial => @menu, :layout => "layout"
   end
 
-  def join
-    @group = current_target_group
-    participations = @group.join current_user
-    unless participations.empty?
-      if participations.first.waiting?
-        flash[:notice] = _('Request sent. Please wait for the approval.')
-      else
-        @group.group_participations.only_owned.each do |owner_participation|
-          SystemMessage.create_message :message_type => 'JOIN', :user_id => owner_participation.user_id, :message_hash => {:group_id => @group.id}
-        end
-        flash[:notice] = _('Joined the group successfully.')
-      end
-    else
-      flash[:error] = @group.errors.full_messages
-    end
-    redirect_to [current_tenant, @group]
-  end
-
-  def leave
-    @group = current_target_group
-    @group.leave current_user do |result|
-      if result
-        @group.group_participations.only_owned.each do |owner_participation|
-          SystemMessage.create_message :message_type => 'LEAVE', :user_id => owner_participation.user_id, :message_hash => {:user_id => current_user.id, :group_id => @group.id}
-        end
-        flash[:notice] = _('Successfully left the group.')
-      else
-        flash[:notice] = _('%s are not a member of the group.') % 'You'
-      end
-    end
-    redirect_to [current_tenant, @group]
-  end
-
   def members
     @users = current_target_group.users.paginate(:page => params[:page])
 
@@ -154,10 +121,12 @@ private
   end
 
   def group_owned_required
-    unless !(current_target_group && current_target_group.owned?(current_user))
+    if current_target_group && current_target_group.owned?(current_user)
+      true
+    else
       flash[:warn] = _('Administrative privillage required for the action.')
       redirect_to root_url
-      return false
+      false
     end
   end
 end

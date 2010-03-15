@@ -60,6 +60,49 @@ class GroupParticipation < ActiveRecord::Base
     !!find_by_user_id_and_group_id_and_waiting_and_owned(target_user, target_group, false, true)
   end
 
+  # TODO 回帰テストを書く
+  def join! target_user, options = {}
+    self.waiting = (!options[:force] && self.group.protected?)
+    if self.new_record?
+      self.save!
+      target_user.notices.create!(:target => self) unless target_user.notices.find_by_target_id(self.group.id)
+      if block_given?
+        yield true, self
+      else
+        true
+      end
+    else
+      self.errors.add_to_base _("%s has already joined / applied to join this group.") % target_user.name
+      if block_given?
+        yield false, self
+      else
+        false
+      end
+    end
+  rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => e
+    self.errors.add_to_base _('Joined the group failed.')
+    if block_given?
+      yield false, self
+    else
+      false
+    end
+  end
+
+  # TODO 回帰テストを書く
+  def leave target_user
+    Group.transaction do
+      self.destroy
+      if notice = target_user.notices.find_by_target_id(self.group.id)
+        notice.destroy
+      end
+      true
+    end
+  end
+
+  def full_accessible? target_user = self.user
+    (target_user == self.user || self.group.owned?(target_user))
+  end
+
   def to_s
     return '[id:' + id.to_s + ', user_id:' + user_id.to_s + ', group_id:' + group_id.to_s + ']'
   end
