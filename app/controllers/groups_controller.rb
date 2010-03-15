@@ -94,26 +94,6 @@ class GroupsController < ApplicationController
     end
   end
 
-#  def manage
-#    @group = current_target_group
-#    @menu = params[:menu] || "manage_info"
-#
-#    case @menu
-#    when "manage_info"
-#      @group_categories = GroupCategory.all
-#    when "manage_permit"
-#      unless @group.protected?
-#        flash[:warn] = _("No approval needed to join this group.")
-#        redirect_to :action => :manage
-#        return
-#      end
-#      @participations = @group.group_participations.waiting.paginate(:page => params[:page], :per_page => 20)
-#    else
-#      render_404 and return
-#    end
-#    render :partial => @menu, :layout => "layout"
-#  end
-
   def members
     @users = current_target_group.users.paginate(:page => params[:page])
 

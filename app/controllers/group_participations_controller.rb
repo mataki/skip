@@ -1,7 +1,7 @@
 class GroupParticipationsController < ApplicationController
   include AccessibleGroup
   before_filter :target_group_required
-  before_filter :required_full_accessible_group, :only => %w(manage_members add_admin_control remove_admin_control)
+  before_filter :required_full_accessible_group, :only => %w(manage_members add_admin_control remove_admin_control approve disapprove)
   before_filter :required_full_accessible_group_participation, :only => %w(destroy)
 
   def create
@@ -65,6 +65,38 @@ class GroupParticipationsController < ApplicationController
     current_target_group_participation.save
     respond_to do |format|
       format.html { redirect_to polymorphic_path([current_tenant, current_target_group, :group_participation], :action => :manage_members) }
+    end
+  end
+
+  def manage_waiting_members
+    @participations = current_target_group.group_participations.waiting.paginate(:page => params[:page], :per_page => 20)
+  end
+
+  def approve
+    group = current_target_group
+    current_target_group_participation.waiting = false
+    current_target_group_participation.save
+    unless current_target_group_participation.user.notices.find_by_target_id(group.id)
+      current_target_group_participation.user.notices.create!(:target => group)
+    end
+    SystemMessage.create_message :message_type => 'APPROVAL_OF_JOIN', :user_id => current_target_group_participation.user.id, :message_hash => {:group_id => group.id}
+    respond_to do |format|
+      format.html do
+        flash[:notice] = _("Succeeded to Approve.")
+        redirect_to polymorphic_path([current_tenant, current_target_group, :group_participation], :action => :manage_waiting_members)
+      end
+    end
+  end
+
+  def disapprove
+    group = current_target_group
+    current_target_group_participation.destroy
+    SystemMessage.create_message :message_type => 'DISAPPROVAL_OF_JOIN', :user_id => current_target_group_participation.user.id, :message_hash => {:group_id => group.id}
+    respond_to do |format|
+      format.html do
+        flash[:notice] = _("Succeeded to Disapprove.")
+        redirect_to polymorphic_path([current_tenant, current_target_group, :group_participation], :action => :manage_waiting_members)
+      end
     end
   end
 

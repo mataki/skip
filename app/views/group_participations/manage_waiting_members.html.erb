@@ -1,0 +1,33 @@
+<% content_for :contents_left do -%>
+  <%= render :partial => "groups/manage_action_box" %>
+<% end -%>
+
+<% content_for :contents_right do -%>
+  <% unless @participations.empty? -%>
+    <%= i18n_will_paginate_with_container_wrapper @participations %>
+
+    <div style="margin: 10px auto 10px auto; width: 100%; text-align: center;">
+      <table border="1" class="normal" style="width: 80%; margin: auto;">
+        <tr>
+          <th><%= _('Name') %></th>
+          <th><%= _('Action') %></th>
+          <th><%= _('Action') %></th>
+        </tr>
+      <% even_or_odd = 0 -%>
+      <% @participations.each_with_index do |participation, index| -%>
+        <% even_or_odd = 1 - even_or_odd %>
+        <tr>
+          <td class="line_<%= even_or_odd -%>"><%= h participation.user.name -%></td>
+          <td align="center" class="line_<%= even_or_odd -%>">
+            <%= link_to _("Approve"), polymorphic_path([current_tenant, current_target_group, participation], :action => :approve), :method => :put %>
+          </td>
+          <td align="center" class="line_<%= even_or_odd -%>">
+            <%= link_to _("Reject"), polymorphic_path([current_tenant, current_target_group, participation], :action => :disapprove), :method => :delete %>
+          </td>
+        </tr>
+      <% end %>
+      </table>
+    </div>
+    <%= i18n_will_paginate_with_container_wrapper @participations %>
+  <% end -%>
+<% end -%>
