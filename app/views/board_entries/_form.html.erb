@@ -125,6 +125,35 @@ div.input_line textarea {
   };
   setupTagComplete();
 
+  // 入力フォームのチェック
+  $j('.board_entry_form')
+  .submit(function (){
+      var tb_array = $j('#trackbacks').val().split(',');
+
+      for(i=0; i < tb_array.length; i++){
+          var tb = Trim(tb_array[i]);
+          if(tb != ""){
+              if (isNaN(tb)){
+                  alert('<%= _('Illegal format in "Topic entry". List the page IDs and separate each other by commas.')%>');
+                  return false;
+              }
+          }
+      }
+
+      if ($j('#board_entry_publication_type_public:checked').size() > 0 && $j('#board_entry_send_mail:checked').size() > 0) {
+          if (!confirm('<%= _('Are you sure to send email to all users?') %>'))
+              return false;
+      }
+
+      // 作成or更新によるページ遷移は警告しない
+      $j(window).unbind('beforeunload');
+  });
+  var Trim = function(str){
+      str = str.replace(/^[ 　]+/,"");
+      str = str.replace(/[ 　]+$/,"");
+      return(str);
+  }
+
   <% unless SkipEmbedded::InitialSettings['mail']['enable_send_email_to_all_users'] -%>
   // メール送信チェックボックスの表示制御
   var toggleSendMail = function() {

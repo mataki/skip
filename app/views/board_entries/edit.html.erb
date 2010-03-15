@@ -1,6 +1,6 @@
 <%= render :partial => 'board_entries/preview_window' %>
 
-<% form_for [current_tenant, current_target_owner, @board_entry], :id => 'board_entry_form' do |f| -%>
+<% form_for [current_tenant, current_target_owner, @board_entry], :html => {:class => 'board_entry_form'} do |f| -%>
   <%= render f %>
   <% if @conflicted -%>
     <div class="desc ui-corner-all"><%= _("*Click on &quot;Reset&quot; to reset the edit or &quot;Update&quot; to overwrite other's edit.")%></div>
