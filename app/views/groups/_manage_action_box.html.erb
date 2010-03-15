@@ -1,0 +1,10 @@
+<div class="box_space">
+  <div class="box_space_title"><%= _('Admin Menu')%></span></div>
+  <div class="box_space_body">
+  <ul>
+    <li><%= link_to_unless_current _('Edit Group Information'), edit_polymorphic_path([current_tenant, current_target_group]) %></li>
+    <li><%= link_to_unless_current _('Manage Members'), polymorphic_path([current_tenant, current_target_group, :group_participation], :action => :manage_members) %></li>
+  </ul>
+  </div>
+  <div class="box_space_bottom"></div>
+</div><!-- box_space -->

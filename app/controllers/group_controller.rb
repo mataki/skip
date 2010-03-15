@@ -42,21 +42,6 @@ class GroupController < ApplicationController
 #    redirect_to :action => 'manage', :menu => 'manage_participations'
 #  end
 
-#  # 管理者による強制退会処理
-#  def forced_leave_user
-#    # FIXME 管理者のみに制御出来ていない
-#    group_participation = GroupParticipation.find(params[:participation_id])
-#    @group.leave group_participation.user do |result|
-#      if result
-#        SystemMessage.create_message :message_type => 'FORCED_LEAVE', :user_id => group_participation.user.id, :message_hash => {:group_id => @group.id}
-#        flash[:notice] = _("Removed %s from members of the group.") % group_participation.user.name
-#      else
-#        flash[:notice] = _('%s are not a member of the group.') % group_participation.user.name
-#      end
-#    end
-#    redirect_to :action => 'manage', :menu => 'manage_participations'
-#  end
-
 #  # post_action ... では無いので後に修正が必要
 #  # 管理者変更
 #  def toggle_owned

@@ -89,12 +89,12 @@ class GroupParticipation < ActiveRecord::Base
   end
 
   # TODO 回帰テストを書く
-  def leave target_user
+  def leave
     Group.transaction do
-      self.destroy
-      if notice = target_user.notices.find_by_target_id(self.group.id)
+      if notice = self.user.notices.find_by_target_id(self.group.id)
         notice.destroy
       end
+      self.destroy
       true
     end
   end

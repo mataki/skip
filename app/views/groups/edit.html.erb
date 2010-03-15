@@ -1,15 +1,5 @@
 <% content_for :contents_left do -%>
-  <div class="box_space">
-    <div class="box_space_title"><%= _('Admin Menu')%></span></div>
-    <div class="box_space_body">
-    <ul>
-      <% get_group_manage_menu_items(@menu).each do |menu_item| %>
-      <li><%= menu_item -%></li>
-      <% end %>
-    </ul>
-    </div>
-    <div class="box_space_bottom"></div>
-  </div><!-- box_space -->
+  <%= render :partial => "manage_action_box" %>
 <% end -%>
 
 <% content_for :contents_right do -%>

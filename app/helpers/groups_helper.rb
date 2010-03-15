@@ -37,13 +37,6 @@ module GroupsHelper
     (entries.count > 50) && (Time.now.ago(7.day) < entries.last.last_updated) unless entries.empty?
   end
 
-  def get_group_manage_menu_items selected_menu
-    @@menus = [{:name => _("Edit Group Information"), :menu => "manage_info" }]
-    @@menus << {:name => _("Approve Member"),     :menu => "manage_permit" } if @group.protected?
-
-    get_menu_items @@menus, selected_menu, "manage"
-  end
-
   def get_select_user_options owners
     options_hash = {}
     owners.each { |owner| options_hash.store(owner.name, owner.id) }

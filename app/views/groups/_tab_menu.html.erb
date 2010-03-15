@@ -10,6 +10,6 @@
     <li><%= link_to_unless_current_tab content_tag(:span, _('Shared Files')), [current_tenant, current_target_group, :share_files] %></li>
   <% end -%>
   <% if current_target_group.owned?(current_user) -%>
-    <li><%= link_to_unless_current_tab content_tag(:span, _('Admin')), polymorphic_path([current_tenant, current_target_group], :action => :manage) %></li>
+    <li><%= link_to_unless_current_tab content_tag(:span, _('Admin')), edit_polymorphic_path([current_tenant, current_target_group]) %></li>
   <% end -%>
 </ul>

@@ -14,9 +14,10 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class GroupsController < ApplicationController
+  include AccessibleGroup
   before_filter :setup_layout, :except => %w(new create)
-  before_filter :target_group_required => %w(show update destroy manage)
-  before_filter :group_owned_required, :only => %w(manage update destroy)
+  before_filter :target_group_required => %w(show update destroy)
+  before_filter :required_full_accessible_group, :only => %w(update destroy)
   after_filter :remove_system_message, :only => %w(show members)
 
   def index
@@ -67,13 +68,17 @@ class GroupsController < ApplicationController
     end
   end
 
+  def edit
+    @group = current_target_group
+  end
+
   def update
     @group = current_target_group
     if @group.update_attributes(params[:group])
       flash[:notice] = _('Group information was successfully updated.')
       redirect_to [current_tenant, @group]
     else
-      render :action => 'manage'
+      render :edit
     end
   end
 
@@ -89,25 +94,25 @@ class GroupsController < ApplicationController
     end
   end
 
-  def manage
-    @group = current_target_group
-    @menu = params[:menu] || "manage_info"
-
-    case @menu
-    when "manage_info"
-      @group_categories = GroupCategory.all
-    when "manage_permit"
-      unless @group.protected?
-        flash[:warn] = _("No approval needed to join this group.")
-        redirect_to :action => :manage
-        return
-      end
-      @participations = @group.group_participations.waiting.paginate(:page => params[:page], :per_page => 20)
-    else
-      render_404 and return
-    end
-    render :partial => @menu, :layout => "layout"
-  end
+#  def manage
+#    @group = current_target_group
+#    @menu = params[:menu] || "manage_info"
+#
+#    case @menu
+#    when "manage_info"
+#      @group_categories = GroupCategory.all
+#    when "manage_permit"
+#      unless @group.protected?
+#        flash[:warn] = _("No approval needed to join this group.")
+#        redirect_to :action => :manage
+#        return
+#      end
+#      @participations = @group.group_participations.waiting.paginate(:page => params[:page], :per_page => 20)
+#    else
+#      render_404 and return
+#    end
+#    render :partial => @menu, :layout => "layout"
+#  end
 
   def members
     @users = current_target_group.users.paginate(:page => params[:page])
@@ -118,15 +123,5 @@ class GroupsController < ApplicationController
 private
   def setup_layout
     @main_menu = @title = _('Groups')
-  end
-
-  def group_owned_required
-    if current_target_group && current_target_group.owned?(current_user)
-      true
-    else
-      flash[:warn] = _('Administrative privillage required for the action.')
-      redirect_to root_url
-      false
-    end
   end
 end

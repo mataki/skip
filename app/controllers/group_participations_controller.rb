@@ -1,6 +1,8 @@
 class GroupParticipationsController < ApplicationController
+  include AccessibleGroup
   before_filter :target_group_required
-  before_filter :required_full_accessible_group_participation, :except => %w(create)
+  before_filter :required_full_accessible_group, :only => %w(manage_members add_admin_control remove_admin_control)
+  before_filter :required_full_accessible_group_participation, :only => %w(destroy)
 
   def create
     group = current_target_group
@@ -28,12 +30,42 @@ class GroupParticipationsController < ApplicationController
 
   def destroy
     group = current_target_group
-    current_target_group_participation.leave(current_user)
-    group.group_participations.only_owned.each do |owner_participation|
-      SystemMessage.create_message :message_type => 'LEAVE', :user_id => owner_participation.user_id, :message_hash => {:user_id => current_user.id, :group_id => group.id}
+    current_target_group_participation.leave
+    respond_to do |format|
+      format.html do
+        if current_user == current_target_group_participation.user
+          group.group_participations.only_owned.each do |owner_participation|
+            SystemMessage.create_message :message_type => 'LEAVE', :user_id => owner_participation.user_id, :message_hash => {:user_id => current_user.id, :group_id => group.id}
+          end
+          flash[:notice] = _('Successfully left the group.')
+          redirect_to [current_tenant, group]
+        else
+          SystemMessage.create_message :message_type => 'FORCED_LEAVE', :user_id => current_target_group_participation.user.id, :message_hash => {:group_id => group.id}
+          flash[:notice] = _("Removed %s from members of the group.") % current_target_group_participation.user.name
+          redirect_to polymorphic_url([current_tenant, group, :group_participation], :action => :manage_members)
+        end
+      end
     end
-    flash[:notice] = _('Successfully left the group.')
-    redirect_to [current_tenant, group]
+  end
+
+  def manage_members
+    @participations = current_target_group.group_participations.active.paginate(:page => params[:page], :per_page => 20)
+  end
+
+  def add_admin_control
+    current_target_group_participation.owned = true
+    current_target_group_participation.save
+    respond_to do |format|
+      format.html { redirect_to polymorphic_path([current_tenant, current_target_group, :group_participation], :action => :manage_members) }
+    end
+  end
+
+  def remove_admin_control
+    current_target_group_participation.owned = false
+    current_target_group_participation.save
+    respond_to do |format|
+      format.html { redirect_to polymorphic_path([current_tenant, current_target_group, :group_participation], :action => :manage_members) }
+    end
   end
 
   private
