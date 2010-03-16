@@ -34,8 +34,9 @@ class Admin::UsersController < Admin::ApplicationController
       Admin::User.transaction do
         if login_mode?(:fixed_rp)
           @user = User.create_with_identity_url(params[:openid_identifier][:url],
-                                                  :name => params[:user][:name],
-                                                  :email => params[:user][:email])
+                                                :name => params[:user][:name],
+                                                :email => params[:user][:email],
+                                                :tenant => current_tenant)
           @user.save!
         else
           @user = Admin::User.make_new_user({:user => params[:user]})

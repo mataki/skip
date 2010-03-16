@@ -14,10 +14,6 @@
 <div id="main_navi" style="background-color: #ffffff; padding: 10px; margin-bottom: 10px;">
   <div class="flow_box ui-corner-all" <%= 'style="background-color: yellow"' unless session[:agreement] -%> ><%= _('See Terms of Use')%></div>
   <div class="next_arrow"><%= icon_tag 'arrow_right' -%></div>
-  <% if login_mode?(:free_rp) -%>
-  <div class="flow_box ui-corner-all" <%= 'style="background-color: yellow"' if session[:agreement] == :agree_with_free_rp -%> ><%= _('Get an account')%></div>
-  <div class="next_arrow"><%= icon_tag 'arrow_right' -%></div>
-  <% end -%>
   <div class="flow_box ui-corner-all" <%= 'style="background-color: yellow"' if session[:agreement] == :agree -%> ><%= _('Register your profile')%></div>
   <div class="next_arrow"><%= icon_tag 'arrow_right' -%></div>
   <div class="flow_box ui-corner-all"><%= _('Start with the site!')%></div>

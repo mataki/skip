@@ -244,7 +244,7 @@ class User < ActiveRecord::Base
     params ||= {}
     code = params.delete(:code)
     password = encrypt(params[:code])
-    user = new(params.slice(:name, :email, :tenant_id).merge(:password => password, :password_confirmation => password))
+    user = new(params.slice(:name, :email, :tenant).merge(:password => password, :password_confirmation => password))
     user.openid_identifiers << OpenidIdentifier.new(:url => identity_url)
     user.status = 'UNUSED'
     user
@@ -517,7 +517,7 @@ class User < ActiveRecord::Base
 
 private
   def password_required?
-    if SkipEmbedded::InitialSettings['login_mode'] == 'password'
+    if !(tenant and tenant.op_url)
       active? and crypted_password.blank? or !password.blank?
     else
       false

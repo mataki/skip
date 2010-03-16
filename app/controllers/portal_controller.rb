@@ -28,7 +28,7 @@ class PortalController < ApplicationController
       flash[:notice] = _('You must login with openid.')
       redirect_to :controller => :platform, :action => :index
     else
-      @user = User.create_with_identity_url(session[:identity_url], params[:user])
+      @user = User.create_with_identity_url(session[:identity_url], params[:user].update(:tenant => current_tenant))
       if @user.valid?
         reset_session
         session[:entrance_next_action] = :registration

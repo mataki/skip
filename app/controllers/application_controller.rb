@@ -349,7 +349,7 @@ protected
       if request.env['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest'
         render :text => _('Session expired. You need to log in again.'), :status => :bad_request
       else
-        redirect_to :controller => '/platform', :action => :login, :openid_url => SkipEmbedded::InitialSettings['fixed_op_url'], :return_to => URI.encode(request.url)
+        redirect_to :controller => '/platform', :action => :login, :openid_identifier => current_tenant.op_url, :return_to => URI.encode(request.url)
       end
       return false
     end

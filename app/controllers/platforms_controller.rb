@@ -20,10 +20,6 @@ class PlatformsController < ApplicationController
 
   before_filter :require_not_login, :except => [:logout]
 
-  # OpenIDのSSOの際にリダイレクトしているため、GETを許可する必要がある
-  # 直接OpenIDの処理を行なうようにすれば、POSTのみでもOKになる
-  verify :method => :post, :only => %w(login), :redirect_to => {:action => :show} if SkipEmbedded::InitialSettings["login_mode"] != "rp"
-
   def show
     # TODO OpenID絡みの部分。後で消すか修正する
     # response.headers['X-XRDS-Location'] = server_url(:format => :xrds, :protocol => scheme)
@@ -54,7 +50,8 @@ class PlatformsController < ApplicationController
     notice = notice + "<br>" + _('You had been retired.') unless params[:message].blank?
     flash[:notice] = notice
 
-    redirect_to login_mode?(:fixed_rp) ? "#{SkipEmbedded::InitialSettings['fixed_op_url']}logout" : tenant_platform_url(current_tenant)
+    # TODO: OP連携のlogout時にOPのログアウトに飛ばすか？
+    redirect_to tenant_platform_url(current_tenant)
   end
 
   def forgot_password
@@ -150,31 +147,6 @@ class PlatformsController < ApplicationController
     end
   end
 
-  def forgot_openid
-    unless enable_forgot_openid?
-      render_404 and return
-    end
-    return unless request.post?
-    email = params[:email]
-    if email.blank?
-      flash.now[:error] = _('Email address is mandatory.')
-      return
-    end
-    if user = User.find_by_email(email)
-      if user.active?
-        user.issue_reset_auth_token
-        user.save_without_validation!
-        UserMailer::Smtp.deliver_sent_forgot_openid(email, reset_openid_url(user.reset_auth_token))
-        flash[:notice] = _("Sent an email containing the URL for resettig OpenID URL to %{email}.") % {:email => email}
-        redirect_to [current_tenant, :platform]
-      else
-        flash.now[:error] = _('User with email address %{email} has not activated the account. The account has to be activated first.') % {:email => email}
-      end
-    else
-      flash.now[:error] = _("Entered email address %s has not been registered in the site.") % email
-    end
-  end
-
   def reset_openid
     if user = User.find_by_reset_auth_token(params[:code])
       if Time.now <= user.reset_auth_token_expires_at
@@ -248,7 +220,7 @@ class PlatformsController < ApplicationController
   end
 
   def create_user_from(identity_url, registration)
-    if login_mode?(:fixed_rp) and identity_url.include?(SkipEmbedded::InitialSettings['fixed_op_url'])
+    if identity_url.include?(current_tenant.op_url)
       user = User.create_with_identity_url(identity_url, create_user_params(registration))
       if user.valid?
         reset_session
@@ -258,10 +230,6 @@ class PlatformsController < ApplicationController
       else
         set_error_message_from_user_and_redirect(user)
       end
-    elsif login_mode?(:free_rp)
-      session[:identity_url] = identity_url
-
-      redirect_to new_polymorphic_url([current_tenant, :user])
     else
       set_error_message_not_create_new_user_and_redirect
     end
@@ -277,7 +245,7 @@ class PlatformsController < ApplicationController
       SkipEmbedded::InitialSettings["ax_fetchrequest"].each do |k, vs|
         fetched.each{|fk, (fv,_)| res[k] = fv if !fv.blank? && vs == fk }
       end
-      res[:tenant_id] = current_tenant.id
+      res[:tenant] = current_tenant
     end
   end
 
@@ -293,7 +261,7 @@ class PlatformsController < ApplicationController
 
   def set_error_message_from_user_and_redirect(user)
     logger.error("[FIXED OP ERROR] User cannot create because #{user.errors.full_messages}")
-    logger.error("[DETAIL USER INFO] #{user.attributes}")
+    logger.error("[DETAIL USER INFO] #{user.attributes.inspect}")
     set_error_message_and_redirect _("Failed to register user. Contact administrator %{contact_addr}.<br/>%{msg}")%{:contact_addr => Admin::Setting.contact_addr, :msg => user.errors.full_messages}
   end
 

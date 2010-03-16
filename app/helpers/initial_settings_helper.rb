@@ -17,11 +17,9 @@ module InitialSettingsHelper
   def login_mode?(mode)
     case mode
     when :password
-      return SkipEmbedded::InitialSettings['login_mode'] == 'password'
-    when :free_rp
-      return (SkipEmbedded::InitialSettings['login_mode'] == 'rp' and SkipEmbedded::InitialSettings['fixed_op_url'].blank?)
+      return !(current_tenant and current_tenant.op_url)
     when :fixed_rp
-      return (SkipEmbedded::InitialSettings['login_mode'] == 'rp' and !SkipEmbedded::InitialSettings['fixed_op_url'].blank?)
+      return !!(current_tenant and current_tenant.op_url)
     else
       return false
     end

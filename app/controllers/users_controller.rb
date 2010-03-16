@@ -119,11 +119,7 @@ class UsersController < ApplicationController
   end
 
   def agreement
-    session[:agreement] = if login_mode?(:free_rp) and !session[:identity_url].blank?
-                                       :agree_with_free_rp
-                                     else
-                                       :agree
-                                     end
+    session[:agreement] = :agree
     redirect_to :action => :new
   end
 

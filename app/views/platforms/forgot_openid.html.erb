@@ -1,7 +1,0 @@
-<div class="content">
-  <h3><%= _('Reset OpenID')%></h3>
-  <p><%= _('An email containing the URL for resetting the OpenID will be sent to the following email address.') %></p>
-  <% form_tag :action => :forgot_openid do -%>
-  <%= render :partial => 'mail_form' %>
-  <% end -%>
-</div>
