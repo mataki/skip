@@ -53,8 +53,8 @@ div.input_line textarea {
 <div class="input_line">
   <div class="input_label"><%= form.label :contents %></div>
   <div class="input_value" style="height: 2em;">
-    <%= form.radio_button(:editor_mode, "richtext") + label_tag("editor_mode_richtext", _('Rich Text')) %>
-    <%= form.radio_button(:editor_mode, "hiki") + label_tag("editor_mode_hiki", _('Wiki text')) %>
+    <%= form.radio_button(:editor_mode, "richtext") + form.label(:editor_mode_richtext, _('Rich Text')) %>
+    <%= form.radio_button(:editor_mode, "hiki") + form.label(:editor_mode_hiki, _('Wiki text')) %>
     <span id="share_file_trigger" class="pointer link"><span class="ss_sprite ss_attach">&nbsp;</span><%= _('Insert file or embed in text body') %></span>
   </div>
 

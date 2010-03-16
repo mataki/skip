@@ -49,6 +49,18 @@ class ShareFilesController < ApplicationController
         end
         render
       end
+      format.js {
+        render :json => {
+          :pages => {
+            :first => 1,
+            :previous => @share_files.previous_page,
+            :next => @share_files.next_page,
+            :last => @share_files.total_pages,
+            :current => @share_files.current_page,
+            :item_count => @share_files.total_entries },
+          :share_files => @share_files.map{|s| share_file_to_json(s) }
+        }
+      }
     end
   end
 
@@ -113,7 +125,7 @@ class ShareFilesController < ApplicationController
           format.html do
             flash[:notice] = _('File was successfully uploaded.')
             if ajax_upload?
-              render(:text => {:status => '200', :messages => [notice_message]}.to_json)
+              render(:text => {:status => '200', :messages => [_('File was successfully uploaded.')]}.to_json)
             else
               redirect_to [current_tenant, current_target_owner, :share_files]
             end
@@ -124,7 +136,7 @@ class ShareFilesController < ApplicationController
   rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotSaved => e
     respond_to do |format|
       format.html do
-        ajax_upload? ? render(:text => {:status => '400', :messages => @error_messages}.to_json) : render(:action => "new")
+        ajax_upload? ? render(:text => {:status => '400', :messages => @share_file.errors.full_messages}.to_json) : render(:action => "new")
       end
     end
   end
@@ -239,7 +251,7 @@ private
 
   def share_file_to_json(share_file)
     returning(share_file.attributes) do |json|
-      src = share_file_url(:controller_name => share_file.owner_symbol_type, :symbol_id => share_file.owner_symbol_id, :file_name => share_file.file_name)
+      src = polymorphic_url([current_tenant, share_file.owner, share_file])
       if share_file.image_extention?
         json[:src] = "#{src}?#{share_file.updated_at.to_i.to_s}"
         json[:file_type] = 'image'

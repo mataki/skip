@@ -122,7 +122,8 @@ module BoardEntriesHelper
     if entry.editor_mode == 'hiki'
       output_contents = hiki_parse(entry.contents, entry.owner)
       image_url_proc = proc { |file_name|
-        file_link_url({:owner_symbol => entry.owner_id, :file_name => file_name}, :inline => true)
+        share_file = entry.owner.owner_share_files.find_by_file_name(file_name)
+        polymorphic_url([current_tenant, entry.owner, share_file], :inline => true)
       }
       output_contents = parse_hiki_embed_syntax(output_contents, image_url_proc)
       output = "<div class='hiki_style'>#{output_contents}</div>"

@@ -331,11 +331,11 @@ class ShareFile < ActiveRecord::Base
   def uncheck_authenticity?
     uncheck_extention? && uncheck_content_type?
   end
-#
-#  def image_extention?
-#    CONTENT_TYPE_IMAGES.keys.any?{ |extension| extension.to_s.downcase == extname }
-#  end
-#
+
+  def image_extention?
+    CONTENT_TYPE_IMAGES.keys.any?{ |extension| extension.to_s.downcase == extname }
+  end
+
   def extname
     File.extname(file_name).sub(/\A\./,'').downcase
   end

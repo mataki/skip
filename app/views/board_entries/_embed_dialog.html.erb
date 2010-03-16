@@ -10,8 +10,6 @@
     <div id="share_file_list"></div>
     <div id="share_file_new_wrapper">
       <div id="share_file_new"></div>
-      <% url_hash = {:controller => '/share_file', :action => :new, :owner_symbol => h(board_entry.symbol), :owner_name => h(board_entry.symbol_name), :reload => 'false'} -%>
-      <%= link_to(_('Upload a file(Specify Directly)'), url_hash, :title => _('Upload a file(Specify Directly)'), :id => 'share_file_new_link', :class => 'link', :onclick => "sub_window_open('#{url_for(url_hash)}', 'subwindow', 550, 400); $j('div#share_file_dialog').dialog('close'); return false;") %>
     </div>
     <% if enable_any_embed? -%>
       <div id="embed_tag">
@@ -65,7 +63,7 @@
     $j('#share_file_new').html('');
     var indicator = $j('<span><%= skip_image_tag 'indicator.gif' %></span>');
     indicator.appendTo($j('#share_file_new')).show();
-    var src = '<%= url_for(:controller => 'share_file', :action => 'new', :owner_symbol => board_entry.symbol, :ajax_upload => 1, :escape => false) %>'; 
+    var src = '<%= new_polymorphic_url([current_tenant, board_entry.owner, :share_file], :ajax_upload => 1) %>'; 
     $j('#share_file_new').append(
       $j('<ul></ul>').addClass('messages')
     ).append(
@@ -120,7 +118,7 @@
     $j('div#share_file_list').html('');
     var indicator = $j('<span><%= skip_image_tag 'indicator.gif' %></span>');
     indicator.appendTo('div#share_file_list').show();
-    var url = '<%= share_files_url(board_entry.symbol) %>';
+    var url = '<%= polymorphic_url([current_tenant, board_entry.owner, :share_files]) %>';
     $j.getJSON(url, requestData, function(data, stat) {
       var share_files = data['share_files'];
       if(share_files.length == 0){
@@ -169,20 +167,20 @@
   };
 
   var insertToRichEditor = function(elem){
-    CKEDITOR.instances.contents_richtext.insertHtml(elem.wrap('<span></span>').parent().html());
+    CKEDITOR.instances.board_entry_contents_richtext.insertHtml(elem.wrap('<span></span>').parent().html());
   };
 
   var insertToHikiEditor = function(text){
-    $j("#contents_hiki").val($j("#contents_hiki").val() + text);
+    $j("#board_entry_contents_hiki").val($j("#board_entry_contents_hiki").val() + text);
   };
 
   var insertLink = function(data){
     var filename = data['file_name'];
     var src = data['src'];
     return $j("<span></span>").text('<%= _('Insert link') %>').addClass("insert_link link pointer").click(function(){
-      if($j('#editor_mode_richtext:checked').length > 0){
+      if($j('#board_entry_editor_mode_richtext:checked').length > 0){
         insertToRichEditor($j("<a></a>").text(filename).attr("href", src));
-      } else if($j('#editor_mode_hiki:checked').length > 0) {
+      } else if($j('#board_entry_editor_mode_hiki:checked').length > 0) {
         insertToHikiEditor('\n[file:' + filename + ']');
       }
     });
@@ -192,10 +190,10 @@
     var filename = data['file_name'];
     var src = data['src'];
     return $j("<span></span>").text('<%= _('Insert image') %>').addClass("insert_link link pointer").click(function(){
-      if($j('#editor_mode_richtext:checked').length > 0){
+      if($j('#board_entry_editor_mode_richtext:checked').length > 0){
         var img = $j("<img></img>").attr("src", src).attr("alt", filename).addClass('pointer');
         insertToRichEditor(img);
-      } else if($j('#editor_mode_hiki:checked').length > 0) {
+      } else if($j('#board_entry_editor_mode_hiki:checked').length > 0) {
         insertToHikiEditor('\n{{' + filename + ',240,}}');
       }
     });
@@ -203,10 +201,10 @@
 
   var insertEmbedLink = function(data){
     return $j("<span></span>").text('<%= _('Insert embed') %>').addClass("insert_link link pointer").click(function(){
-      if($j('#editor_mode_richtext:checked').length > 0){
+      if($j('#board_entry_editor_mode_richtext:checked').length > 0){
         var html = data['insert_tag'];
-        CKEDITOR.instances.contents_richtext.insertHtml(html);
-      } else if($j('#editor_mode_hiki:checked').length > 0) {
+        CKEDITOR.instances.board_entry_contents_richtext.insertHtml(html);
+      } else if($j('#board_entry_editor_mode_hiki:checked').length > 0) {
         var filename = data['file_name'];
         insertToHikiEditor('\n{{' + filename + '}}');
       }
@@ -221,9 +219,9 @@
       if(src){
         var img = $j("<img></img>").attr("src", src).attr("alt", filename).addClass('pointer');
         return img.clone().attr({'height': '72', 'width': '72'}).addClass('fit_image').click(function(){
-          if($j('#editor_mode_richtext:checked').length > 0){
+          if($j('#board_entry_editor_mode_richtext:checked').length > 0){
             insertToRichEditor(img);
-          } else if($j('#editor_mode_hiki:checked').length > 0) {
+          } else if($j('#board_entry_editor_mode_hiki:checked').length > 0) {
             insertToHikiEditor('\n{{' + filename + ',240,}}');
           }
         });
@@ -283,7 +281,7 @@
   <% if enable_any_embed? -%>
   // 埋め込みタグの挿入
   $j('#insert_embed_tag').click(function(){
-    CKEDITOR.instances.contents_richtext.insertHtml($j('#embed_html').val());
+    CKEDITOR.instances.board_entry_contents_richtext.insertHtml($j('#embed_html').val());
     $j('#embed_html').val('');
   });
   <% end -%>

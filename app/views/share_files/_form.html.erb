@@ -27,17 +27,17 @@ table {
 </div>
 
 <div class="input_line">
-  <div class="input_label" style="height: 30px;"><%= _('Publish Date')%></div>
+  <div class="input_label"><%= form.label :date_1i, _('Publish Date')%></div>
   <div class="input_value">
-    <p><%= form.datetime_select :date, :use_month_numbers => true -%></p>
-    <p><a href="#" onclick="setCurrentDatetime('share_file', 'date');return false;"><%= _('[Set current time]')%></a>
+    <%= form.datetime_select :date, :use_month_numbers => true %>
+    <a href="#" onclick="setCurrentDatetime('share_file', 'date');return false;"><%= _('[Set current time]')%></a>
   </div>
   <div style="clear: left"></div>
 </div>
 
 <div class="input_line">
-  <div class="input_label" style="height: 30px;" id="input_label_publication"><%= _('Privacy Settings')%></div>
-  <div class="input_value" id="input_value_publication"><table><tr><td>
+  <div class="input_label"><label><%= _('Privacy Settings')%></label></div>
+  <div class="input_value"><table><tr><td>
     <% display_type = (form.object.owner_is_public? ? "" : "none") %>
     <span style="display:<%= display_type %>">
       <%= form.radio_button :publication_type, "public" %><%= form.label :publication_type_public, _('Open to All') %>

@@ -5,3 +5,4 @@
   <%= submit_tag _("Create") , :id => 'submit_button' %>
   <%= send_mail_check_box_tag %>
 <% end -%>
+<%= render :partial => 'board_entries/embed_dialog', :locals => {:board_entry => @board_entry} %>

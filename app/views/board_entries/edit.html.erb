@@ -9,6 +9,7 @@
   <%= submit_tag _("Update"), :id => 'submit_button' %>
   <%= send_mail_check_box_tag %>
 <% end -%>
+<%= render :partial => 'board_entries/embed_dialog', :locals => {:board_entry => @board_entry} %>
 
 <div class="desc ui-corner-all" style="margin-top: 10px;">
   <% form_for [current_tenant, current_target_owner, @board_entry], :onclick => 'return confirmDestroy(event)', :html => {:method => :delete} do |f| -%>
