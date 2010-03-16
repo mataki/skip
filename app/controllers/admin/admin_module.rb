@@ -128,7 +128,7 @@ module Admin::AdminModule
 
     def create
       object = admin_model_class.new(params[admin_params_sym])
-      object.tenant = current_tenant
+      object.tenant_id = current_tenant.id
       set_singularize_instance_val object
 
       @topics = [[_('Listing %{model}') % {:model => _(controller_name.gsub('_', ' ').capitalize)}, index_url],
