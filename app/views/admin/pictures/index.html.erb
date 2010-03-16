@@ -10,13 +10,13 @@
     <% @pictures.each do |picture| -%>
     <ul class="picture ui-corner-all <%= 'selected' if picture.active? %>">
       <li class="image">
-        <%= image_tag admin_picture_path(picture, :format => :png), :height => 90, :class => 'fit_image' %>
+        <%= image_tag admin_tenant_picture_path(current_tenant, picture, :format => :png), :height => 90, :class => 'fit_image' %>
       </li>
       <li class="data_row">
         <%= picture.user ? h(picture.user.name) : '' %>
       </li>
       <li class="operation">
-        <%= link_to _('Delete'), admin_picture_path(picture), :method => :delete, :confirm => _('Are you sure?') %>
+        <%= link_to _('Delete'), admin_tenant_picture_path(current_tenant, picture), :method => :delete, :confirm => _('Are you sure?') %>
       </li>
     </ul>
     <% end -%>

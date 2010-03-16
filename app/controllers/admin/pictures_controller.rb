@@ -17,7 +17,8 @@ class Admin::PicturesController < Admin::ApplicationController
   include Admin::AdminModule::AdminRootModule
   include Admin::AdminModule::AdminUtil
   def index
-    @pictures = Admin::Picture.order_user_name.paginate(:page => params[:page], :per_page => 40)
+    user_ids = current_tenant.users.map(&:id)
+    @pictures = Admin::Picture.user_id_is(user_ids).order_user_name.paginate(:page => params[:page], :per_page => 40)
 
     @topics = [[_('Listing %{model}') % {:model => _('picture')}]]
 
@@ -27,7 +28,8 @@ class Admin::PicturesController < Admin::ApplicationController
   end
 
   def show
-    @picture = Admin::Picture.find(params[:id])
+    user_ids = current_tenant.users.map(&:id)
+    @picture = Admin::Picture.user_id_is(user_ids).find(params[:id])
     send_data(@picture.data, :filename => @picture.name, :type => @picture.content_type, :disposition => "inline")
   end
 
@@ -54,6 +56,18 @@ class Admin::PicturesController < Admin::ApplicationController
       else
         format.html { render :action => "new" }
       end
+    end
+  end
+
+  def destroy
+    user_ids = current_tenant.users.map(&:id)
+    @picture = Admin::Picture.user_id_is(user_ids).find(params[:id])
+    @picture.destroy
+
+    respond_to do |format|
+      flash[:notice] = _("%{model} was successfully deleted.") % {:model => _('picture')}
+      format.html { redirect_to admin_tenant_pictures_url(current_user) }
+      format.xml  { head :ok }
     end
   end
 end
