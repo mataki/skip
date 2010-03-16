@@ -187,7 +187,7 @@ module Admin::AdminModule
       set_pluralize_instance_val objects
 
       @topics = [[_('Listing %{model}') % {:model => _(object_name_without_admin(load_parent).gsub('_', ' '))}, parent_index_path],
-                 [_('%{model} Show') % {:model => load_parent.topic_title}, load_parent],
+                 [_('%{model} Show') % {:model => load_parent.topic_title}, parent_show_path],
                  _('Listing %{model}') % {:model => _(controller_name.gsub('_', ' ').capitalize)}]
 
       respond_to do |format|
@@ -201,7 +201,7 @@ module Admin::AdminModule
       set_singularize_instance_val object
 
       @topics = [[_('Listing %{model}') % {:model => _(object_name_without_admin(load_parent).gsub('_', ' '))}, parent_index_path],
-                 [_('%{model} Show') % {:model => load_parent.topic_title}, load_parent],
+                 [_('%{model} Show') % {:model => load_parent.topic_title}, parent_show_path],
                  [_('Listing %{model}') % {:model => _(controller_name.gsub('_', ' ').capitalize)}, { :action => :index }],
                  _('%{model} Show') % {:model => object.topic_title}]
 
@@ -216,7 +216,7 @@ module Admin::AdminModule
       set_singularize_instance_val object
 
       @topics = [[_('Listing %{model}') % {:model => _(object_name_without_admin(load_parent).gsub('_', ' '))}, parent_index_path],
-                 [_('%{model} Show') % {:model => load_parent.topic_title}, load_parent],
+                 [_('%{model} Show') % {:model => load_parent.topic_title}, parent_show_path],
                  [_('Listing %{model}') % {:model => _(controller_name.gsub('_', ' ').capitalize)}, { :action => :index }],
                  _('New %{model}') % {:model => object.topic_title}]
 
@@ -231,7 +231,7 @@ module Admin::AdminModule
       set_singularize_instance_val object
 
       @topics = [[_('Listing %{model}') % {:model => _(object_name_without_admin(load_parent).gsub('_', ' '))}, parent_index_path],
-                 [_('%{model} Show') % {:model => load_parent.topic_title}, load_parent],
+                 [_('%{model} Show') % {:model => load_parent.topic_title}, parent_show_path],
                  [_('Listing %{model}') % {:model => _(controller_name.gsub('_', ' ').capitalize)}, { :action => :index }],
                  _('Editing %{model}') % {:model => object.topic_title}]
     end
@@ -241,7 +241,7 @@ module Admin::AdminModule
       set_singularize_instance_val object
 
       @topics = [[_('Listing %{model}') % {:model => _(object_name_without_admin(load_parent).gsub('_', ' '))}, parent_index_path],
-                 [_('%{model} Show') % {:model => load_parent.topic_title}, load_parent],
+                 [_('%{model} Show') % {:model => load_parent.topic_title}, parent_show_path],
                  [_('Listing %{model}') % {:model => _(controller_name.gsub('_', ' ').capitalize)}, { :action => :index }],
                  _('New %{model}') % {:model => object.topic_title}]
 
@@ -263,7 +263,7 @@ module Admin::AdminModule
       set_singularize_instance_val object
 
       @topics = [[_('Listing %{model}') % {:model => _(object_name_without_admin(load_parent).gsub('_', ' '))}, parent_index_path],
-                 [_('%{model} Show') % {:model => load_parent.topic_title}, load_parent],
+                 [_('%{model} Show') % {:model => load_parent.topic_title}, parent_show_path],
                  [_('Listing %{model}') % {:model => _(controller_name.gsub('_', ' ').capitalize)}, { :action => :index }],
                  _('Editing %{model}') % {:model => object.topic_title}]
 
@@ -298,16 +298,20 @@ module Admin::AdminModule
 
     def url_for_parent_and(object)
       redirect_url = url_prefix+singularize_name+"_url"
-      send(redirect_url.to_sym, load_parent, object)
+      send(redirect_url.to_sym, current_tenant, load_parent, object)
     end
 
     def url_for_parent
       redirect_url = url_prefix+controller_name+"_url"
-      send(redirect_url.to_sym, load_parent)
+      send(redirect_url.to_sym, current_tenant, load_parent)
+    end
+
+    def parent_show_path
+      send("admin_tenant_"+object_name_without_admin(load_parent).singularize+"_path", current_tenant, load_parent)
     end
 
     def parent_index_path
-      eval("admin_"+object_name_without_admin(load_parent).pluralize+"_path")
+      send("admin_tenant_"+object_name_without_admin(load_parent).pluralize+"_path", current_tenant)
     end
   end
 end

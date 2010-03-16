@@ -23,6 +23,6 @@ class Admin::GroupParticipationsController < Admin::ApplicationController
   end
 
   def url_prefix
-    'admin_group_'
+    'admin_tenant_group_'
   end
 end

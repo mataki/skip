@@ -25,7 +25,7 @@
                :link_elem_size => 1,
                :link_elem_proc => lambda { |object|
       result = ""
-      result << content_tag(:td, link_to(_("Destroy"), admin_group_group_participation_path(@group, object), {:confirm => _('Are you sure?'), :method => :delete}) )
+      result << content_tag(:td, link_to(_("Destroy"), admin_tenant_group_group_participation_path(current_tenant, @group, object), {:confirm => _('Are you sure?'), :method => :delete}) )
     }
              }
   -%>

@@ -49,7 +49,7 @@ module GroupsHelper
     output_text << icon_tag('group.png') if options[:image_on]
     output_text << (options[:view_text] || h(group.name))
 
-    link_to output_text, [current_tenant, group], options
+    link_to output_text, admin_tenant_group_url(current_tenant, group), options
   end
 
   def get_group_icon(category, options = {:margin => false})

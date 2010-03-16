@@ -32,5 +32,5 @@
 </p>
 </div>
 
-<%= link_to _('Listing %{model}') % {:model => _('group participation')}, admin_group_group_participations_path(@group) %>
+<%= link_to _('Listing %{model}') % {:model => _('group participation')}, admin_tenant_group_group_participations_path(current_tenant, @group) %>
 <% end -%>

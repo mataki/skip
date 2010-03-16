@@ -3,10 +3,10 @@
   <div class="box_space_title"><%= _('Admin Menu')%></div>
   <div class="box_space_body">
     <ul>
-    <%= generate_box_menu_link( _('Groups'), admin_groups_path, request.url.include?(admin_groups_url)) %>
-    <%= generate_box_menu_link( _('Board Entries'), admin_board_entries_path, request.url.include?(admin_board_entries_url)) %>
-    <%= generate_box_menu_link( _('Shared Files'), admin_share_files_path, request.url.include?(admin_share_files_path)) %>
-    <%= generate_box_menu_link( _('Pictures'), admin_pictures_path, request.url.include?(admin_pictures_path)) %>
+    <%= generate_box_menu_link( _('Groups'), admin_tenant_groups_path(current_tenant), request.url.include?(admin_tenant_groups_url(current_tenant))) %>
+    <%= generate_box_menu_link( _('Board Entries'), admin_tenant_board_entries_path(current_tenant), request.url.include?(admin_tenant_board_entries_url(current_tenant))) %>
+    <%= generate_box_menu_link( _('Shared Files'), admin_tenant_share_files_path(current_tenant), request.url.include?(admin_tenant_share_files_path(current_tenant))) %>
+    <%= generate_box_menu_link( _('Pictures'), admin_tenant_pictures_path(current_tenant), request.url.include?(admin_tenant_pictures_path(current_tenant))) %>
     </ul>
   </div>
   <div class="box_space_bottom"></div>

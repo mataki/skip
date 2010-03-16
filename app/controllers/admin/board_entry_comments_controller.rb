@@ -23,6 +23,6 @@ class Admin::BoardEntryCommentsController < Admin::ApplicationController
   end
 
   def url_prefix
-    'admin_board_entry_'
+    'admin_tenant_board_entry_'
   end
 end

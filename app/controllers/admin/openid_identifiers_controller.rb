@@ -52,6 +52,6 @@ class Admin::OpenidIdentifiersController < Admin::ApplicationController
   end
 
   def url_prefix
-    'admin_user_'
+    'admin_tenant_user_'
   end
 end
