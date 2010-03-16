@@ -2,48 +2,56 @@
 # task :skip_embedded do
 #   # Task goes here
 # end
-namespace :skip_embedded do
-  require 'skip_embedded'
 
-  desc "fetch clippy and jquery"
-  task :thirdparty => %w[thirdparty:clippy thirdparty:jquery]
+unless ARGV.any? {|a| a =~ /^gems/} # Don't load anything when running the gems:* tasks
 
-  namespace :thirdparty do
-    require 'open-uri'
+  begin
+    namespace :skip_embedded do
+      require 'skip_embedded'
 
-    desc "fetch clppy.swf from 'http://github.com/mojombo/clippy/raw/master/build/clippy.swf'"
-    task :clippy do
-      source = "http://github.com/mojombo/clippy/raw/master/build/clippy.swf"
-      dest   = File.expand_path("public/flash", Rails.root)
+      desc "fetch clippy and jquery"
+      task :thirdparty => %w[thirdparty:clippy thirdparty:jquery]
 
-      fetch(source, dest)
-    end
+      namespace :thirdparty do
+        require 'open-uri'
 
-    desc "fetch #{SkipEmbedded::Dependencies[:jquery]} from 'http://jqueryjs.googlecode.com/files/#{SkipEmbedded::Dependencies[:jquery]}'"
-    task :jquery do
-      source =  "http://jqueryjs.googlecode.com/files/#{SkipEmbedded::Dependencies[:jquery]}"
-      dest   = File.expand_path("public/javascripts", Rails.root)
+        desc "fetch clppy.swf from 'http://github.com/mojombo/clippy/raw/master/build/clippy.swf'"
+        task :clippy do
+          source = "http://github.com/mojombo/clippy/raw/master/build/clippy.swf"
+          dest   = File.expand_path("public/flash", Rails.root)
 
-      fetch(source, dest)
-    end
-=begin
-    desc "fetch jquery-ui-1.7.1.custom.zip from 'http://jqueryui.com/download/jquery-ui-1.7.1.custom.zip'"
-    task :jqueryui do
-      source =  'http://jqueryui.com/download/jquery-ui-1.7.1.custom.zip'
-      dest   = File.expand_path("tmp/", Rails.root)
+          fetch(source, dest)
+        end
 
-      fetch(source, dest)
-    end
-=end
-    private
-    def fetch(source, dest, filename_from_url = true)
-      if File.directory?(dest) || filename_from_url
-        dir, out = dest, File.basename(source)
-      else
-        dir, out = File.dirname(dest), File.basename(dest)
+        desc "fetch #{SkipEmbedded::Dependencies[:jquery]} from 'http://jqueryjs.googlecode.com/files/#{SkipEmbedded::Dependencies[:jquery]}'"
+        task :jquery do
+          source =  "http://jqueryjs.googlecode.com/files/#{SkipEmbedded::Dependencies[:jquery]}"
+          dest   = File.expand_path("public/javascripts", Rails.root)
+
+          fetch(source, dest)
+        end
+
+          #  desc "fetch jquery-ui-1.7.1.custom.zip from 'http://jqueryui.com/download/jquery-ui-1.7.1.custom.zip'"
+          #  task :jqueryui do
+          #   source =  'http://jqueryui.com/download/jquery-ui-1.7.1.custom.zip'
+          #   dest   = File.expand_path("tmp/", Rails.root)
+
+          #   fetch(source, dest)
+          # end
+
+        private
+        def fetch(source, dest, filename_from_url = true)
+          if File.directory?(dest) || filename_from_url
+            dir, out = dest, File.basename(source)
+          else
+            dir, out = File.dirname(dest), File.basename(dest)
+          end
+          FileUtils.mkdir_p(dir) unless File.directory?(dir)
+          Dir.chdir(dir){ File.open(out, "wb"){|f| f.write open(source).read } }
+        end
       end
-      FileUtils.mkdir_p(dir) unless File.directory?(dir)
-      Dir.chdir(dir){ File.open(out, "wb"){|f| f.write open(source).read } }
     end
+  rescue MissingSourceFile, LoadError
+    puts "Error"
   end
 end

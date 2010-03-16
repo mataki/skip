@@ -17,7 +17,7 @@ config.logger = Logger.new(config.log_path, 1, 10.megabytes)
 
 config.action_mailer.delivery_method = :test
 
-config.gem 'haml', :version => '2.2.17'
+config.gem 'haml'
 #config.gem "josevalim-rails-footnotes",  :lib => "rails-footnotes", :source => "http://gems.github.com"
 config.gem 'bullet', :source => 'http://gemcutter.org'
 config.after_initialize do

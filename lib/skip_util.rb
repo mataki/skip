@@ -15,14 +15,16 @@
 
 require 'kconv'
 class SkipUtil
-  GetText.N_("Sun")
-  GetText.N_("Mon")
-  GetText.N_("Tue")
-  GetText.N_("Wed")
-  GetText.N_("Thu")
-  GetText.N_("Fri")
-  GetText.N_("Sat")
-  
+  if defined?(GetText)
+    GetText.N_("Sun")
+    GetText.N_("Mon")
+    GetText.N_("Tue")
+    GetText.N_("Wed")
+    GetText.N_("Thu")
+    GetText.N_("Fri")
+    GetText.N_("Sat")
+  end
+
   WDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
 
 #  def self.split_symbol symbol
