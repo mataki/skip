@@ -1,8 +1,0 @@
-<div style="margin-bottom: 50px;">
-  <% if !page.deleted? and !page.content.blank? %>
-    <% page.chapters[num..page.chapters.size].each do |chapter| %>
-      <%= render_richtext(chapter.data) %>
-      <%= render :partial => "shared/chapter_menu", :locals => {:page => page, :chapter => chapter} %>
-    <% end %>
-  <% end %>
-</div>
