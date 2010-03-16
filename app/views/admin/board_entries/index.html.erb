@@ -9,13 +9,13 @@
   <%= render :partial => '/admin/search_box', :locals => { :class_name => 'Admin::BoardEntry' } %>
   <%= render :partial => '/admin/shared/sortable_table',
              :locals => {
-               :columns => %w[entry_type symbol user title publication_type contents category],
+               :columns => %w[entry_type user title publication_type contents category],
                :disp_columns_proc => lambda do |object,column|
       case column
       when "entry_type"
         _("BoardEntry|Entry type|#{object.entry_type}")
-      when "symbol"
-        object.symbol_name
+      when "owner_id"
+        object.owner.nam
       when "user"
         object.user.name
       when "publication_type"
@@ -31,9 +31,9 @@
                :link_elem_size => 3,
                :link_elem_proc => lambda { |object|
       result = ""
-      result << content_tag(:td, link_to(_('Show'), object) )
-      result << content_tag(:td, link_to(_('Destroy'), object, :confirm => _('Are you sure?'), :method => :delete))
-      result << content_tag(:td, link_to(_('Change private'), close_admin_board_entry_path(object), :confirm => _('Are you sure?'), :method => :put)) if (object.diary? && !object.private?)
+      result << content_tag(:td, link_to(_('Show'), admin_tenant_board_entry_path(current_tenant, object)))
+      result << content_tag(:td, link_to(_('Destroy'), admin_tenant_board_entry_path(current_tenant, object), :confirm => _('Are you sure?'), :method => :delete))
+      result << content_tag(:td, link_to(_('Change private'), close_admin_tenant_board_entry_path(current_tenant, object), :confirm => _('Are you sure?'), :method => :put)) if (object.diary? && !object.private?)
       result
     }
              }

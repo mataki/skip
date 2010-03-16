@@ -11,8 +11,8 @@
 </p>
 
 <p>
-  <b><%= label @board_entry.class, :Symbol %>:</b>
-  <%=h @board_entry.symbol_name %>
+  <b><%= label @board_entry.class, :OwnerId %>:</b>
+  <%=h @board_entry.owner.name %>
 </p>
 
 <p>
@@ -40,5 +40,5 @@
   <%=h @board_entry.category %>
 </p>
 </div>
-<%= link_to _('Listing %{model}') % {:model => _('board entry comment')}, admin_board_entry_board_entry_comments_path(@board_entry) %>
+<%= link_to _('Listing %{model}') % {:model => _('board entry comment')}, admin_tenant_board_entry_board_entry_comments_path(current_tenant, @board_entry) %>
 <% end -%>

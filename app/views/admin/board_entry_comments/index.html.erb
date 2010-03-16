@@ -23,7 +23,7 @@
                :link_elem_size => 1,
                :link_elem_proc => lambda { |object|
       result = ""
-      result << content_tag(:td, link_to(_('Destroy'), admin_board_entry_board_entry_comment_path(@board_entry, object), {:confirm => _('Are you sure destroing with nest comments?'), :method => :delete}) )
+      result << content_tag(:td, link_to(_('Destroy'), admin_tenant_board_entry_board_entry_comment_path(current_tenant, @board_entry, object), {:confirm => _('Are you sure destroing with nest comments?'), :method => :delete}) )
     }
              }
   -%>
