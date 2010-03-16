@@ -17,7 +17,7 @@ class Admin::ShareFilesController < Admin::ApplicationController
   include Admin::AdminModule::AdminRootModule
 
   def download
-    share_file = Admin::ShareFile.find(params[:id])
+    share_file = current_tenant.share_files.find(params[:id])
     send_file(share_file.full_path, :filename => share_file.file_name, :type => share_file.content_type || Types::ContentType::DEFAULT_CONTENT_TYPE , :stream => false, :disposition => 'attachment')
   end
 end
