@@ -21,7 +21,7 @@
                :link_elem_proc => lambda { |object|
       result = ""
       result << content_tag(:td, link_to(_("Edit"), edit_admin_tenant_group_category_path(current_tenant, object)) )
-      result << content_tag(:td, link_to(_("Destroy"), object, {:confirm => _('Are you sure?'), :method => :delete}) ) if object.deletable?
+      result << content_tag(:td, link_to(_("Destroy"), admin_tenant_group_category_path(current_tenant, object), {:confirm => _('Are you sure?'), :method => :delete}) ) if object.deletable?
       result
     }
              }

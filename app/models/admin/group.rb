@@ -14,8 +14,9 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Admin::Group < Group
-  has_many :group_participations, :dependent => :destroy, :class_name => 'Admin::GroupParticipation'
+  belongs_to :tenant, :class_name => 'Admin::Tenant'
   belongs_to :group_category, :class_name => 'Admin::GroupCategory'
+  has_many :group_participations, :dependent => :destroy, :class_name => 'Admin::GroupParticipation'
 
   N_('Admin::Group|Name')
   N_('Admin::Group|Gid')

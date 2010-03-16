@@ -3,7 +3,7 @@
 <% end -%>
 
 <div class="box tabular">
-  <% form_for(@group_category) do |f| %>
+  <% form_for @group_category, :url => admin_tenant_group_category_path(current_tenant, @group_category) do |f| %>
   <%= render :partial => f %>
   <p>
     <%= f.submit _('Update'), :disable_with => _('Now Updating...') %>

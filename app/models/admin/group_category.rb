@@ -14,6 +14,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Admin::GroupCategory < GroupCategory
+  belongs_to :tenant, :class_name => 'Admin::Tenant'
   has_many :groups, :class_name => 'Admin::Group'
 
   N_('Admin::GroupCategory|Code')

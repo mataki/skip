@@ -13,6 +13,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Admin::UserProfileMaster < UserProfileMaster
+  belongs_to :tenant, :class_name => 'Admin::Tenant'
 
   N_('Admin::UserProfileMaster|User profile master category')
   N_('Admin::UserProfileMaster|User profile master category description')

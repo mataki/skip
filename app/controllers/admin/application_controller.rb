@@ -28,6 +28,11 @@ class Admin::ApplicationController < ApplicationController
     @title = @main_menu = _("System Administration")
   end
 
+  # Override ApplicationController#current_tenant
+  def current_tenant
+    @current_tenant ||= Admin::Tenant.find(params[:tenant_id])
+  end
+
   protected
   def valid_file?(uploaded_file, options = {})
     options = {:max_size => 1.megabyte, :content_types => []}.merge(options)

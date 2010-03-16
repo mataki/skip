@@ -14,6 +14,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Admin::BoardEntry < BoardEntry
+  belongs_to :tenant, :class_name => 'Admin::Tenant'
   has_many :board_entry_comments, :dependent => :destroy, :class_name => 'Admin::BoardEntryComment'
   N_('Admin::BoardEntry|Title')
   N_('Admin::BoardEntry|Contents')

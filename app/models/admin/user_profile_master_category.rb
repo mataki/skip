@@ -14,6 +14,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Admin::UserProfileMasterCategory < UserProfileMasterCategory
+  belongs_to :tenant, :class_name => 'Admin::Tenant'
 
   N_('Admin::UserProfileMasterCategory|Name')
   N_('Admin::UserProfileMasterCategory|Name description')

@@ -14,6 +14,8 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class Admin::ShareFile < ShareFile
+  belongs_to :tenant, :class_name => 'Admin::Tenant'
+
   N_('Admin::ShareFile|File name')
   N_('Admin::ShareFile|Owner symbol')
   N_('Admin::ShareFile|Owner symbol type')

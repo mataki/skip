@@ -17,16 +17,16 @@ class Admin::GroupCategoriesController < Admin::ApplicationController
   include Admin::AdminModule::AdminRootModule
 
   def index
-    redirect_to admin_masters_path
+    redirect_to admin_tenant_masters_path(current_tenant)
   end
 
   def show
     flash.keep
-    redirect_to admin_group_categories_path
+    redirect_to admin_tenant_group_categories_path(current_tenant)
   end
 
   def destroy
-    group_category = Admin::GroupCategory.find(params[:id])
+    group_category = current_tenant.group_categories.find(params[:id])
     if group_category.deletable?
       group_category.destroy
       flash[:notice] = _('Deletion complete.')
@@ -36,13 +36,13 @@ class Admin::GroupCategoriesController < Admin::ApplicationController
       flash[:error] = message unless message.blank?
     end
     respond_to do |format|
-      format.html { redirect_to(admin_group_categories_path) }
+      format.html { redirect_to(admin_tenant_group_categories_path(current_tenant)) }
       format.xml  { head :ok }
     end
   rescue ActiveRecord::RecordNotFound => e
     flash[:error] = _('Category to be deleted does not exist.')
     respond_to do |format|
-      format.html { redirect_to(admin_group_categories_path) }
+      format.html { redirect_to(admin_tenant_group_categories_path(current_tenant)) }
       format.xml  { head :not_found }
     end
   end

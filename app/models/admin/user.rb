@@ -15,6 +15,7 @@
 
 class Admin::User < User
   require 'fastercsv'
+  belongs_to :tenant, :class_name => 'Admin::Tenant'
   has_many :openid_identifiers, :dependent => :destroy, :class_name => 'Admin::OpenidIdentifier'
   has_many :user_profile_values, :dependent => :destroy, :class_name => 'Admin::UserProfileValue'
   has_one :picture, :dependent => :destroy, :class_name => 'Admin::Picture'

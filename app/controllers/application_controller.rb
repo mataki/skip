@@ -165,7 +165,7 @@ protected
   end
 
   def valid_tenant_required
-    unless current_user.tenant == current_tenant
+    unless current_user.tenant.id == current_tenant.id
       redirect_to root_url
     end
   end

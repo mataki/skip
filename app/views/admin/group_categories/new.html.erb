@@ -2,7 +2,7 @@
 <%= render :partial => '/admin/shared/topic_path' %>
 <% end -%>
 <div class="box tabular">
-<% form_for(@group_category) do |f| %>
+<% form_for @group_category, :url => admin_tenant_group_categories_path(current_tenant) do |f| %>
 <%= render :partial => f %>
   <p>
     <%= submit_tag _('Create'), :disable_with => _('Creating...') %>

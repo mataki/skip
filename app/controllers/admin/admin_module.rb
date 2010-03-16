@@ -39,7 +39,7 @@ module Admin::AdminModule
 
     # admin_users_url
     def index_url
-      polymorphic_url [:admin, current_tenant, controller_name]
+      send("admin_tenant_#{controller_name}_url", current_tenant)
     end
 
     # "user" "board entry"
