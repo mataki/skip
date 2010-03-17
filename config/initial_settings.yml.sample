@@ -110,6 +110,8 @@ default: &default
     :name: "http://axschema.org/namePerson"
     :email: "http://axschema.org/contact/email"
     :code: "http://axschema.org/namePerson/friendly"
+    :first_name: "http://axschema.org/namePerson/first"
+    :last_name: "http://axschema.org/namePerson/last"
 
   # ================================================================================================
   # 全文検索に関する設定

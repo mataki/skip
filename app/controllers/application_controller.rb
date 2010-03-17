@@ -49,7 +49,7 @@ protected
 
     # プロフィール情報が登録されていない場合、platformに戻す
     unless user.active?
-      redirect_to user.retired? ? { :controller => '/platform', :action => :logout, :message => 'retired' } : { :controller => '/portal' }
+      redirect_to user.retired? ? logout_tenant_platform_url(current_tenant, :message => 'retired') : new_tenant_user_url(current_tenant)
       return
     end
 
@@ -349,7 +349,7 @@ protected
       if request.env['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest'
         render :text => _('Session expired. You need to log in again.'), :status => :bad_request
       else
-        redirect_to :controller => '/platform', :action => :login, :openid_identifier => current_tenant.op_url, :return_to => URI.encode(request.url)
+        redirect_to login_tenant_platform_url(current_tenant, :openid_url => current_tenant.op_url, :return_to => URI.encode(request.url))
       end
       return false
     end

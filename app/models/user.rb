@@ -135,7 +135,7 @@ class User < ActiveRecord::Base
     { :order => 'user_accesses.last_access DESC', :include => [:user_access] }
   }
 
-  attr_accessor :old_password, :password
+  attr_accessor :old_password, :password, :first_name, :last_name
   attr_protected :admin, :status
   cattr_reader :per_page
   @@per_page = 40
@@ -178,6 +178,12 @@ class User < ActiveRecord::Base
       self.remember_token = nil
       self.remember_token_expires_at = nil
     end
+  end
+
+  before_validation :build_name_with_divided_names
+
+  def build_name_with_divided_names
+    self.name = _("%{first_name} %{last_name}") % { :first_name => self.first_name, :last_name => self.last_name } if self.name.blank?
   end
 
   def before_create
@@ -244,7 +250,7 @@ class User < ActiveRecord::Base
     params ||= {}
     code = params.delete(:code)
     password = encrypt(params[:code])
-    user = new(params.slice(:name, :email, :tenant).merge(:password => password, :password_confirmation => password))
+    user = new(params.slice(:name, :email, :tenant, :first_name, :last_name).merge(:password => password, :password_confirmation => password))
     user.openid_identifiers << OpenidIdentifier.new(:url => identity_url)
     user.status = 'UNUSED'
     user

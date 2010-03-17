@@ -11,7 +11,7 @@ ActionController::Routing::Routes.draw do |map|
       }
     tenant.resource :platform, :only => %(show),
       :member => {
-        :login => :post,
+        :login => :any,
         :logout => :any,
         :activate => :any,
         :forgot_password => :any,

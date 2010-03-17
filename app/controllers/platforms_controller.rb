@@ -193,7 +193,7 @@ class PlatformsController < ApplicationController
   def login_with_open_id
     session[:return_to] = params[:return_to] if !params[:return_to].blank? and params[:open_id_complete].blank?
     begin
-      authenticate_with_open_id( params[:openid_url], :method => 'post',
+      authenticate_with_open_id(params[:openid_url], :method => 'post',
                                 :required => SkipEmbedded::InitialSettings["ax_fetchrequest"].values.flatten) do |result, identity_url, registration|
         if result.successful?
           logger.info("[Login successful with OpenId] \"OpenId\" => #{identity_url}")
@@ -204,6 +204,7 @@ class PlatformsController < ApplicationController
             return_to = session[:return_to]
             reset_session
 
+            # TODO: 該当するOpenIDのユーザを探すときに、テナント内のユーザであるというチェックが必要か？
             self.current_user = identifier.user_with_unused
             redirect_to_return_to_or_root(return_to)
           end
