@@ -7,7 +7,7 @@
     <ul class="notices system">
       <li><%= link_to(_('Mail')) %></li>
       <li><%= link_to(_('Schedule')) %></li>
-      <li><%= link_to(_('Blog')) %></li>
+      <li><%= link_to(_('Blog'), tenant_board_entries_path(:tenant_id => params[:tenant_id])) %></li>
       <li><%= link_to(_('Group')) %></li>
     </ul>
   </div>

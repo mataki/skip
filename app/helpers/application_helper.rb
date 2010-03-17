@@ -202,6 +202,17 @@ module ApplicationHelper
     %w(tile blue green silver snow sakura pink orange)
   end
 
+  def date2wday(date)
+    case date.wday
+    when 0
+      "sunday"
+    when 6
+      "saturday"
+    else
+      "weekday"
+    end
+  end
+
 private
   def relative_url_root
     ActionController::Base.relative_url_root || ''
