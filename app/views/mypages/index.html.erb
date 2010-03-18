@@ -28,6 +28,8 @@
   <%#  right side area -%>
   <%# ============================================================ -%>
   <div id="mypage_right">
+    <%= render :partial => 'mypages/parts/tenpo_notice' %>
+
     <% unless SkipEmbedded::InitialSettings['enable_ad_for_oss'] == "lovelyskip" -%>
       <%= render "ad_for_oss" %>
     <% end -%>
