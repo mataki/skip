@@ -765,13 +765,13 @@ div#statusbar
 
 div#header
   div#search
-    :background-color #E0E0FF
+    //:background-color #E0E0FF
     :padding 4px 4px
     select
       :margin 3px 0 0
-      :font-size 10px
+      :font-size 13px
     input
-      :font-size 10px
+      :font-size 13px
     span.other_links
       :padding 0px 1px
       :font-size 10px
@@ -897,10 +897,12 @@ div.top_info
 div#mypage_left
   :margin-right 195px
   // IEでカラム落ちが発生しないように以下を設定
-  :_width 100%
+  //:_width 100%
+  :width 48%
 div#mypage_right
   :float right
-  :width 180px
+  //:width 180px
+  :width 48%
   div.box_space_body
     :font-size 10px
     li
@@ -947,7 +949,8 @@ div#questions_wrapper
   table
     :width 100%
   div
-    :text-align center
+    //:text-align center
+    :padding 2px 2px
 div#custom_display_wrapper
   :font-size 12px
   :_width 100%
@@ -1787,3 +1790,33 @@ div.feed_item
   :width 90%
   :margin-bottom 8px
 
+// Google Apps Calender
+// ------------------------------------------------------------
+table.calender_header
+  tr
+    td
+      :font-size 16px
+      :font-weight bold
+      :padding 2px
+table#gapps_cal
+  :border 1px solid #999999
+  tr.date
+    :text-align center
+    td.weekday
+      :background-color #FFFFCC
+    td.saturday
+      :background-color #CCFFFF
+    td.sunday
+      :background-color #FFCCCC
+  tr.detail
+    :height 6em
+    ul
+      :list-style-position inside
+      li
+  td
+    :border 1px solid #999999
+    :vertical-align top
+
+// Google Apps Mail
+// ------------------------------------------------------------
+div#gapps_mail
