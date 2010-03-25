@@ -49,7 +49,7 @@ protected
 
     # プロフィール情報が登録されていない場合、platformに戻す
     unless user.active?
-      redirect_to user.retired? ? logout_tenant_platform_url(current_tenant, :message => 'retired') : new_tenant_user_url(current_tenant)
+      redirect_to user.retired? ? logout_platform_url(:message => 'retired') : new_tenant_user_url(current_tenant)
       return
     end
 
@@ -301,8 +301,7 @@ protected
   end
 
   def identifier(user)
-    user_str = user.is_a?(User) ? user.code : user
-    identity_url(:user => user_str, :protocol => scheme)
+    tenant_id_url(user.tenant, :id => user.code, :protocol => scheme)
   end
 
   def checkid_request
@@ -317,6 +316,7 @@ protected
     @current_openid_request ||= OpenIdRequest.find_by_token(session[:request_token]) if session[:request_token]
   end
 
+  # TODO: openid_identifierからユーザを特定して、emailを算出するメソッドに変更する
   def extract_login_from_identifier(openid_url)
     openid_url.gsub(identifier(''), '')
   end
@@ -341,6 +341,8 @@ protected
     else
       tenant_root_url(current_tenant)
     end
+  rescue ActiveRecord::RecordNotFound => e
+    platform_url
   end
 
   private
@@ -349,7 +351,7 @@ protected
       if request.env['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest'
         render :text => _('Session expired. You need to log in again.'), :status => :bad_request
       else
-        redirect_to login_tenant_platform_url(current_tenant, :openid_url => current_tenant.op_url, :return_to => URI.encode(request.url))
+        redirect_to login_platform_url(:openid_url => current_tenant.op_url, :return_to => URI.encode(request.url))
       end
       return false
     end

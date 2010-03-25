@@ -20,7 +20,7 @@ class ServerController < ApplicationController
   # Error handling
   rescue_from OpenID::Server::ProtocolError, :with => :render_openid_error
   # Actions other than index require a logged in user
-  skip_before_filter :sso, :login_required, :prepare_session, :valid_tenant_required, :only => [:index, :cancel]
+  skip_before_filter :sso, :login_required, :prepare_session, :valid_tenant_required, :only => [:index, :cancel, :proceed]
   before_filter :ensure_valid_checkid_request, :except => [:index, :cancel]
   after_filter :clear_checkid_request, :only => [:cancel]
   # These methods are used to display information about the request to the user
@@ -60,7 +60,7 @@ class ServerController < ApplicationController
   # to the decision page.
   def proceed
     identity = identifier(current_user)
-    if SkipEmbedded::InitialSettings['white_list'].include? checkid_request.trust_root
+    if SkipEmbedded::InitialSettings['white_list'].include?(checkid_request.trust_root)
       resp = checkid_request.answer(true, nil, identity)
       props = convert_ax_props(current_user)
       resp = add_ax(resp, props)
@@ -93,7 +93,7 @@ class ServerController < ApplicationController
       render_response(openid_request.answer(false))
     else
       save_checkid_request
-      redirect_to login_path(:return_to => URI.encode(proceed_path))
+      redirect_to platform_url(:return_to => URI.encode(proceed_path))
     end
   end
 
@@ -119,13 +119,13 @@ class ServerController < ApplicationController
     self.openid_request = checkid_request
     if !openid_request.is_a?(OpenID::Server::CheckIDRequest)
       flash[:error] = 'The identity verification request is invalid.'
-      redirect_to login_path
+      redirect_to platform_url
     elsif !allow_verification?
       flash[:notice] = logged_in? && !pape_requirements_met?(auth_time) ?
         'The Service Provider requires reauthentication, because your last login is too long ago.' :
         'Please log in to verify your identity.'
       logout_killing_session!([:request_token])
-      redirect_to login_path(:return_to => URI.encode(proceed_path))
+      redirect_to platform_url(:return_to => URI.encode(proceed_path))
     end
   end
 
@@ -177,7 +177,7 @@ class ServerController < ApplicationController
     hash = {}
     from.each do |i|
       hash["type.#{i[0]}"] = i[1]
-      hash["value.#{i[0]}"] = user.send(i[2].to_sym)
+      hash["value.#{i[0]}"] = user.send(i[2].to_sym).to_s
     end
     hash
   end

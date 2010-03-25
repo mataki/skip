@@ -8,7 +8,7 @@
     <tr>
       <td><%= submit_tag _("Login") %></td>
       <td>
-        <%= hidden_field_tag "openid_url", h(current_tenant.op_url) %>
+        <%= text_field_tag "openid_url" %>
       </td>
     </tr>
   </tbody>

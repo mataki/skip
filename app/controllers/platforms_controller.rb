@@ -21,8 +21,7 @@ class PlatformsController < ApplicationController
   before_filter :require_not_login, :except => [:logout]
 
   def show
-    # TODO OpenID絡みの部分。後で消すか修正する
-    # response.headers['X-XRDS-Location'] = server_url(:format => :xrds, :protocol => scheme)
+    response.headers['X-XRDS-Location'] = server_url(:format => :xrds, :protocol => scheme)
     img_files = Dir.glob(File.join(RAILS_ROOT, "public", "custom", "images", "titles", "background*.{jpg,png,jpeg}"))
     @img_name = File.join("titles", File.basename(img_files[rand(img_files.size)]))
     respond_to do |format|
@@ -51,7 +50,7 @@ class PlatformsController < ApplicationController
     flash[:notice] = notice
 
     # TODO: OP連携のlogout時にOPのログアウトに飛ばすか？
-    redirect_to tenant_platform_url(current_tenant)
+    redirect_to platform_url
   end
 
   def forgot_password
@@ -131,7 +130,7 @@ class PlatformsController < ApplicationController
   def signup
     unless enable_signup?
       flash[:error] = _('%{function} currently unavailable.') % {:function => _('User registration')}
-      return redirect_to tenant_platform_url(current_tenant)
+      return redirect_to platform_url
     end
     if @user = User.find_by_activation_token(params[:code])
       if @user.within_time_limit_of_activation_token?
@@ -139,11 +138,11 @@ class PlatformsController < ApplicationController
         redirect_to new_tenant_user_url(current_tenant)
       else
         flash[:error] = _("The URL for registration has already expired.")
-        redirect_to tenant_platform_url(current_tenant)
+        redirect_to platform_url
       end
     else
       flash[:error] = _("Invalid registration URL. Try again or contact system administrator.")
-      redirect_to tenant_platform_url(current_tenant)
+      redirect_to platform_url
     end
   end
 
@@ -202,8 +201,10 @@ class PlatformsController < ApplicationController
             create_user_from(identity_url, registration)
           else
             return_to = session[:return_to]
-            reset_session
 
+            request_token = session[:request_token]
+            reset_session
+            session[:request_token] = request_token
             # TODO: 該当するOpenIDのユーザを探すときに、テナント内のユーザであるというチェックが必要か？
             self.current_user = identifier.user_with_unused
             redirect_to_return_to_or_root(return_to)
@@ -216,18 +217,18 @@ class PlatformsController < ApplicationController
     rescue OpenIdAuthentication::InvalidOpenId
       logger.info("[Login failed with OpenId] \"OpenId is invalid\"")
       flash[:error] = _("OpenID format invalid.")
-      redirect_to [current_tenant, :platform]
+      redirect_to [:platform]
     end
   end
 
   def create_user_from(identity_url, registration)
-    if identity_url.include?(current_tenant.op_url)
-      user = User.create_with_identity_url(identity_url, create_user_params(registration))
+    if tenant = Tenant.find_by_op_endpoint(params["openid.op_endpoint"])
+      user = User.create_with_identity_url(identity_url, create_user_params(registration, tenant))
       if user.valid?
         reset_session
         self.current_user = user
 
-        redirect_to new_polymorphic_url([current_tenant, :user])
+        redirect_to new_polymorphic_url([tenant, :user])
       else
         set_error_message_from_user_and_redirect(user)
       end
@@ -238,15 +239,15 @@ class PlatformsController < ApplicationController
 
   def redirect_to_return_to_or_root(return_to = params[:return_to])
     return_to = return_to ? URI.encode(return_to) : nil
-    redirect_to (return_to and !return_to.empty?) ? return_to : tenant_root_url(current_tenant)
+    redirect_to (return_to and !return_to.empty?) ? return_to : root_url
   end
 
-  def create_user_params(fetched)
+  def create_user_params(fetched, tenant)
     returning({}) do |res|
       SkipEmbedded::InitialSettings["ax_fetchrequest"].each do |k, vs|
         fetched.each{|fk, (fv,_)| res[k] = fv if !fv.blank? && vs == fk }
       end
-      res[:tenant] = current_tenant
+      res[:tenant] = tenant
     end
   end
 
@@ -272,13 +273,13 @@ class PlatformsController < ApplicationController
 
   def set_error_message_and_redirect(message)
     flash[:error] = message
-    redirect_to [current_tenant, :platform]
+    redirect_to :platform
   end
 
   def login_with_password
     logout_killing_session!([:request_token])
     if params[:login]
-      User.auth(current_tenant, params[:login][:key], params[:login][:password], params[:login][:keyphrase]) do |result, user|
+      User.auth(params[:login][:key], params[:login][:password], params[:login][:keyphrase]) do |result, user|
         if result
           self.current_user = user
           logger.info(current_user.to_s_log('[Login successful with password]'))

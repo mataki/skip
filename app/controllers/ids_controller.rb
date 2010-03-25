@@ -21,7 +21,7 @@ class IdsController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => %w(create update)
 
   def show
-    @user = current_tenant.users.find(params[:user_id])
+    @user = current_tenant.users.find(params[:id])
 
     respond_to do |format|
       format.html do

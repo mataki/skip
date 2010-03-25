@@ -24,7 +24,7 @@
       when "status"
         if object.unused?
           if !object.activation_token.nil? and object.within_time_limit_of_activation_token?
-            signup_url = signup_tenant_platform_url(current_tenant, :code => object.activation_token)
+            signup_url = signup_platform_url(:code => object.activation_token)
             _('To be activated') + "(" + link_to(_('Confirm'), h(signup_url)) + ")"
           else
             issue_link_str = SkipEmbedded::InitialSettings['mail']['show_mail_function'] ? _('Notify activation') : _('Prepare for activation')

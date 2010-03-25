@@ -36,7 +36,7 @@
           other_links_tag = content_tag :div, other_links.join(''), :id => 'other_links', :class => 'invisible'
         end
 
-        links << link_to(_("Sign out"), logout_tenant_platform_url(current_tenant), :class => "underline_link") unless SkipEmbedded::InitialSettings['hide_header_logout_link']
+        links << link_to(_("Sign out"), logout_platform_url, :class => "underline_link") unless SkipEmbedded::InitialSettings['hide_header_logout_link']
 
       -%>
 
@@ -46,7 +46,7 @@
       </div>
     <% end -%>
   </div>
-  <%= header_logo_link %>
+  <%#= header_logo_link %>
   <div class="banner"></div>
 
   <% if current_user -%>

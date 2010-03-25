@@ -47,7 +47,7 @@ class UsersController < ApplicationController
   def new
     unless current_user
       flash[:error] = _('Unable to continue with the user registration process. A fresh start is required.')
-      redirect_to tenant_platform_url(current_tenant)
+      redirect_to platform_url
       return
     end
     @user = current_user

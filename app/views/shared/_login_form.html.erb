@@ -1,11 +1,6 @@
-<% form_tag(login_tenant_platform_url(current_tenant), :id => 'login_form') do -%>
+<% form_tag(login_platform_url, :id => 'login_form') do -%>
   <%= hidden_field_tag "return_to", h(params[:return_to]) %>
-  <% if login_mode?(:password) -%>
-    <%= render :partial => 'shared/password_login_form' %>
-  <% elsif login_mode?(:fixed_rp) -%>
-    <%= render :partial => 'shared/fixed_rp_login_form' %>
-  <% else -%>
-    No matched login-mode. Check your initial_settings.yml!
-  <% end -%>
+  <%= render :partial => 'shared/password_login_form' %>
+  <%= render :partial => 'shared/fixed_rp_login_form' %>
 <% end -%>
 

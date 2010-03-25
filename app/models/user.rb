@@ -215,8 +215,8 @@ class User < ActiveRecord::Base
     alias_method_chain :find, :retired_skip
   end
 
-  def self.auth(tenant, code_or_email, password, key_phrase = nil)
-    unless user = tenant.users.find_by_code_or_email_with_key_phrase(code_or_email, key_phrase)
+  def self.auth(code_or_email, password, key_phrase = nil)
+    unless user = User.find_by_code_or_email_with_key_phrase(code_or_email, key_phrase)
       result, result_user = false, nil
     else
       if user.unused?
@@ -569,5 +569,5 @@ private
     nil
   end
 
-  private_class_method :find_by_code_or_email, :find_by_code_or_email_with_key_phrase, :auth_successed, :auth_failed
+  private_class_method :find_by_code_or_email, :auth_successed, :auth_failed
 end

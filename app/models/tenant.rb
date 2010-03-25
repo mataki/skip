@@ -7,4 +7,12 @@ class Tenant < ActiveRecord::Base
   has_one :activation, :dependent => :destroy
   has_many :user_profile_master_categories, :dependent => :destroy
   has_many :user_profile_masters, :dependent => :destroy
+
+  def self.find_by_op_endpoint(endpoint)
+    if endpoint.match(/^https:\/\/www\.google\.com\/a\/(.*)\/o8\/ud\?be=o8$/)
+      self.find_by_op_url($1)
+    else
+      self.find_by_op_url(endpoint)
+    end
+  end
 end

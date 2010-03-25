@@ -9,16 +9,6 @@ ActionController::Routing::Routes.draw do |map|
         :load_entries => :get,
         :entries_by_antenna => :get
       }
-    tenant.resource :platform, :only => %(show),
-      :member => {
-        :login => :any,
-        :logout => :any,
-        :activate => :any,
-        :forgot_password => :any,
-        :reset_password => :any,
-        :signup => :any,
-        :require_login => :get
-      }
     tenant.resources :users, :new => {:agreement => :get}, :member => {:update_active => :put} do |user|
       user.resources :board_entries, :member => {:print => :get, :toggle_hide => :put}, :collection => {:preview => :post} do |board_entry|
         board_entry.resources :entry_trackbacks, :only => %w(destroy)
@@ -51,6 +41,7 @@ ActionController::Routing::Routes.draw do |map|
     end
     tenant.resources :share_files, :only => %w(index show)
     tenant.resources :board_entries, :only => %w(index show)
+    tenant.resources :ids, :only => :show
   end
 
   map.namespace "admin" do |admin_map|
@@ -95,6 +86,25 @@ ActionController::Routing::Routes.draw do |map|
       event.resources :attendees, :only => [:update]
     end
     app.resource :javascripts, :only => [], :member => {:application => :get}
+  end
+
+  map.resource :platform, :only => %(show), :member => {
+    :login => :any,
+    :logout => :any,
+    :activate => :any,
+    :forgot_password => :any,
+    :reset_password => :any,
+    :signup => :any,
+    :require_login => :get
+  }
+
+  map.root :controller => :platforms, :action => :show
+
+  map.with_options :controller => 'server' do |server|
+    server.formatted_server 'server.:format', :action => 'index'
+    server.server 'server', :action => 'index'
+    server.cancel 'server/cancel', :action => 'cancel'
+    server.proceed 'server/proceed', :action => 'proceed'
   end
 
   map.connect ':controller/:action/:id'

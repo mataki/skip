@@ -2,7 +2,7 @@
 
 <div style="text-align: center; margin: 10px;">
   <%= button_to _('Accept the terms above'), agreement_new_tenant_user_path(current_tenant), :method => :get %>
-  <%= button_to _('Not Accept'), logout_tenant_platform_path(current_tenant), :method => :get %>
+  <%= button_to _('Not Accept'), logout_platform_path, :method => :get %>
 </div>
 
 <% content_for :javascript_initializers do -%>
